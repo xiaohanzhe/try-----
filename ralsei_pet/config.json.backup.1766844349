@@ -1,0 +1,44 @@
+{
+    "api": {
+        "enabled": false,
+        "api_key": "",
+        "base_url": "https://api.doubao.com",
+        "model": "doubao-pro",
+        "agent_id": "",
+        "api_version": "v1",
+        "timeout": 30,
+        "max_retries": 3,
+        "retry_delay": 1.0
+    },
+    "privacy": {
+        "enable_usage_data": false,
+        "enable_daily_report": false,
+        "enable_activity_tracking": false,
+        "enable_api_data_logging": false,
+        "clear_data_on_exit": false,
+        "data_retention_days": 30
+    },
+    "security": {
+        "enable_encryption": true,
+        "encryption_key": "",
+        "auto_lock": false,
+        "lock_timeout": 300
+    },
+    "animation": {
+        "fps": 6,
+        "frame_delay": 166
+    },
+    "movement": {
+        "speed": 5.0,
+        "min_speed": 3.0,
+        "max_speed": 8.0
+    },
+    "ui": {
+        "dialogue_duration": 5000,
+        "typing_speed": 50
+    },
+    "behavior": {
+        "energy_recovery_rate": 1.0,
+        "hunger_increase_rate": 0.5
+    }
+}

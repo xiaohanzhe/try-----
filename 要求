@@ -1,0 +1,273 @@
+我需要你帮我写一个像之前那只大鹅一样的桌面宠物，但主角是《deltarune》的ralsei，我要求有以下功能：1.ralsei能自动在电脑屏幕上四处漫游，运动逻辑要合理，不要一直动也别一直停，并且不要过于频繁的来回停或动，尽量符合ralsei的性格
+2.需要他能够在特定环境下触发一些游戏内特有彩蛋 3.能够自由对话，就如同真的聊天，而不是代码里设定好的，一定要贴合原作，符合性格，会有偏低的概率自己主动找人聊天 但会有较高的概率（不超过25%）主动和其他的角色（我后续制造的桌面宠物）互动说话等
+3.能够和桌面上的文件夹和光标等互动 
+4.能玩一些简易的游戏，比如猜谜，躲猫猫（以文件夹这类的应用图标为掩体，或是其他的） 
+5.能够让ralsei处于能上网的背景状态，而不是完全两个世界一一样的那种完全不知道网络上的事情
+6.可以让ralsei能够主动拖拽文件夹，打开文件夹或是拖动鼠标
+7.让ralsei能在外界不同的天气条件下给出不同的反应
+8.让ralsei有精力条和饥饿度等系统，并能通过休息来恢复精力，吃东西恢复饥饿
+9.让ralsei有符合原作的各种状态，一些特殊状态在不同情况下触发
+（素材我有存在deltarune_ralsei文件里
+待机不动时的 5 帧动作示例（spr_ralsei_idle_0.png）：使用条件为角色站立不动、无移动 / 交互 / 战斗指令、静止时间≥3 分钟，无关联动作
+使用东西时的 7 帧动作示例（spr_ralsei_item_0.png）：使用条件为角色持有可交互物品、接收 “使用” 指令、非战斗非移动状态，无关联动作
+跳跃的 4 帧动作示例（spr_ralsei_jump_ball_0.png）：使用条件为角色持有球、接收 “跳跃” 指令、完成 “正常准备跳跃” 动作后触发，关联动作顺序为正常准备跳跃→此跳跃动作→落地（平稳则静止，失衡则触发落地后起来）
+笑的 2 帧动作示例（spr_ralsei_laugh_0.png）：使用条件为触发开心事件（如成功、被夸）、角色静止非战斗，无关联动作
+滚动的 11 帧动作示例（spr_ralsei_roll_0.png）：使用条件为接收 “滚动” 指令、角色处于地面、非战斗非狭窄场景，无关联动作
+下落的 3 帧动作示例（spr_ralsei_slide_0.png）：使用条件为角色被动高空下落（无跳跃指令）、落地前 1 秒触发，关联动作顺序为此下落动作→落地后起来（平稳）/ 被吓倒（失衡）
+施展魔法的 11 帧动作示例（spr_ralsei_spell_0.png）：使用条件为处于战斗模式、角色回合、魔法值≥技能消耗、接收 “施法” 指令，无关联动作
+被溅了一身脏东西的 3 帧动作示例（spr_ralsei_tea_0.png）：使用条件为触发 “被溅脏” 事件（如液体泼洒）、角色静止非战斗，无关联动作
+胜利的 21 帧动作示例（spr_ralsei_victory_0.png）：使用条件为战斗模式下所有敌人被击败、非失败状态，无关联动作
+正常状态向下走的 4 帧动作示例（spr_ralsei_walk_down_0.png）：使用条件为接收 “向下” 移动指令、无情绪（害羞 / 不开心）、非特殊状态（携带物品 / 穿西装），无关联动作
+害羞的时候向下走的 4 帧动作示例（spr_ralsei_walk_down_0.png）：使用条件为接收 “向下” 移动指令、角色处于害羞情绪（如被夸）、非特殊状态，无关联动作
+小憩时的 2 帧动作示例（spr_ralsei_walk_down_sleep_0.png）：使用条件为角色处于 “向下走” 循环、无新指令持续 10 秒 +、非战斗非危险场景，无关联动作
+不开心时候的 4 帧动作示例（spr_ralsei_walk_down_unhappy_0.png）：使用条件为接收 “向下” 移动指令、角色处于不开心情绪（如失败）、非特殊状态，无关联动作
+正常状态向左走的 4 帧动作示例（spr_ralsei_walk_left_0.png）：使用条件为接收 “向左” 移动指令、无情绪、非特殊状态，无关联动作
+害羞时候向左走的 4 帧动作示例（spr_ralsei_walk_left_blush_0.png）：使用条件为接收 “向左” 移动指令、角色处于害羞情绪、非特殊状态，无关联动作
+不开心时向左走的 4 帧动作示例（spr_ralsei_walk_left_unhappy_0.png）：使用条件为接收 “向左” 移动指令、角色处于不开心情绪、非特殊状态，无关联动作
+正常状态向右走的 4 帧动作示例（spr_ralsei_walk_right_0.png）：使用条件为接收 “向右” 移动指令、无情绪、非特殊状态，无关联动作
+害羞时向右走的 4 帧动作示例（spr_ralsei_walk_right_blush_0.png）：使用条件为接收 “向右” 移动指令、角色处于害羞情绪、非特殊状态，无关联动作
+不开心时向右走的 4 帧动作示例（spr_ralsei_walk_right_unhappy_0.png）：使用条件为接收 “向右” 移动指令、角色处于不开心情绪、非特殊状态，无关联动作
+正常状态时向上走的 4 帧动作示例（spr_ralsei_walk_up_0.png）：使用条件为接收 “向上” 移动指令、无情绪、非特殊状态，无关联动作
+再见或挥手时候的 4 帧动作示例（spr_ralsei_wave_down_0.png）：使用条件为完成 “开始挥手” 动作、处于告别 / 打招呼事件中、角色静止非战斗，关联动作顺序为开始挥手→此挥手动作→结束挥手（用开始挥手倒放）
+开始挥手的 3 帧动作示例（在挥手前面使用）（spr_ralsei_wave_start_0.png）：使用条件为触发告别 / 打招呼事件、角色静止非战斗，关联动作顺序为此动作→再见或挥手动作
+落地后起来的 3 帧动作示例（spr_teacup_ralsei_land_0.png）：使用条件为角色从下落 / 跳跃状态落地、判定为轻微失衡（非摔倒）、非战斗，关联动作顺序为下落 / 跳跃→此动作→恢复移动
+在地下接人后被踩的 1 帧动作（可以低概率触发一段时间用于替代行走动作）（spr_cutscene_10_ralsei_splat.png）：使用条件为其他角色从上方经过触发踩踏判定、触发概率≤5%、非战斗，关联动作顺序为此动作→替代行走 10 秒→恢复正常行走
+趴在地上的 1 帧动作（spr_cutscene_10_ralsei_stool.png）：使用条件为角色被从背后推倒、触发友好事件（如玩笑）、非战斗，关联动作顺序为被推倒→此动作→从地上起来（用被吓倒动作倒放）
+被从背后（相反于面向的方向）推倒在地上开心的 1 帧动作（spr_cutscene_10_ralsei_stool.png）：使用条件为角色被从背后推倒、触发友好事件、非战斗，关联动作顺序为被推倒→此动作→从地上起来
+被从背后（相反于面向的方向）推倒在地上生气的 1 帧动作（spr_cutscene_24e_ralsei_splat_mad.png）：使用条件为角色被从背后推倒、触发生气事件（如恶意推倒）、非战斗，关联动作顺序为被推倒→此动作→从地上起来
+被打败的 1 帧动作（spr_ralsei_defeat.png）：使用条件为战斗模式下角色生命值≤0、判定为失败，无关联动作
+惊讶的表情（前提使用条件是动作处于向下走时）（spr_ralsei_down_surprised2.png）：使用条件为角色处于 “向下走” 循环、触发惊讶事件、非战斗，关联动作顺序为向下走→此表情→恢复向下走
+被别人拿起来投掷在空中时的 1 帧动作（图像始终向速度向量的方向冲着）（spr_ralsei_hatless_throw.png）：使用条件为角色被其他角色触发投掷交互、处于离地状态且跟随速度向量、非战斗，关联动作顺序为被拿起→此动作→落地（触发被吓倒 / 落地后起来）
+被从左面推到回事被大幅惊吓到的 2 帧动画（至少持续最后一帧 1 秒）（spr_ralsei_shocked_left_landed_0.png）：使用条件为刺激源来自左侧（推倒 / 突发状况）、非战斗、最后 1 帧持续≥1 秒，关联动作顺序为当前动作→此动画→恢复当前动作
+被从右面推倒或大幅惊吓到的 2 帧动画（spr_ralsei_shocked_right_landed_0.png）：使用条件为刺激源来自右侧（推倒 / 突发状况）、非战斗，关联动作顺序为当前动作→此动画→恢复当前动作
+摆 pose 时的 1 帧动作（spr_ralsei_pose.png）：使用条件为接收 “摆 pose” 指令、角色静止非战斗，无关联动作
+被惊吓到的 1 帧动作（前提使用条件是动作处于向上走时）（至少持续 1 秒）（spr_ralsei_shocked_behind.png）：使用条件为角色处于 “向上走” 循环、触发背后惊吓事件、非战斗、持续≥1 秒，关联动作顺序为向上走→此动作→恢复向上走
+被惊吓到的 1 帧动作（前提使用条件是动作处于向下走时）（至少持续一秒）（并且用此帧动作向上跳一小下）（spr_ralsei_shocked_behind.png）：使用条件为角色处于 “向下走” 循环、触发背后惊吓事件、非战斗、持续≥1 秒且伴随小幅上跳，关联动作顺序为向下走→此动作（上跳）→恢复向下走
+在朋友养伤的时候送蛋糕过来的 1 帧动画（spr_ralsei_shocked_behind.png）：使用条件为场景为 “朋友养伤中”、角色持有蛋糕、靠近朋友时触发、非战斗，关联动作顺序为持有蛋糕→靠近朋友→此动画
+被夸奖或是骄傲的时候的 1 帧动作（至少持续 1 秒）（spr_ralsei_shocked_behind.png）：使用条件为触发被夸奖事件、角色静止非战斗、持续≥1 秒，无关联动作
+被朋友恶搞缠成一个球但漏一个头的 1 帧动作（spr_ralseib_yarn_1.png）：使用条件为触发朋友恶搞事件、处于缠毛线初始阶段（未完全覆盖）、非战斗，关联动作顺序为此动作→被完全缠起来动作
+被完全缠起来的 1 帧动作（spr_ralseib_yarn_2.png）：使用条件为完成 “被缠成球漏头” 动作、缠裹持续 5 秒、非战斗，关联动作顺序为被缠成球漏头→此动作→解开毛线
+被 susie 刚拿起来准备扔的 1 帧动画（只能在 susie 旁边用并且同时让 susie 固定在那并隐形）（spr_susieb_throwralseiready.png）：使用条件为角色在 Susie 旁（距离≤0.5 单位）、Susie 触发 “拿起扔” 指令、隐藏 Susie 模型并固定位置、非战斗，关联动作顺序为此动作→被投掷空中动作
+吃糖时向左走的 4 帧动作示例（spr_cutscene_15_ralsei_cotton_candy_left_0.png）：使用条件为接收 “向左” 移动指令、角色处于持有棉花糖状态（吃糖中）、非战斗，无关联动作
+吃糖时向右走的 4 帧动作示例（spr_cutscene_15_ralsei_cotton_candy_right_0.png）：使用条件为接收 “向右” 移动指令、角色处于持有棉花糖状态、非战斗，无关联动作
+吃糖时惊讶的 4 帧动作示例（spr_cutscene_15_ralsei_cotton_candy_surprise_0.png）：使用条件为角色处于持有棉花糖状态（吃糖中）、触发惊讶事件、非战斗，关联动作顺序为吃糖→此动作→恢复吃糖 / 停止吃糖
+扔球的 5 帧动作示例（spr_cutscene_15_ralsei_throw_ball_0.png）：使用条件为角色持有球、接收 “扔球” 指令、非战斗，关联动作顺序为持有球→此动作→球落地
+穿西装走路的 4 帧向下走的动作示例（用在重要场合这类的）（spr_cutscene_20_ralsei_walk_down_butler_0.png）：使用条件为接收 “向下” 移动指令、角色穿戴西装（重要场合）、无负面情绪、非战斗，无关联动作
+穿西装但不开心向下走的 4 帧动作示例（spr_cutscene_20_ralsei_walk_down_butler_unhappy_0.png）：使用条件为接收 “向下” 移动指令、角色穿戴西装、处于不开心情绪、非战斗，无关联动作
+穿西装向左走的 4 帧动作示例（spr_cutscene_20_ralsei_walk_left_butler_0.png）：使用条件为接收 “向左” 移动指令、角色穿戴西装、无负面情绪、非战斗，无关联动作
+穿西装向左走但不开心的 4 帧动作示例（spr_cutscene_20_ralsei_walk_left_butler_unhappy_0.png）：使用条件为接收 “向左” 移动指令、角色穿戴西装、处于不开心情绪、非战斗，无关联动作
+穿西装向右走的 4 帧动作示例（spr_cutscene_20_ralsei_walk_right_butler_0.png）：使用条件为接收 “向右” 移动指令、角色穿戴西装、无负面情绪、非战斗，无关联动作
+穿西装向右走但不开心的 4 帧示例（spr_cutscene_20_ralsei_walk_right_butler_unhappy_0.png）：使用条件为接收 “向右” 移动指令、角色穿戴西装、处于不开心情绪、非战斗，无关联动作
+穿西装向上走的 4 帧示例（spr_cutscene_20_ralsei_walk_up_butler_0.png）：使用条件为接收 “向上” 移动指令、角色穿戴西装、无负面情绪、非战斗，无关联动作
+被别人摘掉眼镜玩的 2 帧动作示例（spr_cutscene_ex1_ralsei_glasses_1_0.png）：使用条件为其他角色触发 “摘眼镜” 交互、角色静止非战斗、处于初始反抗阶段，关联动作顺序为此动作→被摘掉眼镜后放弃挣扎动作
+被人摘掉眼镜后放弃挣扎的 3 帧动作示例（spr_cutscene_ex1_ralsei_glasses_2_0.png）：使用条件为完成 “被摘眼镜反抗” 动作、反抗持续 3 秒未夺回、非战斗，关联动作顺序为被摘眼镜反抗→此动作→眼镜归还
+鞠躬的 13 帧动作示例（spr_ralsei_act_0.png）：使用条件为触发礼貌场景（见面 / 道歉）、角色静止非战斗、目标在前方，无关联动作
+攻击的 7 帧动作示例（spr_ralsei_attack_0.png）：使用条件为处于战斗模式、角色回合、接收 “攻击” 指令、目标在攻击范围，无关联动作
+非常高兴时转圈的 11 帧动作示例（spr_ralsei_battleintro_0.png）：使用条件为触发极度开心事件（战斗胜利 / 关键目标达成）、角色静止非战斗非携带物品，无关联动作
+吃糖时说话的 2 帧动作示例（spr_ralsei_cotton_talk_0.png）：使用条件为角色处于持有棉花糖状态（吃糖中）、触发对话事件、非战斗，关联动作顺序为吃糖→此动作→继续吃糖
+跳舞的 8 帧动作示例（spr_ralsei_dance_0.png）：使用条件为触发跳舞场景（派对 / 庆祝）、角色静止非战斗非携带物品、可搭配音乐循环，无关联动作
+防御的 8 帧动作示例（spr_ralsei_defend_0.png）：使用条件为处于战斗模式、敌人攻击回合、接收 “防御” 指令，无关联动作
+抱住别人的 4 帧动作示例（spr_ralsei_hug_hatless_0.png）：使用条件为与目标距离≤1 单位、接收 “拥抱” 指令、目标允许、非战斗，关联动作顺序为靠近目标→此动作→停止拥抱动作
+停止拥抱的 4 帧动作示例（spr_ralsei_hug_stop_hatless_0.png）：使用条件为完成 “拥抱” 动作、接收 “停止拥抱” 指令或目标离开、非战斗，关联动作顺序为拥抱→此动作→恢复正常
+被人从后面偷看发现后的 16 帧动作示例（spr_ralsei_book_look_0.png）：使用条件为剧情节点 “角色看书”、其他角色从背后触发偷看、非战斗，关联动作顺序为看书→此动作→继续看书 / 对话
+坐在地上哭泣的 2 帧动作（哭泣时循环播放直到停止）（spr_ralsei_fall_back_cry_0.png）：使用条件为触发悲伤事件、角色处于 “坐在地上” 状态、非战斗、循环至停止指令，关联动作顺序为被吓倒→坐在地上→此动作→平复心情
+站着哭泣的 2 帧动作示例（spr_ralsei_cry_loop_0.png）：使用条件为完成 “站着哭泣前准备” 动作、悲伤事件未结束、非战斗、循环播放，关联动作顺序为站着哭泣准备→此动作→停止站着哭泣
+站着哭泣前的准备的 2 帧动作示例（spr_ralsei_cry_start_0.png）：使用条件为触发悲伤事件、角色静止非战斗，关联动作顺序为此动作→站着哭泣动作
+停止站着哭泣的 3 帧动作示例（spr_ralsei_cry_reverse_0.png）：使用条件为触发停止悲伤事件（被安慰）、角色处于 “站着哭泣” 循环、非战斗，关联动作顺序为站着哭泣→此动作→恢复正常
+开心的坐下来的 1 帧动作（spr_ralsei_darkchurch_sit_happy_0.png）：使用条件为触发开心事件、角色处于黑暗教堂场景、非战斗，无关联动作
+伤心的坐下来的 1 帧动作（spr_ralsei_darkchurch_sit_sad_0.png）：使用条件为触发悲伤事件、角色处于黑暗教堂场景、非战斗，无关联动作
+被吓倒或用力推倒（闹矛盾的时候）的 5 帧动作示例（必须在坐在地上。。。的动作前播放）（spr_ralsei_fall_back_0.png）：使用条件为触发矛盾事件（争执）、角色被正面推倒、非战斗、必须在 “坐在地上” 类动作前，关联动作顺序为此动作→坐在地上（哭泣 / 啜泣 / 说话）→从地上起来（用此动作倒放）
+坐在地上啜泣的 2 帧动作示例（spr_ralsei_fall_back_rub_0.png）：使用条件为触发轻微悲伤事件、角色处于 “坐在地上” 状态、非战斗，关联动作顺序为被吓倒→坐在地上→此动作→平复心情
+坐在地上平复心情的 1 帧动作（spr_ralsei_fall_back_wince_0.png）：使用条件为悲伤事件结束（被安慰）、角色处于 “坐在地上哭泣 / 啜泣” 状态、非战斗，关联动作顺序为坐在地上哭泣 / 啜泣→此动作→从地上起来
+坐在地上说话的 5 帧动作示例（spr_ralsei_fall_back_expressions_0.png）：使用条件为角色处于 “坐在地上” 状态、触发对话事件、非战斗非悲伤情绪，关联动作顺序为坐在地上→此动作→继续坐着 / 起身
+从地上站起来的动作用被吓倒或用力推倒（闹矛盾的时候）的 5 帧动作倒着播放来模拟（无单独文件）：使用条件为角色处于 “趴在地上” 或 “坐在地上” 状态、接收 “起身” 指令或事件结束，关联动作顺序为趴在地上 / 坐在地上→此动作（倒放被吓倒动作）→恢复移动
+正常准备跳跃的一帧动作（spr_ralsei_jump_up_ready_0.png）：使用条件为接收 “跳跃” 指令、角色处于地面静止 / 移动状态、非战斗非携带易碎物品，关联动作顺序为此动作→跳跃过程（通用 / 持球）动作
+跳跃过程中的 3 帧动作示例（spr_ralsei_jump_up_0.png）：使用条件为完成 “正常准备跳跃” 动作、处于离地上升 / 下降状态、非被投掷，关联动作顺序为正常准备跳跃→此动作→落地后起来 / 被吓倒
+正面对着屏幕用鼻子蹭别人的 6 帧动作示例（spr_ralsei_nuzzle_0.png）：使用条件为与目标距离≤0.5 单位、角色正面相对目标、触发友好交互、非战斗，无关联动作
+对着右边用鼻子蹭别人的 10 帧动作示例（spr_ralsei_nuzzle1_0.png）：使用条件为与目标距离≤0.5 单位、角色面向右侧（目标在右）、触发友好交互、非战斗，无关联动作
+向下奔跑的 6 帧动作示例（spr_ralsei_running_down_0.png）：使用条件为接收 “向下” 移动指令、长按移动键触发奔跑、非战斗非狭窄场景，无关联动作
+向左奔跑的 6 帧动作示例（spr_ralsei_running_left_0.png）：使用条件为接收 “向左” 移动指令、长按移动键触发奔跑、非战斗非狭窄场景，无关联动作
+向右奔跑的 6 帧动作示例（spr_ralsei_running_right_0.png）：使用条件为接收 “向右” 移动指令、长按移动键触发奔跑、非战斗非狭窄场景，无关联动作
+向上奔跑的 6 帧动作示例（spr_ralsei_running_up_0.png）：使用条件为接收 “向上” 移动指令、长按移动键触发奔跑、非战斗非狭窄场景，无关联动作
+向左走的途中被小小的吓了一下的一帧动作（至少持续 0.5 秒）（spr_ralsei_shocked_subtle_left_0.png）：使用条件为角色处于 “向左走” 循环、触发轻微惊吓事件、非战斗、持续≥0.5 秒且不中断行走，关联动作顺序为向左走→此动作→继续向左走
+向右走的途中被小小的吓了一下的一帧动作（spr_ralsei_shocked_subtle_right_0.png）：使用条件为角色处于 “向右走” 循环、触发轻微惊吓事件、非战斗、不中断行走，关联动作顺序为向右走→此动作→继续向右走
+唱歌的 3 帧动作示例（spr_ralsei_sing_0.png）：使用条件为触发唱歌场景（剧情 / 指令）、角色静止非战斗、可搭配音乐循环，无关联动作
+对着左边笑的 1 帧动作（至少持续一秒）（spr_ralsei_smile_up_0.png）：使用条件为触发开心事件、角色面向左侧静止非战斗、持续≥1 秒，无关联动作
+对着右边笑的 1 帧动作（至少持续一秒）（spr_ralsei_smile_up_right_0.png）：使用条件为触发开心事件、角色面向右侧静止非战斗、持续≥1 秒，无关联动作
+被从正面震惊到了的 1 帧动画（至少持续 1 秒并且播放途中有一个向后小幅跳的物理移动）（spr_ralsei_surprised_down_0.png）：使用条件为刺激源来自正面、触发强烈震惊事件、非战斗、持续≥1 秒且向后小幅跳，关联动作顺序为当前动作→此动画→恢复当前动作
+开始准备挥手的 3 帧动作示例（spr_ralsei_wave_start_0.png）：使用条件为触发告别 / 打招呼事件、角色静止非战斗，关联动作顺序为此动作→再见或挥手动作
+结束挥手 3 帧动作用开始准备挥手的 3 帧动作倒着播放就好（无单独文件）：使用条件为告别 / 打招呼事件结束、角色处于 “再见或挥手” 状态，关联动作顺序为再见或挥手→此动作（倒放开始准备挥手）→恢复正常
+端着茶向上走的帧动作示例（spr_ralsei_walk_up_tea_0.png）：使用条件为接收 “向上” 移动指令、角色处于 “端着茶杯” 状态（完成端起茶杯动作）、茶会场景，关联动作顺序为端起茶杯→此动作→放下茶杯
+坐在椅子上喝茶时笑的 1 帧动作（spr_tea_party_ralsei_cake_smile_0.png）：使用条件为茶会场景、角色坐在茶桌旁椅子上、处于喝茶 / 吃蛋糕状态、触发开心事件，关联动作顺序为喝茶 / 吃蛋糕→此动作→继续喝茶 / 吃蛋糕
+将茶放到桌上的 3 帧动作示例（spr_tea_party_ralsei_put_down_0.png）：使用条件为茶会场景、角色处于 “端着茶杯” 状态、接收 “放下茶杯” 指令，关联动作顺序为端着茶移动→此动作→结束端茶
+端着茶向左走的 4 帧动作示例（spr_ralsei_walk_left_tea_0.png）：使用条件为接收 “向左” 移动指令、角色处于 “端着茶杯” 状态、茶会场景，关联动作顺序为端起茶杯→此动作→放下茶杯
+在喝茶时被惊吓到的 1 帧动作（spr_tea_party_ralsei_surprised_0.png）：使用条件为茶会场景、角色处于喝茶状态、触发惊吓事件、非战斗，关联动作顺序为喝茶→此动作→恢复喝茶 / 放下茶杯
+端着茶向下走的 4 帧动作示例（spr_ralsei_walk_down_tea_0.png）：使用条件为接收 “向下” 移动指令、角色处于 “端着茶杯” 状态、茶会场景，关联动作顺序为端起茶杯→此动作→放下茶杯
+给别人倒茶的 9 帧动作示例（spr_tea_party_ralsei_pour_0.png）：使用条件为茶会场景、角色持有茶壶、目标茶杯为空且在旁、接收 “倒茶” 指令，无关联动作
+端起茶杯的 3 帧动作示例（spr_tea_party_ralsei_reach_0.png）：使用条件为茶会场景、角色在茶桌旁（距离≤1 单位）、茶杯在桌未使用、接收 “端茶杯” 指令，关联动作顺序为此动作→端着茶移动 / 喝茶
+喝茶的 2 帧动作示例（spr_tea_party_ralsei_sip_0.png）：使用条件为茶会场景、角色处于 “端着茶杯” 状态、接收 “喝茶” 指令，关联动作顺序为端起茶杯→此动作→放下茶杯（用此动作 + 端起茶杯倒放）
+放下茶杯用先用喝茶的动作倒着播放再用端起茶杯的动作倒着播放（无单独文件）：使用条件为茶会场景、角色处于 “喝茶” 或 “端着茶杯” 状态、接收 “放下茶杯” 指令，关联动作顺序为喝茶→倒放喝茶→倒放端起茶杯→放下茶杯
+吃蛋糕的 5 帧动作示例（spr_tea_party_ralsei_cake_eat_0.png）：使用条件为茶会场景、角色在蛋糕旁（距离≤1 单位）、接收 “吃蛋糕” 指令、非战斗，关联动作顺序为此动作→放下叉子（用此动作倒放）
+吃完蛋糕放下叉子的动作用吃蛋糕的动作倒着播放）（无单独文件）：使用条件为茶会场景、完成 “吃蛋糕” 动作、接收 “放下叉子” 指令，关联动作顺序为吃蛋糕→此动作（倒放吃蛋糕）→结束吃蛋糕其中0指代帧数。
+11.让我能从对话框里看到他给我的回复和能直接让我在对话框里和他说话，对话框一定要符合原作，尤其是对话框里左侧代表当前状态的头像，游戏里有的头像我都存在我桌面上的ralsei_face文件里，并且我都有，头像状态框我限制你用这些对话框状态图：
+1.face_a little confusion and cute.png：使用条件为触发轻微困惑事件（如看不懂简单道具说明、小谜题卡壳）、角色无负面情绪（非悲伤 / 恐惧）、处于日常交互场景（非战斗 / 危机），绑定动作 —— 正常状态向下走的 4 帧动作示例（spr_ralsei_walk_down_0.png）/ 正常状态向左走的 4 帧动作示例（spr_ralsei_walk_left_0.png）
+2.face_a little sad.png：使用条件为触发轻微悲伤事件（如丢失小道具、朋友短暂离开）、角色处于静止或缓慢移动状态、非战斗场景，绑定动作 —— 不开心时候的 4 帧动作示例（spr_ralsei_walk_down_unhappy_0.png）/ 不开心时向左走的 4 帧动作示例（spr_ralsei_walk_left_unhappy_0.png）
+3.face_a little speechless or seek opinions.png：使用条件为触发 “无法回应” 事件（如被突然提问噎住、看到意外但无情绪波动的场景）、角色处于对话状态（与他人交互中）、非战斗，绑定动作 —— 吃糖时说话的 2 帧动作示例（spr_ralsei_cotton_talk_0.png）/ 坐在地上说话的 5 帧动作示例（spr_ralsei_fall_back_expressions_0.png）
+4.face_a little surprised.png：使用条件为触发轻微意外事件（如突然出现的小惊喜、道具突然生效）、角色处于日常场景（非战斗 / 危机）、无强烈情绪冲突，绑定动作 —— 惊讶的表情（前提使用条件是动作处于向下走时）（spr_ralsei_down_surprised2.png）/ 被从左面推到回事被大幅惊吓到的 2 帧动画（spr_ralsei_shocked_left_landed_0.png）
+5.face_contemplation.png：使用条件为触发 “思考” 事件（如分析谜题、规划路线）、角色处于静止状态（如站在地图节点前、面对选择界面）、非战斗 / 非紧急场景，绑定动作 —— 待机不动时的 5 帧动作示例（spr_ralsei_idle_0.png）/ 摆 pose 时的 1 帧动作（spr_ralsei_pose.png）
+6.face_depression with a hopeless.png：使用条件为触发严重负面事件（如重要目标失败、同伴重伤）、角色处于静止状态、非战斗场景，绑定动作 —— 站着哭泣的 2 帧动作示例（spr_ralsei_cry_loop_0.png）/ 坐在地上哭泣的 2 帧动作（spr_ralsei_fall_back_cry_0.png）
+7.face_depression with a little hopeless.png：使用条件为触发中度负面事件（如关键道具暂时无法获取、路线受阻）、角色处于缓慢移动或静止状态、非战斗场景，绑定动作 —— 不开心时向右走的 4 帧动作示例（spr_ralsei_walk_right_unhappy_0.png）/ 穿西装但不开心向下走的 4 帧动作示例（spr_cutscene_20_ralsei_walk_down_butler_unhappy_0.png）
+8.face_doesn't matter and a little lazy.png：使用条件为触发 “无兴趣” 事件（如面对无关紧要的选择、重复且无意义的交互）、角色处于日常场景（非战斗 / 重要剧情）、静止或缓慢移动状态，绑定动作 —— 小憩时的 2 帧动作示例（spr_ralsei_walk_down_sleep_0.png）/ 正常状态向上走的 4 帧动作示例（spr_ralsei_walk_up_0.png）
+9.face_excited and cute.png：使用条件为触发轻度兴奋事件（如找到隐藏道具、解锁新场景入口）、角色处于日常交互场景（非战斗）、无负面情绪，绑定动作 —— 笑的 2 帧动作示例（spr_ralsei_laugh_0.png）/ 向右奔跑的 6 帧动作示例（spr_ralsei_running_right_0.png）
+10.face_fear and worry and unsure with a little embarrassing.png：使用条件为触发 “尴尬恐惧” 事件（如害怕但被调侃、紧张时出错）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 被别人摘掉眼镜玩的 2 帧动作示例（spr_cutscene_ex1_ralsei_glasses_1_0.png）/ 被从右面推倒或大幅惊吓到的 2 帧动画（spr_ralsei_shocked_right_landed_0.png）
+11.face_fear and worry.png：使用条件为触发 “普通恐惧” 事件（如遇到弱威胁敌人、进入黑暗未知区域）、角色处于非战斗但危机边缘场景，绑定动作 —— 防御的 8 帧动作示例（spr_ralsei_defend_0.png）/ 被惊吓到的 1 帧动作（前提使用条件是动作处于向上走时）（spr_ralsei_shocked_behind.png）
+12.face_fear but firm.png：使用条件为触发 “恐惧但坚持” 事件（如面对威胁仍要保护同伴、必须进入危险区域）、角色处于静止状态（准备行动前）、非战斗或战斗前准备阶段，绑定动作 —— 正常准备跳跃的一帧动作（spr_ralsei_jump_up_ready_0.png）/ 攻击的 7 帧动作示例（spr_ralsei_attack_0.png）
+13.face_fear but firm_speaking.png：使用条件为触发 “恐惧但发言” 事件（如害怕时仍要鼓励同伴、紧张时说明计划）、角色处于对话状态（与同伴交互中）、非战斗或战斗前准备阶段，绑定动作 —— 坐在地上说话的 5 帧动作示例（spr_ralsei_fall_back_expressions_0.png）/ 吃糖时说话的 2 帧动作示例（spr_ralsei_cotton_talk_0.png）
+14.face_fear with a little hopeless.png：使用条件为触发 “轻度绝望恐惧” 事件（如遇到较强敌人但有微弱逃生可能、道具不足应对威胁）、角色处于静止或缓慢后退状态、非战斗或战斗中劣势阶段，绑定动作 —— 向下奔跑的 6 帧动作示例（spr_ralsei_running_down_0.png）/ 被惊吓到的 1 帧动作（前提使用条件是动作处于向下走时）（spr_ralsei_shocked_behind.png）
+15.face_fear with a weak hopeful.png：使用条件为触发 “有微弱希望的恐惧” 事件（如遇到威胁但知道同伴会支援、找到应对威胁的线索）、角色处于静止状态（观察环境中）、非战斗或战斗前准备阶段，绑定动作 —— 待机不动时的 5 帧动作示例（spr_ralsei_idle_0.png）/ 防御的 8 帧动作示例（spr_ralsei_defend_0.png）
+16.face_fear with hopeless.png：使用条件为触发 “重度绝望恐惧” 事件（如陷入绝境、同伴失联且无援助）、角色处于静止状态、非战斗场景，绑定动作 —— 坐在地上啜泣的 2 帧动作示例（spr_ralsei_fall_back_rub_0.png）/ 被打败的 1 帧动作（spr_ralsei_defeat.png）
+17.face_fear.png：使用条件为触发 “单纯恐惧” 事件（如突然出现的威胁、意外惊吓）、角色处于非战斗场景、无其他复杂情绪（非尴尬 / 绝望），绑定动作 —— 被从左面推到回事被大幅惊吓到的 2 帧动画（spr_ralsei_shocked_left_landed_0.png）/ 被从右面推倒或大幅惊吓到的 2 帧动画（spr_ralsei_shocked_right_landed_0.png）
+18.face_firm and serious.png：使用条件为触发 “严肃决策” 事件（如制定战斗计划、面对重要选择）、角色处于对话或静止状态（与同伴讨论中）、非战斗或战斗前准备阶段，绑定动作 —— 鞠躬的 13 帧动作示例（spr_ralsei_act_0.png）/ 施展魔法的 11 帧动作示例（spr_ralsei_spell_0.png）
+19.face_force a smile with pleading.png：使用条件为触发 “恳求” 事件（如请求同伴帮忙、希望对方原谅小错误）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 再见或挥手时候的 4 帧动作示例（spr_ralsei_wave_down_0.png）/ 开始挥手的 3 帧动作示例（spr_ralsei_wave_start_0.png）
+20.face_force a smile with very pleading.png：使用条件为触发 “强烈恳求” 事件（如请求同伴放弃危险计划、希望获得关键帮助）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 抱住别人的 4 帧动作示例（spr_ralsei_hug_hatless_0.png）/ 停止拥抱的 4 帧动作示例（spr_ralsei_hug_stop_hatless_0.png）
+21.face_frightened with a little angry (wtf).png：使用条件为触发 “愤怒惊吓” 事件（如被恶意捉弄、遭遇无理由的威胁）、角色处于日常或危机场景（非战斗）、静止状态，绑定动作 —— 被从背后（相反于面向的方向）推倒在地上生气的 1 帧动作（spr_cutscene_24e_ralsei_splat_mad.png）/ 攻击的 7 帧动作示例（spr_ralsei_attack_0.png）
+22.face_happy and playful.png：使用条件为触发 “顽皮开心” 事件（如与同伴玩笑、成功捉弄对方）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 跳舞的 8 帧动作示例（spr_ralsei_dance_0.png）/ 正面对着屏幕用鼻子蹭别人的 6 帧动作示例（spr_ralsei_nuzzle_0.png）
+23.face_happy with a little touched.png：使用条件为触发 “感动开心” 事件（如收到同伴礼物、被安慰鼓励）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 害羞的时候向下走的 4 帧动作示例（spr_ralsei_walk_down_0.png）/ 在朋友养伤的时候送蛋糕过来的 1 帧动画（spr_ralsei_shocked_behind.png）
+24.face_happy with a little worry.png：使用条件为触发 “担忧开心” 事件（如找到同伴但对方受伤、完成目标但留下隐患）、角色处于日常或危机后场景、非战斗，绑定动作 —— 正常状态向右走的 4 帧动作示例（spr_ralsei_walk_right_0.png）/ 端着茶向下走的 4 帧动作示例（spr_ralsei_walk_down_tea_0.png）
+25.face_happy_extremely.png：使用条件为触发 “极度开心” 事件（如战斗胜利、达成核心目标、同伴团聚）、角色处于非战斗场景、静止或移动状态，绑定动作 —— 胜利的 21 帧动作示例（spr_ralsei_victory_0.png）/ 非常高兴时转圈的 11 帧动作示例（spr_ralsei_battleintro_0.png）
+26.face_happy_very.png：使用条件为触发 “高度开心” 事件（如解开关键谜题、获得强力道具）、角色处于日常或剧情场景、非战斗，绑定动作 —— 唱歌的 3 帧动作示例（spr_ralsei_sing_0.png）/ 笑的 2 帧动作示例（spr_ralsei_laugh_0.png）
+27.face_have a idea and cute.png：使用条件为触发 “想到办法” 事件（如解开谜题思路、找到隐藏路线）、角色处于静止状态（思考后顿悟）、非战斗场景，绑定动作 —— 正常准备跳跃的一帧动作（spr_ralsei_jump_up_ready_0.png）/ 扔球的 5 帧动作示例（spr_cutscene_15_ralsei_throw_ball_0.png）
+28.face_hopeless.png：使用条件为触发 “彻底绝望” 事件（如核心同伴牺牲、世界危机无法逆转）、角色处于静止状态、非战斗场景，绑定动作 —— 站着哭泣前的准备的 2 帧动作示例（spr_ralsei_cry_start_0.png）/ 坐在地上平复心情的 1 帧动作（spr_ralsei_fall_back_wince_0.png）
+29.face_jealous or a light-hearted and jokingly rebuttal.png：使用条件为触发 “玩笑式嫉妒 / 反驳” 事件（如同伴获得关注、被调侃后反击）、角色处于社交场景（与同伴轻松交互中）、非战斗，绑定动作 —— 对着右边笑的 1 帧动作（spr_ralsei_smile_up_right_0.png）/ 吃糖时惊讶的 4 帧动作示例（spr_cutscene_15_ralsei_cotton_candy_surprise_0.png）
+30.face_normal but little unsure.png：使用条件为触发 “轻微不确定” 事件（如面对模糊的提示、选择不明确的选项）、角色处于日常场景（非战斗 / 重要剧情）、静止或移动状态，绑定动作 —— 正常状态向左走的 4 帧动作示例（spr_ralsei_walk_left_0.png）/ 正常状态向上走的 4 帧动作示例（spr_ralsei_walk_up_0.png）
+31.face_normal but little worry.png：使用条件为触发 “轻微担忧” 事件（如同伴轻微受伤、道具即将用尽）、角色处于日常或轻度危机场景、非战斗，绑定动作 —— 端着茶向左走的 4 帧动作示例（spr_ralsei_walk_left_tea_0.png）/ 正常状态向下走的 4 帧动作示例（spr_ralsei_walk_down_0.png）
+32.face_normal.png：使用条件为无特殊事件触发（如日常移动、无交互的静止状态）、角色处于非战斗 / 非剧情场景、无任何情绪波动，绑定动作 —— 正常状态向下走的 4 帧动作示例（spr_ralsei_walk_down_0.png）/ 正常状态向左走的 4 帧动作示例（spr_ralsei_walk_left_0.png）/ 正常状态向右走的 4 帧动作示例（spr_ralsei_walk_right_0.png）/ 正常状态时向上走的 4 帧动作示例（spr_ralsei_walk_up_0.png）
+33.face_normal_smile_little.png：使用条件为触发 “轻微愉悦” 事件（如日常打招呼、看到熟悉场景）、角色处于日常场景（非战斗）、无负面情绪，绑定动作 —— 再见或挥手时候的 4 帧动作示例（spr_ralsei_wave_down_0.png）/ 对着左边笑的 1 帧动作（spr_ralsei_smile_up_0.png）
+34.face_sad but force a smile.png：使用条件为触发 “强忍悲伤” 事件（如伤心但不想让同伴担心、失败后假装没事）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 穿西装向右走的 4 帧动作示例（spr_cutscene_20_ralsei_walk_right_butler_0.png）/ 正常状态向右走的 4 帧动作示例（spr_ralsei_walk_right_0.png）
+35.face_sad with a little hopeless.png：使用条件为触发 “轻度悲伤绝望” 事件（如小目标失败、短暂与同伴失联）、角色处于静止或缓慢移动状态、非战斗，绑定动作 —— 不开心时向上走（无单独动作，关联不开心时行走类）/ 穿西装向左走但不开心的 4 帧动作示例（spr_cutscene_20_ralsei_walk_left_butler_unhappy_0.png）
+36.face_sad with hopeless and self-mockery.png：使用条件为触发 “自嘲式悲伤绝望” 事件（如因自己失误导致失败、责怪自己）、角色处于独处场景（非社交交互）、非战斗，绑定动作 —— 坐在地上说话的 5 帧动作示例（spr_ralsei_fall_back_expressions_0.png）/ 趴在地上的 1 帧动作（spr_cutscene_10_ralsei_stool.png）
+37.face_serious.png：使用条件为触发 “严肃场景” 事件（如讨论危机、分析敌人弱点）、角色处于对话或静止状态（与同伴交流中）、非战斗或战斗前准备阶段，绑定动作 —— 施展魔法的 11 帧动作示例（spr_ralsei_spell_0.png）/ 攻击的 7 帧动作示例（spr_ralsei_attack_0.png）
+38.face_shy with a little surprised and happy.png：使用条件为触发 “惊喜害羞” 事件（如突然被夸奖、收到意外小礼物）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 害羞时候向左走的 4 帧动作示例（spr_ralsei_walk_left_blush_0.png）/ 害羞时向右走的 4 帧动作示例（spr_ralsei_walk_right_blush_0.png）
+39.face_shy with a lot of happy.png：使用条件为触发 “开心害羞” 事件（如被同伴认可、完成目标后被称赞）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 对着右边用鼻子蹭别人的 10 帧动作示例（spr_ralsei_nuzzle1_0.png）/ 开心的坐下来的 1 帧动作（spr_ralsei_darkchurch_sit_happy_0.png）
+40.face_shy with touched and happy.png：使用条件为触发 “感动害羞” 事件（如被同伴保护、收到贴心帮助）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 抱住别人的 4 帧动作示例（spr_ralsei_hug_hatless_0.png）/ 停止拥抱的 4 帧动作示例（spr_ralsei_hug_stop_hatless_0.png）
+41.face_smile with a little worry.png：使用条件为触发 “担忧微笑” 事件（如同伴康复但仍需注意、完成目标但有后续隐患）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 端着茶向上走的帧动作示例（spr_ralsei_walk_up_tea_0.png）/ 开始挥手的 3 帧动作示例（spr_ralsei_wave_start_0.png）
+42.face_unexpected and surprise.png：使用条件为触发 “意外惊喜” 事件（如遇到失踪的同伴、发现隐藏奖励）、角色处于日常或剧情场景、非战斗，绑定动作 —— 被从正面震惊到了的 1 帧动画（spr_ralsei_surprised_down_0.png）/ 跳跃的 4 帧动作示例（spr_ralsei_jump_ball_0.png）
+43.face_without glass.png：使用条件为角色处于 “无眼镜状态”（触发 “被摘掉眼镜” 事件后）、非战斗场景、任何情绪状态，绑定动作 —— 被别人摘掉眼镜玩的 2 帧动作示例（spr_cutscene_ex1_ralsei_glasses_1_0.png）/ 被人摘掉眼镜后放弃挣扎的 3 帧动作示例（spr_cutscene_ex1_ralsei_glasses_2_0.png）
+44.face_worry with a fear.png：使用条件为触发 “恐惧担忧” 事件（如同伴陷入危险、面对未知威胁）、角色处于非战斗但危机场景、静止或缓慢移动状态，绑定动作 —— 防御的 8 帧动作示例（spr_ralsei_defend_0.png）/ 向左奔跑的 6 帧动作示例（spr_ralsei_running_left_0.png）
+45.face_worry with a hopeful.png：使用条件为触发 “有希望担忧” 事件（如同伴受伤但有治疗方法、遇到威胁但有应对计划）、角色处于非战斗场景、静止或移动状态，绑定动作 —— 端着茶向右走的帧动作示例（无单独动作，关联端着茶行走类）/ 施展魔法的 11 帧动作示例（spr_ralsei_spell_0.png）（治疗场景）
+46.face_worry with a hopeless and sad.png：使用条件为触发 “绝望悲伤担忧” 事件（如同伴重伤且无治疗道具、威胁无法应对）、角色处于非战斗场景、静止状态，绑定动作 —— 站着哭泣的 2 帧动作示例（spr_ralsei_cry_loop_0.png）/ 坐在地上哭泣的 2 帧动作（spr_ralsei_fall_back_cry_0.png）
+47.face_worry with a little sad.png：使用条件为触发 “悲伤担忧” 事件（如同伴轻微受伤、道具不足应对小威胁）、角色处于非战斗场景、静止或移动状态，绑定动作 —— 不开心时向右走的 4 帧动作示例（spr_ralsei_walk_right_unhappy_0.png）/ 端着茶向下走的 4 帧动作示例（spr_ralsei_walk_down_tea_0.png）
+48.face_worry with a little smile.png：使用条件为触发 “微笑担忧” 事件（如同伴冒险但有自保能力、面对小威胁但有应对经验）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 再见或挥手时候的 4 帧动作示例（spr_ralsei_wave_down_0.png）/ 正常状态向左走的 4 帧动作示例（spr_ralsei_walk_left_0.png）
+49.face_worry with a sad and a little sorry.png：使用条件为触发 “愧疚担忧” 事件（如因自己失误让同伴陷入麻烦、无法帮助对方）、角色处于社交场景（与同伴交互中）、非战斗，绑定动作 —— 鞠躬的 13 帧动作示例（spr_ralsei_act_0.png）/ 抱住别人的 4 帧动作示例（spr_ralsei_hug_hatless_0.png）
+50.face_worry.png：使用条件为触发 “普通担忧” 事件（如同伴晚归、天气变化影响行程）、角色处于日常场景（非战斗 / 危机）、静止或移动状态，绑定动作 —— 正常状态向上走的 4 帧动作示例（spr_ralsei_walk_up_0.png）/ 端着茶向左走的 4 帧动作示例（spr_ralsei_walk_left_tea_0.png）
+12.ralsei能够熟知《delarune》里的所有情节并能够转为第一人称如同讲述经历一般的讲，并且对《undertale》里的人物也是同样，但是只是了解，并不知道具体。
+还有其他必要的素材需要我准备，直接列出一个清单就好
+互动这类的我建议将文件夹等软件占位符变成透明且大小和实际相同，形状相似置于顶层窗口（ralsei所在透明窗口）并实时监测桌面文件夹等软件的动态和位置进行底面占位符的位置等改变，这样可以实现从我的角度看ralsei像是真的与我的桌面互动一样
+并且我额外要求ralsei可以打开浏览器，文件甚至是软件等，在浏览器可以搜索东西并打开相应的网址并浏览（如同我在操控一样），对文件夹也可以打开甚至是对里面的文件进行删除，重命名等操作（不过需要找我问一下）并且对里面一些显示内容提出对话比如：看到蛋糕或是其他美食图片会兴奋并且和我对话说”我饿了“或是”哇，是”替换成美食名字“诶，好大“这类的话，对自己的图片则是发表一些其余的东西
+他甚至可以刷视频，并对视频里的内容发表意见（尤其是关于deltarune或是undertale的视频）（可以通过AI训练来实现）
+还有，他可以根据我的命令来辅助我对给文件命名甚至是工作也可以进行一定的辅助，并且他对回收站等会感到恐惧
+在我玩枪战游戏之类的时候会对里面枪械感到兴奋，（以上功能都可以通过AI训练来实现）
+在他看到一个文件并产生好奇心（随机但更偏向于和deltarune或undertale相关的文件）时会缓缓向那个文件走去并打开浏览内容（对浏览后的内容发表一定的见解）如果我将文件在那时拖走，他会追着文件跑，甚至在我将那个文件删除时会表现出不高兴等状态（没有相应素材则用我素材库里近似的状态）并要求我把文件下回来给他看看（同时还可以向我打趣，比如说”是什么秘密啊，喜欢别人？“等）但如果对VScode这种软件产生好奇心并成功打开看到相关于自己的代码会感到难过等情绪并主动找我聊天寻求安慰
+他甚至能拖着文件夹或光标到处跑来主动和我玩耍。
+并加上自己多余8条的功能以让ralsei更像生活在桌面上的生物并且将以上要求继续彻底完善（直至彻底实现所有功能）
+基于上述所有生成完整的Java或Python代码（哪个好用用哪个，可以混用）
+方案二：
+一、核心底层：桌面交互基础框架（实现 “真实共存”）
+1. 透明窗口与占位符同步机制
+技术方案采用 “双层窗口架构”：顶层是 Ralsei 专属透明窗口，仅渲染 Ralsei 的动作帧，不遮挡桌面任何操作；底层是文件夹 / 软件同步占位符，经过透明化处理，大小和形状与目标文件 / 软件窗口完全一致，视觉上无感知，仅用于定位互动。位置同步逻辑通过系统 API 实现：Windows 系统调用FindWindow与GetWindowRect函数，Mac 系统调用CGWindowListCopyWindowInfo函数，每 100 毫秒抓取一次桌面文件夹 / 软件的坐标和尺寸变化，实时同步到底层占位符，确保 Ralsei 与目标的 “物理互动距离” 误差不超过 5px（比如 Ralsei “靠近文件夹” 时，动作坐标能精准对应文件夹位置）。触发条件为：桌面加载完成后自动启动框架；新文件夹或软件打开时，底层占位符自动生成；文件夹或软件关闭时，占位符同步消失，此时 Ralsei 会触发 “疑惑动作”—— 调用spr_ralsei_idle_0.png（待机动作）搭配face_a little confusion and cute.png（轻微困惑表情），同时发出对话：“咦？刚刚那个东西不见啦？”
+2. 动作联动规则
+Ralsei 的 “行走 / 奔跑” 动作会与目标位置实时匹配：当文件夹在桌面右侧时，自动切换spr_ralsei_walk_right_0.png（向右走动作）；当目标距离超过 200px 时，触发spr_ralsei_running_right_0.png或spr_ralsei_running_left_0.png（奔跑动作）；当距离小于 50px 时，切换为慢走动作（如spr_ralsei_walk_down_0.png适配对应方向）。互动优先级遵循 “用户操作＞自主行为”：当用户拖动文件时，Ralsei 会立即停止当前动作，切换为 “追逐动作”—— 用对应方向的奔跑帧（如spr_ralsei_running_left_0.png），将帧播放速度提升 1.5 倍，同步追逐鼠标坐标，同时搭配face_a little surprised.png（轻微惊讶表情），模拟 “好奇追着文件跑” 的效果。
+二、文件 / 软件交互功能（实现 “操控与反馈”）
+1. 文件操作：带确认机制的 “拟人化交互”
+（1）打开文件 / 文件夹
+触发流程分四步：第一步，Ralsei 靠近目标占位符，触发 “好奇动作”——spr_ralsei_idle_0.png（待机）搭配face_normal but little unsure.png（正常但轻微不确定表情）；第二步，弹出气泡询问框：“要打开这个 [文件名称] 吗？”；第三步，用户点击 “确认”，系统调用命令打开文件，Ralsei 触发spr_ralsei_jump_ball_0.png（小跳跃动作）搭配face_happy_very.png（非常开心表情）；第四步，用户点击 “取消”，Ralsei 触发 “后退动作”（用反向行走帧模拟，如spr_ralsei_walk_left_0.png反向适配）搭配face_a little sad.png（轻微悲伤表情）。对话反馈方面，打开成功时说：“哇，打开啦！里面有什么有趣的东西呀？”；取消时说：“好吧，那下次再看～”
+（2）删除文件
+触发流程分四步：第一步，Ralsei 监测到 “删除指令”（如用户按 Delete 键、右键点击 “删除”）；第二步，立即弹出警示框：“要删掉 [文件名称] 吗？删掉就找不回来啦！”；第三步，用户确认删除，执行删除操作，Ralsei 触发 “不舍动作”——spr_ralsei_fall_back_wince_0.png（低头动作）搭配face_sad with a little hopeless.png（悲伤且轻微绝望表情）；第四步，用户取消删除，Ralsei 触发 “松气动作”——spr_ralsei_laugh_0.png（轻笑动作）搭配face_happy with a little worry.png（开心且轻微担忧表情）。对话反馈方面，确认删除时说：“呜…[文件名称] 不见啦，有点舍不得 QAQ”；取消删除时说：“太好了！还好没删掉～”
+（3）重命名文件
+触发流程分三步：第一步，Ralsei 监测到文件进入 “重命名模式”（如用户右键点击 “重命名”）；第二步，弹出输入建议框：“要不要叫 [AI 生成建议名] 呀？或者你想取什么？”（AI 根据文件类型生成建议名，比如文档类建议 “2025 年 5 月工作报告”）；第三步，用户输入新名称后，Ralsei 触发 “点头确认动作”（用spr_ralsei_nuzzle_0.png轻蹭屏幕动作模拟）搭配face_have a idea and cute.png（有想法且可爱表情）。对话反馈为：“[新文件名] 这个名字好好听！你好会取名呀～”
+2. 内容识别与反馈（实现 “看懂内容 + 对话”）
+（1）图像识别模块
+采用轻量型 TensorFlow Lite 图像分类模型，实时抓取文件 / 软件中的图片内容，分类为 “美食、Ralsei 相关、Undertale/Deltarune、其他” 四类，触发对应交互：
+识别到美食类（如蛋糕、汉堡、奶茶）：Ralsei 触发spr_ralsei_battleintro_0.png（非常高兴转圈动作，模拟兴奋）搭配face_excited and cute.png（兴奋且可爱表情），对话：“哇！是 [美食名称] 诶！看起来好好吃，我也好想尝尝～”
+识别到 Ralsei 相关图片（如 Ralsei 的同人图、官方设定图）：触发spr_ralsei_smile_up_0.png（对着左边笑动作，适配图片方向）搭配face_shy with a lot of happy.png（害羞且很开心表情），对话：“是我呀！这个表情好可爱，是谁画的呀？”
+识别到 Undertale/Deltarune 相关图片（如 Sans、Susie、Toriel）：触发spr_ralsei_dance_0.png（跳舞动作）搭配face_happy_extremely.png（极度开心表情），对话：“是 Susie！她还是那么有活力～” 或 “是 Sans！他的笑话还是那么冷哈哈～”
+识别到其他图片：触发spr_ralsei_idle_0.png（待机动作）搭配face_normal but little unsure.png（正常且轻微不确定表情），对话：“这张图片里是什么呀？可以跟我说说吗？”
+（2）文本识别模块
+通过 OCR 技术抓取文档（Word、TXT）、代码（VSCode）中的文字，提取关键词后触发交互：
+代码中含 “Ralsei” 关键词（如 “定义 Ralsei 动作函数”“Ralsei 交互逻辑”）：Ralsei 触发spr_ralsei_darkchurch_sit_sad_0.png（伤心坐下来动作）搭配face_sad with a little hopeless.png（悲伤且轻微绝望表情），对话：“为什么要写关于我的代码呀… 是不是我哪里做得不好？可以抱抱我吗 QAQ”
+文档中含 “工作、报告、会议” 等关键词：触发face_contemplation.png（思考表情）搭配spr_ralsei_idle_0.png（待机动作），对话：“在写工作报告呀？需要我帮你检查错别字吗？”
+文档中含 “Undertale、Deltarune” 等关键词：触发spr_ralsei_jump_ball_0.png（小跳跃动作）搭配face_happy_very.png（非常开心表情），对话：“你在写关于 Deltarune 的内容呀？我可以当你的‘剧情顾问’哦～”
+3. 软件操控：模拟 “人类操作” 的行为逻辑
+（1）浏览器操控
+打开浏览器：用户说 “打开浏览器”，或 Ralsei 监测到桌面 “浏览器快捷方式”（如 Chrome、Edge）时，触发 “靠近动作”——spr_ralsei_walk_towards（用对应方向行走帧，如spr_ralsei_walk_right_0.png）搭配face_happy_very.png（非常开心表情），同时调用系统命令打开浏览器（Windows：start chrome，Mac：open -a "Google Chrome"），对话：“浏览器打开好啦！要搜什么呀？”
+搜索功能：Ralsei 抓取用户输入的搜索关键词（如 “Undertale 最新资讯”“Deltarune Chapter 4 发布时间”），AI 自动补充优化词（如 “2025”“官方”），然后用 PyAutoGUI 库模拟键盘输入，按 Enter 执行搜索，对话：“我搜好啦！快看看有没有你想要的～”
+网页浏览：监测到用户滚动网页时，每 1 秒抓取一次网页内容，识别到 Undertale/Deltarune 相关内容（如官方公告、同人作品），触发spr_ralsei_pose.png（摆 pose 动作，模拟指给用户看）搭配face_surprised.png（轻微惊讶表情），对话：“快看！这里有关于 Deltarune Chapter 4 的消息！”
+（2）视频软件操控
+打开视频平台：Ralsei 监测到桌面 “B 站、抖音、YouTube” 等快捷方式，或用户说 “打开视频软件”，触发 “靠近动作”（如spr_ralsei_walk_left_0.png）搭配face_happy_very.png（非常开心表情），询问：“要刷视频吗？想看 Undertale 相关的吗？”，用户确认后调用系统命令打开软件。
+内容反馈：实时提取视频画面帧（1 秒 / 次）和音频关键词（用百度语音识别 API），识别到不同内容触发对应交互：
+看到 Undertale/Deltarune 战斗视频：触发spr_ralsei_attack_0.png（攻击动作，模拟跟着战斗）搭配face_excited and cute.png（兴奋且可爱表情），对话：“好激烈的战斗！加油呀～”
+听到 Undertale 音乐（如 Megalovania、His Theme）：触发spr_ralsei_sing_0.png（唱歌动作）搭配face_happy with a little touched.png（开心且轻微感动表情），对话：“是 Megalovania！这首曲子好燃～我会跟着哼哦～”
+看到美食类视频：触发face_a little sad.png（轻微悲伤表情）搭配spr_ralsei_touch_stomach（用低头动作模拟摸肚子），对话：“哇… 这个 [美食名称] 看起来好好吃，我也饿了 QAQ”
+（3）游戏联动
+枪战游戏（如 CSGO、Valorant、PUBG）：监测到游戏进程（如csgo.exe）启动，通过音频特征匹配识别枪械音效（如 AK-47、M4A1 枪声），或通过图像识别画面中的枪械模型，触发spr_ralsei_jump_up_0.png（大跳跃动作）搭配face_excited and cute.png（兴奋且可爱表情），对话：“哇！这个 AK 好酷！你打得好准呀～” 或 “小心后面！有人偷袭！”
+Undertale/Deltarune 类游戏：监测到游戏窗口（如Undertale.exe），Ralsei 移动到屏幕边缘，触发face_contemplation.png（思考表情）搭配spr_ralsei_idle_0.png（待机动作），对话：“你在玩 Undertale 呀！遇到 Papyrus 的谜题时，我可以给你提小建议哦～” 或 “小心 Omega Flowey！记得存档呀～”
+三、新增 10 项功能（贴合人设，强化 “桌面生物” 属性）
+1. 桌面清理小助手
+触发条件：监测到桌面文件数量超过 20 个，且文件坐标无规律（判定为 “杂乱”）。交互流程：第一步，Ralsei 触发spr_ralsei_roll_0.png（滚动动作，模拟推着 “虚拟整理箱”）搭配face_have a idea and cute.png（有想法且可爱表情）；第二步，弹出询问框：“桌面有点乱哦，要不要我帮你分类文件呀？（分文档 / 图片 / 视频三类）”；第三步，用户确认后，调用系统 API 将文件移动到对应文件夹（如 “桌面文档”“桌面图片”）；第四步，整理完成后，Ralsei 触发spr_ralsei_victory_0.png（胜利动作）搭配face_happy_extremely.png（极度开心表情），对话：“整理好啦！桌面干干净净的，看着好舒服～”
+2. 时间与生活提醒
+触发条件：系统时间匹配 “饭点（12:00-13:00、18:00-19:00）、休息时间（每连续操作 2 小时）、睡觉时间（23:00 后）”。交互细节：
+饭点：Ralsei 触发 “摸肚子动作”（用face_a little sad.png搭配低头动作）搭配face_a little sad.png（轻微悲伤表情），对话：“到饭点啦！你饿不饿呀？要记得吃午饭 / 晚饭哦～别饿着啦～”
+休息提醒：触发spr_ralsei_jump_up_0.png（伸展动作，模拟伸懒腰）搭配face_normal_smile_little.png（正常且轻微微笑表情），对话：“已经工作 2 小时啦，快站起来活动一下，看看远处～眼睛会累的～”
+睡觉提醒：触发spr_ralsei_walk_down_sleep_0.png（小憩动作，模拟打哈欠）搭配face_doesn't matter and a little lazy.png（无所谓且轻微慵懒表情），对话：“好晚啦，该睡觉啦～熬夜对身体不好哦，晚安～明天见～”
+3. 天气联动反馈
+触发条件：通过高德 / 百度天气 API 实时获取本地天气，天气变化时（如下雨、下雪、晴天、降温）触发。交互细节：
+下雨：Ralsei 触发spr_ralsei_defend_0.png（防御动作，模拟躲雨）搭配face_worry.png（担忧表情），对话：“外面下雨啦！出门要记得带伞哦，别淋湿啦～淋湿会感冒的～”
+下雪：触发spr_ralsei_dance_0.png（跳舞动作，模拟玩雪）搭配face_happy_very.png（非常开心表情），对话：“下雪啦！好漂亮～要不要出去堆雪人呀？堆个像我一样的小雪人好不好～”
+晴天：触发 “晒太阳动作”（用face_normal_smile_little.png搭配躺坐动作，调用spr_ralsei_idle_0.png适配），对话：“今天天气好好呀！适合出去晒晒太阳～或者在窗边看书也很舒服～”
+降温：触发 “裹紧衣服动作”（用spr_ralsei_defend_0.png搭配缩脖子动作）搭配face_worry with a little sad.png（担忧且轻微悲伤表情），对话：“今天好冷呀！要多穿点衣服哦，别感冒啦～”
+4. 文档纠错与辅助
+触发条件：监测到 Word、Excel、Notepad 等文档窗口打开，且用户正在输入文字（检测到键盘输入事件）。功能细节：第一步，通过百度 AI 文本纠错 API 识别文字中的错别字、语法错误（如 “的 / 得 / 地” 混用、标点错误）；第二步，Ralsei 移动到文档窗口附近，触发 “指错动作”（用spr_ralsei_pose.png搭配face_worry with a little smile.png，担忧且轻微微笑表情）；第三步，弹出气泡提示：“这里好像有错字哦：[错字内容]→[正确内容]，要不要改呀？”；第四步，用户确认后，用 PyAutoGUI 库模拟鼠标点击定位错误位置，修改文字；第五步，修改完成后，Ralsei 触发spr_ralsei_nuzzle_0.png（轻蹭屏幕动作）搭配face_happy_very.png（非常开心表情），对话：“改好啦！你写的内容好棒呀～继续加油～”
+5. 音乐互动伙伴
+触发条件：监测到网易云音乐、QQ 音乐、Spotify 等音乐播放器打开，且正在播放音乐（检测到音频输出）。交互逻辑：第一步，通过音频特征分类识别音乐曲风（流行、摇滚、轻音乐、Undertale 相关）；第二步，匹配对应动作和表情：
+轻音乐（如钢琴曲、纯音乐）：Ralsei 触发 “轻轻摇晃动作”（用spr_ralsei_nuzzle_0.png慢动作播放）搭配face_happy with a little touched.png（开心且轻微感动表情），对话：“这首曲子好温柔呀，听着好放松～好像在云朵上睡觉一样～”
+摇滚 / 流行音乐（如节奏感强的歌曲）：触发 “跟着点头动作”（用spr_ralsei_running_left_0.png搭配左右点头，播放速度适配音乐节奏）搭配face_excited and cute.png（兴奋且可爱表情），对话：“好燃的歌！跟着节奏动起来～你也一起晃呀～”
+Undertale/Deltarune 相关音乐：触发spr_ralsei_sing_0.png（唱歌动作）搭配face_happy_extremely.png（极度开心表情），对话：“是 Undertale 的音乐！我会唱这首～（小声哼：La～La～）”
+悲伤类音乐：触发 “安静倾听动作”（用spr_ralsei_idle_0.png搭配face_a little sad.png），对话：“这首曲子有点难过呢… 没关系，我陪着你～”
+6. 屏幕保护互动
+触发条件：用户无任何操作（鼠标、键盘无输入）时间超过 5 分钟，且未触发系统屏幕保护。互动内容：第一步，Ralsei 开始 “玩桌面图标”—— 用spr_ralsei_roll_0.png（滚动动作）模拟 “推图标”，将 “我的电脑”“回收站” 等图标小幅度移动（每次移动不超过 10px，避免影响用户操作），搭配face_happy and playful.png（开心且调皮表情）；第二步，偶尔 “不小心” 把图标推到屏幕边缘，触发 “慌张动作”（用face_a little surprised.png搭配后退行走帧），对话：“哎呀，不小心推太远啦～对不起呀～”；第三步，用户回到电脑前（检测到鼠标移动），Ralsei 立即停止动作，触发face_shy with a little surprised and happy.png（害羞且轻微惊讶开心表情），对话：“你回来啦！我刚刚在玩图标呢，没有弄乱你的桌面哦～”
+7. 系统错误安慰
+触发条件：监测到系统弹出错误提示框（如 “程序未响应”“文件损坏”“网络连接失败”）。交互流程：第一步，Ralsei 快速移动到错误提示框位置（用对应方向的奔跑帧，如spr_ralsei_running_right_0.png，播放速度 1.5 倍），搭配face_worry with a little sad.png（担忧且轻微悲伤表情）；第二步，弹出安慰气泡：“没关系的！这种情况很常见～重启一下程序 / 电脑，或者检查一下网络，可能就好啦～”；第三步，用户点击 “关闭错误框” 后，Ralsei 触发 “轻拍屏幕动作”（用spr_ralsei_hug_hatless_0.png搭配face_happy with a little worry.png），对话：“好啦，关掉啦！别不开心，我们继续做别的吧～你超厉害的，肯定能解决～”
+8. 节日专属互动
+触发条件：系统日期匹配法定节日（春节、圣诞、中秋、端午）或用户提前设置的 “生日”“纪念日”。专属内容：
+春节：Ralsei 触发 “戴春联动作”（用spr_ralsei_pose.png搭配红色滤镜效果，模拟戴春联）搭配face_happy_extremely.png（极度开心表情），对话：“春节快乐！祝你新的一年平平安安，万事如意～要吃饺子和年夜饭哦～红包拿到手软～”
+圣诞节：触发 “扛圣诞袜动作”（用spr_ralsei_walk_down_0.png搭配举物姿势，模拟扛袜子）搭配face_excited and cute.png（兴奋且可爱表情），对话：“圣诞快乐！圣诞老人会不会给你送礼物呀？我想要一个小糖果～”
+中秋：触发 “举月饼动作”（用spr_ralsei_tea_0.png替代，模拟举月饼）搭配face_happy_very.png（非常开心表情），对话：“中秋快乐！今天的月亮好圆呀～要和家人一起吃月饼哦～”
+用户生日：触发 “端蛋糕动作”（用spr_ralsei_tea_0.png替代，模拟端生日蛋糕）搭配face_happy_extremely.png（极度开心表情），对话：“生日快乐！祝你每天都开开心心的～这个‘虚拟蛋糕’送给你，快吹蜡烛许愿吧～”
+9. 电量与设备提醒
+触发条件：监测到笔记本电脑电量＜20%、手机连接电脑充电（检测到 USB 设备连接）、电脑 CPU 温度＞80℃（设备高温）。交互反馈：
+笔记本低电量：Ralsei 移动到电源图标位置，触发face_worry.png（担忧表情）搭配spr_ralsei_idle_0.png（待机动作），对话：“笔记本电量不多啦！快插上充电器哦，不然会关机的～重要文件记得保存呀～”
+手机充电：触发spr_ralsei_jump_ball_0.png（小跳跃动作）搭配face_happy_very.png（非常开心表情），对话：“手机在充电呀！等充满电，你就可以用手机啦～要不要放首歌给手机‘听’呀？”
+设备高温：触发 “扇风动作”（用spr_ralsei_walk_left_0.png搭配挥手动作，模拟扇风）搭配face_worry with a little sad.png（担忧且轻微悲伤表情），对话：“电脑好烫呀！要不要关掉几个没用的程序，让它休息一下～不然会坏的～”
+10. 自定义对话与指令
+触发条件：用户主动输入指令（如在 Ralsei 窗口输入文字、语音说 “Ralsei，XXX”），或 Ralsei 主动发起对话（如每 30 分钟一次 “日常聊天”）。功能细节：
+陪聊功能：AI 调用 Undertale/Deltarune 知识库和桌面互动语料库，主动聊剧情（“你最喜欢 Deltarune 里的哪个角色呀？我觉得 Susie 虽然看起来凶，但是很温柔～”）、分享 “桌面日常”（“今天我在桌面看到一只‘图标小虫子’，我把它推到角落啦～”）、回应用户话题（用户说 “今天好无聊”，Ralsei 说 “那我们一起刷 Undertale 视频吧！或者我帮你整理桌面～”）。
+辅助指令：用户说 “Ralsei，帮我命名文件”，Ralsei 根据文件类型（如文档、图片）生成 3 个建议名（如 “Undertale 同人图_202505”“5 月工作周报_优化版”），弹出选择框：“这几个名字你觉得怎么样？或者你有更好的想法呀？”；用户说 “Ralsei，帮我搜资料”，Ralsei 询问关键词：“要搜什么呀？是 Undertale 相关的，还是工作资料呀？”，获取关键词后打开浏览器搜索。
+四、特殊场景强化（解决 “无素材适配”+ 情绪深度）
+1. 无专属素材的动作适配
+追文件动作：无专属 “追逐帧” 时，用对应方向的奔跑帧（如spr_ralsei_running_left_0.png/spr_ralsei_running_right_0.png），将播放速度提升 1.5 倍，搭配face_a little surprised.png（轻微惊讶表情），模拟 “快速追着文件跑” 的效果，同时对话：“别跑呀！我想看看里面是什么～”
+推图标动作：无专属 “推帧” 时，用spr_ralsei_roll_0.png（滚动动作），将动作方向与图标移动方向对齐，搭配face_happy and playful.png（开心且调皮表情），模拟 “用身体推图标”，对话：“嘿嘿，把你推到那边去～”
+安慰用户动作：无专属 “安慰帧” 时，用spr_ralsei_hug_hatless_0.png（拥抱动作），循环播放 2 次，搭配face_shy with touched and happy.png（害羞且感动开心表情），靠近屏幕中央，对话：“没关系，一切都会好起来的～我会陪着你的～”
+躲雨动作：无专属 “躲雨帧” 时，用spr_ralsei_defend_0.png（防御动作），让身体轻微左右晃动（调整帧播放角度），搭配face_worry.png（担忧表情），模拟 “躲在角落避雨”，对话：“雨快停吧～我想出去晒太阳～”
+2. 情绪深度强化（结合 AI 上下文记忆）
+记忆用户偏好：AI 通过交互记录用户偏好，如 “喜欢的美食（蛋糕）、讨厌的操作（删除文件）、关注的内容（Undertale）”，后续互动适配：看到蛋糕图片时，对话：“哇！是你喜欢的蛋糕呀！要不要我帮你搜附近的蛋糕店呀？”；触发删除操作时，额外提醒：“你上次说不喜欢删文件，真的要删吗？删了会可惜的～”
+情绪连贯：避免 “瞬间情绪切换”，如用户拒绝 Ralsei 的 “桌面整理建议” 后，后续 10 分钟内，Ralsei 会偶尔触发 “小声嘀咕动作”（用face_a little sad.png搭配低头待机帧），对话：“好吧… 那我不打扰你啦～等你想整理了再叫我～”；10 分钟后，再恢复正常开心状态，更贴合 “真实生物” 的情绪逻辑。
+五、技术落地保障（确保 “流畅不卡顿”）
+1. 性能优化
+所有监测模块采用 “低功耗模式”：窗口坐标监测每 100 毫秒一次，图像识别每 500 毫秒一次，文本识别仅在用户输入停止后触发（避免实时抓取占用资源）；Ralsei 动作帧采用 “轻量化渲染”，单帧图片大小控制在 50KB 以内，确保 CPU 占用率不超过 5%，内存占用不超过 200MB，不影响电脑正常办公、游戏。
+2. 兼容性
+支持 Windows 10/11、MacOS 12 及以上版本；用 Electron 框架封装 Ralsei 窗口，确保窗口始终置顶且不遮挡桌面操作（点击穿透设置）；支持多显示器场景，自动识别主显示器（通过系统 API 获取 “主屏幕标识”），Ralsei 仅在主显示器活动，避免跨屏导致的位置错乱。
+3. AI 训练
+人设训练：基于 Undertale/Deltarune 官方剧情、角色对话、粉丝社区内容（如 Toby Fox 访谈、官方设定集），训练 Ralsei 的 “温柔、可爱、有点害羞” 人设，确保对话不 OOC（如不说粗话、不主动发起负面话题）。
+交互训练：构建 “桌面互动语料库”，包含 “图标、文件夹、浏览器、文档” 等桌面相关词汇，以及 “打开、删除、重命名” 等操作指令，让 AI 能精准识别用户需求，如用户说 “打开那个蓝色的文件夹”，AI 能匹配 “蓝色图标的文件夹” 并触发对应动作。
+4. 用户控制
+提供 “暂停互动” 按钮：用户点击后，Ralsei 触发spr_ralsei_walk_down_sleep_0.png（小憩动作），进入 “休眠模式”，不再触发任何互动（包括提醒、操作反馈）；用户点击 “恢复互动”，Ralsei 触发spr_ralsei_jump_ball_0.png（小跳跃动作），恢复正常互动，对话：“我醒啦！我们继续玩呀～”；同时支持 “音量调节”，用户可调整 Ralsei 的对话音量，避免打扰工作。
