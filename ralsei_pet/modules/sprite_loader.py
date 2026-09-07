@@ -368,7 +368,10 @@ class SpriteLoader:
         # 检查缓存中是否已经有该文件
         if filename in self.image_cache:
             self.cache_hits += 1
-            return self.image_cache[filename]
+            # 真正的LRU：命中时先删除再插入，把项移到末尾（表示最近使用）
+            pixmap = self.image_cache.pop(filename)
+            self.image_cache[filename] = pixmap
+            return pixmap
         
         self.cache_misses += 1
         
@@ -606,7 +609,10 @@ class SpriteLoader:
         # 检查缓存
         face_key = f"face_{face_name}"
         if face_key in self.image_cache:
-            return self.image_cache[face_key]
+            # 真正的LRU：命中时移到末尾
+            pixmap = self.image_cache.pop(face_key)
+            self.image_cache[face_key] = pixmap
+            return pixmap
 
         file_path = os.path.join(self.face_dir, face_name + ".png")
         pixmap = None

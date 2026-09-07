@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from urllib.parse import quote_plus
 
 class SearchSummarizer:
     def __init__(self):
@@ -13,7 +14,9 @@ class SearchSummarizer:
         搜索Google并返回搜索结果
         """
         try:
-            url = f"https://www.google.com/search?q={query}&num={num_results}"
+            # 修复：对查询参数进行URL编码，避免含特殊字符（空格、中文、&等）时URL出错
+            encoded_query = quote_plus(query)
+            url = f"https://www.google.com/search?q={encoded_query}&num={num_results}"
             response = requests.get(url, headers=self.headers, timeout=10)
             response.raise_for_status()
             
@@ -57,7 +60,9 @@ class SearchSummarizer:
         搜索Bing并返回搜索结果
         """
         try:
-            url = f"https://www.bing.com/search?q={query}&count={num_results}"
+            # 修复：对查询参数进行URL编码
+            encoded_query = quote_plus(query)
+            url = f"https://www.bing.com/search?q={encoded_query}&count={num_results}"
             response = requests.get(url, headers=self.headers, timeout=10)
             response.raise_for_status()
             

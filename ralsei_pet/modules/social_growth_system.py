@@ -452,8 +452,11 @@ class SocialGrowthSystem:
     def _check_evolution(self):
         """检查是否进化"""
         # 每5级进化一次
-        if self.level % 5 == 0 and self.evolution_stage < self.level // 5 + 1:
-            self.evolution_stage = self.level // 5
+        # 修复：条件和赋值保持一致，避免第一次进化（5级）阶段值不变的bug
+        # 之前的实现：条件用 level//5+1 判断，但赋值用 level//5，导致 5级时 stage 仍是 1
+        target_stage = self.level // 5 + 1  # 1级→1阶段, 5级→2阶段, 10级→3阶段...
+        if self.level % 5 == 0 and self.evolution_stage < target_stage:
+            self.evolution_stage = target_stage
             print(f"进化了！现在是第 {self.evolution_stage} 阶段！")
             # 触发进化事件
             self.parent.pet_ai.trigger_event('evolution', {
@@ -465,14 +468,51 @@ class SocialGrowthSystem:
             self.parent.dialogue_ui.add_dialogue("ralsei", f"我进化了！现在是更强大的 {self.evolution_stage} 阶段！", "happy_extremely")
     
     def _check_achievements(self):
-        """检查是否解锁成就"""
-        # 检查每个成就的解锁条件
+        """
+        检查是否解锁成就。
+        修复：移除了随机解锁逻辑（10%概率），改为基于真实数据的条件判定。
+        之前的随机解锁与成就描述的条件完全无关，严重破坏游戏体验。
+        """
+        # 收集当前可用的统计数据（用于条件判定）
+        stats = {
+            'level': self.level,
+            'experience': self.experience,
+            'evolution_stage': self.evolution_stage,
+        }
+
+        # 各成就的解锁条件判定
+        conditions = {
+            # 初次体验类 — 首次触发即解锁（由对应事件调用 unlock，这里做兜底检查）
+            'first_interaction': lambda s: s['level'] >= 1 and s['experience'] >= 10,
+            'first_touch': lambda s: s['level'] >= 1,
+            'first_gift': lambda s: s['level'] >= 2,
+
+            # 日常互动类 — 基于等级近似（等级越高代表互动越多）
+            'daily_visitor': lambda s: s['level'] >= 3,   # 约3级≈5天互动
+            'weekly_visitor': lambda s: s['level'] >= 5,  # 约5级≈7天互动
+            'monthly_visitor': lambda s: s['level'] >= 10, # 约10级≈30天互动
+
+            # 知识类 — 基于等级和经验
+            'knowledge_seeker': lambda s: s['level'] >= 4,
+            'conversation_master': lambda s: s['experience'] >= 500,
+            'topic_explorer': lambda s: s['level'] >= 8,
+
+            # 情感连接类 — 基于进化阶段近似
+            'emotional_connection': lambda s: s['level'] >= 5,
+            'heartfelt_bond': lambda s: s['evolution_stage'] >= 2,
+            'family_member': lambda s: s['evolution_stage'] >= 3,
+
+            # 冒险类 — 基于等级
+            'adventurer': lambda s: s['level'] >= 6,
+        }
+
         for achievement_id, achievement in self.achievements_list.items():
-            if not achievement['unlocked']:
-                # 这里可以添加具体的成就解锁条件检查
-                # 暂时简化为随机解锁
-                if random.random() < 0.1:  # 10% 的概率解锁成就
-                    self._unlock_achievement(achievement_id)
+            if achievement['unlocked']:
+                continue
+            # 查找对应条件，满足则解锁
+            condition = conditions.get(achievement_id)
+            if condition and condition(stats):
+                self._unlock_achievement(achievement_id)
     
     def _unlock_achievement(self, achievement_id):
         """解锁成就"""

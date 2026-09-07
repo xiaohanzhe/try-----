@@ -201,6 +201,10 @@ class AutonomousAgent:
         self._enabled: bool = False
         # 进阶 Skill 去抖时间戳
         self._last_organize_time: float = 0.0
+        # 修复：记录暂停前的状态，冲突解除后恢复而不是直接变 IDLE（避免"暂停=取消"）
+        self._pre_pause_state: AgentState = AgentState.IDLE
+        # WALKING 暂停时记录目标坐标，恢复时重新发起移动
+        self._pre_pause_walk_target: Optional[tuple] = None
 
     # ---- 公共 API ----
 
@@ -227,6 +231,21 @@ class AutonomousAgent:
         if self._has_conflict():
             if self.state in (AgentState.WALKING, AgentState.FACING,
                               AgentState.ACTING, AgentState.REACTING):
+                # 修复：记录暂停前状态，以便恢复时继续而不是取消任务
+                self._pre_pause_state = self.state
+                # WALKING 时记录实际目标坐标（宠物可能被拖走，恢复时需要重新 walk_to）
+                if self.state == AgentState.WALKING and self.current_task is not None:
+                    try:
+                        pos = self._get_pos()
+                        # 从主移动系统获取当前目标（如果有），否则用任务目标
+                        owner = getattr(self._desktop, 'parent', None)
+                        if owner is not None and hasattr(owner, 'target_pos') and owner.target_pos:
+                            self._pre_pause_walk_target = (owner.target_pos.x(), owner.target_pos.y())
+                        else:
+                            tx, ty = self.current_task.target.center()
+                            self._pre_pause_walk_target = (tx, ty)
+                    except Exception:
+                        self._pre_pause_walk_target = None
                 self.state = AgentState.PAUSED
             return
 
@@ -234,7 +253,8 @@ class AutonomousAgent:
             self._maybe_decide(now)
         elif self.state == AgentState.PAUSED:
             if not self._has_conflict():
-                self.state = AgentState.IDLE
+                # 修复：从暂停恢复时回到之前的状态，而不是直接变 IDLE
+                self._resume_from_pause(now)
         elif self.state == AgentState.WALKING:
             # 修复：WALKING 无超时兜底——自主代理的目标落点（target.center()+随机偏移）
             # 不做屏幕 clamp，而主移动系统会把宠物夹回主屏内，导致边缘/多屏目标
@@ -269,13 +289,26 @@ class AutonomousAgent:
     def suspend(self):
         """主窗口检测到冲突（用户拖拽等）时调用。"""
         if self.is_busy():
+            self._pre_pause_state = self.state
+            # WALKING 时记录目标坐标，恢复时需要重新发起移动
+            if self.state == AgentState.WALKING and self.current_task is not None:
+                try:
+                    owner = getattr(self._desktop, 'parent', None)
+                    if owner is not None and hasattr(owner, 'target_pos') and owner.target_pos:
+                        self._pre_pause_walk_target = (owner.target_pos.x(), owner.target_pos.y())
+                    else:
+                        tx, ty = self.current_task.target.center()
+                        self._pre_pause_walk_target = (tx, ty)
+                except Exception:
+                    self._pre_pause_walk_target = None
             self.state = AgentState.PAUSED
         elif self.state == AgentState.IDLE:
+            self._pre_pause_state = AgentState.IDLE
             self.state = AgentState.PAUSED
 
     def resume(self):
         if self.state == AgentState.PAUSED and not self._has_conflict():
-            self.state = AgentState.IDLE
+            self._resume_from_pause(time.time())
 
     # ---- 内部状态机 ----
 
@@ -519,6 +552,45 @@ class AutonomousAgent:
     def _finish_task(self):
         self.current_task = None
         self.state = AgentState.IDLE
+
+    def _resume_from_pause(self, now: float):
+        """从暂停恢复：回到暂停前的状态继续执行，而不是取消任务。"""
+        prev = self._pre_pause_state
+        if prev == AgentState.WALKING:
+            # WALKING：宠物可能被拖到新位置，需要重新发起移动
+            if self.current_task is not None and self._pre_pause_walk_target:
+                tx, ty = self._pre_pause_walk_target
+                self.state = AgentState.WALKING
+                # 重置开始时间，避免刚恢复就触发超时（因为暂停期间计时仍在走）
+                self._task_started_at = now
+                try:
+                    self._walk_to(tx, ty)
+                except Exception:
+                    # 移动失败就放弃本轮
+                    self._finish_task()
+            else:
+                # 没有任务或目标，直接回 IDLE
+                self.state = AgentState.IDLE
+        elif prev in (AgentState.FACING, AgentState.ACTING, AgentState.REACTING):
+            # 这些阶段是计时的，暂停期间时间仍在流逝 → 把起始时间往后推"暂停时长"
+            # 简化处理：重置阶段起始时间为 now，给足完整的阶段时长
+            t = self.current_task
+            if t is not None:
+                if prev == AgentState.FACING:
+                    t.facing_start = now
+                elif prev == AgentState.ACTING:
+                    t.acting_start = now
+                elif prev == AgentState.REACTING:
+                    t.reaction_start = now
+                self.state = prev
+            else:
+                self.state = AgentState.IDLE
+        else:
+            # 本来就是 IDLE 或异常状态，直接回 IDLE
+            self.state = AgentState.IDLE
+
+        self._pre_pause_walk_target = None
+        self._pre_pause_state = AgentState.IDLE
 
     # ---- 动作执行（后台 API，零鼠标劫持）----
 

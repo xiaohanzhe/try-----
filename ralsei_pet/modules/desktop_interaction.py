@@ -16,6 +16,10 @@ try:
 except ImportError:
     psutil = None
 
+from logger_utils import get_logger
+
+log = get_logger("desktop_interaction")
+
 LVM_FIRST = 0x1000
 LVM_GETITEMCOUNT = LVM_FIRST + 4
 LVM_GETITEMRECT = LVM_FIRST + 14
@@ -136,7 +140,31 @@ class DesktopInteraction:
         except Exception:
             pass
         return base
-        
+
+    @staticmethod
+    def _safe_release_com(app=None, doc=None, doc_close_kwargs=None):
+        """
+        安全释放 Office COM 对象，防止进程泄漏。
+        统一处理 ppt_control / excel_control / create_new_excel 等函数中的清理逻辑，
+        避免每个函数都写一遍 try-except-pass 的嵌套。
+
+        Args:
+            app:  应用对象 (Excel.Application / PowerPoint.Application)，会调用 .Quit()
+            doc:  文档对象 (Workbook / Presentation)，会调用 .Close()
+            doc_close_kwargs: 传给 Close() 的参数，如 {'SaveChanges': False}
+        """
+        if doc is not None:
+            try:
+                kwargs = doc_close_kwargs or {}
+                doc.Close(**kwargs)
+            except Exception:
+                log.debug("COM 文档关闭失败", exc_info=True)
+        if app is not None:
+            try:
+                app.Quit()
+            except Exception:
+                log.debug("COM 应用退出失败", exc_info=True)
+
     def init_scheduled_tasks(self):
         # 初始化定时任务
         self.scheduled_tasks = [
@@ -491,28 +519,74 @@ class DesktopInteraction:
             return False
     
     def clean_temp_files(self):
-        # 清理临时文件
+        """
+        安全地清理临时文件。
+        只清理本程序创建的临时文件（以 ralsei_ 开头），且只删除超过 24 小时的文件。
+        绝不删除子目录，避免误删其他应用的数据。
+        """
+        # 本程序临时文件的前缀标识
+        TEMP_FILE_PREFIX = "ralsei_"
+        # 只删除超过这个时间（秒）的文件，避免删掉刚创建的
+        MIN_FILE_AGE_SECONDS = 24 * 3600  # 24小时
+
+        deleted_count = 0
+        skipped_count = 0
+        now = time.time()
+
         try:
-            temp_path = os.environ['TEMP']
-            if os.path.exists(temp_path):
-                import shutil
-                # 清理临时文件
-                for filename in os.listdir(temp_path):
-                    file_path = os.path.join(temp_path, filename)
+            temp_path = os.environ.get('TEMP')
+            if not temp_path or not os.path.exists(temp_path):
+                log.warning("临时文件目录不存在，跳过清理")
+                return False
+
+            import shutil
+
+            for filename in os.listdir(temp_path):
+                file_path = os.path.join(temp_path, filename)
+
+                try:
+                    # 安全规则 1：只删本程序创建的文件（有特定前缀）
+                    if not filename.startswith(TEMP_FILE_PREFIX):
+                        skipped_count += 1
+                        continue
+
+                    # 安全规则 2：只删文件，绝不删目录
+                    if not os.path.isfile(file_path):
+                        skipped_count += 1
+                        continue
+
+                    # 安全规则 3：只删超过 24 小时的文件
                     try:
-                        if os.path.isfile(file_path):
-                            os.unlink(file_path)
-                        elif os.path.isdir(file_path):
-                            shutil.rmtree(file_path)
-                    except Exception as e:
-                        pass
-                print("临时文件已清理")
-                self.parent.emotion_system.react_to_event("temp_files_cleaned", {})
-                return True
-            return False
+                        file_mtime = os.path.getmtime(file_path)
+                        if (now - file_mtime) < MIN_FILE_AGE_SECONDS:
+                            skipped_count += 1
+                            continue
+                    except OSError:
+                        # 拿不到修改时间就跳过，宁可漏删也不误删
+                        skipped_count += 1
+                        continue
+
+                    # 通过所有安全检查，才删除
+                    os.unlink(file_path)
+                    deleted_count += 1
+
+                except OSError:
+                    # 单个文件删除失败不影响整体，继续下一个
+                    log.debug("删除临时文件失败: %s", file_path)
+                    skipped_count += 1
+                    continue
+
+            log.info("临时文件清理完成：删除 %d 个，跳过 %d 个", deleted_count, skipped_count)
+            if hasattr(self.parent, 'emotion_system') and self.parent.emotion_system:
+                self.parent.emotion_system.react_to_event("temp_files_cleaned", {
+                    "deleted_count": deleted_count
+                })
+            return deleted_count > 0
+
         except Exception as e:
             print(f"清理临时文件失败: {e}")
-            self.parent.emotion_system.react_to_event("temp_files_clean_failed", {"error": str(e)})
+            if hasattr(self.parent, 'emotion_system') and self.parent.emotion_system:
+                self.parent.emotion_system.react_to_event("temp_files_clean_failed", {"error": str(e)})
             return False
         
     def _get_cached_icon_rects(self):
@@ -1392,13 +1466,28 @@ class DesktopInteraction:
             return False
     
     def cut_file(self, source_path, target_dir, auto_organize=False, preserve_metadata=True, show_progress=False):
-        # 剪切文件到目标目录，模拟真实剪切操作，支持自动分类和元数据保留
+        """
+        剪切文件到目标目录。
+        修复：使用 shutil.move 原生移动操作；若失败则回滚，保证"剪切"语义正确。
+        之前的实现是先复制再删除，删除失败时变成复制，违反剪切语义。
+        """
+        import shutil
+
         try:
-            print(f"正在剪切文件: {source_path} 到: {target_dir}")
-            
+            log.info("剪切文件: %s → %s", source_path, target_dir)
+
+            # 前置校验
+            if not os.path.exists(source_path):
+                log.warning("源文件不存在: %s", source_path)
+                return False
+            if not os.path.isfile(source_path):
+                log.warning("源路径不是文件: %s", source_path)
+                return False
+            if not os.path.exists(target_dir):
+                os.makedirs(target_dir, exist_ok=True)
+
             # 自动分类功能
             if auto_organize:
-                # 根据文件类型自动分类
                 file_ext = os.path.splitext(source_path)[1].lower()
                 if file_ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']:
                     target_dir = os.path.join(target_dir, '图片')
@@ -1412,56 +1501,72 @@ class DesktopInteraction:
                     target_dir = os.path.join(target_dir, '代码')
                 elif file_ext in ['.zip', '.rar', '.7z', '.tar', '.gz']:
                     target_dir = os.path.join(target_dir, '压缩文件')
-                
-                # 确保分类目录存在
                 os.makedirs(target_dir, exist_ok=True)
-            
-            # 显示剪切进度
+
             if show_progress:
-                print("正在准备剪切文件...")
-            
+                log.debug("正在准备剪切文件...")
+
             # 模拟真实剪切延迟，根据文件大小调整
             try:
                 file_size = os.path.getsize(source_path) / (1024 * 1024)  # MB
-                # 小文件快速剪切，大文件有更长延迟
                 delay = min(1.2, max(0.4, file_size * 0.08))
                 time.sleep(delay)
             except Exception:
                 time.sleep(0.5)
-            
-            import shutil
+
             filename = os.path.basename(source_path)
             target_path = os.path.join(target_dir, filename)
-            
+
             # 如果目标文件已存在，添加智能后缀
             if os.path.exists(target_path):
                 base_name, ext = os.path.splitext(filename)
-                # 先尝试简单的剪切标记
                 target_path = os.path.join(target_dir, f"{base_name} - 剪切{ext}")
-                # 如果剪切标记也存在，添加序号
                 if os.path.exists(target_path):
                     counter = 1
                     while os.path.exists(target_path):
                         target_path = os.path.join(target_dir, f"{base_name} - 剪切{counter}{ext}")
                         counter += 1
-            
-            # 执行剪切操作（先复制再删除）
-            if preserve_metadata:
-                shutil.copy2(source_path, target_path)  # 保留元数据
-            else:
-                shutil.copy(source_path, target_path)   # 只复制内容
-            
-            # 显示进度
-            if show_progress:
-                print("正在删除源文件...")
-                time.sleep(0.2)
-            
-            os.remove(source_path)
-            
-            print(f"文件剪切成功，新路径: {target_path}")
+
+            # 优先使用系统原生移动（同盘下是原子操作，跨盘会自动降级为复制+删除）
+            try:
+                shutil.move(source_path, target_path)
+            except Exception as move_error:
+                # shutil.move 失败时，手动执行并确保回滚
+                log.warning("原生移动失败，尝试备用方案: %s", move_error)
+
+                # 步骤1：复制
+                try:
+                    if preserve_metadata:
+                        shutil.copy2(source_path, target_path)
+                    else:
+                        shutil.copy(source_path, target_path)
+                except Exception as copy_error:
+                    log.error("复制也失败: %s", copy_error)
+                    return False
+
+                # 步骤2：删除源文件
+                if show_progress:
+                    log.debug("正在删除源文件...")
+                    time.sleep(0.2)
+
+                try:
+                    os.remove(source_path)
+                except Exception as remove_error:
+                    # 删除失败 → 回滚（删掉刚复制的目标文件），保证"剪切"语义
+                    log.error("删除源文件失败，正在回滚: %s", remove_error)
+                    try:
+                        if os.path.exists(target_path):
+                            os.remove(target_path)
+                            log.info("回滚成功，已删除目标文件")
+                    except Exception as rollback_error:
+                        log.critical("回滚也失败了，源文件和目标文件都存在: %s", rollback_error)
+                    return False
+
+            log.info("文件剪切成功: %s", target_path)
             return target_path
+
         except Exception as e:
-            print(f"剪切文件失败: {e}")
+            log.error("剪切文件异常: %s", e, exc_info=True)
             return False
     
     def double_click_file(self, file_path):
@@ -1761,26 +1866,16 @@ class DesktopInteraction:
                 try:
                     workbook.Save()
                 except Exception as e:
-                    print(f"Excel保存失败: {e}")
+                    log.error("Excel保存失败: %s", e)
             
             return result
         except Exception as e:
-            print(f"Excel操作失败: {e}")
-            import traceback
-            traceback.print_exc()
+            log.error("Excel操作失败: %s", e, exc_info=True)
             return False
         finally:
             # 无论成功失败都释放 COM 资源，防止进程泄漏和文件独占
-            try:
-                if workbook is not None:
-                    workbook.Close(SaveChanges=False)
-            except Exception:
-                pass
-            try:
-                if excel is not None:
-                    excel.Quit()
-            except Exception:
-                pass
+            self._safe_release_com(app=excel, doc=workbook,
+                                   doc_close_kwargs={'SaveChanges': False})
     
     def _execute_excel_action(self, workbook, action, sheet_name=None, cell_range=None, data=None):
         # 执行具体的Excel操作
@@ -2312,6 +2407,8 @@ class DesktopInteraction:
     
     def create_new_excel(self, file_name, sheet_name="Sheet1"):
         # 在桌面上创建新的Excel文件
+        excel = None
+        workbook = None
         try:
             print(f"正在创建新的Excel文件: {file_name}")
             
@@ -2347,10 +2444,12 @@ class DesktopInteraction:
             print(f"Excel文件创建成功: {excel_path}")
             return excel_path
         except Exception as e:
-            print(f"创建Excel文件失败: {e}")
-            import traceback
-            traceback.print_exc()
+            log.error("创建Excel文件失败: %s", e, exc_info=True)
             return None
+        finally:
+            # 无论成功失败都释放 COM 资源，防止 Excel 进程泄漏和文件独占
+            self._safe_release_com(app=excel, doc=workbook,
+                                   doc_close_kwargs={'SaveChanges': False})
     
     def identify_ppt_windows(self):
         # 识别当前打开的PPT窗口

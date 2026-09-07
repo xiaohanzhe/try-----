@@ -3,97 +3,9 @@ import sys
 import os
 import time
 
-# 在程序最开始就进行单实例检查
-print("正在进行单实例检查...")
-
-# 使用Windows命名互斥量来实现可靠的单实例检查
-# 这种方法在Windows平台上是最可靠的
-import win32event
-import win32api
-import winerror
-
-# 创建一个全局唯一的互斥量名称
-mutex_name = r"Global\RalseiPetMutex"
-
-try:
-    # 尝试创建互斥量，如果已存在则会返回错误
-    # 参数说明：
-    # 1. 安全属性，None表示默认安全属性
-    # 2. 是否初始拥有，False表示不初始拥有
-    # 3. 互斥量名称
-    mutex = win32event.CreateMutex(None, False, mutex_name)
-    
-    # 检查创建结果
-    if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
-        # 互斥量已存在，说明已有实例在运行
-        print("单实例检查失败，Ralsei Pet 已经在运行中了！")
-        print(" Ralsei 是独一无二的哦~")
-        # 关闭互斥量句柄
-        win32api.CloseHandle(mutex)
-        # 等待用户按键后退出
-        input("按回车键退出...")
-        sys.exit(0)
-    else:
-        # 互斥量创建成功，当前是唯一实例
-        print("单实例检查通过，互斥量已创建")
-        
-        # 互斥量会在进程结束时自动释放，不需要手动清理
-except Exception as e:
-    print(f"单实例检查出错: {e}")
-    # 如果互斥量检查失败，使用文件锁作为备选方案
-    lock_file_path = os.path.join(os.getenv('TEMP', '.'), 'ralsei_pet.lock')
-    
-    try:
-        # 使用x模式创建文件，确保原子性
-        with open(lock_file_path, 'x') as lock_file:
-            lock_file.write(str(os.getpid()))
-        
-        print("备选单实例检查通过，锁文件已创建")
-        
-        # 注册退出处理函数
-        def exit_handler():
-            try:
-                os.unlink(lock_file_path)
-                print("备选单实例检查锁文件已删除")
-            except Exception as e:
-                print(f"删除锁文件时出错: {e}")
-        
-        import atexit
-        atexit.register(exit_handler)
-    except FileExistsError:
-        print("备选单实例检查失败，锁文件已存在")
-        try:
-            with open(lock_file_path, 'r') as lock_file:
-                pid = int(lock_file.read().strip())
-            
-            # 检查进程是否存在
-            try:
-                os.kill(pid, 0)
-                print("Ralsei Pet 已经在运行中了哦！")
-                input("按回车键退出...")
-                sys.exit(0)
-            except OSError:
-                pass
-        except (ValueError, OSError):
-            print("发现无效的锁文件，正在清理...")
-            os.unlink(lock_file_path)
-            
-            with open(lock_file_path, 'w') as lock_file:
-                lock_file.write(str(os.getpid()))
-            
-            print("备选锁文件已重新创建，单实例检查通过")
-            
-            def exit_handler():
-                try:
-                    os.unlink(lock_file_path)
-                    print("备选单实例检查锁文件已删除")
-                except Exception as e:
-                    print(f"删除锁文件时出错: {e}")
-            
-            import atexit
-            atexit.register(exit_handler)
-
-print("单实例检查通过，可以正常运行！")
+# 注意：单实例检查已封装为 check_single_instance() 函数
+# 在 if __name__ == '__main__': 中调用，避免 import 时就触发退出
+# 也便于单元测试和 mock
 
 # 继续导入其他模块
 import time
@@ -8450,9 +8362,104 @@ class RalseiPet(QMainWindow):
         from PyQt5.QtCore import QTimer
         QTimer.singleShot(500, lambda: self._hide_end_game(user_won=True))
 
+
+def check_single_instance():
+    """
+    单实例检查 — 确保同时只有一个 Ralsei Pet 在运行。
+    修复：从模块顶层移入函数，避免 import 时就执行并可能退出。
+    优先使用 Windows 命名互斥量，失败时回退到文件锁。
+    """
+    import atexit
+
+    print("正在进行单实例检查...")
+
+    mutex_name = r"Global\RalseiPetMutex"
+
+    # 方案1：Windows 命名互斥量（最可靠）
+    try:
+        import win32event
+        import win32api
+        import winerror
+
+        mutex = win32event.CreateMutex(None, False, mutex_name)
+
+        if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
+            print("单实例检查失败，Ralsei Pet 已经在运行中了！")
+            print(" Ralsei 是独一无二的哦~")
+            win32api.CloseHandle(mutex)
+            input("按回车键退出...")
+            sys.exit(0)
+        else:
+            print("单实例检查通过，互斥量已创建")
+            # 互斥量会在进程结束时自动释放
+            print("单实例检查通过，可以正常运行！")
+            return True
+
+    except Exception as e:
+        print(f"互斥量单实例检查出错，改用文件锁: {e}")
+
+    # 方案2：文件锁作为备选
+    lock_file_path = os.path.join(os.getenv('TEMP', '.'), 'ralsei_pet.lock')
+
+    def _cleanup_lock():
+        try:
+            if os.path.exists(lock_file_path):
+                os.unlink(lock_file_path)
+                print("单实例锁文件已清理")
+        except Exception:
+            pass
+
+    try:
+        with open(lock_file_path, 'x') as lock_file:
+            lock_file.write(str(os.getpid()))
+        print("备选单实例检查通过，锁文件已创建")
+        atexit.register(_cleanup_lock)
+        print("单实例检查通过，可以正常运行！")
+        return True
+
+    except FileExistsError:
+        print("备选单实例检查：发现已存在的锁文件")
+        try:
+            with open(lock_file_path, 'r') as lock_file:
+                pid = int(lock_file.read().strip())
+            # 检查进程是否还活着
+            try:
+                os.kill(pid, 0)
+                print("Ralsei Pet 已经在运行中了哦！")
+                input("按回车键退出...")
+                sys.exit(0)
+            except OSError:
+                # 进程不存在了，锁文件是残留的
+                pass
+        except (ValueError, OSError):
+            pass
+
+        # 清理残留锁文件并重新创建
+        print("发现残留的锁文件，正在清理...")
+        try:
+            os.unlink(lock_file_path)
+        except OSError:
+            pass
+        try:
+            with open(lock_file_path, 'w') as lock_file:
+                lock_file.write(str(os.getpid()))
+            atexit.register(_cleanup_lock)
+            print("锁文件已重新创建，单实例检查通过")
+            print("单实例检查通过，可以正常运行！")
+            return True
+        except Exception as e:
+            print(f"重新创建锁文件失败: {e}")
+            # 最后兜底：允许运行（单实例检查失败不应阻止程序启动）
+            print("警告：单实例检查失败，程序将继续运行")
+            return True
+
+
 if __name__ == "__main__":
     import traceback
-    
+
+    # 单实例检查（必须在最开始执行）
+    check_single_instance()
+
     try:
         app = QApplication(sys.argv)
         window = RalseiPet()

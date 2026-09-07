@@ -91,7 +91,14 @@ class WeatherSystem:
                     adjusted.append((weather, p * 1.3))
                 else:
                     adjusted.append((weather, p))
-            probs = adjusted
+            # 修复：调整后做归一化，确保概率和为1。
+            # 之前的实现概率和<1，多余的概率全部落入末尾的sunny fallback，
+            # 导致夜间晴天概率反而更高，与设计意图相反。
+            total = sum(p for _, p in adjusted)
+            if total > 0:
+                probs = [(w, p / total) for w, p in adjusted]
+            else:
+                probs = adjusted
 
         seed = int(f"{now.year}{now.month:02d}{now.day:02d}")
         rng = random.Random(seed)

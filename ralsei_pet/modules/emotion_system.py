@@ -235,15 +235,10 @@ class EmotionSystem:
             elif self.emotions[emotion] < 0:
                 self.emotions[emotion] = min(0, self.emotions[emotion] + decay_amount)
         
-        # 复合情绪衰减
-        for emotion in self.complex_emotions:
-            decay_rate = complex_emotion_decay_rates.get(emotion, self.emotion_decay_rate)
-            decay_amount = decay_rate * elapsed
-            
-            if self.complex_emotions[emotion] > 0:
-                self.complex_emotions[emotion] = max(0, self.complex_emotions[emotion] - decay_amount)
-            elif self.complex_emotions[emotion] < 0:
-                self.complex_emotions[emotion] = min(0, self.complex_emotions[emotion] + decay_amount)
+        # 注意：复合情绪不再独立衰减。
+        # 修复：它们由 _update_complex_emotions() 从基础情绪推导而来，
+        # 基础情绪衰减了，复合情绪自然就衰减了。
+        # 之前的实现是先衰减复合情绪，再全量重算覆盖，导致衰减完全无效。
         
         # 情绪相互影响
         self._influence_emotions()
@@ -446,12 +441,15 @@ class EmotionSystem:
             self._add_to_history(emotion, value)
     
     def add_emotion(self, emotion, delta):
-        # 增加或减少情绪值
+        # 增加或减少情绪值（已应用个性修正）
+        # 修复：个性系数只影响增量，不对总值做乘法（避免累积缩放bug）
+        adjusted_delta = self._apply_personality_to_delta(emotion, delta)
+
         if emotion in self.emotions:
-            self.emotions[emotion] = max(-100, min(100, self.emotions[emotion] + delta))
+            self.emotions[emotion] = max(-100, min(100, self.emotions[emotion] + adjusted_delta))
             self._add_to_history(emotion, self.emotions[emotion])
         elif emotion in self.complex_emotions:
-            self.complex_emotions[emotion] = max(-100, min(100, self.complex_emotions[emotion] + delta))
+            self.complex_emotions[emotion] = max(-100, min(100, self.complex_emotions[emotion] + adjusted_delta))
             self._add_to_history(emotion, self.complex_emotions[emotion])
     
     def _add_to_history(self, emotion, value):
@@ -727,45 +725,51 @@ class EmotionSystem:
             # 同伴晚归
             self.add_emotion('worry', 45)        # 增加普通担忧程度
             self.add_emotion('anxious', 20)      # 增加焦虑程度
-        
-        # 根据个性特质调整情绪反应
-        self._adjust_emotion_by_personality()
+        # 注意：个性特质调整已在 add_emotion 内部通过 _apply_personality_to_delta 完成，
+        # 不再需要在这里对总值做乘法（避免累积缩放bug）
     
-    def _adjust_emotion_by_personality(self):
-        # 根据个性特质调整情绪
-        
-        # 内向-外向：内向的Ralsei情绪变化更慢，外向的Ralsei情绪变化更快
-        if self.personality['introvert_extrovert'] < 30:
-            # 内向
-            for emotion in self.emotions:
-                self.emotions[emotion] *= 0.8
-        elif self.personality['introvert_extrovert'] > 70:
-            # 外向
-            for emotion in self.emotions:
-                self.emotions[emotion] *= 1.2
-        
-        # 乐观-悲观：乐观的Ralsei更容易感到开心，悲观的Ralsei更容易感到悲伤
-        if self.personality['optimism_pessimism'] > 70:
-            # 乐观
-            self.emotions['happy'] *= 1.3
-            self.emotions['sad'] *= 0.7
-        elif self.personality['optimism_pessimism'] < 30:
-            # 悲观
-            self.emotions['happy'] *= 0.7
-            self.emotions['sad'] *= 1.3
-        
-        # 勇敢-谨慎：勇敢的Ralsei不容易感到恐惧，谨慎的Ralsei更容易感到恐惧
-        if self.personality['bravery_caution'] > 70:
-            # 勇敢
-            self.emotions['fear'] *= 0.5
-        elif self.personality['bravery_caution'] < 30:
-            # 谨慎
-            self.emotions['fear'] *= 1.5
-        
-        # 好奇心：好奇心强的Ralsei更容易感到惊讶
-        if self.personality['curiosity'] > 70:
-            # 好奇心强
-            self.emotions['surprised'] *= 1.2
+    def _apply_personality_to_delta(self, emotion, delta):
+        """
+        根据个性特质修正情绪变化的增量。
+        修复：只影响本次增量，不对情绪总值做乘法（避免累积缩放bug）。
+        之前的实现是每次事件都对总值乘系数，导致内向者几次事件后情绪归零。
+        """
+        factor = 1.0
+
+        # 内向-外向：内向的情绪变化更平缓，外向的更激烈
+        ie = self.personality.get('introvert_extrovert', 50)
+        if ie < 30:
+            factor *= 0.8   # 内向：情绪增量打8折
+        elif ie > 70:
+            factor *= 1.2   # 外向：情绪增量放大20%
+
+        # 乐观-悲观：影响开心和悲伤的增量
+        op = self.personality.get('optimism_pessimism', 50)
+        if emotion == 'happy':
+            if op > 70:
+                factor *= 1.3   # 乐观：开心增量 +30%
+            elif op < 30:
+                factor *= 0.7   # 悲观：开心增量 -30%
+        elif emotion == 'sad':
+            if op > 70:
+                factor *= 0.7   # 乐观：悲伤增量 -30%
+            elif op < 30:
+                factor *= 1.3   # 悲观：悲伤增量 +30%
+
+        # 勇敢-谨慎：影响恐惧的增量
+        bc = self.personality.get('bravery_caution', 50)
+        if emotion == 'fear':
+            if bc > 70:
+                factor *= 0.5   # 勇敢：恐惧增量 -50%
+            elif bc < 30:
+                factor *= 1.5   # 谨慎：恐惧增量 +50%
+
+        # 好奇心：影响惊讶的增量
+        cur = self.personality.get('curiosity', 50)
+        if emotion == 'surprised' and cur > 70:
+            factor *= 1.2   # 好奇心强：惊讶增量 +20%
+
+        return delta * factor
     
     def get_animation_for_emotion(self, emotion, intensity):
         # 根据情绪和强度获取对应的动画
