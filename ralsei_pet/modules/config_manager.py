@@ -1,6 +1,18 @@
+import copy
 import json
 import os
 import time
+
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
 
 class ConfigManager:
     """配置文件管理类，用于加载和保存配置"""
@@ -80,13 +92,14 @@ class ConfigManager:
             # 之后 .get("version") 会抛未捕获 AttributeError 导致启动即崩（无备份无回退）。
             # 非 dict 一律按损坏处理：备份后回退默认配置。
             if not isinstance(loaded_config, dict):
-                print(f"配置文件根节点不是对象（{type(loaded_config).__name__}），按损坏处理")
+                _log.warning("配置文件根节点不是对象（%s），按损坏处理",
+                             type(loaded_config).__name__)
                 raise json.JSONDecodeError("config root is not dict", "", 0)
-            
+
             # 配置版本检查和自动升级
             config_version = loaded_config.get("version", "0.0")
             if config_version != self.config_version:
-                print(f"配置版本升级: {config_version} -> {self.config_version}")
+                _log.info("配置版本升级: %s -> %s", config_version, self.config_version)
                 # 创建配置备份
                 self._backup_config(loaded_config)
                 # 合并默认配置和加载的配置，确保所有必要的键都存在
@@ -96,7 +109,7 @@ class ConfigManager:
             else:
                 # 正常合并配置
                 merged_config = self._merge_configs(default_config, loaded_config)
-            
+
             # 自动迁移旧版云服务商配置到本地 AI 默认值
             api_section = merged_config.get("api", {})
             needs_migration = False
@@ -110,25 +123,28 @@ class ConfigManager:
                 api_section["model"] = "local-model"
                 needs_migration = True
             if needs_migration:
-                print("检测到旧版云服务配置，已自动迁移为本地 AI 默认值")
-            
+                _log.info("检测到旧版云服务配置，已自动迁移为本地 AI 默认值")
+
             # 如果合并后的配置与加载的配置不同，保存更新后的配置
             if merged_config != loaded_config:
                 self._save_config(merged_config)
-            
+
             return merged_config
-        except (json.JSONDecodeError, IOError) as e:
-            print(f"加载配置文件失败: {e}")
+        # 修复：原先只捕获 (JSONDecodeError, IOError)，编码错误（UnicodeDecodeError）
+        # 不在 IOError 体系内，会让启动直接崩溃；一并捕获并走"备份损坏文件→回退默认"流程。
+        except (json.JSONDecodeError, UnicodeDecodeError, ValueError, OSError) as e:
+            _log.error("加载配置文件失败: %s", e)
             # 创建配置备份
             try:
-                with open(self.config_file, 'r', encoding='utf-8') as f:
+                with open(self.config_file, 'r', encoding='utf-8', errors='replace') as f:
                     corrupt_config = f.read()
                 backup_path = f"{self.config_file}.corrupt.{int(time.time())}"
                 with open(backup_path, 'w', encoding='utf-8') as f:
                     f.write(corrupt_config)
-                print(f"已备份损坏的配置文件到: {backup_path}")
-            except:
-                pass
+                _log.info("已备份损坏的配置文件到: %s", backup_path)
+            except OSError as backup_err:
+                # 修复：原先裸 except 静默吞噬备份失败，现在至少留一条日志
+                _log.warning("备份损坏配置失败: %s", backup_err)
             # 如果加载失败，使用默认配置
             self._save_config(default_config)
             return default_config
@@ -147,27 +163,31 @@ class ConfigManager:
         
         return merged
     
-    def _save_config(self, config):
-        """保存配置文件（原子写入）"""
+    def _save_config(self, config) -> bool:
+        """保存配置文件（原子写入）。修复：返回是否成功，供 update() 做失败回滚。"""
         try:
             temp_file = f"{self.config_file}.tmp"
             with open(temp_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4, ensure_ascii=False)
             os.replace(temp_file, self.config_file)
             self.last_save_time = time.time()
-        except IOError as e:
-            print(f"保存配置文件失败: {e}")
+            return True
+        except (OSError, TypeError, ValueError) as e:
+            _log.error("保存配置文件失败: %s", e)
             if os.path.exists(f"{self.config_file}.tmp"):
                 try:
                     os.remove(f"{self.config_file}.tmp")
-                except:
+                except OSError:
                     pass
-    
+            return False
+
     def get(self, key_path, default=None):
         """获取配置值"""
+        if not isinstance(key_path, str) or not key_path:
+            return default
         keys = key_path.split('.')
         value = self.config
-        
+
         try:
             for key in keys:
                 if isinstance(value, dict) and key in value:
@@ -177,60 +197,121 @@ class ConfigManager:
             return value
         except (TypeError, AttributeError):
             return default
-    
-    def set(self, key_path, value):
-        """设置配置值"""
+
+    @staticmethod
+    def _split_key_path(key_path):
+        """校验并切分 key_path；非法（空串/None/含空段）返回 None。
+
+        修复：原先 "a..b"/""/None 会创建 config[""] 垃圾数据。
+        """
+        if not isinstance(key_path, str) or not key_path:
+            return None
         keys = key_path.split('.')
-        config = self.config
-        
-        # 保存旧值用于通知观察者
-        old_value = self.get(key_path)
-        
-        # 遍历除最后一个键之外的所有键，确保嵌套字典存在
-        for key in keys[:-1]:
-            if key not in config or not isinstance(config[key], dict):
+        if any(k == "" for k in keys):
+            return None
+        return keys
+
+    @staticmethod
+    def _ensure_nested(config, keys):
+        """逐级确保嵌套字典存在，返回最内层字典。
+
+        修复：原先 set() 与 update() 各写一份逐级建字典的循环（重复编码），收敛于此。
+        收尾修复：遇到中间节点不是 dict 时记 warning，避免静默覆盖导致数据丢失。
+        """
+        for key in keys:
+            if key not in config:
+                config[key] = {}
+            elif not isinstance(config[key], dict):
+                _log.warning(
+                    "配置节点 %r 原值类型为 %s 而非 dict，将被覆盖为空字典（数据可能丢失）",
+                    key, type(config[key]).__name__,
+                )
                 config[key] = {}
             config = config[key]
-        
-        # 设置最后一个键的值
-        config[keys[-1]] = value
-        
-        # 保存配置文件
-        self._save_config(self.config)
-        
+        return config
+
+    def set(self, key_path, value):
+        """设置配置值"""
+        # 修复：空/非法 key_path 原先会创建 config[""] 垃圾数据，现在直接拒绝
+        keys = self._split_key_path(key_path)
+        if keys is None:
+            _log.warning("set() 拒绝非法 key_path: %r", key_path)
+            return False
+
+        # 保存快照，写盘失败时回滚内存状态（与 update() 一致）
+        snapshot = copy.deepcopy(self.config)
+
+        # 保存旧值用于通知观察者
+        old_value = self.get(key_path)
+
+        try:
+            # 遍历除最后一个键之外的所有键，确保嵌套字典存在
+            config = self._ensure_nested(self.config, keys[:-1])
+
+            # 设置最后一个键的值
+            config[keys[-1]] = value
+        except (TypeError, AttributeError) as e:
+            _log.error("set() 失败，已回滚: %s", e)
+            self.config = snapshot
+            return False
+
+        # 保存配置文件；失败则回滚内存并放弃通知
+        if not self._save_config(self.config):
+            self.config = snapshot
+            _log.error("set() 写盘失败，已回滚内存配置: %s", key_path)
+            return False
+
         # 通知观察者配置变更
         self._notify_observers(key_path, old_value, value)
-    
+        return True
+
     def update(self, updates):
         """批量更新配置"""
         if not isinstance(updates, dict):
             return False
-        
+
+        # 修复：先校验全部 key_path 合法，避免半途插入垃圾数据后再回滚的复杂态
+        valid_updates = {}
+        for key_path, value in updates.items():
+            if self._split_key_path(key_path) is not None:
+                valid_updates[key_path] = value
+            else:
+                _log.warning("update() 跳过非法 key_path: %r", key_path)
+        if not valid_updates:
+            return False
+
+        # 修复：保存快照，写盘失败时回滚内存状态（原先保存失败时内存与磁盘不一致）
+        snapshot = copy.deepcopy(self.config)
+
         # 记录变更信息
         changes = []
-        
-        for key_path, value in updates.items():
-            old_value = self.get(key_path)
-            keys = key_path.split('.')
-            config = self.config
-            
-            # 遍历创建嵌套字典
-            for key in keys[:-1]:
-                if key not in config or not isinstance(config[key], dict):
-                    config[key] = {}
-                config = config[key]
-            
-            # 设置值
-            config[keys[-1]] = value
-            changes.append((key_path, old_value, value))
-        
-        # 一次性保存配置
-        self._save_config(self.config)
-        
+
+        try:
+            for key_path, value in valid_updates.items():
+                old_value = self.get(key_path)
+                keys = key_path.split('.')
+
+                # 遍历创建嵌套字典
+                config = self._ensure_nested(self.config, keys[:-1])
+
+                # 设置值
+                config[keys[-1]] = value
+                changes.append((key_path, old_value, value))
+        except (TypeError, AttributeError) as e:
+            _log.error("批量更新配置失败，已回滚: %s", e)
+            self.config = snapshot
+            return False
+
+        # 一次性保存配置；失败则回滚内存并放弃通知
+        if not self._save_config(self.config):
+            self.config = snapshot
+            _log.error("批量更新写盘失败，已回滚内存配置")
+            return False
+
         # 通知所有变更
         for change in changes:
             self._notify_observers(*change)
-        
+
         return True
     
     def add_observer(self, observer):
@@ -249,17 +330,17 @@ class ConfigManager:
             try:
                 observer.on_config_change(key_path, old_value, new_value)
             except Exception as e:
-                print(f"通知观察者失败: {e}")
-    
+                _log.warning("通知观察者失败: %s", e)
+
     def _backup_config(self, config):
         """创建配置备份"""
         try:
             backup_path = f"{self.config_file}.backup.{int(time.time())}"
             with open(backup_path, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4, ensure_ascii=False)
-            print(f"已创建配置备份: {backup_path}")
-        except Exception as e:
-            print(f"创建配置备份失败: {e}")
+            _log.info("已创建配置备份: %s", backup_path)
+        except (OSError, TypeError, ValueError) as e:
+            _log.warning("创建配置备份失败: %s", e)
     
     def reset_config(self, section=None):
         """重置配置到默认值"""
@@ -289,15 +370,15 @@ class ConfigManager:
         for section in required_sections:
             if section not in self.config:
                 return False, f"缺少必要的配置部分: {section}"
-        
-        # AI 配置验证
-        api_config = self.config["api"]
-        if api_config["enabled"]:
-            if not api_config["api_key"]:
+
+        # AI 配置验证（修复：手改配置缺键时直接 [] 索引会 KeyError，改用 .get）
+        api_config = self.config.get("api", {}) or {}
+        if api_config.get("enabled"):
+            if not api_config.get("api_key"):
                 return False, "AI已启用但未设置API密钥"
-            if not api_config["base_url"]:
+            if not api_config.get("base_url"):
                 return False, "AI已启用但未设置基础URL"
-        
+
         return True, "配置验证通过"
     
     def get_api_config(self):

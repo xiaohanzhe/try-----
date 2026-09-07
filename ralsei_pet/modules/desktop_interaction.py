@@ -116,7 +116,7 @@ class DesktopInteraction:
 
     @staticmethod
     def _get_real_desktop_path():
-        """获取真实桌面路径（兼容 OneDrive 桌面重定向 / 多用户）。
+        r"""获取真实桌面路径（兼容 OneDrive 桌面重定向 / 多用户）。
         纯文件系统判断：优先 USERPROFILE\Desktop，再试常见 OneDrive 路径。"""
         base = os.path.join(os.environ['USERPROFILE'], 'Desktop')
         if os.path.isdir(base):
@@ -137,8 +137,8 @@ class DesktopInteraction:
                 v, _ = winreg.QueryValueEx(k, 'Desktop')
                 if v and os.path.isdir(v):
                     return v
-        except Exception:
-            pass
+        except Exception as e:
+            log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
         return base
 
     @staticmethod
@@ -239,7 +239,7 @@ class DesktopInteraction:
             
             return system_info
         except Exception as e:
-            print(f"获取系统信息失败: {e}")
+            log.warning(f"获取系统信息失败: {e}")
             return {}
     
     def get_storage_info(self):
@@ -263,11 +263,11 @@ class DesktopInteraction:
                         "percent": usage.percent
                     })
                 except Exception as e:
-                    print(f"获取存储分区信息失败: {e}")
+                    log.warning(f"获取存储分区信息失败: {e}")
             
             return storage_info
         except Exception as e:
-            print(f"获取存储信息失败: {e}")
+            log.warning(f"获取存储信息失败: {e}")
             return []
     
     def check_system_resources(self):
@@ -302,8 +302,8 @@ class DesktopInteraction:
                 try:
                     load_average = [round(load, 2) for load in psutil.getloadavg()]
                     resource_info["load_average"] = load_average
-                except Exception:
-                    pass
+                except Exception as e:
+                    log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
             
             # 发送系统资源通知（仅当超过阈值时）
             if cpu_percent > 90:
@@ -315,7 +315,7 @@ class DesktopInteraction:
                 
             return resource_info
         except Exception as e:
-            print(f"检查系统资源失败: {e}")
+            log.warning(f"检查系统资源失败: {e}")
             return {}
     
     def check_battery_status(self):
@@ -342,7 +342,7 @@ class DesktopInteraction:
                 return battery_info
             return {}
         except Exception as e:
-            print(f"检查电池状态失败: {e}")
+            log.warning(f"检查电池状态失败: {e}")
             return {}
     
     def check_network_status(self):
@@ -376,7 +376,7 @@ class DesktopInteraction:
                 
             return net_stats
         except Exception as e:
-            print(f"检查网络状态失败: {e}")
+            log.warning(f"检查网络状态失败: {e}")
             return {}
     
     def check_scheduled_tasks(self):
@@ -408,7 +408,7 @@ class DesktopInteraction:
     
     def execute_scheduled_task(self, task):
         # 执行定时任务
-        print(f"执行定时任务: {task['name']} - {task['action']}")
+        log.debug(f"执行定时任务: {task['name']} - {task['action']}")
         # 发送任务执行通知
         self.parent.emotion_system.react_to_event("scheduled_task_executed", task)
         # 生成对话
@@ -422,19 +422,19 @@ class DesktopInteraction:
     def add_scheduled_task(self, task):
         # 添加新的定时任务
         self.scheduled_tasks.append(task)
-        print(f"添加定时任务: {task['name']}")
+        log.debug(f"添加定时任务: {task['name']}")
     
     def remove_scheduled_task(self, task_name):
         # 删除定时任务
         self.scheduled_tasks = [task for task in self.scheduled_tasks if task["name"] != task_name]
-        print(f"删除定时任务: {task_name}")
+        log.debug(f"删除定时任务: {task_name}")
     
     def enable_scheduled_task(self, task_name, enabled=True):
         # 启用或禁用定时任务
         for task in self.scheduled_tasks:
             if task["name"] == task_name:
                 task["enabled"] = enabled
-                print(f"{'启用' if enabled else '禁用'}定时任务: {task_name}")
+                log.debug(f"{'启用' if enabled else '禁用'}定时任务: {task_name}")
                 break
     
     def get_scheduled_tasks(self):
@@ -465,11 +465,11 @@ class DesktopInteraction:
             # 关闭不必要的进程
             # 清理临时文件
             # 优化系统设置
-            print("系统优化中...")
+            log.debug("系统优化中...")
             self.parent.emotion_system.react_to_event("system_optimized", {})
             return True
         except Exception as e:
-            print(f"系统优化失败: {e}")
+            log.warning(f"系统优化失败: {e}")
             return False
     
     def backup_data(self, backup_path=None):
@@ -490,12 +490,12 @@ class DesktopInteraction:
             if os.path.exists(config_path):
                 import shutil
                 shutil.copy(config_path, backup_path)
-                print(f"配置文件已备份到: {backup_path}")
+                log.debug(f"配置文件已备份到: {backup_path}")
                 self.parent.emotion_system.react_to_event("data_backup_successful", {"path": backup_path})
                 return True
             return False
         except Exception as e:
-            print(f"数据备份失败: {e}")
+            log.warning(f"数据备份失败: {e}")
             self.parent.emotion_system.react_to_event("data_backup_failed", {"error": str(e)})
             return False
     
@@ -509,12 +509,12 @@ class DesktopInteraction:
             backup_config = os.path.join(backup_path, 'config.json')
             if os.path.exists(backup_config):
                 shutil.copy(backup_config, self.parent.config_manager.config_file)
-                print(f"配置文件已从: {backup_path} 恢复")
+                log.debug(f"配置文件已从: {backup_path} 恢复")
                 self.parent.emotion_system.react_to_event("data_restore_successful", {"path": backup_path})
                 return True
             return False
         except Exception as e:
-            print(f"数据恢复失败: {e}")
+            log.warning(f"数据恢复失败: {e}")
             self.parent.emotion_system.react_to_event("data_restore_failed", {"error": str(e)})
             return False
     
@@ -584,7 +584,7 @@ class DesktopInteraction:
             return deleted_count > 0
 
         except Exception as e:
-            print(f"清理临时文件失败: {e}")
+            log.warning(f"清理临时文件失败: {e}")
             if hasattr(self.parent, 'emotion_system') and self.parent.emotion_system:
                 self.parent.emotion_system.react_to_event("temp_files_clean_failed", {"error": str(e)})
             return False
@@ -739,7 +739,7 @@ class DesktopInteraction:
             desktop = shell.NameSpace(self.desktop_path)
             items = list(desktop.Items())
         except Exception as e:
-            print(f"Shell API 获取桌面项失败: {e}")
+            log.warning(f"Shell API 获取桌面项失败: {e}")
             items = []
 
         # 先收集所有文件夹（使用 Shell 结果优先）
@@ -754,8 +754,8 @@ class DesktopInteraction:
                         'modified_date': desktop.GetDetailsOf(item, 3),
                         'type_desc': "文件夹",
                     })
-            except Exception:
-                pass
+            except Exception as e:
+                log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
 
         # Shell 不可用时，回退到 os.listdir
         if not folder_items:
@@ -770,8 +770,8 @@ class DesktopInteraction:
                             'modified_date': '',
                             'type_desc': "文件夹",
                         })
-            except Exception:
-                pass
+            except Exception as e:
+                log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
 
         if not folder_items:
             return []
@@ -810,7 +810,7 @@ class DesktopInteraction:
             desktop = shell.NameSpace(self.desktop_path)
             items = list(desktop.Items())
         except Exception as e:
-            print(f"Shell API 获取桌面项失败: {e}")
+            log.warning(f"Shell API 获取桌面项失败: {e}")
             items = []
 
         file_items = []
@@ -824,8 +824,8 @@ class DesktopInteraction:
                         'type_desc': desktop.GetDetailsOf(item, 15),
                         'modified_date': desktop.GetDetailsOf(item, 3),
                     })
-            except Exception:
-                pass
+            except Exception as e:
+                log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
 
         if not file_items:
             try:
@@ -839,8 +839,8 @@ class DesktopInteraction:
                             'type_desc': os.path.splitext(name)[1],
                             'modified_date': time.ctime(os.path.getmtime(full)),
                         })
-            except Exception:
-                pass
+            except Exception as e:
+                log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
 
         if not file_items:
             return []
@@ -877,27 +877,35 @@ class DesktopInteraction:
     def open_file(self, file_path):
         # 打开文件，模拟真实用户操作
         try:
-            print(f"正在打开文件: {file_path}")
+            log.debug("正在打开文件: %s", file_path)
+            # 修复：前置校验，避免对不存在路径 startfile 抛 OSError
+            if not file_path or not os.path.exists(file_path):
+                log.warning("打开失败，文件不存在: %s", file_path)
+                return False
             os.startfile(file_path)
             return True
         except Exception as e:
-            print(f"打开文件失败: {e}")
+            log.error("打开文件失败: %s", e)
             return False
-        
+
     def open_folder(self, folder_path):
         # 打开文件夹，模拟真实用户操作
         try:
-            print(f"正在打开文件夹: {folder_path}")
+            log.debug("正在打开文件夹: %s", folder_path)
+            # 修复：前置校验，同 open_file
+            if not folder_path or not os.path.isdir(folder_path):
+                log.warning("打开失败，文件夹不存在: %s", folder_path)
+                return False
             os.startfile(folder_path)
             return True
         except Exception as e:
-            print(f"打开文件夹失败: {e}")
+            log.error("打开文件夹失败: %s", e)
             return False
-        
+
     def close_window(self, window_title):
         # 关闭窗口，模拟真实用户操作
         try:
-            print(f"正在关闭窗口: {window_title}")
+            log.debug("正在关闭窗口: %s", window_title)
             hwnd = win32gui.FindWindow(None, window_title)
             if hwnd:
                 # 先激活窗口
@@ -907,7 +915,7 @@ class DesktopInteraction:
                 return True
             return False
         except Exception as e:
-            print(f"关闭窗口失败: {e}")
+            log.error("关闭窗口失败: %s", e)
             return False
         
     def get_window_rect(self, window_title):
@@ -923,7 +931,7 @@ class DesktopInteraction:
                     'height': rect[3] - rect[1],
                 }
         except Exception as e:
-            print(f"获取窗口位置失败: {e}")
+            log.warning(f"获取窗口位置失败: {e}")
         return None
         
     def get_all_visible_windows(self):
@@ -1040,7 +1048,7 @@ class DesktopInteraction:
             # 枚举所有窗口
             win32gui.EnumWindows(callback, None)
         except Exception as e:
-            print(f"获取所有可见窗口失败: {e}")
+            log.warning(f"获取所有可见窗口失败: {e}")
         
         # 统一计算Z序和平台高度（优化：减少窗口遍历次数）
         if visible_windows:
@@ -1086,7 +1094,7 @@ class DesktopInteraction:
                 self.user_opened_privacy_apps.append(hwnd)
                 # 获取窗口标题用于日志
                 title = win32gui.GetWindowText(hwnd)
-                print(f"已标记应用为用户打开: {title} (HWND: {hwnd})")
+                log.debug(f"已标记应用为用户打开: {title} (HWND: {hwnd})")
         else:
             # 是应用名称
             app_name = app_name_or_hwnd
@@ -1108,7 +1116,7 @@ class DesktopInteraction:
                 if hwnd not in self.user_opened_privacy_apps:
                     self.user_opened_privacy_apps.append(hwnd)
                     title = win32gui.GetWindowText(hwnd)
-                    print(f"已标记应用为用户打开: {title} (HWND: {hwnd})")
+                    log.debug(f"已标记应用为用户打开: {title} (HWND: {hwnd})")
     
     def mark_app_as_closed(self, app_name_or_hwnd):
         # 标记应用为已关闭
@@ -1117,7 +1125,7 @@ class DesktopInteraction:
             hwnd = app_name_or_hwnd
             if hwnd in self.user_opened_privacy_apps:
                 self.user_opened_privacy_apps.remove(hwnd)
-                print(f"已标记应用为已关闭 (HWND: {hwnd})")
+                log.debug(f"已标记应用为已关闭 (HWND: {hwnd})")
         else:
             # 是应用名称
             app_name = app_name_or_hwnd
@@ -1133,7 +1141,7 @@ class DesktopInteraction:
             for hwnd in hwnds_to_remove:
                 if hwnd in self.user_opened_privacy_apps:
                     self.user_opened_privacy_apps.remove(hwnd)
-                    print(f"已标记应用为已关闭: {win32gui.GetWindowText(hwnd)} (HWND: {hwnd})")
+                    log.debug(f"已标记应用为已关闭: {win32gui.GetWindowText(hwnd)} (HWND: {hwnd})")
     
     def is_privacy_app(self, window_title_or_file_path):
         # 检查是否是隐私应用或隐私文件
@@ -1157,7 +1165,7 @@ class DesktopInteraction:
     def drag_file(self, file_path, target_pos):
         # 拖拽文件到指定位置，模拟真实拖拽操作
         try:
-            print(f"正在拖拽文件: {file_path} 到位置: {target_pos}")
+            log.debug(f"正在拖拽文件: {file_path} 到位置: {target_pos}")
             
             # 获取当前文件目录和目标目录
             current_dir = os.path.dirname(file_path)
@@ -1189,10 +1197,10 @@ class DesktopInteraction:
             
             # 执行文件移动
             os.rename(file_path, new_path)
-            print(f"文件拖拽成功{action}，新路径: {new_path}")
+            log.debug(f"文件拖拽成功{action}，新路径: {new_path}")
             return True
         except Exception as e:
-            print(f"拖拽文件失败: {e}")
+            log.warning(f"拖拽文件失败: {e}")
             return False
     
     def _get_folder_at_pos(self, pos):
@@ -1207,34 +1215,46 @@ class DesktopInteraction:
     def rename_file(self, file_path, new_name):
         # 重命名文件，模拟真实用户操作
         try:
-            print(f"正在重命名文件: {file_path} 为: {new_name}")
-            
+            log.debug("正在重命名文件: %s 为: %s", file_path, new_name)
+
+            # 修复：前置校验——源文件不存在/目录不可写时提前返回，
+            # 而不是等 os.rename 抛 PermissionError 后统一报"重命名失败"
+            if not os.path.exists(file_path):
+                log.warning("重命名失败，源文件不存在: %s", file_path)
+                return False
+            if not os.access(os.path.dirname(file_path) or ".", os.W_OK):
+                log.warning("重命名失败，目录不可写: %s", file_path)
+                return False
+            if not new_name or not isinstance(new_name, str):
+                log.warning("重命名失败，新文件名为空")
+                return False
+
             # 获取当前文件目录
             current_dir = os.path.dirname(file_path)
-            
+
             # 修复：移除 time.sleep(0.3) 主线程阻塞
-            
+
             # 构建新路径
             new_path = os.path.join(current_dir, new_name)
-            
+
             # 检查新文件名是否有效
             if not self._is_valid_filename(new_name):
-                print(f"无效的文件名: {new_name}")
+                log.warning("无效的文件名: %s", new_name)
                 return False
-            
+
             # 如果文件已存在，添加时间戳
             if os.path.exists(new_path):
                 timestamp = int(time.time())
                 base_name, ext = os.path.splitext(new_name)
                 new_name = f"{base_name}_{timestamp}{ext}"
                 new_path = os.path.join(current_dir, new_name)
-            
+
             # 执行重命名
             os.rename(file_path, new_path)
-            print(f"文件重命名成功，新路径: {new_path}")
+            log.info("文件重命名成功，新路径: %s", new_path)
             return True
         except Exception as e:
-            print(f"重命名文件失败: {e}")
+            log.error("重命名文件失败: %s", e)
             return False
     
     def _is_valid_filename(self, filename):
@@ -1249,16 +1269,22 @@ class DesktopInteraction:
     def delete_file(self, file_path, confirm=True, send_to_recycle=True, show_animation=True):
         # 删除文件，模拟真实用户操作，支持回收站和动画效果
         try:
-            print(f"正在删除文件: {file_path}")
-            
+            log.debug("正在删除文件: %s", file_path)
+
+            # 修复：前置校验——文件不存在时提前返回 False（原先会一路走到
+            # SHFileOperation/os.remove 再报错，报错信息对用户不可读）
+            if not file_path or not os.path.exists(file_path):
+                log.warning("删除失败，文件不存在: %s", file_path)
+                return False
+
             # 修复：移除 time.sleep(0.5/0.4/0.3) 主线程阻塞（合计约 1.2 秒，删除会卡 UI）
-            
+
             if confirm:
                 # 模拟确认对话框，更智能的确认逻辑
                 filename = os.path.basename(file_path)
-                print(f"确认删除文件 '{filename}' 吗？ (模拟确认对话框)")
-                print(f"此操作将{'将文件移至回收站' if send_to_recycle else '永久删除文件'}")
-            
+                log.debug("确认删除文件 '%s' 吗？ (模拟确认对话框)", filename)
+                log.debug("此操作将%s", "将文件移至回收站" if send_to_recycle else "永久删除文件")
+
             if send_to_recycle:
                 # 移至回收站，使用Windows API
                 try:
@@ -1269,21 +1295,25 @@ class DesktopInteraction:
                     shell.SHFileOperation((0, shellcon.FO_DELETE, file_path, None,
                                            shellcon.FOF_ALLOWUNDO | shellcon.FOF_NOCONFIRMATION,
                                            None, None))
-                    print(f"文件 '{os.path.basename(file_path)}' 已移至回收站")
+                    log.info("文件 '%s' 已移至回收站", os.path.basename(file_path))
                 except Exception as e:
                     # 修复：回收站移动失败时绝不静默降级为 os.remove 永久删除
                     # （用户以为可回收恢复、实际被彻底删除，不可撤销）。
                     # 返回 False 并明确提示，保留文件等待上层处理/重试。
-                    print(f"移至回收站失败（文件已保留，未删除）: {e}")
+                    log.warning("移至回收站失败（文件已保留，未删除）: %s", e)
                     return False
             else:
                 # 执行永久删除操作
+                # 修复：先做写权限检查，无权限时给出明确原因
+                if not os.access(file_path, os.W_OK):
+                    log.warning("永久删除失败，无写权限: %s", file_path)
+                    return False
                 os.remove(file_path)
-                print(f"文件 '{os.path.basename(file_path)}' 已永久删除")
-            
+                log.info("文件 '%s' 已永久删除", os.path.basename(file_path))
+
             return True
         except Exception as e:
-            print(f"删除文件失败: {e}")
+            log.error("删除文件失败: %s", e)
             return False
 
     # ------------------------------------------------------------------
@@ -1298,7 +1328,7 @@ class DesktopInteraction:
             win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
             return True
         except Exception as e:
-            print(f"按句柄关闭窗口失败: {e}")
+            log.warning("按句柄关闭窗口失败: %s", e)
             return False
 
     def minimize_window_by_hwnd(self, hwnd):
@@ -1307,7 +1337,7 @@ class DesktopInteraction:
             win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
             return True
         except Exception as e:
-            print(f"最小化窗口失败: {e}")
+            log.warning("最小化窗口失败: %s", e)
             return False
 
     def maximize_window_by_hwnd(self, hwnd):
@@ -1316,7 +1346,7 @@ class DesktopInteraction:
             win32gui.ShowWindow(hwnd, win32con.SW_MAXIMIZE)
             return True
         except Exception as e:
-            print(f"最大化窗口失败: {e}")
+            log.warning("最大化窗口失败: %s", e)
             return False
 
     def resize_window_by_hwnd(self, hwnd, width, height):
@@ -1329,7 +1359,7 @@ class DesktopInteraction:
                                   win32con.SWP_NOACTIVATE)
             return True
         except Exception as e:
-            print(f"调整窗口大小失败: {e}")
+            log.warning("调整窗口大小失败: %s", e)
             return False
 
     def get_desktop_file_count(self):
@@ -1337,7 +1367,8 @@ class DesktopInteraction:
         try:
             return len([n for n in os.listdir(self.desktop_path)
                         if os.path.isfile(os.path.join(self.desktop_path, n))])
-        except Exception:
+        except Exception as e:
+            log.debug("统计桌面文件数失败: %s", e)
             return 0
 
     def organize_desktop(self):
@@ -1348,7 +1379,7 @@ class DesktopInteraction:
     def drag_file_background(self, file_path, target_pos):
         """后台"拖拽"文件。安全实现：不真实移动用户文件（移到屏幕坐标没有
         目录语义，真实移动会打乱用户文件布局），返回 False 表示未执行。"""
-        print(f"[自主代理] 跳过真实拖拽文件（安全限制）: {file_path}")
+        log.debug("跳过真实拖拽文件（安全限制）: %s", file_path)
         return False
 
     def create_folder(self, folder_name, target_path=None, suggest_name=False):
@@ -1366,22 +1397,28 @@ class DesktopInteraction:
                     f"文档_{current_time}"
                 ]
                 folder_name = random.choice(suggested_names)
-            
-            print(f"正在创建文件夹: {folder_name}")
-            
+
+            log.debug("正在创建文件夹: %s", folder_name)
+
             # 修复：移除 time.sleep(0.8) 主线程阻塞
-            
+
             # 检查文件夹名是否有效
-            if not self._is_valid_filename(folder_name):
-                print(f"无效的文件夹名: {folder_name}")
+            if not folder_name or not self._is_valid_filename(folder_name):
+                log.warning("无效的文件夹名: %s", folder_name)
                 return False
-            
+
             # 确定目标路径
             if target_path and os.path.isdir(target_path):
                 folder_path = os.path.join(target_path, folder_name)
             else:
                 folder_path = os.path.join(self.desktop_path, folder_name)
-            
+
+            # 修复：创建前检查目标目录写权限，避免 makedirs 抛 PermissionError
+            _parent_dir = os.path.dirname(folder_path) or "."
+            if not os.access(_parent_dir, os.W_OK):
+                log.warning("创建文件夹失败，目录不可写: %s", _parent_dir)
+                return False
+
             # 如果文件夹已存在，添加更智能的后缀
             if os.path.exists(folder_path):
                 # 尝试添加序号而不是时间戳，更友好
@@ -1391,23 +1428,34 @@ class DesktopInteraction:
                     folder_name = f"{base_name}_{counter}"
                     folder_path = os.path.join(os.path.dirname(folder_path), folder_name)
                     counter += 1
-            
+
             # 执行创建操作
             os.makedirs(folder_path, exist_ok=True)
-            print(f"文件夹创建成功，路径: {folder_path}")
-            
+            log.info("文件夹创建成功，路径: %s", folder_path)
+
             # 模拟文件夹创建后的选择和重命名状态
             time.sleep(0.5)
             return folder_path
         except Exception as e:
-            print(f"创建文件夹失败: {e}")
+            log.error("创建文件夹失败: %s", e)
             return False
     
     def copy_file(self, source_path, target_dir, auto_organize=False, preserve_metadata=True):
         # 复制文件到目标目录，模拟真实复制操作，支持自动分类和元数据保留
         try:
-            print(f"正在复制文件: {source_path} 到: {target_dir}")
-            
+            log.debug("正在复制文件: %s 到: %s", source_path, target_dir)
+
+            # 修复：前置校验——源文件不存在/不可读时提前返回明确错误
+            if not source_path or not os.path.isfile(source_path):
+                log.warning("复制失败，源文件不存在: %s", source_path)
+                return False
+            if not os.access(source_path, os.R_OK):
+                log.warning("复制失败，源文件不可读: %s", source_path)
+                return False
+            if not target_dir or not isinstance(target_dir, str):
+                log.warning("复制失败，目标目录无效: %r", target_dir)
+                return False
+
             # 自动分类功能
             if auto_organize:
                 # 根据文件类型自动分类
@@ -1424,10 +1472,17 @@ class DesktopInteraction:
                     target_dir = os.path.join(target_dir, '代码')
                 elif file_ext in ['.zip', '.rar', '.7z', '.tar', '.gz']:
                     target_dir = os.path.join(target_dir, '压缩文件')
-                
+
                 # 确保分类目录存在
                 os.makedirs(target_dir, exist_ok=True)
-            
+
+            # 修复：复制前确保目标目录存在（auto_organize=False 且传入的
+            # target_dir 不存在时，原先 shutil.copy2 直接 FileNotFoundError）
+            os.makedirs(target_dir, exist_ok=True)
+            if not os.access(target_dir, os.W_OK):
+                log.warning("复制失败，目标目录不可写: %s", target_dir)
+                return False
+
             # 模拟真实复制延迟，根据文件大小调整
             try:
                 file_size = os.path.getsize(source_path) / (1024 * 1024)  # MB
@@ -1436,11 +1491,11 @@ class DesktopInteraction:
                 time.sleep(delay)
             except Exception:
                 time.sleep(0.8)
-            
+
             import shutil
             filename = os.path.basename(source_path)
             target_path = os.path.join(target_dir, filename)
-            
+
             # 如果目标文件已存在，添加智能后缀
             if os.path.exists(target_path):
                 base_name, ext = os.path.splitext(filename)
@@ -1452,17 +1507,17 @@ class DesktopInteraction:
                     while os.path.exists(target_path):
                         target_path = os.path.join(target_dir, f"{base_name} - 副本{counter}{ext}")
                         counter += 1
-            
+
             # 执行复制操作，保留元数据
             if preserve_metadata:
                 shutil.copy2(source_path, target_path)  # 保留元数据
             else:
                 shutil.copy(source_path, target_path)   # 只复制内容
-            
-            print(f"文件复制成功，新路径: {target_path}")
+
+            log.info("文件复制成功，新路径: %s", target_path)
             return True
         except Exception as e:
-            print(f"复制文件失败: {e}")
+            log.error("复制文件失败: %s", e)
             return False
     
     def cut_file(self, source_path, target_dir, auto_organize=False, preserve_metadata=True, show_progress=False):
@@ -1572,40 +1627,45 @@ class DesktopInteraction:
     def double_click_file(self, file_path):
         # 双击打开文件，模拟真实用户双击操作
         try:
-            print(f"正在双击打开文件: {file_path}")
-            
+            log.debug("正在双击打开文件: %s", file_path)
+
+            # 修复：前置校验——文件不存在时直接返回，避免 startfile 抛 OSError
+            if not file_path or not os.path.exists(file_path):
+                log.warning("打开失败，文件不存在: %s", file_path)
+                return False
+
             # 模拟真实双击延迟
             time.sleep(0.2)
-            
+
             # 执行打开操作
             os.startfile(file_path)
-            print(f"文件打开成功: {file_path}")
+            log.info("文件打开成功: %s", file_path)
             return True
         except Exception as e:
-            print(f"打开文件失败: {e}")
+            log.error("打开文件失败: %s", e)
             return False
     
     def right_click_file(self, file_path):
         # 右键点击文件，显示上下文菜单，模拟真实右键操作
         try:
-            print(f"正在右键点击文件: {file_path}")
+            log.debug(f"正在右键点击文件: {file_path}")
             
             # 模拟真实右键延迟
             time.sleep(0.1)
             
             # 显示模拟的右键菜单选项
-            print(f"文件右键菜单: {file_path}")
-            print("  1. 打开")
-            print("  2. 打开方式")
-            print("  3. 发送到")
-            print("  4. 复制")
-            print("  5. 剪切")
-            print("  6. 重命名")
-            print("  7. 删除")
-            print("  8. 属性")
+            log.debug(f"文件右键菜单: {file_path}")
+            log.debug("  1. 打开")
+            log.debug("  2. 打开方式")
+            log.debug("  3. 发送到")
+            log.debug("  4. 复制")
+            log.debug("  5. 剪切")
+            log.debug("  6. 重命名")
+            log.debug("  7. 删除")
+            log.debug("  8. 属性")
             return True
         except Exception as e:
-            print(f"右键点击文件失败: {e}")
+            log.warning(f"右键点击文件失败: {e}")
             return False
     
     def is_deltarune_related(self, file_path):
@@ -1648,7 +1708,7 @@ class DesktopInteraction:
             
             return False
         except Exception as e:
-            print(f"检查文件是否与Deltarune相关失败: {e}")
+            log.warning(f"检查文件是否与Deltarune相关失败: {e}")
             return False
     
     def get_interesting_files(self):
@@ -1675,12 +1735,12 @@ class DesktopInteraction:
         presentation = None
         self_opened = False  # 本方法自己 Dispatch 的实例才负责 Quit
         try:
-            print(f"正在执行PPT操作: {action}")
+            log.debug(f"正在执行PPT操作: {action}")
             
             # 根据文件路径打开PPT
             if ppt_path:
                 if not os.path.exists(ppt_path):
-                    print(f"PPT文件不存在: {ppt_path}")
+                    log.debug(f"PPT文件不存在: {ppt_path}")
                     return False
                 
                 # 启动PowerPoint
@@ -1699,10 +1759,10 @@ class DesktopInteraction:
                     if powerpoint.Presentations.Count > 0:
                         presentation = powerpoint.ActivePresentation
                     else:
-                        print("PowerPoint 已打开但没有演示文稿")
+                        log.debug("PowerPoint 已打开但没有演示文稿")
                         return False
                 except Exception:
-                    print("未找到已打开的 PowerPoint 实例，请提供 PPT 文件路径")
+                    log.debug("未找到已打开的 PowerPoint 实例，请提供 PPT 文件路径")
                     return False
             
             # 执行操作
@@ -1719,7 +1779,7 @@ class DesktopInteraction:
             
             return result
         except Exception as e:
-            print(f"PPT操作失败: {e}")
+            log.warning(f"PPT操作失败: {e}")
             import traceback
             traceback.print_exc()
             # 异常且是本方法自己打开的实例时，主动释放，防止进程泄漏/文件独占
@@ -1727,13 +1787,13 @@ class DesktopInteraction:
                 try:
                     if presentation is not None:
                         presentation.Close()
-                except Exception:
-                    pass
+                except Exception as e:
+                    log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
                 try:
                     if powerpoint is not None:
                         powerpoint.Quit()
-                except Exception:
-                    pass
+                except Exception as e:
+                    log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
             return False
     
     def _execute_ppt_action(self, presentation, action):
@@ -1742,59 +1802,59 @@ class DesktopInteraction:
             if action == "start_slideshow":
                 # 开始放映幻灯片
                 presentation.SlideShowSettings.Run()
-                print("PPT放映已开始")
+                log.debug("PPT放映已开始")
                 return True
             elif action == "next_slide":
                 # 切换到下一张幻灯片
                 if hasattr(presentation, 'SlideShowWindow') and presentation.SlideShowWindow.View is not None:
                     presentation.SlideShowWindow.View.Next()
-                    print("切换到下一张幻灯片")
+                    log.debug("切换到下一张幻灯片")
                     return True
                 else:
-                    print("当前没有正在放映的幻灯片")
+                    log.debug("当前没有正在放映的幻灯片")
                     return False
             elif action == "previous_slide":
                 # 切换到上一张幻灯片
                 if hasattr(presentation, 'SlideShowWindow') and presentation.SlideShowWindow.View is not None:
                     presentation.SlideShowWindow.View.Previous()
-                    print("切换到上一张幻灯片")
+                    log.debug("切换到上一张幻灯片")
                     return True
                 else:
-                    print("当前没有正在放映的幻灯片")
+                    log.debug("当前没有正在放映的幻灯片")
                     return False
             elif action == "stop_slideshow":
                 # 停止放映幻灯片
                 if hasattr(presentation, 'SlideShowWindow'):
                     presentation.SlideShowWindow.View.Exit()
-                    print("PPT放映已停止")
+                    log.debug("PPT放映已停止")
                     return True
                 else:
-                    print("当前没有正在放映的幻灯片")
+                    log.debug("当前没有正在放映的幻灯片")
                     return False
             elif action == "save":
                 # 保存演示文稿
                 presentation.Save()
-                print("PPT已保存")
+                log.debug("PPT已保存")
                 return True
             elif action == "close":
                 # 关闭演示文稿
                 presentation.Close()
-                print("PPT已关闭")
+                log.debug("PPT已关闭")
                 return True
             elif action == "add_slide":
                 # 添加新幻灯片
                 slide_layout = presentation.SlideMaster.CustomLayouts(1)  # 使用第一个布局
                 presentation.Slides.AddSlide(presentation.Slides.Count + 1, slide_layout)
-                print("已添加新幻灯片")
+                log.debug("已添加新幻灯片")
                 return True
             elif action == "delete_slide":
                 # 删除当前幻灯片
                 if presentation.Slides.Count > 0:
                     presentation.Slides(presentation.Slides.Count).Delete()
-                    print("已删除最后一张幻灯片")
+                    log.debug("已删除最后一张幻灯片")
                     return True
                 else:
-                    print("没有幻灯片可以删除")
+                    log.debug("没有幻灯片可以删除")
                     return False
             elif action == "go_to_slide":
                 # 跳转到指定幻灯片
@@ -1804,32 +1864,32 @@ class DesktopInteraction:
                     slide_index = 3
                     if slide_index <= presentation.Slides.Count:
                         presentation.SlideShowWindow.View.GotoSlide(slide_index)
-                        print(f"已跳转到幻灯片 {slide_index}")
+                        log.debug(f"已跳转到幻灯片 {slide_index}")
                         return True
                     else:
-                        print(f"幻灯片 {slide_index} 不存在")
+                        log.debug(f"幻灯片 {slide_index} 不存在")
                         return False
                 else:
-                    print("当前没有正在放映的幻灯片")
+                    log.debug("当前没有正在放映的幻灯片")
                     return False
             elif action == "set_slide_time":
                 # 设置幻灯片自动切换时间
                 for slide in presentation.Slides:
                     slide.SlideShowTransition.AdvanceOnTime = True
                     slide.SlideShowTransition.AdvanceTime = 5  # 5秒自动切换
-                print("已设置幻灯片自动切换时间为5秒")
+                log.debug("已设置幻灯片自动切换时间为5秒")
                 return True
             elif action == "export_as_pdf":
                 # 导出为PDF
                 pdf_path = os.path.splitext(presentation.FullName)[0] + ".pdf"
                 presentation.ExportAsFixedFormat(pdf_path, 2)  # 2表示PDF格式
-                print(f"已将PPT导出为PDF: {pdf_path}")
+                log.debug(f"已将PPT导出为PDF: {pdf_path}")
                 return True
             else:
-                print(f"不支持的PPT操作: {action}")
+                log.warning(f"不支持的PPT操作: {action}")
                 return False
         except Exception as e:
-            print(f"执行PPT操作失败: {e}")
+            log.warning(f"执行PPT操作失败: {e}")
             return False
     
     # 表格编辑辅助功能
@@ -1840,14 +1900,14 @@ class DesktopInteraction:
         excel = None
         workbook = None
         try:
-            print(f"正在执行Excel操作: {action}")
+            log.debug(f"正在执行Excel操作: {action}")
             
             if not excel_path:
-                print("请提供Excel文件路径")
+                log.debug("请提供Excel文件路径")
                 return False
             
             if not os.path.exists(excel_path):
-                print(f"Excel文件不存在: {excel_path}")
+                log.debug(f"Excel文件不存在: {excel_path}")
                 return False
             
             # 启动Excel
@@ -1885,7 +1945,7 @@ class DesktopInteraction:
                 if sheet_name in [sheet.Name for sheet in workbook.Sheets]:
                     sheet = workbook.Sheets(sheet_name)
                 else:
-                    print(f"工作表不存在: {sheet_name}")
+                    log.debug(f"工作表不存在: {sheet_name}")
                     return False
             else:
                 sheet = workbook.ActiveSheet
@@ -1893,116 +1953,116 @@ class DesktopInteraction:
             if action == "read_data":
                 # 读取单元格数据
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 range_obj = sheet.Range(cell_range)
                 data = range_obj.Value
-                print(f"读取到数据: {data}")
+                log.debug(f"读取到数据: {data}")
                 return data
             elif action == "write_data":
                 # 写入数据到单元格
                 if not cell_range or data is None:
-                    print("请提供单元格范围和数据")
+                    log.debug("请提供单元格范围和数据")
                     return False
                 
                 sheet.Range(cell_range).Value = data
-                print(f"已将数据写入单元格: {cell_range}")
+                log.debug(f"已将数据写入单元格: {cell_range}")
                 return True
             elif action == "add_sheet":
                 # 添加新工作表
                 if sheet_name:
                     workbook.Sheets.Add().Name = sheet_name
-                    print(f"已添加工作表: {sheet_name}")
+                    log.debug(f"已添加工作表: {sheet_name}")
                     return True
                 else:
                     new_sheet = workbook.Sheets.Add()
-                    print(f"已添加新工作表: {new_sheet.Name}")
+                    log.debug(f"已添加新工作表: {new_sheet.Name}")
                     return True
             elif action == "delete_sheet":
                 # 删除工作表
                 if sheet_name and sheet_name in [s.Name for s in workbook.Sheets]:
                     workbook.Sheets(sheet_name).Delete()
-                    print(f"已删除工作表: {sheet_name}")
+                    log.debug(f"已删除工作表: {sheet_name}")
                     return True
                 else:
-                    print("请提供有效的工作表名称")
+                    log.debug("请提供有效的工作表名称")
                     return False
             elif action == "auto_fit":
                 # 自动调整列宽
                 sheet.Cells.EntireColumn.AutoFit()
-                print("已自动调整列宽")
+                log.debug("已自动调整列宽")
                 return True
             elif action == "save":
                 # 保存工作簿
                 workbook.Save()
-                print("Excel已保存")
+                log.debug("Excel已保存")
                 return True
             elif action == "close":
                 # 关闭工作簿
                 workbook.Close()
-                print("Excel已关闭")
+                log.debug("Excel已关闭")
                 return True
             elif action == "sum_range":
                 # 计算范围总和
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 result = sheet.Evaluate(f"SUM({cell_range})")
-                print(f"范围 {cell_range} 的总和为: {result}")
+                log.debug(f"范围 {cell_range} 的总和为: {result}")
                 return result
             elif action == "average_range":
                 # 计算范围平均值
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 result = sheet.Evaluate(f"AVERAGE({cell_range})")
-                print(f"范围 {cell_range} 的平均值为: {result}")
+                log.debug(f"范围 {cell_range} 的平均值为: {result}")
                 return result
             elif action == "max_range":
                 # 计算范围最大值
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 result = sheet.Evaluate(f"MAX({cell_range})")
-                print(f"范围 {cell_range} 的最大值为: {result}")
+                log.debug(f"范围 {cell_range} 的最大值为: {result}")
                 return result
             elif action == "min_range":
                 # 计算范围最小值
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 result = sheet.Evaluate(f"MIN({cell_range})")
-                print(f"范围 {cell_range} 的最小值为: {result}")
+                log.debug(f"范围 {cell_range} 的最小值为: {result}")
                 return result
             elif action == "sort_data":
                 # 排序数据
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 # 默认按第一列升序排序
                 range_obj = sheet.Range(cell_range)
                 range_obj.Sort(Key1=range_obj.Columns(1), Order1=1)  # Order1=1表示升序
-                print(f"已对范围 {cell_range} 按第一列升序排序")
+                log.debug(f"已对范围 {cell_range} 按第一列升序排序")
                 return True
             elif action == "filter_data":
                 # 筛选数据
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 sheet.Range(cell_range).AutoFilter()
-                print(f"已为范围 {cell_range} 添加筛选器")
+                log.debug(f"已为范围 {cell_range} 添加筛选器")
                 return True
             elif action == "create_chart":
                 # 创建图表
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 # 获取当前工作表
@@ -2010,56 +2070,56 @@ class DesktopInteraction:
                 chart.SetSourceData(Source=sheet.Range(cell_range))
                 chart.ChartType = -4100  # 柱状图
                 chart.Location(Where=1, Name=sheet.Name)  # 嵌入当前工作表
-                print(f"已在工作表 {sheet.Name} 中创建柱状图")
+                log.debug(f"已在工作表 {sheet.Name} 中创建柱状图")
                 return True
             elif action == "merge_cells":
                 # 合并单元格
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 sheet.Range(cell_range).Merge()
-                print(f"已合并单元格: {cell_range}")
+                log.debug(f"已合并单元格: {cell_range}")
                 return True
             elif action == "unmerge_cells":
                 # 取消合并单元格
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 sheet.Range(cell_range).UnMerge()
-                print(f"已取消合并单元格: {cell_range}")
+                log.debug(f"已取消合并单元格: {cell_range}")
                 return True
             elif action == "set_cell_color":
                 # 设置单元格颜色
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 # 默认设置为浅黄色
                 sheet.Range(cell_range).Interior.ColorIndex = 36
-                print(f"已设置单元格 {cell_range} 颜色为浅黄色")
+                log.debug(f"已设置单元格 {cell_range} 颜色为浅黄色")
                 return True
             elif action == "clear_format":
                 # 清除单元格格式
                 if not cell_range:
-                    print("请提供单元格范围")
+                    log.debug("请提供单元格范围")
                     return False
                 
                 sheet.Range(cell_range).ClearFormats()
-                print(f"已清除单元格 {cell_range} 的格式")
+                log.debug(f"已清除单元格 {cell_range} 的格式")
                 return True
             elif action == "export_as_pdf":
                 # 导出为PDF
                 pdf_path = os.path.splitext(workbook.FullName)[0] + ".pdf"
                 sheet.ExportAsFixedFormat(0, pdf_path)  # 0表示PDF格式
-                print(f"已将工作表 {sheet.Name} 导出为PDF: {pdf_path}")
+                log.debug(f"已将工作表 {sheet.Name} 导出为PDF: {pdf_path}")
                 return True
             else:
-                print(f"不支持的Excel操作: {action}")
+                log.warning(f"不支持的Excel操作: {action}")
                 return False
         except Exception as e:
-            print(f"执行Excel操作失败: {e}")
+            log.warning(f"执行Excel操作失败: {e}")
             return False
         
     def get_file_content_preview(self, file_path, max_lines=5, allow_privacy=False):
@@ -2083,7 +2143,7 @@ class DesktopInteraction:
             else:
                 return f"无法预览此文件类型: {os.path.splitext(file_path)[1]}"
         except Exception as e:
-            print(f"获取文件预览失败: {e}")
+            log.warning(f"获取文件预览失败: {e}")
             return f"预览失败: {str(e)}"
         
     def is_element_nearby(self, element_pos, check_pos, max_distance=100):
@@ -2219,7 +2279,7 @@ class DesktopInteraction:
     def open_browser(self, url="https://www.google.com", new_window=False, position=None, size=None):
         # 打开浏览器并访问指定URL
         try:
-            print(f"正在打开浏览器访问: {url}")
+            log.debug(f"正在打开浏览器访问: {url}")
             import webbrowser
             
             if new_window:
@@ -2231,7 +2291,7 @@ class DesktopInteraction:
             
             return True
         except Exception as e:
-            print(f"打开浏览器失败: {e}")
+            log.warning(f"打开浏览器失败: {e}")
             return False
     
     def move_window_smoothly(self, window_title, target_x, target_y, duration=1.0):
@@ -2264,7 +2324,7 @@ class DesktopInteraction:
             
             return True
         except Exception as e:
-            print(f"平滑移动窗口失败: {e}")
+            log.warning(f"平滑移动窗口失败: {e}")
             return False
     
     def resize_window_smoothly(self, window_title, target_width, target_height, duration=1.0):
@@ -2299,7 +2359,7 @@ class DesktopInteraction:
             
             return True
         except Exception as e:
-            print(f"平滑调整窗口大小失败: {e}")
+            log.warning(f"平滑调整窗口大小失败: {e}")
             return False
     
     def find_window_by_keyword(self, keyword):
@@ -2339,7 +2399,7 @@ class DesktopInteraction:
             bilibili_windows = self.find_window_by_keyword("B站")
         
         if not bilibili_windows:
-            print("未找到B站窗口")
+            log.debug("未找到B站窗口")
             return False
         
         # 选择第一个找到的B站窗口
@@ -2369,7 +2429,7 @@ class DesktopInteraction:
     def search_in_browser(self, query, browser="chrome"):
         # 在浏览器中搜索指定内容
         try:
-            print(f"正在搜索: {query}")
+            log.debug(f"正在搜索: {query}")
             import webbrowser
             # 根据浏览器类型构建搜索URL
             if browser.lower() == "chrome":
@@ -2384,7 +2444,7 @@ class DesktopInteraction:
             webbrowser.open(url)
             return True
         except Exception as e:
-            print(f"搜索失败: {e}")
+            log.warning(f"搜索失败: {e}")
             return False
     
     def identify_browser_windows(self):
@@ -2402,7 +2462,7 @@ class DesktopInteraction:
             
             return browser_windows
         except Exception as e:
-            print(f"识别浏览器窗口失败: {e}")
+            log.warning(f"识别浏览器窗口失败: {e}")
             return []
     
     def create_new_excel(self, file_name, sheet_name="Sheet1"):
@@ -2410,14 +2470,14 @@ class DesktopInteraction:
         excel = None
         workbook = None
         try:
-            print(f"正在创建新的Excel文件: {file_name}")
+            log.debug(f"正在创建新的Excel文件: {file_name}")
             
             # 构建完整的文件路径
             excel_path = os.path.join(self.desktop_path, f"{file_name}.xlsx")
             
             # 检查文件是否已存在
             if os.path.exists(excel_path):
-                print(f"Excel文件已存在: {excel_path}")
+                log.debug(f"Excel文件已存在: {excel_path}")
                 return excel_path
             
             # 启动Excel
@@ -2441,7 +2501,7 @@ class DesktopInteraction:
             workbook.Close()
             excel.Quit()
             
-            print(f"Excel文件创建成功: {excel_path}")
+            log.debug(f"Excel文件创建成功: {excel_path}")
             return excel_path
         except Exception as e:
             log.error("创建Excel文件失败: %s", e, exc_info=True)
@@ -2498,7 +2558,7 @@ class DesktopInteraction:
             win32gui.EnumWindows(callback, None)
             return ppt_windows
         except Exception as e:
-            print(f"识别PPT窗口失败: {e}")
+            log.warning(f"识别PPT窗口失败: {e}")
             import traceback
             traceback.print_exc()
             return []
@@ -2550,7 +2610,7 @@ class DesktopInteraction:
             win32gui.EnumWindows(callback, None)
             return excel_windows
         except Exception as e:
-            print(f"识别Excel窗口失败: {e}")
+            log.warning(f"识别Excel窗口失败: {e}")
             import traceback
             traceback.print_exc()
             return []
@@ -2602,7 +2662,7 @@ class DesktopInteraction:
             win32gui.EnumWindows(callback, None)
             return word_windows
         except Exception as e:
-            print(f"识别Word窗口失败: {e}")
+            log.warning(f"识别Word窗口失败: {e}")
             import traceback
             traceback.print_exc()
             return []
@@ -2643,7 +2703,7 @@ class DesktopInteraction:
                             }
                             ppt_files.append(file_info)
             except Exception as e:
-                print(f"直接遍历桌面目录失败: {e}")
+                log.warning(f"直接遍历桌面目录失败: {e}")
         
         return ppt_files
     

@@ -1,4 +1,11 @@
 import time
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 
 class EnergyHungerSystem:
     def __init__(self, parent):
@@ -98,8 +105,8 @@ class EnergyHungerSystem:
                     if _spell_stage is None and not _playing:
                         self.parent.change_animation("idle", force=False)
                     # spell/游戏中：只记休息意图，不切动画（由主状态机自然处理）
-                except Exception:
-                    pass
+                except Exception as e:
+                    _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
                 # 自动进入休息状态
                 self.is_resting = True
             elif energy_tier == 'low':
@@ -140,8 +147,8 @@ class EnergyHungerSystem:
             # 休息时停止移动，由主状态机自然切到 idle。
             try:
                 self.parent.is_moving = False
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
     
     def eat(self):
         # 开始进食
@@ -152,8 +159,8 @@ class EnergyHungerSystem:
             # 修复：同上，不直接改 current_animation。
             try:
                 self.parent.is_moving = False
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
         
     def set_resting(self, resting):
         # 设置休息状态

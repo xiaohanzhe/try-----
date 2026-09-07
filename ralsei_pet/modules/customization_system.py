@@ -1,6 +1,13 @@
 import json
 import os
 
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 class CustomizationSystem:
     def __init__(self, parent):
         self.parent = parent
@@ -80,9 +87,9 @@ class CustomizationSystem:
                     loaded_config = json.load(f)
                     # 合并配置，保留原有配置的默认值
                     self._merge_config(self.customization_data, loaded_config)
-                    print(f"成功加载自定义配置: {self.config_path}")
+                    _log.debug("成功加载自定义配置: %s", self.config_path)
         except Exception as e:
-            print(f"加载自定义配置失败: {e}")
+            _log.warning("加载自定义配置失败: %s", e)
     
     def save_config(self):
         """保存自定义配置"""
@@ -91,9 +98,9 @@ class CustomizationSystem:
             os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
             with open(self.config_path, 'w', encoding='utf-8') as f:
                 json.dump(self.customization_data, f, ensure_ascii=False, indent=2)
-            print(f"成功保存自定义配置: {self.config_path}")
+            _log.debug("成功保存自定义配置: %s", self.config_path)
         except Exception as e:
-            print(f"保存自定义配置失败: {e}")
+            _log.warning("保存自定义配置失败: %s", e)
     
     def _merge_config(self, base, update):
         """递归合并配置"""
@@ -143,7 +150,7 @@ class CustomizationSystem:
         # 这里可以添加实际的外观变化应用逻辑
         # 例如：更换服装、调整大小、改变颜色等
         appearance = self.customization_data['appearance']
-        print(f"应用外观变化: {appearance}")
+        _log.debug("应用外观变化: %s", appearance)
         # 调整动画速度
         animation_speed = appearance['animation_speed']
         # 更新动画定时器速度
@@ -350,7 +357,7 @@ class CustomizationSystem:
         # 这里可以添加实际的外观变化应用逻辑
         # 例如：更换服装、调整大小、改变颜色等
         appearance = self.customization_data['appearance']
-        print(f"应用外观变化: {appearance}")
+        _log.debug("应用外观变化: %s", appearance)
         
         # 调整动画速度
         # 修复：animation_speed 为 0 时 int(100/0) 除零崩溃；为负/非数值时也异常。取有效范围。
@@ -391,12 +398,12 @@ class CustomizationSystem:
         
         # 应用其他行为设置
         behavior = self.customization_data['behavior']
-        print(f"应用行为变化: {behavior}")
+        _log.debug("应用行为变化: %s", behavior)
     
     def apply_content_changes(self):
         """应用内容变化"""
         content = self.customization_data['content']
-        print(f"应用内容变化: {content}")
+        _log.debug("应用内容变化: %s", content)
     
     def update_behavior(self, behavior_settings):
         """更新行为设置"""

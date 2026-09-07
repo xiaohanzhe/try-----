@@ -16,6 +16,16 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor, QTransform
 from PyQt5.QtCore import Qt, QTimer, QPoint, QRect, pyqtSignal
 
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
 
 
 # 添加性能监控功能
@@ -64,7 +74,7 @@ def monitor_performance(func):
 # 添加项目根目录到sys.path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
-print(f"添加项目根目录: {project_root}")
+_log.debug(f"添加项目根目录: {project_root}")
 
 # 直接导入模块
 from modules.sprite_loader import SpriteLoader
@@ -190,7 +200,7 @@ class RalseiPet(QMainWindow):
             tray.activated.connect(self._on_tray_activated)
             self._tray = tray
         except Exception as e:
-            print(f"系统托盘初始化失败（不影响使用）: {e}")
+            _log.warning(f"系统托盘初始化失败（不影响使用）: {e}")
             self._tray = None
 
     def _hide_ralsei(self):
@@ -207,8 +217,8 @@ class RalseiPet(QMainWindow):
             try:
                 tray.showMessage("Ralsei", "我藏起来啦~ 点托盘图标就能找到我！",
                                  QSystemTrayIcon.Information, 2500)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
         else:
             self.showMinimized()
 
@@ -219,16 +229,16 @@ class RalseiPet(QMainWindow):
         try:
             if getattr(self, '_tray', None) is not None:
                 self._tray.hide()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     def _on_tray_activated(self, reason):
         try:
             from PyQt5.QtWidgets import QSystemTrayIcon
             if reason == QSystemTrayIcon.Trigger:  # 单击/双击托盘图标
                 self._show_from_tray()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     def init_ui(self):
         # 创建透明窗口，移除固定置顶，改为动态调整
@@ -270,15 +280,15 @@ class RalseiPet(QMainWindow):
         
     def load_resources(self):
         # 加载精灵资源
-        print("开始加载精灵资源...")
+        _log.debug("开始加载精灵资源...")
         self.sprite_loader = SpriteLoader()
         try:
             self.sprite_loader.load_sprites()
-            print("精灵资源加载完成！")
+            _log.debug("精灵资源加载完成！")
             # 打印加载的动画
-            print(f"加载的动画列表: {list(self.sprite_loader.animation_mapping.keys())}")
+            _log.debug(f"加载的动画列表: {list(self.sprite_loader.animation_mapping.keys())}")
         except Exception as e:
-            print(f"加载精灵资源失败: {e}")
+            _log.warning(f"加载精灵资源失败: {e}")
             import traceback
             traceback.print_exc()
         
@@ -302,7 +312,7 @@ class RalseiPet(QMainWindow):
         try:
             self.sound_manager = SoundManager(parent=self)
         except Exception as e:
-            print(f"声音管理器初始化失败: {e}")
+            _log.warning(f"声音管理器初始化失败: {e}")
             self.sound_manager = None
         
         # 初始化楼层管理器，用于实现"建楼"要求
@@ -324,7 +334,7 @@ class RalseiPet(QMainWindow):
             )
             self.autonomous_agent.start()
         except Exception as e:
-            print(f"自主代理初始化失败: {e}")
+            _log.warning(f"自主代理初始化失败: {e}")
             self.autonomous_agent = None
         
         # 初始化虚拟鼠标
@@ -343,7 +353,7 @@ class RalseiPet(QMainWindow):
         try:
             self.ai_driver = AiActionDriver(self)
         except Exception as e:
-            print(f"AI 行动驱动初始化失败: {e}")
+            _log.warning(f"AI 行动驱动初始化失败: {e}")
             self.ai_driver = None
         
         # 初始化透明占位符系统
@@ -868,8 +878,8 @@ class RalseiPet(QMainWindow):
                 new_val = old_val
             try:
                 self.emotion_system.set_emotion(new_key, new_val)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
 
     def _agent_busy_flags(self) -> dict:
         """返回各种会与自主代理冲突的状态标志。
@@ -895,19 +905,19 @@ class RalseiPet(QMainWindow):
             self._hide_moving_cb = None
             self._hide_moving_cb_stage = None
             try:
-                print(f"[ARRIVE] 触发到达回调 stage={cb_stage} pos=({self.x()},{self.y()}) target=({self.target_pos.x()},{self.target_pos.y()})")
+                _log.debug(f"[ARRIVE] 触发到达回调 stage={cb_stage} pos=({self.x()},{self.y()}) target=({self.target_pos.x()},{self.target_pos.y()})")
                 cb()
-                print(f"[ARRIVE] 回调执行完成 stage={cb_stage} 后 hide_stage={getattr(self, '_hide_stage', None)} spell_stage={getattr(self, '_spell_stage', None)}")
+                _log.debug(f"[ARRIVE] 回调执行完成 stage={cb_stage} 后 hide_stage={getattr(self, '_hide_stage', None)} spell_stage={getattr(self, '_spell_stage', None)}")
             except Exception as e:
-                print(f"[ARRIVE] 回调异常 stage={cb_stage}: {type(e).__name__}: {e}")
+                _log.warning(f"[ARRIVE] 回调异常 stage={cb_stage}: {type(e).__name__}: {e}")
                 import traceback
                 traceback.print_exc()
         # 自主代理通知
         try:
             if getattr(self, 'autonomous_agent', None) is not None:
                 self.autonomous_agent.notify_arrived()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     def randomize_movement_pattern(self):
         # 随机化运动模式，使Ralsei能够合理地在屏幕上漫游
@@ -1170,7 +1180,7 @@ class RalseiPet(QMainWindow):
             if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 3.0:
                 self.check_nearby_desktop_elements()
         except Exception as e:
-            print(f"check_nearby_desktop_elements 异常: {e}")
+            _log.warning(f"check_nearby_desktop_elements 异常: {e}")
         self._last_desktop_elem_check = current_time
         
         # 睡眠状态处理
@@ -1191,7 +1201,7 @@ class RalseiPet(QMainWindow):
             if getattr(self, 'autonomous_agent', None) is not None:
                 self.autonomous_agent.tick(current_time)
         except Exception as e:
-            print(f"自主代理tick异常: {e}")
+            _log.warning(f"自主代理tick异常: {e}")
         
         # 更新楼层信息 + 窗口移动跟随 / 关窗掉落（定期 1 秒；不依赖 is_moving）
         # 修复：原来 check_window_movement（含窗口移动→楼板跟随、窗口消失→坠落）只在
@@ -1201,7 +1211,7 @@ class RalseiPet(QMainWindow):
             try:
                 self.check_window_movement()
             except Exception as e:
-                print(f"check_window_movement 异常: {e}")
+                _log.warning(f"check_window_movement 异常: {e}")
             self.last_floor_check_time = current_time
         
         # ===== 关键过程总开关：施法 / 躲猫猫 中 强制关闭鼠标跟随 / 拖拽跟随 / 拖拽玩耍 =====
@@ -1698,8 +1708,8 @@ class RalseiPet(QMainWindow):
         # 移动鼠标
         try:
             win32api.SetCursorPos((current_x, current_y))
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
     
     def stop_mouse_drag(self):
         # 停止拖动鼠标
@@ -1739,7 +1749,7 @@ class RalseiPet(QMainWindow):
                 result = self.command_manager.execute_command(command)
                 results.append(result)
                 # 可以根据需要处理执行结果
-                print(f"API命令执行结果: {result}")
+                _log.debug(f"API命令执行结果: {result}")
             
             # 发送执行结果回API
             self.api_client.send_status({
@@ -1747,7 +1757,7 @@ class RalseiPet(QMainWindow):
                 'last_command_results': results
             })
         except Exception as e:
-            print(f"API命令处理错误: {e}")
+            _log.warning(f"API命令处理错误: {e}")
     
     # 鼠标事件处理
     
@@ -1960,7 +1970,7 @@ class RalseiPet(QMainWindow):
         start_pos_str = f"({self.jump_start_pos.x()}, {self.jump_start_pos.y()})"
         start_on_window = "窗口上" if self.current_window else "桌面上"
         target_info = f"窗口[{target_window['title'] if target_window else '桌面'}]"
-        print(f"起跳: {start_pos_str}, 位置: {start_on_window}, 目标: {target_info}")
+        _log.debug(f"起跳: {start_pos_str}, 位置: {start_on_window}, 目标: {target_info}")
         
         # 计算目标平台的Z坐标
         self.jump_target_z = 0
@@ -2121,7 +2131,7 @@ class RalseiPet(QMainWindow):
             # 常规摔落动画持续时间
             self.max_fall_duration = 2.0
         
-        print(f"开始重力掉落，起始位置: {self.fall_start_pos}, 摔落速度: {fall_velocity}, 是否甩飞: {is_thrown}")
+        _log.debug(f"开始重力掉落，起始位置: {self.fall_start_pos}, 摔落速度: {fall_velocity}, 是否甩飞: {is_thrown}")
         
     def _is_falling_through_window(self, current_rect, new_rect, window_rect):
         # 检查Ralsei是否会穿过某个窗口
@@ -2204,7 +2214,7 @@ class RalseiPet(QMainWindow):
                 continue
             if floor['rect'].intersects(current_rect):
                 # 检测到穿透，取消跳跃，启动重力掉落
-                print("跳跃过程中检测到楼层穿透，取消跳跃并启动重力掉落")
+                _log.debug("跳跃过程中检测到楼层穿透，取消跳跃并启动重力掉落")
                 self.is_jumping = False
                 self.start_falling()
                 return
@@ -2299,12 +2309,12 @@ class RalseiPet(QMainWindow):
                 if new_floor['type'] == 'window':
                     # 从一个窗口移动到另一个窗口，检查是否是因为窗口移动导致的
                     # 启动摔倒动画，符合"建楼"要求：移动他所在的"楼板"时他会重心不稳甚至摔倒
-                    print(f"Ralsei从一个窗口移动到另一个窗口，重心不稳摔倒了！")
+                    _log.debug(f"Ralsei从一个窗口移动到另一个窗口，重心不稳摔倒了！")
                     # 设置摔倒动画持续时间至少3秒，符合要求
                     self.start_fall("window_move")
                 elif new_floor['type'] == 'desktop':
                     # 从窗口上掉落到桌面，启动重力掉落
-                    print(f"Ralsei从窗口上掉落到桌面，启动重力掉落！")
+                    _log.debug(f"Ralsei从窗口上掉落到桌面，启动重力掉落！")
                     self.start_falling()
 
         # ===== 修复：窗口移动时 Ralsei 跟随楼板一起移动 =====
@@ -2334,7 +2344,7 @@ class RalseiPet(QMainWindow):
                     self.current_window['height'] = new_floor['rect'].height()
                     # 大幅移动 → 重心不稳摔倒（至少3秒），符合建楼要求
                     if move_distance > 30 and not self.is_falling:
-                        print(f"窗口被大幅度移动，移动距离: {move_distance}，Ralsei重心不稳摔倒了！")
+                        _log.debug(f"窗口被大幅度移动，移动距离: {move_distance}，Ralsei重心不稳摔倒了！")
                         self.emotion_system.react_to_event('window_moved', {})
                         self.start_fall("window_move")
 
@@ -2385,21 +2395,21 @@ class RalseiPet(QMainWindow):
                         
                         # 如果移动距离过大（超过30像素），Ralsei会重心不稳摔倒
                         if move_distance > 30 and not self.is_falling:
-                            print(f"窗口被大幅度移动，移动距离: {move_distance}，Ralsei重心不稳摔倒了！")
+                            _log.debug(f"窗口被大幅度移动，移动距离: {move_distance}，Ralsei重心不稳摔倒了！")
                             # 触发情绪反应：窗口移动
                             self.emotion_system.react_to_event('window_moved', {})
                             # 设置摔倒动画持续时间至少3秒，符合要求
                             self.start_fall("window_move")
                 elif new_floor['type'] != 'window':
                     # 窗口被关闭或移动，Ralsei从窗口上掉下来
-                    print(f"窗口被关闭或移动，Ralsei从窗口上掉下来了！")
+                    _log.debug(f"窗口被关闭或移动，Ralsei从窗口上掉下来了！")
                     # 启动重力掉落
                     self.start_falling()
             else:
                 # 当前在桌面上，检查是否有新窗口覆盖
                 if new_floor['type'] == 'window':
                     # 新窗口覆盖了Ralsei所在的位置，站到新窗口上
-                    print(f"新窗口覆盖了Ralsei所在的位置，Ralsei站到新窗口上")
+                    _log.debug(f"新窗口覆盖了Ralsei所在的位置，Ralsei站到新窗口上")
                     # 触发情绪反应：发现新窗口
                     self.emotion_system.react_to_event('found_window', {})
         
@@ -2413,7 +2423,7 @@ class RalseiPet(QMainWindow):
         # 开始摔倒，添加状态检查，避免重复触发
         if self.is_falling:
             # 已经在摔倒状态，不重复触发
-            print("已经在摔倒状态，不重复触发摔倒动作")
+            _log.debug("已经在摔倒状态，不重复触发摔倒动作")
             return
         # ===== 关键过程保护：施法 / 躲猫猫 / 拖拽中，不触发摔倒 =====
         if getattr(self, '_spell_stage', None) is not None:
@@ -2506,8 +2516,8 @@ class RalseiPet(QMainWindow):
         # 播放 splat 音效
         try:
             self.sound_manager.play_splat()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         # 切换到 splat 动画
         self.change_animation("splat", force=True)
         # 显示惊讶对话
@@ -2718,8 +2728,8 @@ class RalseiPet(QMainWindow):
                         else:
                             d = 'down' if dy > 0 else 'up'
                         self.change_animation(f"walk_{d}", force=True)
-                    except Exception:
-                        pass
+                    except Exception as e:  # 修复：原先静默吞噬
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
                 else:
                     # 恢复正常状态，但先休息一段时间，符合Ralsei温柔的性格
                     self.is_moving = False
@@ -2872,8 +2882,8 @@ class RalseiPet(QMainWindow):
                 # 移动光标
                 try:
                     win32api.SetCursorPos((new_cursor_x, new_cursor_y))
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
                 
                 # 让Ralsei跟随光标移动
                 ralsei_pos = self.pos()
@@ -3622,7 +3632,7 @@ class RalseiPet(QMainWindow):
             
             return True
         except Exception as e:
-            print(f"创建人名表失败: {e}")
+            _log.warning(f"创建人名表失败: {e}")
             self.dialogue_ui.add_dialogue("ralsei", "创建人名表失败了...", "sad")
             self.dialogue_ui.show_dialogue()
             return False
@@ -3683,8 +3693,8 @@ class RalseiPet(QMainWindow):
                 # 选择最新的Excel文件
                 try:
                     excel_files.sort(key=lambda f: os.path.getmtime(os.path.join(desktop_path, f)), reverse=True)
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
                 excel_file = excel_files[0]
                 excel_path = os.path.join(desktop_path, excel_file)
                 
@@ -3753,7 +3763,7 @@ class RalseiPet(QMainWindow):
             self.dialogue_ui.show_dialogue()
             return True
         except Exception as e:
-            print(f"处理文件操作指令失败: {e}")
+            _log.warning(f"处理文件操作指令失败: {e}")
             self.dialogue_ui.add_dialogue("ralsei", "处理文件操作指令失败了...", "sad")
             self.dialogue_ui.show_dialogue()
             return True
@@ -3771,8 +3781,8 @@ class RalseiPet(QMainWindow):
         # 刷新桌面元素后按名称匹配（真实图标 + 忽略扩展名 + 模糊包含）
         try:
             self.desktop_interaction.update_desktop_elements()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         target_lower = text.lower()
         matched = None
         for el in self.desktop_interaction.desktop_elements:
@@ -3837,19 +3847,19 @@ class RalseiPet(QMainWindow):
             
             return True
         except Exception as e:
-            print(f"修复Excel格式失败: {e}")
+            _log.warning(f"修复Excel格式失败: {e}")
             return False
         finally:
             try:
                 if workbook is not None:
                     workbook.Close(SaveChanges=False)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
             try:
                 if excel is not None:
                     excel.Quit()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
     
     def fill_names_in_excel(self, excel_path, names_list):
         # 往Excel表格中按顺序填写人名
@@ -3875,7 +3885,7 @@ class RalseiPet(QMainWindow):
             except Exception:
                 existing = False
             if existing:
-                print(f"文件已有内容，为避免覆盖用户数据，未填写人名: {excel_path}")
+                _log.debug(f"文件已有内容，为避免覆盖用户数据，未填写人名: {excel_path}")
                 return False
             
             # 设置表头
@@ -3907,19 +3917,19 @@ class RalseiPet(QMainWindow):
             
             return True
         except Exception as e:
-            print(f"往Excel表格中填写人名失败: {e}")
+            _log.warning(f"往Excel表格中填写人名失败: {e}")
             return False
         finally:
             try:
                 if workbook is not None:
                     workbook.Close(SaveChanges=False)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
             try:
                 if excel is not None:
                     excel.Quit()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
     
     def check_excel_table_needs(self):
         # 检查是否需要创建Excel表格
@@ -4259,8 +4269,8 @@ class RalseiPet(QMainWindow):
                     self._start_video_watching_loop()
                 elif not self.video_watching_timer.isActive():
                     self.video_watching_timer.start(5000)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
     
     def move_to_edge_and_shrink(self):
         # 将Ralsei移动到屏幕边缘并缩小（非阻塞 QTimer 动画）
@@ -4322,8 +4332,8 @@ class RalseiPet(QMainWindow):
             # 正在给用户打字（含 AI 思考/回复中）不插话，避免打断当前消息
             if getattr(self.dialogue_ui, 'is_typing', False):
                 return
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         current_hour = int(time.strftime("%H"))
         import random
         
@@ -4416,7 +4426,7 @@ class RalseiPet(QMainWindow):
                 if _cmds and isinstance(_cmds, dict):
                     self._handle_agent_commands(_cmds)
         except Exception as _e:
-            print(f"[本地AI] 状态轮询异常(忽略，不影响运行): {_e}")
+            _log.warning(f"[本地AI] 状态轮询异常(忽略，不影响运行): {_e}")
 
         # 本地 AI 行动驱动：让模型周期性地给 Ralsei 挑一个白名单动作
         # （跳舞/唱歌/散步/睡觉/说句话…）。一切失败静默回退规则行为。
@@ -4424,7 +4434,7 @@ class RalseiPet(QMainWindow):
             if getattr(self, 'ai_driver', None) is not None:
                 self.ai_driver.tick(time.time())
         except Exception as _e:
-            print(f"[本地AI] 行动驱动异常(忽略): {_e}")
+            _log.warning(f"[本地AI] 行动驱动异常(忽略): {_e}")
 
     def _handle_agent_commands(self, cmds):
         """消费自定义 agent 返回的命令 dict（本地 AI 协议留白处的接收端）。
@@ -4451,8 +4461,8 @@ class RalseiPet(QMainWindow):
                 if res and isinstance(res, dict) and res.get('reply'):
                     self.dialogue_ui.add_dialogue("ralsei", str(res['reply']), "happy")
                     self.dialogue_ui.show_dialogue()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         
     @monitor_performance
     def update_stats(self):
@@ -4476,13 +4486,13 @@ class RalseiPet(QMainWindow):
                 if _gt in ('rock_paper_scissors', 'guess_number'):
                     _started = _gs.get('started_at', 0.0)
                     if time.time() - _started > 300.0:
-                        print(f"[游戏] {_gt} 超过 5 分钟无输入，自动结束")
+                        _log.debug(f"[游戏] {_gt} 超过 5 分钟无输入，自动结束")
                         if _gt == 'rock_paper_scissors':
                             self.end_rock_paper_scissors()
                         else:
                             self.end_guess_number()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         
     def update_animation_by_emotion(self):
         # 根据当前情绪更新动画，保持情绪和姿势的自主性
@@ -4527,8 +4537,8 @@ class RalseiPet(QMainWindow):
             dui = self.dialogue_ui
             if hasattr(dui, '_is_user_inputting') and dui._is_user_inputting():
                 return
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         # 主动搭话（低概率，should_initiate_conversation 内部控制频率）——允许弹窗
         if self.dialogue_system.should_initiate_conversation():
             message = self.dialogue_system.initiate_conversation()
@@ -4566,7 +4576,7 @@ class RalseiPet(QMainWindow):
             try:
                 func()
             except Exception as e:
-                print(f"[办公检查] {func.__name__} 异常: {e}")
+                _log.warning(f"[办公检查] {func.__name__} 异常: {e}")
     
     
         
@@ -4689,8 +4699,8 @@ class RalseiPet(QMainWindow):
                 if getattr(self, 'is_splat', False):
                     try:
                         self.sound_manager.play_splat()
-                    except Exception:
-                        pass
+                    except Exception as e:  # 修复：原先静默吞噬
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
                     self.dialogue_ui.add_dialogue("ralsei", "别戳我啦...我都扁了...", "sad")
                     self.dialogue_ui.show_dialogue()
                     event.accept()
@@ -4735,11 +4745,11 @@ class RalseiPet(QMainWindow):
                     # 检查是否是连续点击
                     if current_time - self._pet_detection_state['last_click_time'] < 0.5:
                         self._pet_detection_state['click_count'] += 1
-                        print(f"连续点击耳朵: {self._pet_detection_state['click_count']}次")
+                        _log.debug(f"连续点击耳朵: {self._pet_detection_state['click_count']}次")
                         
                         # 连续点击3次触发不楞耳朵
                         if self._pet_detection_state['click_count'] >= 3:
-                            print("不楞不楞耳朵！")
+                            _log.debug("不楞不楞耳朵！")
                             self.emotion_system.add_emotion("happy", 40)
                             self.emotion_system.add_emotion("excited", 20)
                             self.play_animation_once("laugh")
@@ -4757,7 +4767,7 @@ class RalseiPet(QMainWindow):
                 # 根据不同部位触发不同效果
                 if clicked_part == "body":
                     # 轻推躯干
-                    print("轻推了Ralsei的躯干！")
+                    _log.debug("轻推了Ralsei的躯干！")
                     self.emotion_system.add_emotion("happy", 20)
                     self.emotion_system.add_emotion("curious", 15)
                     self.play_animation_once("surprised")
@@ -4765,7 +4775,7 @@ class RalseiPet(QMainWindow):
                     self.dialogue_ui.show_dialogue()
                 elif clicked_part == "shoulder":
                     # 轻推肩膀
-                    print("轻推了Ralsei的肩膀！")
+                    _log.debug("轻推了Ralsei的肩膀！")
                     self.emotion_system.add_emotion("happy", 20)
                     self.emotion_system.add_emotion("curious", 10)
                     self.play_animation_once("look_up")
@@ -4786,7 +4796,7 @@ class RalseiPet(QMainWindow):
             try:
                 self.show_interaction_menu(event.globalPos())
             except Exception as e:
-                print(f"显示互动菜单失败: {e}")
+                _log.warning(f"显示互动菜单失败: {e}")
                 # 兜底：菜单失败时退回原来的切对话框行为
                 if self.dialogue_ui.isVisible():
                     self.dialogue_ui.hide_dialogue()
@@ -5053,7 +5063,7 @@ class RalseiPet(QMainWindow):
                         if direction_changes >= 2 and current_time - self._pet_detection_state['last_pet_time'] > 1.5:
                             # 检测抚摸的身体部位
                             pet_part = self.get_ralsei_body_part(event.pos())
-                            print(f"抚摸了Ralsei的: {pet_part}")
+                            _log.debug(f"抚摸了Ralsei的: {pet_part}")
                             
                             # 根据不同部位触发不同的抚摸效果
                             self.emotion_system.add_emotion("happy", 30)
@@ -5119,12 +5129,12 @@ class RalseiPet(QMainWindow):
                 # 检测长按操作（至少0.5秒）
                 if press_duration >= 0.5:
                     clicked_part = self._pet_detection_state['click_part']
-                    print(f"长按了Ralsei的: {clicked_part}，时长: {press_duration:.2f}秒")
+                    _log.debug(f"长按了Ralsei的: {clicked_part}，时长: {press_duration:.2f}秒")
                     
                     # 根据不同部位触发不同效果
                     if clicked_part == "ear":
                         # 轻轻捏耳朵
-                        print("轻轻捏了Ralsei的耳朵！")
+                        _log.debug("轻轻捏了Ralsei的耳朵！")
                         self.emotion_system.add_emotion("happy", 35)
                         self.emotion_system.add_emotion("shy", 25)
                         self.play_animation_once("surprised")
@@ -5132,14 +5142,14 @@ class RalseiPet(QMainWindow):
                         self.dialogue_ui.show_dialogue()
                     elif clicked_part == "arm":
                         # 拉住手臂
-                        print("拉住了Ralsei的手臂！")
+                        _log.debug("拉住了Ralsei的手臂！")
                         self.emotion_system.add_emotion("happy", 30)
                         self.play_animation_once("wave")
                         self.dialogue_ui.add_dialogue("ralsei", "嘿嘿~ 别拉我的手臂啦！", "happy")
                         self.dialogue_ui.show_dialogue()
                     elif clicked_part == "body":
                         # 按住躯干
-                        print("按住了Ralsei的躯干！")
+                        _log.debug("按住了Ralsei的躯干！")
                         self.emotion_system.add_emotion("happy", 25)
                         self.emotion_system.add_emotion("shy", 20)
                         self.play_animation_once("happy")
@@ -5147,7 +5157,7 @@ class RalseiPet(QMainWindow):
                         self.dialogue_ui.show_dialogue()
                     elif clicked_part == "belly":
                         # 拍肚子
-                        print("拍了Ralsei的肚子！")
+                        _log.debug("拍了Ralsei的肚子！")
                         self.emotion_system.add_emotion("happy", 40)
                         self.emotion_system.add_emotion("excited", 20)
                         self.play_animation_once("laugh")
@@ -5155,7 +5165,7 @@ class RalseiPet(QMainWindow):
                         self.dialogue_ui.show_dialogue()
                     elif clicked_part == "face":
                         # 轻轻捏脸
-                        print("轻轻捏了Ralsei的脸！")
+                        _log.debug("轻轻捏了Ralsei的脸！")
                         self.emotion_system.add_emotion("happy", 30)
                         self.emotion_system.add_emotion("shy", 30)
                         self.play_animation_once("surprised")
@@ -5163,7 +5173,7 @@ class RalseiPet(QMainWindow):
                         self.dialogue_ui.show_dialogue()
                     elif clicked_part == "shoulder":
                         # 拉住肩膀
-                        print("拉住了Ralsei的肩膀！")
+                        _log.debug("拉住了Ralsei的肩膀！")
                         self.emotion_system.add_emotion("happy", 25)
                         self.emotion_system.add_emotion("shy", 15)
                         self.play_animation_once("pose")
@@ -5181,12 +5191,12 @@ class RalseiPet(QMainWindow):
         if self.sprite_label.geometry().contains(event.pos()):
             # 检测双击的身体部位
             clicked_part = self.get_ralsei_body_part(event.pos())
-            print(f"双击了Ralsei的: {clicked_part}")
+            _log.debug(f"双击了Ralsei的: {clicked_part}")
             
             # 根据不同部位触发不同效果
             if clicked_part == "hair":
                 # 摸头杀
-                print("摸头杀！")
+                _log.debug("摸头杀！")
                 self.emotion_system.add_emotion("happy", 50)
                 self.emotion_system.add_emotion("shy", 35)
                 self.play_animation_once("pose")
@@ -5194,7 +5204,7 @@ class RalseiPet(QMainWindow):
                 self.dialogue_ui.show_dialogue()
             elif clicked_part == "belly":
                 # 拍肚子（双击）
-                print("用力拍了Ralsei的肚子！")
+                _log.debug("用力拍了Ralsei的肚子！")
                 self.emotion_system.add_emotion("happy", 45)
                 self.emotion_system.add_emotion("excited", 25)
                 self.play_animation_once("laugh")
@@ -5202,7 +5212,7 @@ class RalseiPet(QMainWindow):
                 self.dialogue_ui.show_dialogue()
             elif clicked_part == "face":
                 # 捏脸
-                print("捏了Ralsei的脸！")
+                _log.debug("捏了Ralsei的脸！")
                 self.emotion_system.add_emotion("happy", 40)
                 self.emotion_system.add_emotion("shy", 40)
                 self.play_animation_once("surprised")
@@ -5210,7 +5220,7 @@ class RalseiPet(QMainWindow):
                 self.dialogue_ui.show_dialogue()
             elif clicked_part == "shoulder":
                 # 拍拍肩膀
-                print("拍拍Ralsei的肩膀！")
+                _log.debug("拍拍Ralsei的肩膀！")
                 self.emotion_system.add_emotion("happy", 35)
                 self.emotion_system.add_emotion("caring", 20)
                 self.play_animation_once("wave")
@@ -5220,7 +5230,7 @@ class RalseiPet(QMainWindow):
                 # 修复：双击耳朵/手臂/腿/躯干等未单独列出的部位时，
                 # 原来会落到外层 else 触发"显示/隐藏对话框"（窗口级行为），
                 # 在 sprite 内点击却切对话框，交互错乱。改为统一的友好反应。
-                print(f"双击了Ralsei的: {clicked_part}")
+                _log.debug(f"双击了Ralsei的: {clicked_part}")
                 self.emotion_system.add_emotion("happy", 20)
                 self.emotion_system.add_emotion("shy", 10)
                 self.play_animation_once("happy")
@@ -5474,7 +5484,7 @@ class RalseiPet(QMainWindow):
         try:
             self.api_client = create_client(api_config)
         except Exception as e:
-            print(f"重建 API 客户端失败: {e}")
+            _log.warning(f"重建 API 客户端失败: {e}")
         self.animation_fps = fps
         self.animation_frame_delay = frame_delay
         self.min_speed = self.min_speed_spinbox.value()
@@ -5531,7 +5541,7 @@ class RalseiPet(QMainWindow):
         try:
             self.energy_hunger.eat()
         except Exception as e:
-            print(f"[feed] energy_hunger.eat 异常: {e}")
+            _log.warning(f"[feed] energy_hunger.eat 异常: {e}")
         self.emotion_system.add_emotion("happy", 30)
         self.emotion_system.add_emotion("grateful", 15)
         self.play_animation_once("laugh")
@@ -5862,7 +5872,7 @@ class RalseiPet(QMainWindow):
     # 本地 AI 接入（OpenAI 兼容 / register_provider 自定义实现）
     def init_api_client(self, api_key=None, base_url=None, model=None, agent_id=None, api_version=None):
         # 初始化本地 AI 客户端（对话走 chat_with_ai；自定义 agent 走协议轮询）
-        print("正在初始化本地 AI 客户端...")
+        _log.debug("正在初始化本地 AI 客户端...")
         
         # 从配置管理器获取当前API配置
         api_config = self.config_manager.get_api_config()
@@ -5895,7 +5905,7 @@ class RalseiPet(QMainWindow):
         except Exception:
             need_key = True
         if need_key and (not api_config.get('api_key')):
-            print("API初始化失败: 云服务缺少API密钥（本机 Ollama 等本地模型可留空）")
+            _log.warning("API初始化失败: 云服务缺少API密钥（本机 Ollama 等本地模型可留空）")
             self.api_enabled = False
             api_config['enabled'] = False
             return False
@@ -5909,7 +5919,7 @@ class RalseiPet(QMainWindow):
             safe_config = dict(api_config)
             if safe_config.get('api_key'):
                 safe_config['api_key'] = '***'
-            print(f"API客户端初始化完成，配置: {safe_config}")
+            _log.debug(f"API客户端初始化完成，配置: {safe_config}")
             
             # 保存API配置到配置文件
             self.config_manager.update_api_config(api_config)
@@ -5918,11 +5928,11 @@ class RalseiPet(QMainWindow):
             try:
                 self.api_client = create_client(api_config)
             except Exception as e:
-                print(f"重建 API 客户端失败: {e}")
+                _log.warning(f"重建 API 客户端失败: {e}")
             
             return True
         except Exception as e:
-            print(f"API连接测试失败: {e}")
+            _log.warning(f"API连接测试失败: {e}")
             self.api_enabled = False
             api_config['enabled'] = False
             return False
@@ -5930,15 +5940,15 @@ class RalseiPet(QMainWindow):
     def send_api_request(self, prompt, **kwargs):
         # 发送API请求（OpenAI 兼容协议，本机 Ollama / 云服务均可）
         if not self.api_enabled:
-            print("API未启用，请先初始化API客户端")
+            _log.debug("API未启用，请先初始化API客户端")
             return None
         
         import requests
         import json
         import time
         
-        print(f"发送API请求: {prompt}")
-        print(f"请求参数: {kwargs}")
+        _log.debug(f"发送API请求: {prompt}")
+        _log.debug(f"请求参数: {kwargs}")
         
         # 获取API版本
         api_version = self.api_config.get('api_version', 'v1')
@@ -6015,22 +6025,22 @@ class RalseiPet(QMainWindow):
                         'timestamp': time.time(),
                         'raw_response': response_data
                     }
-                    print(f"API响应: {api_response}")
+                    _log.debug(f"API响应: {api_response}")
                     return api_response
                 else:
-                    print(f"API请求失败，状态码: {response.status_code}, 响应: {response.text}")
+                    _log.warning(f"API请求失败，状态码: {response.status_code}, 响应: {response.text}")
                     retries += 1
                     if retries < self.api_config['max_retries']:
-                        print(f"将在 {self.api_config['retry_delay']} 秒后重试...")
+                        _log.debug(f"将在 {self.api_config['retry_delay']} 秒后重试...")
                         time.sleep(self.api_config['retry_delay'])
             except requests.exceptions.RequestException as e:
-                print(f"API请求异常: {e}")
+                _log.warning(f"API请求异常: {e}")
                 retries += 1
                 if retries < self.api_config['max_retries']:
-                    print(f"将在 {self.api_config['retry_delay']} 秒后重试...")
+                    _log.debug(f"将在 {self.api_config['retry_delay']} 秒后重试...")
                     time.sleep(self.api_config['retry_delay'])
         
-        print(f"API请求失败，已达到最大重试次数 ({self.api_config['max_retries']})")
+        _log.warning(f"API请求失败，已达到最大重试次数 ({self.api_config['max_retries']})")
         return {
             'status': 'error',
             'content': '',
@@ -6042,13 +6052,13 @@ class RalseiPet(QMainWindow):
         # 处理API响应
         if response and response['status'] == 'success':
             content = response['content']
-            print(f"处理API响应: {content}")
+            _log.debug(f"处理API响应: {content}")
             
             # 根据响应内容执行相应操作
             self._execute_api_action(content)
             return True
         else:
-            print(f"API响应处理失败: {response}")
+            _log.warning(f"API响应处理失败: {response}")
             # 可以添加错误处理逻辑，例如显示错误消息
             error_msg = response.get('error', '未知错误') if response else '无效响应'
             self.dialogue_ui.add_dialogue("ralsei", f"抱歉，我现在有点不太舒服... ({error_msg})")
@@ -6157,7 +6167,7 @@ class RalseiPet(QMainWindow):
     
     def _execute_api_action(self, content):
         # 根据API响应执行相应操作
-        print(f"执行API操作: {content}")
+        _log.debug(f"执行API操作: {content}")
         
         # 动作映射
         action_keywords = {
@@ -6409,7 +6419,7 @@ class RalseiPet(QMainWindow):
                 # 定时器永不触发，API 响应被静默丢弃。改用 Qt Signal 跨线程投递到主线程。
                 self._api_result.emit(response, callback)
             except Exception as e:
-                print(f"[API请求] 线程异常: {e}")
+                _log.warning(f"[API请求] 线程异常: {e}")
                 # 异常时也把错误结果发回主线程，避免静默失败
                 self._api_result.emit({'status': 'error', 'content': '', 'timestamp': time.time(),
                                        'error': str(e)}, callback)
@@ -6431,8 +6441,8 @@ class RalseiPet(QMainWindow):
         if not self.api_enabled:
             try:
                 on_reply(None)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
             return
         import threading
 
@@ -6448,7 +6458,7 @@ class RalseiPet(QMainWindow):
                 reply = cli.chat(text, system_prompt=system)
                 self._api_result.emit(reply, on_reply)
             except Exception as e:
-                print(f"[本地AI] 对话请求异常: {e}")
+                _log.warning(f"[本地AI] 对话请求异常: {e}")
                 self._api_result.emit(None, on_reply)
 
         threading.Thread(target=_worker, daemon=True).start()
@@ -6461,7 +6471,7 @@ class RalseiPet(QMainWindow):
             else:
                 self.handle_api_response(response)
         except Exception as e:
-            print(f"[API结果] 处理异常: {e}")
+            _log.warning(f"[API结果] 处理异常: {e}")
             import traceback
             traceback.print_exc()
 
@@ -6882,7 +6892,7 @@ class RalseiPet(QMainWindow):
                             except Exception as e:
                                 # 修复：回调异常不再静默——回调常是躲猫猫/施法推进，
                                 # 静默吞会让阶段停在中间（_play_once_active 已清而阶段未推进）
-                                print(f"[动画] 一次性动画回调异常: {e}")
+                                _log.warning(f"[动画] 一次性动画回调异常: {e}")
                                 import traceback
                                 traceback.print_exc()
         else:
@@ -7151,7 +7161,7 @@ class RalseiPet(QMainWindow):
                     return f"哇，这里提到了{keyword}！我也很喜欢呢~"
                     
         except Exception as e:
-            print(f"检查文本内容失败: {e}")
+            _log.warning(f"检查文本内容失败: {e}")
             return None
         
         return None
@@ -7190,8 +7200,8 @@ class RalseiPet(QMainWindow):
             # "看到美食更想吃" = 让 hunger 值降低 5 点（而非 +5）。
             try:
                 self.energy_hunger.hunger = max(0, self.energy_hunger.hunger - 5)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
         elif any(keyword in file_name.lower() for keyword in ['ralsei', 'deltarune', 'undertale']):
             # 看到自己相关的内容，感到开心
             self.emotion_system.react_to_event("saw_self_related", {'file_path': file_path})
@@ -7390,7 +7400,7 @@ class RalseiPet(QMainWindow):
             self._start_open_with_spell(file_path, 'file', _real_open_file)
         except Exception as e:
             # 极端兜底：spell 系统异常时至少不丢失打开动作
-            print(f"[open_file] spell 异常，兜底直接打开：{e}")
+            _log.warning(f"[open_file] spell 异常，兜底直接打开：{e}")
             _real_open_file(file_path, 'file')
 
     def open_folder(self, folder_path):
@@ -7410,7 +7420,7 @@ class RalseiPet(QMainWindow):
         try:
             self._start_open_with_spell(folder_path, 'folder', _real_open_folder)
         except Exception as e:
-            print(f"[open_folder] spell 异常，兜底直接打开：{e}")
+            _log.warning(f"[open_folder] spell 异常，兜底直接打开：{e}")
             _real_open_folder(folder_path, 'folder')
         
     def handle_window_operation(self, user_input):
@@ -7464,7 +7474,7 @@ class RalseiPet(QMainWindow):
                 d.maximize_window_by_hwnd(hwnd)
                 msg = f"把「{title}」最大化啦~"
         except Exception as e:
-            print(f"窗口操作失败: {e}")
+            _log.warning(f"窗口操作失败: {e}")
             msg = "呜... 窗口操作失败了。"
         self.dialogue_ui.add_dialogue("ralsei", msg, "happy")
         self.dialogue_ui.show_dialogue()
@@ -7592,14 +7602,14 @@ class RalseiPet(QMainWindow):
             vh = win32api.GetSystemMetrics(79)   # SM_CYVIRTUALSCREEN
             if vw > 0 and vh > 0:
                 return _Qr(vx, vy, vw, vh)
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         sg = QApplication.desktop().availableGeometry()
         return QRect(sg.x(), sg.y(), sg.width(), sg.height())
 
     def cleanup_on_exit(self):
         """程序退出时的清理工作，根据隐私设置清理用户数据"""
-        print("正在执行退出清理工作...")
+        _log.debug("正在执行退出清理工作...")
 
         # 1. 停止所有定时器，防止退出后回调触发已销毁对象
         for timer_attr in ('animation_timer', 'ai_timer', 'stats_timer',
@@ -7612,23 +7622,23 @@ class RalseiPet(QMainWindow):
                 t = getattr(self, timer_attr, None)
                 if t is not None:
                     t.stop()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
 
         # 2. 停止后台线程
         try:
             if hasattr(self, 'ai_thread') and self.ai_thread is not None:
                 self.ai_thread_running = False
                 self.ai_thread.join(timeout=2)
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
         # 2.5 隐藏托盘图标（若有）
         try:
             if getattr(self, '_tray', None) is not None:
                 self._tray.hide()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
         # 2.6 躲猫猫残留的"障碍物N"文件夹清理（游戏中途退出会在桌面留下垃圾文件夹）
         try:
@@ -7637,17 +7647,17 @@ class RalseiPet(QMainWindow):
                     import shutil
                     if os.path.isdir(p):
                         shutil.rmtree(p, ignore_errors=True)
-                        print(f"已清理躲猫猫残留文件夹: {p}")
-                except Exception:
-                    pass
+                        _log.debug(f"已清理躲猫猫残留文件夹: {p}")
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
             self._hide_obstacles = []
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
         # 3. 检查是否需要在退出时清理数据
         privacy_config = self.config_manager.get_privacy_config()
         if privacy_config.get("clear_data_on_exit", False):
-            print("根据隐私设置，正在清理用户数据...")
+            _log.debug("根据隐私设置，正在清理用户数据...")
 
             # 清理记忆数据
             try:
@@ -7655,29 +7665,29 @@ class RalseiPet(QMainWindow):
                 memory_file = os.path.join(os.path.dirname(__file__), '..', 'memory.json')
                 if os.path.exists(memory_file):
                     os.remove(memory_file)
-                    print("记忆数据已清理")
+                    _log.debug("记忆数据已清理")
             except Exception as e:
-                print(f"清理记忆数据时出错: {e}")
+                _log.debug(f"清理记忆数据时出错: {e}")
 
             # 清理成长数据
             try:
                 growth_file = os.path.join(os.path.dirname(__file__), '..', 'growth_data.json')
                 if os.path.exists(growth_file):
                     os.remove(growth_file)
-                    print("成长数据已清理")
+                    _log.debug("成长数据已清理")
             except Exception as e:
-                print(f"清理成长数据时出错: {e}")
+                _log.debug(f"清理成长数据时出错: {e}")
 
             # 清理娱乐数据
             try:
                 entertainment_file = os.path.join(os.path.dirname(__file__), '..', 'entertainment_data.json')
                 if os.path.exists(entertainment_file):
                     os.remove(entertainment_file)
-                    print("娱乐数据已清理")
+                    _log.debug("娱乐数据已清理")
             except Exception as e:
-                print(f"清理娱乐数据时出错: {e}")
+                _log.debug(f"清理娱乐数据时出错: {e}")
 
-        print("退出清理工作完成！")
+        _log.debug("退出清理工作完成！")
 
     # ==============================================================
     # 施法流程 Spell Flow：文件/文件夹操作必须先走完 走过去+施法11帧 的仪式
@@ -7695,8 +7705,8 @@ class RalseiPet(QMainWindow):
                 if el.get('path') == path:
                     return (int(el['x'] + el.get('width', 80) / 2),
                             int(el['y'] + el.get('height', 80) / 2))
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         # 2) fallback：按路径在真实桌面目录列表里的索引分块估算（找不到就取第一个，
         #    不再用随机 hash 产生不稳定坐标）
         try:
@@ -7762,7 +7772,7 @@ class RalseiPet(QMainWindow):
             # ===== 修复：单个 spell 中断 不直接 abort 整个躲猫猫游戏 =====
             # 躲猫猫的 _abort_hide_and_seek 只在：game 主动结束（end_hide_and_seek）/ 超时 / 玩家点退出 时调用
             # 这里只清理 spell 状态，让上层决定是否继续推进游戏或重试
-            print(f"[SPELL] 流程中断 reason={r} stage={self._spell_stage}，仅清理 spell 状态")
+            _log.debug(f"[SPELL] 流程中断 reason={r} stage={self._spell_stage}，仅清理 spell 状态")
             # walking/casting 都清理 spell 状态
             self._spell_stage = None
             self._spell_target_direction = None
@@ -7779,21 +7789,21 @@ class RalseiPet(QMainWindow):
             # _abort_hide_and_seek 全项目仅一处调用 → 游戏永远结束不了。这里统一兜底。
             hs = getattr(self, '_hide_stage', None)
             if hs is not None:
-                print(f"[SPELL] 躲猫猫阶段 {hs} 的施法被打断，兜底结束躲猫猫")
+                _log.debug(f"[SPELL] 躲猫猫阶段 {hs} 的施法被打断，兜底结束躲猫猫")
                 self._abort_hide_and_seek(reason='spell_interrupted')
             else:
                 # 躲猫猫销毁阶段（_hide_end_game 已清 _hide_stage，但障碍物还没删）被打断 →
                 # 清理残留障碍物，避免桌面上永久残留"障碍物N"文件夹
                 obstacles = getattr(self, '_hide_obstacles', []) or []
                 if obstacles:
-                    print("[SPELL] 躲猫猫销毁施法被打断，清理残留障碍物")
+                    _log.debug("[SPELL] 躲猫猫销毁施法被打断，清理残留障碍物")
                     import shutil
                     for p in obstacles:
                         try:
                             if os.path.isdir(p):
                                 shutil.rmtree(p, ignore_errors=True)
-                        except Exception:
-                            pass
+                        except Exception as e:  # 修复：原先静默吞噬
+                            _log.debug("main 防御性异常（已忽略）: %s", e)
                     self._hide_obstacles = []
                     self._hide_folder_path = None
                 # 恢复自主代理（非躲猫猫 spell 被打断时，之前 suspend 的 agent 必须恢复，
@@ -7801,8 +7811,8 @@ class RalseiPet(QMainWindow):
                 if getattr(self, '_spell_auto_suspended', False):
                     try:
                         self.autonomous_agent.resume()
-                    except Exception:
-                        pass
+                    except Exception as e:  # 修复：原先静默吞噬
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
                     self._spell_auto_suspended = False
             return
 
@@ -7830,8 +7840,8 @@ class RalseiPet(QMainWindow):
                 # 施法音效
                 try:
                     self.sound_manager.play_spell()
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
                 self._spell_target_direction = direction
                 self.previous_direction = self.current_direction
                 self.current_direction = direction
@@ -7844,8 +7854,8 @@ class RalseiPet(QMainWindow):
                 try:
                     self.autonomous_agent.suspend()
                     self._spell_auto_suspended = True
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
             else:
                 # 每帧向目标移动一小步：用主移动系统，确保走的是 walk 动画
                 target = QPoint(int(tx - self.width() / 2), int(ty - self.height() / 2))
@@ -7903,8 +7913,8 @@ class RalseiPet(QMainWindow):
                 if getattr(self, '_spell_auto_suspended', False) and getattr(self, '_hide_stage', None) is None:
                     try:
                         self.autonomous_agent.resume()
-                    except Exception:
-                        pass
+                    except Exception as e:  # 修复：原先静默吞噬
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
                     self._spell_auto_suspended = False
                 elif getattr(self, '_spell_auto_suspended', False):
                     self._spell_auto_suspended = False
@@ -7941,8 +7951,8 @@ class RalseiPet(QMainWindow):
         # 施法音效
         try:
             self.sound_manager.play_spell()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         self._spell_target_direction = direction
         self.previous_direction = self.current_direction
         self.current_direction = direction
@@ -7960,8 +7970,8 @@ class RalseiPet(QMainWindow):
         try:
             self.autonomous_agent.suspend()
             self._spell_auto_suspended = True
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     def _start_open_with_spell(self, path, kind, cb):
         """打开文件/文件夹的入口：
@@ -7998,8 +8008,8 @@ class RalseiPet(QMainWindow):
         try:
             self.autonomous_agent.suspend()
             self._spell_auto_suspended = True
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     # ==============================================================
     # 躲猫猫游戏 Hide and Seek
@@ -8019,8 +8029,8 @@ class RalseiPet(QMainWindow):
         # 暂停自主代理
         try:
             self.autonomous_agent.suspend()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         self.game_state['is_playing'] = True
         self.game_state['game_type'] = 'hide_and_seek'
 
@@ -8053,8 +8063,8 @@ class RalseiPet(QMainWindow):
         try:
             if getattr(self, '_hide_search_timer', None) is not None:
                 self._hide_search_timer.stop()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         self._hide_search_timer = None
         # 清理障碍物（如果有创建记录）
         obstacles = getattr(self, '_hide_obstacles', []) or []
@@ -8063,15 +8073,15 @@ class RalseiPet(QMainWindow):
                 if os.path.isdir(p):
                     import shutil
                     shutil.rmtree(p, ignore_errors=True)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
         self._hide_obstacles = []
         self._hide_folder_path = None
         # 恢复自主代理
         try:
             self.autonomous_agent.resume()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         if real_interrupt and reason not in ('end_hide_and_seek', 'cast_spell_then_replaced'):
             self.dialogue_ui.add_dialogue("ralsei", "呜…游戏被打断啦！下次再玩吧~", "sad")
             self.dialogue_ui.show_dialogue()
@@ -8144,7 +8154,7 @@ class RalseiPet(QMainWindow):
             except Exception as e:
                 # 修复：创建失败不再完全静默（否则 len(created)<3 时游戏莫名提前结束，
                 # 且原因不可见）。打印失败原因便于排查（如权限/路径问题）。
-                print(f"[躲猫猫] 障碍物创建失败: {folder_path} -> {type(e).__name__}: {e}")
+                _log.warning(f"[躲猫猫] 障碍物创建失败: {folder_path} -> {type(e).__name__}: {e}")
         self._hide_obstacles = created
         if len(created) < 3:
             # 极端失败：结束游戏
@@ -8196,8 +8206,8 @@ class RalseiPet(QMainWindow):
                 self._hide_search_timer = QTimer(self)
                 self._hide_search_timer.timeout.connect(self._hide_search_tick)
             self._hide_search_timer.start(3000)
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     def _hide_search_tick(self):
         if getattr(self, '_hide_stage', None) != 'searching':
@@ -8220,8 +8230,8 @@ class RalseiPet(QMainWindow):
                     if name and name in title:
                         self._hide_report_clicked_folder(p)
                         return
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         # 每隔 3 秒打开一个"错误的文件夹"（表演找不到）
         unchecked = [p for p in getattr(self, '_hide_obstacles', [])
                      if p != self._hide_folder_path and p not in getattr(self, '_hide_search_checked', set())]
@@ -8234,8 +8244,8 @@ class RalseiPet(QMainWindow):
             except Exception:
                 try:
                     self.desktop_interaction.open_folder(pick)
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
             self.dialogue_ui.add_dialogue("ralsei", "你点的这个…我不在这儿呀~", "happy")
             self.dialogue_ui.show_dialogue()
 
@@ -8250,8 +8260,8 @@ class RalseiPet(QMainWindow):
         try:
             if getattr(self, '_hide_search_timer', None) is not None:
                 self._hide_search_timer.stop()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         self._hide_search_timer = None
         # 先把藏身处显示对话（文件夹还没删），让用户知道结果
         if user_won:
@@ -8277,15 +8287,15 @@ class RalseiPet(QMainWindow):
                         winshell.delete_file(p, no_confirm=True, allow_undo=True)
                     except Exception:
                         shutil.rmtree(p, ignore_errors=True)
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
         self._hide_obstacles = []
         self._hide_folder_path = None
         # 恢复自主代理
         try:
             self.autonomous_agent.resume()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         self._spell_auto_suspended = False
         # 切回 idle
         self.change_animation('idle', force=True)
@@ -8310,8 +8320,8 @@ class RalseiPet(QMainWindow):
             try:
                 if getattr(self, '_hide_search_timer', None) is not None:
                     self._hide_search_timer.stop()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
             self._hide_search_timer = None
             self._hide_stage = 'won_pending'  # 非 searching，避免 tick/超时重复触发
             # 1. 打开正确的文件夹窗口
@@ -8320,16 +8330,16 @@ class RalseiPet(QMainWindow):
             except Exception:
                 try:
                     os.startfile(folder_path)
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
             # 2. Ralsei 出现在文件夹窗口里（显示窗口，定位到文件夹窗口附近）
             self.show()
             # 尝试定位到文件夹窗口的位置
             try:
                 (fx, fy) = self._resolve_target_screen_anchor(folder_path)
                 self.move(int(fx - self.width() // 2), int(fy - self.height() // 2))
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
             # 3. 说"你找到我了"
             self.change_animation('surprised', force=True)
             self.dialogue_ui.add_dialogue("ralsei", "你找到我啦！真厉害！", "surprised")
@@ -8344,8 +8354,8 @@ class RalseiPet(QMainWindow):
             except Exception:
                 try:
                     os.startfile(folder_path)
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
             self.dialogue_ui.add_dialogue("ralsei", "这里没有我~ 再找找！", "happy")
             self.dialogue_ui.show_dialogue()
 
@@ -8371,7 +8381,7 @@ def check_single_instance():
     """
     import atexit
 
-    print("正在进行单实例检查...")
+    _log.debug("正在进行单实例检查...")
 
     mutex_name = r"Global\RalseiPetMutex"
 
@@ -8384,19 +8394,19 @@ def check_single_instance():
         mutex = win32event.CreateMutex(None, False, mutex_name)
 
         if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
-            print("单实例检查失败，Ralsei Pet 已经在运行中了！")
-            print(" Ralsei 是独一无二的哦~")
+            _log.warning("单实例检查失败，Ralsei Pet 已经在运行中了！")
+            _log.debug(" Ralsei 是独一无二的哦~")
             win32api.CloseHandle(mutex)
             input("按回车键退出...")
             sys.exit(0)
         else:
-            print("单实例检查通过，互斥量已创建")
+            _log.debug("单实例检查通过，互斥量已创建")
             # 互斥量会在进程结束时自动释放
-            print("单实例检查通过，可以正常运行！")
+            _log.debug("单实例检查通过，可以正常运行！")
             return True
 
     except Exception as e:
-        print(f"互斥量单实例检查出错，改用文件锁: {e}")
+        _log.debug(f"互斥量单实例检查出错，改用文件锁: {e}")
 
     # 方案2：文件锁作为备选
     lock_file_path = os.path.join(os.getenv('TEMP', '.'), 'ralsei_pet.lock')
@@ -8405,27 +8415,27 @@ def check_single_instance():
         try:
             if os.path.exists(lock_file_path):
                 os.unlink(lock_file_path)
-                print("单实例锁文件已清理")
-        except Exception:
-            pass
+                _log.debug("单实例锁文件已清理")
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     try:
         with open(lock_file_path, 'x') as lock_file:
             lock_file.write(str(os.getpid()))
-        print("备选单实例检查通过，锁文件已创建")
+        _log.debug("备选单实例检查通过，锁文件已创建")
         atexit.register(_cleanup_lock)
-        print("单实例检查通过，可以正常运行！")
+        _log.debug("单实例检查通过，可以正常运行！")
         return True
 
     except FileExistsError:
-        print("备选单实例检查：发现已存在的锁文件")
+        _log.debug("备选单实例检查：发现已存在的锁文件")
         try:
             with open(lock_file_path, 'r') as lock_file:
                 pid = int(lock_file.read().strip())
             # 检查进程是否还活着
             try:
                 os.kill(pid, 0)
-                print("Ralsei Pet 已经在运行中了哦！")
+                _log.debug("Ralsei Pet 已经在运行中了哦！")
                 input("按回车键退出...")
                 sys.exit(0)
             except OSError:
@@ -8435,7 +8445,7 @@ def check_single_instance():
             pass
 
         # 清理残留锁文件并重新创建
-        print("发现残留的锁文件，正在清理...")
+        _log.debug("发现残留的锁文件，正在清理...")
         try:
             os.unlink(lock_file_path)
         except OSError:
@@ -8444,13 +8454,13 @@ def check_single_instance():
             with open(lock_file_path, 'w') as lock_file:
                 lock_file.write(str(os.getpid()))
             atexit.register(_cleanup_lock)
-            print("锁文件已重新创建，单实例检查通过")
-            print("单实例检查通过，可以正常运行！")
+            _log.debug("锁文件已重新创建，单实例检查通过")
+            _log.debug("单实例检查通过，可以正常运行！")
             return True
         except Exception as e:
-            print(f"重新创建锁文件失败: {e}")
+            _log.warning(f"重新创建锁文件失败: {e}")
             # 最后兜底：允许运行（单实例检查失败不应阻止程序启动）
-            print("警告：单实例检查失败，程序将继续运行")
+            _log.warning("警告：单实例检查失败，程序将继续运行")
             return True
 
 
@@ -8466,13 +8476,13 @@ if __name__ == "__main__":
         window.show()
         result = app.exec_()
         # 程序退出时打印性能统计信息
-        print("\n=== 正在打印性能统计信息 ===")
+        _log.debug("\n=== 正在打印性能统计信息 ===")
         perf_monitor.print_stats()
-        print("=== 性能统计信息打印完成 ===")
+        _log.debug("=== 性能统计信息打印完成 ===")
         sys.exit(result)
     except Exception as e:
-        print(f"程序运行时出错: {e}")
-        print("详细错误信息:")
+        _log.debug(f"程序运行时出错: {e}")
+        _log.warning("详细错误信息:")
         traceback.print_exc()
         # 避免程序直接退出，让用户有时间查看错误信息
         input("按回车键退出...")

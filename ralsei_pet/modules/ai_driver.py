@@ -28,6 +28,13 @@ import re
 import threading
 import time
 
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 # 模型可挑选的动作动画 —— 必须真实存在于 sprite_loader 动画组里
 ANIMATION_ACTIONS = {
     "dance", "sing", "wave", "bow", "laugh", "look_up", "pose",
@@ -98,8 +105,8 @@ def extract_json(text):
     try:
         obj = json.loads(t)
         return obj if isinstance(obj, dict) else None
-    except Exception:
-        pass
+    except Exception as e:
+        _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
     # 找第一组配平的 { ... }
     start = t.find("{")
     if start == -1:
@@ -171,7 +178,7 @@ class AiActionDriver:
                 return
             self._fire(now)
         except Exception as e:
-            print(f"[AI行动] tick 异常(忽略): {e}")
+            _log.debug("[AI行动] tick 异常(已忽略): %s", e)
             self._busy = False
             self._backoff(now)
 
@@ -202,7 +209,7 @@ class AiActionDriver:
         self._busy = False
         parsed = extract_json(reply) if reply else None
         if not parsed:
-            print("[AI行动] 模型回复无法解析，退避")
+            _log.debug("[AI行动] 模型回复无法解析，退避")
             self._backoff(now)
             return
         acted = self._execute(parsed)
@@ -291,8 +298,8 @@ class AiActionDriver:
                 try:
                     # 清掉它的决策节流，让它在下一个 tick 重新选目标走过去
                     agent._last_decision_time = 0.0
-                except Exception:
-                    pass
+                except Exception as e:
+                    _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
             if say and isinstance(say, str) and say.strip():
                 self._say(say, emotion_hint or "curious")
             return True
@@ -340,8 +347,8 @@ class AiActionDriver:
                 return
             if getattr(dlg, "_is_user_inputting", lambda: False)():
                 return
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
         if time.time() - self._last_say_at < SAY_COOLDOWN:
             return
         face = SAY_FACES.get(emotion_hint, "happy") if emotion_hint else "happy"
@@ -353,8 +360,8 @@ class AiActionDriver:
             if not dlg.isVisible():
                 dlg.show_dialogue()
             self._last_say_at = time.time()
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
 
     # ------------------------------------------------------------ 构造状态提示词
     def _build_prompt(self) -> str:

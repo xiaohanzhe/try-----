@@ -18,6 +18,16 @@ from PyQt5.QtGui import (QPixmap, QFont, QPainter, QBrush, QColor,
                          QPen, QFontMetrics, QFontDatabase)
 from PyQt5.QtCore import Qt, QPoint, QTimer, QPropertyAnimation, QEasingCurve, QRect
 
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
 
 # ---------------------------------------------------------------------------
 # 加载项目根目录下的"普通字体.ttf"，作为 Ralsei 说话字体（全局注册一次）
@@ -37,8 +47,8 @@ def _load_ralsei_font():
                 families = QFontDatabase.applicationFontFamilies(fid)
                 if families:
                     _FONT_FAMILY = families[0]
-    except Exception:
-        pass
+    except Exception as e:  # 修复：原先静默吞噬
+        _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
     return _FONT_FAMILY
 
 
@@ -321,8 +331,8 @@ class DialogueUI(QWidget):
             if app is not None and not getattr(self, '_app_filter_installed', False):
                 app.installEventFilter(self)
                 self._app_filter_installed = True
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     # ------------------------------------------------------------------ face
     def set_face(self, face_type):
@@ -423,8 +433,8 @@ class DialogueUI(QWidget):
             self._last_content_h = content_h
             # 高度变了，才真正执行 resize
             self._recalc_size_to_content()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     def _get_screen_rect(self):
         """统一取屏幕可用区域 (left, top, right, bottom)，优先Win32虚拟屏再Qt。"""
@@ -522,8 +532,8 @@ class DialogueUI(QWidget):
                 if safe_after != after:
                     self.move(safe_after.x(), safe_after.y())
                     self.resize(safe_after.width(), safe_after.height())
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     def _start_typing(self, text):
         # 新消息：取消之前的自动隐藏
@@ -547,8 +557,8 @@ class DialogueUI(QWidget):
                 sm = getattr(self.parent, 'sound_manager', None)
                 if sm is not None:
                     sm.play_typewriter()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         else:
             # 打字完成：停止计时，但不把消息并入历史（直到下一条消息到来）
             # 这样最后一条消息后能继续闪烁光标
@@ -664,15 +674,15 @@ class DialogueUI(QWidget):
         # 再次隐藏（对话框"弹出后立即消失"）。同时停掉打字机，避免不可见窗口逐字渲染。
         try:
             self.stop_typing()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         _old = getattr(self, '_fade_anim', None)
         if _old is not None:
             try:
                 _old.stop()
                 _old.finished.disconnect()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 淡入（存到 self._fade_anim 防止被 GC）
         self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
         self._fade_anim.setDuration(320)
@@ -686,15 +696,15 @@ class DialogueUI(QWidget):
         # 修复：隐藏时停打字机 + 断开旧动画（见 show_dialogue 注释）
         try:
             self.stop_typing()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         _old = getattr(self, '_fade_anim', None)
         if _old is not None:
             try:
                 _old.stop()
                 _old.finished.disconnect()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 淡出（存到 self._fade_anim 防止被 GC）
         self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
         self._fade_anim.setDuration(260)
@@ -737,8 +747,8 @@ class DialogueUI(QWidget):
             if (center_x, bottom_y) != getattr(self, '_last_anchor_pos', None):
                 self._last_anchor_pos = (center_x, bottom_y)
                 self.move(center_x, bottom_y)
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     # ---------------------------------------------------------------- input
     def send_message(self):
@@ -801,8 +811,8 @@ class DialogueUI(QWidget):
             self._ai_inflight = True
             try:
                 self._ai_thinking_on()
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
             def _on_ai_reply(reply_text):
                 if req_seq != getattr(self, '_ai_seq', 0):
@@ -810,8 +820,8 @@ class DialogueUI(QWidget):
                 self._ai_inflight = False
                 try:
                     self._ai_thinking_off()
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 if reply_text:
                     try:
                         current_emotion, emotion_value = \
@@ -827,8 +837,8 @@ class DialogueUI(QWidget):
                         try:
                             self.show()
                             self._position_above_ralsei()
-                        except Exception:
-                            pass
+                        except Exception as e:  # 修复：原先静默吞噬
+                            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 else:
                     # 模型不可用：回退规则对话
                     _rule_reply()
@@ -837,12 +847,12 @@ class DialogueUI(QWidget):
                 self.parent.chat_with_ai(user_input, _on_ai_reply)
                 return
             except Exception as e:
-                print(f"[本地AI] 调用失败，回退规则对话: {e}")
+                _log.debug(f"[本地AI] 调用失败，回退规则对话: {e}")
                 self._ai_inflight = False
                 try:
                     self._ai_thinking_off()
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         _rule_reply()
 
     # ---------------- 本地 AI 思考占位（等待回复时像在停顿组织语言） ----------------
@@ -851,21 +861,21 @@ class DialogueUI(QWidget):
         # 不能让对话框在等待回复时自己淡出。
         try:
             self._auto_hide_timer.stop()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         try:
             self.stop_typing()
             self._commit_previous_ralsei_into_history()
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 显示 Ralsei 式省略号 + 思考表情（不写"正在想怎么回答你"这类暴露文字）
         self.typing_text = self.AI_THINKING_PLACEHOLDER
         self.typing_index = len(self.typing_text)
         self.is_typing = False
         try:
             self.set_face("thinking")
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         self._refresh_display()
 
     def _ai_thinking_off(self):
@@ -1123,7 +1133,7 @@ class DialogueUI(QWidget):
                     result = action()
                 except Exception as _e:
                     import traceback
-                    print(f"[dialogue_cmd] 关键词 '{kw}' 触发 action 失败: {_e}")
+                    _log.debug(f"[dialogue_cmd] 关键词 '{kw}' 触发 action 失败: {_e}")
                     traceback.print_exc()
                     result = None
                 # reply/face 支持延迟求值（lambda返回 (reply, face)），方便读实时状态
@@ -1133,7 +1143,7 @@ class DialogueUI(QWidget):
                     except Exception as _e2:
                         # 修复：求值失败时 reply 仍是可调用对象，会显示成
                         # "<function ...>" 文本。回退为一句兜底话。
-                        print(f"[dialogue_cmd] reply 求值失败: {_e2}")
+                        _log.debug(f"[dialogue_cmd] reply 求值失败: {_e2}")
                         reply = "诶... 我刚才没反应过来，再说一次好吗？"
                         face = "curious"
                 return (reply, face)
@@ -1189,14 +1199,14 @@ class DialogueUI(QWidget):
                         if name.lower() == tl or base == tl or (len(tl) >= 2 and tl in name.lower()):
                             matched_path = el['path']
                             break
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
             if matched_path and hasattr(self.parent, 'delete_file') and callable(self.parent.delete_file):
                 try:
                     self.parent.delete_file(matched_path)
                     return True
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
             # 没解析到明确目标：友好提示（不误删）
             self.add_dialogue("ralsei",
                 "这个... 我不太确定具体要删哪个文件。能说得更具体一点吗？",
@@ -1228,8 +1238,8 @@ class DialogueUI(QWidget):
                     res = self.parent.handle_window_operation(raw)
                     if res is not None:
                         return True
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
             self.add_dialogue("ralsei", "好的！不过我只能用后台方式操作当前可见的窗口哦。", "serious")
             return True
 

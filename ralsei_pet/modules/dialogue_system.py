@@ -618,32 +618,36 @@ class DialogueSystem:
     
     def _get_response_from_template(self, template_list):
         """从模板列表中获取响应，支持可调用对象"""
+        # 修复：空模板列表会让 random.choice 抛 IndexError（对话直接崩）。
+        if not template_list:
+            return "……"
         response = random.choice(template_list)
         if callable(response):
             return response()
         return response
-        
+
     def generate_response(self, user_input, emotion_system=None):
         # 改进的对话生成逻辑，更符合Ralsei的性格，支持更多主题和场景
         # 结合情绪系统，根据当前情绪调整对话内容和风格
+        # 修复：user_input 为 None/非字符串时 .lower() 直接 AttributeError；
+        # 空输入回退通用回复而不是崩溃。
+        if not isinstance(user_input, str) or not user_input.strip():
+            return "唔……你想说什么呢？"
+        user_input = user_input.strip()
         user_input_lower = user_input.lower()
         response = ""
-        
+
         # 获取当前情绪（如果有情绪系统）
+        # 修复：原先在同一段代码里重复获取了两次情绪（完全相同的两块），
+        # 删除其一；并把 update_context 放到情绪获取之后保持原行为。
         current_emotion = None
         emotion_intensity = 0
         if emotion_system:
             current_emotion, emotion_intensity = emotion_system.get_current_emotion()
-        
+
         # 更新上下文
         self.update_context(user_input)
-        
-        # 获取当前情绪（如果有情绪系统）
-        current_emotion = None
-        emotion_intensity = 0
-        if emotion_system:
-            current_emotion, emotion_intensity = emotion_system.get_current_emotion()
-        
+
         # 检查上下文相关回复
         context_response = self._get_context_response(user_input_lower, current_emotion, emotion_intensity)
         if context_response:
@@ -1236,7 +1240,12 @@ class DialogueSystem:
         
         # 更新最后一次对话的时间戳
         self.last_conversation_time = time.time()
-        
+
+        # 修复：兜底——任何分支异常/模板缺失导致 response 为空时，返回通用回复，
+        # 避免 UI 拿到空字符串渲染出"空气对话气泡"。
+        if not response:
+            response = "唔……我有点走神了，你能再说一遍吗？"
+
         return response
     
     def update_context_DEPRECATED(self, user_input):

@@ -38,9 +38,20 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 
+# 修复：原先 _logger 只 setLevel(INFO) 却没有 handler——模块级 logger 不经
+# logger_utils 配置时，INFO 级日志会被 Python 内置 lastResort 丢弃（只输出
+# WARNING+），排查"AI 为什么没回复"时关键线索全部丢失。现在优先挂接项目
+# 统一日志（logger_utils），独立导入时补一个控制台 handler。
 _logger = logging.getLogger('LocalAI')
 if not _logger.handlers:
-    _logger.setLevel(logging.INFO)
+    try:
+        from logger_utils import get_logger
+        _logger = get_logger('LocalAI')
+    except ImportError:
+        _h = logging.StreamHandler()
+        _h.setFormatter(logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s'))
+        _logger.addHandler(_h)
+        _logger.setLevel(logging.INFO)
 
 
 class LocalAIBase(ABC):
@@ -54,7 +65,11 @@ class LocalAIBase(ABC):
         config = config or {}
         self.config = config
         self.enabled = bool(config.get('enabled', False))
-        self.base_url = str(config.get('base_url', 'http://localhost:8000')).rstrip('/')
+        # 修复：base_url 为空字符串/纯空格时，chat_endpoint() 会拼出相对路径
+        # "/v1/chat/completions"（requests 视为非法 URL 直接抛 MissingSchema），
+        # 且空串绕过了原来的默认值逻辑。剥离空白后为空一律回退默认地址。
+        _base_url = str(config.get('base_url', '') or '').strip().rstrip('/')
+        self.base_url = _base_url or 'http://localhost:8000'
         self.model = config.get('model', 'local-model')
         self.agent_id = config.get('agent_id', '')
         self.api_version = config.get('api_version', 'v1')
@@ -158,26 +173,33 @@ class HTTPLocalAI(LocalAIBase):
             return None
         try:
             import requests
+            # 修复：temperature / max_tokens 原先无范围校验，调用方传入负数或
+            # 0 会让部分 OpenAI 兼容后端直接 400 且难以排查。这里做防御性钳位。
+            def _clamp(v, lo, hi, default):
+                try:
+                    v = float(v)
+                except (TypeError, ValueError):
+                    return default
+                return max(lo, min(v, hi))
+            temperature = _clamp(kwargs.get("temperature", 0.7), 0.0, 2.0, 0.7)
+            max_tokens = int(_clamp(kwargs.get("max_tokens", 500), 1, 100000, 500))
             payload = {
                 "model": self.model,
                 "messages": [
                     {"role": "system", "content": system_prompt or "你是Ralsei"},
                     {"role": "user", "content": prompt},
                 ],
-                "temperature": kwargs.get("temperature", 0.7),
-                "max_tokens": kwargs.get("max_tokens", 500),
+                "temperature": temperature,
+                "max_tokens": max_tokens,
                 "stream": False,
             }
             if self.agent_id:
                 payload["agent_id"] = self.agent_id
-            resp = requests.post(self.chat_endpoint(), json=payload,
-                                 headers=self._auth_headers(),
-                                 timeout=self.timeout)
-            if resp.status_code != 200:
-                _logger.warning("本地 AI chat HTTP %s: %s", resp.status_code,
-                                resp.text[:200])
+            # 修复：原先 chat() 与 _post_json() 各写一份 POST/状态码/异常处理逻辑
+            # （重复编码），统一走 _post_json，非 200 也统一记 warning 日志。
+            data = self._post_json(self.chat_endpoint(), payload)
+            if not data:
                 return None
-            data = resp.json()
             choices = data.get("choices") or []
             if not choices:
                 return None
@@ -217,6 +239,8 @@ class HTTPLocalAI(LocalAIBase):
             resp = requests.post(url, json=body, headers=self._auth_headers(),
                                  timeout=self.timeout)
             if resp.status_code != 200:
+                _logger.warning("本地 AI HTTP %s: %s", resp.status_code,
+                                resp.text[:200])
                 return None
             return resp.json()
         except Exception as e:

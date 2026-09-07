@@ -25,6 +25,16 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional, List, Callable, Any, Dict
 
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
 
 class AgentState(str, Enum):
     IDLE = "idle"
@@ -244,7 +254,8 @@ class AutonomousAgent:
                         else:
                             tx, ty = self.current_task.target.center()
                             self._pre_pause_walk_target = (tx, ty)
-                    except Exception:
+                    except Exception as e:
+                        _log.debug("记录 WALKING 暂停目标失败: %s", e)
                         self._pre_pause_walk_target = None
                 self.state = AgentState.PAUSED
             return
@@ -261,7 +272,7 @@ class AutonomousAgent:
             # 永远走不到、notify_arrived 永不触发 → 永久卡 WALKING。任务从决策开始
             # 18 秒内未到达则放弃本轮，回到 IDLE 稍后再决策。
             if now - self._task_started_at > 18.0:
-                print("[agent] WALKING 超时，放弃本轮任务")
+                _log.info("WALKING 超时，放弃本轮任务")
                 self._finish_task()
             else:
                 self._check_arrived(now)
@@ -299,7 +310,8 @@ class AutonomousAgent:
                     else:
                         tx, ty = self.current_task.target.center()
                         self._pre_pause_walk_target = (tx, ty)
-                except Exception:
+                except Exception as e:
+                    _log.debug("记录 WALKING 暂停目标失败: %s", e)
                     self._pre_pause_walk_target = None
             self.state = AgentState.PAUSED
         elif self.state == AgentState.IDLE:
@@ -339,8 +351,9 @@ class AutonomousAgent:
                             "happy")
                     # moved == 0：静默（不误导用户说"整理好了"）
                     return  # 整理完本轮不再选目标
-            except Exception:
-                pass
+            except Exception as e:
+                # 修复：原先静默吞噬——整理桌面失败（权限/文件被占用）无从得知
+                _log.warning("自动整理桌面失败: %s", e)
 
         target = self._pick_target()
         if target is None:
@@ -391,8 +404,8 @@ class AutonomousAgent:
                     width=el.get("width", 40),
                     height=el.get("height", 40),
                 ))
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("收集桌面图标目标失败: %s", e)
 
         # 可见窗口
         try:
@@ -410,8 +423,8 @@ class AutonomousAgent:
                     width=w.get("width", 200),
                     height=w.get("height", 200),
                 ))
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("收集可见窗口目标失败: %s", e)
 
         if not candidates:
             return None
@@ -442,8 +455,8 @@ class AutonomousAgent:
             if owner is not None and hasattr(owner, 'emotion_system'):
                 e, _ = owner.emotion_system.get_current_emotion()
                 emotion = e
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("读取情绪状态失败（按无情绪处理）: %s", e)
 
         if target.kind == "window":
             # 修复：自主代理不再自动关闭/最小化/缩放用户窗口——随机选中的窗口可能
@@ -472,10 +485,11 @@ class AutonomousAgent:
         try:
             screen_w = self._desktop.screen_width or 1920
             screen_h = self._desktop.screen_height or 1080
-        except Exception:
+        except Exception as e:
+            _log.debug("读取屏幕尺寸失败（用默认值）: %s", e)
             screen_w, screen_h = 1920, 1080
-        x = random.randint(100, screen_w - 200)
-        y = random.randint(100, screen_h - 200)
+        x = random.randint(100, max(101, screen_w - 200))
+        y = random.randint(100, max(101, screen_h - 200))
         return (float(x), float(y))
 
     # ---- 状态转移 ----
@@ -565,8 +579,9 @@ class AutonomousAgent:
                 self._task_started_at = now
                 try:
                     self._walk_to(tx, ty)
-                except Exception:
+                except Exception as e:
                     # 移动失败就放弃本轮
+                    _log.debug("恢复 WALKING 移动失败，放弃本轮: %s", e)
                     self._finish_task()
             else:
                 # 没有任务或目标，直接回 IDLE
@@ -632,7 +647,7 @@ class AutonomousAgent:
                                             f"让我看看{preview[:60]}...", "curious")
 
         except Exception as e:
-            print(f"[AutonomousAgent] 动作执行失败: {e}")
+            _log.warning("动作执行失败: %s", e)
 
     # ---- 辅助 ----
 
@@ -671,8 +686,8 @@ class AutonomousAgent:
                             ox, oy = random.choice(offsets)
                             self._walk_to(tx + ox, ty + oy)
                         break
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("跟踪目标位置变化失败: %s", e)
 
         my_pos = self._get_pos()
         tc = self.current_task.target.center()

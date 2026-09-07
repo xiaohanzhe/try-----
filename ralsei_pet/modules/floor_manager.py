@@ -1,4 +1,11 @@
 import ctypes
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 import time
 import win32gui
 from PyQt5.QtCore import QRect, QPoint
@@ -57,8 +64,8 @@ class FloorManager:
                         union = sg if union is None else union.united(sg)
                     if union:
                         self.desktop_floor['rect'] = union
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
         self._update_underlying_windows()
         self._generate_floors()
 
@@ -77,8 +84,8 @@ class FloorManager:
             class_name = ''
             try:
                 class_name = win32gui.GetClassName(w['hwnd'])
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
             visible_windows.append({
                 'hwnd': w['hwnd'],
                 'title': w['title'],
@@ -132,8 +139,8 @@ class FloorManager:
                     ctypes.c_void_p(0), ctypes.c_void_p(0),
                     0, 1000, None
                 )
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
 
         workerw = 0
 
@@ -149,14 +156,14 @@ class FloorManager:
 
         try:
             win32gui.EnumWindows(callback, None)
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
 
         if not workerw:
             try:
                 workerw = win32gui.FindWindowEx(0, 0, "WorkerW", None)
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
 
         return workerw
 

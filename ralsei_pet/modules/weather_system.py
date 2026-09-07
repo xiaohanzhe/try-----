@@ -1,4 +1,11 @@
 import time
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 import random
 import datetime
 import os
@@ -14,10 +21,16 @@ class WeatherSystem:
     3. 没网 / 读缓存失败 → 基于本地季节+时段推断天气（同一天稳定，不依赖网络）
     """
 
-    def __init__(self):
+    def __init__(self, update_interval=3600):
         self.current_weather = "sunny"
         self.last_update_time = 0
-        self.update_interval = 3600  # 每小时更新一次
+        # 修复：原先硬编码 3600 不可配置（测试/演示时无法缩短周期）。
+        # 改为构造参数，非法值（<=0 / 非数字）回退默认 1 小时。
+        try:
+            update_interval = int(update_interval)
+        except (TypeError, ValueError):
+            update_interval = 3600
+        self.update_interval = update_interval if update_interval > 0 else 3600
         self._last_date = None  # 记录上次更新的日期，同一天天气保持稳定
 
         # 天气与反应的映射
@@ -179,8 +192,8 @@ class WeatherSystem:
                     try:
                         mtime = os.path.getmtime(full)
                         db_files.append((mtime, full))
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        _log.debug("weather_system 防御性异常（已忽略）: %s", e)
             if not db_files:
                 return None
             db_files.sort(reverse=True)
@@ -239,8 +252,8 @@ class WeatherSystem:
             finally:
                 try:
                     conn.close()
-                except Exception:
-                    pass
+                except Exception as e:
+                    _log.debug("weather_system 防御性异常（已忽略）: %s", e)
             return weather_value
         except Exception:
             return None

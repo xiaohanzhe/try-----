@@ -3,7 +3,23 @@ import time
 import json
 import os
 
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
+
 class SocialGrowthSystem:
+    # 等级上限：与进化路径的最终阶段（20级"终极形态"）和 level_20 成就对齐，
+    # 防止经验无限累积后等级/进度条溢出 UI 表达范围。
+    MAX_LEVEL = 20
+    MAX_EXPERIENCE = MAX_LEVEL * 100  # 满级所需总经验（每100经验1级）
+
     def __init__(self, parent):
         self.parent = parent
         self.experience = 0
@@ -386,20 +402,40 @@ class SocialGrowthSystem:
             if os.path.exists(self.growth_data_path):
                 with open(self.growth_data_path, 'r', encoding='utf-8') as f:
                     growth_data = json.load(f)
-                    self.experience = growth_data.get('experience', 0)
-                    self.level = growth_data.get('level', 1)
-                    self.achievements = growth_data.get('achievements', [])
-                    self.relationships = growth_data.get('relationships', {})
-                    self.evolution_stage = growth_data.get('evolution_stage', 1)
-                    self.evolution_path = growth_data.get('evolution_path', 'default')
-                    # 更新成就解锁状态
-                    for achievement_id in self.achievements:
-                        if achievement_id in self.achievements_list:
-                            self.achievements_list[achievement_id]['unlocked'] = True
-                    print(f"成功加载成长数据: {self.growth_data_path}")
-        except Exception as e:
-            print(f"加载成长数据失败: {e}")
-    
+                # 修复：手改/损坏的成长数据文件可能写入字符串等错误类型，
+                # 直接读入后参与算术运算会在升级检查时崩溃。逐字段做类型
+                # 强制转换 + 范围钳位，非法值回退默认。
+                if not isinstance(growth_data, dict):
+                    raise ValueError(f"成长数据根节点不是对象: {type(growth_data).__name__}")
+
+                def _to_int(v, default, lo, hi):
+                    try:
+                        v = int(v)
+                    except (TypeError, ValueError):
+                        return default
+                    return max(lo, min(v, hi))
+
+                self.experience = _to_int(growth_data.get('experience', 0), 0,
+                                          0, self.MAX_EXPERIENCE)
+                self.level = _to_int(growth_data.get('level', 1), 1,
+                                     1, self.MAX_LEVEL)
+                _ach = growth_data.get('achievements', [])
+                self.achievements = [a for a in _ach if isinstance(a, str)] if isinstance(_ach, list) else []
+                _rel = growth_data.get('relationships', {})
+                self.relationships = _rel if isinstance(_rel, dict) else {}
+                self.evolution_stage = _to_int(growth_data.get('evolution_stage', 1), 1,
+                                               1, len(self.evolution_paths['default']['stages']))
+                _path = growth_data.get('evolution_path', 'default')
+                # 未知路径回退 default，避免后续 evolution_paths[...] KeyError
+                self.evolution_path = _path if _path in self.evolution_paths else 'default'
+                # 更新成就解锁状态
+                for achievement_id in self.achievements:
+                    if achievement_id in self.achievements_list:
+                        self.achievements_list[achievement_id]['unlocked'] = True
+                _log.info("成功加载成长数据: %s", self.growth_data_path)
+        except (OSError, ValueError, json.JSONDecodeError) as e:
+            _log.warning("加载成长数据失败（使用默认值）: %s", e)
+
     def save_growth_data(self):
         """保存成长数据"""
         try:
@@ -415,29 +451,43 @@ class SocialGrowthSystem:
             }
             with open(self.growth_data_path, 'w', encoding='utf-8') as f:
                 json.dump(growth_data, f, ensure_ascii=False, indent=2)
-            print(f"成功保存成长数据: {self.growth_data_path}")
-        except Exception as e:
-            print(f"保存成长数据失败: {e}")
-    
+            _log.debug("成功保存成长数据: %s", self.growth_data_path)
+        except (OSError, TypeError, ValueError) as e:
+            _log.error("保存成长数据失败: %s", e)
+
     def add_experience(self, amount):
         """添加经验值"""
-        self.experience += amount
-        print(f"获得经验值: {amount}, 总经验值: {self.experience}")
+        # 修复：原先不校验 amount，传入负数会"倒扣经验"甚至把等级拉回 1 级，
+        # 非法类型（字符串）则直接 TypeError 崩溃。负数一律忽略。
+        try:
+            amount = int(amount)
+        except (TypeError, ValueError):
+            _log.warning("add_experience 忽略非法经验值: %r", amount)
+            return
+        if amount < 0:
+            _log.warning("add_experience 忽略负数经验值: %d", amount)
+            return
+        # 满级封顶：经验不再无限增长（等级/进度/UI 都按 20 级设计）
+        if self.level >= self.MAX_LEVEL and self.experience >= self.MAX_EXPERIENCE:
+            _log.debug("已满级（%d 级），忽略追加经验 %d", self.MAX_LEVEL, amount)
+            return
+        self.experience = min(self.experience + amount, self.MAX_EXPERIENCE)
+        _log.debug("获得经验值: %d, 总经验值: %d", amount, self.experience)
         # 检查是否升级
         self._check_level_up()
         # 检查是否解锁成就
         self._check_achievements()
         # 保存成长数据
         self.save_growth_data()
-    
+
     def _check_level_up(self):
         """检查是否升级"""
-        # 简单的升级公式：每100点经验升一级
-        new_level = self.experience // 100 + 1
+        # 简单的升级公式：每100点经验升一级（满级封顶）
+        new_level = min(self.experience // 100 + 1, self.MAX_LEVEL)
         if new_level > self.level:
             old_level = self.level
             self.level = new_level
-            print(f"升级了！从 {old_level} 级升到 {self.level} 级！")
+            _log.info("升级了！从 %d 级升到 %d 级！", old_level, self.level)
             # 检查是否进化
             self._check_evolution()
             # 触发升级事件
@@ -457,7 +507,7 @@ class SocialGrowthSystem:
         target_stage = self.level // 5 + 1  # 1级→1阶段, 5级→2阶段, 10级→3阶段...
         if self.level % 5 == 0 and self.evolution_stage < target_stage:
             self.evolution_stage = target_stage
-            print(f"进化了！现在是第 {self.evolution_stage} 阶段！")
+            _log.info("进化了！现在是第 %d 阶段！", self.evolution_stage)
             # 触发进化事件
             self.parent.pet_ai.trigger_event('evolution', {
                 'stage': self.evolution_stage,
@@ -522,7 +572,7 @@ class SocialGrowthSystem:
             self.achievements.append(achievement_id)
             # 获得成就奖励
             self.add_experience(achievement['experience_reward'])
-            print(f"解锁成就: {achievement['name']} - {achievement['description']}")
+            _log.info("解锁成就: %s - %s", achievement['name'], achievement['description'])
             # 显示成就解锁消息
             self.parent.dialogue_ui.add_dialogue("ralsei", f"太棒了！我解锁了成就：{achievement['name']}！", "happy_very")
     
@@ -563,7 +613,7 @@ class SocialGrowthSystem:
         new_level = self._get_relationship_level(relationship['relationship_value'])
         if new_level != relationship['relationship_level']:
             relationship['relationship_level'] = new_level
-            print(f"与 {other_pet_id} 的关系升级为 {new_level}！")
+            _log.info("与 %s 的关系升级为 %s！", other_pet_id, new_level)
             # 显示关系升级消息
             self.parent.dialogue_ui.add_dialogue("ralsei", f"我和 {other_pet_id} 的关系变得更好了！现在是 {new_level} 了！", "happy")
         
@@ -589,7 +639,7 @@ class SocialGrowthSystem:
     
     def initiate_interaction(self, other_pet_id, interaction_type='greet'):
         """主动发起与其他宠物的互动"""
-        print(f"发起与 {other_pet_id} 的互动: {interaction_type}")
+        _log.debug("发起与 %s 的互动: %s", other_pet_id, interaction_type)
         # 更新关系
         relationship = self.update_relationship(other_pet_id, interaction_type)
         # 触发互动事件
@@ -631,8 +681,12 @@ class SocialGrowthSystem:
     
     def get_progress_to_next_level(self):
         """获取升级进度百分比"""
+        # 满级后进度恒为 100
+        if self.level >= self.MAX_LEVEL:
+            return 100
         next_level_exp = self.get_next_level_experience()
         current_level_exp = ((self.level - 1) * 100)
-        current_progress = self.experience - current_level_exp
+        # 修复：手改数据导致 experience 低于本级起点时会出现负百分比，钳位到 0
+        current_progress = max(0, self.experience - current_level_exp)
         level_range = next_level_exp - current_level_exp
         return min(100, (current_progress / level_range) * 100) if level_range > 0 else 100

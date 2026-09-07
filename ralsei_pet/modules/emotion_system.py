@@ -1,6 +1,16 @@
 import time
 import random
 
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
 class EmotionSystem:
     def __init__(self, parent):
         self.parent = parent
@@ -342,6 +352,17 @@ class EmotionSystem:
             self.emotions['sad'] += self.complex_emotions['bored'] * 0.1
             self.emotions['happy'] = max(0, self.emotions['happy'] - self.complex_emotions['bored'] * 0.15)
             self.complex_emotions['curious'] = max(0, self.complex_emotions['curious'] - self.complex_emotions['bored'] * 0.1)
+
+        # 修复：上面的 += 写入（happy/sad/content/lonely/anxious 等）原先部分
+        # 无钳位（如 caring>20 时 happy += caring*0.1），长期运行会无界增长
+        # 超过 100，导致"主导情绪恒为 happy"之类的失衡。这里统一收尾钳位：
+        # 基础情绪 [-100,100]，复合情绪 [0,100]。
+        # 注：对复合情绪的多数写入随后会被 _update_complex_emotions() 全量
+        # 重算覆盖（tired 除外），但钳位保证任何残留路径也不会越界。
+        for emotion in self.emotions:
+            self.emotions[emotion] = max(-100, min(100, self.emotions[emotion]))
+        for emotion in self.complex_emotions:
+            self.complex_emotions[emotion] = max(0, min(100, self.complex_emotions[emotion]))
     
     def _update_complex_emotions(self):
         # 根据基础情绪更新复合情绪
@@ -725,6 +746,10 @@ class EmotionSystem:
             # 同伴晚归
             self.add_emotion('worry', 45)        # 增加普通担忧程度
             self.add_emotion('anxious', 20)      # 增加焦虑程度
+        else:
+            # 修复：未知事件类型原先静默忽略，新增事件源时拼错名字无法发现。
+            # 留 debug 日志辅助排查，不影响行为。
+            _log.debug("react_to_event 收到未知事件类型: %s", event_type)
         # 注意：个性特质调整已在 add_emotion 内部通过 _apply_personality_to_delta 完成，
         # 不再需要在这里对总值做乘法（避免累积缩放bug）
     

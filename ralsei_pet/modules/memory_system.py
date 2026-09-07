@@ -2,6 +2,13 @@ import time
 import json
 import os
 
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 class MemorySystem:
     def __init__(self, parent):
         self.parent = parent
@@ -228,7 +235,7 @@ class MemorySystem:
                     self.long_term_memory = data.get('long_term_memory', self.long_term_memory)
                     self.experience = data.get('experience', self.experience)
                     self.level = data.get('level', self.level)
-                    print(f"成功加载记忆: {self.memory_file}")
+                    _log.debug("成功加载记忆: %s", self.memory_file)
                     # 修复：旧版本记忆文件可能缺 skill_levels/behavior_patterns 等键，
                     # 后续 get_knowledge_summary / integrate_knowledge 直接索引会 KeyError。
                     # 加载后用默认结构补全缺失键。
@@ -250,7 +257,7 @@ class MemorySystem:
                     _merged.update(self.long_term_memory)
                     self.long_term_memory = _merged
         except Exception as e:
-            print(f"加载记忆失败: {e}")
+            _log.warning("加载记忆失败: %s", e)
             # 使用默认记忆
             # 修复：损坏/加载失败时兜底结构必须与成功路径一致（全键补全），
             # 否则后续 update()/learn 系列直接索引 skill_levels 等键会 KeyError。
@@ -290,12 +297,12 @@ class MemorySystem:
                 json.dump(data, f, ensure_ascii=False, indent=2)
             os.replace(_tmp, self.memory_file)
         except Exception as e:
-            print(f"保存记忆失败: {e}")
+            _log.warning("保存记忆失败: %s", e)
             try:
                 if os.path.exists(self.memory_file + ".tmp"):
                     os.remove(self.memory_file + ".tmp")
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("memory_system 防御性异常（已忽略）: %s", e)
     
     def get_experience(self):
         """获取当前经验值"""
@@ -439,7 +446,7 @@ class MemorySystem:
             # 保存记忆
             self.save_memory()
             
-            print(f"Ralsei学习了新技能: {new_skill}！")
+            _log.debug("Ralsei学习了新技能: %s！", new_skill)
     
     def improve_skill(self, skill_name, amount=1):
         """提升技能等级"""

@@ -4,6 +4,16 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QPoint
 import os
 
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
 class PetAI:
     def __init__(self, parent):
         self.parent = parent
@@ -177,6 +187,15 @@ class PetAI:
         return False
 
     def update_state(self):
+        # 修复：update_state 由 QTimer 周期性直调，任何一个子步骤抛异常
+        # （如 parent 子系统未初始化/返回类型异常）都会让整个 Qt 事件循环
+        # 崩溃退出。加外层保护：记录异常并跳过本轮，下一轮继续。
+        try:
+            self._update_state_impl()
+        except Exception as e:
+            _log.exception("update_state 本轮执行失败（已跳过）: %s", e)
+
+    def _update_state_impl(self):
         # 更新AI状态（关键过程中整个 AI 冻结）
         if self._skip_if_critical():
             return
@@ -332,7 +351,15 @@ class PetAI:
             dynamic_probs["play"] += 0.2
         
         # 确保概率总和不超过1
+        # 修复：total<=0 时除零崩溃（极端情况下所有概率被扣减为 0），回退均分
         total = sum(dynamic_probs.values())
+        if total <= 0:
+            _keys = list(dynamic_probs.keys())
+            if _keys:
+                _even = 1.0 / len(_keys)
+                for key in _keys:
+                    dynamic_probs[key] = _even
+            return dynamic_probs
         for key in dynamic_probs:
             dynamic_probs[key] = max(0, min(1, dynamic_probs[key] / total))
         
@@ -463,7 +490,7 @@ class PetAI:
             return
         if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
             return
-        print(f"触发动作: {action}")
+        _log.debug("触发动作: %s", action)
         self.parent.change_animation(action)
     
     def execute_state_action(self):
@@ -492,8 +519,10 @@ class PetAI:
         max_y = screen_geometry.height() - 150
 
         # 随机选择目标位置
-        target_x = random.randint(50, max_x)
-        target_y = random.randint(50, max_y)
+        # 修复：屏幕宽/高 < 200px 时 randint(50, max_x) 会因 a>b 抛 ValueError
+        # 直接崩溃（如极小虚拟桌面/远程会话刚建立时）。下限不超过上限。
+        target_x = random.randint(50, max(51, max_x))
+        target_y = random.randint(50, max(51, max_y))
 
         # 设置目标位置
         self.parent.target_pos = QPoint(target_x, target_y)
@@ -599,8 +628,8 @@ class PetAI:
             try:
                 self.parent.emotion_system.add_emotion("surprised", 5)
                 self.parent.emotion_system.add_emotion("happy", 5)
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("pet_ai 防御性异常（已忽略）: %s", e)
         elif event_type == "file_dragged":
             # 用户拖动了文件
             self.parent.current_animation = "walk_right"  # 追逐文件

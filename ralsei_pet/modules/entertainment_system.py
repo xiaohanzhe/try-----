@@ -4,6 +4,13 @@ import os
 import json
 from typing import List, Dict, Any
 
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 class EntertainmentSystem:
     def __init__(self, parent):
         self.parent = parent
@@ -222,9 +229,9 @@ class EntertainmentSystem:
                     for achievement_id, achievement in creative_achievements.items():
                         if achievement_id in self.creative_achievements:
                             self.creative_achievements[achievement_id]['unlocked'] = achievement.get('unlocked', False)
-                print(f"成功加载娱乐数据: {self.entertainment_data_path}")
+                _log.debug("成功加载娱乐数据: %s", self.entertainment_data_path)
         except Exception as e:
-            print(f"加载娱乐数据失败: {e}")
+            _log.warning("加载娱乐数据失败: %s", e)
     
     def save_entertainment_data(self):
         """保存娱乐数据"""
@@ -237,9 +244,9 @@ class EntertainmentSystem:
             }
             with open(self.entertainment_data_path, 'w', encoding='utf-8') as f:
                 json.dump(entertainment_data, f, ensure_ascii=False, indent=2)
-            print(f"成功保存娱乐数据: {self.entertainment_data_path}")
+            _log.debug("成功保存娱乐数据: %s", self.entertainment_data_path)
         except Exception as e:
-            print(f"保存娱乐数据失败: {e}")
+            _log.warning("保存娱乐数据失败: %s", e)
     
     def get_available_games(self):
         """获取可用的游戏列表"""
@@ -274,7 +281,7 @@ class EntertainmentSystem:
             return False, f"无效的难度级别，可选难度：{', '.join(game['difficulty'])}"
         
         # 记录游戏开始
-        print(f"开始游戏：{game['name']}，难度：{difficulty}")
+        _log.debug("开始游戏：%s，难度：%s", game['name'], difficulty)
         
         # 触发游戏开始事件
         self.parent.pet_ai.trigger_event('game_start', {
@@ -349,7 +356,7 @@ class EntertainmentSystem:
             return False, f"需要{activity['min_level']}级才能进行这个创意活动"
         
         # 记录活动开始
-        print(f"开始创意活动：{activity['name']}")
+        _log.debug("开始创意活动：%s", activity['name'])
         
         # 触发创意活动开始事件
         self.parent.pet_ai.trigger_event('creative_activity_start', {

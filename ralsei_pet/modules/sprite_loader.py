@@ -4,6 +4,13 @@ import time
 from collections import defaultdict
 from PyQt5.QtGui import QPixmap, QColor, QPainter
 
+try:
+    from logger_utils import get_logger
+    _log = get_logger(__name__)
+except ImportError:  # 模块外独立导入时的降级
+    import logging
+    _log = logging.getLogger(__name__)
+
 class SpriteLoader:
     def __init__(self):
         self.sprites = {}
@@ -164,124 +171,13 @@ class SpriteLoader:
         }
         
         # 位置偏移配置 - 用于调整不在中心的动画
-        self.position_offset = {
-            # 走路动画偏移 - 确保所有走路动画帧的位置一致
-            "walk_down": (0, 0),
-            "walk_down_unhappy": (0, 0),
-            "walk_down_blush": (0, 0),
-            "walk_left": (0, 0),
-            "walk_left_unhappy": (0, 0),
-            "walk_left_blush": (0, 0),
-            "walk_right": (0, 0),
-            "walk_right_unhappy": (0, 0),
-            "walk_right_blush": (0, 0),
-            "walk_up": (0, 0),
-            "run_down": (0, 0),
-            "run_left": (0, 0),
-            "run_right": (0, 0),
-            "run_up": (0, 0),
-            
-            # 表情和情绪动画
-            "laugh": (0, 0),
-            "cry": (0, 0),
-            "cry_start": (0, 0),
-            "surprised": (0, 0),
-            "surprised_down": (0, 0),
-            "surprised_behind": (0, 0),
-            "shocked_left": (0, 0),
-            "shocked_right": (0, 0),
-            "curtsy": (0, 0),
-            "pose": (0, 0),
-            "smile_left": (0, 0),
-            "smile_right": (0, 0),
-            
-            # 动作动画
-            "jump_ready": (0, 0),
-            "jump": (0, 0),
-            "jump_ball": (0, 0),
-            "fall": (0, 0),
-            "land": (0, 0),
-            "slide": (0, 0),
-            "roll": (0, 0),
-            "dance": (0, 0),
-            "spin": (0, 0),
-            "bow": (0, 0),
-            "sing": (0, 0),
-            "hug": (0, 0),
-            "hug_stop": (0, 0),
-            "cower": (0, 0),
-            "look_up": (0, 0),
-            "nuzzle": (0, 0),
-            "nuzzle1": (0, 0),
-            
-            # 互动动画
-            "wave_start": (0, 0),
-            "wave": (0, 0),
-            "wave_down": (0, 0),
-            "victory": (0, 0),
-            "act": (0, 0),
-            "attack": (0, 0),
-            "spell": (0, 0),
-            "battleintro": (0, 0),
-            "defeat": (0, 0),
-            
-            # 特殊状态动画
-            "sleep": (0, 0),
-            "tea": (0, 0),
-            "teacup_land": (0, 0),
-            "hatless_throw": (0, 0),
-            "splat": (0, 0),
-            "stool": (0, 0),
-            
-            # 吃糖和茶会动画
-            "cotton_candy_left": (0, 0),
-            "cotton_candy_right": (0, 0),
-            "cotton_surprise": (0, 0),
-            "cotton_talk": (0, 0),
-            "throw_ball": (0, 0),
-            "walk_tea_up": (0, 0),
-            "walk_tea_down": (0, 0),
-            "walk_tea_left": (0, 0),
-            "tea_sip": (0, 0),
-            "tea_put_down": (0, 0),
-            "tea_reach": (0, 0),
-            "tea_pour": (0, 0),
-            "tea_smile": (0, 0),
-            "cake_eat": (0, 0),
-            
-            # 西装动画
-            "walk_down_butler": (0, 0),
-            "walk_down_butler_unhappy": (0, 0),
-            "walk_left_butler": (0, 0),
-            "walk_left_butler_unhappy": (0, 0),
-            "walk_right_butler": (0, 0),
-            "walk_right_butler_unhappy": (0, 0),
-            "walk_up_butler": (0, 0),
-            
-            # 眼镜相关动画
-            "glasses_1": (0, 0),
-            "glasses_2": (0, 0),
-            
-            # 地上状态动画
-            "fall_back": (0, 0),
-            "fall_back_cry": (0, 0),
-            "fall_back_rub": (0, 0),
-            "fall_back_wince": (0, 0),
-            "fall_back_expressions": (0, 0),
-            "kneel_cry": (0, 0),
-            "kneel_serious": (0, 0),
-
-            # 毛线球动画
-            "yarn_1": (0, 0),
-            "yarn_2": (0, 0),
-
-            # 其他动画（attack/defend 已在前面定义）
-            "defend": (0, 0),
-            "book_look": (0, 0),
-            "spell": (0, 0),
-            "spell_left": (0, 0),
-            "idle": (0, 0)
-        }
+        # 位置偏移配置 - 用于调整不在中心的动画
+        # 修复：原先 100+ 个条目全部是 (0, 0)，与 get_position_offset() 的
+        # .get(animation, (0, 0)) 默认值完全冗余（纯死数据，新动画还得记得来这补一条
+        # 全零占位）。现在默认偏移由 .get() 兜底，字典仅存放【非零】的特例偏移，
+        # 需要时用 set_position_offset() 或直接在此追加，例如：
+        #   "jump": (0, -10),
+        self.position_offset = {}
         
         # 自动扫描和分组的动画
         self.auto_scanned_animations = {}
@@ -296,7 +192,7 @@ class SpriteLoader:
     def scan_and_group_assets(self):
         """扫描素材文件夹并按前缀分组，支持多种文件命名格式"""
         if not os.path.exists(self.sprite_dir):
-            print(f"警告: 素材文件夹 {self.sprite_dir} 不存在")
+            _log.warning("素材文件夹 %s 不存在", self.sprite_dir)
             return
         
         # 使用defaultdict来存储前缀和对应的帧信息
@@ -308,7 +204,7 @@ class SpriteLoader:
             if filename.endswith(".png"):
                 all_png_files.append(filename)
         
-        print(f"找到 {len(all_png_files)} 个PNG文件")
+        _log.debug("找到 %d 个PNG文件", len(all_png_files))
         
         # 尝试多种命名格式来匹配文件
         for filename in all_png_files:
@@ -342,7 +238,7 @@ class SpriteLoader:
         # 按前缀名排序
         self.auto_scanned_animations = dict(sorted(self.auto_scanned_animations.items()))
         
-        print(f"成功分组 {len(self.auto_scanned_animations)} 个动画组")
+        _log.debug("成功分组 %d 个动画组", len(self.auto_scanned_animations))
     
     def create_placeholder_image(self, size=None):
         """创建占位图像"""
@@ -395,7 +291,7 @@ class SpriteLoader:
                         loaded_ok = True
                         break  # 成功加载，退出循环
                 except Exception as e:
-                    pass  # 简化输出，减少控制台日志
+                    _log.debug("加载帧 %s 失败: %s", path, e)
 
         if not loaded_ok:
             # 文件缺失：返回占位图但不缓存，避免后续补上真实文件后仍显示占位图
@@ -414,8 +310,8 @@ class SpriteLoader:
     def load_sprites(self, debug=False):
         """加载所有精灵，支持调试模式"""
         if debug:
-            print(f"开始加载精灵，精灵目录: {self.sprite_dir}")
-            print(f"精灵目录是否存在: {os.path.exists(self.sprite_dir)}")
+            _log.debug("开始加载精灵，精灵目录: %s", self.sprite_dir)
+            _log.debug("精灵目录是否存在: %s", os.path.exists(self.sprite_dir))
         
         # 记录加载开始时间
         start_time = time.time()
@@ -440,7 +336,7 @@ class SpriteLoader:
         # 批量加载所有帧
         for animation, files in all_animations.items():
             if debug:
-                print(f"\n加载动画: {animation}")
+                _log.debug("加载动画: %s", animation)
             
             # 预分配帧列表空间
             frames = []
@@ -459,7 +355,7 @@ class SpriteLoader:
             # 确保关键动画至少有1帧
             if animation in required_animations and self.frame_counts[animation] == 0:
                 if debug:
-                    print(f"警告: 关键动画 {animation} 没有加载到任何帧，创建默认帧")
+                    _log.warning("关键动画 %s 没有加载到任何帧，创建默认帧", animation)
                 # 创建默认的占位帧
                 default_frame = self.create_placeholder_image((50, 80))
                 self.sprites[animation] = [default_frame]
@@ -563,19 +459,23 @@ class SpriteLoader:
         end_time = time.time()
         
         if debug:
-            print("\n所有精灵加载完成！")
-            print("=== 加载总结 ===")
+            _log.debug("所有精灵加载完成！")
+            _log.debug("=== 加载总结 ===")
             total_frames = sum(self.frame_counts.values())
-            print(f"总计加载 {len(self.sprites)} 个动画，{total_frames} 帧")
-            print(f"加载耗时: {end_time - start_time:.2f} 秒")
-            print(f"缓存命中率: {self.cache_hits / (self.cache_hits + self.cache_misses) * 100:.1f}%" if (self.cache_hits + self.cache_misses) > 0 else "缓存未使用")
-            
+            _log.debug("总计加载 %d 个动画，%d 帧", len(self.sprites), total_frames)
+            _log.debug("加载耗时: %.2f 秒", end_time - start_time)
+            _total_cache = self.cache_hits + self.cache_misses
+            if _total_cache > 0:
+                _log.debug("缓存命中率: %.1f%%", self.cache_hits / _total_cache * 100)
+            else:
+                _log.debug("缓存未使用")
+
             # 检查关键动画是否都已加载
             missing_animations = [anim for anim in required_animations if anim not in self.sprites or self.frame_counts[anim] == 0]
             if missing_animations:
-                print(f"警告: 以下关键动画缺失或没有帧: {missing_animations}")
+                _log.warning("以下关键动画缺失或没有帧: %s", missing_animations)
             else:
-                print("所有关键动画已成功加载！")
+                _log.debug("所有关键动画已成功加载！")
             
     def get_sprite(self, animation, frame, loop=True):
         """获取指定动画和帧的精灵，支持循环模式"""
@@ -625,8 +525,8 @@ class SpriteLoader:
                     loaded_ok = True
                 else:
                     pixmap = None
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug("sprite_loader 防御性异常（已忽略）: %s", e)
 
         if not loaded_ok:
             # 表情文件缺失：返回占位图但不缓存，与 load_frame 行为一致
