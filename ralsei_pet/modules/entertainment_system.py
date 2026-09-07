@@ -131,10 +131,12 @@ class EntertainmentSystem:
                 'ending': "最终，{name}成功地{achievement}，并从中学到了{lesson}。"
             },
             {
-                'title': "神秘的{object}",
-                'intro': "在{place}的深处，有一个神秘的{object}。传说中，谁能找到它，就能获得{power}...",
-                'middle': "{name}决定去寻找这个神秘的{object}。在旅途中，{name}遇到了各种挑战，包括{challenge}...",
-                'ending': "经过一番努力，{name}终于找到了{object}，但{twist}。最终，{name}意识到{truth}。"
+                # 注意：模板占位符必须与 generate_story 的 .format() 参数完全一致，
+                # 否则 random.choice 选中该模板时 format 抛 KeyError（50% 概率崩溃）
+                'title': "{name}的奇遇",
+                'intro': "在{place}的深处，有一个古老的传说。有一天，{event}发生了，惊动了{name}和所有的{character_type}...",
+                'middle': "{name}决定去探寻真相。在旅途中，{name}遇到了{friend}，并一起克服了许多困难...",
+                'ending': "最终，{name}成功地{achievement}，并从中学到了{lesson}。"
             }
         ]
         
@@ -241,7 +243,7 @@ class EntertainmentSystem:
     
     def get_available_games(self):
         """获取可用的游戏列表"""
-        current_level = self.parent.social_growth_system.get_level()
+        current_level = self.parent.social_growth.get_level()
         available_games = []
         for game_id, game_info in self.games.items():
             if current_level >= game_info['min_level']:
@@ -250,7 +252,7 @@ class EntertainmentSystem:
     
     def get_available_creative_features(self):
         """获取可用的创意功能列表"""
-        current_level = self.parent.social_growth_system.get_level()
+        current_level = self.parent.social_growth.get_level()
         available_features = []
         for feature_id, feature_info in self.creative_features.items():
             if current_level >= feature_info['min_level']:
@@ -263,7 +265,7 @@ class EntertainmentSystem:
             return False, "游戏不存在"
         
         game = self.games[game_id]
-        current_level = self.parent.social_growth_system.get_level()
+        current_level = self.parent.social_growth.get_level()
         
         if current_level < game['min_level']:
             return False, f"需要{game['min_level']}级才能玩这个游戏"
@@ -305,7 +307,7 @@ class EntertainmentSystem:
             reward = int(base_reward * 0.5)
         
         # 添加经验值
-        self.parent.social_growth_system.add_experience(reward)
+        self.parent.social_growth.add_experience(reward)
         
         # 更新统计数据
         self.activity_stats['games_played'] += 1
@@ -341,7 +343,7 @@ class EntertainmentSystem:
             return False, "创意活动不存在"
         
         activity = self.creative_features[activity_id]
-        current_level = self.parent.social_growth_system.get_level()
+        current_level = self.parent.social_growth.get_level()
         
         if current_level < activity['min_level']:
             return False, f"需要{activity['min_level']}级才能进行这个创意活动"
@@ -380,7 +382,7 @@ class EntertainmentSystem:
         reward = int(base_reward * multiplier)
         
         # 添加经验值
-        self.parent.social_growth_system.add_experience(reward)
+        self.parent.social_growth.add_experience(reward)
         
         # 更新统计数据
         if activity_id == 'story_writing':
@@ -434,7 +436,7 @@ class EntertainmentSystem:
         
         if correct:
             # 获得少量经验值
-            self.parent.social_growth_system.add_experience(5)
+            self.parent.social_growth.add_experience(5)
             self.save_entertainment_data()
             return True, "恭喜！回答正确！"
         else:
@@ -483,13 +485,13 @@ class EntertainmentSystem:
         if score >= 100 and not self.game_achievements['perfect_score']['unlocked']:
             self.game_achievements['perfect_score']['unlocked'] = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "太棒了！我们解锁了'满分达人'成就！", "happy_extremely")
-            self.parent.social_growth_system.add_experience(self.game_achievements['perfect_score']['reward'])
+            self.parent.social_growth.add_experience(self.game_achievements['perfect_score']['reward'])
         
         # 检查游戏大师成就（这里简化处理，实际需要检查所有游戏是否都玩过）
         if self.activity_stats['games_played'] >= len(self.games) and not self.game_achievements['game_master']['unlocked']:
             self.game_achievements['game_master']['unlocked'] = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "太厉害了！我们解锁了'游戏大师'成就！", "happy_extremely")
-            self.parent.social_growth_system.add_experience(self.game_achievements['game_master']['reward'])
+            self.parent.social_growth.add_experience(self.game_achievements['game_master']['reward'])
     
     def _check_creative_achievements(self, activity_id):
         """检查创意成就"""
@@ -497,19 +499,19 @@ class EntertainmentSystem:
         if self.activity_stats['stories_created'] >= 10 and not self.creative_achievements['storyteller']['unlocked']:
             self.creative_achievements['storyteller']['unlocked'] = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "太棒了！我们解锁了'故事大王'成就！", "happy_extremely")
-            self.parent.social_growth_system.add_experience(self.creative_achievements['storyteller']['reward'])
+            self.parent.social_growth.add_experience(self.creative_achievements['storyteller']['reward'])
         
         # 检查诗人成就
         if self.activity_stats['poems_written'] >= 20 and not self.creative_achievements['poet']['unlocked']:
             self.creative_achievements['poet']['unlocked'] = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "太棒了！我们解锁了'诗人'成就！", "happy_extremely")
-            self.parent.social_growth_system.add_experience(self.creative_achievements['poet']['reward'])
+            self.parent.social_growth.add_experience(self.creative_achievements['poet']['reward'])
         
         # 检查艺术家成就
         if self.activity_stats['drawings_made'] >= 15 and not self.creative_achievements['artist']['unlocked']:
             self.creative_achievements['artist']['unlocked'] = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "太棒了！我们解锁了'艺术家'成就！", "happy_extremely")
-            self.parent.social_growth_system.add_experience(self.creative_achievements['artist']['reward'])
+            self.parent.social_growth.add_experience(self.creative_achievements['artist']['reward'])
     
     def get_activity_stats(self):
         """获取活动统计数据"""

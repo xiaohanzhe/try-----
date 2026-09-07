@@ -8,21 +8,20 @@ class ConfigManager:
     def __init__(self, config_file="config.json"):
         # 获取配置文件的完整路径
         self.config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", config_file)
-        self.config_version = "1.0"  # 配置版本
+        self.config_version = "1.0"
         self.last_save_time = time.time()
-        self.save_delay = 0.5  # 保存延迟，避免频繁写入
-        self.observers = []  # 配置变更观察者
+        self.observers = []
         self.config = self._load_config()
     
-    def _load_config(self):
-        """加载配置文件"""
-        default_config = {
-            "version": self.config_version,
+    @staticmethod
+    def _default_config():
+        return {
+            "version": "1.0",
             "api": {
                 "enabled": False,
                 "api_key": "",
-                "base_url": "https://api.doubao.com",
-                "model": "doubao-pro",
+                "base_url": "http://localhost:8000",
+                "model": "local-model",
                 "agent_id": "",
                 "api_version": "v1",
                 "timeout": 30,
@@ -38,7 +37,9 @@ class ConfigManager:
                 "data_retention_days": 30
             },
             "security": {
-                "enable_encryption": True,
+                # 修复：加密功能尚未实现（api_key 等仍明文落盘），默认值改为
+                # False 以避免"已启用加密"的虚假安全感；待实现 DPAPI/Fernet 后再开启。
+                "enable_encryption": False,
                 "encryption_key": "",
                 "auto_lock": False,
                 "lock_timeout": 300
@@ -61,6 +62,10 @@ class ConfigManager:
                 "hunger_increase_rate": 0.5
             }
         }
+
+    def _load_config(self):
+        """加载配置文件"""
+        default_config = self._default_config()
         
         # 如果配置文件不存在，创建默认配置
         if not os.path.exists(self.config_file):
@@ -71,6 +76,12 @@ class ConfigManager:
         try:
             with open(self.config_file, 'r', encoding='utf-8') as f:
                 loaded_config = json.load(f)
+            # 修复：config.json 可能是合法 JSON 但非 dict（[]/null/数字/字符串），
+            # 之后 .get("version") 会抛未捕获 AttributeError 导致启动即崩（无备份无回退）。
+            # 非 dict 一律按损坏处理：备份后回退默认配置。
+            if not isinstance(loaded_config, dict):
+                print(f"配置文件根节点不是对象（{type(loaded_config).__name__}），按损坏处理")
+                raise json.JSONDecodeError("config root is not dict", "", 0)
             
             # 配置版本检查和自动升级
             config_version = loaded_config.get("version", "0.0")
@@ -85,6 +96,21 @@ class ConfigManager:
             else:
                 # 正常合并配置
                 merged_config = self._merge_configs(default_config, loaded_config)
+            
+            # 自动迁移旧版云服务商配置到本地 AI 默认值
+            api_section = merged_config.get("api", {})
+            needs_migration = False
+            _legacy_cloud_urls = ("https://api.doubao.com",
+                                  "https://ark.cn-beijing.volces.com",
+                                  "https://ark.cn-beijing.volces.com/api/v3")
+            if api_section.get("base_url", "").lower() in _legacy_cloud_urls:
+                api_section["base_url"] = "http://localhost:8000"
+                needs_migration = True
+            if api_section.get("model", "").lower().startswith("doubao"):
+                api_section["model"] = "local-model"
+                needs_migration = True
+            if needs_migration:
+                print("检测到旧版云服务配置，已自动迁移为本地 AI 默认值")
             
             # 如果合并后的配置与加载的配置不同，保存更新后的配置
             if merged_config != loaded_config:
@@ -122,26 +148,15 @@ class ConfigManager:
         return merged
     
     def _save_config(self, config):
-        """保存配置文件"""
-        # 延迟保存机制，避免频繁写入
-        current_time = time.time()
-        if current_time - self.last_save_time < self.save_delay:
-            return
-        
+        """保存配置文件（原子写入）"""
         try:
-            # 创建临时文件，写入成功后再替换原文件，提高安全性
             temp_file = f"{self.config_file}.tmp"
             with open(temp_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4, ensure_ascii=False)
-            
-            # 替换原文件
             os.replace(temp_file, self.config_file)
-            
-            # 更新最后保存时间
-            self.last_save_time = current_time
+            self.last_save_time = time.time()
         except IOError as e:
             print(f"保存配置文件失败: {e}")
-            # 清理临时文件
             if os.path.exists(f"{self.config_file}.tmp"):
                 try:
                     os.remove(f"{self.config_file}.tmp")
@@ -248,22 +263,19 @@ class ConfigManager:
     
     def reset_config(self, section=None):
         """重置配置到默认值"""
-        """重置配置到默认值"""
-        default_config = self._load_config()
-        
+        defaults = self._default_config()
+
         if section:
-            # 只重置特定部分
-            if section in default_config:
-                self.config[section] = default_config[section]
+            if section in defaults:
+                self.config[section] = defaults[section]
                 self._save_config(self.config)
                 self._notify_observers(section, None, self.config[section])
                 return True
             return False
         else:
-            # 重置所有配置
-            self.config = default_config
+            self.config = defaults
             self._save_config(self.config)
-            self._notify_observers("*")
+            self._notify_observers("*", None, None)
             return True
     
     def get_full_config(self):
@@ -278,22 +290,22 @@ class ConfigManager:
             if section not in self.config:
                 return False, f"缺少必要的配置部分: {section}"
         
-        # API配置验证
+        # AI 配置验证
         api_config = self.config["api"]
         if api_config["enabled"]:
             if not api_config["api_key"]:
-                return False, "API已启用但未设置API密钥"
+                return False, "AI已启用但未设置API密钥"
             if not api_config["base_url"]:
-                return False, "API已启用但未设置基础URL"
+                return False, "AI已启用但未设置基础URL"
         
         return True, "配置验证通过"
     
     def get_api_config(self):
-        """获取API相关配置"""
+        """获取 AI 相关配置"""
         return self.config.get("api", {})
     
     def update_api_config(self, api_config):
-        """更新API相关配置"""
+        """更新 AI 相关配置"""
         self.config["api"].update(api_config)
         self._save_config(self.config)
     
@@ -333,5 +345,6 @@ class ConfigManager:
         self._save_config(self.config)
     
     def is_encryption_enabled(self):
-        """检查是否启用加密"""
-        return self.config.get("security", {}).get("enable_encryption", True)
+        """检查是否启用加密。注意：当前版本加密功能尚未实现，
+        无论配置如何都返回 False，避免上层产生"已加密"的错觉。"""
+        return False

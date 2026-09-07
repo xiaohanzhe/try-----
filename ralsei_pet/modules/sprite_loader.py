@@ -8,8 +8,10 @@ class SpriteLoader:
     def __init__(self):
         self.sprites = {}
         self.frame_counts = {}
-        self.sprite_dir = "c:/Users/23002/Documents/trae_projects/try/deltarune_ralsei"
-        self.face_dir = "c:/Users/23002/Documents/trae_projects/try/ralsei_face"
+        # 动态计算素材路径：相对于本文件向上两级（modules → ralsei_pet → 项目根）
+        _project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        self.sprite_dir = os.path.join(_project_root, "deltarune_ralsei")
+        self.face_dir = os.path.join(_project_root, "ralsei_face")
         
         # 添加图像缓存，避免重复加载
         self.image_cache = {}
@@ -33,8 +35,9 @@ class SpriteLoader:
             "walk_right_unhappy": ["spr_ralsei_walk_right_unhappy_0.png", "spr_ralsei_walk_right_unhappy_1.png", "spr_ralsei_walk_right_unhappy_2.png", "spr_ralsei_walk_right_unhappy_3.png"],
             "walk_right_blush": ["spr_ralsei_walk_right_blush_0.png", "spr_ralsei_walk_right_blush_1.png", "spr_ralsei_walk_right_blush_2.png", "spr_ralsei_walk_right_blush_3.png"],
             "walk_up": ["spr_ralsei_walk_up_0.png", "spr_ralsei_walk_up_1.png", "spr_ralsei_walk_up_2.png", "spr_ralsei_walk_up_3.png"],
-            "walk_up_blush": ["spr_ralsei_walk_up_blush_0.png", "spr_ralsei_walk_up_blush_1.png", "spr_ralsei_walk_up_blush_2.png", "spr_ralsei_walk_up_blush_3.png"],
-            "walk_up_unhappy": ["spr_ralsei_walk_up_unhappy_0.png", "spr_ralsei_walk_up_unhappy_1.png", "spr_ralsei_walk_up_unhappy_2.png", "spr_ralsei_walk_up_unhappy_3.png"],
+            # 注意：walk_up_blush / walk_up_unhappy 的帧文件在素材目录中不存在（1106 个 PNG 实测缺失），
+            # 若保留 mapping 会加载"?"灰块占位帧。朝上走时脸红/不开心退化为普通 walk_up（无素材可用）。
+            # 移除这两行可让 change_animation 走前缀回退（walk_up_blush → walk_up）。
             
             # 跑步动画
             "run_down": ["spr_ralsei_run_down_0.png", "spr_ralsei_run_down_1.png", "spr_ralsei_run_down_2.png", "spr_ralsei_run_down_3.png", "spr_ralsei_run_down_4.png", "spr_ralsei_run_down_5.png"],
@@ -75,7 +78,6 @@ class SpriteLoader:
             "hug": ["spr_ralsei_hug_hatless_0.png", "spr_ralsei_hug_hatless_1.png", "spr_ralsei_hug_hatless_2.png", "spr_ralsei_hug_hatless_3.png"],
             "hug_stop": ["spr_ralsei_hug_stop_hatless_0.png", "spr_ralsei_hug_stop_hatless_1.png", "spr_ralsei_hug_stop_hatless_2.png", "spr_ralsei_hug_stop_hatless_3.png"],
             "cower": ["spr_ralsei_cower_arms_0.png"],
-            "defend": ["spr_ralsei_defend_0.png"],
             "look_up": ["spr_ralsei_look_up_0.png", "spr_ralsei_look_up_1.png", "spr_ralsei_look_up_2.png", "spr_ralsei_look_up_3.png"],
             "nuzzle": ["spr_ralsei_nuzzle_0.png", "spr_ralsei_nuzzle_1.png", "spr_ralsei_nuzzle_2.png", "spr_ralsei_nuzzle_3.png", "spr_ralsei_nuzzle_4.png", "spr_ralsei_nuzzle_5.png"],
             "nuzzle1": ["spr_ralsei_nuzzle1_0.png"],
@@ -90,8 +92,8 @@ class SpriteLoader:
             "wave_down": ["spr_ralsei_wave_down_0.png", "spr_ralsei_wave_down_1.png", "spr_ralsei_wave_down_2.png", "spr_ralsei_wave_down_3.png"],
             "victory": ["spr_ralsei_victory_0.png", "spr_ralsei_victory_1.png", "spr_ralsei_victory_2.png", "spr_ralsei_victory_3.png", "spr_ralsei_victory_4.png", "spr_ralsei_victory_5.png", "spr_ralsei_victory_6.png", "spr_ralsei_victory_7.png", "spr_ralsei_victory_8.png", "spr_ralsei_victory_9.png", "spr_ralsei_victory_10.png", "spr_ralsei_victory_11.png", "spr_ralsei_victory_12.png", "spr_ralsei_victory_13.png", "spr_ralsei_victory_14.png", "spr_ralsei_victory_15.png", "spr_ralsei_victory_16.png", "spr_ralsei_victory_17.png", "spr_ralsei_victory_18.png", "spr_ralsei_victory_19.png", "spr_ralsei_victory_20.png"],
             "act": ["spr_ralsei_act_0.png", "spr_ralsei_act_1.png", "spr_ralsei_act_2.png", "spr_ralsei_act_3.png", "spr_ralsei_act_4.png", "spr_ralsei_act_5.png", "spr_ralsei_act_6.png", "spr_ralsei_act_7.png", "spr_ralsei_act_8.png", "spr_ralsei_act_9.png", "spr_ralsei_act_10.png", "spr_ralsei_act_11.png", "spr_ralsei_act_12.png"],
-            "attack": ["spr_ralsei_attack_0.png", "spr_ralsei_attack_1.png", "spr_ralsei_attack_2.png", "spr_ralsei_attack_3.png", "spr_ralsei_attack_4.png", "spr_ralsei_attack_5.png", "spr_ralsei_attack_6.png"],
             "spell": ["spr_ralsei_spell_0.png", "spr_ralsei_spell_1.png", "spr_ralsei_spell_2.png", "spr_ralsei_spell_3.png", "spr_ralsei_spell_4.png", "spr_ralsei_spell_5.png", "spr_ralsei_spell_6.png", "spr_ralsei_spell_7.png", "spr_ralsei_spell_8.png", "spr_ralsei_spell_9.png", "spr_ralsei_spell_10.png"],
+            "spell_left": ["spr_ralsei_spell_left_0.png", "spr_ralsei_spell_left_1.png", "spr_ralsei_spell_left_2.png", "spr_ralsei_spell_left_3.png", "spr_ralsei_spell_left_4.png", "spr_ralsei_spell_left_5.png", "spr_ralsei_spell_left_6.png", "spr_ralsei_spell_left_7.png", "spr_ralsei_spell_left_8.png", "spr_ralsei_spell_left_9.png", "spr_ralsei_spell_left_10.png"],
             "battleintro": ["spr_ralsei_battleintro_0.png", "spr_ralsei_battleintro_1.png", "spr_ralsei_battleintro_2.png", "spr_ralsei_battleintro_3.png", "spr_ralsei_battleintro_4.png", "spr_ralsei_battleintro_5.png", "spr_ralsei_battleintro_6.png", "spr_ralsei_battleintro_7.png", "spr_ralsei_battleintro_8.png", "spr_ralsei_battleintro_9.png", "spr_ralsei_battleintro_10.png"],
             "defeat": ["spr_ralsei_defeat.png"],
             
@@ -101,7 +103,6 @@ class SpriteLoader:
             "teacup_land": ["spr_teacup_ralsei_land_0.png"],
             "hatless_throw": ["spr_ralsei_hatless_throw.png"],
             "splat": ["spr_cutscene_10_ralsei_splat.png"],
-            "splat_mad": ["spr_cutscene_24e_ralsei_splat_mad.png"],
             "stool": ["spr_cutscene_10_ralsei_stool.png"],
             
             # 吃糖和茶会动画
@@ -129,7 +130,7 @@ class SpriteLoader:
             "walk_right_butler": ["spr_cutscene_20_ralsei_walk_right_butler_0.png", "spr_cutscene_20_ralsei_walk_right_butler_1.png", "spr_cutscene_20_ralsei_walk_right_butler_2.png", "spr_cutscene_20_ralsei_walk_right_butler_3.png"],
             "walk_right_butler_unhappy": ["spr_cutscene_20_ralsei_walk_right_butler_unhappy_0.png", "spr_cutscene_20_ralsei_walk_right_butler_unhappy_1.png", "spr_cutscene_20_ralsei_walk_right_butler_unhappy_2.png", "spr_cutscene_20_ralsei_walk_right_butler_unhappy_3.png"],
             "walk_up_butler": ["spr_cutscene_20_ralsei_walk_up_butler_0.png", "spr_cutscene_20_ralsei_walk_up_butler_1.png", "spr_cutscene_20_ralsei_walk_up_butler_2.png", "spr_cutscene_20_ralsei_walk_up_butler_3.png"],
-            "walk_up_butler_unhappy": ["spr_cutscene_20_ralsei_walk_up_butler_unhappy_0.png"],
+            # walk_up_butler_unhappy 帧文件缺失，移除以免灰块；不开心朝上走回退 walk_up_butler
             
             # 眼镜相关动画
             "glasses_1": ["spr_cutscene_ex1_ralsei_glasses_1_0.png"],
@@ -143,11 +144,14 @@ class SpriteLoader:
             "fall_back_expressions": ["spr_ralsei_fall_back_expressions_0.png", "spr_ralsei_fall_back_expressions_1.png", "spr_ralsei_fall_back_expressions_2.png", "spr_ralsei_fall_back_expressions_3.png", "spr_ralsei_fall_back_expressions_4.png"],
             "kneel_cry": ["spr_ralsei_kneel_cry_0.png", "spr_ralsei_kneel_cry_1.png"],
             "kneel_serious": ["spr_ralsei_kneel_serious_0.png"],
-            
-            # 拥抱动画
-            "hug": ["spr_ralsei_hug_hatless_0.png", "spr_ralsei_hug_hatless_1.png", "spr_ralsei_hug_hatless_2.png", "spr_ralsei_hug_hatless_3.png"],
-            "hug_stop": ["spr_ralsei_hug_stop_hatless_0.png", "spr_ralsei_hug_stop_hatless_1.png", "spr_ralsei_hug_stop_hatless_2.png", "spr_ralsei_hug_stop_hatless_3.png"],
-            
+
+            # 情绪动画别名（复用现有素材：happy→laugh、neutral→idle、sad→站着哭泣前准备）
+            # 修复：此前代码大量 play_animation_once("sad"/"happy"/"neutral") 以及
+            # emotion_system 的 'sad' 动画映射在 sprite_loader 中不存在，全部静默退化为 idle。
+            "happy": ["spr_ralsei_laugh_0.png", "spr_ralsei_laugh_1.png"],
+            "neutral": ["spr_ralsei_idle_0.png", "spr_ralsei_idle_1.png", "spr_ralsei_idle_2.png", "spr_ralsei_idle_3.png", "spr_ralsei_idle_4.png"],
+            "sad": ["spr_ralsei_cry_start_0.png"],
+
             # 毛线球动画
             "yarn_1": ["spr_ralseib_yarn_1.png"],
             "yarn_2": ["spr_ralseib_yarn_2.png"],
@@ -206,7 +210,6 @@ class SpriteLoader:
             "hug": (0, 0),
             "hug_stop": (0, 0),
             "cower": (0, 0),
-            "defend": (0, 0),
             "look_up": (0, 0),
             "nuzzle": (0, 0),
             "nuzzle1": (0, 0),
@@ -228,7 +231,6 @@ class SpriteLoader:
             "teacup_land": (0, 0),
             "hatless_throw": (0, 0),
             "splat": (0, 0),
-            "splat_mad": (0, 0),
             "stool": (0, 0),
             
             # 吃糖和茶会动画
@@ -268,19 +270,16 @@ class SpriteLoader:
             "fall_back_expressions": (0, 0),
             "kneel_cry": (0, 0),
             "kneel_serious": (0, 0),
-            
-            # 拥抱动画
-            "hug": (0, 0),
-            "hug_stop": (0, 0),
-            
+
             # 毛线球动画
             "yarn_1": (0, 0),
             "yarn_2": (0, 0),
-            
-            # 其他动画
-            "attack": (0, 0),
+
+            # 其他动画（attack/defend 已在前面定义）
             "defend": (0, 0),
             "book_look": (0, 0),
+            "spell": (0, 0),
+            "spell_left": (0, 0),
             "idle": (0, 0)
         }
         
@@ -289,6 +288,10 @@ class SpriteLoader:
         
         # 帧加载失败时的占位图像大小
         self.placeholder_size = (50, 80)
+
+        # 所有精灵帧的最大包围盒（在 load_sprites 结束时填充）。
+        # main.py 用它作为固定容器尺寸，让窗口大小永不因精灵而异而 setGeometry。
+        self.frame_container_size = None  # (w, h)
         
     def scan_and_group_assets(self):
         """扫描素材文件夹并按前缀分组，支持多种文件命名格式"""
@@ -377,7 +380,8 @@ class SpriteLoader:
         ]
         
         pixmap = None
-        
+        loaded_ok = False
+
         # 尝试加载所有候选文件
         for candidate in file_candidates:
             path = os.path.join(self.sprite_dir, candidate)
@@ -385,20 +389,22 @@ class SpriteLoader:
                 try:
                     pixmap = QPixmap(path)
                     if not pixmap.isNull():
+                        loaded_ok = True
                         break  # 成功加载，退出循环
                 except Exception as e:
                     pass  # 简化输出，减少控制台日志
-        
-        if not pixmap:
-            # 创建一个占位图像
+
+        if not loaded_ok:
+            # 文件缺失：返回占位图但不缓存，避免后续补上真实文件后仍显示占位图
             pixmap = self.create_placeholder_image()
-        
-        # 缓存图像，支持LRU策略
+            return pixmap
+
+        # 仅缓存真实加载成功的图像，支持 LRU 策略
         if len(self.image_cache) >= self.cache_limit:
             # 简单的LRU策略：移除最早添加的项
             oldest_key = next(iter(self.image_cache))
             del self.image_cache[oldest_key]
-        
+
         self.image_cache[filename] = pixmap
         return pixmap
     
@@ -455,6 +461,100 @@ class SpriteLoader:
                 default_frame = self.create_placeholder_image((50, 80))
                 self.sprites[animation] = [default_frame]
                 self.frame_counts[animation] = 1
+
+        # 计算"核心角色动作"的最大包围盒，给 UI 层做"固定容器尺寸"。
+        # 只统计真正的角色动作（walk/run/idle/jump 等），排除 gameshow/plush/道具等大图。
+        core_prefixes = (
+            'spr_ralsei_idle',
+            'spr_ralsei_walk',
+            'spr_ralsei_run',
+            'spr_ralsei_jump',
+            'spr_ralsei_fall',
+            'spr_ralsei_land',
+            'spr_ralsei_laugh',
+            'spr_ralsei_cry',
+            'spr_ralsei_victory',
+            'spr_ralsei_wave',
+            'spr_ralsei_look_up',
+            'spr_ralsei_smile',
+            'spr_ralsei_surprised',
+            'spr_ralsei_shocked',
+            'spr_ralsei_dance',
+            'spr_ralsei_sing',
+            'spr_ralsei_hug',
+            'spr_ralsei_act',
+            'spr_ralsei_pose',
+            'spr_ralsei_tea',
+            'spr_ralsei_roll',
+            'spr_ralsei_slide',
+            'spr_ralsei_spell',
+            'spr_ralsei_attack',
+            'spr_ralsei_battleintro',
+            'spr_ralsei_cower',
+            'spr_ralsei_defend',
+            'spr_ralsei_kneel',
+            'spr_ralsei_nuzzle',
+            'spr_ralsei_cotton',
+            'spr_ralsei_book',
+            'spr_ralsei_button',
+            'spr_ralsei_throw',
+            'spr_ralsei_hatless',
+            'spr_ralsei_curtsy',
+            'spr_ralsei_defeat',
+            'spr_ralsei_bow',
+            'spr_ralsei_spin',
+            'spr_teacup_ralsei',
+            'spr_cutscene_10_ralsei',
+            'spr_cutscene_15_ralsei_cotton',
+            'spr_cutscene_20_ralsei_walk',
+            'spr_cutscene_27_ralsei',
+            'spr_cutscene_ex1_ralsei',
+            'spr_cutscene_20_ralsei_walk',
+            'spr_susieb_throwralsei',
+        )
+        max_h = 0
+        max_w = 0
+        # Phase 1: 先拿所有核心帧的真实高度上限 max_h（spell 类也参与高度统计，因为它与 idle 高度接近）
+        for animation_name, frames in self.sprites.items():
+            name_lower = animation_name.lower() if isinstance(animation_name, str) else ''
+            is_core = any(name_lower.startswith(p.lower()) for p in core_prefixes)
+            if animation_name not in self.animation_mapping and not is_core:
+                continue
+            for f in frames:
+                if f is not None and not f.isNull():
+                    if f.height() > max_h:
+                        max_h = f.height()
+        # Phase 2: 以统一目标高度 target_h = max_h * 0.95 为准，
+        # 对所有非 spell 核心帧做"保持长宽比缩到 target_h"的预计算，
+        # 然后取"缩放后最大宽度"作为容器宽度——这样永远不会出现某帧宽度超容器
+        # 而回退到 scaledToWidth（那会破坏高度一致，视觉上各状态大小不一）。
+        target_h = max(1, int(max_h * 0.95)) if max_h > 0 else 50
+        max_scaled_w = 0
+        for animation_name, frames in self.sprites.items():
+            name_lower = animation_name.lower() if isinstance(animation_name, str) else ''
+            is_core = any(name_lower.startswith(p.lower()) for p in core_prefixes)
+            if animation_name not in self.animation_mapping and not is_core:
+                continue
+            is_spell = name_lower.startswith('spr_ralsei_spell') or animation_name in ('spell', 'spell_left')
+            # spell/spell_left 单独按实际宽度超界时保留原高度（特效溢出），
+            # 不参与 Phase 2 的宽度统计——它们的施法特效允许超出容器边界居中绘制。
+            if is_spell:
+                continue
+            for f in frames:
+                if f is not None and not f.isNull():
+                    fh = f.height()
+                    if fh <= 0:
+                        continue
+                    ratio = target_h / float(fh)
+                    sw = max(1, int(f.width() * ratio))
+                    if sw > max_scaled_w:
+                        max_scaled_w = sw
+        # 兜底：至少要有非 0 的尺寸
+        if max_scaled_w <= 0:
+            max_scaled_w = 50
+        if max_h <= 0:
+            max_h = 80
+        self.frame_container_size = (max_scaled_w, max_h)
         
         # 记录加载结束时间
         end_time = time.time()
@@ -507,26 +607,31 @@ class SpriteLoader:
         face_key = f"face_{face_name}"
         if face_key in self.image_cache:
             return self.image_cache[face_key]
-        
+
         file_path = os.path.join(self.face_dir, face_name + ".png")
         pixmap = None
-        
+        loaded_ok = False
+
         if os.path.exists(file_path):
             try:
                 pixmap = QPixmap(file_path)
-                if pixmap.isNull():
+                if not pixmap.isNull():
+                    loaded_ok = True
+                else:
                     pixmap = None
             except Exception:
                 pass
-        
-        if not pixmap:
-            # 创建表情占位图像
-            pixmap = self.create_placeholder_image((30, 30))
-        
-        # 缓存表情
-        if len(self.image_cache) < self.cache_limit:
-            self.image_cache[face_key] = pixmap
-        
+
+        if not loaded_ok:
+            # 表情文件缺失：返回占位图但不缓存，与 load_frame 行为一致
+            return self.create_placeholder_image((30, 30))
+
+        # 缓存真实加载成功的表情，使用与 load_frame 一致的 LRU 策略
+        if len(self.image_cache) >= self.cache_limit:
+            oldest_key = next(iter(self.image_cache))
+            del self.image_cache[oldest_key]
+
+        self.image_cache[face_key] = pixmap
         return pixmap
         
     def get_position_offset(self, animation):

@@ -1,20 +1,44 @@
 import os
+import ctypes
+import platform
+import shutil
+import socket
 import win32gui
 import win32api
 import win32con
 import win32com.client
 import time
-import platform
 import random
-import shutil
-import socket
 from PyQt5.QtCore import QTimer, QPoint, QRect
 
-# 按需导入psutil，避免启动时的性能开销
 try:
     import psutil
 except ImportError:
     psutil = None
+
+LVM_FIRST = 0x1000
+LVM_GETITEMCOUNT = LVM_FIRST + 4
+LVM_GETITEMRECT = LVM_FIRST + 14
+LVM_SUBITEMHITTEST = LVM_FIRST + 17
+LVIR_SELECTBOUNDS = 1
+
+PROCESS_VM_OPERATION = 0x0008
+PROCESS_VM_READ = 0x0010
+PROCESS_VM_WRITE = 0x0020
+MEM_COMMIT = 0x1000
+MEM_RELEASE = 0x8000
+PAGE_READWRITE = 0x04
+
+class RECT(ctypes.Structure):
+    _fields_ = [
+        ("left", ctypes.c_long),
+        ("top", ctypes.c_long),
+        ("right", ctypes.c_long),
+        ("bottom", ctypes.c_long),
+    ]
+
+kernel32 = ctypes.windll.kernel32
+user32 = ctypes.windll.user32
 
 class DesktopInteraction:
     def __init__(self, parent):
@@ -22,10 +46,19 @@ class DesktopInteraction:
         self.desktop_elements = []
         self.update_timer = QTimer(self.parent)
         self.update_timer.timeout.connect(self.update_desktop_elements)
-        self.update_timer.start(1000)  # 每秒更新一次桌面元素
-        
+        self.update_timer.start(1000)
+
         # 桌面路径
-        self.desktop_path = os.path.join(os.environ['USERPROFILE'], 'Desktop')
+        # 修复：硬编码 USERPROFILE\Desktop 在 OneDrive 桌面重定向（OneDrive\Desktop）时
+        # 指向错误目录，导致桌面元素检测不到、躲猫猫障碍物创建到看不见的地方、
+        # 目标坐标估算随机化（看起来像"瞬移"）。用纯文件系统判断获取真实桌面路径
+        # （不用 COM/ctypes 调 SHGetFolderPath，避免污染 Qt 进程导致原生崩溃）。
+        self.desktop_path = self._get_real_desktop_path()
+
+        # 真实图标位置缓存（避免每次 Shell 调用都重新枚举）
+        self._icon_rect_cache = None
+        self._icon_rect_cache_time = 0.0
+        self._icon_rect_cache_ttl = 5.0  # 5 秒有效
         
         # 隐私应用列表，包含需要保护的应用关键词
         self.privacy_apps = [
@@ -76,6 +109,33 @@ class DesktopInteraction:
         
         # 存储信息
         self.storage_info = self.get_storage_info()
+
+    @staticmethod
+    def _get_real_desktop_path():
+        """获取真实桌面路径（兼容 OneDrive 桌面重定向 / 多用户）。
+        纯文件系统判断：优先 USERPROFILE\Desktop，再试常见 OneDrive 路径。"""
+        base = os.path.join(os.environ['USERPROFILE'], 'Desktop')
+        if os.path.isdir(base):
+            return base
+        for cand in (
+            os.path.join(os.environ.get('OneDrive', ''), 'Desktop'),
+            os.path.join(os.environ.get('OneDriveConsumer', ''), 'Desktop'),
+            os.path.join(os.path.expanduser('~'), 'OneDrive', 'Desktop'),
+            os.path.join(os.path.expanduser('~'), 'OneDrive', '桌面'),
+        ):
+            if cand and os.path.isdir(cand):
+                return cand
+        # 注册表 KnownFolder：HKCU\...\Shell Folders\Desktop
+        try:
+            import winreg
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                                r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as k:
+                v, _ = winreg.QueryValueEx(k, 'Desktop')
+                if v and os.path.isdir(v):
+                    return v
+        except Exception:
+            pass
+        return base
         
     def init_scheduled_tasks(self):
         # 初始化定时任务
@@ -293,7 +353,11 @@ class DesktopInteraction:
     
     def check_scheduled_tasks(self):
         # 检查并执行定时任务
+        # 修复：daily 任务原来用字符串相等判断，同一分钟内重复执行多次；
+        # interval 任务直接 pass 永不执行。现在 daily 记录上次执行日期防重复，
+        # interval 用时间戳差值实现周期触发。
         current_time = time.strftime("%H:%M")
+        today = time.strftime("%Y-%m-%d")
         current_seconds = time.time()
         
         for task in self.scheduled_tasks:
@@ -301,12 +365,18 @@ class DesktopInteraction:
                 continue
             
             if task["type"] == "daily":
-                if task["time"] == current_time:
+                last_date = task.get("last_executed_date")
+                if task.get("time") == current_time and last_date != today:
+                    task["last_executed_date"] = today
                     self.execute_scheduled_task(task)
             elif task["type"] == "interval":
-                # 简单的间隔任务实现
-                # 实际应用中应使用更精确的定时机制
-                pass
+                interval = task.get("interval", 0)
+                if interval <= 0:
+                    continue
+                last_ts = task.get("last_executed_ts", 0)
+                if current_seconds - last_ts >= interval:
+                    task["last_executed_ts"] = current_seconds
+                    self.execute_scheduled_task(task)
     
     def execute_scheduled_task(self, task):
         # 执行定时任务
@@ -384,7 +454,11 @@ class DesktopInteraction:
             os.makedirs(backup_path, exist_ok=True)
             
             # 备份配置文件
-            config_path = os.path.join(self.parent.config_manager.config_dir, 'config.json')
+            # 修复：config_manager 只有 config_file 属性，没有 config_dir，
+            # 原代码访问 config_dir 会 AttributeError 被吞 → 备份永远失败。
+            config_path = os.path.dirname(os.path.abspath(self.parent.config_manager.config_file))
+            if os.path.isdir(config_path):
+                config_path = os.path.join(config_path, 'config.json')
             if os.path.exists(config_path):
                 import shutil
                 shutil.copy(config_path, backup_path)
@@ -402,9 +476,11 @@ class DesktopInteraction:
         try:
             import shutil
             # 恢复配置文件
+            # 修复：config_manager 只有 config_file 属性（config_path 不存在），
+            # 原代码 AttributeError 被吞 → 恢复永远失败。
             backup_config = os.path.join(backup_path, 'config.json')
             if os.path.exists(backup_config):
-                shutil.copy(backup_config, self.parent.config_manager.config_path)
+                shutil.copy(backup_config, self.parent.config_manager.config_file)
                 print(f"配置文件已从: {backup_path} 恢复")
                 self.parent.emotion_system.react_to_event("data_restore_successful", {"path": backup_path})
                 return True
@@ -439,140 +515,289 @@ class DesktopInteraction:
             self.parent.emotion_system.react_to_event("temp_files_clean_failed", {"error": str(e)})
             return False
         
-    def get_desktop_folders(self):
-        # 获取桌面文件夹列表，包含真实位置信息
-        folders = []
-        
+    def _get_cached_icon_rects(self):
+        now = time.time()
+        if self._icon_rect_cache is not None and (now - self._icon_rect_cache_time) < self._icon_rect_cache_ttl:
+            return self._icon_rect_cache
+        rects = self._probe_desktop_icon_positions()
+        self._icon_rect_cache = rects
+        self._icon_rect_cache_time = now
+        return rects
+
+    def _probe_desktop_icon_positions(self):
+        """通过 SysListView32 枚举真实桌面图标位置（参考 Mineradio 方案）"""
+        # 查找桌面列表视图窗口链：Progman -> SHELLDLL_DefView -> SysListView32
+        list_view_hwnd = 0
+        worker_w = win32gui.FindWindowEx(0, 0, "WorkerW", None)
+        if worker_w:
+            shell_dll = win32gui.FindWindowEx(worker_w, 0, "SHELLDLL_DefView", None)
+            if shell_dll:
+                list_view_hwnd = win32gui.FindWindowEx(shell_dll, 0, "SysListView32", None)
+        if not list_view_hwnd:
+            progman = win32gui.FindWindow("Progman", "Program Manager")
+            if progman:
+                shell_dll = win32gui.FindWindowEx(progman, 0, "SHELLDLL_DefView", None)
+                if shell_dll:
+                    list_view_hwnd = win32gui.FindWindowEx(shell_dll, 0, "SysListView32", None)
+        if not list_view_hwnd:
+            return None
+
+        # 获取进程 ID 并打开进程
+        pid = ctypes.c_ulong()
+        user32.GetWindowThreadProcessId(list_view_hwnd, ctypes.byref(pid))
+        if not pid.value:
+            return None
+
+        access = PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE
+        h_process = kernel32.OpenProcess(access, False, pid.value)
+        if not h_process:
+            return None
+
         try:
-            # 使用Windows Shell API获取桌面文件夹信息
+            # 在远程进程中分配 RECT 缓冲区
+            rect_size = ctypes.sizeof(RECT)
+            remote_rect = kernel32.VirtualAllocEx(h_process, None, rect_size, MEM_COMMIT, PAGE_READWRITE)
+            if not remote_rect:
+                return None
+
+            try:
+                # 获取图标数量
+                count = user32.SendMessageW(list_view_hwnd, LVM_GETITEMCOUNT, 0, 0)
+                if count <= 0:
+                    return None
+
+                # 获取列表视图在屏幕上的左上角，用于 MapWindowPoints
+                lv_rect = win32gui.GetWindowRect(list_view_hwnd)
+                lv_left = lv_rect[0]
+                lv_top = lv_rect[1]
+
+                icon_rects = []
+                local_rect = RECT()
+                for i in range(count):
+                    user32.SendMessageW(list_view_hwnd, LVM_GETITEMRECT, i, remote_rect)
+                    if not kernel32.ReadProcessMemory(h_process, remote_rect, ctypes.byref(local_rect), rect_size, None):
+                        continue
+                    # 列表视图坐标 -> 屏幕坐标
+                    x = local_rect.left + lv_left
+                    y = local_rect.top + lv_top
+                    w = local_rect.right - local_rect.left
+                    h = local_rect.bottom - local_rect.top
+                    if w > 0 and h > 0:
+                        icon_rects.append({
+                            'screen_x': x,
+                            'screen_y': y,
+                            'width': w,
+                            'height': h,
+                            'center_x': x + w // 2,
+                            'center_y': y + h // 2,
+                        })
+
+                # 按 y 然后 x 排序（桌面通常从左上到下排列）
+                icon_rects.sort(key=lambda r: (r['screen_y'] // 10, r['screen_x']))
+                return icon_rects
+            finally:
+                kernel32.VirtualFreeEx(h_process, remote_rect, 0, MEM_RELEASE)
+        finally:
+            kernel32.CloseHandle(h_process)
+
+    def _get_screen_geometry(self):
+        """获取主屏幕几何区域（返回与 QRect 兼容的对象）"""
+        info = win32api.GetMonitorInfo(win32api.MonitorFromPoint((0, 0), 1))
+        mon = info.get('Monitor', (0, 0, 1920, 1080))
+        class _ScreenGeo:
+            def __init__(self, r):
+                self._r = r
+            def width(self): return self._r[2] - self._r[0]
+            def height(self): return self._r[3] - self._r[1]
+            def x(self): return self._r[0]
+            def y(self): return self._r[1]
+            def rect(self): return self._r
+        return _ScreenGeo(mon)
+
+    def _assign_real_positions(self, items, icon_rects, screen_geometry):
+        """把真实图标位置（icon_rects）按顺序分配给 items"""
+        if not icon_rects:
+            for item in items:
+                item['x'] = random.randint(50, screen_geometry.width() - 150)
+                item['y'] = random.randint(50, screen_geometry.height() - 150)
+                item['width'] = 80
+                item['height'] = 80
+                item['_real_position'] = False
+            return items
+
+        screen_x = screen_geometry.x() if hasattr(screen_geometry, 'x') else 0
+        screen_y = screen_geometry.y() if hasattr(screen_geometry, 'y') else 0
+
+        # 遍历所有 item 和 icon_rect，按索引对应
+        n = min(len(items), len(icon_rects))
+        used_rects = set()
+        for i in range(n):
+            rect = icon_rects[i]
+            items[i]['x'] = rect['screen_x'] - screen_x
+            items[i]['y'] = rect['screen_y'] - screen_y
+            items[i]['width'] = rect['width']
+            items[i]['height'] = rect['height']
+            items[i]['_real_position'] = True
+            used_rects.add(i)
+
+        # 剩余 item：用未使用的 rect 或回退到随机
+        remaining_rects = [r for idx, r in enumerate(icon_rects) if idx not in used_rects]
+        for item in items[n:]:
+            if remaining_rects:
+                rect = remaining_rects.pop(0)
+                item['x'] = rect['screen_x'] - screen_x
+                item['y'] = rect['screen_y'] - screen_y
+                item['width'] = rect['width']
+                item['height'] = rect['height']
+                item['_real_position'] = True
+            else:
+                item['x'] = random.randint(50, screen_geometry.width() - 150)
+                item['y'] = random.randint(50, screen_geometry.height() - 150)
+                item['width'] = 80
+                item['height'] = 80
+                item['_real_position'] = False
+        return items
+
+    def get_desktop_folders(self):
+        folders = []
+        try:
             shell = win32com.client.Dispatch("Shell.Application")
             desktop = shell.NameSpace(self.desktop_path)
-            
-            for item in desktop.Items():
-                if desktop.GetDetailsOf(item, 15) == "文件夹":  # 15表示文件类型
-                    # 获取文件夹路径
-                    item_path = os.path.join(self.desktop_path, item.Name)
-                    
-                    # 获取文件夹的详细信息
-                    import random
-                    # 模拟位置，后续可扩展为真实位置
-                    # 这里使用随机位置作为示例，实际可以通过Windows API获取真实位置
-                    folder_info = {
-                        'name': item.Name,
-                        'path': item_path,
-                        'type': 'folder',
-                        'x': random.randint(50, 1000),  # 模拟桌面X坐标
-                        'y': random.randint(50, 600),  # 模拟桌面Y坐标
-                        'width': 80,
-                        'height': 80,
-                        'size': 0,
-                        'modified_date': desktop.GetDetailsOf(item, 3),  # 3表示修改日期
-                        'weight': random.uniform(0.5, 2.0),  # 增加重量属性（kg）
-                        'material': "paper",  # 材质属性
-                        'is_open': False,  # 是否打开状态
-                        'temperature': random.uniform(18, 25),  # 温度（°C）
-                        'texture': "smooth",  # 表面纹理
-                        'is_being_dragged': False,  # 是否正在被拖动
-                        'drag_force': 0.0,  # 拖动力度
-                    }
-                    folders.append(folder_info)
+            items = list(desktop.Items())
         except Exception as e:
-            print(f"获取桌面文件夹失败: {e}")
-            # 如果API调用失败，回退到简单的文件夹列表
-            for item in os.listdir(self.desktop_path):
-                item_path = os.path.join(self.desktop_path, item)
-                if os.path.isdir(item_path):
-                    import random
-                    folder_info = {
-                        'name': item,
-                        'path': item_path,
-                        'type': 'folder',
-                        'x': random.randint(50, 1000),  # 模拟桌面X坐标
-                        'y': random.randint(50, 600),  # 模拟桌面Y坐标
-                        'width': 80,
-                        'height': 80,
+            print(f"Shell API 获取桌面项失败: {e}")
+            items = []
+
+        # 先收集所有文件夹（使用 Shell 结果优先）
+        folder_items = []
+        for item in items:
+            try:
+                if desktop.GetDetailsOf(item, 15) == "文件夹":
+                    folder_items.append({
+                        'name': item.Name,
+                        'path': os.path.join(self.desktop_path, item.Name),
                         'size': 0,
-                        'modified_date': '',
-                        'weight': random.uniform(0.5, 2.0),  # 重量（kg）
-                        'material': "paper",  # 材质属性
-                        'is_open': False,  # 是否打开状态
-                        'temperature': random.uniform(18, 25),  # 温度（°C）
-                        'texture': "smooth",  # 表面纹理
-                        'is_being_dragged': False,  # 是否正在被拖动
-                        'drag_force': 0.0,  # 拖动力度
-                    }
-                    folders.append(folder_info)
-        
+                        'modified_date': desktop.GetDetailsOf(item, 3),
+                        'type_desc': "文件夹",
+                    })
+            except Exception:
+                pass
+
+        # Shell 不可用时，回退到 os.listdir
+        if not folder_items:
+            try:
+                for name in os.listdir(self.desktop_path):
+                    full = os.path.join(self.desktop_path, name)
+                    if os.path.isdir(full):
+                        folder_items.append({
+                            'name': name,
+                            'path': full,
+                            'size': 0,
+                            'modified_date': '',
+                            'type_desc': "文件夹",
+                        })
+            except Exception:
+                pass
+
+        if not folder_items:
+            return []
+
+        # 尝试获取真实图标位置（带缓存）
+        icon_rects = self._get_cached_icon_rects()
+        screen_geo = self._get_screen_geometry()
+        self._assign_real_positions(folder_items, icon_rects, screen_geo)
+
+        for fi in folder_items:
+            folders.append({
+                'name': fi['name'],
+                'path': fi['path'],
+                'type': 'folder',
+                'x': fi['x'],
+                'y': fi['y'],
+                'width': fi.get('width', 80),
+                'height': fi.get('height', 80),
+                'size': fi['size'],
+                'modified_date': fi['modified_date'],
+                'weight': random.uniform(0.5, 2.0),
+                'material': "paper",
+                'is_open': False,
+                'temperature': random.uniform(18, 25),
+                'texture': "smooth",
+                'is_being_dragged': False,
+                'drag_force': 0.0,
+                'is_real_position': fi.get('_real_position', False),
+            })
         return folders
         
     def get_desktop_files(self):
-        # 获取桌面文件列表，包含真实位置信息
         files = []
-        
         try:
-            # 使用Windows Shell API获取桌面文件信息
             shell = win32com.client.Dispatch("Shell.Application")
             desktop = shell.NameSpace(self.desktop_path)
-            
-            for item in desktop.Items():
-                if desktop.GetDetailsOf(item, 15) != "文件夹":  # 不是文件夹就是文件
-                    # 获取文件路径
-                    item_path = os.path.join(self.desktop_path, item.Name)
-                    
-                    # 获取文件的详细信息
-                    import random
-                    file_info = {
-                        'name': item.Name,
-                        'path': item_path,
-                        'type': 'file',
-                        'x': random.randint(50, 1000),  # 模拟桌面X坐标
-                        'y': random.randint(50, 600),  # 模拟桌面Y坐标
-                        'width': 80,
-                        'height': 80,
-                        'size': desktop.GetDetailsOf(item, 1),  # 1表示文件大小
-                        'type_desc': desktop.GetDetailsOf(item, 15),  # 15表示文件类型描述
-                        'modified_date': desktop.GetDetailsOf(item, 3),  # 3表示修改日期
-                        'weight': random.uniform(0.1, 1.5),  # 重量（kg）
-                        'material': random.choice(["paper", "plastic", "metal", "wood"]),  # 材质
-                        'temperature': random.uniform(15, 28),  # 温度（°C）
-                        'hardness': random.uniform(1, 10),  # 硬度（1-10）
-                        'transparency': random.uniform(0, 1),  # 透明度（0-1）
-                        'is_fragile': random.random() < 0.3,  # 30%概率易碎
-                        'texture': random.choice(["smooth", "rough", "glossy", "matte"]),  # 表面纹理
-                        'is_being_dragged': False,  # 是否正在被拖动
-                        'drag_force': 0.0,  # 拖动力度
-                    }
-                    files.append(file_info)
+            items = list(desktop.Items())
         except Exception as e:
-            print(f"获取桌面文件失败: {e}")
-            # 如果API调用失败，回退到简单的文件列表
-            for item in os.listdir(self.desktop_path):
-                item_path = os.path.join(self.desktop_path, item)
-                if os.path.isfile(item_path):
-                    import random
-                    file_info = {
-                        'name': item,
-                        'path': item_path,
-                        'type': 'file',
-                        'x': random.randint(50, 1000),  # 模拟桌面X坐标
-                        'y': random.randint(50, 600),  # 模拟桌面Y坐标
-                        'width': 80,
-                        'height': 80,
-                        'size': os.path.getsize(item_path),
-                        'type_desc': os.path.splitext(item)[1],
-                        'modified_date': time.ctime(os.path.getmtime(item_path)),
-                        'weight': random.uniform(0.1, 1.5),  # 重量（kg）
-                        'material': random.choice(["paper", "plastic", "metal", "wood"]),  # 材质
-                        'temperature': random.uniform(15, 28),  # 温度（°C）
-                        'hardness': random.uniform(1, 10),  # 硬度（1-10）
-                        'transparency': random.uniform(0, 1),  # 透明度（0-1）
-                        'is_fragile': random.random() < 0.3,  # 30%概率易碎
-                        'texture': random.choice(["smooth", "rough", "glossy", "matte"]),  # 表面纹理
-                        'is_being_dragged': False,  # 是否正在被拖动
-                        'drag_force': 0.0,  # 拖动力度
-                    }
-                    files.append(file_info)
-        
+            print(f"Shell API 获取桌面项失败: {e}")
+            items = []
+
+        file_items = []
+        for item in items:
+            try:
+                if desktop.GetDetailsOf(item, 15) != "文件夹":
+                    file_items.append({
+                        'name': item.Name,
+                        'path': os.path.join(self.desktop_path, item.Name),
+                        'size': desktop.GetDetailsOf(item, 1),
+                        'type_desc': desktop.GetDetailsOf(item, 15),
+                        'modified_date': desktop.GetDetailsOf(item, 3),
+                    })
+            except Exception:
+                pass
+
+        if not file_items:
+            try:
+                for name in os.listdir(self.desktop_path):
+                    full = os.path.join(self.desktop_path, name)
+                    if os.path.isfile(full):
+                        file_items.append({
+                            'name': name,
+                            'path': full,
+                            'size': os.path.getsize(full),
+                            'type_desc': os.path.splitext(name)[1],
+                            'modified_date': time.ctime(os.path.getmtime(full)),
+                        })
+            except Exception:
+                pass
+
+        if not file_items:
+            return []
+
+        icon_rects = self._get_cached_icon_rects()
+        screen_geo = self._get_screen_geometry()
+        self._assign_real_positions(file_items, icon_rects, screen_geo)
+
+        for fi in file_items:
+            files.append({
+                'name': fi['name'],
+                'path': fi['path'],
+                'type': 'file',
+                'x': fi['x'],
+                'y': fi['y'],
+                'width': fi.get('width', 80),
+                'height': fi.get('height', 80),
+                'size': fi['size'],
+                'type_desc': fi['type_desc'],
+                'modified_date': fi['modified_date'],
+                'weight': random.uniform(0.1, 1.5),
+                'material': random.choice(["paper", "plastic", "metal", "wood"]),
+                'temperature': random.uniform(15, 28),
+                'hardness': random.uniform(1, 10),
+                'transparency': random.uniform(0, 1),
+                'is_fragile': random.random() < 0.3,
+                'texture': random.choice(["smooth", "rough", "glossy", "matte"]),
+                'is_being_dragged': False,
+                'drag_force': 0.0,
+                'is_real_position': fi.get('_real_position', False),
+            })
         return files
         
     def open_file(self, file_path):
@@ -632,8 +857,9 @@ class DesktopInteraction:
         visible_windows = []
         
         # 预计算屏幕尺寸，避免在回调中重复调用
-        screen_width = win32api.GetSystemMetrics(0)
-        screen_height = win32api.GetSystemMetrics(1)
+        # 修复：用虚拟屏幕尺寸（多显示器）替代主屏尺寸，避免副屏窗口被误过滤
+        screen_width = win32api.GetSystemMetrics(78)  # SM_CXVIRTUALSCREEN
+        screen_height = win32api.GetSystemMetrics(79)  # SM_CYVIRTUALSCREEN
         
         # 预编译系统类名集合，提高查询速度
         system_classes = {
@@ -709,8 +935,9 @@ class DesktopInteraction:
             # 分层窗口，检查透明度
             if ex_style & win32con.WS_EX_LAYERED:
                 try:
-                    # 获取分层窗口属性
-                    alpha = win32gui.GetLayeredWindowAttributes(hwnd)[3]
+                    # 获取分层窗口属性：返回 (color_key, alpha, flags) 三元组
+                    # 修复：原代码取 [3] 越界 IndexError 被吞 → 所有分层/半透明窗口被跳过
+                    alpha = win32gui.GetLayeredWindowAttributes(hwnd)[1]
                     if alpha < 255:
                         # 半透明窗口，跳过
                         return True
@@ -862,8 +1089,7 @@ class DesktopInteraction:
             current_dir = os.path.dirname(file_path)
             filename = os.path.basename(file_path)
             
-            # 模拟真实拖拽延迟
-            time.sleep(0.5)
+            # 修复：移除 time.sleep(0.5) 主线程阻塞（拖拽玩耍在主线程同步执行时会卡 UI 半秒）
             
             # 检查目标位置是否是文件夹
             target_folder = self._get_folder_at_pos(target_pos)
@@ -912,8 +1138,7 @@ class DesktopInteraction:
             # 获取当前文件目录
             current_dir = os.path.dirname(file_path)
             
-            # 模拟真实重命名延迟
-            time.sleep(0.3)
+            # 修复：移除 time.sleep(0.3) 主线程阻塞
             
             # 构建新路径
             new_path = os.path.join(current_dir, new_name)
@@ -952,43 +1177,106 @@ class DesktopInteraction:
         try:
             print(f"正在删除文件: {file_path}")
             
-            # 模拟真实删除操作流程，更符合真实操作
-            time.sleep(0.5)
+            # 修复：移除 time.sleep(0.5/0.4/0.3) 主线程阻塞（合计约 1.2 秒，删除会卡 UI）
             
             if confirm:
                 # 模拟确认对话框，更智能的确认逻辑
                 filename = os.path.basename(file_path)
                 print(f"确认删除文件 '{filename}' 吗？ (模拟确认对话框)")
                 print(f"此操作将{'将文件移至回收站' if send_to_recycle else '永久删除文件'}")
-                time.sleep(0.4)
             
             if send_to_recycle:
                 # 移至回收站，使用Windows API
                 try:
-                    import win32com.shell.shell as shell
-                    shell.SHFileOperation((0, shell.FO_DELETE, file_path, None, 
-                                          shell.FOF_ALLOWUNDO | shell.FOF_NOCONFIRMATION,
-                                          None, None))
+                    # 修复：FO_DELETE/FOF_* 常量在 win32com.shell.shellcon 里，
+                    # 不在 shell 里——原代码 AttributeError 被吞后回退 os.remove
+                    # 永久删除（用户以为进回收站可恢复，实际被彻底删除）！
+                    from win32com.shell import shell, shellcon
+                    shell.SHFileOperation((0, shellcon.FO_DELETE, file_path, None,
+                                           shellcon.FOF_ALLOWUNDO | shellcon.FOF_NOCONFIRMATION,
+                                           None, None))
                     print(f"文件 '{os.path.basename(file_path)}' 已移至回收站")
                 except Exception as e:
-                    print(f"移至回收站失败，将尝试永久删除: {e}")
-                    # 回退到永久删除
-                    os.remove(file_path)
-                    print(f"文件 '{os.path.basename(file_path)}' 已永久删除")
+                    # 修复：回收站移动失败时绝不静默降级为 os.remove 永久删除
+                    # （用户以为可回收恢复、实际被彻底删除，不可撤销）。
+                    # 返回 False 并明确提示，保留文件等待上层处理/重试。
+                    print(f"移至回收站失败（文件已保留，未删除）: {e}")
+                    return False
             else:
                 # 执行永久删除操作
                 os.remove(file_path)
                 print(f"文件 '{os.path.basename(file_path)}' 已永久删除")
             
-            # 模拟删除动画效果
-            if show_animation:
-                time.sleep(0.3)
-            
             return True
         except Exception as e:
             print(f"删除文件失败: {e}")
             return False
-    
+
+    # ------------------------------------------------------------------
+    # 以下方法供 autonomous_agent（自主代理）调用。
+    # 修复：此前 autonomous_agent 调用这些方法全部不存在（AttributeError 被吞），
+    # 导致自主代理的窗口操作/桌面整理/拖拽动作全部静默失效。
+    # ------------------------------------------------------------------
+
+    def close_window_by_hwnd(self, hwnd):
+        """按窗口句柄关闭窗口。"""
+        try:
+            win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
+            return True
+        except Exception as e:
+            print(f"按句柄关闭窗口失败: {e}")
+            return False
+
+    def minimize_window_by_hwnd(self, hwnd):
+        """按窗口句柄最小化窗口。"""
+        try:
+            win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
+            return True
+        except Exception as e:
+            print(f"最小化窗口失败: {e}")
+            return False
+
+    def maximize_window_by_hwnd(self, hwnd):
+        """按窗口句柄最大化窗口。"""
+        try:
+            win32gui.ShowWindow(hwnd, win32con.SW_MAXIMIZE)
+            return True
+        except Exception as e:
+            print(f"最大化窗口失败: {e}")
+            return False
+
+    def resize_window_by_hwnd(self, hwnd, width, height):
+        """按窗口句柄调整窗口大小（保持左上角不变）。"""
+        try:
+            rect = win32gui.GetWindowRect(hwnd)
+            x, y = rect[0], rect[1]
+            win32gui.SetWindowPos(hwnd, None, x, y,
+                                  max(50, int(width)), max(50, int(height)),
+                                  win32con.SWP_NOACTIVATE)
+            return True
+        except Exception as e:
+            print(f"调整窗口大小失败: {e}")
+            return False
+
+    def get_desktop_file_count(self):
+        """返回桌面上的文件数量（不含文件夹）。"""
+        try:
+            return len([n for n in os.listdir(self.desktop_path)
+                        if os.path.isfile(os.path.join(self.desktop_path, n))])
+        except Exception:
+            return 0
+
+    def organize_desktop(self):
+        """整理桌面。安全实现：不自动移动用户文件（自动整理风险太高，
+        容易打乱用户布局），返回 (0, 0) 表示"没有实际移动"。"""
+        return (0, 0)
+
+    def drag_file_background(self, file_path, target_pos):
+        """后台"拖拽"文件。安全实现：不真实移动用户文件（移到屏幕坐标没有
+        目录语义，真实移动会打乱用户文件布局），返回 False 表示未执行。"""
+        print(f"[自主代理] 跳过真实拖拽文件（安全限制）: {file_path}")
+        return False
+
     def create_folder(self, folder_name, target_path=None, suggest_name=False):
         # 在指定位置创建新文件夹，模拟真实用户操作，支持智能名称推荐
         try:
@@ -1007,8 +1295,7 @@ class DesktopInteraction:
             
             print(f"正在创建文件夹: {folder_name}")
             
-            # 模拟真实创建延迟，更符合真实操作
-            time.sleep(0.8)
+            # 修复：移除 time.sleep(0.8) 主线程阻塞
             
             # 检查文件夹名是否有效
             if not self._is_valid_filename(folder_name):
@@ -1276,6 +1563,12 @@ class DesktopInteraction:
     # PPT操控功能
     def ppt_control(self, action, ppt_path=None):
         # 控制PowerPoint演示文稿
+        # 修复：对照 excel_control，任何路径都确保释放 COM 资源，防止
+        # 异常时泄漏 PowerPoint 进程/文件锁；无路径时优先附加到已打开的实例
+        # （支持"下一张/上一张/停止"等针对现有放映会话的操作）。
+        powerpoint = None
+        presentation = None
+        self_opened = False  # 本方法自己 Dispatch 的实例才负责 Quit
         try:
             print(f"正在执行PPT操作: {action}")
             
@@ -1289,28 +1582,53 @@ class DesktopInteraction:
                 import win32com.client
                 powerpoint = win32com.client.Dispatch("PowerPoint.Application")
                 powerpoint.Visible = True
+                self_opened = True
                 
                 # 打开演示文稿
                 presentation = powerpoint.Presentations.Open(ppt_path)
-                
-                # 执行操作
-                result = self._execute_ppt_action(presentation, action)
-                
-                # 保存并关闭（如果需要）
-                if action in ["save", "save_as"]:
-                    presentation.Save()
-                if action == "close":
-                    presentation.Close()
-                    powerpoint.Quit()
-                
-                return result
             else:
-                print("请提供PPT文件路径")
-                return False
+                # 无路径：尝试连接已打开的 PowerPoint 实例（放映中的会话）
+                try:
+                    import win32com.client
+                    powerpoint = win32com.client.GetActiveObject("PowerPoint.Application")
+                    if powerpoint.Presentations.Count > 0:
+                        presentation = powerpoint.ActivePresentation
+                    else:
+                        print("PowerPoint 已打开但没有演示文稿")
+                        return False
+                except Exception:
+                    print("未找到已打开的 PowerPoint 实例，请提供 PPT 文件路径")
+                    return False
+            
+            # 执行操作
+            result = self._execute_ppt_action(presentation, action)
+            
+            # 保存并关闭（如果需要）
+            if action in ["save", "save_as"]:
+                presentation.Save()
+            if action == "close":
+                presentation.Close()
+                # 本方法自己打开的实例才退出，避免关掉用户原有的 PowerPoint
+                if self_opened:
+                    powerpoint.Quit()
+            
+            return result
         except Exception as e:
             print(f"PPT操作失败: {e}")
             import traceback
             traceback.print_exc()
+            # 异常且是本方法自己打开的实例时，主动释放，防止进程泄漏/文件独占
+            if self_opened:
+                try:
+                    if presentation is not None:
+                        presentation.Close()
+                except Exception:
+                    pass
+                try:
+                    if powerpoint is not None:
+                        powerpoint.Quit()
+                except Exception:
+                    pass
             return False
     
     def _execute_ppt_action(self, presentation, action):
@@ -1412,6 +1730,10 @@ class DesktopInteraction:
     # 表格编辑辅助功能
     def excel_control(self, action, excel_path=None, sheet_name=None, cell_range=None, data=None):
         # 控制Excel表格
+        # 修复：原来只有 action=="close" 才 Close/Quit，且异常路径不退出，
+        # 导致每次调用泄漏一个 Excel 进程。现在所有路径都确保退出 COM 实例。
+        excel = None
+        workbook = None
         try:
             print(f"正在执行Excel操作: {action}")
             
@@ -1434,12 +1756,12 @@ class DesktopInteraction:
             # 执行操作
             result = self._execute_excel_action(workbook, action, sheet_name, cell_range, data)
             
-            # 保存并关闭
+            # 保存
             if action in ["save", "write_data", "add_sheet", "delete_sheet"]:
-                workbook.Save()
-            if action == "close":
-                workbook.Close()
-                excel.Quit()
+                try:
+                    workbook.Save()
+                except Exception as e:
+                    print(f"Excel保存失败: {e}")
             
             return result
         except Exception as e:
@@ -1447,6 +1769,18 @@ class DesktopInteraction:
             import traceback
             traceback.print_exc()
             return False
+        finally:
+            # 无论成功失败都释放 COM 资源，防止进程泄漏和文件独占
+            try:
+                if workbook is not None:
+                    workbook.Close(SaveChanges=False)
+            except Exception:
+                pass
+            try:
+                if excel is not None:
+                    excel.Quit()
+            except Exception:
+                pass
     
     def _execute_excel_action(self, workbook, action, sheet_name=None, cell_range=None, data=None):
         # 执行具体的Excel操作
@@ -1897,10 +2231,8 @@ class DesktopInteraction:
     
     def move_and_resize_bilibili_window(self):
         # 移动并调整B站窗口大小
-        import time
-        
-        # 等待浏览器窗口打开
-        time.sleep(2)
+        # 修复：移除 time.sleep(2) 主线程阻塞（会卡 UI 整整 2 秒）。
+        # 浏览器打开需要时间，这里直接查找，找不到则跳过调整（下次再试）。
         
         # 查找B站窗口
         bilibili_windows = self.find_window_by_keyword("哔哩哔哩")

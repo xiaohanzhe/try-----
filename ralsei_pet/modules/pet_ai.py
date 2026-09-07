@@ -162,12 +162,27 @@ class PetAI:
         # 当Ralsei想要跪下哭泣时触发
         energy = self.parent.energy_hunger.get_energy()
         return energy < 15 and random.random() < 0.02
-    
+
+    def _skip_if_critical(self, also_skip_game: bool = True) -> bool:
+        """全局保护：施法中/游戏中/拖拽中/跳跃中/掉落中，所有 AI 动作跳过。
+        返回 True 表示当前应跳过该动作。"""
+        if getattr(self.parent, '_spell_stage', None) is not None:
+            return True
+        if also_skip_game and getattr(self.parent, 'game_state', {}).get('is_playing'):
+            return True
+        if getattr(self.parent, '_is_being_dragged', False):
+            return True
+        if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
+            return True
+        return False
+
     def update_state(self):
-        # 更新AI状态
+        # 更新AI状态（关键过程中整个 AI 冻结）
+        if self._skip_if_critical():
+            return
         current_time = time.time()
         self.state_duration = current_time - self.last_state_change
-        
+
         # 获取当前状态数据
         # 直接访问属性，减少方法调用开销
         energy = self.parent.energy_hunger.energy
@@ -301,17 +316,17 @@ class PetAI:
             dynamic_probs["move"] += 0.1
             dynamic_probs["play"] += 0.1
         
-        # 根据情绪调整
+        # 根据情绪调整（emotion_value 为 0-100 尺度，见 emotion_system.get_current_emotion）
         emotion_type, emotion_value = emotion
-        if emotion_type == "happy" and emotion_value > 0.5:
+        if emotion_type == "happy" and emotion_value > 50:
             # 很高兴，增加玩耍和互动概率
             dynamic_probs["play"] += 0.2
             dynamic_probs["interact"] += 0.1
-        elif emotion_type == "sad" and emotion_value < -0.5:
+        elif emotion_type == "sad" and emotion_value > 50:
             # 难过，增加休息和互动概率
             dynamic_probs["rest"] += 0.2
             dynamic_probs["interact"] += 0.1
-        elif emotion_type == "excited" and emotion_value > 0.7:
+        elif emotion_type == "excited" and emotion_value > 70:
             # 兴奋，增加活动和玩耍概率
             dynamic_probs["move"] += 0.2
             dynamic_probs["play"] += 0.2
@@ -437,12 +452,24 @@ class PetAI:
                 break
     
     def trigger_action(self, action):
-        # 触发指定动作
+        # 触发指定动作：spell 流程活跃（躲猫猫/打开文件等）时跳过，避免打断施法
+        if getattr(self.parent, '_spell_stage', None) is not None:
+            return
+        # 躲猫猫 / 其他游戏进行中也跳过
+        if getattr(self.parent, 'game_state', {}).get('is_playing'):
+            return
+        # 正在被拖拽 / 正在跳跃 / 正在掉落也跳过
+        if getattr(self.parent, '_is_being_dragged', False):
+            return
+        if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
+            return
         print(f"触发动作: {action}")
         self.parent.change_animation(action)
     
     def execute_state_action(self):
         # 执行当前状态对应的动作
+        if self._skip_if_critical():
+            return
         if self.state == "move":
             self.move_to_random_location()
         elif self.state == "interact":
@@ -456,26 +483,30 @@ class PetAI:
     
     def move_to_random_location(self):
         # 移动到随机位置，改进运动逻辑，更符合Ralsei的性格
-        
+        if self._skip_if_critical():
+            return
+
         # 获取屏幕几何信息
         screen_geometry = QApplication.desktop().availableGeometry()
         max_x = screen_geometry.width() - 150
         max_y = screen_geometry.height() - 150
-        
+
         # 随机选择目标位置
         target_x = random.randint(50, max_x)
         target_y = random.randint(50, max_y)
-        
+
         # 设置目标位置
         self.parent.target_pos = QPoint(target_x, target_y)
-        
+
         # 随机调整速度，模拟Ralsei有时候走得快有时候走得慢
         # 使用新的速度范围，确保移动更流畅
         self.parent.speed = random.uniform(3.0, 8.0)
     
     def interact_with_something(self):
         # 与某物交互，改进交互逻辑
-        
+        if self._skip_if_critical():
+            return
+
         # 随机选择交互目标
         targets = list(self.interaction_priorities.keys())
         probabilities = list(self.interaction_priorities.values())
@@ -522,9 +553,11 @@ class PetAI:
     
     def play_something(self):
         # 玩一些东西，改进游戏逻辑
+        if self._skip_if_critical():
+            return
         games = ["hide_and_seek", "puzzle", "dance", "sing", "chase_cursor"]
         game = random.choice(games)
-        
+
         if game == "dance":
             self.parent.change_animation("dance", force=True)
             self.parent.dialogue_ui.add_dialogue("ralsei", "来跳舞吧！转圈圈~ 嘻嘻！", "happy")
@@ -547,20 +580,27 @@ class PetAI:
     
     def rest(self):
         # 休息
+        if self._skip_if_critical():
+            return
         self.parent.change_animation("idle", force=True)
-    
+
     def idle(self):
         # 空闲状态
+        if self._skip_if_critical():
+            return
         self.parent.change_animation("idle")
     
     def react_to_event(self, event_type, event_data):
         # 对事件做出反应
         if event_type == "user_clicked":
-            # 用户点击了Ralsei
-            self.parent.dialogue_ui.add_dialogue("ralsei", "哎呀！你吓到我了！", "surprised")
-            self.parent.dialogue_ui.show_dialogue()
-            # 触发惊讶动作
-            self.trigger_action("surprised")
+            # 修复：鼠标点击 Ralsei 已由 main.mousePressEvent 按身体部位弹专属对话/
+            # 动画/情绪（body/ear/shoulder...），这里再弹固定"吓到我了"+强制 surprised
+            # 会造成"点一次弹两条对话"且覆盖部位动画。这里只补一点轻微情绪。
+            try:
+                self.parent.emotion_system.add_emotion("surprised", 5)
+                self.parent.emotion_system.add_emotion("happy", 5)
+            except Exception:
+                pass
         elif event_type == "file_dragged":
             # 用户拖动了文件
             self.parent.current_animation = "walk_right"  # 追逐文件
@@ -594,4 +634,36 @@ class PetAI:
                 else:
                     self.parent.dialogue_ui.add_dialogue("ralsei", f"Excel操作 '{action}' 执行失败了...", "sad")
                 self.parent.dialogue_ui.show_dialogue()
+
+    def trigger_event(self, event_type, event_data=None):
+        """触发事件 — 供其他模块调用，委托给 react_to_event 统一处理。"""
+        if event_data is None:
+            event_data = {}
+
+        if event_type == 'game_start':
+            game_name = event_data.get('game_name', '游戏')
+            self.parent.dialogue_ui.add_dialogue("ralsei", f"好耶！一起来玩{game_name}吧！", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            self.trigger_action("jump")
+        elif event_type == 'creative_activity_start':
+            activity_name = event_data.get('activity_name', '创意活动')
+            self.parent.dialogue_ui.add_dialogue("ralsei", f"哇，{activity_name}！我来帮忙～", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+        elif event_type == 'level_up':
+            new_level = event_data.get('new_level', 0)
+            self.parent.dialogue_ui.add_dialogue("ralsei", f"升级啦！现在是等级 {new_level}～", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            self.trigger_action("victory")
+        elif event_type == 'evolution':
+            stage = event_data.get('stage', 1)
+            self.parent.dialogue_ui.add_dialogue("ralsei", f"进化了呢！现在是第 {stage} 阶段！", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            self.trigger_action("dance")
+        elif event_type == 'pet_interaction':
+            other_pet = event_data.get('other_pet_id', '朋友')
+            interaction = event_data.get('interaction_type', '互动')
+            self.parent.dialogue_ui.add_dialogue("ralsei", f"和{other_pet}的{interaction}真开心～", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+        else:
+            self.react_to_event(event_type, event_data)
 

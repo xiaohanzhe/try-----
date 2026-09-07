@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from typing import Dict, Any, Callable
 from PyQt5.QtCore import QPoint
 
@@ -50,26 +51,38 @@ class CommandManager:
         x = command.get('x', 0)
         y = command.get('y', 0)
         speed = command.get('speed', self.ralsei.speed)
-        
+
+        # 校验目标位置是否在虚拟屏幕范围内，避免 AI 发出屏幕外坐标导致 Ralsei 消失
+        try:
+            import win32api
+            vx = win32api.GetSystemMetrics(76)
+            vy = win32api.GetSystemMetrics(77)
+            vw = win32api.GetSystemMetrics(78)
+            vh = win32api.GetSystemMetrics(79)
+            x = max(vx, min(x, vx + vw - self.ralsei.width()))
+            y = max(vy, min(y, vy + vh - self.ralsei.height()))
+        except Exception:
+            # win32 不可用时退化为不校验
+            pass
+
         self.ralsei.target_pos = QPoint(x, y)
         self.ralsei.speed = speed
         self.ralsei.is_moving = True
-        
+
         return {'message': f'正在移动到位置 ({x}, {y})', 'speed': speed}
     
     def handle_jump_command(self, command: Dict[str, Any]) -> Dict[str, Any]:
         """处理跳跃命令"""
-        x = command.get('x')
-        y = command.get('y')
-        
-        if x is not None and y is not None:
-            target_pos = QPoint(x, y)
-            self.ralsei.start_jump(target_pos)
-        else:
-            # 原地跳跃
-            current_pos = self.ralsei.pos()
-            self.ralsei.start_jump(current_pos)
-        
+        # start_jump(target_window, window_edge) 需要 window 字典或 None
+        # 对于命令式跳跃，直接原地跳跃（target_window=None 表示跳到当前层/桌面）
+        self.ralsei.is_jumping = True
+        self.ralsei.jump_start_time = time.time()
+        self.ralsei.jump_start_pos = self.ralsei.pos()
+        self.ralsei.jump_target_window = None
+        self.ralsei.jump_target_z = 0
+        if hasattr(self.ralsei, 'spatial_pos'):
+            self.ralsei.jump_start_spatial = self.ralsei.spatial_pos.copy()
+
         return {'message': '开始跳跃'}
     
     def handle_animation_command(self, command: Dict[str, Any]) -> Dict[str, Any]:
@@ -106,9 +119,8 @@ class CommandManager:
     
     def handle_sleep_command(self, command: Dict[str, Any]) -> Dict[str, Any]:
         """处理睡眠命令"""
-        self.ralsei.is_sleeping = True
-        self.ralsei.current_activity = "sleeping"
-        
+        # 调用统一的 enter_sleep_mode，确保动画切换、对话、状态重置一致
+        self.ralsei.enter_sleep_mode()
         return {'message': '开始睡眠'}
     
     def handle_wake_up_command(self, command: Dict[str, Any]) -> Dict[str, Any]:

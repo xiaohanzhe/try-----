@@ -1,658 +1,1236 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QTextEdit, QPushButton, QFrame
-from PyQt5.QtGui import QPixmap, QFont, QPainter, QBrush, QColor
-from PyQt5.QtCore import Qt, QPoint
+"""Ralsei 对话框 UI — Deltarune 风格。
+
+外部 API（main.py 调用的）保持不变：
+    add_dialogue(speaker, message, face_type="normal")
+    show_dialogue(message=None)
+    hide_dialogue()
+    send_message()
+    stop_typing()
+    handle_chat_commands(user_input) -> str|None
+    handle_file_commands(user_input) -> str|None
+"""
+import os
+
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
+                             QTextEdit, QPushButton, QFrame, QSizePolicy,
+                             QApplication)
+from PyQt5.QtGui import (QPixmap, QFont, QPainter, QBrush, QColor,
+                         QPen, QFontMetrics, QFontDatabase)
+from PyQt5.QtCore import Qt, QPoint, QTimer, QPropertyAnimation, QEasingCurve, QRect
+
+
+# ---------------------------------------------------------------------------
+# 加载项目根目录下的"普通字体.ttf"，作为 Ralsei 说话字体（全局注册一次）
+# ---------------------------------------------------------------------------
+_FONT_FAMILY = None
+def _load_ralsei_font():
+    global _FONT_FAMILY
+    if _FONT_FAMILY is not None:
+        return _FONT_FAMILY
+    try:
+        _root = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), '..', '..'))
+        path = os.path.join(_root, '普通字体.ttf')
+        if os.path.exists(path):
+            fid = QFontDatabase.addApplicationFont(path)
+            if fid != -1:
+                families = QFontDatabase.applicationFontFamilies(fid)
+                if families:
+                    _FONT_FAMILY = families[0]
+    except Exception:
+        pass
+    return _FONT_FAMILY
+
+
+# ---------------------------------------------------------------------------
+# 表情类型 → 素材文件名（不含 .png）。全部走 sprite_loader.get_face() 加载。
+# ---------------------------------------------------------------------------
+_FACE_MAP = {
+    # 兜底
+    "normal": "face_normal",
+    "neutral": "face_normal",
+    # 开心
+    "happy": "face_happy_very",
+    "happy_extremely": "face_happy_extremely",
+    "happy_very": "face_happy_very",
+    "laughing": "face_happy_very",
+    "playful": "face_happy and playful",
+    # 感动 / 关心 / 感激
+    "caring": "face_shy with touched and happy",
+    "grateful": "face_shy with touched and happy",
+    "touched": "face_shy with touched and happy",
+    # 满足 / 平静
+    "content": "face_normal_smile_little",
+    "peaceful": "face_normal_smile_little",
+    "calm": "face_normal_smile_little",
+    "sleepy": "face_normal_smile_little",
+    # 乐于助人（友好微笑）
+    "helpful": "face_happy_very",
+    # 微笑
+    "normal_smile_little": "face_normal_smile_little",
+    "normal_smile": "face_normal_smile_little",
+    # 惊讶
+    "surprised": "face_a little surprised",
+    "surprised_strong": "face_unexpected and surprise",
+    # 害羞
+    "shy": "face_shy with a little surprised and happy",
+    "shy_happy": "face_shy with a lot of happy",
+    "blushing": "face_shy with a little surprised and happy",
+    # 思考
+    "curious": "face_a little confusion and cute",
+    "thinking": "face_contemplation",
+    "confused": "face_a little confusion and cute",
+    # 担忧
+    "concerned": "face_worry",
+    "concerned_fear": "face_worry with a fear",
+    "worry": "face_worry",
+    "worried": "face_worry",
+    # 兴奋
+    "excited": "face_excited and cute",
+    # 悲伤
+    "sad": "face_a little sad",
+    "a little sad": "face_a little sad",
+    "unhappy": "face_a little sad",
+    "sad_hopeless": "face_sad with a little hopeless",
+    "sad_force_smile": "face_sad but force a smile",
+    "depressed": "face_depression with a little hopeless",
+    # 恐惧
+    "fear": "face_fear",
+    "scared": "face_fear",
+    "afraid": "face_fear",
+    "fear_firm": "face_fear but firm",
+    # 生气
+    "angry": "face_frightened with a little angry",
+    # 严肃
+    "serious": "face_serious",
+    "firm": "face_firm and serious",
+    # 疲惫
+    "tired": "face_depression with a little hopeless",
+}
+
+
+def _resolve_face_name(face_type):
+    """把各种输入（带 .png、完整路径、表情关键字）统一解析成素材名。"""
+    if not face_type:
+        return "face_normal"
+    # 如果是文件名（含 .png），去掉后缀直接用
+    if isinstance(face_type, str) and face_type.endswith(".png"):
+        return os.path.splitext(os.path.basename(face_type))[0]
+    # 已经带 face_ 前缀，直接用
+    if isinstance(face_type, str) and face_type.startswith("face_"):
+        return face_type
+    # 查表
+    if face_type in _FACE_MAP:
+        return _FACE_MAP[face_type]
+    # 兜底：emotion_system 返回的不带 face_ 前缀的素材名，补上前缀
+    return "face_" + face_type
+
 
 class DialogueUI(QWidget):
+    # 本地 AI 思考占位文本（Ralsei 式的省略号 + 思考表情，不暴露"在调模型"，
+    # 让等待回复显得像普通的停顿组织语言；识别它以避免被当作正式回复写进历史）
+    AI_THINKING_PLACEHOLDER = "……"
+
+    # ------------------------------------------------------------------ init
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.init_ui()
-        
-    def init_ui(self):
-        # 设置窗口属性
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
+        self._build_ui()
+        self._init_state()
+        self.set_face("normal")
+
+    def _build_ui(self):
+        # 无边框 + 置顶 + 工具窗口（不占任务栏）
+        self.setWindowFlags(
+            Qt.FramelessWindowHint
+            | Qt.WindowStaysOnTopHint
+            | Qt.Tool
+        )
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setGeometry(100, 500, 500, 260)
-        self.setWindowOpacity(0.98)
-        
-        # 创建主布局
-        main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(15, 15, 15, 15)
-        
-        # 创建对话框架
-        self.dialogue_frame = QFrame(self)
-        self.dialogue_frame.setStyleSheet('''
-            QFrame {
-                background-color: rgba(255, 248, 240, 0.98);
-                border: 3px solid #8B4513;
-                border-radius: 20px;
+        self.setWindowOpacity(0.0)  # 初始完全透明，显示时淡入
+        self.resize(540, 180)
+
+        # —— 主容器（带 Deltarune 风格黑底边框）——
+        self._frame = QFrame(self)
+        self._frame.setObjectName("drFrame")
+        self._frame.setStyleSheet("""
+            QFrame#drFrame {
+                background-color: rgba(10, 10, 16, 0.96);
+                border: 2px solid #ffffff;
+                border-radius: 18px;
             }
-        ''')
-        dialogue_layout = QVBoxLayout(self.dialogue_frame)
-        dialogue_layout.setContentsMargins(20, 20, 20, 20)
-        
-        # 创建对话头部（包含表情、名称和最小化按钮）
-        header_layout = QHBoxLayout()
-        
-        # 表情标签
+        """)
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
+        outer.addWidget(self._frame)
+
+        # 拖动支持：主容器 frame 占满整个窗口，鼠标基本都落在它上面。
+        # 安装事件过滤器，把 frame 上的鼠标事件转发给对话框的拖动逻辑，
+        # 否则点击 frame 区域时事件只落在子控件上，对话框"移不动"。
+        self._frame.installEventFilter(self)
+
+        inner = QHBoxLayout(self._frame)
+        inner.setContentsMargins(18, 14, 18, 14)
+        inner.setSpacing(14)
+
+        # —— 左侧：Ralsei 头像 ——
         self.face_label = QLabel(self)
-        self.face_label.setFixedSize(100, 100)
-        self.face_label.setStyleSheet('border-radius: 50px; border: 4px solid #8B4513; background-color: rgba(255, 255, 255, 0.9);')
-        header_layout.addWidget(self.face_label)
-        
-        # 名称标签
-        self.name_label = QLabel("Ralsei", self)
-        self.name_label.setFont(QFont("Comic Sans MS", 20, QFont.Bold))
-        self.name_label.setStyleSheet('color: #8B4513;')
-        header_layout.addWidget(self.name_label, 1, Qt.AlignCenter)
-        
-        # 添加最小化按钮
-        self.minimize_button = QPushButton("_", self)
-        self.minimize_button.setFont(QFont("Arial", 18, QFont.Bold))
-        self.minimize_button.setFixedSize(35, 35)
-        self.minimize_button.setStyleSheet('''
-            QPushButton {
-                background-color: rgba(139, 69, 19, 0.7);
-                color: white;
-                border: 2px solid #8B4513;
-                border-radius: 17px;
-                padding: 0;
+        self.face_label.setFixedSize(84, 84)
+        self.face_label.setAlignment(Qt.AlignCenter)
+        self.face_label.setStyleSheet("""
+            QLabel {
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 2px solid #ffffff;
+                border-radius: 10px;
             }
-            QPushButton:hover {
-                background-color: rgba(139, 69, 19, 0.9);
-            }
-            QPushButton:pressed {
-                background-color: rgba(101, 49, 14, 0.9);
-            }
-        ''')
-        self.minimize_button.clicked.connect(self.minimize_dialogue)
-        header_layout.addWidget(self.minimize_button, 0, Qt.AlignTop)
-        
-        dialogue_layout.addLayout(header_layout)
-        
-        # 创建对话内容
+        """)
+        inner.addWidget(self.face_label, 0, Qt.AlignTop)
+
+        # —— 右侧：名称 + 对话正文 + 输入框 ——
+        right_col = QVBoxLayout()
+        right_col.setSpacing(4)
+
+        self.name_label = QLabel("RALSEI", self)
+        f = QFont("微软雅黑", 11, QFont.Bold)
+        self.name_label.setFont(f)
+        self.name_label.setStyleSheet("color: #ffffff; letter-spacing: 2px;")
+        right_col.addWidget(self.name_label)
+
         self.dialogue_content = QTextEdit(self)
         self.dialogue_content.setReadOnly(True)
-        self.dialogue_content.setFont(QFont("Comic Sans MS", 14))
-        self.dialogue_content.setStyleSheet('''
+        self.dialogue_content.setFrameShape(QFrame.NoFrame)
+        self.dialogue_content.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        # 内容过高才开滚动条；大多数情况完全展开（随消息增长而变大）
+        self.dialogue_content.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.dialogue_content.setSizePolicy(
+            QSizePolicy.Expanding, QSizePolicy.Minimum)
+        # Ralsei 说话字体：使用系统普通字体（微软雅黑），平滑抗锯齿
+        f2 = QFont("微软雅黑", 13)
+        f2.setStyleStrategy(QFont.PreferAntialias)
+        self.dialogue_content.setFont(f2)
+        self.dialogue_content.setStyleSheet("""
             QTextEdit {
                 background-color: transparent;
                 border: none;
-                color: #5D4037;
-                padding: 15px;
-                line-height: 1.6;
+                color: #ffffff;
+                padding: 2px 0 6px 0;
             }
-        ''')
-        self.dialogue_content.setFixedHeight(100)
-        dialogue_layout.addWidget(self.dialogue_content)
-        
-        # 创建输入区域
-        input_layout = QHBoxLayout()
-        
+        """)
+        # 初始最小高度（约 3 行），之后随内容动态变化
+        self.dialogue_content.setMinimumHeight(72)
+        # 保存初始固定宽度，供 recalc 使用
+        self._base_width = 540
+        self._min_dialogue_h = 72
+        self._max_dialogue_h = 380  # 上限防止占满全屏
+        right_col.addWidget(self.dialogue_content, 1)
+
+        # —— 输入区域（默认折叠，用户交互时展开）——
+        self._input_bar = QFrame(self)
+        self._input_bar.setStyleSheet("""
+            QFrame {
+                background-color: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 8px;
+            }
+        """)
+        input_layout = QHBoxLayout(self._input_bar)
+        input_layout.setContentsMargins(8, 6, 8, 6)
+        input_layout.setSpacing(8)
+
         self.input_field = QTextEdit(self)
-        self.input_field.setFixedHeight(80)
-        self.input_field.setFont(QFont("Comic Sans MS", 14))
-        self.input_field.setStyleSheet('''
+        self.input_field.setFixedHeight(48)
+        self.input_field.setFrameShape(QFrame.NoFrame)
+        self.input_field.setStyleSheet("""
             QTextEdit {
-                background-color: rgba(255, 255, 255, 0.95);
-                border: 3px solid #8B4513;
-                border-radius: 12px;
-                padding: 12px;
-                color: #5D4037;
+                background-color: rgba(0, 0, 0, 0.3);
+                color: #ffffff;
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 6px;
+                padding: 6px 8px;
+                font-family: "微软雅黑";
+                font-size: 12pt;
             }
             QTextEdit:focus {
-                border: 3px solid #6B8E23;
-                outline: none;
+                border-color: #ffffff;
             }
-        ''')
+        """)
         input_layout.addWidget(self.input_field, 1)
-        
-        self.send_button = QPushButton("发送", self)
-        self.send_button.setFont(QFont("Comic Sans MS", 14, QFont.Bold))
-        self.send_button.setStyleSheet('''
+
+        self.send_button = QPushButton("SEND", self)
+        self.send_button.setFixedSize(72, 48)
+        self.send_button.setFont(QFont("微软雅黑", 10, QFont.Bold))
+        self.send_button.setStyleSheet("""
             QPushButton {
-                background-color: #6B8E23;
-                color: white;
-                border: 3px solid #556B2F;
-                border-radius: 12px;
-                padding: 10px 25px;
-                margin-left: 15px;
-                font-weight: bold;
+                background-color: #ffffff;
+                color: #0a0a10;
+                border: none;
+                border-radius: 6px;
             }
-            QPushButton:hover {
-                background-color: #556B2F;
-            }
-            QPushButton:pressed {
-                background-color: #4A5D23;
-            }
-        ''')
+            QPushButton:hover { background-color: #cccccc; }
+            QPushButton:pressed { background-color: #aaaaaa; }
+        """)
         self.send_button.clicked.connect(self.send_message)
-        input_layout.addWidget(self.send_button)
-        
-        dialogue_layout.addLayout(input_layout)
-        
-        main_layout.addWidget(self.dialogue_frame)
-        
-        # 初始化打字机效果
-        self.is_typing = False
-        self.typing_timer = None
+        input_layout.addWidget(self.send_button, 0)
+
+        right_col.addWidget(self._input_bar)
+        self._input_bar.hide()
+        self._recalc_size_to_content()  # 默认折叠
+
+        inner.addLayout(right_col, 1)
+
+    def _init_state(self):
+        # 历史消息HTML缓冲：所有已经显示完的消息（用户输入+已打完的Ralsei回复）
+        # 格式：每条是一段HTML（<span style=...>），拼接后用 setHtml 整体渲染
+        self._history_html = ""
+        # 打字机
+        self.typing_timer = QTimer(self)
+        self.typing_timer.timeout.connect(self._type_next_char)
         self.typing_text = ""
         self.typing_index = 0
-        
-        # 初始化表情字典
-        self.face_mapping = {
-            "happy": "face_happy_very.png",
-            "happy_extremely": "face_happy_extremely.png",
-            "happy_very": "face_happy_very.png",
-            "normal_smile_little": "face_normal_smile_little.png",
-            "normal_unsure": "face_normal but little unsure.png",
-            "normal_worry": "face_normal but little worry.png",
-            "sad": "face_a little sad.png",
-            "sad_hopeless": "face_sad with a little hopeless.png",
-            "sad_force_smile": "face_sad but force a smile.png",
-            "surprised": "face_a little surprised.png",
-            "surprised_strong": "face_unexpected and surprise.png",
-            "curious": "face_a little confusion and cute.png",
-            "excited": "face_excited and cute.png",
-            "shy": "face_shy with a little surprised and happy.png",
-            "shy_happy": "face_shy with a lot of happy.png",
-            "concerned": "face_worry.png",
-            "concerned_fear": "face_worry with a fear.png",
-            "laughing": "face_happy_very.png",
-            "blushing": "face_shy with a little surprised and happy.png",
-            "thinking": "face_contemplation.png",
-            "fear": "face_fear.png",
-            "fear_firm": "face_fear but firm.png",
-            "serious": "face_serious.png",
-            "firm": "face_firm and serious.png",
-            "pleading": "face_force a smile with pleading.png",
-            "tired": "face_depression with a little hopeless.png",
-            "neutral": "face_normal.png",
-            "confused": "face_a little confusion and cute.png",
-            "embarrassed": "face_fear and worry and unsure with a little embarrassing.png",
-            "without_glass": "face_without glass.png",
-            "playful": "face_happy and playful.png",
-        }
-        
-        # 初始化表情
-        self.set_face("normal")
-        
-        # 最小化相关变量
-        self.is_minimized = False
-        self.original_size = self.size()
-        self.original_pos = self.pos()
-        self.minimized_size = (500, 70)  # 最小化后的高度
-        
-    def set_face(self, face_type):
-        # 设置表情，添加错误处理
-        face_mapping = {
-            # 基础表情
-            "normal": "face_normal.png",
-            "happy": "face_happy_very.png",
-            "happy_extremely": "face_happy_extremely.png",
-            "happy_very": "face_happy_very.png",
-            "normal_smile_little": "face_normal_smile_little.png",
-            "normal_smile": "face_normal_smile_little.png",
-            "normal_unsure": "face_normal but little unsure.png",
-            "normal but little unsure": "face_normal but little unsure.png",
-            "normal_worry": "face_normal but little worry.png",
-            "normal but little worry": "face_normal but little worry.png",
-            "face_normal": "face_normal.png",
-            "face_happy_very": "face_happy_very.png",
-            "face_happy_extremely": "face_happy_extremely.png",
-            "face_normal_smile_little": "face_normal_smile_little.png",
-            "face_normal but little unsure": "face_normal but little unsure.png",
-            "face_normal but little worry": "face_normal but little worry.png",
-            
-            # 开心相关
-            "happy with a little touched": "face_happy with a little touched.png",
-            "happy_with_touched": "face_happy with a little touched.png",
-            "happy with a little worry": "face_happy with a little worry.png",
-            "happy_with_worry": "face_happy with a little worry.png",
-            "happy and playful": "face_happy and playful.png",
-            "grateful": "face_happy with a little touched.png",
-            "laughing": "face_happy_very.png",
-            "face_happy with a little touched": "face_happy with a little touched.png",
-            "face_happy and playful": "face_happy and playful.png",
-            "face_happy with a little worry": "face_happy with a little worry.png",
-            
-            # 悲伤相关
-            "a little sad": "face_a little sad.png",
-            "sad": "face_a little sad.png",
-            "sad with a little hopeless": "face_sad with a little hopeless.png",
-            "sad_with_hopeless": "face_sad with a little hopeless.png",
-            "sad with hopeless and self-mockery": "face_sad with hopeless and self-mockery.png",
-            "sad_with_hopeless_self_mockery": "face_sad with hopeless and self-mockery.png",
-            "sad but force a smile": "face_sad but force a smile.png",
-            "sad_but_force_smile": "face_sad but force a smile.png",
-            "depression with a little hopeless": "face_depression with a little hopeless.png",
-            "disappointed": "face_depression with a little hopeless.png",
-            "depression with a hopeless": "face_depression with a hopeless.png",
-            "depression_hopeless": "face_depression with a hopeless.png",
-            "face_a little sad": "face_a little sad.png",
-            "face_sad with a little hopeless": "face_sad with a little hopeless.png",
-            "face_sad with hopeless and self-mockery": "face_sad with hopeless and self-mockery.png",
-            "face_sad but force a smile": "face_sad but force a smile.png",
-            "face_depression with a little hopeless": "face_depression with a little hopeless.png",
-            "face_depression with a hopeless": "face_depression with a hopeless.png",
-            
-            # 惊讶相关
-            "a little surprised": "face_a little surprised.png",
-            "surprised": "face_a little surprised.png",
-            "unexpected and surprise": "face_unexpected and surprise.png",
-            "unexpected_surprise": "face_unexpected and surprise.png",
-            "a little speechless with happy": "face_a little speechless with happy.png",
-            "a little speechless": "face_a little speechless with happy.png",
-            "face_a little surprised": "face_a little surprised.png",
-            "face_unexpected and surprise.png": "face_unexpected and surprise.png",
-            "face_a little speechless with happy": "face_a little speechless with happy.png",
-            
-            # 困惑思考相关
-            "a little confusion and cute": "face_a little confusion and cute.png",
-            "confused": "face_a little confusion and cute.png",
-            "contemplation": "face_contemplation.png",
-            "curious": "face_contemplation.png",
-            "thoughtful": "face_contemplation.png",
-            "have a idea and cute": "face_have a idea and cute.png",
-            "have_idea": "face_have a idea and cute.png",
-            "a little speechless or seek opinions": "face_a little speechless or seek opinions.png",
-            "seek_opinions": "face_a little speechless or seek opinions.png",
-            "face_a little confusion and cute": "face_a little confusion and cute.png",
-            "face_contemplation": "face_contemplation.png",
-            "face_have a idea and cute": "face_have a idea and cute.png",
-            "face_a little speechless or seek opinions": "face_a little speechless or seek opinions.png",
-            
-            # 恐惧相关
-            "fear": "face_fear.png",
-            "fear and worry": "face_worry with a fear.png",
-            "fear_with_worry": "face_worry with a fear.png",
-            "fear but firm": "face_fear but firm.png",
-            "fear_but_firm": "face_fear but firm.png",
-            "fear but firm_speaking": "face_fear but firm_speaking.png",
-            "fear with a little hopeless": "face_fear with a little hopeless.png",
-            "fear_with_hopeless": "face_fear with a little hopeless.png",
-            "fear with a weak hopeful": "face_fear with a weak hopeful.png",
-            "fear_with_weak_hopeful": "face_fear with a weak hopeful.png",
-            "fear with hopeless": "face_fear with hopeless.png",
-            "fear_with_hopeless_strong": "face_fear with hopeless.png",
-            "fear and worry and unsure with a little embarrassing": "face_fear and worry and unsure with a little embarrassing.png",
-            "embarrassed_fear": "face_fear and worry and unsure with a little embarrassing.png",
-            "hopeless": "face_hopeless.png",
-            "face_fear": "face_fear.png",
-            "face_worry with a fear": "face_worry with a fear.png",
-            "face_fear but firm": "face_fear but firm.png",
-            "face_fear but firm_speaking": "face_fear but firm_speaking.png",
-            "face_fear with a little hopeless": "face_fear with a little hopeless.png",
-            "face_fear with a weak hopeful": "face_fear with a weak hopeful.png",
-            "face_fear with hopeless": "face_fear with hopeless.png",
-            "face_fear and worry and unsure with a little embarrassing": "face_fear and worry and unsure with a little embarrassing.png",
-            "face_hopeless": "face_hopeless.png",
-            
-            # 愤怒厌恶相关
-            "frightened with a little angry": "face_frightened with a little angry.png",
-            "frightened with a little angry (wtf)": "face_frightened with a little angry.png",
-            "angry": "face_frightened with a little angry.png",
-            "disgust": "face_frightened with a little angry.png",
-            "face_frightened with a little angry": "face_frightened with a little angry.png",
-            
-            # 害羞相关
-            "shy with a little surprised and happy": "face_shy with a little surprised and happy.png",
-            "shy": "face_shy with a little surprised and happy.png",
-            "shy with a lot of happy": "face_shy with a lot of happy.png",
-            "shy_happy": "face_shy with a lot of happy.png",
-            "shy with touched and happy": "face_shy with touched and happy.png",
-            "shy_touched": "face_shy with touched and happy.png",
-            "blushing": "face_shy with a little surprised and happy.png",
-            "face_shy with a little surprised and happy": "face_shy with a little surprised and happy.png",
-            "face_shy with a lot of happy": "face_shy with a lot of happy.png",
-            "face_shy with touched and happy": "face_shy with touched and happy.png",
-            
-            # 骄傲严肃相关
-            "proud": "face_serious.png",
-            "serious": "face_serious.png",
-            "firm and serious": "face_firm and serious.png",
-            "firm_serious": "face_firm and serious.png",
-            "face_serious": "face_serious.png",
-            "face_firm and serious": "face_firm and serious.png",
-            
-            # 担忧相关
-            "worry": "face_worry.png",
-            "worry with a fear": "face_worry with a fear.png",
-            "worry_with_fear": "face_worry with a fear.png",
-            "worry with a hopeful": "face_worry with a hopeful.png",
-            "worry_with_hopeful": "face_worry with a hopeful.png",
-            "worry with a hopeless and sad": "face_worry with a hopeless and sad.png",
-            "worry_with_hopeless_sad": "face_worry with a hopeless and sad.png",
-            "worry with a little sad": "face_worry with a little sad.png",
-            "worry_with_little_sad": "face_worry with a little sad.png",
-            "worry with a little smile": "face_worry with a little smile.png",
-            "worry_with_little_smile": "face_worry with a little smile.png",
-            "worry with a sad and a little sorry": "face_worry with a sad and a little sorry.png",
-            "worry_with_sad_sorry": "face_worry with a sad and a little sorry.png",
-            "smile with a little worry": "face_smile with a little worry.png",
-            "concerned": "face_worry.png",
-            "face_worry": "face_worry.png",
-            "face_worry with a hopeful": "face_worry with a hopeful.png",
-            "face_worry with a hopeless and sad": "face_worry with a hopeless and sad.png",
-            "face_worry with a little sad": "face_worry with a little sad.png",
-            "face_worry with a little smile": "face_worry with a little smile.png",
-            "face_worry with a sad and a little sorry": "face_worry with a sad and a little sorry.png",
-            "face_smile with a little worry": "face_smile with a little worry.png",
-            
-            # 兴奋期待相关
-            "excited and cute": "face_excited and cute.png",
-            "expectant": "face_excited and cute.png",
-            "excited": "face_excited and cute.png",
-            "face_excited and cute": "face_excited and cute.png",
-            
-            # 其他表情
-            "doesn't matter and a little lazy": "face_doesn't matter and a little lazy.png",
-            "doesn't_matter": "face_doesn't matter and a little lazy.png",
-            "force a smile with pleading": "face_force a smile with pleading.png",
-            "force_smile_pleading": "face_force a smile with pleading.png",
-            "force a smile with very pleading": "face_force a smile with very pleading.png",
-            "force_smile_very_pleading": "face_force a smile with very pleading.png",
-            "without glass": "face_without glass.png",
-            "without_glass": "face_without glass.png",
-            "face_doesn't matter and a little lazy": "face_doesn't matter and a little lazy.png",
-            "face_force a smile with pleading": "face_force a smile with pleading.png",
-            "face_force a smile with very pleading": "face_force a smile with very pleading.png",
-            "face_without glass": "face_without glass.png",
-            
-            # 特定表情名称直接映射
-            "face_worry": "face_worry.png",
-            "face_worry.png": "face_worry.png",
-            "normal_smile_little": "face_normal_smile_little.png",
-            "smile_with_touched": "face_happy with a little touched.png",
-            "smile_with_worry": "face_smile with a little worry.png",
-            "neutral": "face_normal.png",
-            "neutral_smile": "face_normal_smile_little.png",
-            "neutral_unsure": "face_normal but little unsure.png",
-            "depressed": "face_depression with a little hopeless.png",
-            "depression": "face_depression with a little hopeless.png",
-            "contemplative": "face_contemplation.png",
-            "contemplation": "face_contemplation.png",
-            "pleading": "face_force a smile with pleading.png",
-            "playful": "face_happy and playful.png",
-            "unsure": "face_normal but little unsure.png",
-        }
-        
-        face_file = face_mapping.get(face_type, "face_normal.png")
-        face_path = f"c:/Users/23002/Documents/trae_projects/try/ralsei_face/{face_file}"
-        
+        self.is_typing = False
+
+        # Deltarune 闪烁光标
+        self._cursor_visible = True
+        self._cursor_timer = QTimer(self)
+        self._cursor_timer.timeout.connect(self._blink_cursor)
+        self._cursor_timer.start(530)
+
+        # 自动隐藏：5.5 秒无操作后淡出；输入/聚焦时由 _try_auto_hide 暂缓隐藏
+        self._auto_hide_timer = QTimer(self)
+        self._auto_hide_timer.setSingleShot(True)
+        self._auto_hide_timer.timeout.connect(self._try_auto_hide)
+
+        # 淡入淡出动画引用（防止被 GC）
+        self._fade_anim = None
+
+        # 拖动 & 最小化：用户拖过后对话框保持用户放置位置，不再被 follow_timer 拉回
+        self.drag_position = QPoint()
+        self._is_dragging = False
+        self._user_moved = False
+
+        # 位置跟随定时器：对话框可见时持续贴在 ralsei 上方
+        self._follow_timer = QTimer(self)
+        self._follow_timer.timeout.connect(self._position_above_ralsei)
+        self._follow_timer.start(100)  # 10 帧/秒更新位置
+
+        # 回车发送：统一拦截入口（单一判定函数）
+        self.input_field.installEventFilter(self)
+        # 全局 X 键跳过对话：装在 QApplication 上，eventFilter 统一判定
         try:
-            pixmap = QPixmap(face_path)
-            if not pixmap.isNull():
-                self.face_label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-            else:
-                print(f"警告：无法加载表情图片: {face_path}")
-        except Exception as e:
-            print(f"加载表情图片时出错: {e}")
-            # 使用默认表情
-            default_path = "c:/Users/23002/Documents/trae_projects/try/ralsei_face/face_normal.png"
-            pixmap = QPixmap(default_path)
-            if not pixmap.isNull():
-                self.face_label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        
+            app = QApplication.instance()
+            if app is not None and not getattr(self, '_app_filter_installed', False):
+                app.installEventFilter(self)
+                self._app_filter_installed = True
+        except Exception:
+            pass
+
+    # ------------------------------------------------------------------ face
+    def set_face(self, face_type):
+        name = _resolve_face_name(face_type)
+        pixmap = self.parent.sprite_loader.get_face(name)
+        if pixmap and not pixmap.isNull():
+            self.face_label.setPixmap(
+                pixmap.scaled(78, 78, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+
+    # ---------------------------------------------------------------- typing
     def add_dialogue(self, speaker, message, face_type="normal"):
-        # 添加对话内容
+        # 修复：消息类型防护 + HTML 转义。
+        # (1) 延迟回复(lambda)求值失败时会返回函数对象/None，直接 len()/拼接会
+        #     TypeError 把 send_message 链路打断（用户消息已回显却无回复）；
+        # (2) 用户输入原样拼进 setHtml 会成为 HTML 注入，破坏排版。
+        import html as _html
+        if message is None:
+            message = ""
+        elif not isinstance(message, str):
+            try:
+                message = str(message)
+            except Exception:
+                message = ""
+        message = _html.escape(message)
+        # 前台若是 AI 思考占位文本，先丢弃它（无论新消息还是真实回复到达），
+        # 占位只是"等待"提示，绝不能并入历史或当成正式消息。
+        if self.typing_text == self.AI_THINKING_PLACEHOLDER:
+            self.typing_text = ""
+            self.typing_index = 0
+            self.is_typing = False
         if speaker == "ralsei":
             self.set_face(face_type)
-            # 使用打字机效果显示Ralsei的对话
-            self.start_typing(message)
+            # 先打断前一条打字机（补完剩余内容，非打字时noop安全）
+            self.stop_typing()
+            # 把上一条 Ralsei 完整并入历史，然后再开新的打字机，防止消息覆盖
+            self._commit_previous_ralsei_into_history()
+            self._start_typing(message)
         else:
-            # 直接显示用户的对话
-            self.dialogue_content.append(f"<b>You:</b> {message}")
-            # 滚动到底部
-            self.dialogue_content.verticalScrollBar().setValue(self.dialogue_content.verticalScrollBar().maximum())
-    
-    def start_typing(self, text):
-        # 开始打字机效果
-        from PyQt5.QtCore import QTimer
-        
-        # 停止之前的打字效果
-        if hasattr(self, 'typing_timer') and self.typing_timer:
-            self.typing_timer.stop()
-        
-        self.is_typing = True
-        self.typing_text = f"<b>Ralsei:</b> " + text
-        self.typing_index = 0
-        self.dialogue_content.clear()
-        
-        # 创建打字机效果的定时器，优化打字速度
-        self.typing_timer = QTimer(self)
-        self.typing_timer.timeout.connect(self.type_next_character)
-        # 根据文本长度动态调整打字速度，使长文本打字更快
-        base_speed = 30  # 基础速度
-        if len(text) > 100:
-            base_speed = 20  # 长文本打字更快
-        elif len(text) > 50:
-            base_speed = 25  # 中长文本打字稍快
-        self.typing_timer.start(base_speed)
-    
-    def type_next_character(self):
-        # 打字机效果，每次显示一个字符
-        if self.typing_index < len(self.typing_text):
-            # 添加一个字符
-            # 使用更可靠的方式构建HTML文本
-            current_html = f"<html><body>{self.typing_text[:self.typing_index+1]}</body></html>"
-            self.dialogue_content.setHtml(current_html)
-            self.typing_index += 1
-            # 滚动到底部
-            self.dialogue_content.verticalScrollBar().setValue(self.dialogue_content.verticalScrollBar().maximum())
-        else:
-            # 打字完成
-            self.is_typing = False
-            if hasattr(self, 'typing_timer') and self.typing_timer:
+            # 用户说的话：先打断打字机，再把上一条Ralsei并入历史，然后追加用户消息
+            self.stop_typing()
+            self._commit_previous_ralsei_into_history()
+            self._history_html += (
+                f'<div style="color:#9aa0aa;font-size:10pt;line-height:1.45;'
+                f'margin:2px 0 4px 0;">▸ YOU: {message}</div>')
+            self.typing_text = ""   # 前台清空：最新的一条是用户消息
+            self._refresh_display()
+
+    # -------------------------------------------------------- display helper
+
+    def _commit_previous_ralsei_into_history(self):
+        """如果前台还有一条 Ralsei 消息（typing_text 非空），把它完整并入历史。"""
+        if self.typing_text:
+            # 立刻补完当前打字机进度，用完整文本写入历史
+            full_text = self.typing_text
+            if self.is_typing:
+                self.is_typing = False
                 self.typing_timer.stop()
-    
-    def stop_typing(self):
-        # 立即停止打字效果，显示完整文本
-        if self.is_typing:
-            self.is_typing = False
-            if hasattr(self, 'typing_timer') and self.typing_timer:
-                self.typing_timer.stop()
-            # 显示完整文本
-            self.dialogue_content.setHtml(f"<html><body>{self.typing_text}</body></html>")
-            # 滚动到底部
-            self.dialogue_content.verticalScrollBar().setValue(self.dialogue_content.verticalScrollBar().maximum())
-    
-    def handle_chat_commands(self, user_input):
-        # 处理聊天指令，通过影响情绪来影响动画，保持情绪和姿势的自主性
-        user_input_lower = user_input.lower()
-        
-        # 指令映射：关键词 -> (情绪影响方法, 成功响应)
-        # 这里通过影响情绪来影响动画，而不是直接控制动画，保持情绪和姿势的自主性
-        command_mapping = {
-            # 抚摸相关指令 - 增加开心和害羞情绪
-            "抚摸": (lambda: self.parent.emotion_system.add_emotion("happy", 30), "嘿嘿~ 好舒服呀！"),
-            "摸": (lambda: self.parent.emotion_system.add_emotion("happy", 20), "谢谢你的抚摸！"),
-            "摸摸": (lambda: self.parent.emotion_system.add_emotion("happy", 25), "真的好舒服呀~"),
-            "抚摸我": (lambda: [self.parent.emotion_system.add_emotion("happy", 35), self.parent.emotion_system.add_emotion("shy", 20)], "嘿嘿~ 我很喜欢被抚摸哦！"),
-            "摸我": (lambda: [self.parent.emotion_system.add_emotion("happy", 25), self.parent.emotion_system.add_emotion("shy", 15)], "好呀好呀！"),
-            
-            # 喂食相关指令 - 增加开心和感激情绪
-            "喂食": (lambda: [self.parent.emotion_system.add_emotion("happy", 40), self.parent.emotion_system.add_emotion("grateful", 20)], "谢谢你的食物！我现在感觉好多了！"),
-            "喂": (lambda: self.parent.emotion_system.add_emotion("happy", 35), "啊呜~ 真好吃！"),
-            "给你吃": (lambda: [self.parent.emotion_system.add_emotion("happy", 30), self.parent.emotion_system.add_emotion("grateful", 25)], "太感谢你了！"),
-            
-            # 玩游戏相关指令 - 增加开心和兴奋情绪
-            "玩游戏": (lambda: [self.parent.emotion_system.add_emotion("happy", 35), self.parent.emotion_system.add_emotion("excited", 30)], "好呀！我们来玩游戏吧！"),
-            "游戏": (lambda: self.parent.emotion_system.add_emotion("excited", 35), "我最喜欢玩游戏了！"),
-            "一起玩": (lambda: [self.parent.emotion_system.add_emotion("happy", 30), self.parent.emotion_system.add_emotion("excited", 25)], "当然可以！"),
-            
-            # 跳舞相关指令 - 增加兴奋和开心情绪
-            "跳舞": (lambda: [self.parent.emotion_system.add_emotion("excited", 40), self.parent.emotion_system.add_emotion("happy", 30)], "你看！我跳得怎么样？"),
-            "跳个舞": (lambda: [self.parent.emotion_system.add_emotion("excited", 35), self.parent.emotion_system.add_emotion("happy", 25)], "好呀！我来为你跳舞！"),
-            
-            # 唱歌相关指令 - 增加开心和期待情绪
-            "唱歌": (lambda: [self.parent.emotion_system.add_emotion("happy", 35), self.parent.emotion_system.add_emotion("expectant", 25)], "啦啦啦~ 唱首歌给你听！"),
-            "唱首歌": (lambda: [self.parent.emotion_system.add_emotion("happy", 30), self.parent.emotion_system.add_emotion("expectant", 30)], "我来为你唱歌！"),
-            
-            # 挥手相关指令 - 增加开心和惊讶情绪
-            "挥手": (lambda: [self.parent.emotion_system.add_emotion("happy", 25), self.parent.emotion_system.add_emotion("surprised", 20)], "你好呀！"),
-            "打招呼": (lambda: self.parent.emotion_system.add_emotion("happy", 20), "嘿嘿！"),
-            
-            # 拥抱相关指令 - 增加开心和感激情绪
-            "拥抱": (lambda: [self.parent.emotion_system.add_emotion("happy", 40), self.parent.emotion_system.add_emotion("grateful", 30)], "谢谢你的拥抱！"),
-            "抱一下": (lambda: [self.parent.emotion_system.add_emotion("happy", 35), self.parent.emotion_system.add_emotion("grateful", 25)], "我最喜欢拥抱了！"),
-            
-            # 大笑相关指令 - 增加开心情绪
-            "笑": (lambda: self.parent.emotion_system.add_emotion("happy", 40), "哈哈哈哈！"),
-            "大笑": (lambda: self.parent.emotion_system.add_emotion("happy", 50), "太好笑了！"),
-            
-            # 哭泣相关指令 - 增加悲伤情绪
-            "哭": (lambda: self.parent.emotion_system.add_emotion("sad", 35), "呜... 你为什么要让我哭呢？"),
-            "难过": (lambda: self.parent.emotion_system.add_emotion("sad", 40), "呜... 我真的很难过..."),
-            
-            # 喝茶相关指令 - 增加开心和放松情绪
-            "喝茶": (lambda: self.parent.emotion_system.add_emotion("happy", 25), "这茶真好喝！"),
-            "喝杯茶": (lambda: self.parent.emotion_system.add_emotion("happy", 20), "谢谢你的茶！"),
-            
-            # 摆姿势相关指令 - 增加骄傲和开心情绪
-            "摆姿势": (lambda: [self.parent.emotion_system.add_emotion("proud", 30), self.parent.emotion_system.add_emotion("happy", 25)], "你看我摆的姿势怎么样？"),
-            "pose": (lambda: [self.parent.emotion_system.add_emotion("proud", 35), self.parent.emotion_system.add_emotion("happy", 20)], "摆个pose！"),
-        }
-        
-        # 检查是否匹配任何指令
-        for keyword, (action, response) in command_mapping.items():
-            if keyword in user_input_lower:
-                # 执行对应情绪影响
-                action()
-                return response
-        
-        # 检查是否匹配部分关键词
-        partial_matches = {
-            "抚摸": (lambda: self.parent.emotion_system.add_emotion("happy", 25), "嘿嘿~ 好舒服呀！"),
-            "摸": (lambda: self.parent.emotion_system.add_emotion("happy", 20), "谢谢你的抚摸！"),
-            "喂": (lambda: self.parent.emotion_system.add_emotion("happy", 30), "啊呜~ 真好吃！"),
-            "游戏": (lambda: self.parent.emotion_system.add_emotion("excited", 30), "我最喜欢玩游戏了！"),
-            "跳舞": (lambda: [self.parent.emotion_system.add_emotion("excited", 35), self.parent.emotion_system.add_emotion("happy", 25)], "你看！我跳得怎么样？"),
-            "唱歌": (lambda: [self.parent.emotion_system.add_emotion("happy", 30), self.parent.emotion_system.add_emotion("expectant", 25)], "啦啦啦~ 唱首歌给你听！"),
-        }
-        
-        for keyword, (action, response) in partial_matches.items():
-            if keyword in user_input_lower:
-                action()
-                return response
-        
-        # 没有匹配的指令
-        return None
-    
-    def handle_file_commands(self, user_input):
-        # 处理文件操作指令
-        user_input_lower = user_input.lower()
-        
-        # 检查是否包含文件操作关键词
-        if any(keyword in user_input_lower for keyword in ["打开", "修改", "表格", "excel", "对齐", "格子", "超出去"]):
-            # 检查是否是请求打开并修改表格的指令
-            if "打开" in user_input_lower and "表格" in user_input_lower and ("修改" in user_input_lower or "对齐" in user_input_lower):
-                return self.parent.handle_file_operation(user_input)
-        
-        # 没有匹配的文件操作指令
-        return None
-    
-    def send_message(self):
-        # 发送用户消息
-        user_input = self.input_field.toPlainText().strip()
-        if user_input:
-            self.add_dialogue("user", user_input)
-            
-            # 首先检查是否是聊天指令
-            command_response = self.handle_chat_commands(user_input)
-            if command_response:
-                # 是聊天指令，直接回复
-                self.add_dialogue("ralsei", command_response, "happy")
-            # 检查是否是游戏输入
-            elif self.parent.handle_game_input(user_input):
-                # 是游戏输入，已经处理
-                pass
-            # 检查是否是文件操作指令
-            elif self.handle_file_commands(user_input):
-                # 是文件操作指令，已经处理
-                pass
+            self._history_html += (
+                f'<div style="color:#ffffff;line-height:1.45;">{full_text}</div>')
+            self.typing_text = ""
+            self.typing_index = 0
+
+    def _refresh_display(self):
+        """统一渲染：历史消息 + 前台当前消息（若存在）带闪烁光标。"""
+        cursor = "▼" if self._cursor_visible else " "
+        html = self._history_html
+        if self.typing_text:
+            # 有前台 Ralsei 消息：当前显示到 index，后面加闪烁光标
+            show_idx = (self.typing_index
+                        if self.is_typing else len(self.typing_text))
+            current_shown = self.typing_text[:show_idx]
+            html += (f'<div style="color:#ffffff;line-height:1.45;">'
+                     f'{current_shown}{cursor}</div>')
+        self.dialogue_content.setHtml(html)
+
+        # ============================================================
+        # 动态高度：只在内容高度真正变化时才 resize（避免每帧 resize 导致文字抖动）
+        # 拖拽中完全不 resize（避免拖不动）
+        # ============================================================
+        if not getattr(self, '_is_dragging', False):
+            self._recalc_size_to_content_lazy()
+
+        # 滚到底
+        sb = self.dialogue_content.verticalScrollBar()
+        sb.setValue(sb.maximum())
+
+    def _recalc_size_to_content_lazy(self):
+        """惰性重算：只在文档高度真正变化时才执行 resize/move。
+        避免每帧 resize 导致文字抖动 + 对话框不可拖动。"""
+        try:
+            doc = self.dialogue_content.document()
+            doc.setTextWidth(self.dialogue_content.viewport().width())
+            content_h = int(doc.size().height())
+            # 和上次记录的高度比较，没变就不 resize
+            last_h = getattr(self, '_last_content_h', -1)
+            if content_h == last_h:
+                return
+            self._last_content_h = content_h
+            # 高度变了，才真正执行 resize
+            self._recalc_size_to_content()
+        except Exception:
+            pass
+
+    def _get_screen_rect(self):
+        """统一取屏幕可用区域 (left, top, right, bottom)，优先Win32虚拟屏再Qt。"""
+        try:
+            import win32api
+            vx = win32api.GetSystemMetrics(76)
+            vy = win32api.GetSystemMetrics(77)
+            vw = win32api.GetSystemMetrics(78)
+            vh = win32api.GetSystemMetrics(79)
+            return (vx, vy, vx + vw, vy + vh)
+        except Exception:
+            from PyQt5.QtWidgets import QApplication
+            screen = QApplication.desktop().availableGeometry()
+            return (screen.left(), screen.top(), screen.right(), screen.bottom())
+
+    def _clamp_to_screen(self, geom):
+        """把 QRect 夹到屏幕可见区域内，保证至少 80x60 可见。"""
+        sl, st, sr, sb = self._get_screen_rect()
+        x, y, w, h = geom.x(), geom.y(), geom.width(), geom.height()
+        # 先夹右边界
+        if x + w > sr:
+            x = sr - w
+        # 再夹左边界
+        if x < sl:
+            x = sl
+        # 夹下边界
+        if y + h > sb:
+            y = sb - h
+        # 夹上边界
+        if y < st:
+            y = st
+        # 最后兜底：宽/高超过屏幕时至少露一个角
+        if w > sr - sl:
+            x = sl
+        if h > sb - st:
+            y = st
+        from PyQt5.QtCore import QRect
+        return QRect(x, y, w, h)
+
+    def _recalc_size_to_content(self):
+        """根据 dialogue_content 文档实际高度，
+        重新设置 dialogue_content 高度 + 整个对话框尺寸。
+        带屏幕边界 clamp，任何情况下都不允许掉出屏幕外。
+        """
+        try:
+            # QTextEdit 的 document 有真实像素高度（setHtml 之后就有值）
+            doc = self.dialogue_content.document()
+            doc.setTextWidth(self.dialogue_content.viewport().width())
+            content_h = int(doc.size().height())
+            # 夹在最小/最大之间，超出时 QTextEdit 会显示滚动条（VerticalScrollBarAsNeeded）
+            clamped_h = max(self._min_dialogue_h, min(content_h + 8, self._max_dialogue_h))
+            self.dialogue_content.setFixedHeight(clamped_h)
+
+            # —— 根据输入框是否可见 + 内容高度，计算整个窗口的目标高度 ——
+            frame_v_pad = 28  # 14 + 14
+            name_label_h = 18
+            right_spacing = 4
+            face_h = 84
+            body_h = name_label_h + right_spacing + clamped_h
+            if self._input_bar.isVisible():
+                body_h += right_spacing + self._input_bar.sizeHint().height()
+            right_col_h = max(face_h, body_h)
+            target_h = frame_v_pad + right_col_h
+            target_h = max(target_h, 180)
+            target_w = self._base_width
+
+            old_geom = self.geometry()
+            # —— 计算目标几何：先按原策略算 (x,y)，再统一 screen-clamp ——
+            from PyQt5.QtCore import QRect
+            if getattr(self, '_user_moved', False):
+                # 用户拖过：底边对齐，向上扩展
+                new_x = old_geom.x()
+                new_y = old_geom.y() + old_geom.height() - target_h
+                target = QRect(new_x, new_y, target_w, target_h)
             else:
-                # 不是游戏输入，生成正常回复
-                # 获取Ralsei的回复，结合情绪系统
-                response = self.parent.dialogue_system.generate_response(user_input, self.parent.emotion_system)
-                
-                # 根据当前情绪获取表情
-                current_emotion, emotion_value = self.parent.emotion_system.get_current_emotion()
-                intensity = abs(emotion_value)
-                face_type = self.parent.emotion_system.get_face_for_emotion(current_emotion, intensity)
-                
-                self.add_dialogue("ralsei", response, face_type)
-            
-            # 清空输入框
-            self.input_field.clear()
-        
-    def show_dialogue(self, message=None):
-        # 显示对话框，添加淡入效果
-        self.show()
-        
-        # 如果提供了消息，显示消息
+                # 未拖过：目标宽高先set，之后 _position_above_ralsei 会重新定位
+                target = QRect(old_geom.x(), old_geom.y(), target_w, target_h)
+
+            # 关键：如果算出来的 rect 掉出屏幕 → 强制 clamp
+            safe = self._clamp_to_screen(target)
+            # 如果 clamp 结果和原计算不一样（=真的出屏了），说明用户拖到屏幕边缘或屏幕
+            # 已经 resize 了，此时清掉 _user_moved 并贴回默认底部位置（防止永久"卡出界"）
+            if safe != target:
+                if safe.x() != target.x() or safe.y() != target.y():
+                    self._user_moved = False
+            self.resize(safe.width(), safe.height())
+            if getattr(self, '_user_moved', False):
+                self.move(safe.x(), safe.y())
+            elif self.isVisible():
+                # 没拖过 + 当前可见 → 重新贴回屏幕底部居中
+                self._position_above_ralsei()
+                # 贴完再 clamp 一次兜底，防止 _position_above_ralsei 算错
+                after = self.frameGeometry()
+                safe_after = self._clamp_to_screen(after)
+                if safe_after != after:
+                    self.move(safe_after.x(), safe_after.y())
+                    self.resize(safe_after.width(), safe_after.height())
+        except Exception:
+            pass
+
+    def _start_typing(self, text):
+        # 新消息：取消之前的自动隐藏
+        self._auto_hide_timer.stop()
+        self.typing_timer.stop()
+        self.typing_text = text
+        self.typing_index = 0
+        self.is_typing = True
+        # 速度：默认 35ms/字，长文本 22ms/字
+        speed = 35 if len(text) <= 60 else 22
+        self.typing_timer.start(speed)
+        # 立刻显示第0帧（只显示光标，历史+空当前）
+        self._refresh_display()
+
+    def _type_next_char(self):
+        if self.typing_index < len(self.typing_text):
+            self.typing_index += 1
+            self._refresh_display()
+            # 每打一个字播放一次 txtralsei.ogg（打字声）
+            try:
+                sm = getattr(self.parent, 'sound_manager', None)
+                if sm is not None:
+                    sm.play_typewriter()
+            except Exception:
+                pass
+        else:
+            # 打字完成：停止计时，但不把消息并入历史（直到下一条消息到来）
+            # 这样最后一条消息后能继续闪烁光标
+            self.is_typing = False
+            self.typing_timer.stop()
+            self.typing_index = len(self.typing_text)
+            self._refresh_display()
+            # 打字完成 → 安排自动隐藏（输入中时延后）
+            self._schedule_auto_hide()
+
+    def stop_typing(self):
+        """立即打完当前Ralsei消息（外部X键/点击打断用）。未在打字时noop。"""
+        if not self.is_typing:
+            return
+        # 把打字进度跳到末尾（补完剩余文字）
+        self.is_typing = False
+        self.typing_timer.stop()
+        self.typing_index = len(self.typing_text)
+        self._refresh_display()
+        # 手动打断打字 → 安排自动隐藏（输入中时延后）
+        self._schedule_auto_hide()
+
+    # ----------------------------------------------------- auto-hide helpers
+
+    @staticmethod
+    def _should_send_on_enter(event):
+        """单一判定：仅当按下 Enter/Return 且未按住 Shift/Ctrl 时，才发送消息。"""
+        from PyQt5.QtCore import Qt
+        if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+            if event.modifiers() & (Qt.ShiftModifier | Qt.ControlModifier):
+                return False
+            return True
+        return False
+
+    def _is_user_inputting(self):
+        """用户是否正在输入：输入框有焦点 或 输入框有内容。"""
+        try:
+            if self.input_field.hasFocus():
+                return True
+            if self.input_field.toPlainText().strip():
+                return True
+        except Exception:
+            return False
+        return False
+
+    def _schedule_auto_hide(self):
+        """触发一次倒计时检查。timeout 时由 _try_auto_hide 判断真实 hide 条件。"""
+        self._auto_hide_timer.start(5500)
+
+    def _try_auto_hide(self):
+        """_auto_hide_timer 到点：正在输入就 1 秒后再查，否则淡出隐藏。"""
+        if self._is_user_inputting():
+            # 用户仍在输入：1 秒后重新检查，避免打断打字
+            self._auto_hide_timer.start(1000)
+            return
+        self.hide_dialogue()
+
+    def eventFilter(self, obj, event):
+        """统一拦截：输入框回车发送 / Shift+Enter 换行；全局 X 键跳过打字。
+        X 键跳过仅在"正在打字 且 输入框未聚焦"时触发，避免影响用户在输入框里打字。
+        另外转发主容器 frame 上的鼠标事件给对话框自身，实现"点哪都能拖动"。"""
+        # 主容器 frame 的鼠标事件 → 转发给对话框拖动逻辑（避免事件被子控件吞掉）
+        if obj is self._frame:
+            if event.type() == event.MouseButtonPress:
+                self.mousePressEvent(event)
+                return True
+            elif event.type() == event.MouseMove:
+                self.mouseMoveEvent(event)
+                return True
+            elif event.type() == event.MouseButtonRelease:
+                self.mouseReleaseEvent(event)
+                return True
+        if event.type() == event.KeyPress:
+            # 全局 X 键跳过对话（不打字音效，直接显示完整文本）
+            if event.key() == Qt.Key_X and self.is_typing and not self._is_user_inputting():
+                self.stop_typing()
+                return True
+            # 输入框：回车发送 / Shift+Enter 换行
+            if obj is self.input_field and self._should_send_on_enter(event):
+                self.send_message()
+                return True
+        return super().eventFilter(obj, event)
+
+    def _blink_cursor(self):
+        self._cursor_visible = not self._cursor_visible
+        # 统一刷新：无论正在打字或已打完，历史渲染都能带上光标闪烁
+        self._refresh_display()
+
+    # ------------------------------------------------------------------ show
+    def show_dialogue(self, message=None, face_type=None):
+        # 不再每次重置位置：用户拖过后保持用户放置位置
+        # 仅在未被拖过时定位到屏幕正下方居中
         if message:
-            self.add_dialogue("ralsei", message, "happy")
-        
-        from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
-        animation = QPropertyAnimation(self, b"windowOpacity")
-        animation.setDuration(500)
-        animation.setStartValue(0.0)
-        animation.setEndValue(0.95)
-        animation.setEasingCurve(QEasingCurve.InOutQuad)
-        animation.start()
-        
+            # 如果未指定表情，尝试使用当前情绪对应的表情
+            if face_type is None:
+                try:
+                    current_emotion, emotion_value = \
+                        self.parent.emotion_system.get_current_emotion()
+                    intensity = abs(emotion_value)
+                    face_type = self.parent.emotion_system.get_face_for_emotion(
+                        current_emotion, intensity)
+                except Exception:
+                    face_type = "normal"
+            self.add_dialogue("ralsei", message, face_type)
+        self.show()
+        # show 之后再定位：_position_above_ralsei 在不可见时会提前 return，
+        # 必须在 show() 之后调用，否则对话框会在旧位置闪一下再被 follow_timer 拉回
+        self._position_above_ralsei()
+        # 取消之前的自动隐藏（重新 show 时不立即消失）
+        self._auto_hide_timer.stop()
+        # 修复：淡入前停掉并断开旧动画——hide 时创建的 fade-out 把 finished→self.hide
+        # 挂在旧动画对象上，若淡出未结束就 show，旧回调会在淡入完成后把刚显示的窗口
+        # 再次隐藏（对话框"弹出后立即消失"）。同时停掉打字机，避免不可见窗口逐字渲染。
+        try:
+            self.stop_typing()
+        except Exception:
+            pass
+        _old = getattr(self, '_fade_anim', None)
+        if _old is not None:
+            try:
+                _old.stop()
+                _old.finished.disconnect()
+            except Exception:
+                pass
+        # 淡入（存到 self._fade_anim 防止被 GC）
+        self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
+        self._fade_anim.setDuration(320)
+        self._fade_anim.setStartValue(0.0)
+        self._fade_anim.setEndValue(0.98)
+        self._fade_anim.setEasingCurve(QEasingCurve.OutCubic)
+        self._fade_anim.start()
+
     def hide_dialogue(self):
-        # 隐藏对话框，添加淡出效果
-        from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
-        
-        def on_hide_finished():
-            self.hide()
-        
-        animation = QPropertyAnimation(self, b"windowOpacity")
-        animation.setDuration(500)
-        animation.setStartValue(0.95)
-        animation.setEndValue(0.0)
-        animation.setEasingCurve(QEasingCurve.InOutQuad)
-        animation.finished.connect(on_hide_finished)
-        animation.start()
-        
+        self._auto_hide_timer.stop()
+        # 修复：隐藏时停打字机 + 断开旧动画（见 show_dialogue 注释）
+        try:
+            self.stop_typing()
+        except Exception:
+            pass
+        _old = getattr(self, '_fade_anim', None)
+        if _old is not None:
+            try:
+                _old.stop()
+                _old.finished.disconnect()
+            except Exception:
+                pass
+        # 淡出（存到 self._fade_anim 防止被 GC）
+        self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
+        self._fade_anim.setDuration(260)
+        self._fade_anim.setStartValue(self.windowOpacity())
+        self._fade_anim.setEndValue(0.0)
+        self._fade_anim.setEasingCurve(QEasingCurve.InQuad)
+        self._fade_anim.finished.connect(self.hide)
+        self._fade_anim.start()
+
+    def _position_above_ralsei(self):
+        """对话框定位：用户拖过后保持用户位置，否则定位到屏幕正下方居中。"""
+        # 用户拖过一次后永远不再自动定位，保持用户放的位置（不管可见与否）
+        if getattr(self, '_user_moved', False):
+            return
+        # 不可见时不做 move，防止隐藏期间把几何改回屏幕底部导致下次显示"被重置"
+        if not self.isVisible():
+            return
+        try:
+            dw = self.width()
+            dh = self.height()
+
+            # 获取屏幕可用区域
+            try:
+                import win32api
+                vx = win32api.GetSystemMetrics(76)
+                vy = win32api.GetSystemMetrics(77)
+                vw = win32api.GetSystemMetrics(78)
+                vh = win32api.GetSystemMetrics(79)
+                left, top, right, bottom = vx, vy, vx + vw, vy + vh
+            except Exception:
+                from PyQt5.QtWidgets import QApplication
+                screen = QApplication.desktop().availableGeometry()
+                left, top, right, bottom = screen.left(), screen.top(), screen.right(), screen.bottom()
+
+            # 水平居中，垂直贴底
+            center_x = (left + right) // 2 - dw // 2
+            bottom_y = bottom - dh - 4
+            # 修复：_follow_timer 每 100ms 调用本函数，位置没变时不要重复 move
+            # （重复 move 会持续触发窗口移动事件，浪费 CPU 且可能引起轻微抖动）
+            if (center_x, bottom_y) != getattr(self, '_last_anchor_pos', None):
+                self._last_anchor_pos = (center_x, bottom_y)
+                self.move(center_x, bottom_y)
+        except Exception:
+            pass
+
+    # ---------------------------------------------------------------- input
+    def send_message(self):
+        user_input = self.input_field.toPlainText().strip()
+        if not user_input:
+            return
+        self.input_field.clear()
+
+        # —— 若上一个本地 AI 对话仍在思考：作废它（seq 递增 + inflight 复位）。
+        #    用户已输入新消息，旧模型的迟到回复不应再显示，避免乱序/串话。
+        #    （思考占位文本随后会被 add_dialogue("user") 的占位拦截丢弃，不入历史）
+        if getattr(self, '_ai_inflight', False):
+            self._ai_seq = getattr(self, '_ai_seq', 0) + 1
+            self._ai_inflight = False
+
+        # —— 用户消息回显：把自己说的话显示在对话框里（灰色 YOU 前缀），不经过打字机
+        self.add_dialogue("user", user_input, "normal")
+
+        self._input_bar.hide()
+        self._recalc_size_to_content()
+
+        # 先检查聊天指令
+        cmd = self.handle_chat_commands(user_input)
+        if cmd:
+            reply, face = cmd
+            self.add_dialogue("ralsei", reply, face)
+            return
+
+        # 游戏输入
+        if self.parent.handle_game_input(user_input):
+            return
+
+        # 文件操作
+        if self.handle_file_commands(user_input):
+            return
+
+        # 正常对话
+        # 修复/扩展：API 启用（本地 Ollama Ralsei / OpenAI 兼容）时优先把这句话交给
+        # 本地模型回答（更贴角色）；请求失败/未启用则回退内置规则 dialogue_system。
+        def _rule_reply():
+            response = self.parent.dialogue_system.generate_response(
+                user_input, self.parent.emotion_system)
+            try:
+                current_emotion, emotion_value = \
+                    self.parent.emotion_system.get_current_emotion()
+                intensity = abs(emotion_value)
+                face_type = self.parent.emotion_system.get_face_for_emotion(
+                    current_emotion, intensity)
+            except Exception:
+                face_type = "normal"
+            self.add_dialogue("ralsei", response, face_type)
+
+        use_ai = (getattr(self.parent, 'api_enabled', False)
+                  and hasattr(self.parent, 'chat_with_ai'))
+        if use_ai:
+            # 本地模型推理通常要几秒：先显示"…"占位，回复到了再打字机显示。
+            # 并发保护：每次发起请求 seq+1，回调里校验 seq，过期请求直接丢弃。
+            self._ai_seq = getattr(self, '_ai_seq', 0) + 1
+            req_seq = self._ai_seq
+            self._ai_inflight = True
+            try:
+                self._ai_thinking_on()
+            except Exception:
+                pass
+
+            def _on_ai_reply(reply_text):
+                if req_seq != getattr(self, '_ai_seq', 0):
+                    return  # 已被更新的请求作废，忽略迟到回复
+                self._ai_inflight = False
+                try:
+                    self._ai_thinking_off()
+                except Exception:
+                    pass
+                if reply_text:
+                    try:
+                        current_emotion, emotion_value = \
+                            self.parent.emotion_system.get_current_emotion()
+                        face_type = self.parent.emotion_system.get_face_for_emotion(
+                            current_emotion, abs(emotion_value))
+                    except Exception:
+                        face_type = "normal"
+                    self.add_dialogue("ralsei", reply_text, face_type)
+                    # 模型推理可能耗时较长，等待期间对话框也许已被自动隐藏：
+                    # 回复到达时若不可见则重新显示并贴回宠物上方。
+                    if not self.isVisible():
+                        try:
+                            self.show()
+                            self._position_above_ralsei()
+                        except Exception:
+                            pass
+                else:
+                    # 模型不可用：回退规则对话
+                    _rule_reply()
+
+            try:
+                self.parent.chat_with_ai(user_input, _on_ai_reply)
+                return
+            except Exception as e:
+                print(f"[本地AI] 调用失败，回退规则对话: {e}")
+                self._ai_inflight = False
+                try:
+                    self._ai_thinking_off()
+                except Exception:
+                    pass
+        _rule_reply()
+
+    # ---------------- 本地 AI 思考占位（等待回复时像在停顿组织语言） ----------------
+    def _ai_thinking_on(self):
+        # 思考期间取消自动隐藏：本地模型推理常需数秒~十几秒，
+        # 不能让对话框在等待回复时自己淡出。
+        try:
+            self._auto_hide_timer.stop()
+        except Exception:
+            pass
+        try:
+            self.stop_typing()
+            self._commit_previous_ralsei_into_history()
+        except Exception:
+            pass
+        # 显示 Ralsei 式省略号 + 思考表情（不写"正在想怎么回答你"这类暴露文字）
+        self.typing_text = self.AI_THINKING_PLACEHOLDER
+        self.typing_index = len(self.typing_text)
+        self.is_typing = False
+        try:
+            self.set_face("thinking")
+        except Exception:
+            pass
+        self._refresh_display()
+
+    def _ai_thinking_off(self):
+        self.typing_text = ""
+        self.typing_index = 0
+        self.is_typing = False
+        # 表情留给下一条 add_dialogue 按情绪设置（这里不抢）
+        self._refresh_display()
+
     def mousePressEvent(self, event):
-        # 鼠标按下事件，用于拖动窗口
+        # 记录拖动起点（点击展开输入框延迟到 mouseReleaseEvent 的单击判定——
+        # 修复：原来一按鼠标就展开输入框并重算窗口大小，拖动时窗口尺寸变化、
+        # 位置被重算，导致对话框"拖不动"）
         if event.button() == Qt.LeftButton:
             self.drag_position = event.globalPos() - self.frameGeometry().topLeft()
+            self._is_dragging = False
+            # 记录按下时的全局坐标，用于在 mouseMoveEvent 中判断是否真正移动了足够距离
+            self._drag_press_global = event.globalPos()
             event.accept()
-    
+
     def mouseMoveEvent(self, event):
-        # 鼠标移动事件，用于拖动窗口
-        if event.buttons() == Qt.LeftButton:
-            self.move(event.globalPos() - self.drag_position)
+        if event.buttons() == Qt.LeftButton and not self.drag_position.isNull():
+            # 只有真正移动超过 3 像素才标记为拖拽（区分单击 vs 拖动）
+            # 否则点击时的轻微抖动会被误判为拖拽，导致 click-to-skip-typing 失效
+            press = getattr(self, '_drag_press_global', None)
+            if press is not None:
+                moved = (event.globalPos() - press).manhattanLength()
+                if moved < 3:
+                    return  # 移动量不足，仍视为点击，不进入拖拽
+            self._is_dragging = True
+            # 【修复】clamp 到屏幕边界，防止拖出屏幕
+            new_pos = event.globalPos() - self.drag_position
+            clamped = self._clamp_to_screen(
+                QRect(new_pos.x(), new_pos.y(), self.width(), self.height()))
+            self.move(clamped.x(), clamped.y())
             event.accept()
-            
-    def minimize_dialogue(self):
-        # 最小化/恢复对话框
-        self.is_minimized = not self.is_minimized
-        
-        if self.is_minimized:
-            # 最小化状态
-            # 保存当前大小和位置
-            self.original_size = self.size()
-            self.original_pos = self.pos()
-            
-            # 调整窗口大小
-            self.resize(self.minimized_size[0], self.minimized_size[1])
-            
-            # 隐藏部分UI元素
-            self.dialogue_content.hide()
-            self.input_field.hide()
-            self.send_button.hide()
+
+    def mouseReleaseEvent(self, event):
+        was_dragging = self._is_dragging
+        self._is_dragging = False
+        self.drag_position = QPoint()
+        # 清掉按下起点，避免残留坐标影响下一次交互判定
+        self._drag_press_global = None
+        # 用户拖过一次就记住：之后 _follow_timer 不再强制定位到正下方
+        if was_dragging:
+            self._user_moved = True
+        # 单击（没拖动）→ 展开输入框让用户说话；若正在打字则跳过打字显示完整文本
+        if not was_dragging:
+            if not self.is_typing and not self._input_bar.isVisible():
+                self._input_bar.show()
+                self._recalc_size_to_content()
+                self.input_field.setFocus()
+            elif self.is_typing:
+                self.stop_typing()
+        event.accept() if was_dragging else super().mouseReleaseEvent(event)
+
+    def mouseDoubleClickEvent(self, event):
+        # 双击 → 切换输入框显示
+        if self._input_bar.isVisible():
+            self._input_bar.hide()
+            self._recalc_size_to_content()
         else:
-            # 恢复正常状态
-            # 恢复原始大小和位置
-            self.resize(self.original_size)
-            self.move(self.original_pos)
-            
-            # 显示所有UI元素
-            self.dialogue_content.show()
-            self.input_field.show()
-            self.send_button.show()
+            self._input_bar.show()
+            self._recalc_size_to_content()
+            self.input_field.setFocus()
+
+    # ------------------------------------------------------------- commands
+    def handle_chat_commands(self, user_input):
+        """返回 (reply, face_type)，让调用方统一 add_dialogue。没命中返回 None。"""
+        low = user_input.lower().strip()
+        raw = user_input.strip()
+
+        # —— 工具函数：获取当前状态信息 ——
+        def _get_status_text():
+            try:
+                e_sys = self.parent.emotion_system
+                # 修复：主对象属性名是 energy_hunger，不是 energy_hunger_system——
+                # 原代码永远取到 None，状态查询从不显示精力/饥饿。
+                eh_sys = getattr(self.parent, 'energy_hunger', None)
+                cur_emo, emo_val = e_sys.get_current_emotion()
+                parts = [f"当前情绪：{cur_emo}（强度 {int(abs(emo_val))}）"]
+                if eh_sys is not None:
+                    parts.append(f"精力：{int(eh_sys.energy)}/100")
+                    parts.append(f"饥饿：{int(eh_sys.hunger)}/100")
+                w_sys = getattr(self.parent, 'weather_system', None)
+                if w_sys is not None:
+                    w = w_sys.get_current_weather()
+                    parts.append(f"天气：{w}")
+                return "  ".join(parts)
+            except Exception:
+                return "暂时读不到状态..."
+
+        # —— 按优先级排序的指令表：更精确的关键词放前面 ——
+        cmds = [
+            # ———————— 系统控制 ————————
+            ("你去睡觉吧", (lambda: [
+                self.parent.enter_sleep_mode(),
+                self.parent.emotion_system.add_emotion("sleepy", 40)],
+                "嗯... 好困，我去睡一会儿，zZZ...", "sleepy")),
+            ("睡觉", (lambda: [
+                self.parent.enter_sleep_mode(),
+                self.parent.emotion_system.add_emotion("sleepy", 40)],
+                "嗯... 好困，我去睡一会儿，zZZ...", "sleepy")),
+            ("休眠", (lambda: [
+                self.parent.enter_sleep_mode(),
+                self.parent.emotion_system.add_emotion("sleepy", 40)],
+                "好的~ 我休息一下，有事叫我！", "sleepy")),
+            ("暂停", (lambda: [
+                self.parent.enter_sleep_mode(),
+                self.parent.emotion_system.add_emotion("calm", 30)],
+                "好的，我先暂停活动~", "peaceful")),
+            ("醒醒", (lambda: [
+                self.parent.wake_up() if hasattr(self.parent, 'wake_up') else None,
+                self.parent.emotion_system.add_emotion("happy", 30)],
+                "啊~ 睡醒了！精神满满！", "happy")),
+            ("醒来", (lambda: [
+                self.parent.wake_up() if hasattr(self.parent, 'wake_up') else None,
+                self.parent.emotion_system.add_emotion("happy", 30)],
+                "啊~ 睡醒了！精神满满！", "happy")),
+
+            # ———————— 状态与天气（reply是延迟求值lambda，第三个face参数作备用会被覆盖）————————
+            ("查看天气", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 20),
+                (lambda: (
+                    "今天是" + getattr(self.parent.weather_system, 'get_current_weather',
+                                        lambda: "sunny")() + "呀！"
+                    + getattr(self.parent.weather_system, 'get_weather_response',
+                              lambda: {'dialogue': ''})()['dialogue'],
+                    "curious")),
+                "curious")),
+            ("天气怎么样", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 20),
+                (lambda: (
+                    "今天是" + getattr(self.parent.weather_system, 'get_current_weather',
+                                        lambda: "sunny")() + "！"
+                    + getattr(self.parent.weather_system, 'get_weather_response',
+                              lambda: {'dialogue': ''})()['dialogue'],
+                    "curious")),
+                "curious")),
+            ("天气", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 20),
+                (lambda: (
+                    "今天是" + getattr(self.parent.weather_system, 'get_current_weather',
+                                        lambda: "sunny")() + "！"
+                    + getattr(self.parent.weather_system, 'get_weather_response',
+                              lambda: {'dialogue': ''})()['dialogue'],
+                    "curious")),
+                "curious")),
+            ("状态", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 10),
+                (lambda: (_get_status_text(), "curious")),
+                "curious")),
+            ("你现在怎么样", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 10),
+                (lambda: (_get_status_text(), "peaceful")),
+                "peaceful")),
+            ("精力", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 10),
+                (lambda: (_get_status_text(), "curious")),
+                "curious")),
+            ("饿了吗", (
+                lambda: self.parent.emotion_system.add_emotion("curious", 10),
+                (lambda: (_get_status_text(), "curious")),
+                "curious")),
+
+            # ———————— 互动动作（原版保留，放在后面避免上面的被误匹配）————————
+            ("喂食", (lambda: self.parent.emotion_system.add_emotion("happy", 35),
+                    "啊呜~ 真好吃！谢谢你~", "happy")),
+            ("喂我", (lambda: self.parent.emotion_system.add_emotion("happy", 35),
+                    "啊呜~ 真好吃！谢谢你~", "happy")),
+            ("吃东西", (lambda: self.parent.emotion_system.add_emotion("happy", 35),
+                    "啊呜~ 真好吃！", "happy")),
+            ("抚摸", (lambda: self.parent.emotion_system.add_emotion("happy", 30),
+                      "嘿嘿~ 好舒服呀！", "happy")),
+            ("摸摸头", (lambda: [
+                self.parent.emotion_system.add_emotion("happy", 25),
+                self.parent.emotion_system.add_emotion("shy", 15)],
+                "好呀好呀~ 最喜欢被摸头了！", "shy")),
+            ("摸我", (lambda: [
+                self.parent.emotion_system.add_emotion("happy", 25),
+                self.parent.emotion_system.add_emotion("shy", 15)],
+                "好呀好呀！", "shy")),
+            ("游戏", (lambda: self.parent.emotion_system.add_emotion("excited", 35),
+                      "我最喜欢玩游戏了！想玩什么呢？", "happy")),
+            ("跳舞", (lambda: [
+                self.parent.emotion_system.add_emotion("excited", 40),
+                self.parent.emotion_system.add_emotion("happy", 30)],
+                "你看！我跳得怎么样？✨", "happy")),
+            ("唱歌", (lambda: [
+                self.parent.emotion_system.add_emotion("happy", 35),
+                self.parent.emotion_system.add_emotion("expectant", 25)],
+                "啦啦啦~ 唱首歌给你听！", "happy")),
+            ("挥手", (lambda: [
+                self.parent.emotion_system.add_emotion("happy", 25),
+                self.parent.emotion_system.add_emotion("surprised", 20)],
+                "你好呀！好久不见~", "happy")),
+            ("拥抱", (lambda: [
+                self.parent.emotion_system.add_emotion("happy", 40),
+                self.parent.emotion_system.add_emotion("grateful", 30)],
+                "谢谢你的拥抱！好温暖~", "happy")),
+            ("抱抱", (lambda: [
+                self.parent.emotion_system.add_emotion("happy", 40),
+                self.parent.emotion_system.add_emotion("grateful", 30)],
+                "来抱抱！", "happy")),
+            ("笑一个", (lambda: self.parent.emotion_system.add_emotion("happy", 40),
+                    "哈哈哈哈！今天真的好开心！", "happy")),
+            ("哭", (lambda: self.parent.emotion_system.add_emotion("sad", 35),
+                    "呜... 为什么要让我哭嘛...", "sad")),
+            ("喝茶", (lambda: self.parent.emotion_system.add_emotion("happy", 25),
+                      "这茶真好喝！暖暖的~", "happy")),
+            ("pose", (lambda: [
+                self.parent.emotion_system.add_emotion("proud", 30),
+                self.parent.emotion_system.add_emotion("happy", 25)],
+                "你看我摆的姿势怎么样？很帅气吧！", "serious")),
+
+            # —— 石头剪刀布 / 猜数字触发（修复：原指令表没有入口，聊天说
+            #    "玩石头剪刀布/猜数字"只会得到一句随机闲聊，游戏从不开始）——
+            ("石头剪刀布", (lambda: [
+                self.parent.emotion_system.add_emotion("excited", 35),
+                self.parent.start_rock_paper_scissors()],
+                "好呀~ 来玩石头剪刀布！你要出什么？石头、剪刀还是布？", "happy")),
+            ("猜数字", (lambda: [
+                self.parent.emotion_system.add_emotion("excited", 35),
+                self.parent.start_guess_number()],
+                "好呀~ 来玩猜数字！我 1-100 想好了一个数字，你来猜~", "happy")),
+            ("猜一个数", (lambda: [
+                self.parent.emotion_system.add_emotion("excited", 35),
+                self.parent.start_guess_number()],
+                "好呀~ 来玩猜数字！我 1-100 想好了一个数字，你来猜~", "happy")),
+
+            # —— 躲猫猫游戏触发（修复：已在其他游戏中时不误说"开始藏"）——
+            ("躲猫猫", (lambda: [
+                self.parent.emotion_system.add_emotion("excited", 40),
+                self.parent.emotion_system.add_emotion("happy", 30),
+                self.parent.start_hide_and_seek_game()],
+                (lambda: (
+                    "我们已经开始躲猫猫啦，快来找我~", "happy")
+                    if getattr(self.parent, '_hide_stage', None) is not None
+                    else ("现在还在玩别的呢，等这局结束再躲猫猫吧~", "curious")),
+                "happy")),
+            ("捉迷藏", (lambda: [
+                self.parent.emotion_system.add_emotion("excited", 40),
+                self.parent.emotion_system.add_emotion("happy", 30),
+                self.parent.start_hide_and_seek_game()],
+                (lambda: (
+                    "我们已经开始捉迷藏啦，快来找我~", "happy")
+                    if getattr(self.parent, '_hide_stage', None) is not None
+                    else ("现在还在玩别的呢，等这局结束再捉迷藏吧~", "curious")),
+                "happy")),
+        ]
+
+        for kw, (action, reply, face) in cmds:
+            if kw in raw:
+                try:
+                    result = action()
+                except Exception as _e:
+                    import traceback
+                    print(f"[dialogue_cmd] 关键词 '{kw}' 触发 action 失败: {_e}")
+                    traceback.print_exc()
+                    result = None
+                # reply/face 支持延迟求值（lambda返回 (reply, face)），方便读实时状态
+                if callable(reply):
+                    try:
+                        reply, face = reply()
+                    except Exception as _e2:
+                        # 修复：求值失败时 reply 仍是可调用对象，会显示成
+                        # "<function ...>" 文本。回退为一句兜底话。
+                        print(f"[dialogue_cmd] reply 求值失败: {_e2}")
+                        reply = "诶... 我刚才没反应过来，再说一次好吗？"
+                        face = "curious"
+                return (reply, face)
+        return None
+
+    def handle_file_commands(self, user_input):
+        raw = user_input.strip()
+        low = raw.lower()
+
+        # —— 打开文件/文件夹：交给 main.py 的统一流程（施法→打开）——
+        if "打开" in raw:
+            # 尝试匹配"打开 XX"（不管是文件还是文件夹，都走施法流程）
+            # 具体解析交给 main.py.handle_file_operation 做正则匹配
+            result = self.parent.handle_file_operation(raw)
+            if result:
+                return True
+
+        # —— 新建文件夹 ——
+        if any(k in raw for k in ["新建文件夹", "创建文件夹", "新建目录"]):
+            try:
+                import os
+                import datetime
+                # 修复：用真实桌面路径（OneDrive 重定向兼容）
+                desktop = self.parent.desktop_interaction.desktop_path
+                name = f"新建文件夹_{datetime.datetime.now().strftime('%H%M%S')}"
+                new_dir = os.path.join(desktop, name)
+                os.makedirs(new_dir, exist_ok=True)
+                self.parent.emotion_system.add_emotion("happy", 25)
+                self.add_dialogue("ralsei", f"好啦！已经在桌面新建了「{name}」文件夹~", "happy")
+                return True
+            except Exception as e:
+                self.add_dialogue("ralsei", f"呜... 新建文件夹失败了：{e}", "sad")
+                return True
+
+        # —— 删除文件/文件夹（需要用户明确说"删除XX"，并弹确认框）——
+        if any(k in raw for k in ["删除", "删掉", "移除"]) and "回收站" not in low:
+            # 修复：原来把整句用户文本直接传给 main.delete_file（它按文件路径处理），
+            # 永远解析不到目标 → 只得到"不太确定"的模糊提示，删除功能实际不可用。
+            # 现在先解析"删除 XX"里的目标名，按名匹配桌面文件再交给 delete_file（带确认框）。
+            import re as _re
+            target = _re.sub(r'^(请|帮我)?(删除|删掉|移除)\s*', '', raw)
+            target = _re.sub(r'[呢？。！!~～\s]+$', '', target).strip()
+            matched_path = None
+            if target:
+                try:
+                    self.parent.desktop_interaction.update_desktop_elements()
+                    tl = target.lower()
+                    for el in self.parent.desktop_interaction.desktop_elements:
+                        if el.get('type') != 'file':
+                            continue
+                        name = el.get('name', '') or ''
+                        base = os.path.splitext(name)[0].lower()
+                        if name.lower() == tl or base == tl or (len(tl) >= 2 and tl in name.lower()):
+                            matched_path = el['path']
+                            break
+                except Exception:
+                    pass
+            if matched_path and hasattr(self.parent, 'delete_file') and callable(self.parent.delete_file):
+                try:
+                    self.parent.delete_file(matched_path)
+                    return True
+                except Exception:
+                    pass
+            # 没解析到明确目标：友好提示（不误删）
+            self.add_dialogue("ralsei",
+                "这个... 我不太确定具体要删哪个文件。能说得更具体一点吗？",
+                "curious")
+            return True
+
+        # —— 列出桌面文件/看看有什么 ——
+        if any(k in raw for k in ["桌面有什么", "看桌面", "有什么文件", "桌面上的东西"]):
+            try:
+                import os
+                # 修复：用真实桌面路径（OneDrive 重定向兼容）
+                desktop = self.parent.desktop_interaction.desktop_path
+                names = [n for n in os.listdir(desktop) if not n.startswith(".")][:20]
+                if not names:
+                    self.add_dialogue("ralsei", "桌面上好像干干净净的呢~", "peaceful")
+                else:
+                    preview = "、".join(names[:10])
+                    extra = f" 等{len(names)}项" if len(names) > 10 else ""
+                    self.parent.emotion_system.add_emotion("curious", 15)
+                    self.add_dialogue("ralsei", f"我看到：{preview}{extra}。要我帮你打开哪个吗？", "curious")
+                return True
+            except Exception:
+                return False
+
+        # —— 窗口管理 ——
+        if any(k in raw for k in ["关闭窗口", "关掉窗口", "最小化", "最大化"]):
+            if hasattr(self.parent, 'handle_window_operation'):
+                try:
+                    res = self.parent.handle_window_operation(raw)
+                    if res is not None:
+                        return True
+                except Exception:
+                    pass
+            self.add_dialogue("ralsei", "好的！不过我只能用后台方式操作当前可见的窗口哦。", "serious")
+            return True
+
+        return None

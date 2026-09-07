@@ -28,6 +28,8 @@ class EmotionSystem:
             'confident': 0,
             'bored': 0,
             'peaceful': 0,
+            'calm': 0,
+            'relieved': 0,
             'nostalgic': 0,
             'excited': 0,
             'curious': 0,
@@ -410,8 +412,11 @@ class EmotionSystem:
         # 精力充沛 = 开心 + 低疲惫
         self.complex_emotions['energetic'] = (self.emotions['happy'] + (100 - self.complex_emotions['tired']) * 0.5) / 2
         
-        # 疲惫 = 低开心 + 低精力充沛
-        self.complex_emotions['tired'] = (100 - self.emotions['happy'] + (100 - self.complex_emotions['energetic']) * 0.5) / 2
+        # 疲惫：本应由"低精力/真实疲惫信号"驱动，不参与公式推导。
+        # 修复：原公式 (100-happy + (100-energetic)*0.5)/2 与 energetic 公式互推，
+        # 无任何真实情绪时稳态自激到 tired≈73 → 空闲期每 10s 主导情绪恒为
+        # 'tired'，宠物被强制切 sleep 动画（每 tick 抽搐）。这里不再覆写 tired：
+        # 它只由 add_emotion('tired')/衰减自然变化。
         
         # 普通担忧 = 少量恐惧 + 少量悲伤
         self.complex_emotions['worry'] = (self.emotions['fear'] * 0.4 + self.emotions['sad'] * 0.3 + self.emotions['angry'] * 0.3) / 2
@@ -463,19 +468,34 @@ class EmotionSystem:
     
     def get_current_emotion(self):
         # 获取当前主导情绪
+        # 修复：'peaceful'/'calm' 是"无情绪"基线（peaceful 由公式推到 ≈100），
+        # 若参与主导候选会永远压过真实情绪 → 空闲动画被锁成 peaceful 档的 sing、
+        # 表情/移动概率全被"平静"支配。把它们排除出主导候选，仅作无情绪时的兜底。
+        # 修复2：'content'/'tired'/'energetic'/'bored'/'lonely' 同样是无输入时的
+        # 派生稳态高位（content≈45、tired≈73、lonely≈25），不参与主导候选，
+        # 否则空闲期宠物被误判"疲惫/无聊"而周期性抽搐。真实疲惫/无聊由
+        # energy_hunger / 对话系统表达，不影响这里的主导情绪判定。
+        _baseline = ('peaceful', 'calm', 'content', 'tired', 'energetic', 'bored', 'lonely')
         max_emotion = None
         max_value = -float('inf')
         
         for emotion in self.emotions:
+            if emotion in _baseline:
+                continue
             if abs(self.emotions[emotion]) > max_value:
                 max_value = abs(self.emotions[emotion])
                 max_emotion = emotion
         
         for emotion in self.complex_emotions:
+            if emotion in _baseline:
+                continue
             if abs(self.complex_emotions[emotion]) > max_value:
                 max_value = abs(self.complex_emotions[emotion])
                 max_emotion = emotion
         
+        if max_emotion is None or max_value <= 0.5:
+            # 没有显著的真实情绪：返回 peaceful 且强度 0（不触发情绪动画/表情变化）
+            return 'peaceful', 0.0
         return max_emotion, max_value
     
     def get_emotion_level(self, emotion):
@@ -803,7 +823,7 @@ class EmotionSystem:
             'jealous': {
                 'low': 'idle',
                 'medium': 'cower',
-                'high': 'splat_mad'
+                'high': 'cower'
             },
             'grateful': {
                 'low': 'idle',
@@ -887,7 +907,10 @@ class EmotionSystem:
             },
             'worry': {
                 'low': 'walk_up',
-                'medium': 'walk_left_tea',
+                # 修复：素材名是 walk_tea_left（sprite_loader.animation_mapping），
+                # 原 walk_left_tea 不存在 → change_animation 前缀回退成 walk_left，
+                # 担忧时静默变成普通走路，动画语义丢失。
+                'medium': 'walk_tea_left',
                 'high': 'walk_up'
             }
         }
@@ -901,8 +924,8 @@ class EmotionSystem:
             intensity_level = 'high'
         
         return animation_map.get(emotion, {}).get(intensity_level, 'idle')
-    
-    def get_face_for_emotion(self, emotion, intensity):
+
+    def get_face_for_emotion_DEPRECATED(self, emotion, intensity):
         # 根据情绪和强度获取对应的表情
         face_map = {
             'happy': {
@@ -1180,151 +1203,183 @@ class EmotionSystem:
     
     def get_face_for_emotion(self, emotion, intensity):
         # 根据情绪和强度获取对应的表情
+        # 严格对照「要求」文件中 50 个 face_*.png 的使用条件逐一映射：
+        #  - 每个情绪的 low/medium/high 三档对应事件的轻重程度；
+        #  - 要求中遗漏标注文件名的 2 处（jealous / angry）已匹配实际素材。
         face_map = {
+            # 轻微愉悦 (33) → 高度开心 (26) → 极度开心 (25)
             'happy': {
-                'low': 'normal_smile',
+                'low': 'normal_smile_little',
                 'medium': 'happy_very',
                 'high': 'happy_extremely'
             },
+            # 轻微悲伤 (2) → 轻度悲伤绝望 (35) → 自嘲式悲伤绝望 (36)
             'sad': {
                 'low': 'a little sad',
                 'medium': 'sad with a little hopeless',
-                'high': 'sad_with_hopeless_strong'
+                'high': 'sad with hopeless and self-mockery'
             },
+            # 玩笑式气/反驳 (实际文件 jealous 素材) → 微笑式不满 (48) → 愤怒惊吓 (21, 实际文件名不含 wtf)
             'angry': {
-                'low': 'fear and worry',
-                'medium': 'fear and worry',
-                'high': 'frightened with a little angry (wtf)'
+                'low': 'a little speechless with happy',
+                'medium': 'worry with a little smile',
+                'high': 'frightened with a little angry'
             },
+            # 单纯恐惧 (17) → 轻度绝望恐惧 (14) → 重度绝望恐惧 (16)
             'fear': {
                 'low': 'fear',
-                'medium': 'fear and worry',
+                'medium': 'fear with a little hopeless',
                 'high': 'fear with hopeless'
             },
+            # 轻微意外 (4) → 意外惊喜 (42) → 意外惊喜 (42, 强)
             'surprised': {
                 'low': 'a little surprised',
-                'medium': 'a little surprised',
+                'medium': 'unexpected and surprise',
                 'high': 'unexpected and surprise'
             },
+            # 无法回应 (3) → 微笑式不适 (48) → 强烈恳求 (20, 极度厌恶)
             'disgust': {
-                'low': 'fear and worry',
-                'medium': 'fear and worry',
-                'high': 'fear and worry'
+                'low': 'a little speechless or seek opinions',
+                'medium': 'worry with a little smile',
+                'high': 'force a smile with very pleading'
             },
+            # 惊喜害羞 (38) → 开心害羞 (39) → 感动害羞 (40)
             'shy': {
                 'low': 'shy with a little surprised and happy',
                 'medium': 'shy with a lot of happy',
                 'high': 'shy with touched and happy'
             },
+            # 顽皮期待 (22) → 恐惧但发言 (13, 鼓励/说计划) → 轻度兴奋 (9)
             'expectant': {
-                'low': 'excited and cute',
-                'medium': 'excited and cute',
+                'low': 'happy and playful',
+                'medium': 'fear but firm_speaking',
                 'high': 'excited and cute'
             },
+            # 悲伤担忧 (47) → 中度负面 (7) → 严重负面 (6)
             'disappointed': {
-                'low': 'depression with a little hopeless',
+                'low': 'worry with a little sad',
                 'medium': 'depression with a little hopeless',
                 'high': 'depression with a hopeless'
             },
+            # 被夸奖感动 (23) → 担忧微笑 (41) → 顽皮骄傲 (22)
             'proud': {
-                'low': 'serious',
-                'medium': 'serious',
-                'high': 'firm and serious'
-            },
-            'jealous': {
-                'low': 'jealous or a light-hearted and jokingly rebuttal',
-                'medium': 'jealous or a light-hearted and jokingly rebuttal',
-                'high': 'jealous or a light-hearted and jokingly rebuttal'
-            },
-            'grateful': {
                 'low': 'happy with a little touched',
-                'medium': 'happy with a little touched',
-                'high': 'happy with a little touched'
+                'medium': 'smile with a little worry',
+                'high': 'happy and playful'
             },
-            'excited': {
-                'low': 'happy_very',
-                'medium': 'happy_extremely',
+            # 悲伤担忧 (47) → 玩笑反驳 (实际素材名 a little speechless with happy, 原要求 29) → 恳求 (19)
+            'jealous': {
+                'low': 'worry with a little sad',
+                'medium': 'a little speechless with happy',
+                'high': 'force a smile with pleading'
+            },
+            # 担忧微笑 (41) → 感动开心 (23) → 极度感恩 (25)
+            'grateful': {
+                'low': 'smile with a little worry',
+                'medium': 'happy with a little touched',
                 'high': 'happy_extremely'
             },
+            # 高度开心 (26) → 意外惊喜兴奋 (42) → 极度开心 (25)
+            'excited': {
+                'low': 'happy_very',
+                'medium': 'unexpected and surprise',
+                'high': 'happy_extremely'
+            },
+            # 轻微困惑 (1) → 思考 (5) → 想到办法 (27)
             'curious': {
-                'low': 'contemplation',
+                'low': 'a little confusion and cute',
                 'medium': 'contemplation',
-                'high': 'contemplation'
+                'high': 'have a idea and cute'
             },
+            # 担忧微笑 (41, 照顾他人) → 感动开心 (23, 被照顾) → 担忧开心 (24, 找到人但对方受伤)
             'caring': {
-                'low': 'happy with a little touched',
+                'low': 'smile with a little worry',
                 'medium': 'happy with a little touched',
-                'high': 'happy with a little touched'
+                'high': 'happy with a little worry'
             },
+            # 轻微不确定 (30) → 有微弱希望的恐惧 (15) → 有希望担忧 (45)
             'hopeful': {
-                'low': 'expectant',
-                'medium': 'expectant',
-                'high': 'expectant'
+                'low': 'normal but little unsure',
+                'medium': 'fear with a weak hopeful',
+                'high': 'worry with a hopeful'
             },
+            # 轻微悲伤 (2) → 悲伤担忧 (47) → 强忍悲伤 (34, 孤独装没事)
             'lonely': {
                 'low': 'a little sad',
-                'medium': 'sad with a little hopeless',
-                'high': 'sad_with_hopeless_strong'
+                'medium': 'worry with a little sad',
+                'high': 'sad but force a smile'
             },
+            # 轻微担忧 (31) → 普通恐惧担忧 (11) → 恐惧担忧 (44)
             'anxious': {
-                'low': 'fear and worry',
+                'low': 'normal but little worry',
                 'medium': 'fear and worry',
-                'high': 'fear with hopeless'
+                'high': 'worry with a fear'
             },
+            # 轻微愉悦 (33) → 高度开心 (26) → 极度开心 (25)
             'content': {
-                'low': 'normal_smile',
+                'low': 'normal_smile_little',
                 'medium': 'happy_very',
                 'high': 'happy_extremely'
             },
+            # 高度开心 (26) → 顽皮活泼 (22) → 极度开心 (25)
             'energetic': {
                 'low': 'happy_very',
-                'medium': 'happy_extremely',
+                'medium': 'happy and playful',
                 'high': 'happy_extremely'
             },
+            # 无兴趣/懒 (8) → 轻微悲伤 (2) → 轻度悲伤绝望 (35)
             'tired': {
-                'low': 'a little sad',
-                'medium': 'sad with a little hopeless',
-                'high': 'sad_with_hopeless_strong'
+                'low': "doesn't matter and a little lazy",
+                'medium': 'a little sad',
+                'high': 'sad with a little hopeless'
             },
+            # 悲伤担忧 (47, 轻微愧疚) → 愧疚担忧 (49) → 绝望悲伤担忧 (46, 深重愧疚)
             'guilty': {
-                'low': 'worry with a sad and a little sorry',
+                'low': 'worry with a little sad',
                 'medium': 'worry with a sad and a little sorry',
-                'high': 'worry with a sad and a little sorry'
+                'high': 'worry with a hopeless and sad'
             },
+            # 惊喜害羞 (38, 被调侃) → 尴尬恐惧 (10) → 无眼镜窘迫 (43, 摘眼镜社交极端尴尬)
             'embarrassed': {
                 'low': 'shy with a little surprised and happy',
-                'medium': 'shy with a little surprised and happy',
-                'high': 'shy with a little surprised and happy'
+                'medium': 'fear and worry and unsure with a little embarrassing',
+                'high': 'without glass'
             },
+            # 严肃 (37) → 恐惧但坚持 (12, 保护同伴的坚定) → 严肃决策 (18)
             'confident': {
-                'low': 'firm and serious',
-                'medium': 'firm and serious',
+                'low': 'serious',
+                'medium': 'fear but firm',
                 'high': 'firm and serious'
             },
+            # 无兴趣 (8) → 无法回应 (3) → 轻微不确定 (30, 无聊迟疑)
             'bored': {
                 'low': "doesn't matter and a little lazy",
-                'medium': "doesn't matter and a little lazy",
-                'high': "doesn't matter and a little lazy"
+                'medium': 'a little speechless or seek opinions',
+                'high': 'normal but little unsure'
             },
+            # 轻微愉悦 (33) → 日常无情绪 (32) → 感动开心 (23, 平和感动)
             'peaceful': {
-                'low': 'happy_extremely',
-                'medium': 'happy_extremely',
-                'high': 'happy_extremely'
+                'low': 'normal_smile_little',
+                'medium': 'normal',
+                'high': 'happy with a little touched'
             },
+            # 轻微忧伤 (2) → 沉思 (5) → 怀念+担忧 (31, 怀旧不安)
             'nostalgic': {
-                'low': 'contemplation',
+                'low': 'a little sad',
                 'medium': 'contemplation',
-                'high': 'contemplation'
+                'high': 'normal but little worry'
             },
+            # 轻微担忧 (31) → 普通担忧 (50) → 恐惧担忧 (44)
             'worry': {
                 'low': 'normal but little worry',
                 'medium': 'worry',
                 'high': 'worry with a fear'
             },
+            # 绝望悲伤担忧 (46) → 彻底绝望 (28) → 重度绝望恐惧 (16)
             'hopeless': {
-                'low': 'hopeless',
+                'low': 'worry with a hopeless and sad',
                 'medium': 'hopeless',
-                'high': 'hopeless'
+                'high': 'fear with hopeless'
             }
         }
         

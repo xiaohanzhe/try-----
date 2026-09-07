@@ -824,7 +824,7 @@ class DialogueSystem:
                 "时间过得真快呢！",
                 "要好好珍惜每一刻哦！",
                 "时间就像流水一样，一去不复返...",
-                "现在的时间是 {current_time}，你有什么计划吗？",
+                f"现在的时间是 {current_time}，你有什么计划吗？",
                 "时间管理很重要哦！",
                 "不管什么时候，我都会陪着你的！",
             ])
@@ -1239,7 +1239,7 @@ class DialogueSystem:
         
         return response
     
-    def update_context(self, user_input):
+    def update_context_DEPRECATED(self, user_input):
         # 更新上下文信息
         self.context["conversation_history"].append(user_input)
         if len(self.context["conversation_history"]) > self.context["max_history_len"]:
@@ -1368,6 +1368,41 @@ class DialogueSystem:
         else:
             return "general_chat"
     
+    def _is_followup_input(self, user_input_lower, last_topic):
+        """判断用户输入是否在"承接/延续"上一条话题（而不是切换话题）。
+        修复：此前 last_topic 一旦命中 context_responses 键，_get_context_response
+        无条件返回该话题模板且 last_topic 永不复位 → 聊过 Excel/工作后所有对话
+        （含"你好/换话题/再见"）都被永久锁死。且承接判断不能用宽泛字眼
+        （如"好"字会误中"你好"），改为精确承接词表 + 话题领域词。
+        """
+        stripped = user_input_lower.strip().strip('！!。?？，,~～ ')
+        # 精确承接/应答词（短句）
+        short_follow = {'嗯', '嗯嗯', '哦', '好', '行', '是', '对', '可以', 'ok',
+                        '好吧', '好的', '对呀', '是的', '知道了', '继续', '接着说',
+                        '还有呢', '然后呢', '再看看', '继续吧', '行吧', '好啊',
+                        '好呀', '可以啊', '没问题', '没错', '对呀', '继续说',
+                        '接着讲', '然后', '那然后呢', '好吧继续'}
+        if stripped in short_follow:
+            return True
+        # 包含旧话题的领域词 → 视为在同一话题上继续
+        topic_hints = {
+            'work': ['工作', '上班', '任务', '加班'],
+            'file_handling': ['文件', '文件夹', '处理文件'],
+            'email': ['邮件', '邮箱', '发信'],
+            'meeting': ['会议', '开会'],
+            'search': ['搜索', '搜一搜', '查找'],
+            'excel': ['excel', '表格', '人名表', '名单', '表'],
+            'word': ['word', '文档', 'doc'],
+            'ppt': ['ppt', '幻灯片', '放映', '演示'],
+            'system_status': ['系统', '内存', 'cpu', '处理器', '硬盘', '磁盘', '电量', '网络', '状态'],
+            'system_management': ['清理', '优化', '备份', '恢复', '重启', '垃圾'],
+            'reminder_request': ['提醒', '日程', '定时', '闹钟', '记得'],
+        }
+        for hint in topic_hints.get(last_topic, []):
+            if hint in user_input_lower:
+                return True
+        return False
+
     def _get_context_response(self, user_input_lower, current_emotion, emotion_intensity):
         """根据上下文生成更相关的回复"""
         # 检查最近的话题
@@ -1376,7 +1411,11 @@ class DialogueSystem:
             
             # 检查是否有上下文相关的回复模板
             if last_topic in self.context_responses:
-                return random.choice(self.context_responses[last_topic])
+                if self._is_followup_input(user_input_lower, last_topic):
+                    return random.choice(self.context_responses[last_topic])
+                # 用户明显在说别的话题：清除延续话题，交给正常对话逻辑，
+                # 避免旧话题永久劫持后续所有输入。
+                self.context["last_topic"] = None
         
         # 检查最近的关键词
         if "last_keywords" in self.context and self.context["last_keywords"]:

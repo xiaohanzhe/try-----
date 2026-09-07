@@ -92,15 +92,19 @@ class MemorySystem:
         # 应用过滤条件
         for memory in memories:
             match = True
+            if not isinstance(memory, dict):
+                continue
             
             # 按记忆类型过滤
             if 'memory_types' in query_params:
-                if memory['type'] not in query_params['memory_types']:
+                if memory.get('type') not in query_params['memory_types']:
                     match = False
             
             # 按关键词过滤
             if match and 'keywords' in query_params:
-                content = memory['content'].lower()
+                # 修复：content 可能是 dict（非字符串），直接 .lower() 会 AttributeError
+                raw_content = memory.get('content', '')
+                content = raw_content.lower() if isinstance(raw_content, str) else str(raw_content)
                 keyword_match = False
                 for keyword in query_params['keywords']:
                     if keyword.lower() in content:
@@ -225,14 +229,44 @@ class MemorySystem:
                     self.experience = data.get('experience', self.experience)
                     self.level = data.get('level', self.level)
                     print(f"成功加载记忆: {self.memory_file}")
+                    # 修复：旧版本记忆文件可能缺 skill_levels/behavior_patterns 等键，
+                    # 后续 get_knowledge_summary / integrate_knowledge 直接索引会 KeyError。
+                    # 加载后用默认结构补全缺失键。
+                    _defaults = {
+                        'user_preferences': {},
+                        'important_dates': {},
+                        'interaction_history': [],
+                        'favorite_topics': {},
+                        'disliked_topics': {},
+                        'skill_levels': {},
+                        'behavior_patterns': {},
+                        'emotional_responses': {},
+                        'environmental_preferences': {},
+                        'relationship_history': []
+                    }
+                    if not isinstance(self.long_term_memory, dict):
+                        self.long_term_memory = {}
+                    _merged = dict(_defaults)
+                    _merged.update(self.long_term_memory)
+                    self.long_term_memory = _merged
         except Exception as e:
             print(f"加载记忆失败: {e}")
             # 使用默认记忆
-            self.long_term_memory = {
+            # 修复：损坏/加载失败时兜底结构必须与成功路径一致（全键补全），
+            # 否则后续 update()/learn 系列直接索引 skill_levels 等键会 KeyError。
+            _defaults = {
                 'user_preferences': {},
                 'important_dates': {},
-                'interaction_history': []
+                'interaction_history': [],
+                'favorite_topics': {},
+                'disliked_topics': {},
+                'skill_levels': {},
+                'behavior_patterns': {},
+                'emotional_responses': {},
+                'environmental_preferences': {},
+                'relationship_history': []
             }
+            self.long_term_memory = dict(_defaults)
             self.experience = 0
             self.level = 1
     
@@ -248,10 +282,20 @@ class MemorySystem:
                 'level': self.level
             }
             
-            with open(self.memory_file, 'w', encoding='utf-8') as f:
+            # 修复：原实现直接 open(w) 覆写，写一半崩溃/断电会损坏整个记忆文件
+            # （下次加载失败 → 全部记忆丢失）。改为临时文件 + 原子替换。
+            import tempfile
+            _tmp = self.memory_file + ".tmp"
+            with open(_tmp, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+            os.replace(_tmp, self.memory_file)
         except Exception as e:
             print(f"保存记忆失败: {e}")
+            try:
+                if os.path.exists(self.memory_file + ".tmp"):
+                    os.remove(self.memory_file + ".tmp")
+            except Exception:
+                pass
     
     def get_experience(self):
         """获取当前经验值"""
@@ -458,9 +502,13 @@ class MemorySystem:
         """
         # 分析用户行为模式
         behavior_patterns = {}
-        for memory in self.long_term_memory['interaction_history']:
-            if memory['type'] == 'user_interaction':
-                content = memory['content'].lower()
+        for memory in self.long_term_memory.get('interaction_history', []):
+            if not isinstance(memory, dict):
+                continue
+            if memory.get('type') == 'user_interaction':
+                # 修复：content 可能是 dict，直接 .lower() 会 AttributeError
+                raw_content = memory.get('content', '')
+                content = raw_content.lower() if isinstance(raw_content, str) else str(raw_content)
                 # 统计行为模式
                 if '早上好' in content or '早安' in content:
                     behavior_patterns['morning_greeting'] = behavior_patterns.get('morning_greeting', 0) + 1
@@ -474,12 +522,12 @@ class MemorySystem:
         
         # 分析情感触发因素
         emotional_triggers = {}
-        for memory in self.long_term_memory['interaction_history']:
-            if 'emotion' in memory:
+        for memory in self.long_term_memory.get('interaction_history', []):
+            if isinstance(memory, dict) and 'emotion' in memory:
                 emotion = memory['emotion']
                 if emotion not in emotional_triggers:
                     emotional_triggers[emotion] = []
-                emotional_triggers[emotion].append(memory['content'])
+                emotional_triggers[emotion].append(memory.get('content', ''))
         
         # 更新情感反应模式
         self.long_term_memory['emotional_responses'] = emotional_triggers
@@ -491,8 +539,8 @@ class MemorySystem:
         """获取知识摘要，整合记忆中的关键信息"""
         summary = {
             'user_preferences': self.get_user_preferences_summary(),
-            'behavior_patterns': self.long_term_memory['behavior_patterns'],
-            'skill_levels': self.long_term_memory['skill_levels'],
+            'behavior_patterns': self.long_term_memory.get('behavior_patterns', {}),
+            'skill_levels': self.long_term_memory.get('skill_levels', {}),
             'experience': self.experience,
             'level': self.level
         }

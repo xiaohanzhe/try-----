@@ -86,6 +86,7 @@ class SocialGrowthSystem:
                 'category': 'knowledge'
             },
             'topic_explorer': {
+                'name': "话题探索者",
                 'description': "与Ralsei讨论了所有对话主题",
                 'experience_reward': 200,
                 'unlocked': False,

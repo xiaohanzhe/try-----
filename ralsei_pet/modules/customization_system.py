@@ -110,7 +110,7 @@ class CustomizationSystem:
         # 应用外观变化
         self.apply_appearance_changes()
     
-    def update_behavior(self, behavior_settings):
+    def update_behavior_DEPRECATED(self, behavior_settings):
         """更新行为设置"""
         if 'personality_traits' in behavior_settings:
             # 更新个性特质
@@ -128,7 +128,7 @@ class CustomizationSystem:
         
         self.save_config()
     
-    def update_content_preferences(self, content_settings):
+    def update_content_preferences_DEPRECATED(self, content_settings):
         """更新内容偏好"""
         self.customization_data['content'].update(content_settings)
         self.save_config()
@@ -138,7 +138,7 @@ class CustomizationSystem:
         self.customization_data['privacy'].update(privacy_settings)
         self.save_config()
     
-    def apply_appearance_changes(self):
+    def apply_appearance_changes_DEPRECATED(self):
         """应用外观变化"""
         # 这里可以添加实际的外观变化应用逻辑
         # 例如：更换服装、调整大小、改变颜色等
@@ -227,15 +227,15 @@ class CustomizationSystem:
         for trait, value in self.customization_data['behavior']['personality_traits'].items():
             self.parent.emotion_system.set_personality_trait(trait, value)
     
-    def get_available_outfits(self):
+    def get_available_outfits_DEPRECATED(self):
         """获取可用的服装列表"""
         return ['default', 'butler', 'casual', 'sleepy', 'festival']
     
-    def get_available_accessories(self):
+    def get_available_accessories_DEPRECATED(self):
         """获取可用的配饰列表"""
         return ['glasses', 'hat', 'scarf', 'necklace', 'earrings', 'backpack']
     
-    def get_available_color_schemes(self):
+    def get_available_color_schemes_DEPRECATED(self):
         """获取可用的配色方案"""
         return ['default', 'pastel', 'dark', 'vibrant', 'monochrome']
     
@@ -353,7 +353,14 @@ class CustomizationSystem:
         print(f"应用外观变化: {appearance}")
         
         # 调整动画速度
+        # 修复：animation_speed 为 0 时 int(100/0) 除零崩溃；为负/非数值时也异常。取有效范围。
         animation_speed = appearance['animation_speed']
+        try:
+            animation_speed = float(animation_speed)
+        except (TypeError, ValueError):
+            animation_speed = 1.0
+        if animation_speed <= 0:
+            animation_speed = 1.0
         # 更新动画定时器速度
         if hasattr(self.parent, 'animation_timer'):
             original_interval = 100  # 默认100ms

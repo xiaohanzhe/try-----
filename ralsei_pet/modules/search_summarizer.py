@@ -14,7 +14,7 @@ class SearchSummarizer:
         """
         try:
             url = f"https://www.google.com/search?q={query}&num={num_results}"
-            response = requests.get(url, headers=self.headers)
+            response = requests.get(url, headers=self.headers, timeout=10)
             response.raise_for_status()
             
             soup = BeautifulSoup(response.text, "html.parser")
@@ -58,7 +58,7 @@ class SearchSummarizer:
         """
         try:
             url = f"https://www.bing.com/search?q={query}&count={num_results}"
-            response = requests.get(url, headers=self.headers)
+            response = requests.get(url, headers=self.headers, timeout=10)
             response.raise_for_status()
             
             soup = BeautifulSoup(response.text, "html.parser")

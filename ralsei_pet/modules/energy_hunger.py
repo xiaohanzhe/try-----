@@ -24,10 +24,15 @@ class EnergyHungerSystem:
         
         # 上次更新时间
         self.last_update_time = time.time()
-        
+
         # 状态
         self.is_resting = False
         self.is_eating = False
+
+        # 阈值跨越跟踪：只在状态档位发生变化时才弹对话，避免每个 tick 重复刷屏
+        # 档位: 'critical' / 'low' / 'normal' / 'high'
+        self._prev_energy_tier = None
+        self._prev_hunger_tier = None
         
     def update_stats(self):
         # 更新精力和饥饿度
@@ -58,39 +63,72 @@ class EnergyHungerSystem:
         # 检查状态变化并触发相应事件
         self.check_status_changes()
         
-    def check_status_changes(self):
-        # 检查精力状态
+    def _energy_tier(self):
         if self.energy < self.critical_energy_threshold:
-            # 精力严重不足
-            self.parent.dialogue_ui.add_dialogue("ralsei", "呜... 我真的好累好累... 几乎走不动了...", "sad")
-            self.parent.dialogue_ui.show_dialogue()
-            self.parent.current_animation = "idle"
-            # 自动进入休息状态
-            self.is_resting = True
+            return 'critical'
         elif self.energy < self.low_energy_threshold:
-            # 精力不足
-            self.parent.dialogue_ui.add_dialogue("ralsei", "我有点累了... 能不能休息一下？", "sad")
-            self.parent.dialogue_ui.show_dialogue()
-        elif self.energy > 80 and self.is_resting:
-            # 精力充足，结束休息
-            self.parent.dialogue_ui.add_dialogue("ralsei", "哇！我感觉好多了！谢谢你让我休息！", "happy")
-            self.parent.dialogue_ui.show_dialogue()
-            self.is_resting = False
-        
-        # 检查饥饿状态
+            return 'low'
+        elif self.energy > 80:
+            return 'high'
+        return 'normal'
+
+    def _hunger_tier(self):
         if self.hunger < self.critical_hunger_threshold:
-            # 饥饿严重
-            self.parent.dialogue_ui.add_dialogue("ralsei", "肚子好饿好饿... 我快饿死了...", "sad")
-            self.parent.dialogue_ui.show_dialogue()
+            return 'critical'
         elif self.hunger < self.low_hunger_threshold:
-            # 有点饿
-            self.parent.dialogue_ui.add_dialogue("ralsei", "嗯... 我有点饿了... 有没有什么吃的？", "sad")
-            self.parent.dialogue_ui.show_dialogue()
-        elif self.hunger > 80 and self.is_eating:
-            # 饥饿度充足，结束进食
-            self.parent.dialogue_ui.add_dialogue("ralsei", "好吃！我已经吃饱了！谢谢你的食物！", "happy")
-            self.parent.dialogue_ui.show_dialogue()
-            self.is_eating = False
+            return 'low'
+        elif self.hunger > 80:
+            return 'high'
+        return 'normal'
+
+    def check_status_changes(self):
+        # 只在档位发生跨越时弹一次对话，避免每个 tick 重复刷屏
+        energy_tier = self._energy_tier()
+        if energy_tier != self._prev_energy_tier:
+            if energy_tier == 'critical':
+                self.parent.dialogue_ui.add_dialogue("ralsei", "呜... 我真的好累好累... 几乎走不动了...", "sad")
+                self.parent.dialogue_ui.show_dialogue()
+                # 修复：原代码直接 self.parent.current_animation="idle"，绕过
+                # change_animation 的冷却/优先级/施法(spell)/游戏硬拦截——若恰好处于
+                # spell casting 或躲猫猫关键阶段会打断流程。改走受保护接口，
+                # 被拦截时保持原动画不强行打断。
+                try:
+                    _spell_stage = getattr(self.parent, '_spell_stage', None)
+                    _playing = getattr(self.parent, 'game_state', {}).get('is_playing', False)
+                    if _spell_stage is None and not _playing:
+                        self.parent.change_animation("idle", force=False)
+                    # spell/游戏中：只记休息意图，不切动画（由主状态机自然处理）
+                except Exception:
+                    pass
+                # 自动进入休息状态
+                self.is_resting = True
+            elif energy_tier == 'low':
+                self.parent.dialogue_ui.add_dialogue("ralsei", "我有点累了... 能不能休息一下？", "sad")
+                self.parent.dialogue_ui.show_dialogue()
+            elif energy_tier == 'high' and self.is_resting:
+                # 精力充足，结束休息
+                self.parent.dialogue_ui.add_dialogue("ralsei", "哇！我感觉好多了！谢谢你让我休息！", "happy")
+                self.parent.dialogue_ui.show_dialogue()
+                self.is_resting = False
+            self._prev_energy_tier = energy_tier
+
+        # 检查饥饿状态
+        hunger_tier = self._hunger_tier()
+        if hunger_tier != self._prev_hunger_tier:
+            if hunger_tier == 'critical':
+                # 饥饿严重
+                self.parent.dialogue_ui.add_dialogue("ralsei", "肚子好饿好饿... 我快饿死了...", "sad")
+                self.parent.dialogue_ui.show_dialogue()
+            elif hunger_tier == 'low':
+                # 有点饿
+                self.parent.dialogue_ui.add_dialogue("ralsei", "嗯... 我有点饿了... 有没有什么吃的？", "sad")
+                self.parent.dialogue_ui.show_dialogue()
+            elif hunger_tier == 'high' and self.is_eating:
+                # 饥饿度充足，结束进食
+                self.parent.dialogue_ui.add_dialogue("ralsei", "好吃！我已经吃饱了！谢谢你的食物！", "happy")
+                self.parent.dialogue_ui.show_dialogue()
+                self.is_eating = False
+            self._prev_hunger_tier = hunger_tier
     
     def rest(self):
         # 开始休息
@@ -98,7 +136,12 @@ class EnergyHungerSystem:
             self.is_resting = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "我要休息一下啦... 呼...", "normal")
             self.parent.dialogue_ui.show_dialogue()
-            self.parent.current_animation = "idle"
+            # 修复：不直接改 current_animation（绕过 change_animation 会破坏动画状态机），
+            # 休息时停止移动，由主状态机自然切到 idle。
+            try:
+                self.parent.is_moving = False
+            except Exception:
+                pass
     
     def eat(self):
         # 开始进食
@@ -106,7 +149,11 @@ class EnergyHungerSystem:
             self.is_eating = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "哇！有好吃的！我开动啦！", "happy")
             self.parent.dialogue_ui.show_dialogue()
-            self.parent.current_animation = "idle"
+            # 修复：同上，不直接改 current_animation。
+            try:
+                self.parent.is_moving = False
+            except Exception:
+                pass
         
     def set_resting(self, resting):
         # 设置休息状态

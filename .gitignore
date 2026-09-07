@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 运行时产物 / 日志
+*.log
+*.err.log
+debug.log
+output.log
+run*.log
+smoke_test*.log
+startup_test.log
+tmp_diag.log
+diag*.log
+animation_history.json
+coordinates.json
+*.png.txt
+
+# 配置备份与损坏副本
+config.json.backup.*
+config.json.corrupt.*
+*.bak
+*.backup*
+*.orig
+
+# 诊断截图 / 帧产物
+diag_frames/
+diag_frames2/
+screenshot*.png
+
+# 系统
+desktop.ini
+Thumbs.db
+.DS_Store

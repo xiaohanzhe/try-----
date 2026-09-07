@@ -31,4 +31,9 @@ except ImportError as e:
 # 尝试导入QtWidgets
 try:
     from PyQt5 import QtWidgets
-    print("
+    print("✓ 成功导入QtWidgets")
+except ImportError as e:
+    print("✗ 导入QtWidgets失败:", e)
+    sys.exit(1)
+
+print("所有PyQt5模块导入成功！")
