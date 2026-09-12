@@ -1002,7 +1002,10 @@ class DialogueSystem:
                 "有什么特定的关键词吗？",
             ])
             self.context["last_topic"] = "search"
-        elif "帮助" in user_input_lower or "怎么" in user_input_lower or "如何" in user_input_lower:
+        elif "帮助" in user_input_lower or any(w in user_input_lower for w in
+                ["怎么办", "怎么做", "怎么用", "怎么弄", "如何"]):
+            # 修复：与 _detect_intent 相同的过宽问题——'怎么' 会让
+            # "怎么样/怎么啦" 等口语被误判为求助，答非所问。
             response = random.choice([
                 "我很乐意帮你！你想了解什么？",
                 "让我想想... 或许我可以帮你！",
@@ -1200,39 +1203,37 @@ class DialogueSystem:
         else:
             # 更智能的随机回复选择
             # 根据对话历史选择合适的回复类型
-            if len(self.dialogue_history) > 0:
-                # 如果上一条是用户的问题，选择问题类型的回复
-                last_speaker, last_message = self.dialogue_history[-1]
-                if last_speaker == "user" and ("？" in last_message or "?" in last_message):
-                    response = random.choice(self.response_templates["question"])
-                else:
-                    # 根据Ralsei的性格随机选择回复
-                    categories = list(self.response_templates.keys())
-                    # 根据性格权重调整选择概率
-                    category_weights = {
-                        "happy": 2,
-                        "caring": 2,
-                        "helpful": 2,
-                        "supportive": 1.5,
-                        "thoughtful": 1.5,
-                        "empathetic": 1.5,
-                        "curious": 1,
-                        "playful": 1,
-                        "knowledgeable": 1,
-                        "shy": 1,
-                        "question": 1,
-                        "excited": 0.8,
-                        "sad": 0.5,
-                    }
-                    # 根据权重随机选择
-                    weighted_categories = []
-                    for category, weight in category_weights.items():
-                        weighted_categories.extend([category] * int(weight * 10))
-                    category = random.choice(weighted_categories)
-                    response = random.choice(self.response_templates[category])
+            # 修复：dialogue_history 每次追加顺序固定为 (user, ralsei)，
+            # [-1] 恒为 Ralsei 自己的回复 → "上一条是用户的问题"分支永远
+            # 不可达，用户问什么都不会得到问题类回复。直接判断当前输入
+            # 是否带问号（语义正确且不受历史结构影响）。
+            if "？" in user_input or "?" in user_input:
+                response = random.choice(self.response_templates["question"])
             else:
-                # 第一次对话，选择问候或好奇的回复
-                response = random.choice(self.greetings)
+                # 根据Ralsei的性格随机选择回复
+                categories = list(self.response_templates.keys())
+                # 根据性格权重调整选择概率
+                category_weights = {
+                    "happy": 2,
+                    "caring": 2,
+                    "helpful": 2,
+                    "supportive": 1.5,
+                    "thoughtful": 1.5,
+                    "empathetic": 1.5,
+                    "curious": 1,
+                    "playful": 1,
+                    "knowledgeable": 1,
+                    "shy": 1,
+                    "question": 1,
+                    "excited": 0.8,
+                    "sad": 0.5,
+                }
+                # 根据权重随机选择
+                weighted_categories = []
+                for category, weight in category_weights.items():
+                    weighted_categories.extend([category] * int(weight * 10))
+                category = random.choice(weighted_categories)
+                response = random.choice(self.response_templates[category])
         
         # 添加到对话历史，限制历史长度
         self.dialogue_history.append(("user", user_input))
@@ -1358,7 +1359,10 @@ class DialogueSystem:
             return "gratitude"
         elif any(word in user_input_lower for word in ['再见', 'bye', '拜拜']):
             return "farewell"
-        elif any(word in user_input_lower for word in ['帮助', '怎么', '如何']):
+        elif any(word in user_input_lower for word in ['帮助', '怎么办', '怎么做', '怎么用', '怎么弄', '如何']):
+            # 修复：原关键词 '怎么' 太宽泛，"怎么样/怎么啦/怎么不睡"等口语
+            # 全被误判为求助 → 用户问"你今天过得怎么样？"会得到
+            # "我很乐意伸出援手！" 这类答非所问的回复。收敛为明确的求助表达。
             return "help_request"
         elif any(word in user_input_lower for word in ['开心', '快乐', '高兴']):
             return "positive_emotion"
