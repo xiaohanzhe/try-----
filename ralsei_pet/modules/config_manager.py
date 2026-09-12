@@ -66,7 +66,7 @@ class ConfigManager:
             },
             "animation": {
                 "fps": 30,
-                "frame_delay": 33
+                "frame_delay": 32
             },
             "movement": {
                 "speed": 5.0,

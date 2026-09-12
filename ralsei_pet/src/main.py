@@ -6747,13 +6747,9 @@ class RalseiPet(QMainWindow):
                         self.jump_duration = 0.5
                 elif self.current_direction == "up":
                     new_animation = "surprised_behind"
-                    # 确保持续1秒
-                    if not hasattr(self, 'surprised_start_time') or self.surprised_start_time is None:
-                        self.surprised_start_time = current_time
-                    if current_time - self.surprised_start_time >= 1.0:
-                        self.is_surprised = False
-                        self.surprised_start_time = None
-                        self.surprised_jump = False
+                    # 修复：此前 up 方向用 surprised_start_time 1秒清除、down 方向只能靠
+                    # 函数末尾 surprised_timer 2秒清除，两套逻辑导致上下方向惊讶持续时间不一致。
+                    # 统一由函数末尾的 surprised_timer（2秒）清除，此处只负责选动画。
             
             # 检查是否触发被惊吓到的动作
             if hasattr(self, 'is_shocked') and self.is_shocked:
@@ -6784,8 +6780,9 @@ class RalseiPet(QMainWindow):
                 new_animation = self.current_animation
             else:
                 # 静止状态，根据静止时间决定使用idle还是待机动画
-                self.idle_timer += (current_time - self._last_animation_time)
-                
+                # 修复：idle_timer 此前在 update_movement（30ms timer）和本函数（33ms timer）
+                # 中被双重累加，导致休息时间实际只有配置的一半、宠物过早开始移动。
+                # idle_timer 统一由 update_movement 维护，本函数只读取不写入。
                 # 检查是否满足待机不动时的5帧动作使用条件：静止时间≥3分钟
                 if self.idle_timer >= 180.0:  # 3分钟 = 180秒
                     # 使用待机动画
@@ -8049,6 +8046,9 @@ class RalseiPet(QMainWindow):
             anim = self.current_animation
             frames = self.sprite_loader.sprites.get(anim, [])
             cur_f = self.current_frame
+            # 记录 casting 开始时间（用于时间超时 fallback）
+            if not hasattr(self, '_spell_cast_start_time') or self._spell_cast_start_time is None:
+                self._spell_cast_start_time = current_time
             if (anim in ('spell', 'spell_left')) and len(frames) >= 2:
                 # 看到了真实帧：累积 _spell_frames_seen（同一帧重复见不算）
                 if getattr(self, '_spell_seen_frame', -1) != cur_f:
@@ -8057,9 +8057,11 @@ class RalseiPet(QMainWindow):
             # 心跳 log 4 次（防止完全不可见）
             frames_seen = getattr(self, '_spell_frames_seen', 0)
             cond_ideal = (frames_seen >= expected) and (anim in ('spell', 'spell_left')) and (len(frames) >= 2)
-            cond_timeout_fallback = False
-            if not cond_ideal and frames_seen >= expected * 2:
-                cond_timeout_fallback = True
+            # 修复：此前 timeout fallback 仅依赖 frames_seen>=22，若 spell 动画帧数<2
+            # （frames_seen 永远为 0）则永久卡住。新增：帧数不足直接完成 + 5秒时间超时。
+            cond_frames_insufficient = (anim in ('spell', 'spell_left')) and (len(frames) < 2)
+            cond_time_fallback = (current_time - getattr(self, '_spell_cast_start_time', current_time)) > 5.0
+            cond_timeout_fallback = (not cond_ideal) and (frames_seen >= expected * 2 or cond_time_fallback)
             if cond_ideal or cond_timeout_fallback:
                 cb = self._spell_finish_cb
                 path = self._spell_target_path
@@ -8074,6 +8076,7 @@ class RalseiPet(QMainWindow):
                 self._spell_target_screen_pos = None
                 self._spell_target_direction = None
                 self._spell_cast_start_frame = None
+                self._spell_cast_start_time = None
                 self._spell_finish_cb = None
                 self._spell_touched_flag = False
                 self._spell_seen_frame = -1
