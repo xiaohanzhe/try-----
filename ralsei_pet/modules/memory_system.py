@@ -74,7 +74,8 @@ class MemorySystem:
         """获取最近的记忆"""
         if memory_type:
             # 过滤特定类型的记忆
-            filtered_memory = [m for m in self.short_term_memory if m['type'] == memory_type]
+            filtered_memory = [m for m in self.short_term_memory
+                               if isinstance(m, dict) and m.get('type') == memory_type]
         else:
             filtered_memory = self.short_term_memory
         
@@ -142,18 +143,31 @@ class MemorySystem:
         """获取与特定记忆相关的联想记忆"""
         memories = self.short_term_memory if memory_type == 'short_term' else self.long_term_memory['interaction_history']
         
-        # 找到目标记忆
+        # 修复：add_memory 从不写入 'id' 字段，原实现按 id 匹配恒失败 → 恒返回 []。
+        # 改为：先按 id 精确匹配；找不到时退化为按 content 文本匹配（调用方可传
+        # 记忆内容片段），保证联想检索在现有数据结构下真正可用。
         target_memory = None
         for memory in memories:
-            if 'id' in memory and memory['id'] == memory_id:
+            if not isinstance(memory, dict):
+                continue
+            if memory.get('id') == memory_id:
                 target_memory = memory
                 break
-        
+        if target_memory is None:
+            for memory in memories:
+                if not isinstance(memory, dict):
+                    continue
+                raw = memory.get('content', '')
+                text = raw.lower() if isinstance(raw, str) else str(raw)
+                if memory_id.lower() in text:
+                    target_memory = memory
+                    break
         if not target_memory:
             return []
         
         # 提取关键词
-        content = target_memory['content'].lower()
+        raw_content = target_memory.get('content', '')
+        content = raw_content.lower() if isinstance(raw_content, str) else str(raw_content)
         keywords = ['游戏', '音乐', '电影', '书籍', '食物', '天气', '工作', '学习', '蛋糕', '甜点', 'deltarune', 'undertale']
         extracted_keywords = []
         for keyword in keywords:
@@ -232,9 +246,15 @@ class MemorySystem:
             if os.path.exists(self.memory_file):
                 with open(self.memory_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
+                    if not isinstance(data, dict):
+                        raise ValueError("memory root is not dict")
                     self.long_term_memory = data.get('long_term_memory', self.long_term_memory)
-                    self.experience = data.get('experience', self.experience)
-                    self.level = data.get('level', self.level)
+                    exp = data.get('experience', self.experience)
+                    lv = data.get('level', self.level)
+                    # 修复：手改/损坏的记忆文件可能把数值写成字符串，后续
+                    # add_experience/check_level_up 做算术会 TypeError。
+                    self.experience = exp if isinstance(exp, (int, float)) else 0
+                    self.level = lv if isinstance(lv, (int, float)) and lv >= 1 else 1
                     _log.debug("成功加载记忆: %s", self.memory_file)
                     # 修复：旧版本记忆文件可能缺 skill_levels/behavior_patterns 等键，
                     # 后续 get_knowledge_summary / integrate_knowledge 直接索引会 KeyError。
@@ -314,10 +334,12 @@ class MemorySystem:
     
     def update(self):
         """定期更新记忆"""
-        # 整理和优化记忆
-        self._organize_memories()
-        # 提取重要记忆到长期记忆
+        # 修复：原实现先 _organize_memories 后 _extract_important_memories，
+        # 而 _organize_memories 会删除"出现次数 <2"的记忆类型——level_up /
+        # achievement_unlocked / evolution 这类只发生一次的重要记忆每次都被
+        # 先删掉，导致长期记忆恒空。顺序调整为：先提取重要记忆，再整理。
         self._extract_important_memories()
+        self._organize_memories()
         # 学习用户偏好
         self._learn_user_preferences()
     
@@ -332,8 +354,13 @@ class MemorySystem:
             memory_types[mem_type] = memory_types.get(mem_type, 0) + 1
 
         # 移除频率过低的记忆类型（原地修改，避免引用切换）
+        # 修复：与 update() 顺序修复配套的兜底——重要类型即使只出现 1 次也保留，
+        # 防止"先提取"遗漏时仍被整理逻辑误删。
+        _protected_types = {'user_preferences', 'important_dates', 'completed_task',
+                            'level_up', 'evolution', 'achievement_unlocked'}
         for mem_type, count in list(memory_types.items()):
-            if count < 2:  # 如果某类记忆出现次数少于2次，视为不重要
+            if count < 2 and mem_type not in _protected_types:
+                # 如果某类记忆出现次数少于2次，视为不重要
                 self.short_term_memory[:] = [m for m in self.short_term_memory
                                              if not (isinstance(m, dict) and m.get('type') == mem_type)]
         
@@ -369,8 +396,11 @@ class MemorySystem:
         
         # 从多种记忆类型中学习
         for memory in self.short_term_memory:
-            if memory['type'] in ['user_interaction', 'dialogue', 'search_query', 'file_created', 'file_opened']:
-                content = memory['content'].lower()
+            if not isinstance(memory, dict):
+                continue
+            if memory.get('type') in ['user_interaction', 'dialogue', 'search_query', 'file_created', 'file_opened']:
+                raw_content = memory.get('content', '')
+                content = raw_content.lower() if isinstance(raw_content, str) else str(raw_content)
                 for keyword in keywords:
                     if keyword in content:
                         topic_counts[keyword] = topic_counts.get(keyword, 0) + 1
@@ -397,27 +427,33 @@ class MemorySystem:
     
     def remember_user_behavior(self, behavior_type, duration=0):
         """记录用户行为模式"""
-        memory = {
-            'timestamp': time.time(),
-            'type': 'user_behavior',
-            'content': {
-                'behavior_type': behavior_type,
-                'duration': duration
-            }
-        }
-        self.add_memory('user_behavior', memory, is_short_term=True)
+        # 修复：原实现构造好含 content 的记忆后，又整体作为 content 传给
+        # add_memory()（add_memory 会再包一层 {timestamp,type,content}），
+        # 导致 get_user_behavior_patterns 里 memory['content']['behavior_type']
+        # 必然 KeyError。这里直接传 content 本体，由 add_memory 统一包装。
+        self.add_memory('user_behavior', {
+            'behavior_type': behavior_type,
+            'duration': duration
+        }, is_short_term=True)
     
     def get_user_behavior_patterns(self):
         """获取用户行为模式"""
         behavior_patterns = {}
         for memory in self.short_term_memory + self.long_term_memory['interaction_history']:
-            if memory['type'] == 'user_behavior':
-                behavior_type = memory['content']['behavior_type']
-                duration = memory['content']['duration']
-                behavior_patterns[behavior_type] = {
-                    'count': behavior_patterns.get(behavior_type, {}).get('count', 0) + 1,
-                    'total_duration': behavior_patterns.get(behavior_type, {}).get('total_duration', 0) + duration
-                }
+            if not isinstance(memory, dict) or memory.get('type') != 'user_behavior':
+                continue
+            content = memory.get('content')
+            if not isinstance(content, dict):
+                continue
+            behavior_type = content.get('behavior_type', 'unknown')
+            duration = content.get('duration', 0)
+            try:
+                duration = float(duration)
+            except (TypeError, ValueError):
+                duration = 0
+            entry = behavior_patterns.setdefault(behavior_type, {'count': 0, 'total_duration': 0.0})
+            entry['count'] += 1
+            entry['total_duration'] += duration
         return behavior_patterns
     
     def learn_new_skill(self):
