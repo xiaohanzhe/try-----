@@ -27,6 +27,7 @@ import random
 import re
 import threading
 import time
+from collections import deque
 
 try:
     from logger_utils import get_logger
@@ -84,7 +85,18 @@ _ACTION_SYSTEM_PROMPT = (
     "否则不要频繁睡觉；也不要总是说话。根据当前状态选一个最符合当下心情的动作。"
     "另外：如果上次动作是 idle/rest/wait 这类发呆，这次请尽量换一个有行动感的"
     "动作（比如 wander 出去走走，或 dance/sing/wave 这样的小表演），"
-    "让桌面宠物看起来有活力、像个活着的小家伙。"
+    "让桌面宠物看起来有活力、像个活着的小家伙。\n\n"
+    "【时段感】状态里会给出现在是什么时段，请顺着时段选动作：\n"
+    "- 清晨/上午：精神好，可以 wander 走走或做个小表演，say 里道声早安。\n"
+    "- 中午：可以 say 关心主人有没有好好吃饭。\n"
+    "- 下午：散步或小表演都合适。\n"
+    "- 傍晚/晚上：适合安静的活动（tea、look_up、idle），say 可以关心主人累不累。\n"
+    "- 深夜：主人还在用电脑就安静陪着，别再提议跳舞唱歌；"
+    "自己很累（精力<25）时选 sleep。\n\n"
+    "【防重复】状态里会给出最近几次动作。如果最近已经做过某个动作，"
+    "尽量换一个不同的；不要连续三次做同一个动作，也不要连续说两次话。\n\n"
+    "【say 的要求】要说就说有内容、贴合当下的话（一句关心、分享、或邀请），"
+    "不要空泛客套（如“你好呀”）；没有想说的就把 say 留空，不要硬凑。"
 )
 
 
@@ -151,6 +163,8 @@ class AiActionDriver:
         self._last_say_at = 0.0
         self._last_action = "无"
         self._last_action_at = 0.0
+        # 最近几次已执行的动作（防重复：让模型知道别老做同一个）
+        self._recent_actions = deque(maxlen=6)
 
     # ------------------------------------------------------------ 主入口
     def tick(self, now: float):
@@ -159,6 +173,10 @@ class AiActionDriver:
             if not getattr(self._owner, "api_enabled", False):
                 return
             if self._busy:
+                # 防卡死：请求挂了太久（超时+重试可能拖到 2 分钟），
+                # 强制复位让规则行为继续跑，迟到回复由 _on_reply 再排期
+                if now - getattr(self, "_fire_started_at", 0.0) > 90.0:
+                    self._busy = False
                 return
             if now < self._next_at:
                 return
@@ -185,6 +203,7 @@ class AiActionDriver:
     # ------------------------------------------------------------ 发起请求
     def _fire(self, now: float):
         self._busy = True
+        self._fire_started_at = now
         owner = self._owner
         cli = owner.api_client
         prompt = self._build_prompt()
@@ -255,6 +274,8 @@ class AiActionDriver:
         now = time.time()
         self._last_action = action or "无"
         self._last_action_at = now
+        if action:
+            self._recent_actions.append(action)
 
         if not action:
             # 没给动作但有话想说
@@ -388,8 +409,30 @@ class AiActionDriver:
             if self._last_action_at else -1
         last_desc = (f"{self._last_action}（约{seconds_since_last}秒前）"
                      if seconds_since_last >= 0 else "还没有")
+        # 时段描述（训练调优：让行为决策带"时段感"，晚上安静、深夜想睡）
+        try:
+            _h = time.localtime().tm_hour
+            if 5 <= _h < 8:
+                tod = "清晨"
+            elif 8 <= _h < 11:
+                tod = "上午"
+            elif 11 <= _h < 13:
+                tod = "中午"
+            elif 13 <= _h < 17:
+                tod = "下午"
+            elif 17 <= _h < 19:
+                tod = "傍晚"
+            elif 19 <= _h < 23:
+                tod = "晚上"
+            else:
+                tod = "深夜"
+        except Exception:
+            tod = ""
+        # 最近动作序列（防重复）
+        recent_desc = "、".join(self._recent_actions) if self._recent_actions else "还没有"
         lines = [
             "当前状态：",
+            f"- 时段：{tod}" if tod else "- 时段：未知",
             f"- 心情：{emotion_str}",
             f"- 精力：{energy}/100，饥饿：{hunger}/100",
             f"- 位置：屏幕({px},{py})",
@@ -397,6 +440,7 @@ class AiActionDriver:
             f"- 当前动画：{getattr(o, 'current_animation', 'idle')}",
             f"- 正在移动：{'是' if getattr(o, 'is_moving', False) else '否'}",
             f"- 上次动作：{last_desc}",
+            f"- 最近动作序列：{recent_desc}",
             "",
             "请只输出一个 JSON 动作对象（见格式要求）。",
         ]

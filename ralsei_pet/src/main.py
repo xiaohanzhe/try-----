@@ -97,8 +97,14 @@ from modules.ai_driver import AiActionDriver
 from modules.command_manager import CommandManager
 from modules.autonomous_agent import AutonomousAgent
 from modules.sound_manager import SoundManager
-# 暂时注释掉search_summarizer的导入，因为缺少bs4依赖
-# from modules.search_summarizer import SearchSummarizer
+# 联网搜索摘要：依赖 beautifulsoup4。改为"可选导入"而不是整段注释掉——
+# 原写法让整个模块变成永远不可达的死代码（需求"能上网"缺一环），
+# 且一旦有人取消注释而环境没有 bs4，程序会在 import 期直接崩溃。
+try:
+    from modules.search_summarizer import SearchSummarizer
+except Exception as _e:  # ImportError / 依赖缺失 / 模块内异常
+    SearchSummarizer = None
+    _log.warning("联网搜索摘要模块不可用（缺少 beautifulsoup4？已降级）: %s", _e)
 
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
@@ -276,7 +282,10 @@ class RalseiPet(QMainWindow):
         # 主动拖动鼠标的定时器
         self.mouse_drag_timer = QTimer(self)
         self.mouse_drag_timer.timeout.connect(self.update_mouse_drag)
-        self.mouse_drag_timer.setSingleShot(True)
+        # 修复：原来是 setSingleShot(True) + start(drag_duration*1000)，
+        # 即整段拖动只回调一次，且回调时 elapsed >= drag_duration 立刻走"结束"分支，
+        # 结果光标从头到尾一步都没移动。改为周期定时器，由 start_mouse_drag 按帧间隔启动。
+        self.mouse_drag_timer.setSingleShot(False)
         
     def load_resources(self):
         # 加载精灵资源
@@ -299,8 +308,17 @@ class RalseiPet(QMainWindow):
         self.dialogue_ui = DialogueUI(self)
         self.weather_system = WeatherSystem()
         self.pet_ai = PetAI(self)
-        # 暂时注释掉SearchSummarizer的初始化，因为缺少bs4依赖
-        # self.search_summarizer = SearchSummarizer()
+        # 联网搜索摘要（可用时初始化；不可用时置 None，调用方需判空）
+        # 注意：summarize_search_results / get_brief_summary 内部是同步网络请求，
+        # 若要在交互里使用，必须放到后台线程（参考 chat_with_ai 的线程+信号模式）。
+        if SearchSummarizer is not None:
+            try:
+                self.search_summarizer = SearchSummarizer()
+            except Exception as e:
+                _log.warning(f"联网搜索摘要初始化失败: {e}")
+                self.search_summarizer = None
+        else:
+            self.search_summarizer = None
         self.energy_hunger = EnergyHungerSystem(self)
         self.emotion_system = EmotionSystem(self)
         self.memory_system = MemorySystem(self)
@@ -391,7 +409,7 @@ class RalseiPet(QMainWindow):
         # 初始化动画定时器
         self.animation_timer = QTimer(self)
         self.animation_timer.timeout.connect(self.update_animation)
-        self.animation_timer.start(167)  # 6FPS，降低帧率
+        self.animation_timer.start(167)  # 初始占位，下方随即按配置重启（30FPS 对齐游戏）
         
         self.current_animation = "idle"
         self.next_animation = None  # 下一个要播放的动画
@@ -404,8 +422,8 @@ class RalseiPet(QMainWindow):
         self.animation_change_cooldown = 0.8  # 0.8秒冷却时间，防止频繁切换导致的抽搐
         self.last_animation_change = time.time() - self.animation_change_cooldown  # 初始化为冷却时间之前，确保第一次切换也受到冷却时间限制
         
-        # 从配置中获取动画设置
-        self.animation_fps = self.config_manager.get("animation.fps", 6)  # 降低默认帧率到6FPS
+        # 从配置中获取动画设置（默认 30FPS，与《Deltarune》游戏帧率一致）
+        self.animation_fps = self.config_manager.get("animation.fps", 30)
         self.animation_frame_delay = self.config_manager.get("animation.frame_delay", int(1000 / self.animation_fps))  # 毫秒，转换为整数
         
         # 修复：动画定时器原来固定 167ms（≈6FPS），导致配置 fps>6 完全无效
@@ -1670,8 +1688,8 @@ class RalseiPet(QMainWindow):
         # 播放动画
         self.play_animation_once("act")
         
-        # 启动拖动定时器
-        self.mouse_drag_timer.start(int(self.drag_duration * 1000))
+        # 启动拖动定时器：按 ~60FPS 推进，直到 update_mouse_drag 判定时间到后自行停止
+        self.mouse_drag_timer.start(16)
     
     def update_mouse_drag(self):
         # 更新鼠标拖动位置
@@ -1706,13 +1724,26 @@ class RalseiPet(QMainWindow):
         current_y = int(self.drag_start_pos.y() + dy * eased_progress)
         
         # 移动鼠标
+        # 修复：本函数作用域内从未 import win32api（只有 2868/7597 行各自 import 过），
+        # 这里必然抛 NameError 并被下方 except 静默吞掉 → "帮你拖动鼠标"功能从未真正生效。
+        # 现在补上导入，并用 QCursor 作为 win32 不可用时的兜底。
         try:
+            import win32api
             win32api.SetCursorPos((current_x, current_y))
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
+        except Exception as e:
+            _log.debug("win32api 移动光标失败，改用 QCursor: %s", e)
+            try:
+                QCursor.setPos(int(current_x), int(current_y))
+            except Exception as e2:
+                _log.debug("QCursor 移动光标也失败: %s", e2)
     
     def stop_mouse_drag(self):
         # 停止拖动鼠标
+        # 修复：改为周期定时器后必须显式停止，否则会以 16ms 空转
+        try:
+            self.mouse_drag_timer.stop()
+        except Exception as e:
+            _log.debug("停止鼠标拖动定时器失败: %s", e)
         self.is_dragging_mouse = False
         self.drag_start_pos = None
         self.drag_target_pos = None
@@ -2459,8 +2490,11 @@ class RalseiPet(QMainWindow):
             # 设置摔倒状态，暂停行走
             self.is_moving = False
         elif reason == "fall_from_window":
-            # 从窗口掉落
-            self.change_animation("fall", force=True)
+            # 从窗口掉落 —— 这是用户（关窗/移窗）造成的，按"建楼"要求用生气的那组动作
+            if "fall_mad" in self.sprite_loader.sprites:
+                self.change_animation("fall_mad", force=True)
+            else:
+                self.change_animation("fall", force=True)
             # 确保掉落动画持续时间至少5秒，符合要求文件第36行的要求
             self.max_fall_duration = 5.0
             # 显示掉落消息
@@ -6437,6 +6471,8 @@ class RalseiPet(QMainWindow):
           由调用方回退到内置规则对话。
         - 这是"培养的本地 Ralsei"（Ollama / OpenAI 兼容端点）的主对话端口：
           配置对话框里填 base_url + model（如 http://localhost:11434 / ralsei）即可。
+        - 训练调优：把「角色设定 + 当前状态上下文 + 最近对话历史」一起交给模型，
+          让 Ralsei 的对话连贯、贴角色、能感知当下（时间/天气/心情/精力/记忆）。
         """
         if not self.api_enabled:
             try:
@@ -6446,22 +6482,111 @@ class RalseiPet(QMainWindow):
             return
         import threading
 
+        # —— 主线程先准备好上下文与历史（避免工作线程跨线程读 UI/子系统状态）——
+        user_msg = self._build_ai_context() + text
+        history = []
+        try:
+            history = self.dialogue_ui.get_ai_history(limit=6) \
+                if getattr(self, 'dialogue_ui', None) else []
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        # 角色系统提示词：与 Ollama ralsei 模型内置设定互补，突出"简短自然"
+        system = (
+            "你正在扮演《Deltarune》中的 Ralsei——黑暗世界的王子：温柔、善良、"
+            "害羞、体贴的和平主义者。请始终沉浸在角色中，绝不提及自己是 AI，"
+            "也不要跳出角色。\n\n"
+            "【语气与表达】\n"
+            "- 用简体中文回复，每次 1~3 句，像日常聊天一样简短自然；"
+            "不要长篇大论，不要列条目。\n"
+            "- 说话柔和礼貌，可带“呀/呢/吧/哦”等语气词；偶尔用“……”表示"
+            "犹豫或害羞，但不要每句都堆省略号。\n"
+            "- 被夸奖会害羞脸红、谦虚否认；关心主人时会问“你还好吗”“要不要"
+            "休息一下”。\n\n"
+            "【对话习惯】\n"
+            "- 先接住对方说的话（回应内容或情绪），再自然补一句自己的感受或"
+            "关心；不要答非所问。\n"
+            "- 用户消息前可能带【此刻】方块，那是你的环境信息（时间/天气/心情/"
+            "精力/记忆），回应时可以自然融入，但不要逐条复述。\n"
+            "- 不使用攻击性语言，不说教，不故作高深。"
+        )
+
         def _worker():
             try:
                 cli = self.api_client
                 if cli is None or not getattr(cli, 'enabled', False):
                     self._api_result.emit(None, on_reply)
                     return
-                system = ("你是《Deltarune》的Ralsei：温柔、害羞、善良的黑暗王子，"
-                          "说话带省略号和脸红，会用第一人称讲述自己的经历，"
-                          "对朋友很关心。用简体中文回复，简短自然。")
-                reply = cli.chat(text, system_prompt=system)
+                reply = cli.chat(user_msg, system_prompt=system, history=history,
+                                 temperature=0.7, max_tokens=256)
                 self._api_result.emit(reply, on_reply)
             except Exception as e:
                 _log.warning(f"[本地AI] 对话请求异常: {e}")
                 self._api_result.emit(None, on_reply)
 
         threading.Thread(target=_worker, daemon=True).start()
+
+    def _build_ai_context(self) -> str:
+        """构造发给本地 AI 的「此刻状态」上下文块（自然语言，非 JSON）。
+
+        内容：时段、天气、心情、精力/饥饿、记忆到的用户偏好。
+        任何子系统异常都静默降级为省略对应项，绝不让对话链路崩溃。
+        """
+        parts = []
+        try:
+            _h = time.localtime().tm_hour
+            if 5 <= _h < 8:
+                _tod = "清晨"
+            elif 8 <= _h < 11:
+                _tod = "上午"
+            elif 11 <= _h < 13:
+                _tod = "中午"
+            elif 13 <= _h < 17:
+                _tod = "下午"
+            elif 17 <= _h < 19:
+                _tod = "傍晚"
+            elif 19 <= _h < 23:
+                _tod = "晚上"
+            else:
+                _tod = "深夜"
+            parts.append(f"现在是{_tod}")
+        except Exception:
+            pass
+        try:
+            _w = self.weather_system.get_current_weather()
+            if _w:
+                parts.append(f"天气{_w}")
+        except Exception:
+            pass
+        try:
+            _e, _ev = self.emotion_system.get_current_emotion()
+            if _e:
+                parts.append(f"心情{_e}")
+        except Exception:
+            pass
+        try:
+            _energy = self.energy_hunger.get_energy()
+            _hunger = self.energy_hunger.get_hunger()
+            if _energy < 30:
+                parts.append("有点疲惫")
+            if _hunger < 30:
+                parts.append("肚子有点饿")
+        except Exception:
+            pass
+        # 记忆：用户偏好（如果有），让 Ralsei 记住主人喜欢聊什么
+        try:
+            if getattr(self, 'memory_system', None) is not None:
+                _name = self.memory_system.get_user_preference('user_name', '')
+                if _name:
+                    parts.append(f"主人的名字是{_name}")
+                _prefs = self.memory_system.get_user_preferences_summary()
+                _topics = [p[0] for p in _prefs[:2] if p[1] > 0.5]
+                if _topics:
+                    parts.append("记得你最近喜欢聊" + "、".join(_topics))
+        except Exception:
+            pass
+        if not parts:
+            return ""
+        return "【此刻：" + "，".join(parts) + "】\n"
     
     def _on_api_result(self, response, callback):
         """主线程槽：处理工作线程返回的 API 结果（由 _api_result 信号触发）。"""
@@ -6781,8 +6906,30 @@ class RalseiPet(QMainWindow):
                     scale_factor = getattr(self, '_cached_scale_factor', 2.0)
                     
                     # 计算缩放后的目标大小
-                    target_width = int(sprite.width() * scale_factor)
-                    target_height = int(sprite.height() * scale_factor)
+                    # ===== 修复：用「本动画所有帧的最大尺寸」作为固定容器，而不是当前帧尺寸 =====
+                    # 同一个动画内各帧的像素尺寸并不一致（实测 run_right 有 28x33/28x35/
+                    # 29x33/29x34/29x35 五种，act 有十种，dance 三种），而下面只要窗口尺寸
+                    # 与目标不符就会 setGeometry（重建窗口 + 按中心回算位置）。
+                    # 于是播放多帧动画时窗口每帧都在 resize、位置来回微移，表现就是
+                    # Ralsei 跑步/跳舞/施法时"逐帧抽搐、抖动"，同时每帧一次 setGeometry
+                    # 也是不必要的绘制开销。
+                    # sprite_label 已设置为 AlignCenter，所以精灵会在固定容器里居中显示。
+                    _cont_key = getattr(self, '_anim_container_key', None)
+                    if _cont_key != self.current_animation:
+                        _cw, _ch = 1, 1
+                        for _f in self.sprite_loader.sprites.get(self.current_animation, []):
+                            if _f is not None and not _f.isNull():
+                                _cw = max(_cw, _f.width())
+                                _ch = max(_ch, _f.height())
+                        self._anim_container_size = (_cw, _ch)
+                        self._anim_container_key = self.current_animation
+                    _container = getattr(self, '_anim_container_size', None)
+                    if _container:
+                        target_width = int(_container[0] * scale_factor)
+                        target_height = int(_container[1] * scale_factor)
+                    else:
+                        target_width = int(sprite.width() * scale_factor)
+                        target_height = int(sprite.height() * scale_factor)
                     
                     # 优化：只有在窗口大小改变时才调整大小和位置，避免瞬移
                     if self.width() != target_width or self.height() != target_height:
@@ -6907,8 +7054,30 @@ class RalseiPet(QMainWindow):
                     scale_factor = getattr(self, '_cached_scale_factor', 2.0)
                     
                     # 计算缩放后的目标大小
-                    target_width = int(sprite.width() * scale_factor)
-                    target_height = int(sprite.height() * scale_factor)
+                    # ===== 修复：用「本动画所有帧的最大尺寸」作为固定容器，而不是当前帧尺寸 =====
+                    # 同一个动画内各帧的像素尺寸并不一致（实测 run_right 有 28x33/28x35/
+                    # 29x33/29x34/29x35 五种，act 有十种，dance 三种），而下面只要窗口尺寸
+                    # 与目标不符就会 setGeometry（重建窗口 + 按中心回算位置）。
+                    # 于是播放多帧动画时窗口每帧都在 resize、位置来回微移，表现就是
+                    # Ralsei 跑步/跳舞/施法时"逐帧抽搐、抖动"，同时每帧一次 setGeometry
+                    # 也是不必要的绘制开销。
+                    # sprite_label 已设置为 AlignCenter，所以精灵会在固定容器里居中显示。
+                    _cont_key = getattr(self, '_anim_container_key', None)
+                    if _cont_key != self.current_animation:
+                        _cw, _ch = 1, 1
+                        for _f in self.sprite_loader.sprites.get(self.current_animation, []):
+                            if _f is not None and not _f.isNull():
+                                _cw = max(_cw, _f.width())
+                                _ch = max(_ch, _f.height())
+                        self._anim_container_size = (_cw, _ch)
+                        self._anim_container_key = self.current_animation
+                    _container = getattr(self, '_anim_container_size', None)
+                    if _container:
+                        target_width = int(_container[0] * scale_factor)
+                        target_height = int(_container[1] * scale_factor)
+                    else:
+                        target_width = int(sprite.width() * scale_factor)
+                        target_height = int(sprite.height() * scale_factor)
                     
                     # 优化：只有在窗口大小改变时才调整大小和位置，避免瞬移
                     if self.width() != target_width or self.height() != target_height:
@@ -8373,6 +8542,43 @@ class RalseiPet(QMainWindow):
         QTimer.singleShot(500, lambda: self._hide_end_game(user_won=True))
 
 
+def install_crash_guard():
+    """安装全局未捕获异常兜底（必须在 QApplication 创建之前调用）。
+
+    背景：PyQt5 在"槽函数（定时器回调 / 信号处理）里抛出未捕获异常"时会调用
+    qFatal() 直接终止进程（本机实测退出码 0xC0000409），表现就是桌宠毫无提示地
+    消失、日志里连一行错误都没有。而本项目有 10+ 个高频定时器
+    （update_movement 30ms、update_animation 100ms 等），任何一处意外异常
+    都会直接杀掉整个程序。
+
+    这里安装自定义 sys.excepthook（PyQt5 检测到非默认 excepthook 后不会再 qFatal）：
+      1) 完整堆栈写入日志与 logs/crash.log，便于事后定位；
+      2) 进程不再退出，单次异常不至于终结用户一整天的陪伴。
+    """
+    import traceback
+
+    def _hook(exc_type, exc_value, exc_tb):
+        if issubclass(exc_type, KeyboardInterrupt):
+            sys.__excepthook__(exc_type, exc_value, exc_tb)
+            return
+        text = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+        try:
+            _log.error("未捕获异常（已拦截，程序继续运行）:\n%s", text)
+        except Exception:
+            pass
+        try:
+            crash_path = os.path.join(project_root, "logs", "crash.log")
+            os.makedirs(os.path.dirname(crash_path), exist_ok=True)
+            with open(crash_path, "a", encoding="utf-8") as f:
+                f.write("\n===== %s =====\n%s" % (time.strftime("%Y-%m-%d %H:%M:%S"), text))
+        except Exception:
+            pass
+
+    sys.excepthook = _hook
+    _log.debug("全局异常兜底已安装")
+    return _hook
+
+
 def check_single_instance():
     """
     单实例检查 — 确保同时只有一个 Ralsei Pet 在运行。
@@ -8469,6 +8675,9 @@ if __name__ == "__main__":
 
     # 单实例检查（必须在最开始执行）
     check_single_instance()
+
+    # 全局异常兜底：必须在 QApplication 之前安装，否则槽函数里的异常会直接 abort 进程
+    install_crash_guard()
 
     try:
         app = QApplication(sys.argv)

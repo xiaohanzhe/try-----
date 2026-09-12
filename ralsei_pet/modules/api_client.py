@@ -183,12 +183,24 @@ class HTTPLocalAI(LocalAIBase):
                 return max(lo, min(v, hi))
             temperature = _clamp(kwargs.get("temperature", 0.7), 0.0, 2.0, 0.7)
             max_tokens = int(_clamp(kwargs.get("max_tokens", 500), 1, 100000, 500))
+            # 修复：新增 history 参数 —— 调用方可传入最近几轮对话
+            # [(role, content), ...]（role ∈ user/assistant），让模型拥有上下文，
+            # 对话不再"每句都是第一次见面"。角色非法/内容非字符串的条目静默丢弃。
+            history = kwargs.get("history") or []
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+            if isinstance(history, (list, tuple)):
+                for _role, _content in history:
+                    if _role not in ("user", "assistant"):
+                        continue
+                    if not isinstance(_content, str) or not _content.strip():
+                        continue
+                    messages.append({"role": _role, "content": _content})
+            messages.append({"role": "user", "content": prompt})
             payload = {
                 "model": self.model,
-                "messages": [
-                    {"role": "system", "content": system_prompt or "你是Ralsei"},
-                    {"role": "user", "content": prompt},
-                ],
+                "messages": messages,
                 "temperature": temperature,
                 "max_tokens": max_tokens,
                 "stream": False,
@@ -234,18 +246,34 @@ class HTTPLocalAI(LocalAIBase):
         return self._post_json(endpoint, command)
 
     def _post_json(self, url: str, body: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """POST JSON；网络异常/5xx 按 max_retries/retry_delay 重试（4xx 不重试）。"""
         try:
             import requests
-            resp = requests.post(url, json=body, headers=self._auth_headers(),
-                                 timeout=self.timeout)
-            if resp.status_code != 200:
-                _logger.warning("本地 AI HTTP %s: %s", resp.status_code,
-                                resp.text[:200])
-                return None
-            return resp.json()
-        except Exception as e:
-            _logger.info("本地 AI %s 请求失败（忽略）: %s", url, e)
+        except Exception:
             return None
+        max_retries = max(0, int(getattr(self, "max_retries", 0) or 0))
+        retry_delay = max(0.0, float(getattr(self, "retry_delay", 0.0) or 0.0))
+        for attempt in range(max_retries + 1):
+            try:
+                resp = requests.post(url, json=body, headers=self._auth_headers(),
+                                     timeout=self.timeout)
+                if resp.status_code == 200:
+                    return resp.json()
+                if resp.status_code < 500:
+                    # 4xx 是请求本身的问题，重试无意义（如 401/400/404）
+                    _logger.warning("本地 AI HTTP %s: %s", resp.status_code,
+                                    resp.text[:200])
+                    return None
+                # 5xx：服务端临时故障，按配置退避重试
+                _logger.warning("本地 AI HTTP %s（服务端错误，重试 %d/%d）: %s",
+                                resp.status_code, attempt + 1, max_retries + 1,
+                                resp.text[:200])
+            except Exception as e:
+                _logger.info("本地 AI %s 请求失败（重试 %d/%d）: %s", url,
+                             attempt + 1, max_retries + 1, e)
+            if attempt < max_retries and retry_delay > 0:
+                time.sleep(retry_delay)
+        return None
 
 
 # ---------------- 可插拔 provider 注册 ----------------

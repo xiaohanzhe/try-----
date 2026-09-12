@@ -79,6 +79,10 @@ _FACE_MAP = {
     # 微笑
     "normal_smile_little": "face_normal_smile_little",
     "normal_smile": "face_normal_smile_little",
+    # 鼓励（游戏失败等场景的安抚微笑）。
+    # 修复：此前无此键，_resolve_face_name 兜底拼成不存在的 face_encouraging，
+    # 头像渲染成灰色"?"占位图（entertainment_system 游戏失败分支触发）。
+    "encouraging": "face_normal_smile_little",
     # 惊讶
     "surprised": "face_a little surprised",
     "surprised_strong": "face_unexpected and surprise",
@@ -299,6 +303,13 @@ class DialogueUI(QWidget):
         self.typing_index = 0
         self.is_typing = False
 
+        # 本地 AI 对话状态：显式初始化（此前仅靠 getattr 默认值兜底，字段语义不清晰）
+        self._ai_inflight = False   # 上一个本地 AI 请求是否仍在等待回复
+        self._ai_seq = 0            # 请求序号：新消息递增，作废迟到的旧回复
+        # 最近几轮对话历史（供本地 AI 做上下文），只保留真正的对话轮次
+        self._ai_history = []
+        self._ai_history_max = 8
+
         # Deltarune 闪烁光标
         self._cursor_visible = True
         self._cursor_timer = QTimer(self)
@@ -337,7 +348,16 @@ class DialogueUI(QWidget):
     # ------------------------------------------------------------------ face
     def set_face(self, face_type):
         name = _resolve_face_name(face_type)
-        pixmap = self.parent.sprite_loader.get_face(name)
+        loader = self.parent.sprite_loader
+        # 兜底：解析出的素材名若不存在（新增/拼错的表情键、emotion_system 返回
+        # 未覆盖的键），退回 face_normal，避免渲染出灰色"?"占位头像。
+        try:
+            if hasattr(loader, 'has_face') and not loader.has_face(name):
+                _log.debug("表情素材缺失，回退 normal: %r -> %r", face_type, name)
+                name = "face_normal"
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        pixmap = loader.get_face(name)
         if pixmap and not pixmap.isNull():
             self.face_label.setPixmap(
                 pixmap.scaled(78, 78, Qt.KeepAspectRatio, Qt.SmoothTransformation))
@@ -356,37 +376,66 @@ class DialogueUI(QWidget):
                 message = str(message)
             except Exception:
                 message = ""
-        message = _html.escape(message)
+        # 修复：不要把整条消息先 escape 再交给打字机。
+        # 打字机是按字符切片渲染的（_refresh_display 里 typing_text[:idx]），
+        # 对"已转义的整串"切片会在逐字显示过程中闪出 &am / &lt / &quot 之类的实体残片。
+        # 现在保留原文用于逐字显示，只在真正拼进 HTML 的那一刻转义。
+        safe_message = _html.escape(message)
         # 前台若是 AI 思考占位文本，先丢弃它（无论新消息还是真实回复到达），
         # 占位只是"等待"提示，绝不能并入历史或当成正式消息。
         if self.typing_text == self.AI_THINKING_PLACEHOLDER:
             self.typing_text = ""
             self.typing_index = 0
             self.is_typing = False
+        # 记录对话轮次（供本地 AI 上下文用）：占位/空消息不入历史
+        if message.strip():
+            self._push_ai_history(speaker, message)
         if speaker == "ralsei":
             self.set_face(face_type)
             # 先打断前一条打字机（补完剩余内容，非打字时noop安全）
             self.stop_typing()
             # 把上一条 Ralsei 完整并入历史，然后再开新的打字机，防止消息覆盖
             self._commit_previous_ralsei_into_history()
-            self._start_typing(message)
+            self._start_typing(message)   # 传原文，渲染时才转义（见 _refresh_display）
         else:
             # 用户说的话：先打断打字机，再把上一条Ralsei并入历史，然后追加用户消息
             self.stop_typing()
             self._commit_previous_ralsei_into_history()
             self._history_html += (
                 f'<div style="color:#9aa0aa;font-size:10pt;line-height:1.45;'
-                f'margin:2px 0 4px 0;">▸ YOU: {message}</div>')
+                f'margin:2px 0 4px 0;">▸ YOU: {safe_message}</div>')
             self.typing_text = ""   # 前台清空：最新的一条是用户消息
             self._refresh_display()
 
     # -------------------------------------------------------- display helper
 
+    def _push_ai_history(self, speaker, message):
+        """把一轮对话写进本地 AI 的上下文缓冲（只保留最近 N 轮）。"""
+        try:
+            _role = "assistant" if speaker == "ralsei" else "user"
+            _msg = str(message).strip()
+            if not _msg:
+                return
+            self._ai_history.append((_role, _msg))
+            if len(self._ai_history) > self._ai_history_max:
+                del self._ai_history[:len(self._ai_history) - self._ai_history_max]
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
+    def get_ai_history(self, limit: int = 8):
+        """返回最近几轮对话历史 [(role, content), ...]，供本地 AI 参考。"""
+        try:
+            return list(self._ai_history[-limit:])
+        except Exception:
+            return []
+
     def _commit_previous_ralsei_into_history(self):
         """如果前台还有一条 Ralsei 消息（typing_text 非空），把它完整并入历史。"""
+        import html as _html
         if self.typing_text:
             # 立刻补完当前打字机进度，用完整文本写入历史
-            full_text = self.typing_text
+            # 修复：typing_text 现在是「原文」，入历史前必须转义，否则 "<" 等会被当成标签
+            full_text = _html.escape(self.typing_text)
             if self.is_typing:
                 self.is_typing = False
                 self.typing_timer.stop()
@@ -397,13 +446,15 @@ class DialogueUI(QWidget):
 
     def _refresh_display(self):
         """统一渲染：历史消息 + 前台当前消息（若存在）带闪烁光标。"""
+        import html as _html
         cursor = "▼" if self._cursor_visible else " "
         html = self._history_html
         if self.typing_text:
             # 有前台 Ralsei 消息：当前显示到 index，后面加闪烁光标
             show_idx = (self.typing_index
                         if self.is_typing else len(self.typing_text))
-            current_shown = self.typing_text[:show_idx]
+            # 先按字符切片、再转义：保证逐字显示过程中不会出现 &amp; 这类实体残片
+            current_shown = _html.escape(self.typing_text[:show_idx])
             html += (f'<div style="color:#ffffff;line-height:1.45;">'
                      f'{current_shown}{cursor}</div>')
         self.dialogue_content.setHtml(html)
@@ -415,9 +466,16 @@ class DialogueUI(QWidget):
         if not getattr(self, '_is_dragging', False):
             self._recalc_size_to_content_lazy()
 
-        # 滚到底
-        sb = self.dialogue_content.verticalScrollBar()
-        sb.setValue(sb.maximum())
+        # 滚到底：仅在内容确实增长时自动跟随。
+        # 修复：原来每次刷新（打字时 35ms/次、光标闪烁 530ms/次）都无条件
+        # setValue(maximum)，用户想往上翻看历史会被立刻弹回底部，历史几乎不可查看。
+        try:
+            sb = self.dialogue_content.verticalScrollBar()
+            if sb.maximum() != getattr(self, '_last_scroll_max', -1):
+                self._last_scroll_max = sb.maximum()
+                sb.setValue(sb.maximum())
+        except Exception as e:
+            _log.debug("dialogue_ui 滚动到底失败: %s", e)
 
     def _recalc_size_to_content_lazy(self):
         """惰性重算：只在文档高度真正变化时才执行 resize/move。
@@ -671,11 +729,15 @@ class DialogueUI(QWidget):
         self._auto_hide_timer.stop()
         # 修复：淡入前停掉并断开旧动画——hide 时创建的 fade-out 把 finished→self.hide
         # 挂在旧动画对象上，若淡出未结束就 show，旧回调会在淡入完成后把刚显示的窗口
-        # 再次隐藏（对话框"弹出后立即消失"）。同时停掉打字机，避免不可见窗口逐字渲染。
-        try:
-            self.stop_typing()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        # 再次隐藏（对话框"弹出后立即消失"）。
+        #
+        # 修复（打字机）：这里原来还无条件调用 stop_typing()，而 stop_typing 的语义是
+        # "立刻把当前这句话补完"。main.py 里 150+ 处写法都是
+        #     add_dialogue(...)  # 启动打字机
+        #     show_dialogue()    # ← 立刻把它补完
+        # 于是逐字打字效果 100% 失效：台词瞬间整段出现、打字音效 play_typewriter 从不播放。
+        # show_dialogue 只负责"把窗口显示出来"，不应该打断正在进行的打字；
+        # 真正需要打断的场景（隐藏对话框、新消息到来）已分别在 hide_dialogue / add_dialogue 处理。
         _old = getattr(self, '_fade_anim', None)
         if _old is not None:
             try:
@@ -756,6 +818,9 @@ class DialogueUI(QWidget):
         if not user_input:
             return
         self.input_field.clear()
+
+        # —— "训练"钩子：从对话里记住主人的名字/喜好（显式自述，非被动追踪）——
+        self._learn_from_user_input(user_input)
 
         # —— 若上一个本地 AI 对话仍在思考：作废它（seq 递增 + inflight 复位）。
         #    用户已输入新消息，旧模型的迟到回复不应再显示，避免乱序/串话。
@@ -855,6 +920,55 @@ class DialogueUI(QWidget):
                     _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         _rule_reply()
 
+    def _learn_from_user_input(self, user_input):
+        """从对话中学习主人的信息（显式自述才记，不做被动追踪）。
+
+        - “我叫/我是 XX” → 记住名字（user_name）
+        - “我喜欢/我很喜欢 XX” → 记住兴趣（interest_XX，累计权重）
+        - “我讨厌/我不喜欢 XX” → 记住反感（dislike_XX）
+        记忆写入 memory.json，之后本地 AI 的上下文会带上这些偏好，
+        让 Ralsei 越聊越了解主人（这是"训练"最朴素的形式）。
+        """
+        try:
+            parent = self.parent
+            ms = getattr(parent, 'memory_system', None)
+            if ms is None or not callable(getattr(ms, 'learn_user_preference', None)):
+                return
+            import re as _re
+            s = str(user_input).strip()
+            if not s:
+                return
+            # 名字：我(叫|是)XX（1~8 个中文字符或字母数字）
+            m = _re.search(r'我(?:叫|是)([\u4e00-\u9fa5A-Za-z0-9]{1,8})', s)
+            if m:
+                _name = m.group(1).strip()
+                if _name and _name not in ('Ralsei', 'ralsei'):
+                    ms.learn_user_preference('user_name', _name)
+            # 喜欢：我(很/特别/超)?喜欢XX
+            m = _re.search(r'我(?:很|特别|超|最)?喜欢([\u4e00-\u9fa5A-Za-z0-9]{1,12})', s)
+            if m:
+                _topic = m.group(1).strip()
+                if _topic and not _topic.endswith(('吗', '呢', '呀', '吧')):
+                    _cur = 0.0
+                    try:
+                        _cur = float(ms.get_user_preference(f'interest_{_topic}', 0.0))
+                    except (TypeError, ValueError):
+                        _cur = 0.0
+                    ms.learn_user_preference(f'interest_{_topic}', _cur + 1.0)
+            # 讨厌：我(不|很)?(喜欢|讨厌|反感)XX
+            m = _re.search(r'我(?:不|很)?(?:喜欢|讨厌|反感)([\u4e00-\u9fa5A-Za-z0-9]{1,12})', s)
+            if m:
+                _topic = m.group(1).strip()
+                if _topic and not _topic.endswith(('吗', '呢', '呀', '吧')):
+                    _cur = 0.0
+                    try:
+                        _cur = float(ms.get_user_preference(f'dislike_{_topic}', 0.0))
+                    except (TypeError, ValueError):
+                        _cur = 0.0
+                    ms.learn_user_preference(f'dislike_{_topic}', _cur + 1.0)
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
     # ---------------- 本地 AI 思考占位（等待回复时像在停顿组织语言） ----------------
     def _ai_thinking_on(self):
         # 思考期间取消自动隐藏：本地模型推理常需数秒~十几秒，
@@ -947,6 +1061,19 @@ class DialogueUI(QWidget):
         """返回 (reply, face_type)，让调用方统一 add_dialogue。没命中返回 None。"""
         low = user_input.lower().strip()
         raw = user_input.strip()
+
+        # ===== 修复：游戏进行中，退出指令不能被闲聊指令截获 =====
+        # 本方法在 send_message 里先于 handle_game_input 执行，而下面有一组
+        # ("游戏", ...) 关键词指令。于是正在玩石头剪刀布/猜数字时输入"退出游戏"，
+        # 会命中"游戏"关键词并直接 return，返回一句与游戏状态矛盾的闲聊
+        # （"我最喜欢玩游戏了！想玩什么呢？"），游戏永远退不出去。
+        # 这里把退出类指令放行给游戏状态机处理。
+        try:
+            _playing = bool(getattr(self.parent, 'game_state', {}).get('is_playing'))
+        except Exception:
+            _playing = False
+        if _playing and any(w in raw for w in ("退出游戏", "结束游戏", "退出", "不玩了", "不玩", "算了")):
+            return None
 
         # —— 工具函数：获取当前状态信息 ——
         def _get_status_text():

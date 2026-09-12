@@ -24,6 +24,14 @@ class ConfigManager:
         self.last_save_time = time.time()
         self.observers = []
         self.config = self._load_config()
+        # 修复：备份清理原来只在"新建备份"时触发，而 _backup_config 仅在配置结构
+        # 发生大变动时才被调用 —— 于是历史遗留的备份文件永远不会被收敛
+        # （本机实测程序目录里积压了 106 个 config.json.backup.*，纯垃圾）。
+        # 启动时主动剪枝一次，保证"最多保留 MAX_CONFIG_BACKUPS 个"这一承诺成立。
+        try:
+            self._prune_old_backups()
+        except Exception as e:
+            _log.debug("启动时清理历史配置备份失败（已忽略）: %s", e)
     
     @staticmethod
     def _default_config():
@@ -57,8 +65,8 @@ class ConfigManager:
                 "lock_timeout": 300
             },
             "animation": {
-                "fps": 6,
-                "frame_delay": 166
+                "fps": 30,
+                "frame_delay": 33
             },
             "movement": {
                 "speed": 5.0,
@@ -112,6 +120,11 @@ class ConfigManager:
 
             # 自动迁移旧版云服务商配置到本地 AI 默认值
             api_section = merged_config.get("api", {})
+            if not isinstance(api_section, dict):
+                # 兜底：无论如何都不能让一个非 dict 的 api 节走到 .get() 上
+                _log.warning("配置节 'api' 类型异常（%s），已重置为默认值", type(api_section).__name__)
+                api_section = {}
+                merged_config["api"] = api_section
             needs_migration = False
             _legacy_cloud_urls = ("https://api.doubao.com",
                                   "https://ark.cn-beijing.volces.com",
@@ -132,7 +145,10 @@ class ConfigManager:
             return merged_config
         # 修复：原先只捕获 (JSONDecodeError, IOError)，编码错误（UnicodeDecodeError）
         # 不在 IOError 体系内，会让启动直接崩溃；一并捕获并走"备份损坏文件→回退默认"流程。
-        except (json.JSONDecodeError, UnicodeDecodeError, ValueError, OSError) as e:
+        except (json.JSONDecodeError, UnicodeDecodeError, ValueError, TypeError,
+                AttributeError, OSError) as e:
+            # 修复：TypeError/AttributeError 也要接住——配置结构被写坏时它们会在
+            # 合并/迁移阶段抛出，漏掉就会让"备份损坏文件→回退默认配置"这条兜底失效。
             _log.error("加载配置文件失败: %s", e)
             # 创建配置备份
             try:
@@ -157,6 +173,14 @@ class ConfigManager:
             if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
                 # 如果是嵌套字典，递归合并
                 merged[key] = self._merge_configs(merged[key], value)
+            elif key in merged and isinstance(merged[key], dict) and not isinstance(value, dict):
+                # 修复：用户手改配置 / 同步工具写坏时，可能把整"节"写成标量或数组
+                # （如 "api": "oops"）。原实现直接用这个标量覆盖字典节，紧接着
+                # _load_config 里就对它调用 .get()，抛出的 AttributeError 又不在
+                # 捕获列表内 → 桌宠双击启动后完全不出现（只在控制台留一句"按回车键退出"）。
+                # 这里保留默认节，只记录一条 warning。
+                _log.warning("配置节 %r 应为 dict，实际是 %s，已忽略并保留默认值",
+                             key, type(value).__name__)
             else:
                 # 否则直接替换
                 merged[key] = value
@@ -332,6 +356,11 @@ class ConfigManager:
             except Exception as e:
                 _log.warning("通知观察者失败: %s", e)
 
+    # 修复：配置备份此前没有任何保留上限，配置版本一旦反复演进，备份文件会在
+    # 程序目录里无限堆积（实测已累积 100+ 个 config.json.backup.*，纯垃圾文件）。
+    # 保留最近 MAX_CONFIG_BACKUPS 个，其余自动清理。
+    MAX_CONFIG_BACKUPS = 10
+
     def _backup_config(self, config):
         """创建配置备份"""
         try:
@@ -339,8 +368,38 @@ class ConfigManager:
             with open(backup_path, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4, ensure_ascii=False)
             _log.info("已创建配置备份: %s", backup_path)
+            self._prune_old_backups()
         except (OSError, TypeError, ValueError) as e:
             _log.warning("创建配置备份失败: %s", e)
+
+    def _prune_old_backups(self, keep=None):
+        """只保留最近 keep 个配置备份，删除更早的（按文件名时间戳排序）。"""
+        if keep is None:
+            keep = self.MAX_CONFIG_BACKUPS
+        prefix = f"{self.config_file}.backup."
+        try:
+            files = [os.path.join(os.path.dirname(self.config_file), n)
+                     for n in os.listdir(os.path.dirname(self.config_file))
+                     if n.startswith(os.path.basename(prefix))]
+        except OSError as e:
+            _log.debug("枚举配置备份失败（已忽略）: %s", e)
+            return
+
+        def _ts(path):
+            # 兼容 hash 后缀之外的非数字文件名：解析失败视为最旧
+            try:
+                return int(os.path.basename(path).rsplit('.', 1)[-1])
+            except (ValueError, IndexError):
+                return 0
+
+        files.sort(key=_ts, reverse=True)
+        for old in files[keep:]:
+            try:
+                os.remove(old)
+                _log.info("已清理过期配置备份: %s", os.path.basename(old))
+            except OSError as e:
+                # 单个文件删不掉不影响主流程（可能被占用/无权限）
+                _log.debug("清理配置备份失败（已忽略）: %s", e)
     
     def reset_config(self, section=None):
         """重置配置到默认值"""
