@@ -420,6 +420,10 @@ class RalseiPet(QMainWindow):
         
         # 动画播放控制
         self.animation_change_cooldown = 0.8  # 0.8秒冷却时间，防止频繁切换导致的抽搐
+        # 表演动画最小持续时间：laugh/tea/wave/dance 等被触发后至少播这么久才允许切回 idle，
+        # 避免"闪一下就没了"（修复：is_happy 等状态只持续一帧导致表演动画只播0.15秒）。
+        self._last_perf_anim_time = 0.0
+        self._perf_anim_min_duration = 1.5
         self.last_animation_change = time.time() - self.animation_change_cooldown  # 初始化为冷却时间之前，确保第一次切换也受到冷却时间限制
         
         # 从配置中获取动画设置（默认 30FPS，与《Deltarune》游戏帧率一致）
@@ -1546,8 +1550,11 @@ class RalseiPet(QMainWindow):
                     _critical_move = True
                 if not _critical_move:
                     # 切换回空闲动画
+                    # 修复：必须 force=True——walk/run 优先级(2)高于 idle(1)，
+                    # 不带 force 会被 change_animation 的优先级拦截拒绝，
+                    # 导致宠物停在走路姿势但实际不动（"走着走着突然定住"）。
                     if self.current_animation.startswith("walk_") or self.current_animation.startswith("run_"):
-                        self.change_animation("idle")
+                        self.change_animation("idle", force=True)
                 # —— 到达回调：通知躲猫猫 / 自主代理 ——
                 self._notify_arrived_if_needed()
         else:
@@ -6181,6 +6188,16 @@ class RalseiPet(QMainWindow):
         self.current_animation = new_animation
         self.current_priority = new_priority
         self.last_animation_change = current_time
+        # 记录表演动画切换时间（用于最小持续时间保护）
+        # 放在 change_animation 内部，确保不管谁调用（emotion_system/randomize/update_animation）
+        # 都能正确记录时间。修复：此前只在 update_animation 中记录，导致其他系统触发的
+        # 表演动画 _last_perf_anim_time 永远为0，最小持续时间保护失效。
+        _is_perf = (new_animation not in (
+            'idle', 'spell', 'spell_left', 'jump', 'jump_ready', 'jump_ball',
+            'fall', 'fall_back', 'fall_mad', 'splat', 'splat_mad', 'land',
+        ) and not new_animation.startswith(('walk_', 'run_')))
+        if _is_perf and hasattr(self, '_last_perf_anim_time'):
+            self._last_perf_anim_time = current_time
 
         # 从 walk_<dir> / run_<dir> / walk_<dir>_blush 等动画名里提取方向并同步
         if new_group in ('walk', 'run'):
@@ -6834,7 +6851,15 @@ class RalseiPet(QMainWindow):
         
         # 平滑切换动画，避免频繁切换
         # ===== 一次性动画保护：播放期间不允许状态逻辑切换动画 =====
-        if not _play_once and self.current_animation != new_animation:
+        # 修复：表演动画(laugh/tea/wave/dance等)被触发后至少播1.5秒才允许切回 idle，
+        # 避免 is_happy 等状态只持续一帧导致表演动画"闪一下就没了"。
+        _is_perf_anim = self.current_animation not in (
+            'idle', 'spell', 'spell_left', 'jump', 'jump_ready', 'jump_ball',
+            'fall', 'fall_back', 'fall_mad', 'splat', 'splat_mad', 'land',
+        ) and not self.current_animation.startswith(('walk_', 'run_'))
+        _perf_blocked = (_is_perf_anim and new_animation == 'idle'
+                         and (current_time - self._last_perf_anim_time) < self._perf_anim_min_duration)
+        if not _play_once and not _perf_blocked and self.current_animation != new_animation:
             # 确保new_animation不为None
             if new_animation is None:
                 new_animation = 'idle'
@@ -6867,10 +6892,12 @@ class RalseiPet(QMainWindow):
             
             # 对于同一类动画，强制切换；对于不同类动画，使用冷却时间
             # 注意：帧重置/保持由 change_animation 内部处理，不再额外覆盖
-            if is_same_category:
-                self.change_animation(new_animation, force=True)
-            else:
-                self.change_animation(new_animation, force=False)
+            # 修复：回到 idle 是"状态恢复"，必须 force=True——
+            # 表演动画(sing/dance/laugh/pose/hug等)优先级=3，idle优先级=1，
+            # 不带 force 会被 change_animation 的优先级拦截(new_pri<cur_pri)拒绝，
+            # 导致宠物永远卡在表演动画里（"唱完歌后定住不动"）。
+            _use_force = is_same_category or (new_animation == 'idle')
+            self.change_animation(new_animation, force=_use_force)
         
         # 优化：参考niko_desktop_pet，只在移动时更新动画帧
         # 静止时保持特定帧，提高视觉一致性
