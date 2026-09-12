@@ -110,7 +110,7 @@ SAY_FACES = {
     "playful": "playful", "touched": "touched", "surprised": "surprised",
 }
 
-BASE_INTERVAL = 35.0        # 正常节奏：两次问模型的最小间隔（秒）
+BASE_INTERVAL = 25.0        # 正常节奏：两次问模型的最小间隔（秒）
 MAX_INTERVAL = 300.0        # 连续失败后最多退避到 5 分钟
 RETRY_SHORT = 10.0          # 与关键流程冲突时，稍后（10 秒）再试
 DIALOGUE_COOLDOWN = 8.0     # 模型正在回复用户时，等它回完再试
@@ -119,6 +119,17 @@ SAY_COOLDOWN = 90.0         # AI 自主"开口说话"的最小间隔（防吵）
 _ACTION_SYSTEM_PROMPT = (
     "你是桌面宠物 Ralsei 的行为决策器。根据玩家给你的状态，只输出一个 JSON "
     "对象，不要输出任何别的文字、解释或 markdown 代码块。\n\n"
+    "===== 重要：表演动画只能由你触发 =====\n"
+    "规则系统不再自动触发任何表演动画（dance/sing/laugh/pose/tea/wave/curtsy/hug/"
+    "nuzzle/look_up/victory/slide/roll/item/act/spin/bow 等）。宠物默认只做 idle/walk/run"
+    "等基础行为。所有表演动作的触发权完全在你手里：\n"
+    "- 你觉得该表演的时候（心情好、想和主人互动、时段合适），立刻选对应的表演动作，"
+    "通过 play_animation_once 一次性播放。\n"
+    "- 你觉得不该表演的时候，选 idle/rest/wander，让宠物安静待着或走走。\n"
+    "- 不要因为'频率要低'就一直选 idle——那样宠物会像个木头。适当的时候要有小动作"
+    "（look_up/pose/wave/laugh 等单帧或短动画作为点缀），让它看起来有生气。\n"
+    "- 长动画（victory/roll/act >=10帧）只在特别兴奋或想表现自己的时候用，用了之后"
+    "下一次选 idle/rest 让它播完。\n\n"
     "输出格式（严格）：\n"
     '{"action":"动作名","say":"可选的一句想对主人说的话(简体中文,没有就空字符串)",'
     '"emotion":"可选的当前心情(如 happy/curious/peaceful/sleepy/shy)"}\n\n'

@@ -490,6 +490,19 @@ class PetAI:
             return
         if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
             return
+        # ===== 表演/情绪动画一律交给 ai_driver（大模型AI）决策，pet_ai 不再自动触发 =====
+        # 修复：此前 pet_ai.check_action_triggers 每3秒随机选 dance/sing/laugh/tea/pose 等
+        # 表演动画并直接 change_animation，导致"走着走着突然坐到地上跳舞"。
+        # 现在 pet_ai 只负责基础行为（idle/walk/run），所有表演动画由用户交互或
+        # ai_driver 通过 play_animation_once 触发，在需要的时候立刻触发，不需要的时候不触发。
+        _BASIC_ANIM_WHITELIST = {
+            'idle',
+            'walk_down', 'walk_left', 'walk_right', 'walk_up',
+            'run_down', 'run_left', 'run_right', 'run_up',
+        }
+        if action not in _BASIC_ANIM_WHITELIST:
+            _log.debug("pet_ai 拦截表演动画 %s（交给 ai_driver 决策）", action)
+            return
         _log.debug("触发动作: %s", action)
         self.parent.change_animation(action)
     

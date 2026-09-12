@@ -6689,16 +6689,10 @@ class RalseiPet(QMainWindow):
             new_animation = "item"
         elif self.is_spellcasting:
             new_animation = "spell"
-        elif self.is_laughing:
-            new_animation = "laugh"
-        elif self.is_rolling:
-            new_animation = "roll"
-        elif self.is_sliding:
-            new_animation = "slide"
-        elif self.is_teasplashed:
-            new_animation = "tea"
-        elif self.is_victorious:
-            new_animation = "victory"
+        # ===== 表演/情绪动画不再由 update_animation 自动选择 =====
+        # laugh/roll/slide/tea/victory/dance/sing/pose/wave 等一律由用户交互或 AI
+        # 通过 play_animation_once 触发，避免"走着走着突然坐到地上跳舞"。
+        # 基础行为（idle/walk/run/jump/fall/splat/spell）仍由本函数自动管理。
         elif self.is_moving:
             # 移动状态，根据速度大小决定是走还是跑
             # 优化：使用平方比较替代math.hypot，减少计算开销
@@ -6804,36 +6798,16 @@ class RalseiPet(QMainWindow):
                 if self.idle_timer >= 180.0:  # 3分钟 = 180秒
                     # 使用待机动画
                     new_animation = "idle"
-                elif self.is_happy and not getattr(self, 'game_state', {}).get('is_playing'):
-                    new_animation = "laugh"
-                elif self.is_surprised and not getattr(self, 'game_state', {}).get('is_playing'):
-                    new_animation = "surprised"
-                elif self.is_shy and not getattr(self, 'game_state', {}).get('is_playing'):
-                    new_animation = "smile_left" if self.current_direction == "left" else "smile_right"
-                elif hasattr(self, 'is_waving') and self.is_waving:
-                    # 挥手动作序列
-                    if not hasattr(self, 'wave_phase') or self.wave_phase is None or self.wave_phase == "start":
-                        new_animation = "wave_start"
-                        self.wave_phase = "waving"
-                        self.wave_start_time = current_time
-                    elif self.wave_phase == "waving":
-                        new_animation = "wave_down"
-                        # 检查挥手是否应该结束
-                        if self.wave_start_time is not None and current_time - self.wave_start_time >= 2.0:  # 挥手持续时间
-                            self.wave_phase = "end"
-                    else:
-                        # 结束挥手，使用开始挥手的倒放
-                        new_animation = "wave_start"
-                        if self.wave_start_time is not None and current_time - self.wave_start_time >= 3.0:  # 挥手总持续时间
-                            self.is_waving = False
-                            self.wave_phase = None
-                            self.wave_start_time = None
                 elif hasattr(self, 'is_being_thrown') and self.is_being_thrown:
                     new_animation = "hatless_throw"
                     # 确保图像始终向速度向量的方向冲着
                     # 这里可以添加旋转逻辑
                 else:
                     # 使用普通idle动画
+                    # ===== 表演/情绪动画（laugh/surprised/smile/wave等）不再自动触发 =====
+                    # 统一由用户交互或 AI 通过 play_animation_once 触发，避免"走着走着突然跳舞"。
+                    # is_happy/is_surprised/is_shy/is_waving 状态标志仍可被设置（供对话/情绪系统使用），
+                    # 但不再驱动动画自动切换。
                     new_animation = "idle"
         
 
