@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""memory_system.py 修复验证（第1区块）"""
+"""memory_system.py 修复验证（第1区块）—— 所有实例的 memory_file 隔离到临时目录"""
 import os
 import sys
 import tempfile
 
-ROOT = r"C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet"
-sys.path.insert(0, os.path.join(ROOT, "modules"))
+ROOT = r"C:\Users\23002\Desktop\项目文件夹\try - 副本"
+sys.path.insert(0, os.path.join(ROOT, "ralsei_pet", "modules"))
 
 from memory_system import MemorySystem
 
@@ -24,8 +24,15 @@ class FakeParent:
             pass
 
 
-def test_update_preserves_important_memory():
+def _isolated_ms():
+    """构造并隔离：绝不读写真实 memory.json"""
     ms = MemorySystem(FakeParent())
+    ms.memory_file = os.path.join(tempfile.mkdtemp(), "memory_test.json")
+    return ms
+
+
+def test_update_preserves_important_memory():
+    ms = _isolated_ms()
     ms.short_term_memory = [
         {'timestamp': 3, 'type': 'level_up', 'content': '升到2级'},
         {'timestamp': 2, 'type': 'dialogue', 'content': '闲聊一句'},
@@ -39,7 +46,7 @@ def test_update_preserves_important_memory():
 
 
 def test_organize_keeps_single_important():
-    ms = MemorySystem(FakeParent())
+    ms = _isolated_ms()
     ms.short_term_memory = [
         {'timestamp': 5, 'type': 'achievement_unlocked', 'content': '解锁成就'},
         {'timestamp': 4, 'type': 'dialogue', 'content': 'A'},
@@ -51,7 +58,7 @@ def test_organize_keeps_single_important():
 
 
 def test_remember_behavior_no_keyerror():
-    ms = MemorySystem(FakeParent())
+    ms = _isolated_ms()
     ms.remember_user_behavior('typing', 12)
     patterns = ms.get_user_behavior_patterns()
     assert patterns.get('typing', {}).get('count') == 1, patterns
@@ -60,7 +67,7 @@ def test_remember_behavior_no_keyerror():
 
 
 def test_associated_memories_content_match():
-    ms = MemorySystem(FakeParent())
+    ms = _isolated_ms()
     ms.short_term_memory = [
         {'timestamp': 1, 'type': 'dialogue', 'content': '我喜欢玩 Deltarune'},
         {'timestamp': 2, 'type': 'dialogue', 'content': 'Deltarune 的音乐很好听'},
