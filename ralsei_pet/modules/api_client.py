@@ -62,7 +62,10 @@ class LocalAIBase(ABC):
 
     # ---- 运行时可热启用：换配置后调用此方法更新内部状态（不重建实例也行） ----
     def rebuild(self, config: Dict[str, Any]):
-        config = config or {}
+        # 修复：config 可能是列表/字符串等非 dict（配置文件被手改），
+        # 直接 .get() 会 AttributeError 导致 create_client 崩溃。
+        if not isinstance(config, dict):
+            config = {}
         self.config = config
         self.enabled = bool(config.get('enabled', False))
         # 修复：base_url 为空字符串/纯空格时，chat_endpoint() 会拼出相对路径
@@ -191,7 +194,13 @@ class HTTPLocalAI(LocalAIBase):
             if system_prompt:
                 messages.append({"role": "system", "content": system_prompt})
             if isinstance(history, (list, tuple)):
-                for _role, _content in history:
+                for item in history:
+                    # 修复：history 元素可能是非二元组/不可解包对象，原实现
+                    # for _role, _content in history 会抛 ValueError/TypeError
+                    # 使整次对话失败。畸形条目直接跳过。
+                    if not isinstance(item, (list, tuple)) or len(item) != 2:
+                        continue
+                    _role, _content = item
                     if _role not in ("user", "assistant"):
                         continue
                     if not isinstance(_content, str) or not _content.strip():
@@ -294,7 +303,10 @@ def create_client(config: Optional[Dict[str, Any]]) -> LocalAIBase:
     - 已 register_provider       → 你的工厂实现
     - 否则                       → HTTPLocalAI（OpenAI 兼容骨架）
     """
-    config = config or {}
+    # 修复：config 可能是列表/字符串等非 dict（配置被手改），
+    # 直接 .get('enabled') 会 AttributeError 使 AI 热启用失败。
+    if not isinstance(config, dict):
+        config = {}
     if not config.get('enabled'):
         return LocalAIStub(config)
     if _provider_factory is not None:
