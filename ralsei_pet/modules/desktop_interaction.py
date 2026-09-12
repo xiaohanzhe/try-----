@@ -978,8 +978,18 @@ class DesktopInteraction:
             log.warning(f"获取窗口位置失败: {e}")
         return None
         
-    def get_all_visible_windows(self):
+    def get_all_visible_windows(self, use_cache=True, cache_ttl=2.0):
         # 获取所有可见窗口的信息，根据"建楼"要求实现楼层系统
+        # 修复（性能）：本方法做全量 EnumWindows 枚举，每个窗口多次跨进程 Win32 调用，
+        # 单次耗时可达几十毫秒。而主线程每 1 秒（floor 追踪）+ 每 3 秒（nearby 感知）
+        # 各调用一次 → GUI 线程周期性阻塞，表现为"鼠标移动渲染跟不上"。
+        # 增加 TTL 缓存（默认 0.8s）：同一窗口状态快照被多次调用共享；返回深拷贝，
+        # 调用方修改结果不会污染缓存。需要强实时数据时可传 use_cache=False。
+        import copy
+        if use_cache:
+            _cache = getattr(self, '_visible_windows_cache', None)
+            if _cache is not None and time.time() - _cache[0] < cache_ttl:
+                return copy.deepcopy(_cache[1])
         visible_windows = []
         
         # 预计算屏幕尺寸，避免在回调中重复调用
@@ -1082,6 +1092,7 @@ class DesktopInteraction:
             window_info = {
                 'hwnd': hwnd,
                 'title': title,
+                'class_name': class_name,  # 修复：补存已取得的类名，调用方不再重复 GetClassName
                 'x': rect[0],
                 'y': rect[1],
                 'width': width,
@@ -1125,6 +1136,11 @@ class DesktopInteraction:
         # 按Z序排序，Z序越小，窗口越靠前（越上层）
         visible_windows.sort(key=lambda x: x['z_order'])
         
+        if use_cache:
+            self._visible_windows_cache = (time.time(), visible_windows)
+            # 修复：首次调用若返回本体，调用方修改会直接污染缓存内容；
+            # 统一返回深拷贝，缓存内对象永不外泄。
+            return copy.deepcopy(visible_windows)
         return visible_windows
         
     def is_mouse_over_desktop_element(self, mouse_pos):

@@ -739,7 +739,10 @@ class RalseiPet(QMainWindow):
         # 楼层系统相关变量
         self.current_floor = None  # 当前所在楼层
         self.last_floor_check_time = 0  # 上次楼层检查时间
-        self.floor_check_interval = 1.0  # 楼层检查间隔（秒）
+        self.floor_check_interval = 2.0  # 楼层检查间隔（秒）
+        # 性能：楼层检查会全量枚举窗口（win32 跨进程调用，单次可达几十毫秒），
+        # 1s 间隔 + nearby 检查让主线程周期性阻塞、鼠标渲染掉帧；2s 间隔配合
+        # get_all_visible_windows 的 2s TTL 缓存，主线程枚举频率降一半以上。
         
         # 环境变量（客观因素）
         self.current_time = time.strftime("%H:%M:%S")  # 当前时间
@@ -1194,12 +1197,14 @@ class RalseiPet(QMainWindow):
             self.update_mood()
             self._last_env_update = current_time
         
-        # 低频检查附近的桌面元素（每3秒一次；修复：此前 check_nearby_desktop_elements
+        # 低频检查附近的桌面元素（每5秒一次；修复：此前 check_nearby_desktop_elements
         # 从未被调用，Ralsei 对桌面文件夹/文件的"靠近反应"从未触发）
         # 修复：时间戳更新放在 try 外——原来在 try 内，若 check_* 抛错则时间戳不更新，
         # 每 30ms 全量重试（性能热循环）。
+        # 性能：get_nearby_elements 内部会全量枚举窗口（现已有缓存），5s 节拍足够，
+        # 避免主线程频繁被窗口枚举拖慢。
         try:
-            if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 3.0:
+            if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 5.0:
                 self.check_nearby_desktop_elements()
         except Exception as e:
             _log.warning(f"check_nearby_desktop_elements 异常: {e}")

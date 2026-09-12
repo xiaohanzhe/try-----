@@ -81,11 +81,9 @@ class FloorManager:
             rect = w['rect']
             width = rect[2] - rect[0]
             height = rect[3] - rect[1]
-            class_name = ''
-            try:
-                class_name = win32gui.GetClassName(w['hwnd'])
-            except Exception as e:
-                _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
+            # 修复（性能）：get_all_visible_windows 已在枚举时取得并缓存 class_name，
+            # 这里再 GetClassName 是对每个窗口的重复跨进程调用（量级翻倍），直接复用。
+            class_name = w.get('class_name', '')
             visible_windows.append({
                 'hwnd': w['hwnd'],
                 'title': w['title'],
