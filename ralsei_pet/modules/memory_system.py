@@ -326,16 +326,19 @@ class MemorySystem:
         # 统计记忆类型分布
         memory_types = {}
         for memory in self.short_term_memory:
+            if not isinstance(memory, dict) or 'type' not in memory:
+                continue
             mem_type = memory['type']
             memory_types[mem_type] = memory_types.get(mem_type, 0) + 1
-        
-        # 移除频率过低的记忆类型
+
+        # 移除频率过低的记忆类型（原地修改，避免引用切换）
         for mem_type, count in list(memory_types.items()):
             if count < 2:  # 如果某类记忆出现次数少于2次，视为不重要
-                self.short_term_memory = [m for m in self.short_term_memory if m['type'] != mem_type]
+                self.short_term_memory[:] = [m for m in self.short_term_memory
+                                             if not (isinstance(m, dict) and m.get('type') == mem_type)]
         
         # 按时间排序，保留最新的记忆
-        self.short_term_memory.sort(key=lambda x: x['timestamp'], reverse=True)
+        self.short_term_memory.sort(key=lambda x: x.get('timestamp', 0) if isinstance(x, dict) else 0, reverse=True)
         
         # 限制短期记忆数量，确保性能
         if len(self.short_term_memory) > self.max_short_term_memory:
@@ -346,6 +349,8 @@ class MemorySystem:
         important_types = ['user_preferences', 'important_dates', 'completed_task', 'level_up', 'evolution', 'achievement_unlocked']
         
         for memory in self.short_term_memory:
+            if not isinstance(memory, dict) or 'type' not in memory:
+                continue
             if memory['type'] in important_types and memory not in self.long_term_memory['interaction_history']:
                 self.long_term_memory['interaction_history'].append(memory)
                 # 保存长期记忆

@@ -148,10 +148,14 @@ class WeatherSystem:
             return "sunny"
         if any(k in r for k in ("cloud", "cloudy", "overcast", "partly", "mostly")):
             return "cloudy"
+        # 修复：判定顺序错误——"shower" 同时出现在 "Snow Showers" 里，
+        # 而 rain 分支原来写在 snow 之前，导致 Windows 天气缓存里常见的
+        # "Snow Showers" 被判成下雨（Ralsei 会说"下雨了…湿漉漉的"并变成不开心）。
+        # 先判雪，再判雨。
+        if any(k in r for k in ("snow", "snowy", "flurry", "blizzard", "sleet")):
+            return "snowy"
         if any(k in r for k in ("rain", "rainy", "shower", "drizzle", "light rain")):
             return "rainy"
-        if any(k in r for k in ("snow", "snowy", "flurry", "blizzard")):
-            return "snowy"
         if any(k in r for k in ("wind", "breezy", "windy", "gust")):
             return "windy"
         if any(k in r for k in ("storm", "thunder", "t-storm", "tornado", "hurricane")):

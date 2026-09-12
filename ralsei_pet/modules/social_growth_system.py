@@ -427,13 +427,20 @@ class SocialGrowthSystem:
                                                1, len(self.evolution_paths['default']['stages']))
                 _path = growth_data.get('evolution_path', 'default')
                 # 未知路径回退 default，避免后续 evolution_paths[...] KeyError
-                self.evolution_path = _path if _path in self.evolution_paths else 'default'
+                # 修复：成员判断要求键可哈希，文件被写坏成数组（["default"]）时会抛
+                # TypeError: unhashable type，而下面的 except 不含 TypeError
+                # → 异常逃逸，桌宠构造 SocialGrowthSystem 时直接启动失败。
+                if not isinstance(_path, str) or _path not in self.evolution_paths:
+                    _path = 'default'
+                self.evolution_path = _path
                 # 更新成就解锁状态
                 for achievement_id in self.achievements:
                     if achievement_id in self.achievements_list:
                         self.achievements_list[achievement_id]['unlocked'] = True
                 _log.info("成功加载成长数据: %s", self.growth_data_path)
-        except (OSError, ValueError, json.JSONDecodeError) as e:
+        except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError) as e:
+            # 修复：成长文件被写坏时可能抛 TypeError/KeyError，
+            # 漏掉它们会让"回退默认值"失效并直接中断启动流程。
             _log.warning("加载成长数据失败（使用默认值）: %s", e)
 
     def save_growth_data(self):

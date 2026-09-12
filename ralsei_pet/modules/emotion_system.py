@@ -12,6 +12,10 @@ except ImportError:  # 允许被包外单独导入
 _log = get_logger(__name__)
 
 class EmotionSystem:
+    # 复合情绪（不参与公式推导的那些，如 relieved）每秒自然消退的幅度。
+    # 参与推导的复合情绪每 tick 会被重算，此值用于「保留事件写入的残余」时不至于粘滞。
+    COMPLEX_EMOTION_DECAY_PER_SECOND = 0.2
+
     def __init__(self, parent):
         self.parent = parent
         
@@ -191,14 +195,18 @@ class EmotionSystem:
     
     def update(self):
         # 更新情绪状态
+        # 修复：统一在入口计算 elapsed 并做下限钳位（时钟回拨/夏令时会让 elapsed 为负，
+        # 实测把系统时间回拨 1 小时后 sad 会直接从 50 跳到 100）。
+        current_time = time.time()
+        elapsed = max(0.0, current_time - self.last_emotion_change)
         self._decay_emotions()
-        self._update_complex_emotions()
+        self._update_complex_emotions(elapsed)
         self._update_emotion_intensity()
     
     def _decay_emotions(self):
         # 情绪自然衰减，不同情绪有不同的衰减速度
         current_time = time.time()
-        elapsed = current_time - self.last_emotion_change
+        elapsed = max(0.0, current_time - self.last_emotion_change)  # 修复：时钟回拨时钳位
         
         # 不同情绪的衰减速率
         emotion_decay_rates = {
@@ -290,15 +298,23 @@ class EmotionSystem:
             self.complex_emotions['lonely'] += self.emotions['fear'] * 0.1
         
         # 兴奋会增加开心和精力充沛
+        # ===== 修复：切断 happy 的正反馈自激 =====
+        # excited/expectant/grateful/caring/hopeful/energetic 这几个复合情绪本身
+        # 都由 _update_complex_emotions() 用 happy 线性推导出来，此处再用它们按比例
+        # 反哺 happy，等价于 happy += c * happy（指数自增），而 happy 的自然衰减只有
+        # 0.3/秒。实测：add_emotion('happy', 30) 之后 happy 每 10 秒净增，
+        # 12 个 tick（2 分钟）后锁死在 100 并永不回落 —— 表现为"点一次就永久极度开心"，
+        # 动画恒为 dance、表情恒为 happy_extremely、其他情绪永远显示不出来。
+        # 现在只保留非 happy 派生的来源（惊讶 → 开心），闭环即被切断。
         if self.complex_emotions['excited'] > 30:
-            self.emotions['happy'] += self.complex_emotions['excited'] * 0.15
+            self.emotions['happy'] += self.emotions['surprised'] * 0.15
             self.emotions['happy'] = min(100, self.emotions['happy'])
             self.complex_emotions['energetic'] += self.complex_emotions['excited'] * 0.2
             self.complex_emotions['anxious'] = max(0, self.complex_emotions['anxious'] - self.complex_emotions['excited'] * 0.1)
         
         # 期待会增加开心、兴奋和希望
         if self.complex_emotions['expectant'] > 25:
-            self.emotions['happy'] += self.complex_emotions['expectant'] * 0.1
+            # 修复：去掉 expectant → happy 的反哺（expectant 由 happy 推导，见上方说明）
             self.complex_emotions['excited'] += self.complex_emotions['expectant'] * 0.15
             self.complex_emotions['hopeful'] += self.complex_emotions['expectant'] * 0.2
             self.emotions['happy'] = min(100, self.emotions['happy'])
@@ -306,14 +322,14 @@ class EmotionSystem:
         
         # 感激会增加开心、关心和减少悲伤
         if self.complex_emotions['grateful'] > 20:
-            self.emotions['happy'] += self.complex_emotions['grateful'] * 0.15
+            # 修复：去掉 grateful → happy 的反哺（grateful 由 happy 推导，见上方说明）
             self.emotions['sad'] = max(0, self.emotions['sad'] - self.complex_emotions['grateful'] * 0.2)
             self.complex_emotions['caring'] += self.complex_emotions['grateful'] * 0.15
             self.emotions['happy'] = min(100, self.emotions['happy'])
         
         # 关心会增加开心和满足
         if self.complex_emotions['caring'] > 20:
-            self.emotions['happy'] += self.complex_emotions['caring'] * 0.1
+            # 修复：去掉 caring → happy 的反哺（caring 由 happy 推导，见上方说明）
             self.complex_emotions['content'] += self.complex_emotions['caring'] * 0.15
             self.complex_emotions['lonely'] = max(0, self.complex_emotions['lonely'] - self.complex_emotions['caring'] * 0.2)
         
@@ -325,7 +341,7 @@ class EmotionSystem:
         
         # 希望会增加开心和减少焦虑
         if self.complex_emotions['hopeful'] > 20:
-            self.emotions['happy'] += self.complex_emotions['hopeful'] * 0.1
+            # 修复：去掉 hopeful → happy 的反哺（hopeful 由 happy 推导，见上方说明）
             self.complex_emotions['anxious'] = max(0, self.complex_emotions['anxious'] - self.complex_emotions['hopeful'] * 0.15)
             self.complex_emotions['content'] += self.complex_emotions['hopeful'] * 0.1
         
@@ -337,7 +353,8 @@ class EmotionSystem:
         
         # 精力充沛会增加开心和减少疲惫
         if self.complex_emotions['energetic'] > 20:
-            self.emotions['happy'] += self.complex_emotions['energetic'] * 0.1
+            # 修复：去掉 energetic → happy 的反哺（energetic 由 happy 推导，见上方说明）；
+            # 保留"精力充沛 → 不疲惫 / 不无聊"这两条非闭环影响。
             self.complex_emotions['tired'] = max(0, self.complex_emotions['tired'] - self.complex_emotions['energetic'] * 0.2)
             self.complex_emotions['bored'] = max(0, self.complex_emotions['bored'] - self.complex_emotions['energetic'] * 0.1)
         
@@ -357,15 +374,17 @@ class EmotionSystem:
         # 无钳位（如 caring>20 时 happy += caring*0.1），长期运行会无界增长
         # 超过 100，导致"主导情绪恒为 happy"之类的失衡。这里统一收尾钳位：
         # 基础情绪 [-100,100]，复合情绪 [0,100]。
-        # 注：对复合情绪的多数写入随后会被 _update_complex_emotions() 全量
-        # 重算覆盖（tired 除外），但钳位保证任何残留路径也不会越界。
+        # 注：复合情绪每 tick 会被 _update_complex_emotions() 重算，但该函数现在会
+        # 保留"事件写入部分"的残余（见其末尾），因此这里的钳位仍是必要的边界保护。
         for emotion in self.emotions:
             self.emotions[emotion] = max(-100, min(100, self.emotions[emotion]))
         for emotion in self.complex_emotions:
             self.complex_emotions[emotion] = max(0, min(100, self.complex_emotions[emotion]))
     
-    def _update_complex_emotions(self):
+    def _update_complex_emotions(self, elapsed=0.0):
         # 根据基础情绪更新复合情绪
+        # prev：覆写前的快照，用于在末尾保留"事件写入的复合情绪残余"（见函数末尾说明）
+        prev = dict(self.complex_emotions)
         
         # 害羞 = 少量开心 + 少量恐惧
         self.complex_emotions['shy'] = (self.emotions['happy'] * 0.3 + self.emotions['fear'] * 0.7) / 2
@@ -440,7 +459,26 @@ class EmotionSystem:
         # 确保所有情绪值在0-100之间
         for emotion in self.complex_emotions:
             self.complex_emotions[emotion] = max(0, min(100, self.complex_emotions[emotion]))
-    
+
+        # ===== 修复：推导值不该把"事件写入的复合情绪"瞬间清零 =====
+        # 本函数每个 tick 都会用基础情绪全量覆写 21 个复合情绪，于是
+        # react_to_event 里 add_emotion('shy', 45)（被夸奖）这类由事件写入的复合情绪，
+        # 最迟 10 秒就被抹成推导值（实测 shy 45 → 0、disappointed 35 → 0、
+        # grateful 25 → 6.9），事件反应几乎全部失效。
+        # 现在取「本 tick 推导值」与「上一 tick 值按固定速率自然消退后的残余」的较大者：
+        # 事件写入的情绪会保留一小段时间再平滑消失，而不是当场归零。
+        # 同时这条规则也让不参与公式推导的情绪（如 relieved）获得衰减，避免永久驻留。
+        for emotion, prev_value in prev.items():
+            residual = prev_value - self.COMPLEX_EMOTION_DECAY_PER_SECOND * elapsed
+            current = self.complex_emotions.get(emotion, 0.0)
+            if residual > current:
+                # 上一 tick 的值（含事件写入的部分）更高 → 保留残余
+                self.complex_emotions[emotion] = max(0.0, residual)
+            elif current == prev_value:
+                # 本 tick 的推导公式没有动过它（例如 relieved / tired）→ 直接按速率衰减，
+                # 否则这类情绪会永久驻留并长期霸占"主导情绪"（实测 relieved 33 分钟不降）。
+                self.complex_emotions[emotion] = max(0.0, residual)
+
     def _update_emotion_intensity(self):
         # 计算当前情绪强度
         total_intensity = 0

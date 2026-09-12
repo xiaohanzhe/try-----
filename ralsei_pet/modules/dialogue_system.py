@@ -1163,16 +1163,10 @@ class DialogueSystem:
             elif "整理" in user_input_lower:
                 response = "好的！我来帮你整理文件！请告诉我具体要整理什么！"
                 self.context["last_topic"] = "organize_file"
-        elif "喜欢" in user_input_lower:
-            # 增强：处理用户表达喜好的情况
-            response = random.choice([
-                "我也喜欢！这真的很有趣呢！",
-                "你这么说我很开心！",
-                "我也有类似的喜好！",
-                "这是个不错的爱好！",
-                "能和你有相同的喜好真好！",
-            ])
-            self.context["last_topic"] = "preference"
+        # 修复：否定分支必须排在肯定分支之前。
+        # 原来先判断 "喜欢"，导致"我不喜欢狗"命中"喜欢"分支，Ralsei 会回答
+        # "我也喜欢！这真的很有趣呢！"（与用户意思完全相反），
+        # 且下面的"不喜欢/讨厌"分支永远不可达。
         elif "不喜欢" in user_input_lower or "讨厌" in user_input_lower:
             # 增强：处理用户表达不喜欢的情况
             response = random.choice([
@@ -1183,6 +1177,16 @@ class DialogueSystem:
                 "谢谢你告诉我，我会记住的！",
             ])
             self.context["last_topic"] = "dislike"
+        elif "喜欢" in user_input_lower:
+            # 增强：处理用户表达喜好的情况
+            response = random.choice([
+                "我也喜欢！这真的很有趣呢！",
+                "你这么说我很开心！",
+                "我也有类似的喜好！",
+                "这是个不错的爱好！",
+                "能和你有相同的喜好真好！",
+            ])
+            self.context["last_topic"] = "preference"
         elif "爱" in user_input_lower or "喜欢" in user_input_lower and "不" not in user_input_lower:
             # 增强：处理用户表达爱的情况
             response = random.choice([

@@ -218,14 +218,45 @@ class FloorManager:
                 above_floors.append(floor)
         return above_floors
 
+    @staticmethod
+    def _floor_identity(floor):
+        """楼层的稳定标识：窗口用 hwnd，桌面用固定串。
+
+        修复：原来用 dict 内容相等（floor == current_floor）来定位"当前楼层"在
+        all_floors 中的下标，但 floors 每秒由 update_floors 整体重建，
+        窗口标题/位置/z 序任一变化都会让旧对象与重建后的对象不相等 →
+        current_index 保持 -1 → range(0, len) 就变成"从最顶层窗口开始找落点"，
+        宠物从某个窗口边缘掉下时会被判定成落到比它更高的窗口上（凭空被"上吸"）。
+        """
+        if floor is None:
+            return None
+        if floor.get('type') == 'desktop':
+            return 'desktop'
+        return floor.get('window_hwnd')
+
+    def _index_of_floor(self, all_floors, current_floor):
+        """返回 current_floor 在 all_floors（按 platform_height 降序）中的下标。
+
+        找不到时按平台高度退化定位，且保证结果指向"不高于当前楼层"的位置，
+        绝不会把搜索起点错误地放到列表头部（最顶层）。
+        """
+        cur_id = self._floor_identity(current_floor)
+        for i, floor in enumerate(all_floors):
+            if self._floor_identity(floor) == cur_id:
+                return i
+        try:
+            cur_h = current_floor.get('platform_height', 0)
+        except AttributeError:
+            cur_h = 0
+        for i, floor in enumerate(all_floors):
+            if floor['platform_height'] <= cur_h:
+                return i - 1
+        return len(all_floors) - 1
+
     def get_drop_destination(self, pos, current_floor):
         all_floors = sorted(self.floors + [self.desktop_floor], key=lambda x: x['platform_height'], reverse=True)
 
-        current_index = -1
-        for i, floor in enumerate(all_floors):
-            if floor == current_floor:
-                current_index = i
-                break
+        current_index = self._index_of_floor(all_floors, current_floor)
 
         for i in range(current_index + 1, len(all_floors)):
             floor = all_floors[i]
@@ -261,11 +292,8 @@ class FloorManager:
         all_floors = sorted(self.floors + [self.desktop_floor],
                           key=lambda x: x['platform_height'], reverse=True)
 
-        current_index = -1
-        for i, floor in enumerate(all_floors):
-            if floor == current_floor:
-                current_index = i
-                break
+        # 修复：同 get_drop_destination，改用稳定标识定位（见 _floor_identity 注释）
+        current_index = self._index_of_floor(all_floors, current_floor)
 
         if current_index + 1 < len(all_floors):
             next_floor = all_floors[current_index + 1]

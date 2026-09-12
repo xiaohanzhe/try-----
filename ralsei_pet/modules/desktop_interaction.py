@@ -351,12 +351,21 @@ class DesktopInteraction:
             net_stats = {}
             
             # 检查网络连接状态（使用更快的DNS查询）
-            is_connected = True
-            try:
-                # 使用本地DNS服务器或更快的公共DNS
-                socket.create_connection(("8.8.8.8", 53), timeout=1)
-            except socket.error:
-                is_connected = False
+            # 修复：这里是主线程同步阻塞调用，而本方法每 10 秒被 QTimer 触发一次。
+            # 断网/受限网络下每次都要等满 timeout（原来 1 秒）→ 桌宠每 10 秒卡顿约 1 秒
+            # （动画停住、拖不动）。现在把超时压到 0.3 秒，并缓存结果 30 秒，
+            # 最坏情况下的阻塞从"每 10 秒 1 秒"降到"每 30 秒 0.3 秒"。
+            _now = time.time()
+            _net_cache = getattr(self, '_net_check_cache', None)
+            if _net_cache is not None and (_now - _net_cache[0]) < 30:
+                is_connected = _net_cache[1]
+            else:
+                is_connected = True
+                try:
+                    socket.create_connection(("8.8.8.8", 53), timeout=0.3)
+                except socket.error:
+                    is_connected = False
+                self._net_check_cache = (_now, is_connected)
             
             net_stats["is_connected"] = is_connected
             
@@ -746,7 +755,14 @@ class DesktopInteraction:
         folder_items = []
         for item in items:
             try:
-                if desktop.GetDetailsOf(item, 15) == "文件夹":
+                # 修复：原判据 desktop.GetDetailsOf(item, 15) 用错了"详细信息列索引"。
+                # 索引 15 在本机是"年"列，对所有条目都返回空串 → 判据恒为假，
+                # 桌面文件夹一个都收不到（实测 folder_items 恒为 0），只能靠下面的
+                # os.listdir 回退，于是文件夹的 modified_date 永远是空串。
+                # 改用 Shell 自动化对象的 IsFolder 属性（与系统语言/列顺序无关），
+                # 并用 os.path.isdir 兜底。
+                _is_folder = bool(getattr(item, 'IsFolder', False)) or                     os.path.isdir(os.path.join(self.desktop_path, item.Name))
+                if _is_folder:
                     folder_items.append({
                         'name': item.Name,
                         'path': os.path.join(self.desktop_path, item.Name),
@@ -816,12 +832,16 @@ class DesktopInteraction:
         file_items = []
         for item in items:
             try:
-                if desktop.GetDetailsOf(item, 15) != "文件夹":
+                # 修复：同上，原判据恒为真 → 桌面文件夹被当成文件塞进 file_items
+                # （进而参与"文件物理/拖拽/内容预览"等只该对文件生效的逻辑）。
+                # 类型列改用正确的索引 2（"项目类型"），索引 15 是"年"。
+                _is_folder = bool(getattr(item, 'IsFolder', False)) or                     os.path.isdir(os.path.join(self.desktop_path, item.Name))
+                if not _is_folder:
                     file_items.append({
                         'name': item.Name,
                         'path': os.path.join(self.desktop_path, item.Name),
                         'size': desktop.GetDetailsOf(item, 1),
-                        'type_desc': desktop.GetDetailsOf(item, 15),
+                        'type_desc': desktop.GetDetailsOf(item, 2),
                         'modified_date': desktop.GetDetailsOf(item, 3),
                     })
             except Exception as e:
@@ -1292,9 +1312,18 @@ class DesktopInteraction:
                     # 不在 shell 里——原代码 AttributeError 被吞后回退 os.remove
                     # 永久删除（用户以为进回收站可恢复，实际被彻底删除）！
                     from win32com.shell import shell, shellcon
-                    shell.SHFileOperation((0, shellcon.FO_DELETE, file_path, None,
-                                           shellcon.FOF_ALLOWUNDO | shellcon.FOF_NOCONFIRMATION,
-                                           None, None))
+                    _rc = shell.SHFileOperation((0, shellcon.FO_DELETE, file_path, None,
+                                                 shellcon.FOF_ALLOWUNDO | shellcon.FOF_NOCONFIRMATION,
+                                                 None, None))
+                    # 修复：SHFileOperation 失败时**不会抛异常**，只返回 (errcode, aborted)。
+                    # 实测对不存在/被占用/无权限的路径返回 (124, False)，原代码照样打
+                    # "已移至回收站"并返回 True —— 用户以为文件删掉了，桌面上的文件却还在。
+                    # 这里显式校验返回码，非 0 视为失败并保留文件。
+                    _errcode = _rc[0] if isinstance(_rc, (tuple, list)) and _rc else _rc
+                    if int(_errcode) != 0:
+                        log.warning("移至回收站失败（错误码 %s，文件已保留）: %s",
+                                    _errcode, file_path)
+                        return False
                     log.info("文件 '%s' 已移至回收站", os.path.basename(file_path))
                 except Exception as e:
                     # 修复：回收站移动失败时绝不静默降级为 os.remove 永久删除
@@ -2316,10 +2345,19 @@ class DesktopInteraction:
             step_dy = dy / steps
             
             # 执行平滑移动
+            # 修复：整段动画期间用 time.sleep 独占主线程（50 步 × 30ms ≈ 1.5 秒，
+            # 调用方还会连着调 resize，合计约 3 秒），期间桌宠界面完全无响应
+            # （动画停住、点不动、拖不动）。这里每步先让 Qt 处理一次事件，
+            # 保证界面在窗口动画期间仍可重绘/响应。
             for i in range(steps):
                 new_x = int(current_x + step_dx * (i + 1))
                 new_y = int(current_y + step_dy * (i + 1))
                 win32gui.MoveWindow(hwnd, new_x, new_y, current_rect[2]-current_rect[0], current_rect[3]-current_rect[1], True)
+                try:
+                    from PyQt5.QtWidgets import QApplication
+                    QApplication.processEvents()
+                except Exception as e:
+                    log.debug("desktop_interaction 处理事件失败: %s", e)
                 time.sleep(step_duration)
             
             return True

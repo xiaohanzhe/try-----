@@ -110,6 +110,12 @@ class SpriteLoader:
             "teacup_land": ["spr_teacup_ralsei_land_0.png"],
             "hatless_throw": ["spr_ralsei_hatless_throw.png"],
             "splat": ["spr_cutscene_10_ralsei_splat.png"],
+            # 修复：main.py 一直按"fall_mad 存在才播放生气摔倒动画"来判断
+            # （start_fall 的 window_move / fall_from_window 分支），但这两个键从未在
+            # 这里配置过 → 判断恒为假，需求"用户行为导致的摔倒要用生气那个动作"
+            # 从未生效。素材 spr_cutscene_24e_ralsei_splat_mad.png 本来就在素材包里。
+            "splat_mad": ["spr_cutscene_24e_ralsei_splat_mad.png"],
+            "fall_mad": ["spr_cutscene_24e_ralsei_splat_mad.png"],
             "stool": ["spr_cutscene_10_ralsei_stool.png"],
             
             # 吃糖和茶会动画
@@ -184,6 +190,9 @@ class SpriteLoader:
         
         # 帧加载失败时的占位图像大小
         self.placeholder_size = (50, 80)
+
+        # 表情素材名缓存（懒加载，供 has_face() 校验，避免每次 os.listdir）
+        self._face_names = None
 
         # 所有精灵帧的最大包围盒（在 load_sprites 结束时填充）。
         # main.py 用它作为固定容器尺寸，让窗口大小永不因精灵而异而 setGeometry。
@@ -504,6 +513,22 @@ class SpriteLoader:
         """获取动画的帧数量"""
         return self.frame_counts.get(animation, 0)
         
+    def has_face(self, face_name):
+        """检查表情素材是否存在（face_name 不含 .png 后缀）。
+        供 UI 层做"缺图回退"，避免渲染灰色"?"占位头像。"""
+        if not face_name:
+            return False
+        if self._face_names is None:
+            try:
+                self._face_names = {
+                    f[:-4].lower() for f in os.listdir(self.face_dir)
+                    if f.lower().endswith('.png')
+                }
+            except OSError as e:
+                _log.debug("枚举表情素材失败（已忽略）: %s", e)
+                self._face_names = set()
+        return face_name.lower() in self._face_names
+
     def get_face(self, face_name):
         """获取表情图片"""
         # 检查缓存

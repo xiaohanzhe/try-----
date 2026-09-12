@@ -1,0 +1,32 @@
+2026-09-07 22:14:12 [INFO] ralsei_pet.test — 这是一条 INFO 日志
+2026-09-07 22:14:12 [WARNING] ralsei_pet.test — 这是一条 WARNING 日志
+2026-09-07 22:14:12 [ERROR] ralsei_pet.test — 这是一条 ERROR 日志
+2026-09-07 22:43:52 [WARNING] ralsei_pet.config_manager — set() 拒绝非法 key_path: ''
+2026-09-07 22:43:52 [WARNING] ralsei_pet.config_manager — set() 拒绝非法 key_path: 'a..b'
+2026-09-07 22:43:52 [WARNING] ralsei_pet.config_manager — update() 跳过非法 key_path: 'x..y'
+2026-09-07 22:44:15 [WARNING] ralsei_pet.config_manager — set() 拒绝非法 key_path: ''
+2026-09-07 22:44:15 [WARNING] ralsei_pet.config_manager — set() 拒绝非法 key_path: 'a..b'
+2026-09-07 22:44:15 [WARNING] ralsei_pet.config_manager — update() 跳过非法 key_path: 'x..y'
+2026-09-07 22:44:15 [ERROR] ralsei_pet.config_manager — 加载配置文件失败: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-09-07 22:44:15 [INFO] ralsei_pet.config_manager — 已备份损坏的配置文件到: C:\Users\23002\AppData\Local\Temp\tmpn79efhpg\config2.json.corrupt.1788792255
+2026-09-07 22:44:26 [WARNING] ralsei_pet.social_growth_system — add_experience 忽略负数经验值: -50
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 升级了！从 1 级升到 20 级！
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 进化了！现在是第 5 阶段！
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 初次互动 - 与Ralsei进行第一次对话
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 初次触摸 - 第一次触摸Ralsei
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 初次馈赠 - 第一次给Ralsei送礼物
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 每日访客 - 连续5天与Ralsei互动
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 每周访客 - 连续7天与Ralsei互动
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 每月访客 - 连续30天与Ralsei互动
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 知识探索者 - 了解了Ralsei的所有知识领域
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 对话大师 - 与Ralsei进行了100次对话
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 话题探索者 - 与Ralsei讨论了所有对话主题
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 情感连接 - 与Ralsei建立了深厚的情感连接
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 心灵纽带 - 与Ralsei的关系达到了best_friend级别
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 家人 - 与Ralsei的关系达到了family级别
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 解锁成就: 冒险者 - 与Ralsei一起尝试了所有互动功能
+2026-09-07 22:44:26 [INFO] ralsei_pet.social_growth_system — 成功加载成长数据: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\modules\..\growth_data.json
+2026-09-07 22:55:45 [INFO] ralsei_pet.social_growth_system — 升级了！从 1 级升到 20 级！
+2026-09-07 22:55:45 [INFO] ralsei_pet.social_growth_system — 进化了！现在是第 5 阶段！
+2026-09-07 22:56:36 [INFO] ralsei_pet.social_growth_system — 进化了！现在是第 2 阶段！
+2026-09-07 22:56:36 [INFO] ralsei_pet.social_growth_system — 进化了！现在是第 3 阶段！

@@ -2,3 +2,5 @@ PyQt5
 pywin32
 requests
 psutil
+# 联网搜索摘要（modules/search_summarizer.py）依赖；缺失时该模块自动降级为不可用
+beautifulsoup4

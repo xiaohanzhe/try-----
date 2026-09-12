@@ -28,6 +28,9 @@ class EnergyHungerSystem:
         self.critical_energy_threshold = 10
         self.low_hunger_threshold = 30
         self.critical_hunger_threshold = 10
+        # "已经足够了"的阈值：与 _hunger_tier()/_energy_tier() 的 high 档判定保持一致
+        self.full_hunger_threshold = 80
+        self.full_energy_threshold = 80
         
         # 上次更新时间
         self.last_update_time = time.time()
@@ -44,7 +47,10 @@ class EnergyHungerSystem:
     def update_stats(self):
         # 更新精力和饥饿度
         current_time = time.time()
-        elapsed_time = (current_time - self.last_update_time) / 60  # 转换为分钟
+        # 修复：系统时间被回拨（NTP 校时 / 夏令时 / 用户手改表）时 elapsed 为负，
+        # 会让精力、饥饿度反向跳变——实测回拨 1 小时，饥饿度立刻从 70 跳到 100。
+        # 增量一律取下限 0。
+        elapsed_time = max(0.0, (current_time - self.last_update_time) / 60)  # 转换为分钟
         self.last_update_time = current_time
         
         # 更新精力
@@ -112,11 +118,6 @@ class EnergyHungerSystem:
             elif energy_tier == 'low':
                 self.parent.dialogue_ui.add_dialogue("ralsei", "我有点累了... 能不能休息一下？", "sad")
                 self.parent.dialogue_ui.show_dialogue()
-            elif energy_tier == 'high' and self.is_resting:
-                # 精力充足，结束休息
-                self.parent.dialogue_ui.add_dialogue("ralsei", "哇！我感觉好多了！谢谢你让我休息！", "happy")
-                self.parent.dialogue_ui.show_dialogue()
-                self.is_resting = False
             self._prev_energy_tier = energy_tier
 
         # 检查饥饿状态
@@ -130,15 +131,30 @@ class EnergyHungerSystem:
                 # 有点饿
                 self.parent.dialogue_ui.add_dialogue("ralsei", "嗯... 我有点饿了... 有没有什么吃的？", "sad")
                 self.parent.dialogue_ui.show_dialogue()
-            elif hunger_tier == 'high' and self.is_eating:
-                # 饥饿度充足，结束进食
-                self.parent.dialogue_ui.add_dialogue("ralsei", "好吃！我已经吃饱了！谢谢你的食物！", "happy")
-                self.parent.dialogue_ui.show_dialogue()
-                self.is_eating = False
             self._prev_hunger_tier = hunger_tier
+
+        # ===== 修复：进食 / 休息的结束条件必须独立判定，不能挂在"档位跨越"上 =====
+        # 原实现只在 hunger_tier 从别的档跳到 'high' 的那一次把 is_eating 置 False。
+        # 如果调用 eat() 时饥饿度已经是 high 档（>80，例如刚喂完又点了一次"喂食"），
+        # 档位永远不再变化 → is_eating 永久为 True → 饥饿度只增不减、被钉死在 100，
+        # 此后 Ralsei 永远不会饿，饥饿系统彻底失效（实测 30 个 tick 后仍是
+        # hunger=100.0 / is_eating=True）。这里改为每 tick 独立判定，且只在真正结束时提示一次。
+        if self.is_eating and self.hunger >= self.full_hunger_threshold:
+            self.parent.dialogue_ui.add_dialogue("ralsei", "好吃！我已经吃饱了！谢谢你的食物！", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            self.is_eating = False
+        if self.is_resting and self.energy >= self.full_energy_threshold:
+            self.parent.dialogue_ui.add_dialogue("ralsei", "哇！我感觉好多了！谢谢你让我休息！", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            self.is_resting = False
     
     def rest(self):
         # 开始休息
+        # 修复：同理，精力充沛时不应进入"永远休息不完"的状态
+        if self.energy >= self.full_energy_threshold:
+            self.parent.dialogue_ui.add_dialogue("ralsei", "我现在精神得很，一点都不累哦！", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            return False
         if not self.is_resting:
             self.is_resting = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "我要休息一下啦... 呼...", "normal")
@@ -152,6 +168,12 @@ class EnergyHungerSystem:
     
     def eat(self):
         # 开始进食
+        # 修复：已经吃饱了还继续喂，会进入"永远吃不完"的状态（见 check_status_changes 注释）。
+        # 这里直接给出反馈并拒绝进入进食状态。
+        if self.hunger >= self.full_hunger_threshold:
+            self.parent.dialogue_ui.add_dialogue("ralsei", "呜…我已经吃得饱饱的啦，再吃就要撑破了！", "happy")
+            self.parent.dialogue_ui.show_dialogue()
+            return False
         if not self.is_eating:
             self.is_eating = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "哇！有好吃的！我开动啦！", "happy")
