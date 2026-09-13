@@ -7,7 +7,7 @@
 
 ## 项目概况
 - 主体：`ralsei_pet/` — Deltarune Ralsei 桌面宠物，Windows + Python 3.11 + PyQt5。
-- `src/main.py` 约 8740 行、单巨型 `RalseiPet(QMainWindow)` 类；另有 22 个 `modules/*.py`。
+- `src/main.py` 现 8500 行 / 187 个 def、单巨型 `RalseiPet(QMainWindow)` 类；另有 23 个 `modules/*.py`。
 - 审查产物统一放 `code-quality-audit/第五轮/`（轮次递增），报告放项目根 `代码质量复审报告_*.md`。
 
 ## 仓库与远端
@@ -64,6 +64,28 @@
 - `dialogue_ui._on_ai_reply` 跨线程操作 QWidget 已由 `pyqtSignal` 排队回主线程防御。
 - `reset_special_states` 全项目零调用，漏复位 `is_happy`/`is_splat` 无影响。
 - 原子写（临时文件 + 同目录 `os.replace`）与回收站删除失败保留，均已正确防御。
+
+## 第六轮：用户反馈 6 项行为缺陷修复（已完成，2026-09-13）
+提交 `4ef922e`（行为）+ `67d2936`（文档留痕），已推送。报告 `代码质量复审报告_2026-09-13_第六轮.md`，
+证据 `code-quality-audit/第六轮/`（含 `verify_round6_fixes.py` 39 项断言，四套合计 72 PASS / 0 FAIL）。
+
+**项目级约定（后续改代码必须遵守，勿再回退）**：
+- **多显示器坐标一律不用 `QApplication.desktop().availableGeometry()`**——它只返回主屏且原点固定 `(0,0)`，
+  副屏负坐标会被夹回，历史上就是"瞬移"的根因。统一用 `_virtual_screen_rect()`（整个虚拟桌面）/
+  `_current_screen_rect()`（`screenGeometry(self)`，它当前所在屏幕）/ `_clamp_pos_to_desktop()` / `_desktop_floor_y()`。
+- **物理量必须钳 `dt`**：`update_movement`/`handle_gravity_fall`/`update_bounce` 中 dt 上限 0.1s，
+  否则主线程卡顿后单帧 dt 变大会让位移按 dt 二次放大 → 同一种"瞬移"。
+- **甩飞（fling）判定只能放在 `mouseReleaseEvent`**：曾误写在 `mouseMoveEvent` 的无按键分支里，
+  导致"停住再松手"永不触发、且松手后碰一下鼠标会用陈旧采样自己甩自己。速度用
+  `_drag_samples` 真实 px/s（最近 0.12s 窗口，末次采样距今 >0.25s 记为轻放）；
+  `_FLING_SPEED=900`、`_BOUNCE_SPEED=250`。
+- **抛物线的落地相位不能借用 `self.fall_duration` 绝对值**（曾导致高空弧线在空中就进 splat/dazed），
+  必须用 `_fall_phase_start` + `_fall_flight_time` + `_fall_landed` 做相对计时。
+- **动画帧率 `fps=6`**（`config.json` + `config_manager.py`，frame_delay 166）——用户明确要求，勿改回去。
+- **自主说话只有一个入口 `start_autonomous_speech()`**，节流 `AUTONOMOUS_SPEECH_MIN_INTERVAL=600.0`；
+  **AI 关闭时必须保持沉默，不得回落内置台词**（20 个内置对话方法已全删，见 `strip_builtin_dialogue.py`）。
+- 常识底线：不给"假装操作桌面文件"的假动作、不劫持鼠标指针、拖拽 1:1 跟手、起身类动作
+  `play_animation_once(..., restore_to="idle")` 只播一次。
 
 ## H4/H5 架构改造（用户已决定"单独排期"，方案见 `架构改造排期方案_H4-H5_2026-09-13.md`）
 - 工具与基线在 `code-quality-audit/架构改造-H4H5/`（`scan_refactor_baseline.py`、`scan_animation_contract.py`，均为只读）。

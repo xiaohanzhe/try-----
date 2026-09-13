@@ -1,12 +1,14 @@
-﻿--- attempt 1 (exit=0) ---
+﻿PUSH_OK=True  ahead=0
+--- attempt 1 (exit=0) ---
 git : To https://github.com/xiaohanzhe/try-----.git
-所在位置 行:454 字符: 8
+所在位置 行:452 字符: 8
 +   $r = git -c credential.helper= -c http.proxy=http://127.0.0.1:7897  ...
 +        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (To https://gith...he/try-----.git 
    :String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
-   e0bd553..4ef922e  main -> main
+   4ef922e..67d2936  main -> main
 
-PUSH_OK=True
+67d2936 docs(绗叚杞?: 琛屼负淇鎶ュ憡涓庢帹閫佺暀鐥?
+origin=67d2936122d70bd888f4b3418a87083d240b4e4c
