@@ -7,6 +7,8 @@ venv/
 
 # 运行时产物 / 日志
 *.log
+# 轮转日志（如 ralsei_pet.log.2026-09-12）：*.log 不匹配，需单独一条
+*.log.*
 *.err.log
 debug.log
 output.log
