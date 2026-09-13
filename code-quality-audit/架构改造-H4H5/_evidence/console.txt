@@ -1,0 +1,178 @@
+﻿=== RalseiPet 瑙勬ā ===
+绫昏捣濮嬭: 122
+鐩存帴鏂规硶鏁? 186
+main.py 鎬昏鏁? 8794
+鏂规硶浣撴€昏鏁? 8286 (鍗犲叏鏂?94.2%)
+
+=== 鏈€閲嶇殑 25 涓柟娉曪紙琛屾暟闄嶅簭锛?==
+method                                       start     end   lines
+update_animation                              6699    7234     536
+update_movement                               1189    1616     428
+mouseMoveEvent                                4940    5228     289
+check_nearby_windows                          1836    2026     191
+init_movement                                  621     809     189
+_tick_spell_flow                              8011    8189     179
+react_to_desktop_element                      3090    3262     173
+_execute_api_action                           6296    6461     166
+start_jump                                    2028    2171     144
+handle_file_operation                         3741    3883     143
+generate_new_move_target                      1050    1185     136
+show_config_dialog                            5423    5558     136
+mousePressEvent                               4785    4917     133
+handle_fall                                   2725    2855     131
+handle_jump                                   2228    2354     127
+handle_gravity_fall                           2604    2722     119
+send_api_request                              6058    6166     109
+change_animation                              6186    6294     109
+start_watching_video                          4121    4224     104
+init_systems                                   317     415      99
+handle_dragging_play                          2922    3018      97
+randomize_movement_pattern                     955    1048      94
+init_animation                                 419     509      91
+start_fall                                    2491    2576      86
+cleanup_on_exit                               7859    7938      80
+
+=== 涓嬪垝绾垮紑澶存柟娉?39 涓紙鍗婃ā鍧楀寲淇″彿锛?==
+
+=== self 灞炴€т簯 ===
+涓嶅悓灞炴€у悕鎬绘暟: 438
+琚啓鍏?Store)杩囩殑灞炴€ф暟: 269
+鍙湪鏂规硶鍐呰銆佷粠鏈啓 self 鐨勫睘鎬ф暟(鍙兘鏉ヨ嚜鍏朵粬瀵硅薄鎴栬鐢?: 169
+
+attr                                  read   write
+dialogue_ui                            322       1
+emotion_system                         111       1
+desktop_interaction                     62       1
+change_animation                        62       0
+game_state                              60       1
+height                                  47       0
+current_animation                       44       3
+width                                   44       0
+play_animation_once                     40       0
+current_direction                       18      19
+_pet_detection_state                    32       2
+pos                                     33       0
+sprite_loader                           28       1
+is_moving                                5      24
+current_window                          20       8
+api_config                              24       3
+current_speed_x                         10      11
+max_idle_duration                        2      18
+guess_number_game                       19       1
+current_speed_y                          8      11
+move                                    19       0
+config_manager                          18       1
+speed                                    9       8
+current_frame                            8       9
+jump_start_pos                          13       3
+_spell_stage                             7       8
+idle_timer                               2      13
+_bounce_params                          14       1
+dragging_element                        10       5
+is_falling                               6       8
+sprite_label                            12       1
+current_floor                            9       4
+target_pos                               7       6
+autonomous_agent                        11       2
+is_recovering                            4       9
+max_fall_duration                        2      10
+is_jumping                               5       6
+spatial_pos                             10       1
+_cached_mood_factor                      1      10
+_spell_target_direction                  5       6
+jump_target_pos                          4       7
+_sprite_cache                            8       2
+fall_duration                            4       6
+jump_count                               3       7
+_hide_search_timer                       5       5
+weather                                  8       2
+floor_manager                            8       1
+current_activity                         3       6
+emotions                                 8       1
+jump_target_window                       7       2
+_hide_folder_path                        4       5
+_last_drag_pos                           8       1
+energy_hunger                            8       1
+_hide_stage                              0       9
+drag_target_pos                          5       4
+last_window_rect                         0       8
+is_watching_video                        3       5
+jump_duration                            6       2
+drag_start_pos                           5       3
+previous_direction                       2       6
+
+琚?>=3 澶勫啓鍏ョ殑灞炴€э紙璺ㄦ柟娉曞叡浜彲鍙樼姸鎬侊紝鎷嗗垎鐪熻€﹀悎鐐癸級: 106 涓?
+current_animation, current_direction, is_moving, current_window, api_config, current_speed_x, max_idle_duration, current_speed_y, speed, current_frame, jump_start_pos, _spell_stage, idle_timer, dragging_element, is_falling, current_floor, target_pos, is_recovering, max_fall_duration, is_jumping, _cached_mood_factor, _spell_target_direction, jump_target_pos, fall_duration, jump_count, _hide_search_timer, current_activity, _hide_folder_path, _hide_stage, drag_target_pos, last_window_rect, is_watching_video, drag_start_pos, previous_direction, api_enabled, window_level, api_client, is_sleeping_walk, _spell_auto_suspended, mood, is_unhappy, time_of_day, idle_walk_timer, is_shy, animation_frame_delay, _tray, video_platform, jump_phase, needs_rest, fall_speed, is_dragging_mouse, current_platform_z, _spell_target_path, humidity, _spell_finish_cb, fall_velocity_x, is_surprised, _spell_seen_frame, _hide_obstacles, video_title, _spell_frames_seen, fall_start_time, max_moving_duration, recovery_duration, is_splat, fall_slide_speed_y, _spell_target_kind, is_gravity_falling, fall_slide_speed_x, video_start_time, surprised_timer, is_sleeping, is_following_dragged_file, dragging_type, drag_start_time, last_interaction_time, _spell_target_screen_pos, is_following_mouse, unhappy_timer, _fall_phase
+=== sprite_loader.animation_mapping 鍩虹嚎 ===
+mapping 閿紙鍔ㄧ敾缁勶級鏁? 109
+寮曠敤鐨勫抚鏂囦欢鏉＄洰鏁帮紙鍚噸澶嶅紩鐢級: 377
+鍘婚噸鍚庡紩鐢ㄧ殑甯ф枃浠舵暟: 363
+绱犳潗鐩綍 PNG 瀹為檯鏁伴噺: 1106
+
+!! mapping 寮曠敤浣嗙鐩樹笉瀛樺湪鐨勬枃浠? 0 涓紙浼氭覆鏌撴垚鐏板潡鍗犱綅甯э級
+
+?? 纾佺洏瀛樺湪浣嗘湭琚?mapping 寮曠敤: 743 涓?
+   UNUSED   spr_board_ralsei_dead_0.png
+   UNUSED   spr_board_ralsei_hurt_0.png
+   UNUSED   spr_board_ralsei_itemget_0.png
+   UNUSED   spr_board_ralsei_sleep_0.png
+   UNUSED   spr_board_ralsei_sleep_1.png
+   UNUSED   spr_board_ralsei_surfboard_0.png
+   UNUSED   spr_board_ralsei_surfboard_1.png
+   UNUSED   spr_board_ralsei_walk_down_0.png
+   UNUSED   spr_board_ralsei_walk_down_1.png
+   UNUSED   spr_board_ralsei_walk_down_armsup_0.png
+   UNUSED   spr_board_ralsei_walk_down_armsup_1.png
+   UNUSED   spr_board_ralsei_walk_left_0.png
+   UNUSED   spr_board_ralsei_walk_left_1.png
+   UNUSED   spr_board_ralsei_walk_left_armsup_0.png
+   UNUSED   spr_board_ralsei_walk_left_armsup_1.png
+   UNUSED   spr_board_ralsei_walk_right_0.png
+   UNUSED   spr_board_ralsei_walk_right_1.png
+   UNUSED   spr_board_ralsei_walk_right_armsup_0.png
+   UNUSED   spr_board_ralsei_walk_right_armsup_1.png
+   UNUSED   spr_board_ralsei_walk_up_0.png
+   UNUSED   spr_board_ralsei_walk_up_1.png
+   UNUSED   spr_board_ralsei_walk_up_armsup_0.png
+   UNUSED   spr_board_ralsei_walk_up_armsup_1.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_down_pippins_0.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_down_pippins_1.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_down_pippins_2.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_down_pippins_3.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_left_pippins_0.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_left_pippins_1.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_left_pippins_2.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_left_pippins_3.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_right_pippins_0.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_right_pippins_1.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_right_pippins_2.png
+   UNUSED   spr_ch3_shutta_act_ralsei_walk_right_pippins_3.png
+   UNUSED   spr_chefs_ralsei_0.png
+   UNUSED   spr_chefs_ralsei_1.png
+   UNUSED   spr_chefs_ralsei_2.png
+   UNUSED   spr_chefs_ralsei_3.png
+   UNUSED   spr_cutscene_12_susie_ralsei_drag_0.png
+   UNUSED   spr_cutscene_12_susie_ralsei_drag_1.png
+   UNUSED   spr_cutscene_12_susie_ralsei_drag_2.png
+   UNUSED   spr_cutscene_12_susie_ralsei_drag_3.png
+   UNUSED   spr_cutscene_15_ralsei_throw_ball_5.png
+   UNUSED   spr_cutscene_24e_ralsei_splat_happy.png
+   UNUSED   spr_cutscene_27_queen_hand_surprise_ralsei.png
+   UNUSED   spr_cutscene_27_ralsei_huh.png
+   UNUSED   spr_cutscene_27_ralsei_look.png
+   UNUSED   spr_cutscene_27_ralsei_mu.png
+   UNUSED   spr_cutscene_27_ralsei_scared.png
+   UNUSED   spr_cutscene_27_ralsei_smile.png
+   UNUSED   spr_cutscene_27_ralsei_stern.png
+   UNUSED   spr_cutscene_ex1_ralsei_glasses_1_1.png
+   UNUSED   spr_cutscene_ex1_ralsei_glasses_2_1.png
+   UNUSED   spr_cutscene_ex1_ralsei_glasses_2_2.png
+   UNUSED   spr_dw_tv_prize_ralsei_0.png
+   UNUSED   spr_dw_tv_prizes_11.png
+   UNUSED   spr_gameshow_drowningRalsei_ralsei_0.png
+   UNUSED   spr_gameshow_drowningRalsei_ralsei_origin_edit_0.png
+   UNUSED   spr_gameshow_ralseiplush_stoole_0.png
+   ... 鍏朵綑 683 涓 _evidence/sprite_mapping_gap.json
+
+[ok] 浜х墿鍐欏叆 C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\code-quality-audit\鏋舵瀯鏀归€?H4H5\_evidence
+exit=0

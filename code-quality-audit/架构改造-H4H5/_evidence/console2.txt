@@ -1,0 +1,28 @@
+﻿=== 鍔ㄧ敾鍚嶅绾︼紙H5 楠屾敹绾㈢嚎锛?==
+mapping 宸插畾涔夐敭: 109
+浠ｇ爜涓互"鍔ㄧ敾鍚?褰㈠紡鍑虹幇鐨勫瓧闈㈤噺: 24
+  -> 宸茶 mapping 瑕嗙洊: 24
+  -> mapping 涓己澶憋紙杩愯鏃堕潤榛橀€€鍖?idle锛? 0
+mapping 瀹氫箟浜嗕絾浠ｇ爜浠庝笉寮曠敤: 85
+
+--- 缂哄け鍚嶅崟锛堟瘡椤?涓€澶勬綔鍦ㄩ潤榛樺け鏁堬級---
+
+--- 瀹氫箟浜嗕絾闆跺紩鐢紙閰嶇疆鍖栨椂鍙爣娉?legacy锛?--
+   attack, battleintro, book_look, bow, button_press, cake_eat, cotton_candy_left, cotton_candy_right, cotton_surprise, cotton_talk, cower, cry, cry_reverse, cry_start, curtsy, darkchurch_sit_happy, darkchurch_sit_sad, defeat, defend, fall_back_cry, fall_back_expressions, fall_back_wince, glasses_1, glasses_2, hatless_throw, hug_stop, item, kneel_cry, kneel_serious, nuzzle1, roll, run_down, run_left, run_right, run_up, shocked_left, shocked_right, shocked_subtle_left, shocked_subtle_right, sleep, slide, smile_left, smile_right, spell, spell_left, spin, splat_mad, stool, surprised_behind, surprised_down, susie_throw_ready, tea, tea_pour, tea_put_down, tea_reach, tea_sip, tea_smile, tea_surprised, teacup_land, throw_ball, victory, walk_down_blush, walk_down_butler, walk_down_butler_unhappy, walk_down_unhappy, walk_left, walk_left_blush, walk_left_butler, walk_left_butler_unhappy, walk_left_unhappy, walk_right, walk_right_blush, walk_right_butler, walk_right_butler_unhappy, walk_right_unhappy, walk_tea_down, walk_tea_left, walk_tea_right, walk_tea_up, walk_up, walk_up_butler, wave_down, wave_start, yarn_1, yarn_2
+
+--- 鍔ㄦ€佹嫾鎺ョ殑鍔ㄧ敾鍚嶏紙闈欐€佹壂鎻忎笉鍙锛孒5 蹇呴』闈犺繍琛屾椂鑷锛?--
+鎷兼帴鐐规暟閲? 12锛屾ā鏉?9 绉?
+   f"idle"   鏉ユ簮: main.py
+   f"run_{direction}"   鏉ユ簮: command_manager.py
+   f"run_{new_dir}"   鏉ユ簮: main.py
+   f"run_{self.current_direction}"   鏉ユ簮: main.py
+   f"walk_{d}"   鏉ユ簮: main.py
+   f"walk_{facing}"   鏉ユ簮: autonomous_agent.py
+   f"walk_{new_dir}"   鏉ユ簮: main.py
+   f"walk_{self.current_direction}"   鏉ユ簮: main.py
+   f"{anim_type}_{new_dir}"   鏉ユ簮: main.py
+
+!!! 缁撹锛氫笂闈?85 涓?闆跺紩鐢?閿笉鑳界洿鎺ュ垽涓?legacy 鈥斺€?鍏朵腑 walk_/run_/walk_tea_ 绛?
+    閿敱 f-string 鍦ㄨ繍琛屾椂鎷煎嚭锛堝 walk_{direction}銆乺un_{direction}锛夛紝闈欐€佷笉鍙銆?
+    H5 閰嶇疆鍖栫殑绗竴姝ヤ笉鏄惉瀛楅潰閲忥紝鑰屾槸缁?change_animation 鍔?鏈懡涓嵆鍛婅"鐨勮嚜妫€銆?
+exit=0

@@ -1,0 +1,27 @@
+=== 动画名契约（H5 验收红线）===
+mapping 已定义键: 109
+代码中以"动画名"形式出现的字面量: 24
+  -> 已被 mapping 覆盖: 24
+  -> mapping 中缺失（运行时静默退化 idle）: 0
+mapping 定义了但代码从不引用: 85
+
+--- 缺失名单（每项=一处潜在静默失效）---
+
+--- 定义了但零引用（配置化时可标注 legacy）---
+   attack, battleintro, book_look, bow, button_press, cake_eat, cotton_candy_left, cotton_candy_right, cotton_surprise, cotton_talk, cower, cry, cry_reverse, cry_start, curtsy, darkchurch_sit_happy, darkchurch_sit_sad, defeat, defend, fall_back_cry, fall_back_expressions, fall_back_wince, glasses_1, glasses_2, hatless_throw, hug_stop, item, kneel_cry, kneel_serious, nuzzle1, roll, run_down, run_left, run_right, run_up, shocked_left, shocked_right, shocked_subtle_left, shocked_subtle_right, sleep, slide, smile_left, smile_right, spell, spell_left, spin, splat_mad, stool, surprised_behind, surprised_down, susie_throw_ready, tea, tea_pour, tea_put_down, tea_reach, tea_sip, tea_smile, tea_surprised, teacup_land, throw_ball, victory, walk_down_blush, walk_down_butler, walk_down_butler_unhappy, walk_down_unhappy, walk_left, walk_left_blush, walk_left_butler, walk_left_butler_unhappy, walk_left_unhappy, walk_right, walk_right_blush, walk_right_butler, walk_right_butler_unhappy, walk_right_unhappy, walk_tea_down, walk_tea_left, walk_tea_right, walk_tea_up, walk_up, walk_up_butler, wave_down, wave_start, yarn_1, yarn_2
+
+--- 动态拼接的动画名（静态扫描不可见，H5 必须靠运行时自检）---
+拼接点数量: 12，模板 9 种
+   f"idle"   来源: main.py
+   f"run_{direction}"   来源: command_manager.py
+   f"run_{new_dir}"   来源: main.py
+   f"run_{self.current_direction}"   来源: main.py
+   f"walk_{d}"   来源: main.py
+   f"walk_{facing}"   来源: autonomous_agent.py
+   f"walk_{new_dir}"   来源: main.py
+   f"walk_{self.current_direction}"   来源: main.py
+   f"{anim_type}_{new_dir}"   来源: main.py
+
+!!! 结论：上面 85 个"零引用"键不能直接判为 legacy —— 其中 walk_/run_/walk_tea_ 等
+    键由 f-string 在运行时拼出（如 walk_{direction}、run_{direction}），静态不可见。
+    H5 配置化的第一步不是搬字面量，而是给 change_animation 加"未命中即告警"的自检。
