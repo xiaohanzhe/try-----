@@ -64,6 +64,18 @@
 - **可靠做法**：用 Write 工具把提交信息写成 UTF-8 文件，再 `git commit -F <文件>`。
   提交后**必须核对 `git log --oneline -1`**，别只看 push 的退出码。
 
+## GitHub 连接器（2026-09-13 接入）
+- 已连接，身份 = `xiaohanzhe`（id **236837805**，与本机 GCM 账号一致）。
+- **但它看不到我们的工作仓库**：`GET /repos/xiaohanzhe/try-----` 返 **404**（私有库对无权限令牌一律 404，
+  以此掩盖"存在与否"）。同账号公开库可正常读（`desktop-pet` 的 commits 拉得到）→ 连接器本身是通的，
+  **是授权范围只覆盖公开库**。要用它核对推送 / 读 PR，须把 `try-----` 加进其可访问仓库
+  （OAuth scope 或 GitHub App 的 repository selection，取决于授权形态）。
+- 该账号公开库只有 2 个且都不是本项目：`desktop-pet`（Python 脚手架）与 `ralsei_pet`
+  （**空壳**：仅 `README.md`/`PR_NOTES.md`/`.gitattributes`/`assets/`，无 `src/`）→ **无代码外泄**。
+- **`git ls-remote` 对私有库同样要手工认证头**，否则退出码 **128 且完全静默**（与 push 同因：
+  非交互 GCM 取不到凭据）。加 `-c credential.helper= -c http.extraheader="Authorization: Basic <b64>"`
+  即成功。**核对外发是否真的成功，用它可以，且比看 push 退出码更硬**。
+
 ## 仓库卫生约定
 - `compileall` 会改写被 git 跟踪的 `src/__pycache__/main.cpython-311.pyc` → 跑完用 `git checkout --` 还原。
 - 临时诊断脚本/输出统一收进 `code-quality-audit/<轮次>/_evidence/`，项目根不留散落文件。
