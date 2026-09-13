@@ -104,6 +104,20 @@ except Exception as exc:      # 解析失败本身就是断言失败，不让脚
     resolved, _res_ok = {}, False
     print('  !! resolve_groups 抛异常: %r' % (exc,))
 check('A5', '文件可被解析（alias_of 展开、无成环）', _res_ok)
+# 加载器对未知字段只 warning 不拒绝 —— 于是 "legcay: true" 这类拼写错误会静默失效。
+# 这里对**随包发布的这一份**上锁，保证入库文件里没有未知键。
+_KNOWN = set(sl._GROUP_KNOWN_KEYS)   # 私有常量：审计脚本直接引用，避免"复制一份白名单"漂移
+unknown_keys = sorted('%s.%s' % (n, k) for n, e in groups.items() for k in e if k not in _KNOWN)
+check('A6', '所有组只含已知字段（拼错的键不会被静默忽略）', not unknown_keys,
+      '未知=%s' % (unknown_keys or '无'))
+# comment 的契约是 str 或 str 列表（见 _validate_animation_config），
+# 实际导出统一为**非空字符串数组**（保留源码里的多行注释，不做有损拼接）。
+bad_comment = sorted(n for n, e in groups.items()
+                     if e.get('comment') is not None
+                     and not (isinstance(e['comment'], list)
+                              and all(isinstance(c, str) and c.strip() for c in e['comment'])))
+check('A7', 'comment 统一为非空字符串数组（保留源码多行注释）', not bad_comment,
+      '异常=%s' % (bad_comment or '无'))
 
 print()
 print('=== B. 与源码硬编码表深度相等（S2 的核心断言） ===')
