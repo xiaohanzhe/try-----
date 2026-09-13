@@ -1,4 +1,5 @@
 import os
+import json
 import re
 import time
 from collections import defaultdict
@@ -17,14 +18,32 @@ except ImportError:  # 模块外独立导入时的降级
 _DIRECTION_TOKENS = ('down', 'up', 'left', 'right')
 _ANIM_TYPE_TOKENS = ('walk', 'run')
 
+# ================== H5 S2：动画表外部化（JSON 优先，内置兜底）==================
+# 目标结构见 `架构改造排期方案_H4-H5_2026-09-13.md` §4.1：
+#   {schema_version, meta:{...}, groups:{名:{frames, loop?, offset?, alias_of?, legacy?}}}
+# 三条硬约束：
+#   1. 加载失败**绝不**让程序起不来——一律回落内置表（本文件内那张原表，原样保留）；
+#   2. JSON 还原出的 dict 必须与内置表**深度相等**（由 verify_s2_animations_json.py 断言）；
+#   3. 名字集合与语义不变，只是来源从代码变成文件。
+ENV_ANIMATIONS_JSON = 'RALSEI_ANIMATIONS_JSON'
+ANIMATIONS_JSON_SUBPATH = ('ralsei_pet', 'assets', 'animations.json')
+SUPPORTED_SCHEMA_VERSIONS = (1,)
+_GROUP_KNOWN_KEYS = ('frames', 'loop', 'offset', 'alias_of', 'legacy', 'comment')
+
+
+def _project_root():
+    """项目根：<根>/ralsei_pet/modules/sprite_loader.py → 向上两级。"""
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+
 class SpriteLoader:
     def __init__(self):
         self.sprites = {}
         self.frame_counts = {}
         # 动态计算素材路径：相对于本文件向上两级（modules → ralsei_pet → 项目根）
-        _project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-        self.sprite_dir = os.path.join(_project_root, "deltarune_ralsei")
-        self.face_dir = os.path.join(_project_root, "ralsei_face")
+        _root = _project_root()
+        self.sprite_dir = os.path.join(_root, "deltarune_ralsei")
+        self.face_dir = os.path.join(_root, "ralsei_face")
         
         # 添加图像缓存，避免重复加载
         self.image_cache = {}
@@ -33,7 +52,10 @@ class SpriteLoader:
         self.cache_limit = 1000  # 缓存限制
         
         # 定义动画与文件的映射关系
-        self.animation_mapping = {
+        # H5 S2：本字典从此是**兜底表**（原表原样保留，不删不改），
+        # 实际生效的表由 _load_animation_config() 决定：assets/animations.json 优先，
+        # 读不到 / 校验不过 → 回落本表。见下方 H5 S2 段落。
+        _builtin_animation_mapping = {
             # 基础动作
             "idle": ["spr_ralsei_idle_0.png", "spr_ralsei_idle_1.png", "spr_ralsei_idle_2.png", "spr_ralsei_idle_3.png", "spr_ralsei_idle_4.png"],
             
@@ -211,7 +233,180 @@ class SpriteLoader:
         # 让它成为后续配置化改造（S2/S3）的输入清单与验收依据。
         self.animation_misses = {}   # {请求名: {'count', 'where': set, 'resolved': set}}
         self._miss_reported = set()  # 同一请求名只告警一次，避免每帧刷屏
-        
+
+        # ================= H5 S2：动画表外部化（JSON 优先，内置兜底）=================
+        # 放在 __init__ 末尾：_load_animation_config() 会写 position_offset、
+        # 读 sprite_dir，必须等这些字段都初始化完再执行。
+        # animation_config_source ∈ {'json', 'builtin'}，供自检与回归断言使用。
+        self.legacy_animations = set()
+        self.animation_config_source = 'builtin'
+        self.animation_mapping, self.animation_config_source = \
+            self._load_animation_config(_builtin_animation_mapping)
+
+    # ================== H5 S2：动画表加载与校验 ==================
+    @staticmethod
+    def _resolve_animations_json_path():
+        """JSON 配置的查找顺序：环境变量覆盖 → <项目根>/ralsei_pet/assets/animations.json。
+
+        环境变量是为了让验证脚本能在**不影响真实配置**的前提下指向临时文件。
+        """
+        override = os.environ.get(ENV_ANIMATIONS_JSON)
+        if override:
+            return os.path.abspath(override)
+        return os.path.join(_project_root(), *ANIMATIONS_JSON_SUBPATH)
+
+    def _load_animation_config(self, builtin):
+        """加载动画表。**永不抛异常**：任何失败都回落内置表，保证程序起得来。
+
+        返回值：(mapping, source)。source ∈ {'json', 'builtin'}。
+        铁律：JSON 还原出来的 dict 必须与内置表**深度相等**——
+        这条由 `verify_s2_animations_json.py` 机器断言，不靠人工核对。
+        """
+        path = self._resolve_animations_json_path()
+        try:
+            with open(path, encoding='utf-8') as fh:
+                raw = json.load(fh)
+        except FileNotFoundError:
+            _log.info("[anim-config] 未找到 %s → 使用内置动画表（%d 组）", path, len(builtin))
+            return self._copy_mapping(builtin), 'builtin'
+        except Exception as e:
+            _log.error("[anim-config] 读取 %s 失败 → 回落内置动画表：%s", path, e)
+            return self._copy_mapping(builtin), 'builtin'
+
+        try:
+            mapping = self._validate_animation_config(raw)
+        except Exception as e:
+            _log.error("[anim-config] %s 校验不通过 → 回落内置动画表：%s", path, e)
+            return self._copy_mapping(builtin), 'builtin'
+
+        self._report_animation_config(mapping, path, raw.get('schema_version'))
+        return mapping, 'json'
+
+    @staticmethod
+    def _copy_mapping(mapping):
+        """浅拷贝外层 + 拷贝帧列表：调用方修改不会污染内置表。"""
+        return {name: list(frames) for name, frames in mapping.items()}
+
+    def _validate_animation_config(self, raw):
+        """结构校验 + 归一化成 {动画名: [帧文件名]}。校验不过就抛异常（由调用方回落）。"""
+        if not isinstance(raw, dict):
+            raise ValueError('顶层不是 JSON 对象')
+        version = raw.get('schema_version')
+        if version not in SUPPORTED_SCHEMA_VERSIONS:
+            raise ValueError('schema_version=%r 不受支持（支持 %s）'
+                             % (version, list(SUPPORTED_SCHEMA_VERSIONS)))
+        groups = raw.get('groups')
+        if not isinstance(groups, dict) or not groups:
+            raise ValueError('groups 缺失或为空')
+
+        mapping = {}
+        legacy = set()
+        for name, spec in groups.items():
+            if not isinstance(name, str) or not name or name != name.strip():
+                raise ValueError('动画名非法: %r' % (name,))
+            if not isinstance(spec, dict):
+                raise ValueError('%s 的配置不是对象' % name)
+
+            frames = spec.get('frames', [])
+            if not isinstance(frames, list) or not all(isinstance(f, str) for f in frames):
+                raise ValueError('%s.frames 不是字符串列表' % name)
+            if 'loop' in spec and not isinstance(spec['loop'], bool):
+                raise ValueError('%s.loop 不是布尔值' % name)
+            offset = spec.get('offset', [0, 0])
+            if not (isinstance(offset, list) and len(offset) == 2
+                    and all(isinstance(v, int) and not isinstance(v, bool) for v in offset)):
+                raise ValueError('%s.offset 不是 [int, int]' % name)
+            alias_of = spec.get('alias_of')
+            if alias_of is not None and not isinstance(alias_of, str):
+                raise ValueError('%s.alias_of 不是字符串' % name)
+            if 'legacy' in spec and not isinstance(spec['legacy'], bool):
+                raise ValueError('%s.legacy 不是布尔值' % name)
+            comment = spec.get('comment')
+            if comment is not None and not (
+                    isinstance(comment, str)
+                    or (isinstance(comment, list) and all(isinstance(c, str) for c in comment))):
+                raise ValueError('%s.comment 不是字符串或字符串列表' % name)
+
+            unknown = sorted(k for k in spec if k not in _GROUP_KNOWN_KEYS)
+            if unknown:
+                _log.warning('[anim-config] %s 含未知字段 %s（已忽略）', name, unknown)
+
+            mapping[name] = list(frames)
+            if spec.get('legacy') is True:
+                legacy.add(name)
+            if any(offset):
+                # 与内置表的 position_offset 同语义：只登记非零特例偏移。
+                self.position_offset[name] = (offset[0], offset[1])
+
+        # 别名第二遍解析（允许 alias_of 前向引用）
+        for name, spec in groups.items():
+            target = spec.get('alias_of')
+            if not target:
+                continue
+            if target not in mapping:
+                raise ValueError('%s.alias_of 指向不存在的动画 %r' % (name, target))
+            alias_frames = list(mapping[target])
+            if mapping[name] and mapping[name] != alias_frames:
+                raise ValueError('%s 与 alias_of(%s) 的帧不一致' % (name, target))
+            mapping[name] = alias_frames
+
+        self.legacy_animations = legacy
+        return mapping
+
+    def _report_animation_config(self, mapping, path, schema_version):
+        """加载成功后的自检报告：组数、别名、legacy、以及**引用缺失的帧文件**。
+
+        缺帧只告警不拒绝——内置表历史上也允许缺帧（缺帧会被 load_sprites 跳过），
+        若在此处直接拒绝反而会引入"以前能起、现在起不来"的新故障。
+        """
+        missing_total, missing_groups, samples = 0, [], []
+        for name, frames in mapping.items():
+            miss = [f for f in frames
+                    if not os.path.exists(os.path.join(self.sprite_dir, f))]
+            if miss:
+                missing_total += len(miss)
+                missing_groups.append(name)
+                if len(samples) < 8:
+                    samples.append('%s/%s' % (name, miss[0]))
+        if missing_total:
+            _log.warning('[anim-config] %s 引用了 %d 个磁盘上不存在的帧（涉及 %d 组）：%s%s',
+                         os.path.basename(path), missing_total, len(missing_groups),
+                         '、'.join(samples),
+                         ' …' if len(missing_groups) > len(samples) else '')
+        _log.info('[anim-config] 已从 %s 加载 %d 组动画（legacy %d 组，schema=%s）',
+                  os.path.basename(path), len(mapping), len(self.legacy_animations),
+                  schema_version)
+
+    def get_animation_config_report(self):
+        """动画表来源与差异清单，供启动自检 / 回归断言读取。"""
+        path = self._resolve_animations_json_path()
+        missing = {}
+        for name, frames in self.animation_mapping.items():
+            miss = [f for f in frames
+                    if not os.path.exists(os.path.join(self.sprite_dir, f))]
+            if miss:
+                missing[name] = miss
+        return {
+            'source': self.animation_config_source,
+            'path': path,
+            'path_exists': os.path.exists(path),
+            'groups': len(self.animation_mapping),
+            'legacy_groups': sorted(self.legacy_animations),
+            'missing_frames': missing,
+            'missing_frame_total': sum(len(v) for v in missing.values()),
+        }
+
+    def get_unconfigured_asset_report(self):
+        """补漏报告：自动扫描到、但**配置表里没有**的素材前缀。
+
+        这是把 `scan_and_group_assets` 从"自动接管配置"降级为"只报告差异"的第一步。
+        注意：本方法**只读不接管**——`load_sprites` 目前仍会把自动扫描结果并入
+        `sprites`（见该方法的说明：那 380 组里有一部分命中 `core_prefixes`，
+        参与 frame_container_size 的包围盒计算，直接停用会改变容器尺寸）。
+        """
+        auto = self.auto_scanned_animations or {}
+        return sorted(name for name in auto if name not in self.animation_mapping)
+
     def scan_and_group_assets(self):
         """扫描素材文件夹并按前缀分组，支持多种文件命名格式"""
         if not os.path.exists(self.sprite_dir):
@@ -365,6 +560,13 @@ class SpriteLoader:
         
         # 合并手动定义的动画映射和自动扫描的动画
         # 注意：自动扫描的动画只在手动映射中不存在时才添加
+        # H5 S2 备注：方案 §4.1 希望把 scan_and_group_assets 降级为"补漏报告器"
+        # （只输出"磁盘有、配置无"的清单，不自动接管）。但实测那 380 组里有相当一部分
+        # 命中下方 core_prefixes（组名就是文件前缀，如 spr_ralsei_idle），
+        # 会参与 frame_container_size 的包围盒统计——直接停用会改变窗口容器尺寸，
+        # 属于用户可见的视觉变更，不能藏在"配置化"里做。
+        # 因此本轮只新增 get_unconfigured_asset_report()（只读报告），
+        # 是否停用并入留待单独一步 + 单独度量（见 verify_s2_animations_json.py 的 G 组）。
         all_animations = self.animation_mapping.copy()
         for animation_name, files in self.auto_scanned_animations.items():
             if animation_name not in all_animations:
