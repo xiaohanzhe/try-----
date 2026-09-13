@@ -43,6 +43,15 @@
   git -c credential.helper= -c http.extraheader="Authorization: Basic $b64" push origin main
   ```
   注意：**永远不要把令牌明文/base64 写进仓库文件**；用完确认 `_evidence` 无泄露再提交。
+- **网络层（2026-09-13 实测新增）**：本机 `HTTP_PROXY`/`HTTPS_PROXY` 环境变量指向
+  `http://127.0.0.1:54231`（沙箱代理），但 `github.com` 走它常返 **`CONNECT tunnel failed, response 502`**；
+  直连则 `Failed to connect to github.com port 443`（不通）。**可靠组合**：
+  `-c http.proxy=http://127.0.0.1:7897`（本机 Clash 端口）**+ 重试循环（3–5 次，间隔 5s）**。
+  典型症状是 `schannel: failed to receive handshake` / `unexpected eof while reading` →
+  属 **github.com 的 SNI 被 TLS 重置**，是间歇性的，**重试通常能过**（实测第 4 次成功）。
+  快速判据：`curl.exe -v -x http://127.0.0.1:7897 https://github.com` 若看到
+  `CONNECT tunnel established, response 200` 紧接 `schannel: failed to receive handshake`，
+  即代理通、目标被重置；而 `api.github.com` 同时可 200（用于区分"代理坏了"还是"目标被封"）。
 
 ## 仓库卫生约定
 - `compileall` 会改写被 git 跟踪的 `src/__pycache__/main.cpython-311.pyc` → 跑完用 `git checkout --` 还原。
