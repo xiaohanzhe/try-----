@@ -2,17 +2,17 @@
 import sys
 import os
 import time
+import functools
 
 # 注意：单实例检查已封装为 check_single_instance() 函数
 # 在 if __name__ == '__main__': 中调用，避免 import 时就触发退出
 # 也便于单元测试和 mock
 
 # 继续导入其他模块
-import time
 import random
 import math
 import statistics
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QMessageBox
 from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor, QTransform
 from PyQt5.QtCore import Qt, QTimer, QPoint, QRect, pyqtSignal
 
@@ -55,13 +55,26 @@ class PerformanceMonitor:
     
     def print_stats(self):
         """打印性能统计信息"""
-        pass
+        stats = self.get_stats()
+        if not stats:
+            _log.info("暂无性能统计数据")
+            return
+        _log.info("========== 性能统计 ==========")
+        for func_name, stat in stats.items():
+            _log.info(
+                f"函数: {func_name} | 调用次数: {stat['count']} | "
+                f"平均耗时: {stat['avg']:.4f} ms | "
+                f"最小耗时: {stat['min']:.4f} ms | "
+                f"最大耗时: {stat['max']:.4f} ms"
+            )
+        _log.info("==============================")
 
 # 创建全局性能监控实例
 perf_monitor = PerformanceMonitor()
 
 # 性能监控装饰器
 def monitor_performance(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
@@ -400,9 +413,7 @@ class RalseiPet(QMainWindow):
         self._hide_center_x = None
         self._hide_center_y = None
         self._hide_search_timer = None              # searching 阶段定时器
-        # game_state 统一游戏状态
-        if not hasattr(self, 'game_state') or not isinstance(getattr(self, 'game_state', None), dict):
-            self.game_state = {'is_playing': False, 'game_type': None}
+        # game_state 在 __init__ 中已完整初始化（含 is_playing/game_type/player_score/best_streak 等 12 个字段）
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):
@@ -542,11 +553,12 @@ class RalseiPet(QMainWindow):
         # 初始化透明占位符系统，用于Ralsei与桌面文件夹/文件的互动
         self.placeholder_labels = []
         self.placeholder_elements = []
+        self._last_desktop_elements_sig = None  # 上次桌面元素签名，用于增量更新判断
         
         # 创建定时器用于更新占位符位置
         self.placeholder_timer = QTimer(self)
         self.placeholder_timer.timeout.connect(self.update_placeholders)
-        self.placeholder_timer.start(1000)  # 每秒更新一次占位符位置
+        self.placeholder_timer.start(3000)  # 每3秒更新一次占位符位置（C10修复：降低频率避免全量重建）
         
         # 初始化占位符
         self.create_placeholders()
@@ -581,7 +593,20 @@ class RalseiPet(QMainWindow):
         # 首先更新桌面元素列表
         self.desktop_interaction.update_desktop_elements()
         
-        # 重新创建占位符
+        # C10修复：计算当前桌面元素签名，仅在元素真正变化时才重建占位符
+        # 签名格式：元素数量 + 每个元素的x/y/width/height/name拼接
+        desktop_elements = self.desktop_interaction.desktop_elements
+        sig_parts = [str(len(desktop_elements))]
+        for el in desktop_elements:
+            sig_parts.append(f"{el.get('x', 0)},{el.get('y', 0)},{el.get('width', 0)},{el.get('height', 0)},{el.get('name', '')}")
+        current_sig = "|".join(sig_parts)
+        
+        if current_sig == self._last_desktop_elements_sig:
+            # 桌面元素未变化，跳过重建，避免不必要的销毁/创建 QLabel
+            return
+        
+        # 元素有变化，才重建占位符
+        self._last_desktop_elements_sig = current_sig
         self.create_placeholders()
         
     def get_element_at_pos(self, pos):
@@ -834,77 +859,60 @@ class RalseiPet(QMainWindow):
     
     def update_mood(self):
         # 更新Ralsei的心情，基于客观因素
-        
-        # 基础情绪变化（自然衰减）
-        for emotion in self.emotions:
-            # 情绪自然衰减
-            self.emotions[emotion] *= 0.99
-            
-            # 情绪值限制在0-100之间
-            self.emotions[emotion] = max(0.0, min(100.0, self.emotions[emotion]))
-        
-        # 根据环境客观因素调整情绪
+        # 注意：emotion_system.update() 已在主循环中调用，包含自己的衰减逻辑，这里不再重复衰减
+
+        # 根据环境客观因素调整情绪（统一走新版 emotion_system）
         if self.weather == "sunny":
-            self.emotions["happiness"] += 0.5
-            self.emotions["sadness"] -= 0.5
+            self.emotion_system.add_emotion("happy", 0.5)
+            self.emotion_system.add_emotion("sad", -0.5)
         elif self.weather == "rainy":
-            self.emotions["sadness"] += 0.3
-            self.emotions["happiness"] -= 0.3
-        
+            self.emotion_system.add_emotion("sad", 0.3)
+            self.emotion_system.add_emotion("happy", -0.3)
+
         if self.time_of_day == "night":
-            self.emotions["tiredness"] += 0.5
-        
+            self.emotion_system.add_emotion("tired", 0.5)
+
         # 根据活动状态调整情绪
         if self.current_activity == "idle":
-            self.emotions["boredom"] += 0.3
+            self.emotion_system.add_emotion("bored", 0.3)
         elif self.current_activity == "jumping":
-            self.emotions["excitement"] += 0.5
+            self.emotion_system.add_emotion("excited", 0.5)
         elif self.current_activity == "sleeping":
-            self.emotions["tiredness"] -= 0.8
-        
-        # 计算整体心情
-        if self.emotions["happiness"] > 70:
+            self.emotion_system.add_emotion("tired", -0.8)
+
+        # 计算整体心情（从新版情绪系统获取主导情绪）
+        dominant, intensity = self.emotion_system.get_current_emotion()
+        if dominant == 'happy' and intensity > 20:
             self.mood = "happy"
-        elif self.emotions["sadness"] > 50:
+        elif dominant == 'sad' and intensity > 15:
             self.mood = "sad"
-        elif self.emotions["tiredness"] > 70:
+        elif dominant in ('tired', 'exhausted') and intensity > 25:
             self.mood = "tired"
-        elif self.emotions["excitement"] > 60:
+        elif dominant == 'excited' and intensity > 20:
             self.mood = "excited"
-        elif self.emotions["boredom"] > 60:
+        elif dominant == 'bored' and intensity > 20:
             self.mood = "bored"
         else:
             self.mood = "normal"
-        
-        # 同步旧版 emotions 字典到新版 emotion_system，避免双系统不一致
-        self._sync_emotions_to_system()
 
-    # 旧版 emotions key → 新版 emotion_system key 映射
-    _EMOTION_KEY_MAP = {
-        "happiness": "happy",
-        "sadness": "sad",
-        "anger": "angry",
-        "fear": "fear",
-        "surprise": "surprised",
-        "boredom": "bored",
-        "tiredness": "tired",
-        "excitement": "excited",
-    }
+        # 将新版 emotion_system 同步到旧版 self.emotions 字典（只读兼容）
+        self._sync_system_to_emotions()
 
-    def _sync_emotions_to_system(self):
-        """将旧版 self.emotions 字典的值同步到新版 self.emotion_system。
-        happiness(0-100) 映射为 happy(-50~50)，其余直接映射。"""
-        for old_key, new_key in self._EMOTION_KEY_MAP.items():
-            old_val = self.emotions.get(old_key, 0.0)
-            if old_key == "happiness":
-                # happiness 以 50 为中性点，映射到 happy 以 0 为中性点
-                new_val = old_val - 50.0
-            else:
-                new_val = old_val
-            try:
-                self.emotion_system.set_emotion(new_key, new_val)
-            except Exception as e:  # 修复：原先静默吞噬
-                _log.debug("main 防御性异常（已忽略）: %s", e)
+    def _sync_system_to_emotions(self):
+        """将新版 emotion_system 的值同步到旧版 self.emotions 字典（只读兼容）。
+        新版范围 -100~100 → 旧版范围 0-100，happy 特殊处理（加 50 并 clamp）。"""
+        try:
+            es = self.emotion_system
+            self.emotions["happiness"] = max(0.0, min(100.0, es.get_emotion_level("happy") + 50.0))
+            self.emotions["sadness"] = max(0.0, min(100.0, es.get_emotion_level("sad")))
+            self.emotions["anger"] = max(0.0, min(100.0, es.get_emotion_level("angry")))
+            self.emotions["fear"] = max(0.0, min(100.0, es.get_emotion_level("fear")))
+            self.emotions["surprise"] = max(0.0, min(100.0, es.get_emotion_level("surprised")))
+            self.emotions["boredom"] = max(0.0, min(100.0, es.get_emotion_level("bored")))
+            self.emotions["tiredness"] = max(0.0, min(100.0, es.get_emotion_level("tired")))
+            self.emotions["excitement"] = max(0.0, min(100.0, es.get_emotion_level("excited")))
+        except Exception as e:
+            _log.debug("情绪同步失败（已忽略）: %s", e)
 
     def _agent_busy_flags(self) -> dict:
         """返回各种会与自主代理冲突的状态标志。
@@ -1213,9 +1221,32 @@ class RalseiPet(QMainWindow):
         # 睡眠状态处理
         if self.is_sleeping:
             self.current_activity = "sleeping"
-            # 检查是否有互动（优化：降低检查频率）
+            # 修复：人被叫醒时不会立刻清醒，应该迷迷糊糊的。
+            # 第一次互动：翻身哼哼（groggy），不立刻醒；
+            # 5秒内第二次互动：才完全醒来。超过5秒没再互动就继续睡。
             if current_time - self.last_interaction_time < 1.0:
-                self.wake_up()
+                if not hasattr(self, '_sleep_stir_time'):
+                    # 第一次被吵醒：哼哼唧唧翻个身，但还没醒
+                    self._sleep_stir_time = current_time
+                    self._sleep_stir_count = 1
+                    try:
+                        self.play_animation_once("look_up")
+                    except Exception:
+                        pass
+                    stir_msgs = ["唔...别吵...", "嗯...再睡五分钟...", "zzz...别闹..."]
+                    self.dialogue_ui.add_dialogue("ralsei", random.choice(stir_msgs), "sleepy")
+                    self.dialogue_ui.show_dialogue()
+                elif (current_time - self._sleep_stir_time < 5.0
+                      and getattr(self, '_sleep_stir_count', 0) == 1):
+                    # 5秒内第二次被吵：才真正醒来
+                    self._sleep_stir_count = 2
+                    self.wake_up()
+            elif hasattr(self, '_sleep_stir_time') and current_time - self._sleep_stir_time > 5.0:
+                # 超过5秒没再被吵，翻个身继续睡
+                if hasattr(self, '_sleep_stir_time'):
+                    delattr(self, '_sleep_stir_time')
+                if hasattr(self, '_sleep_stir_count'):
+                    delattr(self, '_sleep_stir_count')
             return
         
         # 检查是否需要进入睡眠模式
@@ -1675,16 +1706,11 @@ class RalseiPet(QMainWindow):
     
     def initiate_auto_mouse_drag(self):
         # 主动发起鼠标拖动
-        import random
-        # 15%概率发起主动拖动，符合Ralsei害羞的性格
-        if random.random() < 0.15:
-            # 随机选择一个目标位置
-            screen_geometry = QApplication.desktop().availableGeometry()
-            target_x = random.randint(100, screen_geometry.width() - 100)
-            target_y = random.randint(100, screen_geometry.height() - 100)
-            
-            # 开始拖动鼠标
-            self.start_mouse_drag(QPoint(target_x, target_y))
+        # 修复：禁用——Ralsei 不会主动去抢用户的鼠标控制权。
+        # 原代码15%概率调用 SetCursorPos 移动用户光标，会打断用户正在做的事，
+        # 这是非常冒犯的行为。人不会去抢别人的鼠标，宠物也不该。
+        # 保留方法签名避免调用方报错，但内部什么都不做。
+        return
     
     def start_mouse_drag(self, target_pos):
         # 开始拖动鼠标
@@ -2478,28 +2504,26 @@ class RalseiPet(QMainWindow):
 
         self.is_falling = True
         self.fall_duration = 0.0
-        self.fall_start_time = time.time()  # 设置摔倒开始时间
-        self.is_recovering = False  # 是否处于恢复期
-        self.recovery_duration = 0.0  # 恢复期持续时间
-        self.recovery_max_duration = 5.0  # 恢复期最大持续时间（秒）
+        self.fall_start_time = time.time()
+        self.is_recovering = False
+        self.recovery_duration = 0.0
+        # 修复：恢复时间从5秒降到2.5秒。
+        # 人摔倒后晕一会就爬起来了，5秒恢复期+3-5秒摔倒=8-10秒趴在地上太久了。
+        self.recovery_max_duration = 2.5
         
         # 触发情绪反应：摔倒
         self.emotion_system.react_to_event('fell_down', {'reason': reason})
         
         # 根据摔倒原因选择不同的动画、消息和持续时间
         if reason == "window_move":
-            # 用户移动窗口导致摔倒
-            # 使用生气的摔倒动画（spr_ralsei_splat_mad_0.png），持续至少3秒，符合要求
-            # 优先使用生气摔倒动画，如果没有则使用普通摔倒动画
+            # 用户移动窗口导致摔倒——用户行为造成的，用生气的摔倒动画
             if "fall_mad" in self.sprite_loader.sprites:
                 self.change_animation("fall_mad", force=True)
             else:
                 self.change_animation("fall", force=True)
-            # 确保摔倒动画持续时间至少3秒，符合要求文件第37行的要求
             self.max_fall_duration = 3.0
-            # 显示摔倒消息
-            self.dialogue_ui.add_dialogue("ralsei", "哎呀！窗口移动了，我要摔下去了！", "surprised")
-            # 设置摔倒状态，暂停行走
+            # 修复：台词匹配生气动画——抱怨用户乱动窗口，而不是单纯惊讶
+            self.dialogue_ui.add_dialogue("ralsei", "喂！别乱动窗口呀！我站不稳了...", "surprised")
             self.is_moving = False
         elif reason == "fall_from_window":
             # 从窗口掉落 —— 这是用户（关窗/移窗）造成的，按"建楼"要求用生气的那组动作
@@ -2553,16 +2577,23 @@ class RalseiPet(QMainWindow):
     
     def trigger_splat(self):
         """触发 splat 状态（先决条件：高速重力掉落/被甩飞等）。
-        播放 snd_splat.wav 音效，设置 is_splat=True，约2秒后自动恢复。"""
+        播放 snd_splat.wav 音效，然后走分阶段恢复：摔扁→晕乎揉头→爬起来。"""
+        # 修复：不再用 is_splat 独立计时（2秒后直接切idle太突兀）。
+        # 改为走 handle_fall 的 _fall_phase 分阶段流程，有完整的爬起过渡。
         self.is_splat = True
         self.splat_start_time = time.time()
         self.is_moving = False
-        self.is_falling = False
+        self.is_falling = True
         self.is_recovering = False
+        self.fall_duration = 0.0
+        self.fall_start_time = time.time()
+        self._fall_phase = "splat"  # 直接从摔扁阶段开始（已经落地了）
+        self.max_fall_duration = 3.0  # splat(2s) + dazed(1s)
+        self.recovery_max_duration = 1.5  # 爬起恢复1.5秒
         # 播放 splat 音效
         try:
             self.sound_manager.play_splat()
-        except Exception as e:  # 修复：原先静默吞噬
+        except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
         # 切换到 splat 动画
         self.change_animation("splat", force=True)
@@ -2615,9 +2646,9 @@ class RalseiPet(QMainWindow):
                 self.fall_slide_speed_x = random.uniform(-20, 20)
                 self.fall_slide_speed_y = random.uniform(-10, 10)
             else:
-                # 低速摔落，切换回正常动画
-                self.change_animation(f"walk_{self.current_direction}")
-            
+                # 低速摔落：先站稳(idle)，而不是立刻开始走路
+                self.change_animation("idle", force=True)
+
             # 更新当前楼层信息
             self.current_floor = drop_floor
             self.current_platform_z = drop_floor['platform_height']
@@ -2671,8 +2702,8 @@ class RalseiPet(QMainWindow):
                     self.fall_slide_speed_x = random.uniform(-20, 20)
                     self.fall_slide_speed_y = random.uniform(-10, 10)
                 else:
-                    # 低速摔落，切换回正常动画
-                    self.change_animation(f"walk_{self.current_direction}")
+                    # 低速摔落：先站稳(idle)
+                    self.change_animation("idle", force=True)
                 
                 # 更新当前窗口信息
                 self.current_window = None
@@ -2692,51 +2723,80 @@ class RalseiPet(QMainWindow):
     
     # 摔倒判定相关代码 - 处理摔倒逻辑
     def handle_fall(self, elapsed_time, current_time):
-        # 处理摔倒逻辑
+        # 处理摔倒逻辑（分阶段：flying → splat → dazed → recovering）
         if not self.is_recovering:
             self.fall_duration += elapsed_time
-            
-            # 应用摔倒惯性滑行效果，减少滑行计算的频率
-            if hasattr(self, 'fall_slide_speed_x') and hasattr(self, 'fall_slide_speed_y'):
-                # 计算滑行距离
+
+            # 应用摔倒惯性滑行效果（仅飞行阶段滑行）
+            if (getattr(self, '_fall_phase', 'flying') == "flying"
+                    and hasattr(self, 'fall_slide_speed_x')
+                    and hasattr(self, 'fall_slide_speed_y')):
                 slide_x = self.fall_slide_speed_x * elapsed_time
                 slide_y = self.fall_slide_speed_y * elapsed_time
-                
-                # 更新位置
                 current_pos = self.pos()
                 new_x = current_pos.x() + slide_x
                 new_y = current_pos.y() + slide_y
                 self.move(int(new_x), int(new_y))
-                
-                # 逐渐减小滑行速度，使用更简单的衰减公式
-                self.fall_slide_speed_x *= 0.8  # 每次更新减少20%的速度，减少计算次数
+                self.fall_slide_speed_x *= 0.8
                 self.fall_slide_speed_y *= 0.8
-            
-            # 检查是否完成摔倒
-            if self.fall_duration >= self.max_fall_duration:
-                # 摔倒完成，进入恢复期
+
+            # 阶段转换
+            phase = getattr(self, '_fall_phase', 'flying')
+            if phase == "flying" and self.fall_duration >= 1.0:
+                # 飞行1秒后 → 摔扁在地上
+                self._fall_phase = "splat"
+                self.is_splat = True
+                if "splat" in self.sprite_loader.sprites:
+                    self.change_animation("splat", force=True)
+                try:
+                    self.sound_manager.play_splat()
+                except Exception:
+                    pass
+                # 清除滑行速度
+                for attr in ('fall_slide_speed_x', 'fall_slide_speed_y'):
+                    if hasattr(self, attr):
+                        delattr(self, attr)
+            elif phase == "splat" and self.fall_duration >= 2.0:
+                # 摔扁1秒后 → 晕乎揉头
+                self._fall_phase = "dazed"
+                self.is_splat = False
+                if "fall_back_rub" in self.sprite_loader.sprites:
+                    self.change_animation("fall_back_rub", force=True)
+                elif "fall_back" in self.sprite_loader.sprites:
+                    self.change_animation("fall_back", force=True)
+                dazed_msgs = ["呜...头好晕...", "诶...我在哪...", "浑身好痛..."]
+                self.dialogue_ui.add_dialogue("ralsei", random.choice(dazed_msgs), "sad")
+                self.dialogue_ui.show_dialogue()
+            elif phase == "dazed" and self.fall_duration >= self.max_fall_duration:
+                # 晕乎1.5秒后 → 慢慢爬起来，进入恢复期
+                self._fall_phase = "recovering"
                 self.is_recovering = True
                 self.recovery_duration = 0.0
-                
-                # 切换到恢复动画，优先使用特殊恢复动画，如果没有则使用站立动画
                 if "land" in self.sprite_loader.sprites:
                     self.change_animation("land", force=True)
                 elif "pose" in self.sprite_loader.sprites:
                     self.change_animation("pose", force=True)
                 else:
-                    self.change_animation(f"idle", force=True)
-                
-                # 清除滑行速度属性
-                if hasattr(self, 'fall_slide_speed_x'):
-                    del self.fall_slide_speed_x
-                if hasattr(self, 'fall_slide_speed_y'):
-                    del self.fall_slide_speed_y
-                
-                # 触发情绪反应：开始恢复
+                    self.change_animation("idle", force=True)
                 self.emotion_system.react_to_event('recovery_started', {})
-                
-                # 显示恢复消息，更加温柔和害羞
-                if random.random() < 0.7:  # 70%概率显示恢复消息
+                if random.random() < 0.7:
+                    self.dialogue_ui.add_dialogue("ralsei", "呼...我没事了...谢谢你的关心...", "shy")
+                    self.dialogue_ui.show_dialogue()
+            elif phase not in ("flying", "splat", "dazed") and self.fall_duration >= self.max_fall_duration:
+                # 兼容旧逻辑（没有_fall_phase时按原流程）
+                self.is_recovering = True
+                self.recovery_duration = 0.0
+                if "land" in self.sprite_loader.sprites:
+                    self.change_animation("land", force=True)
+                elif "pose" in self.sprite_loader.sprites:
+                    self.change_animation("pose", force=True)
+                else:
+                    self.change_animation("idle", force=True)
+                for attr in ('fall_slide_speed_x', 'fall_slide_speed_y'):
+                    if hasattr(self, attr):
+                        delattr(self, attr)
+                self.emotion_system.react_to_event('recovery_started', {})
+                if random.random() < 0.7:
                     self.dialogue_ui.add_dialogue("ralsei", "呼...我没事了...谢谢你的关心...", "shy")
                     self.dialogue_ui.show_dialogue()
         else:
@@ -2748,7 +2808,10 @@ class RalseiPet(QMainWindow):
                 # 恢复完成，返回正常状态
                 self.is_falling = False
                 self.is_recovering = False
-                
+                if hasattr(self, '_fall_phase'):
+                    delattr(self, '_fall_phase')
+                self.is_splat = False
+
                 # 触发情绪反应：恢复完成
                 self.emotion_system.react_to_event('recovery_complete', {})
 
@@ -2795,6 +2858,10 @@ class RalseiPet(QMainWindow):
     def wake_up(self):
         # 唤醒Ralsei
         self.is_sleeping = False
+        # 清理睡眠迷糊状态
+        for attr in ('_sleep_stir_time', '_sleep_stir_count'):
+            if hasattr(self, attr):
+                delattr(self, attr)
         # 修复：唤醒时也退出"小憩走路"状态、复位相关计时
         self.is_sleeping_walk = False
         self.idle_walk_timer = 0
@@ -2815,12 +2882,14 @@ class RalseiPet(QMainWindow):
         self.sleep_timer = 0
         
     def start_dragging_play(self):
-        # 开始拖动桌面元素或光标玩耍
+        # 开始拖动桌面元素玩耍
         import random
-        
-        # 选择拖动对象：桌面元素或光标
-        drag_target = random.choice(["desktop_element", "cursor"])
-        
+
+        # 修复：移除"cursor"选项——Ralsei 不会去抢用户的鼠标控制权。
+        # 人被别人乱动鼠标会很烦躁，宠物也不该做这种冒犯的事。
+        # 只玩桌面元素（且安全实现不真的移动用户文件）。
+        drag_target = "desktop_element"
+
         if drag_target == "desktop_element":
             # 从桌面元素中随机选择一个
             desktop_elements = self.desktop_interaction.desktop_elements
@@ -2848,20 +2917,6 @@ class RalseiPet(QMainWindow):
                 
                 # 记录元素初始位置
                 self.dragging_element_initial_pos = (self.dragging_element["x"], self.dragging_element["y"])
-        else:
-            # 拖动光标
-            self.dragging_element = None
-            self.dragging_type = "cursor"
-            self.dragging_cursor_start = QCursor.pos()
-            self.dragging_cursor_duration = random.uniform(1.0, 3.0)
-            self.dragging_cursor_start_time = time.time()
-            
-            # 显示对话
-            self.dialogue_ui.show_dialogue("我来陪你玩一会儿鼠标吧！")
-            
-            # 切换到合适的动画
-            self.change_animation("laugh", force=True)
-        
         self.last_dragging_time = time.time()
         
     def handle_dragging_play(self, elapsed_time, current_time):
@@ -3713,9 +3768,22 @@ class RalseiPet(QMainWindow):
                     new_file_path = os.path.join(desktop_path, new_file_name)
                     counter += 1
                 
-                workbook.SaveAs(new_file_path)
-                workbook.Close()
-                excel.Quit()
+                # 修复（P2）：原实现直接 SaveAs/Close/Quit，没有 finally。SaveAs 失败
+                # （目标文件被 Excel 占用、桌面无写权限、磁盘满、文件名为非法字符）时
+                # 异常直接抛出，excel.Quit() 永不执行 → 留下一个隐藏的 EXCEL.EXE
+                # 僵尸进程，且可能锁住刚写了一半的文件。同文件的 fix_excel_format /
+                # fill_names_in_excel 已按 finally 修复，此处补齐以消除不一致。
+                try:
+                    workbook.SaveAs(new_file_path)
+                finally:
+                    try:
+                        workbook.Close(SaveChanges=False)
+                    except Exception as e:
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
+                    try:
+                        excel.Quit()
+                    except Exception as e:
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
                 
                 self.dialogue_ui.add_dialogue("ralsei", f"我已经在桌面上创建了一个新的Excel表格: {new_file_name}", "happy")
                 self.dialogue_ui.show_dialogue()
@@ -4203,15 +4271,8 @@ class RalseiPet(QMainWindow):
         self.dialogue_ui.add_dialogue("ralsei", msg, emotion)
         self.dialogue_ui.show_dialogue()
         # 修复：原来固定 add_emotion("happy")，忽略元组里的 'surprised'/'excited' 等情绪；
-        # 且直接改 self.emotions 与 emotion_system 双通道不一致。统一按反应情绪更新。
+        # 现在统一走 emotion_system，旧版 self.emotions 通过 _sync_system_to_emotions 自动同步。
         self.emotion_system.add_emotion(emotion, happy_delta)
-        # 同步旧版情绪字典（happiness 以 50 为中性点）
-        if emotion == 'happy':
-            self.emotions["happiness"] = min(100.0, self.emotions.get("happiness", 50.0) + happy_delta)
-        elif emotion == 'surprised':
-            self.emotions["surprise"] = min(100.0, self.emotions.get("surprise", 0.0) + happy_delta)
-        elif emotion == 'excited':
-            self.emotions["excitement"] = min(100.0, self.emotions.get("excitement", 0.0) + happy_delta)
         self.play_animation_once(anim)
     
     def close_bilibili(self):
@@ -4227,6 +4288,10 @@ class RalseiPet(QMainWindow):
         # 进入睡眠状态
         self.is_sleeping = True
         self.is_moving = False
+        # 清理睡眠迷糊状态
+        for attr in ('_sleep_stir_time', '_sleep_stir_count'):
+            if hasattr(self, attr):
+                delattr(self, attr)
         self.change_animation("idle", force=True)  # force=True 确保即使冷却期内也切换
         sleep_msgs = ["zzz... 晚安，做个好梦！", "zzz... 我困了...", "zzz... 好舒服..."]
         self.dialogue_ui.add_dialogue("ralsei", random.choice(sleep_msgs), "sleepy")
@@ -4812,12 +4877,13 @@ class RalseiPet(QMainWindow):
                 
                 # 根据不同部位触发不同效果
                 if clicked_part == "body":
-                    # 轻推躯干
-                    _log.debug("轻推了Ralsei的躯干！")
-                    self.emotion_system.add_emotion("happy", 20)
-                    self.emotion_system.add_emotion("curious", 15)
-                    self.play_animation_once("surprised")
-                    self.dialogue_ui.add_dialogue("ralsei", "哎呀！你推我干嘛？", "surprised")
+                    # 轻点躯干：好奇地歪头看看，而不是质问"你推我干嘛"
+                    _log.debug("轻点了Ralsei的躯干！")
+                    self.emotion_system.add_emotion("happy", 15)
+                    self.emotion_system.add_emotion("curious", 10)
+                    self.play_animation_once("look_up")
+                    body_responses = ["嗯？怎么啦？", "诶？有什么事吗？", "嘿嘿~ 你戳我啦"]
+                    self.dialogue_ui.add_dialogue("ralsei", random.choice(body_responses), "curious")
                     self.dialogue_ui.show_dialogue()
                 elif clicked_part == "shoulder":
                     # 轻推肩膀
@@ -4970,26 +5036,29 @@ class RalseiPet(QMainWindow):
                     # 根据释放速度添加不同的物理反馈
                     if release_speed > 150:
                         # 极快释放，触发甩飞效果
+                        # 修复：人被甩飞后不会飞3秒然后直接站起来。
+                        # 改为分阶段：飞行(~1s) → 摔扁splat(~1s) → 晕乎揉头(~1.5s) → 爬起恢复
                         self.is_falling = True
                         self.is_recovering = False
                         self.fall_duration = 0.0
-                        self.fall_start_time = time.time()  # 设置摔倒开始时间
-                        self.max_fall_duration = 3.0  # 甩飞动画持续至少3秒
-                        self.recovery_max_duration = 3.0
-                        
-                        # 切换到投掷动画（如果存在），否则使用splat动画
-                        throw_animation = "jump_ball"  # 使用跳跃球动画作为投掷动画
+                        self.fall_start_time = time.time()
+                        self._fall_phase = "flying"  # flying → splat → dazed → recovering
+                        self.max_fall_duration = 3.5  # 总摔倒时长（飞行+摔扁+晕乎）
+                        self.recovery_max_duration = 2.0
+
+                        # 飞行阶段：jump_ball 动画
+                        throw_animation = "jump_ball"
                         if throw_animation in self.sprite_loader.sprites:
                             self.change_animation(throw_animation, force=True)
                         else:
                             self.change_animation("fall", force=True)
-                        
+
                         # 添加摔倒惯性滑行效果
                         self.fall_slide_speed_x = dx * 0.5
                         self.fall_slide_speed_y = dy * 0.5
-                        
+
                         # 显示惊讶对话
-                        self.dialogue_ui.add_dialogue("ralsei", "啊！被甩飞了...", "surprised")
+                        self.dialogue_ui.add_dialogue("ralsei", "哇啊——！", "surprised")
                         self.dialogue_ui.show_dialogue()
                     elif release_speed > 20:
                         # 快速释放时，添加弹跳效果
@@ -5300,15 +5369,13 @@ class RalseiPet(QMainWindow):
     
     def on_mouse_hover(self):
         # 鼠标悬停时的处理
-        # 优化：降低随机触发概率，减少不必要的动画播放
-        if random.random() < 0.05:  # 5%的概率
-            # 播放一次害羞或开心动画
-            # 修复："shy" 不是有效动画名（sprite_loader 没有），play_animation_once
-            # 会静默失败；改用真实存在的动画。
-            hover_animations = ["laugh", "happy", "wave", "look_up", "surprised"]
-            self.play_animation_once(random.choice(hover_animations))
-            # 添加轻微的开心情绪
-            self.emotion_system.add_emotion("happy", 5)
+        # 修复：人不会因为别人看了自己一眼就随机大笑/挥手/惊讶。
+        # 降到1%概率，且只做"抬头看看是谁"的轻微反应（look_up），
+        # 加一点点被关注的开心，不做夸张表情。
+        if random.random() < 0.01:  # 1%的概率
+            if self.current_animation == "idle" and not getattr(self, '_play_once_active', False):
+                self.play_animation_once("look_up")
+                self.emotion_system.add_emotion("happy", 3)
     
     def show_interaction_menu(self, pos):
         # 显示互动菜单
@@ -5602,14 +5669,19 @@ class RalseiPet(QMainWindow):
         self.dialogue_ui.show_dialogue()
     
     def change_animation_randomly(self):
-        # 随机切换动画
-        all_animations = list(self.sprite_loader.sprites.keys())
-        # 过滤掉太长或不适合单独播放的动画
-        valid_animations = [anim for anim in all_animations if len(anim) < 30 and not anim.startswith("spr_")]
-        if valid_animations:
-            new_animation = random.choice(valid_animations)
+        # 随机切换动画（用户主动从菜单点的，所以可以活泼一些）
+        # 修复：只从适合主动表演的动画中选，不选 splat/fall/shocked 等受伤/摔倒状态。
+        # 人不会主动把自己摔扁然后开心地说"看！我在做splat！"
+        safe_performance_anims = [
+            "dance", "sing", "wave", "bow", "laugh", "look_up", "pose",
+            "curtsy", "spin", "hug", "tea", "slide", "roll", "nuzzle",
+            "item", "act", "victory",
+        ]
+        available = [a for a in safe_performance_anims if a in self.sprite_loader.sprites]
+        if available:
+            new_animation = random.choice(available)
             self.play_animation_once(new_animation)
-            self.dialogue_ui.add_dialogue("ralsei", f"看！我在做{new_animation}！", "happy")
+            self.dialogue_ui.add_dialogue("ralsei", f"看！我会做这个动作~", "happy")
             self.dialogue_ui.show_dialogue()
     
     def start_rock_paper_scissors(self):
@@ -6678,11 +6750,13 @@ class RalseiPet(QMainWindow):
                 new_animation = "land"
                 self.jump_phase = None
         elif self.is_falling:
-            # 摔倒状态，保持摔倒动画
-            # 修复：时长统一由 handle_fall 按 max_fall_duration（3~5 秒）管理，
-            # 这里不再硬编码 1 秒截断（否则 3/5 秒摔倒需求被破坏、恢复完成逻辑永不执行）。
-            # 修复：保留 start_fall 按原因选择的动画（fall / fall_mad），不要强制覆盖成 fall_back。
-            if self.current_animation not in ('fall', 'fall_mad', 'fall_back'):
+            # 摔倒状态：动画由 handle_fall 管理。
+            # 有 _fall_phase 时（甩飞/重力splat的分阶段流程：flying/splat/dazed），
+            # handle_fall 会主动切换 jump_ball/splat/fall_back_rub，这里不要覆盖。
+            # 无 _fall_phase 时（旧 start_fall 路径），保持 fall/fall_mad 不被覆盖。
+            if hasattr(self, '_fall_phase'):
+                new_animation = self.current_animation
+            elif self.current_animation not in ('fall', 'fall_mad', 'fall_back'):
                 new_animation = "fall_back"
             else:
                 new_animation = self.current_animation
@@ -6818,15 +6892,18 @@ class RalseiPet(QMainWindow):
 
         
         # splat 状态：由重力掉落/摔倒等先决条件触发（非随机）
-        # 触发后播放 snd_splat.wav，约2秒后恢复（符合需求：recovers after about 2 seconds）
-        if hasattr(self, 'is_splat') and self.is_splat:
+        # 正常流程走 handle_fall 的 _fall_phase（splat→dazed→land），这里只做兜底：
+        # 如果 is_splat 被外部直接设置（不走 _fall_phase），2秒后播 land 过渡再恢复。
+        if hasattr(self, 'is_splat') and self.is_splat and not hasattr(self, '_fall_phase'):
             new_animation = "splat"
             if not hasattr(self, 'splat_start_time') or self.splat_start_time is None:
                 self.splat_start_time = current_time
-            # 约 2 秒后恢复
             if current_time - self.splat_start_time >= 2.0:
                 self.is_splat = False
                 self.splat_start_time = None
+                # 摔扁后先播 land（爬起来），而不是直接切 idle
+                if "land" in self.sprite_loader.sprites:
+                    self.play_animation_once("land")
         
         # 平滑切换动画，避免频繁切换
         # ===== 一次性动画保护：播放期间不允许状态逻辑切换动画 =====
@@ -7454,26 +7531,26 @@ class RalseiPet(QMainWindow):
             # 枪战游戏，兴奋反应
             self.dialogue_ui.show_dialogue(f"哇！你在玩枪战游戏{game_title}！里面的枪械看起来好酷啊！")
             self.emotion_system.react_to_event("saw_gun_game", {'game_title': game_title})
-            self.emotions["excitement"] += 35
-            self.emotions["happiness"] += 25
+            self.emotion_system.add_emotion("excited", 35)
+            self.emotion_system.add_emotion("happy", 25)
         elif any(keyword in game_title.lower() for keyword in ['rpg', 'role', 'adventure', '冒险']):
             # RPG游戏，兴趣反应
             self.dialogue_ui.show_dialogue(f"这是RPG游戏{game_title}呢，看起来很有趣！里面有很多故事吧？")
-            self.emotions["excitement"] += 20
+            self.emotion_system.add_emotion("excited", 20)
         elif any(keyword in game_title.lower() for keyword in ['strategy', '战略', '策略']):
             # 策略游戏，思考反应
             self.dialogue_ui.show_dialogue(f"这是策略游戏{game_title}呢，需要动很多脑筋吧？你真厉害！")
-            self.emotions["happiness"] += 15
+            self.emotion_system.add_emotion("happy", 15)
         elif any(keyword in game_title.lower() for keyword in ['deltarune', 'undertale']):
             # Deltarune/Undertale游戏，特别兴奋反应
             self.dialogue_ui.show_dialogue(f"哇！你在玩{game_title}！这是我最喜欢的游戏！能和你一起玩就好了~")
             self.emotion_system.react_to_event("saw_deltarune_game", {'game_title': game_title})
-            self.emotions["excitement"] += 40
-            self.emotions["happiness"] += 30
+            self.emotion_system.add_emotion("excited", 40)
+            self.emotion_system.add_emotion("happy", 30)
         else:
             # 默认游戏反应
             self.dialogue_ui.show_dialogue(f"你在玩{game_title}呀，看起来很好玩的样子！")
-            self.emotions["excitement"] += 10
+            self.emotion_system.add_emotion("excited", 10)
         
     def watch_video(self, video_window):
         # 观看视频并做出反应
@@ -7487,16 +7564,16 @@ class RalseiPet(QMainWindow):
             # Deltarune/Undertale相关视频，兴奋反应
             self.dialogue_ui.show_dialogue(f"哇！这是关于{video_title}的视频！我超级感兴趣的！")
             self.emotion_system.react_to_event("saw_interesting_video", {'video_title': video_title})
-            self.emotions["excitement"] += 30
-            self.emotions["happiness"] += 20
+            self.emotion_system.add_emotion("excited", 30)
+            self.emotion_system.add_emotion("happy", 20)
         elif any(keyword in video_title.lower() for keyword in ['game', '游戏', 'playthrough']):
             # 游戏视频，兴趣反应
             self.dialogue_ui.show_dialogue(f"这是游戏视频呢，看起来很好玩的样子！")
-            self.emotions["excitement"] += 15
+            self.emotion_system.add_emotion("excited", 15)
         elif any(keyword in video_title.lower() for keyword in ['music', '音乐', 'song']):
             # 音乐视频，愉悦反应
             self.dialogue_ui.show_dialogue(f"这是音乐视频呢，听起来很美妙！")
-            self.emotions["happiness"] += 15
+            self.emotion_system.add_emotion("happy", 15)
         else:
             # 默认反应
             self.dialogue_ui.show_dialogue(f"你在看{video_title}呀，看起来很有趣呢！")
@@ -7528,9 +7605,9 @@ class RalseiPet(QMainWindow):
         # 改变表情为悲伤
         self.dialogue_ui.set_face("sad")
         
-        # 降低幸福感，增加悲伤感
-        self.emotions["happiness"] -= 20
-        self.emotions["sadness"] += 30
+        # 降低幸福感，增加悲伤感（统一走 emotion_system）
+        self.emotion_system.add_emotion("happy", -20)
+        self.emotion_system.add_emotion("sad", 30)
         
         # 一段时间后恢复
         QTimer.singleShot(3000, self._recover_from_sadness)
@@ -7539,8 +7616,8 @@ class RalseiPet(QMainWindow):
         # 从悲伤中恢复
         self.dialogue_ui.set_face("normal")
         self.dialogue_ui.show_dialogue("不过，能被你创造出来，我还是很开心的...")
-        self.emotions["sadness"] -= 15
-        self.emotions["happiness"] += 10
+        self.emotion_system.add_emotion("sad", -15)
+        self.emotion_system.add_emotion("happy", 10)
         
     def is_own_code(self, file_path):
         # 检查是否是自己的代码
@@ -7692,10 +7769,10 @@ class RalseiPet(QMainWindow):
         # 改变表情为恐惧
         self.dialogue_ui.set_face("scared")
         
-        # 增加恐惧和悲伤感
-        self.emotions["fear"] += 35
-        self.emotions["sadness"] += 15
-        self.emotions["happiness"] -= 20
+        # 增加恐惧和悲伤感（统一走 emotion_system）
+        self.emotion_system.add_emotion("fear", 35)
+        self.emotion_system.add_emotion("sad", 15)
+        self.emotion_system.add_emotion("happy", -20)
         
         # 远离回收站
         self._move_away_from_recycle_bin()
@@ -7719,8 +7796,8 @@ class RalseiPet(QMainWindow):
         # 从恐惧中恢复
         self.dialogue_ui.set_face("normal")
         self.dialogue_ui.show_dialogue("呼...好可怕啊，我们离那里远一点吧...")
-        self.emotions["fear"] -= 20
-        self.emotions["happiness"] += 10
+        self.emotion_system.add_emotion("fear", -20)
+        self.emotion_system.add_emotion("happy", 10)
         
     def delete_file(self, file_path):
         # 删除文件，需要确认
@@ -7833,8 +7910,7 @@ class RalseiPet(QMainWindow):
 
             # 清理记忆数据
             try:
-                import os
-                memory_file = os.path.join(os.path.dirname(__file__), '..', 'memory.json')
+                memory_file = self.memory_system.memory_file
                 if os.path.exists(memory_file):
                     os.remove(memory_file)
                     _log.debug("记忆数据已清理")
@@ -7843,7 +7919,7 @@ class RalseiPet(QMainWindow):
 
             # 清理成长数据
             try:
-                growth_file = os.path.join(os.path.dirname(__file__), '..', 'growth_data.json')
+                growth_file = self.social_growth.growth_data_path
                 if os.path.exists(growth_file):
                     os.remove(growth_file)
                     _log.debug("成长数据已清理")
@@ -7852,7 +7928,7 @@ class RalseiPet(QMainWindow):
 
             # 清理娱乐数据
             try:
-                entertainment_file = os.path.join(os.path.dirname(__file__), '..', 'entertainment_data.json')
+                entertainment_file = self.entertainment_system.entertainment_data_path
                 if os.path.exists(entertainment_file):
                     os.remove(entertainment_file)
                     _log.debug("娱乐数据已清理")
@@ -8053,8 +8129,14 @@ class RalseiPet(QMainWindow):
             frames = self.sprite_loader.sprites.get(anim, [])
             cur_f = self.current_frame
             # 记录 casting 开始时间（用于时间超时 fallback）
+            # 修复（P0）：此处原写 current_time —— 该方法内并无此局部变量，模块级
+            # 也没有同名全局，运行到 casting 阶段必抛 NameError，被本帧 tick 的
+            # try/except 吞掉后 _spell_stage 永远停在 'casting'：施法回调不触发
+            # （文件永远打不开、躲猫猫障碍物永不生成），且 pet_ai.trigger_action
+            # 见到 _spell_stage 非空即直接 return → 宠物进入无法自恢复的僵直，
+            # 日志每 100ms 刷一次堆栈。统一改用本函数第 8054 行已定义的 now。
             if not hasattr(self, '_spell_cast_start_time') or self._spell_cast_start_time is None:
-                self._spell_cast_start_time = current_time
+                self._spell_cast_start_time = now
             if (anim in ('spell', 'spell_left')) and len(frames) >= 2:
                 # 看到了真实帧：累积 _spell_frames_seen（同一帧重复见不算）
                 if getattr(self, '_spell_seen_frame', -1) != cur_f:
@@ -8066,7 +8148,7 @@ class RalseiPet(QMainWindow):
             # 修复：此前 timeout fallback 仅依赖 frames_seen>=22，若 spell 动画帧数<2
             # （frames_seen 永远为 0）则永久卡住。新增：帧数不足直接完成 + 5秒时间超时。
             cond_frames_insufficient = (anim in ('spell', 'spell_left')) and (len(frames) < 2)
-            cond_time_fallback = (current_time - getattr(self, '_spell_cast_start_time', current_time)) > 5.0
+            cond_time_fallback = (now - getattr(self, '_spell_cast_start_time', now)) > 5.0
             cond_timeout_fallback = (not cond_ideal) and (frames_seen >= expected * 2 or cond_time_fallback)
             if cond_ideal or cond_timeout_fallback:
                 cb = self._spell_finish_cb
@@ -8594,6 +8676,7 @@ def check_single_instance():
     修复：从模块顶层移入函数，避免 import 时就执行并可能退出。
     优先使用 Windows 命名互斥量，失败时回退到文件锁。
     """
+    global _single_instance_mutex
     import atexit
 
     _log.debug("正在进行单实例检查...")
@@ -8612,11 +8695,15 @@ def check_single_instance():
             _log.warning("单实例检查失败，Ralsei Pet 已经在运行中了！")
             _log.debug(" Ralsei 是独一无二的哦~")
             win32api.CloseHandle(mutex)
-            input("按回车键退出...")
+            QMessageBox.warning(None, "提示", "Ralsei Pet 已经在运行中！")
             sys.exit(0)
         else:
             _log.debug("单实例检查通过，互斥量已创建")
-            # 互斥量会在进程结束时自动释放
+            # 修复：句柄必须保持存活到进程结束。局部变量在函数返回后被 GC
+            # 关闭句柄，命名互斥量在最后一个句柄关闭时会被系统销毁，导致第二次
+            # 启动可成功创建同名互斥量 → 单实例保护失效（双实例并存）。
+            # 存入模块级引用，进程退出时由操作系统自动释放。
+            _single_instance_mutex = mutex
             _log.debug("单实例检查通过，可以正常运行！")
             return True
 
@@ -8651,7 +8738,7 @@ def check_single_instance():
             try:
                 os.kill(pid, 0)
                 _log.debug("Ralsei Pet 已经在运行中了哦！")
-                input("按回车键退出...")
+                QMessageBox.warning(None, "提示", "Ralsei Pet 已经在运行中！")
                 sys.exit(0)
             except OSError:
                 # 进程不存在了，锁文件是残留的
@@ -8703,4 +8790,5 @@ if __name__ == "__main__":
         _log.warning("详细错误信息:")
         traceback.print_exc()
         # 避免程序直接退出，让用户有时间查看错误信息
-        input("按回车键退出...")
+        QMessageBox.warning(None, "错误", f"程序运行时出错: {e}")
+        sys.exit(1)

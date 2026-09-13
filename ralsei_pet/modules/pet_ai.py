@@ -109,20 +109,27 @@ class PetAI:
         return (energy < 20 or hunger < 20) and random.random() < 0.05
     
     def trigger_surprised(self):
-        # 当Ralsei感到惊讶时触发
-        return random.random() < 0.05
+        # 惊讶不应该随机出现——人不会无缘无故突然惊讶。
+        # 惊讶应由外部事件驱动（被点击、被大力拖拽、新窗口弹出等）。
+        # 这里保留极低概率作为"听到了什么声音"的自然反应，且只在静止时。
+        return (random.random() < 0.005
+                and self.state in ["idle", "rest"]
+                and self.parent.current_animation == "idle")
     
     def trigger_cower(self):
-        # 当Ralsei感到害怕时触发
-        return random.random() < 0.03
+        # 害怕退缩不应该随机出现——Ralsei 性格温柔但不胆小，
+        # 不会无缘无故缩起来。害怕只在被大力甩飞/持续骚扰时由事件触发。
+        # 自主轮询中直接返回 False，杜绝"走着走着突然害怕"。
+        return False
     
     def trigger_wave(self):
         # 当Ralsei打招呼或告别时触发
         return random.random() < 0.08 and self.state == "interact"
     
     def trigger_wave_start(self):
-        # 当Ralsei准备挥手时触发
-        return random.random() < 0.05
+        # 准备挥手不应该随机出现——挥手是社交动作，应该在有互动对象时。
+        # 由用户交互或 ai_driver 在合适时机触发，这里不随机触发。
+        return False
     
     def trigger_hug(self):
         # 当Ralsei想要拥抱时触发
@@ -161,17 +168,20 @@ class PetAI:
         return random.random() < 0.04 and self.state == "idle"
     
     def trigger_look_up(self):
-        # 当Ralsei想要向上看时触发
-        return random.random() < 0.07
+        # 抬头看可以是偶尔发呆，但7%太高了（每500ms检查一次≈每7秒一次）。
+        # 降到2%，且只在静止时，作为"看看周围"的自然小动作。
+        return (random.random() < 0.02
+                and self.state in ["idle", "rest"]
+                and self.parent.current_animation == "idle")
     
     def trigger_kneel_serious(self):
         # 当Ralsei想要严肃地跪下时触发
         return random.random() < 0.03 and self.state == "interact"
     
     def trigger_kneel_cry(self):
-        # 当Ralsei想要跪下哭泣时触发
-        energy = self.parent.energy_hunger.get_energy()
-        return energy < 15 and random.random() < 0.02
+        # 跪下哭是极端情绪表达——Ralsei 性格温柔害羞，但不会因为饿了/累了就跪下哭。
+        # 这种动作只在非常悲伤的剧情场景下由事件触发，自主轮询中不触发。
+        return False
 
     def _skip_if_critical(self, also_skip_game: bool = True) -> bool:
         """全局保护：施法中/游戏中/拖拽中/跳跃中/掉落中，所有 AI 动作跳过。
@@ -367,29 +377,40 @@ class PetAI:
     
     def check_special_events(self):
         # 检查特殊事件，如用户操作、时间事件等
+        # 修复：增加内部冷却，避免每1秒检查+5%概率导致深夜频繁说话（"已经这么晚了"刷屏）。
+        # 同一时段内至少间隔 120 秒才说一次。
         current_hour = time.localtime().tm_hour
-        
+        now = time.time()
+        if not hasattr(self, '_last_special_event_say'):
+            self._last_special_event_say = 0.0
+        if now - self._last_special_event_say < 120.0:
+            return
+
         # 时间相关事件
         if 7 <= current_hour < 9:
             # 早上，可能会打招呼
             if random.random() < 0.05:
                 self.parent.dialogue_ui.add_dialogue("ralsei", "早上好！今天看起来是个美好的一天！", "happy")
                 self.parent.dialogue_ui.show_dialogue()
+                self._last_special_event_say = now
         elif 12 <= current_hour < 14:
             # 中午，可能会提到吃饭
             if random.random() < 0.05:
                 self.parent.dialogue_ui.add_dialogue("ralsei", "中午了呢，你有没有好好吃饭呀？", "neutral")
                 self.parent.dialogue_ui.show_dialogue()
+                self._last_special_event_say = now
         elif 18 <= current_hour < 20:
             # 晚上，可能会提醒休息
             if random.random() < 0.05:
                 self.parent.dialogue_ui.add_dialogue("ralsei", "晚上好！今天过得怎么样呀？", "happy")
                 self.parent.dialogue_ui.show_dialogue()
+                self._last_special_event_say = now
         elif 22 <= current_hour or current_hour < 6:
             # 深夜，可能会提醒睡觉
             if random.random() < 0.05:
                 self.parent.dialogue_ui.add_dialogue("ralsei", "已经这么晚了，要注意休息哦！", "concerned")
                 self.parent.dialogue_ui.show_dialogue()
+                self._last_special_event_say = now
     
     def check_action_triggers(self):
         # 检查所有动作的触发条件
@@ -561,32 +582,32 @@ class PetAI:
                 self.parent.dialogue_ui.add_dialogue("ralsei", message, "happy")
                 self.parent.dialogue_ui.show_dialogue()
         elif target == "folder":
-            # 与文件夹交互
+            # 与文件夹交互：走过去远远看看（不擅自打开用户文件夹）
             folders = self.parent.desktop_interaction.get_desktop_folders()
             if folders:
                 # 随机选择一个文件夹
                 folder = random.choice(folders)
-                
-                # 向文件夹移动
-                self.parent.target_pos = QPoint(folder['x'], folder['y'])
+
+                # 向文件夹附近移动（停在旁边，不压在图标上）
+                self.parent.target_pos = QPoint(folder['x'] + 60, folder['y'])
                 self.parent.is_moving = True
-                
-                # 显示交互对话
-                self.parent.dialogue_ui.add_dialogue("ralsei", f"这是什么文件夹呀？{folder['name']}... 看起来很有趣！", "curious")
+
+                # 显示交互对话：只是好奇地看看，不承诺打开
+                self.parent.dialogue_ui.add_dialogue("ralsei", f"咦，这个{folder['name']}文件夹里会有什么呢？... 我就远远看看好啦。", "curious")
                 self.parent.dialogue_ui.show_dialogue()
         elif target == "file":
-            # 与文件交互
+            # 与文件交互：走过去远远看看（不擅自打开用户文件）
             files = self.parent.desktop_interaction.get_desktop_files()
             if files:
                 # 随机选择一个文件
                 file = random.choice(files)
-                
-                # 向文件移动
-                self.parent.target_pos = QPoint(file['x'], file['y'])
+
+                # 向文件附近移动
+                self.parent.target_pos = QPoint(file['x'] + 60, file['y'])
                 self.parent.is_moving = True
-                
-                # 显示交互对话
-                self.parent.dialogue_ui.add_dialogue("ralsei", f"这是什么文件呀？{file['name']}... 我可以看看吗？", "curious")
+
+                # 显示交互对话：只是好奇，不承诺打开
+                self.parent.dialogue_ui.add_dialogue("ralsei", f"这个{file['name']}看起来有点意思... 不过我还是不随便打开啦。", "curious")
                 self.parent.dialogue_ui.show_dialogue()
         elif target == "app":
             # 与应用程序交互
@@ -597,15 +618,22 @@ class PetAI:
         # 玩一些东西，改进游戏逻辑
         if self._skip_if_critical():
             return
+        # 修复：不再直接 change_animation(force=True) 触发 dance/sing。
+        # 表演动画的触发权在 ai_driver（见 trigger_action 白名单注释），
+        # pet_ai 在这里只表达"想玩"的意愿和对话，实际动画由 ai_driver 在
+        # 下一轮决策时根据情绪选择播放，避免"走着走着突然跳舞"。
         games = ["hide_and_seek", "puzzle", "dance", "sing", "chase_cursor"]
         game = random.choice(games)
 
         if game == "dance":
-            self.parent.change_animation("dance", force=True)
+            # 想跳舞：先开心地表达，动画交给 ai_driver 触发
+            self.parent.emotion_system.add_emotion("happy", 15)
+            self.parent.emotion_system.add_emotion("excited", 10)
             self.parent.dialogue_ui.add_dialogue("ralsei", "来跳舞吧！转圈圈~ 嘻嘻！", "happy")
             self.parent.dialogue_ui.show_dialogue()
         elif game == "sing":
-            self.parent.change_animation("sing", force=True)
+            # 想唱歌：先表达，动画交给 ai_driver
+            self.parent.emotion_system.add_emotion("happy", 10)
             self.parent.dialogue_ui.add_dialogue("ralsei", "啦啦啦~ 唱首歌给你听！", "happy")
             self.parent.dialogue_ui.show_dialogue()
         elif game == "chase_cursor":

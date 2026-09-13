@@ -172,6 +172,12 @@ class HTTPLocalAI(LocalAIBase):
         return headers
 
     def chat(self, prompt: str, system_prompt: Optional[str] = None, **kwargs) -> Optional[str]:
+        """向本地 AI 发送对话请求，返回文字回复；失败返回 None。
+
+        注意：此方法为**阻塞调用**，内部使用 requests.post() 同步发送 HTTP 请求，
+        超时时间由配置项 timeout 控制（默认 30 秒）。**严禁在主线程/UI 线程直接调用**，
+        否则会导致界面冻结。应在工作线程中调用（如 main.py 的 _async_api_request）。
+        """
         if not self.enabled:
             return None
         try:
@@ -255,7 +261,13 @@ class HTTPLocalAI(LocalAIBase):
         return self._post_json(endpoint, command)
 
     def _post_json(self, url: str, body: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """POST JSON；网络异常/5xx 按 max_retries/retry_delay 重试（4xx 不重试）。"""
+        """POST JSON；网络异常/5xx 按 max_retries/retry_delay 重试（4xx 不重试）。
+
+        注意：此方法为**阻塞调用**，使用 requests.post() 同步发送 HTTP 请求，
+        超时时间由 self.timeout 控制（从配置读取，默认 30 秒）。
+        所有调用此方法的公共方法（chat/get_commands/send_status/execute_command）
+        均为阻塞调用，严禁在主线程/UI 线程直接调用。
+        """
         try:
             import requests
         except Exception:

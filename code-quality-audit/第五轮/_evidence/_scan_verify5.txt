@@ -1,0 +1,39 @@
+﻿=== COMPILE ===
+
+compile_exit=0
+=== PYFLAKES dialogue ===
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\modules\dialogue_system.py:1233:17: local variable 'categories' is assigned to but never used
+
+=== VERIFY ===
+=== V1/V2 瀵硅瘽绯荤粺锛氱郴缁熺被鎰忓浘鏄惁瑙﹁揪鐪熷疄妗岄潰鎿嶄綔 ===
+  [PASS] V1a 闂?鍐呭瓨浣跨敤鐜?瑙﹁揪 get_system_resources :: calls=['get_system_resources'] reply='褰撳墠绯荤粺鐘舵€侊細\nCPU浣跨敤鐜囷細11.1%\n鍐呭瓨浣跨敤鐜囷細22.2%\n纾佺洏浣跨敤鐜囷細33.3%'
+  [PASS] V1b 鍥炲涓甫鐪熷疄鏁板€?11.1) :: reply='褰撳墠绯荤粺鐘舵€侊細\nCPU浣跨敤鐜囷細11.1%\n鍐呭瓨浣跨敤鐜囷細22.2%\n纾佺洏浣跨敤鐜囷細33.3%'
+   [debug] 浼樺寲 -> calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+  [PASS] V1c 璇?浼樺寲'瑙﹁揪 optimize_system :: calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+   [debug] 娓呯悊 -> calls=['clean_temp_files'] reply='涓存椂鏂囦欢娓呯悊宸插畬鎴愶紒'
+  [PASS] V1d 璇?娓呯悊'瑙﹁揪 clean_temp_files :: calls=['clean_temp_files'] reply='涓存椂鏂囦欢娓呯悊宸插畬鎴愶紒'
+  [PASS] V1e 璇?澶囦唤'瑙﹁揪 backup_data :: calls=['backup_data']
+   [debug] 绾?浼樺寲' -> calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+  [PASS] V1f 绾?浼樺寲'瑙﹁揪 optimize_system :: calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+  [PASS] V2a 鎵挎帴璇粛鑳借鍒颁笂涓€杞剰鍥?:: last_intent=system_status
+  [PASS] V2b 鎵挎帴璇緱鍒颁笂涓嬫枃鍥炲鑰岄潪宕╂簝 :: reply='浣犳兂鏌ョ湅绯荤粺鐨勫摢涓叿浣撴寚鏍囷紵'
+
+=== V3 鏂芥硶娴佺▼ casting 鍒嗘敮锛堝惈鏈 P0 淇锛?===
+  [PASS] V3-pre 鎺㈤拡鎴愬姛鎻愬彇鏂规硶浣?:: 璇彞鏁?6
+  [PASS] V3a 鍙嶆眹缂栦腑宸叉棤 LOAD_GLOBAL current_time :: offsets=[]
+  [PASS] V3b casting tick 涓嶅啀鎶?NameError :: err=None
+  [PASS] V3c 鏂芥硶缁撴潫鍥炶皟琚湡姝ｈ皟鐢紙鏂囦欢鎵嶄細琚墦寮€锛?:: cb_called=True frames_seen=11
+  [PASS] V3d _spell_stage 宸插浣嶏紙涓嶅啀姘镐箙鍗″湪 casting锛?:: stage=None
+
+=== V4 娓告垙澶у笀鎴愬氨锛堝幓閲嶉€昏緫锛?===
+  [PASS] V4a 鍒ゅ畾浣跨敤 games_played_ids 鍘婚噸闆嗗悎
+  [PASS] V4b 涓嶅啀浣跨敤绱娆℃暟 games_played 鍒ゅ畾
+  [PASS] V4c activity_stats 鍒濆鍖栧惈 games_played_ids
+
+=== V5 memory save_memory 钀界洏閿?===
+  save_memory 瀹為檯钀界洏閿? ['long_term_memory', 'experience', 'level']
+  璁板綍锛歮emory_strength 鏄惁鍦ㄨ惤鐩橀敭涓?-> False
+
+============================================================
+鎬昏 16 椤癸紝閫氳繃 16锛屽け璐?0
+

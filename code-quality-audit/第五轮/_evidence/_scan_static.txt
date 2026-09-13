@@ -1,0 +1,67 @@
+﻿=== DEADREFS ===
+files scanned: 33
+defs: 775
+never_referenced: 188
+duplicate_definitions: 35
+written: C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\code-quality-audit\绗簲杞甛_deadrefs.json
+
+=== PYFLAKES (modules) ===
+python.exe : C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\modules\*.py: 
+Invalid argument
+所在位置 行:445 字符: 273
++ ...  ==="; $o+=(& $py -m pyflakes "$r\ralsei_pet\modules\*.py" 2>&1 | Out ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\23002\...nvalid argument 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+=== PYFLAKES (main.py) ===
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:1896:13: local variable 'edge_threshold' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2370:9: local variable 'ralsei_rect' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2381:32: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2386:32: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2428:9: local variable 'ralsei_rect' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2474:32: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2481:32: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2606:9: 'math' imported but unused
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:2970:17: 'win32con' imported but unused
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3109:9: local variable 'texture' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3360:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3362:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3369:57: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3402:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3404:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3406:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3412:57: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3430:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3432:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3434:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3441:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3443:21: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3481:9: local variable 'current_hour' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:3758:17: local variable 'sheet' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:4204:31: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:4229:9: local variable 'current_minute' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:4351:51: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:5671:53: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:5901:57: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:5912:57: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:6688:9: 'math' imported but unused
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:6776:36: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:6778:40: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:7216:9: local variable 'e' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:7298:9: local variable 'file_type' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:7428:9: local variable 'file_ext' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:7558:44: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:7562:44: f-string is missing placeholders
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:7611:9: local variable 'file_name' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8054:9: local variable 'now' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8120:47: undefined name 'current_time'
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8131:13: local variable 'cond_frames_insufficient' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8132:35: undefined name 'current_time'
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8132:90: undefined name 'current_time'
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8235:9: local variable 'spell_anim' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8434:9: local variable 'folder_path' is assigned to but never used
+C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\src\main.py:8494:9: local variable 'hs' is assigned to but never used
+

@@ -996,6 +996,14 @@ class DesktopInteraction:
         # 修复：用虚拟屏幕尺寸（多显示器）替代主屏尺寸，避免副屏窗口被误过滤
         screen_width = win32api.GetSystemMetrics(78)  # SM_CXVIRTUALSCREEN
         screen_height = win32api.GetSystemMetrics(79)  # SM_CYVIRTUALSCREEN
+        # 修复：GetWindowRect 返回的是「虚拟屏幕绝对坐标」，而 78/79 只给尺寸。
+        # 原先下面用 rect[2] < 0 / rect[3] < 0 判"出屏"，会把位于主屏左/上方
+        # 副屏（坐标为负）的窗口整窗丢弃——宠物无法在那些窗口边框上"建楼"。
+        # 这里补上虚拟屏原点，改用「窗口矩形与虚拟屏矩形是否相交」判定。
+        virtual_left = win32api.GetSystemMetrics(76)   # SM_XVIRTUALSCREEN
+        virtual_top = win32api.GetSystemMetrics(77)    # SM_YVIRTUALSCREEN
+        virtual_right = virtual_left + screen_width
+        virtual_bottom = virtual_top + screen_height
         
         # 预编译系统类名集合，提高查询速度
         system_classes = {
@@ -1060,9 +1068,10 @@ class DesktopInteraction:
             if width <= 100 or height <= 100:
                 return True
             
-            # 快速过滤：屏幕外的窗口
-            if (rect[0] > screen_width or rect[1] > screen_height or 
-                rect[2] < 0 or rect[3] < 0):
+            # 快速过滤：完全落在虚拟屏幕之外的窗口（与虚拟屏矩形做相交判断，
+            # 兼容主屏左侧/上方副屏产生的负坐标）
+            if (rect[2] <= virtual_left or rect[0] >= virtual_right or
+                    rect[3] <= virtual_top or rect[1] >= virtual_bottom):
                 return True
             
             # 只检测非透明窗口（优化：减少不必要的系统调用）
@@ -2444,6 +2453,14 @@ class DesktopInteraction:
                 new_width = int(current_width + (target_width - current_width) * current_scale)
                 new_height = int(current_height + (target_height - current_height) * current_scale)
                 win32gui.MoveWindow(hwnd, current_x, current_y, new_width, new_height, True)
+                # 修复：原循环只 sleep 不处理事件，duration（默认 1.0s）内 GUI 线程
+                # 完全冻结——与同文件 move_window_smoothly 已改为每步 processEvents
+                # 的做法自相矛盾。这里补齐，避免缩放动画期间界面卡死。
+                try:
+                    from PyQt5.QtWidgets import QApplication
+                    QApplication.processEvents()
+                except Exception as e:
+                    log.debug("desktop_interaction 处理事件失败: %s", e)
                 time.sleep(step_duration)
             
             return True

@@ -203,7 +203,10 @@ class EntertainmentSystem:
             'drawings_made': 0,
             'music_composed': 0,
             'jokes_told': 0,
-            'riddles_answered': 0
+            'riddles_answered': 0,
+            # 修复：「游戏大师」成就需要判定"每种游戏都玩过"，仅靠 games_played
+            # 总次数会重复玩同一个游戏即可解锁，故增加去重后的游戏 id 列表。
+            'games_played_ids': []
         }
         
         # 数据文件路径
@@ -219,6 +222,9 @@ class EntertainmentSystem:
                 with open(self.entertainment_data_path, 'r', encoding='utf-8') as f:
                     entertainment_data = json.load(f)
                     self.activity_stats = entertainment_data.get('activity_stats', self.activity_stats)
+                    # 兼容旧存档：缺少 games_played_ids 时补齐，避免成就判定读到缺失键
+                    if isinstance(self.activity_stats, dict):
+                        self.activity_stats.setdefault('games_played_ids', [])
                     self.recent_activities = entertainment_data.get('recent_activities', self.recent_activities)
                     # 加载成就数据
                     game_achievements = entertainment_data.get('game_achievements', {})
@@ -335,6 +341,10 @@ class EntertainmentSystem:
         
         # 更新统计数据
         self.activity_stats['games_played'] += 1
+        # 记录本局游戏 id（去重），供「游戏大师」成就判定"每种游戏都玩过"
+        _played_ids = self.activity_stats.setdefault('games_played_ids', [])
+        if game_id not in _played_ids:
+            _played_ids.append(game_id)
         
         # 记录最近活动
         self._add_recent_activity('game', {
@@ -511,8 +521,11 @@ class EntertainmentSystem:
             self.parent.dialogue_ui.add_dialogue("ralsei", "太棒了！我们解锁了'满分达人'成就！", "happy_extremely")
             self.parent.social_growth.add_experience(self.game_achievements['perfect_score']['reward'])
         
-        # 检查游戏大师成就（这里简化处理，实际需要检查所有游戏是否都玩过）
-        if self.activity_stats['games_played'] >= len(self.games) and not self.game_achievements['game_master']['unlocked']:
+        # 检查游戏大师成就：必须是"每一种游戏都玩过"（按 game_id 去重统计），
+        # 修复：原实现用 games_played 累计次数 >= 游戏总数，重复玩同一个游戏
+        # 达到总数即解锁，与成就名称/描述严重不符（原注释亦自承"简化处理"）。
+        _played_unique = self.activity_stats.get('games_played_ids', [])
+        if len(_played_unique) >= len(self.games) and not self.game_achievements['game_master']['unlocked']:
             self.game_achievements['game_master']['unlocked'] = True
             self.parent.dialogue_ui.add_dialogue("ralsei", "太厉害了！我们解锁了'游戏大师'成就！", "happy_extremely")
             self.parent.social_growth.add_experience(self.game_achievements['game_master']['reward'])

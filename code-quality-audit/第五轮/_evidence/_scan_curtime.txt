@@ -1,0 +1,97 @@
+﻿=== HEAD version grep ===
+        self.current_time = time.strftime("%H:%M:%S")  # 褰撳墠鏃堕棿
+        current_time = time.strftime("%H:%M:%S")
+        self.current_time = current_time
+        # Ralsei鎬ф牸锛氭俯鏌斻€佸缇烇紝鍔ㄤ綔杞绘煍锛屽枩娆㈡帰绱絾涓嶄細杩囦簬婵€杩?        current_time = time.time()
+            # 妫€鏌ヤ笂娆＄Щ鍔ㄧ粨鏉熸椂闂?            time_since_last_move = current_time - self.last_movement_end_time
+        # 璁＄畻瀹為檯缁忚繃鐨勬椂闂?        current_time = time.time()
+        elapsed_time = current_time - self.last_update_time
+        self.last_update_time = current_time
+            if current_time - self._last_env_update > 5.0:
+                self._last_env_update = current_time
+            self._last_env_update = current_time
+            if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 5.0:
+        self._last_desktop_elem_check = current_time
+            if current_time - self.last_interaction_time < 1.0:
+        # 妫€鏌ユ槸鍚﹂渶瑕佽繘鍏ョ潯鐪犳ā寮?        if current_time - self.last_interaction_time > self.max_sleep_idle_duration:
+                self.autonomous_agent.tick(current_time)
+        # 鏇存柊妤煎眰淇℃伅 + 绐楀彛绉诲姩璺熼殢 / 鍏崇獥鎺夎惤锛堝畾鏈?1 绉掞紱涓嶄緷璧?is_moving锛?        # 淇锛氬師鏉?check_window_movement锛堝惈绐楀彛绉诲姩鈫掓ゼ鏉胯窡闅忋€佺獥鍙ｆ秷澶扁啋鍧犺惤锛夊彧鍦?        # is_moving 鍒嗘敮鍐呰璋冿紝Ralsei 闈欐鏃惰剼涓嬬獥鍙ｈ绉昏蛋/鍏抽棴浼?鎮┖"鏁板崄绉掓墠澶勭悊锛?        # 杩濆弽寤烘ゼ瑕佹眰銆傝繖閲岀粺涓€鑺傛媿鎵ц銆?        if current_time - self.last_floor_check_time > self.floor_check_interval:
+            self.last_floor_check_time = current_time
+            self.handle_jump(elapsed_time, current_time)
+            self.handle_gravity_fall(elapsed_time, current_time)
+            self.handle_fall(elapsed_time, current_time)
+            self.handle_fall(elapsed_time, current_time)
+            if _fs is not None and current_time - _fs > 20.0:
+                self.handle_dragging_play(elapsed_time, current_time)
+            # 浼樺寲锛氶檷浣庣獥鍙ｆ鏌ラ鐜?            if current_time - self.last_window_check_time > self.window_check_interval:
+                self.last_window_check_time = current_time
+                # 鎯呯华褰卞搷锛堜紭鍖栵細缂撳瓨鎯呯华鍥犲瓙锛?                if not hasattr(self, '_cached_mood_factor') or current_time - getattr(self, '_last_mood_check', 0) > 2.0:
+                    self._last_mood_check = current_time
+                # 浼樺寲锛氱紦瀛樺睆骞曞嚑浣曚俊鎭?                # 淇锛堝弬鑰冨皬椴搁奔 widget 鐨?濮嬬粓澶瑰湪鍙鍖?锛夛細鐢ㄥ灞忚櫄鎷熺煩褰㈣€岄潪涓诲睆锛?                # 鍚﹀垯鍓睆锛堝彸渚?宸︿晶璐熷潗鏍囷級鐩爣姘歌繙璧颁笉鍒般€佷笖浼氳姣忓抚 clamp 鎷夊洖涓诲睆鎶栧姩銆?                if not hasattr(self, '_cached_screen_geom') or current_time - getattr(self, '_last_screen_check', 0) > 3.0:
+                    self._last_screen_check = current_time
+        current_time = time.time()
+        elapsed = current_time - self.drag_start_time
+        # 妫€鏌ヨ烦璺冪柌鍔?        current_time = time.time()
+            # 妫€鏌ヤ紤鎭槸鍚﹀畬鎴?            if current_time - self.last_jump_time > self.rest_duration:
+        # 妫€鏌ユ槸鍚﹀湪璺宠穬鍐峰嵈鏈?        if current_time - self.last_jump_time < jump_cooldown:
+    def handle_jump(self, elapsed_time, current_time):
+        elapsed = current_time - self.jump_start_time
+    def handle_gravity_fall(self, elapsed_time, current_time):
+    def handle_fall(self, elapsed_time, current_time):
+    def handle_dragging_play(self, elapsed_time, current_time):
+                elapsed_dragging = current_time - self.dragging_start_time
+            elapsed_dragging = current_time - self.dragging_cursor_start_time
+                current_time = time.time()
+                        'last_click_time': current_time,
+                        'press_start_time': current_time,
+                    # 鏇存柊闀挎寜鐘舵€?                    self._pet_detection_state['press_start_time'] = current_time
+                    if current_time - self._pet_detection_state['last_click_time'] < 0.5:
+                    # 鏇存柊鏈€鍚庣偣鍑绘椂闂?                    self._pet_detection_state['last_click_time'] = current_time
+                        current_time = time.time()
+                        if direction_changes >= 2 and current_time - self._pet_detection_state['last_pet_time'] > 1.5:
+                            self._pet_detection_state['last_pet_time'] = current_time
+                current_time = time.time()
+                press_duration = current_time - self._pet_detection_state['press_start_time']
+        # 瀹夊叏鍦板垏鎹㈠姩鐢伙紝甯︽湁鍐峰嵈鏃堕棿妫€鏌ャ€佷紭鍏堢骇绯荤粺銆乻pell 闃舵纭嫤鎴?        current_time = time.time()
+                if current_time - self.last_animation_change < self.animation_change_cooldown * 2:
+                if current_time - self.last_animation_change < self.animation_change_cooldown:
+        self.last_animation_change = current_time
+            self._last_perf_anim_time = current_time
+            'current_time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        current_time = time.time()
+        if (current_time - self._last_animation_time) * 1000 < drag_delay:
+            self.idle_walk_timer += (current_time - self._last_animation_time)
+                        self.last_jump_time = current_time
+                        self.jump_start_time = current_time
+                    self.shocked_start_time = current_time
+                if current_time - self.shocked_start_time >= 1.0:
+                self.splat_start_time = current_time
+            if current_time - self.splat_start_time >= 2.0:
+                         and (current_time - self._last_perf_anim_time) < self._perf_anim_min_duration)
+                        current_time = time.time()
+                        elapsed = current_time - self._rotation_damping['start_time']
+            self.surprised_timer += (current_time - self._last_animation_time)
+            self.happy_timer += (current_time - self._last_animation_time)
+            self.shy_timer += (current_time - self._last_animation_time)
+            self.unhappy_timer += (current_time - self._last_animation_time)
+        # 鏇存柊鏈€鍚庡姩鐢绘椂闂?        self._last_animation_time = current_time
+        current_time = time.time()
+        elapsed = current_time - self._bounce_params['start_time']
+            self._bounce_params['start_time'] = current_time
+                self._spell_cast_start_time = current_time
+            cond_time_fallback = (current_time - getattr(self, '_spell_cast_start_time', current_time)) > 5.0
+=== diff hunks mentioning current_time ===
+  -                self.wake_up()
+  +                if not hasattr(self, '_sleep_stir_time'):
+> +                    # 绗竴娆¤鍚甸啋锛氬摷鍝煎敡鍞х炕涓韩锛屼絾杩樻病閱?+                    self._sleep_stir_time = current_time
+  +                    self._sleep_stir_count = 1
+  +                    try:
+  +                    self.dialogue_ui.add_dialogue("ralsei", random.choice(stir_msgs), "sleepy")
+  +                    self.dialogue_ui.show_dialogue()
+> +                elif (current_time - self._sleep_stir_time < 5.0
+  +                      and getattr(self, '_sleep_stir_count', 0) == 1):
+  +                    # 5绉掑唴绗簩娆¤鍚碉細鎵嶇湡姝ｉ啋鏉?+                    self._sleep_stir_count = 2
+  +                    self.wake_up()
+> +            elif hasattr(self, '_sleep_stir_time') and current_time - self._sleep_stir_time > 5.0:
+  +                # 瓒呰繃5绉掓病鍐嶈鍚碉紝缈讳釜韬户缁潯
+  +                if hasattr(self, '_sleep_stir_time'):

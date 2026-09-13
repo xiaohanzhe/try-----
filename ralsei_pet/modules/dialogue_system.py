@@ -645,14 +645,20 @@ class DialogueSystem:
         if emotion_system:
             current_emotion, emotion_intensity = emotion_system.get_current_emotion()
 
-        # 更新上下文
-        self.update_context(user_input)
-
         # 检查上下文相关回复
+        # 修复（P1）：本调用必须早于 update_context()。_get_context_response() 读的是
+        # 「上一轮」的 last_topic / last_keywords / last_intent；原顺序先 update_context()
+        # 把「当前输入」的意图写进 context，紧接着这里就读到本轮意图并 return 一句套话，
+        # 使 generate_response 主链里真正调用 desktop_interaction.get_system_resources()
+        # / optimize_system() / clean_temp_files() / backup_data() 的分支永远不可达——
+        # 用户问"内存多少 / 帮我清理垃圾 / 备份数据"只会收到一句闲聊，动作完全不执行。
         context_response = self._get_context_response(user_input_lower, current_emotion, emotion_intensity)
         if context_response:
             response = context_response
             return response
+
+        # 更新上下文（记录本轮输入，供下一轮承接判断使用）
+        self.update_context(user_input)
         
         # 检查用户输入是否包含关键词
         if "你好" in user_input or "hi" in user_input_lower or "hello" in user_input_lower:
@@ -744,7 +750,7 @@ class DialogueSystem:
                 "好吧，那我们下次再聊！",
             ])
             self.context["last_topic"] = "farewell"
-        elif "饿" in user_input or "吃" in user_input_lower and "蛋糕" not in user_input_lower:
+        elif ("饿" in user_input or "吃" in user_input_lower) and "蛋糕" not in user_input_lower:
             response = random.choice([
                 "我也有点饿了呢... 要不要一起吃点什么？",
                 "肚子咕咕叫了... 想吃点甜甜的东西！",
@@ -964,6 +970,39 @@ class DialogueSystem:
                 "我可以帮你创建工作日志，记录每天的工作内容！",
             ])
             self.context["last_topic"] = "work"
+        # ===== 修复（P1）：动作词优先于名词 =====
+        # 原先"优化/清理/备份/恢复"四个动作分支排在 "文件"(约973行) 与 "系统"(约1094行)
+        # 两个宽泛名词分支之后，被完全遮蔽：
+        #   "帮我优化一下系统" 含"系统" → 命中系统资源查询，永远不执行 optimize_system()
+        #   "清理一下垃圾文件" 含"文件" → 命中"要打开桌面上的文件吗？"，永远不执行
+        #                             clean_temp_files()
+        #   "清理…" 另有第1075行 "整理"/"清理" 两个重复分支在前，"清理"动作分支
+        #            是彻底不可达的死分支
+        # 这里把动作分支整体前移到最前面，保证"动词优先"。
+        elif "优化" in user_input_lower:
+            if self.desktop_interaction:
+                self.desktop_interaction.optimize_system()
+                response = "系统优化已完成！"
+            else:
+                response = "我可以帮你优化系统！"
+            self.context["last_topic"] = "system_management"
+        elif "清理" in user_input_lower:
+            if self.desktop_interaction:
+                self.desktop_interaction.clean_temp_files()
+                response = "临时文件清理已完成！"
+            else:
+                response = "我可以帮你清理系统垃圾文件！"
+            self.context["last_topic"] = "system_management"
+        elif "备份" in user_input_lower:
+            if self.desktop_interaction:
+                self.desktop_interaction.backup_data()
+                response = "数据备份已完成！"
+            else:
+                response = "我可以帮你备份重要数据！"
+            self.context["last_topic"] = "system_management"
+        elif "恢复" in user_input_lower:
+            response = "数据恢复功能需要指定备份路径，暂时无法自动完成！"
+            self.context["last_topic"] = "system_management"
         elif "文件" in user_input_lower or "文档" in user_input_lower:
             response = random.choice([
                 "需要我帮你处理文件吗？",
@@ -1066,7 +1105,9 @@ class DialogueSystem:
                 "需要我帮你查找桌面上的特定文件吗？",
             ])
             self.context["last_topic"] = "desktop"
-        elif "整理" in user_input_lower or "清理" in user_input_lower:
+        elif "整理" in user_input_lower:
+            # 修复：移除重复的 "清理" —— 它与下方"清理"动作分支重复，且排在前面
+            # 会把那条动作分支彻底遮蔽成不可达死代码（用户说清理只得到寒暄）。
             response = random.choice([
                 "需要我帮你整理文件吗？",
                 "我可以帮你清理桌面，让你的工作环境更整洁！",
@@ -1111,30 +1152,8 @@ class DialogueSystem:
             else:
                 response = random.choice(self.topic_responses["system_status"])
             self.context["last_topic"] = "system_status"
-        elif "优化" in user_input_lower:
-            if self.desktop_interaction:
-                self.desktop_interaction.optimize_system()
-                response = "系统优化已完成！"
-            else:
-                response = "我可以帮你优化系统！"
-            self.context["last_topic"] = "system_management"
-        elif "清理" in user_input_lower:
-            if self.desktop_interaction:
-                self.desktop_interaction.clean_temp_files()
-                response = "临时文件清理已完成！"
-            else:
-                response = "我可以帮你清理系统垃圾文件！"
-            self.context["last_topic"] = "system_management"
-        elif "备份" in user_input_lower:
-            if self.desktop_interaction:
-                self.desktop_interaction.backup_data()
-                response = "数据备份已完成！"
-            else:
-                response = "我可以帮你备份重要数据！"
-            self.context["last_topic"] = "system_management"
-        elif "恢复" in user_input_lower:
-            response = "数据恢复功能需要指定备份路径，暂时无法自动完成！"
-            self.context["last_topic"] = "system_management"
+        # （原"优化/清理/备份/恢复"动作分支位于此处，因被上方的宽泛名词分支遮蔽，
+        #   已整体前移到 "文件"/"文档" 分支之前，见本函数靠前处的同注释。）
         elif "定时" in user_input_lower or "提醒" in user_input_lower or "日程" in user_input_lower or "闹钟" in user_input_lower:
             response = random.choice(self.topic_responses["reminder_request"])
             self.context["last_topic"] = "reminder_request"
@@ -1422,6 +1441,20 @@ class DialogueSystem:
 
     def _get_context_response(self, user_input_lower, current_emotion, emotion_intensity):
         """根据上下文生成更相关的回复"""
+        # ===== 修复（P1）：只要「当前输入本身携带明确意图」，就完全不使用上下文模板 =====
+        # 曾经的故障链：用户第一次说"内存使用率"→ main 链走到 system_status 分支，
+        # 在 self.context["last_topic"] 记下 "system_status"；用户第二次说
+        # "帮我优化一下系统"（同一主题）→ 本函数看到 last_topic，_is_followup_input()
+        # 只要输入含该主题的领域词（'系统'）就判为"承接"，于是返回一句模板并提前
+        # return —— generate_response 主链里真正调用 desktop_interaction
+        # .get_system_resources() / optimize_system() / clean_temp_files() /
+        # backup_data() 的分支永远不会执行。用户反复说"优化/清理"只会得到套话，
+        # 桌面动作一次都不发生（功能静默失效，且与代码声称的能力不符）。
+        # 判定原则：只有"承接式"输入（嗯嗯/好的/还有呢/继续…，即 _detect_intent 为
+        # general_chat）才用上下文模板；携带明确意图的输入一律交给主链执行真实动作。
+        if self._detect_intent(user_input_lower) != "general_chat":
+            return None
+
         # 检查最近的话题
         if "last_topic" in self.context and self.context["last_topic"]:
             last_topic = self.context["last_topic"]

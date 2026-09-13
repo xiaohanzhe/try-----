@@ -1,0 +1,93 @@
+﻿=== DIFFSTAT vs HEAD ===
+git : warning: in the working copy of 'ralsei_pet/modules/command_manager.py', 
+LF will be replaced by CRLF the next time Git touches it
+所在位置 行:445 字符: 91
++ ... ="=== DIFFSTAT vs HEAD ==="; $o+= (git -C $r diff --stat 2>&1 | Out-S ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'ralsei_pet/modules/emotion_system.py', LF will
+ be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/memory_system.py', LF will 
+be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/search_summarizer.py', LF w
+ill be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/weather_system.py', LF will
+ be replaced by CRLF the next time Git touches it
+ ralsei_pet/modules/ai_driver.py         |  18 +-
+ ralsei_pet/modules/api_client.py        |  14 +-
+ ralsei_pet/modules/command_manager.py   |  14 +-
+ ralsei_pet/modules/config_manager.py    |  87 ++++--
+ ralsei_pet/modules/dialogue_system.py   |   2 +-
+ ralsei_pet/modules/emotion_system.py    |  42 +--
+ ralsei_pet/modules/energy_hunger.py     |  20 +-
+ ralsei_pet/modules/memory_system.py     |  29 +-
+ ralsei_pet/modules/pet_ai.py            |  84 ++++--
+ ralsei_pet/modules/search_summarizer.py |   2 +-
+ ralsei_pet/modules/weather_system.py    |   6 +
+ ralsei_pet/src/main.py                  | 511 ++++++++++++++++++--------------
+ 12 files changed, 517 insertions(+), 312 deletions(-)
+
+=== main.py recent diff hunks (last 200 lines of diff) ===
+diff --git a/ralsei_pet/src/main.py b/ralsei_pet/src/main.py
+index 00f04a0..cafc922 100644
+--- a/ralsei_pet/src/main.py
++++ b/ralsei_pet/src/main.py
+@@ -2,17 +2,17 @@
+ import sys
+ import os
+ import time
++import functools
+ 
+ # 娉ㄦ剰锛氬崟瀹炰緥妫€鏌ュ凡灏佽涓?check_single_instance() 鍑芥暟
+ # 鍦?if __name__ == '__main__': 涓皟鐢紝閬垮厤 import 鏃跺氨瑙﹀彂閫€鍑? # 涔熶究浜庡崟鍏冩祴璇曞拰 mock
+ 
+ # 缁х画瀵煎叆鍏朵粬妯″潡
+-import time
+ import random
+ import math
+ import statistics
+-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
++from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QMessageBox
+ from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor, QTransform
+ from PyQt5.QtCore import Qt, QTimer, QPoint, QRect, pyqtSignal
+ 
+@@ -55,13 +55,26 @@ class PerformanceMonitor:
+     
+     def print_stats(self):
+         """鎵撳嵃鎬ц兘缁熻淇℃伅"""
+-        pass
++        stats = self.get_stats()
++        if not stats:
++            _log.info("鏆傛棤鎬ц兘缁熻鏁版嵁")
++            return
++        _log.info("========== 鎬ц兘缁熻 ==========")
++        for func_name, stat in stats.items():
++            _log.info(
++                f"鍑芥暟: {func_name} | 璋冪敤娆℃暟: {stat['count']} | "
++                f"骞冲潎鑰楁椂: {stat['avg']:.4f} ms | "
++                f"鏈€灏忚€楁椂: {stat['min']:.4f} ms | "
++                f"鏈€澶ц€楁椂: {stat['max']:.4f} ms"
++            )
++        _log.info("==============================")
+ 
+ # 鍒涘缓鍏ㄥ眬鎬ц兘鐩戞帶瀹炰緥
+ perf_monitor = PerformanceMonitor()
+ 
+ # 鎬ц兘鐩戞帶瑁呴グ鍣? def monitor_performance(func):
++    @functools.wraps(func)
+     def wrapper(*args, **kwargs):
+         start_time = time.time()
+         result = func(*args, **kwargs)
+@@ -400,9 +413,7 @@ class RalseiPet(QMainWindow):
+         self._hide_center_x = None
+         self._hide_center_y = None
+         self._hide_search_timer = None              # searching 闃舵瀹氭椂鍣?-        # game_state 缁熶竴娓告垙鐘舵€?-        if not hasattr(self, 'game_state') or not isinstance(getattr(self, 'game_state', None), dict):
+-            self.game_state = {'is_playing': False, 'game_type': None}
++        # game_state 鍦?__init__ 涓凡瀹屾暣鍒濆鍖栵紙鍚?is_playing/game_type/player_score/best_streak 绛?12 涓瓧娈碉級
+ 
+     # 甯у姩鐢绘挱鏀剧浉鍏充唬鐮?- 鍒濆鍖栧姩鐢荤郴缁?     def init_animation(self):
+@@ -542,11 +553,12 @@ class RalseiPet(QMainWindow):
+         # 鍒濆鍖栭€忔槑鍗犱綅绗︾郴缁燂紝鐢ㄤ簬Ralsei涓庢闈㈡枃浠跺す/鏂囦欢鐨勪簰鍔?         self.placeholder_labels = []

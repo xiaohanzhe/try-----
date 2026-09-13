@@ -1,0 +1,23 @@
+﻿=== 鐩爣鏂规硶 ===
+_tick_spell_flow  @ line 7998 - 8170
+
+=== 璇ユ柟娉曞強鍐呭祵鍑芥暟寮曠敤鐨勩€愬叏灞€鍚嶃€?===
+['Exception', 'QPoint', '_abort_hide_and_seek', '_hide_folder_path', '_hide_obstacles', '_log', '_spell_auto_suspended', '_spell_cast_start_frame', '_spell_cast_start_time', '_spell_finish_cb', '_spell_frames_seen', '_spell_interrupted_reason', '_spell_seen_frame', '_spell_stage', '_spell_target_direction', '_spell_target_kind', '_spell_target_path', '_spell_target_screen_pos', '_spell_touched_flag', 'abs', 'autonomous_agent', 'callable', 'center', 'change_animation', 'current_animation', 'current_direction', 'current_frame', 'current_speed_x', 'current_speed_y', 'current_time', 'debug', 'frameGeometry', 'get', 'getattr', 'hasattr', 'height', 'int', 'is_moving', 'isdir', 'len', 'os', 'path', 'play_spell', 'previous_direction', 'resume', 'rmtree', 'shutil', 'sound_manager', 'speed', 'sprite_loader', 'sprites', 'suspend', 'target_pos', 'time', 'width', 'x', 'y']
+
+鏄惁鍑虹幇 current_time : True
+
+=== 妯″潡椤跺眰鏄惁缁戝畾杩?current_time ===
+current_time in module globals: False
+妯″潡椤跺眰鍚嶆暟閲? 43
+
+=== 鍙嶆眹缂栦腑鎵€鏈?current_time 鐩稿叧鎸囦护 ===
+(1, 2080, 'LOAD_GLOBAL', 'current_time', 'current_time')
+(1, 2388, 'LOAD_GLOBAL', 'current_time', 'current_time')
+(1, 2412, 'LOAD_GLOBAL', 'current_time', 'current_time')
+
+current_time 鎸囦护鏉℃暟: 3
+
+=== 缁撹 ===
+>>> 宸茶瘉瀹烇細current_time 鍦ㄦ柟娉曞唴浠?LOAD_GLOBAL 鏂瑰紡瑙ｆ瀽锛?
+>>> 鑰屾ā鍧楅《灞備粠鏈粦瀹氳鍚嶅瓧 => 杩愯鍒拌琛屽繀鐒舵姏 NameError銆?
+

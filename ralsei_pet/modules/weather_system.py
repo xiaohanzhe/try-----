@@ -214,7 +214,13 @@ class WeatherSystem:
                 tables = [r[0] for r in cur.fetchall()]
 
                 # 常见的几种表结构，一个个试
+                import re
+                _safe_table_re = re.compile(r'^[a-zA-Z_][a-zA-Z0-9_]*$')
                 for table in tables:
+                    # 安全校验：表名必须是合法的 SQL 标识符，防止 SQL 注入
+                    if not _safe_table_re.match(table):
+                        _log.warning("跳过非法表名（不符合标识符规范）: %r", table)
+                        continue
                     t = table.lower()
                     try:
                         if "current_conditions" in t or "weather_snapshot" in t:

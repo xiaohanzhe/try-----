@@ -1,0 +1,36 @@
+﻿=== 当前工作区改动（含前几轮未提交部分 + 本轮修复） ===
+git : warning: in the working copy of 'ralsei_pet/modules/command_manager.py', 
+LF will be replaced by CRLF the next time Git touches it
+所在位置 行:445 字符: 131
++ ... 改动（含前几轮未提交部分 + 本轮修复） ==="; $o+=(git -C $r diff --numstat 2>&1 | Out-S ...
++                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'ralsei_pet/modules/desktop_interaction.py', LF
+ will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/emotion_system.py', LF will
+ be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/memory_system.py', LF will 
+be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/search_summarizer.py', LF w
+ill be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ralsei_pet/modules/weather_system.py', LF will
+ be replaced by CRLF the next time Git touches it
+17	1	ralsei_pet/modules/ai_driver.py
+13	1	ralsei_pet/modules/api_client.py
+4	10	ralsei_pet/modules/command_manager.py
+70	17	ralsei_pet/modules/config_manager.py
+20	3	ralsei_pet/modules/desktop_interaction.py
+62	29	ralsei_pet/modules/dialogue_system.py
+21	21	ralsei_pet/modules/emotion_system.py
+15	5	ralsei_pet/modules/energy_hunger.py
+16	3	ralsei_pet/modules/entertainment_system.py
+23	6	ralsei_pet/modules/memory_system.py
+56	28	ralsei_pet/modules/pet_ai.py
+1	1	ralsei_pet/modules/search_summarizer.py
+6	0	ralsei_pet/modules/weather_system.py
+-	-	ralsei_pet/src/__pycache__/main.cpython-311.pyc
+314	226	ralsei_pet/src/main.py
+

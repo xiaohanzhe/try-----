@@ -184,13 +184,23 @@ class EnergyHungerSystem:
             except Exception as e:
                 _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
         
-    def set_resting(self, resting):
-        # 设置休息状态
+    def _set_resting(self, resting):
+        # 设置休息状态（内部方法）
+        # 修复：开启休息时需要检查精力阈值，避免绕过 rest() 的保护逻辑
+        if resting:
+            if self.energy >= self.full_energy_threshold:
+                return False
         self.is_resting = resting
+        return True
         
-    def set_eating(self, eating):
-        # 设置进食状态
+    def _set_eating(self, eating):
+        # 设置进食状态（内部方法）
+        # 修复：开启进食时需要检查饥饿度阈值，避免绕过 eat() 的保护逻辑
+        if eating:
+            if self.hunger >= self.full_hunger_threshold:
+                return False
         self.is_eating = eating
+        return True
         
     def get_energy(self):
         # 获取当前精力值

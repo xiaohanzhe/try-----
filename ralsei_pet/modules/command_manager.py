@@ -1,6 +1,5 @@
 import json
 import logging
-import time
 from typing import Dict, Any, Callable
 from PyQt5.QtCore import QPoint
 
@@ -73,15 +72,10 @@ class CommandManager:
     
     def handle_jump_command(self, command: Dict[str, Any]) -> Dict[str, Any]:
         """处理跳跃命令"""
-        # start_jump(target_window, window_edge) 需要 window 字典或 None
-        # 对于命令式跳跃，直接原地跳跃（target_window=None 表示跳到当前层/桌面）
-        self.ralsei.is_jumping = True
-        self.ralsei.jump_start_time = time.time()
-        self.ralsei.jump_start_pos = self.ralsei.pos()
-        self.ralsei.jump_target_window = None
-        self.ralsei.jump_target_z = 0
-        if hasattr(self.ralsei, 'spatial_pos'):
-            self.ralsei.jump_start_spatial = self.ralsei.spatial_pos.copy()
+        # 调用 start_jump 进行完整的跳跃状态初始化，
+        # 避免手动设置字段导致跳跃阶段、动画、计数、休息逻辑等被绕过。
+        # target_window=None 且 window_edge=None 表示命令式原地跳跃。
+        self.ralsei.start_jump(None, None)
 
         return {'message': '开始跳跃'}
     

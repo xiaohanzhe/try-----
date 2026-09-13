@@ -128,7 +128,7 @@ class SearchSummarizer:
     def _extract_keywords(self, text):
         """提取文本中的关键词"""
         # 简单的关键词提取，移除常见的停用词
-        stop_words = set(["the", "and", "of", "to", "in", "a", "is", "it", "that", "for", "on", "with", "as", "by", "at", "from", "but", "or", "this", "are", "was", "were", "be", "been", "have", "has", "had", "do", "does", "did", "will", "would", "shall", "should", "can", "could", "may", "might", "must", "ought", "I", "you", "he", "she", "it", "we", "they", "them", "their", "his", "her", "its", "our", "your", "my", "me", "him", "her", "us", "you", "them"])
+        stop_words = set(["the", "and", "of", "to", "in", "a", "is", "it", "that", "for", "on", "with", "as", "by", "at", "from", "but", "or", "this", "are", "was", "were", "be", "been", "have", "has", "had", "do", "does", "did", "will", "would", "shall", "should", "can", "could", "may", "might", "must", "ought", "I", "you", "he", "she", "it", "we", "they", "them", "their", "his", "her", "its", "our", "your", "my", "me", "him", "us"])
 
         # 移除标点符号
         text = re.sub(r'[^\w\s]', '', text)

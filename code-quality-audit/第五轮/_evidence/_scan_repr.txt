@@ -1,0 +1,90 @@
+### ralsei_pet\src\main.py
+--- lines 3752-3778 ---
+3752|'                '
+3753|'                # 创建新的Excel文件'
+3754|'                excel = win32com.client.Dispatch("Excel.Application")'
+3755|'                excel.Visible = False'
+3756|'                '
+3757|'                workbook = excel.Workbooks.Add()'
+3758|'                sheet = workbook.ActiveSheet'
+3759|'                '
+3760|'                # 保存文件'
+3761|'                new_file_name = "新建表格.xlsx"'
+3762|'                new_file_path = os.path.join(desktop_path, new_file_name)'
+3763|'                '
+3764|'                # 检查文件是否已存在，如果存在则添加数字后缀'
+3765|'                counter = 1'
+3766|'                while os.path.exists(new_file_path):'
+3767|'                    new_file_name = f"新建表格_{counter}.xlsx"'
+3768|'                    new_file_path = os.path.join(desktop_path, new_file_name)'
+3769|'                    counter += 1'
+3770|'                '
+3771|'                workbook.SaveAs(new_file_path)'
+3772|'                workbook.Close()'
+3773|'                excel.Quit()'
+3774|'                '
+3775|'                self.dialogue_ui.add_dialogue("ralsei", f"我已经在桌面上创建了一个新的Excel表格: {new_file_name}", "happy")'
+3776|'                self.dialogue_ui.show_dialogue()'
+3777|'                return True'
+3778|'            '
+### ralsei_pet\modules\desktop_interaction.py
+--- lines 1062-1068 ---
+1062|'            '
+1063|'            # 快速过滤：屏幕外的窗口'
+1064|'            if (rect[0] > screen_width or rect[1] > screen_height or '
+1065|'                rect[2] < 0 or rect[3] < 0):'
+1066|'                return True'
+1067|'            '
+1068|'            # 只检测非透明窗口（优化：减少不必要的系统调用）'
+--- lines 2436-2450 ---
+2436|'            # 计算步数和每步缩放比例'
+2437|'            steps = 50'
+2438|'            step_duration = duration / steps'
+2439|'            '
+2440|'            # 执行平滑缩放'
+2441|'            for i in range(steps):'
+2442|'                # 计算当前步骤的缩放比例'
+2443|'                current_scale = (i + 1) / steps'
+2444|'                new_width = int(current_width + (target_width - current_width) * current_scale)'
+2445|'                new_height = int(current_height + (target_height - current_height) * current_scale)'
+2446|'                win32gui.MoveWindow(hwnd, current_x, current_y, new_width, new_height, True)'
+2447|'                time.sleep(step_duration)'
+2448|'            '
+2449|'            return True'
+2450|'        except Exception as e:'
+### ralsei_pet\modules\entertainment_system.py
+--- lines 512-519 ---
+512|"            self.parent.social_growth.add_experience(self.game_achievements['perfect_score']['reward'])"
+513|'        '
+514|'        # 检查游戏大师成就（这里简化处理，实际需要检查所有游戏是否都玩过）'
+515|"        if self.activity_stats['games_played'] >= len(self.games) and not self.game_achievements['game_master']['unlocked']:"
+516|"            self.game_achievements['game_master']['unlocked'] = True"
+517|'            self.parent.dialogue_ui.add_dialogue("ralsei", "太厉害了！我们解锁了\'游戏大师\'成就！", "happy_extremely")'
+518|"            self.parent.social_growth.add_experience(self.game_achievements['game_master']['reward'])"
+519|'    '
+--- lines 198-208 ---
+198|'        # 统计数据'
+199|'        self.activity_stats = {'
+200|"            'games_played': 0,"
+201|"            'stories_created': 0,"
+202|"            'poems_written': 0,"
+203|"            'drawings_made': 0,"
+204|"            'music_composed': 0,"
+205|"            'jokes_told': 0,"
+206|"            'riddles_answered': 0"
+207|'        }'
+208|'        '
+--- lines 218-223 ---
+218|'            if os.path.exists(self.entertainment_data_path):'
+219|"                with open(self.entertainment_data_path, 'r', encoding='utf-8') as f:"
+220|'                    entertainment_data = json.load(f)'
+221|"                    self.activity_stats = entertainment_data.get('activity_stats', self.activity_stats)"
+222|"                    self.recent_activities = entertainment_data.get('recent_activities', self.recent_activities)"
+223|'                    # 加载成就数据'
+--- lines 335-340 ---
+335|'        '
+336|'        # 更新统计数据'
+337|"        self.activity_stats['games_played'] += 1"
+338|'        '
+339|'        # 记录最近活动'
+340|"        self._add_recent_activity('game', {"

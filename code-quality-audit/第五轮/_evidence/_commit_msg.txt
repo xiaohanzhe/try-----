@@ -1,0 +1,29 @@
+第5轮代码审查：修复 P0 仙术流程崩溃等 6 处缺陷，附审查报告与验证证据
+
+本轮以"资深测试 + 资深开发"双视角对 ralsei_pet（PyQt5 桌宠）做第五轮深审，
+静态基线 -> 并行只读深审 -> 字节码/功能级独立验证 -> 定点修复 -> 回归验证。
+
+缺陷修复
+- P0 ralsei_pet/src/main.py: _tick_spell_flow 施法分支引用了从未定义的 current_time
+  （仅存在 now = time.time()），每次 tick 抛 NameError，导致仙术演出/动画/捉迷藏永久卡死。
+  已改为 now（2 处），并以字节码反汇编 + 逐帧驱动做回归证明。
+- P1 dialogue_system.py: update_context 提前于 _get_context_response 调用导致上下文被当前输入
+  覆盖；补充意图门控，仅追问类语句才走上下文模板；"优化/清理/备份/恢复"动作分支上移到
+  "文件/文档"名词分支之前，并删除被遮蔽的死分支（重复的 "清理"）。
+- P1 entertainment_system.py: "游戏大师"成就以 games_played >= len(games) 判定，重复玩同一款
+  也能解锁；改为按去重 games_played_ids 统计。
+- P2 main.py: "新建表格"分支 Excel COM 无 try/finally，异常会残留 EXCEL.EXE 僵尸进程，已补 finally 释放。
+- P2 desktop_interaction.py: get_all_visible_windows 以 >=0 过滤坐标，会丢弃负坐标副屏窗口；
+  改为基于 GetSystemMetrics(76..79) 虚拟屏矩形做矩形相交判定。
+- P2 desktop_interaction.py: resize_window_smoothly 的时序循环仅 sleep，未处理事件导致阻塞；
+  循环内补充 QApplication.processEvents()。
+
+验证结论（全部通过）
+- compileall 全量编译通过，pyflakes 无未定义名
+- verify_round5_fixes.py 16/16 功能断言通过
+- smoke_import_round5.py 22/22 模块导入通过，current_time 残留 0
+- 复核并驳回 5 处子代理误报（内存系统 random.choice 越界、跨线程 QWidget 访问、
+  原子写/回收站删除等，均已在此之前有防护）
+
+本提交同时纳入前四轮遗留的未提交改动（12 个 modules 文件）与历史审查报告，
+并新增第五轮审查报告、审计脚本与全部验证证据（code-quality-audit/第五轮/）。

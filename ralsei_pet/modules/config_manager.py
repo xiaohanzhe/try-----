@@ -406,16 +406,28 @@ class ConfigManager:
         defaults = self._default_config()
 
         if section:
-            if section in defaults:
-                self.config[section] = defaults[section]
-                self._save_config(self.config)
-                self._notify_observers(section, None, self.config[section])
-                return True
-            return False
+            # 按 section 重置：复用 update() 的回滚与通知逻辑
+            if section not in defaults:
+                return False
+            section_defaults = defaults[section]
+            if not isinstance(section_defaults, dict):
+                return False
+            updates = {f"{section}.{key}": value for key, value in section_defaults.items()}
+            return self.update(updates)
         else:
-            self.config = defaults
-            self._save_config(self.config)
-            self._notify_observers("*", None, None)
+            # 全量重置：保存快照，写盘失败时回滚
+            snapshot = copy.deepcopy(self.config)
+            self.config = copy.deepcopy(defaults)
+
+            if not self._save_config(self.config):
+                self.config = snapshot
+                _log.error("全量重置配置写盘失败，已回滚内存配置")
+                return False
+
+            # 为每个顶级 section 发送变更通知
+            for key in defaults:
+                if isinstance(defaults[key], dict):
+                    self._notify_observers(key, snapshot.get(key), self.config.get(key))
             return True
     
     def get_full_config(self):
@@ -438,6 +450,48 @@ class ConfigManager:
             if not api_config.get("base_url"):
                 return False, "AI已启用但未设置基础URL"
 
+        # ---- 数值范围校验 ----
+        # 合理范围说明：
+        #   animation.fps:  1 ~ 120 fps（<=0 会导致除零错误；过高无实际意义且占用性能）
+        #   movement.speed: > 0（负数会导致移动方向反转等异常）
+        #   ui.dialogue_duration: >= 1000 ms（即至少 1 秒，否则对话瞬间消失用户无法阅读）
+        # 发现非法值时：记录 warning 日志并回退到默认值，不影响整体验证结果。
+
+        defaults = self._default_config()
+
+        # animation.fps 校验
+        anim_config = self.config.get("animation", {})
+        if isinstance(anim_config, dict):
+            fps = anim_config.get("fps")
+            if not isinstance(fps, (int, float)) or fps <= 0 or fps > 120:
+                default_fps = defaults["animation"]["fps"]
+                _log.warning(
+                    "配置 animation.fps = %r 非法（合理范围: 1~120），已回退为默认值 %s",
+                    fps, default_fps)
+                anim_config["fps"] = default_fps
+
+        # movement.speed 校验
+        move_config = self.config.get("movement", {})
+        if isinstance(move_config, dict):
+            speed = move_config.get("speed")
+            if not isinstance(speed, (int, float)) or speed <= 0:
+                default_speed = defaults["movement"]["speed"]
+                _log.warning(
+                    "配置 movement.speed = %r 非法（必须 > 0），已回退为默认值 %s",
+                    speed, default_speed)
+                move_config["speed"] = default_speed
+
+        # ui.dialogue_duration 校验
+        ui_config = self.config.get("ui", {})
+        if isinstance(ui_config, dict):
+            duration = ui_config.get("dialogue_duration")
+            if not isinstance(duration, (int, float)) or duration < 1000:
+                default_duration = defaults["ui"]["dialogue_duration"]
+                _log.warning(
+                    "配置 ui.dialogue_duration = %r 非法（必须 >= 1000 毫秒），已回退为默认值 %s",
+                    duration, default_duration)
+                ui_config["dialogue_duration"] = default_duration
+
         return True, "配置验证通过"
     
     def get_api_config(self):
@@ -446,8 +500,8 @@ class ConfigManager:
     
     def update_api_config(self, api_config):
         """更新 AI 相关配置"""
-        self.config["api"].update(api_config)
-        self._save_config(self.config)
+        updates = {f"api.{key}": value for key, value in api_config.items()}
+        self.update(updates)
     
     def is_api_enabled(self):
         """检查API是否启用"""
@@ -455,8 +509,7 @@ class ConfigManager:
     
     def enable_api(self, enabled=True):
         """启用或禁用API"""
-        self.config["api"]["enabled"] = enabled
-        self._save_config(self.config)
+        self.set("api.enabled", enabled)
     
     def get_privacy_config(self):
         """获取隐私相关配置"""
@@ -464,8 +517,8 @@ class ConfigManager:
     
     def update_privacy_config(self, privacy_config):
         """更新隐私相关配置"""
-        self.config["privacy"].update(privacy_config)
-        self._save_config(self.config)
+        updates = {f"privacy.{key}": value for key, value in privacy_config.items()}
+        self.update(updates)
     
     def is_usage_data_enabled(self):
         """检查是否启用使用数据收集"""
@@ -481,8 +534,8 @@ class ConfigManager:
     
     def update_security_config(self, security_config):
         """更新安全相关配置"""
-        self.config["security"].update(security_config)
-        self._save_config(self.config)
+        updates = {f"security.{key}": value for key, value in security_config.items()}
+        self.update(updates)
     
     def is_encryption_enabled(self):
         """检查是否启用加密。注意：当前版本加密功能尚未实现，

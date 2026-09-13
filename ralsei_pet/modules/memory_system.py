@@ -19,6 +19,7 @@ class MemorySystem:
         # 短期记忆
         self.short_term_memory = []
         self.max_short_term_memory = 100  # 增加短期记忆数量
+        self.MAX_LONG_TERM_INTERACTIONS = 500  # 长期记忆交互历史上限
         
         # 扩展长期记忆
         self.long_term_memory = {
@@ -67,6 +68,9 @@ class MemorySystem:
         else:
             # 添加到长期记忆的交互历史
             self.long_term_memory['interaction_history'].append(memory)
+            # 限制长期记忆交互历史长度
+            if len(self.long_term_memory['interaction_history']) > self.MAX_LONG_TERM_INTERACTIONS:
+                self.long_term_memory['interaction_history'] = self.long_term_memory['interaction_history'][-self.MAX_LONG_TERM_INTERACTIONS:]
             # 保存长期记忆
             self.save_memory()
     
@@ -123,9 +127,13 @@ class MemorySystem:
             
             # 按时间范围过滤
             if match and 'time_range' in query_params:
-                start_time, end_time = query_params['time_range']
-                if not (start_time <= memory['timestamp'] <= end_time):
-                    match = False
+                time_range = query_params.get('time_range')
+                if not isinstance(time_range, (list, tuple)) or len(time_range) != 2:
+                    _log.debug("query_memory: 非法的 time_range 格式，跳过时间过滤")
+                else:
+                    start_time, end_time = time_range
+                    if not (start_time <= memory['timestamp'] <= end_time):
+                        match = False
             
             if match:
                 filtered_memories.append(memory)
@@ -183,7 +191,8 @@ class MemorySystem:
             if memory == target_memory:
                 continue
             
-            mem_content = memory['content'].lower()
+            _raw_c = memory.get('content', '')
+            mem_content = _raw_c.lower() if isinstance(_raw_c, str) else str(_raw_c)
             for keyword in extracted_keywords:
                 if keyword in mem_content:
                     associated_memories.append(memory)
@@ -218,10 +227,13 @@ class MemorySystem:
     def check_level_up(self):
         """检查是否升级"""
         # 动态升级逻辑：每级所需经验递增
+        # 注意：等级上限为 20（与 SocialGrowthSystem.MAX_LEVEL 保持一致，
+        # 此处直接使用常量避免循环依赖）。
+        MAX_LEVEL = 20
         new_level = 1
         required_experience = 100
         
-        while self.experience >= required_experience:
+        while self.experience >= required_experience and new_level < MAX_LEVEL:
             new_level += 1
             # 每级所需经验增加20%
             required_experience += int(required_experience * 0.2)
@@ -380,6 +392,9 @@ class MemorySystem:
                 continue
             if memory['type'] in important_types and memory not in self.long_term_memory['interaction_history']:
                 self.long_term_memory['interaction_history'].append(memory)
+                # 限制长期记忆交互历史长度
+                if len(self.long_term_memory['interaction_history']) > self.MAX_LONG_TERM_INTERACTIONS:
+                    self.long_term_memory['interaction_history'] = self.long_term_memory['interaction_history'][-self.MAX_LONG_TERM_INTERACTIONS:]
                 # 保存长期记忆
                 self.save_memory()
     
@@ -525,12 +540,14 @@ class MemorySystem:
             self.update_memory_strength(experience_type, 10)
             if experience_type in self.long_term_memory['skill_levels']:
                 self.improve_skill(experience_type, 2)
+            # 成功时适当降低学习率
+            self.learning_rate = max(0.1, self.learning_rate - 0.02)
             # 记录成功经验
             self.add_memory('success_experience', f'{experience_type}: {outcome}', is_short_term=True)
         elif outcome == 'failure':
             # 失败经验，增强学习率和记忆强度
             self.update_memory_strength(experience_type, -5)
-            self.learning_rate += 0.05
+            self.learning_rate = min(1.0, self.learning_rate + 0.05)
             # 记录失败经验，便于后续分析
             self.add_memory('failure_experience', f'{experience_type}: {outcome}', is_short_term=True)
         elif outcome == 'neutral':

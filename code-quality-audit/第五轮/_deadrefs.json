@@ -1,0 +1,1770 @@
+{
+  "never_referenced": [
+    {
+      "name": "register_provider",
+      "file": "modules\\api_client.py",
+      "line": 304,
+      "occurrences": 1
+    },
+    {
+      "name": "nearest_edge",
+      "file": "modules\\autonomous_agent.py",
+      "line": 75,
+      "occurrences": 1
+    },
+    {
+      "name": "notify_position_changed",
+      "file": "modules\\autonomous_agent.py",
+      "line": 294,
+      "occurrences": 1
+    },
+    {
+      "name": "add_observer",
+      "file": "modules\\config_manager.py",
+      "line": 341,
+      "occurrences": 1
+    },
+    {
+      "name": "remove_observer",
+      "file": "modules\\config_manager.py",
+      "line": 346,
+      "occurrences": 1
+    },
+    {
+      "name": "reset_config",
+      "file": "modules\\config_manager.py",
+      "line": 404,
+      "occurrences": 1
+    },
+    {
+      "name": "get_full_config",
+      "file": "modules\\config_manager.py",
+      "line": 433,
+      "occurrences": 1
+    },
+    {
+      "name": "validate_config",
+      "file": "modules\\config_manager.py",
+      "line": 437,
+      "occurrences": 1
+    },
+    {
+      "name": "is_api_enabled",
+      "file": "modules\\config_manager.py",
+      "line": 506,
+      "occurrences": 1
+    },
+    {
+      "name": "enable_api",
+      "file": "modules\\config_manager.py",
+      "line": 510,
+      "occurrences": 1
+    },
+    {
+      "name": "update_privacy_config",
+      "file": "modules\\config_manager.py",
+      "line": 518,
+      "occurrences": 1
+    },
+    {
+      "name": "is_usage_data_enabled",
+      "file": "modules\\config_manager.py",
+      "line": 523,
+      "occurrences": 1
+    },
+    {
+      "name": "get_security_config",
+      "file": "modules\\config_manager.py",
+      "line": 531,
+      "occurrences": 1
+    },
+    {
+      "name": "update_security_config",
+      "file": "modules\\config_manager.py",
+      "line": 535,
+      "occurrences": 1
+    },
+    {
+      "name": "is_encryption_enabled",
+      "file": "modules\\config_manager.py",
+      "line": 540,
+      "occurrences": 1
+    },
+    {
+      "name": "update_appearance",
+      "file": "modules\\customization_system.py",
+      "line": 131,
+      "occurrences": 1
+    },
+    {
+      "name": "update_behavior_DEPRECATED",
+      "file": "modules\\customization_system.py",
+      "line": 138,
+      "occurrences": 1
+    },
+    {
+      "name": "update_content_preferences_DEPRECATED",
+      "file": "modules\\customization_system.py",
+      "line": 156,
+      "occurrences": 1
+    },
+    {
+      "name": "update_privacy_settings",
+      "file": "modules\\customization_system.py",
+      "line": 161,
+      "occurrences": 1
+    },
+    {
+      "name": "apply_appearance_changes_DEPRECATED",
+      "file": "modules\\customization_system.py",
+      "line": 166,
+      "occurrences": 1
+    },
+    {
+      "name": "get_customization_data",
+      "file": "modules\\customization_system.py",
+      "line": 180,
+      "occurrences": 1
+    },
+    {
+      "name": "reset_customization",
+      "file": "modules\\customization_system.py",
+      "line": 184,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_outfits_DEPRECATED",
+      "file": "modules\\customization_system.py",
+      "line": 255,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_accessories_DEPRECATED",
+      "file": "modules\\customization_system.py",
+      "line": 259,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_color_schemes_DEPRECATED",
+      "file": "modules\\customization_system.py",
+      "line": 263,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_sizes",
+      "file": "modules\\customization_system.py",
+      "line": 267,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_activity_levels",
+      "file": "modules\\customization_system.py",
+      "line": 271,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_interaction_frequencies",
+      "file": "modules\\customization_system.py",
+      "line": 275,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_humor_levels",
+      "file": "modules\\customization_system.py",
+      "line": 279,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_formality_levels",
+      "file": "modules\\customization_system.py",
+      "line": 283,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_knowledge_areas",
+      "file": "modules\\customization_system.py",
+      "line": 287,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_interests",
+      "file": "modules\\customization_system.py",
+      "line": 291,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_conversation_topics",
+      "file": "modules\\customization_system.py",
+      "line": 295,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_privacy_levels",
+      "file": "modules\\customization_system.py",
+      "line": 299,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_backgrounds",
+      "file": "modules\\customization_system.py",
+      "line": 303,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_lighting_effects",
+      "file": "modules\\customization_system.py",
+      "line": 307,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_personality_traits",
+      "file": "modules\\customization_system.py",
+      "line": 311,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_language_styles",
+      "file": "modules\\customization_system.py",
+      "line": 315,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_response_lengths",
+      "file": "modules\\customization_system.py",
+      "line": 319,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_creativity_levels",
+      "file": "modules\\customization_system.py",
+      "line": 323,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_humor_types",
+      "file": "modules\\customization_system.py",
+      "line": 327,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_environment_locations",
+      "file": "modules\\customization_system.py",
+      "line": 331,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_time_preferences",
+      "file": "modules\\customization_system.py",
+      "line": 335,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_weather_preferences",
+      "file": "modules\\customization_system.py",
+      "line": 339,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_temperature_preferences",
+      "file": "modules\\customization_system.py",
+      "line": 343,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_relationship_types",
+      "file": "modules\\customization_system.py",
+      "line": 347,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_initiative_levels",
+      "file": "modules\\customization_system.py",
+      "line": 351,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_emotional_intensities",
+      "file": "modules\\customization_system.py",
+      "line": 355,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_verbosity_levels",
+      "file": "modules\\customization_system.py",
+      "line": 359,
+      "occurrences": 1
+    },
+    {
+      "name": "update_behavior",
+      "file": "modules\\customization_system.py",
+      "line": 426,
+      "occurrences": 1
+    },
+    {
+      "name": "update_content_preferences",
+      "file": "modules\\customization_system.py",
+      "line": 446,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_outfits",
+      "file": "modules\\customization_system.py",
+      "line": 453,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_accessories",
+      "file": "modules\\customization_system.py",
+      "line": 457,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_color_schemes",
+      "file": "modules\\customization_system.py",
+      "line": 461,
+      "occurrences": 1
+    },
+    {
+      "name": "add_scheduled_task",
+      "file": "modules\\desktop_interaction.py",
+      "line": 455,
+      "occurrences": 1
+    },
+    {
+      "name": "remove_scheduled_task",
+      "file": "modules\\desktop_interaction.py",
+      "line": 460,
+      "occurrences": 1
+    },
+    {
+      "name": "enable_scheduled_task",
+      "file": "modules\\desktop_interaction.py",
+      "line": 465,
+      "occurrences": 1
+    },
+    {
+      "name": "get_scheduled_tasks",
+      "file": "modules\\desktop_interaction.py",
+      "line": 473,
+      "occurrences": 1
+    },
+    {
+      "name": "get_storage_usage",
+      "file": "modules\\desktop_interaction.py",
+      "line": 489,
+      "occurrences": 1
+    },
+    {
+      "name": "restore_data",
+      "file": "modules\\desktop_interaction.py",
+      "line": 535,
+      "occurrences": 1
+    },
+    {
+      "name": "get_window_rect",
+      "file": "modules\\desktop_interaction.py",
+      "line": 965,
+      "occurrences": 1
+    },
+    {
+      "name": "is_mouse_over_desktop_element",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1146,
+      "occurrences": 1
+    },
+    {
+      "name": "mark_app_as_opened",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1154,
+      "occurrences": 1
+    },
+    {
+      "name": "mark_app_as_closed",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1191,
+      "occurrences": 1
+    },
+    {
+      "name": "get_privacy_apps",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1227,
+      "occurrences": 1
+    },
+    {
+      "name": "get_user_opened_privacy_apps",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1231,
+      "occurrences": 1
+    },
+    {
+      "name": "drag_file",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1235,
+      "occurrences": 1
+    },
+    {
+      "name": "create_folder",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1464,
+      "occurrences": 1
+    },
+    {
+      "name": "copy_file",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1522,
+      "occurrences": 1
+    },
+    {
+      "name": "cut_file",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1602,
+      "occurrences": 1
+    },
+    {
+      "name": "double_click_file",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1706,
+      "occurrences": 1
+    },
+    {
+      "name": "right_click_file",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1727,
+      "occurrences": 1
+    },
+    {
+      "name": "get_interesting_files",
+      "file": "modules\\desktop_interaction.py",
+      "line": 1793,
+      "occurrences": 1
+    },
+    {
+      "name": "get_browser_url",
+      "file": "modules\\desktop_interaction.py",
+      "line": 2799,
+      "occurrences": 1
+    },
+    {
+      "name": "_weighted_random_choice",
+      "file": "modules\\dialogue_system.py",
+      "line": 611,
+      "occurrences": 1
+    },
+    {
+      "name": "_get_response_from_template",
+      "file": "modules\\dialogue_system.py",
+      "line": 619,
+      "occurrences": 1
+    },
+    {
+      "name": "update_context_DEPRECATED",
+      "file": "modules\\dialogue_system.py",
+      "line": 1256,
+      "occurrences": 1
+    },
+    {
+      "name": "get_random_greeting",
+      "file": "modules\\dialogue_system.py",
+      "line": 1269,
+      "occurrences": 1
+    },
+    {
+      "name": "get_personalized_greeting",
+      "file": "modules\\dialogue_system.py",
+      "line": 1529,
+      "occurrences": 1
+    },
+    {
+      "name": "_load_ralsei_font",
+      "file": "modules\\dialogue_ui.py",
+      "line": 36,
+      "occurrences": 1
+    },
+    {
+      "name": "set_emotion",
+      "file": "modules\\emotion_system.py",
+      "line": 493,
+      "occurrences": 1
+    },
+    {
+      "name": "get_personality_trait",
+      "file": "modules\\emotion_system.py",
+      "line": 567,
+      "occurrences": 1
+    },
+    {
+      "name": "get_emotion_intensity",
+      "file": "modules\\emotion_system.py",
+      "line": 576,
+      "occurrences": 1
+    },
+    {
+      "name": "get_face_for_emotion_DEPRECATED",
+      "file": "modules\\emotion_system.py",
+      "line": 995,
+      "occurrences": 1
+    },
+    {
+      "name": "get_dialogue_for_emotion",
+      "file": "modules\\emotion_system.py",
+      "line": 1180,
+      "occurrences": 1
+    },
+    {
+      "name": "_set_resting",
+      "file": "modules\\energy_hunger.py",
+      "line": 187,
+      "occurrences": 1
+    },
+    {
+      "name": "_set_eating",
+      "file": "modules\\energy_hunger.py",
+      "line": 196,
+      "occurrences": 1
+    },
+    {
+      "name": "get_energy_percentage",
+      "file": "modules\\energy_hunger.py",
+      "line": 213,
+      "occurrences": 1
+    },
+    {
+      "name": "get_hunger_percentage",
+      "file": "modules\\energy_hunger.py",
+      "line": 217,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_games",
+      "file": "modules\\entertainment_system.py",
+      "line": 262,
+      "occurrences": 1
+    },
+    {
+      "name": "get_available_creative_features",
+      "file": "modules\\entertainment_system.py",
+      "line": 271,
+      "occurrences": 1
+    },
+    {
+      "name": "start_game",
+      "file": "modules\\entertainment_system.py",
+      "line": 280,
+      "occurrences": 1
+    },
+    {
+      "name": "end_game",
+      "file": "modules\\entertainment_system.py",
+      "line": 309,
+      "occurrences": 1
+    },
+    {
+      "name": "start_creative_activity",
+      "file": "modules\\entertainment_system.py",
+      "line": 364,
+      "occurrences": 1
+    },
+    {
+      "name": "end_creative_activity",
+      "file": "modules\\entertainment_system.py",
+      "line": 389,
+      "occurrences": 1
+    },
+    {
+      "name": "get_riddle",
+      "file": "modules\\entertainment_system.py",
+      "line": 451,
+      "occurrences": 1
+    },
+    {
+      "name": "answer_riddle",
+      "file": "modules\\entertainment_system.py",
+      "line": 456,
+      "occurrences": 1
+    },
+    {
+      "name": "generate_story",
+      "file": "modules\\entertainment_system.py",
+      "line": 470,
+      "occurrences": 1
+    },
+    {
+      "name": "get_activity_stats",
+      "file": "modules\\entertainment_system.py",
+      "line": 540,
+      "occurrences": 1
+    },
+    {
+      "name": "get_recent_activities",
+      "file": "modules\\entertainment_system.py",
+      "line": 544,
+      "occurrences": 1
+    },
+    {
+      "name": "get_game_achievements",
+      "file": "modules\\entertainment_system.py",
+      "line": 548,
+      "occurrences": 1
+    },
+    {
+      "name": "get_creative_achievements",
+      "file": "modules\\entertainment_system.py",
+      "line": 552,
+      "occurrences": 1
+    },
+    {
+      "name": "get_insert_after_hwnd",
+      "file": "modules\\floor_manager.py",
+      "line": 168,
+      "occurrences": 1
+    },
+    {
+      "name": "set_window_behind",
+      "file": "modules\\floor_manager.py",
+      "line": 184,
+      "occurrences": 1
+    },
+    {
+      "name": "get_jump_destinations",
+      "file": "modules\\floor_manager.py",
+      "line": 266,
+      "occurrences": 1
+    },
+    {
+      "name": "is_floor_valid",
+      "file": "modules\\floor_manager.py",
+      "line": 305,
+      "occurrences": 1
+    },
+    {
+      "name": "is_on_floor_edge",
+      "file": "modules\\floor_manager.py",
+      "line": 332,
+      "occurrences": 1
+    },
+    {
+      "name": "find_support_below",
+      "file": "modules\\floor_manager.py",
+      "line": 341,
+      "occurrences": 1
+    },
+    {
+      "name": "set_level",
+      "file": "modules\\logger_utils.py",
+      "line": 119,
+      "occurrences": 1
+    },
+    {
+      "name": "get_log_dir",
+      "file": "modules\\logger_utils.py",
+      "line": 137,
+      "occurrences": 1
+    },
+    {
+      "name": "get_recent_memory",
+      "file": "modules\\memory_system.py",
+      "line": 77,
+      "occurrences": 1
+    },
+    {
+      "name": "query_memory",
+      "file": "modules\\memory_system.py",
+      "line": 89,
+      "occurrences": 1
+    },
+    {
+      "name": "get_associated_memories",
+      "file": "modules\\memory_system.py",
+      "line": 150,
+      "occurrences": 1
+    },
+    {
+      "name": "add_important_date",
+      "file": "modules\\memory_system.py",
+      "line": 212,
+      "occurrences": 1
+    },
+    {
+      "name": "get_important_date",
+      "file": "modules\\memory_system.py",
+      "line": 217,
+      "occurrences": 1
+    },
+    {
+      "name": "remember_user_behavior",
+      "file": "modules\\memory_system.py",
+      "line": 443,
+      "occurrences": 1
+    },
+    {
+      "name": "get_user_behavior_patterns",
+      "file": "modules\\memory_system.py",
+      "line": 454,
+      "occurrences": 1
+    },
+    {
+      "name": "get_skill_level",
+      "file": "modules\\memory_system.py",
+      "line": 517,
+      "occurrences": 1
+    },
+    {
+      "name": "has_skill",
+      "file": "modules\\memory_system.py",
+      "line": 521,
+      "occurrences": 1
+    },
+    {
+      "name": "get_memory_strength",
+      "file": "modules\\memory_system.py",
+      "line": 531,
+      "occurrences": 1
+    },
+    {
+      "name": "learn_from_experience",
+      "file": "modules\\memory_system.py",
+      "line": 535,
+      "occurrences": 1
+    },
+    {
+      "name": "integrate_knowledge",
+      "file": "modules\\memory_system.py",
+      "line": 560,
+      "occurrences": 1
+    },
+    {
+      "name": "get_knowledge_summary",
+      "file": "modules\\memory_system.py",
+      "line": 603,
+      "occurrences": 1
+    },
+    {
+      "name": "set_drag_active",
+      "file": "modules\\pet_interaction.py",
+      "line": 320,
+      "occurrences": 1
+    },
+    {
+      "name": "set_follow_active",
+      "file": "modules\\pet_interaction.py",
+      "line": 325,
+      "occurrences": 1
+    },
+    {
+      "name": "handle_press",
+      "file": "modules\\pet_interaction.py",
+      "line": 340,
+      "occurrences": 1
+    },
+    {
+      "name": "handle_release",
+      "file": "modules\\pet_interaction.py",
+      "line": 347,
+      "occurrences": 1
+    },
+    {
+      "name": "handle_move",
+      "file": "modules\\pet_interaction.py",
+      "line": 354,
+      "occurrences": 1
+    },
+    {
+      "name": "summarize_search_results",
+      "file": "modules\\search_summarizer.py",
+      "line": 94,
+      "occurrences": 1
+    },
+    {
+      "name": "get_brief_summary",
+      "file": "modules\\search_summarizer.py",
+      "line": 111,
+      "occurrences": 1
+    },
+    {
+      "name": "check_other_pets",
+      "file": "modules\\social_growth_system.py",
+      "line": 682,
+      "occurrences": 1
+    },
+    {
+      "name": "initiate_interaction",
+      "file": "modules\\social_growth_system.py",
+      "line": 691,
+      "occurrences": 1
+    },
+    {
+      "name": "get_achievements",
+      "file": "modules\\social_growth_system.py",
+      "line": 712,
+      "occurrences": 1
+    },
+    {
+      "name": "get_relationships",
+      "file": "modules\\social_growth_system.py",
+      "line": 716,
+      "occurrences": 1
+    },
+    {
+      "name": "get_evolution_stage",
+      "file": "modules\\social_growth_system.py",
+      "line": 720,
+      "occurrences": 1
+    },
+    {
+      "name": "get_remaining_experience",
+      "file": "modules\\social_growth_system.py",
+      "line": 728,
+      "occurrences": 1
+    },
+    {
+      "name": "get_progress_to_next_level",
+      "file": "modules\\social_growth_system.py",
+      "line": 733,
+      "occurrences": 1
+    },
+    {
+      "name": "set_enabled",
+      "file": "modules\\sound_manager.py",
+      "line": 57,
+      "occurrences": 1
+    },
+    {
+      "name": "set_volume",
+      "file": "modules\\sound_manager.py",
+      "line": 60,
+      "occurrences": 1
+    },
+    {
+      "name": "get_volume",
+      "file": "modules\\sound_manager.py",
+      "line": 68,
+      "occurrences": 1
+    },
+    {
+      "name": "play_spellcast",
+      "file": "modules\\sound_manager.py",
+      "line": 141,
+      "occurrences": 1
+    },
+    {
+      "name": "play_click",
+      "file": "modules\\sound_manager.py",
+      "line": 149,
+      "occurrences": 1
+    },
+    {
+      "name": "play_happy",
+      "file": "modules\\sound_manager.py",
+      "line": 152,
+      "occurrences": 1
+    },
+    {
+      "name": "play_sad",
+      "file": "modules\\sound_manager.py",
+      "line": 155,
+      "occurrences": 1
+    },
+    {
+      "name": "play_jump",
+      "file": "modules\\sound_manager.py",
+      "line": 158,
+      "occurrences": 1
+    },
+    {
+      "name": "play_footstep",
+      "file": "modules\\sound_manager.py",
+      "line": 161,
+      "occurrences": 1
+    },
+    {
+      "name": "get_sprite",
+      "file": "modules\\sprite_loader.py",
+      "line": 511,
+      "occurrences": 1
+    },
+    {
+      "name": "get_frame_count",
+      "file": "modules\\sprite_loader.py",
+      "line": 534,
+      "occurrences": 1
+    },
+    {
+      "name": "get_position_offset",
+      "file": "modules\\sprite_loader.py",
+      "line": 590,
+      "occurrences": 1
+    },
+    {
+      "name": "set_position_offset",
+      "file": "modules\\sprite_loader.py",
+      "line": 594,
+      "occurrences": 1
+    },
+    {
+      "name": "get_all_animations",
+      "file": "modules\\sprite_loader.py",
+      "line": 598,
+      "occurrences": 1
+    },
+    {
+      "name": "get_cache_stats",
+      "file": "modules\\sprite_loader.py",
+      "line": 604,
+      "occurrences": 1
+    },
+    {
+      "name": "clear_cache",
+      "file": "modules\\sprite_loader.py",
+      "line": 614,
+      "occurrences": 1
+    },
+    {
+      "name": "add_animation",
+      "file": "modules\\sprite_loader.py",
+      "line": 625,
+      "occurrences": 1
+    },
+    {
+      "name": "get_animation_files",
+      "file": "modules\\sprite_loader.py",
+      "line": 649,
+      "occurrences": 1
+    },
+    {
+      "name": "set_location",
+      "file": "modules\\weather_system.py",
+      "line": 308,
+      "occurrences": 1
+    },
+    {
+      "name": "set_api_key",
+      "file": "modules\\weather_system.py",
+      "line": 314,
+      "occurrences": 1
+    },
+    {
+      "name": "get_element_at_pos",
+      "file": "src\\main.py",
+      "line": 612,
+      "occurrences": 1
+    },
+    {
+      "name": "check_desktop_element_at_target",
+      "file": "src\\main.py",
+      "line": 1697,
+      "occurrences": 1
+    },
+    {
+      "name": "start_mouse_drag",
+      "file": "src\\main.py",
+      "line": 1715,
+      "occurrences": 1
+    },
+    {
+      "name": "_is_falling_through_window",
+      "file": "src\\main.py",
+      "line": 2205,
+      "occurrences": 1
+    },
+    {
+      "name": "update_floor",
+      "file": "src\\main.py",
+      "line": 2425,
+      "occurrences": 1
+    },
+    {
+      "name": "trigger_surprise",
+      "file": "src\\main.py",
+      "line": 3029,
+      "occurrences": 1
+    },
+    {
+      "name": "trigger_shy",
+      "file": "src\\main.py",
+      "line": 3035,
+      "occurrences": 1
+    },
+    {
+      "name": "trigger_unhappy",
+      "file": "src\\main.py",
+      "line": 3041,
+      "occurrences": 1
+    },
+    {
+      "name": "trigger_victory",
+      "file": "src\\main.py",
+      "line": 3047,
+      "occurrences": 1
+    },
+    {
+      "name": "trigger_teasplash",
+      "file": "src\\main.py",
+      "line": 3052,
+      "occurrences": 1
+    },
+    {
+      "name": "reset_special_states",
+      "file": "src\\main.py",
+      "line": 3057,
+      "occurrences": 1
+    },
+    {
+      "name": "create_person_name_table",
+      "file": "src\\main.py",
+      "line": 3684,
+      "occurrences": 1
+    },
+    {
+      "name": "move_to_edge_and_shrink",
+      "file": "src\\main.py",
+      "line": 4373,
+      "occurrences": 1
+    },
+    {
+      "name": "suggest_game",
+      "file": "src\\main.py",
+      "line": 4489,
+      "occurrences": 1
+    },
+    {
+      "name": "paintEvent",
+      "file": "src\\main.py",
+      "line": 4708,
+      "occurrences": 1
+    },
+    {
+      "name": "mouseEnterEvent",
+      "file": "src\\main.py",
+      "line": 5348,
+      "occurrences": 1
+    },
+    {
+      "name": "mouseLeaveEvent",
+      "file": "src\\main.py",
+      "line": 5353,
+      "occurrences": 1
+    },
+    {
+      "name": "init_api_client",
+      "file": "src\\main.py",
+      "line": 5978,
+      "occurrences": 1
+    },
+    {
+      "name": "_async_api_request",
+      "file": "src\\main.py",
+      "line": 6526,
+      "occurrences": 1
+    },
+    {
+      "name": "on_animation_complete",
+      "file": "src\\main.py",
+      "line": 7223,
+      "occurrences": 1
+    },
+    {
+      "name": "react_to_file_emotionally",
+      "file": "src\\main.py",
+      "line": 7421,
+      "occurrences": 1
+    },
+    {
+      "name": "follow_file",
+      "file": "src\\main.py",
+      "line": 7466,
+      "occurrences": 1
+    },
+    {
+      "name": "react_to_file_deletion",
+      "file": "src\\main.py",
+      "line": 7472,
+      "occurrences": 1
+    },
+    {
+      "name": "check_video_windows",
+      "file": "src\\main.py",
+      "line": 7477,
+      "occurrences": 1
+    },
+    {
+      "name": "check_game_windows",
+      "file": "src\\main.py",
+      "line": 7493,
+      "occurrences": 1
+    },
+    {
+      "name": "react_to_game",
+      "file": "src\\main.py",
+      "line": 7509,
+      "occurrences": 1
+    },
+    {
+      "name": "watch_video",
+      "file": "src\\main.py",
+      "line": 7542,
+      "occurrences": 1
+    },
+    {
+      "name": "react_to_video_content",
+      "file": "src\\main.py",
+      "line": 7568,
+      "occurrences": 1
+    },
+    {
+      "name": "check_recycle_bin",
+      "file": "src\\main.py",
+      "line": 7719,
+      "occurrences": 1
+    },
+    {
+      "name": "check_dragged_file",
+      "file": "src\\main.py",
+      "line": 7819,
+      "occurrences": 1
+    },
+    {
+      "name": "_after_bang",
+      "file": "src\\main.py",
+      "line": 3160,
+      "occurrences": 1
+    }
+  ],
+  "defined_once_referenced_once": [],
+  "duplicate_definitions": [
+    {
+      "name": "__init__",
+      "locs": [
+        {
+          "file": "modules\\ai_driver.py",
+          "line": 259
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 60
+        },
+        {
+          "file": "modules\\autonomous_agent.py",
+          "line": 175
+        },
+        {
+          "file": "modules\\command_manager.py",
+          "line": 7
+        },
+        {
+          "file": "modules\\config_manager.py",
+          "line": 20
+        },
+        {
+          "file": "modules\\customization_system.py",
+          "line": 12
+        },
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 68
+        },
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 715
+        },
+        {
+          "file": "modules\\dialogue_system.py",
+          "line": 5
+        },
+        {
+          "file": "modules\\dialogue_ui.py",
+          "line": 149
+        },
+        {
+          "file": "modules\\emotion_system.py",
+          "line": 19
+        },
+        {
+          "file": "modules\\energy_hunger.py",
+          "line": 11
+        },
+        {
+          "file": "modules\\entertainment_system.py",
+          "line": 15
+        },
+        {
+          "file": "modules\\floor_manager.py",
+          "line": 29
+        },
+        {
+          "file": "modules\\memory_system.py",
+          "line": 13
+        },
+        {
+          "file": "modules\\pet_ai.py",
+          "line": 18
+        },
+        {
+          "file": "modules\\pet_interaction.py",
+          "line": 85
+        },
+        {
+          "file": "modules\\pet_interaction.py",
+          "line": 145
+        },
+        {
+          "file": "modules\\pet_interaction.py",
+          "line": 207
+        },
+        {
+          "file": "modules\\pet_interaction.py",
+          "line": 311
+        },
+        {
+          "file": "modules\\search_summarizer.py",
+          "line": 22
+        },
+        {
+          "file": "modules\\social_growth_system.py",
+          "line": 23
+        },
+        {
+          "file": "modules\\sound_manager.py",
+          "line": 27
+        },
+        {
+          "file": "modules\\sprite_loader.py",
+          "line": 15
+        },
+        {
+          "file": "modules\\weather_system.py",
+          "line": 24
+        },
+        {
+          "file": "src\\main.py",
+          "line": 33
+        },
+        {
+          "file": "src\\main.py",
+          "line": 127
+        },
+        {
+          "file": "src\\test_interaction.py",
+          "line": 13
+        },
+        {
+          "file": "src\\test_interaction_detailed.py",
+          "line": 13
+        }
+      ]
+    },
+    {
+      "name": "tick",
+      "locs": [
+        {
+          "file": "modules\\ai_driver.py",
+          "line": 274
+        },
+        {
+          "file": "modules\\autonomous_agent.py",
+          "line": 233
+        }
+      ]
+    },
+    {
+      "name": "_worker",
+      "locs": [
+        {
+          "file": "modules\\ai_driver.py",
+          "line": 315
+        },
+        {
+          "file": "src\\main.py",
+          "line": 6594
+        }
+      ]
+    },
+    {
+      "name": "chat",
+      "locs": [
+        {
+          "file": "modules\\api_client.py",
+          "line": 92
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 116
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 174
+        }
+      ]
+    },
+    {
+      "name": "get_commands",
+      "locs": [
+        {
+          "file": "modules\\api_client.py",
+          "line": 97
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 121
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 239
+        }
+      ]
+    },
+    {
+      "name": "send_status",
+      "locs": [
+        {
+          "file": "modules\\api_client.py",
+          "line": 102
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 126
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 247
+        }
+      ]
+    },
+    {
+      "name": "execute_command",
+      "locs": [
+        {
+          "file": "modules\\api_client.py",
+          "line": 107
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 131
+        },
+        {
+          "file": "modules\\api_client.py",
+          "line": 255
+        },
+        {
+          "file": "modules\\command_manager.py",
+          "line": 29
+        }
+      ]
+    },
+    {
+      "name": "get_logger",
+      "locs": [
+        {
+          "file": "modules\\autonomous_agent.py",
+          "line": 33
+        },
+        {
+          "file": "modules\\config_manager.py",
+          "line": 11
+        },
+        {
+          "file": "modules\\dialogue_ui.py",
+          "line": 26
+        },
+        {
+          "file": "modules\\emotion_system.py",
+          "line": 9
+        },
+        {
+          "file": "modules\\logger_utils.py",
+          "line": 106
+        },
+        {
+          "file": "modules\\pet_ai.py",
+          "line": 12
+        },
+        {
+          "file": "modules\\search_summarizer.py",
+          "line": 11
+        },
+        {
+          "file": "modules\\social_growth_system.py",
+          "line": 11
+        },
+        {
+          "file": "modules\\sound_manager.py",
+          "line": 15
+        },
+        {
+          "file": "src\\main.py",
+          "line": 24
+        }
+      ]
+    },
+    {
+      "name": "get_status",
+      "locs": [
+        {
+          "file": "modules\\command_manager.py",
+          "line": 182
+        },
+        {
+          "file": "modules\\energy_hunger.py",
+          "line": 221
+        }
+      ]
+    },
+    {
+      "name": "update",
+      "locs": [
+        {
+          "file": "modules\\config_manager.py",
+          "line": 292
+        },
+        {
+          "file": "modules\\emotion_system.py",
+          "line": 196
+        },
+        {
+          "file": "modules\\memory_system.py",
+          "line": 347
+        }
+      ]
+    },
+    {
+      "name": "save_config",
+      "locs": [
+        {
+          "file": "modules\\customization_system.py",
+          "line": 94
+        },
+        {
+          "file": "src\\main.py",
+          "line": 5547
+        }
+      ]
+    },
+    {
+      "name": "update_environment",
+      "locs": [
+        {
+          "file": "modules\\customization_system.py",
+          "line": 363
+        },
+        {
+          "file": "src\\main.py",
+          "line": 811
+        }
+      ]
+    },
+    {
+      "name": "update_relationship",
+      "locs": [
+        {
+          "file": "modules\\customization_system.py",
+          "line": 368
+        },
+        {
+          "file": "modules\\social_growth_system.py",
+          "line": 630
+        }
+      ]
+    },
+    {
+      "name": "get_system_info",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 248
+        },
+        {
+          "file": "src\\main.py",
+          "line": 6450
+        }
+      ]
+    },
+    {
+      "name": "open_file",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 921
+        },
+        {
+          "file": "src\\main.py",
+          "line": 7625
+        }
+      ]
+    },
+    {
+      "name": "open_folder",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 935
+        },
+        {
+          "file": "src\\main.py",
+          "line": 7642
+        }
+      ]
+    },
+    {
+      "name": "rename_file",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 1285
+        },
+        {
+          "file": "src\\main.py",
+          "line": 7814
+        }
+      ]
+    },
+    {
+      "name": "delete_file",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 1339
+        },
+        {
+          "file": "src\\main.py",
+          "line": 7789
+        }
+      ]
+    },
+    {
+      "name": "check_ppt_files",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 2759
+        },
+        {
+          "file": "src\\main.py",
+          "line": 3376
+        }
+      ]
+    },
+    {
+      "name": "callback",
+      "locs": [
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 1010
+        },
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 2458
+        },
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 2609
+        },
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 2661
+        },
+        {
+          "file": "modules\\desktop_interaction.py",
+          "line": 2713
+        },
+        {
+          "file": "modules\\floor_manager.py",
+          "line": 145
+        }
+      ]
+    },
+    {
+      "name": "mousePressEvent",
+      "locs": [
+        {
+          "file": "modules\\dialogue_ui.py",
+          "line": 1002
+        },
+        {
+          "file": "src\\main.py",
+          "line": 4772
+        }
+      ]
+    },
+    {
+      "name": "mouseMoveEvent",
+      "locs": [
+        {
+          "file": "modules\\dialogue_ui.py",
+          "line": 1013
+        },
+        {
+          "file": "src\\main.py",
+          "line": 4927
+        }
+      ]
+    },
+    {
+      "name": "mouseReleaseEvent",
+      "locs": [
+        {
+          "file": "modules\\dialogue_ui.py",
+          "line": 1030
+        },
+        {
+          "file": "src\\main.py",
+          "line": 5217
+        }
+      ]
+    },
+    {
+      "name": "mouseDoubleClickEvent",
+      "locs": [
+        {
+          "file": "modules\\dialogue_ui.py",
+          "line": 1049
+        },
+        {
+          "file": "src\\main.py",
+          "line": 5290
+        }
+      ]
+    },
+    {
+      "name": "react_to_event",
+      "locs": [
+        {
+          "file": "modules\\emotion_system.py",
+          "line": 580
+        },
+        {
+          "file": "modules\\pet_ai.py",
+          "line": 663
+        }
+      ]
+    },
+    {
+      "name": "update_stats",
+      "locs": [
+        {
+          "file": "modules\\energy_hunger.py",
+          "line": 47
+        },
+        {
+          "file": "src\\main.py",
+          "line": 4566
+        }
+      ]
+    },
+    {
+      "name": "rest",
+      "locs": [
+        {
+          "file": "modules\\energy_hunger.py",
+          "line": 151
+        },
+        {
+          "file": "modules\\pet_ai.py",
+          "line": 651
+        }
+      ]
+    },
+    {
+      "name": "tell_joke",
+      "locs": [
+        {
+          "file": "modules\\entertainment_system.py",
+          "line": 444
+        },
+        {
+          "file": "src\\main.py",
+          "line": 4474
+        }
+      ]
+    },
+    {
+      "name": "add_experience",
+      "locs": [
+        {
+          "file": "modules\\memory_system.py",
+          "line": 221
+        },
+        {
+          "file": "modules\\social_growth_system.py",
+          "line": 465
+        }
+      ]
+    },
+    {
+      "name": "get_experience",
+      "locs": [
+        {
+          "file": "modules\\memory_system.py",
+          "line": 339
+        },
+        {
+          "file": "modules\\social_growth_system.py",
+          "line": 708
+        }
+      ]
+    },
+    {
+      "name": "get_level",
+      "locs": [
+        {
+          "file": "modules\\memory_system.py",
+          "line": 343
+        },
+        {
+          "file": "modules\\social_growth_system.py",
+          "line": 704
+        }
+      ]
+    },
+    {
+      "name": "trigger_laugh",
+      "locs": [
+        {
+          "file": "modules\\pet_ai.py",
+          "line": 101
+        },
+        {
+          "file": "src\\main.py",
+          "line": 3020
+        }
+      ]
+    },
+    {
+      "name": "set_sprite",
+      "locs": [
+        {
+          "file": "modules\\pet_interaction.py",
+          "line": 91
+        },
+        {
+          "file": "modules\\pet_interaction.py",
+          "line": 317
+        }
+      ]
+    },
+    {
+      "name": "run_all_tests",
+      "locs": [
+        {
+          "file": "src\\test_interaction.py",
+          "line": 19
+        },
+        {
+          "file": "src\\test_interaction_detailed.py",
+          "line": 19
+        }
+      ]
+    },
+    {
+      "name": "_record_test",
+      "locs": [
+        {
+          "file": "src\\test_interaction.py",
+          "line": 161
+        },
+        {
+          "file": "src\\test_interaction_detailed.py",
+          "line": 186
+        }
+      ]
+    }
+  ]
+}

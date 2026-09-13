@@ -583,12 +583,12 @@ class EmotionSystem:
         # 根据事件类型调整情绪
         if event_type == 'user_clicked':
             # 用户点击了Ralsei
-            self.add_emotion('surprised', 20)  # 降低惊讶程度，Ralsei比较温柔
+            self.add_emotion('surprised', 20)  # 增加惊讶程度，Ralsei比较温柔
             self.add_emotion('happy', 30)       # 增加开心程度，Ralsei喜欢被抚摸
         elif event_type == 'user_praised':
             # 用户夸奖了Ralsei
-            self.add_emotion('happy', 40)       # 降低开心程度，Ralsei比较谦虚
-            self.add_emotion('proud', 25)       # 降低骄傲程度，Ralsei比较谦虚
+            self.add_emotion('happy', 40)       # 增加开心程度，Ralsei比较谦虚
+            self.add_emotion('proud', 25)       # 增加骄傲程度，Ralsei比较谦虚
             self.add_emotion('shy', 45)         # 增加害羞程度，Ralsei很容易害羞
         elif event_type == 'user_scolded':
             # 用户批评了Ralsei
@@ -597,26 +597,26 @@ class EmotionSystem:
             self.add_emotion('shy', 20)         # 增加害羞程度，Ralsei被批评会害羞
         elif event_type == 'found_food':
             # 找到食物
-            self.add_emotion('happy', 55)       # 降低开心程度，Ralsei比较克制
-            self.add_emotion('expectant', 40)   # 降低期待程度
+            self.add_emotion('happy', 55)       # 增加开心程度，Ralsei比较克制
+            self.add_emotion('expectant', 40)   # 增加期待程度
         elif event_type == 'lost_item':
             # 丢失物品
             self.add_emotion('sad', 35)         # 增加悲伤程度
             self.add_emotion('disappointed', 25) # 增加失望程度
         elif event_type == 'saw_scary_thing':
             # 看到可怕的东西
-            self.add_emotion('fear', 45)        # 降低恐惧程度，Ralsei比较勇敢但仍然会害怕
-            self.add_emotion('surprised', 35)   # 降低惊讶程度
+            self.add_emotion('fear', 45)        # 增加恐惧程度，Ralsei比较勇敢但仍然会害怕
+            self.add_emotion('surprised', 35)   # 增加惊讶程度
             self.add_emotion('shy', 15)         # 增加害羞程度，Ralsei害怕时会害羞
         elif event_type == 'met_friend':
             # 遇到朋友
-            self.add_emotion('happy', 65)       # 降低开心程度
+            self.add_emotion('happy', 65)       # 增加开心程度
             self.add_emotion('excited', 40)     # 增加兴奋程度
-            self.add_emotion('grateful', 25)    # 降低感激程度
+            self.add_emotion('grateful', 25)    # 增加感激程度
         elif event_type == 'completed_task':
             # 完成任务
-            self.add_emotion('happy', 55)       # 降低开心程度
-            self.add_emotion('proud', 35)       # 降低骄傲程度
+            self.add_emotion('happy', 55)       # 增加开心程度
+            self.add_emotion('proud', 35)       # 增加骄傲程度
         elif event_type == 'failed_task':
             # 任务失败
             self.add_emotion('sad', 45)         # 增加悲伤程度
@@ -629,7 +629,7 @@ class EmotionSystem:
             self.add_emotion('nostalgic', 30)   # 增加怀旧程度
         elif event_type == 'saw_undertale_content':
             # 看到关于Undertale的内容
-            self.add_emotion('happy', 45)       # 降低开心程度
+            self.add_emotion('happy', 45)       # 增加开心程度
             self.add_emotion('grateful', 35)    # 增加感激程度，Ralsei对Undertale的世界充满感激
             self.add_emotion('nostalgic', 25)   # 增加怀旧程度
         elif event_type == 'saw_own_code':
@@ -651,7 +651,7 @@ class EmotionSystem:
             self.add_emotion('peaceful', 25)    # 增加平静程度
         elif event_type == 'weather_rainy':
             # 天气下雨
-            self.add_emotion('sad', 15)         # 降低悲伤程度，Ralsei觉得下雨很浪漫
+            self.add_emotion('sad', 15)         # 增加悲伤程度，Ralsei觉得下雨很浪漫
             self.add_emotion('peaceful', 35)    # 增加平静程度，Ralsei喜欢下雨的平静
         elif event_type == 'weather_snowy':
             # 天气下雪
@@ -673,24 +673,24 @@ class EmotionSystem:
             self.add_emotion('expectant', 25)   # 增加期待程度，Ralsei期待用户回来
         elif event_type == 'user_return':
             # 用户返回
-            self.add_emotion('happy', 65)       # 降低开心程度，Ralsei比较克制
+            self.add_emotion('happy', 65)       # 增加开心程度，Ralsei比较克制
             self.add_emotion('excited', 45)     # 增加兴奋程度
             self.add_emotion('shy', 30)         # 增加害羞程度，Ralsei见到用户回来会害羞
         elif event_type == 'level_up':
             # 升级
-            self.add_emotion('happy', 50)       # 降低开心程度
-            self.add_emotion('proud', 30)       # 降低骄傲程度
+            self.add_emotion('happy', 50)       # 增加开心程度
+            self.add_emotion('proud', 30)       # 增加骄傲程度
             self.add_emotion('shy', 25)         # 增加害羞程度
         elif event_type == 'evolution':
             # 进化
-            self.add_emotion('happy', 65)       # 降低开心程度
-            self.add_emotion('excited', 55)     # 降低兴奋程度
-            self.add_emotion('proud', 40)       # 降低骄傲程度
+            self.add_emotion('happy', 65)       # 增加开心程度
+            self.add_emotion('excited', 55)     # 增加兴奋程度
+            self.add_emotion('proud', 40)       # 增加骄傲程度
             self.add_emotion('shy', 30)         # 增加害羞程度
         elif event_type == 'achievement_unlocked':
             # 解锁成就
-            self.add_emotion('happy', 45)       # 降低开心程度
-            self.add_emotion('proud', 30)       # 降低骄傲程度
+            self.add_emotion('happy', 45)       # 增加开心程度
+            self.add_emotion('proud', 30)       # 增加骄傲程度
             self.add_emotion('shy', 20)         # 增加害羞程度
         elif event_type == 'saw_beautiful_scenery':
             # 看到美丽的景色
