@@ -37,3 +37,6 @@ screenshot*.png
 desktop.ini
 Thumbs.db
 .DS_Store
+
+# G2 回归基线的临时产物（baseline.json 要入库，_out/ 是每次运行的原始输出与 diff）
+code-quality-audit/regress/_out/
