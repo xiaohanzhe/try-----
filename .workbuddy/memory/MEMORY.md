@@ -75,3 +75,14 @@
   `change_animation`/`get_sprite` 加"未命中即 WARNING"自检，不是搬配置（动态拼接使缺失静态不可见）。
 - H4 拆分判据：新模块**不反向引用 `RalseiPet`**、不 import `main`；施工用"转发壳"（原方法体改一行转发、
   保留原名），Wave 顺序 独立子系统 → 鼠标交互 → 动画/移动/物理。
+- **进度**：H5 **S1 已完成**（2026-09-13）——`sprite_loader` 加 `animation_misses` 账本 +
+  `diagnose_dynamic_name`/`note_animation_miss`/`get_animation_miss_report`/`log_animation_miss_summary`；
+  `main.py` 在 `change_animation`/`update_animation` 内嵌回退块/`play_animation_once`/`_tick_spell_flow`
+  四处记账，`cleanup_on_exit` 输出汇总。**纯观测零行为变更**，17/17 验证（含 501 样本等价性）+ 第五轮回归全绿。
+  报告 `H5-S1_动画名自检_实施与验证报告_2026-09-13.md`。
+- **运行时实测（新增，勿再重复测）**：`sprites` = **489 组** = mapping 语义名 109 + 自动扫描 380
+  （1084 帧对象，82 组与 mapping 100% 重复加载）；仅自动扫描引用、mapping 未引用 724 个帧文件；
+  磁盘 1106 PNG 中 19 个无人引用。→ 自动扫描只能当"补漏报告器"，不能接管配置。
+- 已知不一致（未修）：`change_animation` 从长到短回退 vs `update_animation` 内嵌块只取前两段。
+- **S1 之后的下一步**：S2 抽 `assets/animations.json` + 加载器（断言"JSON 还原的 dict == 原硬编码 dict"）。
+  真实"未命中清单"须在真机跑一轮后从日志/退出汇总取，它是 S2 必须覆盖的名字集合。

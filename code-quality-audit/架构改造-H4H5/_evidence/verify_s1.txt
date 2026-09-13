@@ -1,0 +1,59 @@
+﻿=== 载入素材 ===
+  已加载动画组: 489，帧总数: 1461
+
+=== A. 自检本身 ===
+  [PASS] A1       load_sprites 阶段未产生任何 miss（加载不应被误记为请求）  :: misses=0
+  [PASS] A2       diagnose_dynamic_name('walk_north') 定位到方向词非法  :: 缺少方向词（应为 down/up/left/right 之一）
+  [PASS] A3       diagnose_dynamic_name('run_sideways') 同样被识别
+  [PASS] A4       diagnose_dynamic_name('walk_up_blush') 结构正常 → 不误报  :: None
+  [PASS] A5       diagnose_dynamic_name('idle') 不误报
+  [PASS] A6       diagnose_dynamic_name('') 被识别为空
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'no_such_anim' → 回退 '<拒绝切换/返回 None>' (来源: SpriteLoader.get_sprite)
+  [PASS] A7       get_sprite 对不存在的动画返回 None 且入账
+
+=== B. 回退行为等价性（改造前算法 vs 现网 change_animation）===
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_up_blush' → 回退 'walk_up' (来源: change_animation)
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_up_unhappy' → 回退 'walk_up' (来源: change_animation)
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_up_butler_unhappy' → 回退 'walk_up_butler' (来源: change_animation)
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'run_north' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_sideways' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_up_blush_x' → 回退 'walk_up' (来源: change_animation)
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: '___' → 回退 'idle' (来源: change_animation)
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'nonexistent_prefix_abc' → 回退 'idle' (来源: change_animation)
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'run' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+  [PASS] B1       全部 501 个样本的落点与改造前算法一致
+  [PASS] B2       walk_up_blush → walk_up（素材缺失走前缀回退）  :: walk_up
+  [PASS] B3       该次回退已入账且回退目标记录为 walk_up  :: {'count': 2, 'where': {'change_animation'}, 'resolved': {'walk_up'}}
+  [PASS] B4       walk_down_blush 直接命中（不产生误报）
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_north' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+  [PASS] B5       walk_north → idle，且告警里带'缺少方向词'定位
+
+=== C. 拒绝切换的分支（sprites 为空时只有 idle 可回退）===
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk_down' → 回退 '<拒绝切换/返回 None>' (来源: change_animation)
+  [PASS] C1       全部动画缺失时 change_animation 返回 False 且不改状态
+  [PASS] C2       该拒绝同样被记账
+
+=== D. 汇总输出 ===
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader — [anim-miss] 本轮共 13 个动画名未命中，合计 14 次：
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_up_blush                  x2    来源=change_animation 回退=walk_up
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - ___                            x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - nonexistent_prefix_abc         x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - run                            x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - run_north                      x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk                           x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_                          x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_down                      x1    来源=change_animation 回退=<None>
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_north                     x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_sideways                  x1    来源=change_animation 回退=idle
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_up_blush_x                x1    来源=change_animation 回退=walk_up
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_up_butler_unhappy         x1    来源=change_animation 回退=walk_up_butler
+2026-09-13 14:15:25 [WARNING] ralsei_pet.sprite_loader —   - walk_up_unhappy                x1    来源=change_animation 回退=walk_up
+  [PASS] D1       汇总返回未命中种类数且与账本一致  :: summary=13 ledger=13
+  [PASS] D2       重复请求同一名字不会重复计数种类（只累加次数）
+  [PASS] D3       report 按次数降序且字段完整  :: 前 3 条: [('walk_up_blush', 2, ['change_animation'], ['walk_up']), ('___', 1, ['change_animation'], ['idle']), ('nonexistent_prefix_abc', 1, ['change_animation'], ['idle'])]
+
+============================================================
+总计 17 项，通过 17，失败 0
+exit=0

@@ -1,0 +1,22 @@
+=== 运行时 sprites 规模 ===
+动画组总数（sprites）       : 489
+  ├ mapping 的语义名        : 109 组 / 377 帧对象
+  ├ 仅自动扫描（文件名前缀）  : 380 组 / 1084 帧对象
+  └ 其他                    : 0 组
+
+=== 帧文件引用 ===
+磁盘 PNG                    : 1106
+自动扫描建组数              : 380 组
+mapping 引用（去重）        : 363
+自动扫描引用（去重）        : 1084
+  两者交集                  : 360
+  仅自动扫描引用（mapping 未引用）: 724
+  未被任何组引用的磁盘文件    : 19
+
+=== 冗余 ===
+自动扫描多建了 380 个"文件名前缀"组（mapping 里没有对应语义名），
+其中 82 个组的帧文件**全部**已被 mapping 覆盖 → 100% 重复加载。
+例：spr_cutscene_10_ralsei_splat, spr_cutscene_10_ralsei_stool, spr_cutscene_15_ralsei_cotton_candy_left, spr_cutscene_15_ralsei_cotton_candy_right, spr_cutscene_15_ralsei_cotton_candy_surprise, spr_cutscene_20_ralsei_walk_down_butler, spr_cutscene_20_ralsei_walk_down_butler_unhappy, spr_cutscene_20_ralsei_walk_left_butler, spr_cutscene_20_ralsei_walk_left_butler_unhappy, spr_cutscene_20_ralsei_walk_right_butler, spr_cutscene_20_ralsei_walk_right_butler_unhappy, spr_cutscene_20_ralsei_walk_up_butler
+
+结论：main.py 真正请求的只有 mapping 的 109 个语义名（外加 9 种 f-string 拼接），
+另外 380 组本次运行中从未被任何代码按名字请求——纯启动加载开销 + 内存占用。

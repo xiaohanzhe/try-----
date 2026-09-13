@@ -6188,7 +6188,10 @@ class RalseiPet(QMainWindow):
         current_time = time.time()
         
         # 1) 动画不存在时：按 parts 从长到短回退到基础动画，仍找不到 → 拒绝
+        #    H5 S1：这里是"静默退化"的主要发生地（回退 idle / 直接拒绝切换都不会有任何
+        #    反馈）。在此记账 + 告警，行为与改造前完全一致，只是多了一条可见日志。
         if new_animation not in self.sprite_loader.sprites:
+            _requested = new_animation
             base_parts = new_animation.split('_')
             found = None
             for i in range(len(base_parts), 1, -1):
@@ -6199,7 +6202,9 @@ class RalseiPet(QMainWindow):
             if found is None and 'idle' in self.sprite_loader.sprites:
                 found = 'idle'
             if found is None:
+                self.sprite_loader.note_animation_miss(_requested, None, 'change_animation')
                 return False
+            self.sprite_loader.note_animation_miss(_requested, found, 'change_animation')
             new_animation = found
         
         # 2) 计算新动画优先级：先查 animation_priorities，否则按 group 兜底
@@ -6928,6 +6933,9 @@ class RalseiPet(QMainWindow):
                     base_anim = new_animation.split('_')[0] + '_' + new_animation.split('_')[1]
                     if base_anim not in self.sprite_loader.sprites:
                         base_anim = 'idle'
+                # H5 S1：此处回退策略与 change_animation 的"从长到短"并不一致
+                # （这里只取前两段：walk_up_blush_x → walk_up）。记一笔，便于日后统一。
+                self.sprite_loader.note_animation_miss(new_animation, base_anim, 'update_animation')
                 new_animation = base_anim
             
             # 检查是否是同一类动画（如walk_*到walk_*），这类切换不需要冷却
@@ -7256,6 +7264,8 @@ class RalseiPet(QMainWindow):
                 self.next_animation = None
                 return False
             return True
+        # H5 S1：名字不在 sprites 里时这里原本静默返回 False，调用方无从得知。
+        self.sprite_loader.note_animation_miss(animation_name, None, 'play_animation_once')
         return False
     
     def update_bounce(self):
@@ -7889,6 +7899,12 @@ class RalseiPet(QMainWindow):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
+        # 2.55 H5 S1：输出"动画名未命中"汇总（纯日志，不改任何状态）
+        try:
+            self.sprite_loader.log_animation_miss_summary()
+        except Exception as e:  # 观测代码绝不能影响退出流程
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
         # 2.6 躲猫猫残留的"障碍物N"文件夹清理（游戏中途退出会在桌面留下垃圾文件夹）
         try:
             for p in list(getattr(self, '_hide_obstacles', []) or []):
@@ -8127,6 +8143,10 @@ class RalseiPet(QMainWindow):
             expected = 11
             anim = self.current_animation
             frames = self.sprite_loader.sprites.get(anim, [])
+            if not frames:
+                # H5 S1：casting 阶段靠数帧推进，frames 为空会让本阶段永不结束
+                # （与之前 P0 的 current_time NameError 是同一后果）。记账以便定位来源。
+                self.sprite_loader.note_animation_miss(anim, None, '_tick_spell_flow')
             cur_f = self.current_frame
             # 记录 casting 开始时间（用于时间超时 fallback）
             # 修复（P0）：此处原写 current_time —— 该方法内并无此局部变量，模块级

@@ -11,6 +11,12 @@ except ImportError:  # 模块外独立导入时的降级
     import logging
     _log = logging.getLogger(__name__)
 
+# H5 S1 自检用的结构性词表。
+# 动画名里的"方向词/动作类型"是 f-string 动态拼接出来的（walk_{dir}、run_{dir}、
+# walk_tea_{dir} 等），静态扫描看不到。这里只用于【诊断日志】，不参与任何加载/回退决策。
+_DIRECTION_TOKENS = ('down', 'up', 'left', 'right')
+_ANIM_TYPE_TOKENS = ('walk', 'run')
+
 class SpriteLoader:
     def __init__(self):
         self.sprites = {}
@@ -197,6 +203,14 @@ class SpriteLoader:
         # 所有精灵帧的最大包围盒（在 load_sprites 结束时填充）。
         # main.py 用它作为固定容器尺寸，让窗口大小永不因精灵而异而 setGeometry。
         self.frame_container_size = None  # (w, h)
+
+        # ================= H5 S1：动画名未命中自检（纯观测，零行为变更）=================
+        # 背景：mapping 里"缺了某个动画名"是静默的——调用方拿不到任何反馈（回退 idle、
+        # 拒绝切换或返回 None）。而 walk_{dir}/run_{dir} 这类名字由 f-string 在运行时拼出，
+        # 静态扫描不可能发现配置缺失。所以先把"未命中"变成一条可见的 WARNING + 计数，
+        # 让它成为后续配置化改造（S2/S3）的输入清单与验收依据。
+        self.animation_misses = {}   # {请求名: {'count', 'where': set, 'resolved': set}}
+        self._miss_reported = set()  # 同一请求名只告警一次，避免每帧刷屏
         
     def scan_and_group_assets(self):
         """扫描素材文件夹并按前缀分组，支持多种文件命名格式"""
@@ -508,9 +522,81 @@ class SpriteLoader:
             else:
                 _log.debug("所有关键动画已成功加载！")
             
+    # ================== H5 S1：动画名未命中自检 ==================
+    @staticmethod
+    def diagnose_dynamic_name(name):
+        """对 f-string 拼接出来的动画名做结构性校验。
+
+        返回问题描述字符串；结构正常返回 None。**只用于日志提示**，
+        不参与加载、回退或任何行为决策。
+        """
+        if not isinstance(name, str) or not name:
+            return '动画名为空或非字符串'
+        parts = name.split('_')
+        if parts[0] in _ANIM_TYPE_TOKENS or name.startswith('walk_tea'):
+            dirs = [p for p in parts if p in _DIRECTION_TOKENS]
+            if not dirs:
+                return '缺少方向词（应为 %s 之一）' % '/'.join(_DIRECTION_TOKENS)
+            if len(dirs) > 1:
+                return '出现多个方向词: %s' % dirs
+            digits = [p for p in parts[1:] if p.isdigit()]
+            if digits:
+                return '动画名里混入帧号: %s' % digits
+        return None
+
+    def note_animation_miss(self, requested, resolved=None, where='unknown'):
+        """记录一次"请求的动画名不存在"。
+
+        重复调用只累加计数；同名只告警一次（避免 update_animation 每帧刷屏）。
+        返回 resolved，方便调用方一行内完成"记账 + 继续原逻辑"。
+        """
+        rec = self.animation_misses.get(requested)
+        if rec is None:
+            rec = {'count': 0, 'where': set(), 'resolved': set()}
+            self.animation_misses[requested] = rec
+        rec['count'] += 1
+        rec['where'].add(where)
+        rec['resolved'].add('<None>' if resolved is None else str(resolved))
+
+        if requested not in self._miss_reported:
+            self._miss_reported.add(requested)
+            hint = self.diagnose_dynamic_name(requested)
+            _log.warning(
+                "[anim-miss] 动画名不存在: %r → 回退 %r (来源: %s)%s",
+                requested,
+                '<拒绝切换/返回 None>' if resolved is None else resolved,
+                where,
+                (' ；疑似拼接参数非法：' + hint) if hint else '',
+            )
+        return resolved
+
+    def get_animation_miss_report(self):
+        """未命中统计，按次数降序：[(请求名, 次数, [来源], [回退目标])]"""
+        report = [
+            (name, rec['count'], sorted(rec['where']), sorted(rec['resolved']))
+            for name, rec in self.animation_misses.items()
+        ]
+        report.sort(key=lambda item: (-item[1], item[0]))
+        return report
+
+    def log_animation_miss_summary(self):
+        """输出未命中汇总。无未命中时只留一行 INFO，便于回归时断言。"""
+        report = self.get_animation_miss_report()
+        if not report:
+            _log.info("[anim-miss] 本轮运行未出现未命中的动画名（已加载 %d 组）",
+                      len(self.sprites))
+            return 0
+        _log.warning("[anim-miss] 本轮共 %d 个动画名未命中，合计 %d 次：",
+                     len(report), sum(item[1] for item in report))
+        for name, count, where, resolved in report:
+            _log.warning("  - %-30s x%-4d 来源=%s 回退=%s",
+                         name, count, ','.join(where), ','.join(resolved))
+        return len(report)
+
     def get_sprite(self, animation, frame, loop=True):
         """获取指定动画和帧的精灵，支持循环模式"""
         if animation not in self.sprites:
+            self.note_animation_miss(animation, None, 'SpriteLoader.get_sprite')
             return None
         
         frames = self.sprites[animation]
