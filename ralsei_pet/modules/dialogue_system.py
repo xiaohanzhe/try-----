@@ -1288,45 +1288,6 @@ class DialogueSystem:
     def get_random_greeting(self):
         return random.choice(self.greetings)
         
-    def should_initiate_conversation(self):
-        # 智能判断是否应该主动发起对话
-        # Ralsei性格：温柔、害羞，不会过于主动，主动聊天概率偏低
-        # 基础概率较低，符合Ralsei害羞的性格
-        base_prob = 0.01
-        
-        # 获取当前时间
-        current_hour = int(time.strftime("%H"))
-        
-        # 不同时间的对话概率调整
-        time_adjustments = {
-            (6, 12): 0.02,      # 早上，概率略高
-            (12, 14): 0.015,     # 中午，概率中等
-            (14, 18): 0.01,      # 下午，概率正常
-            (18, 22): 0.02,      # 晚上，概率略高
-            (22, 24): 0.008,     # 深夜，概率降低
-            (0, 6): 0.003,       # 凌晨，概率很低
-        }
-        
-        # 应用时间调整
-        for (start, end), adjustment in time_adjustments.items():
-            if start <= current_hour < end:
-                base_prob = adjustment
-                break
-        
-        # 考虑最近的对话历史，如果很久没有对话，增加发起对话的概率
-        current_time = time.time()
-        time_since_last_convo = current_time - self.last_conversation_time
-        
-        # 如果很久没有对话，增加发起对话的概率
-        if time_since_last_convo > 300:  # 5分钟
-            base_prob *= 2
-        if time_since_last_convo > 600:  # 10分钟
-            base_prob *= 3
-        if time_since_last_convo > 1800:  # 30分钟
-            base_prob *= 5
-        
-        # 随机判断是否发起对话
-        return random.random() < base_prob
         
     def update_context(self, user_input):
         """更新对话上下文，增强上下文理解"""
@@ -1494,70 +1455,6 @@ class DialogueSystem:
                 return random.choice(self.topic_responses["reminder_request"])
         
         return None
-        
-    def initiate_conversation(self):
-        # 主动发起对话，基于当前时间和状态
-        current_hour = int(time.strftime("%H"))
-        
-        # 根据时间选择合适的对话主题
-        if 6 <= current_hour < 12:
-            # 早上主题
-            topics = [
-                "早上好！今天准备做什么呀？",
-                "早上的空气真清新！要不要一起出去散步？",
-                "今天的早餐是什么？看起来很好吃的样子！",
-                "早上是一天的开始，要充满活力哦！",
-                "要不要我帮你准备今天的计划？",
-                "要不要我帮你打开浏览器看看新闻？",
-                "今天有什么工作要做吗？我可以帮忙哦！",
-                "睡得好吗？今天看起来精神不错呢！",
-                "要不要我给你推荐一些有趣的事情？",
-                "今天天气真好！适合出去走走！",
-            ]
-        elif 12 <= current_hour < 14:
-            # 中午主题
-            topics = [
-                "中午好！吃午饭了吗？",
-                "工作学习了一上午，要好好休息一下！",
-                "今天中午吃什么？看起来很美味！",
-                "要不要一起看个有趣的视频放松一下？",
-                "下午有什么安排吗？需要我帮忙吗？",
-                "午休时间到了，要不要小睡一会儿？",
-            ]
-        elif 14 <= current_hour < 18:
-            # 下午主题
-            topics = [
-                "下午好！工作学习辛苦了！",
-                "要不要休息一下？我陪你聊聊天！",
-                "下午的阳光真好！要不要一起晒太阳？",
-                "有没有什么有趣的事情分享给我？",
-                "要不要一起玩个小游戏放松一下？",
-                "你在看什么呢？需要我帮忙吗？",
-                "要不要我帮你搜索点什么资料？",
-                "PPT做累了吗？需要我帮你调整幻灯片吗？",
-                "Excel表格看起来很复杂，需要我帮忙整理吗？",
-                "工作累了吧？要不要我帮你打开浏览器看看有趣的内容放松一下？",
-            ]
-        else:
-            # 晚上主题
-            topics = [
-                "晚上好！今天过得怎么样？",
-                "工作学习了一天，要好好休息哦！",
-                "晚上的星星真美！要不要一起看看？",
-                "要不要我给你讲个故事？",
-                "明天有什么计划吗？",
-                "今天工作完成得怎么样？要不要我帮你总结一下？",
-                "要不要我帮你打开浏览器看看Deltarune的最新消息？",
-                "要不要看部电影放松一下？我可以帮你搜索推荐！",
-                "要不要我帮你找些有趣的视频看看？",
-                "你喜欢玩什么游戏？我可以帮你搜索相关攻略！",
-                "要不要我帮你看看最近有什么热门的动漫或电视剧？",
-                "想不想听点音乐？我可以帮你打开音乐网站！",
-                "今天有没有遇到什么开心的事情？",
-                "要不要我陪你聊聊天，放松一下？",
-            ]
-        
-        return random.choice(topics)
         
     def get_personalized_greeting(self):
         """根据时间和用户偏好生成个性化问候"""

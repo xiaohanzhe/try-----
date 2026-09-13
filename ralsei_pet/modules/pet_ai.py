@@ -576,11 +576,14 @@ class PetAI:
         target = random.choices(targets, weights=probabilities, k=1)[0]
         
         if target == "user":
-            # 与用户交互
-            if self.parent.dialogue_system.should_initiate_conversation():
-                message = self.parent.dialogue_system.initiate_conversation()
-                self.parent.dialogue_ui.add_dialogue("ralsei", message, "happy")
-                self.parent.dialogue_ui.show_dialogue()
+            # 与用户交互：第六轮起内置台词已删除，开口只能走 AI 通道
+            # （parent.start_autonomous_speech 内部有 10 分钟闸门与合时宜检查；
+            #   AI 未启用时它保持沉默，不再回落模板台词）。
+            try:
+                if callable(getattr(self.parent, 'start_autonomous_speech', None)):
+                    self.parent.start_autonomous_speech("pet_ai_user")
+            except Exception as e:
+                _log.debug("pet_ai 防御性异常（已忽略）: %s", e)
         elif target == "folder":
             # 与文件夹交互：走过去远远看看（不擅自打开用户文件夹）
             folders = self.parent.desktop_interaction.get_desktop_folders()

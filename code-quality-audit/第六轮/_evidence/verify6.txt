@@ -1,0 +1,167 @@
+﻿=== A. 鍐呯疆鍙拌瘝锛堢郴缁熻嚜甯﹀璇濓級宸插垹闄?===
+  [PASS] A1 RalseiPet 涓?20 涓唴缃彴璇?鍋囨惉杩愭柟娉曞叏閮ㄤ笉瀛樺湪 :: still present=[]
+  [PASS] A2 dialogue_system 涓嶅啀鏈?should_initiate_conversation / initiate_conversation
+  [PASS] A3 main.py 婧愮爜閲屽凡鏃犺繖浜涙柟娉曠殑璋冪敤鐐?:: calls=[]
+  [PASS] A4 澶╂皵鎾姤瀹氭椂鍣ㄥ凡鍋滅敤锛坵eather_timer 缃?None锛屼笉鍐嶆瘡 5 鍒嗛挓鎾姤锛?
+  [PASS] A5 check_initiate_dialogue 鍙皟 start_autonomous_speech锛堜笉鍐嶈蛋妯℃澘搴擄級
+=== B. 鑷富寮€鍙ｏ細AI 鍞竴閫氶亾 + 10 鍒嗛挓闂搁棬 ===
+  [PASS] B1 涓変釜鏂版柟娉曞瓨鍦紙start / _autonomous_speech_allowed / _can_speak_now锛?
+  [PASS] B2 棣栨寮€鍙ｆ垚鍔熴€佺揣鎺ョ潃绗簩娆¤ 10 鍒嗛挓闂搁棬鎸′綇 :: first=True second=False shown=1
+  [PASS] B3 杈圭晫锛氬樊 1 绉掞紙599s锛夋嫆缁濓紝婊?600s 浠ヤ笂鏀捐 :: 599s->False 601s->True
+  [PASS] B4 鐢ㄦ埛鎵撳瓧涓?/ 鐫＄湢涓?/ 娓告垙涓?/ 鎽斿€掍腑 涓€寰嬮棴鍢?
+  [PASS] B5 鏈惎鐢ㄦ湰鍦?AI 鈫?淇濇寔娌夐粯锛屼笖涓嶈惤浠讳綍鍙拌瘝锛堜笉鍐嶅洖钀藉唴缃ā鏉匡級
+  [PASS] B6 AI 閫夋嫨娌夐粯锛堝彧鍥炰竴涓彞鍙凤級鈫?涓嶆樉绀轰换浣曞璇?
+  [PASS] B7 AI 姝ｅ父杩斿洖 鈫?鍙彇绗竴鍙ャ€佸幓寮曞彿銆佹樉绀轰竴娆?:: shown=[('ralsei', '涓讳汉濂戒箙娌¤窡鎴戣璇濆暒锛屾槸涓嶆槸寰堝繖鍛€锛?, 'happy')]
+  [PASS] B8 鐢ㄦ埛涓诲姩鐐?鑱婂ぉ'涓嶅彈 10 鍒嗛挓闂搁棬闄愬埗锛堝彲杩炵画涓ゆ锛?
+=== C. 鐢╅鍒ゅ畾锛氱湡瀹為€熷害(px/s) + 鏃舵晥鎬?===
+  [PASS] C1 鎱㈡嫋 600px/s 鏉炬墜 鈫?涓嶈Е鍙戠敥椋?:: is_falling=False
+  [PASS] C2 鐚涚敥 2000px/s 鈫?瑙﹀彂鐢╅锛屼笖绔栫洿鍒濋€熷悜涓婏紙<0锛?:: falling=True vx=0 vy=-1100
+  [PASS] C3 鎷栧畬鍋滀綇 0.5s 鍐嶆澗鎵?鈫?瑙嗕负杞绘斁锛岀粷涓嶇敥椋?
+  [PASS] C4 鎸変笅鍗虫澗锛堟棤浣嶇Щ閲囨牱锛夆啋 涓嶇敥椋?
+  [PASS] C5 鐢╅闂ㄦ鏄惧紡瀹氫箟涓?>= 900px/s锛堟棫瀹炵幇鏄?150 鍍忕礌宸級 :: threshold=900.0
+  [PASS] C6 鏉炬墜鍒ゅ畾宸叉惉杩?mouseReleaseEvent锛宮ouseMoveEvent 閲屼笉鍐嶆湁瀹?:: rel=True mv=False
+  [PASS] C7 闀挎寜閮ㄤ綅鍙嶅簲鍔犱簡 not is_falling 瀹堝崼锛堣鐢╅鏃朵笉椤哄甫鎹忚劯/鎷夋墜锛?
+=== D. 鎶涚墿璺緞锛堜刊瑙?2D 椋庢牸锛?==
+  [PASS] D1 椋炶闃舵纭疄鍏堝悜涓婅吘绌猴紙y 鍑忓皬锛?:: min_y=372 (launch=500)
+  [PASS] D2 钀藉湴鍚庣粡鍘?splat 闃舵锛堜笉鍐嶆槸绌轰腑鎽旀墎锛?:: phase=dazed anims=['splat', 'fall_back_rub']
+  [PASS] D3 鍏ㄧ▼ y 涓嶈秴杩囧湴闈㈢嚎锛堜笉浼氱┛鍒版闈㈠簳涓嬶級 :: max_y=500
+  [PASS] D4 姘村钩鏂瑰悜鏈変綅绉伙紙鎶涚墿绾夸笉鏄瀭鐩磋惤浣擄級 :: x=662
+  [PASS] D5 钀藉湴鍚庨琛岄€熷害琚竻闆讹紙缃?0 鎴栧凡娓呯悊锛?:: vx=None vy=None
+  [PASS] D6a 椋炶 1 绉掓椂**涓嶅啀**寮鸿鍒?splat锛堣鏄庝笉鏄┖涓憯鎵侊級 :: phase@1s=flying
+  [PASS] D6b 鏈€缁堢簿纭惤鍥炶捣璺抽珮搴︼紙钀界偣鍚搁檮锛屾棤绂绘暎澶氬啿锛夊苟杩涘叆 splat 涔嬪悗 :: final_y=500 phase=dazed
+  [PASS] D6c 钀藉湴鍓嶇殑鏈€楂樼偣纭疄楂樹簬璧疯烦楂樺害锛堢湡鎶涚墿绾匡級 :: min_y=132
+=== E. 涓€娆℃€у姩浣滐紙'绔欒捣韬繖绫荤殑鍔ㄤ綔鎾竴娆″氨濂?锛?==
+  [PASS] E1 play_animation_once 鏀寔 restore_to锛堟挱瀹屾樉寮忓垏鍥炴寚瀹氬姩鐢伙級
+  [PASS] E2 鎽斿€掓仮澶嶅垎鏀敤 play_animation_once('land', restore_to='idle')
+  [PASS] E3 璺宠穬钀藉湴涔熺敤涓€娆℃€?land锛堜笉鍐?change_animation 寰幆閲嶆挱锛?
+  [PASS] E4 update_bounce 鍦伴潰鏀圭敤 _desktop_floor_y锛堝鏄剧ず鍣級
+=== F. 甯х巼涓庡鏄剧ず鍣ㄥす绱?===
+  [PASS] F1 config.json锛歠ps=6 / frame_delay=166 :: animation={'fps': 6, 'frame_delay': 166}
+  [PASS] F2 config_manager 榛樿 fps=6锛堟柊瑁呯敤鎴蜂篃鏄?6 甯э級
+  [PASS] F3 鍓睆鍧愭爣涓嶅啀琚媺鍥炰富灞忥紙2500 淇濇寔 2500锛?:: -> (2500,900)
+  [PASS] F4 璐熷潗鏍囧壇灞忓彲鍋滅暀锛?1500 淇濇寔 -1500锛?:: -> (-1500,500)
+  [PASS] F5 瓒婄晫浠嶄細琚す鍥炶櫄鎷熸闈㈠乏杈圭晫锛?1920锛?:: -> -1920
+  [PASS] F6 _desktop_floor_y / _current_screen_rect 鍧囧凡瀹氫箟
+  [PASS] F7 update_movement 閲屽 dt 鍋氫簡 0.1s 鎴柇锛堢灛绉婚槻娌伙級
+
+============================================================
+鎬昏 39 椤癸紝閫氳繃 39锛屽け璐?0
+verify exit=0
+寰呭鍏ユā鍧楁暟: 22
+  [ OK ] ai_driver
+  [ OK ] api_client
+  [ OK ] autonomous_agent
+  [ OK ] command_manager
+  [ OK ] config_manager
+  [ OK ] customization_system
+  [ OK ] desktop_interaction
+  [ OK ] dialogue_system
+  [ OK ] dialogue_ui
+  [ OK ] emotion_system
+  [ OK ] energy_hunger
+  [ OK ] entertainment_system
+  [ OK ] floor_manager
+  [ OK ] logger_utils
+  [ OK ] memory_system
+  [ OK ] pet_ai
+  [ OK ] pet_interaction
+  [ OK ] search_summarizer
+  [ OK ] social_growth_system
+  [ OK ] sound_manager
+  [ OK ] sprite_loader
+  [ OK ] weather_system
+
+瀵煎叆澶辫触鏁? 0
+
+_tick_spell_flow 浠ｇ爜浣擄紙宸插墧闄ゆ敞閲婏級涓畫鐣欒８ current_time 娆℃暟: 0 (搴斾负 0)
+浼樺寲鍒嗘敮浣嶇疆 34491  鏂囦欢鍒嗘敮浣嶇疆 35534  鍔ㄤ綔浼樺厛: True
+=== V1/V2 瀵硅瘽绯荤粺锛氱郴缁熺被鎰忓浘鏄惁瑙﹁揪鐪熷疄妗岄潰鎿嶄綔 ===
+  [PASS] V1a 闂?鍐呭瓨浣跨敤鐜?瑙﹁揪 get_system_resources :: calls=['get_system_resources'] reply='褰撳墠绯荤粺鐘舵€侊細\nCPU浣跨敤鐜囷細11.1%\n鍐呭瓨浣跨敤鐜囷細22.2%\n纾佺洏浣跨敤鐜囷細33.3%'
+  [PASS] V1b 鍥炲涓甫鐪熷疄鏁板€?11.1) :: reply='褰撳墠绯荤粺鐘舵€侊細\nCPU浣跨敤鐜囷細11.1%\n鍐呭瓨浣跨敤鐜囷細22.2%\n纾佺洏浣跨敤鐜囷細33.3%'
+   [debug] 浼樺寲 -> calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+  [PASS] V1c 璇?浼樺寲'瑙﹁揪 optimize_system :: calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+   [debug] 娓呯悊 -> calls=['clean_temp_files'] reply='涓存椂鏂囦欢娓呯悊宸插畬鎴愶紒'
+  [PASS] V1d 璇?娓呯悊'瑙﹁揪 clean_temp_files :: calls=['clean_temp_files'] reply='涓存椂鏂囦欢娓呯悊宸插畬鎴愶紒'
+  [PASS] V1e 璇?澶囦唤'瑙﹁揪 backup_data :: calls=['backup_data']
+   [debug] 绾?浼樺寲' -> calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+  [PASS] V1f 绾?浼樺寲'瑙﹁揪 optimize_system :: calls=['optimize_system'] reply='绯荤粺浼樺寲宸插畬鎴愶紒'
+  [PASS] V2a 鎵挎帴璇粛鑳借鍒颁笂涓€杞剰鍥?:: last_intent=system_status
+  [PASS] V2b 鎵挎帴璇緱鍒颁笂涓嬫枃鍥炲鑰岄潪宕╂簝 :: reply='浣犳兂鏌ョ湅绯荤粺鐨勫摢涓叿浣撴寚鏍囷紵'
+
+=== V3 鏂芥硶娴佺▼ casting 鍒嗘敮锛堝惈鏈 P0 淇锛?===
+  [PASS] V3-pre 鎺㈤拡鎴愬姛鎻愬彇鏂规硶浣?:: 璇彞鏁?6
+  [PASS] V3a 鍙嶆眹缂栦腑宸叉棤 LOAD_GLOBAL current_time :: offsets=[]
+  [PASS] V3b casting tick 涓嶅啀鎶?NameError :: err=None
+  [PASS] V3c 鏂芥硶缁撴潫鍥炶皟琚湡姝ｈ皟鐢紙鏂囦欢鎵嶄細琚墦寮€锛?:: cb_called=True frames_seen=11
+  [PASS] V3d _spell_stage 宸插浣嶏紙涓嶅啀姘镐箙鍗″湪 casting锛?:: stage=None
+
+=== V4 娓告垙澶у笀鎴愬氨锛堝幓閲嶉€昏緫锛?===
+  [PASS] V4a 鍒ゅ畾浣跨敤 games_played_ids 鍘婚噸闆嗗悎
+  [PASS] V4b 涓嶅啀浣跨敤绱娆℃暟 games_played 鍒ゅ畾
+  [PASS] V4c activity_stats 鍒濆鍖栧惈 games_played_ids
+
+=== V5 memory save_memory 钀界洏閿?===
+  save_memory 瀹為檯钀界洏閿? ['long_term_memory', 'experience', 'level']
+  璁板綍锛歮emory_strength 鏄惁鍦ㄨ惤鐩橀敭涓?-> False
+
+============================================================
+鎬昏 16 椤癸紝閫氳繃 16锛屽け璐?0
+=== 杞藉叆绱犳潗 ===
+  宸插姞杞藉姩鐢荤粍: 489锛屽抚鎬绘暟: 1461
+
+=== A. 鑷鏈韩 ===
+  [PASS] A1       load_sprites 闃舵鏈骇鐢熶换浣?miss锛堝姞杞戒笉搴旇璇涓鸿姹傦級  :: misses=0
+  [PASS] A2       diagnose_dynamic_name('walk_north') 瀹氫綅鍒版柟鍚戣瘝闈炴硶  :: 缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+  [PASS] A3       diagnose_dynamic_name('run_sideways') 鍚屾牱琚瘑鍒?
+  [PASS] A4       diagnose_dynamic_name('walk_up_blush') 缁撴瀯姝ｅ父 鈫?涓嶈鎶? :: None
+  [PASS] A5       diagnose_dynamic_name('idle') 涓嶈鎶?
+  [PASS] A6       diagnose_dynamic_name('') 琚瘑鍒负绌?
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'no_such_anim' 鈫?鍥為€€ '<鎷掔粷鍒囨崲/杩斿洖 None>' (鏉ユ簮: SpriteLoader.get_sprite)
+  [PASS] A7       get_sprite 瀵逛笉瀛樺湪鐨勫姩鐢昏繑鍥?None 涓斿叆璐?
+
+=== B. 鍥為€€琛屼负绛変环鎬э紙鏀归€犲墠绠楁硶 vs 鐜扮綉 change_animation锛?==
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_up_blush' 鈫?鍥為€€ 'walk_up' (鏉ユ簮: change_animation)
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_up_unhappy' 鈫?鍥為€€ 'walk_up' (鏉ユ簮: change_animation)
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_up_butler_unhappy' 鈫?鍥為€€ 'walk_up_butler' (鏉ユ簮: change_animation)
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'run_north' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation) 锛涚枒浼兼嫾鎺ュ弬鏁伴潪娉曪細缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_sideways' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation) 锛涚枒浼兼嫾鎺ュ弬鏁伴潪娉曪細缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_up_blush_x' 鈫?鍥為€€ 'walk_up' (鏉ユ簮: change_animation)
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation) 锛涚枒浼兼嫾鎺ュ弬鏁伴潪娉曪細缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: '___' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation)
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'nonexistent_prefix_abc' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation)
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation) 锛涚枒浼兼嫾鎺ュ弬鏁伴潪娉曪細缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'run' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation) 锛涚枒浼兼嫾鎺ュ弬鏁伴潪娉曪細缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+  [PASS] B1       鍏ㄩ儴 501 涓牱鏈殑钀界偣涓庢敼閫犲墠绠楁硶涓€鑷?
+  [PASS] B2       walk_up_blush 鈫?walk_up锛堢礌鏉愮己澶辫蛋鍓嶇紑鍥為€€锛? :: walk_up
+  [PASS] B3       璇ユ鍥為€€宸插叆璐︿笖鍥為€€鐩爣璁板綍涓?walk_up  :: {'count': 2, 'where': {'change_animation'}, 'resolved': {'walk_up'}}
+  [PASS] B4       walk_down_blush 鐩存帴鍛戒腑锛堜笉浜х敓璇姤锛?
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_north' 鈫?鍥為€€ 'idle' (鏉ユ簮: change_animation) 锛涚枒浼兼嫾鎺ュ弬鏁伴潪娉曪細缂哄皯鏂瑰悜璇嶏紙搴斾负 down/up/left/right 涔嬩竴锛?
+  [PASS] B5       walk_north 鈫?idle锛屼笖鍛婅閲屽甫'缂哄皯鏂瑰悜璇?瀹氫綅
+
+=== C. 鎷掔粷鍒囨崲鐨勫垎鏀紙sprites 涓虹┖鏃跺彧鏈?idle 鍙洖閫€锛?==
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鍔ㄧ敾鍚嶄笉瀛樺湪: 'walk_down' 鈫?鍥為€€ '<鎷掔粷鍒囨崲/杩斿洖 None>' (鏉ユ簮: change_animation)
+  [PASS] C1       鍏ㄩ儴鍔ㄧ敾缂哄け鏃?change_animation 杩斿洖 False 涓斾笉鏀圭姸鎬?
+  [PASS] C2       璇ユ嫆缁濆悓鏍疯璁拌处
+
+=== D. 姹囨€昏緭鍑?===
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?[anim-miss] 鏈疆鍏?13 涓姩鐢诲悕鏈懡涓紝鍚堣 14 娆★細
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_up_blush                  x2    鏉ユ簮=change_animation 鍥為€€=walk_up
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - ___                            x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - nonexistent_prefix_abc         x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - run                            x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - run_north                      x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk                           x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_                          x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_down                      x1    鏉ユ簮=change_animation 鍥為€€=<None>
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_north                     x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_sideways                  x1    鏉ユ簮=change_animation 鍥為€€=idle
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_up_blush_x                x1    鏉ユ簮=change_animation 鍥為€€=walk_up
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_up_butler_unhappy         x1    鏉ユ簮=change_animation 鍥為€€=walk_up_butler
+2026-09-13 20:10:48 [WARNING] ralsei_pet.sprite_loader 鈥?  - walk_up_unhappy                x1    鏉ユ簮=change_animation 鍥為€€=walk_up
+  [PASS] D1       姹囨€昏繑鍥炴湭鍛戒腑绉嶇被鏁颁笖涓庤处鏈竴鑷? :: summary=13 ledger=13
+  [PASS] D2       閲嶅璇锋眰鍚屼竴鍚嶅瓧涓嶄細閲嶅璁℃暟绉嶇被锛堝彧绱姞娆℃暟锛?
+  [PASS] D3       report 鎸夋鏁伴檷搴忎笖瀛楁瀹屾暣  :: 鍓?3 鏉? [('walk_up_blush', 2, ['change_animation'], ['walk_up']), ('___', 1, ['change_animation'], ['idle']), ('nonexistent_prefix_abc', 1, ['change_animation'], ['idle'])]
+
+============================================================
+鎬昏 17 椤癸紝閫氳繃 17锛屽け璐?0
+all exit=0

@@ -65,8 +65,11 @@ class ConfigManager:
                 "lock_timeout": 300
             },
             "animation": {
-                "fps": 30,
-                "frame_delay": 32
+                # 2026-09-13 用户反馈"动画播放太快"：默认帧率从 30 降回 6
+                # （即 167ms/帧，与早期固定 167ms 的手感一致）。30fps 只适合游戏原速，
+                # 桌宠逐帧播放会显得"抽搐式快进"。
+                "fps": 6,
+                "frame_delay": 166
             },
             "movement": {
                 "speed": 5.0,
