@@ -40,3 +40,6 @@ Thumbs.db
 
 # G2 回归基线的临时产物（baseline.json 要入库，_out/ 是每次运行的原始输出与 diff）
 code-quality-audit/regress/_out/
+
+# 各轮次的临时侦察/调试日志（只留可复算的脚本 + 报告，不留散落日志）
+code-quality-audit/*/_recon/

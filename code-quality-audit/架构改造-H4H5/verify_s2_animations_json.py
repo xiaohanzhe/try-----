@@ -93,24 +93,35 @@ check('A3', 'groups 非空且每个组都有 frames 列表',
       bool(groups) and all(isinstance(e.get('frames'), list) for e in groups.values()),
       'groups=%d' % len(groups))
 builtin, _node, _lines = ex.extract_literal()
-_regenerated = ex.dumps(ex.build_document(builtin, ex.collect_comments(_lines, _node)))
-check('A4', '导出确定性：重跑导出器结果与磁盘文件逐字节一致',
-      _regenerated == _raw_text,
-      '%d vs %d 字节' % (len(_regenerated.encode('utf-8')), len(_raw_text.encode('utf-8'))))
+_regen_a = ex.dumps(ex.build_document(builtin, ex.collect_comments(_lines, _node)))
+_regen_b = ex.dumps(ex.build_document(builtin, ex.collect_comments(_lines, _node)))
+check('A4', '导出器幂等：同一输入连续两次导出逐字节一致',
+      _regen_a == _regen_b, '%d 字节' % len(_regen_a.encode('utf-8')))
+try:
+    resolved = ex.resolve_groups(doc)
+    _res_ok = True
+except Exception as exc:      # 解析失败本身就是断言失败，不让脚本崩
+    resolved, _res_ok = {}, False
+    print('  !! resolve_groups 抛异常: %r' % (exc,))
+check('A5', '文件可被解析（alias_of 展开、无成环）', _res_ok)
 
 print()
 print('=== B. 与源码硬编码表深度相等（S2 的核心断言） ===')
-json_mapping = frames_only(groups)
+json_mapping = resolved
 check('B1', '键集合完全相同', set(builtin) == set(json_mapping),
       'builtin=%d json=%d' % (len(builtin), len(json_mapping)))
 check('B2', '键顺序也相同（导出保持源码顺序）',
       list(builtin) == list(json_mapping))
 diff_frames = [k for k in builtin if builtin[k] != json_mapping.get(k)]
-check('B3', '每个组的帧列表逐项相等（含顺序）', not diff_frames,
+check('B3', '每组解析后的帧列表逐项相等（含顺序）', not diff_frames,
       '不一致的组=%s' % diff_frames)
 check('B4', '总帧数一致',
       sum(len(v) for v in builtin.values()) == sum(len(v) for v in json_mapping.values()),
       'frames=%d' % sum(len(v) for v in builtin.values()))
+alias_groups = sorted(n for n, e in groups.items() if e.get('alias_of'))
+check('B5', '别名组的原始 frames 已清空（不再靠"再写一遍文件名"表达）',
+      all(not (groups[n].get('frames') or []) for n in alias_groups),
+      '别名组=%s' % alias_groups)
 
 print()
 print('=== C. 运行时等价：读 JSON vs 强制内置表 ===')
@@ -131,8 +142,12 @@ check('C4', '两条来源的 animation_mapping 与源码字面量都相等',
 check('C5', 'position_offset 仍为空（JSON 里没有非零偏移）',
       loader_json.position_offset == {} and loader_builtin.position_offset == {},
       'offset=%r' % (loader_json.position_offset,))
-check('C6', 'legacy 集合为空（S2 数据里没有 legacy 键）',
-      loader_json.legacy_animations == set() and loader_builtin.legacy_animations == set())
+legacy_in_json = sorted(n for n, e in groups.items() if e.get('legacy') is True)
+check('C6', 'legacy 集合与 JSON 里 legacy:true 的组一致（S3 起不再为空）',
+      sorted(loader_json.legacy_animations) == legacy_in_json
+      and sorted(loader_builtin.legacy_animations) == [],
+      'json=%d 组（内置表来源无 legacy，因为内置表没有这个字段）'
+      % len(legacy_in_json))
 
 print('  ... 两个 loader 各自 load_sprites()（各加载 1000+ 张 PNG，稍等）')
 loader_json.load_sprites()
@@ -191,12 +206,21 @@ ld = make_loader(**{ENV: ghost})
 check('E1', '含缺失帧的配置仍被接受（不抛异常、不回退）',
       ld.animation_config_source == 'json' and ld.animation_mapping['idle'][1] == 'ghost_frame_不存在.png')
 report = ld.get_animation_config_report()
-check('E2', '缺失帧被记进 get_animation_config_report()',
-      report['missing_frames'].get('idle') == ['ghost_frame_不存在.png']
-      and report['missing_frame_total'] == 1,
-      'total=%d' % report['missing_frame_total'])
-check('E3', '报告里的组数与 legacy 数与实际一致',
-      report['groups'] == len(ld.animation_mapping) and report['legacy_groups'] == [])
+# S3 之后 idle 成了别名目标（neutral -> idle），而别名在加载期「取目标的帧」，
+# 所以注进 idle 的缺失帧会沿别名传播到所有 alias_of 指向 idle 的组。
+# 期望值必须从 doc 现算，否则一旦新增别名（如 S3 把 neutral 改别名）就会误报。
+ghost_groups = sorted(['idle'] + [n for n, e in groups.items() if e.get('alias_of') == 'idle'])
+declared_legacy = sorted(n for n, e in groups.items() if e.get('legacy'))
+check('E2', '缺失帧被记进 get_animation_config_report()（并沿别名传播）',
+      all(report['missing_frames'].get(g) == ['ghost_frame_不存在.png'] for g in ghost_groups)
+      and report['missing_frame_total'] == len(ghost_groups),
+      'total=%d 期望=%d 组=%s' % (report['missing_frame_total'], len(ghost_groups),
+                                ','.join(ghost_groups)))
+check('E3', '报告里的组数与 legacy 数与文件声明一致',
+      report['groups'] == len(ld.animation_mapping)
+      and report['legacy_groups'] == declared_legacy,
+      'groups=%d/%d legacy=%d' % (report['groups'], len(ld.animation_mapping),
+                                  len(report['legacy_groups'])))
 
 print()
 print('=== F. S3 字段已就绪：alias_of / legacy / offset ===')

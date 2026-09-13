@@ -69,6 +69,37 @@ def collect_comments(lines, node):
     return out
 
 
+def resolve_groups(doc):
+    """把 {名: {frames, alias_of?, ...}} 归一化成 {名: [帧文件名]}，展开 alias_of。
+
+    规则与 sprite_loader._validate_animation_config 一致：
+      - 有 alias_of 的组，帧取自目标组（允许 alias 套 alias，带环检测）；
+      - 其余组取自己的 frames（缺失视为空列表）。
+    S2/S3 的"深度等价"断言都以此为准 —— 比的是**解析后**的表，而不是文件的原始形状，
+    这样"别名从'再写一遍文件名'改成 alias_of"才不会把等价性断言本身搞坏。
+    """
+    groups = doc['groups']
+    cache = {}
+
+    def resolve(name, seen):
+        if name in cache:
+            return cache[name]
+        if name in seen:
+            raise ValueError('alias_of 成环：%s' % ' → '.join(list(seen) + [name]))
+        entry = groups.get(name)
+        if not isinstance(entry, dict):
+            raise ValueError('alias_of 指向不存在的组 %r' % name)
+        target = entry.get('alias_of')
+        if target:
+            frames = resolve(target, seen | {name})
+        else:
+            frames = list(entry.get('frames') or [])
+        cache[name] = frames
+        return frames
+
+    return {name: resolve(name, set()) for name in groups}
+
+
 def build_document(mapping, comments):
     """构造 JSON 文档（保持源码顺序）。本函数是导出格式的唯一出口。
 
@@ -159,11 +190,21 @@ def main():
         if existing is None:
             print('FAIL 目标文件不存在: %s' % TARGET)
             return 1
-        ok = existing.get('groups') and \
-            {n: e['frames'] for n, e in existing['groups'].items()} == mapping
-        print('%s 现有 JSON 与代码字面量%s' % ('PASS' if ok else 'FAIL', '一致' if ok else '不一致'))
-        print('  组数：JSON=%s 代码=%s' % (
-            len(existing.get('groups', {})), len(mapping)))
+        try:
+            resolved = resolve_groups(existing)
+        except Exception as exc:
+            print('FAIL 解析失败: %s' % exc)
+            return 1
+        # 自校验：导出器幂等（同一输入连续两次导出必须逐字节一致）
+        idem = dumps(build_document(mapping, comments)) == dumps(build_document(mapping, comments))
+        ok = resolved == mapping and idem
+        print('%s 现有 JSON **解析后**与代码字面量%s'
+              % ('PASS' if ok else 'FAIL', '一致' if resolved == mapping else '不一致'))
+        print('  组数：JSON=%s 代码=%s；导出器幂等=%s' % (
+            len(existing.get('groups', {})), len(mapping), idem))
+        if resolved != mapping:
+            bad = [k for k in mapping if resolved.get(k) != mapping[k]]
+            print('  不一致的组：%s' % bad)
         return 0 if ok else 1
 
     if args.stdout:
