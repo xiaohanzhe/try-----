@@ -1,14 +1,16 @@
 ﻿PUSH_OK=True  ahead=0
 --- attempt 1 (exit=0) ---
 git : To https://github.com/xiaohanzhe/try-----.git
-所在位置 行:452 字符: 8
+所在位置 行:454 字符: 8
 +   $r = git -c credential.helper= -c http.proxy=http://127.0.0.1:7897  ...
 +        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (To https://gith...he/try-----.git 
    :String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
-   4ef922e..67d2936  main -> main
+   67d2936..29a3b6d  main -> main
 
-67d2936 docs(绗叚杞?: 琛屼负淇鎶ュ憡涓庢帹閫佺暀鐥?
-origin=67d2936122d70bd888f4b3418a87083d240b4e4c
+origin=29a3b6db71fa1280c7f9a3518cae587b5651b338
+HEAD=29a3b6db71fa1280c7f9a3518cae587b5651b338
+ M "code-quality-audit/\347\254\254\345\205\255\350\275\256/_evidence/_git_log.txt"
+ M "code-quality-audit/\347\254\254\345\205\255\350\275\256/_evidence/push6.txt"
