@@ -148,3 +148,48 @@
 2. 若需要「Agent 接入 / VLM 屏幕理解」等高级能力，是否愿意购买并自行激活能力码？
 
 在两题有答案之前，该技能保持"已安装、不使用"状态。
+
+---
+
+## 7. 附记（20:5x）：下载与验签记录 —— **停在执行前的最后一步**
+
+用户指示"装，但尽量别用付费能力"。桌面端安装包已下载并验签完毕，**尚未执行安装**。
+
+### 7.1 真实下载路径（技能给的地址不是直链）
+
+- `.../sah/downloads/windows/latest` → **301** → `.../latest/`，返回 **HTML 落地页**（不是二进制）。
+- 落地页提供两个入口：
+  - `?arch=x64&format=exe` —— **直链**，`Content-Disposition: ...ScreenAutomationHelper-Windows-x64-latest.exe`
+  - `.../sah/downloads/zip/latest` —— **301 跳百度网盘**（`pan.baidu.com/s/...`），需登录/提取码，**脚本化不可行**
+
+实际采用：`https://www.xiaozs.com/sah/downloads/windows/latest/?arch=x64&format=exe`
+
+### 7.2 已核验的事实
+
+| 项 | 值 |
+|---|---|
+| 文件大小 | **76,364,367 字节**（与 HEAD 的 `Content-Length` 一致 → 下载完整） |
+| SHA-256 | `D7CD1686826FB3ED635788BF2D01418DEAA9B7CA763A7D0A5470B9A9D0407F1A` |
+| 厂商（`VersionInfo.CompanyName`） | 小助手网络 |
+| 产品名 / 版本 | 屏幕自动化小助手 / **0.17.13** |
+| **数字签名** | **`NotSigned`** —— 无 Authenticode 签名，**无签名证书** |
+| 安装器类型 | **Inno Setup**（全文件扫描命中 `Inno Setup` + `rDlPtS` 标记） |
+| 安装范围 | **按用户**：卸载键位于 `HKCU\...\Uninstall\{F174BA6D-...}_is1`，目标 `%LOCALAPPDATA%\Programs\Xiaozs\...` → **不需要管理员权限** |
+
+### 7.3 为什么停在这里
+
+**未签名**意味着：没有发布者身份绑定、没有篡改检测，Windows SmartScreen 会拦一次。
+而这个程序的能力恰恰是**读取屏幕 + 注入鼠标键盘**——权限最高的一类软件。
+76 MB 二进制**不在我能审计的范围内**，我无法排除它包含任何行为。
+
+所以需要用户对"**安装一个无签名的读屏/控屏程序**"这件事**本身**明确点头，
+而不只是对"装桌面端"这个笼统的想法点头。这是执行前的最后一道闸门。
+
+### 7.4 装法（已勘明，待执行）
+
+- 默认安装即落到技能查找的路径（`%LOCALAPPDATA%\Programs\Xiaozs\ScreenAutomationHelper\`），**无需提权**。
+- 可静默安装：`/VERYSILENT /SUPPRESSMSGBOXES /NORESTART`（Inno Setup 标准开关）。
+- 卸载：自带卸载器（HKCU 卸载键 `{F174BA6D-570B-4F87-A453-84AA66C4A0CB}_is1`）。
+- **免费路线已确认**：基础屏幕能力（`window list-visible` / `task begin|observe|find|wait|click|drag|scroll|write|hotkey`）
+  属**本地能力，无需能力码**；只有「Agent 接入」「VLM 屏幕理解」「浏览器增强」才需要付费激活 ——
+  按用户要求，本次**一概不碰**。
