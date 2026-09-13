@@ -8,7 +8,9 @@
 ## 项目概况
 - 主体：`ralsei_pet/` — Deltarune Ralsei 桌面宠物，Windows + Python 3.11 + PyQt5。
 - `src/main.py` 现 8500 行 / 187 个 def、单巨型 `RalseiPet(QMainWindow)` 类；另有 23 个 `modules/*.py`。
-- 审查产物统一放 `code-quality-audit/第五轮/`（轮次递增），报告放项目根 `代码质量复审报告_*.md`。
+- 审查产物统一放 `code-quality-audit/<轮次>/`（第五轮起逐轮递增；架构改造类在
+  `code-quality-audit/架构改造-H4H5/`、一键回归在 `code-quality-audit/regress/`），
+  报告放项目根（`代码质量复审报告_*.md` / `H5-*.md`）；每轮的临时侦察日志进 `<轮次>/_recon/`（已 gitignore）。
 
 ## 仓库与远端
 - 分支 `main` → `origin/main`，远端 `https://github.com/xiaohanzhe/try-----.git`（**私有库**，未认证请求返回 401 "Repository not found."）。
@@ -52,6 +54,15 @@
   快速判据：`curl.exe -v -x http://127.0.0.1:7897 https://github.com` 若看到
   `CONNECT tunnel established, response 200` 紧接 `schannel: failed to receive handshake`，
   即代理通、目标被重置；而 `api.github.com` 同时可 200（用于区分"代理坏了"还是"目标被封"）。
+
+## git 提交备忘：**别用 `-m @'...'@` 传含英文双引号的中文消息**
+- 现象：`git commit -m @'...'@` 报 `error: pathspec 'true 这类拼写错误…' did not match any file(s)` ——
+  提交**没发生**，随后 `git push` 因"无提交可推"退出码 0，看起来像成功（其实啥也没推）。
+- 根因：PowerShell 5.1 向原生 exe 传参时不正确转义内层 `"`；只要正文出现**带空格的英文引号串**
+  （如 `"legcay: true"`）就会被拆成多个 argv。正文没有英文引号时用 here-string 一切正常（这解释了
+  早期"传中文多行没问题"的结论为何不完整）。
+- **可靠做法**：用 Write 工具把提交信息写成 UTF-8 文件，再 `git commit -F <文件>`。
+  提交后**必须核对 `git log --oneline -1`**，别只看 push 的退出码。
 
 ## 仓库卫生约定
 - `compileall` 会改写被 git 跟踪的 `src/__pycache__/main.cpython-311.pyc` → 跑完用 `git checkout --` 还原。
@@ -97,14 +108,29 @@
   `change_animation`/`get_sprite` 加"未命中即 WARNING"自检，不是搬配置（动态拼接使缺失静态不可见）。
 - H4 拆分判据：新模块**不反向引用 `RalseiPet`**、不 import `main`；施工用"转发壳"（原方法体改一行转发、
   保留原名），Wave 顺序 独立子系统 → 鼠标交互 → 动画/移动/物理。
-- **进度**：H5 **S1 已完成**（2026-09-13）——`sprite_loader` 加 `animation_misses` 账本 +
-  `diagnose_dynamic_name`/`note_animation_miss`/`get_animation_miss_report`/`log_animation_miss_summary`；
-  `main.py` 在 `change_animation`/`update_animation` 内嵌回退块/`play_animation_once`/`_tick_spell_flow`
-  四处记账，`cleanup_on_exit` 输出汇总。**纯观测零行为变更**，17/17 验证（含 501 样本等价性）+ 第五轮回归全绿。
-  报告 `H5-S1_动画名自检_实施与验证报告_2026-09-13.md`。
-- **运行时实测（新增，勿再重复测）**：`sprites` = **489 组** = mapping 语义名 109 + 自动扫描 380
-  （1084 帧对象，82 组与 mapping 100% 重复加载）；仅自动扫描引用、mapping 未引用 724 个帧文件；
-  磁盘 1106 PNG 中 19 个无人引用。→ 自动扫描只能当"补漏报告器"，不能接管配置。
+- **进度：H5 S1 / S2 / S3 全部完成**（2026-09-13）。
+  - S1：`animation_misses` 账本 + `diagnose_dynamic_name`/`note_animation_miss`/
+    `get_animation_miss_report`/`log_animation_miss_summary`；`main.py` 四处记账。**零行为变更**，17/17。
+    报告 `H5-S1_动画名自检_实施与验证报告_2026-09-13.md`。
+  - S2（`b099e4c`）：配置外化到 `ralsei_pet/assets/animations.json`（schema=1，109 组 / 377 帧，21,809 字节），
+    由 `架构改造-H4H5/extract_animations_json.py` 从源码 AST **单向导出**；JSON 优先、异常回落内置表；
+    新增 `animation_config_source`/`legacy_animations`/`position_offset`/`get_animation_config_report()`/
+    `get_unconfigured_asset_report()`。等价性已证（键集合/顺序/每组帧/总帧数全等；运行期 `sprites` 489/489、
+    `frame_container_size` 两侧均 (222,110)、总帧 1461）。
+  - S3（`94e4902`）：4 组别名改 `alias_of`（happy→laugh / neutral→idle / sad→cry_start / splat_mad→fall_mad，
+    自身 frames 清空），28 组标 `legacy:true`；**未改 `sprite_loader.py`/`main.py`**。
+    工具 `apply_s3_alias_legacy.py`（--apply 幂等）+ `verify_s3_alias_legacy.py`（19 项，含独立字面量重扫）。
+    报告 `H5-S2-S3_动画表外部化_实施与验证报告_2026-09-13.md`。
+- **运行时实测（勿再重复测）**：`sprites` = **489 组** = mapping 109 + 自动扫描 380（1084 帧对象，
+  82 组与 mapping 100% 重复）；仅自动扫描引用而 mapping 未引用的帧文件 **724** 个；磁盘 1106 PNG 中 **19** 个无人引用。
+- **G2 一键回归基线已建立**（`77b01a1`）：`code-quality-audit/regress/run_all.py` —— 归一化输出后比
+  SHA-256 + PASS/FAIL + 退出码 → `IDENTICAL`/`DIFF`/`BASELINE`/`SKIP`（`--list`/`--only`/`--update`/`--verbose`）；
+  固定种子 `_seed_runner.py`(20260913) + `PYTHONHASHSEED=0`。**现状 6 套件 153 PASS / 0 FAIL，连跑两次全 IDENTICAL**。
+  改任何代码前先跑它。
+- **H5 新增三条契约（勿破）**：① `comment` 统一为**非空字符串数组**（A7 锁）；② 加载器对**未知字段只 warning
+  不拒绝** → 拼错键会静默失效，故 A6 锁"入库文件无未知键"；③ **自动扫描不可降级为"只报告"** —— 停用后
+  `frame_container_size` 由 (222,110) 变 (136,71)（`core_prefixes` 含 `spr_cutscene_27_ralsei`，自动扫入的
+  `..._huh/_look/_mu` 帧高 110 被算作 core），**用户可见**；G3 是冻结卡口（期望"必须不同"），要降级须单独验收。
 - 已知不一致（未修）：`change_animation` 从长到短回退 vs `update_animation` 内嵌块只取前两段。
-- **S1 之后的下一步**：S2 抽 `assets/animations.json` + 加载器（断言"JSON 还原的 dict == 原硬编码 dict"）。
-  真实"未命中清单"须在真机跑一轮后从日志/退出汇总取，它是 S2 必须覆盖的名字集合。
+- **下一步**：真机跑一轮取**真实未命中清单**（S1 账本落日志）——S2/S3 只证"与现状等价"，未证"覆盖完整"。
+  H4 拆分现有 G2 兜底，可开工。
