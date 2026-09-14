@@ -65,6 +65,12 @@ SUITES = [
         'desc': '第六轮：39 项行为修复断言（对话/甩飞/抛物线/帧率/多屏）',
     },
     {
+        'id': 'round7_launch',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第七轮', 'verify_round7_launch_import.py'),
+        'offscreen': True,
+        'desc': '第七轮：文档化启动（仅 src/ 在 path）不再 ModuleNotFoundError',
+    },
+    {
         'id': 's1_anim_miss',
         'script': os.path.join(ROOT, 'code-quality-audit', '架构改造-H4H5', 'verify_s1_animation_miss.py'),
         'offscreen': True,
