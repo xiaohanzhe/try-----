@@ -88,6 +88,12 @@ SUITES = [
         'offscreen': True,
         'desc': 'H5-S3：alias_of / legacy 显式化后语义仍等价',
     },
+    {
+        'id': 'round8_dialogue',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_dialogue.py'),
+        'offscreen': True,
+        'desc': '第八轮：对话框 ▼ 闪烁不再撑高抖动 + 滚动位置不被弹回顶部',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

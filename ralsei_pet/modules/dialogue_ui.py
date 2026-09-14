@@ -183,6 +183,19 @@ class DialogueUI(QWidget):
         # 否则点击 frame 区域时事件只落在子控件上，对话框"移不动"。
         self._frame.installEventFilter(self)
 
+        # —— 闪烁光标 ▼：独立覆盖层，不参与正文文档布局 ——
+        # 原先 "▼" 是拼进正文 HTML 的一个内联字符：它占的宽度会参与换行计算，
+        # 于是每 530ms 一次闪烁都可能让最后一行多/少占一行，文档高度来回跳，
+        # 再由 _recalc_size_to_content 同步 setFixedHeight + resize → 整框高度抖动，
+        # 正文看起来"一上一下地抖"。改成独立 QLabel 后，闪烁只切换它的可见性，
+        # 完全不触碰正文文档，抖动从根上消失（也顺带让滚动条不再被闪烁重置）。
+        self._cursor_label = QLabel("▼", self._frame)
+        self._cursor_label.setStyleSheet(
+            "QLabel { color: #ffffff; background: transparent; font-size: 12px; }")
+        self._cursor_label.setAlignment(Qt.AlignCenter)
+        self._cursor_label.setFixedSize(12, 12)
+        self._cursor_label.hide()
+
         inner = QHBoxLayout(self._frame)
         inner.setContentsMargins(18, 14, 18, 14)
         inner.setSpacing(14)
@@ -316,6 +329,18 @@ class DialogueUI(QWidget):
         self._cursor_timer.timeout.connect(self._blink_cursor)
         self._cursor_timer.start(530)
 
+        # 滚动条：用户正在拖动时，自动跟随（滚到底）不与用户抢位置
+        self._scrollbar_dragging = False
+        self._last_scroll_max = -1
+        try:
+            _sb = self.dialogue_content.verticalScrollBar()
+            _sb.sliderPressed.connect(
+                lambda: setattr(self, '_scrollbar_dragging', True))
+            _sb.sliderReleased.connect(
+                lambda: setattr(self, '_scrollbar_dragging', False))
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 滚动条信号连接失败: %s", e)
+
         # 自动隐藏：5.5 秒无操作后淡出；输入/聚焦时由 _try_auto_hide 暂缓隐藏
         self._auto_hide_timer = QTimer(self)
         self._auto_hide_timer.setSingleShot(True)
@@ -445,19 +470,50 @@ class DialogueUI(QWidget):
             self.typing_index = 0
 
     def _refresh_display(self):
-        """统一渲染：历史消息 + 前台当前消息（若存在）带闪烁光标。"""
+        """统一渲染：历史消息 + 前台当前消息（若存在）。
+        闪烁光标是独立覆盖层（见 _cursor_label），这里只负责正文本身。"""
         import html as _html
-        cursor = "▼" if self._cursor_visible else " "
         html = self._history_html
         if self.typing_text:
-            # 有前台 Ralsei 消息：当前显示到 index，后面加闪烁光标
+            # 有前台 Ralsei 消息：当前显示到 index
             show_idx = (self.typing_index
                         if self.is_typing else len(self.typing_text))
             # 先按字符切片、再转义：保证逐字显示过程中不会出现 &amp; 这类实体残片
             current_shown = _html.escape(self.typing_text[:show_idx])
             html += (f'<div style="color:#ffffff;line-height:1.45;">'
-                     f'{current_shown}{cursor}</div>')
+                     f'{current_shown}</div>')
+
+        # —— 滚动位置保护 ——
+        # setHtml 会重建文档并把滚动条重置回顶部。先记住用户当前视图位置与"是否贴在
+        # 底部"，重建后再恢复：用户向上翻看历史时不会被弹回底部，新消息到来时又能
+        # 自动跟随到底（修"对话框没办法下拉/翻不上去"）。
+        sb = None
+        prev_val = 0
+        was_at_bottom = True
+        try:
+            sb = self.dialogue_content.verticalScrollBar()
+            prev_val = sb.value()
+            was_at_bottom = prev_val >= sb.maximum() - 4
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 读取滚动位置失败: %s", e)
+            sb = None
+
         self.dialogue_content.setHtml(html)
+
+        if sb is not None:
+            try:
+                if getattr(self, '_scrollbar_dragging', False) or not was_at_bottom:
+                    # 用户正在翻/已翻上去：原样保留他的视图位置
+                    sb.setValue(min(prev_val, sb.maximum()))
+                else:
+                    # 本来就贴在底部：跟随新内容滚到底
+                    sb.setValue(sb.maximum())
+                self._last_scroll_max = sb.maximum()
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 恢复滚动位置失败: %s", e)
+
+        # 光标覆盖层显隐（只切可见性，不重建文档）——抖动修复的关键
+        self._update_cursor_overlay()
 
         # ============================================================
         # 动态高度：只在内容高度真正变化时才 resize（避免每帧 resize 导致文字抖动）
@@ -466,16 +522,40 @@ class DialogueUI(QWidget):
         if not getattr(self, '_is_dragging', False):
             self._recalc_size_to_content_lazy()
 
-        # 滚到底：仅在内容确实增长时自动跟随。
-        # 修复：原来每次刷新（打字时 35ms/次、光标闪烁 530ms/次）都无条件
-        # setValue(maximum)，用户想往上翻看历史会被立刻弹回底部，历史几乎不可查看。
+    def _update_cursor_overlay(self):
+        """依据"是否有前台消息"决定 ▼ 覆盖层显隐；闪烁相位由 _cursor_visible 自持。"""
         try:
-            sb = self.dialogue_content.verticalScrollBar()
-            if sb.maximum() != getattr(self, '_last_scroll_max', -1):
-                self._last_scroll_max = sb.maximum()
-                sb.setValue(sb.maximum())
-        except Exception as e:
-            _log.debug("dialogue_ui 滚动到底失败: %s", e)
+            lbl = getattr(self, '_cursor_label', None)
+            if lbl is None:
+                return
+            has_fg = bool(getattr(self, 'typing_text', ""))
+            lbl.setVisible(has_fg and self._cursor_visible)
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
+    def _position_cursor_overlay(self):
+        """把 ▼ 覆盖层贴到对话框右下角内侧（原作的位置），完全避开正文区域。"""
+        try:
+            lbl = getattr(self, '_cursor_label', None)
+            if lbl is None:
+                return
+            margin_r = 8
+            margin_b = 8
+            # 用 self 的尺寸（窗口==frame，outer 布局 0 边距）：resizeEvent 触发时
+            # self 的几何已更新，而子控件 frame 可能还没同步，故取 self 更稳。
+            lbl.move(max(0, self.width() - margin_r - lbl.width()),
+                     max(0, self.height() - margin_b - lbl.height()))
+            lbl.raise_()
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
+    def resizeEvent(self, event):
+        # 窗口尺寸变化时把 ▼ 覆盖层重新贴到右下角
+        try:
+            self._position_cursor_overlay()
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        super().resizeEvent(event)
 
     def _recalc_size_to_content_lazy(self):
         """惰性重算：只在文档高度真正变化时才执行 resize/move。
@@ -702,8 +782,8 @@ class DialogueUI(QWidget):
 
     def _blink_cursor(self):
         self._cursor_visible = not self._cursor_visible
-        # 统一刷新：无论正在打字或已打完，历史渲染都能带上光标闪烁
-        self._refresh_display()
+        # 只切换独立覆盖层的显隐：不再 setHtml → 不再引起正文重排/高度抖动/滚动重置
+        self._update_cursor_overlay()
 
     # ------------------------------------------------------------------ show
     def show_dialogue(self, message=None, face_type=None):
