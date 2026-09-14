@@ -94,6 +94,12 @@ SUITES = [
         'offscreen': True,
         'desc': '第八轮：对话框 ▼ 闪烁不再撑高抖动 + 滚动位置不被弹回顶部',
     },
+    {
+        'id': 'round8_floor',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_floor.py'),
+        'offscreen': True,
+        'desc': '第八轮：楼层身份改用稳定标识（不再"看到窗口就摔"）+ 落地同步 current_floor',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

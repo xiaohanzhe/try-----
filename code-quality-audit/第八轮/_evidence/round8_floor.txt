@@ -1,0 +1,23 @@
+﻿
+[PASS] W1.1 同一窗口重建 dict（高度/层序/标题变化）不再触发摔倒  <- calls=[]
+[PASS] W1.2 当前楼层被刷新为最新那份 dict（无身份漂移）  <- ph=25
+[PASS] W2 窗口未移动时零副作用（不摔不落不跟）  <- calls=[]
+[PASS] W3.1 窗口平移 60px：宠物跟着走（x +60）  <- pos=(560,500)
+[PASS] W3.2 同时判定重心不稳 → start_fall('window_move')  <- calls=[('start_fall', 'win
+dow_move')]
+[PASS] W3.3 触发 window_moved 情绪事件  <- emotion=['window_moved']
+[PASS] W4 小幅挪动（10px）只跟随、不摔  <- pos=(510,500) calls=[]
+[PASS] W5.1 大幅瞬移时宠物不跟着瞬移（位置不变）  <- pos=(500,500)
+[PASS] W5.2 改为失足掉落 start_fall('window_move')  <- calls=[('start_fall', 'window_
+move')]
+[PASS] W6 窗口关闭 → start_falling()（往下掉）  <- calls=[('start_falling', 0)]
+[PASS] W7.1 被新窗口盖住后接管为新楼层，不摔不落  <- calls=[] now=1008
+[PASS] W8.1 坠落不再在当前位置'悬停落地'（确实一路往下掉）  <- frames=40 final_y=969 floor_y=969
+[PASS] W8.2 落到底边后 current_floor 同步为桌面层（消除每秒假坠落）  <- type=desktop
+[PASS] W8.3 落地后下一秒不再凭空重复触发坠落  <- calls=[]
+[PASS] W9.1 main.py 中已无 floor dict 内容比较式楼层判定（AST 判定，注释不算）  <- 残留=[]
+[PASS] W9.2 已引入稳定标识比较工具 _floor_identity_key
+第八轮建楼楼层判定验证：16/16 PASS, 0 FAIL
+
+
+EXITCODE=0

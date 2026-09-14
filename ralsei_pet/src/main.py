@@ -2294,18 +2294,13 @@ class RalseiPet(QMainWindow):
         # 用 `floor != self.current_floor` 做对象身份排除会因对象更替而失效 →
         # 跳跃飞行后段一旦跨越重建边界，与任意楼层相交即被误判"穿透"凭空坠落。
         # 改用稳定标识（window_hwnd / 'desktop'）比较。
-        def _floor_id(f):
-            if f is None:
-                return None
-            if f.get('type') == 'desktop':
-                return 'desktop'
-            return ('window', f.get('window_hwnd'))
-
-        cur_fid = _floor_id(getattr(self, 'current_floor', None))
-        tgt_fid = _floor_id(getattr(self, 'jump_target_floor', None))
+        # 楼层身份统一走 _floor_identity_key（稳定标识：窗口 hwnd / 'desktop'），
+        # 绝不能用 floor dict 的内容比较——floors 每秒由 update_floors 整体重建。
+        cur_fid = self._floor_identity_key(getattr(self, 'current_floor', None))
+        tgt_fid = self._floor_identity_key(getattr(self, 'jump_target_floor', None))
         all_floors = self.floor_manager.get_all_floors()
         for floor in all_floors:
-            if _floor_id(floor) in (cur_fid, tgt_fid):
+            if self._floor_identity_key(floor) in (cur_fid, tgt_fid):
                 continue
             if floor['rect'].intersects(current_rect):
                 # 检测到穿透，取消跳跃，启动重力掉落
@@ -2375,6 +2370,79 @@ class RalseiPet(QMainWindow):
             self.spatial_pos["x"] = self.pos().x()
             self.spatial_pos["y"] = self.pos().y()
     
+    # ------------------------------------------------------------------
+    # 楼层身份 / 楼板跟随（建楼要求：铁律"当前楼层原则"）
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _floor_identity_key(floor):
+        """楼层的稳定标识：窗口用 hwnd、桌面用固定串。
+
+        绝不能用两份 floor dict 的内容比较来判定"楼层有没有变"：floors 每轮由
+        FloorManager.update_floors 整体重建，其中 platform_height 依赖"当前可见
+        窗口数量"、z_order 随焦点变化、title 可能变动 —— 同一个窗口重建出来的
+        dict 与缓存不等，就会被误判成"换了楼板"→ 直接摔倒。
+        """
+        if floor is None:
+            return None
+        if floor.get('type') == 'desktop':
+            return 'desktop'
+        return ('window', floor.get('window_hwnd'))
+
+    @staticmethod
+    def _floor_rect_changed(old_rect, new_rect):
+        """楼板矩形是否变化（含尺寸）。任一侧为空按"变了"处理。"""
+        if old_rect is None or new_rect is None:
+            return True
+        return (old_rect.left() != new_rect.left()
+                or old_rect.top() != new_rect.top()
+                or old_rect.width() != new_rect.width()
+                or old_rect.height() != new_rect.height())
+
+    def _follow_floor_move(self, old_floor, moved_floor):
+        """楼板（窗口）被人挪走：把宠物按同样位移平移，保持它在楼板上的相对位置。
+
+        对应建楼要求"我挪动窗口 = 我在空中挪动了一块楼板，宠物必须跟着楼板一起
+        移动，别给我掉下来"。位移按两级阈值处理：
+          · > 400px —— 视为"楼板被瞬间搬走"（最大化/还原/被系统挪走），不跟随，
+            改为失足掉落；
+          · > 30px  —— 跟随之后重心不稳摔倒（动画 ≥3s，符合要求）。
+        """
+        old_rect = old_floor.get('rect')
+        new_rect = moved_floor.get('rect')
+        if old_rect is None or new_rect is None:
+            return
+        x_diff = new_rect.left() - old_rect.left()
+        y_diff = new_rect.top() - old_rect.top()
+        if x_diff == 0 and y_diff == 0:
+            return
+        move_distance = (x_diff ** 2 + y_diff ** 2) ** 0.5
+
+        # 无论是否跟随，都先把缓存的窗口位置刷成最新，避免下一轮重复判定
+        if (self.current_window is not None
+                and self.current_window.get('hwnd') == moved_floor.get('window_hwnd')):
+            self.current_window['x'] = new_rect.left()
+            self.current_window['y'] = new_rect.top()
+            self.current_window['width'] = new_rect.width()
+            self.current_window['height'] = new_rect.height()
+
+        if move_distance > 400:
+            _log.debug("窗口被大幅瞬移（%.0fpx），Ralsei 不跟随，改为失足掉落", move_distance)
+            self.emotion_system.react_to_event('window_moved', {})
+            if not self.is_falling:
+                self.start_fall("window_move")
+            return
+
+        # 跟随楼板移动（同步平移，不做滑步）
+        n_x = self.pos().x() + x_diff
+        n_y = self.pos().y() + y_diff
+        n_x, n_y = self._clamp_pos_to_desktop(n_x, n_y)
+        self.move(int(n_x), int(n_y))
+
+        if move_distance > 30 and not self.is_falling:
+            _log.debug("窗口被大幅度移动（%.0fpx），Ralsei 重心不稳摔倒了", move_distance)
+            self.emotion_system.react_to_event('window_moved', {})
+            self.start_fall("window_move")
+
     def check_window_movement(self):
         # 检查当前所在窗口是否移动，使用楼层系统处理
         
@@ -2393,60 +2461,42 @@ class RalseiPet(QMainWindow):
         
         # 获取当前所在楼层
         new_floor = self.floor_manager.get_current_floor(current_pos)
-        
-        if self.current_floor and new_floor != self.current_floor:
-            # 楼层发生变化
-            if self.current_floor['type'] == 'window':
-                if new_floor['type'] == 'window':
-                    # 从一个窗口移动到另一个窗口，检查是否是因为窗口移动导致的
-                    # 启动摔倒动画，符合"建楼"要求：移动他所在的"楼板"时他会重心不稳甚至摔倒
-                    _log.debug(f"Ralsei从一个窗口移动到另一个窗口，重心不稳摔倒了！")
-                    # 设置摔倒动画持续时间至少3秒，符合要求
-                    self.start_fall("window_move")
-                elif new_floor['type'] == 'desktop':
-                    # 从窗口上掉落到桌面，启动重力掉落
-                    _log.debug(f"Ralsei从窗口上掉落到桌面，启动重力掉落！")
-                    self.start_falling()
+        old_floor = self.current_floor
 
-        # ===== 修复：窗口移动时 Ralsei 跟随楼板一起移动 =====
-        # 此前该逻辑写在 update_floor()（全项目无任何调用点）中，"挪动窗口宠物跟着楼板走"
-        # 的建楼需求从未生效。这里按同一窗口句柄比较新矩形与缓存位置，同步平移 Ralsei。
-        if (self.current_window
-                and new_floor['type'] == 'window'
-                and new_floor.get('window_hwnd') == self.current_window.get('hwnd')):
-            old_x = self.current_window.get('x')
-            old_y = self.current_window.get('y')
-            if old_x is not None and old_y is not None:
-                x_diff = new_floor['rect'].left() - old_x
-                y_diff = new_floor['rect'].top() - old_y
-                if x_diff != 0 or y_diff != 0:
-                    move_distance = (x_diff ** 2 + y_diff ** 2) ** 0.5
-                    # 瞬移防治：正常拖动窗口时逐帧差值只有几像素，直接跟随即可；
-                    # 但窗口被**最大化/还原/被系统搬走**时差值可达上千像素，
-                    # 一次性跟过去就是用户看到的"瞬移"。
-                    # 判据：单帧差值 > 400px 视为"楼板被瞬移"，不跟着瞬移，
-                    # 改为失足掉落（符合建楼设定：楼板没了他就掉下去）。
-                    if move_distance > 400:
-                        _log.debug("窗口被大幅瞬移（%.0fpx），Ralsei 不跟随，改为失足掉落", move_distance)
-                        self.emotion_system.react_to_event('window_moved', {})
-                        if not self.is_falling:
-                            self.start_fall("window_move")
-                    else:
-                        # 跟随楼板移动（同步平移，不做滑步）
-                        n_x = self.pos().x() + x_diff
-                        n_y = self.pos().y() + y_diff
-                        n_x, n_y = self._clamp_pos_to_desktop(n_x, n_y)
-                        self.move(int(n_x), int(n_y))
-                        # 大幅移动 → 重心不稳摔倒（至少3秒），符合建楼要求
-                        if move_distance > 30 and not self.is_falling:
-                            _log.debug(f"窗口被大幅度移动，移动距离: {move_distance}，Ralsei重心不稳摔倒了！")
-                            self.emotion_system.react_to_event('window_moved', {})
-                            self.start_fall("window_move")
-                    # 更新缓存的窗口位置，避免下一轮重复判定
-                    self.current_window['x'] = new_floor['rect'].left()
-                    self.current_window['y'] = new_floor['rect'].top()
-                    self.current_window['width'] = new_floor['rect'].width()
-                    self.current_window['height'] = new_floor['rect'].height()
+        # ===== 1) 脚下的"楼板"被搬走？先跟随，而不是直接摔 =====
+        # 建楼要求："我挪动窗口 = 我在空中挪动了一块楼板，宠物必须跟着楼板一起移动"。
+        # 这里按**窗口句柄**找到那块楼板的最新矩形（哪怕宠物已经被落在后面、
+        # get_current_floor 已经找不到它），再按位移决定"跟随"还是"失足"。
+        followed = False
+        if (old_floor is not None
+                and old_floor.get('type') == 'window'
+                and not self.is_falling
+                and not self.is_jumping):
+            moved = self.floor_manager.get_floor_by_window(old_floor.get('window_hwnd'))
+            if moved is not None and self._floor_rect_changed(old_floor.get('rect'),
+                                                              moved.get('rect')):
+                followed = True
+                self._follow_floor_move(old_floor, moved)
+                current_pos = self.pos()
+                new_floor = self.floor_manager.get_current_floor(current_pos)
+
+        # ===== 2) 楼板是否真的换了：用稳定标识比较，绝不用 dict 内容 =====
+        # 原写法 `new_floor != self.current_floor` 是拿两份 floor dict 比内容，而
+        # floors 每轮由 update_floors 整体重建，platform_height（依赖当前可见窗口数量）
+        # 与 z_order（随焦点变化）任一变，都会让"同一个窗口"重建出的 dict 与缓存不等
+        # → 被误判成"楼层变化"→ 直接 start_fall("window_move") 摔倒。
+        # 这正是用户看到的"看到窗口就摔倒"；同理，窗口被挪走时 get_current_floor
+        # 找不到它、误判成"楼板消失"→ 一路掉到屏幕最底。
+        if (not followed
+                and old_floor is not None
+                and self._floor_identity_key(new_floor) != self._floor_identity_key(old_floor)):
+            if old_floor.get('type') == 'window' and new_floor.get('type') != 'window':
+                # 脚下的那块窗口楼板真的没了（被关闭 / 被移走且未跟上）
+                # → 按重力原则立刻往下掉
+                _log.debug("脚下的窗口楼板已消失，启动重力掉落")
+                self.start_falling()
+            # 窗口 → 另一块窗口（被更高的新窗口盖住 / 走到另一块楼板）：按
+            # "当前楼层原则"，宠物现在直接站在新楼板上，不算楼板被搬走，不摔。
 
         # 更新当前楼层信息
         self.current_floor = new_floor
@@ -2669,8 +2719,20 @@ class RalseiPet(QMainWindow):
         ralsei_pos = QPoint(int(new_x), int(new_y))
         drop_floor, drop_pos = self.floor_manager.get_drop_destination(ralsei_pos, self.current_floor)
         
-        if drop_floor and drop_floor != self.current_floor:
-            # 落到了新的楼层上
+        # 落点判定：同样必须用"楼层稳定标识"比较，不能用 dict 内容（floors 每轮重建，
+        # 内容必然不等 → 会把"还在自己脚下的那块楼板"误判成"落到了新楼层"）。
+        # 另外把"桌面"排除在"落地"之外：桌面是最底层，只有真的落到屏幕底边（max_y）
+        # 才算落地；否则从窗口上开始的坠落会立刻在当前位置"落地"、悬停在半空中。
+        landed_floor = None
+        if (drop_floor is not None
+                and drop_floor.get('type') != 'desktop'
+                and self._floor_identity_key(drop_floor)
+                != self._floor_identity_key(self.current_floor)):
+            landed_floor = drop_floor
+
+        if landed_floor is not None:
+            # 落到了新的楼层上（下面沿用 drop_floor 命名，二者此刻是同一块楼板）
+            drop_floor = landed_floor
             new_y = drop_pos.y()
             self.is_gravity_falling = False
             self.fall_velocity_x = 0  # 落地清除水平惯性
@@ -2743,6 +2805,11 @@ class RalseiPet(QMainWindow):
                 self.current_window = None
                 self.window_level = 0
                 self.last_window_rect = None
+                # 修复（坠落循环）：这里原来没有把 current_floor 更新成桌面层，
+                # 于是宠物落到屏幕底边后 current_floor 仍是"那块已经离开的窗口楼板"，
+                # 下一秒 check_window_movement 又判定"窗口→桌面"= 楼层变化 →
+                # 再次 start_falling()，表现为每隔 1 秒凭空"抽一下"的假坠落。
+                self.current_floor = self.floor_manager.desktop_floor
                 
                 # 更新空间坐标
                 self.spatial_pos["z"] = 0

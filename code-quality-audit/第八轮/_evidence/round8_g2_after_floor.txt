@@ -1,0 +1,18 @@
+﻿========================================================================
+回归基线（G2）  ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+========================================================================
+
+suite            exit   PASS   FAIL   比对       说明
+------------------------------------------------------------------------
+round5_smoke     0      22     0      IDENTICAL 第五轮：22 个 modules 全量导入冒烟 + 2 个源码不变量
+round5_verify    0      16     0      IDENTICAL 第五轮：16 项缺陷修复断言（对话/施法/成就/记忆）
+round6_verify    0      39     0      IDENTICAL 第六轮：39 项行为修复断言（对话/甩飞/抛物线/帧率/多屏）
+round7_launch    0      5      0      IDENTICAL 第七轮：文档化启动（仅 src/ 在 path）不再 ModuleNotFoundError
+s1_anim_miss     0      17     0      IDENTICAL H5-S1：动画名未命中自检 17 项 + 501 样本等价性
+s2_anim_json     0      40     0      IDENTICAL H5-S2：animations.json 与硬编码表深度等价 + 回落可用
+s3_alias_legacy  0      19     0      IDENTICAL H5-S3：alias_of / legacy 显式化后语义仍等价
+round8_dialogue  0      20     0      BASELINE 第八轮：对话框 ▼ 闪烁不再撑高抖动 + 滚动位置不被弹回顶部
+round8_floor     0      16     0      BASELINE 第八轮：楼层身份改用稳定标识（不再"看到窗口就摔"）+ 落地同步 current_floor
+
+合计：PASS=194 FAIL=0  套件=9
+EXITCODE=0
