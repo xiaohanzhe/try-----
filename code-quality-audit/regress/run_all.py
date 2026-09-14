@@ -106,6 +106,12 @@ SUITES = [
         'offscreen': True,
         'desc': '第八轮：斜抛（方向由松手速度定）+ 空中可二次抓住（按线速度缓冲减速）+ 卡动画自检',
     },
+    {
+        'id': 'round8_anim',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_anim.py'),
+        'offscreen': True,
+        'desc': '第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 3 分钟 + 鞠躬锚点',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
@@ -115,6 +121,17 @@ _DUR = re.compile(r'(?:耗时[:：]?\s*)?\d+(?:\.\d+)?\s*(?:秒|s\b|ms\b)')
 _TMPDIR = re.compile(r'[A-Za-z]:[\\/][^"\'\s]*?(?:AppData[\\/]Local[\\/]Temp|/tmp|\btmp\b)[^"\'\s]*')
 _PID = re.compile(r'\bpid[=: ]?\d+\b', re.I)
 _MEM = re.compile(r'内存[^\d]{0,4}\d+(?:\.\d+)?\s*(?:MB|KB|GB|字节)', re.I)
+# Qt 离屏插件的环境噪声（与宠物行为无关，且**是否出现取决于本机字体/插件状态**，
+# 曾导致 round8_dialogue 基线与现值“假 DIFF”：基线录到了 112 行字体告警，之后
+# 同一份代码再跑就不打了）。这些行必须排除，否则基线不可复现。
+_QT_NOISE = re.compile(
+    r'^(?:QFontDatabase: Cannot find font directory.*'
+    r'|Note that Qt no longer ships fonts\..*'
+    r'|This plugin does not support .*'
+    r'|QWindowsWindow::.*'
+    r'|QObject::.*'
+    r'|qt\.qpa\..*)$'
+)
 
 
 def normalize(text):
@@ -133,6 +150,8 @@ def normalize(text):
     lines = [ln.rstrip() for ln in t.split('\n')]
     out, blank = [], False
     for ln in lines:
+        if _QT_NOISE.match(ln):      # Qt 插件噪声：不是被测行为的一部分
+            continue
         if not ln:
             if blank:
                 continue
@@ -169,7 +188,7 @@ def run_suite(suite, verbose=False):
     env.pop('QT_QPA_PLATFORM_OVERRIDE', None)
 
     proc = subprocess.run(
-        [sys.executable, SEED_RUNNER, str(SEED), script],
+        [PYTHON or sys.executable, SEED_RUNNER, str(SEED), script],
         cwd=os.path.dirname(script),
         env=env,
         stdout=subprocess.PIPE,
@@ -195,6 +214,38 @@ def run_suite(suite, verbose=False):
         'sha256': sha256(norm),
         'norm': norm,
     }
+
+
+# ---------------------------------------------------------------- 解释器选择
+# 套件必须用"装了 PyQt5 且能 import bs4"的解释器跑：本机 C:\Python311\python.exe
+# 满足，而 ~/.workbuddy 下的托管 venv（Python 3.13）看不到 3.11 的用户
+# site-packages —— 用它跑会得到 round5_smoke 假 FAIL（No module named 'bs4'）
+# 以及一批与本项目无关的输出漂移。优先顺序：
+#   环境变量 REGRESS_PYTHON > 已知系统解释器 > 当前解释器
+_PY_CANDIDATES = (
+    os.environ.get('REGRESS_PYTHON'),
+    r'C:\Python311\python.exe',
+)
+PYTHON = None          # main() 里确定，run_suite 使用
+
+
+def pick_python():
+    tried = []
+    for cand in _PY_CANDIDATES:
+        if not cand or cand in tried:
+            continue
+        tried.append(cand)
+        if not os.path.exists(cand):
+            continue
+        try:
+            proc = subprocess.run([cand, '-c', 'import PyQt5, bs4'],
+                                  stdout=subprocess.DEVNULL,
+                                  stderr=subprocess.DEVNULL)
+        except Exception:
+            continue
+        if proc.returncode == 0:
+            return cand, tried
+    return sys.executable, tried
 
 
 def load_baseline():
@@ -249,6 +300,9 @@ def main():
 
     baseline = load_baseline()
 
+    global PYTHON
+    PYTHON, _tried = pick_python()
+
     if args.show_diff:
         with open(os.path.join(OUT_DIR, args.show_diff + '.txt'), encoding='utf-8') as fh:
             new_norm = normalize(fh.read())
@@ -263,6 +317,7 @@ def main():
 
     print('=' * 72)
     print('回归基线（G2）  ROOT = %s' % ROOT)
+    print('解释器 = %s' % PYTHON)
     print('=' * 72)
 
     results = [run_suite(s, verbose=args.verbose) for s in picked]

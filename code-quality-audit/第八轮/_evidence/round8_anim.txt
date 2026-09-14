@@ -1,0 +1,34 @@
+﻿2026-09-14 22:55:49 [INFO] ralsei_pet.sprite_loader 鈥?[anim-config] 宸蹭粠 animations.json 鍔犺浇 109 缁勫姩鐢伙紙legacy 28 缁勶紝schema=1锛?
+[PASS] D0.1 idle 绱犳潗瀛樺湪涓斾负 69x47 瀹界敾甯?<- idle[0]=69x47
+[PASS] D0.2 idle 閿氱偣鍋忕Щ鈮?-20, +2.5)锛堣鑹插亸宸︼紝鍙充晶 41px 閫忔槑鐣欑櫧锛?<- idle off=(-20.0, 2.5)
+[PASS] D0.3 bow 閿氱偣鍋忕Щ鈮?0, 0)锛堢礌鏉愭湰韬眳涓級 <- bow off=(0.0, 0.0)
+[PASS] D1.1 鍏ㄩ儴鍔ㄧ敾鍚堟垚鍚庡寘鍥寸洅涓績 = 鐢诲竷涓績锛堚墹1px锛?<- 瓒呭樊=[] 鏈€宸?(0.0, '')
+[PASS] D2.1 鎵€鏈夊姩浣滅殑瑙掕壊灞忓箷浣嶇疆閮界浉鍚岋紙鈮?px锛屼慨澶嶅墠 idle鈫斿叾瀹冨樊 40px锛?<- 瓒呭樊=[] 鏈€宸?(0.0, '')
+[PASS] D3.1 鏂板 _anim_anchor_offset / _compose_anchored_sprite
+[PASS] D3.2 涓ゅ娓叉煋鍒嗘敮閮借皟鐢?_compose_anchored_sprite <- 璋冪敤娆℃暟=2
+[PASS] D3.3 宸蹭笉鍐嶇洿鎺ユ妸鏈畾浣嶇殑绮剧伒 setPixmap 鍒?label
+2026-09-14 22:55:50 [INFO] ralsei_pet.modules.sprite_loader 鈥?[anim-config] 宸蹭粠 animations.json 鍔犺浇 109 缁勫姩鐢伙紙legacy 28 缁勶紝schema=1锛?
+[PASS] E1.1 瀛樺湪 IDLE_LOOP_MIN_SECONDS=180 涓斿垵鍊间负鏈縺娲?<- const=180.0
+[PASS] E1.2 闈欐 10s锛氬緟鏈哄惊鐜湭鍚姩锛屼笖涓€鐩村仠鍦ㄧ 0 甯?<- loop=False frames=[0, 0, 0, 0, 0, 0]
+[PASS] E1.3 闈欐 200s锛氬緟鏈哄惊鐜惎鍔ㄤ笖甯т細鎺ㄨ繘 <- loop=True frames=[2, 3, 4, 5, 1, 2]
+[PASS] E1.4 婧愮爜绾э細姝诲垎鏀?if idle_timer>=180 涓ゅ垎鏀悓鍊煎凡娑堥櫎锛屾敼鐢ㄥ父閲?<- 锛堝凡鍓旈櫎娉ㄩ噴/鏂囨。瀛楃涓诧細鍘熷啓娉曞彧浣滀负鍙嶉潰渚嬪瓙鐣欏湪娉ㄩ噴閲岋級
+[PASS] F1.1 宸插垹闄ゆ偓鍋?1% 鐨勯殢鏈?look_up
+[PASS] F1.2 update_animation_by_emotion 鍑芥暟浣撳彧鍓╄８ return锛堟棤闅忔満/鏃犲垏鎹級 <- stmts=['Return']
+[PASS] F1.3 update_animation_by_emotion 宸叉垚涓虹┖瀹炵幇锛堜笉鍐嶉┍鍔ㄥ姩鐢伙級
+[PASS] F1.4 鏃ц矾寰勬湰浼氬垏鍒扮殑鐗规畩鍔ㄧ敾纭疄瀛樺湪锛堟槧灏勯潪 idle锛?<- emotion=excited -> jump_ball
+[PASS] F1.5 杩炵画 30 娆¤皟鐢ㄥ叆鍙ｅ悗鍔ㄧ敾浠嶄负 idle锛堟儏缁笉鍐嶉┍鍔ㄥ姩鐢伙級 <- seen=['idle']
+[PASS] G1.0 鐗规畩鍔ㄧ敾鍒嗙被姝ｇ‘
+[PASS] G1.1 鐗规畩鍔ㄧ敾鍙互姝ｅ父璧锋挱 <- ok=True anim=wave
+[PASS] G1.2 鎾斁涓柊鐨勭壒娈婂姩鐢昏鎷掔粷锛堜笉鎵撴柇锛?<- ok=False anim=wave
+[PASS] G1.3 鍗充究 force=True 涔熶笉鑳界敤鐗规畩鍔ㄧ敾鎵撴柇鐗规畩鍔ㄧ敾 <- ok=False anim=wave
+[PASS] G1.4 闈炵壒娈婂姩鐢伙紙璧拌矾锛変粛鍙墦鏂紝涓嶄細鍗℃ <- ok=True anim=walk_down
+[PASS] G1.5 鐗规畩鍔ㄧ敾鎾斁鏈熼棿涓嶇Щ鍔紙涓嶈榧犳爣璺熼殢鎷栧姩锛?<- locked=True before=(631, 453) after=(631, 453)
+[PASS] G1.6 婧愮爜绾э細绉诲姩閿佸湪 update_movement 鍐呫€佷笖鎺掑湪鎷栨嫿淇濇姢涔嬪墠 <- len=20467
+[PASS] H1.1 鎵€鏈?play_animation_once 璋冪敤閮芥潵鑷櫧鍚嶅崟鏉ユ簮锛堟棤鐜鑷姩瑙﹀彂锛?<- 瓒婃潈鏉ユ簮={}
+[PASS] H1.2 react_to_desktop_element 涓嶅啀鑷鎾姩鐢伙紝鏀硅蛋 _note_desktop_observation <- 涓绘祦绋?play_once=False 涓婃姤=True / 杈呭姪 note_event=True
+[PASS] H1.3 _react_to_video锛堥櫔鐪嬭棰戯級涓嶅啀鑷鎾姩鐢伙紝鏀逛负 note_event 涓婃姤 <- 鏈?note_event=True 鏈?play_once=False
+[PASS] H1.4 ai_driver 鎻愪緵 note_event 涓斾簨浠朵細杩涘叆鍐崇瓥鎻愮ず璇?
+--------------------------------------------------------------------
+绗叓杞壒娈婂姩鐢绘不鐞嗛獙璇侊細28/28 PASS, 0 FAIL
+2026-09-14 22:55:53 [INFO] ralsei_pet.modules.sprite_loader 鈥?[anim-miss] 鏈疆杩愯鏈嚭鐜版湭鍛戒腑鐨勫姩鐢诲悕锛堝凡鍔犺浇 489 缁勶級
+exit=0

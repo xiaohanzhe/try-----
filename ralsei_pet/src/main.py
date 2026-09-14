@@ -13,7 +13,8 @@ import random
 import math
 import statistics
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QMessageBox
-from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor, QTransform
+from PyQt5.QtGui import (QPainter, QBrush, QColor, QCursor, QTransform,
+                         QPixmap, QBitmap, QRegion)
 from PyQt5.QtCore import Qt, QTimer, QPoint, QRect, pyqtSignal
 
 try:
@@ -44,6 +45,22 @@ _FALL_VELOCITY_ATTRS = (
     '_fall_flight_time', '_fall_vy0',
 )
 _FALL_STATE_ATTRS = ('_fall_phase', '_fall_phase_start') + _FALL_VELOCITY_ATTRS
+
+# "特殊动画"的定义（第八轮）。用户要求：
+#   "除了走路，跑步，待机这几个动画，其余的都只交给 AI 判断是否播放，别和抽风似的突然一下"；
+#   "如果要是播放，那就播完，不要打断，也不要出现边播放边移动这种情况（只针对特殊动画）"。
+# 这里列出**非特殊**的动作分组 —— 它们由移动/物理/施法/道具状态机驱动，必须允许被状态随时
+# 覆盖（否则摔下去、开始走路时切不动动画，就会"卡在动作里"）：
+#   idle / walk_* / run_*        常规移动与待机
+#   jump_* / fall* / splat* / land / hatless_throw / slide / roll   物理与摔倒流程
+#   spell* / item                施法与道具
+# 其余（laugh / dance / sing / wave / curtsy / hug / pose / tea / nuzzle / victory /
+# spin / bow / look_up / surprised / cry / sad / happy / act / book_look …）= 特殊动画。
+_NON_SPECIAL_ANIM_GROUPS = frozenset({
+    'idle', 'walk', 'run',
+    'jump', 'fall', 'splat', 'land', 'hatless_throw', 'slide', 'roll',
+    'spell', 'item',
+})
 
 
 # 添加性能监控功能
@@ -462,6 +479,14 @@ class RalseiPet(QMainWindow):
         # 线性衰减到 0，而不是像撞墙一样瞬间归零。
         self._CATCH_BRAKE_SECONDS = 0.28
         self._catch_brake = None
+
+        # 待机动画开关：只有原地静止满 IDLE_LOOP_MIN_SECONDS 才置真（update_animation
+        # 静止分支里按 idle_timer 计算），未满则只显示站立静帧。
+        self._idle_loop_active = False
+
+        # "正在发起一次性动画"的短暂标记：用于让 play_animation_once 自己那次
+        # change_animation 通过"特殊动画播完为止"这道锁（见 change_animation 关键 1.6）。
+        self._play_once_arming = False
         
         # 动画播放控制
         self.animation_change_cooldown = 0.8  # 0.8秒冷却时间，防止频繁切换导致的抽搐
@@ -1371,6 +1396,17 @@ class RalseiPet(QMainWindow):
             except Exception as e:
                 _log.warning(f"缓冲减速推进异常: {e}")
                 self._catch_brake = None
+
+        # ===== 特殊动画播放期：不移动 =====
+        # 用户要求（第八轮）："……不要出现边播放边移动这种情况（注意，只针对特殊动画）"。
+        # 放在"拖拽保护/鼠标拖动/跟随"之前：这些分支都会直接 self.move(...) 然后 return，
+        # 不拦住就会出现"一边摆手一边平移"。只暂停本 tick 的移动，**不清掉跟随意图**，
+        # 动画播完后照常继续跟。（物理/施法/躲猫猫在上面已提前 return，不受影响。）
+        if self._special_anim_locked():
+            self.current_speed_x = 0
+            self.current_speed_y = 0
+            self.current_activity = "performing"
+            return
 
         # ===== 拖拽保护：用户正按住/拖拽 Ralsei 时，完全停止自主移动驱动 =====
         # 修复：此前拖拽中 update_movement 仍向旧 target_pos 平移（抓不住/自己跑）。
@@ -3401,7 +3437,15 @@ class RalseiPet(QMainWindow):
         self.dialogue_ui.show_dialogue()
             
         # 播放相应动画
-        self.play_animation_once(reaction['action'])
+        # ===== 第八轮：特殊动画不再由规则引擎自行播放，只把观察上报给 AI =====
+        # 用户要求："确保所有特殊动画，也就是除了走路、跑步、待机这几个动画，
+        # 其余的都只交给 AI 判断是否播放，别和抽风似的突然一下。"
+        # 这里原来是 play_animation_once(reaction['action'])，由"凑近桌面元素"
+        # （update_movement 每 5 秒一次 check_nearby_desktop_elements）自动触发 ——
+        # 宠物会站着毫无来由地突然抬头/比划/惊讶。现在规则系统只当"眼睛"：
+        # 把"我凑近了什么、它是什么质地"写进 ai_driver 的事件队列，
+        # 要不要做动作、做哪个动作，完全由 AI 决定；AI 未启用时不会有任何表演。
+        self._note_desktop_observation(elem_path, element, reaction)
             
         # 更新情绪
         self.emotion_system.add_emotion(reaction['emotion'], 30)
@@ -3464,6 +3508,58 @@ class RalseiPet(QMainWindow):
     
     
     
+    # 动画名 → 口语化的"心痒"描述（只作提示，AI 可以不理）
+    _URGE_WORDS = {
+        'look_up': '抬头看看', 'act': '比划一下', 'surprised': '惊讶一下',
+        'wave': '挥挥手', 'pose': '摆个姿势', 'cry': '想哭',
+        'happy': '开心一下', 'laugh': '笑一下',
+    }
+
+    def _note_desktop_observation(self, elem_path, element, reaction):
+        """把"凑近桌面元素"这件事上报给 AI（只上报，不再自行表演特殊动画）。
+
+        第八轮用户要求：特殊动画只能由 AI 判断是否播放。规则系统在这里的角色
+        从"演员"降级为"眼睛"——描述事实（看到什么、什么质地、心里有点想怎样），
+        由 AI 在下一拍决策时决定要不要回应（say / 小动作 / 什么都不做）。
+
+        AI 未启用时，事件只会静静躺在队列里（上限 6 条），不产生任何可见行为。
+        """
+        try:
+            driver = getattr(self, 'ai_driver', None)
+            if driver is None or not callable(getattr(driver, 'note_event', None)):
+                return
+            name = os.path.basename(elem_path) or str(elem_path or '东西')
+            traits = []
+            try:
+                if element.get('is_fragile'):
+                    traits.append('看起来很脆、容易碎')
+                _w = element.get('weight')
+                if isinstance(_w, (int, float)) and _w > 1.5:
+                    traits.append('挺重的')
+                _t = element.get('temperature')
+                if isinstance(_t, (int, float)):
+                    if _t > 25:
+                        traits.append('摸起来有点热')
+                    elif _t < 18:
+                        traits.append('摸起来凉凉的')
+                _mat = {'metal': '金属的', 'wood': '木头的',
+                        'plastic': '塑料的', 'paper': '纸做的'}.get(
+                            element.get('material'))
+                if _mat:
+                    traits.append(_mat)
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+
+            desc = "我凑近了桌面上的「%s」" % name
+            if traits:
+                desc += "（%s）" % "，".join(traits)
+            urge = self._URGE_WORDS.get(str(reaction.get('action') or '').strip())
+            if urge:
+                desc += "，心里有点想%s" % urge
+            driver.note_event(desc, reaction.get('emotion', ''))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
     def create_person_name_table(self, names=None):
         # 在桌面上创建新的Excel表格并填入人名
         if not names:
@@ -4033,13 +4129,24 @@ class RalseiPet(QMainWindow):
             ("太好看了，根本停不下来！", "excited", "happy", 10),
             ("这个角色好可爱啊~", "happy", "smile", 8),
         ]
-        msg, emotion, anim, happy_delta = random.choice(reactions)
+        msg, emotion, _anim, happy_delta = random.choice(reactions)
         self.dialogue_ui.add_dialogue("ralsei", msg, emotion)
         self.dialogue_ui.show_dialogue()
         # 修复：原来固定 add_emotion("happy")，忽略元组里的 'surprised'/'excited' 等情绪；
         # 现在统一走 emotion_system，旧版 self.emotions 通过 _sync_system_to_emotions 自动同步。
         self.emotion_system.add_emotion(emotion, happy_delta)
-        self.play_animation_once(anim)
+        # ===== 第八轮：陪看视频时的"反应动画"不再自行播放 =====
+        # 用户要求："所有特殊动画……只交给 AI 判断是否播放，别和抽风似的突然一下。"
+        # 原来这里是 play_animation_once(anim)（10% 概率随机播 laugh/dance/surprised…），
+        # 属于非 AI 的随机特殊动画。现在只把"我正在陪主人看视频"上报给 AI，
+        # 由 AI 决定要不要做个动作；AI 未启用 / 不回应时，宠物就安静地陪着看。
+        # TODO(#15 对话全 AI 接管)：上面那句 msg 仍来自内置台词表，属缺陷 1 的范围。
+        try:
+            _driver = getattr(self, 'ai_driver', None)
+            if _driver is not None and callable(getattr(_driver, 'note_event', None)):
+                _driver.note_event("我正在陪主人一起看视频", emotion)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
     
     def close_bilibili(self):
         # 关闭B站浏览器窗口
@@ -4372,36 +4479,26 @@ class RalseiPet(QMainWindow):
             _log.debug("main 防御性异常（已忽略）: %s", e)
         
     def update_animation_by_emotion(self):
-        # 根据当前情绪更新动画，保持情绪和姿势的自主性
-        # —— 施法中 / 游戏中 / 移动中 / 物理状态中：冻结情绪动画切换 ——
-        # 修复：此前只有 spell/game 保护，缺少移动保护——Ralsei 正在走路时，
-        # 10% 概率的强制情绪动画切换（force=True 的 sing/dance 等）会打断走路动画，
-        # 造成"走着走着突然切情绪动画"的动画错乱。
-        if getattr(self, '_spell_stage', None) is not None:
-            return
-        if getattr(self, 'game_state', {}).get('is_playing'):
-            return
-        if (getattr(self, 'is_moving', False) or getattr(self, 'is_jumping', False)
-                or getattr(self, 'is_falling', False) or getattr(self, 'is_recovering', False)):
-            return
-        current_emotion, emotion_value = self.emotion_system.get_current_emotion()
-        intensity = abs(emotion_value)
-        
-        # 获取适合当前情绪的动画
-        emotion_animation = self.emotion_system.get_animation_for_emotion(current_emotion, intensity)
-        
-        # 只有在情绪强度足够高时才切换动画，保持动画的稳定性
-        if emotion_animation and emotion_animation != self.current_animation and intensity > 20:
-            # 根据情绪强度决定是否强制切换动画
-            force_change = intensity > 50
-            self.change_animation(emotion_animation, force=force_change)
-        
-        # 确保情绪强度足够高时，动画能够反映当前情绪
-        # 同时保持一定的随机性，让Ralsei的行为更自然
-        import random
-        if intensity > 30 and random.random() < 0.1:  # 10%的概率随机切换到情绪动画
-            self.change_animation(emotion_animation, force=True)
-        
+        """已废弃的"情绪自动切换动画"入口 —— 现在什么都不做（保留空实现以便不改调用点）。
+
+        用户要求（第八轮）："确保所有特殊动画，也就是除了走路，跑步，待机这几个动画，
+        其余的都只交给 AI 判断是否播放，别和抽风似的突然一下。"
+
+        原实现里有两条**非 AI** 的特殊动画入口：
+          · 情绪 → 动画映射（`emotion_system.get_animation_for_emotion`），强度 >20 就切；
+          · `random.random() < 0.1` 的 10% 随机 `force=True` 切换。
+        两者都会在宠物站着不动时突然切到 dance / sing / curtsy / sleep / hug / victory…
+        —— 正是用户说的"抽风似的突然一下"。（强度 >50 时还是 force 硬切，
+        会把走路/一次性动画一起打断。）
+
+        现在：情绪照常累计与衰减（`emotion_system` 不依赖本函数），但**不再驱动动画**。
+        特殊动画只允许两个来源：
+          1) 本地 AI 决策（ai_driver → play_animation_once）；
+          2) 用户的显式交互（右键菜单、抚摸/戳一戳等点击事件）。
+        本函数保留为空实现，是为了不动 update 循环里的调用点。
+        """
+        return
+
     # ==============================================================
     # 自主开口（AI 接管）—— 第六轮
     #   用户要求：删掉"系统里自带的对话"，全权交给 AI；10 分钟内最多主动说 1 次。
@@ -4414,6 +4511,11 @@ class RalseiPet(QMainWindow):
     #   AI 未启用 / 请求失败 / 返回空 → **保持沉默**，绝不回落内置台词。
     # ==============================================================
     AUTONOMOUS_SPEECH_MIN_INTERVAL = 600.0  # 自主开口最小间隔：10 分钟
+
+    # 待机动画（idle 的 5 帧循环）启动门限：必须**原地静止**满这么久才播。
+    # 用户要求："待机动画要在原地不动3分钟以上才会播放哦，而不是停止就播"。
+    # 单位秒；idle_timer 由 update_movement 维护，移动时清零。
+    IDLE_LOOP_MIN_SECONDS = 180.0  # 3 分钟
 
     def _can_speak_now(self):
         """此刻开口是否"合时宜"（硬条件，与频率无关）。"""
@@ -5239,13 +5341,11 @@ class RalseiPet(QMainWindow):
     
     def on_mouse_hover(self):
         # 鼠标悬停时的处理
-        # 修复：人不会因为别人看了自己一眼就随机大笑/挥手/惊讶。
-        # 降到1%概率，且只做"抬头看看是谁"的轻微反应（look_up），
-        # 加一点点被关注的开心，不做夸张表情。
-        if random.random() < 0.01:  # 1%的概率
-            if self.current_animation == "idle" and not getattr(self, '_play_once_active', False):
-                self.play_animation_once("look_up")
-                self.emotion_system.add_emotion("happy", 3)
+        # 用户要求（第八轮）："所有特殊动画……都只交给 AI 判断是否播放，别和抽风似的突然一下。"
+        # 原来这里有一个 `random.random() < 0.01` 的 1% 概率 `play_animation_once("look_up")`
+        # —— 属于非 AI 的随机特殊动画（宠物会毫无来由地突然抬头），已删除。
+        # 悬停只保留"光标变手型"这类纯 UI 反馈（见 mouseEnterEvent）。
+        return
     
     def show_interaction_menu(self, pos):
         # 显示互动菜单
@@ -6060,6 +6160,24 @@ class RalseiPet(QMainWindow):
             self.dialogue_ui.show_dialogue()
             return False
     
+    @staticmethod
+    def _is_special_anim(name):
+        """该动画是不是"特殊动画"（见模块级 _NON_SPECIAL_ANIM_GROUPS 的说明）。"""
+        if not name:
+            return False
+        group = name.split('_')[0] if '_' in name else name
+        return group not in _NON_SPECIAL_ANIM_GROUPS
+
+    def _special_anim_locked(self):
+        """当前是否处于"特殊动画正在播放"的锁定状态。
+
+        锁定条件 = 一次性动画进行中（_play_once_active）**且**当前动画属于特殊类。
+        walk/run/idle 与物理/施法动画即便走 play_animation_once 也不锁
+        （例如 `play_animation_once("land")` 是摔倒恢复流程，必须能被后续状态接管）。
+        """
+        return bool(getattr(self, '_play_once_active', False)
+                    and self._is_special_anim(self.current_animation))
+
     def change_animation(self, new_animation, force=False):
         # 安全地切换动画，带有冷却时间检查、优先级系统、spell 阶段硬拦截
         current_time = time.time()
@@ -6127,6 +6245,22 @@ class RalseiPet(QMainWindow):
                 if new_group in ('laugh', 'dance', 'sing', 'wave', 'eat'):
                     return False
         
+        # ========== 关键 1.6：特殊动画"播完为止"，不允许被另一个特殊动画打断 ==========
+        # 用户要求（第八轮）："如果要是播放，那就播完，不要打断……（注意，只针对特殊动画）"
+        # 只拦"特殊 → 特殊"：目标是 idle/walk/run/jump/fall/splat/land/spell/item 时一律
+        # 放行 —— 那些代表状态真的变了（开始走路、摔下去、AI 施法、一次性动画收尾），
+        # 拦掉反而会让宠物卡在动作里。
+        # `_play_once_arming` 是"正在发起这一次性动画"的短暂标记，用于放行
+        # play_animation_once 自己那次 change_animation（否则会把自己锁在门外）。
+        if (getattr(self, '_play_once_active', False)
+                and not getattr(self, '_play_once_arming', False)
+                and new_animation != self.current_animation
+                and self._is_special_anim(self.current_animation)
+                and self._is_special_anim(new_animation)):
+            _log.debug("[动画] 特殊动画 %r 播放中，拒绝被 %r 打断",
+                       self.current_animation, new_animation)
+            return False
+
         # 检查冷却时间和优先级
         if not force:
             # 不同分组的动画切换需要更长的冷却时间
@@ -6593,6 +6727,88 @@ class RalseiPet(QMainWindow):
 
     # 帧动画播放相关代码 - 更新动画帧
     @monitor_performance
+    def _anim_anchor_offset(self, animation):
+        """该动画的"角色锚点"相对画布中心的偏移（源像素，正=偏右/偏下）。
+
+        素材是逐姿势紧裁的，各自画布尺寸不同，而且**并非每张画布都把角色居中**：
+        实测 `spr_ralsei_idle_*.png` 是 69x47 的画布，但角色 alpha 包围盒只有
+        (1,6,27,40) —— 右侧整整 41px 是透明空白；其余动作（walk/run/bow/act/
+        pose/curtsy…）的包围盒都等于整张画布，也就是天然居中。
+
+        渲染时窗口尺寸 = 当前动画容器 × scale，换动画会 resize 并**保持窗口中心**，
+        精灵又是 AlignCenter —— 于是"角色落在哪里"完全由画布中心决定。
+        idle 偏左 20 源像素 → scale=2 时角色比其它动作**偏左 40px**，
+        切到鞠躬等动作时角色整体右移 40px，观感就是用户报的
+        "像是镜头也在移动一样"。
+
+        这里返回补偿量，交给 `_compose_anchored_sprite` 把角色 alpha 包围盒的
+        **中心**钉到画布中心，从而跨动画零平移。按动画缓存（首次渲染该动画时算一次）。
+        """
+        cache = getattr(self, '_anim_anchor_cache', None)
+        if cache is None:
+            cache = {}
+            self._anim_anchor_cache = cache
+        if animation in cache:
+            return cache[animation]
+
+        off = (0.0, 0.0)
+        try:
+            frames = self.sprite_loader.sprites.get(animation) or []
+            cw = ch = 0
+            for f in frames:
+                if f is not None and not f.isNull():
+                    cw = max(cw, f.width())
+                    ch = max(ch, f.height())
+            if cw > 0 and ch > 0:
+                # 取"整个动画所有帧的包围盒并集"，保证同一动画内每帧用同一个锚点，
+                # 不会因为逐帧包围盒变化而引入新的抖动。
+                ux0 = uy0 = None
+                ux1 = uy1 = 0
+                for f in frames:
+                    if f is None or f.isNull():
+                        continue
+                    reg = QRegion(QBitmap.fromImage(f.toImage().createAlphaMask()))
+                    for r in reg.rects():
+                        x0, y0 = r.x(), r.y()
+                        x1, y1 = r.x() + r.width(), r.y() + r.height()
+                        ux0 = x0 if ux0 is None else min(ux0, x0)
+                        uy0 = y0 if uy0 is None else min(uy0, y0)
+                        ux1 = max(ux1, x1)
+                        uy1 = max(uy1, y1)
+                if ux0 is not None:
+                    off = ((ux0 + ux1) / 2.0 - cw / 2.0,
+                           (uy0 + uy1) / 2.0 - ch / 2.0)
+        except Exception as e:
+            _log.debug("计算动画锚点偏移失败（按画布居中处理）: %s", e)
+        cache[animation] = off
+        return off
+
+    def _compose_anchored_sprite(self, sprite, container, animation, scale_factor):
+        """把已缩放（可选已倾斜）的精灵放进 container×scale 的透明画布，
+        并按"角色 alpha 包围盒中心 = 画布中心"落位。
+
+        为什么不能直接 setPixmap + AlignCenter：那等于按**画布**居中，而各动作
+        画布对"角色在哪里"的约定并不一致（见 `_anim_anchor_offset` 的说明）。
+        统一钉到角色包围盒中心后，切换动画时角色在屏幕上不会平移。
+        """
+        off_x, off_y = self._anim_anchor_offset(animation)
+        if container:
+            cw = int(container[0] * scale_factor)
+            ch = int(container[1] * scale_factor)
+        else:
+            cw, ch = sprite.width(), sprite.height()
+        # 画布不得小于精灵本身，否则会把角色裁掉
+        cw = max(cw, sprite.width())
+        ch = max(ch, sprite.height())
+        canvas = QPixmap(cw, ch)
+        canvas.fill(Qt.transparent)
+        dx = (cw - sprite.width()) // 2 - int(round(off_x * scale_factor))
+        dy = (ch - sprite.height()) // 2 - int(round(off_y * scale_factor))
+        painter = QPainter(canvas)
+        painter.drawPixmap(dx, dy, sprite)
+        painter.end()
+        return canvas
+
     def update_animation(self):
         # 更新动画帧，确保流畅的动画播放
         import math
@@ -6781,20 +6997,24 @@ class RalseiPet(QMainWindow):
             if _spell_stage == 'casting' and self.current_animation in ('spell', 'spell_left'):
                 new_animation = self.current_animation
             else:
-                # 静止状态，根据静止时间决定使用idle还是待机动画
-                # 修复：idle_timer 此前在 update_movement（30ms timer）和本函数（33ms timer）
-                # 中被双重累加，导致休息时间实际只有配置的一半、宠物过早开始移动。
-                # idle_timer 统一由 update_movement 维护，本函数只读取不写入。
-                # 检查是否满足待机不动时的5帧动作使用条件：静止时间≥3分钟
-                if self.idle_timer >= 180.0:  # 3分钟 = 180秒
-                    # 使用待机动画
-                    new_animation = "idle"
-                elif hasattr(self, 'is_being_thrown') and self.is_being_thrown:
+                # 静止状态：区分"普通站立"与"待机动画"。
+                #
+                # 用户要求："待机动画要在原地不动3分钟以上才会播放哦，而不是停止就播"。
+                # 反例（勿回退）：原先写的是
+                #     if self.idle_timer >= 180.0: new_animation = "idle"
+                #     else:                         new_animation = "idle"
+                # 两个分支给的是同一个值 —— 那个 3 分钟判断实际上是**死分支**，
+                # 一停下就会走 idle 的 5 帧循环，正是用户说的"停止就播"。
+                #
+                # 现在：`idle` 的 5 帧循环只在原地静止 ≥ IDLE_LOOP_MIN_SECONDS 后播放；
+                # 在此之前显示站立静帧（第 0 帧，由 _need_advance 抑制帧推进会自然停住）。
+                self._idle_loop_active = bool(
+                    self.idle_timer >= self.IDLE_LOOP_MIN_SECONDS)
+                if hasattr(self, 'is_being_thrown') and self.is_being_thrown:
                     new_animation = "hatless_throw"
                     # 确保图像始终向速度向量的方向冲着
                     # 这里可以添加旋转逻辑
                 else:
-                    # 使用普通idle动画
                     # ===== 表演/情绪动画（laugh/surprised/smile/wave等）不再自动触发 =====
                     # 统一由用户交互或 AI 通过 play_animation_once 触发，避免"走着走着突然跳舞"。
                     # is_happy/is_surprised/is_shy/is_waving 状态标志仍可被设置（供对话/情绪系统使用），
@@ -6875,13 +7095,18 @@ class RalseiPet(QMainWindow):
         # ===== 修复：spell/spell_left 动画必须推进帧（casting 时 is_moving=False 但动画必须播放完 11 帧）=====
         # ===== 修复：idle/laugh/dance/sing/wave/pose/smile/surprised 等静止动画也需要循环播放帧 =====
         _cur_anim_group = self.current_animation.split('_')[0] if '_' in self.current_animation else self.current_animation
+        # idle 的"待机循环"要静止满 IDLE_LOOP_MIN_SECONDS 才允许推进帧；
+        # 未满时只显示站立静帧（见下面静态分支的 current_frame 归零）。
+        _idle_advance = (_cur_anim_group != 'idle'
+                         or getattr(self, '_idle_loop_active', False))
         _need_advance = (self.is_moving or self.is_jumping or self.is_falling or self.is_recovering
                          or _cur_anim_group == 'spell'
                          or _cur_anim_group == 'splat'
                          or getattr(self, 'is_splat', False)
                          or getattr(self, '_spell_stage', None) is not None
                          or _play_once
-                         or _cur_anim_group in ('idle', 'laugh', 'dance', 'sing', 'wave',
+                         or _idle_advance
+                         or _cur_anim_group in ('laugh', 'dance', 'sing', 'wave',
                                                 'pose', 'smile', 'surprised', 'item',
                                                 'roll', 'victory', 'tea', 'hug', 'nuzzle',
                                                 'act', 'defend', 'attack', 'cry', 'fall',
@@ -6996,9 +7221,14 @@ class RalseiPet(QMainWindow):
                             transform.rotate(tilt_angle)
                             transform.translate(-center_x, -center_y)
                             # 应用变换
-                            cached_sprite = scaled_sprite.transformed(transform, Qt.SmoothTransformation)
+                            _placed = scaled_sprite.transformed(transform, Qt.SmoothTransformation)
                         else:
-                            cached_sprite = scaled_sprite
+                            _placed = scaled_sprite
+
+                        # 按"角色 alpha 包围盒中心"落位，而不是按画布中心 ——
+                        # 修掉 idle 素材右侧 41px 透明留白导致的跨动画横移 40px。
+                        cached_sprite = self._compose_anchored_sprite(
+                            _placed, _container, self.current_animation, scale_factor)
                         
                         # 初始化缓存
                         if not hasattr(self, '_sprite_cache'):
@@ -7046,6 +7276,10 @@ class RalseiPet(QMainWindow):
             frame_count = len(frames)
             if frame_count > 0:
                 self.current_frame = min(self.current_frame, frame_count - 1)
+                # 待机循环未开启（静止未满 3 分钟）→ 钉在站立静帧，不播 5 帧循环。
+                if (self.current_animation == 'idle'
+                        and not getattr(self, '_idle_loop_active', False)):
+                    self.current_frame = 0
                 sprite = frames[self.current_frame]
                 if sprite:
                     # 缓存缩放因子，避免重复计算
@@ -7100,7 +7334,10 @@ class RalseiPet(QMainWindow):
                         # 首次渲染：纯等比例 scale_factor × sprite 原始尺寸
                         target_w = int(sprite.width() * scale_factor)
                         target_h = int(sprite.height() * scale_factor)
-                        cached_sprite = sprite.scaled(target_w, target_h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                        _placed = sprite.scaled(target_w, target_h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                        # 按"角色 alpha 包围盒中心"落位（同 update_animation 的说明）
+                        cached_sprite = self._compose_anchored_sprite(
+                            _placed, _container, self.current_animation, scale_factor)
                         
                         # 初始化缓存
                         if not hasattr(self, '_sprite_cache'):
@@ -7164,6 +7401,14 @@ class RalseiPet(QMainWindow):
         fall_back_rub（又躺下），因为"之前那个动画"本身就是躺着。
         """
         if animation_name in self.sprite_loader.sprites:
+            # 特殊动画"播完为止"：已经有特殊动画在播时，不再接受**另一个**特殊动画。
+            # （同一个动画名重复请求按"重播"处理，不算打断。）
+            if (self._special_anim_locked()
+                    and animation_name != self.current_animation
+                    and self._is_special_anim(animation_name)):
+                _log.debug("[动画] 特殊动画 %r 仍在播放，忽略新的 %r",
+                           self.current_animation, animation_name)
+                return False
             self.next_animation = restore_to or self.current_animation
             self._play_once_active = True
             self._play_once_frame_counter = 0
@@ -7172,7 +7417,13 @@ class RalseiPet(QMainWindow):
             # casting 只允许 spell），返回 False 时动画并未切换——此时若保留
             # _play_once_active=True，update_animation 的一次性动画保护会跳过正常状态逻辑，
             # 动画卡在错误状态（"动画播放错乱"）。切换失败必须回滚一次性动画标志。
-            if not self.change_animation(animation_name, force=True):
+            # `_play_once_arming`：本次是"发起"，要放行 change_animation 里的特殊动画锁。
+            self._play_once_arming = True
+            try:
+                _changed = self.change_animation(animation_name, force=True)
+            finally:
+                self._play_once_arming = False
+            if not _changed:
                 self._play_once_active = False
                 self._play_once_frame_counter = 0
                 self._play_once_callback = None

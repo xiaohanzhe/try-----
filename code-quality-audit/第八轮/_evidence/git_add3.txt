@@ -1,0 +1,29 @@
+﻿git : warning: in the working copy of '.workbuddy/memory/2026-09-14.md', LF wil
+l be replaced by CRLF the next time Git touches it
+所在位置 行:447 字符: 1
++ git add -A 2>&1 | Out-File -Encoding utf8 "$root\code-quality-audit\第 ...
++ ~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of '.workbuddy/memory/MEMORY.md', LF will be repla
+ced by CRLF the next time Git touches it
+warning: in the working copy of 'code-quality-audit/regress/baseline.json', LF 
+will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'code-quality-audit/regress/run_all.py', LF wil
+l be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'code-quality-audit/绗叓杞?verify_round8_fling.py
+', LF will be replaced by CRLF the next time Git touches it
+[main 654da19] fix(fling): 鏂滄姏杞ㄨ抗鐢辨澗鎵嬮€熷害鍐冲畾 + 绌轰腑鍙簩娆℃姄浣?+ 淇帀鐢╅鏃跺崱鍔ㄧ敾
+ 15 files changed, 861 insertions(+), 136 deletions(-)
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/compile_fling_verify.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/compile_main_r8.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/git_add3.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/git_push2.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/git_status3.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/round8_fling.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/round8_g2_after_fling.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/round8_g2_update.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/verify_round8_fling.py"
+654da19 fix(fling): 鏂滄姏杞ㄨ抗鐢辨澗鎵嬮€熷害鍐冲畾 + 绌轰腑鍙簩娆℃姄浣?+ 淇帀鐢╅鏃跺崱鍔ㄧ敾

@@ -17,6 +17,10 @@
 4. 绝不打断关键流程：施法/游戏/拖拽/追鼠标/跳跃掉落中不触发；正在给用户
    打字/模型正在回话时不插话；正在播一次性动画时不打断。
 5. 全部 owner 访问走 getattr 守卫：任何接口缺失都退化为"本拍什么都不做"。
+6. 【特殊动画的唯一来源】规则系统不再自行播放任何特殊动画：桌面上凑近文件、
+   陪主人看视频这类"环境触发"只通过 `note_event()` **上报观察**，要不要表演
+   由模型决定（第八轮用户要求："所有特殊动画……都只交给 AI 判断是否播放，
+   别和抽风似的突然一下"）。
 
 【动画感知训练】
 AI 决策时能看到：当前在播什么动画、是不是一次性动画、已播多久、每个可选
@@ -198,7 +202,12 @@ _ACTION_SYSTEM_PROMPT = (
     "- 傍晚/晚上：安静活动（tea/look_up/idle），say 关心主人累不累\n"
     "- 深夜：安静陪着，别跳舞唱歌；精力<25时选 sleep\n\n"
     "【防重复】状态里会给出最近几次动作。不要连续做同一个动作，也不要连续说两次话。\n\n"
-    "【say 的要求】要说就说有内容、贴合当下的话，不要空泛客套；没有想说的就留空。"
+    "【say 的要求】要说就说有内容、贴合当下的话，不要空泛客套；没有想说的就留空。\n\n"
+    "【环境事件】状态里可能给出 `- 刚刚：…` 这样的行，那是规则系统**观察到**的、"
+    "刚刚发生在宠物身边的事（例如它凑近了桌面上某个文件、它正在陪主人看视频）。"
+    "规则系统自己**不会**据此表演——要不要因为这些事件做点什么（say 一句话 / "
+    "选一个小动作）完全由你决定。事件已经过去就过去了，不回应也完全没问题，"
+    "不要为了回应而强行选动作。"
 )
 
 
@@ -269,6 +278,28 @@ class AiActionDriver:
         self._recent_actions = deque(maxlen=6)
         # 上次执行动画表演动作的时间（长动画后冷却，避免连续打断）
         self._last_anim_action_at = 0.0
+        # 规则系统上报的"环境观察"（等着给模型看；看一次就消费掉）
+        self._pending_events = deque(maxlen=6)
+
+    # ------------------------------------------------------------ 环境事件（只上报，不表演）
+    def note_event(self, text: str, emotion_hint: str = ""):
+        """规则系统上报一条环境观察，供下一次决策参考。
+
+        第八轮约定：非 AI 的自动触发（凑近桌面文件、陪看视频等）**不再自行
+        播放特殊动画**，只把"我看到了/我正在做什么"写进队列；要不要据此说句话
+        或做个小动作，由模型自己决定。AI 未启用时事件只是静静攒着（上限 6 条），
+        不会有任何可见行为。
+
+        :param text: 简体中文的一句话观察，例如 "我凑近了桌面上的「报告.pptx」"
+        :param emotion_hint: 可选的当下情绪提示（happy/surprised/careful…）
+        """
+        try:
+            t = str(text or "").strip()
+            if not t:
+                return
+            self._pending_events.append((t, str(emotion_hint or "").strip()))
+        except Exception as e:
+            _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
 
     # ------------------------------------------------------------ 主入口
     def tick(self, now: float):
@@ -558,6 +589,16 @@ class AiActionDriver:
         # 最近动作序列（防重复）
         recent_desc = "、".join(self._recent_actions) if self._recent_actions else "还没有"
 
+        # ===== 环境事件（规则系统只上报、不表演；给模型看过一次就消费掉）=====
+        events = []
+        try:
+            while self._pending_events:
+                _txt, _emo = self._pending_events.popleft()
+                events.append("- 刚刚：%s%s"
+                              % (_txt, ("（当时心情偏%s）" % _emo) if _emo else ""))
+        except Exception as e:
+            _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
+
         # ===== 动画感知：当前动画状态 =====
         cur_anim = getattr(o, "current_animation", "idle")
         is_moving = bool(getattr(o, "is_moving", False))
@@ -594,6 +635,13 @@ class AiActionDriver:
             f"- 动画状态：{anim_status}",
             f"- 上次动作：{last_desc}",
             f"- 最近动作序列：{recent_desc}",
+        ]
+        if events:
+            lines.append("")
+            lines.append("刚刚发生的环境事件（要不要回应由你决定，"
+                         "不回应完全没问题）：")
+            lines.extend(events)
+        lines += [
             "",
             "请只输出一个 JSON 动作对象（见格式要求）。",
         ]
