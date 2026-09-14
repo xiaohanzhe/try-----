@@ -1,0 +1,6 @@
+第八轮 #13：留痕推送核验日志（_evidence/git_push4.txt）
+
+- push 首次成功：654da19..11ac9a1 main -> main
+- git ls-remote origin refs/heads/main = 11ac9a17bc4b07f627a1cb3c0ab528b2b8f80cbe
+  与本地 HEAD 一致（外发核验以 ls-remote 为准，比看 push 退出码硬）。
+- 日志内只记录退出码与 git 输出，不含任何凭据。
