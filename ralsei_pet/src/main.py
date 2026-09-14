@@ -89,6 +89,16 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
 _log.debug(f"添加项目根目录: {project_root}")
 
+# 修复：把 modules/ 也放进 sys.path。modules/*.py 内部用的是"扁平导入"
+# （如 `from logger_utils import get_logger`），只有 modules/ 本身在 sys.path 上
+# 才能命中真实模块。此前按 README 记载的 `cd src && python main.py` 启动，会在
+# import 期直接 ModuleNotFoundError 崩掉；而回归脚本恰好预置了 modules/，
+# 于是掩盖了这一类问题（已纳入第七轮）。
+# 用 append 而非 insert：让标准库始终优先，仅当名字无法解析时才落到 modules/。
+_modules_dir = os.path.join(project_root, 'modules')
+if _modules_dir not in sys.path:
+    sys.path.append(_modules_dir)
+
 # 直接导入模块
 from modules.sprite_loader import SpriteLoader
 from modules.dialogue_system import DialogueSystem

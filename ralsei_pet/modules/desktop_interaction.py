@@ -16,7 +16,13 @@ try:
 except ImportError:
     psutil = None
 
-from logger_utils import get_logger
+try:
+    from logger_utils import get_logger
+except ImportError:  # 与其余 modules/*.py 保持一致：未预置 sys.path 时降级
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
 
 log = get_logger("desktop_interaction")
 
