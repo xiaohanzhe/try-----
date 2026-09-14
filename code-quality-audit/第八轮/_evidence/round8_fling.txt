@@ -1,0 +1,34 @@
+﻿[PASS] F1.1 已删除[强行上抛]的硬编码（_vy = -350 - abs(_vy)*0.5）
+[PASS] F1.2 改为等比缩放 + 按矢量和限幅（不掰弯方向）
+[PASS] F1.3 落点判定要求初速朝上才用[回到起跳高度]
+[PASS] F2.1 水平甩出后首帧即下落（y 增大），没有被强行上抛 <- ys[:4]=[502, 506, 512, 520]
+[PASS] F2.2 水平方向持续朝甩出方向前进（x 递增） <- xs[:4]=[427, 453, 477, 499]
+[PASS] F3.1 下甩不会原地秒落地（至少飞了多帧） <- frames=18
+[PASS] F3.2 最终落到屏幕底边（而不是悬停在松手高度） <- final_y=969 floor_y=969
+[PASS] F4.1 上抛：先升（y 先减小）再落回起跳高度 <- min_y=472 final_y=500
+[PASS] F5 纯竖直上抛精确落回起跳高度并进入 splat 之后 <- final_y=500 phase=splat
+[PASS] F6.1 坠落中按下 → 接住成功
+[PASS] F6.2 接住后坠落状态全部清掉（两种坠落都不再为真） <- is_falling=False is_gravity=False
+[PASS] F6.3 抛物线字段已清理（_fall_vx/_fall_vy/_fall_phase）
+[PASS] F6.4 线速度被记录进缓冲窗口（vx=600, vy=300） <- cb.vx=600.0 cb.vy=300.0 cb.dur=0.28
+[PASS] F6.5 未坠落时不该有缓冲（普通拖拽零影响）
+[PASS] F7.1 接住后确实还会滑行一段（不是原地急停） <- 位移=102 px
+[PASS] F7.2 位移单调不减且随速度衰减收敛（减速效果） <- xs=[400, 432, 458, 478, 493, 502, 502]
+[PASS] F7.3 缓冲结束后窗口自动清空
+[PASS] F7.4 缓冲结束时重设拖拽锚点（避免被拉回光标处跳动）
+[PASS] F7.5 源码级：缓冲推进被接进 update_movement（拖拽保护之前）
+[PASS] F8.1 start_fall 清 is_gravity_falling
+[PASS] F8.2 start_falling 清 is_falling（并清 is_splat）
+[PASS] F8.3 trigger_splat 也清 is_gravity_falling（把隐患从[靠调用方记得清]变自洽）
+[PASS] F9.1 is_falling 时直接返回（连窗口枚举都不做） <- update_floors 调用次数=0
+[PASS] F9.2 is_gravity_falling 时同样不判定楼层 <- update_floors=0
+[PASS] F9.2 is_jumping 时同样不判定楼层 <- update_floors=0
+[PASS] F9.3 拖拽中同样不判定楼层（不与鼠标抢位置） <- update_floors=0
+[PASS] F10.1 update_animation 增加了[帧数为 0 就解除一次性动画保护]的自检
+[PASS] F11.1 第一次甩飞落地后 _fall_vy0 已被清理（不留残留） <- has=False
+[PASS] F11.2 紧接着下甩第二轮仍能正常落地（不沿用上一轮初速） <- frames=20 final_y=969 floor_y=969
+[PASS] F11.3 清理点统一用 _FALL_VELOCITY_ATTRS/_FALL_STATE_ATTRS 常量
+[PASS] F11.4 _fall_vy0 在速度清理常量里（新增字段不会再被漏掉）
+--------------------------------------------------------------------
+第八轮甩飞/卡动画/空中接住验证：31/31 PASS, 0 FAIL
+exit=0

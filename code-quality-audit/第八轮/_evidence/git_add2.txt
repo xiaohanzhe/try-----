@@ -1,0 +1,24 @@
+﻿git : warning: in the working copy of 'code-quality-audit/regress/run_all.py', 
+LF will be replaced by CRLF the next time Git touches it
+所在位置 行:448 字符: 1
++ git add "ralsei_pet/src/main.py" "code-quality-audit/regress/run_all. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'code-quality-audit/第八轮/verify_round8_floor.py'
+, LF will be replaced by CRLF the next time Git touches it
+[main cc9471d] fix(floor): 楼层身份改用稳定标识，消除"看到窗口就摔倒"与凭空掉到屏幕底
+ 10 files changed, 629 insertions(+), 66 deletions(-)
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/_ps_policy.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/_verify_remote.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/git_add2.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/git_push.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/round8_floor.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/round8_g2_after_floor.txt"
+ create mode 100644 "code-quality-audit/\347\254\254\345\205\253\350\275\256/verify_round8_floor.py"
+--- LOG ---
+cc9471d fix(floor): 楼层身份改用稳定标识，消除"看到窗口就摔倒"与凭空掉到屏幕底
+024b6aa fix(dialogue): ▼ 改为独立覆盖层消除闪烁抖框；刷新不再把滚动视图弹回顶部
+ M "code-quality-audit/\347\254\254\345\205\253\350\275\256/_evidence/git_add2.txt"

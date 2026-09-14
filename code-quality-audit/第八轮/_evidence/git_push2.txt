@@ -1,0 +1,16 @@
+﻿=== push 2026-09-14T22:08:28.9789947+08:00 ===
+cred user=236837805 pwlen=40
+--- attempt 1 ---
+git : To https://github.com/xiaohanzhe/try-----.git
+所在位置 行:459 字符: 3
++   git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c ht ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (To https://gith...he/try-----.git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   024b6aa..cc9471d  main -> main
+push exit=0
+--- verify ---
+local  HEAD = cc9471d1d6704008c81bd22feaa6c90ad39e599c
+remote main = cc9471d1d6704008c81bd22feaa6c90ad39e599c	refs/heads/main

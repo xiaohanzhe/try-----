@@ -26,6 +26,24 @@ except ImportError:  # 允许被包外单独导入
 
 _log = get_logger(__name__)
 
+# 抛物线（甩飞）飞行期的状态属性名。接住宠物 / 恢复完成时统一清掉，避免残留让
+# update_movement 继续走坠落分支。放在模块级而非类级：便于离屏测试用轻量 stub
+# 直接调用 _catch_falling_in_air（详见 verify_round8_fling.py）。
+#
+# 拆成两个常量是为了满足两种**不同**的清理时机：
+#   · _FALL_VELOCITY_ATTRS —— 落地那一刻清（速度/落点标记），**但必须留着
+#     _fall_phase**，否则下一帧的 phase 机被重置回 "flying"，又会重新入场；
+#   · _FALL_STATE_ATTRS —— 空中被接住 / 恢复完成时清（连阶段字段一起清）。
+# 教训（勿回退）：不要在各处内联写属性名元组 —— 新增 `_fall_vy0` 时就漏改了
+# 三处内联列表，导致**第二次甩飞沿用上一次的起跳竖直速度**，落点判定用错初速
+# → 下甩时误判"要回到起跳高度"→ 一路飞到 2.5s 兜底超时才落地，表现就是
+# 用户报的"被甩飞的时候卡在一个动画里不继续"。
+_FALL_VELOCITY_ATTRS = (
+    'fall_slide_speed_x', 'fall_slide_speed_y',
+    '_fall_vx', '_fall_vy', '_fall_launch_y', '_fall_landed',
+    '_fall_flight_time', '_fall_vy0',
+)
+_FALL_STATE_ATTRS = ('_fall_phase', '_fall_phase_start') + _FALL_VELOCITY_ATTRS
 
 
 # 添加性能监控功能
@@ -438,6 +456,12 @@ class RalseiPet(QMainWindow):
         self._play_once_active = False  # 一次性动画播放标志
         self._play_once_frame_counter = 0  # 一次性动画已播放帧数
         self._play_once_callback = None  # 一次性动画完成回调
+
+        # 空中接住（用户反馈"坠落中没法用鼠标二次抓住，且要有针对当时线速度的减速"）
+        # 按下鼠标时把坠落线速度交给这个缓冲窗口，线速度在 _CATCH_BRAKE_SECONDS 内
+        # 线性衰减到 0，而不是像撞墙一样瞬间归零。
+        self._CATCH_BRAKE_SECONDS = 0.28
+        self._catch_brake = None
         
         # 动画播放控制
         self.animation_change_cooldown = 0.8  # 0.8秒冷却时间，防止频繁切换导致的抽搐
@@ -1339,6 +1363,15 @@ class RalseiPet(QMainWindow):
             # 恢复期状态，保持静止，继续处理摔倒恢复逻辑
             self.handle_fall(elapsed_time, current_time)
             return
+        # ===== 空中接住的缓冲减速（必须在拖拽保护之前推进）=====
+        # 用户要求"要有一个针对他当时线速度的减速效果，而不是撞上一堵墙毫无缓冲"。
+        if getattr(self, '_catch_brake', None) is not None:
+            try:
+                self._tick_catch_brake(elapsed_time)
+            except Exception as e:
+                _log.warning(f"缓冲减速推进异常: {e}")
+                self._catch_brake = None
+
         # ===== 拖拽保护：用户正按住/拖拽 Ralsei 时，完全停止自主移动驱动 =====
         # 修复：此前拖拽中 update_movement 仍向旧 target_pos 平移（抓不住/自己跑）。
         if getattr(self, '_is_being_dragged', False):
@@ -2209,6 +2242,10 @@ class RalseiPet(QMainWindow):
         self.fall_speed = 0.0  # 初始掉落速度为0
         self.fall_start_time = time.time()
         self.fall_start_pos = self.pos()
+        # 修复（状态互斥）：见 start_fall 注释——两种坠落状态同时为真会让
+        # handle_fall 的分阶段流程被 handle_gravity_fall 顶掉，宠物卡在动画里。
+        self.is_falling = False
+        self.is_splat = False
         self._fall_velocity = fall_velocity  # 记录摔落时的速度（用于判断是否甩飞）
         self._is_thrown = is_thrown  # 是否是被甩飞的
         # 水平惯性：掉落时保留当前水平速度，形成2D抛物线坠落
@@ -2443,6 +2480,93 @@ class RalseiPet(QMainWindow):
             self.emotion_system.react_to_event('window_moved', {})
             self.start_fall("window_move")
 
+    # ------------------------------------------------------------------
+    # 空中接住：坠落途中允许鼠标二次抓住 + 线速度缓冲减速
+    # ------------------------------------------------------------------
+    def _catch_falling_in_air(self):
+        """鼠标按下时调用：如果宠物正在坠落，就"接住"它。
+
+        用户反馈："他坠落过程中没办法用鼠标二次抓住他，记得改成能抓住的，并且要有
+        一个针对他当时线速度的减速效果，而不是和撞上一堵墙毫无缓冲的感觉。"
+
+        原来 is_falling 时 update_movement 会在拖拽保护**之前**就 handle_fall 并
+        return，抛物线仍按旧速度移动宠物、与鼠标拖拽互相拉扯 → 抓不住，且一抓到就
+        像撞墙一样瞬间静止。
+
+        现在：结束坠落状态（两种坠落都清），把接住瞬间的线速度装进
+        `_catch_brake` 缓冲窗口，由 `_tick_catch_brake` 让宠物按原速度方向再滑一段
+        并线性减速到 0，减速结束后才真正 1:1 跟手。
+        """
+        was_falling = bool(getattr(self, 'is_falling', False)
+                           or getattr(self, 'is_gravity_falling', False))
+        if not was_falling:
+            return False
+
+        # 接住瞬间的线速度（px/s）：甩飞看 _fall_vx/_fall_vy，重力坠落看
+        # fall_velocity_x/fall_speed。两者语义都是"每秒像素"。
+        if getattr(self, 'is_gravity_falling', False):
+            vx = float(getattr(self, 'fall_velocity_x', 0.0) or 0.0)
+            vy = float(getattr(self, 'fall_speed', 0.0) or 0.0)
+        else:
+            vx = float(getattr(self, '_fall_vx', 0.0) or 0.0)
+            vy = float(getattr(self, '_fall_vy', 0.0) or 0.0)
+
+        # 结束坠落：两种状态都清，避免残留让 update_movement 继续走坠落分支
+        self.is_falling = False
+        self.is_gravity_falling = False
+        self.is_recovering = False
+        self.is_splat = False
+        self.fall_velocity_x = 0.0
+        self.fall_speed = 0.0
+        self.fall_duration = 0.0
+        for _a in _FALL_STATE_ATTRS:
+            if hasattr(self, _a):
+                delattr(self, _a)
+
+        cur = self.pos()
+        self._catch_brake = {
+            't0': time.time(),
+            'vx': vx,
+            'vy': vy,
+            'dur': float(getattr(self, '_CATCH_BRAKE_SECONDS', 0.28)),
+            'x': cur.x(),
+            'y': cur.y(),
+        }
+        _log.debug("在空中接住宠物：线速度 (%.0f, %.0f) px/s 进入 %.2fs 缓冲减速",
+                   vx, vy, self._catch_brake['dur'])
+        return True
+
+    def _tick_catch_brake(self, elapsed_time):
+        """缓冲减速窗口推进：按接住瞬间的线速度继续滑行并线性衰减到 0。
+
+        位移用**速度线性衰减到 0 的积分**解析式，而不是逐帧累加，保证轨迹与帧率无关：
+            速度 v(t) = v0 · (1 - t/dur)
+            位移 s(t) = ∫v = v0 · t · (1 - t/(2·dur))
+        收敛终点在 t=dur 处，总位移 = v0·dur/2（例：700px/s 接住 → 滑行 105px）。
+
+        反例（勿回退）：曾误写 s(t) = v0 · t · (1 - t/dur)，那是**没有积分**的
+        速度式乘时间 —— 轨迹成了顶点在 t=dur/2 的抛物线，宠物会先冲出去再**退回原地**。
+        """
+        cb = getattr(self, '_catch_brake', None)
+        if not cb:
+            self._catch_brake = None
+            return
+        elapsed = time.time() - cb['t0']
+        if elapsed >= cb['dur']:
+            # 缓冲结束：把拖拽锚点重设到"宠物此刻所在处"，否则下一帧鼠标一动
+            # 宠物就被拉回光标处、跳一大截。
+            try:
+                self.drag_position = QCursor.pos() - self.frameGeometry().topLeft()
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+            self._catch_brake = None
+            return
+        _k = max(0.0, 1.0 - elapsed / (2.0 * cb['dur']))
+        nx = cb['x'] + cb['vx'] * _k * elapsed
+        ny = cb['y'] + cb['vy'] * _k * elapsed
+        nx, ny = self._clamp_pos_to_desktop(int(nx), int(ny))
+        self.move(nx, ny)
+
     def check_window_movement(self):
         # 检查当前所在窗口是否移动，使用楼层系统处理
         
@@ -2451,10 +2575,24 @@ class RalseiPet(QMainWindow):
             return
         if getattr(self, 'game_state', {}).get('is_playing'):
             return
-        
+
+        # ===== 空中/摔倒/被拖拽中：不做楼层判定 =====
+        # 修复（"被甩飞时偶尔卡在一个动画里不继续" + "凭空掉到屏幕最底"）：
+        # 本函数在 update_movement 里位于 is_jumping / is_gravity_falling / is_falling
+        # 三个分支**之前**，所以摔倒飞行的途中它照样会跑。飞行中宠物会越过
+        # "窗口→桌面"的边界 → 触发 start_falling() → is_gravity_falling 与 is_falling
+        # 同时为真 → update_movement 优先走重力分支，handle_fall 的 _fall_phase
+        # 再也不推进 → 宠物永久卡在 jump_ball 且一路掉到屏幕底。
+        # 同理，拖拽中宠物位置由鼠标直接驱动，也不该被楼层跟随/失足打断。
+        if (getattr(self, 'is_falling', False)
+                or getattr(self, 'is_gravity_falling', False)
+                or getattr(self, 'is_jumping', False)
+                or getattr(self, '_is_being_dragged', False)):
+            return
+
         # 更新楼层信息
         self.floor_manager.update_floors()
-        
+
         # 获取Ralsei当前位置
         current_pos = self.pos()
         ralsei_rect = QRect(current_pos.x(), current_pos.y(), self.width(), self.height())
@@ -2588,6 +2726,10 @@ class RalseiPet(QMainWindow):
         self.fall_start_time = time.time()
         self.is_recovering = False
         self.recovery_duration = 0.0
+        # 修复（状态互斥）：is_falling / is_gravity_falling 同时为真时，
+        # update_movement 会优先走重力分支（handle_gravity_fall），handle_fall 的
+        # 分阶段流程永远不推进 → 宠物卡在摔倒动画里不动。两种"坠落"必须互斥。
+        self.is_gravity_falling = False
         # 修复：恢复时间从5秒降到2.5秒。
         # 人摔倒后晕一会就爬起来了，5秒恢复期+3-5秒摔倒=8-10秒趴在地上太久了。
         self.recovery_max_duration = 2.5
@@ -2665,6 +2807,11 @@ class RalseiPet(QMainWindow):
         self.splat_start_time = time.time()
         self.is_moving = False
         self.is_falling = True
+        # 修复（状态互斥）：唯一调用点（handle_gravity_fall）确实在调用前清过
+        # is_gravity_falling，但本方法若被其它路径调用就会出现 is_falling 与
+        # is_gravity_falling 同时为真 → update_movement 走重力分支、splat 流程停滞。
+        # 在这里显式清一次，把这个隐患从"靠调用方记得清"变成自洽。
+        self.is_gravity_falling = False
         self.is_recovering = False
         self.fall_duration = 0.0
         self.fall_start_time = time.time()
@@ -2845,6 +2992,13 @@ class RalseiPet(QMainWindow):
                 if _is_ballistic:
                     _vx0 = getattr(self, '_fall_vx', 0.0)
                     _vy0 = getattr(self, '_fall_vy', 0.0)
+                    # 起跳竖直速度只取"飞行第一帧"那一次：self._fall_vy 每帧末尾都会
+                    # 被写成当前速度，若每帧重读就会在下降段读到正数，
+                    # "初速朝上才用起跳高度落地"的判定随之失效。
+                    _vy0_launch = getattr(self, '_fall_vy0', None)
+                    if _vy0_launch is None:
+                        _vy0_launch = float(_vy0)
+                        self._fall_vy0 = _vy0_launch
                     _gy = float(getattr(self, 'gravity', 500.0)) or 500.0
                     _drag = 1.9  # 空气阻力系数(1/s)
                     _vx = float(_vx0) * max(0.0, 1.0 - _drag * elapsed_time)
@@ -2857,8 +3011,12 @@ class RalseiPet(QMainWindow):
                     _nx, _ny = self._clamp_pos_to_desktop(_nx, _ny)
                     # 落地判定：正在下落且回到起跳高度，或已经顶到桌面底边。
                     # 落点直接"吸附"到平面上，避免离散积分多冲出去一帧（几像素的抖动）
+                    # 修复（斜抛）：只有**初速朝上**（_vy0 < 0）时才存在"升到最高点再
+                    # 落回起跳高度"这一段；水平/向下甩的初速一上来 _vy 就 > 0，
+                    # 若仍按"回到起跳高度"判定就会在第 1 帧原地判定落地（摔在松手点），
+                    # 斜抛根本飞不起来。此时改为一路落到真正的实心地面。
                     _hit_floor = _ny >= _floor_y
-                    _hit_launch = (_vy > 0 and _ny >= _launch_y)
+                    _hit_launch = (_vy0_launch < 0 and _vy > 0 and _ny >= _launch_y)
                     if _hit_floor or _hit_launch:
                         self.move(_nx, _floor_y if _hit_floor else _launch_y)
                         self._fall_vx = 0.0
@@ -2900,10 +3058,9 @@ class RalseiPet(QMainWindow):
                     self.sound_manager.play_splat()
                 except Exception:
                     pass
-                # 清除滑行/抛物线速度与落地标记
-                for attr in ('fall_slide_speed_x', 'fall_slide_speed_y',
-                             '_fall_vx', '_fall_vy', '_fall_launch_y',
-                             '_fall_landed', '_fall_flight_time'):
+                # 清除滑行/抛物线速度与落地标记（注意：**不含** _fall_phase，
+                # 它刚被置为 "splat"，下面还要靠它推进阶段机）
+                for attr in _FALL_VELOCITY_ATTRS:
                     if hasattr(self, attr):
                         delattr(self, attr)
             elif phase == "splat" and _phase_t >= 1.0:
@@ -2945,9 +3102,7 @@ class RalseiPet(QMainWindow):
                     self.play_animation_once("pose", restore_to="idle")
                 else:
                     self.change_animation("idle", force=True)
-                for attr in ('fall_slide_speed_x', 'fall_slide_speed_y',
-                             '_fall_vx', '_fall_vy', '_fall_launch_y',
-                             '_fall_landed', '_fall_flight_time'):
+                for attr in _FALL_VELOCITY_ATTRS:
                     if hasattr(self, attr):
                         delattr(self, attr)
                 self.emotion_system.react_to_event('recovery_started', {})
@@ -2963,9 +3118,7 @@ class RalseiPet(QMainWindow):
                 # 恢复完成，返回正常状态
                 self.is_falling = False
                 self.is_recovering = False
-                for _a in ('_fall_phase', '_fall_phase_start', '_fall_vx', '_fall_vy',
-                           '_fall_launch_y', '_fall_landed', '_fall_flight_time',
-                           'fall_slide_speed_x', 'fall_slide_speed_y'):
+                for _a in _FALL_STATE_ATTRS:
                     if hasattr(self, _a):
                         delattr(self, _a)
                 self.is_splat = False
@@ -4463,6 +4616,8 @@ class RalseiPet(QMainWindow):
             self.current_speed_x = 0
             self.current_speed_y = 0
             self._is_being_dragged = True
+            # 空中接住：坠落途中按下鼠标 = 抓住（含"线速度缓冲减速"，不做撞墙式急停）
+            self._catch_falling_in_air()
             # 甩飞判定重做（用户反馈"判定范围太广"）：记录 (时间戳, x, y) 采样序列，
             # 松手时用"最近 120ms 内的真实速度 px/s"判定，而不是"相邻两次事件的像素差"。
             # 旧逻辑把位移当速度用，慢拖一大步也会 >150 被判甩飞；且最后两次采样可能是
@@ -4886,13 +5041,24 @@ class RalseiPet(QMainWindow):
                     else:
                         self.change_animation("fall", force=True)
 
-                    # ===== 抛物线初速（俯视 2D 风格）=====
-                    # 水平：沿用甩出方向的速度（衰减 55%），限幅避免飞出屏幕外太远；
-                    # 竖直：一定带一个向上分量（被甩飞必然先腾空），再由重力拉下来。
-                    _vx = max(-1600.0, min(1600.0, rel_vx * 0.55))
-                    _vy = max(-1400.0, min(600.0, rel_vy * 0.55))
-                    if _vy > -350.0:
-                        _vy = -350.0 - abs(_vy) * 0.5  # 保证有可见的上抛弧线
+                    # ===== 斜抛初速：完全由"松手瞬间的速度矢量"决定 =====
+                    # 用户反馈："被甩飞时候的那个抛物线是斜抛运动，轨迹要由初速度方向
+                    # 和大小决定"。原实现把竖直分量强行掰成向上：
+                    #     if _vy > -350.0: _vy = -350.0 - abs(_vy) * 0.5
+                    # 于是"横着甩"和"往下甩"都会被改成上抛，方向完全不对。
+                    # 现在只做等比缩放 + 整体限幅：
+                    #   · 等比缩放 → 保持方向（角度）不变，只改速度大小；
+                    #   · 限幅按**矢量和**做 → 不会像逐分量限幅那样把角度掰弯。
+                    # 不注入任何额外分量，水平甩就是水平斜抛，下甩就直接往下走。
+                    _LAUNCH_SCALE = 0.55
+                    _vx = rel_vx * _LAUNCH_SCALE
+                    _vy = rel_vy * _LAUNCH_SCALE
+                    _v_mag = (_vx ** 2 + _vy ** 2) ** 0.5
+                    _MAX_LAUNCH_SPEED = 1600.0
+                    if _v_mag > _MAX_LAUNCH_SPEED:
+                        _k = _MAX_LAUNCH_SPEED / _v_mag
+                        _vx *= _k
+                        _vy *= _k
                     self._fall_vx = _vx
                     self._fall_vy = _vy
                     self._fall_launch_y = self.pos().y()
@@ -6459,6 +6625,19 @@ class RalseiPet(QMainWindow):
 
         # ===== 一次性动画保护：如果正在播放一次性动画，跳过状态逻辑覆盖 =====
         _play_once = getattr(self, '_play_once_active', False)
+        # 修复（"被甩飞时偶尔卡在一个动画里不继续"）：完成检测那边写的是
+        # `_fc = len(sprites[current_animation]); if _fc > 0 and counter >= _fc`，
+        # 所以当前动画的帧列表一旦为空（素材缺失 / 名字拼错 / 别名没解析出来），
+        # 计数永远不满足 → _play_once_active 永久为真 → 本函数一直跳过正常状态逻辑，
+        # 宠物就永久卡死在这一帧。这里做一次自检：数不出帧就解除保护。
+        if _play_once and len(self.sprite_loader.sprites.get(self.current_animation, [])) == 0:
+            _log.warning("[动画] 一次性动画 %r 没有可用帧，解除卡死保护并回落 idle",
+                         self.current_animation)
+            self._play_once_active = False
+            self._play_once_frame_counter = 0
+            self._play_once_callback = None
+            self.next_animation = "idle"
+            _play_once = False
 
         # 确定当前应该播放的动画
         new_animation = None

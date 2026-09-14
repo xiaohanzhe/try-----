@@ -100,6 +100,12 @@ SUITES = [
         'offscreen': True,
         'desc': '第八轮：楼层身份改用稳定标识（不再"看到窗口就摔"）+ 落地同步 current_floor',
     },
+    {
+        'id': 'round8_fling',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_fling.py'),
+        'offscreen': True,
+        'desc': '第八轮：斜抛（方向由松手速度定）+ 空中可二次抓住（按线速度缓冲减速）+ 卡动画自检',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
