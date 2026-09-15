@@ -43,3 +43,6 @@ code-quality-audit/regress/_out/
 
 # 各轮次的临时侦察/调试日志（只留可复算的脚本 + 报告，不留散落日志）
 code-quality-audit/*/_recon/
+# 自检脚本的临时沙箱（临时记忆文件等，绝不该入库）
+code-quality-audit/*/_evidence/tmp*/
+code-quality-audit/*/_evidence/_tmp*/
