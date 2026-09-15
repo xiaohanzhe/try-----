@@ -1,17 +1,23 @@
 {
   "note": "归一化输出的 SHA-256 快照。改造前后必须逐字节一致；有意变更时用 --update 重建。",
   "suites": {
+    "round10_graph": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 98,
+      "sha256": "c455f9410545f29de5b5e195e2a55bd0626d62a8f92f963ecde86dd922a2d375"
+    },
     "round5_smoke": {
       "exit": 0,
       "fail": 0,
-      "pass": 24,
-      "sha256": "0b573ca6a96d50f90121536f1a25fb85343b68e0b0ef3aad7bf8f8b21115c135"
+      "pass": 25,
+      "sha256": "98b653394dbd772a384f4999d20c8b7445258945588c4d6f12b5c9ee0c62e3b5"
     },
     "round5_verify": {
       "exit": 0,
       "fail": 0,
       "pass": 16,
-      "sha256": "0b5e583e6fe220d430b4da84bab39ffafa2d61c5d66d6c8f0bdb80893da3446a"
+      "sha256": "1bc5ba4b1c3ede2576016df0ccc84c58cbed2c7f9824dd4d30f6193223f42b93"
     },
     "round6_verify": {
       "exit": 0,

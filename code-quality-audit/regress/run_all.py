@@ -50,7 +50,7 @@ SUITES = [
         'id': 'round5_smoke',
         'script': os.path.join(ROOT, 'code-quality-audit', '第五轮', 'smoke_import_round5.py'),
         'offscreen': False,
-        'desc': '第五轮：24 个 modules 全量导入冒烟 + 2 个源码不变量',
+        'desc': '第五轮：25 个 modules 全量导入冒烟 + 2 个源码不变量',
     },
     {
         'id': 'round5_verify',
@@ -123,6 +123,13 @@ SUITES = [
         'script': os.path.join(ROOT, 'code-quality-audit', '第九轮', 'verify_round9_memory.py'),
         'offscreen': True,
         'desc': '第九轮：拟人记忆（选择性记住/联想召回/遗忘与日摘要/复习强化）+ 存储落 E 盘与桌面兜底搬运',
+    },
+    {
+        'id': 'round10_graph',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十轮', 'verify_round10_graph.py'),
+        'offscreen': False,
+        'desc': '第十轮：分层关联图（强/中/弱边 + hub 惩罚）+ 受控多跳检索（路径打分/PPR/每跳过滤/'
+                '重排去重/预算/LLM 验证钩子）+ 反馈学习边权 + 离线巩固 + 噪声率·有用率·成功率',
     },
 ]
 

@@ -1,0 +1,38 @@
+========================================================================
+真机记忆召回取证（源文件只读）
+========================================================================
+记忆文件 = C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\memory.json
+文件存在 = True
+源文件取证前 = size 537  mtime 2026-09-12 21:57:46
+文件 schema = None  字节 = 537
+文件里 assoc 值类型 = ['空']（int=第九轮旧格式）
+文件里 fragments = 0  keys = 0  digests = 0  assoc 词条 = 0
+2026-09-15 23:33:37 [INFO] ralsei_pet.memory_system — 新位置无记忆，已从旧版 memory.json 继承: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\memory.json
+
+--- 升级结果 ---
+加载耗时 = 5.5 ms
+落点 = C:\Users\23002\AppData\Local\Temp\ralsei_real10_h81dn14z\scratch（on_device=True）
+图自检 = {'keys': 0, 'edges': 0, 'tiers': {'strong': 0, 'mid': 0, 'weak': 0}, 'weak_penalty': 0.0, 'df_entries': 0, 'corpus': 0}
+索引关键词数 = 0
+边记录（带 tier）总数 = 0
+
+--- 真实召回（线索取自真实高频词：游戏、今天）---
+
+· 线索「游戏」  -> 0 条  耗时 4.1 ms
+
+· 线索「今天」  -> 0 条  耗时 0.0 ms
+
+--- 出口文案（真机数据）---
+(该线索没有想起任何东西)
+
+--- 场景重构（真机数据）---
+(没聚到同一天的片段)
+
+--- 巩固与指标（不写盘）---
+consolidate = {'edges_before': 0, 'decayed': 0, 'pruned': 0, 'promoted': 0, 'demoted': 0, 'added': 0, 'keys_before': 0, 'edges_after': 0, 'keys_after': 0, 'tune': {'weak_penalty_before': 0.0, 'weak_penalty_after': 0.0, 'weak_useful_rate': None}}
+metrics = {'queries': 3, 'items': 0, 'used': 0, 'noise_rate': 0.0, 'useful_rate': 0.0, 'success_rate': 0.0, 'by_tier': {}, 'by_hop_total': {}, 'weak_penalty': 0.0}
+
+单次召回最慢 = 4.1 ms（预算上限 120.0 ms）
+源文件取证后 = {'size': 537, 'mtime': 1789221466.5425448}
+源文件未被改动 = True（size+mtime 前后一致；本轮写盘全部落在临时目录 C:\Users\23002\AppData\Local\Temp\ralsei_real10_h81dn14z）
+========================================================================

@@ -1,0 +1,23 @@
+========================================================================
+回归基线（G2）  ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+解释器 = C:\Python311\python.exe
+========================================================================
+
+suite            exit   PASS   FAIL   比对       说明
+------------------------------------------------------------------------
+round5_smoke     0      25     0      IDENTICAL 第五轮：25 个 modules 全量导入冒烟 + 2 个源码不变量
+round5_verify    0      16     0      IDENTICAL 第五轮：16 项缺陷修复断言（对话/施法/成就/记忆）
+round6_verify    0      39     0      IDENTICAL 第六轮：39 项行为修复断言（对话/甩飞/抛物线/帧率/多屏）
+round7_launch    0      5      0      IDENTICAL 第七轮：文档化启动（仅 src/ 在 path）不再 ModuleNotFoundError
+s1_anim_miss     0      17     0      IDENTICAL H5-S1：动画名未命中自检 17 项 + 501 样本等价性
+s2_anim_json     0      40     0      IDENTICAL H5-S2：animations.json 与硬编码表深度等价 + 回落可用
+s3_alias_legacy  0      19     0      IDENTICAL H5-S3：alias_of / legacy 显式化后语义仍等价
+round8_dialogue  0      20     0      IDENTICAL 第八轮：对话框 ▼ 闪烁不再撑高抖动 + 滚动位置不被弹回顶部
+round8_floor     0      16     0      IDENTICAL 第八轮：楼层身份改用稳定标识（不再"看到窗口就摔"）+ 落地同步 current_floor
+round8_fling     0      31     0      IDENTICAL 第八轮：斜抛（方向由松手速度定）+ 空中可二次抓住（按线速度缓冲减速）+ 卡动画自检
+round8_anim      0      28     0      IDENTICAL 第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 3 分钟 + 鞠躬锚点
+round9_focus     0      54     0      IDENTICAL 第九轮：对话注意力锚（换题只能由用户发起）+ 对话框 20s 无输入隐藏（鼠标压输入栏不隐藏）+ 自主开口不打断聊天
+round9_memory    0      51     0      IDENTICAL 第九轮：拟人记忆（选择性记住/联想召回/遗忘与日摘要/复习强化）+ 存储落 E 盘与桌面兜底搬运
+round10_graph    0      98     0      IDENTICAL 第十轮：分层关联图（强/中/弱边 + hub 惩罚）+ 受控多跳检索（路径打分/PPR/每跳过滤/重排去重/预算/LLM 验证钩子）+ 反馈学习边权 + 离线巩固 + 噪声率·有用率·成功率
+
+合计：PASS=459 FAIL=0  套件=14
