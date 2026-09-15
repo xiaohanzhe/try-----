@@ -5,7 +5,7 @@
   不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md` / `H5-*.md`）；证据 `code-quality-audit/<轮次>/`，
   侦察日志进 `<轮次>/_recon/`（gitignore），要留痕的进 `_evidence/`。
-- 改代码前跑 G2：`code-quality-audit/regress/run_all.py`（11 套件）。
+- 改代码前跑 G2：`code-quality-audit/regress/run_all.py`（15 套件）。
 
 ## 环境铁律
 1. **Bash 工具不可用**（`ls`/`cd`/`dirname` 全 command not found）→ 一律 **PowerShell 工具**；列目录用 Glob/Read。
@@ -70,6 +70,18 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 `
   加进关键词分，被路径剪掉的 hub 词会被复活（R2c 抓到过）。
   且 `assoc` 是 property、`_graph` 是唯一真源；`graph.paths()` 只吃 `seed_map()` 归一化后的 dict
   （传 list 会 `seeds.items()` 抛错并被防御性 except 吞掉 → **多跳静默返回空**）。
+- **联想输入端（第十一轮）**：
+  ① 抽词唯一入口是 `conversation_focus.extract_keywords`（**三层择优**：`_from_segmenter` →
+     `_extract(strict=True)` → `_extract(strict=False)` 兜底，**不返回空**）。碎片治理靠
+     **位置专员剪刀**（`_STOP_MULTI`/`_EDGE_FUNC`/`_INNER_FUNC`+`_INNER_VERB`/`_EDGE_VERB`/`_TAIL_FUNC`，
+     每把只盯一个字符位置）+ **免伤名单 `_KEEP_WORDS`**（真词命中即绕过全部结构剪刀）。
+     `_ngrams` 必须**按位置生成**（顺序即语义）。`set_segmenter(fn)` 是分词器注入点，
+     **抛异常/返回空都回落内置**（第十二轮接 jieba 用）。
+  ② 建边拓扑 `memory_graph.EDGE_TOPOLOGY` **默认仍是 `clique`**（勿凭直觉改 star/chain）：
+     实测 star/chain 精确率更高（55% vs 50%）、密度更低（0.83 vs 3.26 边/点），
+     **但过不了多跳可达闸门** —— 强制 `代码—熬夜—咖啡`（代码与咖啡从未同句）时，
+     clique stage2(中边) 通、stage3 通；star/chain **强边也断链**（非核心词之间无直连，路径超跳数）。
+     密度靠**输入端**（抽干净词 + 分层 + hub 惩罚 + 路径分）压，**不靠砍边**。回归锁 B13–B17。
 - **误报清单（勿据此改）**：`learn_new_skill` 有 `if new_skills:` 守卫；`_on_ai_reply` 跨线程已由
   `pyqtSignal` 排主线程；`reset_special_states` 零调用；原子写/回收站删除已正确防御。
 
@@ -101,6 +113,18 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 `
   `fragments`/`keys`/`digests`/`assoc` + `forget_cycle`/`recall`/`recall_text`/`reconstruct_scene`/`reset_all`；
   `dialogue_ui` 加 `AUTO_HIDE_MS=20000`/`has_active_conversation`/`_mouse_on_input(global_pos=None)`/`_note_memory`。
   自检 **105 PASS / 0 FAIL**，G2 **13 套件 / 360 PASS / 全 IDENTICAL**。真机：`E:\RalseiMemory\memory.json`。
+- 第十轮（2026-09-15，**已完成**）：受控多跳联想 —— 新增 `modules/memory_graph.py`（566 行，
+  分层边/hub 惩罚/路径打分/PPR/反馈学习/离线巩固/`RecallBudget` 预算，纯标准库）；
+  `memory_system.recall()` 重写为**五段管线**（直命中→图路径+PPR→合并打分→rerank→可选 LLM 验证）。
+  被实测修正两处：① 静态 tier 门槛把多跳锁死（→ `{1:weak,2:weak,3:mid}` + 中转资格）；
+  ② PPR 加法会绕过路径过滤（→ 只加权不准入）。自检 98/0，G2 **14 套件 / 459 PASS / 全 IDENTICAL**。
+  报告 `代码质量复审报告_2026-09-15_第十轮.md`（提交 `e9f6b00` / 报告 `e352515`）。
+- 第十一轮（2026-09-15，**已完成**）：联想输入端治理（承接第十轮 §五 P0）。
+  P0-1 抽词剪刀：碎片 94→57（-39%）、建图节点 81→46（-43%）；P0-2 拓扑**实测推翻"改用 star"的直觉**，
+  多跳闸门证明只有 `clique` 走得通跨句联想 → 默认保留 clique（详见"勿回退契约·联想输入端"）。
+  自检 64/0，G2 **15 套件 / 523 PASS / 全 IDENTICAL**。报告 `代码质量复审报告_2026-09-15_第十一轮.md`。
+  残渣账本（未治，须接分词库）：`天下/天开/塞尔/习编/编程需/花不/咖啡感/件事` 等。
+  下一步：接轻量分词库走 `set_segmenter()`；第十轮遗留 `change_animation` 长→短回退冲突。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 工具/基线 `code-quality-audit/架构改造-H4H5/`（只读）。**量化基线（勿重测）**：`main.py` 8794 行 /

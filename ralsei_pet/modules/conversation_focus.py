@@ -12,6 +12,7 @@
 本模块就是这个焦点，刻意做成一个**轻量、可解释、不需要模型**的跟踪器：
 
   · 关键词提取：中文取 2/3 字滑窗（过滤停用词与语气词）+ 英文/数字词。
+    （第十一轮起再加"首字剪刀"专杀跨词碎片，并支持注入外部分词器；见 `extract_keywords`。）
   · 归属判定：新话与当前话题的关键词做**覆盖度**比较；指代词（"这个/它/继续/刚才"）
     与"接着说"类标记直接判为延续。
   · 话题生命周期：开题 → 延续（累计轮数/时长）→ 冷场超时归档。
@@ -54,7 +55,78 @@ _EDGE_FUNC = frozenset(
     "吗呢吧啊呀哦嗯啦嘛哟哇很挺太更最怎谁哪几多么个在把被让给"
     "聊说想问讲看听想做"
 )
+# 内部功能字。**注意`_INNER_FUNC`里的字全都也在`_EDGE_FUNC`里** ——
+# 所以只对长度 ≥3 的词做"内部检查"与原来对 2 字词也做的效果等价（见 `_keep`）。
 _INNER_FUNC = frozenset("的了着过和与或这那我们吗呢吧啊呀哦嗯啦嘛么个")
+
+# 第十一轮：把剪刀按"位置专精"补全 --------------------------------------------
+#
+# 病根（真机实测）：滑窗法最大的漏网之鱼是"**被单字动词切开的碎片**"。
+#   "想写点代码"        → 旧词法 {写点, 点代, 点代码, 代码}，只有 `代码` 是真词；
+#   "写代码写累了就喝咖啡" → 旧词法 {写代, 写代码, 代码, 代码写, 码写, …}；
+#   "今天下雨会有点冷吧"  → 旧词法 9 个词里 `雨会/会有/点冷/天下雨…` 全是碎片。
+# 这些碎片混进记忆图后会被反复共现、抬成中边 → 当上"中转站" → 联想一路漂移
+# （报告里那条 `写代码 → 写代 → 爬山` 就是这么来的）。
+#
+# 三把**位置专精**的剪刀（与 `_EDGE_FUNC` 那种"首尾都查、且是第九轮既有"的分开）：
+#
+# ① `_EDGE_VERB`：查**首字或尾字**。单字动词/助动词出现在窗口边缘，说明窗口是从它
+#    中间切开的（首：`点代/想写点`；尾：`码写/雨会/挺有`）。
+#    刻意**不收**：来(未来/回来/出来)、去(去年)、下(下雨/下午)、上(上班)、
+#    开(开会/开心)、到、得、着、过、好、太、很 —— 它们当边缘字时更多是在构成正常词。
+_EDGE_VERB = frozenset("想要会写点有听做用学带记喝去杯觉")
+
+# ② `_INNER_VERB`：查**内部**（只对长度 ≥3 的词，看第 2 个字起）。
+#    这样 `天想写`(内部"想")、`息一下`(内部"一")、`事很重`(内部"很")、
+#    `气不错`(内部"不") 会被杀掉；而同样含这些字、但落在首/尾的正常词
+#    （开会/机会/社会/重要/不错）不受影响 —— 注意 `不错` 是 2 字词，
+#    内部检查不碰它，这正是"位置专精"的价值。
+_INNER_VERB = frozenset(
+    "想要会能该写说讲聊问看听干做给帮带记用来买喝学玩点一"
+    "不很挺太更最都也又就而且还但多些好下"
+)
+
+# ③ `_TAIL_FUNC`：查**尾字**的数量/量词 —— 碎片"休息一/杯咖啡"这类是"词+量词"截面。
+_TAIL_FUNC = frozenset("一二三四五六七八九十百千两半杯")
+
+# 「免伤名单」：会被上面某把剪刀切到、但本身是正常话题词的词。
+# 有了它才敢把剪刀开得这么宽 —— 宁可多列几十个词，
+# 也不要把"重要/会议/学习/记得"这种高频词误伤（那会让话题锚直接抽不到词，
+# 是用户可见的功能退化）。命中即**跳过所有结构剪刀**，只受停用词/去重约束。
+#
+# 另有一层保险：`extract_keywords` 在"严格词法一个词都没抽到"时会回落到
+# 宽松词法（不做这些新剪刀），所以像"重要吗"这种"唯一话题词恰好被切中"的句子
+# 不会变成空 —— 见 `extract_keywords` 的三层择优说明。
+_KEEP_WORDS = frozenset("""
+重要 需要 主要 要求 要紧 要么 必要 想要 理想 梦想 思想 幻想 感想 想象 想法 联想
+机会 社会 学会 开会 会议 晚会 一会儿 描写 填写 编写 喝咖啡 喝茶
+优点 缺点 重点 地点 热点 景点 起点 终点 特点 点心 所有 拥有 具有
+有点 有意思 有趣 有效 听说 好听 动听 做法 做梦 当做 做饭
+用户 用途 有用 使用 费用 作用 用法 学习 学校 学生 同学 数学 大学
+带来 带走 皮带 记得 记录 记忆 日记 笔记 忘记 记住 玩具 好玩 喝水 买单 去年
+杯子 睡觉 干杯
+""".split())
+
+# ④ 「含停用词」剪刀：候选词里若**整段包含**一个多字停用词，几乎必然是从它上面
+#    切出来的碎片（`时候天` 含 `时候`、`今天下` 含 `今天`）。
+#    只认**长度 ≥2** 的停用词：单字停用词（想/要/会/好）太常见于正常词内部
+#    （想法/重要/会议/爱好），拿它当判据会大面积误杀。
+_STOP_MULTI = frozenset(w for w in _STOPWORDS if len(w) >= 2)
+
+# 可选外部分词器注入点：装了 jieba 之类分词库的调用方可以
+# `set_segmenter(lambda t: jieba.cut(t))`，不必改本模块的代码。
+# 约定：返回可迭代的词序列；抛异常或返回空 → 自动回落内置词法。
+_SEGMENTER = None
+
+
+def set_segmenter(fn):
+    """注入外部分词器（`fn(text) -> Iterable[str]`）；传 `None` 恢复内置词法。"""
+    global _SEGMENTER
+    _SEGMENTER = fn
+
+
+# 纯虚词组合（如"的了"）—— 一定不是话题词
+_ALL_FUNC = '的了着过和与或也都是就还又而但却为所以如果那么这那'
 
 _CJK = r'\u4e00-\u9fff'
 _TOKEN_RE = re.compile(r'[A-Za-z][A-Za-z0-9_\-]{1,}|[0-9]{2,}|[%s]{2,}' % _CJK)
@@ -72,25 +144,68 @@ _QUESTION_MARKERS = ('?', '？', '吗', '呢', '怎么', '为什么', '什么', 
 
 
 def _ngrams(run):
-    """中文串取 2 字与 3 字滑窗（不用分词器也能覆盖绝大多数话题词）。"""
+    """中文串取 2 字与 3 字滑窗，**按出现位置排序**。
+
+    顺序很重要，不是审美问题：`extract_keywords` 的输出顺序会被
+    `memory_graph.edge_pairs('chain')` 当作"句子里的先后"来连边。
+    旧实现"先把所有 2 字窗倒完、再倒所有 3 字窗"，导致连出来的边
+    完全没有语义含义（实测：相邻边把 `点代` 连到 `代码`、`代码` 连到 `天想写`）。
+    """
     out = []
     n = len(run)
-    for size in (2, 3):
-        if n < size:
-            continue
-        if n == size:
-            out.append(run)
-            continue
-        for i in range(n - size + 1):
-            out.append(run[i:i + size])
+    for i in range(n):
+        for size in (2, 3):
+            if i + size <= n:
+                out.append(run[i:i + size])
     return out
 
 
-def extract_keywords(text):
-    """从一句话里抽出话题关键词（有序去重，保持出现顺序便于调试）。"""
-    if not text:
-        return []
-    s = str(text)
+def _keep(c, seen, strict=True):
+    """一个滑窗候选是不是够格当关键词（`strict`=是否启用第十一轮的新剪刀）。
+
+    结构剪刀共五把，各有明确的"位置专精"，避免互相误伤：
+
+      · 首/尾（`_EDGE_FUNC`）—— 句子骨架，第九轮既有；
+      · 首/尾（`_EDGE_VERB`）—— 被单字动词切开的碎片（`点代` / `码写` / `雨会`）；
+      · 尾字（`_TAIL_FUNC`）—— 数量词截面（`休息一` / `杯咖啡`）；
+      · 内部（`_INNER_FUNC` + `_INNER_VERB`，**只看长度 ≥3 词的第 2~n-1 个字**）；
+      · 含停用词（`_STOP_MULTI`）—— 整段包住一个多字停用词的碎片（`时候天`）。
+
+    `_INNER_FUNC` 里的字**全都也在 `_EDGE_FUNC` 里**，所以把"内部检查"限制到长度 ≥3
+    的词，对 2 字词的效果与第九轮完全等价（2 字词的非首即尾，已被首尾剪刀覆盖）。
+    `strict=False` 时只保留第九轮的既有剪刀（回落用），见 `extract_keywords`。
+    """
+    if c in _STOPWORDS or c in seen:
+        return False
+    # 免伤名单里的真词：跳过一切结构剪刀
+    if c in _KEEP_WORDS:
+        return True
+    # 整段包含多字停用词 → 是从停用词上切下来的碎片
+    if any(w in c for w in _STOP_MULTI):
+        return False
+    # 纯虚词组合（如"的了"）直接丢
+    if all(ch in _ALL_FUNC for ch in c):
+        return False
+    # 首/尾是骨架字 → 只可能是句子骨架
+    if c[0] in _EDGE_FUNC or c[-1] in _EDGE_FUNC:
+        return False
+    # 内部夹着功能字/单字动词 → 一定跨了词（只对 ≥3 字词做）
+    if len(c) >= 3 and any(ch in _INNER_FUNC or ch in _INNER_VERB
+                           for ch in c[1:-1]):
+        return False
+    if strict:
+        # 首/尾是单字动词 → 被动词切开的碎片
+        if c[0] in _EDGE_VERB or c[-1] in _EDGE_VERB:
+            return False
+        # 尾字数量词
+        if c[-1] in _TAIL_FUNC:
+            return False
+    return True
+
+
+def _extract(text, strict=True):
+    """内置滑窗词法。`strict=False` = 只做第九轮的既有剪刀（宽松档，回落用）。"""
+    s = str(text or '')
     seen, out = set(), []
     for m in _TOKEN_RE.finditer(s):
         tok = m.group(0)
@@ -102,19 +217,68 @@ def extract_keywords(text):
         else:
             cand = _ngrams(tok)
         for c in cand:
-            if c in _STOPWORDS or c in seen:
-                continue
-            # 纯虚词组合（如"的了"）直接丢
-            if all(ch in '的了着过和与或也都是就还又而但却为所以如果那么这那' for ch in c):
-                continue
-            # 滑窗碎片：首/尾是骨架字，或内部夹着强功能字 → 不是话题词
-            if c[0] in _EDGE_FUNC or c[-1] in _EDGE_FUNC:
-                continue
-            if any(ch in _INNER_FUNC for ch in c):
+            if not _keep(c, seen, strict):
                 continue
             seen.add(c)
             out.append(c)
     return out
+
+
+def _from_segmenter(text):
+    """外部分词器路径：分词器已经知道词边界，这里只做停用词/长度/去重过滤。"""
+    fn = _SEGMENTER
+    if fn is None:
+        return []
+    try:
+        words = list(fn(str(text or '')))
+    except Exception:
+        return []                                   # 分词器坏了 → 回落内置词法
+    out, seen = [], set()
+    for w in words:
+        w = str(w or '').strip()
+        if not w:
+            continue
+        if re.match(r'^[A-Za-z0-9]', w):
+            w = w.lower()
+            if len(w) < 3 or w in _EN_STOP:
+                continue
+        elif len(w) < 2:
+            continue
+        if w in _STOPWORDS or w in seen:
+            continue
+        seen.add(w)
+        out.append(w)
+    return out
+
+
+def extract_keywords(text):
+    """从一句话里抽出话题关键词（有序去重，保持**句中出现顺序**）。
+
+    三层**择优**（第十一轮）：
+
+      1. **外部注入的分词器**（若有，见 `set_segmenter`）—— 真分词器的结果最可信；
+      2. **严格词法** —— 第九轮既有剪刀 + 三把位置专精剪刀，专杀
+         `点代/码写/天想写/雨会/息一下` 这类被单字动词切开的碎片；
+      3. **宽松词法** —— 严格词法**一个词都没抽到**时，回落到只做第九轮剪刀。
+
+    第 3 层是**安全网**，不是装饰：句子里唯一的话题词若恰好被新剪刀切中
+    （如"重要吗"里的"重要"、"开会吗"里的"开会"），严格档会给出空列表，
+    于是话题锚会静默退化成"抽不到词 → 不建题" —— 那是**用户可见的功能退化**。
+    宁可在这种句子上退回旧行为（带上一点碎片），也不能让整条链路哑掉。
+
+    **顺序即语义**：输出顺序被 `memory_graph.edge_pairs('chain')` 当作"句子里的先后"
+    用来连边，因此这里必须按位置升序（`_ngrams` 已按位置生成）。
+    """
+    if not text:
+        return []
+    out = _from_segmenter(text)
+    if out:
+        return out
+    strict = _extract(text, strict=True)
+    if strict:
+        return strict
+    return _extract(text, strict=False)
+
 
 
 def _coverage(new_kw, topic_kw):

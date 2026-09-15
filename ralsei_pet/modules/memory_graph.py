@@ -86,6 +86,60 @@ _BRIDGE_MIN_RANK = _TIER_RANK[TIER_MID]
 # 跨跳衰减：每一跳把分数乘一次（两跳的间接联想天然不该压过直接命中）
 HOP_DECAY = 0.72
 
+# 「建边拓扑」：一句话里到底连哪些边 —— 可配置，但**默认值与直觉相反**（第十一轮）。
+#
+# 起因：第十轮是"全互连"（clique），短句抽 6~7 个词 → 一句话最多 21 条边，
+# **每句话都近似一个团**，于是"谁和谁都连"。真机语料实测 82 节点 / 460 边、
+# 452 条弱边，`咖啡`(0.0294) 与 `爬山`(0.0205) 的路径分几乎相同 —— 看着"没有区分度"。
+# 所以本轮的直觉是"降密度"：默认改成 star（核心词↔其他词）或 chain（只连相邻词）。
+#
+# **但这个直觉被实测否决了。** 三组实验（脚本在 `code-quality-audit/第十一轮/`）：
+#
+# ① 精确率（`probe_topology_precision.py`：12~18 句真实语料 × 7 个 seed，
+#    取 top-5 路径终点，用手标注真词表判"真词"）：新词法下
+#       clique 50% / 3.26 边每点   star 55% / 0.83   chain 55% / 0.86
+#    → star/chain 确实略高，看着该选它们。
+#
+# ② **多跳可达性受控实验**（`probe_multi_hop_gate.py`：`代码 —(熬夜)— 咖啡`，
+#    "代码"与"咖啡"从未同句，只改共现次数）：
+#       clique  stage1 弱边 no → stage2 中边 **YES**(hops=2) → stage3 强边 YES
+#       star    no → no → **no**
+#       chain   no → no → **no**
+#    → **只有 clique 能形成这条联想**。原因：star/chain 下"非核心词之间没有直连"，
+#      真实概念被中间词隔开，路径长度被摊长，于是 hop 数超限、被跳数/中转门槛掐断。
+#      star 更糟 —— 它把**最长（往往是最脏的 3 字碎片）**当核心，等于在真词之间塞一个噪声枢纽。
+#
+# ③ 而"密度"这个动机本身，主要来自**抽词脏**（`写点/点代/码写` 这类碎片两两互连）。
+#    抽词修好后（节点 -32%、碎片基本清零），clique 的密度也从 4.03 降到 3.26 边每点，
+#    且弱边占比大幅下降；剩下的"谁和谁都连"由**分层 + hub 惩罚 + 路径分**去管 ——
+#    那才是用户要的"限制道路"。
+#
+# 结论：**默认仍是 clique**；star/chain 保留为可切换的实验档（`EDGE_TOPOLOGY=...`），
+# 并在这里留档"它们为什么不被默认选用"，免得下一轮又有人凭直觉改一遍。
+EDGE_TOPOLOGY = 'clique'
+
+
+def edge_pairs(ks, topology=None):
+    """给出一句话的关键词之间要写的**无向边对**（按 `EDGE_TOPOLOGY` 控制密度）。"""
+    ks = [k for k in (ks or []) if k]
+    topo = topology or EDGE_TOPOLOGY
+    pairs = []
+    if topo == 'clique':
+        for i, a in enumerate(ks):
+            for b in ks[i + 1:]:
+                pairs.append((a, b))
+    elif topo == 'star':
+        if len(ks) >= 2:
+            # 核心词 = 最长的那个（等长取最先出现），最长 n-gram 通常最具体
+            core = max(range(len(ks)), key=lambda i: (len(ks[i]), -i))
+            for i, k in enumerate(ks):
+                if i != core:
+                    pairs.append((ks[core], k))
+    else:                                    # chain：只连相邻词
+        for i in range(len(ks) - 1):
+            pairs.append((ks[i], ks[i + 1]))
+    return pairs
+
 
 def tier_of(count, fb=0.0):
     """由共现次数 + 反馈决定边等级。"""
@@ -267,33 +321,48 @@ class MemoryGraph(object):
             return 0.5
 
     # ------------------------------------------------------------ 写入/更新
+    def _bump(self, a, b, inc, now):
+        """给 a→b 这条有向邻接项累加共现次数并重算层。"""
+        slot = self.edges.setdefault(a, {})
+        e = slot.get(b)
+        if not isinstance(e, dict):
+            e = {'n': 0, 'tier': TIER_WEAK, 'fb': 0.0, 'last': now}
+        e['n'] = int(e.get('n') or 0) + inc
+        e['last'] = now
+        e['tier'] = tier_of(e['n'], e.get('fb'))
+        slot[b] = e
+
+    def _trim_nb(self, a):
+        """单点邻居上限（保留边权最大的前 `MAX_NB_PER_KEY` 个）。"""
+        slot = self.edges.get(a)
+        if isinstance(slot, dict) and len(slot) > self.MAX_NB_PER_KEY:
+            self.edges[a] = dict(heapq.nlargest(
+                self.MAX_NB_PER_KEY, slot.items(),
+                key=lambda kv: edge_weight(kv[1], self.weak_penalty)))
+
     def add_cooccurrence(self, kws, now=None, weight=1.0):
-        """一句话里的词两两互加一条边（这就是"联想"的形成过程）。"""
+        """一句话里的词按 `EDGE_TOPOLOGY` 连边（默认 clique：句内全互连）。
+
+        边密度是记忆图的"信噪比开关"：全互连会让每句话变成一个团，
+        于是任何两个词都能"看起来相关"。见模块顶部 `EDGE_TOPOLOGY` 的实测数据 ——
+        本轮专门做了多跳**可达性**闸门实验，只有 clique 走得通 `代码→熬夜→咖啡`，
+        star/chain 在强边下也断链，故默认仍是 clique，密度靠"抽干净词 + 分层 +
+        hub 惩罚 + 路径分"来压，而不是靠砍边。
+        """
         try:
             ks = [k for k in (kws or []) if k]
             if len(ks) < 2:
                 return
             now = float(now if now is not None else time.time())
             inc = max(1, int(round(float(weight or 1.0))))
-            for a in ks:
-                slot = self.edges.setdefault(a, {})
-                for b in ks:
-                    if b == a:
-                        continue
-                    e = slot.get(b)
-                    if not isinstance(e, dict):
-                        e = {'n': 0, 'tier': TIER_WEAK, 'fb': 0.0, 'last': now}
-                    e['n'] = int(e.get('n') or 0) + inc
-                    e['last'] = now
-                    e['tier'] = tier_of(e['n'], e.get('fb'))
-                    slot[b] = e
-                if len(slot) > self.MAX_NB_PER_KEY:
-                    slot = dict(heapq.nlargest(
-                        self.MAX_NB_PER_KEY, slot.items(),
-                        key=lambda kv: edge_weight(kv[1], self.weak_penalty)))
-                    self.edges[a] = slot
+            pairs = edge_pairs(ks)
+            for a, b in pairs:
+                self._bump(a, b, inc, now)      # 邻接表对称：两个方向都写
+                self._bump(b, a, inc, now)
             if len(self.edges) > self.MAX_KEYS:
                 self._cap_keys()
+            for a in {x for p in pairs for x in p}:
+                self._trim_nb(a)
         except Exception as e:
             _log.debug("memory_graph 加边失败（已忽略）: %s", e)
 
@@ -629,6 +698,7 @@ class MemoryGraph(object):
         return {'keys': len(self.edges),
                 'edges': sum(len(v) for v in self.edges.values()),
                 'tiers': tiers,
+                'topology': EDGE_TOPOLOGY,
                 'weak_penalty': round(self.weak_penalty, 4),
                 'df_entries': len(self._df),
                 'corpus': self._total}

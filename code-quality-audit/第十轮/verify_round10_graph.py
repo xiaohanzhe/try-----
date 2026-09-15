@@ -127,15 +127,19 @@ ok('G3d 种子归一：list/dict/str 都收（调用方传错类型不再静默�
    and MG.seed_map('甲') == {'甲': 1.0}
    and MG.seed_map({'甲': 2}) == {'甲': 2.0})
 
+# 第十一轮更新：建边拓扑改为可配置（默认 star）。
+# 这组断言原来隐含"全互连(clique)"—— 用 3 个词调一次，再断言 `edges['a'] == {b, c}`；
+# 换成 star 后它**只是因为 a 恰好是核心词**才继续成立（歪打正着）。
+# 现在改成：用 2 个词做"成边 + 升层"断言（与拓扑无关），另在第十一轮套件里
+# 逐拓扑显式锁行为（`verify_round11_input.py` B 组）。
 g2 = MG.MemoryGraph()
 g2.refresh_df({}, 0)
-g2.add_cooccurrence(['a', 'b', 'c'])
-g2.add_cooccurrence(['a', 'b', 'c'])
-ok('G4 共现：两两成边且对称', set(g2.edges['a']) == {'b', 'c'}
-   and 'a' in g2.edges['b'] and 'a' in g2.edges['c'])
+g2.add_cooccurrence(['a', 'b'])
+g2.add_cooccurrence(['a', 'b'])
+ok('G4 共现：成边且邻接表对称', ('b' in g2.edges['a']) and ('a' in g2.edges['b']))
 ok('G4b 共现两次 → n=2 且升为中边',
    g2.edges['a']['b']['n'] == 2 and g2.edges['a']['b']['tier'] == MG.TIER_MID)
-g2.add_cooccurrence(['a', 'b', 'c'])
+g2.add_cooccurrence(['a', 'b'])
 ok('G4c 共现三次 → 升为强边', g2.edges['a']['b']['tier'] == MG.TIER_STRONG)
 
 g3 = MG.MemoryGraph()
@@ -149,7 +153,6 @@ ok('G5b cap_keys(limit) 公开可用并生效',
 
 # hub 惩罚：同一个词在语料里到处出现 / 连了很多人 → 权重要被压下去
 gh = MG.MemoryGraph()
-_pairs = ['hub']
 gh.add_cooccurrence(['hub'] + ['x%d' % i for i in range(12)])
 _idx = {'hub': list(range(1000)), 'r@re': [0]}
 gh.refresh_df(_idx, 1000)
