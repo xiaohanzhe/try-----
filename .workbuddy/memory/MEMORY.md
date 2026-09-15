@@ -61,12 +61,25 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 `
   播放期 `_special_anim_locked()` 禁移动且 **force 也不能打断**；待机循环需原地静止
   ≥`IDLE_LOOP_MIN_SECONDS=180` 才推进帧；动画切换位置一致靠 `_anim_anchor_offset`/
   `_compose_anchored_sprite` 按 alpha 包围盒中心对齐（idle 偏移 (-20,+2.5)）。
+- **多跳联想（第十轮）**：分层边（strong/mid/weak）+ hub 惩罚（IDF×度，∈[0.25,1]）+ 路径打分
+  （∏边权×∏节点权×`HOP_DECAY=0.72`^跳数）+ `RecallBudget` 预算截断。两条铁律：
+  ① 跳层门槛用 `HOP_TIER_FLOOR={1:weak,2:weak,3:mid}` + **中转资格** `_BRIDGE_MIN_RANK=mid`
+  （弱边**可到达、不可再出发**）—— 写成静态 `{1:weak,2:mid,3:strong}` 会在真实语料（98% 弱边）
+  下把多跳整体锁死；
+  ② **PPR 只加权不准入**（`kw *= 1 + PPR_MIX×ppr_norm`），准入永远由路径分决定 —— 一旦把 PPR
+  加进关键词分，被路径剪掉的 hub 词会被复活（R2c 抓到过）。
+  且 `assoc` 是 property、`_graph` 是唯一真源；`graph.paths()` 只吃 `seed_map()` 归一化后的 dict
+  （传 list 会 `seeds.items()` 抛错并被防御性 except 吞掉 → **多跳静默返回空**）。
 - **误报清单（勿据此改）**：`learn_new_skill` 有 `if new_skills:` 守卫；`_on_ai_reply` 跨线程已由
   `pyqtSignal` 排主线程；`reset_special_states` 零调用；原子写/回收站删除已正确防御。
 
 ## 验证脚本教训（第八轮踩过）
 - **别用 `"字面量" in 源码` 做源码级断言**：注释与文档字符串会误命中。用 `code_only()`
-  （tokenize 剥 COMMENT/STRING 再扫）。
+  （tokenize 剥 COMMENT/STRING 再扫）。**但 `tokenize` 不产空白 token** → 拼回必须 `' '.join`
+  （用 `''.join` 会把 `import heapq` 粘成 `importheapq`，子串断言恒假）；比较两侧都先
+  `re.sub(r'\s+','',...)`，并加一条"自检自检"的 X0 用例。
+- **防御性 `except` 必须配异常计数**：一轮里 `paths()` 收到 list 抛 `AttributeError` 被静默吞掉，
+  表现为"多跳永远返回空"，排查成本极高。
 - 顺序断言必须限定在**目标函数体内**（`func_src(name)`），不能用全文件 `.index()`（会取到别的函数里
   更早的同名串 → 顺序判反）。
 - 行为级断言优先于字符串断言；`SimpleNamespace` 桩要 `types.MethodType` 绑实例方法。
