@@ -1,0 +1,139 @@
+﻿python = C:\Python311\python.exe
+
+[S] 瀛樺偍浣嶇疆
+[PASS] S1 璁惧鍏抽棴 鈫?妗岄潰鍏滃簳 <妗岄潰>/memory
+[PASS] S2 璁惧瀛樺湪 鈫?鐢ㄨ澶囩洰褰?
+[PASS] S3 璁板繂鏂囦欢鍚嶄负 memory.json
+[PASS] S4 鍏抽棴璁惧鏃?find_device_dir(create=False) 鈫?None
+[PASS] S5 寮哄埗璁惧鐩綍鏃?find_device_dir 鍘熸牱杩斿洖
+
+[M] 妗岄潰 鈫?璁惧鐨勬惉杩?
+[PASS] M1 璁惧涓虹┖鏃舵惉鍏ュ苟娓呯悊妗岄潰鍓湰涓庣┖鐩綍
+[PASS] M2 妗岄潰鏇存柊 鈫?鐢ㄦ闈㈢殑锛屾棫鐨勮澶囩増鐣欐。涓嶄涪
+[PASS] M3 鎼繍鍚庢闈㈠壇鏈娓呮帀
+[PASS] M4 璁惧鏇存柊 鈫?淇濈暀璁惧鐗堬紝妗岄潰閭ｄ唤鐣欐。
+[PASS] M5 妗岄潰鏃犺蹇?鈫?moved=False 涓斾笉鎶ラ敊
+[PASS] M6 鐩爣鍗冲厹搴曠洰褰?鈫?涓嶆惉锛堥槻鑷垜鍒犻櫎锛?
+
+[F] 閫夋嫨鎬ц蹇嗭紙灏忕墖娈?/ 鍏抽敭璁板繂锛?
+[PASS] F1 姝ｅ父鍐欏叆鐗囨锛堝惈 id/鏃?keywords/寮哄害锛?
+[PASS] F2 澶煭锛?2 瀛楋級涓嶇畻鐗囨
+[PASS] F3 瓒呴暱鐗囨琚埅鏂埌涓婇檺
+[PASS] F4 2 灏忔椂鍐呴噸澶嶅悓鍙?鈫?涓嶆柊澧烇紝鍙綋浣滃涔?
+[PASS] F5 涓讳汉璇寸殑璇濇樉钁楁€ф洿楂?
+[PASS] F6 鍚屼竴鏉″叧閿蹇嗕笉鍘婚噸鍫嗙Н锛堝彧绱娆℃暟锛?
+[PASS] F7 鐗囨鏁板彈涓婇檺绾︽潫
+
+[R] 鍙洖 / 鑱旀兂鎵╂暎 / 鍦烘櫙閲嶆瀯
+[PASS] R1 鐩存帴鍛戒腑骞舵帓绗竴
+[PASS] R2 鑱旀兂鎵╂暎锛氬叡鐜拌瘝鎶婄浉閭昏瘽棰樹篃甯﹀嚭鏉?
+[PASS] R3 琚兂璧?鈫?鍙洖蹇嗗害鎻愬崌锛堝涔犳晥搴旓級
+[PASS] R4 recall_text 鏈夊懡涓?鈫?鍚?闆舵槦鐨勫洖蹇?涓庡師鏂?
+[PASS] R5 recall_text 瀹屽叏鏃犲叧 鈫?杩斿洖绌轰覆锛堜笉纭紪锛?
+[PASS] R6 鍏抽敭璁板繂浼樺厛鍑虹幇鍦ㄥ彫鍥炵粨鏋滈噷
+[PASS] R7 鍦烘櫙閲嶆瀯鑳芥嫾鍑哄彊杩?
+[PASS] R8 鍊掓帓绱㈠紩宸插缓绔?
+[PASS] R9 鍙洖缁撴灉涓嶉噸澶?
+
+[G] 閬楀繕 / 鏃ユ憳瑕?/ 淇濇姢鏈?
+[PASS] G1 鍙堝急鍙堣€佸張鏃犲叧鐨勭墖娈佃蹇樻帀
+[PASS] G2 鏈€杩?24 灏忔椂鍐呯殑鍐呭鍙椾繚鎶わ紙寮哄害鍐嶄綆涔熶笉鍒狅級
+[PASS] G3 鍏抽敭璁板繂鍏嶇柅閬楀繕
+[PASS] G4 閬楀繕鍛ㄦ湡浼氳“鍑忓己搴?
+[PASS] G5 瓒呰繃 2 澶╃殑鏃ュ瓙浼氱敓鎴?鏃ユ憳瑕?
+[PASS] G6 鏃ユ憳瑕佺暀涓嬮偅澶╃殑"鍗拌薄"锛堝叧閿瘝鎴栧師璇濓級
+[PASS] G7 纭笂闄愬厹搴曞悗鐗囨鏁颁笉瓒呬笂闄?
+[PASS] G8 閬楀繕鍚庣储寮曚笌鐗囨鏁颁竴鑷达紙鏃犺剰涓嬫爣锛?
+
+[P] 鎸佷箙鍖?
+[PASS] P1 钀界洏鍚?schema=2 涓庡瓨鍌ㄧ被鍨?
+[PASS] P2 钀界洏鍖呭惈鏂拌蹇嗗眰鍥涗釜閿?
+[PASS] P3 閲嶆柊鍔犺浇鍚庣墖娈?鍏抽敭璁板繂/鏃ユ憳瑕佷竴鑷?
+[PASS] P4 閲嶆柊鍔犺浇鍚庡€掓帓绱㈠紩鍙敤
+2026-09-15 22:44:23 [WARNING] ralsei_pet.memory_system 鈥?璇诲彇璁板繂鏂囦欢澶辫触 C:\Users\23002\AppData\Local\Temp\ralsei_mem9_8i94_fe7\msBad\memory.json: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[PASS] P5 鍧忔枃浠朵笉宕╀笖閫€鍖栦负绌鸿蹇嗭紙闀挎湡璁板繂閿綈鍏級
+2026-09-15 22:44:23 [INFO] ralsei_pet.memory_system 鈥?鏂颁綅缃棤璁板繂锛屽凡浠庢棫鐗?memory.json 缁ф壙: C:\Users\23002\AppData\Local\Temp\ralsei_mem9_8i94_fe7\legacy_memory.json
+[PASS] P6 鏂颁綅缃棤鏂囦欢鏃朵粠鏃х増 memory.json 缁ф壙锛堝崌绾т笉澶卞繂锛?
+[PASS] P7 autosave 鑺傛祦锛氬垰瀛樿繃涓嶅啀鍐欑洏
+[PASS] P8 autosave(force=True) 蹇呭畾鍐欑洏
+[PASS] P9 reset_all 娓呯┖璁板繂鏂囦欢涓庡唴瀛樻€?
+
+[I] 闆嗘垚濂戠害锛堟簮鐮佺骇锛?
+[PASS] I1 add_dialogue 姣忚疆鐧昏璁板繂鐗囨
+[PASS] I2 _note_memory 璋?memory_system.add_fragment
+[PASS] I3 chat_with_ai 娉ㄥ叆"闆舵槦鍥炲繂"
+[PASS] I4 update 瑙﹀彂閬楀繕鍛ㄦ湡涓庡瓨鍌ㄨ縼绉?
+[PASS] I5 save_memory 钀界洏 schema 涓庤蹇嗗眰
+[PASS] I6 memory_store 鍦?import 鏈熶笉鍋氱鐩樻搷浣?
+[PASS] I7 get_memory_stats 鍙嶆槧浣嶇疆涓庝綋閲?
+
+============================================================
+PASS = 51   FAIL = 0
+
+mem_exit=0
+python = C:\Python311\python.exe
+
+[A] conversation_focus 绾€昏緫
+[PASS] A1 鍏抽敭璇嶏細鎶藉埌"澶╂皵"銆佸墧闄よ櫄璇?
+[PASS] A2 绌轰覆 鈫?绌哄叧閿瘝
+[PASS] A3 棣栧彞 鈫?new 骞跺缓棰?
+[PASS] A4 鍚岄缁х画 鈫?continue
+[PASS] A5 鐢ㄦ埛鎹㈤ 鈫?switch 涓旀爣绛惧彉鍖?
+[PASS] A6 鎺ュ姏鏍囪"缁х画" 鈫?continue锛堜笉鎹㈤锛?
+[PASS] A7 鍔╂墜璇磋瘽涓嶅緱鏀硅瘽棰橈紙鎹㈤鏉冨彧鍦ㄧ敤鎴凤級
+[PASS] A8 鍔╂墜鎶涢棶 鈫?鐧昏 pending
+[PASS] A9 clear_pending 鍚庢棤 pending
+[PASS] A10 鍐峰満瓒呮椂 鈫?褰掓。骞堕噸寮€
+[PASS] A11 pending 瓒呮椂鍚庝笉鍐嶈拷闂?
+[PASS] A12 鏃犺瘽棰樻椂 brief 涓虹┖涓?
+[PASS] A13 brief 鍚劍鐐规爣璇嗕笌"缁х画鏈瘽棰?鎸囦护
+[PASS] A14 brief 鍚?鏈洖搴?鎻愰啋
+[PASS] A15 鑱婂お涔?鈫?brief 鎻愮ず鏀朵竴鏀?
+[PASS] A16 snapshot/restore 寰€杩斾竴鑷?
+[PASS] A17 鍧忓揩鐓т笉鑷村穿涓斾粛鍙敤
+[PASS] A18 璇濋鏍囩鍙栧叿浣撹瘝鑰岄潪鏃堕棿璇?
+[PASS] A19 婊戠獥纰庣墖琚壀鎺夛紙鏃?杈捐繖娓?/"鑱婂ぉ鐨?锛?
+[PASS] A20 铏氳瘝寮€澶寸殑璇濋浠嶈兘鎶藉埌锛?澶╂皵"锛?
+
+[B] dialogue_ui 琛屼负锛堟々 + 鐪熷疄鏂规硶缁戝畾锛?
+[PASS] B1 鍒氳亰杩?鈫?姝ｅ湪鑱婂ぉ
+[PASS] B2 寰堜箙娌″姩闈?鈫?闈炶亰澶╀腑
+[PASS] B3 妯″瀷鎬濊€冧腑 鈫?绠楄亰澶╀腑
+[PASS] B4 姝ｅ湪鎵撳瓧 鈫?绠楄亰澶╀腑
+[PASS] B5 鐢ㄦ埛姝ｅ湪杈撳叆 鈫?绠楄亰澶╀腑
+[PASS] B6 绐楀彛鍙鐩栵紙window=300 鈫?True锛?
+[PASS] B7 榧犳爣鍦ㄨ緭鍏ユ爮鍐?鈫?True
+[PASS] B8 榧犳爣鍦ㄨ緭鍏ユ爮澶?鈫?False
+[PASS] B9 鏃犺緭鍏ユ爮 鈫?False锛堜笉宕╋級
+[PASS] B10 鏃犲姩闈?鈫?涓嶆嫤锛堝彲浠ラ殣钘忥級
+[PASS] B11 榧犳爣鍘嬭緭鍏ユ爮 鈫?鎷?
+[PASS] B12 姝ｅ湪杈撳叆 鈫?鎷?
+[PASS] B13 妯″瀷鎬濊€冧腑 鈫?鎷?
+[PASS] B14 _schedule_auto_hide 鎺ュ彈 str 鍙傛暟涓旂敤 20000ms
+[PASS] B15 琚嫤 鈫?1s 鍚庡鏌ヤ笖涓嶉殣钘?
+[PASS] B16 鏃犲姩闈?鈫?鎵ц闅愯棌
+[PASS] B17 _note_focus 鐢ㄦ埛杞細鍒锋柊娲诲姩鏃堕棿 + 娓?pending + 鍠?note_user
+[PASS] B18 _note_focus 鍔╂墜杞細鍙杺 note_assistant
+[PASS] B19 focus 涓?None 鏃朵笉宕╋紙浠嶅埛鏃堕棿鎴筹級
+[PASS] B20 鏃犺瘽棰?鈫?绌轰覆
+[PASS] B21 鏈夎瘽棰?鈫?杩斿洖 brief 鏂囨湰
+[PASS] B22 focus 寮傚父 鈫?绌轰覆锛堜笉鎶涳級
+[PASS] B23 AUTO_HIDE_MS == 20000
+[PASS] B24 ACTIVE_CONVERSATION_SECONDS == 150
+
+[C] 婧愮爜绾у绾︼紙tokenize 鍓ユ敞閲?瀛楃涓诧級
+[PASS] C1 鑷富寮€鍙ｉ椄闂ㄥ惈"姝ｅ湪鑱婂ぉ鍒欎笉鎻掕瘽"
+[PASS] C2 chat_with_ai 鎶婄劍鐐圭畝鎶ユ嫾杩涚郴缁熸彁绀?
+[PASS] C3 ai_driver._say 鍦ㄨ亰澶╀腑璺宠繃鎻掕瘽
+[PASS] C4 ai_driver._build_prompt 甯︿笂鐒︾偣绠€鎶?
+[PASS] C5 dialogue_ui 鎸備笂 textChanged 鈫?_schedule_auto_hide
+[PASS] C6 鎵撳瓧瀹屾垚閲嶈捣鍊掕鏃?
+[PASS] C7 show_dialogue 閲嶈捣鍊掕鏃?
+[PASS] C8 榧犳爣鎸変笅鍙噸缃€掕鏃躲€佷笉鏀?_last_activity
+[PASS] C9 _note_focus 鍖哄垎璇磋瘽浜哄苟鍒锋椂闂存埑
+[PASS] C10 add_dialogue 璋冪敤浜?_note_focus
+
+============================================================
+PASS = 54   FAIL = 0
+
+focus_exit=0

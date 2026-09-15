@@ -26,6 +26,17 @@ except ImportError:  # 允许被包外单独导入
     def get_logger(name):
         return logging.getLogger(name)
 
+try:
+    from conversation_focus import ConversationFocus
+except ImportError:  # 允许被包外单独导入（如单测直接跑本文件）
+    import os as _os
+    import sys as _sys
+    _sys.path.append(_os.path.dirname(_os.path.abspath(__file__)))
+    try:
+        from conversation_focus import ConversationFocus
+    except ImportError:
+        ConversationFocus = None
+
 _log = get_logger(__name__)
 
 
@@ -144,6 +155,18 @@ class DialogueUI(QWidget):
     # 本地 AI 思考占位文本（Ralsei 式的省略号 + 思考表情，不暴露"在调模型"，
     # 让等待回复显得像普通的停顿组织语言；识别它以避免被当作正式回复写进历史）
     AI_THINKING_PLACEHOLDER = "……"
+
+    # 自动隐藏：每次对话活动后等这么久没有任何新动静，就把对话框淡出收起。
+    # 用户要求（第九轮）："对话框在 20s 内不输入会自动消失哦，但一旦鼠标点
+    # 在输入栏上那就不能消失"。所以 20 秒是"无输入"的窗口，而"输入栏被点住/
+    # 光标停在输入栏上/模型正在思考"都属于**有动静**，一律不隐藏。
+    AUTO_HIDE_MS = 20000
+    # 输入栏被鼠标压住时的复查间隔（压着就一直延后，松开后重新计时）
+    AUTO_HIDE_RECHECK_MS = 1000
+
+    # 什么算"正在聊天"：最近一次对话活动（用户输入/模型回复）在这个窗口内。
+    # 10 分钟自主开口闸门用它来避免"聊到一半突然插一句自己的话题"。
+    ACTIVE_CONVERSATION_SECONDS = 150.0
 
     # ------------------------------------------------------------------ init
     def __init__(self, parent):
@@ -323,6 +346,13 @@ class DialogueUI(QWidget):
         self._ai_history = []
         self._ai_history_max = 8
 
+        # 对话注意力 / 话题锚（第九轮）：让模型知道"我们现在在聊什么"，
+        # 避免聊着一个话题突然切换。见 conversation_focus.py。
+        self.focus = ConversationFocus() if ConversationFocus is not None else None
+        # 最近一次对话活动时间（用户输入 / Ralsei 回复）——"是否正在聊天"的判据，
+        # 同时给自主开口闸门用（别打断进行中的聊天）。
+        self._last_activity = 0.0
+
         # Deltarune 闪烁光标
         self._cursor_visible = True
         self._cursor_timer = QTimer(self)
@@ -341,10 +371,15 @@ class DialogueUI(QWidget):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("dialogue_ui 滚动条信号连接失败: %s", e)
 
-        # 自动隐藏：5.5 秒无操作后淡出；输入/聚焦时由 _try_auto_hide 暂缓隐藏
+        # 自动隐藏：20 秒无输入后淡出；输入/聚焦/鼠标压住输入栏时由 _try_auto_hide 暂缓
         self._auto_hide_timer = QTimer(self)
         self._auto_hide_timer.setSingleShot(True)
         self._auto_hide_timer.timeout.connect(self._try_auto_hide)
+        # 输入框每敲一个字都重新开始 20 秒倒计时（避免"打着字突然消失"）
+        try:
+            self.input_field.textChanged.connect(self._schedule_auto_hide)
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("dialogue_ui 输入框信号连接失败: %s", e)
 
         # 淡入淡出动画引用（防止被 GC）
         self._fade_anim = None
@@ -415,6 +450,10 @@ class DialogueUI(QWidget):
         # 记录对话轮次（供本地 AI 上下文用）：占位/空消息不入历史
         if message.strip():
             self._push_ai_history(speaker, message)
+            # 对话注意力：把这一轮交给话题锚，并刷新"刚有过对话活动"时间戳
+            self._note_focus(speaker, message)
+            # 记忆（第九轮）：把这一轮作为"日常小片段"喂给拟人记忆系统
+            self._note_memory(speaker, message)
         if speaker == "ralsei":
             self.set_face(face_type)
             # 先打断前一条打字机（补完剩余内容，非打字时noop安全）
@@ -446,6 +485,66 @@ class DialogueUI(QWidget):
                 del self._ai_history[:len(self._ai_history) - self._ai_history_max]
         except Exception as e:
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
+    # -------------------------------------------------------- conversation focus
+    def _note_focus(self, speaker, message):
+        """把这一轮喂给话题锚，并刷新活动时间戳（失败绝不影响对话）。"""
+        import time as _time
+        self._last_activity = _time.time()
+        if self.focus is None:
+            return
+        try:
+            if speaker == "ralsei":
+                self.focus.note_assistant(message)
+            else:
+                # 用户在说话 → 说明上一个"悬置问题"已被回应
+                self.focus.clear_pending()
+                self.focus.note_user(message)
+        except Exception as e:
+            _log.debug("dialogue_ui 话题锚异常（已忽略）: %s", e)
+
+    def get_focus_brief(self):
+        """给本地 AI 的"注意力焦点"提示词（没有话题时返回空串）。"""
+        try:
+            if self.focus is None:
+                return ""
+            return self.focus.brief()
+        except Exception:
+            return ""
+
+    def _note_memory(self, speaker, message):
+        """把这一轮记成"日常小片段"（第九轮：拟人记忆）。
+
+        只管登记，不管存储位置与遗忘 —— 那是 memory_system 的事。
+        失败绝不影响对话。
+        """
+        try:
+            ms = getattr(self.parent, 'memory_system', None)
+            if ms is None or not callable(getattr(ms, 'add_fragment', None)):
+                return
+            ms.add_fragment(message, who=('ralsei' if speaker == 'ralsei' else 'user'),
+                            kind='dialogue')
+        except Exception as e:
+            _log.debug("dialogue_ui 记忆登记异常（已忽略）: %s", e)
+
+    def has_active_conversation(self, window=None):
+        """此刻是否"正在聊天"：最近有对话活动，或模型正在思考，或正在打字。
+
+        自主开口闸门（10 分钟一次）用它来避免**打断进行中的聊天**：
+        用户刚才还在说话、Ralsei 还在等回复，这时插一句自己的话非常突兀。
+        """
+        try:
+            import time as _time
+            if self._ai_inflight:
+                return True
+            if self.is_typing:
+                return True
+            if getattr(self, '_is_user_inputting', lambda: False)():
+                return True
+            w = self.ACTIVE_CONVERSATION_SECONDS if window is None else float(window)
+            return (_time.time() - float(self._last_activity or 0.0)) < w
+        except Exception:
+            return False
 
     def get_ai_history(self, limit: int = 8):
         """返回最近几轮对话历史 [(role, content), ...]，供本地 AI 参考。"""
@@ -742,15 +841,49 @@ class DialogueUI(QWidget):
             return False
         return False
 
-    def _schedule_auto_hide(self):
-        """触发一次倒计时检查。timeout 时由 _try_auto_hide 判断真实 hide 条件。"""
-        self._auto_hide_timer.start(5500)
+    def _mouse_on_input(self, global_pos=None):
+        """鼠标是不是正压在输入栏上（按用户的说法：这种时候**不允许**消失）。
+
+        用光标全局坐标判断而不是 `underMouse()`：后者在鼠标悬停于输入栏的
+        **子控件**（发送按钮、输入框边缘）时为 False，会漏判。
+        `global_pos` 只是给测试留的注入点，正常调用不传。
+        """
+        try:
+            bar = getattr(self, '_input_bar', None)
+            if bar is None or not bar.isVisible():
+                return False
+            if global_pos is None:
+                from PyQt5.QtGui import QCursor
+                global_pos = QCursor.pos()
+            return bar.rect().contains(bar.mapFromGlobal(global_pos))
+        except Exception:
+            return False
+
+    def _auto_hide_blocked(self):
+        """当前是否不允许自动隐藏（"有动静"的三种情形）。"""
+        if self._is_user_inputting():
+            return True          # 光标在输入框 / 已经打了字
+        if self._mouse_on_input():
+            return True          # 鼠标压在输入栏上
+        if getattr(self, '_ai_inflight', False):
+            return True          # 模型正在思考，等它回完再谈隐藏
+        return False
+
+    def _schedule_auto_hide(self, *_args):
+        """触发一次倒计时检查（AUTO_HIDE_MS = 20 秒无输入才隐藏）。
+
+        注意带 `*_args`：它同时被 `input_field.textChanged` 连过来，
+        那时会带一个字符串参数，不接住会 TypeError。
+        """
+        try:
+            self._auto_hide_timer.start(int(self.AUTO_HIDE_MS))
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     def _try_auto_hide(self):
-        """_auto_hide_timer 到点：正在输入就 1 秒后再查，否则淡出隐藏。"""
-        if self._is_user_inputting():
-            # 用户仍在输入：1 秒后重新检查，避免打断打字
-            self._auto_hide_timer.start(1000)
+        """_auto_hide_timer 到点：有动静就 1 秒后再查，否则淡出隐藏。"""
+        if self._auto_hide_blocked():
+            self._auto_hide_timer.start(int(self.AUTO_HIDE_RECHECK_MS))
             return
         self.hide_dialogue()
 
@@ -805,8 +938,11 @@ class DialogueUI(QWidget):
         # show 之后再定位：_position_above_ralsei 在不可见时会提前 return，
         # 必须在 show() 之后调用，否则对话框会在旧位置闪一下再被 follow_timer 拉回
         self._position_above_ralsei()
-        # 取消之前的自动隐藏（重新 show 时不立即消失）
+        # 取消之前的自动隐藏（重新 show 时不立即消失），并重新起一次 20 秒倒计时
+        # （第九轮：无输入 20s 就收起；打字过程中 _start_typing 还会再重置一次，
+        #  所以真正开始计时的时刻是"这句话打完/显示完"之后）
         self._auto_hide_timer.stop()
+        self._schedule_auto_hide()
         # 修复：淡入前停掉并断开旧动画——hide 时创建的 fade-out 把 finished→self.hide
         # 挂在旧动画对象上，若淡出未结束就 show，旧回调会在淡入完成后把刚显示的窗口
         # 再次隐藏（对话框"弹出后立即消失"）。
@@ -1084,6 +1220,10 @@ class DialogueUI(QWidget):
         # 修复：原来一按鼠标就展开输入框并重算窗口大小，拖动时窗口尺寸变化、
         # 位置被重算，导致对话框"拖不动"）
         if event.button() == Qt.LeftButton:
+            # 点一下对话框 = 有动静：20 秒自动隐藏倒计时重新开始
+            # （只重置"隐藏倒计时"，不动 _last_activity —— 后者表示"真的在聊天"，
+            #   供 10 分钟自主开口闸门判断有没有打断进行中的对话）
+            self._schedule_auto_hide()
             self.drag_position = event.globalPos() - self.frameGeometry().topLeft()
             self._is_dragging = False
             # 记录按下时的全局坐标，用于在 mouseMoveEvent 中判断是否真正移动了足够距离

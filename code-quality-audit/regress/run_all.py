@@ -50,7 +50,7 @@ SUITES = [
         'id': 'round5_smoke',
         'script': os.path.join(ROOT, 'code-quality-audit', '第五轮', 'smoke_import_round5.py'),
         'offscreen': False,
-        'desc': '第五轮：22 个 modules 全量导入冒烟 + 2 个源码不变量',
+        'desc': '第五轮：24 个 modules 全量导入冒烟 + 2 个源码不变量',
     },
     {
         'id': 'round5_verify',
@@ -111,6 +111,18 @@ SUITES = [
         'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_anim.py'),
         'offscreen': True,
         'desc': '第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 3 分钟 + 鞠躬锚点',
+    },
+    {
+        'id': 'round9_focus',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第九轮', 'verify_round9_focus.py'),
+        'offscreen': True,
+        'desc': '第九轮：对话注意力锚（换题只能由用户发起）+ 对话框 20s 无输入隐藏（鼠标压输入栏不隐藏）+ 自主开口不打断聊天',
+    },
+    {
+        'id': 'round9_memory',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第九轮', 'verify_round9_memory.py'),
+        'offscreen': True,
+        'desc': '第九轮：拟人记忆（选择性记住/联想召回/遗忘与日摘要/复习强化）+ 存储落 E 盘与桌面兜底搬运',
     },
 ]
 

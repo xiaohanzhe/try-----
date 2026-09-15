@@ -4541,9 +4541,21 @@ class RalseiPet(QMainWindow):
         return True
 
     def _autonomous_speech_allowed(self):
-        """自主开口闸门：合时宜 + 距上次自主开口 ≥ 10 分钟。"""
+        """自主开口闸门：合时宜 + 距上次自主开口 ≥ 10 分钟 + **不在聊天中途**。"""
         if not self._can_speak_now():
             return False
+        # 用户要求（第九轮）："确保那个 10 分钟自动触发一次聊天的机制不会打断
+        # 当前进行的聊天。" —— 只要正在聊天（刚有来有回 / 模型还在回 / 用户在
+        # 打字 / 静置不超过 150 秒），自主开口就让位。用户主动点"聊天"走的是
+        # user_requested 分支，不受这条限制。
+        try:
+            dui = self.dialogue_ui
+            if callable(getattr(dui, 'has_active_conversation', None)) \
+                    and dui.has_active_conversation():
+                _log.debug("[自主对话] 正在聊天中，本次不插话")
+                return False
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         last = getattr(self, '_last_autonomous_speech_time', None)
         interval = float(getattr(self, 'AUTONOMOUS_SPEECH_MIN_INTERVAL', 600.0))
         if last is not None and (time.time() - last) < interval:
@@ -6634,6 +6646,33 @@ class RalseiPet(QMainWindow):
             "精力/记忆），回应时可以自然融入，但不要逐条复述。\n"
             "- 不使用攻击性语言，不说教，不故作高深。"
         )
+        # 对话注意力（第九轮）：把"我们现在在聊什么"交给模型。
+        # 用户要求："把那个 AI 整的有些注意力哈，别到时候聊着一个话题呢突然就切换了。"
+        # 只把最近的 6 轮原文交给模型，它每轮都要自己猜"该聊什么"，很容易被一句话带跑；
+        # 这里补上显式的注意力焦点（当前话题 + 轮数 + 悬置问题），
+        # 并明确要求"除非主人自己换话题，否则别跳"。见 modules/conversation_focus.py。
+        try:
+            _focus = (self.dialogue_ui.get_focus_brief()
+                      if getattr(self, 'dialogue_ui', None) is not None else "")
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            _focus = ""
+        if _focus:
+            system = system + "\n\n" + _focus
+
+        # 记忆（第九轮）：由主人这句话联想"零星的记忆片段"，让 Ralsei 自然地想起来。
+        # 要求："在需要的时候脑子里会根据一些零星的记忆片段自动重构当时的场景"。
+        # 只在真想起东西时才拼进提示词（recall_text 无命中返回空串），不会硬编。
+        try:
+            _ms = getattr(self, 'memory_system', None)
+            _recall = (_ms.recall_text(text, limit=3)
+                       if _ms is not None
+                       and callable(getattr(_ms, 'recall_text', None)) else "")
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            _recall = ""
+        if _recall:
+            system = system + "\n\n" + _recall
 
         def _worker():
             try:
@@ -8118,10 +8157,17 @@ class RalseiPet(QMainWindow):
 
             # 清理记忆数据
             try:
-                memory_file = self.memory_system.memory_file
-                if os.path.exists(memory_file):
-                    os.remove(memory_file)
-                    _log.debug("记忆数据已清理")
+                # 第九轮：记忆位置可能已迁到设备(E盘)或落在桌面兜底目录，
+                # 且新增了片段/关键记忆/日摘要/留档副本 —— 统一交给 reset_all()，
+                # 免得只删一个文件、留下一堆"记得一半"的残留。
+                _ms = self.memory_system
+                if callable(getattr(_ms, 'reset_all', None)):
+                    _ms.reset_all()
+                else:
+                    memory_file = _ms.memory_file
+                    if os.path.exists(memory_file):
+                        os.remove(memory_file)
+                _log.debug("记忆数据已清理")
             except Exception as e:
                 _log.debug(f"清理记忆数据时出错: {e}")
 

@@ -530,6 +530,16 @@ class AiActionDriver:
             _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
         if time.time() - self._last_say_at < SAY_COOLDOWN:
             return
+        # 正在聊天中不要插话（第九轮）：用户在对话框里跟 Ralsei 有来有回时，
+        # 行为大脑再自己冒一句"随口闲聊"就是打断 —— 让位给真正的对话。
+        # 注意只拦 `say`，动作/动画照常（站在那儿做个小动作不打扰聊天）。
+        try:
+            if (callable(getattr(dlg, "has_active_conversation", None))
+                    and dlg.has_active_conversation()):
+                _log.debug("[AI行动] 正在聊天中，跳过自主说话（动作不受影响）")
+                return
+        except Exception as e:
+            _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
         face = SAY_FACES.get(emotion_hint, "happy") if emotion_hint else "happy"
         text = str(text).strip()
         if not text:
@@ -641,6 +651,21 @@ class AiActionDriver:
             lines.append("刚刚发生的环境事件（要不要回应由你决定，"
                          "不回应完全没问题）：")
             lines.extend(events)
+
+        # 对话注意力（第九轮）：正在聊天时，让行为决策也知道"我们在聊什么"，
+        # 这样它选的表演动作/表情跟话题搭得上，而不是突然切到别的事上。
+        try:
+            _dlg = getattr(o, "dialogue_ui", None)
+            _fb = ""
+            if _dlg is not None and callable(getattr(_dlg, "get_focus_brief", None)):
+                _fb = _dlg.get_focus_brief() or ""
+        except Exception as e:
+            _log.debug("ai_driver 防御性异常（已忽略）: %s", e)
+            _fb = ""
+        if _fb:
+            lines.append("")
+            lines.append(_fb)
+
         lines += [
             "",
             "请只输出一个 JSON 动作对象（见格式要求）。",

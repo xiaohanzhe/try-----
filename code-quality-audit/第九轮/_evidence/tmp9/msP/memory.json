@@ -1,0 +1,106 @@
+{
+  "schema": 2,
+  "saved_at": 1789483420.0910518,
+  "long_term_memory": {
+    "user_preferences": {},
+    "important_dates": {},
+    "interaction_history": [],
+    "favorite_topics": {},
+    "disliked_topics": {},
+    "skill_levels": {},
+    "behavior_patterns": {},
+    "emotional_responses": {},
+    "environmental_preferences": {},
+    "relationship_history": []
+  },
+  "experience": 0,
+  "level": 1,
+  "learning_rate": 0.3,
+  "memory_strength": {},
+  "fragments": [
+    {
+      "id": 1,
+      "t": 1789483420.0431762,
+      "day": "2026-09-15",
+      "who": "user",
+      "kind": "dialogue",
+      "text": "持久化测试：我喜欢在晚上听爵士乐",
+      "kw": [
+        "持久",
+        "久化",
+        "化测",
+        "测试",
+        "持久化",
+        "久化测"
+      ],
+      "emotion": null,
+      "salience": 0.75,
+      "strength": 0.7625,
+      "rehearsals": 1,
+      "hits": 0,
+      "seen": 1789483420.0431762,
+      "norm": "持久化测试：我喜欢在晚上听爵士乐"
+    }
+  ],
+  "keys": [
+    {
+      "id": 2,
+      "t": 1789483420.0900507,
+      "kind": "user_preferences",
+      "text": "主人喜欢爵士乐",
+      "count": 1,
+      "last_at": 1789483420.0900507,
+      "salience": 0.9,
+      "meta": {}
+    }
+  ],
+  "digests": {
+    "2026-08-01": "那天聊过爵士乐"
+  },
+  "assoc": {
+    "持久": {
+      "久化": 1,
+      "化测": 1,
+      "测试": 1,
+      "持久化": 1,
+      "久化测": 1
+    },
+    "久化": {
+      "持久": 1,
+      "化测": 1,
+      "测试": 1,
+      "持久化": 1,
+      "久化测": 1
+    },
+    "化测": {
+      "持久": 1,
+      "久化": 1,
+      "测试": 1,
+      "持久化": 1,
+      "久化测": 1
+    },
+    "测试": {
+      "持久": 1,
+      "久化": 1,
+      "化测": 1,
+      "持久化": 1,
+      "久化测": 1
+    },
+    "持久化": {
+      "持久": 1,
+      "久化": 1,
+      "化测": 1,
+      "测试": 1,
+      "久化测": 1
+    },
+    "久化测": {
+      "持久": 1,
+      "久化": 1,
+      "化测": 1,
+      "测试": 1,
+      "持久化": 1
+    }
+  },
+  "next_id": 3,
+  "storage_kind": "device"
+}
