@@ -1,0 +1,21 @@
+﻿--- push attempt 1 exit=0 ---
+git : To https://github.com/xiaohanzhe/try-----.git
+所在位置 行:457 字符: 9
++   $o = (git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (To https://gith...he/try-----.git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   bedd485..11a0824  main -> main
+
+--- remote ---
+11a0824777ddfe2052e8f5dc3557691246870460	refs/heads/main
+
+--- log ---
+11a0824 绗節杞細鐣欑棔鎺ㄩ€佹牳楠岋紙_evidence/git_push9.txt 涓?git_verify9.txt锛?bedd485 绗節杞細娓呮帀棣栬疆鑷閬楃暀鐨勪复鏃舵矙绠憋紙_evidence/tmp9锛夊苟鍔?gitignore 瑙勫垯
+9f66b2a 绗節杞細瀵硅瘽娉ㄦ剰鍔涢敋 + 瀵硅瘽妗?20s 鑷姩闅愯棌 + 鑷富寮€鍙ｄ笉鎵撴柇鑱婂ぉ + 鎷熶汉璁板繂绯荤粺
+ff43665 绗叓杞?#13锛氱暀鐥曟帹閫佹牳楠屾棩蹇楋紙_evidence/git_push4.txt锛?
+
+--- status ---
+

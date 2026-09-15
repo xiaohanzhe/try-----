@@ -1,0 +1,57 @@
+﻿2026-09-15 22:50:10 [INFO] ralsei_pet.memory_system 鈥?鏂颁綅缃棤璁板繂锛屽凡浠庢棫鐗?memory.json 缁ф壙: C:\Users\23002\Desktop\椤圭洰鏂囦欢澶筡try - 鍓湰\ralsei_pet\modules\..\memory.json
+{
+  "drives": [
+    {
+      "root": "C:\\",
+      "label": "Windows-SSD"
+    },
+    {
+      "root": "D:\\",
+      "label": "Data"
+    },
+    {
+      "root": "E:\\",
+      "label": "鑲栫堪鍝?
+    }
+  ],
+  "describe": {
+    "device_dir": "E:\\RalseiMemory",
+    "device_present": true,
+    "fallback_dir": "C:\\Users\\23002\\Desktop\\memory",
+    "fallback_has_memory": false,
+    "active_dir": "E:\\RalseiMemory",
+    "ts": 1789483807.4987912
+  },
+  "resolved_dir": "E:\\RalseiMemory",
+  "resolved_on_device": true,
+  "resolved_device_dir": "E:\\RalseiMemory",
+  "memory_file": "E:\\RalseiMemory\\memory.json",
+  "file_exists_now": false,
+  "desktop_fallback": "C:\\Users\\23002\\Desktop\\memory",
+  "write_test": {
+    "dir": "E:\\RalseiMemory",
+    "on_device": true,
+    "file_written": true,
+    "stats": {
+      "dir": "E:\\RalseiMemory",
+      "on_device": true,
+      "file": "E:\\RalseiMemory\\memory.json",
+      "file_bytes": 2346,
+      "fragments": 1,
+      "keys": 1,
+      "digests": 0,
+      "assoc_keys": 6,
+      "short_term": 0,
+      "interaction_history": 1,
+      "avg_strength": 0.7625,
+      "index_keys": 6
+    },
+    "schema": 2,
+    "storage_kind": "device",
+    "fragments_in_file": 1,
+    "keys_in_file": 1,
+    "file_after_reset": false
+  }
+}
+
+exit=0
