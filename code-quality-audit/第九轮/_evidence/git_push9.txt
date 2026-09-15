@@ -1,0 +1,14 @@
+﻿user=236837805
+pw_len=40
+--- attempt 1 exit=0 ---
+git : To https://github.com/xiaohanzhe/try-----.git
+所在位置 行:455 字符: 9
++   $o = (git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (To https://gith...he/try-----.git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   ff43665..bedd485  main -> main
+
+push_ok=True
