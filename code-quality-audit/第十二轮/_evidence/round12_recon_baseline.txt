@@ -1,0 +1,69 @@
+第十二轮侦察基线（改动前快照）
+采集时间：2026-09-16 00:00 前后（第十二轮开工前的首次侦察）
+来源：E:\Download\_tmp\_recon12.txt（临时件，已转存为证据）
+
+=== E:\RalseiMemory 内容 ===
+（空 —— 当时 E 盘虽挂载但 vault 尚无任何产物，7 类运行时产物全部散落在程序目录）
+
+=== ralsei_pet 下的运行时 json / logs ===
+Mode   Length LastWriteTime       Name
+d-----        2026/9/16 0:00:11   logs
+-a---- 743396 2026/3/1 13:07:06   animation_history.json
+-a---- 945    2026/9/13 19:50:15   config.json
+-a---- 56964 2026/3/1 12:43:55   coordinates.json
+-a---- 1818   2026/9/7 22:51:05   customization_config.json
+-a---- 1021   2026/8/12 12:02:19   debug.log
+-a---- 11051  2026/8/12 12:01:51   diag2.log
+-a---- 0      2026/8/12 11:58:42   diag2_err.log
+-a---- 7552   2026/8/12 12:05:47   diag3.log
+-a---- 52     2026/8/12 12:04:57   diag3_err.log
+-a---- 10207  2026/8/12 12:07:53   diag4.log
+-a---- 0      2026/8/12 12:05:59   diag4_err.log
+-a---- 8424   2026/8/12 12:09:18   diag5.log
+-a---- 0      2026/8/12 12:07:55   diag5_err.log
+-a---- 7081   2026/8/12 14:43:38   diag6.log
+-a---- 0      2026/8/12 14:42:32   diag6_err.log
+-a---- 0      2026/8/12 11:56:23   diag_error.log
+-a---- 9134   2026/8/14 13:14:10   diag_logic_out.log
+-a---- 6249   2026/8/12 11:58:36   diag_output.log
+-a---- 0      2026/8/14 13:12:27   diag_spell_stderr2.log
+-a---- 1031   2026/8/14 13:11:10   diag_spell_stdout.log
+-a---- 0      2026/8/14 13:12:27   diag_spell_stdout2.log
+-a---- 0      2026/9/13 21:21:35   launch_err.log
+-a---- 0      2026/9/13 21:21:35   launch_out.log
+-a---- 537    2026/9/12 21:57:46   memory.json
+-a---- 132    2025/12/13 11:23:51 output.log
+-a---- 0      2026/8/12 11:44:52   run.log
+-a---- 0      2026/8/12 11:48:14   run2.log
+-a---- 0      2026/8/12 11:48:14   run2_err.log
+-a---- 0      2026/8/12 11:44:52   run_err.log
+-a---- 5250   2026/8/18 20:08:06   smoke_test.log
+-a---- 2687   2026/8/18 20:49:57   smoke_test2.log
+-a---- 3052   2026/8/18 19:56:39   startup_test.log
+-a---- 2309   2026/8/14 13:52:41   tmp_diag.log
+
+判读：
+  - 改动前"运行时产物 = 程序目录里的一堆散落文件"，正是第十二轮 data_store 要收口的对象
+    （7 类：logs/、crash.log、config.json、customization_config.json、entertainment_data.json、
+    growth_data.json、jieba.cache）。
+  - 那批 diag*/run*/smoke_test*/startup_test*/launch_* 是历轮开发/调试残留，
+    属报告 §六-3"程序目录历史开发日志未删（待用户点头）"。
+  - coordinates.json / animation_history.json 不是第十二轮收口的 7 类产物，未动。
+
+=== jieba 是否已安装（C:\Python311） ===
+& C:\Python311\python.exe -c "import jieba, sys; print('jieba', jieba.__version__)"
+  → ModuleNotFoundError: No module named 'jieba'
+    （当时尚未安装；第十二轮按"软依赖"接入，装与不装都必须能跑）
+
+=== pip list 关键词 ===
+beautifulsoup4            4.14.3
+psutil                    7.1.0
+PyQt5                     5.15.11
+PyQt5-Qt5                 5.15.2
+PyQt5_sip                 12.17.2
+pywin32                   306
+pywin32-ctypes            0.2.3
+
+=== config.json 位置 ===
+C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\config.json
+  （改动前配置读程序目录；第十二轮后应经 data_store 落到 vault/staging）

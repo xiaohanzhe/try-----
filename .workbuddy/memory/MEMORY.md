@@ -18,9 +18,11 @@
 7. 代理：沙箱 `127.0.0.1:54231`（github 常 502）；Clash `127.0.0.1:7897`（可用；偶发 SSL 抖动 → push 重试 3–5 次）。
 8. **E 盘是外接盘、会掉线**（`Get-Volume` 只剩 C/D、`Get-Disk` 仅一块 NVMe 即掉线）→ "本地中转站"是**可用性必需**。
    判在线看 `Get-Disk`/`Win32_DiskDrive`；注册表 `\DosDevices\E:` 只是**历史挂载记录**，不能当在线证据。
-9. **Agent 沙箱有 safe-delete 守卫**：一轮内删除累计超阈值（~50）后，**应用自己的 `os.remove` 也会被拒**并结束
-   进程（症状：`.write_probe` 残留 + 无 stdout）。自检/探针很耗预算 → 要跑"真机 GUI"就放在一轮**早期**；
-   `dangerouslyDisableSandbox` 对它**无效**。
+9. **Agent 沙箱有 safe-delete 守卫**：应用自己的 `os.remove` 也被拒并结束进程（症状：`.write_probe` 残留 +
+   无 stdout）。**已证是确定性拦截、不是"删除预算"**：换全新轮次复跑，计数**照样是 `count=160/阈值 50`**
+   （`targetCount=1` → 160 不是"本轮删了几个文件"）。故**走 `_is_writable_dir` 写探测的默认启动在沙箱内
+   永远起不来** → 只能让用户真机复跑，别在本环境反复试；要观察真机行为就把 `RALSEI_MEMORY_DIR` 直指。
+   `dangerouslyDisableSandbox` 对它**无效**。好消息：拦截信息会打印目标路径，可当"路径解析对不对"的证据。
 
 ## git push（退出码 128 且全静默 = 非交互 GCM 取不到凭据）
 ```powershell
@@ -104,10 +106,10 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
   + 多人对话预留 + "建楼"楼层 + bilibili 窗口摆放（PPT 类软件打开则不开）。
 - 9 `conversation_focus.py` + 20s 自动隐藏 + 自主开口不打断 + 拟人记忆 `memory_store.py`（105/0，G2 13/360）。
 - 10 `e9f6b00` `memory_graph.py`（98/0，G2 14/459）。11 `e8795da`/`6ef6fe2` 抽词剪刀 + 拓扑实测择优 clique（64/0，G2 15/523）。
-- 12 `289023c` + **补丁** `d2f36c6`：jieba 软依赖 + `data_store.py` 收口 7 类产物；补丁 **E 盘真机确认通过**
+- 12 `289023c` + **补丁** `d2f36c6`/`55e4a4c`：jieba 软依赖 + `data_store.py` 收口 7 类产物；补丁 **E 盘真机确认通过**
   （日志/记忆/缓存全落 `E:\RalseiMemory`，中转站为空）+ 修间接初始化环（`lazy_log`）+ 迁移落选留档。
-  58/0，G2 16 套件 584 PASS/全 IDENTICAL。局限：默认启动方式被沙箱 safe-delete 守卫拦过；日志跨期只留档不追加；
-  程序目录历史开发日志未删。
+  58/0，G2 16 套件 584 PASS/全 IDENTICAL。局限：默认启动方式被沙箱 safe-delete 守卫**确定性**拦住（改判"
+  由用户真机复跑"，见环境铁律 9）；日志跨期只留档不追加；程序目录历史开发日志未删。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
