@@ -252,8 +252,9 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   **遗留**：① 真机肉眼确认"走到边缘掉下去不再生气 / 关窗仍生气"② `climb_to_top_window()` 仍走裸窗口路径
   （故意没动：它挑的是最前面那个窗口，按定义不会被盖住）③ `update_floor` 独有的 `found_window` 情绪
   当前本就不可达、本轮未恢复 ④ 程序目录三个本地 `.bak`/`.backup_*` 备份文件未删（等用户点头）。
-  **push 备注**：本轮 push 报 `21605d4..1b279d3 main -> main` 成功，但随后沙箱代理（57186）对 github
-  持续 502，`ls-remote` 复核连试多次不通 → 未能在当时闭环核验（下次联网时补一次 `ls-remote`）。
+  **push 备注**：本轮 push 期间沙箱代理（57186）对 github 一度持续 502（`ls-remote` 连试多次不通），
+  但两次 push 自报成功、随后代理恢复时 `ls-remote` 复核 **远端 == 本地 == `cc8c7c5`** → 已闭环。
+  **代理抖动时不要只看退出码，但也要等它恢复后补一次 `ls-remote`**。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
