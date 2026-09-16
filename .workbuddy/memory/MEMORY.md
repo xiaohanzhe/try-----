@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **17 套件 / 655 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **19 套件 / 728 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -129,23 +129,43 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `c_void_p`**，否则 HWND 高位被截断且**静默失效**（同 `OpenProcess` 老坑）。窗口表**不再自带 `platform_height`**
   （原 `z_order*5` 是第二套编号 → 删掉，`floor_manager` 唯一真源）。`is_floor_valid` **不再要求四边逐一相等**
   （DWM 1px 抖动会让楼板反复"消失"→ 无故坠落）。回归锁 `verify_round13_build.py` A–G 71 项。
-- **「建楼」上下动 / 落到某层（第十四轮）**：**楼层可用时不回落旧启发式** —— `check_nearby_windows` 里
-  `fm = self._floors_for_jump()` 拿到楼层就**早返回**（`return`，不 continue 到下面裸窗口矩形那段）；
-  旧段只在"一个桌面窗口都没有 / 单测桩"时走到（保 G2 不漂移 + 沙箱可用）。要点：
+- **「建楼」上下动 / 落到某层（第十四轮）**：**楼层系统是跳跃的唯一入口** —— `check_nearby_windows` 里
+  `fm = self._floors_for_jump()` 拿到楼层就规划、拿不到就**直接 return**。
+  【第十五轮更新】那句"下面还有裸窗口矩形兜底段"**已不存在**：整段（154 行）删掉了 ——
+  `floors` 空 ⟺ 一个可见窗口都没有 ⟹ 本来就没有可跳的楼板，旧段在那种情况下同样无对象可枚举。要点：
   ① **上跳落点必须过可见区域门** —— `_floor_entry_plan` 出落点后 `nearest_visible_point` 吸附；
      触发几何照旧"贴边 `NEAR=60px`"（手感不变，判据换掉），别改成"横向覆盖就跳"（会一路狂跳）。
   ② **下跳显式取相邻下一层** `adjacent_lower_floor`（按 `platform_height` 名次；**桌面返回 `None`**），
      不能从 `get_jump_destinations` 结果里"顺便拿" —— 那里按 x 范围过滤，而"半个身子探出楼板"恰好
      x 已出范围 → 会被漏掉。**不穿透**是硬要求。
   ③ **`current_window` 已降级为派生缓存**（原来与 `current_floor` 是**两套真源** → 站在窗口上却按桌面判）。
-     **唯一写点** `_sync_window_cache_from_floor(floor)`（不删，三十多处还在读）；三个入口
+     **唯一写点** `_sync_window_cache_from_floor(floor)`（不删，三十多处还在读）；入口
      （走路换楼板 / 跳跃落地 / 重力落地）全收口到它；重力落地里手写的裸 dict 构造已删。
+     【第十五轮更新】"走路换楼板"那条 `update_floor` 已删 → 只剩 `check_window_movement` 一个入口。
   ④ **落地当场结算**：`handle_jump` 完成帧必须写 `current_floor`+`current_platform_z`、同步缓存、
      **立刻** `_apply_pet_z_order()`（原来要等 1s 节拍，落地那一瞬层级是错的）、播 `land` 一次。
      低速落到**窗口层**也要 `play_animation_once("land")`（原来直接 `idle` → 看着像平移）。
   ⑤ **坠落按起因分流**：`start_falling(..., reason=)`；`reason=='floor_removed'`（只由"用户抽走楼板"
      两个入口传：关窗 / 窗口没跟上）→ `fall_mad` + `max_fall_duration=5.0`；**"自己走到边缘掉下去"
      "跳跃被判穿透"不带起因**（不算用户行为，不误用生气动画）。回归锁 `verify_round14_move.py` A–G 41 项。
+- **「建楼」死代码清理 + 坠落起因修正（第十五轮）**：清掉"**没改也没人调用**"的那一堆（本项目最贵坑的
+  另一面，前几轮踩的是"改了没人调用"）：
+  ① **删 `main.py::check_nearby_windows` 尾部裸矩形段（154 行）** —— 它是第十三轮**口径错误的活样本**
+     （跳到被遮部分 / 站在窗口上把目标声明成桌面 = 穿透）。不可达，但谁挪掉早返回 bug 立刻复活。
+  ② **删 `main.py::update_floor`（67 行）** —— 第五轮 F3 就点名的**零调用漂移副本**（与
+     `check_window_movement` 逐行重复且已不一致）、H4/H5 排期方案 G1 优先清理项。
+     **它的独有行为（桌面被新窗口覆盖 → `found_window` 情绪）本来就不可达 → 未迁移，等于没有回退。**
+  ③ **删 `floor_manager::find_support_below`（`get_drop_destination` 的重复实现）/ `is_on_floor_edge`（无消费者）**。
+  ④ **接线 `is_floor_valid`**（自第五轮起就在死引用清单里）：`check_window_movement` 里
+     "脚下不再是窗口楼板"要分两种成因 —— `is_floor_valid(old_floor)` 为真 = **窗口还开着 ⇒ 宠物自己走出了
+     楼板边缘**（要求："就直直掉下去，落到下面第一块能接住的楼板"）→ `start_falling()` 常规动画；
+     为假 = **用户关窗把楼板抽走** → `start_falling(reason='floor_removed')` 生气 ≥5s。
+     **原实现一律按"用户行为"→ 宠物被赶到边缘也会生气，与要求正好相反（真 bug）。**
+     用"窗口还在不在"而不是"离边缘 ≤N px"判：楼层检查是 **1s 节拍**，宠物一秒能走几百像素，
+     距离阈值必漏判；窗口在不在与节拍无关。
+  ⑤ **不许误删**：`start_jump` 的裸窗口回落分支**必须留着** —— 还有两个活调用方
+     （`climb_to_top_window()` / `command_manager.py:78`）。回归锁 `verify_round15_cleanup.py` A–D 30 项
+     + 真机冒烟 `_probe_smoke.py`（真 `RalseiPet()`，不是 stub）。`main.py` 9373→9172 行。
 - **DPI 量纲（第十三轮，差点改错方向）**：`Qt` 建 `QApplication` 时把进程设成 per-monitor-v2 DPI 感知；**在那之前**
   进程 DPI 不感知 → `GetWindowRect`/`GetSystemMetrics` 被 Windows 按系统缩放**虚拟化**（本机 150%：物理 2560×1600
   回报 1707×1067），而 **`DwmGetWindowAttribute` 永远返回物理像素** → 混用会得出"DWM 矩形正好 1.5 倍"的假象。
@@ -173,8 +193,20 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   纯几何/纯计数类断言尤其要这样：**先让"独立方法"同意，再谈结论。**
 - **桩必须跟着真实方法面走**：第十三轮 `handle_gravity_fall` 新增 `_apply_pet_z_order()` 调用 →
   `第八轮/PetStub` 缺方法直接 AttributeError（`round8_floor` 16→11）；**第十四轮同一坑又踩一次**
-  （缺 `_sync_window_cache_from_floor` → AttributeError；补上后 `start_falling` 又因多了 `reason` → TypeError）。
-  **改了被测对象的对外调用面，就要同步扫一遍所有桩**；顺手把新要求**加严进老套件**（W6 → +W6b）。
+  （缺 `_sync_window_cache_from_floor` → AttributeError；补上后 `start_falling` 又因多了 `reason` → TypeError）；
+  **第十五轮第 3 次**（`check_window_movement` 要调 `is_floor_valid` → `第八轮/FakeFloorManager` 缺它）。
+  **改了被测对象的对外调用面，就要同步扫一遍所有桩**；顺手把新要求**加严进老套件**（W6→+W6b）。
+  好消息：补桩后 `round8_floor` 输出**一字未变**（IDENTICAL）—— 说明补桩没有改变任何既有断言的结论，
+  这正是"桩只是方法面的镜像"的证明。
+- **别把断言写在死代码上**（第十五轮）：第十四轮 G5b 断的是 `update_floor` 体里的
+  `start_falling(reason='floor_removed')` 字符串 —— 而 `update_floor` **从来没被调用过**，
+  那条断言永远为真、什么也没保护。**断言死代码 ≡ 断言一个常量。**
+  写源码级断言前先问："这段代码真的会被执行吗？"；本轮已把它改成锁"死代码不该长回来"。
+- **大块删除用"行级手术 + 断言 + 编译校验"，不要手工重排版**：删 154/67 行这种规模，
+  逐行 `old_string` 匹配一次打错就白干。脚本按行号定位、**断言落点正确**
+  （同名 `get_all_visible_windows()` 全文件 10 处 → 必须确认取到 `check_nearby_windows` 那一处、
+  且上溯最近的 `def` 就是它），删完 `py_compile` + 跑 G2。注意 **main.py 是 CRLF、floor_manager 是 LF** →
+  一律 `newline=''` 读写、匹配时 `rstrip('\r')`，只做整行增删（见 `第十五轮/_evidence/round15_surgery_log.txt`）。
 - **"函数写对了"不等于"产品用上了"——本项目最贵的坑（已第 3 次）**：第八轮 z 序两函数、
   第十三轮三个可见区域判定（`get_jump_destinations`/`find_support_below`/`is_on_floor_edge`）
   都是**零调用死代码**，套件测的是"函数对不对"，**没有一条断言"产品调没调用"**。
@@ -182,6 +214,11 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   必须加**行为级接线断言** —— 用**故意缺掉回落依赖**的 stub（第十四轮 A2/A2c：stub 不给
   `desktop_interaction`）驱动**真实的**产品入口函数，一旦代码偷回旧路 → 立刻 `AttributeError`。
   **"改了 A 却没接线到 B" 要当独立交付项来验，不能算在"A 的套件过了"里。**
+- **它的镜像问题：没改也没人调用的（第十五轮）**：死代码不只是"占地方" ——
+  `check_nearby_windows` 尾部那段是**第十三轮口径错误的活样本**，留着就等于把 bug 冻结在原地等人复活。
+  本轮定了处置口径：**要么接线、要么删**，不留第三种状态。
+  查死代码最省事的两个来源：`第五轮/_evidence/_deadrefs_filtered_view.txt`（零引用方法清单，
+  `is_floor_valid`/`update_floor` 都在里面）+ H4/H5 排期方案 §G1。
 
 ## 历轮（细节见 `.workbuddy/memory/<日期>.md` 与对应报告）
 - 7–8：README 路径 import 修复；#10 ▼ 抖动 `024b6aa` / #11 坠落误判 `cc9471d` / #12 斜抛+空中二次抓+卡动画
@@ -206,6 +243,17 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `代码质量复审报告_2026-09-16_第十四轮.md`；证据 `第十四轮/_evidence/`（编码 0 损坏 0 告警）。
   **遗留**：① 真机肉眼确认上下动/落地（只能用户做）② `check_nearby_windows` 尾部旧裸矩形兜底段仍留
   （只在"零桌面窗口"时走到，建议下轮清理）③ `is_on_floor_edge`/`find_support_below` **仍零调用**（要么接活要么删）。
+- 15 `1b279d3`：**建楼死代码清干净 + 一个被错判的坠落起因**。兑现第十四轮 §八 两条待办并扩大：
+  删 `check_nearby_windows` 尾部裸矩形段（154 行）/ `update_floor`（67 行）/ `find_support_below` /
+  `is_on_floor_edge`；接线 `is_floor_valid` 修掉"宠物自己走出楼板也播生气动画"（与要求相反的真 bug）。
+  `main.py` 9373→9172 行（+40/−241）。30/0，G2 **19 套件 728 PASS**/全 IDENTICAL（round13 71→72、
+  round14 文案变更，均为有意）；另跑真机启动路径冒烟（真 `RalseiPet()`，四条链全过）。
+  报告 `代码质量复审报告_2026-09-17_第十五轮.md`；证据 `第十五轮/_evidence/`（8 份，编码 0 损坏 0 告警）。
+  **遗留**：① 真机肉眼确认"走到边缘掉下去不再生气 / 关窗仍生气"② `climb_to_top_window()` 仍走裸窗口路径
+  （故意没动：它挑的是最前面那个窗口，按定义不会被盖住）③ `update_floor` 独有的 `found_window` 情绪
+  当前本就不可达、本轮未恢复 ④ 程序目录三个本地 `.bak`/`.backup_*` 备份文件未删（等用户点头）。
+  **push 备注**：本轮 push 报 `21605d4..1b279d3 main -> main` 成功，但随后沙箱代理（57186）对 github
+  持续 502，`ls-remote` 复核连试多次不通 → 未能在当时闭环核验（下次联网时补一次 `ls-remote`）。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
