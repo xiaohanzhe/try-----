@@ -40,6 +40,7 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
 - 令牌别写进仓库文件。核验外发用 `git ls-remote origin refs/heads/main`（加同样头），比看退出码硬。
 - **提交信息用 Write 写 UTF-8 文件 + `git commit -F <文件>`**：`-m @'...'@` 遇带空格的英文引号串会被 PS 5.1 拆
   argv → 提交没发生、push 退 0 假成功。提交后必核 `git log --oneline -1`。
+  **别用 `Out-File -Encoding utf8` 写提交信息**：PS 5.1 会加 **BOM**，标题首位多出一个不可见字符（`git log` 里显示成 `锘`）；用 `Write` 工具写（无 BOM）。
 
 ## 仓库与真机
 - 远端 `https://github.com/xiaohanzhe/try-----.git`（私有，未认证 401/404）；main→origin/main。GitHub 连接器只覆盖
