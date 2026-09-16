@@ -15,7 +15,10 @@
 5. **删文件**：管道 `Remove-Item` 静默无效 → `[System.IO.File]::Delete()` + `Test-Path` 校验。
 6. Python：**`C:\Python311\python.exe`**（PyQt5/pywin32/bs4/psutil/jieba）—— **G2 与所有套件必须用它**；
    托管 venv（3.13）缺 `bs4` → `round5_smoke` 假 FAIL。
-7. 代理：沙箱 `127.0.0.1:54231`（github 常 502）；Clash `127.0.0.1:7897`（可用；偶发 SSL 抖动 → push 重试 3–5 次）。
+7. 代理：**`git push` 用沙箱代理（端口会变，现为 `127.0.0.1:57186`）**——CONNECT 可用，退 0 即成功。
+   **Clash `7897` 对 GitHub 已失效**（`schannel: failed to receive handshake` / `unexpected eof while reading`，
+   连 `ls-remote` 也过不去）；旧记录里"7897 可用"作废。**端口要现查**（`netstat -ano | findstr LISTENING`
+   找 `127.0.0.1:<port>`，或看沙箱注入的 `HTTP_PROXY` 环境变量）。
 8. **E 盘是外接盘、会掉线**（`Get-Volume` 只剩 C/D、`Get-Disk` 仅一块 NVMe 即掉线）→ "本地中转站"是**可用性必需**。
    判在线看 `Get-Disk`/`Win32_DiskDrive`；注册表 `\DosDevices\E:` 只是**历史挂载记录**，不能当在线证据。
 9. **Agent 沙箱有 safe-delete 守卫，按目标路径累计删除计数**（阈值 50，`count=51` 即触发）。症状：**进程在
@@ -47,10 +50,12 @@ $cred = "url=https://github.com/xiaohanzhe/try-----.git`n`n" | git credential fi
 $pw  = ($cred | ? { $_ -like 'password=*' }) -replace '^password=',''
 $usr = ($cred | ? { $_ -like 'username=*' }) -replace '^username=',''
 $b64 = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$usr`:$pw"))
-git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=http://127.0.0.1:7897 `
-    -c http.extraheader="Authorization: Basic $b64" push origin main
+git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=http://127.0.0.1:57186 `
+    -c http.extraheader="Authorization: Basic $b64" push origin main   # 端口现查；重试 3–5 次
 ```
-- 令牌别写进仓库文件。核验外发用 `git ls-remote origin refs/heads/main`（加同样头），比看退出码硬。
+
+- **推送结果**：`TRY1: 41ffecd..f1f8079  main -> main` 一次过是常态。
+- **旧记录作废**：曾写"沙箱 54231 / Clash 7897"。54231 已不顺；**7897 对 GitHub TLS 直接握手失败**。- 令牌别写进仓库文件。核验外发用 `git ls-remote origin refs/heads/main`（加同样头），比看退出码硬。
 - **提交信息用 Write 写 UTF-8 文件 + `git commit -F <文件>`**：`-m @'...'@` 遇带空格的英文引号串会被 PS 5.1 拆
   argv → 提交没发生、push 退 0 假成功。提交后必核 `git log --oneline -1`。
   **别用 `Out-File -Encoding utf8` 写提交信息**：PS 5.1 会加 **BOM**，标题首位多出一个不可见字符（`git log` 里显示成 `锘`）；用 `Write` 工具写（无 BOM）。
@@ -124,6 +129,23 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
   `c_void_p`**，否则 HWND 高位被截断且**静默失效**（同 `OpenProcess` 老坑）。窗口表**不再自带 `platform_height`**
   （原 `z_order*5` 是第二套编号 → 删掉，`floor_manager` 唯一真源）。`is_floor_valid` **不再要求四边逐一相等**
   （DWM 1px 抖动会让楼板反复"消失"→ 无故坠落）。回归锁 `verify_round13_build.py` A–G 71 项。
+- **「建楼」上下动 / 落到某层（第十四轮）**：**楼层可用时不回落旧启发式** —— `check_nearby_windows` 里
+  `fm = self._floors_for_jump()` 拿到楼层就**早返回**（`return`，不 continue 到下面裸窗口矩形那段）；
+  旧段只在"一个桌面窗口都没有 / 单测桩"时走到（保 G2 不漂移 + 沙箱可用）。要点：
+  ① **上跳落点必须过可见区域门** —— `_floor_entry_plan` 出落点后 `nearest_visible_point` 吸附；
+     触发几何照旧"贴边 `NEAR=60px`"（手感不变，判据换掉），别改成"横向覆盖就跳"（会一路狂跳）。
+  ② **下跳显式取相邻下一层** `adjacent_lower_floor`（按 `platform_height` 名次；**桌面返回 `None`**），
+     不能从 `get_jump_destinations` 结果里"顺便拿" —— 那里按 x 范围过滤，而"半个身子探出楼板"恰好
+     x 已出范围 → 会被漏掉。**不穿透**是硬要求。
+  ③ **`current_window` 已降级为派生缓存**（原来与 `current_floor` 是**两套真源** → 站在窗口上却按桌面判）。
+     **唯一写点** `_sync_window_cache_from_floor(floor)`（不删，三十多处还在读）；三个入口
+     （走路换楼板 / 跳跃落地 / 重力落地）全收口到它；重力落地里手写的裸 dict 构造已删。
+  ④ **落地当场结算**：`handle_jump` 完成帧必须写 `current_floor`+`current_platform_z`、同步缓存、
+     **立刻** `_apply_pet_z_order()`（原来要等 1s 节拍，落地那一瞬层级是错的）、播 `land` 一次。
+     低速落到**窗口层**也要 `play_animation_once("land")`（原来直接 `idle` → 看着像平移）。
+  ⑤ **坠落按起因分流**：`start_falling(..., reason=)`；`reason=='floor_removed'`（只由"用户抽走楼板"
+     两个入口传：关窗 / 窗口没跟上）→ `fall_mad` + `max_fall_duration=5.0`；**"自己走到边缘掉下去"
+     "跳跃被判穿透"不带起因**（不算用户行为，不误用生气动画）。回归锁 `verify_round14_move.py` A–G 41 项。
 - **DPI 量纲（第十三轮，差点改错方向）**：`Qt` 建 `QApplication` 时把进程设成 per-monitor-v2 DPI 感知；**在那之前**
   进程 DPI 不感知 → `GetWindowRect`/`GetSystemMetrics` 被 Windows 按系统缩放**虚拟化**（本机 150%：物理 2560×1600
   回报 1707×1067），而 **`DwmGetWindowAttribute` 永远返回物理像素** → 混用会得出"DWM 矩形正好 1.5 倍"的假象。
@@ -149,8 +171,17 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
   面积和正确"用**采样网格**（10px 打点逐点判可见、数点数）反向核对。两者一解析一暴力，对得上才可信 ——
   否则就是在**验自己手算错的期望值**（本轮我确实把两处重叠遮挡的期望面积重复扣了）。
   纯几何/纯计数类断言尤其要这样：**先让"独立方法"同意，再谈结论。**
-- **桩必须跟着真实方法面走**：本轮 `handle_gravity_fall` 新增 `_apply_pet_z_order()` 调用 → `第八轮/PetStub`
-  缺方法直接 AttributeError（`round8_floor` 16→11）。**改了被测对象的对外调用面，就要同步扫一遍所有桩。**
+- **桩必须跟着真实方法面走**：第十三轮 `handle_gravity_fall` 新增 `_apply_pet_z_order()` 调用 →
+  `第八轮/PetStub` 缺方法直接 AttributeError（`round8_floor` 16→11）；**第十四轮同一坑又踩一次**
+  （缺 `_sync_window_cache_from_floor` → AttributeError；补上后 `start_falling` 又因多了 `reason` → TypeError）。
+  **改了被测对象的对外调用面，就要同步扫一遍所有桩**；顺手把新要求**加严进老套件**（W6 → +W6b）。
+- **"函数写对了"不等于"产品用上了"——本项目最贵的坑（已第 3 次）**：第八轮 z 序两函数、
+  第十三轮三个可见区域判定（`get_jump_destinations`/`find_support_below`/`is_on_floor_edge`）
+  都是**零调用死代码**，套件测的是"函数对不对"，**没有一条断言"产品调没调用"**。
+  第十三轮换判据后真机没生效，根因就在这。**写断言的铁律**：凡是"改判据"的轮次，
+  必须加**行为级接线断言** —— 用**故意缺掉回落依赖**的 stub（第十四轮 A2/A2c：stub 不给
+  `desktop_interaction`）驱动**真实的**产品入口函数，一旦代码偷回旧路 → 立刻 `AttributeError`。
+  **"改了 A 却没接线到 B" 要当独立交付项来验，不能算在"A 的套件过了"里。**
 
 ## 历轮（细节见 `.workbuddy/memory/<日期>.md` 与对应报告）
 - 7–8：README 路径 import 修复；#10 ▼ 抖动 `024b6aa` / #11 坠落误判 `cc9471d` / #12 斜抛+空中二次抓+卡动画
@@ -168,6 +199,13 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
   顺带：`_is_writable_dir` 零副作用快路径（修 G2 自伤 + **默认启动现已能在沙箱跑起来**）、`save_baseline` 合并模式、
   DPI 量纲陷阱定论。71/0，G2 **17 套件 655 PASS**/全 IDENTICAL。真机证据 `第十三轮/_evidence/`。
   **下一步**：让用户在真机肉眼确认"宠物会被前台窗口盖住"（沙箱内透明非置顶窗被遮挡时鼠标事件打不到，只能离屏断言）。
+- 14 `41ffecd`（批次一 上下动/接线）+ `9960e89`（批次二 落地/生气动画）+ `f1f8079`（补交报告）：
+  **把第十三轮"写对没接线"的楼层判定接进产品路径**。三处症状 → 三处收口：① 跳落点过可见区域门
+  ② 下跳显式取相邻层（不穿透）③ `current_window` 降级派生缓存（消第二真源）。落地当场结算 + z 序 +
+  `land` 动画；关窗 → `fall_mad` ≥5s。41/0，G2 **18 套件 697 PASS**/全 IDENTICAL。报告
+  `代码质量复审报告_2026-09-16_第十四轮.md`；证据 `第十四轮/_evidence/`（编码 0 损坏 0 告警）。
+  **遗留**：① 真机肉眼确认上下动/落地（只能用户做）② `check_nearby_windows` 尾部旧裸矩形兜底段仍留
+  （只在"零桌面窗口"时走到，建议下轮清理）③ `is_on_floor_edge`/`find_support_below` **仍零调用**（要么接活要么删）。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
