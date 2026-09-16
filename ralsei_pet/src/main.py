@@ -1934,6 +1934,159 @@ class RalseiPet(QMainWindow):
     
     
 
+    # ------------------------------------------------------------------
+    # 建楼：以 floor_manager 为唯一真源的跳跃规划（第十四轮接线）
+    # ------------------------------------------------------------------
+    # 为什么要有这一段
+    # ----------------
+    # 第十三轮把 floor_manager 里的判据全换成了"可见区域"，
+    # `get_jump_destinations` / `find_support_below` / `is_on_floor_edge` 都改对了 ——
+    # 但**产品一个都没调用**：真正决定跳不跳、跳去哪的还是下面 `check_nearby_windows`
+    # 里那套"裸窗口矩形 + 10~30px 贴边"的老启发式。于是两条要求实际没生效：
+    #   ① "向上跳只能跳到该窗口**没被挡住**的那部分边缘上" —— 老逻辑不看可见区域；
+    #   ② "向下跳必须先到相邻下一层，不能穿透" —— 老逻辑站在窗口上时直接把目标
+    #      声明成**桌面**，等于从 3 楼朝 1 楼跳（`handle_jump` 的穿透检查会把它
+    #      打断成"取消跳跃 + 自由落体"，观感是硬着陆，不是要求里的"先跳到2楼"）。
+    # 这一段的职责就是把这套判定接进产品路径。
+
+    def _floors_for_jump(self):
+        """可用的楼层系统；不可用（无窗口 / 单测桩）时返回 None → 调用方回落旧逻辑。"""
+        fm = getattr(self, 'floor_manager', None)
+        if fm is None or not getattr(fm, 'floors', None):
+            return None
+        return fm
+
+    def _visible_landing(self, fm, floor, pos):
+        """把落点收进该楼层的可见区域（薄封装，统一走 floor_manager 的几何）。"""
+        try:
+            return fm.nearest_visible_point(floor, pos)
+        except Exception:
+            return None
+
+    def _floor_entry_plan(self, fm, floor, ralsei_rect, cur_floor=None):
+        """从宠物当前所在的一侧"进入"某块楼板：返回 (edge, 落点) 或 None。
+
+        把老启发式的四条边（上/下/左/右）保留下来 —— 那是"贴着边才跳"的触感来源，
+        宠物只有真的贴到某块楼板边上才会起跳；但**几何全部换成楼层的权威矩形**，
+        并且落点必须落在该楼层的**可见区域**里（看不见的部分跳不上去）。
+        """
+        rect = floor.get('rect')
+        if rect is None or rect.width() <= 0 or rect.height() <= 0:
+            return None
+
+        # 目标层是桌面（1楼）：桌面是一片无边的大地，"从哪条边进入"没有意义。
+        # 规则与旧逻辑同源（"从窗口底边跳回桌面"），但落点改成"当前楼板下沿之下一小段"，
+        # 而不是旧代码里会落到屏幕最底的那条分支。
+        if floor.get('type') == 'desktop':
+            slab = (cur_floor or {}).get('rect')
+            if slab is None:
+                return None
+            gap = ralsei_rect.bottom() - slab.bottom()   # >=0 = 宠物已探出下沿
+            if not (-20 <= gap <= 60):
+                return None
+            land = QPoint(ralsei_rect.center().x(), slab.bottom() + 20)
+            land = self._visible_landing(fm, floor, land)
+            if land is None:
+                return None
+            return "down", land
+
+        # 目标楼板横向/纵向的"内容区间"（留 20px 内缩，别贴死角上）
+        span_ok_x = (ralsei_rect.center().x() > rect.left() + 20
+                     and ralsei_rect.center().x() < rect.right() - 20)
+        span_ok_y = (ralsei_rect.center().y() > rect.top() + 20
+                     and ralsei_rect.center().y() < rect.bottom() - 20)
+
+        # 宠物在目标楼板的哪一侧（相隔距离用"最近边"衡量，<=60px 才算贴边）
+        NEAR = 60
+        gap_top = rect.top() - ralsei_rect.bottom()          # >0 = 宠物在楼板上方
+        gap_bottom = ralsei_rect.top() - rect.bottom()       # >0 = 宠物在楼板下方
+        gap_left = rect.left() - ralsei_rect.right()         # >0 = 宠物在楼板左侧
+        gap_right = ralsei_rect.left() - rect.right()        # >0 = 宠物在楼板右侧
+
+        edge, land = None, None
+        if -20 <= gap_top <= NEAR and span_ok_x:
+            # 从上方进入：站在楼板**上边缘之内**（与 get_drop_destination 落地口径一致）
+            edge, land = "bottom", QPoint(ralsei_rect.center().x(), rect.top() + 10)
+        elif -20 <= gap_left <= NEAR and span_ok_y:
+            edge, land = "left", QPoint(rect.left() + 10, ralsei_rect.center().y())
+        elif -20 <= gap_right <= NEAR and span_ok_y:
+            edge, land = "right", QPoint(rect.right() - self.width() - 10,
+                                        ralsei_rect.center().y())
+        elif -20 <= gap_bottom <= NEAR and span_ok_x:
+            edge, land = "top", QPoint(ralsei_rect.center().x(),
+                                       rect.bottom() - self.height() - 10)
+        if edge is None:
+            return None
+
+        land = self._visible_landing(fm, floor, land)
+        if land is None:
+            return None
+        # 吸附后如果被推得太远（可见部分离宠物十万八千里），这次跳跃不成立 ——
+        # 要求里"只能跳到没被挡住的那部分边缘上"，而不是"跳到同一层的另一个角落"。
+        if abs(land.x() - ralsei_rect.center().x()) > 200 \
+                or abs(land.y() - ralsei_rect.center().y()) > 200:
+            return None
+        return edge, land
+
+    def _nearest_floor_jump(self, fm, cur_floor, ralsei_rect):
+        """这一拍可执行的楼层跳跃：返回 (目标楼层, edge, 落点) 或 None。
+
+        候选来自 `floor_manager.get_jump_destinations`（唯一真源）：
+          · 比当前楼板**更高**的楼层 —— 落点已由楼层侧按可见区域给到；
+          · **相邻的下层** —— 逐层，不穿透（要求："必须先跳到2楼"）。
+        再按"进入边 + 贴边距离"筛选，取最近的一个。
+        """
+        cur_pos = ralsei_rect.topLeft()
+        try:
+            cands = fm.get_jump_destinations(cur_floor, cur_pos)
+        except Exception:
+            return None
+        cur_id = self._floor_identity_key(cur_floor)
+
+        candidates = [f for f, _pos in cands
+                      if self._floor_identity_key(f) != cur_id]
+
+        # 向下：**显式**取相邻下一层，而不是从 get_jump_destinations 的结果里"顺便拿"。
+        # 原因：那里会按"宠物 x 是否落在该层横向范围内"过滤，而"走到楼板边缘、
+        # 半个身子探出去"恰恰就是 x 已经出了范围的那种情形 —— 会被漏掉。
+        # 建楼要求明写"向下必须先跳到相邻的下一层"，这条不能靠副作用满足。
+        down = fm.adjacent_lower_floor(cur_floor)
+        if down is not None and self._floor_identity_key(down) != cur_id:
+            known = {self._floor_identity_key(f) for f in candidates}
+            if self._floor_identity_key(down) not in known:
+                candidates.append(down)
+
+        best = None
+        for floor in candidates:
+            plan = self._floor_entry_plan(fm, floor, ralsei_rect, cur_floor)
+            if plan is None:
+                continue
+            edge, land = plan
+            d = (abs(land.x() - ralsei_rect.center().x())
+                 + abs(land.y() - ralsei_rect.center().y()))
+            if best is None or d < best[0]:
+                best = (d, floor, edge, land)
+        if best is None:
+            return None
+        return best[1], best[2], best[3]
+
+    def _start_floor_jump(self, floor, edge, land):
+        """按楼层目标起跳（落点由楼层可见区域给出）。"""
+        target_window = None
+        if floor.get('type') == 'window':
+            w = floor.get('window') or {}
+            rect = w.get('rect')
+            target_window = {
+                'hwnd': w.get('hwnd'),
+                'title': w.get('title', ''),
+                'x': rect.x() if rect is not None else floor['rect'].x(),
+                'y': rect.y() if rect is not None else floor['rect'].y(),
+                'width': rect.width() if rect is not None else floor['rect'].width(),
+                'height': rect.height() if rect is not None else floor['rect'].height(),
+                'z_order': w.get('z_order', 0),
+            }
+        self.start_jump(target_window, edge, target_floor=floor, target_pos=land)
+
     def check_nearby_windows(self, current_pos):
         # 检查附近的窗口，判断是否需要跳跃
         # 如果已经在跳跃中，不再检测跳跃
@@ -1967,11 +2120,22 @@ class RalseiPet(QMainWindow):
         # 检查是否在跳跃冷却期
         if current_time - self.last_jump_time < jump_cooldown:
             return
-        
-        windows = self.desktop_interaction.get_all_visible_windows()
-        
-        # 计算Ralsei的矩形
+
+        # ===== 建楼（第十四轮）：楼层系统可用时，跳跃决策**只**由它回答 =====
+        # 判据全部来自 floor_manager：可见区域（"只能跳到没被挡住的那部分边缘"）
+        # ＋ 相邻下层（"向下必须先到2楼"）。这里**故意不回落**下面的裸矩形启发式 ——
+        # 那条路会把宠物送到"看不见的地板"上，正是本轮要消灭的行为。
+        # 楼层系统不可用（无桌面窗口 / 单测桩）时才走下面的老逻辑。
         ralsei_rect = QRect(current_pos.x(), current_pos.y(), self.width(), self.height())
+        fm = self._floors_for_jump()
+        if fm is not None:
+            cur_floor = getattr(self, 'current_floor', None) or fm.desktop_floor
+            plan = self._nearest_floor_jump(fm, cur_floor, ralsei_rect)
+            if plan is not None:
+                self._start_floor_jump(*plan)
+            return
+
+        windows = self.desktop_interaction.get_all_visible_windows()
         
         # 计算当前位置到各窗口边缘的距离，对每个窗口的边缘都能跳跃
         nearby_windows = []
@@ -2126,7 +2290,18 @@ class RalseiPet(QMainWindow):
             window_edge = nearby_windows[0][2]
             self.start_jump(closest_window, window_edge)
 
-    def start_jump(self, target_window, window_edge):
+    def start_jump(self, target_window, window_edge, target_floor=None, target_pos=None):
+        """开始跳跃。
+
+        参数（第十四轮新增后两个）：
+          · `target_window` —— 目标**窗口**（裸 dict，沿用历史调用）；跳桌面传 None。
+          · `window_edge`   —— 进入目标楼板的那条边（"bottom"/"left"/"right"/"top"/
+                               "down"/"up"），只影响落点启发式与日志。
+          · `target_floor`  —— **目标楼层**（floor_manager 的权威对象）。给了就用它，
+                               不再从裸窗口反查；这是"唯一真源"要求下的正路。
+          · `target_pos`    —— **落点**（已经由调用方按可见区域选定）。给了就用它，
+                               跳过下面那套"从裸窗口矩形推落点"的启发式。
+        """
         # 开始跳跃
         self.is_jumping = True
         self.jump_start_time = time.time()
@@ -2144,7 +2319,10 @@ class RalseiPet(QMainWindow):
         
         # 计算目标平台的Z坐标
         self.jump_target_z = 0
-        if target_window:
+        if target_floor is not None:
+            # 楼层系统给出的目标：唯一权威编号（有效楼层名次，最前=最高）
+            self.jump_target_z = target_floor.get('platform_height', 0)
+        elif target_window:
             # 跳上窗口：用**楼层**的 platform_height 作为目标Z坐标。
             # 修复（第十三轮）：原来读的是裸窗口 dict 的 platform_height —— 那是
             # desktop_interaction 里的第二套编号口径（与 floor_manager 方向相反），
@@ -2160,7 +2338,9 @@ class RalseiPet(QMainWindow):
         
         # 设置目标楼层，用于跳跃过程中的穿透检查
         self.jump_target_floor = None
-        if target_window:
+        if target_floor is not None:
+            self.jump_target_floor = target_floor
+        elif target_window:
             # 查找目标窗口对应的楼层
             self.jump_target_floor = self.floor_manager.get_floor_by_window(target_window['hwnd'])
         else:
@@ -2177,7 +2357,16 @@ class RalseiPet(QMainWindow):
         
         # 调整跳跃次数和休息逻辑
         # 当返回较低平台时，减少跳跃次数计数
-        if self.current_window and target_window:
+        # 修复（第十四轮）：原来用裸窗口的 z_order 比大小，而"两个都是 None
+        # （从桌面跳到桌面）"或"裸 dict 口径与楼层口径不一致"时会算错方向。
+        # 改以**楼层编号**判方向（唯一真源），没有楼层可比时退回旧的 z_order 判据。
+        _cur_floor = getattr(self, 'current_floor', None)
+        if target_floor is not None and _cur_floor is not None:
+            if target_floor.get('platform_height', 0) < _cur_floor.get('platform_height', 0):
+                self.jump_count = max(0, self.jump_count - 1)   # 往下走，减计数
+            else:
+                self.jump_count += 1                            # 往上走，加计数
+        elif self.current_window and target_window:
             if target_window['z_order'] < self.current_window['z_order']:
                 # 返回较低平台，减少跳跃次数
                 self.jump_count = max(0, self.jump_count - 1)
@@ -2199,7 +2388,12 @@ class RalseiPet(QMainWindow):
             self.needs_rest = False
         
         # 计算跳跃目标位置，确保准确跳上窗口或桌面，避免在空中
-        if target_window:
+        if target_pos is not None:
+            # 落点已由调用方按**目标楼层的可见区域**选定（建楼要求：只能跳到
+            # 没被挡住的那部分边缘）。这里只做屏幕夹紧，绝不重新按裸窗口矩形推落点 ——
+            # 那正是会落到"看不见的地板"上的老路。
+            target_x, target_y = self._clamp_pos_to_desktop(target_pos.x(), target_pos.y())
+        elif target_window:
             window_rect = QRect(target_window['x'], target_window['y'], target_window['width'], target_window['height'])
             
             # 计算跳跃方向和距离，确保Ralsei被放置在窗口的内容区域
@@ -2457,6 +2651,42 @@ class RalseiPet(QMainWindow):
     # ------------------------------------------------------------------
     # 楼层身份 / 楼板跟随（建楼要求：铁律"当前楼层原则"）
     # ------------------------------------------------------------------
+    def _sync_window_cache_from_floor(self, floor):
+        """把 `self.current_window`（老代码到处在用的裸窗口缓存）对齐到当前楼层。
+
+        为什么必须同步（第十四轮）：建楼之后"当前站在哪"的唯一真源是 `current_floor`，
+        而 `self.current_window` 是历史遗留的第二份状态，过去只在**跳跃落地 /
+        重力落地**时被写。宠物**用脚走进**一块新楼板时（`check_window_movement` /
+        `update_floor` 里直接 `current_floor = new_floor`）它不会被更新 ——
+        于是 `check_nearby_windows` 读到的"当前窗口"是 None 或过期的那块，
+        层级过滤与跳跃方向全部算错（表现为"明明站上窗口了，却还按桌面判"）。
+        这里把它降级成**派生缓存**：楼层一动就跟着刷，不再各写一份。
+        """
+        if floor is None or floor.get('type') != 'window':
+            self.current_window = None
+            self.window_level = 0
+            self.last_window_rect = None
+            return
+        w = floor.get('window') or {}
+        rect = w.get('rect') or floor.get('rect')
+        if rect is None:
+            self.current_window = None
+            self.window_level = 0
+            self.last_window_rect = None
+            return
+        self.current_window = {
+            'hwnd': w.get('hwnd', floor.get('window_hwnd')),
+            'title': w.get('title', ''),
+            'x': rect.x(),
+            'y': rect.y(),
+            'width': rect.width(),
+            'height': rect.height(),
+            'z_order': w.get('z_order', floor.get('z_order', 0)),
+            'platform_height': floor.get('platform_height', 0),
+        }
+        self.window_level = self.current_window['z_order']
+        self.last_window_rect = (rect.x(), rect.y(), rect.width(), rect.height())
+
     @staticmethod
     def _floor_identity_key(floor):
         """楼层的稳定标识：窗口用 hwnd、桌面用固定串。
@@ -2717,7 +2947,10 @@ class RalseiPet(QMainWindow):
         self.current_floor = new_floor
         self.current_platform_z = new_floor['platform_height']
         self.spatial_pos["z"] = new_floor['platform_height']
-
+        # 派生缓存同步：走路换上楼板时 current_window 也必须跟着换，
+        # 否则它是 None/过期值，跳跃判定会按错的楼层算（见 _sync_window_cache_from_floor）
+        self._sync_window_cache_from_floor(new_floor)
+    
     def update_floor(self):
         # 获取Ralsei当前位置
         current_pos = self.pos()
@@ -2782,6 +3015,8 @@ class RalseiPet(QMainWindow):
         self.current_floor = new_floor
         self.current_platform_z = new_floor['platform_height']
         self.spatial_pos["z"] = new_floor['platform_height']
+        # 同上：老缓存与楼层真源必须一致（见 _sync_window_cache_from_floor）
+        self._sync_window_cache_from_floor(new_floor)
     
     # 摔倒判定相关代码 - 开始摔倒
     def start_fall(self, reason="window_move"):

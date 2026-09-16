@@ -192,6 +192,12 @@ class PetStub:
     def _apply_pet_z_order(self):
         return False
 
+    # 第十四轮新增：换楼板时把 current_window 这份派生缓存对齐到 current_floor。
+    # 同样属于"stub 要跟上真实方法表面"：不挂上，check_window_movement 一进来就炸。
+    # 这里直接用真实现（它只读 floor dict，本套件的 win_floor 结构满足）。
+    def _sync_window_cache_from_floor(self, floor):
+        return RalseiPet._sync_window_cache_from_floor(self, floor)
+
     def trigger_splat(self):
         self.calls.append(('splat', None))
 

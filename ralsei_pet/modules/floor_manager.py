@@ -553,6 +553,57 @@ class FloorManager:
 
         return jump_destinations
 
+    def adjacent_lower_floor(self, current_floor):
+        """当前楼板**直接相邻**的那一层（桌面恒为最底层）。
+
+        建楼要求（向下跳的逐层约束）：
+          "如果它站在3楼的窗口上，想回桌面（1楼），它必须先跳到2楼（中间层的窗口），
+           然后再从2楼跳回1楼。不能直接从3楼穿透2楼跳到1楼！"
+
+        注意"楼层"是**堆叠名次**（platform_height），不是屏幕 y 坐标 ——
+        2楼那块楼板在屏幕上可能比 3楼高也可能比它低，但名次上紧挨着它。
+        已经是最底层（桌面）时返回 None："桌面下面没有楼板了"。
+        """
+        all_floors = sorted(self.floors + [self.desktop_floor],
+                            key=lambda x: x['platform_height'], reverse=True)
+        idx = self._index_of_floor(all_floors, current_floor)
+        if idx < 0:
+            return None
+        if idx + 1 < len(all_floors):
+            return all_floors[idx + 1]
+        return None
+
+    def nearest_visible_point(self, floor, pos):
+        """把落点吸附到该楼层的**可见区域**内（越界就取最近的那块可见子矩形）。
+
+        建楼要求（向上跳的落点约束）：
+          "它只能跳到这个浏览器窗口没被其他东西挡住的那部分边缘上。"
+        被前面窗口盖住的部分是"看不见的地板"，落上去等于站在虚空里。
+        桌面层整片都是可见的，直接原样返回。
+
+        返回 None = 该层没有任何可见区域（理论上不会发生：可见面积不足阈值的
+        窗口根本不会成为楼层）→ 调用方据此放弃这次跳跃。
+        """
+        if floor is None:
+            return None
+        if floor.get('type') == 'desktop':
+            return pos
+        rects = floor.get('visible_rects') or []
+        if not rects:
+            return None
+        for r in rects:
+            if r.contains(pos):
+                return pos
+        best, best_d2 = None, None
+        for r in rects:
+            # 子矩形内的最近点（点在外面时是边界上的投影）
+            lx = min(max(pos.x(), r.left()), r.right())
+            ly = min(max(pos.y(), r.top()), r.bottom())
+            d2 = (pos.x() - lx) ** 2 + (pos.y() - ly) ** 2
+            if best_d2 is None or d2 < best_d2:
+                best_d2, best = d2, QPoint(lx, ly)
+        return best
+
     def is_floor_valid(self, floor):
         """该楼板引用的窗口是否还在（还活着）。
 

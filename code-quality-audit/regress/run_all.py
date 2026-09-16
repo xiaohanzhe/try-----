@@ -86,7 +86,7 @@ HERMETIC_IDS = frozenset({
     'round5_smoke', 'round5_verify', 'round6_verify',
     's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
     'round8_dialogue', 'round8_floor', 'round8_fling',
-    'round9_focus', 'round13_build',
+    'round9_focus', 'round13_build', 'round14_move',
 })
 
 
@@ -202,6 +202,15 @@ SUITES = [
                 '—— 可见区域矩形相减（含独立网格 oracle 交叉验证）/ 完全盖住即不存在 / '
                 '楼层名次最前最高 / 站立·下落·跳跃都只在可见区域 / '
                 'DWM 可见边框·幽灵窗口·按进程排除自身 / SetWindowPos 把宠物插到所站楼板之上',
+    },
+    {
+        'id': 'round14_move',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十四轮', 'verify_round14_move.py'),
+        'offscreen': True,
+        'desc': '第十四轮：「建楼」的上下动（跨楼层移动接线）—— 楼层判定真正接进产品路径'
+                '（防"改了没人调用"复演：行为级证明 check_nearby_windows 走 '
+                '_nearest_floor_jump）/ 向上跳落点必须在可见区域（被遮处要被吸附回来）/ '
+                '向下跳只到相邻下一层（禁穿透）/ current_window 与 current_floor 单真源同步',
     },
 ]
 
