@@ -86,7 +86,7 @@ HERMETIC_IDS = frozenset({
     'round5_smoke', 'round5_verify', 'round6_verify',
     's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
     'round8_dialogue', 'round8_floor', 'round8_fling',
-    'round9_focus', 'round13_build', 'round14_move',
+    'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
 })
 
 
@@ -212,6 +212,16 @@ SUITES = [
                 '_nearest_floor_jump）/ 向上跳落点必须在可见区域（被遮处要被吸附回来）/ '
                 '向下跳只到相邻下一层（禁穿透）/ current_window 与 current_floor 单真源同步 / '
                 '落地当场结算并重排 z 序 / 用户抽走楼板（关窗）→ 生气动画 ≥5s',
+    },
+    {
+        'id': 'round15_cleanup',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十五轮', 'verify_round15_cleanup.py'),
+        'offscreen': True,
+        'desc': '第十五轮：「建楼」死代码清干净 + 一个被错判的坠落起因'
+                '—— 删 update_floor（第五轮 F3 点名的零调用漂移副本）/ '
+                'check_nearby_windows 尾部裸矩形老启发式 / find_support_below（get_drop_destination 的重复）/ '
+                'is_on_floor_edge（无消费者）；接线 is_floor_valid 区分'
+                '"宠物自己走出楼板"（常规动画）与"用户关窗抽走楼板"（生气动画）',
     },
 ]
 

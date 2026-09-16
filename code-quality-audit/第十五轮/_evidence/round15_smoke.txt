@@ -1,0 +1,12 @@
+RALSEI_MEMORY_DIR = C:\Users\23002\AppData\Local\Temp\r15_smoke_b7ipxy8n\RalseiMemory
+QT_QPA_PLATFORM  = offscreen
+main.py 行数 = 9172
+[ OK ] RalseiPet() 实例化成功
+[ OK ] floor_manager.update_floors()  -> floors=0 underlying_windows=0
+[ OK ] floor_manager.is_floor_valid(desktop)  -> True
+[ OK ] check_window_movement() ×3（1 秒节拍那条链）  -> no exception
+[ OK ] check_nearby_windows(pos)（跳跃决策；本轮删掉了尾部老启发式）  -> no exception
+[ OK ] start_falling() → handle_gravity_fall() 直到落地  -> frames=44 landed=desktop z=0
+[ OK ] _nearest_floor_jump()（跳跃规划，不改状态）  -> floors=1 cur=desktop plan=None
+
+结论：全部通过

@@ -4,13 +4,13 @@
 为什么要单开这一轮
 ------------------
 第十三轮把 `floor_manager` 里的判据全换成了"可见区域"（`visible_subrects` /
-`floor_visible_contains` / `get_jump_destinations` / `find_support_below`），
+`floor_visible_contains` / `get_jump_destinations`），
 套件 C 段也确实在测这些函数 —— **但产品代码一个都没调用**：
 
   · 真正决定"跳不跳、跳去哪"的是 `main.py::check_nearby_windows`，
     它用的是**裸窗口矩形**（`window['x'/'y'/'width'/'height']`）+ 10~30px 贴边启发式；
-  · `check_window_movement` / `update_floor` 只更新 `current_floor`，从不更新
-    `self.current_window` —— 而 `check_nearby_windows` 读的偏偏是 `current_window`。
+  · 换楼板时只更新 `current_floor`，从不更新 `self.current_window` ——
+    而 `check_nearby_windows` 读的偏偏是 `current_window`。
     （"当前站在哪"于是有两份状态，两份还不一致。）
 
 结果就是两条"建楼"要求**在真机上根本没生效**：
@@ -461,12 +461,15 @@ ok('G2 自己掉下去（无 user 起因）→ 常规坠落动画，不误用生
    'anim=%s reason=%r' % (_p_self.anim_calls[-1:], _p_self._fall_reason))
 
 # G5：两个"楼板被抽走"的入口都必须带上起因（否则永远选不出生气动画）
+# 第十五轮更新：`update_floor` 已作为死代码删除（它在第五轮 F3 就被点名"全项目无调用点、
+# 与 check_window_movement 逐行重复且已漂移"）。原来 G5b 断言的是那份**死代码**里的字符串
+# —— 断言死代码等于没测。改为锁"它不该再长回来"，并确认唯一入口还在。
 _cwm = func_src('check_window_movement')
-_upd = func_src('update_floor')
 ok('G5a check_window_movement：楼板消失时带 reason=\'floor_removed\'',
    "start_falling(reason='floor_removed')" in _cwm, None)
-ok('G5b update_floor：窗口被关闭时带 reason=\'floor_removed\'',
-   "start_falling(reason='floor_removed')" in _upd, None)
+ok('G5b 死代码 update_floor 已删除（第五轮 F3 的漂移副本），走动换楼板只剩一个入口',
+   'defupdate_floor(' not in flat(_main_src)
+   and 'defcheck_window_movement(' in flat(_main_src), None)
 
 # G3：跳跃落地当场结算 current_floor（不是等下一个 1 秒节拍）
 _hj = func_src('handle_jump')

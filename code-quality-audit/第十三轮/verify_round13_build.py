@@ -253,11 +253,16 @@ ok('C4 从记事本往下掉：浏览器在那里被记事本自己盖住 → �
 dest2, _ = fm.get_drop_destination(QPoint(700, 700), b_floor)
 ok('C5 从记事本往下掉：浏览器在那里可见 → 被浏览器接住',
    dest2.get('window_hwnd') == 2002, dest2.get('window_hwnd'))
-ok('C6 find_support_below 同样按可见区域：记事本下方那块地板在被遮处接不住',
-   fm.find_support_below(QPoint(700, 150),
-                         z_below=b_floor['platform_height'] - 1).get('type') == 'desktop',
-   fm.find_support_below(QPoint(700, 150),
-                         z_below=b_floor['platform_height'] - 1).get('type'))
+ok('C6 "脚下能不能接住"只剩一条判据 floor_visible_contains：被遮处接不住、可见处接得住',
+   fm.floor_visible_contains(fm.get_floor_by_window(2002), QPoint(700, 150)) is False
+   and fm.floor_visible_contains(fm.get_floor_by_window(2002), QPoint(700, 700)) is True,
+   (fm.floor_visible_contains(fm.get_floor_by_window(2002), QPoint(700, 150)),
+    fm.floor_visible_contains(fm.get_floor_by_window(2002), QPoint(700, 700))))
+# 第十五轮：原 C6 断言的 `find_support_below` 已作为重复实现删除
+# （它和 `get_drop_destination` 是同一件事的两份实现，且全项目零调用）。
+# 这里加锁：这两个零调用 helper 不该再被长回来。
+ok('C6b 零调用重复实现已删（find_support_below / is_on_floor_edge 不再存在）',
+   not hasattr(fm, 'find_support_below') and not hasattr(fm, 'is_on_floor_edge'), None)
 
 # 向上跳的两个前提：① 宠物水平位置在目标层横向范围内 ② 落点在目标层可见区域
 _jumps = fm.get_jump_destinations(a_floor, QPoint(700, 500))

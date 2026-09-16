@@ -630,30 +630,3 @@ class FloorManager:
                 return floor
         return None
 
-    # ------------------------------------------------------------------
-    # Boundary: detect when pet walks off a floor edge
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def is_on_floor_edge(pos, floor, margin=6):
-        """Return True if pos is within `margin` pixels of the floor's
-        outer edge AND outside the floor rect itself (pet walked off)."""
-        rect = floor['rect']
-        if rect.contains(pos):
-            return False
-        expanded = rect.adjusted(-margin, -margin, margin, margin)
-        return expanded.contains(pos)
-
-    def find_support_below(self, pos, z_below=None):
-        """pos 正下方第一块能接住它的楼板（走到边缘掉下去时用）。
-
-        可见区域判定（第十三轮）：被前面窗口盖住的部分是"看不见的地板"，接不住宠物。
-        """
-        all_floors = sorted(self.floors + [self.desktop_floor],
-                            key=lambda x: x['platform_height'], reverse=True)
-        if z_below is not None:
-            all_floors = [f for f in all_floors if f['platform_height'] <= z_below]
-        for floor in all_floors:
-            if self.floor_visible_contains(floor, pos):
-                return floor
-        return self.desktop_floor

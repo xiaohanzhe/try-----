@@ -95,6 +95,19 @@ class FakeFloorManager:
                 return f
         return None
 
+    def is_floor_valid(self, floor):
+        """第十五轮新增：`check_window_movement` 用它区分
+        "宠物自己走出楼板"（窗口还在）与"楼板被用户抽走"（窗口没了）。
+
+        真实现查 `underlying_windows`；本套件没有那层，等价地查 floors
+        （本套件的模型里"窗口还在"就是"还在楼层表里"）。
+        教训照旧：**生产代码的方法面一变，所有 stub 都要跟**。
+        """
+        if (floor or {}).get('type') == 'desktop':
+            return True
+        hwnd = (floor or {}).get('window_hwnd')
+        return any(f.get('window_hwnd') == hwnd for f in self.floors)
+
     def get_drop_destination(self, pos, current_floor):
         """与 FloorManager.get_drop_destination 同语义（按稳定标识定位当前楼层）。"""
         all_floors = self._all()

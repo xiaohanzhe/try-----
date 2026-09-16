@@ -1940,7 +1940,7 @@ class RalseiPet(QMainWindow):
     # 为什么要有这一段
     # ----------------
     # 第十三轮把 floor_manager 里的判据全换成了"可见区域"，
-    # `get_jump_destinations` / `find_support_below` / `is_on_floor_edge` 都改对了 ——
+    # `get_jump_destinations` / `floor_visible_contains` 都改对了 ——
     # 但**产品一个都没调用**：真正决定跳不跳、跳去哪的还是下面 `check_nearby_windows`
     # 里那套"裸窗口矩形 + 10~30px 贴边"的老启发式。于是两条要求实际没生效：
     #   ① "向上跳只能跳到该窗口**没被挡住**的那部分边缘上" —— 老逻辑不看可见区域；
@@ -1948,9 +1948,15 @@ class RalseiPet(QMainWindow):
     #      声明成**桌面**，等于从 3 楼朝 1 楼跳（`handle_jump` 的穿透检查会把它
     #      打断成"取消跳跃 + 自由落体"，观感是硬着陆，不是要求里的"先跳到2楼"）。
     # 这一段的职责就是把这套判定接进产品路径。
+    # 第十五轮：`check_nearby_windows` 里那套老启发式**已整体删除**，
+    # 楼层系统成为跳跃的唯一入口（详见该函数内的注释）。
 
     def _floors_for_jump(self):
-        """可用的楼层系统；不可用（无窗口 / 单测桩）时返回 None → 调用方回落旧逻辑。"""
+        """可用的楼层系统；不可用（无可见窗口 / 单测桩）时返回 None。
+
+        第十五轮起调用方不再"回落旧逻辑"—— `check_nearby_windows` 拿到 None
+        就什么都不做（floors 空 ⟺ 一个可跳的楼板都没有）。
+        """
         fm = getattr(self, 'floor_manager', None)
         if fm is None or not getattr(fm, 'floors', None):
             return None
@@ -2121,174 +2127,22 @@ class RalseiPet(QMainWindow):
         if current_time - self.last_jump_time < jump_cooldown:
             return
 
-        # ===== 建楼（第十四轮）：楼层系统可用时，跳跃决策**只**由它回答 =====
+        # ===== 建楼：跳跃决策**只**由楼层系统回答 =====
         # 判据全部来自 floor_manager：可见区域（"只能跳到没被挡住的那部分边缘"）
-        # ＋ 相邻下层（"向下必须先到2楼"）。这里**故意不回落**下面的裸矩形启发式 ——
-        # 那条路会把宠物送到"看不见的地板"上，正是本轮要消灭的行为。
-        # 楼层系统不可用（无桌面窗口 / 单测桩）时才走下面的老逻辑。
+        # ＋ 相邻下层（"向下必须先到2楼"）。
+        # 第十五轮：原来这里下面是**两条**路 —— 楼层不可用时回落到"裸窗口矩形 +
+        # 10~30px 贴边"的老启发式。那条路是第十三轮口径错误的旧路（会跳到被挡住的部分、
+        # 站在窗口上时把目标直接声明成桌面 = 穿透），已整体删除。
+        # 现在只有一条路：**没有楼层 = 没有可跳的楼板**（floors 空 ⟺ 一个可见窗口都没有），
+        # 直接返回。旧启发式在"无楼层"时本来也无对象可枚举，删掉不改变行为。
         ralsei_rect = QRect(current_pos.x(), current_pos.y(), self.width(), self.height())
         fm = self._floors_for_jump()
-        if fm is not None:
-            cur_floor = getattr(self, 'current_floor', None) or fm.desktop_floor
-            plan = self._nearest_floor_jump(fm, cur_floor, ralsei_rect)
-            if plan is not None:
-                self._start_floor_jump(*plan)
+        if fm is None:
             return
-
-        windows = self.desktop_interaction.get_all_visible_windows()
-        
-        # 计算当前位置到各窗口边缘的距离，对每个窗口的边缘都能跳跃
-        nearby_windows = []
-        jump_to_desktop = False
-        jump_desktop_edge = ""
-        
-        # 情况1: Ralsei在窗口上，检查是否可以跳到桌面
-        if self.current_window:
-            # 获取当前窗口的矩形
-            current_window_rect = QRect(
-                self.current_window['x'], 
-                self.current_window['y'], 
-                self.current_window['width'], 
-                self.current_window['height']
-            )
-            
-            # 计算Ralsei在窗口内的相对位置
-            relative_center_x = ralsei_rect.center().x() - current_window_rect.left()
-            relative_center_y = ralsei_rect.center().y() - current_window_rect.top()
-            
-            # 检查Ralsei是否在当前窗口的边缘，准备跳到桌面
-            # 增加更严格的边缘检测条件，避免频繁跳到桌面
-            edge_threshold = 20  # 距离边缘的阈值
-            
-            # 检查窗口底部边缘
-            if (ralsei_rect.bottom() >= current_window_rect.bottom() - 5 and 
-                ralsei_rect.bottom() <= current_window_rect.bottom() + 5 and
-                # 确保Ralsei非常靠近边缘，并且在窗口边缘的中心区域
-                relative_center_x > current_window_rect.width() * 0.2 and 
-                relative_center_x < current_window_rect.width() * 0.8):
-                # 在窗口底部边缘，可以跳到下方桌面
-                jump_to_desktop = True
-                jump_desktop_edge = "down"
-                # 计算跳跃目标位置
-                desktop_edge = current_window_rect.bottom() + 20
-                target_x = ralsei_rect.center().x() - self.width() // 2
-                self.jump_target_pos = QPoint(target_x, desktop_edge)
-            # 检查窗口右侧边缘
-            elif (ralsei_rect.right() >= current_window_rect.right() - 5 and 
-                  ralsei_rect.right() <= current_window_rect.right() + 5 and
-                  # 确保Ralsei非常靠近边缘，并且在窗口边缘的中心区域
-                  relative_center_y > current_window_rect.height() * 0.2 and 
-                  relative_center_y < current_window_rect.height() * 0.8):
-                # 在窗口右侧边缘，可以跳到右侧桌面
-                jump_to_desktop = True
-                jump_desktop_edge = "right"
-                # 计算跳跃目标位置
-                desktop_edge = current_window_rect.right() + 20
-                target_y = ralsei_rect.center().y() - self.height() // 2
-                self.jump_target_pos = QPoint(desktop_edge, target_y)
-            # 检查窗口左侧边缘
-            elif (ralsei_rect.left() >= current_window_rect.left() - 5 and 
-                  ralsei_rect.left() <= current_window_rect.left() + 5 and
-                  # 确保Ralsei非常靠近边缘，并且在窗口边缘的中心区域
-                  relative_center_y > current_window_rect.height() * 0.2 and 
-                  relative_center_y < current_window_rect.height() * 0.8):
-                # 在窗口左侧边缘，可以跳到左侧桌面
-                jump_to_desktop = True
-                jump_desktop_edge = "left"
-                # 计算跳跃目标位置
-                desktop_edge = current_window_rect.left() - 20
-                target_y = ralsei_rect.center().y() - self.height() // 2
-                self.jump_target_pos = QPoint(desktop_edge, target_y)
-            # 检查窗口顶部边缘
-            elif (ralsei_rect.top() >= current_window_rect.top() - 5 and 
-                  ralsei_rect.top() <= current_window_rect.top() + 5 and
-                  # 确保Ralsei非常靠近边缘，并且在窗口边缘的中心区域
-                  relative_center_x > current_window_rect.width() * 0.2 and 
-                  relative_center_x < current_window_rect.width() * 0.8):
-                # 在窗口顶部边缘，可以跳到上方桌面
-                jump_to_desktop = True
-                jump_desktop_edge = "up"
-                # 计算跳跃目标位置
-                desktop_edge = current_window_rect.top() - 20
-                target_x = ralsei_rect.center().x() - self.width() // 2
-                self.jump_target_pos = QPoint(target_x, desktop_edge)
-
-        
-        # 情况2: Ralsei在桌面或其他位置，检查是否可以跳到其他窗口
-        if not jump_to_desktop:
-            if windows:
-                for window in windows:
-                    # 获取当前Ralsei的层级
-                    current_level = self.current_window['z_order'] if self.current_window else float('inf')
-                    
-                    # 视野限制：只考虑当前层级或更高层级的窗口（z_order更小表示层级更高）
-                    if window['z_order'] > current_level:
-                        continue
-                    
-                    # 计算窗口的边缘位置
-                    window_rect = QRect(window['x'], window['y'], window['width'], window['height'])
-                    
-                    # 跳过当前所在的窗口，避免在同一窗口上跳跃
-                    if self.current_window and window['hwnd'] == self.current_window['hwnd']:
-                        continue
-                    
-                    # 检查Ralsei是否在窗口边缘附近，增加更严格的距离限制，避免频繁触发跳跃
-                    # 情况1: Ralsei在窗口下方，准备跳上窗口顶部
-                    if (ralsei_rect.bottom() >= window_rect.top() - 50 and 
-                        ralsei_rect.bottom() <= window_rect.top() + 15 and 
-                        ralsei_rect.center().x() > window_rect.left() + 50 and
-                        ralsei_rect.center().x() < window_rect.right() - 50):
-                        # 在窗口下方，且中心在窗口内容区域内，可以跳上窗口顶部
-                        # 计算到窗口顶部边缘的垂直距离
-                        vertical_distance = abs(window_rect.top() - ralsei_rect.bottom())
-                        # 增加最小距离限制，避免太靠近时频繁触发
-                        if vertical_distance > 10 and vertical_distance < 30:
-                            nearby_windows.append((vertical_distance, window, "bottom"))
-                    
-                    # 情况2: Ralsei在窗口左侧，准备跳上窗口左侧边缘
-                    elif (ralsei_rect.right() >= window_rect.left() - 50 and 
-                          ralsei_rect.right() <= window_rect.left() + 15 and 
-                          ralsei_rect.center().y() > window_rect.top() + 50 and
-                          ralsei_rect.center().y() < window_rect.bottom() - 50):
-                        # 在窗口左侧，且中心在窗口内容区域内，可以跳上窗口左侧边缘
-                        # 计算到窗口左侧边缘的水平距离
-                        horizontal_distance = abs(window_rect.left() - ralsei_rect.right())
-                        if horizontal_distance > 10 and horizontal_distance < 30:
-                            nearby_windows.append((horizontal_distance, window, "left"))
-                    
-                    # 情况3: Ralsei在窗口右侧，准备跳上窗口右侧边缘
-                    elif (ralsei_rect.left() >= window_rect.right() - 50 and 
-                          ralsei_rect.left() <= window_rect.right() + 15 and 
-                          ralsei_rect.center().y() > window_rect.top() + 50 and
-                          ralsei_rect.center().y() < window_rect.bottom() - 50):
-                        # 在窗口右侧，且中心在窗口内容区域内，可以跳上窗口右侧边缘
-                        # 计算到窗口右侧边缘的水平距离
-                        horizontal_distance = abs(window_rect.right() - ralsei_rect.left())
-                        if horizontal_distance > 10 and horizontal_distance < 30:
-                            nearby_windows.append((horizontal_distance, window, "right"))
-                    
-                    # 情况4: Ralsei在窗口上方，准备跳上窗口底部
-                    elif (ralsei_rect.top() <= window_rect.bottom() + 15 and 
-                          ralsei_rect.top() >= window_rect.bottom() - 50 and 
-                          ralsei_rect.center().x() > window_rect.left() + 50 and
-                          ralsei_rect.center().x() < window_rect.right() - 50):
-                        # 在窗口上方，且中心在窗口内容区域内，可以跳上窗口底部
-                        # 计算到窗口底部边缘的垂直距离
-                        vertical_distance = abs(window_rect.bottom() - ralsei_rect.top())
-                        if vertical_distance > 10 and vertical_distance < 30:
-                            nearby_windows.append((vertical_distance, window, "top"))
-                
-                # 按距离排序
-                nearby_windows.sort(key=lambda x: x[0])
-        
-        if jump_to_desktop:
-            # 跳到桌面
-            self.start_jump(None, jump_desktop_edge)
-        elif nearby_windows:
-            # 选择最近的窗口
-            closest_window = nearby_windows[0][1]
-            window_edge = nearby_windows[0][2]
-            self.start_jump(closest_window, window_edge)
+        cur_floor = getattr(self, 'current_floor', None) or fm.desktop_floor
+        plan = self._nearest_floor_jump(fm, cur_floor, ralsei_rect)
+        if plan is not None:
+            self._start_floor_jump(*plan)
 
     def start_jump(self, target_window, window_edge, target_floor=None, target_pos=None):
         """开始跳跃。
@@ -2672,11 +2526,13 @@ class RalseiPet(QMainWindow):
 
         为什么必须同步（第十四轮）：建楼之后"当前站在哪"的唯一真源是 `current_floor`，
         而 `self.current_window` 是历史遗留的第二份状态，过去只在**跳跃落地 /
-        重力落地**时被写。宠物**用脚走进**一块新楼板时（`check_window_movement` /
-        `update_floor` 里直接 `current_floor = new_floor`）它不会被更新 ——
+        重力落地**时被写。宠物**用脚走进**一块新楼板时（`check_window_movement` 里
+        直接 `current_floor = new_floor`）它不会被更新 ——
         于是 `check_nearby_windows` 读到的"当前窗口"是 None 或过期的那块，
         层级过滤与跳跃方向全部算错（表现为"明明站上窗口了，却还按桌面判"）。
         这里把它降级成**派生缓存**：楼层一动就跟着刷，不再各写一份。
+        （第十五轮：另一个"走路换楼板"的入口 `update_floor` 已作为死代码删除，
+        本套同步现在只剩 `check_window_movement` 一个入口。）
         """
         if floor is None or floor.get('type') != 'window':
             self.current_window = None
@@ -2952,12 +2808,22 @@ class RalseiPet(QMainWindow):
                 and old_floor is not None
                 and self._floor_identity_key(new_floor) != self._floor_identity_key(old_floor)):
             if old_floor.get('type') == 'window' and new_floor.get('type') != 'window':
-                # 脚下的那块窗口楼板真的没了（被关闭 / 被移走且未跟上）
-                # → 按重力原则立刻往下掉
-                # 第十四轮：这是**用户的行为**（关窗/把楼板抽走）→ 用生气的那组动画，
-                # 符合建楼要求"如果是我的行为导致他摔到桌面上的那就用生气的那个，至少5s"。
-                _log.debug("脚下的窗口楼板已消失，启动重力掉落（用户行为 → 生气动画）")
-                self.start_falling(reason='floor_removed')
+                # 脚下的那块窗口楼板没了。**两种成因必须分开**（第十五轮）：
+                #   · 窗口还在（`is_floor_valid` 为真）→ 宠物**自己走到了楼板边缘外**
+                #     —— 建楼要求："走到楼板边缘，脚下没东西了，就直直掉下去，
+                #     落到下面第一块能接住的楼板"。这是它自己的问题，用常规坠落动画。
+                #   · 窗口已经不在了 → 用户把楼板抽走（关窗）→ 生气的那组动画，至少 5s。
+                #     建楼要求："如果是我的行为导致他摔到桌面上的就用生气的那个。"
+                # 修复：原来一律按"用户行为"处理（reason='floor_removed'），于是
+                # **宠物自己走出楼板也会播生气动画** —— 与要求正好相反。
+                # `is_floor_valid` 是全项目零调用的 helper（第五轮就点名的死代码），
+                # 这里正是它该被用的地方：它回答的就是"楼板引用的窗口还在不在"。
+                if self.floor_manager.is_floor_valid(old_floor):
+                    _log.debug("宠物走出了楼板边缘（自身行为）→ 常规坠落动画")
+                    self.start_falling()
+                else:
+                    _log.debug("脚下的窗口楼板已消失（用户行为）→ 生气动画 ≥5s")
+                    self.start_falling(reason='floor_removed')
             # 窗口 → 另一块窗口（被更高的新窗口盖住 / 走到另一块楼板）：按
             # "当前楼层原则"，宠物现在直接站在新楼板上，不算楼板被搬走，不摔。
 
@@ -2967,73 +2833,6 @@ class RalseiPet(QMainWindow):
         self.spatial_pos["z"] = new_floor['platform_height']
         # 派生缓存同步：走路换上楼板时 current_window 也必须跟着换，
         # 否则它是 None/过期值，跳跃判定会按错的楼层算（见 _sync_window_cache_from_floor）
-        self._sync_window_cache_from_floor(new_floor)
-    
-    def update_floor(self):
-        # 获取Ralsei当前位置
-        current_pos = self.pos()
-        ralsei_rect = QRect(current_pos.x(), current_pos.y(), self.width(), self.height())
-        
-        # 更新楼层信息
-        self.floor_manager.update_floors()
-        
-        # 获取当前所在楼层
-        new_floor = self.floor_manager.get_current_floor(current_pos)
-        
-        if self.current_floor:
-            # 如果当前在窗口上
-            if self.current_floor['type'] == 'window':
-                # 检查窗口是否仍然存在且位置未变
-                if new_floor['type'] == 'window' and new_floor['window_hwnd'] == self.current_floor['window_hwnd']:
-                    # 窗口仍然存在，检查位置是否变化
-                    old_rect = self.current_floor['rect']
-                    new_rect = new_floor['rect']
-                    
-                    # 计算位置变化
-                    x_diff = new_rect.left() - old_rect.left()
-                    y_diff = new_rect.top() - old_rect.top()
-                    
-                    # 窗口移动时，Ralsei会跟随楼板移动，就像楼板被移动一样
-                    if x_diff != 0 or y_diff != 0:
-                        # 计算窗口移动距离
-                        move_distance = (x_diff ** 2 + y_diff ** 2) ** 0.5
-                        
-                        # 跟随窗口移动
-                        new_x = current_pos.x() + x_diff
-                        new_y = current_pos.y() + y_diff
-                        self.move(new_x, new_y)
-                        
-                        # 保存Ralsei在窗口内的相对位置
-                        window_center = QPoint(new_rect.left() + new_rect.width() // 2, 
-                                             new_rect.top() + new_rect.height() // 2)
-                        ralsei_center = QPoint(new_x + self.width() // 2, new_y + self.height() // 2)
-                        self.ralsei_window_relative_pos = ralsei_center - window_center
-                        
-                        # 如果移动距离过大（超过30像素），Ralsei会重心不稳摔倒
-                        if move_distance > 30 and not self.is_falling:
-                            _log.debug(f"窗口被大幅度移动，移动距离: {move_distance}，Ralsei重心不稳摔倒了！")
-                            # 触发情绪反应：窗口移动
-                            self.emotion_system.react_to_event('window_moved', {})
-                            # 设置摔倒动画持续时间至少3秒，符合要求
-                            self.start_fall("window_move")
-                elif new_floor['type'] != 'window':
-                    # 窗口被关闭或移动，Ralsei从窗口上掉下来
-                    _log.debug(f"窗口被关闭或移动，Ralsei从窗口上掉下来了！")
-                    # 启动重力掉落（第十四轮：用户行为 → 生气动画）
-                    self.start_falling(reason='floor_removed')
-            else:
-                # 当前在桌面上，检查是否有新窗口覆盖
-                if new_floor['type'] == 'window':
-                    # 新窗口覆盖了Ralsei所在的位置，站到新窗口上
-                    _log.debug(f"新窗口覆盖了Ralsei所在的位置，Ralsei站到新窗口上")
-                    # 触发情绪反应：发现新窗口
-                    self.emotion_system.react_to_event('found_window', {})
-        
-        # 更新当前楼层信息
-        self.current_floor = new_floor
-        self.current_platform_z = new_floor['platform_height']
-        self.spatial_pos["z"] = new_floor['platform_height']
-        # 同上：老缓存与楼层真源必须一致（见 _sync_window_cache_from_floor）
         self._sync_window_cache_from_floor(new_floor)
     
     # 摔倒判定相关代码 - 开始摔倒

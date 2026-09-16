@@ -1,0 +1,42 @@
+
+=== A 死代码确实清了（建楼遗留的三堆） ===
+[PASS] A1 update_floor 已删除（第五轮 F3 点名的"零调用 + 漂移副本"）
+[PASS] A1b 唯一入口 check_window_movement 仍在（不是把功能一起删了）
+[PASS] A2 floor_manager 不再有 find_support_below（get_drop_destination 的重复实现）
+[PASS] A2b floor_manager 不再有 is_on_floor_edge（无消费者）
+[PASS] A3 三个死实体在 main / floor_manager 源码里都已不存在
+[PASS] A4 check_nearby_windows 体内已无 desktop_interaction / get_all_visible_windows
+[PASS] A4b check_nearby_windows 体内已无老启发式的特征量（jump_desktop_edge / edge_threshold）
+[PASS] A4c 老落点反推的 title_bar_height 只剩 start_jump 一处（climb_to_top_window 那条路还在用）
+[PASS] A5 check_nearby_windows 仍可正常取到（签名未变）
+[PASS] A5b start_jump 的裸窗口回落分支**保留**（climb_to_top_window / 命令行仍在用，不能误删）
+
+=== B 跳跃只剩一条入口（楼层不可用时不再回落裸矩形） ===
+[PASS] B1 楼层可用 → 走楼层规划（_nearest_floor_jump 被调用）
+[PASS] B1b 楼层可用但本拍无可执行跳跃 → 不起跳、不抛异常
+[PASS] B2 楼层不可用（无可见窗口）→ 直接返回：不查桌面窗口、不抛（老路径已删）
+[PASS] B3 有可执行跳跃时确实起跳（_start_floor_jump 被调用）
+
+=== C "自己走出楼板" vs "用户抽走楼板"（起因分流） ===
+[PASS] C1 自己走出楼板边缘（窗口还在）→ start_falling() 不带"用户行为"起因
+[PASS] C1b 不会误用 floor_removed（否则会播生气动画，与要求相反）
+[PASS] C3 窗口被关掉（楼板被抽走）→ start_falling(reason='floor_removed')
+[PASS] C5 is_floor_valid 在 check_window_movement 里被真正调用（判别一次成因）
+[PASS] C5b 源码级：判别分支就在 check_window_movement 体内
+[PASS] C6 is_floor_valid：窗口还在 → True
+[PASS] C6b is_floor_valid：窗口不在了 → False
+[PASS] C6c is_floor_valid：桌面层恒为 True
+[PASS] C7 贴边进入规划仍可用（上方贴边 → 产出 edge='bottom' + 可见落点）
+[PASS] C7b 落点确实落在该层可见区域内
+
+=== D floor_manager 的权威路径未被误删 ===
+[PASS] D1 get_drop_destination 仍在（下落落点唯一真源）
+[PASS] D2 adjacent_lower_floor / nearest_visible_point 仍在（第十四轮新增契约）
+[PASS] D3 floor_visible_contains / visible_subrects 仍在（可见区域唯一判据）
+[PASS] D4 第十四轮新增的 6 个跳跃规划方法都还在
+[PASS] D5 get_drop_destination 行为仍按可见区域（下方那块看得见 → 被它接住）
+[PASS] D5b 下方没有任何可见楼板 → 落到桌面（不许悬空、也不许跨层抢接）
+--------------------------------------------------------------------
+第十五轮建楼清理验证：30/30 PASS, 0 FAIL
+
+[driver] exit=0

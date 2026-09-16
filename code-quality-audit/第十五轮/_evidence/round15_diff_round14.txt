@@ -1,0 +1,11 @@
+--- round14_move (baseline)
++++ round14_move (now)
+@@ -43,7 +43,7 @@
+ [PASS] G1b 起因被记下来（_fall_reason），后续落地表现可据此分流
+ [PASS] G2 自己掉下去（无 user 起因）→ 常规坠落动画，不误用生气动画
+ [PASS] G5a check_window_movement：楼板消失时带 reason='floor_removed'
+-[PASS] G5b update_floor：窗口被关闭时带 reason='floor_removed'
++[PASS] G5b 死代码 update_floor 已删除（第五轮 F3 的漂移副本），走动换楼板只剩一个入口
+ [PASS] G3 跳跃落地时立刻把 current_floor 结算为目标楼层
+ [PASS] G3b 跳跃落地时同步 current_window（派生缓存统一入口）
+ [PASS] G4 重力落地走统一同步器（不再手写裸 dict 构造 current_window）
