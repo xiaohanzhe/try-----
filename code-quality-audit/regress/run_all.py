@@ -207,10 +207,11 @@ SUITES = [
         'id': 'round14_move',
         'script': os.path.join(ROOT, 'code-quality-audit', '第十四轮', 'verify_round14_move.py'),
         'offscreen': True,
-        'desc': '第十四轮：「建楼」的上下动（跨楼层移动接线）—— 楼层判定真正接进产品路径'
+        'desc': '第十四轮：「建楼」的上下动 + 落到某一层楼 —— 楼层判定真正接进产品路径'
                 '（防"改了没人调用"复演：行为级证明 check_nearby_windows 走 '
                 '_nearest_floor_jump）/ 向上跳落点必须在可见区域（被遮处要被吸附回来）/ '
-                '向下跳只到相邻下一层（禁穿透）/ current_window 与 current_floor 单真源同步',
+                '向下跳只到相邻下一层（禁穿透）/ current_window 与 current_floor 单真源同步 / '
+                '落地当场结算并重排 z 序 / 用户抽走楼板（关窗）→ 生气动画 ≥5s',
     },
 ]
 

@@ -170,8 +170,10 @@ class PetStub:
         self.calls.append(('start_fall', reason))
         self.is_falling = True
 
-    def start_falling(self, fall_velocity=0, is_thrown=False):
-        self.calls.append(('start_falling', fall_velocity))
+    def start_falling(self, fall_velocity=0, is_thrown=False, reason=None):
+        # 第十四轮：新增 reason（'floor_removed' = 用户抽走了脚下的楼板）。
+        # stub 必须跟上真实方法表面 —— 签名跟不上就 TypeError（本轮真踩到）。
+        self.calls.append(('start_falling', fall_velocity, reason))
         self.is_gravity_falling = True
         self.fall_speed = 0.0
         self.fall_velocity_x = 0.0
@@ -286,7 +288,12 @@ def t5_huge_jump_no_follow_and_fall():
 
 
 def t6_window_closed_start_falling():
-    """窗口被关闭（枚举里没有它了）→ 立刻重力掉落（建楼要求）。"""
+    """窗口被关闭（枚举里没有它了）→ 立刻重力掉落（建楼要求）。
+
+    第十四轮起多断言一条：这属于**用户行为**（用户把楼板抽走），起因必须以
+    `reason='floor_removed'` 传下去 —— 建楼要求第36行要求"是我的行为导致他摔到
+    桌面上的就用生气的那个动画，至少5s"，而且**只有**带上起因才选得出那组动画。
+    """
     a = win_floor(1006, 300, 300, 800, 600)
     fm = FakeFloorManager([a])
     pet = PetStub(fm, 500, 500)
@@ -294,7 +301,9 @@ def t6_window_closed_start_falling():
     fm.floors = []                       # 楼板被抽走
     calls = run_cwm(pet)
     check("W6 窗口关闭 → start_falling()（往下掉）",
-          ('start_falling', 0) in calls, "calls=%s" % calls)
+          any(c[0] == 'start_falling' for c in calls), "calls=%s" % calls)
+    check("W6b 用户行为（关窗/抽走楼板）必须带起因 reason='floor_removed'（→ 生气动画）",
+          ('start_falling', 0, 'floor_removed') in calls, "calls=%s" % calls)
 
 
 def t7_covered_by_other_window_no_fall():

@@ -23,11 +23,20 @@
 
 本轮做的事（见报告 §三）
 ------------------------
+批次一（上下动 / 接线）
   · `main.py` 新增 `_floors_for_jump` / `_visible_landing` / `_floor_entry_plan` /
     `_nearest_floor_jump` / `_start_floor_jump` / `_sync_window_cache_from_floor`；
   · `check_nearby_windows`：楼层系统可用时**只**由楼层回答跳不跳（不回落裸矩形）；
   · `start_jump` 增加 `target_floor` / `target_pos`（落点由可见区域给定，不再反推）；
   · `floor_manager` 新增 `adjacent_lower_floor` / `nearest_visible_point`。
+
+批次二（落到某一层楼）
+  · `handle_jump` 落地时**当场结算** `current_floor` + 同步缓存 + 立刻重排 z 序
+    （原来只写老缓存、不写 current_floor，落地瞬间层级是错的，要等 1 秒才纠正）；
+  · `handle_gravity_fall` 落地分支改走统一同步器（删掉手写的裸 dict 构造）；
+    低速落到**窗口楼层**时播一次 `land`（"落地"要有交代，原来直接切 idle）；
+  · `start_falling(reason=...)`：用户抽走楼板（关窗）→ `fall_mad` ≥5s，
+    对应建楼要求第36行"是我的行为导致他摔到桌面上的就用生气的那个"。
 
 分组
 ----
@@ -37,6 +46,7 @@
   D `current_window` 与 `current_floor` 单真源同步
   E floor_manager 新增契约（相邻层 / 可见吸附）
   F 源码级不变量（不该再出现的旧写法）
+  G 落地：落到某一层楼的效果（当场结算 + 用户行为用生气动画）
 
 本套件不需要真窗口（全用合成窗口表 + 真 FloorManager），结果确定可复现。
 必须用 C:\\Python311\\python.exe 运行。
@@ -45,6 +55,7 @@ import io
 import os
 import sys
 import tokenize
+import types
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
@@ -157,10 +168,39 @@ class PetStub:
         self.resting_time = 0
         self.jump_duration = 1.0
         self.anim_calls = []
+        # 批次二（落地/坠落）需要的表面
+        self.current_speed_x = 0.0
+        self.is_gravity_falling = False
+        self.fall_speed = 0.0
+        self.fall_velocity_x = 0.0
+        self.max_fall_duration = 0.0
+        self._fall_reason = None
+        self.gravity = 900.0
+        self.has_ball = False
+        self.is_falling_state = False
+        self.sprites_seen = []
+        self.sprite_loader = types.SimpleNamespace(
+            sprites={'fall_mad': 1, 'fall': 1, 'land': 1, 'idle': 1})
         # 真方法绑定（静态方法在本类上是普通函数，直接挂）
         self._floor_identity_key = RalseiPet._floor_identity_key
         self._sync_window_cache_from_floor = (
             lambda floor: RalseiPet._sync_window_cache_from_floor(self, floor))
+
+    def show(self):
+        pass
+
+    def play_animation_once(self, name, restore_to=None, **k):
+        self.anim_calls.append(('once', name))
+
+    def _apply_pet_z_order(self):
+        self.anim_calls.append('z_order')
+        return True
+
+    def start_falling(self, fall_velocity=0, is_thrown=False, reason=None):
+        return RalseiPet.start_falling(self, fall_velocity, is_thrown, reason)
+
+    def handle_jump(self, elapsed_time, current_time):
+        return RalseiPet.handle_jump(self, elapsed_time, current_time)
 
     def pos(self):
         return QPoint(self._x, self._y)
@@ -383,10 +423,93 @@ ok('F2 楼层可用时 check_nearby_windows 走 _nearest_floor_jump',
 ok('F3 落点不再由"裸窗口矩形 + title_bar_height"反推（给了 target_pos 就直接用）',
    has(_main_src, 'if target_pos is not None:'), None)
 
+# ============================================================ G 落到某一层楼
+section('G 落地：落到某一层楼的效果（当场结算 + 用户行为用生气动画）')
+
+
+def func_src(name):
+    """取某个函数体的源码（顺序断言必须限定在目标函数内，不能全文件找 —— 会命中别的函数）。"""
+    plain = io.open(_main_py, encoding='utf-8').read()
+    i = plain.find('\n    def %s(' % name)
+    if i < 0:
+        return ''
+    j = plain.find('\n    def ', i + 1)
+    return plain[i:j if j > 0 else len(plain)]
+
+
+# G1/G2：坠落动画的起因选择（建楼要求第36行）
+_fm6 = fm_with([mk_window(401, 300, 100, 600, 400, 0)])
+_f401 = floor_of(_fm6, 401)
+
+
+def fall_anim(reason):
+    pet = PetStub(_fm6, 500, 500, current_floor=_f401)
+    pet.start_falling(reason=reason)
+    return pet
+
+
+_p_user = fall_anim('floor_removed')
+ok('G1 用户行为（关窗/抽走楼板）→ 用**生气**的坠落动画，且时长 ≥5s',
+   _p_user.anim_calls[-1] == 'fall_mad' and _p_user.max_fall_duration >= 5.0,
+   'anim=%s dur=%s' % (_p_user.anim_calls[-1:], _p_user.max_fall_duration))
+ok('G1b 起因被记下来（_fall_reason），后续落地表现可据此分流',
+   _p_user._fall_reason == 'floor_removed', _p_user._fall_reason)
+
+_p_self = fall_anim(None)
+ok('G2 自己掉下去（无 user 起因）→ 常规坠落动画，不误用生气动画',
+   _p_self.anim_calls[-1] == 'fall' and _p_self._fall_reason is None,
+   'anim=%s reason=%r' % (_p_self.anim_calls[-1:], _p_self._fall_reason))
+
+# G5：两个"楼板被抽走"的入口都必须带上起因（否则永远选不出生气动画）
+_cwm = func_src('check_window_movement')
+_upd = func_src('update_floor')
+ok('G5a check_window_movement：楼板消失时带 reason=\'floor_removed\'',
+   "start_falling(reason='floor_removed')" in _cwm, None)
+ok('G5b update_floor：窗口被关闭时带 reason=\'floor_removed\'',
+   "start_falling(reason='floor_removed')" in _upd, None)
+
+# G3：跳跃落地当场结算 current_floor（不是等下一个 1 秒节拍）
+_hj = func_src('handle_jump')
+ok('G3 跳跃落地时立刻把 current_floor 结算为目标楼层',
+   has(_hj, 'self.current_floor = landed_floor'), None)
+ok('G3b 跳跃落地时同步 current_window（派生缓存统一入口）',
+   has(_hj, 'self._sync_window_cache_from_floor(landed_floor)'), None)
+
+# G4：重力落地不再手写裸 dict 构造 current_window（双真源已消除）
+_hgf = func_src('handle_gravity_fall')
+ok('G4 重力落地走统一同步器（不再手写裸 dict 构造 current_window）',
+   has(_hgf, 'self._sync_window_cache_from_floor(drop_floor)')
+   and "'hwnd': window['hwnd']," not in flat(_hgf), None)
+ok('G4b 落到**窗口楼层**的低速落地有落地动作（land 播一次），不是直接 idle',
+   has(_hgf, 'self.play_animation_once("land", restore_to="idle")'), None)
+
+# G6 行为级：驱动真实的 handle_jump 完成帧，验证落地结算
+_pet7 = PetStub(_fm6, 500, 500, current_floor=_fm6.desktop_floor)
+_pet7.jump_target_floor = _f401
+_pet7.jump_target_window = None
+_pet7.jump_target_pos = QPoint(555, 110)
+_pet7.jump_start_pos = QPoint(500, 500)
+_pet7.jump_duration = 1.0
+_pet7.jump_start_time = 0.0
+_pet7.jump_start_spatial = {'x': 500, 'y': 500, 'z': 0}
+_pet7.jump_target_z = _f401['platform_height']
+_pet7.jump_z_diff = _f401['platform_height']
+_pet7.is_jumping = True
+_pet7.handle_jump(0.05, 2.0)          # progress = 2.0/1.0 → ≥1.0 → 落地帧
+ok('G6 handle_jump 落地后：current_floor 立刻是该窗口楼层',
+   _pet7.current_floor is _f401, (_pet7.current_floor or {}).get('window_hwnd'))
+ok('G6b handle_jump 落地后：current_window 同步为该窗口（不再是 None）',
+   _pet7.current_window and _pet7.current_window.get('hwnd') == 401,
+   _pet7.current_window)
+ok('G6c handle_jump 落地后：立即重排 z 序（不等 1 秒节拍）',
+   'z_order' in _pet7.anim_calls, _pet7.anim_calls)
+ok('G6d handle_jump 落地播放 land 一次',
+   ('once', 'land') in _pet7.anim_calls, _pet7.anim_calls)
+
 # ---- 汇总（G2 需要这一行固定格式）
 print('')
 print('=' * 68)
-print('第十四轮·上下动：PASS=%d FAIL=%d' % (len(PASS), len(FAIL)))
+print('第十四轮·上下动 + 落地：PASS=%d FAIL=%d' % (len(PASS), len(FAIL)))
 if FAIL:
     for f in FAIL:
         print('  FAILED: %s' % f)

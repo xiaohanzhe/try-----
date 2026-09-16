@@ -1,0 +1,60 @@
+=== exit=0 ===
+
+=== A 接线：产品真的走楼层判定（防"改了没人调用"复演） ===
+[PASS] A1 新增了楼层跳跃规划器（定义存在）
+[PASS] A2 贴边起跳由楼层判定触发（is_jumping=True）
+[PASS] A2b 目标楼层 = 那块窗口的楼层（而不是"桌面"）
+[PASS] A2c 未回落旧逻辑（楼层可用时不再枚举裸窗口表 —— stub 根本没这个属性）
+
+=== B 向上跳：落点只能落在目标层的**可见区域** ===
+[PASS] B1 无遮挡时跳到窗口：落点在可见区域内
+[PASS] B2 起跳后落点必然落在**所跳目标层**的可见区域内
+[PASS] B2b 跳到的是"更高的可见悬崖边"（102 最前，优先于被它压着的 103）
+[PASS] B2c 对**被压住**的目标层 103：落点被吸附进它的可见区域（不再落在看不见的地板上）
+[PASS] B3 目标层顶部被完全盖住时，不产生"从顶部进入"的跳跃
+
+=== C 向下跳：只能落到**相邻下一层**，不得穿透 ===
+[PASS] C0 合成几何成立：B 比 A 高一层（名次相邻）
+[PASS] C1 从 3 楼下跳：目标是**相邻的 2 楼**，不是 1 楼（桌面）
+[PASS] C2 落点在该层可见区域内
+[PASS] C3 相邻下层就是桌面时：目标 = 桌面（桌面恒为最底层）
+[PASS] C4 跳向桌面的落点在当前楼板**下方**（不是原地/上方）
+
+=== D current_window 与 current_floor 单真源 ===
+[PASS] D1 站上窗口楼层 → current_window 同步为该窗口
+[PASS] D2 回到桌面层 → current_window 清空
+[PASS] D3 check_window_movement 里真的调了同步器（走路换楼板也要同步）
+[PASS] D4 同步器是"1 处定义 + ≥2 处调用"（两个换楼板的入口都接上了）
+[PASS] D5 楼层表为空时 _floors_for_jump 返回 None（产品据此整体回落旧逻辑）
+
+=== E floor_manager 新增契约（相邻层 / 可见吸附） ===
+[PASS] E1 adjacent_lower_floor：3楼 → 2楼（不是直接到 1楼）
+[PASS] E2 adjacent_lower_floor：2楼 → 桌面
+[PASS] E3 adjacent_lower_floor：桌面 → None（最底层没有下一层）
+[PASS] E4 nearest_visible_point：可见区内原样返回
+[PASS] E5 nearest_visible_point：桌面层整片可见（原样返回）
+[PASS] E6 nearest_visible_point：被遮住点被吸附进可见区域
+
+=== F 源码级不变量 ===
+[PASS] F1 start_jump 支持 target_floor / target_pos（落点由可见区域给定）
+[PASS] F2 楼层可用时 check_nearby_windows 走 _nearest_floor_jump
+[PASS] F3 落点不再由"裸窗口矩形 + title_bar_height"反推（给了 target_pos 就直接用）
+
+=== G 落地：落到某一层楼的效果（当场结算 + 用户行为用生气动画） ===
+[PASS] G1 用户行为（关窗/抽走楼板）→ 用**生气**的坠落动画，且时长 ≥5s
+[PASS] G1b 起因被记下来（_fall_reason），后续落地表现可据此分流
+[PASS] G2 自己掉下去（无 user 起因）→ 常规坠落动画，不误用生气动画
+[PASS] G5a check_window_movement：楼板消失时带 reason='floor_removed'
+[PASS] G5b update_floor：窗口被关闭时带 reason='floor_removed'
+[PASS] G3 跳跃落地时立刻把 current_floor 结算为目标楼层
+[PASS] G3b 跳跃落地时同步 current_window（派生缓存统一入口）
+[PASS] G4 重力落地走统一同步器（不再手写裸 dict 构造 current_window）
+[PASS] G4b 落到**窗口楼层**的低速落地有落地动作（land 播一次），不是直接 idle
+[PASS] G6 handle_jump 落地后：current_floor 立刻是该窗口楼层
+[PASS] G6b handle_jump 落地后：current_window 同步为该窗口（不再是 None）
+[PASS] G6c handle_jump 落地后：立即重排 z 序（不等 1 秒节拍）
+[PASS] G6d handle_jump 落地播放 land 一次
+
+====================================================================
+第十四轮·上下动：PASS=41 FAIL=0
+====================================================================

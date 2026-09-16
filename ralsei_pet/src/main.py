@@ -2470,7 +2470,7 @@ class RalseiPet(QMainWindow):
         # 更新跳跃目标位置
         self.jump_target_pos = QPoint(target_x, target_y)
 
-    def start_falling(self, fall_velocity=0, is_thrown=False):
+    def start_falling(self, fall_velocity=0, is_thrown=False, reason=None):
         # 开始重力掉落，实现"建楼"要求：没有支撑，就必须往下掉
         # ===== 关键过程保护：施法 / 躲猫猫 / 拖拽中，跳过重力掉落 =====
         if getattr(self, '_spell_stage', None) is not None:
@@ -2489,11 +2489,24 @@ class RalseiPet(QMainWindow):
         self.is_splat = False
         self._fall_velocity = fall_velocity  # 记录摔落时的速度（用于判断是否甩飞）
         self._is_thrown = is_thrown  # 是否是被甩飞的
+        # 第十四轮：记录这次坠落的**起因**。建楼要求第36行：
+        #   "摔到桌面上的动画用的还是咱之前那个，但如果是我的行为导致他摔到桌面上的
+        #     那就用生气的那个，这两个动画持续至少5s。"
+        # 只有"用户把脚下的楼板抽走/关掉窗口"才算用户行为（reason='floor_removed'）；
+        # 自己走到边缘掉下去、跳跃被判穿透，都算自己的问题，走常规动画。
+        self._fall_reason = reason
         # 水平惯性：掉落时保留当前水平速度，形成2D抛物线坠落
         self.fall_velocity_x = self.current_speed_x * 0.5
-        
-        # 根据摔落速度选择不同的动画
-        if fall_velocity > 100 or is_thrown:
+
+        # 根据"起因 / 摔落速度"选择不同的动画
+        if reason == 'floor_removed':
+            # 用户抽走了脚下的楼板（关窗 / 移窗没跟上）→ 生气的那组，至少 5s
+            if "fall_mad" in self.sprite_loader.sprites:
+                self.change_animation("fall_mad", force=True)
+            else:
+                self.change_animation("fall", force=True)
+            self.max_fall_duration = 5.0
+        elif fall_velocity > 100 or is_thrown:
             # 高速摔落或被甩飞时，使用splat动画
             self.change_animation("fall", force=True)
             # 设置较长的动画持续时间，至少3秒
@@ -2592,28 +2605,31 @@ class RalseiPet(QMainWindow):
             # 跳跃完成，确保正确落到目标位置
             x = self.jump_target_pos.x()
             y = self.jump_target_pos.y()
-            
-            # 更新当前窗口信息
-            if self.jump_target_window:
-                self.current_window = self.jump_target_window
-                self.window_level = self.jump_target_window['z_order']
-                self.last_window_rect = (self.jump_target_window['x'], self.jump_target_window['y'], 
-                                      self.jump_target_window['width'], self.jump_target_window['height'])
-            else:
-                # 跳到桌面，重置窗口信息
-                self.current_window = None
-                self.window_level = 0
-                self.last_window_rect = None
-            
+
+            # ===== 落地收口（第十四轮）："落到某一层楼"必须当场结算 =====
+            # 原来这里只更新了 `current_window`（历史遗留的裸缓存），**没更新
+            # `current_floor`** —— 于是落地后 current_floor 还是起跳前那块楼板，
+            # 紧接着 `_apply_pet_z_order` 会按错楼层把宠物插进 Windows z 序
+            # （要等下一个 1 秒节拍才纠正），表现为"刚跳上去的一瞬间层级是错的"。
+            landed_floor = getattr(self, 'jump_target_floor', None)
+            if landed_floor is not None:
+                self.current_floor = landed_floor
+                self.current_platform_z = landed_floor.get('platform_height', 0)
+            # current_window 降级为派生缓存，统一由楼层刷新（与走路/坠落同一条路）
+            self._sync_window_cache_from_floor(landed_floor)
+
             # 确保Ralsei可见
             self.show()
-            
+
             # 移动到新位置
             self.move(int(x), int(y))
-            
+
             # 更新Z轴坐标为目标Z坐标
             self.spatial_pos["z"] = self.jump_target_z
-            
+
+            # 落定后立刻按"一层压一层"重排 z 序（show() 之后，理由同 handle_gravity_fall）
+            self._apply_pet_z_order()
+
             # 播放落地动画（一次性：落地/站稳的动作播一遍就够，循环重播会"卡带"）
             self.play_animation_once("land", restore_to="idle")
 
@@ -2938,8 +2954,10 @@ class RalseiPet(QMainWindow):
             if old_floor.get('type') == 'window' and new_floor.get('type') != 'window':
                 # 脚下的那块窗口楼板真的没了（被关闭 / 被移走且未跟上）
                 # → 按重力原则立刻往下掉
-                _log.debug("脚下的窗口楼板已消失，启动重力掉落")
-                self.start_falling()
+                # 第十四轮：这是**用户的行为**（关窗/把楼板抽走）→ 用生气的那组动画，
+                # 符合建楼要求"如果是我的行为导致他摔到桌面上的那就用生气的那个，至少5s"。
+                _log.debug("脚下的窗口楼板已消失，启动重力掉落（用户行为 → 生气动画）")
+                self.start_falling(reason='floor_removed')
             # 窗口 → 另一块窗口（被更高的新窗口盖住 / 走到另一块楼板）：按
             # "当前楼层原则"，宠物现在直接站在新楼板上，不算楼板被搬走，不摔。
 
@@ -3001,8 +3019,8 @@ class RalseiPet(QMainWindow):
                 elif new_floor['type'] != 'window':
                     # 窗口被关闭或移动，Ralsei从窗口上掉下来
                     _log.debug(f"窗口被关闭或移动，Ralsei从窗口上掉下来了！")
-                    # 启动重力掉落
-                    self.start_falling()
+                    # 启动重力掉落（第十四轮：用户行为 → 生气动画）
+                    self.start_falling(reason='floor_removed')
             else:
                 # 当前在桌面上，检查是否有新窗口覆盖
                 if new_floor['type'] == 'window':
@@ -3195,14 +3213,23 @@ class RalseiPet(QMainWindow):
             new_y = drop_pos.y()
             self.is_gravity_falling = False
             self.fall_velocity_x = 0  # 落地清除水平惯性
+
+            # 落点合法性：`get_drop_destination` 只在"宠物位置落在该层**可见区域**里"
+            # 时才把这一层交出来（第十三轮的可见区域判定），所以这里不需要再吸附 ——
+            # 能落到这一层，就说明脚下确实是一块看得见的地板。
             
-            # 根据摔落速度决定是否触发摔倒动画
+            # 根据摔落速度决定落地表现
             if self.fall_speed > 150:
                 # 高速摔落 → 触发 splat（先决条件：重力掉落）
                 self.trigger_splat()
                 # 添加摔倒惯性滑行效果
                 self.fall_slide_speed_x = random.uniform(-20, 20)
                 self.fall_slide_speed_y = random.uniform(-10, 10)
+            elif "land" in self.sprite_loader.sprites:
+                # 低速落到**窗口楼层**（不是摔到桌面）：播一次落地动作再站稳。
+                # "落到某一层楼"要有落地的交代 —— 原来直接切 idle，看着像平移过去的。
+                # 一次性播放（与跳跃落地同一口径），循环重播会"卡带"。
+                self.play_animation_once("land", restore_to="idle")
             else:
                 # 低速摔落：先站稳(idle)，而不是立刻开始走路
                 self.change_animation("idle", force=True)
@@ -3211,30 +3238,10 @@ class RalseiPet(QMainWindow):
             self.current_floor = drop_floor
             self.current_platform_z = drop_floor['platform_height']
             self.spatial_pos["z"] = drop_floor['platform_height']
-            
-            # 更新窗口信息
-            if drop_floor['type'] == 'window':
-                # 在窗口上
-                window = drop_floor['window']
-                self.current_window = {
-                    'hwnd': window['hwnd'],
-                    'title': window['title'],
-                    'x': window['rect'].x(),
-                    'y': window['rect'].y(),
-                    'width': window['rect'].width(),
-                    'height': window['rect'].height(),
-                    'z_order': window['z_order'],
-                    'platform_height': drop_floor['platform_height']
-                }
-                self.window_level = window['z_order']
-                self.last_window_rect = (window['rect'].x(), window['rect'].y(), 
-                                      window['rect'].width(), window['rect'].height())
-                # 渲染层序交给 Windows 原生 z 序（见 _apply_pet_z_order）
-            else:
-                # 在桌面上
-                self.current_window = None
-                self.window_level = 0
-                self.last_window_rect = None
+            # current_window 是派生缓存，统一由楼层刷新（第十四轮：消除双真源。
+            # 原来这里有一份手写的裸 dict 构造，和 _sync_window_cache_from_floor
+            # 是同一件事的两份实现 —— 正是这个项目反复踩的坑。）
+            self._sync_window_cache_from_floor(drop_floor)
 
             self.show()
             # 落定后按"一层压一层"重排 z 序。
@@ -3264,15 +3271,13 @@ class RalseiPet(QMainWindow):
                     # 低速摔落：先站稳(idle)
                     self.change_animation("idle", force=True)
                 
-                # 更新当前窗口信息
-                self.current_window = None
-                self.window_level = 0
-                self.last_window_rect = None
                 # 修复（坠落循环）：这里原来没有把 current_floor 更新成桌面层，
                 # 于是宠物落到屏幕底边后 current_floor 仍是"那块已经离开的窗口楼板"，
                 # 下一秒 check_window_movement 又判定"窗口→桌面"= 楼层变化 →
                 # 再次 start_falling()，表现为每隔 1 秒凭空"抽一下"的假坠落。
                 self.current_floor = self.floor_manager.desktop_floor
+                # 派生缓存同步（同一入口，见 _sync_window_cache_from_floor）
+                self._sync_window_cache_from_floor(self.floor_manager.desktop_floor)
                 
                 # 更新空间坐标
                 self.spatial_pos["z"] = 0
