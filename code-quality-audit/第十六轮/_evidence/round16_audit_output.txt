@@ -1,0 +1,70 @@
+﻿
+=== A ①②③⑫ 世界构建：楼层生成 / 最高层 / 被盖住即不存在 / 一层压一层 ===
+[PASS] A1 ① 每个可见窗口都生成一层楼板，且楼板矩形与窗口矩形完全一致
+[PASS] A2 ② 最前面的窗口 = 最高层（B 在前 → platform_height 更高，桌面恒 0）
+[PASS] A3 ③ 被前面窗口完全盖住的窗口不成楼层（"暂时不存在"）
+[PASS] A3b ③ 被压下去的窗口**不再遮挡**更低的窗口（正确实现只把成立的楼层当遮挡者）
+[PASS] A3c ③ 只被**部分**遮住（可见面积够大）→ 仍然是楼层
+[PASS] A4 ⑫ 一层压一层：_apply_pet_z_order 走"插到所站楼板之上"（不是强制置顶）
+[PASS] A4b ⑫ 曾经让遮挡彻底失效的 WindowStaysOnTopHint 已不在 main.py
+
+=== B ④⑤⑥⑦ 视野限制 / 只旁跳或垂直跳 / 上跳落点 / 下跳逐层 ===
+[PASS] B1 ④ 站在被遮挡的部分不算数（floor_visible_contains 只认可见区域）
+[PASS] B2 ⑥ 向上跳的落点被吸附进目标层可见区域
+[PASS] B2b ⑥ 落点被推得太远（可见部分离宠物 >200px）就放弃这次跳跃
+[PASS] B2c ⑥ 落点一律过 nearest_visible_point（唯一吸附入口）
+[PASS] B3 ⑦ adjacent_lower_floor(B) == A（相邻下一层），不是桌面
+[PASS] B3b ⑦ adjacent_lower_floor(A) == 桌面；桌面下面没有楼板 → None
+[PASS] B3c ⑦ 跳跃规划**显式**并入相邻下层（不靠 get_jump_destinations 的副作用）
+[PASS] B3d ⑦ 落点必须落在该层可见区域内（get_jump_destinations 已改判可见区域）
+[PASS] B4 ⑤ 侧向移动 = 走路（不经过跳跃入口）：跳跃候选显式排除当前楼板
+
+=== C ⑧⑩⑪ 走出边缘坠落 / 关窗坠落 / 新窗盖旧窗 ===
+[PASS] C1 ⑧ 自己走出楼板边缘（下面只有桌面）→ start_falling()，且不带"用户行为"起因
+[PASS] C2 ⑩ 用户关掉脚下窗口（下面只有桌面）→ start_falling(reason='floor_removed')
+[PASS] C3 ⑧ 坠落落点 = 先按可见区域找"下面第一块能接住的"，逐层不跳层
+[PASS] C3b ⑧ 走 A 的可见部分掉下去 → 落到桌面（A 已是脚下楼板则被跳过）
+[PASS] C4 ⑪ 被新窗口盖住 → current_floor 重判为新窗口（B），且不摔
+
+=== D ⑨ 挪动窗口 → 宠物跟着楼板一起移动 ===
+[PASS] D1 ⑨ 窗口平移 40px → 宠物跟着平移同样的位移
+[PASS] D1b ⑨ 位移 >30px → 重心不稳摔倒（window_move ≥3s，要求第 37 行）
+[PASS] D2 ⑨ 小幅平移 10px → 还是跟着走，且**不摔**（"别给我掉下来"）
+
+=== E ⑬⑭ 两条动画要求（生气 ≥5s / 挪楼板摔倒 ≥3s） ===
+[PASS] E1 ⑭ 挪楼板摔倒：start_fall(window_move) 选 fall_mad 且 max_fall_duration = 3.0
+[PASS] E1b ⑭ 这个 3.0 是**真的被消费**的（handle_fall 会读它）
+[PASS] E2 ⑬ 关窗坠落：start_falling(reason='floor_removed') 选 fall_mad 且写 max_fall_duration = 5.0
+
+=== F GAP — 复检新发现的缺口（修复后本组断言必须翻转） ===
+[PASS] G1[GAP] max_fall_duration 在**全项目**只被 handle_fall 读取 → start_falling 写的 5.0 是死参数
+[PASS] G1b[GAP] start_falling 把 is_falling 置 False → handle_fall（唯一读 max_fall_duration 的地方）不跑
+[PASS] G1c[GAP] 关窗坠落落地后动画被 trigger_splat 顶成普通 splat（splat_mad 从未被播过）
+[PASS] G2[GAP] 关掉上层窗口、下方还有另一窗口 → **不坠落**（直接换成下层，无动画）  ← 要求原文第 30 行正是这个例子
+[PASS] G2b[GAP] 因为坠落分支的门是 new_floor.type != "window" → 起因分流(is_floor_valid)根本没被问
+[PASS] G2c[GAP] 但"下面的窗口"作为落点是**算得出来的** → 缺的是调用点，不是落点几何
+[PASS] G3[GAP] 站在桌面(1楼)上水平走进窗口B的可见区域 → 被直接提升到 B， 无跳跃、不坠落（要求 ⑤：上/下必须靠"跳"）
+[PASS] G3b[GAP] 随机走路目标完全不看窗口/楼层（没有任何避让或"必须先跳"的闸门）
+[PASS] G4[GAP/偏差] 窗口瞬时位移 >400px → 宠物**不跟随**、原地失足掉落（要求 ⑨ 写的是"必须跟着楼板一起移动"；这是为最大化/还原留的有意偏差）
+[PASS] G5[GAP] climb_to_top_window 仍用裸窗口直跳（不经楼层 → 可能落到被遮挡部分）
+[PASS] G6[GAP] handle_fall 的"摔扁"阶段切的是普通 splat → 生气素材只存活在飞行段(≈1s)
+[PASS] G7[GAP/偏差] 可见面积 1000px²(<1600) 的窗口直接不成楼层（要求 ③ 只写"被**完全**盖住"才不存在）
+[PASS] G7b[GAP/偏差] 可见面积 10000px²(>1600) → 仍是楼层（阈值效应得到对照）
+
+================================================================
+复检结果：PASS=40  FAIL=0
+其中"缺口"断言（断言的是**当前缺陷**，修好后必须翻转）：13 条
+   · G1[GAP] max_fall_duration 在**全项目**只被 handle_fall 读取 → start_falling 写的 5.0 是死参数
+   · G1b[GAP] start_falling 把 is_falling 置 False → handle_fall（唯一读 max_fall_duration 的地方）不跑
+   · G1c[GAP] 关窗坠落落地后动画被 trigger_splat 顶成普通 splat（splat_mad 从未被播过）
+   · G2[GAP] 关掉上层窗口、下方还有另一窗口 → **不坠落**（直接换成下层，无动画）  ← 要求原文第 30 行正是这个例子
+   · G2b[GAP] 因为坠落分支的门是 new_floor.type != "window" → 起因分流(is_floor_valid)根本没被问
+   · G2c[GAP] 但"下面的窗口"作为落点是**算得出来的** → 缺的是调用点，不是落点几何
+   · G3[GAP] 站在桌面(1楼)上水平走进窗口B的可见区域 → 被直接提升到 B， 无跳跃、不坠落（要求 ⑤：上/下必须靠"跳"）
+   · G3b[GAP] 随机走路目标完全不看窗口/楼层（没有任何避让或"必须先跳"的闸门）
+   · G4[GAP/偏差] 窗口瞬时位移 >400px → 宠物**不跟随**、原地失足掉落（要求 ⑨ 写的是"必须跟着楼板一起移动"；这是为最大化/还原留的有意偏差）
+   · G5[GAP] climb_to_top_window 仍用裸窗口直跳（不经楼层 → 可能落到被遮挡部分）
+   · G6[GAP] handle_fall 的"摔扁"阶段切的是普通 splat → 生气素材只存活在飞行段(≈1s)
+   · G7[GAP/偏差] 可见面积 1000px²(<1600) 的窗口直接不成楼层（要求 ③ 只写"被**完全**盖住"才不存在）
+   · G7b[GAP/偏差] 可见面积 10000px²(>1600) → 仍是楼层（阈值效应得到对照）
+================================================================

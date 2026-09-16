@@ -179,6 +179,26 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
 - **误报清单（勿据此改）**：`learn_new_skill` 有 `if new_skills:` 守卫；`_on_ai_reply` 跨线程已由 `pyqtSignal` 排主线程；
   `reset_special_states` 零调用；原子写/回收站删除已正确防御。
 
+## 「建楼」要求：已核实实现面 + 6 个缺口（第十六轮行为级复检，**勿凭直觉"重做"**）
+- 已实现（断言 A1–B4）：每窗一层且 `floor['rect']==window['rect']`；`platform_height=(n−i)×5`（最前最高、桌面 0）；
+  可见面积 < `MIN_FLOOR_VISIBLE_AREA`(1600px²) 即不成楼层**且不再遮挡更低的窗口**；`floor_visible_contains` 只认可见区域；
+  上跳落点过 `nearest_visible_point`（推远 >200px 放弃）；`adjacent_lower_floor` 显式逐层；`_apply_pet_z_order` 插位；
+  `WindowStaysOnTopHint` 已移除。
+- **缺口（未修，已排 4 批次，见项目根 `建楼要求复检与缺口计划_2026-09-17.md`）**：
+  1. **⑬ 生气动画 ≥5s 不成立**：`max_fall_duration` **全项目只被 `handle_fall` 读**，但 `start_falling` 置
+     `is_falling=False` → 走 `handle_gravity_fall` → `handle_fall` 不跑 → `5.0` 是**死参数**；落地 `trigger_splat()`
+     用普通 `splat` 顶掉生气素材。`splat_mad` 已配好、也进了两处"特殊动画"白名单，但**全项目零调用**。
+  2. **⑧/⑩ 下方还有窗口时不坠落**（**就是要求原文第 30 行的例子**）：坠落那道门是 `new_floor.get('type') != 'window'`
+     → 只有"下面变成桌面"才掉；此路上 `is_floor_valid` 起因分流**根本没被问到**。落点几何是好的
+     （`get_drop_destination` 会给对）→ **缺调用点，不是算法**。修法：判据改成**层高比较**（`new<old` → 摔），
+     天然保留 ⑪「新窗盖旧窗→不摔」。
+  3. **⑤ 走路没有层高闸门**：站桌面走进窗口可见区域被**直接提升**到该层，不跳不摔；`generate_new_move_target`
+     里完全不出现 `window`/`floor`。修法待用户拍板（收紧 / 补过渡动作 / 维持）。
+  4. **⑨ 偏差（保留）**：位移 >400px 不跟随改失足（为最大化/还原）；要求字面是"必须跟着"。
+  5. **`climb_to_top_window()` 仍走裸窗口**（挑最前面那个窗口，按定义不会被盖，暂不出问题）。
+  6. **①③ 偏差（保留）**：窗口"只被遮住一部分但可见 <1600px²"直接不成楼层，要求字面只说"完全盖住"才不存在。
+- 另：⑩ 的"立刻" = 1 秒节拍（`floor_check_interval`）→ 最长 1s 延迟，登记为已知。
+
 ## 验证脚本教训（第八轮）
 - **别用 `"字面量" in 源码` 做源码级断言**（注释/文档串会误命中）。用 `code_only()`（tokenize 剥 COMMENT/STRING）；
   但 **`tokenize` 不产空白 token** → 拼回必须 `' '.join`（`''.join` 会把 `import heapq` 粘成 `importheapq`）；
@@ -255,6 +275,15 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   **push 备注**：本轮 push 期间沙箱代理（57186）对 github 一度持续 502（`ls-remote` 连试多次不通），
   但两次 push 自报成功、随后代理恢复时 `ls-remote` 复核 **远端 == 本地 == `cc8c7c5`** → 已闭环。
   **代理抖动时不要只看退出码，但也要等它恢复后补一次 `ls-remote`**。
+
+- 16 `建楼要求复检与缺口计划_2026-09-17.md`：**「建楼」要求行为级复检（只读，未改产品代码）**。
+  用户："复检一下到底实没实现那些要求，没有的话那就把它也加到计划里就好"。13 条要求 + 3 铁律 + 2 动画要求
+  里 **7 条已实现**（①②③④⑥⑦⑫）、**5 条部分**（⑤⑧⑨⑩⑪，缺口全在下落路径）、**2 条动画要求实际不成立**（⑬⑭）。
+  复检新建 `第十六轮/verify_build_req_audit.py`（40 项断言，F 组**故意断言当前缺陷**、名字带 `[GAP]`，
+  修好后必须翻转 → 逐条列出 6 缺口；**不入 G2**，与第十三轮 `probe_*` 同规格）。40/0；G2 **19 套件 728 PASS**
+  /全 IDENTICAL（没动产品代码 → 与基线逐字节一致）。**更正了第十三轮"13 条没有漏项"的结论**。
+  计划 4 批次：A＝G2+G1 一起修"下落路径"（含把 `splat_mad` 接活）；B＝G3 层高闸门（待用户拍板）；C＝G5 收编；
+  D＝三条有意偏差只登记。**下一步：等用户对批次 B 拍板 + 授权开做批次 A。**
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
