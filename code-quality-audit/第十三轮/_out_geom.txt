@@ -1,0 +1,23 @@
+A-B pieces = [(0, 0, 1000, 100), (0, 400, 1000, 800), (0, 100, 600, 400), (900, 100, 1000, 400)]
+sum area = 710000   expect = 710000
+overlap check = [False, False, False, False, False, False] (all should be False)
+covered point (700,150) in pieces? [False, False, False, False] (expect False)
+
+floors = 2 (expect 2)
+  hwnd=2002 ph=5 visible_area=710000 rects=[(0, 0, 999, 99), (0, 400, 999, 799), (0, 100, 599, 399), (900, 100, 999, 399)]
+  hwnd=2001 ph=10 visible_area=90000 rects=[(600, 100, 899, 399)]
+
+get_current_floor(700,150) -> hwnd=2001 (expect 2001 = 记事本)
+get_current_floor(100,400) -> hwnd=2002 (expect 2002 = 浏览器)
+get_current_floor(50,50)   -> hwnd=2002 (expect 2002 = 浏览器)
+drop from 记事本@(700,150) -> desktop (expect desktop：A 在那里被盖住)
+drop from 记事本@(700,700) -> hwnd=2002 (expect 2002：A 在那里可见)
+
+covered-by-fullscreen: floors = 1 (expect 1，被完全盖住的不存在)
+get_current_floor(200,200) -> hwnd=3001 (expect 3001)
+
+sliver(1000x1=1000px2): floors = 1 (expect 1，细缝站不住，不算楼层)
+  hwnd=4001 visible_area=199000
+sliver(1000x4=4000px2): floors = 2 (expect 2，够站就恢复)
+  hwnd=4002 visible_area=4000
+  hwnd=4001 visible_area=196000

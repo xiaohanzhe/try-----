@@ -1354,6 +1354,13 @@ class RalseiPet(QMainWindow):
         if current_time - self.last_floor_check_time > self.floor_check_interval:
             try:
                 self.check_window_movement()
+                # 渲染层序（"一层压一层"）：宠物插在"所站楼板之上、其余窗口之下"。
+                # 与楼层检查同节拍刷新；放在这里而不是 check_window_movement 里面，
+                # 是因为 z 序属渲染关注点，且回归套件会直接调 check_window_movement
+                # （把副作用塞进去会让那些 stub 突然多出一个不存在的依赖）。
+                if not self.is_jumping and not self.is_falling \
+                        and not getattr(self, 'is_gravity_falling', False):
+                    self._apply_pet_z_order()
             except Exception as e:
                 _log.warning(f"check_window_movement 异常: {e}")
             self.last_floor_check_time = current_time
@@ -2138,8 +2145,12 @@ class RalseiPet(QMainWindow):
         # 计算目标平台的Z坐标
         self.jump_target_z = 0
         if target_window:
-            # 跳上窗口，使用窗口的platform_height作为目标Z坐标
-            self.jump_target_z = target_window['platform_height']
+            # 跳上窗口：用**楼层**的 platform_height 作为目标Z坐标。
+            # 修复（第十三轮）：原来读的是裸窗口 dict 的 platform_height —— 那是
+            # desktop_interaction 里的第二套编号口径（与 floor_manager 方向相反），
+            # 已删除以免两套编号打架；现在唯一权威是楼层（有效楼层名次，最前=最高）。
+            _tf = self.floor_manager.get_floor_by_window(target_window['hwnd'])
+            self.jump_target_z = _tf['platform_height'] if _tf else 0
         else:
             # 跳到桌面，Z坐标为0
             self.jump_target_z = 0
@@ -2603,6 +2614,36 @@ class RalseiPet(QMainWindow):
         nx, ny = self._clamp_pos_to_desktop(int(nx), int(ny))
         self.move(nx, ny)
 
+    def _apply_pet_z_order(self):
+        """把宠物窗口按"一层压一层"插进 Windows 的 z 序里。
+
+        用 Windows 原生的 `SetWindowPos(pet, insertAfter=所站楼板窗口, ...)`：
+        宠物紧贴在**它正站着的那块楼板之上**，于是任何排在楼板前面的窗口都会
+        自然盖住宠物 —— 遮挡不需要我们自己算，系统会算。
+
+        · 站在窗口楼板上 → 插到该窗口之上；
+        · 站在桌面上（1楼） → 插到 WorkerW 之后 = 桌面图标之上、所有应用窗口之下。
+
+        修复（第十三轮）：之前这里是 `setWindowFlags(... | Qt.WindowStaysOnTopHint)`，
+        把宠物**永久置顶**，于是它永远画在所有窗口之上、遮挡关系完全失效
+        （用户原话："他直接走到我的窗口上面了，根本没遮挡关系这类的"）。
+        floor_manager 里早就写好了 `get_insert_after_hwnd` / `set_window_behind`
+        这对 helper，但**全项目零调用**，是死代码 —— 这里把它接活。
+
+        需要定时重刷的原因：窗口被激活/移动、用户切换前台窗口之后 z 序会变，
+        宠物要重新归位（与楼层检查同节拍，1 秒一次）。
+        """
+        try:
+            hwnd = int(self.winId())
+        except Exception as e:
+            _log.debug("拿不到宠物窗口句柄，跳过 z 序调整: %s", e)
+            return False
+        if not hwnd:
+            return False
+        insert_after = self.floor_manager.get_insert_after_hwnd(
+            getattr(self, 'current_floor', None))
+        return FloorManager.set_window_behind(hwnd, insert_after)
+
     def check_window_movement(self):
         # 检查当前所在窗口是否移动，使用楼层系统处理
         
@@ -2953,17 +2994,21 @@ class RalseiPet(QMainWindow):
                 self.window_level = window['z_order']
                 self.last_window_rect = (window['rect'].x(), window['rect'].y(), 
                                       window['rect'].width(), window['rect'].height())
-                # 使用WindowStaysOnTopHint确保Ralsei在当前窗口上可见
-                self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
+                # 渲染层序交给 Windows 原生 z 序（见 _apply_pet_z_order）
             else:
                 # 在桌面上
                 self.current_window = None
                 self.window_level = 0
                 self.last_window_rect = None
-                # 移除顶层窗口标志
-                self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
-            
+
             self.show()
+            # 落定后按"一层压一层"重排 z 序。
+            # 顺序很关键：必须放在 show() **之后** —— show() 有把窗口提到前面的副作用，
+            # 先定位再 show 会被它撤销。
+            # 修复（第十三轮）：原来这里按"在窗口上/在桌面"分别 setWindowFlags，
+            # 在窗口上用 Qt.WindowStaysOnTopHint 强制置顶 → 宠物永远画在所有窗口之上，
+            # 遮挡关系完全失效（用户："他直接走到我的窗口上面了，根本没遮挡关系"）。
+            self._apply_pet_z_order()
         else:
             # 继续掉落
             # 检查是否落到了桌面底部（多显示器：虚拟桌面底边）
@@ -2998,9 +3043,9 @@ class RalseiPet(QMainWindow):
                 self.spatial_pos["z"] = 0
                 self.current_platform_z = 0
                 
-                # 移除顶层窗口标志
-                self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
+                # 落回桌面（1楼）→ 按"一层压一层"重排 z 序（插到 WorkerW 之后）
                 self.show()
+                self._apply_pet_z_order()
         
         # 移动Ralsei
         self.move(int(new_x), int(new_y))
@@ -5284,6 +5329,16 @@ class RalseiPet(QMainWindow):
                 self._pet_detection_state['press_start_time'] = 0
                 self._pet_detection_state['press_start_pos'] = None
     
+        # 松手后立刻按"一层压一层"归位一次。
+        # 必要性：用户拖动宠物时窗口会被激活 → Windows 把宠物提到同组最前，
+        # 不重排的话它就一直浮在所站楼板前面的窗口之上了（遮挡关系失效）。
+        # 这里不节流 —— 松手是低频事件，一次 SetWindowPos 可忽略不计。
+        try:
+            if not self.is_falling and not self.is_jumping:
+                self._apply_pet_z_order()
+        except Exception as e:
+            _log.debug("松手后重排 z 序失败（已忽略）: %s", e)
+
     def mouseDoubleClickEvent(self, event):
         # 鼠标双击事件
         # 检查是否双击了Ralsei

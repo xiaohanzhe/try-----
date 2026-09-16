@@ -93,9 +93,28 @@ def list_drive_roots():
 
 
 def _is_writable_dir(path):
-    """目录可写性探测：能建成、能落一个小文件、能删掉。"""
+    """目录可写性探测：能建成、能落一个小文件、能删掉。
+
+    两级判定，**快路径刻意不落任何文件**（第十三轮修复）：
+      1. `os.access(path, W_OK)` —— 本机固定盘上可信、零副作用，且**不缓存**，
+         所以拔盘/掉线在下次调用依然能被检出来；
+      2. 只有快路径给不出结论（返回 False）时才退回"真建一个 `.write_probe`
+         再删掉"的老探针，保证判据不比以前更宽松。
+
+    为什么要分两级：`find_device_dir(create=True)` 在**一次启动**里会被调用十几次
+    （`data_store` 要解析记忆库 + 7 类运行时产物），老实现每次都真的建/写/删一个
+    文件。这不只是浪费 —— 实测这些删除会累积撞上宿主沙箱的"同一轮内同路径删除
+    配额"（`SAFE_DELETE_BULK_CONFIRM_REQUIRED`），把正在跑的**整个回归套件进程**
+    掐掉，表现为全套件 `exit=1 PASS=0`。第十三轮 G2 全量跑出的 11 个假 DIFF，
+    真凶就在这里（`E:\\RalseiMemory\\.write_probe` 单轮被删 50+ 次）。
+    """
     try:
         os.makedirs(path, exist_ok=True)
+    except Exception:
+        return False
+    if os.access(path, os.W_OK):
+        return True
+    try:
         probe = os.path.join(path, '.write_probe')
         with open(probe, 'w', encoding='utf-8') as fh:
             fh.write('ok')

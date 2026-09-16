@@ -186,6 +186,12 @@ class PetStub:
     def show(self):
         pass
 
+    # 第十三轮新增：落地后按"一层压一层"重排窗口 z 序（把宠物插到所站楼板之上）。
+    # 本套件只关心"摔/不摔/掉到哪"，z 序与判定无关 → 这里空实现。
+    # （教训：stub 必须跟得上真实方法表面，否则生产代码一加调用就 AttributeError。）
+    def _apply_pet_z_order(self):
+        return False
+
     def trigger_splat(self):
         self.calls.append(('splat', None))
 

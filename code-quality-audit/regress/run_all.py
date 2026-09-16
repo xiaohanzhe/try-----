@@ -30,8 +30,10 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
@@ -45,6 +47,49 @@ SEED = 20260913
 # 顺序固定：先快后慢，先静态后运行时。
 #   offscreen=True  → 注入 QT_QPA_PLATFORM=offscreen（涉及 QWidget/QPixmap 的套件必须）
 #   needs         → 该套件依赖的前置文件，缺失即判 SKIP（而不是 FAIL）
+#   env           → 可调用的"额外环境变量工厂"，返回 (dict, 待清理目录或 None)
+
+def _make_hermetic_env():
+    """给「会实例化整个 App」的套件一套每轮全新的隔离存储。
+
+    为什么必须隔离（第十三轮发现的基线缺陷）：
+      round8_anim 里会 `RalseiPet()`，于是 memory_system / data_store 真的去解析
+      **真实**存储位置。第九轮起记忆住在 E 盘（`E:\\RalseiMemory`），而
+      `data_store.vault_root()` 是**委托** `memory_store.find_device_dir()` 的 ——
+      所以只强制 `RALSEI_MEMORY_DIR` 一个变量，记忆库与 7 类运行时产物会一起被隔离。
+
+    不隔离的两个后果：
+      1. 基线不封闭：套件输出随「E 盘是否在线」「E 盘上是否已有 memory.json」漂移。
+         实测症状：E 盘接回后，"新位置无记忆，已从旧版 memory.json 继承"这行不再打印
+         → round8_anim 与基线 DIFF（假警报，而真正的回归会被这堆噪声淹没）。
+      2. 测试污染用户真实数据：套件跑一次就会往用户 E 盘写日志/成长数据。
+
+    `tempfile.mkdtemp` 保证"新位置一定为空"→ "从旧版继承"必然发生 → 输出可复现；
+    路径经 normalize() 归一成 <TMP>，所以每轮不同的随机目录名不会造成漂移。
+    """
+    base = tempfile.mkdtemp(prefix='ralsei_g2_iso_')
+    return {'RALSEI_MEMORY_DIR': os.path.join(base, 'RalseiMemory')}, base
+
+
+# 需要"隔离真实存储"的套件：凡是会 `RalseiPet()` / 触碰 memory · data_store
+# 的套件都在此列。不隔离有三个后果：
+#   1. 基线不封闭（输出随"E 盘在不在线""E 盘上有没有 memory.json"漂移）；
+#   2. 往用户真实的 E 盘写运行时产物（日志/成长数据/记忆）；
+#   3. **第十三轮实测的真问题**：`memory_store._is_writable_dir` 老实现每次调用
+#      都真的 建/写/删 一个 `.write_probe`，一次启动被调十几次；17 个套件跑一轮，
+#      同一路径 `E:\RalseiMemory\.write_probe` 单轮被删 50+ 次，累积撞上宿主沙箱的
+#      删除配额守卫 → 每个套件进程在**开头就被掐掉**，输出只剩
+#      `[safe-delete][SAFE_DELETE_BULK_CONFIRM_REQUIRED]`，
+#      全套件 `exit=1 PASS=0`（11 个假 DIFF 的真凶，见记忆_store 的快路径修复）。
+# 强制 `RALSEI_MEMORY_DIR` 会让 `find_device_dir` 直接 return，连探针都不会跑。
+HERMETIC_IDS = frozenset({
+    'round5_smoke', 'round5_verify', 'round6_verify',
+    's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
+    'round8_dialogue', 'round8_floor', 'round8_fling',
+    'round9_focus', 'round13_build',
+})
+
+
 SUITES = [
     {
         'id': 'round5_smoke',
@@ -110,6 +155,7 @@ SUITES = [
         'id': 'round8_anim',
         'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_anim.py'),
         'offscreen': True,
+        'env': _make_hermetic_env,     # 会 RalseiPet()，必须隔离真实存储（见该函数注释）
         'desc': '第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 3 分钟 + 鞠躬锚点',
     },
     {
@@ -147,6 +193,15 @@ SUITES = [
                 '（E 盘为最终存储、本地只作中转站：data_store 解析/收编模板/回迁五条安全约定）'
                 '+ 7 类运行时产物全部路由到数据根 + 初始化环回归锁'
                 '（间接环 lazy_log + 有鉴别力的导入顺序断言）；E 盘真机确认补丁',
+    },
+    {
+        'id': 'round13_build',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十三轮', 'verify_round13_build.py'),
+        'offscreen': True,
+        'desc': '第十三轮：「建楼」遮挡判定 + 窗口层数 + 渲染层序（按 Windows 原生口径）'
+                '—— 可见区域矩形相减（含独立网格 oracle 交叉验证）/ 完全盖住即不存在 / '
+                '楼层名次最前最高 / 站立·下落·跳跃都只在可见区域 / '
+                'DWM 可见边框·幽灵窗口·按进程排除自身 / SetWindowPos 把宠物插到所站楼板之上',
     },
 ]
 
@@ -227,13 +282,23 @@ def run_suite(suite, verbose=False):
         env['QT_QPA_PLATFORM'] = 'offscreen'
     env.pop('QT_QPA_PLATFORM_OVERRIDE', None)
 
-    proc = subprocess.run(
-        [PYTHON or sys.executable, SEED_RUNNER, str(SEED), script],
-        cwd=os.path.dirname(script),
-        env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    cleanup = None
+    extra = suite.get('env') or (_make_hermetic_env if suite['id'] in HERMETIC_IDS else None)
+    if callable(extra):
+        extra_env, cleanup = extra()
+        env.update(extra_env)
+
+    try:
+        proc = subprocess.run(
+            [PYTHON or sys.executable, SEED_RUNNER, str(SEED), script],
+            cwd=os.path.dirname(script),
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+    finally:
+        if cleanup:
+            shutil.rmtree(cleanup, ignore_errors=True)
     raw = proc.stdout.decode('utf-8', 'replace')
     norm = normalize(raw)
     n_pass, n_fail = count_results(raw)
@@ -295,15 +360,31 @@ def load_baseline():
         return json.load(fh)
 
 
-def save_baseline(results):
-    data = {
-        'version': 1,
-        'note': '归一化输出的 SHA-256 快照。改造前后必须逐字节一致；有意变更时用 --update 重建。',
-        'suites': {
-            r['id']: {'exit': r['exit'], 'pass': r['pass'], 'fail': r['fail'], 'sha256': r['sha256']}
-            for r in results if r['status'] != 'SKIP'
-        },
-    }
+def save_baseline(results, merge=True):
+    """写基线。默认**合并**：只覆盖 results 里出现的套件，其余保留。
+
+    修复（第十三轮）：原来是无条件整体重写，于是
+        run_all.py --only round8_anim --update
+    会把 baseline.json 里其余 15 个套件**静默删掉** —— 下次全量跑就全部变成
+    "BASELINE"（无从比对），而输出看起来一切正常。基线是整个 H4/H5 改造的
+    唯一安全性判据，不能有这种一键抹除的路径。
+    """
+    data = None
+    if merge:
+        data = load_baseline()
+    if not data or 'suites' not in data:
+        data = {
+            'version': 1,
+            'note': '归一化输出的 SHA-256 快照。改造前后必须逐字节一致；有意变更时用 --update 重建。',
+            'suites': {},
+        }
+    for r in results:
+        if r['status'] == 'SKIP':
+            continue
+        data['suites'][r['id']] = {
+            'exit': r['exit'], 'pass': r['pass'], 'fail': r['fail'], 'sha256': r['sha256'],
+        }
+    data['suites'] = dict(sorted(data['suites'].items()))
     with open(BASELINE, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(data, fh, ensure_ascii=False, indent=2, sort_keys=True)
         fh.write('\n')
@@ -395,7 +476,9 @@ def main():
     if args.update:
         save_baseline(results)
         print()
-        print('基线已重建：%s' % BASELINE)
+        print('基线已更新（合并模式）：%s' % BASELINE)
+        if args.only:
+            print('  注意：本次只重建了 %d 个被 --only 选中的套件，其余套件的基线保持不动。' % len(picked))
         # 留一份原始文本供下次 DIFF 时做行级对比
         for r in results:
             if r['status'] == 'SKIP':

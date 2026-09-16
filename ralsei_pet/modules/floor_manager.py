@@ -20,9 +20,107 @@ HWND_BOTTOM = 1
 HWND_TOPMOST = -1
 HWND_NOTOPMOST = -2
 
+# GetWindow 的 z 序步进方向（win32con.GW_HWNDNEXT 的值；本模块不引入 win32con）
+GW_HWNDNEXT = 2
+
 _user32 = ctypes.windll.user32
 _user32.SendMessageTimeoutW.restype = ctypes.c_void_p
 _user32.SendMessageTimeoutW.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_void_p)]
+
+# --------------------------------------------------------------------- 建楼：遮挡与分层
+# 「建楼」要求原文：
+#   · 楼层关系："哪个窗口在最前面，哪个就是最高楼层。后面的窗口如果被前面的**完全盖住**，
+#     那就相当于被压在下面了，暂时'不存在'。"
+#   · 视野限制："ralsei 眼里只有两种东西：它正站着的这块楼板，以及比当前这块楼板更高的、
+#     **没有被完全挡住**的'悬崖边'。它看不到脚下楼板下面的东西。"
+#   · 不透明原则："窗口就是实心地板，绝不允许穿透、看穿。"
+#
+# 于是楼层的判定口径必须从"窗口矩形"升级为"**可见区域**"：
+#   可见区域 = 自身矩形 − 所有比它更高的窗口矩形之并
+# 第十四轮之前只判 `higher.rect.contains(me.rect)`（**完全包含**才算被盖住），
+# 于是"被挡住 90% 的窗口"仍然算一块完整楼板 —— 宠物会站在那块根本看不见的地板上。
+#
+# 阈值：可见面积低于这个值就不算楼层（"被压下去，暂时不存在"）。
+# 取 40×40 ≈ 宠物脚下能站稳的一小块；比它更细的缝站不住，也没法让用户看见宠物站在哪。
+MIN_FLOOR_VISIBLE_AREA = 40 * 40
+
+# 桌面层的固定标识（与 _floor_identity 保持一致）
+DESKTOP_IDENTITY = 'desktop'
+
+
+def _rect_tuple(rect):
+    """QRect → 半开区间元组 (left, top, right, bottom)。
+
+    半开区间（right/bottom 不含）能让"相减"的边界算术保持整数且不重叠，
+    避免 QRect.right() = x + w - 1 这种左右闭区间带来的差一错误。
+    """
+    return (rect.left(), rect.top(), rect.left() + rect.width(),
+            rect.top() + rect.height())
+
+
+def _qr(t):
+    """半开区间元组 → QRect。"""
+    l, t0, r, b = t
+    return QRect(l, t0, max(0, r - l), max(0, b - t0))
+
+
+def _area(t):
+    l, t0, r, b = t
+    return max(0, r - l) * max(0, b - t0)
+
+
+def _cut(rect, hole):
+    """从 rect 里挖掉 hole，返回 ≤4 个**互不重叠**的矩形（可能为空）。"""
+    l, t, r, b = rect
+    hl, ht, hr, hb = hole
+    if hr <= l or hl >= r or hb <= t or ht >= b:
+        return [rect]                     # 不相交，原样返回
+    if hl <= l and hr >= r and ht <= t and hb >= b:
+        return []                         # 全被挖掉
+    out = []
+    if ht > t:                            # 上横条
+        out.append((l, t, r, ht))
+    if hb < b:                            # 下横条
+        out.append((l, hb, r, b))
+    mid_t, mid_b = max(t, ht), min(b, hb)
+    if hl > l and mid_b > mid_t:          # 左竖条（只占 hole 的纵向范围）
+        out.append((l, mid_t, hl, mid_b))
+    if hr < r and mid_b > mid_t:          # 右竖条
+        out.append((hr, mid_t, r, mid_b))
+    return out
+
+
+def visible_subrects(target, blockers):
+    """target 挖掉 blockers 之并后剩下的矩形列表。
+
+    不变量：返回的矩形**两两不重叠**，且并集恰好 = target − ⋃blockers。
+    实现说明：初始只有一个矩形，每次 `_cut` 把"一个矩形"换成"它减去洞之后的一个划分"，
+    所以不重叠这一条是构造性成立的 —— 因此可见面积可以直接求和，不会重复计算。
+    """
+    pieces = [target]
+    for hole in blockers:
+        if not pieces:
+            break
+        nxt = []
+        for p in pieces:
+            nxt.extend(_cut(p, hole))
+        pieces = [p for p in nxt if _area(p) > 0]
+    return pieces
+
+
+def _native_window_from_point(x, y):
+    """Windows 原生口径：这一点上"最上面"的顶层窗口（`WindowFromPoint`）。
+
+    惰性导入 `desktop_interaction`：它已经声明好了 argtypes/restype（64 位 HWND 不截断），
+    这里复用即可，避免两处各写一份 Win32 声明。导入失败（独立跑本模块）时返回 0，
+    调用方自然回落到几何判定。
+    """
+    try:
+        from desktop_interaction import window_from_point as _wfp
+        return _wfp(x, y)
+    except Exception:
+        return 0
+
 
 
 class FloorManager:
@@ -95,27 +193,56 @@ class FloorManager:
         self.underlying_windows = visible_windows
 
     def _generate_floors(self):
+        """按"一层压一层"生成楼层表（本模块的核心）。
+
+        口径（对照"建楼"要求）：
+          1. `underlying_windows` 已按 z_order 升序 = **从最前面往最后面**；
+          2. 从前往后扫，每一层挖掉"前面所有**已经成立的**楼层"所占的矩形 → 得到它的可见区域；
+          3. 可见面积不足 MIN_FLOOR_VISIBLE_AREA → 被压下去了，"暂时不存在"，**不是楼层**；
+             它也不再遮挡更低的窗口（符合"被压住的就暂时不存在"）；
+          4. platform_height 按"有效楼层的名次"编（最前 = 最高 = 数值最大，桌面恒为 0）。
+
+        为什么"只在成立的楼层里累加遮挡者"是对的：
+          如果某窗口被压下去（不存在），它对更低的窗口就既不可见、也不该算作地板；
+          从前往后一遍扫完即是正确答案，不需要迭代到不动点。
+        """
         self.floors = []
 
-        for i, window in enumerate(self.underlying_windows):
-            is_covered = False
-            for j in range(i):
-                if self.underlying_windows[j]['rect'].contains(window['rect']):
-                    is_covered = True
-                    break
+        # 防御性排序：本函数的正确性依赖"从最前面往最后面"扫。
+        # 调用方（_update_underlying_windows）确实会按 z_order 排好，但这是隐式约定 ——
+        # 一旦有人直接赋值 underlying_windows（测试、以后的重构）就会静默算错，
+        # 所以这里自己再排一次，把约定变成不变量。
+        windows_in_z = sorted(self.underlying_windows,
+                              key=lambda w: w.get('z_order', 0))
 
-            if not is_covered:
-                platform_height = (len(self.underlying_windows) - i) * 5
+        valid = []                       # 已经成立的楼层（同时充当"遮挡者"）
+        for window in windows_in_z:
+            rect = _rect_tuple(window['rect'])
+            pieces = visible_subrects(rect, [_rect_tuple(v['rect']) for v in valid])
+            vis_area = sum(_area(p) for p in pieces)
 
-                floor = {
-                    'type': 'window',
-                    'window': window,
-                    'rect': window['rect'],
-                    'z_order': window['z_order'],
-                    'platform_height': platform_height,
-                    'window_hwnd': window['hwnd']
-                }
-                self.floors.append(floor)
+            if vis_area < MIN_FLOOR_VISIBLE_AREA:
+                # 被前面的窗口盖住了 → 按建楼要求"暂时不存在"
+                continue
+
+            window['visible_rects'] = [_qr(p) for p in pieces]
+            window['visible_area'] = vis_area
+            valid.append(window)
+
+        n = len(valid)
+        for i, window in enumerate(valid):
+            self.floors.append({
+                'type': 'window',
+                'window': window,
+                'rect': window['rect'],
+                # 可见区域（可站的部分）：跳/落/站立判定都用它，不再用整个 rect
+                'visible_rects': window['visible_rects'],
+                'visible_area': window['visible_area'],
+                'z_order': window['z_order'],
+                # 最前的有效楼层最高。×5 沿用历轮的量纲（spatial_pos["z"] 消费它）
+                'platform_height': (n - i) * 5,
+                'window_hwnd': window['hwnd'],
+            })
 
         self.floors.sort(key=lambda x: x['platform_height'])
 
@@ -166,30 +293,93 @@ class FloorManager:
         return workerw
 
     def get_insert_after_hwnd(self, floor):
-        """Return the HWND that Ralsei should be placed directly ABOVE.
-        - desktop floor → WorkerW (pet on top of desktop, below all apps)
-        - window floor → that window's HWND (pet on top of this window,
-          but naturally hidden by any window higher in z-order)"""
+        """返回"宠物应该紧贴在谁之上"的 HWND。
+
+        这是"一层压一层"的关键（Windows 原生 `SetWindowPos(insertAfter=...)`）：
+          · 站在窗口楼板上 → 插到**那块窗口之上**，于是任何排在它前面的窗口
+            都会自然盖住宠物（这就是"前面的窗口压住你"）；
+          · 站在桌面上（1楼） → 插到 WorkerW 之后，即"桌面图标之上、所有应用窗口之下"。
+
+        修复（第十三轮）：窗口句柄失效时不再直接把野句柄交给 SetWindowPos
+        （窗口可能刚好在这一拍被关掉），改为回落到 WorkerW / HWND_BOTTOM。
+        """
         if floor is None or floor.get('type') == 'desktop':
-            now = time.time()
+            return self._workerw_or_bottom()
+
+        hwnd = floor.get('window_hwnd')
+        try:
+            if hwnd and win32gui.IsWindow(hwnd):
+                return hwnd
+        except Exception:
+            pass
+        return self._workerw_or_bottom()
+
+    def _workerw_or_bottom(self):
+        """桌面层的插入点：WorkerW（桌面图标之上、应用窗口之下），拿不到就 HWND_BOTTOM。"""
+        now = time.time()
+        try:
             if (self._workerw_hwnd is None
                     or not win32gui.IsWindow(self._workerw_hwnd)
                     or now - self._workerw_find_time > 300):
                 self._workerw_hwnd = self.find_desktop_workerw_hwnd()
                 self._workerw_find_time = now
-            return self._workerw_hwnd or HWND_BOTTOM
-        return floor.get('window_hwnd', HWND_BOTTOM)
+        except Exception as e:
+            _log.debug("floor_manager 防御性异常（已忽略）: %s", e)
+        return self._workerw_hwnd or HWND_BOTTOM
+
+    @staticmethod
+    def z_order_index(hwnd):
+        """hwnd 在顶层窗口 z 序里的下标（0 = 最前）；不在链上返回 None。
+
+        用的是 Windows 原生的 z 序链（`GetTopWindow` + `GW_HWNDNEXT`）——
+        与 `desktop_interaction.get_all_visible_windows` 里算 z_order 是同一套口径。
+        用途：核验"宠物确实被插在了所站楼板之上、其余窗口之下"（真机与回归都用它）。
+        """
+        if not hwnd:
+            return None
+        try:
+            cur = win32gui.GetTopWindow(None)
+            i = 0
+            while cur:
+                if cur == hwnd:
+                    return i
+                cur = win32gui.GetWindow(cur, GW_HWNDNEXT)
+                i += 1
+        except Exception:
+            return None
+        return None
+
+    @classmethod
+    def is_above(cls, hwnd_a, hwnd_b):
+        """z 序上 hwnd_a 是否在 hwnd_b **前面**（更靠上）。任一句柄不在链上返回 None。"""
+        ia = cls.z_order_index(hwnd_a)
+        ib = cls.z_order_index(hwnd_b)
+        if ia is None or ib is None:
+            return None
+        return ia < ib
+
 
     @staticmethod
     def set_window_behind(hwnd_target, hwnd_after):
-        """Use SetWindowPos to place hwnd_target directly above hwnd_after
-        in Z order. Flags: SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOOWNERZORDER
-        so we only touch the z-order, nothing else. Uses win32gui which
-        handles 64-bit HWNDs correctly."""
+        """把 hwnd_target 插到 z 序里 hwnd_after **之上**（紧邻其后）。
+
+        只动 z 序，不动位置/大小/焦点：
+        `SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOOWNERZORDER`。
+        用 win32gui 是为了 64 位 HWND 不被截断。
+
+        `hwnd_after` 失效（窗口刚被关掉）时回落到 HWND_BOTTOM ——
+        绝不把野句柄交给 SetWindowPos（那会得到一次无法预期的 z 序跳变）。
+        """
         if not hwnd_target or not win32gui.IsWindow(hwnd_target):
             return False
+        insert = hwnd_after or HWND_BOTTOM
+        try:
+            if insert not in (HWND_BOTTOM, HWND_TOP, HWND_TOPMOST, HWND_NOTOPMOST) \
+                    and not win32gui.IsWindow(insert):
+                insert = HWND_BOTTOM
+        except Exception:
+            insert = HWND_BOTTOM
         flags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOOWNERZORDER
-        insert = hwnd_after if hwnd_after else HWND_BOTTOM
         try:
             win32gui.SetWindowPos(hwnd_target, insert, 0, 0, 0, 0, flags)
             return True
@@ -200,14 +390,66 @@ class FloorManager:
     # Floor queries
     # ------------------------------------------------------------------
 
-    def get_current_floor(self, pos):
-        all_floors = sorted(self.floors + [self.desktop_floor], key=lambda x: x['platform_height'], reverse=True)
+    @staticmethod
+    def floor_visible_contains(floor, pos):
+        """pos 是否落在该楼层的**可见**区域里。
 
-        for floor in all_floors:
-            if floor['rect'].contains(pos):
+        这是"建楼"的核心判定：站在楼板上时，脚下那一点必须是**看得见的地板**。
+        被前面窗口盖住的部分不算 —— 否则宠物会站在根本看不见的地方
+        （第十三轮之前只判 `rect.contains(pos)`，于是"被挡住 90% 的窗口"
+        仍然是整块可站楼板，这正是用户看到的"没有遮挡关系"）。
+        """
+        if floor is None:
+            return False
+        if floor.get('type') == 'desktop':
+            return bool(floor['rect'].contains(pos))
+        for r in floor.get('visible_rects') or ():
+            if r.contains(pos):
+                return True
+        return False
+
+    def floor_at_native_point(self, pos):
+        """Windows 原生口径：`WindowFromPoint` 说"这一点上最上面是谁"。
+
+        返回对应楼层；无法判定时返回 None：
+          · 返回 0（该处没有任何窗口 → 桌面）；
+          · 返回的句柄不属于任何已知楼层（例如**本程序自己的窗口** —— 宠物窗口就盖在
+            自己脚下这一点上，这种情况下原生口径没有参考价值，必须让几何判定说了算）。
+
+        `WS_EX_TRANSPARENT` 的窗口会被系统自动跳过，天然符合"不透明原则"。
+        """
+        hwnd = _native_window_from_point(pos.x(), pos.y())
+        if not hwnd:
+            return None
+        for floor in self.floors:
+            if floor.get('window_hwnd') == hwnd:
                 return floor
+        return None
 
-        return self.desktop_floor
+    def get_current_floor(self, pos):
+        """pos 处宠物应该站的楼板：**可见区域**命中的最高那层。
+
+        判定顺序（为什么这么定）：
+          ① 几何口径为主 —— "可见区域 + 从高到低"，与 Windows 的 z 序语义一致，
+             而且可以离线复现（回归门禁要的是确定性）；
+          ② 原生口径只做**"只升不降"**的兜底 —— 只有当几何判定得出"脚下是桌面"、
+             而 Windows 原生 `WindowFromPoint` 明确指到某个已知楼层时才采纳它。
+             方向如此限定是为了两件事同时成立：真机上多一层保护（几何算错时仍站得住），
+             测试里不可能被外部真实窗口干扰（原生答案只会命中"本就不存在的楼层"→ 不采纳）。
+        """
+        all_floors = sorted(self.floors + [self.desktop_floor],
+                            key=lambda x: x['platform_height'], reverse=True)
+        geometric = self.desktop_floor
+        for floor in all_floors:
+            if self.floor_visible_contains(floor, pos):
+                geometric = floor
+                break
+
+        if geometric.get('type') == 'desktop':
+            native = self.floor_at_native_point(pos)
+            if native is not None and native.get('type') != 'desktop':
+                return native
+        return geometric
 
     def get_floors_above(self, current_floor):
         above_floors = []
@@ -229,7 +471,7 @@ class FloorManager:
         if floor is None:
             return None
         if floor.get('type') == 'desktop':
-            return 'desktop'
+            return DESKTOP_IDENTITY
         return floor.get('window_hwnd')
 
     def _index_of_floor(self, all_floors, current_floor):
@@ -252,18 +494,31 @@ class FloorManager:
         return len(all_floors) - 1
 
     def get_drop_destination(self, pos, current_floor):
+        """向下掉时，pos 正下方第一块**能接住它**的楼板。
+
+        可见区域判定（第十三轮）：被前面窗口盖住的部分接不住宠物 ——
+        楼板只在"看得见的地板"上才是实的（对应"不透明原则"）。
+        """
         all_floors = sorted(self.floors + [self.desktop_floor], key=lambda x: x['platform_height'], reverse=True)
 
         current_index = self._index_of_floor(all_floors, current_floor)
 
         for i in range(current_index + 1, len(all_floors)):
             floor = all_floors[i]
-            if floor['rect'].contains(pos):
+            if self.floor_visible_contains(floor, pos):
                 return floor, pos
 
         return self.desktop_floor, pos
 
     def get_jump_destinations(self, current_floor, current_pos):
+        """可跳的目标：附近同一层的位置、上方**可见**的悬崖边、下方相邻一层。
+
+        对照"建楼"要求：
+          · 向上跳只能落到"没被其他东西挡住的那部分边缘" → 落点必须在该层**可见区域**内；
+            原来这里又用 `contains` 自己判了一遍"是否可见"，与 _generate_floors 的口径
+            不一致（一个判完全包含、一个判可见区域），现在统一由 visible_rects 回答。
+          · 向下跳只能跳**相邻的下一层**，不能穿透中间楼层。
+        """
         jump_destinations = []
 
         jump_destinations.append((current_floor, current_pos))
@@ -274,18 +529,13 @@ class FloorManager:
         for floor in above_floors:
             rect = floor['rect']
 
-            is_visible = True
-            for higher_floor in above_floors:
-                if higher_floor['platform_height'] > floor['platform_height']:
-                    if higher_floor['rect'].contains(rect):
-                        is_visible = False
-                        break
-
-            if is_visible and (current_pos.x() >= rect.left() and
+            if (current_pos.x() >= rect.left() and
                 current_pos.x() <= rect.right() and
                 current_pos.y() >= rect.bottom()):
                 jump_pos = QPoint(current_pos.x(), rect.top() + 10)
-                jump_destinations.append((floor, jump_pos))
+                # 落点必须是看得见的地板（被挡住的部分跳不上去）
+                if self.floor_visible_contains(floor, jump_pos):
+                    jump_destinations.append((floor, jump_pos))
 
         all_floors = sorted(self.floors + [self.desktop_floor],
                           key=lambda x: x['platform_height'], reverse=True)
@@ -298,21 +548,26 @@ class FloorManager:
             if (current_pos.x() >= next_floor['rect'].left() and
                 current_pos.x() <= next_floor['rect'].right()):
                 jump_pos = QPoint(current_pos.x(), next_floor['rect'].top() + 10)
-                jump_destinations.append((next_floor, jump_pos))
+                if self.floor_visible_contains(next_floor, jump_pos):
+                    jump_destinations.append((next_floor, jump_pos))
 
         return jump_destinations
 
     def is_floor_valid(self, floor):
+        """该楼板引用的窗口是否还在（还活着）。
+
+        修复（第十三轮）：原来要求"四边与缓存完全相等"才判有效 —— 但改用 DWM 可见边框
+        后（见 desktop_interaction.get_frame_rect），窗口只要被拖动/缩放/进出全屏，
+        边框就会有 1px 级抖动，于是同一块楼板被判"失效"，宠物凭空掉下去。
+        现在只判"窗口还在不在"，几何变化交给"跟随楼板移动"逻辑处理。
+        """
         if floor['type'] == 'desktop':
             return True
 
+        hwnd = floor.get('window_hwnd')
         for window in self.underlying_windows:
-            if window['hwnd'] == floor['window_hwnd']:
-                if (window['rect'].left() == floor['rect'].left() and
-                    window['rect'].top() == floor['rect'].top() and
-                    window['rect'].width() == floor['rect'].width() and
-                    window['rect'].height() == floor['rect'].height()):
-                    return True
+            if window['hwnd'] == hwnd:
+                return True
         return False
 
     def get_all_floors(self):
@@ -339,13 +594,15 @@ class FloorManager:
         return expanded.contains(pos)
 
     def find_support_below(self, pos, z_below=None):
-        """Find the nearest floor below pos that actually contains pos.
-        Used when pet walks off an edge — gravity drops to next solid floor."""
+        """pos 正下方第一块能接住它的楼板（走到边缘掉下去时用）。
+
+        可见区域判定（第十三轮）：被前面窗口盖住的部分是"看不见的地板"，接不住宠物。
+        """
         all_floors = sorted(self.floors + [self.desktop_floor],
                             key=lambda x: x['platform_height'], reverse=True)
         if z_below is not None:
             all_floors = [f for f in all_floors if f['platform_height'] <= z_below]
         for floor in all_floors:
-            if floor['rect'].contains(pos):
+            if self.floor_visible_contains(floor, pos):
                 return floor
         return self.desktop_floor

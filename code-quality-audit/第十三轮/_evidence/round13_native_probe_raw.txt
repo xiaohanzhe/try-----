@@ -1,0 +1,33 @@
+=== 0) 量纲自检（QApplication 建好后各口径必须同量纲）===
+Qt  primaryScreen().geometry() : 2560 x 1600   devicePixelRatio=1.0
+Qt  availableGeometry()        : 2560 x 1528
+Win GetSystemMetrics(0,1)      : 2560 x 1600
+→ 二者一致才说明"楼层坐标系 == 宠物坐标系"（第十三轮 DPI 陷阱）
+
+=== 1) DWM 可见边框 vs GetWindowRect（阴影差额）===
+窗口标题                         GetWindowRect              DWM 可见边框                   每边差额
+WorkBuddy                    (3, 7, 1206, 910)          (3, 7, 1206, 910)          (0, 0, 0, 0)
+Windows 输入体验                 (0, 0, 2560, 1600)         (0, 0, 2560, 1600)         (0, 0, 0, 0)
+wv_1001                      (0, 0, 2560, 1528)         (0, 0, 2560, 1528)         (0, 0, 0, 0)
+Program Manager              (0, 0, 2560, 1600)         (0, 0, 2560, 1600)         (0, 0, 0, 0)
+
+=== 2) 原生过滤器效果 ===
+可见顶层窗口（粗筛，≥100x100 有标题）: 4
+  其中 DWM 幽灵窗口(cloaked): 1 ['Windows 输入体验']
+  其中 WS_EX_TOOLWINDOW     : 2 ['wv_1001', 'Program Manager']
+  其中 WS_EX_NOACTIVATE     : 1 ['wv_1001']
+
+=== 3) 原生 WindowFromPoint（"这一点上最上面是谁"）===
+虚拟桌面 = (0,0) 2560x1600 ；屏幕中心 = (1280,800)
+该点上最上面的窗口 hwnd=66092 title='Program Manager'
+当前前台窗口     hwnd=1970972 title='WorkBuddy'
+一致: False（中心点上未必是前台窗口 —— 只说明 WindowFromPoint 命中的是"那一点上"的顶层窗口）
+该点所属进程 pid=15476；本进程 pid=38372（相等则说明打到的是自己 → 必须靠进程号排除）
+
+=== 4) 用真实窗口表建楼层（**走产品真实的过滤枚举**）===
+（这里不用上面的粗筛 raw_list：粗筛只过滤"可见且不最小化"，不过滤幽灵/工具窗/自身，
+  用它建楼会高估楼层数。直接调产品方法 get_all_visible_windows 才是真口径。）
+粗筛窗口数 = 4  →  产品过滤后 = 1  （被滤掉 3：幽灵/工具窗/无激活/自身/出屏）
+  留下: hwnd=1970972   'WorkBuddy' rect=(3, 7, 1206, 910)
+窗口数 = 1 → 有效楼层数 = 1（差额 = "被压下去暂时不存在"或可见面积太小）
+  L5   hwnd=1970972   可见 1086309/1086309 px (100.0%)  WorkBuddy

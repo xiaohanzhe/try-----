@@ -47,6 +47,14 @@ class RECT(ctypes.Structure):
         ("bottom", ctypes.c_long),
     ]
 
+
+class POINT(ctypes.Structure):
+    _fields_ = [
+        ("x", ctypes.c_long),
+        ("y", ctypes.c_long),
+    ]
+
+
 kernel32 = ctypes.windll.kernel32
 user32 = ctypes.windll.user32
 
@@ -69,6 +77,109 @@ user32.GetWindowThreadProcessId.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctyp
 user32.GetWindowThreadProcessId.restype = ctypes.c_ulong
 user32.SendMessageW.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_uint, ctypes.c_void_p]
 user32.SendMessageW.restype = ctypes.c_ssize_t
+
+# --------------------------------------------------------------------- DWM 与"原生窗口口径"
+# 「建楼」要求："楼板的大小、位置，必须和窗口一模一样"，而 `GetWindowRect` 返回的是
+# **带 DWM 不可见阴影边框**的矩形（Win10 起每边各多约 7px）—— 用它当楼板，宠物会
+# 站在窗口外一圈看不见的地板上。原生口径是
+# `DwmGetWindowAttribute(DWMWA_EXTENDED_FRAME_BOUNDS)`，它给的才是"看见的那个框"。
+DWMWA_EXTENDED_FRAME_BOUNDS = 9
+DWMWA_CLOAKED = 14
+
+GA_ROOT = 2
+
+try:
+    dwmapi = ctypes.windll.dwmapi
+except Exception:                      # 极老系统 / 非 Windows：全部走回退
+    dwmapi = None
+
+# 修复（同类于本文件已有的 OpenProcess 截断）：`WindowFromPoint` / `GetAncestor`
+# 返回的是 HWND，64 位系统上必须显式声明 restype=c_void_p，否则被当成 c_int
+# 截成 32 位 —— 拿到的是个错误句柄，后续 IsWindow/GetWindowRect 全部失效。
+user32.WindowFromPoint.argtypes = [POINT]
+user32.WindowFromPoint.restype = ctypes.c_void_p
+user32.GetAncestor.argtypes = [ctypes.c_void_p, ctypes.c_uint]
+user32.GetAncestor.restype = ctypes.c_void_p
+if dwmapi is not None:
+    dwmapi.DwmGetWindowAttribute.argtypes = [ctypes.c_void_p, ctypes.c_uint,
+                                             ctypes.c_void_p, ctypes.c_uint]
+    dwmapi.DwmGetWindowAttribute.restype = ctypes.c_long
+
+
+def get_frame_rect(hwnd):
+    """窗口的**可见**矩形 `(left, top, right, bottom)`；拿不到时退回 `GetWindowRect`。
+
+    契约：**绝不抛**。DWM 不可用、窗口正在销毁、句柄无效（如 0）都属正常情况 ——
+    最终退回 `(0, 0, 0, 0)`，调用方按"太小"过滤掉即可。
+    """
+    if dwmapi is not None:
+        r = RECT()
+        try:
+            hr = dwmapi.DwmGetWindowAttribute(
+                ctypes.c_void_p(hwnd), ctypes.c_uint(DWMWA_EXTENDED_FRAME_BOUNDS),
+                ctypes.byref(r), ctypes.sizeof(r))
+            if hr == 0 and (r.right - r.left) > 0 and (r.bottom - r.top) > 0:
+                return (r.left, r.top, r.right, r.bottom)
+        except Exception:
+            pass
+    try:
+        return win32gui.GetWindowRect(hwnd)
+    except Exception:
+        return (0, 0, 0, 0)
+
+
+def is_cloaked(hwnd):
+    """DWM 隐身窗口（被挂起的 UWP / 位于别的虚拟桌面）。
+
+    `IsWindowVisible()` 对它们仍然返回 True，但屏幕上**根本看不见** ——
+    不排除就会给宠物凭空造出一层"幽灵楼层"（宠物会站在空气上）。
+    """
+    if dwmapi is None:
+        return False
+    v = ctypes.c_uint(0)
+    try:
+        hr = dwmapi.DwmGetWindowAttribute(
+            ctypes.c_void_p(hwnd), ctypes.c_uint(DWMWA_CLOAKED),
+            ctypes.byref(v), ctypes.sizeof(v))
+        return hr == 0 and v.value != 0
+    except Exception:
+        return False
+
+
+def get_root_window(hwnd):
+    """取顶层窗口：`WindowFromPoint` 可能返回子窗口或被子窗口。"""
+    if not hwnd:
+        return 0
+    try:
+        root = user32.GetAncestor(ctypes.c_void_p(hwnd), ctypes.c_uint(GA_ROOT))
+        return int(root) if root else int(hwnd)
+    except Exception:
+        return int(hwnd)
+
+
+def window_from_point(x, y):
+    """Windows 原生的"这一点上最上面是谁"。
+
+    命中测试 + z 序 + 可见性 + `WS_EX_TRANSPARENT` 跳过，系统一次算完 —— 这正是
+    "参考 Windows 本地怎么判定"的答案，也是 `get_current_floor` 的权威依据。
+    返回顶层窗口 hwnd；失败返回 0。
+    """
+    try:
+        hwnd = user32.WindowFromPoint(POINT(int(x), int(y)))
+        return get_root_window(hwnd)
+    except Exception:
+        return 0
+
+
+def get_window_pid(hwnd):
+    """窗口所属进程 id；失败返回 0。"""
+    try:
+        pid = ctypes.c_ulong(0)
+        user32.GetWindowThreadProcessId(ctypes.c_void_p(hwnd), ctypes.byref(pid))
+        return pid.value
+    except Exception:
+        return 0
+
 
 class DesktopInteraction:
     def __init__(self, parent):
@@ -1011,6 +1122,17 @@ class DesktopInteraction:
         virtual_right = virtual_left + screen_width
         virtual_bottom = virtual_top + screen_height
         
+        # 本进程 id：用于排除"我们自己的窗口"。
+        # 修复：原来靠标题里有没有 "Ralsei" 来排除自身 —— 一是会误伤用户自己的
+        # 同名窗口，二是**漏掉本进程的其它窗口**（对话框、托盘气泡等都是独立顶层窗口，
+        # 标题里未必有 Ralsei），它们会被当成楼板，宠物能站在自己的对话框上。
+        # 按进程排除是 Windows 原生做法（GetWindowThreadProcessId）。
+        own_pid = 0
+        try:
+            own_pid = kernel32.GetCurrentProcessId()
+        except Exception:
+            own_pid = os.getpid()
+
         # 预编译系统类名集合，提高查询速度
         system_classes = {
             "WorkerW", "Progman", "Program Manager",
@@ -1034,14 +1156,25 @@ class DesktopInteraction:
             # 快速过滤：屏蔽Ralsei相关窗口，避免检测到自身
             if "Ralsei" in title or "ralsei" in title:
                 return True
-            
+
+            # 修复：按进程排除本程序的所有窗口（宠物窗、对话窗、托盘相关窗口）。
+            # 只靠标题会漏 —— 见 own_pid 处的注释。
+            if own_pid and get_window_pid(hwnd) == own_pid:
+                return True
+
             # 获取窗口类名（快速操作）
             class_name = win32gui.GetClassName(hwnd)
-            
+
             # 快速过滤：系统窗口类
             if class_name in system_classes:
                 return True
-            
+
+            # 快速过滤：DWM 隐身窗口（挂起的 UWP / 别的虚拟桌面上的窗口）。
+            # IsWindowVisible 对它们是 True，但屏幕上根本看不见 —— 不排除就会
+            # 造出"幽灵楼层"，宠物站在空气上。
+            if is_cloaked(hwnd):
+                return True
+
             # 快速过滤：Windows设置应用
             if "设置" in title:
                 return True
@@ -1061,8 +1194,12 @@ class DesktopInteraction:
             
             # 获取窗口矩形（修复：窗口可能在此刻被销毁，GetWindowRect 抛异常会
             # 中断整轮 EnumWindows，导致楼层表静默变短；单窗口失败直接跳过）
+            # 修复（第十三轮·建楼）：改用 DWM 的**可见**边框（EXTENDED_FRAME_BOUNDS）。
+            # GetWindowRect 含 DWM 不可见阴影，用它当楼板宠物会站到窗口外面一圈
+            # 看不见的地板上 —— 违反"楼板必须和窗口一模一样"。DWM 拿不到时函数内部
+            # 自动退回 GetWindowRect。
             try:
-                rect = win32gui.GetWindowRect(hwnd)
+                rect = get_frame_rect(hwnd)
             except Exception:
                 return True
             
@@ -1086,6 +1223,15 @@ class DesktopInteraction:
             except Exception:
                 return True
             
+            # 修复（第十三轮·建楼）：工具窗与"不抢焦点的覆盖层"都不是地板。
+            # WS_EX_TOOLWINDOW = 浮动面板/挂件（也不在任务栏出现），
+            # WS_EX_NOACTIVATE = 点击不激活的覆盖层（输入法提示、屏幕挂件等）。
+            # 让宠物站到这类东西上不符合"窗口就是一块楼板"的直觉。
+            if ex_style & win32con.WS_EX_TOOLWINDOW:
+                return True
+            if ex_style & win32con.WS_EX_NOACTIVATE:
+                return True
+
             # 完全透明窗口，跳过
             if ex_style & win32con.WS_EX_TRANSPARENT:
                 return True
@@ -1140,11 +1286,14 @@ class DesktopInteraction:
                 hwnd_temp = win32gui.GetWindow(hwnd_temp, win32con.GW_HWNDNEXT)
                 z_order += 1
             
-            # 为每个窗口设置Z序和平台高度
+            # 为每个窗口设置Z序
             for window in visible_windows:
                 window['z_order'] = hwnd_to_index.get(window['hwnd'], 0)
-                # 根据"建楼"要求：桌面Z坐标为0，窗口层级依次增加5
-                window['platform_height'] = window['z_order'] * 5
+                # 修复（第十三轮·建楼）：**不再在这里算 platform_height**。
+                # 原来这里写 `z_order * 5`，而 floor_manager._generate_floors 又写
+                # `(len - i) * 5` —— 两套口径并存且方向相反（前者 z 越小高度越小，
+                # 后者 z 越小高度越大），谁是"楼层编号"全看谁最后写入，极易改错。
+                # 现在唯一权威是 floor_manager：按"有效楼层名次"编号（最前 = 最高）。
                 # 窗口就是实心楼板，不透明原则：窗口就是实心地板，绝不允许穿透、看穿
                 window['can_see_below'] = False
         

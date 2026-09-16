@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **16 套件**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **17 套件 / 655 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -18,11 +18,15 @@
 7. 代理：沙箱 `127.0.0.1:54231`（github 常 502）；Clash `127.0.0.1:7897`（可用；偶发 SSL 抖动 → push 重试 3–5 次）。
 8. **E 盘是外接盘、会掉线**（`Get-Volume` 只剩 C/D、`Get-Disk` 仅一块 NVMe 即掉线）→ "本地中转站"是**可用性必需**。
    判在线看 `Get-Disk`/`Win32_DiskDrive`；注册表 `\DosDevices\E:` 只是**历史挂载记录**，不能当在线证据。
-9. **Agent 沙箱有 safe-delete 守卫**：应用自己的 `os.remove` 也被拒并结束进程（症状：`.write_probe` 残留 +
-   无 stdout）。**已证是确定性拦截、不是"删除预算"**：换全新轮次复跑，计数**照样是 `count=160/阈值 50`**
-   （`targetCount=1` → 160 不是"本轮删了几个文件"）。故**走 `_is_writable_dir` 写探测的默认启动在沙箱内
-   永远起不来** → 只能让用户真机复跑，别在本环境反复试；要观察真机行为就把 `RALSEI_MEMORY_DIR` 直指。
-   `dangerouslyDisableSandbox` 对它**无效**。好消息：拦截信息会打印目标路径，可当"路径解析对不对"的证据。
+9. **Agent 沙箱有 safe-delete 守卫，按目标路径累计删除计数**（阈值 50，`count=51` 即触发）。症状：**进程在
+   import/初始化阶段就被杀**，stdout 只剩一行 `[safe-delete][SAFE_DELETE_BULK_CONFIRM_REQUIRED] {...}`；
+   批量跑套件时表现为**多个套件同时 `exit=1 PASS=0` + 假 DIFF**（看着像代码全崩，实为测试自伤）。
+   **【第十三轮已推翻旧结论】**旧记录说"计数恒定 160 → 确定性拦截、与预算无关"——**错**：计数就是累计删除数，
+   恒定的原因是**一次默认启动就删十几次**（`_is_writable_dir` 每次调用都真的建/写/删 `.write_probe`）。
+   已在应用侧根治（`_is_writable_dir` 加零副作用快路径 `os.access`；快路径**不缓存**以免拔盘检不出），
+   **默认启动方式在沙箱内现已能正常跑起来**（证据 `第十三轮/_evidence/round13_default_launch_ok.md`）。
+   另注：`dangerouslyDisableSandbox` 对它无效。
+   **通则：见到"计数恒定"别急着下"确定性"结论——把触发源干掉再看还发生不发生。**
 
 ## git push（退出码 128 且全静默 = 非交互 GCM 取不到凭据）
 ```powershell
@@ -88,6 +92,34 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
 - **jieba 是软依赖（第十二轮）**：适配层 `modules/text_segmenter.py`，`install()` 走 `set_segmenter`，没装/加载失败/
   切词抛异常一律静默回落内置；后台预热；`calls`/`fallbacks` 计数；可选 `jieba_userdict.txt`。**词边界归适配器，
   停用词/长度/去重仍归 `_from_segmenter()`（唯一一份）**。实测六句 56→14 词条。G2 需归一化 `Loading model cost X seconds`。
+- **「建楼」遮挡 / 层数 / 层序（第十三轮，按 Windows 原生口径）**：**楼层 = 窗口的"可见区域"，不是整矩形**。
+  ① 几何：`_cut(rect,hole)` 最多切 4 块、**产出天然两两不重叠** → `sum(面积)` 精确；`visible_subrects(target,blockers)`
+  依次切。`MIN_FLOOR_VISIBLE_AREA=40*40`（语义是**"够不够站"**，不是"有没有缝"：1px 缝 1000px² 不成层，4px 4000px² 成层）。
+  ② 编号：`platform_height=(n-i)*5` **按名次**（前=高），`DESKTOP_IDENTITY='desktop'` 恒 0 层；**通用规则：可见面积
+  跌破阈值 = 该层"暂时不存在"，且它**不再遮挡更低窗口**。③ 查询：`floor_visible_contains` 是**唯一判据**，
+  站立/下落/跳跃/边缘全走它；`get_drop_destination`/`find_support_below` 只取"**下面第一个**能接住的"（不许跨层）；
+  `get_current_floor` **几何优先**，`WindowFromPoint` 只在几何判到桌面时做"**只向上**的兜底"（否则 G2 变随机测试）。
+  ④ 渲染：**禁用 `Qt.WindowStaysOnTopHint`**（永久置顶 = 遮挡从渲染层就失效，用户原话"根本没遮挡关系"）；
+  改用 `_apply_pet_z_order()` → `SetWindowPos(pet, insertAfter=所站楼板)`，**让系统算遮挡**。`get_insert_after_hwnd` /
+  `set_window_behind` 原是全项目零调用的死代码，现已接活（4 处：1s tick / 落地 / `show()` 之后 / 松手）。
+  **顺序铁律：`show()` 有"提到前面"的副作用 → 必须 `show()` 之后再调 z 序。**
+  ⑤ `desktop_interaction` 助手：`get_frame_rect`(DWM `DWMWA_EXTENDED_FRAME_BOUNDS`=9，**不含 DWM 隐形阴影/调整边框**)、
+  `is_cloaked`(=14 幽灵窗口：挂起 UWP/别的虚拟桌面)、`window_from_point`(=`WindowFromPoint`+`GetAncestor(GA_ROOT=2)`，
+  防返子控件)、`get_window_pid`。**枚举按进程排除自身**（不再靠标题里有没"Ralsei"——会误伤同名窗且漏掉本进程对话框）；
+  排除 `WS_EX_TOOLWINDOW`/`WS_EX_NOACTIVATE`。**64 位坑：`WindowFromPoint`/`GetAncestor` 的 `restype` 必须显式
+  `c_void_p`**，否则 HWND 高位被截断且**静默失效**（同 `OpenProcess` 老坑）。窗口表**不再自带 `platform_height`**
+  （原 `z_order*5` 是第二套编号 → 删掉，`floor_manager` 唯一真源）。`is_floor_valid` **不再要求四边逐一相等**
+  （DWM 1px 抖动会让楼板反复"消失"→ 无故坠落）。回归锁 `verify_round13_build.py` A–G 71 项。
+- **DPI 量纲（第十三轮，差点改错方向）**：`Qt` 建 `QApplication` 时把进程设成 per-monitor-v2 DPI 感知；**在那之前**
+  进程 DPI 不感知 → `GetWindowRect`/`GetSystemMetrics` 被 Windows 按系统缩放**虚拟化**（本机 150%：物理 2560×1600
+  回报 1707×1067），而 **`DwmGetWindowAttribute` 永远返回物理像素** → 混用会得出"DWM 矩形正好 1.5 倍"的假象。
+  真机宠物活在 QApplication 里 → **楼层(DWM) 与宠物(Qt) 同量纲**（实测 Qt 2560×1600 / `devicePixelRatio=1.0`，
+  三种 GetWindowRect 口径与 DWM 完全一致）。**写探针/裸进程脚本必须先建 `QApplication` 再读任何坐标**，且
+  先打印"量纲自检"（`第十三轮/_probe_dpi.py` 即此用）。
+- **G2 测试封闭性（第十三轮）**：`run_all.py` 有 `HERMETIC_IDS` —— 凡会实例化 App / 触碰存储的套件统一注入临时
+  `RALSEI_MEMORY_DIR`（`find_device_dir` 见到即 return，**连探针都不跑**），既防污染用户真实 E 盘、也防上一条的守卫。
+  **`save_baseline` 是合并模式**（原为整体重写 → `--only X --update` 会**静默抹掉其余套件基线**，而输出看着一切正常；
+  基线是 H4/H5 改造的唯一安全性判据，不能有这种一键抹除路径）。
 - **误报清单（勿据此改）**：`learn_new_skill` 有 `if new_skills:` 守卫；`_on_ai_reply` 跨线程已由 `pyqtSignal` 排主线程；
   `reset_special_states` 零调用；原子写/回收站删除已正确防御。
 
@@ -99,6 +131,12 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
 - **回归锁必须有鉴别力**：断言两侧若可能同值就等于没测（第十二轮 C2 环境把中转站钉成数据根 + 关设备，
   正确/错误路径同值 → 间接环漏网）。写断言前先问"坏了这行还会是 True 吗"。
 - 顺序断言限定在**目标函数体内**；行为级断言优先；`SimpleNamespace` 桩要 `types.MethodType` 绑实例方法。
+- **解析算法必须有"算法无关"的独立 oracle 交叉验证**（第十三轮）：`visible_subrects`（矩形相减）的"两两不重叠 +
+  面积和正确"用**采样网格**（10px 打点逐点判可见、数点数）反向核对。两者一解析一暴力，对得上才可信 ——
+  否则就是在**验自己手算错的期望值**（本轮我确实把两处重叠遮挡的期望面积重复扣了）。
+  纯几何/纯计数类断言尤其要这样：**先让"独立方法"同意，再谈结论。**
+- **桩必须跟着真实方法面走**：本轮 `handle_gravity_fall` 新增 `_apply_pet_z_order()` 调用 → `第八轮/PetStub`
+  缺方法直接 AttributeError（`round8_floor` 16→11）。**改了被测对象的对外调用面，就要同步扫一遍所有桩。**
 
 ## 历轮（细节见 `.workbuddy/memory/<日期>.md` 与对应报告）
 - 7–8：README 路径 import 修复；#10 ▼ 抖动 `024b6aa` / #11 坠落误判 `cc9471d` / #12 斜抛+空中二次抓+卡动画
@@ -108,8 +146,14 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:7897 -c https.proxy=htt
 - 10 `e9f6b00` `memory_graph.py`（98/0，G2 14/459）。11 `e8795da`/`6ef6fe2` 抽词剪刀 + 拓扑实测择优 clique（64/0，G2 15/523）。
 - 12 `289023c` + **补丁** `d2f36c6`/`55e4a4c`：jieba 软依赖 + `data_store.py` 收口 7 类产物；补丁 **E 盘真机确认通过**
   （日志/记忆/缓存全落 `E:\RalseiMemory`，中转站为空）+ 修间接初始化环（`lazy_log`）+ 迁移落选留档。
-  58/0，G2 16 套件 584 PASS/全 IDENTICAL。局限：默认启动方式被沙箱 safe-delete 守卫**确定性**拦住（改判"
-  由用户真机复跑"，见环境铁律 9）；日志跨期只留档不追加；程序目录历史开发日志未删。
+  58/0，G2 16 套件 584 PASS/全 IDENTICAL。局限：日志跨期只留档不追加；程序目录历史开发日志未删。
+  **原"默认启动被沙箱确定性拦住"的结论已在第十三轮推翻并关闭**（见环境铁律 9）。
+- 13 `代码质量复审报告_2026-09-16_第十三轮.md`：**「建楼」遮挡判定 + 窗口层数 + 渲染层序（Windows 原生口径）**。
+  三处硬伤 = ① `rect.contains(rect)` 把"被遮 90%"当整块楼板 ② `get_current_floor` 不看遮挡 ③ **`WindowStaysOnTopHint`
+  强制置顶让遮挡从渲染层就失效**（最要紧，且 `get_insert_after_hwnd`/`set_window_behind` 本是零调用死代码，已接活）。
+  顺带：`_is_writable_dir` 零副作用快路径（修 G2 自伤 + **默认启动现已能在沙箱跑起来**）、`save_baseline` 合并模式、
+  DPI 量纲陷阱定论。71/0，G2 **17 套件 655 PASS**/全 IDENTICAL。真机证据 `第十三轮/_evidence/`。
+  **下一步**：让用户在真机肉眼确认"宠物会被前台窗口盖住"（沙箱内透明非置顶窗被遮挡时鼠标事件打不到，只能离屏断言）。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
