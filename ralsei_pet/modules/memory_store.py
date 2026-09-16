@@ -29,12 +29,17 @@ import os
 import shutil
 import time
 
+# 惰性日志器（勿改回模块级 get_logger）：本模块被 data_store.vault_root() 反向 import，
+# 若在 import 期就去要 logger，会形成
+#     logger_utils → data_store → memory_store → logger_utils
+# 的间接环，把日志目录永久钉到中转站（详见 modules/lazy_log.py 与
+# code-quality-audit/第十二轮/probe_cycle2.py）。
 try:
-    from logger_utils import get_logger
-    _log = get_logger(__name__)
-except ImportError:  # 模块外独立导入时的降级
-    import logging
-    _log = logging.getLogger(__name__)
+    from lazy_log import LazyLogger
+except ImportError:            # 包内导入（modules/ 不在 sys.path 上时）
+    from .lazy_log import LazyLogger
+
+_log = LazyLogger(__name__)
 
 # 卷标命中即认为是"主人的记忆盘"。真实卷标是"肖翰哲"，这里放宽到包含匹配，
 # 免得用户后来把盘改名成"肖翰哲(E)"或"肖翰哲的U盘"就认不出来了。

@@ -1,0 +1,22 @@
+==============================================================================
+【导入顺序对照：logger 目录会不会被间接环毒化成 staging】
+==============================================================================
+
+--- 顺序 A：先 import data_store（第十二轮探针就是这个顺序） ---
+  1) import data_store                     -> ok
+  2) data_store.artifact_path('logs')      = E:\RalseiMemory\logs
+  3) logger_utils.get_log_dir()            = E:\RalseiMemory\logs
+  4) data_store.describe().active_kind     = vault
+
+--- 顺序 B：先 import logger_utils（真实 app 大概率的顺序） ---
+  3) logger_utils.get_log_dir()            = E:\RalseiMemory\logs
+  4) data_store.artifact_path('logs')      = E:\RalseiMemory\logs
+  5) data_store.describe().active_kind     = vault
+
+==============================================================================
+【判读】
+  期望（E 盘在线）：两种顺序下 get_log_dir() 都应以 RalseiMemory 结尾。
+    顺序 A get_log_dir() = E:\RalseiMemory\logs   -> vault OK
+    顺序 B get_log_dir() = E:\RalseiMemory\logs   -> vault OK
+  结论：两种顺序一致，间接环已断开。
+==============================================================================

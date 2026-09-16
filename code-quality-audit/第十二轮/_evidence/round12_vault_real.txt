@@ -1,0 +1,73 @@
+==============================================================================
+【E 盘接回后的 vault 真机确认】
+==============================================================================
+
+--- 迁移前 describe() ---
+    active_dir         = E:\RalseiMemory
+    active_kind        = vault
+    staging_dir        = C:\Users\23002\AppData\Local\RalseiPet
+    staging_has_data   = False
+    vault_dir          = E:\RalseiMemory
+    vault_online       = True
+
+--- A. vault 分支 ---
+  [PASS] vault 在线（E 盘被识别）                                     vault_dir=E:\RalseiMemory
+  [PASS] vault 路径以 RalseiMemory 结尾                            E:\RalseiMemory
+  [PASS] active_kind == vault                                 vault
+  [PASS] vault 与 staging 不是同一目录                               E:\RalseiMemory vs C:\Users\23002\AppData\Local\RalseiPet
+
+--- B. 中转站回迁 migrate_from_staging() ---
+    迁移前 staging 文件数 = 0：[]
+    迁移前 vault   文件数 = 6：['.write_probe', 'cache/jieba.cache', 'config.json', 'customization_config.json', 'logs/ralsei_pet.log', 'logs/ralsei_pet.log.old']
+
+    migrate_from_staging() 返回：
+        moved   = []
+        skipped = []
+        errors  = []
+
+    迁移后 staging 文件数 = 0：[]
+    迁移后 vault   文件数 = 5：['cache/jieba.cache', 'config.json', 'customization_config.json', 'logs/ralsei_pet.log', 'logs/ralsei_pet.log.old']
+  [PASS] 无迁移错误                                                []
+  [PASS] 中转站已清空                                               剩余=[]
+
+--- C. 七类产物路径解析 ---
+    当前数据根 = E:\RalseiMemory (vault)
+
+  [PASS] 产物在 vault 内：logs/ralsei_pet.log                      E:\RalseiMemory\logs/ralsei_pet.log
+  [PASS] 产物在 vault 内：logs/crash.log                           E:\RalseiMemory\logs/crash.log
+  [PASS] 产物在 vault 内：config.json                              E:\RalseiMemory\config.json
+  [PASS] 产物在 vault 内：customization_config.json                E:\RalseiMemory\customization_config.json
+  [PASS] 产物在 vault 内：entertainment_data.json                  E:\RalseiMemory\entertainment_data.json
+  [PASS] 产物在 vault 内：growth_data.json                         E:\RalseiMemory\growth_data.json
+  [PASS] 产物在 vault 内：cache/jieba.cache                        E:\RalseiMemory\cache/jieba.cache
+
+    子系统上报的真实路径：
+        config.json                E:\RalseiMemory\config.json   [OK]
+  [PASS] 子系统路径在 vault 内：config.json                           E:\RalseiMemory\config.json
+        customization_config.json  E:\RalseiMemory\customization_config.json   [OK]
+  [PASS] 子系统路径在 vault 内：customization_config.json             E:\RalseiMemory\customization_config.json
+        entertainment_data.json    E:\RalseiMemory\entertainment_data.json   [OK]
+  [PASS] 子系统路径在 vault 内：entertainment_data.json               E:\RalseiMemory\entertainment_data.json
+        growth_data.json           E:\RalseiMemory\growth_data.json   [OK]
+  [PASS] 子系统路径在 vault 内：growth_data.json                      E:\RalseiMemory\growth_data.json
+        logs/                      E:\RalseiMemory\logs   [OK]
+  [PASS] 子系统路径在 vault 内：logs/                                 E:\RalseiMemory\logs
+        jieba 缓存                   E:\RalseiMemory\cache\jieba.cache   [OK]
+  [PASS] 子系统路径在 vault 内：jieba 缓存                              E:\RalseiMemory\cache\jieba.cache
+
+--- D. memory_store 记忆文件 ---
+    default_memory_dir() = E:\RalseiMemory  (is_device=True, dev=E:\RalseiMemory)
+    memory_file          = E:\RalseiMemory\memory.json
+  [PASS] 记忆目录即 vault                                          E:\RalseiMemory vs E:\RalseiMemory
+  [PASS] 记忆文件落在 vault 内                                       E:\RalseiMemory\memory.json
+  [PASS] 设备发现目录 = vault                                       E:\RalseiMemory vs E:\RalseiMemory
+
+--- E. 迁移后内容完好性 ---
+  [PASS] JSON 仍合法：config.json                                 E:\RalseiMemory\config.json
+  [PASS] JSON 仍合法：customization_config.json                   E:\RalseiMemory\customization_config.json
+  [PASS] 日志文件非空                                               46472 字节
+  [PASS] jieba 缓存已随迁                                          9254935 字节
+
+==============================================================================
+汇总：26 项检查，0 FAIL
+==============================================================================

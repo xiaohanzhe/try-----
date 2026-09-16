@@ -50,7 +50,7 @@ SUITES = [
         'id': 'round5_smoke',
         'script': os.path.join(ROOT, 'code-quality-audit', '第五轮', 'smoke_import_round5.py'),
         'offscreen': False,
-        'desc': '第五轮：27 个 modules 全量导入冒烟 + 2 个源码不变量',
+        'desc': '第五轮：28 个 modules 全量导入冒烟 + 2 个源码不变量',
     },
     {
         'id': 'round5_verify',
@@ -145,7 +145,8 @@ SUITES = [
         'offscreen': False,
         'desc': '第十二轮：jieba 分词接入（走 set_segmenter 注入，软依赖+静默回落）+ 存储统一'
                 '（E 盘为最终存储、本地只作中转站：data_store 解析/收编模板/回迁五条安全约定）'
-                '+ 7 类运行时产物全部路由到数据根 + 初始化环回归锁',
+                '+ 7 类运行时产物全部路由到数据根 + 初始化环回归锁'
+                '（间接环 lazy_log + 有鉴别力的导入顺序断言）；E 盘真机确认补丁',
     },
 ]
 

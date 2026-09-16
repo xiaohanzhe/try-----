@@ -32,36 +32,18 @@ E 盘是**外接盘**：本机实测它会掉线（`Get-Volume` 一度只剩 C/D
 """
 import os
 import shutil
-import logging
 
 
-class _LazyLogger(object):
-    """**惰性**日志器 —— 刻意不在 import 期去 import `logger_utils`。
+# 惰性日志器（勿改回模块级 get_logger）：`logger_utils` 初始化时要解析日志目录，
+# 而目录正是由本模块决定的（`_log_dir()` 内部会 `import data_store`）。import 期若
+# 回头向 logger 要日志器，就成环 —— 那一刻本模块还没执行完、`artifact_path` 还不存在，
+# 日志目录会被**永久钉死**（实测踩过：`logs/` 落到程序目录 / 中转站而不是数据根）。
+try:
+    from lazy_log import LazyLogger
+except ImportError:            # 包内导入（modules/ 不在 sys.path 上时）
+    from .lazy_log import LazyLogger
 
-    为什么：`logger_utils` 初始化时要解析日志目录，而那个目录正是由本模块决定的
-    （`_log_dir()` 内部会 `import data_store`）。如果本模块在 import 期就回头向
-    logger 要日志器，就形成 `logger_utils ↔ data_store` 的**初始化环**：那一刻本模块
-    还没执行完、`artifact_path` 还不存在，于是日志目录被**永久钉死在"程序目录兜底"**
-    上（实测踩过：`logs/` 落到 `ralsei_pet/logs` 而不是数据根）。
-
-    本模块 import 期本来也不打日志，等第一次真写日志时再解析即可 —— 环自然断开。
-    """
-
-    _impl = None
-
-    def __getattr__(self, name):
-        impl = _LazyLogger._impl
-        if impl is None:
-            try:
-                from logger_utils import get_logger
-                impl = get_logger(__name__)
-            except Exception:
-                impl = logging.getLogger(__name__)
-            _LazyLogger._impl = impl
-        return getattr(impl, name)
-
-
-_log = _LazyLogger()
+_log = LazyLogger(__name__)
 
 
 # 程序目录（ralsei_pet/），历史遗留文件都在这里
@@ -254,7 +236,18 @@ def migrate_from_staging(remove_empty_dirs=True):
                 if os.path.exists(dst):
                     try:
                         if os.path.getmtime(src) <= os.path.getmtime(dst):
-                            result['skipped'].append(rel)
+                            # 目标（最终存储）里那份更新 → 保留目标，把**落选的源**
+                            # 留档成 `<名字>.old` 后再从"中转站"清掉。
+                            # 不能只是 skip：那样中转站会永远残留这份文件、
+                            # `staging_has_data()` 恒为 True（"本地只作中转站"就落空了），
+                            # 也与本函数的文档约定"落选的那份挪成 <名字>.old"不符。
+                            _arch = dst + '.old'
+                            shutil.copy2(src, _arch)
+                            if os.path.getsize(src) != os.path.getsize(_arch):
+                                result['errors'].append('%s: 落选留档长度不一致，保留源文件' % rel)
+                                continue
+                            os.remove(src)
+                            result['moved'].append(rel + ' -> .old')
                             continue
                         shutil.copy2(dst, dst + '.old')   # 目标版更旧 → 先留档
                     except Exception as e:

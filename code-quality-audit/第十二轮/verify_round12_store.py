@@ -269,6 +269,30 @@ ok('B13 两边同名时留新的（新内容胜出）', kept == 'staging-newer',
 ok('B14 落选者挪成 .old 留档（不丢数据）',
    os.path.exists(os.path.join(_vlt, 'config.json.old')), rep2)
 
+# 源比目标旧 → 目标（vault）胜出，落选的**源**也要留档成 .old 并清出"中转站"。
+# 若只是 skip：中转站会永远残留这份文件、staging_has_data() 恒为 True，
+# "本地只作中转站"就落空了（E 盘真机确认时实测到 logs/ralsei_pet.log 卡在这里）。
+os.makedirs(_stg, exist_ok=True)
+_w(os.path.join(_stg, 'only-old.txt'), 'from-staging-old')
+_w(os.path.join(_vlt, 'only-old.txt'), 'vault-newer')
+_old_t = time.time() - 7200
+os.utime(os.path.join(_stg, 'only-old.txt'), (_old_t, _old_t))
+rep2b = data_store.migrate_from_staging()
+
+
+def _read(p):
+    try:
+        with io.open(p, 'r', encoding='utf-8') as f:
+            return f.read()
+    except Exception:
+        return ''
+
+
+ok('B19 源比目标旧 → 目标胜出 + 落选源留档 .old + 中转站不再残留',
+   _read(os.path.join(_vlt, 'only-old.txt')) == 'vault-newer'
+   and _read(os.path.join(_vlt, 'only-old.txt.old')) == 'from-staging-old'
+   and not os.path.exists(os.path.join(_stg, 'only-old.txt')), rep2b)
+
 # vault 离线 → 不动数据
 os.environ.pop('RALSEI_MEMORY_DIR', None)
 os.environ['RALSEI_MEMORY_DEVICE'] = 'off'
@@ -347,25 +371,41 @@ for name in ('config.json', 'customization_config.json', 'entertainment_data.jso
     v = paths.get(name, '')
     ok('C1 产物在数据根内：%s' % name, isinstance(v, str) and v.startswith(DATA_ROOT), v)
 
-# 两种导入顺序都要正确（初始化环的回归锁）
-_child = (
-    'import sys, io, os\n'
-    'sys.path.insert(0, r"%s")\n'
-    'import data_store\n'
-    'import logger_utils\n'
-    'io.open(r"%s", "w", encoding="utf-8").write(logger_utils.get_log_dir())\n'
-) % (MODS, os.path.join(TMP, 'order_out.txt'))
-_env = dict(os.environ)
-_r = subprocess.run([sys.executable, '-c', _child], capture_output=True, env=_env)
-_order_dir = ''
-try:
-    with io.open(os.path.join(TMP, 'order_out.txt'), 'r', encoding='utf-8') as f:
-        _order_dir = f.read()
-except Exception:
-    pass
-ok('C2 先 import data_store 的导入顺序下，日志目录仍落在数据根内',
-   _r.returncode == 0 and _order_dir.startswith(os.environ['RALSEI_DATA_DIR']),
-   (_r.returncode, _order_dir, _r.stderr.decode('utf-8', 'replace')[:200]))
+# 两种导入顺序都要正确（初始化环的回归锁）。
+# **必须有鉴别力**：让"正确的 vault 路径"和"错误的中转站路径"是**两个不同目录**，
+# 否则断言恒真。第十二轮初版就踩了这个坑 —— 环境里 RALSEI_DATA_DIR 把中转站钉成了
+# 数据根、又把设备强制关掉，于是无论有没有环，日志目录都等于同一个值，弱断言永远 PASS，
+# 间接环（logger_utils → data_store → memory_store → logger_utils）因此漏网。
+# 这里用 RALSEI_MEMORY_DIR 模拟"E 盘在线"，其路径刻意与 staging 不同。
+_VAULT_SIM = os.path.join(TMP, 'vault_sim')
+_ENV_V = dict(os.environ)
+_ENV_V['RALSEI_MEMORY_DIR'] = _VAULT_SIM       # 模拟在线 vault（优先级高于设备开关）
+_ENV_V.pop('RALSEI_MEMORY_DEVICE', None)
+_EXPECT_LOGDIR = os.path.abspath(os.path.join(_VAULT_SIM, 'logs'))
+
+
+def _child_logdir(tag, first):
+    body = ['import sys, io, os', 'sys.path.insert(0, r"%s")' % MODS,
+            'import %s' % first, 'import logger_utils',
+            'io.open(r"%s", "w", encoding="utf-8").write(logger_utils.get_log_dir())'
+            % os.path.join(TMP, 'order_%s.txt' % tag)]
+    p = subprocess.run([sys.executable, '-c', '\n'.join(body)],
+                       capture_output=True, env=_ENV_V)
+    got = ''
+    try:
+        with io.open(os.path.join(TMP, 'order_%s.txt' % tag), 'r', encoding='utf-8') as f:
+            got = f.read()
+    except Exception:
+        pass
+    return p, got
+
+
+for _tag, _first in (('ds_first', 'data_store'), ('lg_first', 'logger_utils')):
+    _p, _got = _child_logdir(_tag, _first)
+    ok('C2 先 import %s：日志目录仍落在 vault 而非中转站' % _first,
+       _p.returncode == 0 and os.path.abspath(_got) == _EXPECT_LOGDIR,
+       (_p.returncode, 'got=%s' % _got, 'expect=%s' % _EXPECT_LOGDIR,
+        _p.stderr.decode('utf-8', 'replace')[:200]))
 
 _bad = []
 for fn in sorted(os.listdir(MODS)):
@@ -388,14 +428,22 @@ section('D 回归守卫（源码级）')
 _src_ds = code_only(os.path.join(MODS, 'data_store.py'))
 _src_ds_nc = code_no_comment(os.path.join(MODS, 'data_store.py'))
 _src_lg = code_only(os.path.join(MODS, 'logger_utils.py'))
+_src_ll = code_only(os.path.join(MODS, 'lazy_log.py'))
+_src_ms = code_only(os.path.join(MODS, 'memory_store.py'))
 _src_main = code_no_comment(os.path.join(ROOT, 'ralsei_pet', 'src', 'main.py'))
 
 ok('D0 助手自检：含字面量的 needle 只有 code_no_comment 才找得到',
    (not has(_src_ds, "artifact_path('logs')")) or has(_src_ds_nc, "artifact_path"),
    'needle 里带引号时 code_only 会漏')
 
-ok('D1 data_store 用惰性日志器（防 logger_utils ↔ data_store 初始化环复活）',
-   has(_src_ds, 'class _LazyLogger') and has(_src_ds, 'def __getattr__'), '')
+ok('D1 底层模块（data_store / memory_store）走共享惰性日志器 lazy_log',
+   has(_src_ds, 'from lazy_log import LazyLogger')
+   and has(_src_ms, 'from lazy_log import LazyLogger')
+   and has(_src_ll, 'class LazyLogger') and has(_src_ll, 'def __getattr__'), '')
+ok('D11 memory_store 不在 import 期 import logger_utils（间接环回归锁）',
+   not has(_src_ms, 'import logger_utils'), '改回模块级 get_logger 会重现 E 盘日志目录被钉到中转站')
+ok('D12 lazy_log 模块顶层不碰 logger_utils（惰性才成立）',
+   'logger_utils' not in _src_ll.split('def ')[0], '')
 ok('D2 logger_utils 有重入护栏 _initializing',
    has(_src_lg, '_initializing') and has(_src_lg, '_init_logging_impl'), '')
 ok('D3 _log_dir 解析失败时**不缓存**兜底值（否则会永久钉错目录）',
