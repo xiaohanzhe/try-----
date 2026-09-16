@@ -1,20 +1,19 @@
-﻿=== A 鍚勫彛寰勪笅鐨?灞忓箷灏哄"锛堣皝鏄墿鐞嗐€佽皝鏄€昏緫锛?==
-ctypes user32.GetSystemMetrics(0,1) 灞忓箷     : 1707 x 1067
-ctypes GetSystemMetrics(76..79) 铏氭嫙妗岄潰     : 1707 x 1067
+=== A 各口径下的"屏幕尺寸"（谁是物理、谁是逻辑）===
+ctypes user32.GetSystemMetrics(0,1) 屏幕     : 1707 x 1067
+ctypes GetSystemMetrics(76..79) 虚拟桌面     : 1707 x 1067
 win32api.GetSystemMetrics(0,1)               : 1707 x 1067
-win32api DESKTOPHORZRES(118) / 鐗╃悊          : 0 x 0
+win32api DESKTOPHORZRES(118) / 物理          : 0 x 0
 Qt primaryScreen().geometry()               : 2560 x 1600
 Qt virtualGeometry()                         : 2560 x 1600
 Qt availableGeometry()                       : 2560 x 1528
 Qt devicePixelRatio()                        : 1.0
 QApplication.desktop().availableGeometry()   : 2560 x 1528
 
-=== B 鍚屼竴涓湡瀹炵獥鍙ｏ紝涓夌鍙栫煩褰㈠彛寰勫姣?===
-鍓嶅彴绐楀彛 title = 'WorkBuddy'
+=== B 同一个真实窗口，三种取矩形口径对比 ===
+前台窗口 title = 'WorkBuddy'
 1) win32gui.GetWindowRect      : (3, 7, 1206, 910)
 2) ctypes user32.GetWindowRect : (3, 7, 1206, 910)
-3) DWM EXTENDED_FRAME (鏈」鐩殑) : (3, 7, 1206, 910)
+3) DWM EXTENDED_FRAME (本项目的) : (3, 7, 1206, 910)
 
-鍒ゆ柇娉曪細瀹犵墿锛圦t锛夎嫢涓?1)/2) 鍚岄噺绾?鈫?DWM(3) 鏄?寮傜被"锛屾湰杞敼鍔ㄦ柟鍚戝弽浜嗭紱
-        鑻?Qt 涓?3) 鍚岄噺绾?鈫?DWM 鎵嶆槸瀵圭殑锛岃€佷唬鐮佺敤 GetWindowRect 涓€鐩存槸閿欎綅銆?
-塅呉〽਍
+判断法：宠物（Qt）若与 1)/2) 同量纲 → DWM(3) 是"异类"，本轮改动方向反了；
+        若 Qt 与 3) 同量纲 → DWM 才是对的，老代码用 GetWindowRect 一直是错位。

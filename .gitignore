@@ -46,3 +46,6 @@ code-quality-audit/*/_recon/
 # 自检脚本的临时沙箱（临时记忆文件等，绝不该入库）
 code-quality-audit/*/_evidence/tmp*/
 code-quality-audit/*/_evidence/_tmp*/
+
+# 编码校验工具自己的输出报告（每次运行的产物；且含乱码样本预览，入库会污染后续扫描）
+code-quality-audit/tools/_out_*

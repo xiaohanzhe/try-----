@@ -27,6 +27,19 @@
    **默认启动方式在沙箱内现已能正常跑起来**（证据 `第十三轮/_evidence/round13_default_launch_ok.md`）。
    另注：`dangerouslyDisableSandbox` 对它无效。
    **通则：见到"计数恒定"别急着下"确定性"结论——把触发源干掉再看还发生不发生。**
+10. **证据/报告一律让 Python 自己写 UTF-8，绝不用 PowerShell 捕获原生程序 stdout**：`& py x.py *> o.txt`、
+   `... | Out-File -Encoding utf8` 会把输出的**字节按控制台代码页（GBK）解码再按 UTF-8 重写** → 中文二次编码
+   成读不懂的方块字（**文件内容真坏了，不是显示问题**）。第十三轮我就这么把两份真机证据写坏并推送了。
+   · 正确：脚本内 `open(path,'w',encoding='utf-8')` 自写（探针的 `_out_*.txt` 即此法）；搬运用 `Copy-Item`
+   （逐字节，不经编码转换）。
+   · **`Write` 工具覆盖一个原本带 BOM 的文件时会保留 BOM**（内容更新、BOM 还在）→ 去 BOM 必须用 Python 重写。
+   · 校验工具 `code-quality-audit/tools/check_evidence_encoding.py`（`--out` 自写报告、`--strict` 让告警也算失败；
+     **确定性损坏** = 非法 UTF-8 / U+FFFD；**告警** = BOM / 疑似乱码绊线）。
+   · **别信教科书式往返判据**（`text.encode('gbk').decode('utf-8')` 成功即乱码）：PowerShell 那次解码是**有损**的，
+     往返直接抛异常 → 判据永不触发 → 报出 `mojibake=0` 的**假清白**。**"能力自评失准"比"能力不足"更危险**：
+     一个报 0 的检查器会让人以为已经验过了。现用"命中 ≥2 个特征字"的绊线 + 明确标注"会误报、需人工确认"。
+   · 存量：`code-quality-audit/` 263 个文本文件里 1 个确定性损坏（`第六轮/_evidence/_diff_numstat.txt` 是 UTF-16）、
+     70 个告警（全带 BOM，其中 29 个真乱码），成因都是早期几轮的 PowerShell 捕获；**未擅自清理，待用户点头**。
 
 ## git push（退出码 128 且全静默 = 非交互 GCM 取不到凭据）
 ```powershell
