@@ -1,0 +1,30 @@
+
+=== A G2：坠落判据换成"层高比较"（关窗掉到**下方窗口**也要掉） ===
+[PASS] A1 关窗后**下方还有窗口**→ 仍然 start_falling(reason="floor_removed")（复检 G2 的原例：旧判据会静默跳过，宠物"瞬移"到浏览器那层）
+[PASS] A2 关窗后落到桌面 → start_falling(reason="floor_removed")（改前也对的路径，防回退）
+[PASS] A3 自己走出楼板边缘 → start_falling() 不带起因（不误用生气动画）
+[PASS] A4 被更高的新窗口盖住（5→10）→ 不摔、直接站新板（要求 ⑪ 未被本次改动破坏）
+[PASS] A5 源码级：判据不再依赖 new_floor 的类型（`new_floor.get('type')` 已消失）
+[PASS] A5b 源码级：改为层高比较（`new_h < old_h` + `platform_height`）
+
+=== B G1："生气动画至少 5s / 3s"真的成立（行为级时间推进） ===
+[PASS] B1 用户行为落地 → trigger_splat 切到生气素材 splat_mad（复检 G1c：改前恒切普通 splat，把坠落途中的 fall_mad 顶掉）
+[PASS] B1b 非用户行为（自己掉/被甩）落地 → 普通 splat（改前行为不变）
+[PASS] B2 时长由起因纯派生（关窗 5.0 / 挪楼板 3.0 / 无起因 1.0），不再另存实例属性
+[PASS] B3 关窗摔落：生气动画（splat 阶段）真的停满 ≥5s 才转晕乎
+[PASS] B3b 挪楼板摔倒：停满 ≥3s
+[PASS] B3c 无起因（自己掉下去）：仍为 1.0s —— 与改前逐帧一致，没有把普通摔倒一起拉长
+[PASS] B4 生气版全程没被普通 splat 顶掉（anims 里不出现 "splat"）
+[PASS] B5 源码级：start_falling 不再写 max_fall_duration（复检 G1a 的死参数已清）
+[PASS] B5b 源码级：start_falling 只写起因 `_fall_reason`，时长/素材都不另存（无第二份真源）
+
+=== C 单一入口 / 未误伤 ===
+[PASS] C1 素材判定只有一个入口：模块级 `_splat_animation_name(pet)`，两个调用点都调它
+[PASS] C2 甩飞路径显式复位起因（否则上一次关窗的 _fall_reason 会污染这次甩飞）
+[PASS] C3 生气素材确实在动画库里（splat_mad → alias_of → fall_mad，素材存在）
+
+============================================================
+第十七轮：PASS=18 FAIL=0
+============================================================
+
+EXIT=0

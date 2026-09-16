@@ -71,7 +71,7 @@ from PyQt5.QtWidgets import QApplication                    # noqa: E402
 _app = QApplication.instance() or QApplication([])
 
 import floor_manager as FM                                   # noqa: E402
-from main import RalseiPet                                   # noqa: E402
+from main import RalseiPet, _fall_splat_hold                 # noqa: E402
 
 PASS, FAIL = [], []
 
@@ -449,9 +449,15 @@ def fall_anim(reason):
 
 
 _p_user = fall_anim('floor_removed')
-ok('G1 用户行为（关窗/抽走楼板）→ 用**生气**的坠落动画，且时长 ≥5s',
-   _p_user.anim_calls[-1] == 'fall_mad' and _p_user.max_fall_duration >= 5.0,
-   'anim=%s dur=%s' % (_p_user.anim_calls[-1:], _p_user.max_fall_duration))
+# 第十六轮修订：原来这里断言 `max_fall_duration >= 5.0` —— 而那条写入是**死参数**
+# （start_falling 把 is_falling 置 False → 唯一读 max_fall_duration 的 handle_fall
+# 不跑；即便跑，trigger_splat 也会把 3.0 覆盖回去）。旧断言当时是 PASS，却完全没锁住
+# "生气动画至少 5s"这个要求 → 典型的"断言了写变量、没断言行为"。
+# 第十七轮定稿：时长由起因 `_fall_reason` **纯派生**（`_fall_splat_hold`），
+# 落地结算真的读它；"真的停满 5s"的行为级证明在第十七轮套件 B3（时间推进）。
+ok('G1 用户行为（关窗/抽走楼板）→ 用**生气**的坠落动画，且派生时长 ≥5s',
+   _p_user.anim_calls[-1] == 'fall_mad' and _fall_splat_hold(_p_user) >= 5.0,
+   'anim=%s hold=%s' % (_p_user.anim_calls[-1:], _fall_splat_hold(_p_user)))
 ok('G1b 起因被记下来（_fall_reason），后续落地表现可据此分流',
    _p_user._fall_reason == 'floor_removed', _p_user._fall_reason)
 

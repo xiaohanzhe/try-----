@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **19 套件 / 728 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **20 套件 / 746 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -179,25 +179,36 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
 - **误报清单（勿据此改）**：`learn_new_skill` 有 `if new_skills:` 守卫；`_on_ai_reply` 跨线程已由 `pyqtSignal` 排主线程；
   `reset_special_states` 零调用；原子写/回收站删除已正确防御。
 
+- **「建楼」坠落路径（第十七轮，**勿回退**）**：触发坠落只看**层高比较**（`new_h < old_h`，取自
+  `platform_height`）—— ① 自己走出边缘→桌面 ② 关窗→桌面 ③ **关窗→下方还有窗口**（要求第30行的原例）
+  ④ 新窗盖旧窗（`new>old`）**不摔**（要求 ⑪）。起因分流仍在 `is_floor_valid(old_floor)`：
+  **窗口还在 ⇒ 自己走出去**（常规动画）；**窗口没了 ⇒ 用户抽走楼板**（生气）。
+  **生气动画的时长与素材由起因 `_fall_reason` 纯派生**（模块级 `_fall_splat_hold(pet)` /
+  `_splat_animation_name(pet)`，文件头）：关窗 ≥5s / 挪楼板 ≥3s / 无起因 1.0s；素材 `splat_mad`
+  （此前全项目零调用）。落地结算（`trigger_splat` / `handle_fall`）**只读不写**。
+  坑：① 旧的 `max_fall_duration = 5.0/3.0` 是**死参数**（只有 `handle_fall` 读，而 `start_falling` 把
+  `is_falling` 置 False → 走 `handle_gravity_fall`）→ 已删，别再写回去；② `handle_fall` 的 splat 阶段
+  时长别再硬编码 `1.0`；③ 甩飞路径**必须显式 `self._fall_reason = None`**（否则上一次关窗的起因残留 →
+  甩飞也播生气版并停 5s）；④ 判定函数放**模块级**、**不要**做成 `RalseiPet` 方法 —— 多个历史套件用
+  `SimpleNamespace` 轻量桩驱动 `RalseiPet.handle_fall(stub, ...)`，加实例方法会当场 AttributeError
+  崩掉三个套件。回归锁 `第十七轮/verify_round17_build_fall.py`（18 项，已进 G2）。
 ## 「建楼」要求：已核实实现面 + 6 个缺口（第十六轮行为级复检，**勿凭直觉"重做"**）
 - 已实现（断言 A1–B4）：每窗一层且 `floor['rect']==window['rect']`；`platform_height=(n−i)×5`（最前最高、桌面 0）；
   可见面积 < `MIN_FLOOR_VISIBLE_AREA`(1600px²) 即不成楼层**且不再遮挡更低的窗口**；`floor_visible_contains` 只认可见区域；
   上跳落点过 `nearest_visible_point`（推远 >200px 放弃）；`adjacent_lower_floor` 显式逐层；`_apply_pet_z_order` 插位；
   `WindowStaysOnTopHint` 已移除。
-- **缺口（未修，已排 4 批次，见项目根 `建楼要求复检与缺口计划_2026-09-17.md`）**：
-  1. **⑬ 生气动画 ≥5s 不成立**：`max_fall_duration` **全项目只被 `handle_fall` 读**，但 `start_falling` 置
-     `is_falling=False` → 走 `handle_gravity_fall` → `handle_fall` 不跑 → `5.0` 是**死参数**；落地 `trigger_splat()`
-     用普通 `splat` 顶掉生气素材。`splat_mad` 已配好、也进了两处"特殊动画"白名单，但**全项目零调用**。
-  2. **⑧/⑩ 下方还有窗口时不坠落**（**就是要求原文第 30 行的例子**）：坠落那道门是 `new_floor.get('type') != 'window'`
-     → 只有"下面变成桌面"才掉；此路上 `is_floor_valid` 起因分流**根本没被问到**。落点几何是好的
-     （`get_drop_destination` 会给对）→ **缺调用点，不是算法**。修法：判据改成**层高比较**（`new<old` → 摔），
-     天然保留 ⑪「新窗盖旧窗→不摔」。
+- **缺口（4 批次；A 已修完）**：
+  1. ~~**⑬ 生气动画 ≥5s 不成立**~~ **→ 第十七轮已修**，见上一条。
+  2. ~~**⑧/⑩ 下方还有窗口时不坠落**（要求原文第 30 行的例子）~~ **→ 第十七轮已修**（层高判据）。
   3. **⑤ 走路没有层高闸门**：站桌面走进窗口可见区域被**直接提升**到该层，不跳不摔；`generate_new_move_target`
-     里完全不出现 `window`/`floor`。修法待用户拍板（收紧 / 补过渡动作 / 维持）。
+     里完全不出现 `window`/`floor`。**待用户拍板**（收紧 / 补过渡动作 / 维持）。
   4. **⑨ 偏差（保留）**：位移 >400px 不跟随改失足（为最大化/还原）；要求字面是"必须跟着"。
   5. **`climb_to_top_window()` 仍走裸窗口**（挑最前面那个窗口，按定义不会被盖，暂不出问题）。
   6. **①③ 偏差（保留）**：窗口"只被遮住一部分但可见 <1600px²"直接不成楼层，要求字面只说"完全盖住"才不存在。
 - 另：⑩ 的"立刻" = 1 秒节拍（`floor_check_interval`）→ 最长 1s 延迟，登记为已知。
+- **第十六轮那份只读复检套件（`第十六轮/verify_build_req_audit.py`，40 项）是"修复前"的历史快照**：
+  F 组 `[GAP]` 断言故意断言缺陷，A 批次修完后已翻转为 FAIL，**这是设计如此、不是回归**；
+  它**不在 G2 清单里**（文件头已加注）。"修复后必须成立"的行为由 `第十七轮/verify_round17_build_fall.py` 锁住。
 
 ## 验证脚本教训（第八轮）
 - **别用 `"字面量" in 源码` 做源码级断言**（注释/文档串会误命中）。用 `code_only()`（tokenize 剥 COMMENT/STRING）；
@@ -239,6 +250,14 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   本轮定了处置口径：**要么接线、要么删**，不留第三种状态。
   查死代码最省事的两个来源：`第五轮/_evidence/_deadrefs_filtered_view.txt`（零引用方法清单，
   `is_floor_valid`/`update_floor` 都在里面）+ H4/H5 排期方案 §G1。
+- **桩必须跟着真实方法面走（第 4 次，第十七轮）**：`handle_fall` 里调了一个**新的实例方法** →
+  `round6_verify`（39 项掉到 20）与 `round8_fling` **当场 `AttributeError` 崩在半路**（exit=1 但 FAIL=0，
+  症状是"套件自己炸了"而不是断言失败）。**修法不是给每个桩补方法，而是把这类"被判据调用的纯函数"放到模块级** ——
+  模块级函数由 `main` 的全局命名空间解析，桩不需要知道任何事（`_FALL_VELOCITY_ATTRS` 当初就是这么落的）。
+- **断言要断行为，不要断赋值（第十七轮）**：`round14` 的 G1 断言 `_p_user.max_fall_duration >= 5.0`
+  静静绿了一年多，而"生气动画至少 5s"**从未成立**（那条赋值是死参数）。识别信号：
+  **断言里的量在产品里没有任何行为依赖它**。替代写法：把状态机真的推进（第十七轮 B3 推 100 帧 ×0.05s，
+  量出进入晕乎的时刻 = 5.0 / 3.0 / 1.0s）。**能推进状态机量出来的，就别只检查一行赋值。**
 
 ## 历轮（细节见 `.workbuddy/memory/<日期>.md` 与对应报告）
 - 7–8：README 路径 import 修复；#10 ▼ 抖动 `024b6aa` / #11 坠落误判 `cc9471d` / #12 斜抛+空中二次抓+卡动画
@@ -284,6 +303,20 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   /全 IDENTICAL（没动产品代码 → 与基线逐字节一致）。**更正了第十三轮"13 条没有漏项"的结论**。
   计划 4 批次：A＝G2+G1 一起修"下落路径"（含把 `splat_mad` 接活）；B＝G3 层高闸门（待用户拍板）；C＝G5 收编；
   D＝三条有意偏差只登记。**下一步：等用户对批次 B 拍板 + 授权开做批次 A。**
+
+- 17 `代码质量复审报告_2026-09-17_第十七轮.md`：**「建楼」缺口批次 A —— 把"下落路径"修对（G2 判据 + G1 生气时长）**。
+  用户："好的，那接下来继续按照原计划进行吧"；随后澄清 **"原计划"指的是 H4/H5 上帝类拆分**，
+  但允许先把手上这批建楼缺口做完 → 所以本轮 = 批次 A，做完回 H4/H5。
+  两条缺口都修完：**G2** 触发坠落改**层高比较**（关窗后下方还有窗口也要掉，即要求第30行的原例）；
+  **G1** 生气动画改由起因 `_fall_reason` **纯派生**（模块级 `_fall_splat_hold(pet)` / `_splat_animation_name(pet)`），
+  落地不再被普通 `splat` 顶掉，`splat_mad` 接活。自检 18/0；G2 **20 套件 746 PASS / 0 FAIL / 全 IDENTICAL**
+  （唯一有意变更：round14 G1 断言改名"派生时长" —— 旧断言 `max_fall_duration >= 5.0` 断的是**死参数**，
+  一直是 PASS 却什么也没锁住）。
+  **教训**：①「判据写对了 ≠ 判据被问到」（`is_floor_valid` 被上游门条件挡住 → 调用计数 0）；
+  ② 别把时长再存一份实例属性（双真源）→ 改纯派生；③ **判定函数必须放模块级**（第一次写成实例方法，
+  `round6_verify` / `round8_fling` 的轻量桩当场 AttributeError 崩在半路）；④ **断言要断行为不要断赋值**
+  （round14 那条绿了一年多而要求从未成立；新 B3 直接把阶段机推进 100 帧量出停留 5.0s/3.0s/1.0s）。
+  另外给第十六轮只读复检套件加注"历史快照：修复后 GAP 断言必然翻转，这是设计如此不是回归"。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性

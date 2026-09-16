@@ -46,6 +46,66 @@ _FALL_VELOCITY_ATTRS = (
 )
 _FALL_STATE_ATTRS = ('_fall_phase', '_fall_phase_start') + _FALL_VELOCITY_ATTRS
 
+# ---------------------------------------------------------------------------
+# 「建楼」要求 第36/37行：摔倒的**生气动画必须真的持续**一段时间
+#   · 第36行：用户行为导致摔到桌面 → 用生气的那组，**至少 5s**
+#   · 第37行：移动他所在的楼板 → 重心不稳摔倒，**至少 3s**
+#
+# 修复（第十六轮复检发现，第十七轮改）：这两个时长原来只写成
+# `self.max_fall_duration = 5.0 / 3.0`，而 `max_fall_duration` 在**全项目只有
+# `handle_fall` 会读**；`start_falling()` 偏偏又把 `is_falling` 置 False
+# （坠落期间走的是 `handle_gravity_fall`）→ 那句 5.0 是**死参数**，生气动画只在
+# 下降途中播了一下，落地就被 `trigger_splat()` 换回普通 `splat`。
+# 加上 `handle_fall` 的 splat 阶段时长是**硬编码 1.0s** —— 三处叠加，"至少 5s"
+# 从未成立。
+#
+# 现在把"生气素材 + 最短停留"做成**由起因纯派生**的两个模块级函数：起因在哪里
+# 知道（`_fall_reason`），时长就在哪里算（`_fall_splat_hold`），落地结算
+# （`trigger_splat` / `handle_fall`）只负责读。默认值 1.0 与改前行为逐字节一致
+# （`_fall_reason` 为 None 时即旧行为）。
+#
+# 为什么放在**模块级**而不是类方法：这两个判定会被多个历史回归套件用轻量桩
+# （SimpleNamespace / 手写 stub）驱动 `RalseiPet.handle_fall(stub, ...)` 跑，
+# 类方法会让每个桩都得补一个转发方法（第十七轮实测：round6_verify / round8_fling
+# 当场 AttributeError 崩在半路）。模块级函数由 main 的全局命名空间解析，
+# 桩不需要知道任何事 —— 与 `_fall_splat_hold` 同一条理由。
+FALL_MAD_REASONS = ('floor_removed', 'window_move')
+FALL_SPLAT_HOLD = {
+    'floor_removed': 5.0,     # 要求第36行：用户关窗抽走楼板 → 生气 ≥5s
+    'window_move': 3.0,       # 要求第37行：挪动楼板把人掀倒 → 生气 ≥3s
+}
+FALL_SPLAT_HOLD_DEFAULT = 1.0
+# 生气素材（`spr_cutscene_24e_ralsei_splat_mad.png`）。它早就配在 animations.json /
+# sprite_loader 里、也进了"特殊动画"白名单，但**全项目零调用** —— 这次接活。
+FALL_MAD_ANIMATION = 'splat_mad'
+
+
+def _fall_splat_hold(pet):
+    """这次摔倒的"生气动画最短停留秒数"（无起因 → 1.0，与改前一致）。
+
+    **唯一真源是 `pet._fall_reason`**（在知道起因的地方写一次），此处纯派生 ——
+    不再另存一个 `_splat_hold` 实例属性，避免"双真源"（本项目的头号坑）。
+    """
+    return FALL_SPLAT_HOLD.get(getattr(pet, '_fall_reason', None),
+                               FALL_SPLAT_HOLD_DEFAULT)
+
+
+def _splat_animation_name(pet):
+    """落地进入 splat 阶段该播哪个素材（**唯一入口**，两个调用点共用）。
+
+    建楼要求 第36/37行：用户行为造成的摔落（关窗抽走楼板 / 挪楼板）要用
+    "生气的那组" —— 即 `splat_mad`（`alias_of=fall_mad`，
+    `spr_cutscene_24e_ralsei_splat_mad.png`）。它早就配在 animations.json /
+    sprite_loader 里、也进了"特殊动画"白名单，但第十六轮复检前**全项目零调用**：
+    `trigger_splat` 恒切普通 `splat`，把坠落途中刚播上的 `fall_mad` 在落地那一瞬
+    顶掉 → "生气动画至少 5s"根本不可能成立（复检 G1c）。
+    自己走到边缘掉下去 / 被甩飞 → 常规 `splat`（改前行为）。
+    """
+    if getattr(pet, '_fall_reason', None) in FALL_MAD_REASONS \
+            and FALL_MAD_ANIMATION in pet.sprite_loader.sprites:
+        return FALL_MAD_ANIMATION
+    return "splat"
+
 # "特殊动画"的定义（第八轮）。用户要求：
 #   "除了走路，跑步，待机这几个动画，其余的都只交给 AI 判断是否播放，别和抽风似的突然一下"；
 #   "如果要是播放，那就播完，不要打断，也不要出现边播放边移动这种情况（只针对特殊动画）"。
@@ -2349,6 +2409,11 @@ class RalseiPet(QMainWindow):
         # 只有"用户把脚下的楼板抽走/关掉窗口"才算用户行为（reason='floor_removed'）；
         # 自己走到边缘掉下去、跳跃被判穿透，都算自己的问题，走常规动画。
         self._fall_reason = reason
+        # 第十六轮复检：这里原来写的是 `max_fall_duration` —— 那是**死参数**：全项目
+        # 只有 handle_fall 读它，而本函数把 `is_falling` 置 False（坠落期间走
+        # handle_gravity_fall）→ 永远读不到，于是"关窗掉下来生气至少 5s"从未生效。
+        # 第十七轮定稿：时长不再另存实例属性，由 `_fall_reason` **纯派生**
+        # （`_fall_splat_hold`），避免双真源。
         # 水平惯性：掉落时保留当前水平速度，形成2D抛物线坠落
         self.fall_velocity_x = self.current_speed_x * 0.5
 
@@ -2359,17 +2424,12 @@ class RalseiPet(QMainWindow):
                 self.change_animation("fall_mad", force=True)
             else:
                 self.change_animation("fall", force=True)
-            self.max_fall_duration = 5.0
         elif fall_velocity > 100 or is_thrown:
             # 高速摔落或被甩飞时，使用splat动画
             self.change_animation("fall", force=True)
-            # 设置较长的动画持续时间，至少3秒
-            self.max_fall_duration = 3.0
         else:
             # 普通摔落时，使用常规掉落动画
             self.change_animation("fall", force=True)
-            # 常规摔落动画持续时间
-            self.max_fall_duration = 2.0
         
         _log.debug(f"开始重力掉落，起始位置: {self.fall_start_pos}, 摔落速度: {fall_velocity}, 是否甩飞: {is_thrown}")
         
@@ -2807,25 +2867,42 @@ class RalseiPet(QMainWindow):
         if (not followed
                 and old_floor is not None
                 and self._floor_identity_key(new_floor) != self._floor_identity_key(old_floor)):
-            if old_floor.get('type') == 'window' and new_floor.get('type') != 'window':
-                # 脚下的那块窗口楼板没了。**两种成因必须分开**（第十五轮）：
-                #   · 窗口还在（`is_floor_valid` 为真）→ 宠物**自己走到了楼板边缘外**
-                #     —— 建楼要求："走到楼板边缘，脚下没东西了，就直直掉下去，
-                #     落到下面第一块能接住的楼板"。这是它自己的问题，用常规坠落动画。
-                #   · 窗口已经不在了 → 用户把楼板抽走（关窗）→ 生气的那组动画，至少 5s。
-                #     建楼要求："如果是我的行为导致他摔到桌面上的就用生气的那个。"
-                # 修复：原来一律按"用户行为"处理（reason='floor_removed'），于是
-                # **宠物自己走出楼板也会播生气动画** —— 与要求正好相反。
-                # `is_floor_valid` 是全项目零调用的 helper（第五轮就点名的死代码），
-                # 这里正是它该被用的地方：它回答的就是"楼板引用的窗口还在不在"。
+            # ===== 2a) "要不要掉"只看**层高比较**（第十六轮修复） =====
+            # 原判据是 `old_floor 是窗口 and new_floor 不是窗口` —— 也就是说**只有
+            # "下面变成桌面"才会掉**。可要求原文第 30 行给的例子恰恰是另一种情形：
+            #   "如果我把窗口B（记事本）关掉，3楼消失，宠物如果原来在上面，
+            #     就会掉到2楼（浏览器）上。"
+            # 记事本关掉后下方还有浏览器 → `get_current_floor` 立刻把 current_floor
+            # 换成浏览器（仍是窗口）→ 整段被跳过：不坠落、不播动画、不生气，
+            # 宠物直接"瞬移"到了浏览器那一层（复检第十六轮 G2）。
+            # 改成层高比较后，四种情形一次覆盖：
+            #   · 走出窗口边缘，下面是桌面（5→0）  → 摔（常规动画）
+            #   · 关掉窗口，下面是桌面（5→0）      → 摔（生气，起因=用户）
+            #   · 关掉窗口，下面还有窗口（10→5）   → 摔（生气，起因=用户） ← 本次修复
+            #   · 被更高的新窗口盖住（5→10）        → 不摔，直接站新板（要求 ⑪）
+            old_h = old_floor.get('platform_height', 0) or 0
+            new_h = new_floor.get('platform_height', 0) or 0
+            if new_h < old_h:
+                # 往下跌：脚下那一点已不在旧楼板的可见区域里，而新位置命中的是
+                # **更低**的楼层 → 建楼要求第14行"直直掉下去，落到下面第一块能
+                # 接住的楼板"。具体落到哪由 handle_gravity_fall 里的
+                # `get_drop_destination` 按可见区域结算（已被复检 C3/C3c 锁住）。
+                #
+                # 起因分流（第十五轮接活 `is_floor_valid`，第十六轮才真正走到它）：
+                #   · 窗口还在 → 宠物**自己走到了楼板边缘外** → 常规坠落动画
+                #   · 窗口没了 → 用户把楼板抽走（关窗）    → 生气动画 ≥5s
                 if self.floor_manager.is_floor_valid(old_floor):
                     _log.debug("宠物走出了楼板边缘（自身行为）→ 常规坠落动画")
                     self.start_falling()
                 else:
                     _log.debug("脚下的窗口楼板已消失（用户行为）→ 生气动画 ≥5s")
                     self.start_falling(reason='floor_removed')
-            # 窗口 → 另一块窗口（被更高的新窗口盖住 / 走到另一块楼板）：按
-            # "当前楼层原则"，宠物现在直接站在新楼板上，不算楼板被搬走，不摔。
+            elif new_h > old_h:
+                # 更高：按"当前楼层原则"宠物现在直接站在新楼板上，不算楼板被搬走，
+                # 不摔 —— 这是建楼要求 ⑪"新窗口盖住旧窗口"要的行为，保持不变。
+                # （注：宠物**自己走过去**跨到更高层也走这条分支，那是复检缺口 G3，
+                #  属"批次 B / 层高闸门"，本次不动。）
+                _log.debug("楼层升高（%s → %s）→ 直接站新板，不摔（要求 ⑪）", old_h, new_h)
 
         # 更新当前楼层信息
         self.current_floor = new_floor
@@ -2862,7 +2939,13 @@ class RalseiPet(QMainWindow):
         # 修复：恢复时间从5秒降到2.5秒。
         # 人摔倒后晕一会就爬起来了，5秒恢复期+3-5秒摔倒=8-10秒趴在地上太久了。
         self.recovery_max_duration = 2.5
-        
+
+        # 第十六轮：把起因记下来（`start_falling` 那边同样处理）。
+        # `_fall_reason` 原来只在 `start_falling` 里写，于是 window_move 这条路
+        # 到了落地结算时读不到起因 → 生气素材被普通 splat 顶掉（要求第37行的 ≥3s 落空）。
+        # 时长/素材都由它派生（`_fall_splat_hold` / `_splat_animation_name`）。
+        self._fall_reason = reason
+
         # 触发情绪反应：摔倒
         self.emotion_system.react_to_event('fell_down', {'reason': reason})
         
@@ -2946,15 +3029,21 @@ class RalseiPet(QMainWindow):
         self.fall_start_time = time.time()
         self._fall_phase = "splat"  # 直接从摔扁阶段开始（已经落地了）
         self._fall_phase_start = 0.0
-        self.max_fall_duration = 3.0  # splat(1s) + dazed(1s) + 余量
+        # `max_fall_duration` 现在只服务"晕乎阶段何时结束"这个**旧**口径
+        # （handle_fall: `max(1.0, max_fall_duration - 2.0)` → 1.0s）；
+        # 摔扁阶段的最短停留由 `_fall_reason` 纯派生（`_fall_splat_hold`），
+        # 两者各有各的口径、不再混用。
+        self.max_fall_duration = 3.0
         self.recovery_max_duration = 1.5  # 爬起恢复1.5秒
         # 播放 splat 音效
         try:
             self.sound_manager.play_splat()
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
-        # 切换到 splat 动画
-        self.change_animation("splat", force=True)
+        # 切换到 splat 动画。第十六轮修复：原来恒切普通 `splat`，把坠落途中刚播上的
+        # 生气素材（fall_mad）**在落地那一瞬换掉** —— 于是"生气动画至少 5s"根本不可能
+        # 成立。现在按起因选（判定收在模块级 `_splat_animation_name`，与 handle_fall 共用）。
+        self.change_animation(_splat_animation_name(self), force=True)
         # 显示惊讶对话
         self.dialogue_ui.add_dialogue("ralsei", "啊！摔扁了...", "surprised")
         self.dialogue_ui.show_dialogue()
@@ -3172,8 +3261,12 @@ class RalseiPet(QMainWindow):
                 self._fall_phase = "splat"
                 self._fall_phase_start = self.fall_duration
                 self.is_splat = True
-                if "splat" in self.sprite_loader.sprites:
-                    self.change_animation("splat", force=True)
+                # 第十六轮：这里原来恒切普通 `splat` —— 于是 `start_fall("window_move")`
+                # 在坠落途中播的 `fall_mad` 会在落地一瞬被顶掉（要求第37行 ≥3s 落空）。
+                # 改用与 trigger_splat 共用的模块级 `_splat_animation_name(pet)`。
+                _splat_anim = _splat_animation_name(self)
+                if _splat_anim in self.sprite_loader.sprites:
+                    self.change_animation(_splat_anim, force=True)
                 try:
                     self.sound_manager.play_splat()
                 except Exception:
@@ -3183,8 +3276,11 @@ class RalseiPet(QMainWindow):
                 for attr in _FALL_VELOCITY_ATTRS:
                     if hasattr(self, attr):
                         delattr(self, attr)
-            elif phase == "splat" and _phase_t >= 1.0:
-                # 摔扁1秒后 → 晕乎揉头
+            elif phase == "splat" and _phase_t >= _fall_splat_hold(self):
+                # 摔扁阶段结束 → 晕乎揉头。
+                # 第十六轮：**时长改由 `_fall_splat_hold(pet)` 决定**（关窗 ≥5s / 挪楼板
+                # ≥3s / 其余 1.0s，与改前逐字节一致）。这里原来硬编码 1.0s —— 那正是
+                # "生气动画至少 5s"永远不成立的原因之一（复检 G1）。
                 self._fall_phase = "dazed"
                 self._fall_phase_start = self.fall_duration
                 self.is_splat = False
@@ -3197,6 +3293,10 @@ class RalseiPet(QMainWindow):
                 self.dialogue_ui.show_dialogue()
             elif phase == "dazed" and _phase_t >= max(1.0, self.max_fall_duration - 2.0):
                 # 晕乎1.5秒后 → 慢慢爬起来，进入恢复期
+                # 注（第十六轮）：`max_fall_duration` 从这里起**只等于"晕乎时长 + 2.0"**
+                # 这个旧口径（trigger_splat 固定给 3.0 → 晕乎 1.0s），它不再是
+                # "摔扁最短停留"的载体 —— 那个已交给 `_fall_splat_hold(pet)`。
+                # 两者分开是为了让"≥5s"只影响**生气动画本身**，不把晕乎/爬起一起拉长。
                 self._fall_phase = "recovering"
                 self.is_recovering = True
                 self.recovery_duration = 0.0
@@ -5231,6 +5331,12 @@ class RalseiPet(QMainWindow):
                     self._fall_landed = False
                     self.max_fall_duration = 3.5  # 总摔倒时长（飞行+摔扁+晕乎）
                     self.recovery_max_duration = 2.0
+                    # 第十七轮：显式复位**坠落起因**。甩飞是另一套交互（抛物线 + 二次抓），
+                    # 不属于建楼要求第36/37行的"我的行为导致他摔到楼板/桌面"。
+                    # 不复位的话，上一次"关窗摔落"留下的 `_fall_reason='floor_removed'`
+                    # 会让这次甩飞也栽进生气版 splat 并原地待满 5s（动画错了、时长也错了）。
+                    # 时长/素材都由 `_fall_reason` 派生，所以只清这一个就够。
+                    self._fall_reason = None
 
                     # 飞行阶段：jump_ball 动画
                     throw_animation = "jump_ball"

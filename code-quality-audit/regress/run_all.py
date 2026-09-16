@@ -223,6 +223,14 @@ SUITES = [
                 'is_on_floor_edge（无消费者）；接线 is_floor_valid 区分'
                 '"宠物自己走出楼板"（常规动画）与"用户关窗抽走楼板"（生气动画）',
     },
+    {
+        'id': 'round17_build_fall',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十七轮', 'verify_round17_build_fall.py'),
+        'offscreen': True,
+        'desc': '第十七轮：「建楼」缺口计划 · 批次 A —— G2 下落判据换成层高比较'
+                '（关窗后**下方还有窗口**也要掉，复检的原例）+ G1 生气动画真的播且真的停满'
+                '（关窗 ≥5s / 挪楼板 ≥3s：死参数 max_fall_duration 已清、落地不再被普通 splat 顶掉）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
