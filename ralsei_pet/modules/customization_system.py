@@ -11,7 +11,12 @@ except ImportError:  # 模块外独立导入时的降级
 class CustomizationSystem:
     def __init__(self, parent):
         self.parent = parent
-        self.config_path = os.path.join(os.path.dirname(__file__), '..', 'customization_config.json')
+        # 数据文件走"最终存储"（E 盘优先，见 data_store）；拿不到就回落程序目录
+        try:
+            import data_store
+            self.config_path = data_store.app_file('customization_config.json')
+        except Exception:
+            self.config_path = os.path.join(os.path.dirname(__file__), '..', 'customization_config.json')
         self.customization_data = {
             'appearance': {
                 'outfit': 'default',

@@ -30,23 +30,48 @@ from datetime import datetime
 
 # ---------- 全局配置 ----------
 
-# 日志目录：放在程序数据目录下
+# 日志目录：优先"最终存储"（E 盘，见 data_store），拿不到才回落程序目录。
+# 第十二轮用户原则："所有它产生的文件在本地最多算中转站，只有 E 盘是最终存储"。
 _APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_LOG_DIR = os.path.join(_APP_DIR, "logs")
+_FALLBACK_LOG_DIR = os.path.join(_APP_DIR, "logs")
+_LOG_DIR = None          # 惰性解析（import 期不碰磁盘）
 _LOG_FILENAME = "ralsei_pet.log"
 _DEFAULT_LEVEL = logging.INFO
 _BACKUP_DAYS = 7  # 保留几天的日志
 
 # 全局初始化标记
 _initialized = False
+_initializing = False    # 重入保护，见 _init_logging 的文档字符串
 _root_logger = None
+
+
+def _log_dir():
+    """解析日志目录：data_store（E 盘优先）→ 程序目录兜底。**绝不抛。**
+
+    **兜底值不缓存**：解析失败有一种可能是"`data_store` 模块还没初始化完"
+    （初始化环，见 `data_store._LazyLogger` 的说明）。那种情况下缓存兜底会把目录
+    永久钉错，所以只在**成功解析**时才记住结果，失败就下次再试。
+    """
+    global _LOG_DIR
+    if _LOG_DIR:
+        return _LOG_DIR
+    try:
+        import data_store
+        d = data_store.artifact_path('logs')
+        if d:
+            _LOG_DIR = d
+            return _LOG_DIR
+    except Exception:
+        pass
+    return _FALLBACK_LOG_DIR
 
 
 def _ensure_log_dir():
     """确保日志目录存在。"""
     try:
-        if not os.path.exists(_LOG_DIR):
-            os.makedirs(_LOG_DIR, exist_ok=True)
+        target = _log_dir()
+        if not os.path.exists(target):
+            os.makedirs(target, exist_ok=True)
         return True
     except Exception:
         # 连日志目录都建不了（权限问题？），就只打控制台
@@ -54,11 +79,24 @@ def _ensure_log_dir():
 
 
 def _init_logging():
-    """初始化全局日志系统。只执行一次。"""
-    global _initialized, _root_logger
-    if _initialized:
-        return
+    """初始化全局日志系统。只执行一次。
 
+    `_initializing` 是**重入保护**：`_ensure_log_dir()` 会 `import data_store`，
+    而 `data_store` 的模块体里会调用 `get_logger()` —— 又绕回这里。没有护栏会无限递归。
+    """
+    global _initialized, _initializing
+    if _initialized or _initializing:
+        return
+    _initializing = True
+    try:
+        _init_logging_impl()
+    finally:
+        _initializing = False
+        _initialized = True
+
+
+def _init_logging_impl():
+    global _root_logger
     _root_logger = logging.getLogger("ralsei_pet")
     _root_logger.setLevel(_DEFAULT_LEVEL)
     _root_logger.propagate = False  # 不往上传播，避免重复输出
@@ -80,7 +118,7 @@ def _init_logging():
 
     # --- 文件输出（按天切割，保留 7 天）---
     if _ensure_log_dir():
-        log_file = os.path.join(_LOG_DIR, _LOG_FILENAME)
+        log_file = os.path.join(_log_dir(), _LOG_FILENAME)
         try:
             file_handler = TimedRotatingFileHandler(
                 log_file,
@@ -99,8 +137,6 @@ def _init_logging():
                 print(f"[日志] 文件日志初始化失败，仅使用控制台: {e}")
             except Exception:
                 pass
-
-    _initialized = True
 
 
 def get_logger(name: str) -> logging.Logger:
@@ -136,7 +172,7 @@ def set_level(level: int, name: str = None):
 
 def get_log_dir() -> str:
     """返回日志目录路径。"""
-    return _LOG_DIR
+    return _log_dir()
 
 
 # 便捷函数：直接用模块名获取 logger（最常用的场景）

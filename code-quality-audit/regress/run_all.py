@@ -50,7 +50,7 @@ SUITES = [
         'id': 'round5_smoke',
         'script': os.path.join(ROOT, 'code-quality-audit', '第五轮', 'smoke_import_round5.py'),
         'offscreen': False,
-        'desc': '第五轮：25 个 modules 全量导入冒烟 + 2 个源码不变量',
+        'desc': '第五轮：27 个 modules 全量导入冒烟 + 2 个源码不变量',
     },
     {
         'id': 'round5_verify',
@@ -139,12 +139,23 @@ SUITES = [
                 '分词器注入）+ 建边拓扑可配（实测后默认仍是 clique，star/chain 因多跳闸门不过而弃用）'
                 '+ 多跳闸门 + 残渣账本',
     },
+    {
+        'id': 'round12_store',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十二轮', 'verify_round12_store.py'),
+        'offscreen': False,
+        'desc': '第十二轮：jieba 分词接入（走 set_segmenter 注入，软依赖+静默回落）+ 存储统一'
+                '（E 盘为最终存储、本地只作中转站：data_store 解析/收编模板/回迁五条安全约定）'
+                '+ 7 类运行时产物全部路由到数据根 + 初始化环回归锁',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
 _ADDR = re.compile(r'0x[0-9a-fA-F]{6,}')
 _DUR = re.compile(r'(?:耗时[:：]?\s*)?\d+(?:\.\d+)?\s*(?:秒|s\b|ms\b)')
+# jieba 初始化时用 print 直接打的一行耗时（"Loading model cost 0.622 seconds."），
+# 是 jieba 自己的 stdout、不受 setLogLevel 管，且每次都不一样 → 必须归一化。
+_JIEBA_COST = re.compile(r'Loading model cost [0-9.]+ seconds\.?')
 _TMPDIR = re.compile(r'[A-Za-z]:[\\/][^"\'\s]*?(?:AppData[\\/]Local[\\/]Temp|/tmp|\btmp\b)[^"\'\s]*')
 _PID = re.compile(r'\bpid[=: ]?\d+\b', re.I)
 _MEM = re.compile(r'内存[^\d]{0,4}\d+(?:\.\d+)?\s*(?:MB|KB|GB|字节)', re.I)
@@ -168,6 +179,7 @@ def normalize(text):
     for variant in {ROOT, ROOT.replace('\\', '/'), ROOT.replace('/', '\\')}:
         t = t.replace(variant, '<ROOT>')
     t = _TMPDIR.sub('<TMP>', t)
+    t = _JIEBA_COST.sub('Loading model cost <COST> seconds.', t)
     t = _TS.sub('<TS>', t)
     t = _ADDR.sub('<ADDR>', t)
     t = _PID.sub('<PID>', t)

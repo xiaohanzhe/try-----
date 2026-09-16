@@ -14,12 +14,28 @@ except ImportError:  # 允许被包外单独导入
 _log = get_logger(__name__)
 
 
+def _resolve_config_path(config_file):
+    """配置文件的**正式位置**：最终存储（E 盘优先）→ 程序目录。
+
+    历史遗留：旧版本把 `config.json` 直接写在程序目录，而那份在仓库里是**被跟踪的
+    默认模板**。所以这里只**复制一份**到正式位置（`data_store.ensure_artifact`），
+    绝不搬走或删除程序目录那份，免得 git 显示"默认配置被删了"。
+    """
+    if os.path.isabs(config_file):
+        return config_file
+    try:
+        import data_store
+        return data_store.app_file(config_file)
+    except Exception:
+        return os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", config_file)
+
+
 class ConfigManager:
     """配置文件管理类，用于加载和保存配置"""
     
     def __init__(self, config_file="config.json"):
         # 获取配置文件的完整路径
-        self.config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", config_file)
+        self.config_file = _resolve_config_path(config_file)
         self.config_version = "1.0"
         self.last_save_time = time.time()
         self.observers = []

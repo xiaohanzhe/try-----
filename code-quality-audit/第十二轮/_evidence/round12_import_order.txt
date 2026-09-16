@@ -1,0 +1,7 @@
+导入顺序 → 日志目录解析（两者应一致，且都在数据根内）
+
+  logger_first     log_dir=C:\Users\23002\AppData\Local\RalseiPet\logs
+                   data_root=C:\Users\23002\AppData\Local\RalseiPet
+  data_store_first log_dir=C:\Users\23002\AppData\Local\RalseiPet\logs
+                   data_root=C:\Users\23002\AppData\Local\RalseiPet
+

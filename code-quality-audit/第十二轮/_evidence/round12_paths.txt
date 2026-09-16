@@ -1,0 +1,27 @@
+==========================================================================
+【运行时产物路径解析】
+==========================================================================
+  data_store.describe() =
+      active_dir         = C:\Users\23002\AppData\Local\RalseiPet
+      active_kind        = staging
+      staging_dir        = C:\Users\23002\AppData\Local\RalseiPet
+      staging_has_data   = True
+      vault_dir          = None
+      vault_online       = False
+
+  当前数据根 = C:\Users\23002\AppData\Local\RalseiPet  (staging)
+
+  产物                         解析出的路径
+  ------------------------------------------------------------------------
+  config.json                C:\Users\23002\AppData\Local\RalseiPet\config.json  [在数据根内 OK]
+  customization_config.json  C:\Users\23002\AppData\Local\RalseiPet\customization_config.json  [在数据根内 OK]
+  entertainment_data.json    C:\Users\23002\AppData\Local\RalseiPet\entertainment_data.json  [在数据根内 OK]
+  growth_data.json           C:\Users\23002\AppData\Local\RalseiPet\growth_data.json  [在数据根内 OK]
+  logs/                      C:\Users\23002\AppData\Local\RalseiPet\logs  [在数据根内 OK]
+  jieba 缓存                   C:\Users\23002\AppData\Local\RalseiPet\cache\jieba.cache  [在数据根内 OK]
+  jieba 用户词表                 C:\Users\23002\AppData\Local\RalseiPet\jieba_userdict.txt  [在数据根内 OK]
+
+==========================================================================
+【模块全量导入冒烟】
+==========================================================================
+  导入失败模块数 = 0

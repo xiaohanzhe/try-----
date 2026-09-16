@@ -390,8 +390,12 @@ class SocialGrowthSystem:
         self.last_interaction_day = time.strftime("%Y-%m-%d")
         self.consecutive_days = 0
         
-        # 数据文件路径
-        self.growth_data_path = os.path.join(os.path.dirname(__file__), '..', 'growth_data.json')
+        # 数据文件路径：走"最终存储"（E 盘优先，见 data_store），拿不到就回落程序目录
+        try:
+            import data_store
+            self.growth_data_path = data_store.app_file('growth_data.json')
+        except Exception:
+            self.growth_data_path = os.path.join(os.path.dirname(__file__), '..', 'growth_data.json')
         
         # 加载成长数据
         self.load_growth_data()

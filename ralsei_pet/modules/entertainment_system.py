@@ -209,8 +209,12 @@ class EntertainmentSystem:
             'games_played_ids': []
         }
         
-        # 数据文件路径
-        self.entertainment_data_path = os.path.join(os.path.dirname(__file__), '..', 'entertainment_data.json')
+        # 数据文件路径：走"最终存储"（E 盘优先，见 data_store），拿不到就回落程序目录
+        try:
+            import data_store
+            self.entertainment_data_path = data_store.app_file('entertainment_data.json')
+        except Exception:
+            self.entertainment_data_path = os.path.join(os.path.dirname(__file__), '..', 'entertainment_data.json')
         
         # 加载娱乐数据
         self.load_entertainment_data()

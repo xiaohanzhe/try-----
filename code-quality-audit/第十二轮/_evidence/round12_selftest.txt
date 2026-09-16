@@ -1,0 +1,80 @@
+
+=== A jieba 分词接入 ===
+2026-09-16 21:23:25 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+[PASS] A1 install() 返回状态字典且永不抛（无 jieba 也安全）
+[PASS] A2 本机 jieba 已接入（status.enabled=True）
+[PASS] A3 注入后 conversation_focus 的 _SEGMENTER 非 None
+[PASS] A4 disable() 后回到内置词法（_SEGMENTER 为 None）
+2026-09-16 21:23:25 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+[PASS] A5 接入 jieba 后残渣碎片清零（内置词法有、jieba 没有）
+[PASS] A6 「塞尔达」不再被切成 塞尔/尔达
+[PASS] A7 长句词条数显著下降（13 → 5）
+[PASS] A8 六句词条总数下降（26 → 14）
+[PASS] A9 「咖啡」不再拖出 咖啡感/啡感
+[PASS] A10 分词器输出里没有纯标点（「……」这类不再穿过长度门槛）
+[PASS] A11 词典缓存在数据根内（不再堆 %TEMP%）
+[PASS] A12 用户词表路径在数据根内
+[PASS] A13 有调用计数与回落计数（防御性 except 必须配计数）
+[PASS] A14 describe() 给出可读中文状态
+[PASS] A15 分词器抛异常时静默回落内置词法（不崩、不空）
+[PASS] A16 分词器返回空 → 同样回落内置（不返回空）
+
+=== B data_store：最终存储 / 本地中转站 ===
+[PASS] B1 RALSEI_DATA_DIR 覆盖生效
+[PASS] B2 无设备时 active_kind=staging
+[PASS] B3 默认中转站在 LOCALAPPDATA 下（不落程序目录）
+[PASS] B4 artifact_path 拼接正确且建父目录
+[PASS] B5 ensure_dir=False 只算路径、不建目录
+2026-09-16 21:23:26 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\config.json -> C:\Users\23002\AppData\Local\Temp\ralsei_g12_7s2b9tmh\staging\config.json
+[PASS] B6 app_file 把程序目录的模板收编一份到数据根
+[PASS] B7 已存在时不覆盖（绝不拿模板盖掉用户配置）
+[PASS] B8 程序目录里的模板仍在（只复制、不搬走，git 不出现"删默认配置"）
+[PASS] B9 vault 在线 → 中转站文件全部搬入（含子目录）
+[PASS] B10 搬完源文件已删（copy→校验→删源）
+[PASS] B11 目标内容正确
+[PASS] B12 空目录被清掉（但绝不递归硬删）
+[PASS] B13 两边同名时留新的（新内容胜出）
+[PASS] B14 落选者挪成 .old 留档（不丢数据）
+[PASS] B15 vault 离线时不搬运、数据原样保留
+[PASS] B16 源文件被占用 → 记入 skipped 且不产生重复副本
+[PASS] B17 中转站与最终存储是同一个目录时拒绝搬运
+[PASS] B18 describe() 暴露两种存储与在线状态
+
+=== C 接线：运行时产物是否都进数据根 ===
+2026-09-16 21:23:26 [INFO] ralsei_pet.config_manager — 配置版本升级: 0.0 -> 1.0
+2026-09-16 21:23:26 [INFO] ralsei_pet.config_manager — 已创建配置备份: C:\Users\23002\AppData\Local\Temp\ralsei_g12_7s2b9tmh\staging\config.json.backup.1789565006
+2026-09-16 21:23:26 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\customization_config.json -> C:\Users\23002\AppData\Local\Temp\ralsei_g12_7s2b9tmh\staging\customization_config.json
+[PASS] C1 产物在数据根内：config.json
+[PASS] C1 产物在数据根内：customization_config.json
+[PASS] C1 产物在数据根内：entertainment_data.json
+[PASS] C1 产物在数据根内：growth_data.json
+[PASS] C1 产物在数据根内：logs/
+[PASS] C2 先 import data_store 的导入顺序下，日志目录仍落在数据根内
+[PASS] C3 全量模块导入零失败
+[PASS] C4 仓库里的 config.json 模板仍在（迁移没把它搬走）
+[PASS] C5 memory_store 的桌面兜底语义未被改动（仍是 <桌面>/memory）
+
+=== D 回归守卫（源码级） ===
+[PASS] D0 助手自检：含字面量的 needle 只有 code_no_comment 才找得到
+[PASS] D1 data_store 用惰性日志器（防 logger_utils ↔ data_store 初始化环复活）
+[PASS] D2 logger_utils 有重入护栏 _initializing
+[PASS] D3 _log_dir 解析失败时**不缓存**兜底值（否则会永久钉错目录）
+[PASS] D4 main.py 启动时接入分词器
+[PASS] D5 main.py 启动时做数据回迁
+[PASS] D6 main.py 崩溃日志走 data_store
+[PASS] D7 迁移铁律：先 copy → 校验长度 → 才删源
+[PASS] D8 迁移铁律：被占用的源文件先探测再动目标（不产生重复副本）
+[PASS] D9 data_store 在 import 期不碰磁盘（data_root 不在模块顶层调用）
+[PASS] D10 四个数据模块都改用 data_store.app_file
+
+==============================================================
+第十二轮自检：54 PASS / 0 FAIL
+==============================================================
+
+[stderr]
+Building prefix dict from the default dictionary ...
+Dumping model to file cache C:\Users\23002\AppData\Local\Temp\ralsei_g12_7s2b9tmh\staging\cache\jieba.cache
+Loading model cost 0.552 seconds.
+Prefix dict has been built successfully.
+
+[exit] 0

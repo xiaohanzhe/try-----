@@ -8917,7 +8917,12 @@ def install_crash_guard():
         except Exception:
             pass
         try:
-            crash_path = os.path.join(project_root, "logs", "crash.log")
+            # 崩溃日志同样进"最终存储"（E 盘优先，见 data_store）；拿不到才回落程序目录
+            try:
+                import data_store
+                crash_path = data_store.artifact_path(os.path.join("logs", "crash.log"))
+            except Exception:
+                crash_path = os.path.join(project_root, "logs", "crash.log")
             os.makedirs(os.path.dirname(crash_path), exist_ok=True)
             with open(crash_path, "a", encoding="utf-8") as f:
                 f.write("\n===== %s =====\n%s" % (time.strftime("%Y-%m-%d %H:%M:%S"), text))
@@ -9033,6 +9038,26 @@ if __name__ == "__main__":
 
     # 全局异常兜底：必须在 QApplication 之前安装，否则槽函数里的异常会直接 abort 进程
     install_crash_guard()
+
+    # 分词引擎：接入 jieba（可选增强；没装/加载失败都会静默回落内置词法，不影响启动）
+    try:
+        import text_segmenter
+        text_segmenter.install()
+        _log.info("%s", text_segmenter.describe())
+    except Exception as e:
+        _log.debug("分词引擎接入失败（继续用内置词法）: %s", e)
+
+    # 数据位置：E 盘在线就把本地中转站里的东西搬进最终存储（离线时它自己会跳过）
+    try:
+        import data_store
+        _log.debug("数据存储: %s", data_store.describe())
+        _rep = data_store.migrate_from_staging()
+        if _rep.get('moved'):
+            _log.info("已把本地中转站数据搬进最终存储: %s", _rep['moved'])
+        if _rep.get('errors'):
+            _log.debug("数据回迁未完成的部分: %s", _rep['errors'])
+    except Exception as e:
+        _log.debug("数据回迁检查失败（已忽略）: %s", e)
 
     try:
         app = QApplication(sys.argv)
