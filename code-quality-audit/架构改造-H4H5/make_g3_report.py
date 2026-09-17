@@ -13,11 +13,14 @@ G3 的交付物里有两张长表（真耦合点 111 条 / 必备接口 138 条�
 import json
 import os
 import sys
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 JSON_PATH = os.path.join(HERE, '_evidence', 'attribute_ownership.json')
-OUT_PATH = os.path.join(ROOT, 'H4-G3_属性归属表_2026-09-16.md')
+# 日期由**系统时间**取，不写死 —— 写死过一次（把 09-17 的工作命名成 09-16，与前后轮次不一致）
+DATE = time.strftime('%Y-%m-%d')
+OUT_PATH = os.path.join(ROOT, 'H4-G3_属性归属表_%s.md' % DATE)
 
 W1_SET = ('W1-1', 'W1-2', 'W1-3', 'W1-4', 'W1-5', 'W1-6')
 WAVE_OF = {}
@@ -59,7 +62,7 @@ def hot_sorted():
 # ------------------------------------------------------------------ 1 结论
 w('# H4 · 闸门 G3 交付物：属性归属表')
 w()
-w('> 生成日期：2026-09-16 ｜ 生成器：`code-quality-audit/架构改造-H4H5/make_g3_report.py`')
+w('> 生成日期：%s ｜ 生成器：`code-quality-audit/架构改造-H4H5/make_g3_report.py`' % DATE)
 w('> 数字全部由脚本从 `_evidence/attribute_ownership.json` 渲染，**不要手改**；重跑扫描器后重跑本脚本即可。')
 w('> 依据：`架构改造排期方案_H4-H5_2026-09-13.md` §3 G3（原话"**没有这张表不许进入 Wave 1**"）。')
 w()
