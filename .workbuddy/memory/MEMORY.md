@@ -224,6 +224,14 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
      没碰 H4/H5 那条"用户可见画布"红线。回归锁 `第十八轮/verify_round18_climb.py`（53 项，已进 G2）。
   素材镜像的生成/校验脚本 `第十八轮/make_climb_left_assets.py`（幂等；**逐像素断言镜像关系** ——
   只比尺寸/文件名都拦不住"原样复制"）。
+  ⚠️ **⑤ 的"朝右 = `climb_1`"已被 2026-09-17 复核推翻（用户指认"不是我给的那两组"）**：
+  逐帧 md5 + 镜像比对（`架构改造-H4H5/_evidence/climb_hash_mirror.txt`）证明 ——
+  ① `climb_0_degrees` 的 6 帧 == 基础 `climb` 的 4 帧各自重复一次（**同一套图**，不是另一朝向）；
+  ② `climb_90_degrees` 的 6 帧 == `climb_1`~`climb_6` 各自第 0 帧 → **`climb_1`~`climb_6` 是同一循环的
+ 六个角度变体**；③ **除我生成的 `climb_left` 外没有任何两组互为镜像** → 六组是六个独立角度，
+  **不存在"左右对"**。外观：`0_degrees` 是背面/无脸那套（~27x44、帽大），`climb_1`~`climb_6` 是中帧
+  展开、能看见绿眼镜那套（19–23 宽）。**改 `animations.json` 前必须先让用户指认是哪六组里的哪两组。**
+  查这类"到底是哪一组"**别靠肉眼猜朝向**：`climb_0_degrees` 这种"同图改名重复"只有哈希能抓出来。
 ## 「建楼」要求：已核实实现面 + 6 个缺口（第十六轮行为级复检，**勿凭直觉"重做"**）
 - 已实现（断言 A1–B4）：每窗一层且 `floor['rect']==window['rect']`；`platform_height=(n−i)×5`（最前最高、桌面 0）；
   可见面积 < `MIN_FLOOR_VISIBLE_AREA`(1600px²) 即不成楼层**且不再遮挡更低的窗口**；`floor_visible_contains` 只认可见区域；
@@ -424,3 +432,48 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   自检要在"被删条目仍可访问的快照"上做断言（X5 初版查已删字典 → `KeyError`）。
 - **日期铁律**：注入的 `current_time` **可能过期**（本轮差 1 天，09-16 vs 实际 09-17）→
   日期一律取系统时间（`Get-Date` / `git log --format=%ci` / `time.strftime`），**不许写死**。
+
+### 素材分组补漏（H5 §4.1，**只读报告器，不许自动接管配置**）
+- 工具 `架构改造-H4H5/scan_asset_groups.py`（自检 X1–X7）；证据 `_evidence/asset_groups.{txt,json}`；
+  图库 `素材分组总览_2026-09-17.html`（**已 gitignore**，重生成一条命令）。提交 `1689e1f`。
+- **基线（2026-09-17，勿重测）**：`deltarune_ralsei/*.png` **1111**（0.85 MB）；命名分组 **380**；家族 **19**；
+  `animations.json` **112 组 / 379 帧**；**已登记 82 / 部分引用 20 / 未引用 278**；配置引用但磁盘缺失 **0**。
+  另两个素材目录：`ralsei_face`（50 PNG + 1 txt，要求 §11 的 50 个 face 状态**在这里**，不在 `deltarune_ralsei`）、
+  `textbox`（3 PNG + 1 SVG + 1 README）。**扫描器只覆盖 `deltarune_ralsei`。**
+- **命名归组口径**：`spr_` 前缀去掉 → 去 `.png` → **末段纯数字 ⇒ seq，其余是 base**；否则整段是 base、seq=None。
+  故 `spr_ralsei_hurt.png` 与 `_hurt_0.png` 同组；`spr_ralsei_climb_1_0..4` ⇒ base `ralsei_climb_1`。
+  **家族 = `base.split('_',1)[0]`**。**别名要展开**：`alias_of` 指向的是**组名**不是文件名，
+  不展开会把复用组误判成"未引用"。
+- **大而可复算的产物不入库**：1111 张共 0.85 MB ⇒ 图库 base64 全内联成单文件 1.44 MB，
+  **不需要 http server**（绕开 file:// 被拦）；像素图要 `image-rendering: pixelated` + 棋盘底衬
+  （PNG 有透明通道）；每卡勾选框 + 底部 textarea 自动汇总组名，用户圈完直接粘回来。
+- **流程是三段**：① 分组+展示 ② 用户圈掉不需要的 ③ 对账要求文件查缺补漏。
+  本轮只做 ①，**零回写 `animations.json`**（H5 §4.1 定性为"补漏报告器"）。
+  已知线索：要求点名的 `teacup_ralsei_land_*` 磁盘上**没有**（磁盘只有 `teacup_ralsei`/`_tea`/`_tea2`）。
+- **对照图工具** `架构改造-H4H5/make_asset_contact_sheet.py`（按命名分组放大铺开、带行号/帧号/登记状态）。
+  **PIL 能直接 `ImageFont.truetype('C:\Windows\Fonts\msyh.ttc')` 拿到字体** —— 与"沙箱里 Qt
+  `QFontDatabase` 没字体、`drawText` 静默不画"是两件事，别因为 Qt 那条就不在图上写字。
+
+## 对话 AI 化现状（2026-09-17 调查，**待办 #15 未做，别写成做了**）
+- 用户感受"还是很死板"，事实是**"AI 优先 + 规则旁路 + 内置兜底"混合体**，不是全 AI 接管。
+- **三个死板来源**：① `dialogue_ui.py:1055` 先试 `handle_chat_commands`（约 50 条关键词→固定回复
+  `1319-1497`），再 `handle_game_input:1062` / `handle_file_commands:1499-1593`，**命中即 return，
+  AI 收不到**；自由闲聊是这条链走到底的最后一支（`1085` 起）。② AI 失败/关闭回落 `dialogue_system`
+  （最大的写死池：问候 8 + 13 类模板各 8 + 约 44 话题×8 + 上下文模板，`dialogue_system.py:29-581`
+  与 `663-1273`）；另有 `emotion_system.get_dialogue_for_emotion:1180`、`weather_system:40-65`、
+  `desktop_interaction.get_special_file_reaction:2464`、`autonomous_agent:104-137`。
+  ③ 事件台词 100% 规则：`main.py` 约 131 处 `add_dialogue`；点击/抚摸 `5250-5846`、
+  摔落惊醒 `3271-3358`/`3717`、桌面反应 `3930`、陪看视频 `4626`（**已标 `TODO(#15)` @ `4637`**）。
+- **已按"全权 AI"做对的一条，勿回退**：`start_autonomous_speech`（`main.py:5059`）内容只由 AI 生成，
+  AI 不可用**保持沉默**（`5072-5074`）。
+- **开关** `api.enabled`（`config.json:4`；代码默认 False `config_manager.py:57`，本机已 true，
+  Ollama `ralsei`）。`HTTPLocalAI.chat` 是**同步 requests**（`api_client.py:174/279`），
+  **严禁主线程调用**（`177-180`）→ 一律线程（`main.py:7200` / `ai_driver.py:358`）。
+- **UI 是"假打字机"**：`stream: False`（`main.py:6607`）先拿完整答复再逐字（35ms/22ms `782-784`）、
+  固定 20s 隐藏 `163`、固定 540×180 `188`、上限 380 `274`。
+- **上下文不差（别说成无状态单轮）**：`main.py:7133` `_build_ai_context() + text`（时段/天气/心情/
+  精力饥饿/偏好 `7202-7263`）+ 6 轮历史 `7136` + 话题锚 `7165` + `recall_text` `7176`。
+  **但**：历史只 6 轮（缓冲 8 `dialogue_ui.py:347`）、**桌面观察不进 chat prompt**（只进
+  `ai_driver.note_event` `main.py:4640`）、**`memory_graph.py` 在 `main.py` 零引用**（多跳联想没接进对话）。
+- **未定项（勿猜）**：除三条显式 `return` 外，其余 `add_dialogue` 与 AI 回调**无统一串行化**，
+  运行时顺序静态判不出。
