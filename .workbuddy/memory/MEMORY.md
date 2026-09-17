@@ -224,14 +224,20 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
      没碰 H4/H5 那条"用户可见画布"红线。回归锁 `第十八轮/verify_round18_climb.py`（53 项，已进 G2）。
   素材镜像的生成/校验脚本 `第十八轮/make_climb_left_assets.py`（幂等；**逐像素断言镜像关系** ——
   只比尺寸/文件名都拦不住"原样复制"）。
-  ⚠️ **⑤ 的"朝右 = `climb_1`"已被 2026-09-17 复核推翻（用户指认"不是我给的那两组"）**：
-  逐帧 md5 + 镜像比对（`架构改造-H4H5/_evidence/climb_hash_mirror.txt`）证明 ——
-  ① `climb_0_degrees` 的 6 帧 == 基础 `climb` 的 4 帧各自重复一次（**同一套图**，不是另一朝向）；
-  ② `climb_90_degrees` 的 6 帧 == `climb_1`~`climb_6` 各自第 0 帧 → **`climb_1`~`climb_6` 是同一循环的
- 六个角度变体**；③ **除我生成的 `climb_left` 外没有任何两组互为镜像** → 六组是六个独立角度，
-  **不存在"左右对"**。外观：`0_degrees` 是背面/无脸那套（~27x44、帽大），`climb_1`~`climb_6` 是中帧
-  展开、能看见绿眼镜那套（19–23 宽）。**改 `animations.json` 前必须先让用户指认是哪六组里的哪两组。**
-  查这类"到底是哪一组"**别靠肉眼猜朝向**：`climb_0_degrees` 这种"同图改名重复"只有哈希能抓出来。
+  ⚠️ **【2026-09-17 二次复核：推翻"推翻"】—— `climb_right = climb_1_*` / `climb_front = climb_0_degrees_*`
+  是用户当年的原话口径，配置本来就是对的，不许再改。**
+  权威证据 = 用户 `AskUserQuestion` 答复原文（会话 jsonl）："`spr_ralsei_climb_1_0~4.png` 这是朝向右边的素材；
+  `spr_ralsei_climb_0_degrees_0~5.png` 这是朝向前面的素材；然后相反方向的你就给他翻转一下就好，
+  没有朝后面的因为那样也用不上"。逐条对得上三组注册；运行时渲染（`第十八轮/_evidence/climb_frames_preview.png`：
+  侧视朝右 / 镜像朝左 / 正面朝前，`missing_or_null=无`、`frame_container_size=(222,110)`）+
+  `round18_climb` G2 套件 **53 PASS / 0 FAIL / IDENTICAL** 双证。
+  **上一轮那条"我挑错了组、朝向本来是六组"的结论已作废** —— 它的错在拿"磁盘上还有 45°/90°/poses/climb_2~6 等
+  冗余变体"去推翻"用户明确指名的两组"，把**冗余**当成了**指认错误**；"`0_degrees` 是背面/无脸"的描述也与
+  转角命名（0°=正面）冲突。完整留痕：`架构改造-H4H5/_evidence/climb_注册核对_2026-09-17.md`。
+  未注册的 6 个变体（`climb_2~6` / `45_degrees` / `90_degrees` / `poses` / `poses_alt` / 基础 `climb`）清单已列在
+  该文件 §5 —— **用户若要的是它们，给个行号即可改**，但**不得再自作主张推翻用户指认**。
+  哈希结论仍然有效的部分：`climb_0_degrees`(6) 与基础 `climb`(4) 同图；`climb_90_degrees`(6) = `climb_1~6` 各第 0 帧；
+  `climb_left` ⇔ `climb_1` 逐帧严格镜像（唯一一对）。
 ## 「建楼」要求：已核实实现面 + 6 个缺口（第十六轮行为级复检，**勿凭直觉"重做"**）
 - 已实现（断言 A1–B4）：每窗一层且 `floor['rect']==window['rect']`；`platform_height=(n−i)×5`（最前最高、桌面 0）；
   可见面积 < `MIN_FLOOR_VISIBLE_AREA`(1600px²) 即不成楼层**且不再遮挡更低的窗口**；`floor_visible_contains` 只认可见区域；
@@ -405,12 +411,26 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   JSON 优先异常回落；S3 `94e4902` 别名/legacy 显式化）。未修：`change_animation` 长→短回退 vs
   `update_animation` 内嵌块只取前两段。下一步：真机取真实未命中清单。
 
-### 闸门状态（2026-09-17 复核，**别把没做的写成做了**）
+### 闸门状态（2026-09-17 **已重扫 + 已裁定**）
 - **G2 ✅**（`code-quality-audit/regress/run_all.py`，21 套件 / 799 PASS / 全 IDENTICAL）、
-  **G3 ✅**（本轮交付）、**G4 ✅**（H5 S1–S3）；**G1 ✗ = 1/185** —— 第五轮点名的 185 个应用层零引用方法，
-  到第十五轮**只删了排期优先项 `main.py::update_floor`**。且 188/185 是第五轮口径、主树已改（现 9588 行），
-  **开工前必须重扫**。→ **批次 A 未结算**；方案 §3 末已给两条可选路径（先补完 G1 / 每拆一项做一次专属零引用筛查，
-  倾向后者）。§8 决策 2（**删除 vs 标注 legacy**）仍待用户拍板。
+  **G3 ✅**、**G4 ✅**（H5 S1–S3）
+- **G1 ✗ → 改为"每项 PR 内做该项专属零引用筛查"**（方案 §8 决策 2 已按"技术细节我拍板"落定，
+  **不再整体清 185 项**）。新工具 `架构改造-H4H5/scan_zero_refs.py`（**AST 计名字引用点，不做字符串匹配**，
+  防注释/文档串误命中）→ `_evidence/zero_refs.txt`。
+- **G1 重扫结论（2026-09-17）**：① 排期点名的 **W1-5（17 个办公 `check_*`）已不复存在** —— 第六轮删除，
+  留痕 `main.py:5002-5003`，`check_browser_windows`/`check_ppt_windows`/`check_excel_table_needs`
+  **全项目 AST 零引用**确认，等价能力在 `modules/desktop_interaction.py` → **W1-5 从 Wave 1 划掉**；
+  ② 新查出 1 个全项目零引用方法 `create_person_name_table`（4057，56 行）。
+- **当前基线（2026-09-17 复扫，勿重测）**：`main.py` **9588 行**；`RalseiPet` **191 方法 / 方法体 8772 行**。
+  工具 `架构改造-H4H5/scan_method_index.py`（ast）→ `_evidence/method_index.{txt,json}`（含起止行/行数/Wave 归属）。
+
+### Wave 1 施工顺序（已定，行号为本轮实测）
+**W1-3 → W1-4 → W1-1 → W1-2 → W1-6**（自包含度优先）。W1-3 游戏 = `GamesController`
+（`main.py` **6186–6449**，7 方法 / 258 行，**块内闭合、零互写**，入口仅 `dialogue_ui.py:1445/1449/1453`）
+—— **第一项**。W1-4 视频 `main.py` 4427–4751（8 方法 / 289 行，分组器曾漏标中间 3 个 `_*video*` 私有方法）；
+W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（12 方法 / 342 行；`_hide_ralsei` 445 是
+**托盘隐藏**属别处，勿并入）；W1-6 文件表格 ~370 行（**先处置死代码**）。**Wave 3 明确不在本次范围。**
+
 
 ### G3 属性归属表（交付物 + 口径铁律）
 - 交付物 `H4-G3_属性归属表_2026-09-17.md`（**由脚本渲染，勿手改数字**）；工具

@@ -1,0 +1,2116 @@
+{
+ "class": "RalseiPet",
+ "file_lines": 9588,
+ "group_lines": {
+  "W1-1 spell": {
+   "lines": 63,
+   "n": 2
+  },
+  "W1-2 hide-seek": {
+   "lines": 323,
+   "n": 12
+  },
+  "W1-3 games": {
+   "lines": 258,
+   "n": 7
+  },
+  "W1-4 video": {
+   "lines": 229,
+   "n": 5
+  },
+  "W1-6 file-sheet": {
+   "lines": 399,
+   "n": 7
+  },
+  "W2-1 mouse": {
+   "lines": 719,
+   "n": 6
+  },
+  "W3-1 anim": {
+   "lines": 773,
+   "n": 4
+  },
+  "W3-2 move": {
+   "lines": 877,
+   "n": 4
+  },
+  "W3-3 physics": {
+   "lines": 943,
+   "n": 7
+  }
+ },
+ "method_body_lines": 8772,
+ "method_count": 191,
+ "methods": [
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 403,
+   "len": 57,
+   "name": "__init__",
+   "start": 347
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 443,
+   "len": 39,
+   "name": "_setup_tray",
+   "start": 405
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 462,
+   "len": 18,
+   "name": "_hide_ralsei",
+   "start": 445
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 472,
+   "len": 9,
+   "name": "_show_from_tray",
+   "start": 464
+  },
+  {
+   "args": [
+    "self",
+    "reason"
+   ],
+   "decorators": [],
+   "end": 480,
+   "len": 7,
+   "name": "_on_tray_activated",
+   "start": 474
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 521,
+   "len": 40,
+   "name": "init_ui",
+   "start": 482
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 535,
+   "len": 13,
+   "name": "load_resources",
+   "start": 523
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 635,
+   "len": 99,
+   "name": "init_systems",
+   "start": 537
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 748,
+   "len": 110,
+   "name": "init_animation",
+   "start": 639
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 789,
+   "len": 40,
+   "name": "init_timers",
+   "start": 750
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 803,
+   "len": 13,
+   "name": "init_placeholder_system",
+   "start": 791
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 828,
+   "len": 24,
+   "name": "create_placeholders",
+   "start": 805
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 849,
+   "len": 20,
+   "name": "update_placeholders",
+   "start": 830
+  },
+  {
+   "args": [
+    "self",
+    "pos"
+   ],
+   "decorators": [],
+   "end": 857,
+   "len": 7,
+   "name": "get_element_at_pos",
+   "start": 851
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1048,
+   "len": 189,
+   "name": "init_movement",
+   "start": 860
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1097,
+   "len": 48,
+   "name": "update_environment",
+   "start": 1050
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1138,
+   "len": 40,
+   "name": "update_mood",
+   "start": 1099
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1154,
+   "len": 15,
+   "name": "_sync_system_to_emotions",
+   "start": 1140
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1169,
+   "len": 14,
+   "name": "_agent_busy_flags",
+   "start": 1156
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1199,
+   "len": 29,
+   "name": "_notify_arrived_if_needed",
+   "start": 1171
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1294,
+   "len": 94,
+   "name": "randomize_movement_pattern",
+   "start": 1201
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1436,
+   "len": 141,
+   "name": "generate_new_move_target",
+   "start": 1296
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [
+    "monitor_performance"
+   ],
+   "end": 1892,
+   "len": 453,
+   "name": "update_movement",
+   "start": 1440
+  },
+  {
+   "args": [
+    "self",
+    "elapsed_time"
+   ],
+   "decorators": [],
+   "end": 1961,
+   "len": 68,
+   "name": "_handle_mouse_follow",
+   "start": 1894
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1971,
+   "len": 9,
+   "name": "check_nearby_desktop_elements",
+   "start": 1963
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1981,
+   "len": 9,
+   "name": "check_desktop_element_at_target",
+   "start": 1973
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 1989,
+   "len": 7,
+   "name": "initiate_auto_mouse_drag",
+   "start": 1983
+  },
+  {
+   "args": [
+    "self",
+    "target_pos"
+   ],
+   "decorators": [],
+   "end": 2006,
+   "len": 16,
+   "name": "start_mouse_drag",
+   "start": 1991
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 2052,
+   "len": 45,
+   "name": "update_mouse_drag",
+   "start": 2008
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 2071,
+   "len": 18,
+   "name": "stop_mouse_drag",
+   "start": 2054
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 2105,
+   "len": 33,
+   "name": "check_api_commands",
+   "start": 2073
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 2138,
+   "len": 10,
+   "name": "_floors_for_jump",
+   "start": 2129
+  },
+  {
+   "args": [
+    "self",
+    "fm",
+    "floor",
+    "pos"
+   ],
+   "decorators": [],
+   "end": 2145,
+   "len": 6,
+   "name": "_visible_landing",
+   "start": 2140
+  },
+  {
+   "args": [
+    "self",
+    "fm",
+    "floor",
+    "ralsei_rect",
+    "cur_floor"
+   ],
+   "decorators": [],
+   "end": 2210,
+   "len": 64,
+   "name": "_floor_entry_plan",
+   "start": 2147
+  },
+  {
+   "args": [
+    "self",
+    "fm",
+    "cur_floor",
+    "ralsei_rect"
+   ],
+   "decorators": [],
+   "end": 2252,
+   "len": 41,
+   "name": "_nearest_floor_jump",
+   "start": 2212
+  },
+  {
+   "args": [
+    "self",
+    "floor",
+    "edge",
+    "land"
+   ],
+   "decorators": [],
+   "end": 2269,
+   "len": 16,
+   "name": "_start_floor_jump",
+   "start": 2254
+  },
+  {
+   "args": [
+    "self",
+    "fm",
+    "target_floor"
+   ],
+   "decorators": [],
+   "end": 2294,
+   "len": 14,
+   "name": "_climb_hdir",
+   "start": 2281
+  },
+  {
+   "args": [
+    "self",
+    "fm",
+    "target_floor",
+    "probe",
+    "cur"
+   ],
+   "decorators": [],
+   "end": 2320,
+   "len": 25,
+   "name": "_climb_probe_landing",
+   "start": 2296
+  },
+  {
+   "args": [
+    "self",
+    "fm",
+    "target_floor"
+   ],
+   "decorators": [],
+   "end": 2346,
+   "len": 25,
+   "name": "_climb_landing",
+   "start": 2322
+  },
+  {
+   "args": [
+    "self",
+    "old_floor",
+    "new_floor"
+   ],
+   "decorators": [],
+   "end": 2386,
+   "len": 39,
+   "name": "_start_climb_transition",
+   "start": 2348
+  },
+  {
+   "args": [
+    "self",
+    "current_pos"
+   ],
+   "decorators": [],
+   "end": 2437,
+   "len": 50,
+   "name": "check_nearby_windows",
+   "start": 2388
+  },
+  {
+   "args": [
+    "self",
+    "target_window",
+    "window_edge",
+    "target_floor",
+    "target_pos"
+   ],
+   "decorators": [],
+   "end": 2639,
+   "len": 201,
+   "name": "start_jump",
+   "start": 2439
+  },
+  {
+   "args": [
+    "self",
+    "fall_velocity",
+    "is_thrown",
+    "reason"
+   ],
+   "decorators": [],
+   "end": 2695,
+   "len": 55,
+   "name": "start_falling",
+   "start": 2641
+  },
+  {
+   "args": [
+    "self",
+    "current_rect",
+    "new_rect",
+    "window_rect"
+   ],
+   "decorators": [],
+   "end": 2718,
+   "len": 22,
+   "name": "_is_falling_through_window",
+   "start": 2697
+  },
+  {
+   "args": [
+    "self",
+    "elapsed_time",
+    "current_time"
+   ],
+   "decorators": [],
+   "end": 2849,
+   "len": 130,
+   "name": "handle_jump",
+   "start": 2720
+  },
+  {
+   "args": [
+    "self",
+    "floor"
+   ],
+   "decorators": [],
+   "end": 2890,
+   "len": 37,
+   "name": "_sync_window_cache_from_floor",
+   "start": 2854
+  },
+  {
+   "args": [
+    "floor"
+   ],
+   "decorators": [
+    "staticmethod"
+   ],
+   "end": 2905,
+   "len": 13,
+   "name": "_floor_identity_key",
+   "start": 2893
+  },
+  {
+   "args": [
+    "old_rect",
+    "new_rect"
+   ],
+   "decorators": [
+    "staticmethod"
+   ],
+   "end": 2915,
+   "len": 8,
+   "name": "_floor_rect_changed",
+   "start": 2908
+  },
+  {
+   "args": [
+    "self",
+    "old_floor",
+    "moved_floor"
+   ],
+   "decorators": [],
+   "end": 2960,
+   "len": 44,
+   "name": "_follow_floor_move",
+   "start": 2917
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3016,
+   "len": 52,
+   "name": "_catch_falling_in_air",
+   "start": 2965
+  },
+  {
+   "args": [
+    "self",
+    "elapsed_time"
+   ],
+   "decorators": [],
+   "end": 3047,
+   "len": 30,
+   "name": "_tick_catch_brake",
+   "start": 3018
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3077,
+   "len": 29,
+   "name": "_apply_pet_z_order",
+   "start": 3049
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3215,
+   "len": 137,
+   "name": "check_window_movement",
+   "start": 3079
+  },
+  {
+   "args": [
+    "self",
+    "reason"
+   ],
+   "decorators": [],
+   "end": 3321,
+   "len": 104,
+   "name": "start_fall",
+   "start": 3218
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3359,
+   "len": 37,
+   "name": "trigger_splat",
+   "start": 3323
+  },
+  {
+   "args": [
+    "self",
+    "elapsed_time",
+    "current_time"
+   ],
+   "decorators": [],
+   "end": 3489,
+   "len": 129,
+   "name": "handle_gravity_fall",
+   "start": 3361
+  },
+  {
+   "args": [
+    "self",
+    "elapsed_time",
+    "current_time"
+   ],
+   "decorators": [],
+   "end": 3696,
+   "len": 205,
+   "name": "handle_fall",
+   "start": 3492
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3723,
+   "len": 25,
+   "name": "wake_up",
+   "start": 3699
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3749,
+   "len": 25,
+   "name": "start_dragging_play",
+   "start": 3725
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3758,
+   "len": 8,
+   "name": "trigger_laugh",
+   "start": 3751
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3764,
+   "len": 5,
+   "name": "trigger_surprise",
+   "start": 3760
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3770,
+   "len": 5,
+   "name": "trigger_shy",
+   "start": 3766
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3776,
+   "len": 5,
+   "name": "trigger_unhappy",
+   "start": 3772
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3781,
+   "len": 4,
+   "name": "trigger_victory",
+   "start": 3778
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3786,
+   "len": 4,
+   "name": "trigger_teasplash",
+   "start": 3783
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3805,
+   "len": 18,
+   "name": "reset_special_states",
+   "start": 3788
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3819,
+   "len": 13,
+   "name": "climb_to_top_window",
+   "start": 3807
+  },
+  {
+   "args": [
+    "self",
+    "element"
+   ],
+   "decorators": [],
+   "end": 4001,
+   "len": 181,
+   "name": "react_to_desktop_element",
+   "start": 3821
+  },
+  {
+   "args": [
+    "self",
+    "elem_path",
+    "element",
+    "reaction"
+   ],
+   "decorators": [],
+   "end": 4055,
+   "len": 44,
+   "name": "_note_desktop_observation",
+   "start": 4012
+  },
+  {
+   "args": [
+    "self",
+    "names"
+   ],
+   "decorators": [],
+   "end": 4112,
+   "len": 56,
+   "name": "create_person_name_table",
+   "start": 4057
+  },
+  {
+   "args": [
+    "self",
+    "user_input"
+   ],
+   "decorators": [],
+   "end": 4256,
+   "len": 143,
+   "name": "handle_file_operation",
+   "start": 4114
+  },
+  {
+   "args": [
+    "self",
+    "user_input"
+   ],
+   "decorators": [],
+   "end": 4296,
+   "len": 39,
+   "name": "_open_desktop_item_by_name",
+   "start": 4258
+  },
+  {
+   "args": [
+    "self",
+    "excel_path"
+   ],
+   "decorators": [],
+   "end": 4349,
+   "len": 52,
+   "name": "fix_excel_format",
+   "start": 4298
+  },
+  {
+   "args": [
+    "self",
+    "excel_path",
+    "names_list"
+   ],
+   "decorators": [],
+   "end": 4419,
+   "len": 69,
+   "name": "fill_names_in_excel",
+   "start": 4351
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4425,
+   "len": 5,
+   "name": "open_browser_for_ralsei",
+   "start": 4421
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4444,
+   "len": 18,
+   "name": "check_video_apps",
+   "start": 4427
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4477,
+   "len": 32,
+   "name": "identify_video_apps",
+   "start": 4446
+  },
+  {
+   "args": [
+    "self",
+    "video_app"
+   ],
+   "decorators": [],
+   "end": 4580,
+   "len": 102,
+   "name": "start_watching_video",
+   "start": 4479
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4586,
+   "len": 5,
+   "name": "_start_video_watching_loop",
+   "start": 4582
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4611,
+   "len": 24,
+   "name": "_update_video_watching",
+   "start": 4588
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4643,
+   "len": 31,
+   "name": "_react_to_video",
+   "start": 4613
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4652,
+   "len": 8,
+   "name": "close_bilibili",
+   "start": 4645
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4672,
+   "len": 19,
+   "name": "enter_sleep_mode",
+   "start": 4654
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4704,
+   "len": 31,
+   "name": "stop_watching_video",
+   "start": 4674
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4751,
+   "len": 46,
+   "name": "suggest_watching_video",
+   "start": 4706
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4795,
+   "len": 43,
+   "name": "move_to_edge_and_shrink",
+   "start": 4753
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4852,
+   "len": 56,
+   "name": "check_entertainment_needs",
+   "start": 4797
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4867,
+   "len": 14,
+   "name": "tell_joke",
+   "start": 4854
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4881,
+   "len": 13,
+   "name": "suggest_game",
+   "start": 4869
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [
+    "monitor_performance"
+   ],
+   "end": 4915,
+   "len": 32,
+   "name": "update_ai",
+   "start": 4884
+  },
+  {
+   "args": [
+    "self",
+    "cmds"
+   ],
+   "decorators": [],
+   "end": 4943,
+   "len": 27,
+   "name": "_handle_agent_commands",
+   "start": 4917
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [
+    "monitor_performance"
+   ],
+   "end": 4973,
+   "len": 28,
+   "name": "update_stats",
+   "start": 4946
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4994,
+   "len": 20,
+   "name": "update_animation_by_emotion",
+   "start": 4975
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 5035,
+   "len": 22,
+   "name": "_can_speak_now",
+   "start": 5014
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 5057,
+   "len": 21,
+   "name": "_autonomous_speech_allowed",
+   "start": 5037
+  },
+  {
+   "args": [
+    "self",
+    "reason",
+    "user_requested"
+   ],
+   "decorators": [],
+   "end": 5137,
+   "len": 79,
+   "name": "start_autonomous_speech",
+   "start": 5059
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 5143,
+   "len": 5,
+   "name": "check_initiate_dialogue",
+   "start": 5139
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5147,
+   "len": 2,
+   "name": "moveEvent",
+   "start": 5146
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5153,
+   "len": 5,
+   "name": "paintEvent",
+   "start": 5149
+  },
+  {
+   "args": [
+    "self",
+    "pos"
+   ],
+   "decorators": [],
+   "end": 5211,
+   "len": 57,
+   "name": "get_ralsei_body_part",
+   "start": 5155
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5352,
+   "len": 140,
+   "name": "mousePressEvent",
+   "start": 5213
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 5364,
+   "len": 11,
+   "name": "start_following_mouse",
+   "start": 5354
+  },
+  {
+   "args": [
+    "self",
+    "announce"
+   ],
+   "decorators": [],
+   "end": 5373,
+   "len": 8,
+   "name": "stop_following_mouse",
+   "start": 5366
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5578,
+   "len": 204,
+   "name": "mouseMoveEvent",
+   "start": 5375
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5795,
+   "len": 216,
+   "name": "mouseReleaseEvent",
+   "start": 5580
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5853,
+   "len": 57,
+   "name": "mouseDoubleClickEvent",
+   "start": 5797
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5858,
+   "len": 4,
+   "name": "mouseEnterEvent",
+   "start": 5855
+  },
+  {
+   "args": [
+    "self",
+    "event"
+   ],
+   "decorators": [],
+   "end": 5862,
+   "len": 3,
+   "name": "mouseLeaveEvent",
+   "start": 5860
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 5870,
+   "len": 7,
+   "name": "on_mouse_hover",
+   "start": 5864
+  },
+  {
+   "args": [
+    "self",
+    "pos"
+   ],
+   "decorators": [],
+   "end": 5913,
+   "len": 42,
+   "name": "show_interaction_menu",
+   "start": 5872
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6050,
+   "len": 136,
+   "name": "show_config_dialog",
+   "start": 5915
+  },
+  {
+   "args": [
+    "self",
+    "dialog"
+   ],
+   "decorators": [],
+   "end": 6109,
+   "len": 58,
+   "name": "save_config",
+   "start": 6052
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6117,
+   "len": 7,
+   "name": "initiate_chat",
+   "start": 6111
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6146,
+   "len": 28,
+   "name": "play_game",
+   "start": 6119
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6161,
+   "len": 14,
+   "name": "feed_ralsei",
+   "start": 6148
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6168,
+   "len": 6,
+   "name": "pet_ralsei",
+   "start": 6163
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6184,
+   "len": 15,
+   "name": "change_animation_randomly",
+   "start": 6170
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6211,
+   "len": 26,
+   "name": "start_rock_paper_scissors",
+   "start": 6186
+  },
+  {
+   "args": [
+    "self",
+    "player_choice"
+   ],
+   "decorators": [],
+   "end": 6273,
+   "len": 61,
+   "name": "play_rock_paper_scissors",
+   "start": 6213
+  },
+  {
+   "args": [
+    "self",
+    "player_choice",
+    "ralsei_choice"
+   ],
+   "decorators": [],
+   "end": 6289,
+   "len": 15,
+   "name": "determine_rock_paper_scissors_winner",
+   "start": 6275
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6328,
+   "len": 38,
+   "name": "end_rock_paper_scissors",
+   "start": 6291
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6362,
+   "len": 33,
+   "name": "start_guess_number",
+   "start": 6330
+  },
+  {
+   "args": [
+    "self",
+    "player_guess"
+   ],
+   "decorators": [],
+   "end": 6425,
+   "len": 62,
+   "name": "play_guess_number",
+   "start": 6364
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6449,
+   "len": 23,
+   "name": "end_guess_number",
+   "start": 6427
+  },
+  {
+   "args": [
+    "self",
+    "user_input"
+   ],
+   "decorators": [],
+   "end": 6487,
+   "len": 37,
+   "name": "handle_game_input",
+   "start": 6451
+  },
+  {
+   "args": [
+    "self",
+    "api_key",
+    "base_url",
+    "model",
+    "agent_id",
+    "api_version"
+   ],
+   "decorators": [],
+   "end": 6555,
+   "len": 66,
+   "name": "init_api_client",
+   "start": 6490
+  },
+  {
+   "args": [
+    "self",
+    "prompt"
+   ],
+   "decorators": [],
+   "end": 6666,
+   "len": 110,
+   "name": "send_api_request",
+   "start": 6557
+  },
+  {
+   "args": [
+    "self",
+    "response"
+   ],
+   "decorators": [],
+   "end": 6683,
+   "len": 16,
+   "name": "handle_api_response",
+   "start": 6668
+  },
+  {
+   "args": [
+    "name"
+   ],
+   "decorators": [
+    "staticmethod"
+   ],
+   "end": 6691,
+   "len": 6,
+   "name": "_is_special_anim",
+   "start": 6686
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6701,
+   "len": 9,
+   "name": "_special_anim_locked",
+   "start": 6693
+  },
+  {
+   "args": [
+    "self",
+    "new_animation",
+    "force"
+   ],
+   "decorators": [],
+   "end": 6832,
+   "len": 130,
+   "name": "change_animation",
+   "start": 6703
+  },
+  {
+   "args": [
+    "self",
+    "content"
+   ],
+   "decorators": [],
+   "end": 7014,
+   "len": 181,
+   "name": "_execute_api_action",
+   "start": 6834
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 7090,
+   "len": 75,
+   "name": "get_system_info",
+   "start": 7016
+  },
+  {
+   "args": [
+    "self",
+    "prompt",
+    "callback"
+   ],
+   "decorators": [],
+   "end": 7111,
+   "len": 20,
+   "name": "_async_api_request",
+   "start": 7092
+  },
+  {
+   "args": [
+    "self",
+    "text",
+    "on_reply"
+   ],
+   "decorators": [],
+   "end": 7200,
+   "len": 88,
+   "name": "chat_with_ai",
+   "start": 7113
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 7263,
+   "len": 62,
+   "name": "_build_ai_context",
+   "start": 7202
+  },
+  {
+   "args": [
+    "self",
+    "response",
+    "callback"
+   ],
+   "decorators": [],
+   "end": 7275,
+   "len": 11,
+   "name": "_on_api_result",
+   "start": 7265
+  },
+  {
+   "args": [
+    "self",
+    "animation"
+   ],
+   "decorators": [
+    "monitor_performance"
+   ],
+   "end": 7333,
+   "len": 55,
+   "name": "_anim_anchor_offset",
+   "start": 7279
+  },
+  {
+   "args": [
+    "self",
+    "sprite",
+    "container",
+    "animation",
+    "scale_factor"
+   ],
+   "decorators": [],
+   "end": 7359,
+   "len": 25,
+   "name": "_compose_anchored_sprite",
+   "start": 7335
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 7938,
+   "len": 578,
+   "name": "update_animation",
+   "start": 7361
+  },
+  {
+   "args": [
+    "self",
+    "animation"
+   ],
+   "decorators": [],
+   "end": 7943,
+   "len": 4,
+   "name": "on_animation_complete",
+   "start": 7940
+  },
+  {
+   "args": [
+    "self",
+    "animation_name",
+    "callback",
+    "restore_to"
+   ],
+   "decorators": [],
+   "end": 7984,
+   "len": 40,
+   "name": "play_animation_once",
+   "start": 7945
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8026,
+   "len": 41,
+   "name": "update_bounce",
+   "start": 7986
+  },
+  {
+   "args": [
+    "self",
+    "file_info"
+   ],
+   "decorators": [],
+   "end": 8055,
+   "len": 28,
+   "name": "interact_with_file",
+   "start": 8028
+  },
+  {
+   "args": [
+    "self",
+    "folder_info"
+   ],
+   "decorators": [],
+   "end": 8073,
+   "len": 17,
+   "name": "interact_with_folder",
+   "start": 8057
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8098,
+   "len": 23,
+   "name": "check_file_content",
+   "start": 8076
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8140,
+   "len": 41,
+   "name": "check_text_content",
+   "start": 8100
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8156,
+   "len": 15,
+   "name": "check_image_content",
+   "start": 8142
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8183,
+   "len": 26,
+   "name": "react_to_file_emotionally",
+   "start": 8158
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8189,
+   "len": 5,
+   "name": "follow_file",
+   "start": 8185
+  },
+  {
+   "args": [
+    "self",
+    "file_name"
+   ],
+   "decorators": [],
+   "end": 8194,
+   "len": 4,
+   "name": "react_to_file_deletion",
+   "start": 8191
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8210,
+   "len": 15,
+   "name": "check_video_windows",
+   "start": 8196
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8226,
+   "len": 15,
+   "name": "check_game_windows",
+   "start": 8212
+  },
+  {
+   "args": [
+    "self",
+    "game_window"
+   ],
+   "decorators": [],
+   "end": 8259,
+   "len": 32,
+   "name": "react_to_game",
+   "start": 8228
+  },
+  {
+   "args": [
+    "self",
+    "video_window"
+   ],
+   "decorators": [],
+   "end": 8285,
+   "len": 25,
+   "name": "watch_video",
+   "start": 8261
+  },
+  {
+   "args": [
+    "self",
+    "video_info"
+   ],
+   "decorators": [],
+   "end": 8303,
+   "len": 17,
+   "name": "react_to_video_content",
+   "start": 8287
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8319,
+   "len": 15,
+   "name": "react_to_vs_code_code",
+   "start": 8305
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8326,
+   "len": 6,
+   "name": "_recover_from_sadness",
+   "start": 8321
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8342,
+   "len": 15,
+   "name": "is_own_code",
+   "start": 8328
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8359,
+   "len": 16,
+   "name": "open_file",
+   "start": 8344
+  },
+  {
+   "args": [
+    "self",
+    "folder_path"
+   ],
+   "decorators": [],
+   "end": 8379,
+   "len": 19,
+   "name": "open_folder",
+   "start": 8361
+  },
+  {
+   "args": [
+    "self",
+    "user_input"
+   ],
+   "decorators": [],
+   "end": 8436,
+   "len": 56,
+   "name": "handle_window_operation",
+   "start": 8381
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8468,
+   "len": 31,
+   "name": "check_recycle_bin",
+   "start": 8438
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8487,
+   "len": 18,
+   "name": "react_to_recycle_bin",
+   "start": 8470
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8502,
+   "len": 14,
+   "name": "_move_away_from_recycle_bin",
+   "start": 8489
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8509,
+   "len": 6,
+   "name": "_recover_from_fear",
+   "start": 8504
+  },
+  {
+   "args": [
+    "self",
+    "file_path"
+   ],
+   "decorators": [],
+   "end": 8535,
+   "len": 25,
+   "name": "delete_file",
+   "start": 8511
+  },
+  {
+   "args": [
+    "self",
+    "file_path",
+    "new_name"
+   ],
+   "decorators": [],
+   "end": 8539,
+   "len": 4,
+   "name": "rename_file",
+   "start": 8536
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8544,
+   "len": 4,
+   "name": "check_dragged_file",
+   "start": 8541
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8566,
+   "len": 21,
+   "name": "_virtual_screen_rect",
+   "start": 8546
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8581,
+   "len": 14,
+   "name": "_current_screen_rect",
+   "start": 8568
+  },
+  {
+   "args": [
+    "self",
+    "x",
+    "y"
+   ],
+   "decorators": [],
+   "end": 8599,
+   "len": 17,
+   "name": "_clamp_pos_to_desktop",
+   "start": 8583
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8608,
+   "len": 8,
+   "name": "_desktop_floor_y",
+   "start": 8601
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8702,
+   "len": 93,
+   "name": "cleanup_on_exit",
+   "start": 8610
+  },
+  {
+   "args": [
+    "self",
+    "path"
+   ],
+   "decorators": [],
+   "end": 8746,
+   "len": 39,
+   "name": "_resolve_target_screen_anchor",
+   "start": 8708
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8773,
+   "len": 26,
+   "name": "_spell_interrupted_reason",
+   "start": 8748
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 8957,
+   "len": 183,
+   "name": "_tick_spell_flow",
+   "start": 8775
+  },
+  {
+   "args": [
+    "self",
+    "cb",
+    "direction"
+   ],
+   "decorators": [],
+   "end": 9002,
+   "len": 44,
+   "name": "_cast_spell_then",
+   "start": 8959
+  },
+  {
+   "args": [
+    "self",
+    "path",
+    "kind",
+    "cb"
+   ],
+   "decorators": [],
+   "end": 9040,
+   "len": 37,
+   "name": "_start_open_with_spell",
+   "start": 9004
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 9077,
+   "len": 28,
+   "name": "start_hide_and_seek_game",
+   "start": 9050
+  },
+  {
+   "args": [
+    "self",
+    "reason"
+   ],
+   "decorators": [],
+   "end": 9115,
+   "len": 37,
+   "name": "_abort_hide_and_seek",
+   "start": 9079
+  },
+  {
+   "args": [
+    "self",
+    "x",
+    "y",
+    "cb",
+    "stage_name"
+   ],
+   "decorators": [],
+   "end": 9138,
+   "len": 22,
+   "name": "_hide_move_to_point",
+   "start": 9117
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 9147,
+   "len": 8,
+   "name": "_hide_on_arrive_center",
+   "start": 9140
+  },
+  {
+   "args": [
+    "self",
+    "path",
+    "kind"
+   ],
+   "decorators": [],
+   "end": 9202,
+   "len": 54,
+   "name": "_hide_create_obstacles_after_spell",
+   "start": 9149
+  },
+  {
+   "args": [
+    "self",
+    "path",
+    "kind"
+   ],
+   "decorators": [],
+   "end": 9215,
+   "len": 12,
+   "name": "_hide_after_hiding_spell",
+   "start": 9204
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 9238,
+   "len": 22,
+   "name": "_hide_on_arrive_folder",
+   "start": 9217
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 9278,
+   "len": 39,
+   "name": "_hide_search_tick",
+   "start": 9240
+  },
+  {
+   "args": [
+    "self",
+    "user_won"
+   ],
+   "decorators": [],
+   "end": 9303,
+   "len": 24,
+   "name": "_hide_end_game",
+   "start": 9280
+  },
+  {
+   "args": [
+    "self",
+    "path",
+    "kind"
+   ],
+   "decorators": [],
+   "end": 9329,
+   "len": 25,
+   "name": "_hide_destroy_obstacles",
+   "start": 9305
+  },
+  {
+   "args": [
+    "self",
+    "folder_path"
+   ],
+   "decorators": [],
+   "end": 9388,
+   "len": 58,
+   "name": "_hide_report_clicked_folder",
+   "start": 9331
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 9402,
+   "len": 13,
+   "name": "_hide_jump_back_to_desktop",
+   "start": 9390
+  }
+ ],
+ "source": "ralsei_pet/src/main.py"
+}
