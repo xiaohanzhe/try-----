@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **21 套件 / 799 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **22 套件 / 857 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -15,10 +15,11 @@
 5. **删文件**：管道 `Remove-Item` 静默无效 → `[System.IO.File]::Delete()` + `Test-Path` 校验。
 6. Python：**`C:\Python311\python.exe`**（PyQt5/pywin32/bs4/psutil/jieba）—— **G2 与所有套件必须用它**；
    托管 venv（3.13）缺 `bs4` → `round5_smoke` 假 FAIL。
-7. 代理：**`git push` 用沙箱代理（端口会变，现为 `127.0.0.1:57186`）**——CONNECT 可用，退 0 即成功。
-   **Clash `7897` 对 GitHub 已失效**（`schannel: failed to receive handshake` / `unexpected eof while reading`，
-   连 `ls-remote` 也过不去）；旧记录里"7897 可用"作废。**端口要现查**（`netstat -ano | findstr LISTENING`
-   找 `127.0.0.1:<port>`，或看沙箱注入的 `HTTP_PROXY` 环境变量）。
+7. 代理：**沙箱注入端口会变，现查为准**（`netstat -ano | findstr LISTENING` 找 `127.0.0.1:<port>`，
+   或读沙箱注入的 `HTTP_PROXY`）。**2026-09-18 实测 Clash `7897` 又好了**：
+   `git push` 与 `ls-remote` 走 7897 一次过，`a37f136..ee39227` + 远端哈希核验一致。
+   → 旧记录"7897 对 GitHub TLS 直接握手失败"**作废（它是当时的状态，不是恒定事实）**；
+   换端口前先直接试一次，别照抄旧结论。
 8. **E 盘是外接盘、会掉线**（`Get-Volume` 只剩 C/D、`Get-Disk` 仅一块 NVMe 即掉线）→ "本地中转站"是**可用性必需**。
    判在线看 `Get-Disk`/`Win32_DiskDrive`；注册表 `\DosDevices\E:` 只是**历史挂载记录**，不能当在线证据。
 9. **Agent 沙箱有 safe-delete 守卫，按目标路径累计删除计数**（阈值 50，`count=51` 即触发）。症状：**进程在
@@ -319,12 +320,16 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   红了才揪出来的。**铁律：正/负控制必须成对**；只留负控制时，"测试自己坏了"可以一直绿下去。
   另：**断言失败详情要能诊断** —— detail 写 `None` 时红了只有 `<<< None`，分不清"名字错"还是"桩错"；
   改成打印实际返回值 + 库里的键，一眼定位。**断言失败要把现场交出来。**
-- **源码级 needle 含字符串字面量 → 必须走 `func_lit`（第十八轮，第 4 次踩）**：`func_code` 把 STRING token
+- **源码级 needle 含字符串字面量 → 必须走 `func_lit`（第十八轮，第 4 次踩；2026-09-18 第 5 次）**：`func_code` 把 STRING token
   一起剥掉，`getattr(self,'_jump_anim_override',None)` 这个 needle 里的属性名是字符串字面量 → 剥完变成
   `getattr(self,,None)` → **永远搜不到 → 假红**。定式：**含引号的 needle 用 `func_lit`（只剥注释），
   再用一条**不含引号**的 needle 在 `func_code` 上补一刀，两边互证**。
   本轮不再靠"记得"——加了 **X0 自检**把两个视图的语义钉住（`func_code` 搜不到字面量 / `func_lit` 搜得到 /
   两者都搜不到注释）：**工具的语义本身也要有断言**，否则它一变形，下面所有断言一起失真。
+  **2026-09-18 人味套件首跑又栽在这上面（B3/B4/B6/B7/B12/F8 六条假红）**：新写的
+  `code_no_comment()` 一定要配套留着，**凡 needle 里出现引号、`\n`、或任何会被 tokenize 当成 STRING 的片段，
+  一律先走它**；`code_only_src` 只用于"纯标识符/语法结构"类 needle。
+  另一个同源坑：**`\s+` 全抹会让 needle 里的空格消失** → needle 自己也不能带空格（写成 `recent=[cfor_r,...]`）。
 - **离屏环境没有字体（第十八轮）**：Qt 打 `QFontDatabase: Cannot find font directory`，
   **`QPainter.drawText` 静默不画**（素材对照图第一版整行标题一个字都没有，连试两版才发现）。
   headless 出图**不能靠文字** → 改用色带 + 外部图例（同名 `.txt`）。同理：**别把"看不见"当成"画对了"**。
@@ -410,6 +415,19 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   （第 4 次踩）；③ 失败详情要能诊断（`detail=None` 等于没说）；④ 离屏**没字体**、`drawText` 静默不画；
   ⑤ 证据必须 Python 自己写（第 2 次踩 PS 捕获毁中文）；⑥ 列表推导别手滑多打一层。
 
+- 18（并行线）`ee39227`：**对话 AI「人味」改造（L1 全做）** —— 与"建楼批次 B"同轮号，但**另一条线**。
+  用户："他这个AI没有活人味，你给看看怎么训练一下" → 拍板 **L1 全做**；口径
+  **"保存性能的前提下既要有 Deltarune 世界观，又要让他们知道现在自己生活在电脑桌面上"**。
+  交付：`assets/ralsei_persona.md`（新增）+ `assets/ralsei.modelfile` + `ralsei:v2`
+  + `main.py` 接线重写与 4 个新方法 + `dialogue_ui` 关键词收紧 + 新 G2 套件 `persona_chat`。
+  **端到端实测：完重 0 / 违禁套话 0 / markdown 残留 0**；G2 **22 套件 857 PASS 全 IDENTICAL**。
+  **本轮最值钱的两次自我推翻**（详见上方「对话 AI 人味改造」条）：示范不能删、判退只能看 recent。
+  **教训**：① `/v1` 忽略 `num_ctx`/`repeat_penalty` → 参数必须落 Modelfile；
+  ② persona 是 prompt 不是文档；③ 护栏要在"复刻链路的 e2e"里验收（直接调护栏会得出"成功率 0%"的假象）；
+  ④ 探针判据里的白名单写窄了会把"想要的结巴（我、我）"误报成缺陷 → **先读原始文本再信计数**；
+  ⑤ **测试桩漂移 ≠ 真回归**：`round6_verify` 4 条挂是桩没绑新方法，且 `g2_after.txt` 是**修复前**的旧数据
+  —— 动手 debug 前**先看产物时间戳**。
+
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性
   438、106 个被 ≥3 处写；`animation_mapping` 109 组/1106 PNG/743 未引用/缺失 0；动画名字面量 24+12 f-string。
@@ -421,8 +439,8 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `update_animation` 内嵌块只取前两段。下一步：真机取真实未命中清单。
 
 ### 闸门状态（2026-09-17 **已重扫 + 已裁定**）
-- **G2 ✅**（`code-quality-audit/regress/run_all.py`，21 套件 / 799 PASS / 全 IDENTICAL）、
-  **G3 ✅**、**G4 ✅**（H5 S1–S3）
+- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-18 起 22 套件 / 857 PASS / 全 IDENTICAL**
+  —— 新增 `persona_chat`）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
 - **G1 ✗ → 改为"每项 PR 内做该项专属零引用筛查"**（方案 §8 决策 2 已按"技术细节我拍板"落定，
   **不再整体清 185 项**）。新工具 `架构改造-H4H5/scan_zero_refs.py`（**AST 计名字引用点，不做字符串匹配**，
   防注释/文档串误命中）→ `_evidence/zero_refs.txt`。
@@ -432,6 +450,11 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   ② 新查出 1 个全项目零引用方法 `create_person_name_table`（4057，56 行）。
 - **当前基线（2026-09-17 复扫，勿重测）**：`main.py` **9588 行**；`RalseiPet` **191 方法 / 方法体 8772 行**。
   工具 `架构改造-H4H5/scan_method_index.py`（ast）→ `_evidence/method_index.{txt,json}`（含起止行/行数/Wave 归属）。
+
+⚠️ **2026-09-18 更新**：人味改造（`ee39227`）在 `RalseiPet` 里**新增 4 个方法**
+（`_build_persona_prompt` / `_ai_chat_options` / `_clean_ai_reply` / `_is_repeat_of_recent`）
+→ `main.py` 行数已变（≈9812 行），**下面 Wave 1 的行号区间全部失效**。
+开工前**必须重跑 `scan_method_index.py`**，不要照抄 6186–6449 这类旧区间。
 
 ### Wave 1 施工顺序（已定，行号为本轮实测）
 **W1-3 → W1-4 → W1-1 → W1-2 → W1-6**（自包含度优先）。W1-3 游戏 = `GamesController`
@@ -527,5 +550,44 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
    `哭`/`游戏`/`状态`/`天气`/`精力`/`饿了吗` 等高危子串会把正经闲聊截胡。
 7. 硬件（为"换 7B"决策）：**Intel Core Ultra 5 125H + Intel Arc 核显，无 NVIDIA 独显**，RAM 33.9 GB
    → 3B 的 ~2s 是 CPU/核显推理；7B 可行但预计 5~12s。
-8. **状态：仍只做完诊断，S1~S9 一项未动**（用户尚未拍板范围）。三层"训练"取舍写在报告第四节：
-   L1 提示词/参数层（推荐先做）／L2 换底座（7B 或云端端点）／L3 权重微调（**当前不建议**：无数据集 + 3B 上限未解）。
+8. **状态：诊断 + L1 施工都已完成**（用户拍板"L1 全做"）。施工记录见报告第九节；
+   契约见下条「对话 AI 人味改造（第十八轮并行线）」。S7（131 处事件台词）、S8（流式）**顺延**。
+
+### 对话 AI 人味改造（第十八轮并行线，2026-09-18，提交 `ee39227`，**勿回退**）
+报告 `Ralsei对话人味诊断与训练方案_2026-09-18.md`（第 9 节为施工记录）；
+证据 `code-quality-audit/人味改造-2026-09-18/_evidence/`；**回归锁 `persona_chat`（58 项，已进 G2）**。
+**它不联网、不调 Ollama** —— 模型质量天生不可复现，不进基线。
+
+- **人设单一真源 = `ralsei_pet/assets/ralsei_persona.md`**（App 每次对话读它当 system 发过去）。
+  **不要**只写进 Modelfile —— Ollama 用 messages 里的 system **整体替换** Modelfile 的 SYSTEM。
+  **persona 文件是 prompt 不是文档**：里面不许出现 markdown（`**`/`#`/`>`），3B 会照学，
+  而对话框是逐字打字机渲染 → 星号原样给用户看（实测输出过 `**听到也让我心里暖暖的**`）。
+- **采样参数必须落 Modelfile**（`assets/ralsei.modelfile` → `ralsei:v2`）：
+  **`/v1/chat/completions` 静默忽略 `num_ctx` 与 `repeat_penalty`**（顶层/options 都无效），
+  只有原生 `/api/chat` 的 `options` 或 Modelfile 的 `PARAMETER` 生效。
+  → **参数 A/B 必须走原生端点**，否则会得到"改了没区别"的假结论。
+- **用户消息保持纯原话**，`_build_ai_context()`（`【此刻】…`）/话题锚/记忆召回一律挂 **system 尾部**。
+  拼在用户消息前会被当成"用户说的话"并复述成回答。
+- **输出护栏 `_clean_ai_reply(reply, recent=)`** 四步：markdown 剥除 → 自问自答续写截断 →
+  **车轱辘话判退** → 超长截断。**判退后必须重采样一次**（温度 +0.1 封顶 1.0 + `_RETRY_NUDGE`），
+  **不许直接丢弃** —— 交互链路 `dialogue_ui._on_ai_reply` 在 reply 为空时会 `_rule_reply()`
+  回落内置台词，比照抄更出戏。
+- **两条被实测推翻过的设计（别再改回去）**：
+  ① **persona 的 few-shot 示范不能删** —— 删掉后 3B 口吻明显退化（"我明白你的心情了"这种禁令套话都出来了）。
+     反证留档 `_evidence/behavior_check2_无示范对照.*`。
+  ② **判退条件只能是"和自己最近说过的话（recent）重复"，不是"像 persona 示范句"** ——
+     3B 对「我好喜欢你呀」会 3/3 稳定吐示范句；一律判退 → *判退→重采样→还是照抄→None→内置台词*。
+     示范句第一次说没问题，出戏的是**同一句反复出现**。
+     套件 `persona_chat` 留了 **C7/C8 防回退断言**（等于示范句 + recent 为空 → **必须放行**）。
+- 判据两条互补：整体 `difflib` ≥ 0.82（抓改两三个字）**∪** 最长公共匹配块 ≥ 12 字
+  （抓"整体 ratio 只有 0.74 但后半段原样搬"）。`recent` 由 `chat_with_ai` 从 history 抽 `role=='assistant'`。
+- 交互对话与自主开口**共用同一套护栏**；`_on_reply` 对护栏本身有防御 try/except
+  （护栏抛异常被宽 except 吞掉会把"已发起"误判 False → 第六轮 B2/B3/B7/B8 就这么挂过）。
+- **关键词拦截收紧**（`dialogue_ui`）：软闲聊（天气/哭/游戏/状态/精力/唱歌…）要"指令式命中"
+  （`_is_command_phrase`：去掉关键词后剩字 ≤ `CMD_EXTRA_ALLOWANCE=2`）才截胡；
+  真正驱动动作的硬指令在 `_HARD_CMDS`，仍走子串。
+- **已知局限**：偶发"滑字"（`诪、诪` 本应是 `诶、诶？！`，约 1/10）。**不要为它加启发式护栏或改采样参数** ——
+  `repeat_penalty` 1.15/1.00 × `top_p` 0.92/0.90 各 3 次采样的探针里真滑字 0 次、1.00 组无改善。
+  归入 3B 能力上限，由 L2（换底座）解决。
+- 指标口径（复现时照这个算）：同题重复率 / 违禁套话率 / 格式残留率 / 判退率。
+  本轮实测：9 次调用（重采样 2 次）→ 完全重复 0、违禁套话 0、markdown 残留 0。
