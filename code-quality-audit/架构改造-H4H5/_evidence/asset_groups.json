@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17 23:02:08",
+  "generated_at": "2026-09-17 23:05:43",
   "asset_dir": "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\deltarune_ralsei",
   "animations_json": "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\assets\\animations.json",
   "totals": {
@@ -9,9 +9,9 @@
     "json_frames": 379,
     "missing_on_disk": 0,
     "status": {
-      "unused": 278,
+      "partial": 20,
       "registered": 82,
-      "partial": 20
+      "unused": 278
     },
     "families": 19
   },
@@ -36,7 +36,7 @@
     {
       "name": "X4 三态计数合计 == 组数",
       "pass": true,
-      "detail": "{'unused': 278, 'registered': 82, 'partial': 20} 合计=380 组数=380"
+      "detail": "{'partial': 20, 'registered': 82, 'unused': 278} 合计=380 组数=380"
     },
     {
       "name": "X5 命名解析可逆（parse→unparse 复原）",
@@ -46,7 +46,7 @@
     {
       "name": "X6 状态标签取值合法",
       "pass": true,
-      "detail": "{'partial', 'registered', 'unused'}"
+      "detail": "['partial', 'registered', 'unused']"
     },
     {
       "name": "X7 未引用组的 used_count 必为 0",
@@ -99,9 +99,9 @@
     "cutscene": {
       "groups": 25,
       "status": {
+        "partial": 3,
         "registered": 13,
-        "unused": 9,
-        "partial": 3
+        "unused": 9
       },
       "members": [
         "cutscene_10_ralsei_splat",
@@ -192,9 +192,9 @@
     "ralsei": {
       "groups": 273,
       "status": {
+        "partial": 12,
         "registered": 64,
-        "unused": 197,
-        "partial": 12
+        "unused": 197
       },
       "members": [
         "ralsei_act",
@@ -475,8 +475,8 @@
     "ralseib": {
       "groups": 6,
       "status": {
-        "unused": 5,
-        "registered": 1
+        "registered": 1,
+        "unused": 5
       },
       "members": [
         "ralseib_virokun",
@@ -550,8 +550,8 @@
       "groups": 17,
       "status": {
         "partial": 5,
-        "unused": 10,
-        "registered": 2
+        "registered": 2,
+        "unused": 10
       },
       "members": [
         "tea_party_ralsei_cake_eat",
@@ -576,8 +576,8 @@
     "teacup": {
       "groups": 4,
       "status": {
-        "unused": 3,
-        "registered": 1
+        "registered": 1,
+        "unused": 3
       },
       "members": [
         "teacup_ralsei",

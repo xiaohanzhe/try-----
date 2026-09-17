@@ -165,11 +165,11 @@ def main():
     stat = collections.Counter(g["status"] for g in disk_groups.values())
     checks.append(("X4 三态计数合计 == 组数",
                    sum(stat.values()) == len(disk_groups),
-                   "%s 合计=%d 组数=%d" % (dict(stat), sum(stat.values()), len(disk_groups))))
+                   "%s 合计=%d 组数=%d" % (dict(sorted(stat.items())), sum(stat.values()), len(disk_groups))))
     bad = [f for f in on_disk if unparse(*parse_stem(f)) != f]
     checks.append(("X5 命名解析可逆（parse→unparse 复原）", not bad, "不匹配=%d" % len(bad)))
     checks.append(("X6 状态标签取值合法",
-                   set(stat) <= {"registered", "partial", "unused"}, str(set(stat))))
+                   set(stat) <= {"registered", "partial", "unused"}, str(sorted(stat))))
     checks.append(("X7 未引用组的 used_count 必为 0",
                    all(g["used_count"] == 0 for g in disk_groups.values() if g["status"] == "unused"),
                    "ok"))
@@ -187,7 +187,7 @@ def main():
             "json_groups": len(json_groups),
             "json_frames": len(json_frames),
             "missing_on_disk": len(missing),
-            "status": dict(stat),
+            "status": dict(sorted(stat.items())),
             "families": len({g["family"] for g in disk_groups.values()}),
         },
         "missing_frames": missing,
@@ -212,7 +212,7 @@ def main():
         }
     for k, v in sorted(fam.items()):
         st = collections.Counter(disk_groups[b]["status"] for b in v)
-        result["families"][k] = {"groups": len(v), "status": dict(st), "members": sorted(v)}
+        result["families"][k] = {"groups": len(v), "status": dict(sorted(st.items())), "members": sorted(v)}
 
     write_all(result, disk_groups)
     return 0
@@ -362,9 +362,9 @@ function refresh(){
   ta.value=on.join('\\n');
 }
 boxes.forEach(function(b){b.addEventListener('change',refresh)});
-document.querySelectorAll('.chip').forEach(function(ch){
+document.querySelectorAll('.chip[data-filter]').forEach(function(ch){
   ch.addEventListener('click',function(){
-    document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on')});
+    document.querySelectorAll('.chip[data-filter]').forEach(function(x){x.classList.remove('on')});
     ch.classList.add('on');
     var f=ch.dataset.filter;
     groups.forEach(function(g){g.classList.toggle('hide', f!=='all' && g.dataset.status!==f)});

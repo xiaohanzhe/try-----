@@ -4,9 +4,9 @@
 [PASS] X1 分组帧数合计 == 磁盘文件数 (1111 vs 1111)
 [PASS] X2 每个文件恰好归属一组 (重复=0)
 [PASS] X3 JSON 引用帧集合 ⊆ 磁盘（差集即缺失） (缺失=0)
-[PASS] X4 三态计数合计 == 组数 ({'unused': 278, 'registered': 82, 'partial': 20} 合计=380 组数=380)
+[PASS] X4 三态计数合计 == 组数 ({'partial': 20, 'registered': 82, 'unused': 278} 合计=380 组数=380)
 [PASS] X5 命名解析可逆（parse→unparse 复原） (不匹配=0)
-[PASS] X6 状态标签取值合法 ({'partial', 'registered', 'unused'})
+[PASS] X6 状态标签取值合法 (['partial', 'registered', 'unused'])
 [PASS] X7 未引用组的 used_count 必为 0 (ok)
 已写出：C:\Users\23002\Desktop\项目文件夹\try - 副本\素材分组总览_2026-09-17.html
 已写出：C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\架构改造-H4H5\_evidence\asset_groups.txt
