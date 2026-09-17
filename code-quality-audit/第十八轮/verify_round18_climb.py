@@ -59,6 +59,7 @@ for _p in (os.path.join(PET, 'src'), MODS):
         sys.path.append(_p)
 
 from PyQt5.QtCore import QPoint, QRect                      # noqa: E402
+from PyQt5.QtGui import QImage                              # noqa: E402
 from PyQt5.QtWidgets import QApplication                    # noqa: E402
 
 _app = QApplication.instance() or QApplication([])
@@ -555,6 +556,46 @@ ok('G8 未知方向 → 退到 front（不抛 KeyError）',
    'up=%r' % (_climb_animation_name(_loader, 'up'),))
 ok('G9 完全**没有** sprite_loader 属性 → 也不抛异常（返回 None 回落 jump）',
    _climb_animation_name(types.SimpleNamespace(), 'right') is None, None)
+
+
+def _mirror_sample_bad(a, b):
+    """b 与 a 的水平镜像关系有多少个采样点不符（-1 = 尺寸不同）。"""
+    w, h = a.width(), a.height()
+    if (b.width(), b.height()) != (w, h):
+        return -1
+    bad = 0
+    for xi in range(5):
+        x = min(w - 1, int(xi * (w - 1) / 4))
+        for yi in range(5):
+            y = min(h - 1, int(yi * (h - 1) / 4))
+            if b.pixel(x, y) != a.pixel(w - 1 - x, y):
+                bad += 1
+    return bad
+
+
+# G10：把"朝左 = 朝右的镜像"从"生成脚本里的一次性检查"升级成**回归锁**。
+# 只断言"左右两组文件名不同"（G5）**不够** —— 把源图**原样复制**过去也满足 G5，
+# 而那正是唯一要防的事（没镜像）。所以这里逐像素断言镜像关系：
+# 采 5x5 个点比较 `left(x,y) == right(w-1-x, y)`。
+_R_FRAMES = _groups['climb_right']['frames']
+_L_FRAMES = _groups['climb_left']['frames']
+_bad_pairs = []
+for _i, (_pr, _pl) in enumerate(zip(_R_FRAMES, _L_FRAMES)):
+    _a = QImage(os.path.join(_SPRITE_DIR, _pr))
+    _b = QImage(os.path.join(_SPRITE_DIR, _pl))
+    if _a.isNull() or _b.isNull() or _mirror_sample_bad(_a, _b) != 0:
+        _bad_pairs.append(_i)
+ok('G10 climb_left 每帧都是 climb_right 对应帧的**严格水平镜像**'
+   '（逐像素采样；"原样复制"会被这条抓住）',
+   len(_R_FRAMES) == len(_L_FRAMES) and not _bad_pairs,
+   '帧数 %d/%d 不符点帧=%s' % (len(_R_FRAMES), len(_L_FRAMES), _bad_pairs))
+# G10 自检：把拿到的图**故意翻转两次**（等于原图）应当**不**满足镜像关系 ——
+# 除非图像左右对称。取一张左右明显不对称的（否则这条自检本身没鉴别力）。
+_a0 = QImage(os.path.join(_SPRITE_DIR, _R_FRAMES[0]))
+_DBL = _a0.mirrored(True, False).mirrored(True, False)
+ok('G10b 自检：该判据对"未镜像的同一张图"必须报不符（否则它是恒真的假绿）',
+   _mirror_sample_bad(_a0, _DBL) != 0 or _a0.width() < 3,
+   '不符点数=%s' % (_mirror_sample_bad(_a0, _DBL),))
 
 # ============================================================ H 源码级
 section('H 源码级：闸门与"跳还是爬"各只有一处')

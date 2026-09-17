@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **21 套件 / 797 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **21 套件 / 799 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -59,6 +59,11 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
 - **提交信息用 Write 写 UTF-8 文件 + `git commit -F <文件>`**：`-m @'...'@` 遇带空格的英文引号串会被 PS 5.1 拆
   argv → 提交没发生、push 退 0 假成功。提交后必核 `git log --oneline -1`。
   **别用 `Out-File -Encoding utf8` 写提交信息**：PS 5.1 会加 **BOM**，标题首位多出一个不可见字符（`git log` 里显示成 `锘`）；用 `Write` 工具写（无 BOM）。
+  **第十八轮又踩一次，并发现"修法也有坑"**：已经用 `Out-File` 写坏了之后，**不能**用 `Write` 工具去覆盖修复 ——
+  它在**原本带 BOM** 的文件上会**保留 BOM**（内容更新、BOM 还在）→ 第一次 amend 仍然是脏标题。
+  **必须换个新路径重新写**（新文件才无 BOM），或用 Python `open(...,'w',encoding='utf-8')` 重写；
+  **校验**：读前 3 字节（中文标题应是 `231,172,172`，出现 `239,187,191` 就是 BOM）。
+  成本提示：这一步每次都要 `--amend`（**未推送**时安全；已推送就得靠后续提交兜），所以**第一次就别用 `Out-File`**。
 
 ## 仓库与真机
 - 远端 `https://github.com/xiaohanzhe/try-----.git`（私有，未认证 401/404）；main→origin/main。GitHub 连接器只覆盖
@@ -216,7 +221,9 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
      `climb_front`(6，`spr_ralsei_climb_0_degrees_*`)；**没有朝后的**（"那样也用不上"）。三组同时进
      `_builtin_animation_mapping` 与 `animations.json`。回落后方：素材不在库 → `_climb_animation_name` 返回 None
      → 回落 `jump` 家族（**不切灰块**）。新增后 `frame_container_size` 仍 `(222,110)`（两处来源都是）——
-     没碰 H4/H5 那条"用户可见画布"红线。回归锁 `第十八轮/verify_round18_climb.py`（51 项，已进 G2）。
+     没碰 H4/H5 那条"用户可见画布"红线。回归锁 `第十八轮/verify_round18_climb.py`（53 项，已进 G2）。
+  素材镜像的生成/校验脚本 `第十八轮/make_climb_left_assets.py`（幂等；**逐像素断言镜像关系** ——
+  只比尺寸/文件名都拦不住"原样复制"）。
 ## 「建楼」要求：已核实实现面 + 6 个缺口（第十六轮行为级复检，**勿凭直觉"重做"**）
 - 已实现（断言 A1–B4）：每窗一层且 `floor['rect']==window['rect']`；`platform_height=(n−i)×5`（最前最高、桌面 0）；
   可见面积 < `MIN_FLOOR_VISIBLE_AREA`(1600px²) 即不成楼层**且不再遮挡更低的窗口**；`floor_visible_contains` 只认可见区域；
@@ -371,8 +378,8 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   （`_climb_hdir`/`_climb_probe_landing`/`_climb_landing`）；**跳还是爬在 `start_jump` 单点选型**
   （`_jump_kind_for_span`，存 `_jump_anim_override`，`handle_jump` 每帧优先读）；摔扁收敛成
   `_should_splat_on_landing`（速度>150 **且** 落差 ≥`FALL_SPLAT_MIN_DROP=10`）；三组攀爬素材登记两张表
-  （`climb_left` = `climb_right` 的**水平镜像**，一次性生成真落盘）。自检 **51/0**；
-  G2 **21 套件 797 PASS / 0 FAIL / 全 IDENTICAL**（新增 `round18_climb`；4 处有意变更**全是组数计数行**：
+  （`climb_left` = `climb_right` 的**水平镜像**，一次性生成真落盘）。自检 **53/0**；
+  G2 **21 套件 799 PASS / 0 FAIL / 全 IDENTICAL**（新增 `round18_climb`；4 处有意变更**全是组数计数行**：
   组 109→112、载入 489→493、帧 1461→1482、样本 501→505、导出 21319→22156 字节；`frame_container_size` 仍 `(222,110)`）。
   真机跑 30s **0 ERROR/0 WARNING**；另出**素材实渲染图**（`_evidence/climb_frames_preview.png`，非灰块占位）。
   **取舍**：用户"只能相邻"做了**否决性论证**（逐层小跳会因中间层被遮挡而卡死，I 组断言钉住前提）。
