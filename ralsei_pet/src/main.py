@@ -5091,12 +5091,21 @@ class RalseiPet(QMainWindow):
             )
 
         def _on_reply(reply_text):
+            # 先过公共输出护栏：去包裹引号 / 截掉自问自答续写 / 丢弃照抄 persona 示例
+            # 的回复 / 超长截断（第十八轮统一到 _clean_ai_reply，与对话链路同一套规则）
+            #
+            # 防御：这个回调是从工作线程（或测试桩对象）上调过来的，护栏本身出问题
+            # 也**绝不能**让异常冒泡到调用方 —— 否则 start_autonomous_speech 里那个
+            # 宽 except 会把"已发起"误判成 False（第六轮回归 B2/B3/B7/B8 曾因此全挂）。
+            # 取不到护栏就退回最朴素的清洗。
             try:
-                text = (reply_text or "").strip()
-            except Exception:
-                text = ""
-            # 去掉模型爱加的引号/书名号
-            text = text.strip('"\'“”「」『』《》')
+                text = self._clean_ai_reply(reply_text) or ""
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+                try:
+                    text = (reply_text or "").strip().strip('"\'“”「」『』《》')
+                except Exception:
+                    text = ""
             if not text or text in ("。", "…", "。。。", "（保持沉默）"):
                 _log.debug("[自主对话] AI 选择沉默或不可用，本次不开口")
                 return
@@ -6055,6 +6064,8 @@ class RalseiPet(QMainWindow):
         # 更新API配置
         # 修复：timeout/max_retries/retry_delay 对话框没有对应控件，原实现固定
         # 写 30/3/1.0 会把用户在 config.json 手改的值覆盖掉。保存时保留现有值。
+        # 第十八轮：options（对话采样参数）同样没有控件，一并按现有值保留 ——
+        # 否则用户点一次"保存配置"就会把 temperature 悄悄打回旧行为。
         _cur_cfg = getattr(self, 'api_config', None) or {}
         api_config = {
             'enabled': self.api_enabled_checkbox.isChecked(),
@@ -6065,7 +6076,8 @@ class RalseiPet(QMainWindow):
             'api_version': self.api_version_input.currentText(),
             'timeout': _cur_cfg.get('timeout', 30),
             'max_retries': _cur_cfg.get('max_retries', 3),
-            'retry_delay': _cur_cfg.get('retry_delay', 1.0)
+            'retry_delay': _cur_cfg.get('retry_delay', 1.0),
+            'options': _cur_cfg.get('options', {'temperature': 0.85, 'max_tokens': 256})
         }
         
         # 保存API配置
@@ -7130,32 +7142,27 @@ class RalseiPet(QMainWindow):
         import threading
 
         # —— 主线程先准备好上下文与历史（避免工作线程跨线程读 UI/子系统状态）——
-        user_msg = self._build_ai_context() + text
+        # 第十八轮：用户消息保持**纯原话**。【此刻】/话题锚/记忆召回一律挂到 system 尾部。
+        # 实测把它们拼在用户消息前面时，模型会把它当成"用户说的那段话"，
+        # 甚至直接复述成回答（见 Ralsei对话人味诊断与训练方案_2026-09-18.md §E4-V0）。
+        user_msg = text
         history = []
         try:
             history = self.dialogue_ui.get_ai_history(limit=6) \
                 if getattr(self, 'dialogue_ui', None) else []
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
-        # 角色系统提示词：与 Ollama ralsei 模型内置设定互补，突出"简短自然"
-        system = (
-            "你正在扮演《Deltarune》中的 Ralsei——黑暗世界的王子：温柔、善良、"
-            "害羞、体贴的和平主义者。请始终沉浸在角色中，绝不提及自己是 AI，"
-            "也不要跳出角色。\n\n"
-            "【语气与表达】\n"
-            "- 用简体中文回复，每次 1~3 句，像日常聊天一样简短自然；"
-            "不要长篇大论，不要列条目。\n"
-            "- 说话柔和礼貌，可带“呀/呢/吧/哦”等语气词；偶尔用“……”表示"
-            "犹豫或害羞，但不要每句都堆省略号。\n"
-            "- 被夸奖会害羞脸红、谦虚否认；关心主人时会问“你还好吗”“要不要"
-            "休息一下”。\n\n"
-            "【对话习惯】\n"
-            "- 先接住对方说的话（回应内容或情绪），再自然补一句自己的感受或"
-            "关心；不要答非所问。\n"
-            "- 用户消息前可能带【此刻】方块，那是你的环境信息（时间/天气/心情/"
-            "精力/记忆），回应时可以自然融入，但不要逐条复述。\n"
-            "- 不使用攻击性语言，不说教，不故作高深。"
-        )
+        # 角色系统提示词：**单一真源 = assets/ralsei_persona.md**（内含"我是谁 /
+        # 我现在在哪 / 我怎么说 / 示范"四节）。
+        # 为什么必须由 App 发过去：实测 Ollama 会用 messages 里的 system **整体替换**
+        # Modelfile 的 SYSTEM（不传 system 时角色设定生效 prompt_eval_count=1237，
+        # 传了之后骤降到 41）——也就是说，只把设定写在模型的 Modelfile 里，
+        # 在真实应用里**一次都不会生效**。
+        system = self._build_persona_prompt()
+        # 环境信息作为独立小节挂在 system 尾部，而不是塞进用户消息
+        _ctx = self._build_ai_context()
+        if _ctx:
+            system = system + "\n\n" + _ctx
         # 对话注意力（第九轮）：把"我们现在在聊什么"交给模型。
         # 用户要求："把那个 AI 整的有些注意力哈，别到时候聊着一个话题呢突然就切换了。"
         # 只把最近的 6 轮原文交给模型，它每轮都要自己猜"该聊什么"，很容易被一句话带跑；
@@ -7190,9 +7197,32 @@ class RalseiPet(QMainWindow):
                 if cli is None or not getattr(cli, 'enabled', False):
                     self._api_result.emit(None, on_reply)
                     return
-                reply = cli.chat(user_msg, system_prompt=system, history=history,
-                                 temperature=0.7, max_tokens=256)
-                self._api_result.emit(reply, on_reply)
+                opts = self._ai_chat_options()
+                # 最近说过的台词（车轱辘话判定的唯一比对集合，见 _is_repeat_of_recent）
+                recent = [c for _r, c in history if _r == 'assistant']
+                reply = cli.chat(user_msg, system_prompt=system, history=history, **opts)
+                # 输出护栏：小模型（3B）会自问自答续写、把同一句话反复念，
+                # 清洗后才交给 UI（见 _clean_ai_reply）
+                cleaned = self._clean_ai_reply(reply, recent=recent)
+                # 护栏判退（重复自己的旧台词 / 整条续写 / 只有标点）时**重采样一次**，
+                # 而不是直接沉默：这类判退的成因是"这一次采样又落在了记忆里那句上"，
+                # 抬高温度 + 明确要求换个说法，重采样几乎必出一条新的。
+                # 只有"模型确实说了话却被判退"才重试；模型主动沉默（空回复）不重试。
+                if cleaned is None and isinstance(reply, str) and reply.strip():
+                    try:
+                        retry_opts = dict(opts)
+                        retry_opts['temperature'] = min(
+                            1.0, float(opts.get('temperature', 0.85)) + 0.1)
+                        reply2 = cli.chat(
+                            user_msg,
+                            system_prompt=system + "\n\n" + RalseiPet._RETRY_NUDGE,
+                            history=history, **retry_opts)
+                        cleaned = self._clean_ai_reply(reply2, recent=recent)
+                        _log.debug("[本地AI] 护栏判退后重采样：%r → %r",
+                                   (reply or '')[:40], (cleaned or '')[:40])
+                    except Exception as e:
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
+                self._api_result.emit(cleaned, on_reply)
             except Exception as e:
                 _log.warning(f"[本地AI] 对话请求异常: {e}")
                 self._api_result.emit(None, on_reply)
@@ -7260,8 +7290,202 @@ class RalseiPet(QMainWindow):
             pass
         if not parts:
             return ""
-        return "【此刻：" + "，".join(parts) + "】\n"
+        return "【此刻】" + "，".join(parts)
     
+    # ==================================================================
+    # 第十八轮 · 对话 AI「人味」改造（诊断与证据见
+    # Ralsei对话人味诊断与训练方案_2026-09-18.md，提交见同轮 commit）
+    #
+    # 一句话结论：人味不足的主因**不是模型不行**，而是提示词没接对 ——
+    #   ① App 的 system 把模型里 2003 字的角色设定整体顶掉了（实测 1237 → 41 tokens）
+    #   ② 旧 system 里把口头禅写成了示例，3B 直接当模板复读（4 题里 3 题复读同一句）
+    #   ③ 【此刻】拼进用户消息，被模型当成"用户说的话"
+    #   ④ num_ctx 只有 ~2048，人设+历史+记忆被静默截断
+    # ==================================================================
+    # 角色设定相对路径（相对 src/ 的上一级，即仓库内 ralsei_pet/assets/）
+    PERSONA_REL_PATH = os.path.join('assets', 'ralsei_persona.md')
+
+    # 兜底人设：persona 文件缺失/读失败时使用，保证对话链路不因人设丢失而失常
+    _PERSONA_FALLBACK = (
+        "你是《Deltarune》中的 Ralsei：温柔、善良、害羞、体贴的和平主义者。"
+        "你现在住在主人的 Windows 电脑桌面上；主人是真实世界的人，不是 Kris。"
+        "\n\n【说话方式】一次只说 1~3 句，像真人在聊天框里随手打字，"
+        "不要分点、不要小标题、不要总结；先接住主人这句话里的情绪和具体那件事，"
+        "再补一句自己的感受；不要每句都问“你还好吗”；不要说自己是在扮演 AI。"
+    )
+
+    def _build_persona_prompt(self) -> str:
+        """读取角色设定**单一真源** assets/ralsei_persona.md（带缓存 + 兜底）。
+
+        为什么由 App 读文件而不是让模型自带：实测 Ollama 会用请求里的 system
+        整体替换 Modelfile 的 SYSTEM，所以写在模型里的设定在真实应用里不会生效。
+        放在仓库文件里同时解决三件事：单一真源、可版本化、改人设不用重建模型。
+
+        实现约定：本方法**只依赖类属性与局部量**（不读任何 `self.` 实例属性），
+        以便在测试桩（SimpleNamespace + MethodType）上直接调用而不抛 AttributeError。
+        """
+        cache = getattr(self, '_persona_cache', None)
+        if cache is not None:
+            return cache
+        rel = RalseiPet.PERSONA_REL_PATH
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', rel)
+        text = ""
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                text = f.read().strip()
+        except Exception as e:
+            _log.warning(f"[人设] 读取 {rel} 失败，改用内置兜底: {e}")
+        if not text:
+            text = RalseiPet._PERSONA_FALLBACK
+        self._persona_cache = text
+        return text
+
+    def _ai_chat_options(self) -> dict:
+        """对话采样参数：读 config.json 的 api.options，缺省保持旧行为（0.7 / 256）。
+
+        为什么 num_ctx / repeat_penalty **不在这里**：App 走 Ollama 的 OpenAI 兼容
+        端点 /v1/chat/completions，实测该端点会**静默忽略**这两个参数 ——
+        无论放顶层还是塞进 options，长提示词都恒定截断在 ~2050 tokens
+        （对照组：/api/chat 的 options.num_ctx 才生效，5032 tokens）。
+        它们只能写进 assets/ralsei.modelfile 的 PARAMETER。
+        """
+        opts = {}
+        try:
+            cfg = getattr(self, 'api_config', None) or {}
+            src = cfg.get('options') if isinstance(cfg, dict) else None
+            if isinstance(src, dict):
+                if 'temperature' in src:
+                    opts['temperature'] = src['temperature']
+                if 'max_tokens' in src:
+                    opts['max_tokens'] = src['max_tokens']
+        except Exception as e:  # 防御性：配置异常不能拖垮对话
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        opts.setdefault('temperature', 0.7)
+        opts.setdefault('max_tokens', 256)
+        return opts
+
+    # 模型输出里出现这些"对话标记"，说明它在自问自答续写，从这里截断
+    _AI_ROLE_MARKER = None      # 惰性编译（见 _clean_ai_reply）
+    AI_REPLY_MAX_CHARS = 150    # 单条回复硬上限（超长必是跑飞）
+
+    # 护栏判退后重采样时追加的系统提示（只在重试那一次出现，不污染常规对话）
+    _RETRY_NUDGE = (
+        "【这一次请特别注意】你刚才想说的那句话，和你记忆里的老句子几乎一模一样。"
+        "主人已经听过了，再说一遍就没意思了。请**换一个说法**，"
+        "用你自己的话重新回应主人刚刚说的那件事，不要沿用你想到的第一句。"
+    )
+
+    def _clean_ai_reply(self, reply, recent=None):
+        """模型输出护栏（对话与自主开口共用）。返回清洗后的文本，或 None。
+
+        3B 小模型的四种已知失态靠提示词治不干净，必须在这里拦：
+          0) **markdown / 格式残留**：实测会输出 `**加粗**`、`- 列表` 等 —— 对话框是
+             逐字打字机渲染，这些标记会原样显示出来，必须先剥掉
+          1) **自问自答续写**：回复里冒出「主人：」「你：」「Assistant:」等对话标记
+             → 截断到标记之前（实测 temperature 0.9 时 4 题里 2 题这么跑飞）
+          2) **车轱辘话**：与**自己最近说过的某句**高度重合 → 判无效返回 None，
+             交给调用方换说法重采样（判据与取舍见 `_is_repeat_of_recent`）
+          3) **超长跑飞**：超过 max_chars → 从最近的句末标点处截断
+
+        参数 `recent` = Ralsei 最近说过的回复文本（列表）；不传则只做 0/1/3 三步。
+
+        实现约定：`_is_repeat_of_recent` 用 getattr 取、缺失即跳过该步，
+        使本方法在测试桩上也能独立工作（桩只需绑本方法即可）。
+        """
+        try:
+            import re
+            if reply is None:
+                return None
+            if not isinstance(reply, str):
+                reply = str(reply)
+            t = reply.strip()
+            if not t:
+                return None
+            # 0) 剥掉 markdown 强调/列表标记（对话框不做 markdown 渲染）
+            #    数字列表要求"点号后必须跟空白"，否则会把「1.5 倍」这类误伤成「5 倍」
+            t = re.sub(r'\*{1,3}|`{1,3}|^[#>\-]\s*|^\d+[.、]\s+',
+                       '', t, flags=re.M).strip()
+            # 去掉模型爱加的包裹引号/书名号
+            t = t.strip('"\'“”「」『』《》').strip()
+            if not t:
+                return None
+            # 只有标点、没有任何实义字符（如单回一个「。」）→ 视为无效
+            if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
+                return None
+            # 1) 自问自答续写 → 截到标记之前
+            if RalseiPet._AI_ROLE_MARKER is None:
+                RalseiPet._AI_ROLE_MARKER = re.compile(
+                    r"(?:^|[\n\r])\s*(?:主人|用户|你|Ralsei|ralsei|Assistant|User|Human)"
+                    r"\s*[：:]")
+            m = RalseiPet._AI_ROLE_MARKER.search(t)
+            if m:
+                # 标记出现在行首（m.start()==0）说明整条都是续写，截完为空 → 判无效
+                t = t[:m.start()].strip()
+            if not t:
+                return None
+            # 2) 车轱辘话：和自己最近说过的某句高度重合 → 判无效（调用方会重采样）
+            _rec = getattr(self, '_is_repeat_of_recent', None)
+            if callable(_rec) and _rec(t, recent):
+                _log.debug("[本地AI] 回复与近期台词高度重合，判为重播，丢弃")
+                return None
+            # 3) 超长 → 从最近的句末标点截断
+            max_chars = getattr(self, 'AI_REPLY_MAX_CHARS', None) or RalseiPet.AI_REPLY_MAX_CHARS
+            if len(t) > max_chars:
+                cut = -1
+                for sep in ('。', '！', '？', '!', '?', '\n'):
+                    i = t.rfind(sep, 0, max_chars)
+                    if i > cut:
+                        cut = i
+                t = (t[:cut + 1] if cut > 0 else t[:max_chars]).strip()
+            return t or None
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return reply if isinstance(reply, str) and reply.strip() else None
+
+    def _is_repeat_of_recent(self, text: str, recent=None) -> bool:
+        """这条回复是不是**自己刚说过的话**的翻版（车轱辘话检测）。
+
+        比对集合只有 `recent`（Ralsei 最近几轮说过的回复）。
+
+        为什么**不把 persona 示范句放进比对集合**（这是本轮实测推翻了的设计）：
+        3B 对「我好喜欢你呀」这类高频问题会**稳定地**吐出示范句，如果示范句一律判退，
+        真机上就是"判退 → 重采样 → 还是照抄 → 交回 None → 观众看到的是内置规则台词"，
+        比照抄本身更出戏。而示范句本身是句好台词，**第一次说出来完全没问题**；
+        真正让人觉得"没活人味"的是**同一句反复出现**——这正是 recent 能覆盖的：
+        第二次再想抄，它就落在 recent 里了，于是被拦下重采样。
+
+        判据用**两条互补**（第十八轮实测定的经验值）：
+          1) 整体相似度 difflib ≥ 0.82 —— 抓"只改两三个字"的整句复用；
+          2) 最长公共匹配块 ≥ 12 字 —— 抓"整体相似度不到 0.82，但有一大段原样搬来"
+             （实测 3B 会：开头换两个字、后半段照抄，整体 ratio 只有 0.74）。
+        归一化先去掉标点/空白，避免仅因标点差异漏判。
+        """
+        try:
+            import re
+            import difflib
+
+            def _norm(s):
+                return re.sub(r'[\s，。！？!?、~…—\-（）()「」“”"\'’*`]', '', str(s))
+
+            t = _norm(text)
+            if len(t) < 6 or not recent:
+                return False
+            for sample in recent:
+                s = _norm(sample)
+                if len(s) < 6:
+                    continue
+                if abs(len(s) - len(t)) <= 6 and \
+                        difflib.SequenceMatcher(None, t, s).ratio() >= 0.82:
+                    return True
+                biggest = max(
+                    (b.size for b in difflib.SequenceMatcher(None, t, s).get_matching_blocks()),
+                    default=0)
+                if biggest >= 12:
+                    return True
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return False
+
     def _on_api_result(self, response, callback):
         """主线程槽：处理工作线程返回的 API 结果（由 _api_result 信号触发）。"""
         try:

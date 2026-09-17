@@ -87,6 +87,7 @@ HERMETIC_IDS = frozenset({
     's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
     'round8_dialogue', 'round8_floor', 'round8_fling',
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
+    'persona_chat',
 })
 
 
@@ -239,6 +240,19 @@ SUITES = [
         'desc': '第十八轮：「建楼」缺口计划 · 批次 B —— G3 层高闸门（走进去不再被静默提升，'
                 '上楼/下楼都改成"跳";跨度 ≤一层用 jump、更大用 climb_* 攀爬素材）+ 落点预留水平距离'
                 '+ 被动成因（关窗/要求⑪）不被误伤 + 摔扁门槛收紧到"落差 ≥两层"',
+    },
+    {
+        # 命名刻意不叫 round19：本轮（对话 AI 人味改造）与「建楼」批次 B 同为第十八轮，
+        # 编号已被占用；语义化 id 比编号更能说明它守的是什么。
+        # 它**不联网、不调用 Ollama** —— 模型质量天生不可复现，不进基线。
+        'id': 'persona_chat',
+        'script': os.path.join(ROOT, 'code-quality-audit', '人味改造-2026-09-18',
+                               'verify_persona_chat.py'),
+        'offscreen': True,
+        'desc': '人味改造：角色设定外置单一真源（persona 无 markdown / 示范成对 / 桌宠化口径）'
+                '+ 接线修对（用户消息纯原话、【此刻】挂 system 尾、recent 抽 role==assistant）'
+                '+ 输出护栏 17 例（markdown 剥除 / 自问自答截断 / 车轱辘话判退 / 超长截断）'
+                '+ 判退后换说法重采样（FakeCli 行为级）+ 关键词收紧 + Modelfile 参数',
     },
 ]
 

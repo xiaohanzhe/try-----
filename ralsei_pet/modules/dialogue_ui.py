@@ -168,6 +168,51 @@ class DialogueUI(QWidget):
     # 10 分钟自主开口闸门用它来避免"聊到一半突然插一句自己的话题"。
     ACTIVE_CONVERSATION_SECONDS = 150.0
 
+    # ------------------------------------------------------------------
+    # 第十八轮 · 关键词指令的命中规则分两类
+    #
+    # 旧实现一律 `kw in raw` 纯子串匹配，于是：
+    #   "我快哭了"          → 被「哭」截胡 → "呜... 为什么要让我哭嘛..."
+    #   "我做的游戏上线了"  → 被「游戏」截胡 → "我最喜欢玩游戏了！想玩什么呢？"
+    #   "我状态不太好"      → 被「状态」截胡 → 播报情绪/精力/饥饿
+    # 用户感受就是"很死板"。诊断见 Ralsei对话人味诊断与训练方案_2026-09-18.md §E6。
+    #
+    # 拆法：
+    #   · **_HARD_CMDS**（下表所列）：真正驱动状态机/动作的指令，保持子串命中 ——
+    #     用户说"你去睡觉吧"也得能退出去睡觉。这些**不能**交给 AI，否则动作不会发生。
+    #   · 其余（天气/状态/精力/游戏/跳舞/唱歌/哭/喝茶…）：只是"说一句罐头话"，
+    #     收紧为**指令式命中**（见 _is_command_phrase），否则放行给 AI 自由回答。
+    #     放行后 AI 依然答得上 —— `_build_ai_context()` 已经把时段/天气/心情/
+    #     精力/饥饿都注进 system 了。
+    _HARD_CMDS = frozenset({
+        "你去睡觉吧", "睡觉", "休眠", "暂停", "醒醒", "醒来",
+        "喂食", "喂我", "吃东西", "抚摸", "摸摸头", "摸我",
+        "石头剪刀布", "猜数字", "猜一个数", "躲猫猫", "捉迷藏",
+    })
+
+    # 软指令允许"多出来的字"数量：去掉关键词后剩下的字（忽略空白与标点）
+    # 不超过这个数，才算"这是一句指令"而不是"聊天里顺带提到了这个词"。
+    #   天气 → "" ✓            查看天气 → "查看" ✓
+    #   今天天气真好 → "今天真好" ✗（放行给 AI）
+    #   我快哭了（vs「哭」）→ "我快了" ✗（放行给 AI）
+    CMD_EXTRA_ALLOWANCE = 2
+
+    @classmethod
+    def _is_command_phrase(cls, raw, kw, max_extra=None):
+        """软闲聊关键词的收紧命中：只有"指令式"提及才算命中。"""
+        if kw not in raw:
+            return False
+        try:
+            import re
+            if max_extra is None:
+                max_extra = cls.CMD_EXTRA_ALLOWANCE
+            rest = raw.replace(kw, "", 1)
+            rest = re.sub(r'[\s，。！？!?,\.~、；;：:\-—…（）()]+', '', rest)
+            return len(rest) <= max_extra
+        except Exception as e:  # 防御性：判不出来就按"不命中"处理，放行给 AI
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            return False
+
     # ------------------------------------------------------------------ init
     def __init__(self, parent):
         super().__init__(parent)
@@ -1475,7 +1520,11 @@ class DialogueUI(QWidget):
         ]
 
         for kw, (action, reply, face) in cmds:
-            if kw in raw:
+            # 第十八轮：按关键词归属选命中规则（硬指令=子串；软闲聊=指令式），
+            # 避免"我快哭了""我做的游戏上线了"这类正经话被罐头台词截胡。
+            hit = (kw in raw) if kw in self._HARD_CMDS \
+                else self._is_command_phrase(raw, kw)
+            if hit:
                 try:
                     result = action()
                 except Exception as _e:

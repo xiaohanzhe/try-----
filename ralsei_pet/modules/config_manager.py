@@ -62,7 +62,16 @@ class ConfigManager:
                 "api_version": "v1",
                 "timeout": 30,
                 "max_retries": 3,
-                "retry_delay": 1.0
+                "retry_delay": 1.0,
+                # 第十八轮：对话采样参数。temperature 调高一点更"活"，但小模型
+                # （3B）的模板复读/自问自答要靠 main._clean_ai_reply 的输出护栏兜。
+                # 注意 num_ctx / repeat_penalty **不能**放这里 —— App 走 Ollama 的
+                # OpenAI 兼容端点 /v1/chat/completions，实测该端点会静默忽略这两个
+                # 参数，它们只能写进 assets/ralsei.modelfile。
+                "options": {
+                    "temperature": 0.85,
+                    "max_tokens": 256
+                }
             },
             "privacy": {
                 "enable_usage_data": False,

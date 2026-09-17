@@ -1,6 +1,12 @@
 {
   "note": "归一化输出的 SHA-256 快照。改造前后必须逐字节一致；有意变更时用 --update 重建。",
   "suites": {
+    "persona_chat": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 58,
+      "sha256": "150e19dc4c4afa34179569a07c43603e31bc0d359dfeb3758f4ec5e4ab05c05c"
+    },
     "round10_graph": {
       "exit": 0,
       "fail": 0,

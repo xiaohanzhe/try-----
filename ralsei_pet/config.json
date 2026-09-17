@@ -4,12 +4,16 @@
     "enabled": true,
     "api_key": "",
     "base_url": "http://localhost:11434",
-    "model": "ralsei",
+    "model": "ralsei:v2",
     "agent_id": "",
     "api_version": "v1",
     "timeout": 30,
     "max_retries": 3,
-    "retry_delay": 1.0
+    "retry_delay": 1.0,
+    "options": {
+      "temperature": 0.85,
+      "max_tokens": 256
+    }
   },
   "privacy": {
     "enable_usage_data": false,
