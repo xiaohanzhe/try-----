@@ -1,0 +1,75 @@
+--- s2_anim_json (baseline)
++++ s2_anim_json (now)
+@@ -1,22 +1,22 @@
+ === A. JSON 结构 ===
+   [PASS] A1     animations.json 存在于 ralsei_pet/assets/  :: <ROOT>/ralsei_pet/assets/animations.json
+   [PASS] A2     schema_version == 1（受支持）  :: version=1
+-  [PASS] A3     groups 非空且每个组都有 frames 列表  :: groups=109
+-  [PASS] A4     导出器幂等：同一输入连续两次导出逐字节一致  :: 21319 字节
++  [PASS] A3     groups 非空且每个组都有 frames 列表  :: groups=112
++  [PASS] A4     导出器幂等：同一输入连续两次导出逐字节一致  :: 22156 字节
+   [PASS] A5     文件可被解析（alias_of 展开、无成环）
+   [PASS] A6     所有组只含已知字段（拼错的键不会被静默忽略）  :: 未知=无
+   [PASS] A7     comment 统一为非空字符串数组（保留源码多行注释）  :: 异常=无
+ 
+ === B. 与源码硬编码表深度相等（S2 的核心断言） ===
+-  [PASS] B1     键集合完全相同  :: builtin=109 json=109
++  [PASS] B1     键集合完全相同  :: builtin=112 json=112
+   [PASS] B2     键顺序也相同（导出保持源码顺序）
+   [PASS] B3     每组解析后的帧列表逐项相等（含顺序）  :: 不一致的组=[]
+-  [PASS] B4     总帧数一致  :: frames=377
++  [PASS] B4     总帧数一致  :: frames=393
+   [PASS] B5     别名组的原始 frames 已清空（不再靠"再写一遍文件名"表达）  :: 别名组=['happy', 'neutral', 'sad', 'splat_mad']
+ 
+ === C. 运行时等价：读 JSON vs 强制内置表 ===
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 109 组动画（legacy 28 组，schema=1）
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 未找到 <TMP> → 使用内置动画表（109 组）
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 未找到 <TMP> → 使用内置动画表（112 组）
+   [PASS] C1     默认加载走 JSON  :: source=json
+   [PASS] C2     路径不可用时回落内置表  :: source=builtin
+   [PASS] C3     两条来源的 animation_mapping 深度相等
+@@ -24,10 +24,10 @@
+   [PASS] C5     position_offset 仍为空（JSON 里没有非零偏移）  :: offset={}
+   [PASS] C6     legacy 集合与 JSON 里 legacy:true 的组一致（S3 起不再为空）  :: json=28 组（内置表来源无 legacy，因为内置表没有这个字段）
+   ... 两个 loader 各自 load_sprites()（各加载 1000+ 张 PNG，稍等）
+-  [PASS] C7     sprites 键集合相同  :: json=489 builtin=489
++  [PASS] C7     sprites 键集合相同  :: json=493 builtin=493
+   [PASS] C8     每组的帧数逐个相同（含自动扫描进来的组）  :: 不同的组=[]
+   [PASS] C9     frame_container_size 相同  :: json=(222, 110) builtin=(222, 110)
+-  [PASS] C10    加载到的总帧数相同  :: frames=1461
++  [PASS] C10    加载到的总帧数相同  :: frames=1482
+ 
+ === D. 五种坏 JSON 一律回落内置表（可回滚） ===
+ <TS> [ERROR] ralsei_pet.sprite_loader — [anim-config] 读取 <TMP> 失败 → 回落内置动画表：Expecting value: line 1 column 1 (char 0)
+@@ -43,10 +43,10 @@
+ 
+ === E. 引用缺失帧：只报告，不静默丢帧 ===
+ <TS> [WARNING] ralsei_pet.sprite_loader — [anim-config] ghost.json 引用了 2 个磁盘上不存在的帧（涉及 2 组）：idle/ghost_frame_不存在.png、neutral/ghost_frame_不存在.png
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 ghost.json 加载 109 组动画（legacy 28 组，schema=1）
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 ghost.json 加载 112 组动画（legacy 28 组，schema=1）
+   [PASS] E1     含缺失帧的配置仍被接受（不抛异常、不回退）
+   [PASS] E2     缺失帧被记进 get_animation_config_report()（并沿别名传播）  :: total=2 期望=2 组=idle,neutral
+-  [PASS] E3     报告里的组数与 legacy 数与文件声明一致  :: groups=109/109 legacy=28
++  [PASS] E3     报告里的组数与 legacy 数与文件声明一致  :: groups=112/112 legacy=28
+ 
+ === F. S3 字段已就绪：alias_of / legacy / offset ===
+ <TS> [ERROR] ralsei_pet.sprite_loader — [anim-config] <TMP> 校验不通过 → 回落内置动画表：laugh 与 alias_of(idle) 的帧不一致
+@@ -58,13 +58,13 @@
+   [PASS] F5     非零 offset 进 position_offset  :: offset={'jump': (0, -10)}
+ 
+ === G. 自动扫描并入的影响度量（回答"能否现在就降级为补漏报告器"） ===
+-  [PASS] G1     get_unconfigured_asset_report() 只返回"配置表里没有"的名字  :: 数量=380，样例=['spr_board_ralsei_dead', 'spr_board_ralsei_hurt', 'spr_board_ralsei_itemget']
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 未找到 <TMP> → 使用内置动画表（109 组）
+-  [PASS] G2     不并入自动扫描时，加载的组数 = 配置表组数  :: no_scan=109 config=109
++  [PASS] G1     get_unconfigured_asset_report() 只返回"配置表里没有"的名字  :: 数量=381，样例=['spr_board_ralsei_dead', 'spr_board_ralsei_hurt', 'spr_board_ralsei_itemget']
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 未找到 <TMP> → 使用内置动画表（112 组）
++  [PASS] G2     不并入自动扫描时，加载的组数 = 配置表组数  :: no_scan=112 config=112
+   [PASS] G3     冻结口径：停用自动并入**会**改变容器尺寸（据此本轮不降级）  :: merged=(222, 110) no_scan=(136, 71)
+   [PASS] G4     容器尺寸整体等比缩放（差异不是单类图异常撑开）  :: merged=(222, 110) no_scan=(136, 71)
+   [PASS] G5     停用自动并入后"最高参与组"确实降低（确认是并入带来的）  :: 110 → 71
+-  [NOTE] 自动扫描多并入 380 组（1084 帧）；停用后容器尺寸由 (222, 110) 变为 (136, 71) —— 这是**用户可见的视觉变更**，因此 scan_and_group_assets 本轮只新增 get_unconfigured_asset_report()（只读报告），不改变加载行为；是否降级需单独一步 + 单独验收。
++  [NOTE] 自动扫描多并入 381 组（1089 帧）；停用后容器尺寸由 (222, 110) 变为 (136, 71) —— 这是**用户可见的视觉变更**，因此 scan_and_group_assets 本轮只新增 get_unconfigured_asset_report()（只读报告），不改变加载行为；是否降级需单独一步 + 单独验收。
+   [NOTE] 参与包围盒的"最高组"：并入自动扫描时 [(110, 'spr_cutscene_27_ralsei_huh'), (110, 'spr_cutscene_27_ralsei_look'), (110, 'spr_cutscene_27_ralsei_mu')] ；停用后 [(71, 'susie_throw_ready'), (55, 'item'), (47, 'defeat')]
+   [NOTE]   → 撑大容器的是**自动扫描进来的、配置表里没有的组**：spr_cutscene_27_ralsei_huh（帧高 110）
+ 

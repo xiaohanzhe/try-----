@@ -104,6 +104,10 @@ class SpriteLoader:
             "jump_ball": ["spr_ralsei_jump_ball_0.png", "spr_ralsei_jump_ball_1.png", "spr_ralsei_jump_ball_2.png", "spr_ralsei_jump_ball_3.png"],
             "fall": ["spr_ralsei_fall_back_0.png"],
             "land": ["spr_teacup_ralsei_land_0.png", "spr_teacup_ralsei_land_1.png", "spr_teacup_ralsei_land_2.png"],
+            # 「建楼」批次 B（第十八轮）：楼层高低变换的攀爬衔接（跨度低用跳、跨度高用爬）
+            "climb_right": ["spr_ralsei_climb_1_0.png", "spr_ralsei_climb_1_1.png", "spr_ralsei_climb_1_2.png", "spr_ralsei_climb_1_3.png", "spr_ralsei_climb_1_4.png"],
+            "climb_left": ["spr_ralsei_climb_left_0.png", "spr_ralsei_climb_left_1.png", "spr_ralsei_climb_left_2.png", "spr_ralsei_climb_left_3.png", "spr_ralsei_climb_left_4.png"],
+            "climb_front": ["spr_ralsei_climb_0_degrees_0.png", "spr_ralsei_climb_0_degrees_1.png", "spr_ralsei_climb_0_degrees_2.png", "spr_ralsei_climb_0_degrees_3.png", "spr_ralsei_climb_0_degrees_4.png", "spr_ralsei_climb_0_degrees_5.png"],
             "slide": ["spr_ralsei_slide_0.png", "spr_ralsei_slide_1.png", "spr_ralsei_slide_2.png"],
             "roll": ["spr_ralsei_roll_0.png", "spr_ralsei_roll_1.png", "spr_ralsei_roll_2.png", "spr_ralsei_roll_3.png", "spr_ralsei_roll_4.png", "spr_ralsei_roll_5.png", "spr_ralsei_roll_6.png", "spr_ralsei_roll_7.png", "spr_ralsei_roll_8.png", "spr_ralsei_roll_9.png", "spr_ralsei_roll_10.png"],
             "dance": ["spr_ralsei_dance_0.png", "spr_ralsei_dance_1.png", "spr_ralsei_dance_2.png", "spr_ralsei_dance_3.png", "spr_ralsei_dance_4.png", "spr_ralsei_dance_5.png", "spr_ralsei_dance_6.png", "spr_ralsei_dance_7.png"],

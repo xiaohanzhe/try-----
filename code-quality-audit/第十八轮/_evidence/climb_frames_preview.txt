@@ -1,0 +1,16 @@
+OUT = C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第十八轮\_evidence\climb_frames_preview.png
+图例（自上而下，色带颜色 → 动画组）：
+  1. 浅蓝   climb_right  ← 用户素材 spr_ralsei_climb_1_*（朝右）
+  2. 浅绿   climb_left   ← 由上一组水平镜像落盘的 spr_ralsei_climb_left_*
+  3. 浅黄   climb_front  ← 用户素材 spr_ralsei_climb_0_degrees_*（朝前）
+  4. 浅粉   jump         ← 既有跳跃素材（跨度 ≤ 一层时用它，当标尺）
+  5. 灰     idle         ← 既有待机（当尺寸标尺：69x47）
+（红色实心块 = 该帧取到空 QPixmap，正常不该出现）
+（离屏环境无字体，QPainter.drawText 静默不画，所以图例只能写在这里）
+
+missing_or_null = 无
+climb_right = [(20, 40), (22, 43), (27, 44), (22, 43), (20, 40)]
+climb_left  = [(20, 40), (22, 43), (27, 44), (22, 43), (20, 40)]
+climb_front = [(27, 44), (27, 44), (28, 39), (27, 44), (27, 44), (28, 39)]
+frame_container_size = (222, 110)
+anim_miss_report = []

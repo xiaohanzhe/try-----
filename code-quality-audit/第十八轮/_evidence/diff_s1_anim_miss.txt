@@ -1,0 +1,20 @@
+--- s1_anim_miss (baseline)
++++ s1_anim_miss (now)
+@@ -1,6 +1,6 @@
+ === 载入素材 ===
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 109 组动画（legacy 28 组，schema=1）
+-  已加载动画组: 489，帧总数: 1461
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
++  已加载动画组: 493，帧总数: 1482
+ 
+ === A. 自检本身 ===
+   [PASS] A1       load_sprites 阶段未产生任何 miss（加载不应被误记为请求）  :: misses=0
+@@ -24,7 +24,7 @@
+ <TS> [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'nonexistent_prefix_abc' → 回退 'idle' (来源: change_animation)
+ <TS> [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'walk' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+ <TS> [WARNING] ralsei_pet.sprite_loader — [anim-miss] 动画名不存在: 'run' → 回退 'idle' (来源: change_animation) ；疑似拼接参数非法：缺少方向词（应为 down/up/left/right 之一）
+-  [PASS] B1       全部 501 个样本的落点与改造前算法一致
++  [PASS] B1       全部 505 个样本的落点与改造前算法一致
+   [PASS] B2       walk_up_blush → walk_up（素材缺失走前缀回退）  :: walk_up
+   [PASS] B3       该次回退已入账且回退目标记录为 walk_up  :: {'count': 2, 'where': {'change_animation'}, 'resolved': {'walk_up'}}
+   [PASS] B4       walk_down_blush 直接命中（不产生误报）

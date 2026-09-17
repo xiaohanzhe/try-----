@@ -119,7 +119,8 @@ SUITES = [
         'id': 's1_anim_miss',
         'script': os.path.join(ROOT, 'code-quality-audit', '架构改造-H4H5', 'verify_s1_animation_miss.py'),
         'offscreen': True,
-        'desc': 'H5-S1：动画名未命中自检 17 项 + 501 样本等价性',
+        'desc': 'H5-S1：动画名未命中自检 17 项 + 全样本等价性（样本数 = 动画组数，'
+                '随素材组增减，勿把具体数字写进描述）',
     },
     {
         'id': 's2_anim_json',
@@ -230,6 +231,14 @@ SUITES = [
         'desc': '第十七轮：「建楼」缺口计划 · 批次 A —— G2 下落判据换成层高比较'
                 '（关窗后**下方还有窗口**也要掉，复检的原例）+ G1 生气动画真的播且真的停满'
                 '（关窗 ≥5s / 挪楼板 ≥3s：死参数 max_fall_duration 已清、落地不再被普通 splat 顶掉）',
+    },
+    {
+        'id': 'round18_climb',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第十八轮', 'verify_round18_climb.py'),
+        'offscreen': True,
+        'desc': '第十八轮：「建楼」缺口计划 · 批次 B —— G3 层高闸门（走进去不再被静默提升，'
+                '上楼/下楼都改成"跳";跨度 ≤一层用 jump、更大用 climb_* 攀爬素材）+ 落点预留水平距离'
+                '+ 被动成因（关窗/要求⑪）不被误伤 + 摔扁门槛收紧到"落差 ≥两层"',
     },
 ]
 

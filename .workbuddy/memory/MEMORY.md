@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **20 套件 / 746 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **21 套件 / 797 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -192,16 +192,41 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   甩飞也播生气版并停 5s）；④ 判定函数放**模块级**、**不要**做成 `RalseiPet` 方法 —— 多个历史套件用
   `SimpleNamespace` 轻量桩驱动 `RalseiPet.handle_fall(stub, ...)`，加实例方法会当场 AttributeError
   崩掉三个套件。回归锁 `第十七轮/verify_round17_build_fall.py`（18 项，已进 G2）。
+
+- **「建楼」层高闸门 + 跳/攀爬衔接（第十八轮批次 B，**勿回退**）**：`check_window_movement` 里新增闸门 ——
+  `walk_induced = (new_h != old_h and getattr(self,'is_moving',False) and is_floor_valid(old_floor))`，
+  成立则先试 `_start_climb_transition`；**上楼够不着 ⇒ 保持原楼层**（不许退回"静默提升"，那就是缺口 G3 本身），
+  **下楼够不着 ⇒ 服从重力**（要求⑭）。**入口只用既有属性** → 历史轻量桩（无 `is_moving`）仍走被动路径
+  （这是 21 套件全 IDENTICAL 的原因，别为了"更准"去加新属性）。
+  ① **跳还是爬 = 单点选型**：`start_jump` 按 `_jump_kind_for_span(|Δplatform_height|)` 决定，`≤CLIMB_SPAN_JUMP_MAX=5`
+     用 `jump` 家族、更大用 `climb_*`；结果存 `_jump_anim_override`，**`handle_jump` 每帧必须先读它**
+     （否则第二帧被 `jump` 顶掉＝白切）。两条入口共用这一份判据，别在调用方各写一份。
+  ② **落点"先让开再吸附"**（用户："要预留一定距离哦，别看着和垂直起跳一样"）：`_climb_hdir`（优先沿用走路朝向）
+     → `cur ± CLIMB_HORIZONTAL_RUN(90)` 各取候选 → `_climb_probe_landing` 吸附进**可见区域** + 位移上限
+     `CLIMB_LANDING_MAX_TRAVEL(320)` → `_climb_landing` 两方向择优（`CLIMB_MIN_RESERVE=24`）。
+  ③ **摔扁门槛**：唯一入口 `_should_splat_on_landing`（两个落点共用）= 速度 >150 **且** 落差
+     ≥ `FALL_SPLAT_MIN_DROP=10`（两层）；"主动下来"那一半天然不成立（走路走跳/爬链路，不进坠落状态机）。
+     `_fall_from_height` 进入坠落时记一次；`_landing_drop_height` **必须夹到 ≥0**（落差是物理量不是有向坐标差）。
+  ④ **不做"逐层小跳"（本轮最重要的取舍，勿凭直觉改回去）**：用户说过"不能一次性跳上跨度很高的楼层……只能相邻"，
+     但**在这套几何下逐层会卡死** —— 楼层名次＝z 序，宠物被判到第 N 层正因它的位置落在**最前面**那块板的
+     **可见区域**里，而那正是第 N−1/N−2 层**被挡住**的地方，中间层在该位置**没有可见区域** → 逐层第一步就
+     吸附失败 → 每步 False → **宠物永远上不去**（"进不去窗口"，比改前更糟）。故跨层**换素材不换落点**
+     （攀爬素材 + 320px 位移上限）。前提已被 `第十八轮` I 组断言钉住（I1 下层在同一位置无可见区域）。
+  ⑤ **素材**：`climb_right`(5，`spr_ralsei_climb_1_*`) / `climb_left`(5，**上面那组的水平镜像**，真落盘) /
+     `climb_front`(6，`spr_ralsei_climb_0_degrees_*`)；**没有朝后的**（"那样也用不上"）。三组同时进
+     `_builtin_animation_mapping` 与 `animations.json`。回落后方：素材不在库 → `_climb_animation_name` 返回 None
+     → 回落 `jump` 家族（**不切灰块**）。新增后 `frame_container_size` 仍 `(222,110)`（两处来源都是）——
+     没碰 H4/H5 那条"用户可见画布"红线。回归锁 `第十八轮/verify_round18_climb.py`（51 项，已进 G2）。
 ## 「建楼」要求：已核实实现面 + 6 个缺口（第十六轮行为级复检，**勿凭直觉"重做"**）
 - 已实现（断言 A1–B4）：每窗一层且 `floor['rect']==window['rect']`；`platform_height=(n−i)×5`（最前最高、桌面 0）；
   可见面积 < `MIN_FLOOR_VISIBLE_AREA`(1600px²) 即不成楼层**且不再遮挡更低的窗口**；`floor_visible_contains` 只认可见区域；
   上跳落点过 `nearest_visible_point`（推远 >200px 放弃）；`adjacent_lower_floor` 显式逐层；`_apply_pet_z_order` 插位；
   `WindowStaysOnTopHint` 已移除。
-- **缺口（4 批次；A 已修完）**：
+- **缺口（4 批次；A、B 已修完，C/D 未动）**：
   1. ~~**⑬ 生气动画 ≥5s 不成立**~~ **→ 第十七轮已修**，见上一条。
   2. ~~**⑧/⑩ 下方还有窗口时不坠落**（要求原文第 30 行的例子）~~ **→ 第十七轮已修**（层高判据）。
-  3. **⑤ 走路没有层高闸门**：站桌面走进窗口可见区域被**直接提升**到该层，不跳不摔；`generate_new_move_target`
-     里完全不出现 `window`/`floor`。**待用户拍板**（收紧 / 补过渡动作 / 维持）。
+  3. ~~**⑤ 走路没有层高闸门**：站桌面走进窗口可见区域被**直接提升**到该层，不跳不摔~~ **→ 第十八轮已修**
+     （层高闸门 + 跳/攀爬衔接，见上一条）；⚠️ 与之配套的"跨层是否逐层"见第十八轮条目 ④（**判定不可行**）。
   4. **⑨ 偏差（保留）**：位移 >400px 不跟随改失足（为最大化/还原）；要求字面是"必须跟着"。
   5. **`climb_to_top_window()` 仍走裸窗口**（挑最前面那个窗口，按定义不会被盖，暂不出问题）。
   6. **①③ 偏差（保留）**：窗口"只被遮住一部分但可见 <1600px²"直接不成楼层，要求字面只说"完全盖住"才不存在。
@@ -258,6 +283,27 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   静静绿了一年多，而"生气动画至少 5s"**从未成立**（那条赋值是死参数）。识别信号：
   **断言里的量在产品里没有任何行为依赖它**。替代写法：把状态机真的推进（第十七轮 B3 推 100 帧 ×0.05s，
   量出进入晕乎的时刻 = 5.0 / 3.0 / 1.0s）。**能推进状态机量出来的，就别只检查一行赋值。**
+- **"测试自己坏了"比"测试没写"更危险（第十八轮，最值钱的一条）**：桩**形状**写错（扁平的
+  `SimpleNamespace(sprites=...)`，而函数读的是 `pet.sprite_loader.sprites`）→ 函数**恒返回 None** →
+  "素材不在库应返回 None"这条**负控制必然通过＝没测**（假绿）。它是被**配对的正控制**（"素材在库应返回名字"）
+  红了才揪出来的。**铁律：正/负控制必须成对**；只留负控制时，"测试自己坏了"可以一直绿下去。
+  另：**断言失败详情要能诊断** —— detail 写 `None` 时红了只有 `<<< None`，分不清"名字错"还是"桩错"；
+  改成打印实际返回值 + 库里的键，一眼定位。**断言失败要把现场交出来。**
+- **源码级 needle 含字符串字面量 → 必须走 `func_lit`（第十八轮，第 4 次踩）**：`func_code` 把 STRING token
+  一起剥掉，`getattr(self,'_jump_anim_override',None)` 这个 needle 里的属性名是字符串字面量 → 剥完变成
+  `getattr(self,,None)` → **永远搜不到 → 假红**。定式：**含引号的 needle 用 `func_lit`（只剥注释），
+  再用一条**不含引号**的 needle 在 `func_code` 上补一刀，两边互证**。
+  本轮不再靠"记得"——加了 **X0 自检**把两个视图的语义钉住（`func_code` 搜不到字面量 / `func_lit` 搜得到 /
+  两者都搜不到注释）：**工具的语义本身也要有断言**，否则它一变形，下面所有断言一起失真。
+- **离屏环境没有字体（第十八轮）**：Qt 打 `QFontDatabase: Cannot find font directory`，
+  **`QPainter.drawText` 静默不画**（素材对照图第一版整行标题一个字都没有，连试两版才发现）。
+  headless 出图**不能靠文字** → 改用色带 + 外部图例（同名 `.txt`）。同理：**别把"看不见"当成"画对了"**。
+- **列表推导手滑多打一层（第十八轮）**：`[n for n in (... for n in n) if ...]` → `NameError: name 'n' is not defined`，
+  报错点在推导式内部、traceback 只给行号，看不出是"手滑" → **先展平再筛**，别把嵌套推导写成一行。
+- **证据必须 Python 自己写（第 2 次踩，见环境铁律 10）**：本轮第一遍跑套件用 `Out-File -Encoding utf8` 收
+  PowerShell 管道里的 python stdout，读回来是"涓婃ゼ"这种乱码（能猜出 PASS/FAIL 但**不能当证据**）。
+  项目里早有现成套路（`第十七轮/run_round17.py` 的"runpy + StringIO + 自己写文件"）→
+  **先找项目里已有的工具/套路，再动手写**，别第 N 次重造并重踩。
 
 ## 历轮（细节见 `.workbuddy/memory/<日期>.md` 与对应报告）
 - 7–8：README 路径 import 修复；#10 ▼ 抖动 `024b6aa` / #11 坠落误判 `cc9471d` / #12 斜抛+空中二次抓+卡动画
@@ -317,6 +363,22 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `round6_verify` / `round8_fling` 的轻量桩当场 AttributeError 崩在半路）；④ **断言要断行为不要断赋值**
   （round14 那条绿了一年多而要求从未成立；新 B3 直接把阶段机推进 100 帧量出停留 5.0s/3.0s/1.0s）。
   另外给第十六轮只读复检套件加注"历史快照：修复后 GAP 断言必然翻转，这是设计如此不是回归"。
+
+- 18 `代码质量复审报告_2026-09-17_第十八轮.md`：**「建楼」缺口批次 B —— G3 层高闸门 + 换层全接跳/攀爬**。
+  用户拍板："楼层层高变换必须靠跳衔接"/"走进更低楼层也一样，**下楼也用跳别用掉落**"/"**要预留一定距离**，
+  别看着和垂直起跳一样"/"跨**度低的时候跳，跨度高的时候爬**"/"摔扁只在**层数比较高且掉下来（非主动）**时触发"。
+  改法：闸门（`walk_induced`，只用既有属性 `is_moving`+`is_floor_valid`）→ `_start_climb_transition`
+  （`_climb_hdir`/`_climb_probe_landing`/`_climb_landing`）；**跳还是爬在 `start_jump` 单点选型**
+  （`_jump_kind_for_span`，存 `_jump_anim_override`，`handle_jump` 每帧优先读）；摔扁收敛成
+  `_should_splat_on_landing`（速度>150 **且** 落差 ≥`FALL_SPLAT_MIN_DROP=10`）；三组攀爬素材登记两张表
+  （`climb_left` = `climb_right` 的**水平镜像**，一次性生成真落盘）。自检 **51/0**；
+  G2 **21 套件 797 PASS / 0 FAIL / 全 IDENTICAL**（新增 `round18_climb`；4 处有意变更**全是组数计数行**：
+  组 109→112、载入 489→493、帧 1461→1482、样本 501→505、导出 21319→22156 字节；`frame_container_size` 仍 `(222,110)`）。
+  真机跑 30s **0 ERROR/0 WARNING**；另出**素材实渲染图**（`_evidence/climb_frames_preview.png`，非灰块占位）。
+  **取舍**：用户"只能相邻"做了**否决性论证**（逐层小跳会因中间层被遮挡而卡死，I 组断言钉住前提）。
+  **教训**：① 桩形状错 → 负控制**假绿**（正/负控制必须成对）；② 含字符串 needle 走 `func_lit` + **X0 工具自检**
+  （第 4 次踩）；③ 失败详情要能诊断（`detail=None` 等于没说）；④ 离屏**没字体**、`drawText` 静默不画；
+  ⑤ 证据必须 Python 自己写（第 2 次踩 PS 捕获毁中文）；⑥ 列表推导别手滑多打一层。
 
 ## H4/H5 架构改造（用户排期"单独做"）
 - 基线 `code-quality-audit/架构改造-H4H5/`（只读，**勿重测**）：`main.py` 8794 行/`RalseiPet` 186 方法；`self` 属性

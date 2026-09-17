@@ -1,0 +1,23 @@
+--- round8_anim (baseline)
++++ round8_anim (now)
+@@ -1,4 +1,4 @@
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 109 组动画（legacy 28 组，schema=1）
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+ [PASS] D0.1 idle 素材存在且为 69x47 宽画布 <- idle[0]=69x47
+ [PASS] D0.2 idle 锚点偏移≈(-20, +2.5)（角色偏左，右侧 41px 透明留白） <- idle off=(-20.0, 2.5)
+ [PASS] D0.3 bow 锚点偏移≈(0, 0)（素材本身居中） <- bow off=(0.0, 0.0)
+@@ -8,7 +8,7 @@
+ [PASS] D3.2 两处渲染分支都调用 _compose_anchored_sprite <- 调用次数=2
+ [PASS] D3.3 已不再直接把未定位的精灵 setPixmap 到 label
+ <TS> [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: <ROOT>/ralsei_pet/config.json -> <TMP>
+-<TS> [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 109 组动画（legacy 28 组，schema=1）
++<TS> [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+ <TS> [INFO] ralsei_pet.modules.memory_system — 新位置无记忆，已从旧版 memory.json 继承: <ROOT>/ralsei_pet/modules/../memory.json
+ <TS> [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: <ROOT>/ralsei_pet/customization_config.json -> <TMP>
+ [PASS] E1.1 存在 IDLE_LOOP_MIN_SECONDS=180 且初值为未激活 <- const=180.0
+@@ -33,4 +33,4 @@
+ [PASS] H1.4 ai_driver 提供 note_event 且事件会进入决策提示词
+ --------------------------------------------------------------------
+ 第八轮特殊动画治理验证：28/28 PASS, 0 FAIL
+-<TS> [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 489 组）
++<TS> [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 493 组）

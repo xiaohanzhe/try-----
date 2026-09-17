@@ -1,0 +1,26 @@
+--- s3_alias_legacy (baseline)
++++ s3_alias_legacy (now)
+@@ -4,7 +4,7 @@
+   [PASS] A3   别名目标都存在且 frames 非空  :: ['cry_start', 'fall_mad', 'idle', 'laugh']
+   [PASS] A4   解析后别名组的帧 == 目标组的帧
+   [PASS] A5   别名组没有被同时标 legacy（标注自相矛盾）
+-<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 109 组动画（legacy 28 组，schema=1）
++<TS> [INFO] ralsei_pet.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+   [PASS] A6   loader 解析后别名组拿到的也是目标的帧（运行时真有效）
+ 
+ === B. legacy（打标正确性，独立重扫）===
+@@ -12,12 +12,12 @@
+   [PASS] B2   legacy 里的每个名字在 src/modules 里确实零字面量引用（独立重扫）  :: 被引用的=[]
+   [PASS] B3   动态可达家族（walk_/run_/walk_tea_）一个都没被标 legacy
+   [PASS] B4   保护名单（idle/walk_down/walk_left/walk_right/walk_up/laugh/cry/sing/pose 与别名目标）一个都没被标
+-  [PASS] B5   legacy 只打标不删组：组数不变  :: json=109 builtin=109
++  [PASS] B5   legacy 只打标不删组：组数不变  :: json=112 builtin=112
+   [PASS] B6   legacy 不影响加载：打标组的帧列表未被改动
+   [PASS] B7   legacy 组仍能拿到帧（loader 里帧数 > 0，且与内置表一致）
+ 
+ === C. 端到端等价与自洽 ===
+-  [PASS] C1   解析后的表与源码内置表深度相等（键集合、顺序、每组帧）  :: groups=109 frames=377
++  [PASS] C1   解析后的表与源码内置表深度相等（键集合、顺序、每组帧）  :: groups=112 frames=393
+   [PASS] C2   loader 的 animation_mapping 与内置表深度相等
+   [PASS] C3   legacy 集合与 JSON 标注一致  :: 28 个
+   [PASS] C4   position_offset 仍为空（S3 没有引入偏移）

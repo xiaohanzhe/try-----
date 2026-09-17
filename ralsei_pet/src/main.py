@@ -106,6 +106,121 @@ def _splat_animation_name(pet):
         return FALL_MAD_ANIMATION
     return "splat"
 
+
+# ---------------------------------------------------------------------------
+# 「建楼」批次 B（第十八轮）：**层高闸门 + 攀爬衔接**
+#
+# 复检缺口 G3：`check_window_movement` 每拍把 `new_floor = get_current_floor(pos)`
+# **直接赋值**，没有任何"层高差必须靠跳"的闸门 —— 宠物站在桌面（1楼）水平走进
+# 某个窗口的可见区域，会被**直接提升**到那一层，不跳、不落，只是一个瞬时的层级跳变。
+#
+# 用户口径（第十八轮原话）：
+#   · "走进更低的楼层也是一样，反正只要是楼层高低变换就要通过跳来衔接"；
+#   · "下楼的时候别用掉落，也用跳"；
+#   · "要预留一定距离哦，别看着和垂直起跳一样"；
+#   · "在楼层跨度较低的时候跳，跨度高的时候爬"；
+#   · "他也不能一次性跳上跨度很高的楼层，需要用各个方向的攀爬动画去切换高低楼层"；
+#   · "那个摔扁的机制需要在层数比较高且掉下来而非主动下来的时候才会触发"。
+#
+# 于是本轮的规则是：
+#   ① 宠物**自己走出来**的楼层高低变换 → 一律走"跳/攀爬"（上楼不再静默提升、
+#      下楼不再重力掉落）。被动成因（用户关窗抽走楼板 / 挪楼板 >400px / 甩飞）
+#      仍走原来的坠落链路，见 `check_window_movement` 的 要求⑩/⑪ 分支。
+#   ② 衔接动作按**跨度**选：`|Δplatform_height| <= CLIMB_SPAN_JUMP_MAX`（一层）
+#      用既有 `jump` 家族；跨度更大才用 `climb_*`（"跨度高的时候爬"）。
+#   ③ 落点必须**预留水平距离**（`CLIMB_HORIZONTAL_RUN`），避免"垂直起跳"的观感。
+#
+# 素材（用户指定）：`spr_ralsei_climb_1_*` 朝右 → `climb_right`；
+# 朝左由它**水平镜像**得到（`spr_ralsei_climb_left_*`，用户："相反方向的你就给他翻转一下"）；
+# `spr_ralsei_climb_0_degrees_*` 朝前 → `climb_front`；没有朝后的（"那样也用不上"）。
+# 三组都已登记进 `sprite_loader` 内置表与 `assets/animations.json`（H5 S2 等价契约）。
+CLIMB_SPAN_JUMP_MAX = 5          # 跨度 ≤ 5（相邻一层，platform_height 每层 +5）→ 用跳
+CLIMB_HORIZONTAL_RUN = 90        # 衔接要预留的水平距离（px，位置坐标口径）
+CLIMB_MIN_RESERVE = 24           # 吸附后仍要保留的最小水平位移（否则换方向再试）
+CLIMB_LANDING_MAX_TRAVEL = 320   # 落点离宠物超过这个距离就不成立（"只到够得着的那块楼板"）
+# 摔扁门槛（要求 第36/37行 + 用户第十八轮口径"层数比较高且掉下来"）：
+# 落差 ≥ 两层（platform_height 差 ≥10）才算"层数比较高"。一层（5）掉下去不摔扁。
+FALL_SPLAT_MIN_DROP = 10
+CLIMB_ANIMATION_NAMES = {
+    'right': 'climb_right',
+    'left': 'climb_left',
+    'front': 'climb_front',
+}
+
+
+def _climb_animation_name(pet, direction):
+    """该方向可用的攀爬素材名；素材不在库里则返回 None（调用方回落 `jump` 家族）。
+
+    与 `_splat_animation_name` 同一条理由放在**模块级**：历史回归套件用轻量桩驱动
+    产品方法，桩不该为它补一个转发方法。
+    """
+    name = CLIMB_ANIMATION_NAMES.get(direction) or CLIMB_ANIMATION_NAMES['front']
+    sprites = getattr(getattr(pet, 'sprite_loader', None), 'sprites', None) or {}
+    return name if name in sprites else None
+
+
+def _jump_kind_for_span(span):
+    """跨度 → 衔接方式。用户口径："在楼层跨度较低的时候跳，跨度高的时候爬"。"""
+    try:
+        return 'jump' if abs(int(span or 0)) <= CLIMB_SPAN_JUMP_MAX else 'climb'
+    except Exception:
+        return 'jump'
+
+
+def _jump_hdir_for(start_pos, target_pos):
+    """衔接的横向方向（选攀爬素材用）：横向位移为主 → left/right，否则 front。
+
+    没有朝后的攀爬素材 —— 用户："没有朝后面的因为那样也用不上"。
+    """
+    if start_pos is None or target_pos is None:
+        return 'front'
+    try:
+        dx = int(target_pos.x()) - int(start_pos.x())
+    except Exception:
+        return 'front'
+    if dx > 4:
+        return 'right'
+    if dx < -4:
+        return 'left'
+    return 'front'
+
+
+def _landing_drop_height(pet, landed_floor):
+    """这次坠落是从多高掉下来的（起点楼层 − 落点楼层的 platform_height 差）。
+
+    **夹到 ≥0**：这是"落差"这个物理量，不是有符号坐标差。缺 `_fall_from_height`
+    时按 0 起算，若落点楼层比 0 高就会算出负数 —— 负落差本身不会误触发摔扁
+    （`>= 门槛` 恒假），但把"落差"交出一个负数是个陷阱：任何按距离用的调用方
+    （阈值比较、惯性缩放、音效强度）都会静默算错。这里一次夹干净。
+    """
+    try:
+        from_h = int(getattr(pet, '_fall_from_height', 0) or 0)
+        to_h = int((landed_floor or {}).get('platform_height', 0) or 0)
+    except Exception:
+        return 0
+    return max(0, from_h - to_h)
+
+
+def _should_splat_on_landing(pet, landed_floor):
+    """落地是否触发"摔扁"（唯一入口，`handle_gravity_fall` 的两个落点共用）。
+
+    用户口径（第十八轮）："那个摔扁的机制需要在层数比较高且掉下来而非主动下来的
+    时候才会触发哦"。
+
+    两个条件缺一不可：
+      · **是被动摔下来的**：主动下楼/上楼走的是跳跃-攀爬链路，根本不进坠落状态机，
+        所以走到这里的已经不可能是"主动下来"；
+      · **层数比较高**：落差 ≥ `FALL_SPLAT_MIN_DROP`（两层）。从一层窗口（ph=5）
+        摔到桌面落差只有 5 → 不摔扁，与用户口径一致。
+    速度门槛（>150）沿用改前的口径，不引入新的手感变量。
+    """
+    try:
+        if getattr(pet, 'fall_speed', 0.0) <= 150:
+            return False
+    except Exception:
+        return False
+    return _landing_drop_height(pet, landed_floor) >= FALL_SPLAT_MIN_DROP
+
 # "特殊动画"的定义（第八轮）。用户要求：
 #   "除了走路，跑步，待机这几个动画，其余的都只交给 AI 判断是否播放，别和抽风似的突然一下"；
 #   "如果要是播放，那就播完，不要打断，也不要出现边播放边移动这种情况（只针对特殊动画）"。
@@ -2153,6 +2268,123 @@ class RalseiPet(QMainWindow):
             }
         self.start_jump(target_window, edge, target_floor=floor, target_pos=land)
 
+    # ------------------------------------------------------------------
+    # 「建楼」批次 B（第十八轮）：层高闸门 —— "自己走出来的换层必须靠跳/攀爬"
+    # ------------------------------------------------------------------
+    # 用户口径见 main.py 头部 CLIMB_* 常量那一段。这里只放三块零件：
+    #   · _climb_hdir              —— 往哪边让开（决定"预留水平距离"的方向）
+    #   · _climb_probe_landing     —— 候选落点吸附进可见区域并校验
+    #   · _climb_landing           —— 定落点 + 定爬向
+    #   · _start_climb_transition  —— 真的起跳；返回 False = 够不着（调用方兜底）
+    # 选择"跳还是爬"不在这里，而在 start_jump（它同时看得到起跳层与目标层，
+    # 两条入口共用一份判据，见那里 `_jump_kind_for_span`）。
+    def _climb_hdir(self, fm, target_floor):
+        """让开的方向：优先沿用宠物当前朝向（走路的延续），否则按目标层的几何。"""
+        prev = getattr(self, 'previous_direction', None)
+        if prev in ('left', 'right'):
+            return 1 if prev == 'right' else -1
+        try:
+            t_rect = (target_floor or {}).get('rect')
+            if t_rect is not None and t_rect.center().x() >= self.pos().x():
+                return 1
+            if t_rect is not None:
+                return -1
+        except Exception as e:
+            _log.debug("攀爬方向判定失败（默认向右）: %s", e)
+        return 1
+
+    def _climb_probe_landing(self, fm, target_floor, probe, cur):
+        """把候选落点吸附进目标层的**可见区域**并校验"够不够得着"。
+
+        要求原文："它只能跳到这个浏览器窗口没被其他东西挡住的那部分边缘上。"
+        返回 None = 这次候选不成立（看不见 / 被推得太远）。
+        """
+        try:
+            land = fm.nearest_visible_point(target_floor, probe)
+            if land is None:
+                land = fm.nearest_visible_point(target_floor, cur)
+        except Exception as e:
+            _log.debug("落点吸附失败（放弃本次衔接）: %s", e)
+            return None
+        if land is None:
+            return None
+        try:
+            if not fm.floor_visible_contains(target_floor, land):
+                return None
+        except Exception as e:
+            _log.debug("可见区域校验失败（放弃本次衔接）: %s", e)
+            return None
+        if (abs(land.x() - cur.x()) > CLIMB_LANDING_MAX_TRAVEL
+                or abs(land.y() - cur.y()) > CLIMB_LANDING_MAX_TRAVEL):
+            return None
+        return land
+
+    def _climb_landing(self, fm, target_floor):
+        """定落点 + 定爬向。返回 (落点, 方向) 或 (None, None)。
+
+        为什么要"先让开再吸附"（用户第十八轮）：
+          "要预留一定距离哦，别看着和垂直起跳一样" —— 直接取正上方/正下方会让
+          衔接看着像垂直弹跳；先在水平方向让开 `CLIMB_HORIZONTAL_RUN` 再吸附进可见
+          区域，观感就是"斜着爬/跳过去"。吸附有可能把位移吃掉（目标层可见区域刚好
+          在那一侧很窄），所以两个方向各试一次，取"位移更大"的那个。
+        """
+        cur = self.pos()
+        primary = self._climb_hdir(fm, target_floor)
+        best = None
+        for hdir in (primary, -primary):
+            probe = QPoint(cur.x() + hdir * CLIMB_HORIZONTAL_RUN, cur.y())
+            land = self._climb_probe_landing(fm, target_floor, probe, cur)
+            if land is None:
+                continue
+            dx = abs(land.x() - cur.x())
+            key = (dx >= CLIMB_MIN_RESERVE, dx)      # 先要"留够距离"，其次越大越好
+            if best is None or key > best[0]:
+                best = (key, land)
+        if best is None:
+            return None, None
+        land = best[1]
+        return land, _jump_hdir_for(cur, land)
+
+    def _start_climb_transition(self, old_floor, new_floor):
+        """层高闸门：把"宠物自己走出来"的高低变换交给跳/攀爬衔接。True = 已起跳。
+
+        用户口径："走进更低的楼层也是一样，反正只要是楼层高低变换就要通过跳来衔接，
+        注意，下楼的时候别用掉落，也用跳"—— 所以上下行都走这里，**不走** `start_falling`。
+
+        返回 False = 目标楼板够不着（吸附后被推得太远 / 不可见）→ 由调用方兜底：
+        · 上楼够不着 → 保持原楼层（"静默提升"是复检缺口 G3 本身，不能留着当兜底）；
+        · 下楼够不着 → 服从重力（要求⑭："脚下没东西了就该直直掉下去"）。
+
+        ---- 为什么**不**把"跨度高"拆成逐层小跳（勿回退，第十八轮实测推理）----
+        用户还说过"他也不能一次性跳上跨度很高的楼层……只能相邻"。直觉做法是把一次
+        跨层拆成"先跳到隔壁那层、再跳下一层"。**在这套几何下这样做会卡死**：
+        楼层名次就是 z 序，宠物之所以会被判到第 N 层，正因为它的位置落在**最前面**
+        那块楼板的可见区域里 —— 而那正是"后面的第 N-1、N-2 层被它挡住"的地方，
+        中间层在这个位置上**没有可见区域**。于是"逐层"的第一步就会吸附失败
+        （`_climb_probe_landing` 的 `floor_visible_contains` 过不去）→ 每一步都
+        返回 False → 宠物永远上不去，"静默提升"没了、换成"进不去窗口"，
+        比原来更糟。所以这里对跨越采用：**换素材不换落点**
+        —— 跨度 > 一层时用 `climb_*` 攀爬动画（`start_jump` 按跨度单点决定），
+        落点仍取目标层的可见区域，并用 `CLIMB_LANDING_MAX_TRAVEL` 卡住位移上限，
+        从观感上就是"爬上去"而不是"一步蹦到顶层"。
+        如果以后要真做逐层攀爬，先解决"中间层被遮挡时怎么落脚"，再动这里。
+        """
+        fm = getattr(self, 'floor_manager', None)
+        if fm is None:
+            return False
+        land, direction = self._climb_landing(fm, new_floor)
+        if land is None:
+            return False
+        span = ((new_floor.get('platform_height', 0) or 0)
+                - (old_floor.get('platform_height', 0) or 0))
+        # 起跳：沿用第十/十四轮的楼层跳跃链路（目标楼层 + 由可见区域给出的落点）。
+        # "跳还是爬"由 start_jump 按跨度单点决定（它同时看得到起跳层与目标层）。
+        self._start_floor_jump(new_floor, 'bottom' if span > 0 else 'top', land)
+        _log.debug("层高闸门：%s → %s（跨度 %s，%s，爬向 %s，落点 %s）",
+                   old_floor.get('platform_height'), new_floor.get('platform_height'),
+                   span, _jump_kind_for_span(span), direction, land)
+        return True
+
     def check_nearby_windows(self, current_pos):
         # 检查附近的窗口，判断是否需要跳跃
         # 如果已经在跳跃中，不再检测跳跃
@@ -2260,11 +2492,33 @@ class RalseiPet(QMainWindow):
         else:
             # 跳到桌面，目标楼层为桌面
             self.jump_target_floor = self.floor_manager.desktop_floor
-        
+
+        # ===== 「建楼」批次 B（第十八轮）：按**跨度**选衔接动画 =====
+        # 用户口径："在楼层跨度较低的时候跳，跨度高的时候爬"。
+        # 判据只写这一处：本方法同时看得到"起跳前站在哪层"与"要跳到哪层"，而两个入口
+        # （`_start_climb_transition` 的层高闸门 / `check_nearby_windows` 的贴边起跳）
+        # 都会走到这里 —— 各写一份必然漂移（本项目反复踩的双真源坑）。
+        # 用**模块级**函数而不是类方法：历史回归套件用轻量桩驱动 `RalseiPet.start_jump`，
+        # 桩上不该再多一个要补转发的方法（第十七轮实测过这个坑）。
+        self._jump_anim_override = None
+        try:
+            _cur_floor = getattr(self, 'current_floor', None)
+            _tgt_floor = getattr(self, 'jump_target_floor', None)
+            if _cur_floor is not None and _tgt_floor is not None:
+                _span = ((_tgt_floor.get('platform_height', 0) or 0)
+                         - (_cur_floor.get('platform_height', 0) or 0))
+                if _jump_kind_for_span(_span) == 'climb':
+                    # 跨度大 → 用攀爬素材（没有素材时 _climb_animation_name 返回 None，
+                    # 自动回落下面的 jump 家族，不会切到不存在的动画）
+                    self._jump_anim_override = _climb_animation_name(
+                        self, _jump_hdir_for(self.jump_start_pos, target_pos))
+        except Exception as e:
+            _log.debug("跳跃动画选型失败（按 jump 家族处理）: %s", e)
+
         # 开始跳跃准备阶段
         self.jump_phase = "ready"
-        # 强制切换到准备跳跃动画
-        self.change_animation("jump_ready", force=True)
+        # 强制切换到准备跳跃动画（跨度大时用攀爬素材替代起跳帧）
+        self.change_animation(self._jump_anim_override or "jump_ready", force=True)
         
         # 更新跳跃时间
         self.last_jump_time = time.time()
@@ -2409,6 +2663,13 @@ class RalseiPet(QMainWindow):
         # 只有"用户把脚下的楼板抽走/关掉窗口"才算用户行为（reason='floor_removed'）；
         # 自己走到边缘掉下去、跳跃被判穿透，都算自己的问题，走常规动画。
         self._fall_reason = reason
+        # 批次 B（第十八轮）：记下"从多高掉下来的"。落地时 `_should_splat_on_landing`
+        # 用它算落差 —— 用户口径："摔扁只在**层数比较高**且掉下来而非主动下来时触发"。
+        try:
+            self._fall_from_height = int(
+                (getattr(self, 'current_floor', None) or {}).get('platform_height', 0) or 0)
+        except Exception:
+            self._fall_from_height = 0
         # 第十六轮复检：这里原来写的是 `max_fall_duration` —— 那是**死参数**：全项目
         # 只有 handle_fall 读它，而本函数把 `is_falling` 置 False（坠落期间走
         # handle_gravity_fall）→ 永远读不到，于是"关窗掉下来生气至少 5s"从未生效。
@@ -2462,6 +2723,7 @@ class RalseiPet(QMainWindow):
         # 防御：jump_duration 为 0 会导致下面多处除零崩溃，直接中止跳跃
         if not getattr(self, 'jump_duration', 0) or self.jump_duration <= 0:
             self.is_jumping = False
+            self._jump_anim_override = None
             return
         elapsed = current_time - self.jump_start_time
         jump_progress = min(elapsed / self.jump_duration, 1.0)
@@ -2511,6 +2773,7 @@ class RalseiPet(QMainWindow):
                 # 检测到穿透，取消跳跃，启动重力掉落
                 _log.debug("跳跃过程中检测到楼层穿透，取消跳跃并启动重力掉落")
                 self.is_jumping = False
+                self._jump_anim_override = None
                 self.start_falling()
                 return
         
@@ -2549,6 +2812,8 @@ class RalseiPet(QMainWindow):
 
             # 停止跳跃
             self.is_jumping = False
+            # 清掉"跨度大用攀爬素材"的覆盖标记，避免残留到下一次跳跃
+            self._jump_anim_override = None
         
         # 边界检查：确保Ralsei不会跳到屏幕外
         # 瞬移防治：原用 availableGeometry()（只认主屏）且把原点钉在 (0,0)，
@@ -2561,7 +2826,12 @@ class RalseiPet(QMainWindow):
         # 更新动画
         if self.is_jumping:
             # 如果还在跳跃中，保持跳跃动画
-            if self.has_ball:
+            # 批次 B：跨度大的衔接用**攀爬素材**（`start_jump` 按跨度单点选定），
+            # 这里必须先尊重它 —— 否则每帧都会被 jump/jump_ball 顶掉，等于没切。
+            _override = getattr(self, '_jump_anim_override', None)
+            if _override:
+                self.change_animation(_override, force=True)
+            elif self.has_ball:
                 self.change_animation("jump_ball", force=True)
             else:
                 self.change_animation("jump", force=True)
@@ -2882,6 +3152,38 @@ class RalseiPet(QMainWindow):
             #   · 被更高的新窗口盖住（5→10）        → 不摔，直接站新板（要求 ⑪）
             old_h = old_floor.get('platform_height', 0) or 0
             new_h = new_floor.get('platform_height', 0) or 0
+
+            # ===== 2b) 层高闸门（第十八轮 · 批次 B，修复检缺口 G3） =====
+            # 缺口 G3：这一段原来只有"往低走才处理"，往高走直接落到下面的赋值
+            # `self.current_floor = new_floor` —— 宠物站在桌面水平走进某个窗口的
+            # 可见区域时被**静默提升**，不跳不落，只是一个瞬时的层级跳变。
+            #
+            # 用户口径（第十八轮）："走进更低的楼层也是一样，反正只要是楼层高低变换
+            # 就要通过跳来衔接，注意，下楼的时候别用掉落，也用跳。"
+            # 于是：**宠物自己走出来**的高低变换一律交给跳/攀爬（`_start_climb_transition`），
+            # 上楼不再静默提升、下楼不再重力掉落；
+            # 而**被动**成因（用户关窗抽走楼板 / 挪楼板 / 甩飞）仍旧走下面的坠落链路 ——
+            # 这两条是要求 ⑩/⑪ 明确要的，不能一起改掉。
+            #
+            # "是不是自己走出来的"判据只有两条，且都用既有属性（历史回归套件的轻量桩
+            # 没有 `is_moving` → `getattr` 取到 False → 不会走进闸门，桩继续测被动路径）：
+            #   ① 宠物这一拍在走路；
+            #   ② 旧楼板还有效（窗口还在）—— 被关掉的是被动，走 要求⑩ 的坠落。
+            walk_induced = (new_h != old_h
+                            and bool(getattr(self, 'is_moving', False))
+                            and self.floor_manager.is_floor_valid(old_floor))
+            if walk_induced and self._start_climb_transition(old_floor, new_floor):
+                # 已经起跳：本拍不动 current_floor，落地时由 handle_jump 当场结算
+                return
+            if walk_induced and new_h > old_h:
+                # 自己走上去、但上方那块楼板够不着（吸附后被推太远 / 不在可见区域）：
+                # **保持原楼层**。"静默提升"正是缺口 G3 本身，不能拿它当兜底。
+                _log.debug("层高闸门：够不着 %s 层（%s → %s）→ 保持原楼层",
+                           new_h, old_h, new_h)
+                return
+            # 往下跌 + 够不着攀爬目标（例如走出侧面边缘、下方没有可进入的相邻层）
+            # → 落到下面的坠落链路：重力必须赢（要求⑭）。
+
             if new_h < old_h:
                 # 往下跌：脚下那一点已不在旧楼板的可见区域里，而新位置命中的是
                 # **更低**的楼层 → 建楼要求第14行"直直掉下去，落到下面第一块能
@@ -2899,9 +3201,9 @@ class RalseiPet(QMainWindow):
                     self.start_falling(reason='floor_removed')
             elif new_h > old_h:
                 # 更高：按"当前楼层原则"宠物现在直接站在新楼板上，不算楼板被搬走，
-                # 不摔 —— 这是建楼要求 ⑪"新窗口盖住旧窗口"要的行为，保持不变。
-                # （注：宠物**自己走过去**跨到更高层也走这条分支，那是复检缺口 G3，
-                #  属"批次 B / 层高闸门"，本次不动。）
+                # 不摔 —— 这是建楼要求 ⑪"新窗口盖住旧窗口"要的行为。
+                # 走到这里只有一种情况：**不是宠物自己走上去的**（用户新开窗口盖上来），
+                # 因为"自己走上去"已被上面的层高闸门接管。
                 _log.debug("楼层升高（%s → %s）→ 直接站新板，不摔（要求 ⑪）", old_h, new_h)
 
         # 更新当前楼层信息
@@ -2945,6 +3247,14 @@ class RalseiPet(QMainWindow):
         # 到了落地结算时读不到起因 → 生气素材被普通 splat 顶掉（要求第37行的 ≥3s 落空）。
         # 时长/素材都由它派生（`_fall_splat_hold` / `_splat_animation_name`）。
         self._fall_reason = reason
+
+        # 批次 B（第十八轮）：与 `start_falling` 同一口径记下"从多高掉下来的"
+        # （起点楼层的 platform_height），保持这个量的语义只有一份。
+        try:
+            self._fall_from_height = int(
+                (getattr(self, 'current_floor', None) or {}).get('platform_height', 0) or 0)
+        except Exception:
+            self._fall_from_height = 0
 
         # 触发情绪反应：摔倒
         self.emotion_system.react_to_event('fell_down', {'reason': reason})
@@ -3107,8 +3417,8 @@ class RalseiPet(QMainWindow):
             # 能落到这一层，就说明脚下确实是一块看得见的地板。
             
             # 根据摔落速度决定落地表现
-            if self.fall_speed > 150:
-                # 高速摔落 → 触发 splat（先决条件：重力掉落）
+            if _should_splat_on_landing(self, drop_floor):
+                # 高速 + **层数比较高** → 触发 splat（批次 B：低层摔不扁）
                 self.trigger_splat()
                 # 添加摔倒惯性滑行效果
                 self.fall_slide_speed_x = random.uniform(-20, 20)
@@ -3149,14 +3459,14 @@ class RalseiPet(QMainWindow):
                 self.fall_velocity_x = 0  # 落地清除水平惯性
                 
                 # 根据摔落速度决定是否触发摔倒动画
-                if self.fall_speed > 150:
-                    # 高速摔落 → 触发 splat（先决条件：重力掉落）
+                if _should_splat_on_landing(self, self.floor_manager.desktop_floor):
+                    # 高速 + **层数比较高** → 触发 splat（批次 B：掉到桌面也是一样判）
                     self.trigger_splat()
                     # 添加摔倒惯性滑行效果
                     self.fall_slide_speed_x = random.uniform(-20, 20)
                     self.fall_slide_speed_y = random.uniform(-10, 10)
                 else:
-                    # 低速摔落：先站稳(idle)
+                    # 低速摔落（或层数不够高）：先站稳(idle)
                     self.change_animation("idle", force=True)
                 
                 # 修复（坠落循环）：这里原来没有把 current_floor 更新成桌面层，
