@@ -1,0 +1,354 @@
+素材分组补漏报告（只读扫描，未修改任何配置）
+生成时间：2026-09-17 23:02:08
+素材目录：C:\Users\23002\Desktop\项目文件夹\try - 副本\deltarune_ralsei
+动画表  ：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\animations.json
+
+== 总量 ==
+磁盘 PNG            : 1111
+磁盘分组（命名族）  : 380
+家族数              : 19
+配置组数            : 112
+配置引用帧数        : 379
+三态：已登记 82 / 部分引用 20 / 未引用 278
+配置引用但磁盘缺失  : 0
+
+== 自检 ==
+[PASS] X1 分组帧数合计 == 磁盘文件数 (1111 vs 1111)
+[PASS] X2 每个文件恰好归属一组 (重复=0)
+[PASS] X3 JSON 引用帧集合 ⊆ 磁盘（差集即缺失） (缺失=0)
+[PASS] X4 三态计数合计 == 组数 ({'unused': 278, 'registered': 82, 'partial': 20} 合计=380 组数=380)
+[PASS] X5 命名解析可逆（parse→unparse 复原） (不匹配=0)
+[PASS] X6 状态标签取值合法 ({'partial', 'registered', 'unused'})
+[PASS] X7 未引用组的 used_count 必为 0 (ok)
+
+== A. 未引用（磁盘有、配置零引用） ==
+  board_ralsei_dead                          帧1   已用0   同名组=无     引用=-
+  board_ralsei_hurt                          帧1   已用0   同名组=无     引用=-
+  board_ralsei_itemget                       帧1   已用0   同名组=无     引用=-
+  board_ralsei_sleep                         帧2   已用0   同名组=无     引用=-
+  board_ralsei_surfboard                     帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_down                     帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_down_armsup              帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_left                     帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_left_armsup              帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_right                    帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_right_armsup             帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_up                       帧2   已用0   同名组=无     引用=-
+  board_ralsei_walk_up_armsup                帧2   已用0   同名组=无     引用=-
+  ch3_shutta_act_ralsei_walk_down_pippins    帧4   已用0   同名组=无     引用=-
+  ch3_shutta_act_ralsei_walk_left_pippins    帧4   已用0   同名组=无     引用=-
+  ch3_shutta_act_ralsei_walk_right_pippins   帧4   已用0   同名组=无     引用=-
+  chefs_ralsei                               帧4   已用0   同名组=无     引用=-
+  cutscene_12_susie_ralsei_drag              帧4   已用0   同名组=无     引用=-
+  cutscene_24e_ralsei_splat_happy            帧1   已用0   同名组=无     引用=-
+  cutscene_27_queen_hand_surprise_ralsei     帧1   已用0   同名组=无     引用=-
+  cutscene_27_ralsei_huh                     帧1   已用0   同名组=无     引用=-
+  cutscene_27_ralsei_look                    帧1   已用0   同名组=无     引用=-
+  cutscene_27_ralsei_mu                      帧1   已用0   同名组=无     引用=-
+  cutscene_27_ralsei_scared                  帧1   已用0   同名组=无     引用=-
+  cutscene_27_ralsei_smile                   帧1   已用0   同名组=无     引用=-
+  cutscene_27_ralsei_stern                   帧1   已用0   同名组=无     引用=-
+  dw_tv_prize_ralsei                         帧1   已用0   同名组=无     引用=-
+  dw_tv_prizes                               帧1   已用0   同名组=无     引用=-
+  gameshow_drowningRalsei_ralsei             帧1   已用0   同名组=无     引用=-
+  gameshow_drowningRalsei_ralsei_origin_edit 帧1   已用0   同名组=无     引用=-
+  gameshow_ralseiplush_stoole                帧1   已用0   同名组=无     引用=-
+  hunched_walk_together                      帧4   已用0   同名组=无     引用=-
+  ja_quiz_ralsei_plush                       帧1   已用0   同名组=无     引用=-
+  mannequin_ralsei                           帧1   已用0   同名组=无     引用=-
+  quiz_ralsei_cursor                         帧1   已用0   同名组=无     引用=-
+  quiz_ralsei_plush                          帧1   已用0   同名组=无     引用=-
+  ralsei_actready                            帧2   已用0   同名组=无     引用=-
+  ralsei_attack_alt                          帧1   已用0   同名组=无     引用=-
+  ralsei_attackready                         帧2   已用0   同名组=无     引用=-
+  ralsei_block_up_wind                       帧8   已用0   同名组=无     引用=-
+  ralsei_board_stoolforme                    帧1   已用0   同名组=无     引用=-
+  ralsei_board_stoolforme_back               帧1   已用0   同名组=无     引用=-
+  ralsei_chef                                帧1   已用0   同名组=无     引用=-
+  ralsei_chef_pose                           帧1   已用0   同名组=无     引用=-
+  ralsei_chef_surprised_down                 帧1   已用0   同名组=无     引用=-
+  ralsei_cherub                              帧18  已用0   同名组=无     引用=-
+  ralsei_climb                               帧4   已用0   同名组=无     引用=-
+  ralsei_climb_2                             帧5   已用0   同名组=无     引用=-
+  ralsei_climb_3                             帧5   已用0   同名组=无     引用=-
+  ralsei_climb_4                             帧5   已用0   同名组=无     引用=-
+  ralsei_climb_45_degrees                    帧6   已用0   同名组=无     引用=-
+  ralsei_climb_5                             帧5   已用0   同名组=无     引用=-
+  ralsei_climb_6                             帧5   已用0   同名组=无     引用=-
+  ralsei_climb_90_degrees                    帧6   已用0   同名组=无     引用=-
+  ralsei_climb_poses                         帧3   已用0   同名组=无     引用=-
+  ralsei_climb_poses_alt                     帧3   已用0   同名组=无     引用=-
+  ralsei_coaster                             帧1   已用0   同名组=无     引用=-
+  ralsei_couch_shocked_left                  帧1   已用0   同名组=无     引用=-
+  ralsei_couch_shocked_right                 帧1   已用0   同名组=无     引用=-
+  ralsei_couch_surprise_left                 帧1   已用0   同名组=无     引用=-
+  ralsei_couch_surprise_right                帧1   已用0   同名组=无     引用=-
+  ralsei_couch_wonder_left                   帧1   已用0   同名组=无     引用=-
+  ralsei_couch_wonder_right                  帧1   已用0   同名组=无     引用=-
+  ralsei_d_stealth                           帧4   已用0   同名组=无     引用=-
+  ralsei_d_stealth_left                      帧4   已用0   同名组=无     引用=-
+  ralsei_d_stealth_old                       帧2   已用0   同名组=无     引用=-
+  ralsei_dance2                              帧2   已用0   同名组=无     引用=-
+  ralsei_dark_eyes                           帧1   已用0   同名组=无     引用=-
+  ralsei_darkchurch_sit_happy_old            帧1   已用0   同名组=无     引用=-
+  ralsei_darkchurch_sit_sad_old              帧1   已用0   同名组=无     引用=-
+  ralsei_defend_peek                         帧2   已用0   同名组=无     引用=-
+  ralsei_down                                帧2   已用0   同名组=无     引用=-
+  ralsei_eyes_act                            帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_attack                         帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_blink                          帧4   已用0   同名组=无     引用=-
+  ralsei_eyes_defeated                       帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_defend                         帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_hurt                           帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_idle                           帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_item                           帧1   已用0   同名组=无     引用=-
+  ralsei_eyes_spell                          帧1   已用0   同名组=无     引用=-
+  ralsei_face_wipe                           帧2   已用0   同名组=无     引用=-
+  ralsei_face_wipe_post                      帧1   已用0   同名组=无     引用=-
+  ralsei_face_wipe_post_sad                  帧1   已用0   同名组=无     引用=-
+  ralsei_funnyface                           帧3   已用0   同名组=无     引用=-
+  ralsei_funnyface2                          帧1   已用0   同名组=无     引用=-
+  ralsei_glasses_adjust                      帧2   已用0   同名组=无     引用=-
+  ralsei_group_hug                           帧4   已用0   同名组=无     引用=-
+  ralsei_group_hug_nuzzle                    帧1   已用0   同名组=无     引用=-
+  ralsei_group_hug_nuzzle_alt                帧1   已用0   同名组=无     引用=-
+  ralsei_halt_serious_right                  帧3   已用0   同名组=无     引用=-
+  ralsei_head_down_sad_left                  帧1   已用0   同名组=无     引用=-
+  ralsei_head_down_sad_right                 帧1   已用0   同名组=无     引用=-
+  ralsei_head_down_smile_left                帧1   已用0   同名组=无     引用=-
+  ralsei_head_down_smile_right               帧1   已用0   同名组=无     引用=-
+  ralsei_horse                               帧1   已用0   同名组=无     引用=-
+  ralsei_horse_despondent                    帧1   已用0   同名组=无     引用=-
+  ralsei_horse_jump                          帧2   已用0   同名组=无     引用=-
+  ralsei_horse_run                           帧8   已用0   同名组=无     引用=-
+  ralsei_horse_sad                           帧1   已用0   同名组=无     引用=-
+  ralsei_horse_side_walk                     帧4   已用0   同名组=无     引用=-
+  ralsei_horse_walk                          帧5   已用0   同名组=无     引用=-
+  ralsei_horse_walk_overworld                帧4   已用0   同名组=无     引用=-
+  ralsei_horse_walk_overworld_left           帧4   已用0   同名组=无     引用=-
+  ralsei_horse_yell                          帧1   已用0   同名组=无     引用=-
+  ralsei_hug_stop                            帧1   已用0   同名组=无     引用=-
+  ralsei_hurt                                帧2   已用0   同名组=无     引用=-
+  ralsei_hurt_fixed                          帧2   已用0   同名组=无     引用=-
+  ralsei_hurt_overworld                      帧2   已用0   同名组=无     引用=-
+  ralsei_itemready                           帧2   已用0   同名组=无     引用=-
+  ralsei_jump                                帧2   已用0   同名组=无     引用=-
+  ralsei_jump_ball_fixed                     帧4   已用0   同名组=无     引用=-
+  ralsei_kneel_stand                         帧5   已用0   同名组=无     引用=-
+  ralsei_kneel_start                         帧4   已用0   同名组=无     引用=-
+  ralsei_kneel_up                            帧1   已用0   同名组=无     引用=-
+  ralsei_left                                帧2   已用0   同名组=无     引用=-
+  ralsei_left_up                             帧1   已用0   同名组=无     引用=-
+  ralsei_lift                                帧4   已用0   同名组=无     引用=-
+  ralsei_lift_head                           帧4   已用0   同名组=无     引用=-
+  ralsei_lift_head_post                      帧1   已用0   同名组=无     引用=-
+  ralsei_lightemup1                          帧1   已用0   同名组=无     引用=-
+  ralsei_lightemup2                          帧1   已用0   同名组=无     引用=-
+  ralsei_lightemup3                          帧1   已用0   同名组=无     引用=-
+  ralsei_lightemup4                          帧1   已用0   同名组=无     引用=-
+  ralsei_looks_down                          帧5   已用0   同名组=无     引用=-
+  ralsei_mustache                            帧3   已用0   同名组=无     引用=-
+  ralsei_mustache2                           帧4   已用0   同名组=无     引用=-
+  ralsei_nuzzle2                             帧10  已用0   同名组=无     引用=-
+  ralsei_nuzzle3                             帧10  已用0   同名组=无     引用=-
+  ralsei_nuzzle_head                         帧6   已用0   同名组=无     引用=-
+  ralsei_nuzzle_head_alt                     帧4   已用0   同名组=无     引用=-
+  ralsei_pirouette                           帧7   已用0   同名组=无     引用=-
+  ralsei_pose_look_left                      帧1   已用0   同名组=无     引用=-
+  ralsei_pose_unhappy                        帧1   已用0   同名组=无     引用=-
+  ralsei_quiz_down                           帧3   已用0   同名组=无     引用=-
+  ralsei_quiz_left                           帧3   已用0   同名组=无     引用=-
+  ralsei_racing_play                         帧2   已用0   同名组=无     引用=-
+  ralsei_racing_sit                          帧1   已用0   同名组=无     引用=-
+  ralsei_racing_surprise                     帧1   已用0   同名组=无     引用=-
+  ralsei_racing_walk                         帧4   已用0   同名组=无     引用=-
+  ralsei_racing_watch                        帧1   已用0   同名组=无     引用=-
+  ralsei_redefend                            帧5   已用0   同名组=无     引用=-
+  ralsei_right                               帧2   已用0   同名组=无     引用=-
+  ralsei_rock_1                              帧1   已用0   同名组=无     引用=-
+  ralsei_rock_2                              帧1   已用0   同名组=无     引用=-
+  ralsei_rock_3                              帧1   已用0   同名组=无     引用=-
+  ralsei_rock_blush                          帧1   已用0   同名组=无     引用=-
+  ralsei_rock_pose                           帧1   已用0   同名组=无     引用=-
+  ralsei_rock_shock                          帧1   已用0   同名组=无     引用=-
+  ralsei_rock_surprise                       帧2   已用0   同名组=无     引用=-
+  ralsei_roll_ball                           帧2   已用0   同名组=无     引用=-
+  ralsei_roll_smear                          帧2   已用0   同名组=无     引用=-
+  ralsei_run_serious_right                   帧4   已用0   同名组=无     引用=-
+  ralsei_running_down                        帧6   已用0   同名组=无     引用=-
+  ralsei_running_left                        帧6   已用0   同名组=无     引用=-
+  ralsei_running_right                       帧6   已用0   同名组=无     引用=-
+  ralsei_running_up                          帧6   已用0   同名组=无     引用=-
+  ralsei_sad_right_turn                      帧1   已用0   同名组=无     引用=-
+  ralsei_shake_stress                        帧2   已用0   同名组=无     引用=-
+  ralsei_shirk                               帧2   已用0   同名组=无     引用=-
+  ralsei_shocked_left                        帧1   已用0   同名组=无     引用=-
+  ralsei_shocked_right                       帧1   已用0   同名组=无     引用=-
+  ralsei_shocked_standing_left               帧1   已用0   同名组=无     引用=-
+  ralsei_shocked_standing_right              帧1   已用0   同名组=无     引用=-
+  ralsei_sing_clap                           帧3   已用0   同名组=无     引用=-
+  ralsei_sing_clap_wait                      帧1   已用0   同名组=无     引用=-
+  ralsei_sing_cuss                           帧1   已用0   同名组=无     引用=-
+  ralsei_sing_polite                         帧2   已用0   同名组=无     引用=-
+  ralsei_sing_polite_closed                  帧2   已用0   同名组=无     引用=-
+  ralsei_sing_rude                           帧2   已用0   同名组=无     引用=-
+  ralsei_sob                                 帧2   已用0   同名组=无     引用=-
+  ralsei_sob_arm                             帧2   已用0   同名组=无     引用=-
+  ralsei_sob_arm_wipe                        帧2   已用0   同名组=无     引用=-
+  ralsei_spell_end                           帧1   已用0   同名组=无     引用=-
+  ralsei_spellready                          帧4   已用0   同名组=无     引用=-
+  ralsei_splat                               帧1   已用0   同名组=无     引用=-
+  ralsei_splat_caterpillar                   帧1   已用0   同名组=无     引用=-
+  ralsei_splat_happy                         帧1   已用0   同名组=无     引用=-
+  ralsei_splat_mad                           帧1   已用0   同名组=无     引用=-
+  ralsei_stand_from_kneel_up                 帧5   已用0   同名组=无     引用=-
+  ralsei_stool                               帧1   已用0   同名组=无     引用=-
+  ralsei_surprise_left                       帧1   已用0   同名组=无     引用=-
+  ralsei_surprise_right                      帧1   已用0   同名组=无     引用=-
+  ralsei_surprised_down_subtle               帧1   已用0   同名组=无     引用=-
+  ralsei_surprised_left                      帧1   已用0   同名组=无     引用=-
+  ralsei_surprised_left_walk                 帧4   已用0   同名组=无     引用=-
+  ralsei_surprised_right                     帧1   已用0   同名组=无     引用=-
+  ralsei_surprised_right_walk                帧4   已用0   同名组=无     引用=-
+  ralsei_surprised_subtle_head_down          帧1   已用0   同名组=无     引用=-
+  ralsei_surprised_up                        帧2   已用0   同名组=无     引用=-
+  ralsei_susie_hug                           帧4   已用0   同名组=无     引用=-
+  ralsei_susie_hug_push                      帧2   已用0   同名组=无     引用=-
+  ralsei_susie_lift_head                     帧5   已用0   同名组=无     引用=-
+  ralsei_susie_lift_head_r                   帧5   已用0   同名组=无     引用=-
+  ralsei_tanking                             帧4   已用0   同名组=无     引用=-
+  ralsei_teacup_enter                        帧4   已用0   同名组=无     引用=-
+  ralsei_thrown                              帧1   已用0   同名组=无     引用=-
+  ralsei_trapped_despondent                  帧1   已用0   同名组=无     引用=-
+  ralsei_trapped_lean_01                     帧1   已用0   同名组=无     引用=-
+  ralsei_trapped_lean_02                     帧1   已用0   同名组=无     引用=-
+  ralsei_trapped_press                       帧2   已用0   同名组=无     引用=-
+  ralsei_trapped_press_hurt                  帧1   已用0   同名组=无     引用=-
+  ralsei_turn_away                           帧1   已用0   同名组=无     引用=-
+  ralsei_turn_away_left                      帧1   已用0   同名组=无     引用=-
+  ralsei_turn_left_subtle                    帧1   已用0   同名组=无     引用=-
+  ralsei_turn_right_subtle                   帧1   已用0   同名组=无     引用=-
+  ralsei_up                                  帧2   已用0   同名组=无     引用=-
+  ralsei_up_press                            帧1   已用0   同名组=无     引用=-
+  ralsei_up_scene                            帧1   已用0   同名组=无     引用=-
+  ralsei_up_shock                            帧2   已用0   同名组=无     引用=-
+  ralsei_walk_blush_hide                     帧4   已用0   同名组=无     引用=-
+  ralsei_walk_blush_peek                     帧4   已用0   同名组=无     引用=-
+  ralsei_walk_down_feet                      帧1   已用0   同名组=无     引用=-
+  ralsei_walk_down_sad                       帧4   已用0   同名组=无     引用=-
+  ralsei_walk_down_sad_subtle                帧4   已用0   同名组=无     引用=-
+  ralsei_walk_down_tea_blush                 帧1   已用0   同名组=无     引用=-
+  ralsei_walk_hunched                        帧4   已用0   同名组=无     引用=-
+  ralsei_walk_left_sad                       帧4   已用0   同名组=无     引用=-
+  ralsei_walk_left_sad_subtle                帧4   已用0   同名组=无     引用=-
+  ralsei_walk_left_smile                     帧4   已用0   同名组=无     引用=-
+  ralsei_walk_right_head_down                帧4   已用0   同名组=无     引用=-
+  ralsei_walk_right_sad                      帧4   已用0   同名组=无     引用=-
+  ralsei_walk_right_sad_subtle               帧4   已用0   同名组=无     引用=-
+  ralsei_walk_right_smile                    帧4   已用0   同名组=无     引用=-
+  ralsei_walk_up_sad                         帧4   已用0   同名组=无     引用=-
+  ralsei_walk_up_windy                       帧8   已用0   同名组=无     引用=-
+  ralsei_walk_up_windy_lookright             帧8   已用0   同名组=无     引用=-
+  ralsei_walk_up_windy_scarf                 帧4   已用0   同名组=无     引用=-
+  ralsei_wonder_left                         帧1   已用0   同名组=无     引用=-
+  ralsei_wonder_right                        帧1   已用0   同名组=无     引用=-
+  ralsei_zoosuit                             帧1   已用0   同名组=无     引用=-
+  ralsei_zoosuit_Card                        帧11  已用0   同名组=无     引用=-
+  ralsei_zoosuit_cup                         帧1   已用0   同名组=无     引用=-
+  ralseib_virokun                            帧2   已用0   同名组=无     引用=-
+  ralseib_wan                                帧2   已用0   同名组=无     引用=-
+  ralseib_yarn_1                             帧1   已用0   同名组=无     引用=-
+  ralseib_yarn_1b                            帧1   已用0   同名组=无     引用=-
+  ralseib_yarn_2                             帧1   已用0   同名组=无     引用=-
+  shootout_ralsei_popout                     帧4   已用0   同名组=无     引用=-
+  susie_ralsei_drag_run                      帧4   已用0   同名组=无     引用=-
+  susie_ralsei_grab                          帧8   已用0   同名组=无     引用=-
+  susie_ralsei_grab_alt                      帧3   已用0   同名组=无     引用=-
+  susie_ralsei_grab_exasperated              帧1   已用0   同名组=无     引用=-
+  susie_ralsei_grab_look_away_01             帧1   已用0   同名组=无     引用=-
+  susie_ralsei_grab_look_away_01_shake       帧2   已用0   同名组=无     引用=-
+  susie_ralsei_grab_look_away_02             帧1   已用0   同名组=无     引用=-
+  susie_ralsei_grab_look_away_02_shake       帧2   已用0   同名组=无     引用=-
+  susie_ralsei_grab_look_away_03_shake       帧2   已用0   同名组=无     引用=-
+  susie_ralsei_grab_look_away_smile          帧1   已用0   同名组=无     引用=-
+  susie_ralsei_grab_plead                    帧3   已用0   同名组=无     引用=-
+  susie_ralsei_grab_plead_shock              帧1   已用0   同名组=无     引用=-
+  susie_ralsei_grab_smile                    帧1   已用0   同名组=无     引用=-
+  susie_ralsei_hand_push                     帧5   已用0   同名组=无     引用=-
+  susie_ralsei_help_up                       帧8   已用0   同名组=无     引用=-
+  susie_ralsei_look_down                     帧1   已用0   同名组=无     引用=-
+  susie_ralsei_look_up                       帧1   已用0   同名组=无     引用=-
+  susie_ralsei_noogie                        帧2   已用0   同名组=无     引用=-
+  susie_ralsei_noogie_cover                  帧2   已用0   同名组=无     引用=-
+  susie_ralsei_shake                         帧2   已用0   同名组=无     引用=-
+  susie_ralsei_shock                         帧1   已用0   同名组=无     引用=-
+  susieb_throwralseiready_setup              帧2   已用0   同名组=无     引用=-
+  susiezilla_ralsei_tower                    帧1   已用0   同名组=无     引用=-
+  susiezilla_ralsei_yeet                     帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_cake_shock                帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_laugh                     帧2   已用0   同名组=无     引用=-
+  tea_party_ralsei_look_left                 帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit                       帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit_blush                 帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit_head_down             帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit_look_away             帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit_neutral               帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit_smile                 帧1   已用0   同名组=无     引用=-
+  tea_party_ralsei_sit_surprised             帧1   已用0   同名组=无     引用=-
+  teacup_ralsei                              帧4   已用0   同名组=无     引用=-
+  teacup_ralsei_tea                          帧4   已用0   同名组=无     引用=-
+  teacup_ralsei_tea2                         帧4   已用0   同名组=无     引用=-
+  tiny_ralsei_sneo                           帧2   已用0   同名组=无     引用=-
+  tiny_ralsei_sneo_destroy                   帧17  已用0   同名组=无     引用=-
+  小计：278 组
+
+== B. 部分引用（帧只被引用了一部分） ==
+  cutscene_15_ralsei_throw_ball              帧6   已用5   同名组=无     引用=throw_ball
+  cutscene_ex1_ralsei_glasses_1              帧2   已用1   同名组=无     引用=glasses_1
+  cutscene_ex1_ralsei_glasses_2              帧3   已用1   同名组=无     引用=glasses_2
+  ralsei_cry_reverse                         帧3   已用1   同名组=无     引用=cry_reverse
+  ralsei_cry_start                           帧2   已用1   同名组=无     引用=cry_start,sad
+  ralsei_curtsy                              帧4   已用3   同名组=无     引用=curtsy
+  ralsei_defeat                              帧2   已用1   同名组=无     引用=defeat
+  ralsei_down_surprised2                     帧2   已用1   同名组=无     引用=surprised_down
+  ralsei_hatless_throw                       帧2   已用1   同名组=无     引用=hatless_throw
+  ralsei_nuzzle1                             帧10  已用1   同名组=无     引用=nuzzle1
+  ralsei_pose                                帧2   已用1   同名组=无     引用=pose
+  ralsei_shocked_behind                      帧2   已用1   同名组=无     引用=surprised_behind
+  ralsei_sing                                帧3   已用1   同名组=无     引用=sing
+  ralsei_surprised_down                      帧2   已用1   同名组=无     引用=surprised
+  ralsei_walk_down_sleep                     帧2   已用1   同名组=无     引用=sleep
+  tea_party_ralsei_cake_eat                  帧5   已用1   同名组=无     引用=cake_eat
+  tea_party_ralsei_pour                      帧9   已用1   同名组=无     引用=tea_pour
+  tea_party_ralsei_put_down                  帧3   已用1   同名组=无     引用=tea_put_down
+  tea_party_ralsei_reach                     帧3   已用1   同名组=无     引用=tea_reach
+  tea_party_ralsei_sip                       帧2   已用1   同名组=无     引用=tea_sip
+  小计：20 组
+
+== C. 已登记 ==
+  共 82 组（全部帧均被配置引用），明细见 asset_groups.json
+
+== D. 配置引用但磁盘缺失的帧 ==
+（无）
+
+== E. 家族统计 ==
+  家族               组数     已登记      部分引用       未引用
+  ralsei           273    64       12         197
+  cutscene         25     13       3          9
+  susie            21     0        0          21
+  tea              17     2        5          10
+  board            13     0        0          13
+  ralseib          6      1        0          5
+  teacup           4      1        0          3
+  ch3              3      0        0          3
+  gameshow         3      0        0          3
+  dw               2      0        0          2
+  quiz             2      0        0          2
+  susieb           2      1        0          1
+  susiezilla       2      0        0          2
+  tiny             2      0        0          2
+  chefs            1      0        0          1
+  hunched          1      0        0          1
+  ja               1      0        0          1
+  mannequin        1      0        0          1
+  shootout         1      0        0          1

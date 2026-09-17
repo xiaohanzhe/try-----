@@ -49,3 +49,6 @@ code-quality-audit/*/_evidence/_tmp*/
 
 # 编码校验工具自己的输出报告（每次运行的产物；且含乱码样本预览，入库会污染后续扫描）
 code-quality-audit/tools/_out_*
+
+# 素材分组图库（单文件内联 base64，约 1.4 MB，每次重扫都变；由 scan_asset_groups.py 复算即可）
+素材分组总览_*.html
