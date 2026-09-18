@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **22 套件 / 857 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **23 套件 / 925 PASS**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -439,8 +439,8 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `update_animation` 内嵌块只取前两段。下一步：真机取真实未命中清单。
 
 ### 闸门状态（2026-09-17 **已重扫 + 已裁定**）
-- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-18 起 22 套件 / 857 PASS / 全 IDENTICAL**
-  —— 新增 `persona_chat`）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
+- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-18 起 23 套件 / 925 PASS / 全 IDENTICAL**
+  —— 新增 `persona_chat`(58) 与 `s8_stream`(68)）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
 - **G1 ✗ → 改为"每项 PR 内做该项专属零引用筛查"**（方案 §8 决策 2 已按"技术细节我拍板"落定，
   **不再整体清 185 项**）。新工具 `架构改造-H4H5/scan_zero_refs.py`（**AST 计名字引用点，不做字符串匹配**，
   防注释/文档串误命中）→ `_evidence/zero_refs.txt`。
@@ -452,8 +452,11 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   工具 `架构改造-H4H5/scan_method_index.py`（ast）→ `_evidence/method_index.{txt,json}`（含起止行/行数/Wave 归属）。
 
 ⚠️ **2026-09-18 更新**：人味改造（`ee39227`）在 `RalseiPet` 里**新增 4 个方法**
-（`_build_persona_prompt` / `_ai_chat_options` / `_clean_ai_reply` / `_is_repeat_of_recent`）
-→ `main.py` 行数已变（≈9812 行），**下面 Wave 1 的行号区间全部失效**。
+（`_build_persona_prompt` / `_ai_chat_options` / `_clean_ai_reply` / `_is_repeat_of_recent`）；
+S8 流式（`761b7e0`）又加了 `_emit_delta` / `_on_api_delta` / `_ai_stream_enabled` / `_sanitize_partial_reply`
+等与 `_md_strip_re` / `_role_marker_re`（类方法）。
+`main.py` 实测 **9952 行 / 530781 字节**（Python 计数，2026-09-18 核），
+**“9588 行”与下面 Wave 1 的行号区间全部失效**。
 开工前**必须重跑 `scan_method_index.py`**，不要照抄 6186–6449 这类旧区间。
 
 ### Wave 1 施工顺序（已定，行号为本轮实测）
@@ -521,8 +524,8 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
 - **开关** `api.enabled`（`config.json:4`；代码默认 False `config_manager.py:57`，本机已 true，
   Ollama `ralsei`）。`HTTPLocalAI.chat` 是**同步 requests**（`api_client.py:174/279`），
   **严禁主线程调用**（`177-180`）→ 一律线程（`main.py:7200` / `ai_driver.py:358`）。
-- **UI 是"假打字机"**：`stream: False`（`main.py:6607`）先拿完整答复再逐字（35ms/22ms `782-784`）、
-  固定 20s 隐藏 `163`、固定 540×180 `188`、上限 380 `274`。
+- **UI 打字机**：**原先**是"假打字机"（`stream: False` 先拿完整答复再逐字、固定 20s 隐藏 `163`、
+  固定 540×180 `188`、上限 380 `274`）→ **S8 已改成真流式**（见上「S8 流式输出」条）；20s 隐藏/尺寸未动。
 - **上下文不差（别说成无状态单轮）**：`main.py:7133` `_build_ai_context() + text`（时段/天气/心情/
   精力饥饿/偏好 `7202-7263`）+ 6 轮历史 `7136` + 话题锚 `7165` + `recall_text` `7176`。
   **但**：历史只 6 轮（缓冲 8 `dialogue_ui.py:347`）、**桌面观察不进 chat prompt**（只进
@@ -550,8 +553,10 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
    `哭`/`游戏`/`状态`/`天气`/`精力`/`饿了吗` 等高危子串会把正经闲聊截胡。
 7. 硬件（为"换 7B"决策）：**Intel Core Ultra 5 125H + Intel Arc 核显，无 NVIDIA 独显**，RAM 33.9 GB
    → 3B 的 ~2s 是 CPU/核显推理；7B 可行但预计 5~12s。
-8. **状态：诊断 + L1 施工都已完成**（用户拍板"L1 全做"）。施工记录见报告第九节；
-   契约见下条「对话 AI 人味改造（第十八轮并行线）」。S7（131 处事件台词）、S8（流式）**顺延**。
+8. **状态：诊断 + L1 施工 + S8 流式都已完成**（用户拍板"L1 全做"、随后"继续按计划执行"）。
+   施工记录见报告第九节（L1）与第十节（S8）；契约见下两条。
+   **只剩 S7（131 处事件台词分批交 AI）顺延**（改动面大，单独一轮；须守第 13 条铁律：环境自动触发
+   只能 `ai_driver.note_event()` 上报、**不得自行播动画**；短促罐头反应保持即时，长台词才交 AI）。
 
 ### 对话 AI 人味改造（第十八轮并行线，2026-09-18，提交 `ee39227`，**勿回退**）
 报告 `Ralsei对话人味诊断与训练方案_2026-09-18.md`（第 9 节为施工记录）；
@@ -591,3 +596,36 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
   归入 3B 能力上限，由 L2（换底座）解决。
 - 指标口径（复现时照这个算）：同题重复率 / 违禁套话率 / 格式残留率 / 判退率。
   本轮实测：9 次调用（重采样 2 次）→ 完全重复 0、违禁套话 0、markdown 残留 0。
+
+### S8 流式输出（第十八轮并行线二，2026-09-18，提交 `761b7e0`，**勿回退**）
+报告第十节为施工记录；证据 `code-quality-audit/人味改造-2026-09-18/_evidence/s8_*`；
+**回归锁 `s8_stream`（68 项，已进 G2）**。**不打网络、不调 Ollama。**
+
+- **`LocalAIBase.chat_stream` 是具体方法、不是 `abstractmethod`**（默认回落 `chat()` + 单分片回调）——
+  否则 `LocalAIStub` 与用户 `register_provider()` 的实现被迫改造，App 一升级就崩在用户那边。锁 A1/A2。
+- **`requests.iter_lines()` 必须显式 `chunk_size=1`**：默认按 512 字节攒批 → 首字 0.45s（吃掉近一半收益）；
+  `chunk_size=1` / `resp.raw.readline()` 才是 0.23s（非流式首字节=全文 6.02s）。**这条是流式收益的一半，别省。**
+- **流式只做"前缀安全"清洗**（剥 markdown / 截自问自答）；判退与超长截断**只留给收尾**
+  `_clean_ai_reply`。两条规则**共用同一份定义**（`_md_strip_re()` / `_role_marker_re()` 类方法），
+  否则规则漂移 = 字打出去又被改掉。一句话：**流式负责"看着像人话"，护栏负责"最终算数"**。
+- **流式清洗不可能对所有文本前缀单调**：`1. `（等点号后空白）与 `主人：`（等冒号）这类规则必然让
+  **已显示的 1~2 字符**被延后剥掉。**不要试着改规则消掉它**（试过"提前剥"会把 `1.5 倍` 误伤成 `5 倍`）；
+  正解 = 调用方（`dialogue_ui.stream_delta`）检测"新结果不是已显示内容的前缀"→ **整段替换**。锁 C9/C11。
+- **流式与"判退重采样"天然冲突**：判退发生在收完之后，被判退的半句**已经在屏幕上** →
+  重采样前**必须先发 `None` 分片**（`_stream_reset()` 回「……」）把屏幕擦干净，否则新句粘在旧句后。
+  且流式路径下 `_on_ai_reply` **不能**调 `_ai_thinking_off()`（它清 `typing_text` → 已显示内容一闪而逝再重打）。
+  锁 B7/B13、D7/D8、D14。
+- **UI 结构本来就不用改**：打字机 = `typing_text`（全文）+ `typing_index`（进度）+ QTimer 渲染
+  `typing_text[:index]` → **只要让 `typing_text` 可追加**，`typing_index` 留原位，下一拍自然往新内容上打。
+  新增状态位只有一个 `_streaming`（"队列暂时打完但消息还没收完"）。
+- **`_ai_delta_gen` 世代号丢弃过期分片**；`_on_api_delta` **故意不清 sink**（清了会误杀新请求的接收端）。
+  开关 `api.stream`（`config.json` / `config_manager.py`，**默认 True**，一键关闭）。
+- **Qt 跨线程投递必须单独验**（本项目最贵的坑"写了 A 没接线到 B"）：A~D 组只测到函数级，
+  而分片是*工作线程 emit → 主线程槽执行*，这条链断掉 → **流式一个字都不显示**。
+  F 组用真 `QApplication` + `QObject` + 真 `pyqtSignal` + `processEvents()` 断言"按序投递 +
+  丢弃过期世代 + reset 顺序严格保持"。**凡涉及跨线程信号，都要有这样一组真事件循环的断言。**
+- 实测（4 问 e2e）：首字中位 **0.43s** / 最快 0.31s；完全重复 0；markdown 残渣 0；
+  "屏幕最终 ≠ 护栏定稿" **0 例**。
+- **教训 11–16（写断言相关）已并入上方「验证脚本教训」**：`func_src` 取错函数（基类/别的 `__init__`）、
+  含字面量用 `code_no_comment` vs 结构性用 `code_only_src`、`code_only_src` 抹缩进后别忘中间的 `try:`、
+  计数型断言绑实现细节（`persona_chat` B5 已改成"两处请求都走同一 `_ask` 助手"）。
