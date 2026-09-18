@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **23 套件 / 925 PASS**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **24 套件 / 1043 PASS / 全 IDENTICAL**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -439,8 +439,8 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `update_animation` 内嵌块只取前两段。下一步：真机取真实未命中清单。
 
 ### 闸门状态（2026-09-17 **已重扫 + 已裁定**）
-- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-18 起 23 套件 / 925 PASS / 全 IDENTICAL**
-  —— 新增 `persona_chat`(58) 与 `s8_stream`(68)）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
+- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-18 起 24 套件 / 1043 PASS / 全 IDENTICAL**
+  —— 新增 `persona_chat`(58)、`s8_stream`(68)、`s7_event_speech`(117)）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
 - **G1 ✗ → 改为"每项 PR 内做该项专属零引用筛查"**（方案 §8 决策 2 已按"技术细节我拍板"落定，
   **不再整体清 185 项**）。新工具 `架构改造-H4H5/scan_zero_refs.py`（**AST 计名字引用点，不做字符串匹配**，
   防注释/文档串误命中）→ `_evidence/zero_refs.txt`。
@@ -455,8 +455,10 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
 （`_build_persona_prompt` / `_ai_chat_options` / `_clean_ai_reply` / `_is_repeat_of_recent`）；
 S8 流式（`761b7e0`）又加了 `_emit_delta` / `_on_api_delta` / `_ai_stream_enabled` / `_sanitize_partial_reply`
 等与 `_md_strip_re` / `_role_marker_re`（类方法）。
-`main.py` 实测 **9952 行 / 530781 字节**（Python 计数，2026-09-18 核），
-**“9588 行”与下面 Wave 1 的行号区间全部失效**。
+S7 事件台词（本轮）再加 `speak_event` / `_event_ai_ready` / `_event_say` / `_pick_event_line` /
+`_event_speech_enabled` 5 个方法。
+`main.py` 实测 **10196 行 / 545301 字节**（Python 计数，2026-09-18 S7 + lean 修复后核），
+**“9588 行”“9952 行”“10155 行”与下面 Wave 1 的行号区间全部失效**。
 开工前**必须重跑 `scan_method_index.py`**，不要照抄 6186–6449 这类旧区间。
 
 ### Wave 1 施工顺序（已定，行号为本轮实测）
@@ -551,12 +553,26 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
    `recall_text`（`memory_system.py:1481`）被 `main.py:7178` 调用。之前记的"零引用"只对 `main.py` 文件内成立。
 6. **关键词硬拦截实测 34 条**（不是约 50 条），`dialogue_ui.py:1319-1475`，纯 `kw in raw` 无边界：
    `哭`/`游戏`/`状态`/`天气`/`精力`/`饿了吗` 等高危子串会把正经闲聊截胡。
-7. 硬件（为"换 7B"决策）：**Intel Core Ultra 5 125H + Intel Arc 核显，无 NVIDIA 独显**，RAM 33.9 GB
-   → 3B 的 ~2s 是 CPU/核显推理；7B 可行但预计 5~12s。
-8. **状态：诊断 + L1 施工 + S8 流式都已完成**（用户拍板"L1 全做"、随后"继续按计划执行"）。
-   施工记录见报告第九节（L1）与第十节（S8）；契约见下两条。
-   **只剩 S7（131 处事件台词分批交 AI）顺延**（改动面大，单独一轮；须守第 13 条铁律：环境自动触发
-   只能 `ai_driver.note_event()` 上报、**不得自行播动画**；短促罐头反应保持即时，长台词才交 AI）。
+7. 硬件（为"换 7B"决策）：**Intel Core Ultra 5 125H + Intel Arc 核显，无 NVIDIA 独显**，RAM 31.6 GB
+   → CPU-only 推理。
+   **【2026-09-18 已实测结案：不建议换 7B】** 报告
+   `code-quality-audit/模型选型-7B-2026-09-18/结论_7B换型评估_2026-09-18.md`，
+   原始数据同目录 `probe_7b_vs_3b.txt`。3B `ralsei:v2`(1.80GB) vs `qwen2.5:7b-instruct`(4.36GB)：
+   **整句 2360ms → 4375ms（1.85×）**、**吐字 15.07 → 7.19 tok/s（慢 2.10×）**、
+   **冷加载 2116 → 7742ms（3.66×）**、**冷首字 13.2s → 34.8s**、未命中缓存 prefill **95 → 38 tok/s**。
+   用户前提"速度变化可忽略不计"**不成立** → 结论：不换，等有独显或 L2 阶段再评估。
+   质量上 7B 确实更细，但增量有限（3B 调好 persona 后已能给出像样反应），且更啰嗦 + 出现英文残字`maybe`。
+   **注意**：`probe_7b_vs_3b.py` 汇总表里的"热首字 71.83×"是**假数**（7B 那一格取的是被 `/api/chat`
+   打断缓存后的第 1 次），别引用；以"第 2 次起"为准。
+   **"事件用 3B、聊天用 7B"混搭不可行**：Ollama 一次只驻留一个模型，来回切＝每次付冷加载 + 前缀全废。
+8. **状态：诊断 + L1 施工 + S8 流式 + S7 第一批事件台词（含 lean 修复）都已完成**
+   （用户拍板"L1 全做"、随后"继续按计划执行"）。
+   施工记录见报告第九节（L1）、第十节（S8）、第十一节（S7，含 §11.11 lean）。
+   **S7 只做了第一批 20 处**（`main.py` 还剩 113 处 `add_dialogue`），第二批顺延；
+   须守第 13 条铁律（环境自动触发只能 `ai_driver.note_event()` 上报、**不得自行播动画**）。
+   **7B 换型已评估并给出"不建议"结论，等用户拍板**（见第 7 条）。
+   顺带发现未动：`assets/ralsei_persona.md` 第 62–63 行的**语气示范会被整句搬**（3B/7B 都会，
+   提示词越像示范越必搬）→ 建议把示范里"主人"那句话换成不常出现的场景。
 
 ### 对话 AI 人味改造（第十八轮并行线，2026-09-18，提交 `ee39227`，**勿回退**）
 报告 `Ralsei对话人味诊断与训练方案_2026-09-18.md`（第 9 节为施工记录）；
@@ -629,3 +645,56 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
 - **教训 11–16（写断言相关）已并入上方「验证脚本教训」**：`func_src` 取错函数（基类/别的 `__init__`）、
   含字面量用 `code_no_comment` vs 结构性用 `code_only_src`、`code_only_src` 抹缩进后别忘中间的 `try:`、
   计数型断言绑实现细节（`persona_chat` B5 已改成"两处请求都走同一 `_ask` 助手"）。
+
+### S7 事件台词分批接 AI（第十八轮并行线三，2026-09-18，**勿回退**）
+报告第十一节；证据 `code-quality-audit/人味改造-2026-09-18/_evidence/s7_*`；
+**回归锁 `s7_event_speech`（117 项，已进 G2）**。**不打网络、不调 Ollama。**
+
+- 档位表 `modules/event_speech.py` 是**白名单**：`EVENT_TIERS` 里登记了才走 AI，
+  没登记的事件**行为完全不变**（仍 `add_dialogue` 罐头）。铁律：**漏迁移的后果必须是
+  "跟改造前一模一样"**，而不是"悄悄变成 2 秒延迟"。锁 A1/A4/C2/D14。
+  短促反应**显式钉在罐头档**：`fling`（甩飞「哇啊——！」）/ `splat_poked` / `ear_ruffle`。
+- **唯一出口 `speak_event(kind, pool, face, instant=False)`**；`main.py` 现有 20 处调用点，
+  不再散落 `add_dialogue`（起点：全项目 191 处，`main.py` 131 处）。
+- `event_speech.py` **禁止 import Qt / 项目内任何模块** —— 否则卷进
+  `logger_utils→data_store→memory_store` 初始化环（第十二轮踩过）。锁 A17。
+- **首字兜底只覆盖"第一个字"**：`EVENT_SPEAK_FIRST_TOKEN_MS=1200`。3B 事件台词实测
+  **整句 1.19~1.62s（中位 1.39s）但首字 0.81~0.91s** —— 用"整句时限"（哪怕 1200ms）会让
+  **罐头永远赢**，等于 AI 档从没打开过。必须走 S8 的流式通路。锁 B16/B16b/B18。
+- **⚠️ lean 请求（本轮最关键的一条，缺了整批迁移就是白做）**：`chat_with_ai(text, on_reply,
+  on_delta=None, lean=False)`，`speak_event` 是**唯一**传 `lean=True` 的地方。
+  **机制**：Ollama 的 KV 前缀缓存只复用"从头逐字相同"的那一段。App 原本把
+  **每轮都变**的【此刻】/话题锚/记忆召回挂在 **system 尾部** → 那 ~146 字（≈100 token）每次重算，
+  而本机（CPU-only，无独显）**未命中缓存的 prefill 只有 40~100 tok/s** → +1.19s；
+  再接 2~4 条 history → 再 +0.52s。**合计 2.5~3.0s，必超 1200ms 兜底 → 生产里 100% 走罐头（静默）。**
+  实测（`_evidence/probe_prefix_cache.txt`，4 次中位）：稳定 system **628ms** /
+  变化 system **1815ms** / 稳定 system+变化 history **1148ms**。
+  **修后真机：App 链路首字 3.02s → 0.91s（稳态 0.83s）→ 真的走 AI**。
+  回归锁 B22–B22f（源码级）+ D1d（行为级）+ **F 组 9 条**（把真 `chat_with_ai` 绑桩宿主 +
+  假 `api_client`，抓**真正会发给模型的 system/history**，断言"一个会变的东西都没有"；
+  对照组必须三样都在，防"压根没拼"的假绿）。
+  **别为了给事件加环境感知就把 lean 关掉** —— 要带环境就换个位置（比如塞进 user 消息），
+  别动 system 前缀。对话路径不传 lean，行为不变。
+  **教训**：先猜"system 太长"（错）、再猜"冷加载"（错），第三次才靠对照实验钉到"前缀缓存失效"。
+  第一版探针 `probe_firsttoken_breakdown.py` **自己把缓存灌热了**（先跑原生端点问 prompt tokens），
+  标签写"冷前缀"实为全热 —— 数据自相矛盾（"读提示词 999ms"却"首字 244ms"）。**该文件故意留档不删。**
+- **让路判据用 `dialogue_ui._ai_inflight`，绝不能用 `_ai_delta_sink`**：S8 收尾**故意不清空** sink
+  → 拿它当门 = 开过一次流式之后**所有事件台词永久退回罐头**，而且**静默无日志**。
+  锁 **D22/D22b** 专门钉这条。另配 `_event_speaking` 防"上一个事件没答就叠第二个请求"。
+- **出戏闸 `looks_out_of_character` / `guard_reaction`**：3B 实测会吐
+  「我没有触觉所以无法感受被拉肩」这种自毁角色的句子 → **整句作废、回落罐头**
+  （宁可重复一句写死的，也不能让它说"我是 AI"）。否定式模式匹配，只做止损不做保证。锁 A18/A19/D5d。
+- 罐头去重 `RecentLinePicker`（窗口 8）：修"戳三次同一句"；**罐头也要进窗口**
+  （AI 不可用时最常走这条路，不进就等于学不到自己说过什么）。锁 A12/A13/B19/D19。
+- 事件请求最小间隔 `EVENT_SPEAK_MIN_INTERVAL=2.0s`（连戳不产生请求风暴）；
+  开关 `api.event_speech`（默认 True，显式 false = 一键退回改造前行为）。
+- **桩宿主教训（新，务必复查）**：`mouseReleaseEvent` 改调 `speak_event` 之后，
+  **第六轮套件当场 `AttributeError` 挂掉** —— `SimpleNamespace` 桩只摆了它当时用得到的属性。
+  **凡主程序"内部调用面"变了，所有 `SimpleNamespace` 桩都要复查**
+  （`round8_fling` / `round14_move` / `round17_build_fall` 旁还埋着同类桩）。
+  已修 `第六轮/verify_round6_fixes.py::make_drag_stub`。
+- 连带：`round5_smoke` 模块数 28→29（新增 `event_speech.py`，导入成功，**预期内**）→
+  顺手把 `run_all.py` 里写死"28 个 modules"的描述改成计数无关
+  （同 `s1_anim_miss` 教训：**描述里别写会随代码增长的数字**）。
+- **第二批顺延**：`main.py` 还剩 113 处 `add_dialogue`，只挑"值得现想一句"的迁；
+  短促反应**不再扩大范围**。

@@ -330,6 +330,10 @@ from modules.ai_driver import AiActionDriver
 from modules.command_manager import CommandManager
 from modules.autonomous_agent import AutonomousAgent
 from modules.sound_manager import SoundManager
+# 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
+from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
+                                  build_prompt, guard_reaction, pet_kind, tier_of,
+                                  first_sentence)
 # 联网搜索摘要：依赖 beautifulsoup4。改为"可选导入"而不是整段注释掉——
 # 原写法让整个模块变成永远不可达的死代码（需求"能上网"缺一环），
 # 且一旦有人取消注释而环境没有 bs4，程序会在 import 期直接崩溃。
@@ -374,6 +378,12 @@ class RalseiPet(QMainWindow):
         self._api_delta.connect(self._on_api_delta)
         self._ai_delta_sink = None    # 当前请求的流式接收方（只在主线程读写）
         self._ai_delta_gen = 0        # 世代号：每次发起新请求 +1
+        # 事件台词（S7）：罐头去重器 / 事件世代号 / 上次走 AI 的时刻（频率闸）/
+        # "上一个事件还在等 AI" 标记（防叠加请求）
+        self._event_line_picker = RecentLinePicker()
+        self._event_speak_gen = 0
+        self._event_speak_last = None
+        self._event_speaking = False
         
         # 注册退出处理函数
         import atexit
@@ -5161,6 +5171,244 @@ class RalseiPet(QMainWindow):
         self.start_autonomous_speech("timer")
 
 
+    # ------------------------------------------------------------------
+    # 事件台词（S7）：社交反应走 AI，短促反应保持罐头
+    #
+    # 改造前事件台词 100% 写死（`main.py` 131 处 `add_dialogue`），同一句反复出现
+    # （连着摸三次都是「嘿嘿~ 好舒服呀！」）—— 这是"没活人味"最直观的来源。
+    # 全量清单与「触发来源 × 文本性质」分类见
+    # `code-quality-audit/人味改造-2026-09-18/_evidence/event_lines.txt`（可复算）。
+    #
+    # 档位表在 `modules/event_speech.EVENT_TIERS`（纯逻辑模块，无 Qt）。三档行为：
+    #   ① 未登记为 AI 档 / `instant=True` / AI 不可用 → **立刻说罐头**（= 改造前行为）
+    #   ② AI 档 → 发请求并**流式**打出来；`EVENT_SPEAK_FIRST_TOKEN_MS` 内连首字都没到
+    #      才用罐头兜底（兜底只判"首字"，不判整句 —— 整句由打字机慢慢打）
+    #   ③ 已经说过话之后，AI 的迟到回复不再补第二次 —— 一次事件只给一个气泡
+    # 为什么"短促反应"必须留在罐头：摔落/甩飞要求 0 延迟，而且它是物理状态机的输出，
+    # 交模型只会变慢变差（报告 §5 S7 的原则）。
+    #
+    # 为什么 AI 档要用**流式**（真机实测逼出来的，见 _evidence/s7_e2e_event.txt）：
+    # 整句耗时 1.13~1.65s（中位 1.27s），而**首字** 0.79~0.90s（中位 0.81s）。
+    # 不流式的话只有两条路 —— 让主人干等 1.3s 没反应，或把兜底时限放到 2.5s
+    # （那已经不是"即时反应"了）。所以：框子先冒出来 + 打出「……」，
+    # 首字一到就开始逐字冒字，兜底只负责"连首字都没有"这一种情况。
+    # ------------------------------------------------------------------
+    # 1200 而不是 900：首字实测最慢 0.90s，900ms 只留 0~60ms 余量 ——
+    # 实测 8 次事件里有 1 次正好卡在 0.903s 被误判超时（落回罐头）。
+    # 等待期已经在显示「……」（见 speak_event），放宽不会让人觉得"没反应"。
+    EVENT_SPEAK_FIRST_TOKEN_MS = 1200     # 首字兜底时限（流式；整句不设限）
+    EVENT_SPEAK_MIN_INTERVAL = 2.0        # 两次 AI 档事件的最小间隔（防连戳请求风暴）
+    EVENT_SPEAK_MAX_CHARS = EVENT_MAX_CHARS   # 与模块共用同一份长度口径（不写第二份）
+
+    def _event_speech_enabled(self):
+        """事件台词是否走 AI（config: `api.event_speech`，**缺省开启**）。
+
+        S7 总开关：关掉即回到"事件台词全部罐头"的改造前行为（改 config 即可，无需回滚代码）。
+        """
+        if not getattr(self, 'api_enabled', False):
+            return False
+        try:
+            cfg = getattr(self, 'api_config', None) or {}
+            if isinstance(cfg, dict) and 'event_speech' in cfg:
+                return bool(cfg.get('event_speech'))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return True
+
+    def _pick_event_line(self, pool):
+        """从罐头池里挑一句**最近没说过**的。
+
+        改造前是 `random.choice(pool)`，而池子常常只有 3~4 句 → 连戳三次很容易撞同一句。
+        去重窗口见 `event_speech.RecentLinePicker`。
+        """
+        try:
+            picker = getattr(self, '_event_line_picker', None)
+            if picker is not None:
+                return picker.pick(pool)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        try:
+            items = [x for x in (pool or []) if isinstance(x, str) and x.strip()]
+            return random.choice(items) if items else ""
+        except Exception:
+            return ""
+
+    def _event_say(self, text, face="happy", streamed=False):
+        """事件台词显示的唯一出口（`add_dialogue` + `show_dialogue` 成对，只写一次）。
+
+        `streamed=True` 表示这句话在流式期间**已经逐字显示在前台**了 →
+        交给 `dialogue_ui.add_dialogue(..., _streamed=True)` 走"定格"而不是"从头重打"。
+        """
+        if not text:
+            return False
+        try:
+            dui = getattr(self, 'dialogue_ui', None)
+            if dui is None:
+                return False
+            dui.add_dialogue("ralsei", text, face, _streamed=bool(streamed))
+            dui.show_dialogue()
+            self.last_interaction_time = time.time()
+            return True
+        except Exception as e:
+            _log.warning(f"[事件台词] 显示失败: {e}")
+            return False
+
+    def _event_ai_ready(self, kind, instant=False):
+        """这个事件能不能走 AI 档。任一条件不满足 → 走罐头，**绝不阻塞主人**。"""
+        if instant or not self._event_speech_enabled():
+            return False
+        if tier_of(kind) != TIER_AI:
+            return False
+        dui = getattr(self, 'dialogue_ui', None)
+        if dui is None:
+            return False
+        try:
+            # 主人正在自己打字 → 别抢话
+            if callable(getattr(dui, '_is_user_inputting', None)) and dui._is_user_inputting():
+                return False
+            # 主人那条请求还在路上（`_ai_inflight` 是 dialogue_ui 自己的状态位）→ 让路。
+            # 这里**不能**用 `_ai_delta_sink` 判"对话在流式"：按 S8 的设计它收尾后
+            # **故意不清空**，用它做门 = 开过一次流式之后所有事件永远走罐头
+            # （写本套件时自查出来的；D22 就是钉这条的）。
+            if getattr(dui, '_ai_inflight', False):
+                return False
+            # 屏幕上正有东西在流式打（对话的或上一个事件的）→ 别插进去
+            if getattr(dui, '_streaming', False):
+                return False
+            # 等着回复（前台是「……」占位）：事件台词会把它顶掉
+            if getattr(dui, 'typing_text', '') == getattr(dui, 'AI_THINKING_PLACEHOLDER', None):
+                return False
+            # 上一个事件还在等 AI（没到兜底时限）→ 不叠加第二个请求
+            if getattr(self, '_event_speaking', False):
+                return False
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return False
+        # 频率闸：快速连戳不该连发请求（超限就当场说罐头）
+        last = getattr(self, '_event_speak_last', None)
+        if last is not None and (time.time() - last) < self.EVENT_SPEAK_MIN_INTERVAL:
+            return False
+        return True
+
+    def speak_event(self, kind, pool=None, face="happy", instant=False):
+        """事件台词唯一入口（S7）。三档行为见本节开头。"""
+        canned = self._pick_event_line(pool)
+
+        def _note(text):
+            # 说过的话都要进去重窗口 —— 包括**罐头**。只在 AI 分支记的话，
+            # "AI 关闭/超时"这条最常走的路径就永远学不到自己刚说过什么，
+            # 去重形同虚设（这是写本套件时自查出来的）。
+            try:
+                self._event_line_picker.note(text)
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        if not self._event_ai_ready(kind, instant):
+            _note(canned)
+            self._event_say(canned, face)
+            return canned
+
+        # 世代号：同一时间只认最新的一次事件，旧事件的迟到分片/回复直接丢弃
+        self._event_speak_gen = getattr(self, '_event_speak_gen', 0) + 1
+        gen = self._event_speak_gen
+        self._event_speak_last = time.time()
+        self._event_speaking = True
+        dui = getattr(self, 'dialogue_ui', None)
+        state = {'said': False, 'streaming': False}
+
+        def _say_canned():
+            self._event_speaking = False
+            if state['said'] or gen != getattr(self, '_event_speak_gen', 0):
+                return
+            state['said'] = True
+            if state['streaming']:
+                # 屏幕上已经打着半句 AI 台词 → 先擦掉再换罐头，
+                # 否则罐头会接在半句后面像两句话黏一起（S8 的同一坑）
+                try:
+                    dui.stream_delta(None)
+                except Exception as e:
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
+            _note(canned)
+            self._event_say(canned, face)
+
+        def _on_delta(chunk):
+            # 主线程（`_api_delta` 信号）。世代号保证旧事件的分片不落到屏幕上。
+            if gen != getattr(self, '_event_speak_gen', 0):
+                return
+            # **已经说过话了 → 迟到的分片一律丢弃**（真机 e2e 抓到的真 bug）。
+            # 场景：首字超过兜底时限 → 先说了罐头 → 几百毫秒后模型的字才到。
+            # 不丢的话有两个后果，第二个是致命的：
+            #   ① 屏幕上会"罐头说完又冒出一句 AI 的话"（同一事件两句话）；
+            #   ② `dui.stream_delta` 会把 dialogue_ui 切进流式态（`_streaming=True`），
+            #      而这次事件之后**再没有人**去清它（`_on_reply` 因 `state['said']`
+            #      提前返回）→ `_event_ai_ready` 的 `_streaming` 检查此后**永远为真**
+            #      → 之后所有事件永久退回罐头（静默、无日志）。
+            #      这与 D22 钉的 `_ai_delta_sink` 是同一类"永久挡死"，只是入口不同。
+            if state['said']:
+                return
+            try:
+                if chunk is None:
+                    state['streaming'] = True
+                    dui.stream_delta(None)      # 护栏判退 → 擦掉半句再重采样
+                    return
+                if not isinstance(chunk, str) or not chunk:
+                    return
+                state['streaming'] = True
+                dui.stream_delta(chunk)
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        def _on_reply(reply):
+            # 回调由 `_api_result` 信号投递 → 主线程（chat_with_ai 的约定）
+            self._event_speaking = False
+            text = ""
+            if reply is not None:
+                try:
+                    # 先截成一句、再过"出戏闸"（3B 实测会吐「我没有触觉无法感受…」）
+                    text = guard_reaction(
+                        first_sentence(reply, self.EVENT_SPEAK_MAX_CHARS))
+                except Exception as e:
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
+                    text = ""
+            if not text:
+                # AI 沉默 / 被判退 / 出戏 → 回落罐头（一次事件仍然只有一个气泡）
+                _say_canned()
+                return
+            if state['said'] or gen != getattr(self, '_event_speak_gen', 0):
+                return
+            state['said'] = True
+            _note(text)
+            # 流式期间已经打过字了 → 走"定格"；否则从头打字机
+            self._event_say(text, face, streamed=state['streaming'])
+
+        # 事件先行"开口"：流式要把字打进对话框，框子得先可见；同时打出「……」
+        # （主人戳一下 → 框子立刻冒出来 + 显示 Ralsei 式省略号 → 0.8s 后开始出字，
+        #  比"框子空着不动"自然；也让"等着首字"的那段时间有明确观感）。
+        # `_ai_thinking_on()` 是对话链路（`send_message`）用的同一个等待态助手：
+        # 它会先提交上一条前台消息、停掉自动隐藏，并把占位写进 typing_text ——
+        # 占位**不会被并入历史**（`dialogue_ui.add_dialogue` 显式丢弃它）。
+        try:
+            if dui is not None:
+                dui.show_dialogue()
+                dui._ai_thinking_on()
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        try:
+            # `lean=True` 是 S7 的关键一笔：事件请求只发 persona、不发上下文与历史，
+            # 这样 system **一词不变** → 每次事件都命中 Ollama 的 KV 前缀缓存 →
+            # 首字从 2.5~3.0s 回到 0.6s 量级，才可能在 1200ms 内出字走 AI。
+            # 不加这个词，本批 20 处迁移在生产里**全部**退化成罐头（已实测）。
+            self.chat_with_ai(build_prompt(kind), _on_reply, _on_delta, lean=True)
+        except Exception as e:
+            _log.debug(f"[事件台词] 发起失败，回落罐头: {e}")
+            _say_canned()
+            return canned
+        # 兜底：**首字**都没到（网络/模型无响应）才说罐头。时限只需覆盖首字。
+        QTimer.singleShot(
+            int(self.EVENT_SPEAK_FIRST_TOKEN_MS),
+            lambda: None if (state['streaming'] or state['said']) else _say_canned())
+        return None
+
     def moveEvent(self, event):
         super().moveEvent(event)
 
@@ -5265,8 +5513,7 @@ class RalseiPet(QMainWindow):
                         self.sound_manager.play_splat()
                     except Exception as e:  # 修复：原先静默吞噬
                         _log.debug("main 防御性异常（已忽略）: %s", e)
-                    self.dialogue_ui.add_dialogue("ralsei", "别戳我啦...我都扁了...", "sad")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("splat_poked", ["别戳我啦...我都扁了..."], "sad", instant=True)
                     event.accept()
                     return
                 # 点击了Ralsei
@@ -5317,8 +5564,7 @@ class RalseiPet(QMainWindow):
                             self.emotion_system.add_emotion("happy", 40)
                             self.emotion_system.add_emotion("excited", 20)
                             self.play_animation_once("laugh")
-                            self.dialogue_ui.add_dialogue("ralsei", "哎呀！别不楞我的耳朵啦！", "surprised")
-                            self.dialogue_ui.show_dialogue()
+                            self.speak_event("ear_ruffle", ["哎呀！别不楞我的耳朵啦！"], "surprised", instant=True)
                             # 重置点击计数
                             self._pet_detection_state['click_count'] = 0
                     else:
@@ -5336,21 +5582,18 @@ class RalseiPet(QMainWindow):
                     self.emotion_system.add_emotion("curious", 10)
                     self.play_animation_once("look_up")
                     body_responses = ["嗯？怎么啦？", "诶？有什么事吗？", "嘿嘿~ 你戳我啦"]
-                    self.dialogue_ui.add_dialogue("ralsei", random.choice(body_responses), "curious")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("poke_body", body_responses, "curious")
                 elif clicked_part == "shoulder":
                     # 轻推肩膀
                     _log.debug("轻推了Ralsei的肩膀！")
                     self.emotion_system.add_emotion("happy", 20)
                     self.emotion_system.add_emotion("curious", 10)
                     self.play_animation_once("look_up")
-                    self.dialogue_ui.add_dialogue("ralsei", "嗯？有什么事吗？", "curious")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("poke_shoulder", ["嗯？有什么事吗？"], "curious")
                 else:
                     # 显示点击回应
                     short_responses = ["嘿嘿！", "你好呀！", "很高兴见到你！", "要一起玩吗？"]
-                    self.dialogue_ui.add_dialogue("ralsei", random.choice(short_responses), "happy")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("poke_default", short_responses, "happy")
                 # 即使点击了Ralsei，也允许拖拽
                 event.accept()
         elif event.button() == Qt.RightButton:
@@ -5564,8 +5807,7 @@ class RalseiPet(QMainWindow):
                             
                             # 选择对应的回应
                             response_list = responses.get(pet_part, ["嘿嘿~ 好舒服呀！", "谢谢你的抚摸！", "真的好舒服呀~"])
-                            self.dialogue_ui.add_dialogue("ralsei", random.choice(response_list), "happy")
-                            self.dialogue_ui.show_dialogue()
+                            self.speak_event(pet_kind(pet_part), response_list, "happy")
                             
                             # 更新抚摸时间
                             self._pet_detection_state['last_pet_time'] = current_time
@@ -5700,8 +5942,7 @@ class RalseiPet(QMainWindow):
                     self.fall_slide_speed_y = 0.0
 
                     # 显示惊讶对话
-                    self.dialogue_ui.add_dialogue("ralsei", "哇啊——！", "surprised")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("fling", ["哇啊——！"], "surprised", instant=True)
                 elif release_speed > _BOUNCE_SPEED:
                     # 快速释放时，添加弹跳效果
                     self._bounce_params = {
@@ -5755,47 +5996,41 @@ class RalseiPet(QMainWindow):
                         self.emotion_system.add_emotion("happy", 35)
                         self.emotion_system.add_emotion("shy", 25)
                         self.play_animation_once("surprised")
-                        self.dialogue_ui.add_dialogue("ralsei", "哎呀！别捏我的耳朵！好痒呀！", "surprised")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("pinch_ear", ["哎呀！别捏我的耳朵！好痒呀！"], "surprised")
                     elif clicked_part == "arm":
                         # 拉住手臂
                         _log.debug("拉住了Ralsei的手臂！")
                         self.emotion_system.add_emotion("happy", 30)
                         self.play_animation_once("wave")
-                        self.dialogue_ui.add_dialogue("ralsei", "嘿嘿~ 别拉我的手臂啦！", "happy")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("pull_arm", ["嘿嘿~ 别拉我的手臂啦！"], "happy")
                     elif clicked_part == "body":
                         # 按住躯干
                         _log.debug("按住了Ralsei的躯干！")
                         self.emotion_system.add_emotion("happy", 25)
                         self.emotion_system.add_emotion("shy", 20)
                         self.play_animation_once("happy")
-                        self.dialogue_ui.add_dialogue("ralsei", "嗯~ 好舒服！", "happy")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("press_body", ["嗯~ 好舒服！"], "happy")
                     elif clicked_part == "belly":
                         # 拍肚子
                         _log.debug("拍了Ralsei的肚子！")
                         self.emotion_system.add_emotion("happy", 40)
                         self.emotion_system.add_emotion("excited", 20)
                         self.play_animation_once("laugh")
-                        self.dialogue_ui.add_dialogue("ralsei", "嘿嘿~ 我的肚子很软哦！", "happy")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("pat_belly", ["嘿嘿~ 我的肚子很软哦！"], "happy")
                     elif clicked_part == "face":
                         # 轻轻捏脸
                         _log.debug("轻轻捏了Ralsei的脸！")
                         self.emotion_system.add_emotion("happy", 30)
                         self.emotion_system.add_emotion("shy", 30)
                         self.play_animation_once("surprised")
-                        self.dialogue_ui.add_dialogue("ralsei", "哎呀~ 别捏我的脸！", "shy")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("pinch_face", ["哎呀~ 别捏我的脸！"], "shy")
                     elif clicked_part == "shoulder":
                         # 拉住肩膀
                         _log.debug("拉住了Ralsei的肩膀！")
                         self.emotion_system.add_emotion("happy", 25)
                         self.emotion_system.add_emotion("shy", 15)
                         self.play_animation_once("pose")
-                        self.dialogue_ui.add_dialogue("ralsei", "谢谢你拉我的肩膀！", "happy")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("pull_shoulder", ["谢谢你拉我的肩膀！"], "happy")
                 
                 # 重置长按状态
                 self._pet_detection_state['is_pressing'] = False
@@ -5827,32 +6062,28 @@ class RalseiPet(QMainWindow):
                 self.emotion_system.add_emotion("happy", 50)
                 self.emotion_system.add_emotion("shy", 35)
                 self.play_animation_once("pose")
-                self.dialogue_ui.add_dialogue("ralsei", "嘿嘿~ 摸头杀好舒服！", "happy")
-                self.dialogue_ui.show_dialogue()
+                self.speak_event("double_hair", ["嘿嘿~ 摸头杀好舒服！"], "happy")
             elif clicked_part == "belly":
                 # 拍肚子（双击）
                 _log.debug("用力拍了Ralsei的肚子！")
                 self.emotion_system.add_emotion("happy", 45)
                 self.emotion_system.add_emotion("excited", 25)
                 self.play_animation_once("laugh")
-                self.dialogue_ui.add_dialogue("ralsei", "哈哈！别用力拍我的肚子啦！", "laughing")
-                self.dialogue_ui.show_dialogue()
+                self.speak_event("double_belly", ["哈哈！别用力拍我的肚子啦！"], "laughing")
             elif clicked_part == "face":
                 # 捏脸
                 _log.debug("捏了Ralsei的脸！")
                 self.emotion_system.add_emotion("happy", 40)
                 self.emotion_system.add_emotion("shy", 40)
                 self.play_animation_once("surprised")
-                self.dialogue_ui.add_dialogue("ralsei", "哎呀！别捏我的脸！", "surprised")
-                self.dialogue_ui.show_dialogue()
+                self.speak_event("double_face", ["哎呀！别捏我的脸！"], "surprised")
             elif clicked_part == "shoulder":
                 # 拍拍肩膀
                 _log.debug("拍拍Ralsei的肩膀！")
                 self.emotion_system.add_emotion("happy", 35)
                 self.emotion_system.add_emotion("caring", 20)
                 self.play_animation_once("wave")
-                self.dialogue_ui.add_dialogue("ralsei", "谢谢你拍拍我的肩膀！", "happy")
-                self.dialogue_ui.show_dialogue()
+                self.speak_event("double_shoulder", ["谢谢你拍拍我的肩膀！"], "happy")
             else:
                 # 修复：双击耳朵/手臂/腿/躯干等未单独列出的部位时，
                 # 原来会落到外层 else 触发"显示/隐藏对话框"（窗口级行为），
@@ -5861,8 +6092,7 @@ class RalseiPet(QMainWindow):
                 self.emotion_system.add_emotion("happy", 20)
                 self.emotion_system.add_emotion("shy", 10)
                 self.play_animation_once("happy")
-                self.dialogue_ui.add_dialogue("ralsei", "嘿嘿~ 你对我真好！", "happy")
-                self.dialogue_ui.show_dialogue()
+                self.speak_event("double_other", ["嘿嘿~ 你对我真好！"], "happy")
         else:
             # 双击其他区域，显示/隐藏对话框
             if self.dialogue_ui.isVisible():
@@ -6178,15 +6408,13 @@ class RalseiPet(QMainWindow):
         self.emotion_system.add_emotion("happy", 30)
         self.emotion_system.add_emotion("grateful", 15)
         self.play_animation_once("laugh")
-        self.dialogue_ui.add_dialogue("ralsei", "谢谢你喂我！肚子饱饱的，好幸福~", "happy")
-        self.dialogue_ui.show_dialogue()
+        self.speak_event("feed", ["谢谢你喂我！肚子饱饱的，好幸福~"], "happy")
     
     def pet_ralsei(self):
         # 抚摸Ralsei
         self.emotion_system.add_emotion("happy", 40)
         self.play_animation_once("nuzzle")
-        self.dialogue_ui.add_dialogue("ralsei", "嘿嘿~ 好舒服呀！", "happy")
-        self.dialogue_ui.show_dialogue()
+        self.speak_event("pet_menu", ["嘿嘿~ 好舒服呀！"], "happy")
     
     def change_animation_randomly(self):
         # 随机切换动画（用户主动从菜单点的，所以可以活泼一些）
@@ -7131,7 +7359,7 @@ class RalseiPet(QMainWindow):
         thread.start()
         return thread
 
-    def chat_with_ai(self, text, on_reply, on_delta=None):
+    def chat_with_ai(self, text, on_reply, on_delta=None, lean=False):
         """把用户输入交给本地 AI（后台线程，不卡 UI），完成后在主线程回调
         on_reply(reply_str 或 None)。
 
@@ -7145,6 +7373,14 @@ class RalseiPet(QMainWindow):
           就回调一次（在主线程上），对话框可以"边收边打"，首字延迟从
           "整句生成完"（实测 0.9~6.0s）降到 ~0.23s；`on_delta(None)` 表示
           "把已经显示出去的半句擦掉"（护栏判退后要重采样）。
+        - **lean（S7 事件台词专用）**：只发 persona，**不发**上下文/话题锚/记忆召回
+          与对话历史。原因不是省 token，是**省 prefill**：Ollama 的 KV 前缀缓存只
+          复用"从头逐字相同"的那一段，而上下文尾巴每轮都变（时段/精力/话题/回忆），
+          实测让首字从 0.63s 涨到 1.82s（+1.19s），history 再 +0.52s —— 叠加后
+          2.5~3.0s，**必超** S7 的 1200ms 首字兜底，事件 AI 等于永远不生效。
+          证据：`code-quality-audit/人味改造-2026-09-18/_evidence/probe_prefix_cache.txt`。
+          代价：事件回复不再知道"现在几点/刚才在聊什么"—— 事件是 ≤24 字的触觉反应，
+          不需要这些；**对话路径（send_message）不传 lean，行为不变**。
         """
         if not self.api_enabled:
             try:
@@ -7168,11 +7404,14 @@ class RalseiPet(QMainWindow):
         # 甚至直接复述成回答（见 Ralsei对话人味诊断与训练方案_2026-09-18.md §E4-V0）。
         user_msg = text
         history = []
-        try:
-            history = self.dialogue_ui.get_ai_history(limit=6) \
-                if getattr(self, 'dialogue_ui', None) else []
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
+        # lean（事件台词）**不发历史**：历史每轮都在变，同样让前缀缓存失效
+        # （实测 +0.52s），而且触点反应本来就不需要"接着上一句说"。
+        if not lean:
+            try:
+                history = self.dialogue_ui.get_ai_history(limit=6) \
+                    if getattr(self, 'dialogue_ui', None) else []
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
         # 角色系统提示词：**单一真源 = assets/ralsei_persona.md**（内含"我是谁 /
         # 我现在在哪 / 我怎么说 / 示范"四节）。
         # 为什么必须由 App 发过去：实测 Ollama 会用 messages 里的 system **整体替换**
@@ -7180,8 +7419,12 @@ class RalseiPet(QMainWindow):
         # 传了之后骤降到 41）——也就是说，只把设定写在模型的 Modelfile 里，
         # 在真实应用里**一次都不会生效**。
         system = self._build_persona_prompt()
+        # lean（事件台词）：**只发 persona，一个字节都不变** → 每次事件都命中
+        # KV 前缀缓存 → 首字回到 0.6s 量级（实测见 docstring 的 probe 出处）。
+        # 注意这里连 `_build_ai_context()` 都跳过：它内部会读天气/情绪/记忆，
+        # 开销虽小但**每轮结果不同**，挂了就等于把缓存打掉。
+        _ctx = "" if lean else self._build_ai_context()
         # 环境信息作为独立小节挂在 system 尾部，而不是塞进用户消息
-        _ctx = self._build_ai_context()
         if _ctx:
             system = system + "\n\n" + _ctx
         # 对话注意力（第九轮）：把"我们现在在聊什么"交给模型。
@@ -7195,7 +7438,7 @@ class RalseiPet(QMainWindow):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
             _focus = ""
-        if _focus:
+        if _focus and not lean:
             system = system + "\n\n" + _focus
 
         # 记忆（第九轮）：由主人这句话联想"零星的记忆片段"，让 Ralsei 自然地想起来。
@@ -7203,13 +7446,14 @@ class RalseiPet(QMainWindow):
         # 只在真想起东西时才拼进提示词（recall_text 无命中返回空串），不会硬编。
         try:
             _ms = getattr(self, 'memory_system', None)
+            # lean：recall_text 会跑记忆图检索（比其它几项都贵），事件也用不上
             _recall = (_ms.recall_text(text, limit=3)
-                       if _ms is not None
+                       if not lean and _ms is not None
                        and callable(getattr(_ms, 'recall_text', None)) else "")
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
             _recall = ""
-        if _recall:
+        if _recall and not lean:
             system = system + "\n\n" + _recall
 
         def _emit_delta(piece):

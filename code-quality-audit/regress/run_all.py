@@ -87,7 +87,7 @@ HERMETIC_IDS = frozenset({
     's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
     'round8_dialogue', 'round8_floor', 'round8_fling',
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
-    'persona_chat', 's8_stream',
+    'persona_chat', 's8_stream', 's7_event_speech',
 })
 
 
@@ -96,7 +96,7 @@ SUITES = [
         'id': 'round5_smoke',
         'script': os.path.join(ROOT, 'code-quality-audit', '第五轮', 'smoke_import_round5.py'),
         'offscreen': False,
-        'desc': '第五轮：28 个 modules 全量导入冒烟 + 2 个源码不变量',
+        'desc': '第五轮：modules 全量导入冒烟（模块数随新增模块而变，勿把具体数字写进描述）+ 2 个源码不变量',
     },
     {
         'id': 'round5_verify',
@@ -269,6 +269,23 @@ SUITES = [
                 '+ 流式清洗前缀单调性穷举 + 两个已知非单调边界'
                 '+ 打字机增量显示 9 例（行为级桩：逐字喂入无回缩 / 队尾不停表 / finalize 两种收口）'
                 '+ Qt 跨线程投递（真事件队列：分片按序到达主线程槽、丢弃过期世代、reset 顺序严格）',
+    },
+    {
+        # S7 事件台词分批接 AI：与 S8 同一轮的第三块（§5 的 S7）。
+        # 它守的是"罐头顶替 AI 的三个坑"：延迟（只在已登记事件上开 AI）、
+        # 抢话（事件请求要给正在流式的对话让路）、一事件两气泡（兜底 + 迟到回复）。
+        # 同样**不打网络、不调用 Ollama**（真机延迟数值见 _evidence/s7_e2e_*）。
+        'id': 's7_event_speech',
+        'script': os.path.join(ROOT, 'code-quality-audit', '人味改造-2026-09-18',
+                               'verify_s7_event_speech.py'),
+        'offscreen': True,
+        'desc': 'S7 事件台词分批接 AI：档位白名单（未登记事件 = 行为不变，甩飞/摔扁/连点耳朵'
+                '钉在罐头档）+ 唯一出口 speak_event（不再到处 add_dialogue）'
+                '+ 让路三闸（主人打字中/对话流式中/_ai_inflight 在途）+ 流式首字兜底'
+                '（900ms 内没出字才说罐头，整句 1.4s 不再必然输给罐头）'
+                '+ 世代号丢弃迟到回复与过期分片 + 出戏闸（3B 实测会吐「我没有触觉」）'
+                '+ 罐头去重窗口 + 一键开关 api.event_speech；含 D22 回归锁：'
+                '**不许**用 _ai_delta_sink 当门（S8 收尾不清空它 → 会永久挡死事件 AI）',
     },
 ]
 

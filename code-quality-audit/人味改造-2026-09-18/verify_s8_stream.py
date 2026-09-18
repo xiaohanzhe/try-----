@@ -259,8 +259,9 @@ CHAT_SRC = func_src(MAIN_TEXT, 'chat_with_ai')
 CHAT_NC = code_no_comment(CHAT_SRC)
 CHAT_CO = code_only_src(CHAT_SRC)
 
-ok('B1 chat_with_ai 签名接受 on_delta',
-   'defchat_with_ai(self,text,on_reply,on_delta=None)' in CHAT_CO)
+ok('B1 chat_with_ai 签名接受 on_delta（S7 之后末尾多了 lean，见 S7 §11.11）',
+   'defchat_with_ai(self,text,on_reply,on_delta=None,lean=False)' in CHAT_CO,
+   CHAT_CO[:0])
 ok('B2 新增跨线程分片信号 _api_delta（object, object）',
    '_api_delta=pyqtSignal(object,object)' in code_only_src(MAIN_TEXT))
 # 不用 func_src(MAIN_TEXT,'__init__')：main.py 里第一个 `def __init__` 未必是

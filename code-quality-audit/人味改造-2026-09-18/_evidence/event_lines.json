@@ -1,0 +1,1991 @@
+{
+ "cross_main": {
+  "ai|var": 1,
+  "env|long": 4,
+  "env|short": 2,
+  "env|var": 8,
+  "env|var_fstring": 2,
+  "physics|long": 4,
+  "physics|short": 4,
+  "physics|var": 3,
+  "sys|long": 14,
+  "sys|short": 19,
+  "sys|var": 9,
+  "sys|var_fstring": 19,
+  "user|long": 10,
+  "user|short": 17,
+  "user|var": 5,
+  "user|var_fstring": 10
+ },
+ "oracle": {
+  "ai_driver": {
+   "ast": 1,
+   "delta": 0,
+   "regex": 1
+  },
+  "autonomous_agent": {
+   "ast": 0,
+   "delta": 1,
+   "regex": 1
+  },
+  "command_manager": {
+   "ast": 1,
+   "delta": 0,
+   "regex": 1
+  },
+  "dialogue_ui": {
+   "ast": 11,
+   "delta": 5,
+   "regex": 16
+  },
+  "energy_hunger": {
+   "ast": 10,
+   "delta": 0,
+   "regex": 10
+  },
+  "entertainment_system": {
+   "ast": 11,
+   "delta": 0,
+   "regex": 11
+  },
+  "main": {
+   "ast": 131,
+   "delta": 0,
+   "regex": 131
+  },
+  "pet_ai": {
+   "ast": 22,
+   "delta": 0,
+   "regex": 22
+  },
+  "social_growth_system": {
+   "ast": 4,
+   "delta": 0,
+   "regex": 4
+  }
+ },
+ "per_file": {
+  "ai_driver": 1,
+  "autonomous_agent": 0,
+  "command_manager": 1,
+  "dialogue_ui": 11,
+  "energy_hunger": 10,
+  "entertainment_system": 11,
+  "main": 131,
+  "pet_ai": 22,
+  "social_growth_system": 4
+ },
+ "problems": [],
+ "rows": [
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "init_systems",
+   "kind": "var",
+   "line": 589,
+   "raw": "msg",
+   "source": "sys",
+   "text": "msg"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "update_movement",
+   "kind": "var",
+   "line": 1507,
+   "raw": "random.choice(stir_msgs)",
+   "source": "sys",
+   "text": "random.choice(stir_msgs)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_mouse_drag",
+   "kind": "short",
+   "line": 2008,
+   "raw": "\"我来帮你拖动鼠标吧！\"",
+   "source": "user",
+   "text": "我来帮你拖动鼠标吧！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "stop_mouse_drag",
+   "kind": "short",
+   "line": 2076,
+   "raw": "\"拖动完成啦！\"",
+   "source": "user",
+   "text": "拖动完成啦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_fall",
+   "kind": "long",
+   "line": 3280,
+   "raw": "\"喂！别乱动窗口呀！我站不稳了...\"",
+   "source": "physics",
+   "text": "喂！别乱动窗口呀！我站不稳了..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_fall",
+   "kind": "short",
+   "line": 3291,
+   "raw": "\"啊！我从窗口掉下来了！\"",
+   "source": "physics",
+   "text": "啊！我从窗口掉下来了！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_fall",
+   "kind": "short",
+   "line": 3301,
+   "raw": "\"哎呀！我掉下去了！\"",
+   "source": "physics",
+   "text": "哎呀！我掉下去了！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_fall",
+   "kind": "short",
+   "line": 3311,
+   "raw": "\"哎呀！我摔倒了！\"",
+   "source": "physics",
+   "text": "哎呀！我摔倒了！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "trigger_splat",
+   "kind": "short",
+   "line": 3367,
+   "raw": "\"啊！摔扁了...\"",
+   "source": "physics",
+   "text": "啊！摔扁了..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_fall",
+   "kind": "var",
+   "line": 3611,
+   "raw": "random.choice(dazed_msgs)",
+   "source": "physics",
+   "text": "random.choice(dazed_msgs)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_fall",
+   "kind": "long",
+   "line": 3632,
+   "raw": "\"呼...我没事了...谢谢你的关心...\"",
+   "source": "physics",
+   "text": "呼...我没事了...谢谢你的关心..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_fall",
+   "kind": "long",
+   "line": 3649,
+   "raw": "\"呼...我没事了...谢谢你的关心...\"",
+   "source": "physics",
+   "text": "呼...我没事了...谢谢你的关心..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_fall",
+   "kind": "long",
+   "line": 3701,
+   "raw": "\"我已经完全恢复了...谢谢...\"",
+   "source": "physics",
+   "text": "我已经完全恢复了...谢谢..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "wake_up",
+   "kind": "var",
+   "line": 3727,
+   "raw": "random.choice(wake_up_messages)",
+   "source": "physics",
+   "text": "random.choice(wake_up_messages)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "react_to_desktop_element",
+   "kind": "var",
+   "line": 3939,
+   "raw": "reaction['dialogue']",
+   "source": "env",
+   "text": "reaction['dialogue']"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "react_to_desktop_element",
+   "kind": "long",
+   "line": 3971,
+   "raw": "\"需要我帮你打开浏览器或搜索什么吗？\"",
+   "source": "env",
+   "text": "需要我帮你打开浏览器或搜索什么吗？"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "react_to_desktop_element",
+   "kind": "var",
+   "line": 4009,
+   "raw": "help_messages[file_ext]",
+   "source": "env",
+   "text": "help_messages[file_ext]"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "create_person_name_table",
+   "kind": "short",
+   "line": 4078,
+   "raw": "\"创建Excel文件失败！\"",
+   "source": "sys",
+   "text": "创建Excel文件失败！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "create_person_name_table",
+   "kind": "var_fstring",
+   "line": 4112,
+   "raw": "f\"我已经在桌面上创建了名为'{file_name}.xlsx'的人名表！\"",
+   "source": "sys",
+   "text": "f\"我已经在桌面上创建了名为'{file_name}.xlsx'的人名表！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "create_person_name_table",
+   "kind": "var_fstring",
+   "line": 4113,
+   "raw": "f\"表中包含了以下人名：{', '.join(names)}\"",
+   "source": "sys",
+   "text": "f\"表中包含了以下人名：{', '.join(names)}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "create_person_name_table",
+   "kind": "short",
+   "line": 4119,
+   "raw": "\"创建人名表失败了...\"",
+   "source": "sys",
+   "text": "创建人名表失败了..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4170,
+   "raw": "f\"我已经在桌面上创建了一个新的Excel表格: {new_file_name}\"",
+   "source": "user",
+   "text": "f\"我已经在桌面上创建了一个新的Excel表格: {new_file_name}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "long",
+   "line": 4185,
+   "raw": "\"桌面上没有找到Excel表格文件！\"",
+   "source": "user",
+   "text": "桌面上没有找到Excel表格文件！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4197,
+   "raw": "f\"我将往表格: {excel_file} 里填写人名！\"",
+   "source": "user",
+   "text": "f\"我将往表格: {excel_file} 里填写人名！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4206,
+   "raw": "f\"我已经成功往表格: {excel_file} 里填写了人名！\"",
+   "source": "user",
+   "text": "f\"我已经成功往表格: {excel_file} 里填写了人名！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4207,
+   "raw": "f\"我填写的人名是: {', '.join(default_names)}\"",
+   "source": "user",
+   "text": "f\"我填写的人名是: {', '.join(default_names)}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4209,
+   "raw": "f\"往表格: {excel_file} 里填写人名失败了...\"",
+   "source": "user",
+   "text": "f\"往表格: {excel_file} 里填写人名失败了...\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "long",
+   "line": 4225,
+   "raw": "\"桌面上没有找到Excel表格文件！\"",
+   "source": "user",
+   "text": "桌面上没有找到Excel表格文件！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4233,
+   "raw": "f\"我找到了桌面上的Excel文件: {excel_file}\"",
+   "source": "user",
+   "text": "f\"我找到了桌面上的Excel文件: {excel_file}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4237,
+   "raw": "f\"我将为你打开并修改表格: {excel_file}\"",
+   "source": "user",
+   "text": "f\"我将为你打开并修改表格: {excel_file}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4243,
+   "raw": "f\"我已经成功修改了表格: {excel_file}！\"",
+   "source": "user",
+   "text": "f\"我已经成功修改了表格: {excel_file}！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "long",
+   "line": 4244,
+   "raw": "\"我已经将任务名称和喜好对齐，并确保所有内容都完全放在格子里，没有超出！\"",
+   "source": "user",
+   "text": "我已经将任务名称和喜好对齐，并确保所有内容都完全放在格子里，没有超出！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4246,
+   "raw": "f\"修改表格: {excel_file} 失败了...\"",
+   "source": "user",
+   "text": "f\"修改表格: {excel_file} 失败了...\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "var_fstring",
+   "line": 4248,
+   "raw": "f\"我将为你打开表格: {excel_file}\"",
+   "source": "user",
+   "text": "f\"我将为你打开表格: {excel_file}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_file_operation",
+   "kind": "long",
+   "line": 4263,
+   "raw": "\"处理文件操作指令失败了...\"",
+   "source": "user",
+   "text": "处理文件操作指令失败了..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_open_desktop_item_by_name",
+   "kind": "short",
+   "line": 4274,
+   "raw": "\"你想让我打开什么呀？\"",
+   "source": "env",
+   "text": "你想让我打开什么呀？"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_open_desktop_item_by_name",
+   "kind": "var_fstring",
+   "line": 4296,
+   "raw": "f\"我在桌面上没找到叫「{text}」的东西呢，换个名字试试？\"",
+   "source": "env",
+   "text": "f\"我在桌面上没找到叫「{text}」的东西呢，换个名字试试？\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "open_browser_for_ralsei",
+   "kind": "short",
+   "line": 4432,
+   "raw": "\"我来帮你打开浏览器吧！\"",
+   "source": "env",
+   "text": "我来帮你打开浏览器吧！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_watching_video",
+   "kind": "var",
+   "line": 4523,
+   "raw": "message",
+   "source": "env",
+   "text": "message"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_update_video_watching",
+   "kind": "long",
+   "line": 4610,
+   "raw": "\"时间不早了，我该睡觉了，晚安！\"",
+   "source": "env",
+   "text": "时间不早了，我该睡觉了，晚安！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_react_to_video",
+   "kind": "var",
+   "line": 4636,
+   "raw": "msg",
+   "source": "env",
+   "text": "msg"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "enter_sleep_mode",
+   "kind": "var",
+   "line": 4673,
+   "raw": "random.choice(sleep_msgs)",
+   "source": "physics",
+   "text": "random.choice(sleep_msgs)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "stop_watching_video",
+   "kind": "var",
+   "line": 4702,
+   "raw": "message",
+   "source": "env",
+   "text": "message"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "suggest_watching_video",
+   "kind": "var",
+   "line": 4734,
+   "raw": "message",
+   "source": "env",
+   "text": "message"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "check_entertainment_needs",
+   "kind": "var",
+   "line": 4860,
+   "raw": "suggestion",
+   "source": "env",
+   "text": "suggestion"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "tell_joke",
+   "kind": "var",
+   "line": 4875,
+   "raw": "joke",
+   "source": "sys",
+   "text": "joke"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "suggest_game",
+   "kind": "var",
+   "line": 4889,
+   "raw": "game",
+   "source": "sys",
+   "text": "game"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_handle_agent_commands",
+   "kind": "var",
+   "line": 4939,
+   "raw": "str(reply)",
+   "source": "user",
+   "text": "str(reply)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_handle_agent_commands",
+   "kind": "var",
+   "line": 4949,
+   "raw": "str(res['reply'])",
+   "source": "user",
+   "text": "str(res['reply'])"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_on_reply",
+   "kind": "var",
+   "line": 5144,
+   "raw": "text",
+   "source": "ai",
+   "text": "text"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mousePressEvent",
+   "kind": "long",
+   "line": 5268,
+   "raw": "\"别戳我啦...我都扁了...\"",
+   "source": "user",
+   "text": "别戳我啦...我都扁了..."
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mousePressEvent",
+   "kind": "short",
+   "line": 5320,
+   "raw": "\"哎呀！别不楞我的耳朵啦！\"",
+   "source": "user",
+   "text": "哎呀！别不楞我的耳朵啦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mousePressEvent",
+   "kind": "var",
+   "line": 5339,
+   "raw": "random.choice(body_responses)",
+   "source": "user",
+   "text": "random.choice(body_responses)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mousePressEvent",
+   "kind": "short",
+   "line": 5347,
+   "raw": "\"嗯？有什么事吗？\"",
+   "source": "user",
+   "text": "嗯？有什么事吗？"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mousePressEvent",
+   "kind": "var",
+   "line": 5352,
+   "raw": "random.choice(short_responses)",
+   "source": "user",
+   "text": "random.choice(short_responses)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_following_mouse",
+   "kind": "short",
+   "line": 5378,
+   "raw": "\"我来追着鼠标跑啦！\"",
+   "source": "sys",
+   "text": "我来追着鼠标跑啦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "stop_following_mouse",
+   "kind": "short",
+   "line": 5389,
+   "raw": "\"我不追啦，有点累了！\"",
+   "source": "sys",
+   "text": "我不追啦，有点累了！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseMoveEvent",
+   "kind": "var",
+   "line": 5567,
+   "raw": "random.choice(response_list)",
+   "source": "user",
+   "text": "random.choice(response_list)"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "short",
+   "line": 5703,
+   "raw": "\"哇啊——！\"",
+   "source": "user",
+   "text": "哇啊——！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "long",
+   "line": 5758,
+   "raw": "\"哎呀！别捏我的耳朵！好痒呀！\"",
+   "source": "user",
+   "text": "哎呀！别捏我的耳朵！好痒呀！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "short",
+   "line": 5765,
+   "raw": "\"嘿嘿~ 别拉我的手臂啦！\"",
+   "source": "user",
+   "text": "嘿嘿~ 别拉我的手臂啦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "short",
+   "line": 5773,
+   "raw": "\"嗯~ 好舒服！\"",
+   "source": "user",
+   "text": "嗯~ 好舒服！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "short",
+   "line": 5781,
+   "raw": "\"嘿嘿~ 我的肚子很软哦！\"",
+   "source": "user",
+   "text": "嘿嘿~ 我的肚子很软哦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "short",
+   "line": 5789,
+   "raw": "\"哎呀~ 别捏我的脸！\"",
+   "source": "user",
+   "text": "哎呀~ 别捏我的脸！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseReleaseEvent",
+   "kind": "short",
+   "line": 5797,
+   "raw": "\"谢谢你拉我的肩膀！\"",
+   "source": "user",
+   "text": "谢谢你拉我的肩膀！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseDoubleClickEvent",
+   "kind": "short",
+   "line": 5830,
+   "raw": "\"嘿嘿~ 摸头杀好舒服！\"",
+   "source": "user",
+   "text": "嘿嘿~ 摸头杀好舒服！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseDoubleClickEvent",
+   "kind": "long",
+   "line": 5838,
+   "raw": "\"哈哈！别用力拍我的肚子啦！\"",
+   "source": "user",
+   "text": "哈哈！别用力拍我的肚子啦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseDoubleClickEvent",
+   "kind": "short",
+   "line": 5846,
+   "raw": "\"哎呀！别捏我的脸！\"",
+   "source": "user",
+   "text": "哎呀！别捏我的脸！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseDoubleClickEvent",
+   "kind": "short",
+   "line": 5854,
+   "raw": "\"谢谢你拍拍我的肩膀！\"",
+   "source": "user",
+   "text": "谢谢你拍拍我的肩膀！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "mouseDoubleClickEvent",
+   "kind": "short",
+   "line": 5864,
+   "raw": "\"嘿嘿~ 你对我真好！\"",
+   "source": "user",
+   "text": "嘿嘿~ 你对我真好！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "save_config",
+   "kind": "short",
+   "line": 6129,
+   "raw": "\"配置已保存！\"",
+   "source": "sys",
+   "text": "配置已保存！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_game",
+   "kind": "long",
+   "line": 6146,
+   "raw": "\"来跳舞吧！转圈圈~ 嘻嘻！\"",
+   "source": "sys",
+   "text": "来跳舞吧！转圈圈~ 嘻嘻！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_game",
+   "kind": "short",
+   "line": 6150,
+   "raw": "\"啦啦啦~ 唱首歌给你听！\"",
+   "source": "sys",
+   "text": "啦啦啦~ 唱首歌给你听！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_game",
+   "kind": "long",
+   "line": 6159,
+   "raw": "\"我们来玩躲猫猫吧！我先藏起来~\"",
+   "source": "sys",
+   "text": "我们来玩躲猫猫吧！我先藏起来~"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "feed_ralsei",
+   "kind": "long",
+   "line": 6181,
+   "raw": "\"谢谢你喂我！肚子饱饱的，好幸福~\"",
+   "source": "user",
+   "text": "谢谢你喂我！肚子饱饱的，好幸福~"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "pet_ralsei",
+   "kind": "short",
+   "line": 6188,
+   "raw": "\"嘿嘿~ 好舒服呀！\"",
+   "source": "user",
+   "text": "嘿嘿~ 好舒服呀！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "change_animation_randomly",
+   "kind": "var_fstring",
+   "line": 6204,
+   "raw": "f\"看！我会做这个动作~\"",
+   "source": "sys",
+   "text": "f\"看！我会做这个动作~\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_rock_paper_scissors",
+   "kind": "long",
+   "line": 6212,
+   "raw": "\"现在还在玩别的呢，等这一局结束再玩石头剪刀布吧~\"",
+   "source": "sys",
+   "text": "现在还在玩别的呢，等这一局结束再玩石头剪刀布吧~"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_rock_paper_scissors",
+   "kind": "short",
+   "line": 6227,
+   "raw": "\"我们来玩石头剪刀布吧！\"",
+   "source": "sys",
+   "text": "我们来玩石头剪刀布吧！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_rock_paper_scissors",
+   "kind": "long",
+   "line": 6228,
+   "raw": "\"你要出什么呢？石头、剪刀还是布？\"",
+   "source": "sys",
+   "text": "你要出什么呢？石头、剪刀还是布？"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_rock_paper_scissors",
+   "kind": "var_fstring",
+   "line": 6242,
+   "raw": "f\"请输入有效的选项：{'、'.join(self.rock_paper_scissors_options)}\"",
+   "source": "sys",
+   "text": "f\"请输入有效的选项：{'、'.join(self.rock_paper_scissors_options)}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_rock_paper_scissors",
+   "kind": "var_fstring",
+   "line": 6273,
+   "raw": "f\"你出了：{player_choice}\"",
+   "source": "sys",
+   "text": "f\"你出了：{player_choice}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_rock_paper_scissors",
+   "kind": "var_fstring",
+   "line": 6274,
+   "raw": "f\"我出了：{ralsei_choice}\"",
+   "source": "sys",
+   "text": "f\"我出了：{ralsei_choice}\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_rock_paper_scissors",
+   "kind": "var",
+   "line": 6275,
+   "raw": "result_messages[result]",
+   "source": "sys",
+   "text": "result_messages[result]"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_rock_paper_scissors",
+   "kind": "var_fstring",
+   "line": 6276,
+   "raw": "f\"比分：你 {self.game_state['player_score']} - {self.game_state['ralsei_score']} 我\"",
+   "source": "sys",
+   "text": "f\"比分：你 {self.game_state['player_score']} - {self.game_state['ralsei_score']} 我\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_rock_paper_scissors",
+   "kind": "long",
+   "line": 6294,
+   "raw": "\"要继续玩吗？请输入石头、剪刀或布，或者输入'结束'来结束游戏。\"",
+   "source": "sys",
+   "text": "要继续玩吗？请输入石头、剪刀或布，或者输入'结束'来结束游戏。"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "end_rock_paper_scissors",
+   "kind": "var",
+   "line": 6343,
+   "raw": "final_message",
+   "source": "sys",
+   "text": "final_message"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "end_rock_paper_scissors",
+   "kind": "var",
+   "line": 6344,
+   "raw": "stats_message",
+   "source": "sys",
+   "text": "stats_message"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "end_rock_paper_scissors",
+   "kind": "short",
+   "line": 6345,
+   "raw": "\"谢谢你陪我玩！\"",
+   "source": "sys",
+   "text": "谢谢你陪我玩！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_guess_number",
+   "kind": "long",
+   "line": 6355,
+   "raw": "\"现在还在玩别的呢，等这一局结束再玩猜数字吧~\"",
+   "source": "sys",
+   "text": "现在还在玩别的呢，等这一局结束再玩猜数字吧~"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_guess_number",
+   "kind": "short",
+   "line": 6377,
+   "raw": "\"我们来玩猜数字游戏吧！\"",
+   "source": "sys",
+   "text": "我们来玩猜数字游戏吧！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_guess_number",
+   "kind": "var_fstring",
+   "line": 6378,
+   "raw": "f\"我已经想好了一个{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字，你有{self.guess_number_game['",
+   "source": "sys",
+   "text": "f\"我已经想好了一个{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_guess_number",
+   "kind": "short",
+   "line": 6379,
+   "raw": "\"请输入你猜的数字：\"",
+   "source": "sys",
+   "text": "请输入你猜的数字："
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "short",
+   "line": 6394,
+   "raw": "\"请输入有效的数字！\"",
+   "source": "sys",
+   "text": "请输入有效的数字！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "var_fstring",
+   "line": 6399,
+   "raw": "f\"请输入{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字！\"",
+   "source": "sys",
+   "text": "f\"请输入{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "var_fstring",
+   "line": 6418,
+   "raw": "f\"恭喜你！猜对了！数字就是{target}！\"",
+   "source": "sys",
+   "text": "f\"恭喜你！猜对了！数字就是{target}！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "var_fstring",
+   "line": 6429,
+   "raw": "f\"猜小了！再试一次！还剩{attempts_left}次机会。\"",
+   "source": "sys",
+   "text": "f\"猜小了！再试一次！还剩{attempts_left}次机会。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "short",
+   "line": 6430,
+   "raw": "\"请输入你猜的数字：\"",
+   "source": "sys",
+   "text": "请输入你猜的数字："
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "var_fstring",
+   "line": 6434,
+   "raw": "f\"猜小了！很遗憾，你已经用完了所有机会。\"",
+   "source": "sys",
+   "text": "f\"猜小了！很遗憾，你已经用完了所有机会。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "var_fstring",
+   "line": 6440,
+   "raw": "f\"猜大了！再试一次！还剩{attempts_left}次机会。\"",
+   "source": "sys",
+   "text": "f\"猜大了！再试一次！还剩{attempts_left}次机会。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "short",
+   "line": 6441,
+   "raw": "\"请输入你猜的数字：\"",
+   "source": "sys",
+   "text": "请输入你猜的数字："
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "play_guess_number",
+   "kind": "var_fstring",
+   "line": 6445,
+   "raw": "f\"猜大了！很遗憾，你已经用完了所有机会。\"",
+   "source": "sys",
+   "text": "f\"猜大了！很遗憾，你已经用完了所有机会。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "end_guess_number",
+   "kind": "var",
+   "line": 6465,
+   "raw": "final_message",
+   "source": "sys",
+   "text": "final_message"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "end_guess_number",
+   "kind": "short",
+   "line": 6466,
+   "raw": "\"谢谢你陪我玩！\"",
+   "source": "sys",
+   "text": "谢谢你陪我玩！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_game_input",
+   "kind": "long",
+   "line": 6490,
+   "raw": "\"好吧，那这次就不躲啦~ 下次再一起玩！\"",
+   "source": "user",
+   "text": "好吧，那这次就不躲啦~ 下次再一起玩！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_game_input",
+   "kind": "long",
+   "line": 6499,
+   "raw": "\"现在是石头剪刀布时间！出『石头』『剪刀』或『布』吧（说「结束」就不玩啦）\"",
+   "source": "user",
+   "text": "现在是石头剪刀布时间！出『石头』『剪刀』或『布』吧（说「结束」就不玩啦）"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_api_response",
+   "kind": "var_fstring",
+   "line": 6702,
+   "raw": "f\"抱歉，我现在有点不太舒服... ({error_msg})\"",
+   "source": "sys",
+   "text": "f\"抱歉，我现在有点不太舒服... ({error_msg})\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "var_fstring",
+   "line": 6902,
+   "raw": "f\"我来帮你搜索关于{search_query}的内容！\"",
+   "source": "sys",
+   "text": "f\"我来帮你搜索关于{search_query}的内容！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "var_fstring",
+   "line": 6922,
+   "raw": "f\"开始播放{ppt_files[0]['name']}！\"",
+   "source": "sys",
+   "text": "f\"开始播放{ppt_files[0]['name']}！\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "short",
+   "line": 6924,
+   "raw": "\"没有找到PPT文件呢！\"",
+   "source": "sys",
+   "text": "没有找到PPT文件呢！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "short",
+   "line": 6928,
+   "raw": "\"已切换到下一张幻灯片！\"",
+   "source": "sys",
+   "text": "已切换到下一张幻灯片！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "short",
+   "line": 6931,
+   "raw": "\"已切换到上一张幻灯片！\"",
+   "source": "sys",
+   "text": "已切换到上一张幻灯片！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "short",
+   "line": 6934,
+   "raw": "\"已停止PPT放映！\"",
+   "source": "sys",
+   "text": "已停止PPT放映！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "var_fstring",
+   "line": 6944,
+   "raw": "f\"我找了一下，桌面上有 {len(_ppt or [])} 个 PPT 文件。\"",
+   "source": "sys",
+   "text": "f\"我找了一下，桌面上有 {len(_ppt or [])} 个 PPT 文件。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "long",
+   "line": 6948,
+   "raw": "\"我可以帮你控制PPT，比如播放、切换幻灯片等！\"",
+   "source": "sys",
+   "text": "我可以帮你控制PPT，比如播放、切换幻灯片等！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "var_fstring",
+   "line": 6968,
+   "raw": "f\"现在开着 {len(_bw or [])} 个浏览器窗口呢。\"",
+   "source": "sys",
+   "text": "f\"现在开着 {len(_bw or [])} 个浏览器窗口呢。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "short",
+   "line": 7017,
+   "raw": "\"我更喜欢自己走来走去呢！\"",
+   "source": "sys",
+   "text": "我更喜欢自己走来走去呢！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_execute_api_action",
+   "kind": "var",
+   "line": 7034,
+   "raw": "content",
+   "source": "sys",
+   "text": "content"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_window_operation",
+   "kind": "var_fstring",
+   "line": 8778,
+   "raw": "f\"我没找到叫「{name_part or '目标'}」的窗口呢。\"",
+   "source": "env",
+   "text": "f\"我没找到叫「{name_part or '目标'}」的窗口呢。\""
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "handle_window_operation",
+   "kind": "var",
+   "line": 8798,
+   "raw": "msg",
+   "source": "env",
+   "text": "msg"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "start_hide_and_seek_game",
+   "kind": "long",
+   "line": 9438,
+   "raw": "\"好~ 我先准备 5 个藏身的地方，然后藏起来，你来找我好不好？\"",
+   "source": "sys",
+   "text": "好~ 我先准备 5 个藏身的地方，然后藏起来，你来找我好不好？"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_abort_hide_and_seek",
+   "kind": "long",
+   "line": 9478,
+   "raw": "\"呜…游戏被打断啦！下次再玩吧~\"",
+   "source": "sys",
+   "text": "呜…游戏被打断啦！下次再玩吧~"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_on_arrive_center",
+   "kind": "long",
+   "line": 9508,
+   "raw": "\"魔法~ 变出 5 个小盒子！✨\"",
+   "source": "sys",
+   "text": "魔法~ 变出 5 个小盒子！✨"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_create_obstacles_after_spell",
+   "kind": "long",
+   "line": 9553,
+   "raw": "\"呜…怎么变不出来呢…下次再玩吧。\"",
+   "source": "sys",
+   "text": "呜…怎么变不出来呢…下次再玩吧。"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_create_obstacles_after_spell",
+   "kind": "long",
+   "line": 9564,
+   "raw": "\"我要开始藏啦~ 不许偷看哦！\"",
+   "source": "sys",
+   "text": "我要开始藏啦~ 不许偷看哦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_on_arrive_folder",
+   "kind": "long",
+   "line": 9590,
+   "raw": "\"藏好啦~ 快点点桌面上的文件夹来找我吧！（20 秒内找不到算我赢哦）\"",
+   "source": "sys",
+   "text": "藏好啦~ 快点点桌面上的文件夹来找我吧！（20 秒内找不到算我赢哦）"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_search_tick",
+   "kind": "long",
+   "line": 9609,
+   "raw": "\"啦啦啦~ 时间到！你找不到我！我赢啦~ 嘻嘻！\"",
+   "source": "env",
+   "text": "啦啦啦~ 时间到！你找不到我！我赢啦~ 嘻嘻！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_search_tick",
+   "kind": "long",
+   "line": 9641,
+   "raw": "\"你点的这个…我不在这儿呀~\"",
+   "source": "env",
+   "text": "你点的这个…我不在这儿呀~"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_end_game",
+   "kind": "long",
+   "line": 9661,
+   "raw": "\"哎？！被你发现了…真厉害呀~  你赢啦！\"",
+   "source": "sys",
+   "text": "哎？！被你发现了…真厉害呀~  你赢啦！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_report_clicked_folder",
+   "kind": "short",
+   "line": 9737,
+   "raw": "\"你找到我啦！真厉害！\"",
+   "source": "user",
+   "text": "你找到我啦！真厉害！"
+  },
+  {
+   "cls": "RalseiPet",
+   "file": "main",
+   "func": "_hide_report_clicked_folder",
+   "kind": "short",
+   "line": 9751,
+   "raw": "\"这里没有我~ 再找找！\"",
+   "source": "user",
+   "text": "这里没有我~ 再找找！"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "show_dialogue",
+   "kind": "var",
+   "line": 1123,
+   "raw": "message",
+   "source": "sys",
+   "text": "message"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "send_message",
+   "kind": "var",
+   "line": 1236,
+   "raw": "user_input",
+   "source": "user",
+   "text": "user_input"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "send_message",
+   "kind": "var",
+   "line": 1245,
+   "raw": "reply",
+   "source": "user",
+   "text": "reply"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "_rule_reply",
+   "kind": "var",
+   "line": 1270,
+   "raw": "response",
+   "source": "sys",
+   "text": "response"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "_on_ai_reply",
+   "kind": "var",
+   "line": 1307,
+   "raw": "reply_text",
+   "source": "user",
+   "text": "reply_text"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "handle_file_commands",
+   "kind": "var_fstring",
+   "line": 1739,
+   "raw": "f\"好啦！已经在桌面新建了「{name}」文件夹~\"",
+   "source": "user",
+   "text": "f\"好啦！已经在桌面新建了「{name}」文件夹~\""
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "handle_file_commands",
+   "kind": "var_fstring",
+   "line": 1742,
+   "raw": "f\"呜... 新建文件夹失败了：{e}\"",
+   "source": "user",
+   "text": "f\"呜... 新建文件夹失败了：{e}\""
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "handle_file_commands",
+   "kind": "long",
+   "line": 1775,
+   "raw": "\"这个... 我不太确定具体要删哪个文件。能说得更具体一点吗？\"",
+   "source": "user",
+   "text": "这个... 我不太确定具体要删哪个文件。能说得更具体一点吗？"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "handle_file_commands",
+   "kind": "short",
+   "line": 1788,
+   "raw": "\"桌面上好像干干净净的呢~\"",
+   "source": "user",
+   "text": "桌面上好像干干净净的呢~"
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "handle_file_commands",
+   "kind": "var_fstring",
+   "line": 1793,
+   "raw": "f\"我看到：{preview}{extra}。要我帮你打开哪个吗？\"",
+   "source": "user",
+   "text": "f\"我看到：{preview}{extra}。要我帮你打开哪个吗？\""
+  },
+  {
+   "cls": "DialogueUI",
+   "file": "dialogue_ui",
+   "func": "handle_file_commands",
+   "kind": "long",
+   "line": 1807,
+   "raw": "\"好的！不过我只能用后台方式操作当前可见的窗口哦。\"",
+   "source": "user",
+   "text": "好的！不过我只能用后台方式操作当前可见的窗口哦。"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "check_special_events",
+   "kind": "long",
+   "line": 393,
+   "raw": "\"早上好！今天看起来是个美好的一天！\"",
+   "source": "env",
+   "text": "早上好！今天看起来是个美好的一天！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "check_special_events",
+   "kind": "long",
+   "line": 399,
+   "raw": "\"中午了呢，你有没有好好吃饭呀？\"",
+   "source": "env",
+   "text": "中午了呢，你有没有好好吃饭呀？"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "check_special_events",
+   "kind": "long",
+   "line": 405,
+   "raw": "\"晚上好！今天过得怎么样呀？\"",
+   "source": "env",
+   "text": "晚上好！今天过得怎么样呀？"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "check_special_events",
+   "kind": "long",
+   "line": 411,
+   "raw": "\"已经这么晚了，要注意休息哦！\"",
+   "source": "env",
+   "text": "已经这么晚了，要注意休息哦！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "interact_with_something",
+   "kind": "var_fstring",
+   "line": 599,
+   "raw": "f\"咦，这个{folder['name']}文件夹里会有什么呢？... 我就远远看看好啦。\"",
+   "source": "sys",
+   "text": "f\"咦，这个{folder['name']}文件夹里会有什么呢？... 我就远远看看好啦。\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "interact_with_something",
+   "kind": "var_fstring",
+   "line": 613,
+   "raw": "f\"这个{file['name']}看起来有点意思... 不过我还是不随便打开啦。\"",
+   "source": "sys",
+   "text": "f\"这个{file['name']}看起来有点意思... 不过我还是不随便打开啦。\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "interact_with_something",
+   "kind": "long",
+   "line": 617,
+   "raw": "\"那个图标是什么呀？看起来很好玩！\"",
+   "source": "sys",
+   "text": "那个图标是什么呀？看起来很好玩！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "play_something",
+   "kind": "long",
+   "line": 635,
+   "raw": "\"来跳舞吧！转圈圈~ 嘻嘻！\"",
+   "source": "sys",
+   "text": "来跳舞吧！转圈圈~ 嘻嘻！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "play_something",
+   "kind": "short",
+   "line": 640,
+   "raw": "\"啦啦啦~ 唱首歌给你听！\"",
+   "source": "sys",
+   "text": "啦啦啦~ 唱首歌给你听！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "play_something",
+   "kind": "long",
+   "line": 644,
+   "raw": "\"我来追你的鼠标啦！快动一动！\"",
+   "source": "sys",
+   "text": "我来追你的鼠标啦！快动一动！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "play_something",
+   "kind": "long",
+   "line": 648,
+   "raw": "\"我们来玩躲猫猫吧！我先藏起来~\"",
+   "source": "sys",
+   "text": "我们来玩躲猫猫吧！我先藏起来~"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "play_something",
+   "kind": "long",
+   "line": 651,
+   "raw": "\"我们来玩猜谜游戏吧！我出个题目给你猜！\"",
+   "source": "sys",
+   "text": "我们来玩猜谜游戏吧！我出个题目给你猜！"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "_react_to_event_impl",
+   "kind": "var",
+   "line": 693,
+   "raw": "weather_response[\"dialogue\"]",
+   "source": "env",
+   "text": "weather_response[\"dialogue\"]"
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "_react_to_event_impl",
+   "kind": "var_fstring",
+   "line": 702,
+   "raw": "f\"PPT操作 '{action}' 执行成功！\"",
+   "source": "env",
+   "text": "f\"PPT操作 '{action}' 执行成功！\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "_react_to_event_impl",
+   "kind": "var_fstring",
+   "line": 704,
+   "raw": "f\"PPT操作 '{action}' 执行失败了...\"",
+   "source": "env",
+   "text": "f\"PPT操作 '{action}' 执行失败了...\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "_react_to_event_impl",
+   "kind": "var_fstring",
+   "line": 716,
+   "raw": "f\"Excel操作 '{action}' 执行成功！\"",
+   "source": "env",
+   "text": "f\"Excel操作 '{action}' 执行成功！\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "_react_to_event_impl",
+   "kind": "var_fstring",
+   "line": 718,
+   "raw": "f\"Excel操作 '{action}' 执行失败了...\"",
+   "source": "env",
+   "text": "f\"Excel操作 '{action}' 执行失败了...\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "trigger_event",
+   "kind": "var_fstring",
+   "line": 739,
+   "raw": "f\"好耶！一起来玩{game_name}吧！\"",
+   "source": "sys",
+   "text": "f\"好耶！一起来玩{game_name}吧！\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "trigger_event",
+   "kind": "var_fstring",
+   "line": 744,
+   "raw": "f\"哇，{activity_name}！我来帮忙～\"",
+   "source": "sys",
+   "text": "f\"哇，{activity_name}！我来帮忙～\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "trigger_event",
+   "kind": "var_fstring",
+   "line": 749,
+   "raw": "f\"升级啦！现在是等级 {new_level}～\"",
+   "source": "sys",
+   "text": "f\"升级啦！现在是等级 {new_level}～\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "trigger_event",
+   "kind": "var_fstring",
+   "line": 756,
+   "raw": "f\"进化了呢！现在是第 {stage} 阶段！\"",
+   "source": "sys",
+   "text": "f\"进化了呢！现在是第 {stage} 阶段！\""
+  },
+  {
+   "cls": "PetAI",
+   "file": "pet_ai",
+   "func": "trigger_event",
+   "kind": "var_fstring",
+   "line": 762,
+   "raw": "f\"和{other_pet}的{interaction}真开心～\"",
+   "source": "sys",
+   "text": "f\"和{other_pet}的{interaction}真开心～\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "start_game",
+   "kind": "var_fstring",
+   "line": 315,
+   "raw": "f\"让我们开始玩{game['name']}吧！难度：{difficulty}\"",
+   "source": "sys",
+   "text": "f\"让我们开始玩{game['name']}吧！难度：{difficulty}\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "end_game",
+   "kind": "var_fstring",
+   "line": 372,
+   "raw": "f\"太棒了！我们赢了{game['name']}！获得了{reward}经验值！\"",
+   "source": "sys",
+   "text": "f\"太棒了！我们赢了{game['name']}！获得了{reward}经验值！\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "end_game",
+   "kind": "var_fstring",
+   "line": 374,
+   "raw": "f\"游戏结束了！虽然我们没有赢，但获得了{reward}经验值！下次加油！\"",
+   "source": "sys",
+   "text": "f\"游戏结束了！虽然我们没有赢，但获得了{reward}经验值！下次加油！\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "start_creative_activity",
+   "kind": "var_fstring",
+   "line": 399,
+   "raw": "f\"让我们开始{activity['name']}吧！我很期待我们的创作！\"",
+   "source": "sys",
+   "text": "f\"让我们开始{activity['name']}吧！我很期待我们的创作！\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "end_creative_activity",
+   "kind": "var_fstring",
+   "line": 452,
+   "raw": "f\"哇！我们的{activity['name']}创作太棒了！获得了{reward}经验值！\"",
+   "source": "sys",
+   "text": "f\"哇！我们的{activity['name']}创作太棒了！获得了{reward}经验值！\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "end_creative_activity",
+   "kind": "var_fstring",
+   "line": 454,
+   "raw": "f\"我们的{activity['name']}创作完成了！获得了{reward}经验值！\"",
+   "source": "sys",
+   "text": "f\"我们的{activity['name']}创作完成了！获得了{reward}经验值！\""
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "_check_game_achievements",
+   "kind": "long",
+   "line": 525,
+   "raw": "\"太棒了！我们解锁了'满分达人'成就！\"",
+   "source": "env",
+   "text": "太棒了！我们解锁了'满分达人'成就！"
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "_check_game_achievements",
+   "kind": "long",
+   "line": 534,
+   "raw": "\"太厉害了！我们解锁了'游戏大师'成就！\"",
+   "source": "env",
+   "text": "太厉害了！我们解锁了'游戏大师'成就！"
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "_check_creative_achievements",
+   "kind": "long",
+   "line": 542,
+   "raw": "\"太棒了！我们解锁了'故事大王'成就！\"",
+   "source": "env",
+   "text": "太棒了！我们解锁了'故事大王'成就！"
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "_check_creative_achievements",
+   "kind": "long",
+   "line": 548,
+   "raw": "\"太棒了！我们解锁了'诗人'成就！\"",
+   "source": "env",
+   "text": "太棒了！我们解锁了'诗人'成就！"
+  },
+  {
+   "cls": "EntertainmentSystem",
+   "file": "entertainment_system",
+   "func": "_check_creative_achievements",
+   "kind": "long",
+   "line": 554,
+   "raw": "\"太棒了！我们解锁了'艺术家'成就！\"",
+   "source": "env",
+   "text": "太棒了！我们解锁了'艺术家'成就！"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "check_status_changes",
+   "kind": "long",
+   "line": 102,
+   "raw": "\"呜... 我真的好累好累... 几乎走不动了...\"",
+   "source": "env",
+   "text": "呜... 我真的好累好累... 几乎走不动了..."
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "check_status_changes",
+   "kind": "long",
+   "line": 119,
+   "raw": "\"我有点累了... 能不能休息一下？\"",
+   "source": "env",
+   "text": "我有点累了... 能不能休息一下？"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "check_status_changes",
+   "kind": "long",
+   "line": 128,
+   "raw": "\"肚子好饿好饿... 我快饿死了...\"",
+   "source": "env",
+   "text": "肚子好饿好饿... 我快饿死了..."
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "check_status_changes",
+   "kind": "long",
+   "line": 132,
+   "raw": "\"嗯... 我有点饿了... 有没有什么吃的？\"",
+   "source": "env",
+   "text": "嗯... 我有点饿了... 有没有什么吃的？"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "check_status_changes",
+   "kind": "long",
+   "line": 143,
+   "raw": "\"好吃！我已经吃饱了！谢谢你的食物！\"",
+   "source": "env",
+   "text": "好吃！我已经吃饱了！谢谢你的食物！"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "check_status_changes",
+   "kind": "long",
+   "line": 147,
+   "raw": "\"哇！我感觉好多了！谢谢你让我休息！\"",
+   "source": "env",
+   "text": "哇！我感觉好多了！谢谢你让我休息！"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "rest",
+   "kind": "long",
+   "line": 155,
+   "raw": "\"我现在精神得很，一点都不累哦！\"",
+   "source": "env",
+   "text": "我现在精神得很，一点都不累哦！"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "rest",
+   "kind": "long",
+   "line": 160,
+   "raw": "\"我要休息一下啦... 呼...\"",
+   "source": "env",
+   "text": "我要休息一下啦... 呼..."
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "eat",
+   "kind": "long",
+   "line": 174,
+   "raw": "\"呜…我已经吃得饱饱的啦，再吃就要撑破了！\"",
+   "source": "env",
+   "text": "呜…我已经吃得饱饱的啦，再吃就要撑破了！"
+  },
+  {
+   "cls": "EnergyHungerSystem",
+   "file": "energy_hunger",
+   "func": "eat",
+   "kind": "short",
+   "line": 179,
+   "raw": "\"哇！有好吃的！我开动啦！\"",
+   "source": "env",
+   "text": "哇！有好吃的！我开动啦！"
+  },
+  {
+   "cls": "SocialGrowthSystem",
+   "file": "social_growth_system",
+   "func": "_check_level_up",
+   "kind": "var_fstring",
+   "line": 511,
+   "raw": "f\"哇！我升级了！现在是 {self.level} 级了！\"",
+   "source": "env",
+   "text": "f\"哇！我升级了！现在是 {self.level} 级了！\""
+  },
+  {
+   "cls": "SocialGrowthSystem",
+   "file": "social_growth_system",
+   "func": "_check_evolution",
+   "kind": "var_fstring",
+   "line": 531,
+   "raw": "f\"我进化了！现在是更强大的 {self.evolution_stage} 阶段！\"",
+   "source": "env",
+   "text": "f\"我进化了！现在是更强大的 {self.evolution_stage} 阶段！\""
+  },
+  {
+   "cls": "SocialGrowthSystem",
+   "file": "social_growth_system",
+   "func": "_unlock_achievement_impl",
+   "kind": "var_fstring",
+   "line": 632,
+   "raw": "f\"太棒了！我解锁了成就：{achievement['name']}！\"",
+   "source": "env",
+   "text": "f\"太棒了！我解锁了成就：{achievement['name']}！\""
+  },
+  {
+   "cls": "SocialGrowthSystem",
+   "file": "social_growth_system",
+   "func": "update_relationship",
+   "kind": "var_fstring",
+   "line": 673,
+   "raw": "f\"我和 {other_pet_id} 的关系变得更好了！现在是 {new_level} 了！\"",
+   "source": "env",
+   "text": "f\"我和 {other_pet_id} 的关系变得更好了！现在是 {new_level} 了！\""
+  },
+  {
+   "cls": "AiActionDriver",
+   "file": "ai_driver",
+   "func": "_say",
+   "kind": "var",
+   "line": 548,
+   "raw": "text",
+   "source": "sys",
+   "text": "text"
+  },
+  {
+   "cls": "CommandManager",
+   "file": "command_manager",
+   "func": "handle_say_command",
+   "kind": "var",
+   "line": 97,
+   "raw": "text",
+   "source": "user",
+   "text": "text"
+  }
+ ]
+}

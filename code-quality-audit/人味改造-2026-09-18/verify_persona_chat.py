@@ -180,8 +180,12 @@ ok('B1 chat_with_ai 里用户消息保持纯原话（user_msg = text）',
 ok('B2 chat_with_ai 的 system 来自 _build_persona_prompt()',
    'system=self._build_persona_prompt()' in _CHAT2)
 ok('B3 【此刻】挂 system 尾部（不再是 user 消息前缀）',
-   '_ctx=self._build_ai_context()' in _CHAT2
-   and 'system=system+"\\n\\n"+_ctx' in _CHAT2)
+   # S7 之后 `_build_ai_context()` 被包进 lean 分支（事件请求不发上下文，
+   # 否则 system 每轮都变 → Ollama KV 前缀缓存失效 → 首字 0.63s→1.82s）。
+   # 这里只要求"**非 lean** 时仍然调用它"，尾部拼接的断言不变。
+   'ifleanelseself._build_ai_context()' in _CHAT2
+   and 'system=system+"\\n\\n"+_ctx' in _CHAT2,
+   _CHAT2[:0])
 ok('B4 抽取 recent（role==assistant 的历史回复）传给护栏',
    "recent=[cfor_r,cinhistoryif_r=='assistant']" in _CHAT2)
 # B5 在 S8（流式）那一轮被**加强**过：原来是数 `cli.chat(` 出现 2 次，

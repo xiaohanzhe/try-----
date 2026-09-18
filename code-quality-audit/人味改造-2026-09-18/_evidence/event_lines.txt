@@ -1,0 +1,243 @@
+S7 事件台词全量清单（ast 实测）
+生成脚本：code-quality-audit/人味改造-2026-09-18/scan_event_lines.py
+短句阈值 SHORT_MAX = 12 字
+
+=== 每文件计数 ===
+  ai_driver                1  (regex oracle=1, delta=0)
+  autonomous_agent         0  (regex oracle=1, delta=1)
+  command_manager          1  (regex oracle=1, delta=0)
+  dialogue_ui             11  (regex oracle=16, delta=5)
+  energy_hunger           10  (regex oracle=10, delta=0)
+  entertainment_system    11  (regex oracle=11, delta=0)
+  main                   131  (regex oracle=131, delta=0)
+  pet_ai                  22  (regex oracle=22, delta=0)
+  social_growth_system     4  (regex oracle=4, delta=0)
+  TOTAL                  191
+
+=== 主文件 main.py：按「触发来源 × 文本性质」汇总 ===
+  ai       var            1
+  env      long           4
+  env      short          2
+  env      var            8
+  env      var_fstring    2
+  physics  long           4
+  physics  short          4
+  physics  var            3
+  sys      long          14
+  sys      short         19
+  sys      var            9
+  sys      var_fstring   19
+  user     long          10
+  user     short         17
+  user     var            5
+  user     var_fstring   10
+
+=== main.py 明细（按行号） ===
+line   source     func                               kind         text
+----------------------------------------------------------------------------------------------------------------------
+589    sys        init_systems                       var          msg
+1507   sys        update_movement                    var          random.choice(stir_msgs)
+2008   user       start_mouse_drag                   short        我来帮你拖动鼠标吧！
+2076   user       stop_mouse_drag                    short        拖动完成啦！
+3280   physics    start_fall                         long         喂！别乱动窗口呀！我站不稳了...
+3291   physics    start_fall                         short        啊！我从窗口掉下来了！
+3301   physics    start_fall                         short        哎呀！我掉下去了！
+3311   physics    start_fall                         short        哎呀！我摔倒了！
+3367   physics    trigger_splat                      short        啊！摔扁了...
+3611   physics    handle_fall                        var          random.choice(dazed_msgs)
+3632   physics    handle_fall                        long         呼...我没事了...谢谢你的关心...
+3649   physics    handle_fall                        long         呼...我没事了...谢谢你的关心...
+3701   physics    handle_fall                        long         我已经完全恢复了...谢谢...
+3727   physics    wake_up                            var          random.choice(wake_up_messages)
+3939   env        react_to_desktop_element           var          reaction['dialogue']
+3971   env        react_to_desktop_element           long         需要我帮你打开浏览器或搜索什么吗？
+4009   env        react_to_desktop_element           var          help_messages[file_ext]
+4078   sys        create_person_name_table           short        创建Excel文件失败！
+4112   sys        create_person_name_table           var_fstring  f"我已经在桌面上创建了名为'{file_name}.xlsx'的人名表！"
+4113   sys        create_person_name_table           var_fstring  f"表中包含了以下人名：{', '.join(names)}"
+4119   sys        create_person_name_table           short        创建人名表失败了...
+4170   user       handle_file_operation              var_fstring  f"我已经在桌面上创建了一个新的Excel表格: {new_file_name}"
+4185   user       handle_file_operation              long         桌面上没有找到Excel表格文件！
+4197   user       handle_file_operation              var_fstring  f"我将往表格: {excel_file} 里填写人名！"
+4206   user       handle_file_operation              var_fstring  f"我已经成功往表格: {excel_file} 里填写了人名！"
+4207   user       handle_file_operation              var_fstring  f"我填写的人名是: {', '.join(default_names)}"
+4209   user       handle_file_operation              var_fstring  f"往表格: {excel_file} 里填写人名失败了..."
+4225   user       handle_file_operation              long         桌面上没有找到Excel表格文件！
+4233   user       handle_file_operation              var_fstring  f"我找到了桌面上的Excel文件: {excel_file}"
+4237   user       handle_file_operation              var_fstring  f"我将为你打开并修改表格: {excel_file}"
+4243   user       handle_file_operation              var_fstring  f"我已经成功修改了表格: {excel_file}！"
+4244   user       handle_file_operation              long         我已经将任务名称和喜好对齐，并确保所有内容都完全放在格子里，没有超出！
+4246   user       handle_file_operation              var_fstring  f"修改表格: {excel_file} 失败了..."
+4248   user       handle_file_operation              var_fstring  f"我将为你打开表格: {excel_file}"
+4263   user       handle_file_operation              long         处理文件操作指令失败了...
+4274   env        _open_desktop_item_by_name         short        你想让我打开什么呀？
+4296   env        _open_desktop_item_by_name         var_fstring  f"我在桌面上没找到叫「{text}」的东西呢，换个名字试试？"
+4432   env        open_browser_for_ralsei            short        我来帮你打开浏览器吧！
+4523   env        start_watching_video               var          message
+4610   env        _update_video_watching             long         时间不早了，我该睡觉了，晚安！
+4636   env        _react_to_video                    var          msg
+4673   physics    enter_sleep_mode                   var          random.choice(sleep_msgs)
+4702   env        stop_watching_video                var          message
+4734   env        suggest_watching_video             var          message
+4860   env        check_entertainment_needs          var          suggestion
+4875   sys        tell_joke                          var          joke
+4889   sys        suggest_game                       var          game
+4939   user       _handle_agent_commands             var          str(reply)
+4949   user       _handle_agent_commands             var          str(res['reply'])
+5144   ai         _on_reply                          var          text
+5268   user       mousePressEvent                    long         别戳我啦...我都扁了...
+5320   user       mousePressEvent                    short        哎呀！别不楞我的耳朵啦！
+5339   user       mousePressEvent                    var          random.choice(body_responses)
+5347   user       mousePressEvent                    short        嗯？有什么事吗？
+5352   user       mousePressEvent                    var          random.choice(short_responses)
+5378   sys        start_following_mouse              short        我来追着鼠标跑啦！
+5389   sys        stop_following_mouse               short        我不追啦，有点累了！
+5567   user       mouseMoveEvent                     var          random.choice(response_list)
+5703   user       mouseReleaseEvent                  short        哇啊——！
+5758   user       mouseReleaseEvent                  long         哎呀！别捏我的耳朵！好痒呀！
+5765   user       mouseReleaseEvent                  short        嘿嘿~ 别拉我的手臂啦！
+5773   user       mouseReleaseEvent                  short        嗯~ 好舒服！
+5781   user       mouseReleaseEvent                  short        嘿嘿~ 我的肚子很软哦！
+5789   user       mouseReleaseEvent                  short        哎呀~ 别捏我的脸！
+5797   user       mouseReleaseEvent                  short        谢谢你拉我的肩膀！
+5830   user       mouseDoubleClickEvent              short        嘿嘿~ 摸头杀好舒服！
+5838   user       mouseDoubleClickEvent              long         哈哈！别用力拍我的肚子啦！
+5846   user       mouseDoubleClickEvent              short        哎呀！别捏我的脸！
+5854   user       mouseDoubleClickEvent              short        谢谢你拍拍我的肩膀！
+5864   user       mouseDoubleClickEvent              short        嘿嘿~ 你对我真好！
+6129   sys        save_config                        short        配置已保存！
+6146   sys        play_game                          long         来跳舞吧！转圈圈~ 嘻嘻！
+6150   sys        play_game                          short        啦啦啦~ 唱首歌给你听！
+6159   sys        play_game                          long         我们来玩躲猫猫吧！我先藏起来~
+6181   user       feed_ralsei                        long         谢谢你喂我！肚子饱饱的，好幸福~
+6188   user       pet_ralsei                         short        嘿嘿~ 好舒服呀！
+6204   sys        change_animation_randomly          var_fstring  f"看！我会做这个动作~"
+6212   sys        start_rock_paper_scissors          long         现在还在玩别的呢，等这一局结束再玩石头剪刀布吧~
+6227   sys        start_rock_paper_scissors          short        我们来玩石头剪刀布吧！
+6228   sys        start_rock_paper_scissors          long         你要出什么呢？石头、剪刀还是布？
+6242   sys        play_rock_paper_scissors           var_fstring  f"请输入有效的选项：{'、'.join(self.rock_paper_scissor
+6273   sys        play_rock_paper_scissors           var_fstring  f"你出了：{player_choice}"
+6274   sys        play_rock_paper_scissors           var_fstring  f"我出了：{ralsei_choice}"
+6275   sys        play_rock_paper_scissors           var          result_messages[result]
+6276   sys        play_rock_paper_scissors           var_fstring  f"比分：你 {self.game_state['player_score']} - {
+6294   sys        play_rock_paper_scissors           long         要继续玩吗？请输入石头、剪刀或布，或者输入'结束'来结束游戏。
+6343   sys        end_rock_paper_scissors            var          final_message
+6344   sys        end_rock_paper_scissors            var          stats_message
+6345   sys        end_rock_paper_scissors            short        谢谢你陪我玩！
+6355   sys        start_guess_number                 long         现在还在玩别的呢，等这一局结束再玩猜数字吧~
+6377   sys        start_guess_number                 short        我们来玩猜数字游戏吧！
+6378   sys        start_guess_number                 var_fstring  f"我已经想好了一个{self.guess_number_game['min_numbe
+6379   sys        start_guess_number                 short        请输入你猜的数字：
+6394   sys        play_guess_number                  short        请输入有效的数字！
+6399   sys        play_guess_number                  var_fstring  f"请输入{self.guess_number_game['min_number']}到
+6418   sys        play_guess_number                  var_fstring  f"恭喜你！猜对了！数字就是{target}！"
+6429   sys        play_guess_number                  var_fstring  f"猜小了！再试一次！还剩{attempts_left}次机会。"
+6430   sys        play_guess_number                  short        请输入你猜的数字：
+6434   sys        play_guess_number                  var_fstring  f"猜小了！很遗憾，你已经用完了所有机会。"
+6440   sys        play_guess_number                  var_fstring  f"猜大了！再试一次！还剩{attempts_left}次机会。"
+6441   sys        play_guess_number                  short        请输入你猜的数字：
+6445   sys        play_guess_number                  var_fstring  f"猜大了！很遗憾，你已经用完了所有机会。"
+6465   sys        end_guess_number                   var          final_message
+6466   sys        end_guess_number                   short        谢谢你陪我玩！
+6490   user       handle_game_input                  long         好吧，那这次就不躲啦~ 下次再一起玩！
+6499   user       handle_game_input                  long         现在是石头剪刀布时间！出『石头』『剪刀』或『布』吧（说「结束」就不玩啦）
+6702   sys        handle_api_response                var_fstring  f"抱歉，我现在有点不太舒服... ({error_msg})"
+6902   sys        _execute_api_action                var_fstring  f"我来帮你搜索关于{search_query}的内容！"
+6922   sys        _execute_api_action                var_fstring  f"开始播放{ppt_files[0]['name']}！"
+6924   sys        _execute_api_action                short        没有找到PPT文件呢！
+6928   sys        _execute_api_action                short        已切换到下一张幻灯片！
+6931   sys        _execute_api_action                short        已切换到上一张幻灯片！
+6934   sys        _execute_api_action                short        已停止PPT放映！
+6944   sys        _execute_api_action                var_fstring  f"我找了一下，桌面上有 {len(_ppt or [])} 个 PPT 文件。"
+6948   sys        _execute_api_action                long         我可以帮你控制PPT，比如播放、切换幻灯片等！
+6968   sys        _execute_api_action                var_fstring  f"现在开着 {len(_bw or [])} 个浏览器窗口呢。"
+7017   sys        _execute_api_action                short        我更喜欢自己走来走去呢！
+7034   sys        _execute_api_action                var          content
+8778   env        handle_window_operation            var_fstring  f"我没找到叫「{name_part or '目标'}」的窗口呢。"
+8798   env        handle_window_operation            var          msg
+9438   sys        start_hide_and_seek_game           long         好~ 我先准备 5 个藏身的地方，然后藏起来，你来找我好不好？
+9478   sys        _abort_hide_and_seek               long         呜…游戏被打断啦！下次再玩吧~
+9508   sys        _hide_on_arrive_center             long         魔法~ 变出 5 个小盒子！✨
+9553   sys        _hide_create_obstacles_after_spel  long         呜…怎么变不出来呢…下次再玩吧。
+9564   sys        _hide_create_obstacles_after_spel  long         我要开始藏啦~ 不许偷看哦！
+9590   sys        _hide_on_arrive_folder             long         藏好啦~ 快点点桌面上的文件夹来找我吧！（20 秒内找不到算我赢哦）
+9609   env        _hide_search_tick                  long         啦啦啦~ 时间到！你找不到我！我赢啦~ 嘻嘻！
+9641   env        _hide_search_tick                  long         你点的这个…我不在这儿呀~
+9661   sys        _hide_end_game                     long         哎？！被你发现了…真厉害呀~  你赢啦！
+9737   user       _hide_report_clicked_folder        short        你找到我啦！真厉害！
+9751   user       _hide_report_clicked_folder        short        这里没有我~ 再找找！
+
+=== dialogue_ui 明细 ===
+  1123   sys        show_dialogue                  var          message
+  1236   user       send_message                   var          user_input
+  1245   user       send_message                   var          reply
+  1270   sys        _rule_reply                    var          response
+  1307   user       _on_ai_reply                   var          reply_text
+  1739   user       handle_file_commands           var_fstring  f"好啦！已经在桌面新建了「{name}」文件夹~"
+  1742   user       handle_file_commands           var_fstring  f"呜... 新建文件夹失败了：{e}"
+  1775   user       handle_file_commands           long         这个... 我不太确定具体要删哪个文件。能说得更具体一点吗？
+  1788   user       handle_file_commands           short        桌面上好像干干净净的呢~
+  1793   user       handle_file_commands           var_fstring  f"我看到：{preview}{extra}。要我帮你打开哪个吗？"
+  1807   user       handle_file_commands           long         好的！不过我只能用后台方式操作当前可见的窗口哦。
+
+=== pet_ai 明细 ===
+  393    env        check_special_events           long         早上好！今天看起来是个美好的一天！
+  399    env        check_special_events           long         中午了呢，你有没有好好吃饭呀？
+  405    env        check_special_events           long         晚上好！今天过得怎么样呀？
+  411    env        check_special_events           long         已经这么晚了，要注意休息哦！
+  599    sys        interact_with_something        var_fstring  f"咦，这个{folder['name']}文件夹里会有什么呢？... 我就远远看看好啦。"
+  613    sys        interact_with_something        var_fstring  f"这个{file['name']}看起来有点意思... 不过我还是不随便打开啦。"
+  617    sys        interact_with_something        long         那个图标是什么呀？看起来很好玩！
+  635    sys        play_something                 long         来跳舞吧！转圈圈~ 嘻嘻！
+  640    sys        play_something                 short        啦啦啦~ 唱首歌给你听！
+  644    sys        play_something                 long         我来追你的鼠标啦！快动一动！
+  648    sys        play_something                 long         我们来玩躲猫猫吧！我先藏起来~
+  651    sys        play_something                 long         我们来玩猜谜游戏吧！我出个题目给你猜！
+  693    env        _react_to_event_impl           var          weather_response["dialogue"]
+  702    env        _react_to_event_impl           var_fstring  f"PPT操作 '{action}' 执行成功！"
+  704    env        _react_to_event_impl           var_fstring  f"PPT操作 '{action}' 执行失败了..."
+  716    env        _react_to_event_impl           var_fstring  f"Excel操作 '{action}' 执行成功！"
+  718    env        _react_to_event_impl           var_fstring  f"Excel操作 '{action}' 执行失败了..."
+  739    sys        trigger_event                  var_fstring  f"好耶！一起来玩{game_name}吧！"
+  744    sys        trigger_event                  var_fstring  f"哇，{activity_name}！我来帮忙～"
+  749    sys        trigger_event                  var_fstring  f"升级啦！现在是等级 {new_level}～"
+  756    sys        trigger_event                  var_fstring  f"进化了呢！现在是第 {stage} 阶段！"
+  762    sys        trigger_event                  var_fstring  f"和{other_pet}的{interaction}真开心～"
+
+=== entertainment_system 明细 ===
+  315    sys        start_game                     var_fstring  f"让我们开始玩{game['name']}吧！难度：{difficulty}"
+  372    sys        end_game                       var_fstring  f"太棒了！我们赢了{game['name']}！获得了{reward}经验值！"
+  374    sys        end_game                       var_fstring  f"游戏结束了！虽然我们没有赢，但获得了{reward}经验值！下次加油！"
+  399    sys        start_creative_activity        var_fstring  f"让我们开始{activity['name']}吧！我很期待我们的创作！"
+  452    sys        end_creative_activity          var_fstring  f"哇！我们的{activity['name']}创作太棒了！获得了{reward}经验值！"
+  454    sys        end_creative_activity          var_fstring  f"我们的{activity['name']}创作完成了！获得了{reward}经验值！"
+  525    env        _check_game_achievements       long         太棒了！我们解锁了'满分达人'成就！
+  534    env        _check_game_achievements       long         太厉害了！我们解锁了'游戏大师'成就！
+  542    env        _check_creative_achievements   long         太棒了！我们解锁了'故事大王'成就！
+  548    env        _check_creative_achievements   long         太棒了！我们解锁了'诗人'成就！
+  554    env        _check_creative_achievements   long         太棒了！我们解锁了'艺术家'成就！
+
+=== energy_hunger 明细 ===
+  102    env        check_status_changes           long         呜... 我真的好累好累... 几乎走不动了...
+  119    env        check_status_changes           long         我有点累了... 能不能休息一下？
+  128    env        check_status_changes           long         肚子好饿好饿... 我快饿死了...
+  132    env        check_status_changes           long         嗯... 我有点饿了... 有没有什么吃的？
+  143    env        check_status_changes           long         好吃！我已经吃饱了！谢谢你的食物！
+  147    env        check_status_changes           long         哇！我感觉好多了！谢谢你让我休息！
+  155    env        rest                           long         我现在精神得很，一点都不累哦！
+  160    env        rest                           long         我要休息一下啦... 呼...
+  174    env        eat                            long         呜…我已经吃得饱饱的啦，再吃就要撑破了！
+  179    env        eat                            short        哇！有好吃的！我开动啦！
+
+=== social_growth_system 明细 ===
+  511    env        _check_level_up                var_fstring  f"哇！我升级了！现在是 {self.level} 级了！"
+  531    env        _check_evolution               var_fstring  f"我进化了！现在是更强大的 {self.evolution_stage} 阶段！"
+  632    env        _unlock_achievement_impl       var_fstring  f"太棒了！我解锁了成就：{achievement['name']}！"
+  673    env        update_relationship            var_fstring  f"我和 {other_pet_id} 的关系变得更好了！现在是 {new_level} 了！"
+
+=== ai_driver 明细 ===
+  548    sys        _say                           var          text
+
+=== command_manager 明细 ===
+  97     user       handle_say_command             var          text
+

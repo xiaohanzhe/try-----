@@ -235,6 +235,19 @@ def make_drag_stub():
     o.change_animation = _ca
     o._pos = QPoint(300, 400)
     o.pos = lambda: o._pos
+
+    # S7（事件台词分批接 AI）起，`mouseReleaseEvent` 里的"甩飞"那句不再直接
+    # `add_dialogue`，而是走新的唯一出口 `speak_event`。桩宿主必须跟着
+    # **主程序的内部调用面**升级，否则 SimpleNamespace 上没这个方法 →
+    # AttributeError（本轮 G2 就是这么炸的）。这里按"罐头档"语义最小复刻：
+    # 取池子里第一句落到 dialogue_ui，返回它。本组断言只关心物理量
+    # （is_falling / _fall_vx / _fall_vy），复刻到"有说话"这一层就够了。
+    def _speak_event(kind, pool, face="neutral", instant=False):
+        text = pool[0] if pool else ""
+        o.dialogue_ui.add_dialogue("ralsei", text, face)
+        return text
+
+    o.speak_event = _speak_event
     return o
 
 

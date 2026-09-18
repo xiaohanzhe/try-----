@@ -74,7 +74,11 @@ class ConfigManager:
                 },
                 # S8 流式输出：边收边打，首字延迟从"整句生成完"（实测热 0.9s / 冷 6.0s）
                 # 降到 ~0.23s。置 false 可一键退回旧行为（详见 main._ai_stream_enabled）。
-                "stream": True
+                "stream": True,
+                # S7 事件台词走 AI：被戳/被摸/被喂之后的**社交反应**交给模型生成
+                # （短促反应与物理状态机仍走罐头，见 modules/event_speech.EVENT_TIERS）。
+                # 置 false 即回到"事件台词全部罐头"的改造前行为。
+                "event_speech": True
             },
             "privacy": {
                 "enable_usage_data": False,
