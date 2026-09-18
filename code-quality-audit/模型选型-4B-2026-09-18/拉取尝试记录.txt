@@ -1,0 +1,37 @@
+# 4B 候选（qwen3:4b-instruct-2507-q4_K_M，2.5GB）三次拉取尝试的记录
+#
+# 结论：本机到 Ollama CDN 的连接会"传一阵就被掐断"——每次重连都能续传出新的一段，
+#       但单连接跑不久。最终停在 95.4%（2381.6 / 2497.3 MB），残片保留，续传只剩 116 MB。
+#
+# 三次尝试：
+#   1) ollama pull（客户端设了代理）→ TLS handshake timeout
+#      ★ 根因：pull 是**客户端**，真正下载的是 daemon；在客户端 shell 设 HTTP_PROXY 对 daemon 无效。
+#   2) ollama pull（直连）→ 跑到 2.33GB 后静默卡死（进程活着、零增长）
+#   3) POST /api/pull 流式（可目视每层进度）→ 5.9 → 3.3 → 2.0 → 0.02 MB/s，34% 卡死；
+#      重连续传冲到 95.4% 后再次卡死
+#
+# 下面是原始日志按 5% 采样压缩后的版本（原文每 0.1MB 一行，152KB/142KB，太吵）。
+# ============================================================================
+
+===== pull_log.txt（原始 1978 行 → 采样 8 行）=====
+model=qwen3:4b-instruct-2507-q4_K_M  start=23:33:40
+   0.2s  pulling manifest
+   3.2s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        367.9/2497.3 MB   14.7%
+  25.0s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        490.9/2497.3 MB   19.7%
+  46.1s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        617.7/2497.3 MB   24.7%
+  66.7s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        741.0/2497.3 MB   29.7%
+ 107.5s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        866.0/2497.3 MB   34.7%
+ 163.4s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        900.1/2497.3 MB   36.0%
+
+===== pull_log2.txt（原始 1838 行 → 采样 10 行）=====
+model=qwen3:4b-instruct-2507-q4_K_M  start=23:36:31
+   0.2s  pulling manifest
+   3.6s  pulling 85e4a5b7b8ef sha256:85e4a5b7b        900.2/2497.3 MB   36.0%
+  26.1s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1023.9/2497.3 MB   41.0%
+  38.9s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1147.5/2497.3 MB   46.0%
+  51.6s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1272.9/2497.3 MB   51.0%
+  65.0s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1397.9/2497.3 MB   56.0%
+  79.5s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1522.3/2497.3 MB   61.0%
+  99.2s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1647.0/2497.3 MB   66.0%
+ 342.4s  pulling 85e4a5b7b8ef sha256:85e4a5b7b       1669.3/2497.3 MB   66.8%
+

@@ -10,11 +10,11 @@
   "physics|var": 3,
   "sys|long": 14,
   "sys|short": 19,
-  "sys|var": 9,
+  "sys|var": 10,
   "sys|var_fstring": 19,
-  "user|long": 10,
-  "user|short": 17,
-  "user|var": 5,
+  "user|long": 6,
+  "user|short": 4,
+  "user|var": 2,
   "user|var_fstring": 10
  },
  "oracle": {
@@ -49,9 +49,9 @@
    "regex": 11
   },
   "main": {
-   "ast": 131,
-   "delta": 0,
-   "regex": 131
+   "ast": 112,
+   "delta": 1,
+   "regex": 113
   },
   "pet_ai": {
    "ast": 22,
@@ -71,7 +71,7 @@
   "dialogue_ui": 11,
   "energy_hunger": 10,
   "entertainment_system": 11,
-  "main": 131,
+  "main": 112,
   "pet_ai": 22,
   "social_growth_system": 4
  },
@@ -82,7 +82,7 @@
    "file": "main",
    "func": "init_systems",
    "kind": "var",
-   "line": 589,
+   "line": 599,
    "raw": "msg",
    "source": "sys",
    "text": "msg"
@@ -92,7 +92,7 @@
    "file": "main",
    "func": "update_movement",
    "kind": "var",
-   "line": 1507,
+   "line": 1517,
    "raw": "random.choice(stir_msgs)",
    "source": "sys",
    "text": "random.choice(stir_msgs)"
@@ -102,7 +102,7 @@
    "file": "main",
    "func": "start_mouse_drag",
    "kind": "short",
-   "line": 2008,
+   "line": 2018,
    "raw": "\"我来帮你拖动鼠标吧！\"",
    "source": "user",
    "text": "我来帮你拖动鼠标吧！"
@@ -112,7 +112,7 @@
    "file": "main",
    "func": "stop_mouse_drag",
    "kind": "short",
-   "line": 2076,
+   "line": 2086,
    "raw": "\"拖动完成啦！\"",
    "source": "user",
    "text": "拖动完成啦！"
@@ -122,7 +122,7 @@
    "file": "main",
    "func": "start_fall",
    "kind": "long",
-   "line": 3280,
+   "line": 3290,
    "raw": "\"喂！别乱动窗口呀！我站不稳了...\"",
    "source": "physics",
    "text": "喂！别乱动窗口呀！我站不稳了..."
@@ -132,7 +132,7 @@
    "file": "main",
    "func": "start_fall",
    "kind": "short",
-   "line": 3291,
+   "line": 3301,
    "raw": "\"啊！我从窗口掉下来了！\"",
    "source": "physics",
    "text": "啊！我从窗口掉下来了！"
@@ -142,7 +142,7 @@
    "file": "main",
    "func": "start_fall",
    "kind": "short",
-   "line": 3301,
+   "line": 3311,
    "raw": "\"哎呀！我掉下去了！\"",
    "source": "physics",
    "text": "哎呀！我掉下去了！"
@@ -152,7 +152,7 @@
    "file": "main",
    "func": "start_fall",
    "kind": "short",
-   "line": 3311,
+   "line": 3321,
    "raw": "\"哎呀！我摔倒了！\"",
    "source": "physics",
    "text": "哎呀！我摔倒了！"
@@ -162,7 +162,7 @@
    "file": "main",
    "func": "trigger_splat",
    "kind": "short",
-   "line": 3367,
+   "line": 3377,
    "raw": "\"啊！摔扁了...\"",
    "source": "physics",
    "text": "啊！摔扁了..."
@@ -172,7 +172,7 @@
    "file": "main",
    "func": "handle_fall",
    "kind": "var",
-   "line": 3611,
+   "line": 3621,
    "raw": "random.choice(dazed_msgs)",
    "source": "physics",
    "text": "random.choice(dazed_msgs)"
@@ -182,7 +182,7 @@
    "file": "main",
    "func": "handle_fall",
    "kind": "long",
-   "line": 3632,
+   "line": 3642,
    "raw": "\"呼...我没事了...谢谢你的关心...\"",
    "source": "physics",
    "text": "呼...我没事了...谢谢你的关心..."
@@ -192,7 +192,7 @@
    "file": "main",
    "func": "handle_fall",
    "kind": "long",
-   "line": 3649,
+   "line": 3659,
    "raw": "\"呼...我没事了...谢谢你的关心...\"",
    "source": "physics",
    "text": "呼...我没事了...谢谢你的关心..."
@@ -202,7 +202,7 @@
    "file": "main",
    "func": "handle_fall",
    "kind": "long",
-   "line": 3701,
+   "line": 3711,
    "raw": "\"我已经完全恢复了...谢谢...\"",
    "source": "physics",
    "text": "我已经完全恢复了...谢谢..."
@@ -212,7 +212,7 @@
    "file": "main",
    "func": "wake_up",
    "kind": "var",
-   "line": 3727,
+   "line": 3737,
    "raw": "random.choice(wake_up_messages)",
    "source": "physics",
    "text": "random.choice(wake_up_messages)"
@@ -222,7 +222,7 @@
    "file": "main",
    "func": "react_to_desktop_element",
    "kind": "var",
-   "line": 3939,
+   "line": 3949,
    "raw": "reaction['dialogue']",
    "source": "env",
    "text": "reaction['dialogue']"
@@ -232,7 +232,7 @@
    "file": "main",
    "func": "react_to_desktop_element",
    "kind": "long",
-   "line": 3971,
+   "line": 3981,
    "raw": "\"需要我帮你打开浏览器或搜索什么吗？\"",
    "source": "env",
    "text": "需要我帮你打开浏览器或搜索什么吗？"
@@ -242,7 +242,7 @@
    "file": "main",
    "func": "react_to_desktop_element",
    "kind": "var",
-   "line": 4009,
+   "line": 4019,
    "raw": "help_messages[file_ext]",
    "source": "env",
    "text": "help_messages[file_ext]"
@@ -252,7 +252,7 @@
    "file": "main",
    "func": "create_person_name_table",
    "kind": "short",
-   "line": 4078,
+   "line": 4088,
    "raw": "\"创建Excel文件失败！\"",
    "source": "sys",
    "text": "创建Excel文件失败！"
@@ -262,7 +262,7 @@
    "file": "main",
    "func": "create_person_name_table",
    "kind": "var_fstring",
-   "line": 4112,
+   "line": 4122,
    "raw": "f\"我已经在桌面上创建了名为'{file_name}.xlsx'的人名表！\"",
    "source": "sys",
    "text": "f\"我已经在桌面上创建了名为'{file_name}.xlsx'的人名表！\""
@@ -272,7 +272,7 @@
    "file": "main",
    "func": "create_person_name_table",
    "kind": "var_fstring",
-   "line": 4113,
+   "line": 4123,
    "raw": "f\"表中包含了以下人名：{', '.join(names)}\"",
    "source": "sys",
    "text": "f\"表中包含了以下人名：{', '.join(names)}\""
@@ -282,7 +282,7 @@
    "file": "main",
    "func": "create_person_name_table",
    "kind": "short",
-   "line": 4119,
+   "line": 4129,
    "raw": "\"创建人名表失败了...\"",
    "source": "sys",
    "text": "创建人名表失败了..."
@@ -292,7 +292,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4170,
+   "line": 4180,
    "raw": "f\"我已经在桌面上创建了一个新的Excel表格: {new_file_name}\"",
    "source": "user",
    "text": "f\"我已经在桌面上创建了一个新的Excel表格: {new_file_name}\""
@@ -302,7 +302,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "long",
-   "line": 4185,
+   "line": 4195,
    "raw": "\"桌面上没有找到Excel表格文件！\"",
    "source": "user",
    "text": "桌面上没有找到Excel表格文件！"
@@ -312,7 +312,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4197,
+   "line": 4207,
    "raw": "f\"我将往表格: {excel_file} 里填写人名！\"",
    "source": "user",
    "text": "f\"我将往表格: {excel_file} 里填写人名！\""
@@ -322,7 +322,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4206,
+   "line": 4216,
    "raw": "f\"我已经成功往表格: {excel_file} 里填写了人名！\"",
    "source": "user",
    "text": "f\"我已经成功往表格: {excel_file} 里填写了人名！\""
@@ -332,7 +332,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4207,
+   "line": 4217,
    "raw": "f\"我填写的人名是: {', '.join(default_names)}\"",
    "source": "user",
    "text": "f\"我填写的人名是: {', '.join(default_names)}\""
@@ -342,7 +342,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4209,
+   "line": 4219,
    "raw": "f\"往表格: {excel_file} 里填写人名失败了...\"",
    "source": "user",
    "text": "f\"往表格: {excel_file} 里填写人名失败了...\""
@@ -352,7 +352,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "long",
-   "line": 4225,
+   "line": 4235,
    "raw": "\"桌面上没有找到Excel表格文件！\"",
    "source": "user",
    "text": "桌面上没有找到Excel表格文件！"
@@ -362,7 +362,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4233,
+   "line": 4243,
    "raw": "f\"我找到了桌面上的Excel文件: {excel_file}\"",
    "source": "user",
    "text": "f\"我找到了桌面上的Excel文件: {excel_file}\""
@@ -372,7 +372,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4237,
+   "line": 4247,
    "raw": "f\"我将为你打开并修改表格: {excel_file}\"",
    "source": "user",
    "text": "f\"我将为你打开并修改表格: {excel_file}\""
@@ -382,7 +382,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4243,
+   "line": 4253,
    "raw": "f\"我已经成功修改了表格: {excel_file}！\"",
    "source": "user",
    "text": "f\"我已经成功修改了表格: {excel_file}！\""
@@ -392,7 +392,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "long",
-   "line": 4244,
+   "line": 4254,
    "raw": "\"我已经将任务名称和喜好对齐，并确保所有内容都完全放在格子里，没有超出！\"",
    "source": "user",
    "text": "我已经将任务名称和喜好对齐，并确保所有内容都完全放在格子里，没有超出！"
@@ -402,7 +402,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4246,
+   "line": 4256,
    "raw": "f\"修改表格: {excel_file} 失败了...\"",
    "source": "user",
    "text": "f\"修改表格: {excel_file} 失败了...\""
@@ -412,7 +412,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "var_fstring",
-   "line": 4248,
+   "line": 4258,
    "raw": "f\"我将为你打开表格: {excel_file}\"",
    "source": "user",
    "text": "f\"我将为你打开表格: {excel_file}\""
@@ -422,7 +422,7 @@
    "file": "main",
    "func": "handle_file_operation",
    "kind": "long",
-   "line": 4263,
+   "line": 4273,
    "raw": "\"处理文件操作指令失败了...\"",
    "source": "user",
    "text": "处理文件操作指令失败了..."
@@ -432,7 +432,7 @@
    "file": "main",
    "func": "_open_desktop_item_by_name",
    "kind": "short",
-   "line": 4274,
+   "line": 4284,
    "raw": "\"你想让我打开什么呀？\"",
    "source": "env",
    "text": "你想让我打开什么呀？"
@@ -442,7 +442,7 @@
    "file": "main",
    "func": "_open_desktop_item_by_name",
    "kind": "var_fstring",
-   "line": 4296,
+   "line": 4306,
    "raw": "f\"我在桌面上没找到叫「{text}」的东西呢，换个名字试试？\"",
    "source": "env",
    "text": "f\"我在桌面上没找到叫「{text}」的东西呢，换个名字试试？\""
@@ -452,7 +452,7 @@
    "file": "main",
    "func": "open_browser_for_ralsei",
    "kind": "short",
-   "line": 4432,
+   "line": 4442,
    "raw": "\"我来帮你打开浏览器吧！\"",
    "source": "env",
    "text": "我来帮你打开浏览器吧！"
@@ -462,7 +462,7 @@
    "file": "main",
    "func": "start_watching_video",
    "kind": "var",
-   "line": 4523,
+   "line": 4533,
    "raw": "message",
    "source": "env",
    "text": "message"
@@ -472,7 +472,7 @@
    "file": "main",
    "func": "_update_video_watching",
    "kind": "long",
-   "line": 4610,
+   "line": 4620,
    "raw": "\"时间不早了，我该睡觉了，晚安！\"",
    "source": "env",
    "text": "时间不早了，我该睡觉了，晚安！"
@@ -482,7 +482,7 @@
    "file": "main",
    "func": "_react_to_video",
    "kind": "var",
-   "line": 4636,
+   "line": 4646,
    "raw": "msg",
    "source": "env",
    "text": "msg"
@@ -492,7 +492,7 @@
    "file": "main",
    "func": "enter_sleep_mode",
    "kind": "var",
-   "line": 4673,
+   "line": 4683,
    "raw": "random.choice(sleep_msgs)",
    "source": "physics",
    "text": "random.choice(sleep_msgs)"
@@ -502,7 +502,7 @@
    "file": "main",
    "func": "stop_watching_video",
    "kind": "var",
-   "line": 4702,
+   "line": 4712,
    "raw": "message",
    "source": "env",
    "text": "message"
@@ -512,7 +512,7 @@
    "file": "main",
    "func": "suggest_watching_video",
    "kind": "var",
-   "line": 4734,
+   "line": 4744,
    "raw": "message",
    "source": "env",
    "text": "message"
@@ -522,7 +522,7 @@
    "file": "main",
    "func": "check_entertainment_needs",
    "kind": "var",
-   "line": 4860,
+   "line": 4870,
    "raw": "suggestion",
    "source": "env",
    "text": "suggestion"
@@ -532,7 +532,7 @@
    "file": "main",
    "func": "tell_joke",
    "kind": "var",
-   "line": 4875,
+   "line": 4885,
    "raw": "joke",
    "source": "sys",
    "text": "joke"
@@ -542,7 +542,7 @@
    "file": "main",
    "func": "suggest_game",
    "kind": "var",
-   "line": 4889,
+   "line": 4899,
    "raw": "game",
    "source": "sys",
    "text": "game"
@@ -552,7 +552,7 @@
    "file": "main",
    "func": "_handle_agent_commands",
    "kind": "var",
-   "line": 4939,
+   "line": 4949,
    "raw": "str(reply)",
    "source": "user",
    "text": "str(reply)"
@@ -562,7 +562,7 @@
    "file": "main",
    "func": "_handle_agent_commands",
    "kind": "var",
-   "line": 4949,
+   "line": 4959,
    "raw": "str(res['reply'])",
    "source": "user",
    "text": "str(res['reply'])"
@@ -572,7 +572,7 @@
    "file": "main",
    "func": "_on_reply",
    "kind": "var",
-   "line": 5144,
+   "line": 5154,
    "raw": "text",
    "source": "ai",
    "text": "text"
@@ -580,59 +580,19 @@
   {
    "cls": "RalseiPet",
    "file": "main",
-   "func": "mousePressEvent",
-   "kind": "long",
-   "line": 5268,
-   "raw": "\"别戳我啦...我都扁了...\"",
-   "source": "user",
-   "text": "别戳我啦...我都扁了..."
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mousePressEvent",
-   "kind": "short",
-   "line": 5320,
-   "raw": "\"哎呀！别不楞我的耳朵啦！\"",
-   "source": "user",
-   "text": "哎呀！别不楞我的耳朵啦！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mousePressEvent",
+   "func": "_event_say",
    "kind": "var",
-   "line": 5339,
-   "raw": "random.choice(body_responses)",
-   "source": "user",
-   "text": "random.choice(body_responses)"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mousePressEvent",
-   "kind": "short",
-   "line": 5347,
-   "raw": "\"嗯？有什么事吗？\"",
-   "source": "user",
-   "text": "嗯？有什么事吗？"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mousePressEvent",
-   "kind": "var",
-   "line": 5352,
-   "raw": "random.choice(short_responses)",
-   "source": "user",
-   "text": "random.choice(short_responses)"
+   "line": 5248,
+   "raw": "text",
+   "source": "sys",
+   "text": "text"
   },
   {
    "cls": "RalseiPet",
    "file": "main",
    "func": "start_following_mouse",
    "kind": "short",
-   "line": 5378,
+   "line": 5621,
    "raw": "\"我来追着鼠标跑啦！\"",
    "source": "sys",
    "text": "我来追着鼠标跑啦！"
@@ -642,7 +602,7 @@
    "file": "main",
    "func": "stop_following_mouse",
    "kind": "short",
-   "line": 5389,
+   "line": 5632,
    "raw": "\"我不追啦，有点累了！\"",
    "source": "sys",
    "text": "我不追啦，有点累了！"
@@ -650,139 +610,9 @@
   {
    "cls": "RalseiPet",
    "file": "main",
-   "func": "mouseMoveEvent",
-   "kind": "var",
-   "line": 5567,
-   "raw": "random.choice(response_list)",
-   "source": "user",
-   "text": "random.choice(response_list)"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "short",
-   "line": 5703,
-   "raw": "\"哇啊——！\"",
-   "source": "user",
-   "text": "哇啊——！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "long",
-   "line": 5758,
-   "raw": "\"哎呀！别捏我的耳朵！好痒呀！\"",
-   "source": "user",
-   "text": "哎呀！别捏我的耳朵！好痒呀！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "short",
-   "line": 5765,
-   "raw": "\"嘿嘿~ 别拉我的手臂啦！\"",
-   "source": "user",
-   "text": "嘿嘿~ 别拉我的手臂啦！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "short",
-   "line": 5773,
-   "raw": "\"嗯~ 好舒服！\"",
-   "source": "user",
-   "text": "嗯~ 好舒服！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "short",
-   "line": 5781,
-   "raw": "\"嘿嘿~ 我的肚子很软哦！\"",
-   "source": "user",
-   "text": "嘿嘿~ 我的肚子很软哦！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "short",
-   "line": 5789,
-   "raw": "\"哎呀~ 别捏我的脸！\"",
-   "source": "user",
-   "text": "哎呀~ 别捏我的脸！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseReleaseEvent",
-   "kind": "short",
-   "line": 5797,
-   "raw": "\"谢谢你拉我的肩膀！\"",
-   "source": "user",
-   "text": "谢谢你拉我的肩膀！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseDoubleClickEvent",
-   "kind": "short",
-   "line": 5830,
-   "raw": "\"嘿嘿~ 摸头杀好舒服！\"",
-   "source": "user",
-   "text": "嘿嘿~ 摸头杀好舒服！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseDoubleClickEvent",
-   "kind": "long",
-   "line": 5838,
-   "raw": "\"哈哈！别用力拍我的肚子啦！\"",
-   "source": "user",
-   "text": "哈哈！别用力拍我的肚子啦！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseDoubleClickEvent",
-   "kind": "short",
-   "line": 5846,
-   "raw": "\"哎呀！别捏我的脸！\"",
-   "source": "user",
-   "text": "哎呀！别捏我的脸！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseDoubleClickEvent",
-   "kind": "short",
-   "line": 5854,
-   "raw": "\"谢谢你拍拍我的肩膀！\"",
-   "source": "user",
-   "text": "谢谢你拍拍我的肩膀！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "mouseDoubleClickEvent",
-   "kind": "short",
-   "line": 5864,
-   "raw": "\"嘿嘿~ 你对我真好！\"",
-   "source": "user",
-   "text": "嘿嘿~ 你对我真好！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
    "func": "save_config",
    "kind": "short",
-   "line": 6129,
+   "line": 6359,
    "raw": "\"配置已保存！\"",
    "source": "sys",
    "text": "配置已保存！"
@@ -792,7 +622,7 @@
    "file": "main",
    "func": "play_game",
    "kind": "long",
-   "line": 6146,
+   "line": 6376,
    "raw": "\"来跳舞吧！转圈圈~ 嘻嘻！\"",
    "source": "sys",
    "text": "来跳舞吧！转圈圈~ 嘻嘻！"
@@ -802,7 +632,7 @@
    "file": "main",
    "func": "play_game",
    "kind": "short",
-   "line": 6150,
+   "line": 6380,
    "raw": "\"啦啦啦~ 唱首歌给你听！\"",
    "source": "sys",
    "text": "啦啦啦~ 唱首歌给你听！"
@@ -812,7 +642,7 @@
    "file": "main",
    "func": "play_game",
    "kind": "long",
-   "line": 6159,
+   "line": 6389,
    "raw": "\"我们来玩躲猫猫吧！我先藏起来~\"",
    "source": "sys",
    "text": "我们来玩躲猫猫吧！我先藏起来~"
@@ -820,29 +650,9 @@
   {
    "cls": "RalseiPet",
    "file": "main",
-   "func": "feed_ralsei",
-   "kind": "long",
-   "line": 6181,
-   "raw": "\"谢谢你喂我！肚子饱饱的，好幸福~\"",
-   "source": "user",
-   "text": "谢谢你喂我！肚子饱饱的，好幸福~"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
-   "func": "pet_ralsei",
-   "kind": "short",
-   "line": 6188,
-   "raw": "\"嘿嘿~ 好舒服呀！\"",
-   "source": "user",
-   "text": "嘿嘿~ 好舒服呀！"
-  },
-  {
-   "cls": "RalseiPet",
-   "file": "main",
    "func": "change_animation_randomly",
    "kind": "var_fstring",
-   "line": 6204,
+   "line": 6432,
    "raw": "f\"看！我会做这个动作~\"",
    "source": "sys",
    "text": "f\"看！我会做这个动作~\""
@@ -852,7 +662,7 @@
    "file": "main",
    "func": "start_rock_paper_scissors",
    "kind": "long",
-   "line": 6212,
+   "line": 6440,
    "raw": "\"现在还在玩别的呢，等这一局结束再玩石头剪刀布吧~\"",
    "source": "sys",
    "text": "现在还在玩别的呢，等这一局结束再玩石头剪刀布吧~"
@@ -862,7 +672,7 @@
    "file": "main",
    "func": "start_rock_paper_scissors",
    "kind": "short",
-   "line": 6227,
+   "line": 6455,
    "raw": "\"我们来玩石头剪刀布吧！\"",
    "source": "sys",
    "text": "我们来玩石头剪刀布吧！"
@@ -872,7 +682,7 @@
    "file": "main",
    "func": "start_rock_paper_scissors",
    "kind": "long",
-   "line": 6228,
+   "line": 6456,
    "raw": "\"你要出什么呢？石头、剪刀还是布？\"",
    "source": "sys",
    "text": "你要出什么呢？石头、剪刀还是布？"
@@ -882,7 +692,7 @@
    "file": "main",
    "func": "play_rock_paper_scissors",
    "kind": "var_fstring",
-   "line": 6242,
+   "line": 6470,
    "raw": "f\"请输入有效的选项：{'、'.join(self.rock_paper_scissors_options)}\"",
    "source": "sys",
    "text": "f\"请输入有效的选项：{'、'.join(self.rock_paper_scissors_options)}\""
@@ -892,7 +702,7 @@
    "file": "main",
    "func": "play_rock_paper_scissors",
    "kind": "var_fstring",
-   "line": 6273,
+   "line": 6501,
    "raw": "f\"你出了：{player_choice}\"",
    "source": "sys",
    "text": "f\"你出了：{player_choice}\""
@@ -902,7 +712,7 @@
    "file": "main",
    "func": "play_rock_paper_scissors",
    "kind": "var_fstring",
-   "line": 6274,
+   "line": 6502,
    "raw": "f\"我出了：{ralsei_choice}\"",
    "source": "sys",
    "text": "f\"我出了：{ralsei_choice}\""
@@ -912,7 +722,7 @@
    "file": "main",
    "func": "play_rock_paper_scissors",
    "kind": "var",
-   "line": 6275,
+   "line": 6503,
    "raw": "result_messages[result]",
    "source": "sys",
    "text": "result_messages[result]"
@@ -922,7 +732,7 @@
    "file": "main",
    "func": "play_rock_paper_scissors",
    "kind": "var_fstring",
-   "line": 6276,
+   "line": 6504,
    "raw": "f\"比分：你 {self.game_state['player_score']} - {self.game_state['ralsei_score']} 我\"",
    "source": "sys",
    "text": "f\"比分：你 {self.game_state['player_score']} - {self.game_state['ralsei_score']} 我\""
@@ -932,7 +742,7 @@
    "file": "main",
    "func": "play_rock_paper_scissors",
    "kind": "long",
-   "line": 6294,
+   "line": 6522,
    "raw": "\"要继续玩吗？请输入石头、剪刀或布，或者输入'结束'来结束游戏。\"",
    "source": "sys",
    "text": "要继续玩吗？请输入石头、剪刀或布，或者输入'结束'来结束游戏。"
@@ -942,7 +752,7 @@
    "file": "main",
    "func": "end_rock_paper_scissors",
    "kind": "var",
-   "line": 6343,
+   "line": 6571,
    "raw": "final_message",
    "source": "sys",
    "text": "final_message"
@@ -952,7 +762,7 @@
    "file": "main",
    "func": "end_rock_paper_scissors",
    "kind": "var",
-   "line": 6344,
+   "line": 6572,
    "raw": "stats_message",
    "source": "sys",
    "text": "stats_message"
@@ -962,7 +772,7 @@
    "file": "main",
    "func": "end_rock_paper_scissors",
    "kind": "short",
-   "line": 6345,
+   "line": 6573,
    "raw": "\"谢谢你陪我玩！\"",
    "source": "sys",
    "text": "谢谢你陪我玩！"
@@ -972,7 +782,7 @@
    "file": "main",
    "func": "start_guess_number",
    "kind": "long",
-   "line": 6355,
+   "line": 6583,
    "raw": "\"现在还在玩别的呢，等这一局结束再玩猜数字吧~\"",
    "source": "sys",
    "text": "现在还在玩别的呢，等这一局结束再玩猜数字吧~"
@@ -982,7 +792,7 @@
    "file": "main",
    "func": "start_guess_number",
    "kind": "short",
-   "line": 6377,
+   "line": 6605,
    "raw": "\"我们来玩猜数字游戏吧！\"",
    "source": "sys",
    "text": "我们来玩猜数字游戏吧！"
@@ -992,7 +802,7 @@
    "file": "main",
    "func": "start_guess_number",
    "kind": "var_fstring",
-   "line": 6378,
+   "line": 6606,
    "raw": "f\"我已经想好了一个{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字，你有{self.guess_number_game['",
    "source": "sys",
    "text": "f\"我已经想好了一个{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的"
@@ -1002,7 +812,7 @@
    "file": "main",
    "func": "start_guess_number",
    "kind": "short",
-   "line": 6379,
+   "line": 6607,
    "raw": "\"请输入你猜的数字：\"",
    "source": "sys",
    "text": "请输入你猜的数字："
@@ -1012,7 +822,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "short",
-   "line": 6394,
+   "line": 6622,
    "raw": "\"请输入有效的数字！\"",
    "source": "sys",
    "text": "请输入有效的数字！"
@@ -1022,7 +832,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "var_fstring",
-   "line": 6399,
+   "line": 6627,
    "raw": "f\"请输入{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字！\"",
    "source": "sys",
    "text": "f\"请输入{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字！\""
@@ -1032,7 +842,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "var_fstring",
-   "line": 6418,
+   "line": 6646,
    "raw": "f\"恭喜你！猜对了！数字就是{target}！\"",
    "source": "sys",
    "text": "f\"恭喜你！猜对了！数字就是{target}！\""
@@ -1042,7 +852,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "var_fstring",
-   "line": 6429,
+   "line": 6657,
    "raw": "f\"猜小了！再试一次！还剩{attempts_left}次机会。\"",
    "source": "sys",
    "text": "f\"猜小了！再试一次！还剩{attempts_left}次机会。\""
@@ -1052,7 +862,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "short",
-   "line": 6430,
+   "line": 6658,
    "raw": "\"请输入你猜的数字：\"",
    "source": "sys",
    "text": "请输入你猜的数字："
@@ -1062,7 +872,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "var_fstring",
-   "line": 6434,
+   "line": 6662,
    "raw": "f\"猜小了！很遗憾，你已经用完了所有机会。\"",
    "source": "sys",
    "text": "f\"猜小了！很遗憾，你已经用完了所有机会。\""
@@ -1072,7 +882,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "var_fstring",
-   "line": 6440,
+   "line": 6668,
    "raw": "f\"猜大了！再试一次！还剩{attempts_left}次机会。\"",
    "source": "sys",
    "text": "f\"猜大了！再试一次！还剩{attempts_left}次机会。\""
@@ -1082,7 +892,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "short",
-   "line": 6441,
+   "line": 6669,
    "raw": "\"请输入你猜的数字：\"",
    "source": "sys",
    "text": "请输入你猜的数字："
@@ -1092,7 +902,7 @@
    "file": "main",
    "func": "play_guess_number",
    "kind": "var_fstring",
-   "line": 6445,
+   "line": 6673,
    "raw": "f\"猜大了！很遗憾，你已经用完了所有机会。\"",
    "source": "sys",
    "text": "f\"猜大了！很遗憾，你已经用完了所有机会。\""
@@ -1102,7 +912,7 @@
    "file": "main",
    "func": "end_guess_number",
    "kind": "var",
-   "line": 6465,
+   "line": 6693,
    "raw": "final_message",
    "source": "sys",
    "text": "final_message"
@@ -1112,7 +922,7 @@
    "file": "main",
    "func": "end_guess_number",
    "kind": "short",
-   "line": 6466,
+   "line": 6694,
    "raw": "\"谢谢你陪我玩！\"",
    "source": "sys",
    "text": "谢谢你陪我玩！"
@@ -1122,7 +932,7 @@
    "file": "main",
    "func": "handle_game_input",
    "kind": "long",
-   "line": 6490,
+   "line": 6718,
    "raw": "\"好吧，那这次就不躲啦~ 下次再一起玩！\"",
    "source": "user",
    "text": "好吧，那这次就不躲啦~ 下次再一起玩！"
@@ -1132,7 +942,7 @@
    "file": "main",
    "func": "handle_game_input",
    "kind": "long",
-   "line": 6499,
+   "line": 6727,
    "raw": "\"现在是石头剪刀布时间！出『石头』『剪刀』或『布』吧（说「结束」就不玩啦）\"",
    "source": "user",
    "text": "现在是石头剪刀布时间！出『石头』『剪刀』或『布』吧（说「结束」就不玩啦）"
@@ -1142,7 +952,7 @@
    "file": "main",
    "func": "handle_api_response",
    "kind": "var_fstring",
-   "line": 6702,
+   "line": 6930,
    "raw": "f\"抱歉，我现在有点不太舒服... ({error_msg})\"",
    "source": "sys",
    "text": "f\"抱歉，我现在有点不太舒服... ({error_msg})\""
@@ -1152,7 +962,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "var_fstring",
-   "line": 6902,
+   "line": 7130,
    "raw": "f\"我来帮你搜索关于{search_query}的内容！\"",
    "source": "sys",
    "text": "f\"我来帮你搜索关于{search_query}的内容！\""
@@ -1162,7 +972,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "var_fstring",
-   "line": 6922,
+   "line": 7150,
    "raw": "f\"开始播放{ppt_files[0]['name']}！\"",
    "source": "sys",
    "text": "f\"开始播放{ppt_files[0]['name']}！\""
@@ -1172,7 +982,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "short",
-   "line": 6924,
+   "line": 7152,
    "raw": "\"没有找到PPT文件呢！\"",
    "source": "sys",
    "text": "没有找到PPT文件呢！"
@@ -1182,7 +992,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "short",
-   "line": 6928,
+   "line": 7156,
    "raw": "\"已切换到下一张幻灯片！\"",
    "source": "sys",
    "text": "已切换到下一张幻灯片！"
@@ -1192,7 +1002,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "short",
-   "line": 6931,
+   "line": 7159,
    "raw": "\"已切换到上一张幻灯片！\"",
    "source": "sys",
    "text": "已切换到上一张幻灯片！"
@@ -1202,7 +1012,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "short",
-   "line": 6934,
+   "line": 7162,
    "raw": "\"已停止PPT放映！\"",
    "source": "sys",
    "text": "已停止PPT放映！"
@@ -1212,7 +1022,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "var_fstring",
-   "line": 6944,
+   "line": 7172,
    "raw": "f\"我找了一下，桌面上有 {len(_ppt or [])} 个 PPT 文件。\"",
    "source": "sys",
    "text": "f\"我找了一下，桌面上有 {len(_ppt or [])} 个 PPT 文件。\""
@@ -1222,7 +1032,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "long",
-   "line": 6948,
+   "line": 7176,
    "raw": "\"我可以帮你控制PPT，比如播放、切换幻灯片等！\"",
    "source": "sys",
    "text": "我可以帮你控制PPT，比如播放、切换幻灯片等！"
@@ -1232,7 +1042,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "var_fstring",
-   "line": 6968,
+   "line": 7196,
    "raw": "f\"现在开着 {len(_bw or [])} 个浏览器窗口呢。\"",
    "source": "sys",
    "text": "f\"现在开着 {len(_bw or [])} 个浏览器窗口呢。\""
@@ -1242,7 +1052,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "short",
-   "line": 7017,
+   "line": 7245,
    "raw": "\"我更喜欢自己走来走去呢！\"",
    "source": "sys",
    "text": "我更喜欢自己走来走去呢！"
@@ -1252,7 +1062,7 @@
    "file": "main",
    "func": "_execute_api_action",
    "kind": "var",
-   "line": 7034,
+   "line": 7262,
    "raw": "content",
    "source": "sys",
    "text": "content"
@@ -1262,7 +1072,7 @@
    "file": "main",
    "func": "handle_window_operation",
    "kind": "var_fstring",
-   "line": 8778,
+   "line": 9022,
    "raw": "f\"我没找到叫「{name_part or '目标'}」的窗口呢。\"",
    "source": "env",
    "text": "f\"我没找到叫「{name_part or '目标'}」的窗口呢。\""
@@ -1272,7 +1082,7 @@
    "file": "main",
    "func": "handle_window_operation",
    "kind": "var",
-   "line": 8798,
+   "line": 9042,
    "raw": "msg",
    "source": "env",
    "text": "msg"
@@ -1282,7 +1092,7 @@
    "file": "main",
    "func": "start_hide_and_seek_game",
    "kind": "long",
-   "line": 9438,
+   "line": 9682,
    "raw": "\"好~ 我先准备 5 个藏身的地方，然后藏起来，你来找我好不好？\"",
    "source": "sys",
    "text": "好~ 我先准备 5 个藏身的地方，然后藏起来，你来找我好不好？"
@@ -1292,7 +1102,7 @@
    "file": "main",
    "func": "_abort_hide_and_seek",
    "kind": "long",
-   "line": 9478,
+   "line": 9722,
    "raw": "\"呜…游戏被打断啦！下次再玩吧~\"",
    "source": "sys",
    "text": "呜…游戏被打断啦！下次再玩吧~"
@@ -1302,7 +1112,7 @@
    "file": "main",
    "func": "_hide_on_arrive_center",
    "kind": "long",
-   "line": 9508,
+   "line": 9752,
    "raw": "\"魔法~ 变出 5 个小盒子！✨\"",
    "source": "sys",
    "text": "魔法~ 变出 5 个小盒子！✨"
@@ -1312,7 +1122,7 @@
    "file": "main",
    "func": "_hide_create_obstacles_after_spell",
    "kind": "long",
-   "line": 9553,
+   "line": 9797,
    "raw": "\"呜…怎么变不出来呢…下次再玩吧。\"",
    "source": "sys",
    "text": "呜…怎么变不出来呢…下次再玩吧。"
@@ -1322,7 +1132,7 @@
    "file": "main",
    "func": "_hide_create_obstacles_after_spell",
    "kind": "long",
-   "line": 9564,
+   "line": 9808,
    "raw": "\"我要开始藏啦~ 不许偷看哦！\"",
    "source": "sys",
    "text": "我要开始藏啦~ 不许偷看哦！"
@@ -1332,7 +1142,7 @@
    "file": "main",
    "func": "_hide_on_arrive_folder",
    "kind": "long",
-   "line": 9590,
+   "line": 9834,
    "raw": "\"藏好啦~ 快点点桌面上的文件夹来找我吧！（20 秒内找不到算我赢哦）\"",
    "source": "sys",
    "text": "藏好啦~ 快点点桌面上的文件夹来找我吧！（20 秒内找不到算我赢哦）"
@@ -1342,7 +1152,7 @@
    "file": "main",
    "func": "_hide_search_tick",
    "kind": "long",
-   "line": 9609,
+   "line": 9853,
    "raw": "\"啦啦啦~ 时间到！你找不到我！我赢啦~ 嘻嘻！\"",
    "source": "env",
    "text": "啦啦啦~ 时间到！你找不到我！我赢啦~ 嘻嘻！"
@@ -1352,7 +1162,7 @@
    "file": "main",
    "func": "_hide_search_tick",
    "kind": "long",
-   "line": 9641,
+   "line": 9885,
    "raw": "\"你点的这个…我不在这儿呀~\"",
    "source": "env",
    "text": "你点的这个…我不在这儿呀~"
@@ -1362,7 +1172,7 @@
    "file": "main",
    "func": "_hide_end_game",
    "kind": "long",
-   "line": 9661,
+   "line": 9905,
    "raw": "\"哎？！被你发现了…真厉害呀~  你赢啦！\"",
    "source": "sys",
    "text": "哎？！被你发现了…真厉害呀~  你赢啦！"
@@ -1372,7 +1182,7 @@
    "file": "main",
    "func": "_hide_report_clicked_folder",
    "kind": "short",
-   "line": 9737,
+   "line": 9981,
    "raw": "\"你找到我啦！真厉害！\"",
    "source": "user",
    "text": "你找到我啦！真厉害！"
@@ -1382,7 +1192,7 @@
    "file": "main",
    "func": "_hide_report_clicked_folder",
    "kind": "short",
-   "line": 9751,
+   "line": 9995,
    "raw": "\"这里没有我~ 再找找！\"",
    "source": "user",
    "text": "这里没有我~ 再找找！"
