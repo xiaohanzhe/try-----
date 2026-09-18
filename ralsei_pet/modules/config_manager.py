@@ -71,7 +71,10 @@ class ConfigManager:
                 "options": {
                     "temperature": 0.85,
                     "max_tokens": 256
-                }
+                },
+                # S8 流式输出：边收边打，首字延迟从"整句生成完"（实测热 0.9s / 冷 6.0s）
+                # 降到 ~0.23s。置 false 可一键退回旧行为（详见 main._ai_stream_enabled）。
+                "stream": True
             },
             "privacy": {
                 "enable_usage_data": False,

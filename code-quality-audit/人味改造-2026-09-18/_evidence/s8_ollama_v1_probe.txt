@@ -1,0 +1,25 @@
+=== ① 非流式（对照）===
+首字节=全文到达: 6.02s
+内容: 别担心，喝杯热水放松一下，调整下心情再来面对工作吧。
+
+=== ② 流式（stream=true）===
+HTTP status=200  Content-Type=text/event-stream
+首字延迟(first delta) = 0.23 s
+全文耗时 = 1.34s
+分片数 = 17
+拼接结果: 别太自责了，偶尔一次也正常，休息一下放松心情吧。
+拼接长度 = 24
+
+=== ③ 原始 SSE 前 12 行 ===
+'data: {"id":"chatcmpl-208","object":"chat.completion.chunk","created":1789736985,"model":"ralsei:v2","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"别"},"finish_reason":null}]}'
+''
+'data: {"id":"chatcmpl-208","object":"chat.completion.chunk","created":1789736985,"model":"ralsei:v2","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"太"},"finish_reason":null}]}'
+''
+'data: {"id":"chatcmpl-208","object":"chat.completion.chunk","created":1789736985,"model":"ralsei:v2","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"自"},"finish_reason":null}]}'
+''
+'data: {"id":"chatcmpl-208","object":"chat.completion.chunk","created":1789736985,"model":"ralsei:v2","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"责"},"finish_reason":null}]}'
+''
+'data: {"id":"chatcmpl-208","object":"chat.completion.chunk","created":1789736985,"model":"ralsei:v2","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"了"},"finish_reason":null}]}'
+''
+'data: {"id":"chatcmpl-208","object":"chat.completion.chunk","created":1789736985,"model":"ralsei:v2","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"，"},"finish_reason":null}]}'
+''

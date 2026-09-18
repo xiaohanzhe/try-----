@@ -383,6 +383,10 @@ class DialogueUI(QWidget):
         self.typing_text = ""
         self.typing_index = 0
         self.is_typing = False
+        # 流式输出（S8）：为 True 表示"这条消息还在路上，当前打完的只是已收到的部分"。
+        # 打字机打到队列末尾时，靠它区分"整句打完了"与"打完的只是暂时收到的一段"。
+        self._streaming = False
+        self._stream_raw = ""        # 流式收到的原始文本（未清洗），供前缀比对
 
         # 本地 AI 对话状态：显式初始化（此前仅靠 getattr 默认值兜底，字段语义不清晰）
         self._ai_inflight = False   # 上一个本地 AI 请求是否仍在等待回复
@@ -468,7 +472,7 @@ class DialogueUI(QWidget):
                 pixmap.scaled(78, 78, Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
     # ---------------------------------------------------------------- typing
-    def add_dialogue(self, speaker, message, face_type="normal"):
+    def add_dialogue(self, speaker, message, face_type="normal", _streamed=False):
         # 修复：消息类型防护 + HTML 转义。
         # (1) 延迟回复(lambda)求值失败时会返回函数对象/None，直接 len()/拼接会
         #     TypeError 把 send_message 链路打断（用户消息已回显却无回复）；
@@ -501,11 +505,18 @@ class DialogueUI(QWidget):
             self._note_memory(speaker, message)
         if speaker == "ralsei":
             self.set_face(face_type)
-            # 先打断前一条打字机（补完剩余内容，非打字时noop安全）
-            self.stop_typing()
-            # 把上一条 Ralsei 完整并入历史，然后再开新的打字机，防止消息覆盖
-            self._commit_previous_ralsei_into_history()
-            self._start_typing(message)   # 传原文，渲染时才转义（见 _refresh_display）
+            if _streamed:
+                # 流式（S8）：这段回复在流式期间**已经逐字显示在前台**了，所以
+                #   ① 不能走 `_start_typing`（会从第 0 字重打一遍，视觉上闪一下再重来）；
+                #   ② 不能走 `_commit_previous_ralsei_into_history`
+                #      （它会把前台 typing_text 当成"上一条"提交，可它其实就是本条）。
+                self._finalize_stream(message)
+            else:
+                # 先打断前一条打字机（补完剩余内容，非打字时noop安全）
+                self.stop_typing()
+                # 把上一条 Ralsei 完整并入历史，然后再开新的打字机，防止消息覆盖
+                self._commit_previous_ralsei_into_history()
+                self._start_typing(message)   # 传原文，渲染时才转义（见 _refresh_display）
         else:
             # 用户说的话：先打断打字机，再把上一条Ralsei并入历史，然后追加用户消息
             self.stop_typing()
@@ -821,6 +832,8 @@ class DialogueUI(QWidget):
         # 新消息：取消之前的自动隐藏
         self._auto_hide_timer.stop()
         self.typing_timer.stop()
+        self._streaming = False      # 非流式路径：整句已经在手上了
+        self._stream_raw = ""
         self.typing_text = text
         self.typing_index = 0
         self.is_typing = True
@@ -842,6 +855,11 @@ class DialogueUI(QWidget):
             except Exception as e:  # 修复：原先静默吞噬
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         else:
+            # 流式（S8）还连着：这一批字打完了，但整条消息**还没收完** ——
+            # 不能停表、也不能安排自动隐藏，否则"边收边打"会在第一个分片后就收摊。
+            if getattr(self, '_streaming', False):
+                self._refresh_display()
+                return
             # 打字完成：停止计时，但不把消息并入历史（直到下一条消息到来）
             # 这样最后一条消息后能继续闪烁光标
             self.is_typing = False
@@ -853,6 +871,10 @@ class DialogueUI(QWidget):
 
     def stop_typing(self):
         """立即打完当前Ralsei消息（外部X键/点击打断用）。未在打字时noop。"""
+        # 流式标记**无条件**清掉：用户已经要求"立刻显示全文"，就不能再让后续分片
+        # 追加到这个已定格的文本后面（否则新分片会接在句尾继续往外冒字）。
+        self._streaming = False
+        self._stream_raw = ""
         if not self.is_typing:
             return
         # 把打字进度跳到末尾（补完剩余文字）
@@ -861,6 +883,126 @@ class DialogueUI(QWidget):
         self.typing_index = len(self.typing_text)
         self._refresh_display()
         # 手动打断打字 → 安排自动隐藏（输入中时延后）
+        self._schedule_auto_hide()
+
+    # --------------------------------------------- 流式输出（S8）：边收边打
+
+    def stream_delta(self, chunk):
+        """接收本地 AI 的一段增量文本（**主线程**调用，来源见 main.py `_api_delta`）。
+
+        - **首块到达**：把「……」思考占位换成真正的回复，打字机随即开动
+          —— 首字延迟从"整句生成完"（实测热 0.9s / 冷 6.0s）降到 ~0.23s；
+        - **后续块**：追加到待打队列尾部。打字机本来就是按
+          `typing_text[:typing_index]` 逐字推进的，追加后它会自然往下继续打，
+          **不需要重启** —— 所以视觉上是"字连续冒出来"，而不是"一段一段跳"；
+        - `chunk is None`：**作废已显示的半句**（护栏判退 → 要重采样，
+          旧句不能留在屏幕上，否则新句会接在旧句后面，像两句黏一起）。
+
+        这里只做**前缀安全**的轻清洗（剥 markdown、截自问自答），保证屏幕不闪
+        `**` / `主人：` 这类残渣；判退与截断的定论仍在收尾的 `_clean_ai_reply`。
+        """
+        if chunk is None:
+            self._stream_reset()
+            return
+        if not isinstance(chunk, str) or not chunk:
+            return
+        try:
+            if not getattr(self, '_streaming', False):
+                self._stream_begin()
+            self._stream_raw = (getattr(self, '_stream_raw', '') or '') + chunk
+            clean = self._sanitize_stream(self._stream_raw)
+            shown = self.typing_text or ''
+            if clean.startswith(shown):
+                # 正常情况：清洗结果 = "已显示内容 + 新增的字"，原地追加即可
+                self.typing_text = shown + clean[len(shown):]
+            else:
+                # 极端情况（如 `主人：` 跨分片到达，前半段「主人」已经显示了）：
+                # 前缀假设被打破 → 整段替换。宁可闪一下，也不能让屏幕留下错位内容。
+                self.typing_text = clean
+                self.typing_index = min(self.typing_index, len(clean))
+            if not self.typing_timer.isActive():
+                self.typing_timer.start(35 if len(self.typing_text) <= 60 else 22)
+            self._refresh_display()
+        except Exception as e:
+            _log.debug("dialogue_ui 流式追加异常（已忽略）: %s", e)
+
+    def _sanitize_stream(self, raw):
+        """调 RalseiPet 上的共用清洗；取不到就原样返回（绝不因取不到而丢字）。"""
+        try:
+            fn = getattr(self.parent, '_sanitize_partial_reply', None)
+            if callable(fn):
+                return fn(raw)
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        return raw
+
+    def _stream_begin(self):
+        """首块到达：从"思考占位"切进"正在流式打字"。"""
+        try:
+            self._auto_hide_timer.stop()
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        # 思考占位只是"等待"提示，绝不能并进历史（与 add_dialogue 同款处理）
+        if self.typing_text == self.AI_THINKING_PLACEHOLDER:
+            self.typing_text = ""
+            self.typing_index = 0
+            self.is_typing = False
+        self.stop_typing()
+        self._commit_previous_ralsei_into_history()
+        self._streaming = True
+        self._stream_raw = ""
+        self.typing_text = ""
+        self.typing_index = 0
+        self.is_typing = True
+        self.typing_timer.start(35)
+        self._refresh_display()
+
+    def _stream_reset(self):
+        """把流式期间已经显示出去的内容擦掉，回到"……"等待态。
+
+        护栏判退（车轱辘话）时要重采样一次，判退的那半句必须先消失 ——
+        否则新句会接在旧句后面，看起来像两句话黏在一起。
+        """
+        self._streaming = False
+        self._stream_raw = ""
+        try:
+            self.typing_timer.stop()
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        self.is_typing = False
+        # 重采样还要再花 1~2 秒，恢复"思考中"的观感比留一片空白自然
+        self.typing_text = self.AI_THINKING_PLACEHOLDER
+        self.typing_index = len(self.typing_text)
+        try:
+            self.set_face("thinking")
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        self._refresh_display()
+
+    def _finalize_stream(self, final_text):
+        """收尾：把最终文本定格到前台（由 `add_dialogue(..., _streamed=True)` 调用）。
+
+        流式期间显示的是"清洗过的增量"，收尾时 `_clean_ai_reply` 可能还做了更狠的
+        处理（超长截断、去包裹引号）。于是两种情况：
+          - **一致** → 不打断打字机，让它自然把最后几个字打完（视觉最连续）
+          - **不一致** → 直接定格成最终文本，避免"打完了又突然改字"
+        """
+        self._streaming = False
+        self._stream_raw = ""
+        shown = self.typing_text or ''
+        if shown == final_text:
+            if not self.is_typing:
+                # 打字机已经停了（例如用户点击打断了）→ 手动补一次收尾
+                self._schedule_auto_hide()
+            return
+        try:
+            self.typing_timer.stop()
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        self.is_typing = False
+        self.typing_text = final_text
+        self.typing_index = len(final_text)
+        self._refresh_display()
         self._schedule_auto_hide()
 
     # ----------------------------------------------------- auto-hide helpers
@@ -1144,10 +1286,15 @@ class DialogueUI(QWidget):
                 if req_seq != getattr(self, '_ai_seq', 0):
                     return  # 已被更新的请求作废，忽略迟到回复
                 self._ai_inflight = False
-                try:
-                    self._ai_thinking_off()
-                except Exception as e:  # 修复：原先静默吞噬
-                    _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+                # 流式（S8）期间前台**已经显示着**这条回复了 —— 这时不能调
+                # `_ai_thinking_off`（它会把 typing_text 清空，于是已显示的内容
+                # 一闪而逝、再从第 0 字重打一遍）。非流式路径照旧，先把"……"收掉。
+                streamed = bool(getattr(self, '_streaming', False))
+                if not streamed:
+                    try:
+                        self._ai_thinking_off()
+                    except Exception as e:  # 修复：原先静默吞噬
+                        _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 if reply_text:
                     try:
                         current_emotion, emotion_value = \
@@ -1156,7 +1303,9 @@ class DialogueUI(QWidget):
                             current_emotion, abs(emotion_value))
                     except Exception:
                         face_type = "normal"
-                    self.add_dialogue("ralsei", reply_text, face_type)
+                    # _streamed=streamed：流式走"定格"，非流式走"从头打字机"
+                    self.add_dialogue("ralsei", reply_text, face_type,
+                                      _streamed=streamed)
                     # 模型推理可能耗时较长，等待期间对话框也许已被自动隐藏：
                     # 回复到达时若不可见则重新显示并贴回宠物上方。
                     if not self.isVisible():
@@ -1166,11 +1315,26 @@ class DialogueUI(QWidget):
                         except Exception as e:  # 修复：原先静默吞噬
                             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 else:
-                    # 模型不可用：回退规则对话
+                    # 模型不可用（或流式被判退、重采样也没救回来）→ 回退规则对话。
+                    # 流式路径下屏幕上还留着被判退的半句，必须先擦干净再接规则台词。
+                    if streamed:
+                        try:
+                            self._stream_reset()
+                        except Exception as e:  # 修复：原先静默吞噬
+                            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                     _rule_reply()
 
+            # 流式（S8）：把分片交给打字机。这个回调在**主线程**被调用
+            # （工作线程发出 → main.py 用 _api_delta 信号排到主线程再转发），
+            # 所以这里直接碰 UI 是安全的。世代号校验沿用 req_seq：
+            # 用户已经问了新问题时，旧请求的分片不该再往对话框里写字。
+            def _on_ai_delta(chunk):
+                if req_seq != getattr(self, '_ai_seq', 0):
+                    return  # 已被更新的请求作废，忽略迟到分片
+                self.stream_delta(chunk)
+
             try:
-                self.parent.chat_with_ai(user_input, _on_ai_reply)
+                self.parent.chat_with_ai(user_input, _on_ai_reply, _on_ai_delta)
                 return
             except Exception as e:
                 _log.debug(f"[本地AI] 调用失败，回退规则对话: {e}")
@@ -1244,6 +1408,8 @@ class DialogueUI(QWidget):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 显示 Ralsei 式省略号 + 思考表情（不写"正在想怎么回答你"这类暴露文字）
+        self._streaming = False      # 新一轮请求开始：清掉上一轮的流式状态
+        self._stream_raw = ""
         self.typing_text = self.AI_THINKING_PLACEHOLDER
         self.typing_index = len(self.typing_text)
         self.is_typing = False
@@ -1254,6 +1420,8 @@ class DialogueUI(QWidget):
         self._refresh_display()
 
     def _ai_thinking_off(self):
+        self._streaming = False
+        self._stream_raw = ""
         self.typing_text = ""
         self.typing_index = 0
         self.is_typing = False

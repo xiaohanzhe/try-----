@@ -87,7 +87,7 @@ HERMETIC_IDS = frozenset({
     's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
     'round8_dialogue', 'round8_floor', 'round8_fling',
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
-    'persona_chat',
+    'persona_chat', 's8_stream',
 })
 
 
@@ -253,6 +253,22 @@ SUITES = [
                 '+ 接线修对（用户消息纯原话、【此刻】挂 system 尾、recent 抽 role==assistant）'
                 '+ 输出护栏 17 例（markdown 剥除 / 自问自答截断 / 车轱辘话判退 / 超长截断）'
                 '+ 判退后换说法重采样（FakeCli 行为级）+ 关键词收紧 + Modelfile 参数',
+    },
+    {
+        # S8 流式输出：与人味改造同一轮（第十八轮 §5 的 S8），单独一个套件是因为
+        # 它守的是"另一件事"——流式通路的接口契约与打字机增量显示。
+        # 同样**不联网、不调用 Ollama**（首字延迟那类数值天生不可复现，见 _evidence/）。
+        'id': 's8_stream',
+        'script': os.path.join(ROOT, 'code-quality-audit', '人味改造-2026-09-18',
+                               'verify_s8_stream.py'),
+        'offscreen': True,
+        'desc': 'S8 流式输出：api_client 的 chat_stream（基类默认回落 chat，老 provider 不被打破；'
+                'HTTP 真流式走 iter_lines(chunk_size=1) —— 实测默认攒批 0.45s vs 0.23s）'
+                '+ SSE 解析 6 例（[DONE]/畸形行跳过/回调抛异常不中断/空流→None）'
+                '+ main 接线（_api_delta 世代号、判退前 reset、故意不清 sink）'
+                '+ 流式清洗前缀单调性穷举 + 两个已知非单调边界'
+                '+ 打字机增量显示 9 例（行为级桩：逐字喂入无回缩 / 队尾不停表 / finalize 两种收口）'
+                '+ Qt 跨线程投递（真事件队列：分片按序到达主线程槽、丢弃过期世代、reset 顺序严格）',
     },
 ]
 

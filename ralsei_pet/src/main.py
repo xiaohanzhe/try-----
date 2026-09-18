@@ -344,6 +344,11 @@ class RalseiPet(QMainWindow):
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
     _api_result = pyqtSignal(object, object)
 
+    # 跨线程流式分片信号：(generation, chunk) —— S8 流式输出用。
+    # 第一个参数是"世代号"：用户已经问了新问题时，旧请求的尾巴不该再往对话框写字。
+    # chunk 为 None 表示"作废已显示的内容"（护栏判退 → 要重采样了）。
+    _api_delta = pyqtSignal(object, object)
+
     def __init__(self):
         super().__init__()
         
@@ -365,6 +370,10 @@ class RalseiPet(QMainWindow):
         
         # 连接跨线程 API 结果信号（必须在 handle_api_response 依赖的对象初始化后）
         self._api_result.connect(self._on_api_result)
+        # 流式分片信号（S8）：工作线程 → 主线程 → 对话框打字机
+        self._api_delta.connect(self._on_api_delta)
+        self._ai_delta_sink = None    # 当前请求的流式接收方（只在主线程读写）
+        self._ai_delta_gen = 0        # 世代号：每次发起新请求 +1
         
         # 注册退出处理函数
         import atexit
@@ -7122,7 +7131,7 @@ class RalseiPet(QMainWindow):
         thread.start()
         return thread
 
-    def chat_with_ai(self, text, on_reply):
+    def chat_with_ai(self, text, on_reply, on_delta=None):
         """把用户输入交给本地 AI（后台线程，不卡 UI），完成后在主线程回调
         on_reply(reply_str 或 None)。
 
@@ -7132,6 +7141,10 @@ class RalseiPet(QMainWindow):
           配置对话框里填 base_url + model（如 http://localhost:11434 / ralsei）即可。
         - 训练调优：把「角色设定 + 当前状态上下文 + 最近对话历史」一起交给模型，
           让 Ralsei 的对话连贯、贴角色、能感知当下（时间/天气/心情/精力/记忆）。
+        - **流式（S8）**：传了 `on_delta` 且配置开启 `api.stream` 时，模型每吐一段
+          就回调一次（在主线程上），对话框可以"边收边打"，首字延迟从
+          "整句生成完"（实测 0.9~6.0s）降到 ~0.23s；`on_delta(None)` 表示
+          "把已经显示出去的半句擦掉"（护栏判退后要重采样）。
         """
         if not self.api_enabled:
             try:
@@ -7140,6 +7153,14 @@ class RalseiPet(QMainWindow):
                 _log.debug("main 防御性异常（已忽略）: %s", e)
             return
         import threading
+
+        # —— 流式接收方登记（只在主线程做，工作线程只读快照）——
+        # 世代号：同一时间只允许一个请求往对话框写字。用户在新消息里已经
+        # 递增过 dialogue_ui 的 _ai_seq，这里再发一道"分片级"的闸。
+        _stream_on = bool(callable(on_delta)) and self._ai_stream_enabled()
+        self._ai_delta_gen = getattr(self, '_ai_delta_gen', 0) + 1
+        _gen = self._ai_delta_gen
+        self._ai_delta_sink = on_delta if _stream_on else None
 
         # —— 主线程先准备好上下文与历史（避免工作线程跨线程读 UI/子系统状态）——
         # 第十八轮：用户消息保持**纯原话**。【此刻】/话题锚/记忆召回一律挂到 system 尾部。
@@ -7191,6 +7212,11 @@ class RalseiPet(QMainWindow):
         if _recall:
             system = system + "\n\n" + _recall
 
+        def _emit_delta(piece):
+            """把一个分片投递到主线程（工作线程绝不直接碰 UI）。
+            piece 为 None = 作废已显示内容（护栏判退 → 重采样）。"""
+            self._api_delta.emit(_gen, piece)
+
         def _worker():
             try:
                 cli = self.api_client
@@ -7200,7 +7226,19 @@ class RalseiPet(QMainWindow):
                 opts = self._ai_chat_options()
                 # 最近说过的台词（车轱辘话判定的唯一比对集合，见 _is_repeat_of_recent）
                 recent = [c for _r, c in history if _r == 'assistant']
-                reply = cli.chat(user_msg, system_prompt=system, history=history, **opts)
+                # 能真流式就用流式；老 provider 没实现 chat_stream 时回落阻塞 chat
+                # （基类给了一个"回落 chat + 单次回调"的默认实现，见 api_client）
+                _sfn = getattr(cli, 'chat_stream', None) if _stream_on else None
+
+                def _ask(sys_prompt, ask_opts):
+                    """发一次对话请求（流式优先），返回原始文本或 None。"""
+                    if callable(_sfn):
+                        return _sfn(user_msg, system_prompt=sys_prompt,
+                                    history=history, on_delta=_emit_delta, **ask_opts)
+                    return cli.chat(user_msg, system_prompt=sys_prompt,
+                                    history=history, **ask_opts)
+
+                reply = _ask(system, opts)
                 # 输出护栏：小模型（3B）会自问自答续写、把同一句话反复念，
                 # 清洗后才交给 UI（见 _clean_ai_reply）
                 cleaned = self._clean_ai_reply(reply, recent=recent)
@@ -7210,13 +7248,16 @@ class RalseiPet(QMainWindow):
                 # 只有"模型确实说了话却被判退"才重试；模型主动沉默（空回复）不重试。
                 if cleaned is None and isinstance(reply, str) and reply.strip():
                     try:
+                        # 流式时被判退的那半句**已经打到屏幕上了**，必须先在 UI 上擦掉，
+                        # 否则重采样出的新句子会接在旧句子后面（用户看到两句话黏一起）。
+                        # 这个 None 与随后的分片走的是同一个信号连接，Qt 队列保证先后顺序。
+                        if callable(_sfn):
+                            _emit_delta(None)
                         retry_opts = dict(opts)
                         retry_opts['temperature'] = min(
                             1.0, float(opts.get('temperature', 0.85)) + 0.1)
-                        reply2 = cli.chat(
-                            user_msg,
-                            system_prompt=system + "\n\n" + RalseiPet._RETRY_NUDGE,
-                            history=history, **retry_opts)
+                        reply2 = _ask(
+                            system + "\n\n" + RalseiPet._RETRY_NUDGE, retry_opts)
                         cleaned = self._clean_ai_reply(reply2, recent=recent)
                         _log.debug("[本地AI] 护栏判退后重采样：%r → %r",
                                    (reply or '')[:40], (cleaned or '')[:40])
@@ -7364,9 +7405,92 @@ class RalseiPet(QMainWindow):
         opts.setdefault('max_tokens', 256)
         return opts
 
+    def _ai_stream_enabled(self) -> bool:
+        """是否启用流式输出（S8）。读 config 的 `api.stream`，**缺省开启**。
+
+        收益是"首字延迟"：实测同一句 ralsei:v2 回复，非流式要等整句生成完
+        （热 0.9s / 冷 6.0s）才显示第一个字，流式 0.23s 就开始往外冒字。
+
+        代价是**护栏只能等收完再判退**：流式期间已经把内容打到屏幕上了，
+        万一判退（车轱辘话）就得把半句擦掉重来。判退本身罕见（端到端实测 9 次里 2 次），
+        留这个开关是为了万一真机上观感不对，能一键退回旧行为（改 config 即可）。
+        """
+        try:
+            cfg = getattr(self, 'api_config', None) or {}
+            if isinstance(cfg, dict) and 'stream' in cfg:
+                return bool(cfg.get('stream'))
+        except Exception as e:  # 防御性：配置异常不能拖垮对话
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return True
+
     # 模型输出里出现这些"对话标记"，说明它在自问自答续写，从这里截断
-    _AI_ROLE_MARKER = None      # 惰性编译（见 _clean_ai_reply）
+    _AI_ROLE_MARKER = None      # 惰性编译（见 _role_marker_re）
+    _MD_STRIP_RE = None         # 惰性编译（markdown 标记，见 _md_strip_re）
     AI_REPLY_MAX_CHARS = 150    # 单条回复硬上限（超长必是跑飞）
+
+    @classmethod
+    def _md_strip_re(cls):
+        """markdown 强调/列表标记的正则（**流式显示与收尾护栏共用同一份定义**）。
+
+        为什么必须共用：流式期间屏幕上显示的是"按这条规则清洗过的前缀"，
+        收尾时 `_clean_ai_reply` 还要再清洗一次定论。两处若各写一份、规则漂移，
+        就会出现"字已经打出去了，最后又被改掉"的抖动。
+        """
+        if cls._MD_STRIP_RE is None:
+            import re
+            # 数字列表要求"点号后必须跟空白"，否则会把「1.5 倍」这类误伤成「5 倍」
+            cls._MD_STRIP_RE = re.compile(
+                r'\*{1,3}|`{1,3}|^[#>\-]\s*|^\d+[.、]\s+', re.M)
+        return cls._MD_STRIP_RE
+
+    @classmethod
+    def _role_marker_re(cls):
+        """自问自答续写标记（「主人：」「你：」「Assistant:」…）的正则。"""
+        if cls._AI_ROLE_MARKER is None:
+            import re
+            cls._AI_ROLE_MARKER = re.compile(
+                r"(?:^|[\n\r])\s*(?:主人|用户|你|Ralsei|ralsei|Assistant|User|Human)"
+                r"\s*[：:]")
+        return cls._AI_ROLE_MARKER
+
+    @staticmethod
+    def _sanitize_partial_reply(text) -> str:
+        """流式显示用的**前缀安全**清洗：剥 markdown 标记 + 截断自问自答续写。
+
+        「前缀安全」是这里的硬约束：对**已经收到的前半段**做清洗得到的文本，
+        必须永远是"对完整文本做同样清洗"的**前缀**。否则流式过程中会出现
+        "字已经冒出屏幕、后来又缩回去"的抖动。
+
+        所以这里**故意不做**两件事（它们都必须先看到完整文本）：
+          - 车轱辘话判退：要和 recent 比对，且判退后得把已显示内容整段擦掉重来
+          - 超长截断：截断点取决于全文长度
+        这两件留在收尾的 `_clean_ai_reply` 里做一次定论。
+        分工就是：**流式负责"看着像人话"，护栏负责"最终算数"。**
+
+        为什么写成 staticmethod 且用 `RalseiPet.` 取规则，而不是 `cls.`：
+        与 `_clean_ai_reply` 保持一致，并且这段逻辑要能在测试桩上独立跑
+        （项目教训：护栏方法**不依赖任何 `self.`/实例属性**，否则桩上
+        取不到属性 → 宽 except 吞掉 → 表现为"流式屏幕上是未清洗的原文"）。
+
+        两个已知的**非单调**边界情况（都靠调用方"不是前缀就整段替换"兜底，
+        且都只在回复开头一两个字符的窗口内可见，最终态一定正确）：
+          1) 行首数字列表标记：收到 `1` 时代码看不出它是列表标记（还没等到点号后的
+             空白），已经显示出去了；等 `1. ` 到齐才被剥掉。
+          2) 角色标记跨分片：`主人` 先到、`：` 后到，前半段已经显示出去。
+        """
+        if not isinstance(text, str):
+            return ""
+        try:
+            t = RalseiPet._md_strip_re().sub('', text).strip()
+            # 去掉模型爱加的包裹引号/书名号（与 _clean_ai_reply 保持同步）
+            t = t.strip('"\'“”「」『』《》').strip()
+            m = RalseiPet._role_marker_re().search(t)
+            if m:
+                t = t[:m.start()].strip()
+            return t
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return text
 
     # 护栏判退后重采样时追加的系统提示（只在重试那一次出现，不污染常规对话）
     _RETRY_NUDGE = (
@@ -7402,9 +7526,8 @@ class RalseiPet(QMainWindow):
             if not t:
                 return None
             # 0) 剥掉 markdown 强调/列表标记（对话框不做 markdown 渲染）
-            #    数字列表要求"点号后必须跟空白"，否则会把「1.5 倍」这类误伤成「5 倍」
-            t = re.sub(r'\*{1,3}|`{1,3}|^[#>\-]\s*|^\d+[.、]\s+',
-                       '', t, flags=re.M).strip()
+            #    规则与流式显示**共用同一份定义**（见 _md_strip_re / _sanitize_partial_reply）
+            t = RalseiPet._md_strip_re().sub('', t).strip()
             # 去掉模型爱加的包裹引号/书名号
             t = t.strip('"\'“”「」『』《》').strip()
             if not t:
@@ -7413,11 +7536,7 @@ class RalseiPet(QMainWindow):
             if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
                 return None
             # 1) 自问自答续写 → 截到标记之前
-            if RalseiPet._AI_ROLE_MARKER is None:
-                RalseiPet._AI_ROLE_MARKER = re.compile(
-                    r"(?:^|[\n\r])\s*(?:主人|用户|你|Ralsei|ralsei|Assistant|User|Human)"
-                    r"\s*[：:]")
-            m = RalseiPet._AI_ROLE_MARKER.search(t)
+            m = RalseiPet._role_marker_re().search(t)
             if m:
                 # 标记出现在行首（m.start()==0）说明整条都是续写，截完为空 → 判无效
                 t = t[:m.start()].strip()
@@ -7497,6 +7616,27 @@ class RalseiPet(QMainWindow):
             _log.warning(f"[API结果] 处理异常: {e}")
             import traceback
             traceback.print_exc()
+
+    def _on_api_delta(self, generation, piece):
+        """主线程槽：把工作线程发来的流式分片转发给当前请求的接收方（S8）。
+
+        **世代号校验**：用户已经问了新问题时（`_ai_delta_gen` 已 +1），
+        旧请求的尾巴不该继续往对话框里写字 —— 否则会出现"新问题的回复里
+        混着旧问题的半句话"。
+
+        注意：这里**故意不清理 `_ai_delta_sink`**。收尾时清理看着更"干净"，
+        但 `_on_api_result` 拿不到世代号：一旦"旧请求的结果"和"新请求的登记"
+        在主线程队列里交错，清理会误杀掉**新**请求的接收方。
+        sink 由每个新请求覆盖写，过期分片靠世代号挡 —— 足够且无竞态。
+        """
+        try:
+            if generation != getattr(self, '_ai_delta_gen', 0):
+                return
+            sink = getattr(self, '_ai_delta_sink', None)
+            if sink is not None:
+                sink(piece)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     # 帧动画播放相关代码 - 更新动画帧
     @monitor_performance

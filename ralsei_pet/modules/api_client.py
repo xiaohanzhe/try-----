@@ -93,6 +93,27 @@ class LocalAIBase(ABC):
         """向本地 AI 发送自然语言请求，返回文字回复；失败返回 None。"""
         ...
 
+    # ---- 流式对话：**基类给具体实现**，不是抽象方法 ----
+    def chat_stream(self, prompt: str, system_prompt: Optional[str] = None,
+                    on_delta=None, **kwargs) -> Optional[str]:
+        """流式对话的默认实现：一次性拿完整回复，再作为**单个分片**回调。
+
+        为什么基类给具体实现而不是 abstractmethod：`LocalAIStub` 和用户通过
+        `register_provider()` 注册的自定义实现都不该被迫改造 —— 否则 App 一升级，
+        调用方按"一定有 chat_stream"来写，就会崩在用户那边的实现上。
+        有这个默认实现，"流式"对调用方就永远可用：不支持真流式的实现退化成
+        "憋完整句再一次性给出"（首字延迟没改善，但行为与语义都正确）。
+
+        `on_delta` 为 None 时等价于 `chat()`。
+        """
+        text = self.chat(prompt, system_prompt=system_prompt, **kwargs)
+        if text and on_delta is not None:
+            try:
+                on_delta(text)
+            except Exception as e:
+                _logger.debug("chat_stream 默认实现回调异常（已忽略）: %s", e)
+        return text
+
     @abstractmethod
     def get_commands(self, context: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """让 AI 基于当前上下文生成控制命令；无命令/未实现返回 None。"""
@@ -171,6 +192,61 @@ class HTTPLocalAI(LocalAIBase):
             headers["Authorization"] = f"Bearer {api_key}"
         return headers
 
+    def _chat_messages(self, prompt, system_prompt, kwargs):
+        """把 (prompt, system, kwargs) 归一成 (messages, temperature, max_tokens)。
+
+        `chat()` 与 `chat_stream()` 共用这一份"组装 messages + 参数钳位"的逻辑。
+        **为什么必须共用**：两处各写一份的话，改了钳位规则却只改了一边 ——
+        本项目已经因为"同一逻辑两份实现"出过好几次问题（见文件头注释第 1 条）。
+        """
+        # 修复：temperature / max_tokens 原先无范围校验，调用方传入负数或
+        # 0 会让部分 OpenAI 兼容后端直接 400 且难以排查。这里做防御性钳位。
+        def _clamp(v, lo, hi, default):
+            try:
+                v = float(v)
+            except (TypeError, ValueError):
+                return default
+            return max(lo, min(v, hi))
+        temperature = _clamp(kwargs.get("temperature", 0.7), 0.0, 2.0, 0.7)
+        max_tokens = int(_clamp(kwargs.get("max_tokens", 500), 1, 100000, 500))
+        # 修复：新增 history 参数 —— 调用方可传入最近几轮对话
+        # [(role, content), ...]（role ∈ user/assistant），让模型拥有上下文，
+        # 对话不再"每句都是第一次见面"。角色非法/内容非字符串的条目静默丢弃。
+        history = kwargs.get("history") or []
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        if isinstance(history, (list, tuple)):
+            for item in history:
+                # 修复：history 元素可能是非二元组/不可解包对象，原实现
+                # for _role, _content in history 会抛 ValueError/TypeError
+                # 使整次对话失败。畸形条目直接跳过。
+                if not isinstance(item, (list, tuple)) or len(item) != 2:
+                    continue
+                _role, _content = item
+                if _role not in ("user", "assistant"):
+                    continue
+                if not isinstance(_content, str) or not _content.strip():
+                    continue
+                messages.append({"role": _role, "content": _content})
+        messages.append({"role": "user", "content": prompt})
+        return messages, temperature, max_tokens
+
+    def _chat_payload(self, prompt, system_prompt, kwargs, stream):
+        """构造请求体。`chat` / `chat_stream` 共用，只有 stream 标志不同。"""
+        messages, temperature, max_tokens = self._chat_messages(
+            prompt, system_prompt, kwargs)
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "stream": bool(stream),
+        }
+        if self.agent_id:
+            payload["agent_id"] = self.agent_id
+        return payload
+
     def chat(self, prompt: str, system_prompt: Optional[str] = None, **kwargs) -> Optional[str]:
         """向本地 AI 发送对话请求，返回文字回复；失败返回 None。
 
@@ -181,47 +257,7 @@ class HTTPLocalAI(LocalAIBase):
         if not self.enabled:
             return None
         try:
-            import requests
-            # 修复：temperature / max_tokens 原先无范围校验，调用方传入负数或
-            # 0 会让部分 OpenAI 兼容后端直接 400 且难以排查。这里做防御性钳位。
-            def _clamp(v, lo, hi, default):
-                try:
-                    v = float(v)
-                except (TypeError, ValueError):
-                    return default
-                return max(lo, min(v, hi))
-            temperature = _clamp(kwargs.get("temperature", 0.7), 0.0, 2.0, 0.7)
-            max_tokens = int(_clamp(kwargs.get("max_tokens", 500), 1, 100000, 500))
-            # 修复：新增 history 参数 —— 调用方可传入最近几轮对话
-            # [(role, content), ...]（role ∈ user/assistant），让模型拥有上下文，
-            # 对话不再"每句都是第一次见面"。角色非法/内容非字符串的条目静默丢弃。
-            history = kwargs.get("history") or []
-            messages = []
-            if system_prompt:
-                messages.append({"role": "system", "content": system_prompt})
-            if isinstance(history, (list, tuple)):
-                for item in history:
-                    # 修复：history 元素可能是非二元组/不可解包对象，原实现
-                    # for _role, _content in history 会抛 ValueError/TypeError
-                    # 使整次对话失败。畸形条目直接跳过。
-                    if not isinstance(item, (list, tuple)) or len(item) != 2:
-                        continue
-                    _role, _content = item
-                    if _role not in ("user", "assistant"):
-                        continue
-                    if not isinstance(_content, str) or not _content.strip():
-                        continue
-                    messages.append({"role": _role, "content": _content})
-            messages.append({"role": "user", "content": prompt})
-            payload = {
-                "model": self.model,
-                "messages": messages,
-                "temperature": temperature,
-                "max_tokens": max_tokens,
-                "stream": False,
-            }
-            if self.agent_id:
-                payload["agent_id"] = self.agent_id
+            payload = self._chat_payload(prompt, system_prompt, kwargs, False)
             # 修复：原先 chat() 与 _post_json() 各写一份 POST/状态码/异常处理逻辑
             # （重复编码），统一走 _post_json，非 200 也统一记 warning 日志。
             data = self._post_json(self.chat_endpoint(), payload)
@@ -234,6 +270,97 @@ class HTTPLocalAI(LocalAIBase):
         except Exception as e:
             _logger.info("本地 AI chat 请求失败（忽略）: %s", e)
             return None
+
+    # ---------------- 流式对话（S8） ----------------
+    # 收益全在"首字延迟"：实测 ralsei:v2 非流式首字节 6.02s（首字也是 6.02s），
+    # 流式首字 0.23s、全文 1.34s。非流式时用户盯着"……"空等，正是"假人感"来源。
+    def chat_stream(self, prompt: str, system_prompt: Optional[str] = None,
+                    on_delta=None, **kwargs) -> Optional[str]:
+        """流式对话：边收边把增量交给 `on_delta`，返回**累积的完整文本**。
+
+        返回完整文本而不是 None，是因为调用方仍要拿它过一遍输出护栏
+        （剥 markdown / 截断自问自答 / 判车轱辘话）—— 护栏必须看到全文。
+
+        `on_delta` 为 None → 直接回落 `chat()`（没必要走流式解析）。
+
+        注意：**同样是阻塞调用**（会一直读到流结束），必须在工作线程里调。
+        """
+        if not self.enabled:
+            return None
+        if on_delta is None:
+            return self.chat(prompt, system_prompt=system_prompt, **kwargs)
+        try:
+            import requests
+            payload = self._chat_payload(prompt, system_prompt, kwargs, True)
+            # 故意**不重试**：流式一旦已经开始往外吐字，重试会让同一句被说两遍。
+            # 网络抖动交给上层（护栏判退后的重采样）兜底。
+            resp = requests.post(self.chat_endpoint(), json=payload,
+                                 headers=self._auth_headers(),
+                                 timeout=self.timeout, stream=True)
+            if resp.status_code != 200:
+                _logger.warning("本地 AI 流式 HTTP %s: %s",
+                                resp.status_code, resp.text[:200])
+                return None
+            return self._consume_stream(resp, on_delta)
+        except Exception as e:
+            _logger.info("本地 AI 流式请求失败（忽略）: %s", e)
+            return None
+
+    @staticmethod
+    def _delta_of(payload: str) -> str:
+        """从一条 SSE 的 data 负载中取出增量文本；取不到返回 ''。"""
+        try:
+            obj = json.loads(payload)
+        except Exception:
+            return ""
+        choices = obj.get("choices") or []
+        if not choices:
+            return ""
+        delta = choices[0].get("delta") or {}
+        piece = delta.get("content")
+        return piece if isinstance(piece, str) else ""
+
+    def _consume_stream(self, resp, on_delta) -> Optional[str]:
+        """逐行消费 SSE，边收边回调，返回累积全文；一个字都没收到则 None。
+
+        两个实测要点：
+        1) **`chunk_size=1` 是必须的**。`requests.iter_lines()` 默认按 512 字节攒批，
+           实测首字延迟 0.45s，而 `chunk_size=1` 是 0.23s —— 攒批把流式收益吃掉一半。
+           （同一探针里 `resp.raw.readline()` 也是 0.23s，说明瓶颈就在攒批。）
+        2) 单行畸形（非 `data:` / JSON 坏 / delta 结构不对）一律**跳过而不是中断**：
+           一次解析失败不该把已经收到的半句话一起丢掉。
+        """
+        parts = []
+        try:
+            for raw in resp.iter_lines(chunk_size=1):
+                if raw is None:
+                    continue
+                line = (raw.decode("utf-8", "replace")
+                        if isinstance(raw, (bytes, bytearray)) else raw)
+                s = line.strip()
+                if not s or not s.startswith("data:"):
+                    continue
+                payload = s[5:].strip()
+                if payload == "[DONE]":
+                    break
+                piece = self._delta_of(payload)
+                if not piece:
+                    continue
+                parts.append(piece)
+                try:
+                    on_delta(piece)
+                except Exception as e:
+                    # 回调抛异常（如对话框已被销毁）不能中断接收，
+                    # 否则"用户关掉了对话框"会连带把整条回复也丢掉。
+                    _logger.debug("流式回调异常（已忽略）: %s", e)
+        except Exception as e:
+            _logger.info("本地 AI 流式读取中断（保留已收到的内容）: %s", e)
+        finally:
+            try:
+                resp.close()
+            except Exception:
+                pass
+        return "".join(parts) or None
 
     # ---------------- 命令轮询 / 状态同步 / 命令执行（协议留白） ----------------
     def get_commands(self, context: Dict[str, Any]) -> Optional[Dict[str, Any]]:

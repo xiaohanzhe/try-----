@@ -184,8 +184,18 @@ ok('B3 【此刻】挂 system 尾部（不再是 user 消息前缀）',
    and 'system=system+"\\n\\n"+_ctx' in _CHAT2)
 ok('B4 抽取 recent（role==assistant 的历史回复）传给护栏',
    "recent=[cfor_r,cinhistoryif_r=='assistant']" in _CHAT2)
-ok('B5 判退后有重采样分支（第二次 cli.chat 调用）',
-   _CHAT2.count('cli.chat(') == 2, 'cli.chat 出现 %d 次' % _CHAT2.count('cli.chat('))
+# B5 在 S8（流式）那一轮被**加强**过：原来是数 `cli.chat(` 出现 2 次，
+# 但引入流式后两次请求被收进同一个助手 `_ask()`（它负责"能流式就流式"），
+# 计数法失效。改成直接断言"两次请求都存在、且都走同一个助手" ——
+# 比计数更贴近意图（重采样**也**必须带上流式回调，不能绕过）。
+ok('B5 判退后有重采样分支，且两次请求共用同一助手（保证重采样也走流式）',
+   'reply=_ask(system,opts)' in _CHAT2
+   and 'reply2=_ask(system+"\\n\\n"+RalseiPet._RETRY_NUDGE,retry_opts)' in _CHAT2
+   and 'def_ask(sys_prompt,ask_opts)' in _CHAT2,
+   'reply=%s reply2=%s helper=%s' % (
+       'reply=_ask(system,opts)' in _CHAT2,
+       'reply2=_ask(system+"\\n\\n"+RalseiPet._RETRY_NUDGE,retry_opts)' in _CHAT2,
+       'def_ask(sys_prompt,ask_opts)' in _CHAT2))
 ok('B6 重采样温度高于首次',
    "retry_opts['temperature']=min(1.0,float(opts.get('temperature',0.85))+0.1)" in _CHAT2)
 ok('B7 _build_ai_context 返回以【此刻】开头',
