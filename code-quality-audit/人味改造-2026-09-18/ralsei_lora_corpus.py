@@ -68,7 +68,7 @@ def norm(s):
 def load_chapter(src, ch):
     p = os.path.join(src, "data__chap%d_dataset.jsonl" % ch)
     if not os.path.exists(p):
-        raise SystemExit("缺少 %s —— 先跑 fetch_hf_transcript.py" % p)
+        raise SystemExit("缺少 %s —— 先跑同目录的 fetch_deltarune_transcript.py" % p)
     rows = []
     with open(p, encoding="utf-8") as f:
         for ln in f:
