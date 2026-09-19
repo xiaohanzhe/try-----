@@ -335,7 +335,7 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   headless 出图**不能靠文字** → 改用色带 + 外部图例（同名 `.txt`）。同理：**别把"看不见"当成"画对了"**。
 - **列表推导手滑多打一层（第十八轮）**：`[n for n in (... for n in n) if ...]` → `NameError: name 'n' is not defined`，
   报错点在推导式内部、traceback 只给行号，看不出是"手滑" → **先展平再筛**，别把嵌套推导写成一行。
-- **证据必须 Python 自己写（第 2 次踩，见环境铁律 10）**：本轮第一遍跑套件用 `Out-File -Encoding utf8` 收
+- **证据必须 Python 自己写（第 2 次踩，见环境铁律 10；2026-09-19 又踩第 3 次）**：本轮第一遍跑套件用 `Out-File -Encoding utf8` 收
   PowerShell 管道里的 python stdout，读回来是"涓婃ゼ"这种乱码（能猜出 PASS/FAIL 但**不能当证据**）。
   项目里早有现成套路（`第十七轮/run_round17.py` 的"runpy + StringIO + 自己写文件"）→
   **先找项目里已有的工具/套路，再动手写**，别第 N 次重造并重踩。
@@ -439,8 +439,8 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `update_animation` 内嵌块只取前两段。下一步：真机取真实未命中清单。
 
 ### 闸门状态（2026-09-17 **已重扫 + 已裁定**）
-- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-18 起 24 套件 / 1043 PASS / 全 IDENTICAL**
-  —— 新增 `persona_chat`(58)、`s8_stream`(68)、`s7_event_speech`(117)）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
+- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-19 起 24 套件 / 1050 PASS / 全 IDENTICAL**
+  —— 新增 `persona_chat`(58)、`s8_stream`(68)、`s7_event_speech`(124)）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
 - **G1 ✗ → 改为"每项 PR 内做该项专属零引用筛查"**（方案 §8 决策 2 已按"技术细节我拍板"落定，
   **不再整体清 185 项**）。新工具 `架构改造-H4H5/scan_zero_refs.py`（**AST 计名字引用点，不做字符串匹配**，
   防注释/文档串误命中）→ `_evidence/zero_refs.txt`。
@@ -612,24 +612,28 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
    「需要我帮你打开浏览器或搜索什么吗？」是 persona 明令禁止的助手腔，
    但**它是写死字符串、persona 管不到** → 直接改文案即可，不必接 AI。
 
-### S7 第二批候选分类（第七轮产出，决策清单）
-**文档 `code-quality-audit/人味改造-2026-09-18/S7_第二批候选分类_2026-09-18.md`。**
+### S7 第二批候选分类（第七轮产出 + **2026-09-19 已落地 batch 2 的前半**，提交 `b25e91d`）
+**文档 `code-quality-audit/人味改造-2026-09-18/S7_第二批候选分类_2026-09-18.md`（其顶部 §〇 是权威更正，优先于本文下面这段）。**
 **要点：这一批不能照着搬** —— batch 1 的对象满足三条（用户显式交互 / 纯情绪不含信息 /
 同一句被反复听到），剩下 112 处里大部分不满足，硬搬有两类可感知回归
-（迁功能性回执 → **丢信息或编造路径文件名**；迁环境自动触发 → **绕过节流**）。
-- **该迁（2 条）**：`energy_hunger.rest()`/`eat()` 的**正常开始**台词
-  「我要休息一下啦... 呼...」/「哇！有好吃的！我开动啦！」（用 `speak_event`，**别保留
-  原来的 `add_dialogue`+`show_dialogue`**，否则一次事件两个气泡）。
-- **⚠️ 需先拍板（11+ 条）**：环境/时间/物理触发的台词（`check_status_changes` 累饿 4 条、
-  `pet_ai.check_special_events` 定时问候 4 条、`wake_up`、`handle_fall` 恢复语、
-  `react_to_desktop_element`）语义上属**"自主说话"**，而契约规定唯一入口是
-  `start_autonomous_speech()`（`AUTONOMOUS_SPEECH_MIN_INTERVAL=600s`）；
-  走 `speak_event` **绕过 600 秒节流** → Ralsei 明显变话多。**规则定下来之前不迁。**
+（迁功能性回执 → **丢信息或编造路径文件名**）。
+- ✅ **已迁（2 条，2026-09-19）**：`energy_hunger.rest()`/`eat()` 的**正常开始**台词
+  「我要休息一下啦... 呼...」/「哇！有好吃的！我开动啦！」→ `speak_event("rest_start"/"eat_start", ...)`，
+  **删掉原来的 `add_dialogue`+`show_dialogue`**（否则一次事件两个气泡）。
+  两个 kind 已登记 `EVENT_TIERS`(TIER_AI) + `EVENT_DIRECTIVES`。
+- ⚠️ **【2026-09-19 推翻本条】原文写"迁环境自动触发 → 绕过 600 秒节流 → Ralsei 明显变话多"——不成立**：
+  ① `energy_hunger.check_status_changes` 本来就只在**档位跨越**时弹一次
+  （`if energy_tier != self._prev_energy_tier:`，注释"避免每个 tick 重复刷屏"）→
+  说话**次数**只由触发源决定，跟"走不走 AI"无关；
+  ② 原文说"`speak_event` 没有时间节流"也**错**：`main.py:5200` 有 `EVENT_SPEAK_MIN_INTERVAL = 2.0`，
+  就是 `_event_ai_ready()` 尾部那道频率闸（锁 B10/D18）。
+  → 剩下那 11 条**不阻塞、也不会让 Ralsei 变话多**，只剩"固定台词 vs AI 现编"的小偏好。**可以随时做，也可以一直不做。**
 - **不迁**：功能性回执（PPT/文件/游戏规则与比分/状态确认）；**`rest()` 精力已满、
-  `eat()` 已吃饱这两句是"拒绝的原因说明"**（迁了会丢"为什么没反应"的唯一提示）；
-  短促物理反应沿用 batch 1 口径。
-- `_event_ai_ready()` 有一整套"让路"条件（主人打字 / `_ai_inflight` / `_streaming` /
-  前台占位 / `_event_speaking`），**但没有时间维度的节流** —— 它只防"叠加"，不防"太频繁"。
+  `eat()` 已吃饱这两句是"拒绝的原因说明"**（迁了会丢"为什么没反应"的唯一提示）；短促物理反应沿用 batch 1 口径。
+- **`main.py:4000~4010` 的 `help_messages`**（"需要我帮你控制这个PPT吗？"等）**是功能发现性提示**（真的在告诉用户
+  能干什么），与 §五 那种**零信息的助手填充句**不同 → 不在迁移范围，别顺手扫过去。
+- `_event_ai_ready()` 的"让路"条件：主人打字 / `_ai_inflight` / `_streaming` / 前台占位 / `_event_speaking`
+  **＋ 时间闸 `EVENT_SPEAK_MIN_INTERVAL`**。
 
 ### 对话 AI 人味改造（第十八轮并行线，2026-09-18，提交 `ee39227`，**勿回退**）
 报告 `Ralsei对话人味诊断与训练方案_2026-09-18.md`（第 9 节为施工记录）；
@@ -705,7 +709,7 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
 
 ### S7 事件台词分批接 AI（第十八轮并行线三，2026-09-18，**勿回退**）
 报告第十一节；证据 `code-quality-audit/人味改造-2026-09-18/_evidence/s7_*`；
-**回归锁 `s7_event_speech`（117 项，已进 G2）**。**不打网络、不调 Ollama。**
+**回归锁 `s7_event_speech`（124 项，已进 G2）**。**不打网络、不调 Ollama。**
 
 - 档位表 `modules/event_speech.py` 是**白名单**：`EVENT_TIERS` 里登记了才走 AI，
   没登记的事件**行为完全不变**（仍 `add_dialogue` 罐头）。铁律：**漏迁移的后果必须是
@@ -753,5 +757,27 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
 - 连带：`round5_smoke` 模块数 28→29（新增 `event_speech.py`，导入成功，**预期内**）→
   顺手把 `run_all.py` 里写死"28 个 modules"的描述改成计数无关
   （同 `s1_anim_miss` 教训：**描述里别写会随代码增长的数字**）。
-- **第二批顺延**：`main.py` 还剩 113 处 `add_dialogue`，只挑"值得现想一句"的迁；
-  短促反应**不再扩大范围**。
+- **第二批（2026-09-19 `b25e91d`）**：已迁 `energy_hunger.py` 的 `rest_start` / `eat_start`
+  （`main.py` 现仍是 112 处 `add_dialogue`；`main.py` 侧 20 处 `speak_event` 调用未变 —— batch 2 迁的是**别的模块**，
+  所以套件 C1 的 main.py 计数不变，另加 C10~C12 锁 energy_hunger）；短促反应**不再扩大范围**。
+  **别只数 `main.py` 就以为迁移范围只有 main.py。**
+
+### S7 batch 2 落地记录（2026-09-19，`b25e91d`）
+文档 `人味改造-2026-09-18/S7_第二批候选分类_2026-09-18.md` §〇（口径更正）+ §七（落地清单）；
+证据 `_evidence/s7_event_speech_after_batch2.txt` + `_evidence/g2_full_compare_batch2.txt`。
+- **改了 3 个产品文件**：`modules/event_speech.py`（登记 2 个 kind + 旁白）、
+  `modules/energy_hunger.py`（`rest()`/`eat()` 走 `speak_event`；**"拒绝原因说明"两句保持罐头**）、
+  `src/main.py:3981`（写死的助手腔 → 「咦，是浏览器呀……我平时不太敢乱碰里面的东西呢。」，face `helpful`→`surprised`）。
+- **断言**：`s7_event_speech` 117 → **124**（C10/C11/C12 源码级 + D24/D24b/D24c/D25 行为级）；
+  全量 G2 **1050 PASS / 0 FAIL / 24 套件 / 全 IDENTICAL**；`baseline.json` 已重建。
+- **教训（本轮的，别再犯）**：
+  ① **别把"某条链路没有节流"当结论写进决策文档** —— 落笔前先 grep 常量与调用点。
+     本轮两处 overstatement（"绕 600s 会变话多"、"speak_event 没有时间节流"）都是没看
+     `speak_event` 尾部那道 `EVENT_SPEAK_MIN_INTERVAL` 闸。
+  ② **断言不要写成"这个函数里没有 `add_dialogue`"**：同一函数里可能有**合法的**另一处直接显示
+     （本轮 `rest()` 的"拒绝原因"分支）→ 判假红。要锁的是**具体那一处**
+     （`add_dialogue("ralsei","我要休息一下啦` 不存在 **＋** 计数 2→1 双条件）。
+  ③ **PowerShell 捕获 Python 的 UTF-8 stdout 又毁了一次证据**（第 3 次踩，见环境铁律 10）：
+     先用 `Out-File -Encoding utf8` 收 `run_all.py` 输出 → 乱码。正解：**直接 `Copy-Item`
+     `regress/_out/<suite>.txt`**（那是 Python 自己写的真 UTF-8），或先设
+     `[Console]::OutputEncoding = [Text.Encoding]::UTF8` 再 Out-File。
