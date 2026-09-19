@@ -1,0 +1,45 @@
+第二十一轮：世界观拆成网图 + 内容加厚 + 端到端探针
+
+用户三项要求全部落地：
+  A 世界观可以详细点   → ralsei_worldview.md 块体 1.7K → 2.7K 字符
+  B 你直接做探针       → verify_persona_worldview.py 升级为端到端（真拼 system）
+  C 拆分成网图         → @@> 边声明 + worldview_recall 沿边扩图
+
+C. 图结构（本次地基）
+- ralsei_worldview.md 加 @@> 有向边声明（11 块 / 26 条边，全部双向）
+- worldview_recall._parse 解析 @@>；新增 load_graph() 返回 (blocks, adj, dangling)
+- recall() 加沿边扩图：种子命中后补邻块，只扩一层、不越 MAX_BLOCKS
+- 关键取舍：邻块不要求自己被 cue 命中（加了同门槛 = 扩图永不开火；
+  正确判据是"邻块与种子相关（有边）"，前提"种子命中"本身就是闸门）
+
+A. 内容加厚
+- 每块都补了"他的态度/心里话"而非设定条目
+- 单块都没触 MAX_BLOCK_CHARS=700 截断线
+
+B. 端到端探针
+- 旧版只发 persona，测的不是产品链路；新版每题先真跑 recall_text 再拼 system
+- 加 --no-recall 对照组
+- 开召回 12 PASS；关召回 10 PASS / 2 FAIL（Q5 托丽尔、Q10 Asgore 被召回修复）
+- 对照组暴露更严重问题：Q4 无召回时人设答反了（Kris"爱笑藏星星碎片"、
+  Susie"安静的画家"）—— 没召回时模型不是"不知道"而是"自信地编错"
+
+踩坑（已写进代码注释）
+- K13 原判据恒真（A->B 用 A in rev[B] 检反向，对任何图都成立），
+  且掩盖了图里真实存在的 4 条单向边 → 用正确判据补齐反向边
+- K14 原本也是死断言（_parse 主动滤自环 → 断结果永远为真）→ 改成喂自环样本
+- 鉴别力体检必须改文件、不能改内存对象（adj/dangling 是解析期算的）
+
+验证
+- G2 全量 1145 PASS / 0 FAIL / 24 套件（1135 → 1145，新增 K11-K20）
+- persona_chat 139 PASS / 0 FAIL（129 → 139）
+- G2 diff 纯增量，无既有条目改动
+- 鉴别力矩阵 5 条新锁各有专属破坏场景
+
+文件
+- ralsei_pet/assets/ralsei_worldview.md
+- ralsei_pet/modules/worldview_recall.py
+- code-quality-audit/人味改造-2026-09-18/verify_persona_chat.py
+- code-quality-audit/人味改造-2026-09-18/verify_persona_worldview.py
+- code-quality-audit/人味改造-2026-09-18/probe_precheck.py
+- code-quality-audit/regress/baseline.json
+- 第二十一轮报告_世界观网图_2026-09-20.md
