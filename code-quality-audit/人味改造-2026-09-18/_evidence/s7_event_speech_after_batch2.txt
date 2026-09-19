@@ -1,0 +1,138 @@
+
+=== A. modules/event_speech.py 纯逻辑 ===
+[PASS] A1 未登记事件回落"罐头档"（登记表是白名单 —— 没迁移 = 行为不变）
+[PASS] A2 已登记的社交事件是 AI 档
+[PASS] A3 短促/状态机事件显式钉在罐头档（甩飞 / 摔扁被戳 / 连点耳朵）
+[PASS] A4 第一批 23 个事件全部登记（漏登记 = 静默退回罐头，白改）
+[PASS] A5 每个登记事件都有提示词文案（否则 build_prompt 退化成通用旁白）
+[PASS] A6 build_prompt 含事件旁白 + 长度约束
+[PASS] A7 build_prompt **不含示例台词**（3B 会把示例当模板照抄 —— 第十八轮的主因）
+[PASS] A8 build_prompt 对未知事件也给出可用旁白（不返回空）
+[PASS] A9 first_sentence 取第一句 / 首句过短则整句保留 / 剥包裹引号 / 只有标点判空
+[PASS] A10 first_sentence 压到上限以内（超长硬截断）
+[PASS] A11 first_sentence 与 start_autonomous_speech 同口径：优先句号（一个完整的想法）
+[PASS] A12 去重器：有没说过的话时绝不挑刚说过的
+[PASS] A13 去重器：全说过时挑最久没说过的（不是随机）
+[PASS] A14 去重器：空池 / 非字符串池返回空串
+[PASS] A15 去重窗口只保留最近 N 条
+[PASS] A16 模块自检通过（自带 oracle）
+[PASS] A17 模块不 import Qt / 项目内模块（否则会卷进 logger_utils→data_store 初始化环）
+[PASS] A18 出戏闸命中"AI 自我指涉 / 否认感官"（实测真出现过「我没有触觉」）
+[PASS] A19 guard_reaction 命中的整句作废（返回空串 → 调用方回落罐头），好句原样放行
+
+=== B. main.py 接线 ===
+[PASS] B1 五个新方法都挂在 RalseiPet 上
+[PASS] B2 main.py 导入了 event_speech 的档位/构造/截断函数（不是自己再抄一份）
+[PASS] B3 __init__ 里初始化了去重器/世代号/上次时刻（全文件 needle：不同类的 `__init__` 只有 7 行，用 func_src 会取错）
+[PASS] B4 _event_say 是"add_dialogue + show_dialogue"成对（顺序正确）
+[PASS] B5 _event_say 是唯一显示出口：main.py 里所有 speak_event 调用都不再直接 add_dialogue
+[PASS] B6 主人正在打字 → 不走 AI（不抢话）
+[PASS] B7 对话正在流式 → 不走 AI（否则会顶掉主人的流式接收端，回复半路停住）
+[PASS] B8 主人那条请求还在路上 → 不走 AI（用 dialogue_ui 自己的 _ai_inflight）
+[PASS] B8b **不许**用 `_ai_delta_sink` 当门（S8 设计上收尾不清空它 → 用它做门 = 开过一次流式之后事件永远走罐头，D22 钉这条）
+[PASS] B9 等着主人的回复（前台是占位）→ 不走 AI
+[PASS] B10 频率闸用 EVENT_SPEAK_MIN_INTERVAL（连戳不连发请求）
+[PASS] B11 instant=True 直接短路成罐头（不看配置、不碰 AI）
+[PASS] B12 档位判定走 tier_of（未知事件回落罐头）
+[PASS] B13 罐头档立刻说罐头并返回（不发起 AI 请求）
+[PASS] B14 世代号：事件请求 +1 且迟到回调按世代丢弃
+[PASS] B15 一次事件只给一个气泡（state[said] 守卫）
+[PASS] B16 首字兜底：QTimer 到 EVENT_SPEAK_FIRST_TOKEN_MS 且只在"没出字"时说罐头
+[PASS] B16b 兜底时限只覆盖**首字**，且落在实测区间内（整句 1.13~1.65s；首字 0.79~0.90s）
+[PASS] B17 AI 回复先过 first_sentence 再显示（长度/句数口径只有一份）
+[PASS] B17b 再出戏闸（3B 实测会吐「我没有触觉无法感受…」这种自毁角色的句子）
+[PASS] B18 事件请求是**流式**（传 on_delta），否则主人要干等 1.4s 才见到反应
+[PASS] B18b 分片走 dialogue_ui.stream_delta，且按世代号丢弃旧事件的分片
+[PASS] B18c 护栏判退（chunk is None）→ 擦掉半句，不把罐头接在半句后面
+[PASS] B18d 流式打过的句子走"定格"（_streamed=True），不从头重打一遍
+[PASS] B18e 事件先行"开口"（show_dialogue），避免把字打进看不见的框
+[PASS] B18e2 等待首字期间显示「……」（_ai_thinking_on），框子不空着
+[PASS] B18e3 dialogue_ui.add_dialogue 必须继续丢弃思考占位（否则「……」会被并入历史） —— 这是 B18e2 的**前置依赖**，跨模块锁
+[PASS] B18f 上一个事件还在等 AI 时不叠加第二个请求（_event_speaking）
+[PASS] B18g 迟到分片必须被"已经说过话"挡住（否则会把 UI 钉在流式态 → 永久挡死后续事件）
+[PASS] B19 罐头也进去重窗口（否则最常走的"AI 不可用"路径永远学不到自己说过什么）
+[PASS] B20 显示长度上限与模块共用同一份（不写第二份 24）
+[PASS] B21 事件提示词走 build_prompt（不在 main 里手拼文案）
+[PASS] B22 事件请求必须带 lean=True（不带 = 生产里事件 AI 全灭，静默）
+[PASS] B22b chat_with_ai 的 lean 分支必须跳过"每轮都在变"的三处：此刻 / 话题锚 / 记忆召回
+[PASS] B22c lean 分支还必须跳过对话历史（history 每轮都变，同样打掉前缀缓存）
+[PASS] B22d recall_text 在 lean 下**不被调用**（它会跑记忆图检索，比其它几项都贵）
+[PASS] B22e lean 是**默认 False**（对话路径不传就保持原行为：带话题锚与记忆召回）
+[PASS] B22f 对话路径（dialogue_ui → parent.chat_with_ai）确实**不传** lean
+
+=== C. 迁移完整性 ===
+[PASS] C1 迁移点计数 = 20（字面量 19 + pet_kind 动态 1）
+[PASS] C2 每个迁移点的事件名都在 EVENT_TIERS 里登记（防手抄错名字 → 静默退回罐头）
+[PASS] C3 抚摸用 pet_kind(部位) 动态取事件名（6 个部位 + 兜底都在表里）
+[PASS] C4 mouseReleaseEvent 里不再有裸事件台词（长按 6 处 + 甩飞 1 处全迁走）
+[PASS] C5 甩飞那句仍然是 instant 罐头（要求 0 延迟）
+[PASS] C6 mouseDoubleClickEvent 里不再有裸事件台词
+[PASS] C7 mousePressEvent 只剩非-Ralsei 台词（三个交互点已迁；无残留裸台词）
+[PASS] C8 物理状态机未动：坠落/摔扁仍是罐头（有意保留，不是漏迁）
+[PASS] C9 菜单抚摸/喂食已迁走
+[PASS] C10 batch 2 迁移完整性：rest()/eat() 的"开始"台词已走事件唯一出口（不再有裸 add_dialogue；函数里只剩"拒绝原因"那一处直接显示，2 处降到 1 处）
+[PASS] C11 batch 2 的事件名已登记为 AI 档（只在一侧写 = 静默退回罐头）
+[PASS] C12 **拒绝原因说明仍保持罐头**（"为什么没反应"的唯一提示，交模型会丢信息）
+
+=== D. 行为级（真 QApplication + 桩宿主） ===
+[PASS] D1 AI 档：请求已发出、框子先开、且**没有**立刻说罐头
+[PASS] D1b 事件请求带上了 on_delta（流式）
+[PASS] D1d 事件请求带上了 lean=True（否则 system 每轮都变 → 前缀缓存失效 → 必超时限）
+[PASS] D1c 等待首字期间框子是「……」态（不是空白），且占位没被当成一条消息
+[PASS] D2 AI 回复到达后说 AI 那句（罐头让位）
+[PASS] D2b 分片确实进了 dialogue_ui.stream_delta
+[PASS] D2c 流式打过的句子走"定格"（streamed=True），不从头重打一遍
+[PASS] D3 AI 档仍然把提示词交给 build_prompt（含事件旁白）
+[PASS] D4 AI 未响应时：当场不说话（还在等首字）
+[PASS] D5 首字超时 → 说罐头（主人不会"戳了没反应"）
+[PASS] D5b 首字已到 → 兜底定时器**不**再插一句罐头（一次事件一个气泡）
+[PASS] D5c AI 沉默/被判退（None）→ 立刻用罐头顶上，不干等兜底
+[PASS] D5c2 擦除分片（None）被透传到 stream_delta
+[PASS] D5d 出戏句（"我没有触觉"）被作废，回落罐头（宁可重复也不能自毁角色）
+[PASS] D6 兜底说过之后，AI 的迟到回复**不再补第二个气泡**
+[PASS] D6b 兜底之后迟到的分片被丢弃（不画进框、不让 UI 进流式态）
+[PASS] D6c 兜底 + 迟到分片之后，下一个事件**仍然**走 AI（不许永久挡死）
+[PASS] D7 事件 1 首字超时 → 兜底罐头 + 门禁复位（否则后续事件全被挡）
+[PASS] D8 旧事件的迟到回复/分片按世代丢弃（不往对话框里塞过期内容）
+[PASS] D8b 最新事件的回复正常显示
+[PASS] D9 AI 长回复压成第一句且不超上限
+[PASS] D11 api.enabled=False → 立刻罐头且**不发请求**
+[PASS] D12 api.event_speech=False → 立刻罐头（一键退回改造前行为）
+[PASS] D13 instant=True → 立刻罐头（短促反应不交给模型）
+[PASS] D14 未登记事件 → 立刻罐头（白名单语义）
+[PASS] D15 主人正在输入 → 立刻罐头（不抢话）
+[PASS] D16 对话正在流式 → 立刻罐头（别插进主人那条正在打的字里）
+[PASS] D17 主人的对话请求还在等回复（_ai_inflight）→ 立刻罐头
+[PASS] D17b 上一个事件还在等 AI → 不叠加第二个请求（_event_speaking）
+[PASS] D18 频率闸：2 秒内的第二次事件不发请求（连戳不产生请求风暴）
+[PASS] D19 罐头连续 3 次不说重样（改造前 random.choice 三选一很容易撞）
+[PASS] D20 去重窗口记下了刚说过的罐头
+[PASS] D21 事件 1 走完（sink 仍非空，模拟 S8 收尾不清空）
+[PASS] D22 事件 2 **仍然**走 AI（不许被残留的 _ai_delta_sink 永久挡住）
+[PASS] D22b 事件 2 结束后 _event_speaking 复位（不留下永久门禁）
+[PASS] D23 去重窗口同时收下 AI 台词与罐头（跨模式去重）
+[PASS] D23b 只能选一句时，罐头不会被 AI 刚说的那句挡住（池小也不至于"没反应"）
+[PASS] D24 rest_start 在 AI 可用时走 AI（发请求、先开框、不发罐头）
+[PASS] D24b rest_start 的请求文案是「主人让你去休息」的旁白（不是罐头原句）
+[PASS] D24c rest_start 的 AI 回复到达后显示出来
+[PASS] D25 AI 关闭 → eat_start 立刻说罐头原句，且**不发请求**（守既有契约：AI 关闭不得改口、不得静默）
+
+=== E. 配置 ===
+[PASS] E1 config_manager 默认值含 api.event_speech=True
+[PASS] E2 仓库 config.json 含 event_speech=true
+[PASS] E3 _event_speech_enabled 缺省开启（老配置没这个键也走 AI）
+[PASS] E4 显式 false 生效
+[PASS] E5 api.enabled=False 时 S7 一定关（不会绕过总开关）
+
+=== F. lean 请求的真实形态（真 chat_with_ai + 假 api_client，离线） ===
+[PASS] F1 lean 请求真的发出去了（抓到了 system / history）
+[PASS] F2 lean 的 system **不含**【此刻】/话题锚/记忆召回（一个会变的都没有）
+[PASS] F2b 对照组（不传 lean）三样都在 —— 证明 F2 不是"因为压根没拼"
+[PASS] F3 lean 的 system 确实是 persona（不是空串兜底），且比完整版短
+[PASS] F4 lean 不发对话历史（history == []）
+[PASS] F4b 对照组照旧带历史
+[PASS] F4c lean 下**根本不去读**历史（get_ai_history 零调用）
+[PASS] F5 lean 下**根本不调** recall_text（记忆图检索比其它几项都贵）
+[PASS] F6 lean 仍然是**流式**（on_delta 有效），否则首字收益白拿
+
+PASS=124 FAIL=0

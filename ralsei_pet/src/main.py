@@ -3977,8 +3977,12 @@ class RalseiPet(QMainWindow):
         # 检查是否是浏览器相关文件
         file_name = os.path.basename(elem_path).lower()
         if 'browser' in file_name or 'chrome' in file_name or 'firefox' in file_name or 'edge' in file_name:
-            # 显示浏览器相关帮助
-            self.dialogue_ui.add_dialogue("ralsei", "需要我帮你打开浏览器或搜索什么吗？", "helpful")
+            # 纯文案修复（零成本）：原句「需要我帮你打开浏览器或搜索什么吗？」是
+            # persona 第 40~41 行**明令禁说**的助手腔，但它写死在代码里、persona 管不到，
+            # 所以会一直说下去（S7 第二批分类文档 §五 的顺带发现）。
+            # 改成"看到浏览器"的纯观察 —— 是 Ralsei 的口吻，也**不再**是工具人说辞。
+            self.dialogue_ui.add_dialogue(
+                "ralsei", "咦，是浏览器呀……我平时不太敢乱碰里面的东西呢。", "surprised")
             self.dialogue_ui.show_dialogue()
         # 如果是工作相关文件，可以提供帮助
         else:

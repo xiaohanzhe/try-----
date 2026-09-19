@@ -19,7 +19,8 @@
 ----
   A `modules/event_speech.py` 纯逻辑（档位 / 提示词 / 首句截断 / 罐头去重）
   B `main.py` 接线（唯一出口 / 让路 / 世代号 / 兜底 / 只发一个气泡）
-  C 迁移完整性（20 处已迁、物理状态机未动、kind 全部登记）
+  C 迁移完整性（batch 1 `main.py` 20 处 + batch 2 `energy_hunger.py` 2 处、
+     物理状态机未动、kind 全部登记）
   D 行为级（真 `QApplication` + 桩宿主，含"AI 卡住"与"迟到回复"两条时序）
   E 配置（一键开关）
 
@@ -356,6 +357,29 @@ ok('C8 物理状态机未动：坠落/摔扁仍是罐头（有意保留，不是
 ok('C9 菜单抚摸/喂食已迁走', 'add_dialogue(' not in code_only_src(func_src(MAIN_TEXT, 'pet_ralsei'))
    and 'add_dialogue(' not in code_only_src(func_src(MAIN_TEXT, 'feed_ralsei')))
 
+# —— C10~C12：S7 batch 2（迁移点在 modules/energy_hunger.py，**不在** main.py，
+#    所以 C1 的 main.py 计数不变仍为 20；这里单独锁这一批） ——
+ENERGY_TEXT = io.open(os.path.join(MODS, 'energy_hunger.py'), encoding='utf-8').read()
+_rest_c = code_no_comment(func_src(ENERGY_TEXT, 'rest'))
+_eat_c = code_no_comment(func_src(ENERGY_TEXT, 'eat'))
+ok('C10 batch 2 迁移完整性：rest()/eat() 的"开始"台词已走事件唯一出口'
+   '（不再有裸 add_dialogue；函数里只剩"拒绝原因"那一处直接显示，2 处降到 1 处）',
+   ('add_dialogue("ralsei","我要休息一下啦' not in _rest_c)
+   and ('add_dialogue("ralsei","哇！有好吃的！我开动啦！' not in _eat_c)
+   and ('speak_event("rest_start"' in _rest_c)
+   and ('speak_event("eat_start"' in _eat_c)
+   and (_rest_c.count('add_dialogue(') == 1)
+   and (_eat_c.count('add_dialogue(') == 1),
+   ('rest.add_dialogue=%d' % _rest_c.count('add_dialogue('),
+    'eat.add_dialogue=%d' % _eat_c.count('add_dialogue('),
+    'rest_start' in _rest_c, 'eat_start' in _eat_c))
+ok('C11 batch 2 的事件名已登记为 AI 档（只在一侧写 = 静默退回罐头）',
+   E.tier_of('rest_start') == E.TIER_AI and E.tier_of('eat_start') == E.TIER_AI
+   and 'rest_start' in E.EVENT_DIRECTIVES and 'eat_start' in E.EVENT_DIRECTIVES)
+ok('C12 **拒绝原因说明仍保持罐头**（"为什么没反应"的唯一提示，交模型会丢信息）',
+   '我现在精神得很，一点都不累哦！' in _rest_c
+   and '我已经吃得饱饱的啦' in _eat_c)
+
 # ================================================================ D
 section('D. 行为级（真 QApplication + 桩宿主）')
 
@@ -684,6 +708,29 @@ ok('D23 去重窗口同时收下 AI 台词与罐头（跨模式去重）',
    h._event_line_picker._recent)
 ok('D23b 只能选一句时，罐头不会被 AI 刚说的那句挡住（池小也不至于"没反应"）',
    last_msg(h) == '罐头甲', h.dialogue_ui.said)
+
+# D24/D25 batch 2：energy_hunger 的 rest_start / eat_start 走的是同一条出口，
+# 但它们是**别的模块**调进来的（`self.parent.speak_event(...)`），单独证明一次。
+_REST_POOL = ['我要休息一下啦... 呼...']
+h = make_host(auto=True, reply_value='嗯……那我就眯一小会儿啦。')
+h.speak_event('rest_start', _REST_POOL, 'normal')
+ok('D24 rest_start 在 AI 可用时走 AI（发请求、先开框、不发罐头）',
+   len(h.chat_calls) == 1 and h.dialogue_ui.shown == 1 and not h.dialogue_ui.said,
+   (h.chat_calls, h.dialogue_ui.shown, h.dialogue_ui.said))
+ok('D24b rest_start 的请求文案是「主人让你去休息」的旁白（不是罐头原句）',
+   ('休息' in h.chat_calls[0]['text']) and (_REST_POOL[0] not in h.chat_calls[0]['text']),
+   h.chat_calls[0]['text'])
+pump(200)
+ok('D24c rest_start 的 AI 回复到达后显示出来', last_msg(h) == '嗯……那我就眯一小会儿啦。',
+   h.dialogue_ui.said)
+
+h = make_host(api_enabled=False)
+_out = h.speak_event('eat_start', ['哇！有好吃的！我开动啦！'], 'happy')
+ok('D25 AI 关闭 → eat_start 立刻说罐头原句，且**不发请求**'
+   '（守既有契约：AI 关闭不得改口、不得静默）',
+   _out == '哇！有好吃的！我开动啦！' and len(h.chat_calls) == 0
+   and last_msg(h) == '哇！有好吃的！我开动啦！',
+   (h.chat_calls, h.dialogue_ui.said))
 
 # E
 section('E. 配置')

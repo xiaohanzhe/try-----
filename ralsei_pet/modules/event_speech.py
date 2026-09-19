@@ -69,6 +69,11 @@ EVENT_TIERS = {
     "pet_other": TIER_AI,
     "feed": TIER_AI,
     "pet_menu": TIER_AI,
+    # —— 第二批（S7 batch 2）：菜单按钮触发的"开始休息 / 开始进食" ——
+    # 与 batch 1 同性质：用户**显式点了按钮**（不是环境自动触发）、台词是纯情绪、
+    # 每次点都同一句。它们**不在** main.py 里，而在 modules/energy_hunger.py。
+    "rest_start": TIER_AI,      # 用户点"休息"按钮 → energy_hunger.rest()
+    "eat_start": TIER_AI,       # 用户点"喂食"按钮 → energy_hunger.eat()
     # —— 有意保持罐头（TIER_INSTANT）：物理状态机 / 极短拟声 / 连点机关 ——
     "fling": TIER_INSTANT,      # 被甩飞时的「哇啊——！」
     "splat_poked": TIER_INSTANT,  # 摔扁形态下被戳
@@ -101,6 +106,9 @@ EVENT_DIRECTIVES = {
     "pet_other": "（主人轻轻抚摸你。）",
     "feed": "（主人刚喂你吃了东西。）",
     "pet_menu": "（主人从菜单里摸了摸你。）",
+    # —— 第二批：菜单按钮触发的开始休息 / 开始进食 ——
+    "rest_start": "（主人让你去休息，你乖乖躺下了。）",
+    "eat_start": "（主人喂了你东西，你开心地吃了起来。）",
     "fling": "（主人把你甩了出去。）",
     "splat_poked": "（你已经摔扁了，主人又戳了你一下。）",
     "ear_ruffle": "（主人连着弹了三次你的耳朵。）",

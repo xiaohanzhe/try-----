@@ -157,8 +157,16 @@ class EnergyHungerSystem:
             return False
         if not self.is_resting:
             self.is_resting = True
-            self.parent.dialogue_ui.add_dialogue("ralsei", "我要休息一下啦... 呼...", "normal")
-            self.parent.dialogue_ui.show_dialogue()
+            # S7 batch 2：用户**显式点了"休息"按钮**、台词是纯情绪（"呼..."）、
+            # 每次点都同一句 —— 与 batch 1 的鼠标体感交互同性质，因此走事件唯一出口
+            # `speak_event`（AI 可用时现编一句，关闭/超时回落同一句罐头）。
+            # 注意：`speak_event` 内部已把 `add_dialogue` + `show_dialogue` 成对做完，
+            # 这里**不能**再保留原来那两行，否则一次事件弹两个气泡（回归锁 C10 钉这条）。
+            try:
+                self.parent.speak_event("rest_start",
+                                        pool=["我要休息一下啦... 呼..."], face="normal")
+            except Exception as e:
+                _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
             # 修复：不直接改 current_animation（绕过 change_animation 会破坏动画状态机），
             # 休息时停止移动，由主状态机自然切到 idle。
             try:
@@ -176,8 +184,12 @@ class EnergyHungerSystem:
             return False
         if not self.is_eating:
             self.is_eating = True
-            self.parent.dialogue_ui.add_dialogue("ralsei", "哇！有好吃的！我开动啦！", "happy")
-            self.parent.dialogue_ui.show_dialogue()
+            # S7 batch 2：同 rest()—— 用户点了"喂食"按钮 → 走事件唯一出口。
+            try:
+                self.parent.speak_event("eat_start",
+                                        pool=["哇！有好吃的！我开动啦！"], face="happy")
+            except Exception as e:
+                _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
             # 修复：同上，不直接改 current_animation。
             try:
                 self.parent.is_moving = False
