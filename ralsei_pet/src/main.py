@@ -7431,6 +7431,15 @@ class RalseiPet(QMainWindow):
           代价：事件回复不再知道"现在几点/刚才在聊什么"—— 事件是 ≤24 字的触觉反应，
           不需要这些；**对话路径（send_message）不传 lean，行为不变**。
         """
+        # 载体层状态：记下"主人刚开口"的时刻。主线程写、主线程读（本方法在主线程调用），
+        # 供 _build_ai_context 派生"被冷落多久"这类语气 —— 模型自己看不到时钟，
+        # 也看不到"主人已经很久没理我"这种**跨轮**事实，这类状态只有 App（载体）持有。
+        # 刻意放在 api_enabled 判断**之前**：AI 关着的时候也要记，否则一关开关就"失忆"，
+        # 再打开会立刻说"主人很久没跟我说话了"（把开关当成冷落）。
+        try:
+            self._last_user_chat_ts = time.time()
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         if not self.api_enabled:
             try:
                 on_reply(None)
@@ -7602,12 +7611,45 @@ class RalseiPet(QMainWindow):
         except Exception:
             pass
         try:
+            # 分档而不是只报"低"：状态越具体，语气才有得变 ——
+            # "有点疲惫"和"累得快撑不住"该是两个不同的反应。
             _energy = self.energy_hunger.get_energy()
             _hunger = self.energy_hunger.get_hunger()
-            if _energy < 30:
-                parts.append("有点疲惫")
-            if _hunger < 30:
-                parts.append("肚子有点饿")
+            if _energy < 20:
+                parts.append("你累得快撑不住了")
+            elif _energy < 45:
+                parts.append("你有点疲惫")
+            elif _energy > 85:
+                parts.append("你精神很好")
+            if _hunger < 20:
+                parts.append("你肚子饿得厉害")
+            elif _hunger < 45:
+                parts.append("你肚子有点饿")
+        except Exception:
+            pass
+        # 载体状态：此刻在哪儿、正在干什么。与驱动动画的是**同一份状态** ——
+        # "站窗口上/在走动/正在掉下去"本来就该影响他怎么说话。
+        try:
+            if getattr(self, 'is_falling', False):
+                parts.append("你正从高处往下掉")
+            elif getattr(self, 'is_moving', False):
+                parts.append("你正在走动")
+            elif getattr(self, 'current_window', None) or getattr(self, 'window_level', 0):
+                parts.append("你站在一个打开的窗口上")
+            else:
+                parts.append("你站在桌面上")
+        except Exception:
+            pass
+        # 被冷落多久：只有真的久（>30 分钟）才提 —— 每句都提就变成"每句都在撒娇"，
+        # 那正是用户说的"不像 Ralsei"。两条互斥（elif），不会同时出现。
+        try:
+            _last = getattr(self, '_last_user_chat_ts', None)
+            if _last:
+                _idle = time.time() - _last
+                if _idle > 1800:
+                    parts.append("主人已经很久没跟你说话了")
+                elif _idle < 60:
+                    parts.append("主人刚跟你说过话")
         except Exception:
             pass
         # 记忆：用户偏好（如果有），让 Ralsei 记住主人喜欢聊什么
@@ -7624,7 +7666,10 @@ class RalseiPet(QMainWindow):
             pass
         if not parts:
             return ""
-        return "【此刻】" + "，".join(parts)
+        # 尾部这句"用法约束"是必需的：状态是**给模型的背景**，不是话题。
+        # 不写这句，模型会把它当清单念出来（"现在是深夜，你有点疲惫，你在走动……"），
+        # 那就从"有状态的角色"退回成"会读报表的助手"。
+        return "【此刻】" + "，".join(parts) + "。（这些是你现在的状态，可以自然地带一点出来，但别逐条念，也别硬把它转成话题。）"
     
     # ==================================================================
     # 第十八轮 · 对话 AI「人味」改造（诊断与证据见

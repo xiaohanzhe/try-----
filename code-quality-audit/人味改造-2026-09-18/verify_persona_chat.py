@@ -46,6 +46,7 @@ import io
 import os
 import sys
 import threading
+import time
 import types
 import tokenize
 
@@ -425,6 +426,85 @@ ok('F7 Modelfile 有且只有一条 FROM（底座换代只会改这一行，断�
    len(_mf_from) == 1 and len(_mf_from[0]) > len('FROM '), _mf_from)
 ok('F8 保存配置时不会清空 options（api_config 字典带 options）',
    "'options':_cur_cfg.get('options'," in code_no_comment(MAIN_TEXT))
+
+# ---------------------------------------------------------------- G
+section('G. 载体层状态管理（_build_ai_context 的状态口径）')
+# 「载体层状态」= 由 App（载体）持有、每轮拼进 system 尾部的"Ralsei 此刻状态"。
+# 性格不只在人设文件里，也在状态里：累了会抱怨、被冷落会委屈、
+# 站在窗口上和在桌面上说话不该一模一样。
+# 这里锁两件事：① 状态确实进了提示词；② 缺子系统时必须静默降级（不能拖垮对话）。
+#
+# 视图选择：本组 needle 大多含**字符串字面量**（`getattr(self,'is_falling',...)`），
+# 而 code_only_src 会把 STRING 也剥掉 → 一律走 code_no_comment（MEMORY 已记 5 次踩坑）。
+# G0 就是这条工具语义的自检，免得视图一变形、下面所有断言一起失真。
+_CTX_SRC = code_no_comment(func_src(MAIN_TEXT, '_build_ai_context'))
+_CTX_CODE = code_only_src(func_src(MAIN_TEXT, '_build_ai_context'))
+
+ok('G0 X0 自检：含引号的 needle 在 code_only_src 上必然落空、在 code_no_comment 上才搜得到',
+   ('你站在桌面上' not in _CTX_CODE) and ('你站在桌面上' in _CTX_SRC))
+ok('G1 仍以【此刻】开头（S7 时代订下的格式，不许改）',
+   'return"【此刻】"+' in _CTX_SRC)
+ok('G2 精力/饥饿分档（不再只有"低"一档）',
+   '_energy<20' in _CTX_CODE and '_energy<45' in _CTX_CODE
+   and '_energy>85' in _CTX_CODE and '_hunger<20' in _CTX_CODE
+   and '_hunger<45' in _CTX_CODE)
+ok('G3 载体状态：在窗口上 / 在桌面上 / 走动 / 掉落 都会说出来',
+   all(k in _CTX_SRC for k in ('你站在一个打开的窗口上', '你站在桌面上',
+                               '你正在走动', '你正从高处往下掉')))
+ok('G4 被冷落时长由载体时间戳派生（>30 分钟才提，不让模型猜）',
+   '主人已经很久没跟你说话了' in _CTX_SRC and '_idle>1800' in _CTX_CODE)
+ok('G5 尾部带"别逐条念"的用法约束（否则模型会把状态当清单念出来）',
+   '别逐条念' in _CTX_SRC)
+_F_CHAT_CODE = code_only_src(_f_chat)
+ok('G6 chat_with_ai 是"主人开口时间戳"的唯一写点，且写在 api_enabled 判断之前（关 AI 也要记）',
+   '_last_user_chat_ts=time.time()' in _F_CHAT_CODE
+   and _F_CHAT_CODE.index('_last_user_chat_ts=time.time()')
+   < _F_CHAT_CODE.index('ifnotself.api_enabled:'))
+
+
+class _Sub:
+    """只提供 _build_ai_context 需要的两个读口的极简桩。"""
+
+    def __init__(self, e, h):
+        self._e, self._h = e, h
+
+    def get_energy(self):
+        return self._e
+
+    def get_hunger(self):
+        return self._h
+
+
+def make_ctx_stub(energy=50, hunger=50, window=None, fall=False, moving=False,
+                  idle=None):
+    """**故意不挂** weather_system / emotion_system / memory_system ——
+    那三块本来就该走 except 静默降级，顺便当"缺子系统不崩"的常驻负控制。"""
+    s = types.SimpleNamespace()
+    s.energy_hunger = _Sub(energy, hunger)
+    s.current_window = window
+    s.window_level = 0
+    s.is_falling = fall
+    s.is_moving = moving
+    if idle is not None:
+        s._last_user_chat_ts = time.time() - idle
+    return s
+
+
+_c1 = R._build_ai_context(make_ctx_stub(energy=10, hunger=10))
+ok('G7 行为级：低精力 + 低饥饿真的进了上下文',
+   '累得快撑不住' in _c1 and '饿得厉害' in _c1, _c1[:90])
+_c2 = R._build_ai_context(make_ctx_stub(energy=95, window={'hwnd': 1}, idle=3600))
+ok('G8 行为级：精神好 + 站在窗口上 + 久未互动，三条都在',
+   '精神很好' in _c2 and '窗口上' in _c2 and '很久没跟你说话' in _c2, _c2[:130])
+_c3 = R._build_ai_context(make_ctx_stub(idle=5))
+ok('G9 行为级："刚聊过"与"久未互动"互斥（不会同时出现）',
+   '刚跟你说过话' in _c3 and '很久没跟你说话' not in _c3, _c3[:130])
+_c4 = R._build_ai_context(make_ctx_stub(fall=True))
+ok('G10 行为级：掉落时不再报"在走动"（同一份状态的优先级）',
+   '往下掉' in _c4 and '正在走动' not in _c4, _c4[:130])
+_c5 = R._build_ai_context(types.SimpleNamespace())
+ok('G11 行为级：子系统与状态属性全缺也不抛（静默降级），仍是【此刻】串',
+   isinstance(_c5, str) and _c5.startswith('【此刻】'), repr(_c5)[:90])
 
 # ---------------------------------------------------------------- 汇总
 print('')
