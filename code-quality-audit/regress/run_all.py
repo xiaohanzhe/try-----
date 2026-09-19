@@ -250,7 +250,7 @@ SUITES = [
                                'verify_persona_chat.py'),
         'offscreen': True,
         'desc': '人味改造：角色设定外置单一真源（persona 无 markdown / 三条接法规则 / 桌宠化口径'
-                ' / Deltarune 世界观知识 + 元游戏词负控制）'
+                ' / Deltarune 世界观知识 + 人物群像 + 第 5 章 + 元游戏词/攻略腔负控制）'
                 '+ 接线修对（用户消息纯原话、【此刻】挂 system 尾、recent 抽 role==assistant）'
                 '+ 输出护栏（markdown 剥除 / 句中括号动作只删那段 / 禁说清单：出戏＋客服腔（与事件链路同源）'
                 ' / 自问自答截断 / 车轱辘话判退 / 超长截断）'

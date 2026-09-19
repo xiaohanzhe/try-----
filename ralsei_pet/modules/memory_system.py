@@ -1492,7 +1492,11 @@ class MemorySystem:
             return ""
         lines = ["【零星的回忆（可以自然提一句，别生硬复述）】"]
         for it in items:
-            who = '主人' if it.get('who') == 'user' else (
+            # 第二十轮：`who` 从「主人」改为「你」—— 用户与 Ralsei 是**平级**关系，
+            # 不许再让他管对方叫"主人"。这里直接落进发给模型的提示词，
+            # 所以是**会真正生效**的一处（不像注释），必须和 persona 口径一致。
+            # 兼容：存储里 who 仍是 'user'（历史数据不改写，只改展示标签）。
+            who = '你' if it.get('who') == 'user' else (
                 '（重要的事）' if it.get('is_key') else '我')
             when = str(it.get('when') or '')
             tod = str(it.get('tod') or '')

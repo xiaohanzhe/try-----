@@ -3,6 +3,12 @@ Ralsei 原作语料 · 世界观事实依据
 来源 : ralsei_lora_corpus.jsonl
 规模 : 853 条 Ralsei 台词（output 侧）/ 章覆盖 = [1, 2, 3, 4]
 
+!! 覆盖缺口（2026-09-19 补记）：本语料**只到 ch4**，ch5 一条都没有。
+   ch5 于 2026-06-24 发售（本机时间 2026-09-19，已发布约 3 个月）。
+   所以下面所有计数都只代表"他 ch1–ch4 会说谁"——写 ch5 人物（Flowery / 七色花 /
+   Asgore 花店 / Dess 线）时**不能**用本文件的计数做依据，必须另找来源（官方 wiki / 攻略）
+   并在 persona 里按"他记得"的口吻写，不要细讲关卡。
+
 -- 人物：他自己说到过（output 命中条数 / 853）--
   Susie                  out=120   in=513
   Kris                   out=116   in=196
@@ -23,6 +29,11 @@ Ralsei 原作语料 · 世界观事实依据
   Mike                   out=  0   in=  6
   Gerson                 out=  0   in=  0
   Rudin                  out=  0   in=  1
+  Seam                   out=  0   in=  0
+  Napstablook            out=  0   in=  0
+  Mettaton               out=  0   in=  0
+  Sans                   out=  0   in=  0
+  Asriel                 out=  0   in=  0
 
 -- 世界观概念 --
   world/real 世界真实性       out= 18   in= 34

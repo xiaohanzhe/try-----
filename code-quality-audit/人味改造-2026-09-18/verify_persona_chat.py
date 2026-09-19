@@ -57,7 +57,9 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 PET = os.path.join(ROOT, 'ralsei_pet')
 SRC = os.path.join(PET, 'src')
 MODS = os.path.join(PET, 'modules')
-for _p in (SRC, MODS):
+# PET 本身也要进 path：`import modules.worldview_recall` 需要能把 ralsei_pet
+# 当作包的父目录来解析（K 组新增）。少了这一条 → ModuleNotFoundError: modules。
+for _p in (PET, SRC, MODS):
     if _p not in sys.path:
         sys.path.append(_p)
 
@@ -158,8 +160,20 @@ for tag, label in (('我是谁', 'A2 有人格定义节'), ('我现在在哪', '
                    ('语气示范', 'A6 有语气示范节')):
     ok('%s（%s）' % (label, tag), tag in PERSONA)
 
-ok('A7 桌宠化口径：明确"主人不是 Kris"',
-   '不是 Kris' in PERSONA and 'Windows' in PERSONA)
+# A7（2026-09-19 第二十轮改写）：原断言是 `'不是 Kris' in PERSONA and 'Windows' in PERSONA`。
+# 用户口径：「别把我的身份变成"主人"，我和他平级，他也不是为了什么而来的，他只是来了仅此而已」。
+# 于是「我现在在哪」节被整段重写：不再有"住进主人的 Windows 电脑桌面"这种措辞，
+# 原锚（"不是 Kris" / "Windows"）自然落空 —— 但**它要防的东西没变**：
+#   ① 对方是真实世界的人、不是 Kris（不能被当成游戏角色）
+#   ② 他和 Ralsei 是**平级**关系，不能自称"主人"
+# 所以断言改成断这两条**新锚**，并保留一条**负锚**：不许再出现"住进…电脑桌面"式旧叙事。
+ok('A7 桌宠化口径：明确"对方不是 Kris"且**平级**（不再叫"主人"）',
+   '不是 Kris' in PERSONA and '平级的' in PERSONA
+   and '仅此而已' in PERSONA
+   and '住进了' not in PERSONA,
+   '不是Kris=%s 平级=%s 仅此而已=%s 旧叙事=%s'
+   % ('不是 Kris' in PERSONA, '平级的' in PERSONA,
+      '仅此而已' in PERSONA, '住进了' in PERSONA))
 ok('A8 含违禁套话清单', '我理解你的感受' in PERSONA and '作为一个语言模型' in PERSONA)
 ok('A9 明确"不要照抄示范句"', '不要整句搬' in PERSONA)
 ok('A10 明确"复读口头禅要换着说"', '你还好吗' in PERSONA)
@@ -177,7 +191,10 @@ _n_me = len([1 for ln in PERSONA.splitlines() if ln.startswith('我：')])
 # "不要整句搬"的显式禁令（见 A9）。
 # 断言随之改成"三条接法规则齐备"—— 这才是 now 真正承载行为锚的东西，
 # 而且比数对数更有判别力（少一条就说明行为锚缺了一角）。
-_RULES = ('主人说的是坏消息', '主人说的是好消息', '不知道自己该说什么的时候')
+# 2026-09-19 第二十轮：第三条规则（"不知道自己该说什么的时候"）不受影响，
+# 但前两条的**主语词**从"主人"改成了"你"（平级口径），所以锚同步更新。
+# 只改主语、不动规则本身 —— 这三条是"先接住对方那件事"的**行为锚**，一条都不能少。
+_RULES = ('你说的是坏消息', '你说的是好消息', '不知道自己该说什么的时候')
 _missing = [r for r in _RULES if r not in PERSONA]
 ok('A12 三条"碰到事该怎么接"规则齐备（坏消息 / 好消息 / 不知道说什么）',
    not _missing, '缺=%r' % (_missing,))
@@ -186,27 +203,98 @@ ok('A12 三条"碰到事该怎么接"规则齐备（坏消息 / 好消息 / 不�
 ok('A12b 反向控制：成对示范（主人：/ 我：）已移除，不再逐字可搬',
    _n_owner == 0 and _n_me == 0, '主人=%d 我=%d' % (_n_owner, _n_me))
 
-# —— A13~A17：世界观 / 角色知识（2026-09-19 加）——
+# 世界观索引（第二十轮新增）：A 组与 K 组都要读它，**在这里统一加载一次**。
+# 位置刻意放在 A 组之前 —— A13–A22 的视图是 `PERSONA + _WV_TEXT`（并集），
+# 定义得晚会在构造 `_WV_VIEW` 时 NameError。
+import modules.worldview_recall as WR                                   # noqa: E402
+
+_WV_MD = os.path.join(PET, 'assets', 'ralsei_worldview.md')
+_WV_TEXT = io.open(_WV_MD, encoding='utf-8').read() if os.path.exists(_WV_MD) else ''
+_K_BLOCKS = WR.load_blocks()
+
+# —— A13~A22：世界观 / 角色知识（2026-09-19 加；第二十轮改为查**索引文件**）——
 # 用户口径：「一定要保证三角符文本地的世界观也存在，也就是他知道他该知道的游戏内容」。
 # 依据不取我的记忆，而取**原作语料本身**：853 条 Ralsei 台词里他自己提到过
 #   Susie 120 条 / Kris 116 / Lancer 9 / Queen 9 / Fountain 15 / Darkner 7 / prophecy 6 …
 # 取证 `_evidence/ralsei_worldview_2026-09-19.txt`（可复算）。
-ok('A13 有「我知道的世界」节（角色知识不再只有"我是谁"那两行）',
-   '我知道的世界' in PERSONA)
+#
+# ⚠️ 第二十轮的位置变更（**这一组为什么改指向**）：
+# 世界观正文已从 persona 搬到 `assets/ralsei_worldview.md`（按需召回，见 K 组）。
+# 这一组要防的属性 ——「他知道他该知道的游戏内容」—— **没有变**，
+# 变的只是**存放位置**。所以断言对象从 PERSONA 换成 PERSONA + 索引的并集。
+# 并集视图而不是"只看索引"：万一有人把某段又抄回 persona，并集照样能找到，
+# 而这组锁要管的是"**存不存在**"，不是"存在哪"—— 位置由 K1/K2 专门管。
+_WV_VIEW = PERSONA + '\n' + _WV_TEXT
+ok('A13 有世界观内容（persona 的索引节 + ralsei_worldview.md 一起算）',
+   '我知道的世界' in PERSONA and len(_K_BLOCKS) >= 8)
 _WORLD_ANCHORS = ('黑暗喷泉', '光之民', '暗之民', '两位光之英雄', 'Kris', 'Susie', 'Lancer')
-_miss_w = [a for a in _WORLD_ANCHORS if a not in PERSONA]
+_miss_w = [a for a in _WORLD_ANCHORS if a not in _WV_VIEW]
 ok('A14 核心设定锚齐备（黑暗喷泉 / 光之民 / 暗之民 / 两位光之英雄 / Kris / Susie / Lancer）',
    not _miss_w, '缺=%r' % (_miss_w,))
 ok('A15 世界观带"别主动讲、别硬拐"的使用约束（否则会退化成设定倾倒）',
-   '主人不问' in PERSONA and '别把话题硬拐' in PERSONA)
+   '平时它们就待在脑子里，不会平白冒出来' in _WV_VIEW
+   and '只有话头碰到了那边' in _WV_VIEW
+   and '别把话题硬拐' in _WV_VIEW)
 ok('A16 他知道"自己瞒过同伴"这件事（原作 ch4 的核心人物动机，也是他性格的来源）',
-   '瞒过' in PERSONA)
+   '瞒过' in _WV_VIEW)
 # 负控制：世界观必须是**游戏里的世界**，不能把元游戏/玩家视角漏进来 ——
 # 一旦出现"玩家/存档/读档/通关"这类词，他就从角色退化成旁白，世界观反而变假了。
+# 视图**故意用并集**：抄回 persona 也算违规（那会把元游戏词带进常驻前缀）。
 _META_WORDS = ('玩家', '存档', '读档', '通关', '第四面墙')
-_hit_meta = [w for w in _META_WORDS if w in PERSONA]
-ok('A17 负控制：persona 里没有元游戏词（玩家 / 存档 / 读档 / 通关 / 第四面墙）',
+_hit_meta = [w for w in _META_WORDS if w in _WV_VIEW]
+ok('A17 负控制：世界观里没有元游戏词（玩家 / 存档 / 读档 / 通关 / 第四面墙）',
    not _hit_meta, '命中=%r' % (_hit_meta,))
+
+# —— A18~A22：人物群像 + 第 5 章（2026-09-19 第二轮补，用户："有些人物都没加上，尤其第 5 章"）——
+# 缺口原状：世界观节只点了 Kris/Susie/Lancer/Tenna/King 5 个名字，
+#   而语料里 Ralsei 自己提到过 Queen 9 / Rouxls 5 / Berdly 2 / Noelle 1（见 `_evidence/ralsei_worldview_*.txt`），
+#   光明世界那一侧（Toriel / Asgore / Noelle / Berdly / Rudy / Sans / Asriel）一个都没写。
+#   → 问到"Kris 的妈妈是谁""Noelle 是谁"就露怯。
+_LIGHT_ANCHORS = ('托丽尔', 'Asgore', 'Noelle', 'Berdly', 'Rudy', 'Sans', 'Asriel')
+_miss_l = [a for a in _LIGHT_ANCHORS if a not in _WV_VIEW]
+ok('A18 光明世界人物群像齐备（托丽尔 / Asgore / Noelle / Berdly / Rudy / Sans / Asriel）',
+   not _miss_l, '缺=%r' % (_miss_l,))
+_DARK_ANCHORS = ('Rouxls', 'Seam', '黑桃国王')
+_miss_d = [a for a in _DARK_ANCHORS if a not in _WV_VIEW]
+ok('A19 黑暗世界次要人物齐备（Rouxls / Seam / 黑桃国王）',
+   not _miss_d, '缺=%r' % (_miss_d,))
+# 第 5 章（2026-06-24 发售；本项目语料只到 ch4，**不能**用计数取证 → 依据官方 wiki，见报告 §2.2）：
+#   花之王国 / Flowery / 七色花(那束花) / 第二座喷泉 / 骑士抓走 Asgore / Dess 失踪 / 避难所密码。
+_CH5_ANCHORS = ('花之王国', 'Flowery', '第二座喷泉', 'Dess', '避难所')
+_miss5 = [a for a in _CH5_ANCHORS if a not in _WV_VIEW]
+ok('A20 第 5 章关键设定齐备（花之王国 / Flowery / 第二座喷泉 / Dess / 避难所）',
+   not _miss5, '缺=%r' % (_miss5,))
+ok('A21 第 5 章按"他的记忆"口吻写（含他和 Flowery 的共情，不是关卡攻略）',
+   '出发点和我是一样的' in _WV_VIEW and '我一开始很防着他' in _WV_VIEW)
+# 负控制：第 5 章内容**不许**写成攻略腔（"收集 10 个粉色硬币 / 秘密 boss / 击败"这类），
+#   那是玩家语言，不是 Ralsei 的语言 —— 写进去他就变成维基播报机。
+_GUIDE_WORDS = ('粉色硬币', '秘密boss', '秘密BOSS', '击败', '攻略', '通关', '灵魂模式', '隐藏房间')
+_hit_guide = [w for w in _GUIDE_WORDS if w in _WV_VIEW]
+ok('A22 负控制：第 5 章内容不含攻略腔（粉色硬币 / 秘密 boss / 击败 / 攻略 / 灵魂模式 / 隐藏房间）',
+   not _hit_guide, '命中=%r' % (_hit_guide,))
+
+# —— A23~A25：平级关系口径（2026-09-19 第二十轮，用户原话）——
+# 「别把我的身份变成"主人"，我和他平级，他也不是为了什么而来的，他只是来了仅此而已」。
+# 这一组只钉**关系口径**，不钉具体措辞 —— 措辞以后可以再润，但下面三条语义是硬约束。
+_OWNER_EXEMPT = '我不用管他叫'      # 唯一允许出现"主人"的地方：禁令本身
+_owner_lines = [ln for ln in PERSONA.splitlines()
+                if '主人' in ln and _OWNER_EXEMPT not in ln]
+ok('A23 负控制：persona 里"主人"只剩禁令里那一处，没有任何地方拿它当称呼',
+   not _owner_lines, '残留=%r' % (_owner_lines[:3],))
+
+# 使命叙事的典型写法（"他把我带到…""让我在这里陪着…""这是我现在的日常"
+# "住进…电脑桌面"）。用户明确要求消解掉："他不是为了什么而来的"。
+_MISSION_PHRASES = ('他把我带到', '让我在这里陪', '这是我现在的日常', '住进了',
+                    '陪着他——', '为了陪伴')
+_hit_mission = [p for p in _MISSION_PHRASES if p in PERSONA]
+ok('A24 负控制：已无"被带到电脑上/陪着他"的使命叙事',
+   not _hit_mission, '命中=%r' % (_hit_mission,))
+
+# 正向：平级关系必须**明写**出来（不是"没写主人"就算数 —— 那是缺省，不是声明）。
+# "仅此而已"是用户原话里最要紧的一笔：没有理由、没有任务、没有目的。
+ok('A25 正向：明写"平级 + 就是来了，仅此而已"（没有任务、没有缘由）',
+   '平级' in PERSONA and '仅此而已' in PERSONA
+   and '谁也没有非让我来不可的理由' in PERSONA)
 
 # ---------------------------------------------------------------- B
 section('B. main.py 接线（源码级 + 行为级）')
@@ -245,6 +333,12 @@ ok('B7 _build_ai_context 返回以【此刻】开头',
 
 import main as M                                                    # noqa: E402
 R = M.RalseiPet
+
+# J 组用的别名（与 R 同物；单列一个名字只是为了让"读 persona 的 A 组"和
+# "读代码接线的 J 组"在断言文本里一眼可分）。
+RalseiPetJ = R
+# 自主开口 prompt（J5 用）：它是**独立方法**，不在 chat_with_ai 里。
+_f_auto = code_no_comment(func_src(MAIN_TEXT, 'start_autonomous_speech'))
 
 
 def make_stub(**extra):
@@ -529,7 +623,8 @@ ok('G3 载体状态：在窗口上 / 在桌面上 / 走动 / 掉落 都会说出
    all(k in _CTX_SRC for k in ('你站在一个打开的窗口上', '你站在桌面上',
                                '你正在走动', '你正从高处往下掉')))
 ok('G4 被冷落时长由载体时间戳派生（>30 分钟才提，不让模型猜）',
-   '主人已经很久没跟你说话了' in _CTX_SRC and '_idle>1800' in _CTX_CODE)
+   '你有很久没跟对方说话了' in _CTX_SRC and '_idle>1800' in _CTX_CODE
+   and '主人已经很久没跟你说' not in _CTX_SRC)
 ok('G5 尾部带"别逐条念"的用法约束（否则模型会把状态当清单念出来）',
    '别逐条念' in _CTX_SRC)
 _F_CHAT_CODE = code_only_src(_f_chat)
@@ -572,10 +667,10 @@ ok('G7 行为级：低精力 + 低饥饿真的进了上下文',
    '累得快撑不住' in _c1 and '饿得厉害' in _c1, _c1[:90])
 _c2 = R._build_ai_context(make_ctx_stub(energy=95, window={'hwnd': 1}, idle=3600))
 ok('G8 行为级：精神好 + 站在窗口上 + 久未互动，三条都在',
-   '精神很好' in _c2 and '窗口上' in _c2 and '很久没跟你说话' in _c2, _c2[:130])
+   '精神很好' in _c2 and '窗口上' in _c2 and '很久没跟对方说话' in _c2, _c2[:130])
 _c3 = R._build_ai_context(make_ctx_stub(idle=5))
 ok('G9 行为级："刚聊过"与"久未互动"互斥（不会同时出现）',
-   '刚跟你说过话' in _c3 and '很久没跟你说话' not in _c3, _c3[:130])
+   '刚跟对方说过话' in _c3 and '很久没跟对方说话' not in _c3, _c3[:130])
 _c4 = R._build_ai_context(make_ctx_stub(fall=True))
 ok('G10 行为级：掉落时不再报"在走动"（同一份状态的优先级）',
    '往下掉' in _c4 and '正在走动' not in _c4, _c4[:130])
@@ -600,6 +695,287 @@ ok('H3 判据与事件链路共用同一份（从 modules.event_speech 导入）
 # （视图走 code_only_src：本文件的注释里提到了这两个名字，用字面量 in 源码会假红。）
 ok('H4 反向控制：main.py 里没有第二份禁语表（判据只有 event_speech 一处）',
    '_BANNED_PATTERNS' not in CODE_MAIN and '_OOC_PATTERNS' not in CODE_MAIN)
+
+# ---------------------------------------------------------------- J
+# J 组：平级口径的**接线锁**（2026-09-19 第二十轮）
+# 为什么单开一组而不并进 A 组：A 组看的是 persona **文件**写没写对，
+# 而这里要防的是本项目最贵的那个坑 —— **"文件写对了，产品没用上"**。
+# "主人"这个词在代码里还有 5 处会**真的发进模型请求**：
+#   ① _build_ai_context 的两条冷落提示  ② 名字提示  ③ _PERSONA_FALLBACK
+#   ④ memory_system.recall_text 的 who 标签  ⑤ 自主开口的两条 prompt
+# 只改 persona 不改这 5 处，等于白改 —— 而单看 persona 文件是**看不出来**的。
+section('J. 平级口径的接线（改 persona 不够，代码里那几处也会发给模型）')
+
+# 判据要和 A23 用**同一条豁免规则**：兜底里允许出现"主人"，
+# 但只允许在"不用叫他主人"这个**禁令本身**里出现（那是在否证它）。
+# 用整句锚而不是裸词，是为了让这条断言对"兜底被写回旧叙事"仍然敏感。
+ok('J1 兜底人设与真源同口径（persona 读失败时不会退回"主人"旧叙事）',
+   '不用叫他' in RalseiPetJ._PERSONA_FALLBACK
+   and '仅此而已' in RalseiPetJ._PERSONA_FALLBACK
+   and '平级' in RalseiPetJ._PERSONA_FALLBACK
+   # 负锚：旧兜底那两句"住在主人的 Windows 电脑桌面上"必须不在
+   and '住在主人' not in RalseiPetJ._PERSONA_FALLBACK
+   and 'Windows 电脑桌面' not in RalseiPetJ._PERSONA_FALLBACK)
+
+# 行为级：真跑一次上下文拼装，确认发给模型的那串里没有"主人"。
+# 用 idle 触发"久未互动"分支、并挂一个带名字的 memory_system 桩 ——
+# 这两条正是旧代码里唯二会拼出"主人"的路径，必须都覆盖到。
+class _MemStub:
+    def get_user_preference(self, k, d=''):
+        return '小哲' if k == 'user_name' else d
+
+    def get_user_preferences_summary(self):
+        return []
+
+
+_j_stub = make_ctx_stub(energy=95, window={'hwnd': 1}, idle=3600)
+_j_stub.memory_system = _MemStub()      # make_ctx_stub 故意不挂它，这里按需补上
+_cj = RalseiPetJ._build_ai_context(_j_stub)
+ok('J2 行为级：冷落 + 名字两条路径拼出的上下文里没有"主人"',
+   '主人' not in _cj and '很久没跟对方说话' in _cj and '小哲' in _cj, _cj[:130])
+# 反向控制：这两条断言**不是恒真** —— 换成旧措辞必须变红（否则等于没测）。
+
+_j_old = _cj.replace('对方', '主人')
+ok('J3 反向控制：把措辞换回"主人"后，J2 的判据确实会变红（证明 J2 有鉴别力）',
+   '主人' in _j_old and '主人' not in _cj)
+
+# 回忆块的 who 标签：直接发给模型，属于"会真正生效"的一处。
+_MEM_SRC = code_no_comment(
+    func_src(io.open(os.path.join(ROOT, 'ralsei_pet', 'modules', 'memory_system.py'),
+                     encoding='utf-8').read(), 'recall_text'))
+ok('J4 回忆块的 who 标签是"你"（不是"主人"），且不再拿"主人"当称呼',
+   "who='你'if" in _MEM_SRC.replace(' ', '')
+   and "who='主人'" not in _MEM_SRC.replace(' ', ''))
+
+# 自主开口的两条 prompt 里有"主人主动来找你聊天了"，也是真发给模型的。
+ok('J5 自主开口的 prompt 用"对方"（不再说"主人主动来找你"）',
+   '主人主动来找你' not in _f_auto and '对方主动来找你' in _f_auto)
+
+# 自问自答截断正则：**「主人：」必须仍然被认得**（历史记忆/旧模型可能残留），
+# 所以这里断的是"它在正则候选里"而不是"它被删了" —— 与 A23 不矛盾：
+# A23 管的是**不能拿它当称呼**，这里管的是**要认得这个残留标记**。
+ok('J6 截断闸仍认得「主人：」这类残留角色标记（防漏截一整条自问自答）',
+   '主人|对方|用户' in RalseiPetJ._role_marker_re().pattern)
+
+# ---------------------------------------------------------------- K
+# K 组：世界观**按需召回**（2026-09-19 第二十轮，C1）
+# 用户口径：「没必要每次让他说话的时候都读取完整的世界观啊，可以按照语言的关联性
+#   去单个读取或是一定范围内读取，就和咱那个记忆系统一样，或是说这个世界观本就是
+#   他自己自带的初始记忆」。
+# 这一组要同时钉住三件事：**省下来了**、**该想起的想得起来**、**不该倒的不倒**。
+section('K. 世界观按需召回（不再每轮全读；碰话题才想起）')
+
+# K1 —— 结构性：世界观**已不在 persona 常驻文本里**。
+# 这是"省下来了"的直接证据。注意断的是**正文**而不是标题：
+# persona 里现在还有一个"（初始记忆）"的**说明节**，说明节必须留（它告诉模型
+# "你现在只有个索引，取到的会附在后面"），但正文不许再躺在里面。
+_K_MOVED = ('世界有两面。光明世界是你住的这种普通世界',
+            '光明世界来的人叫光之民',
+            'Kris 是人类少年，话很少',
+            '花的首领叫 Flowery')
+_hit_in_persona = [p for p in _K_MOVED if p in PERSONA]
+ok('K1 世界观正文已从 persona 常驻前缀移出（不再每轮全读）',
+   not _hit_in_persona, '仍留在 persona=%r' % (_hit_in_persona,))
+# 反向控制：同一批正文**必须还在**索引文件里 —— 否则上面那条只是因为内容被删了。
+_hit_in_wv = [p for p in _K_MOVED if p in _WV_TEXT]
+ok('K2 反向控制：同一批正文确实搬到了 ralsei_worldview.md（不是被删掉）',
+   len(_hit_in_wv) == len(_K_MOVED), '索引里找到 %r' % (_hit_in_wv,))
+
+# K3 —— persona 变短了（这是"省 token"的量化证据）。
+# 阈值取 10000：改前 13140 B。**故意不等号取宽**，让文案增删几行不会假红，
+# 但"世界观又被塞回来"（+4768 B）必然越界。
+ok('K3 persona 常驻体积已下降（世界观移出后 < 10KB）',
+   os.path.getsize(PERSONA_MD) < 10000,
+   'size=%s' % os.path.getsize(PERSONA_MD))
+
+# K4 —— 索引可解析：块数够用、每块都有标签和触发词。
+ok('K4 世界观索引可解析出 ≥8 个块（每块都有标签与触发词）',
+   len(_K_BLOCKS) >= 8
+   and all(b.label and b.triggers and b.body for b in _K_BLOCKS),
+   'blocks=%d' % len(_K_BLOCKS))
+
+# K5 —— 行为级：**该想起的想得起来**。这几条是"召回有没有接线"的实证。
+# 期望值写**中文标签**（人读得懂，改 key 不会假红），因此比对的是 `b.label`。
+_K_WANT = (('黑暗喷泉是啥', '世界怎么运作'),
+           ('庆典那天发生了什么', '庆典那天'),
+           ('你还记得 Dess 吗', '那件事的结局'),
+           ('你们去过哪些地方', '走过的地方'))
+_k_bad = []
+for _q, _want_label in _K_WANT:
+    _got = [b.label for b in WR.recall(_q, limit=2)]
+    if _want_label not in _got:
+        _k_bad.append((_q, _want_label, _got))
+ok('K5 行为级：问到世界/庆典/Dess/地点，都召回到对应那块',
+   not _k_bad, '未命中=%r' % (_k_bad,))
+
+# K6 —— **负控制：闲聊不召回**。这条最要紧：用户要的是"按关联性读取"，
+# 不是"什么都想起来"。回归锁若只测"能召回"，把 MIN_SCORE 调成 0（全命中）
+# 也能通过 —— 那就成了"每轮还是在倒设定"，等于没改。
+_k_chat = [('我最近好累啊',), ('今天吃什么',)]
+_k_leak = []
+for (_q,) in _k_chat:
+    if WR.recall(_q, limit=2):
+        _k_leak.append((_q, [b.key for b in WR.recall(_q, limit=2)]))
+ok('K6 负控制：闲聊（累/吃什么）不召回任何世界观块（不硬拐话题）',
+   not _k_leak, '误召回=%r' % (_k_leak,))
+
+# K7 —— 上限硬约束：一次最多两块。persona 里"一次别倒太多"是写死的口径，
+# 召回必须同源，否则它会把那句话顶掉（设定倾倒）。
+ok('K7 一次最多召回 2 块（与 persona"一次别倒太多"同源）',
+   len(WR.recall('Kris Susie 喷泉 庆典 Asgore Dess 骑士 避难所', limit=99)) <= 2
+   and WR.MAX_BLOCKS == 2)
+
+# K8 —— 无命中返回**空串**（而不是某块兜底）。
+# 空串意味着"这轮不追加任何东西"，正是"他没想起来"的正确表现。
+ok('K8 无命中时 recall_text 返回空串（不拿某块硬兜底）',
+   WR.recall_text('今天天气不错') == '')
+
+# K9 —— 接线：chat_with_ai 里真的调了它，且 **lean 分支跳过**（事件台词不吃召回）。
+_CHAT_K = code_no_comment(func_src(MAIN_TEXT, 'chat_with_ai'))
+ok('K9 chat_with_ai 真的调用了世界观召回，且 lean 时跳过',
+   'worldview_recall' in _CHAT_K and 'ifnotlean' in _CHAT_K.replace(' ', '')
+   and 'system=system+"\\n\\n"+_wv' in _CHAT_K)
+
+# K10 —— 初始化环：召回模块**不许** import 项目内模块（QA 启动早期要用它）。
+_WR_SRC = io.open(os.path.join(PET, 'modules', 'worldview_recall.py'),
+                  encoding='utf-8').read()
+_WR_IMPORTS = [ln for ln in _WR_SRC.split('\n')
+               if ln.startswith(('import ', 'from '))]
+_WR_BAD_IMP = [ln for ln in _WR_IMPORTS
+               if 'modules' in ln or 'PyQt' in ln or ln.strip().endswith('main')]
+ok('K10 召回模块不 import 任何项目内模块 / Qt（初始化环）',
+   not _WR_BAD_IMP, '违规=%r' % (_WR_BAD_IMP,))
+
+# ---------------------------------------------------------------- L
+# L 组：关系演进（2026-09-19 第二十轮，D）
+# 用户口径：「朋友关系是**逐渐**的，**开始并不是朋友**……他只是一个**意外**来到我桌面上
+#   的人，后期和我们相处的关系是**一步一步搭起来**的。加入一个**信任度**，这个信任度
+#   **不可见**，只作为关系好坏的评估标准。开始他是**害怕**我们对他的举动，到**不愿意
+#   继续和我们说什么**，再**逐渐成为朋友**。」
+# 三条要害各有锁：① 起始是戒备 ② 数值不可见 ③ 演进路径有序。
+section('L. 关系演进（起始是戒备、信任度不可见、路径有序）')
+
+import modules.relationship as REL                                      # noqa: E402
+
+# L1 —— 起始态：**不是朋友**。这是整组的地基：
+# 若 TRUST_INITIAL 落在 warming/friend，其余断言全都是摆设。
+_L0 = REL.Relationship(path=None)
+ok('L1 起始档位是"害怕戒备"（不是朋友、不是"我来陪你"）',
+   _L0.stage == 'distrust' and REL.TRUST_INITIAL < REL.STAGES[1][1],
+   'stage=%s trust=%.3f' % (_L0.stage, REL.TRUST_INITIAL))
+
+# L2 —— 路径顺序**逐字**对齐用户原话，不许调换/删档。
+_L_ORDER = [k for k, _f, _l in REL.STAGES]
+ok('L2 演进路径与用户原话同序（害怕戒备 → 不愿多说 → 慢慢熟 → 朋友）',
+   _L_ORDER == ['distrust', 'guarded', 'warming', 'friend'], _L_ORDER)
+
+# L3 —— **信任度不可见**（本组最要紧的一条）。
+# 只测"数值没进提示词"不够 —— 还要防止他把"信任/关系/阶段"当话题说出来。
+_L_BRIEF = REL.build_brief(0.6)
+_has_num = any(ch.isdigit() for ch in _L_BRIEF)
+ok('L3 给模型的关系段里**没有数字**（信任度是内部量，不许进提示词）',
+   not _has_num, _L_BRIEF[:100])
+# 档位名（distrust/guarded/…）也不许出现 —— 出现就等于给了模型一个可以念的词
+_L_KEY_LEAK = [k for k, _f, _l in REL.STAGES if k in _L_BRIEF]
+ok('L4 关系段里没有档位标识（distrust/guarded/warming/friend 都不出现）',
+   not _L_KEY_LEAK, '泄漏=%r' % (_L_KEY_LEAK,))
+# 但**必须有禁令**：光有正面指令，4B 一定会把"我现在信任你 X%"说出来。
+ok('L5 关系段带"别把它当话题说"的禁令（否则模型会念出信任度）',
+   '绝对不要' in _L_BRIEF and '信任' in _L_BRIEF and '打分数' in _L_BRIEF)
+
+# L6 —— 行为级：**好的互动会涨、坏的会跌**。正负成对，避免只测一边。
+_L_a = REL.Relationship(path=None)
+_L_b = REL.Relationship(path=None)
+for _i in range(6):
+    _L_a.note('comfort')
+    _L_b.note('harsh')
+ok('L6 行为级：安慰让信任上升、命令/贬低让它下降（正负成对）',
+   _L_a.trust > REL.TRUST_INITIAL and _L_b.trust < REL.TRUST_INITIAL,
+   'comfort=%.3f harsh=%.3f' % (_L_a.trust, _L_b.trust))
+
+# L7 —— **"一步一步"**：单轮涨幅有硬上限，不能几句话就称兄道弟。
+_L_c = REL.Relationship(path=None)
+for _i in range(50):
+    _L_c.note('comfort', now=1000.0 + _i)      # 同一时刻连打，排除时间回落干扰
+ok('L7 存在单轮涨幅上限（一次互动不可能把关系拉满）',
+   _L_c.trust < REL.TRUST_MAX and REL.GAIN_CAP_PER_TURN <= 0.1,
+   'trust=%.3f（50 轮 comfort 后）' % _L_c.trust)
+
+# L8 —— 边界：值域是 [0, TRUST_MAX]，两端都不许穿。
+# 这条断的是**硬边界**，不是"harsh 后仍不低于起点" —— 后者是错的设计：
+# 若下界设成 TRUST_INITIAL，`harsh` 在开局就完全无效，信任度只剩好的一端，
+# 退化成进度条（本轮实测抓到的）。0 = 戒备到极点，仍归"害怕戒备"档。
+_L_d = REL.Relationship(path=None)
+for _i in range(400):
+    _L_d.note('comfort', now=1000.0 + _i)
+_L_e = REL.Relationship(path=None)
+for _i in range(400):
+    _L_e.note('harsh', now=1000.0 + _i)
+ok('L8 边界：涨到顶不超 TRUST_MAX，跌到底不低于 0（clamp 两端都生效）',
+   _L_d.trust <= REL.TRUST_MAX and _L_e.trust >= 0.0
+   and _L_d.trust > _L_e.trust,
+   'hi=%.3f lo=%.3f' % (_L_d.trust, _L_e.trust))
+# 反向控制：`harsh` 必须**真的**能推动关系往下走 —— 否则它是个死事件。
+ok('L8b 反向控制：harsh 真的能把信任度压到起点之下（不是死事件）',
+   _L_e.trust < REL.TRUST_INITIAL,
+   'lo=%.3f init=%.3f' % (_L_e.trust, REL.TRUST_INITIAL))
+
+# L9 —— 久不说话关系会**回落**（信任度是"好坏评估"，必须能往回走）。
+_L_f = REL.Relationship(path=None)
+for _i in range(40):
+    _L_f.note('comfort', now=1000.0 + _i)
+_L_peak = _L_f.trust
+_L_f.note('chat', now=1000.0 + 40 + REL.IDLE_DECAY_AFTER + 10 * 86400)
+ok('L9 久未互动后信任回落（冷落会让关系变凉）',
+   _L_f.trust < _L_peak, 'peak=%.3f now=%.3f' % (_L_peak, _L_f.trust))
+
+# L10 —— 分类器：把"安慰/命令/好奇/自我暴露"分对。确定性规则，可回归。
+_L_cls = (('别怕，我在呢', 'comfort'),
+          ('你给我闭嘴', 'harsh'),
+          ('你为什么喜欢这个', 'curious'),
+          ('嗯', 'chat'))
+_L_bad_cls = [(t, want, REL.classify(t)) for t, want in _L_cls
+              if REL.classify(t) != want]
+ok('L10 输入分类：安慰/命令/好奇/普通闲聊都分得对',
+   not _L_bad_cls, '分错=%r' % (_L_bad_cls,))
+
+# L11 —— **接线**：chat_with_ai 里真的记了账、真的拼了关系段。
+# 只写模块不接线 = 本项目最贵的坑（"函数写对了 ≠ 产品用上了"，踩过 4 次）。
+_CHAT_L = code_no_comment(func_src(MAIN_TEXT, 'chat_with_ai'))
+ok('L11 chat_with_ai 真的调了关系记账与关系段拼接，且 lean 时跳过',
+   '_relmod.classify(text)' in _CHAT_L.replace(' ', '')
+   and '_rel.note(' in _CHAT_L.replace(' ', '')
+   and '_rel.brief()' in _CHAT_L.replace(' ', '')
+   and 'system=system+"\\n\\n"+_rel_brief' in _CHAT_L)
+ok('L12 关系实例由 App 持有（初始化里挂上 self.relationship）',
+   'self.relationship=_make_relationship()' in CODE_MAIN.replace(' ', ''))
+
+# L13 —— persona 的静态关系句必须让位：不许写死"已经是朋友"。
+# 这条防的是**本轮真踩过的坑** —— C2 先写了"我们是一起待着的关系"（太热），
+# 后来 D 要求起始是戒备。若 persona 里留着一句静态热关系，动态关系段会被它顶掉。
+_L_HOT = ('我们是一起待着的关系', '我们是朋友', '我最好的朋友是你')
+_L_hot_hit = [h for h in _L_HOT if h in PERSONA]
+ok('L13 负控制：persona 里没有写死"已经是朋友/一起待着"的静态关系句',
+   not _L_hot_hit, '命中=%r' % (_L_hot_hit,))
+# 正向：persona 必须**显式声明关系不固定、以 App 那句为准**（否则模型不知道
+# 该听谁的 —— 两份关系描述并存时它会挑更热的那句说）。
+ok('L14 persona 声明"关系不是定死的、以另给的那句为准"',
+   '我们俩是什么关系，不是定死的' in PERSONA
+   and '我另有一句话告诉你，以那句为准' in PERSONA)
+
+# L15 —— 初始化环 + 可选导入：关系模块不许 import 项目内模块。
+_REL_SRC = io.open(os.path.join(PET, 'modules', 'relationship.py'),
+                   encoding='utf-8').read()
+_REL_IMPORTS = [ln for ln in _REL_SRC.split('\n')
+                if ln.startswith(('import ', 'from '))]
+_REL_BAD_IMP = [ln for ln in _REL_IMPORTS
+                if 'modules' in ln or 'PyQt' in ln]
+ok('L15 关系模块不 import 任何项目内模块 / Qt（初始化环）',
+   not _REL_BAD_IMP, '违规=%r' % (_REL_BAD_IMP,))
+# 反向控制：模块是**可选导入**的 —— 挂了也不能让程序起不来。
+ok('L16 main.py 对关系模块走可选导入（失败降级，不炸启动）',
+   'frommodules.relationshipimportRelationshipas_Relationship' in CODE_MAIN.replace(' ', '')
+   and '_Relationship=None' in CODE_MAIN.replace(' ', ''))
 
 # ---------------------------------------------------------------- 汇总
 print('')

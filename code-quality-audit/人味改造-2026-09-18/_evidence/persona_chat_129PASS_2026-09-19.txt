@@ -1,0 +1,160 @@
+��
+=== A. persona �V"k�o b�[�X]�m� *��q.|�?===
+[PASS] A1 persona �V"kp:jjn�m�ejo�~?
+[PASS] A2 ȓ	YIl͓Nq~u�mY�Y�X�Wē�v�?
+[PASS] A3 ȓY�9p�r�[9p+l�}z��P}�� bG^f�%1jn]�N�}
+[PASS] A4 ȓY��t�o�g�[�_�Y�X�W���^�{�t��}
+[PASS] A5 ȓYQD�=_4d�e�Y�X�W(��R���Y�e}
+[PASS] A6 ȓY���Y�eZ0|��Q�Y�#X���Y�eZ0|��Q}
+[PASS] A7 �Y}\�uV�'h[_�[�R0}ē�^ "5pĉ�g�m�]�i Kris"�m?*��]��**�X	{P��]h_"�m��Il"�?
+[PASS] A8 Z���Z~�~xO��t�o�zW�?
+[PASS] A9 ē�^ "�m�]���D�Y�~?��[Y�?
+[PASS] A10 ē�^ "�o�]��Y�E�T0�~pT�湓"2Co�t?
+[PASS] A11 persona ��~\�uȓ?markdown ͓�V���X`uē?prompt�|\	{ē�g�YO�}
+[PASS] A12 �mYoo"�~g�W\m-[�ᬓ�^�{��?Yt�R�W�i,a,��XVoZXO / �o���y��?/ �m�]aq���d��`m� �m,X}
+[PASS] A12b Y��]�`��C�W�-l�W5p-WZ0|��Q}�m��Il�? ��/b0}�
+Y�Q�~ZZ�j�|\	{P��]� ,a�tY���`
+[PASS] A13 ȓ	Y{#��\G�P�mT���gWersona (��R�P�[�f�Y + ralsei_worldview.md �m� �tΘ{u�?
+[PASS] A14 ͓?z>~�t�`~u��6l�}�o�V}�ib�k`��ex / O�	Y�{�Y?/ Ɠ>i�{�Y?/ �m�0�}O�	Y�{{�M��l / Kris / Susie / Lancer�?
+[PASS] A15 �m+hkfYt�P+u"R����[T�(1�ᆒxO�W�~��Z"(��RZ"�'1�[ɓ�q}Z�@��W|m6l� � V�(h�W�t�`~uJ��`� �c}
+[PASS] A16 `m+haq��?w�D�A~,��cC~Z�|\sS"igk"k\m6[}X��q�} ch4 (��RsrG��QIl�A%�Yȓ4s}�m�q�i`m(h� Dxr(��RuogZ6a}
+[PASS] A17 �t�q6^R���0}�m+hkfYt�PwVZ!AnO��Q6r���_v�"X:^9p?/ p;j0 / �t�~0 / ��,l�S / �~�mȕ 2~��?
+[PASS] A18 O�Y�i�m+hkf\my��X�0Q�i,a,��X�X�mɅ�v / Asgore / Noelle / Berdly / Rudy / Sans / Asriel�?
+[PASS] A19 �ib�k�m+hkfZ���\my��X�i,a,��'Wouxls / Seam / �ib�e�Lu^�?
+[PASS] A20 �~?5 �~�r�S�����9p6l�}�o�V}z��S�{�*[Wm / Flowery / �~��)|4dC�g	Z?/ Dess / ��WW�k��� �?
+[PASS] A21 �~?5 �~�r�["`m+h�k�tgB~"Y�E��`P�k}Z���|\�?Flowery (��R�S���T}�m�]�iO��Q1]��d��f�?
+[PASS] A22 �t�q6^R���0}�~?5 �~�r4U9p�	{Z���~e#��0�S�"X�wy�,� /u?/ �~:jv boss / Q�f� / ��d��f / �8u�t�Y3 !} / ŕ/a�h��WW�h�?
+[PASS] A23 �t�q6^R���0}persona ��?�m��Il"Y�D�X�~wO�b���\EP�m� �o�R}Z!An`m���}f�Hr�g���W`u0��d[�?
+[PASS] A24 �t�q6^R���0}�[�S�h"t��+uR�nbxet�b{/ĕF�Co`m?(��RZ[�ɅJ_\m?
+[PASS] A25 �YE��`�-l�iP�?��]�� + Op���iɓ�0!|�|\�|�Y�0� }\�Q"�X�uȓ	YbcT��� yO�uȓY-}"��a}
+
+=== B. main.py ���0�V�X.|.�zO�� + t|\��~M} ===
+[PASS] B1 chat_with_ai ���\de����y���Z~��zO�QX��q=v�rWser_msg = text�?
+[PASS] B2 chat_with_ai (�?system ɓ�0�V _build_persona_prompt()
+[PASS] B3 ��-a�R�Gl� b�[ system OpC�4Q�X	{P��]�i user ZXOS��]}�?
+[PASS] B4 ��ɅG_ recent�nWole==assistant (��R�]Y��cm�o�]}|m�r�|���0.r
+[PASS] B5 R��0� � Z��^An���]pV͓�\�W��$�}�m�e��Z����Y�P�S"�%1�`�m� T�B%�X�XZ~�t�OxV���Vqr�m�qˆ4ZxO!}�?
+[PASS] B6 ���]pV͓��O4dB��s\m�^��Z?
+[PASS] B7 _build_ai_context ig�em`m�0� -a�R�Gl� b}�o?
+[PASS] B8 _build_persona_prompt �t��W(��R(lē?persona �V"kO�&1�g
+[PASS] B9 _ai_chat_options ���_6} config (��RpV͓�\,_��?
+[PASS] B10 _ai_chat_options y�7ne��p�` 0.7 / 256
+[PASS] B11 _build_persona_prompt Y�F�de�~�Xw��M}�YA%��t2 {Y��z�?
+[PASS] B12 w�C��[�[� Y�D�{\m�00|5pEx=vO���deZ�|\�z�oAi�Y͓�_}_on_reply ��|\�{ig?_clean_ai_reply�?
+[PASS] B13 _on_reply 5pĉ�Y͓�_pn엢��N\m�U�i�[&}���0.r���m}/uP�	{�[@i�`��?�[�cB_�t?�?
+
+=== C. Hg�d�V���0.rt|\��X�`��?persona�~\�nR�5g{P�mT��YtH�� <�} ===
+[PASS] C1 markdown �[?��v͓�V��S��0�j
+[PASS] C2 t�\��\m�f_/�[�fde�~@��Xĕ?
+[PASS] C3 ��g�tR�Di0S��]}S��0�j
+[PASS] C4 Op�_�f�m�]��|m�0}1.5 J��]}
+[PASS] C5 w�H��hw�F��t^�SUY�E��WS��]]Y�?
+[PASS] C6 ��X[oo�����i^�SU +�?None
+[PASS] C7 �m?persona �~?��[��,a�t)�?z�` + recent �my�% +�?**G�tT0��Pc�**�%X�ie��p� � �?
+[PASS] C8 �m?persona �~?��[Bi:j�[ƕ�\�` + recent �my�% +�?**G�tT0��Pc�**�%X�ie��p� � �?
+[PASS] C9 �m?persona �~?��[��,a�t)�?z�` + recent �[�c�`9p?+�?None
+[PASS] C10 �m?recent Bi:j�[ƕ�\�`�X�`W�CZ��X��qqr��
+�}+�?None
+[PASS] C11 �~�#r�xv}Y�D�m�m� �mD�^_Y��Q}+�?None
+[PASS] C12 V�pT��[�f_S��0�j
+[PASS] C13 �m�^Z0|�?recent ��b	{���]�`(��R�/u?zm�o?+�?X��qqr��3lC~
+[PASS] C14 �~p��� +�?None
+[PASS] C15 None +�?None
+[PASS] C16 ȕ�p�t�~?��� +�?^g��t�~?���
+[PASS] C17 �ttT�f��E��g�1lan9p�p�f4d?.�?�mGZ�j�m�e�NY��0on͓�VcP�����q
+[PASS] C18 ���_T�$1�}ÓzO�jY�D�W��D��zZ�x}�m�]�i��Qg^_cm�n>|�?
+[PASS] C18b ē�q_�"X�kT�$1�}ÓzO�jZ�~\qrR��r^�X�u4Z,[anQ�y�G^ig?`*^gf�N��m�!|���gme)�?`�?
+[PASS] C18c ��Qg^_Y�E�An�m� �mE��ZY��\�Ycm?+�?R��0�h��,X}�t4OxV���Vqr�|\{O���`uR��0� � Z��\�w�?
+[PASS] C19 �t�q6^R���0}���_�t�c>~���\=v**X��qqr��Pc�**�X��t�o|d�t�	{K�?Y��0�淓�_=ÓzO�j"(��R�fY��0�}4d�q}
+[PASS] C20 9p!2Gnu�?+�?R��0�h��,X}"ȓ	Y�|�mXr_`m�0�^cm�r�kZ�Ki5}"��\ˆÓ!2An���]pV͓�u�w�[�R}
+[PASS] C21 Q��p�W +�?R��0�h��,X}"cm�n��m� �mG���wt� �Y3 7p%�?�?
+[PASS] C22 0c ���cjnS�?markdown �m*[�`�X�Y�~@i�[At-W�k9p!2Gnu��e�`͓��Z�[>i�}�?
+[PASS] C23 �t�q6^R���0}�YE�6rY��bvX��qqr��Pc��"X��ta�0�m�]�}�t��o�?
+
+=== D. R��0� � Z��^xV���Vqr�#X�my����N[akeCli�?===
+[PASS] D1 �h(h��R��0� � Z��^ 9p�pxV���Vqr�HWli.chat �t�Qde 2 Z&}
+[PASS] D2 ���]pV͓��O4d=��YBiHj}0.85 +�?0.95�?
+[PASS] D3 ���]pV͓�\+u��~\2]�m� �mG���	Z�f� �]A_�~?
+[PASS] D4 ȓ� X&l?UI (��R�i���]pV͓Θ�|˓�n}�m�]�it��m�[�Q�k��E�^_
+[PASS] D5 �Y3 7p�m��YZY�|�"X%e��p2��	Y	{Yt@�B_���]/v
+
+=== E. O��bme�t�]�Z��E�ye�~M}^g��hq�CZ�et?/ �~��[`m�0�|p*a���?===
+[PASS] E1 14 ɓ3 �S����v"�$1�}O�)14Q�~@��`�h�Ran
+[PASS] E2 �~��[`m�0�lZ�%Xjo�~p�{�m?T�$1�}��C�W4Z?Z�}\�`
+[PASS] E3 ^g��S����v(��R�a�m^�W9p3l���Y?X��~^O��bme�t�]�`S�A%�t .�?allowance"
+
+=== F. ig/a�ÓX�S��{ Modelfile ===
+[PASS] F1 `m�d1|�i?j{ᰕ�]�u���V�` ralsei �~�W�Y3 7p�?vN��\�Xȓ�k4d�f����m�,Up�}\I_�?
+[PASS] F2 `m�d1|�i?j{ᰕ�]�u/u?options�qWemperature/max_tokens�?
+[PASS] F3 config_manager �i?j{�J�Nq�`�Y�0+u options�X�gAtoTde����{ē�V~�oEipV͓�\,_��.^}
+[PASS] F4 ralsei.modelfile p:jjn
+[PASS] F5 Modelfile P�k4� num_ctx 8192�?v1 �~�cP|m,l�b#��0��Y��P�f�}\g_s��Nlo Modelfile�?
+[PASS] F6 Modelfile P�k4� repeat_penalty�X�`�mOZ}
+[PASS] F7 Modelfile ȓ	Y{Y�E�An�m� ɓ?FROM�X3|4dD2]`mE�g_|m-l|eigk�zt�\}a�%�m�]�b�Y��Scm�d�Xȓ
+�}
+[PASS] F8 �m�o�t���]�uÓ5g	{|m-l�z�~?options�EWpi_config p@iT/u?options�?
+
+=== G. ^gb�}^p�P�Y��zOx���U}_build_ai_context (��R�Y��xO[_�[�R} ===
+[PASS] G0 X0 w�E����,l�`�[�f_(�?needle f�?code_only_src �mBZ@~��`�`�~R`� xOjn code_no_comment �mCZ�X���n�}R�?
+[PASS] G1 `m�]�N��-a�R�Gl� b}�o��}S7 Ó5g,U�tm�{(��Rxr�[�_}�m�]����xv}
+[PASS] G2 �~�`�Y/Wi�0�0R��U0�X	{P��]g_ȓ?cm?�m� �YO�}
+[PASS] G3 ^gb�}�5�� �O0}f�'1esY�D�{ / f�&1�ȕm�{ / �tg�Y / ��Y�` ��b0}�tQg�Vɓ?
+[PASS] G4 t���U����i���qe^gb�}ÓX�h��k��m"��q}>30 R��Uc���]A_�|\	{�tB%h�,[�[�?
+[PASS] G5 OpC�4Q/u?R��� -aooG�?(��Rde	Z�f�[ɓ�q}Z�@��W�Y3 7p|m-l�Y�5�� xO�}ZmT]G�[��Vɓ�0}
+[PASS] G6 chat_with_ai ē?�m��Il�[� Y�F�iX[�W"(��Rne�m� P�kcP�|\{P�kjn api_enabled R��0�g�m*[�X�X�S AI �m�q��t.^}
+[PASS] G7 t|\��~M0}cm�^?|T�?+ cm�^�0Wi�an(��RX~\m�U{�m+[�g
+[PASS] G8 t|\��~M0}�~gR���o?+ �~kjn�~@i[_�m?+ �mnTmn\m�c�Y�|\{ɓ��XQf�?
+[PASS] G9 t|\��~M0}"R�3l�Nig?�m?�mnTmn\m�c�Y"\m�c�g�X	{|m,l�`Ó���V�.^}
+[PASS] G10 t|\��~M0}��Y�`Ó5g	{P��]�Y"f�(1ˆT�?�X�`�m� `mLu�Y��zO�k|m:j�S�~M}
+[PASS] G11 t|\��~M0}p.a���q{�5�� xOXw��C�Sp��{�m�]�Y�%Xdo�i@j�j�~M}�|\�|ē� -a�R�Gl� b��
+
+=== H. 5pEx=v��Pc�w���\��tX[�zW��f� �]�S4d�f4^�~!S}d4.2�?===
+[PASS] H1 _clean_ai_reply ���\an(��R�v"�$1!|Q��p�Wi�}P�k��\m�U}
+[PASS] H2 _clean_ai_reply ���\an(��R�v"�$1!|9p!2Gnu��ei�XSU5p�!|�?
+[PASS] H3 R��0A]�m�^(|`mX|d�t��S"�%1�`�m� `m�e}`m?modules.event_speech 5pNq�S�?
+[PASS] H4 Y��]�`��C�W�nkain.py ��~\�uȓY��\m|\$U�~}O��t��}R��0A]Y�E�An event_speech �m� �o�R}
+
+=== J. ��]��Y�E��}(��R4^�~!S}��?persona �m�]D��|\,U.��OwV��E��V�o�R�{|m,lB_kh�6[} ===
+[PASS] J1 O��n3|\m?���m�^angZ,a�`Y�E��}�gWersona �t�Q0�t�0i�m�]0}��� e�?�m��Il"ÓCJ_\m6[}
+[PASS] J2 t|\��~M0}P��u�` + Z��]�t�m�0oo�t��}��Nq�V(��R{�m+[�g��~\�uȓ?�m��Il"
+[PASS] J3 Y��]�`��C�W�-l�Y��G��}�� 2m"�m��Il"Z��^}J2 (��R�W���� 9p�p0}Y�<ji[�#X	vē?J2 ȓY�XR����Y�?
+[PASS] J4 e��pB~g�Ci�k who ͓�V7�ē?cm?�X	{ē?�m��Il"�Y}�m�e	{P��]["�m��Il"0��d[�?
+[PASS] J5 w�C��[�[� Y�G��k prompt "�?5pĉ�g"�X	{P��]��"�m��Il�m��Yɓ�0�Xcm?�?
+[PASS] J6 ��E��gP��|�t�0�}��|\�[\m4s0}���]V~�~�~ku#�kW�y��S#r�t.^}Õ�S!}��C��z��X[oow�H��hw�F��t�?
+
+=== K. �m+hkfYt�P�[Ǖ� Y��m�X	{P��]!v^g���S�tO1}�~�b=v�h;j�X���[cc�?===
+[PASS] K1 �m+hkfYt�P��V�Q`m?persona /ud%S��]}�~�V�X	{P��]!v^g���S�tO}
+[PASS] K2 Y��]�`��C�W�,l�`�m� ��ĉ��V 9p�p�`R���!| ralsei_worldview.md�X	{ē�f�R��r^�?
+[PASS] K3 persona /ud%cm�d�[m�{ĕ�]}�m+hkfYt�P)Q��T�` < 10KB�?
+[PASS] K4 �m+hkfYt�P�P�[�fr_YtF�=pQ�?.�? �mD�ao�X!vg�EiXQȓY#r�~�S{Yt@�B_�t�]}
+[PASS] K5 t|\��~M0}���W�m+hkf/4d�UT/Dess/f�nbcP��\XQY��mR�g��4d�eEPg�?
+[PASS] K6 �t�q6^R���0}6��N�"X�u/Z��Q�|�m,X}�m�]k_e��pbccm�f{#��\G�g�Ki}�m�] ��/a=v�hHj}
+[PASS] K7 �m� Z!6n�o,lk_e�?2 g�Ki}�m?persona"�m� Z3 �WJ��cJ0�o?Z�~\.|�?
+[PASS] K8 Ó�r�a�m_�i recall_text ig�em�~p����X	{��cGqg�Ci O��n3|�?
+[PASS] K9 chat_with_ai *��q�k�t�Qde\m�U{#��\G�Y��m�|\{ lean Ó�`�pig?
+[PASS] K10 Y��m�Y3 ao�m?import `m���}$i-W0mP�nTg�?/ Qt�X�W�o*[�[�$�}
+
+=== L. O�]��UZ�eX~�#Xcc�o+[�i���c,憒wO�O`m�[�m�]r_YtuO� }O�w�[�RAn4d�_} ===
+[PASS] L1 �t�\P�YD��}ē?9pk�� �f�W�o?�X	{ē�EnY�([� wO	{ē?��buoĕC��}"�?
+[PASS] L2 UZ�eX~�t��}�m�^de���\+^�t�o�`4d�_}9pk�� �f�W�o?+�?�m�]�R�o3l�� +�?��!2�S�?+�?ȓ*[8_�?
+[PASS] L3 kh�,[�kO�]��Z8uwV**Z!An��g�t**�X�O`m�[ē�4U��)1zV�|\	{�tLkX~��.aZ0�t�]}
+[PASS] L4 O�]��Z8uwVZ!An�YD��}͓�Vv�IWistrust/guarded/warming/friend ��b	{Q�y�G^�?
+[PASS] L5 O�]��Z[�+u"R���Y9p�Q�}�t�o}�t?(��R��`m�0}Z�@��W�Y3 7p|m,l�^Q�p��O`m�[�?
+[PASS] L6 t|\��~M0}9pY�S�t@%�O`m��{W��V� xO�a`m?�t���}�tA%`u�m.[�j�X�t�q�W5pxv}
+[PASS] L7 p:jjnW��f�uZ%1�{�mGZ�j�X�zZ2 0|T�$1	{Y��XQ��BZ�S�~�~�ZJZ&}
+[PASS] L8 Hg-Wkf�-l�[R�4O
+0�m�]�y TRUST_MAX��\|zR�g3|�m�]�}\m?0�HWlamp �m�0lகLuSe��,X}
+[PASS] L8b Y��]�`��C�W�hkarsh *��q�ks����Y�m2 bc4d@�^R��bcc���{�m6[}�m�]�i�Y��(|`m��}
+[PASS] L9 �mnTmn\m�c�YZ��^�O`m�m���e}P��u�`|m3l��O�]��Y�:jsV�?
+[PASS] L10 Hg�d�SR��U���,lhu��?[�b�b/�oɅ��/œ�� 6l�hq�GZXQR��U�}5p?
+[PASS] L11 chat_with_ai *��q�k�t�Q!|O�]���t�bY�m�^�S�~�~�ᷓ|Q4^�|\{ lean Ó�`�pig?
+[PASS] L12 O�]��9p�p�}"�?App ��yOAn�X�W�o*[�[��~\�[�m?self.relationship�?
+[PASS] L13 �t�q6^R���0}persona ��~\�uȓ
+YSU�Y?�[,��|ē�EnY�?�m� �t�\�}+�� "(��Rdo��xO�S�~�^_
+[PASS] L14 persona �oHr�i"O�]���m�]�i9p-l4�(��R� wO�NY�>��|(��REPY��0�Q�?
+[PASS] L15 O�]���Y3 ao�m?import `m���}$i-W0mP�nTg�?/ Qt�X�W�o*[�[�$�}
+[PASS] L16 main.py 5ppt�S�~�~g�DiˆY�� 
+Y��O��0}�o���ĕ�]���|\	{�?z�`T���}
+
+============================================================
+��fx� 129 $ixv}��3lC~ 129�}\Q0�t?0

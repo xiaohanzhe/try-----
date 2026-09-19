@@ -39,6 +39,11 @@ PEOPLE = {
     'Gerson': [r'\bGerson\b'],
     'Knight (骑士)': [r'\bKnight\b'],
     'Rudin': [r'\bRudin\b'],
+    'Seam': [r'\bSeam\b'],
+    'Napstablook': [r'\bNapstablook\b'],
+    'Mettaton': [r'\bMettaton\b'],
+    'Sans': [r'\bSans\b'],
+    'Asriel': [r'\bAsriel\b'],
 }
 
 # 世界观概念
@@ -82,7 +87,13 @@ lines.append('来源 : %s' % os.path.basename(CORPUS))
 lines.append('规模 : %d 条 Ralsei 台词（output 侧）/ 章覆盖 = %s' % (
     len(rows), sorted(set(r['chapter'] for r in rows))))
 lines.append('')
-lines.append('-- 人物：他自己说到过（output 命中条数 / 853）--')
+lines.append('!! 覆盖缺口（2026-09-19 补记）：本语料**只到 ch4**，ch5 一条都没有。')
+lines.append('   ch5 于 2026-06-24 发售（本机时间 2026-09-19，已发布约 3 个月）。')
+lines.append('   所以下面所有计数都只代表"他 ch1–ch4 会说谁"——写 ch5 人物（Flowery / 七色花 /')
+lines.append('   Asgore 花店 / Dess 线）时**不能**用本文件的计数做依据，必须另找来源（官方 wiki / 攻略）')
+lines.append('   并在 persona 里按"他记得"的口吻写，不要细讲关卡。')
+lines.append('')
+lines.append('-- 人物：他自己说到过（output 命中条数 / %d）--' % len(rows))
 for name, pats in sorted(PEOPLE.items(), key=lambda kv: -count(kv[1], outs)):
     lines.append('  %-22s out=%3d   in=%3d' % (name, count(pats, outs), count(pats, ins)))
 

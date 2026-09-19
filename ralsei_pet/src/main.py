@@ -344,6 +344,38 @@ except Exception as _e:  # ImportError / 依赖缺失 / 模块内异常
     SearchSummarizer = None
     _log.warning("联网搜索摘要模块不可用（缺少 beautifulsoup4？已降级）: %s", _e)
 
+
+# 关系演进（第二十轮）：可选导入 —— 与上面 search_summarizer 同一条纪律。
+# 关系模块挂了不该让整个程序起不来，退化成 None（链路里所有取用处都有 None 判断）。
+try:
+    from modules.relationship import Relationship as _Relationship
+except Exception as _e:
+    _Relationship = None
+    _log.warning("关系演进模块不可用（已降级为无关系态）: %s", _e)
+
+
+def _make_relationship():
+    """造一个关系实例：存盘路径走 data_store（唯一存储入口），取不到就退内存态。
+
+    为什么不在模块里直接 import data_store：data_store 会反向依赖 memory 层，
+    而关系模块要在启动早期可用 —— 这是**初始化环**，本项目已踩过 4 次。
+    所以路径由**调用方注入**（与 event_speech.py「禁止 import 项目内模块」同源）。
+    """
+    if _Relationship is None:
+        return None
+    path = None
+    try:
+        import data_store
+        path = data_store.app_file(RalseiPet.RELATIONSHIP_FILE)
+    except Exception as e:
+        _log.debug("关系存储路径不可用，改用内存态: %s", e)
+    try:
+        return _Relationship(path=path)
+    except Exception as e:
+        _log.warning("关系模块初始化失败（已降级为无关系态）: %s", e)
+        return None
+
+
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
@@ -575,6 +607,11 @@ class RalseiPet(QMainWindow):
         self.energy_hunger = EnergyHungerSystem(self)
         self.emotion_system = EmotionSystem(self)
         self.memory_system = MemorySystem(self)
+        # 关系演进（第二十轮）：信任度 = **内部**评估量，绝不对用户显示。
+        # 存盘走 data_store（唯一存储入口）→ E 盘优先，取不到退内存态，绝不抛。
+        # 为什么由 App 持有而不是放进 persona：persona 是**静态**的（每次读出来一样），
+        # 而关系必须随相处**变化** —— 静态提示词写不出"从戒备到朋友"。
+        self.relationship = _make_relationship()
         self.customization_system = CustomizationSystem(self)
         self.social_growth = SocialGrowthSystem(self)
         self.entertainment_system = EntertainmentSystem(self)
@@ -5104,12 +5141,12 @@ class RalseiPet(QMainWindow):
 
         if user_requested:
             prompt = (
-                "（主人主动来找你聊天了，你先开口打个招呼吧。"
+                "（对方主动来找你聊天了，你先开口打个招呼吧。"
                 "简短地说一句话即可，只输出这一句话。）"
             )
         else:
             prompt = (
-                "（主人有一阵子没说话了。你可以主动开口，简短地说一句话——"
+                "（对方有一阵子没说话了。你可以主动开口，简短地说一句话——"
                 "问问他好不好、说说你此刻的小心情，或者随口闲聊都行。"
                 "只输出这一句话，不要说别的；如果实在没什么想说的，就只回复一个「。」）"
             )
@@ -7515,6 +7552,64 @@ class RalseiPet(QMainWindow):
         if _recall and not lean:
             system = system + "\n\n" + _recall
 
+        # 初始记忆（第二十轮）：世界观**不再常驻 system 前缀**，改成按需召回。
+        # 用户口径：「没必要每次让他说话的时候都读取完整的世界观啊，可以按照语言的
+        # 关联性去单个读取或是一定范围内读取，就和咱那个记忆系统一样，或是说这个
+        # 世界观本就是他自己自带的初始记忆」。
+        # 收益有两层，第二层更要紧：
+        #   ① 常驻前缀 ~4380 → ~2800 tokens；
+        #   ② **保 KV 前缀缓存** —— 世界观原是 system 中部的固定长文本，
+        #      它一抽掉，骨架前缀更短且更稳，Ollama 复用的那一段更不容易被打断。
+        # lean（事件台词）跳过：事件是 ≤24 字的触觉反应，聊不到"黑暗喷泉"这类话题，
+        # 而它每轮都要跑一遍词表匹配 —— 省下的 prefill 比省 token 重要。
+        # 失败一律静默：召回不到就当这轮没聊到那边（返回空串），绝不让链路掉线。
+        try:
+            _wv = ""
+            if not lean:
+                _wv = getattr(self, '_worldview_recall_text', None)
+                if not callable(_wv):
+                    from modules import worldview_recall as _wr
+                    _wv = _wr.recall_text
+                    self._worldview_recall_text = _wv
+                _wv = _wv(text, limit=2)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            _wv = ""
+        if _wv:
+            system = system + "\n\n" + _wv
+
+        # 关系（第二十轮）：把**当前档位**变成一句话挂进 system。
+        # 位置刻意在所有"临时状态"（【此刻】/话题锚/回忆/想起的事）**之前** ——
+        # 关系比这些变化得慢得多，放在前缀更靠前的位置，跨轮更容易保持逐字相同，
+        # KV 缓存复用得更长（Ollama 只复用"从头逐字相同"的那一段）。
+        # lean（事件台词）跳过：事件是 ≤24 字的触觉反应，装不下"态度的差别"，
+        # 而且它每轮都要重算 —— 那正是 S7 首字兜底要避开的东西。
+        # 记账也放在这里：**只有真发起了一轮对话才算一次相处**（见下）。
+        _rel_brief = ""
+        try:
+            _rel = getattr(self, 'relationship', None)
+            if _rel is not None and not lean:
+                # 先记账再取 brief：这样"这一轮"的影响立刻体现在语气上，
+                # 而不是延迟一轮（用户能感知到的延迟 = "他反应慢半拍"）。
+                # 事件类型由轻量规则判定（modules/relationship.classify），
+                # 确定性、可回归；判错也只是多涨/少涨一点点，不会走样。
+                from modules import relationship as _relmod
+                _ev = _relmod.classify(text)
+                _old_st, _new_st, _delta = _rel.note(_ev)
+                _rel_brief = _rel.brief()
+                if _old_st != _new_st:
+                    _log.info("[关系] 档位变化 %s → %s（%s）",
+                              _old_st, _new_st, _rel.describe())
+                try:
+                    _rel.save()
+                except Exception as e:
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            _rel_brief = ""
+        if _rel_brief:
+            system = system + "\n\n" + _rel_brief
+
         def _emit_delta(piece):
             """把一个分片投递到主线程（工作线程绝不直接碰 UI）。
             piece 为 None = 作废已显示内容（护栏判退 → 重采样）。"""
@@ -7648,17 +7743,17 @@ class RalseiPet(QMainWindow):
             if _last:
                 _idle = time.time() - _last
                 if _idle > 1800:
-                    parts.append("主人已经很久没跟你说话了")
+                    parts.append("你有很久没跟对方说话了")
                 elif _idle < 60:
-                    parts.append("主人刚跟你说过话")
+                    parts.append("你刚跟对方说过话")
         except Exception:
             pass
-        # 记忆：用户偏好（如果有），让 Ralsei 记住主人喜欢聊什么
+        # 记忆：用户偏好（如果有），让 Ralsei 记住对方喜欢聊什么
         try:
             if getattr(self, 'memory_system', None) is not None:
                 _name = self.memory_system.get_user_preference('user_name', '')
                 if _name:
-                    parts.append(f"主人的名字是{_name}")
+                    parts.append(f"对方的名字是{_name}")
                 _prefs = self.memory_system.get_user_preferences_summary()
                 _topics = [p[0] for p in _prefs[:2] if p[1] > 0.5]
                 if _topics:
@@ -7682,15 +7777,36 @@ class RalseiPet(QMainWindow):
     #   ③ 【此刻】拼进用户消息，被模型当成"用户说的话"
     #   ④ num_ctx 只有 ~2048，人设+历史+记忆被静默截断
     # ==================================================================
+    # ==================================================================
+    # 第二十轮 · 关系演进（用户口径："关系是一步一步搭起来的，不是一开始就是朋友"）
+    #
+    # 要害只有一句：**关系不能写在 persona 里**。persona 每次读出来都一样，
+    # 而关系必须随相处变化 —— 静态提示词写不出"从戒备到朋友"。
+    # 所以信任度由 App 持有（modules/relationship.py），每轮按互动增减，
+    # 每轮把它**当前档位**变成一句话挂进 system。
+    #
+    # 三条不能破的约束（都有回归锁）：
+    #   ① **起始是戒备**（TRUST_INITIAL=0.12 → distrust 档），不是"我来陪你"；
+    #   ② **信任度不可见**：数值绝不进提示词，只给"这个阶段是什么态度"的行为指令
+    #      ＋ 一句显式禁令（否则 4B 一定会说"我现在信任你 60%"）；
+    #   ③ **演进是离散四档**（害怕戒备 → 不愿多说 → 慢慢熟 → 朋友），顺序不许换。
+    # ==================================================================
+    RELATIONSHIP_FILE = 'relationship.json'
+
     # 角色设定相对路径（相对 src/ 的上一级，即仓库内 ralsei_pet/assets/）
     PERSONA_REL_PATH = os.path.join('assets', 'ralsei_persona.md')
 
     # 兜底人设：persona 文件缺失/读失败时使用，保证对话链路不因人设丢失而失常
+    # ⚠️ 这份兜底**必须和 assets/ralsei_persona.md 的关系口径保持一致**（平级、无使命），
+    # 否则 persona 一旦读取失败，模型会立刻退回"主人/陪伴任务"那套旧叙事 ——
+    # 而这条退化路径在正常运行时**看不见**（A 组锁测的是真源文件，不是这份字符串）。
     _PERSONA_FALLBACK = (
         "你是《Deltarune》中的 Ralsei：温柔、善良、害羞、体贴的和平主义者。"
-        "你现在住在主人的 Windows 电脑桌面上；主人是真实世界的人，不是 Kris。"
+        "你现在在这台电脑的桌面上，谁也没有非让你来不可的理由 —— 你就是来了，仅此而已。"
+        "在屏幕另一头跟你说话的人和你是平级的，不用叫他\"主人\"，也不用替他操心什么；"
+        "他有名字就叫名字，没名字就说\"你\"。"
         "\n\n【说话方式】一次只说 1~3 句，像真人在聊天框里随手打字，"
-        "不要分点、不要小标题、不要总结；先接住主人这句话里的情绪和具体那件事，"
+        "不要分点、不要小标题、不要总结；先接住你这句话里的情绪和具体那件事，"
         "再补一句自己的感受；不要每句都问“你还好吗”；不要说自己是在扮演 AI。"
     )
 
@@ -7784,11 +7900,17 @@ class RalseiPet(QMainWindow):
 
     @classmethod
     def _role_marker_re(cls):
-        """自问自答续写标记（「主人：」「你：」「Assistant:」…）的正则。"""
+        """自问自答续写标记（「你：」「Assistant:」…）的正则。
+
+        注意 `主人` 仍留在候选里：它**不是**为了让模型自称主人，而是因为
+        旧人设/旧记忆里可能残留这个词，模型续写时仍可能吐出「主人：」这种
+        角色标记 —— 截断闸必须认得它，否则会漏掉一整条自问自答。
+        （人设已改为平级口径，见 assets/ralsei_persona.md「我现在在哪」。）
+        """
         if cls._AI_ROLE_MARKER is None:
             import re
             cls._AI_ROLE_MARKER = re.compile(
-                r"(?:^|[\n\r])\s*(?:主人|用户|你|Ralsei|ralsei|Assistant|User|Human)"
+                r"(?:^|[\n\r])\s*(?:主人|对方|用户|你|Ralsei|ralsei|Assistant|User|Human)"
                 r"\s*[：:]")
         return cls._AI_ROLE_MARKER
 
