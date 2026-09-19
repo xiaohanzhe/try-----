@@ -333,7 +333,7 @@ from modules.sound_manager import SoundManager
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
-                                  first_sentence)
+                                  first_sentence, strip_action_parentheticals)
 # 联网搜索摘要：依赖 beautifulsoup4。改为"可选导入"而不是整段注释掉——
 # 原写法让整个模块变成永远不可达的死代码（需求"能上网"缺一环），
 # 且一旦有人取消注释而环境没有 bs4，程序会在 import 期直接崩溃。
@@ -7815,6 +7815,15 @@ class RalseiPet(QMainWindow):
           1) 行首数字列表标记：收到 `1` 时代码看不出它是列表标记（还没等到点号后的
              空白），已经显示出去了；等 `1. ` 到齐才被剥掉。
           2) 角色标记跨分片：`主人` 先到、`：` 后到，前半段已经显示出去。
+
+        **第三个非单调情况是有意留在收尾层的**（2026-09-19 加）：句中「（括号动作）」
+        的删除（见 `_clean_ai_reply` 的 0b）**故意不在这里做** —— 删掉句中一段文本
+        天然不前缀安全（`（轻轻敲` 已显示、`)` 到齐后那一段才消失），
+        而且这里若按"删除未闭合括号之后的内容"来保前缀安全，会误伤
+        Ralsei 用括号讲心里话的正常写法（原作 26/853 条以括号开头）。
+        代价：极少数（探针实测 1/34）回复的括号动作会在**收尾那一刻**被摘掉，
+        屏幕上表现为那一段闪一下；收益是正式台词里不再出现舞台指示。
+        若将来这条闪现被用户点名，再把它提升到本函数里做（届时需要改 C10 的边界清单）。
         """
         if not isinstance(text, str):
             return ""
@@ -7841,7 +7850,11 @@ class RalseiPet(QMainWindow):
         """模型输出护栏（对话与自主开口共用）。返回清洗后的文本，或 None。
 
         3B 小模型的四种已知失态靠提示词治不干净，必须在这里拦：
-          0) **markdown / 格式残留**：实测会输出 `**加粗**`、`- 列表` 等 —— 对话框是
+         0a) **句中括号动作旁白**（2026-09-19 加）：会吐「（轻轻敲了下键盘）」这类
+             舞台指示 → **只删那一段**（判据与取舍见 `strip_action_parentheticals`）；
+             删干净则判无效。规则只命中"括号内以动作/发声动词开头"的那一类。
+             ⚠️ 这一步**必须排在 0b 之前**（星号版的星号会被 0b 吃掉，见下方实参处注释）。
+         0b) **markdown / 格式残留**：实测会输出 `**加粗**`、`- 列表` 等 —— 对话框是
              逐字打字机渲染，这些标记会原样显示出来，必须先剥掉
           1) **自问自答续写**：回复里冒出「主人：」「你：」「Assistant:」等对话标记
              → 截断到标记之前（实测 temperature 0.9 时 4 题里 2 题这么跑飞）
@@ -7863,7 +7876,22 @@ class RalseiPet(QMainWindow):
             t = reply.strip()
             if not t:
                 return None
-            # 0) 剥掉 markdown 强调/列表标记（对话框不做 markdown 渲染）
+            # 0a) **先**删句中夹带的「括号动作旁白」（2026-09-19 加）
+            #     ⚠️ 顺序是硬约束：**必须在剥 markdown 之前**。星号版的旁白
+            #     （实测真出现过 `*轻轻敲了敲键盘*`）若先过 `_md_strip_re`，
+            #     那对星号会被吃掉，只剩 `轻轻敲了敲键盘` 这段**裸旁白** ——
+            #     既认不出是动作旁白，又更像一句真台词，比不处理更糟。
+            #     为什么删而不整句作废：动作旁白通常只是句子的装饰
+            #     （「（小声）其实我很害怕。」），整句作废要重采样、白等一两秒还未必更好。
+            #     为什么不一刀切禁括号：Ralsei 原作里括号是他的正常表达手段
+            #     （853 条里 35 条含括号、26 条以括号开头），见
+            #     `code-quality-audit/人味改造-2026-09-18/_evidence/paren_usage_2026-09-19.txt`
+            #     与命中/误伤量化 `_evidence/paren_gate_2026-09-19.txt`。
+            #     删干净（整句只有一个括号动作）→ 判无效，与其它判退走同一条重采样路径。
+            t = strip_action_parentheticals(t)
+            if not t:
+                return None
+            # 0b) 剥掉 markdown 强调/列表标记（对话框不做 markdown 渲染）
             #    规则与流式显示**共用同一份定义**（见 _md_strip_re / _sanitize_partial_reply）
             t = RalseiPet._md_strip_re().sub('', t).strip()
             # 去掉模型爱加的包裹引号/书名号

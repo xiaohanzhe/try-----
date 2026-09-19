@@ -231,6 +231,39 @@ ok('A21 旁白闸：句首括号/星号 = 舞台指示，不是"对主人说的�
    and all(E.guard_reaction(x) == x for x in _banned_ok),
    [x for x in _narr if E.guard_reaction(x)])
 
+# —— A22：句中「括号动作」闸（2026-09-19 加；补 A21 **只看句首**的洞）——
+# A21 的洞：`looks_like_narration` 只查首字符，所以「（歪着头）」拦得住，
+# 而「嗯…（轻轻敲了下键盘）我也是这么想的。」**原样放行** ——
+# 探针把这类单列成「括号动作」标记后实测确实出现过（见 _evidence/paren_gate_2026-09-19.txt）。
+_PAREN_REAL = [
+    ('嗯…（轻轻敲了下键盘）我也是这么想的。', '嗯…我也是这么想的。'),
+    ('（小声）其实我很害怕。', '其实我很害怕。'),
+    ('（歪着头）你好呀。', '你好呀。'),
+    ('诶？（挠了挠头）我没听懂。', '诶？我没听懂。'),
+    ('（叹了口气）也行吧。', '也行吧。'),
+    ('嗯……（停顿了一下）我没事。', '嗯……我没事。'),
+]
+ok('A22 句中括号动作：**只删那一段**再把剩下的台词放行（不是整句作废）',
+   all(E.strip_action_parentheticals(a) == b and E.guard_reaction(a) == b
+       for a, b in _PAREN_REAL),
+   [(a, E.strip_action_parentheticals(a)) for a, b in _PAREN_REAL
+    if E.strip_action_parentheticals(a) != b])
+ok('A22b 整句只有一个括号动作 → 删干净 → 判退（返回空串）',
+   E.strip_action_parentheticals('（歪着头）') == ''
+   and E.strip_action_parentheticals('*叹了口气*') == ''
+   and E.guard_reaction('（歪着头）') == '')
+# 负控制：括号讲心里话是他**正常**的表达手段（原作 853 条里 35 条含括号、26 条以括号开头），
+# 补洞不能顺手砍特征 —— 这几条必须一条都不动。
+_INNER_PAREN = ['（其实我有点怕）', '其实……（我想想该怎么说）', '（……我是不是又说错话了）',
+                '（抱歉，我不是故意的）', '（笑不出来）', '（因为……我一直都是一个人）']
+ok('A22c 负控制：括号讲心里话**一条都不动**（只抓"动作词开头"的那一类）',
+   all(E.strip_action_parentheticals(x) == x for x in _INNER_PAREN),
+   [x for x in _INNER_PAREN if E.strip_action_parentheticals(x) != x])
+ok('A22d 两道闸分工明确：句首括号的**整句叙述**仍由 looks_like_narration 作废',
+   E.guard_reaction('（我扶着墙站了起来，拍拍身上的尘土。）') == ''
+   and E.strip_action_parentheticals('（我扶着墙站了起来，拍拍身上的尘土。）')
+   == '（我扶着墙站了起来，拍拍身上的尘土。）')
+
 # ================================================================ B
 section('B. main.py 接线')
 

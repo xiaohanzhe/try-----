@@ -1,0 +1,52 @@
+== Ralsei 原作台词 · 括号用法量化（ralsei_lora_corpus.jsonl）==
+样本条数 = 853
+
+含括号/星号的条数          = 35  (4.1%)
+其中**句首**就是括号的条数  = 26  (3.0%)   <- 现有 looks_like_narration 会整句作废
+   · 句首括号 + 括号内开头是动作词 = 0   <- 新规则会判为旁白（期望）
+   · 句首括号 + 不是动作词         = 26   <- **这些是他的心里话**，新规则应放行
+
+—— 句首括号但**不是**动作词的样本（新规则必须放行的那一批，最多列 25 条）——
+    (Kris, if it's for friendship...) Well then, we'll gladly help. What shall we do?
+    (Kris, tell Susie what to do.)
+    (Come now, Susie!) I'm glad you're starting to realize, Mr. King... None of us really want to fight. If you can just tell us about your worries... I'm sure we can all be friends, Mr. King!
+    (Kris, I have something...)
+    (I need you to return to the light World...)
+    (And go to the old classroom, t- the EAST of the closet doors.)
+    (Inside, gather everything on the ground.)
+    (And bring it back here. Could you?)
+    (Kris, as you bring Dark World Denizens back here...)
+    (The power of our Fountain...)
+    (Will transform this town more and more.)
+    (From now on, the enemies we SPARE...)
+    (Will be RECRUITED to our town.)
+    (So let's keep SPARING enemies, okay?)
+    (I think she likes it, Kris!)
+    (I... I'm sorry, Kris...)
+    (Enemies you SPARE get RECRUITED to our town, remember?)
+    (Y-you think of me as more than a lackey...?)
+    (I... I'm a little nervous...)
+    (I think we use that machine on the right...?)
+    (I'll... just try to sing as loud as I can...)
+    (Kris, it looks like you can use the MAUS with the MOUSE...!)
+    (Um... there isn't.)
+    (... Susie... is nice, isn't she, Kris.)
+    (Approaching from the shadows)* * ...
+
+—— 句首括号且开头是动作词的样本（新规则会拦，最多列 25 条）——
+
+—— 括语出现在**句中**的样本（现有闸抓不到；新闸要处理的那一类，最多列 25 条）——
+    "(... Kris, let's just go wherever Lancer... DOESN'T go???)"
+    "(Seems she doesn't know the right way either, Kris...)"
+    Look, Susie! *A candy tree!
+    [Serious]* All we have to do is climb up this...
+    [Suprised]* ... huh?
+    [Suprised]* The... the Knight...!
+    [Horrified face]* SUSIE, WAIT!!
+    [Horrified face]* SUSIE, DON'T LOOK--
+    [Eyes wet, smile visibly forced, sprite trembling]* I'm smiling!
+
+整句**只有**一个括号动作的条数 = 0（删掉后会变空 → 走判退）
+
+计数说明：以上是**语料条数**（已按说话人切分），不是原作全部行数；
+          「含括号」包含 Ralsei 用括号讲心里话的正常用法 —— 这正是不能用一刀切的原因。

@@ -312,6 +312,27 @@ ok('C17 超长截断：真实长度 ≤ 上限且以句末标点收尾',
    bool(LONG_OUT) and len(LONG_OUT) <= R.AI_REPLY_MAX_CHARS and LONG_OUT[-1] in '。！？!?',
    'in=%d out=%s last=%r' % (len(LONG_IN), len(LONG_OUT or ''), (LONG_OUT or '')[-1:]))
 
+# —— C18/C19：句中「括号动作旁白」（2026-09-19 新增的 0b 步）——
+# 样本来自探针归档的真实输出（_evidence/paren_gate_2026-09-19.txt，可复算）。
+_PAREN_IN = '诶、诶？晚安啊……你也是呀。（轻轻敲了下键盘）睡吧，梦里有星星的。'
+_PAREN_OUT = stub._clean_ai_reply(_PAREN_IN)
+ok('C18 括号动作旁白只删那一段（不是整句作废）',
+   _PAREN_OUT == '诶、诶？晚安啊……你也是呀。睡吧，梦里有星星的。',
+   'got=%r' % (_PAREN_OUT,))
+ok('C18b 星号版的动作旁白同样删掉（实测真出现过 `*轻轻敲了敲键盘*`）',
+   stub._clean_ai_reply('诶……不说话也行啊。我在呢。*轻轻敲了敲键盘* 要不要先喝点水？')
+   == '诶……不说话也行啊。我在呢。要不要先喝点水？',
+   repr(stub._clean_ai_reply('诶……不说话也行啊。我在呢。*轻轻敲了敲键盘* 要不要先喝点水？')))
+ok('C18c 整句只有一个括号动作 → 判无效（走重采样，与其它判退同路）',
+   stub._clean_ai_reply('（歪着头）') is None, repr(stub._clean_ai_reply('（歪着头）')))
+# 负控制：Ralsei 用括号讲心里话是他的正常表达手段（原作 853 条里 35 条含括号、26 条以括号开头），
+# 必须原样放行 —— 否则"补一个洞"变成"砍掉他的特征"。
+_INNER = '（其实我有点怕）'
+ok('C19 负控制：括号讲心里话**原样放行**（对话链路不做"句首括号=旁白"的整句作废）',
+   stub._clean_ai_reply(_INNER) == _INNER
+   and stub._clean_ai_reply('其实……（我想想该怎么说）') == '其实……（我想想该怎么说）',
+   repr((stub._clean_ai_reply(_INNER), stub._clean_ai_reply('其实……（我想想该怎么说）'))))
+
 # ---------------------------------------------------------------- D
 section('D. 判退后重采样（行为级，FakeCli）')
 

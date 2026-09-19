@@ -112,7 +112,7 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:<port> -c https.proxy=h
   **锁（改 persona 必须保住）**：A1–A11 + **A12 三条接法规则齐备** + **A12b 反向控制**（断言 `主人：`/`我：` 成对示范已移除）+ F1/F7。
 - **判退只能看"和自己最近说过的（recent）重复"**，不是"像 persona 示范"。**C7/C8 是防回退断言**。
 - **采样参数必须落 Modelfile**（`/v1/chat/completions` **静默忽略 `num_ctx` 与 `repeat_penalty`**）→ 参数 A/B 走原生端点。
-- **输出护栏 `_clean_ai_reply(reply, recent=)`**：markdown 剥除 → 自问自答截断 → 车轱辘话判退 → 超长截断；
+- **输出护栏 `_clean_ai_reply(reply, recent=)`**：括号动作 → markdown 剥除 → 自问自答截断 → 车轱辘话判退 → 超长截断；
   **判退后必须重采样一次**（不许直接丢弃）。**S8 流式**：`iter_lines(chunk_size=1)`（**这是流式收益的一半**）；
   流式只做"前缀安全"清洗，护栏负责"最终算数"；重采样前必须先 `_stream_reset()` 擦干净。
 - **S7 事件台词**：档位表 `modules/event_speech.py` 是**白名单**（没登记的行为完全不变）；唯一出口
@@ -140,6 +140,6 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:<port> -c https.proxy=h
   G2 ✅ / G3 ✅ / G4 ✅；**G1 改为"每项 PR 内做该项专属零引用筛查"**；**Wave 1 顺序 W1-3→W1-4→W1-1→W1-2→W1-6**
   （第一项 `GamesController`）；**Wave 1 旧行号区间已全部失效 → 开工前必须重跑 `scan_method_index.py`**。
 - **遗留**：① 真机肉眼确认（用户做：遮挡 / 上下动手感 / 边缘掉落不生气而关窗生气）② `climb_to_top_window()` 仍走裸窗口
-  ③ 程序目录 `.bak` 与 `code-quality-audit/` 编码告警存量未清理（等用户点头）④ **对话链路尚无代码级"禁说清单"兜底**
-  （`_clean_ai_reply` 一个字都不查禁语）；事件链路已补三道闸（§6），对话链路同类闸**未做** ⑤ S7 第二批剩余 ~11 处
+  ③ 程序目录 `.bak` 与 `code-quality-audit/` 编码告警存量未清理（等用户点头）④ **对话链路**已补 0a「括号动作」
+  闸，但**代码级禁说清单（客服腔）仍未做**；事件链路已补四道闸（§6） ⑤ S7 第二批剩余 ~11 处
   候选**不阻塞**、可做可不做。
