@@ -5295,8 +5295,18 @@ class RalseiPet(QMainWindow):
         return True
 
     def speak_event(self, kind, pool=None, face="happy", instant=False):
-        """事件台词唯一入口（S7）。三档行为见本节开头。"""
+        """事件台词唯一入口（S7）。三档行为见本节开头。
+
+        **`pool` 的两种语义（2026-09-19 用户决定「所有对话全权交给 AI」后新增）**
+        * 传了 `pool=[...]`：保留**内置台词**，AI 不可用/超时/判退时说出来。
+          （batch 1/2 的历史调用点都走这条，行为与改造前一致。）
+        * **不传（`pool=None`）**：**不给内置台词** —— 说不了就**不说话**，
+          宁可安静也不甩一句写死的台词。这是"全权交给 AI"的口径，
+          新迁移的台词一律走这条。返回值同样是 `""`（"这次什么都没说"）。
+        """
         canned = self._pick_event_line(pool)
+        # 有没有"内置台词可用"是后面所有退路的判据（空 = 允许沉默）
+        has_canned = bool(canned)
 
         def _note(text):
             # 说过的话都要进去重窗口 —— 包括**罐头**。只在 AI 分支记的话，
@@ -5319,19 +5329,31 @@ class RalseiPet(QMainWindow):
         self._event_speaking = True
         dui = getattr(self, 'dialogue_ui', None)
         state = {'said': False, 'streaming': False}
+        # 判退重采样只用一次（没有内置台词时才有意义，见 `_on_reply`）
+        _retried = [False]
 
-        def _say_canned():
+        def _fallback():
+            """AI 这条走不通时的退路（超时 / 无响应 / 判退 / 发起失败都汇到这里）。
+
+            `has_canned=False`（没给内置台词）时**什么都不说**：这不是漏了兜底，
+            是"全权交给 AI"的口径 —— 沉默 > 甩一句写死的台词。
+            唯一必做的清理是：若流式已经把半句画到屏幕上，先擦掉再退
+            （否则屏幕上留着半句话，比不说更糟）。
+            """
             self._event_speaking = False
             if state['said'] or gen != getattr(self, '_event_speak_gen', 0):
                 return
-            state['said'] = True
             if state['streaming']:
                 # 屏幕上已经打着半句 AI 台词 → 先擦掉再换罐头，
                 # 否则罐头会接在半句后面像两句话黏一起（S8 的同一坑）
                 try:
                     dui.stream_delta(None)
+                    state['streaming'] = False
                 except Exception as e:
                     _log.debug("main 防御性异常（已忽略）: %s", e)
+            if not has_canned:
+                return
+            state['said'] = True
             _note(canned)
             self._event_say(canned, face)
 
@@ -5375,8 +5397,30 @@ class RalseiPet(QMainWindow):
                     _log.debug("main 防御性异常（已忽略）: %s", e)
                     text = ""
             if not text:
-                # AI 沉默 / 被判退 / 出戏 → 回落罐头（一次事件仍然只有一个气泡）
-                _say_canned()
+                # 没拿到可用句子（AI 沉默 / 无响应 / 被判退）。三条路：
+                #   ① 有内置台词 → 说罐头（batch 1/2 的历史口径，行为不变）
+                #   ② **没有**内置台词且还没重试过 → 同一提示词再要一次
+                #      （temperature 0.85 重采样；**不改提示词**是为了保住 KV 前缀缓存，
+                #       改写提示词会让首字从 0.24s 掉回 0.85s 量级）
+                #   ③ 没有内置台词且已重试过 → 沉默（`_fallback()` 里 has_canned=False 直接返回）
+                if not has_canned and not _retried[0]:
+                    _retried[0] = True
+                    if state['streaming']:
+                        # 上一轮已经把半句画上屏幕了 → 先擦掉再要一次，
+                        # 否则新旧两句会黏在一起
+                        try:
+                            dui.stream_delta(None)
+                            state['streaming'] = False
+                        except Exception as e:
+                            _log.debug("main 防御性异常（已忽略）: %s", e)
+                    self._event_speaking = True
+                    try:
+                        self.chat_with_ai(build_prompt(kind), _on_reply, _on_delta, lean=True)
+                    except Exception as e:
+                        _log.debug(f"[事件台词] 重采样发起失败: {e}")
+                        _fallback()
+                    return
+                _fallback()
                 return
             if state['said'] or gen != getattr(self, '_event_speak_gen', 0):
                 return
@@ -5404,13 +5448,14 @@ class RalseiPet(QMainWindow):
             # 不加这个词，本批 20 处迁移在生产里**全部**退化成罐头（已实测）。
             self.chat_with_ai(build_prompt(kind), _on_reply, _on_delta, lean=True)
         except Exception as e:
-            _log.debug(f"[事件台词] 发起失败，回落罐头: {e}")
-            _say_canned()
+            _log.debug(f"[事件台词] 发起失败，退路处理: {e}")
+            _fallback()
             return canned
         # 兜底：**首字**都没到（网络/模型无响应）才说罐头。时限只需覆盖首字。
+        # 兜底：**首字**都没到（网络/模型无响应）才算这一轮没戏。时限只需覆盖首字。
         QTimer.singleShot(
             int(self.EVENT_SPEAK_FIRST_TOKEN_MS),
-            lambda: None if (state['streaming'] or state['said']) else _say_canned())
+            lambda: None if (state['streaming'] or state['said']) else _fallback())
         return None
 
     def moveEvent(self, event):

@@ -399,7 +399,11 @@ import json                                                          # noqa: E40
 
 _cfg = json.load(io.open(CFG_JSON, encoding='utf-8'))
 _api = _cfg.get('api') or {}
-ok('F1 仓库默认配置指向 ralsei:v2', _api.get('model') == 'ralsei:v2', _api.get('model'))
+# 断言写成"ralsei 系列 + 带版本号"而不是钉死某个版本：
+# 底座会随换代而换（2026-09-19 :v2(3B) → :v3(4B)），钉死版本号等于每换一次就要改测试
+# —— 与 s1_anim_miss / round5_smoke 的教训同源：**别在断言里写会随项目演进而变的常量**。
+ok('F1 仓库默认配置指向 ralsei 系列模型（:vN，版本随底座换代而变）',
+   str(_api.get('model', '')).startswith('ralsei:'), _api.get('model'))
 ok('F2 仓库默认配置带 options（temperature/max_tokens）',
    isinstance(_api.get('options'), dict) and 'temperature' in _api['options']
    and 'max_tokens' in _api['options'], _api.get('options'))
@@ -413,7 +417,12 @@ ok('F4 ralsei.modelfile 存在', bool(_mf))
 ok('F5 Modelfile 写死 num_ctx 8192（/v1 端点会忽略该参数，只能靠 Modelfile）',
    'num_ctx 8192' in _mf, repr(_mf[:80]))
 ok('F6 Modelfile 写死 repeat_penalty（同上）', 'repeat_penalty' in _mf)
-ok('F7 Modelfile 基线是 qwen2.5:3b', 'FROM qwen2.5:3b' in _mf)
+# 原断言是 'FROM qwen2.5:3b'（钉死底座）。2026-09-19 底座换到 4B 后它会假红 ——
+# 而 Modelfile 真正要守的不变量不是"用哪个底座"，而是 **FROM 指向 ralsei 系列底座**
+# 且**采样参数烘在里面**（不然 App 只发 temperature/max_tokens，其余会被静默换掉）。
+_mf_from = [ln.strip() for ln in _mf.splitlines() if ln.strip().startswith('FROM ')]
+ok('F7 Modelfile 有且只有一条 FROM（底座换代只会改这一行，断言不钉死具体版本）',
+   len(_mf_from) == 1 and len(_mf_from[0]) > len('FROM '), _mf_from)
 ok('F8 保存配置时不会清空 options（api_config 字典带 options）',
    "'options':_cur_cfg.get('options'," in code_no_comment(MAIN_TEXT))
 

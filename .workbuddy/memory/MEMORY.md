@@ -3,7 +3,7 @@
 ## 铁律
 - **每轮改动完成即 commit + push**（"以免后期找不到"）。称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - 报告放项目根（`代码质量复审报告_*.md`）；证据进 `code-quality-audit/<轮次>/`，侦察 `_recon/`（gitignore），
-  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **24 套件 / 1043 PASS / 全 IDENTICAL**）。
+  留痕 `_evidence/`。改代码前跑 G2 `code-quality-audit/regress/run_all.py`（现 **24 套件 / 1057 PASS / 全 IDENTICAL**）。
 - **下载/生成物默认落 `E:\Download`**（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。系统默认下载目录**不动**。
 
 ## 环境铁律
@@ -439,7 +439,7 @@ git -c credential.helper= -c http.proxy=http://127.0.0.1:57186 -c https.proxy=ht
   `update_animation` 内嵌块只取前两段。下一步：真机取真实未命中清单。
 
 ### 闸门状态（2026-09-17 **已重扫 + 已裁定**）
-- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-19 起 24 套件 / 1050 PASS / 全 IDENTICAL**
+- **G2 ✅**（`code-quality-audit/regress/run_all.py`，**2026-09-19 起 24 套件 / 1057 PASS / 全 IDENTICAL**
   —— 新增 `persona_chat`(58)、`s8_stream`(68)、`s7_event_speech`(124)）、**G3 ✅**、**G4 ✅**（H5 S1–S3）
 - **G1 ✗ → 改为"每项 PR 内做该项专属零引用筛查"**（方案 §8 决策 2 已按"技术细节我拍板"落定，
   **不再整体清 185 项**）。新工具 `架构改造-H4H5/scan_zero_refs.py`（**AST 计名字引用点，不做字符串匹配**，
@@ -575,8 +575,47 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
    顺带发现未动：`assets/ralsei_persona.md` 第 62–63 行的**语气示范会被整句搬**（3B/7B 都会，
    提示词越像示范越必搬）→ 建议把示范里"主人"那句话换成不常出现的场景。
 
+### 底座换型 v3（2026-09-19）—— **现用底座**
+**用户决定：所有对话全权交给 AI、不给内置台词**（顶多留"口头禅"式固定句，目前还没有），
+**前提「AI 要足够生动」，并授权换模型**。→ **换成 4B，已落地。**
+文档 `code-quality-audit/人味改造-2026-09-18/底座换型决策_2026-09-19.md`；
+证据 `_evidence/probe_vividness.txt`（3B 生动度）· `_evidence/probe_models_compare.txt`（三向对比原文）。
+- **`ralsei:v3` = `qwen3:4b-instruct-2507-q4_K_M` + 原采样参数**（num_ctx 8192 / temp 0.85 /
+  top_p 0.92 / repeat_penalty 1.15 / num_predict 256），由 `assets/ralsei.modelfile` build。
+  `config.json`（仓库 + 运行时 `E:\RalseiMemory\config.json`）都已改 `ralsei:v3`。
+- **⚠️ 换底座不能只改 config.json**：`api_client` **只发** `temperature` + `max_tokens`，
+  `top_p`/`repeat_penalty`/`num_ctx` 全靠**模型的 Modelfile** → 指向裸模型会**静默**换掉采样。
+  必须 `ollama create <新tag> -f ralsei.modelfile` 重新派生。
+- **3B 为什么不行**（生产同形抽查，三类硬错）：① 客服腔「早安，有什么我可以帮忙的吗？」
+  （persona 明令禁说）② 主体错位（饿 →「你今天过得怎么样呢？」）③ 意思反转（已吃饱 →
+  「我自己也饿坏了」）④ 旁白化（「我扶着墙站了起来，拍拍身上的尘土」）。
+- **三向对比**（同 persona / 同 options / 同闸门）：3B 判退 1/28 且**另 1 条穿闸漏网**；
+  4B **0/28**；7B 0/28 但**又慢又平**（「谢谢你。」「好痒啊……」）→ 7B 无理由选。
+  耗时中位（CPU，无独显）：3B 首字 530 / 整句 1214ms；**4B 829 / 1815ms**；7B 1041 / 1996ms。
+  → 代价是"多等 0.3~0.6 秒"，换"每句话都是自己想出来的"。
+- **`ralsei:v2` 可退休**（`ollama rm ralsei:v2`，省 1.8GB）—— **未执行，等用户点头**。
+
+### `speak_event` 的 `pool` 新语义 + 三道输出闸（2026-09-19，`main.py` / `event_speech.py`）
+- **`pool=None`（不传）= 不给内置台词**：AI 不可用/超时/判退时**一个字都不说**（不是漏兜底，
+  是"沉默 > 一句写死的台词"，返回 `""`）。传了 `pool=[...]` 才是旧行为（说罐头）。
+  → **以后新迁移的台词一律不传 pool**；想保留固定句才传。
+- **判退后自动重采样一次**（同一提示词，temperature 0.85 给不同样本；**不改提示词**是为保住
+  KV 前缀缓存 —— 改写会让首字从 0.24s 掉回 0.85s）。两次都判退 → 沉默。
+- **`guard_reaction` 从"一道闸"变"三道闸"**：出戏（原有）＋ **客服腔禁语**（新增）＋
+  **旁白化**（新增，句首括号/星号）。禁语表在 `event_speech._BANNED_PATTERNS`。
+- **⚠️ 禁语表必须按"动词块"收、穷举语序变体**：3B 的「早安，有什么我可以帮忙的吗？」
+  穿过了只写"有什么可以帮"的旧表（下一字是"我"不是"你/到/上"）。回归锁 **A20b** 钉这条。
+- 回归：`s7_event_speech` 124 → **131** 项；`persona_chat` F1/F7 原本**钉死了
+  `ralsei:v2`/`FROM qwen2.5:3b`**，换底座即假红 → 改成"ralsei 系列 + 有且只有一条 FROM"
+  （**别在断言里写会随项目演进而变的常量**，同 `s1_anim_miss` 教训）。
+
 ### 底座决策（第七轮 2026-09-18，用户"允许下载新模型"后的复评，提交 `ffea877`）
-**结论：维持 `ralsei:v2`（3B），不换。** 报告
+> ⚠️ **【2026-09-19 已被推翻 —— 见下面「底座换型 v3」】**
+> 当时结论"维持 `ralsei:v2`(3B)"的**前提**是"只把一部分台词交给 AI，人工挑着迁"。
+> 用户随后改成"**所有对话全权交给 AI、不给内置台词**"，前提变了 → 结论也随之改变。
+> 下面这段保留作留痕，**决策请以下面的「底座换型 v3」为准**。
+
+**结论（当时的）：维持 `ralsei:v2`（3B），不换。** 报告
 `code-quality-audit/模型选型-4B-2026-09-18/结论_4B换型评估_2026-09-18.md`；探针 `probe_4b_vs_3b.py`
 （两轮输出：`probe_4b_vs_3b.txt` 权威 + `raw_run1_旧判据.txt` 留档）。
 - **lean 形状实测**（稳定 system + 变 user）：3B 首字 **351ms**、整句 **1750ms**、14.93 tok/s；
@@ -709,7 +748,7 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
 
 ### S7 事件台词分批接 AI（第十八轮并行线三，2026-09-18，**勿回退**）
 报告第十一节；证据 `code-quality-audit/人味改造-2026-09-18/_evidence/s7_*`；
-**回归锁 `s7_event_speech`（124 项，已进 G2）**。**不打网络、不调 Ollama。**
+**回归锁 `s7_event_speech`（131 项，已进 G2）**。**不打网络、不调 Ollama。**
 
 - 档位表 `modules/event_speech.py` 是**白名单**：`EVENT_TIERS` 里登记了才走 AI，
   没登记的事件**行为完全不变**（仍 `add_dialogue` 罐头）。铁律：**漏迁移的后果必须是
@@ -768,8 +807,8 @@ W1-1 施法 8748–9040（4 方法 / 290 行）；W1-2 躲猫猫 9050–9402（1
 - **改了 3 个产品文件**：`modules/event_speech.py`（登记 2 个 kind + 旁白）、
   `modules/energy_hunger.py`（`rest()`/`eat()` 走 `speak_event`；**"拒绝原因说明"两句保持罐头**）、
   `src/main.py:3981`（写死的助手腔 → 「咦，是浏览器呀……我平时不太敢乱碰里面的东西呢。」，face `helpful`→`surprised`）。
-- **断言**：`s7_event_speech` 117 → **124**（C10/C11/C12 源码级 + D24/D24b/D24c/D25 行为级）；
-  全量 G2 **1050 PASS / 0 FAIL / 24 套件 / 全 IDENTICAL**；`baseline.json` 已重建。
+- **断言**：`s7_event_speech` 117 → **131**（C10/C11/C12 源码级 + D24/D24b/D24c/D25 行为级）；
+  全量 G2 **1057 PASS / 0 FAIL / 24 套件 / 全 IDENTICAL**；`baseline.json` 已重建。
 - **教训（本轮的，别再犯）**：
   ① **别把"某条链路没有节流"当结论写进决策文档** —— 落笔前先 grep 常量与调用点。
      本轮两处 overstatement（"绕 600s 会变话多"、"speak_event 没有时间节流"）都是没看

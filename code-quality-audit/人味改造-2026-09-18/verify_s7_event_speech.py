@@ -17,12 +17,15 @@
 
 分组
 ----
-  A `modules/event_speech.py` 纯逻辑（档位 / 提示词 / 首句截断 / 罐头去重）
+  A `modules/event_speech.py` 纯逻辑（档位 / 提示词 / 首句截断 / 罐头去重 /
+    **三道输出闸**：出戏 · 客服腔禁语 · 旁白化）
   B `main.py` 接线（唯一出口 / 让路 / 世代号 / 兜底 / 只发一个气泡）
   C 迁移完整性（batch 1 `main.py` 20 处 + batch 2 `energy_hunger.py` 2 处、
      物理状态机未动、kind 全部登记）
-  D 行为级（真 `QApplication` + 桩宿主，含"AI 卡住"与"迟到回复"两条时序）
+  D 行为级（真 `QApplication` + 桩宿主，含"AI 卡住"与"迟到回复"两条时序；
+    D26~D28 锁 `pool` 的新语义：**不传 pool = 不给内置台词 = 说不了就沉默**）
   E 配置（一键开关）
+  F `lean` 请求的真实形态（真 `chat_with_ai` + 假 `api_client`，离线）
 
 本套件**不打网络、不调用 Ollama**（真机数值另见 `_evidence/s7_*`）。
 必须用 C:\\Python311\\python.exe 运行（PyQt5）。
@@ -200,6 +203,33 @@ ok('A18 出戏闸命中"AI 自我指涉 / 否认感官"（实测真出现过「�
    [x for x in _ok_lines if E.looks_out_of_character(x)])
 ok('A19 guard_reaction 命中的整句作废（返回空串 → 调用方回落罐头），好句原样放行',
    E.guard_reaction(_ooc[0]) == '' and E.guard_reaction(_ok_lines[0]) == _ok_lines[0])
+
+# —— A20/A21：2026-09-19 新增的两道闸（"所有对话全权交给 AI"的前置条件）——
+# 样本全部来自三向对比的真实输出（_evidence/probe_models_compare.txt / probe_vividness.txt）
+_banned = [
+    '早安，有什么我可以帮忙的吗？',    # 3B 实测**穿过旧表**的那条（"有什么可以帮"后面是"我"）
+    '早安～有什么可以帮到你吗？',      # 3B 实测（旧表已能抓到）
+    '当然在，有什么可以帮忙的吗？',    # 3B 实测（"在吗"场景）
+    '我理解你的感受，别难过。',
+    '我相信你一定可以做好的。',
+    '首先，你要先休息一下。',
+    '希望这些能帮到你。',
+    '需要我帮你打开什么东西吗？',
+]
+_banned_ok = ['谢谢你，喜欢这样。', '我肚子都咕咕叫了。', '吃饱啦，再吃会撑的～',
+              '早啊，你今天想先做什么呀？', '在呢～']
+ok('A20 禁语闸：persona 明令不说的那类（客服腔 / 空话安慰 / 助手式分点）整句作废',
+   all(E.looks_like_assistant_speak(x) for x in _banned)
+   and not any(E.looks_like_assistant_speak(x) for x in _banned_ok),
+   [x for x in _banned_ok if E.looks_like_assistant_speak(x)])
+ok('A20b 禁语闸必须覆盖**语序变体**（只写"有什么可以帮"会漏掉"有什么我可以帮忙"）',
+   E.looks_like_assistant_speak('早安，有什么我可以帮忙的吗？')
+   and E.looks_like_assistant_speak('有什么我能帮上忙的吗'))
+_narr = ['（我扶着墙站了起来，拍拍身上的尘土。）', '*叹了口气*', '（歪着头）']
+ok('A21 旁白闸：句首括号/星号 = 舞台指示，不是"对主人说的台词" → 判退',
+   all(E.guard_reaction(x) == '' for x in _narr)
+   and all(E.guard_reaction(x) == x for x in _banned_ok),
+   [x for x in _narr if E.guard_reaction(x)])
 
 # ================================================================ B
 section('B. main.py 接线')
@@ -731,6 +761,54 @@ ok('D25 AI 关闭 → eat_start 立刻说罐头原句，且**不发请求**'
    _out == '哇！有好吃的！我开动啦！' and len(h.chat_calls) == 0
    and last_msg(h) == '哇！有好吃的！我开动啦！',
    (h.chat_calls, h.dialogue_ui.said))
+
+# D26~D28：`pool` 的**新语义**（2026-09-19「所有对话全权交给 AI，不给内置台词」）
+#   不传 pool = 没有内置台词 → 说不了就**沉默**（不是漏兜底）
+h = make_host(api_enabled=False)
+_out = h.speak_event('poke_body')          # 注意：**不传 pool**
+ok('D26 没给内置台词 + AI 不可用 → 一个字都不说（"全权交 AI"的口径，不是漏兜底）',
+   _out == '' and not h.dialogue_ui.said and len(h.chat_calls) == 0,
+   (_out, h.dialogue_ui.said, h.chat_calls))
+
+h = make_host(auto=True, reply_value='谢谢你，小豆。')
+h.speak_event('poke_body')                 # 无 pool，但 AI 可用
+pump(200)
+ok('D26b 没给内置台词但 AI 可用 → 照常说 AI 那句（沉默只在"说不了"时发生）',
+   last_msg(h) == '谢谢你，小豆。', h.dialogue_ui.said)
+
+# D27：判退后**自动重采样一次**（同一提示词 —— 保住 KV 前缀缓存，不改写）
+h = make_host(auto=False)
+_replies = ['早安，有什么我可以帮忙的吗？', '早啊，你今天想先做什么呀？']
+
+
+def _auto2(text, on_reply, on_delta=None, lean=False):
+    h.chat_calls.append({'text': text, 'on_reply': on_reply, 'on_delta': on_delta, 'lean': lean})
+    n = len(h.chat_calls) - 1
+    QTimer.singleShot(0, lambda: on_reply(_replies[n] if n < len(_replies) else None))
+
+
+h.chat_with_ai = _auto2
+h.speak_event('poke_body')
+pump(200)
+ok('D27 判退（客服腔）→ 自动重采样一次，第二次的好句照常显示（一次事件仍只有一个气泡）',
+   len(h.chat_calls) == 2 and last_msg(h) == '早啊，你今天想先做什么呀？',
+   (len(h.chat_calls), h.dialogue_ui.said))
+
+# D28：两次都判退 → 沉默（不再要第三次，也不说内置台词）
+h = make_host(auto=False)
+
+
+def _auto3(text, on_reply, on_delta=None, lean=False):
+    h.chat_calls.append({'text': text, 'on_reply': on_reply})
+    QTimer.singleShot(0, lambda: on_reply('我理解你的感受。'))
+
+
+h.chat_with_ai = _auto3
+h.speak_event('poke_body')
+pump(200)
+ok('D28 两次都判退 → 沉默（重采样**只一次**；没有内置台词时不当复读机）',
+   len(h.chat_calls) == 2 and not h.dialogue_ui.said and h._event_speaking is False,
+   (len(h.chat_calls), h.dialogue_ui.said, h._event_speaking))
 
 # E
 section('E. 配置')
