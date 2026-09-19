@@ -249,10 +249,12 @@ SUITES = [
         'script': os.path.join(ROOT, 'code-quality-audit', '人味改造-2026-09-18',
                                'verify_persona_chat.py'),
         'offscreen': True,
-        'desc': '人味改造：角色设定外置单一真源（persona 无 markdown / 三条接法规则 / 桌宠化口径）'
+        'desc': '人味改造：角色设定外置单一真源（persona 无 markdown / 三条接法规则 / 桌宠化口径'
+                ' / Deltarune 世界观知识 + 元游戏词负控制）'
                 '+ 接线修对（用户消息纯原话、【此刻】挂 system 尾、recent 抽 role==assistant）'
-                '+ 输出护栏（markdown 剥除 / 句中括号动作只删那段 / 自问自答截断 / 车轱辘话判退 / 超长截断）'
-                '+ 判退后换说法重采样（FakeCli 行为级）+ 关键词收紧 + Modelfile 参数',
+                '+ 输出护栏（markdown 剥除 / 句中括号动作只删那段 / 禁说清单：出戏＋客服腔（与事件链路同源）'
+                ' / 自问自答截断 / 车轱辘话判退 / 超长截断）'
+                '+ 判退后换说法重采样（FakeCli 行为级）+ 关键词收紧 + 载体层状态 + Modelfile 参数',
     },
     {
         # S8 流式输出：与人味改造同一轮（第十八轮 §5 的 S8），单独一个套件是因为

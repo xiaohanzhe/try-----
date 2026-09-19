@@ -333,7 +333,8 @@ from modules.sound_manager import SoundManager
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
-                                  first_sentence, strip_action_parentheticals)
+                                  first_sentence, strip_action_parentheticals,
+                                  looks_out_of_character, looks_like_assistant_speak)
 # 联网搜索摘要：依赖 beautifulsoup4。改为"可选导入"而不是整段注释掉——
 # 原写法让整个模块变成永远不可达的死代码（需求"能上网"缺一环），
 # 且一旦有人取消注释而环境没有 bs4，程序会在 import 期直接崩溃。
@@ -7849,20 +7850,27 @@ class RalseiPet(QMainWindow):
     def _clean_ai_reply(self, reply, recent=None):
         """模型输出护栏（对话与自主开口共用）。返回清洗后的文本，或 None。
 
-        3B 小模型的四种已知失态靠提示词治不干净，必须在这里拦：
+        小模型的几种已知失态靠提示词治不干净，必须在这里拦（顺序即优先级，别随便调）：
          0a) **句中括号动作旁白**（2026-09-19 加）：会吐「（轻轻敲了下键盘）」这类
              舞台指示 → **只删那一段**（判据与取舍见 `strip_action_parentheticals`）；
              删干净则判无效。规则只命中"括号内以动作/发声动词开头"的那一类。
              ⚠️ 这一步**必须排在 0b 之前**（星号版的星号会被 0b 吃掉，见下方实参处注释）。
          0b) **markdown / 格式残留**：实测会输出 `**加粗**`、`- 列表` 等 —— 对话框是
              逐字打字机渲染，这些标记会原样显示出来，必须先剥掉
+         0c) **设定里明令不说的两类话**（2026-09-19 加，补上 §4.2 这个产品缺口）：
+             出戏（"作为AI"/"我的设定"/"我只是个程序"）＋ 客服腔与空话安慰
+             （"有什么可以帮你的吗"/"我理解你的感受"/"我相信你"/"首先…其次…"）
+             → 判无效。判据与事件链路的 `_OOC_PATTERNS` / `_BANNED_PATTERNS`
+             **共用同一份**，不另立一套。放在 0b 之后：先剥干净格式再匹配，免得
+             `**有什么可以帮你的吗**` 这种漏网。
           1) **自问自答续写**：回复里冒出「主人：」「你：」「Assistant:」等对话标记
              → 截断到标记之前（实测 temperature 0.9 时 4 题里 2 题这么跑飞）
           2) **车轱辘话**：与**自己最近说过的某句**高度重合 → 判无效返回 None，
              交给调用方换说法重采样（判据与取舍见 `_is_repeat_of_recent`）
           3) **超长跑飞**：超过 max_chars → 从最近的句末标点处截断
 
-        参数 `recent` = Ralsei 最近说过的回复文本（列表）；不传则只做 0/1/3 三步。
+        参数 `recent` = Ralsei 最近说过的回复文本（列表）；不传则**跳过第 2 步**
+        （0a/0b/0c/1/3 都与 recent 无关）。
 
         实现约定：`_is_repeat_of_recent` 用 getattr 取、缺失即跳过该步，
         使本方法在测试桩上也能独立工作（桩只需绑本方法即可）。
@@ -7900,6 +7908,17 @@ class RalseiPet(QMainWindow):
                 return None
             # 只有标点、没有任何实义字符（如单回一个「。」）→ 视为无效
             if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
+                return None
+            # 0c) 设定里明令不说的两类话（2026-09-19 补：与事件链路**共用同一份判据**）
+            #     ① 出戏："作为AI"/"我的设定"/"我只是个程序"/“提示词” 这类自我指涉；
+            #     ② 客服腔与空话安慰："有什么可以帮你的吗"/"我理解你的感受"/"我相信你"/
+            #        "首先…其次…总结一下" 这类助手式组织语言。
+            #     persona 第 57~63 行白纸黑字写着这些不说，但**提示词不是保证** ——
+            #     3B 时代实测连着回「早安，有什么我可以帮忙的吗？」（见
+            #     `_evidence/probe_vividness.txt`）。所以代码里兜一道，与 event_speech
+            #     的 `_OOC_PATTERNS` / `_BANNED_PATTERNS` 同源，避免两处判据漂移。
+            #     命中 → 判无效；由调用方走既有的"换一个说法重采样"路径（不是直接沉默）。
+            if looks_out_of_character(t) or looks_like_assistant_speak(t):
                 return None
             # 1) 自问自答续写 → 截到标记之前
             m = RalseiPet._role_marker_re().search(t)

@@ -32,12 +32,14 @@
 
 分组
 ----
-  A persona 文件契约（存在 / 章节 / 桌宠化口径 / 无 markdown / 示范成对）
+  A persona 文件契约（存在 / 章节 / 桌宠化口径 / 世界观知识 / 无 markdown / 示范成对）
   B main.py 接线（源码级 + 行为级）
-  C 输出护栏行为（14 用例，合成 persona，与内容解耦）
+  C 输出护栏行为（合成 persona，与内容解耦；含括号动作 / 禁说清单）
   D 判退后重采样链路（FakeCli 行为级）
   E 关键词拦截收紧（软闲聊放行 / 硬指令仍子串）
   F 运行时配置与 Modelfile
+  G 载体层状态管理（_build_ai_context 的状态口径）
+  H 对话链路「禁说清单」兜底接线（判据与事件链路**同源**，2026-09-19 补）
 
 本套件**不打网络、不调用 Ollama**（模型质量不进回归基线 —— 它天生不可复现）。
 必须用 C:\\Python311\\python.exe 运行（PyQt5）。
@@ -183,6 +185,28 @@ ok('A12 三条"碰到事该怎么接"规则齐备（坏消息 / 好消息 / 不�
 # 否则说明改动没生效、上面那条断言是在测一份还在用旧结构的文件。
 ok('A12b 反向控制：成对示范（主人：/ 我：）已移除，不再逐字可搬',
    _n_owner == 0 and _n_me == 0, '主人=%d 我=%d' % (_n_owner, _n_me))
+
+# —— A13~A17：世界观 / 角色知识（2026-09-19 加）——
+# 用户口径：「一定要保证三角符文本地的世界观也存在，也就是他知道他该知道的游戏内容」。
+# 依据不取我的记忆，而取**原作语料本身**：853 条 Ralsei 台词里他自己提到过
+#   Susie 120 条 / Kris 116 / Lancer 9 / Queen 9 / Fountain 15 / Darkner 7 / prophecy 6 …
+# 取证 `_evidence/ralsei_worldview_2026-09-19.txt`（可复算）。
+ok('A13 有「我知道的世界」节（角色知识不再只有"我是谁"那两行）',
+   '我知道的世界' in PERSONA)
+_WORLD_ANCHORS = ('黑暗喷泉', '光之民', '暗之民', '两位光之英雄', 'Kris', 'Susie', 'Lancer')
+_miss_w = [a for a in _WORLD_ANCHORS if a not in PERSONA]
+ok('A14 核心设定锚齐备（黑暗喷泉 / 光之民 / 暗之民 / 两位光之英雄 / Kris / Susie / Lancer）',
+   not _miss_w, '缺=%r' % (_miss_w,))
+ok('A15 世界观带"别主动讲、别硬拐"的使用约束（否则会退化成设定倾倒）',
+   '主人不问' in PERSONA and '别把话题硬拐' in PERSONA)
+ok('A16 他知道"自己瞒过同伴"这件事（原作 ch4 的核心人物动机，也是他性格的来源）',
+   '瞒过' in PERSONA)
+# 负控制：世界观必须是**游戏里的世界**，不能把元游戏/玩家视角漏进来 ——
+# 一旦出现"玩家/存档/读档/通关"这类词，他就从角色退化成旁白，世界观反而变假了。
+_META_WORDS = ('玩家', '存档', '读档', '通关', '第四面墙')
+_hit_meta = [w for w in _META_WORDS if w in PERSONA]
+ok('A17 负控制：persona 里没有元游戏词（玩家 / 存档 / 读档 / 通关 / 第四面墙）',
+   not _hit_meta, '命中=%r' % (_hit_meta,))
 
 # ---------------------------------------------------------------- B
 section('B. main.py 接线（源码级 + 行为级）')
@@ -332,6 +356,25 @@ ok('C19 负控制：括号讲心里话**原样放行**（对话链路不做"句�
    stub._clean_ai_reply(_INNER) == _INNER
    and stub._clean_ai_reply('其实……（我想想该怎么说）') == '其实……（我想想该怎么说）',
    repr((stub._clean_ai_reply(_INNER), stub._clean_ai_reply('其实……（我想想该怎么说）'))))
+
+# —— C20/C23：设定里明令不说的两类话（2026-09-19 新增的 0c 步，补 §4.2 那个产品缺口）——
+# 缺口原状：persona 写了"这些话我不说"，但**对话链路一句都不查**（事件链路才有那两道闸）。
+ok('C20 客服腔 → 判无效（"有什么可以帮你的吗？"，走既有重采样路径）',
+   stub._clean_ai_reply('有什么可以帮你的吗？') is None,
+   repr(stub._clean_ai_reply('有什么可以帮你的吗？')))
+ok('C21 出戏 → 判无效（"作为一个语言模型…"）',
+   stub._clean_ai_reply('作为一个语言模型，我其实不太懂这些。') is None,
+   repr(stub._clean_ai_reply('作为一个语言模型，我其实不太懂这些。')))
+# 顺序锁：0c 必须排在 0b 之后 —— 先剥格式再匹配，否则 `**有什么可以帮你的吗**` 会漏网。
+ok('C22 0c 排在剥 markdown 之后（加粗包裹的客服腔同样拦得住）',
+   stub._clean_ai_reply('**有什么可以帮你的吗**') is None,
+   repr(stub._clean_ai_reply('**有什么可以帮你的吗**')))
+# 负控制：这套判据不许误伤正常台词（正/负成对 —— 否则"一律判无效"也能让上面三条变绿）。
+ok('C23 负控制：正常台词原样放行（禁语表不得误伤）',
+   stub._clean_ai_reply('我今天有点困了，想早点睡。') == '我今天有点困了，想早点睡。'
+   and stub._clean_ai_reply('那件事我也没什么办法，但你说话我一直在听。')
+   == '那件事我也没什么办法，但你说话我一直在听。',
+   repr(stub._clean_ai_reply('我今天有点困了，想早点睡。')))
 
 # ---------------------------------------------------------------- D
 section('D. 判退后重采样（行为级，FakeCli）')
@@ -539,6 +582,24 @@ ok('G10 行为级：掉落时不再报"在走动"（同一份状态的优先级�
 _c5 = R._build_ai_context(types.SimpleNamespace())
 ok('G11 行为级：子系统与状态属性全缺也不抛（静默降级），仍是【此刻】串',
    isinstance(_c5, str) and _c5.startswith('【此刻】'), repr(_c5)[:90])
+
+# ---------------------------------------------------------------- H
+section('H. 对话链路「禁说清单」兜底接线（§4.2）')
+# 缺口原状：persona 第 57~63 行写着"这些话我不说"，事件链路也补了两道代码闸，
+# 但**对话链路的 `_clean_ai_reply` 一个字都不查**（用户天天用的正是这条链路）。
+# 2026-09-19 补 0c 步，判据**与事件链路共用同一份**（不另抄一张表，免得两处漂移）。
+_CLN = code_only_src(func_src(MAIN_TEXT, '_clean_ai_reply'))
+ok('H1 _clean_ai_reply 里真的调用了出戏闸（写对了）',
+   'looks_out_of_character(t)' in _CLN)
+ok('H2 _clean_ai_reply 里真的调用了客服腔闸（写对了）',
+   'looks_like_assistant_speak(t)' in _CLN)
+# "写对了" ≠ "产品用上了"（本项目最贵的坑，踩过 4 次）：这里再钉一次它**来自 event_speech**。
+ok('H3 判据与事件链路共用同一份（从 modules.event_speech 导入）',
+   'looks_out_of_character,looks_like_assistant_speak' in CODE_MAIN, CODE_MAIN[:0])
+# 反向控制：main.py 里不许出现第二份表 —— 抄一份就一定会漂移。
+# （视图走 code_only_src：本文件的注释里提到了这两个名字，用字面量 in 源码会假红。）
+ok('H4 反向控制：main.py 里没有第二份禁语表（判据只有 event_speech 一处）',
+   '_BANNED_PATTERNS' not in CODE_MAIN and '_OOC_PATTERNS' not in CODE_MAIN)
 
 # ---------------------------------------------------------------- 汇总
 print('')

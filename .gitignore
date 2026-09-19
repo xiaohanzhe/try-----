@@ -52,3 +52,11 @@ code-quality-audit/tools/_out_*
 
 # 素材分组图库（单文件内联 base64，约 1.4 MB，每次重扫都变；由 scan_asset_groups.py 复算即可）
 素材分组总览_*.html
+
+# 临时脚本/中间产物（勿入库）
+_commit_msg.txt
+_do_push.py
+_push_log.txt
+_log_entry_tmp.md
+_g2_out.txt
+_enc_out*.txt

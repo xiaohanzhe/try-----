@@ -1,0 +1,84 @@
+Ralsei 原作语料 · 世界观事实依据
+============================================================
+来源 : ralsei_lora_corpus.jsonl
+规模 : 853 条 Ralsei 台词（output 侧）/ 章覆盖 = [1, 2, 3, 4]
+
+-- 人物：他自己说到过（output 命中条数 / 853）--
+  Susie                  out=120   in=513
+  Kris                   out=116   in=196
+  Lancer                 out=  9   in= 71
+  Queen                  out=  9   in= 35
+  Mr. Tenna (电视先生)       out=  6   in= 61
+  Rouxls (Kaard)         out=  5   in= 22
+  Knight (骑士)            out=  3   in=  9
+  Berdly                 out=  2   in= 16
+  King (黑桃国王)            out=  2   in= 15
+  Noelle                 out=  1   in= 14
+  Toriel                 out=  0   in=  5
+  Asgore                 out=  0   in=  0
+  Alphys                 out=  0   in=  0
+  Undyne                 out=  0   in=  3
+  Jevil                  out=  0   in=  0
+  Spamton                out=  0   in=  2
+  Mike                   out=  0   in=  6
+  Gerson                 out=  0   in=  0
+  Rudin                  out=  0   in=  1
+
+-- 世界观概念 --
+  world/real 世界真实性       out= 18   in= 34
+  Fountain 喷泉            out= 15   in= 20
+  darkness 黑暗            out= 11   in= 22
+  Darkner                out=  7   in= 14
+  light 光                out=  7   in= 18
+  Dark World 黑暗世界        out=  6   in= 16
+  Lightner               out=  6   in= 15
+  prophecy 预言            out=  6   in= 17
+  hero 英雄                out=  5   in= 12
+  Castle Town 城堡镇        out=  4   in=  4
+  Light World 光明世界       out=  2   in=  6
+  SOUL                   out=  1   in=  4
+  TP                     out=  1   in=  5
+  ACT 行动                 out=  1   in=  1
+  Angel 天使               out=  1   in=  1
+  Roaring                out=  1   in=  2
+  Delta Rune             out=  0   in=  0
+  SPARE 饶恕               out=  0   in=  1
+  Hometown               out=  0   in=  0
+
+-- 场景名里的地标（按章，取前若干）--
+  ch1 (20 个场景): Scene: Obj Checker Animtest | Scene: Obj Clubsenemy & Obj Clubsenemy Old | Scene: Obj Dummyenemy | Scene: Obj Elevatorcontroller | Scene: Obj Fountainkris | Scene: Obj Getsusieevent | Scene: Obj Insideclosetcutscene | Scene: Obj Kingcutscene & Obj King Boss | Scene: Obj Lancerbattle2 Event | Scene: Obj Prisonevent | Scene: Obj Rurus Checker Event | Scene: Obj Smallcheckers Enemy | Scene: Obj Suitspuzzle Event | Scene: Obj Susie Lancer Chillout
+  ch2 (27 个场景): Scene: Exploring Castle Town | Scene: Leaving Castle Town | Scene: Obj Acid Tunnel Swan Ride | Scene: Obj Castle Lancer Room | Scene: Obj Castle Rooms | Scene: Obj Castletown Intro | Scene: Obj Castletown Return | Scene: Obj City Carnival | Scene: Obj City Smorgasbord Battle | Scene: Obj City Split Up | Scene: Obj Cyberfield Afterbattle1 | Scene: Obj Cyberfield Intro | Scene: Obj Cyberfield Puzzles | Scene: Obj Ferris Wheel Dream
+  ch3 (37 个场景): Scene: Obj Balloon Room Escape | Scene: Obj Cooking Show Minigame | Scene: Obj Darkness Void | Scene: Obj Darkworld Wakeup | Scene: Obj Final Challenge Intro | Scene: Obj Final Concert Hall | Scene: Obj Game Lobby Final | Scene: Obj Gameshow Quiz 1 | Scene: Obj Gameshow Start | Scene: Obj Green Room Explore | Scene: Obj Green Room Final | Scene: Obj Green Room Intro | Scene: Obj Green Room Wakeup | Scene: Obj Knight Battle
+  ch4 (51 个场景): Scene: Obj 2Nd Sanctuary Fountain | Scene: Obj 2Nd Sanctuary Gate | Scene: Obj 2Nd Sanctuary Stairs | Scene: Obj 2Nd Sanctuary Top | Scene: Obj 3Rd Sanctuary Angel Mural | Scene: Obj 3Rd Sanctuary Climb Start | Scene: Obj 3Rd Sanctuary Entrance | Scene: Obj 3Rd Sanctuary Final Corridor | Scene: Obj 3Rd Sanctuary Glass Path | Scene: Obj 3Rd Sanctuary Knight Confrontation | Scene: Obj 3Rd Sanctuary Stairs Save | Scene: Obj Castle Prison | Scene: Obj Castle Rooms Combined | Scene: Obj Castletown Fountain
+
+-- 关键设定句抽样（含 real / object / prophecy / cards / laptop）--
+  [ch1|Scene: Obj Insideclosetcutscene] Welcome. I am the Prince of this Kingdom... The KINGDOM OF DARKNESS. Kris, Susie... There is a LEGEND in this land. A LEGEND that one day, two HEROES of LIGHT will arrive, And fulfill the ancient prophecy, foretold by time and space. Please, Heroes... Listen to my tale...
+  [ch1|Scene: Obj Insideclosetcutscene] Umm... I suppose it's just the two of us, then... Kris, I'm a PRINCE, but... I, um, currently don't have any subjects. I've been waiting alone here... Um... My whole life for you two to arrive. So... I'm really happy to meet you. I hope we can be good friends, Kris. Let's try to find Susie. She must be to the southeast. You can lead the way, Kris!
+  [ch1|Scene: Obj Insideclosetcutscene] I'm really happy to meet you.
+  [ch1|Scene: Obj Dummyenemy] Great job, Kris! That'd be the end in a real battle! I'm really happy I had the chance to teach you, Kris!
+  [ch1|Scene: Obj Getsusieevent] Uh, Susie. We need YOU to finish it. Sometimes, proceeding will take all 3 of us. Furthermore, only Kris can seal the DARK FOUNTAIN... So if you don't accompany us, you won't make it home!
+  [ch1|Scene: Obj Susie Lancer Chillout] "You two should REALLY start working on it earlier..."
+  [ch1|Scene: Obj Thrashafter Follow] That's because you're alongside the Lightners, Lancer.
+  [ch1|Scene: Obj Thrashafter Follow] Our purpose - Darkners' purpose - is to assist them.
+  [ch1|Scene: Obj Thrashafter Follow] That's the FOUNTAIN, Susie! If we can get there...
+  [ch1|Scene: Obj Kingcutscene & Obj King Bos] (Come now, Susie!) I'm glad you're starting to realize, Mr. King... None of us really want to fight. If you can just tell us about your worries... I'm sure we can all be friends, Mr. King!
+  [ch1|Scene: Obj Kingcutscene & Obj King Bos] Aww, Susie... You're beginning to sound like a real hero...!
+  [ch1|Scene: Obj Kingcutscene & Obj King Bos] Susie... Kris...? If we must say goodbye, then... Umm, I... I just wanted to say... I... I... I really enjoyed meeting you two, and...
+  [ch2|Scene: Exploring Castle Town] Mr. King, the Lightners returned everyone here safely.
+  [ch2|Scene: Obj Castle Rooms] I really hope you like it!
+  [ch2|Scene: Obj Cyberfield Afterbattle1] It seems that a new Dark Fountain has appeared.
+  [ch2|Scene: Obj Cyberfield Afterbattle1] Worry not, Susie! All we have to do is seal the Fountain!
+  [ch2|Scene: Obj Highway Chase] You mean... "Lightners?"
+  [ch2|Scene: Obj City Carnival] Oh. Yes. She is a real... "master" at it, Kris.
+  [ch2|Scene: Obj Mansion Approach] Look!! We're finally close to the Fountain!
+  [ch2|Scene: Obj Mansion Dining Hall] You see, each Dark Fountain creates a different "world."
+  [ch2|Scene: Obj Mansion Dining Hall] A "world" whose Darkners reflect the will of its fountain.
+  [ch2|Scene: Obj Mansion Dining Hall] But, though those Darkners can exist in their own worlds...
+  [ch2|Scene: Obj Acid Tunnel Swan Ride] D... did it r-really take a picture of that!?
+  [ch2|Scene: Obj Queen Battle 1] Queen, think of the Lightners! Aren't we supposed to make them happy?
+  [ch2|Scene: Obj Mansion Rooftop Giga Queen] Guess we can seal the fountain now, right everybody?
+  [ch2|Scene: Obj Mansion Rooftop Giga Queen] Do you realize what will happen if you do that?
+  [ch3|Scene: Obj Darkworld Wakeup] If we keep going, the Dark Fountain should be...
+  [ch3|Scene: Obj Ralsei Story] An alternate view of reality through the lens of shadow.
+  [ch3|Scene: Obj Ralsei Story] The Dark Fountains change everything into a fantasy.
+  [ch3|Scene: Obj Ralsei Story] In the Light World, in reality...
