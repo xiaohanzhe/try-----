@@ -30,6 +30,14 @@
   两者都过才算 PASS。只过第 1 层但出现第 2 层的，算 **PARTIAL**（要人工看）。
 
 输出落盘：本目录 `_evidence/worldview_probe_<日期>.txt`（UTF-8，Python 自写，不经 PowerShell）。
+
+第二十三轮升级（2026-09-20）：**把 `_clean_ai_reply` 的四步闸全部复刻进探针**。
+  上一版只复刻了长度闸，两轮里连撞两次"探针漏一道闸 → 报一个假问题"：
+    · 长度闸漏 → 误读"召回让回答变啰嗦"（其实是 150 的上限砍的）；
+    · 动作闸漏 → 误报"产品漏删（停顿了一下）"（其实是探针没跑 0a 步）。
+  本版补齐 0a（括号动作）、0c（出戏/客服腔）、1（自问自答截断）、
+  2（车轱辘话，靠探针自维护的 `recent`）、3（超长）—— 于是"闸后"就是
+  **用户实际看到的文本**，判退（返回 None）会被如实报成「判退」而不是被洗掉。
 """
 import argparse
 import io
@@ -88,13 +96,24 @@ def build_system(persona, cue, use_recall=True):
     return persona + '\n\n' + txt, [b.key for b in blocks], txt
 
 
-# 第二十二轮加：**长度闸**的复刻。
-# 为什么探针里也要过一遍这道闸：它现在是 `_clean_ai_reply` 的第 3 步，
-# 产品链路上**每一条**回复都会经过它。探针若只看裸输出，量到的长度
-# 就是"模型想吐多长"，而不是"用户实际看到多长" —— 那正好会得出错误结论
-# （上一轮就是被这个坑到：看到 214 字以为"召回让它变啰嗦"，
-#   实际上 214 已经 > 当时的 150 上限、用户看到的是被砍过尾巴的 150 字）。
-# 这里只 import 常量和截断逻辑，不 import main（避免拉起 PyQt 依赖链）。
+# 第二十二轮加：**长度闸 + 动作闸**的复刻。
+# 第二十三轮（2026-09-20）补：**第 1、2 步**（自问自答截断、车轱辘话判退）也要复刻。
+#
+# 为什么探针里也要过这些闸：它们都在 `_clean_ai_reply`（产品链路上**每一条**
+# 回复都会走完这几步）。探针若只看裸输出，报的就不是"用户实际看到的文本"。
+#   ① 长度闸漏复刻 → 上一轮量到 214 字，以为"召回让它变啰嗦"，
+#      实际 214 已 > 当时的 150 上限、用户看到的是被砍过尾巴的 150 字。
+#   ② 动作闸漏复刻 → 本轮报出「（停顿了一下）」像"产品漏删旁白"，
+#      其实是探针没复刻 0a 步（`_ACTION_PAREN_RE` 里明明有「停顿」）。
+# 两次都是同一类错：**探针漏一道闸就报一个假问题**。
+# 所以这里把 0a / 1 / 2 / 3 四步**全部复刻**，让"闸后"就是"用户实际看到的"。
+#
+# 为什么不直接 import main 里的 `_clean_ai_reply`：它会拉起 PyQt 依赖链
+# （本探针要在裸 python 下跑；实测托管 3.13 里根本没有 PyQt5）。所以：
+#   · 常量/正则 → 从 `src/main.py` **源码抽取**（`_load_*` 三个函数）；
+#   · 判据（动作/出戏/客服腔）→ 从 `modules.event_speech` **直接 import**
+#     （该模块 Qt-free）。**绝不另抄一份判据**（项目铁律：判据只许有一处，
+#     抄第二份必然漂移）。
 def _load_reply_cap():
     """从 src/main.py 里取 AI_REPLY_MAX_CHARS（不 import main，只正则抓常量）。"""
     try:
@@ -106,34 +125,177 @@ def _load_reply_cap():
         return None
 
 
-def _apply_gates(text, cap):
-    """复刻 `_clean_ai_reply` 的两道**与内容无关**的闸（0a 括号动作 + 3 超长）。
+def _load_role_marker_re():
+    """从 src/main.py 源码里抽出 `_role_marker_re` 的正则（第 1 步的判据）。
 
-    为什么探针也要过这两道（2026-09-20 补，这是个真实的保真度缺口）：
-      上一版探针只过了长度闸。结果 Q1/Q2/Q8 的"最终回复"里赫然留着
-      「（停顿了一下）」—— 看着像**产品漏了动作旁白**，其实是**探针没复刻那道闸**：
-      `_ACTION_PAREN_RE` 里明明有 `停顿`（`modules/event_speech.py`，C18/C18b 锁着），
-      产品链路上它一定会被删掉。
-      探针的价值在于"报出用户实际看到的文本"，多漏一道闸就会报出**假问题**
-      （本轮差点据此去改一个本来正常的正则）—— 所以这里补齐。
+    正则源码是**两段相邻字符串拼接**（`re.compile(r"..." r"...")`）——
+    这也是从源码抽取而非 import 的原因（import 会拉 PyQt）。两段都要取，
+    只取第一段会少掉 `[：:]` 那个结尾。
 
-    为什么不直接 import `_clean_ai_reply`：它会拉起 PyQt 依赖链（本探针要能在
-    裸 python 下跑），且它还要 `recent` 才能跑第 2 步。这里只复刻**可独立复现**的两步，
-    判据从 `modules.event_speech` 直接导入 —— **不另抄一份正则**（项目铁律：
-    判据只许有一处，抄第二份必然漂移）。
-    第 1 步（自问自答截断）与第 2 步（车轱辘话）依赖会话历史，本探针不覆盖。
+    抽不到 → 返回 None，由调用方降级（当作"没有这道闸"，并在报告里标注）。
+    """
+    try:
+        import re
+        src = io.open(os.path.join(PET, 'src', 'main.py'), encoding='utf-8').read()
+        m = re.search(
+            r'_AI_ROLE_MARKER\s*=\s*re\.compile\(\s*\n'
+            r'\s*r"([^"]*)"\s*\n'
+            r'\s*r"([^"]*)"', src)
+        if not m:
+            return None
+        return re.compile(m.group(1) + m.group(2))
+    except Exception:
+        return None
+
+
+def _is_repeat_of_recent(text, recent):
+    """复刻 `RalseiPet._is_repeat_of_recent` 的车轱辘话判据（第 2 步）。
+
+    判据**逐字对齐** src/main.py（第十八轮定的经验值，两条互补）：
+      1) 整体相似度 difflib ≥ 0.82（且长度差 ≤ 6）—— 抓"只改两三个字"的整句复用；
+      2) 最长公共匹配块 ≥ 12 字 —— 抓"整体相似度不到 0.82、但有一大段原样搬来"。
+    归一化先去标点/空白/星号（与产品一致）。
+
+    ⚠️ 这里是**唯一的例外**：产品那份判据写在 `main.py` 的实例方法里，
+    没法从源码里"取出来直接用"（它依赖 `self` 与 `difflib` 运行时），
+    所以只能重写一份。为防漂移，验证脚本里有一条**等价性断言**
+    （`verify_persona_chat.py` 的 W 组）会拿同一批样本跑两侧、比对结果。
+    """
+    try:
+        import re as _re
+        import difflib
+
+        def _norm(s):
+            return _re.sub(r'[\s，。！？!?、~…—\-（）()「」“”"\'’*`]', '', str(s))
+
+        t = _norm(text)
+        if len(t) < 6 or not recent:
+            return False
+        for sample in recent:
+            s = _norm(sample)
+            if len(s) < 6:
+                continue
+            if abs(len(s) - len(t)) <= 6 and \
+                    difflib.SequenceMatcher(None, t, s).ratio() >= 0.82:
+                return True
+            biggest = max(
+                (b.size for b in difflib.SequenceMatcher(None, t, s).get_matching_blocks()),
+                default=0)
+            if biggest >= 12:
+                return True
+    except Exception:
+        return False
+    return False
+
+
+def _load_md_strip_re():
+    """从 src/main.py 源码里抽出 `_md_strip_re` 的正则（第 0b 步的判据）。
+
+    与 `_role_marker_re` 同一套路（源码抽取，不 import main）。
+    ⚠️ 抽不到不要紧 —— 但**必须让 0b 步有兜底**：`_md_strip_fallback()` 用
+    一份等价的朴素正则，并会在报告里标注"用的是兜底"。宁可标注，不要静默漏闸。
+    """
+    try:
+        import re
+        src = io.open(os.path.join(PET, 'src', 'main.py'), encoding='utf-8').read()
+        m = re.search(r'_MD_STRIP_RE\s*=\s*re\.compile\(\s*\n\s*r\'([^\']*)\'',
+                      src)
+        if not m:
+            return None
+        return re.compile(m.group(1), re.M)
+    except Exception:
+        return None
+
+
+def _md_strip_fallback():
+    """与 main.py `_md_strip_re` 等价的朴素实现（仅在源码抽取失败时兜底）。
+
+    抽不到源码正则说明 main.py 被大改过 —— 那时**宁可少剥也不能崩**，
+    但报告里要能看出来（否则又是一个"静默漏闸"）。
+    """
+    import re
+    return re.compile(r'\*{1,3}|`{1,3}|^[#>\-]\s*|^\d+[.、]\s+', re.M)
+
+
+# 判据一次导入，供整轮复用（模块级；导入失败置 None，由调用方降级）
+try:
+    if PET not in sys.path:
+        sys.path.append(PET)
+    from modules.event_speech import (
+        strip_action_parentheticals as _STRIP_ACTION,
+        looks_out_of_character as _OOC,
+        looks_like_assistant_speak as _ASST)
+except Exception as _e:                                  # pragma: no cover
+    _STRIP_ACTION = _OOC = _ASST = None
+    sys.stderr.write('[warn] event_speech 判据导入失败，0a/0c 步降级：%r\n' % (_e,))
+
+_ROLE_RE = _load_role_marker_re()
+_MD_RE = _load_md_strip_re()
+_MD_FALLBACK = _MD_RE is None
+
+
+def _apply_gates(text, cap, recent=None):
+    """复刻 `_clean_ai_reply` 的四步闸，返回 (最终文本或 None, 闸后长度, 是否被截断)。
+
+    与产品（`src/main.py::_clean_ai_reply`）**逐步对应**（顺序即优先级）：
+      0a) 删句中括号动作旁白（判据 import 自 modules.event_speech）→ 删净则判退
+      0b) 剥 markdown 强调/列表标记 + 去包裹引号（判据从 main.py 源码抽取）
+      0c) 出戏 / 客服腔（判据同 modules.event_speech）→ 判退 ［本步与内容有关，
+          探针也要过，否则"模型真吐了客服腔"会被探针洗掉，报出一个假 PASS］
+      1)  自问自答续写 → 截到标记之前；截完为空 → 判退
+      2)  车轱辘话（与探针维护的 recent 比）→ 判退
+      3)  超长 → 从最近的句末标点截断
+
+    ⚠️ 0a 必须排在 0b 之前（与产品同）：星号版的动作旁白 `*轻轻敲了敲键盘*`
+    若先过 0b，那对星号会被吃掉、只剩裸旁白，反而认不出来。
+
+    返回值语义（与产品一致）：
+      * `(None, …)` = **判退**（产品会走"换一个说法重采样"路径，不是沉默）；
+      * `(str, …)`  = 该显示的文本。
+    第 3 元组 `was_cut` 只对第 3 步（超长）有意义 —— 第 1 步的截断不在此列
+    （它由 `_ROLE_RE` 直接改文本，语义是"续写被切掉"，与"太长被砍尾巴"不同，
+    产品里也是分开处理的）。
+
+    第 2 步需要 `recent`：探针把**本轮已产出的回复**当 recent 累积传进来
+    （产品里 recent 也确实是"他自己最近说的话"）。
     """
     t = text
-    try:
-        import sys as _sys
-        if PET not in _sys.path:
-            _sys.path.append(PET)
-        from modules.event_speech import strip_action_parentheticals as _strip
-        t = _strip(t)
-    except Exception:
-        pass                      # 导入失败就当这步没做（宁可少删，不可崩）
+    if not isinstance(t, str):
+        return None, 0, False
+    t = t.strip()
     if not t:
-        return t, len(text), False
+        return None, len(text), False
+    was_cut = False
+    # 0a) 括号动作旁白（删那一段）—— 必须在剥 markdown 之前
+    if _STRIP_ACTION is not None:
+        t = _STRIP_ACTION(t)
+        if not t:
+            return None, len(text), False
+    # 0b) 剥 markdown 标记 + 去包裹引号/书名号
+    t = (_MD_RE or _md_strip_fallback()).sub('', t).strip()
+    t = t.strip('"\'“”「」『』《》').strip()
+    if not t:
+        return None, len(text), False
+    # 与产品同步：只剩标点（无任何实义字符）→ 判退
+    import re as _re_local
+    if not _re_local.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
+        return None, len(text), False
+    # 0c) 出戏 / 客服腔 → 判退（与产品同源；探针不替产品"洗掉"这类输出）
+    if _OOC is not None and _OOC(t):
+        return None, len(text), False
+    if _ASST is not None and _ASST(t):
+        return None, len(text), False
+    # 1) 自问自答续写 → 截到标记之前
+    if _ROLE_RE is not None:
+        m = _ROLE_RE.search(t)
+        if m:
+            t = t[:m.start()].strip()
+        if not t:
+            return None, len(text), False
+    # 2) 车轱辘话 → 判退（调用方/产品会重采样）
+    if _is_repeat_of_recent(t, recent):
+        return None, len(text), False
+    # 3) 超长 → 最近的句末标点处截断
     n0 = len(t)
     if not cap or n0 <= cap:
         return t, n0, False
@@ -196,6 +358,10 @@ def main():
                  % _cap)
     lines.append('动作闸 : 复刻 _clean_ai_reply 第 0a 步（句中括号动作只删那段，判据从 '
                  'modules.event_speech 导入）')
+    lines.append('格式闸 : 复刻第 0b 步（剥 markdown 标记 + 去包裹引号；正则从 src/main.py 抽取）')
+    lines.append('话术闸 : 复刻第 0c 步（出戏 / 客服腔 → 判退；判据同源 event_speech）')
+    lines.append('续写闸 : 复刻第 1 步（自问自答截断；正则从 src/main.py 源码抽取）')
+    lines.append('复读闸 : 复刻第 2 步（车轱辘话判退；recent = 本轮已产出的回复，逐题累积）')
     lines.append('召回 : %s' % ('**关闭（对照组：只发 persona）**'
                                 if args.no_recall else '开启（复刻 chat_with_ai 链路）'))
     lines.append('')
@@ -203,13 +369,18 @@ def main():
     lines.append('      hit 但有 bad → PARTIAL(人工看)；连 hit 都没有 → FAIL。')
     lines.append('      #12 是负控制题（闲聊），期望"召回为空、不出现设定倾倒"。')
     lines.append('      判分用**闸后**文本（用户实际看到的那条）；闸前长度另列，用于看模型原始倾向。')
-    lines.append('      ⚠️ 探针只复刻与内容无关的两道闸（动作/长度）；第 1、2 步（自问自答截断、')
-    lines.append('         车轱辘话判退）依赖会话历史，不在此覆盖 —— 所以这里的"闸后"是**下界**，')
-    lines.append('         真实产品链路只会更短，不会更长。')
+    lines.append('      ⚠️ 本版已复刻 `_clean_ai_reply` 全部六道闸（0a/0b/0c/1/2/3）→ "闸后"即'
+                 '"用户实际看到的"。')
+    lines.append('         若某题标「判退(None)」，意味着产品链路上这条会走**重采样**、'
+                 '用户看不到它。')
+    lines.append('         重采样后的结果本探针不模拟（那要多打一次模型）—— 所以判退题计为'
+                 '**RETAIN**，单列不算分。')
     lines.append('')
 
     counts = {'PASS': 0, 'PARTIAL': 0, 'FAIL': 0, 'ERR': 0}
     stats = []          # (num, raw_len, final_len, cut?)
+    recent = []         # 第 2 步用：本轮**已产出**的回复（复刻产品"他自己最近说过的话"）
+    rejected = []       # (num, why) —— 判退的题
     for num, q, anchors, bads in QUESTIONS:
         if args.only and num != args.only:
             continue
@@ -221,7 +392,18 @@ def main():
             lines.append('        %r' % (e,))
             counts['ERR'] += 1
             continue
-        reply, raw_len, was_cut = _apply_gates(reply_raw, _cap)
+        verdict_raw = reply_raw
+        reply, raw_len, was_cut = _apply_gates(reply_raw, _cap, recent=recent)
+        if reply is None:
+            # 判退：产品链路上这条不会被用户看到（会重采样）。单列，不计分。
+            lines.append('[RETN] Q%-2d %s  (%.1fs)' % (num, q, dt))
+            lines.append('        system=%d 字 ; 召回=%r' % (len(system), rkeys))
+            lines.append('        判退：这条被 _clean_ai_reply 拦下（产品会重采样，用户看不到它）')
+            lines.append('        闸前原文：%s' % verdict_raw.replace('\n', ' / ')[:200])
+            lines.append('')
+            rejected.append((num, 'gated'))
+            continue
+        recent.append(reply)        # 只有"真的显示给用户"的那句才进 recent
         stats.append((num, raw_len, len(reply), was_cut))
         verdict, hit, bad = score(reply, anchors, bads)
         counts[verdict] += 1
@@ -241,8 +423,12 @@ def main():
         lines.append('')
 
     lines.append('=' * 64)
-    lines.append('合计：PASS=%d PARTIAL=%d FAIL=%d ERR=%d' % (
-        counts['PASS'], counts['PARTIAL'], counts['FAIL'], counts['ERR']))
+    lines.append('合计：PASS=%d PARTIAL=%d FAIL=%d ERR=%d  判退(RETN)=%d' % (
+        counts['PASS'], counts['PARTIAL'], counts['FAIL'], counts['ERR'],
+        len(rejected)))
+    if rejected:
+        lines.append('判退题：%s（产品链路上会重采样；探针不模拟第二次调用）'
+                     % ', '.join('Q%d' % n for n, _w in rejected))
     if stats:
         _rls = [s[1] for s in stats]
         _fls = [s[2] for s in stats]
@@ -270,6 +456,8 @@ def main():
     lines.append('  · 这一版把召回块真的拼进 system 了 —— 若某题 FAIL 但"召回"字段显示命中，')
     lines.append('    说明**召回取到了、模型没接住**，问题在 persona 的"怎么说"而不是索引内容。')
     lines.append('    若"召回"字段是 []，说明是**取错了块**，该回去查触发词或图边。')
+    lines.append('  · RETN（判退）不是坏事：它说明护栏在干活。但若**判退突然变多**，')
+    lines.append('    多半是模型输出风格漂了（或 persona 改过头）—— 该去看闸前原文长什么样。')
 
     os.makedirs(OUTDIR, exist_ok=True)
     suffix = '_norecall' if args.no_recall else ''

@@ -44,6 +44,7 @@
   K 世界观按需召回（不再每轮全读；碰话题才想起）
   L 关系演进（起始是戒备、信任度不可见、路径有序）
   M 回答篇幅上限可算（阈值须贴着模型真实输出上限，不许失准，第二十二轮补）
+  W 真机探针的复刻品 == 产品真身（防"探针漏一道闸就报假问题"，第二十三轮补）
 
 本套件**不打网络、不调用 Ollama**（模型质量不进回归基线 —— 它天生不可复现）。
 必须用 C:\\Python311\\python.exe 运行（PyQt5）。
@@ -1183,6 +1184,152 @@ ok('M4 鉴别力：把上限改到 100 后，正常长度的回答确实会被�
 ok('M5 C17 的超长输入确实超过新上限（否则 C17 退化成恒真断言）',
    len(LONG_IN) > R.AI_REPLY_MAX_CHARS,
    'in=%d max=%d' % (len(LONG_IN), R.AI_REPLY_MAX_CHARS))
+
+# ---------------------------------------------------------------- W
+# W 组：**探针保真度**（2026-09-20 第二十三轮）。
+#
+# 缘起：`verify_persona_worldview.py`（真机行为探针）为了在**裸 python** 下跑
+# （实测托管 3.13 没有 PyQt5，import main 会炸），必须**自己复刻** `_clean_ai_reply`
+# 的四步闸。前两轮已连撞两次"探针漏一道闸 → 报一个假问题"：
+#   · 漏长度闸 → 误读"召回让回答变啰嗦"；漏动作闸 → 误报"产品漏删（停顿了一下）"。
+# 本轮补齐四步后，必须钉住一件事：**复刻品 == 产品真身**。
+# 尤其第 2 步的车轱辘话判据是**唯一不得不重写**的一份（产品那份写在实例方法里、
+# 依赖 self，取不出来）——重写就有漂移风险，所以这里逐条比对。
+#
+# ⚠️ 本组必须 import 探针模块；探针模块顶层会 `sys.path.append(PET)` 并 import
+#    `modules.event_speech`（Qt-free），不会拉起 PyQt —— 与探针自身的运行前提一致。
+section('W. 真机探针的复刻品 == 产品真身（防"探针漏一道闸就报假问题"）')
+
+# ⚠️ 必须显式把本目录塞进 sys.path 再 import 探针（首跑在 G2 里踩了）：
+#    直接跑时 `python verify_persona_chat.py` 会把脚本目录放进 `sys.path[0]`，
+#    于是 `import verify_persona_worldview` 成功；但 G2 是用 `_seed_runner.py`
+#    以 `runpy.run_path` 执行的 —— **runpy 不会自动加脚本目录**，
+#    于是同一句 import 在 G2 里 `ModuleNotFoundError`。表现为"单跑绿、进 G2 红"。
+#    修法就是这一行（而不是去改 G2 的启动器）。
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+
+try:
+    import verify_persona_worldview as _PVP          # noqa: E402
+    _PVP_OK = True
+except Exception as _e_pvp:
+    _PVP_OK = False
+    _PVP_ERR = repr(_e_pvp)
+
+ok('W1 探针模块可被导入（且不依赖 PyQt：本套件在裸 python 下也能跑到这里）',
+   _PVP_OK, '' if _PVP_OK else _PVP_ERR)
+
+if _PVP_OK:
+    # 样本覆盖四步闸 + 各自的负控制；recent 走产品同语义（"他自己最近说过的话"）。
+    _W_RECENT = [
+        '被骂了啊……是因为什么事呢？我听着都替你委屈。',
+        '诶、诶？！你突然说这个干嘛啦……我、我其实也挺喜欢你的就是了。',
+        '嗯……我也不知道那个预言是什么意思，我们一起去看看好不好？',
+    ]
+    _W_CASES = [
+        # 0a 括号动作（删一段 / 删净判退 / 心里话放行）
+        ('诶、诶？晚安啊……你也是呀。（轻轻敲了下键盘）睡吧，梦里有星星的。', None),
+        ('（歪着头）', None),
+        ('（其实我有点怕）', None),
+        ('其实……（我想想该怎么说）', None),
+        # 0b markdown 剥除 / 包裹引号（含真机 Q3 的 `**…**` 形态）
+        ('**听到也让我心里暖暖的**。别太累了。', None),
+        ('# 早点休息\n> 别熬夜', None),
+        ('1. 早点休息', None),
+        ('"今天风挺大的。"', None),
+        ('那个结尾是说：**世界才会真正开始重置。**', None),
+        # 0c 出戏 / 客服腔（判退 / 负控制）
+        ('有什么可以帮你的吗？', None),
+        ('作为一个语言模型，我其实不太懂这些。', None),
+        ('**有什么可以帮你的吗**', None),
+        ('我今天有点困了，想早点睡。', None),
+        # 1 自问自答截断（截一段 / 行首判退 / 非候选放行）
+        ('嗯……我想想。\n主人：你今天怎么这么安静', None),
+        ('主人：我在呢', None),
+        ('好呀。\n你：嗯嗯，我也是', None),
+        ('Kris:hello there', None),
+        # 2 车轱辘话（逐字 / 只改标点 / 改写 / 负控制）
+        ('被骂了啊……是因为什么事呢？我听着都替你委屈。', _W_RECENT),
+        ('被骂了啊…是因为什么事呢？我听着都替你委屈。', _W_RECENT),
+        ('诶、诶？！你突然说这个干嘛啦……我其实也挺喜欢你的就是了。', _W_RECENT),
+        ('我们一起去看看那个预言好不好？', _W_RECENT),
+        # 3 超长（有标点收尾 / 无标点跑飞）
+        ('唔……' + '这是一段很长的独白，用来测试超长截断。' * 12, None),
+        ('这是一段很长的话用来测试跑飞上限' * 75, None),
+        # 组合
+        ('（停顿了一下）\n主人：喂', None),
+        ('嗯……我在听。（轻轻点头）\n你：那就好', None),
+    ]
+    _W_DIFF = []
+    for _i, (_inp, _rec) in enumerate(_W_CASES, 1):
+        _prod = stub._clean_ai_reply(_inp, recent=_rec)
+        _prb, _n, _c = _PVP._apply_gates(_inp, R.AI_REPLY_MAX_CHARS, recent=_rec)
+        if _prod != _prb:
+            _W_DIFF.append((_i, _inp[:24], _prod, _prb))
+    ok('W2 %d 条样本下，探针 `_apply_gates` 与产品 `_clean_ai_reply` 输出**逐条一致**'
+       % len(_W_CASES),
+       not _W_DIFF, '差异 %d 条：%r' % (len(_W_DIFF), _W_DIFF[:3]))
+
+    # 鉴别力：探针若**漏掉第 2 步**（recent 传空当没有），上面第 13/14/15 条就会
+    # 由"判退(None)"变成"原文放行" —— 必须能观察到这个差别，否则 W2 是恒真。
+    _w_no_recent = [_PVP._apply_gates(t, R.AI_REPLY_MAX_CHARS, recent=None)[0]
+                    for t, _r in _W_CASES if _r]
+    ok('W3 鉴别力：把 recent 抽掉后，车轱辘话样本确实不再判退（证明第 2 步真的在跑）',
+       all(v is not None for v in _w_no_recent) and len(_w_no_recent) == 4,
+       'no_recent 结果=%r' % (['None' if v is None else 'text' for v in _w_no_recent],))
+
+    # 判据只许有一处：探针里**不许**再抄一份动作/出戏/客服腔的正则或词表。
+    _PVP_SRC = io.open(os.path.join(HERE, 'verify_persona_worldview.py'),
+                       encoding='utf-8').read()
+    ok('W4 探针不另抄判据（动作/出戏/客服腔一律 import 自 modules.event_speech）',
+       'from modules.event_speech import' in _PVP_SRC
+       and 'looks_out_of_character' in _PVP_SRC
+       and 'looks_like_assistant_speak' in _PVP_SRC)
+
+    # 第 1 步的正则必须**从 main.py 源码抽取**（不 import main，否则拉 PyQt）。
+    # ⚠️ 三个坑都在这儿（首跑连踩，正是 X0 自检存在的理由）：
+    #   ① 裸 `'import main' in 源码` 会命中探针**注释**里的
+    #      "为什么不直接 import main 里的…" → 假红；
+    #   ② 换成 `code_no_comment`（剥注释留字符串）后，还会命中探针**docstring**里的
+    #      "（不 import main，只正则抓常量）" —— docstring 是 STRING，被保留了；
+    #   ③ `code_no_comment` 会把**所有空白抹平**（`def x` → `defx`），
+    #      所以 needle 必须是抹平后的形式，照抄带空格的会永远匹配不上。
+    # 正解（分工，与 X0 自检同源）：
+    #   · "有没有 import main **语句**"    → `code_only_src`（注释+字符串全剥，只看代码）；
+    #   · "正则是不是从 main.py **抽取**的" → `code_no_comment`（要看得见字符串里的
+    #     文件名 `main.py` 与标识符 `_AI_ROLE_MARKER`）。
+    _PVP_CODE = code_no_comment(_PVP_SRC)
+    _PVP_ONLY = code_only_src(_PVP_SRC)
+    ok('W5 第 1 步的正则从 src/main.py 源码抽取（探针无 `import main` 语句）',
+       'def_load_role_marker_re' in _PVP_CODE
+       and '_AI_ROLE_MARKER' in _PVP_CODE
+       and 'importmain' not in _PVP_ONLY,
+       'def=%s marker=%s 代码里有importmain=%s' % (
+           'def_load_role_marker_re' in _PVP_CODE,
+           '_AI_ROLE_MARKER' in _PVP_CODE,
+           'importmain' in _PVP_ONLY))
+
+    # X 组自检（同源）：抽出来的正则必须真的认得「主人：」，也真的不误伤普通句。
+    _rm = _PVP._load_role_marker_re()
+    ok('W6 抽取出的角色标记正则行为正确（认得「主人：」/ 不误伤正常台词）',
+       _rm is not None
+       and _rm.search('主人：我在') is not None
+       and _rm.search('好呀\n你：嗯') is not None
+       and _rm.search('嗯，晚安。') is None,
+       're=%r' % (_rm.pattern if _rm else None,))
+
+    # 0b 的 markdown 正则同样从源码抽取；抽不到必须有兜底并在报告标注。
+    _md = _PVP._load_md_strip_re()
+    ok('W7 第 0b 步的 markdown 正则从 src/main.py 抽取（且落点行为正确）',
+       _md is not None
+       and _md.sub('', '**听到也让我心里暖暖的**。').strip() == '听到也让我心里暖暖的。'
+       and _md.sub('', '1. 早点休息').strip() == '早点休息',
+       're=%r' % (_md.pattern if _md else None,))
+
+    # 探针必须真的把 0b 用在复刻链路上（不是"写了个 loader 却没用"——本项目最贵的坑）。
+    ok('W8 探针在复刻链路上真的调用了 0b（剥 markdown）',
+       '_MD_RE' in _PVP_CODE or '_md_strip_fallback' in _PVP_CODE,
+       '代码里找不到 0b 的调用点')
 
 # ---------------------------------------------------------------- 汇总
 print('')
