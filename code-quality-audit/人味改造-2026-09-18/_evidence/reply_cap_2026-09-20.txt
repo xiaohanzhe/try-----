@@ -1,0 +1,53 @@
+回答篇幅上限复核 · 2026-09-20（第二十二轮）
+================================================================
+
+起因（用户口径：「那就加」）：上一轮观察到问设定类回答偏长。
+
+— 1. 常量 —
+src/main.py  AI_REPLY_MAX_CHARS = 220（改前 150）
+ralsei.modelfile  PARAMETER num_predict = 256
+
+— 2. 换算率的取证（1 token ≈ ? 个中文字）—
+候选语料文件：
+  code-quality-audit\人味改造-2026-09-18\_evidence\probe_ralsei_voice.txt  (20901 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\probe_ralsei_voice_口癖版_2026-09-19.txt  (17620 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\probe_ralsei_voice_碎片加内容约束_2026-09-19.txt  (20435 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\probe_ralsei_voice_碎片版_2026-09-19.txt  (18958 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\probe_ralsei_voice_规则版v1_2026-09-19.txt  (19874 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\ralsei_lora_corpus.jsonl  (386435 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\ralsei_lora_corpus_stats.txt  (8744 B)
+  code-quality-audit\人味改造-2026-09-18\_evidence\ralsei_worldview_2026-09-19.txt  (8391 B)
+  code-quality-audit\人味诊断-2026-09-18\_evidence\probe_ralsei_result.txt  (11537 B)
+  code-quality-audit\人味诊断-2026-09-18\_evidence\ralsei_modelfile.txt  (18711 B)
+
+— 3. 探针实测的篇幅分布 —
+【召回 ON】worldview_probe_2026-09-20.txt
+   合计：PASS=12 PARTIAL=0 FAIL=0 ERR=0
+   闸前：均值 214 字，最长 333 字（模型原始倾向）
+   闸后：均值 165 字，最长 220 字（用户实际看到的）
+   被截断：4/12 条  → Q1(330→202), Q2(333→171), Q3(329→220), Q4(325→133)
+   超过上限的条数：4/12（这是"闸门本来会不会砍它"的直接证据）
+
+【召回 OFF（对照组）】worldview_probe_2026-09-20_norecall.txt
+   合计：PASS=10 PARTIAL=0 FAIL=2 ERR=0
+   闸前：均值 167 字，最长 253 字（模型原始倾向）
+   闸后：均值 154 字，最长 215 字（用户实际看到的）
+   被截断：4/12 条  → Q1(248→180), Q3(236→211), Q6(253→215), Q7(228→207)
+   超过上限的条数：4/12（这是"闸门本来会不会砍它"的直接证据）
+
+— 4. 旧值 150 的后果（用本轮探针的闸前长度重放）—
+闸前长度样本：[330, 333, 329, 325, 86, 158, 154, 206, 153, 186, 178, 130]
+按旧上限 150 会截断：10/12 条
+按新上限 220 会截断：4/12 条
+→ 差 = 6 条本来不必被砍、却被旧值砍掉尾巴的回答。
+
+— 5. 动作闸（0a）探针保真度 —
+改前：final 文本里出现「（停顿了一下）」2 处 → 看着像产品漏删。
+取证：modules/event_speech.py 的 _ACTION_VERBS 含「停顿」，正则能匹配（见下）。
+样本：'那时候，风有点冷。\n\n（停顿了一下）\n\n我不敢动。'
+正则命中：'（停顿了一下）'
+删除后：'那时候，风有点冷。\n\n我不敢动。'
+→ 结论：产品链路本来就删得掉；是**探针没复刻那道闸**。已补齐（_apply_gates）。
+改后：final 文本里的「停顿」= 1 处（0 = 干净；若剩 1 处，须确认落在 --闸前原文-- 区块内）
+   命中行 68：| 诶……那个……其实我们本来是同一种东西——光明世界里的一样东西，在喷泉的光里活过来就成了“暗之民”。   /  / 比如一本书、一朵花，或者一台机器，原本只是静止的东西，可当它
+   → 该行以 '| 诶……那' 开头 = 闸前原文区块（模型原始输出，未过闸）

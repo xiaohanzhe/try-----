@@ -40,6 +40,10 @@
   F 运行时配置与 Modelfile
   G 载体层状态管理（_build_ai_context 的状态口径）
   H 对话链路「禁说清单」兜底接线（判据与事件链路**同源**，2026-09-19 补）
+  J 平级口径的接线（persona 之外，代码里另有两处也直接发给模型）
+  K 世界观按需召回（不再每轮全读；碰话题才想起）
+  L 关系演进（起始是戒备、信任度不可见、路径有序）
+  M 回答篇幅上限可算（阈值须贴着模型真实输出上限，不许失准，第二十二轮补）
 
 本套件**不打网络、不调用 Ollama**（模型质量不进回归基线 —— 它天生不可复现）。
 必须用 C:\\Python311\\python.exe 运行（PyQt5）。
@@ -202,6 +206,21 @@ ok('A12 三条"碰到事该怎么接"规则齐备（坏消息 / 好消息 / 不�
 # 否则说明改动没生效、上面那条断言是在测一份还在用旧结构的文件。
 ok('A12b 反向控制：成对示范（主人：/ 我：）已移除，不再逐字可搬',
    _n_owner == 0 and _n_me == 0, '主人=%d 我=%d' % (_n_owner, _n_me))
+
+# A12c —— 第三条规则里的**篇幅约束必须排在碎片示例之前**（第二十二轮）。
+# 用户口径（本轮）：「那就加」—— 就"聊到设定时回答偏长"加一条长度约束。
+# ⚠️ 为什么单列一条断言，而且断的是**位置**不是"字符串在不在"：
+#   这条约束是"碰到事该怎么做"（规则），碎片是"声音长什么样"（示例）。
+#   persona 自己在收尾处写死了喂法：「先记三条…这三条比下面那些碎片重要得多」、
+#   「碎片只是调味，不是主菜」。若把约束塞到碎片那一区，它就从"规则"降格成"示例"，
+#   而**碎片区全是短句** —— 模型学短句的样子，长度约束反而被稀释掉。
+#   所以位置是本条断言的全部内容：只断"在不在"会被"随便塞哪儿"糊弄过去。
+_A12C_RULE = '都别一口气倒完'
+_A12C_FRAG = '坏消息的时候用：'
+ok('A12c persona 有"别一口气倒完"的篇幅约束，且在碎片示例之前（规则区）',
+   _A12C_RULE in PERSONA
+   and 0 <= PERSONA.find(_A12C_RULE) < PERSONA.find(_A12C_FRAG),
+   'rule@%d frag@%d' % (PERSONA.find(_A12C_RULE), PERSONA.find(_A12C_FRAG)))
 
 # 世界观索引（第二十轮新增）：A 组与 K 组都要读它，**在这里统一加载一次**。
 # 位置刻意放在 A 组之前 —— A13–A22 的视图是 `PERSONA + _WV_TEXT`（并集），
@@ -1093,6 +1112,77 @@ ok('L15 关系模块不 import 任何项目内模块 / Qt（初始化环）',
 ok('L16 main.py 对关系模块走可选导入（失败降级，不炸启动）',
    'frommodules.relationshipimportRelationshipas_Relationship' in CODE_MAIN.replace(' ', '')
    and '_Relationship=None' in CODE_MAIN.replace(' ', ''))
+
+# ---------------------------------------------------------------- M
+# M 组：回答篇幅上限的**可算性**（2026-09-20 第二十二轮）
+# 用户口径：「那就加」—— 接在"问设定类回答偏长"的观察之后。
+#
+# 为什么要有这么一组（本组的由来，别删）：
+#   原 `AI_REPLY_MAX_CHARS = 150` 是**3B 时代**定下的，换 4B（`num_predict 256`）
+#   后没跟着改 → 实测正常的"问设定"回答 214 字 **也超 150**，于是每一条都被
+#   从"最近句末标点"截到 ~150 字。用户要的是"短一点"，拿到的是"被砍掉尾巴"。
+#   真正跑飞的量级（自问自答续写 / 车轱辘话）在 300 字以上。
+#   所以这不是"把阈值调大"这么简单 —— 是**这个数必须能从模型的实际输出上限算出来**，
+#   否则下一次换底座又会静默失准（本项目最贵的坑型："改了，但没人保证它还对"）。
+section('M. 回答篇幅上限可算（阈值必须贴着模型真实输出上限，不许失准）')
+
+# M1 —— 正向：上限必须**大于**模型正常回答的长度，否则这道闸会砍正常回答。
+# 214 是实测值（21 轮探针：问"设定"时 214 字；对照组 129 字），**写死这个数**
+# 是因为它就是"正常回答"的实证长度 —— 若哪天阈值掉回 150，这条必红。
+_M_MEASURED_NORMAL = 214
+ok('M1 上限必须高于实测常态回答（否则闸门在砍正常回答，不是在防跑飞）',
+   R.AI_REPLY_MAX_CHARS > _M_MEASURED_NORMAL,
+   'max=%d measured=%d' % (R.AI_REPLY_MAX_CHARS, _M_MEASURED_NORMAL))
+
+# M2 —— **可算性**：上限与 Modelfile 的 `num_predict` 必须挂钩。
+# 判据是"算得出来"而不是"等于某个数"：换算率 1 token ≈ 1.42 中文字由语料实测得到
+# （853 条原台词，见 §6.6 的取证脚本），取上限的 0.6 作为"正常回答"的容忍带。
+# 换底座 / 调 num_predict 而忘了复核这个数 → 这条会红（这正是我们要的提醒）。
+_M_RATIO = 1.42            # token → 中文字（含标点），语料实测
+_M_BAND = (0.5, 0.75)      # 阈值应落在"模型物理上限"的 50%~75%
+_M_NPREDICT = None
+for _ln in _mf.split('\n'):
+    _ln = _ln.strip()
+    if _ln.lower().startswith('parameter num_predict'):
+        try:
+            _M_NPREDICT = int(_ln.split()[-1])
+        except Exception:
+            _M_NPREDICT = None
+        break
+_M_CEIL = (_M_NPREDICT or 0) * _M_RATIO
+_M_LO, _M_HI = _M_CEIL * _M_BAND[0], _M_CEIL * _M_BAND[1]
+ok('M2 上限可从 Modelfile 的 num_predict 推出（阈值落在物理上限的 50%~75%）',
+   _M_NPREDICT is not None and _M_LO <= R.AI_REPLY_MAX_CHARS <= _M_HI,
+   'num_predict=%s 物理上限≈%.0f 允许区间=[%.0f, %.0f] 实际=%d'
+   % (_M_NPREDICT, _M_CEIL, _M_LO, _M_HI, R.AI_REPLY_MAX_CHARS))
+
+# M3 —— 负控制（**成对**）：模型物理上根本吐不出的长度，必须仍然被拦。
+# 没有这条的话，M1/M2 只要"把阈值调大"就全能过 —— 那等于把这道闸拆了。
+# 造一条 1200 字、且**不含任何句末标点**的输入：截断后不可能是原文，且长度 ≤ 上限。
+_M_FLOOD = '这是一段很长的话用来测试跑飞上限' * 75      # 1200 字，无句末标点
+_M_FLOOD_OUT = stub._clean_ai_reply(_M_FLOOD)
+ok('M3 负控制：超过物理上限的跑飞仍被截断（阈值没有被调成"不设防"）',
+   _M_FLOOD_OUT is not None and len(_M_FLOOD_OUT) <= R.AI_REPLY_MAX_CHARS
+   and len(_M_FLOOD_OUT) < len(_M_FLOOD),
+   'in=%d out=%d max=%d' % (len(_M_FLOOD), len(_M_FLOOD_OUT or ''),
+                            R.AI_REPLY_MAX_CHARS))
+
+# M4 —— **鉴别力体检**：把阈值临时改小，M1 判据必须变红。
+# 不做这一步的话，M1 可能只是"恒真"（比如误写成 `>= 0`）—— 那比不写还危险。
+_M_stub_small = make_stub()
+_M_stub_small.AI_REPLY_MAX_CHARS = 100
+_M_small_out = _M_stub_small._clean_ai_reply('。'.join(['这是一句话'] * 40))
+ok('M4 鉴别力：把上限改到 100 后，正常长度的回答确实会被截断（M1 判据非恒真）',
+   _M_small_out is not None and len(_M_small_out) <= 100
+   and len(_M_small_out) < len('。'.join(['这是一句话'] * 40)),
+   'out=%d' % (len(_M_small_out or ''),))
+
+# M5 —— C17 用的 long_input 必须仍然超限（否则 C17 自己退化成恒真）。
+# 这条是**给 C17 做的体检**：C17 断的是"输出 ≤ 上限"，输入若不再超限，
+# 输出就等于输入，C17 会永远为真 —— 那是死断言（本项目铁律："别写在死代码上"）。
+ok('M5 C17 的超长输入确实超过新上限（否则 C17 退化成恒真断言）',
+   len(LONG_IN) > R.AI_REPLY_MAX_CHARS,
+   'in=%d max=%d' % (len(LONG_IN), R.AI_REPLY_MAX_CHARS))
 
 # ---------------------------------------------------------------- 汇总
 print('')
