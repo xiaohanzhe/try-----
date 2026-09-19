@@ -1,0 +1,79 @@
+== 策略 A：按段落名归属（只认 obj_ralsei*）==
+  obj_ralseienemy              @7215    台词行=111
+  obj_ralseithrown             @7430    台词行=3
+  obj_ralseienemy              @27169   台词行=0
+  obj_ralseithrown             @27196   台词行=2
+  obj_ralsei_hook              @87353   台词行=0
+  ---- 合计 116 行 ----
+  评价：这些段全是战斗教学/被投掷的短促反应，且说话对象是 Kris。
+  样例（全部读一遍的成本很低，直接贴前 30 行）：
+      | * ...
+      | * See that HEART, Kris?
+      | * That's a SOUL, the culmination of a HUMAN's being!
+      | * Not only does it represent one's WILL and COMPASSION...
+      | * But it also has the power to DETERMINE FATE.
+      | * When enemies attack, BULLETS appear.
+      | * Please avoid them and protect your team's FATE!
+      | * Ready, Kris?
+      | * Let's try dodging!
+      | * That's DEFENDING, Kris.
+      | * You'll recover TP and take less damage.
+      | * It's not part of this lesson, though.
+      | * Gee, Kris!
+      | * You sure are good at defending!
+      | * I'm not attacking, you, though, so...
+      | * No need to defend!
+      | * Ummm...
+      | * Kris?
+      | * There are no bullets, and you can't use TP...
+      | * So, umm, maybe you could stop defending?
+      | * ...
+      | * You've got an item!
+      | * That's, um, great, Kris...
+      | * W-wow, Kris!
+      | * That was an amazing attack!
+      | * Have you done this before or something...?
+      | * Good job, Kris!
+      | * By the way, you'll do more damage...
+      | * Pressing Z when the cursor is RIGHT IN the box on the left!
+      | * Kris!
+
+== 策略 B：按'名字标签行'归属（游戏里会不会打出说话人名牌？）==
+  '疑似名牌'行数 = 311
+      | up...  →  
+      | Checkers  →  
+      | Throw  →  
+      | all.  →  
+      | friends...  →  
+      | Boost  →  
+      | Damage  →  
+      | everyone  →  
+      | WlyWlyWlyWly  →  
+      | weird.  →  
+      | orange  →  
+      | behind.  →  
+
+== 策略 C：按'章节里提到过 Ralsei'归属（宽松法）==
+  '所在段落提到过 Ralsei' 的台词行 = 15034（占全部 28768 行的 52%）
+  评价：段落是'场景'不是'说话人'。同一段里 Susie / Lancer / 旁白混排，
+
+== 反例：同一段里两个不同说话人都是 '* ' 行（obj_checker_animtest）==
+      | * Hohoho...
+      | * Well STEP on my BOOTS.
+      | * If it isn't the
+      | * You boys or girls had better turn back while you can.
+      | * Lancer!!!
+      | * What is it this time!?
+      | * Hohoho...
+      | * I'm simply warning you...!
+      | * Something EXTREMELY dangerous is lying ahead!
+      | * Hohoho! It's actually really inconvenient!
+      | * Ha! I can't go home at all because I'm so scared!
+      | * Wh... What is it!?
+      | * Oh, hey, little guy...
+      | * THAT??? THAT'S what you're afraid of???
+      这两句「* Lancer!!!」和「* What is it this time!?」一个是 Susie 一个是 Lancer，
+      转储里**没有任何字段**能区分，只能说 textbox 内容原样铺开。
+
+== 语言 ==
+  台词行 28768 条，纯 ASCII 28765 条（100.0%）→ 语料是英文

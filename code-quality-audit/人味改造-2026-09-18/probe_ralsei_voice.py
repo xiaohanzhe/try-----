@@ -11,8 +11,17 @@
 把客服腔与旁白化写进禁说清单、「我怎么说」加"别急着给建议/自检像不像在给人回复"。
 
 这个探针回答一个问题：**改前改后，同一批输入下，4B 的话有没有更像 Ralsei。**
-做法是 A/B：旧 persona 取自 `git show HEAD:ralsei_pet/assets/ralsei_persona.md`，
-新 persona 直接读磁盘，**同一个模型 `ralsei:v3`、同一套 options、同一批输入**。
+做法是 A/B：旧 persona 取自**最近一次改动该文件的提交的「父版本」**
+（`git log -1 --format=%H -- <path>` 再取 `^`），新 persona 直接读磁盘，
+**同一个模型 `ralsei:v3`、同一套 options、同一批输入**。
+
+⚠ 2026-09-19 踩坑（已修）
+----------------------
+第一版写死 `git show HEAD:<path>`。当时 persona 改动**已经先提交**了，于是
+`HEAD` == 磁盘 → **A 组和 B 组是同一条 system prompt**，探针静默退化成 A/A：
+头部那行"旧 2136 字 / 新 2136 字"就是铁证，我却当成"输出几乎一致"的观测。
+**教训：凡 A/B，先断言 A ≠ B，否则结论一定是"没有差别"。**
+现在 `load_old_persona()` 取父版本 + `main()` 里硬校验 md5 不同，不满足直接抛错。
 
 顺带把生产的两道闸（`looks_like_assistant_speak` / `looks_like_narration`）当**尺子**量一遍
 （不是当护栏用 —— 事件链路才有闸，对话链路目前没有）。
@@ -76,6 +85,14 @@ TAIL = ('用一句话很短地回应（最多 %d 个字），只输出这一句�
 _PARTICLES = ('诶', '欸', '唔', '嗯', '咦', '唉', '哦', '噢', '呃', '嘛', '啦')
 _STUTTER = re.compile(r'(.)、\1')
 _MD = ('**', '##')
+# 括号/星号里的"动作旁白"：括号内是动作词而不是一句能说出口的话。
+# 举例：「（轻轻敲了下键盘）」「（小声）」「（歪头）」「*轻轻挠了挠头*」
+# 注意 Ralsei 原作里**真的用括号讲心里话**（22/825 条），所以这里只抓"动作类"，
+# 不做"见到括号就判退" —— 那会把他的特征一起杀掉。
+_PAREN_ACTION = re.compile(
+    r'[（(\*][^）)\*]{0,12}'
+    r'(敲|挠|歪|低头|抬头|眨眼|笑|叹气|脸红|握|摊手|耸肩|点头|摇头|小声|轻声|喃喃|沉默|停顿|想了想)'
+    r'[^）)\*]{0,12}[）)\*]')
 
 
 def _post(path, payload, timeout=300):
@@ -129,6 +146,11 @@ def markers(text):
         flags.append('出戏')
     if any(m in t for m in _MD) or t.startswith('#'):
         flags.append('md残留')
+    # 2026-09-19 补：生产的两道闸**抓不到**「（轻轻敲了下键盘）」这类括号动作旁白。
+    # 上一轮 A/B 里新旧 persona 都出现过，而 looks_like_narration 全放过 ——
+    # 说明尺子有洞。这条独立列出来，让"洞"本身可量化。
+    if _PAREN_ACTION.search(t):
+        flags.append('括号动作')
     feats = []
     if any(p in t for p in _PARTICLES):
         feats.append('语气词')
@@ -187,52 +209,107 @@ def summarize(res):
     return n, bad, feat_n, flags
 
 
+REL_PERSONA = 'ralsei_pet/assets/ralsei_persona.md'
+
+
+def load_old_persona(rev=None):
+    """取「最近一次改动 persona 的那个提交」的父版本 —— 即真正的改前状态。
+
+    rev 指定时直接用它（可隔离出"这一次"改动，而不是累计对比）。
+    返回 (text, rev_desc)。取不到就抛错：宁可不跑，也不要拿同一份文件当 A/B。
+    """
+    if rev:
+        old_rev = rev
+        desc = rev
+    else:
+        last = subprocess.run(['git', 'log', '-1', '--format=%H', '--', REL_PERSONA],
+                              cwd=REPO, capture_output=True)
+        if last.returncode != 0 or not last.stdout.strip():
+            raise RuntimeError('git log 取 persona 改动提交失败：%s'
+                               % last.stderr.decode('utf-8', 'replace')[:200])
+        head_rev = last.stdout.decode('ascii').strip()
+        old_rev = head_rev + '^'
+        desc = '%s^（改动提交 %s 的父版本）' % (old_rev[:7], head_rev[:7])
+    show = subprocess.run(['git', 'show', '%s:%s' % (old_rev, REL_PERSONA)],
+                          cwd=REPO, capture_output=True)
+    if show.returncode != 0:
+        raise RuntimeError('git show %s 失败：%s'
+                           % (old_rev, show.stderr.decode('utf-8', 'replace')[:200]))
+    return show.stdout.decode('utf-8').strip(), desc
+
+
+def rev_short(rev):
+    return rev[:8] if rev else 'auto'
+
+
 def main():
+    import hashlib
+    argv = sys.argv[1:]
+    revs = []
+    for i, a in enumerate(argv):
+        if a == '--old-rev' and i + 1 < len(argv):
+            revs = [x.strip() for x in argv[i + 1].split(',') if x.strip()]
+    out_name = 'probe_ralsei_voice.txt'
+    for i, a in enumerate(argv):
+        if a == '--out' and i + 1 < len(argv):
+            out_name = argv[i + 1]
+
     with open(PERSONA, 'r', encoding='utf-8') as f:
         new_p = f.read().strip()
-    try:
-        old_p = subprocess.run(['git', 'show', 'HEAD:ralsei_pet/assets/ralsei_persona.md'],
-                               cwd=REPO, capture_output=True).stdout.decode('utf-8').strip()
-    except Exception as e:
-        old_p = ''
-        print('旧 persona 取不到：%s' % e)
+    mn = hashlib.md5(new_p.encode('utf-8')).hexdigest()[:8]
+
+    old_list = []                      # [(标签, persona, 描述)]
+    if revs:
+        for r in revs:
+            p, d = load_old_persona(r)
+            old_list.append(('OLD-%s' % rev_short(r), p, d))
+    else:
+        p, d = load_old_persona()
+        old_list.append(('OLD', p, d))
+
+    for tag, p, d in old_list:         # 硬闸：A/B 退化成 A/A 就立刻停
+        mo = hashlib.md5(p.encode('utf-8')).hexdigest()[:8]
+        if mo == mn:
+            raise SystemExit('!! A/B 无效：%s 与磁盘 persona 内容相同（md5=%s）。' % (tag, mn))
 
     L = []
     L.append('口吻抽查 —— 改过 persona 之后 4B 是否更像 Ralsei（A/B：旧 persona vs 新 persona）')
     L.append('模型 %s @ %s；options = %s' % (MODEL, HOST, json.dumps(OPTS, ensure_ascii=False)))
-    L.append('旧 persona = git HEAD 版本（%d 字）；新 persona = 磁盘版本（%d 字）'
-             % (len(old_p), len(new_p)))
+    for tag, p, d in old_list:
+        L.append('%s = %s（%d 字 md5=%s）'
+                 % (tag, d, len(p), hashlib.md5(p.encode('utf-8')).hexdigest()[:8]))
+    L.append('NEW = 磁盘版本（%d 字 md5=%s）' % (len(new_p), mn))
     L.append('对话 %d 场景 x %d 次；事件 %d 场景 x %d 次（事件额外过 first_sentence(%d)+guard_reaction）'
              % (len(DIALOGUE), REPS, len(EVENTS), REPS, EVENT_MAX_CHARS))
     L.append('=' * 78)
 
     new_res = run_persona('NEW', new_p, EVENTS)
-    old_res = run_persona('OLD', old_p, EVENTS) if old_p else None
+    results = [('新 persona', new_res)]
+    for tag, p, _d in old_list:
+        results.append((tag, run_persona(tag, p, EVENTS)))
 
     # ---------------- 汇总
     L.append('')
     L.append('### 汇总（标记越少越好；特征比例越高越有 Ralsei 的语气）')
-    for tag, res in (('新 persona', new_res), ('旧 persona', old_res)):
-        if res is None:
-            L.append('  %s：未取到' % tag)
-            continue
+    for tag, res in results:
         n, bad, feat_n, fl = summarize(res)
-        L.append('  %-9s 有效 %2d 条 | 命中生产标记 %d 条 %s | 带语气特征 %d 条（%.0f%%）'
+        L.append('  %-12s 有效 %2d 条 | 命中生产标记 %d 条 %s | 带语气特征 %d 条（%.0f%%）'
                  % (tag, n, bad, fl or '{}', feat_n, 100.0 * feat_n / max(n, 1)))
 
     # ---------------- 逐条原文
     L.append('')
     L.append('### 逐条原文')
+    short = {'新 persona': '新'}
+    for tag, _p, _d in old_list:
+        short[tag] = tag.replace('OLD-', '旧:').replace('OLD', '旧')
     for i, (label, user, risk) in enumerate(DIALOGUE):
         L.append('')
         L.append('--- [%02d] %s   易犯：%s' % (i + 1, label, risk))
         L.append('    主人▸ %s' % user)
-        for who, res in (('新', new_res), ('旧', old_res)):
-            if res is None:
-                continue
+        for tag, res in results:
             for j, (ttft, total, raw) in enumerate(res['D'].get(label, [])):
                 f, fe = markers(raw)
-                L.append('    %s#%d %5.0fms ▸「%s」' % (who, j + 1, ttft or -1,
+                L.append('    %s#%d %5.0fms ▸「%s」' % (short[tag], j + 1, ttft or -1,
                                                         raw.replace('\n', ' ⏎ ')))
                 L.append('           %s' % (('标记=' + '/'.join(f) + ' ') if f else '') +
                          ('特征=' + '/'.join(fe) if fe else ''))
@@ -240,17 +317,15 @@ def main():
         L.append('')
         L.append('--- [事件] %s   kind=%s' % (label, kind))
         L.append('    user▸ %s' % (build_prompt(kind) + ' ' + TAIL))
-        for who, res in (('新', new_res), ('旧', old_res)):
-            if res is None:
-                continue
+        for tag, res in results:
             for j, (ttft, total, raw) in enumerate(res['E'].get(label, [])):
                 shown = guard_reaction(first_sentence(raw, EVENT_MAX_CHARS))
                 L.append('    %s#%d %5.0fms 上线后▸「%s」%s' % (
-                    who, j + 1, ttft or -1, shown,
+                    short[tag], j + 1, ttft or -1, shown,
                     '' if shown else '   ← 判退/为空（生产里沉默）'))
                 L.append('           裸回复▸ %s' % raw.replace('\n', ' ⏎ ')[:160])
 
-    out = os.path.join(HERE, '_evidence', 'probe_ralsei_voice.txt')
+    out = os.path.join(HERE, '_evidence', out_name)
     with open(out, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(L) + '\n')
     print('written: %s' % out)

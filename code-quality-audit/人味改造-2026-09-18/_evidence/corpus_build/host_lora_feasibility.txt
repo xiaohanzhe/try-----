@@ -1,0 +1,45 @@
+== 系统 ==
+  python   : 3.11.0 (C:\Python311\python.exe)
+  platform : Windows-10-10.0.26100-SP0
+  cpu      : Intel64 Family 6 Model 170 Stepping 4, GenuineIntel
+  cpu 逻辑核: 18
+  内存     : 总 31.6 GB / 可用 7.6 GB
+
+== GPU ==
+  wmic 失败: FileNotFoundError(2, '系统找不到指定的文件。', None, 2, None)
+
+== 训练栈 ==
+  torch           OK   2.3.0+cu121
+  transformers    OK   4.57.0
+  peft            OK   0.17.1
+  datasets        OK   4.1.1
+  accelerate      OK   1.10.1
+  bitsandbytes    OK   0.48.1
+  safetensors     OK   0.6.2
+  trl             缺失 (ModuleNotFoundError)
+  sentencepiece   缺失 (ModuleNotFoundError)
+  tokenizers      OK   0.22.1
+
+== torch 细节 ==
+  cuda available : False
+  device count   : 0
+  built with cuda: 12.1
+  CPU 512x512 矩阵乘 x20 = 0.065s  (82.8 GFLOP/s 峰值估)
+
+== 本地已有模型文件（能不能直接训？）==
+  ollama blobs 目录存在: False
+  E:\RalseiMemory                                               0.01 GB
+  → 关键：Ollama 的 GGUF **不能直接训**，LoRA 要 HF safetensors 权重。
+    本机有没有 qwen3-4b 的 safetensors？上面 HF 缓存目录大小说明问题。
+
+== GGUF 转换链（训完要转回去才能给 Ollama 用）==
+  llama-quantize           未找到
+  convert_hf_to_gguf.py    未找到
+  ollama                   C:\Users\23002\AppData\Local\Programs\Ollama\ollama.EXE
+  ollama --version: ollama version is 0.34.2
+
+== 网络：HF 能不能下 ==
+  OK https://huggingface.co/api/models/Qwen/Qwen3-4B-Instruct-2507
+     modelId=Qwen/Qwen3-4B-Instruct-2507  downloads=3992032  private=False
+     文件 13 个，前 12: ['.gitattributes', 'LICENSE', 'README.md', 'config.json', 'generation_config.json', 'merges.txt', 'model-00001-of-00003.safetensors', 'model-00002-of-00003.safetensors', 'model-00003-of-00003.safetensors', 'model.safetensors.index.json', 'tokenizer.json', 'tokenizer_config.json']
+     safetensors: ['model-00001-of-00003.safetensors', 'model-00002-of-00003.safetensors', 'model-00003-of-00003.safetensors']

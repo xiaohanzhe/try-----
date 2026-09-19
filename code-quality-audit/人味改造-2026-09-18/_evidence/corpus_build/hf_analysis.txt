@@ -1,0 +1,97 @@
+== data/chapN_dataset.jsonl ==
+  chap1:  1068 行 | 说话人  50 种 | Ralsei  131 行 (12%) | 场景 37 个
+  chap2:  3109 行 | 说话人  77 种 | Ralsei  191 行 (6%) | 场景 77 个
+  chap3:  3352 行 | 说话人  82 种 | Ralsei  169 行 (5%) | 场景 94 个
+  chap4:  4070 行 | 说话人 101 种 | Ralsei  334 行 (8%) | 场景 160 个
+  合计 11599 行；字段 = ['context', 'speaker', 'text']
+
+== 全局说话人排行（前 20）==
+  Narrator                3566
+  Susie                   2311
+  Ralsei                   825
+  Noelle                   506
+  Mr. Tenna                481
+  Player                   343
+  Berdly                   311
+  Queen                    296
+  Lancer                   194
+  Rouxls Kaard             136
+  Toriel                   132
+  Old Man                  118
+  Alphys                   114
+  Spamton                   82
+  Ramb                      78
+  Spamton NEO               67
+  Mr. Tenna (viewer)        65
+  Ralsei (viewer)           63
+  Lanino                    56
+  King                      55
+
+== Ralsei 台词合计 825 行 ==
+  长度：min=0 max=349 平均=37.4 中位=35
+  总字符 = 30871
+
+== Ralsei 台词样例（均匀取 40 条）==
+  [Scene: Obj Insideclosetcutscene] Welcome, heroes...!
+  [Scene: Obj Dummyenemy] 
+  [Scene: Obj Susieandlancer Event] And before that, you ate an innocent person's cake...
+  [Scene: Obj Suitspuzzle Event] Sorry! Sorry. ... I notice there is a puzzle here. Would you two... like to... do it...?
+  [Scene: Obj Lancerbattle2 Event] Ah. I see.
+  [Scene: Obj Thrashafter Follow] Oh... I mean, I've always wondered what it's like...
+  [Scene: Obj Kingcutscene & Obj King] (Come now, Susie!) I'm glad you're starting to realize, Mr. King... None of us really want to fi
+  [Scene: Obj Castletown Intro] (And go to the old classroom, t- the EAST of the closet doors.)
+  [Scene: Obj Castle Rooms] Umm, I'd be happy if this place...
+  [Scene: Obj Cyberfield Afterbattle1] I just used my PACIFY spell to put them into "Sleep Mode"!
+  [Scene: Obj Cyberfield Puzzles] Maybe if Kris.. um...
+  [Scene: Obj Trash Pile Aftermath] (Enemies you SPARE get RECRUITED to our town, remember?)
+  [Scene: Obj Mansion Dining Hall] O-oh!! Kris, Susie!! Umm, how may I serve you...?
+  [Scene: Obj Mansion Berdly Shortcut] H-huh...? Y-you mean...
+  [Scene: Obj Acid Tunnel Swan Ride] Umm, Mr. Kaard? What happens if WE win?
+  [Scene: Obj Mansion Rooftop Confron] B... Berdly!? But he's been...
+  [Scene: Obj Mansion Rooftop Giga Qu] Kris can take you back to our Castle Town!
+  [Scene: Obj Darkworld Wakeup] Because I... Because we...
+  [Scene: Obj Ralsei Story] What if we could take away the light that wasn't there
+  [Scene: Obj Ralsei Story] ... to worry too much about us, OK?
+  [Scene: Obj Weather Duo Battle] Ninety... Ni--
+  [Scene: Obj Lightners Live Concert] Wow, they loved it! I'm starting to feel like a real rocker!
+  [Scene: Obj Darkness Void] Ask Susie how she's doing?
+  [Scene: Obj Rouxls Battle Final] L-Lancer, help us! Rouxls used his Rules Card...
+  [Scene: Obj Tenna Final Battle] If... that ever comes to an end.
+  [Scene: Obj Castle Rooms Combined] Umm, and here's the tea.
+  [Scene: Obj Castle Rooms Combined] Really? Um, congratulations, Kris!
+  [Scene: Obj Ralsei Room Tragedy] ... please... tell me...
+  [Scene: Obj Dark Sanctuary Mural] That's...
+  [Scene: Obj Dark Sanctuary Small Pi] Oh, Kris! This seems like a complicated puzzle...
+  [Scene: Obj Dark Sanctuary Boss Aft] We're sorry, we were just looking for a way...
+  [Scene: Obj Dark Sanctuary Ancestor] It, it might be nice if she had this chance to...
+  [Scene: Obj Dark Sanctuary Chase] Then... it'll at least... buy us a little more time.
+  [Scene: Obj Gerson Statue Battle] About the "rules" of this world. About the prophecy.
+  [Scene: Obj Gerson Statue Battle] ...
+  [Scene: Obj 3Rd Sanctuary Entrance] So, it makes sense... it would be a similar world as...
+  [Scene: Obj 3Rd Sanctuary Final Cor] I'll be there, okay?
+  [Scene: Obj Fountain Top Ledge] It only exists to destroy.
+  [Scene: Obj Titan Battle Final] ... keep on fighting.
+  [Scene: Obj Prophecy Break] ...
+
+  括号型（内心/私下）台词 = 22 行 (3%)
+
+== chatml/deltarune_story_chatml.jsonl ==
+  行数 = 377；字段 = ['messages']
+  第 1 条 messages 角色序列 = ['system', 'user', 'assistant']
+
+  --- 样例 1 ---
+    system     You are the Deltarune Script Archive. You provide exact, chronological scene transcripts including dialogues, actions, and pauses.
+    user       Provide the transcript for Scene: Device Contact. ⏎ Context: This scene occurs after 'None (Start of Game)' and before 'Obj Krisroom'.
+    assistant  * (ARE YOU THERE?) * ⏎ * (ARE WE CONNECTED?) * ⏎ * (...) * ⏎ * (EXCELLENT.) * ⏎ * (TRULY EXCELLENT.) * ⏎ * (NOW.) * ⏎ * (WE MAY BEGIN.) * ⏎ * (FIRST.) * ⏎ * (YOU MUST
+
+  --- 样例 2 ---
+    system     You are the Deltarune Script Archive. You provide exact, chronological scene transcripts including dialogues, actions, and pauses.
+    user       Provide the transcript for Scene: Obj Krisroom. ⏎ Context: This scene occurs after 'Device Contact' and before 'Obj Carcutscene'.
+    assistant  Toriel: "Kris...!" ⏎ Toriel: "Wake up!" ⏎ Toriel: "KRIS...!" ⏎ Toriel: "Kris, if you do not wake up, we will be late for school!" ⏎ Toriel: "I will wait outsi
+
+  --- 样例 3 ---
+    system     You are the Deltarune Script Archive. You provide exact, chronological scene transcripts including dialogues, actions, and pauses.
+    user       Provide the transcript for Scene: Obj Carcutscene. ⏎ Context: This scene occurs after 'Obj Krisroom' and before 'Obj Classscene'.
+    assistant  Toriel: "Kris... It is a beautiful day today, is it not?" ⏎ Toriel: "I hope it stays this way when ASRIEL visits next week." ⏎ Toriel: "But I wonder..." ⏎ T
+
+  全局 role 分布 = {'system': 377, 'user': 377, 'assistant': 377}

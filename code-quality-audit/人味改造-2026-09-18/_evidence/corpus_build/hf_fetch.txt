@@ -1,0 +1,35 @@
+proxy env: HTTP_PROXY=http://127.0.0.1:64805 HTTPS_PROXY=http://127.0.0.1:64805
+OK  https://huggingface.co/api/datasets/Deltarunefan/Deltarune-Complete-Transcript-Cleaned/tree/main  (767 chars)
+
+== 仓库文件 ==
+  .gitattributes                                 2504 bytes
+  README.md                                      3138 bytes
+  parquet.py                                     1330 bytes
+  readme.md                                      2543 bytes
+  目录: ['chatml', 'data', 'parquet', 'raw']
+  chatml/deltarune_story_chatml.jsonl            777863 bytes
+  data/chap1_cleaned.txt                         63884 bytes
+  data/chap1_dataset.jsonl                       136972 bytes
+  data/chap2_cleaned.txt                         136976 bytes
+  data/chap2_dataset.jsonl                       357503 bytes
+  data/chap3_cleaned.txt                         176436 bytes
+  data/chap3_dataset.jsonl                       410129 bytes
+  data/chap4_cleaned.txt                         211155 bytes
+  data/chap4_dataset.jsonl                       493228 bytes
+  parquet/chap1_dataset.parquet                  41761 bytes
+  parquet/chap2_dataset.parquet                  93340 bytes
+  parquet/chap3_dataset.parquet                  101400 bytes
+  parquet/chap4_dataset.parquet                  126713 bytes
+  parquet/full_chapters_dataset.parquet          357298 bytes
+  raw/chap1.txt                                  66187 bytes
+  raw/chap2.txt                                  159002 bytes
+  raw/chap3.txt                                  187066 bytes
+  raw/chap4.txt                                  221595 bytes
+
+== 下载 ==
+待下载 5 个：['chatml/deltarune_story_chatml.jsonl', 'data/chap1_dataset.jsonl', 'data/chap2_dataset.jsonl', 'data/chap3_dataset.jsonl', 'data/chap4_dataset.jsonl']
+  OK   E:\Download\_tmp\corpus\hf\chatml__deltarune_story_chatml.jsonl  777863 bytes
+  OK   E:\Download\_tmp\corpus\hf\data__chap1_dataset.jsonl  136972 bytes
+  OK   E:\Download\_tmp\corpus\hf\data__chap2_dataset.jsonl  357503 bytes
+  OK   E:\Download\_tmp\corpus\hf\data__chap3_dataset.jsonl  410129 bytes
+  OK   E:\Download\_tmp\corpus\hf\data__chap4_dataset.jsonl  493228 bytes
