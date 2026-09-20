@@ -5,23 +5,26 @@ H4 零引用筛查（AST 口径，非字符串匹配）
 
 ==========================================================================
 ### (指定)
-  start_rock_paper_scissors              引用点 2
-      ralsei_pet\modules\dialogue_ui.py  L1658
-      ralsei_pet\src\main.py  L6544
-  play_rock_paper_scissors               引用点 1
-      ralsei_pet\src\main.py  L6615
-  determine_rock_paper_scissors_winner   引用点 1
-      ralsei_pet\modules\games_controller.py  L162
-  end_rock_paper_scissors                引用点 3
-      ralsei_pet\modules\games_controller.py  L204
-      ralsei_pet\src\main.py  L5093, 6596
-  start_guess_number                     引用点 3
-      ralsei_pet\modules\dialogue_ui.py  L1662, 1666
-      ralsei_pet\src\main.py  L6547
-  play_guess_number                      引用点 1
-      ralsei_pet\src\main.py  L6618
-  end_guess_number                       引用点 5
-      ralsei_pet\modules\games_controller.py  L340, 351, 362
-      ralsei_pet\src\main.py  L5095, 6598
-  handle_game_input                      引用点 1
-      ralsei_pet\modules\dialogue_ui.py  L1249
+  check_video_apps                       引用点 1
+      ralsei_pet\src\main.py  L4666
+  identify_video_apps                    引用点 1
+      ralsei_pet\modules\video_controller.py  L215
+  start_watching_video                   引用点 1
+      ralsei_pet\modules\video_controller.py  L223
+  stop_watching_video                    引用点 2
+      ralsei_pet\modules\video_controller.py  L386
+      ralsei_pet\src\main.py  L4659
+  suggest_watching_video                 引用点 1
+      ralsei_pet\modules\video_controller.py  L227
+  _start_video_watching_loop             引用点 2
+      ralsei_pet\modules\video_controller.py  L363, 501
+  _update_video_watching                 引用点 1
+      ralsei_pet\modules\video_controller.py  L368
+  _react_to_video                        引用点 1
+      ralsei_pet\modules\video_controller.py  L394
+  is_watching_video                      引用点 8
+      ralsei_pet\modules\video_controller.py  L266, 373, 430, 431, 492
+      ralsei_pet\src\main.py  L1159, 4583, 4656
+  video_watching_timer                   引用点 9
+      ralsei_pet\modules\video_controller.py  L367, 368, 369, 374, 458, 500, 502, 503
+      ralsei_pet\src\main.py  L1169
