@@ -5,10 +5,10 @@
 > 本文件只留**每轮都必须遵守**的铁律、速查契约与当前状态。
 
 ## 0. 铁律
-- 每轮改动完成即 **commit + push**（"以免后期找不到"）；称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
+- 每轮改动完成即 **commit + push**（"以免后期找不到"）；称呼"用户"；技术细节我拍板；不可逆动作先说影响面。
 - 报告放项目根 `人味*.md` / `code-quality-audit/架构改造-H4H5/W1-*.md`；证据进 `code-quality-audit/<轮次>/_evidence/`
   （侦察 `_recon/`，gitignore）。下载/生成物默认落 `E:\Download`（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。
-- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（**24 套件 / 1163 PASS / 全 IDENTICAL**）。
+- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（**24 套件/1163 PASS/全 IDENTICAL**）。
   G2 会跑 `compileall` → 可能改写被跟踪的 `src/__pycache__/*.pyc` → 收工前 `git checkout --`。
 ## 1. 环境（**全文见参考 §1**；下列每条都真踩过）
 1. ⚠️ **本沙箱 Bash 工具经常整个坏掉**（`dirname`/`ls`/`mkdir`/`cd`/`head`/`cat` 全 exit 127）→ **一律 PowerShell + Python**；
@@ -55,12 +55,11 @@
   ④ `data_store` 是**唯一入口**（vault=`E:\RalseiMemory\` 读优先，staging=`%LOCALAPPDATA%\RalseiPet\`，
      迁移**只复制不搬走**）；被反向依赖的底层模块一律 `modules/lazy_log.LazyLogger`；
      裸进程脚本**先建 `QApplication` 再读坐标**。
-- **误报清单（勿据此改）**：`learn_new_skill` 有守卫；`_on_ai_reply` 已由 `pyqtSignal` 排主线程；
-  `reset_special_states` 零调用。
+- **误报清单（勿据此改）**：`learn_new_skill` 有守卫；`_on_ai_reply` 已由 `pyqtSignal` 排主线程；`reset_special_states` 零调用。
 ## 5. 验证脚本教训（**全文见参考 §5 + §5.1 + §5.2 + §8.4，改断言前必读**）
 - **源级断言别用 `"字面量" in 源码`** → `code_only_src()`；含字面量的 needle 走 `code_no_comment()`（5 次踩）。
 - **回归锁必须有鉴别力**（两侧同值＝没测）；**正/负控制成对**；**断行为不断赋值**；**恒真判据比不写还危险**；
-  **体检须"改文件"**（改内存 → 假 P）；❗**报红先自问"夹具真把破坏写进去了吗"**（连报 3 次假红全是夹具 bug）。
+  **体检须"改文件"**（改内存 → 假 P）；❗**报红先自问"夹具真把破坏写进去了吗"**（连报 3 次假红全是夹具 bug）
 - **阈值型断言必须锚在"实测物理上限"**，不能是裸常数；**换底座/改 num_predict 必须重跑测量脚本**。
 - **探针不保真 = 报假问题** → 「**能从源码拿的别 import；能 import 的别重写；不得不重写必须锁等价**」；
   **`runpy.run_path` 不给 `sys.path` 加脚本目录** → **"单跑绿、进 G2 红"**（**先怀疑加载器**）。
@@ -88,14 +87,13 @@
   persona **是 prompt 不是文档**：不许 markdown。**别再放整句示范**（4B 会逐字背），但"先接住对方那件事"的
   **行为锚不能丢**（由规则承担）。锁 **A1–A12c + F1/F7**。
 - **补充速查**：**❗平级口径（用户硬要求）：不许叫"主人"**，用户与 Ralsei **平级**、他**不是为谁而来**，
-  **persona 与代码两层都要改**（只改 persona 无效），锁 **J1–J6**；**世界观 = `assets/ralsei_worldview.md` +
+  **persona 与代码两层都要改**，锁 **J1–J6**；**世界观 = `assets/ralsei_worldview.md` +
   `modules/worldview_recall.py`**（`MAX_BLOCKS=2` 硬上限、**无命中返回空串**、`lean=True` 跳过），锁 **K1–K20**；
   **关系演进 = `modules/relationship.py`**（四档按用户原话顺序 distrust→guarded→warming→friend、
   `TRUST_INITIAL=0.12` 从 distrust 起步；**信任度不可见**、唯一写入口 `note(event)`；**勿把下界抬到 TRUST_INITIAL**
   → 会让 `harsh` 变死事件），锁 L1–L16。**S7 事件台词** `modules/event_speech.py`：档位表是**白名单**；
   唯一出口 `speak_event(kind, pool, face)`；**`pool=None` = 不给内置台词**（AI 失败/判退 → **返回 `""` 沉默**）；
-  **禁止 import Qt / 项目内模块**。
-- **底座 = `ralsei:v3`（`qwen3:4b-instruct-2507-q4_K_M`）**：**采样参数必须落 Modelfile**（`/v1/chat/completions`
+  **禁止 import Qt / 项目内模块**。- **底座 = `ralsei:v3`（`qwen3:4b-instruct-2507-q4_K_M`）**：**采样参数必须落 Modelfile**（`/v1/chat/completions`
   **静默忽略 `num_ctx`/`repeat_penalty`**）；**⚠️ 换底座必须 `ollama create <新tag> -f ralsei.modelfile`**。
 - **护栏 `_clean_ai_reply(reply, recent=)`（顺序 = 优先级，别乱调）**：0a 句中括号动作 → 0b 剥 markdown →
   0c 禁说清单（**与事件链路同源，不许另立第二份表**）→ 1 自问自答截断 → 2 车轱辘话判退（**只看 recent 重复**）
@@ -104,18 +102,20 @@
 - **❗篇幅上限 = `main.AI_REPLY_MAX_CHARS`，现 220**（原 150 是 3B 拍的，**在砍正常回答**）；
   **换底座/调 num_predict 必须重跑 `measure_token_ratio.py`**。锁 **M1–M5**。
 ## 7. 历轮索引 / H4-H5 / 遗留（**详情见参考 §7–§9**）
-- **历轮 7–24**：详见参考 §7 + 今日日志。要点：**7–18** 路径 import / 联想三件套 / jieba / `data_store` 收口 /
+- **历轮 7–24**（**详见参考 §7 + 今日日志**）：**7–18** 路径 import / 联想三件套 / jieba / `data_store` 收口 /
   建楼线 / DPI / 批次 A/B / S8 流式；**19** S7 batch2 + 底座 v3 + 人味四轮；**20** 世界观按需召回 + 平级口径 + 关系演进；
-  **21** 世界观网图（§10）；**22** 篇幅 150→220（§11）；**23** 探针保真度六闸复刻（§12）+ 清存量；
-  **24** H4/H5 Wave1 四项连做（§8.1–§8.4）+ 第 7 条搬运铁律 + **A/B 失效谱三形态**。
+  **21** 世界观网图；**22** 篇幅 150→220；**23** 探针保真度六闸复刻 + 清存量；
+  **24** H4/H5 Wave1 四项连做 + 第 7 条搬运铁律 + **A/B 失效谱三形态**。
 - **H4/H5 上帝类拆分**（用户排期"单独做"）：基线 `code-quality-audit/架构改造-H4H5/`（**勿重测**）；
   **S1/S2/S3 完成**；**G1 = 每项 PR 内做该专项零引用筛查**；
   **Wave 1 顺序 W1-3→W1-4→W1-1→W1-2→W1-6**（**W1-3/W1-4/W1-1/W1-2 ✅**）；
-  **旧行号已失效 → 开工前必须重跑 `scan_method_index.py`**；**剩余仅 W1-6（文件表 7 方法 / ~399 行）**。
-  - ❗**`scan_method_index.py` 既漏标也误纳 → 只是下界 + 线索，不是范围定义**（`group_of()` 是名字前缀启发式）：
-    W1-1 漏标 `_tick_*`/`_cast_*`（报 2/63，实为 4/290）；W1-4 漏标 `_*video*`；**W1-2 反向误纳 `_hide_ralsei`
-    （托盘隐藏，L558/17 行）** → 照抄索引会把托盘功能一起搬走。**必须与排期方案 `架构改造排期方案_H4-H5_2026-09-13.md`
-    交叉核对（以方案为准）+ 人工确认"物理连续块"边界；两个方向都要防。**
+  **旧行号已失效 → 开工前必须重跑 `scan_method_index.py`**；**剩余仅 W1-6（文件表，实测 399 行）**。
+  - ❗**`scan_method_index.py` 四类偏差都出现过 → 只是线索，不是范围定义**（`group_of()` 是名字前缀启发式）：
+    W1-1 漏标 `_tick_*`/`_cast_*`（报 2/63，实为 4/290）；W1-4 漏标 `_*video*`；**W1-2 误纳 `_hide_ralsei`
+    （托盘隐藏，L558/17 行）**；**W1-6 跨区散布（7 方法横跨 L4222–4584 与 L8511–8591 两区，相距 ~4000 行）
+    ⇒「物理连续块」假设不成立**。**必须与排期方案 `架构改造排期方案_H4-H5_2026-09-13.md` 交叉核对
+    （方案为准）+ 逐方法人工确认边界**；**⚠️ 方案本身也会错**（W1-6 行号全漂、行数自相矛盾、
+    把「已删的 `check_excel_table_needs`」列为待处置死代码）→ **两边都验**。
   - ⚠️ **W1 转发铁律：双向 `__getattr__` 两侧都须显式白名单**，否则成环（真机踩过）：宿主侧**只能**
     `getattr(type(ctrl), name)`，**绝不** `hasattr(ctrl, name)`；控制器侧只在「名字在宿主实例字典 **或** 宿主类型 MRO」
     时回落。**`RecursionError` 崩在构造期 → G2 抓不到**（仅 16 套件会 `RalseiPet()`）→ 自写 e2e 才抓到。
@@ -134,5 +134,6 @@
     不是 Name-func 调用 —— 只扫"裸 Call 的 name"会**完全看不见**它们（W1-2 漏了 11 处 `os.` 站点）→
     逐个确认有**模块级** import。
 - **遗留**：① **真机实测（用户做）**：遮挡 / 上下动手感 / 边缘掉落不生气而关窗生气 —— **契约级+单元级已锁，真机未验**；
-  ② `climb_to_top_window()` 仍走裸窗口 ③ 75 个历史编码告警**已冻结归档** ④ 日志滚动：**旧诊断实测不成立**
-  （3.11 `doRollover` 自带 `os.remove(dfn)`；3.13 改为"目标存在则早退"）→ **不凭"应该会坏"改全局日志行为** ⑤ S7 第二批 ~11 处**不阻塞**。
+  ② `climb_to_top_window()` 仍走裸窗口 ③ 75 个历史编码告警**已冻结归档** ④ 日志滚动：**旧诊断实测不成立** →
+  **不凭"应该会坏"改全局日志行为** ⑤ S7 第二批 ~11 处**不阻塞** ⑥ **W1-6 的 B 块 3 个 `check_*_content`
+  （文件情感反应群）暂缓**，待 H4「文件反应」专项处置。
