@@ -110,16 +110,62 @@ check("V2b 承接语得到上下文回复而非崩溃",
 print()
 print("=== V3 施法流程 casting 分支（含本次 P0 修复） ===")
 MAIN = os.path.join(BASE, "src", "main.py")
-src = io.open(MAIN, encoding="utf-8").read()
-lines = src.splitlines()
 
+# H4/H5 W1-1：`_tick_spell_flow` 已搬进 modules/spell_controller.py。
+# 定位器必须**跟着代码搬家** —— 只扫 main.py 会拿到 node=None，
+# 然后在 `lines[node.lineno-1]` 处 AttributeError 崩掉整个套件
+# （表现为 exit=1 但 FAIL=0，很容易被误读成"断言失败"）。
+# 这与 W1-4 的 round8_anim 是**同一个坑**：修**定位器**，
+# **不动产品代码、不动基线**；⚠️ 严禁弱化成"找不到就跳过"（= 悄悄扔锁）。
 import ast
-tree = ast.parse(src)
-node = None
-for n in ast.walk(tree):
-    if isinstance(n, ast.FunctionDef) and n.name == "_tick_spell_flow":
-        node = n
-        break
+
+# (模块路径, 该模块里的类名 —— 为空表示模块级函数)
+_SEARCH = [
+    (os.path.join(BASE, "src", "main.py"), "RalseiPet"),
+    (os.path.join(BASE, "modules", "spell_controller.py"), "SpellFlowController"),
+    (os.path.join(BASE, "modules", "games_controller.py"), "GamesController"),
+    (os.path.join(BASE, "modules", "video_controller.py"), "VideoController"),
+]
+
+
+def _find_func(name):
+    """在 main + 各 controller 模块里找方法 `name`。
+
+    返回 (node, src) 二元组 —— **必须把源码一起带回来**：
+    后续 `lines[...]` 切片要用"产出该 node 的那份源码"，
+    否则跨模块时行号会串到别的文件上（假红/假绿的经典来源）。
+    找不到返回 (None, None)，由调用方显式报错，绝不静默跳过。
+    """
+    for path, cls_name in _SEARCH:
+        if not os.path.exists(path):
+            continue
+        try:
+            s = io.open(path, encoding="utf-8").read()
+            t = ast.parse(s)
+        except Exception:
+            continue
+        scope = t
+        if cls_name:
+            scope = None
+            for n in t.body:
+                if isinstance(n, ast.ClassDef) and n.name == cls_name:
+                    scope = n
+                    break
+            if scope is None:
+                continue
+        for n in ast.walk(scope):
+            if isinstance(n, ast.FunctionDef) and n.name == name:
+                return n, s
+    return None, None
+
+
+node, src = _find_func("_tick_spell_flow")
+if node is None:
+    raise SystemExit(
+        "V3 定位器失败：_tick_spell_flow 在 %d 个候选模块里都没找到 —— "
+        "这**不是**产品回归，是定位器过时；请更新 _SEARCH 而不是删锁。"
+        % len(_SEARCH))
+lines = src.splitlines()
 
 frag_lines = lines[node.lineno - 1: node.end_lineno]
 dedented = [(ln[4:] if ln.startswith("    ") else ln) for ln in frag_lines]

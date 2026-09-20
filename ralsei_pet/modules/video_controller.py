@@ -423,7 +423,7 @@ class VideoController(object):
             if _driver is not None and callable(getattr(_driver, 'note_event', None)):
                 _driver.note_event("我正在陪主人一起看视频", emotion)
         except Exception as e:
-            _log_().debug("main 防御性异常（已忽略）: %s", e)
+            self._log_().debug("main 防御性异常（已忽略）: %s", e)
 
     def stop_watching_video(self):
         # 停止观看视频
@@ -502,4 +502,4 @@ class VideoController(object):
                 elif not self.video_watching_timer.isActive():
                     self.video_watching_timer.start(5000)
             except Exception as e:  # 修复：原先静默吞噬
-                _log_().debug("main 防御性异常（已忽略）: %s", e)
+                self._log_().debug("main 防御性异常（已忽略）: %s", e)

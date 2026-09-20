@@ -31,11 +31,58 @@ for n, tb in fail:
     print("----", n)
     print(tb)
 
-# 关键不变量：main.py 的 _tick_spell_flow 里不允许再出现未定义的裸 current_time 引用
+# 关键不变量：_tick_spell_flow 里不允许再出现未定义的裸 current_time 引用
 # 注意：必须剔除注释（本次修复的说明注释里含该词，朴素的全文 grep 会误报）。
-MAIN = os.path.join(BASE, "src", "main.py")
-src = io.open(MAIN, encoding="utf-8").read()
-body = src.split("def _tick_spell_flow", 1)[1].split("\n    def ", 1)[0]
+#
+# H4/H5 W1-1：`_tick_spell_flow` 已搬进 modules/spell_controller.py。
+# 原来这里靠 `src.split("def _tick_spell_flow", 1)[1]` 切 main.py 源码 ——
+# 搬走后切不到 → IndexError 崩掉整个套件（症状同 round5_verify：
+# exit=1 但 FAIL=0，容易被误读成断言失败）。
+# 修**定位器**（跨模块找方法并切源码），**不动产品代码、不动基线**。
+# ⚠️ 严禁弱化成"找不到就跳过"（= 悄悄扔锁）。
+import ast
+
+_CANDIDATES = [
+    (os.path.join(BASE, "src", "main.py"), "RalseiPet"),
+    (os.path.join(MODS, "spell_controller.py"), "SpellFlowController"),
+    (os.path.join(MODS, "games_controller.py"), "GamesController"),
+    (os.path.join(MODS, "video_controller.py"), "VideoController"),
+]
+
+
+def _extract_func_body(fname):
+    """跨模块提取方法源码（返回源码串，找不到返回 None）。"""
+    for path, cls_name in _CANDIDATES:
+        if not os.path.exists(path):
+            continue
+        try:
+            s = io.open(path, encoding="utf-8").read()
+            t = ast.parse(s)
+        except Exception:
+            continue
+        scope = t
+        if cls_name:
+            scope = None
+            for n in t.body:
+                if isinstance(n, ast.ClassDef) and n.name == cls_name:
+                    scope = n
+                    break
+            if scope is None:
+                continue
+        for n in ast.walk(scope):
+            if isinstance(n, ast.FunctionDef) and n.name == fname:
+                ls = s.splitlines()
+                return "\n".join(ls[n.lineno - 1:n.end_lineno])
+    return None
+
+
+body = _extract_func_body("_tick_spell_flow")
+if body is None:
+    print()
+    print("!! 定位器失败：_tick_spell_flow 在 %d 个候选模块里都没找到"
+          % len(_CANDIDATES))
+    print("!! 这是**定位器过时**，不是产品回归 —— 请更新 _CANDIDATES 而不是删锁。")
+    sys.exit(2)
 code_only = "\n".join(
     (ln.split("#", 1)[0] if "#" in ln else ln) for ln in body.splitlines()
 )

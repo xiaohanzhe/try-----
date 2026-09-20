@@ -334,6 +334,7 @@ from modules.sound_manager import SoundManager
 # 只搬方法不搬状态 —— game_state 等仍在 __init__，控制器通过宿主引用读写。
 from modules.games_controller import GamesController
 from modules.video_controller import VideoController
+from modules.spell_controller import SpellFlowController
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -497,7 +498,8 @@ class RalseiPet(QMainWindow):
     # ------------------------------------------------------------------
     #   · 'games'  → GamesController（W1-3）
     #   · 'video'  → VideoController（W1-4）
-    _CONTROLLER_ATTRS = ('games', 'video')
+    #   · 'spell'  → SpellFlowController（W1-1）
+    _CONTROLLER_ATTRS = ('games', 'video', 'spell')
 
     def __getattr__(self, name):
         # 注意：`__getattr__` 只在常规查找失败时被调用，所以 `self.games` 已存在时
@@ -732,6 +734,11 @@ class RalseiPet(QMainWindow):
         # 视频控制器（W1-4）：持有「陪看视频」这条业务线的 8 个方法。
         # 时机同 games —— 在 init_systems 内、晚于 dialogue_ui / desktop_interaction。
         self.video = VideoController(self)
+        # 施法流程控制器（W1-1）：持有「施法 (spell)」这条业务线的 4 个方法。
+        # 时机同 games/video —— 在 init_systems 内、晚于 dialogue_ui / sprite_loader。
+        # ⚠️ 它依赖紧随其后的 `_spell_*` 状态声明区；但控制器任何时候取到的都是
+        # 宿主同一份状态（转发壳），故声明先后无实质影响，仅按紧邻放置便于阅读。
+        self.spell = SpellFlowController(self)
         
         # 初始化透明占位符系统
         self.init_placeholder_system()
@@ -751,6 +758,13 @@ class RalseiPet(QMainWindow):
         self._spell_cast_start_frame = None         # spell 起始帧索引
         self._spell_touched_flag = False            # 施法期间是否有触摸/拖拽等打断
         self._spell_auto_suspended = False          # 施法期间是否暂停了自主代理
+        # ⚠️ 以下 2 个此前**从未在状态声明区出现**（只在方法体里首次赋值）。
+        # 它们原本一直是「方法内首赋值 → 自然进宿主 __dict__」，功能正常；
+        # 但 W1-1 把施法方法搬进控制器后，控制器的 __setattr__ 转发判据是
+        # 「宿主**已拥有**这个名字」—— 未预声明 → 不满足判据 → 首赋值会落到
+        # **控制器自己的 __dict__**，状态被劈成两份（详见 W1-4 报告第五节铁律 3）。
+        self._spell_seen_frame = -1                 # casting 帧去重标记（同帧重复见不计数）
+        self._spell_cast_start_time = None          # casting 起始时刻（5s 时间兜底用）
 
         # ========== 躲猫猫 (hide & seek) 状态字段 ==========
         self._hide_stage = None                     # None | moving_to_center | creating | hiding_spell | moving_to_folder | searching
@@ -9149,299 +9163,6 @@ class RalseiPet(QMainWindow):
             screen = self._current_screen_rect()
             return (int(screen.x() + screen.width() / 2), int(screen.y() + screen.height() / 2))
 
-    def _spell_interrupted_reason(self):
-        """检查当前施法流程是否应该中断。返回 str 原因或 None 表示未中断。"""
-        if self._spell_stage is None:
-            return None
-        # 拖拽：立即中断
-        if getattr(self, '_is_being_dragged', False):
-            return 'drag_started'
-        # 用户触摸 / 鼠标按下
-        if getattr(self, '_spell_touched_flag', False):
-            return 'user_touched'
-        # 跳跃 / 掉落：物理过程覆盖所有动画
-        if getattr(self, 'is_jumping', False) or getattr(self, 'is_falling', False):
-            return 'physics_started'
-        # casting 阶段：动画必须是 spell / spell_left，否则视为被打断
-        if self._spell_stage == 'casting' and self._spell_target_direction:
-            expected_anim = 'spell_left' if self._spell_target_direction == 'left' else 'spell'
-            if self.current_animation != expected_anim:
-                # 修复：动画被切走（被 walk/idle/其他动画覆盖）即中断，不再看方向。
-                # 原逻辑在"动画不对但方向匹配"时既不中断也不修复，
-                # 导致 frames_seen 永不增长、施法流程永久卡死（文件夹永不打开）。
-                return 'anim_mismatch'
-            if self.current_direction != self._spell_target_direction:
-                # 动画正确但方向字段不一致：同步方向，不做中断判定
-                self.previous_direction = self.current_direction
-                self.current_direction = self._spell_target_direction
-        return None
-
-    def _tick_spell_flow(self):
-        """每帧执行：推进 spell 流程 walking/casting 状态机。
-        只有 _spell_stage != None 时才真正干活。"""
-        if self._spell_stage is None:
-            return
-
-        # 1. 统一打断检测
-        r = self._spell_interrupted_reason()
-        if r is not None:
-            # ===== 修复：单个 spell 中断 不直接 abort 整个躲猫猫游戏 =====
-            # 躲猫猫的 _abort_hide_and_seek 只在：game 主动结束（end_hide_and_seek）/ 超时 / 玩家点退出 时调用
-            # 这里只清理 spell 状态，让上层决定是否继续推进游戏或重试
-            _log.debug(f"[SPELL] 流程中断 reason={r} stage={self._spell_stage}，仅清理 spell 状态")
-            # walking/casting 都清理 spell 状态
-            self._spell_stage = None
-            self._spell_target_direction = None
-            self._spell_finish_cb = None
-            self._spell_target_path = None
-            self._spell_target_kind = None
-            self._spell_target_screen_pos = None
-            self._spell_cast_start_frame = None
-            self._spell_frames_seen = 0
-            self._spell_seen_frame = -1
-            self._spell_touched_flag = False
-            # ===== 修复：躲猫猫进行中的 spell 被打断 → 兜底结束游戏，避免永久卡死 =====
-            # 原逻辑只清 spell 状态，_hide_stage 卡在中间阶段：无法重开、超时定时器未启动、
-            # _abort_hide_and_seek 全项目仅一处调用 → 游戏永远结束不了。这里统一兜底。
-            hs = getattr(self, '_hide_stage', None)
-            if hs is not None:
-                _log.debug(f"[SPELL] 躲猫猫阶段 {hs} 的施法被打断，兜底结束躲猫猫")
-                self._abort_hide_and_seek(reason='spell_interrupted')
-            else:
-                # 躲猫猫销毁阶段（_hide_end_game 已清 _hide_stage，但障碍物还没删）被打断 →
-                # 清理残留障碍物，避免桌面上永久残留"障碍物N"文件夹
-                obstacles = getattr(self, '_hide_obstacles', []) or []
-                if obstacles:
-                    _log.debug("[SPELL] 躲猫猫销毁施法被打断，清理残留障碍物")
-                    import shutil
-                    for p in obstacles:
-                        try:
-                            if os.path.isdir(p):
-                                shutil.rmtree(p, ignore_errors=True)
-                        except Exception as e:  # 修复：原先静默吞噬
-                            _log.debug("main 防御性异常（已忽略）: %s", e)
-                    self._hide_obstacles = []
-                    self._hide_folder_path = None
-                # 恢复自主代理（非躲猫猫 spell 被打断时，之前 suspend 的 agent 必须恢复，
-                # 否则自主代理永久挂起）
-                if getattr(self, '_spell_auto_suspended', False):
-                    try:
-                        self.autonomous_agent.resume()
-                    except Exception as e:  # 修复：原先静默吞噬
-                        _log.debug("main 防御性异常（已忽略）: %s", e)
-                    self._spell_auto_suspended = False
-            return
-
-        now = time.time()
-
-        # 2. walking 阶段：向目标点移动（dist<35 → 转 casting）
-        if self._spell_stage == 'walking':
-            me = self.frameGeometry().center()
-            tx, ty = self._spell_target_screen_pos
-            dx = tx - me.x()
-            dy = ty - me.y()
-            dist = (dx * dx + dy * dy) ** 0.5
-            if dist < 35:
-                # —— 足够近：立刻切换到 casting 阶段 ——
-                direction = self._spell_target_direction
-                if direction is None:
-                    direction = 'right' if (self.current_direction != 'left') else 'left'
-                spell_anim = 'spell_left' if direction == 'left' else 'spell'
-                self._spell_stage = 'casting'
-                # 修复：进入施法时必须停稳——否则 is_moving 残留 True 时
-                # update_movement 继续驱动移动，施法过程中漂移/抖动（抽搐感）。
-                self.is_moving = False
-                self.current_speed_x = 0
-                self.current_speed_y = 0
-                # 施法音效
-                try:
-                    self.sound_manager.play_spell()
-                except Exception as e:  # 修复：原先静默吞噬
-                    _log.debug("main 防御性异常（已忽略）: %s", e)
-                self._spell_target_direction = direction
-                self.previous_direction = self.current_direction
-                self.current_direction = direction
-                if self.change_animation(spell_anim, force=True):
-                    self.current_frame = 0
-                self._spell_cast_start_frame = 0
-                self._spell_frames_seen = 0
-                self._spell_seen_frame = -1  # 修复：重置帧去重标记，避免残留值吞掉首帧计数
-                # 暂停自主代理（避免它的 look_up / act 覆盖 spell 动画；躲猫猫结束后恢复）
-                try:
-                    self.autonomous_agent.suspend()
-                    self._spell_auto_suspended = True
-                except Exception as e:  # 修复：原先静默吞噬
-                    _log.debug("main 防御性异常（已忽略）: %s", e)
-            else:
-                # 每帧向目标移动一小步：用主移动系统，确保走的是 walk 动画
-                target = QPoint(int(tx - self.width() / 2), int(ty - self.height() / 2))
-                if getattr(self, 'target_pos', None) != target:
-                    self.target_pos = target
-                    self.is_moving = True
-                    self.speed = 6.0
-                    # 按方向切 walk_<dir>
-                    if abs(dx) > abs(dy):
-                        new_dir = 'right' if dx > 0 else 'left'
-                    else:
-                        new_dir = 'down' if dy > 0 else 'up'
-                    # 修复：只在方向确实变化时才 force 切换动画（避免每帧强制切换造成抽搐）。
-                    # force=True 保证冷却期内也能切到目标方向（非 force 时会被冷却拒绝）。
-                    if self.current_direction != new_dir:
-                        self.current_direction = new_dir
-                        self.change_animation(f"walk_{new_dir}", force=True)
-
-        # 3. casting 阶段：数 spell/spell_left 帧直到 11 帧播完 → cb
-        elif self._spell_stage == 'casting':
-            expected = 11
-            anim = self.current_animation
-            frames = self.sprite_loader.sprites.get(anim, [])
-            if not frames:
-                # H5 S1：casting 阶段靠数帧推进，frames 为空会让本阶段永不结束
-                # （与之前 P0 的 current_time NameError 是同一后果）。记账以便定位来源。
-                self.sprite_loader.note_animation_miss(anim, None, '_tick_spell_flow')
-            cur_f = self.current_frame
-            # 记录 casting 开始时间（用于时间超时 fallback）
-            # 修复（P0）：此处原写 current_time —— 该方法内并无此局部变量，模块级
-            # 也没有同名全局，运行到 casting 阶段必抛 NameError，被本帧 tick 的
-            # try/except 吞掉后 _spell_stage 永远停在 'casting'：施法回调不触发
-            # （文件永远打不开、躲猫猫障碍物永不生成），且 pet_ai.trigger_action
-            # 见到 _spell_stage 非空即直接 return → 宠物进入无法自恢复的僵直，
-            # 日志每 100ms 刷一次堆栈。统一改用本函数第 8054 行已定义的 now。
-            if not hasattr(self, '_spell_cast_start_time') or self._spell_cast_start_time is None:
-                self._spell_cast_start_time = now
-            if (anim in ('spell', 'spell_left')) and len(frames) >= 2:
-                # 看到了真实帧：累积 _spell_frames_seen（同一帧重复见不算）
-                if getattr(self, '_spell_seen_frame', -1) != cur_f:
-                    self._spell_frames_seen = getattr(self, '_spell_frames_seen', 0) + 1
-                    self._spell_seen_frame = cur_f
-            # 心跳 log 4 次（防止完全不可见）
-            frames_seen = getattr(self, '_spell_frames_seen', 0)
-            cond_ideal = (frames_seen >= expected) and (anim in ('spell', 'spell_left')) and (len(frames) >= 2)
-            # 修复：此前 timeout fallback 仅依赖 frames_seen>=22，若 spell 动画帧数<2
-            # （frames_seen 永远为 0）则永久卡住。新增：帧数不足直接完成 + 5秒时间超时。
-            cond_frames_insufficient = (anim in ('spell', 'spell_left')) and (len(frames) < 2)
-            cond_time_fallback = (now - getattr(self, '_spell_cast_start_time', now)) > 5.0
-            cond_timeout_fallback = (not cond_ideal) and (frames_seen >= expected * 2 or cond_time_fallback)
-            if cond_ideal or cond_timeout_fallback:
-                cb = self._spell_finish_cb
-                path = self._spell_target_path
-                kind = self._spell_target_kind
-                # —— 关键！保存回调前的动画名，避免回调里启动新 spell 时，
-                #    后面 finally 把新 spell_left 当作旧 spell 清理掉切 idle。
-                _anim_before_cb = self.current_animation
-                # 先清理 spell 状态，再回调（避免回调认为"仍在施法"）
-                self._spell_stage = None
-                self._spell_target_kind = None
-                self._spell_target_path = None
-                self._spell_target_screen_pos = None
-                self._spell_target_direction = None
-                self._spell_cast_start_frame = None
-                self._spell_cast_start_time = None
-                self._spell_finish_cb = None
-                self._spell_touched_flag = False
-                self._spell_seen_frame = -1
-                # 自主代理恢复（仅当 spell 是一次性（非躲猫猫）的情况才恢复；
-                # 躲猫猫整体结束再恢复）
-                if getattr(self, '_spell_auto_suspended', False) and getattr(self, '_hide_stage', None) is None:
-                    try:
-                        self.autonomous_agent.resume()
-                    except Exception as e:  # 修复：原先静默吞噬
-                        _log.debug("main 防御性异常（已忽略）: %s", e)
-                    self._spell_auto_suspended = False
-                elif getattr(self, '_spell_auto_suspended', False):
-                    self._spell_auto_suspended = False
-                try:
-                    if callable(cb):
-                        cb(path, kind)
-                finally:
-                    # 只有 回调没再次启动 spell，且当前动画还停留在 callback 前的 spell/spell_left，才切回 idle
-                    if (self._spell_stage is None
-                            and _anim_before_cb in ('spell', 'spell_left')
-                            and self.current_animation == _anim_before_cb):
-                        self.change_animation('idle', force=True)
-
-    def _cast_spell_then(self, cb, direction=None):
-        """**纯施法**：不走 walking 阶段，直接播 spell / spell_left。
-        用于躲猫猫"创建文件夹"/"躲藏"两个仪式动作。cb：(path, kind) -> None"""
-        # 1) 清理旧 spell 状态（只清 spell，不 abort 整个躲猫猫游戏）
-        # 多次调用 _cast_spell_then 是躲猫猫的正常流程推进（creating→hiding_spell），
-        # 不能调用 _abort_hide_and_seek 否则直接杀掉整个游戏
-        self._spell_stage = None
-        self._spell_finish_cb = cb
-        self._spell_target_path = None
-        self._spell_target_kind = '__cast_only__'
-        self._spell_frames_seen = 0
-        self._spell_seen_frame = -1
-
-        # 2) 确定朝向（spell_left / spell）
-        if direction is None:
-            direction = 'right' if self.current_direction != 'left' else 'left'
-        spell_anim = 'spell_left' if direction == 'left' else 'spell'
-
-        # 3) 登记为 casting 阶段
-        self._spell_stage = 'casting'
-        # 施法音效
-        try:
-            self.sound_manager.play_spell()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        self._spell_target_direction = direction
-        self.previous_direction = self.current_direction
-        self.current_direction = direction
-        ok = self.change_animation(spell_anim, force=True)
-        if ok:
-            self.current_frame = 0
-        else:
-            # 兜底：直接强制设置 + 清零帧
-            self.current_animation = spell_anim
-            self.current_frame = 0
-            self.current_priority = 5
-            self.last_animation_change = time.time()
-        self._spell_cast_start_frame = 0
-        # 暂停自主代理（如果有的话）
-        try:
-            self.autonomous_agent.suspend()
-            self._spell_auto_suspended = True
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-
-    def _start_open_with_spell(self, path, kind, cb):
-        """打开文件/文件夹的入口：
-        1) walking 阶段：Ralsei 走过去（靠近 path 的屏幕坐标）
-        2) casting 阶段：施法 11 帧
-        3) 调用 cb(path, kind) 真实打开文件"""
-        # 清理旧 spell（只清 spell，不 abort 躲猫猫游戏——躲猫猫 searching 阶段找到文件时
-        # 本来就是 open_with_spell，不能反过来 abort 游戏）
-        self._spell_stage = None
-
-        # 1) 目标屏幕坐标 + 朝向
-        (tx, ty) = self._resolve_target_screen_anchor(path)
-        me = self.frameGeometry().center()
-        dx = tx - me.x()
-        dy = ty - me.y()
-        if abs(dx) > abs(dy):
-            direction = 'right' if dx > 0 else 'left'
-        else:
-            direction = 'down' if dy > 0 else 'up'
-        spell_anim = 'spell_left' if direction == 'left' else 'spell'
-
-        # 2) 登记 walking 阶段
-        self._spell_stage = 'walking'
-        self._spell_target_kind = kind
-        self._spell_target_path = path
-        self._spell_target_screen_pos = (tx, ty)
-        self._spell_target_direction = direction
-        self._spell_finish_cb = cb
-        self._spell_frames_seen = 0
-        self._spell_seen_frame = -1
-
-        # 3) 如果已经足够近（<35px），下一次 _tick_spell_flow 会立刻转 casting
-        #    暂停自主代理（避免干扰）
-        try:
-            self.autonomous_agent.suspend()
-            self._spell_auto_suspended = True
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
 
     # ==============================================================
     # 躲猫猫游戏 Hide and Seek
