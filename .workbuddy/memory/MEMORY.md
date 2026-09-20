@@ -20,7 +20,9 @@
 3. Python 一律 **`C:\Python311\python.exe`**（PyQt5/pywin32/bs4/psutil/jieba）—— G2 与所有套件必须用它；
    托管 venv(3.13) 缺 `bs4` → `round5_smoke` 假 FAIL。
 4. **代理端口现查为准**（`netstat -ano | findstr LISTENING` 或读注入 `HTTP_PROXY`）。❗**单端口一次成败不能当结论**：
-   **每端口至少 2~3 次 + 跨端口重试（含直连）。** ❗**bash 缺 coreutils**，但 **PortableGit 自带一份**：
+   **每端口至少 2~3 次 + 跨端口重试（含直连）。** 实测 **注入的 `HTTPS_PROXY`（如 64676）可用**，
+   **`7897`（Clash）也长期可用** → **策略：候选列表逐个试（注入值 → 7897 → 7890），push 成功即停**。
+   ❗**bash 缺 coreutils**，但 **PortableGit 自带一份**：
    `export PATH="/c/Users/23002/.workbuddy/binaries/PortableGit/versions/1.2.0/usr/bin:$PATH"` → 全可用。
 5. **E 盘是外接盘、会掉线**（判在线看 `Get-Disk`）→ 本地中转站是可用性必需。
 6. 清理守卫按目标路径**累计删除计数**（阈值 50）：症状 = 进程在 import 期就被杀。已在应用侧根治；
@@ -73,6 +75,12 @@
   「**能从源码拿的别 import；能 import 的别重写；不得不重写的必须锁等价**」；改判据必须配 **正/负样本 + 鉴别力锁**。
 - **`runpy.run_path` 不给 `sys.path` 加脚本目录**（G2 的 `_seed_runner.py` 用它）→ **"单跑绿、进 G2 红"** 的经典成因：
   套件里 import 同目录兄弟模块必在 import 前 `sys.path.insert(0, HERE)`。**见到这种红先怀疑加载器，别改被测模块。**
+- ❗**"定义"与"引用"必须分开数**（W1-3 踩）：拿"属性名/裸名计数"断言"只定义一次"，
+  会把方法内部的 `self.foo()` **调用**也算成定义 → 假红（报"实际 4 次"）。拆 `defs_of()`（只数
+  `FunctionDef` 节点）/ `refs()`（数引用）两个函数。
+- ❗**反例控制的 needle 必须先断言"真的命中了"**（W1-3 踩）：needle 用 ASCII `"x"` 而源码是 `'x'`
+  → `replace` 空操作 → 篡改没发生 → "篡改后仍相等" → **反例控制假通过**。
+  三段递进：① needle 命中 ≥1 ② 文本确实改变 ③ 判据判不等。**缺①就可能整条假通过。**
 - **断言"某约束在配置里"时要断言它的位置**：放"规则区"是规则，放"全是短句的示例区"就被稀释成例子。
 - **"函数写对了" ≠ "产品用上了"（最贵坑，4 次）** —— 镜像：**"没改也没人调用"要么接线、要么删**；
   **描述/断言里别写会随代码增长的数字**（`ralsei:v2`、`FROM qwen2.5:3b` 都假红）。
@@ -122,8 +130,22 @@
   150→220 + 锁 A12c/M1–M5（§11）。**23**（`8548003`+`f81a8e3`+`61f689f`+`0c93021`）探针保真度六闸全复刻（§12）
   + 清存量：UTF-16 无损转 UTF-8 + 2 个 U+FFFD 加事故头注 + 75 告警冻结。
 - **H4/H5 上帝类拆分**（用户排期"单独做"）：基线 `code-quality-audit/架构改造-H4H5/`（**勿重测**）；**S1/S2/S3 完成**；
-  **G1 = 每项 PR 内做该专项零引用筛查**；**Wave 1 顺序 W1-3→W1-4→W1-1→W1-2→W1-6**（首项 `GamesController`）；
+  **G1 = 每项 PR 内做该专项零引用筛查**；**Wave 1 顺序 W1-3→W1-4→W1-1→W1-2→W1-6**；
   **旧行号已失效 → 开工前必须重跑 `scan_method_index.py`**。
+  - ✅ **W1-3 完成**（`d8e2878`）：`GamesController`（7 方法/258 行）搬出，`main.py` 10481→10265。
+    口径「**只搬方法、不搬状态（转发壳 + 宿主 API）**」→ `game_state`/`guess_number_game`/
+    `rock_paper_scissors_options` **仍留在 `RalseiPet.__init__`**；方法体**逐字搬运**（verify 用
+    "归一 `self.p.` 后逐字节比较"硬证明）；控制器**不 import 任何项目内模块**。
+    新增 4 个校验：`verify_w1_3_{games_extract,forwarding,e2e,ab}.py`（38/45/46 PASS + A/B 轨迹一致）。
+    报告 `W1-3_施工报告_2026-09-20.md`。**`handle_game_input` 刻意不搬**（调 W1-2 的
+    `_abort_hide_and_seek`）→ **待 W1-2 落地后随该项一起搬**。
+  - ⚠️ **W1 转发机制铁律：双向 `__getattr__` 必须两侧都是显式白名单**，否则成环。
+    宿主侧**只能** `getattr(type(ctrl), name)`（只看控制器**类**上定义的方法），
+    **绝不** `hasattr(ctrl, name)`；控制器侧只在「名字在宿主实例字典 **或** 宿主类型 MRO」时回落。
+    **真机踩过**：`__init__` **L405** `init_movement()`→`randomize_movement_pattern()` 会
+    `getattr(self,'game_state',{})`，而 `game_state` 直到 **L426** 才赋值 → `RecursionError` **崩在构造期**。
+    → **构造期崩溃 G2 抓不到**（只有 16 个套件会 `RalseiPet()`，部分还是桩）：自写 e2e（真 `RalseiPet()`）才抓到。
+    **"方法体逐字等价" ≠ "产品还能跑"**，两者必须独立证明。
 - **遗留**：① **真机实测（用户做）**：遮挡 / 上下动手感 / 边缘掉落不生气而关窗生气 —— **契约级+单元级已锁，真机未验**；
   ② `climb_to_top_window()` 仍走裸窗口 ③ 75 个历史编码告警（第五～九轮 BOM/乱码）**已冻结归档**；3 个确定性损坏
   已处置（1 个 UTF-16 无损转 UTF-8；2 个 U+FFFD 不可恢复 → 加事故头注、原字节保留）④ 日志滚动：**旧诊断
