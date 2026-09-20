@@ -1,0 +1,39 @@
+[PASS] 搬移前 RalseiPet 有 start_rock_paper_scissors
+[PASS] 搬移前 RalseiPet 有 play_rock_paper_scissors
+[PASS] 搬移前 RalseiPet 有 determine_rock_paper_scissors_winner
+[PASS] 搬移前 RalseiPet 有 end_rock_paper_scissors
+[PASS] 搬移前 RalseiPet 有 start_guess_number
+[PASS] 搬移前 RalseiPet 有 play_guess_number
+[PASS] 搬移前 RalseiPet 有 end_guess_number
+[PASS] 搬移后 RalseiPet 不再定义 start_rock_paper_scissors（只留转发）
+[PASS] 搬移后 RalseiPet 不再定义 play_rock_paper_scissors（只留转发）
+[PASS] 搬移后 RalseiPet 不再定义 determine_rock_paper_scissors_winner（只留转发）
+[PASS] 搬移后 RalseiPet 不再定义 end_rock_paper_scissors（只留转发）
+[PASS] 搬移后 RalseiPet 不再定义 start_guess_number（只留转发）
+[PASS] 搬移后 RalseiPet 不再定义 play_guess_number（只留转发）
+[PASS] 搬移后 RalseiPet 不再定义 end_guess_number（只留转发）
+[PASS] GamesController 定义 start_rock_paper_scissors
+[PASS] GamesController 定义 play_rock_paper_scissors
+[PASS] GamesController 定义 determine_rock_paper_scissors_winner
+[PASS] GamesController 定义 end_rock_paper_scissors
+[PASS] GamesController 定义 start_guess_number
+[PASS] GamesController 定义 play_guess_number
+[PASS] GamesController 定义 end_guess_number
+[PASS] start_rock_paper_scissors 方法体逐字等价
+[PASS] play_rock_paper_scissors 方法体逐字等价
+[PASS] determine_rock_paper_scissors_winner 方法体逐字等价
+[PASS] end_rock_paper_scissors 方法体逐字等价
+[PASS] start_guess_number 方法体逐字等价
+[PASS] play_guess_number 方法体逐字等价
+[PASS] end_guess_number 方法体逐字等价
+[PASS] 反例控制：篡改 needle "'max_attempts'" 在源码中命中 1 次（必须 ≥1）
+[PASS] 反例控制：篡改确实改变了文本（不是空操作）
+[PASS] 反例控制：篡改一个字符后判据判为不等（证明判据有鉴别力）
+[PASS] 反例控制：未篡改的原文仍判为相等（排除替换式自伤）
+[PASS] handle_game_input 仍在 RalseiPet（本 PR 刻意不搬）
+[PASS] handle_game_input 未被搬进 GamesController
+[PASS] games_controller 不 import 项目内模块（实际: []）
+[PASS] 控制器不持有状态 self.game_state（只借宿主）
+[PASS] 控制器不持有状态 self.guess_number_game（只借宿主）
+[PASS] 控制器不持有状态 self.rock_paper_scissors_options（只借宿主）
+合计：PASS=38 FAIL=0

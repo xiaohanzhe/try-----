@@ -1,18 +1,18 @@
 ==============================================================================
 H4 · G3 属性归属表（只读扫描）  main.py
 ==============================================================================
-RalseiPet：起始行 342 / 直接方法 191 个 / 方法体 8770 行 / main.py 共 9588 行
-self 属性名全集：286 个（Store 过 279 个；类体声明 4 个；property 0 个）
-另：self.foo() 调用位（方法 / Qt 内置，非属性）172 个名字 / 474 个调用点 —— 见文末专段
+RalseiPet：起始行 382 / 直接方法 199 个 / 方法体 9260 行 / main.py 共 10279 行
+self 属性名全集：303 个（Store 过 290 个；类体声明 9 个；property 0 个）
+另：self.foo() 调用位（方法 / Qt 内置，非属性）182 个名字 / 490 个调用点 —— 见文末专段
 
 --- 自检 ---
-[PASS] X1 每个属性恰好一个分区、分区之和 == 全集（286）
+[PASS] X1 每个属性恰好一个分区、分区之和 == 全集（303）
 [PASS] X2 写入方法数 ≤ 写出现次数（恒成立）
-[PASS] X3 字符串形式 setattr/getattr 已计入（setattr=2 getattr=200）
-[PASS] X4 方法分区之和 == 方法总数（191）
-[PASS] X5 判为"方法/Qt 调用"的名字写次数必须为 0（172 个）
+[PASS] X3 字符串形式 setattr/getattr 已计入（setattr=2 getattr=227）
+[PASS] X4 方法分区之和 == 方法总数（199）
+[PASS] X5 判为"方法/Qt 调用"的名字写次数必须为 0（182 个）
 [PASS] X6 排除段与属性表交集为空
-[PASS] X7 排除段 + 属性表 == 原始 self.<name> 名集（172 + 286 == 458）
+[PASS] X7 排除段 + 属性表 == 原始 self.<name> 名集（182 + 303 == 485）
 
 --- 分区分布 ---
 分区                            属性数 其中写≥3方法
@@ -23,6 +23,7 @@ CORE 情绪与状态                     26     12
 W3-1 动画                        25      7
 CORE 会话/AI                     18      3
 子系统引用                          18      1
+UNCLASSIFIED（未归类）              17      0
 W1-1 施法流程                      13     11
 CORE 配置 UI                     12      0
 W1-2 躲猫猫                       10      4
@@ -34,15 +35,15 @@ W1-3 游戏                         3      0
 CORE 未赋值（悬空读，交 G1）              1      0
 
 --- 跨方法共享可变状态（真耦合点）---
-写方法数≥3：93 个    写出现次数≥3：111 个    并集：111 个
+写方法数≥3：93 个    写出现次数≥3：112 个    并集：112 个
 attr                                  写法    写法    读法 归属
-is_moving                             25    17     5 W3-2 移动
+is_moving                             25    17     6 W3-2 移动
 current_direction                     19    11     9 W3-2 移动
 max_idle_duration                     18     8     2 W3-2 移动
 idle_timer                            13     7     2 W3-2 移动
 current_speed_x                       12     5     6 W3-2 移动
 current_speed_y                       12     5     4 W3-2 移动
-is_falling                            10     8    10 W3-3 物理
+is_falling                            10     8    11 W3-3 物理
 current_frame                         10     5     3 W3-1 动画
 is_recovering                         10     7     4 W3-3 物理
 _cached_mood_factor                   10     1     1 CORE 情绪与状态
@@ -59,7 +60,7 @@ fall_duration                          7     6     1 W3-3 物理
 is_splat                               7     5     2 W3-3 物理
 mood                                   7     2     0 CORE 情绪与状态
 is_jumping                             6     4    11 W3-3 物理
-current_window                         6     4     3 W3-3 物理
+current_window                         6     4     4 W3-3 物理
 _hide_obstacles                        6     6     6 W1-2 躲猫猫
 _spell_target_direction                6     4     2 W1-1 施法流程
 is_sleeping_walk                       6     4     1 W3-2 移动
@@ -68,21 +69,23 @@ _spell_frames_seen                     6     4     1 W1-1 施法流程
 fall_velocity_x                        6     3     2 W3-3 物理
 _spell_seen_frame                      6     3     1 W1-1 施法流程
 idle_walk_timer                        6     4     1 W3-2 移动
+window_level                           6     4     1 W3-3 物理
 current_platform_z                     6     5     0 W3-3 物理
 fall_start_time                        6     5     0 W3-3 物理
 last_window_rect                       6     4     0 W3-2 移动
 max_moving_duration                    6     2     0 W3-2 移动
-window_level                           6     4     0 W3-3 物理
 current_floor                          5     4     8 W3-3 物理
 _hide_search_timer                     5     5     4 W1-2 躲猫猫
+api_enabled                            5     3     5 CORE 会话/AI
 _hide_folder_path                      5     5     4 W1-2 躲猫猫
-api_enabled                            5     3     4 CORE 会话/AI
 _catch_brake                           5     4     3 W2-1 鼠标交互
 _play_once_active                      5     3     3 W3-1 动画
 is_watching_video                      5     5     3 W1-4 视频观看
 _fall_phase                            5     3     1 W3-3 物理
 _jump_anim_override                    5     2     2 W3-3 物理
+last_interaction_time                  5     5     1 CORE 会话/AI
 time_of_day                            5     2     2 CORE 环境
+_event_speaking                        5     2     1 UNCLASSIFIED（未归类）
 _play_once_callback                    5     3     1 W3-1 动画
 _play_once_frame_counter               5     3     1 W3-1 动画
 _spell_finish_cb                       5     4     1 W1-1 施法流程
@@ -109,7 +112,6 @@ is_shy                                 4     4     1 CORE 情绪与状态
 is_surprised                           4     4     1 CORE 情绪与状态
 jump_phase                             4     2     1 W3-3 物理
 jump_target_z                          4     1     2 W3-3 物理
-last_interaction_time                  4     4     1 CORE 会话/AI
 _fall_phase_start                      4     3     1 W3-3 物理
 _spell_target_screen_pos               4     3     1 W1-1 施法流程
 _spell_touched_flag                    4     3     1 W1-1 施法流程
@@ -122,7 +124,7 @@ unhappy_timer                          4     3     1 CORE 情绪与状态
 _fall_from_height                      4     2     0 W3-3 物理
 moving_duration                        4     4     0 W3-2 移动
 current_animation                      3     3    11 W3-1 动画
-api_config                             3     3     3 CORE 会话/AI
+api_config                             3     3     6 CORE 会话/AI
 jump_start_pos                         3     3     2 W3-3 物理
 drag_start_pos                         3     3     1 W2-1 鼠标交互
 jump_target_pos                        3     3     1 W3-3 物理
@@ -178,10 +180,10 @@ is_sleeping_walk               W3-2             RalseiPet（留在宿主）, W3-
 previous_direction             W3-2             W1-1, W3-1
 _spell_frames_seen             W1-1             RalseiPet（留在宿主）
 idle_walk_timer                W3-2             RalseiPet（留在宿主）, W3-1
+window_level                   W3-3             RalseiPet（留在宿主）, W1-4, W3-2
 current_platform_z             W3-3             W1-5, W3-2
 fall_start_time                W3-3             RalseiPet（留在宿主）, W2-1, W3-2
 last_window_rect               W3-2             RalseiPet（留在宿主）, W1-4, W3-3
-window_level                   W3-3             RalseiPet（留在宿主）, W1-4, W3-2
 current_floor                  W3-3             W1-5, W3-2
 _hide_search_timer             W1-2             RalseiPet（留在宿主）
 _hide_folder_path              W1-2             RalseiPet（留在宿主）, W1-1
@@ -255,16 +257,14 @@ jump_height                    W3-3             W3-1, W3-2
 jump_target_window             W3-3             W3-2
 resting_time                   W3-3             W1-5, W3-2
 sleep_timer                    W3-3             RalseiPet（留在宿主）, W3-2
-game_state                     W1-3             RalseiPet（留在宿主）
 sprite_loader                  W3-1             RalseiPet（留在宿主）
-guess_number_game              W1-3             RalseiPet（留在宿主）
+game_state                     W1-3             RalseiPet（留在宿主）
 floor_manager                  W3-3             RalseiPet（留在宿主）
 _bounce_params                 W3-3             W2-1
 sprite_label                   W3-1             RalseiPet（留在宿主）
 video_watch_history            W1-4             W3-2
 _rotation_damping              W3-2             W2-1
 mouse_drag_timer               W2-1             RalseiPet（留在宿主）
-rock_paper_scissors_options    W1-3             RalseiPet（留在宿主）
 _bounce_timer                  W3-3             W2-1
 gravity                        W3-3             W3-2
 _sleep_stir_time               W3-3             W3-2
@@ -281,30 +281,37 @@ jump_cooldown                  W3-3             W3-2
 max_sleep_idle_duration        W3-3             W3-2
 mouse_follow_distance          W2-1             W3-2
 rest_duration                  W3-3             W3-2
+rock_paper_scissors_options    W1-3             RalseiPet（留在宿主）
 _is_thrown                     W2-1             W3-3
 bounce_coefficient             W3-3             W3-2
 current_video_url              W1-4             W3-2
+guess_number_game              W1-3             RalseiPet（留在宿主）
 jump_stamina_cost              W3-3             W3-2
 mouse_follow_speed             W2-1             W3-2
 recovery_start_time            W3-3             W3-2
 video_duration                 W1-4             W3-2
 
 --- 读而从未写 / 写而从未读（死参数、悬空读候选，交 G1 处置）---
-从无赋值：7 个 —— 其中类体常量 4 个（合法，读常量）；**真悬空读 3 个**
+从无赋值：13 个 —— 其中类体常量 9 个（合法，读常量）；**真悬空读 4 个**
    _api_result                        读方法=3 分区=CORE 会话/AI               类体常量
+   _api_delta                         读方法=2 分区=UNCLASSIFIED（未归类）        类体常量
    _cached_scale_factor               读方法=1 分区=CORE 窗口几何                **悬空读（读一个从未赋值的属性）**
    ai_thread                          读方法=1 分区=CORE 托盘/进程               **悬空读（读一个从未赋值的属性）**
+   AI_REPLY_MAX_CHARS                 读方法=1 分区=UNCLASSIFIED（未归类）        类体常量
    AUTONOMOUS_SPEECH_MIN_INTERVAL     读方法=1 分区=CORE 会话/AI               类体常量
+   EVENT_SPEAK_FIRST_TOKEN_MS         读方法=1 分区=UNCLASSIFIED（未归类）        类体常量
+   EVENT_SPEAK_MAX_CHARS              读方法=1 分区=UNCLASSIFIED（未归类）        类体常量
+   EVENT_SPEAK_MIN_INTERVAL           读方法=1 分区=UNCLASSIFIED（未归类）        类体常量
    IDLE_LOOP_MIN_SECONDS              读方法=1 分区=CORE 会话/AI               类体常量
    _URGE_WORDS                        读方法=1 分区=CORE 会话/AI               类体常量
+   __dict__                           读方法=1 分区=UNCLASSIFIED（未归类）        **悬空读（读一个从未赋值的属性）**
    is_being_thrown                    读方法=1 分区=CORE 未赋值（悬空读，交 G1）       **悬空读（读一个从未赋值的属性）**
-赋过值但从无读取（死参数候选）：59 个
+赋过值但从无读取（死参数候选）：60 个
    mood                               写方法=2 分区=CORE 情绪与状态
    current_platform_z                 写方法=5 分区=W3-3 物理
    fall_start_time                    写方法=5 分区=W3-3 物理
    last_window_rect                   写方法=4 分区=W3-2 移动
    max_moving_duration                写方法=2 分区=W3-2 移动
-   window_level                       写方法=4 分区=W3-3 物理
    _spell_cast_start_frame            写方法=3 分区=W1-1 施法流程
    _fall_from_height                  写方法=2 分区=W3-3 物理
    moving_duration                    写方法=4 分区=W3-2 移动
@@ -339,6 +346,8 @@ video_duration                 W1-4             W3-2
    current_video_url                  写方法=1 分区=W1-4 视频观看
    customization_system               写方法=1 分区=子系统引用
    dialogue_system                    写方法=1 分区=子系统引用
+   games                              写方法=1 分区=UNCLASSIFIED（未归类）
+   guess_number_game                  写方法=1 分区=W1-3 游戏
    jump_stamina_cost                  写方法=1 分区=W3-3 物理
    last_dragging_time                 写方法=1 分区=W2-1 鼠标交互
    last_mood_change                   写方法=1 分区=CORE 情绪与状态
@@ -359,17 +368,34 @@ video_duration                 W1-4             W3-2
    video_duration                     写方法=1 分区=W1-4 视频观看
    weather_timer                      写方法=1 分区=CORE 环境
 
---- 未归类属性（**显式列出，禁止静默归 core**）：0 个 ---
+--- 未归类属性（**显式列出，禁止静默归 core**）：17 个 ---
+   _event_speaking                    写法=2 读法=1
+   _event_speak_gen                   写法=2 读法=1
+   _ai_delta_gen                      写法=2 读法=2
+   _ai_delta_sink                     写法=2 读法=1
+   _event_speak_last                  写法=2 读法=1
+   _event_line_picker                 写法=1 读法=2
+   _last_user_chat_ts                 写法=1 读法=1
+   _persona_cache                     写法=1 读法=1
+   _worldview_recall_text             写法=1 读法=1
+   relationship                       写法=1 读法=1
+   games                              写法=1 读法=0
+   _api_delta                         写法=0 读法=2
+   AI_REPLY_MAX_CHARS                 写法=0 读法=1
+   EVENT_SPEAK_FIRST_TOKEN_MS         写法=0 读法=1
+   EVENT_SPEAK_MAX_CHARS              写法=0 读法=1
+   EVENT_SPEAK_MIN_INTERVAL           写法=0 读法=1
+   __dict__                           写法=0 读法=1
 
 --- 方法 → 待拆模块（覆盖率显式打印）---
-RalseiPet（留在宿主）         96 个方法
+RalseiPet（留在宿主）        111 个方法
 W2-1                    16 个方法
-W1-3                    13 个方法
 W1-5                    12 个方法
 W1-2                    11 个方法
 W3-3                    11 个方法
 W1-4                    11 个方法
 W3-1                     8 个方法
+W1-3                     6 个方法
 W1-1                     6 个方法
 W3-2                     4 个方法
 W1-6                     3 个方法
@@ -377,17 +403,17 @@ W1-6                     3 个方法
 --- 排除段：self.foo() 调用位（方法 / Qt 内置），不是状态，**不得进属性表** ---
 name                                      调用    读取 说明
 change_animation                          53     1 RalseiPet 方法
-play_animation_once                       43     1 RalseiPet 方法
 pos                                       37     0 Qt/继承方法
 height                                    35     0 Qt/继承方法
 width                                     31     0 Qt/继承方法
+play_animation_once                       30     1 RalseiPet 方法
+speak_event                               20     0 RalseiPet 方法
 move                                      19     0 Qt/继承方法
 _clamp_pos_to_desktop                     12     0 RalseiPet 方法
 _floor_identity_key                       12     0 RalseiPet 方法
 _current_screen_rect                       8     0 RalseiPet 方法
 show                                       7     0 Qt/继承方法
 _apply_pet_z_order                         5     0 RalseiPet 方法
-end_guess_number                           5     0 RalseiPet 方法
 frameGeometry                              5     0 Qt/继承方法
 randomize_movement_pattern                 5     0 RalseiPet 方法
 _abort_hide_and_seek                       4     0 RalseiPet 方法
@@ -398,9 +424,11 @@ generate_new_move_target                   4     0 RalseiPet 方法
 setCursor                                  4     0 Qt/继承方法
 x                                          4     0 Qt/继承方法
 _cast_spell_then                           3     0 RalseiPet 方法
+_clean_ai_reply                            3     0 RalseiPet 方法
 _desktop_floor_y                           3     0 RalseiPet 方法
+_event_say                                 3     0 RalseiPet 方法
 _resolve_target_screen_anchor              3     0 RalseiPet 方法
-end_rock_paper_scissors                    3     0 RalseiPet 方法
+chat_with_ai                               3     0 RalseiPet 方法
 get_ralsei_body_part                       3     0 RalseiPet 方法
 react_to_recycle_bin                       3     0 RalseiPet 方法
 setGeometry                                3     0 Qt/继承方法
@@ -421,6 +449,8 @@ _visible_landing                           2     0 RalseiPet 方法
 check_file_content                         2     0 RalseiPet 方法
 check_nearby_windows                       2     0 RalseiPet 方法
 create_placeholders                        2     0 RalseiPet 方法
+end_guess_number                           2     0 Qt/继承方法
+end_rock_paper_scissors                    2     0 Qt/继承方法
 enter_sleep_mode                           2     0 RalseiPet 方法
 handle_fall                                2     0 RalseiPet 方法
 hide                                       2     0 Qt/继承方法
@@ -432,13 +462,18 @@ start_following_mouse                      2     0 RalseiPet 方法
 start_jump                                 2     0 RalseiPet 方法
 stop_watching_video                        2     0 RalseiPet 方法
 trigger_splat                              2     0 RalseiPet 方法
+_ai_chat_options                           1     0 RalseiPet 方法
+_ai_stream_enabled                         1     0 RalseiPet 方法
 _anim_anchor_offset                        1     0 RalseiPet 方法
 _autonomous_speech_allowed                 1     0 RalseiPet 方法
 _build_ai_context                          1     0 RalseiPet 方法
+_build_persona_prompt                      1     0 RalseiPet 方法
 _catch_falling_in_air                      1     0 RalseiPet 方法
 _climb_hdir                                1     0 RalseiPet 方法
 _climb_landing                             1     0 RalseiPet 方法
 _climb_probe_landing                       1     0 RalseiPet 方法
+_event_ai_ready                            1     0 RalseiPet 方法
+_event_speech_enabled                      1     0 RalseiPet 方法
 _execute_api_action                        1     0 RalseiPet 方法
 _floor_entry_plan                          1     0 RalseiPet 方法
 _floor_rect_changed                        1     0 RalseiPet 方法
@@ -453,6 +488,7 @@ _nearest_floor_jump                        1     0 RalseiPet 方法
 _note_desktop_observation                  1     0 RalseiPet 方法
 _notify_arrived_if_needed                  1     0 RalseiPet 方法
 _open_desktop_item_by_name                 1     0 RalseiPet 方法
+_pick_event_line                           1     0 RalseiPet 方法
 _react_to_video                            1     0 RalseiPet 方法
 _setup_tray                                1     0 RalseiPet 方法
 _show_from_tray                            1     1 RalseiPet 方法
@@ -462,7 +498,6 @@ _sync_system_to_emotions                   1     0 RalseiPet 方法
 _tick_catch_brake                          1     0 RalseiPet 方法
 _tick_spell_flow                           1     0 RalseiPet 方法
 activateWindow                             1     0 Qt/继承方法
-chat_with_ai                               1     0 RalseiPet 方法
 check_entertainment_needs                  1     0 RalseiPet 方法
 check_image_content                        1     0 RalseiPet 方法
 check_nearby_desktop_elements              1     0 RalseiPet 方法
@@ -472,7 +507,6 @@ check_window_movement                      1     0 RalseiPet 方法
 climb_to_top_window                        1     1 RalseiPet 方法
 close_bilibili                             1     0 RalseiPet 方法
 cursor                                     1     0 Qt/继承方法
-determine_rock_paper_scissors_winner       1     0 RalseiPet 方法
 fill_names_in_excel                        1     0 RalseiPet 方法
 fix_excel_format                           1     0 RalseiPet 方法
 get_system_info                            1     0 RalseiPet 方法
@@ -493,8 +527,8 @@ load_resources                             1     0 RalseiPet 方法
 open_browser_for_ralsei                    1     0 RalseiPet 方法
 open_file                                  1     0 RalseiPet 方法
 open_folder                                1     0 RalseiPet 方法
-play_guess_number                          1     0 RalseiPet 方法
-play_rock_paper_scissors                   1     0 RalseiPet 方法
+play_guess_number                          1     0 Qt/继承方法
+play_rock_paper_scissors                   1     0 Qt/继承方法
 raise_                                     1     0 Qt/继承方法
 react_to_vs_code_code                      1     0 RalseiPet 方法
 rect                                       1     0 Qt/继承方法
@@ -509,9 +543,9 @@ setWindowTitle                             1     0 Qt/继承方法
 showMinimized                              1     0 Qt/继承方法
 show_interaction_menu                      1     0 RalseiPet 方法
 start_dragging_play                        1     0 RalseiPet 方法
-start_guess_number                         1     0 RalseiPet 方法
+start_guess_number                         1     0 Qt/继承方法
 start_hide_and_seek_game                   1     0 RalseiPet 方法
-start_rock_paper_scissors                  1     0 RalseiPet 方法
+start_rock_paper_scissors                  1     0 Qt/继承方法
 start_watching_video                       1     0 RalseiPet 方法
 stop_mouse_drag                            1     0 RalseiPet 方法
 suggest_watching_video                     1     0 RalseiPet 方法
@@ -527,6 +561,8 @@ _hide_on_arrive_center                     0     1 RalseiPet 方法
 _hide_on_arrive_folder                     0     1 RalseiPet 方法
 _hide_ralsei                               0     1 RalseiPet 方法
 _hide_search_tick                          0     1 RalseiPet 方法
+_is_repeat_of_recent                       0     1 RalseiPet 方法
+_on_api_delta                              0     1 RalseiPet 方法
 _on_api_result                             0     1 RalseiPet 方法
 _on_tray_activated                         0     1 RalseiPet 方法
 _recover_from_fear                         0     1 RalseiPet 方法

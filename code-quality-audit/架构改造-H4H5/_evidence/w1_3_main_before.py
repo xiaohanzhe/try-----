@@ -484,15 +484,6 @@ class RalseiPet(QMainWindow):
     # 性能：只有「常规查找全 miss」的属性才会走到这里，热路径（每帧属性访问）
     # 完全不受影响。转发名单按控制器逐个列出，**不用**遍历所有控制器 ——
     # 避免"遍历到某个属性含副作用的控制器"这类隐式耦合。
-    #
-    # ⚠️ 绝不能用 `hasattr(ctrl, name)` 探测控制器是否"有"这个名字：
-    #   控制器自己的 `__getattr__` 会**回落给宿主**（它靠这个读到 game_state）。
-    #   于是 `hasattr(ctrl, name)` 会反过来 `getattr(pet, name)`，又回到本函数
-    #   → **无限递归**。真机踩过：`randomize_movement_pattern` 里的
-    #   `getattr(self, 'game_state', {})` 在 `__init__` 早期（game_state 还没赋值）
-    #   按下这条链 → RecursionError 崩在构造期。
-    #   所以这里改成**显式方向**：只有"控制器自己类上定义的方法"才转发，
-    #   属性/状态名一律不转（那些本就该在宿主上找）。
     # ------------------------------------------------------------------
     _CONTROLLER_ATTRS = ('games',)
 
@@ -501,12 +492,7 @@ class RalseiPet(QMainWindow):
         # `self.games.start_rock_paper_scissors` 走的是正常路径，不进这里。
         for attr in RalseiPet._CONTROLLER_ATTRS:
             ctrl = self.__dict__.get(attr)
-            if ctrl is None:
-                continue
-            # 只看控制器**类**上定义的名字（含 __dict__ 里的方法/静态方法），
-            # 不触发控制器实例的 __getattr__ 回落链 —— 这是不递归的关键。
-            impl = getattr(type(ctrl), name, None)
-            if impl is not None:
+            if ctrl is not None and hasattr(ctrl, name):
                 return getattr(ctrl, name)
         raise AttributeError(name)
         
@@ -6581,6 +6567,271 @@ class RalseiPet(QMainWindow):
             self.play_animation_once(new_animation)
             self.dialogue_ui.add_dialogue("ralsei", f"看！我会做这个动作~", "happy")
             self.dialogue_ui.show_dialogue()
+    
+    def start_rock_paper_scissors(self):
+        # 开始石头剪刀布游戏
+        # 修复：其他游戏进行中（躲猫猫等）不允许覆盖——否则躲猫猫的 _hide_stage/
+        # _hide_search_timer 残留、障碍文件夹永远留在桌面。返回 False 表示未开始。
+        if self.game_state.get('is_playing'):
+            self.dialogue_ui.add_dialogue("ralsei", "现在还在玩别的呢，等这一局结束再玩石头剪刀布吧~", "curious")
+            self.dialogue_ui.show_dialogue()
+            return False
+        # 使用 update 而不是整体替换，保留 total_wins/current_streak/best_streak 等统计键
+        # （否则 end_rock_paper_scissors 访问 self.game_state["total_wins"] 会 KeyError 崩溃）
+        self.game_state.update({
+            "is_playing": True,
+            "game_type": "rock_paper_scissors",
+            "game_round": 0,
+            "player_score": 0,
+            "ralsei_score": 0,
+            "game_history": [],
+            "started_at": time.time()
+        })
+        
+        self.dialogue_ui.add_dialogue("ralsei", "我们来玩石头剪刀布吧！", "excited")
+        self.dialogue_ui.add_dialogue("ralsei", "你要出什么呢？石头、剪刀还是布？", "happy")
+        self.dialogue_ui.show_dialogue()
+        
+        # 播放开心动画
+        self.play_animation_once("happy")
+    
+    def play_rock_paper_scissors(self, player_choice):
+        # 处理石头剪刀布游戏的玩家选择
+        if not self.game_state["is_playing"] or self.game_state["game_type"] != "rock_paper_scissors":
+            return
+        
+        # 确保玩家选择有效
+        player_choice = player_choice.strip()
+        if player_choice not in self.rock_paper_scissors_options:
+            self.dialogue_ui.add_dialogue("ralsei", f"请输入有效的选项：{'、'.join(self.rock_paper_scissors_options)}", "confused")
+            return
+        
+        # Ralsei随机选择
+        ralsei_choice = random.choice(self.rock_paper_scissors_options)
+        
+        # 判断胜负
+        result = self.determine_rock_paper_scissors_winner(player_choice, ralsei_choice)
+        
+        # 更新分数
+        self.game_state["game_round"] += 1
+        if result == "player":
+            self.game_state["player_score"] += 1
+        elif result == "ralsei":
+            self.game_state["ralsei_score"] += 1
+        
+        # 记录游戏历史
+        self.game_state["game_history"].append({
+            "round": self.game_state["game_round"],
+            "player_choice": player_choice,
+            "ralsei_choice": ralsei_choice,
+            "result": result
+        })
+        
+        # 显示结果
+        result_messages = {
+            "player": "你赢了！太棒了！",
+            "ralsei": "我赢了！嘿嘿~",
+            "tie": "平局！再来一次吧！"
+        }
+        
+        self.dialogue_ui.add_dialogue("ralsei", f"你出了：{player_choice}", "neutral")
+        self.dialogue_ui.add_dialogue("ralsei", f"我出了：{ralsei_choice}", "neutral")
+        self.dialogue_ui.add_dialogue("ralsei", result_messages[result], "happy")
+        self.dialogue_ui.add_dialogue("ralsei", f"比分：你 {self.game_state['player_score']} - {self.game_state['ralsei_score']} 我", "neutral")
+        
+        # 根据结果播放相应的动画
+        if result == "player":
+            self.play_animation_once("sad")
+            self.emotion_system.add_emotion("sad", 20)
+        elif result == "ralsei":
+            self.play_animation_once("laugh")
+            self.emotion_system.add_emotion("happy", 30)
+        else:
+            self.play_animation_once("neutral")
+        
+        # 询问是否继续游戏
+        if self.game_state["game_round"] >= 5:
+            # 游戏结束，显示最终结果
+            self.end_rock_paper_scissors()
+        else:
+            # 询问是否继续
+            self.dialogue_ui.add_dialogue("ralsei", "要继续玩吗？请输入石头、剪刀或布，或者输入'结束'来结束游戏。", "happy")
+    
+    def determine_rock_paper_scissors_winner(self, player_choice, ralsei_choice):
+        # 判断石头剪刀布游戏的胜负
+        if player_choice == ralsei_choice:
+            return "tie"
+        
+        win_conditions = {
+            "石头": "剪刀",
+            "剪刀": "布",
+            "布": "石头"
+        }
+        
+        if win_conditions[player_choice] == ralsei_choice:
+            return "player"
+        else:
+            return "ralsei"
+    
+    def end_rock_paper_scissors(self):
+        # 结束石头剪刀布游戏
+        final_message = "游戏结束！"
+        if self.game_state["player_score"] > self.game_state["ralsei_score"]:
+            final_message += "你赢了！太棒了！"
+            self.play_animation_once("sad")
+            self.emotion_system.add_emotion("sad", 20)
+            # 更新游戏统计
+            self.game_state["total_wins"] += 1
+            self.game_state["current_streak"] += 1
+            if self.game_state["current_streak"] > self.game_state["best_streak"]:
+                self.game_state["best_streak"] = self.game_state["current_streak"]
+        elif self.game_state["player_score"] < self.game_state["ralsei_score"]:
+            final_message += "我赢了！嘿嘿~"
+            self.play_animation_once("laugh")
+            self.emotion_system.add_emotion("happy", 30)
+            # 更新游戏统计
+            self.game_state["total_losses"] += 1
+            self.game_state["current_streak"] = 0
+        else:
+            final_message += "平局！真是一场精彩的比赛！"
+            self.play_animation_once("neutral")
+            # 更新游戏统计
+            self.game_state["total_ties"] += 1
+            self.game_state["current_streak"] = 0
+        
+        final_message += f"最终比分：你 {self.game_state['player_score']} - {self.game_state['ralsei_score']} 我"
+        
+        # 添加游戏统计信息
+        stats_message = f"游戏统计：总游戏数 {self.game_state['total_games']}，胜利 {self.game_state['total_wins']}，失败 {self.game_state['total_losses']}，平局 {self.game_state['total_ties']}，当前连胜 {self.game_state['current_streak']}，最佳连胜 {self.game_state['best_streak']}"
+        
+        self.dialogue_ui.add_dialogue("ralsei", final_message, "happy")
+        self.dialogue_ui.add_dialogue("ralsei", stats_message, "neutral")
+        self.dialogue_ui.add_dialogue("ralsei", "谢谢你陪我玩！", "grateful")
+        
+        # 重置游戏状态
+        self.game_state["is_playing"] = False
+        self.game_state["game_type"] = None
+    
+    def start_guess_number(self):
+        # 开始猜数字游戏
+        # 修复：其他游戏进行中不允许覆盖（同 start_rock_paper_scissors）
+        if self.game_state.get('is_playing'):
+            self.dialogue_ui.add_dialogue("ralsei", "现在还在玩别的呢，等这一局结束再玩猜数字吧~", "curious")
+            self.dialogue_ui.show_dialogue()
+            return False
+        
+        # 生成目标数字
+        self.guess_number_game["target_number"] = random.randint(
+            self.guess_number_game["min_number"],
+            self.guess_number_game["max_number"]
+        )
+        self.guess_number_game["attempts"] = 0
+        
+        # 更新游戏状态（update 保留统计键，避免后续 end_rock_paper_scissors 等 KeyError）
+        self.game_state.update({
+            "is_playing": True,
+            "game_type": "guess_number",
+            "game_round": 0,
+            "player_score": 0,
+            "ralsei_score": 0,
+            "game_history": [],
+            "started_at": time.time()
+        })
+        
+        self.dialogue_ui.add_dialogue("ralsei", "我们来玩猜数字游戏吧！", "excited")
+        self.dialogue_ui.add_dialogue("ralsei", f"我已经想好了一个{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字，你有{self.guess_number_game['max_attempts']}次机会来猜！", "happy")
+        self.dialogue_ui.add_dialogue("ralsei", "请输入你猜的数字：", "happy")
+        self.dialogue_ui.show_dialogue()
+        
+        # 播放开心动画
+        self.play_animation_once("happy")
+    
+    def play_guess_number(self, player_guess):
+        # 处理猜数字游戏的玩家输入
+        if not self.game_state["is_playing"] or self.game_state["game_type"] != "guess_number":
+            return
+        
+        # 确保玩家输入是有效的数字
+        try:
+            player_guess = int(player_guess.strip())
+        except ValueError:
+            self.dialogue_ui.add_dialogue("ralsei", "请输入有效的数字！", "confused")
+            return
+        
+        # 检查数字范围
+        if player_guess < self.guess_number_game["min_number"] or player_guess > self.guess_number_game["max_number"]:
+            self.dialogue_ui.add_dialogue("ralsei", f"请输入{self.guess_number_game['min_number']}到{self.guess_number_game['max_number']}之间的数字！", "confused")
+            return
+        
+        # 更新尝试次数
+        self.guess_number_game["attempts"] += 1
+        self.game_state["game_round"] += 1
+        
+        # 记录游戏历史
+        self.game_state["game_history"].append({
+            "round": self.game_state["game_round"],
+            "player_guess": player_guess,
+            "target_number": self.guess_number_game["target_number"]
+        })
+        
+        # 判断猜测结果
+        target = self.guess_number_game["target_number"]
+        if player_guess == target:
+            # 猜对了
+            self.game_state["player_score"] += 1
+            self.dialogue_ui.add_dialogue("ralsei", f"恭喜你！猜对了！数字就是{target}！", "happy")
+            # 修复：玩家猜对时 Ralsei 不该放"难过"动画/加悲伤情绪（原代码方向反转，
+            # 文案祝贺、表情却难过）。Ralsei 是"被猜中"但游戏是陪玩，应一起开心。
+            self.play_animation_once("happy")
+            self.emotion_system.add_emotion("happy", 25)
+            self.emotion_system.add_emotion("surprised", 15)
+            self.end_guess_number()
+        elif player_guess < target:
+            # 猜小了
+            attempts_left = self.guess_number_game["max_attempts"] - self.guess_number_game["attempts"]
+            if attempts_left > 0:
+                self.dialogue_ui.add_dialogue("ralsei", f"猜小了！再试一次！还剩{attempts_left}次机会。", "happy")
+                self.dialogue_ui.add_dialogue("ralsei", "请输入你猜的数字：", "happy")
+                self.play_animation_once("laugh")
+                self.emotion_system.add_emotion("happy", 10)
+            else:
+                self.dialogue_ui.add_dialogue("ralsei", f"猜小了！很遗憾，你已经用完了所有机会。", "sad")
+                self.end_guess_number()
+        else:
+            # 猜大了
+            attempts_left = self.guess_number_game["max_attempts"] - self.guess_number_game["attempts"]
+            if attempts_left > 0:
+                self.dialogue_ui.add_dialogue("ralsei", f"猜大了！再试一次！还剩{attempts_left}次机会。", "happy")
+                self.dialogue_ui.add_dialogue("ralsei", "请输入你猜的数字：", "happy")
+                self.play_animation_once("laugh")
+                self.emotion_system.add_emotion("happy", 10)
+            else:
+                self.dialogue_ui.add_dialogue("ralsei", f"猜大了！很遗憾，你已经用完了所有机会。", "sad")
+                self.end_guess_number()
+    
+    def end_guess_number(self):
+        # 结束猜数字游戏
+        target = self.guess_number_game["target_number"]
+        
+        if self.game_state["player_score"] > 0:
+            # 修复：玩家赢 → Ralsei 一起开心（原代码玩家赢却放 sad/难过）
+            final_message = f"恭喜你赢了！数字是{target}！"
+            self.play_animation_once("happy")
+            self.emotion_system.add_emotion("happy", 20)
+            self.emotion_system.add_emotion("grateful", 15)
+        else:
+            # 修复：玩家没猜中（Ralsei 守住了数字）→ 轻快收场（原代码玩家输反而 laugh 正确，保留）
+            final_message = f"游戏结束！正确数字是{target}！下次再挑战我呀~"
+            self.play_animation_once("laugh")
+            self.emotion_system.add_emotion("happy", 10)
+            self.emotion_system.add_emotion("playful", 10)
+        
+        self.dialogue_ui.add_dialogue("ralsei", final_message, "happy")
+        self.dialogue_ui.add_dialogue("ralsei", "谢谢你陪我玩！", "grateful")
+        
+        # 重置游戏状态
+        self.game_state["is_playing"] = False
+        self.game_state["game_type"] = None
     
     def handle_game_input(self, user_input):
         # 处理游戏相关的用户输入
