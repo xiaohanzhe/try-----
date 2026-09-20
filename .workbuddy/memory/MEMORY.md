@@ -48,25 +48,17 @@
   `Global\RalseiPetMutex`，残留用 psutil 杀。窗口透明非置顶 FramelessWindow → **甩飞、抛物线只能离屏断言**。
 
 ## 4. 勿回退契约（**逐条全文见参考 §4.1–§4.12 / §10，改动前必读**）
-- **多屏**：禁用 `QApplication.desktop().availableGeometry()`；用 `_virtual_screen_rect()`；钳 `dt≤0.1s`。
-- **甩飞/抛物线**：判定只在 `mouseReleaseEvent`（`_drag_samples` 0.12s）；初速只由松手速度定（等比缩放 + **矢量和**限幅）；
-  `_fall_vy0` 只第一帧记录。
-- **动画**：`fps=6`；自主说话唯一入口 `start_autonomous_speech()`，**AI 关闭必须沉默、不得回落内置台词**。
-  **特殊动画（#13）来源只三类**（ai_driver / 用户显式交互 / 物理状态机）；**环境自动触发不得自行播动画**，
-  只能 `ai_driver.note_event()` 上报；播放期 `_special_anim_locked()` 禁移动。
-- **多跳联想 / 抽词 / 世界观网图 / 建楼**：**四组契约全文见参考 §4.4–§4.9 + §10**，开工前必读。速查仅记：
-  ① 弱边可到达、**不可再出发**（`_BRIDGE_MIN_RANK=mid`）；`graph.paths()` 只吃 `seed_map()` 归一化 dict；
-  ② `extract_keywords` 是抽词**唯一入口**（不返回空）；`EDGE_TOPOLOGY` **默认仍是 `clique`**，密度靠**输入端**压；
-  ③ 网图：`@@> 本键 -> 邻键` 声明边，**邻块不要求自己被 cue 命中**、**不做二阶扩图**、**添块必给反向边**；
-  ⚠️ **`A in rev[B]` 检反向是恒真判据**（正确 `b.key in adj[t]`），**鉴别力体检必改文件**（`adj` 解析期算）；
-  ④ 建楼：楼层 = 窗口**可见区域**，`floor_visible_contains` 是**唯一判据**；**禁用 `Qt.WindowStaysOnTopHint`**
-  → `_apply_pet_z_order()`（**必须在 `show()` 之后**）；**不做"逐层小跳"**；**甩飞路径必显式 `self._fall_reason = None`**；
-  ⚠️ **`climb_1_*`=朝右 / `climb_0_degrees_*`=朝前 是用户当年原话口径，不许再改**。
+- **多屏 / 甩飞抛物线 / 动画 / 多跳联想 / 抽词 / 世界观网图 / 建楼**：这 7 组契约的**全文**在参考
+  **§4.1–§4.9 + §10**（含每条铁律、判据、禁用写法、用户原话口径），**开工前必读**。速查本不复述；
+  仅点三个最容易踩的：① **`availableGeometry()` 只返主屏 → 必用 `_virtual_screen_rect()`**；
+  ② **建楼里 `floor_visible_contains` 是唯一判据、禁用 `Qt.WindowStaysOnTopHint`（改 `_apply_pet_z_order()`）**，
+  ⚠️ **`climb_1_*`=朝右 / `climb_0_degrees_*`=朝前 是用户当年原话口径，不许再改**；
+  ③ **`A in rev[B]` 检反向是恒真判据**（正确 `b.key in adj[t]`），**鉴别力体检必改文件**。
 - **存储两层**：vault=`E:\RalseiMemory\`（读优先），staging=`%LOCALAPPDATA%\RalseiPet\`；`data_store` **唯一入口**；
   迁移**只复制不搬走**、落选者留档 `.old`；**jieba 软依赖**，失败静默回落。**初始化环**：被反向依赖的底层模块
-  一律 `modules/lazy_log.LazyLogger`、**零项目内 import**。
-- **DPI**：写探针/裸进程脚本**必须先建 `QApplication` 再读坐标**。**G2 封闭性**：`HERMETIC_IDS` 注入临时 `RALSEI_MEMORY_DIR`；
-  **`save_baseline` 是合并模式**。**误报清单（勿据此改）**：`learn_new_skill` 有守卫；`_on_ai_reply` 已由 `pyqtSignal` 排主线程；
+  一律 `modules/lazy_log.LazyLogger`。**DPI**：写探针/裸进程脚本**先建 `QApplication` 再读坐标**。
+  **G2**：`HERMETIC_IDS` 注入临时 `RALSEI_MEMORY_DIR`；**`save_baseline` 是合并模式**。
+  **误报清单（勿据此改）**：`learn_new_skill` 有守卫；`_on_ai_reply` 已由 `pyqtSignal` 排主线程；
   `reset_special_states` 零调用；原子写/回收站删除已正确防御。
 ## 5. 验证脚本教训（**全文见参考 §5 + §5.1，改断言前必读**）
 - 源码级断言别用 `"字面量" in 源码` → `code_only_src()`；**含字符串字面量的 needle 走 `code_no_comment()`**（5 次踩）。
@@ -120,19 +112,21 @@
   **换底座/调 num_predict 必须重跑 `measure_token_ratio.py`。**
 - **S7 事件台词** `modules/event_speech.py`：档位表是**白名单**；唯一出口 `speak_event(kind, pool, face)`；
   **`pool=None` = 不给内置台词**（AI 失败/判退 → **返回 `""` 沉默**）；**禁止 import Qt / 项目内模块**。
-  `speak_event` 是**唯一**传 `lean=True` 处 → 保 KV 前缀缓存（否则首字 +1.19s，超 1200ms 上限）。
+  它是**唯一**传 `lean=True` 处（保 KV 前缀缓存，否则首字 +1.19s、超 1200ms 上限）。
 
 ## 7. 历轮索引 / H4-H5 / 遗留（**详情见参考 §7–§9**）
 - **7–18**：路径 import + `conversation_focus`/`memory_store`/`memory_graph` + jieba 软依赖 + `data_store` 收口 +
   建楼线 + DPI + 批次 A/B + S8 流式。**19**（`2738189`）S7 batch 2 + 底座换 v3 + 人味第四轮 + 第 4 道闸。
   **20**（`930657a`）世界观按需召回 + 平级口径（去"主人"）+ 关系演进。
-  **21**（`bc9b1d7`+`75369b8`）世界观网图 + 内容加厚 + 端到端探针（参考 §10）。
-  **22**（`21d9ff9`）回答篇幅约束：`AI_REPLY_MAX_CHARS` 150→220 + 锁 A12c/M1–M5（参考 §11）。
-  **23**（`8548003`）真机探针保真度：`_clean_ai_reply` 六道闸全复刻 + W1–W8 锁 + 26/26 逐字节等价 + 判退(RETN) 语义（参考 §12）。
+  **21**（`bc9b1d7`+`75369b8`）世界观网图 + 加厚 + 端到端探针（§10）。**22**（`21d9ff9`）`AI_REPLY_MAX_CHARS`
+  150→220 + 锁 A12c/M1–M5（§11）。**23**（`8548003`+`f81a8e3`+`61f689f`+`0c93021`）探针保真度六闸全复刻（§12）
+  + 清存量：UTF-16 无损转 UTF-8 + 2 个 U+FFFD 加事故头注 + 75 告警冻结。
 - **H4/H5 上帝类拆分**（用户排期"单独做"）：基线 `code-quality-audit/架构改造-H4H5/`（**勿重测**）；**S1/S2/S3 完成**；
-  **G1 改为"每项 PR 内做该专项零引用筛查"**；**Wave 1 顺序 W1-3→W1-4→W1-1→W1-2→W1-6**（首项 `GamesController`）；
+  **G1 = 每项 PR 内做该专项零引用筛查**；**Wave 1 顺序 W1-3→W1-4→W1-1→W1-2→W1-6**（首项 `GamesController`）；
   **旧行号已失效 → 开工前必须重跑 `scan_method_index.py`**。
 - **遗留**：① **真机实测（用户做）**：遮挡 / 上下动手感 / 边缘掉落不生气而关窗生气 —— **契约级+单元级已锁，真机未验**；
-  ② `climb_to_top_window()` 仍走裸窗口 ③ `.bak` 与 `code-quality-audit/` 编码告警存量未清
-  ④ `E:\RalseiMemory\logs\ralsei_pet.log` 在 exFAT 上 `os.rename` 撞已存在目标 → `WinError 1` → **日志永不滚动**（未修）
-  ⑤ S7 第二批剩余 ~11 处候选**不阻塞**。
+  ② `climb_to_top_window()` 仍走裸窗口 ③ 75 个历史编码告警（第五～九轮 BOM/乱码）**已冻结归档**；3 个确定性损坏
+  已处置（1 个 UTF-16 无损转 UTF-8；2 个 U+FFFD 不可恢复 → 加事故头注、原字节保留）④ 日志滚动：**旧诊断
+  （exFAT 撞已存在目标→WinError 1）实测不成立**（3.11 的 `doRollover` 自带 `os.remove(dfn)`；E 盘实测能切）；
+  **3.11 与托管 3.13 的 `doRollover` 行为不同**（3.13 改为「目标存在则早退」）。Sep 16 迁到 E 盘后只成功切一次
+  → 疑为**当时 E 盘不稳定**，非代码缺陷 → **不凭"应该会坏"改全局日志行为** ⑤ S7 第二批 ~11 处候选**不阻塞**。
