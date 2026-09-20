@@ -32,6 +32,30 @@ from sprite_loader import SpriteLoader  # noqa: E402
 MAIN_SRC = open(os.path.join(PET, 'src', 'main.py'), encoding='utf-8').read()
 SCALE = 2.0
 
+# ---------------------------------------------------------------------------
+# H4/H5 上帝类拆分后：部分方法已从 main.py **搬进控制器模块**。
+# 本套件大量使用"取某方法的源码、看它有没有调 X"这类**源码级**断言 ——
+# 方法一搬家，`_find_func` 在 main.py 里就找不到它，断言会**假红**
+# （实测：H1.3 `_react_to_video` 搬进 video_controller.py 后报
+#  "有 note_event=False"，而方法体里 `note_event` 一个字符都没改）。
+#
+# 处置口径（**不许**把断言放宽成"找不到就跳过" —— 那会让锁失去鉴别力）：
+# 让源码查找**跟着方法的新家走**：先 main.py，再按需读控制器模块。
+# 这样"实现被搬走"不会误伤锁，"实现真的改坏了"照样会被抓住。
+# ---------------------------------------------------------------------------
+CONTROLLER_SRCS = {}
+for _rel in (
+    os.path.join('modules', 'games_controller.py'),    # W1-3
+    os.path.join('modules', 'video_controller.py'),    # W1-4
+):
+    _p = os.path.join(PET, _rel)
+    if os.path.exists(_p):
+        CONTROLLER_SRCS[_rel] = open(_p, encoding='utf-8').read()
+
+# 合并视图：main.py + 所有控制器（`_find_func` / `play_once_owners` 等按此查找）。
+# 顺序很重要 —— main.py 在前，保持"同名以宿主为准"的既有语义。
+ALL_SRC = MAIN_SRC + ''.join('\n' + s for s in CONTROLLER_SRCS.values())
+
 RESULTS = []
 
 
@@ -66,26 +90,36 @@ def code_only(src):
 
 
 def _find_func(name, src=None):
+    """在 main.py **与已搬出的控制器模块**里找同名函数（见 ALL_SRC 的说明）。
+
+    返回 `(node, src)` 二元组：node 所在的那份源码必须一起带出来，
+    否则 `ast.get_source_segment` 会拿错源文本（跨文件 `node` 对不上 `MAIN_SRC`）。
+    """
     import ast
-    src = MAIN_SRC if src is None else src
-    for node in ast.walk(ast.parse(src)):
-        if (isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-                and node.name == name):
-            return node
-    return None
+    sources = [src] if src is not None else ([MAIN_SRC] + list(CONTROLLER_SRCS.values()))
+    for s in sources:
+        for node in ast.walk(ast.parse(s)):
+            if (isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                    and node.name == name):
+                return node, s
+    return None, None
 
 
 def func_src(name):
-    """模块级函数/方法 `name` 的源码文本（含 def 行），找不到返回 ''。"""
+    """模块级函数/方法 `name` 的源码文本（含 def 行），找不到返回 ''。
+
+    ⚠️ 必须用 `_find_func` 返回的**那份**源码取片段（而不是硬写 MAIN_SRC）：
+    方法搬进控制器后，node 来自 video_controller.py，拿 MAIN_SRC 定位会取到错位文本。
+    """
     import ast
-    node = _find_func(name)
-    return (ast.get_source_segment(MAIN_SRC, node) or '') if node else ''
+    node, src = _find_func(name)
+    return (ast.get_source_segment(src, node) or '') if node else ''
 
 
 def func_statements(name):
     """函数体内跳过 docstring 后的语句列表（找不到返回 None）。"""
     import ast
-    node = _find_func(name)
+    node, _src = _find_func(name)
     if node is None:
         return None
     body = list(node.body)

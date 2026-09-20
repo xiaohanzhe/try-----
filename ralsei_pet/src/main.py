@@ -333,6 +333,7 @@ from modules.sound_manager import SoundManager
 # 小游戏控制器（H4/H5 Wave 1 · W1-3）：石头剪刀布 + 猜数字 7 个方法搬出上帝类。
 # 只搬方法不搬状态 —— game_state 等仍在 __init__，控制器通过宿主引用读写。
 from modules.games_controller import GamesController
+from modules.video_controller import VideoController
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -494,7 +495,9 @@ class RalseiPet(QMainWindow):
     #   所以这里改成**显式方向**：只有"控制器自己类上定义的方法"才转发，
     #   属性/状态名一律不转（那些本就该在宿主上找）。
     # ------------------------------------------------------------------
-    _CONTROLLER_ATTRS = ('games',)
+    #   · 'games'  → GamesController（W1-3）
+    #   · 'video'  → VideoController（W1-4）
+    _CONTROLLER_ATTRS = ('games', 'video')
 
     def __getattr__(self, name):
         # 注意：`__getattr__` 只在常规查找失败时被调用，所以 `self.games` 已存在时
@@ -726,6 +729,9 @@ class RalseiPet(QMainWindow):
         # 因为它只借用这些宿主成员（方法体里 `self.dialogue_ui...` 经本类的
         # `__getattr__` 转发到宿主）。
         self.games = GamesController(self)
+        # 视频控制器（W1-4）：持有「陪看视频」这条业务线的 8 个方法。
+        # 时机同 games —— 在 init_systems 内、晚于 dialogue_ui / desktop_interaction。
+        self.video = VideoController(self)
         
         # 初始化透明占位符系统
         self.init_placeholder_system()
@@ -1157,6 +1163,10 @@ class RalseiPet(QMainWindow):
         self.video_platform = ""  # 当前视频平台
         self.video_title = ""  # 当前视频标题
         self.video_watch_history = []  # 视频观看历史
+        # 观看循环定时器（W1-4）：由 VideoController._start_video_watching_loop 创建。
+        # 在这里**预声明为 None** 是必须的 —— 控制器的 __setattr__ 只把赋值转发给
+        # 宿主「已经拥有」的名字；不预声明的话这个属性会落在控制器上，状态被劈成两份。
+        self.video_watching_timer = None
         self.video_preferences = ["游戏", "动画", "音乐", "科普", "搞笑", "Deltarune", "Undertale"]  # 视频偏好
         
         # 添加活动状态系统（客观行为记录）
@@ -4548,224 +4558,6 @@ class RalseiPet(QMainWindow):
         self.dialogue_ui.show_dialogue()
         self.desktop_interaction.open_browser("https://www.baidu.com")
     
-    def check_video_apps(self):
-        # 检查视频应用并做出反应
-        import random
-        
-        # 识别视频应用窗口
-        video_apps = self.identify_video_apps()
-        
-        if video_apps:
-            # 随机选择一个视频应用窗口
-            target_video = random.choice(video_apps)
-            
-            # 有一定概率观看视频
-            if random.random() < 0.5:  # 50%的概率
-                self.start_watching_video(target_video)
-        else:
-            # 没有视频应用，有一定概率主动打开视频
-            if random.random() < 0.3:  # 30%的概率
-                self.suggest_watching_video()
-    
-    def identify_video_apps(self):
-        # 识别视频相关应用窗口
-        windows = self.desktop_interaction.get_all_visible_windows()
-        video_apps = []
-        
-        # 视频应用关键词，包含更多视频平台和应用
-        video_keywords = [
-            "YouTube", "哔哩哔哩", "B站", "腾讯视频", "爱奇艺", "优酷", 
-            "芒果TV", "Netflix", "抖音", "快手", "视频", "腾讯视频", 
-            "搜狐视频", "乐视视频", "PP视频", "风行视频", "西瓜视频", 
-            "好看视频", "全民小视频", "梨视频", "土豆视频", "AcFun", 
-            "A站", "斗鱼", "虎牙", "哔哩哔哩直播", "花椒直播", 
-            "映客直播", "YY直播", "熊猫直播", "龙珠直播", "企鹅电竞",
-            "Twitch", "Disney+", "HBO Max", "Prime Video", "Hulu",
-            "Vimeo", "TikTok", "Snapchat", "Instagram", "Facebook Watch"
-        ]
-        
-        for window in windows:
-            # 检查窗口标题是否包含视频关键词
-            if any(keyword in window['title'] for keyword in video_keywords):
-                video_apps.append(window)
-            # 检查窗口类名，识别常见视频播放器
-            elif 'class_name' in window and window['class_name']:
-                player_class_names = [
-                    "WMPlayerApp", "VLC media player", "mpv", "PotPlayer", 
-                    "QQPlayer", "KMPlayer", "GOM Player", "MediaPlayerClassic",
-                    "MPV", "SMPlayer", "MPlayer", "Totem", "XBMC", "Kodi"
-                ]
-                if any(class_name in window['class_name'] for class_name in player_class_names):
-                    video_apps.append(window)
-        
-        return video_apps
-    
-    def start_watching_video(self, video_app):
-        # 开始观看视频
-        import random
-        
-        self.is_watching_video = True
-        self.video_start_time = time.time()
-        self.video_platform = video_app['title']
-        
-        # 随机选择视频类型
-        video_types = self.video_preferences.copy()
-        video_type = random.choice(video_types)
-        
-        # 生成视频标题
-        self.video_title = f"{video_type}相关视频"
-        
-        # 添加到观看历史
-        self.video_watch_history.append({
-            "title": self.video_title,
-            "platform": self.video_platform,
-            "start_time": self.video_start_time,
-            "duration": 0
-        })
-        
-        # 限制历史记录数量
-        if len(self.video_watch_history) > 20:
-            self.video_watch_history.pop(0)
-        
-        # 显示观看视频的消息
-        watch_messages = [
-            f"哇！我正在观看{self.video_platform}上的{self.video_title}，看起来很有趣呢！",
-            f"这个{video_type}视频太吸引人了！我要仔细看看。",
-            f"{self.video_platform}上的视频真好看，我沉浸进去了！",
-            f"这个{video_type}内容真不错，我要继续观看。"
-        ]
-        message = random.choice(watch_messages)
-        self.dialogue_ui.add_dialogue("ralsei", message, "happy")
-        self.dialogue_ui.show_dialogue()
-        
-        # 确保Ralsei在视频窗口上，正面对着视频
-        video_rect = QRect(video_app['x'], video_app['y'], video_app['width'], video_app['height'])
-        
-        # 计算视频窗口中心位置，让Ralsei面向视频
-        video_center_x = video_app['x'] + video_app['width'] // 2
-        video_center_y = video_app['y'] + video_app['height'] // 2
-        
-        # 调整Ralsei位置到视频窗口内，确保正对着视频中心
-        # 确保Ralsei在视频窗口内，而不是在窗口下方
-        ralsei_x = video_center_x - self.width() // 2
-        ralsei_y = video_center_y - self.height() // 2
-        
-        # 确保Ralsei在视频窗口范围内，距离边缘至少20像素
-        ralsei_x = max(video_rect.left() + 20, min(video_rect.right() - self.width() - 20, ralsei_x))
-        ralsei_y = max(video_rect.top() + 20, min(video_rect.bottom() - self.height() - 20, ralsei_y))
-        
-        # 确保Ralsei位置在屏幕范围内（多显示器虚拟桌面夹紧）
-        ralsei_x, ralsei_y = self._clamp_pos_to_desktop(ralsei_x, ralsei_y)
-        
-        # 移动Ralsei到视频窗口内
-        self.move(ralsei_x, ralsei_y)
-        
-        # 更新当前窗口信息，确保Ralsei在视频窗口上
-        self.current_window = video_app
-        self.last_window_rect = (video_app['x'], video_app['y'], video_app['width'], video_app['height'])
-        self.window_level = video_app['z_order']
-        
-        # 暂停移动，专注观看视频
-        self.is_moving = False
-        self.idle_timer = 0
-        self.max_idle_duration = random.uniform(10, 30)  # 观看时间10-30秒，减少观看时间，让Ralsei能继续移动
-        
-        # 确保Ralsei正对着视频 - 根据视频中心位置计算方向
-        # 获取Ralsei中心位置
-        ralsei_center_x = ralsei_x + self.width() // 2
-        ralsei_center_y = ralsei_y + self.height() // 2
-        
-        # 计算方向向量
-        dx = video_center_x - ralsei_center_x
-        dy = video_center_y - ralsei_center_y
-        
-        # 根据方向向量确定面向
-        if abs(dx) > abs(dy):
-            # 水平方向为主
-            if dx > 0:
-                self.current_direction = "right"  # 向右面对视频
-            else:
-                self.current_direction = "left"   # 向左面对视频
-        else:
-            # 垂直方向为主
-            if dy > 0:
-                self.current_direction = "down"   # 向下面对视频
-            else:
-                self.current_direction = "up"     # 向上面对视频
-        
-        # 更新动画为观看动画，使用合适的动画
-        self.change_animation(f"idle", force=True)  # 使用idle动画作为观看动画
-        
-        # 检查是否是B站窗口，如果是，移动并调整大小
-        if "哔哩哔哩" in video_app['title'] or "bilibili" in video_app['title'] or "B站" in video_app['title']:
-            self.desktop_interaction.move_and_resize_bilibili_window()
-        
-        # 开始真正观看视频
-        self._start_video_watching_loop()
-    
-    def _start_video_watching_loop(self):
-        # 视频观看循环，模拟真正观看视频的行为
-        self.video_watching_timer = QTimer(self)
-        self.video_watching_timer.timeout.connect(self._update_video_watching)
-        self.video_watching_timer.start(5000)  # 每5秒更新一次观看状态
-    
-    def _update_video_watching(self):
-        # 更新视频观看状态
-        if not self.is_watching_video:
-            self.video_watching_timer.stop()
-            return
-        
-        # 检查当前时间，最多晚上12:00必须关闭
-        # 修复：原条件 (hour>=23 and minute>=55) 只在 23:55-23:59 为真，
-        # 跨过午夜后 hour==0 永不满足，"深夜自动关闭"失效。23 点后或凌晨 6 点前都视为深夜。
-        current_hour = int(time.strftime("%H"))
-        current_minute = int(time.strftime("%M"))
-        if current_hour >= 23 or current_hour < 6:
-            # 快到12点了，准备关闭
-            self.dialogue_ui.add_dialogue("ralsei", "时间不早了，我该睡觉了，晚安！", "tired")
-            self.dialogue_ui.show_dialogue()
-            self.stop_watching_video()
-            self.close_bilibili()
-            self.enter_sleep_mode()
-            return
-        
-        # 随机做出一些观看反应
-        import random
-        if random.random() < 0.1:  # 10%的概率做出反应
-            self._react_to_video()
-    
-    def _react_to_video(self):
-        # 观看视频时的随机反应
-        import random
-        reactions = [
-            ("haha！这个好好笑！", "happy", "laugh", 15),
-            ("哇！这个太厉害了！", "surprised", "surprised", 10),
-            ("嗯...挺有意思的。", "happy", "smile", 5),
-            ("嘿嘿，我也想试试！", "excited", "happy", 12),
-            ("这段音乐真好听~", "happy", "dance", 8),
-            ("啊！吓我一跳！", "surprised", "surprised", 15),
-            ("太好看了，根本停不下来！", "excited", "happy", 10),
-            ("这个角色好可爱啊~", "happy", "smile", 8),
-        ]
-        msg, emotion, _anim, happy_delta = random.choice(reactions)
-        self.dialogue_ui.add_dialogue("ralsei", msg, emotion)
-        self.dialogue_ui.show_dialogue()
-        # 修复：原来固定 add_emotion("happy")，忽略元组里的 'surprised'/'excited' 等情绪；
-        # 现在统一走 emotion_system，旧版 self.emotions 通过 _sync_system_to_emotions 自动同步。
-        self.emotion_system.add_emotion(emotion, happy_delta)
-        # ===== 第八轮：陪看视频时的"反应动画"不再自行播放 =====
-        # 用户要求："所有特殊动画……只交给 AI 判断是否播放，别和抽风似的突然一下。"
-        # 原来这里是 play_animation_once(anim)（10% 概率随机播 laugh/dance/surprised…），
-        # 属于非 AI 的随机特殊动画。现在只把"我正在陪主人看视频"上报给 AI，
-        # 由 AI 决定要不要做个动作；AI 未启用 / 不回应时，宠物就安静地陪着看。
-        # TODO(#15 对话全 AI 接管)：上面那句 msg 仍来自内置台词表，属缺陷 1 的范围。
-        try:
-            _driver = getattr(self, 'ai_driver', None)
-            if _driver is not None and callable(getattr(_driver, 'note_event', None)):
-                _driver.note_event("我正在陪主人一起看视频", emotion)
-        except Exception as e:
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-    
     def close_bilibili(self):
         # 关闭B站浏览器窗口
         # 查找并关闭B站相关窗口
@@ -4794,85 +4586,6 @@ class RalseiPet(QMainWindow):
         self.is_falling = False
         self.idle_timer = 0
         self.max_idle_duration = 3600.0  # 睡眠1小时
-    
-    def stop_watching_video(self):
-        # 停止观看视频
-        if self.is_watching_video:
-            self.is_watching_video = False
-            duration = time.time() - self.video_start_time
-            
-            # 更新观看历史
-            if self.video_watch_history and self.video_watch_history[-1]['title'] == self.video_title:
-                self.video_watch_history[-1]['duration'] = duration
-            
-            # 显示停止观看的消息
-            stop_messages = [
-                "这个视频看完了，我要继续活动活动！",
-                "视频结束了，我该做些其他事情了。",
-                "哇，那个视频真好看！不过我该继续移动了。",
-                "视频很有趣，但我需要休息一下眼睛了。"
-            ]
-            import random
-            message = random.choice(stop_messages)
-            self.dialogue_ui.add_dialogue("ralsei", message, "content")
-            self.dialogue_ui.show_dialogue()
-            
-            # 恢复正常移动
-            self.randomize_movement_pattern()
-            self.is_moving = True
-            # 使用随机化的最大空闲时间，而不是未定义的base_max_idle_duration
-            self.max_idle_duration = random.uniform(0.5, 3.0)
-            
-            # 停止视频观看循环
-            if hasattr(self, 'video_watching_timer'):
-                self.video_watching_timer.stop()
-    
-    def suggest_watching_video(self):
-        # 建议观看视频，只使用B站
-        import random
-        
-        # 随机选择视频类型
-        video_types = self.video_preferences.copy()
-        video_type = random.choice(video_types)
-        
-        # 固定使用B站
-        platform = "哔哩哔哩"
-        
-        # 显示建议消息
-        suggestion_messages = [
-            f"我想看点{video_type}视频，要不要一起看？",
-            f"最近听说{platform}上有很好看的{video_type}视频，我想去看看！",
-            f"无聊了，要不要打开{platform}看些{video_type}内容？",
-            f"我想放松一下，看个{video_type}视频怎么样？"
-        ]
-        message = random.choice(suggestion_messages)
-        self.dialogue_ui.add_dialogue("ralsei", message, "excited")
-        self.dialogue_ui.show_dialogue()
-        
-        # 有一定概率直接打开视频
-        if random.random() < 0.5:
-            # 直接打开B站热门视频页面，在新窗口打开
-            self.desktop_interaction.open_browser(f"https://www.bilibili.com/v/popular/all", new_window=True)
-            # 打开视频后，移动并调整B站窗口大小
-            self.desktop_interaction.move_and_resize_bilibili_window()
-            # 设置为正在观看视频状态
-            # 修复：此前只设 is_watching_video/video_start_time，未设 video_title、未启动
-            # 观看定时器、未设 max_idle_duration → check_entertainment_needs 用残留旧值
-            # （可能仅 0.5~3 秒）几秒内就判定"看完了"关掉视频，观看历史也因 video_title=="" 丢失。
-            self.is_watching_video = True
-            self.video_start_time = time.time()
-            self.video_title = "B站热门视频"
-            self.video_platform = platform
-            # 观看时长：30~90 秒后再自然结束
-            self.max_idle_duration = random.uniform(30.0, 90.0)
-            # 启动 5 秒 tick 的观看循环（深夜自动关闭 / 随机反应）
-            try:
-                if not hasattr(self, 'video_watching_timer') or self.video_watching_timer is None:
-                    self._start_video_watching_loop()
-                elif not self.video_watching_timer.isActive():
-                    self.video_watching_timer.start(5000)
-            except Exception as e:  # 修复：原先静默吞噬
-                _log.debug("main 防御性异常（已忽略）: %s", e)
     
     def move_to_edge_and_shrink(self):
         # 将Ralsei移动到屏幕边缘并缩小（非阻塞 QTimer 动画）
