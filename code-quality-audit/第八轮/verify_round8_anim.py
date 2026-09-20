@@ -528,12 +528,21 @@ def t_g_play_to_finish_and_no_move():
     # 顺序断言必须限定在 update_movement 内部（原先用全文件 .index()，取到的是
     # 别的函数里更早出现的同一个字符串 → 顺序判反，是"测试写错"而非代码错）。
     _um = func_src('update_movement')
+    # ⚠️ detail 里放**任何数字**都会漂：_um 的 len、两个 needle 的 index（序号是
+    # 绝对偏移，needle 之前加一行就 +N）——第 25 轮三次迭代全部踩实，其中一次还
+    # 因为打"文件名/首行"吃到了别的代码段的怪字符串，把 DIFF 搞得更大。
+    # 唯一与代码增长无关、又真的能定位失败的，是**两个 needle 各自的命中与否**：
+    #   lock=F  → 移动锁整个没了（或方法被搬走取错片段）
+    #   drag=F  → 拖拽保护没了
+    #   lock=T drag=T 却仍 FAIL → 两者都在、但顺序反了
+    # 顺序这一维由上面的断言本体承担，detail 不必复述。
     check("G1.6 源码级：移动锁在 update_movement 内、且排在拖拽保护之前",
           "_special_anim_locked()" in _um
           and "_is_being_dragged" in _um
           and _um.index("_special_anim_locked()")
           < _um.index("_is_being_dragged"),
-          "len=%d" % len(_um))
+          "lock=%s drag=%s" % ("_special_anim_locked()" in _um,
+                               "_is_being_dragged" in _um))
 
 
 # ---------------------------------------------------------------- #13a 来源闸门

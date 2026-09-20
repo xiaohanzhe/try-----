@@ -1389,7 +1389,7 @@ class RalseiPet(QMainWindow):
         # 获取当前主导情绪，根据情绪调整移动模式
         dominant_emotion, emotion_intensity = self.emotion_system.get_current_emotion()
         
-        if hasattr(self, 'last_movement_end_time'):
+        if getattr(self, 'last_movement_end_time', None) is not None:
             # 检查上次移动结束时间
             time_since_last_move = current_time - self.last_movement_end_time
             
@@ -1510,7 +1510,7 @@ class RalseiPet(QMainWindow):
         current_pos = self.pos()
         
         # 计算当前方向，保持方向一致性，减少突然转向
-        if hasattr(self, 'previous_direction'):
+        if getattr(self, 'previous_direction', None) is not None:
             # 根据情绪调整方向保持概率
             if dominant_emotion == 'excited' or dominant_emotion == 'energetic':
                 # 兴奋时更可能改变方向，探索更多区域
@@ -1625,7 +1625,7 @@ class RalseiPet(QMainWindow):
             elapsed_time = 0.1
         
         # 优化：减少环境和心情更新频率（每5秒更新一次）
-        if hasattr(self, '_last_env_update'):
+        if getattr(self, '_last_env_update', None) is not None:
             if current_time - self._last_env_update > 5.0:
                 self.update_environment()
                 self.update_mood()
@@ -2104,7 +2104,7 @@ class RalseiPet(QMainWindow):
             new_y = int(self.pos().y() + self.current_speed_y * 0.8)  # 平滑移动
             
             # 使用缓存的屏幕几何信息（多屏虚拟矩形 clamp）
-            if hasattr(self, '_cached_screen_geom'):
+            if getattr(self, '_cached_screen_geom', None) is not None:
                 screen_geom = self._cached_screen_geom
                 new_x = max(screen_geom.left(), min(new_x, screen_geom.right() - self.width()))
                 new_y = max(screen_geom.top(), min(new_y, screen_geom.bottom() - self.height()))
@@ -3727,7 +3727,7 @@ class RalseiPet(QMainWindow):
                         _nx, _ny = self._clamp_pos_to_desktop(_nx, _ny)
                         self.move(_nx, _ny)
                         self.fall_slide_speed_x *= max(0.0, 1.0 - 2.0 * elapsed_time)
-                        if hasattr(self, 'fall_slide_speed_y'):
+                        if getattr(self, 'fall_slide_speed_y', None) is not None:
                             self.fall_slide_speed_y *= max(0.0, 1.0 - 2.0 * elapsed_time)
 
             # 阶段转换（以"本阶段已持续时长"驱动，而不是全局 fall_duration）
@@ -5390,7 +5390,7 @@ class RalseiPet(QMainWindow):
             # 鼠标又会用过期采样补触发 —— 表现就是"过一会儿自己飞一下"。
             # 松手就该在 mouseReleaseEvent 处理。
             # 处理拖拽释放时的物理反馈效果
-            if hasattr(self, '_last_drag_pos'):
+            if getattr(self, '_last_drag_pos', None) is not None:
                 # ===== 释放速度：单位 px/秒（真实速度，而非"两次事件的像素差"）=====
                 # 用户反馈"甩飞判定范围太广"：150 是像素差阈值，慢拖一步就能过。
                 # 现在改为真实速度 + 时效性校验：
@@ -7510,7 +7510,7 @@ class RalseiPet(QMainWindow):
             # 有 _fall_phase 时（甩飞/重力splat的分阶段流程：flying/splat/dazed），
             # handle_fall 会主动切换 jump_ball/splat/fall_back_rub，这里不要覆盖。
             # 无 _fall_phase 时（旧 start_fall 路径），保持 fall/fall_mad 不被覆盖。
-            if hasattr(self, '_fall_phase'):
+            if getattr(self, '_fall_phase', None) is not None:
                 new_animation = self.current_animation
             elif self.current_animation not in ('fall', 'fall_mad', 'fall_back'):
                 new_animation = "fall_back"
@@ -8064,7 +8064,7 @@ class RalseiPet(QMainWindow):
     
     def update_bounce(self):
         """更新弹跳效果"""
-        if not hasattr(self, '_bounce_params'):
+        if getattr(self, '_bounce_params', None) is None:
             return
         
         current_time = time.time()

@@ -466,7 +466,11 @@ class VideoController(object):
             self.max_idle_duration = random.uniform(0.5, 3.0)
             
             # 停止视频观看循环
-            if hasattr(self, 'video_watching_timer'):
+            # 判据与 _start_video_watching_loop 里的 `if timer is not None:` 保持同一套：
+            # 该属性已在宿主 init_systems 区**显式预声明为 None**（见 main.py
+            # 「观看循环定时器（W1-4）」注释），所以「非 None」才是"定时器已建"的真判据。
+            # 不用 hasattr —— 它只测名字存在、且遇描述符/属性会触发副作用。
+            if getattr(self, 'video_watching_timer', None) is not None:
                 self.video_watching_timer.stop()
 
     def suggest_watching_video(self):

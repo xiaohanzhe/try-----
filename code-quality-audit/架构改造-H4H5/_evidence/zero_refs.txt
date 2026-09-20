@@ -16,6 +16,9 @@ H4 零引用筛查（AST 口径，非字符串匹配）
       ralsei_pet\diag_logic.py  L68, 106
       ralsei_pet\diag_spell.py  L59
       ralsei_pet\modules\spell_controller.py  L259
+  _cast_spell_then                       引用点 4
+      ralsei_pet\diag_logic.py  L66
+      ralsei_pet\modules\hide_controller.py  L271, 326, 427
 
 ==========================================================================
 ### W1-2 hide-seek
@@ -44,6 +47,8 @@ H4 零引用筛查（AST 口径，非字符串匹配）
       ralsei_pet\modules\hide_controller.py  L383
   _hide_jump_back_to_desktop             引用点 1
       ralsei_pet\modules\hide_controller.py  L501
+  _hide_ralsei                           引用点 1
+      ralsei_pet\src\main.py  L5695
 
 ==========================================================================
 ### W1-3 games
@@ -53,9 +58,9 @@ H4 零引用筛查（AST 口径，非字符串匹配）
   play_rock_paper_scissors               引用点 1
       ralsei_pet\src\main.py  L6003
   determine_rock_paper_scissors_winner   引用点 1
-      ralsei_pet\modules\games_controller.py  L174
+      ralsei_pet\modules\games_controller.py  L200
   end_rock_paper_scissors                引用点 3
-      ralsei_pet\modules\games_controller.py  L216
+      ralsei_pet\modules\games_controller.py  L242
       ralsei_pet\src\main.py  L4481, 5984
   start_guess_number                     引用点 3
       ralsei_pet\modules\dialogue_ui.py  L1662, 1666
@@ -63,7 +68,7 @@ H4 零引用筛查（AST 口径，非字符串匹配）
   play_guess_number                      引用点 1
       ralsei_pet\src\main.py  L6006
   end_guess_number                       引用点 5
-      ralsei_pet\modules\games_controller.py  L352, 363, 374
+      ralsei_pet\modules\games_controller.py  L378, 389, 400
       ralsei_pet\src\main.py  L4483, 5986
 
 ==========================================================================
@@ -82,25 +87,20 @@ H4 零引用筛查（AST 口径，非字符串匹配）
 
 ==========================================================================
 ### W1-5 office(old, 方案表里的)
-  check_browser_windows                  引用点 0
-      → 全项目零引用（可判定为死代码候选）
-  check_ppt_windows                      引用点 0
-      → 全项目零引用（可判定为死代码候选）
-  check_excel_table_needs                引用点 0
-      → 全项目零引用（可判定为死代码候选）
+  check_browser_windows                  [已移除] 全仓库无定义（静态清单过期，非死代码）
+  check_ppt_windows                      [已移除] 全仓库无定义（静态清单过期，非死代码）
+  check_excel_table_needs                [已移除] 全仓库无定义（静态清单过期，非死代码）
 
 ==========================================================================
 ### W1-6 file-sheet
-  create_person_name_table               引用点 0
-      → 全项目零引用（可判定为死代码候选）
   fix_excel_format                       引用点 1
       ralsei_pet\modules\file_sheet_controller.py  L280
   fill_names_in_excel                    引用点 1
       ralsei_pet\modules\file_sheet_controller.py  L243
-  check_excel_table_needs                引用点 0
-      → 全项目零引用（可判定为死代码候选）
   handle_file_operation                  引用点 1
       ralsei_pet\modules\dialogue_ui.py  L1724
+  _open_desktop_item_by_name             引用点 1
+      ralsei_pet\modules\file_sheet_controller.py  L297
   check_file_content                     引用点 2
       ralsei_pet\src\main.py  L8128, 8239
   check_text_content                     引用点 1

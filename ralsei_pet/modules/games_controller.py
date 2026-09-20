@@ -126,6 +126,32 @@ class GamesController(object):
                 return getattr(_ctrl, name)
         raise AttributeError(name)
 
+    def __setattr__(self, name, value):
+        # 与其余四个控制器（SpellFlowController / HideAndSeekController /
+        # VideoController / FileSheetController）**逐字同构**的写转发护栏。
+        #
+        # 为什么 W1-3 当时没加、现在补上：本块七个方法确实是「块内闭合、零互写」，
+        # 现有代码里对游戏状态的写全是 `self.game_state.update({...})`（原地改字典）
+        # 和 `self.game_state["k"] += 1`（下标写）—— 两者都**不经 __setattr__**，
+        # 所以当时功能上正确。但「正确」依赖的是**调用方的写法**，不是类的约束：
+        # 只要有人把 `self.game_state.update({...})` 重构成整体重赋值
+        # `self.game_state = {...}`，或新增 `self.game_xxx = ...`，赋值就会静默落进
+        # **控制器自己的 __dict__** → 宿主读到旧值 → 状态劈成两份。
+        # 这个坑本项目真踩过一次（W1-4 的 is_watching_video），且 G2 完全看不见。
+        #
+        # 判据 = 宿主**已经拥有**的名字（实例字典 or MRO 上有）：
+        #   · 自动覆盖将来新增的状态名，不必回来改名单；
+        #   · 控制器**故意不允许**给自己新增业务属性 —— 想加状态就加到宿主上。
+        # ⚠️ 必跳过 'p'：`p` 是控制器自己的宿主引用，转发出去就永远拿不到宿主了。
+        if name != 'p':
+            pet = self.__dict__.get('p')
+            if pet is not None:
+                if name in pet.__dict__ or any(
+                        name in klass.__dict__ for klass in type(pet).__mro__):
+                    setattr(pet, name, value)
+                    return
+        object.__setattr__(self, name, value)
+
     # ------------------------------------------------------------------
     # 石头剪刀布
     # ------------------------------------------------------------------
