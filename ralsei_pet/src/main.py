@@ -335,6 +335,7 @@ from modules.sound_manager import SoundManager
 from modules.games_controller import GamesController
 from modules.video_controller import VideoController
 from modules.spell_controller import SpellFlowController
+from modules.hide_controller import HideAndSeekController
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -499,7 +500,8 @@ class RalseiPet(QMainWindow):
     #   · 'games'  → GamesController（W1-3）
     #   · 'video'  → VideoController（W1-4）
     #   · 'spell'  → SpellFlowController（W1-1）
-    _CONTROLLER_ATTRS = ('games', 'video', 'spell')
+    #   · 'hide_seek' → HideAndSeekController（W1-2）
+    _CONTROLLER_ATTRS = ('games', 'video', 'spell', 'hide_seek')
 
     def __getattr__(self, name):
         # 注意：`__getattr__` 只在常规查找失败时被调用，所以 `self.games` 已存在时
@@ -739,6 +741,10 @@ class RalseiPet(QMainWindow):
         # ⚠️ 它依赖紧随其后的 `_spell_*` 状态声明区；但控制器任何时候取到的都是
         # 宿主同一份状态（转发壳），故声明先后无实质影响，仅按紧邻放置便于阅读。
         self.spell = SpellFlowController(self)
+        # 躲猫猫控制器（W1-2）：持有「躲猫猫 (hide & seek)」这条业务线的 12 个方法。
+        # 时机同 games/video/spell —— 在 init_systems 内、晚于 dialogue_ui / desktop_interaction。
+        # ⚠️ 依赖紧随其后的 `_hide_*` 状态声明区（含本项新补的 4 个预声明）。
+        self.hide_seek = HideAndSeekController(self)
         
         # 初始化透明占位符系统
         self.init_placeholder_system()
@@ -773,6 +779,17 @@ class RalseiPet(QMainWindow):
         self._hide_center_x = None
         self._hide_center_y = None
         self._hide_search_timer = None              # searching 阶段定时器
+        # ⚠️ 以下 4 个此前**从未在状态声明区出现**（只在方法体里首次赋值）。
+        # 它们原本一直是「方法内首赋值 → 自然进宿主 __dict__」，功能正常；
+        # 但 W1-2 把躲猫猫方法搬进 HideAndSeekController 后，控制器的 __setattr__
+        # 转发判据是「宿主**已拥有**这个名字」—— 未预声明 → 不满足判据 → 首赋值会落到
+        # **控制器自己的 __dict__** → 状态劈成两份（详见 W1-4 报告第五节铁律 3）。
+        # 后果：宿主 `_notify_arrived_if_needed` 读到 `_hide_moving_cb=None`
+        # → 到达回调永不触发 → 躲猫猫卡在走路态。
+        self._hide_search_started_at = 0            # searching 起始时刻（20s 上限判定用）
+        self._hide_search_checked = set()           # 已"表演找过"的文件夹路径集合
+        self._hide_moving_cb = None                 # 到达回调（由 _hide_move_to_point 注册）
+        self._hide_moving_cb_stage = None           # 该回调对应的 stage 名
         # game_state 在 __init__ 中已完整初始化（含 is_playing/game_type/player_score/best_streak 等 12 个字段）
 
     # 帧动画播放相关代码 - 初始化动画系统
@@ -9171,361 +9188,6 @@ class RalseiPet(QMainWindow):
     #       → searching 阶段（用户点击正确文件夹 = 玩家赢，超时 = Ralsei 赢）
     #       → 结束：清理 5 个障碍物文件夹
     # ==============================================================
-
-    def start_hide_and_seek_game(self):
-        # 入口：检查重复启动、暂停自主代理、移动到屏幕中央
-        # 修复：返回 True 表示成功开始，False 表示已有游戏在玩（供调用方决定话术）
-        if getattr(self, 'game_state', {}).get('is_playing'):
-            return False
-        if getattr(self, '_hide_stage', None) is not None:
-            return False
-        # 暂停自主代理
-        try:
-            self.autonomous_agent.suspend()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        self.game_state['is_playing'] = True
-        self.game_state['game_type'] = 'hide_and_seek'
-
-        # 计算屏幕中央（瞬移防治：取 Ralsei 所在的这块屏的中心，而非主屏中心）
-        screen = self._current_screen_rect()
-        cx = int(screen.x() + screen.width() / 2)
-        cy = int(screen.y() + screen.height() / 2)
-        self._hide_center_x = cx
-        self._hide_center_y = cy
-
-        # 1) 走到屏幕正中央（自然走路：is_moving + target_pos 主系统）
-        self._hide_stage = 'moving_to_center'
-        self.dialogue_ui.add_dialogue("ralsei", "好~ 我先准备 5 个藏身的地方，然后藏起来，你来找我好不好？", "excited")
-        self.dialogue_ui.show_dialogue()
-        self._hide_move_to_point(cx, cy, self._hide_on_arrive_center, 'moving_to_center')
-        return True
-
-    def _abort_hide_and_seek(self, reason='generic'):
-        """躲猫猫任一阶段被中断时调用。
-        若有真实游戏在进行，则清理障碍并退出；否则只打印一声。"""
-        hs = getattr(self, '_hide_stage', None)
-        if hs is None and not getattr(self, 'game_state', {}).get('is_playing'):
-            return
-        real_interrupt = (hs is not None)
-        # 清理游戏状态
-        self._hide_stage = None
-        self.game_state['is_playing'] = False
-        self.game_state['game_type'] = None
-        # searching 定时器停掉
-        try:
-            if getattr(self, '_hide_search_timer', None) is not None:
-                self._hide_search_timer.stop()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        self._hide_search_timer = None
-        # 清理障碍物（如果有创建记录）
-        obstacles = getattr(self, '_hide_obstacles', []) or []
-        for p in obstacles:
-            try:
-                if os.path.isdir(p):
-                    import shutil
-                    shutil.rmtree(p, ignore_errors=True)
-            except Exception as e:  # 修复：原先静默吞噬
-                _log.debug("main 防御性异常（已忽略）: %s", e)
-        self._hide_obstacles = []
-        self._hide_folder_path = None
-        # 恢复自主代理
-        try:
-            self.autonomous_agent.resume()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        if real_interrupt and reason not in ('end_hide_and_seek', 'cast_spell_then_replaced'):
-            self.dialogue_ui.add_dialogue("ralsei", "呜…游戏被打断啦！下次再玩吧~", "sad")
-            self.dialogue_ui.show_dialogue()
-
-    def _hide_move_to_point(self, x, y, cb, stage_name):
-        """封装：把宠物窗口中心移到 (x, y)，到达时调用 cb()。
-        使用主系统 is_moving + target_pos，保证自然走+walk动画。"""
-        # 目标坐标（窗口左上角）
-        tx = int(x - self.width() / 2)
-        ty = int(y - self.height() / 2)
-        self.target_pos = QPoint(tx, ty)
-        self.is_moving = True
-        self.speed = 6.0
-        self.moving_duration = 0
-        # 注册到达回调（在 _notify_arrived_if_needed 里触发）
-        self._hide_moving_cb = cb
-        self._hide_moving_cb_stage = stage_name
-        # 手动设一次方向，保证立刻走起来
-        me = self.frameGeometry().center()
-        dx = x - me.x()
-        dy = y - me.y()
-        if abs(dx) > abs(dy):
-            new_dir = 'right' if dx > 0 else 'left'
-        else:
-            new_dir = 'down' if dy > 0 else 'up'
-        self.change_animation(f"walk_{new_dir}", force=True)
-
-    def _hide_on_arrive_center(self):
-        if getattr(self, '_hide_stage', None) != 'moving_to_center':
-            return
-        self._hide_stage = 'creating'
-        self.dialogue_ui.add_dialogue("ralsei", "魔法~ 变出 5 个小盒子！✨", "excited")
-        self.dialogue_ui.show_dialogue()
-        # [spell right] → 完成后回调 _hide_create_obstacles_after_spell
-        self._cast_spell_then(self._hide_create_obstacles_after_spell, direction='right')
-
-    def _hide_create_obstacles_after_spell(self, path=None, kind=None):
-        if getattr(self, '_hide_stage', None) != 'creating':
-            return
-        # —— 固定布局：上 3 下 2 ——
-        # 上 3：屏幕中心 X 轴 -120 / 0 / +120，Y = 中心 Y - 180
-        # 下 2：屏幕中心 X 轴 -60 / +60，Y = 中心 Y + 180
-        # 修复：用真实桌面路径（OneDrive 桌面重定向时 USERPROFILE\Desktop 不是用户看到的桌面，
-        # 障碍物会创建到看不见的目录 → "躲猫猫根本没生成障碍物"）
-        desktop_dir = self.desktop_interaction.desktop_path
-        screen = self._current_screen_rect()
-        cx = screen.center().x()
-        cy = screen.center().y()
-        positions = [
-            ('top_left',     cx - 120, cy - 180),
-            ('top_center',   cx,       cy - 180),
-            ('top_right',    cx + 120, cy - 180),
-            ('bottom_left',  cx - 60,  cy + 180),
-            ('bottom_right', cx + 60,  cy + 180),
-        ]
-        created = []
-        base_names = ['障碍物1', '障碍物2', '障碍物3', '障碍物4', '障碍物5']
-        import random
-        random.shuffle(positions)
-        for i, (tag, px, py) in enumerate(positions):
-            folder_path = os.path.join(desktop_dir, base_names[i])
-            # 如果存在就加后缀避免冲突
-            suffix = 2
-            while os.path.exists(folder_path):
-                folder_path = os.path.join(desktop_dir, f"{base_names[i]}_{suffix}")
-                suffix += 1
-            try:
-                os.makedirs(folder_path, exist_ok=True)
-                created.append(folder_path)
-            except Exception as e:
-                # 修复：创建失败不再完全静默（否则 len(created)<3 时游戏莫名提前结束，
-                # 且原因不可见）。打印失败原因便于排查（如权限/路径问题）。
-                _log.warning(f"[躲猫猫] 障碍物创建失败: {folder_path} -> {type(e).__name__}: {e}")
-        self._hide_obstacles = created
-        if len(created) < 3:
-            # 极端失败：结束游戏
-            self.dialogue_ui.add_dialogue("ralsei", "呜…怎么变不出来呢…下次再玩吧。", "sad")
-            self.dialogue_ui.show_dialogue()
-            self._abort_hide_and_seek(reason='end_hide_and_seek')
-            return
-
-        # 在 5 个里选 1 个当藏身点
-        chosen = random.choice(created)
-        self._hide_folder_path = chosen
-
-        # —— 躲藏仪式：[spell left] ——
-        self._hide_stage = 'hiding_spell'
-        self.dialogue_ui.add_dialogue("ralsei", "我要开始藏啦~ 不许偷看哦！", "happy")
-        self.dialogue_ui.show_dialogue()
-        self._cast_spell_then(self._hide_after_hiding_spell, direction='left')
-
-    def _hide_after_hiding_spell(self, path=None, kind=None):
-        if getattr(self, '_hide_stage', None) != 'hiding_spell':
-            return
-        self._hide_stage = 'moving_to_folder'
-        # 计算藏身处 folder 在桌面的坐标（desktop_interaction 查不到就用我们创建时记录的位置）
-        folder_path = self._hide_folder_path
-        (fx, fy) = self._resolve_target_screen_anchor(folder_path)
-        # 再往 folder 下方走一步，站在文件夹前
-        fy2 = fy + 80
-        screen = self._current_screen_rect()
-        fy2 = min(fy2, screen.y() + screen.height() - self.height() // 2 - 10)
-        self._hide_move_to_point(fx, fy2, self._hide_on_arrive_folder, 'moving_to_folder')
-
-    def _hide_on_arrive_folder(self):
-        if getattr(self, '_hide_stage', None) != 'moving_to_folder':
-            return
-        # 到达藏身文件夹前 → 躲藏：Ralsei 在桌面上消失（隐藏窗口）
-        folder_path = self._hide_folder_path
-        # 不自动打开文件夹，等用户自己打开
-        self.hide()  # 桌面上消失
-        # 进入 searching 阶段
-        self._hide_stage = 'searching'
-        self.dialogue_ui.add_dialogue("ralsei", "藏好啦~ 快点点桌面上的文件夹来找我吧！（20 秒内找不到算我赢哦）", "excited")
-        self.dialogue_ui.show_dialogue()
-        # searching 阶段最多 20 秒；每 3 秒打开一个错误文件夹"表演找我"
-        self._hide_search_started_at = time.time()
-        self._hide_search_checked = set()
-        try:
-            if getattr(self, '_hide_search_timer', None) is None:
-                from PyQt5.QtCore import QTimer
-                self._hide_search_timer = QTimer(self)
-                self._hide_search_timer.timeout.connect(self._hide_search_tick)
-            self._hide_search_timer.start(3000)
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-
-    def _hide_search_tick(self):
-        if getattr(self, '_hide_stage', None) != 'searching':
-            return
-        # 20 秒总超时 = Ralsei 赢
-        if time.time() - getattr(self, '_hide_search_started_at', 0) > 20:
-            self.dialogue_ui.add_dialogue("ralsei", "啦啦啦~ 时间到！你找不到我！我赢啦~ 嘻嘻！", "happy")
-            self.dialogue_ui.show_dialogue()
-            self._hide_end_game(user_won=False)
-            return
-        # ===== 修复：检测玩家是否点开了某个障碍物文件夹（"玩家点击获胜"接线）=====
-        # 此前 _hide_report_clicked_folder 没有任何调用点，玩家永远无法通过点击文件夹获胜。
-        # 这里通过窗口标题匹配 5 个障碍物文件夹名来识别"玩家打开了哪个文件夹"。
-        try:
-            windows = self.desktop_interaction.get_all_visible_windows()
-            for p in getattr(self, '_hide_obstacles', []):
-                name = os.path.basename(p)
-                for w in windows:
-                    title = w.get('title', '') or ''
-                    if name and name in title:
-                        self._hide_report_clicked_folder(p)
-                        return
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        # 每隔 3 秒打开一个"错误的文件夹"（表演找不到）
-        unchecked = [p for p in getattr(self, '_hide_obstacles', [])
-                     if p != self._hide_folder_path and p not in getattr(self, '_hide_search_checked', set())]
-        if unchecked:
-            import random
-            pick = random.choice(unchecked)
-            self._hide_search_checked.add(pick)
-            try:
-                os.startfile(pick)
-            except Exception:
-                try:
-                    self.desktop_interaction.open_folder(pick)
-                except Exception as e:  # 修复：原先静默吞噬
-                    _log.debug("main 防御性异常（已忽略）: %s", e)
-            self.dialogue_ui.add_dialogue("ralsei", "你点的这个…我不在这儿呀~", "happy")
-            self.dialogue_ui.show_dialogue()
-
-    def _hide_end_game(self, user_won):
-        hs = getattr(self, '_hide_stage', None)
-        self._hide_stage = None
-        self.game_state['is_playing'] = False
-        self.game_state['game_type'] = None
-        # 确保 Ralsei 可见
-        self.show()
-        # 关 searching 定时器
-        try:
-            if getattr(self, '_hide_search_timer', None) is not None:
-                self._hide_search_timer.stop()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        self._hide_search_timer = None
-        # 先把藏身处显示对话（文件夹还没删），让用户知道结果
-        if user_won:
-            self.change_animation('surprised', force=True)
-            self.dialogue_ui.add_dialogue("ralsei", "哎？！被你发现了…真厉害呀~  你赢啦！", "surprised")
-            self.dialogue_ui.show_dialogue()
-        else:
-            self.change_animation('laugh', force=True)
-            self.show()  # Ralsei 输了也要重新出现
-        # —— 销毁文件夹前播放 spell 动画（spr_ralsei_spell_0~10）——
-        self._cast_spell_then(self._hide_destroy_obstacles, direction='right')
-
-    def _hide_destroy_obstacles(self, path=None, kind=None):
-        """spell 动画播放完后，真正删除桌面上所有 5 个障碍物文件夹。"""
-        obstacles = list(getattr(self, '_hide_obstacles', []) or [])
-        import shutil
-        for p in obstacles:
-            try:
-                if os.path.isdir(p):
-                    # 先尝试回收；删不掉就彻底删
-                    try:
-                        import winshell
-                        winshell.delete_file(p, no_confirm=True, allow_undo=True)
-                    except Exception:
-                        shutil.rmtree(p, ignore_errors=True)
-            except Exception as e:  # 修复：原先静默吞噬
-                _log.debug("main 防御性异常（已忽略）: %s", e)
-        self._hide_obstacles = []
-        self._hide_folder_path = None
-        # 恢复自主代理
-        try:
-            self.autonomous_agent.resume()
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("main 防御性异常（已忽略）: %s", e)
-        self._spell_auto_suspended = False
-        # 切回 idle
-        self.change_animation('idle', force=True)
-
-    def _hide_report_clicked_folder(self, folder_path):
-        """searching 阶段：用户点了桌面上某个文件夹就调用它。
-        点对了 = 玩家赢：Ralsei 出现在文件夹窗口，说"你找到我了"，然后跳回桌面；
-        点错了 = 对话 + 继续。"""
-        if getattr(self, '_hide_stage', None) != 'searching':
-            return
-        if not folder_path or not os.path.isdir(folder_path):
-            return
-        # 必须是我们创建的 5 个障碍物之一
-        if folder_path not in getattr(self, '_hide_obstacles', []):
-            return
-        if folder_path == self._hide_folder_path:
-            # —— 玩家赢 ——
-            # 修复：先把 searching 阶段的定时器停掉并离开 searching 状态，
-            # 否则 1.2 秒延迟内若恰逢 3 秒 tick / 20 秒超时，会再触发一次
-            # _hide_end_game(False)，与跳回后的 _hide_end_game(True) 双执行
-            # （双 spell destroy、对话/动画互相覆盖）。
-            try:
-                if getattr(self, '_hide_search_timer', None) is not None:
-                    self._hide_search_timer.stop()
-            except Exception as e:  # 修复：原先静默吞噬
-                _log.debug("main 防御性异常（已忽略）: %s", e)
-            self._hide_search_timer = None
-            self._hide_stage = 'won_pending'  # 非 searching，避免 tick/超时重复触发
-            # 1. 打开正确的文件夹窗口
-            try:
-                self.desktop_interaction.open_folder(folder_path)
-            except Exception:
-                try:
-                    os.startfile(folder_path)
-                except Exception as e:  # 修复：原先静默吞噬
-                    _log.debug("main 防御性异常（已忽略）: %s", e)
-            # 2. Ralsei 出现在文件夹窗口里（显示窗口，定位到文件夹窗口附近）
-            self.show()
-            # 尝试定位到文件夹窗口的位置
-            try:
-                (fx, fy) = self._resolve_target_screen_anchor(folder_path)
-                self.move(int(fx - self.width() // 2), int(fy - self.height() // 2))
-            except Exception as e:  # 修复：原先静默吞噬
-                _log.debug("main 防御性异常（已忽略）: %s", e)
-            # 3. 说"你找到我了"
-            self.change_animation('surprised', force=True)
-            self.dialogue_ui.add_dialogue("ralsei", "你找到我啦！真厉害！", "surprised")
-            self.dialogue_ui.show_dialogue()
-            # 4. 延迟1秒后从窗口跳回桌面，然后结束游戏（销毁文件夹）
-            from PyQt5.QtCore import QTimer
-            QTimer.singleShot(1200, lambda: self._hide_jump_back_to_desktop())
-        else:
-            # 错误：打开它，加一句对话，继续 searching
-            try:
-                self.desktop_interaction.open_folder(folder_path)
-            except Exception:
-                try:
-                    os.startfile(folder_path)
-                except Exception as e:  # 修复：原先静默吞噬
-                    _log.debug("main 防御性异常（已忽略）: %s", e)
-            self.dialogue_ui.add_dialogue("ralsei", "这里没有我~ 再找找！", "happy")
-            self.dialogue_ui.show_dialogue()
-
-    def _hide_jump_back_to_desktop(self):
-        """躲猫猫找到后：从文件夹窗口跳回桌面，然后触发结束（销毁障碍物）。"""
-        # 播放跳跃动画，从当前位置跳到桌面底部
-        screen = self._current_screen_rect()
-        target_y = screen.y() + screen.height() - self.height() - 50
-        target_x = self.x()
-        # 简单跳跃：直接移动到桌面位置，播放jump动画
-        self.change_animation('jump', force=True)
-        target_x, target_y = self._clamp_pos_to_desktop(target_x, target_y)
-        self.move(target_x, target_y)
-        # 延迟后结束游戏（用spell动画销毁文件夹）
-        from PyQt5.QtCore import QTimer
-        QTimer.singleShot(500, lambda: self._hide_end_game(user_won=True))
-
 
 def install_crash_guard():
     """安装全局未捕获异常兜底（必须在 QApplication 创建之前调用）。

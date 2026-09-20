@@ -1,11 +1,7 @@
 {
  "class": "RalseiPet",
- "file_lines": 9992,
+ "file_lines": 9713,
  "group_lines": {
-  "W1-1 spell": {
-   "lines": 63,
-   "n": 2
-  },
   "W1-2 hide-seek": {
    "lines": 323,
    "n": 12
@@ -31,18 +27,18 @@
    "n": 7
   }
  },
- "method_body_lines": 8980,
- "method_count": 191,
+ "method_body_lines": 8702,
+ "method_count": 187,
  "methods": [
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 459,
+   "end": 460,
    "len": 67,
    "name": "__init__",
-   "start": 393
+   "start": 394
   },
   {
    "args": [
@@ -50,40 +46,40 @@
     "name"
    ],
    "decorators": [],
-   "end": 514,
+   "end": 516,
    "len": 13,
    "name": "__getattr__",
-   "start": 502
+   "start": 504
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 554,
+   "end": 556,
    "len": 39,
    "name": "_setup_tray",
-   "start": 516
+   "start": 518
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 573,
+   "end": 575,
    "len": 18,
    "name": "_hide_ralsei",
-   "start": 556
+   "start": 558
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 583,
+   "end": 585,
    "len": 9,
    "name": "_show_from_tray",
-   "start": 575
+   "start": 577
   },
   {
    "args": [
@@ -91,60 +87,50 @@
     "reason"
    ],
    "decorators": [],
-   "end": 591,
+   "end": 593,
    "len": 7,
    "name": "_on_tray_activated",
-   "start": 585
+   "start": 587
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 632,
+   "end": 634,
    "len": 40,
    "name": "init_ui",
-   "start": 593
+   "start": 595
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 646,
+   "end": 648,
    "len": 13,
    "name": "load_resources",
-   "start": 634
+   "start": 636
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 761,
-   "len": 114,
+   "end": 775,
+   "len": 126,
    "name": "init_systems",
-   "start": 648
+   "start": 650
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 874,
+   "end": 888,
    "len": 110,
    "name": "init_animation",
-   "start": 765
-  },
-  {
-   "args": [
-    "self"
-   ],
-   "decorators": [],
-   "end": 915,
-   "len": 40,
-   "name": "init_timers",
-   "start": 876
+   "start": 779
   },
   {
    "args": [
@@ -152,18 +138,18 @@
    ],
    "decorators": [],
    "end": 929,
-   "len": 13,
-   "name": "init_placeholder_system",
-   "start": 917
+   "len": 40,
+   "name": "init_timers",
+   "start": 890
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 954,
-   "len": 24,
-   "name": "create_placeholders",
+   "end": 943,
+   "len": 13,
+   "name": "init_placeholder_system",
    "start": 931
   },
   {
@@ -171,10 +157,20 @@
     "self"
    ],
    "decorators": [],
-   "end": 975,
+   "end": 968,
+   "len": 24,
+   "name": "create_placeholders",
+   "start": 945
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 989,
    "len": 20,
    "name": "update_placeholders",
-   "start": 956
+   "start": 970
   },
   {
    "args": [
@@ -182,90 +178,90 @@
     "pos"
    ],
    "decorators": [],
-   "end": 983,
+   "end": 997,
    "len": 7,
    "name": "get_element_at_pos",
-   "start": 977
+   "start": 991
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1178,
+   "end": 1192,
    "len": 193,
    "name": "init_movement",
-   "start": 986
+   "start": 1000
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1227,
+   "end": 1241,
    "len": 48,
    "name": "update_environment",
-   "start": 1180
+   "start": 1194
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1268,
+   "end": 1282,
    "len": 40,
    "name": "update_mood",
-   "start": 1229
+   "start": 1243
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1284,
+   "end": 1298,
    "len": 15,
    "name": "_sync_system_to_emotions",
-   "start": 1270
+   "start": 1284
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1299,
+   "end": 1313,
    "len": 14,
    "name": "_agent_busy_flags",
-   "start": 1286
+   "start": 1300
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1329,
+   "end": 1343,
    "len": 29,
    "name": "_notify_arrived_if_needed",
-   "start": 1301
+   "start": 1315
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1424,
+   "end": 1438,
    "len": 94,
    "name": "randomize_movement_pattern",
-   "start": 1331
+   "start": 1345
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 1566,
+   "end": 1580,
    "len": 141,
    "name": "generate_new_move_target",
-   "start": 1426
+   "start": 1440
   },
   {
    "args": [
@@ -274,10 +270,10 @@
    "decorators": [
     "monitor_performance"
    ],
-   "end": 2022,
+   "end": 2036,
    "len": 453,
    "name": "update_movement",
-   "start": 1570
+   "start": 1584
   },
   {
    "args": [
@@ -285,40 +281,40 @@
     "elapsed_time"
    ],
    "decorators": [],
-   "end": 2091,
+   "end": 2105,
    "len": 68,
    "name": "_handle_mouse_follow",
-   "start": 2024
+   "start": 2038
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2101,
+   "end": 2115,
    "len": 9,
    "name": "check_nearby_desktop_elements",
-   "start": 2093
+   "start": 2107
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2111,
+   "end": 2125,
    "len": 9,
    "name": "check_desktop_element_at_target",
-   "start": 2103
+   "start": 2117
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2119,
+   "end": 2133,
    "len": 7,
    "name": "initiate_auto_mouse_drag",
-   "start": 2113
+   "start": 2127
   },
   {
    "args": [
@@ -326,50 +322,50 @@
     "target_pos"
    ],
    "decorators": [],
-   "end": 2136,
+   "end": 2150,
    "len": 16,
    "name": "start_mouse_drag",
-   "start": 2121
+   "start": 2135
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2182,
+   "end": 2196,
    "len": 45,
    "name": "update_mouse_drag",
-   "start": 2138
+   "start": 2152
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2201,
+   "end": 2215,
    "len": 18,
    "name": "stop_mouse_drag",
-   "start": 2184
+   "start": 2198
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2235,
+   "end": 2249,
    "len": 33,
    "name": "check_api_commands",
-   "start": 2203
+   "start": 2217
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 2268,
+   "end": 2282,
    "len": 10,
    "name": "_floors_for_jump",
-   "start": 2259
+   "start": 2273
   },
   {
    "args": [
@@ -379,10 +375,10 @@
     "pos"
    ],
    "decorators": [],
-   "end": 2275,
+   "end": 2289,
    "len": 6,
    "name": "_visible_landing",
-   "start": 2270
+   "start": 2284
   },
   {
    "args": [
@@ -393,10 +389,10 @@
     "cur_floor"
    ],
    "decorators": [],
-   "end": 2340,
+   "end": 2354,
    "len": 64,
    "name": "_floor_entry_plan",
-   "start": 2277
+   "start": 2291
   },
   {
    "args": [
@@ -406,10 +402,10 @@
     "ralsei_rect"
    ],
    "decorators": [],
-   "end": 2382,
+   "end": 2396,
    "len": 41,
    "name": "_nearest_floor_jump",
-   "start": 2342
+   "start": 2356
   },
   {
    "args": [
@@ -419,10 +415,10 @@
     "land"
    ],
    "decorators": [],
-   "end": 2399,
+   "end": 2413,
    "len": 16,
    "name": "_start_floor_jump",
-   "start": 2384
+   "start": 2398
   },
   {
    "args": [
@@ -431,10 +427,10 @@
     "target_floor"
    ],
    "decorators": [],
-   "end": 2424,
+   "end": 2438,
    "len": 14,
    "name": "_climb_hdir",
-   "start": 2411
+   "start": 2425
   },
   {
    "args": [
@@ -445,10 +441,10 @@
     "cur"
    ],
    "decorators": [],
-   "end": 2450,
+   "end": 2464,
    "len": 25,
    "name": "_climb_probe_landing",
-   "start": 2426
+   "start": 2440
   },
   {
    "args": [
@@ -457,10 +453,10 @@
     "target_floor"
    ],
    "decorators": [],
-   "end": 2476,
+   "end": 2490,
    "len": 25,
    "name": "_climb_landing",
-   "start": 2452
+   "start": 2466
   },
   {
    "args": [
@@ -469,10 +465,10 @@
     "new_floor"
    ],
    "decorators": [],
-   "end": 2516,
+   "end": 2530,
    "len": 39,
    "name": "_start_climb_transition",
-   "start": 2478
+   "start": 2492
   },
   {
    "args": [
@@ -480,10 +476,10 @@
     "current_pos"
    ],
    "decorators": [],
-   "end": 2567,
+   "end": 2581,
    "len": 50,
    "name": "check_nearby_windows",
-   "start": 2518
+   "start": 2532
   },
   {
    "args": [
@@ -494,10 +490,10 @@
     "target_pos"
    ],
    "decorators": [],
-   "end": 2769,
+   "end": 2783,
    "len": 201,
    "name": "start_jump",
-   "start": 2569
+   "start": 2583
   },
   {
    "args": [
@@ -507,10 +503,10 @@
     "reason"
    ],
    "decorators": [],
-   "end": 2825,
+   "end": 2839,
    "len": 55,
    "name": "start_falling",
-   "start": 2771
+   "start": 2785
   },
   {
    "args": [
@@ -520,10 +516,10 @@
     "window_rect"
    ],
    "decorators": [],
-   "end": 2848,
+   "end": 2862,
    "len": 22,
    "name": "_is_falling_through_window",
-   "start": 2827
+   "start": 2841
   },
   {
    "args": [
@@ -532,10 +528,10 @@
     "current_time"
    ],
    "decorators": [],
-   "end": 2979,
+   "end": 2993,
    "len": 130,
    "name": "handle_jump",
-   "start": 2850
+   "start": 2864
   },
   {
    "args": [
@@ -543,10 +539,10 @@
     "floor"
    ],
    "decorators": [],
-   "end": 3020,
+   "end": 3034,
    "len": 37,
    "name": "_sync_window_cache_from_floor",
-   "start": 2984
+   "start": 2998
   },
   {
    "args": [
@@ -555,10 +551,10 @@
    "decorators": [
     "staticmethod"
    ],
-   "end": 3035,
+   "end": 3049,
    "len": 13,
    "name": "_floor_identity_key",
-   "start": 3023
+   "start": 3037
   },
   {
    "args": [
@@ -568,10 +564,10 @@
    "decorators": [
     "staticmethod"
    ],
-   "end": 3045,
+   "end": 3059,
    "len": 8,
    "name": "_floor_rect_changed",
-   "start": 3038
+   "start": 3052
   },
   {
    "args": [
@@ -580,20 +576,20 @@
     "moved_floor"
    ],
    "decorators": [],
-   "end": 3090,
+   "end": 3104,
    "len": 44,
    "name": "_follow_floor_move",
-   "start": 3047
+   "start": 3061
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3146,
+   "end": 3160,
    "len": 52,
    "name": "_catch_falling_in_air",
-   "start": 3095
+   "start": 3109
   },
   {
    "args": [
@@ -601,30 +597,30 @@
     "elapsed_time"
    ],
    "decorators": [],
-   "end": 3177,
+   "end": 3191,
    "len": 30,
    "name": "_tick_catch_brake",
-   "start": 3148
+   "start": 3162
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3207,
+   "end": 3221,
    "len": 29,
    "name": "_apply_pet_z_order",
-   "start": 3179
+   "start": 3193
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3345,
+   "end": 3359,
    "len": 137,
    "name": "check_window_movement",
-   "start": 3209
+   "start": 3223
   },
   {
    "args": [
@@ -632,20 +628,20 @@
     "reason"
    ],
    "decorators": [],
-   "end": 3451,
+   "end": 3465,
    "len": 104,
    "name": "start_fall",
-   "start": 3348
+   "start": 3362
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3489,
+   "end": 3503,
    "len": 37,
    "name": "trigger_splat",
-   "start": 3453
+   "start": 3467
   },
   {
    "args": [
@@ -654,10 +650,10 @@
     "current_time"
    ],
    "decorators": [],
-   "end": 3619,
+   "end": 3633,
    "len": 129,
    "name": "handle_gravity_fall",
-   "start": 3491
+   "start": 3505
   },
   {
    "args": [
@@ -666,100 +662,90 @@
     "current_time"
    ],
    "decorators": [],
-   "end": 3826,
+   "end": 3840,
    "len": 205,
    "name": "handle_fall",
-   "start": 3622
+   "start": 3636
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3853,
+   "end": 3867,
    "len": 25,
    "name": "wake_up",
-   "start": 3829
+   "start": 3843
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3879,
+   "end": 3893,
    "len": 25,
    "name": "start_dragging_play",
-   "start": 3855
+   "start": 3869
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3888,
+   "end": 3902,
    "len": 8,
    "name": "trigger_laugh",
-   "start": 3881
+   "start": 3895
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3894,
+   "end": 3908,
    "len": 5,
    "name": "trigger_surprise",
-   "start": 3890
+   "start": 3904
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3900,
+   "end": 3914,
    "len": 5,
    "name": "trigger_shy",
-   "start": 3896
+   "start": 3910
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3906,
+   "end": 3920,
    "len": 5,
    "name": "trigger_unhappy",
-   "start": 3902
+   "start": 3916
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3911,
+   "end": 3925,
    "len": 4,
    "name": "trigger_victory",
-   "start": 3908
+   "start": 3922
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 3916,
+   "end": 3930,
    "len": 4,
    "name": "trigger_teasplash",
-   "start": 3913
-  },
-  {
-   "args": [
-    "self"
-   ],
-   "decorators": [],
-   "end": 3935,
-   "len": 18,
-   "name": "reset_special_states",
-   "start": 3918
+   "start": 3927
   },
   {
    "args": [
@@ -767,9 +753,19 @@
    ],
    "decorators": [],
    "end": 3949,
+   "len": 18,
+   "name": "reset_special_states",
+   "start": 3932
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 3963,
    "len": 13,
    "name": "climb_to_top_window",
-   "start": 3937
+   "start": 3951
   },
   {
    "args": [
@@ -777,10 +773,10 @@
     "element"
    ],
    "decorators": [],
-   "end": 4135,
+   "end": 4149,
    "len": 185,
    "name": "react_to_desktop_element",
-   "start": 3951
+   "start": 3965
   },
   {
    "args": [
@@ -790,10 +786,10 @@
     "reaction"
    ],
    "decorators": [],
-   "end": 4189,
+   "end": 4203,
    "len": 44,
    "name": "_note_desktop_observation",
-   "start": 4146
+   "start": 4160
   },
   {
    "args": [
@@ -801,10 +797,10 @@
     "names"
    ],
    "decorators": [],
-   "end": 4246,
+   "end": 4260,
    "len": 56,
    "name": "create_person_name_table",
-   "start": 4191
+   "start": 4205
   },
   {
    "args": [
@@ -812,10 +808,10 @@
     "user_input"
    ],
    "decorators": [],
-   "end": 4390,
+   "end": 4404,
    "len": 143,
    "name": "handle_file_operation",
-   "start": 4248
+   "start": 4262
   },
   {
    "args": [
@@ -823,10 +819,10 @@
     "user_input"
    ],
    "decorators": [],
-   "end": 4430,
+   "end": 4444,
    "len": 39,
    "name": "_open_desktop_item_by_name",
-   "start": 4392
+   "start": 4406
   },
   {
    "args": [
@@ -834,10 +830,10 @@
     "excel_path"
    ],
    "decorators": [],
-   "end": 4483,
+   "end": 4497,
    "len": 52,
    "name": "fix_excel_format",
-   "start": 4432
+   "start": 4446
   },
   {
    "args": [
@@ -846,70 +842,60 @@
     "names_list"
    ],
    "decorators": [],
-   "end": 4553,
+   "end": 4567,
    "len": 69,
    "name": "fill_names_in_excel",
-   "start": 4485
+   "start": 4499
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4559,
+   "end": 4573,
    "len": 5,
    "name": "open_browser_for_ralsei",
-   "start": 4555
+   "start": 4569
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4568,
+   "end": 4582,
    "len": 8,
    "name": "close_bilibili",
-   "start": 4561
+   "start": 4575
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4588,
+   "end": 4602,
    "len": 19,
    "name": "enter_sleep_mode",
-   "start": 4570
+   "start": 4584
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4632,
+   "end": 4646,
    "len": 43,
    "name": "move_to_edge_and_shrink",
-   "start": 4590
+   "start": 4604
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4689,
+   "end": 4703,
    "len": 56,
    "name": "check_entertainment_needs",
-   "start": 4634
-  },
-  {
-   "args": [
-    "self"
-   ],
-   "decorators": [],
-   "end": 4704,
-   "len": 14,
-   "name": "tell_joke",
-   "start": 4691
+   "start": 4648
   },
   {
    "args": [
@@ -917,9 +903,19 @@
    ],
    "decorators": [],
    "end": 4718,
+   "len": 14,
+   "name": "tell_joke",
+   "start": 4705
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 4732,
    "len": 13,
    "name": "suggest_game",
-   "start": 4706
+   "start": 4720
   },
   {
    "args": [
@@ -928,10 +924,10 @@
    "decorators": [
     "monitor_performance"
    ],
-   "end": 4752,
+   "end": 4766,
    "len": 32,
    "name": "update_ai",
-   "start": 4721
+   "start": 4735
   },
   {
    "args": [
@@ -939,10 +935,10 @@
     "cmds"
    ],
    "decorators": [],
-   "end": 4780,
+   "end": 4794,
    "len": 27,
    "name": "_handle_agent_commands",
-   "start": 4754
+   "start": 4768
   },
   {
    "args": [
@@ -951,40 +947,40 @@
    "decorators": [
     "monitor_performance"
    ],
-   "end": 4810,
+   "end": 4824,
    "len": 28,
    "name": "update_stats",
-   "start": 4783
+   "start": 4797
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4831,
+   "end": 4845,
    "len": 20,
    "name": "update_animation_by_emotion",
-   "start": 4812
+   "start": 4826
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4872,
+   "end": 4886,
    "len": 22,
    "name": "_can_speak_now",
-   "start": 4851
+   "start": 4865
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4894,
+   "end": 4908,
    "len": 21,
    "name": "_autonomous_speech_allowed",
-   "start": 4874
+   "start": 4888
   },
   {
    "args": [
@@ -993,30 +989,30 @@
     "user_requested"
    ],
    "decorators": [],
-   "end": 4983,
+   "end": 4997,
    "len": 88,
    "name": "start_autonomous_speech",
-   "start": 4896
+   "start": 4910
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 4989,
+   "end": 5003,
    "len": 5,
    "name": "check_initiate_dialogue",
-   "start": 4985
+   "start": 4999
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 5034,
+   "end": 5048,
    "len": 14,
    "name": "_event_speech_enabled",
-   "start": 5021
+   "start": 5035
   },
   {
    "args": [
@@ -1024,10 +1020,10 @@
     "pool"
    ],
    "decorators": [],
-   "end": 5052,
+   "end": 5066,
    "len": 17,
    "name": "_pick_event_line",
-   "start": 5036
+   "start": 5050
   },
   {
    "args": [
@@ -1037,10 +1033,10 @@
     "streamed"
    ],
    "decorators": [],
-   "end": 5072,
+   "end": 5086,
    "len": 19,
    "name": "_event_say",
-   "start": 5054
+   "start": 5068
   },
   {
    "args": [
@@ -1049,10 +1045,10 @@
     "instant"
    ],
    "decorators": [],
-   "end": 5109,
+   "end": 5123,
    "len": 36,
    "name": "_event_ai_ready",
-   "start": 5074
+   "start": 5088
   },
   {
    "args": [
@@ -1063,10 +1059,10 @@
     "instant"
    ],
    "decorators": [],
-   "end": 5273,
+   "end": 5287,
    "len": 163,
    "name": "speak_event",
-   "start": 5111
+   "start": 5125
   },
   {
    "args": [
@@ -1074,10 +1070,10 @@
     "event"
    ],
    "decorators": [],
-   "end": 5276,
+   "end": 5290,
    "len": 2,
    "name": "moveEvent",
-   "start": 5275
+   "start": 5289
   },
   {
    "args": [
@@ -1085,10 +1081,10 @@
     "event"
    ],
    "decorators": [],
-   "end": 5282,
+   "end": 5296,
    "len": 5,
    "name": "paintEvent",
-   "start": 5278
+   "start": 5292
   },
   {
    "args": [
@@ -1096,10 +1092,10 @@
     "pos"
    ],
    "decorators": [],
-   "end": 5340,
+   "end": 5354,
    "len": 57,
    "name": "get_ralsei_body_part",
-   "start": 5284
+   "start": 5298
   },
   {
    "args": [
@@ -1107,20 +1103,20 @@
     "event"
    ],
    "decorators": [],
-   "end": 5476,
+   "end": 5490,
    "len": 135,
    "name": "mousePressEvent",
-   "start": 5342
+   "start": 5356
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 5488,
+   "end": 5502,
    "len": 11,
    "name": "start_following_mouse",
-   "start": 5478
+   "start": 5492
   },
   {
    "args": [
@@ -1128,10 +1124,10 @@
     "announce"
    ],
    "decorators": [],
-   "end": 5497,
+   "end": 5511,
    "len": 8,
    "name": "stop_following_mouse",
-   "start": 5490
+   "start": 5504
   },
   {
    "args": [
@@ -1139,10 +1135,10 @@
     "event"
    ],
    "decorators": [],
-   "end": 5701,
+   "end": 5715,
    "len": 203,
    "name": "mouseMoveEvent",
-   "start": 5499
+   "start": 5513
   },
   {
    "args": [
@@ -1150,10 +1146,10 @@
     "event"
    ],
    "decorators": [],
-   "end": 5911,
+   "end": 5925,
    "len": 209,
    "name": "mouseReleaseEvent",
-   "start": 5703
+   "start": 5717
   },
   {
    "args": [
@@ -1161,10 +1157,10 @@
     "event"
    ],
    "decorators": [],
-   "end": 5964,
+   "end": 5978,
    "len": 52,
    "name": "mouseDoubleClickEvent",
-   "start": 5913
+   "start": 5927
   },
   {
    "args": [
@@ -1172,10 +1168,10 @@
     "event"
    ],
    "decorators": [],
-   "end": 5969,
+   "end": 5983,
    "len": 4,
    "name": "mouseEnterEvent",
-   "start": 5966
+   "start": 5980
   },
   {
    "args": [
@@ -1183,20 +1179,20 @@
     "event"
    ],
    "decorators": [],
-   "end": 5973,
+   "end": 5987,
    "len": 3,
    "name": "mouseLeaveEvent",
-   "start": 5971
+   "start": 5985
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 5981,
+   "end": 5995,
    "len": 7,
    "name": "on_mouse_hover",
-   "start": 5975
+   "start": 5989
   },
   {
    "args": [
@@ -1204,20 +1200,20 @@
     "pos"
    ],
    "decorators": [],
-   "end": 6024,
+   "end": 6038,
    "len": 42,
    "name": "show_interaction_menu",
-   "start": 5983
+   "start": 5997
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 6161,
+   "end": 6175,
    "len": 136,
    "name": "show_config_dialog",
-   "start": 6026
+   "start": 6040
   },
   {
    "args": [
@@ -1225,30 +1221,20 @@
     "dialog"
    ],
    "decorators": [],
-   "end": 6223,
+   "end": 6237,
    "len": 61,
    "name": "save_config",
-   "start": 6163
+   "start": 6177
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 6231,
+   "end": 6245,
    "len": 7,
    "name": "initiate_chat",
-   "start": 6225
-  },
-  {
-   "args": [
-    "self"
-   ],
-   "decorators": [],
-   "end": 6260,
-   "len": 28,
-   "name": "play_game",
-   "start": 6233
+   "start": 6239
   },
   {
    "args": [
@@ -1256,18 +1242,18 @@
    ],
    "decorators": [],
    "end": 6274,
-   "len": 13,
-   "name": "feed_ralsei",
-   "start": 6262
+   "len": 28,
+   "name": "play_game",
+   "start": 6247
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 6280,
-   "len": 5,
-   "name": "pet_ralsei",
+   "end": 6288,
+   "len": 13,
+   "name": "feed_ralsei",
    "start": 6276
   },
   {
@@ -1275,10 +1261,20 @@
     "self"
    ],
    "decorators": [],
-   "end": 6296,
+   "end": 6294,
+   "len": 5,
+   "name": "pet_ralsei",
+   "start": 6290
+  },
+  {
+   "args": [
+    "self"
+   ],
+   "decorators": [],
+   "end": 6310,
    "len": 15,
    "name": "change_animation_randomly",
-   "start": 6282
+   "start": 6296
   },
   {
    "args": [
@@ -1286,10 +1282,10 @@
     "user_input"
    ],
    "decorators": [],
-   "end": 6334,
+   "end": 6348,
    "len": 37,
    "name": "handle_game_input",
-   "start": 6298
+   "start": 6312
   },
   {
    "args": [
@@ -1301,10 +1297,10 @@
     "api_version"
    ],
    "decorators": [],
-   "end": 6402,
+   "end": 6416,
    "len": 66,
    "name": "init_api_client",
-   "start": 6337
+   "start": 6351
   },
   {
    "args": [
@@ -1312,10 +1308,10 @@
     "prompt"
    ],
    "decorators": [],
-   "end": 6513,
+   "end": 6527,
    "len": 110,
    "name": "send_api_request",
-   "start": 6404
+   "start": 6418
   },
   {
    "args": [
@@ -1323,10 +1319,10 @@
     "response"
    ],
    "decorators": [],
-   "end": 6530,
+   "end": 6544,
    "len": 16,
    "name": "handle_api_response",
-   "start": 6515
+   "start": 6529
   },
   {
    "args": [
@@ -1335,20 +1331,20 @@
    "decorators": [
     "staticmethod"
    ],
-   "end": 6538,
+   "end": 6552,
    "len": 6,
    "name": "_is_special_anim",
-   "start": 6533
+   "start": 6547
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 6548,
+   "end": 6562,
    "len": 9,
    "name": "_special_anim_locked",
-   "start": 6540
+   "start": 6554
   },
   {
    "args": [
@@ -1357,10 +1353,10 @@
     "force"
    ],
    "decorators": [],
-   "end": 6679,
+   "end": 6693,
    "len": 130,
    "name": "change_animation",
-   "start": 6550
+   "start": 6564
   },
   {
    "args": [
@@ -1368,20 +1364,20 @@
     "content"
    ],
    "decorators": [],
-   "end": 6861,
+   "end": 6875,
    "len": 181,
    "name": "_execute_api_action",
-   "start": 6681
+   "start": 6695
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 6937,
+   "end": 6951,
    "len": 75,
    "name": "get_system_info",
-   "start": 6863
+   "start": 6877
   },
   {
    "args": [
@@ -1390,10 +1386,10 @@
     "callback"
    ],
    "decorators": [],
-   "end": 6958,
+   "end": 6972,
    "len": 20,
    "name": "_async_api_request",
-   "start": 6939
+   "start": 6953
   },
   {
    "args": [
@@ -1404,50 +1400,50 @@
     "lean"
    ],
    "decorators": [],
-   "end": 7180,
+   "end": 7194,
    "len": 221,
    "name": "chat_with_ai",
-   "start": 6960
+   "start": 6974
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 7279,
+   "end": 7293,
    "len": 98,
    "name": "_build_ai_context",
-   "start": 7182
+   "start": 7196
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 7348,
+   "end": 7362,
    "len": 25,
    "name": "_build_persona_prompt",
-   "start": 7324
+   "start": 7338
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 7372,
+   "end": 7386,
    "len": 23,
    "name": "_ai_chat_options",
-   "start": 7350
+   "start": 7364
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 7390,
+   "end": 7404,
    "len": 17,
    "name": "_ai_stream_enabled",
-   "start": 7374
+   "start": 7388
   },
   {
    "args": [
@@ -1456,10 +1452,10 @@
    "decorators": [
     "classmethod"
    ],
-   "end": 7432,
+   "end": 7446,
    "len": 13,
    "name": "_md_strip_re",
-   "start": 7420
+   "start": 7434
   },
   {
    "args": [
@@ -1468,10 +1464,10 @@
    "decorators": [
     "classmethod"
    ],
-   "end": 7448,
+   "end": 7462,
    "len": 14,
    "name": "_role_marker_re",
-   "start": 7435
+   "start": 7449
   },
   {
    "args": [
@@ -1480,10 +1476,10 @@
    "decorators": [
     "staticmethod"
    ],
-   "end": 7496,
+   "end": 7510,
    "len": 46,
    "name": "_sanitize_partial_reply",
-   "start": 7451
+   "start": 7465
   },
   {
    "args": [
@@ -1492,10 +1488,10 @@
     "recent"
    ],
    "decorators": [],
-   "end": 7602,
+   "end": 7616,
    "len": 98,
    "name": "_clean_ai_reply",
-   "start": 7505
+   "start": 7519
   },
   {
    "args": [
@@ -1504,10 +1500,10 @@
     "recent"
    ],
    "decorators": [],
-   "end": 7646,
+   "end": 7660,
    "len": 43,
    "name": "_is_repeat_of_recent",
-   "start": 7604
+   "start": 7618
   },
   {
    "args": [
@@ -1516,10 +1512,10 @@
     "callback"
    ],
    "decorators": [],
-   "end": 7658,
+   "end": 7672,
    "len": 11,
    "name": "_on_api_result",
-   "start": 7648
+   "start": 7662
   },
   {
    "args": [
@@ -1528,10 +1524,10 @@
     "piece"
    ],
    "decorators": [],
-   "end": 7679,
+   "end": 7693,
    "len": 20,
    "name": "_on_api_delta",
-   "start": 7660
+   "start": 7674
   },
   {
    "args": [
@@ -1541,10 +1537,10 @@
    "decorators": [
     "monitor_performance"
    ],
-   "end": 7737,
+   "end": 7751,
    "len": 55,
    "name": "_anim_anchor_offset",
-   "start": 7683
+   "start": 7697
   },
   {
    "args": [
@@ -1555,20 +1551,20 @@
     "scale_factor"
    ],
    "decorators": [],
-   "end": 7763,
+   "end": 7777,
    "len": 25,
    "name": "_compose_anchored_sprite",
-   "start": 7739
+   "start": 7753
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8342,
+   "end": 8356,
    "len": 578,
    "name": "update_animation",
-   "start": 7765
+   "start": 7779
   },
   {
    "args": [
@@ -1576,10 +1572,10 @@
     "animation"
    ],
    "decorators": [],
-   "end": 8347,
+   "end": 8361,
    "len": 4,
    "name": "on_animation_complete",
-   "start": 8344
+   "start": 8358
   },
   {
    "args": [
@@ -1589,20 +1585,20 @@
     "restore_to"
    ],
    "decorators": [],
-   "end": 8388,
+   "end": 8402,
    "len": 40,
    "name": "play_animation_once",
-   "start": 8349
+   "start": 8363
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8430,
+   "end": 8444,
    "len": 41,
    "name": "update_bounce",
-   "start": 8390
+   "start": 8404
   },
   {
    "args": [
@@ -1610,10 +1606,10 @@
     "file_info"
    ],
    "decorators": [],
-   "end": 8459,
+   "end": 8473,
    "len": 28,
    "name": "interact_with_file",
-   "start": 8432
+   "start": 8446
   },
   {
    "args": [
@@ -1621,10 +1617,10 @@
     "folder_info"
    ],
    "decorators": [],
-   "end": 8477,
+   "end": 8491,
    "len": 17,
    "name": "interact_with_folder",
-   "start": 8461
+   "start": 8475
   },
   {
    "args": [
@@ -1632,10 +1628,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8502,
+   "end": 8516,
    "len": 23,
    "name": "check_file_content",
-   "start": 8480
+   "start": 8494
   },
   {
    "args": [
@@ -1643,10 +1639,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8544,
+   "end": 8558,
    "len": 41,
    "name": "check_text_content",
-   "start": 8504
+   "start": 8518
   },
   {
    "args": [
@@ -1654,10 +1650,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8560,
+   "end": 8574,
    "len": 15,
    "name": "check_image_content",
-   "start": 8546
+   "start": 8560
   },
   {
    "args": [
@@ -1665,10 +1661,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8587,
+   "end": 8601,
    "len": 26,
    "name": "react_to_file_emotionally",
-   "start": 8562
+   "start": 8576
   },
   {
    "args": [
@@ -1676,10 +1672,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8593,
+   "end": 8607,
    "len": 5,
    "name": "follow_file",
-   "start": 8589
+   "start": 8603
   },
   {
    "args": [
@@ -1687,30 +1683,30 @@
     "file_name"
    ],
    "decorators": [],
-   "end": 8598,
+   "end": 8612,
    "len": 4,
    "name": "react_to_file_deletion",
-   "start": 8595
+   "start": 8609
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8614,
+   "end": 8628,
    "len": 15,
    "name": "check_video_windows",
-   "start": 8600
+   "start": 8614
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8630,
+   "end": 8644,
    "len": 15,
    "name": "check_game_windows",
-   "start": 8616
+   "start": 8630
   },
   {
    "args": [
@@ -1718,10 +1714,10 @@
     "game_window"
    ],
    "decorators": [],
-   "end": 8663,
+   "end": 8677,
    "len": 32,
    "name": "react_to_game",
-   "start": 8632
+   "start": 8646
   },
   {
    "args": [
@@ -1729,10 +1725,10 @@
     "video_window"
    ],
    "decorators": [],
-   "end": 8689,
+   "end": 8703,
    "len": 25,
    "name": "watch_video",
-   "start": 8665
+   "start": 8679
   },
   {
    "args": [
@@ -1740,30 +1736,30 @@
     "video_info"
    ],
    "decorators": [],
-   "end": 8707,
+   "end": 8721,
    "len": 17,
    "name": "react_to_video_content",
-   "start": 8691
+   "start": 8705
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8723,
+   "end": 8737,
    "len": 15,
    "name": "react_to_vs_code_code",
-   "start": 8709
+   "start": 8723
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8730,
+   "end": 8744,
    "len": 6,
    "name": "_recover_from_sadness",
-   "start": 8725
+   "start": 8739
   },
   {
    "args": [
@@ -1771,10 +1767,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8746,
+   "end": 8760,
    "len": 15,
    "name": "is_own_code",
-   "start": 8732
+   "start": 8746
   },
   {
    "args": [
@@ -1782,10 +1778,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8763,
+   "end": 8777,
    "len": 16,
    "name": "open_file",
-   "start": 8748
+   "start": 8762
   },
   {
    "args": [
@@ -1793,10 +1789,10 @@
     "folder_path"
    ],
    "decorators": [],
-   "end": 8783,
+   "end": 8797,
    "len": 19,
    "name": "open_folder",
-   "start": 8765
+   "start": 8779
   },
   {
    "args": [
@@ -1804,50 +1800,50 @@
     "user_input"
    ],
    "decorators": [],
-   "end": 8840,
+   "end": 8854,
    "len": 56,
    "name": "handle_window_operation",
-   "start": 8785
+   "start": 8799
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8872,
+   "end": 8886,
    "len": 31,
    "name": "check_recycle_bin",
-   "start": 8842
+   "start": 8856
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8891,
+   "end": 8905,
    "len": 18,
    "name": "react_to_recycle_bin",
-   "start": 8874
+   "start": 8888
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8906,
+   "end": 8920,
    "len": 14,
    "name": "_move_away_from_recycle_bin",
-   "start": 8893
+   "start": 8907
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8913,
+   "end": 8927,
    "len": 6,
    "name": "_recover_from_fear",
-   "start": 8908
+   "start": 8922
   },
   {
    "args": [
@@ -1855,10 +1851,10 @@
     "file_path"
    ],
    "decorators": [],
-   "end": 8939,
+   "end": 8953,
    "len": 25,
    "name": "delete_file",
-   "start": 8915
+   "start": 8929
   },
   {
    "args": [
@@ -1867,40 +1863,40 @@
     "new_name"
    ],
    "decorators": [],
-   "end": 8943,
+   "end": 8957,
    "len": 4,
    "name": "rename_file",
-   "start": 8940
+   "start": 8954
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8948,
+   "end": 8962,
    "len": 4,
    "name": "check_dragged_file",
-   "start": 8945
+   "start": 8959
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8970,
+   "end": 8984,
    "len": 21,
    "name": "_virtual_screen_rect",
-   "start": 8950
+   "start": 8964
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 8985,
+   "end": 8999,
    "len": 14,
    "name": "_current_screen_rect",
-   "start": 8972
+   "start": 8986
   },
   {
    "args": [
@@ -1909,30 +1905,30 @@
     "y"
    ],
    "decorators": [],
-   "end": 9003,
+   "end": 9017,
    "len": 17,
    "name": "_clamp_pos_to_desktop",
-   "start": 8987
+   "start": 9001
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9012,
+   "end": 9026,
    "len": 8,
    "name": "_desktop_floor_y",
-   "start": 9005
+   "start": 9019
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9106,
+   "end": 9120,
    "len": 93,
    "name": "cleanup_on_exit",
-   "start": 9014
+   "start": 9028
   },
   {
    "args": [
@@ -1940,65 +1936,20 @@
     "path"
    ],
    "decorators": [],
-   "end": 9150,
+   "end": 9164,
    "len": 39,
    "name": "_resolve_target_screen_anchor",
-   "start": 9112
+   "start": 9126
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9177,
-   "len": 26,
-   "name": "_spell_interrupted_reason",
-   "start": 9152
-  },
-  {
-   "args": [
-    "self"
-   ],
-   "decorators": [],
-   "end": 9361,
-   "len": 183,
-   "name": "_tick_spell_flow",
-   "start": 9179
-  },
-  {
-   "args": [
-    "self",
-    "cb",
-    "direction"
-   ],
-   "decorators": [],
-   "end": 9406,
-   "len": 44,
-   "name": "_cast_spell_then",
-   "start": 9363
-  },
-  {
-   "args": [
-    "self",
-    "path",
-    "kind",
-    "cb"
-   ],
-   "decorators": [],
-   "end": 9444,
-   "len": 37,
-   "name": "_start_open_with_spell",
-   "start": 9408
-  },
-  {
-   "args": [
-    "self"
-   ],
-   "decorators": [],
-   "end": 9481,
+   "end": 9202,
    "len": 28,
    "name": "start_hide_and_seek_game",
-   "start": 9454
+   "start": 9175
   },
   {
    "args": [
@@ -2006,10 +1957,10 @@
     "reason"
    ],
    "decorators": [],
-   "end": 9519,
+   "end": 9240,
    "len": 37,
    "name": "_abort_hide_and_seek",
-   "start": 9483
+   "start": 9204
   },
   {
    "args": [
@@ -2020,20 +1971,20 @@
     "stage_name"
    ],
    "decorators": [],
-   "end": 9542,
+   "end": 9263,
    "len": 22,
    "name": "_hide_move_to_point",
-   "start": 9521
+   "start": 9242
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9551,
+   "end": 9272,
    "len": 8,
    "name": "_hide_on_arrive_center",
-   "start": 9544
+   "start": 9265
   },
   {
    "args": [
@@ -2042,10 +1993,10 @@
     "kind"
    ],
    "decorators": [],
-   "end": 9606,
+   "end": 9327,
    "len": 54,
    "name": "_hide_create_obstacles_after_spell",
-   "start": 9553
+   "start": 9274
   },
   {
    "args": [
@@ -2054,30 +2005,30 @@
     "kind"
    ],
    "decorators": [],
-   "end": 9619,
+   "end": 9340,
    "len": 12,
    "name": "_hide_after_hiding_spell",
-   "start": 9608
+   "start": 9329
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9642,
+   "end": 9363,
    "len": 22,
    "name": "_hide_on_arrive_folder",
-   "start": 9621
+   "start": 9342
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9682,
+   "end": 9403,
    "len": 39,
    "name": "_hide_search_tick",
-   "start": 9644
+   "start": 9365
   },
   {
    "args": [
@@ -2085,10 +2036,10 @@
     "user_won"
    ],
    "decorators": [],
-   "end": 9707,
+   "end": 9428,
    "len": 24,
    "name": "_hide_end_game",
-   "start": 9684
+   "start": 9405
   },
   {
    "args": [
@@ -2097,10 +2048,10 @@
     "kind"
    ],
    "decorators": [],
-   "end": 9733,
+   "end": 9454,
    "len": 25,
    "name": "_hide_destroy_obstacles",
-   "start": 9709
+   "start": 9430
   },
   {
    "args": [
@@ -2108,20 +2059,20 @@
     "folder_path"
    ],
    "decorators": [],
-   "end": 9792,
+   "end": 9513,
    "len": 58,
    "name": "_hide_report_clicked_folder",
-   "start": 9735
+   "start": 9456
   },
   {
    "args": [
     "self"
    ],
    "decorators": [],
-   "end": 9806,
+   "end": 9527,
    "len": 13,
    "name": "_hide_jump_back_to_desktop",
-   "start": 9794
+   "start": 9515
   }
  ],
  "source": "ralsei_pet/src/main.py"

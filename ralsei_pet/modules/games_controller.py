@@ -112,6 +112,18 @@ class GamesController(object):
             return pet.__dict__[name]
         if any(name in klass.__dict__ for klass in type(pet).__mro__):
             return getattr(pet, name)
+        # 第 3 条白名单：**兄弟控制器**（W1-2 施工中 e2e 抓到的真 P0）。
+        # 控制器 A 调 `self.<B 的方法>` 时，B 的方法是 **B 的类属性** ——
+        # 既不在宿主实例字典、也不在宿主类型 MRO → 前两条都不命中 → AttributeError。
+        # 实例：`_hide_end_game` 调 `self._cast_spell_then`（属 SpellFlowController）。
+        # 修法：复刻宿主的 `_CONTROLLER_ATTRS` 扫描，**跳过自己**；
+        # 只看对方**类**上的名字（不触发对方实例的 __getattr__）→ 不成环。
+        for _attr in getattr(type(pet), '_CONTROLLER_ATTRS', ()):
+            _ctrl = pet.__dict__.get(_attr)
+            if _ctrl is None or _ctrl is self:
+                continue
+            if getattr(type(_ctrl), name, None) is not None:
+                return getattr(_ctrl, name)
         raise AttributeError(name)
 
     # ------------------------------------------------------------------

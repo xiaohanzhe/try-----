@@ -2,207 +2,202 @@ main.py 方法索引（ast 实测）
 生成脚本：code-quality-audit/架构改造-H4H5/scan_method_index.py
 源文件：ralsei_pet/src/main.py
 
-文件总行数        : 9992
+文件总行数        : 9713
 类                : RalseiPet
-方法数            : 191
-方法体行数合计    : 8980
+方法数            : 187
+方法体行数合计    : 8702
 
 start  end    行数    分组           方法名
 ------------------------------------------------------------------------------
-393    459    67                 __init__
-502    514    13                 __getattr__
-516    554    39                 _setup_tray
-556    573    18    W1-2 hide-seek _hide_ralsei
-575    583    9                  _show_from_tray
-585    591    7                  _on_tray_activated
-593    632    40                 init_ui
-634    646    13                 load_resources
-648    761    114                init_systems
-765    874    110                init_animation
-876    915    40                 init_timers
-917    929    13                 init_placeholder_system
-931    954    24                 create_placeholders
-956    975    20                 update_placeholders
-977    983    7                  get_element_at_pos
-986    1178   193   W3-2 move    init_movement
-1180   1227   48                 update_environment
-1229   1268   40                 update_mood
-1270   1284   15                 _sync_system_to_emotions
-1286   1299   14                 _agent_busy_flags
-1301   1329   29                 _notify_arrived_if_needed
-1331   1424   94    W3-2 move    randomize_movement_pattern
-1426   1566   141   W3-2 move    generate_new_move_target
-1570   2022   453   W3-2 move    update_movement
-2024   2091   68                 _handle_mouse_follow
-2093   2101   9                  check_nearby_desktop_elements
-2103   2111   9                  check_desktop_element_at_target
-2113   2119   7                  initiate_auto_mouse_drag
-2121   2136   16                 start_mouse_drag
-2138   2182   45    W2-1 mouse   update_mouse_drag
-2184   2201   18                 stop_mouse_drag
-2203   2235   33                 check_api_commands
-2259   2268   10                 _floors_for_jump
-2270   2275   6                  _visible_landing
-2277   2340   64                 _floor_entry_plan
-2342   2382   41                 _nearest_floor_jump
-2384   2399   16                 _start_floor_jump
-2411   2424   14                 _climb_hdir
-2426   2450   25                 _climb_probe_landing
-2452   2476   25                 _climb_landing
-2478   2516   39                 _start_climb_transition
-2518   2567   50                 check_nearby_windows
-2569   2769   201   W3-3 physics start_jump
-2771   2825   55                 start_falling
-2827   2848   22                 _is_falling_through_window
-2850   2979   130   W3-3 physics handle_jump
-2984   3020   37                 _sync_window_cache_from_floor
-3023   3035   13                 _floor_identity_key
-3038   3045   8                  _floor_rect_changed
-3047   3090   44                 _follow_floor_move
-3095   3146   52                 _catch_falling_in_air
-3148   3177   30                 _tick_catch_brake
-3179   3207   29                 _apply_pet_z_order
-3209   3345   137   W3-3 physics check_window_movement
-3348   3451   104   W3-3 physics start_fall
-3453   3489   37    W3-3 physics trigger_splat
-3491   3619   129   W3-3 physics handle_gravity_fall
-3622   3826   205   W3-3 physics handle_fall
-3829   3853   25                 wake_up
-3855   3879   25                 start_dragging_play
-3881   3888   8                  trigger_laugh
-3890   3894   5                  trigger_surprise
-3896   3900   5                  trigger_shy
-3902   3906   5                  trigger_unhappy
-3908   3911   4                  trigger_victory
-3913   3916   4                  trigger_teasplash
-3918   3935   18                 reset_special_states
-3937   3949   13                 climb_to_top_window
-3951   4135   185                react_to_desktop_element
-4146   4189   44                 _note_desktop_observation
-4191   4246   56    W1-6 file-sheet create_person_name_table
-4248   4390   143   W1-6 file-sheet handle_file_operation
-4392   4430   39                 _open_desktop_item_by_name
-4432   4483   52    W1-6 file-sheet fix_excel_format
-4485   4553   69    W1-6 file-sheet fill_names_in_excel
-4555   4559   5                  open_browser_for_ralsei
-4561   4568   8                  close_bilibili
-4570   4588   19                 enter_sleep_mode
-4590   4632   43                 move_to_edge_and_shrink
-4634   4689   56                 check_entertainment_needs
-4691   4704   14                 tell_joke
-4706   4718   13                 suggest_game
-4721   4752   32                 update_ai
-4754   4780   27                 _handle_agent_commands
-4783   4810   28                 update_stats
-4812   4831   20                 update_animation_by_emotion
-4851   4872   22                 _can_speak_now
-4874   4894   21                 _autonomous_speech_allowed
-4896   4983   88                 start_autonomous_speech
-4985   4989   5                  check_initiate_dialogue
-5021   5034   14                 _event_speech_enabled
-5036   5052   17                 _pick_event_line
-5054   5072   19                 _event_say
-5074   5109   36                 _event_ai_ready
-5111   5273   163                speak_event
-5275   5276   2                  moveEvent
-5278   5282   5                  paintEvent
-5284   5340   57    W2-1 mouse   get_ralsei_body_part
-5342   5476   135   W2-1 mouse   mousePressEvent
-5478   5488   11                 start_following_mouse
-5490   5497   8                  stop_following_mouse
-5499   5701   203   W2-1 mouse   mouseMoveEvent
-5703   5911   209   W2-1 mouse   mouseReleaseEvent
-5913   5964   52    W2-1 mouse   mouseDoubleClickEvent
-5966   5969   4                  mouseEnterEvent
-5971   5973   3                  mouseLeaveEvent
-5975   5981   7                  on_mouse_hover
-5983   6024   42                 show_interaction_menu
-6026   6161   136                show_config_dialog
-6163   6223   61                 save_config
-6225   6231   7                  initiate_chat
-6233   6260   28                 play_game
-6262   6274   13                 feed_ralsei
-6276   6280   5                  pet_ralsei
-6282   6296   15                 change_animation_randomly
-6298   6334   37                 handle_game_input
-6337   6402   66                 init_api_client
-6404   6513   110                send_api_request
-6515   6530   16                 handle_api_response
-6533   6538   6                  _is_special_anim
-6540   6548   9                  _special_anim_locked
-6550   6679   130   W3-1 anim    change_animation
-6681   6861   181                _execute_api_action
-6863   6937   75                 get_system_info
-6939   6958   20                 _async_api_request
-6960   7180   221                chat_with_ai
-7182   7279   98                 _build_ai_context
-7324   7348   25                 _build_persona_prompt
-7350   7372   23                 _ai_chat_options
-7374   7390   17                 _ai_stream_enabled
-7420   7432   13                 _md_strip_re
-7435   7448   14                 _role_marker_re
-7451   7496   46                 _sanitize_partial_reply
-7505   7602   98                 _clean_ai_reply
-7604   7646   43                 _is_repeat_of_recent
-7648   7658   11                 _on_api_result
-7660   7679   20                 _on_api_delta
-7683   7737   55                 _anim_anchor_offset
-7739   7763   25    W3-1 anim    _compose_anchored_sprite
-7765   8342   578   W3-1 anim    update_animation
-8344   8347   4                  on_animation_complete
-8349   8388   40    W3-1 anim    play_animation_once
-8390   8430   41                 update_bounce
-8432   8459   28                 interact_with_file
-8461   8477   17                 interact_with_folder
-8480   8502   23    W1-6 file-sheet check_file_content
-8504   8544   41    W1-6 file-sheet check_text_content
-8546   8560   15    W1-6 file-sheet check_image_content
-8562   8587   26                 react_to_file_emotionally
-8589   8593   5                  follow_file
-8595   8598   4                  react_to_file_deletion
-8600   8614   15                 check_video_windows
-8616   8630   15                 check_game_windows
-8632   8663   32                 react_to_game
-8665   8689   25                 watch_video
-8691   8707   17                 react_to_video_content
-8709   8723   15                 react_to_vs_code_code
-8725   8730   6                  _recover_from_sadness
-8732   8746   15                 is_own_code
-8748   8763   16                 open_file
-8765   8783   19                 open_folder
-8785   8840   56                 handle_window_operation
-8842   8872   31                 check_recycle_bin
-8874   8891   18                 react_to_recycle_bin
-8893   8906   14                 _move_away_from_recycle_bin
-8908   8913   6                  _recover_from_fear
-8915   8939   25                 delete_file
-8940   8943   4                  rename_file
-8945   8948   4                  check_dragged_file
-8950   8970   21                 _virtual_screen_rect
-8972   8985   14                 _current_screen_rect
-8987   9003   17                 _clamp_pos_to_desktop
-9005   9012   8                  _desktop_floor_y
-9014   9106   93                 cleanup_on_exit
-9112   9150   39                 _resolve_target_screen_anchor
-9152   9177   26    W1-1 spell   _spell_interrupted_reason
-9179   9361   183                _tick_spell_flow
-9363   9406   44                 _cast_spell_then
-9408   9444   37    W1-1 spell   _start_open_with_spell
-9454   9481   28    W1-2 hide-seek start_hide_and_seek_game
-9483   9519   37                 _abort_hide_and_seek
-9521   9542   22    W1-2 hide-seek _hide_move_to_point
-9544   9551   8     W1-2 hide-seek _hide_on_arrive_center
-9553   9606   54    W1-2 hide-seek _hide_create_obstacles_after_spell
-9608   9619   12    W1-2 hide-seek _hide_after_hiding_spell
-9621   9642   22    W1-2 hide-seek _hide_on_arrive_folder
-9644   9682   39    W1-2 hide-seek _hide_search_tick
-9684   9707   24    W1-2 hide-seek _hide_end_game
-9709   9733   25    W1-2 hide-seek _hide_destroy_obstacles
-9735   9792   58    W1-2 hide-seek _hide_report_clicked_folder
-9794   9806   13    W1-2 hide-seek _hide_jump_back_to_desktop
+394    460    67                 __init__
+504    516    13                 __getattr__
+518    556    39                 _setup_tray
+558    575    18    W1-2 hide-seek _hide_ralsei
+577    585    9                  _show_from_tray
+587    593    7                  _on_tray_activated
+595    634    40                 init_ui
+636    648    13                 load_resources
+650    775    126                init_systems
+779    888    110                init_animation
+890    929    40                 init_timers
+931    943    13                 init_placeholder_system
+945    968    24                 create_placeholders
+970    989    20                 update_placeholders
+991    997    7                  get_element_at_pos
+1000   1192   193   W3-2 move    init_movement
+1194   1241   48                 update_environment
+1243   1282   40                 update_mood
+1284   1298   15                 _sync_system_to_emotions
+1300   1313   14                 _agent_busy_flags
+1315   1343   29                 _notify_arrived_if_needed
+1345   1438   94    W3-2 move    randomize_movement_pattern
+1440   1580   141   W3-2 move    generate_new_move_target
+1584   2036   453   W3-2 move    update_movement
+2038   2105   68                 _handle_mouse_follow
+2107   2115   9                  check_nearby_desktop_elements
+2117   2125   9                  check_desktop_element_at_target
+2127   2133   7                  initiate_auto_mouse_drag
+2135   2150   16                 start_mouse_drag
+2152   2196   45    W2-1 mouse   update_mouse_drag
+2198   2215   18                 stop_mouse_drag
+2217   2249   33                 check_api_commands
+2273   2282   10                 _floors_for_jump
+2284   2289   6                  _visible_landing
+2291   2354   64                 _floor_entry_plan
+2356   2396   41                 _nearest_floor_jump
+2398   2413   16                 _start_floor_jump
+2425   2438   14                 _climb_hdir
+2440   2464   25                 _climb_probe_landing
+2466   2490   25                 _climb_landing
+2492   2530   39                 _start_climb_transition
+2532   2581   50                 check_nearby_windows
+2583   2783   201   W3-3 physics start_jump
+2785   2839   55                 start_falling
+2841   2862   22                 _is_falling_through_window
+2864   2993   130   W3-3 physics handle_jump
+2998   3034   37                 _sync_window_cache_from_floor
+3037   3049   13                 _floor_identity_key
+3052   3059   8                  _floor_rect_changed
+3061   3104   44                 _follow_floor_move
+3109   3160   52                 _catch_falling_in_air
+3162   3191   30                 _tick_catch_brake
+3193   3221   29                 _apply_pet_z_order
+3223   3359   137   W3-3 physics check_window_movement
+3362   3465   104   W3-3 physics start_fall
+3467   3503   37    W3-3 physics trigger_splat
+3505   3633   129   W3-3 physics handle_gravity_fall
+3636   3840   205   W3-3 physics handle_fall
+3843   3867   25                 wake_up
+3869   3893   25                 start_dragging_play
+3895   3902   8                  trigger_laugh
+3904   3908   5                  trigger_surprise
+3910   3914   5                  trigger_shy
+3916   3920   5                  trigger_unhappy
+3922   3925   4                  trigger_victory
+3927   3930   4                  trigger_teasplash
+3932   3949   18                 reset_special_states
+3951   3963   13                 climb_to_top_window
+3965   4149   185                react_to_desktop_element
+4160   4203   44                 _note_desktop_observation
+4205   4260   56    W1-6 file-sheet create_person_name_table
+4262   4404   143   W1-6 file-sheet handle_file_operation
+4406   4444   39                 _open_desktop_item_by_name
+4446   4497   52    W1-6 file-sheet fix_excel_format
+4499   4567   69    W1-6 file-sheet fill_names_in_excel
+4569   4573   5                  open_browser_for_ralsei
+4575   4582   8                  close_bilibili
+4584   4602   19                 enter_sleep_mode
+4604   4646   43                 move_to_edge_and_shrink
+4648   4703   56                 check_entertainment_needs
+4705   4718   14                 tell_joke
+4720   4732   13                 suggest_game
+4735   4766   32                 update_ai
+4768   4794   27                 _handle_agent_commands
+4797   4824   28                 update_stats
+4826   4845   20                 update_animation_by_emotion
+4865   4886   22                 _can_speak_now
+4888   4908   21                 _autonomous_speech_allowed
+4910   4997   88                 start_autonomous_speech
+4999   5003   5                  check_initiate_dialogue
+5035   5048   14                 _event_speech_enabled
+5050   5066   17                 _pick_event_line
+5068   5086   19                 _event_say
+5088   5123   36                 _event_ai_ready
+5125   5287   163                speak_event
+5289   5290   2                  moveEvent
+5292   5296   5                  paintEvent
+5298   5354   57    W2-1 mouse   get_ralsei_body_part
+5356   5490   135   W2-1 mouse   mousePressEvent
+5492   5502   11                 start_following_mouse
+5504   5511   8                  stop_following_mouse
+5513   5715   203   W2-1 mouse   mouseMoveEvent
+5717   5925   209   W2-1 mouse   mouseReleaseEvent
+5927   5978   52    W2-1 mouse   mouseDoubleClickEvent
+5980   5983   4                  mouseEnterEvent
+5985   5987   3                  mouseLeaveEvent
+5989   5995   7                  on_mouse_hover
+5997   6038   42                 show_interaction_menu
+6040   6175   136                show_config_dialog
+6177   6237   61                 save_config
+6239   6245   7                  initiate_chat
+6247   6274   28                 play_game
+6276   6288   13                 feed_ralsei
+6290   6294   5                  pet_ralsei
+6296   6310   15                 change_animation_randomly
+6312   6348   37                 handle_game_input
+6351   6416   66                 init_api_client
+6418   6527   110                send_api_request
+6529   6544   16                 handle_api_response
+6547   6552   6                  _is_special_anim
+6554   6562   9                  _special_anim_locked
+6564   6693   130   W3-1 anim    change_animation
+6695   6875   181                _execute_api_action
+6877   6951   75                 get_system_info
+6953   6972   20                 _async_api_request
+6974   7194   221                chat_with_ai
+7196   7293   98                 _build_ai_context
+7338   7362   25                 _build_persona_prompt
+7364   7386   23                 _ai_chat_options
+7388   7404   17                 _ai_stream_enabled
+7434   7446   13                 _md_strip_re
+7449   7462   14                 _role_marker_re
+7465   7510   46                 _sanitize_partial_reply
+7519   7616   98                 _clean_ai_reply
+7618   7660   43                 _is_repeat_of_recent
+7662   7672   11                 _on_api_result
+7674   7693   20                 _on_api_delta
+7697   7751   55                 _anim_anchor_offset
+7753   7777   25    W3-1 anim    _compose_anchored_sprite
+7779   8356   578   W3-1 anim    update_animation
+8358   8361   4                  on_animation_complete
+8363   8402   40    W3-1 anim    play_animation_once
+8404   8444   41                 update_bounce
+8446   8473   28                 interact_with_file
+8475   8491   17                 interact_with_folder
+8494   8516   23    W1-6 file-sheet check_file_content
+8518   8558   41    W1-6 file-sheet check_text_content
+8560   8574   15    W1-6 file-sheet check_image_content
+8576   8601   26                 react_to_file_emotionally
+8603   8607   5                  follow_file
+8609   8612   4                  react_to_file_deletion
+8614   8628   15                 check_video_windows
+8630   8644   15                 check_game_windows
+8646   8677   32                 react_to_game
+8679   8703   25                 watch_video
+8705   8721   17                 react_to_video_content
+8723   8737   15                 react_to_vs_code_code
+8739   8744   6                  _recover_from_sadness
+8746   8760   15                 is_own_code
+8762   8777   16                 open_file
+8779   8797   19                 open_folder
+8799   8854   56                 handle_window_operation
+8856   8886   31                 check_recycle_bin
+8888   8905   18                 react_to_recycle_bin
+8907   8920   14                 _move_away_from_recycle_bin
+8922   8927   6                  _recover_from_fear
+8929   8953   25                 delete_file
+8954   8957   4                  rename_file
+8959   8962   4                  check_dragged_file
+8964   8984   21                 _virtual_screen_rect
+8986   8999   14                 _current_screen_rect
+9001   9017   17                 _clamp_pos_to_desktop
+9019   9026   8                  _desktop_floor_y
+9028   9120   93                 cleanup_on_exit
+9126   9164   39                 _resolve_target_screen_anchor
+9175   9202   28    W1-2 hide-seek start_hide_and_seek_game
+9204   9240   37                 _abort_hide_and_seek
+9242   9263   22    W1-2 hide-seek _hide_move_to_point
+9265   9272   8     W1-2 hide-seek _hide_on_arrive_center
+9274   9327   54    W1-2 hide-seek _hide_create_obstacles_after_spell
+9329   9340   12    W1-2 hide-seek _hide_after_hiding_spell
+9342   9363   22    W1-2 hide-seek _hide_on_arrive_folder
+9365   9403   39    W1-2 hide-seek _hide_search_tick
+9405   9428   24    W1-2 hide-seek _hide_end_game
+9430   9454   25    W1-2 hide-seek _hide_destroy_obstacles
+9456   9513   58    W1-2 hide-seek _hide_report_clicked_folder
+9515   9527   13    W1-2 hide-seek _hide_jump_back_to_desktop
 
 === 按分组汇总（行数） ===
-W1-1 spell     方法   2 个   行数    63
 W1-2 hide-seek 方法  12 个   行数   323
 W1-6 file-sheet 方法   7 个   行数   399
 W2-1 mouse     方法   6 个   行数   701

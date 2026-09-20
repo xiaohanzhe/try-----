@@ -7,15 +7,15 @@ H4 零引用筛查（AST 口径，非字符串匹配）
 ### W1-1 spell
   _tick_spell_flow                       引用点 4
       ralsei_pet\diag_logic.py  L83, 105, 108
-      ralsei_pet\src\main.py  L8350
+      ralsei_pet\src\main.py  L8367
   _start_open_with_spell                 引用点 3
       ralsei_pet\diag_logic.py  L103
-      ralsei_pet\src\main.py  L8773, 8794
+      ralsei_pet\src\main.py  L8790, 8811
   _spell_interrupted_reason              引用点 5
       diag_real.py  L87
       ralsei_pet\diag_logic.py  L68, 106
       ralsei_pet\diag_spell.py  L59
-      ralsei_pet\modules\spell_controller.py  L247
+      ralsei_pet\modules\spell_controller.py  L259
 
 ==========================================================================
 ### W1-2 hide-seek
@@ -23,62 +23,62 @@ H4 零引用筛查（AST 口径，非字符串匹配）
       diag_real.py  L133
       ralsei_pet\diag_spell.py  L82
       ralsei_pet\modules\dialogue_ui.py  L1673, 1682
-      ralsei_pet\src\main.py  L6268
+      ralsei_pet\src\main.py  L6285
   _hide_move_to_point                    引用点 2
-      ralsei_pet\src\main.py  L9201, 9340
+      ralsei_pet\modules\hide_controller.py  L200, 339
   _hide_on_arrive_center                 引用点 1
-      ralsei_pet\src\main.py  L9201
+      ralsei_pet\modules\hide_controller.py  L200
   _hide_create_obstacles_after_spell     引用点 1
-      ralsei_pet\src\main.py  L9272
+      ralsei_pet\modules\hide_controller.py  L271
   _hide_after_hiding_spell               引用点 1
-      ralsei_pet\src\main.py  L9327
+      ralsei_pet\modules\hide_controller.py  L326
   _hide_on_arrive_folder                 引用点 1
-      ralsei_pet\src\main.py  L9340
+      ralsei_pet\modules\hide_controller.py  L339
   _hide_search_tick                      引用点 1
-      ralsei_pet\src\main.py  L9360
+      ralsei_pet\modules\hide_controller.py  L359
   _hide_end_game                         引用点 2
-      ralsei_pet\src\main.py  L9372, 9527
+      ralsei_pet\modules\hide_controller.py  L371, 526
   _hide_destroy_obstacles                引用点 1
-      ralsei_pet\src\main.py  L9428
+      ralsei_pet\modules\hide_controller.py  L427
   _hide_report_clicked_folder            引用点 1
-      ralsei_pet\src\main.py  L9384
+      ralsei_pet\modules\hide_controller.py  L383
   _hide_jump_back_to_desktop             引用点 1
-      ralsei_pet\src\main.py  L9502
+      ralsei_pet\modules\hide_controller.py  L501
 
 ==========================================================================
 ### W1-3 games
   start_rock_paper_scissors              引用点 2
       ralsei_pet\modules\dialogue_ui.py  L1658
-      ralsei_pet\src\main.py  L6271
+      ralsei_pet\src\main.py  L6288
   play_rock_paper_scissors               引用点 1
-      ralsei_pet\src\main.py  L6342
+      ralsei_pet\src\main.py  L6359
   determine_rock_paper_scissors_winner   引用点 1
-      ralsei_pet\modules\games_controller.py  L162
+      ralsei_pet\modules\games_controller.py  L174
   end_rock_paper_scissors                引用点 3
-      ralsei_pet\modules\games_controller.py  L204
-      ralsei_pet\src\main.py  L4820, 6323
+      ralsei_pet\modules\games_controller.py  L216
+      ralsei_pet\src\main.py  L4837, 6340
   start_guess_number                     引用点 3
       ralsei_pet\modules\dialogue_ui.py  L1662, 1666
-      ralsei_pet\src\main.py  L6274
+      ralsei_pet\src\main.py  L6291
   play_guess_number                      引用点 1
-      ralsei_pet\src\main.py  L6345
+      ralsei_pet\src\main.py  L6362
   end_guess_number                       引用点 5
-      ralsei_pet\modules\games_controller.py  L340, 351, 362
-      ralsei_pet\src\main.py  L4822, 6325
+      ralsei_pet\modules\games_controller.py  L352, 363, 374
+      ralsei_pet\src\main.py  L4839, 6342
 
 ==========================================================================
 ### W1-4 video
   check_video_apps                       引用点 1
-      ralsei_pet\src\main.py  L4680
+      ralsei_pet\src\main.py  L4697
   identify_video_apps                    引用点 1
-      ralsei_pet\modules\video_controller.py  L215
-  start_watching_video                   引用点 1
-      ralsei_pet\modules\video_controller.py  L223
-  stop_watching_video                    引用点 2
-      ralsei_pet\modules\video_controller.py  L386
-      ralsei_pet\src\main.py  L4673
-  suggest_watching_video                 引用点 1
       ralsei_pet\modules\video_controller.py  L227
+  start_watching_video                   引用点 1
+      ralsei_pet\modules\video_controller.py  L235
+  stop_watching_video                    引用点 2
+      ralsei_pet\modules\video_controller.py  L398
+      ralsei_pet\src\main.py  L4690
+  suggest_watching_video                 引用点 1
+      ralsei_pet\modules\video_controller.py  L239
 
 ==========================================================================
 ### W1-5 office(old, 方案表里的)
@@ -94,16 +94,16 @@ H4 零引用筛查（AST 口径，非字符串匹配）
   create_person_name_table               引用点 0
       → 全项目零引用（可判定为死代码候选）
   fix_excel_format                       引用点 1
-      ralsei_pet\src\main.py  L4379
+      ralsei_pet\src\main.py  L4396
   fill_names_in_excel                    引用点 1
-      ralsei_pet\src\main.py  L4342
+      ralsei_pet\src\main.py  L4359
   check_excel_table_needs                引用点 0
       → 全项目零引用（可判定为死代码候选）
   handle_file_operation                  引用点 1
       ralsei_pet\modules\dialogue_ui.py  L1724
   check_file_content                     引用点 2
-      ralsei_pet\src\main.py  L8467, 8578
+      ralsei_pet\src\main.py  L8484, 8595
   check_text_content                     引用点 1
-      ralsei_pet\src\main.py  L8510
+      ralsei_pet\src\main.py  L8527
   check_image_content                    引用点 1
-      ralsei_pet\src\main.py  L8501
+      ralsei_pet\src\main.py  L8518
