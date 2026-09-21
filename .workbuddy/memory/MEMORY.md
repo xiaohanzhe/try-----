@@ -144,4 +144,37 @@
 - **未达标但判为可接受**：33% 里剩 3 种全是**短促语气起音**（`诶！`/`我、我……`）= **Ralsei 人设特征**（原作结巴是标志）
   → 清零等于砍特征。**下一轮杠杆若还嫌模板感重 = 采样侧（temperature/repeat_penalty），但本轮无证据支持动它**。
   锁 A12d/A12e/A22e/A22f（+4，G2 1165 → **1169**）。
-- **G2 终态**：`PASS=1169 FAIL=0 套件=24` / `IDENTICAL=24 DIFF=0 rc=0`。
+- **G2 终态（第 27 轮）**：`PASS=1169 FAIL=0 套件=24` / `IDENTICAL=24 DIFF=0 rc=0`。
+
+## 10. 第 28 轮 场景系统 P0（**全文见 `场景系统P0骨架实施与验证报告_2026-09-22.md`**）
+- 用户原话：**「我后期会给他添加场景系统，也就是把原作的世界搬到桌面上，你要留好拓展接口哦
+  （桌面也会被我当成一个场景，你自己看一下原作的场景切换这类的）」**。
+- ✅ **已施工 + 提交推送**（`0aba480`，`ls-remote` 核验 **SYNCED=True**）。
+  **G2 终态：`PASS=1250 FAIL=0 套件=25` / `IDENTICAL=25 DIFF=0 rc=0`**。
+- **交付 = 真的接口，不是文档**：`modules/scene_system.py`（数据层，纯函数）+
+  `modules/scene_controller.py`（接线层，双向转发）+ `assets/scenes/{_index,_anchors,desktop}.json`
+  + `main.py` **四处接线**（import / `_CONTROLLER_ATTRS` 加 `'scene'` / `init_systems` 实例化 /
+  **6 个状态字段预声明**）。回归锁 `scene_p0`（79 项，已进 G2）。
+- ★★ **铁律：P0 判据 = 「不切场景时零行为变化」** → `switch()` **只写状态、不动画面、
+  不注册定时器、不碰物理**；`desktop.json` 的 `bg/bgm/objects` 全空 → 即使 P1 接上渲染层也一个像素不变。
+  **一旦 P0 就改了画面，这条最强判据就丢了，P1 的真回归会被淹没。**
+- ★ **素材两套口径（新发现）**：`sprite_loader.sprite_dir` 指向**仓库根**（`<仓根>/deltarune_ralsei/`，
+  即 `ralsei_pet/` 的**上一级**），而场景 JSON 在 `ralsei_pet/assets/scenes/` →
+  **同一个 JSON 里按 `kind` 分两套**：`sprite`→仓库根；其余（image/prop/bg/未知）→场景目录。
+  `resolve_asset_path()` 是**唯一翻译点**。
+- ★ **三条设计律**（都有正/负控制成对）：① 算不出返回 **`None`，绝不伪装 `(0,0)`**
+  （静默降级是头号敌人）；② 坏元素**跳过不作废整件**；③ 未知 `cond` 键**一律放行**（渐进增强）。
+- **桌面 = 一等场景**：同 schema / 同三级结构 / 控制器**零 `desktop` 特判**（源码级断言）。
+- ❗❗ **第 5 次踩同一个坑**：源码断言里用**字符串字面量**匹配，而 `code_only_src()` **会剥掉
+  STRING token** → `name != 'p'` 被洗成 `name!=` / `('a','b')` 被洗成 `('','')` → **断言恒假或恒红**。
+  **新铁律：能上 AST 就上 AST**；`code_only_src()` 只适合断言**标识符/运算符**，
+  断言**字面量**必须走 AST 或 `code_no_comment()`。已在本轮探针自检出 4 个此类 bug。
+- ❗ **`round5_smoke` 的"模块数"是唯一会随新增模块漂的基线**（它逐个 import `modules/*.py` 并打印计数）
+  → 加模块后它必然 BASELINE/DIFF。**处置：`--only round5_smoke --update`（合并模式）**，
+  然后 `--update` 全量重建。套件描述里已写明「模块数随新增模块而变，勿把具体数字写进描述」。
+- 🔴 **待用户裁定（P1 开工前唯一阻塞项）：场景美术素材来源**。实测：`<仓根>/deltarune_ralsei/`
+  1111 张 PNG **全是角色精灵**、`ralsei_face/` 50 张表情、`textbox/` 3 张；
+  `assets/sprites/`、`assets/faces/` **都是空目录**；全仓库搜 `bg_`/`tileset`/`room_`/`map_` **零命中**。
+  三条出路：**A 程序化生成**（零版权、立即可用）/ **B 用户提供截图**（最贴原作）/ C 重绘 → **推荐 A+B**。
+  另三项待定：场景粒度、是否要 BGM（现 `sound_manager` **只有 3 音效、无 BGM 能力**）、原作版权尺度。
+- 勘察产物（项目根）：`场景系统架构地图_2026-09-22.md`、`场景系统扩展接口设计方案_2026-09-22.md`。
