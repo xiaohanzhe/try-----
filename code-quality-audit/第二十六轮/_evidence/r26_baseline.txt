@@ -1,0 +1,64 @@
+﻿=== 婧愮爜瑙勬ā ===
+  src/main.py                    482686 B    8987 lines
+  src/main_simple.py               2048 B      65 lines
+  src/test_animation.py             977 B      31 lines
+  src/test_basic.py                2207 B      72 lines
+  src/test_interaction.py          6684 B     170 lines
+  src/test_interaction_detailed.py     8495 B     195 lines
+  src/test_pyqt.py                  305 B      13 lines
+  src/test_pyqt_import.py           854 B      40 lines
+  src/test_pyqt_simple.py           706 B      29 lines
+  src/test_sprite_loader.py        1957 B      58 lines
+  src/test_with_log.py             3531 B     105 lines
+
+=== modules/ (37 涓?.py) ===
+  __init__.py                             0 B       1 lines
+  ai_driver.py                        34080 B     674 lines
+  api_client.py                       22423 B     461 lines
+  autonomous_agent.py                 31344 B     713 lines
+  command_manager.py                   8194 B     200 lines
+  config_manager.py                   26224 B     579 lines
+  conversation_focus.py               23890 B     500 lines
+  customization_system.py             20973 B     468 lines
+  data_store.py                       12369 B     303 lines
+  desktop_interaction.py             131444 B    2974 lines
+  dialogue_system.py                  85010 B    1502 lines
+  dialogue_ui.py                      92863 B    1811 lines
+  emotion_system.py                   76554 B    1462 lines
+  energy_hunger.py                    12033 B     256 lines
+  entertainment_system.py             24667 B     571 lines
+  event_speech.py                     23509 B     458 lines
+  file_sheet_controller.py            25130 B     469 lines
+  floor_manager.py                    27969 B     633 lines
+  games_controller.py                 26252 B     482 lines
+  hide_controller.py                  28900 B     527 lines
+  lazy_log.py                          2739 B      56 lines
+  logger_utils.py                      6190 B     182 lines
+  memory_graph.py                     34322 B     705 lines
+  memory_store.py                     13365 B     343 lines
+  memory_system.py                    83427 B    1710 lines
+  pet_ai.py                           37003 B     767 lines
+  pet_interaction.py                  13352 B     365 lines
+  relationship.py                     14972 B     347 lines
+  search_summarizer.py                 6081 B     145 lines
+  social_growth_system.py             31588 B     747 lines
+  sound_manager.py                     6261 B     163 lines
+  spell_controller.py                 30664 B     518 lines
+  sprite_loader.py                    55119 B     947 lines
+  text_segmenter.py                    8524 B     215 lines
+  video_controller.py                 28702 B     522 lines
+  weather_system.py                   13433 B     317 lines
+  worldview_recall.py                 11971 B     288 lines
+  modules 鍚堣琛屾暟 = 23381
+
+=== RalseiPet (main.py L386) ===
+  methods: 171
+  _CONTROLLER_ATTRS: 'games', 'video', 'spell', 'hide_seek', 'file_sheet'
+  main.py md5: 493b48454c878056021df74dd9d04264
+
+=== 鎺у埗鍣?===
+  file_sheet_controller.py     class=['FileSheetController'] methods=8
+  games_controller.py          class=['GamesController'] methods=11
+  hide_controller.py           class=['HideAndSeekController'] methods=16
+  spell_controller.py          class=['SpellFlowController'] methods=8
+  video_controller.py          class=['VideoController'] methods=12

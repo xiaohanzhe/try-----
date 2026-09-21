@@ -1,0 +1,23 @@
+﻿======================================================================
+### react_to_file_emotionally
+   src/main.py                        L8205   def react_to_file_emotionally(self, file_path):
+   modules/file_sheet_controller.py   L15     瀹冧滑灞炪€?*鏂囦欢鎯呮劅鍙嶅簲**銆嶇兢锛堝悓缇?`react_to_file_emotionally` / `follow_file` /
+======================================================================
+### follow_file
+   src/main.py                        L8232   def follow_file(self, file_path):
+   modules/file_sheet_controller.py   L15     瀹冧滑灞炪€?*鏂囦欢鎯呮劅鍙嶅簲**銆嶇兢锛堝悓缇?`react_to_file_emotionally` / `follow_file` /
+======================================================================
+### react_to_file_deletion
+   src/main.py                        L8238   def react_to_file_deletion(self, file_name):
+   modules/file_sheet_controller.py   L16     `react_to_file_deletion` 鍧囧湪瀹夸富锛夛紝涓庛€屾枃浠?/ 琛ㄦ牸**鎿嶄綔**銆嶆槸涓ょ鑱岃矗銆?
+======================================================================
+### check_dragged_file
+   src/main.py                        L8588   def check_dragged_file(self):
+======================================================================
+### interact_with_file
+   src/main.py                        L4131   self.interact_with_file(element)
+   src/main.py                        L8075   def interact_with_file(self, file_info):
+======================================================================
+### interact_with_folder
+   src/main.py                        L4128   self.interact_with_folder(element)
+   src/main.py                        L8104   def interact_with_folder(self, folder_info):
