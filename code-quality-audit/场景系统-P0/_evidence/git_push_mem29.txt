@@ -1,0 +1,27 @@
+raw first12 = [232, 174, 176, 229, 191, 134, 231, 187, 180, 230, 138, 164]
+BOM=False FFFD=0
+--- add ---
+rc=0
+M  .workbuddy/memory/2026-09-22.md
+M  .workbuddy/memory/MEMORY.md
+M  ".workbuddy/memory/\345\217\202\350\200\203-\345\245\221\347\272\246\344\270\216\345\216\206\350\275\256\357\274\210\350\257\246\347\211\210\357\274\211.md"
+?? "code-quality-audit/\345\234\272\346\231\257\347\263\273\347\273\237-P0/_evidence/commit_msg_verify.txt"
+?? "code-quality-audit/\345\234\272\346\231\257\347\263\273\347\273\237-P0/_evidence/git_push_r29.txt"
+
+--- commit ---
+rc=0
+[main 4dc2306] 记忆维护：第29轮落档 + 速查本压缩 + 详版补 §16/§17/§18
+ 3 files changed, 582 insertions(+), 150 deletions(-)
+
+4dc2306 记忆维护：第29轮落档 + 速查本压缩 + 详版补 §16/§17/§18
+
+--- cred ---
+usr='236837805' pw_len=40
+--- push ---
+try1 rc=0 out='' err='To https://github.com/xiaohanzhe/try-----.git\n   52d5514..4dc2306  main -> main'
+--- ls-remote ---
+remote=4dc230665f285de6f315f29eeb65d6ded59a15d4	refs/heads/main
+local =4dc230665f285de6f315f29eeb65d6ded59a15d4
+SYNCED=True
+--- final ---
+clean=False

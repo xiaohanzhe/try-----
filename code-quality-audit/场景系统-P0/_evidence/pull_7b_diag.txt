@@ -1,0 +1,44 @@
+=== 1. GET /api/tags ===
+  ralsei:v3                          eb03d55cc270  2.33 GB
+  qwen3:4b-instruct-2507-q4_K_M      0edcdef34593  2.33 GB
+
+=== 2. GET /api/version ===
+  {"version":"0.34.2"}
+
+=== 3. POST /api/pull (stream) ===
+  [  1] {"status":"pulling manifest"}
+  [  2] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1888951992}
+  [  3] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1888997176}
+  [  4] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1889046328}
+  [  5] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1889062712}
+  [ 20] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1889390392}
+  [ 40] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1889767224}
+  [ 60] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1890225976}
+  [ 80] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1890684728}
+  [100] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1891192632}
+  [120] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1891602232}
+  [140] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1892142904}
+  [160] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1892623736}
+  [180] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1892995704}
+  [200] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1893473080}
+  [220] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1893891320}
+  [240] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1894317304}
+  [260] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1894726904}
+  [280] {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1895185656}
+  (stopped reading after 20s)
+  total lines = 284
+  last = {"status":"pulling 2bada8a74506","digest":"sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730","total":4683073952,"completed":1895267576}
+
+=== 4. GET /api/tags (after pull) ===
+  ralsei:v3                          eb03d55cc270  2.33 GB
+  qwen3:4b-instruct-2507-q4_K_M      0edcdef34593  2.33 GB
+
+=== 5. blobs state ===
+  PARTIAL sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial  4.361 GB
+  shard markers = 16 (all tiny = progress markers, not data)
+  BLOB    sha256-85e4a5b7b8ef0e48a...  2.326 GB
+  BLOB    sha256-d18a5cc71b84bc4af...  0.000 GB
+  BLOB    sha256-eade0a07cac771278...  0.000 GB
+  BLOB    sha256-b72accf9724e93698...  0.000 GB
+  BLOB    sha256-47f58071fc5c89a98...  0.000 GB
+  BLOB    sha256-cc31d9ff2c7076e44...  0.000 GB

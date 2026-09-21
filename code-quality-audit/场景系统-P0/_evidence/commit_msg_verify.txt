@@ -1,0 +1,26 @@
+=== A. raw bytes ===
+total bytes = 1379
+first 12 bytes = [229, 156, 186, 230, 153, 175, 232, 183, 175, 231, 148, 177]
+decode OK, first char = '场'
+first char ord = 22330 (U+573A)
+first 6 chars = '场'(U+573A) '景'(U+666F) '路'(U+8DEF) '由'(U+7531) '层'(U+5C42) '与'(U+4E0E)
+
+EXPECT: 场景路由层与7B底座评估
+  U+573A=场 U+666F=景 U+8DEF=路 U+7531=由 U+5C42=层 U+4E0E=与
+  场 UTF-8 = E5 9C BA = 229 156 186  << 这就是 first3！
+  我之前的判据 231,172,172 是错的（那是"第"字之类）
+
+=== B. git log raw commit message ===
+git output first 12 bytes = [229, 156, 186, 230, 153, 175, 232, 183, 175, 231, 148, 177]
+git decode OK, first line = '场景路由层与7B底座评估'
+git U+FFFD = 0
+
+=== C. byte-exact compare (git cat-file vs file) ===
+git msg bytes len = 1379, file bytes len = 1379
+IDENTICAL = True
+
+=== D. BOM / EOL ===
+file has BOM = False
+file has CRLF = False
+git  has CRLF = False
+file newline count = 27
