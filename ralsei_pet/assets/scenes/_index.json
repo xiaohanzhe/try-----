@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "note": "场景总索引。三级 = 章节 / 区域 / 场景；真正被『切到』的是场景。新增一个场景 = 在这里登记一行 + 放一个 <scene_id>.json，零改 main.py。桌面（desktop）与作品内场景完全平级，不开后门。",
+    "anchors_file": "_anchors.json",
+    "scene_file_pattern": "<scene_id>.json",
+    "path_rules": {
+      "kind=sprite": "相对仓库根（与 SpriteLoader.sprite_dir 同源 = <仓库>/deltarune_ralsei/）",
+      "kind=image/prop/bg": "相对本目录（<仓库>/ralsei_pet/assets/scenes/）"
+    }
+  },
+  "default_scene": "desktop",
+  "chapters": {
+    "desktop": {
+      "name": "桌面",
+      "order": 0,
+      "note": "用户明确要求：桌面也算一个场景。它是一等公民，与作品内场景同级同构。",
+      "areas": {
+        "desktop": {
+          "name": "桌面",
+          "scenes": {
+            "desktop": {
+              "name": "桌面",
+              "file": "desktop.json",
+              "builtin": true,
+              "note": "启动场景。P0 只用它证明『框架在位且零行为变化』。"
+            }
+          }
+        }
+      }
+    }
+  }
+}

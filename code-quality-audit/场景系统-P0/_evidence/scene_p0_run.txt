@@ -1,0 +1,102 @@
+
+=== A 模块存在与零依赖纪律 ===
+[PASS] A1 scene_system.py 存在且可 import（拿到 SCENE_SCHEMA_VERSION）
+[PASS] A2 scene_controller.py 存在且可 import（拿到 SceneController）
+[PASS] A3 scene_system.py 不 import 任何 Qt 模块
+[PASS] A4 scene_system.py 不 import 任何项目内模块（初始化环纪律）
+[PASS] A5 负控制：A3/A4 的判据真能抓到越界 import（合成样本）
+[PASS] A6 scene_controller.py 只 import 标准库 + scene_system（不 import Qt / 其他项目模块）
+[PASS] A7 scene_system.py 源码里不出现 Qt 类名（防漏 import 的抄写残留）
+
+=== B 数据文件契约 ===
+[PASS] B1._index.json 存在且是合法 UTF-8 JSON
+[PASS] B1._anchors.json 存在且是合法 UTF-8 JSON
+[PASS] B1.desktop.json 存在且是合法 UTF-8 JSON
+[PASS] B2 _index.json 能被 load_index 解析（ok=True，schema 版本匹配）
+[PASS] B3 索引里登记了 desktop 场景（桌面是一等场景的登记证据）
+[PASS] B4 索引 default_scene 指向一个真的登记过的场景
+[PASS] B5 desktop.json 能被 load_scene 加载（返回 SceneState 而非 None）
+[PASS] B6 desktop.json 在 P0 是零可渲染项（bg/bgm/objects 全空 → 零行为变化的前提）
+[PASS] B7 _anchors.json 能被 load_anchors 解析（锚点表非空）
+[PASS] B8 锚点值都是合法的二元比例（0.0~1.0）
+[PASS] B9 负控制：目录不存在时 load_index 回落 ok=False（不抛异常）
+[PASS] B10 负控制：场景不存在时 load_scene 返回 None（不抛异常）
+[PASS] B11 负控制：场景 id 含路径穿越（../ 、分隔符）时 load_scene 拒绝
+
+=== C 纯函数：resolve_anchor ===
+[PASS] C1 pos 优先于 anchor（写了绝对像素就不看锚点）
+[PASS] C2 anchor 命中全局表 → 按屏幕比例换算
+[PASS] C3 无 pos 且无 anchor（或锚点名不存在）→ 兜底屏幕底部中央
+[PASS] C4 多屏（虚拟桌面含负坐标）换算正确
+[PASS] C5 负控制：screen_rect 非法 → 返回 None（不是 (0,0)）
+[PASS] C6 负控制：obj 不是 dict → 不抛异常（返回兜底位或 None）
+
+=== D 纯函数：pick_variant ===
+[PASS] D1 单帧（str）原样返回
+[PASS] D2 variants 按 tick 轮播（含回绕）
+[PASS] D3 frames 是 variants 的别名（复用 animations.json 的心智模型）
+[PASS] D4 传 list 本身等价于 {"variants": [...]}
+[PASS] D5 负控制：候选为空 / None / 非字符串元素 → 返回 None（不抛）
+[PASS] D6 坏元素被跳过而不是整体作废（一个坏元素不该让物件消失）
+[PASS] D7 tick 为非法值时不抛（按 0 处理）
+
+=== E 纯函数：depth_of ===
+[PASS] E1 显式 depth 覆盖一切
+[PASS] E2 无 depth 时由 y 推导（越小 = 越远 = 键越大）
+[PASS] E3 都没有 → 基准值（不按列表顺序伪造深度）
+[PASS] E4 负控制：depth/y 是垃圾值时不抛，回落基准
+
+=== F 纯函数：visible_objects ===
+[PASS] F1 过滤掉 enabled=False 的物件
+[PASS] F2 过滤掉 alpha<=0 的物件
+[PASS] F3 cond 相等判定生效（不匹配的丢、匹配的留）
+[PASS] F4 结果按 depth_of 升序（先画远的、后画近的）
+[PASS] F5 每个结果都带上了算好的屏幕坐标 _x/_y
+[PASS] F6 纯函数纪律：不改原物件 dict（_x/_y 只出现在返回值里）
+[PASS] F7 未知 cond 键一律放行（渐进增强：老场景包不被新条件误杀）
+[PASS] F8 负控制：scene=None / 非列表 objects → 返回空列表（不抛）
+[PASS] F9 正/负成对：screen_rect 非法 → 全部物件都算不出位置 → 空结果
+[PASS] F10 同深度保持声明顺序（稳定排序）
+
+=== G SceneState ===
+[PASS] G1 from_dict 对垃圾输入不抛（返回空 SceneState）
+[PASS] G2 from_dict 跳过 objects 里的坏元素（非 dict 元素被丢弃）
+[PASS] G3 from_dict 的 anchors 只保留合法二元数值对
+[PASS] G4 describe() 是给 AI 的**唯一入口**：scene_id 为空 → 空串（调用方整段不注入）
+[PASS] G5 describe() 输出场景的中文描述（章节/区域/场景名）
+
+=== H 控制器双向转发 ===
+[PASS] H1 load() 成功：ready=False → True，current_scene=desktop
+[PASS] H2 load() 幂等（重复调用不炸、不改变状态）
+[PASS] H3 available_scenes() 列出索引里的场景
+[PASS] H4 switch(不存在的场景) → False，且**保持当前场景不变**（不切空场景）
+[PASS] H5 switch(路径穿越 id) → False（与 load_scene 的拦截同源）
+[PASS] H6 状态全在宿主：控制器实例字典里除 "p" 外没有任何键
+[PASS] H7 控制器 → 宿主的方法转发真的通（forward 到 play_animation_once）
+[PASS] H8 缺失的名字抛原始 AttributeError（保住 hasattr / getattr 默认值语义）
+[PASS] H9 宿主 __getattr__ 用 getattr(type(ctrl), name) 探测（不用 hasattr(ctrl,...) → 不成环）
+[PASS] H10 负控制：控制器 __setattr__ 必跳过 "p"（否则永远拿不回宿主）
+[PASS] H10b 负控制：漏护栏的合成源码必须被判为 False（判据有鉴别力）
+[PASS] H11 resolve_objects() 是给 P1 渲染层的入口，现在就能调（空场景 → 空列表）
+[PASS] H12 description() 与 SceneState.describe() 同源（AI 注入的唯一出口）
+
+=== J main.py 三处接线 ===
+[PASS] J1 main.py import 了 SceneController（import 期就要可用）
+[PASS] J2 _CONTROLLER_ATTRS 里登记了 'scene'（宿主转发壳才认它）
+[PASS] J3 init_systems 里创建了 self.scene = SceneController(self)
+[PASS] J4._scene_index 已在 main.py 预声明（self._scene_index = ...）
+[PASS] J4._scene_state 已在 main.py 预声明（self._scene_state = ...）
+[PASS] J4.current_scene 已在 main.py 预声明（self.current_scene = ...）
+[PASS] J4.scene_objects 已在 main.py 预声明（self.scene_objects = ...）
+[PASS] J4._scene_anchors 已在 main.py 预声明（self._scene_anchors = ...）
+[PASS] J4._scene_loaded 已在 main.py 预声明（self._scene_loaded = ...）
+[PASS] J5 控制器自身不引入任何新字段名（全部走宿主已预声明的 6 个）
+
+=== K 桌面是一等场景（同级同构） ===
+[PASS] K1 desktop.json 用的是与作品内场景**同一套 schema**（schema_version 一致）
+[PASS] K2 desktop 在索引里走的是**普通的 chapter/area/scene 三级结构**（不是特例分支）
+[PASS] K3 控制器里没有针对 desktop 的特判分支（桌面不许开后门）
+[PASS] K4 场景层的桌面与物理层的桌面口径一致（floor_manager 把桌面当一等楼层）
+
+============================================================
+总计 79 项，通过 79，失败 0

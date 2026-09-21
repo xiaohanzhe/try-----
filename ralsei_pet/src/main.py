@@ -337,6 +337,10 @@ from modules.video_controller import VideoController
 from modules.spell_controller import SpellFlowController
 from modules.hide_controller import HideAndSeekController
 from modules.file_sheet_controller import FileSheetController
+# 场景系统控制器：把「原作的世界搬到桌面上」这条需求的地基接上宿主。
+# P0 阶段是空壳（只加载索引 + 存状态，不动任何画面）—— 用户要求「留好拓展接口」，
+# 所以接口必须先真的在位、能被调、能过 G2，而不是只写在文档里。
+from modules.scene_controller import SceneController
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -503,13 +507,20 @@ class RalseiPet(QMainWindow):
     #   · 'spell'  → SpellFlowController（W1-1）
     #   · 'hide_seek' → HideAndSeekController（W1-2）
     #   · 'file_sheet' → FileSheetController（W1-6）
+    #   · 'scene'  → SceneController（场景系统 P0，非 H4/H5 拆分产物）
     #
     # W1-7（第二十六轮）把 `handle_game_input` 从宿主搬进了 'games'。
     # 它当初被 W1-3 **刻意留下**，理由是它经 `_abort_hide_and_seek` 依赖
     # W1-2（躲猫猫）。W1-2 落地后该依赖由**兄弟控制器白名单**（
     # GamesController.__getattr__ 第 3 条扫描宿主 `_CONTROLLER_ATTRS`）承接，
     # 前提成立，故一并搬入，Wave 1 至此**业务方法全部归位**。
-    _CONTROLLER_ATTRS = ('games', 'video', 'spell', 'hide_seek', 'file_sheet')
+    #
+    # ⚠️ 'scene' 与上面五个有一个本质区别：前五个是**搬出来的**（方法原本在宿主，
+    # 拆分后仍靠转发壳让老调用点零改动），'scene' 是**新写的**（P1 渲染层的方法
+    # 一出生就定义在控制器里，宿主从来没有过）。两者共用同一套转发机制，但
+    # "搬"与"新写"决定了校验方式不同 —— 搬出来的要证明**逐字等价**，
+    # 新写的要证明**零行为变化**（不切场景时 G2 输出逐字节不动）。
+    _CONTROLLER_ATTRS = ('games', 'video', 'spell', 'hide_seek', 'file_sheet', 'scene')
 
     def __getattr__(self, name):
         # 注意：`__getattr__` 只在常规查找失败时被调用，所以 `self.games` 已存在时
@@ -759,6 +770,13 @@ class RalseiPet(QMainWindow):
         #    4 个方法全是"读宿主 + 调宿主 API + 用局部变量"，状态劈裂风险为零。
         #    `open_file` / `open_folder` 留在宿主，经宿主 __getattr__ 的 MRO 白名单命中。
         self.file_sheet = FileSheetController(self)
+        # 场景系统控制器（场景系统 P0）：把「原作的世界搬到桌面上」接上宿主。
+        # ⚠️ 时机同前序 —— 在 init_systems 内、晚于 floor_manager / customization_system。
+        #    P0 只读 `assets/scenes/_index.json` + 默认场景，结果存宿主状态字段；
+        #    **不注册定时器、不改渲染路径、不碰物理** → 不切场景时零行为变化。
+        #    P1 的渲染层需要 floor_manager（地面 y）/ sprite_loader（物件帧），
+        #    两者在本行之前都已就绪。
+        self.scene = SceneController(self)
         
         # 初始化透明占位符系统
         self.init_placeholder_system()
@@ -805,6 +823,19 @@ class RalseiPet(QMainWindow):
         self._hide_moving_cb = None                 # 到达回调（由 _hide_move_to_point 注册）
         self._hide_moving_cb_stage = None           # 该回调对应的 stage 名
         # game_state 在 __init__ 中已完整初始化（含 is_playing/game_type/player_score/best_streak 等 12 个字段）
+
+        # ========== 场景系统 状态字段（P0）==========
+        # ⚠️ 这 6 个**必须在这里预声明**，理由与上面 `_spell_*` / `_hide_*` 完全一样：
+        #    SceneController 的 `__setattr__` 转发判据是「宿主**已拥有**这个名字」。
+        #    未预声明 → 首次赋值会落进**控制器自己的 __dict__** → 状态劈成两份，
+        #    而且这种劈裂 G2 **完全看不见**（本项目真踩过两次，见 W1-4 报告铁律 3）。
+        # 字段分工（唯一真源都在宿主，控制器不持有任何场景状态）：
+        self._scene_index = None                    # load_index() 的结果（含 chapters/scenes/default_scene）
+        self._scene_state = None                    # 当前场景的 SceneState（只读视图，换场景 = 换引用）
+        self.current_scene = None                   # 当前场景 id（str），如 'desktop'
+        self.scene_objects = []                     # 当前场景的可见物件缓存（P1 渲染层消费）
+        self._scene_anchors = {}                     # 全局命名锚点表（_anchors.json）
+        self._scene_loaded = False                  # 索引是否已尝试加载过（幂等守卫，防重复 IO）
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):

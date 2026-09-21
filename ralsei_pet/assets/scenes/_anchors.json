@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "note": "命名锚点表（借原作 marker 机制）。物件用 \"anchor\": \"<名字>\" 引用，坐标随屏幕尺寸缩放，换分辨率/多屏布局时仍落在该落的地方。坐标为相对屏幕矩形（虚拟桌面，可为负）的比例。物件若写了 \"pos\"（绝对像素）则以 pos 为准。",
+    "conventions": {
+      "x": "0.0 = 屏幕最左，1.0 = 屏幕最右",
+      "y": "0.0 = 屏幕最上，1.0 = 屏幕最下（底部是桌宠站立的地面）"
+    }
+  },
+  "anchors": {
+    "screen_center": [0.5, 0.5],
+    "screen_bottom_center": [0.5, 1.0],
+    "screen_bottom_left": [0.1, 1.0],
+    "screen_bottom_right": [0.9, 1.0],
+    "screen_top_left": [0.08, 0.08],
+    "screen_top_right": [0.92, 0.08],
+    "ground_left": [0.2, 1.0],
+    "ground_center": [0.5, 1.0],
+    "ground_right": [0.8, 1.0],
+    "mid_left": [0.2, 0.65],
+    "mid_center": [0.5, 0.65],
+    "mid_right": [0.8, 0.65]
+  }
+}

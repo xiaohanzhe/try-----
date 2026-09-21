@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "scene_id": "desktop",
+  "name": "桌面",
+  "chapter_id": "desktop",
+  "chapter_name": "桌面",
+  "area_id": "desktop",
+  "area_name": "桌面",
+
+  "bg": null,
+  "bgm": null,
+  "ambient": {
+    "lighting": null,
+    "weather": null,
+    "particles": null
+  },
+  "objects": [],
+  "anchors": {},
+  "transition": null,
+
+  "_comment": {
+    "purpose": "P0 骨架的**零行为变化**证明件。它声明的所有可渲染项都是 null/空，因此即使渲染层（P1）接上，画面也与现状完全一致 —— 像素仍然只由 Ralsei 自己的 sprite_label 提供（main.py paintEvent 的唯一动作是填全透明）。",
+    "why_desktop_is_a_scene": "用户原话『桌面也会被我当成一个场景』。桌面在物理系统里早就是一等公民（floor_manager.desktop_floor，type='desktop'、platform_height=0，且 _desktop_floor_y() 是『地面』y 坐标的唯一真源），所以映射到场景系统是天然对齐，不是特例。",
+    "how_to_fill_it_in_later": [
+      "1. bg: 填字符串（相对本目录，如 \"bg/desktop_night.png\"）或 {'variants': [...]}（轮播，例如白天/夜晚）。P0 留 null。",
+      "2. objects: 每个物件 ≥ {'id','kind','z','pos' 或 'anchor'}；kind 决定路径口径（见 _index.json 的 path_rules）。",
+      "3. ambient: 借 customization_system.py 里**早已定义、从未接线**的 appearance.weather_effects / lighting_effects / particle_effects（customization_system.py:28-30）与 environment.home_location（:71）—— 那是本项目官方预留的接入坑位，场景系统应当接管它，不另起炉灶。",
+      "4. anchors: 场景自带锚点（相对本场景的『区域矩形』，与 _anchors.json 的相对整屏不同）。"
+    ],
+    "object_schema": {
+      "id": "场景内唯一名（用于深度排错、AI 提及、存档）",
+      "kind": "sprite | image | prop | bg（决定路径口径；未知 kind 按 image 处理＝相对本目录，安全侧）",
+      "pos": "[x, y] 绝对屏幕像素。写了它就不看 anchor。（可选）",
+      "anchor": "命名锚点，先查本场景 anchors、再查 _anchors.json。（可选）",
+      "alpha": "0.0~1.0，默认 1.0。0 或负 → 整件丢弃",
+      "depth": "绘制排序键，越小越先画（越远）。不写则由 y 推导。（可选）",
+      "y": "仅参与深度推导（不写 depth 时用）",
+      "variants": "多帧候选。pick_variant 按 tick 轮播。（可选）",
+      "enabled": "false 则整件丢弃（临时关掉不必删声明）",
+      "cond": "{scene_id|chapter_id|area_id: 值或值列表} 相等判定；未知键一律放行",
+      "repeat": "【P1 才展开】地面瓷砖/栅栏这类重复铺排"
+    },
+    "what_this_scene_does_NOT_do": [
+      "不动物理（楼层、甩飞、抛物线一律不碰）",
+      "不自己播动画（特殊动画只能经 ai_driver 决策或用户显式交互触发）",
+      "不注入 AI 上下文（P1 才加，且只加一句场景描述）",
+      "不接管 customization_system（P0 只留接口，不夺权）"
+    ]
+  }
+}
