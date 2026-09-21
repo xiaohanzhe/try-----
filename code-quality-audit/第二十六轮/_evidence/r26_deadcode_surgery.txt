@@ -1,0 +1,30 @@
+第26轮 P1 死代码处置 — 行级手术记录
+目标：ralsei_pet\src\main.py
+改前 md5：32c1cb5ec84b8b14eb003db03b318392   字节 483243   行数 8987
+EOL：CRLF=0  lone-LF=8986
+
+### 逐方法首行断言
+  follow_file              L8232–L8236  首行唯一命中=[8232]  'def follow_file(self, file_path):'
+  react_to_file_deletion   L8238–L8241  首行唯一命中=[8238]  'def react_to_file_deletion(self, file_name):'
+  check_video_windows      L8243–L8257  首行唯一命中=[8243]  'def check_video_windows(self):'
+  check_game_windows       L8259–L8273  首行唯一命中=[8259]  'def check_game_windows(self):'
+  react_to_game            L8275–L8306  首行唯一命中=[8275]  'def react_to_game(self, game_window):'
+  watch_video              L8308–L8332  首行唯一命中=[8308]  'def watch_video(self, video_window):'
+  react_to_video_content   L8334–L8350  首行唯一命中=[8334]  'def react_to_video_content(self, video_info):'
+  check_dragged_file       L8588–L8591  首行唯一命中=[8588]  'def check_dragged_file(self):'
+  → 全部通过（8/8）
+
+### 反向归一证明：通过（删→按原序插回 == 原文，逐字符相等）
+
+### AST 解析：OK
+### compileall 退出码：0
+### AST 反查（应全部不在 main.py）
+  仍在：（无）✓
+### 反向控制（保留项应仍在）
+  缺失：（无）✓
+
+### 结果
+  改后 md5：cf9d95cb88164a8b97d750e2634eed38   字节 476662   (Δ=-6581)
+  删除行数：124
+  改后行数：8863
+  文件尾字节：b')'

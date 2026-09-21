@@ -505,8 +505,8 @@ class MemorySystem:
                       [int(k.get('id') or 0) for k in self.keys] + [0])
             if _mx >= self._next_id:
                 self._next_id = _mx + 1
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("memory_system 防御性异常（已忽略）: %s", e)
     
     def save_memory(self):
         """保存记忆"""
@@ -978,8 +978,8 @@ class MemorySystem:
         if _cf is not None:
             try:
                 return list(_cf.extract_keywords(text))[:limit]
-            except Exception:
-                pass
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("memory_system 防御性异常（已忽略）: %s", e)
         # 退化实现：按非文字符切开，取长度 ≥2 的片段
         try:
             import re as _re
@@ -1193,8 +1193,8 @@ class MemorySystem:
                     try:
                         if graph.node_weight(tgt) < self.MIN_PAGE_W:
                             continue
-                    except Exception:
-                        pass
+                    except Exception as e:  # 修复：原先静默吞噬
+                        _log.debug("memory_system 防御性异常（已忽略）: %s", e)
                     s = float(p.get('score') or 0.0) * self.PATH_GAIN
                     if s > kw_assoc.get(tgt, 0.0):
                         kw_assoc[tgt] = s

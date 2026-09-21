@@ -4617,7 +4617,17 @@ class RalseiPet(QMainWindow):
             # 宽 except 会把"已发起"误判成 False（第六轮回归 B2/B3/B7/B8 曾因此全挂）。
             # 取不到护栏就退回最朴素的清洗。
             try:
-                text = self._clean_ai_reply(reply_text) or ""
+                # 修复：原先未传 recent → _clean_ai_reply 第 2 步（车轱辘话判定）
+                # 整步跳过，自主开口永远不会被判退重采样，与对话链路不一致。
+                # 取法与对话链路同源：AI 历史里 role=='assistant' 的文本。
+                _rec = []
+                try:
+                    _dui = getattr(self, 'dialogue_ui', None)
+                    _hist = _dui.get_ai_history() if _dui is not None else []
+                    _rec = [c for _r, c in _hist if _r == 'assistant']
+                except Exception:
+                    _rec = []
+                text = self._clean_ai_reply(reply_text, recent=_rec) or ""
             except Exception as e:
                 _log.debug("main 防御性异常（已忽略）: %s", e)
                 try:
@@ -4958,9 +4968,14 @@ class RalseiPet(QMainWindow):
 
     def paintEvent(self, event):
         # 绘制透明背景
+        # 修复：原先无显式 end()，中途抛异常会留下 active painter，
+        # Qt 会打印 "QPainter::begin: Painter already active"。
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.fillRect(self.rect(), QBrush(QColor(0, 0, 0, 0)))
+        try:
+            painter.setRenderHint(QPainter.Antialiasing)
+            painter.fillRect(self.rect(), QBrush(QColor(0, 0, 0, 0)))
+        finally:
+            painter.end()
         
     def get_ralsei_body_part(self, pos):
         # 根据鼠标位置确定点击的Ralsei身体部位
@@ -6846,20 +6861,20 @@ class RalseiPet(QMainWindow):
             else:
                 _tod = "深夜"
             parts.append(f"现在是{_tod}")
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：时段分片获取失败（已忽略）: %s", e)
         try:
             _w = self.weather_system.get_current_weather()
             if _w:
                 parts.append(f"天气{_w}")
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：天气分片获取失败（已忽略）: %s", e)
         try:
             _e, _ev = self.emotion_system.get_current_emotion()
             if _e:
                 parts.append(f"心情{_e}")
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：心情分片获取失败（已忽略）: %s", e)
         try:
             # 分档而不是只报"低"：状态越具体，语气才有得变 ——
             # "有点疲惫"和"累得快撑不住"该是两个不同的反应。
@@ -6875,8 +6890,8 @@ class RalseiPet(QMainWindow):
                 parts.append("你肚子饿得厉害")
             elif _hunger < 45:
                 parts.append("你肚子有点饿")
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：精力/饥饿分片获取失败（已忽略）: %s", e)
         # 载体状态：此刻在哪儿、正在干什么。与驱动动画的是**同一份状态** ——
         # "站窗口上/在走动/正在掉下去"本来就该影响他怎么说话。
         try:
@@ -6888,8 +6903,8 @@ class RalseiPet(QMainWindow):
                 parts.append("你站在一个打开的窗口上")
             else:
                 parts.append("你站在桌面上")
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：载体状态分片获取失败（已忽略）: %s", e)
         # 被冷落多久：只有真的久（>30 分钟）才提 —— 每句都提就变成"每句都在撒娇"，
         # 那正是用户说的"不像 Ralsei"。两条互斥（elif），不会同时出现。
         try:
@@ -6900,8 +6915,8 @@ class RalseiPet(QMainWindow):
                     parts.append("你有很久没跟对方说话了")
                 elif _idle < 60:
                     parts.append("你刚跟对方说过话")
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：冷落时长分片获取失败（已忽略）: %s", e)
         # 记忆：用户偏好（如果有），让 Ralsei 记住对方喜欢聊什么
         try:
             if getattr(self, 'memory_system', None) is not None:
@@ -6912,8 +6927,8 @@ class RalseiPet(QMainWindow):
                 _topics = [p[0] for p in _prefs[:2] if p[1] > 0.5]
                 if _topics:
                     parts.append("记得你最近喜欢聊" + "、".join(_topics))
-        except Exception:
-            pass
+        except Exception as e:
+            _log.debug("AI 上下文：记忆偏好分片获取失败（已忽略）: %s", e)
         if not parts:
             return ""
         # 尾部这句"用法约束"是必需的：状态是**给模型的背景**，不是话题。
@@ -8229,126 +8244,6 @@ class RalseiPet(QMainWindow):
             # 看到悲伤的内容，感到难过
             self.emotion_system.react_to_event("saw_sad_content", {'file_path': file_path})
         
-    def follow_file(self, file_path):
-        # 跟随拖拽的文件
-        self.dragged_file = file_path
-        self.is_following_dragged_file = True
-        self.dialogue_ui.show_dialogue("你要把这个文件拖到哪里去呀？让我跟着看看~")
-        
-    def react_to_file_deletion(self, file_name):
-        # 对文件删除做出反应
-        self.dialogue_ui.show_dialogue(f"你把{file_name}删除了？为什么要这样做呢...")
-        self.emotion_system.react_to_event("file_deleted", {'file_name': file_name})
-        
-    def check_video_windows(self):
-        # 检查视频播放器窗口
-        windows = self.desktop_interaction.get_all_visible_windows()
-        video_windows = []
-        
-        # 视频播放器关键词
-        video_player_keywords = ['vlc', 'potplayer', 'mpc', 'media player', '播放器', 'video', 'movie']
-        
-        for window in windows:
-            title_lower = window['title'].lower()
-            # 检查窗口标题是否包含视频播放器关键词
-            if any(keyword in title_lower for keyword in video_player_keywords):
-                video_windows.append(window)
-        
-        return video_windows
-        
-    def check_game_windows(self):
-        # 检查游戏窗口
-        windows = self.desktop_interaction.get_all_visible_windows()
-        game_windows = []
-        
-        # 游戏关键词
-        game_keywords = ['game', '游戏', 'play', 'playing', 'steam', 'epic', 'battle', 'war', 'fps', 'shooter', 'action']
-        
-        for window in windows:
-            title_lower = window['title'].lower()
-            # 检查窗口标题是否包含游戏关键词
-            if any(keyword in title_lower for keyword in game_keywords):
-                game_windows.append(window)
-        
-        return game_windows
-        
-    def react_to_game(self, game_window):
-        # 对游戏做出反应
-        if not game_window:
-            return
-            
-        game_title = game_window['title']
-        
-        # 根据游戏类型做出不同反应
-        if any(keyword in game_title.lower() for keyword in ['fps', 'shooter', '枪战', '射击', 'gun', 'weapon', '枪械']):
-            # 枪战游戏，兴奋反应
-            self.dialogue_ui.show_dialogue(f"哇！你在玩枪战游戏{game_title}！里面的枪械看起来好酷啊！")
-            self.emotion_system.react_to_event("saw_gun_game", {'game_title': game_title})
-            self.emotion_system.add_emotion("excited", 35)
-            self.emotion_system.add_emotion("happy", 25)
-        elif any(keyword in game_title.lower() for keyword in ['rpg', 'role', 'adventure', '冒险']):
-            # RPG游戏，兴趣反应
-            self.dialogue_ui.show_dialogue(f"这是RPG游戏{game_title}呢，看起来很有趣！里面有很多故事吧？")
-            self.emotion_system.add_emotion("excited", 20)
-        elif any(keyword in game_title.lower() for keyword in ['strategy', '战略', '策略']):
-            # 策略游戏，思考反应
-            self.dialogue_ui.show_dialogue(f"这是策略游戏{game_title}呢，需要动很多脑筋吧？你真厉害！")
-            self.emotion_system.add_emotion("happy", 15)
-        elif any(keyword in game_title.lower() for keyword in ['deltarune', 'undertale']):
-            # Deltarune/Undertale游戏，特别兴奋反应
-            self.dialogue_ui.show_dialogue(f"哇！你在玩{game_title}！这是我最喜欢的游戏！能和你一起玩就好了~")
-            self.emotion_system.react_to_event("saw_deltarune_game", {'game_title': game_title})
-            self.emotion_system.add_emotion("excited", 40)
-            self.emotion_system.add_emotion("happy", 30)
-        else:
-            # 默认游戏反应
-            self.dialogue_ui.show_dialogue(f"你在玩{game_title}呀，看起来很好玩的样子！")
-            self.emotion_system.add_emotion("excited", 10)
-        
-    def watch_video(self, video_window):
-        # 观看视频并做出反应
-        if not video_window:
-            return
-            
-        video_title = video_window['title']
-        
-        # 根据视频标题做出不同反应
-        if any(keyword in video_title.lower() for keyword in ['deltarune', 'undertale', 'ralsei', 'sans', 'papyrus']):
-            # Deltarune/Undertale相关视频，兴奋反应
-            self.dialogue_ui.show_dialogue(f"哇！这是关于{video_title}的视频！我超级感兴趣的！")
-            self.emotion_system.react_to_event("saw_interesting_video", {'video_title': video_title})
-            self.emotion_system.add_emotion("excited", 30)
-            self.emotion_system.add_emotion("happy", 20)
-        elif any(keyword in video_title.lower() for keyword in ['game', '游戏', 'playthrough']):
-            # 游戏视频，兴趣反应
-            self.dialogue_ui.show_dialogue(f"这是游戏视频呢，看起来很好玩的样子！")
-            self.emotion_system.add_emotion("excited", 15)
-        elif any(keyword in video_title.lower() for keyword in ['music', '音乐', 'song']):
-            # 音乐视频，愉悦反应
-            self.dialogue_ui.show_dialogue(f"这是音乐视频呢，听起来很美妙！")
-            self.emotion_system.add_emotion("happy", 15)
-        else:
-            # 默认反应
-            self.dialogue_ui.show_dialogue(f"你在看{video_title}呀，看起来很有趣呢！")
-            
-    def react_to_video_content(self, video_info):
-        # 对视频内容做出反应
-        # 这里可以扩展为使用AI分析视频内容，现在简化为基于关键词
-        video_title = video_info.get('title', '')
-        
-        # 检查是否是Deltarune/Undertale相关视频
-        if any(keyword in video_title.lower() for keyword in ['deltarune', 'undertale', 'ralsei', 'kris', 'susie']):
-            responses = [
-                f"哇，这个{video_title}视频太精彩了！我也想参与其中呢~",
-                f"看到{video_title}的视频，让我想起了很多美好的回忆...",
-                f"这个{video_title}视频做得真棒！我很喜欢！"
-            ]
-            response = random.choice(responses)
-            self.dialogue_ui.show_dialogue(response)
-            self.emotion_system.react_to_event("saw_deltarune_video", video_info)
-        else:
-            self.dialogue_ui.show_dialogue(f"这个{video_title}视频看起来很有趣呢！")
-        
     def react_to_vs_code_code(self):
         # 对VS Code中的自己代码做出反应
         # 悲伤情绪反应
@@ -8585,11 +8480,6 @@ class RalseiPet(QMainWindow):
         if self.desktop_interaction.rename_file(file_path, new_name):
             self.dialogue_ui.show_dialogue(f"我帮你把文件重命名为{new_name}啦~")
         
-    def check_dragged_file(self):
-        # 检查是否有文件被拖拽
-        # 这里可以添加检测拖拽文件的逻辑
-        pass
-
     def _virtual_screen_rect(self):
         """多屏虚拟桌面矩形（含左侧负坐标副屏）。
 

@@ -1,0 +1,49 @@
+第26轮 G1 零引用筛查（AST 口径，非字符串匹配）
+生成脚本：code-quality-audit/第二十六轮/_run_g1_zero_refs.py
+扫描根  ：.
+跳过目录：.git, .workbuddy, __pycache__, code-quality-audit, node_modules
+
+==========================================================================
+### A. 死代码候选（预期：有定义 + 零引用）
+  check_dragged_file                     有定义=True  引用点 0
+      → 零引用（死代码候选成立）
+  react_to_file_deletion                 有定义=True  引用点 0
+      → 零引用（死代码候选成立）
+  follow_file                            有定义=True  引用点 0
+      → 零引用（死代码候选成立）
+  react_to_file_emotionally              有定义=True  引用点 0
+      → 零引用（死代码候选成立）
+
+==========================================================================
+### B. 活链路对照组（预期：引用点 >= 1）
+  delete_file                            有定义  引用点 5
+      ralsei_pet\modules\autonomous_agent.py  L628
+      ralsei_pet\modules\dialogue_ui.py  L1768, 1770
+      ralsei_pet\modules\hide_controller.py  L439
+      ralsei_pet\src\main.py  L8578
+  rename_file                            有定义  引用点 1
+      ralsei_pet\src\main.py  L8585
+  open_file                              有定义  引用点 3
+      ralsei_pet\modules\autonomous_agent.py  L620
+      ralsei_pet\modules\file_sheet_controller.py  L344
+      ralsei_pet\src\main.py  L8398
+  open_folder                            有定义  引用点 6
+      ralsei_pet\modules\autonomous_agent.py  L618
+      ralsei_pet\modules\file_sheet_controller.py  L342
+      ralsei_pet\modules\hide_controller.py  L398, 481, 505
+      ralsei_pet\src\main.py  L8419
+  check_video_windows                    有定义  引用点 0
+  check_game_windows                     有定义  引用点 0
+  react_to_game                          有定义  引用点 0
+  watch_video                            有定义  引用点 0
+  interact_with_file                     有定义  引用点 1
+      ralsei_pet\src\main.py  L4131
+  interact_with_folder                   有定义  引用点 1
+      ralsei_pet\src\main.py  L4128
+  check_file_content                     有定义  引用点 2
+      ralsei_pet\src\main.py  L8096, 8207
+  check_text_content                     有定义  引用点 1
+      ralsei_pet\src\main.py  L8139
+  check_image_content                    有定义  引用点 1
+      ralsei_pet\src\main.py  L8130
+

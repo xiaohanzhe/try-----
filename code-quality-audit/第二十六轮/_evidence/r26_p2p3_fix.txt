@@ -1,0 +1,31 @@
+第26轮 P2/P3 定点修复记录
+
+### 改前哈希
+  memory_system          md5=05fd1cc605a78c3647750168718179ae bytes=83427
+  memory_store           md5=9598631b23fb8a098fff9226fa80c92d bytes=13365
+  desktop_interaction    md5=7209c5730a84159f6ce32e983ba7550c bytes=131444
+  main                   md5=9d6fe2dfd699a155467f72e8a555f094 bytes=476653
+
+  OK [P2-a] memory_system  命中=1  next_id 兜底失败 → _next_id 留在文件值，可能导致 id 复用
+  OK [P2-b] memory_system  命中=1  抽词失败 → 静默回落退化实现，无痕迹
+  OK [P2-c] memory_system  命中=1  node_weight 失败 → 该路径被跳过，无痕迹
+  OK [P2-d] memory_store  命中=1  删空回落目录失败（非递归），影响面小但应留痕
+  OK [P2-e] desktop_interaction  命中=1  DWM 取窗口边框失败 → 回落 GetWindowRect，应有痕迹
+  OK [P2-f] desktop_interaction  命中=1  窗口枚举回调单窗失败 → 该窗口漏标，应有痕迹
+  OK [P3-a] main  命中=1  自主开口补传 recent（对齐对话链路）
+  OK [P3-b] main  命中=1  paintEvent 无 end() → 异常时 painter 残留
+
+### 反向归一证明：通过（逐条换回 == 原文，逐字符相等）
+
+### AST / compileall 校验
+  memory_system          AST OK
+  memory_store           AST OK
+  desktop_interaction    AST OK
+  main                   AST OK
+  compileall 退出码：0
+
+### 改后哈希
+  memory_system          md5=3a92d13ca86bf2eb1358db5375a1b878 bytes=83718 (Δ=+291)
+  memory_store           md5=18c88c1b1866f3f1a2a9467d7cee14d3 bytes=13461 (Δ=+96)
+  desktop_interaction    md5=cc4dbbb46c6488e7eba24c85ee1bc4fc bytes=131648 (Δ=+204)
+  main                   md5=5abe03a8eee88dc7d5e08cf9630c1166 bytes=477505 (Δ=+852)

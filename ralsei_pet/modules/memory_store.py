@@ -321,8 +321,8 @@ def migrate_from_fallback(target_dir):
         if not os.listdir(fb):
             os.rmdir(fb)
             result['removed_fallback_dir'] = True
-    except Exception:
-        pass
+    except Exception as e:  # 修复：原先静默吞噬
+        _log.debug("memory_store 防御性异常（已忽略）: %s", e)
     result['reason'] = '已搬入设备并清理桌面副本'
     return result
 

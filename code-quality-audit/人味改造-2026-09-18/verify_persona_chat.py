@@ -393,12 +393,51 @@ ok('B11 _build_persona_prompt 只用类属性（桩对象上可跑）',
    'self.PERSONA_REL_PATH' not in code_only_src(func_src(MAIN_TEXT, '_build_persona_prompt'))
    and 'RalseiPet.PERSONA_REL_PATH'
    in code_only_src(func_src(MAIN_TEXT, '_build_persona_prompt')))
+# --- B12/B13（第二十六轮升级：由"字面量子串"改为 AST 结构断言）---
+# 旧判据是 `'text=self._clean_ai_reply(reply_text)or""' in code_no_comment(...)`。
+# 它**只对一种写法有效**：第二十六轮给自主开口补传 recent 后（对齐对话链路），
+# 该字面量不再出现 → 两条锁同时假红。这正是项目纪律「断言断行为不断赋值」的反例：
+# 锁应当锁"自主开口里确实调用了护栏、且做了防御"，而不是锁那次调用的**实参个数**。
+# 新判据用 AST：在 start_autonomous_speech 内找 _clean_ai_reply 调用，
+# 断言 ① 存在该调用（护栏共用） ② 该调用处在 try 的 body 里（护栏抛异常不冒泡）。
+def _autonomous_clean_calls():
+    """返回 start_autonomous_speech 内所有 _clean_ai_reply 调用的 (node, in_try_body)。"""
+    import ast as _ast
+    tree = _ast.parse(MAIN_TEXT)
+    fn = None
+    for n in _ast.walk(tree):
+        if isinstance(n, _ast.FunctionDef) and n.name == 'start_autonomous_speech':
+            fn = n
+            break
+    if fn is None:
+        return []
+    # 收集"处在某个 Try 的 body 里"的调用行号
+    in_try = set()
+    for t in _ast.walk(fn):
+        if isinstance(t, _ast.Try):
+            for stmt in t.body:
+                for sub in _ast.walk(stmt):
+                    in_try.add(id(sub))
+    out = []
+    for c in _ast.walk(fn):
+        if isinstance(c, _ast.Call) and isinstance(c.func, _ast.Attribute) \
+                and c.func.attr == '_clean_ai_reply':
+            out.append((c, id(c) in in_try))
+    return out
+
+
+_calls = _autonomous_clean_calls()
 ok('B12 自主开口与交互对话共用同一套护栏（_on_reply 里也过 _clean_ai_reply）',
-   'text=self._clean_ai_reply(reply_text)or""'
-   in code_no_comment(func_src(MAIN_TEXT, 'start_autonomous_speech')))
+   len(_calls) >= 1, '找到 %d 个 _clean_ai_reply 调用' % len(_calls))
 ok('B13 _on_reply 对护栏本身做了防御（护栏抛异常不得吞掉"已发起"）',
-   'try:text=self._clean_ai_reply(reply_text)or""'
-   in code_no_comment(func_src(MAIN_TEXT, 'start_autonomous_speech')))
+   any(in_try for _c, in_try in _calls),
+   '调用是否在 try body 内：%s' % [it for _c, it in _calls])
+# B13b 行为级接线（第二十六轮新增）：自主开口的护栏调用**必须**传 recent，
+# 否则 _clean_ai_reply 第 2 步（车轱辘话判定）整步跳过 → 与对话链路不一致。
+ok('B13b 自主开口的护栏调用传了 recent（对齐对话链路）',
+   all(any(k.arg == 'recent' for k in c.keywords) for c, _it in _calls)
+   and len(_calls) >= 1,
+   'kwargs=%s' % [[k.arg for k in c.keywords] for c, _it in _calls])
 
 # ---------------------------------------------------------------- C
 section('C. 输出护栏行为（合成 persona，机制与内容解耦）')

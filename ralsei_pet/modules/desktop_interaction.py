@@ -120,8 +120,8 @@ def get_frame_rect(hwnd):
                 ctypes.byref(r), ctypes.sizeof(r))
             if hr == 0 and (r.right - r.left) > 0 and (r.bottom - r.top) > 0:
                 return (r.left, r.top, r.right, r.bottom)
-        except Exception:
-            pass
+        except Exception as e:  # 修复：原先静默吞噬
+            log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
     try:
         return win32gui.GetWindowRect(hwnd)
     except Exception:
@@ -1339,8 +1339,8 @@ class DesktopInteraction:
                         class_name = win32gui.GetClassName(hwnd)
                         if app_name.lower() in title.lower() or app_name.lower() in class_name.lower():
                             hwnds.append(hwnd)
-                except Exception:
-                    pass
+                except Exception as e:  # 修复：原先静默吞噬
+                    log.debug("desktop_interaction 防御性异常（已忽略）: %s", e)
                 return True
             
             win32gui.EnumWindows(enum_callback, None)
