@@ -503,12 +503,6 @@ class RalseiPet(QMainWindow):
     #   · 'spell'  → SpellFlowController（W1-1）
     #   · 'hide_seek' → HideAndSeekController（W1-2）
     #   · 'file_sheet' → FileSheetController（W1-6）
-    #
-    # W1-7（第二十六轮）把 `handle_game_input` 从宿主搬进了 'games'。
-    # 它当初被 W1-3 **刻意留下**，理由是它经 `_abort_hide_and_seek` 依赖
-    # W1-2（躲猫猫）。W1-2 落地后该依赖由**兄弟控制器白名单**（
-    # GamesController.__getattr__ 第 3 条扫描宿主 `_CONTROLLER_ATTRS`）承接，
-    # 前提成立，故一并搬入，Wave 1 至此**业务方法全部归位**。
     _CONTROLLER_ATTRS = ('games', 'video', 'spell', 'hide_seek', 'file_sheet')
 
     def __getattr__(self, name):
@@ -5975,6 +5969,44 @@ class RalseiPet(QMainWindow):
             self.play_animation_once(new_animation)
             self.dialogue_ui.add_dialogue("ralsei", f"看！我会做这个动作~", "happy")
             self.dialogue_ui.show_dialogue()
+    
+    def handle_game_input(self, user_input):
+        # 处理游戏相关的用户输入
+        if not self.game_state["is_playing"]:
+            return False
+        
+        # 修复：支持"结束/退出游戏/不玩了/算了"等多种退出说法（原来只认精确"结束"，
+        # 用户在游戏里想退出却被"无效选项"提示锁死）。
+        _quit_words = ("结束", "退出游戏", "不玩了", "不玩", "算了", "quit", "exit")
+        _want_quit = any(q in user_input for q in _quit_words)
+        if _want_quit:
+            if self.game_state["game_type"] == "rock_paper_scissors":
+                self.end_rock_paper_scissors()
+            elif self.game_state["game_type"] == "guess_number":
+                self.end_guess_number()
+            elif self.game_state["game_type"] == "hide_and_seek":
+                # 修复：躲猫猫进行中用户说"退出游戏/不玩了"时结束游戏并清理障碍物
+                #（原实现不处理，玩家被困在局里只能等超时或杀进程）。
+                self._abort_hide_and_seek(reason='user_quit')
+                self.dialogue_ui.add_dialogue("ralsei", "好吧，那这次就不躲啦~ 下次再一起玩！", "sad")
+                self.dialogue_ui.show_dialogue()
+            return True
+        
+        if self.game_state["game_type"] == "rock_paper_scissors":
+            # 修复：游戏中收到明显不是出招的内容（你好/随便聊聊）时给出引导而不是
+            # 静默吞掉或当作"无效选项"反复提示——仍返回 True 表示"由游戏接管"。
+            if user_input not in self.rock_paper_scissors_options:
+                if not any(ord(c) > 127 for c in user_input) and len(user_input) < 8:
+                    self.dialogue_ui.add_dialogue("ralsei", "现在是石头剪刀布时间！出『石头』『剪刀』或『布』吧（说「结束」就不玩啦）", "happy")
+                    self.dialogue_ui.show_dialogue()
+                    return True
+            self.play_rock_paper_scissors(user_input)
+            return True
+        elif self.game_state["game_type"] == "guess_number":
+            self.play_guess_number(user_input)
+            return True
+        
+        return False
     
     # 本地 AI 接入（OpenAI 兼容 / register_provider 自定义实现）
     def init_api_client(self, api_key=None, base_url=None, model=None, agent_id=None, api_version=None):

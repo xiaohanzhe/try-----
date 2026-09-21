@@ -1,0 +1,33 @@
+========================================================================
+回归基线（G2）  ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+解释器 = C:\Python311\python.exe
+========================================================================
+
+suite            exit   PASS   FAIL   比对       说明
+------------------------------------------------------------------------
+round5_smoke     0      36     0      IDENTICAL 第五轮：modules 全量导入冒烟（模块数随新增模块而变，勿把具体数字写进描述）+ 2 个源码不变量
+round5_verify    0      16     0      IDENTICAL 第五轮：16 项缺陷修复断言（对话/施法/成就/记忆）
+round6_verify    0      39     0      IDENTICAL 第六轮：39 项行为修复断言（对话/甩飞/抛物线/帧率/多屏）
+round7_launch    0      5      0      IDENTICAL 第七轮：文档化启动（仅 src/ 在 path）不再 ModuleNotFoundError
+s1_anim_miss     0      17     0      IDENTICAL H5-S1：动画名未命中自检 17 项 + 全样本等价性（样本数 = 动画组数，随素材组增减，勿把具体数字写进描述）
+s2_anim_json     0      40     0      IDENTICAL H5-S2：animations.json 与硬编码表深度等价 + 回落可用
+s3_alias_legacy  0      19     0      IDENTICAL H5-S3：alias_of / legacy 显式化后语义仍等价
+round8_dialogue  0      20     0      IDENTICAL 第八轮：对话框 ▼ 闪烁不再撑高抖动 + 滚动位置不被弹回顶部
+round8_floor     0      17     0      IDENTICAL 第八轮：楼层身份改用稳定标识（不再"看到窗口就摔"）+ 落地同步 current_floor
+round8_fling     0      31     0      IDENTICAL 第八轮：斜抛（方向由松手速度定）+ 空中可二次抓住（按线速度缓冲减速）+ 卡动画自检
+round8_anim      0      28     0      IDENTICAL 第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 3 分钟 + 鞠躬锚点
+round9_focus     0      54     0      IDENTICAL 第九轮：对话注意力锚（换题只能由用户发起）+ 对话框 20s 无输入隐藏（鼠标压输入栏不隐藏）+ 自主开口不打断聊天
+round9_memory    0      51     0      IDENTICAL 第九轮：拟人记忆（选择性记住/联想召回/遗忘与日摘要/复习强化）+ 存储落 E 盘与桌面兜底搬运
+round10_graph    0      98     0      IDENTICAL 第十轮：分层关联图（强/中/弱边 + hub 惩罚）+ 受控多跳检索（路径打分/PPR/每跳过滤/重排去重/预算/LLM 验证钩子）+ 反馈学习边权 + 离线巩固 + 噪声率·有用率·成功率
+round11_input    0      64     0      IDENTICAL 第十一轮：联想输入端治理 —— 抽词结构剪刀（碎片灭/真词留/免伤名单/三层择优/分词器注入）+ 建边拓扑可配（实测后默认仍是 clique，star/chain 因多跳闸门不过而弃用）+ 多跳闸门 + 残渣账本
+round12_store    0      58     0      IDENTICAL 第十二轮：jieba 分词接入（走 set_segmenter 注入，软依赖+静默回落）+ 存储统一（E 盘为最终存储、本地只作中转站：data_store 解析/收编模板/回迁五条安全约定）+ 7 类运行时产物全部路由到数据根 + 初始化环回归锁（间接环 lazy_log + 有鉴别力的导入顺序断言）；E 盘真机确认补丁
+round13_build    0      72     0      IDENTICAL 第十三轮：「建楼」遮挡判定 + 窗口层数 + 渲染层序（按 Windows 原生口径）—— 可见区域矩形相减（含独立网格 oracle 交叉验证）/ 完全盖住即不存在 / 楼层名次最前最高 / 站立·下落·跳跃都只在可见区域 / DWM 可见边框·幽灵窗口·按进程排除自身 / SetWindowPos 把宠物插到所站楼板之上
+round14_move     0      41     0      IDENTICAL 第十四轮：「建楼」的上下动 + 落到某一层楼 —— 楼层判定真正接进产品路径（防"改了没人调用"复演：行为级证明 check_nearby_windows 走 _nearest_floor_jump）/ 向上跳落点必须在可见区域（被遮处要被吸附回来）/ 向下跳只到相邻下一层（禁穿透）/ current_window 与 current_floor 单真源同步 / 落地当场结算并重排 z 序 / 用户抽走楼板（关窗）→ 生气动画 ≥5s
+round15_cleanup  0      30     0      IDENTICAL 第十五轮：「建楼」死代码清干净 + 一个被错判的坠落起因—— 删 update_floor（第五轮 F3 点名的零调用漂移副本）/ check_nearby_windows 尾部裸矩形老启发式 / find_support_below（get_drop_destination 的重复）/ is_on_floor_edge（无消费者）；接线 is_floor_valid 区分"宠物自己走出楼板"（常规动画）与"用户关窗抽走楼板"（生气动画）
+round17_build_fall 0      18     0      IDENTICAL 第十七轮：「建楼」缺口计划 · 批次 A —— G2 下落判据换成层高比较（关窗后**下方还有窗口**也要掉，复检的原例）+ G1 生气动画真的播且真的停满（关窗 ≥5s / 挪楼板 ≥3s：死参数 max_fall_duration 已清、落地不再被普通 splat 顶掉）
+round18_climb    0      53     0      IDENTICAL 第十八轮：「建楼」缺口计划 · 批次 B —— G3 层高闸门（走进去不再被静默提升，上楼/下楼都改成"跳";跨度 ≤一层用 jump、更大用 climb_* 攀爬素材）+ 落点预留水平距离+ 被动成因（关窗/要求⑪）不被误伤 + 摔扁门槛收紧到"落差 ≥两层"
+persona_chat     0      153    0      IDENTICAL 人味改造：角色设定外置单一真源（persona 无 markdown / 三条接法规则 / 桌宠化口径 / Deltarune 世界观知识 + 人物群像 + 第 5 章 + 元游戏词/攻略腔负控制）+ 接线修对（用户消息纯原话、【此刻】挂 system 尾、recent 抽 role==assistant）+ 输出护栏（markdown 剥除 / 句中括号动作只删那段 / 禁说清单：出戏＋客服腔（与事件链路同源） / 自问自答截断 / 车轱辘话判退 / 超长截断）+ 判退后换说法重采样（FakeCli 行为级）+ 关键词收紧 + 载体层状态 + Modelfile 参数
+s8_stream        0      69     0      IDENTICAL S8 流式输出：api_client 的 chat_stream（基类默认回落 chat，老 provider 不被打破；HTTP 真流式走 iter_lines(chunk_size=1) —— 实测默认攒批 0.45s vs 0.23s）+ SSE 解析 6 例（[DONE]/畸形行跳过/回调抛异常不中断/空流→None）+ main 接线（_api_delta 世代号、判退前 reset、故意不清 sink）+ 流式清洗前缀单调性穷举 + 两个已知非单调边界+ 有意分工：句中括号动作的删除只留在收尾层（流式层不删，见 C10d）+ 打字机增量显示 9 例（行为级桩：逐字喂入无回缩 / 队尾不停表 / finalize 两种收口）+ Qt 跨线程投递（真事件队列：分片按序到达主线程槽、丢弃过期世代、reset 顺序严格）
+s7_event_speech  0      135    0      IDENTICAL S7 事件台词分批接 AI：档位白名单（未登记事件 = 行为不变，甩飞/摔扁/连点耳朵钉在罐头档）+ 唯一出口 speak_event（不再到处 add_dialogue）+ 让路三闸（主人打字中/对话流式中/_ai_inflight 在途）+ 流式首字兜底（900ms 内没出字才说罐头，整句 1.4s 不再必然输给罐头）+ 世代号丢弃迟到回复与过期分片 + 出戏闸（3B 实测会吐「我没有触觉」）+ 客服腔禁语闸 + 旁白闸（句首括号/星号 → 整句作废）+ 句中括号动作闸（只删那一段；补"只看句首"的洞，含负控制）+ 罐头去重窗口 + 一键开关 api.event_speech；含 D22 回归锁：**不许**用 _ai_delta_sink 当门（S8 收尾不清空它 → 会永久挡死事件 AI）
+
+合计：PASS=1164 FAIL=0  套件=24

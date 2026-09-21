@@ -26,6 +26,8 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 
 n_pass = n_fail = 0
+SYS_PATH_ADDED = []
+PATH_APPENDED = []
 
 
 def check(cond, msg):
@@ -38,12 +40,49 @@ def check(cond, msg):
         print('[FAIL] ' + msg)
 
 
+def _proj_root():
+    """A/B 对照时的项目根：默认 = 本文件所在仓库。
+
+    第二十六轮新增（**不改默认行为**，只加一个可选覆写口）：本探针是 W1-3 的
+    A/B 基准（`verify_w1_3_ab.py` 把它当"同一把尺子"在两个项目根上各量一次）。
+    它原先硬编码 `HERE/../..`，于是 B 组（旧 main.py 回填到**当前**仓库）量的是
+    混合体，而不是"改造前那一版"。加了 `RALSEI_PROJECT_ROOT` 之后，B 组可以把
+    `ralsei_pet/` 整个换成改造前的快照（连模块一起），量到真正的历史版本。
+
+    不设该变量时行为与从前逐字节相同（A 组仍走原路径），所以既有 A/B 结论不受影响。
+    """
+    return os.environ.get('RALSEI_PROJECT_ROOT') or ROOT
+
+
+def _prepare_sys_path(proj_root):
+    """按**项目根**决定模块搜索路径。返回 (SYS_PATH_ADDED, PATH_APPENDED)。
+
+    铁律 1（本探针第一版真踩，2026-09-20）：模块从哪来，**必须显式钉住**，
+    不许"谁在 sys.path 里就用谁" —— 否则两个根同名时，`import main` 可能解析到
+    残留的 `ralsei_pet/src/main.py`，B 组量的是 A 组的东西，A/B 退化成自己跟自己比。
+    """
+    global SYS_PATH_ADDED, PATH_APPENDED
+    src = os.path.join(proj_root, 'ralsei_pet', 'src')
+    mods = os.path.join(proj_root, 'ralsei_pet', 'modules')
+    for b in (src, mods):
+        while b in sys.path:
+            sys.path.remove(b)
+    for m in list(sys.modules):
+        if m in ('main', 'modules') or m.startswith('modules.'):
+            del sys.modules[m]
+    sys.path.insert(0, src)
+    sys.path.insert(0, mods)
+    SYS_PATH_ADDED = list(sys.path[:2])
+    PATH_APPENDED = list(SYS_PATH_ADDED)
+    return SYS_PATH_ADDED, PATH_APPENDED
+
+
 def main():
     os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
-    src = os.path.join(ROOT, 'ralsei_pet', 'src')
-    mods = os.path.join(ROOT, 'ralsei_pet', 'modules')
-    sys.path.append(mods)
-    sys.path.append(src)
+    proj_root = _proj_root()
+    _prepare_sys_path(proj_root)
+    src = os.path.join(proj_root, 'ralsei_pet', 'src')
+    mods = os.path.join(proj_root, 'ralsei_pet', 'modules')
 
     from PyQt5.QtWidgets import QApplication
     app = QApplication.instance() or QApplication(sys.argv)
@@ -139,8 +178,15 @@ def main():
     check(pet.games.game_state is pet.game_state,
           '控制器经回落读到的仍是宿主那份 game_state')
 
-    # --- 5. handle_game_input 仍在宿主且可用（本 PR 刻意不搬） ---
-    check(callable(pet.handle_game_input), 'handle_game_input 仍在宿主且可调用')
+    # --- 5. handle_game_input 仍要从宿主实例解析得到（W1-7 改口） ---
+    # W1-3 时它**刻意留在宿主**；W1-7 搬入 games 后走的是 __getattr__ 转发。
+    # ⚠️ 本段刻意**只断言行为面**（可调用 / 真的接管 / 躲猫猫退出口通），
+    #    不断言"它在哪个类上定义" —— 那是**搬运状态**，A/B 对照（B 组 = 搬前快照）
+    #    在天生上就不可能两边都过。归属断言归 W1-7 专属探针：
+    #      verify_w1_7_move.py  G2/G3
+    #    （本项目铁律：A/B 用的 e2e 必须是"两版都该全绿"的同一把尺子。）
+    check(callable(pet.handle_game_input),
+          'handle_game_input 从宿主实例可调用（经 __getattr__ 转发）')
     pet.game_state['is_playing'] = True
     pet.game_state['game_type'] = 'guess_number'
     handled = pet.handle_game_input('结束')
@@ -148,6 +194,29 @@ def main():
     check(pet.game_state['is_playing'] is False, '"结束"后游戏真的结束了')
     pet.game_state['is_playing'] = False
     pet.game_state['game_type'] = None
+
+    # --- 6. 躲猫猫退出口（W1-7 新增：跨控制器转发链的行为级证明） ---
+    # `handle_game_input` 的 hide_and_seek 分支调 `self._abort_hide_and_seek`，
+    # 它住在 HideAndSeekController —— 搬走后这条链必须靠**兄弟控制器白名单**接通。
+    # 这条断言正是「搬运前模拟」抓到的真缺口，必须留在回归里。
+    real_abort = pet.hide_seek._abort_hide_and_seek
+    calls = []
+
+    def _spy(**kw):
+        calls.append(kw)
+    pet.hide_seek._abort_hide_and_seek = _spy
+    try:
+        pet.game_state['is_playing'] = True
+        pet.game_state['game_type'] = 'hide_and_seek'
+        r = pet.handle_game_input('退出游戏')
+        check(r is True, '躲猫猫中说「退出游戏」→ handle_game_input 返回 True')
+        check(len(calls) == 1 and calls[0].get('reason') == 'user_quit',
+              '躲猫猫退出真的调到了 HideAndSeekController._abort_hide_and_seek'
+              '（跨控制器转发链通；实际 %r）' % (calls,))
+    finally:
+        pet.hide_seek._abort_hide_and_seek = real_abort
+        pet.game_state['is_playing'] = False
+        pet.game_state['game_type'] = None
 
     print()
     print('合计：PASS=%d FAIL=%d' % (n_pass, n_fail))

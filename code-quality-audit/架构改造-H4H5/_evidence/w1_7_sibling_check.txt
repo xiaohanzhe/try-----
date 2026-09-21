@@ -1,0 +1,35 @@
+HideAndSeekController 的方法面（16 个）：
+  __init__
+  __getattr__
+  __setattr__
+  _log_
+  start_hide_and_seek_game
+  _abort_hide_and_seek
+  _hide_move_to_point
+  _hide_on_arrive_center
+  _hide_create_obstacles_after_spell
+  _hide_after_hiding_spell
+  _hide_on_arrive_folder
+  _hide_search_tick
+  _hide_end_game
+  _hide_destroy_obstacles
+  _hide_report_clicked_folder
+  _hide_jump_back_to_desktop
+
+======================================================================
+场景 1：宿主**没有** h 槽位（模拟 W1-2 尚未落地时的状态）
+======================================================================
+[PASS] AttributeError（预期：无兄弟控制器可用）: _abort_hide_and_seek
+
+======================================================================
+场景 2：宿主**有** hide_seek 槽位（当前真机状态，W1-2 已落地）
+======================================================================
+[PASS] _abort_hide_and_seek 经兄弟控制器白名单解析成功且可调用
+[PASS] 调用真的落到 HideAndSeekController 的方法上
+
+======================================================================
+场景 3：负控制 —— 两个控制器都没有的名字必须抛
+======================================================================
+[PASS] 负控制：不存在的方法抛 AttributeError（白名单不会吞掉语义）
+
+合计：PASS=4 FAIL=0

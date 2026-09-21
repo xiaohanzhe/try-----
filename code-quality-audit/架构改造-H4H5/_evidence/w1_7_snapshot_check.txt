@@ -1,0 +1,27 @@
+REV=HEAD  前缀 ralsei_pet/ 下 blob 数 = 107
+已导出 107 个文件，总字节 = 3540139
+
+========================================================================
+A. md5 核验：导出 vs git 原始 blob（期望全 OK）
+========================================================================
+  ralsei_pet/src/main.py                               1f33e99a79f8716fb20b7dd124405b21  OK
+  ralsei_pet/modules/games_controller.py               0648e9440c367157c88e8fa89d1322c7  OK
+  ralsei_pet/modules/hide_controller.py                a3b3dd6870c81819e6a7ede7d3e0bbed  OK
+  ralsei_pet/modules/dialogue_ui.py                    bae2b8384581a1c9668c1892352c31a0  OK
+  ralsei_pet/modules/file_sheet_controller.py          267da35716539565145dcc5c429d864f  OK
+  ralsei_pet/modules/spell_controller.py               b3fcae6c359147fc5ba8b810f0b60340  OK
+  ralsei_pet/modules/video_controller.py               87ffee659461ff1bf065887b4d04a871  OK
+  ralsei_pet/modules/event_speech.py                   18de4af01097126c273fa4f8eb009d0c  OK
+  ralsei_pet/assets/ralsei_persona.md                  fff2eb3a7029c9e30d32e3002bc27656  OK
+
+A 全部一致 = True
+
+========================================================================
+B. 布局自检（**v2 就是在这里翻车的**）
+========================================================================
+  ralsei_pet/src/main.py                               OK
+  ralsei_pet/modules/games_controller.py               OK
+  ralsei_pet/modules/hide_controller.py                OK
+  → e2e 探针按 <ROOT>/ralsei_pet/src 推导 sys.path，
+    所以快照必须保留 ralsei_pet/ 这一层。
+B 布局正确 = True

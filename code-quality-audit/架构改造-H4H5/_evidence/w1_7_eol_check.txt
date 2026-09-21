@@ -1,0 +1,58 @@
+ralsei_pet/ 下 .py 数 = 72
+
+========================================================================
+A. 「双口径」文件：blob 里全是 LF，工作区里是 CRLF（14 个）
+   → 这是 core.autocrlf=true 的正常表现，但意味着
+     「按 git 提交的内容」与「按工作区字节」是两套东西，做逐字节
+     参照系时**必须声明用的是哪一套**。
+========================================================================
+  diag30.py                                                CRLF=45
+  diag_screen.py                                           CRLF=36
+  diag_state.py                                            CRLF=44
+  modules/ai_driver.py                                     CRLF=673
+  modules/api_client.py                                    CRLF=460
+  modules/config_manager.py                                CRLF=578
+  modules/customization_system.py                          CRLF=467
+  modules/dialogue_system.py                               CRLF=1501
+  modules/dialogue_ui.py                                   CRLF=1810
+  modules/energy_hunger.py                                 CRLF=255
+  modules/entertainment_system.py                          CRLF=570
+  modules/pet_ai.py                                        CRLF=766
+  modules/pet_interaction.py                               CRLF=364
+  modules/sound_manager.py                                 CRLF=162
+
+========================================================================
+B. 「单口径」文件：blob 与工作区都是纯 LF（58 个）
+========================================================================
+  diag_logic.py
+  diag_spell.py
+  modules/__init__.py
+  modules/autonomous_agent.py
+  modules/command_manager.py
+  modules/conversation_focus.py
+  modules/data_store.py
+  modules/desktop_interaction.py
+  modules/emotion_system.py
+  modules/event_speech.py
+  modules/file_sheet_controller.py
+  modules/floor_manager.py
+  modules/games_controller.py
+  modules/hide_controller.py
+  modules/lazy_log.py
+  modules/logger_utils.py
+  modules/memory_graph.py
+  modules/memory_store.py
+  modules/memory_system.py
+  modules/relationship.py
+  ... 另有 38 个
+
+========================================================================
+C. 对 dialogue_ui.py 的三问
+========================================================================
+  1. blob         91053 字节  CRLF=0      md5=bae2b8384581a1c9668c1892352c31a0
+  2. 工作区       92863 字节  CRLF=1810   md5=1baff28ae27e18b57a2944403a4642a7
+  3. blob 与工作区**仅**换行不同？  True
+
+  4. git status --short 对该文件输出：''（空 = 干净）
+     git diff --stat：''
+     git check-attr text：'ralsei_pet/modules/dialogue_ui.py: text: unspecified'

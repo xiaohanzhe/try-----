@@ -31,7 +31,10 @@ MOVED = [
     'play_guess_number',
     'end_guess_number',
 ]
-STAYED = ['handle_game_input']
+# W1-7（第二十六轮）：`handle_game_input` 由「刻意留在宿主」改为「搬入 games」。
+# 它原本单列在 STAYED 里；现在与其余 7 个方法**同等待遇**（真的搬走了、要能转发）。
+MOVED += ['handle_game_input']
+STAYED = []
 
 n_pass = n_fail = 0
 
@@ -148,7 +151,7 @@ def main():
     check(has_call('start_guess_number', 'dialogue_ui.py'),
           'dialogue_ui 仍调用 start_guess_number')
     check(has_call('handle_game_input', 'dialogue_ui.py'),
-          'dialogue_ui 仍调用 handle_game_input')
+          'dialogue_ui 仍调用 handle_game_input（W1-7 后经宿主 __getattr__ 转发）')
     check(has_call('end_rock_paper_scissors', 'main.py'),
           'main.py（update_stats 5 分钟超时）仍调用 end_rock_paper_scissors')
     check(has_call('end_guess_number', 'main.py'),

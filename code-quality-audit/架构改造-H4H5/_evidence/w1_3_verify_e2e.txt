@@ -1,3 +1,7 @@
+2026-09-21 22:50:37 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\config.json -> E:\Download\_tmp\_w17iso\RalseiMemory\config.json
+2026-09-21 22:50:37 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+2026-09-21 22:50:38 [INFO] ralsei_pet.modules.memory_system — 新位置无记忆，已从旧版 memory.json 继承: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\modules\..\memory.json
+2026-09-21 22:50:38 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\customization_config.json -> E:\Download\_tmp\_w17iso\RalseiMemory\customization_config.json
 [PASS] RalseiPet 实例可解析 start_rock_paper_scissors（经转发）
 [PASS] RalseiPet.start_rock_paper_scissors 可调用
 [PASS] RalseiPet 实例可解析 play_rock_paper_scissors（经转发）
@@ -41,7 +45,11 @@
 [PASS] 猜对后 player_score=1
 [PASS] 控制器实例字典里仍无 game_state（状态没被复制过去）
 [PASS] 控制器经回落读到的仍是宿主那份 game_state
-[PASS] handle_game_input 仍在宿主且可调用
+[PASS] handle_game_input 从宿主实例可调用（经 __getattr__ 转发）
 [PASS] handle_game_input 识别"结束"并接管（返回 True）
 [PASS] "结束"后游戏真的结束了
-合计：PASS=46 FAIL=0
+[PASS] 躲猫猫中说「退出游戏」→ handle_game_input 返回 True
+[PASS] 躲猫猫退出真的调到了 HideAndSeekController._abort_hide_and_seek（跨控制器转发链通；实际 [{'reason': 'user_quit'}]）
+
+合计：PASS=48 FAIL=0
+2026-09-21 22:50:38 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 493 组）

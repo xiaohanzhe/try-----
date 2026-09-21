@@ -1,0 +1,131 @@
+[PASS] 施工前快照目录在位：C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\架构改造-H4H5\_evidence\w1_7_before
+[PASS] 存在 ralsei_pet\src\main.py
+[PASS] 存在 code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py
+[PASS] 存在 ralsei_pet\modules\games_controller.py
+[PASS] 存在 code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\games_controller.py
+
+main.py              A(当前)=493b48454c878056021df74dd9d04264  B(搬前)=1f33e99a79f8716fb20b7dd124405b21  不同
+games_controller.py  A(当前)=106e6bab791fa0daacb74ad9e2240612  B(搬前)=0648e9440c367157c88e8fa89d1322c7  不同
+
+[PASS] A≠B：两版 main.py 字节不同（否则 A/B 退化为自己比自己）
+[PASS] A≠B：两版 games_controller.py 字节不同
+[PASS] 搬前快照里 handle_game_input **仍定义在宿主**（快照口径正确）
+[PASS] 当前版本宿主里已无 handle_game_input 的 def
+
+========================================================================
+A/B 轨迹对照
+========================================================================
+A(当前)     49 行 trace, exit=0
+B(搬走前)   49 行 trace, exit=0
+
+[PASS] A 组 exit=0（实际 0）
+[PASS] B 组 exit=0（实际 0）
+[PASS] A 组轨迹行数 >= 20（实际 49，防探针没跑起来）
+[PASS] B 组轨迹行数 >= 20（实际 49）
+[PASS] 稳定性对照：A 组同版重跑轨迹逐行一致（49 行，exit=0）
+
+[PASS] A/B 行为轨迹**逐行一致**（各 49 行）
+
+合计：PASS=15 FAIL=0
+
+--- A 组 trace（当前）---
+  [PASS] RalseiPet 实例可解析 start_rock_paper_scissors（经转发）
+  [PASS] RalseiPet.start_rock_paper_scissors 可调用
+  [PASS] RalseiPet 实例可解析 play_rock_paper_scissors（经转发）
+  [PASS] RalseiPet.play_rock_paper_scissors 可调用
+  [PASS] RalseiPet 实例可解析 determine_rock_paper_scissors_winner（经转发）
+  [PASS] RalseiPet.determine_rock_paper_scissors_winner 可调用
+  [PASS] RalseiPet 实例可解析 end_rock_paper_scissors（经转发）
+  [PASS] RalseiPet.end_rock_paper_scissors 可调用
+  [PASS] RalseiPet 实例可解析 start_guess_number（经转发）
+  [PASS] RalseiPet.start_guess_number 可调用
+  [PASS] RalseiPet 实例可解析 play_guess_number（经转发）
+  [PASS] RalseiPet.play_guess_number 可调用
+  [PASS] RalseiPet 实例可解析 end_guess_number（经转发）
+  [PASS] RalseiPet.end_guess_number 可调用
+  [PASS] game_state 仍在宿主
+  [PASS] guess_number_game 仍在宿主
+  [PASS] rock_paper_scissors_options 仍在宿主
+  [PASS] 控制器读到的 game_state 就是宿主那一个对象（不是副本）
+  [PASS] 控制器读到的 guess_number_game 就是宿主那一个对象
+  [PASS] 控制器持有宿主引用且是同一个对象
+  [PASS] 控制器的实例字典里不含 game_state（状态没被搬进去）
+  [PASS] 控制器的实例字典里不含 guess_number_game
+  [PASS] 控制器的实例字典里不含 rock_paper_scissors_options
+  [PASS] 石头剪刀布开局后 is_playing=True
+  [PASS] game_type 正确
+  [PASS] game_round 从 0 起
+  [PASS] 别的游戏进行中时 start_rock_paper_scissors 返回 False（不覆盖）
+  [PASS] 出满 5 轮后 game_round=5（实际 5）
+  [PASS] game_history 记录了 5 局
+  [PASS] 第 5 轮后自动结算，is_playing 复位
+  [PASS] 结算后统计键被更新（wins+losses+ties=1）
+  [PASS] update 语义保住了 total_wins / best_streak 等统计键（不 KeyError）
+  [PASS] 猜数字开局后 is_playing=True
+  [PASS] game_type=guess_number
+  [PASS] 目标数字在 1..100 内（实际 47）
+  [PASS] attempts 归零
+  [PASS] 非数字输入不消耗尝试次数
+  [PASS] 超范围输入不消耗尝试次数
+  [PASS] 合法输入消耗 1 次尝试
+  [PASS] 猜对后自动结算，is_playing 复位
+  [PASS] 猜对后 player_score=1
+  [PASS] 控制器实例字典里仍无 game_state（状态没被复制过去）
+  [PASS] 控制器经回落读到的仍是宿主那份 game_state
+  [PASS] handle_game_input 从宿主实例可调用（经 __getattr__ 转发）
+  [PASS] handle_game_input 识别"结束"并接管（返回 True）
+  [PASS] "结束"后游戏真的结束了
+  [PASS] 躲猫猫中说「退出游戏」→ handle_game_input 返回 True
+  [PASS] 躲猫猫退出真的调到了 HideAndSeekController._abort_hide_and_seek（跨控制器转发链通；实际 [{'reason': 'user_quit'}]）
+  合计：PASS=48 FAIL=0
+
+--- B 组 trace（搬走前）---
+  [PASS] RalseiPet 实例可解析 start_rock_paper_scissors（经转发）
+  [PASS] RalseiPet.start_rock_paper_scissors 可调用
+  [PASS] RalseiPet 实例可解析 play_rock_paper_scissors（经转发）
+  [PASS] RalseiPet.play_rock_paper_scissors 可调用
+  [PASS] RalseiPet 实例可解析 determine_rock_paper_scissors_winner（经转发）
+  [PASS] RalseiPet.determine_rock_paper_scissors_winner 可调用
+  [PASS] RalseiPet 实例可解析 end_rock_paper_scissors（经转发）
+  [PASS] RalseiPet.end_rock_paper_scissors 可调用
+  [PASS] RalseiPet 实例可解析 start_guess_number（经转发）
+  [PASS] RalseiPet.start_guess_number 可调用
+  [PASS] RalseiPet 实例可解析 play_guess_number（经转发）
+  [PASS] RalseiPet.play_guess_number 可调用
+  [PASS] RalseiPet 实例可解析 end_guess_number（经转发）
+  [PASS] RalseiPet.end_guess_number 可调用
+  [PASS] game_state 仍在宿主
+  [PASS] guess_number_game 仍在宿主
+  [PASS] rock_paper_scissors_options 仍在宿主
+  [PASS] 控制器读到的 game_state 就是宿主那一个对象（不是副本）
+  [PASS] 控制器读到的 guess_number_game 就是宿主那一个对象
+  [PASS] 控制器持有宿主引用且是同一个对象
+  [PASS] 控制器的实例字典里不含 game_state（状态没被搬进去）
+  [PASS] 控制器的实例字典里不含 guess_number_game
+  [PASS] 控制器的实例字典里不含 rock_paper_scissors_options
+  [PASS] 石头剪刀布开局后 is_playing=True
+  [PASS] game_type 正确
+  [PASS] game_round 从 0 起
+  [PASS] 别的游戏进行中时 start_rock_paper_scissors 返回 False（不覆盖）
+  [PASS] 出满 5 轮后 game_round=5（实际 5）
+  [PASS] game_history 记录了 5 局
+  [PASS] 第 5 轮后自动结算，is_playing 复位
+  [PASS] 结算后统计键被更新（wins+losses+ties=1）
+  [PASS] update 语义保住了 total_wins / best_streak 等统计键（不 KeyError）
+  [PASS] 猜数字开局后 is_playing=True
+  [PASS] game_type=guess_number
+  [PASS] 目标数字在 1..100 内（实际 47）
+  [PASS] attempts 归零
+  [PASS] 非数字输入不消耗尝试次数
+  [PASS] 超范围输入不消耗尝试次数
+  [PASS] 合法输入消耗 1 次尝试
+  [PASS] 猜对后自动结算，is_playing 复位
+  [PASS] 猜对后 player_score=1
+  [PASS] 控制器实例字典里仍无 game_state（状态没被复制过去）
+  [PASS] 控制器经回落读到的仍是宿主那份 game_state
+  [PASS] handle_game_input 从宿主实例可调用（经 __getattr__ 转发）
+  [PASS] handle_game_input 识别"结束"并接管（返回 True）
+  [PASS] "结束"后游戏真的结束了
+  [PASS] 躲猫猫中说「退出游戏」→ handle_game_input 返回 True
+  [PASS] 躲猫猫退出真的调到了 HideAndSeekController._abort_hide_and_seek（跨控制器转发链通；实际 [{'reason': 'user_quit'}]）
+  合计：PASS=48 FAIL=0

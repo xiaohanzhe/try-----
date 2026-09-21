@@ -15,12 +15,35 @@ import ast
 import io
 import os
 import sys
+import tokenize
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 OLD = os.path.join(HERE, '_evidence', 'w1_3_main_before.py')
 CUR = os.path.join(ROOT, 'ralsei_pet', 'src', 'main.py')
 NEW = os.path.join(ROOT, 'ralsei_pet', 'modules', 'games_controller.py')
+
+# 剥掉注释/字符串后的 token 串联 —— 「字面量 in 源码」会误命中（本项目同型坑 6 次）
+_DROP = (tokenize.COMMENT, tokenize.STRING, tokenize.NL, tokenize.NEWLINE,
+         tokenize.INDENT, tokenize.DEDENT)
+
+
+def code_only_src(src):
+    """剥掉注释与字符串字面量后的代码文本（空白抹平）。
+
+    用于「源码里有没有这个写法」这类断言 —— 直接 `in 源码` 会把注释/docstring
+    里的同名文字一起算进去，本项目为此踩过 5 次以上。
+    """
+    out = []
+    try:
+        for tok in tokenize.generate_tokens(io.StringIO(src).readline):
+            if tok.type in _DROP:
+                continue
+            out.append(tok.string)
+    except Exception:
+        return ''
+    return ' '.join(out)
+
 
 METHODS = [
     'start_rock_paper_scissors',
@@ -135,9 +158,15 @@ def main():
         check(raw_new == base,
               '反例控制：未篡改的原文仍判为相等（排除替换式自伤）')
 
-    # --- 6. handle_game_input 仍在宿主（本 PR 刻意不搬） ---
-    check('handle_game_input' in cur_m, 'handle_game_input 仍在 RalseiPet（本 PR 刻意不搬）')
-    check('handle_game_input' not in new_m, 'handle_game_input 未被搬进 GamesController')
+    # --- 6. handle_game_input 的归属（W1-7 第二十六轮改口） ---
+    # 原先这里断言「仍在宿主、且**未被**搬进 GamesController」——那是 W1-3 的
+    # 施工口径（刻意不搬）。W1-2 落地后前提消失，W1-7 已把它搬入。
+    # 现在断言**搬到位且宿主不再定义**，并顺手守住「迁移不留副本」这条。
+    # ⚠️ 但**不能**把断言翻成"哪儿都没有"——那会让本脚本在 W1-7 前后都 FAIL。
+    check('handle_game_input' not in cur_m,
+          'handle_game_input 已不在 RalseiPet（W1-7 搬入 games）')
+    check('handle_game_input' in new_m,
+          'handle_game_input 已在 GamesController 类体内定义')
 
     # --- 7. 控制器不 import 任何项目内模块（初始化环纪律） ---
     tree = ast.parse(new_src)
@@ -154,9 +183,34 @@ def main():
     check(not proj_imports, 'games_controller 不 import 项目内模块（实际: %r）' % proj_imports)
 
     # --- 8. 状态仍在宿主（只搬方法不搬状态） ---
+    # ⚠️ 判据修过（第二十六轮）：原式
+    #       attr not in new_src or ('self.%s =' % attr) not in new_src
+    #    做的是**原始文本**匹配，分不清注释与代码。本文件正文里本来就有这么一行
+    #    注释 —— `# self.game_state = {...}，或新增 self.game_xxx = ...` ——
+    #    于是 W1-7 把 `handle_game_input` 搬进来后，`self.game_state` 的**真实**
+    #    下标写在**这条注释之前**出现，判据就报假红（本项目同型坑第 6 次）。
+    #    正确做法：先剥注释/字符串再找 —— 且要找的是**赋值语句**（AST 级），
+    #    不是子串。注释里那句 `self.game_state = {...}` 必须**不被算作**持有状态。
+    code_src = code_only_src(new_src)
+    hidden_assigns = []
+    for node in ast.walk(ast.parse(new_src)):
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if (isinstance(t, ast.Attribute)
+                        and isinstance(t.value, ast.Name) and t.value.id == 'self'
+                        and t.attr in ('game_state', 'guess_number_game',
+                                       'rock_paper_scissors_options')):
+                    hidden_assigns.append((t.attr, node.lineno))
+    check(not hidden_assigns,
+          '控制器不持有状态（AST 级：类内无 self.<状态> = 赋值；实际 %r）'
+          % (hidden_assigns,))
     for attr in ('game_state', 'guess_number_game', 'rock_paper_scissors_options'):
-        check(attr not in new_src or ('self.%s =' % attr) not in new_src,
-              '控制器不持有状态 self.%s（只借宿主）' % attr)
+        # 反向控制：注释里那句确实存在，但剥注释后必须找不到 → 证明上面不是恒真
+        check((' self.%s = ' % attr) not in code_src,
+              '剥注释/字符串后无 self.%s = 的代码形态（注释里的不算）' % attr)
+    check(('self.game_state =' in new_src) and
+          ('self.game_state =' not in code_src),
+          '反向控制：注释里确实有 self.game_state =，剥注释后消失（判据有鉴别力）')
 
     print()
     print('合计：PASS=%d FAIL=%d' % (n_pass, n_fail))

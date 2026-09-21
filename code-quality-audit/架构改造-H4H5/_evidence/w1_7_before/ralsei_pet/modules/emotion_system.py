@@ -1,0 +1,1461 @@
+import time
+import random
+
+try:
+    from logger_utils import get_logger
+except ImportError:  # 允许被包外单独导入
+    import logging
+
+    def get_logger(name):
+        return logging.getLogger(name)
+
+_log = get_logger(__name__)
+
+class EmotionSystem:
+    # 复合情绪（不参与公式推导的那些，如 relieved）每秒自然消退的幅度。
+    # 参与推导的复合情绪每 tick 会被重算，此值用于「保留事件写入的残余」时不至于粘滞。
+    COMPLEX_EMOTION_DECAY_PER_SECOND = 0.2
+
+    def __init__(self, parent):
+        self.parent = parent
+        
+        # 基础情绪值（范围：-100到100）
+        self.emotions = {
+            'happy': 0,
+            'sad': 0,
+            'angry': 0,
+            'fear': 0,
+            'surprised': 0,
+            'disgust': 0
+        }
+        
+        # 扩展复合情绪
+        self.complex_emotions = {
+            'shy': 0,
+            'expectant': 0,
+            'disappointed': 0,
+            'proud': 0,
+            'jealous': 0,
+            'grateful': 0,
+            'guilty': 0,
+            'embarrassed': 0,
+            'confident': 0,
+            'bored': 0,
+            'peaceful': 0,
+            'calm': 0,
+            'relieved': 0,
+            'nostalgic': 0,
+            'excited': 0,
+            'curious': 0,
+            'caring': 0,
+            'hopeful': 0,
+            'lonely': 0,
+            'anxious': 0,
+            'content': 0,
+            'energetic': 0,
+            'tired': 0,
+            'worry': 0
+        }
+        
+        # 情绪强度（0-100）
+        self.emotion_intensity = 0
+        
+        # 情绪记忆
+        self.emotion_history = []
+        self.max_history_length = 100  # 增加历史记录长度
+        
+        # 情绪衰减速率（每秒衰减的情绪值）
+        self.emotion_decay_rate = 0.5
+        
+        # 扩展个性特质
+        self.personality = {
+            'introvert_extrovert': 30,  # 内向-外向（0-100，低为内向，高为外向）
+            'optimism_pessimism': 70,  # 乐观-悲观（0-100，低为悲观，高为乐观）
+            'bravery_caution': 50,     # 勇敢-谨慎（0-100，低为谨慎，高为勇敢）
+            'curiosity': 80,           # 好奇心强度（0-100）
+            'loyalty': 90,              # 忠诚度（0-100）
+            'patience': 70,             # 耐心（0-100）
+            'creativity': 85,           # 创造力（0-100）
+            'empathy': 95,              # 同理心（0-100）
+            'playfulness': 80,          # 玩性（0-100）
+            'neatness': 60              # 整洁度（0-100）
+        }
+        
+        # 最近情绪变化时间
+        self.last_emotion_change = time.time()
+        
+        # 情绪触发阈值
+        self.emotion_trigger_threshold = 20
+        
+        # 情绪表达模式
+        self.emotion_expressions = {
+            'happy': {
+                'facial': ['smile', 'laugh', 'grin', 'twinkle', 'soft_smile'],
+                'body': ['dance', 'wave', 'jump', 'clap', 'sway'],
+                'voice': ['cheerful', 'excited', 'warm', 'bright', 'gentle'],
+                'text': ['enthusiastic', 'positive', 'upbeat', 'joyful', 'delighted']
+            },
+            'sad': {
+                'facial': ['frown', 'teary', 'pout', 'downcast_eyes', 'quivering_lips'],
+                'body': ['slump', 'cower', 'cry', 'hug_knees', 'slow_movement'],
+                'voice': ['soft', 'quiet', 'melancholy', 'quivering', 'despondent'],
+                'text': ['downcast', 'sad', 'depressed', 'heartbroken', 'dejected']
+            },
+            'angry': {
+                'facial': ['glare', 'scowl', 'tight_lips', 'flared_nostrils', 'teeth_clenched'],
+                'body': ['stomp', 'cross_arms', 'clench_fists', 'tap_foot', 'lean_forward'],
+                'voice': ['loud', 'sharp', 'aggressive', 'gritty', 'cold'],
+                'text': ['irritated', 'angry', 'frustrated', 'furious', 'outraged']
+            },
+            'fear': {
+                'facial': ['wide_eyes', 'pale', 'open_mouth', 'sweating', 'trembling_chin'],
+                'body': ['tremble', 'hide', 'run', 'curl_up', 'back_away'],
+                'voice': ['quiver', 'whisper', 'high_pitched', 'breathy', 'panicked'],
+                'text': ['scared', 'frightened', 'terrified', 'petrified', 'panicked']
+            },
+            'surprised': {
+                'facial': ['raised_eyebrows', 'open_mouth', 'wide_eyes', 'gasps', 'blink_rapidly'],
+                'body': ['jump', 'step_back', 'gasp', 'clutch_chest', 'stare'],
+                'voice': ['exclaim', 'yell', 'gasp', 'squeak', 'stammer'],
+                'text': ['shocked', 'amazed', 'surprised', 'astonished', 'flabbergasted']
+            },
+            'disgust': {
+                'facial': ['wrinkled_nose', 'sneer', 'gag', 'turn_away', 'closed_eyes'],
+                'body': ['step_back', 'wave_hand', 'cover_nose', 'shiver', 'disgusted_shake'],
+                'voice': ['disgusted', 'sneering', 'sharp', 'cold', 'dismissive'],
+                'text': ['disgusted', 'revolted', 'repulsed', 'appalled', 'horrified']
+            },
+            'shy': {
+                'facial': ['blush', 'downcast_eyes', 'smile', 'bashful_look', 'fidgety_eyes'],
+                'body': ['twirl_hair', 'fidget', 'curtsy', 'hide_face', 'rock_foot'],
+                'voice': ['quiet', 'stutter', 'soft', 'muffled', 'bashful'],
+                'text': ['bashful', 'shy', 'embarrassed', 'flustered', 'nervous']
+            },
+            'excited': {
+                'facial': ['wide_smile', 'sparkling_eyes', 'animated_look', 'grin', 'bouncing_cheeks'],
+                'body': ['jump', 'dance', 'clap', 'wave', 'bounce'],
+                'voice': ['loud', 'energetic', 'high_pitched', 'fast', 'enthusiastic'],
+                'text': ['excited', 'thrilled', 'ecstatic', 'overjoyed', 'pumped']
+            },
+            'curious': {
+                'facial': ['tilt_head', 'narrowed_eyes', 'puzzled_look', 'focused', 'perked_eyebrows'],
+                'body': ['lean_forward', 'point', 'examine', 'touch', 'listen_intently'],
+                'voice': ['inquiring', 'interested', 'curious', 'questioning', 'intrigued'],
+                'text': ['curious', 'interested', 'intrigued', 'puzzled', 'investigating']
+            },
+            'caring': {
+                'facial': ['gentle_smile', 'soft_eyes', 'warm_look', 'compassionate', 'understanding'],
+                'body': ['hug', 'pat_back', 'hold_hand', 'lean_in', 'comforting_touch'],
+                'voice': ['soft', 'warm', 'gentle', 'compassionate', 'reassuring'],
+                'text': ['caring', 'compassionate', 'understanding', 'supportive', 'nurturing']
+            },
+            'hopeful': {
+                'facial': ['bright_eyes', 'soft_smile', 'uplifted_eyebrows', 'dreamy', 'optimistic'],
+                'body': ['look_up', 'clasp_hands', 'stand_tall', 'sway_gently', 'open_posture'],
+                'voice': ['gentle', 'uplifting', 'positive', 'soft', 'hopeful'],
+                'text': ['hopeful', 'optimistic', 'positive', 'expectant', 'bright']
+            },
+            'lonely': {
+                'facial': ['sad_look', 'empty_eyes', 'downcast_eyes', 'pout', 'lost_expression'],
+                'body': ['sit_alone', 'hug_knees', 'stare_off', 'slow_movement', 'slumped_posture'],
+                'voice': ['quiet', 'soft', 'melancholy', 'lonely', 'despondent'],
+                'text': ['lonely', 'isolated', 'empty', 'alone', 'desolate']
+            },
+            'anxious': {
+                'facial': ['furrowed_brow', 'tense_lips', 'sweating', 'wide_eyes', 'twitching'],
+                'body': ['fidget', 'pace', 'tap_foot', 'clench_hands', 'bounce_leg'],
+                'voice': ['nervous', 'high_pitched', 'fast', 'quivering', 'anxious'],
+                'text': ['anxious', 'nervous', 'worried', 'tense', 'stressed']
+            },
+            'content': {
+                'facial': ['soft_smile', 'relaxed_eyes', 'calm_expression', 'serene', 'peaceful'],
+                'body': ['lean_back', 'cross_legs', 'rest_hands', 'slow_breathing', 'relaxed_posture'],
+                'voice': ['soft', 'calm', 'relaxed', 'peaceful', 'content'],
+                'text': ['content', 'satisfied', 'peaceful', 'calm', 'relaxed']
+            },
+            'energetic': {
+                'facial': ['bright_smile', 'alert_eyes', 'animated_look', 'energetic', 'vibrant'],
+                'body': ['jump', 'run', 'dance', 'clap', 'move_quickly'],
+                'voice': ['loud', 'energetic', 'fast', 'bright', 'vibrant'],
+                'text': ['energetic', 'vibrant', 'lively', 'dynamic', 'spirited']
+            },
+            'tired': {
+                'facial': ['droopy_eyes', 'yawning', 'half_closed_eyes', 'pale', 'exhausted'],
+                'body': ['slump', 'lean_on', 'stretch', 'slow_movement', 'rub_eyes'],
+                'voice': ['soft', 'quiet', 'hoarse', 'slow', 'dragging'],
+                'text': ['tired', 'exhausted', 'weary', 'fatigued', 'drained']
+            },
+            'worry': {
+                'facial': ['worried', 'furrowed_brow', 'downcast_eyes', 'biting_lip', 'tense_face'],
+                'body': ['pace', 'fidget', 'clasp_hands', 'bite_nails', 'look_around'],
+                'voice': ['soft', 'hesitant', 'anxious', 'quiet', 'worried'],
+                'text': ['worried', 'concerned', 'anxious', 'nervous', 'uneasy']
+            }
+        }
+    
+    def update(self):
+        # 更新情绪状态
+        # 修复：统一在入口计算 elapsed 并做下限钳位（时钟回拨/夏令时会让 elapsed 为负，
+        # 实测把系统时间回拨 1 小时后 sad 会直接从 50 跳到 100）。
+        current_time = time.time()
+        elapsed = max(0.0, current_time - self.last_emotion_change)
+        self._decay_emotions()
+        self._update_complex_emotions(elapsed)
+        self._update_emotion_intensity()
+    
+    def _decay_emotions(self):
+        # 情绪自然衰减，不同情绪有不同的衰减速度
+        current_time = time.time()
+        elapsed = max(0.0, current_time - self.last_emotion_change)  # 修复：时钟回拨时钳位
+        
+        # 不同情绪的衰减速率
+        emotion_decay_rates = {
+            'happy': 0.3,      # 开心情绪衰减较慢
+            'sad': 0.4,        # 悲伤情绪衰减中等
+            'angry': 0.5,       # 愤怒情绪衰减较快
+            'fear': 0.6,        # 恐惧情绪衰减很快
+            'surprised': 0.7,   # 惊讶情绪衰减非常快
+            'disgust': 0.5      # 厌恶情绪衰减较快
+        }
+        
+        complex_emotion_decay_rates = {
+            'shy': 0.2,         # 害羞情绪衰减很慢
+            'expectant': 0.4,    # 期待情绪衰减中等
+            'disappointed': 0.3, # 失望情绪衰减较慢
+            'proud': 0.4,        # 自豪情绪衰减中等
+            'jealous': 0.5,      # 嫉妒情绪衰减较快
+            'grateful': 0.3,     # 感激情绪衰减较慢
+            'guilty': 0.3,       # 愧疚情绪衰减较慢
+            'embarrassed': 0.4,  # 尴尬情绪衰减中等
+            'confident': 0.5,    # 自信情绪衰减中等
+            'bored': 0.2,        # 无聊情绪衰减很慢
+            'peaceful': 0.1,     # 平静情绪衰减非常慢
+            'nostalgic': 0.2,    # 怀旧情绪衰减很慢
+            'excited': 0.8,      # 兴奋情绪衰减非常快
+            'curious': 0.5,      # 好奇情绪衰减中等
+            'caring': 0.3,       # 关心情绪衰减较慢
+            'hopeful': 0.3,      # 希望情绪衰减较慢
+            'lonely': 0.4,       # 孤独情绪衰减中等
+            'anxious': 0.5,      # 焦虑情绪衰减中等
+            'content': 0.2,      # 满足情绪衰减很慢
+            'energetic': 0.6,    # 精力充沛情绪衰减较快
+            'tired': 0.5,        # 疲惫情绪衰减中等
+            'worry': 0.4         # 普通担忧情绪衰减中等
+        }
+        
+        # 基础情绪衰减
+        for emotion in self.emotions:
+            decay_rate = emotion_decay_rates.get(emotion, self.emotion_decay_rate)
+            decay_amount = decay_rate * elapsed
+            
+            if self.emotions[emotion] > 0:
+                self.emotions[emotion] = max(0, self.emotions[emotion] - decay_amount)
+            elif self.emotions[emotion] < 0:
+                self.emotions[emotion] = min(0, self.emotions[emotion] + decay_amount)
+        
+        # 注意：复合情绪不再独立衰减。
+        # 修复：它们由 _update_complex_emotions() 从基础情绪推导而来，
+        # 基础情绪衰减了，复合情绪自然就衰减了。
+        # 之前的实现是先衰减复合情绪，再全量重算覆盖，导致衰减完全无效。
+        
+        # 情绪相互影响
+        self._influence_emotions()
+        
+        self.last_emotion_change = current_time
+    
+    def _influence_emotions(self):
+        # 情绪之间的相互影响
+        
+        # 开心会减少悲伤、愤怒和恐惧
+        if self.emotions['happy'] > 20:
+            self.emotions['sad'] = max(0, self.emotions['sad'] - self.emotions['happy'] * 0.1)
+            self.emotions['angry'] = max(0, self.emotions['angry'] - self.emotions['happy'] * 0.15)
+            self.emotions['fear'] = max(0, self.emotions['fear'] - self.emotions['happy'] * 0.1)
+            self.complex_emotions['lonely'] = max(0, self.complex_emotions['lonely'] - self.emotions['happy'] * 0.2)
+            self.complex_emotions['anxious'] = max(0, self.complex_emotions['anxious'] - self.emotions['happy'] * 0.15)
+            self.complex_emotions['content'] += self.emotions['happy'] * 0.1
+        
+        # 悲伤会减少开心、兴奋和自信
+        if self.emotions['sad'] > 20:
+            self.emotions['happy'] = max(0, self.emotions['happy'] - self.emotions['sad'] * 0.15)
+            self.complex_emotions['excited'] = max(0, self.complex_emotions['excited'] - self.emotions['sad'] * 0.2)
+            self.complex_emotions['confident'] = max(0, self.complex_emotions['confident'] - self.emotions['sad'] * 0.1)
+            self.complex_emotions['lonely'] += self.emotions['sad'] * 0.15
+            self.complex_emotions['anxious'] += self.emotions['sad'] * 0.1
+        
+        # 愤怒会增加悲伤、减少开心和耐心
+        if self.emotions['angry'] > 20:
+            self.emotions['sad'] += self.emotions['angry'] * 0.1
+            self.emotions['sad'] = min(100, self.emotions['sad'])
+            self.emotions['happy'] = max(0, self.emotions['happy'] - self.emotions['angry'] * 0.2)
+            self.complex_emotions['anxious'] += self.emotions['angry'] * 0.15
+            self.complex_emotions['caring'] = max(0, self.complex_emotions['caring'] - self.emotions['angry'] * 0.1)
+        
+        # 恐惧会增加焦虑和减少自信
+        if self.emotions['fear'] > 20:
+            self.complex_emotions['anxious'] += self.emotions['fear'] * 0.2
+            self.complex_emotions['confident'] = max(0, self.complex_emotions['confident'] - self.emotions['fear'] * 0.15)
+            self.complex_emotions['lonely'] += self.emotions['fear'] * 0.1
+        
+        # 兴奋会增加开心和精力充沛
+        # ===== 修复：切断 happy 的正反馈自激 =====
+        # excited/expectant/grateful/caring/hopeful/energetic 这几个复合情绪本身
+        # 都由 _update_complex_emotions() 用 happy 线性推导出来，此处再用它们按比例
+        # 反哺 happy，等价于 happy += c * happy（指数自增），而 happy 的自然衰减只有
+        # 0.3/秒。实测：add_emotion('happy', 30) 之后 happy 每 10 秒净增，
+        # 12 个 tick（2 分钟）后锁死在 100 并永不回落 —— 表现为"点一次就永久极度开心"，
+        # 动画恒为 dance、表情恒为 happy_extremely、其他情绪永远显示不出来。
+        # 现在只保留非 happy 派生的来源（惊讶 → 开心），闭环即被切断。
+        if self.complex_emotions['excited'] > 30:
+            self.emotions['happy'] += self.emotions['surprised'] * 0.15
+            self.emotions['happy'] = min(100, self.emotions['happy'])
+            self.complex_emotions['energetic'] += self.complex_emotions['excited'] * 0.2
+            self.complex_emotions['anxious'] = max(0, self.complex_emotions['anxious'] - self.complex_emotions['excited'] * 0.1)
+        
+        # 期待会增加开心、兴奋和希望
+        if self.complex_emotions['expectant'] > 25:
+            # 修复：去掉 expectant → happy 的反哺（expectant 由 happy 推导，见上方说明）
+            self.complex_emotions['excited'] += self.complex_emotions['expectant'] * 0.15
+            self.complex_emotions['hopeful'] += self.complex_emotions['expectant'] * 0.2
+            self.emotions['happy'] = min(100, self.emotions['happy'])
+            self.complex_emotions['excited'] = min(100, self.complex_emotions['excited'])
+        
+        # 感激会增加开心、关心和减少悲伤
+        if self.complex_emotions['grateful'] > 20:
+            # 修复：去掉 grateful → happy 的反哺（grateful 由 happy 推导，见上方说明）
+            self.emotions['sad'] = max(0, self.emotions['sad'] - self.complex_emotions['grateful'] * 0.2)
+            self.complex_emotions['caring'] += self.complex_emotions['grateful'] * 0.15
+            self.emotions['happy'] = min(100, self.emotions['happy'])
+        
+        # 关心会增加开心和满足
+        if self.complex_emotions['caring'] > 20:
+            # 修复：去掉 caring → happy 的反哺（caring 由 happy 推导，见上方说明）
+            self.complex_emotions['content'] += self.complex_emotions['caring'] * 0.15
+            self.complex_emotions['lonely'] = max(0, self.complex_emotions['lonely'] - self.complex_emotions['caring'] * 0.2)
+        
+        # 好奇会增加兴奋和减少无聊
+        if self.complex_emotions['curious'] > 20:
+            self.complex_emotions['excited'] += self.complex_emotions['curious'] * 0.1
+            self.complex_emotions['bored'] = max(0, self.complex_emotions['bored'] - self.complex_emotions['curious'] * 0.2)
+            self.complex_emotions['energetic'] += self.complex_emotions['curious'] * 0.1
+        
+        # 希望会增加开心和减少焦虑
+        if self.complex_emotions['hopeful'] > 20:
+            # 修复：去掉 hopeful → happy 的反哺（hopeful 由 happy 推导，见上方说明）
+            self.complex_emotions['anxious'] = max(0, self.complex_emotions['anxious'] - self.complex_emotions['hopeful'] * 0.15)
+            self.complex_emotions['content'] += self.complex_emotions['hopeful'] * 0.1
+        
+        # 满足会减少焦虑、无聊和增加平静
+        if self.complex_emotions['content'] > 20:
+            self.complex_emotions['anxious'] = max(0, self.complex_emotions['anxious'] - self.complex_emotions['content'] * 0.2)
+            self.complex_emotions['bored'] = max(0, self.complex_emotions['bored'] - self.complex_emotions['content'] * 0.15)
+            self.complex_emotions['peaceful'] += self.complex_emotions['content'] * 0.15
+        
+        # 精力充沛会增加开心和减少疲惫
+        if self.complex_emotions['energetic'] > 20:
+            # 修复：去掉 energetic → happy 的反哺（energetic 由 happy 推导，见上方说明）；
+            # 保留"精力充沛 → 不疲惫 / 不无聊"这两条非闭环影响。
+            self.complex_emotions['tired'] = max(0, self.complex_emotions['tired'] - self.complex_emotions['energetic'] * 0.2)
+            self.complex_emotions['bored'] = max(0, self.complex_emotions['bored'] - self.complex_emotions['energetic'] * 0.1)
+        
+        # 疲惫会增加悲伤和减少精力充沛
+        if self.complex_emotions['tired'] > 30:
+            self.emotions['sad'] += self.complex_emotions['tired'] * 0.1
+            self.complex_emotions['energetic'] = max(0, self.complex_emotions['energetic'] - self.complex_emotions['tired'] * 0.2)
+            self.complex_emotions['anxious'] += self.complex_emotions['tired'] * 0.1
+        
+        # 无聊会增加悲伤和减少开心
+        if self.complex_emotions['bored'] > 30:
+            self.emotions['sad'] += self.complex_emotions['bored'] * 0.1
+            self.emotions['happy'] = max(0, self.emotions['happy'] - self.complex_emotions['bored'] * 0.15)
+            self.complex_emotions['curious'] = max(0, self.complex_emotions['curious'] - self.complex_emotions['bored'] * 0.1)
+
+        # 修复：上面的 += 写入（happy/sad/content/lonely/anxious 等）原先部分
+        # 无钳位（如 caring>20 时 happy += caring*0.1），长期运行会无界增长
+        # 超过 100，导致"主导情绪恒为 happy"之类的失衡。这里统一收尾钳位：
+        # 基础情绪 [-100,100]，复合情绪 [0,100]。
+        # 注：复合情绪每 tick 会被 _update_complex_emotions() 重算，但该函数现在会
+        # 保留"事件写入部分"的残余（见其末尾），因此这里的钳位仍是必要的边界保护。
+        for emotion in self.emotions:
+            self.emotions[emotion] = max(-100, min(100, self.emotions[emotion]))
+        for emotion in self.complex_emotions:
+            self.complex_emotions[emotion] = max(0, min(100, self.complex_emotions[emotion]))
+    
+    def _update_complex_emotions(self, elapsed=0.0):
+        # 根据基础情绪更新复合情绪
+        # prev：覆写前的快照，用于在末尾保留"事件写入的复合情绪残余"（见函数末尾说明）
+        prev = dict(self.complex_emotions)
+        
+        # 害羞 = 少量开心 + 少量恐惧
+        self.complex_emotions['shy'] = (self.emotions['happy'] * 0.3 + self.emotions['fear'] * 0.7) / 2
+        
+        # 期待 = 开心 + 惊讶
+        self.complex_emotions['expectant'] = (self.emotions['happy'] + self.emotions['surprised']) / 2
+        
+        # 失望 = 悲伤 + 愤怒
+        self.complex_emotions['disappointed'] = (self.emotions['sad'] + self.emotions['angry']) / 2
+        
+        # 自豪 = 开心 + 少量愤怒（自信）
+        self.complex_emotions['proud'] = (self.emotions['happy'] + self.emotions['angry'] * 0.2) / 2
+        
+        # 嫉妒 = 愤怒 + 悲伤
+        self.complex_emotions['jealous'] = (self.emotions['angry'] + self.emotions['sad']) / 2
+        
+        # 感激 = 开心 + 少量悲伤（感动）
+        self.complex_emotions['grateful'] = (self.emotions['happy'] + self.emotions['sad'] * 0.3) / 2
+        
+        # 愧疚 = 悲伤 + 少量愤怒（自责）
+        self.complex_emotions['guilty'] = (self.emotions['sad'] + self.emotions['angry'] * 0.4) / 2
+        
+        # 尴尬 = 害羞 + 惊讶 + 少量悲伤
+        self.complex_emotions['embarrassed'] = (self.complex_emotions['shy'] + self.emotions['surprised'] + self.emotions['sad'] * 0.2) / 3
+        
+        # 自信 = 开心 + 少量愤怒
+        self.complex_emotions['confident'] = (self.emotions['happy'] + self.emotions['angry'] * 0.3) / 2
+        
+        # 无聊 = 低开心 + 低愤怒 + 低恐惧
+        self.complex_emotions['bored'] = (100 - self.emotions['happy'] + 100 - self.emotions['angry'] + 100 - self.emotions['fear']) / 30
+        
+        # 平静 = 低所有情绪
+        total_emotion = sum(abs(e) for e in self.emotions.values())
+        self.complex_emotions['peaceful'] = max(0, 100 - total_emotion / 7)
+        
+        # 怀旧 = 低开心 + 少量悲伤
+        self.complex_emotions['nostalgic'] = (self.emotions['happy'] * 0.5 + self.emotions['sad'] * 0.5) / 2
+        
+        # 兴奋 = 开心 + 惊讶
+        self.complex_emotions['excited'] = (self.emotions['happy'] + self.emotions['surprised']) / 2
+        
+        # 好奇 = 惊讶 + 少量开心
+        self.complex_emotions['curious'] = (self.emotions['surprised'] + self.emotions['happy'] * 0.3) / 2
+        
+        # 关心 = 开心 + 少量悲伤（同理心）
+        self.complex_emotions['caring'] = (self.emotions['happy'] + self.emotions['sad'] * 0.5) / 2
+        
+        # 希望 = 开心 + 少量期待
+        self.complex_emotions['hopeful'] = (self.emotions['happy'] + self.complex_emotions['expectant'] * 0.5) / 2
+        
+        # 孤独 = 悲伤 + 低开心
+        self.complex_emotions['lonely'] = (self.emotions['sad'] + (100 - self.emotions['happy']) * 0.5) / 2
+        
+        # 焦虑 = 恐惧 + 少量愤怒
+        self.complex_emotions['anxious'] = (self.emotions['fear'] + self.emotions['angry'] * 0.3) / 2
+        
+        # 满足 = 开心 + 平静
+        self.complex_emotions['content'] = (self.emotions['happy'] + self.complex_emotions['peaceful']) / 2
+        
+        # 精力充沛 = 开心 + 低疲惫
+        self.complex_emotions['energetic'] = (self.emotions['happy'] + (100 - self.complex_emotions['tired']) * 0.5) / 2
+        
+        # 疲惫：本应由"低精力/真实疲惫信号"驱动，不参与公式推导。
+        # 修复：原公式 (100-happy + (100-energetic)*0.5)/2 与 energetic 公式互推，
+        # 无任何真实情绪时稳态自激到 tired≈73 → 空闲期每 10s 主导情绪恒为
+        # 'tired'，宠物被强制切 sleep 动画（每 tick 抽搐）。这里不再覆写 tired：
+        # 它只由 add_emotion('tired')/衰减自然变化。
+        
+        # 普通担忧 = 少量恐惧 + 少量悲伤
+        self.complex_emotions['worry'] = (self.emotions['fear'] * 0.4 + self.emotions['sad'] * 0.3 + self.emotions['angry'] * 0.3) / 2
+        
+        # 确保所有情绪值在0-100之间
+        for emotion in self.complex_emotions:
+            self.complex_emotions[emotion] = max(0, min(100, self.complex_emotions[emotion]))
+
+        # ===== 修复：推导值不该把"事件写入的复合情绪"瞬间清零 =====
+        # 本函数每个 tick 都会用基础情绪全量覆写 21 个复合情绪，于是
+        # react_to_event 里 add_emotion('shy', 45)（被夸奖）这类由事件写入的复合情绪，
+        # 最迟 10 秒就被抹成推导值（实测 shy 45 → 0、disappointed 35 → 0、
+        # grateful 25 → 6.9），事件反应几乎全部失效。
+        # 现在取「本 tick 推导值」与「上一 tick 值按固定速率自然消退后的残余」的较大者：
+        # 事件写入的情绪会保留一小段时间再平滑消失，而不是当场归零。
+        # 同时这条规则也让不参与公式推导的情绪（如 relieved）获得衰减，避免永久驻留。
+        for emotion, prev_value in prev.items():
+            residual = prev_value - self.COMPLEX_EMOTION_DECAY_PER_SECOND * elapsed
+            current = self.complex_emotions.get(emotion, 0.0)
+            if residual > current:
+                # 上一 tick 的值（含事件写入的部分）更高 → 保留残余
+                self.complex_emotions[emotion] = max(0.0, residual)
+            elif current == prev_value:
+                # 本 tick 的推导公式没有动过它（例如 relieved / tired）→ 直接按速率衰减，
+                # 否则这类情绪会永久驻留并长期霸占"主导情绪"（实测 relieved 33 分钟不降）。
+                self.complex_emotions[emotion] = max(0.0, residual)
+
+    def _update_emotion_intensity(self):
+        # 计算当前情绪强度
+        total_intensity = 0
+        for emotion in self.emotions:
+            total_intensity += abs(self.emotions[emotion])
+        for emotion in self.complex_emotions:
+            total_intensity += abs(self.complex_emotions[emotion])
+        
+        # 归一化到0-100
+        self.emotion_intensity = min(100, total_intensity / 8)
+    
+    def set_emotion(self, emotion, value):
+        # 设置情绪值（-100到100）
+        if emotion in self.emotions:
+            self.emotions[emotion] = max(-100, min(100, value))
+            self._add_to_history(emotion, value)
+        elif emotion in self.complex_emotions:
+            self.complex_emotions[emotion] = max(-100, min(100, value))
+            self._add_to_history(emotion, value)
+    
+    def add_emotion(self, emotion, delta):
+        # 增加或减少情绪值（已应用个性修正）
+        # 修复：个性系数只影响增量，不对总值做乘法（避免累积缩放bug）
+        adjusted_delta = self._apply_personality_to_delta(emotion, delta)
+
+        if emotion in self.emotions:
+            self.emotions[emotion] = max(-100, min(100, self.emotions[emotion] + adjusted_delta))
+            self._add_to_history(emotion, self.emotions[emotion])
+        elif emotion in self.complex_emotions:
+            self.complex_emotions[emotion] = max(-100, min(100, self.complex_emotions[emotion] + adjusted_delta))
+            self._add_to_history(emotion, self.complex_emotions[emotion])
+    
+    def _add_to_history(self, emotion, value):
+        # 添加情绪变化到历史记录
+        self.emotion_history.append({
+            'timestamp': time.time(),
+            'emotion': emotion,
+            'value': value
+        })
+        
+        # 限制历史记录长度
+        if len(self.emotion_history) > self.max_history_length:
+            self.emotion_history.pop(0)
+    
+    def get_current_emotion(self):
+        # 获取当前主导情绪
+        # 修复：'peaceful'/'calm' 是"无情绪"基线（peaceful 由公式推到 ≈100），
+        # 若参与主导候选会永远压过真实情绪 → 空闲动画被锁成 peaceful 档的 sing、
+        # 表情/移动概率全被"平静"支配。把它们排除出主导候选，仅作无情绪时的兜底。
+        # 修复2：'content'/'tired'/'energetic'/'bored'/'lonely' 同样是无输入时的
+        # 派生稳态高位（content≈45、tired≈73、lonely≈25），不参与主导候选，
+        # 否则空闲期宠物被误判"疲惫/无聊"而周期性抽搐。真实疲惫/无聊由
+        # energy_hunger / 对话系统表达，不影响这里的主导情绪判定。
+        _baseline = ('peaceful', 'calm', 'content', 'tired', 'energetic', 'bored', 'lonely')
+        max_emotion = None
+        max_value = -float('inf')
+        
+        for emotion in self.emotions:
+            if emotion in _baseline:
+                continue
+            if abs(self.emotions[emotion]) > max_value:
+                max_value = abs(self.emotions[emotion])
+                max_emotion = emotion
+        
+        for emotion in self.complex_emotions:
+            if emotion in _baseline:
+                continue
+            if abs(self.complex_emotions[emotion]) > max_value:
+                max_value = abs(self.complex_emotions[emotion])
+                max_emotion = emotion
+        
+        if max_emotion is None or max_value <= 0.5:
+            # 没有显著的真实情绪：返回 peaceful 且强度 0（不触发情绪动画/表情变化）
+            return 'peaceful', 0.0
+        return max_emotion, max_value
+    
+    def get_emotion_level(self, emotion):
+        # 获取特定情绪的当前值
+        if emotion in self.emotions:
+            return self.emotions[emotion]
+        elif emotion in self.complex_emotions:
+            return self.complex_emotions[emotion]
+        else:
+            return 0
+    
+    def get_personality_trait(self, trait):
+        # 获取个性特质值
+        return self.personality.get(trait, 50)
+    
+    def set_personality_trait(self, trait, value):
+        # 设置个性特质值（0-100）
+        if trait in self.personality:
+            self.personality[trait] = max(0, min(100, value))
+    
+    def get_emotion_intensity(self):
+        # 获取当前情绪强度
+        return self.emotion_intensity
+    
+    def react_to_event(self, event_type, event_data):
+        # 对事件做出情感反应
+        
+        # 根据事件类型调整情绪
+        if event_type == 'user_clicked':
+            # 用户点击了Ralsei
+            self.add_emotion('surprised', 20)  # 增加惊讶程度，Ralsei比较温柔
+            self.add_emotion('happy', 30)       # 增加开心程度，Ralsei喜欢被抚摸
+        elif event_type == 'user_praised':
+            # 用户夸奖了Ralsei
+            self.add_emotion('happy', 40)       # 增加开心程度，Ralsei比较谦虚
+            self.add_emotion('proud', 25)       # 增加骄傲程度，Ralsei比较谦虚
+            self.add_emotion('shy', 45)         # 增加害羞程度，Ralsei很容易害羞
+        elif event_type == 'user_scolded':
+            # 用户批评了Ralsei
+            self.add_emotion('sad', 50)         # 增加悲伤程度，Ralsei很敏感
+            self.add_emotion('disappointed', 35) # 增加失望程度
+            self.add_emotion('shy', 20)         # 增加害羞程度，Ralsei被批评会害羞
+        elif event_type == 'found_food':
+            # 找到食物
+            self.add_emotion('happy', 55)       # 增加开心程度，Ralsei比较克制
+            self.add_emotion('expectant', 40)   # 增加期待程度
+        elif event_type == 'lost_item':
+            # 丢失物品
+            self.add_emotion('sad', 35)         # 增加悲伤程度
+            self.add_emotion('disappointed', 25) # 增加失望程度
+        elif event_type == 'saw_scary_thing':
+            # 看到可怕的东西
+            self.add_emotion('fear', 45)        # 增加恐惧程度，Ralsei比较勇敢但仍然会害怕
+            self.add_emotion('surprised', 35)   # 增加惊讶程度
+            self.add_emotion('shy', 15)         # 增加害羞程度，Ralsei害怕时会害羞
+        elif event_type == 'met_friend':
+            # 遇到朋友
+            self.add_emotion('happy', 65)       # 增加开心程度
+            self.add_emotion('excited', 40)     # 增加兴奋程度
+            self.add_emotion('grateful', 25)    # 增加感激程度
+        elif event_type == 'completed_task':
+            # 完成任务
+            self.add_emotion('happy', 55)       # 增加开心程度
+            self.add_emotion('proud', 35)       # 增加骄傲程度
+        elif event_type == 'failed_task':
+            # 任务失败
+            self.add_emotion('sad', 45)         # 增加悲伤程度
+            self.add_emotion('disappointed', 35) # 增加失望程度
+            self.add_emotion('shy', 25)         # 增加害羞程度
+        elif event_type == 'saw_deltarune_content':
+            # 看到关于Deltarune的内容
+            self.add_emotion('happy', 55)       # 增加开心程度，Ralsei对自己的世界充满感情
+            self.add_emotion('excited', 35)     # 增加兴奋程度
+            self.add_emotion('nostalgic', 30)   # 增加怀旧程度
+        elif event_type == 'saw_undertale_content':
+            # 看到关于Undertale的内容
+            self.add_emotion('happy', 45)       # 增加开心程度
+            self.add_emotion('grateful', 35)    # 增加感激程度，Ralsei对Undertale的世界充满感激
+            self.add_emotion('nostalgic', 25)   # 增加怀旧程度
+        elif event_type == 'saw_own_code':
+            # 看到关于自己的代码
+            self.add_emotion('sad', 35)         # 增加悲伤程度，Ralsei看到自己的代码会感到难过
+            self.add_emotion('shy', 50)         # 增加害羞程度，Ralsei对自己的存在感到害羞
+            self.add_emotion('curious', 20)     # 增加好奇程度，Ralsei对自己的代码感到好奇
+        elif event_type == 'file_deleted':
+            # 文件被删除
+            self.add_emotion('sad', 25)         # 增加悲伤程度
+            self.add_emotion('disappointed', 25) # 增加失望程度
+        elif event_type == 'file_created':
+            # 文件被创建
+            self.add_emotion('happy', 25)       # 增加开心程度
+            self.add_emotion('curious', 35)     # 增加好奇程度，Ralsei对新文件感到好奇
+        elif event_type == 'weather_sunny':
+            # 天气晴朗
+            self.add_emotion('happy', 35)       # 增加开心程度，Ralsei喜欢晴朗的天气
+            self.add_emotion('peaceful', 25)    # 增加平静程度
+        elif event_type == 'weather_rainy':
+            # 天气下雨
+            self.add_emotion('sad', 15)         # 增加悲伤程度，Ralsei觉得下雨很浪漫
+            self.add_emotion('peaceful', 35)    # 增加平静程度，Ralsei喜欢下雨的平静
+        elif event_type == 'weather_snowy':
+            # 天气下雪
+            self.add_emotion('happy', 50)       # 增加开心程度，Ralsei喜欢雪
+            self.add_emotion('excited', 45)     # 增加兴奋程度
+            self.add_emotion('peaceful', 25)    # 增加平静程度
+        elif event_type == 'time_morning':
+            # 早上
+            self.add_emotion('happy', 25)       # 增加开心程度，Ralsei喜欢早上
+            self.add_emotion('expectant', 35)   # 增加期待程度
+        elif event_type == 'time_night':
+            # 晚上
+            self.add_emotion('peaceful', 45)    # 增加平静程度，Ralsei喜欢晚上的宁静
+            self.add_emotion('tired', 20)       # 增加疲惫程度
+        elif event_type == 'user_away':
+            # 用户离开
+            self.add_emotion('sad', 40)         # 增加悲伤程度，Ralsei会想念用户
+            self.add_emotion('lonely', 35)      # 增加孤独程度
+            self.add_emotion('expectant', 25)   # 增加期待程度，Ralsei期待用户回来
+        elif event_type == 'user_return':
+            # 用户返回
+            self.add_emotion('happy', 65)       # 增加开心程度，Ralsei比较克制
+            self.add_emotion('excited', 45)     # 增加兴奋程度
+            self.add_emotion('shy', 30)         # 增加害羞程度，Ralsei见到用户回来会害羞
+        elif event_type == 'level_up':
+            # 升级
+            self.add_emotion('happy', 50)       # 增加开心程度
+            self.add_emotion('proud', 30)       # 增加骄傲程度
+            self.add_emotion('shy', 25)         # 增加害羞程度
+        elif event_type == 'evolution':
+            # 进化
+            self.add_emotion('happy', 65)       # 增加开心程度
+            self.add_emotion('excited', 55)     # 增加兴奋程度
+            self.add_emotion('proud', 40)       # 增加骄傲程度
+            self.add_emotion('shy', 30)         # 增加害羞程度
+        elif event_type == 'achievement_unlocked':
+            # 解锁成就
+            self.add_emotion('happy', 45)       # 增加开心程度
+            self.add_emotion('proud', 30)       # 增加骄傲程度
+            self.add_emotion('shy', 20)         # 增加害羞程度
+        elif event_type == 'saw_beautiful_scenery':
+            # 看到美丽的景色
+            self.add_emotion('happy', 50)       # 增加开心程度
+            self.add_emotion('peaceful', 40)    # 增加平静程度
+            self.add_emotion('nostalgic', 25)   # 增加怀旧程度
+        elif event_type == 'heard_music':
+            # 听到音乐
+            self.add_emotion('happy', 40)       # 增加开心程度
+            self.add_emotion('peaceful', 35)    # 增加平静程度
+            self.add_emotion('excited', 25)     # 增加兴奋程度
+        elif event_type == 'drank_tea':
+            # 喝了茶
+            self.add_emotion('happy', 45)       # 增加开心程度
+            self.add_emotion('peaceful', 45)    # 增加平静程度
+        elif event_type == 'ate_cake':
+            # 吃了蛋糕
+            self.add_emotion('happy', 55)       # 增加开心程度
+            self.add_emotion('excited', 35)     # 增加兴奋程度
+        elif event_type == 'played_game':
+            # 玩了游戏
+            self.add_emotion('happy', 50)       # 增加开心程度
+            self.add_emotion('excited', 40)     # 增加兴奋程度
+        elif event_type == 'helped_someone':
+            # 帮助了别人
+            self.add_emotion('happy', 50)       # 增加开心程度
+            self.add_emotion('proud', 30)       # 增加骄傲程度
+            self.add_emotion('grateful', 25)    # 增加感激程度
+        elif event_type == 'was_helped':
+            # 被别人帮助
+            self.add_emotion('happy', 45)       # 增加开心程度
+            self.add_emotion('grateful', 40)    # 增加感激程度
+            self.add_emotion('shy', 30)         # 增加害羞程度
+        elif event_type == 'pet_interaction':
+            # 与其他宠物互动
+            self.add_emotion('happy', 50)
+            self.add_emotion('excited', 40)
+        elif event_type == 'ppt_opened':
+            # PPT打开
+            self.add_emotion('curious', 30)
+            self.add_emotion('expectant', 20)
+        elif event_type == 'excel_opened':
+            # Excel打开
+            self.add_emotion('curious', 30)
+            self.add_emotion('expectant', 20)
+        elif event_type == 'window_moved':
+            # 窗口（楼板）移动
+            self.add_emotion('surprised', 45)   # 增加惊讶程度
+            self.add_emotion('fear', 35)        # 增加恐惧程度
+            self.add_emotion('shy', 20)         # 增加害羞程度
+        elif event_type == 'fell_down':
+            # 摔倒了
+            self.add_emotion('sad', 40)         # 增加悲伤程度
+            self.add_emotion('embarrassed', 35)  # 增加尴尬程度
+            self.add_emotion('shy', 30)         # 增加害羞程度
+        elif event_type == 'greeted':
+            # 被打招呼
+            self.add_emotion('happy', 30)       # 增加开心程度
+            self.add_emotion('shy', 35)         # 增加害羞程度
+        elif event_type == 'given_gift':
+            # 收到礼物
+            self.add_emotion('happy', 55)       # 增加开心程度
+            self.add_emotion('grateful', 45)    # 增加感激程度
+            self.add_emotion('shy', 40)         # 增加害羞程度
+        elif event_type == 'saw_friend':
+            # 看到朋友
+            self.add_emotion('happy', 45)       # 增加开心程度
+            self.add_emotion('excited', 35)     # 增加兴奋程度
+        elif event_type == 'heard_story':
+            # 听故事
+            self.add_emotion('calm', 35)        # 增加平静程度
+            self.add_emotion('curious', 25)     # 增加好奇程度
+        elif event_type == 'recovery_complete':
+            # 恢复完成
+            self.add_emotion('happy', 30)       # 增加开心程度
+            self.add_emotion('relieved', 25)    # 增加释然程度
+        elif event_type == 'recovery_started':
+            # 开始恢复
+            self.add_emotion('tired', 30)       # 增加疲惫程度
+            self.add_emotion('peaceful', 20)    # 增加平静程度
+        elif event_type == 'normal_worry':
+            # 普通担忧事件（如同伴晚归、天气变化影响行程）
+            self.add_emotion('worry', 35)        # 增加普通担忧程度
+            self.add_emotion('fear', 15)         # 少量恐惧
+            self.add_emotion('sad', 15)          # 少量悲伤
+        elif event_type == 'weather_affected_trip':
+            # 天气变化影响行程
+            self.add_emotion('worry', 40)        # 增加普通担忧程度
+            self.add_emotion('disappointed', 25) # 增加失望程度
+        elif event_type == 'companion_late':
+            # 同伴晚归
+            self.add_emotion('worry', 45)        # 增加普通担忧程度
+            self.add_emotion('anxious', 20)      # 增加焦虑程度
+        else:
+            # 修复：未知事件类型原先静默忽略，新增事件源时拼错名字无法发现。
+            # 留 debug 日志辅助排查，不影响行为。
+            _log.debug("react_to_event 收到未知事件类型: %s", event_type)
+        # 注意：个性特质调整已在 add_emotion 内部通过 _apply_personality_to_delta 完成，
+        # 不再需要在这里对总值做乘法（避免累积缩放bug）
+    
+    def _apply_personality_to_delta(self, emotion, delta):
+        """
+        根据个性特质修正情绪变化的增量。
+        修复：只影响本次增量，不对情绪总值做乘法（避免累积缩放bug）。
+        之前的实现是每次事件都对总值乘系数，导致内向者几次事件后情绪归零。
+        """
+        factor = 1.0
+
+        # 内向-外向：内向的情绪变化更平缓，外向的更激烈
+        ie = self.personality.get('introvert_extrovert', 50)
+        if ie < 30:
+            factor *= 0.8   # 内向：情绪增量打8折
+        elif ie > 70:
+            factor *= 1.2   # 外向：情绪增量放大20%
+
+        # 乐观-悲观：影响开心和悲伤的增量
+        op = self.personality.get('optimism_pessimism', 50)
+        if emotion == 'happy':
+            if op > 70:
+                factor *= 1.3   # 乐观：开心增量 +30%
+            elif op < 30:
+                factor *= 0.7   # 悲观：开心增量 -30%
+        elif emotion == 'sad':
+            if op > 70:
+                factor *= 0.7   # 乐观：悲伤增量 -30%
+            elif op < 30:
+                factor *= 1.3   # 悲观：悲伤增量 +30%
+
+        # 勇敢-谨慎：影响恐惧的增量
+        bc = self.personality.get('bravery_caution', 50)
+        if emotion == 'fear':
+            if bc > 70:
+                factor *= 0.5   # 勇敢：恐惧增量 -50%
+            elif bc < 30:
+                factor *= 1.5   # 谨慎：恐惧增量 +50%
+
+        # 好奇心：影响惊讶的增量
+        cur = self.personality.get('curiosity', 50)
+        if emotion == 'surprised' and cur > 70:
+            factor *= 1.2   # 好奇心强：惊讶增量 +20%
+
+        return delta * factor
+    
+    def get_animation_for_emotion(self, emotion, intensity):
+        # 根据情绪和强度获取对应的动画
+        animation_map = {
+            'happy': {
+                'low': 'idle',
+                'medium': 'laugh',
+                'high': 'dance'
+            },
+            'sad': {
+                'low': 'idle',
+                'medium': 'cry',
+                'high': 'fall_back_cry'
+            },
+            'angry': {
+                'low': 'idle',
+                'medium': 'cower',
+                'high': 'attack'
+            },
+            'fear': {
+                'low': 'cower',
+                'medium': 'surprised',
+                'high': 'shocked_left'
+            },
+            'surprised': {
+                'low': 'surprised',
+                'medium': 'surprised_behind',
+                'high': 'surprised_down'
+            },
+            'disgust': {
+                'low': 'idle',
+                'medium': 'cower',
+                'high': 'cower'
+            },
+            'shy': {
+                'low': 'idle',
+                'medium': 'curtsy',
+                'high': 'curtsy'
+            },
+            'expectant': {
+                'low': 'idle',
+                'medium': 'look_up',
+                'high': 'jump_ready'
+            },
+            'disappointed': {
+                'low': 'idle',
+                'medium': 'sad',
+                'high': 'fall_back_rub'
+            },
+            'proud': {
+                'low': 'pose',
+                'medium': 'smile_left',
+                'high': 'victory'
+            },
+            'jealous': {
+                'low': 'idle',
+                'medium': 'cower',
+                'high': 'cower'
+            },
+            'grateful': {
+                'low': 'idle',
+                'medium': 'hug',
+                'high': 'hug'
+            },
+            'excited': {
+                'low': 'dance',
+                'medium': 'spin',
+                'high': 'jump_ball'
+            },
+            'guilty': {
+                'low': 'idle',
+                'medium': 'sad',
+                'high': 'kneel_serious'
+            },
+            'embarrassed': {
+                'low': 'idle',
+                'medium': 'curtsy',
+                'high': 'pose'
+            },
+            'confident': {
+                'low': 'pose',
+                'medium': 'smile_right',
+                'high': 'victory'
+            },
+            'bored': {
+                'low': 'idle',
+                'medium': 'sleep',
+                'high': 'sleep'
+            },
+            'peaceful': {
+                'low': 'idle',
+                'medium': 'idle',
+                'high': 'sing'
+            },
+            'nostalgic': {
+                'low': 'idle',
+                'medium': 'look_up',
+                'high': 'smile_left'
+            },
+            'curious': {
+                'low': 'look_up',
+                'medium': 'book_look',
+                'high': 'look_up'
+            },
+            'caring': {
+                'low': 'hug',
+                'medium': 'hug',
+                'high': 'hug'
+            },
+            'hopeful': {
+                'low': 'look_up',
+                'medium': 'jump_ready',
+                'high': 'jump'
+            },
+            'lonely': {
+                'low': 'idle',
+                'medium': 'sad',
+                'high': 'fall_back_cry'
+            },
+            'anxious': {
+                'low': 'cower',
+                'medium': 'shocked_right',
+                'high': 'shocked_left'
+            },
+            'content': {
+                'low': 'idle',
+                'medium': 'smile_right',
+                'high': 'sing'
+            },
+            'energetic': {
+                'low': 'dance',
+                'medium': 'run_down',
+                'high': 'spin'
+            },
+            'tired': {
+                'low': 'idle',
+                'medium': 'sleep',
+                'high': 'sleep'
+            },
+            'worry': {
+                'low': 'walk_up',
+                # 修复：素材名是 walk_tea_left（sprite_loader.animation_mapping），
+                # 原 walk_left_tea 不存在 → change_animation 前缀回退成 walk_left，
+                # 担忧时静默变成普通走路，动画语义丢失。
+                'medium': 'walk_tea_left',
+                'high': 'walk_up'
+            }
+        }
+        
+        # 根据强度确定动画
+        if intensity < 30:
+            intensity_level = 'low'
+        elif intensity < 70:
+            intensity_level = 'medium'
+        else:
+            intensity_level = 'high'
+        
+        return animation_map.get(emotion, {}).get(intensity_level, 'idle')
+
+    def get_face_for_emotion_DEPRECATED(self, emotion, intensity):
+        # 根据情绪和强度获取对应的表情
+        face_map = {
+            'happy': {
+                'low': 'normal_smile_little',
+                'medium': 'happy_very',
+                'high': 'happy_extremely'
+            },
+            'sad': {
+                'low': 'a little sad',
+                'medium': 'sad with a little hopeless',
+                'high': 'sad with hopeless and self-mockery'
+            },
+            'angry': {
+                'low': 'fear and worry',
+                'medium': 'frightened with a little angry',
+                'high': 'frightened with a little angry'
+            },
+            'fear': {
+                'low': 'fear and worry',
+                'medium': 'fear with a little hopeless',
+                'high': 'fear with hopeless'
+            },
+            'surprised': {
+                'low': 'a little surprised',
+                'medium': 'unexpected and surprise',
+                'high': 'a little surprised'
+            },
+            'disgust': {
+                'low': 'fear and worry',
+                'medium': 'frightened with a little angry',
+                'high': 'frightened with a little angry'
+            },
+            'shy': {
+                'low': 'shy with a little surprised and happy',
+                'medium': 'shy with a lot of happy',
+                'high': 'shy with touched and happy'
+            },
+            'expectant': {
+                'low': 'excited and cute',
+                'medium': 'expectant',
+                'high': 'excited and cute'
+            },
+            'disappointed': {
+                'low': 'a little sad',
+                'medium': 'sad with a little hopeless',
+                'high': 'sad with hopeless and self-mockery'
+            },
+            'proud': {
+                'low': 'serious',
+                'medium': 'firm and serious',
+                'high': 'firm and serious'
+            },
+            'jealous': {
+                'low': 'fear and worry',
+                'medium': 'frightened with a little angry',
+                'high': 'frightened with a little angry'
+            },
+            'grateful': {
+                'low': 'happy with a little touched',
+                'medium': 'happy with a little touched',
+                'high': 'happy with a little touched'
+            },
+            'excited': {
+                'low': 'excited and cute',
+                'medium': 'happy_very',
+                'high': 'happy_extremely'
+            },
+            'guilty': {
+                'low': 'sad with a little hopeless',
+                'medium': 'sad with a little hopeless',
+                'high': 'sad with hopeless and self-mockery'
+            },
+            'embarrassed': {
+                'low': 'shy with a little surprised and happy',
+                'medium': 'shy with a lot of happy',
+                'high': 'shy with touched and happy'
+            },
+            'confident': {
+                'low': 'serious',
+                'medium': 'firm and serious',
+                'high': 'firm and serious'
+            },
+            'bored': {
+                'low': "doesn't matter and a little lazy",
+                'medium': "doesn't matter and a little lazy",
+                'high': "doesn't matter and a little lazy"
+            },
+            'peaceful': {
+                'low': 'normal',
+                'medium': 'normal_smile_little',
+                'high': 'normal_smile_little'
+            },
+            'nostalgic': {
+                'low': 'normal but little unsure',
+                'medium': 'happy with a little touched',
+                'high': 'happy with a little touched'
+            },
+            'curious': {
+                'low': 'have a idea and cute',
+                'medium': 'contemplation',
+                'high': 'a little confusion and cute'
+            },
+            'caring': {
+                'low': 'happy with a little worry',
+                'medium': 'happy with a little touched',
+                'high': 'happy with a little touched'
+            },
+            'hopeful': {
+                'low': 'happy with a little worry',
+                'medium': 'fear with a weak hopeful',
+                'high': 'worry with a hopeful'
+            },
+            'lonely': {
+                'low': 'a little sad',
+                'medium': 'sad with a little hopeless',
+                'high': 'sad with hopeless and self-mockery'
+            },
+            'anxious': {
+                'low': 'fear and worry',
+                'medium': 'fear with a little hopeless',
+                'high': 'fear with hopeless'
+            },
+            'content': {
+                'low': 'normal_smile_little',
+                'medium': 'normal_smile_little',
+                'high': 'normal_smile_little'
+            },
+            'energetic': {
+                'low': 'excited and cute',
+                'medium': 'happy_very',
+                'high': 'happy_extremely'
+            },
+            'tired': {
+                'low': "doesn't matter and a little lazy",
+                'medium': "doesn't matter and a little lazy",
+                'high': "doesn't matter and a little lazy"
+            },
+            'contemplative': {
+                'low': 'contemplation',
+                'medium': 'contemplation',
+                'high': 'contemplation'
+            },
+            'depressed': {
+                'low': 'depression with a little hopeless',
+                'medium': 'depression with a little hopeless',
+                'high': 'depression with a hopeless'
+            },
+            'serious': {
+                'low': 'firm and serious',
+                'medium': 'firm and serious',
+                'high': 'firm and serious'
+            },
+            'pleading': {
+                'low': 'force a smile with pleading',
+                'medium': 'force a smile with pleading',
+                'high': 'force a smile with very pleading'
+            },
+            'playful': {
+                'low': 'happy and playful',
+                'medium': 'happy and playful',
+                'high': 'happy and playful'
+            },
+            'unsure': {
+                'low': 'a little speechless or seek opinions',
+                'medium': 'a little speechless or seek opinions',
+                'high': 'normal but little unsure'
+            },
+            'worry': {
+                'low': 'worry',
+                'medium': 'worry',
+                'high': 'worry with a fear'
+            }
+        }
+        
+        # 根据强度确定表情
+        if intensity < 30:
+            intensity_level = 'low'
+        elif intensity < 70:
+            intensity_level = 'medium'
+        else:
+            intensity_level = 'high'
+        
+        return face_map.get(emotion, {}).get(intensity_level, 'normal')
+    
+    def get_dialogue_for_emotion(self, emotion, intensity):
+        # 根据情绪和强度获取对应的对话
+        dialogue_map = {
+            'happy': {
+                'low': ['今天天气真好！', '我感觉很开心！', '见到你真高兴！', '阳光照在身上，好舒服呀！', '和你在一起真开心！', '嘿嘿，今天心情不错~', '谢谢... 我很开心...'],
+                'medium': ['哈哈，太有趣了！', '我好开心呀！', '你真好！', '这让我想起了美好的回忆！', '生活真美好！', '嘿嘿，谢谢你！', '哇，这太开心了！'],
+                'high': ['哇！太棒了！', '我简直太高兴了！', '这是我最开心的一天！', '哈哈哈哈！我太兴奋了！', '我感觉自己像在飞！', '我好开心呀！', '谢谢你让我这么开心！']
+            },
+            'sad': {
+                'low': ['今天有点不开心...', '我感觉有点难过。', '一切都会好起来的吧？', '为什么事情总是这样？', '我有点孤单...', '今天有点无聊...', '我感觉有点累...'],
+                'medium': ['呜呜...', '为什么会这样？', '我好伤心...', '我真的很难过...', '请不要离开我...', '我感觉好孤单...', '为什么命运如此不公...'],
+                'high': ['呜呜呜...我好难过！', '我不想这样...', '请不要离开我...', '我感觉心都碎了...', '为什么命运如此不公...', '我真的好难过...', '请不要抛弃我...']
+            },
+            'angry': {
+                'low': ['哼！', '我生气了！', '请不要这样！', '你这样做不对！', '我真的很生气！', '请不要这样...', '我有点生气...'],
+                'medium': ['你太过分了！', '我真的生气了！', '请道歉！', '我无法原谅你！', '你怎么能这样！', '请不要太过分...', '我很生气！'],
+                'high': ['我受不了了！', '你怎么能这样！', '我要生气了！', '我真的很愤怒！', '请你立刻停止！', '我太生气了！', '请你道歉！']
+            },
+            'fear': {
+                'low': ['我有点害怕...', '请不要吓我！', '这是什么？', '我不敢看...', '我有点紧张...', '请不要这样...', '我有点不安...'],
+                'medium': ['啊！好可怕！', '不要过来！', '我害怕！', '救命啊！', '请保护我！', '我好害怕...', '请不要靠近我...'],
+                'high': ['救命啊！', '太可怕了！', '我好害怕！', '我快吓死了！', '请不要靠近我！', '我要回家...', '我真的很害怕！']
+            },
+            'surprised': {
+                'low': ['哇！', '哦？', '真的吗？', '这太神奇了！', '我没想到！', '哎呀！', '哇哦~'],
+                'medium': ['哎呀！', '真没想到！', '太惊讶了！', '这怎么可能！', '哦我的天哪！', '哇！好厉害！', '真的吗？'],
+                'high': ['哇！太神奇了！', '哦我的天哪！', '这怎么可能！', '我简直不敢相信！', '这太不可思议了！', '哇！', '真的吗？']
+            },
+            'shy': {
+                'low': ['嗯...', '那个...', '不好意思...', '我有点害羞...', '请不要看我...', '啊... 那个...', '嘿嘿...'],
+                'medium': ['哎呀，不要这样...', '我有点害羞...', '请不要看我...', '我脸都红了...', '我好紧张...', '啊... 不要这样...', '我很害羞...'],
+                'high': ['哎呀！羞死人了！', '我不行了...', '请饶了我吧！', '我要找个地方躲起来...', '我的心跳好快...', '啊... 太害羞了！', '请不要这样...']
+            },
+            'proud': {
+                'low': ['我做到了！', '我很厉害吧！', '看我的！', '我就知道我能行！', '我好自豪！', '嘿嘿，我做到了！', '我很厉害！'],
+                'medium': ['我真的做到了！', '我好自豪！', '这是我的功劳！', '我太棒了！', '没有人能比得上我！', '我做到了！', '我好厉害！'],
+                'high': ['哈哈！我是最棒的！', '我简直太厉害了！', '没有人能比得上我！', '我为自己感到骄傲！', '这是我一生中最辉煌的时刻！', '我是最棒的！', '我好厉害！']
+            },
+            'curious': {
+                'low': ['这是什么？', '我很好奇...', '让我看看！', '这东西看起来很有趣！', '我想知道更多！', '哇，这是什么？', '好有趣！'],
+                'medium': ['哇！这个好有意思！', '我很好奇它是怎么工作的！', '让我仔细看看！', '这东西真奇妙！', '我想了解更多！', '好有趣！', '这是什么？'],
+                'high': ['这太神奇了！', '我必须知道它的原理！', '这简直是个奇迹！', '我对这个充满了好奇心！', '我一定要弄明白！', '好神奇！', '这是什么？']
+            },
+            'caring': {
+                'low': ['你还好吗？', '需要帮助吗？', '我来帮你！', '让我照顾你！', '我会一直在你身边的！', '你还好吗？', '需要帮助吗？'],
+                'medium': ['别担心，我会帮助你的！', '让我来照顾你吧！', '一切都会好起来的！', '我会一直在你身边支持你！', '你不是一个人！', '别担心，我会帮你的！', '一切都会好起来的！'],
+                'high': ['请让我来帮助你！', '我会尽我所能照顾你！', '你对我来说很重要！', '我永远不会离开你！', '让我来承担你的痛苦！', '请让我帮你！', '我会一直陪在你身边！']
+            },
+            'hopeful': {
+                'low': ['一切都会好起来的！', '我相信未来会更美好！', '明天会更好！', '我充满了希望！', '事情会有转机的！', '明天会更好！', '我相信一切都会好起来的！'],
+                'medium': ['我相信我们能做到！', '未来充满了无限可能！', '我们一定能成功！', '我对未来充满了期待！', '希望就在前方！', '我们一定能成功！', '未来会更好！'],
+                'high': ['我相信一切都会好起来的！', '我们一定能创造奇迹！', '未来会更加美好！', '我对我们的未来充满了信心！', '希望之光永远不会熄灭！', '我们一定能做到！', '未来会更好！']
+            },
+            'lonely': {
+                'low': ['我有点孤单...', '没有人陪我说话...', '我好无聊...', '希望有人能陪我...', '一个人的时候有点难过...', '我有点孤单...', '好无聊...'],
+                'medium': ['我真的很孤单...', '为什么没有人陪我？', '我好想念大家...', '一个人真的很难过...', '我不想一个人...', '我好孤单...', '为什么没有人陪我？'],
+                'high': ['我好孤单！', '请不要让我一个人！', '我真的很需要有人陪伴！', '一个人的日子太难熬了...', '我感觉好空虚...', '请不要离开我...', '我好孤单...']
+            },
+            'anxious': {
+                'low': ['我有点紧张...', '我好担心...', '要是出问题怎么办？', '我有点焦虑...', '我睡不着...', '我有点紧张...', '我好担心...'],
+                'medium': ['我真的很担心！', '要是失败了怎么办？', '我好焦虑...', '我感觉很不安...', '我的心跳好快...', '我好紧张...', '要是失败了怎么办？'],
+                'high': ['我快焦虑死了！', '我好害怕会出问题！', '我睡不着也吃不下！', '我感觉整个人都要崩溃了！', '请帮帮我！我好焦虑！', '我好紧张！', '我快崩溃了！']
+            },
+            'content': {
+                'low': ['现在这样就很好...', '我感觉很满足...', '这样的日子真美好...', '我很享受现在的时光...', '简单的快乐就足够了...', '现在这样就很好...', '我很满足...'],
+                'medium': ['我真的很满足！', '这样的生活太美好了！', '我很享受现在的一切！', '简单的快乐最珍贵...', '我感到非常幸福...', '我很满足！', '这样的生活很美好！'],
+                'high': ['我简直太满足了！', '这就是我想要的生活！', '我感到无比幸福！', '现在的一切都完美无缺！', '我是世界上最幸福的人！', '我太满足了！', '这就是我想要的生活！']
+            },
+            'energetic': {
+                'low': ['我感觉精力充沛！', '今天充满了活力！', '我想做点什么！', '我感觉很好！', '今天是充满希望的一天！', '我精力充沛！', '今天充满了活力！'],
+                'medium': ['我精力充沛！', '我想做很多事情！', '今天我要大干一场！', '我感觉自己充满了力量！', '让我们开始行动吧！', '我想做很多事情！', '让我们开始行动吧！'],
+                'high': ['我简直太有活力了！', '我感觉自己能飞！', '今天我要完成所有的任务！', '我充满了无限的能量！', '让我们一起创造奇迹！', '我太有活力了！', '我能做很多事情！']
+            },
+            'tired': {
+                'low': ['我有点累了...', '今天有点疲惫...', '我想休息一下...', '我感觉有点困...', '让我歇一会儿...', '我有点累了...', '我想休息一下...'],
+                'medium': ['我真的很累了...', '我想好好休息一下...', '我感觉浑身无力...', '我需要睡一觉...', '今天好累啊...', '我真的很累了...', '我想休息...'],
+                'high': ['我快累死了！', '我必须休息了！', '我感觉浑身酸痛...', '我需要好好睡一觉！', '我真的撑不住了...', '我太疲惫了！', '我必须休息了！']
+            }
+        }
+        
+        # 根据强度确定对话
+        if intensity < 30:
+            intensity_level = 'low'
+        elif intensity < 70:
+            intensity_level = 'medium'
+        else:
+            intensity_level = 'high'
+        
+        dialogues = dialogue_map.get(emotion, {}).get(intensity_level, ['我现在感觉很复杂...'])
+        return random.choice(dialogues)
+    
+    def get_face_for_emotion(self, emotion, intensity):
+        # 根据情绪和强度获取对应的表情
+        # 严格对照「要求」文件中 50 个 face_*.png 的使用条件逐一映射：
+        #  - 每个情绪的 low/medium/high 三档对应事件的轻重程度；
+        #  - 要求中遗漏标注文件名的 2 处（jealous / angry）已匹配实际素材。
+        face_map = {
+            # 轻微愉悦 (33) → 高度开心 (26) → 极度开心 (25)
+            'happy': {
+                'low': 'normal_smile_little',
+                'medium': 'happy_very',
+                'high': 'happy_extremely'
+            },
+            # 轻微悲伤 (2) → 轻度悲伤绝望 (35) → 自嘲式悲伤绝望 (36)
+            'sad': {
+                'low': 'a little sad',
+                'medium': 'sad with a little hopeless',
+                'high': 'sad with hopeless and self-mockery'
+            },
+            # 玩笑式气/反驳 (实际文件 jealous 素材) → 微笑式不满 (48) → 愤怒惊吓 (21, 实际文件名不含 wtf)
+            'angry': {
+                'low': 'a little speechless with happy',
+                'medium': 'worry with a little smile',
+                'high': 'frightened with a little angry'
+            },
+            # 单纯恐惧 (17) → 轻度绝望恐惧 (14) → 重度绝望恐惧 (16)
+            'fear': {
+                'low': 'fear',
+                'medium': 'fear with a little hopeless',
+                'high': 'fear with hopeless'
+            },
+            # 轻微意外 (4) → 意外惊喜 (42) → 意外惊喜 (42, 强)
+            'surprised': {
+                'low': 'a little surprised',
+                'medium': 'unexpected and surprise',
+                'high': 'unexpected and surprise'
+            },
+            # 无法回应 (3) → 微笑式不适 (48) → 强烈恳求 (20, 极度厌恶)
+            'disgust': {
+                'low': 'a little speechless or seek opinions',
+                'medium': 'worry with a little smile',
+                'high': 'force a smile with very pleading'
+            },
+            # 惊喜害羞 (38) → 开心害羞 (39) → 感动害羞 (40)
+            'shy': {
+                'low': 'shy with a little surprised and happy',
+                'medium': 'shy with a lot of happy',
+                'high': 'shy with touched and happy'
+            },
+            # 顽皮期待 (22) → 恐惧但发言 (13, 鼓励/说计划) → 轻度兴奋 (9)
+            'expectant': {
+                'low': 'happy and playful',
+                'medium': 'fear but firm_speaking',
+                'high': 'excited and cute'
+            },
+            # 悲伤担忧 (47) → 中度负面 (7) → 严重负面 (6)
+            'disappointed': {
+                'low': 'worry with a little sad',
+                'medium': 'depression with a little hopeless',
+                'high': 'depression with a hopeless'
+            },
+            # 被夸奖感动 (23) → 担忧微笑 (41) → 顽皮骄傲 (22)
+            'proud': {
+                'low': 'happy with a little touched',
+                'medium': 'smile with a little worry',
+                'high': 'happy and playful'
+            },
+            # 悲伤担忧 (47) → 玩笑反驳 (实际素材名 a little speechless with happy, 原要求 29) → 恳求 (19)
+            'jealous': {
+                'low': 'worry with a little sad',
+                'medium': 'a little speechless with happy',
+                'high': 'force a smile with pleading'
+            },
+            # 担忧微笑 (41) → 感动开心 (23) → 极度感恩 (25)
+            'grateful': {
+                'low': 'smile with a little worry',
+                'medium': 'happy with a little touched',
+                'high': 'happy_extremely'
+            },
+            # 高度开心 (26) → 意外惊喜兴奋 (42) → 极度开心 (25)
+            'excited': {
+                'low': 'happy_very',
+                'medium': 'unexpected and surprise',
+                'high': 'happy_extremely'
+            },
+            # 轻微困惑 (1) → 思考 (5) → 想到办法 (27)
+            'curious': {
+                'low': 'a little confusion and cute',
+                'medium': 'contemplation',
+                'high': 'have a idea and cute'
+            },
+            # 担忧微笑 (41, 照顾他人) → 感动开心 (23, 被照顾) → 担忧开心 (24, 找到人但对方受伤)
+            'caring': {
+                'low': 'smile with a little worry',
+                'medium': 'happy with a little touched',
+                'high': 'happy with a little worry'
+            },
+            # 轻微不确定 (30) → 有微弱希望的恐惧 (15) → 有希望担忧 (45)
+            'hopeful': {
+                'low': 'normal but little unsure',
+                'medium': 'fear with a weak hopeful',
+                'high': 'worry with a hopeful'
+            },
+            # 轻微悲伤 (2) → 悲伤担忧 (47) → 强忍悲伤 (34, 孤独装没事)
+            'lonely': {
+                'low': 'a little sad',
+                'medium': 'worry with a little sad',
+                'high': 'sad but force a smile'
+            },
+            # 轻微担忧 (31) → 普通恐惧担忧 (11) → 恐惧担忧 (44)
+            'anxious': {
+                'low': 'normal but little worry',
+                'medium': 'fear and worry',
+                'high': 'worry with a fear'
+            },
+            # 轻微愉悦 (33) → 高度开心 (26) → 极度开心 (25)
+            'content': {
+                'low': 'normal_smile_little',
+                'medium': 'happy_very',
+                'high': 'happy_extremely'
+            },
+            # 高度开心 (26) → 顽皮活泼 (22) → 极度开心 (25)
+            'energetic': {
+                'low': 'happy_very',
+                'medium': 'happy and playful',
+                'high': 'happy_extremely'
+            },
+            # 无兴趣/懒 (8) → 轻微悲伤 (2) → 轻度悲伤绝望 (35)
+            'tired': {
+                'low': "doesn't matter and a little lazy",
+                'medium': 'a little sad',
+                'high': 'sad with a little hopeless'
+            },
+            # 悲伤担忧 (47, 轻微愧疚) → 愧疚担忧 (49) → 绝望悲伤担忧 (46, 深重愧疚)
+            'guilty': {
+                'low': 'worry with a little sad',
+                'medium': 'worry with a sad and a little sorry',
+                'high': 'worry with a hopeless and sad'
+            },
+            # 惊喜害羞 (38, 被调侃) → 尴尬恐惧 (10) → 无眼镜窘迫 (43, 摘眼镜社交极端尴尬)
+            'embarrassed': {
+                'low': 'shy with a little surprised and happy',
+                'medium': 'fear and worry and unsure with a little embarrassing',
+                'high': 'without glass'
+            },
+            # 严肃 (37) → 恐惧但坚持 (12, 保护同伴的坚定) → 严肃决策 (18)
+            'confident': {
+                'low': 'serious',
+                'medium': 'fear but firm',
+                'high': 'firm and serious'
+            },
+            # 无兴趣 (8) → 无法回应 (3) → 轻微不确定 (30, 无聊迟疑)
+            'bored': {
+                'low': "doesn't matter and a little lazy",
+                'medium': 'a little speechless or seek opinions',
+                'high': 'normal but little unsure'
+            },
+            # 轻微愉悦 (33) → 日常无情绪 (32) → 感动开心 (23, 平和感动)
+            'peaceful': {
+                'low': 'normal_smile_little',
+                'medium': 'normal',
+                'high': 'happy with a little touched'
+            },
+            # 轻微忧伤 (2) → 沉思 (5) → 怀念+担忧 (31, 怀旧不安)
+            'nostalgic': {
+                'low': 'a little sad',
+                'medium': 'contemplation',
+                'high': 'normal but little worry'
+            },
+            # 轻微担忧 (31) → 普通担忧 (50) → 恐惧担忧 (44)
+            'worry': {
+                'low': 'normal but little worry',
+                'medium': 'worry',
+                'high': 'worry with a fear'
+            },
+            # 绝望悲伤担忧 (46) → 彻底绝望 (28) → 重度绝望恐惧 (16)
+            'hopeless': {
+                'low': 'worry with a hopeless and sad',
+                'medium': 'hopeless',
+                'high': 'fear with hopeless'
+            }
+        }
+        
+        # 根据强度确定表情
+        if intensity < 30:
+            intensity_level = 'low'
+        elif intensity < 70:
+            intensity_level = 'medium'
+        else:
+            intensity_level = 'high'
+        
+        return face_map.get(emotion, {}).get(intensity_level, 'normal')

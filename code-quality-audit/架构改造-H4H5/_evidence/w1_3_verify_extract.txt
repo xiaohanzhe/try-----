@@ -30,10 +30,13 @@
 [PASS] 反例控制：篡改确实改变了文本（不是空操作）
 [PASS] 反例控制：篡改一个字符后判据判为不等（证明判据有鉴别力）
 [PASS] 反例控制：未篡改的原文仍判为相等（排除替换式自伤）
-[PASS] handle_game_input 仍在 RalseiPet（本 PR 刻意不搬）
-[PASS] handle_game_input 未被搬进 GamesController
+[PASS] handle_game_input 已不在 RalseiPet（W1-7 搬入 games）
+[PASS] handle_game_input 已在 GamesController 类体内定义
 [PASS] games_controller 不 import 项目内模块（实际: []）
-[PASS] 控制器不持有状态 self.game_state（只借宿主）
-[PASS] 控制器不持有状态 self.guess_number_game（只借宿主）
-[PASS] 控制器不持有状态 self.rock_paper_scissors_options（只借宿主）
-合计：PASS=38 FAIL=0
+[PASS] 控制器不持有状态（AST 级：类内无 self.<状态> = 赋值；实际 []）
+[PASS] 剥注释/字符串后无 self.game_state = 的代码形态（注释里的不算）
+[PASS] 剥注释/字符串后无 self.guess_number_game = 的代码形态（注释里的不算）
+[PASS] 剥注释/字符串后无 self.rock_paper_scissors_options = 的代码形态（注释里的不算）
+[PASS] 反向控制：注释里确实有 self.game_state =，剥注释后消失（判据有鉴别力）
+
+合计：PASS=40 FAIL=0

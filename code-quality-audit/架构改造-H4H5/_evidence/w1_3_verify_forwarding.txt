@@ -1,4 +1,5 @@
 ========================================================================
+G1 零引用筛查（W1-3 · games 七方法）
 ========================================================================
 [PASS] start_rock_paper_scissors 在全仓库只定义 1 次且位于 games_controller.py（实际 1 次）
 [PASS] start_rock_paper_scissors 在 RalseiPet 里已无 def（只留转发）
@@ -21,12 +22,34 @@
 [PASS] end_guess_number 在全仓库只定义 1 次且位于 games_controller.py（实际 1 次）
 [PASS] end_guess_number 在 RalseiPet 里已无 def（只留转发）
 [PASS] end_guess_number 在 GamesController 类体内有 def
+[PASS] handle_game_input 在全仓库只定义 1 次且位于 games_controller.py（实际 1 次）
+[PASS] handle_game_input 在 RalseiPet 里已无 def（只留转发）
+[PASS] handle_game_input 在 GamesController 类体内有 def
+
 --- 调用点清单（真引用，排除定义处） ---
+  start_rock_paper_scissors              2 处
+        ralsei_pet/modules/dialogue_ui.py  L1658
+        ralsei_pet/src/main.py  L5938
+  play_rock_paper_scissors               0 处
+  determine_rock_paper_scissors_winner   0 处
+  end_rock_paper_scissors                1 处
+        ralsei_pet/src/main.py  L4487
+  start_guess_number                     3 处
+        ralsei_pet/modules/dialogue_ui.py  L1662
+        ralsei_pet/modules/dialogue_ui.py  L1666
+        ralsei_pet/src/main.py  L5941
+  play_guess_number                      0 处
+  end_guess_number                       1 处
+        ralsei_pet/src/main.py  L4489
+  handle_game_input                      2 处
+        ralsei_pet/modules/dialogue_ui.py  L1249
+        ralsei_pet/tests/test_dialogue_ai.py  L76
 [PASS] dialogue_ui 仍调用 start_rock_paper_scissors
 [PASS] dialogue_ui 仍调用 start_guess_number
-[PASS] dialogue_ui 仍调用 handle_game_input
+[PASS] dialogue_ui 仍调用 handle_game_input（W1-7 后经宿主 __getattr__ 转发）
 [PASS] main.py（update_stats 5 分钟超时）仍调用 end_rock_paper_scissors
 [PASS] main.py 仍调用 end_guess_number
+
 --- 行为级转发探针 ---
 [PASS] GamesController 实例可解析 start_rock_paper_scissors
 [PASS] start_rock_paper_scissors 可调用
@@ -42,9 +65,12 @@
 [PASS] play_guess_number 可调用
 [PASS] GamesController 实例可解析 end_guess_number
 [PASS] end_guess_number 可调用
+[PASS] GamesController 实例可解析 handle_game_input
+[PASS] handle_game_input 可调用
 [PASS] 转发：宿主可解析 start_rock_paper_scissors
 [PASS] 转发：宿主可解析 end_guess_number
 [PASS] 反例控制：不存在的方法 hasattr 必须为 False（转发不会吞掉 AttributeError）
 [PASS] 反例控制：不存在的方法抛 AttributeError（保住 hasattr/getattr 语义）
 [PASS] 反例控制：控制器无该方法时转发确实失效（证明上一段不是恒真）
-合计：PASS=45 FAIL=0
+
+合计：PASS=50 FAIL=0

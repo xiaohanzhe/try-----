@@ -1,0 +1,25 @@
+[PASS] 搬前快照里 RalseiPet 有 handle_game_input
+[PASS] 当前 GamesController 有 handle_game_input
+[PASS] 方法体**逐字等价**（零归一化：1754 字符）
+[PASS] 反向控制：needle "reason='user_quit'" 命中 1 次（必须 ≥1）
+[PASS] 反向控制：篡改确实改变了文本（不是空操作）
+[PASS] 反向控制：篡改后判据判为不等（判据有鉴别力）
+[PASS] 反向控制：未篡改的原文仍判为相等（排除替换式自伤）
+[PASS] 宿主 RalseiPet 类体里已无 handle_game_input 的 def
+[PASS] GamesController 类体里有 handle_game_input 的 def
+[PASS] 当前 main.py 全文里已无 handle_game_input 的定义（迁移不留副本）
+[PASS] 宿主实例经 __getattr__ 可解析 handle_game_input
+[PASS] handle_game_input 解析到的是**绑定在 GamesController 上**的方法
+[PASS] 宿主**类**上没有该方法（类型查找 getattr(type(x), n) 会 AttributeError，符合语义）
+[PASS] 控制器实例字典里无 game_state（状态没搬进控制器）
+[PASS] 控制器实例字典里无 guess_number_game（状态没搬进控制器）
+[PASS] 控制器实例字典里无 rock_paper_scissors_options（状态没搬进控制器）
+[PASS] HideAndSeekController 类上有 _abort_hide_and_seek（兄弟白名单的目标）
+[PASS] 躲猫猫中说「退出游戏」→ 返回 True
+[PASS] **跨控制器链真的接通**：调到了 HideAndSeekController._abort_hide_and_seek（实际 [{'reason': 'user_quit'}]）
+[PASS] 躲猫猫退出后说了收场台词
+[PASS] 反向控制：无兄弟控制器时确实 AttributeError（上面那条不是恒真）
+[PASS] dialogue_ui.py 仍以 `self.parent.handle_game_input(...)` 调用（行 [1249]）
+[PASS] 调用写法未变（仍是 self.parent，未改成 self.parent.games.…）
+
+合计：PASS=23 FAIL=0

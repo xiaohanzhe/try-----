@@ -1,0 +1,77 @@
+{
+  "appearance": {
+    "outfit": "default",
+    "accessories": [],
+    "color_scheme": "default",
+    "size": "normal",
+    "animation_speed": 1.0,
+    "background": "default",
+    "weather_effects": false,
+    "lighting_effects": "default",
+    "particle_effects": false
+  },
+  "behavior": {
+    "personality_traits": {
+      "introvert_extrovert": 30,
+      "optimism_pessimism": 70,
+      "bravery_caution": 50,
+      "curiosity": 80,
+      "loyalty": 90,
+      "patience": 70,
+      "creativity": 85,
+      "empathy": 95,
+      "playfulness": 80,
+      "neatness": 60
+    },
+    "active_level": "medium",
+    "interaction_frequency": "medium",
+    "humor_level": "medium",
+    "formality_level": "low",
+    "initiative_level": "low",
+    "emotional_intensity": "medium",
+    "verbosity": "medium"
+  },
+  "content": {
+    "knowledge_areas": [
+      "deltarune",
+      "undertale",
+      "general"
+    ],
+    "interests": [
+      "games",
+      "music",
+      "art",
+      "reading"
+    ],
+    "conversation_topics": [
+      "daily_life",
+      "hobbies",
+      "emotions",
+      "ideas"
+    ],
+    "language_style": "friendly",
+    "response_length": "medium",
+    "creativity_level": "medium",
+    "humor_type": "wholesome"
+  },
+  "privacy": {
+    "data_collection": "minimal",
+    "activity_tracking": true,
+    "learning_mode": true,
+    "screen_content_analysis": false,
+    "voice_analysis": false,
+    "location_tracking": false
+  },
+  "environment": {
+    "home_location": "bedroom",
+    "time_of_day_preference": "day",
+    "weather_preference": "sunny",
+    "temperature_preference": "warm"
+  },
+  "relationship": {
+    "relationship_type": "friend",
+    "nickname": "",
+    "anniversary": "",
+    "special_connections": []
+  }
+}

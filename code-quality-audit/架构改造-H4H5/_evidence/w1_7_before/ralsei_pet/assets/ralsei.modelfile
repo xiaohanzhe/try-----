@@ -1,0 +1,45 @@
+# ============================================================================
+# 底座换型记录（2026-09-19）
+#   本文件当前生成 **ralsei:v3**：
+#     FROM qwen2.5:3b           → FROM qwen3:4b-instruct-2507-q4_K_M
+#   为什么换（证据 `code-quality-audit/人味改造-2026-09-18/_evidence/probe_models_compare.txt`）：
+#     · 用户决定「所有对话全权交给 AI，不给内置台词」，前提是「AI 要足够生动」；
+#     · 3B 实测过不了这个前提：会吐 persona 明令禁说的客服腔（「早安，有什么我可以帮忙的吗？」）、
+#       把自己的状态说成主人的（饿 →「你今天过得怎么样呢？」）、把已吃饱说成饿（意思反转）；
+#     · 4B(qwen3-4b-instruct-2507) 在**同一份 persona、同一套参数**下 28 条零判退、
+#       句子明显更活（「吃饱啦，再吃会撑的～」「被骂了啊……是因为什么事呢？」）；
+#     · 7B(qwen2.5) 也更干净，但**更慢且更平**（「谢谢你。」「好痒啊……」）→ 没有理由选它。
+#   成本：事件类首字中位 530ms → 829ms、整句 1214ms → 1815ms（CPU 推理，本机无独显）。
+# ============================================================================
+FROM qwen3:4b-instruct-2507-q4_K_M
+
+# 会话窗口与采样参数。
+#
+# 为什么必须写在这里而不是请求里：
+#   App 走的是 Ollama 的 OpenAI 兼容端点 /v1/chat/completions，
+#   实测该端点**不接受** num_ctx 与 repeat_penalty —— 无论放在顶层还是
+#   塞进 options，都会被静默忽略（长提示词恒定截断在 ~2050 tokens）。
+#   只有 Ollama 原生 /api/chat 的 options.num_ctx 生效，或写进这里。
+#   对照组实测：/v1 + num_ctx=8192 → prompt_tokens=2050；
+#               /api/chat + options.num_ctx=8192 → prompt_tokens=5032。
+#   ⚠️ 这也是**换底座时必须重新 build 而不是只改 config.json**的原因：
+#      `api_client` 只发 temperature + max_tokens，top_p / repeat_penalty / num_ctx
+#      全部继承自这里 —— 直接指向一个裸模型会**静默**换掉采样参数。
+#
+# 角色设定**不放在这里**：单一真源是 ralsei_pet/assets/ralsei_persona.md，
+# 由 App 每次请求作为 system 发出（Ollama 会用 messages 里的 system 整体替换本文件的 SYSTEM）。
+#   （但**注意**：底座自带的"helpful assistant"倾向不会被 persona 完全压住 ——
+#     3B 照样吐客服腔，所以 `modules/event_speech.py` 里另有一道代码级禁语闸。）
+
+# 窗口：模型支持 32768，默认只有 ~2048，装不下人设 + 历史 + 记忆
+PARAMETER num_ctx 8192
+
+# 采样：比默认 0.8 略高一点更活，但要靠输出护栏兜住小模型的续写失态
+PARAMETER temperature 0.85
+PARAMETER top_p 0.92
+
+# 重复惩罚：抑制"你还好吗／要不要休息一下"这类模板复读
+PARAMETER repeat_penalty 1.15
+
+# 单次输出上限，与 App 侧 max_tokens 一致
+PARAMETER num_predict 256
