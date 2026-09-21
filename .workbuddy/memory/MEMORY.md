@@ -8,7 +8,7 @@
 - 每轮改动完成即 **commit + push**（"以免后期找不到"）；称呼"用户"；技术细节我拍板；不可逆动作先说影响面。
 - 报告放项目根；证据进 `code-quality-audit/<轮次>/_evidence/`（`_recon/` gitignore）。
   下载/生成物默认落 `E:\Download`（临时件 `_tmp\` 用后即删）；仓库内产物留项目目录。
-- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（**24 套件 / 1164 PASS / 全 IDENTICAL**）。
+- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（**24 套件 / 1165 PASS / 全 IDENTICAL**）。
   G2 跑 `compileall` → 可能改写被跟踪的 `src/__pycache__/*.pyc` → 收工前 `git checkout --`。
 
 ## 1. 环境（**全文见参考 §1**）
@@ -121,18 +121,30 @@
   ★★ **A/B 盲区**：`types.MethodType(fn, stub)` 下 `self` 即 **stub** ⇒ **铁律 1/2/3 在 A/B 中结构上不可见**。
   **A/B 只答"行为是否一致"**；铁律由 **e2e（真控制器实例）** 负责。**别用 A/B 的"没差别"去否定铁律。**
 
-## 8. 第 26 轮复审（**全文见参考 §14 + `代码质量复审报告_2026-09-21_第二十六轮.md`**）
+## 8. 第 26 轮复审 + 处置（**全文见参考 §14 + `代码质量复审报告_2026-09-21_第二十六轮.md` + `第二十六轮处置报告_2026-09-21.md`**）
 - **第一次复检 = 全项目代码质量复审（只读，先报告再定）**。**H4/H5 Wave 1 判定合格** ⇒ 删壳前提已具备
-  （但**删壳独立评估、不顺手做**）。人味线 7/8 契约成立。G2 重跑 24 套件/1164 PASS/全 IDENTICAL。
-- ❗**P0 待用户裁定**：`dialogue_ui.py:1259-1270` `_rule_reply()` 调 `dialogue_system.generate_response()` 罐头皮；
-  回落点 `:1325`（AI 空/判退救不回）、`:1346`（AI 未启用 **或** `chat_with_ai` 抛异常）。
-  **`start_autonomous_speech`（`main.py:4590-4592`）是干净的** ⇒ 「AI 关必沉默」是否也管"用户主动打字"= 产品决策。
-- **4 个确认死代码**（零调用）：`react_to_file_emotionally`(L8205)/`follow_file`(L8232)/`react_to_file_deletion`(L8238)/
-  `check_dragged_file`(L8588 空实现)；全项目**无拖拽入口**。⚠️ `interact_with_file`/`_folder`/`check_file_content`
-  **是活的**（L4124 25%→L4131→L8096）⇒ 印证「属文件反应非文件操作」。
-- **假绿灾区**：`main.py:6849-6916` 连续 7 个 `except Exception: pass` 建 AI 上下文 → 静默缺失="AI 变笨"无痕。
-- ⭐**误报订正**：`config_manager.py:239`/`memory_store.py:316` **是正确模式**（`.tmp` 清理，真因已 log）
-  ⇒ **先读原文再看计数**。
-- 总口径 = `架构改造-H4H5/H4-H5施工总口径_2026-09-21.md`（Wave 2 依据）。
-- **待办**：真机手感实测（用户侧）｜`.gitattributes` 换行口径（**先议后动**）｜`.bak`/`_tmp` 存量（**等用户点头，不得批量删**）｜
+  （但**删壳独立评估、不顺手做**）。人味线 7/8 契约成立。
+- ✅ **处置已施工完毕（commit `5c0a3e7`，push + `ls-remote` 核验 SYNCED）**：
+  * **P1 死代码实删 8 个**（报告只点名 4）—— ★**正则口径漏判 4 个**，改 **AST 口径**后现形，
+    全是 **W1-3/W1-4「搬迁残留」**（控制器已建、宿主老副本没删）：
+    `follow_file`/`react_to_file_deletion`/`check_dragged_file`/`check_video_windows`/
+    `check_game_windows`/`react_to_game`/`watch_video`/`react_to_video_content`。
+    ⇒ **铁律：零引用筛查一律走 AST（`scan_zero_refs.py`），不走 `\b<name>\b` 正则**（注释提及会被计成"引用"）。
+  * **P2 补异常日志 6 处**：`memory_system._apply_loaded/_kw_of/recall` + `memory_store.migrate_from_fallback`
+    + `desktop_interaction.get_frame_rect/mark_app_as_opened`（独立探针 PASS=14/0）。
+    **未动** `config_manager.py:239`/`memory_store.py:316`（`.tmp` 清理，正确模式 —— 误报订正再次生效）。
+  * **P3 两处**：`paintEvent` 加 `try/finally` + `painter.end()`；自主开口 `_clean_ai_reply` **补传 `recent`**
+    （原未传 → 护栏第 2 步整步跳过 → 自主开口永不判退重采样，与对话链路不一致）。
+  * **★ 回归锁 B12/B13 升级：「字面量子串 → AST 结构断言」+ 新增 B13b**（断言传了 `recent`）。
+    原判据只对一种写法有效，P3-a 后假红 ⇒ **锁在正确工作，归因是"锁得太具体"不是"太脆"**。
+    ⇒ **铁律：回归锁断行为/结构，别断赋值/写法。**
+- **保留项（活链路/专项归属，勿删）**：`react_to_file_emotionally`（H4 文件反应专项唯一实现）/
+  `interact_with_file`/`_folder`/`check_*_content`（`main.py:4124` 25% 分支）。
+- **假绿灾区（已补日志）**：`main.py:6849-6916` 连续 7 个 `except Exception: pass` 建 AI 上下文。
+- **决定不做（已记入报告，待用户回头否决）**：① **§3.4 关键路径异常计数**（探针已能直接断言日志被调用，
+  比运行期计数更早暴露；加计数器要动 6 个模块状态面，收益递减）；② **§0-P0 两条口径**
+  （AI 失败是否回落内置台词 / 隐私清理是否走回收站）→ **保守自判 + 记录待裁定**；③ **§3.5** 退出清理同理。
+- **❗P0 仍待用户裁定**：`dialogue_ui.py:1259-1270` `_rule_reply()` 罐头皮 + 回落点 `:1325`/`:1346`
+  ⇒ 「AI 关必沉默」是否也管"用户主动打字"= 产品决策。
+- **待办**：真机手感实测（用户侧）｜`.gitattributes` 换行口径（**先议后动**）｜`_tmp`/`.bak` 存量（**等用户点头，不得批量删**）｜
   H4「文件反应」专项（3 个 `check_*_content`，活跃不可删）。
