@@ -1,0 +1,82 @@
+--- manifests tree ---
+  registry.ollama.ai/library/qwen3/4b-instruct-2507-q4_K_M  (859 bytes)
+  registry.ollama.ai/library/ralsei/v3  (977 bytes)
+
+--- blobs by size ---
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial 4.361 GB
+  sha256-85e4a5b7b8ef0e48af0e8658f5aaab9c2324c76c1641493f4d1e25fce54b18b9  2.326 GB
+  sha256-d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12  0.000 GB
+  sha256-eade0a07cac7712787bbce23d12f9306adb4781d873d1df6e16f7840fa37afec  0.000 GB
+  sha256-b72accf9724e93698c57cbd3b1af2d3341b3d05ec2089d86d273d97964853cd2  0.000 GB
+  sha256-47f58071fc5c89a98265fee28b779f97b0846f72e3b931b19b9524328a54afec  0.000 GB
+  sha256-cc31d9ff2c7076e44c77ce3f286a2f6ab02eaaeaa5133ac75ec01d83ba17da91  0.000 GB
+  sha256-0914c7781e001948488d937994217538375b4fd8c1466c5e7a625221abd3ea7a  0.000 GB
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial-11 0.000 GB
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial-12 0.000 GB
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial-5 0.000 GB
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial-3 0.000 GB
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial-8 0.000 GB
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial-10 0.000 GB
+total blobs: 24
+
+--- any partial left ---
+  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730-partial  4.361 GB
+
+--- ralsei manifests content ---
+  FILE: C:\Users\23002\.ollama\models\manifests\registry.ollama.ai\library\ralsei\v3
+    mediaType=application/vnd.docker.distribution.manifest.v2+json
+    config.keys=['mediaType', 'digest', 'size']
+      layer application/vnd.ollama.image.model sha256:85e4a5b7b8ef0e48a                                               2497280480
+      layer application/vnd.ollama.image.template sha256:eade0a07cac771278                                               1379
+      layer application/vnd.ollama.image.license sha256:d18a5cc71b84bc4af                                               11338
+      layer application/vnd.ollama.image.params sha256:47f58071fc5c89a98                                               157
+
+--- 4b manifest (reference) ---
+  FILE: C:\Users\23002\.ollama\models\manifests\registry.ollama.ai\library\qwen3\4b-instruct-2507-q4_K_M
+      layer application/vnd.ollama.image.model sha256:85e4a5b7b8ef0e48a                                               2497280480
+      layer application/vnd.ollama.image.template sha256:eade0a07cac771278                                               1379
+      layer application/vnd.ollama.image.license sha256:d18a5cc71b84bc4af                                               11338
+      layer application/vnd.ollama.image.params sha256:0914c7781e0019484                                               119
+
+--- server.log tail ---
+  log=C:\Users\23002\AppData\Local\Ollama\server.log lines=7056
+  | slot   operator(): id  0 | task 28 | cached n_tokens = 2314, memory_seq_rm [2314, end)
+  | slot init_sampler: id  0 | task 28 | init sampler, took 0.45 ms, tokens: text = 2327, total = 2327
+  | slot print_timing: id  0 | task 28 | prompt eval time =     560.80 ms /    13 tokens (   43.14 ms per token,    23.18 tokens per second)
+  | slot print_timing: id  0 | task 28 |        eval time =    4814.93 ms /    40 tokens (  123.46 ms per token,     8.10 tokens per second)
+  | slot print_timing: id  0 | task 28 |       total time =    5375.73 ms /    53 tokens
+  | slot print_timing: id  0 | task 28 |    graphs reused =         59
+  | slot      release: id  0 | task 28 | stop processing: n_tokens = 2366, truncated = 0
+  | srv  update_slots: all slots are idle
+  | [GIN] 2026/09/22 - 02:12:51 | 200 |    5.4136341s |       127.0.0.1 | POST     "/api/chat"
+  | srv  server_strea: conv_id= (empty=1)
+  | srv    operator(): chat format: peg-native
+  | slot get_availabl: id  0 | task -1 |  - checking sim = 0.996 (2314/2323) > 0.100
+  | slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.996 (> 0.100 thold), f_keep = 0.978
+  | slot launch_slot_: id  0 | task -1 | sampler chain: logits -> penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist
+  | slot launch_slot_: id  0 | task -1 | sampler params:
+  | 	repeat_last_n = 64, repeat_penalty = 1.150, frequency_penalty = 0.000, presence_penalty = 0.000
+  | 	dry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64
+  | 	top_k = 20, top_p = 0.920, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 0.850
+  | 	mirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900
+  | slot launch_slot_: id  0 | task 69 | processing task, is_child = 0
+  | slot   operator(): id  0 | task 69 | new prompt, n_ctx_slot = 8192, n_keep = 4, task.n_tokens = 2323
+  | slot   operator(): id  0 | task 69 | cached n_tokens = 2314, memory_seq_rm [2314, end)
+  | slot init_sampler: id  0 | task 69 | init sampler, took 0.41 ms, tokens: text = 2323, total = 2323
+  | slot print_timing: id  0 | task 69 | prompt eval time =     410.56 ms /     9 tokens (   45.62 ms per token,    21.92 tokens per second)
+  | slot print_timing: id  0 | task 69 |        eval time =   12281.00 ms /   100 tokens (  124.05 ms per token,     8.06 tokens per second)
+  | slot print_timing: id  0 | task 69 |       total time =   12691.56 ms /   109 tokens
+  | slot print_timing: id  0 | task 69 |    graphs reused =        157
+  | slot      release: id  0 | task 69 | stop processing: n_tokens = 2422, truncated = 0
+  | srv  update_slots: all slots are idle
+  | [GIN] 2026/09/22 - 02:13:04 | 200 |   12.7330323s |       127.0.0.1 | POST     "/api/chat"
+  | [GIN] 2026/09/22 - 02:13:04 | 404 |      2.6254ms |       127.0.0.1 | POST     "/api/chat"
+  | [GIN] 2026/09/22 - 02:13:10 | 200 |      4.1296ms |       127.0.0.1 | GET      "/api/tags"
+  | [GIN] 2026/09/22 - 02:15:19 | 200 |       4.139ms |       127.0.0.1 | GET      "/api/tags"
+  | [GIN] 2026/09/22 - 02:17:10 | 200 |      4.2392ms |       127.0.0.1 | GET      "/api/tags"
+  | [GIN] 2026/09/22 - 02:22:21 | 200 |      4.2021ms |       127.0.0.1 | GET      "/api/tags"
+  | time=2026-09-22T02:22:38.993+08:00 level=INFO source=download.go:299 msg="2bada8a74506 part 8 attempt 0 failed: unexpected EOF, retrying in 1s"
+  | [GIN] 2026/09/22 - 02:23:41 | 200 |      4.3361ms |       127.0.0.1 | GET      "/api/tags"
+  | [GIN] 2026/09/22 - 02:24:16 | 200 |       7.159ms |       127.0.0.1 | GET      "/api/tags"
+  | [GIN] 2026/09/22 - 02:24:59 | 200 |            0s |       127.0.0.1 | HEAD     "/"
+  | [GIN] 2026/09/22 - 02:24:59 | 200 |      4.7924ms |       127.0.0.1 | GET      "/api/tags"

@@ -312,6 +312,30 @@ SUITES = [
                 '+ main.py 三处接线（import / _CONTROLLER_ATTRS / 6 字段预声明）'
                 '+ 桌面与作品内场景同级同构（无 desktop 特判）',
     },
+    {
+        # 场景路由层（第二十九轮）。用户要求「给模型训练在什么语境下怎么走路线、
+        # 去哪个场景；你只需要留好拓展的接口……一切根据原作」。这一套守的是：
+        #   · 路由数据层零依赖（与 scene_system 同源纪律）；
+        #   · match() 的匹配语义（when_scene/area/chapter/mood/event/keywords
+        #     + AND/OR + priority 三级排序）；
+        #   · **三条设计律**（匹配不到返回 None 不伪装 / 坏规则跳过不作废整表 /
+        #     未知条件键一律放行 —— 全部配正负控制成对）；
+        #   · destinations 自省会过滤未登记场景（防 AI 被送往空场景）；
+        #   · **零行为变化**：路由层不得注册定时器、不得自己播动画、只有
+        #     follow_route 允许调 switch（否则 P0 判据失效）；
+        #   · 原作房间表研究记录的完整性（"一切根据原作"的留痕）。
+        # **不联网、不实例化 App、不需要显示器**（纯数据 + 桩宿主）。
+        'id': 'scene_routing',
+        'script': os.path.join(ROOT, 'code-quality-audit', '场景系统-P0',
+                               'verify_scene_routing.py'),
+        'offscreen': False,
+        'desc': '场景路由层：数据层零依赖 + match() 匹配语义（场景/区域/章节/心情/'
+                '事件/关键词，AND 主 + 关键词 OR，priority→命中数→声明序三级排序）'
+                '+ 三条设计律正负成对（匹配不到→None 不伪装 / 坏规则跳过 / 未知键放行）'
+                '+ destinations 过滤未登记场景 + 控制器 load_routes 幂等与状态不劈裂'
+                '+ main.py 预声明 3 个路由字段 + **零行为变化**（无定时器 / 无动画 / '
+                '仅 follow_route 调 switch）+ 原作房间表研究记录完整性',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

@@ -836,6 +836,11 @@ class RalseiPet(QMainWindow):
         self.scene_objects = []                     # 当前场景的可见物件缓存（P1 渲染层消费）
         self._scene_anchors = {}                     # 全局命名锚点表（_anchors.json）
         self._scene_loaded = False                  # 索引是否已尝试加载过（幂等守卫，防重复 IO）
+        # ---- 路由层（"什么语境下去哪"）状态 ----
+        # 与上面同一条铁律：控制器会用到的名字必须在**宿主**预声明。
+        self._scene_routes = None                   # load_routes() 的结果（含 routes/fallback）
+        self._routes_loaded = False                 # 路由表是否已尝试加载过（幂等守卫）
+        self._scene_route_reason = ''               # 最近一次路由命中给的"为什么走这条路"
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):

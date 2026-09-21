@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "note": "场景路由表 —— 『什么语境下走哪条路、去哪个场景』。这是 P0 交付的**拓展接口**：规则全在这里，改路由不需要碰任何 Python。控制器 modules/scene_routing.py 只负责『读 + 匹配』。",
+    "how_it_works": [
+      "1. 控制器把当前语境（在哪个场景 / 宠物心情 / 触发了什么事件 / 聊天关键词）打包成 context。",
+      "2. scene_routing.match() 按 priority 升序、命中条件多的优先，挑出第一条匹配的规则。",
+      "3. 拿规则的 to 字段去 switch()。匹配不到就是『没有理由换场景』→ 原地不动。"
+    ],
+    "rule_fields": {
+      "to": "目标 scene_id（必填，必须登记在 _index.json）",
+      "priority": "越小越先匹配；不写 = 500；兜底 = 10000",
+      "reason": "为什么走这条路的自然语言解释 —— 会注入给 AI，让它能说出有因果的话",
+      "when_scene": "当前场景 id；'*' = 任意场景",
+      "when_area": "当前区域 id",
+      "when_chapter": "当前章节 id",
+      "when_mood": "宠物心情（单个或数组，命中任一即可）",
+      "when_event": "触发事件名（单个或数组，命中任一即可）",
+      "when_keywords": "聊天关键词（数组，命中任一即可）—— 注意是 OR 语义"
+    },
+    "why_no_builtin_original_scenes": "原作场景（城堡镇 / 黑暗世界…）暂不登记：它们的素材还没做（见 __main__ §7 待裁定），登记了也会切到一个空场景 = 『世界突然变白』，比不切更糟。等素材到位，往 _index.json 加一行 + 往这里加一条规则即可，零改代码。",
+    "original_room_reference": "原作真实房间表见仓库根 原作场景线路研究_2026-09-22.md（抄自 code.deltarune.wiki 的 scr_roomname 反编译）。等做场景时照那张表登记。"
+  },
+  "routes": [
+    {
+      "to": "desktop",
+      "priority": 10,
+      "reason": "任何时候都该能回到桌面 —— 这是桌宠的家，也是用户的正常工作区",
+      "when_scene": "*"
+    }
+  ],
+  "_fallback": {
+    "to": "desktop",
+    "reason": "没有匹配到任何规则时的落脚点：回桌面"
+  }
+}

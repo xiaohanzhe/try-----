@@ -173,14 +173,32 @@ ok('A5 负控制：A3/A4 的判据真能抓到越界 import（合成样本）',
        sorted(_FAKE_BAD_IMPORTS & _QT_MODULES),
        sorted(_FAKE_BAD_IMPORTS & _PROJECT_INTERNAL)))
 
-# scene_controller 只许 import scene_system（+ 标准库）
-_CTL_ALLOWED = {'logging', 'scene_system'}
+# scene_controller 只许 import 标准库 + 零依赖的姊妹数据层模块
+#
+# 白名单里为什么有两个 data 层模块（第 29 轮扩的）：
+#   · `scene_system`  —— 场景数据 + 几何纯函数；
+#   · `scene_routing` —— 路由数据 + 匹配纯函数（第 29 轮新增）。
+# 两者是**平级的零依赖模块**（各自都禁 Qt / 禁项目内业务模块，有 A2/A3 与
+# 路由套件的 A2/A3 双份断言守着）。控制器 import 它们不会接上初始化环 ——
+# 环的风险来自"回头 import 有反向依赖的业务模块"（logger_utils / data_store…），
+# 而不是来自这两个纯数据模块。
+# ⚠️ 本白名单是**显式**的：新增一条必须在这里加一行。这个"麻烦"是刻意的 ——
+#    它逼每次放宽都成为一次有意识的决定（本轮就是被这条断言逮到的）。
+_CTL_ALLOWED = {'logging', 'scene_system', 'scene_routing'}
 _CTL_OVER = ((SCENE_CTL_IMPORTS & _QT_MODULES)
              | (SCENE_CTL_IMPORTS & (_PROJECT_INTERNAL - {'scene_system'}))
              | (SCENE_CTL_IMPORTS - _CTL_ALLOWED))
-ok('A6 scene_controller.py 只 import 标准库 + scene_system（不 import Qt / 其他项目模块）',
+ok('A6 scene_controller.py 只 import 标准库 + 零依赖数据层（不 import Qt / 业务模块）',
    not _CTL_OVER,
    'imports=%s（越界=%s）' % (sorted(SCENE_CTL_IMPORTS), sorted(_CTL_OVER)))
+
+# 负控制：A6 的白名单不许宽到"什么都放得过"
+_FAKE_CTL_BAD = 'import logging\nimport json\nfrom data_store import x\n'
+_FCB = _imports_of(_FAKE_CTL_BAD)
+ok('A6b 负控制：A6 的判据真能抓到"业务模块 + 未列入白名单的标准库"',
+   bool(_FCB & _PROJECT_INTERNAL)
+   and bool(_FCB - _CTL_ALLOWED),
+   '越界=%s' % sorted((_FCB & _PROJECT_INTERNAL) | (_FCB - _CTL_ALLOWED)))
 
 # 源码级：module 里不许出现 QTimer/QWidget 这类名字（防"忘了 import 但抄了代码"）
 ok('A7 scene_system.py 源码里不出现 Qt 类名（防漏 import 的抄写残留）',

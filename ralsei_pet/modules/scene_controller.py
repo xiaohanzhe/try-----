@@ -66,6 +66,7 @@ from scene_system import (  # noqa: F401  (同目录扁平导入，见 main.py �
     scenes_dir,
     visible_objects,
 )
+import scene_routing  # 同为纯标准库模块，接环风险为零（见 scene_routing 的零依赖纪律）
 
 _log = logging.getLogger(__name__)
 
@@ -287,3 +288,162 @@ class SceneController(object):
         if scene is None:
             return ''
         return scene.describe()
+
+    # ------------------------------------------------------------------
+    #  路由（"什么语境下去哪"）—— 数据在 assets/scenes/_routes.json
+    # ------------------------------------------------------------------
+    def load_routes(self, scene_dir_path=None):
+        """读路由表（**幂等**，由 `_routes_loaded` 守）。返回 True 表示可用。
+
+        与 `load()` 分开是因为两者的失败**互不影响**：索引没读上 = 没有任何
+        场景可去（整个场景系统降级）；路由表没读上 = 场景都在、只是"没有
+        自动走的理由"（用户手动切场景照常可用）。合成一个会让后者拖垮前者。
+        """
+        pet = self.p
+        try:
+            if not pet.__dict__.get('_routes_loaded'):
+                routes = scene_routing.load_routes(scene_dir_path)
+                pet._scene_routes = routes
+                pet._routes_loaded = True
+                if not routes.get('ok'):
+                    _log.warning("路由表不可用（自动换场景降级为不换）: %s",
+                                 routes.get('error'))
+                    return False
+            return bool((pet.__dict__.get('_scene_routes') or {}).get('ok'))
+        except Exception as e:
+            _log.warning("路由表加载失败（自动换场景降级为不换）: %s", e)
+            return False
+
+    def context_snapshot(self, extra=None):
+        """打包**当前语境**，交给 `scene_routing.match()` 判定该不该换场景。
+
+        这是"路由层"与"宿主"之间**唯一**的数据接口 —— 路由模块不认识桌宠，
+        它只吃这个 dict（见 `scene_routing._match_one` 认的键）。
+
+        已填的键：
+
+          · `scene_id` / `area_id` / `chapter_id` —— 从当前 SceneState 取
+            （没有当前场景时一律 `None`，规则里写 `when_scene` 就不会命中）。
+          · `mood` —— 宠物心情。**从 `emotion_system` 投影**，取不到就是
+            `None`（**不伪造一个 'neutral'** —— 那会让"我不知道心情"静默地
+            匹配上 `when_mood: neutral` 的规则，是设计律 1 的变体）。
+          · `keywords` —— 语境关键词集合。**取不到就是空集合**，同理。
+
+        `extra` 里的键**覆盖**上面推导出来的值（调用方明确知道语境时以它为准）。
+
+        ⚠️ 全部字段都做了"取不到给 None"处理，**本方法永不抛**：路由是锦上添花，
+        它失败绝不能让对话/移动这些主路径崩掉。
+        """
+        ctx = {
+            'scene_id': None,
+            'area_id': None,
+            'chapter_id': None,
+            'mood': None,
+            'event': None,
+            'keywords': set(),
+        }
+        try:
+            scene = self.p.__dict__.get('_scene_state')
+            if scene is not None:
+                ctx['scene_id'] = getattr(scene, 'scene_id', None)
+                ctx['area_id'] = getattr(scene, 'area_id', None)
+                ctx['chapter_id'] = getattr(scene, 'chapter_id', None)
+
+            # 心情：emotion_system 的 API 面在不同轮次有变动，这里用**鸭子类型**
+            # 探测（有 current_mood 属性或 get_mood() 方法都接受），探测不到就
+            # 保持 None —— 不去猜、不去造。
+            emo = self.p.__dict__.get('emotion_system')
+            if emo is not None:
+                mood = getattr(emo, 'current_mood', None)
+                if mood is None:
+                    getter = getattr(emo, 'get_mood', None)
+                    if callable(getter):
+                        try:
+                            mood = getter()
+                        except Exception:
+                            mood = None
+                if isinstance(mood, str) and mood:
+                    ctx['mood'] = mood
+        except Exception as e:
+            _log.debug("语境打包（读取场景/心情）失败，用默认空语境: %s", e)
+
+        if isinstance(extra, dict):
+            for key, value in extra.items():
+                if value is not None:
+                    ctx[key] = value
+        return ctx
+
+    def pick_route(self, extra=None, scene_dir_path=None):
+        """判定**当前语境该走哪条路**。返回命中的 route（dict）或 `None`。
+
+        返回 `None` = 「没有任何理由换场景」—— 调用方应原地不动，
+        **不要**拿它去 switch（`switch(None)` 会失败并把日志刷满 warning）。
+
+        P0 阶段本方法**没有自动调用方**（不注册定时器、不在事件里挂钩），
+        这是"零行为变化"验收的要求。P1 才由 ai_driver / 事件链路调用它。
+        """
+        try:
+            if not self.load_routes(scene_dir_path):
+                return None
+            routes = self.p.__dict__.get('_scene_routes') or {}
+            return scene_routing.match(routes, self.context_snapshot(extra))
+        except Exception as e:
+            _log.warning("路由判定失败（不换场景）: %s", e)
+            return None
+
+    def follow_route(self, extra=None, scene_dir_path=None):
+        """判定 + 执行：有路走就切过去。返回切过去的 `scene_id` 或 `None`。
+
+        语义（重要）：**已经站在目标场景里时返回 None**。否则每次调用都会
+        "切到自己"，日志被刷满、且 P1 接上转场动画后会**原地重播转场**。
+        这个判断放在这里而不是 `switch()` 里 —— `switch()` 显式切到当前场景
+        应该仍然算一次调用（用户点 UI 里"回到桌面"时转场该播）。
+
+        目标场景**未登记**时（比如路由表写了 but _index 里没有）→ 保持原地，
+        返回 None 并把原因记进日志。切到一个不存在的场景会走 `switch()` 的
+        失败分支，那里会 warning，但调用方拿到的是 False、看不出"是路由表写错
+        了还是场景文件坏了"——所以这里先自己筛一道。
+        """
+        route = self.pick_route(extra, scene_dir_path)
+        target = scene_routing.route_target(route)
+        if not target:
+            return None
+        if target == self.p.__dict__.get('current_scene'):
+            return None
+        index = self.p.__dict__.get('_scene_index') or {}
+        if target not in (index.get('scenes') or {}):
+            _log.warning("路由指向的场景 %r 未登记在索引里（保持当前场景）", target)
+            return None
+        # 理由暂存进宿主：P1 的 AI 注入与转场文案都要用它（见 scene_routing
+        # 的 route_reason 文档）。P0 没有消费者，但**先落状态**，免得 P1 又
+        # 回头改这里（"函数写对了但产品用不上"的反面：先把数据备好）。
+        self.p._scene_route_reason = scene_routing.route_reason(route)
+        return target if self.switch(target, scene_dir_path) else None
+
+    def destinations(self):
+        """当前**可达**的场景清单（已过滤掉未登记的）。给 AI 的"我能去哪"。"""
+        try:
+            if not self.load_routes():
+                return []
+            routes = self.p.__dict__.get('_scene_routes') or {}
+            return scene_routing.destinations(
+                routes, self.p.__dict__.get('_scene_index'))
+        except Exception as e:
+            _log.warning("可达场景枚举失败: %s", e)
+            return []
+
+    def destinations_text(self):
+        """可达场景的中文清单（`''` = 没有 → 调用方应**整段不注入**）。"""
+        try:
+            if not self.load_routes():
+                return ''
+            routes = self.p.__dict__.get('_scene_routes') or {}
+            return scene_routing.describe_destinations(
+                routes, self.p.__dict__.get('_scene_index'))
+        except Exception as e:
+            _log.warning("可达场景描述生成失败: %s", e)
+            return ''
+
+    def route_reason(self):
+        """最近一次路由命中给出的理由（`''` = 没有）。"""
+        return self.p.__dict__.get('_scene_route_reason') or ''

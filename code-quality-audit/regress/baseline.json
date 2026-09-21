@@ -58,8 +58,8 @@
     "round5_smoke": {
       "exit": 0,
       "fail": 0,
-      "pass": 38,
-      "sha256": "557842c3592bde2989352c0d898477d54381737d1ad932ad8250490aaaac9bc1"
+      "pass": 39,
+      "sha256": "69e0f84626fc81bf8c62bd8875e788dcc2153a090e8153f6f24d7adc2a011a45"
     },
     "round5_verify": {
       "exit": 0,
@@ -148,8 +148,14 @@
     "scene_p0": {
       "exit": 0,
       "fail": 0,
-      "pass": 79,
-      "sha256": "221731d336c16068742dcd7c13cef4d2f870169573de1572f540441c94d0f9e7"
+      "pass": 80,
+      "sha256": "89573da6f2dc1182841b84bdff690cfe0209a026ba65eea3e97d0d920883321c"
+    },
+    "scene_routing": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 106,
+      "sha256": "a6f338e36c406a9ea507dd92c92da2122f8b6145eb23ff9aa914d5d2f36d40c5"
     }
   },
   "version": 1
