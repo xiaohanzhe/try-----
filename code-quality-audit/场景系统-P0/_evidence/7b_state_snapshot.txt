@@ -1,0 +1,11 @@
+=== 7B 状态快照 @ 2026-09-22 02:39 ===
+
+api/tags models:
+  ralsei:v3                          eb03d55cc270 2.33 GB
+  qwen3:4b-instruct-2507-q4_K_M      0edcdef34593 2.33 GB
+  -> 7B NOT in tags yet (still pulling)
+
+partial blob file size = 4.361 GB  <-- 这是稀疏预分配，不是进度！
+real progress (from /api/pull) = 42.70% (1.863 / 4.361 GB)
+
+教训：文件大小 != 进度。见 skill desktop-app-live-verification 铁律 5。
