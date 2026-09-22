@@ -4,7 +4,7 @@
     "enabled": true,
     "api_key": "",
     "base_url": "http://localhost:11434",
-    "model": "ralsei:v3",
+    "model": "ralsei:v4",
     "agent_id": "",
     "api_version": "v1",
     "timeout": 30,
@@ -47,5 +47,14 @@
   "behavior": {
     "energy_recovery_rate": 1.0,
     "hunger_increase_rate": 0.5
+  },
+  "startup": {
+    "_comment": "开机自启与预热。两者都是**用户可选项**，默认 false —— 不硬性开启。",
+    "auto_launch": false,
+    "auto_launch_comment": "是否随系统启动。开启方式见「设置 → 启动」，写入的是当前用户的 HKCU Run 项，不改系统级配置；随时可关。",
+    "prewarm": false,
+    "prewarm_comment": "启动后是否先发一次预热请求，把 Ollama 的 KV 前缀缓存喂热。冷启动首字可达 96~120s，预热后回到 1s 内。仅在本地 Ollama 下有意义。",
+    "prewarm_timeout": 180,
+    "prewarm_timeout_comment": "预热请求的超时（秒）。冷启动需算完整 persona，7B 在纯 CPU 上约 100~120s。"
   }
 }

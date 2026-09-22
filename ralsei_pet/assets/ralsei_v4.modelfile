@@ -1,0 +1,54 @@
+# ============================================================================
+# 底座换型记录
+#
+#   ralsei:v1  FROM qwen2.5:3b
+#   ralsei:v2  （中间版本）
+#   ralsei:v3  FROM qwen3:4b-instruct-2507-q4_K_M     ← 第 27~29 轮在用
+#   ralsei:v4  FROM qwen2.5:7b-instruct-q4_K_M        ← 本版（第 30 轮）
+#
+# 为什么换到 7B（用户口径，2026-09-22 原话）：
+#   「我想要用7B目的就是让他贴合人物并且不出bug，所以prompt尽量完整，
+#     还有，1~3s当然是首字的延迟啦」
+#   「7B为默认吧，你尽量把他压缩进5s内，当然，是在不影响人物真实性这类的前提下」
+#   ⇒ 换 7B 的动机是**质量**（贴合人物 / 少出格式崩坏），不是速度；
+#   ⇒ 验收指标是**首字延迟（TTF）**，目标先压进 5s。
+#
+# ★ 与 v3 的差异**只有 FROM 一行**，其余参数完全一致。
+#   这是刻意的 —— 换模型时**不要同时改采样参数**，否则出问题分不清是
+#   "模型变了"还是"参数变了"（第 27 轮的教训）。
+#
+# ★ 回退方式（v3 不会被删）：
+#     config.json 里把 model 改回 `ralsei:v3` 即可，无需重新 build。
+# ============================================================================
+FROM qwen2.5:7b-instruct-q4_K_M
+
+# 会话窗口与采样参数。
+#
+# 为什么必须写在这里而不是请求里：
+#   App 走的是 Ollama 的 OpenAI 兼容端点 /v1/chat/completions，
+#   实测该端点**不接受** num_ctx 与 repeat_penalty —— 无论放在顶层还是
+#   塞进 options，都会被静默忽略（长提示词恒定截断在 ~2050 tokens）。
+#   只有 Ollama 原生 /api/chat 的 options.num_ctx 生效，或写进这里。
+#   对照组实测：/v1 + num_ctx=8192 → prompt_tokens=2050；
+#               /api/chat + options.num_ctx=8192 → prompt_tokens=5032。
+#   ⚠️ 这也是**换底座时必须重新 build 而不是只改 config.json**的原因：
+#      `api_client` 只发 temperature + max_tokens，top_p / repeat_penalty / num_ctx
+#      全部继承自这里 —— 直接指向一个裸模型会**静默**换掉采样参数。
+#
+# 角色设定**不放在这里**：单一真源是 ralsei_pet/assets/ralsei_persona.md，
+# 由 App 每次请求作为 system 发出（Ollama 会用 messages 里的 system 整体替换本文件的 SYSTEM）。
+#   （但**注意**：底座自带的"helpful assistant"倾向不会被 persona 完全压住，
+#     所以 `modules/event_speech.py` 里另有一道代码级禁语闸。）
+
+# 窗口：模型支持 32768，默认只有 ~2048，装不下人设 + 历史 + 记忆
+PARAMETER num_ctx 8192
+
+# 采样：比默认 0.8 略高一点更活，但要靠输出护栏兜住小模型的续写失态
+PARAMETER temperature 0.85
+PARAMETER top_p 0.92
+
+# 重复惩罚：抑制"你还好吗／要不要休息一下"这类模板复读
+PARAMETER repeat_penalty 1.15
+
+# 单次输出上限，与 App 侧 max_tokens 一致
+PARAMETER num_predict 256

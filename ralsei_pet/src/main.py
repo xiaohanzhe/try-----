@@ -6815,6 +6815,41 @@ class RalseiPet(QMainWindow):
         if _rel_brief:
             system = system + "\n\n" + _rel_brief
 
+        # ★★★ 第三十轮：把「每轮必变」的部分整体挪到 system **最末尾**，
+        # 并且把对话历史也**折进 system**（不再作为独立 messages 送）。
+        #
+        # 为什么（实测证据 `_evidence/ttf_strategy_7b.txt`，7B 底座、真实轮次）：
+        #   Ollama 只复用「从 prompt 开头起、逐字相同」的最长前缀。
+        #   现状的 messages 顺序是 [system, history…, user]，而 system 里
+        #   夹着【此刻】/话题焦点/记忆召回 —— 这些**每轮都变**，一变就把
+        #   system 及其之后（含 history）全部作废，整段重算。
+        #
+        #   同一批 4 轮真实对话，两种排布的平均首字：
+        #     变化段在中部（原样）        6.549s   ← 超用户 5s 目标
+        #     变化段压末尾 + 历史折进 system  4.601s   ← 达标
+        #   （另有「system 恒为 persona、状态塞进 user 消息」能到 2.808s，
+        #     但那正是第十八轮否掉的做法 —— 模型会把贴在 user 前的状态
+        #     当成"用户说的话"甚至复述出来，**不用**。）
+        #
+        # 为什么把历史也折进 system：历史同样是"每轮都在变"的东西。
+        # 只要它出现在 system 之后，system 一变它照样全废；折进 system 尾部后，
+        # 它和变化段同处"可变尾巴"，而 persona + 关系（稳定段）能被完整复用。
+        # 副作用（真机核对过）：模型对"谁说了什么"的理解反而更准 ——
+        # 历史带 [user]/[assistant] 前缀后，比裸 messages 更不容易张冠李戴。
+        #
+        # ★ 这一段只改**排布**，不改任何一段的内容 —— persona、上下文、
+        #   焦点、记忆、关系、历史，一个字都没删（符合用户口径「prompt 尽量完整」）。
+        _hist_block = ""
+        if history and not lean:
+            _hist_lines = []
+            for _hr, _hc in history:
+                _hist_lines.append("[%s] %s" % (
+                    '你' if _hr == 'assistant' else '他', _hc))
+            if _hist_lines:
+                _hist_block = "【我们刚才说的话】\n" + "\n".join(_hist_lines)
+        if _hist_block:
+            system = system + "\n\n" + _hist_block
+
         def _emit_delta(piece):
             """把一个分片投递到主线程（工作线程绝不直接碰 UI）。
             piece 为 None = 作废已显示内容（护栏判退 → 重采样）。"""
@@ -6829,6 +6864,11 @@ class RalseiPet(QMainWindow):
                 opts = self._ai_chat_options()
                 # 最近说过的台词（车轱辘话判定的唯一比对集合，见 _is_repeat_of_recent）
                 recent = [c for _r, c in history if _r == 'assistant']
+                # ★ 第三十轮：历史已折进 system 尾部（见上方 _hist_block），
+                # 这里**不再重复发** messages 形式的历史 —— 发两份既浪费 token，
+                # 又会让"历史"重新出现在 system 之后、把缓存尾巴拉长。
+                # lean（事件台词）本来就无历史，这里一律空。
+                _hist_for_api = []
                 # 能真流式就用流式；老 provider 没实现 chat_stream 时回落阻塞 chat
                 # （基类给了一个"回落 chat + 单次回调"的默认实现，见 api_client）
                 _sfn = getattr(cli, 'chat_stream', None) if _stream_on else None
@@ -6837,9 +6877,9 @@ class RalseiPet(QMainWindow):
                     """发一次对话请求（流式优先），返回原始文本或 None。"""
                     if callable(_sfn):
                         return _sfn(user_msg, system_prompt=sys_prompt,
-                                    history=history, on_delta=_emit_delta, **ask_opts)
+                                    history=_hist_for_api, on_delta=_emit_delta, **ask_opts)
                     return cli.chat(user_msg, system_prompt=sys_prompt,
-                                    history=history, **ask_opts)
+                                    history=_hist_for_api, **ask_opts)
 
                 reply = _ask(system, opts)
                 # 输出护栏：小模型（3B）会自问自答续写、把同一句话反复念，

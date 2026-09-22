@@ -242,6 +242,13 @@ _PAREN_REAL = [
     ('诶？（挠了挠头）我没听懂。', '诶？我没听懂。'),
     ('（叹了口气）也行吧。', '也行吧。'),
     ('嗯……（停顿了一下）我没事。', '嗯……我没事。'),
+    # 2026-09-22 第31轮补：7B 裸测漏网的发声/接触类小动作（原例见 _evidence/stutter_ab_7b.txt
+    #   的「…（轻叹）你最近吃了什么…」）。当时 `轻` 不在修饰语表、`叹` 在动词表，
+    #   中间那个"轻"让整条不匹配 → 真机旁白漏进台词。这组锁住修复。
+    ('我喜欢那个草莓蛋糕。（轻叹）你最近吃了什么？', '我喜欢那个草莓蛋糕。你最近吃了什么？'),
+    ('（轻笑）你能这么说我很开心。', '你能这么说我很开心。'),
+    ('（轻哼）才不是那样呢。', '才不是那样呢。'),
+    ('（摸摸头）别难过啦。', '别难过啦。'),
 ]
 ok('A22 句中括号动作：**只删那一段**再把剩下的台词放行（不是整句作废）',
    all(E.strip_action_parentheticals(a) == b and E.guard_reaction(a) == b
@@ -259,6 +266,14 @@ _INNER_PAREN = ['（其实我有点怕）', '其实……（我想想该怎么�
 ok('A22c 负控制：括号讲心里话**一条都不动**（只抓"动作词开头"的那一类）',
    all(E.strip_action_parentheticals(x) == x for x in _INNER_PAREN),
    [x for x in _INNER_PAREN if E.strip_action_parentheticals(x) != x])
+# 2026-09-22 第31轮补：把 `轻笑` 加进动词表时，**不能**顺手加裸 `笑` ——
+#   `（笑不出来）` 是合法的第一人称话语，加了裸 `笑` 就会被误删。
+#   这条锁是那次放宽的**专门防线**（放宽前实测：裸 `笑` 让 `（笑不出来）` KILL）。
+ok('A22g 放宽"轻"类动作词后，`（笑不出来）` 仍不被误杀（裸 `笑` 不许进表）',
+   E.strip_action_parentheticals('（笑不出来）') == '（笑不出来）'
+   and E.strip_action_parentheticals('嗯。（笑不出来）今天真的不行。') == '嗯。（笑不出来）今天真的不行。'
+   and E.strip_action_parentheticals('（轻笑）好呀。') == '好呀。',
+   E.strip_action_parentheticals('（笑不出来）'))
 ok('A22d 两道闸分工明确：句首括号的**整句叙述**仍由 looks_like_narration 作废',
    E.guard_reaction('（我扶着墙站了起来，拍拍身上的尘土。）') == ''
    and E.strip_action_parentheticals('（我扶着墙站了起来，拍拍身上的尘土。）')
@@ -1022,9 +1037,21 @@ ok('F3 lean 的 system 确实是 persona（不是空串兜底），且比完整�
    (len(_lean_sys), len(_full_sys)))
 ok('F4 lean 不发对话历史（history == []）',
    _fh_lean.calls[0]['history'] == [], _fh_lean.calls[0]['history'])
-ok('F4b 对照组照旧带历史',
-   _fh_full.calls[0]['history'] == [('user', '历史甲'), ('assistant', '历史乙')],
-   _fh_full.calls[0]['history'])
+ok('F4b 对照组照旧带历史 —— 但第三十轮起改为**折进 system 尾部**（契约变更，见下）',
+   # 第三十轮：文案与判据同步更新。
+   #   旧契约：非 lean 走 messages 形式的 history=[(...)]，system 里不含历史。
+   #   新契约（实测依据 `_evidence/ttf_strategy_7b.txt`）：
+   #     历史折进 **system 最末尾**，messages 形式的 history 恒为空。
+   #   为什么要改：Ollama 只复用「从 prompt 开头起逐字相同」的前缀；
+   #     历史原先出现在 system 之后、且每轮都在变 —— system 一有变化，
+   #     历史整段重算。折进 system 尾部后，稳定的 persona+关系 能被完整复用。
+   #     4 轮真实对话平均首字：**6.549s → 4.601s**（7B 底座）。
+   #   ★ 鉴别力**没有降低**：仍要求"历史真的被送出去了"（只是换了位置），
+   #     并额外负控制"不能同时又出现在 messages 里"（防两份重复）。
+   #   ★ 本用例的设计意图（证明 F4 不是"因为压根没拼"）完整保留。
+   ('历史甲' in _full_sys and '历史乙' in _full_sys)
+   and _fh_full.calls[0]['history'] == [],
+   (_full_sys[-200:], _fh_full.calls[0]['history']))
 ok('F4c lean 下**根本不去读**历史（get_ai_history 零调用）',
    _fh_lean.history_reads == [], _fh_lean.history_reads)
 ok('F5 lean 下**根本不调** recall_text（记忆图检索比其它几项都贵）',
