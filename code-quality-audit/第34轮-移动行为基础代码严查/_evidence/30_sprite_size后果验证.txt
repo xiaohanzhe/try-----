@@ -1,0 +1,44 @@
+== 抽取被测语句（main.py L2001-2010 夹取 + L2058-2061 到达判定）==
+ 2001|                 # 优化：缓存屏幕几何信息
+ 2002|                 # 修复（参考小鲸鱼 widget 的"始终夹在可视区"）：用多屏虚拟矩形而非主屏，
+ 2003|                 # 否则副屏（右侧/左侧负坐标）目标永远走不到、且会被每帧 clamp 拉回主屏抖动。
+ 2004|                 if not hasattr(self, '_cached_screen_geom') or current_time - getattr(self, '_last_screen_check', 0) > 3.0:
+ 2005|                     self._cached_screen_geom = self._virtual_screen_rect()
+ 2006|                     self._last_screen_check = current_time
+ 2007|                 
+ 2008|                 screen_geom = self._cached_screen_geom
+ 2009|                 new_x = max(screen_geom.left(), min(new_x, screen_geom.right() - self.width()))
+ 2010|                 new_y = max(screen_geom.top(), min(new_y, screen_geom.bottom() - self.height()))
+ 2011|                 
+   ...
+ 2058|             # 优化：使用平方距离进行比较，避免开方运算
+ 2059|             # 到达阈值放大：speed*3 或至少30px（游戏/施法的移动容忍更大）
+ 2060|             _threshold_sq = max((self.speed * 3.0) ** 2, 30.0 ** 2)
+ 2061|             if distance_sq <= _threshold_sq:
+ 2062|                 # 到达目标位置，直接停止移动，避免速度波动
+
+== 场景 1：目标在屏幕右下角极限位置 ==
+   目标 = (1781, 985)  ← 按真实 138x94 夹取该到的位置
+   硬编码 sprite_size=100：最终 (1760, 978) 到达=True 步数=251
+   修法 self.width/height：最终 (1760, 978) 到达=True 步数=251
+[FAIL] F1 硬编码口径：目标在右下角时**无法到达**（卡在走路状态） (arrived=True, 卡在 (1760, 978))
+[PASS] F2 修法口径：同一目标**能到达** (arrived=True, 步数=251)
+[FAIL] F3 鉴别力：两版结果不同（探针确实测到差异） 
+   硬编码版卡住点距目标 = 22.1 px（阈值 sqrt(900)=30 px）
+[FAIL] F4 卡住点距目标 > 30px 阈值（故到达判定永远为假） (d=22.1)
+
+== 场景 2：目标略偏内（能到达的对照，证明不是探针恒假）==
+   目标 = (1751, 955)，硬编码版 到达=True
+[PASS] F5 正控制：目标远离右下极限时，硬编码版也能到达（排除探针恒假） 
+
+== 场景 3：Y 方向偏差（-6px，保守）==
+   目标 y=985（真实高 94 时的底部），硬编码版 到达=True 停在 y=960
+[PASS] F6 Y 方向：硬编码 100 > 实际 94 ⇒ 只少用 6px，仍可达（无害，但口径不一致） (停在 y=960)
+
+== 汇总 ==
+  窗口真机实测 = 138x94（idle 帧 69x47 × scale 2.0）
+  硬编码 sprite_size = 100  ⇒ X 偏差 +38 px，Y 偏差 -6 px
+  X 偏差为正 ⇒ 右下角目标无法到达，宠物卡在"一直走"状态（真缺陷）
+  Y 偏差为负 ⇒ 保守，无用户可见后果
+
+SUITE_SUMMARY pass=3 fail=3

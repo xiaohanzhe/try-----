@@ -1,0 +1,32 @@
+== 真机取尺寸 ==
+python: 3.11.0
+cwd: C:\Users\23002\Desktop\项目文件夹\try - 副本
+main 模块导入成功
+RalseiPet 实例化 + show() 成功
+
+== 读到的事实 ==
+self.width()  = 138
+self.height() = 94
+_cached_scale_factor (getattr 默认 2.0) = '<未设置>'
+_anim_container_size = (69, 47)
+_anim_container_key = 'idle'
+current_animation = 'idle'
+sprite_loader.frame_container_size = (222, 110)
+sprite_loader.sprites 组数 = 493
+idle 帧原始尺寸 = [(69, 47), (69, 47), (69, 47), (69, 47), (69, 47)]
+全库最宽帧 = ('spr_gameshow_ralseiplush_stoole', 396, 263)
+全库最高帧 = ('spr_gameshow_ralseiplush_stoole', 396, 263)
+
+== 与硬编码 sprite_size=100 的比对 ==
+sprite_size(硬编码) = 100
+实际窗口 = 138 x 94
+宽是否等于 100 => False
+高是否等于 100 => False
+是否正方形 => False（正方形时单标量用法无害）
+X 边界偏差 = 实际宽 - 100 = 38 px
+Y 边界偏差 = 实际高 - 100 = -6 px
+
+== 与产品夹取口径（self.width()/self.height()）的比对 ==
+产品 L2009/L2155 用 self.width()/self.height() = 138/94
+generate_new_move_target L1612/1620/1635/1636 用 sprite_size = 100
+⇒ 两套口径相差 38 px（X）/ 6 px（Y）

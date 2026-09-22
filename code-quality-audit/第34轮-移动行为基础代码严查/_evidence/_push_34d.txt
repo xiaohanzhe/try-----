@@ -1,0 +1,40 @@
+========================================================================
+第 34 轮续：提交 + 推送
+========================================================================
+[0] 提交信息自证: 3337 字节, 首3字节=[231, 172, 172] (无 BOM OK)
+[1] add .workbuddy/memory/2026-09-22.md                            rc=0 warning: in the working copy of '.workbuddy/memory/2026-09-22.md', LF will be re
+[1] add .workbuddy/memory/MEMORY.md                                rc=0 warning: in the working copy of '.workbuddy/memory/MEMORY.md', LF will be replac
+[1] add .workbuddy/memory/参考-契约与历轮（详版）.md                          rc=0 warning: in the working copy of '.workbuddy/memory/参考-契约与历轮（详版）.md', LF will be 
+[1] add 第三十四轮移动行为基础代码严查报告_2026-09-22.md                            rc=0 warning: in the working copy of '第三十四轮移动行为基础代码严查报告_2026-09-22.md', LF will be re
+[1] add code-quality-audit/第34轮-移动行为基础代码严查/_evidence               rc=0 warning: in the working copy of 'code-quality-audit/第34轮-移动行为基础代码严查/_evidence/_d
+[1] 暂存后改动条目: 25
+[2] commit rc=0
+[main 8f95f5e] 第34轮续：交互接线 / 动画播放 / 移动核心 —— 一条确定结论 + 一次自我推翻
+ 25 files changed, 2760 insertions(+), 100 deletions(-)
+ create mode 100644 "code-quality-audit/\347\254\25434\350\275\256-\347\247\273\345\212\250\350\241\214\344\270\272\345\237\272\347\241\200\344\273\243\347\240\201\344\270\245\346\237\245/_evidence/19_\344\272\244\344\272\222\346\211\213\345\212\277\346\216\242\351\222\210.txt"
+ create mode 100644 "code-quality-audit/\347\254\25434\350\275\256-\347\247\273\345\212\250\350\241\214\34
+[3] log -1 : 8f95f5e 第34轮续：交互接线 / 动画播放 / 移动核心 —— 一条确定结论 + 一次自我推翻
+[4] 提交信息逐字节核验: IDENTICAL (45/45 行一致)
+[5] remote url: https://github.com/xiaohanzhe/try-----.git
+[5] credential fill 得到凭据: 100 字节
+[5] extraheader 已构造
+[6] 本地代理端口命中: 7897
+[7] push(extraheader) rc=0
+     err: To https://github.com/xiaohanzhe/try-----.git
+   2e49fd8..8f95f5e  main -> main
+[8] 远端核验（独立构造 + 重试）
+    ls-remote 第1次: 8f95f5e387161b821ead3a188c170283d65403a3
+
+========================================================================
+结果
+========================================================================
+  本地 HEAD          : 8f95f5e387161b821ead3a188c170283d65403a3
+  origin/main (本地)  : 8f95f5e387161b821ead3a188c170283d65403a3
+  远端 refs (ls-remote): 8f95f5e387161b821ead3a188c170283d65403a3
+  本地 == 远端       : True
+  本地 == origin/本地 : True
+
+[PASS] 三方一致，推送成功
+  剩余未提交: 0
+  已清理 E:\Download\_tmp\msg_r34d.txt
+  已清理 E:\Download\_tmp\cred.txt

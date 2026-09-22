@@ -415,6 +415,34 @@ SUITES = [
                 '+ memory_store 留档名不得撞车（D1 正控制 / D2/D3 / 约定名仍在 D4）'
                 '+ 隐私 reset_all 连带清时间戳留档（E1 前置 / E2 清零）',
     },
+    # -------------------------------- 第三十四轮续：移动核心（update_movement）节拍
+    # 用户口径「检查一下尤其是移动代码，动画播放和有关楼层的代码」在**移动核心**
+    # 上的成果：坐实并修复 1 条真缺陷 F34-1。
+    #   · `update_movement` 里 `check_nearby_desktop_elements` 的 5 秒节拍，
+    #     时间戳推进 `self._last_desktop_elem_check = current_time` 原写在 `try`
+    #     **之外、无条件执行** ⇒ 时间戳每 tick（30ms）被刷新 ⇒ 节拍判据
+    #     `> 5.0` 除首次外永远为假 ⇒ 该检查**一生只跑一次**。
+    #   · 后果链真机可达：check_nearby_desktop_elements → react_to_desktop_element
+    #     → _note_desktop_observation（唯一调用点在此）→ 「凑近桌面文件的观察」
+    #     从不进入 AI 事件队列。
+    #   · 同文件另两处节拍（`_last_env_update` / `last_floor_check_time`）写法本就正确，
+    #     本套件把三者一起锁住（防"修一处、改坏另两处"）。
+    # 判据纪律：**AST 判结构（不断言写法）** + **逐字抽取该片段用最小 self 桩跑**
+    #   （20s 该 4 次 / 60s 该 12 次）；正/负控制成对，负控制 = 旧写法必须重现"只 1 次"。
+    # **不联网、不实例化 App、不需要显示器**（AST + 无 Qt 的纯逻辑重演）。
+    # 鉴别力已体检：回退修复 → 5 项报红 rc=1；还原 → 13/13 PASS rc=0。
+    {
+        'id': 'round34b_move_beat',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第34轮-移动行为基础代码严查',
+                               'verify_round34b_move_beat.py'),
+        'offscreen': False,
+        'desc': '第三十四轮续：移动核心节拍不许回退 —— `update_movement` 的 '
+                '5 秒节拍时间戳必须落在 if 块内（AST 结构 A1/A2 + 反向控制 A3/A4）'
+                '+ 行为级：逐字抽取片段跑 20s/60s 必须触发 4/12 次（B1/B2/B3）'
+                '+ 接线自证（B4 无节拍版 100 tick = 100 次）'
+                '+ 负控制（B5 旧写法 60s 只 1 次，证明本锁有鉴别力）'
+                '+ 同口径一致性（C1 `_last_env_update` / C2 `last_floor_check_time` 仍块内赋值）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

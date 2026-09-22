@@ -1,0 +1,19 @@
+== 产品路径：_nearest_floor_jump 是否依赖 get_jump_destinations 的横向过滤 ==
+   （该函数 L2427-2467，41 行）
+[PASS] A 调用了 get_jump_destinations 
+[PASS] B 显式补相邻下层 `adjacent_lower_floor`（绕过横向过滤） 
+[PASS] B2 补层前用 identity 去重（不与种子集重复） 
+[PASS] C 每个候选都要过 `_floor_entry_plan`（真正的准入判定） 
+[PASS] D `_floor_entry_plan` 走 `nearest_visible_point`（可见吸附，与楼层侧同源） 
+[PASS] E 吸附过远（>200px）拒绝（防空跳/跳到同层角落） 
+[PASS] E2 上一条 200 阈值确实出现两次（x 与 y） (count=2)
+
+== 结论判定 ==
+[PASS] F 产品路径**不**依赖 get_jump_destinations 的横向过滤结果 → S2/S3 非缺陷 (存在第二道准入门 _floor_entry_plan + 显式补 adjacent_lower_floor)
+
+== 交叉核验：_floor_entry_plan 的横向内容区间（留 20px 内缩）==
+[PASS] G _floor_entry_plan 横向用 rect 留 20px 内缩判 span_ok_x 
+[PASS] H 四边贴边阈值 NEAR=60px 
+[PASS] I 四边 gap 允许 -20 容差（已经探出边/轻微重叠也算贴边） (count=5)
+
+SUITE_SUMMARY pass=11 fail=0

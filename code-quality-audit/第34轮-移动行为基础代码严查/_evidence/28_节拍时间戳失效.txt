@@ -1,0 +1,28 @@
+== 抽取被测片段（main.py L1690-1695 原文）==
+        try:
+            if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 5.0:
+                self.check_nearby_desktop_elements()
+        except Exception as e:
+            _log.warning(f"check_nearby_desktop_elements 异常: {e}")
+        self._last_desktop_elem_check = current_time
+
+== AST：本级语句体 ==
+   Try(L1690-1694)
+   Assign(self._last_desktop_elem_check, L1695)
+[PASS] A1 片段含 Try（节拍判定 + 调用） 
+[PASS] A2 片段含 `_last_desktop_elem_check` 赋值，且它是**本级**语句（不在 if 内） 
+   赋值语句 L1695 是 update_movement 的**直接子语句**（不是 if 的子块）
+[PASS] A3 该赋值**不在**任何 if 块内（这正是缺陷所在） 
+
+== 行为核验：最小 self 桩 + 逐字 exec 现写法 ==
+   20 秒内（667 tick）：现写法 hits=1，修法 hits=4
+[PASS] B1 现写法：20 秒内只触发 1 次（节拍失效，功能形同死） (got=1)
+[PASS] B2 修法：20 秒内触发 4 次（5 秒节拍，20/5=4） (got=4)
+[PASS] B3 鉴别力：两版结果不同（探针确实测到了差异） 
+   60 秒内（2000 tick）：现写法 hits=1，修法 hits=12
+[PASS] B4 现写法：60 秒内**仍然**只触发 1 次（时间翻三倍次数不变 ⇒ 确证节拍失效） (got=1)
+[PASS] B5 修法：60 秒内触发 12 次（60/5=12，线性） (got=12)
+   桩接线自证：去节拍版 100 tick → hits=100（应=100）
+[PASS] C 桩接线自证：去节拍版每 tick 都触发（证明桩与调用链确实通） (got=100)
+
+SUITE_SUMMARY pass=9 fail=0

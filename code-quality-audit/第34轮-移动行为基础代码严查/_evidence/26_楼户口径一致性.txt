@@ -1,0 +1,30 @@
+== S1 `_index_of_floor` 的 return 形态 ==
+   L518   BinOp(left=Call(func=Name(id='len', ctx=Load()), args=[Name(id='all_fl
+   L508   Name(id='i', ctx=Load())
+   L517   IfExp(test=Compare(left=Name(id='i', ctx=Load()), ops=[Eq()], comparat
+[PASS] S1a `_index_of_floor` 不含负数常量返回 (found=[])
+[PASS] S1b `_index_of_floor` 无裸 return（None） (returns=["BinOp(left=Call(func=Name(id='len', ctx=Load()), args=[Name(id='all_fl", "Name(id='i', ctx=Load())", "IfExp(test=Compare(left=Name(id='i', ctx=Load()), ops=[Eq()], comparat"])
+   源码三支：
+     L518   return len(all_floors) - 1
+     L508   return i
+     L517   return 0 if i == 0 else i - 1
+[PASS] S1c 三支返回分别覆盖 `0`、`i-1`(i>=1)、`len-1` (n=3)
+[PASS] S1d 旧最高层消失（cur_h 高于所有活楼层）→ 返回 0 而非 -1 (got=0)
+[PASS] S1e cur_h == 最高活楼层 → 返回 0 (got=0)
+[PASS] S1f cur_h 介于 10 与 5 之间 → 返回 0（=10 那层之上） (got=0)
+[PASS] S1g cur_h 低于所有活楼层 → 返回末项下标 1 (got=1)
+[PASS] S1h 负控制：旧写法 i-1 在此场景确为 -1（证明该修复有实际效果） (got=-1)
+
+== S2/S3 `get_jump_destinations` 横向判据口径 ==
+[PASS] S2a 向上跳横向范围用 `floor['rect']`（完整矩形） 
+[PASS] S2b 向上跳落点用 `floor_visible_contains`（可见区） 
+[PASS] S3a 向下跳横向范围用 `next_floor['rect']`（完整矩形） 
+[PASS] S3b 向下跳落点用 `floor_visible_contains`（可见区） 
+[PASS] S3c 横向(rect) 与 纵向(visible) 口径确实不一致 → 存在"候选被静默丢弃"的路径 
+
+== 行为核验：被挡住的列 → 横向通过、纵向被拒（候选静默丢弃）==
+[PASS] S3d 横向判据(rect)通过 
+[PASS] S3e 纵向判据(visible)拒绝 → 该候选被静默丢弃 (jump_pos=120,110, visible_rects=[250..400])
+[PASS] S3f 正控制：x=300 两判据都通过（候选保留） 
+
+SUITE_SUMMARY pass=16 fail=0

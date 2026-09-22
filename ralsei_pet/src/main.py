@@ -1687,12 +1687,20 @@ class RalseiPet(QMainWindow):
         # 每 30ms 全量重试（性能热循环）。
         # 性能：get_nearby_elements 内部会全量枚举窗口（现已有缓存），5s 节拍足够，
         # 避免主线程频繁被窗口枚举拖慢。
+        # 第三十四轮续修复（F34-1）：时间戳必须**只在真正执行检查后**才推进。
+        # 原写法把 `self._last_desktop_elem_check = current_time` 放在 try 之外无条件执行，
+        # 于是时间戳每 tick（30ms）都被刷新 ⇒ `current_time - _last_... > 5.0` 除首次外
+        # 永远为假 ⇒ check_nearby_desktop_elements 一生只跑一次（"靠近桌面元素做出反应"
+        # 实际从不发生，连带 _note_desktop_observation 从不入 AI 事件队列）。
+        # 现改为与 `_last_env_update` / `last_floor_check_time` 同一口径：赋值落在 if 块内。
+        # 抛错时不推进时间戳（保留原"防热循环"诉求的替代实现：下一次 tick 重试一次即可，
+        # 因为节拍判据本身要求距上次成功检查满 5 秒）。
         try:
             if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 5.0:
                 self.check_nearby_desktop_elements()
+                self._last_desktop_elem_check = current_time
         except Exception as e:
             _log.warning(f"check_nearby_desktop_elements 异常: {e}")
-        self._last_desktop_elem_check = current_time
         
         # 睡眠状态处理
         if self.is_sleeping:
