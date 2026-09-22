@@ -225,7 +225,14 @@ def _mtime(path):
 
 
 def _copy_verified(src, dst):
-    """复制并校验（长度一致 + 能解析成 JSON dict）；返回是否成功。"""
+    """复制并校验（长度一致 + 能解析成 JSON dict）；返回是否成功。
+
+    ⚠️ 留档文件的判据：`_rollback_path()` 现在可能返回 `memory.old.json`
+    **或**带时间戳的 `memory.old.json.<ts>`（防撞车，第三十四轮），所以这里不能用
+    `basename == ROLLBACK_FILENAME` 精确比对 —— 会漏掉带后缀的那批、
+    对它们多跑一次多余的 JSON 校验（虽然仍能通过，但判据语义已经不对）。
+    改成"文件名以留档名开头"即视为留档。
+    """
     try:
         shutil.copy2(src, dst)
     except Exception as e:
@@ -236,9 +243,32 @@ def _copy_verified(src, dst):
             return False
     except Exception:
         return False
-    if os.path.basename(dst) != ROLLBACK_FILENAME and _read_json(dst) is None:
+    if not os.path.basename(dst).startswith(ROLLBACK_FILENAME) and _read_json(dst) is None:
         return False
     return True
+
+
+def _rollback_path(target_dir):
+    """挑一个**不会覆盖既有留档**的留档路径。
+
+    第三十四轮修复（固定名 `memory.old.json` 会被下一次搬运静默覆盖）：
+        原先一律写 `<target_dir>/memory.old.json`。而本函数会被 `memory_system` 在**每次
+        启动**时调用（`memory_system.py:79`）—— 只要反复出现"设备版更新、桌面版落选"，
+        每一轮都会把上一轮的留档覆盖掉，**只有最后一次落选者能存活**。
+        实测取证：`16_存储配置层探针.txt` 的 Q4b 段（round2 后留档变成了 desktop2，
+        round1 的 desktop1 消失）。
+        修法：首选仍是 `memory.old.json`（模块文档里明写的约定名，保持对用户可见），
+        但**它已被占用时**退到带时间戳的名字，把历史留档保住。
+        轮转语义：`memory.old.json` 永远是最新一次落选者，更早的在 `.old.<ts>` 里。
+    """
+    base = os.path.join(target_dir, ROLLBACK_FILENAME)
+    if not os.path.exists(base):
+        return base
+    for i in range(1000):
+        cand = '%s.%d' % (base, int(time.time()) + i)
+        if not os.path.exists(cand):
+            return cand
+    return base      # 兜底（几乎不可能到达）
 
 
 def migrate_from_fallback(target_dir):
@@ -275,7 +305,8 @@ def migrate_from_fallback(target_dir):
         d_new = _saved_at(dst_data) or _mtime(dst)
         if s_new <= d_new:
             # 设备版更新 → 留设备版，把桌面那份留档
-            if not _copy_verified(src, os.path.join(target_dir, ROLLBACK_FILENAME)):
+            # ⚠️ 留档路径要防撞车（_rollback_path），固定名会覆盖上一次的留档
+            if not _copy_verified(src, _rollback_path(target_dir)):
                 _log.warning("记忆留档失败，为保安全不删桌面副本")
                 result['reason'] = '留档失败，保留桌面副本'
                 result['kept'] = 'target'
@@ -283,7 +314,7 @@ def migrate_from_fallback(target_dir):
             result['kept'] = 'target'
         else:
             # 桌面版更新 → 先把设备版留档，再用桌面版覆盖
-            if not _copy_verified(dst, os.path.join(target_dir, ROLLBACK_FILENAME)):
+            if not _copy_verified(dst, _rollback_path(target_dir)):
                 result['reason'] = '留档失败，保留桌面副本'
                 result['kept'] = 'target'
                 return result

@@ -12,7 +12,7 @@
 - 远端 `https://github.com/xiaohanzhe/try-----.git`（私有）；main→origin/main。真机起：
   `Set-Location ralsei_pet; & C:\Python311\python.exe src\main.py` + `run_in_background`。单实例锁
   `Global\RalseiPetMutex`。窗口透明非置顶 FramelessWindow → **甩飞、抛物线只能离屏断言**。
-- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **28 套件 / 1410 PASS / 全 IDENTICAL**）。
+- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **29 套件 / 1427 PASS / 全 IDENTICAL**）。
   G2 跑 `compileall` → 可能改写被跟踪的 `src/__pycache__/*.pyc` → 收工前 `git checkout --`。
   ★ **改了套件断言/文案 → 用 `--only <suite> --update`（合并模式）重建基线**，别全量 update。
 - ★ **只读优先、改动最小化**：审查阶段不改被审文件；修复阶段一次只动必要处，每处配独立验证断言。
@@ -193,7 +193,7 @@
 | 31 | 7B 设默认 + 首字进 5s + 治固定开场白 | §20 | ✅ `eb806e4`；G2 **1359/26** |
 | 32 | 结巴取证（8.3% 属真实，真凶=固定模板） | §22.1 | ✅ 见 `2026-09-22.md` |
 | 33 | 换窗口交接 + 游戏源文件勘察 | §22.2/§22.3 | ✅ 见 `2026-09-22.md` 末 |
-| 34 | 移动/行为基础代码严查 + 跳跃统一 jump_ball + 楼层 F7 修复 | **§23** | ✅ G2 **1410/28**，commit `20faad0` |
+| 34 | 移动/行为严查 + 跳跃统一 jump_ball + 楼层 F7 + **存储/配置 4 缺陷** | **§23** | ✅ G2 **1427/29**，commits `20faad0`/`d3a4735`/`21697eb`/`55c53fe` |
 
 ## 11. 🔴 待用户裁定（**开工前必看**）
 1. **场景美术素材来源**（**P1 开工前唯一阻塞项**）：`<仓根>/deltarune_ralsei/` 1111 张 PNG **全是角色精灵**；

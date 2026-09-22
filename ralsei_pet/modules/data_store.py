@@ -180,14 +180,53 @@ def _same(a, b):
         return False
 
 
+def _archive_name(path):
+    """给"落选的旧版本"挑一个**不会撞车**的留档名：`<名字>.old` → `<名字>.old.<ts>`。
+
+    第三十四轮修复（固定名 `.old` 会被下一次搬运静默覆盖）：
+        原实现固定用 `path + '.old'`。第二次有落选者时，`shutil.copy2` 会**直接覆盖**
+        上一次的留档 —— 第一次的历史版本就永久没了，而调用方毫无察觉
+        （`result['moved']` 里两条记录长得一模一样）。
+        实测取证：`16_存储配置层探针.txt` 的 Q3b 段（round2 后 `.old` 内容变成了
+        `STAGING-OLD-2`，round1 的 `STAGING-OLD` 消失）。
+        修法：优先用未被占用的 `.old`（保持老用户可见的命名），被占了就退到带时间戳的
+        名字，绝不覆盖既有留档。
+    """
+    base = path + '.old'
+    if not os.path.exists(base):
+        return base
+    import time as _time
+    # 同一秒内多次落选也不能撞车：往后找一个没被占用的后缀
+    for i in range(1000):
+        cand = '%s.%d' % (base, int(_time.time()) + i)
+        if not os.path.exists(cand):
+            return cand
+    return base      # 兜底（几乎不可能到达）：宁可覆盖也不抛
+
+
 def _movable(src):
     """探测源文件能否被搬走。
 
     Windows 上**正被写入的文件**（典型：日志）无法删除/重命名。先原地改名再改回来，
     失败就说明它被占用 —— 这样能在**动目标之前**就决定跳过，避免"复制成功但源删不掉"
     导致同一份数据在两边各留一个。
+
+    第三十四轮修复（残留 `.migprobe` 会把文件**永久**钉在中转站）：
+        本探针用 `os.rename(src, src+'.migprobe')` 试改名。若**上一次**探针在第 196 行
+        的"改回来"也失败了（注释里自己承认的"极罕见"分支），`<src>.migprobe` 就会残留；
+        此后每次再来改名，`os.rename` 都会因**目标已存在**而抛 `OSError` →
+        本函数恒返 `False` → `migrate_from_staging` 每轮都把这个文件列进 `skipped`
+        → 它**永远搬不进最终存储**，`staging_has_data()` 也恒为 True。
+        实测取证：`16_存储配置层探针.txt` 的 Q5 段（残留 .migprobe 时 `_movable=False`）。
+        修法：动 rename **之前**先把残留的探针清掉；清不掉才判定为不可搬。
     """
     probe = src + '.migprobe'
+    # 先清残留探针：不清掉的话下面的 rename 会因"目标已存在"恒失败
+    if os.path.exists(probe):
+        try:
+            os.remove(probe)
+        except OSError:
+            return False      # 连残留都清不掉（被占用/无权限）→ 保守判为不可搬
     try:
         os.rename(src, probe)
     except OSError:
@@ -241,15 +280,18 @@ def migrate_from_staging(remove_empty_dirs=True):
                             # 不能只是 skip：那样中转站会永远残留这份文件、
                             # `staging_has_data()` 恒为 True（"本地只作中转站"就落空了），
                             # 也与本函数的文档约定"落选的那份挪成 <名字>.old"不符。
-                            _arch = dst + '.old'
+                            # ⚠️ 留档名必须**不撞车**（_archive_name），固定名 .old 会被
+                            # 下一次搬运静默覆盖、丢掉历史版本。
+                            _arch = _archive_name(dst)
                             shutil.copy2(src, _arch)
                             if os.path.getsize(src) != os.path.getsize(_arch):
                                 result['errors'].append('%s: 落选留档长度不一致，保留源文件' % rel)
                                 continue
                             os.remove(src)
-                            result['moved'].append(rel + ' -> .old')
+                            result['moved'].append(rel + ' -> ' + os.path.basename(_arch))
                             continue
-                        shutil.copy2(dst, dst + '.old')   # 目标版更旧 → 先留档
+                        _arch = _archive_name(dst)        # 目标版更旧 → 先留档（同样防撞车）
+                        shutil.copy2(dst, _arch)
                     except Exception as e:
                         result['errors'].append('%s: 留档失败 %s' % (rel, e))
                         continue

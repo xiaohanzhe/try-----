@@ -1,0 +1,30 @@
+=== 鉴别力体检 v2：round34_store_config ===
+快照 sha256: {'config_manager': 'ea864fac1d3a', 'data_store': '7dd7835d6bc8', 'memory_store': '5c57eaf0304c'}
+
+[基线] rc=0 SUITE_SUMMARY pass=17 fail=0
+
+[回退 A：config_manager 只剪 .backup.（原缺陷）] rc=1 SUITE_SUMMARY pass=15 fail=2
+   [FAIL] A2 .corrupt.* 也收敛到 <= 10（实测 15）—— 原先一份都不清
+   [FAIL] A3 两类各自独立保留 10 份、互不挤占（backup=10 corrupt=15）
+   => 抓破坏：YES
+   还原逐字节一致：True
+
+[回退 B：data_store 不预清残留 .migprobe（原缺陷）] rc=1 SUITE_SUMMARY pass=16 fail=1
+   [FAIL] B2 残留探针：被清掉、文件恢复可搬（原先恒 False → 永久滞留）
+   => 抓破坏：YES
+   还原逐字节一致：True
+
+[回退 C：data_store 用固定名 .old（原缺陷）] rc=1 SUITE_SUMMARY pass=15 fail=2
+   [FAIL] C1 第一次留档 OLD-1 仍存活（固定名 .old 原先会被覆盖）
+   [FAIL] C3 两次落选 = 两份留档（实测 1）
+   => 抓破坏：YES
+   还原逐字节一致：True
+
+[回退 D：memory_store 用固定名留档（原缺陷）] rc=1 SUITE_SUMMARY pass=15 fail=2
+   [FAIL] D2 第一次留档 desktop1 仍存活（每次启动都会调，原先必被覆盖）
+   [FAIL] E1 前置：reset 前确有 2 份留档（实测 1）
+   => 抓破坏：YES
+   还原逐字节一致：True
+
+[终检] rc=0 SUITE_SUMMARY pass=17 fail=0  FAIL=0
+三文件全部还原到快照：True

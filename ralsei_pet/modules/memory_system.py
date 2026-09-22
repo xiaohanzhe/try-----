@@ -597,6 +597,21 @@ class MemorySystem:
                     os.remove(f)
             except Exception as e:
                 _log.warning("清理记忆文件失败 %s: %s", f, e)
+        # 第三十四轮：留档名现在可能是 `memory.old.json.<ts>`（防撞车），
+        # 上面那条精确路径删不到它们。隐私口径是"清空**全部**记忆，**含留档副本**"，
+        # 所以这里把同前缀的带时间戳留档一并清掉，否则 reset 之后磁盘上还留着旧记忆。
+        try:
+            _rollback_base = getattr(self._store, 'ROLLBACK_FILENAME', 'memory.old.json')
+            for _n in os.listdir(self.memory_dir):
+                if _n.startswith(_rollback_base + '.'):
+                    try:
+                        os.remove(os.path.join(self.memory_dir, _n))
+                    except Exception as e:
+                        _log.warning("清理记忆留档失败 %s: %s", _n, e)
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            _log.warning("枚举记忆留档失败（已忽略）: %s", e)
     
     def get_experience(self):
         """获取当前经验值"""

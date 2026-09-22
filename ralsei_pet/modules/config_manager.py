@@ -408,14 +408,27 @@ class ConfigManager:
             _log.warning("创建配置备份失败: %s", e)
 
     def _prune_old_backups(self, keep=None):
-        """只保留最近 keep 个配置备份，删除更早的（按文件名时间戳排序）。"""
+        """只保留最近 keep 个配置备份，删除更早的（按文件名时间戳排序）。
+
+        第三十四轮修复（`.corrupt.*` 从未被收敛）：
+            `_load_config` 在配置损坏时会写下 `<config>.corrupt.<ts>`，但本函数原先
+            **只匹配 `.backup.` 前缀** —— 于是 `.corrupt.*` 一份都不清。实测：15 个
+            `.corrupt.*` 全部留存，而 `.backup.*` 被正确收敛到 10 个。
+            触发路径真实可达：配置一旦被同步工具/手改写坏一次就留一个，**永不自愈**，
+            与本函数注释里记的"106 个 .backup.* 纯垃圾"是同一类问题，当年只修了一半。
+            修法：两类前缀一起收敛（各自独立计数，互不挤占配额）。
+        """
         if keep is None:
             keep = self.MAX_CONFIG_BACKUPS
-        prefix = f"{self.config_file}.backup."
+        for tag in ('.backup.', '.corrupt.'):
+            self._prune_by_prefix(f"{self.config_file}{tag}", keep)
+
+    def _prune_by_prefix(self, prefix, keep):
+        """把 `prefix<时间戳>` 形式的文件收敛到最近 keep 个。"""
         try:
-            files = [os.path.join(os.path.dirname(self.config_file), n)
-                     for n in os.listdir(os.path.dirname(self.config_file))
-                     if n.startswith(os.path.basename(prefix))]
+            d = os.path.dirname(self.config_file)
+            base = os.path.basename(prefix)
+            files = [os.path.join(d, n) for n in os.listdir(d) if n.startswith(base)]
         except OSError as e:
             _log.debug("枚举配置备份失败（已忽略）: %s", e)
             return

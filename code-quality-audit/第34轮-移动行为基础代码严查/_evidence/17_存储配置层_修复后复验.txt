@@ -1,0 +1,34 @@
+SANDBOX = C:\Users\23002\AppData\Local\Temp\r34_fix_ydo0isx0
+
+========== Q1b 复验：.corrupt.* 也收敛 ==========
+after prune: .backup.*=10  .corrupt.*=10
+[PASS] Q1b-1  .backup.* 收敛（实测 10）
+[PASS] Q1b-2  .corrupt.* 收敛（实测 10）
+[PASS] Q1b-3  两类各自独立保留 10 份（互不挤占）
+
+========== Q5 复验：残留 .migprobe ==========
+干净文件 _movable = True
+残留 .migprobe 时 _movable = True, 源还在=True, .migprobe 还在=False
+[PASS] Q5  残留探针被清掉、文件恢复可搬（不再永久滞留）
+  反向控制：用一个目录冒充文件（rename 会失败）
+  _movable(目录) = True（True 也属正常：目录可改名）
+
+========== Q3b 复验：data_store .old 不再被覆盖 ==========
+round1 moved=['sub\\data.txt -> data.txt.old'] archives=['data.txt.old']
+round2 moved=['sub\\data.txt -> data.txt.old.1790093636'] archives=['data.txt.old', 'data.txt.old.1790093636']
+留档内容 = {'data.txt.old': 'STAGING-OLD-1', 'data.txt.old.1790093636': 'STAGING-OLD-2'}
+[PASS] Q3b-1  第一次留档 STAGING-OLD-1 仍存活（未被覆盖）
+[PASS] Q3b-2  第二次留档 STAGING-OLD-2 也已落盘
+[PASS] Q3b-3  两次落选 = 两个留档文件（实测 2）
+
+========== Q4b 复验：memory_store 留档不再被覆盖 ==========
+留档文件 = {'memory.old.json': 'desktop1', 'memory.old.json.1790093636': 'desktop2'}
+[PASS] Q4b-1  第一次留档 desktop1 仍存活
+[PASS] Q4b-2  第二次留档 desktop2 已落盘
+[PASS] Q4b-3  memory.old.json（约定名）仍是其中之一
+
+========== reset_all 回归：隐私清理必须连带时间戳留档一起清 ==========
+reset_all 之后残留留档 = []
+[PASS] R1  隐私 reset_all 清掉了全部留档（含带时间戳的）
+
+sandbox cleaned: True

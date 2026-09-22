@@ -1,0 +1,34 @@
+SANDBOX = C:\Users\23002\AppData\Local\Temp\r34_store_6h3rw31n
+
+========== Q1: config_manager 是否清理 .corrupt.* 备份 ==========
+after prune: .backup.*=10  .corrupt.*=15  (MAX_CONFIG_BACKUPS=10)
+[PASS] Q1a  .backup.* 已被收敛到 <= 10（实测 10）
+[FAIL] Q1b  .corrupt.* 也已收敛到 <= 10（实测 15）
+
+========== Q5: data_store._movable 探针行为 ==========
+第一次 _movable(干净文件) = True, 文件还在=True
+残留 .migprobe 存在时 _movable = False
+  源文件还在=True, .migprobe 内容='STALE'
+[FAIL] Q5  .migprobe 残留导致 _movable=False（源还在=True）—— 需人工判读
+
+========== Q2/Q3: migrate_from_staging 留档是否校验/覆盖 ==========
+round1 moved=['sub\\data.txt -> .old'] skipped=[] errors=[]
+  .old 内容 = 'STAGING-OLD'
+[PASS] Q3a  落选者（staging 旧版）被正确留档到 .old
+round2 moved=['sub\\data.txt -> .old'] errors=[]
+  .old 内容（第二次后） = 'STAGING-OLD-2'
+[FAIL] Q3b  .old 保留了**第一次**的留档（未被第二次静默覆盖）
+  → 若 Q3b FAIL：固定名 .old 被覆盖，第一次留档永久丢失
+
+========== Q4: memory_store 留档固定名 ==========
+round1 = {'moved': True, 'kept': 'target', 'removed_fallback_file': True}
+  留档 = {'saved_at': 1000.0, 'who': 'desktop1'}
+[PASS] Q4a  落选者 desktop1 被正确留档
+round2 = {'moved': True, 'kept': 'target'}
+round2 留档 = {'saved_at': 1000.0, 'who': 'desktop2'}
+[FAIL] Q4b  留档保留了**第一次**的 desktop1（未被 desktop2 静默覆盖）
+  → 若 Q4b FAIL：固定名 @memory.old.json 被覆盖，第一次留档永久丢失
+
+Q4c 结论：memory_store 的留档路径 = memory.old.json（固定名）
+
+sandbox cleaned: True
