@@ -1,0 +1,37 @@
+=== main.py 内「定义但零调用」的函数（排除 Qt 钩子 / dunder / main） ===
+
+  L6633   _async_api_request                    ⚠️ 疑似死函数
+  L2908   _is_falling_through_window            ⚠️ 疑似死函数
+  L7338   _is_repeat_of_recent                  ⚠️ 疑似死函数
+  L8721   _resolve_target_screen_anchor         ⚠️ 疑似死函数
+  L7185   _sanitize_partial_reply               [装饰器保护的槽/property]
+          装饰器: ['@staticmethod']
+  L2184   check_desktop_element_at_target       ⚠️ 疑似死函数
+  L8456   check_recycle_bin                     ⚠️ 疑似死函数
+  L4278   close_bilibili                        ⚠️ 疑似死函数
+  L1058   get_element_at_pos                    ⚠️ 疑似死函数
+  L8399   handle_window_operation               ⚠️ 疑似死函数
+  L6031   init_api_client                       ⚠️ 疑似死函数
+  L5698   mouseEnterEvent                       ⚠️ 疑似死函数
+  L5703   mouseLeaveEvent                       ⚠️ 疑似死函数
+  L4307   move_to_edge_and_shrink               ⚠️ 疑似死函数
+  L8296   react_to_file_emotionally             ⚠️ 疑似死函数
+  L3999   reset_special_states                  ⚠️ 疑似死函数
+  L2202   start_mouse_drag                      ⚠️ 疑似死函数
+  L4423   suggest_game                          ⚠️ 疑似死函数
+  L4408   tell_joke                             ⚠️ 疑似死函数
+  L3962   trigger_laugh                         ⚠️ 疑似死函数
+  L3977   trigger_shy                           ⚠️ 疑似死函数
+  L3971   trigger_surprise                      ⚠️ 疑似死函数
+  L3994   trigger_teasplash                     ⚠️ 疑似死函数
+  L3983   trigger_unhappy                       ⚠️ 疑似死函数
+  L3989   trigger_victory                       ⚠️ 疑似死函数
+
+小计: 25 个定义但静态无调用点（其中 1 个有装饰器保护）
+
+=== 交叉：上述疑似死函数中，名字/所属区域含移动·行为关键词的 ===
+
+  L2908   _is_falling_through_window
+  L4307   move_to_edge_and_shrink
+  L8296   react_to_file_emotionally
+  L2202   start_mouse_drag

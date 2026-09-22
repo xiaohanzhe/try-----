@@ -1,0 +1,99 @@
+================================================================
+第 34 轮 · 移动/行为基础代码严查 —— 取证第四批
+（Qt 钩子实测 + update_movement 热循环）
+日期：2026-09-22
+只读审查，未改动任何产品文件
+================================================================
+
+================================================================
+一、★ Qt 钩子无效 —— 三重实证闭合（上一条结论升级为"确凿"）
+================================================================
+前一批（03）只凭命名规则推断，本批补**实测**，结论不变且更强。
+
+【证据 1】真实事件派发
+  探针：`_r34_event_probe.py`（QT_QPA_PLATFORM=offscreen，不显示窗口）
+  做法：一个 Probe(QWidget) 同时定义 enterEvent / leaveEvent /
+        mouseEnterEvent / mouseLeaveEvent 四个方法，
+        用 `app.sendEvent(w1, QEnterEvent(...))` 与 `QEvent(QEvent.Leave)`
+        走 **Qt 真实事件分发**。
+  结果：命中的钩子 = **['enterEvent', 'leaveEvent']**
+        ⇒ mouseEnterEvent / mouseLeaveEvent **一次都没命中**
+
+【证据 2】基类成员实证
+  hasattr(QWidget, 'enterEvent')        = **True**
+  hasattr(QWidget, 'leaveEvent')        = **True**
+  hasattr(QWidget, 'mouseEnterEvent')   = **False**   ← 基类里根本没这个名字
+  hasattr(QWidget, 'mouseLeaveEvent')   = **False**   ← 同上
+  hasattr(QWidget, 'mouseMoveEvent')    = True
+  hasattr(QWidget, 'mousePressEvent')   = True
+
+【证据 3】官方约定
+  QEvent.Enter → enterEvent(QEvent)；QEvent.Leave → leaveEvent(QEvent)
+  PyQt5 **不存在** mouseEnterEvent / mouseLeaveEvent 这一对约定。
+
+⇒ **结论：main.py L5698 / L5703 两个方法从未被调用过**（不是"偶尔失效"）。
+
+  危害复核（第二批已评估，此处定稿）：
+   · 它们做的事：setCursor(手型/箭头) + on_mouse_hover()
+   · 光标手型已由 mouseMoveEvent（L5316/L5424）覆盖 ⇒ **无功能缺失**
+   · on_mouse_hover 已是空壳（第 8 轮清空）⇒ **无功能缺失**
+   ⇒ 定性：**永久失效的冗余实现**，零行为危害，但是**扩展陷阱**
+     （未来往这两个方法里加逻辑会静默失效：无报错、无日志、G2 也抓不到）
+
+================================================================
+二、update_movement 热循环审查（L1651~L2103）
+================================================================
+整体质量**高于预期**，第 6/13/17/18 轮的修复痕迹完整。逐段结论：
+
+■ 已核实正确（勿动）
+  1. dt 截断（L1664~L1667）：非数值/负数归零、>0.1 截到 0.1 —— 防瞬移，正确
+  2. 环境/心情 5s 节拍（L1670~L1678）：首次即执行（else 分支），正确
+  3. `_last_desktop_elem_check` 赋值在 try **外**（L1691）：
+     注释说明"防抛错后每 30ms 全量重试"，**这是刻意设计，正确**
+  4. 楼层检查 1s 节拍 + `_apply_pet_z_order` 只在非空中时刷（L1740~L1752）：正确
+  5. 特殊状态分派优先级（L1770~1783）：jumping > gravity_falling > falling > recovering，
+     与 handle_* 的读值口径一致，**正确**
+  6. 移动主体（L1905~L2052）：
+     · 平方距离分档（10000/2500）—— 性能优化，正确
+     · `base_move_distance = new_speed` **不乘 elapsed_time** —— 注释明确"speed 语义 = 像素/帧"，
+       乘 dt 会导致 0.1 像素四舍五入为 0（太空滑步）⇒ **正确且关键**
+     · `_cached_screen_geom` 3s 缓存 + `_virtual_screen_rect()` —— 多屏契约①，正确
+     · `_cached_mood_factor` 2s 缓存 —— 正确
+     · 到达时必须 `force=True` 切 idle（L2080）—— 注释说明 walk/run 优先级 2 > idle 1，
+       不带 force 会被拦（"走着走着突然定住"）⇒ **正确且关键**
+     · spell 阶段不在此切方向动画（L2046）—— 避免与 _tick_spell_flow 双算法打架致抽搐，正确
+
+■ 疑点（记录，低优先级）
+  7. ⚠️ clamp 的极端边界（L2005~L2006）：
+       new_x = max(screen_geom.left(), min(new_x, screen_geom.right() - self.width()))
+     若 `self.width() > screen_geom.width()`（宠物被放大到超过屏幕宽），
+     则 `right() - width() < left()` ⇒ max 把 new_x 钉在 left ⇒ **右侧出屏**。
+     触发条件：DPI 缩放 + 超大宠物尺寸，罕见。**暂不改**，记为已知边界。
+
+  8. ⚠️ 空闲分支的状态覆盖不全（L2084~L2103）：
+       防"随机启动移动"的 elif 链覆盖：_spell_stage / _is_being_dragged /
+       is_jumping / is_falling / game_state.is_playing
+       **未覆盖**：is_gravity_falling / is_recovering / is_sleeping
+     当前**不会出问题**——因为 is_gravity_falling(L1774) 与 is_recovering(L1780)
+       在上面已 return，is_sleeping 在 L1694 已 return。
+     ⇒ 属**防御性不一致**（对比 L1747 顶部就写全了三个），
+       而非活跃 bug。建议：补全三个条件，或加一行注释说明"到此必非上述状态"。
+     ⚠️ **不要仅凭"看起来能漏"就改** —— 需先实测是否存在漏到这里的路径。
+
+  9. ⚠️ 甩飞入口（mouseReleaseEvent L5489~L5491）显式清
+       is_falling=True / is_recovering=False / fall_duration=0.0，
+     并**再写一次 `fall_start_time = time.time()`（L5492）** ——
+     该字段全项目零读（第一批已确认）⇒ 又一次死写。
+     此处是死字段的第 5 个写点（共 6 处）。
+
+■ 真纰漏（归入总表）
+  10. ★ `is_moving` 写 19 / 读 5（比值 3.8:1）—— 见下一批专项：
+      需确认是否存在"设了 True 但无消费者"的写点。
+
+================================================================
+三、下一步
+================================================================
+- 专项：is_moving 的 19 个写点逐个核实用途（下一批）
+- 专项：check_window_movement（L3290）+ mouseMoveEvent 拖拽链路
+- 归总：出《第34轮真实纰漏清单》→ 报用户 → 修复放 task #15
+================================================================

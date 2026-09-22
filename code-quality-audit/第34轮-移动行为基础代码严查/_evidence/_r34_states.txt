@@ -1,0 +1,46 @@
+=== 1. 状态位总览 ===
+
+状态位                          写点       读点       预声明区(init_systems)         首定义处
+--------------------------------------------------------------------------------------------------------------
+is_moving                    19       5        no                         L1095
+is_jumping                   6        8        no                         L1125
+is_falling                   10       9        no                         L1100
+is_gravity_falling           8        1        no                         L1199
+is_recovering                10       4        no                         L1101
+is_sleeping                  3        2        no                         L1152
+is_splat                     7        1        no                         L2868
+is_sleeping_walk             6        2        no                         L1182
+is_dragging_mouse            4        2        no                         L643
+is_following_mouse           4        1        no                         L1145
+is_following_dragged_file    3        1        YES                        L786
+is_rolling                   2        0        no                         L1174
+is_sliding                   2        0        no                         L1175
+is_spellcasting              2        1        no                         L1172
+is_using_item                2        1        no                         L1171
+is_laughing                  3        0        no                         L1173
+is_teasplashed               3        0        no                         L1176
+is_happy                     3        1        no                         L1179
+is_shy                       4        2        no                         L1180
+is_surprised                 4        2        no                         L1178
+
+=== 2. 「同时置 True」组合扫描（同函数体内被置 True 的状态位对） ===
+
+  trigger_splat()  L3534~L3570
+    同时置 True: ['is_falling', 'is_splat']
+  handle_fall()  L3703~L3907
+    同时置 True: ['is_recovering', 'is_splat']
+  trigger_laugh()  L3962~L3969
+    同时置 True: ['is_happy', 'is_laughing']
+
+=== 3. 关键互斥对检查 ===
+
+  is_falling             + is_gravity_falling      ✓ 无同函数共现
+      理由: 两种坠落必须互斥（否则 handle_fall 阶段机不推进）
+  is_sleeping            + is_moving               ✓ 无同函数共现
+      理由: 睡眠中不该在移动
+  is_jumping             + is_falling              ✓ 无同函数共现
+      理由: 跳跃中不该同时摔倒
+  is_jumping             + is_gravity_falling      ✓ 无同函数共现
+      理由: 跳跃中不该同时重力掉落
+  is_splat               + is_sleeping             ✓ 无同函数共现
+      理由: 摔扁时不该睡眠

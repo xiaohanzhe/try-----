@@ -1,0 +1,22 @@
+=== 用 app.sendEvent 做真实派发 ===
+命中的钩子: ['enterEvent', 'leaveEvent']
+
+判读：
+  · 若命中含 enterEvent/leaveEvent 而不含 mouseEnterEvent/mouseLeaveEvent
+    ⇒ 证明 Qt 只认标准名，项目里那两个方法永不触发
+  · 若四个都命中 ⇒ 说明 PyQt 有别名映射（则我判断错误，需撤回结论）
+
+=== 对照：QEvent 类型 → Qt 期待的处理函数名（官方约定） ===
+  QEvent.Enter        -> enterEvent(QEvent)
+  QEvent.Leave        -> leaveEvent(QEvent)
+  QEvent.MouseMove    -> mouseMoveEvent(QMouseEvent)
+  QEvent.MouseButtonPress -> mousePressEvent(QMouseEvent)
+  (PyQt5 无 mouseEnterEvent / mouseLeaveEvent 这一对约定)
+
+=== hasattr(QWidget, ...) 实证 ===
+  QWidget.enterEvent           hasattr=True
+  QWidget.leaveEvent           hasattr=True
+  QWidget.mouseEnterEvent      hasattr=False
+  QWidget.mouseLeaveEvent      hasattr=False
+  QWidget.mouseMoveEvent       hasattr=True
+  QWidget.mousePressEvent      hasattr=True

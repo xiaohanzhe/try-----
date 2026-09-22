@@ -1,0 +1,48 @@
+=== is_moving 全部出现点（写 / 读 标注） ===
+
+  [WRITE] L1095   init_movement()                  self.is_moving = True
+  [WRITE] L1479   randomize_movement_pattern()     self.is_moving = False
+  [WRITE] L1488   randomize_movement_pattern()     self.is_moving = False
+  [WRITE] L1496   randomize_movement_pattern()     self.is_moving = False
+  [WRITE] L1504   randomize_movement_pattern()     self.is_moving = False
+  [WRITE] L1646   generate_new_move_target()       self.is_moving = True
+  [read ] L1895   update_movement()                if (not self.is_moving
+  [read ] L1905   update_movement()                if self.is_moving:
+  [WRITE] L2059   update_movement()                self.is_moving = False
+  [WRITE] L3483   start_fall()                     self.is_moving = False
+  [WRITE] L3495   start_fall()                     self.is_moving = False
+  [WRITE] L3505   start_fall()                     self.is_moving = False
+  [WRITE] L3515   start_fall()                     self.is_moving = False
+  [WRITE] L3541   trigger_splat()                  self.is_moving = False
+  [WRITE] L3896   handle_fall()                    self.is_moving = False
+  [WRITE] L3957   start_dragging_play()            self.is_moving = True
+  [WRITE] L4016   reset_special_states()           self.is_moving = True
+  [read ] L4095   react_to_desktop_element()       if self.is_moving and (self.current_animation.startswith('walk_')
+  [WRITE] L4290   enter_sleep_mode()               self.is_moving = False
+  [WRITE] L4301   enter_sleep_mode()               self.is_moving = False
+  [WRITE] L5084   mousePressEvent()                self.is_moving = False
+  [read ] L7590   update_animation()               elif self.is_moving:
+  [read ] L7789   update_animation()               _need_advance = (self.is_moving or self.is_jumping or self.is_falling or self.is_recovering
+  [WRITE] L8519   _move_away_from_recycle_bin()    self.is_moving = True
+
+=== 统计 ===
+  写点 19 个，读点 5 个
+
+=== 写点按函数归类 ===
+  randomize_movement_pattern()             4 次
+  start_fall()                             4 次
+  enter_sleep_mode()                       2 次
+  init_movement()                          1 次
+  generate_new_move_target()               1 次
+  update_movement()                        1 次
+  trigger_splat()                          1 次
+  handle_fall()                            1 次
+  start_dragging_play()                    1 次
+  reset_special_states()                   1 次
+  mousePressEvent()                        1 次
+  _move_away_from_recycle_bin()            1 次
+
+=== 读点按函数归类 ===
+  update_movement()                        2 次
+  update_animation()                       2 次
+  react_to_desktop_element()               1 次

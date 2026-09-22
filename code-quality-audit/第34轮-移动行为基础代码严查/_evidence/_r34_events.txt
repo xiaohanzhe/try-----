@@ -1,0 +1,42 @@
+=== main.py 内所有 *Event* 形式的方法定义 ===
+  L4747   _event_speech_enabled
+  L4762   _pick_event_line
+  L4780   _event_say
+  L4800   _event_ai_ready
+  L4837   speak_event
+  L5001   moveEvent
+  L5004   paintEvent
+  L5073   mousePressEvent
+  L5230   mouseMoveEvent
+  L5434   mouseReleaseEvent
+  L5644   mouseDoubleClickEvent
+  L5697   mouseEnterEvent
+  L5702   mouseLeaveEvent
+
+=== PyQt5 QWidget 标准钩子对照 ===
+  enterEvent                 --- 缺失
+  leaveEvent                 --- 缺失
+  mouseMoveEvent             YES
+  mousePressEvent            YES
+  mouseReleaseEvent          YES
+  mouseDoubleClickEvent      YES
+  contextMenuEvent           --- 缺失
+  wheelEvent                 --- 缺失
+  paintEvent                 YES
+  resizeEvent                --- 缺失
+  moveEvent                  YES
+  showEvent                  --- 缺失
+  hideEvent                  --- 缺失
+  closeEvent                 --- 缺失
+  dragEnterEvent             --- 缺失
+  dragMoveEvent              --- 缺失
+  dragLeaveEvent             --- 缺失
+  dropEvent                  --- 缺失
+  keyPressEvent              --- 缺失
+  keyReleaseEvent            --- 缺失
+  focusInEvent               --- 缺失
+  focusOutEvent              --- 缺失
+  changeEvent                --- 缺失
+  timerEvent                 --- 缺失
+  event                      --- 缺失
+  eventFilter                --- 缺失

@@ -1,0 +1,151 @@
+=== 1. `fall_start_time` 全形态引用（含 getattr / 字符串字面量） ===
+
+--- fall_start_time ---
+  ralsei_pet\src\main.py:1102  self.fall_start_time = None
+  ralsei_pet\src\main.py:1202  self.fall_start_time = 0  # 重力掉落开始时间
+  ralsei_pet\src\main.py:2863  self.fall_start_time = time.time()
+  ralsei_pet\src\main.py:3445  self.fall_start_time = time.time()
+  ralsei_pet\src\main.py:3550  self.fall_start_time = time.time()
+  ralsei_pet\src\main.py:5492  self.fall_start_time = time.time()
+
+--- fall_start_pos ---
+  ralsei_pet\src\main.py:1203  self.fall_start_pos = QPoint(0, 0)  # 重力掉落开始位置
+  ralsei_pet\src\main.py:2864  self.fall_start_pos = self.pos()
+  ralsei_pet\src\main.py:2906  _log.debug(f"开始重力掉落，起始位置: {self.fall_start_pos}, 摔落速度: {fall_velocity}, 是否甩飞: {is_thrown}")
+
+--- fall_speed ---
+  ralsei_pet\src\main.py:218  if getattr(pet, 'fall_speed', 0.0) <= 150:
+  ralsei_pet\src\main.py:1201  self.fall_speed = 0.0  # 重力掉落速度
+  ralsei_pet\src\main.py:2862  self.fall_speed = 0.0  # 初始掉落速度为0
+  ralsei_pet\src\main.py:3199  vy = float(getattr(self, 'fall_speed', 0.0) or 0.0)
+  ralsei_pet\src\main.py:3210  self.fall_speed = 0.0
+  ralsei_pet\src\main.py:3577  self.fall_speed += self.gravity * elapsed_time
+  ralsei_pet\src\main.py:3580  fall_distance = self.fall_speed * elapsed_time
+
+--- recovery_duration ---
+  ralsei_pet\src\main.py:1162  self.recovery_duration = 0.0
+  ralsei_pet\src\main.py:3447  self.recovery_duration = 0.0
+  ralsei_pet\src\main.py:3823  self.recovery_duration = 0.0
+  ralsei_pet\src\main.py:3839  self.recovery_duration = 0.0
+  ralsei_pet\src\main.py:3855  self.recovery_duration += elapsed_time
+  ralsei_pet\src\main.py:3858  if self.recovery_duration >= self.recovery_max_duration:
+
+--- recovery_max_duration ---
+  ralsei_pet\src\main.py:1163  self.recovery_max_duration = 5.0
+  ralsei_pet\src\main.py:3454  self.recovery_max_duration = 2.5
+  ralsei_pet\src\main.py:3558  self.recovery_max_duration = 1.5  # 爬起恢复1.5秒
+  ralsei_pet\src\main.py:3858  if self.recovery_duration >= self.recovery_max_duration:
+  ralsei_pet\src\main.py:5498  self.recovery_max_duration = 2.0
+
+--- fall_duration ---
+  ralsei_pet\src\main.py:1160  self.fall_duration = 0.0
+  ralsei_pet\src\main.py:1161  self.max_fall_duration = 5.0
+  ralsei_pet\src\main.py:1200  self.fall_duration = 0.0  # 摔倒持续时间
+  ralsei_pet\src\main.py:1204  self.max_fall_duration = 2.0  # 最大摔倒持续时间（秒）
+  ralsei_pet\src\main.py:3211  self.fall_duration = 0.0
+  ralsei_pet\src\main.py:3444  self.fall_duration = 0.0
+  ralsei_pet\src\main.py:3480  self.max_fall_duration = 3.0
+  ralsei_pet\src\main.py:3491  self.max_fall_duration = 5.0
+  ralsei_pet\src\main.py:3501  self.max_fall_duration = 5.0
+  ralsei_pet\src\main.py:3511  self.max_fall_duration = 3.0
+  ralsei_pet\src\main.py:3549  self.fall_duration = 0.0
+  ralsei_pet\src\main.py:3557  self.max_fall_duration = 3.0
+  ralsei_pet\src\main.py:3706  self.fall_duration += elapsed_time
+  ralsei_pet\src\main.py:3777  _phase_t = self.fall_duration - getattr(self, '_fall_phase_start', 0.0)
+  ralsei_pet\src\main.py:3783  self._fall_phase_start = self.fall_duration
+  ralsei_pet\src\main.py:3806  self._fall_phase_start = self.fall_duration
+  ralsei_pet\src\main.py:3815  elif phase == "dazed" and _phase_t >= max(1.0, self.max_fall_duration - 2.0):
+  ralsei_pet\src\main.py:3836  elif phase not in ("flying", "splat", "dazed") and self.fall_duration >= self.max_fall_duration:
+  ralsei_pet\src\main.py:5491  self.fall_duration = 0.0
+  ralsei_pet\src\main.py:5497  self.max_fall_duration = 3.5  # 总摔倒时长（飞行+摔扁+晕乎）
+
+=== 2. getattr(self, ...) 动态读全扫描（看是否有隐藏消费者） ===
+
+  AI_REPLY_MAX_CHARS               [('ralsei_pet\\src\\main.py', 7325)]
+  AUTONOMOUS_SPEECH_MIN_INTERVAL   [('ralsei_pet\\src\\main.py', 4608)]
+  _CATCH_BRAKE_SECONDS             [('ralsei_pet\\src\\main.py', 3221)]
+  _ai_delta_gen                    [('ralsei_pet\\src\\main.py', 6698), ('ralsei_pet\\src\\main.py', 7407)]
+  _ai_delta_sink                   [('ralsei_pet\\src\\main.py', 7409)]
+  _anim_anchor_cache               [('ralsei_pet\\src\\main.py', 7434)]
+  _anim_container_key              [('ralsei_pet\\src\\main.py', 7824), ('ralsei_pet\\src\\main.py', 7984)]
+  _anim_container_size             [('ralsei_pet\\src\\main.py', 7833), ('ralsei_pet\\src\\main.py', 7993)]
+  _bounce_params                   [('ralsei_pet\\src\\main.py', 8126)]
+  _cached_scale_factor             [('ralsei_pet\\src\\main.py', 7813), ('ralsei_pet\\src\\main.py', 7973)]
+  _cached_screen_geom              [('ralsei_pet\\src\\main.py', 2149)]
+  _catch_brake                     [('ralsei_pet\\src\\main.py', 1786), ('ralsei_pet\\src\\main.py', 3240)]
+  _drag_samples                    [('ralsei_pet\\src\\main.py', 5244), ('ralsei_pet\\src\\main.py', 5461), ('ralsei_pet\\src\\main.py', 5567), ('ralsei_pet\\src\\main.py', 7858)]
+  _drag_surprised                  [('ralsei_pet\\src\\main.py', 5274)]
+  _event_line_picker               [('ralsei_pet\\src\\main.py', 4770)]
+  _event_speak_gen                 [('ralsei_pet\\src\\main.py', 4867), ('ralsei_pet\\src\\main.py', 4885), ('ralsei_pet\\src\\main.py', 4903), ('ralsei_pet\\src\\main.py', 4966)]
+  _event_speak_last                [('ralsei_pet\\src\\main.py', 4833)]
+  _event_speaking                  [('ralsei_pet\\src\\main.py', 4827)]
+  _fall_flight_time                [('ralsei_pet\\src\\main.py', 3721), ('ralsei_pet\\src\\main.py', 3780)]
+  _fall_landed                     [('ralsei_pet\\src\\main.py', 3778)]
+  _fall_launch_y                   [('ralsei_pet\\src\\main.py', 3739)]
+  _fall_phase                      [('ralsei_pet\\src\\main.py', 3719), ('ralsei_pet\\src\\main.py', 3776), ('ralsei_pet\\src\\main.py', 7572)]
+  _fall_phase_start                [('ralsei_pet\\src\\main.py', 3777)]
+  _fall_vx                         [('ralsei_pet\\src\\main.py', 3201), ('ralsei_pet\\src\\main.py', 3723)]
+  _fall_vy                         [('ralsei_pet\\src\\main.py', 3202), ('ralsei_pet\\src\\main.py', 3724)]
+  _fall_vy0                        [('ralsei_pet\\src\\main.py', 3728)]
+  _follow_mouse_start              [('ralsei_pet\\src\\main.py', 1819)]
+  _hide_moving_cb                  [('ralsei_pet\\src\\main.py', 1385)]
+  _hide_moving_cb_stage            [('ralsei_pet\\src\\main.py', 1385), ('ralsei_pet\\src\\main.py', 1387)]
+  _hide_obstacles                  [('ralsei_pet\\src\\main.py', 8664)]
+  _hide_stage                      [('ralsei_pet\\src\\main.py', 1385), ('ralsei_pet\\src\\main.py', 1393), ('ralsei_pet\\src\\main.py', 2071), ('ralsei_pet\\src\\main.py', 3872), ('ralsei_pet\\src\\main.py', 5098), ('ralsei_pet\\src\\main.py', 6301)]
+  _idle_loop_active                [('ralsei_pet\\src\\main.py', 7788), ('ralsei_pet\\src\\main.py', 7968)]
+  _is_being_dragged                [('ralsei_pet\\src\\main.py', 1371), ('ralsei_pet\\src\\main.py', 1420), ('ralsei_pet\\src\\main.py', 1806), ('ralsei_pet\\src\\main.py', 1898), ('ralsei_pet\\src\\main.py', 2091), ('ralsei_pet\\src\\main.py', 2859), ('ralsei_pet\\src\\main.py', 3310), ('ralsei_pet\\src\\main.py', 3440), ('ralsei_pet\\src\\main.py', 4360), ('ralsei_pet\\src\\main.py', 7860)]
+  _is_repeat_of_recent             [('ralsei_pet\\src\\main.py', 7320)]
+  _jump_anim_override              [('ralsei_pet\\src\\main.py', 3042)]
+  _last_autonomous_speech_time     [('ralsei_pet\\src\\main.py', 4607)]
+  _last_drag_pos                   [('ralsei_pet\\src\\main.py', 5450)]
+  _last_dragging_play_time         [('ralsei_pet\\src\\main.py', 1899)]
+  _last_env_update                 [('ralsei_pet\\src\\main.py', 1670)]
+  _last_mood_check                 [('ralsei_pet\\src\\main.py', 1940)]
+  _last_reacted_element            [('ralsei_pet\\src\\main.py', 4039)]
+  _last_screen_check               [('ralsei_pet\\src\\main.py', 2000)]
+  _last_user_chat_ts               [('ralsei_pet\\src\\main.py', 6987)]
+  _pending_look_at_element         [('ralsei_pet\\src\\main.py', 1405)]
+  _persona_cache                   [('ralsei_pet\\src\\main.py', 7068)]
+  _play_once_active                [('ralsei_pet\\src\\main.py', 6241), ('ralsei_pet\\src\\main.py', 6318), ('ralsei_pet\\src\\main.py', 7530)]
+  _play_once_arming                [('ralsei_pet\\src\\main.py', 6319)]
+  _sleep_stir_count                [('ralsei_pet\\src\\main.py', 1712)]
+  _spell_stage                     [('ralsei_pet\\src\\main.py', 1378), ('ralsei_pet\\src\\main.py', 1393), ('ralsei_pet\\src\\main.py', 1416), ('ralsei_pet\\src\\main.py', 1756), ('ralsei_pet\\src\\main.py', 1879), ('ralsei_pet\\src\\main.py', 1896), ('ralsei_pet\\src\\main.py', 2046), ('ralsei_pet\\src\\main.py', 2069), ('ralsei_pet\\src\\main.py', 2088), ('ralsei_pet\\src\\main.py', 2162), ('ralsei_pet\\src\\main.py', 2606), ('ralsei_pet\\src\\main.py', 2855), ('ralsei_pet\\src\\main.py', 3294), ('ralsei_pet\\src\\main.py', 3436), ('ralsei_pet\\src\\main.py', 3875), ('ralsei_pet\\src\\main.py', 5079), ('ralsei_pet\\src\\main.py', 6289), ('ralsei_pet\\src\\main.py', 7683), ('ralsei_pet\\src\\main.py', 7793)]
+  _sprite_cache                    [('ralsei_pet\\src\\main.py', 7891), ('ralsei_pet\\src\\main.py', 8018)]
+  _tray                            [('ralsei_pet\\src\\main.py', 581), ('ralsei_pet\\src\\main.py', 603), ('ralsei_pet\\src\\main.py', 8651)]
+  _worldview_recall_text           [('ralsei_pet\\src\\main.py', 6774)]
+  ai_driver                        [('ralsei_pet\\src\\main.py', 4237), ('ralsei_pet\\src\\main.py', 4466)]
+  api_client                       [('ralsei_pet\\src\\main.py', 4454)]
+  api_config                       [('ralsei_pet\\src\\main.py', 4756), ('ralsei_pet\\src\\main.py', 5903), ('ralsei_pet\\src\\main.py', 7095), ('ralsei_pet\\src\\main.py', 7119)]
+  api_enabled                      [('ralsei_pet\\src\\main.py', 4626), ('ralsei_pet\\src\\main.py', 4753)]
+  autonomous_agent                 [('ralsei_pet\\src\\main.py', 1400), ('ralsei_pet\\src\\main.py', 1731)]
+  current_floor                    [('ralsei_pet\\src\\main.py', 2645), ('ralsei_pet\\src\\main.py', 2716), ('ralsei_pet\\src\\main.py', 2742), ('ralsei_pet\\src\\main.py', 2881), ('ralsei_pet\\src\\main.py', 2977), ('ralsei_pet\\src\\main.py', 3287), ('ralsei_pet\\src\\main.py', 3466)]
+  current_priority                 [('ralsei_pet\\src\\main.py', 6337)]
+  current_window                   [('ralsei_pet\\src\\main.py', 6978)]
+  dialogue_ui                      [('ralsei_pet\\src\\main.py', 4661), ('ralsei_pet\\src\\main.py', 4790), ('ralsei_pet\\src\\main.py', 4807), ('ralsei_pet\\src\\main.py', 4871), ('ralsei_pet\\src\\main.py', 6713), ('ralsei_pet\\src\\main.py', 6738)]
+  fall_slide_speed_y               [('ralsei_pet\\src\\main.py', 3768), ('ralsei_pet\\src\\main.py', 3772)]
+  fall_speed                       [('ralsei_pet\\src\\main.py', 3199)]
+  fall_velocity_x                  [('ralsei_pet\\src\\main.py', 3198)]
+  floor_manager                    [('ralsei_pet\\src\\main.py', 2346), ('ralsei_pet\\src\\main.py', 2583)]
+  game_state                       [('ralsei_pet\\src\\main.py', 500), ('ralsei_pet\\src\\main.py', 1379), ('ralsei_pet\\src\\main.py', 1418), ('ralsei_pet\\src\\main.py', 1757), ('ralsei_pet\\src\\main.py', 1897), ('ralsei_pet\\src\\main.py', 2094), ('ralsei_pet\\src\\main.py', 2165), ('ralsei_pet\\src\\main.py', 2608), ('ralsei_pet\\src\\main.py', 2857), ('ralsei_pet\\src\\main.py', 3296), ('ralsei_pet\\src\\main.py', 3438), ('ralsei_pet\\src\\main.py', 4358), ('ralsei_pet\\src\\main.py', 4573), ('ralsei_pet\\src\\main.py', 6300), ('ralsei_pet\\src\\main.py', 7639)]
+  gravity                          [('ralsei_pet\\src\\main.py', 3732)]
+  is_dragging                      [('ralsei_pet\\src\\main.py', 1764)]
+  is_dragging_mouse                [('ralsei_pet\\src\\main.py', 1371)]
+  is_falling                       [('ralsei_pet\\src\\main.py', 1373), ('ralsei_pet\\src\\main.py', 1422), ('ralsei_pet\\src\\main.py', 2091), ('ralsei_pet\\src\\main.py', 3190), ('ralsei_pet\\src\\main.py', 3307), ('ralsei_pet\\src\\main.py', 5578), ('ralsei_pet\\src\\main.py', 6974)]
+  is_following_dragged_file        [('ralsei_pet\\src\\main.py', 1761)]
+  is_following_mouse               [('ralsei_pet\\src\\main.py', 1372), ('ralsei_pet\\src\\main.py', 1759)]
+  is_gravity_falling               [('ralsei_pet\\src\\main.py', 1374), ('ralsei_pet\\src\\main.py', 1422), ('ralsei_pet\\src\\main.py', 1748), ('ralsei_pet\\src\\main.py', 3191), ('ralsei_pet\\src\\main.py', 3197), ('ralsei_pet\\src\\main.py', 3308)]
+  is_jumping                       [('ralsei_pet\\src\\main.py', 1376), ('ralsei_pet\\src\\main.py', 1422), ('ralsei_pet\\src\\main.py', 2091), ('ralsei_pet\\src\\main.py', 2859), ('ralsei_pet\\src\\main.py', 3309), ('ralsei_pet\\src\\main.py', 3440)]
+  is_moving                        [('ralsei_pet\\src\\main.py', 3384), ('ralsei_pet\\src\\main.py', 6303), ('ralsei_pet\\src\\main.py', 6976)]
+  is_recovering                    [('ralsei_pet\\src\\main.py', 1375)]
+  is_sleeping                      [('ralsei_pet\\src\\main.py', 4356)]
+  is_sleeping_walk                 [('ralsei_pet\\src\\main.py', 7679)]
+  is_splat                         [('ralsei_pet\\src\\main.py', 5106), ('ralsei_pet\\src\\main.py', 7792)]
+  jump_duration                    [('ralsei_pet\\src\\main.py', 2935)]
+  jump_target_floor                [('ralsei_pet\\src\\main.py', 2717), ('ralsei_pet\\src\\main.py', 2978), ('ralsei_pet\\src\\main.py', 3002)]
+  last_movement_end_time           [('ralsei_pet\\src\\main.py', 1434)]
+  memory_system                    [('ralsei_pet\\src\\main.py', 6749), ('ralsei_pet\\src\\main.py', 6998)]
+  pet_ai                           [('ralsei_pet\\src\\main.py', 6611)]
+  previous_direction               [('ralsei_pet\\src\\main.py', 1555), ('ralsei_pet\\src\\main.py', 2494)]
+  relationship                     [('ralsei_pet\\src\\main.py', 6795)]
+  window_level                     [('ralsei_pet\\src\\main.py', 6978)]
+  (共 87 个不同属性名)

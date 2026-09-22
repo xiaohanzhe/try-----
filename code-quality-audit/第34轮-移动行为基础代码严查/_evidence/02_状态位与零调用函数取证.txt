@@ -1,0 +1,143 @@
+================================================================
+第 34 轮 · 移动/行为基础代码严查 —— 取证第二批（状态位 / 零调用函数）
+日期：2026-09-22
+只读审查，未改动任何产品文件
+================================================================
+
+【方法】
+1. 21 个移动/行为状态位：AST 统计写点/读点，检查是否在 init_systems 预声明区
+2. "同时置 True" 组合扫描：同函数体内被置 True 的状态位对
+3. 关键互斥对检查（is_falling×is_gravity_falling 等 5 对）
+4. 零调用函数扫描 —— ⚠️ **第一版探针误报 31 个**（见下"探针教训"）
+5. 逐名核实（不能用探针计数下结论，必须读原文 + 查跨文件引用）
+
+================================================================
+一、探针教训（本轮第 1 条，最该记的）
+================================================================
+❗ 零调用扫描第一版报 **56 个**"死函数"，其中含 `update_movement` / `update_animation`
+   / `_on_reply` / `update_ai` —— **这些天天在跑**（用户亲眼看到宠物在动）。
+
+根因：探针只收集了 `ast.Call` 的 func 名。
+  而 Qt 的定时器/信号是 **`timer.timeout.connect(self.foo)`** ——
+  `self.foo` 是 `ast.Attribute`，**不是 `ast.Call`** ⇒ 全部漏掉 ⇒ 假死报。
+
+修法：被"引用"= `ast.Call` 的 func ∪ **任何 `ast.Attribute` 的 attr** ∪ 任何 `ast.Name`；
+  并**跨文件**扫 `modules/*.py`（`dialogue_ui.py:1802 self.parent.handle_window_operation(raw)`
+  就是靠跨文件扫描才找回来的）。
+
+修正后 56 → **25**。**误报 31 个（55%）**。
+⇒ 再次验证 MEMORY.md §4：「探针不保真 = 报假问题」「必须拿产品函数逐条复核」。
+
+================================================================
+二、状态位总览（21 个，按写点降序）
+================================================================
+状态位              写点  读点  预声明区  首定义
+is_moving           19    5    no       L1095   ← 读写比 3.8:1，异常高
+is_jumping           6    8    no       L1125
+is_falling          10    9    no       L1100
+is_gravity_falling   8    1    no       L1199   ← 静态读点仅 1，其余走 getattr
+is_recovering       10    4    no       L1101
+is_sleeping          3    2    no       L1152
+is_splat             7    1    no       L2868
+is_sleeping_walk     6    2    no       L1182
+is_dragging_mouse    4    2    no       L643
+is_following_mouse   4    1    no       L1145
+is_following_dragged_file 3 1   YES      L786    ← 唯一在预声明区的
+is_rolling           2    0    no       L1174   ← ★零读
+is_sliding           2    0    no       L1175   ← ★零读
+is_laughing          3    0    no       L1173   ← ★零读
+is_teasplashed       3    0    no       L1176   ← ★零读
+is_spellcasting      2    1    no       L1172
+is_using_item        2    1    no       L1171
+is_happy             3    1    no       L1179
+is_shy               4    2    no       L1180
+is_surprised         4    2    no       L1178
+
+================================================================
+三、互斥纪律检查（结果：全部 ✓ 干净）
+================================================================
+  is_falling + is_gravity_falling   ✓ 无同函数共现（两种坠落互斥，判据正确）
+  is_sleeping + is_moving           ✓
+  is_jumping + is_falling           ✓
+  is_jumping + is_gravity_falling   ✓
+  is_splat + is_sleeping            ✓
+
+  同函数"同时置 True"的正当组合（复核后都合理）：
+   · trigger_splat()  → is_falling + is_splat（落地进摔扁阶段，合理）
+   · handle_fall()    → is_recovering + is_splat（爬起时清 splat，合理）
+   · trigger_laugh()  → is_happy + is_laughing（笑=开心，合理）
+
+  ⇒ **互斥纪律这条线是干净的**，本批未发现状态互斥 bug。
+
+================================================================
+四、★ 真纰漏：孤儿状态位（一旦置 True 永不复位）
+================================================================
+判据：状态位是否有"周期性复位路径"。
+
+  复位覆盖情况（在 update_animation L8043~L8066 每帧递减）：
+    is_surprised  ✓ 有（2.0s）      is_happy   ✓ 有（3.0s）
+    is_shy        ✓ 有（2.5s）      is_unhappy ✓ 有（2.0s）
+
+  ✗ **无任何周期复位路径**：
+    is_laughing     —— trigger_laugh 置 True，**无人复位**
+    is_teasplashed  —— trigger_teasplash 置 True，**无人复位**
+    is_victorious   —— trigger_victory 置 True，**无人复位**
+    is_rolling      —— 无置 True 处（只 init + reset 置 False）
+    is_sliding      —— 同上
+
+  ⚠️ 唯一"看起来能复位"的地方是 `reset_special_states()` ——
+     但它 **在产品文件里零调用**（只 .bak 里有同名定义）。
+
+  实际危害评估（不夸大）：
+    · is_laughing / is_teasplashed / is_victorious **本身零消费者** ⇒ 当前**零行为危害**
+    · 但 `trigger_laugh()` 同时设 `is_happy=True` + `happy_timer=0`，
+      而 is_happy **是有消费者的**（L8050 每帧读、3s 后复位）⇒ 这条链是通的 ✓
+    ⇒ 定性：**"死状态位 + 半死 trigger 函数"**，属卫生问题 + 扩展陷阱
+      （未来若有人读 is_laughing 做判断，会拿到"永久 True"的错值）。
+
+================================================================
+五、★ 真纰漏：产品文件内零调用的函数（25 个里筛出的真孤儿）
+================================================================
+经逐名核实（读原文 + 查跨文件引用），**确认真孤儿**：
+
+  函数                        行号     性质
+  ---------------------------------------------------------------------
+  _is_falling_through_window  L2908    ★自研碰撞检测旧启发式，已被
+                                       floor_manager（建楼系统）取代。
+                                       与第 15 轮删掉的 find_support_below /
+                                       is_on_floor_edge 属同一类残留。
+                                       ⚠️ 注释自称"简化处理" ⇒ 不是权威判据
+                                       （契约②：floor_visible_contains 才是唯一判据）
+  move_to_edge_and_shrink     L4307    移动行为类，零消费者
+  check_recycle_bin           L8456    回收站检查，零消费者
+  start_mouse_drag            L2202    仅测试脚本引用，产品内零调用
+                                       ⚠️ 但同群的 initiate_auto_mouse_drag 是活的
+                                       （L987 timer.connect）—— 别一起删
+  react_to_file_emotionally   L8296    第 26 轮已归档为 H4「文件反应」专项，
+                                       **有既定处置计划**，勿擅自删
+
+  trigger_laugh / trigger_surprise / trigger_shy /
+  trigger_unhappy / trigger_victory / trigger_teasplash /
+  reset_special_states        L3962~   7 个 status 触发器全零调用（见四）
+  suggest_game / tell_joke    L4423/   AI 对话技能类，零消费者
+                              L4408
+  init_api_client             L6031    零消费者
+  close_bilibili              ✗       —— **不是孤儿**：video_controller.py:399 调用
+  handle_window_operation      ✗       —— **不是孤儿**：dialogue_ui.py:1802 调用
+  initiate_auto_mouse_drag     ✗       —— **不是孤儿**：main.py:987 timer.connect
+  mouseEnterEvent / mouseLeaveEvent L5698/5703
+                              ⚠️       Qt 钩子（探针白名单漏列）—— **不是孤儿**
+                                       ⚠️ 但注意：PyQt5 的 QWidget 钩子是
+                                       leaveEvent/enterEvent，**mouseEnterEvent /
+                                       mouseLeaveEvent 不是 Qt 标准钩子名**
+                                       ⇒ **真的不会被 Qt 调用**！需人工确认。
+
+================================================================
+六、下一步
+================================================================
+- ⚠️ 待核实：mouseEnterEvent / mouseLeaveEvent 是否是 Qt 标准钩子
+  （PyQt5 QWidget 的对应钩子是 enterEvent / leaveEvent）
+  ⇒ 若确认为非标准名，则"鼠标进入/离开宠物"的事件处理**从未生效** —— 这是**真 bug**
+- 继续严查：update_movement 热循环边界条件 / check_window_movement / mouseMoveEvent 拖拽链路
+- 修复统一放 task #15，先出"真实纰漏清单"再报用户
+================================================================

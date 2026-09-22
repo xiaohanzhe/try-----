@@ -1,0 +1,93 @@
+================================================================================
+NAME: _is_falling_through_window
+================================================================================
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:2803  def _is_falling_through_window(self, current_rect, new_rect, window_rect):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:2866  def _is_falling_through_window(self, current_rect, new_rect, window_rect):
+  ralsei_pet\src\main.py:2908  def _is_falling_through_window(self, current_rect, new_rect, window_rect):
+
+================================================================================
+NAME: move_to_edge_and_shrink
+================================================================================
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:4863  def move_to_edge_and_shrink(self):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:4265  def move_to_edge_and_shrink(self):
+  ralsei_pet\src\main.py:4307  def move_to_edge_and_shrink(self):
+
+================================================================================
+NAME: start_mouse_drag
+================================================================================
+  code-quality-audit\复审_2026-09-12\verify_fixes.py:43  pet.start_mouse_drag(pet.pos())
+  code-quality-audit\复审_2026-09-12\verify_fixes.py:44  ck("start_mouse_drag 后定时器激活", pet.mouse_drag_timer.isActive() is True)
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:614  # 结果光标从头到尾一步都没移动。改为周期定时器，由 start_mouse_drag 按帧间隔启动。
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:2097  def start_mouse_drag(self, target_pos):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:637  # 结果光标从头到尾一步都没移动。改为周期定时器，由 start_mouse_drag 按帧间隔启动。
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:2160  def start_mouse_drag(self, target_pos):
+  code-quality-audit\第八轮\verify_round8_anim.py:556  'start_mouse_drag', 'stop_mouse_drag', 'start_following_mouse',
+  ralsei_pet\src\main.py:654  # 结果光标从头到尾一步都没移动。改为周期定时器，由 start_mouse_drag 按帧间隔启动。
+  ralsei_pet\src\main.py:2202  def start_mouse_drag(self, target_pos):
+
+================================================================================
+NAME: initiate_auto_mouse_drag
+================================================================================
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:886  self.auto_mouse_drag_timer.timeout.connect(self.initiate_auto_mouse_drag)
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:2089  def initiate_auto_mouse_drag(self):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:945  self.auto_mouse_drag_timer.timeout.connect(self.initiate_auto_mouse_drag)
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:2152  def initiate_auto_mouse_drag(self):
+  ralsei_pet\src\main.py:987  self.auto_mouse_drag_timer.timeout.connect(self.initiate_auto_mouse_drag)
+  ralsei_pet\src\main.py:2194  def initiate_auto_mouse_drag(self):
+
+================================================================================
+NAME: react_to_file_emotionally
+================================================================================
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:9100  def react_to_file_emotionally(self, file_path):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\file_sheet_controller.py:15  它们属「**文件情感反应**」群（同群 `react_to_file_emotionally` / `follow_file` /
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:8237  def react_to_file_emotionally(self, file_path):
+  code-quality-audit\第二十六轮\_do_r26_deadcode.py:25  · react_to_file_emotionally (L8205) —— 归 H4「文件反应」专项
+  code-quality-audit\第二十六轮\_do_r26_deadcode.py:158  KEEP = ["react_to_file_emotionally", "delete_file", "rename_file",
+  code-quality-audit\第二十六轮\_run_g1_zero_refs.py:19  "check_dragged_file", "react_to_file_deletion", "follow_file", "react_to_file_emotionally",
+  code-quality-audit\第二十六轮\_run_g1_zero_refs.py:38  for n in ["check_dragged_file", "react_to_file_deletion", "follow_file", "react_to_file_emotionally"]:
+  code-quality-audit\第二十六轮\_verify_seam.py:23  # 定位 react_to_file_emotionally 末尾 -> react_to_vs_code_code 之间的空行
+  ralsei_pet\modules\file_sheet_controller.py:15  它们属「**文件情感反应**」群（同群 `react_to_file_emotionally` / `follow_file` /
+  ralsei_pet\src\main.py:8296  def react_to_file_emotionally(self, file_path):
+
+================================================================================
+NAME: check_recycle_bin
+================================================================================
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:9380  def check_recycle_bin(self):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:8517  def check_recycle_bin(self):
+  ralsei_pet\src\main.py:8456  def check_recycle_bin(self):
+
+================================================================================
+NAME: handle_window_operation
+================================================================================
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:9323  def handle_window_operation(self, user_input):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\autonomous_agent.py:464  # 触发过强）。窗口的破坏性操作只保留给用户明确指令（handle_window_operation）。
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\dialogue_ui.py:1800  if hasattr(self.parent, 'handle_window_operation'):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\dialogue_ui.py:1802  res = self.parent.handle_window_operation(raw)
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:8460  def handle_window_operation(self, user_input):
+  ralsei_pet\modules\autonomous_agent.py:464  # 触发过强）。窗口的破坏性操作只保留给用户明确指令（handle_window_operation）。
+  ralsei_pet\modules\dialogue_ui.py:1800  if hasattr(self.parent, 'handle_window_operation'):
+  ralsei_pet\modules\dialogue_ui.py:1802  res = self.parent.handle_window_operation(raw)
+  ralsei_pet\src\main.py:8399  def handle_window_operation(self, user_input):
+
+================================================================================
+NAME: close_bilibili
+================================================================================
+  code-quality-audit\架构改造-H4H5\verify_w1_4_ab.py:130  def close_bilibili():
+  code-quality-audit\架构改造-H4H5\verify_w1_4_ab.py:134  pet.close_bilibili = close_bilibili
+  code-quality-audit\架构改造-H4H5\verify_w1_4_e2e.py:20  7. 深夜分支里 `self.close_bilibili()` / `self.enter_sleep_mode()` 必须
+  code-quality-audit\架构改造-H4H5\verify_w1_4_e2e.py:186  def close_bilibili(self):
+  code-quality-audit\架构改造-H4H5\verify_w1_4_e2e.py:303  check("6b 深夜 → close_bilibili（宿主未搬方法）真的执行了",
+  code-quality-audit\架构改造-H4H5\verify_w1_4_unit.py:64  "max_idle_duration", "close_bilibili", "enter_sleep_mode",
+  code-quality-audit\架构改造-H4H5\verify_w1_4_unit.py:245  for key in ("close_bilibili", "enter_sleep_mode", "check_entertainment_needs"):
+  code-quality-audit\架构改造-H4H5\_run_w1_4.py:69  + "* **`close_bilibili` 没搬**：它是「按关键词关窗口」的**通用原语**，B站只是当前" + NL
+  code-quality-audit\架构改造-H4H5\_run_w1_4.py:71  + "  于是本模块的深夜分支里 `self.close_bilibili()` 仍然合法（宿主方法）。" + NL
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:4714  self.close_bilibili()
+  code-quality-audit\架构改造-H4H5\_evidence\w1_3_main_before.py:4755  def close_bilibili(self):
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\video_controller.py:36  * **`close_bilibili` 没搬**：它是「按关键词关窗口」的**通用原语**，B站只是当前
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\video_controller.py:38  于是本模块的深夜分支里 `self.close_bilibili()` 仍然合法（宿主方法）。
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\modules\video_controller.py:399  self.close_bilibili()
+  code-quality-audit\架构改造-H4H5\_evidence\w1_7_before\ralsei_pet\src\main.py:4236  def close_bilibili(self):
+  ralsei_pet\modules\video_controller.py:36  * **`close_bilibili` 没搬**：它是「按关键词关窗口」的**通用原语**，B站只是当前
+  ralsei_pet\modules\video_controller.py:38  于是本模块的深夜分支里 `self.close_bilibili()` 仍然合法（宿主方法）。
+  ralsei_pet\modules\video_controller.py:399  self.close_bilibili()
+  ralsei_pet\src\main.py:4278  def close_bilibili(self):

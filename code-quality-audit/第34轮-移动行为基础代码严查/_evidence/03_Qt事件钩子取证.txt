@@ -1,0 +1,106 @@
+================================================================
+第 34 轮 · 移动/行为基础代码严查 —— 取证第三批（Qt 事件钩子）
+日期：2026-09-22
+只读审查，未改动任何产品文件
+================================================================
+
+【方法】
+用正则枚举 main.py 内所有 `def *Event*` 形式的方法，与 PyQt5 QWidget
+标准钩子名逐一对照。
+
+================================================================
+一、★ 真纰漏：两个 Qt 钩子名写错 ⇒ 永不触发
+================================================================
+  main.py 实际定义          PyQt5 标准名        结论
+  ------------------------  -----------------  ------------------------
+  mouseEnterEvent (L5697)   enterEvent         ✗ 非标准名 → 永不调用
+  mouseLeaveEvent (L5702)   leaveEvent         ✗ 非标准名 → 永不调用
+
+  对照：同文件其他钩子**全部正确**（说明不是不懂命名规则，是这两个写串了）
+    mousePressEvent        L5073  ✓
+    mouseMoveEvent         L5230  ✓
+    mouseReleaseEvent      L5434  ✓
+    mouseDoubleClickEvent  L5644  ✓
+    moveEvent              L5001  ✓
+    paintEvent             L5004  ✓
+
+  Qt 的事件分发按**方法名精确查找**（sip 绑定约定），拼错的钩子永远不会被
+  事件循环调用 —— 不是"偶尔不生效"，是"从未执行过一次"。
+
+================================================================
+二、危害评估（逐条，不夸大）
+================================================================
+  这两个方法体内做的事：
+    mouseEnterEvent: setCursor(PointingHandCursor) + on_mouse_hover()
+    mouseLeaveEvent: setCursor(ArrowCursor)
+
+  ① 光标手型 —— **无实际缺失** ✗（已由别处覆盖）
+     证据：mouseMoveEvent 内已有逐帧实现
+       · L5316-5317  if current_cursor.shape() != Qt.PointingHandCursor:
+                        self.setCursor(Qt.PointingHandCursor)
+       · L5424       self.setCursor(Qt.ArrowCursor)
+     ⇒ 用户把鼠标移到 Ralsei 身上时光标**会**变手型（走的是 mouseMoveEvent）
+     ⚠️ **差点误报成"光标不变手型"的真 bug** —— 靠读原文拦下。
+
+  ② on_mouse_hover() —— **无实际损失** ✗
+     证据：L5707-5713 该函数体已在第 8 轮被清空（只剩 `return`）。
+       注释原文："原来这里有一个 random.random() < 0.01 的 1% 概率
+       play_animation_once('look_up') —— 属非 AI 的随机特殊动画，已删除。"
+
+  ⇒ 定性：**"两套实现、一套永久失效"的冗余**。
+     当前**零功能缺失**，但属卫生问题：
+     · 读代码的人会以为 enter/leave 有专门处理（实际没有）
+     · 未来若有人往 mouseEnterEvent 里加逻辑，会**静默失效**且极难查
+       （无报错、无日志、G2 也抓不到 —— 因为它是"名字"层面的错）
+
+================================================================
+三、处置建议（留待 task #15）
+================================================================
+  方案 A（推荐）：**删掉 mouseEnterEvent / mouseLeaveEvent 两个方法**
+    · 它们做的事已被 mouseMoveEvent 覆盖（光标）
+    · on_mouse_hover 已是空壳
+    · 删后行为零变化 ⇒ 可用 A/B 断言锁住"光标行为不变"
+    · 且消除"未来在错钩子里加逻辑"的陷阱
+  方案 B：重命名为 enterEvent / leaveEvent
+    · 会**改变行为**（新增一次进/出时的光标设置）—— 但那是幂等的、与
+      mouseMoveEvent 同效 ⇒ 实际也是零变化
+    · 风险：enterEvent 在 Qt5 中可能被频繁触发（子窗口/重绘），需实测
+  ⇒ 建议 A（删除），理由：项目铁律"没改也没人调用"要么接线要么删；
+     而这里**已有另一套正确实现**，属于纯冗余，删比接线干净。
+
+  ⚠️ 修复前必做：确认 `_is_special_anim` / 光标相关回归锁是否会因此变动。
+     先跑 G2 定位有无覆盖"光标"的断言（暂无 → 需补一条）。
+
+================================================================
+四、附：main.py 全部 *Event* 方法清单
+================================================================
+  L4747  _event_speech_enabled   （私有方法，非 Qt 钩子）
+  L4762  _pick_event_line        （同上）
+  L4780  _event_say              （同上）
+  L4800  _event_ai_ready         （同上）
+  L4837  speak_event             （同上）
+  L5001  moveEvent               ✓ Qt
+  L5004  paintEvent              ✓ Qt
+  L5073  mousePressEvent         ✓ Qt
+  L5230  mouseMoveEvent          ✓ Qt
+  L5434  mouseReleaseEvent       ✓ Qt
+  L5644  mouseDoubleClickEvent   ✓ Qt
+  L5697  mouseEnterEvent         ✗ 非 Qt 标准名 ← 本批纰漏
+  L5702  mouseLeaveEvent         ✗ 非 Qt 标准名 ← 本批纰漏
+
+  Qt 标准钩子缺失清单（未实现，属正常/待确认）：
+    enterEvent / leaveEvent / contextMenuEvent / wheelEvent / resizeEvent /
+    showEvent / hideEvent / closeEvent / dragEnter-Move-Leave-Drop Event /
+    keyPress-ReleaseEvent / focusIn-OutEvent / changeEvent / timerEvent /
+    event / eventFilter
+  ⚠️ 注意：拖拽文件相关（dragEnterEvent 等）缺失 ⇒ 拖文件到宠物身上
+     可能走的是外部机制（第 8 轮"文件反应"线）—— 属**另一条线**的待查项，
+     不属本批（移动/行为）范围。
+
+================================================================
+五、下一步
+================================================================
+- 继续严查：update_movement 热循环边界条件 / check_window_movement /
+  mouseMoveEvent 拖拽链路（含甩飞判定）
+- 修复统一放 task #15
+================================================================
