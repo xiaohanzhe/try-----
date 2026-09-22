@@ -1,0 +1,27 @@
+========== Y1：长按是否会污染 consecutive_clicks ==========
+单击1 -> None  clicks=1 last_click_time=1790094078.759
+长按 -> Gesture.PINCH  clicks=1 last_click_time=1790094078.759（应保持不变）
+长按后立刻单击 -> None  clicks=2 gap=0.571（gap 是相对长按前那次算的）
+[PASS] Y1 观察：长按后 last_click_time 未被刷新（gap 会虚高，计数可能连号）
+
+========== Y2：_StrokeDetector 横向/纵向符号是否串味 ==========
+  feed(dx=+10, dy=+0) -> direction_changes=0 last_sign=1
+  feed(dx=+0, dy=+10) -> direction_changes=0 last_sign=1
+  feed(dx=-10, dy=+0) -> direction_changes=1 last_sign=-1
+  feed(dx=+0, dy=-10) -> direction_changes=1 last_sign=-1
+[FAIL] Y2a 交替横纵序列累计方向变化 >= 3（实测 1，理论 4）
+  纯纵向往返 (下/上/下/上) -> direction_changes=0
+[FAIL] Y2b 纯纵向往返也能累计（实测 0）
+  横向恒右 + 纵向恒上 的交替 -> direction_changes=0 last_sign=1
+[PASS] Y2c 观察：横向恒右时，纵向步把符号翻来翻去（实测 changes=0）
+
+========== Y3：drag/follow 抑制 ==========
+drag 中 handle_press -> None, is_pressing=False
+[PASS] Y3a drag 中按下被忽略
+[PASS] Y3b drag 中释放返回 None
+follow 中 handle_press -> is_pressing=False
+[PASS] Y3c follow 中按下也被忽略
+
+========== Y4：无精灵时的区域判定 ==========
+空 mapper: is_on_pet(10,10)=False classify=BodyPart.WHOLE_BODY
+[PASS] Y4  空精灵 classify 返回 WHOLE_BODY（不越界）

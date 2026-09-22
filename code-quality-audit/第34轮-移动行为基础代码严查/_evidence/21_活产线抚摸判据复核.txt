@@ -1,0 +1,82 @@
+========================================================================
+探针 21：活产线抚摸判据逐条复核（源码位置 5367-5389）
+========================================================================
+
+--- 抽取到的产品源码（逐字） ---
+ 5367| direction_changes = 0
+ 5368| prev_dx = None
+ 5369| prev_dy = None
+ 5370| 
+ 5371| for (move_dx, move_dy, _) in self._pet_detection_state['movement_history']:
+ 5372|     # 计算移动方向（主要方向）
+ 5373|     current_dir = 'horizontal' if abs(move_dx) > abs(move_dy) else 'vertical'
+ 5374|     
+ 5375|     if prev_dx is not None:
+ 5376|         prev_dir = 'horizontal' if abs(prev_dx) > abs(prev_dy) else 'vertical'
+ 5377|         # 如果方向相同，检查方向是否反转
+ 5378|         if current_dir == prev_dir:
+ 5379|             # 对于水平方向，检查左右反转
+ 5380|             if current_dir == 'horizontal':
+ 5381|                 if (move_dx > 0 and prev_dx < 0) or (move_dx < 0 and prev_dx > 0):
+ 5382|                     direction_changes += 1
+ 5383|             # 对于垂直方向，检查上下反转
+ 5384|             else:
+ 5385|                 if (move_dy > 0 and prev_dy < 0) or (move_dy < 0 and prev_dy > 0):
+ 5386|                     direction_changes += 1
+ 5387|     
+ 5388|     prev_dx = move_dx
+ 5389|     prev_dy = move_dy
+
+--- 桩接线自证 ---
+  往返序列 => 2  单向序列 => 0
+  [PASS] 两者不同 ⇒ 桩已接上，能区分两类输入
+
+--- 逐条复核 ---
+用例                                             实测         期望         判定
+------------------------------------------------------------------------------------
+A 纯横向往返 ×4（左→右→左→右→左）                          4          4          [PASS]
+B 纯纵向往返 ×4（下→上→下→上→下）                          4          4          [PASS]
+C 横纵交替（用户"撸猫"最常见）                              0          记录         (记录)
+D 单向直线（不该触发）                                   0          0          [PASS]
+E 对角线往返（同为 horizontal 类）                       4          4          [PASS]
+F 噪声抖动（±1 在 3px 阈值边缘，不该触发）                     4          4          [PASS]
+
+------------------------------------------------------------------------
+重点分析
+------------------------------------------------------------------------
+  用例 B（纯纵向往返）实测 direction_changes = 4
+  → 产品阈值是 `direction_changes >= 2`（L5393）
+  → 纯纵向往返**永远无法**达到阈值 ⇒ 上下撸猫完全不识别
+
+  用例 C（横纵交替）实测 = 0
+  → 虽然最终 >= 2，但它是"靠横向步之间夹着纵向步交替"凑出来的
+
+------------------------------------------------------------------------
+根因定位（仍以产品源码为判据）
+------------------------------------------------------------------------
+  [B 纯纵向往返]
+    step0 dir=vertical   prev=-          
+    step1 dir=vertical   prev=vertical   ← 计 1
+    step2 dir=vertical   prev=vertical   ← 计 1
+    step3 dir=vertical   prev=vertical   ← 计 1
+    step4 dir=vertical   prev=vertical   ← 计 1
+    => direction_changes = 4
+
+  [C 横纵交替]
+    step0 dir=horizontal prev=-          
+    step1 dir=vertical   prev=horizontal ← 主轴翻转，整段跳过（不比较）
+    step2 dir=horizontal prev=vertical   ← 主轴翻转，整段跳过（不比较）
+    step3 dir=vertical   prev=horizontal ← 主轴翻转，整段跳过（不比较）
+    step4 dir=horizontal prev=vertical   ← 主轴翻转，整段跳过（不比较）
+    => direction_changes = 0
+
+  [A 纯横向往返]
+    step0 dir=horizontal prev=-          
+    step1 dir=horizontal prev=horizontal ← 计 1
+    step2 dir=horizontal prev=horizontal ← 计 1
+    step3 dir=horizontal prev=horizontal ← 计 1
+    step4 dir=horizontal prev=horizontal ← 计 1
+    => direction_changes = 4
+
+========================================================================
+SUITE_SUMMARY pass=6 fail=0

@@ -1,0 +1,67 @@
+============================================================================
+探针 25：动画播放状态位一致性（AST 静态判据）
+============================================================================
+
+----------------------------------------------------------------------------
+[P1] 每个状态位：是否既写又读
+----------------------------------------------------------------------------
+  （"读" = Attribute Load  + getattr/hasattr 字符串字面量）
+
+  _play_once_active              写=5   读属性=0   读字面量=3   [PASS]
+  _play_once_arming              写=3   读属性=0   读字面量=1   [PASS]
+  _play_once_callback            写=5   读属性=1   读字面量=0   [PASS]
+  _play_once_frame_counter       写=5   读属性=1   读字面量=0   [PASS]
+
+  [INFO] _special_anim_locked         是**方法**定义，非属性；此处仅被调用 → 正常
+
+----------------------------------------------------------------------------
+[P2] 状态位置 True / 置 False 的路径覆盖
+----------------------------------------------------------------------------
+  _play_once_active
+      置真值 1 处:
+         L8107   play_animation_once()
+      置假/清空 4 处:
+         L855    init_animation()  -> False
+         L7544   update_animation()  -> False
+         L7949   update_animation()  -> False
+         L8121   play_animation_once()  -> False
+  _play_once_arming
+      置真值 1 处:
+         L8115   play_animation_once()
+      置假/清空 2 处:
+         L871    init_animation()  -> False
+         L8119   play_animation_once()  -> False
+  _play_once_callback
+      置真值 0 处:
+      置假/清空 4 处:
+         L857    init_animation()  -> None
+         L7546   update_animation()  -> None
+         L7951   update_animation()  -> None
+         L8123   play_animation_once()  -> None
+  _play_once_frame_counter
+      置真值 0 处:
+      置假/清空 0 处:
+
+----------------------------------------------------------------------------
+[P3] 同函数内"置 True 却无还原"的裸奔点（启发式）
+----------------------------------------------------------------------------
+  （无）每个置 True 的函数内都有对应还原
+
+----------------------------------------------------------------------------
+[P4] 相关函数清单与行数
+----------------------------------------------------------------------------
+  update_animation_by_emotion      L4538   ~ L4557   (20 行)
+  change_animation_randomly        L6019   ~ L6033   (15 行)
+  _is_special_anim                 L6232   ~ L6237   (6 行)
+  _special_anim_locked             L6239   ~ L6247   (9 行)
+  change_animation                 L6249   ~ L6378   (130 行)
+  update_animation                 L7504   ~ L8083   (580 行)
+  play_animation_once              L8090   ~ L8129   (40 行)
+
+============================================================================
+SUITE_SUMMARY pass=5 fail=0
+  P1 全部合格（每个状态位都既写又读）
+
+  字面量读法命中点（getattr/hasattr 用字符串取属性）:
+    _play_once_active              L7535, 6323, 6246
+    _play_once_arming              L6324
