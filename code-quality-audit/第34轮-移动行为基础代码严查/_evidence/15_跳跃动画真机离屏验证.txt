@@ -1,0 +1,24 @@
+========================================================================
+真机（离屏）验证：跳跃动画统一 jump_ball / 坠落链路不变
+========================================================================
+2026-09-22 23:58:32 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+构造 RalseiPet: constructed
+
+[A] start_jump 起跳准备帧
+[PASS] [A1] start_jump 期间切到过 jump_ball（实测序列 ['jump_ball']）
+[PASS] [A2] start_jump 期间**不再**切 jump_ready（实测 ['jump_ball']）
+
+[B] has_ball 开关不再影响跳跃选型（对照组应一致）
+[PASS] [B1] has_ball=False 与 True 的跳跃动画序列一致（['jump_ball'] vs ['jump_ball']）
+[PASS] [B2] 两种 has_ball 取值下都出现 jump_ball
+
+[C] 坠落链路（"摔下去"）仍用原来的素材
+[PASS] [C0] start_falling(reason=None) 确实产生了动画切换（实测 ['fall']）
+[PASS] [C] start_falling(reason=None) 用坠落家族 ('fall', 'splat')（实测 ['fall']）
+[PASS] [C] start_falling(reason=None) 不得使用 jump_ball（实测 ['fall']）
+[PASS] [C0] start_falling(reason='floor_removed') 确实产生了动画切换（实测 ['fall_mad']）
+[PASS] [C] start_falling(reason='floor_removed') 用坠落家族 ('fall_mad', 'fall')（实测 ['fall_mad']）
+[PASS] [C] start_falling(reason='floor_removed') 不得使用 jump_ball（实测 ['fall_mad']）
+
+[SUMMARY] live jump anim: 10/10 PASS
+2026-09-22 23:58:33 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 493 组）

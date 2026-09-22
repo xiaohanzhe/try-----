@@ -1,0 +1,13 @@
+========================================================================
+回归基线（G2）  ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+解释器 = C:\Python311\python.exe
+========================================================================
+
+suite            exit   PASS   FAIL   比对       说明
+------------------------------------------------------------------------
+round34_movement 0      36     0      BASELINE 第三十四轮：移动/行为基础代码不许回退 —— 假 Qt 钩子（mouseEnter/LeaveEvent）已删且不许回来（AST + 真钩子反向控制 + QWidget 属性实证）+ 死字段 fall_start_time 全清（AST 节点/getattr/modules 三向 + 注释留痕反向控制）+ init_movement 五组重复赋值已合并（赋值语句数 ≤1 + 字段仍在的反向控制）+ max_fall_duration 初值运行时等价 2.0（防去重时误取 5.0 的静默行为变更）+ start_fall 的 is_moving 提取到分支前（含 idle_timer 差异必须保留的反向控制）+ 日志 rollover 失败被兜住（正负控制：原生吐 Logging error / 安全类不吐且继续写盘）
+
+基线已更新（合并模式）：C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\regress\baseline.json
+  注意：本次只重建了 1 个被 --only 选中的套件，其余套件的基线保持不动。
+
+合计：PASS=36 FAIL=0  套件=1

@@ -1,0 +1,110 @@
+第三十四轮 · 修复等价性取证（2026-09-22）
+============================================================
+本轮共 4 组修复，全部要求「运行时行为等价」——只清除冗余/死代码/假钩子，
+不引入任何新的运行时差异。下面逐组给出「改前语义 = 改后语义」的论证。
+
+------------------------------------------------------------
+F1 · 删除 mouseEnterEvent / mouseLeaveEvent（假 Qt 钩子）
+------------------------------------------------------------
+改前：
+    def mouseEnterEvent(self, event):   # 非 Qt 钩子名
+        self.setCursor(Qt.PointingHandCursor)
+        self.on_mouse_hover()
+    def mouseLeaveEvent(self, event):   # 非 Qt 钩子名
+        self.setCursor(Qt.ArrowCursor)
+
+改后：整体删除，改为注释说明。
+
+等价性论证（三重实证，见 03_Qt事件钩子取证.txt）：
+  ① Qt 的 QWidget 悬停钩子名是 enterEvent / leaveEvent。
+     `python -c "from PyQt5.QtWidgets import QWidget; print(hasattr(QWidget,'mouseEnterEvent'))"`
+     → False；`hasattr(QWidget,'enterEvent')` → True。
+  ② 真机用 QApplication.sendEvent 派发 QEvent.Enter/Leave：
+     只命中标准名 enterEvent，`mouseEnterEvent` 从不被调用。
+  ③ 同文件其余 6 个事件钩子（mousePressEvent / mouseMoveEvent / mouseReleaseEvent /
+     mouseDoubleClickEvent / paintEvent / …）全部是 Qt 标准名，仅这两个是杜撰名。
+
+因此这两个方法**从未执行过一次**（死代码），删除不改变任何运行时行为。
+
+功能不丢失：
+  · 光标手型：已由 mouseMoveEvent 的
+      `if current_cursor.shape() != Qt.PointingHandCursor: self.setCursor(Qt.PointingHandCursor)`
+    与离开分支的 `setCursor(Qt.ArrowCursor)` 逐帧施加（见 04 号证据）。
+  · on_mouse_hover()：第八轮已清空为 `return`（零动作）。
+
+------------------------------------------------------------
+F2 · 删除 fall_start_time（纯死字段）
+------------------------------------------------------------
+改前：6 处写点
+    1102  init_movement: self.fall_start_time = None      （类型 None）
+    1202  init_movement: self.fall_start_time = 0         （类型 int → 类型漂移）
+    2869  start_falling: self.fall_start_time = time.time()
+    3451  start_fall:    self.fall_start_time = time.time()
+    3556  trigger_splat: self.fall_start_time = time.time()
+    5495  mouseReleaseEvent(甩飞): self.fall_start_time = time.time()
+改后：6 处全删，字段整体消失。
+
+等价性论证（AST 双向扫描）：
+  扫描口径：
+    · 任何 `ast.Attribute`（self.fall_start_time）且 ctx 不是 Store  → 读
+    · 任何 `ast.Call` 为 getattr(self, 'fall_start_time')          → 读
+    · 跨文件扫 ralsei_pet/modules/*.py
+  结果：
+    NON-STORE refs: []          ← main.py 零读点
+    modules 全文件无该字符串     ← 零引用
+  即：**没有任何代码读取过这个字段**。删除后没有任何表达式会依赖它。
+
+顺带消除的隐患：该字段在 init 里被写成 None（L1102）后又被写成 0（L1202），
+而运行期写的是 float（time.time()）——三种类型并存，是典型的"看起来有用其实没用"
+的误导字段。删除后该隐患一并消失。
+
+------------------------------------------------------------
+F3 · init_movement 重复赋值合并
+------------------------------------------------------------
+改前（AST 统计，均在 init_movement 内）：
+    self.is_falling          x3   L1100 / L1158 / L1198
+    self.is_recovering       x2   L1101 / L1159
+    self.fall_start_time     x2   L1102 / L1202   （随 F2 一起删）
+    self.fall_duration       x2   L1160 / L1200
+    self.max_fall_duration   x2   L1161(5.0) / L1204(2.0)
+
+改后：统一在"摔倒和恢复状态"区块声明一次。
+
+⚠️ 关键：**不是简单删重复行**。Python 语义是后赋值胜，所以
+    max_fall_duration 改前最终生效值是 **2.0**（L1204 在 L1161 之后）。
+    若去重时保留先出现的 5.0，就把运行时初值从 2.0 静默改成 5.0 —— 这是引入 bug。
+    本轮的取值 = 2.0，与改前运行时完全一致。
+    （已在改动过程中自查并纠正过一次：初版误写 5.0，已改回 2.0。）
+
+is_falling / is_recovering / fall_duration 三者在所有声明处初值都相同
+（False / False / 0.0），合并后值不变。
+
+------------------------------------------------------------
+F4 · start_fall 四分支 is_moving=False 提取
+------------------------------------------------------------
+改前：reason 的 4 个分支各自写一次
+    window_move       → self.is_moving = False
+    fall_from_window  → self.is_moving = False
+    fall_off          → self.is_moving = False
+    else              → self.is_moving = False
+改后：在分支判断**之前**统一写一次 `self.is_moving = False`。
+
+等价性论证：
+  ① 四个分支写的值与位置语义完全一致（都是 False）。
+  ② 提升点位于 `self.emotion_system.react_to_event(...)` 之后、
+     四分支 if/elif 之前；该提升点自身不会 return / raise。
+  ③ 分支体内除 idle_timer 外**再无任何代码读写 is_moving**（AST 核实：
+     改后 start_fall 内 is_moving 的赋值语句数 = 1）。
+  ④ 因此"进入任一分支 ⇒ is_moving 为 False"的结论在改前后成立且相同。
+
+刻意未合并的部分：
+    `self.idle_timer = 0` 只出现在 fall_off 与 else 两个分支，
+    window_move / fall_from_window 没有。这是**真实差异**，合并会改变行为，
+    故保持原样。合并只做"四处完全等价"的项。
+
+------------------------------------------------------------
+改前后 G2 对照
+------------------------------------------------------------
+改前（_g2_after_readonly.txt 之前的基线）：PASS=1359 FAIL=0 套件=26 全 IDENTICAL
+改后（_g2_after_fix.txt）：见该文件末尾汇总行。
+本组改动不新增/修改任何断言，故预期套件数、PASS 数不变。

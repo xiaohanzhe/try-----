@@ -1097,9 +1097,8 @@ class RalseiPet(QMainWindow):
         self.moving_duration = 0
         
         # 摔倒和恢复相关变量
-        self.is_falling = False
-        self.is_recovering = False
-        self.fall_start_time = None
+        # 第三十四轮去重：`fall_start_time` 整体删除（6 处写、AST 证实 0 处读的纯死字段）；
+        # `is_falling` / `is_recovering` 改由下方"摔倒和恢复状态"区块统一声明（此处不再重复）。
         self.recovery_start_time = None
         self.max_idle_duration = 0
         self.max_moving_duration = 0
@@ -1155,10 +1154,15 @@ class RalseiPet(QMainWindow):
         self.last_interaction_time = time.time()  # 上次互动时间
         
         # 摔倒和恢复状态
+        # ===== 唯一真源（第三十四轮合并去重）=====
+        # 此前 `is_falling` 在本函数被赋值 3 次（原 L1100/L1158/L1198）、`is_recovering`/`fall_duration`
+        # 各 2 次、`max_fall_duration` 2 次（5.0 被更靠后的 2.0 覆盖）。
+        # ⚠️ 去重必须**保持运行时等价**：原代码里最后生效的 max_fall_duration 是 2.0
+        #    （后赋值胜），所以这里取 2.0 而不是先出现的 5.0 —— 写 5.0 会静默改变行为。
         self.is_falling = False
         self.is_recovering = False
         self.fall_duration = 0.0
-        self.max_fall_duration = 5.0
+        self.max_fall_duration = 2.0
         self.recovery_duration = 0.0
         self.recovery_max_duration = 5.0
         
@@ -1195,13 +1199,13 @@ class RalseiPet(QMainWindow):
         self.window_check_interval = 2.0  # 增加窗口检查间隔，优化性能
         self.last_window_rect = None  # 上次窗口位置和大小
         self.ralsei_window_relative_pos = QPoint(0, 0)  # Ralsei在窗口内的相对位置
-        self.is_falling = False  # 是否正在摔倒
+        # 重力掉落专属字段（第三十四轮去重）。
+        # 原处还重复声明了 is_falling / fall_duration / fall_start_time / max_fall_duration ——
+        # 前三个已在上面"摔倒和恢复状态"区块声明（fall_start_time 已整体删除），
+        # 此处 max_fall_duration 的 2.0 会覆盖上面的 5.0，语义混乱；现只保留重力掉落独有的三项。
         self.is_gravity_falling = False  # 是否正在重力掉落
-        self.fall_duration = 0.0  # 摔倒持续时间
         self.fall_speed = 0.0  # 重力掉落速度
-        self.fall_start_time = 0  # 重力掉落开始时间
         self.fall_start_pos = QPoint(0, 0)  # 重力掉落开始位置
-        self.max_fall_duration = 2.0  # 最大摔倒持续时间（秒）
         
         # 空间坐标系统（简化版，只保留基本功能）
         self.spatial_pos = {"x": 0, "y": 0, "z": 0}  # Ralsei的三维空间坐标
@@ -2728,8 +2732,12 @@ class RalseiPet(QMainWindow):
 
         # 开始跳跃准备阶段
         self.jump_phase = "ready"
-        # 强制切换到准备跳跃动画（跨度大时用攀爬素材替代起跳帧）
-        self.change_animation(self._jump_anim_override or "jump_ready", force=True)
+        # 强制切换到跳跃动画（跨度大时用攀爬素材替代）
+        # 第三十四轮（用户口径）："跳跃这种动画统一用 jump_ball 代替，只有摔下去的时候
+        # 用原来的" —— 起跳准备帧也从 `jump_ready` 改为 `jump_ball`，让整个跳跃过程
+        # 只有一种素材（此前 ready 帧是 jump_ready、jumping 帧是 jump，两段不一致）。
+        # 攀爬素材（`_jump_anim_override`）不受影响：那是"跨度大"这条独立机制的选型。
+        self.change_animation(self._jump_anim_override or "jump_ball", force=True)
         
         # 更新跳跃时间
         self.last_jump_time = time.time()
@@ -2860,7 +2868,6 @@ class RalseiPet(QMainWindow):
             return
         self.is_gravity_falling = True
         self.fall_speed = 0.0  # 初始掉落速度为0
-        self.fall_start_time = time.time()
         self.fall_start_pos = self.pos()
         # 修复（状态互斥）：见 start_fall 注释——两种坠落状态同时为真会让
         # handle_fall 的分阶段流程被 handle_gravity_fall 顶掉，宠物卡在动画里。
@@ -3038,14 +3045,18 @@ class RalseiPet(QMainWindow):
         if self.is_jumping:
             # 如果还在跳跃中，保持跳跃动画
             # 批次 B：跨度大的衔接用**攀爬素材**（`start_jump` 按跨度单点选定），
-            # 这里必须先尊重它 —— 否则每帧都会被 jump/jump_ball 顶掉，等于没切。
+            # 这里必须先尊重它 —— 否则每帧都会被 jump_ball 顶掉，等于没切。
             _override = getattr(self, '_jump_anim_override', None)
             if _override:
                 self.change_animation(_override, force=True)
-            elif self.has_ball:
-                self.change_animation("jump_ball", force=True)
             else:
-                self.change_animation("jump", force=True)
+                # 第三十四轮（用户口径）："跳跃这种动画统一用 jump_ball 代替，
+                # 只有摔下去的时候用原来的" —— 跳跃一律 jump_ball。
+                # 原写法是 `elif self.has_ball: jump_ball / else: jump`，但
+                # `has_ball` 全项目只有 L1170 一处赋值（恒为 False），
+                # 于是实际**永远走 jump**，jump_ball 这条分支是死的。
+                # 现在去掉这个恒假条件，直接走 jump_ball。
+                self.change_animation("jump_ball", force=True)
         
         # 优化Z轴计算，确保有足够的跳跃高度
         if jump_progress < 1.0:
@@ -3442,7 +3453,6 @@ class RalseiPet(QMainWindow):
 
         self.is_falling = True
         self.fall_duration = 0.0
-        self.fall_start_time = time.time()
         self.is_recovering = False
         self.recovery_duration = 0.0
         # 修复（状态互斥）：is_falling / is_gravity_falling 同时为真时，
@@ -3469,7 +3479,13 @@ class RalseiPet(QMainWindow):
 
         # 触发情绪反应：摔倒
         self.emotion_system.react_to_event('fell_down', {'reason': reason})
-        
+
+        # 第三十四轮：四个分支原本各自写一次 `self.is_moving = False`（4 处重复）。
+        # 提为无条件统一赋值——四个分支的值完全一致，且后续无分支再改它。
+        # ⚠️ 各分支的 `idle_timer = 0` 只在 fall_off / 默认 两处出现，属真实差异，
+        #    不在此处合并（合并会改变 window_move / fall_from_window 的行为）。
+        self.is_moving = False
+
         # 根据摔倒原因选择不同的动画、消息和持续时间
         if reason == "window_move":
             # 用户移动窗口导致摔倒——用户行为造成的，用生气的摔倒动画
@@ -3480,7 +3496,6 @@ class RalseiPet(QMainWindow):
             self.max_fall_duration = 3.0
             # 修复：台词匹配生气动画——抱怨用户乱动窗口，而不是单纯惊讶
             self.dialogue_ui.add_dialogue("ralsei", "喂！别乱动窗口呀！我站不稳了...", "surprised")
-            self.is_moving = False
         elif reason == "fall_from_window":
             # 从窗口掉落 —— 这是用户（关窗/移窗）造成的，按"建楼"要求用生气的那组动作
             if "fall_mad" in self.sprite_loader.sprites:
@@ -3491,8 +3506,6 @@ class RalseiPet(QMainWindow):
             self.max_fall_duration = 5.0
             # 显示掉落消息
             self.dialogue_ui.add_dialogue("ralsei", "啊！我从窗口掉下来了！", "surprised")
-            # 设置掉落状态，暂停行走
-            self.is_moving = False
         elif reason == "fall_off":
             # Ralsei自己从窗口边缘掉下去
             # 使用普通摔倒动画（spr_ralsei_splat_0.png），持续5秒
@@ -3502,7 +3515,6 @@ class RalseiPet(QMainWindow):
             # 显示摔倒消息
             self.dialogue_ui.add_dialogue("ralsei", "哎呀！我掉下去了！", "sad")
             # 修复：与其他分支一致，摔倒时暂停行走
-            self.is_moving = False
             self.idle_timer = 0
         else:
             # 默认情况，使用普通摔倒动画，持续5秒
@@ -3511,8 +3523,6 @@ class RalseiPet(QMainWindow):
             self.max_fall_duration = 3.0
             # 显示摔倒消息
             self.dialogue_ui.add_dialogue("ralsei", "哎呀！我摔倒了！", "surprised")
-            # 设置摔倒状态，暂停行走
-            self.is_moving = False
             self.idle_timer = 0
         
         self.dialogue_ui.show_dialogue()
@@ -3547,7 +3557,6 @@ class RalseiPet(QMainWindow):
         self.is_gravity_falling = False
         self.is_recovering = False
         self.fall_duration = 0.0
-        self.fall_start_time = time.time()
         self._fall_phase = "splat"  # 直接从摔扁阶段开始（已经落地了）
         self._fall_phase_start = 0.0
         # `max_fall_duration` 现在只服务"晕乎阶段何时结束"这个**旧**口径
@@ -5489,7 +5498,6 @@ class RalseiPet(QMainWindow):
                     self.is_falling = True
                     self.is_recovering = False
                     self.fall_duration = 0.0
-                    self.fall_start_time = time.time()
                     self._fall_phase = "flying"  # flying → splat → dazed → recovering
                     self._fall_phase_start = 0.0
                     self._fall_flight_time = 0.0
@@ -5695,21 +5703,18 @@ class RalseiPet(QMainWindow):
             else:
                 self.dialogue_ui.show_dialogue()
     
-    def mouseEnterEvent(self, event):
-        # 鼠标进入窗口事件
-        self.setCursor(Qt.PointingHandCursor)
-        self.on_mouse_hover()
-    
-    def mouseLeaveEvent(self, event):
-        # 鼠标离开窗口事件
-        self.setCursor(Qt.ArrowCursor)
-    
+    # 第三十四轮删除：此前的 `mouseEnterEvent` / `mouseLeaveEvent` **不是 Qt 的事件钩子名**
+    # （QWidget 的钩子是 `enterEvent` / `leaveEvent`），Qt 从不派发它们 —— 写得再对也永远不执行。
+    # 三重实证见 code-quality-audit/第34轮-移动行为基础代码严查/_evidence/03_Qt事件钩子取证.txt。
+    # 其唯一实质动作（光标手型切换）已由 `mouseMoveEvent` 里的
+    # `setCursor(Qt.PointingHandCursor/ArrowCursor)`（见"检查鼠标是否在Ralsei身上"一段）逐帧覆盖，
+    # 故删除不损失任何功能；保留则会误导后来者以为存在悬停钩子。
     def on_mouse_hover(self):
         # 鼠标悬停时的处理
         # 用户要求（第八轮）："所有特殊动画……都只交给 AI 判断是否播放，别和抽风似的突然一下。"
         # 原来这里有一个 `random.random() < 0.01` 的 1% 概率 `play_animation_once("look_up")`
         # —— 属于非 AI 的随机特殊动画（宠物会毫无来由地突然抬头），已删除。
-        # 悬停只保留"光标变手型"这类纯 UI 反馈（见 mouseEnterEvent）。
+        # 悬停只保留"光标变手型"这类纯 UI 反馈，实际由 `mouseMoveEvent` 逐帧施加。
         return
     
     def show_interaction_menu(self, pos):
@@ -7552,14 +7557,16 @@ class RalseiPet(QMainWindow):
                 self.jump_phase = "ready"
             if self.jump_phase == "ready":
                 # 准备跳跃阶段
-                new_animation = "jump_ready"
+                # 第三十四轮（用户口径）：跳跃动画统一 jump_ball，起跳准备帧不再是 jump_ready。
+                new_animation = "jump_ball"
                 self.jump_phase = "jumping"
             elif self.jump_phase == "jumping":
                 # 跳跃阶段
-                if self.has_ball:
-                    new_animation = "jump_ball"
-                else:
-                    new_animation = "jump"
+                # 第三十四轮（用户口径）："跳跃这种动画统一用 jump_ball 代替，
+                # 只有摔下去的时候用原来的" —— 跳跃一律 jump_ball。
+                # 原来的 `if self.has_ball: jump_ball / else: jump` 因 has_ball 恒为 False
+                # 而永远走 jump，jump_ball 分支是死的。
+                new_animation = "jump_ball"
             else:
                 # 落地阶段
                 new_animation = "land"

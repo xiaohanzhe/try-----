@@ -1,0 +1,55 @@
+========================================================================
+第三十四轮：移动/行为基础代码「不许回退」回归锁
+========================================================================
+
+[A] 假 Qt 事件钩子（mouseEnterEvent / mouseLeaveEvent）不许回来
+[PASS] main.py 里不得再定义 mouseEnterEvent（AST FunctionDef）
+[PASS] main.py 里不得再定义 mouseLeaveEvent（AST FunctionDef）
+[PASS] 反向控制：真 Qt 钩子 mousePressEvent 仍在（判据有鉴别力）
+[PASS] 反向控制：真 Qt 钩子 mouseMoveEvent 仍在（判据有鉴别力）
+[PASS] 反向控制：真 Qt 钩子 mouseReleaseEvent 仍在（判据有鉴别力）
+[PASS] 反向控制：真 Qt 钩子 mouseDoubleClickEvent 仍在（判据有鉴别力）
+[PASS] 逆向实证：QWidget 类本身没有 mouseEnterEvent 属性
+[PASS] 逆向实证：QWidget 类有 enterEvent 属性（这才是 Qt 的钩子）
+
+[B] 死字段 fall_start_time 不许回来
+[PASS] main.py 内 self.fall_start_time 的 Attribute 节点数 = 0（实测 0）
+[PASS] main.py 内 getattr(self,'fall_start_time') 调用数 = 0（实测 0）
+[PASS] modules/*.py 内不得出现 fall_start_time（实测命中 无）
+[PASS] 反向控制：源码注释里仍留有 fall_start_time 的删除说明（判据不是空扫）
+
+[C] init_movement 内同一字段不得重复赋值
+[PASS] 能定位 init_movement（AST）
+[PASS] init_movement 内 is_falling 赋值语句数 ≤ 1（实测 1）
+[PASS] init_movement 内 is_recovering 赋值语句数 ≤ 1（实测 1）
+[PASS] init_movement 内 fall_duration 赋值语句数 ≤ 1（实测 1）
+[PASS] init_movement 内 max_fall_duration 赋值语句数 ≤ 1（实测 1）
+[PASS] init_movement 内 fall_start_time 赋值语句数 = 0（已整体删除，实测 0）
+[PASS] 反向控制：init_movement 内仍有 is_falling 的初始化（实测 1）
+[PASS] 反向控制：init_movement 内仍有 is_recovering 的初始化（实测 1）
+[PASS] 反向控制：init_movement 内仍有 fall_duration 的初始化（实测 1）
+[PASS] 反向控制：init_movement 内仍有 max_fall_duration 的初始化（实测 1）
+[PASS] 反向控制：init_movement 内仍有 is_gravity_falling 的初始化（实测 1）
+
+[C2] init_movement 的 max_fall_duration 初值必须保持运行时等价（2.0）
+[PASS] init_movement 内 max_fall_duration 的常量初值恰为 [2.0]（实测 [2.0]）
+
+[D] start_fall 内 is_moving 赋值语句数 = 1 且位于分支之前
+[PASS] 能定位 start_fall（AST）
+[PASS] start_fall 内 is_moving 赋值语句数 == 1（实测 1）
+[PASS] 反向控制：is_moving=False 位于 reason 分支之前（相对位置：赋值的行号 < 分支的行号 = True）
+[PASS] 反向控制：start_fall 内 idle_timer 赋值语句数 == 2（真实差异被保留，实测 2）
+
+[E] 日志 handler 的 rollover 失败必须被兜住
+[PASS] logger_utils 里有 doRollover 覆盖（AST）
+[PASS] logger_utils 里存在 TimedRotatingFileHandler 的子类（实测 _SafeTimedRotatingFileHandler）
+[PASS] 初始化处不再直接用裸 TimedRotatingFileHandler
+[PASS] 能取到安全 handler 类
+[PASS] 安全 handler 是 TimedRotatingFileHandler 的子类
+[PASS] 负控制：原生 handler 在 rollover 失败时确实吐 Logging error（判据有鉴别力）
+[PASS] 正控制：安全 handler 在同样故障下不吐 Logging error
+[PASS] 正控制：rollover 失败后日志仍继续写入当前文件
+
+========================================================================
+结果：PASS=36 FAIL=0
+========================================================================

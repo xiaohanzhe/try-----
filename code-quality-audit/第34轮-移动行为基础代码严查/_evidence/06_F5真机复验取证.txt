@@ -1,0 +1,76 @@
+第三十四轮 · F5（日志 rollover）真机复验取证
+============================================================
+目的：确认 `_SafeTimedRotatingFileHandler` 是否真的消除了 rollover 失败。
+方法：同一份代码、同一天，用**两种不同的 stdout 抓取方式**各跑一次，对照。
+
+------------------------------------------------------------
+【第 1 次】探针方式：stdout 重定向到父进程打开的文本文件
+------------------------------------------------------------
+命令要点：
+    subprocess.Popen([python, 'src/main.py'], stdout=open(log_path,'w',encoding='utf-8'),
+                     stderr=subprocess.STDOUT)
+
+结果（`_evidence/_live_run_after_fix.log`）：
+    alive after 14s = True
+    log bytes = 1011
+    Logging error present? True
+    Traceback present? True
+
+日志内容：
+    --- Logging error ---
+    Traceback (most recent call last):
+      File "C:\Python311\Lib\logging\__init__.py", line 1114, in emit
+        self.flush()
+      File "C:\Python311\Lib\logging\__init__.py", line 1094, in flush
+        self.stream.flush()
+    OSError: [Errno 22] Invalid argument
+
+★ 关键判读：**栈变了**。
+  修复前是 `handlers.py:74 emit → doRollover → rotate → os.rename`（FileHandler 的 rollover）
+  修复后变成 `logging/__init__.py:1114 emit → self.flush()`（**StreamHandler 的 flush**）
+  ⇒ 说明 **doRollover 那条栈已经彻底消失，F5 生效**；
+     剩下这条是 **控制台 handler** 的问题，与文件 logs 切割无关。
+
+------------------------------------------------------------
+【第 2 次】对照方式：stdout=PIPE（不经父进程文件对象）
+------------------------------------------------------------
+命令要点：
+    subprocess.Popen([python, 'src/main.py'], stdout=subprocess.PIPE,
+                     stderr=subprocess.STDOUT)
+
+结果：
+    alive after 12s = True
+    bytes = 398
+    Logging error present? **False**
+    Traceback present? **False**
+
+日志内容（干净，全是正常启动日志）：
+    Building prefix dict from the default dictionary ...
+    2026-09-22 23:45:02 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+    Loading model from cache E:\RalseiMemory\cache\jieba.cache
+    2026-09-22 23:45:02 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+    Loading model cost 0.713 seconds.
+    Prefix dict has been built successfully.
+
+------------------------------------------------------------
+结论
+------------------------------------------------------------
+1. **F5 修复有效**：`doRollover → os.rename` 的 `WinError 1` 已不再出现。
+2. **第 1 次的 `Errno 22` 是探针假象**，不是产品缺陷：
+   我用 `stdout=open(path,'w')` 把子进程 stdout 接到**父进程持有的文件对象**上，
+   该对象在 `StreamHandler.flush()` 时的行为不稳定（子进程拿到的其实是继承的 fd，
+   而 logging 侧对它的 flush 在某些时序下会 `EINVAL`）。
+   换 `stdout=PIPE` 后完全干净。
+3. ⇒ **第 N 次验证 MEMORY.md §4 铁律**：
+   「**探针不保真 = 报假问题**」「**报红先自问'夹具真把破坏写进去了吗'**」
+   「**先怀疑核验判据，再怀疑被测物**」。
+   如果当时只看第 1 次结果，我会误判"F5 无效"并去改一个本来正确的实现。
+
+------------------------------------------------------------
+附带记录：老坑复发
+------------------------------------------------------------
+本次还踩了 `python -c` 内联长文本（含中文 + 反引号 + 括号）被 bash 破坏的坑：
+    `C:\...\bash.exe: line 1: check_window_movement: command not found`
+    `SyntaxError: unterminated triple-quoted string literal`
+⇒ **凡是长文本落盘，一律用 Write 工具 / 独立 .py 文件，不要走 `python -c` 内联。**
+（MEMORY.md §1 已记，本次再次应验。）

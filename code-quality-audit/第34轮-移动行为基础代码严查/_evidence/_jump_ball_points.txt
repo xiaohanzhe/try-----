@@ -1,0 +1,31 @@
+921 |             "jump_ball": 4,
+2718 |         self._jump_anim_override = None
+2728 |                     self._jump_anim_override = _climb_animation_name(
+2736 |         # 第三十四轮（用户口径）："跳跃这种动画统一用 jump_ball 代替，只有摔下去的时候
+2737 |         # 用原来的" —— 起跳准备帧也从 `jump_ready` 改为 `jump_ball`，让整个跳跃过程
+2739 |         # 攀爬素材（`_jump_anim_override`）不受影响：那是"跨度大"这条独立机制的选型。
+2740 |         self.change_animation(self._jump_anim_override or "jump_ball", force=True)
+2944 |             self._jump_anim_override = None
+2994 |                 self._jump_anim_override = None
+3034 |             self._jump_anim_override = None
+3048 |             # 这里必须先尊重它 —— 否则每帧都会被 jump_ball 顶掉，等于没切。
+3049 |             _override = getattr(self, '_jump_anim_override', None)
+3053 |                 # 第三十四轮（用户口径）："跳跃这种动画统一用 jump_ball 代替，
+3054 |                 # 只有摔下去的时候用原来的" —— 跳跃一律 jump_ball。
+3055 |                 # 原写法是 `elif self.has_ball: jump_ball / else: jump`，但
+3057 |                 # 于是实际**永远走 jump**，jump_ball 这条分支是死的。
+3058 |                 # 现在去掉这个恒假条件，直接走 jump_ball。
+3059 |                 self.change_animation("jump_ball", force=True)
+3316 |         # 再也不推进 → 宠物永久卡在 jump_ball 且一路掉到屏幕底。
+5514 |                     # 飞行阶段：jump_ball 动画
+5515 |                     throw_animation = "jump_ball"
+6357 |             'idle', 'spell', 'spell_left', 'jump', 'jump_ready', 'jump_ball',
+7560 |                 # 第三十四轮（用户口径）：跳跃动画统一 jump_ball，起跳准备帧不再是 jump_ready。
+7561 |                 new_animation = "jump_ball"
+7565 |                 # 第三十四轮（用户口径）："跳跃这种动画统一用 jump_ball 代替，
+7566 |                 # 只有摔下去的时候用原来的" —— 跳跃一律 jump_ball。
+7567 |                 # 原来的 `if self.has_ball: jump_ball / else: jump` 因 has_ball 恒为 False
+7568 |                 # 而永远走 jump，jump_ball 分支是死的。
+7569 |                 new_animation = "jump_ball"
+7577 |             # handle_fall 会主动切换 jump_ball/splat/fall_back_rub，这里不要覆盖。
+7739 |             'idle', 'spell', 'spell_left', 'jump', 'jump_ready', 'jump_ball',

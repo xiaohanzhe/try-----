@@ -1,8 +1,8 @@
 # 项目记忆 — ralsei_pet（Deltarune Ralsei 桌宠）
 
-> **全文（§0–§22，116k 字符）在 `参考-契约与历轮（详版）.md`**（**不自动注入，改动前 Read**）。
+> **全文（§0–§23）在 `参考-契约与历轮（详版）.md`**（**不自动注入，改动前 Read**）。
 > 本文件只留**每轮必守的铁律 + 索引 + 待裁定**。细则一律去详版对应 §。
-> ⚠️ 本文件超注入上限时会被截断 —— **压缩前必须先把细则补进详版**（skill `agent-memory-compaction`）。
+> ⚠️ 本文件超注入上限会被截断 —— **压缩前必须先把细则补进详版**（skill `agent-memory-compaction`）。
 
 ## 0. 铁律
 - 每轮改动完成即 **commit + push**；称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
@@ -12,29 +12,29 @@
 - 远端 `https://github.com/xiaohanzhe/try-----.git`（私有）；main→origin/main。真机起：
   `Set-Location ralsei_pet; & C:\Python311\python.exe src\main.py` + `run_in_background`。单实例锁
   `Global\RalseiPetMutex`。窗口透明非置顶 FramelessWindow → **甩飞、抛物线只能离屏断言**。
-- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **26 套件 / 1359 PASS / 全 IDENTICAL**）。
+- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **27 套件 / 1395 PASS / 全 IDENTICAL**）。
   G2 跑 `compileall` → 可能改写被跟踪的 `src/__pycache__/*.pyc` → 收工前 `git checkout --`。
   ★ **改了套件断言/文案 → 用 `--only <suite> --update`（合并模式）重建基线**，别全量 update。
 - ★ **只读优先、改动最小化**：审查阶段不改被审文件；修复阶段一次只动必要处，每处配独立验证断言。
 
-## 1. 环境（详版 §1 / §18 / §19 / §21）
+## 1. 环境（详版 §1 / §18 / §19 / §21 / §23.10）
 - ⚠️ **Bash 工具常整个坏掉**（`ls`/`head`/`cat`/`tail`/`dirname` 全 127）→ **一律 Python + PowerShell 工具**；
   `Glob`/`Grep`/`Read` 照常。❗`2>$null` 报 `ambiguous redirect`；❗**别从 Bash 里调 PowerShell**（安全策略拦）；
   PS **stdout 常不回传** → 命令内 `Out-File -Encoding utf8` 再 Read。
-  ❗❗**别内联 `python -c` 写含反引号的文本**（Bash 命令替换吞掉 → 生成 0 字节垃圾）。
+  ❗❗**别内联 `python -c` 写含反引号/长中文的文本**（Bash 命令替换吞掉 → 0 字节垃圾 / 语法报错）。
 - **起进程**只能 `&` + `run_in_background:true`；**杀进程**用 Python+psutil；**删文件**用 `[System.IO.File]::Delete()`；
   **`wmic` 已移除** → `Get-CimInstance`。
 - Python 一律 **`C:\Python311\python.exe`**（PyQt5/pywin32/bs4/psutil/jieba）—— G2 与所有套件必须用它。
 - **代理端口现查为准**；**单端口一次成败不是结论**。**git 用 `shutil.which("git")`**。
 - **E 盘会掉线**（`Write` 报 `ENOENT … mkdir '\\?'`）；❗**E 盘 exFAT 不能当探针沙箱** → 用本地 NTFS `%TEMP%\`。
-- ❗**长任务被清理守卫 SIGTERM 杀**（`Exit Code: -1` / `Signal: SIGTERM` / 无输出）；
-  **见"删除计数恒定"先干掉触发源**。细则 §21.3。
+- ❗**长任务被清理守卫 SIGTERM 杀**（`Exit Code: -1` / `Signal: SIGTERM` / 无输出；按路径**累计删除计数**，
+  阈值 50）；**见"计数恒定/身份期被 import 期杀"先干掉触发源**。细则 §21.3。
 - **证据/报告一律让 Python 自写 UTF-8**；`Write` 覆盖带 BOM 文件**会保留 BOM**。
   ❗**"能力自评失准"比"能力不足"更危险**（§21.3）。
 - **注入的 `current_time` 会滞后** → 落盘带日期的产物先 `Get-Date` 校准。
 - **`github.com` 主站不可达而 `api.github.com` 仍 200** 时会 push 失败 → **提交照做 + 如实报告 + 稍后重试**，
   **别怀疑凭据或改 git 配置**。
-- ⭐ **仓库两套换行口径**（`autocrlf=true` + 无 `.gitattributes`，详版 §8.6.5）⇒ **编辑必须保持原 EOL**；
+- ⭐ **仓库两套换行口径**（`autocrlf=true` + 无 `.gitattributes`，§8.6.5）⇒ **编辑必须保持原 EOL**；
   **逐字节参照系只能用 `git cat-file blob`**。
 - ⭐ **git 对中文路径加引号转义** ⇒ 核验文件存在性**必须** `git ls-files -z` + `surrogateescape`（§21.2）。
 - ⭐ **Ollama 日志 = 性能金矿**：`%LOCALAPPDATA%\Ollama\server.log` 的 `slot print_timing` 行（§21.1）。
@@ -49,31 +49,45 @@
   ⇒ **先怀疑核验判据，再怀疑被测物。**
 - ❗**`subprocess.run(input=...)` 必须喂 bytes**（str → `TypeError` 被吞 → push 整段静默跳过，**像网络问题**）。
 
-## 3. 勿回退契约（**全文详版 §4.1–§4.12 + §10，开工前必读**）
-13 组契约（多屏/甩飞/动画/联想/抽词/网图/建楼/存储/初始化环/jieba/DPI/G2 封闭性/误报清单）。四个最易踩：
+## 3. 勿回退契约（**全文 §4.1–§4.12 + §10 + §23.9，开工前必读**）
+13 组契约（多屏/甩飞/动画/联想/抽词/网图/**建楼**/存储/初始化环/jieba/DPI/G2 封闭性/误报清单）。最易踩六条：
 ① **`availableGeometry()` 只返主屏 → 必用 `_virtual_screen_rect()`**；
-② **建楼 `floor_visible_contains` 是唯一判据、禁用 `Qt.WindowStaysOnTopHint`**，
+② **建楼 `floor_visible_contains` 是唯一判据**（站立/下落/跳跃/边缘全走它）、
+  **禁用 `Qt.WindowStaysOnTopHint`**；**`get_drop_destination`/`find_support_below` 只取"下面第一个"**（不许跨层）；
+  `get_current_floor` 几何优先、`WindowFromPoint` 只做**"只向上"**兜底；
   ⚠️ **`climb_1_*`=朝右 / `climb_0_degrees_*`=朝前 是用户原话口径，不许再改**；
+  ★ **不做"逐层小跳"**（楼层名次=z 序，逐层第一步必吸附失败）⇒ **跨层换素材不换落点**；
+  ★ **顺序铁律：`show()` 有"提到前面"副作用 → 必须 `show()` 之后再调 z 序**；
+  ★ **甩飞路径必须显式 `self._fall_reason = None`**（否则关窗起因残留 → 甩飞也播生气版 5s）；
+  ★ 判定函数放**模块级**、**不要**做成 `RalseiPet` 方法（历史套件用 `SimpleNamespace` 桩）。
 ③ **`A in rev[B]` 检反向是恒真判据**；**鉴别力体检必改文件**；
 ④ `data_store` 是**唯一入口**（vault=`E:\RalseiMemory\` 读优先，迁移**只复制不搬走**）；
-  被反向依赖的底层模块一律 `lazy_log.LazyLogger`；裸进程脚本**先建 `QApplication` 再读坐标**。
+  被反向依赖的底层模块一律 `lazy_log.LazyLogger`；裸进程脚本**先建 `QApplication` 再读坐标**（否则 DPI 假象）；
+⑤ **G2 `run_all.py` 有 `HERMETIC_IDS`**；`save_baseline` 是**合并模式**（别全量 `--update`）；
+⑥ ★★ **新套件必须 `print('[PASS] %s')` 字面量** —— `run_all.py:425` 用
+  `re.findall(r'\[PASS\]|\[\s*OK\s*\]', text)` 计数，写成 `"  PASS  msg"` 会让 **PASS 列恒为 0**（套件仍显示 IDENTICAL，极易漏看）；
+  新套件脚本在 `code-quality-audit/<轮次>/` ⇒ `ROOT = os.path.join(HERE,'..','..')`（**两层**）。
 **误报清单（勿据此改）**：`learn_new_skill` 有守卫；`_on_ai_reply` 已 `pyqtSignal` 排主线程；`reset_special_states` 零调用。
 
-## 4. 验证脚本教训（**全文详版 §5 各节 + §8.4/§8.6，改断言前必读**）
+## 4. 验证脚本教训（**全文 §5 各节 + §8.4/§8.6 + §23.4/§23.5，改断言前必读**）
 - ⭐**能上 AST 就上 AST**：`code_only_src()` **会剥 STRING token** → 断言**字面量**必恒假/恒红（**踩 7 次**）；
   含字面量走 `code_no_comment()`。**零引用筛查一律走 AST**。
 - **回归锁必须有鉴别力**（两侧同值＝没测）；**正/负控制成对**；**断行为/结构不断赋值/写法**；
   **恒真判据比不写还危险**；❗**报红先自问"夹具真把破坏写进去了吗"**。**恒红 ≠ 抓破坏**。
-- **探针不保真 = 报假问题** →「**能从源码拿的别 import；能 import 的别重写；不得不重写必须锁等价**」；
+- **探针不保真 = 报假问题**（**已踩 2 次**）→「**能从源码拿的别 import；能 import 的别重写；不得不重写必须锁等价**」；
   ❗❗**"分类器太窄"和"闸有洞"长得一样** → **必须拿产品函数逐条复核，不能只看探针计数**。
+  ★★ **任何"修复无效"的结论，先复核探针**（第 34 轮 F5：`stdout=open(file)` 让 `StreamHandler.flush()`
+  抛 `Errno 22`，差点误判修好的实现还坏着；换 `PIPE` 后全干净）。
 - **"函数写对了" ≠ "产品用上了"（最贵坑，4 次）**；镜像：**"没改也没人调用"要么接线、要么删**。
 - ⭐**两个断言同时报红，处置方向可能相反** → **先读原文再定**。
 - **A/B 纪律**：先断言 **A ≠ B**（"旧值"若已提交 → A==B，取**父版本**）；桩打在「方法体里 `self` 的那张类」；
   **A/B 只证"两版等价"**。**对照组重复跑、先量尺子公差**；**先读原文再看计数**。
 - ⭐❌ **测性能必须用产品真实输入**：裸测 4B 首字 0.6~0.7s 报"合格"，**产品真 persona 实测 36.82s**（50 倍）。
   **简化输入会给出反向结论。**
+- ★★ **「删掉重复行」≠「去掉重」** —— 去重必须以**运行时等价**为准。第 34 轮 `max_fall_duration`
+  先出现 `5.0`、后赋值 `2.0`（**后赋值胜**）⇒ 取 5.0 就是**静默改行为**（§23.4）。
 
-## 5. 人味改造线（**全文详版 §6/§11/§12/§14.3/§15/§20，动手前必读**）
+## 5. 人味改造线（**全文 §6/§11/§12/§14.3/§15/§20，动手前必读**）
 回归锁 `persona_chat`(156)/`s8_stream`(69)/`s7_event_speech`(138)，**均进 G2、不联网、不调 Ollama**。
 - **人设单一真源 = `assets/ralsei_persona.md`**（每次对话读出来当 `system`）。**别只写 Modelfile** ——
   Ollama 用 messages 的 system **整体替换** Modelfile 的 SYSTEM → 写进模型的人设**一次都不生效**。
@@ -107,16 +121,16 @@
 - **❗篇幅上限 = `main.AI_REPLY_MAX_CHARS`，现 220**；**换底座/调 num_predict 必须重跑 `measure_token_ratio.py`**。
 - ⚠️ 已处置：`_clean_ai_reply` 在 `start_autonomous_speech._on_reply`(`main.py:4620`) 曾**未传 `recent`**（B13b 锁）。
 
-## 6. H4/H5 上帝类拆分（**全文详版 §8.1–§8.6**）
+## 6. H4/H5 上帝类拆分（**全文 §8.1–§8.6**）
 - 基线 `code-quality-audit/架构改造-H4H5/`（**勿重测**）；**Wave 1 七项 ✅ + 第 26 轮复审判"合格"**；**Wave 3 不在范围**。
   ★**预声明区 = 宿主 `init_systems()`**（`main.py` L660，状态块 L770–806；**不是 `__init__`**）。
 - ❗**`scan_method_index.py` 只是线索，不是范围定义** —— **四类偏差都出现过**（漏标/误纳/跨区散布/方案自身错）
   ⇒ **必须与排期方案交叉核对 + 逐方法人工确认**。
 - ⚠️ **W1 转发铁律：双向 `__getattr__` 两侧都须显式白名单**：宿主侧**只能** `getattr(type(ctrl),name)`，
   **绝不** `hasattr(ctrl,name)`。**`RecursionError` 崩在构造期 → G2 抓不到**。`_CONTROLLER_ATTRS` 在 `main.py` L512。
-- ❗❗**W1 搬运铁律 8 条 + A/B 结构性盲区 → 详版 §8.5**。
+- ❗❗**W1 搬运铁律 8 条 + A/B 结构性盲区 → 全文 §8.5**。
 
-## 7. 场景系统线 / 原作机制（第 28–31 轮，**全文详版 §16/§17/§18/§19/§20**）
+## 7. 场景系统线 / 原作机制（第 28–31 轮，**全文 §16/§17/§18/§19/§20**）
 用户口径：**「把原作的世界搬到桌面上…桌面也会被我当成一个场景」** + **「一切根据原作」**。
 - **P0**（`0aba480`）：`scene_system.py`（数据层纯函数）+ `scene_controller.py`（接线层）+ `assets/scenes/*.json`；
   ★★ **P0 判据 =「不切场景时零行为变化」**：`switch()` **只写状态**、不动画面/定时器/物理。
@@ -135,7 +149,7 @@
 - ★ **游戏源文件**：`C:\Users\23002\Desktop\项目文件夹\niko的秘密\DELTARUNE_183049\DELTARUNE`
   （含 `data.win` + 代码参考）。⚠️ 已解析的 `ROOM/SPRT/OBJT.json` **不可信**（指针基址错）→ §22.3。
 
-## 8. 性能线（第 29–31 轮，**全文详版 §17.3/§18/§19/§20.3**）
+## 8. 性能线（第 29–31 轮，**全文 §17.3/§18/§19/§20.3**）
 - **硬件真相**：Intel Core Ultra 5 125H + **Intel Arc 核显 + 31.6 GiB 内存**，**无独显、无独立 VRAM**。
   用户说"32GB 显存"→ 实为**内存**。Ollama 跑**纯 CPU** ⇒ **Vulkan 救不回冷 prefill**。
 - **4B 实测**（219 次真实推理，源 `server.log`）：**avg 8.07 tok/s**；**12 tok=1.49s / 20 tok=2.48s / 40 tok=4.96s**。
@@ -163,6 +177,9 @@
 - **「一切根据原作」** —— 场景/线路/命名以原作 GML 实证为准。
 - ★★ **当前主轴（第 32 轮，逐字）**：**移动/行为 = 唯一主轴**；**结巴议题搁置**；
   **严查现有基础代码纰漏**；**这一阶段完全 ok 才进下一阶段**（质量优先于功能堆叠）。细则 §22.4。
+- ★★ **第 34 轮工作方式（逐字）**：**「不必要每次变完一轮就暂停一次，大可以你测完了没问题后，
+  然后按照你的计划来」** ⇒ **测完绿了就按自己的计划连续推进，不要每轮停下请示**。
+- ★ **第 34 轮功能口径（逐字）**：「他**跳跃动画统一用 jump_ball 代替**，**只有摔下去的时候用原来的**」。
 
 ## 10. 历轮索引（细节去详版 + `.workbuddy/memory/<日期>.md` + 对应报告）
 
@@ -176,6 +193,7 @@
 | 31 | 7B 设默认 + 首字进 5s + 治固定开场白 | §20 | ✅ `eb806e4`；G2 **1359/26** |
 | 32 | 结巴取证（8.3% 属真实，真凶=固定模板） | §22.1 | ✅ 见 `2026-09-22.md` |
 | 33 | 换窗口交接 + 游戏源文件勘察 | §22.2/§22.3 | ✅ 见 `2026-09-22.md` 末 |
+| 34 | 移动/行为基础代码严查 + 跳跃统一 jump_ball | **§23** | ✅ G2 **1395/27** |
 
 ## 11. 🔴 待用户裁定（**开工前必看**）
 1. **场景美术素材来源**（**P1 开工前唯一阻塞项**）：`<仓根>/deltarune_ralsei/` 1111 张 PNG **全是角色精灵**；
@@ -188,3 +206,7 @@
    `monitor_*.txt` 存量（**等用户点头，不得批量删**）｜H4「文件反应」专项。
 6. **开机自启 + 预热**（用户口径：**「后期等咱项目结束的时候」**）—— 实现留到项目收尾。
 7. 是否试 **Vulkan 后端**（已实测：**救不回冷 prefill**）。
+8. ★ **第 34 轮遗留（P3 技术债）**：死函数批量清理 / 空闲分支补 3 条件 / 5 个孤儿状态位复位 /
+   **楼层实现 3 处"区间口径不一致"**（`nearest_visible_point` 与 `get_jump_destinations` 的
+   `QRect.bottom()/right()` **闭区间** vs `_rect_tuple` **半开区间**；`_index_of_floor` 退化分支返回 `-1`）
+   —— **均属低危（差 1px 不可能改"站得住"判定），建议同批处理，勿单独动**。详见 §23.9。

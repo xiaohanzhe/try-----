@@ -45,6 +45,35 @@ _initializing = False    # 重入保护，见 _init_logging 的文档字符串
 _root_logger = None
 
 
+class _SafeTimedRotatingFileHandler(TimedRotatingFileHandler):
+    """按天切割的日志 handler，但**绝不让切割失败把异常吐给用户**。
+
+    第三十四轮修复（真机实测暴露）：
+        `TimedRotatingFileHandler.doRollover()` 在 emit() 内部被调用，也就是
+        **每次写日志时**都可能触发。而项目日志落在 E 盘（exFAT，见 data_store），
+        `os.rename` 在 exFAT 上会抛：
+            OSError: [WinError 1] 函数不正确。: '...\\ralsei_pet.log' -> '...\\ralsei_pet.log.2026-09-21'
+        该异常由 logging 内部捕获后打一大段 `--- Logging error ---` + Traceback 到
+        stderr，并**放弃本次写盘**；下次写又重试、又失败 —— 表现为
+        "日志从某天起不再切割、控制台反复刷 Traceback"。
+
+    原实现的 try/except 只包住了 handler 的**构造**，包不住运行期 rollover，
+    所以这个洞一直存在。
+
+    本类的处置：把 rollover 整体兜住。失败时**降级为继续写当前文件**（不切割），
+    最多多占一点磁盘，但日志不丢、用户不被 Traceback 骚扰。
+    """
+
+    def doRollover(self):
+        try:
+            super().doRollover()
+        except Exception:
+            # 回退到"沿用当前文件"：把下次切割时间往后推一天，
+            # 避免每次写日志都重试一次（高频写入下会疯狂刷失败日志）。
+            import time as _time
+            self.rolloverAt = int(_time.time()) + 86400
+
+
 def _log_dir():
     """解析日志目录：data_store（E 盘优先）→ 程序目录兜底。**绝不抛。**
 
@@ -120,7 +149,9 @@ def _init_logging_impl():
     if _ensure_log_dir():
         log_file = os.path.join(_log_dir(), _LOG_FILENAME)
         try:
-            file_handler = TimedRotatingFileHandler(
+            # 用 _SafeTimedRotatingFileHandler：切割失败（E 盘 exFAT 的 os.rename 会抛
+            # WinError 1）时降级为继续写当前文件，而不是往 stderr 吐 Traceback。
+            file_handler = _SafeTimedRotatingFileHandler(
                 log_file,
                 when="midnight",   # 每天 0 点切割
                 interval=1,

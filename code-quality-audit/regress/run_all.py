@@ -336,6 +336,59 @@ SUITES = [
                 '+ main.py 预声明 3 个路由字段 + **零行为变化**（无定时器 / 无动画 / '
                 '仅 follow_route 调 switch）+ 原作房间表研究记录完整性',
     },
+    {
+        # 第三十四轮：移动/行为基础代码「不许回退」回归锁。用户主轴是
+        # 「先把桌面宠物的移动、行为这类的做好…严查一下咱现在这些基础代码有没有纰漏」，
+        # 这一套守的是本轮严查中实测确认的四类问题 + 一项日志健壮性：
+        #   A. 假 Qt 事件钩子（mouseEnterEvent/mouseLeaveEvent 不是 Qt 钩子名）不许回来
+        #      —— AST 判据 + 真钩子反向控制（防"全删了也 PASS"）+ QWidget 属性实证；
+        #   B. 死字段 fall_start_time（6 写 0 读，init 里三种类型并存）不许回来
+        #      —— AST 节点数 + getattr 调用数 + modules 全扫 + 注释留痕反向控制；
+        #   C. init_movement 内同一字段不得重复赋值（本轮合并 5 组）
+        #      —— 赋值语句数 ≤1 + 反向控制"字段确实还在"；
+        #   C2. max_fall_duration 初值必须保持 **运行时等价（2.0）** —— 去重时若误取
+        #      先出现的 5.0 就是静默行为变更（本轮施工中真的踩过一次，故专门设锁）；
+        #   D. start_fall 内 is_moving 赋值语句数 ==1 且位于 reason 分支之前
+        #      —— 含"idle_timer 差异必须保留（两处不是四处）"的反向控制；
+        #   E. 日志 rollover 失败必须被兜住（E 盘 exFAT 的 os.rename 会抛 WinError 1，
+        #      原生 handler 会把 Traceback 吐到 stderr 且日志永不切割）
+        #      —— 行为级正负控制：同故障下原生吐、安全类不吐且继续写盘。
+        # **不联网、不实例化 App、不需要显示器**（AST + 轻量运行时 + 一次 logging 往返）。
+        'id': 'round34_movement',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第34轮-移动行为基础代码严查',
+                               'verify_round34_movement.py'),
+        'offscreen': False,
+        'desc': '第三十四轮：移动/行为基础代码不许回退 —— 假 Qt 钩子（mouseEnter/LeaveEvent）'
+                '已删且不许回来（AST + 真钩子反向控制 + QWidget 属性实证）'
+                '+ 死字段 fall_start_time 全清（AST 节点/getattr/modules 三向 + 注释留痕反向控制）'
+                '+ init_movement 五组重复赋值已合并（赋值语句数 ≤1 + 字段仍在的反向控制）'
+                '+ max_fall_duration 初值运行时等价 2.0（防去重时误取 5.0 的静默行为变更）'
+                '+ start_fall 的 is_moving 提取到分支前（含 idle_timer 差异必须保留的反向控制）'
+                '+ 日志 rollover 失败被兜住（正负控制：原生吐 Logging error / 安全类不吐且继续写盘）',
+    },
+    # -------------------------------- 第三十四轮：楼层实现审查（floor_manager）
+    # 需求：「仔细检查那个楼层的实现」→ 坐实并修复 `_index_of_floor` 退化分支缺陷：
+    #   返回 -1（=「比最高活楼层还高」）被两个消费方误读成"未找到" →
+    #     · get_drop_destination 从最高活楼层起扫 → 宠物被"上吸"一层；
+    #     · adjacent_lower_floor 返回 None（语义「下面没楼板了」）→ 有下层却报"到底了"。
+    # 触发路径：宠物站在**当前最高的窗口**上、用户关掉它 → current_floor 仍持有已消失
+    #   窗口的旧 dict，而重建后最高活楼层比它低 → 按高度找 "<= cur_h" 的首项即 i==0。
+    # 本套件**全部调用产品真函数**（不重写被测逻辑），断言行为而非写法；
+    # 正/负控制成对（含"正常路径 i>=1 的 i-1 语义不许被改坏"的反向控制）。
+    # **不联网、不实例化 App、需要 QApplication 实例（offline 平台即可）**。
+    # 鉴别力已体检：回退修复行 → 6 项报红 rc=1；还原 → 15/15 PASS rc=0。
+    {
+        'id': 'round34_floor_manager',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第34轮-移动行为基础代码严查',
+                               'verify_round34_floor_manager.py'),
+        'offscreen': True,
+        'desc': '第三十四轮：楼层实现不许回退 —— `_index_of_floor` 退化分支不得返回 -1'
+                '（A1/A2 + 全低反向控制 A3）'
+                '+ get_drop_destination 落点不得被"上吸"（B1 正控制 / B2 修复 / B3 单调性）'
+                '+ adjacent_lower_floor 不得把"有下层"误报成 None（C1 正控制 / C2 修复）'
+                '+ 正常路径 i>=1 的 i-1 语义保持（D 三个活楼层 + D2 stale 落在层间）'
+                '+ 只有桌面 / 桌面最底层口径保持（E1/E2/E3）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

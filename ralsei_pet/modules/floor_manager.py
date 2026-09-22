@@ -479,6 +479,28 @@ class FloorManager:
 
         找不到时按平台高度退化定位，且保证结果指向"不高于当前楼层"的位置，
         绝不会把搜索起点错误地放到列表头部（最顶层）。
+
+        第三十四轮修复（退化分支的 -1 不是安全哨兵）：
+            原写法 `return i - 1` 在本函数语境里表示"**当前楼层高于第 i 层**"，
+            但 `i == 0` 时它会返回 **-1** —— 而 -1 的两个消费方都不把它当
+            "未找到"，而是当成"**比最高的活楼层还高**"：
+              · `get_drop_destination`：`range(current_index+1, n)` 变成
+                `range(0, n)` → 从**最高**的活楼层开始向下扫 → 第一块能接住的
+                就是最高的那块 → 宠物**被"上吸"到更高的楼层**；
+              · `adjacent_lower_floor`：`idx < 0` 直接 `return None`，
+                None 的语义是"已在最底层、下面没有楼板了" → **明明有下一层却报"到底了"**。
+            `_floor_identity` 的注释里记着同型的"凭空被上吸"历史缺陷，这条是它的复现路径。
+
+            触发条件（真机可达）：宠物站在**当前最高的那个窗口**上，用户把这个窗口
+            关掉 → `self.current_floor` 还持有那只已消失窗口的旧 dict（hwnd 已不在
+            `underlying_windows` 里），而重建后的 `all_floors` 最高层比它低 →
+            按高度找"<= cur_h"的第一项就是 `i == 0` → 返回 -1。
+
+            修法：把"比所有活楼层都高"显式规范成 **0**（落在最高活楼层**之上**，
+            于是 `current_index + 1 == 1`，向下扫时从第二高的活楼层开始，
+            与"关掉最高的楼板 → 掉到下一个活楼层或桌面"的既有口径一致）。
+            ⚠️ 只在 `i == 0` 这一支改变返回值；`i >= 1` 时 `i - 1` 语义本就正确
+            （它就是"不高于当前楼层"的最近一项），保持原样以免动到已锁定的路径。
         """
         cur_id = self._floor_identity(current_floor)
         for i, floor in enumerate(all_floors):
@@ -490,7 +512,9 @@ class FloorManager:
             cur_h = 0
         for i, floor in enumerate(all_floors):
             if floor['platform_height'] <= cur_h:
-                return i - 1
+                # i == 0：当前楼层比**所有**活楼层都高 → 规范成 0，不留 -1。
+                # （-1 会被 range(idx+1, n) 误当成"从最高层开始扫"，见 docstring）
+                return 0 if i == 0 else i - 1
         return len(all_floors) - 1
 
     def get_drop_destination(self, pos, current_floor):
