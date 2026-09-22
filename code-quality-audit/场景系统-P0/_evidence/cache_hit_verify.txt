@@ -1,0 +1,11 @@
+=== 1. 用产品真实函数组装 messages ===
+import api_client: OK   (C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\modules\api_client.py)
+messages 组装结果（角色序列）：['system', 'user', 'assistant', 'user']
+第 1 条是 system 且内容 == 传入的完整 system：True
+messages[0].content 长度 = 8699
+temperature=0.7 max_tokens=500
+
+=== 2. 两次真实请求，看第二次的 prompt_eval 是否塌落 ===
+冷启动 A（前缀 = system）       prompt= 2050  首字=103.635s  wall=109.28s
+同前缀 B（只尾巴不同）             prompt= 2050  首字=  0.546s  wall=5.84s
+同前缀 B 重复                 prompt= 2050  首字=  0.191s  wall=5.95s

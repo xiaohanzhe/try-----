@@ -1,0 +1,48 @@
+第30轮：7B落地 + 「首字延迟」真相查明
+
+用户口径（优先于我的技术判断）：
+① 换 7B 动机 = 贴合人物 + 不出 bug（质量，不是速度）
+② 「prompt 尽量完整」—— 明确否决我第29轮"先砍 prompt 长度"的建议
+③ 「1~3s」= 首字延迟（TTF），不是整句
+
+本轮实测（全部用产品真实 persona，prompt 一字未裁）：
+
+7B 已下载完成（status=success，api/tags 已注册）。
+  裸测：短system 43tok 首字1.39s；完整prompt 2050tok 冷启 96.48s / 缓存命中 0.20s
+  产品链路：完整system+历史 冷启120.27s / 再来一轮 3.22s / 【此刻】变了 8.28s /
+            lean（只发persona）1.88s ← 唯一达标
+  ⇒ 7B 产品链路首字 1.9~8.3s，达不到 1~3s 门槛。
+
+4B 产品真实 persona 重测：2322tok 冷启 36.82s（第29轮报的0.6~0.7s是裸测，不成立）。
+
+★★★ 因果定位（本轮最值钱的结论）：
+同一份 prompt（2050tok，长度完全相同）：
+  冷启动 103.635s  vs  缓存命中 0.546s  vs  完全重复 0.191s   → 差 190 倍
+⇒ 决定首字的不是 prompt 长度，而是「KV 前缀缓存是否命中」。
+⇒ 第29轮"长度是唯一决定项"的简化结论被推翻。
+
+A/B 对照（唯一变量=变化段位置，prompt 均 3629tok）：
+  变化段靠前（紧跟persona） 73.44s
+  变化段末尾（挪到system尾） 2.50s
+  ⇒ 29.4 倍
+⇒ 产品现行 system 组装顺序（main.py:6722-6816）已是位置最优的，
+  第20轮就为此把世界观改成按需召回 + 关系brief排在临时状态之前；
+  本轮实测印证并量化了那个设计。
+
+结论改写：
+- 撤回「砍 prompt 长度」建议（用户否决，且实测证明不必砍）
+- 「首字1~3s」的正确解法 = 让前缀缓存稳定命中（变化段恒在末尾 + persona恒在开头逐字不变
+  + 别让会话冷下去）
+- Vulkan 后端救不回冷 prefill（冷启96~225s量级）—— 要治的是"别让它冷"
+
+回归：G2 PASS=1358 FAIL=0 套件=26 / 26 套件全 IDENTICAL（本轮纯测量，未改产品代码）
+
+证据（code-quality-audit/场景系统-P0/_evidence/）：
+  ttf_measure.txt / ttf_measure_7b.txt / ttf_product_chain_7b.txt /
+  cache_hit_verify.txt / cache_position_ab.txt（v1失败留档）/ cache_position_ab2.txt
+  + 5 个可复现探针脚本
+
+教训（已进记忆）：
+- 测性能必须用产品真实输入（简化输入会给出反向结论）
+- /api/pull 探测提前 break → 日志报 context canceled，不是网络故障（我误判过）
+- Ollama 模型目录是 C:\Users\23002\.ollama\models（不是 %LOCALAPPDATA%）
