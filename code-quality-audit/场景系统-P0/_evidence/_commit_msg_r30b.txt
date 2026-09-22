@@ -1,0 +1,6 @@
+证据清理：移除一次性的推送脚本（已执行完毕，无复现价值）
+
+_push_r30.py 是仅用于本轮 add/commit/push/ls-remote 的一次性脚本，
+执行完即失效；保留它有误导性（下次会以为可复用）。
+测量类脚本（_measure7b.py / _cache_verify.py / _ttf_chain7b.py /
+_cache_position_ab*.py）与其产出证据全部保留。
