@@ -1,0 +1,41 @@
+第35轮 动画名比对 v2（精确口径：只取流入动画 API 的字符串）
+==================================================================
+资源侧可解析动画名: 127
+静态字面量调用: 79 处
+f-string 动态拼名: 11 处
+
+【静态字面量核验】
+  命中资源: 79
+  ★ 未命中资源: 0
+------------------------------------------------------------------
+
+【f-string 动态拼名】（静态不可判，列出形状供实测对照）
+------------------------------------------------------------------
+  idle                               <- change_animation  (modules\video_controller.py:368)
+  run_{?}                            <- change_animation  (modules\command_manager.py:178)
+  walk_{?}                           <- change_animation  (modules\hide_controller.py:262)
+  {?}_{?}                            <- change_animation  (src\main.py:2064)
+
+【动态拼名可达性抽检】
+------------------------------------------------------------------
+  run_{?}  (modules\command_manager.py:178)
+      可达 4 / 不可达 0
+  run_{?}  (src\main.py:1893)
+      可达 4 / 不可达 0
+  run_{?}  (src\main.py:2180)
+      可达 4 / 不可达 0
+  run_{?}  (src\main.py:5237)
+      可达 4 / 不可达 0
+  walk_{?}  (modules\hide_controller.py:262)
+      可达 4 / 不可达 0
+  walk_{?}  (modules\spell_controller.py:364)
+      可达 4 / 不可达 0
+  walk_{?}  (src\main.py:2178)
+      可达 4 / 不可达 0
+  walk_{?}  (src\main.py:3908)
+      可达 4 / 不可达 0
+  walk_{?}  (src\main.py:4114)
+      可达 4 / 不可达 0
+  {?}_{?}  (src\main.py:2064)
+      可达 0 / 不可达 28
+      不可达样例: down_, down__blush, down__unhappy, down__butler, down__butler_unhappy, down__sleep, down__tea, left_

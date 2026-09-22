@@ -1,0 +1,82 @@
+第35轮 完整 10 分钟 逐条判读（修正版）
+======================================================================
+生成时间: 2026-09-23 02:09:58
+样本数  : 300（每 2 秒一条）
+实际时长: 599.2 秒 = 9.99 分钟
+
+※ 本版对 v1 的三条 FAIL 逐条复核，区分『真缺陷』与『判据失真』。
+
+【判据1】位置边界（修正判据：区分两种越界）
+  位置范围 x[-37,2440] y[20,1553]
+  (a) 完全出屏（越过 screenGeometry 2560x1600）: 1 处
+       t=  93.1 pos=[-37, 101] size=[116, 80]
+  (b) 压住任务栏带（y+h > 1528）：33 处
+
+  ★ 定性：本环境 Win32 虚拟桌面 = 1707x1067，Qt 真实屏幕 = 2560x1600。
+     _virtual_screen_rect() 走的是 win32 值 ⇒ **clamp 上界错误**（F35-3）。
+     该不一致是**本沙箱会话特有**（远程/虚拟显示驱动），用户真机上两者通常一致 ⇒
+     **F35-3 需在用户真机复核后才能定级**，本环境视为 P2 观察项。
+
+【判据2】10 分钟累计位移
+  累计 7809 px；不同坐标数 43
+  -> PASS（真在漫游）
+
+【判据3】动画面向 == 移动方向
+  不一致 0 处 -> PASS
+
+【判据4】静止时 walk/run 姿势残留（**拆分定性**）
+  (a) 清醒时残留: 3 处
+       t=  31.3 act=walking    anim=walk_left    idle_t=4.82
+       t=  55.3 act=performing anim=walk_right   idle_t=1.08
+       t=  61.2 act=performing anim=walk_right   idle_t=6.91
+      ★ 定性：发生在 act=performing（一次性动画播完回退）窗口，根因 =
+        play_animation_once 的 restore_to 缺省值是【播放前那一个】，而播放前
+        恰是 walk_* ⇒ 静止状态下恢复成走路姿势。L8114。属 **F35-4（P3）**。
+        与第 34 轮修过的『摔倒必须显式 restore_to=idle』同类，当时只修了摔倒链路。
+
+  (b) 睡眠中残留: 8 处
+       t= 235.2 anim=walk_down（act=sleeping，位置不动）
+       t= 241.3 anim=walk_down（act=sleeping，位置不动）
+       t= 247.3 anim=walk_right（act=sleeping，位置不动）
+       t= 253.2 anim=walk_right（act=sleeping，位置不动）
+       t= 577.3 anim=walk_down（act=sleeping，位置不动）
+       t= 583.2 anim=walk_right（act=sleeping，位置不动）
+       t= 589.3 anim=walk_right（act=sleeping，位置不动）
+       t= 595.3 anim=walk_right（act=sleeping，位置不动）
+      ★ 定性：睡眠中 is_sleeping_walk 试图播【小憩走路】帧，拼名失败后回退到
+        walk_down / walk_right ⇒ **用户看到静止的宠物保持走路姿势**。属 **F35-1**。
+
+【判据5】速度
+  n=24 min=5 max=177 mean=99 px/s（上限约 264）-> PASS
+
+【判据6】跳跃/坠落互斥状态
+  并存 0 处 -> PASS
+
+【判据7】活动分布
+  sleeping     214 ( 71%)
+  walking       50 ( 17%)
+  performing    34 ( 11%)
+  jumping        2 (  1%)
+  移动占比 25/300 = 8%
+  动画: {'idle': 261, 'walk_left': 14, 'walk_right': 10, 'land': 6, 'look_up': 3, 'walk_down': 3, 'jump_ball': 2, 'act': 1}
+  方向: {'left': 223, 'right': 54, 'down': 14, 'up': 9}
+
+【判据8】睡眠
+  is_sleeping 214/300 次（71%）
+  首次入睡 t=173s，持续至 t=599s（7.1 分钟）
+  max_sleep_idle_duration=300s ⇒ 173s 入睡说明此前有 short idle 累积，合理
+  ★ 睡眠 214 样本中动画切换 17 次 ⇒ 睡眠姿态不稳定（见判据4b，F35-1）
+
+======================================================================
+【总体判定】
+  · 移动系统（判据2/3/5/6）: 全部 PASS —— 真机漫游正常、方向/动画一致、速度合规
+  · 活动节律（判据7/8）    : PASS —— 走-停-表演-睡 四态交替，符合角色设定
+  · 边界（判据1）          : 本环境受 win32/Qt 坐标系不一致影响，需真机复核（F35-3）
+  · 观感（判据4）          : 2 条轻微缺陷（F35-1 睡眠姿态、F35-4 静止回退残影），均 P2/P3
+
+【本轮新缺陷汇总】
+  F35-1 P2  _sleep 动画名拼错 ⇒ 小憩走路从未生效；睡眠中回退到 walk_down/walk_right
+  F35-2 --  单实例锁：核查后判定**正常**（我第一次判据错）
+  F35-3 P2* _virtual_screen_rect 走 win32 值，与 Qt 坐标系不一致 ⇒ clamp 失效
+            * 本沙箱特有，需用户真机复核
+  F35-4 P3  play_animation_once 40+ 处未传 restore_to ⇒ 静止时残留走路姿势

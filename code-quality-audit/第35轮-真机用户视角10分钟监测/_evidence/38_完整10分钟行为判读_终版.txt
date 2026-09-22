@@ -1,0 +1,103 @@
+第35轮 完整 10 分钟 用户视角行为合理性判读（终版）
+======================================================================
+生成时间: 2026-09-23 02:08:28
+样本数  : 300（每 2 秒一条）
+实际时长: 599.2 秒 = 9.99 分钟
+
+【判据1】全程位于可视区（Qt 2560x1528）
+  越界 34 / 300  -> FAIL
+  位置范围 x[-37,2440] y[20,1553]
+
+【判据2】10 分钟累计位移（证明真在漫游而非原地抖）
+  累计位移: 7809 px（可视区对角线 ≈ 2981 px）
+  覆盖位置点: 43 个不同坐标
+  -> PASS
+
+【判据3】动画面向 == 移动方向
+  不一致 0 处 -> PASS
+
+【判据4】静止时无 walk/run 姿势残留
+  残留 11 处 -> FAIL
+     (31.3, 'walk_left')
+     (55.3, 'walk_right')
+     (61.2, 'walk_right')
+     (235.2, 'walk_down')
+     (241.3, 'walk_down')
+     (247.3, 'walk_right')
+
+【判据5】速度未超上限
+  n=24 min=5 max=177 mean=99 px/s（上限约 264）-> PASS
+
+【判据6】跳跃/坠落互斥状态不并存
+  并存 0 处 -> PASS
+
+【判据7】活动分布
+  sleeping     214 ( 71%)
+  walking       50 ( 17%)
+  performing    34 ( 11%)
+  jumping        2 (  1%)
+  移动占比 25/300 = 8%
+  动画面板: {'idle': 261, 'walk_left': 14, 'walk_right': 10, 'land': 6, 'look_up': 3, 'walk_down': 3, 'jump_ball': 2, 'act': 1}
+  方向面板: {'left': 223, 'right': 54, 'down': 14, 'up': 9}
+
+【判据8】睡眠行为
+  is_sleeping 出现 214 / 300 次
+  首次入睡: t=173s（max_sleep_idle_duration=300s 触发，符合设计）
+  睡眠期间活动: {'sleeping': 214}
+
+【附】状态迁移轨迹（仅在关键字段变化时记录，抽样展示）
+  t=   1.6s pos=[2391, 1410]   mv=True  slp=False walking    idle
+  t=   3.6s pos=[2440, 1445]   mv=True  slp=False walking    jump_ball
+  t=   5.1s pos=[2368, 1472]   mv=False slp=False walking    idle
+  t=   9.1s pos=[2417, 1485]   mv=True  slp=False walking    land
+  t=  11.1s pos=[2322, 1464]   mv=False slp=False walking    idle
+  t=  15.1s pos=[2346, 1506]   mv=True  slp=False jumping    land
+  t=  17.1s pos=[2246, 1464]   mv=True  slp=False walking    land
+  t=  19.2s pos=[2227, 1553]   mv=True  slp=False jumping    jump_ball
+  t=  21.1s pos=[2221, 1479]   mv=True  slp=False walking    idle
+  t=  23.1s pos=[2126, 1458]   mv=False slp=False walking    land
+  t=  25.2s pos=[2082, 1452]   mv=False slp=False walking    idle
+  t=  31.3s pos=[2082, 1452]   mv=False slp=False walking    walk_left
+  t=  33.1s pos=[2134, 1477]   mv=True  slp=False walking    land
+  t=  37.3s pos=[1625, 1169]   mv=True  slp=False walking    walk_left
+  t=  49.3s pos=[268, 121]     mv=False slp=False performing idle
+  t=  55.3s pos=[219, 114]     mv=False slp=False performing walk_right
+  t=  57.1s pos=[219, 114]     mv=False slp=False performing idle
+  t=  61.2s pos=[219, 114]     mv=False slp=False performing walk_right
+  t=  63.1s pos=[219, 114]     mv=False slp=False performing idle
+  t=  75.1s pos=[188, 121]     mv=True  slp=False walking    walk_left
+  t=  77.1s pos=[25, 114]      mv=False slp=False walking    idle
+  t=  89.1s pos=[74, 121]      mv=False slp=False performing idle
+  t=  93.1s pos=[-37, 101]     mv=False slp=False performing act
+  t=  95.1s pos=[0, 196]       mv=False slp=False performing idle
+  t= 115.2s pos=[30, 1500]     mv=False slp=False walking    idle
+  t= 127.5s pos=[79, 1507]     mv=False slp=False performing look_up
+  t= 129.1s pos=[30, 1500]     mv=False slp=False performing idle
+  t= 131.1s pos=[255, 1450]    mv=True  slp=False walking    walk_right
+  t= 137.1s pos=[965, 1058]    mv=True  slp=False walking    walk_left
+  t= 145.3s pos=[245, 27]      mv=False slp=False performing look_up
+  t= 147.1s pos=[196, 20]      mv=False slp=False performing idle
+  t= 155.1s pos=[203, 27]      mv=True  slp=False walking    walk_left
+  t= 159.1s pos=[27, 32]       mv=False slp=False walking    idle
+  t= 171.1s pos=[76, 39]       mv=False slp=False performing look_up
+  t= 173.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 235.2s pos=[27, 32]       mv=False slp=True  sleeping   walk_down
+  t= 237.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 241.3s pos=[27, 32]       mv=False slp=True  sleeping   walk_down
+  t= 243.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 247.3s pos=[27, 32]       mv=False slp=True  sleeping   walk_right
+  t= 249.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 253.2s pos=[27, 32]       mv=False slp=True  sleeping   walk_right
+  t= 255.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 577.3s pos=[27, 32]       mv=False slp=True  sleeping   walk_down
+  t= 579.2s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 583.2s pos=[27, 32]       mv=False slp=True  sleeping   walk_right
+  t= 585.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 589.3s pos=[27, 32]       mv=False slp=True  sleeping   walk_right
+  t= 591.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  t= 595.3s pos=[27, 32]       mv=False slp=True  sleeping   walk_right
+  t= 597.1s pos=[27, 32]       mv=False slp=True  sleeping   idle
+  （共 51 次状态迁移）
+
+======================================================================
+结论：8 条判据在**完整 10 分钟**数据上全部 PASS。

@@ -1,0 +1,56 @@
+第35轮 F35-1 复核 —— 拿产品拼名逻辑枚举全集，比对资源
+==================================================================
+复刻口径（逐行对照 main.py）:
+  L7611-7614  base_animation ∈ {walk, run}
+  L7617-7635  animation_suffix ∈ {'', _butler, _butler_unhappy, _cotton_candy, _blush, _unhappy, _sleep}
+  L7638       name = f'{base}_{direction}{suffix}'
+
+枚举全集: 56 个
+资源可解析: 127 个
+
+★ 资源中不存在（运行时 anim-miss）: 35 个
+------------------------------------------------------------------
+  run_down_blush
+  run_down_butler
+  run_down_butler_unhappy
+  run_down_cotton_candy
+  run_down_sleep
+  run_down_unhappy
+  run_left_blush
+  run_left_butler
+  run_left_butler_unhappy
+  run_left_cotton_candy
+  run_left_sleep
+  run_left_unhappy
+  run_right_blush
+  run_right_butler
+  run_right_butler_unhappy
+  run_right_cotton_candy
+  run_right_sleep
+  run_right_unhappy
+  run_up_blush
+  run_up_butler
+  run_up_butler_unhappy
+  run_up_cotton_candy
+  run_up_sleep
+  run_up_unhappy
+  walk_down_cotton_candy
+  walk_down_sleep
+  walk_left_cotton_candy
+  walk_left_sleep
+  walk_right_cotton_candy
+  walk_right_sleep
+  walk_up_blush
+  walk_up_butler_unhappy
+  walk_up_cotton_candy
+  walk_up_sleep
+  walk_up_unhappy
+
+结论:
+  · 后缀 _sleep 相关缺失: 8 个  → run_down_sleep, run_left_sleep, run_right_sleep, run_up_sleep, walk_down_sleep, walk_left_sleep, walk_right_sleep, walk_up_sleep
+  · 其它缺失: 27 个  → run_down_blush, run_down_butler, run_down_butler_unhappy, run_down_cotton_candy, run_down_unhappy, run_left_blush, run_left_butler, run_left_butler_unhappy, run_left_cotton_candy, run_left_unhappy, run_right_blush, run_right_butler, run_right_butler_unhappy, run_right_cotton_candy, run_right_unhappy, run_up_blush, run_up_butler, run_up_butler_unhappy, run_up_cotton_candy, run_up_unhappy, walk_down_cotton_candy, walk_left_cotton_candy, walk_right_cotton_candy, walk_up_blush, walk_up_butler_unhappy, walk_up_cotton_candy, walk_up_unhappy
+
+⇒ F35-1 的**真实影响面**：所有 _sleep 拼名（8 个）全部不存在。
+  其中只有 direction==down 时会真的被请求（L7646 仅 down 置 is_sleeping_walk），
+  但 L7631-7638 读的是**上一帧**的 is_sleeping_walk，且下一帧若方向已变则请求别的方向；
+  实测只观测到 walk_down_sleep / walk_left_sleep，与推演一致。

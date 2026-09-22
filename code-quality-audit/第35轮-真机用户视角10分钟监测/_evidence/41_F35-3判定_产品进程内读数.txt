@@ -1,0 +1,27 @@
+F35-3 判定：产品进程（QApplication 已建）内的 GetSystemMetrics
+==================================================================
+python 版本: 3.11.0
+
+【DPI 感知状态】
+  IsProcessDPIAware() = True
+  GetDpiForSystem()   = 144
+
+【win32 读数（产品进程内）】
+  SM_CXSCREEN        = 2560
+  SM_CYSCREEN        = 1600
+  SM_CXVIRTUALSCREEN = 2560
+  SM_CYVIRTUALSCREEN = 1600
+
+【Qt 读数（产品进程内）】
+  geometry()          = PyQt5.QtCore.QRect(0, 0, 2560, 1600)
+  virtualGeometry()   = PyQt5.QtCore.QRect(0, 0, 2560, 1600)
+  availableGeometry() = PyQt5.QtCore.QRect(0, 0, 2560, 1528)
+  devicePixelRatio()  = 1.0
+
+【clamp 上界对比】
+  _virtual_screen_rect() 将返回 (0,0,2560,1600)
+  Qt screenGeometry()        = (0,0,2560,1600)
+  两者一致? True
+
+⇒ **F35-3 撤销**：产品进程内 win32 与 Qt 坐标系一致，clamp 上界正确。
+  之前观察到的 1707x1067 来自**非 DPI 感知的辅助进程**，不适用于产品。

@@ -1,0 +1,110 @@
+第35轮 动画名比对：代码引用 vs 资源存在（AST 口径）
+==================================================================
+资源侧真名(groups): 112 个
+sprite_loader 别名: 127 个
+代码侧疑似动画名字面量: 193 个
+
+★ 资源中不存在（= 运行时会 anim-miss 回退）: 96 个
+------------------------------------------------------------------
+  acting                       引用处: ralsei_pet\modules\autonomous_agent.py
+  action                       引用处: ralsei_pet\modules\ai_driver.py, ralsei_pet\modules\desktop_interaction.py, ralsei_pet\modules\pet_ai.py
+  active_dir                   引用处: ralsei_pet\modules\data_store.py, ralsei_pet\modules\memory_store.py
+  active_kind                  引用处: ralsei_pet\modules\data_store.py
+  active_level                 引用处: ralsei_pet\modules\customization_system.py
+  activity                     引用处: ralsei_pet\modules\command_manager.py
+  activity_id                  引用处: ralsei_pet\modules\entertainment_system.py
+  activity_name                引用处: ralsei_pet\modules\entertainment_system.py, ralsei_pet\modules\pet_ai.py
+  activity_stats               引用处: ralsei_pet\modules\entertainment_system.py
+  activity_tracking            引用处: ralsei_pet\modules\customization_system.py
+  blush                        引用处: ralsei_pet\modules\emotion_system.py
+  blushing                     引用处: ralsei_pet\modules\dialogue_ui.py
+  butler                       引用处: ralsei_pet\modules\customization_system.py
+  climb                        引用处: ralsei_pet\src\main.py
+  dance→play_animation_once    引用处: ralsei_pet\tests\test_ai_driver.py
+  dark                         引用处: ralsei_pet\modules\customization_system.py
+  fall_from_window             引用处: ralsei_pet\src\main.py
+  fall_off                     引用处: ralsei_pet\src\main.py
+  fall_slide_speed_x           引用处: ralsei_pet\src\main.py
+  fall_slide_speed_y           引用处: ralsei_pet\src\main.py
+  fall_speed                   引用处: ralsei_pet\src\main.py
+  fall_velocity_x              引用处: ralsei_pet\src\main.py
+  fallback                     引用处: ralsei_pet\modules\memory_store.py, ralsei_pet\modules\scene_routing.py
+  fallback_dir                 引用处: ralsei_pet\modules\memory_store.py
+  fallback_has_memory          引用处: ralsei_pet\modules\memory_store.py
+  fallbacks                    引用处: ralsei_pet\modules\text_segmenter.py
+  falling                      引用处: ralsei_pet\src\main.py
+  hug_knees                    引用处: ralsei_pet\modules\emotion_system.py
+  items                        引用处: ralsei_pet\modules\memory_system.py
+  jump.wav                     引用处: ralsei_pet\modules\sound_manager.py
+  jump_duration                引用处: ralsei_pet\src\main.py
+  jump_phase                   引用处: ralsei_pet\src\main.py
+  jump_target_floor            引用处: ralsei_pet\src\main.py
+  jump_target_pos              引用处: ralsei_pet\src\main.py
+  jump_trajectory              引用处: ralsei_pet\test_ralsei_features.py
+  jumping                      引用处: ralsei_pet\src\main.py
+  laughing                     引用处: ralsei_pet\modules\dialogue_ui.py, ralsei_pet\src\main.py
+  look_around                  引用处: ralsei_pet\modules\emotion_system.py
+  looking_around               引用处: ralsei_pet\src\main.py
+  pat                          引用处: ralsei_pet\modules\pet_interaction.py
+  pat_back                     引用处: ralsei_pet\modules\emotion_system.py
+  pat_belly                    引用处: ralsei_pet\modules\event_speech.py, ralsei_pet\src\main.py
+  paths                        引用处: ralsei_pet\modules\memory_system.py
+  patience                     引用处: ralsei_pet\modules\customization_system.py, ralsei_pet\modules\emotion_system.py
+  pet_%s                       引用处: ralsei_pet\modules\event_speech.py
+  pet_ai                       引用处: ralsei_pet\src\main.py
+  pet_ai_user                  引用处: ralsei_pet\modules\pet_ai.py
+  pet_arm                      引用处: ralsei_pet\modules\event_speech.py
+  pet_attempts                 引用处: ralsei_pet\src\main.py
+  pet_body                     引用处: ralsei_pet\modules\event_speech.py
+  pet_count                    引用处: ralsei_pet\src\main.py
+  pet_ear                      引用处: ralsei_pet\modules\event_speech.py
+  pet_face                     引用处: ralsei_pet\modules\event_speech.py
+  pet_hair                     引用处: ralsei_pet\modules\event_speech.py
+  pet_interaction              引用处: ralsei_pet\modules\emotion_system.py, ralsei_pet\modules\pet_ai.py, ralsei_pet\modules\social_growth_system.py
+  pet_menu                     引用处: ralsei_pet\modules\event_speech.py, ralsei_pet\src\main.py
+  pet_other                    引用处: ralsei_pet\modules\event_speech.py
+  pet_shoulder                 引用处: ralsei_pet\modules\event_speech.py
+  pet_state                    引用处: ralsei_pet\src\main.py
+  pet_success                  引用处: ralsei_pet\src\main.py
+  run                          引用处: ralsei_pet\diag_logic.py, ralsei_pet\modules\command_manager.py, ralsei_pet\modules\emotion_system.py
+  run_                         引用处: ralsei_pet\modules\command_manager.py, ralsei_pet\src\main.py
+  running                      引用处: ralsei_pet\src\main.py
+  shocked                      引用处: ralsei_pet\modules\ai_driver.py, ralsei_pet\modules\emotion_system.py
+  shocked_start_time           引用处: ralsei_pet\src\main.py
+  sing+say                     引用处: ralsei_pet\tests\test_ai_driver.py
+  sit_alone                    引用处: ralsei_pet\modules\emotion_system.py
+  sleeping                     引用处: ralsei_pet\src\main.py
+  sleepy                       引用处: ralsei_pet\modules\ai_driver.py, ralsei_pet\modules\customization_system.py, ralsei_pet\modules\dialogue_ui.py
+  smile                        引用处: ralsei_pet\modules\emotion_system.py, ralsei_pet\modules\video_controller.py, ralsei_pet\src\main.py
+  spell_auto_sus               引用处: ralsei_pet\diag_spell.py
+  spell_frames_seen            引用处: ralsei_pet\diag_spell.py
+  spell_interrupt_reason       引用处: ralsei_pet\diag_spell.py
+  spell_interrupted            引用处: ralsei_pet\modules\spell_controller.py
+  spell_stage                  引用处: ralsei_pet\diag_spell.py
+  spell_tgt_dir                引用处: ralsei_pet\diag_spell.py
+  spell_touched                引用处: ralsei_pet\diag_spell.py
+  splat_poked                  引用处: ralsei_pet\modules\event_speech.py, ralsei_pet\src\main.py
+  splat_start_time             引用处: ralsei_pet\src\main.py
+  stand_tall                   引用处: ralsei_pet\modules\emotion_system.py
+  surprised_jump               引用处: ralsei_pet\src\main.py
+  surprised_strong             引用处: ralsei_pet\modules\dialogue_ui.py
+  susie                        引用处: ralsei_pet\modules\desktop_interaction.py
+  susie_pet                    引用处: ralsei_pet\modules\social_growth_system.py
+  teach                        引用处: ralsei_pet\modules\social_growth_system.py
+  teacher                      引用处: ralsei_pet\modules\customization_system.py, ralsei_pet\modules\social_growth_system.py
+  teamwork                     引用处: ralsei_pet\modules\memory_system.py
+  teary                        引用处: ralsei_pet\modules\emotion_system.py
+  unhappy                      引用处: ralsei_pet\modules\dialogue_ui.py
+  wake                         引用处: ralsei_pet\modules\ai_driver.py, ralsei_pet\tests\test_ai_driver.py
+  wake_up                      引用处: ralsei_pet\modules\ai_driver.py, ralsei_pet\modules\command_manager.py, ralsei_pet\modules\dialogue_ui.py
+  walk                         引用处: ralsei_pet\diag_logic.py, ralsei_pet\modules\ai_driver.py, ralsei_pet\modules\sprite_loader.py
+  walk_                        引用处: ralsei_pet\modules\autonomous_agent.py, ralsei_pet\modules\hide_controller.py, ralsei_pet\modules\spell_controller.py
+  walk_tea                     引用处: ralsei_pet\modules\sprite_loader.py
+  walking                      引用处: ralsei_pet\diag_logic.py, ralsei_pet\modules\autonomous_agent.py, ralsei_pet\modules\spell_controller.py
+  wave_hand                    引用处: ralsei_pet\modules\emotion_system.py
+
+（注：部分字面量可能是动画**前缀**片段而非完整名，需人工复核；
+  下方列出资源侧全部真名，供比对。）
+------------------------------------------------------------------
+资源侧 groups 全量：
+  act, attack, battleintro, book_look, bow, button_press, cake_eat, climb_front, climb_left, climb_right, cotton_candy_left, cotton_candy_right, cotton_surprise, cotton_talk, cower, cry, cry_reverse, cry_start, curtsy, dance, darkchurch_sit_happy, darkchurch_sit_sad, defeat, defend, fall, fall_back, fall_back_cry, fall_back_expressions, fall_back_rub, fall_back_wince, fall_mad, glasses_1, glasses_2, happy, hatless_throw, hug, hug_stop, idle, item, jump, jump_ball, jump_ready, kneel_cry, kneel_serious, land, laugh, look_up, neutral, nuzzle, nuzzle1, pose, roll, run_down, run_left, run_right, run_up, sad, shocked_left, shocked_right, shocked_subtle_left, shocked_subtle_right, sing, sleep, slide, smile_left, smile_right, spell, spell_left, spin, splat, splat_mad, stool, surprised, surprised_behind, surprised_down, susie_throw_ready, tea, tea_pour, tea_put_down, tea_reach, tea_sip, tea_smile, tea_surprised, teacup_land, throw_ball, victory, walk_down, walk_down_blush, walk_down_butler, walk_down_butler_unhappy, walk_down_unhappy, walk_left, walk_left_blush, walk_left_butler, walk_left_butler_unhappy, walk_left_unhappy, walk_right, walk_right_blush, walk_right_butler, walk_right_butler_unhappy, walk_right_unhappy, walk_tea_down, walk_tea_left, walk_tea_right, walk_tea_up, walk_up, walk_up_butler, wave, wave_down, wave_start, yarn_1, yarn_2
