@@ -1,0 +1,90 @@
+=== AST hits (排除定义文件自身) ===
+mark_app_as_opened               0
+mark_app_as_closed               0
+is_privacy_app                   0
+get_privacy_apps                 0
+get_user_opened_privacy_apps     0
+copy_file                        0
+cut_file                         0
+create_folder                    0
+double_click_file                0
+right_click_file                 0
+drag_file                        0
+drag_file_background             1
+      modules\autonomous_agent.py:624  [attr] d
+organize_desktop                 1
+      modules\autonomous_agent.py:346  [attr] self._desktop
+get_desktop_file_count           1
+      modules\autonomous_agent.py:343  [attr] self._desktop
+get_window_rect                  0
+get_browser_url                  0
+get_interestning_files           0
+get_interesting_files            0
+get_file_content_preview         1
+      modules\autonomous_agent.py:644  [attr] d
+is_mouse_over_desktop_element    0
+restore_data                     0
+create_new_excel                 1
+      test_excel_creation.py:27  [attr] desktop
+close_window_by_hwnd             2
+      modules\autonomous_agent.py:632  [attr] d
+      src\main.py:8456  [attr] d
+minimize_window_by_hwnd          2
+      modules\autonomous_agent.py:636  [attr] d
+      src\main.py:8459  [attr] d
+maximize_window_by_hwnd          1
+      src\main.py:8462  [attr] d
+resize_window_by_hwnd            1
+      modules\autonomous_agent.py:640  [attr] d
+
+=== RAW TEXT hits (含注释/字符串) ===
+mark_app_as_opened               total=1   external=0
+mark_app_as_closed               total=1   external=0
+is_privacy_app                   total=5   external=0
+get_privacy_apps                 total=1   external=0
+get_user_opened_privacy_apps     total=1   external=0
+copy_file                        total=3   external=2
+      test_office_functions.py:28  'copy_file',
+      test_office_functions.py:128  if hasattr(self.desktop_interaction, 'copy_file'):
+cut_file                         total=3   external=2
+      test_office_functions.py:29  'cut_file',
+      test_office_functions.py:135  if hasattr(self.desktop_interaction, 'cut_file'):
+create_folder                    total=2   external=1
+      test_office_functions.py:27  'create_folder',
+double_click_file                total=3   external=2
+      test_office_functions.py:30  'double_click_file',
+      test_office_functions.py:142  if hasattr(self.desktop_interaction, 'double_click_file'):
+right_click_file                 total=3   external=2
+      test_office_functions.py:31  'right_click_file'
+      test_office_functions.py:149  if hasattr(self.desktop_interaction, 'right_click_file'):
+drag_file                        total=5   external=3
+      test_office_functions.py:24  'drag_file',
+      test_office_functions.py:114  if hasattr(self.desktop_interaction, 'drag_file'):
+      modules\autonomous_agent.py:624  d.drag_file_background(t.target.path, t.drag_to)
+drag_file_background             total=2   external=1
+      modules\autonomous_agent.py:624  d.drag_file_background(t.target.path, t.drag_to)
+organize_desktop                 total=3   external=2
+      modules\autonomous_agent.py:339  # 注意：organize_desktop 现为安全实现（不自动移动用户文件，返回 (0,0)），
+      modules\autonomous_agent.py:346  moved, skipped = self._desktop.organize_desktop()
+get_desktop_file_count           total=2   external=1
+      modules\autonomous_agent.py:343  file_count = self._desktop.get_desktop_file_count()
+get_window_rect                  total=1   external=0
+get_browser_url                  total=1   external=0
+get_interestning_files           total=0   external=0
+get_interesting_files            total=1   external=0
+get_file_content_preview         total=3   external=1
+      modules\autonomous_agent.py:644  preview = d.get_file_content_preview(t.target.path, max_lines=3)
+is_mouse_over_desktop_element    total=1   external=0
+restore_data                     total=1   external=0
+create_new_excel                 total=3   external=1
+      test_excel_creation.py:27  excel_path = desktop.create_new_excel(file_name)
+close_window_by_hwnd             total=3   external=2
+      modules\autonomous_agent.py:632  d.close_window_by_hwnd(t.target.hwnd)
+      src\main.py:8456  d.close_window_by_hwnd(hwnd)
+minimize_window_by_hwnd          total=3   external=2
+      modules\autonomous_agent.py:636  d.minimize_window_by_hwnd(t.target.hwnd)
+      src\main.py:8459  d.minimize_window_by_hwnd(hwnd)
+maximize_window_by_hwnd          total=2   external=1
+      src\main.py:8462  d.maximize_window_by_hwnd(hwnd)
+resize_window_by_hwnd            total=2   external=1
+      modules\autonomous_agent.py:640  d.resize_window_by_hwnd(t.target.hwnd, t.new_width, t.new_height)

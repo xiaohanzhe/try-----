@@ -1,0 +1,34 @@
+[SOURCE] 95: if is_privacy_app and hwnd not in self.user_opened_privacy_apps:
+
+=== 纯逻辑核验：判据在空列表下的行为 ===
+privacy_apps = ['微信', 'WeChat', 'QQ', '钉钉', 'DingTalk', '企业微信', 'WXWork', 'Outlook', '邮件']
+user_opened_privacy_apps = []  (产品实际值)
+
+窗口标题/类名        -> 命中隐私?  L1192 判定(跳过?)
+  微信        /WeChatMainWndForPC        YES     ★跳过（不建楼）
+  QQ        /TXGuiFoundation           YES     ★跳过（不建楼）
+  钉钉        /StandardFrame_DingTalk    YES     ★跳过（不建楼）
+  企业微信      /WeWorkWindow              YES     ★跳过（不建楼）
+  Outlook   /rctrl_renwnd32            YES     ★跳过（不建楼）
+  Chrome    /Chrome_WidgetWin_1        no      正常建楼
+  记事本       /Notepad                   no      正常建楼
+
+=== 反证：若 mark_app_as_opened 被调用（hwnd=0 加入列表）===
+  微信        /WeChatMainWndForPC        命中=True ★正常建楼
+  QQ        /TXGuiFoundation           命中=True ★正常建楼
+  钉钉        /StandardFrame_DingTalk    命中=True ★正常建楼
+  企业微信      /WeWorkWindow              命中=True ★正常建楼
+  Outlook   /rctrl_renwnd32            命中=True ★正常建楼
+  Chrome    /Chrome_WidgetWin_1        命中=False ★正常建楼
+  记事本       /Notepad                   命中=False ★正常建楼
+
+=== 真机取证：实际可见窗口里有多少被这条判据吞掉 ===
+DesktopInteraction 实例化成功
+user_opened_privacy_apps 实测 = []
+get_all_visible_windows() 返回 1 个窗口
+
+--- 实际枚举到的窗口（前 25） ---
+  hwnd=459898     z=57   [Chrome_WidgetWin_1] WorkBuddy
+
+--- 系统中实际存在的「隐私应用窗口」（被 L1192 全部跳过）---
+共 0 个:

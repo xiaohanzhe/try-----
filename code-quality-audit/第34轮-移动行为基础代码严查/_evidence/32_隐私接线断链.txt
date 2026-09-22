@@ -1,0 +1,106 @@
+method                                   plumb  int    callers
+__init__                                 0      .      ★ORPHAN  
+_assign_real_positions                   0      Y      internal (internal only)
+_execute_excel_action                    0      Y      internal (internal only)
+_execute_ppt_action                      0      Y      internal (internal only)
+_get_cached_icon_rects                   0      Y      internal (internal only)
+_get_folder_at_pos                       0      Y      internal (internal only)
+_get_real_desktop_path                   0      Y      internal (internal only)
+_get_screen_geometry                     0      Y      internal (internal only)
+_is_valid_filename                       0      Y      internal (internal only)
+_probe_desktop_icon_positions            0      Y      internal (internal only)
+_safe_release_com                        0      Y      internal (internal only)
+add_scheduled_task                       0      .      ★ORPHAN  
+backup_data                              1      .      REAL     modules/dialogue_system.py:998(self.desktop_interaction)
+check_battery_status                     0      Y      internal (internal only)
+check_network_status                     0      Y      internal (internal only)
+check_ppt_files                          2      .      REAL     src/main.py:6452(self.desktop_interaction), src/main.py:6473(self.desktop_interaction)
+check_scheduled_tasks                    0      Y      internal (internal only)
+check_system_resources                   0      Y      internal (internal only)
+clean_temp_files                         1      .      REAL     modules/dialogue_system.py:991(self.desktop_interaction)
+close_window                             1      .      REAL     src/main.py:4301(self.desktop_interaction)
+close_window_by_hwnd                     2      .      REAL     modules/autonomous_agent.py:632(d), src/main.py:8456(d)
+copy_file                                0      .      ★ORPHAN  
+create_folder                            0      .      ★ORPHAN  
+create_new_excel                         1      .      TEST-ONLY test_excel_creation.py:27
+cut_file                                 0      .      ★ORPHAN  
+delete_file                              2      .      REAL     modules/autonomous_agent.py:628(d), src/main.py:8564(self.desktop_interaction)
+double_click_file                        0      .      ★ORPHAN  
+drag_file                                0      .      ★ORPHAN  
+drag_file_background                     1      .      REAL     modules/autonomous_agent.py:624(d)
+enable_scheduled_task                    0      .      ★ORPHAN  
+excel_control                            4      .      TEST-ONLY test_excel_creation.py:34, test_excel_creation.py:66, test_excel_creation.py:77
+execute_scheduled_task                   0      Y      internal (internal only)
+find_window_by_keyword                   0      Y      internal (internal only)
+get_all_visible_windows                  11     Y      REAL     modules/autonomous_agent.py:412(self._desktop), modules/hide_controller.py:377(self.desktop_interaction), modules/video_controller.py:243(self.desktop_interaction)
+get_battery_status                       2      .      REAL     modules/dialogue_system.py:1137(self.desktop_interaction), modules/dialogue_system.py:1149(self.desktop_interaction)
+get_browser_url                          0      .      ★ORPHAN  
+get_desktop_file_count                   1      .      REAL     modules/autonomous_agent.py:343(self._desktop)
+get_desktop_files                        2      Y      internal (internal only)
+get_desktop_folders                      1      Y      internal (internal only)
+get_file_content_preview                 1      .      REAL     modules/autonomous_agent.py:644(d)
+get_interesting_files                    0      .      ★ORPHAN  
+get_nearby_elements                      4      .      REAL     src/main.py:2189(self.desktop_interaction), src/main.py:2199(self.desktop_interaction)
+get_network_status                       2      .      REAL     modules/dialogue_system.py:1144(self.desktop_interaction), modules/dialogue_system.py:1150(self.desktop_interaction)
+get_privacy_apps                         0      .      ★ORPHAN  
+get_scheduled_tasks                      0      .      ★ORPHAN  
+get_special_file_reaction                2      .      REAL     src/main.py:4071(self.desktop_interaction)
+get_storage_info                         0      Y      internal (internal only)
+get_storage_usage                        0      .      ★ORPHAN  
+get_system_info                          0      Y      internal (internal only)
+get_system_resources                     2      .      REAL     modules/dialogue_system.py:1133(self.desktop_interaction), modules/dialogue_system.py:1148(self.desktop_interaction)
+get_user_opened_privacy_apps             0      .      ★ORPHAN  
+get_window_rect                          0      .      ★ORPHAN  
+identify_browser_windows                 3      .      REAL     src/main.py:6497(self.desktop_interaction)
+identify_excel_windows                   1      .      TEST-ONLY src\test_interaction_detailed.py:92
+identify_file_type                       2      Y      internal (internal only)
+identify_ppt_windows                     2      .      TEST-ONLY src\test_interaction.py:69, src\test_interaction_detailed.py:91
+identify_word_windows                    1      .      TEST-ONLY src\test_interaction_detailed.py:93
+init_scheduled_tasks                     0      Y      internal (internal only)
+is_deltarune_related                     1      Y      REAL     src/main.py:8196(self.desktop_interaction)
+is_element_nearby                        2      .      TEST-ONLY src\test_interaction.py:142, src\test_interaction_detailed.py:163
+is_mouse_over_desktop_element            0      .      ★ORPHAN  
+is_privacy_app                           0      .      ★ORPHAN  
+mark_app_as_closed                       0      .      ★ORPHAN  
+mark_app_as_opened                       0      .      ★ORPHAN  
+maximize_window_by_hwnd                  1      .      REAL     src/main.py:8462(d)
+minimize_window_by_hwnd                  2      .      REAL     modules/autonomous_agent.py:636(d), src/main.py:8459(d)
+move_and_resize_bilibili_window          2      .      REAL     modules/video_controller.py:372(self.desktop_interaction), modules/video_controller.py:503(self.desktop_interaction)
+move_window_smoothly                     0      Y      internal (internal only)
+open_browser                             2      .      REAL     modules/video_controller.py:501(self.desktop_interaction), src/main.py:4293(self.desktop_interaction)
+open_file                                2      .      REAL     modules/autonomous_agent.py:620(d), src/main.py:8384(self.desktop_interaction)
+open_folder                              5      .      REAL     modules/autonomous_agent.py:618(d), modules/hide_controller.py:481(self.desktop_interaction), modules/hide_controller.py:505(self.desktop_interaction)
+optimize_system                          1      .      REAL     modules/dialogue_system.py:984(self.desktop_interaction)
+organize_desktop                         1      .      REAL     modules/autonomous_agent.py:346(self._desktop)
+ppt_control                              4      .      REAL     src/main.py:6454(self.desktop_interaction), src/main.py:6460(self.desktop_interaction), src/main.py:6463(self.desktop_interaction)
+remove_scheduled_task                    0      .      ★ORPHAN  
+rename_file                              1      .      REAL     src/main.py:8571(self.desktop_interaction)
+resize_window_by_hwnd                    1      .      REAL     modules/autonomous_agent.py:640(d)
+resize_window_smoothly                   0      Y      internal (internal only)
+restore_data                             0      .      ★ORPHAN  
+right_click_file                         0      .      ★ORPHAN  
+search_in_browser                        1      .      REAL     src/main.py:6434(self.desktop_interaction)
+update_desktop_elements                  5      Y      REAL     modules/file_sheet_controller.py:319(self.desktop_interaction), src/main.py:1040(self.desktop_interaction)
+
+=== ORPHAN (21, 不含 __init__) ===
+  add_scheduled_task                         L572       4 lines
+  copy_file                                  L1686     79 lines
+  create_folder                              L1628     57 lines
+  cut_file                                   L1766    103 lines
+  double_click_file                          L1870     20 lines
+  drag_file                                  L1399     40 lines
+  enable_scheduled_task                      L582       7 lines
+  get_browser_url                            L2971      4 lines
+  get_interesting_files                      L1957     13 lines
+  get_privacy_apps                           L1391      3 lines
+  get_scheduled_tasks                        L590       3 lines
+  get_storage_usage                          L606       3 lines
+  get_user_opened_privacy_apps               L1395      3 lines
+  get_window_rect                            L1082     15 lines
+  is_mouse_over_desktop_element              L1310      7 lines
+  is_privacy_app                             L1380     10 lines
+  mark_app_as_closed                         L1355     24 lines
+  mark_app_as_opened                         L1318     36 lines
+  remove_scheduled_task                      L577       4 lines
+  restore_data                               L652      18 lines
+  right_click_file                           L1891     22 lines
