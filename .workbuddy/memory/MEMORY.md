@@ -13,7 +13,7 @@
 - 远端 `https://github.com/xiaohanzhe/try-----.git`（私有）；main→origin/main。真机起：
   `Set-Location ralsei_pet; & C:\Python311\python.exe src\main.py` + `run_in_background`。单实例锁
   `Global\RalseiPetMutex`。窗口透明非置顶 FramelessWindow → **甩飞、抛物线只能离屏断言**。
-- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **29 套件 / 1427 PASS / 全 IDENTICAL**）。
+- 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **31 套件 / 1450 PASS / 全 IDENTICAL**）。
   G2 跑 `compileall` → 可能改写被跟踪的 `src/__pycache__/*.pyc` → 收工前 `git checkout --`。
   ★ **改了套件断言/文案 → 用 `--only <suite> --update`（合并模式）重建基线**，别全量 update。
 - ★ **只读优先、改动最小化**：审查阶段不改被审文件；修复阶段一次只动必要处，每处配独立验证断言。
@@ -25,6 +25,15 @@
   ❗❗**别内联 `python -c` 写含反引号/长中文的文本**（Bash 会吞）。
 - **起进程**只能 `&` + `run_in_background:true`；**杀进程** Python+psutil；**删文件** `[System.IO.File]::Delete()`；
   **`wmic` 已移除** → `Get-CimInstance`。
+- ❗❗**体检/临时备份绝不放工作区**（第 34 轮续三事故）：`.discrim_bak` 落在 `ralsei_pet/modules/` 被
+  `git add -A` 收走；随后 `git add -A` 又在目录读取异常时把**整个 `ralsei_pet/modules/`（41 文件/28046 行）
+  记为删除并提交** ⇒ 磁盘文件真被删。**恢复**：`git checkout <父提交> -- ralsei_pet/modules` ⇒ 41/41
+  逐字节一致。**教训**：① 备份一律放仓库外 `E:\Download\_tmp\`；② 提交前必看
+  `git diff --cached --numstat`，**出现 >1000 行的 deletions 立刻停手**；③ `.gitignore` 已补
+  `*.bak/*.discrim_bak/*.orig/*.rej`。
+- ❗**清理守卫按路径累计删除计数**（阈值 50）：症状 = **进程在 import 期就被杀**（`SAFE_DELETE_BULK_CONFIRM_REQUIRED`）；
+  **绕法**：需要"从版本控制移除但保留磁盘文件"时用 **`git rm --cached`**（只改索引、不触发删除）。
+  **见"计数恒定"先干掉触发源。**
 - Python 一律 **`C:\Python311\python.exe`**（PyQt5/pywin32/bs4/psutil/jieba）—— G2 与所有套件必须用它。
 - ⭐⭐ **代理端口必须"逐端口实测 CONNECT"再选**：第 34 轮续二实测 **`7897` 通**（CONNECT→200→TLS 0.04s）、
   **`7375` 是死代理**（CONNECT 全 timeout）。**按端口升序盲试 = 每端口 25s×5 轮 ⇒ 单次 push 卡 19 分钟**，
@@ -41,6 +50,9 @@
   **别怀疑凭据或改 git 配置**。
 - ⭐ **仓库两套换行口径**（`autocrlf=true` + 无 `.gitattributes`）⇒ **编辑必须保持原 EOL**；
   **逐字节参照系只能用 `git cat-file blob`**。
+- ❗⭐**用 `git checkout` 还原被破坏的文件后，必须复查 EOL**：`autocrlf=true` 会把
+  工作区文件从 LF 转成 CRLF（第 34 轮续三踩过：blob 是 LF 2973 行，checkout 后变 CRLF 2986 行），
+  不修就会产生**整文件 EOL 变更的巨型 diff**。修法：Python 读 bytes → `replace(b'\r\n', b'\n')` → 写回。
 - ⭐ **git 对中文路径加引号转义** ⇒ 核验存在性**必须** `git ls-files -z` + `surrogateescape`。
 - ⭐ **Ollama 日志 = 性能金矿**：`%LOCALAPPDATA%\Ollama\server.log` 的 `slot print_timing` 行。
 - ❗**二进制解析必须做上界校验**（第 33 轮：曾产出 4.29 GB 的 `ROOM.json`，内容是噪声）。
@@ -181,6 +193,7 @@
 | 34 | 移动/行为严查 + 跳跃统一 jump_ball + 楼层 F7 + **存储/配置 4 缺陷** | **§23** | ✅ G2 **1427/29**，commits `20faad0`/`d3a4735`/`21697eb`/`55c53fe`/`2e49fd8` |
 | 34续 | 交互接线 / 动画播放 / 移动核心 | **§23.12/§23.13** | ✅ `8f95f5e`；一条确定结论 + 一次自我推翻（待裁定 #9） |
 | 34续二 | **移动核心节拍 F34-1**（真缺陷，已修+锁）+ 三次自我推翻 | **§23.14** | ✅ `438aa87`；G2 **1440/30**；`round34b_move_beat` 13 项 |
+| 34续三 | **desktop_interaction 接线核查 / F34-4 隐私过滤断链**（已注释+锁）+ **modules 误删事故（已恢复）** | **§23.15** | ✅ `3c7ba60`→`cda5a50`(事故)→`fe14b59`(恢复)；G2 **1450/31** |
 
 ## 11. 🔴 待用户裁定（**全文详版 §23.13.3 镜像；开工前必看**）
 1. **场景美术素材来源**（**P1 开工前唯一阻塞项**）：`<仓根>/deltarune_ralsei/` 1111 张 PNG **全是角色精灵**；
