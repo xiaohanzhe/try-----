@@ -1,0 +1,229 @@
+==============================================================================
+A. ch1 门表（来自 room_goto 配对）
+==============================================================================
+
+  ## gml_GlobalScript_scr_gameover   1 条
+      room_forest_fightsusie       -> room_forest_savepoint3       (97 -> 96)
+
+  ## gml_Object_obj_doorW_Alarm_2   6 条
+      room_town_north              -> room_beach                   (9 -> 10)
+      room_beach                   -> room_town_north              (10 -> 9)
+      room_town_mid                -> room_alphysalley             (11 -> 27)
+      room_town_south              -> room_hospital_lobby          (13 -> 18)
+      room_hospital_lobby          -> room_town_south              (18 -> 13)
+      room_alphysalley             -> room_town_mid                (27 -> 11)
+
+  ## gml_Object_obj_doorX_Alarm_2   19 条
+      room_town_north              -> room_flowershop_1f           (9 -> 24)
+      room_town_mid                -> room_diner                   (11 -> 22)
+      room_town_south              -> room_library                 (13 -> 26)
+      room_town_school             -> room_schoollobby             (14 -> 29)
+      room_town_church             -> room_townhall                (15 -> 23)
+      room_diner                   -> room_town_mid                (22 -> 11)
+      room_townhall                -> room_town_church             (23 -> 15)
+      room_flowershop_1f           -> room_town_north              (24 -> 9)
+      room_library                 -> room_town_south              (26 -> 13)
+      room_schoollobby             -> room_town_school             (29 -> 14)
+      room_castle_town             -> room_castle_tutorial         (45 -> 47)
+      room_castle_tutorial         -> room_castle_town             (47 -> 45)
+      room_forest_dancers1         -> room_forest_secret1          (85 -> 86)
+      room_forest_secret1          -> room_forest_dancers1         (86 -> 85)
+      room_forest_maze1            -> room_forest_savepoint_relax  (91 -> 90)
+      room_forest_maze2            -> room_forest_maze_susie       (94 -> 93)
+      room_forest_savepoint3       -> room_forest_savepoint_relax  (96 -> 90)
+      room_cc_prison_cells         -> room_cc_prisonlancer         (105 -> 106)
+      room_cc_prisonlancer         -> room_cc_prison_cells         (106 -> 105)
+
+  ## gml_Object_obj_doorX_musfade_Alarm_2   13 条
+      room_torhouse                -> room_town_krisyard           (5 -> 7)
+      room_town_krisyard           -> room_torhouse                (7 -> 5)
+      room_town_school             -> room_schoollobby             (14 -> 29)
+      room_schoollobby             -> room_town_school             (29 -> 14)
+      room_castle_town             -> room_castle_tutorial         (45 -> 47)
+      room_castle_tutorial         -> room_castle_town             (47 -> 45)
+      room_field_shop1             -> room_shop1                   (59 -> 133)
+      room_cc_prison_to_elevator   -> room_cc_prisonelevator       (107 -> 109)
+      room_cc_prison_prejoker      -> room_cc_prisonelevator       (111 -> 109)
+      room_cc_entrance             -> room_forest_castlefront      (113 -> 104)
+      room_cc_1f                   -> room_cc_prisonelevator       (114 -> 109)
+      room_cc_5f                   -> room_shop2                   (123 -> 134)
+      room_man                     -> room_forest_savepoint2       (142 -> 82)
+
+  ## gml_Object_obj_doorw_musfade_Alarm_2   4 条
+      room_forest_castlefront      -> room_cc_entrance             (104 -> 113)
+      room_cc_entrance             -> room_forest_castlefront      (113 -> 104)
+      room_cc_1f                   -> room_cc_elevator             (114 -> 110)
+      room_cc_5f                   -> room_cc_elevator             (123 -> 110)
+
+==============================================================================
+B. next / previous 门对象
+==============================================================================
+   gml_Object_obj_checker_animtest_Step_0         ['room_goto_next']
+   gml_Object_obj_doorA_Alarm_2                   ['room_goto_next']
+   gml_Object_obj_doorA_musfade_Alarm_2           ['room_goto_next']
+   gml_Object_obj_doorB_Alarm_2                   ['room_goto_previous']
+   gml_Object_obj_doorB_musfade_Alarm_2           ['room_goto_previous']
+   gml_Object_obj_doorX_Alarm_2                   ['room_goto_next', 'room_goto_previous']
+   gml_Object_obj_kingcutscene_Step_0             ['room_goto_next']
+   gml_Object_obj_lancerslideevent_Step_0         ['room_goto_next']
+
+==============================================================================
+C. 32 个现实世界房间：门实例 -> 推导目标
+==============================================================================
+
+  [ 2] room_krisroom           
+      obj_doorA              x=155     y=230     -> room_krishallway           
+
+  [ 3] room_krishallway        
+      obj_doorB              x=289     y=104     -> room_krisroom              
+      obj_doorC              x=425     y=100     -> room_torhouse              
+
+  [ 4] room_torroom              (无门)
+
+  [ 5] room_torhouse           
+      obj_doorA              x=84      y=168     -> room_torbathroom           
+      obj_doorD              x=144     y=68      -> room_krishallway           
+      obj_doorX_musfade      x=594     y=149     -> room_town_krisyard         (表)
+
+  [ 6] room_torbathroom        
+      obj_doorB              x=236     y=134     -> room_torhouse              
+
+  [ 7] room_town_krisyard      
+      obj_doorC              x=120     y=410     -> room_town_north            
+      obj_doorX_musfade      x=158     y=168     -> room_torhouse              (表)
+
+  [ 8] room_town_northwest       (无门)
+
+  [ 9] room_town_north         
+      obj_doorA              x=1790    y=100     -> room_beach                 
+      obj_doorC              x=625     y=230     -> room_town_mid              
+      obj_doorD              x=378     y=-12     -> room_town_krisyard         
+      obj_doorX              x=1258    y=98      -> room_flowershop_1f         (表)
+
+  [10] room_beach              
+      obj_doorB              x=-15     y=60      -> room_town_north            
+
+  [11] room_town_mid           
+      obj_doorC              x=772     y=232     -> room_town_south            
+      obj_doorD              x=780     y=0       -> room_town_north            
+      obj_doorW              x=1740    y=-10     -> room_alphysalley           (表)
+      obj_doorX              x=600     y=90      -> room_diner                 (表)
+
+  [12] room_town_apartments      (无门)
+
+  [13] room_town_south         
+      obj_doorA              x=1314    y=106     -> room_town_school           
+      obj_doorC              x=798     y=235     -> room_town_church           
+      obj_doorD              x=798     y=1       -> room_town_mid              
+      obj_doorW              x=600     y=80      -> room_hospital_lobby        (表)
+      obj_doorX              x=1000    y=80      -> room_library               (表)
+
+  [14] room_town_school        
+      obj_doorB              x=2       y=182     -> room_town_south            
+      obj_doorX_musfade      x=360     y=120     -> room_schoollobby           (表)
+
+  [15] room_town_church        
+      obj_doorA              x=0       y=340     -> room_graveyard             
+      obj_doorC_musfade      x=380     y=630     -> room_town_shelter          
+      obj_doorD              x=360     y=0       -> room_town_south            
+      obj_doorX              x=565     y=85      -> room_townhall              (表)
+
+  [16] room_graveyard          
+      obj_doorB              x=595     y=115     -> room_town_church           
+
+  [17] room_town_shelter       
+      obj_doorD_musfade      x=120     y=0       -> room_town_church           
+
+  [18] room_hospital_lobby     
+      obj_doorA              x=70      y=76      -> room_hospital_hallway      
+      obj_doorW              x=140     y=230     -> room_town_south            (表)
+
+  [19] room_hospital_hallway   
+      obj_doorA              x=79      y=75      -> room_hospital_rudy         
+      obj_doorB              x=140     y=186     -> room_hospital_lobby        
+      obj_doorC              x=190     y=77      -> room_hospital_room2        
+
+  [20] room_hospital_rudy      
+      obj_doorB              x=140     y=230     -> room_hospital_hallway      
+      obj_doorB              x=160     y=230     -> room_hospital_hallway      
+
+  [21] room_hospital_room2     
+      obj_doorD              x=140     y=236     -> room_hospital_hallway      
+
+  [22] room_diner              
+      obj_doorX              x=140     y=230     -> room_town_mid              (表)
+
+  [23] room_townhall           
+      obj_doorX              x=140     y=230     -> room_town_church           (表)
+
+  [24] room_flowershop_1f      
+      obj_doorA              x=20      y=44      -> room_flowershop_2f         
+      obj_doorA              x=260     y=46      -> room_flowershop_2f         
+      obj_doorX              x=140     y=230     -> room_town_north            (表)
+
+  [25] room_flowershop_2f      
+      obj_doorB              x=20      y=235     -> room_flowershop_1f         
+      obj_doorB              x=260     y=235     -> room_flowershop_1f         
+
+  [26] room_library            
+      obj_doorX              x=140     y=230     -> room_town_south            (表)
+      obj_doorX              x=160     y=230     -> room_town_south            (表)
+
+  [27] room_alphysalley        
+      obj_doorW              x=120     y=235     -> room_town_mid              (表)
+
+  [28] room_torielclass        
+      obj_doorA              x=57      y=46      -> room_schoollobby           
+
+  [29] room_schoollobby        
+      obj_doorA              x=110     y=194     -> room_alphysclass           
+      obj_doorB              x=830     y=194     -> room_torielclass           
+      obj_doorC              x=440     y=-10     -> room_schooldoor            
+      obj_doorX_musfade      x=440     y=415     -> room_town_school           (表)
+
+  [30] room_alphysclass          (无门)
+
+  [31] room_schooldoor         
+      obj_doorC              x=500     y=95      -> room_school_unusedroom     
+      obj_doorD              x=300     y=230     -> room_schoollobby           
+      obj_doorD              x=280     y=230     -> room_schoollobby           
+      obj_doorD              x=320     y=230     -> room_schoollobby           
+
+  [32] room_insidecloset         (无门)
+
+  [33] room_school_unusedroom  
+      obj_doorD              x=140     y=180     -> room_schooldoor            
+
+落盘: E:\Download\_tmp\topo42.json (6010 B)
+
+==============================================================================
+D. 房间级无向连边汇总（去重）
+==============================================================================
+   room_krisroom                <-> room_krishallway              (2<->3)
+   room_krishallway             <-> room_torhouse                 (3<->5)
+   room_torhouse                <-> room_torbathroom              (5<->6)
+   room_torhouse                <-> room_town_krisyard            (5<->7)
+   room_town_krisyard           <-> room_town_north               (7<->9)
+   room_town_north              <-> room_beach                    (9<->10)
+   room_town_north              <-> room_town_mid                 (9<->11)
+   room_town_north              <-> room_flowershop_1f            (9<->24)
+   room_town_mid                <-> room_town_south               (11<->13)
+   room_town_mid                <-> room_diner                    (11<->22)
+   room_town_mid                <-> room_alphysalley              (11<->27)
+   room_town_south              <-> room_town_school              (13<->14)
+   room_town_south              <-> room_town_church              (13<->15)
+   room_town_south              <-> room_hospital_lobby           (13<->18)
+   room_town_south              <-> room_library                  (13<->26)
+   room_town_school             <-> room_schoollobby              (14<->29)
+   room_town_church             <-> room_graveyard                (15<->16)
+   room_town_church             <-> room_town_shelter             (15<->17)
+   room_town_church             <-> room_townhall                 (15<->23)
+   room_hospital_lobby          <-> room_hospital_hallway         (18<->19)
+   room_hospital_hallway        <-> room_hospital_rudy            (19<->20)
+   room_hospital_hallway        <-> room_hospital_room2           (19<->21)
+   room_flowershop_1f           <-> room_flowershop_2f            (24<->25)
+   room_torielclass             <-> room_schoollobby              (28<->29)
+   room_schoollobby             <-> room_alphysclass              (29<->30)
+   room_schoollobby             <-> room_schooldoor               (29<->31)
+   room_schooldoor              <-> room_school_unusedroom        (31<->33)
+   共 27 条

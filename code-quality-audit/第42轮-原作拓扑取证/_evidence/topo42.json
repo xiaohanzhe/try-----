@@ -1,0 +1,520 @@
+{
+ "rooms": [
+  {
+   "index": 2,
+   "name": "room_krisroom",
+   "edges": [
+    [
+     "obj_doorA",
+     155,
+     230,
+     3
+    ]
+   ]
+  },
+  {
+   "index": 3,
+   "name": "room_krishallway",
+   "edges": [
+    [
+     "obj_doorB",
+     289,
+     104,
+     2
+    ],
+    [
+     "obj_doorC",
+     425,
+     100,
+     5
+    ]
+   ]
+  },
+  {
+   "index": 5,
+   "name": "room_torhouse",
+   "edges": [
+    [
+     "obj_doorA",
+     84,
+     168,
+     6
+    ],
+    [
+     "obj_doorD",
+     144,
+     68,
+     3
+    ],
+    [
+     "obj_doorX_musfade",
+     594,
+     149,
+     7
+    ]
+   ]
+  },
+  {
+   "index": 6,
+   "name": "room_torbathroom",
+   "edges": [
+    [
+     "obj_doorB",
+     236,
+     134,
+     5
+    ]
+   ]
+  },
+  {
+   "index": 7,
+   "name": "room_town_krisyard",
+   "edges": [
+    [
+     "obj_doorC",
+     120,
+     410,
+     9
+    ],
+    [
+     "obj_doorX_musfade",
+     158,
+     168,
+     5
+    ]
+   ]
+  },
+  {
+   "index": 9,
+   "name": "room_town_north",
+   "edges": [
+    [
+     "obj_doorA",
+     1790,
+     100,
+     10
+    ],
+    [
+     "obj_doorC",
+     625,
+     230,
+     11
+    ],
+    [
+     "obj_doorD",
+     378,
+     -12,
+     7
+    ],
+    [
+     "obj_doorX",
+     1258,
+     98,
+     24
+    ]
+   ]
+  },
+  {
+   "index": 10,
+   "name": "room_beach",
+   "edges": [
+    [
+     "obj_doorB",
+     -15,
+     60,
+     9
+    ]
+   ]
+  },
+  {
+   "index": 11,
+   "name": "room_town_mid",
+   "edges": [
+    [
+     "obj_doorC",
+     772,
+     232,
+     13
+    ],
+    [
+     "obj_doorD",
+     780,
+     0,
+     9
+    ],
+    [
+     "obj_doorW",
+     1740,
+     -10,
+     27
+    ],
+    [
+     "obj_doorX",
+     600,
+     90,
+     22
+    ]
+   ]
+  },
+  {
+   "index": 13,
+   "name": "room_town_south",
+   "edges": [
+    [
+     "obj_doorA",
+     1314,
+     106,
+     14
+    ],
+    [
+     "obj_doorC",
+     798,
+     235,
+     15
+    ],
+    [
+     "obj_doorD",
+     798,
+     1,
+     11
+    ],
+    [
+     "obj_doorW",
+     600,
+     80,
+     18
+    ],
+    [
+     "obj_doorX",
+     1000,
+     80,
+     26
+    ]
+   ]
+  },
+  {
+   "index": 14,
+   "name": "room_town_school",
+   "edges": [
+    [
+     "obj_doorB",
+     2,
+     182,
+     13
+    ],
+    [
+     "obj_doorX_musfade",
+     360,
+     120,
+     29
+    ]
+   ]
+  },
+  {
+   "index": 15,
+   "name": "room_town_church",
+   "edges": [
+    [
+     "obj_doorA",
+     0,
+     340,
+     16
+    ],
+    [
+     "obj_doorC_musfade",
+     380,
+     630,
+     17
+    ],
+    [
+     "obj_doorD",
+     360,
+     0,
+     13
+    ],
+    [
+     "obj_doorX",
+     565,
+     85,
+     23
+    ]
+   ]
+  },
+  {
+   "index": 16,
+   "name": "room_graveyard",
+   "edges": [
+    [
+     "obj_doorB",
+     595,
+     115,
+     15
+    ]
+   ]
+  },
+  {
+   "index": 17,
+   "name": "room_town_shelter",
+   "edges": [
+    [
+     "obj_doorD_musfade",
+     120,
+     0,
+     15
+    ]
+   ]
+  },
+  {
+   "index": 18,
+   "name": "room_hospital_lobby",
+   "edges": [
+    [
+     "obj_doorA",
+     70,
+     76,
+     19
+    ],
+    [
+     "obj_doorW",
+     140,
+     230,
+     13
+    ]
+   ]
+  },
+  {
+   "index": 19,
+   "name": "room_hospital_hallway",
+   "edges": [
+    [
+     "obj_doorA",
+     79,
+     75,
+     20
+    ],
+    [
+     "obj_doorB",
+     140,
+     186,
+     18
+    ],
+    [
+     "obj_doorC",
+     190,
+     77,
+     21
+    ]
+   ]
+  },
+  {
+   "index": 20,
+   "name": "room_hospital_rudy",
+   "edges": [
+    [
+     "obj_doorB",
+     140,
+     230,
+     19
+    ],
+    [
+     "obj_doorB",
+     160,
+     230,
+     19
+    ]
+   ]
+  },
+  {
+   "index": 21,
+   "name": "room_hospital_room2",
+   "edges": [
+    [
+     "obj_doorD",
+     140,
+     236,
+     19
+    ]
+   ]
+  },
+  {
+   "index": 22,
+   "name": "room_diner",
+   "edges": [
+    [
+     "obj_doorX",
+     140,
+     230,
+     11
+    ]
+   ]
+  },
+  {
+   "index": 23,
+   "name": "room_townhall",
+   "edges": [
+    [
+     "obj_doorX",
+     140,
+     230,
+     15
+    ]
+   ]
+  },
+  {
+   "index": 24,
+   "name": "room_flowershop_1f",
+   "edges": [
+    [
+     "obj_doorA",
+     20,
+     44,
+     25
+    ],
+    [
+     "obj_doorA",
+     260,
+     46,
+     25
+    ],
+    [
+     "obj_doorX",
+     140,
+     230,
+     9
+    ]
+   ]
+  },
+  {
+   "index": 25,
+   "name": "room_flowershop_2f",
+   "edges": [
+    [
+     "obj_doorB",
+     20,
+     235,
+     24
+    ],
+    [
+     "obj_doorB",
+     260,
+     235,
+     24
+    ]
+   ]
+  },
+  {
+   "index": 26,
+   "name": "room_library",
+   "edges": [
+    [
+     "obj_doorX",
+     140,
+     230,
+     13
+    ],
+    [
+     "obj_doorX",
+     160,
+     230,
+     13
+    ]
+   ]
+  },
+  {
+   "index": 27,
+   "name": "room_alphysalley",
+   "edges": [
+    [
+     "obj_doorW",
+     120,
+     235,
+     11
+    ]
+   ]
+  },
+  {
+   "index": 28,
+   "name": "room_torielclass",
+   "edges": [
+    [
+     "obj_doorA",
+     57,
+     46,
+     29
+    ]
+   ]
+  },
+  {
+   "index": 29,
+   "name": "room_schoollobby",
+   "edges": [
+    [
+     "obj_doorA",
+     110,
+     194,
+     30
+    ],
+    [
+     "obj_doorB",
+     830,
+     194,
+     28
+    ],
+    [
+     "obj_doorC",
+     440,
+     -10,
+     31
+    ],
+    [
+     "obj_doorX_musfade",
+     440,
+     415,
+     14
+    ]
+   ]
+  },
+  {
+   "index": 31,
+   "name": "room_schooldoor",
+   "edges": [
+    [
+     "obj_doorC",
+     500,
+     95,
+     33
+    ],
+    [
+     "obj_doorD",
+     300,
+     230,
+     29
+    ],
+    [
+     "obj_doorD",
+     280,
+     230,
+     29
+    ],
+    [
+     "obj_doorD",
+     320,
+     230,
+     29
+    ]
+   ]
+  },
+  {
+   "index": 33,
+   "name": "room_school_unusedroom",
+   "edges": [
+    [
+     "obj_doorD",
+     140,
+     180,
+     31
+    ]
+   ]
+  }
+ ]
+}

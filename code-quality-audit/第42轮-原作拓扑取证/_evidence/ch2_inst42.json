@@ -1,0 +1,1663 @@
+{
+"source": "E:\\Download\\_tmp\\drw\\chapter2_windows\\data.win",
+"n_rooms_total": 278,
+"n_rooms_hit": 226,
+"n_inst": 1149,
+"top": {
+  "obj_doorW": 148,
+  "obj_charmarker": 136,
+  "obj_markerA": 109,
+  "obj_doorB": 104,
+  "obj_markerB": 104,
+  "obj_doorA": 99,
+  "obj_markerX": 71,
+  "obj_markerAny": 46,
+  "obj_markerw": 41,
+  "obj_doorAny": 27,
+  "obj_mansion_door": 25,
+  "obj_markert": 25,
+  "obj_doorX": 24,
+  "obj_markerv": 22,
+  "obj_markeru": 19,
+  "obj_savepoint": 16,
+  "obj_doorD": 15,
+  "obj_markerC": 14,
+  "obj_markerD": 13,
+  "obj_doorC": 11,
+  "obj_doorw_musfade": 10,
+  "obj_doorB_musfade": 10,
+  "obj_doorA_musfade": 10,
+  "obj_markers": 6,
+  "obj_doorX_musfade": 4,
+  "obj_ch2_lw_cutscenes_short": 3,
+  "obj_shortcut_door": 3,
+  "obj_markerr": 2,
+  "obj_lockedDoor_mansion_east_2f_transformed_new": 2,
+  "obj_doorD_musfade": 2,
+  "obj_mansion_doorframe_right_top": 2,
+  "obj_mansion_doorframe_left_top": 2,
+  "obj_mansion_doorframe_right_side": 2,
+  "obj_musicer_mansion_entrance": 2,
+  "obj_darkfountain": 2,
+  "obj_mansion_doorframe_left_side": 2,
+  "obj_npc_castle_door": 1,
+  "obj_fountainkris_ch2_sideb": 1,
+  "obj_ch2_scene25_fountain": 1,
+  "obj_ch2_scene21_puzzle_entrance": 1,
+  "obj_mansion_basement_door": 1,
+  "obj_doorC_musfade": 1,
+  "obj_weirdroute_sewerEntrance": 1,
+  "obj_ch2_room_city_savepoint": 1,
+  "obj_cutscene_test": 1,
+  "obj_cityEntrance_event": 1,
+  "obj_npc_musical_door": 1,
+  "obj_npc_library_upstairs": 1,
+  "obj_example_cutscene_b": 1,
+  "obj_darkdoor": 1,
+  "obj_ch2_room_mansion_entrance": 1,
+  "obj_fountainkris": 1
+},
+"rooms": [
+  {"index": 2, "name": "room_title_placeholder", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 944, "y": 173, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 877, "y": 198, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 4, "name": "room_cutscene_tester", "w": 1280, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorAny", "x": 200, "y": 80, "layer": "BULLET_MODE", "depth": "-100"},
+    {"obj": "obj_cutscene_test", "x": 880, "y": 200, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 11, "name": "room_shaun_puzzle", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 80, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 580, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 13, "name": "room_cutscene_tester_b", "w": 1280, "h": 480, "n": 1, "insts": [
+    {"obj": "obj_example_cutscene_b", "x": 840, "y": 160, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 18, "name": "room_krisroom", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorA", "x": 155, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 155, "y": 185, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 19, "name": "room_krishallway", "w": 540, "h": 240, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 289, "y": 104, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 289, "y": 112, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorC", "x": 425, "y": 100, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 425, "y": 109, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 21, "name": "room_torhouse", "w": 700, "h": 240, "n": 6, "insts": [
+    {"obj": "obj_doorD", "x": 144, "y": 68, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 144, "y": 80, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 84, "y": 168, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 108, "y": 148, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorX_musfade", "x": 594, "y": 149, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 567, "y": 136, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 22, "name": "room_torbathroom", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 236, "y": 134, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 216, "y": 120, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 23, "name": "room_town_krisyard", "w": 320, "h": 420, "n": 5, "insts": [
+    {"obj": "obj_doorC", "x": 120, "y": 410, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 160, "y": 362, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorX_musfade", "x": 150, "y": 169, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 160, "y": 184, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_ch2_lw_cutscenes_short", "x": 120, "y": 240, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 25, "name": "room_town_north", "w": 1800, "h": 240, "n": 8, "insts": [
+    {"obj": "obj_doorC", "x": 625, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 660, "y": 180, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorX", "x": 1258, "y": 98, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 1258, "y": 112, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 1790, "y": 100, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 1764, "y": 110, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 378, "y": -12, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 418, "y": 4, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 26, "name": "room_beach", "w": 600, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": -15, "y": 60, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 10, "y": 100, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 27, "name": "room_town_mid", "w": 2040, "h": 240, "n": 12, "insts": [
+    {"obj": "obj_doorC", "x": 772, "y": 232, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 820, "y": 184, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 780, "y": 0, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 820, "y": 8, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorX", "x": 600, "y": 90, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 600, "y": 105, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorW", "x": 1740, "y": -10, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerw", "x": 1768, "y": 0, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerv", "x": 1096, "y": 91, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markert", "x": 321, "y": 99, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorW", "x": 301, "y": 94, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"},
+    {"obj": "obj_doorw_musfade", "x": 1082, "y": 77, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"}
+  ]},
+  {"index": 29, "name": "room_town_south", "w": 1320, "h": 240, "n": 12, "insts": [
+    {"obj": "obj_doorX", "x": 1000, "y": 80, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 1005, "y": 95, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorW", "x": 600, "y": 80, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerw", "x": 611, "y": 91, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 1314, "y": 106, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 1288, "y": 129, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorC", "x": 798, "y": 235, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 839, "y": 188, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 798, "y": 1, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 839, "y": 9, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerv", "x": 247, "y": 88, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorW", "x": 240, "y": 79, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"}
+  ]},
+  {"index": 30, "name": "room_town_school", "w": 580, "h": 320, "n": 4, "insts": [
+    {"obj": "obj_markerX", "x": 373, "y": 135, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorB", "x": 2, "y": 182, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 18, "y": 216, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorAny", "x": 353, "y": 129, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 31, "name": "room_town_church", "w": 760, "h": 640, "n": 8, "insts": [
+    {"obj": "obj_doorX", "x": 565, "y": 85, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 574, "y": 95, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorC_musfade", "x": 380, "y": 630, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 430, "y": 580, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 0, "y": 340, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 10, "y": 350, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 360, "y": 0, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 420, "y": 0, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 32, "name": "room_graveyard", "w": 600, "h": 240, "n": 3, "insts": [
+    {"obj": "obj_markerX", "x": 570, "y": 130, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorB", "x": 595, "y": 115, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 570, "y": 130, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 33, "name": "room_town_shelter", "w": 320, "h": 1240, "n": 2, "insts": [
+    {"obj": "obj_markerC", "x": 150, "y": 20, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD_musfade", "x": 120, "y": 0, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 34, "name": "room_hospital_lobby", "w": 320, "h": 240, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 140, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 70, "y": 76, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 76, "y": 88, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerw", "x": 150, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 35, "name": "room_hospital_hallway", "w": 320, "h": 240, "n": 6, "insts": [
+    {"obj": "obj_doorB", "x": 140, "y": 186, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 150, "y": 138, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 79, "y": 75, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorC", "x": 190, "y": 77, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 90, "y": 84, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 210, "y": 85, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 36, "name": "room_hospital_rudy", "w": 320, "h": 240, "n": 3, "insts": [
+    {"obj": "obj_doorB", "x": 140, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorB", "x": 160, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 150, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 37, "name": "room_hospital_room2", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorD", "x": 140, "y": 236, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 150, "y": 186, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 38, "name": "room_diner", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorX", "x": 140, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 150, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 39, "name": "room_townhall", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorX", "x": 140, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 150, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 40, "name": "room_flowershop_1f", "w": 320, "h": 240, "n": 6, "insts": [
+    {"obj": "obj_doorX", "x": 140, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 150, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 20, "y": 44, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 260, "y": 46, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 36, "y": 56, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 262, "y": 56, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 41, "name": "room_flowershop_2f", "w": 320, "h": 240, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 20, "y": 235, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorB", "x": 260, "y": 235, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 30, "y": 195, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 270, "y": 195, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 42, "name": "room_library", "w": 320, "h": 240, "n": 6, "insts": [
+    {"obj": "obj_markerX", "x": 150, "y": 185, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorX", "x": 140, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorX", "x": 160, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerw", "x": 142, "y": 63, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"},
+    {"obj": "obj_doorW", "x": 218, "y": 49, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"},
+    {"obj": "obj_markert", "x": 226, "y": 56, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"}
+  ]},
+  {"index": 43, "name": "room_alphysalley", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 120, "y": 235, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerw", "x": 150, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 44, "name": "room_lw_computer_lab", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_markerw", "x": 152, "y": 178, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 130, "y": 230, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 45, "name": "room_lw_library_upstairs", "w": 320, "h": 240, "n": 3, "insts": [
+    {"obj": "obj_npc_library_upstairs", "x": 0, "y": 32, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markert", "x": 231, "y": 188, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 213, "y": 231, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 46, "name": "room_lw_police", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_markerv", "x": 148, "y": 187, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorAny", "x": 125, "y": 233, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 47, "name": "room_lw_conbini", "w": 540, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_markerv", "x": 369, "y": 183, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 348, "y": 230, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 48, "name": "room_lw_icee_pizza", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 124, "y": 231, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 141, "y": 177, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 49, "name": "room_torielclass", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorA", "x": 57, "y": 46, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerB", "x": 57, "y": 55, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 50, "name": "room_schoollobby", "w": 940, "h": 420, "n": 9, "insts": [
+    {"obj": "obj_markerB", "x": 110, "y": 200, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorA", "x": 97, "y": 195, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 460, "y": -6, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 460, "y": 360, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorC", "x": 440, "y": -10, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorB", "x": 817, "y": 196, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerA", "x": 830, "y": 202, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_ch2_lw_cutscenes_short", "x": 160, "y": 160, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorAny", "x": 412, "y": 413, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 51, "name": "room_alphysclass", "w": 320, "h": 240, "n": 1, "insts": [
+    {"obj": "obj_markerA", "x": 242, "y": 52, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 52, "name": "room_schooldoor", "w": 620, "h": 240, "n": 9, "insts": [
+    {"obj": "obj_markerC", "x": 300, "y": 190, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 300, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 280, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorD", "x": 320, "y": 230, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerD", "x": 510, "y": 100, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorC", "x": 500, "y": 95, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_ch2_lw_cutscenes_short", "x": 360, "y": 40, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 300, "y": 110, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_darkdoor", "x": 288, "y": 62, "layer": "Compatibility_Instances_Depth_900000", "depth": "900000"}
+  ]},
+  {"index": 54, "name": "room_school_unusedroom", "w": 320, "h": 240, "n": 2, "insts": [
+    {"obj": "obj_doorD", "x": 140, "y": 180, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 150, "y": 136, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 55, "name": "room_castle_town", "w": 640, "h": 1160, "n": 9, "insts": [
+    {"obj": "obj_savepoint", "x": 298, "y": 290, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorD", "x": -10, "y": 958, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 246, "y": 192, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerB", "x": 302, "y": 200, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorX", "x": 630, "y": 954, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 578, "y": 942, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 194, "y": 1151, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_markerA", "x": 160, "y": 1120, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_markerC", "x": 42, "y": 937, "layer": "COLLISION_DOOR", "depth": "50000"}
+  ]},
+  {"index": 56, "name": "room_castle_tutorial", "w": 1400, "h": 480, "n": 5, "insts": [
+    {"obj": "obj_doorX", "x": -10, "y": 320, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerX", "x": 10, "y": 310, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorW", "x": 1390, "y": 320, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerw", "x": 1350, "y": 300, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markers", "x": 654, "y": 125, "layer": "Compatibility_Instances_Depth_50000", "depth": "50000"}
+  ]},
+  {"index": 57, "name": "room_dw_castle_west_cliff_old", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 567, "y": 260, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_doorX", "x": 630, "y": 280, "layer": "COLLISION_DOOR", "depth": "50000"}
+  ]},
+  {"index": 58, "name": "room_dw_castle_east_door", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_npc_castle_door", "x": 0, "y": 30, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": -10, "y": 320, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_markerw", "x": 20, "y": 300, "layer": "COLLISION_DOOR", "depth": "50000"}
+  ]},
+  {"index": 59, "name": "room_dw_castle_west_cliff", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_markerX", "x": 567, "y": 260, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_doorX", "x": 630, "y": 280, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_markerD", "x": 567, "y": 261, "layer": "COLLISION_DOOR", "depth": "50000"}
+  ]},
+  {"index": 60, "name": "room_dw_castle_area_1", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_markerX", "x": 297, "y": 23, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 200, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 297, "y": 25, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 61, "name": "room_dw_castle_area_2", "w": 640, "h": 1160, "n": 9, "insts": [
+    {"obj": "obj_savepoint", "x": 298, "y": 290, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 246, "y": 192, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerB", "x": 302, "y": 200, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorX", "x": 630, "y": 954, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 578, "y": 942, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 194, "y": 1151, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_markerr", "x": 42, "y": 937, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_markerw", "x": 302, "y": 1051, "layer": "COLLISION_DOOR", "depth": "50000"},
+    {"obj": "obj_doorD", "x": -10, "y": 958, "layer": "COLLISION_DOOR", "depth": "50000"}
+  ]},
+  {"index": 62, "name": "room_dw_castle_area_2_transformed", "w": 1520, "h": 1600, "n": 17, "insts": [
+    {"obj": "obj_savepoint", "x": 833, "y": 297, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorX", "x": 702, "y": 1587, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 1512, "y": 1151, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": -12, "y": 1159, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 684, "y": 192, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 740, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 990, "y": 838, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 878, "y": 578, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 472, "y": 813, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 746, "y": 1495, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerr", "x": 26, "y": 1135, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 1441, "y": 1125, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markers", "x": 889, "y": 577, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 986, "y": 800, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 499, "y": 806, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 567, "y": 566, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX_musfade", "x": 520, "y": 569, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 63, "name": "room_dw_ralsei_castle_front", "w": 1000, "h": 1000, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 440, "y": 990, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 500, "y": 884, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 502, "y": 262, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 462, "y": 249, "layer": "COLLISION_DOOR", "depth": "50000"}
+  ]},
+  {"index": 64, "name": "room_dw_castle_restaurant", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 308, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 276, "y": 466, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 65, "name": "room_dw_castle_cafe", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 440, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 392, "y": 427, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 66, "name": "room_dw_castle_dojo", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 300, "y": 379, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 67, "name": "room_dw_ralsei_castle_1f", "w": 1240, "h": 480, "n": 6, "insts": [
+    {"obj": "obj_markerw", "x": 880, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 600, "y": 360, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerB", "x": 280, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 857, "y": 241, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 551, "y": 459, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 260, "y": 238, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 68, "name": "room_dw_ralsei_castle_2f", "w": 1280, "h": 480, "n": 8, "insts": [
+    {"obj": "obj_markerv", "x": 279, "y": 226, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerw", "x": 551, "y": 226, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 823, "y": 230, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 120, "y": 361, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 255, "y": 235, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 530, "y": 234, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 808, "y": 229, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 80, "y": 457, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 69, "name": "room_dw_castle_dungeon", "w": 1640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 110, "y": 470, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 150, "y": 360, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 71, "name": "room_dw_castle_rooms_kris", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 450, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 320, "y": 360, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 72, "name": "room_dw_castle_rooms_susie", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 257, "y": 465, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 288, "y": 362, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 74, "name": "room_dw_cyber_intro_1", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerB", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 620, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 75, "name": "room_dw_cyber_intro_connector", "w": 2320, "h": 1520, "n": 5, "insts": [
+    {"obj": "obj_savepoint", "x": 440, "y": 202, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 2300, "y": 1200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 28, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 2256, "y": 1182, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 76, "name": "room_dw_cyber_intro_2", "w": 1280, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1260, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1216, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 77, "name": "room_dw_cyber_rhythm_slide", "w": 640, "h": 1840, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 40, "y": 80, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 69, "y": 100, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 78, "name": "room_dw_cyber_savepoint", "w": 1680, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_savepoint", "x": 1240, "y": 291, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 1660, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 301, "y": 307, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1616, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 79, "name": "room_dw_cyber_battle_maze_1", "w": 1680, "h": 1280, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1660, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 182, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1616, "y": 166, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 80, "name": "room_dw_cyber_music_bullet", "w": 1440, "h": 2240, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 2000, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 2006, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1420, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1376, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 81, "name": "room_dw_cyber_tasque_battle", "w": 1320, "h": 1240, "n": 6, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1256, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorC", "x": 1300, "y": 1000, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerD", "x": 1256, "y": 982, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1300, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 82, "name": "room_dw_cyber_keyboard_puzzle_1", "w": 1040, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 83, "name": "room_dw_cyber_queen_boxing", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerB", "x": 576, "y": 142, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorD", "x": 0, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerC", "x": 26, "y": 142, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 620, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 84, "name": "room_dw_cyber_musical_door", "w": 640, "h": 480, "n": 11, "insts": [
+    {"obj": "obj_npc_musical_door", "x": 0, "y": 40, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_shortcut_door", "x": 457, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 620, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 280, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 474, "y": 128, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 85, "name": "room_dw_cyber_maze_virokun", "w": 1879, "h": 560, "n": 10, "insts": [
+    {"obj": "obj_doorW", "x": 240, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 640, "y": 540, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1860, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1815, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 660, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 260, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorC", "x": 1040, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerD", "x": 1060, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 86, "name": "room_dw_cyber_keyboard_puzzle_2", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 87, "name": "room_dw_cyber_battle_maze_2", "w": 1760, "h": 3000, "n": 6, "insts": [
+    {"obj": "obj_markerC", "x": 300, "y": 2900, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorD", "x": 280, "y": 2980, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 480, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 500, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1696, "y": 702, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 1740, "y": 720, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 88, "name": "room_dw_cyber_music_final", "w": 2560, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 2180, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 2160, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 89, "name": "room_dw_cyber_musical_shop", "w": 640, "h": 480, "n": 7, "insts": [
+    {"obj": "obj_savepoint", "x": 452, "y": 120, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 320, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 340, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorX_musfade", "x": 230, "y": 220, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 620, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 576, "y": 182, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 252, "y": 214, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 90, "name": "room_dw_cyber_teacup_final", "w": 3120, "h": 9000, "n": 5, "insts": [
+    {"obj": "obj_markerw", "x": 260, "y": 8896, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 240, "y": 8980, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 3056, "y": 1702, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 3100, "y": 1720, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 2840, "y": 1986, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 91, "name": "room_dw_cyber_rollercoaster", "w": 1780, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 360, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 342, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 92, "name": "room_dw_cyber_maze_fireworks", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 93, "name": "room_dw_cyber_maze_tasque", "w": 1920, "h": 840, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 300, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 94, "name": "room_dw_cyber_maze_queenscreen", "w": 2160, "h": 1120, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 520, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 26, "y": 502, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2140, "y": 520, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2096, "y": 502, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 95, "name": "room_dw_cyber_viro_ring", "w": 2160, "h": 1640, "n": 5, "insts": [
+    {"obj": "obj_markerX", "x": 420, "y": 6, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 400, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 780, "y": 326, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 96, "name": "room_dw_cyber_post_music_boss_slide", "w": 3200, "h": 2800, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 160, "y": 2280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 2880, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 180, "y": 2280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 2900, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 97, "name": "room_dw_cyber_keyboard_puzzle_3", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 302, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 98, "name": "room_dw_cyber_battle_maze_3", "w": 1280, "h": 960, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": -16, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1266, "y": 709, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 43, "y": 144, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1203, "y": 703, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 99, "name": "room_dw_cyber_teacup_2", "w": 640, "h": 960, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": -16, "y": 676, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 36, "y": 653, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 617, "y": 58, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 556, "y": 55, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 100, "name": "room_dw_cyber_shaunsmusicalbullettunnel", "w": 1920, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 80, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1820, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 101, "name": "room_dw_cyber_maze_rhythm", "w": 640, "h": 2600, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 271, "y": 1, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 299, "y": 51, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 269, "y": 2593, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 300, "y": 2509, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 102, "name": "room_dw_cyber_escalator_slide", "w": 1920, "h": 1840, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 275, "y": -7, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 296, "y": 18, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 1513, "y": -7, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 1544, "y": 36, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 103, "name": "room_dw_cyber_nuberts_treasure", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerA", "x": 320, "y": 381, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 280, "y": 459, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 104, "name": "room_dw_cyber_music_fight", "w": 640, "h": 480, "n": 1, "insts": [
+    {"obj": "obj_markerA", "x": 40, "y": 216, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 106, "name": "room_dw_city_prototype_01", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorA", "x": 619, "y": 183, "layer": "Colliders", "depth": "-100"},
+    {"obj": "obj_markerB", "x": 575, "y": 215, "layer": "Colliders", "depth": "-100"}
+  ]},
+  {"index": 107, "name": "room_dw_city_prototype_02", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": -10, "y": 184, "layer": "Colliders", "depth": "-100"},
+    {"obj": "obj_markerA", "x": 29, "y": 201, "layer": "Colliders", "depth": "-100"}
+  ]},
+  {"index": 108, "name": "room_dw_city_spamton_shop_exterior", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_doorA", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 248, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 109, "name": "room_dw_city_spamton_house", "w": 1280, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerB", "x": 1216, "y": 238, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 201, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1260, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 220, "y": 150, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 110, "name": "room_dw_city_intro", "w": 1280, "h": 480, "n": 6, "insts": [
+    {"obj": "obj_shortcut_door", "x": 732, "y": 119, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerw", "x": 750, "y": 175, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 26, "y": 238, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1260, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1216, "y": 238, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 111, "name": "room_dw_city_split", "w": 640, "h": 880, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 600, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 620, "y": 680, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 576, "y": 662, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 646, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 112, "name": "room_dw_city_entrance", "w": 1920, "h": 480, "n": 6, "insts": [
+    {"obj": "obj_savepoint", "x": 1707, "y": 229, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1900, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1856, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_cityEntrance_event", "x": 400, "y": 0, "layer": "OBJECTS_BACKGROUND", "depth": "980600"}
+  ]},
+  {"index": 113, "name": "room_dw_city_traffic_1", "w": 2320, "h": 480, "n": 16, "insts": [
+    {"obj": "obj_charmarker", "x": 592, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 542, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 492, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1132, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1182, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1232, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1432, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1382, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1332, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1972, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 2022, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 2072, "y": 246, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2300, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2256, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 114, "name": "room_dw_city_roadblock", "w": 1280, "h": 960, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1260, "y": 680, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1216, "y": 686, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 115, "name": "room_dw_city_hacker", "w": 840, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 640, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 660, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 116, "name": "room_dw_city_mice", "w": 640, "h": 520, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 120, "y": 500, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 480, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 500, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 140, "y": 420, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 117, "name": "room_dw_city_big_1", "w": 1080, "h": 840, "n": 8, "insts": [
+    {"obj": "obj_doorB", "x": 120, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 760, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 640, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1060, "y": 640, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1016, "y": 622, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 26, "y": 622, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 780, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 140, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 118, "name": "room_dw_city_traffic_2", "w": 2120, "h": 480, "n": 16, "insts": [
+    {"obj": "obj_charmarker", "x": 594, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 544, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 494, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1051, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1101, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1151, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1301, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1251, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1201, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1689, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1739, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1789, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2100, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2056, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 119, "name": "room_dw_city_big_2", "w": 1400, "h": 1440, "n": 6, "insts": [
+    {"obj": "obj_doorW", "x": 720, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 740, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1040, "y": 1420, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1060, "y": 1340, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 120, "name": "room_dw_city_queen_drunk", "w": 1920, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 320, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 340, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1856, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 1900, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 121, "name": "room_dw_city_savepoint", "w": 640, "h": 480, "n": 6, "insts": [
+    {"obj": "obj_savepoint", "x": 306, "y": 302, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_ch2_room_city_savepoint", "x": 0, "y": 40, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerB", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 620, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 122, "name": "room_dw_city_big_3", "w": 2200, "h": 1720, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 2180, "y": 640, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2136, "y": 662, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 123, "name": "room_dw_city_traffic_3", "w": 2000, "h": 2920, "n": 30, "insts": [
+    {"obj": "obj_charmarker", "x": 730, "y": 185, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 770, "y": 185, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 810, "y": 185, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 994, "y": 186, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 954, "y": 186, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 914, "y": 186, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 321, "y": 486, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 271, "y": 486, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 221, "y": 486, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 720, "y": 560, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 760, "y": 560, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 800, "y": 560, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 722, "y": 1440, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 762, "y": 1440, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 802, "y": 1440, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 1440, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 1440, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 1440, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 2081, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 2081, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 2081, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1641, "y": 303, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1681, "y": 303, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1721, "y": 303, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 480, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1980, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 502, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 26, "y": 2102, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1936, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 0, "y": 2080, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 124, "name": "room_dw_city_mice2", "w": 1160, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerA", "x": 26, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1140, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1096, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 125, "name": "room_dw_city_cheesemaze", "w": 2160, "h": 920, "n": 4, "insts": [
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1840, "y": 900, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1860, "y": 820, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 126, "name": "room_dw_city_mice3", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerA", "x": 60, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 40, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 620, "y": 80, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 576, "y": 60, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 127, "name": "room_dw_city_poppup", "w": 5000, "h": 640, "n": 8, "insts": [
+    {"obj": "obj_markerA", "x": 34, "y": 61, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 80, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1060, "y": 540, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 1400, "y": 620, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 1422, "y": 540, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 1040, "y": 620, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 5080, "y": 440, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_weirdroute_sewerEntrance", "x": 4596, "y": 357, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 128, "name": "room_dw_city_berdly", "w": 960, "h": 480, "n": 6, "insts": [
+    {"obj": "obj_doorAny", "x": 440, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 940, "y": 120, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 896, "y": 142, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 100, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 80, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 460, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 129, "name": "room_dw_city_traffic_4", "w": 4600, "h": 480, "n": 8, "insts": [
+    {"obj": "obj_markerB", "x": 2140, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 3180, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 4580, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 4536, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 120, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 26, "y": 102, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 2120, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 3151, "y": 469, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 130, "name": "room_dw_city_spamton_alley", "w": 1280, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 120, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1000, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 1020, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 140, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 131, "name": "room_dw_city_monologue", "w": 7200, "h": 2440, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 7180, "y": 1560, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 7136, "y": 1542, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 132, "name": "room_dw_city_baseball", "w": 1920, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 1900, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 182, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1856, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 133, "name": "room_dw_city_postbaseball_1", "w": 2080, "h": 2480, "n": 5, "insts": [
+    {"obj": "obj_savepoint", "x": 140, "y": 2201, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 26, "y": 2222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2016, "y": 718, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2060, "y": 760, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 2240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 134, "name": "room_dw_city_postbaseball_2", "w": 4400, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 4380, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 4336, "y": 278, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 26, "y": 278, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 135, "name": "room_dw_city_postbaseball_3", "w": 2800, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerAny", "x": 2736, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 26, "y": 278, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 2780, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 136, "name": "room_dw_city_mansion_front", "w": 1600, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 1422, "y": 226, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 137, "name": "room_dw_city_susie_ralsei_fun_1", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 320, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 138, "name": "room_dw_city_mirrorfriend", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 240, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 260, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 139, "name": "room_dw_city_treasure", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 620, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 576, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 140, "name": "room_dw_city_dog_traffic", "w": 2080, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 160, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 180, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 141, "name": "room_dw_city_man", "w": 2080, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 1820, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 1800, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 142, "name": "room_dw_city_moss", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 620, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 576, "y": 206, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 143, "name": "room_dw_city_big_3_backup_2exits", "w": 2200, "h": 1720, "n": 6, "insts": [
+    {"obj": "obj_doorA", "x": 2187, "y": 179, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2120, "y": 228, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 39, "y": 219, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 2183, "y": 753, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 2128, "y": 811, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": -1, "y": 177, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 144, "name": "room_dw_city_traffic_3_2Entrances", "w": 2000, "h": 2920, "n": 35, "insts": [
+    {"obj": "obj_charmarker", "x": 320, "y": 196, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 270, "y": 196, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 220, "y": 196, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 730, "y": 181, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 770, "y": 181, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 810, "y": 181, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 994, "y": 182, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 954, "y": 182, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 914, "y": 182, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 321, "y": 766, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 271, "y": 766, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 221, "y": 766, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 720, "y": 757, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 760, "y": 757, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 800, "y": 757, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 722, "y": 1616, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 762, "y": 1616, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 802, "y": 1616, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 1614, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 1614, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 1614, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 2281, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 2281, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 2281, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1641, "y": 318, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1681, "y": 318, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1721, "y": 318, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1980, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 26, "y": 782, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 760, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 54, "y": 2297, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1936, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": -15, "y": 2258, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 145, "name": "room_dw_city_cheese", "w": 1280, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 1263, "y": 118, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -12, "y": 106, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1200, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 146, "name": "room_dw_city_carnival", "w": 1280, "h": 960, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": -23, "y": 189, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1264, "y": 604, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1200, "y": 640, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 148, "name": "room_dw_city_spamton_shop_interior", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorA", "x": 228, "y": 459, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 293, "y": 342, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 149, "name": "room_dw_city_monologue_old", "w": 2400, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": -7, "y": 135, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 45, "y": 187, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2386, "y": 128, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2315, "y": 180, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 150, "name": "room_dw_mansion_krisroom", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_markerv", "x": 300, "y": 380, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markers", "x": 300, "y": 380, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 151, "name": "room_dw_mansion_susieroom", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_markerv", "x": 300, "y": 380, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markert", "x": 300, "y": 380, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 152, "name": "room_dw_mansion_lightner_hallway", "w": 1960, "h": 480, "n": 32, "insts": [
+    {"obj": "obj_musicer_mansion_entrance", "x": 0, "y": 40, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_savepoint", "x": 102, "y": 270, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 80, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 220, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 360, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 500, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 640, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 780, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 920, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1060, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1200, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1340, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1480, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1620, "y": 0, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1760, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 500, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 780, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1060, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1340, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1620, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 80, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 360, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 640, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 920, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1200, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1480, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_door", "x": 1760, "y": -80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 508, "y": 235, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1940, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 1896, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 240, "y": 236, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 520, "y": 236, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 153, "name": "room_dw_mansion_darkbulb_1", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 620, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 154, "name": "room_dw_mansion_darkbulb_2", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 620, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markers", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 155, "name": "room_dw_mansion_darkbulb_3", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 620, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markers", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 156, "name": "room_dw_mansion_dining_a", "w": 2200, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2180, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2136, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 157, "name": "room_dw_mansion_entrance", "w": 920, "h": 880, "n": 17, "insts": [
+    {"obj": "obj_savepoint", "x": 440, "y": 348, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_ch2_room_mansion_entrance", "x": 0, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_musicer_mansion_entrance", "x": 40, "y": 40, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_shortcut_door", "x": 102, "y": 627, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 856, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 856, "y": 702, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 900, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 170, "y": 443, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 900, "y": 720, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 632, "y": 477, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 750, "y": 477, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 760, "y": 470, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 640, "y": 470, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 120, "y": 679, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 200, "y": 450, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 158, "name": "room_dw_mansion_fire_paintings", "w": 1320, "h": 1320, "n": 4, "insts": [
+    {"obj": "obj_markerA", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1300, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1256, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 159, "name": "room_dw_mansion_single_pot", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 620, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 576, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 160, "name": "room_dw_mansion_potBalance", "w": 1160, "h": 1320, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorA", "x": 1140, "y": 1120, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerB", "x": 1096, "y": 1102, "layer": "COLLISION_DOOR", "depth": "200"}
+  ]},
+  {"index": 161, "name": "room_dw_mansion_tasquePaintings", "w": 1360, "h": 1000, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1340, "y": 640, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1296, "y": 622, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 162, "name": "room_dw_mansion_traffic", "w": 1720, "h": 1640, "n": 16, "insts": [
+    {"obj": "obj_charmarker", "x": 560, "y": 1400, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 510, "y": 1400, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 460, "y": 1400, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1147, "y": 359, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1120, "y": 360, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1080, "y": 359, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 1400, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 1382, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1700, "y": 1400, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1656, "y": 1382, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 198, "y": 1256, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 220, "y": 1276, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_mansion_doorframe_left_side", "x": 200, "y": 1240, "layer": "OBJECTS_VFX", "depth": "5002"},
+    {"obj": "obj_mansion_doorframe_right_side", "x": 240, "y": 1240, "layer": "OBJECTS_VFX", "depth": "5002"},
+    {"obj": "obj_mansion_doorframe_left_top", "x": 200, "y": 1200, "layer": "OBJECTS_VFX", "depth": "5002"},
+    {"obj": "obj_mansion_doorframe_right_top", "x": 240, "y": 1200, "layer": "OBJECTS_VFX", "depth": "5002"}
+  ]},
+  {"index": 163, "name": "room_dw_mansion_east_1f_e", "w": 1920, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 960, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 27, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 980, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 164, "name": "room_dw_mansion_east_1f_secret", "w": 1280, "h": 480, "n": 10, "insts": [
+    {"obj": "obj_mansion_doorframe_left_top", "x": 960, "y": 120, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_doorframe_right_top", "x": 1000, "y": 120, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_doorframe_right_side", "x": 1000, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_mansion_doorframe_left_side", "x": 960, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 230, "y": 190, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 970, "y": 190, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 26, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 260, "y": 196, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 980, "y": 196, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 165, "name": "room_dw_mansion_east_teacup", "w": 640, "h": 4800, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 4780, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 300, "y": 4700, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 280, "y": 1516, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 1516, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 166, "name": "room_dw_mansion_east_teacup_4", "w": 640, "h": 4800, "n": 4, "insts": [
+    {"obj": "obj_markerAny", "x": 300, "y": 4700, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerAny", "x": 300, "y": 676, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorAny", "x": 280, "y": 676, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 280, "y": 4780, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 167, "name": "room_dw_mansion_east_teacup_3", "w": 640, "h": 4800, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 280, "y": 1356, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 280, "y": 4780, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 300, "y": 4700, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 1356, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 168, "name": "room_dw_mansion_east_teacup_2", "w": 640, "h": 4800, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 1356, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 280, "y": 4780, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 300, "y": 4700, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 1356, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 169, "name": "room_dw_mansion_b_entrance", "w": 1280, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 981, "y": 462, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 227, "y": 369, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1017, "y": 373, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": 187, "y": 465, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 170, "name": "room_dw_mansion_b_stairs", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 280, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 300, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 171, "name": "room_dw_mansion_b_central", "w": 1920, "h": 960, "n": 7, "insts": [
+    {"obj": "obj_savepoint", "x": 940, "y": 840, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 0, "y": 800, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 26, "y": 782, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1900, "y": 800, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 1856, "y": 782, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 920, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 940, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 172, "name": "room_dw_mansion_b_west_1f", "w": 1920, "h": 480, "n": 9, "insts": [
+    {"obj": "obj_mansion_basement_door", "x": 200, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 235, "y": 255, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 863, "y": 255, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1429, "y": 254, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 1900, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 1856, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 900, "y": 276, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 1460, "y": 276, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 260, "y": 276, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 173, "name": "room_dw_mansion_b_west_1f_a", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 320, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 320, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 174, "name": "room_dw_mansion_b_west_1f_b", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 320, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 320, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 175, "name": "room_dw_mansion_b_west_2f", "w": 2560, "h": 2560, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 2280, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 2280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 176, "name": "room_dw_mansion_b_east", "w": 2720, "h": 960, "n": 6, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 800, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerX", "x": 40, "y": 760, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorW", "x": 1120, "y": 156, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorW", "x": 120, "y": 156, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerAny", "x": 140, "y": 156, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerAny", "x": 1140, "y": 156, "layer": "COLLISION_DOOR", "depth": "200"}
+  ]},
+  {"index": 177, "name": "room_dw_mansion_b_east_a", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 178, "name": "room_dw_mansion_b_east_b", "w": 1720, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 179, "name": "room_dw_mansion_b_east_transformed", "w": 640, "h": 960, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 800, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 26, "y": 782, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 280, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 180, "name": "room_dw_mansion_east_2f_a", "w": 1920, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerAny", "x": 201, "y": 114, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 177, "y": 96, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1720, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 1740, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 181, "name": "room_dw_mansion_east_2f_transformed_new", "w": 1480, "h": 1160, "n": 9, "insts": [
+    {"obj": "obj_lockedDoor_mansion_east_2f_transformed_new", "x": 1000, "y": 80, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 642, "y": 154, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1000, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 827, "y": 1140, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 840, "y": 1060, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 0, "y": 520, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 26, "y": 542, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 660, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 1020, "y": 150, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 182, "name": "room_dw_mansion_east_2f_shortcut", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": 620, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 576, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 240, "y": 116, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 228, "y": 116, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 183, "name": "room_dw_mansion_kitchen", "w": 1240, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 960, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 982, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 184, "name": "room_dw_mansion_east_2f_c", "w": 2560, "h": 480, "n": 8, "insts": [
+    {"obj": "obj_doorW", "x": 2540, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1560, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 360, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 2497, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 1601, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 400, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 185, "name": "room_dw_mansion_east_2f_c_a", "w": 1920, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 1580, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 300, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1560, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 186, "name": "room_dw_mansion_east_2f_d", "w": 1800, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 1780, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 1736, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 300, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 280, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 187, "name": "room_dw_mansion_east_3f", "w": 1280, "h": 480, "n": 12, "insts": [
+    {"obj": "obj_doorW", "x": 1260, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 944, "y": 140, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 260, "y": 372, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 980, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 1216, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 240, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 242, "y": 145, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 579, "y": 143, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 260, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 600, "y": 156, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 188, "name": "room_dw_mansion_east_3f_projection", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 620, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 189, "name": "room_dw_mansion_east_3f_toilet", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 460, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 302, "y": 380, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 190, "name": "room_dw_mansion_acid_tunnel", "w": 3880, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 3840, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 3796, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 191, "name": "room_dw_mansion_acid_tunnel_puzzle_entrance", "w": 640, "h": 480, "n": 7, "insts": [
+    {"obj": "obj_ch2_scene21_puzzle_entrance", "x": 0, "y": 40, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 280, "y": 100, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 620, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 567, "y": 323, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 37, "y": 322, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 300, "y": 116, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 192, "name": "room_dw_mansion_acid_tunnel_loop_rouxls", "w": 3200, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerB", "x": 3136, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -15, "y": 175, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 17, "y": 194, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA_musfade", "x": 3180, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 193, "name": "room_dw_mansion_acid_tunnel_exit", "w": 1600, "h": 1000, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 1580, "y": 400, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1536, "y": 382, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 766, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 760, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 194, "name": "room_dw_mansion_east_4f_b", "w": 1160, "h": 480, "n": 8, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1140, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1097, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 269, "y": 193, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 548, "y": 234, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 280, "y": 196, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerAny", "x": 560, "y": 236, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 195, "name": "room_dw_mansion_east_4f_c", "w": 2640, "h": 960, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 2620, "y": 440, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerB", "x": 2576, "y": 446, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorB", "x": 0, "y": 440, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerA", "x": 26, "y": 422, "layer": "COLLISION_DOOR", "depth": "200"}
+  ]},
+  {"index": 196, "name": "room_dw_mansion_east_4f_d", "w": 1840, "h": 480, "n": 5, "insts": [
+    {"obj": "obj_doorB", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 26, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1820, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1782, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_ch2_scene25_fountain", "x": 0, "y": 64, "layer": "OBJECTS_Fountain", "depth": "1000200"}
+  ]},
+  {"index": 197, "name": "room_dw_mansion_top", "w": 2560, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_markerA", "x": 26, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2480, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorAny", "x": 2543, "y": 256, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 198, "name": "room_dw_mansion_top_post", "w": 2560, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerA", "x": 26, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 261, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 199, "name": "room_dw_mansion_prefountain", "w": 640, "h": 1080, "n": 4, "insts": [
+    {"obj": "obj_savepoint", "x": 190, "y": 650, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerA", "x": 19, "y": 840, "layer": "COLLISION_DOORS", "depth": "1000100"},
+    {"obj": "obj_doorA", "x": 224, "y": 212, "layer": "COLLISION_DOORS", "depth": "1000100"},
+    {"obj": "obj_doorAny", "x": -15, "y": 861, "layer": "COLLISION_DOORS", "depth": "1000100"}
+  ]},
+  {"index": 200, "name": "room_dw_mansion_fountain", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_fountainkris_ch2_sideb", "x": 300, "y": 260, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_darkfountain", "x": 224, "y": 0, "layer": "OBJECTS_Fountain", "depth": "1100000"}
+  ]},
+  {"index": 203, "name": "room_dw_mansion_noelle_room", "w": 1600, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 252, "y": 380, "layer": "COLLIDERS_DOORS", "depth": "100"},
+    {"obj": "obj_doorW", "x": 230, "y": 460, "layer": "COLLIDERS_DOORS", "depth": "100"}
+  ]},
+  {"index": 204, "name": "room_dw_mansion_bridges", "w": 1640, "h": 1400, "n": 8, "insts": [
+    {"obj": "obj_doorW", "x": 280, "y": 600, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markert", "x": 299, "y": 606, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 1620, "y": 720, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 580, "y": 1300, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 560, "y": 1380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1440, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 1576, "y": 675, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 1440, "y": 6, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 205, "name": "room_dw_mansion_bridges_funny", "w": 1840, "h": 640, "n": 3, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 320, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 26, "y": 268, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 206, "name": "room_dw_mansion_mouseLottery", "w": 1240, "h": 720, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 320, "y": 700, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerX", "x": 320, "y": 620, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorA", "x": 0, "y": 400, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerB", "x": 26, "y": 382, "layer": "COLLISION_DOOR", "depth": "200"}
+  ]},
+  {"index": 207, "name": "room_dw_mansion_hands", "w": 720, "h": 840, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 292, "y": 832, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_markerX", "x": 304, "y": 741, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 700, "y": 560, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 656, "y": 542, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 208, "name": "room_dw_mansion_dining3", "w": 1280, "h": 1440, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 680, "y": -80, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markeru", "x": 620, "y": 166, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorW", "x": 600, "y": 1420, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerX", "x": 620, "y": 1340, "layer": "COLLISION_DOOR", "depth": "200"}
+  ]},
+  {"index": 209, "name": "room_dw_mansion_dininghall", "w": 640, "h": 3200, "n": 6, "insts": [
+    {"obj": "obj_markerX", "x": 576, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 26, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 620, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 280, "y": 3180, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 301, "y": 3080, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 210, "name": "room_dw_mansion_dining_storage", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 25, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 211, "name": "room_dw_mansion_east_1f_b", "w": 1920, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": -8, "y": 265, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 41, "y": 257, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 212, "name": "room_dw_mansion_east_2f_c_b", "w": 960, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 661, "y": -10, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 696, "y": 43, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 213, "name": "room_dw_mansion_traffic_original", "w": 5000, "h": 1600, "n": 7, "insts": [
+    {"obj": "obj_charmarker", "x": 560, "y": 1382, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 510, "y": 1382, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 460, "y": 1382, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 0, "y": 1360, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 32, "y": 1380, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 4980, "y": 400, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 4900, "y": 353, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 214, "name": "room_dw_mansion_east_1f_a", "w": 1440, "h": 880, "n": 4, "insts": [
+    {"obj": "obj_doorA", "x": 1426, "y": 633, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerA", "x": 40, "y": 202, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_markerB", "x": 1366, "y": 611, "layer": "COLLISION_DOOR", "depth": "200"},
+    {"obj": "obj_doorB_musfade", "x": 0, "y": 240, "layer": "COLLISION_DOOR", "depth": "200"}
+  ]},
+  {"index": 215, "name": "room_dw_mansion_east_2f_teacup", "w": 640, "h": 480, "n": 3, "insts": [
+    {"obj": "obj_markerv", "x": 480, "y": 40, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 276, "y": 456, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 302, "y": 374, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 216, "name": "room_dw_mansion_east_4f_e", "w": 640, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": -32, "y": 302, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 627, "y": 304, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 560, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 217, "name": "room_dw_mansion_east_4f_a", "w": 640, "h": 480, "n": 7, "insts": [
+    {"obj": "obj_savepoint", "x": 240, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 617, "y": 255, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 570, "y": 257, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB_musfade", "x": -9, "y": 274, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 24, "y": 253, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 350, "y": 459, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markers", "x": 377, "y": 361, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 218, "name": "room_dw_mansion_east_2f_ufo_old", "w": 640, "h": 1920, "n": 9, "insts": [
+    {"obj": "obj_lockedDoor_mansion_east_2f_transformed_new", "x": 400, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorW", "x": 155, "y": 223, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 179, "y": 285, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 412, "y": 267, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 395, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 227, "y": 1901, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 298, "y": 1804, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": -15, "y": 1670, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 39, "y": 1691, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 219, "name": "room_dw_mansion_east_1f_d", "w": 2320, "h": 720, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": -9, "y": 269, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2290, "y": 270, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 36, "y": 262, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2218, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 220, "name": "room_dw_mansion_east_1f_c", "w": 640, "h": 480, "n": 6, "insts": [
+    {"obj": "obj_doorW", "x": 244, "y": 147, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -9, "y": 269, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 618, "y": 270, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 553, "y": 257, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 281, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 221, "name": "room_dw_mansion_sparks", "w": 1920, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": 1904, "y": 259, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 1816, "y": 265, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 222, "name": "room_dw_mansion_acid_tunnel_old", "w": 3720, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": -16, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 40, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 3711, "y": 256, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 3597, "y": 278, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 223, "name": "room_dw_mansion_top_post_old", "w": 2560, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerA", "x": 42, "y": 257, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -35, "y": 261, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 224, "name": "room_dw_mansion_elevator", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 262, "y": 466, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 280, "y": 360, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 242, "name": "room_dw_cyber_battle_maze_2_old", "w": 1760, "h": 3000, "n": 6, "insts": [
+    {"obj": "obj_markerC", "x": 299, "y": 2893, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorD", "x": 280, "y": 2980, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 920, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 955, "y": 21, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1704, "y": 2703, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1750, "y": 2720, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 244, "name": "room_dw_cyber_tasque_battle_og", "w": 1320, "h": 1080, "n": 6, "insts": [
+    {"obj": "obj_doorA_musfade", "x": 717, "y": 19, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -6, "y": 221, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 45, "y": 213, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 759, "y": 22, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorC", "x": 1300, "y": 880, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerD", "x": 1261, "y": 880, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 245, "name": "room_dw_cyber_savepoint_original", "w": 640, "h": 480, "n": 5, "insts": [
+    {"obj": "obj_savepoint", "x": 320, "y": 160, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": -6, "y": 198, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 622, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 32, "y": 178, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 563, "y": 182, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 246, "name": "room_dw_cyber_battle_maze_1_Original", "w": 1280, "h": 960, "n": 6, "insts": [
+    {"obj": "obj_doorB", "x": -11, "y": 62, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1268, "y": 749, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 40, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1200, "y": 720, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 1201, "y": 68, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1261, "y": 61, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 247, "name": "room_dw_cyber_music_bullet_original", "w": 1280, "h": 1920, "n": 4, "insts": [
+    {"obj": "obj_doorB", "x": -18, "y": 1689, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 1680, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1265, "y": 272, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1194, "y": 250, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 248, "name": "room_dw_cyber_maze_virokun_backuo", "w": 640, "h": 960, "n": 8, "insts": [
+    {"obj": "obj_doorW", "x": 161, "y": -12, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -4, "y": 159, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 23, "y": 157, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 158, "y": 944, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 629, "y": 636, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 558, "y": 636, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 178, "y": 878, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 175, "y": 24, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 249, "name": "room_dw_cyber_battle_maze_2_toby", "w": 1360, "h": 1040, "n": 10, "insts": [
+    {"obj": "obj_doorB", "x": -21, "y": 576, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 33, "y": 563, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1351, "y": 93, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1294, "y": 102, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 154, "y": 1029, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 171, "y": 949, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 471, "y": 1027, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 498, "y": 945, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 791, "y": -7, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 818, "y": 26, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 250, "name": "room_dw_city_big_1_original", "w": 1280, "h": 480, "n": 8, "insts": [
+    {"obj": "obj_doorB", "x": 211, "y": -21, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 280, "y": 40, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 889, "y": -16, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": -22, "y": 264, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1266, "y": 250, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1200, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 40, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 960, "y": 40, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 251, "name": "room_dw_city_traffic_2_old", "w": 1720, "h": 480, "n": 12, "insts": [
+    {"obj": "obj_charmarker", "x": 190, "y": 100, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 240, "y": 100, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 290, "y": 100, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1049, "y": 102, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1099, "y": 102, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1149, "y": 102, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": -12, "y": 100, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 80, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1702, "y": 99, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1600, "y": 160, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 1342, "y": -11, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 1400, "y": 40, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 252, "name": "room_dw_city_big_2_OG", "w": 1880, "h": 960, "n": 6, "insts": [
+    {"obj": "obj_doorW", "x": 705, "y": -13, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 840, "y": 40, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": -15, "y": 148, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 80, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 231, "y": 947, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 360, "y": 840, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 253, "name": "room_dw_city_mice2_og", "w": 1160, "h": 480, "n": 1, "insts": [
+    {"obj": "obj_markerA", "x": 22, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 254, "name": "room_dw_mansion_east_teacup_4_old", "w": 640, "h": 4800, "n": 4, "insts": [
+    {"obj": "obj_markerB", "x": 300, "y": 1360, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorA", "x": 280, "y": 1330, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 260, "y": 4780, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 300, "y": 4680, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 255, "name": "room_dw_cyber_teacup_1", "w": 960, "h": 960, "n": 6, "insts": [
+    {"obj": "obj_doorB", "x": -14, "y": 649, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 39, "y": 647, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 948, "y": 148, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 879, "y": 137, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": -16, "y": 159, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markeru", "x": 44, "y": 143, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 256, "name": "room_dw_cyber_viromaze2", "w": 2160, "h": 1240, "n": 2, "insts": [
+    {"obj": "obj_markerA", "x": 24, "y": 266, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorB", "x": 0, "y": 280, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 257, "name": "room_dw_city_traffic_5_old", "w": 1960, "h": 480, "n": 23, "insts": [
+    {"obj": "obj_savepoint", "x": 445, "y": 229, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 650, "y": 300, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 600, "y": 300, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 550, "y": 300, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 550, "y": 340, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 600, "y": 340, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 650, "y": 340, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 548, "y": 248, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 598, "y": 248, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 648, "y": 248, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1428, "y": 248, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1478, "y": 248, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1528, "y": 248, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1530, "y": 340, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1480, "y": 340, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1430, "y": 340, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1430, "y": 300, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1480, "y": 300, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1530, "y": 300, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": 78, "y": -18, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 200, "y": 40, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1946, "y": 224, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1840, "y": 240, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 258, "name": "room_dw_mansion_dining_storage_old", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorW", "x": 0, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 25, "y": 222, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 259, "name": "room_dw_cyber_virovirokun_fight", "w": 2560, "h": 640, "n": 2, "insts": [
+    {"obj": "obj_doorB", "x": -6, "y": 435, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 20, "y": 416, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 260, "name": "room_dw_mansion_east_2f_d_backup", "w": 1280, "h": 480, "n": 4, "insts": [
+    {"obj": "obj_doorW", "x": 1261, "y": 265, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markert", "x": 1210, "y": 258, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 193, "y": -17, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 217, "y": 14, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 261, "name": "room_dw_city_traffic_3_backup", "w": 2000, "h": 2800, "n": 35, "insts": [
+    {"obj": "obj_charmarker", "x": 320, "y": 280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 270, "y": 280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 220, "y": 280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 720, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 760, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 800, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 240, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 320, "y": 760, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 270, "y": 760, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 220, "y": 760, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 720, "y": 760, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 760, "y": 760, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 800, "y": 760, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 720, "y": 1640, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 760, "y": 1640, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 800, "y": 1640, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 1640, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 1640, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 1640, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1000, "y": 2280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 960, "y": 2280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 920, "y": 2280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1640, "y": 280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1680, "y": 280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_charmarker", "x": 1720, "y": 280, "layer": "OBJECTS_MAIN", "depth": "0"},
+    {"obj": "obj_doorB", "x": -10, "y": 269, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 1970, "y": 257, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 40, "y": 246, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 80, "y": 720, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": -35, "y": 722, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 80, "y": 2299, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 1875, "y": 320, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorw_musfade", "x": -21, "y": 2277, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 262, "name": "room_cc_lancer", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_markerX", "x": 307, "y": 361, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_doorW", "x": 269, "y": 459, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 263, "name": "room_cc_clover", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_doorD_musfade", "x": 280, "y": 470, "layer": "Compatibility_Instances_Depth_0", "depth": "0"},
+    {"obj": "obj_markerC", "x": 300, "y": 390, "layer": "Compatibility_Instances_Depth_0", "depth": "0"}
+  ]},
+  {"index": 264, "name": "room_cc_fountain", "w": 640, "h": 480, "n": 2, "insts": [
+    {"obj": "obj_fountainkris", "x": 300, "y": 260, "layer": "Compatibility_Instances_Depth_10", "depth": "10"},
+    {"obj": "obj_darkfountain", "x": 224, "y": 0, "layer": "Compatibility_Instances_Depth_1100000", "depth": "1100000"}
+  ]},
+  {"index": 265, "name": "room_dw_city_big_3_og", "w": 2120, "h": 1720, "n": 6, "insts": [
+    {"obj": "obj_doorB", "x": -24, "y": 149, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorA", "x": 2080, "y": 120, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerB", "x": 2000, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerA", "x": 80, "y": 200, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 2101, "y": 835, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 2000, "y": 880, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 266, "name": "room_dw_mansion_bridgesold", "w": 800, "h": 960, "n": 6, "insts": [
+    {"obj": "obj_doorW", "x": 780, "y": 560, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerX", "x": 60, "y": 860, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 40, "y": 940, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_doorW", "x": 640, "y": 0, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerw", "x": 736, "y": 515, "layer": "COLLISION_DOOR", "depth": "100"},
+    {"obj": "obj_markerv", "x": 640, "y": 24, "layer": "COLLISION_DOOR", "depth": "100"}
+  ]},
+  {"index": 267, "name": "room_dw_city_sidewayscars", "w": 800, "h": 800, "n": 1, "insts": [
+    {"obj": "obj_charmarker", "x": 280, "y": 320, "layer": "OBJECTS_MAIN", "depth": "0"}
+  ]}
+]
+}

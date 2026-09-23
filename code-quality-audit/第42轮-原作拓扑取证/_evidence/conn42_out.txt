@@ -1,0 +1,126 @@
+==============================================================================
+A. 带条件 (room == X) → room_goto(Y) 的配对表
+==============================================================================
+  总对=38  涉及 Code 条目=3
+
+  ## gml_Object_obj_doorW_Alarm_2   pairs=6
+      room_town_south            -> room_hospital_lobby          (13 -> 18)
+      room_hospital_lobby        -> room_town_south              (18 -> 13)
+      room_town_mid              -> room_alphysalley             (11 -> 27)
+      room_alphysalley           -> room_town_mid                (27 -> 11)
+      room_town_north            -> room_beach                   (9 -> 10)
+      room_beach                 -> room_town_north              (10 -> 9)
+
+  ## gml_Object_obj_doorX_Alarm_2   pairs=19
+      room_castle_town           -> room_castle_tutorial         (45 -> 47)
+      room_castle_tutorial       -> room_castle_town             (47 -> 45)
+      room_town_south            -> room_library                 (13 -> 26)
+      room_library               -> room_town_south              (26 -> 13)
+      room_town_church           -> room_townhall                (15 -> 23)
+      room_townhall              -> room_town_church             (23 -> 15)
+      room_schoollobby           -> room_town_school             (29 -> 14)
+      room_town_school           -> room_schoollobby             (14 -> 29)
+      room_town_mid              -> room_diner                   (11 -> 22)
+      room_diner                 -> room_town_mid                (22 -> 11)
+      room_town_north            -> room_flowershop_1f           (9 -> 24)
+      room_flowershop_1f         -> room_town_north              (24 -> 9)
+      room_cc_prisonlancer       -> room_cc_prison_cells         (106 -> 105)
+      room_cc_prison_cells       -> room_cc_prisonlancer         (105 -> 106)
+      room_forest_secret1        -> room_forest_dancers1         (86 -> 85)
+      room_forest_dancers1       -> room_forest_secret1          (85 -> 86)
+      room_forest_savepoint3     -> room_forest_savepoint_relax   (96 -> 90)
+      room_forest_maze1          -> room_forest_savepoint_relax   (91 -> 90)
+      room_forest_maze2          -> room_forest_maze_susie       (94 -> 93)
+
+  ## gml_Object_obj_doorX_musfade_Alarm_2   pairs=13
+      room_castle_town           -> room_castle_tutorial         (45 -> 47)
+      room_castle_tutorial       -> room_castle_town             (47 -> 45)
+      room_field_shop1           -> room_shop1                   (59 -> 133)
+      room_man                   -> room_forest_savepoint2       (142 -> 82)
+      room_town_krisyard         -> room_torhouse                (7 -> 5)
+      room_torhouse              -> room_town_krisyard           (5 -> 7)
+      room_town_school           -> room_schoollobby             (14 -> 29)
+      room_schoollobby           -> room_town_school             (29 -> 14)
+      room_cc_5f                 -> room_shop2                   (123 -> 134)
+      room_cc_prison_to_elevator -> room_cc_prisonelevator       (107 -> 109)
+      room_cc_1f                 -> room_cc_prisonelevator       (114 -> 109)
+      room_cc_prison_prejoker    -> room_cc_prisonelevator       (111 -> 109)
+      room_cc_entrance           -> room_forest_castlefront      (113 -> 104)
+
+==============================================================================
+B. 无条件 room_goto(Y)（current room 未知）
+==============================================================================
+   gml_Object_obj_insideclosetcutscene_Step_0   -> room_dark1                 (34)
+   gml_Object_obj_darkdoor_Step_0               -> room_insidecloset          (32)
+   gml_Object_obj_schoollobbycutscene_Step_0    -> room_alphysclass           (30)
+   gml_Object_obj_schoollobbycutscene_Step_0    -> room_schooldoor            (31)
+   gml_Object_obj_carcutscene_Step_0            -> room_town_north            (9)
+   gml_Object_obj_carcutscene_Step_0            -> room_town_mid              (11)
+   gml_Object_obj_carcutscene_Step_0            -> room_town_south            (13)
+   gml_Object_obj_carcutscene_Step_0            -> room_town_school           (14)
+   gml_Object_obj_carcutscene_Step_0            -> room_schoollobby           (29)
+   gml_Object_obj_krisroom_Step_0               -> room_myroom_dark           (136)
+   gml_Object_obj_krisroom_Step_0               -> room_dark1                 (34)
+   gml_Object_obj_darkdoorevent_Step_0          -> room_field_start           (49)
+   gml_Object_obj_doorX_Alarm_2                 -> room_forest_maze1          (91)
+   gml_Object_obj_doorX_Alarm_2                 -> room_forest_savepoint3     (96)
+   gml_Object_obj_doorX_Alarm_2                 -> room_forest_savepoint_relax (90)
+   gml_Object_obj_doorX_Alarm_2                 -> room_forest_maze2          (94)
+   gml_Object_obj_doorX_Alarm_2                 -> room_forest_fightsusie     (97)
+   gml_Object_obj_doorX_Alarm_2                 -> room_forest_castlefront    (104)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_man                   (142)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_forest_starwalker     (88)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_cc_prisonelevator     (109)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_cc_prison_to_elevator (107)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_cc_1f                 (114)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_cc_5f                 (123)
+   gml_Object_obj_doorX_musfade_Alarm_2         -> room_cc_prison_prejoker    (111)
+   gml_Object_obj_darkfountain_event_Draw_0     -> room_school_unusedroom     (33)
+   gml_Object_DEVICE_CONTACT_Step_0             -> room_krisroom              (2)
+   gml_Object_DEVICE_CONTACT_Step_0             -> room_krisroom              (2)
+
+==============================================================================
+C. room_goto_next / previous
+==============================================================================
+   gml_Object_obj_doorA_Alarm_2                 room_goto_next
+   gml_Object_obj_doorA_musfade_Alarm_2         room_goto_next
+   gml_Object_obj_doorB_musfade_Alarm_2         room_goto_previous
+   gml_Object_obj_doorB_Alarm_2                 room_goto_previous
+   gml_Object_obj_doorX_Alarm_2                 room_goto_previous
+   gml_Object_obj_doorX_Alarm_2                 room_goto_next
+
+==============================================================================
+D. 双向成对性检验（同一 Code 内 X->Y 与 Y->X 是否都在）
+==============================================================================
+
+  ## gml_Object_obj_doorW_Alarm_2  双向对=3  单向=0
+      <=> room_town_north           room_beach              
+      <=> room_town_mid             room_alphysalley        
+      <=> room_town_south           room_hospital_lobby     
+
+  ## gml_Object_obj_doorX_Alarm_2  双向对=8  单向=3
+      <=> room_town_north           room_flowershop_1f      
+      <=> room_town_mid             room_diner              
+      <=> room_town_south           room_library            
+      <=> room_town_school          room_schoollobby        
+      <=> room_town_church          room_townhall           
+      <=> room_castle_town          room_castle_tutorial    
+      <=> room_forest_dancers1      room_forest_secret1     
+      <=> room_cc_prison_cells      room_cc_prisonlancer    
+      --> room_forest_maze1        -> room_forest_savepoint_relax
+      --> room_forest_maze2        -> room_forest_maze_susie  
+      --> room_forest_savepoint3   -> room_forest_savepoint_relax
+
+  ## gml_Object_obj_doorX_musfade_Alarm_2  双向对=3  单向=7
+      <=> room_torhouse             room_town_krisyard      
+      <=> room_town_school          room_schoollobby        
+      <=> room_castle_town          room_castle_tutorial    
+      --> room_field_shop1         -> room_shop1              
+      --> room_cc_prison_to_elevator -> room_cc_prisonelevator  
+      --> room_cc_prison_prejoker  -> room_cc_prisonelevator  
+      --> room_cc_entrance         -> room_forest_castlefront 
+      --> room_cc_1f               -> room_cc_prisonelevator  
+      --> room_cc_5f               -> room_shop2              
+      --> room_man                 -> room_forest_savepoint2  
+
+落盘: E:\Download\_tmp\conn42.json (4633 B)

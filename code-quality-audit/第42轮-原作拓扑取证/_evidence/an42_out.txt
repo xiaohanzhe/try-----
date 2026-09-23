@@ -1,0 +1,395 @@
+==============================================================================
+A. 32 房间实例数 + 对象直方图 Top10
+==============================================================================
+  [ 2] room_krisroom              320x240   n=26    obj_solidblock x13, obj_readable_room1 x7, obj_mainchara x1, obj_doorA x1, obj_markerB x1, obj_npc_room x1, obj_overworldc x1, obj_krisroom x1
+  [ 3] room_krishallway           540x240   n=22    obj_solidblock x9, obj_readable_room1 x5, obj_mainchara x1, obj_doorB x1, obj_markerA x1, obj_doorC x1, obj_markerD x1, obj_event_room x1, obj_overworldc x1, obj_hallway_mirror x1
+  [ 4] room_torroom               320x240   n=2     obj_mainchara x1, obj_overworldc x1
+  [ 5] room_torhouse              700x240   n=42    obj_solidblock x12, obj_readable_room1 x8, obj_sul x5, obj_sur x4, obj_mainchara x1, obj_doorD x1, obj_markerC x1, obj_doorA x1, obj_markerB x1, obj_doorX_musfade x1
+  [ 6] room_torbathroom           320x240   n=16    obj_solidblock x5, obj_readable_room1 x3, obj_sur x2, obj_mainchara x1, obj_doorB x1, obj_markerA x1, obj_town_event x1, obj_overworldc x1, obj_sul x1
+  [ 7] room_town_krisyard         320x420   n=28    obj_solidblock x15, obj_sdl x2, obj_mainchara x1, obj_sdr x1, obj_doorC x1, obj_markerD x1, obj_doorX_musfade x1, obj_markerX x1, obj_npc_sign x1, obj_carcutscene x1
+  [ 8] room_town_northwest        320x240   n=2     obj_mainchara x1, obj_overworldc x1
+  [ 9] room_town_north           1800x240   n=52    obj_solidblock x22, obj_readable_room1 x9, obj_sul x4, obj_npc_room x3, obj_mainchara x1, obj_npc_facing x1, obj_doorC x1, obj_markerD x1, obj_npc_sign x1, obj_doorX x1
+  [10] room_beach                 600x240   n=13    obj_solidblock x3, obj_npc_sign x2, obj_npc_room x2, obj_mainchara x1, obj_onion_event x1, obj_doorB x1, obj_markerA x1, obj_overworldc x1, obj_wave_fx x1
+  [11] room_town_mid             2040x240   n=57    obj_solidblock x33, obj_readable_room1 x7, obj_npc_room_animated x2, obj_npc_room x2, obj_mainchara x1, obj_84_lang_helper x1, obj_npc_facing x1, obj_town_event x1, obj_doorC x1, obj_markerD x1
+  [12] room_town_apartments       920x240   n=2     obj_mainchara x1, obj_overworldc x1
+  [13] room_town_south           1320x240   n=41    obj_solidblock x15, obj_readable_room1 x6, obj_npc_room x2, obj_sul x2, obj_mainchara x1, obj_84_lang_helper x1, obj_npc_facing x1, obj_doorX x1, obj_markerX x1, obj_town_event x1
+  [14] room_town_school           580x320   n=21    obj_solidblock x12, obj_sdr x2, obj_mainchara x1, obj_markerX x1, obj_doorB x1, obj_markerA x1, obj_doorX_musfade x1, obj_musicer_town x1, obj_overworldc x1
+  [15] room_town_church           760x640   n=39    obj_solidblock x21, obj_sdr x3, obj_mainchara x1, obj_doorX x1, obj_markerX x1, obj_npc_room x1, obj_sdl x1, obj_doorC_musfade x1, obj_markerD x1, obj_doorA x1
+  [16] room_graveyard             600x240   n=27    obj_solidblock x15, obj_readable_room1 x4, obj_mainchara x1, obj_markerX x1, obj_npc_room x1, obj_doorB x1, obj_markerA x1, obj_town_event x1, obj_overworldc x1, obj_sur x1
+  [17] room_town_shelter          320x1240  n=29    obj_solidblock x11, obj_sdl x3, obj_sdr x3, obj_sul x3, obj_sur x3, obj_mainchara x1, obj_readable_room1 x1, obj_markerC x1, obj_doorD_musfade x1, obj_overworldc x1
+  [18] room_hospital_lobby        320x240   n=24    obj_solidblock x15, obj_readable_room1 x2, obj_mainchara x1, obj_doorW x1, obj_npc_room x1, obj_doorA x1, obj_markerB x1, obj_markerw x1, obj_overworldc x1
+  [19] room_hospital_hallway      320x240   n=18    obj_solidblock x9, obj_mainchara x1, obj_doorB x1, obj_markerA x1, obj_doorA x1, obj_doorC x1, obj_markerB x1, obj_markerD x1, obj_readable_room1 x1, obj_overworldc x1
+  [20] room_hospital_rudy         320x240   n=25    obj_solidblock x13, obj_readable_room1 x6, obj_doorB x2, obj_mainchara x1, obj_markerA x1, obj_overworldc x1, obj_rudy x1
+  [21] room_hospital_room2        320x240   n=19    obj_solidblock x10, obj_readable_room1 x5, obj_mainchara x1, obj_doorD x1, obj_markerC x1, obj_overworldc x1
+  [22] room_diner                 320x240   n=25    obj_solidblock x11, obj_npc_room x7, obj_mainchara x1, obj_doorX x1, obj_markerX x1, obj_readable_room1 x1, obj_npc_room_animated x1, obj_overworldc x1, obj_sur x1
+  [23] room_townhall              320x240   n=21    obj_solidblock x10, obj_npc_room x3, obj_readable_room1 x3, obj_mainchara x1, obj_sdl x1, obj_doorX x1, obj_markerX x1, obj_overworldc x1
+  [24] room_flowershop_1f         320x240   n=29    obj_solidblock x12, obj_readable_room1 x6, obj_doorA x2, obj_markerB x2, obj_mainchara x1, obj_doorX x1, obj_markerX x1, obj_overworldc x1, obj_sul x1, obj_sur x1
+  [25] room_flowershop_2f         320x240   n=35    obj_solidblock x13, obj_readable_room1 x8, obj_npc_sign x7, obj_doorB x2, obj_markerA x2, obj_mainchara x1, obj_overworldc x1, obj_flowershop_event x1
+  [26] room_library               320x240   n=32    obj_solidblock x14, obj_readable_room1 x8, obj_npc_facing x3, obj_doorX x2, obj_mainchara x1, obj_84_lang_helper x1, obj_npc_room x1, obj_markerX x1, obj_overworldc x1
+  [27] room_alphysalley           320x240   n=14    obj_solidblock x5, obj_readable_room1 x3, obj_mainchara x1, obj_npc_facing x1, obj_alphysalley_event x1, obj_doorW x1, obj_markerw x1, obj_overworldc x1
+  [28] room_torielclass           320x240   n=31    obj_solidblock x16, obj_readable_room1 x9, obj_mainchara x1, obj_84_lang_helper x1, obj_doorA x1, obj_markerB x1, obj_overworldc x1, obj_torielclass_event x1
+  [29] room_schoollobby           940x420   n=46    obj_solidblock x20, obj_readable_room1 x13, obj_sul x2, obj_mainchara x1, obj_schoollobbycutscene x1, obj_markerB x1, obj_doorA x1, obj_markerD x1, obj_markerX x1, obj_doorC x1
+  [30] room_alphysclass           320x240   n=41    obj_solidblock x16, obj_schooldesk x9, obj_npc_facing x6, obj_readable_room1 x4, obj_mainchara x1, obj_tem_school x1, obj_alphysdesk x1, obj_classscene x1, obj_markerA x1, obj_overworldc x1
+  [31] room_schooldoor            620x240   n=20    obj_solidblock x9, obj_doorD x3, obj_readable_room1 x2, obj_mainchara x1, obj_markerC x1, obj_markerD x1, obj_doorC x1, obj_overworldc x1, obj_darkdoor x1
+  [32] room_insidecloset          820x500   n=29    obj_fallpaper x23, obj_solidblock x3, obj_mainchara x1, obj_overworldc x1, obj_insideclosetcutscene x1
+  [33] room_school_unusedroom     320x240   n=21    obj_solidblock x8, obj_readable_room1 x6, obj_sul x2, obj_mainchara x1, obj_doorD x1, obj_markerC x1, obj_overworldc x1, obj_unusedclassevent x1
+
+==============================================================================
+B. 关键实例（门 / 记号 / 事件 / NPC / 存档 / 车）坐标明细
+==============================================================================
+
+  [ 2] room_krisroom  320x240
+       obj_mainchara                      x=246       y=97         None
+       obj_doorA                          x=155       y=230        None
+       obj_markerB                        x=155       y=185        None
+       obj_npc_room                       x=235       y=165        None
+
+  [ 3] room_krishallway  540x240
+       obj_mainchara                      x=242       y=128        None
+       obj_doorB                          x=289       y=104        None
+       obj_markerA                        x=289       y=112        None
+       obj_doorC                          x=425       y=100        None
+       obj_markerD                        x=426       y=118        None
+       obj_event_room                     x=416       y=160        None
+
+  [ 4] room_torroom  320x240
+       obj_mainchara                      x=140       y=100        None
+
+  [ 5] room_torhouse  700x240
+       obj_mainchara                      x=144       y=140        None
+       obj_doorD                          x=144       y=68         None
+       obj_markerC                        x=144       y=90         None
+       obj_doorA                          x=84        y=168        None
+       obj_markerB                        x=108       y=148        None
+       obj_doorX_musfade                  x=594       y=149        None
+       obj_markerX                        x=567       y=136        None
+       obj_npc_room                       x=422       y=106        None
+       obj_sdr                            x=202       y=193        None
+       obj_event_room                     x=68        y=30         None
+
+  [ 6] room_torbathroom  320x240
+       obj_mainchara                      x=216       y=120        None
+       obj_doorB                          x=236       y=134        None
+       obj_markerA                        x=216       y=120        None
+       obj_town_event                     x=166       y=26         None
+
+  [ 7] room_town_krisyard  320x420
+       obj_mainchara                      x=160       y=186        None
+       obj_sdr                            x=284       y=300        None
+       obj_doorC                          x=120       y=410        None
+       obj_markerD                        x=160       y=362        None
+       obj_doorX_musfade                  x=158       y=168        None
+       obj_markerX                        x=158       y=182        None
+       obj_npc_sign                       x=230       y=120        None
+       obj_carcutscene                    x=160       y=250        None
+       obj_musicer_town                   x=90        y=218        None
+       obj_event_room                     x=192       y=256        None
+
+  [ 8] room_town_northwest  320x240
+       obj_mainchara                      x=140       y=100        None
+
+  [ 9] room_town_north  1800x240
+       obj_mainchara                      x=660       y=180        None
+       obj_npc_facing                     x=220       y=178        None
+       obj_doorC                          x=625       y=230        None
+       obj_markerD                        x=660       y=180        None
+       obj_npc_room                       x=564       y=70         None
+       obj_npc_room                       x=672       y=50         None
+       obj_npc_room                       x=916       y=58         None
+       obj_npc_sign                       x=1442      y=44         None
+       obj_doorX                          x=1258      y=98         None
+       obj_markerX                        x=1258      y=112        None
+       obj_doorA                          x=1790      y=100        None
+       obj_markerB                        x=1764      y=104        None
+       obj_sdr                            x=1476      y=202        None
+       obj_doorD                          x=378       y=-12        None
+       obj_markerC                        x=418       y=4          None
+
+  [10] room_beach  600x240
+       obj_mainchara                      x=10        y=100        None
+       obj_onion_event                    x=365       y=120        None
+       obj_doorB                          x=-15       y=60         None
+       obj_markerA                        x=10        y=100        None
+       obj_npc_sign                       x=80        y=150        None
+       obj_npc_sign                       x=160       y=150        None
+       obj_npc_room                       x=90        y=70         None
+       obj_npc_room                       x=120       y=70         None
+
+  [11] room_town_mid  2040x240
+       obj_mainchara                      x=820       y=140        None
+       obj_npc_facing                     x=1098      y=110        None
+       obj_npc_room_animated              x=200       y=80         None
+       obj_npc_room_animated              x=430       y=80         None
+       obj_town_event                     x=90        y=39         None
+       obj_doorC                          x=772       y=232        None
+       obj_markerD                        x=820       y=184        None
+       obj_doorD                          x=780       y=0          None
+       obj_markerC                        x=820       y=8          None
+       obj_doorX                          x=600       y=90         None
+       obj_markerX                        x=600       y=105        None
+       obj_doorW                          x=1740      y=-10        None
+       obj_markerw                        x=1768      y=0          None
+       obj_npc_room                       x=1830      y=90         None
+       obj_npc_room                       x=1912      y=90         None
+
+  [12] room_town_apartments  920x240
+       obj_mainchara                      x=140       y=100        None
+
+  [13] room_town_south  1320x240
+       obj_mainchara                      x=1289      y=131        None
+       obj_npc_facing                     x=713       y=188        None
+       obj_npc_room                       x=647       y=160        None
+       obj_npc_room                       x=747       y=160        None
+       obj_doorX                          x=1000      y=80         None
+       obj_markerX                        x=1005      y=95         None
+       obj_town_event                     x=160       y=40         None
+       obj_doorW                          x=600       y=80         None
+       obj_markerw                        x=611       y=91         None
+       obj_doorA                          x=1314      y=106        None
+       obj_markerB                        x=1288      y=129        None
+       obj_doorC                          x=798       y=235        None
+       obj_markerD                        x=839       y=188        None
+       obj_doorD                          x=798       y=1          None
+       obj_markerC                        x=839       y=9          None
+       obj_musicer_town                   x=829       y=62         None
+
+  [14] room_town_school  580x320
+       obj_mainchara                      x=18        y=216        None
+       obj_sdr                            x=520       y=260        None
+       obj_sdr                            x=500       y=280        None
+       obj_markerX                        x=373       y=135        None
+       obj_doorB                          x=2         y=182        None
+       obj_markerA                        x=12        y=210        None
+       obj_doorX_musfade                  x=360       y=120        None
+       obj_musicer_town                   x=140       y=60         None
+
+  [15] room_town_church  760x640
+       obj_mainchara                      x=420       y=180        None
+       obj_doorX                          x=565       y=85         None
+       obj_markerX                        x=572       y=95         None
+       obj_npc_room                       x=285       y=290        None
+       obj_sdr                            x=500       y=440        None
+       obj_sdr                            x=520       y=420        None
+       obj_sdr                            x=540       y=320        None
+       obj_doorC_musfade                  x=380       y=630        None
+       obj_markerD                        x=430       y=580        None
+       obj_doorA                          x=0         y=340        None
+       obj_markerB                        x=10        y=350        None
+       obj_doorD                          x=360       y=0          None
+       obj_markerC                        x=420       y=0          None
+       obj_musicer_town                   x=415       y=400        None
+       obj_church_event                   x=220       y=0          None
+
+  [16] room_graveyard  600x240
+       obj_mainchara                      x=570       y=130        None
+       obj_markerX                        x=570       y=130        None
+       obj_npc_room                       x=26        y=56         None
+       obj_doorB                          x=595       y=115        None
+       obj_markerA                        x=570       y=130        None
+       obj_town_event                     x=192       y=148        None
+
+  [17] room_town_shelter  320x1240
+       obj_mainchara                      x=150       y=40         None
+       obj_markerC                        x=150       y=20         None
+       obj_doorD_musfade                  x=120       y=0          None
+       obj_sdr                            x=60        y=1146       None
+       obj_sdr                            x=80        y=1126       None
+       obj_sdr                            x=100       y=1106       None
+       obj_town_shelter_event             x=54        y=1046       None
+
+  [18] room_hospital_lobby  320x240
+       obj_mainchara                      x=150       y=190        None
+       obj_doorW                          x=140       y=230        None
+       obj_npc_room                       x=158       y=62         None
+       obj_doorA                          x=70        y=76         None
+       obj_markerB                        x=76        y=88         None
+       obj_markerw                        x=150       y=188        None
+
+  [19] room_hospital_hallway  320x240
+       obj_mainchara                      x=150       y=138        None
+       obj_doorB                          x=140       y=186        None
+       obj_markerA                        x=150       y=138        None
+       obj_doorA                          x=79        y=75         None
+       obj_doorC                          x=190       y=77         None
+       obj_markerB                        x=90        y=84         None
+       obj_markerD                        x=210       y=85         None
+
+  [20] room_hospital_rudy  320x240
+       obj_mainchara                      x=150       y=190        None
+       obj_doorB                          x=140       y=230        None
+       obj_doorB                          x=160       y=230        None
+       obj_markerA                        x=150       y=190        None
+
+  [21] room_hospital_room2  320x240
+       obj_mainchara                      x=150       y=186        None
+       obj_doorD                          x=140       y=236        None
+       obj_markerC                        x=150       y=186        None
+
+  [22] room_diner  320x240
+       obj_mainchara                      x=150       y=190        None
+       obj_doorX                          x=140       y=230        None
+       obj_markerX                        x=150       y=190        None
+       obj_npc_room                       x=130       y=83         None
+       obj_npc_room                       x=270       y=149        None
+       obj_npc_room                       x=205       y=165        None
+       obj_npc_room                       x=84        y=174        None
+       obj_npc_room                       x=26        y=151        None
+       obj_npc_room                       x=250       y=100        None
+       obj_npc_room                       x=185       y=96         None
+       obj_npc_room_animated              x=250       y=140        None
+
+  [23] room_townhall  320x240
+       obj_mainchara                      x=150       y=190        None
+       obj_npc_room                       x=52        y=112        None
+       obj_npc_room                       x=140       y=56         None
+       obj_npc_room                       x=220       y=90         None
+       obj_doorX                          x=140       y=230        None
+       obj_markerX                        x=150       y=190        None
+
+  [24] room_flowershop_1f  320x240
+       obj_mainchara                      x=150       y=190        None
+       obj_doorX                          x=140       y=230        None
+       obj_markerX                        x=150       y=190        None
+       obj_doorA                          x=20        y=44         None
+       obj_doorA                          x=260       y=46         None
+       obj_markerB                        x=36        y=56         None
+       obj_markerB                        x=262       y=56         None
+       obj_flowershop_event               x=136       y=30         None
+
+  [25] room_flowershop_2f  320x240
+       obj_mainchara                      x=30        y=195        None
+       obj_doorB                          x=20        y=235        None
+       obj_doorB                          x=260       y=235        None
+       obj_markerA                        x=30        y=195        None
+       obj_markerA                        x=270       y=195        None
+       obj_npc_sign                       x=145       y=105        None
+       obj_npc_sign                       x=115       y=105        None
+       obj_npc_sign                       x=173       y=105        None
+       obj_npc_sign                       x=95        y=120        None
+       obj_npc_sign                       x=192       y=120        None
+       obj_npc_sign                       x=95        y=145        None
+       obj_npc_sign                       x=193       y=145        None
+       obj_flowershop_event               x=255       y=175        None
+
+  [26] room_library  320x240
+       obj_mainchara                      x=150       y=185        None
+       obj_npc_facing                     x=180       y=200        None
+       obj_npc_facing                     x=261       y=199        None
+       obj_npc_facing                     x=80        y=200        None
+       obj_npc_room                       x=205       y=57         None
+       obj_markerX                        x=150       y=180        None
+       obj_doorX                          x=140       y=230        None
+       obj_doorX                          x=160       y=230        None
+
+  [27] room_alphysalley  320x240
+       obj_mainchara                      x=150       y=190        None
+       obj_npc_facing                     x=138       y=118        None
+       obj_alphysalley_event              x=26        y=92         None
+       obj_doorW                          x=120       y=235        None
+       obj_markerw                        x=150       y=190        None
+
+  [28] room_torielclass  320x240
+       obj_mainchara                      x=60        y=80         None
+       obj_doorA                          x=57        y=46         None
+       obj_markerB                        x=57        y=55         None
+       obj_torielclass_event              x=79        y=-5         None
+
+  [29] room_schoollobby  940x420
+       obj_mainchara                      x=460       y=360        None
+       obj_schoollobbycutscene            x=280       y=130        None
+       obj_markerB                        x=110       y=200        None
+       obj_doorA                          x=110       y=194        None
+       obj_markerD                        x=460       y=-6         None
+       obj_markerX                        x=460       y=360        None
+       obj_doorC                          x=440       y=-10        None
+       obj_doorB                          x=830       y=194        None
+       obj_markerA                        x=830       y=202        None
+       obj_doorX_musfade                  x=440       y=415        None
+
+  [30] room_alphysclass  320x240
+       obj_mainchara                      x=260       y=110        None
+       obj_npc_facing                     x=76        y=152        None
+       obj_npc_facing                     x=148       y=152        None
+       obj_npc_facing                     x=70        y=182        None
+       obj_npc_facing                     x=213       y=216        None
+       obj_npc_facing                     x=73        y=216        None
+       obj_npc_facing                     x=213       y=184        None
+       obj_markerA                        x=242       y=52         None
+
+  [31] room_schooldoor  620x240
+       obj_mainchara                      x=300       y=140        None
+       obj_markerC                        x=300       y=190        None
+       obj_doorD                          x=300       y=230        None
+       obj_doorD                          x=280       y=230        None
+       obj_doorD                          x=320       y=230        None
+       obj_markerD                        x=510       y=100        None
+       obj_doorC                          x=500       y=95         None
+       obj_darkdoor                       x=288       y=62         None
+
+  [32] room_insidecloset  820x500
+       obj_mainchara                      x=85        y=90         None
+       obj_insideclosetcutscene           x=148       y=80         None
+
+  [33] room_school_unusedroom  320x240
+       obj_mainchara                      x=182       y=84         None
+       obj_doorD                          x=140       y=180        None
+       obj_markerC                        x=150       y=136        None
+       obj_unusedclassevent               x=138       y=42         None
+
+==============================================================================
+C. 全部实例名去重计数（32 房间）
+==============================================================================
+  去重对象数=53  实例总数=849
+    obj_solidblock                         x370
+    obj_readable_room1                     x127
+    obj_mainchara                          x32
+    obj_overworldc                         x32
+    obj_npc_room                           x25
+    obj_fallpaper                          x23
+    obj_sul                                x20
+    obj_markerX                            x13
+    obj_sur                                x13
+    obj_npc_facing                         x13
+    obj_doorA                              x11
+    obj_markerB                            x11
+    obj_doorB                              x11
+    obj_markerA                            x11
+    obj_sdr                                x11
+    obj_npc_sign                           x11
+    obj_doorD                              x10
+    obj_markerD                            x9
+    obj_markerC                            x9
+    obj_doorX                              x9
+    obj_schooldesk                         x9
+    obj_doorC                              x8
+    obj_sdl                                x8
+    obj_doorX_musfade                      x4
+    obj_town_event                         x4
+    obj_musicer_town                       x4
+    obj_84_lang_helper                     x4
+    obj_doorW                              x4
+    obj_markerw                            x4
+    obj_event_room                         x3
+    obj_npc_room_animated                  x3
+    obj_flowershop_event                   x2
+    obj_krisroom                           x1
+    obj_hallway_mirror                     x1
+    obj_solidlong                          x1
+    obj_carcutscene                        x1
+    obj_onion_event                        x1
+    obj_wave_fx                            x1
+    obj_doorC_musfade                      x1
+    obj_soliddark                          x1
+    obj_church_event                       x1
+    obj_doorD_musfade                      x1
+    obj_town_shelter_event                 x1
+    obj_rudy                               x1
+    obj_alphysalley_event                  x1
+    obj_torielclass_event                  x1
+    obj_schoollobbycutscene                x1
+    obj_tem_school                         x1
+    obj_alphysdesk                         x1
+    obj_classscene                         x1
+    obj_darkdoor                           x1
+    obj_insideclosetcutscene               x1
+    obj_unusedclassevent                   x1

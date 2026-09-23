@@ -1,0 +1,208 @@
+==============================================================================
+A. 五章 conn42b 总览
+==============================================================================
+  chapter1_windows   rooms=147  codes=1680   with_rg=44   items=104 
+  chapter2_windows   rooms=278  codes=6707   with_rg=66   items=268 
+  chapter3_windows   rooms=246  codes=9258   with_rg=106  items=165 
+  chapter4_windows   rooms=328  codes=12232  with_rg=114  items=172 
+  chapter5_windows   rooms=252  codes=18016  with_rg=91   items=136 
+  items 合计 = 845
+
+==============================================================================
+B. 五章门对象分布（哪个 obj_door* 承担连接）
+==============================================================================
+  chapter1_windows   {'obj_doorX': 27, 'obj_doorX_musfade': 20, 'obj_doorw_musfade': 6, 'obj_doorW': 6, 'obj_carcutscene': 5, 'gml_Object_PROCESS_LOGO_Draw_0': 3, 'gml_Object_obj_legend_Draw_0': 3, 'gml_GlobalScript_scr_gameover': 2, 'obj_schoollobbycutscene': 2, 'obj_krisroom': 2}
+  chapter2_windows   {'obj_doorW': 151, 'obj_doorX': 27, 'obj_doorw_musfade': 13, 'obj_mainchara': 8, 'obj_doorX_musfade': 8, 'gml_Object_PROCESS_LOGO_Draw_0': 3, 'gml_Object_obj_legend_neo_Draw_0': 3, 'gml_Object_obj_darkfountain_event_Draw_0': 2, 'obj_title_placeholder': 2, 'obj_shop_ch2_music': 2}
+  chapter3_windows   {'obj_doorW': 26, 'obj_doorX': 22, 'obj_mainchara': 7, 'obj_doorX_musfade': 6, 'obj_doorw_musfade': 4, 'obj_room_green_room': 3, 'obj_tenna_zoom': 3, 'obj_shootout_controller': 3, 'obj_room_interstitial': 3, 'obj_title_placeholder': 3}
+  chapter4_windows   {'obj_doorW': 26, 'obj_doorX': 23, 'obj_doorX_musfade': 8, 'obj_mainchara': 7, 'obj_dw_church_worshiproom': 4, 'obj_doorw_musfade': 4, 'obj_dw_gerson_study': 3, 'obj_climb_titan_kris_throw_off_sequence': 3, 'gml_Object_obj_darkfountain_event_Draw_0': 3, 'DEVICE_CONTACT_old': 3}
+  chapter5_windows   {'obj_doorW': 26, 'obj_doorX': 22, 'obj_mainchara': 7, 'obj_doorX_musfade': 6, 'obj_ch5_LW20W_rotate': 4, 'obj_doorw_musfade': 4, 'obj_gameover_init': 3, 'DEVICE_CONTACT_old': 3, 'gml_Object_PROCESS_LOGO_Draw_0': 3, 'obj_room_castle_tv_mike_door': 2}
+
+==============================================================================
+C. 五章里「涉及 town 的门表条目」（src 或 dst 名字含 town）
+==============================================================================
+
+  ## chapter1_windows   28 条
+                                   -> room_town_north               [goto] obj_carcutscene_Step_0
+                                   -> room_town_mid                 [goto] obj_carcutscene_Step_0
+                                   -> room_town_south               [goto] obj_carcutscene_Step_0
+                                   -> room_town_school              [goto] obj_carcutscene_Step_0
+      room_castle_town             -> room_castle_tutorial          [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_castle_town              [goto] obj_doorX_Alarm_2
+      room_town_south              -> room_library                  [goto] obj_doorX_Alarm_2
+      room_library                 -> room_town_south               [goto] obj_doorX_Alarm_2
+      room_town_church             -> room_townhall                 [goto] obj_doorX_Alarm_2
+      room_townhall                -> room_town_church              [goto] obj_doorX_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_Alarm_2
+      room_town_mid                -> room_diner                    [goto] obj_doorX_Alarm_2
+      room_diner                   -> room_town_mid                 [goto] obj_doorX_Alarm_2
+      room_town_north              -> room_flowershop_1f            [goto] obj_doorX_Alarm_2
+      room_flowershop_1f           -> room_town_north               [goto] obj_doorX_Alarm_2
+      room_castle_town             -> room_castle_tutorial          [goto] obj_doorX_musfade_Alarm_2
+      room_castle_tutorial         -> room_castle_town              [goto] obj_doorX_musfade_Alarm_2
+      room_town_krisyard           -> room_torhouse                 [goto] obj_doorX_musfade_Alarm_2
+      room_torhouse                -> room_town_krisyard            [goto] obj_doorX_musfade_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_musfade_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_musfade_Alarm_2
+      room_town_south              -> room_hospital_lobby           [goto] obj_doorW_Alarm_2
+      room_hospital_lobby          -> room_town_south               [goto] obj_doorW_Alarm_2
+      room_town_mid                -> room_alphysalley              [goto] obj_doorW_Alarm_2
+      room_alphysalley             -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_town_north              -> room_beach                    [goto] obj_doorW_Alarm_2
+      room_beach                   -> room_town_north               [goto] obj_doorW_Alarm_2
+
+  ## chapter2_windows   25 条
+      room_castle_town             -> room_castle_tutorial          [goto] obj_doorX_Alarm_2
+      room_town_south              -> room_library                  [goto] obj_doorX_Alarm_2
+      room_library                 -> room_town_south               [goto] obj_doorX_Alarm_2
+      room_town_church             -> room_townhall                 [goto] obj_doorX_Alarm_2
+      room_townhall                -> room_town_church              [goto] obj_doorX_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_Alarm_2
+      room_town_mid                -> room_diner                    [goto] obj_doorX_Alarm_2
+      room_diner                   -> room_town_mid                 [goto] obj_doorX_Alarm_2
+      room_town_north              -> room_flowershop_1f            [goto] obj_doorX_Alarm_2
+      room_flowershop_1f           -> room_town_north               [goto] obj_doorX_Alarm_2
+      room_castle_town             -> room_castle_tutorial          [goto] obj_doorX_musfade_Alarm_2
+      room_castle_tutorial         -> room_castle_town              [goto] obj_doorX_musfade_Alarm_2
+      room_town_krisyard           -> room_torhouse                 [goto] obj_doorX_musfade_Alarm_2
+      room_torhouse                -> room_town_krisyard            [goto] obj_doorX_musfade_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_musfade_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_musfade_Alarm_2
+      room_lw_conbini              -> room_town_mid                 [goto] obj_doorw_musfade_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorw_musfade_Alarm_2
+      room_hospital_lobby          -> room_town_south               [goto] obj_doorW_Alarm_2
+      room_alphysalley             -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_town_north              -> room_beach                    [goto] obj_doorW_Alarm_2
+      room_beach                   -> room_town_north               [goto] obj_doorW_Alarm_2
+      room_lw_icee_pizza           -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorW_Alarm_2
+
+  ## chapter3_windows   34 条
+                                   -> room_town_krisyard_dark       [goto] obj_ch3_PTB02_Step_0
+                                   -> room_town_shelter             [goto] obj_ch3_PTB04_church_Step_0
+                                   -> room_town_church              [goto] obj_ch3_PTB04_krisyard_Step_0
+      room_town_krisyard_dark      -> room_town_church              [goto] obj_doorC_Alarm_2
+      room_town_south              -> room_library                  [goto] obj_doorX_Alarm_2
+      room_library                 -> room_town_south               [goto] obj_doorX_Alarm_2
+      room_town_church             -> room_townhall                 [goto] obj_doorX_Alarm_2
+      room_townhall                -> room_town_church              [goto] obj_doorX_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_Alarm_2
+      room_town_mid                -> room_diner                    [goto] obj_doorX_Alarm_2
+      room_diner                   -> room_town_mid                 [goto] obj_doorX_Alarm_2
+      room_town_north              -> room_flowershop_1f            [goto] obj_doorX_Alarm_2
+      room_flowershop_1f           -> room_town_north               [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_cafe          -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_restaurant    -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_dojo          -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_west_cliff    -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_area_1        -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_dw_castle_town           [goto] obj_doorX_musfade_Alarm_2
+      room_town_krisyard           -> room_torhouse                 [goto] obj_doorX_musfade_Alarm_2
+      room_torhouse                -> room_town_krisyard            [goto] obj_doorX_musfade_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_musfade_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_musfade_Alarm_2
+      room_dw_castle_town          -> room_shop1                    [goto] obj_doorX_musfade_Alarm_2
+      room_lw_conbini              -> room_town_mid                 [goto] obj_doorw_musfade_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorw_musfade_Alarm_2
+      room_hospital_lobby          -> room_town_south               [goto] obj_doorW_Alarm_2
+      room_alphysalley             -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_town_north              -> room_beach                    [goto] obj_doorW_Alarm_2
+      room_beach                   -> room_town_north               [goto] obj_doorW_Alarm_2
+      room_lw_icee_pizza           -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorW_Alarm_2
+
+  ## chapter4_windows   36 条
+                                   -> room_town_noellehouse         [goto] obj_ch4_PDC14C_Step_0
+                                   -> room_town_krisyard_dark       [goto] obj_ch4_LWF04_Step_0
+                                   -> room_town_church              [goto] obj_ch4_LWF01_Step_0
+      room_town_south              -> room_library                  [goto] obj_doorX_Alarm_2
+      room_library                 -> room_town_south               [goto] obj_doorX_Alarm_2
+      room_town_church             -> room_townhall                 [goto] obj_doorX_Alarm_2
+      room_townhall                -> room_town_church              [goto] obj_doorX_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_Alarm_2
+      room_town_mid                -> room_diner                    [goto] obj_doorX_Alarm_2
+      room_diner                   -> room_town_mid                 [goto] obj_doorX_Alarm_2
+      room_town_north              -> room_flowershop_1f            [goto] obj_doorX_Alarm_2
+      room_flowershop_1f           -> room_town_north               [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_cafe          -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_restaurant    -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_tv_rhythm     -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_dojo          -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_west_cliff    -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_area_1        -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_dw_castle_town           [goto] obj_doorX_musfade_Alarm_2
+      room_town_krisyard           -> room_torhouse                 [goto] obj_doorX_musfade_Alarm_2
+                                   -> room_town_krisyard            [goto] obj_doorX_musfade_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_musfade_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_musfade_Alarm_2
+      room_dw_castle_town          -> room_shop1                    [goto] obj_doorX_musfade_Alarm_2
+      room_lw_conbini              -> room_town_mid                 [goto] obj_doorw_musfade_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorw_musfade_Alarm_2
+      room_hospital_lobby          -> room_town_south               [goto] obj_doorW_Alarm_2
+      room_alphysalley             -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_town_north              -> room_beach                    [goto] obj_doorW_Alarm_2
+      room_beach                   -> room_town_north               [goto] obj_doorW_Alarm_2
+      room_lw_icee_pizza           -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorW_Alarm_2
+                                   -> room_town_church              [goto] obj_ch4_PDC04_Step_0
+                                   -> room_dw_castle_town           [goto] obj_shop_music_Alarm_3
+
+  ## chapter5_windows   39 条
+                                   -> room_town_noellehouse         [goto] obj_ch5_LW20W_rotate_Create_0
+                                   -> room_town_school              [goto] obj_ch5_LW20W_rotate_Step_0
+                                   -> room_town_school              [goto] obj_ch5_LWF_town_south_Step_0
+                                   -> room_town_north               [goto] obj_ch5_LW20_Step_0
+                                   -> room_town_north               [goto] obj_ch5_LWF01_Step_0
+                                   -> room_dw_castle_town           [goto] obj_credits_ch5_castle_area_1_Create_0
+                                   -> room_town_mid                 [goto] obj_ch5_LWF_town_north_Step_0
+                                   -> room_town_mid                 [goto] obj_ch5_LWF02_Step_0
+                                   -> room_town_south               [goto] obj_ch5_LWF_town_mid_Step_0
+      room_town_south              -> room_library                  [goto] obj_doorX_Alarm_2
+      room_library                 -> room_town_south               [goto] obj_doorX_Alarm_2
+      room_town_church             -> room_townhall                 [goto] obj_doorX_Alarm_2
+      room_townhall                -> room_town_church              [goto] obj_doorX_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_Alarm_2
+      room_town_mid                -> room_diner                    [goto] obj_doorX_Alarm_2
+      room_diner                   -> room_town_mid                 [goto] obj_doorX_Alarm_2
+      room_town_north              -> room_flowershop_1f            [goto] obj_doorX_Alarm_2
+      room_flowershop_1f           -> room_town_north               [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_cafe          -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_restaurant    -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_dojo          -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_west_cliff    -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_dw_castle_area_1        -> room_dw_castle_town           [goto] obj_doorX_Alarm_2
+      room_castle_tutorial         -> room_dw_castle_town           [goto] obj_doorX_musfade_Alarm_2
+      room_town_krisyard           -> room_torhouse                 [goto] obj_doorX_musfade_Alarm_2
+      room_torhouse                -> room_town_krisyard            [goto] obj_doorX_musfade_Alarm_2
+      room_town_school             -> room_schoollobby              [goto] obj_doorX_musfade_Alarm_2
+      room_schoollobby             -> room_town_school              [goto] obj_doorX_musfade_Alarm_2
+      room_dw_castle_town          -> room_shop1                    [goto] obj_doorX_musfade_Alarm_2
+      room_lw_conbini              -> room_town_mid                 [goto] obj_doorw_musfade_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorw_musfade_Alarm_2
+      room_hospital_lobby          -> room_town_south               [goto] obj_doorW_Alarm_2
+      room_alphysalley             -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_town_north              -> room_beach                    [goto] obj_doorW_Alarm_2
+      room_beach                   -> room_town_north               [goto] obj_doorW_Alarm_2
+      room_lw_icee_pizza           -> room_town_mid                 [goto] obj_doorW_Alarm_2
+      room_lw_police               -> room_town_south               [goto] obj_doorW_Alarm_2
+
+==============================================================================
+D. 五章房间名：现实世界（非 dark/field/forest/cc/castle 等）分类计数
+==============================================================================
+  chapter1_windows   总=147  现实=30   含 room_town_* = 10
+       现实世界前 40: ['room_krisroom', 'room_krishallway', 'room_torroom', 'room_torhouse', 'room_torbathroom', 'room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_beach', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_graveyard', 'room_town_shelter', 'room_hospital_lobby', 'room_hospital_hallway', 'room_hospital_rudy', 'room_hospital_room2', 'room_diner', 'room_townhall', 'room_library', 'room_alphysalley', 'room_torielclass', 'room_schoollobby', 'room_alphysclass', 'room_schooldoor', 'room_insidecloset', 'room_school_unusedroom']
+  chapter2_windows   总=278  现实=224  含 room_town_* = 10
+       现实世界前 40: ['room_gms_debug_failsafe', 'room_title_placeholder', 'room_cutscene_tester', 'room_sound_tester', 'room_sprite_tester', 'room_gif_tester', 'room_bullettest', 'room_teacup_demoauto', 'room_teacup_demobullets', 'room_shaun_puzzle', 'room_GMS2_test', 'room_cutscene_tester_b', 'room_debug_color', 'room_debug_battle', 'room_debug_loc', 'room_krisroom', 'room_krishallway', 'room_torroom', 'room_torhouse', 'room_torbathroom', 'room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_beach', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_graveyard', 'room_town_shelter', 'room_hospital_lobby', 'room_hospital_hallway', 'room_hospital_rudy', 'room_hospital_room2', 'room_diner', 'room_townhall', 'room_library', 'room_alphysalley', 'room_lw_computer_lab']
+  chapter3_windows   总=246  现实=198  含 room_town_* = 11
+       现实世界前 40: ['room_gms_debug_failsafe', 'room_title_placeholder', 'room_cutscene_tester', 'room_sound_tester', 'room_sprite_tester', 'room_gif_tester', 'room_bullettest', 'room_GMS2_test', 'room_cutscene_tester_b', 'room_debug_color', 'room_debug_battle', 'room_debug_loc', 'room_krisroom', 'room_krishallway', 'room_torroom', 'room_torhouse', 'room_torbathroom', 'room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_beach', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_graveyard', 'room_town_shelter', 'room_hospital_lobby', 'room_hospital_hallway', 'room_hospital_rudy', 'room_hospital_room2', 'room_diner', 'room_townhall', 'room_library', 'room_alphysalley', 'room_lw_computer_lab', 'room_lw_library_upstairs', 'room_lw_police', 'room_lw_conbini']
+  chapter4_windows   总=328  现实=255  含 room_town_* = 12
+       现实世界前 40: ['room_gms_debug_failsafe', 'room_title_placeholder', 'room_cutscene_tester', 'room_sound_tester', 'room_sprite_tester', 'room_gif_tester', 'room_bullettest', 'room_GMS2_test', 'room_cutscene_tester_b', 'room_debug_color', 'room_debug_battle', 'room_debug_loc', 'room_krisroom', 'room_krishallway', 'room_torroom', 'room_torhouse', 'room_torbathroom', 'room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_beach', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_graveyard', 'room_town_shelter', 'room_hospital_lobby', 'room_hospital_hallway', 'room_hospital_rudy', 'room_hospital_room2', 'room_diner', 'room_townhall', 'room_library', 'room_alphysalley', 'room_lw_computer_lab', 'room_lw_library_upstairs', 'room_lw_police', 'room_lw_conbini']
+  chapter5_windows   总=252  现实=131  含 room_town_* = 11
+       现实世界前 40: ['room_gms_debug_failsafe', 'room_cutscene_tester', 'room_sound_tester', 'room_sprite_tester', 'room_gif_tester', 'room_GMS2_test', 'room_cutscene_tester_b', 'room_debug_color', 'room_debug_battle', 'room_debug_loc', 'room_krisroom', 'room_krishallway', 'room_torroom', 'room_torhouse', 'room_torbathroom', 'room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_beach', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_graveyard', 'room_town_shelter', 'room_hospital_lobby', 'room_hospital_hallway', 'room_hospital_rudy', 'room_hospital_room2', 'room_diner', 'room_townhall', 'room_library', 'room_alphysalley', 'room_lw_computer_lab', 'room_lw_library_upstairs', 'room_lw_police', 'room_lw_conbini', 'room_lw_icee_pizza', 'room_torielclass']

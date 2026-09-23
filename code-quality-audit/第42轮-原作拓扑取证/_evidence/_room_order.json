@@ -1,0 +1,6306 @@
+{
+ "schema_version": 1,
+ "meta": {
+  "note": "原作五章「房间全序表」——直接取自 data.win 的 Data.Rooms 列表下标。原作的房间顺序就是这份列表的顺序；门对象的 ±1/±2/±3 位移全部基于本表下标。",
+  "source": "UTMT CLI v0.9.2.0 读 Data.Rooms（五章 data.win 副本，只读不落盘）",
+  "why": "用户口径：「所有 room 排序和连接都按照原作，相当于场景复现」。本表 = 排序真相；_room_graph.json = 连接真相。",
+  "field_kind": "home 克里斯家 / town 街道 / town_life 邻接生活区+店铺 / dark 暗世界 / field_forest 田野森林 / card_castle 扑克城堡 / system 系统房间 / debug 调试房间 / other 未归类"
+ },
+ "chapters": {
+  "ch1": {
+   "folder": "chapter1_windows",
+   "name": "第一章",
+   "display_alias": "The Beginning",
+   "n_rooms": 147,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "ROOM_INITIALIZE",
+     "kind": "system"
+    },
+    {
+     "index": 1,
+     "name": "PLACE_CONTACT",
+     "kind": "system"
+    },
+    {
+     "index": 2,
+     "name": "room_krisroom",
+     "kind": "home"
+    },
+    {
+     "index": 3,
+     "name": "room_krishallway",
+     "kind": "home"
+    },
+    {
+     "index": 4,
+     "name": "room_torroom",
+     "kind": "home"
+    },
+    {
+     "index": 5,
+     "name": "room_torhouse",
+     "kind": "home"
+    },
+    {
+     "index": 6,
+     "name": "room_torbathroom",
+     "kind": "home"
+    },
+    {
+     "index": 7,
+     "name": "room_town_krisyard",
+     "kind": "town"
+    },
+    {
+     "index": 8,
+     "name": "room_town_northwest",
+     "kind": "town"
+    },
+    {
+     "index": 9,
+     "name": "room_town_north",
+     "kind": "town"
+    },
+    {
+     "index": 10,
+     "name": "room_beach",
+     "kind": "town_life"
+    },
+    {
+     "index": 11,
+     "name": "room_town_mid",
+     "kind": "town"
+    },
+    {
+     "index": 12,
+     "name": "room_town_apartments",
+     "kind": "town"
+    },
+    {
+     "index": 13,
+     "name": "room_town_south",
+     "kind": "town"
+    },
+    {
+     "index": 14,
+     "name": "room_town_school",
+     "kind": "town"
+    },
+    {
+     "index": 15,
+     "name": "room_town_church",
+     "kind": "town"
+    },
+    {
+     "index": 16,
+     "name": "room_graveyard",
+     "kind": "town_life"
+    },
+    {
+     "index": 17,
+     "name": "room_town_shelter",
+     "kind": "town"
+    },
+    {
+     "index": 18,
+     "name": "room_hospital_lobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 19,
+     "name": "room_hospital_hallway",
+     "kind": "town_life"
+    },
+    {
+     "index": 20,
+     "name": "room_hospital_rudy",
+     "kind": "town_life"
+    },
+    {
+     "index": 21,
+     "name": "room_hospital_room2",
+     "kind": "town_life"
+    },
+    {
+     "index": 22,
+     "name": "room_diner",
+     "kind": "town_life"
+    },
+    {
+     "index": 23,
+     "name": "room_townhall",
+     "kind": "town"
+    },
+    {
+     "index": 24,
+     "name": "room_flowershop_1f",
+     "kind": "town_life"
+    },
+    {
+     "index": 25,
+     "name": "room_flowershop_2f",
+     "kind": "town_life"
+    },
+    {
+     "index": 26,
+     "name": "room_library",
+     "kind": "town_life"
+    },
+    {
+     "index": 27,
+     "name": "room_alphysalley",
+     "kind": "town_life"
+    },
+    {
+     "index": 28,
+     "name": "room_torielclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 29,
+     "name": "room_schoollobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 30,
+     "name": "room_alphysclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 31,
+     "name": "room_schooldoor",
+     "kind": "town_life"
+    },
+    {
+     "index": 32,
+     "name": "room_insidecloset",
+     "kind": "town_life"
+    },
+    {
+     "index": 33,
+     "name": "room_school_unusedroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 34,
+     "name": "room_dark1",
+     "kind": "dark"
+    },
+    {
+     "index": 35,
+     "name": "room_dark1a",
+     "kind": "dark"
+    },
+    {
+     "index": 36,
+     "name": "room_dark2",
+     "kind": "dark"
+    },
+    {
+     "index": 37,
+     "name": "room_dark3",
+     "kind": "dark"
+    },
+    {
+     "index": 38,
+     "name": "room_dark3a",
+     "kind": "dark"
+    },
+    {
+     "index": 39,
+     "name": "room_dark_wobbles",
+     "kind": "dark"
+    },
+    {
+     "index": 40,
+     "name": "room_dark_eyepuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 41,
+     "name": "room_dark7",
+     "kind": "dark"
+    },
+    {
+     "index": 42,
+     "name": "room_dark_chase1",
+     "kind": "dark"
+    },
+    {
+     "index": 43,
+     "name": "room_dark_chase2",
+     "kind": "dark"
+    },
+    {
+     "index": 44,
+     "name": "room_castle_outskirts",
+     "kind": "dark"
+    },
+    {
+     "index": 45,
+     "name": "room_castle_town",
+     "kind": "dark"
+    },
+    {
+     "index": 46,
+     "name": "room_castle_front",
+     "kind": "dark"
+    },
+    {
+     "index": 47,
+     "name": "room_castle_tutorial",
+     "kind": "dark"
+    },
+    {
+     "index": 48,
+     "name": "room_castle_darkdoor",
+     "kind": "dark"
+    },
+    {
+     "index": 49,
+     "name": "room_field_start",
+     "kind": "field_forest"
+    },
+    {
+     "index": 50,
+     "name": "room_field_forest",
+     "kind": "field_forest"
+    },
+    {
+     "index": 51,
+     "name": "room_field1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 52,
+     "name": "room_field2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 53,
+     "name": "room_field2A",
+     "kind": "field_forest"
+    },
+    {
+     "index": 54,
+     "name": "room_field_topchef",
+     "kind": "field_forest"
+    },
+    {
+     "index": 55,
+     "name": "room_field_puzzle1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 56,
+     "name": "room_field_maze",
+     "kind": "field_forest"
+    },
+    {
+     "index": 57,
+     "name": "room_field_puzzle2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 58,
+     "name": "room_field_getsusie",
+     "kind": "field_forest"
+    },
+    {
+     "index": 59,
+     "name": "room_field_shop1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 60,
+     "name": "room_field_puzzletutorial",
+     "kind": "field_forest"
+    },
+    {
+     "index": 61,
+     "name": "room_field3",
+     "kind": "field_forest"
+    },
+    {
+     "index": 62,
+     "name": "room_field_boxpuzzle",
+     "kind": "field_forest"
+    },
+    {
+     "index": 63,
+     "name": "room_field4",
+     "kind": "field_forest"
+    },
+    {
+     "index": 64,
+     "name": "room_field_secret1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 65,
+     "name": "room_field_checkers4",
+     "kind": "field_forest"
+    },
+    {
+     "index": 66,
+     "name": "room_field_checkers2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 67,
+     "name": "room_field_checkers6",
+     "kind": "field_forest"
+    },
+    {
+     "index": 68,
+     "name": "room_field_checkers3",
+     "kind": "field_forest"
+    },
+    {
+     "index": 69,
+     "name": "room_field_checkers1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 70,
+     "name": "room_field_checkers5",
+     "kind": "field_forest"
+    },
+    {
+     "index": 71,
+     "name": "room_field_checkers7",
+     "kind": "field_forest"
+    },
+    {
+     "index": 72,
+     "name": "room_field_checkersboss",
+     "kind": "field_forest"
+    },
+    {
+     "index": 73,
+     "name": "room_forest_savepoint1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 74,
+     "name": "room_forest_area0",
+     "kind": "field_forest"
+    },
+    {
+     "index": 75,
+     "name": "room_forest_area1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 76,
+     "name": "room_forest_area2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 77,
+     "name": "room_forest_area2A",
+     "kind": "field_forest"
+    },
+    {
+     "index": 78,
+     "name": "room_forest_puzzle1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 79,
+     "name": "room_forest_beforeclover",
+     "kind": "field_forest"
+    },
+    {
+     "index": 80,
+     "name": "room_forest_area3A",
+     "kind": "field_forest"
+    },
+    {
+     "index": 81,
+     "name": "room_forest_area3",
+     "kind": "field_forest"
+    },
+    {
+     "index": 82,
+     "name": "room_forest_savepoint2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 83,
+     "name": "room_forest_smith",
+     "kind": "field_forest"
+    },
+    {
+     "index": 84,
+     "name": "room_forest_area4",
+     "kind": "field_forest"
+    },
+    {
+     "index": 85,
+     "name": "room_forest_dancers1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 86,
+     "name": "room_forest_secret1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 87,
+     "name": "room_forest_thrashmaker",
+     "kind": "field_forest"
+    },
+    {
+     "index": 88,
+     "name": "room_forest_starwalker",
+     "kind": "field_forest"
+    },
+    {
+     "index": 89,
+     "name": "room_forest_area5",
+     "kind": "field_forest"
+    },
+    {
+     "index": 90,
+     "name": "room_forest_savepoint_relax",
+     "kind": "field_forest"
+    },
+    {
+     "index": 91,
+     "name": "room_forest_maze1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 92,
+     "name": "room_forest_maze_deadend",
+     "kind": "field_forest"
+    },
+    {
+     "index": 93,
+     "name": "room_forest_maze_susie",
+     "kind": "field_forest"
+    },
+    {
+     "index": 94,
+     "name": "room_forest_maze2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 95,
+     "name": "room_forest_maze_deadend2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 96,
+     "name": "room_forest_savepoint3",
+     "kind": "field_forest"
+    },
+    {
+     "index": 97,
+     "name": "room_forest_fightsusie",
+     "kind": "field_forest"
+    },
+    {
+     "index": 98,
+     "name": "room_forest_afterthrash2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 99,
+     "name": "room_forest_afterthrash3",
+     "kind": "field_forest"
+    },
+    {
+     "index": 100,
+     "name": "room_forest_afterthrash4",
+     "kind": "field_forest"
+    },
+    {
+     "index": 101,
+     "name": "room_forest_castleview",
+     "kind": "dark"
+    },
+    {
+     "index": 102,
+     "name": "room_forest_chase1",
+     "kind": "field_forest"
+    },
+    {
+     "index": 103,
+     "name": "room_forest_chase2",
+     "kind": "field_forest"
+    },
+    {
+     "index": 104,
+     "name": "room_forest_castlefront",
+     "kind": "dark"
+    },
+    {
+     "index": 105,
+     "name": "room_cc_prison_cells",
+     "kind": "dark"
+    },
+    {
+     "index": 106,
+     "name": "room_cc_prisonlancer",
+     "kind": "dark"
+    },
+    {
+     "index": 107,
+     "name": "room_cc_prison_to_elevator",
+     "kind": "dark"
+    },
+    {
+     "index": 108,
+     "name": "room_cc_prison2",
+     "kind": "dark"
+    },
+    {
+     "index": 109,
+     "name": "room_cc_prisonelevator",
+     "kind": "dark"
+    },
+    {
+     "index": 110,
+     "name": "room_cc_elevator",
+     "kind": "card_castle"
+    },
+    {
+     "index": 111,
+     "name": "room_cc_prison_prejoker",
+     "kind": "dark"
+    },
+    {
+     "index": 112,
+     "name": "room_cc_joker",
+     "kind": "card_castle"
+    },
+    {
+     "index": 113,
+     "name": "room_cc_entrance",
+     "kind": "card_castle"
+    },
+    {
+     "index": 114,
+     "name": "room_cc_1f",
+     "kind": "card_castle"
+    },
+    {
+     "index": 115,
+     "name": "room_cc_rudinn",
+     "kind": "card_castle"
+    },
+    {
+     "index": 116,
+     "name": "room_cc_2f",
+     "kind": "card_castle"
+    },
+    {
+     "index": 117,
+     "name": "room_cc_rurus1",
+     "kind": "card_castle"
+    },
+    {
+     "index": 118,
+     "name": "room_cc_3f",
+     "kind": "card_castle"
+    },
+    {
+     "index": 119,
+     "name": "room_cc_hathy",
+     "kind": "card_castle"
+    },
+    {
+     "index": 120,
+     "name": "room_cc_4f",
+     "kind": "card_castle"
+    },
+    {
+     "index": 121,
+     "name": "room_cc_rurus2",
+     "kind": "card_castle"
+    },
+    {
+     "index": 122,
+     "name": "room_cc_clover",
+     "kind": "card_castle"
+    },
+    {
+     "index": 123,
+     "name": "room_cc_5f",
+     "kind": "card_castle"
+    },
+    {
+     "index": 124,
+     "name": "room_cc_lancer",
+     "kind": "card_castle"
+    },
+    {
+     "index": 125,
+     "name": "room_cc_6f",
+     "kind": "card_castle"
+    },
+    {
+     "index": 126,
+     "name": "room_cc_throneroom",
+     "kind": "card_castle"
+    },
+    {
+     "index": 127,
+     "name": "room_cc_preroof",
+     "kind": "card_castle"
+    },
+    {
+     "index": 128,
+     "name": "room_cc_kingbattle",
+     "kind": "card_castle"
+    },
+    {
+     "index": 129,
+     "name": "room_cc_prefountain",
+     "kind": "card_castle"
+    },
+    {
+     "index": 130,
+     "name": "room_cc_fountain",
+     "kind": "card_castle"
+    },
+    {
+     "index": 131,
+     "name": "PLACE_DOG",
+     "kind": "system"
+    },
+    {
+     "index": 132,
+     "name": "room_legend",
+     "kind": "system"
+    },
+    {
+     "index": 133,
+     "name": "room_shop1",
+     "kind": "other"
+    },
+    {
+     "index": 134,
+     "name": "room_shop2",
+     "kind": "other"
+    },
+    {
+     "index": 135,
+     "name": "room_gameover",
+     "kind": "system"
+    },
+    {
+     "index": 136,
+     "name": "room_myroom_dark",
+     "kind": "dark"
+    },
+    {
+     "index": 137,
+     "name": "PLACE_LOGO",
+     "kind": "system"
+    },
+    {
+     "index": 138,
+     "name": "PLACE_FAILURE",
+     "kind": "system"
+    },
+    {
+     "index": 139,
+     "name": "PLACE_MENU",
+     "kind": "system"
+    },
+    {
+     "index": 140,
+     "name": "room_ed",
+     "kind": "system"
+    },
+    {
+     "index": 141,
+     "name": "room_empty",
+     "kind": "system"
+    },
+    {
+     "index": 142,
+     "name": "room_man",
+     "kind": "system"
+    },
+    {
+     "index": 143,
+     "name": "room_DARKempty",
+     "kind": "system"
+    },
+    {
+     "index": 144,
+     "name": "room_battletest",
+     "kind": "system"
+    },
+    {
+     "index": 145,
+     "name": "room_splashscreen",
+     "kind": "system"
+    },
+    {
+     "index": 146,
+     "name": "room_chapter_continue",
+     "kind": "system"
+    }
+   ]
+  },
+  "ch2": {
+   "folder": "chapter2_windows",
+   "name": "第二章",
+   "display_alias": "A Cyber's World",
+   "n_rooms": 278,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "room_gms_debug_failsafe",
+     "kind": "debug"
+    },
+    {
+     "index": 1,
+     "name": "ROOM_INITIALIZE",
+     "kind": "system"
+    },
+    {
+     "index": 2,
+     "name": "room_title_placeholder",
+     "kind": "debug"
+    },
+    {
+     "index": 3,
+     "name": "room_battletest",
+     "kind": "system"
+    },
+    {
+     "index": 4,
+     "name": "room_cutscene_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 5,
+     "name": "room_sound_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 6,
+     "name": "room_sprite_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 7,
+     "name": "room_gif_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 8,
+     "name": "room_bullettest",
+     "kind": "debug"
+    },
+    {
+     "index": 9,
+     "name": "room_teacup_demoauto",
+     "kind": "debug"
+    },
+    {
+     "index": 10,
+     "name": "room_teacup_demobullets",
+     "kind": "debug"
+    },
+    {
+     "index": 11,
+     "name": "room_shaun_puzzle",
+     "kind": "debug"
+    },
+    {
+     "index": 12,
+     "name": "room_GMS2_test",
+     "kind": "debug"
+    },
+    {
+     "index": 13,
+     "name": "room_cutscene_tester_b",
+     "kind": "debug"
+    },
+    {
+     "index": 14,
+     "name": "room_debug_color",
+     "kind": "debug"
+    },
+    {
+     "index": 15,
+     "name": "room_debug_battle",
+     "kind": "debug"
+    },
+    {
+     "index": 16,
+     "name": "room_debug_loc",
+     "kind": "debug"
+    },
+    {
+     "index": 17,
+     "name": "PLACE_CONTACT",
+     "kind": "system"
+    },
+    {
+     "index": 18,
+     "name": "room_krisroom",
+     "kind": "home"
+    },
+    {
+     "index": 19,
+     "name": "room_krishallway",
+     "kind": "home"
+    },
+    {
+     "index": 20,
+     "name": "room_torroom",
+     "kind": "home"
+    },
+    {
+     "index": 21,
+     "name": "room_torhouse",
+     "kind": "home"
+    },
+    {
+     "index": 22,
+     "name": "room_torbathroom",
+     "kind": "home"
+    },
+    {
+     "index": 23,
+     "name": "room_town_krisyard",
+     "kind": "town"
+    },
+    {
+     "index": 24,
+     "name": "room_town_northwest",
+     "kind": "town"
+    },
+    {
+     "index": 25,
+     "name": "room_town_north",
+     "kind": "town"
+    },
+    {
+     "index": 26,
+     "name": "room_beach",
+     "kind": "town_life"
+    },
+    {
+     "index": 27,
+     "name": "room_town_mid",
+     "kind": "town"
+    },
+    {
+     "index": 28,
+     "name": "room_town_apartments",
+     "kind": "town"
+    },
+    {
+     "index": 29,
+     "name": "room_town_south",
+     "kind": "town"
+    },
+    {
+     "index": 30,
+     "name": "room_town_school",
+     "kind": "town"
+    },
+    {
+     "index": 31,
+     "name": "room_town_church",
+     "kind": "town"
+    },
+    {
+     "index": 32,
+     "name": "room_graveyard",
+     "kind": "town_life"
+    },
+    {
+     "index": 33,
+     "name": "room_town_shelter",
+     "kind": "town"
+    },
+    {
+     "index": 34,
+     "name": "room_hospital_lobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 35,
+     "name": "room_hospital_hallway",
+     "kind": "town_life"
+    },
+    {
+     "index": 36,
+     "name": "room_hospital_rudy",
+     "kind": "town_life"
+    },
+    {
+     "index": 37,
+     "name": "room_hospital_room2",
+     "kind": "town_life"
+    },
+    {
+     "index": 38,
+     "name": "room_diner",
+     "kind": "town_life"
+    },
+    {
+     "index": 39,
+     "name": "room_townhall",
+     "kind": "town"
+    },
+    {
+     "index": 40,
+     "name": "room_flowershop_1f",
+     "kind": "town_life"
+    },
+    {
+     "index": 41,
+     "name": "room_flowershop_2f",
+     "kind": "town_life"
+    },
+    {
+     "index": 42,
+     "name": "room_library",
+     "kind": "town_life"
+    },
+    {
+     "index": 43,
+     "name": "room_alphysalley",
+     "kind": "town_life"
+    },
+    {
+     "index": 44,
+     "name": "room_lw_computer_lab",
+     "kind": "town_life"
+    },
+    {
+     "index": 45,
+     "name": "room_lw_library_upstairs",
+     "kind": "town_life"
+    },
+    {
+     "index": 46,
+     "name": "room_lw_police",
+     "kind": "town_life"
+    },
+    {
+     "index": 47,
+     "name": "room_lw_conbini",
+     "kind": "town_life"
+    },
+    {
+     "index": 48,
+     "name": "room_lw_icee_pizza",
+     "kind": "town_life"
+    },
+    {
+     "index": 49,
+     "name": "room_torielclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 50,
+     "name": "room_schoollobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 51,
+     "name": "room_alphysclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 52,
+     "name": "room_schooldoor",
+     "kind": "town_life"
+    },
+    {
+     "index": 53,
+     "name": "room_insidecloset",
+     "kind": "town_life"
+    },
+    {
+     "index": 54,
+     "name": "room_school_unusedroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 55,
+     "name": "room_castle_town",
+     "kind": "dark"
+    },
+    {
+     "index": 56,
+     "name": "room_castle_tutorial",
+     "kind": "dark"
+    },
+    {
+     "index": 57,
+     "name": "room_dw_castle_west_cliff_old",
+     "kind": "dark"
+    },
+    {
+     "index": 58,
+     "name": "room_dw_castle_east_door",
+     "kind": "dark"
+    },
+    {
+     "index": 59,
+     "name": "room_dw_castle_west_cliff",
+     "kind": "dark"
+    },
+    {
+     "index": 60,
+     "name": "room_dw_castle_area_1",
+     "kind": "dark"
+    },
+    {
+     "index": 61,
+     "name": "room_dw_castle_area_2",
+     "kind": "dark"
+    },
+    {
+     "index": 62,
+     "name": "room_dw_castle_area_2_transformed",
+     "kind": "dark"
+    },
+    {
+     "index": 63,
+     "name": "room_dw_ralsei_castle_front",
+     "kind": "dark"
+    },
+    {
+     "index": 64,
+     "name": "room_dw_castle_restaurant",
+     "kind": "dark"
+    },
+    {
+     "index": 65,
+     "name": "room_dw_castle_cafe",
+     "kind": "dark"
+    },
+    {
+     "index": 66,
+     "name": "room_dw_castle_dojo",
+     "kind": "dark"
+    },
+    {
+     "index": 67,
+     "name": "room_dw_ralsei_castle_1f",
+     "kind": "dark"
+    },
+    {
+     "index": 68,
+     "name": "room_dw_ralsei_castle_2f",
+     "kind": "dark"
+    },
+    {
+     "index": 69,
+     "name": "room_dw_castle_dungeon",
+     "kind": "dark"
+    },
+    {
+     "index": 70,
+     "name": "room_dw_castle_rooms_hallway",
+     "kind": "dark"
+    },
+    {
+     "index": 71,
+     "name": "room_dw_castle_rooms_kris",
+     "kind": "dark"
+    },
+    {
+     "index": 72,
+     "name": "room_dw_castle_rooms_susie",
+     "kind": "dark"
+    },
+    {
+     "index": 73,
+     "name": "room_dw_castle_rooms_lancer",
+     "kind": "dark"
+    },
+    {
+     "index": 74,
+     "name": "room_dw_cyber_intro_1",
+     "kind": "dark"
+    },
+    {
+     "index": 75,
+     "name": "room_dw_cyber_intro_connector",
+     "kind": "dark"
+    },
+    {
+     "index": 76,
+     "name": "room_dw_cyber_intro_2",
+     "kind": "dark"
+    },
+    {
+     "index": 77,
+     "name": "room_dw_cyber_rhythm_slide",
+     "kind": "dark"
+    },
+    {
+     "index": 78,
+     "name": "room_dw_cyber_savepoint",
+     "kind": "dark"
+    },
+    {
+     "index": 79,
+     "name": "room_dw_cyber_battle_maze_1",
+     "kind": "dark"
+    },
+    {
+     "index": 80,
+     "name": "room_dw_cyber_music_bullet",
+     "kind": "dark"
+    },
+    {
+     "index": 81,
+     "name": "room_dw_cyber_tasque_battle",
+     "kind": "dark"
+    },
+    {
+     "index": 82,
+     "name": "room_dw_cyber_keyboard_puzzle_1",
+     "kind": "dark"
+    },
+    {
+     "index": 83,
+     "name": "room_dw_cyber_queen_boxing",
+     "kind": "dark"
+    },
+    {
+     "index": 84,
+     "name": "room_dw_cyber_musical_door",
+     "kind": "dark"
+    },
+    {
+     "index": 85,
+     "name": "room_dw_cyber_maze_virokun",
+     "kind": "dark"
+    },
+    {
+     "index": 86,
+     "name": "room_dw_cyber_keyboard_puzzle_2",
+     "kind": "dark"
+    },
+    {
+     "index": 87,
+     "name": "room_dw_cyber_battle_maze_2",
+     "kind": "dark"
+    },
+    {
+     "index": 88,
+     "name": "room_dw_cyber_music_final",
+     "kind": "dark"
+    },
+    {
+     "index": 89,
+     "name": "room_dw_cyber_musical_shop",
+     "kind": "dark"
+    },
+    {
+     "index": 90,
+     "name": "room_dw_cyber_teacup_final",
+     "kind": "debug"
+    },
+    {
+     "index": 91,
+     "name": "room_dw_cyber_rollercoaster",
+     "kind": "dark"
+    },
+    {
+     "index": 92,
+     "name": "room_dw_cyber_maze_fireworks",
+     "kind": "dark"
+    },
+    {
+     "index": 93,
+     "name": "room_dw_cyber_maze_tasque",
+     "kind": "dark"
+    },
+    {
+     "index": 94,
+     "name": "room_dw_cyber_maze_queenscreen",
+     "kind": "dark"
+    },
+    {
+     "index": 95,
+     "name": "room_dw_cyber_viro_ring",
+     "kind": "dark"
+    },
+    {
+     "index": 96,
+     "name": "room_dw_cyber_post_music_boss_slide",
+     "kind": "dark"
+    },
+    {
+     "index": 97,
+     "name": "room_dw_cyber_keyboard_puzzle_3",
+     "kind": "dark"
+    },
+    {
+     "index": 98,
+     "name": "room_dw_cyber_battle_maze_3",
+     "kind": "dark"
+    },
+    {
+     "index": 99,
+     "name": "room_dw_cyber_teacup_2",
+     "kind": "debug"
+    },
+    {
+     "index": 100,
+     "name": "room_dw_cyber_shaunsmusicalbullettunnel",
+     "kind": "debug"
+    },
+    {
+     "index": 101,
+     "name": "room_dw_cyber_maze_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 102,
+     "name": "room_dw_cyber_escalator_slide",
+     "kind": "dark"
+    },
+    {
+     "index": 103,
+     "name": "room_dw_cyber_nuberts_treasure",
+     "kind": "dark"
+    },
+    {
+     "index": 104,
+     "name": "room_dw_cyber_music_fight",
+     "kind": "dark"
+    },
+    {
+     "index": 105,
+     "name": "room_dw_cyber_keyboardexample",
+     "kind": "dark"
+    },
+    {
+     "index": 106,
+     "name": "room_dw_city_prototype_01",
+     "kind": "dark"
+    },
+    {
+     "index": 107,
+     "name": "room_dw_city_prototype_02",
+     "kind": "dark"
+    },
+    {
+     "index": 108,
+     "name": "room_dw_city_spamton_shop_exterior",
+     "kind": "dark"
+    },
+    {
+     "index": 109,
+     "name": "room_dw_city_spamton_house",
+     "kind": "dark"
+    },
+    {
+     "index": 110,
+     "name": "room_dw_city_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 111,
+     "name": "room_dw_city_split",
+     "kind": "dark"
+    },
+    {
+     "index": 112,
+     "name": "room_dw_city_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 113,
+     "name": "room_dw_city_traffic_1",
+     "kind": "dark"
+    },
+    {
+     "index": 114,
+     "name": "room_dw_city_roadblock",
+     "kind": "dark"
+    },
+    {
+     "index": 115,
+     "name": "room_dw_city_hacker",
+     "kind": "dark"
+    },
+    {
+     "index": 116,
+     "name": "room_dw_city_mice",
+     "kind": "dark"
+    },
+    {
+     "index": 117,
+     "name": "room_dw_city_big_1",
+     "kind": "dark"
+    },
+    {
+     "index": 118,
+     "name": "room_dw_city_traffic_2",
+     "kind": "dark"
+    },
+    {
+     "index": 119,
+     "name": "room_dw_city_big_2",
+     "kind": "dark"
+    },
+    {
+     "index": 120,
+     "name": "room_dw_city_queen_drunk",
+     "kind": "dark"
+    },
+    {
+     "index": 121,
+     "name": "room_dw_city_savepoint",
+     "kind": "dark"
+    },
+    {
+     "index": 122,
+     "name": "room_dw_city_big_3",
+     "kind": "dark"
+    },
+    {
+     "index": 123,
+     "name": "room_dw_city_traffic_3",
+     "kind": "dark"
+    },
+    {
+     "index": 124,
+     "name": "room_dw_city_mice2",
+     "kind": "dark"
+    },
+    {
+     "index": 125,
+     "name": "room_dw_city_cheesemaze",
+     "kind": "dark"
+    },
+    {
+     "index": 126,
+     "name": "room_dw_city_mice3",
+     "kind": "dark"
+    },
+    {
+     "index": 127,
+     "name": "room_dw_city_poppup",
+     "kind": "dark"
+    },
+    {
+     "index": 128,
+     "name": "room_dw_city_berdly",
+     "kind": "dark"
+    },
+    {
+     "index": 129,
+     "name": "room_dw_city_traffic_4",
+     "kind": "dark"
+    },
+    {
+     "index": 130,
+     "name": "room_dw_city_spamton_alley",
+     "kind": "dark"
+    },
+    {
+     "index": 131,
+     "name": "room_dw_city_monologue",
+     "kind": "dark"
+    },
+    {
+     "index": 132,
+     "name": "room_dw_city_baseball",
+     "kind": "dark"
+    },
+    {
+     "index": 133,
+     "name": "room_dw_city_postbaseball_1",
+     "kind": "dark"
+    },
+    {
+     "index": 134,
+     "name": "room_dw_city_postbaseball_2",
+     "kind": "dark"
+    },
+    {
+     "index": 135,
+     "name": "room_dw_city_postbaseball_3",
+     "kind": "dark"
+    },
+    {
+     "index": 136,
+     "name": "room_dw_city_mansion_front",
+     "kind": "dark"
+    },
+    {
+     "index": 137,
+     "name": "room_dw_city_susie_ralsei_fun_1",
+     "kind": "dark"
+    },
+    {
+     "index": 138,
+     "name": "room_dw_city_mirrorfriend",
+     "kind": "dark"
+    },
+    {
+     "index": 139,
+     "name": "room_dw_city_treasure",
+     "kind": "dark"
+    },
+    {
+     "index": 140,
+     "name": "room_dw_city_dog_traffic",
+     "kind": "dark"
+    },
+    {
+     "index": 141,
+     "name": "room_dw_city_man",
+     "kind": "dark"
+    },
+    {
+     "index": 142,
+     "name": "room_dw_city_moss",
+     "kind": "dark"
+    },
+    {
+     "index": 143,
+     "name": "room_dw_city_big_3_backup_2exits",
+     "kind": "dark"
+    },
+    {
+     "index": 144,
+     "name": "room_dw_city_traffic_3_2Entrances",
+     "kind": "dark"
+    },
+    {
+     "index": 145,
+     "name": "room_dw_city_cheese",
+     "kind": "dark"
+    },
+    {
+     "index": 146,
+     "name": "room_dw_city_carnival",
+     "kind": "dark"
+    },
+    {
+     "index": 147,
+     "name": "room_dw_city_noelle_fight_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 148,
+     "name": "room_dw_city_spamton_shop_interior",
+     "kind": "dark"
+    },
+    {
+     "index": 149,
+     "name": "room_dw_city_monologue_old",
+     "kind": "dark"
+    },
+    {
+     "index": 150,
+     "name": "room_dw_mansion_krisroom",
+     "kind": "dark"
+    },
+    {
+     "index": 151,
+     "name": "room_dw_mansion_susieroom",
+     "kind": "dark"
+    },
+    {
+     "index": 152,
+     "name": "room_dw_mansion_lightner_hallway",
+     "kind": "dark"
+    },
+    {
+     "index": 153,
+     "name": "room_dw_mansion_darkbulb_1",
+     "kind": "dark"
+    },
+    {
+     "index": 154,
+     "name": "room_dw_mansion_darkbulb_2",
+     "kind": "dark"
+    },
+    {
+     "index": 155,
+     "name": "room_dw_mansion_darkbulb_3",
+     "kind": "dark"
+    },
+    {
+     "index": 156,
+     "name": "room_dw_mansion_dining_a",
+     "kind": "dark"
+    },
+    {
+     "index": 157,
+     "name": "room_dw_mansion_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 158,
+     "name": "room_dw_mansion_fire_paintings",
+     "kind": "dark"
+    },
+    {
+     "index": 159,
+     "name": "room_dw_mansion_single_pot",
+     "kind": "dark"
+    },
+    {
+     "index": 160,
+     "name": "room_dw_mansion_potBalance",
+     "kind": "dark"
+    },
+    {
+     "index": 161,
+     "name": "room_dw_mansion_tasquePaintings",
+     "kind": "dark"
+    },
+    {
+     "index": 162,
+     "name": "room_dw_mansion_traffic",
+     "kind": "dark"
+    },
+    {
+     "index": 163,
+     "name": "room_dw_mansion_east_1f_e",
+     "kind": "dark"
+    },
+    {
+     "index": 164,
+     "name": "room_dw_mansion_east_1f_secret",
+     "kind": "dark"
+    },
+    {
+     "index": 165,
+     "name": "room_dw_mansion_east_teacup",
+     "kind": "debug"
+    },
+    {
+     "index": 166,
+     "name": "room_dw_mansion_east_teacup_4",
+     "kind": "debug"
+    },
+    {
+     "index": 167,
+     "name": "room_dw_mansion_east_teacup_3",
+     "kind": "debug"
+    },
+    {
+     "index": 168,
+     "name": "room_dw_mansion_east_teacup_2",
+     "kind": "debug"
+    },
+    {
+     "index": 169,
+     "name": "room_dw_mansion_b_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 170,
+     "name": "room_dw_mansion_b_stairs",
+     "kind": "dark"
+    },
+    {
+     "index": 171,
+     "name": "room_dw_mansion_b_central",
+     "kind": "dark"
+    },
+    {
+     "index": 172,
+     "name": "room_dw_mansion_b_west_1f",
+     "kind": "dark"
+    },
+    {
+     "index": 173,
+     "name": "room_dw_mansion_b_west_1f_a",
+     "kind": "dark"
+    },
+    {
+     "index": 174,
+     "name": "room_dw_mansion_b_west_1f_b",
+     "kind": "dark"
+    },
+    {
+     "index": 175,
+     "name": "room_dw_mansion_b_west_2f",
+     "kind": "dark"
+    },
+    {
+     "index": 176,
+     "name": "room_dw_mansion_b_east",
+     "kind": "dark"
+    },
+    {
+     "index": 177,
+     "name": "room_dw_mansion_b_east_a",
+     "kind": "dark"
+    },
+    {
+     "index": 178,
+     "name": "room_dw_mansion_b_east_b",
+     "kind": "dark"
+    },
+    {
+     "index": 179,
+     "name": "room_dw_mansion_b_east_transformed",
+     "kind": "dark"
+    },
+    {
+     "index": 180,
+     "name": "room_dw_mansion_east_2f_a",
+     "kind": "dark"
+    },
+    {
+     "index": 181,
+     "name": "room_dw_mansion_east_2f_transformed_new",
+     "kind": "dark"
+    },
+    {
+     "index": 182,
+     "name": "room_dw_mansion_east_2f_shortcut",
+     "kind": "dark"
+    },
+    {
+     "index": 183,
+     "name": "room_dw_mansion_kitchen",
+     "kind": "dark"
+    },
+    {
+     "index": 184,
+     "name": "room_dw_mansion_east_2f_c",
+     "kind": "dark"
+    },
+    {
+     "index": 185,
+     "name": "room_dw_mansion_east_2f_c_a",
+     "kind": "dark"
+    },
+    {
+     "index": 186,
+     "name": "room_dw_mansion_east_2f_d",
+     "kind": "dark"
+    },
+    {
+     "index": 187,
+     "name": "room_dw_mansion_east_3f",
+     "kind": "dark"
+    },
+    {
+     "index": 188,
+     "name": "room_dw_mansion_east_3f_projection",
+     "kind": "dark"
+    },
+    {
+     "index": 189,
+     "name": "room_dw_mansion_east_3f_toilet",
+     "kind": "dark"
+    },
+    {
+     "index": 190,
+     "name": "room_dw_mansion_acid_tunnel",
+     "kind": "dark"
+    },
+    {
+     "index": 191,
+     "name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 192,
+     "name": "room_dw_mansion_acid_tunnel_loop_rouxls",
+     "kind": "dark"
+    },
+    {
+     "index": 193,
+     "name": "room_dw_mansion_acid_tunnel_exit",
+     "kind": "dark"
+    },
+    {
+     "index": 194,
+     "name": "room_dw_mansion_east_4f_b",
+     "kind": "dark"
+    },
+    {
+     "index": 195,
+     "name": "room_dw_mansion_east_4f_c",
+     "kind": "dark"
+    },
+    {
+     "index": 196,
+     "name": "room_dw_mansion_east_4f_d",
+     "kind": "dark"
+    },
+    {
+     "index": 197,
+     "name": "room_dw_mansion_top",
+     "kind": "dark"
+    },
+    {
+     "index": 198,
+     "name": "room_dw_mansion_top_post",
+     "kind": "dark"
+    },
+    {
+     "index": 199,
+     "name": "room_dw_mansion_prefountain",
+     "kind": "dark"
+    },
+    {
+     "index": 200,
+     "name": "room_dw_mansion_fountain",
+     "kind": "dark"
+    },
+    {
+     "index": 201,
+     "name": "room_dw_mansion_ferris_wheel",
+     "kind": "dark"
+    },
+    {
+     "index": 202,
+     "name": "room_dw_mansion_ferris_wheel_post",
+     "kind": "dark"
+    },
+    {
+     "index": 203,
+     "name": "room_dw_mansion_noelle_room",
+     "kind": "dark"
+    },
+    {
+     "index": 204,
+     "name": "room_dw_mansion_bridges",
+     "kind": "dark"
+    },
+    {
+     "index": 205,
+     "name": "room_dw_mansion_bridges_funny",
+     "kind": "dark"
+    },
+    {
+     "index": 206,
+     "name": "room_dw_mansion_mouseLottery",
+     "kind": "dark"
+    },
+    {
+     "index": 207,
+     "name": "room_dw_mansion_hands",
+     "kind": "dark"
+    },
+    {
+     "index": 208,
+     "name": "room_dw_mansion_dining3",
+     "kind": "dark"
+    },
+    {
+     "index": 209,
+     "name": "room_dw_mansion_dininghall",
+     "kind": "dark"
+    },
+    {
+     "index": 210,
+     "name": "room_dw_mansion_dining_storage",
+     "kind": "dark"
+    },
+    {
+     "index": 211,
+     "name": "room_dw_mansion_east_1f_b",
+     "kind": "dark"
+    },
+    {
+     "index": 212,
+     "name": "room_dw_mansion_east_2f_c_b",
+     "kind": "dark"
+    },
+    {
+     "index": 213,
+     "name": "room_dw_mansion_traffic_original",
+     "kind": "dark"
+    },
+    {
+     "index": 214,
+     "name": "room_dw_mansion_east_1f_a",
+     "kind": "dark"
+    },
+    {
+     "index": 215,
+     "name": "room_dw_mansion_east_2f_teacup",
+     "kind": "debug"
+    },
+    {
+     "index": 216,
+     "name": "room_dw_mansion_east_4f_e",
+     "kind": "dark"
+    },
+    {
+     "index": 217,
+     "name": "room_dw_mansion_east_4f_a",
+     "kind": "dark"
+    },
+    {
+     "index": 218,
+     "name": "room_dw_mansion_east_2f_ufo_old",
+     "kind": "dark"
+    },
+    {
+     "index": 219,
+     "name": "room_dw_mansion_east_1f_d",
+     "kind": "dark"
+    },
+    {
+     "index": 220,
+     "name": "room_dw_mansion_east_1f_c",
+     "kind": "dark"
+    },
+    {
+     "index": 221,
+     "name": "room_dw_mansion_sparks",
+     "kind": "dark"
+    },
+    {
+     "index": 222,
+     "name": "room_dw_mansion_acid_tunnel_old",
+     "kind": "dark"
+    },
+    {
+     "index": 223,
+     "name": "room_dw_mansion_top_post_old",
+     "kind": "dark"
+    },
+    {
+     "index": 224,
+     "name": "room_dw_mansion_elevator",
+     "kind": "dark"
+    },
+    {
+     "index": 225,
+     "name": "room_intro_ch2",
+     "kind": "other"
+    },
+    {
+     "index": 226,
+     "name": "PLACE_DOG",
+     "kind": "system"
+    },
+    {
+     "index": 227,
+     "name": "room_legend",
+     "kind": "system"
+    },
+    {
+     "index": 228,
+     "name": "room_legend_neo",
+     "kind": "system"
+    },
+    {
+     "index": 229,
+     "name": "room_shop1",
+     "kind": "other"
+    },
+    {
+     "index": 230,
+     "name": "room_shop_ch2_music",
+     "kind": "other"
+    },
+    {
+     "index": 231,
+     "name": "room_shop_ch2_swatch",
+     "kind": "other"
+    },
+    {
+     "index": 232,
+     "name": "room_shop_ch2_spamton",
+     "kind": "other"
+    },
+    {
+     "index": 233,
+     "name": "room_gameover",
+     "kind": "system"
+    },
+    {
+     "index": 234,
+     "name": "PLACE_LOGO",
+     "kind": "system"
+    },
+    {
+     "index": 235,
+     "name": "PLACE_FAILURE",
+     "kind": "system"
+    },
+    {
+     "index": 236,
+     "name": "PLACE_NAMING_JIKKEN",
+     "kind": "system"
+    },
+    {
+     "index": 237,
+     "name": "PLACE_MENU",
+     "kind": "system"
+    },
+    {
+     "index": 238,
+     "name": "room_ed",
+     "kind": "system"
+    },
+    {
+     "index": 239,
+     "name": "room_empty",
+     "kind": "system"
+    },
+    {
+     "index": 240,
+     "name": "room_DARKempty",
+     "kind": "system"
+    },
+    {
+     "index": 241,
+     "name": "room_DARKbase_GMS2",
+     "kind": "dark"
+    },
+    {
+     "index": 242,
+     "name": "room_dw_cyber_battle_maze_2_old",
+     "kind": "dark"
+    },
+    {
+     "index": 243,
+     "name": "room_dw_cyber_keyboard_puzzle_1_old",
+     "kind": "dark"
+    },
+    {
+     "index": 244,
+     "name": "room_dw_cyber_tasque_battle_og",
+     "kind": "dark"
+    },
+    {
+     "index": 245,
+     "name": "room_dw_cyber_savepoint_original",
+     "kind": "dark"
+    },
+    {
+     "index": 246,
+     "name": "room_dw_cyber_battle_maze_1_Original",
+     "kind": "dark"
+    },
+    {
+     "index": 247,
+     "name": "room_dw_cyber_music_bullet_original",
+     "kind": "dark"
+    },
+    {
+     "index": 248,
+     "name": "room_dw_cyber_maze_virokun_backuo",
+     "kind": "dark"
+    },
+    {
+     "index": 249,
+     "name": "room_dw_cyber_battle_maze_2_toby",
+     "kind": "dark"
+    },
+    {
+     "index": 250,
+     "name": "room_dw_city_big_1_original",
+     "kind": "dark"
+    },
+    {
+     "index": 251,
+     "name": "room_dw_city_traffic_2_old",
+     "kind": "dark"
+    },
+    {
+     "index": 252,
+     "name": "room_dw_city_big_2_OG",
+     "kind": "dark"
+    },
+    {
+     "index": 253,
+     "name": "room_dw_city_mice2_og",
+     "kind": "dark"
+    },
+    {
+     "index": 254,
+     "name": "room_dw_mansion_east_teacup_4_old",
+     "kind": "debug"
+    },
+    {
+     "index": 255,
+     "name": "room_dw_cyber_teacup_1",
+     "kind": "debug"
+    },
+    {
+     "index": 256,
+     "name": "room_dw_cyber_viromaze2",
+     "kind": "dark"
+    },
+    {
+     "index": 257,
+     "name": "room_dw_city_traffic_5_old",
+     "kind": "dark"
+    },
+    {
+     "index": 258,
+     "name": "room_dw_mansion_dining_storage_old",
+     "kind": "dark"
+    },
+    {
+     "index": 259,
+     "name": "room_dw_cyber_virovirokun_fight",
+     "kind": "dark"
+    },
+    {
+     "index": 260,
+     "name": "room_dw_mansion_east_2f_d_backup",
+     "kind": "dark"
+    },
+    {
+     "index": 261,
+     "name": "room_dw_city_traffic_3_backup",
+     "kind": "dark"
+    },
+    {
+     "index": 262,
+     "name": "room_cc_lancer",
+     "kind": "card_castle"
+    },
+    {
+     "index": 263,
+     "name": "room_cc_clover",
+     "kind": "card_castle"
+    },
+    {
+     "index": 264,
+     "name": "room_cc_fountain",
+     "kind": "card_castle"
+    },
+    {
+     "index": 265,
+     "name": "room_dw_city_big_3_og",
+     "kind": "dark"
+    },
+    {
+     "index": 266,
+     "name": "room_dw_mansion_bridgesold",
+     "kind": "dark"
+    },
+    {
+     "index": 267,
+     "name": "room_dw_city_sidewayscars",
+     "kind": "dark"
+    },
+    {
+     "index": 268,
+     "name": "room_transformation_sequence",
+     "kind": "other"
+    },
+    {
+     "index": 269,
+     "name": "room_dw_mansion_gigaqueen",
+     "kind": "dark"
+    },
+    {
+     "index": 270,
+     "name": "room_musical_sync_test",
+     "kind": "debug"
+    },
+    {
+     "index": 271,
+     "name": "PLACE_DOGCHECK2",
+     "kind": "system"
+    },
+    {
+     "index": 272,
+     "name": "room_debug_smallface_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 273,
+     "name": "room_debug_smallface",
+     "kind": "debug"
+    },
+    {
+     "index": 274,
+     "name": "room_debug_choicer_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 275,
+     "name": "room_debug_choicer_light",
+     "kind": "debug"
+    },
+    {
+     "index": 276,
+     "name": "room_debug_battleBalloon",
+     "kind": "debug"
+    },
+    {
+     "index": 277,
+     "name": "room_chapter_continue",
+     "kind": "system"
+    }
+   ]
+  },
+  "ch3": {
+   "folder": "chapter3_windows",
+   "name": "第三章",
+   "display_alias": "Late Night TV",
+   "n_rooms": 246,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "room_gms_debug_failsafe",
+     "kind": "debug"
+    },
+    {
+     "index": 1,
+     "name": "ROOM_INITIALIZE",
+     "kind": "system"
+    },
+    {
+     "index": 2,
+     "name": "room_title_placeholder",
+     "kind": "debug"
+    },
+    {
+     "index": 3,
+     "name": "room_battletest",
+     "kind": "system"
+    },
+    {
+     "index": 4,
+     "name": "room_cutscene_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 5,
+     "name": "room_sound_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 6,
+     "name": "room_sprite_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 7,
+     "name": "room_gif_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 8,
+     "name": "room_bullettest",
+     "kind": "debug"
+    },
+    {
+     "index": 9,
+     "name": "room_GMS2_test",
+     "kind": "debug"
+    },
+    {
+     "index": 10,
+     "name": "room_cutscene_tester_b",
+     "kind": "debug"
+    },
+    {
+     "index": 11,
+     "name": "room_debug_color",
+     "kind": "debug"
+    },
+    {
+     "index": 12,
+     "name": "room_debug_battle",
+     "kind": "debug"
+    },
+    {
+     "index": 13,
+     "name": "room_debug_loc",
+     "kind": "debug"
+    },
+    {
+     "index": 14,
+     "name": "PLACE_CONTACT",
+     "kind": "system"
+    },
+    {
+     "index": 15,
+     "name": "room_krisroom",
+     "kind": "home"
+    },
+    {
+     "index": 16,
+     "name": "room_krishallway",
+     "kind": "home"
+    },
+    {
+     "index": 17,
+     "name": "room_torroom",
+     "kind": "home"
+    },
+    {
+     "index": 18,
+     "name": "room_torhouse",
+     "kind": "home"
+    },
+    {
+     "index": 19,
+     "name": "room_torbathroom",
+     "kind": "home"
+    },
+    {
+     "index": 20,
+     "name": "room_town_krisyard",
+     "kind": "town"
+    },
+    {
+     "index": 21,
+     "name": "room_town_northwest",
+     "kind": "town"
+    },
+    {
+     "index": 22,
+     "name": "room_town_north",
+     "kind": "town"
+    },
+    {
+     "index": 23,
+     "name": "room_beach",
+     "kind": "town_life"
+    },
+    {
+     "index": 24,
+     "name": "room_town_mid",
+     "kind": "town"
+    },
+    {
+     "index": 25,
+     "name": "room_town_apartments",
+     "kind": "town"
+    },
+    {
+     "index": 26,
+     "name": "room_town_south",
+     "kind": "town"
+    },
+    {
+     "index": 27,
+     "name": "room_town_school",
+     "kind": "town"
+    },
+    {
+     "index": 28,
+     "name": "room_town_church",
+     "kind": "town"
+    },
+    {
+     "index": 29,
+     "name": "room_graveyard",
+     "kind": "town_life"
+    },
+    {
+     "index": 30,
+     "name": "room_town_shelter",
+     "kind": "town"
+    },
+    {
+     "index": 31,
+     "name": "room_hospital_lobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 32,
+     "name": "room_hospital_hallway",
+     "kind": "town_life"
+    },
+    {
+     "index": 33,
+     "name": "room_hospital_rudy",
+     "kind": "town_life"
+    },
+    {
+     "index": 34,
+     "name": "room_hospital_room2",
+     "kind": "town_life"
+    },
+    {
+     "index": 35,
+     "name": "room_diner",
+     "kind": "town_life"
+    },
+    {
+     "index": 36,
+     "name": "room_townhall",
+     "kind": "town"
+    },
+    {
+     "index": 37,
+     "name": "room_flowershop_1f",
+     "kind": "town_life"
+    },
+    {
+     "index": 38,
+     "name": "room_flowershop_2f",
+     "kind": "town_life"
+    },
+    {
+     "index": 39,
+     "name": "room_library",
+     "kind": "town_life"
+    },
+    {
+     "index": 40,
+     "name": "room_alphysalley",
+     "kind": "town_life"
+    },
+    {
+     "index": 41,
+     "name": "room_lw_computer_lab",
+     "kind": "town_life"
+    },
+    {
+     "index": 42,
+     "name": "room_lw_library_upstairs",
+     "kind": "town_life"
+    },
+    {
+     "index": 43,
+     "name": "room_lw_police",
+     "kind": "town_life"
+    },
+    {
+     "index": 44,
+     "name": "room_lw_conbini",
+     "kind": "town_life"
+    },
+    {
+     "index": 45,
+     "name": "room_lw_icee_pizza",
+     "kind": "town_life"
+    },
+    {
+     "index": 46,
+     "name": "room_torielclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 47,
+     "name": "room_schoollobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 48,
+     "name": "room_alphysclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 49,
+     "name": "room_schooldoor",
+     "kind": "town_life"
+    },
+    {
+     "index": 50,
+     "name": "room_insidecloset",
+     "kind": "town_life"
+    },
+    {
+     "index": 51,
+     "name": "room_school_unusedroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 52,
+     "name": "room_castle_tutorial",
+     "kind": "dark"
+    },
+    {
+     "index": 53,
+     "name": "room_dw_castle_east_door",
+     "kind": "dark"
+    },
+    {
+     "index": 54,
+     "name": "room_dw_castle_west_cliff",
+     "kind": "dark"
+    },
+    {
+     "index": 55,
+     "name": "room_dw_castle_area_1",
+     "kind": "dark"
+    },
+    {
+     "index": 56,
+     "name": "room_dw_castle_town",
+     "kind": "dark"
+    },
+    {
+     "index": 57,
+     "name": "room_dw_ralsei_castle_front",
+     "kind": "dark"
+    },
+    {
+     "index": 58,
+     "name": "room_dw_castle_restaurant",
+     "kind": "dark"
+    },
+    {
+     "index": 59,
+     "name": "room_dw_castle_cafe",
+     "kind": "dark"
+    },
+    {
+     "index": 60,
+     "name": "room_dw_castle_dojo",
+     "kind": "dark"
+    },
+    {
+     "index": 61,
+     "name": "room_dw_ralsei_castle_1f",
+     "kind": "dark"
+    },
+    {
+     "index": 62,
+     "name": "room_dw_ralsei_castle_2f",
+     "kind": "dark"
+    },
+    {
+     "index": 63,
+     "name": "room_dw_castle_dungeon",
+     "kind": "dark"
+    },
+    {
+     "index": 64,
+     "name": "room_dw_castle_rooms_kris",
+     "kind": "dark"
+    },
+    {
+     "index": 65,
+     "name": "room_dw_castle_rooms_susie",
+     "kind": "dark"
+    },
+    {
+     "index": 66,
+     "name": "PLACE_DOG",
+     "kind": "system"
+    },
+    {
+     "index": 67,
+     "name": "room_legend",
+     "kind": "system"
+    },
+    {
+     "index": 68,
+     "name": "room_legend_neo",
+     "kind": "system"
+    },
+    {
+     "index": 69,
+     "name": "room_shop1",
+     "kind": "other"
+    },
+    {
+     "index": 70,
+     "name": "room_shop_music",
+     "kind": "other"
+    },
+    {
+     "index": 71,
+     "name": "room_gameover",
+     "kind": "system"
+    },
+    {
+     "index": 72,
+     "name": "PLACE_LOGO",
+     "kind": "system"
+    },
+    {
+     "index": 73,
+     "name": "PLACE_FAILURE",
+     "kind": "system"
+    },
+    {
+     "index": 74,
+     "name": "PLACE_NAMING_JIKKEN",
+     "kind": "system"
+    },
+    {
+     "index": 75,
+     "name": "PLACE_MENU",
+     "kind": "system"
+    },
+    {
+     "index": 76,
+     "name": "room_ed",
+     "kind": "system"
+    },
+    {
+     "index": 77,
+     "name": "room_empty",
+     "kind": "system"
+    },
+    {
+     "index": 78,
+     "name": "room_DARKempty",
+     "kind": "system"
+    },
+    {
+     "index": 79,
+     "name": "room_DARKbase_GMS2",
+     "kind": "dark"
+    },
+    {
+     "index": 80,
+     "name": "room_cc_lancer",
+     "kind": "card_castle"
+    },
+    {
+     "index": 81,
+     "name": "room_cc_clover",
+     "kind": "card_castle"
+    },
+    {
+     "index": 82,
+     "name": "room_cc_fountain",
+     "kind": "card_castle"
+    },
+    {
+     "index": 83,
+     "name": "PLACE_DOGCHECK2",
+     "kind": "system"
+    },
+    {
+     "index": 84,
+     "name": "room_debug_smallface_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 85,
+     "name": "room_debug_smallface",
+     "kind": "debug"
+    },
+    {
+     "index": 86,
+     "name": "room_debug_choicer_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 87,
+     "name": "room_debug_choicer_light",
+     "kind": "debug"
+    },
+    {
+     "index": 88,
+     "name": "room_debug_battleBalloon",
+     "kind": "debug"
+    },
+    {
+     "index": 89,
+     "name": "room_overworldBulletEnemyTest",
+     "kind": "other"
+    },
+    {
+     "index": 90,
+     "name": "room_board1_oldtest",
+     "kind": "dark"
+    },
+    {
+     "index": 91,
+     "name": "room_boardtest",
+     "kind": "dark"
+    },
+    {
+     "index": 92,
+     "name": "room_boardtest_old",
+     "kind": "dark"
+    },
+    {
+     "index": 93,
+     "name": "room_tennaCutsceneTest",
+     "kind": "dark"
+    },
+    {
+     "index": 94,
+     "name": "room_tennaAnimTest",
+     "kind": "dark"
+    },
+    {
+     "index": 95,
+     "name": "room_dw_tv_cutscene1g",
+     "kind": "dark"
+    },
+    {
+     "index": 96,
+     "name": "room_dw_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 97,
+     "name": "room_board_designTest",
+     "kind": "dark"
+    },
+    {
+     "index": 98,
+     "name": "room_dw_couch_overworld_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 99,
+     "name": "room_dw_couch_overworld_01",
+     "kind": "dark"
+    },
+    {
+     "index": 100,
+     "name": "room_dw_couch_overworld_02",
+     "kind": "dark"
+    },
+    {
+     "index": 101,
+     "name": "room_dw_couch_overworld_03",
+     "kind": "dark"
+    },
+    {
+     "index": 102,
+     "name": "room_dw_couch_overworld_04",
+     "kind": "dark"
+    },
+    {
+     "index": 103,
+     "name": "room_dw_couch_overworld_05",
+     "kind": "dark"
+    },
+    {
+     "index": 104,
+     "name": "room_dw_nondescript_room",
+     "kind": "dark"
+    },
+    {
+     "index": 105,
+     "name": "room_dw_nondescript_field",
+     "kind": "dark"
+    },
+    {
+     "index": 106,
+     "name": "room_dw_nondescript_hallway",
+     "kind": "dark"
+    },
+    {
+     "index": 107,
+     "name": "room_dw_nondescript_classroom",
+     "kind": "dark"
+    },
+    {
+     "index": 108,
+     "name": "room_dw_backstage",
+     "kind": "dark"
+    },
+    {
+     "index": 109,
+     "name": "room_dw_snow_zone",
+     "kind": "dark"
+    },
+    {
+     "index": 110,
+     "name": "room_town_krisyard_dark",
+     "kind": "dark"
+    },
+    {
+     "index": 111,
+     "name": "room_adventureboardtest",
+     "kind": "dark"
+    },
+    {
+     "index": 112,
+     "name": "room_board_1",
+     "kind": "dark"
+    },
+    {
+     "index": 113,
+     "name": "room_lerptest",
+     "kind": "other"
+    },
+    {
+     "index": 114,
+     "name": "room_shadowmantle_movementExample",
+     "kind": "other"
+    },
+    {
+     "index": 115,
+     "name": "room_board_dungeon_2",
+     "kind": "dark"
+    },
+    {
+     "index": 116,
+     "name": "room_board_dungeon_3",
+     "kind": "dark"
+    },
+    {
+     "index": 117,
+     "name": "room_board_preshadowmantle",
+     "kind": "dark"
+    },
+    {
+     "index": 118,
+     "name": "room_shadowmantle",
+     "kind": "other"
+    },
+    {
+     "index": 119,
+     "name": "room_board_prepostshadowmantle",
+     "kind": "dark"
+    },
+    {
+     "index": 120,
+     "name": "room_board_postshadowmantle",
+     "kind": "dark"
+    },
+    {
+     "index": 121,
+     "name": "room_dw_ch3_man",
+     "kind": "dark"
+    },
+    {
+     "index": 122,
+     "name": "room_board_boattest",
+     "kind": "dark"
+    },
+    {
+     "index": 123,
+     "name": "room_debug_tennatexttester",
+     "kind": "debug"
+    },
+    {
+     "index": 124,
+     "name": "room_susiezilla",
+     "kind": "other"
+    },
+    {
+     "index": 125,
+     "name": "room_board_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 126,
+     "name": "room_susiezilla_singleScreenMockup",
+     "kind": "other"
+    },
+    {
+     "index": 127,
+     "name": "room_torhouse_sepia",
+     "kind": "other"
+    },
+    {
+     "index": 128,
+     "name": "room_rhythmgame_editor",
+     "kind": "other"
+    },
+    {
+     "index": 129,
+     "name": "room_board_tests",
+     "kind": "debug"
+    },
+    {
+     "index": 130,
+     "name": "room_board_postshadowmantle_test",
+     "kind": "debug"
+    },
+    {
+     "index": 131,
+     "name": "room_ch3_gameshowroom",
+     "kind": "other"
+    },
+    {
+     "index": 132,
+     "name": "room_shootout",
+     "kind": "other"
+    },
+    {
+     "index": 133,
+     "name": "room_genanimtest",
+     "kind": "other"
+    },
+    {
+     "index": 134,
+     "name": "room_board_preshadowmantle_repeat",
+     "kind": "dark"
+    },
+    {
+     "index": 135,
+     "name": "room_dw_green_room",
+     "kind": "dark"
+    },
+    {
+     "index": 136,
+     "name": "room_board_1_sword",
+     "kind": "dark"
+    },
+    {
+     "index": 137,
+     "name": "room_board_sword_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 138,
+     "name": "room_board_1_sword_trees",
+     "kind": "dark"
+    },
+    {
+     "index": 139,
+     "name": "room_dw_changing_room",
+     "kind": "dark"
+    },
+    {
+     "index": 140,
+     "name": "room_dw_console_room",
+     "kind": "dark"
+    },
+    {
+     "index": 141,
+     "name": "room_board_2",
+     "kind": "dark"
+    },
+    {
+     "index": 142,
+     "name": "room_dw_tv_closet",
+     "kind": "dark"
+    },
+    {
+     "index": 143,
+     "name": "room_perspective_testing",
+     "kind": "debug"
+    },
+    {
+     "index": 144,
+     "name": "room_board_3",
+     "kind": "dark"
+    },
+    {
+     "index": 145,
+     "name": "room_dw_b3bstest",
+     "kind": "dark"
+    },
+    {
+     "index": 146,
+     "name": "room_dw_b3bstest_big",
+     "kind": "dark"
+    },
+    {
+     "index": 147,
+     "name": "room_dw_b3bs_interstitial",
+     "kind": "dark"
+    },
+    {
+     "index": 148,
+     "name": "room_board_2_sword",
+     "kind": "dark"
+    },
+    {
+     "index": 149,
+     "name": "room_bullettest_new",
+     "kind": "debug"
+    },
+    {
+     "index": 150,
+     "name": "room_board_empty",
+     "kind": "dark"
+    },
+    {
+     "index": 151,
+     "name": "room_dw_b3bs_rouxls_lanina",
+     "kind": "dark"
+    },
+    {
+     "index": 152,
+     "name": "room_dw_b3bs_template",
+     "kind": "dark"
+    },
+    {
+     "index": 153,
+     "name": "room_dw_b3bs_rouxls_boss",
+     "kind": "dark"
+    },
+    {
+     "index": 154,
+     "name": "room_dw_b3bs_cheaterpippins",
+     "kind": "dark"
+    },
+    {
+     "index": 155,
+     "name": "room_dw_b3bs_idcardpuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 156,
+     "name": "room_dw_b3bs_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 157,
+     "name": "room_dw_b3bs_zapper_a",
+     "kind": "dark"
+    },
+    {
+     "index": 158,
+     "name": "room_dw_b3bs_rabbick_a",
+     "kind": "dark"
+    },
+    {
+     "index": 159,
+     "name": "room_dw_b3bs_lancerget",
+     "kind": "dark"
+    },
+    {
+     "index": 160,
+     "name": "room_dw_b3bs_cooltrashy",
+     "kind": "dark"
+    },
+    {
+     "index": 161,
+     "name": "room_dw_b3bs_zapper_c",
+     "kind": "dark"
+    },
+    {
+     "index": 162,
+     "name": "room_dw_b3bs_rabbick_b",
+     "kind": "dark"
+    },
+    {
+     "index": 163,
+     "name": "room_dw_b3bs_sadshadowguys",
+     "kind": "dark"
+    },
+    {
+     "index": 164,
+     "name": "room_dw_b3bs_zapper_b",
+     "kind": "dark"
+    },
+    {
+     "index": 165,
+     "name": "room_ch3_gameshowroom_tennatest",
+     "kind": "dark"
+    },
+    {
+     "index": 166,
+     "name": "room_dw_susiezilla",
+     "kind": "dark"
+    },
+    {
+     "index": 167,
+     "name": "room_dw_inbetween",
+     "kind": "dark"
+    },
+    {
+     "index": 168,
+     "name": "room_dw_teevie_preview",
+     "kind": "dark"
+    },
+    {
+     "index": 169,
+     "name": "room_dw_chef",
+     "kind": "dark"
+    },
+    {
+     "index": 170,
+     "name": "room_dw_puzzlecloset_1",
+     "kind": "dark"
+    },
+    {
+     "index": 171,
+     "name": "room_dw_puzzlecloset_2",
+     "kind": "dark"
+    },
+    {
+     "index": 172,
+     "name": "room_dw_chef_empty",
+     "kind": "dark"
+    },
+    {
+     "index": 173,
+     "name": "room_dw_susiezilla_empty",
+     "kind": "dark"
+    },
+    {
+     "index": 174,
+     "name": "room_dw_rhythm_empty",
+     "kind": "dark"
+    },
+    {
+     "index": 175,
+     "name": "room_board_3b",
+     "kind": "dark"
+    },
+    {
+     "index": 176,
+     "name": "room_CHEFS",
+     "kind": "other"
+    },
+    {
+     "index": 177,
+     "name": "room_dw_b3bs_jail1",
+     "kind": "dark"
+    },
+    {
+     "index": 178,
+     "name": "room_dw_b3bs_shop",
+     "kind": "dark"
+    },
+    {
+     "index": 179,
+     "name": "room_dw_b3bs_mysterypuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 180,
+     "name": "room_dw_b3bs_watercooler",
+     "kind": "dark"
+    },
+    {
+     "index": 181,
+     "name": "room_dw_b3bs_jail2",
+     "kind": "dark"
+    },
+    {
+     "index": 182,
+     "name": "room_dw_b3bs_zapper_d",
+     "kind": "dark"
+    },
+    {
+     "index": 183,
+     "name": "room_dw_b3bs_extrapuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 184,
+     "name": "room_dw_b3bs_bibliox",
+     "kind": "dark"
+    },
+    {
+     "index": 185,
+     "name": "room_rhythmgame_tenna_test",
+     "kind": "debug"
+    },
+    {
+     "index": 186,
+     "name": "room_board_3_sword",
+     "kind": "dark"
+    },
+    {
+     "index": 187,
+     "name": "room_dw_couch_points",
+     "kind": "dark"
+    },
+    {
+     "index": 188,
+     "name": "room_dw_couch_overworld_intro_left",
+     "kind": "dark"
+    },
+    {
+     "index": 189,
+     "name": "room_dw_couch_video",
+     "kind": "dark"
+    },
+    {
+     "index": 190,
+     "name": "room_dw_snow_zone_battle",
+     "kind": "dark"
+    },
+    {
+     "index": 191,
+     "name": "room_dw_b3bs_zapper_a_old",
+     "kind": "dark"
+    },
+    {
+     "index": 192,
+     "name": "room_dw_puzzlecloset_0",
+     "kind": "dark"
+    },
+    {
+     "index": 193,
+     "name": "room_board_gsa02_b0",
+     "kind": "dark"
+    },
+    {
+     "index": 194,
+     "name": "room_dw_tv_curtain",
+     "kind": "dark"
+    },
+    {
+     "index": 195,
+     "name": "room_dw_teevie_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 196,
+     "name": "room_dw_teevie_large_01",
+     "kind": "dark"
+    },
+    {
+     "index": 197,
+     "name": "room_dw_teevie_large_02",
+     "kind": "dark"
+    },
+    {
+     "index": 198,
+     "name": "room_dw_teevie_cowboy_zone_01_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 199,
+     "name": "room_dw_teevie_cowboy_zone_01_after",
+     "kind": "dark"
+    },
+    {
+     "index": 200,
+     "name": "room_dw_teevie_watercooler",
+     "kind": "dark"
+    },
+    {
+     "index": 201,
+     "name": "room_dw_teevie_susiezilla",
+     "kind": "dark"
+    },
+    {
+     "index": 202,
+     "name": "room_dw_teevie_cowboy_zone_02_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 203,
+     "name": "room_dw_teevie_cowboy_zone_02_after",
+     "kind": "dark"
+    },
+    {
+     "index": 204,
+     "name": "room_dw_teevie_shadow_guys",
+     "kind": "dark"
+    },
+    {
+     "index": 205,
+     "name": "room_dw_teevie_stealth_c",
+     "kind": "dark"
+    },
+    {
+     "index": 206,
+     "name": "room_dw_teevie_stealth",
+     "kind": "dark"
+    },
+    {
+     "index": 207,
+     "name": "room_dw_teevie_failure_cage",
+     "kind": "dark"
+    },
+    {
+     "index": 208,
+     "name": "room_dw_teevie_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 209,
+     "name": "room_dw_teevie_maze_points",
+     "kind": "dark"
+    },
+    {
+     "index": 210,
+     "name": "room_dw_teevie_maze_chef",
+     "kind": "dark"
+    },
+    {
+     "index": 211,
+     "name": "room_dw_teevie_maze_final",
+     "kind": "dark"
+    },
+    {
+     "index": 212,
+     "name": "room_dw_teevie_maze",
+     "kind": "dark"
+    },
+    {
+     "index": 213,
+     "name": "room_dw_teevie_chef",
+     "kind": "dark"
+    },
+    {
+     "index": 214,
+     "name": "room_dw_teevie_cutscene_final",
+     "kind": "dark"
+    },
+    {
+     "index": 215,
+     "name": "room_dw_teevie_ribbick",
+     "kind": "dark"
+    },
+    {
+     "index": 216,
+     "name": "room_dw_teevie_preview_south",
+     "kind": "dark"
+    },
+    {
+     "index": 217,
+     "name": "room_dw_b3bs_camerareminder",
+     "kind": "dark"
+    },
+    {
+     "index": 218,
+     "name": "room_dw_puzzlecloset_3",
+     "kind": "dark"
+    },
+    {
+     "index": 219,
+     "name": "room_dw_teevie_sams",
+     "kind": "dark"
+    },
+    {
+     "index": 220,
+     "name": "room_dw_teevie_bonus_zone",
+     "kind": "dark"
+    },
+    {
+     "index": 221,
+     "name": "room_dw_teevie_audiencepits",
+     "kind": "dark"
+    },
+    {
+     "index": 222,
+     "name": "room_dw_channelchange_test",
+     "kind": "debug"
+    },
+    {
+     "index": 223,
+     "name": "room_dw_teevie_lightmaze",
+     "kind": "dark"
+    },
+    {
+     "index": 224,
+     "name": "room_dw_teevie_maze_quiz",
+     "kind": "dark"
+    },
+    {
+     "index": 225,
+     "name": "room_dw_ranking_hub",
+     "kind": "dark"
+    },
+    {
+     "index": 226,
+     "name": "room_dw_ranking_a",
+     "kind": "dark"
+    },
+    {
+     "index": 227,
+     "name": "room_dw_ranking_b",
+     "kind": "dark"
+    },
+    {
+     "index": 228,
+     "name": "room_dw_ranking_c",
+     "kind": "dark"
+    },
+    {
+     "index": 229,
+     "name": "room_dw_ranking_z",
+     "kind": "dark"
+    },
+    {
+     "index": 230,
+     "name": "room_dw_ranking_z_hallway",
+     "kind": "dark"
+    },
+    {
+     "index": 231,
+     "name": "room_dw_teevie_ribbicks_a",
+     "kind": "dark"
+    },
+    {
+     "index": 232,
+     "name": "room_dw_teevie_ribbicks_b",
+     "kind": "dark"
+    },
+    {
+     "index": 233,
+     "name": "room_dw_teevie_susiebridge",
+     "kind": "dark"
+    },
+    {
+     "index": 234,
+     "name": "room_dw_teevie_shuttahmaze",
+     "kind": "dark"
+    },
+    {
+     "index": 235,
+     "name": "room_dw_teevie_stealth_d",
+     "kind": "dark"
+    },
+    {
+     "index": 236,
+     "name": "room_dw_teevie_dust",
+     "kind": "dark"
+    },
+    {
+     "index": 237,
+     "name": "room_dw_teevie_dust_south",
+     "kind": "dark"
+    },
+    {
+     "index": 238,
+     "name": "room_ch3_gacharoom_unknown",
+     "kind": "other"
+    },
+    {
+     "index": 239,
+     "name": "room_dw_ranking_t",
+     "kind": "dark"
+    },
+    {
+     "index": 240,
+     "name": "room_dw_puzzlecloset_1a",
+     "kind": "dark"
+    },
+    {
+     "index": 241,
+     "name": "room_dw_rhythm_countdown",
+     "kind": "dark"
+    },
+    {
+     "index": 242,
+     "name": "room_dw_snow_zone_east_door",
+     "kind": "dark"
+    },
+    {
+     "index": 243,
+     "name": "room_intro",
+     "kind": "other"
+    },
+    {
+     "index": 244,
+     "name": "room_dw_inbetweenhall",
+     "kind": "dark"
+    },
+    {
+     "index": 245,
+     "name": "room_chapter_continue",
+     "kind": "system"
+    }
+   ]
+  },
+  "ch4": {
+   "folder": "chapter4_windows",
+   "name": "第四章",
+   "display_alias": "Prophecy",
+   "n_rooms": 328,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "room_gms_debug_failsafe",
+     "kind": "debug"
+    },
+    {
+     "index": 1,
+     "name": "ROOM_INITIALIZE",
+     "kind": "system"
+    },
+    {
+     "index": 2,
+     "name": "room_title_placeholder",
+     "kind": "debug"
+    },
+    {
+     "index": 3,
+     "name": "room_battletest",
+     "kind": "system"
+    },
+    {
+     "index": 4,
+     "name": "room_cutscene_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 5,
+     "name": "room_sound_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 6,
+     "name": "room_sprite_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 7,
+     "name": "room_gif_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 8,
+     "name": "room_bullettest",
+     "kind": "debug"
+    },
+    {
+     "index": 9,
+     "name": "room_GMS2_test",
+     "kind": "debug"
+    },
+    {
+     "index": 10,
+     "name": "room_cutscene_tester_b",
+     "kind": "debug"
+    },
+    {
+     "index": 11,
+     "name": "room_debug_color",
+     "kind": "debug"
+    },
+    {
+     "index": 12,
+     "name": "room_debug_battle",
+     "kind": "debug"
+    },
+    {
+     "index": 13,
+     "name": "room_debug_loc",
+     "kind": "debug"
+    },
+    {
+     "index": 14,
+     "name": "PLACE_CONTACT",
+     "kind": "system"
+    },
+    {
+     "index": 15,
+     "name": "room_krisroom",
+     "kind": "home"
+    },
+    {
+     "index": 16,
+     "name": "room_krishallway",
+     "kind": "home"
+    },
+    {
+     "index": 17,
+     "name": "room_torroom",
+     "kind": "home"
+    },
+    {
+     "index": 18,
+     "name": "room_torhouse",
+     "kind": "home"
+    },
+    {
+     "index": 19,
+     "name": "room_torbathroom",
+     "kind": "home"
+    },
+    {
+     "index": 20,
+     "name": "room_town_krisyard",
+     "kind": "town"
+    },
+    {
+     "index": 21,
+     "name": "room_town_northwest",
+     "kind": "town"
+    },
+    {
+     "index": 22,
+     "name": "room_town_north",
+     "kind": "town"
+    },
+    {
+     "index": 23,
+     "name": "room_beach",
+     "kind": "town_life"
+    },
+    {
+     "index": 24,
+     "name": "room_town_mid",
+     "kind": "town"
+    },
+    {
+     "index": 25,
+     "name": "room_town_apartments",
+     "kind": "town"
+    },
+    {
+     "index": 26,
+     "name": "room_town_south",
+     "kind": "town"
+    },
+    {
+     "index": 27,
+     "name": "room_town_school",
+     "kind": "town"
+    },
+    {
+     "index": 28,
+     "name": "room_town_church",
+     "kind": "town"
+    },
+    {
+     "index": 29,
+     "name": "room_graveyard",
+     "kind": "town_life"
+    },
+    {
+     "index": 30,
+     "name": "room_town_shelter",
+     "kind": "town"
+    },
+    {
+     "index": 31,
+     "name": "room_hospital_lobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 32,
+     "name": "room_hospital_hallway",
+     "kind": "town_life"
+    },
+    {
+     "index": 33,
+     "name": "room_hospital_rudy",
+     "kind": "town_life"
+    },
+    {
+     "index": 34,
+     "name": "room_hospital_room2",
+     "kind": "town_life"
+    },
+    {
+     "index": 35,
+     "name": "room_diner",
+     "kind": "town_life"
+    },
+    {
+     "index": 36,
+     "name": "room_townhall",
+     "kind": "town"
+    },
+    {
+     "index": 37,
+     "name": "room_flowershop_1f",
+     "kind": "town_life"
+    },
+    {
+     "index": 38,
+     "name": "room_flowershop_2f",
+     "kind": "town_life"
+    },
+    {
+     "index": 39,
+     "name": "room_library",
+     "kind": "town_life"
+    },
+    {
+     "index": 40,
+     "name": "room_alphysalley",
+     "kind": "town_life"
+    },
+    {
+     "index": 41,
+     "name": "room_lw_computer_lab",
+     "kind": "town_life"
+    },
+    {
+     "index": 42,
+     "name": "room_lw_library_upstairs",
+     "kind": "town_life"
+    },
+    {
+     "index": 43,
+     "name": "room_lw_police",
+     "kind": "town_life"
+    },
+    {
+     "index": 44,
+     "name": "room_lw_conbini",
+     "kind": "town_life"
+    },
+    {
+     "index": 45,
+     "name": "room_lw_icee_pizza",
+     "kind": "town_life"
+    },
+    {
+     "index": 46,
+     "name": "room_lw_church_entrance",
+     "kind": "town_life"
+    },
+    {
+     "index": 47,
+     "name": "room_lw_church_main",
+     "kind": "town_life"
+    },
+    {
+     "index": 48,
+     "name": "room_lw_noellehouse_main",
+     "kind": "town_life"
+    },
+    {
+     "index": 49,
+     "name": "room_lw_noellehouse_kitchen",
+     "kind": "town_life"
+    },
+    {
+     "index": 50,
+     "name": "room_lw_noellehouse_bathroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 51,
+     "name": "room_lw_noellehouse_keyroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 52,
+     "name": "room_lw_noellehouse_noelle",
+     "kind": "town_life"
+    },
+    {
+     "index": 53,
+     "name": "room_lw_noellehouse_dess",
+     "kind": "town_life"
+    },
+    {
+     "index": 54,
+     "name": "room_lw_noellehouse_closet",
+     "kind": "town_life"
+    },
+    {
+     "index": 55,
+     "name": "room_torielclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 56,
+     "name": "room_schoollobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 57,
+     "name": "room_alphysclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 58,
+     "name": "room_schooldoor",
+     "kind": "town_life"
+    },
+    {
+     "index": 59,
+     "name": "room_insidecloset",
+     "kind": "town_life"
+    },
+    {
+     "index": 60,
+     "name": "room_school_unusedroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 61,
+     "name": "room_castle_tutorial",
+     "kind": "dark"
+    },
+    {
+     "index": 62,
+     "name": "room_dw_castle_east_door",
+     "kind": "dark"
+    },
+    {
+     "index": 63,
+     "name": "room_dw_castle_west_cliff",
+     "kind": "dark"
+    },
+    {
+     "index": 64,
+     "name": "room_dw_castle_area_1",
+     "kind": "dark"
+    },
+    {
+     "index": 65,
+     "name": "room_dw_castle_town",
+     "kind": "dark"
+    },
+    {
+     "index": 66,
+     "name": "room_dw_ralsei_castle_front",
+     "kind": "dark"
+    },
+    {
+     "index": 67,
+     "name": "room_dw_castle_restaurant",
+     "kind": "dark"
+    },
+    {
+     "index": 68,
+     "name": "room_dw_castle_cafe",
+     "kind": "dark"
+    },
+    {
+     "index": 69,
+     "name": "room_dw_castle_dojo",
+     "kind": "dark"
+    },
+    {
+     "index": 70,
+     "name": "room_dw_ralsei_castle_1f",
+     "kind": "dark"
+    },
+    {
+     "index": 71,
+     "name": "room_dw_ralsei_castle_2f",
+     "kind": "dark"
+    },
+    {
+     "index": 72,
+     "name": "room_dw_castle_dungeon",
+     "kind": "dark"
+    },
+    {
+     "index": 73,
+     "name": "room_dw_castle_rooms_kris",
+     "kind": "dark"
+    },
+    {
+     "index": 74,
+     "name": "room_dw_castle_rooms_susie",
+     "kind": "dark"
+    },
+    {
+     "index": 75,
+     "name": "PLACE_DOG",
+     "kind": "system"
+    },
+    {
+     "index": 76,
+     "name": "room_legend",
+     "kind": "system"
+    },
+    {
+     "index": 77,
+     "name": "room_legend_neo",
+     "kind": "system"
+    },
+    {
+     "index": 78,
+     "name": "room_shop1",
+     "kind": "other"
+    },
+    {
+     "index": 79,
+     "name": "room_shop_music",
+     "kind": "other"
+    },
+    {
+     "index": 80,
+     "name": "room_gameover",
+     "kind": "system"
+    },
+    {
+     "index": 81,
+     "name": "PLACE_LOGO",
+     "kind": "system"
+    },
+    {
+     "index": 82,
+     "name": "PLACE_FAILURE",
+     "kind": "system"
+    },
+    {
+     "index": 83,
+     "name": "PLACE_NAMING_JIKKEN",
+     "kind": "system"
+    },
+    {
+     "index": 84,
+     "name": "PLACE_MENU",
+     "kind": "system"
+    },
+    {
+     "index": 85,
+     "name": "room_ed",
+     "kind": "system"
+    },
+    {
+     "index": 86,
+     "name": "room_empty",
+     "kind": "system"
+    },
+    {
+     "index": 87,
+     "name": "room_DARKempty",
+     "kind": "system"
+    },
+    {
+     "index": 88,
+     "name": "room_test_climb_new",
+     "kind": "debug"
+    },
+    {
+     "index": 89,
+     "name": "room_cc_lancer",
+     "kind": "card_castle"
+    },
+    {
+     "index": 90,
+     "name": "room_cc_clover",
+     "kind": "card_castle"
+    },
+    {
+     "index": 91,
+     "name": "room_cc_fountain",
+     "kind": "card_castle"
+    },
+    {
+     "index": 92,
+     "name": "PLACE_DOGCHECK2",
+     "kind": "system"
+    },
+    {
+     "index": 93,
+     "name": "room_debug_smallface_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 94,
+     "name": "room_debug_smallface",
+     "kind": "debug"
+    },
+    {
+     "index": 95,
+     "name": "room_debug_choicer_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 96,
+     "name": "room_debug_choicer_light",
+     "kind": "debug"
+    },
+    {
+     "index": 97,
+     "name": "room_debug_battleBalloon",
+     "kind": "debug"
+    },
+    {
+     "index": 98,
+     "name": "room_overworldBulletEnemyTest",
+     "kind": "other"
+    },
+    {
+     "index": 99,
+     "name": "room_debug_layeredLevelTest",
+     "kind": "debug"
+    },
+    {
+     "index": 100,
+     "name": "room_debug_windowEffect",
+     "kind": "debug"
+    },
+    {
+     "index": 101,
+     "name": "room_dw_church_slidingbookshelf",
+     "kind": "dark"
+    },
+    {
+     "index": 102,
+     "name": "room_darkness_example",
+     "kind": "dark"
+    },
+    {
+     "index": 103,
+     "name": "room_darkness_example_2",
+     "kind": "dark"
+    },
+    {
+     "index": 104,
+     "name": "room_dw_church_bellplay",
+     "kind": "dark"
+    },
+    {
+     "index": 105,
+     "name": "room_intro_ch4",
+     "kind": "other"
+    },
+    {
+     "index": 106,
+     "name": "room_dw_church_candlelighting",
+     "kind": "dark"
+    },
+    {
+     "index": 107,
+     "name": "room_town_noellehouse",
+     "kind": "town"
+    },
+    {
+     "index": 108,
+     "name": "room_dw_church_intro1",
+     "kind": "dark"
+    },
+    {
+     "index": 109,
+     "name": "room_dw_church_intro3",
+     "kind": "dark"
+    },
+    {
+     "index": 110,
+     "name": "room_dw_church_intro_guei",
+     "kind": "dark"
+    },
+    {
+     "index": 111,
+     "name": "room_dw_church_darkroom1_old",
+     "kind": "dark"
+    },
+    {
+     "index": 112,
+     "name": "room_dw_church_lantern1_old_old",
+     "kind": "dark"
+    },
+    {
+     "index": 113,
+     "name": "room_dw_church_lantern_hallway",
+     "kind": "dark"
+    },
+    {
+     "index": 114,
+     "name": "room_dw_church_darkbell_old",
+     "kind": "dark"
+    },
+    {
+     "index": 115,
+     "name": "room_dw_church_gersonstudy",
+     "kind": "dark"
+    },
+    {
+     "index": 116,
+     "name": "room_dw_church_stairs_west_bell",
+     "kind": "dark"
+    },
+    {
+     "index": 117,
+     "name": "room_dw_church_librarybookenemy",
+     "kind": "dark"
+    },
+    {
+     "index": 118,
+     "name": "room_dw_church_bookshelfpuzzle1",
+     "kind": "dark"
+    },
+    {
+     "index": 119,
+     "name": "room_dw_church_bookshelfpuzzle2",
+     "kind": "dark"
+    },
+    {
+     "index": 120,
+     "name": "room_dw_church_worshiproom",
+     "kind": "dark"
+    },
+    {
+     "index": 121,
+     "name": "room_dw_church_swingingbell",
+     "kind": "dark"
+    },
+    {
+     "index": 122,
+     "name": "room_dw_church_tallbookcases",
+     "kind": "dark"
+    },
+    {
+     "index": 123,
+     "name": "room_dw_church_lantern2",
+     "kind": "dark"
+    },
+    {
+     "index": 124,
+     "name": "room_dw_church_smallbells",
+     "kind": "dark"
+    },
+    {
+     "index": 125,
+     "name": "room_dw_church_claw",
+     "kind": "dark"
+    },
+    {
+     "index": 126,
+     "name": "room_dw_church_shelfclimb1",
+     "kind": "dark"
+    },
+    {
+     "index": 127,
+     "name": "room_dw_church_statueclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 128,
+     "name": "room_dw_church_offering",
+     "kind": "dark"
+    },
+    {
+     "index": 129,
+     "name": "room_dw_church_npcroom_shelfclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 130,
+     "name": "room_dw_church_stairs_stainedglass",
+     "kind": "dark"
+    },
+    {
+     "index": 131,
+     "name": "room_dw_church_bellsareawest",
+     "kind": "dark"
+    },
+    {
+     "index": 132,
+     "name": "room_dw_church_stairs_topright",
+     "kind": "dark"
+    },
+    {
+     "index": 133,
+     "name": "room_dw_church_poolsroom1",
+     "kind": "dark"
+    },
+    {
+     "index": 134,
+     "name": "room_dw_church_candlesroom1",
+     "kind": "dark"
+    },
+    {
+     "index": 135,
+     "name": "room_dw_church_solowaterfall",
+     "kind": "dark"
+    },
+    {
+     "index": 136,
+     "name": "room_dw_church_statueroom",
+     "kind": "dark"
+    },
+    {
+     "index": 137,
+     "name": "room_dw_church_poolsroom2",
+     "kind": "dark"
+    },
+    {
+     "index": 138,
+     "name": "room_dw_church_shelfclimb2",
+     "kind": "dark"
+    },
+    {
+     "index": 139,
+     "name": "room_dw_church_statueclimb_npcroom",
+     "kind": "dark"
+    },
+    {
+     "index": 140,
+     "name": "room_dw_church_bellhall_west",
+     "kind": "dark"
+    },
+    {
+     "index": 141,
+     "name": "room_dw_church_fountainconnection",
+     "kind": "dark"
+    },
+    {
+     "index": 142,
+     "name": "room_dw_church_stainedglasspreview",
+     "kind": "dark"
+    },
+    {
+     "index": 143,
+     "name": "room_dw_church_stairs_topleft",
+     "kind": "dark"
+    },
+    {
+     "index": 144,
+     "name": "room_dw_church_npcroom_pools1",
+     "kind": "dark"
+    },
+    {
+     "index": 145,
+     "name": "room_dw_church_poolsroom1_east",
+     "kind": "dark"
+    },
+    {
+     "index": 146,
+     "name": "room_dw_church_minorlegend",
+     "kind": "system"
+    },
+    {
+     "index": 147,
+     "name": "room_dw_church_bookenemywest",
+     "kind": "dark"
+    },
+    {
+     "index": 148,
+     "name": "room_dw_church_poolsroom2south",
+     "kind": "dark"
+    },
+    {
+     "index": 149,
+     "name": "room_lw_church_office",
+     "kind": "town_life"
+    },
+    {
+     "index": 150,
+     "name": "room_dw_church_bellhall_east",
+     "kind": "dark"
+    },
+    {
+     "index": 151,
+     "name": "room_dw_church_bellhall_central",
+     "kind": "dark"
+    },
+    {
+     "index": 152,
+     "name": "room_dw_church_darkroom_old",
+     "kind": "dark"
+    },
+    {
+     "index": 153,
+     "name": "room_dw_church_lantern1_old",
+     "kind": "dark"
+    },
+    {
+     "index": 154,
+     "name": "room_dw_ralsei_castle_3f",
+     "kind": "dark"
+    },
+    {
+     "index": 155,
+     "name": "room_dw_castle_rooms_ralsei",
+     "kind": "dark"
+    },
+    {
+     "index": 156,
+     "name": "room_dw_rotating_tower",
+     "kind": "dark"
+    },
+    {
+     "index": 157,
+     "name": "room_dark_twostoryTest",
+     "kind": "dark"
+    },
+    {
+     "index": 158,
+     "name": "room_overworldDarknessBulletTest",
+     "kind": "debug"
+    },
+    {
+     "index": 159,
+     "name": "room_krisroom_dark",
+     "kind": "dark"
+    },
+    {
+     "index": 160,
+     "name": "room_overworld_darkmaku_ring",
+     "kind": "dark"
+    },
+    {
+     "index": 161,
+     "name": "room_dw_church_statueroom_old",
+     "kind": "dark"
+    },
+    {
+     "index": 162,
+     "name": "room_lw_noellehouse_vents_west",
+     "kind": "town_life"
+    },
+    {
+     "index": 163,
+     "name": "room_lerptest",
+     "kind": "other"
+    },
+    {
+     "index": 164,
+     "name": "room_overworld_darkmakumaze",
+     "kind": "dark"
+    },
+    {
+     "index": 165,
+     "name": "room_overworld_darkmaku_blocks",
+     "kind": "dark"
+    },
+    {
+     "index": 166,
+     "name": "room_town_krisyard_dark",
+     "kind": "dark"
+    },
+    {
+     "index": 167,
+     "name": "room_dw_castle_rooms_queen",
+     "kind": "dark"
+    },
+    {
+     "index": 168,
+     "name": "room_dw_castle_rooms_tenna",
+     "kind": "dark"
+    },
+    {
+     "index": 169,
+     "name": "room_traintest",
+     "kind": "other"
+    },
+    {
+     "index": 170,
+     "name": "room_dw_church_rippletest",
+     "kind": "dark"
+    },
+    {
+     "index": 171,
+     "name": "room_dw_church_ripplepuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 172,
+     "name": "room_dw_church_gueitest",
+     "kind": "dark"
+    },
+    {
+     "index": 173,
+     "name": "room_dw_church_glass",
+     "kind": "dark"
+    },
+    {
+     "index": 174,
+     "name": "room_dw_church_staircase",
+     "kind": "dark"
+    },
+    {
+     "index": 175,
+     "name": "room_dw_church_bellhall_bookroom",
+     "kind": "dark"
+    },
+    {
+     "index": 176,
+     "name": "room_dw_church_bookcase",
+     "kind": "dark"
+    },
+    {
+     "index": 177,
+     "name": "room_dw_church_savepoint",
+     "kind": "dark"
+    },
+    {
+     "index": 178,
+     "name": "room_dw_church_dark_fire_puzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 179,
+     "name": "room_dw_church_turtles",
+     "kind": "dark"
+    },
+    {
+     "index": 180,
+     "name": "room_dw_church_guei",
+     "kind": "dark"
+    },
+    {
+     "index": 181,
+     "name": "room_dw_church_jackenstein",
+     "kind": "dark"
+    },
+    {
+     "index": 182,
+     "name": "room_dw_church_bellhall_curtain",
+     "kind": "dark"
+    },
+    {
+     "index": 183,
+     "name": "room_dw_church_lantern_hallway_old",
+     "kind": "dark"
+    },
+    {
+     "index": 184,
+     "name": "room_dw_church_dogclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 185,
+     "name": "room_dw_church_arena",
+     "kind": "dark"
+    },
+    {
+     "index": 186,
+     "name": "room_debug_pianotest",
+     "kind": "debug"
+    },
+    {
+     "index": 187,
+     "name": "room_gersonbattleroomtest",
+     "kind": "other"
+    },
+    {
+     "index": 188,
+     "name": "room_traintest_big",
+     "kind": "other"
+    },
+    {
+     "index": 189,
+     "name": "room_dw_church_chase_old",
+     "kind": "dark"
+    },
+    {
+     "index": 190,
+     "name": "room_dw_3d_tower_test",
+     "kind": "debug"
+    },
+    {
+     "index": 191,
+     "name": "room_dw_titan_tower_test",
+     "kind": "debug"
+    },
+    {
+     "index": 192,
+     "name": "room_dw_churchb_nongerson_post",
+     "kind": "dark"
+    },
+    {
+     "index": 193,
+     "name": "room_lw_noellehouse_vents_north",
+     "kind": "town_life"
+    },
+    {
+     "index": 194,
+     "name": "room_lw_noellehouse_vents_east",
+     "kind": "town_life"
+    },
+    {
+     "index": 195,
+     "name": "room_lw_noellehouse_vents_south",
+     "kind": "town_life"
+    },
+    {
+     "index": 196,
+     "name": "room_bullettest_new",
+     "kind": "debug"
+    },
+    {
+     "index": 197,
+     "name": "room_test_pianoGimmick",
+     "kind": "debug"
+    },
+    {
+     "index": 198,
+     "name": "room_test_remotePiano",
+     "kind": "debug"
+    },
+    {
+     "index": 199,
+     "name": "room_DARKbase_GMS2",
+     "kind": "dark"
+    },
+    {
+     "index": 200,
+     "name": "room_test_climb_new2",
+     "kind": "debug"
+    },
+    {
+     "index": 201,
+     "name": "room_test_climb_cameratest",
+     "kind": "debug"
+    },
+    {
+     "index": 202,
+     "name": "room_test_climb_0001",
+     "kind": "debug"
+    },
+    {
+     "index": 203,
+     "name": "room_test_climb_enterexit",
+     "kind": "debug"
+    },
+    {
+     "index": 204,
+     "name": "room_dw_church_climbtut",
+     "kind": "dark"
+    },
+    {
+     "index": 205,
+     "name": "room_dw_church_fastwater",
+     "kind": "dark"
+    },
+    {
+     "index": 206,
+     "name": "room_dw_church_crumbletower",
+     "kind": "dark"
+    },
+    {
+     "index": 207,
+     "name": "room_dw_church_tower1",
+     "kind": "dark"
+    },
+    {
+     "index": 208,
+     "name": "room_lw_church_choir",
+     "kind": "town_life"
+    },
+    {
+     "index": 209,
+     "name": "room_dw_church_bellclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 210,
+     "name": "room_dw_church_shiftclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 211,
+     "name": "room_dw_church_intropiano",
+     "kind": "dark"
+    },
+    {
+     "index": 212,
+     "name": "room_dw_church_intro_gerson",
+     "kind": "dark"
+    },
+    {
+     "index": 213,
+     "name": "room_dw_church_pianopiece_left",
+     "kind": "dark"
+    },
+    {
+     "index": 214,
+     "name": "room_dw_church_northprophecies",
+     "kind": "dark"
+    },
+    {
+     "index": 215,
+     "name": "room_dw_church_darkmaze",
+     "kind": "dark"
+    },
+    {
+     "index": 216,
+     "name": "room_dw_church_quicktest",
+     "kind": "dark"
+    },
+    {
+     "index": 217,
+     "name": "room_dw_church_pianopiece_right",
+     "kind": "dark"
+    },
+    {
+     "index": 218,
+     "name": "room_dw_church_pianopuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 219,
+     "name": "room_dw_church_nwconnect",
+     "kind": "dark"
+    },
+    {
+     "index": 220,
+     "name": "room_dw_church_rightconnect",
+     "kind": "dark"
+    },
+    {
+     "index": 221,
+     "name": "room_dw_church_stairspreview",
+     "kind": "dark"
+    },
+    {
+     "index": 222,
+     "name": "room_dw_church_trueclimbadventure",
+     "kind": "dark"
+    },
+    {
+     "index": 223,
+     "name": "room_dw_church_organpuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 224,
+     "name": "room_dw_church_mizzleencounter",
+     "kind": "dark"
+    },
+    {
+     "index": 225,
+     "name": "room_dw_church_sideclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 226,
+     "name": "room_dw_church_secretpiano",
+     "kind": "dark"
+    },
+    {
+     "index": 227,
+     "name": "room_dw_church_ripplepuzzle_postgers",
+     "kind": "dark"
+    },
+    {
+     "index": 228,
+     "name": "room_dw_church_tallbookcases_backup",
+     "kind": "dark"
+    },
+    {
+     "index": 229,
+     "name": "room_dw_church_fountain",
+     "kind": "dark"
+    },
+    {
+     "index": 230,
+     "name": "room_dw_church_b_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 231,
+     "name": "room_dw_churchc_final_prophecy",
+     "kind": "dark"
+    },
+    {
+     "index": 232,
+     "name": "room_dw_church_bookshelfpuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 233,
+     "name": "room_lw_noellehouse_basement",
+     "kind": "town_life"
+    },
+    {
+     "index": 234,
+     "name": "room_dw_church_biblioxencounter",
+     "kind": "dark"
+    },
+    {
+     "index": 235,
+     "name": "room_dw_church_darkclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 236,
+     "name": "room_dw_church_moneyfountain",
+     "kind": "dark"
+    },
+    {
+     "index": 237,
+     "name": "room_rotating_tower_new_test",
+     "kind": "debug"
+    },
+    {
+     "index": 238,
+     "name": "room_dw_church_pianopiece_left_b",
+     "kind": "dark"
+    },
+    {
+     "index": 239,
+     "name": "room_dw_church_pianopiece_rightprophecy",
+     "kind": "dark"
+    },
+    {
+     "index": 240,
+     "name": "room_rotating_tower_new_example",
+     "kind": "other"
+    },
+    {
+     "index": 241,
+     "name": "room_dw_church_shadowgerson",
+     "kind": "dark"
+    },
+    {
+     "index": 242,
+     "name": "room_dw_church_holywatercooler",
+     "kind": "dark"
+    },
+    {
+     "index": 243,
+     "name": "room_dw_church_rippleworship",
+     "kind": "dark"
+    },
+    {
+     "index": 244,
+     "name": "room_dw_church_waterfallroom",
+     "kind": "dark"
+    },
+    {
+     "index": 245,
+     "name": "room_dw_church_waterfalltearoom",
+     "kind": "dark"
+    },
+    {
+     "index": 246,
+     "name": "room_dw_castle_rooms_kris_susie",
+     "kind": "dark"
+    },
+    {
+     "index": 247,
+     "name": "room_dw_churchb_staircaseintro",
+     "kind": "dark"
+    },
+    {
+     "index": 248,
+     "name": "room_dw_churchb_prophecyencounter",
+     "kind": "dark"
+    },
+    {
+     "index": 249,
+     "name": "room_dw_churchb_worshiproom",
+     "kind": "dark"
+    },
+    {
+     "index": 250,
+     "name": "room_dw_churchb_libraryconnector",
+     "kind": "dark"
+    },
+    {
+     "index": 251,
+     "name": "room_dw_churchb_savepoint",
+     "kind": "dark"
+    },
+    {
+     "index": 252,
+     "name": "room_dw_churchb_rotatingtower",
+     "kind": "dark"
+    },
+    {
+     "index": 253,
+     "name": "room_dw_churchb_bellroom",
+     "kind": "dark"
+    },
+    {
+     "index": 254,
+     "name": "room_dw_churchb_escherstaircase",
+     "kind": "dark"
+    },
+    {
+     "index": 255,
+     "name": "room_dw_churchb_prophecymaze",
+     "kind": "dark"
+    },
+    {
+     "index": 256,
+     "name": "room_dw_churchb_rotatingtower2",
+     "kind": "dark"
+    },
+    {
+     "index": 257,
+     "name": "room_dw_churchb_gersonstudy",
+     "kind": "dark"
+    },
+    {
+     "index": 258,
+     "name": "room_dw_churchb_gersonchase",
+     "kind": "dark"
+    },
+    {
+     "index": 259,
+     "name": "room_dw_churchb_extinguisher",
+     "kind": "dark"
+    },
+    {
+     "index": 260,
+     "name": "room_dw_church_knightclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 261,
+     "name": "room_dw_church_knightclimb_post",
+     "kind": "dark"
+    },
+    {
+     "index": 262,
+     "name": "room_dw_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 263,
+     "name": "room_dw_rhythm_countdown",
+     "kind": "dark"
+    },
+    {
+     "index": 264,
+     "name": "room_dw_rhythm_empty",
+     "kind": "dark"
+    },
+    {
+     "index": 265,
+     "name": "room_rhythmgame_editor",
+     "kind": "other"
+    },
+    {
+     "index": 266,
+     "name": "room_dw_churchb_ripple1",
+     "kind": "dark"
+    },
+    {
+     "index": 267,
+     "name": "room_dw_churchb_ripplepost",
+     "kind": "dark"
+    },
+    {
+     "index": 268,
+     "name": "room_dw_churchb_library_alternate",
+     "kind": "dark"
+    },
+    {
+     "index": 269,
+     "name": "room_dw_churchb_moneyfountain",
+     "kind": "dark"
+    },
+    {
+     "index": 270,
+     "name": "room_dw_churchc_superprophecies",
+     "kind": "dark"
+    },
+    {
+     "index": 271,
+     "name": "room_dw_churchc_encounter1",
+     "kind": "dark"
+    },
+    {
+     "index": 272,
+     "name": "room_dw_churchc_slidingpiano",
+     "kind": "dark"
+    },
+    {
+     "index": 273,
+     "name": "room_dw_churchc_ripplesneak_poc",
+     "kind": "dark"
+    },
+    {
+     "index": 274,
+     "name": "room_dw_churchc_encounter2",
+     "kind": "dark"
+    },
+    {
+     "index": 275,
+     "name": "room_dw_churchc_finalclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 276,
+     "name": "room_dw_churchc_angelprophecy_encounter",
+     "kind": "dark"
+    },
+    {
+     "index": 277,
+     "name": "room_dw_churchc_savepoint",
+     "kind": "dark"
+    },
+    {
+     "index": 278,
+     "name": "room_dw_churchc_darkswords",
+     "kind": "dark"
+    },
+    {
+     "index": 279,
+     "name": "room_dw_churchc_pretitan",
+     "kind": "dark"
+    },
+    {
+     "index": 280,
+     "name": "room_dw_churchc_prepretitan",
+     "kind": "dark"
+    },
+    {
+     "index": 281,
+     "name": "room_dw_churchc_titandefeated",
+     "kind": "dark"
+    },
+    {
+     "index": 282,
+     "name": "room_dw_churchb_fountain",
+     "kind": "dark"
+    },
+    {
+     "index": 283,
+     "name": "room_dw_church_ripseq1",
+     "kind": "dark"
+    },
+    {
+     "index": 284,
+     "name": "room_dw_church_ripseq2",
+     "kind": "dark"
+    },
+    {
+     "index": 285,
+     "name": "room_dw_churchc_titanclimb1",
+     "kind": "dark"
+    },
+    {
+     "index": 286,
+     "name": "room_dw_churchc_titanclimb2",
+     "kind": "dark"
+    },
+    {
+     "index": 287,
+     "name": "room_dw_churchc_titanclimb1_old",
+     "kind": "dark"
+    },
+    {
+     "index": 288,
+     "name": "room_dw_churchc_titanclimb2_old",
+     "kind": "dark"
+    },
+    {
+     "index": 289,
+     "name": "room_lw_noellehouse_north",
+     "kind": "town_life"
+    },
+    {
+     "index": 290,
+     "name": "room_lw_noellehouse_vents_north_west",
+     "kind": "town_life"
+    },
+    {
+     "index": 291,
+     "name": "room_dw_channelchange_test",
+     "kind": "debug"
+    },
+    {
+     "index": 292,
+     "name": "room_ripple_test",
+     "kind": "debug"
+    },
+    {
+     "index": 293,
+     "name": "room_dw_churchb_prophecymaze_old",
+     "kind": "dark"
+    },
+    {
+     "index": 294,
+     "name": "room_dw_churchb_fireplace",
+     "kind": "dark"
+    },
+    {
+     "index": 295,
+     "name": "room_dw_churchb_nongerson",
+     "kind": "dark"
+    },
+    {
+     "index": 296,
+     "name": "room_dw_churchb_library",
+     "kind": "dark"
+    },
+    {
+     "index": 297,
+     "name": "room_dw_castle_tv_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 298,
+     "name": "room_dw_castle_tv",
+     "kind": "dark"
+    },
+    {
+     "index": 299,
+     "name": "room_dw_churchb_windows",
+     "kind": "dark"
+    },
+    {
+     "index": 300,
+     "name": "room_dw_churchb_bookshelf",
+     "kind": "dark"
+    },
+    {
+     "index": 301,
+     "name": "room_dw_churchb_man",
+     "kind": "dark"
+    },
+    {
+     "index": 302,
+     "name": "room_dw_churchb_gallery",
+     "kind": "dark"
+    },
+    {
+     "index": 303,
+     "name": "room_dw_churchb_rotatingtower_old",
+     "kind": "dark"
+    },
+    {
+     "index": 304,
+     "name": "room_dw_churchb_darkclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 305,
+     "name": "room_dw_churchc_titanclimb1_post",
+     "kind": "dark"
+    },
+    {
+     "index": 306,
+     "name": "room_dw_churchc_titanclimb2_post",
+     "kind": "dark"
+    },
+    {
+     "index": 307,
+     "name": "room_dw_churchb_darkclimb_scene",
+     "kind": "dark"
+    },
+    {
+     "index": 308,
+     "name": "room_dw_churchc_dodge",
+     "kind": "dark"
+    },
+    {
+     "index": 309,
+     "name": "room_dw_churchc_insidetitan",
+     "kind": "dark"
+    },
+    {
+     "index": 310,
+     "name": "room_lightworldTest",
+     "kind": "other"
+    },
+    {
+     "index": 311,
+     "name": "room_dw_churchc_prophecies",
+     "kind": "dark"
+    },
+    {
+     "index": 312,
+     "name": "room_dw_churchc_angelprophecy",
+     "kind": "dark"
+    },
+    {
+     "index": 313,
+     "name": "room_dw_church_bookshelfpuzzle_rev",
+     "kind": "dark"
+    },
+    {
+     "index": 314,
+     "name": "room_dw_churchc_prophecies_backup",
+     "kind": "dark"
+    },
+    {
+     "index": 315,
+     "name": "room_dw_churchc_treasurechest",
+     "kind": "dark"
+    },
+    {
+     "index": 316,
+     "name": "room_dw_churchc_titanclimb2_old2",
+     "kind": "dark"
+    },
+    {
+     "index": 317,
+     "name": "room_dw_churchc_titanclimb1_tiled",
+     "kind": "dark"
+    },
+    {
+     "index": 318,
+     "name": "room_dw_churchc_titanclimb2_tiled",
+     "kind": "dark"
+    },
+    {
+     "index": 319,
+     "name": "room_dw_churchb_rotatingtower_tiled",
+     "kind": "dark"
+    },
+    {
+     "index": 320,
+     "name": "room_vfx_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 321,
+     "name": "room_dw_castle_tv_zone_1",
+     "kind": "dark"
+    },
+    {
+     "index": 322,
+     "name": "room_dw_castle_tv_zone_2",
+     "kind": "dark"
+    },
+    {
+     "index": 323,
+     "name": "room_dw_castle_tv_zone_3",
+     "kind": "dark"
+    },
+    {
+     "index": 324,
+     "name": "room_dw_castle_tv_zone_battle",
+     "kind": "dark"
+    },
+    {
+     "index": 325,
+     "name": "room_dw_castle_tv_zone_minigame",
+     "kind": "dark"
+    },
+    {
+     "index": 326,
+     "name": "room_shapetest",
+     "kind": "other"
+    },
+    {
+     "index": 327,
+     "name": "room_chapter_continue",
+     "kind": "system"
+    }
+   ]
+  },
+  "ch5": {
+   "folder": "chapter5_windows",
+   "name": "第五章",
+   "display_alias": "Garden of Hopes and Dreams",
+   "n_rooms": 252,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "room_gms_debug_failsafe",
+     "kind": "debug"
+    },
+    {
+     "index": 1,
+     "name": "ROOM_INITIALIZE",
+     "kind": "system"
+    },
+    {
+     "index": 2,
+     "name": "room_battletest",
+     "kind": "system"
+    },
+    {
+     "index": 3,
+     "name": "room_cutscene_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 4,
+     "name": "room_sound_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 5,
+     "name": "room_sprite_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 6,
+     "name": "room_gif_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 7,
+     "name": "room_GMS2_test",
+     "kind": "debug"
+    },
+    {
+     "index": 8,
+     "name": "room_cutscene_tester_b",
+     "kind": "debug"
+    },
+    {
+     "index": 9,
+     "name": "room_debug_color",
+     "kind": "debug"
+    },
+    {
+     "index": 10,
+     "name": "room_debug_battle",
+     "kind": "debug"
+    },
+    {
+     "index": 11,
+     "name": "room_debug_loc",
+     "kind": "debug"
+    },
+    {
+     "index": 12,
+     "name": "PLACE_CONTACT",
+     "kind": "system"
+    },
+    {
+     "index": 13,
+     "name": "room_krisroom",
+     "kind": "home"
+    },
+    {
+     "index": 14,
+     "name": "room_krishallway",
+     "kind": "home"
+    },
+    {
+     "index": 15,
+     "name": "room_torroom",
+     "kind": "home"
+    },
+    {
+     "index": 16,
+     "name": "room_torhouse",
+     "kind": "home"
+    },
+    {
+     "index": 17,
+     "name": "room_torbathroom",
+     "kind": "home"
+    },
+    {
+     "index": 18,
+     "name": "room_town_krisyard",
+     "kind": "town"
+    },
+    {
+     "index": 19,
+     "name": "room_town_northwest",
+     "kind": "town"
+    },
+    {
+     "index": 20,
+     "name": "room_town_north",
+     "kind": "town"
+    },
+    {
+     "index": 21,
+     "name": "room_beach",
+     "kind": "town_life"
+    },
+    {
+     "index": 22,
+     "name": "room_town_mid",
+     "kind": "town"
+    },
+    {
+     "index": 23,
+     "name": "room_town_apartments",
+     "kind": "town"
+    },
+    {
+     "index": 24,
+     "name": "room_town_south",
+     "kind": "town"
+    },
+    {
+     "index": 25,
+     "name": "room_town_school",
+     "kind": "town"
+    },
+    {
+     "index": 26,
+     "name": "room_town_church",
+     "kind": "town"
+    },
+    {
+     "index": 27,
+     "name": "room_graveyard",
+     "kind": "town_life"
+    },
+    {
+     "index": 28,
+     "name": "room_town_shelter",
+     "kind": "town"
+    },
+    {
+     "index": 29,
+     "name": "room_hospital_lobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 30,
+     "name": "room_hospital_hallway",
+     "kind": "town_life"
+    },
+    {
+     "index": 31,
+     "name": "room_hospital_rudy",
+     "kind": "town_life"
+    },
+    {
+     "index": 32,
+     "name": "room_hospital_room2",
+     "kind": "town_life"
+    },
+    {
+     "index": 33,
+     "name": "room_diner",
+     "kind": "town_life"
+    },
+    {
+     "index": 34,
+     "name": "room_townhall",
+     "kind": "town"
+    },
+    {
+     "index": 35,
+     "name": "room_flowershop_1f",
+     "kind": "town_life"
+    },
+    {
+     "index": 36,
+     "name": "room_flowershop_2f",
+     "kind": "town_life"
+    },
+    {
+     "index": 37,
+     "name": "room_library",
+     "kind": "town_life"
+    },
+    {
+     "index": 38,
+     "name": "room_alphysalley",
+     "kind": "town_life"
+    },
+    {
+     "index": 39,
+     "name": "room_lw_computer_lab",
+     "kind": "town_life"
+    },
+    {
+     "index": 40,
+     "name": "room_lw_library_upstairs",
+     "kind": "town_life"
+    },
+    {
+     "index": 41,
+     "name": "room_lw_police",
+     "kind": "town_life"
+    },
+    {
+     "index": 42,
+     "name": "room_lw_conbini",
+     "kind": "town_life"
+    },
+    {
+     "index": 43,
+     "name": "room_lw_icee_pizza",
+     "kind": "town_life"
+    },
+    {
+     "index": 44,
+     "name": "room_torielclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 45,
+     "name": "room_schoollobby",
+     "kind": "town_life"
+    },
+    {
+     "index": 46,
+     "name": "room_alphysclass",
+     "kind": "town_life"
+    },
+    {
+     "index": 47,
+     "name": "room_schooldoor",
+     "kind": "town_life"
+    },
+    {
+     "index": 48,
+     "name": "room_insidecloset",
+     "kind": "town_life"
+    },
+    {
+     "index": 49,
+     "name": "room_school_unusedroom",
+     "kind": "town_life"
+    },
+    {
+     "index": 50,
+     "name": "room_castle_tutorial",
+     "kind": "dark"
+    },
+    {
+     "index": 51,
+     "name": "room_dw_castle_east_door",
+     "kind": "dark"
+    },
+    {
+     "index": 52,
+     "name": "room_dw_castle_west_cliff",
+     "kind": "dark"
+    },
+    {
+     "index": 53,
+     "name": "room_dw_castle_area_1",
+     "kind": "dark"
+    },
+    {
+     "index": 54,
+     "name": "room_dw_castle_town",
+     "kind": "dark"
+    },
+    {
+     "index": 55,
+     "name": "room_dw_ralsei_castle_front",
+     "kind": "dark"
+    },
+    {
+     "index": 56,
+     "name": "room_dw_castle_restaurant",
+     "kind": "dark"
+    },
+    {
+     "index": 57,
+     "name": "room_dw_castle_cafe",
+     "kind": "dark"
+    },
+    {
+     "index": 58,
+     "name": "room_dw_castle_dojo",
+     "kind": "dark"
+    },
+    {
+     "index": 59,
+     "name": "room_dw_ralsei_castle_1f",
+     "kind": "dark"
+    },
+    {
+     "index": 60,
+     "name": "room_dw_ralsei_castle_2f",
+     "kind": "dark"
+    },
+    {
+     "index": 61,
+     "name": "room_dw_ralsei_castle_3f",
+     "kind": "dark"
+    },
+    {
+     "index": 62,
+     "name": "room_dw_castle_dungeon",
+     "kind": "dark"
+    },
+    {
+     "index": 63,
+     "name": "room_dw_castle_rooms_kris",
+     "kind": "dark"
+    },
+    {
+     "index": 64,
+     "name": "room_dw_castle_rooms_susie",
+     "kind": "dark"
+    },
+    {
+     "index": 65,
+     "name": "room_dw_castle_rooms_ralsei",
+     "kind": "dark"
+    },
+    {
+     "index": 66,
+     "name": "PLACE_DOG",
+     "kind": "system"
+    },
+    {
+     "index": 67,
+     "name": "room_legend",
+     "kind": "system"
+    },
+    {
+     "index": 68,
+     "name": "room_legend_neo",
+     "kind": "system"
+    },
+    {
+     "index": 69,
+     "name": "room_shop1",
+     "kind": "other"
+    },
+    {
+     "index": 70,
+     "name": "room_shop_music",
+     "kind": "other"
+    },
+    {
+     "index": 71,
+     "name": "room_gameover",
+     "kind": "system"
+    },
+    {
+     "index": 72,
+     "name": "PLACE_LOGO",
+     "kind": "system"
+    },
+    {
+     "index": 73,
+     "name": "PLACE_FAILURE",
+     "kind": "system"
+    },
+    {
+     "index": 74,
+     "name": "PLACE_NAMING_JIKKEN",
+     "kind": "system"
+    },
+    {
+     "index": 75,
+     "name": "PLACE_MENU",
+     "kind": "system"
+    },
+    {
+     "index": 76,
+     "name": "room_ed",
+     "kind": "system"
+    },
+    {
+     "index": 77,
+     "name": "room_empty",
+     "kind": "system"
+    },
+    {
+     "index": 78,
+     "name": "room_DARKempty",
+     "kind": "system"
+    },
+    {
+     "index": 79,
+     "name": "room_DARKbase_GMS2",
+     "kind": "dark"
+    },
+    {
+     "index": 80,
+     "name": "room_cc_lancer",
+     "kind": "card_castle"
+    },
+    {
+     "index": 81,
+     "name": "room_cc_clover",
+     "kind": "card_castle"
+    },
+    {
+     "index": 82,
+     "name": "room_cc_fountain",
+     "kind": "card_castle"
+    },
+    {
+     "index": 83,
+     "name": "PLACE_DOGCHECK2",
+     "kind": "system"
+    },
+    {
+     "index": 84,
+     "name": "room_debug_smallface_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 85,
+     "name": "room_debug_smallface",
+     "kind": "debug"
+    },
+    {
+     "index": 86,
+     "name": "room_debug_choicer_dark",
+     "kind": "debug"
+    },
+    {
+     "index": 87,
+     "name": "room_debug_choicer_light",
+     "kind": "debug"
+    },
+    {
+     "index": 88,
+     "name": "room_debug_battleBalloon",
+     "kind": "debug"
+    },
+    {
+     "index": 89,
+     "name": "room_overworldBulletEnemyTest",
+     "kind": "other"
+    },
+    {
+     "index": 90,
+     "name": "room_lerptest",
+     "kind": "other"
+    },
+    {
+     "index": 91,
+     "name": "room_bullettest",
+     "kind": "debug"
+    },
+    {
+     "index": 92,
+     "name": "room_bullettest_new",
+     "kind": "debug"
+    },
+    {
+     "index": 93,
+     "name": "room_animexampletest",
+     "kind": "other"
+    },
+    {
+     "index": 94,
+     "name": "room_climbtest",
+     "kind": "other"
+    },
+    {
+     "index": 95,
+     "name": "room_chapter_continue",
+     "kind": "system"
+    },
+    {
+     "index": 96,
+     "name": "room_towery_tester",
+     "kind": "debug"
+    },
+    {
+     "index": 97,
+     "name": "room_animtest",
+     "kind": "other"
+    },
+    {
+     "index": 98,
+     "name": "PLACE_DOGCHECK_CH5",
+     "kind": "system"
+    },
+    {
+     "index": 99,
+     "name": "room_darkbulbTest",
+     "kind": "dark"
+    },
+    {
+     "index": 100,
+     "name": "room_dw_fcastle_shadowplatformTest",
+     "kind": "dark"
+    },
+    {
+     "index": 101,
+     "name": "room_plat_lab",
+     "kind": "other"
+    },
+    {
+     "index": 102,
+     "name": "room_lw_church_choir",
+     "kind": "town_life"
+    },
+    {
+     "index": 103,
+     "name": "room_lw_church_entrance",
+     "kind": "town_life"
+    },
+    {
+     "index": 104,
+     "name": "room_lw_church_main",
+     "kind": "town_life"
+    },
+    {
+     "index": 105,
+     "name": "room_lw_church_office",
+     "kind": "town_life"
+    },
+    {
+     "index": 106,
+     "name": "room_lw_noellehouse_dess",
+     "kind": "town_life"
+    },
+    {
+     "index": 107,
+     "name": "room_town_noellehouse",
+     "kind": "town"
+    },
+    {
+     "index": 108,
+     "name": "room_dw_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 109,
+     "name": "room_dw_rhythm_countdown",
+     "kind": "dark"
+    },
+    {
+     "index": 110,
+     "name": "room_dw_rhythm_empty",
+     "kind": "dark"
+    },
+    {
+     "index": 111,
+     "name": "room_rhythmgame_editor",
+     "kind": "other"
+    },
+    {
+     "index": 112,
+     "name": "room_dw_castle_tv",
+     "kind": "dark"
+    },
+    {
+     "index": 113,
+     "name": "room_dw_castle_tv_rhythm",
+     "kind": "dark"
+    },
+    {
+     "index": 114,
+     "name": "room_dw_castle_church_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 115,
+     "name": "room_dw_castle_church_climb",
+     "kind": "dark"
+    },
+    {
+     "index": 116,
+     "name": "room_dw_ralsei_castle_basketball",
+     "kind": "dark"
+    },
+    {
+     "index": 117,
+     "name": "room_shop_ch5",
+     "kind": "other"
+    },
+    {
+     "index": 118,
+     "name": "room_dw_garden_meetflowery",
+     "kind": "dark"
+    },
+    {
+     "index": 119,
+     "name": "room_dw_garden_video",
+     "kind": "dark"
+    },
+    {
+     "index": 120,
+     "name": "room_dw_garden_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 121,
+     "name": "room_dw_garden_ralseicupboard",
+     "kind": "dark"
+    },
+    {
+     "index": 122,
+     "name": "room_dw_garden_floradinnencounter",
+     "kind": "dark"
+    },
+    {
+     "index": 123,
+     "name": "room_dw_garden_hospital",
+     "kind": "dark"
+    },
+    {
+     "index": 124,
+     "name": "room_dw_garden_fishingspot",
+     "kind": "dark"
+    },
+    {
+     "index": 125,
+     "name": "room_dw_garden_shearydodge",
+     "kind": "dark"
+    },
+    {
+     "index": 126,
+     "name": "room_dw_garden_hopschef",
+     "kind": "dark"
+    },
+    {
+     "index": 127,
+     "name": "room_dw_garden_platshortcut",
+     "kind": "dark"
+    },
+    {
+     "index": 128,
+     "name": "room_dw_garden_riverchest",
+     "kind": "dark"
+    },
+    {
+     "index": 129,
+     "name": "room_dw_garden_enemyrush",
+     "kind": "dark"
+    },
+    {
+     "index": 130,
+     "name": "room_dw_garden_pedestal",
+     "kind": "dark"
+    },
+    {
+     "index": 131,
+     "name": "room_dw_garden_mushrooms",
+     "kind": "dark"
+    },
+    {
+     "index": 132,
+     "name": "room_dw_garden_flowerygardening",
+     "kind": "dark"
+    },
+    {
+     "index": 133,
+     "name": "room_dw_garden_diner",
+     "kind": "dark"
+    },
+    {
+     "index": 134,
+     "name": "room_dw_garden_starwalkerdash",
+     "kind": "dark"
+    },
+    {
+     "index": 135,
+     "name": "room_dw_garden_hardpressureplates",
+     "kind": "dark"
+    },
+    {
+     "index": 136,
+     "name": "room_dw_garden_aqua",
+     "kind": "dark"
+    },
+    {
+     "index": 137,
+     "name": "room_dw_garden_finalplatforming",
+     "kind": "dark"
+    },
+    {
+     "index": 138,
+     "name": "room_dw_garden_finalplatforming_right",
+     "kind": "dark"
+    },
+    {
+     "index": 139,
+     "name": "room_dw_garden_wateringcan_aqua",
+     "kind": "dark"
+    },
+    {
+     "index": 140,
+     "name": "room_dw_garden_aquadarkness",
+     "kind": "dark"
+    },
+    {
+     "index": 141,
+     "name": "room_dw_garden_aquahole",
+     "kind": "dark"
+    },
+    {
+     "index": 142,
+     "name": "room_dw_garden_aquashrine",
+     "kind": "dark"
+    },
+    {
+     "index": 143,
+     "name": "room_dw_garden_aquaplatforming",
+     "kind": "dark"
+    },
+    {
+     "index": 144,
+     "name": "room_dw_garden_cliffexit",
+     "kind": "dark"
+    },
+    {
+     "index": 145,
+     "name": "room_dw_garden_susiechase",
+     "kind": "dark"
+    },
+    {
+     "index": 146,
+     "name": "room_dw_garden_newdash",
+     "kind": "dark"
+    },
+    {
+     "index": 147,
+     "name": "room_dw_garden_shearyguide",
+     "kind": "dark"
+    },
+    {
+     "index": 148,
+     "name": "room_dw_pink_encounter",
+     "kind": "dark"
+    },
+    {
+     "index": 149,
+     "name": "room_dw_garden_aquatransition",
+     "kind": "dark"
+    },
+    {
+     "index": 150,
+     "name": "room_dw_garden_aquadash",
+     "kind": "dark"
+    },
+    {
+     "index": 151,
+     "name": "room_dw_garden_aquahole_left",
+     "kind": "dark"
+    },
+    {
+     "index": 152,
+     "name": "room_dw_garden_firstdash",
+     "kind": "dark"
+    },
+    {
+     "index": 153,
+     "name": "room_dw_garden_aquadash_plat",
+     "kind": "dark"
+    },
+    {
+     "index": 154,
+     "name": "room_dw_cliff_gardentransition_new",
+     "kind": "dark"
+    },
+    {
+     "index": 155,
+     "name": "room_dw_cliff_climbrefresher",
+     "kind": "dark"
+    },
+    {
+     "index": 156,
+     "name": "room_dw_cliff_cutdown_tutorial",
+     "kind": "dark"
+    },
+    {
+     "index": 157,
+     "name": "room_dw_cliff_bunnyfarm",
+     "kind": "dark"
+    },
+    {
+     "index": 158,
+     "name": "room_dw_cliff_silver_hammer",
+     "kind": "dark"
+    },
+    {
+     "index": 159,
+     "name": "room_dw_cliff_dash_runner",
+     "kind": "dark"
+    },
+    {
+     "index": 160,
+     "name": "room_dw_cliff_seth_miniboss",
+     "kind": "dark"
+    },
+    {
+     "index": 161,
+     "name": "room_dw_cliff_shop",
+     "kind": "dark"
+    },
+    {
+     "index": 162,
+     "name": "room_dw_cliff_netskieclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 163,
+     "name": "room_dw_cliff_finaldash",
+     "kind": "dark"
+    },
+    {
+     "index": 164,
+     "name": "room_dw_cliff_yellowcave",
+     "kind": "dark"
+    },
+    {
+     "index": 165,
+     "name": "room_dw_cliff_shicave",
+     "kind": "dark"
+    },
+    {
+     "index": 166,
+     "name": "room_dw_cliff_verticalwind",
+     "kind": "dark"
+    },
+    {
+     "index": 167,
+     "name": "room_dw_cliff_verticalwind_post",
+     "kind": "dark"
+    },
+    {
+     "index": 168,
+     "name": "room_dw_cliff_netskieclimb_behind",
+     "kind": "dark"
+    },
+    {
+     "index": 169,
+     "name": "room_dw_cliff_eastcliff",
+     "kind": "dark"
+    },
+    {
+     "index": 170,
+     "name": "room_dw_cliff_bonuscombat",
+     "kind": "dark"
+    },
+    {
+     "index": 171,
+     "name": "room_dw_cliff_twirlflowerplatforming",
+     "kind": "dark"
+    },
+    {
+     "index": 172,
+     "name": "room_dw_cliff_kawkawdash",
+     "kind": "dark"
+    },
+    {
+     "index": 173,
+     "name": "room_dw_cliff_precipice",
+     "kind": "dark"
+    },
+    {
+     "index": 174,
+     "name": "room_dw_cliff_twirlflowerwind",
+     "kind": "dark"
+    },
+    {
+     "index": 175,
+     "name": "room_dogplatforming",
+     "kind": "other"
+    },
+    {
+     "index": 176,
+     "name": "room_dw_fcastle_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 177,
+     "name": "room_dw_fcastle_cafe",
+     "kind": "dark"
+    },
+    {
+     "index": 178,
+     "name": "room_dw_fcastle_foyer",
+     "kind": "dark"
+    },
+    {
+     "index": 179,
+     "name": "room_dw_fcastle_post_party_jail",
+     "kind": "dark"
+    },
+    {
+     "index": 180,
+     "name": "room_dw_fcastle_shinobeetle_encounter",
+     "kind": "dark"
+    },
+    {
+     "index": 181,
+     "name": "room_dw_fcastle_left_wing_floweryscene",
+     "kind": "dark"
+    },
+    {
+     "index": 182,
+     "name": "room_dw_fcastle_bounce_1",
+     "kind": "dark"
+    },
+    {
+     "index": 183,
+     "name": "room_dw_fcastle_left_twodoors",
+     "kind": "dark"
+    },
+    {
+     "index": 184,
+     "name": "room_dw_fcastle_yellow_miniboss",
+     "kind": "dark"
+    },
+    {
+     "index": 185,
+     "name": "room_dw_fcastle_sandtrap",
+     "kind": "dark"
+    },
+    {
+     "index": 186,
+     "name": "room_dw_fcastle_dangerous_platforming",
+     "kind": "dark"
+    },
+    {
+     "index": 187,
+     "name": "room_dw_fcastle_blueroom",
+     "kind": "dark"
+    },
+    {
+     "index": 188,
+     "name": "room_dw_fcastle_yellowjail",
+     "kind": "dark"
+    },
+    {
+     "index": 189,
+     "name": "room_dw_fcastle_onsen",
+     "kind": "dark"
+    },
+    {
+     "index": 190,
+     "name": "room_dw_fcastle_left_penultimate",
+     "kind": "dark"
+    },
+    {
+     "index": 191,
+     "name": "room_dw_flowery_tree",
+     "kind": "dark"
+    },
+    {
+     "index": 192,
+     "name": "room_dw_fcastle_bounce_3",
+     "kind": "dark"
+    },
+    {
+     "index": 193,
+     "name": "room_dw_fcastle_shinobeetle_3d",
+     "kind": "dark"
+    },
+    {
+     "index": 194,
+     "name": "room_dw_fcastle_heldmushrooms",
+     "kind": "dark"
+    },
+    {
+     "index": 195,
+     "name": "room_dw_fcastle_flowerydash",
+     "kind": "dark"
+    },
+    {
+     "index": 196,
+     "name": "room_dw_fcastle_partyjail",
+     "kind": "dark"
+    },
+    {
+     "index": 197,
+     "name": "room_dw_fcastle_terracotta_encounter",
+     "kind": "dark"
+    },
+    {
+     "index": 198,
+     "name": "room_dw_fcastle_terracotta_bonus",
+     "kind": "dark"
+    },
+    {
+     "index": 199,
+     "name": "room_dw_fcastle_right_wing_floweryscene",
+     "kind": "dark"
+    },
+    {
+     "index": 200,
+     "name": "room_dw_fcastle_orange_puppet_introduction",
+     "kind": "dark"
+    },
+    {
+     "index": 201,
+     "name": "room_dw_fcastle_gloves_tower",
+     "kind": "dark"
+    },
+    {
+     "index": 202,
+     "name": "room_dw_fcastle_second_diner",
+     "kind": "dark"
+    },
+    {
+     "index": 203,
+     "name": "room_dw_fcastle_obscured_bullets",
+     "kind": "dark"
+    },
+    {
+     "index": 204,
+     "name": "room_dw_fcastle_foxhunt",
+     "kind": "dark"
+    },
+    {
+     "index": 205,
+     "name": "room_dw_fcastle_right_penultimate",
+     "kind": "dark"
+    },
+    {
+     "index": 206,
+     "name": "room_dw_fcastle_green_orange_battle",
+     "kind": "dark"
+    },
+    {
+     "index": 207,
+     "name": "room_dw_fcastle_right_endingscene",
+     "kind": "dark"
+    },
+    {
+     "index": 208,
+     "name": "room_dw_fcastle_right_puzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 209,
+     "name": "room_dw_castle_music",
+     "kind": "dark"
+    },
+    {
+     "index": 210,
+     "name": "room_man",
+     "kind": "system"
+    },
+    {
+     "index": 211,
+     "name": "room_dw_dogballoon",
+     "kind": "dark"
+    },
+    {
+     "index": 212,
+     "name": "room_dw_fcastle_sidepuzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 213,
+     "name": "room_dw_castle_tv_mike",
+     "kind": "dark"
+    },
+    {
+     "index": 214,
+     "name": "room_dw_fcastle_zenlooker",
+     "kind": "dark"
+    },
+    {
+     "index": 215,
+     "name": "room_dw_fcastle_trainroom",
+     "kind": "dark"
+    },
+    {
+     "index": 216,
+     "name": "room_dw_post_flowery_battle",
+     "kind": "dark"
+    },
+    {
+     "index": 217,
+     "name": "room_dw_fcastle_flowerclimb",
+     "kind": "dark"
+    },
+    {
+     "index": 218,
+     "name": "room_dw_fcastle_top_intro",
+     "kind": "dark"
+    },
+    {
+     "index": 219,
+     "name": "room_dw_fcastle_top_staircase_1",
+     "kind": "dark"
+    },
+    {
+     "index": 220,
+     "name": "room_dw_fcastle_ultradash",
+     "kind": "dark"
+    },
+    {
+     "index": 221,
+     "name": "room_dw_fcastle_yellowblue",
+     "kind": "dark"
+    },
+    {
+     "index": 222,
+     "name": "room_dw_fcastle_top_entrance",
+     "kind": "dark"
+    },
+    {
+     "index": 223,
+     "name": "room_dw_fcastle_top_staircase_2",
+     "kind": "dark"
+    },
+    {
+     "index": 224,
+     "name": "room_dw_fcastle_green_checkpoint",
+     "kind": "dark"
+    },
+    {
+     "index": 225,
+     "name": "room_dw_fcastle_final_save",
+     "kind": "dark"
+    },
+    {
+     "index": 226,
+     "name": "room_dw_fcastle_flowery",
+     "kind": "dark"
+    },
+    {
+     "index": 227,
+     "name": "room_dw_fcastle_seth_encounter",
+     "kind": "dark"
+    },
+    {
+     "index": 228,
+     "name": "room_dw_fcastle_top_descent",
+     "kind": "dark"
+    },
+    {
+     "index": 229,
+     "name": "room_dw_fcastle_top_pinkdoor",
+     "kind": "dark"
+    },
+    {
+     "index": 230,
+     "name": "room_dw_fcastle_pinkroom",
+     "kind": "dark"
+    },
+    {
+     "index": 231,
+     "name": "room_dw_fcastle_top_fountain",
+     "kind": "dark"
+    },
+    {
+     "index": 232,
+     "name": "room_dw_post_fountain_close",
+     "kind": "dark"
+    },
+    {
+     "index": 233,
+     "name": "room_dw_fcastle_pinkshop",
+     "kind": "dark"
+    },
+    {
+     "index": 234,
+     "name": "room_dw_fcastle_foxhunt_terakota",
+     "kind": "dark"
+    },
+    {
+     "index": 235,
+     "name": "room_dw_fcastle_foxhunt_socks",
+     "kind": "dark"
+    },
+    {
+     "index": 236,
+     "name": "room_dw_fcastle_foxhunt_chaos",
+     "kind": "dark"
+    },
+    {
+     "index": 237,
+     "name": "room_dw_fcastle_foxhunt_secret",
+     "kind": "dark"
+    },
+    {
+     "index": 238,
+     "name": "room_dw_castle_tv_kikky",
+     "kind": "dark"
+    },
+    {
+     "index": 239,
+     "name": "room_dw_fcastle_terracotta_puzzle",
+     "kind": "dark"
+    },
+    {
+     "index": 240,
+     "name": "room_dw_fcastle_bromides",
+     "kind": "dark"
+    },
+    {
+     "index": 241,
+     "name": "room_dw_fcastle_top_ascent",
+     "kind": "dark"
+    },
+    {
+     "index": 242,
+     "name": "room_dw_fcastle_top_challenge",
+     "kind": "dark"
+    },
+    {
+     "index": 243,
+     "name": "room_dw_fcastle_asgore",
+     "kind": "dark"
+    },
+    {
+     "index": 244,
+     "name": "room_dw_fcastle_orange_gauntlet",
+     "kind": "dark"
+    },
+    {
+     "index": 245,
+     "name": "room_dw_fcastle_fusumadodge",
+     "kind": "dark"
+    },
+    {
+     "index": 246,
+     "name": "room_title_placeholder",
+     "kind": "debug"
+    },
+    {
+     "index": 247,
+     "name": "room_intro_ch5",
+     "kind": "other"
+    },
+    {
+     "index": 248,
+     "name": "room_dw_cliff_sethaqua_battle",
+     "kind": "dark"
+    },
+    {
+     "index": 249,
+     "name": "room_dw_fcastle_flowerclimb_for_tiling",
+     "kind": "dark"
+    },
+    {
+     "index": 250,
+     "name": "room_dw_petaltest",
+     "kind": "dark"
+    },
+    {
+     "index": 251,
+     "name": "room_floortex_test",
+     "kind": "debug"
+    }
+   ]
+  }
+ }
+}

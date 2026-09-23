@@ -1,0 +1,347 @@
+============================================================================
+1. 五章房间名按前缀归类（看"小镇"是哪些）
+============================================================================
+  chapter1_windows   rooms=147
+  chapter2_windows   rooms=278
+  chapter3_windows   rooms=246
+  chapter4_windows   rooms=328
+  chapter5_windows   rooms=252
+
+--- ch1 房间名全表（147）---
+     0  ROOM_INITIALIZE
+     1  PLACE_CONTACT
+     2  room_krisroom
+     3  room_krishallway
+     4  room_torroom
+     5  room_torhouse
+     6  room_torbathroom
+     7  room_town_krisyard
+     8  room_town_northwest
+     9  room_town_north
+    10  room_beach
+    11  room_town_mid
+    12  room_town_apartments
+    13  room_town_south
+    14  room_town_school
+    15  room_town_church
+    16  room_graveyard
+    17  room_town_shelter
+    18  room_hospital_lobby
+    19  room_hospital_hallway
+    20  room_hospital_rudy
+    21  room_hospital_room2
+    22  room_diner
+    23  room_townhall
+    24  room_flowershop_1f
+    25  room_flowershop_2f
+    26  room_library
+    27  room_alphysalley
+    28  room_torielclass
+    29  room_schoollobby
+    30  room_alphysclass
+    31  room_schooldoor
+    32  room_insidecloset
+    33  room_school_unusedroom
+    34  room_dark1
+    35  room_dark1a
+    36  room_dark2
+    37  room_dark3
+    38  room_dark3a
+    39  room_dark_wobbles
+    40  room_dark_eyepuzzle
+    41  room_dark7
+    42  room_dark_chase1
+    43  room_dark_chase2
+    44  room_castle_outskirts
+    45  room_castle_town
+    46  room_castle_front
+    47  room_castle_tutorial
+    48  room_castle_darkdoor
+    49  room_field_start
+    50  room_field_forest
+    51  room_field1
+    52  room_field2
+    53  room_field2A
+    54  room_field_topchef
+    55  room_field_puzzle1
+    56  room_field_maze
+    57  room_field_puzzle2
+    58  room_field_getsusie
+    59  room_field_shop1
+    60  room_field_puzzletutorial
+    61  room_field3
+    62  room_field_boxpuzzle
+    63  room_field4
+    64  room_field_secret1
+    65  room_field_checkers4
+    66  room_field_checkers2
+    67  room_field_checkers6
+    68  room_field_checkers3
+    69  room_field_checkers1
+    70  room_field_checkers5
+    71  room_field_checkers7
+    72  room_field_checkersboss
+    73  room_forest_savepoint1
+    74  room_forest_area0
+    75  room_forest_area1
+    76  room_forest_area2
+    77  room_forest_area2A
+    78  room_forest_puzzle1
+    79  room_forest_beforeclover
+    80  room_forest_area3A
+    81  room_forest_area3
+    82  room_forest_savepoint2
+    83  room_forest_smith
+    84  room_forest_area4
+    85  room_forest_dancers1
+    86  room_forest_secret1
+    87  room_forest_thrashmaker
+    88  room_forest_starwalker
+    89  room_forest_area5
+    90  room_forest_savepoint_relax
+    91  room_forest_maze1
+    92  room_forest_maze_deadend
+    93  room_forest_maze_susie
+    94  room_forest_maze2
+    95  room_forest_maze_deadend2
+    96  room_forest_savepoint3
+    97  room_forest_fightsusie
+    98  room_forest_afterthrash2
+    99  room_forest_afterthrash3
+   100  room_forest_afterthrash4
+   101  room_forest_castleview
+   102  room_forest_chase1
+   103  room_forest_chase2
+   104  room_forest_castlefront
+   105  room_cc_prison_cells
+   106  room_cc_prisonlancer
+   107  room_cc_prison_to_elevator
+   108  room_cc_prison2
+   109  room_cc_prisonelevator
+   110  room_cc_elevator
+   111  room_cc_prison_prejoker
+   112  room_cc_joker
+   113  room_cc_entrance
+   114  room_cc_1f
+   115  room_cc_rudinn
+   116  room_cc_2f
+   117  room_cc_rurus1
+   118  room_cc_3f
+   119  room_cc_hathy
+   120  room_cc_4f
+   121  room_cc_rurus2
+   122  room_cc_clover
+   123  room_cc_5f
+   124  room_cc_lancer
+   125  room_cc_6f
+   126  room_cc_throneroom
+   127  room_cc_preroof
+   128  room_cc_kingbattle
+   129  room_cc_prefountain
+   130  room_cc_fountain
+   131  PLACE_DOG
+   132  room_legend
+   133  room_shop1
+   134  room_shop2
+   135  room_gameover
+   136  room_myroom_dark
+   137  PLACE_LOGO
+   138  PLACE_FAILURE
+   139  PLACE_MENU
+   140  room_ed
+   141  room_empty
+   142  room_man
+   143  room_DARKempty
+   144  room_battletest
+   145  room_splashscreen
+   146  room_chapter_continue
+
+--- ch1 名字含 town/hometown 的 ---
+   ['room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_town_shelter', 'room_townhall', 'room_castle_town']
+
+--- 五章各自含 town 的 ---
+  chapter1_windows   11 个: ['room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_town_shelter', 'room_townhall', 'room_castle_town']
+  chapter2_windows   11 个: ['room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_town_shelter', 'room_townhall', 'room_castle_town']
+  chapter3_windows   12 个: ['room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_town_shelter', 'room_townhall', 'room_dw_castle_town', 'room_town_krisyard_dark']
+  chapter4_windows   13 个: ['room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_town_shelter', 'room_townhall', 'room_dw_castle_town', 'room_town_noellehouse', 'room_town_krisyard_dark']
+  chapter5_windows   12 个: ['room_town_krisyard', 'room_town_northwest', 'room_town_north', 'room_town_mid', 'room_town_apartments', 'room_town_south', 'room_town_school', 'room_town_church', 'room_town_shelter', 'room_townhall', 'room_dw_castle_town', 'room_town_noellehouse']
+
+============================================================================
+2. ch1 连接边里涉及 town 的（来自上一轮 edges41.json）
+============================================================================
+   gml_Object_obj_schoollobbycutscene_Step_0      --goto--> room_alphysclass
+   gml_Object_obj_schoollobbycutscene_Step_0      --goto--> room_schooldoor
+   gml_Object_obj_carcutscene_Step_0              --goto--> room_town_north
+   gml_Object_obj_carcutscene_Step_0              --goto--> room_town_mid
+   gml_Object_obj_carcutscene_Step_0              --goto--> room_town_south
+   gml_Object_obj_carcutscene_Step_0              --goto--> room_town_school
+   gml_Object_obj_carcutscene_Step_0              --goto--> room_schoollobby
+   gml_Object_obj_krisroom_Step_0                 --goto--> room_myroom_dark
+   gml_Object_obj_krisroom_Step_0                 --goto--> room_dark1
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_castle_town
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_town_south
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_townhall
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_town_church
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_town_school
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_schoollobby
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_town_mid
+   gml_Object_obj_doorX_Alarm_2                   --goto--> room_town_north
+   gml_Object_obj_doorX_musfade_Alarm_2           --goto--> room_castle_town
+   gml_Object_obj_doorX_musfade_Alarm_2           --goto--> room_torhouse
+   gml_Object_obj_doorX_musfade_Alarm_2           --goto--> room_town_krisyard
+   gml_Object_obj_doorX_musfade_Alarm_2           --goto--> room_schoollobby
+   gml_Object_obj_doorX_musfade_Alarm_2           --goto--> room_town_school
+   gml_Object_obj_doorW_Alarm_2                   --goto--> room_hospital_lobby
+   gml_Object_obj_doorW_Alarm_2                   --goto--> room_town_south
+   gml_Object_obj_doorW_Alarm_2                   --goto--> room_alphysalley
+   gml_Object_obj_doorW_Alarm_2                   --goto--> room_town_mid
+   gml_Object_obj_doorW_Alarm_2                   --goto--> room_town_north
+   gml_Object_obj_darkfountain_event_Draw_0       --goto--> room_school_unusedroom
+   gml_Object_DEVICE_CONTACT_Step_0               --goto--> room_krisroom
+   gml_Object_DEVICE_CONTACT_Step_0               --goto--> room_krisroom
+   gml_Object_obj_dkris_event_Step_0              --goto--> PLACE_LOGO
+  （共 114 条边里筛出上面这些）
+
+============================================================================
+3. 门 / 传送门 / 暗世界入口 相关对象（rooms_map 的 instances）
+============================================================================
+  含门/传送/暗世界线索的实例名 155 个：
+    obj_b0entrance                                 x1
+    obj_b1_finaledoor                              x1
+    obj_b2atlantisentrance                         x1
+    obj_b2d_icedoor                                x1
+    obj_b2pantheonentrance                         x1
+    obj_b2s_tennaentrance                          x1
+    obj_board_b1_shadowteaseentrance               x12
+    obj_board_b1swordentrance                      x1
+    obj_board_b2_boatwarp                          x1
+    obj_board_b2entrance_animatecamera             x1
+    obj_board_b2entrance_animateonsen              x1
+    obj_board_b2s_icedoor                          x1
+    obj_board_b2sword_boatwarp                     x2
+    obj_board_b3topdoor                            x1
+    obj_board_b3undergroundright_warpdoor          x1
+    obj_board_bs_warp                              x2
+    obj_board_check_warp                           x4
+    obj_board_event_bigdoor                        x1
+    obj_board_freeroam_warp_touch                  x4
+    obj_board_maildoor                             x1
+    obj_board_pc2_sworddoor                        x1
+    obj_board_specialwarp                          x5
+    obj_board_sword_fakeentrance                   x2
+    obj_board_touch_warp                           x5
+    obj_board_warpdoor                             x1
+    obj_board_warpentrance                         x8
+    obj_board_warptopreshadowmantle                x1
+    obj_board_warptouch                            x58
+    obj_ch2_room_mansion_entrance                  x1
+    obj_ch2_scene21_puzzle_entrance                x1
+    obj_ch2_scene25_fountain                       x1
+    obj_ch3_closet                                 x1
+    obj_ch3_man_warp                               x2
+    obj_ch4_DCA12_darkfountain                     x1
+    obj_ch5_DW45_fountain                          x1
+    obj_church_entrance                            x2
+    obj_church_entrance_foreground                 x2
+    obj_cityEntrance_event                         x1
+    obj_cliff_petalwarp                            x4
+    obj_climb_door                                 x23
+    obj_darkcastle_event                           x1
+    obj_darkcontroller                             x881
+    obj_darkdoor                                   x5
+    obj_darkdoorevent                              x1
+    obj_darkeyepuzzle                              x1
+    obj_darkeyepuzzle_switch                       x3
+    obj_darkfountain                               x6
+    obj_darkfruit_tree_plat                        x1
+    obj_darklancer                                 x2
+    obj_darklanding                                x4
+    obj_darkness_illusion                          x1
+    obj_darkness_interactable_example              x1
+    obj_darkness_overlay                           x34
+    obj_darkness_overlay_twofloor                  x1
+    obj_darkponman_ow                              x9
+    obj_darkroom1_bookshelfWall                    x2
+    obj_darkroom1_lanternDispenser1                x6
+    obj_darkroom1_wallswitch                       x2
+    obj_darkslide                                  x3
+    obj_darkslide_new                              x38
+    obj_darkswordthrower                           x13
+    obj_darkwakeevent                              x1
+    obj_doorA                                      x204
+    obj_doorA_musfade                              x17
+    obj_doorAny                                    x830
+    obj_doorAnyHorz                                x42
+    obj_doorAnyVert                                x9
+    obj_doorB                                      x210
+    obj_doorB_musfade                              x15
+    obj_doorC                                      x54
+
+============================================================================
+4. ch1 里 room_krisroom / room_dark1 这类关键房间的层与实例
+============================================================================
+  [2] room_krisroom  320x240
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara
+      Compatibility_Instances_Depth_0    Instances  d=0            inst=obj_doorA,obj_markerB,obj_readable_room1,obj_readable_room1,obj_readable_room1,obj_readable_room1,obj_readable_room1,obj_readable_room1
+      Compatibility_Instances_Depth_10   Instances  d=10           inst=obj_overworldc
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock
+      Compatibility_Instances_Depth_1000 Instances  d=10000        inst=obj_krisroom
+      Compatibility_Tiles_Depth_15000    Assets     d=15000        
+      Compatibility_Background_0_bg_myro Background d=2147483500   bg=bg_myroom
+      Compatibility_Colour               Background d=2147483600   
+  [11] room_town_mid  2040x240
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara,obj_84_lang_helper
+      Compatibility_Instances_Depth_-10  Instances  d=-10          inst=obj_npc_facing
+      Compatibility_Instances_Depth_0    Instances  d=0            inst=obj_npc_room_animated,obj_npc_room_animated,obj_town_event,obj_readable_room1,obj_readable_room1,obj_readable_room1,obj_doorC,obj_markerD
+      Compatibility_Instances_Depth_10   Instances  d=10           inst=obj_overworldc
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock
+      Compatibility_Tiles_Depth_5000     Assets     d=5000         asset=1个
+      Compatibility_Tiles_Depth_990000   Assets     d=990000       
+      Compatibility_Tiles_Depth_995000   Assets     d=995000       
+      Compatibility_Tiles_Depth_1000000  Assets     d=1000000      
+      Compatibility_Colour               Background d=2147483600   
+  [14] room_town_school  580x320
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara
+      Compatibility_Instances_Depth_0    Instances  d=0            inst=obj_sdr,obj_sdr,obj_markerX,obj_doorB,obj_markerA,obj_doorX_musfade,obj_musicer_town
+      Compatibility_Instances_Depth_10   Instances  d=10           inst=obj_overworldc
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock
+      Compatibility_Tiles_Depth_5000     Assets     d=5000         
+      Compatibility_Tiles_Depth_950000   Assets     d=950000       
+      Compatibility_Tiles_Depth_990000   Assets     d=990000       
+      Compatibility_Tiles_Depth_995000   Assets     d=995000       
+      Compatibility_Tiles_Depth_1000000  Assets     d=1000000      
+      Compatibility_Colour               Background d=2147483600   
+  [30] room_alphysclass  320x240
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara
+      Compatibility_Instances_Depth_-10  Instances  d=-10          inst=obj_npc_facing,obj_npc_facing,obj_npc_facing,obj_npc_facing,obj_npc_facing,obj_npc_facing,obj_tem_school
+      Compatibility_Instances_Depth_0    Instances  d=0            inst=obj_schooldesk,obj_schooldesk,obj_schooldesk,obj_schooldesk,obj_schooldesk,obj_schooldesk,obj_schooldesk,obj_schooldesk
+      Compatibility_Instances_Depth_10   Instances  d=10           inst=obj_overworldc
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock
+      Compatibility_Background_0_bg_alph Background d=2147483500   bg=bg_alphysclass
+      Compatibility_Colour               Background d=2147483600   
+  [31] room_schooldoor  620x240
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara
+      Compatibility_Instances_Depth_0    Instances  d=0            inst=obj_markerC,obj_doorD,obj_doorD,obj_doorD,obj_markerD,obj_readable_room1,obj_doorC,obj_readable_room1
+      Compatibility_Instances_Depth_10   Instances  d=10           inst=obj_overworldc
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock,obj_solidblock
+      Compatibility_Instances_Depth_9000 Instances  d=900000       inst=obj_darkdoor
+      Compatibility_Tiles_Depth_995000   Assets     d=995000       
+      Compatibility_Tiles_Depth_1000000  Assets     d=1000000      
+      Compatibility_Colour               Background d=2147483600   
+  [32] room_insidecloset  820x500
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara
+      Compatibility_Instances_Depth_10   Instances  d=10           inst=obj_overworldc
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_solidblock,obj_solidblock,obj_solidblock
+      Compatibility_Instances_Depth_5000 Instances  d=500000       inst=obj_insideclosetcutscene
+      Compatibility_Instances_Depth_6000 Instances  d=600000       inst=obj_fallpaper,obj_fallpaper,obj_fallpaper,obj_fallpaper,obj_fallpaper,obj_fallpaper,obj_fallpaper,obj_fallpaper
+      Compatibility_Tiles_Depth_1000000  Assets     d=1000000      
+      Compatibility_Background_0         Background d=2147483500   
+      Compatibility_Colour               Background d=2147483600   
+  [34] room_dark1  640x480
+      Compatibility_Instances_Depth_-20  Instances  d=-20          inst=obj_mainchara
+      Compatibility_Instances_Depth_0    Instances  d=0            inst=obj_darkcontroller,obj_doorA,obj_markerB,obj_darkwakeevent,obj_npc_room_animated
+      Compatibility_Instances_Depth_100  Instances  d=100          inst=obj_soliddark,obj_soliddark,obj_soliddark,obj_soliddark,obj_soliddark,obj_soliddark,obj_soliddark,obj_soliddark
+      Compatibility_Tiles_Depth_940000   Assets     d=940000       
+      Compatibility_Tiles_Depth_950000   Assets     d=950000       
+      Compatibility_Tiles_Depth_1000000  Assets     d=1000000      
+      Compatibility_Colour               Background d=2147483600   

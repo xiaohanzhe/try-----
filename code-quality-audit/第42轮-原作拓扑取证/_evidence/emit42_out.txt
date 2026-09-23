@@ -1,0 +1,22 @@
+==============================================================================
+生成产物
+==============================================================================
+  _room_order.json         122612 B
+  _room_graph.json         144819 B
+  边总数 = 782
+
+==============================================================================
+自检
+==============================================================================
+  ch1  rooms=147  edges=238   边数一致=True 下标合法=True 无自环=True 名字一致=True  OK
+       kind: {'system': 15, 'home': 5, 'town': 10, 'town_life': 17, 'dark': 24, 'field_forest': 54, 'card_castle': 20, 'other': 2}
+  ch2  rooms=278  edges=323   边数一致=True 下标合法=True 无自环=True 名字一致=True  OK
+       kind: {'debug': 31, 'system': 16, 'home': 5, 'town': 10, 'town_life': 22, 'dark': 185, 'other': 6, 'card_castle': 3}
+  ch3  rooms=246  edges=79    边数一致=True 下标合法=True 无自环=True 名字一致=True  OK
+       kind: {'debug': 24, 'system': 16, 'home': 5, 'town': 10, 'town_life': 22, 'dark': 150, 'other': 16, 'card_castle': 3}
+  ch4  rooms=328  edges=72    边数一致=True 下标合法=True 无自环=True 名字一致=True  OK
+       kind: {'debug': 35, 'system': 17, 'home': 5, 'town': 11, 'town_life': 40, 'dark': 205, 'other': 12, 'card_castle': 3}
+  ch5  rooms=252  edges=70    边数一致=True 下标合法=True 无自环=True 名字一致=True  OK
+       kind: {'debug': 20, 'system': 18, 'home': 5, 'town': 11, 'town_life': 27, 'dark': 156, 'other': 12, 'card_castle': 3}
+  五章房间合计 = 1251
+  总判定 = PASS

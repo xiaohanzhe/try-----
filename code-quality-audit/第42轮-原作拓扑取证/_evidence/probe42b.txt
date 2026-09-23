@@ -1,0 +1,1953 @@
+codes matched=9  ins_total=1933
+
+### gml_Object_obj_doorE_Create_0   ins=2
+      0  PushI          Int16     Double    0
+      1  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_doorE_Alarm_2   ins=16
+      0  PushI          Int16     Double    6
+      1  Pop            Variable  Int32     VAR=entrance
+      2  PushI          Int16     Double    145
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  PushBltn       Variable  Double    VAR=room
+     11  Call           Int32     Double    FN=room_next
+     12  Call           Int32     Double    FN=room_next
+     13  Call           Int32     Double    FN=room_next
+     14  Call           Int32     Double    FN=room_goto
+     15  Popz           Variable  Double    
+
+### gml_Object_obj_doorE_Other_19   ins=23
+      0  PushI          Int16     Double    3
+      1  Pop            Variable  Int32     VAR=interact
+      2  PushI          Int16     Double    143
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  Push           Variable  Double    VAR=touched
+     11  PushI          Int16     Double    0
+     12  Cmp            Int32     Variable  
+     13  Bf             Double    Double    
+     14  Push           Int32     Double    68121
+     15  Break          Int16     Double    
+     16  PushI          Int16     Double    8
+     17  Conv           Int32     Variable  
+     18  PushI          Int16     Double    -1
+     19  PushI          Int16     Double    2
+     20  Pop            Variable  Variable  VAR=alarm
+     21  PushI          Int16     Double    1
+     22  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_doorF_Create_0   ins=2
+      0  PushI          Int16     Double    0
+      1  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_doorF_Alarm_2   ins=16
+      0  PushI          Int16     Double    7
+      1  Pop            Variable  Int32     VAR=entrance
+      2  PushI          Int16     Double    145
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  PushBltn       Variable  Double    VAR=room
+     11  Call           Int32     Double    FN=room_previous
+     12  Call           Int32     Double    FN=room_previous
+     13  Call           Int32     Double    FN=room_previous
+     14  Call           Int32     Double    FN=room_goto
+     15  Popz           Variable  Double    
+
+### gml_Object_obj_doorF_Other_19   ins=23
+      0  PushI          Int16     Double    3
+      1  Pop            Variable  Int32     VAR=interact
+      2  PushI          Int16     Double    143
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  Push           Variable  Double    VAR=touched
+     11  PushI          Int16     Double    0
+     12  Cmp            Int32     Variable  
+     13  Bf             Double    Double    
+     14  Push           Int32     Double    68121
+     15  Break          Int16     Double    
+     16  PushI          Int16     Double    8
+     17  Conv           Int32     Variable  
+     18  PushI          Int16     Double    -1
+     19  PushI          Int16     Double    2
+     20  Pop            Variable  Variable  VAR=alarm
+     21  PushI          Int16     Double    1
+     22  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_overworldc_Create_0   ins=12
+      0  PushI          Int16     Double    0
+      1  Pop            Variable  Int32     VAR=buffer
+      2  PushI          Int16     Double    0
+      3  Pop            Variable  Int32     VAR=saved
+      4  PushI          Int16     Double    0
+      5  Pop            Variable  Int32     VAR=selnoise
+      6  PushI          Int16     Double    0
+      7  Pop            Variable  Int32     VAR=movenoise
+      8  PushI          Int16     Double    0
+      9  Pop            Variable  Boolean   VAR=hasitems
+     10  PushI          Int16     Double    0
+     11  Pop            Variable  Int32     VAR=threebuffer
+
+### gml_Object_obj_overworldc_Step_0   ins=702
+      0  PushI          Int16     Double    -5
+      1  PushI          Int16     Double    0
+      2  Push           Variable  Double    VAR=litem
+      3  PushI          Int16     Double    0
+      4  Cmp            Int32     Variable  
+      5  Pop            Variable  Boolean   VAR=hasitems
+      6  PushGlb        Variable  Double    VAR=interact
+      7  PushI          Int16     Double    5
+      8  Cmp            Int32     Variable  
+      9  Bf             Double    Double    
+     10  PushGlb        Variable  Double    VAR=menuno
+     11  Pop            Variable  Variable  VAR=currentmenu
+     12  PushGlb        Variable  Double    VAR=menuno
+     13  PushI          Int16     Double    6
+     14  Cmp            Int32     Variable  
+     15  Bf             Double    Double    
+     16  PushI          Int16     Double    -5
+     17  PushGlb        Variable  Double    VAR=menuno
+     18  Conv           Variable  Int32     
+     19  Push           Variable  Double    VAR=menucoord
+     20  Pop            Variable  Variable  VAR=currentspot
+     21  Call           Int32     Double    FN=gml_Script_button1_p
+     22  Conv           Variable  Boolean   
+     23  Bf             Double    Double    
+     24  PushGlb        Variable  Double    VAR=menuno
+     25  PushI          Int16     Double    5
+     26  Cmp            Int32     Variable  
+     27  Bf             Double    Double    
+     28  PushI          Int16     Double    -5
+     29  PushI          Int16     Double    5
+     30  Push           Variable  Double    VAR=menucoord
+     31  PushI          Int16     Double    0
+     32  Cmp            Int32     Variable  
+     33  Bf             Double    Double    
+     34  PushI          Int16     Double    9
+     35  Pop            Variable  Int32     VAR=menuno
+     36  PushI          Int16     Double    -5
+     37  PushI          Int16     Double    -5
+     38  PushI          Int16     Double    1
+     39  Push           Variable  Double    VAR=menucoord
+     40  Conv           Variable  Int32     
+     41  Push           Variable  Double    VAR=litem
+     42  PushI          Int16     Double    -5
+     43  PushI          Int16     Double    1
+     44  Push           Variable  Double    VAR=menucoord
+     45  Push           Int32     Double    FN=gml_Script_scr_litemuseb
+     46  Conv           Int32     Variable  
+     47  Call           Int32     Double    FN=script_execute
+     48  Popz           Variable  Double    
+     49  PushI          Int16     Double    -5
+     50  PushI          Int16     Double    5
+     51  Push           Variable  Double    VAR=menucoord
+     52  PushI          Int16     Double    1
+     53  Cmp            Int32     Variable  
+     54  Bf             Double    Double    
+     55  PushI          Int16     Double    9
+     56  Pop            Variable  Int32     VAR=menuno
+     57  PushI          Int16     Double    -5
+     58  PushI          Int16     Double    -5
+     59  PushI          Int16     Double    1
+     60  Push           Variable  Double    VAR=menucoord
+     61  Conv           Variable  Int32     
+     62  Push           Variable  Double    VAR=litem
+     63  Push           Int32     Double    FN=gml_Script_scr_litemdesc
+     64  Conv           Int32     Variable  
+     65  Call           Int32     Double    FN=script_execute
+     66  Popz           Variable  Double    
+     67  PushI          Int16     Double    0
+     68  Conv           Int32     Variable  
+     69  PushI          Int16     Double    0
+     70  Conv           Int32     Variable  
+     71  Push           String    Double    STR="x"@79
+     72  Conv           String    Variable  
+     73  PushI          Int16     Double    0
+     74  Conv           Int32     Variable  
+     75  Push           Int32     Double    FN=gml_Script_scr_writetext
+     76  Conv           Int32     Variable  
+     77  Call           Int32     Double    FN=script_execute
+     78  Popz           Variable  Double    
+     79  PushI          Int16     Double    -5
+     80  PushI          Int16     Double    5
+     81  Push           Variable  Double    VAR=menucoord
+     82  PushI          Int16     Double    2
+     83  Cmp            Int32     Variable  
+     84  Bf             Double    Double    
+     85  PushI          Int16     Double    0
+     86  Pop            Variable  Int32     VAR=dontthrow
+     87  PushI          Int16     Double    0
+     88  Pop            Variable  Int32     VAR=dontthrowtype
+     89  PushI          Int16     Double    9
+     90  Pop            Variable  Int32     VAR=menuno
+     91  PushI          Int16     Double    -5
+     92  PushI          Int16     Double    -5
+     93  PushI          Int16     Double    1
+     94  Push           Variable  Double    VAR=menucoord
+     95  Conv           Variable  Int32     
+     96  Push           Variable  Double    VAR=litem
+     97  PushI          Int16     Double    5
+     98  Cmp            Int32     Variable  
+     99  Bf             Double    Double    
+    100  PushI          Int16     Double    1
+    101  Pop            Variable  Int32     VAR=dontthrow
+    102  PushI          Int16     Double    -5
+    103  PushI          Int16     Double    -5
+    104  PushI          Int16     Double    1
+    105  Push           Variable  Double    VAR=menucoord
+    106  Conv           Variable  Int32     
+    107  Push           Variable  Double    VAR=litem
+    108  PushI          Int16     Double    11
+    109  Cmp            Int32     Variable  
+    110  Bf             Double    Double    
+    111  PushI          Int16     Double    1
+    112  Pop            Variable  Int32     VAR=dontthrow
+    113  PushI          Int16     Double    2
+    114  Pop            Variable  Int32     VAR=dontthrowtype
+    115  Push           Variable  Double    VAR=dontthrow
+    116  PushI          Int16     Double    0
+    117  Cmp            Int32     Variable  
+    118  Bf             Double    Double    
+    119  PushI          Int16     Double    30
+    120  Conv           Int32     Variable  
+    121  Call           Int32     Double    FN=random
+    122  Call           Int32     Double    FN=round
+    123  Pop            Variable  Variable  VAR=i
+    124  Push           Variable  Double    VAR=i
+    125  PushI          Int16     Double    0
+    126  Cmp            Int32     Variable  
+    127  Bf             Double    Double    
+    128  Push           Int32     Double    231191
+    129  Break          Int16     Double    
+    130  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_32_0"@11025
+    131  Conv           String    Variable  
+    132  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    133  PushI          Int16     Double    -5
+    134  PushI          Int16     Double    -5
+    135  PushI          Int16     Double    1
+    136  Push           Variable  Double    VAR=menucoord
+    137  Conv           Variable  Int32     
+    138  Push           Variable  Double    VAR=litemname
+    139  Add            Variable  Variable  
+    140  Push           String    Double    STR="."@1784
+    141  Add            String    Variable  
+    142  PushI          Int16     Double    -5
+    143  PushI          Int16     Double    0
+    144  Pop            Variable  Variable  VAR=msg
+    145  Push           Variable  Double    VAR=i
+    146  PushI          Int16     Double    1
+    147  Cmp            Int32     Variable  
+    148  Bf             Double    Double    
+    149  PushI          Int16     Double    -5
+    150  PushI          Int16     Double    -5
+    151  PushI          Int16     Double    1
+    152  Push           Variable  Double    VAR=menucoord
+    153  Conv           Variable  Int32     
+    154  Push           Variable  Double    VAR=litemname
+    155  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_33_0"@11026
+    156  Conv           String    Variable  
+    157  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    158  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    159  PushI          Int16     Double    -5
+    160  PushI          Int16     Double    0
+    161  Pop            Variable  Variable  VAR=msg
+    162  Push           Variable  Double    VAR=i
+    163  PushI          Int16     Double    2
+    164  Cmp            Int32     Variable  
+    165  Bf             Double    Double    
+    166  PushI          Int16     Double    -5
+    167  PushI          Int16     Double    -5
+    168  PushI          Int16     Double    1
+    169  Push           Variable  Double    VAR=menucoord
+    170  Conv           Variable  Int32     
+    171  Push           Variable  Double    VAR=litemname
+    172  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_35_0"@11027
+    173  Conv           String    Variable  
+    174  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    175  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    176  PushI          Int16     Double    -5
+    177  PushI          Int16     Double    0
+    178  Pop            Variable  Variable  VAR=msg
+    179  Push           Variable  Double    VAR=i
+    180  PushI          Int16     Double    3
+    181  Cmp            Int32     Variable  
+    182  Bf             Double    Double    
+    183  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_36_0"@11028
+    184  Conv           String    Variable  
+    185  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    186  PushI          Int16     Double    -5
+    187  PushI          Int16     Double    -5
+    188  PushI          Int16     Double    1
+    189  Push           Variable  Double    VAR=menucoord
+    190  Conv           Variable  Int32     
+    191  Push           Variable  Double    VAR=litemname
+    192  Add            Variable  Variable  
+    193  Push           String    Double    STR="."@1784
+    194  Add            String    Variable  
+    195  PushI          Int16     Double    -5
+    196  PushI          Int16     Double    0
+    197  Pop            Variable  Variable  VAR=msg
+    198  Push           Variable  Double    VAR=i
+    199  PushI          Int16     Double    3
+    200  Cmp            Int32     Variable  
+    201  Bf             Double    Double    
+    202  PushI          Int16     Double    -5
+    203  PushI          Int16     Double    -5
+    204  PushI          Int16     Double    1
+    205  Push           Variable  Double    VAR=menucoord
+    206  Conv           Variable  Int32     
+    207  Push           Variable  Double    VAR=litemname
+    208  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_37_0"@11029
+    209  Conv           String    Variable  
+    210  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    211  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    212  PushI          Int16     Double    -5
+    213  PushI          Int16     Double    0
+    214  Pop            Variable  Variable  VAR=msg
+    215  PushI          Int16     Double    -5
+    216  PushI          Int16     Double    0
+    217  Dup            Int32     Double    
+    218  Push           Variable  Double    VAR=msg
+    219  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_38_0"@11030
+    220  Conv           String    Variable  
+    221  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    222  Add            Variable  Variable  
+    223  Pop            Int32     Variable  VAR=msg
+    224  PushI          Int16     Double    -5
+    225  PushI          Int16     Double    -5
+    226  PushI          Int16     Double    1
+    227  Push           Variable  Double    VAR=menucoord
+    228  Conv           Variable  Int32     
+    229  Push           Variable  Double    VAR=litem
+    230  PushI          Int16     Double    8
+    231  Cmp            Int32     Variable  
+    232  Bf             Double    Double    
+    233  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_41_0"@11031
+    234  Conv           String    Variable  
+    235  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    236  PushI          Int16     Double    -5
+    237  PushI          Int16     Double    0
+    238  Pop            Variable  Variable  VAR=msg
+    239  PushI          Int16     Double    -5
+    240  PushI          Int16     Double    263
+    241  Push           Variable  Double    VAR=flag
+    242  PushI          Int16     Double    0
+    243  Cmp            Int32     Variable  
+    244  Bf             Double    Double    
+    245  Push           Int32     Double    231188
+    246  Break          Int16     Double    
+    247  PushI          Int16     Double    1
+    248  Conv           Int32     Variable  
+    249  PushI          Int16     Double    -5
+    250  PushI          Int16     Double    263
+    251  Pop            Variable  Variable  VAR=flag
+    252  PushI          Int16     Double    0
+    253  Conv           Int32     Variable  
+    254  PushI          Int16     Double    0
+    255  Conv           Int32     Variable  
+    256  Push           String    Double    STR="x"@79
+    257  Conv           String    Variable  
+    258  PushI          Int16     Double    0
+    259  Conv           Int32     Variable  
+    260  Push           Int32     Double    FN=gml_Script_scr_writetext
+    261  Conv           Int32     Variable  
+    262  Call           Int32     Double    FN=script_execute
+    263  Popz           Variable  Double    
+    264  PushI          Int16     Double    0
+    265  Conv           Int32     Variable  
+    266  PushI          Int16     Double    -5
+    267  PushI          Int16     Double    1
+    268  Push           Variable  Double    VAR=menucoord
+    269  Push           Int32     Double    FN=gml_Script_scr_litemshift
+    270  Conv           Int32     Variable  
+    271  Call           Int32     Double    FN=script_execute
+    272  Popz           Variable  Double    
+    273  Push           Variable  Double    VAR=dontthrow
+    274  PushI          Int16     Double    1
+    275  Cmp            Int32     Variable  
+    276  Bf             Double    Double    
+    277  Push           Variable  Double    VAR=dontthrowtype
+    278  PushI          Int16     Double    0
+    279  Cmp            Int32     Variable  
+    280  Bf             Double    Double    
+    281  PushI          Int16     Double    10
+    282  Pop            Variable  Int32     VAR=msc
+    283  PushGlb        Variable  Double    VAR=msc
+    284  Call           Int32     Double    FN=gml_Script_scr_text
+    285  Popz           Variable  Double    
+    286  PushI          Int16     Double    0
+    287  Conv           Int32     Variable  
+    288  PushI          Int16     Double    0
+    289  Conv           Int32     Variable  
+    290  Push           String    Double    STR="x"@79
+    291  Conv           String    Variable  
+    292  PushI          Int16     Double    10
+    293  Conv           Int32     Variable  
+    294  Push           Int32     Double    FN=gml_Script_scr_writetext
+    295  Conv           Int32     Variable  
+    296  Call           Int32     Double    FN=script_execute
+    297  Popz           Variable  Double    
+    298  B              Double    Double    
+    299  Push           Variable  Double    VAR=dontthrowtype
+    300  PushI          Int16     Double    2
+    301  Cmp            Int32     Variable  
+    302  Bf             Double    Double    
+    303  Push           Int32     Double    231191
+    304  Break          Int16     Double    
+    305  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_42_0"@11032
+    306  Conv           String    Variable  
+    307  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    308  PushI          Int16     Double    -5
+    309  PushI          Int16     Double    0
+    310  Pop            Variable  Variable  VAR=msg
+    311  Push           String    Double    STR="obj_overworldc_slash_Step_0_gml_43_0"@11033
+    312  Conv           String    Variable  
+    313  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    314  PushI          Int16     Double    -5
+    315  PushI          Int16     Double    1
+    316  Pop            Variable  Variable  VAR=msg
+    317  PushI          Int16     Double    0
+    318  Conv           Int32     Variable  
+    319  PushI          Int16     Double    0
+    320  Conv           Int32     Variable  
+    321  Push           String    Double    STR="x"@79
+    322  Conv           String    Variable  
+    323  PushI          Int16     Double    0
+    324  Conv           Int32     Variable  
+    325  Push           Int32     Double    FN=gml_Script_scr_writetext
+    326  Conv           Int32     Variable  
+    327  Call           Int32     Double    FN=script_execute
+    328  Popz           Variable  Double    
+    329  PushGlb        Variable  Double    VAR=menuno
+    330  PushI          Int16     Double    3
+    331  Cmp            Int32     Variable  
+    332  Bf             Double    Double    
+    333  PushI          Int16     Double    9
+    334  Pop            Variable  Int32     VAR=menuno
+    335  PushI          Int16     Double    -5
+    336  PushI          Int16     Double    -5
+    337  PushI          Int16     Double    3
+    338  Push           Variable  Double    VAR=menucoord
+    339  Conv           Variable  Int32     
+    340  Push           Variable  Double    VAR=phone
+    341  PushI          Int16     Double    -5
+    342  PushI          Int16     Double    3
+    343  Push           Variable  Double    VAR=menucoord
+    344  Push           Int32     Double    FN=gml_Script_scr_litemuseb
+    345  Conv           Int32     Variable  
+    346  Call           Int32     Double    FN=script_execute
+    347  Popz           Variable  Double    
+    348  PushGlb        Variable  Double    VAR=menuno
+    349  PushI          Int16     Double    1
+    350  Cmp            Int32     Variable  
+    351  Bf             Double    Double    
+    352  PushI          Int16     Double    5
+    353  Pop            Variable  Int32     VAR=menuno
+    354  Push           Int32     Double    231243
+    355  Break          Int16     Double    
+    356  PushI          Int16     Double    0
+    357  Conv           Int32     Variable  
+    358  PushI          Int16     Double    -5
+    359  PushI          Int16     Double    5
+    360  Pop            Variable  Variable  VAR=menucoord
+    361  PushGlb        Variable  Double    VAR=menuno
+    362  PushI          Int16     Double    0
+    363  Cmp            Int32     Variable  
+    364  Bf             Double    Double    
+    365  Push           Variable  Double    VAR=menuno
+    366  PushI          Int16     Double    -5
+    367  PushI          Int16     Double    0
+    368  Push           Variable  Double    VAR=menucoord
+    369  PushI          Int16     Double    1
+    370  Add            Int32     Variable  
+    371  Add            Variable  Variable  
+    372  Pop            Variable  Variable  VAR=menuno
+    373  PushGlb        Variable  Double    VAR=menuno
+    374  PushI          Int16     Double    3
+    375  Cmp            Int32     Variable  
+    376  Bf             Double    Double    
+    377  Push           Int32     Double    FN=gml_Script_scr_phonename
+    378  Conv           Int32     Variable  
+    379  Call           Int32     Double    FN=script_execute
+    380  Popz           Variable  Double    
+    381  PushI          Int16     Double    0
+    382  Conv           Int32     Variable  
+    383  PushI          Int16     Double    -5
+    384  PushI          Int16     Double    3
+    385  Pop            Variable  Variable  VAR=menucoord
+    386  PushGlb        Variable  Double    VAR=menuno
+    387  PushI          Int16     Double    1
+    388  Cmp            Int32     Variable  
+    389  Bf             Double    Double    
+    390  PushI          Int16     Double    -5
+    391  PushI          Int16     Double    0
+    392  Push           Variable  Double    VAR=litem
+    393  PushI          Int16     Double    0
+    394  Cmp            Int32     Variable  
+    395  Bf             Double    Double    
+    396  PushI          Int16     Double    0
+    397  Conv           Int32     Variable  
+    398  PushI          Int16     Double    -5
+    399  PushI          Int16     Double    1
+    400  Pop            Variable  Variable  VAR=menucoord
+    401  Push           Int32     Double    FN=gml_Script_scr_litemname
+    402  Conv           Int32     Variable  
+    403  Call           Int32     Double    FN=script_execute
+    404  Popz           Variable  Double    
+    405  B              Double    Double    
+    406  PushI          Int16     Double    0
+    407  Pop            Variable  Int32     VAR=menuno
+    408  Call           Int32     Double    FN=gml_Script_up_p
+    409  Conv           Variable  Boolean   
+    410  Bf             Double    Double    
+    411  PushGlb        Variable  Double    VAR=menuno
+    412  PushI          Int16     Double    0
+    413  Cmp            Int32     Variable  
+    414  Bf             Double    Double    
+    415  PushI          Int16     Double    -5
+    416  PushI          Int16     Double    0
+    417  Push           Variable  Double    VAR=menucoord
+    418  PushI          Int16     Double    0
+    419  Cmp            Int32     Variable  
+    420  Bf             Double    Double    
+    421  PushI          Int16     Double    -5
+    422  PushI          Int16     Double    0
+    423  Dup            Int32     Double    
+    424  Push           Variable  Double    VAR=menucoord
+    425  PushI          Int16     Double    1
+    426  Sub            Int32     Variable  
+    427  Pop            Int32     Variable  VAR=menucoord
+    428  PushGlb        Variable  Double    VAR=menuno
+    429  PushI          Int16     Double    1
+    430  Cmp            Int32     Variable  
+    431  Bf             Double    Double    
+    432  PushI          Int16     Double    -5
+    433  PushI          Int16     Double    1
+    434  Push           Variable  Double    VAR=menucoord
+    435  PushI          Int16     Double    0
+    436  Cmp            Int32     Variable  
+    437  Bf             Double    Double    
+    438  PushI          Int16     Double    -5
+    439  PushI          Int16     Double    1
+    440  Dup            Int32     Double    
+    441  Push           Variable  Double    VAR=menucoord
+    442  PushI          Int16     Double    1
+    443  Sub            Int32     Variable  
+    444  Pop            Int32     Variable  VAR=menucoord
+    445  PushGlb        Variable  Double    VAR=menuno
+    446  PushI          Int16     Double    3
+    447  Cmp            Int32     Variable  
+    448  Bf             Double    Double    
+    449  PushI          Int16     Double    -5
+    450  PushI          Int16     Double    3
+    451  Push           Variable  Double    VAR=menucoord
+    452  PushI          Int16     Double    0
+    453  Cmp            Int32     Variable  
+    454  Bf             Double    Double    
+    455  PushI          Int16     Double    -5
+    456  PushI          Int16     Double    3
+    457  Dup            Int32     Double    
+    458  Push           Variable  Double    VAR=menucoord
+    459  PushI          Int16     Double    1
+    460  Sub            Int32     Variable  
+    461  Pop            Int32     Variable  VAR=menucoord
+    462  Call           Int32     Double    FN=gml_Script_down_p
+    463  Conv           Variable  Boolean   
+    464  Bf             Double    Double    
+    465  PushGlb        Variable  Double    VAR=menuno
+    466  PushI          Int16     Double    0
+    467  Cmp            Int32     Variable  
+    468  Bf             Double    Double    
+    469  PushI          Int16     Double    -5
+    470  PushI          Int16     Double    0
+    471  Push           Variable  Double    VAR=menucoord
+    472  PushI          Int16     Double    2
+    473  Cmp            Int32     Variable  
+    474  Bf             Double    Double    
+    475  PushI          Int16     Double    -5
+    476  PushI          Int16     Double    0
+    477  Dup            Int32     Double    
+    478  Push           Variable  Double    VAR=menucoord
+    479  PushI          Int16     Double    1
+    480  Add            Int32     Variable  
+    481  Pop            Int32     Variable  VAR=menucoord
+    482  PushGlb        Variable  Double    VAR=menuno
+    483  PushI          Int16     Double    1
+    484  Cmp            Int32     Variable  
+    485  Bf             Double    Double    
+    486  PushI          Int16     Double    -5
+    487  PushI          Int16     Double    1
+    488  Push           Variable  Double    VAR=menucoord
+    489  PushI          Int16     Double    7
+    490  Cmp            Int32     Variable  
+    491  Bf             Double    Double    
+    492  PushI          Int16     Double    -5
+    493  PushI          Int16     Double    -5
+    494  PushI          Int16     Double    1
+    495  Push           Variable  Double    VAR=menucoord
+    496  PushI          Int16     Double    1
+    497  Add            Int32     Variable  
+    498  Conv           Variable  Int32     
+    499  Push           Variable  Double    VAR=litem
+    500  PushI          Int16     Double    0
+    501  Cmp            Int32     Variable  
+    502  Bf             Double    Double    
+    503  PushI          Int16     Double    -5
+    504  PushI          Int16     Double    1
+    505  Dup            Int32     Double    
+    506  Push           Variable  Double    VAR=menucoord
+    507  PushI          Int16     Double    1
+    508  Add            Int32     Variable  
+    509  Pop            Int32     Variable  VAR=menucoord
+    510  PushGlb        Variable  Double    VAR=menuno
+    511  PushI          Int16     Double    3
+    512  Cmp            Int32     Variable  
+    513  Bf             Double    Double    
+    514  PushI          Int16     Double    -5
+    515  PushI          Int16     Double    3
+    516  Push           Variable  Double    VAR=menucoord
+    517  PushI          Int16     Double    7
+    518  Cmp            Int32     Variable  
+    519  Bf             Double    Double    
+    520  PushI          Int16     Double    -5
+    521  PushI          Int16     Double    -5
+    522  PushI          Int16     Double    3
+    523  Push           Variable  Double    VAR=menucoord
+    524  PushI          Int16     Double    1
+    525  Add            Int32     Variable  
+    526  Conv           Variable  Int32     
+    527  Push           Variable  Double    VAR=phone
+    528  PushI          Int16     Double    0
+    529  Cmp            Int32     Variable  
+    530  Bf             Double    Double    
+    531  PushI          Int16     Double    -5
+    532  PushI          Int16     Double    3
+    533  Dup            Int32     Double    
+    534  Push           Variable  Double    VAR=menucoord
+    535  PushI          Int16     Double    1
+    536  Add            Int32     Variable  
+    537  Pop            Int32     Variable  VAR=menucoord
+    538  Call           Int32     Double    FN=gml_Script_button2_p
+    539  Conv           Variable  Boolean   
+    540  Bf             Double    Double    
+    541  Push           Variable  Double    VAR=buffer
+    542  PushI          Int16     Double    0
+    543  Cmp            Int32     Variable  
+    544  B              Double    Double    
+    545  Push           Int16     Double    0
+    546  Bf             Double    Double    
+    547  PushGlb        Variable  Double    VAR=menuno
+    548  PushI          Int16     Double    0
+    549  Cmp            Int32     Variable  
+    550  Bf             Double    Double    
+    551  PushI          Int16     Double    -1
+    552  Pop            Variable  Int32     VAR=menuno
+    553  PushI          Int16     Double    0
+    554  Pop            Variable  Int32     VAR=interact
+    555  B              Double    Double    
+    556  PushGlb        Variable  Double    VAR=menuno
+    557  PushI          Int16     Double    3
+    558  Cmp            Int32     Variable  
+    559  Bf             Double    Double    
+    560  PushI          Int16     Double    0
+    561  Pop            Variable  Int32     VAR=menuno
+    562  PushGlb        Variable  Double    VAR=menuno
+    563  PushI          Int16     Double    5
+    564  Cmp            Int32     Variable  
+    565  Bf             Double    Double    
+    566  PushI          Int16     Double    1
+    567  Pop            Variable  Int32     VAR=menuno
+    568  Call           Int32     Double    FN=gml_Script_right_p
+    569  Conv           Variable  Boolean   
+    570  Bf             Double    Double    
+    571  PushGlb        Variable  Double    VAR=menuno
+    572  PushI          Int16     Double    5
+    573  Cmp            Int32     Variable  
+    574  Bf             Double    Double    
+    575  PushI          Int16     Double    -5
+    576  PushI          Int16     Double    5
+    577  Push           Variable  Double    VAR=menucoord
+    578  PushI          Int16     Double    2
+    579  Cmp            Int32     Variable  
+    580  Bf             Double    Double    
+    581  PushI          Int16     Double    -5
+    582  PushI          Int16     Double    5
+    583  Dup            Int32     Double    
+    584  Push           Variable  Double    VAR=menucoord
+    585  PushI          Int16     Double    1
+    586  Add            Int32     Variable  
+    587  Pop            Int32     Variable  VAR=menucoord
+    588  Call           Int32     Double    FN=gml_Script_left_p
+    589  Conv           Variable  Boolean   
+    590  Bf             Double    Double    
+    591  PushGlb        Variable  Double    VAR=menuno
+    592  PushI          Int16     Double    5
+    593  Cmp            Int32     Variable  
+    594  Bf             Double    Double    
+    595  PushI          Int16     Double    -5
+    596  PushI          Int16     Double    5
+    597  Push           Variable  Double    VAR=menucoord
+    598  PushI          Int16     Double    0
+    599  Cmp            Int32     Variable  
+    600  Bf             Double    Double    
+    601  PushI          Int16     Double    -5
+    602  PushI          Int16     Double    5
+    603  Dup            Int32     Double    
+    604  Push           Variable  Double    VAR=menucoord
+    605  PushI          Int16     Double    1
+    606  Sub            Int32     Variable  
+    607  Pop            Int32     Variable  VAR=menucoord
+    608  Call           Int32     Double    FN=gml_Script_button3_p
+    609  Conv           Variable  Boolean   
+    610  Bf             Double    Double    
+    611  Push           Variable  Double    VAR=threebuffer
+    612  PushI          Int16     Double    0
+    613  Cmp            Int32     Variable  
+    614  B              Double    Double    
+    615  Push           Int16     Double    0
+    616  Bf             Double    Double    
+    617  PushGlb        Variable  Double    VAR=menuno
+    618  PushI          Int16     Double    0
+    619  Cmp            Int32     Variable  
+    620  Bf             Double    Double    
+    621  PushI          Int16     Double    -1
+    622  Pop            Variable  Int32     VAR=menuno
+    623  PushI          Int16     Double    0
+    624  Pop            Variable  Int32     VAR=interact
+    625  PushI          Int16     Double    30
+    626  PushEnv        Double    Double    0
+    627  PushI          Int16     Double    2
+    628  Pop            Variable  Int32     VAR=threebuffer
+    629  PopEnv         Int16     Int16     
+    630  Push           Variable  Double    VAR=currentmenu
+    631  PushGlb        Variable  Double    VAR=menuno
+    632  Cmp            Variable  Variable  
+    633  Bf             Double    Double    
+    634  PushGlb        Variable  Double    VAR=menuno
+    635  PushI          Int16     Double    9
+    636  Cmp            Int32     Variable  
+    637  B              Double    Double    
+    638  Push           Int16     Double    0
+    639  Bf             Double    Double    
+    640  PushI          Int16     Double    1
+    641  Pop            Variable  Int32     VAR=selnoise
+    642  B              Double    Double    
+    643  PushGlb        Variable  Double    VAR=menuno
+    644  PushI          Int16     Double    0
+    645  Cmp            Int32     Variable  
+    646  Bf             Double    Double    
+    647  PushGlb        Variable  Double    VAR=menuno
+    648  PushI          Int16     Double    6
+    649  Cmp            Int32     Variable  
+    650  B              Double    Double    
+    651  Push           Int16     Double    0
+    652  Bf             Double    Double    
+    653  Push           Variable  Double    VAR=currentspot
+    654  PushI          Int16     Double    -5
+    655  PushGlb        Variable  Double    VAR=menuno
+    656  Conv           Variable  Int32     
+    657  Push           Variable  Double    VAR=menucoord
+    658  Cmp            Variable  Variable  
+    659  Bf             Double    Double    
+    660  PushI          Int16     Double    1
+    661  Pop            Variable  Int32     VAR=movenoise
+    662  PushGlb        Variable  Double    VAR=menuno
+    663  PushI          Int16     Double    9
+    664  Cmp            Int32     Variable  
+    665  Bf             Double    Double    
+    666  PushI          Int16     Double    9
+    667  Conv           Int32     Variable  
+    668  Call           Int32     Double    FN=instance_exists
+    669  PushI          Int16     Double    0
+    670  Cmp            Boolean   Variable  
+    671  B              Double    Double    
+    672  Push           Int16     Double    0
+    673  Bf             Double    Double    
+    674  PushI          Int16     Double    -1
+    675  Pop            Variable  Int32     VAR=menuno
+    676  PushI          Int16     Double    0
+    677  Pop            Variable  Int32     VAR=interact
+    678  Push           Variable  Double    VAR=selnoise
+    679  PushI          Int16     Double    1
+    680  Cmp            Int32     Variable  
+    681  Bf             Double    Double    
+    682  PushI          Int16     Double    150
+    683  Conv           Int32     Variable  
+    684  Call           Int32     Double    FN=gml_Script_snd_play
+    685  Popz           Variable  Double    
+    686  PushI          Int16     Double    0
+    687  Pop            Variable  Int32     VAR=selnoise
+    688  Push           Variable  Double    VAR=movenoise
+    689  PushI          Int16     Double    1
+    690  Cmp            Int32     Variable  
+    691  Bf             Double    Double    
+    692  PushI          Int16     Double    149
+    693  Conv           Int32     Variable  
+    694  Call           Int32     Double    FN=gml_Script_snd_play
+    695  Popz           Variable  Double    
+    696  PushI          Int16     Double    0
+    697  Pop            Variable  Int32     VAR=movenoise
+    698  Push           Variable  Double    VAR=threebuffer
+    699  Push           Int16     Double    1
+    700  Sub            Int32     Variable  
+    701  Pop            Variable  Variable  VAR=threebuffer
+
+### gml_Object_obj_overworldc_Draw_0   ins=1137
+      0  Push           Variable  Double    VAR=buffer
+      1  PushI          Int16     Double    1
+      2  Add            Int32     Variable  
+      3  Pop            Variable  Variable  VAR=buffer
+      4  PushGlb        Variable  Double    VAR=interact
+      5  PushI          Int16     Double    5
+      6  Cmp            Int32     Variable  
+      7  Bf             Double    Double    
+      8  PushBltn       Variable  Double    VAR=view_current
+      9  Push           Int64     Double    0
+     10  Conv           Int64     Variable  
+     11  Call           Int32     Double    FN=gml_Script___view_get
+     12  Pop            Variable  Variable  VAR=xx
+     13  PushBltn       Variable  Double    VAR=view_current
+     14  Push           Int64     Double    1
+     15  Conv           Int64     Variable  
+     16  Call           Int32     Double    FN=gml_Script___view_get
+     17  PushI          Int16     Double    10
+     18  Add            Int32     Variable  
+     19  Pop            Variable  Variable  VAR=yy
+     20  Push           Variable  Double    VAR=yy
+     21  Pop            Variable  Variable  VAR=moveyy
+     22  PushI          Int16     Double    263
+     23  Pop            Variable  Int32     VAR=stat_right
+     24  PushGlb        Variable  Double    VAR=lang
+     25  Push           String    Double    STR="ja"@1805
+     26  Cmp            String    Variable  
+     27  Bf             Double    Double    
+     28  PushI          Int16     Double    300
+     29  Pop            Variable  Int32     VAR=stat_right
+     30  Push           Variable  Double    VAR=y
+     31  Push           Variable  Double    VAR=yy
+     32  PushI          Int16     Double    120
+     33  Add            Int32     Variable  
+     34  Cmp            Variable  Variable  
+     35  Bf             Double    Double    
+     36  Push           Variable  Double    VAR=moveyy
+     37  PushI          Int16     Double    135
+     38  Add            Int32     Variable  
+     39  Pop            Variable  Variable  VAR=moveyy
+     40  PushGlb        Variable  Double    VAR=menuno
+     41  PushI          Int16     Double    4
+     42  Cmp            Int32     Variable  
+     43  Bf             Double    Double    
+     44  Push           Int32     Double    16777215
+     45  Conv           Int32     Variable  
+     46  Call           Int32     Double    FN=draw_set_color
+     47  Popz           Variable  Double    
+     48  PushI          Int16     Double    0
+     49  Conv           Boolean   Variable  
+     50  PushI          Int16     Double    70
+     51  Push           Variable  Double    VAR=moveyy
+     52  Add            Variable  Int32     
+     53  PushI          Int16     Double    86
+     54  Push           Variable  Double    VAR=xx
+     55  Add            Variable  Int32     
+     56  PushI          Int16     Double    16
+     57  Push           Variable  Double    VAR=moveyy
+     58  Add            Variable  Int32     
+     59  PushI          Int16     Double    16
+     60  Push           Variable  Double    VAR=xx
+     61  Add            Variable  Int32     
+     62  Call           Int32     Double    FN=draw_rectangle
+     63  Popz           Variable  Double    
+     64  PushI          Int16     Double    0
+     65  Conv           Boolean   Variable  
+     66  PushI          Int16     Double    147
+     67  Push           Variable  Double    VAR=yy
+     68  Add            Variable  Int32     
+     69  PushI          Int16     Double    86
+     70  Push           Variable  Double    VAR=xx
+     71  Add            Variable  Int32     
+     72  PushI          Int16     Double    74
+     73  Push           Variable  Double    VAR=yy
+     74  Add            Variable  Int32     
+     75  PushI          Int16     Double    16
+     76  Push           Variable  Double    VAR=xx
+     77  Add            Variable  Int32     
+     78  Call           Int32     Double    FN=draw_rectangle
+     79  Popz           Variable  Double    
+     80  PushGlb        Variable  Double    VAR=menuno
+     81  PushI          Int16     Double    1
+     82  Cmp            Int32     Variable  
+     83  Bt             Double    Double    
+     84  PushGlb        Variable  Double    VAR=menuno
+     85  PushI          Int16     Double    5
+     86  Cmp            Int32     Variable  
+     87  Bt             Double    Double    
+     88  PushGlb        Variable  Double    VAR=menuno
+     89  PushI          Int16     Double    6
+     90  Cmp            Int32     Variable  
+     91  B              Double    Double    
+     92  Push           Int16     Double    1
+     93  Bf             Double    Double    
+     94  PushI          Int16     Double    0
+     95  Conv           Boolean   Variable  
+     96  PushI          Int16     Double    196
+     97  Push           Variable  Double    VAR=yy
+     98  Add            Variable  Int32     
+     99  PushI          Int16     Double    266
+    100  Push           Variable  Double    VAR=xx
+    101  Add            Variable  Int32     
+    102  PushI          Int16     Double    16
+    103  Push           Variable  Double    VAR=yy
+    104  Add            Variable  Int32     
+    105  PushI          Int16     Double    94
+    106  Push           Variable  Double    VAR=xx
+    107  Add            Variable  Int32     
+    108  Call           Int32     Double    FN=draw_rectangle
+    109  Popz           Variable  Double    
+    110  PushGlb        Variable  Double    VAR=menuno
+    111  PushI          Int16     Double    2
+    112  Cmp            Int32     Variable  
+    113  Bf             Double    Double    
+    114  PushI          Int16     Double    0
+    115  Conv           Boolean   Variable  
+    116  PushI          Int16     Double    224
+    117  Push           Variable  Double    VAR=yy
+    118  Add            Variable  Int32     
+    119  PushLoc        Variable  Double    VAR=stat_right
+    120  PushI          Int16     Double    3
+    121  Add            Int32     Variable  
+    122  Push           Variable  Double    VAR=xx
+    123  Add            Variable  Variable  
+    124  PushI          Int16     Double    16
+    125  Push           Variable  Double    VAR=yy
+    126  Add            Variable  Int32     
+    127  PushI          Int16     Double    94
+    128  Push           Variable  Double    VAR=xx
+    129  Add            Variable  Int32     
+    130  Call           Int32     Double    FN=draw_rectangle
+    131  Popz           Variable  Double    
+    132  PushGlb        Variable  Double    VAR=menuno
+    133  PushI          Int16     Double    3
+    134  Cmp            Int32     Variable  
+    135  Bf             Double    Double    
+    136  PushI          Int16     Double    0
+    137  Conv           Boolean   Variable  
+    138  PushI          Int16     Double    150
+    139  Push           Variable  Double    VAR=yy
+    140  Add            Variable  Int32     
+    141  PushI          Int16     Double    266
+    142  Push           Variable  Double    VAR=xx
+    143  Add            Variable  Int32     
+    144  PushI          Int16     Double    16
+    145  Push           Variable  Double    VAR=yy
+    146  Add            Variable  Int32     
+    147  PushI          Int16     Double    94
+    148  Push           Variable  Double    VAR=xx
+    149  Add            Variable  Int32     
+    150  Call           Int32     Double    FN=draw_rectangle
+    151  Popz           Variable  Double    
+    152  PushGlb        Variable  Double    VAR=menuno
+    153  PushI          Int16     Double    7
+    154  Cmp            Int32     Variable  
+    155  Bf             Double    Double    
+    156  PushI          Int16     Double    0
+    157  Conv           Boolean   Variable  
+    158  PushI          Int16     Double    216
+    159  Push           Variable  Double    VAR=yy
+    160  Add            Variable  Int32     
+    161  PushI          Int16     Double    266
+    162  Push           Variable  Double    VAR=xx
+    163  Add            Variable  Int32     
+    164  PushI          Int16     Double    16
+    165  Push           Variable  Double    VAR=yy
+    166  Add            Variable  Int32     
+    167  PushI          Int16     Double    94
+    168  Push           Variable  Double    VAR=xx
+    169  Add            Variable  Int32     
+    170  Call           Int32     Double    FN=draw_rectangle
+    171  Popz           Variable  Double    
+    172  PushI          Int16     Double    0
+    173  Conv           Int32     Variable  
+    174  Call           Int32     Double    FN=draw_set_color
+    175  Popz           Variable  Double    
+    176  PushI          Int16     Double    0
+    177  Conv           Boolean   Variable  
+    178  PushI          Int16     Double    67
+    179  Push           Variable  Double    VAR=moveyy
+    180  Add            Variable  Int32     
+    181  PushI          Int16     Double    83
+    182  Push           Variable  Double    VAR=xx
+    183  Add            Variable  Int32     
+    184  PushI          Int16     Double    19
+    185  Push           Variable  Double    VAR=moveyy
+    186  Add            Variable  Int32     
+    187  PushI          Int16     Double    19
+    188  Push           Variable  Double    VAR=xx
+    189  Add            Variable  Int32     
+    190  Call           Int32     Double    FN=draw_rectangle
+    191  Popz           Variable  Double    
+    192  PushI          Int16     Double    0
+    193  Conv           Boolean   Variable  
+    194  PushI          Int16     Double    144
+    195  Push           Variable  Double    VAR=yy
+    196  Add            Variable  Int32     
+    197  PushI          Int16     Double    83
+    198  Push           Variable  Double    VAR=xx
+    199  Add            Variable  Int32     
+    200  PushI          Int16     Double    77
+    201  Push           Variable  Double    VAR=yy
+    202  Add            Variable  Int32     
+    203  PushI          Int16     Double    19
+    204  Push           Variable  Double    VAR=xx
+    205  Add            Variable  Int32     
+    206  Call           Int32     Double    FN=draw_rectangle
+    207  Popz           Variable  Double    
+    208  PushGlb        Variable  Double    VAR=menuno
+    209  PushI          Int16     Double    1
+    210  Cmp            Int32     Variable  
+    211  Bt             Double    Double    
+    212  PushGlb        Variable  Double    VAR=menuno
+    213  PushI          Int16     Double    5
+    214  Cmp            Int32     Variable  
+    215  Bt             Double    Double    
+    216  PushGlb        Variable  Double    VAR=menuno
+    217  PushI          Int16     Double    6
+    218  Cmp            Int32     Variable  
+    219  B              Double    Double    
+    220  Push           Int16     Double    1
+    221  Bf             Double    Double    
+    222  PushI          Int16     Double    0
+    223  Conv           Boolean   Variable  
+    224  PushI          Int16     Double    193
+    225  Push           Variable  Double    VAR=yy
+    226  Add            Variable  Int32     
+    227  PushI          Int16     Double    263
+    228  Push           Variable  Double    VAR=xx
+    229  Add            Variable  Int32     
+    230  PushI          Int16     Double    19
+    231  Push           Variable  Double    VAR=yy
+    232  Add            Variable  Int32     
+    233  PushI          Int16     Double    97
+    234  Push           Variable  Double    VAR=xx
+    235  Add            Variable  Int32     
+    236  Call           Int32     Double    FN=draw_rectangle
+    237  Popz           Variable  Double    
+    238  PushGlb        Variable  Double    VAR=menuno
+    239  PushI          Int16     Double    2
+    240  Cmp            Int32     Variable  
+    241  Bf             Double    Double    
+    242  PushI          Int16     Double    0
+    243  Conv           Boolean   Variable  
+    244  PushI          Int16     Double    221
+    245  Push           Variable  Double    VAR=yy
+    246  Add            Variable  Int32     
+    247  PushLoc        Variable  Double    VAR=stat_right
+    248  Push           Variable  Double    VAR=xx
+    249  Add            Variable  Variable  
+    250  PushI          Int16     Double    19
+    251  Push           Variable  Double    VAR=yy
+    252  Add            Variable  Int32     
+    253  PushI          Int16     Double    97
+    254  Push           Variable  Double    VAR=xx
+    255  Add            Variable  Int32     
+    256  Call           Int32     Double    FN=draw_rectangle
+    257  Popz           Variable  Double    
+    258  PushGlb        Variable  Double    VAR=menuno
+    259  PushI          Int16     Double    3
+    260  Cmp            Int32     Variable  
+    261  Bf             Double    Double    
+    262  PushI          Int16     Double    0
+    263  Conv           Boolean   Variable  
+    264  PushI          Int16     Double    147
+    265  Push           Variable  Double    VAR=yy
+    266  Add            Variable  Int32     
+    267  PushI          Int16     Double    263
+    268  Push           Variable  Double    VAR=xx
+    269  Add            Variable  Int32     
+    270  PushI          Int16     Double    19
+    271  Push           Variable  Double    VAR=yy
+    272  Add            Variable  Int32     
+    273  PushI          Int16     Double    97
+    274  Push           Variable  Double    VAR=xx
+    275  Add            Variable  Int32     
+    276  Call           Int32     Double    FN=draw_rectangle
+    277  Popz           Variable  Double    
+    278  PushGlb        Variable  Double    VAR=menuno
+    279  PushI          Int16     Double    7
+    280  Cmp            Int32     Variable  
+    281  Bf             Double    Double    
+    282  PushI          Int16     Double    0
+    283  Conv           Boolean   Variable  
+    284  PushI          Int16     Double    213
+    285  Push           Variable  Double    VAR=yy
+    286  Add            Variable  Int32     
+    287  PushI          Int16     Double    263
+    288  Push           Variable  Double    VAR=xx
+    289  Add            Variable  Int32     
+    290  PushI          Int16     Double    19
+    291  Push           Variable  Double    VAR=yy
+    292  Add            Variable  Int32     
+    293  PushI          Int16     Double    97
+    294  Push           Variable  Double    VAR=xx
+    295  Add            Variable  Int32     
+    296  Call           Int32     Double    FN=draw_rectangle
+    297  Popz           Variable  Double    
+    298  Push           Int32     Double    16777215
+    299  Conv           Int32     Variable  
+    300  Call           Int32     Double    FN=draw_set_color
+    301  Popz           Variable  Double    
+    302  PushI          Int16     Double    7
+    303  Conv           Int32     Variable  
+    304  Call           Int32     Double    FN=draw_set_font
+    305  Popz           Variable  Double    
+    306  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_36_0"@11036
+    307  Conv           String    Variable  
+    308  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    309  PushGlb        Variable  Double    VAR=lhp
+    310  Call           Int32     Double    FN=string
+    311  Add            Variable  Variable  
+    312  Push           String    Double    STR="/"@599
+    313  Add            String    Variable  
+    314  PushGlb        Variable  Double    VAR=lmaxhp
+    315  Call           Int32     Double    FN=string
+    316  Add            Variable  Variable  
+    317  Call           Int32     Double    FN=string_hash_to_newline
+    318  PushI          Int16     Double    49
+    319  Push           Variable  Double    VAR=moveyy
+    320  Add            Variable  Int32     
+    321  PushI          Int16     Double    23
+    322  Push           Variable  Double    VAR=xx
+    323  Add            Variable  Int32     
+    324  Call           Int32     Double    FN=draw_text
+    325  Popz           Variable  Double    
+    326  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_37_0"@11037
+    327  Conv           String    Variable  
+    328  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    329  PushGlb        Variable  Double    VAR=llv
+    330  Call           Int32     Double    FN=string
+    331  Add            Variable  Variable  
+    332  Call           Int32     Double    FN=string_hash_to_newline
+    333  PushI          Int16     Double    40
+    334  Push           Variable  Double    VAR=moveyy
+    335  Add            Variable  Int32     
+    336  PushI          Int16     Double    23
+    337  Push           Variable  Double    VAR=xx
+    338  Add            Variable  Int32     
+    339  Call           Int32     Double    FN=draw_text
+    340  Popz           Variable  Double    
+    341  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_39_0"@11038
+    342  Conv           String    Variable  
+    343  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    344  PushGlb        Variable  Double    VAR=lgold
+    345  Call           Int32     Double    FN=string
+    346  Add            Variable  Variable  
+    347  Call           Int32     Double    FN=string_hash_to_newline
+    348  PushI          Int16     Double    58
+    349  Push           Variable  Double    VAR=moveyy
+    350  Add            Variable  Int32     
+    351  PushI          Int16     Double    23
+    352  Push           Variable  Double    VAR=xx
+    353  Add            Variable  Int32     
+    354  Call           Int32     Double    FN=draw_text
+    355  Popz           Variable  Double    
+    356  Push           String    Double    STR="main"@1798
+    357  Conv           String    Variable  
+    358  Call           Int32     Double    FN=gml_Script_scr_84_set_draw_font
+    359  Popz           Variable  Double    
+    360  Push           Variable  Double    VAR=hasitems
+    361  Conv           Variable  Boolean   
+    362  Bf             Double    Double    
+    363  Push           Int32     Double    16777215
+    364  Conv           Int32     Variable  
+    365  B              Double    Double    
+    366  Push           Int32     Double    8421504
+    367  Conv           Int32     Variable  
+    368  Pop            Variable  Variable  VAR=_itemTextColor
+    369  PushGlb        Variable  Double    VAR=lang
+    370  Push           String    Double    STR="ja"@1805
+    371  Cmp            String    Variable  
+    372  Bf             Double    Double    
+    373  PushGlb        Variable  Double    VAR=lcharname
+    374  Call           Int32     Double    FN=string_hash_to_newline
+    375  PushI          Int16     Double    20
+    376  Push           Variable  Double    VAR=moveyy
+    377  Add            Variable  Int32     
+    378  PushI          Int16     Double    20
+    379  Push           Variable  Double    VAR=xx
+    380  Add            Variable  Int32     
+    381  Call           Int32     Double    FN=draw_text
+    382  Popz           Variable  Double    
+    383  PushLoc        Variable  Double    VAR=_itemTextColor
+    384  Call           Int32     Double    FN=draw_set_color
+    385  Popz           Variable  Double    
+    386  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_42_0"@11040
+    387  Conv           String    Variable  
+    388  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    389  Call           Int32     Double    FN=string_hash_to_newline
+    390  PushI          Int16     Double    84
+    391  Push           Variable  Double    VAR=yy
+    392  Add            Variable  Int32     
+    393  PushI          Int16     Double    40
+    394  Push           Variable  Double    VAR=xx
+    395  Add            Variable  Int32     
+    396  Call           Int32     Double    FN=draw_text
+    397  Popz           Variable  Double    
+    398  B              Double    Double    
+    399  PushGlb        Variable  Double    VAR=lcharname
+    400  Call           Int32     Double    FN=string_hash_to_newline
+    401  PushI          Int16     Double    20
+    402  Push           Variable  Double    VAR=moveyy
+    403  Add            Variable  Int32     
+    404  PushI          Int16     Double    23
+    405  Push           Variable  Double    VAR=xx
+    406  Add            Variable  Int32     
+    407  Call           Int32     Double    FN=draw_text
+    408  Popz           Variable  Double    
+    409  PushLoc        Variable  Double    VAR=_itemTextColor
+    410  Call           Int32     Double    FN=draw_set_color
+    411  Popz           Variable  Double    
+    412  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_42_0"@11040
+    413  Conv           String    Variable  
+    414  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    415  Call           Int32     Double    FN=string_hash_to_newline
+    416  PushI          Int16     Double    84
+    417  Push           Variable  Double    VAR=yy
+    418  Add            Variable  Int32     
+    419  PushI          Int16     Double    42
+    420  Push           Variable  Double    VAR=xx
+    421  Add            Variable  Int32     
+    422  Call           Int32     Double    FN=draw_text
+    423  Popz           Variable  Double    
+    424  Push           Int32     Double    16777215
+    425  Conv           Int32     Variable  
+    426  Call           Int32     Double    FN=draw_set_color
+    427  Popz           Variable  Double    
+    428  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_43_0"@11041
+    429  Conv           String    Variable  
+    430  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    431  Call           Int32     Double    FN=string_hash_to_newline
+    432  PushI          Int16     Double    102
+    433  Push           Variable  Double    VAR=yy
+    434  Add            Variable  Int32     
+    435  PushI          Int16     Double    42
+    436  Push           Variable  Double    VAR=xx
+    437  Add            Variable  Int32     
+    438  Call           Int32     Double    FN=draw_text
+    439  Popz           Variable  Double    
+    440  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_44_0"@11042
+    441  Conv           String    Variable  
+    442  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    443  Call           Int32     Double    FN=string_hash_to_newline
+    444  PushI          Int16     Double    120
+    445  Push           Variable  Double    VAR=yy
+    446  Add            Variable  Int32     
+    447  PushI          Int16     Double    42
+    448  Push           Variable  Double    VAR=xx
+    449  Add            Variable  Int32     
+    450  Call           Int32     Double    FN=draw_text
+    451  Popz           Variable  Double    
+    452  PushGlb        Variable  Double    VAR=menuno
+    453  PushI          Int16     Double    1
+    454  Cmp            Int32     Variable  
+    455  Bt             Double    Double    
+    456  PushGlb        Variable  Double    VAR=menuno
+    457  PushI          Int16     Double    5
+    458  Cmp            Int32     Variable  
+    459  B              Double    Double    
+    460  Push           Int16     Double    1
+    461  Bf             Double    Double    
+    462  PushI          Int16     Double    0
+    463  Pop            Variable  Int32     VAR=i
+    464  Push           Variable  Double    VAR=i
+    465  PushI          Int16     Double    8
+    466  Cmp            Int32     Variable  
+    467  Bf             Double    Double    
+    468  PushI          Int16     Double    -5
+    469  Push           Variable  Double    VAR=i
+    470  Conv           Variable  Int32     
+    471  Push           Variable  Double    VAR=litemname
+    472  Call           Int32     Double    FN=string_hash_to_newline
+    473  PushI          Int16     Double    30
+    474  Push           Variable  Double    VAR=yy
+    475  Add            Variable  Int32     
+    476  Push           Variable  Double    VAR=i
+    477  PushI          Int16     Double    16
+    478  Mul            Int32     Variable  
+    479  Add            Variable  Variable  
+    480  PushI          Int16     Double    116
+    481  Push           Variable  Double    VAR=xx
+    482  Add            Variable  Int32     
+    483  Call           Int32     Double    FN=draw_text
+    484  Popz           Variable  Double    
+    485  Push           Variable  Double    VAR=i
+    486  PushI          Int16     Double    1
+    487  Add            Int32     Variable  
+    488  Pop            Variable  Variable  VAR=i
+    489  B              Int16     Int16     
+    490  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_52_0"@11043
+    491  Conv           String    Variable  
+    492  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    493  Call           Int32     Double    FN=string_hash_to_newline
+    494  PushI          Int16     Double    170
+    495  Push           Variable  Double    VAR=yy
+    496  Add            Variable  Int32     
+    497  PushI          Int16     Double    116
+    498  Push           Variable  Double    VAR=xx
+    499  Add            Variable  Int32     
+    500  Call           Int32     Double    FN=draw_text
+    501  Popz           Variable  Double    
+    502  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_53_0"@11044
+    503  Conv           String    Variable  
+    504  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    505  Call           Int32     Double    FN=string_hash_to_newline
+    506  PushI          Int16     Double    170
+    507  Push           Variable  Double    VAR=yy
+    508  Add            Variable  Int32     
+    509  PushI          Int16     Double    116
+    510  Push           Variable  Double    VAR=xx
+    511  Add            Variable  Int32     
+    512  PushI          Int16     Double    48
+    513  Add            Int32     Variable  
+    514  Call           Int32     Double    FN=draw_text
+    515  Popz           Variable  Double    
+    516  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_54_0"@11045
+    517  Conv           String    Variable  
+    518  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    519  Call           Int32     Double    FN=string_hash_to_newline
+    520  PushI          Int16     Double    170
+    521  Push           Variable  Double    VAR=yy
+    522  Add            Variable  Int32     
+    523  PushI          Int16     Double    116
+    524  Push           Variable  Double    VAR=xx
+    525  Add            Variable  Int32     
+    526  PushI          Int16     Double    105
+    527  Add            Int32     Variable  
+    528  Call           Int32     Double    FN=draw_text
+    529  Popz           Variable  Double    
+    530  PushGlb        Variable  Double    VAR=menuno
+    531  PushI          Int16     Double    3
+    532  Cmp            Int32     Variable  
+    533  Bf             Double    Double    
+    534  PushI          Int16     Double    0
+    535  Pop            Variable  Int32     VAR=i
+    536  Push           Variable  Double    VAR=i
+    537  PushI          Int16     Double    7
+    538  Cmp            Int32     Variable  
+    539  Bf             Double    Double    
+    540  PushI          Int16     Double    -5
+    541  Push           Variable  Double    VAR=i
+    542  Conv           Variable  Int32     
+    543  Push           Variable  Double    VAR=phonename
+    544  Call           Int32     Double    FN=string_hash_to_newline
+    545  PushI          Int16     Double    30
+    546  Push           Variable  Double    VAR=yy
+    547  Add            Variable  Int32     
+    548  Push           Variable  Double    VAR=i
+    549  PushI          Int16     Double    16
+    550  Mul            Int32     Variable  
+    551  Add            Variable  Variable  
+    552  PushI          Int16     Double    116
+    553  Push           Variable  Double    VAR=xx
+    554  Add            Variable  Int32     
+    555  Call           Int32     Double    FN=draw_text
+    556  Popz           Variable  Double    
+    557  Push           Variable  Double    VAR=i
+    558  PushI          Int16     Double    1
+    559  Add            Int32     Variable  
+    560  Pop            Variable  Variable  VAR=i
+    561  B              Int16     Int16     
+    562  PushGlb        Variable  Double    VAR=menuno
+    563  PushI          Int16     Double    2
+    564  Cmp            Int32     Variable  
+    565  Bf             Double    Double    
+    566  PushGlb        Variable  Double    VAR=lcharname
+    567  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_66_0"@11046
+    568  Conv           String    Variable  
+    569  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    570  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    571  Call           Int32     Double    FN=string_hash_to_newline
+    572  PushI          Int16     Double    32
+    573  Push           Variable  Double    VAR=yy
+    574  Add            Variable  Int32     
+    575  PushI          Int16     Double    108
+    576  Push           Variable  Double    VAR=xx
+    577  Add            Variable  Int32     
+    578  Call           Int32     Double    FN=draw_text
+    579  Popz           Variable  Double    
+    580  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_67_0"@11047
+    581  Conv           String    Variable  
+    582  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    583  PushGlb        Variable  Double    VAR=llv
+    584  Call           Int32     Double    FN=string
+    585  Add            Variable  Variable  
+    586  Call           Int32     Double    FN=string_hash_to_newline
+    587  PushI          Int16     Double    62
+    588  Push           Variable  Double    VAR=yy
+    589  Add            Variable  Int32     
+    590  PushI          Int16     Double    108
+    591  Push           Variable  Double    VAR=xx
+    592  Add            Variable  Int32     
+    593  Call           Int32     Double    FN=draw_text
+    594  Popz           Variable  Double    
+    595  PushGlb        Variable  Double    VAR=lhp
+    596  Call           Int32     Double    FN=string
+    597  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_68_0"@11048
+    598  Conv           String    Variable  
+    599  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    600  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    601  PushGlb        Variable  Double    VAR=lmaxhp
+    602  Call           Int32     Double    FN=string
+    603  Add            Variable  Variable  
+    604  Call           Int32     Double    FN=string_hash_to_newline
+    605  PushI          Int16     Double    78
+    606  Push           Variable  Double    VAR=yy
+    607  Add            Variable  Int32     
+    608  PushI          Int16     Double    108
+    609  Push           Variable  Double    VAR=xx
+    610  Add            Variable  Int32     
+    611  Call           Int32     Double    FN=draw_text
+    612  Popz           Variable  Double    
+    613  PushGlb        Variable  Double    VAR=lat
+    614  Call           Int32     Double    FN=string
+    615  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_70_0"@11049
+    616  Conv           String    Variable  
+    617  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    618  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    619  PushGlb        Variable  Double    VAR=lwstrength
+    620  Call           Int32     Double    FN=string
+    621  Add            Variable  Variable  
+    622  Push           String    Double    STR=")"@4184
+    623  Add            String    Variable  
+    624  Call           Int32     Double    FN=string_hash_to_newline
+    625  PushI          Int16     Double    110
+    626  Push           Variable  Double    VAR=yy
+    627  Add            Variable  Int32     
+    628  PushI          Int16     Double    108
+    629  Push           Variable  Double    VAR=xx
+    630  Add            Variable  Int32     
+    631  Call           Int32     Double    FN=draw_text
+    632  Popz           Variable  Double    
+    633  PushGlb        Variable  Double    VAR=ldf
+    634  Call           Int32     Double    FN=string
+    635  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_71_0"@11050
+    636  Conv           String    Variable  
+    637  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    638  Call           Int32     Double    FN=gml_Script_scr_84_get_subst_string
+    639  PushGlb        Variable  Double    VAR=ladef
+    640  Call           Int32     Double    FN=string
+    641  Add            Variable  Variable  
+    642  Push           String    Double    STR=")"@4184
+    643  Add            String    Variable  
+    644  Call           Int32     Double    FN=string_hash_to_newline
+    645  PushI          Int16     Double    126
+    646  Push           Variable  Double    VAR=yy
+    647  Add            Variable  Int32     
+    648  PushI          Int16     Double    108
+    649  Push           Variable  Double    VAR=xx
+    650  Add            Variable  Int32     
+    651  Call           Int32     Double    FN=draw_text
+    652  Popz           Variable  Double    
+    653  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_72_0"@11051
+    654  Conv           String    Variable  
+    655  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    656  Pop            Variable  Variable  VAR=weaponname
+    657  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_73_0"@11052
+    658  Conv           String    Variable  
+    659  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    660  Pop            Variable  Variable  VAR=armorname
+    661  PushGlb        Variable  Double    VAR=lweapon
+    662  PushI          Int16     Double    2
+    663  Cmp            Int32     Variable  
+    664  Bf             Double    Double    
+    665  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_74_0"@11053
+    666  Conv           String    Variable  
+    667  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    668  Pop            Variable  Variable  VAR=weaponname
+    669  PushGlb        Variable  Double    VAR=lweapon
+    670  PushI          Int16     Double    6
+    671  Cmp            Int32     Variable  
+    672  Bf             Double    Double    
+    673  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_75_0"@11054
+    674  Conv           String    Variable  
+    675  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    676  Pop            Variable  Variable  VAR=weaponname
+    677  PushGlb        Variable  Double    VAR=lweapon
+    678  PushI          Int16     Double    7
+    679  Cmp            Int32     Variable  
+    680  Bf             Double    Double    
+    681  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_76_0"@11055
+    682  Conv           String    Variable  
+    683  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    684  Pop            Variable  Variable  VAR=weaponname
+    685  PushGlb        Variable  Double    VAR=larmor
+    686  PushI          Int16     Double    3
+    687  Cmp            Int32     Variable  
+    688  Bf             Double    Double    
+    689  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_77_0"@11056
+    690  Conv           String    Variable  
+    691  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    692  Pop            Variable  Variable  VAR=armorname
+    693  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_80_0"@11057
+    694  Conv           String    Variable  
+    695  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    696  Push           Variable  Double    VAR=weaponname
+    697  Add            Variable  Variable  
+    698  Call           Int32     Double    FN=string_hash_to_newline
+    699  PushI          Int16     Double    156
+    700  Push           Variable  Double    VAR=yy
+    701  Add            Variable  Int32     
+    702  PushI          Int16     Double    108
+    703  Push           Variable  Double    VAR=xx
+    704  Add            Variable  Int32     
+    705  Call           Int32     Double    FN=draw_text
+    706  Popz           Variable  Double    
+    707  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_81_0"@11058
+    708  Conv           String    Variable  
+    709  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    710  Push           Variable  Double    VAR=armorname
+    711  Add            Variable  Variable  
+    712  Call           Int32     Double    FN=string_hash_to_newline
+    713  PushI          Int16     Double    172
+    714  Push           Variable  Double    VAR=yy
+    715  Add            Variable  Int32     
+    716  PushI          Int16     Double    108
+    717  Push           Variable  Double    VAR=xx
+    718  Add            Variable  Int32     
+    719  Call           Int32     Double    FN=draw_text
+    720  Popz           Variable  Double    
+    721  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_82_0"@11059
+    722  Conv           String    Variable  
+    723  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    724  PushGlb        Variable  Double    VAR=lgold
+    725  Call           Int32     Double    FN=string
+    726  Add            Variable  Variable  
+    727  Call           Int32     Double    FN=string_hash_to_newline
+    728  PushI          Int16     Double    192
+    729  Push           Variable  Double    VAR=yy
+    730  Add            Variable  Int32     
+    731  PushI          Int16     Double    108
+    732  Push           Variable  Double    VAR=xx
+    733  Add            Variable  Int32     
+    734  Call           Int32     Double    FN=draw_text
+    735  Popz           Variable  Double    
+    736  PushGlb        Variable  Double    VAR=lcharname
+    737  Call           Int32     Double    FN=string_length
+    738  PushI          Int16     Double    7
+    739  Cmp            Int32     Variable  
+    740  Bf             Double    Double    
+    741  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_88_0"@11060
+    742  Conv           String    Variable  
+    743  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    744  Call           Int32     Double    FN=string_hash_to_newline
+    745  PushI          Int16     Double    32
+    746  Push           Variable  Double    VAR=yy
+    747  Add            Variable  Int32     
+    748  PushI          Int16     Double    192
+    749  Push           Variable  Double    VAR=xx
+    750  Add            Variable  Int32     
+    751  Call           Int32     Double    FN=draw_text
+    752  Popz           Variable  Double    
+    753  PushI          Int16     Double    0
+    754  Pop            Variable  Int32     VAR=nextlevel
+    755  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_91_0"@11062
+    756  Conv           String    Variable  
+    757  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    758  PushGlb        Variable  Double    VAR=lxp
+    759  Call           Int32     Double    FN=string
+    760  Add            Variable  Variable  
+    761  Call           Int32     Double    FN=string_hash_to_newline
+    762  PushI          Int16     Double    110
+    763  Push           Variable  Double    VAR=yy
+    764  Add            Variable  Int32     
+    765  PushI          Int16     Double    192
+    766  Push           Variable  Double    VAR=xx
+    767  Add            Variable  Int32     
+    768  Call           Int32     Double    FN=draw_text
+    769  Popz           Variable  Double    
+    770  PushGlb        Variable  Double    VAR=llv
+    771  PushI          Int16     Double    1
+    772  Cmp            Int32     Variable  
+    773  Bf             Double    Double    
+    774  PushI          Int16     Double    10
+    775  PushGlb        Variable  Double    VAR=lxp
+    776  Sub            Variable  Int32     
+    777  Pop            Variable  Variable  VAR=nextlevel
+    778  PushGlb        Variable  Double    VAR=llv
+    779  PushI          Int16     Double    2
+    780  Cmp            Int32     Variable  
+    781  Bf             Double    Double    
+    782  PushI          Int16     Double    30
+    783  PushGlb        Variable  Double    VAR=lxp
+    784  Sub            Variable  Int32     
+    785  Pop            Variable  Variable  VAR=nextlevel
+    786  PushGlb        Variable  Double    VAR=llv
+    787  PushI          Int16     Double    3
+    788  Cmp            Int32     Variable  
+    789  Bf             Double    Double    
+    790  PushI          Int16     Double    70
+    791  PushGlb        Variable  Double    VAR=lxp
+    792  Sub            Variable  Int32     
+    793  Pop            Variable  Variable  VAR=nextlevel
+    794  PushGlb        Variable  Double    VAR=llv
+    795  PushI          Int16     Double    4
+    796  Cmp            Int32     Variable  
+    797  Bf             Double    Double    
+    798  PushI          Int16     Double    120
+    799  PushGlb        Variable  Double    VAR=lxp
+    800  Sub            Variable  Int32     
+    801  Pop            Variable  Variable  VAR=nextlevel
+    802  PushGlb        Variable  Double    VAR=llv
+    803  PushI          Int16     Double    5
+    804  Cmp            Int32     Variable  
+    805  Bf             Double    Double    
+    806  PushI          Int16     Double    200
+    807  PushGlb        Variable  Double    VAR=lxp
+    808  Sub            Variable  Int32     
+    809  Pop            Variable  Variable  VAR=nextlevel
+    810  PushGlb        Variable  Double    VAR=llv
+    811  PushI          Int16     Double    6
+    812  Cmp            Int32     Variable  
+    813  Bf             Double    Double    
+    814  PushI          Int16     Double    300
+    815  PushGlb        Variable  Double    VAR=lxp
+    816  Sub            Variable  Int32     
+    817  Pop            Variable  Variable  VAR=nextlevel
+    818  PushGlb        Variable  Double    VAR=llv
+    819  PushI          Int16     Double    7
+    820  Cmp            Int32     Variable  
+    821  Bf             Double    Double    
+    822  PushI          Int16     Double    500
+    823  PushGlb        Variable  Double    VAR=lxp
+    824  Sub            Variable  Int32     
+    825  Pop            Variable  Variable  VAR=nextlevel
+    826  PushGlb        Variable  Double    VAR=llv
+    827  PushI          Int16     Double    8
+    828  Cmp            Int32     Variable  
+    829  Bf             Double    Double    
+    830  PushI          Int16     Double    800
+    831  PushGlb        Variable  Double    VAR=lxp
+    832  Sub            Variable  Int32     
+    833  Pop            Variable  Variable  VAR=nextlevel
+    834  PushGlb        Variable  Double    VAR=llv
+    835  PushI          Int16     Double    9
+    836  Cmp            Int32     Variable  
+    837  Bf             Double    Double    
+    838  PushI          Int16     Double    1200
+    839  PushGlb        Variable  Double    VAR=lxp
+    840  Sub            Variable  Int32     
+    841  Pop            Variable  Variable  VAR=nextlevel
+    842  PushGlb        Variable  Double    VAR=llv
+    843  PushI          Int16     Double    10
+    844  Cmp            Int32     Variable  
+    845  Bf             Double    Double    
+    846  PushI          Int16     Double    1700
+    847  PushGlb        Variable  Double    VAR=lxp
+    848  Sub            Variable  Int32     
+    849  Pop            Variable  Variable  VAR=nextlevel
+    850  PushGlb        Variable  Double    VAR=llv
+    851  PushI          Int16     Double    11
+    852  Cmp            Int32     Variable  
+    853  Bf             Double    Double    
+    854  PushI          Int16     Double    2500
+    855  PushGlb        Variable  Double    VAR=lxp
+    856  Sub            Variable  Int32     
+    857  Pop            Variable  Variable  VAR=nextlevel
+    858  PushGlb        Variable  Double    VAR=llv
+    859  PushI          Int16     Double    12
+    860  Cmp            Int32     Variable  
+    861  Bf             Double    Double    
+    862  PushI          Int16     Double    3500
+    863  PushGlb        Variable  Double    VAR=lxp
+    864  Sub            Variable  Int32     
+    865  Pop            Variable  Variable  VAR=nextlevel
+    866  PushGlb        Variable  Double    VAR=llv
+    867  PushI          Int16     Double    13
+    868  Cmp            Int32     Variable  
+    869  Bf             Double    Double    
+    870  PushI          Int16     Double    5000
+    871  PushGlb        Variable  Double    VAR=lxp
+    872  Sub            Variable  Int32     
+    873  Pop            Variable  Variable  VAR=nextlevel
+    874  PushGlb        Variable  Double    VAR=llv
+    875  PushI          Int16     Double    14
+    876  Cmp            Int32     Variable  
+    877  Bf             Double    Double    
+    878  PushI          Int16     Double    7000
+    879  PushGlb        Variable  Double    VAR=lxp
+    880  Sub            Variable  Int32     
+    881  Pop            Variable  Variable  VAR=nextlevel
+    882  PushGlb        Variable  Double    VAR=llv
+    883  PushI          Int16     Double    15
+    884  Cmp            Int32     Variable  
+    885  Bf             Double    Double    
+    886  PushI          Int16     Double    10000
+    887  PushGlb        Variable  Double    VAR=lxp
+    888  Sub            Variable  Int32     
+    889  Pop            Variable  Variable  VAR=nextlevel
+    890  PushGlb        Variable  Double    VAR=llv
+    891  PushI          Int16     Double    16
+    892  Cmp            Int32     Variable  
+    893  Bf             Double    Double    
+    894  PushI          Int16     Double    15000
+    895  PushGlb        Variable  Double    VAR=lxp
+    896  Sub            Variable  Int32     
+    897  Pop            Variable  Variable  VAR=nextlevel
+    898  PushGlb        Variable  Double    VAR=llv
+    899  PushI          Int16     Double    17
+    900  Cmp            Int32     Variable  
+    901  Bf             Double    Double    
+    902  PushI          Int16     Double    25000
+    903  PushGlb        Variable  Double    VAR=lxp
+    904  Sub            Variable  Int32     
+    905  Pop            Variable  Variable  VAR=nextlevel
+    906  PushGlb        Variable  Double    VAR=llv
+    907  PushI          Int16     Double    18
+    908  Cmp            Int32     Variable  
+    909  Bf             Double    Double    
+    910  Push           Int32     Double    50000
+    911  PushGlb        Variable  Double    VAR=lxp
+    912  Sub            Variable  Int32     
+    913  Pop            Variable  Variable  VAR=nextlevel
+    914  PushGlb        Variable  Double    VAR=llv
+    915  PushI          Int16     Double    19
+    916  Cmp            Int32     Variable  
+    917  Bf             Double    Double    
+    918  Push           Int32     Double    99999
+    919  PushGlb        Variable  Double    VAR=lxp
+    920  Sub            Variable  Int32     
+    921  Pop            Variable  Variable  VAR=nextlevel
+    922  PushGlb        Variable  Double    VAR=llv
+    923  PushI          Int16     Double    20
+    924  Cmp            Int32     Variable  
+    925  Bf             Double    Double    
+    926  PushI          Int16     Double    0
+    927  Pop            Variable  Int32     VAR=nextlevel
+    928  Push           String    Double    STR="obj_overworldc_slash_Draw_0_gml_112_0"@11063
+    929  Conv           String    Variable  
+    930  Call           Int32     Double    FN=gml_Script_scr_84_get_lang_string
+    931  Push           Variable  Double    VAR=nextlevel
+    932  Call           Int32     Double    FN=string
+    933  Add            Variable  Variable  
+    934  Call           Int32     Double    FN=string_hash_to_newline
+    935  PushI          Int16     Double    126
+    936  Push           Variable  Double    VAR=yy
+    937  Add            Variable  Int32     
+    938  PushI          Int16     Double    192
+    939  Push           Variable  Double    VAR=xx
+    940  Add            Variable  Int32     
+    941  Call           Int32     Double    FN=draw_text
+    942  Popz           Variable  Double    
+    943  PushGlb        Variable  Double    VAR=menuno
+    944  PushI          Int16     Double    444
+    945  Cmp            Int32     Variable  
+    946  Bf             Double    Double    
+    947  PushGlb        Variable  Double    VAR=menuno
+    948  PushI          Int16     Double    0
+    949  Cmp            Int32     Variable  
+    950  Bf             Double    Double    
+    951  PushI          Int16     Double    88
+    952  Push           Variable  Double    VAR=yy
+    953  Add            Variable  Int32     
+    954  PushI          Int16     Double    18
+    955  PushI          Int16     Double    -5
+    956  PushI          Int16     Double    0
+    957  Push           Variable  Double    VAR=menucoord
+    958  Mul            Variable  Int32     
+    959  Add            Variable  Variable  
+    960  PushI          Int16     Double    28
+    961  Push           Variable  Double    VAR=xx
+    962  Add            Variable  Int32     
+    963  PushI          Int16     Double    0
+    964  Conv           Int32     Variable  
+    965  PushI          Int16     Double    924
+    966  Conv           Int32     Variable  
+    967  Call           Int32     Double    FN=draw_sprite
+    968  Popz           Variable  Double    
+    969  PushGlb        Variable  Double    VAR=menuno
+    970  PushI          Int16     Double    1
+    971  Cmp            Int32     Variable  
+    972  Bf             Double    Double    
+    973  PushI          Int16     Double    34
+    974  Push           Variable  Double    VAR=yy
+    975  Add            Variable  Int32     
+    976  PushI          Int16     Double    16
+    977  PushI          Int16     Double    -5
+    978  PushI          Int16     Double    1
+    979  Push           Variable  Double    VAR=menucoord
+    980  Mul            Variable  Int32     
+    981  Add            Variable  Variable  
+    982  PushI          Int16     Double    104
+    983  Push           Variable  Double    VAR=xx
+    984  Add            Variable  Int32     
+    985  PushI          Int16     Double    0
+    986  Conv           Int32     Variable  
+    987  PushI          Int16     Double    924
+    988  Conv           Int32     Variable  
+    989  Call           Int32     Double    FN=draw_sprite
+    990  Popz           Variable  Double    
+    991  PushGlb        Variable  Double    VAR=menuno
+    992  PushI          Int16     Double    3
+    993  Cmp            Int32     Variable  
+    994  Bf             Double    Double    
+    995  PushI          Int16     Double    34
+    996  Push           Variable  Double    VAR=yy
+    997  Add            Variable  Int32     
+    998  PushI          Int16     Double    16
+    999  PushI          Int16     Double    -5
+   1000  PushI          Int16     Double    3
+   1001  Push           Variable  Double    VAR=menucoord
+   1002  Mul            Variable  Int32     
+   1003  Add            Variable  Variable  
+   1004  PushI          Int16     Double    104
+   1005  Push           Variable  Double    VAR=xx
+   1006  Add            Variable  Int32     
+   1007  PushI          Int16     Double    0
+   1008  Conv           Int32     Variable  
+   1009  PushI          Int16     Double    924
+   1010  Conv           Int32     Variable  
+   1011  Call           Int32     Double    FN=draw_sprite
+   1012  Popz           Variable  Double    
+   1013  PushGlb        Variable  Double    VAR=menuno
+   1014  PushI          Int16     Double    6
+   1015  Cmp            Int32     Variable  
+   1016  Bf             Double    Double    
+   1017  PushI          Int16     Double    34
+   1018  Push           Variable  Double    VAR=yy
+   1019  Add            Variable  Int32     
+   1020  PushI          Int16     Double    16
+   1021  PushI          Int16     Double    -5
+   1022  PushI          Int16     Double    6
+   1023  Push           Variable  Double    VAR=menucoord
+   1024  Mul            Variable  Int32     
+   1025  Add            Variable  Variable  
+   1026  PushI          Int16     Double    104
+   1027  Push           Variable  Double    VAR=xx
+   1028  Add            Variable  Int32     
+   1029  PushI          Int16     Double    0
+   1030  Conv           Int32     Variable  
+   1031  PushI          Int16     Double    924
+   1032  Conv           Int32     Variable  
+   1033  Call           Int32     Double    FN=draw_sprite
+   1034  Popz           Variable  Double    
+   1035  PushGlb        Variable  Double    VAR=menuno
+   1036  PushI          Int16     Double    7
+   1037  Cmp            Int32     Variable  
+   1038  Bf             Double    Double    
+   1039  PushI          Int16     Double    34
+   1040  Push           Variable  Double    VAR=yy
+   1041  Add            Variable  Int32     
+   1042  PushI          Int16     Double    16
+   1043  PushI          Int16     Double    -5
+   1044  PushI          Int16     Double    7
+   1045  Push           Variable  Double    VAR=menucoord
+   1046  Mul            Variable  Int32     
+   1047  Add            Variable  Variable  
+   1048  PushI          Int16     Double    104
+   1049  Push           Variable  Double    VAR=xx
+   1050  Add            Variable  Int32     
+   1051  PushI          Int16     Double    0
+   1052  Conv           Int32     Variable  
+   1053  PushI          Int16     Double    924
+   1054  Conv           Int32     Variable  
+   1055  Call           Int32     Double    FN=draw_sprite
+   1056  Popz           Variable  Double    
+   1057  PushGlb        Variable  Double    VAR=menuno
+   1058  PushI          Int16     Double    5
+   1059  Cmp            Int32     Variable  
+   1060  Bf             Double    Double    
+   1061  PushI          Int16     Double    -5
+   1062  PushI          Int16     Double    5
+   1063  Push           Variable  Double    VAR=menucoord
+   1064  PushI          Int16     Double    0
+   1065  Cmp            Int32     Variable  
+   1066  Bf             Double    Double    
+   1067  PushI          Int16     Double    174
+   1068  Push           Variable  Double    VAR=yy
+   1069  Add            Variable  Int32     
+   1070  PushI          Int16     Double    104
+   1071  Push           Variable  Double    VAR=xx
+   1072  Add            Variable  Int32     
+   1073  PushI          Int16     Double    45
+   1074  PushI          Int16     Double    -5
+   1075  PushI          Int16     Double    5
+   1076  Push           Variable  Double    VAR=menucoord
+   1077  Mul            Variable  Int32     
+   1078  Add            Variable  Variable  
+   1079  PushI          Int16     Double    0
+   1080  Conv           Int32     Variable  
+   1081  PushI          Int16     Double    924
+   1082  Conv           Int32     Variable  
+   1083  Call           Int32     Double    FN=draw_sprite
+   1084  Popz           Variable  Double    
+   1085  PushI          Int16     Double    -5
+   1086  PushI          Int16     Double    5
+   1087  Push           Variable  Double    VAR=menucoord
+   1088  PushI          Int16     Double    1
+   1089  Cmp            Int32     Variable  
+   1090  Bf             Double    Double    
+   1091  PushI          Int16     Double    174
+   1092  Push           Variable  Double    VAR=yy
+   1093  Add            Variable  Int32     
+   1094  PushI          Int16     Double    104
+   1095  Push           Variable  Double    VAR=xx
+   1096  Add            Variable  Int32     
+   1097  PushI          Int16     Double    45
+   1098  PushI          Int16     Double    -5
+   1099  PushI          Int16     Double    5
+   1100  Push           Variable  Double    VAR=menucoord
+   1101  Mul            Variable  Int32     
+   1102  PushI          Int16     Double    3
+   1103  Add            Int32     Variable  
+   1104  Add            Variable  Variable  
+   1105  PushI          Int16     Double    0
+   1106  Conv           Int32     Variable  
+   1107  PushI          Int16     Double    924
+   1108  Conv           Int32     Variable  
+   1109  Call           Int32     Double    FN=draw_sprite
+   1110  Popz           Variable  Double    
+   1111  PushI          Int16     Double    -5
+   1112  PushI          Int16     Double    5
+   1113  Push           Variable  Double    VAR=menucoord
+   1114  PushI          Int16     Double    2
+   1115  Cmp            Int32     Variable  
+   1116  Bf             Double    Double    
+   1117  PushI          Int16     Double    174
+   1118  Push           Variable  Double    VAR=yy
+   1119  Add            Variable  Int32     
+   1120  PushI          Int16     Double    104
+   1121  Push           Variable  Double    VAR=xx
+   1122  Add            Variable  Int32     
+   1123  PushI          Int16     Double    45
+   1124  PushI          Int16     Double    -5
+   1125  PushI          Int16     Double    5
+   1126  Push           Variable  Double    VAR=menucoord
+   1127  Mul            Variable  Int32     
+   1128  PushI          Int16     Double    15
+   1129  Add            Int32     Variable  
+   1130  Add            Variable  Variable  
+   1131  PushI          Int16     Double    0
+   1132  Conv           Int32     Variable  
+   1133  PushI          Int16     Double    924
+   1134  Conv           Int32     Variable  
+   1135  Call           Int32     Double    FN=draw_sprite
+   1136  Popz           Variable  Double    
+

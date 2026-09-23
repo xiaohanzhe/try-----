@@ -1,0 +1,7554 @@
+{
+ "ch1": {
+  "folder": "chapter1_windows",
+  "n_rooms": 147,
+  "room_names": [
+   "ROOM_INITIALIZE",
+   "PLACE_CONTACT",
+   "room_krisroom",
+   "room_krishallway",
+   "room_torroom",
+   "room_torhouse",
+   "room_torbathroom",
+   "room_town_krisyard",
+   "room_town_northwest",
+   "room_town_north",
+   "room_beach",
+   "room_town_mid",
+   "room_town_apartments",
+   "room_town_south",
+   "room_town_school",
+   "room_town_church",
+   "room_graveyard",
+   "room_town_shelter",
+   "room_hospital_lobby",
+   "room_hospital_hallway",
+   "room_hospital_rudy",
+   "room_hospital_room2",
+   "room_diner",
+   "room_townhall",
+   "room_flowershop_1f",
+   "room_flowershop_2f",
+   "room_library",
+   "room_alphysalley",
+   "room_torielclass",
+   "room_schoollobby",
+   "room_alphysclass",
+   "room_schooldoor",
+   "room_insidecloset",
+   "room_school_unusedroom",
+   "room_dark1",
+   "room_dark1a",
+   "room_dark2",
+   "room_dark3",
+   "room_dark3a",
+   "room_dark_wobbles",
+   "room_dark_eyepuzzle",
+   "room_dark7",
+   "room_dark_chase1",
+   "room_dark_chase2",
+   "room_castle_outskirts",
+   "room_castle_town",
+   "room_castle_front",
+   "room_castle_tutorial",
+   "room_castle_darkdoor",
+   "room_field_start",
+   "room_field_forest",
+   "room_field1",
+   "room_field2",
+   "room_field2A",
+   "room_field_topchef",
+   "room_field_puzzle1",
+   "room_field_maze",
+   "room_field_puzzle2",
+   "room_field_getsusie",
+   "room_field_shop1",
+   "room_field_puzzletutorial",
+   "room_field3",
+   "room_field_boxpuzzle",
+   "room_field4",
+   "room_field_secret1",
+   "room_field_checkers4",
+   "room_field_checkers2",
+   "room_field_checkers6",
+   "room_field_checkers3",
+   "room_field_checkers1",
+   "room_field_checkers5",
+   "room_field_checkers7",
+   "room_field_checkersboss",
+   "room_forest_savepoint1",
+   "room_forest_area0",
+   "room_forest_area1",
+   "room_forest_area2",
+   "room_forest_area2A",
+   "room_forest_puzzle1",
+   "room_forest_beforeclover",
+   "room_forest_area3A",
+   "room_forest_area3",
+   "room_forest_savepoint2",
+   "room_forest_smith",
+   "room_forest_area4",
+   "room_forest_dancers1",
+   "room_forest_secret1",
+   "room_forest_thrashmaker",
+   "room_forest_starwalker",
+   "room_forest_area5",
+   "room_forest_savepoint_relax",
+   "room_forest_maze1",
+   "room_forest_maze_deadend",
+   "room_forest_maze_susie",
+   "room_forest_maze2",
+   "room_forest_maze_deadend2",
+   "room_forest_savepoint3",
+   "room_forest_fightsusie",
+   "room_forest_afterthrash2",
+   "room_forest_afterthrash3",
+   "room_forest_afterthrash4",
+   "room_forest_castleview",
+   "room_forest_chase1",
+   "room_forest_chase2",
+   "room_forest_castlefront",
+   "room_cc_prison_cells",
+   "room_cc_prisonlancer",
+   "room_cc_prison_to_elevator",
+   "room_cc_prison2",
+   "room_cc_prisonelevator",
+   "room_cc_elevator",
+   "room_cc_prison_prejoker",
+   "room_cc_joker",
+   "room_cc_entrance",
+   "room_cc_1f",
+   "room_cc_rudinn",
+   "room_cc_2f",
+   "room_cc_rurus1",
+   "room_cc_3f",
+   "room_cc_hathy",
+   "room_cc_4f",
+   "room_cc_rurus2",
+   "room_cc_clover",
+   "room_cc_5f",
+   "room_cc_lancer",
+   "room_cc_6f",
+   "room_cc_throneroom",
+   "room_cc_preroof",
+   "room_cc_kingbattle",
+   "room_cc_prefountain",
+   "room_cc_fountain",
+   "PLACE_DOG",
+   "room_legend",
+   "room_shop1",
+   "room_shop2",
+   "room_gameover",
+   "room_myroom_dark",
+   "PLACE_LOGO",
+   "PLACE_FAILURE",
+   "PLACE_MENU",
+   "room_ed",
+   "room_empty",
+   "room_man",
+   "room_DARKempty",
+   "room_battletest",
+   "room_splashscreen",
+   "room_chapter_continue"
+  ],
+  "n_edges": 238,
+  "edges": [
+   {
+    "src": 2,
+    "dst": 3,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 155,
+    "y": 230
+   },
+   {
+    "src": 3,
+    "dst": 2,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 289,
+    "y": 104
+   },
+   {
+    "src": 3,
+    "dst": 5,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 425,
+    "y": 100
+   },
+   {
+    "src": 5,
+    "dst": 3,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 144,
+    "y": 68
+   },
+   {
+    "src": 5,
+    "dst": 6,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 84,
+    "y": 168
+   },
+   {
+    "src": 5,
+    "dst": 7,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 594,
+    "y": 149
+   },
+   {
+    "src": 6,
+    "dst": 5,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 236,
+    "y": 134
+   },
+   {
+    "src": 7,
+    "dst": 9,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 120,
+    "y": 410
+   },
+   {
+    "src": 7,
+    "dst": 5,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 158,
+    "y": 168
+   },
+   {
+    "src": 9,
+    "dst": 11,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 625,
+    "y": 230
+   },
+   {
+    "src": 9,
+    "dst": 24,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1258,
+    "y": 98
+   },
+   {
+    "src": 9,
+    "dst": 10,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1790,
+    "y": 100
+   },
+   {
+    "src": 9,
+    "dst": 7,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 378,
+    "y": -12
+   },
+   {
+    "src": 10,
+    "dst": 9,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 60
+   },
+   {
+    "src": 11,
+    "dst": 13,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 772,
+    "y": 232
+   },
+   {
+    "src": 11,
+    "dst": 9,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 780,
+    "y": 0
+   },
+   {
+    "src": 11,
+    "dst": 22,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 600,
+    "y": 90
+   },
+   {
+    "src": 11,
+    "dst": 27,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1740,
+    "y": -10
+   },
+   {
+    "src": 13,
+    "dst": 26,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1000,
+    "y": 80
+   },
+   {
+    "src": 13,
+    "dst": 18,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 600,
+    "y": 80
+   },
+   {
+    "src": 13,
+    "dst": 14,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1314,
+    "y": 106
+   },
+   {
+    "src": 13,
+    "dst": 15,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 798,
+    "y": 235
+   },
+   {
+    "src": 13,
+    "dst": 11,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 798,
+    "y": 1
+   },
+   {
+    "src": 14,
+    "dst": 13,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 2,
+    "y": 182
+   },
+   {
+    "src": 14,
+    "dst": 29,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 360,
+    "y": 120
+   },
+   {
+    "src": 15,
+    "dst": 23,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 565,
+    "y": 85
+   },
+   {
+    "src": 15,
+    "dst": 17,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 380,
+    "y": 630
+   },
+   {
+    "src": 15,
+    "dst": 16,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 340
+   },
+   {
+    "src": 15,
+    "dst": 13,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 360,
+    "y": 0
+   },
+   {
+    "src": 16,
+    "dst": 15,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 595,
+    "y": 115
+   },
+   {
+    "src": 17,
+    "dst": 15,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 18,
+    "dst": 13,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 18,
+    "dst": 19,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 70,
+    "y": 76
+   },
+   {
+    "src": 19,
+    "dst": 18,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 186
+   },
+   {
+    "src": 19,
+    "dst": 20,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 79,
+    "y": 75
+   },
+   {
+    "src": 19,
+    "dst": 21,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 190,
+    "y": 77
+   },
+   {
+    "src": 20,
+    "dst": 19,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 20,
+    "dst": 19,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 21,
+    "dst": 19,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 236
+   },
+   {
+    "src": 22,
+    "dst": 11,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 23,
+    "dst": 15,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 24,
+    "dst": 9,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 24,
+    "dst": 25,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 20,
+    "y": 44
+   },
+   {
+    "src": 24,
+    "dst": 25,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 46
+   },
+   {
+    "src": 25,
+    "dst": 24,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 20,
+    "y": 235
+   },
+   {
+    "src": 25,
+    "dst": 24,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 260,
+    "y": 235
+   },
+   {
+    "src": 26,
+    "dst": 13,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 26,
+    "dst": 13,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 27,
+    "dst": 11,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 120,
+    "y": 235
+   },
+   {
+    "src": 28,
+    "dst": 29,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 57,
+    "y": 46
+   },
+   {
+    "src": 29,
+    "dst": 30,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 110,
+    "y": 194
+   },
+   {
+    "src": 29,
+    "dst": 31,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 440,
+    "y": -10
+   },
+   {
+    "src": 29,
+    "dst": 28,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 830,
+    "y": 194
+   },
+   {
+    "src": 29,
+    "dst": 14,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 440,
+    "y": 415
+   },
+   {
+    "src": 31,
+    "dst": 29,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 300,
+    "y": 230
+   },
+   {
+    "src": 31,
+    "dst": 29,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 230
+   },
+   {
+    "src": 31,
+    "dst": 29,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 320,
+    "y": 230
+   },
+   {
+    "src": 31,
+    "dst": 33,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 500,
+    "y": 95
+   },
+   {
+    "src": 33,
+    "dst": 31,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 180
+   },
+   {
+    "src": 34,
+    "dst": 35,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 200
+   },
+   {
+    "src": 35,
+    "dst": 34,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 200
+   },
+   {
+    "src": 35,
+    "dst": 36,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 200
+   },
+   {
+    "src": 36,
+    "dst": 35,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 200
+   },
+   {
+    "src": 36,
+    "dst": 37,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 3630,
+    "y": 320
+   },
+   {
+    "src": 37,
+    "dst": 36,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 360
+   },
+   {
+    "src": 37,
+    "dst": 38,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1000,
+    "y": 1270
+   },
+   {
+    "src": 37,
+    "dst": 39,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1510,
+    "y": 920
+   },
+   {
+    "src": 38,
+    "dst": 37,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 400,
+    "y": -20
+   },
+   {
+    "src": 39,
+    "dst": 37,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 39,
+    "dst": 40,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1310,
+    "y": 320
+   },
+   {
+    "src": 40,
+    "dst": 39,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 40,
+    "dst": 41,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1340,
+    "y": 320
+   },
+   {
+    "src": 41,
+    "dst": 42,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2030,
+    "y": 680
+   },
+   {
+    "src": 41,
+    "dst": 40,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 240
+   },
+   {
+    "src": 42,
+    "dst": 43,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 5390,
+    "y": 800
+   },
+   {
+    "src": 42,
+    "dst": 41,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 520
+   },
+   {
+    "src": 44,
+    "dst": 45,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 280
+   },
+   {
+    "src": 45,
+    "dst": 44,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 958
+   },
+   {
+    "src": 45,
+    "dst": 46,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 246,
+    "y": 192
+   },
+   {
+    "src": 45,
+    "dst": 47,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 630,
+    "y": 954
+   },
+   {
+    "src": 46,
+    "dst": 45,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 440,
+    "y": 990
+   },
+   {
+    "src": 47,
+    "dst": 45,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 47,
+    "dst": 48,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1390,
+    "y": 320
+   },
+   {
+    "src": 48,
+    "dst": 47,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 49,
+    "dst": 50,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 200,
+    "y": 980
+   },
+   {
+    "src": 50,
+    "dst": 51,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 1030,
+    "y": 280
+   },
+   {
+    "src": 50,
+    "dst": 49,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 240,
+    "y": 160
+   },
+   {
+    "src": 51,
+    "dst": 50,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": -10,
+    "y": 310
+   },
+   {
+    "src": 51,
+    "dst": 52,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1680,
+    "y": 670
+   },
+   {
+    "src": 52,
+    "dst": 51,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 240,
+    "y": -10
+   },
+   {
+    "src": 52,
+    "dst": 53,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 640,
+    "y": 670
+   },
+   {
+    "src": 52,
+    "dst": 54,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1990,
+    "y": 320
+   },
+   {
+    "src": 53,
+    "dst": 52,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 400,
+    "y": -10
+   },
+   {
+    "src": 54,
+    "dst": 52,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": -10,
+    "y": 240
+   },
+   {
+    "src": 54,
+    "dst": 55,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 240
+   },
+   {
+    "src": 55,
+    "dst": 54,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 280
+   },
+   {
+    "src": 55,
+    "dst": 56,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1590,
+    "y": 280
+   },
+   {
+    "src": 56,
+    "dst": 55,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 280
+   },
+   {
+    "src": 56,
+    "dst": 57,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1940,
+    "y": 1160
+   },
+   {
+    "src": 57,
+    "dst": 56,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 280
+   },
+   {
+    "src": 57,
+    "dst": 58,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 280
+   },
+   {
+    "src": 58,
+    "dst": 57,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 240
+   },
+   {
+    "src": 59,
+    "dst": 58,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 240,
+    "y": 470
+   },
+   {
+    "src": 59,
+    "dst": 133,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 260,
+    "y": 160
+   },
+   {
+    "src": 59,
+    "dst": 61,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 620,
+    "y": 200
+   },
+   {
+    "src": 59,
+    "dst": 60,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 60,
+    "dst": 59,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 620,
+    "y": 200
+   },
+   {
+    "src": 61,
+    "dst": 62,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1190,
+    "y": 240
+   },
+   {
+    "src": 61,
+    "dst": 59,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": -10,
+    "y": 240
+   },
+   {
+    "src": 62,
+    "dst": 63,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 100
+   },
+   {
+    "src": 62,
+    "dst": 61,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -20,
+    "y": 240
+   },
+   {
+    "src": 63,
+    "dst": 62,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 460
+   },
+   {
+    "src": 63,
+    "dst": 64,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 160,
+    "y": 0
+   },
+   {
+    "src": 63,
+    "dst": 65,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 1030,
+    "y": 240
+   },
+   {
+    "src": 64,
+    "dst": 63,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 120,
+    "y": 470
+   },
+   {
+    "src": 65,
+    "dst": 66,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 240
+   },
+   {
+    "src": 65,
+    "dst": 63,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 66,
+    "dst": 65,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 66,
+    "dst": 67,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1700,
+    "y": 240
+   },
+   {
+    "src": 67,
+    "dst": 68,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 240
+   },
+   {
+    "src": 67,
+    "dst": 66,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 68,
+    "dst": 67,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 68,
+    "dst": 69,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 240
+   },
+   {
+    "src": 69,
+    "dst": 70,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 240
+   },
+   {
+    "src": 69,
+    "dst": 68,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 70,
+    "dst": 71,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 240
+   },
+   {
+    "src": 70,
+    "dst": 69,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 71,
+    "dst": 70,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 71,
+    "dst": 72,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 240
+   },
+   {
+    "src": 72,
+    "dst": 73,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 1020,
+    "y": 240
+   },
+   {
+    "src": 72,
+    "dst": 71,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 73,
+    "dst": 72,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 230
+   },
+   {
+    "src": 73,
+    "dst": 74,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 620,
+    "y": 230
+   },
+   {
+    "src": 74,
+    "dst": 73,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 74,
+    "dst": 75,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 830,
+    "y": 200
+   },
+   {
+    "src": 75,
+    "dst": 76,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1390,
+    "y": 760
+   },
+   {
+    "src": 75,
+    "dst": 74,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 160
+   },
+   {
+    "src": 76,
+    "dst": 75,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 640
+   },
+   {
+    "src": 76,
+    "dst": 77,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 80,
+    "y": 0
+   },
+   {
+    "src": 76,
+    "dst": 78,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1360,
+    "y": 200
+   },
+   {
+    "src": 77,
+    "dst": 76,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 78,
+    "dst": 76,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 78,
+    "dst": 79,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 240
+   },
+   {
+    "src": 79,
+    "dst": 78,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 79,
+    "dst": 81,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1500,
+    "y": 280
+   },
+   {
+    "src": 79,
+    "dst": 80,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 400,
+    "y": 0
+   },
+   {
+    "src": 80,
+    "dst": 79,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 320,
+    "y": 460
+   },
+   {
+    "src": 81,
+    "dst": 82,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 520,
+    "y": 0
+   },
+   {
+    "src": 81,
+    "dst": 79,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 0,
+    "y": 400
+   },
+   {
+    "src": 82,
+    "dst": 83,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 360,
+    "y": 0
+   },
+   {
+    "src": 82,
+    "dst": 84,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 1260,
+    "y": 240
+   },
+   {
+    "src": 82,
+    "dst": 81,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 520,
+    "y": 460
+   },
+   {
+    "src": 83,
+    "dst": 82,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 84,
+    "dst": 85,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1390,
+    "y": 720
+   },
+   {
+    "src": 84,
+    "dst": 82,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 720
+   },
+   {
+    "src": 85,
+    "dst": 84,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 85,
+    "dst": 87,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1620,
+    "y": 640
+   },
+   {
+    "src": 85,
+    "dst": 86,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 440,
+    "y": 1470
+   },
+   {
+    "src": 85,
+    "dst": 86,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1400,
+    "y": 1470
+   },
+   {
+    "src": 86,
+    "dst": 85,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 200,
+    "y": 0
+   },
+   {
+    "src": 86,
+    "dst": 85,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 800,
+    "y": 0
+   },
+   {
+    "src": 87,
+    "dst": 88,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 600,
+    "y": 200
+   },
+   {
+    "src": 87,
+    "dst": 85,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 88,
+    "dst": 87,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 88,
+    "dst": 89,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2620,
+    "y": 280
+   },
+   {
+    "src": 89,
+    "dst": 90,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1660,
+    "y": 520
+   },
+   {
+    "src": 90,
+    "dst": 89,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 91,
+    "dst": 90,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 665
+   },
+   {
+    "src": 91,
+    "dst": 90,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 160,
+    "y": 0
+   },
+   {
+    "src": 91,
+    "dst": 90,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 400,
+    "y": 0
+   },
+   {
+    "src": 92,
+    "dst": 91,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 464
+   },
+   {
+    "src": 94,
+    "dst": 93,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 860
+   },
+   {
+    "src": 94,
+    "dst": 93,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 94,
+    "dst": 93,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 440,
+    "y": 0
+   },
+   {
+    "src": 94,
+    "dst": 93,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 0
+   },
+   {
+    "src": 95,
+    "dst": 93,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 96,
+    "dst": 97,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 630,
+    "y": 200
+   },
+   {
+    "src": 96,
+    "dst": 90,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 97,
+    "dst": 96,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 98,
+    "dst": 97,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 98,
+    "dst": 99,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1480,
+    "y": 200
+   },
+   {
+    "src": 99,
+    "dst": 98,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 99,
+    "dst": 100,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1480,
+    "y": 200
+   },
+   {
+    "src": 100,
+    "dst": 99,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 100,
+    "dst": 101,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1480,
+    "y": 200
+   },
+   {
+    "src": 101,
+    "dst": 100,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 101,
+    "dst": 102,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1960,
+    "y": 240
+   },
+   {
+    "src": 102,
+    "dst": 103,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2960,
+    "y": 200
+   },
+   {
+    "src": 103,
+    "dst": 104,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 0
+   },
+   {
+    "src": 104,
+    "dst": 113,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 240,
+    "y": 630
+   },
+   {
+    "src": 105,
+    "dst": 106,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 640,
+    "y": 660
+   },
+   {
+    "src": 105,
+    "dst": 106,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 200,
+    "y": 660
+   },
+   {
+    "src": 106,
+    "dst": 105,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 1680,
+    "y": 0
+   },
+   {
+    "src": 106,
+    "dst": 107,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 200
+   },
+   {
+    "src": 106,
+    "dst": 105,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 480,
+    "y": 0
+   },
+   {
+    "src": 107,
+    "dst": 108,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 630,
+    "y": 230
+   },
+   {
+    "src": 107,
+    "dst": 106,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 210
+   },
+   {
+    "src": 107,
+    "dst": 109,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 280,
+    "y": 120
+   },
+   {
+    "src": 108,
+    "dst": 107,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 111,
+    "dst": 109,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 160,
+    "y": 160
+   },
+   {
+    "src": 112,
+    "dst": 111,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 113,
+    "dst": 114,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 240,
+    "y": 0
+   },
+   {
+    "src": 113,
+    "dst": 104,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 240,
+    "y": 460
+   },
+   {
+    "src": 114,
+    "dst": 109,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 1494,
+    "y": 596
+   },
+   {
+    "src": 114,
+    "dst": 115,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 288,
+    "y": 432
+   },
+   {
+    "src": 114,
+    "dst": 116,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 736,
+    "y": 168
+   },
+   {
+    "src": 114,
+    "dst": 110,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 1058,
+    "y": 158
+   },
+   {
+    "src": 114,
+    "dst": 113,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 846,
+    "y": 1070
+   },
+   {
+    "src": 115,
+    "dst": 114,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 116,
+    "dst": 117,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1580,
+    "y": 760
+   },
+   {
+    "src": 116,
+    "dst": 114,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 115,
+    "y": 720
+   },
+   {
+    "src": 116,
+    "dst": 118,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 800,
+    "y": 170
+   },
+   {
+    "src": 117,
+    "dst": 116,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 118,
+    "dst": 119,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 974,
+    "y": 120
+   },
+   {
+    "src": 118,
+    "dst": 120,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 180,
+    "y": 120
+   },
+   {
+    "src": 118,
+    "dst": 116,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 580,
+    "y": 280
+   },
+   {
+    "src": 119,
+    "dst": 118,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 120,
+    "dst": 121,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1340,
+    "y": 440
+   },
+   {
+    "src": 120,
+    "dst": 118,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 130,
+    "y": 410
+   },
+   {
+    "src": 120,
+    "dst": 122,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 550,
+    "y": 910
+   },
+   {
+    "src": 121,
+    "dst": 120,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 236
+   },
+   {
+    "src": 122,
+    "dst": 120,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 123,
+    "dst": 134,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 400,
+    "y": 685
+   },
+   {
+    "src": 123,
+    "dst": 125,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 275,
+    "y": 205
+   },
+   {
+    "src": 123,
+    "dst": 110,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 280,
+    "y": 445
+   },
+   {
+    "src": 123,
+    "dst": 124,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 155,
+    "y": 685
+   },
+   {
+    "src": 124,
+    "dst": 123,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 125,
+    "dst": 123,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 180,
+    "y": 160
+   },
+   {
+    "src": 125,
+    "dst": 126,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 1130,
+    "y": 170
+   },
+   {
+    "src": 126,
+    "dst": 125,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 282,
+    "y": 782
+   },
+   {
+    "src": 126,
+    "dst": 127,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 0
+   },
+   {
+    "src": 127,
+    "dst": 128,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1020,
+    "y": 200
+   },
+   {
+    "src": 127,
+    "dst": 126,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 460
+   },
+   {
+    "src": 128,
+    "dst": 127,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 160
+   },
+   {
+    "src": 128,
+    "dst": 129,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 160
+   },
+   {
+    "src": 129,
+    "dst": 128,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 760
+   },
+   {
+    "src": 129,
+    "dst": 130,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 240,
+    "y": 150
+   },
+   {
+    "src": 142,
+    "dst": 82,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   }
+  ]
+ },
+ "ch2": {
+  "folder": "chapter2_windows",
+  "n_rooms": 278,
+  "room_names": [
+   "room_gms_debug_failsafe",
+   "ROOM_INITIALIZE",
+   "room_title_placeholder",
+   "room_battletest",
+   "room_cutscene_tester",
+   "room_sound_tester",
+   "room_sprite_tester",
+   "room_gif_tester",
+   "room_bullettest",
+   "room_teacup_demoauto",
+   "room_teacup_demobullets",
+   "room_shaun_puzzle",
+   "room_GMS2_test",
+   "room_cutscene_tester_b",
+   "room_debug_color",
+   "room_debug_battle",
+   "room_debug_loc",
+   "PLACE_CONTACT",
+   "room_krisroom",
+   "room_krishallway",
+   "room_torroom",
+   "room_torhouse",
+   "room_torbathroom",
+   "room_town_krisyard",
+   "room_town_northwest",
+   "room_town_north",
+   "room_beach",
+   "room_town_mid",
+   "room_town_apartments",
+   "room_town_south",
+   "room_town_school",
+   "room_town_church",
+   "room_graveyard",
+   "room_town_shelter",
+   "room_hospital_lobby",
+   "room_hospital_hallway",
+   "room_hospital_rudy",
+   "room_hospital_room2",
+   "room_diner",
+   "room_townhall",
+   "room_flowershop_1f",
+   "room_flowershop_2f",
+   "room_library",
+   "room_alphysalley",
+   "room_lw_computer_lab",
+   "room_lw_library_upstairs",
+   "room_lw_police",
+   "room_lw_conbini",
+   "room_lw_icee_pizza",
+   "room_torielclass",
+   "room_schoollobby",
+   "room_alphysclass",
+   "room_schooldoor",
+   "room_insidecloset",
+   "room_school_unusedroom",
+   "room_castle_town",
+   "room_castle_tutorial",
+   "room_dw_castle_west_cliff_old",
+   "room_dw_castle_east_door",
+   "room_dw_castle_west_cliff",
+   "room_dw_castle_area_1",
+   "room_dw_castle_area_2",
+   "room_dw_castle_area_2_transformed",
+   "room_dw_ralsei_castle_front",
+   "room_dw_castle_restaurant",
+   "room_dw_castle_cafe",
+   "room_dw_castle_dojo",
+   "room_dw_ralsei_castle_1f",
+   "room_dw_ralsei_castle_2f",
+   "room_dw_castle_dungeon",
+   "room_dw_castle_rooms_hallway",
+   "room_dw_castle_rooms_kris",
+   "room_dw_castle_rooms_susie",
+   "room_dw_castle_rooms_lancer",
+   "room_dw_cyber_intro_1",
+   "room_dw_cyber_intro_connector",
+   "room_dw_cyber_intro_2",
+   "room_dw_cyber_rhythm_slide",
+   "room_dw_cyber_savepoint",
+   "room_dw_cyber_battle_maze_1",
+   "room_dw_cyber_music_bullet",
+   "room_dw_cyber_tasque_battle",
+   "room_dw_cyber_keyboard_puzzle_1",
+   "room_dw_cyber_queen_boxing",
+   "room_dw_cyber_musical_door",
+   "room_dw_cyber_maze_virokun",
+   "room_dw_cyber_keyboard_puzzle_2",
+   "room_dw_cyber_battle_maze_2",
+   "room_dw_cyber_music_final",
+   "room_dw_cyber_musical_shop",
+   "room_dw_cyber_teacup_final",
+   "room_dw_cyber_rollercoaster",
+   "room_dw_cyber_maze_fireworks",
+   "room_dw_cyber_maze_tasque",
+   "room_dw_cyber_maze_queenscreen",
+   "room_dw_cyber_viro_ring",
+   "room_dw_cyber_post_music_boss_slide",
+   "room_dw_cyber_keyboard_puzzle_3",
+   "room_dw_cyber_battle_maze_3",
+   "room_dw_cyber_teacup_2",
+   "room_dw_cyber_shaunsmusicalbullettunnel",
+   "room_dw_cyber_maze_rhythm",
+   "room_dw_cyber_escalator_slide",
+   "room_dw_cyber_nuberts_treasure",
+   "room_dw_cyber_music_fight",
+   "room_dw_cyber_keyboardexample",
+   "room_dw_city_prototype_01",
+   "room_dw_city_prototype_02",
+   "room_dw_city_spamton_shop_exterior",
+   "room_dw_city_spamton_house",
+   "room_dw_city_intro",
+   "room_dw_city_split",
+   "room_dw_city_entrance",
+   "room_dw_city_traffic_1",
+   "room_dw_city_roadblock",
+   "room_dw_city_hacker",
+   "room_dw_city_mice",
+   "room_dw_city_big_1",
+   "room_dw_city_traffic_2",
+   "room_dw_city_big_2",
+   "room_dw_city_queen_drunk",
+   "room_dw_city_savepoint",
+   "room_dw_city_big_3",
+   "room_dw_city_traffic_3",
+   "room_dw_city_mice2",
+   "room_dw_city_cheesemaze",
+   "room_dw_city_mice3",
+   "room_dw_city_poppup",
+   "room_dw_city_berdly",
+   "room_dw_city_traffic_4",
+   "room_dw_city_spamton_alley",
+   "room_dw_city_monologue",
+   "room_dw_city_baseball",
+   "room_dw_city_postbaseball_1",
+   "room_dw_city_postbaseball_2",
+   "room_dw_city_postbaseball_3",
+   "room_dw_city_mansion_front",
+   "room_dw_city_susie_ralsei_fun_1",
+   "room_dw_city_mirrorfriend",
+   "room_dw_city_treasure",
+   "room_dw_city_dog_traffic",
+   "room_dw_city_man",
+   "room_dw_city_moss",
+   "room_dw_city_big_3_backup_2exits",
+   "room_dw_city_traffic_3_2Entrances",
+   "room_dw_city_cheese",
+   "room_dw_city_carnival",
+   "room_dw_city_noelle_fight_intro",
+   "room_dw_city_spamton_shop_interior",
+   "room_dw_city_monologue_old",
+   "room_dw_mansion_krisroom",
+   "room_dw_mansion_susieroom",
+   "room_dw_mansion_lightner_hallway",
+   "room_dw_mansion_darkbulb_1",
+   "room_dw_mansion_darkbulb_2",
+   "room_dw_mansion_darkbulb_3",
+   "room_dw_mansion_dining_a",
+   "room_dw_mansion_entrance",
+   "room_dw_mansion_fire_paintings",
+   "room_dw_mansion_single_pot",
+   "room_dw_mansion_potBalance",
+   "room_dw_mansion_tasquePaintings",
+   "room_dw_mansion_traffic",
+   "room_dw_mansion_east_1f_e",
+   "room_dw_mansion_east_1f_secret",
+   "room_dw_mansion_east_teacup",
+   "room_dw_mansion_east_teacup_4",
+   "room_dw_mansion_east_teacup_3",
+   "room_dw_mansion_east_teacup_2",
+   "room_dw_mansion_b_entrance",
+   "room_dw_mansion_b_stairs",
+   "room_dw_mansion_b_central",
+   "room_dw_mansion_b_west_1f",
+   "room_dw_mansion_b_west_1f_a",
+   "room_dw_mansion_b_west_1f_b",
+   "room_dw_mansion_b_west_2f",
+   "room_dw_mansion_b_east",
+   "room_dw_mansion_b_east_a",
+   "room_dw_mansion_b_east_b",
+   "room_dw_mansion_b_east_transformed",
+   "room_dw_mansion_east_2f_a",
+   "room_dw_mansion_east_2f_transformed_new",
+   "room_dw_mansion_east_2f_shortcut",
+   "room_dw_mansion_kitchen",
+   "room_dw_mansion_east_2f_c",
+   "room_dw_mansion_east_2f_c_a",
+   "room_dw_mansion_east_2f_d",
+   "room_dw_mansion_east_3f",
+   "room_dw_mansion_east_3f_projection",
+   "room_dw_mansion_east_3f_toilet",
+   "room_dw_mansion_acid_tunnel",
+   "room_dw_mansion_acid_tunnel_puzzle_entrance",
+   "room_dw_mansion_acid_tunnel_loop_rouxls",
+   "room_dw_mansion_acid_tunnel_exit",
+   "room_dw_mansion_east_4f_b",
+   "room_dw_mansion_east_4f_c",
+   "room_dw_mansion_east_4f_d",
+   "room_dw_mansion_top",
+   "room_dw_mansion_top_post",
+   "room_dw_mansion_prefountain",
+   "room_dw_mansion_fountain",
+   "room_dw_mansion_ferris_wheel",
+   "room_dw_mansion_ferris_wheel_post",
+   "room_dw_mansion_noelle_room",
+   "room_dw_mansion_bridges",
+   "room_dw_mansion_bridges_funny",
+   "room_dw_mansion_mouseLottery",
+   "room_dw_mansion_hands",
+   "room_dw_mansion_dining3",
+   "room_dw_mansion_dininghall",
+   "room_dw_mansion_dining_storage",
+   "room_dw_mansion_east_1f_b",
+   "room_dw_mansion_east_2f_c_b",
+   "room_dw_mansion_traffic_original",
+   "room_dw_mansion_east_1f_a",
+   "room_dw_mansion_east_2f_teacup",
+   "room_dw_mansion_east_4f_e",
+   "room_dw_mansion_east_4f_a",
+   "room_dw_mansion_east_2f_ufo_old",
+   "room_dw_mansion_east_1f_d",
+   "room_dw_mansion_east_1f_c",
+   "room_dw_mansion_sparks",
+   "room_dw_mansion_acid_tunnel_old",
+   "room_dw_mansion_top_post_old",
+   "room_dw_mansion_elevator",
+   "room_intro_ch2",
+   "PLACE_DOG",
+   "room_legend",
+   "room_legend_neo",
+   "room_shop1",
+   "room_shop_ch2_music",
+   "room_shop_ch2_swatch",
+   "room_shop_ch2_spamton",
+   "room_gameover",
+   "PLACE_LOGO",
+   "PLACE_FAILURE",
+   "PLACE_NAMING_JIKKEN",
+   "PLACE_MENU",
+   "room_ed",
+   "room_empty",
+   "room_DARKempty",
+   "room_DARKbase_GMS2",
+   "room_dw_cyber_battle_maze_2_old",
+   "room_dw_cyber_keyboard_puzzle_1_old",
+   "room_dw_cyber_tasque_battle_og",
+   "room_dw_cyber_savepoint_original",
+   "room_dw_cyber_battle_maze_1_Original",
+   "room_dw_cyber_music_bullet_original",
+   "room_dw_cyber_maze_virokun_backuo",
+   "room_dw_cyber_battle_maze_2_toby",
+   "room_dw_city_big_1_original",
+   "room_dw_city_traffic_2_old",
+   "room_dw_city_big_2_OG",
+   "room_dw_city_mice2_og",
+   "room_dw_mansion_east_teacup_4_old",
+   "room_dw_cyber_teacup_1",
+   "room_dw_cyber_viromaze2",
+   "room_dw_city_traffic_5_old",
+   "room_dw_mansion_dining_storage_old",
+   "room_dw_cyber_virovirokun_fight",
+   "room_dw_mansion_east_2f_d_backup",
+   "room_dw_city_traffic_3_backup",
+   "room_cc_lancer",
+   "room_cc_clover",
+   "room_cc_fountain",
+   "room_dw_city_big_3_og",
+   "room_dw_mansion_bridgesold",
+   "room_dw_city_sidewayscars",
+   "room_transformation_sequence",
+   "room_dw_mansion_gigaqueen",
+   "room_musical_sync_test",
+   "PLACE_DOGCHECK2",
+   "room_debug_smallface_dark",
+   "room_debug_smallface",
+   "room_debug_choicer_dark",
+   "room_debug_choicer_light",
+   "room_debug_battleBalloon",
+   "room_chapter_continue"
+  ],
+  "n_edges": 323,
+  "edges": [
+   {
+    "src": 2,
+    "dst": 1,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 11,
+    "dst": 10,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 80,
+    "y": 200
+   },
+   {
+    "src": 11,
+    "dst": 12,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 580,
+    "y": 200
+   },
+   {
+    "src": 18,
+    "dst": 19,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 155,
+    "y": 230
+   },
+   {
+    "src": 19,
+    "dst": 18,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 289,
+    "y": 104
+   },
+   {
+    "src": 19,
+    "dst": 21,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 425,
+    "y": 100
+   },
+   {
+    "src": 21,
+    "dst": 19,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 144,
+    "y": 68
+   },
+   {
+    "src": 21,
+    "dst": 22,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 84,
+    "y": 168
+   },
+   {
+    "src": 21,
+    "dst": 23,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 594,
+    "y": 149
+   },
+   {
+    "src": 22,
+    "dst": 21,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 236,
+    "y": 134
+   },
+   {
+    "src": 23,
+    "dst": 25,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 120,
+    "y": 410
+   },
+   {
+    "src": 23,
+    "dst": 21,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 150,
+    "y": 169
+   },
+   {
+    "src": 25,
+    "dst": 27,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 625,
+    "y": 230
+   },
+   {
+    "src": 25,
+    "dst": 40,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1258,
+    "y": 98
+   },
+   {
+    "src": 25,
+    "dst": 26,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1790,
+    "y": 100
+   },
+   {
+    "src": 25,
+    "dst": 23,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 378,
+    "y": -12
+   },
+   {
+    "src": 26,
+    "dst": 25,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 60
+   },
+   {
+    "src": 27,
+    "dst": 29,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 772,
+    "y": 232
+   },
+   {
+    "src": 27,
+    "dst": 25,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 780,
+    "y": 0
+   },
+   {
+    "src": 27,
+    "dst": 38,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 600,
+    "y": 90
+   },
+   {
+    "src": 29,
+    "dst": 42,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1000,
+    "y": 80
+   },
+   {
+    "src": 29,
+    "dst": 30,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1314,
+    "y": 106
+   },
+   {
+    "src": 29,
+    "dst": 31,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 798,
+    "y": 235
+   },
+   {
+    "src": 29,
+    "dst": 27,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 798,
+    "y": 1
+   },
+   {
+    "src": 30,
+    "dst": 29,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 2,
+    "y": 182
+   },
+   {
+    "src": 31,
+    "dst": 39,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 565,
+    "y": 85
+   },
+   {
+    "src": 31,
+    "dst": 33,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 380,
+    "y": 630
+   },
+   {
+    "src": 31,
+    "dst": 32,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 340
+   },
+   {
+    "src": 31,
+    "dst": 29,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 360,
+    "y": 0
+   },
+   {
+    "src": 32,
+    "dst": 31,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 595,
+    "y": 115
+   },
+   {
+    "src": 33,
+    "dst": 31,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 34,
+    "dst": 29,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 34,
+    "dst": 35,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 70,
+    "y": 76
+   },
+   {
+    "src": 35,
+    "dst": 34,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 186
+   },
+   {
+    "src": 35,
+    "dst": 36,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 79,
+    "y": 75
+   },
+   {
+    "src": 35,
+    "dst": 37,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 190,
+    "y": 77
+   },
+   {
+    "src": 36,
+    "dst": 35,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 36,
+    "dst": 35,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 35,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 236
+   },
+   {
+    "src": 38,
+    "dst": 27,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 39,
+    "dst": 31,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 40,
+    "dst": 25,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 40,
+    "dst": 41,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 20,
+    "y": 44
+   },
+   {
+    "src": 40,
+    "dst": 41,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 46
+   },
+   {
+    "src": 41,
+    "dst": 40,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 20,
+    "y": 235
+   },
+   {
+    "src": 41,
+    "dst": 40,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 260,
+    "y": 235
+   },
+   {
+    "src": 42,
+    "dst": 29,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 42,
+    "dst": 29,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 43,
+    "dst": 27,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 120,
+    "y": 235
+   },
+   {
+    "src": 44,
+    "dst": 42,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 130,
+    "y": 230
+   },
+   {
+    "src": 45,
+    "dst": 42,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 213,
+    "y": 231
+   },
+   {
+    "src": 47,
+    "dst": 27,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 348,
+    "y": 230
+   },
+   {
+    "src": 48,
+    "dst": 27,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 124,
+    "y": 231
+   },
+   {
+    "src": 49,
+    "dst": 50,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 57,
+    "y": 46
+   },
+   {
+    "src": 50,
+    "dst": 51,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 97,
+    "y": 195
+   },
+   {
+    "src": 50,
+    "dst": 52,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 440,
+    "y": -10
+   },
+   {
+    "src": 50,
+    "dst": 49,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 817,
+    "y": 196
+   },
+   {
+    "src": 52,
+    "dst": 50,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 300,
+    "y": 230
+   },
+   {
+    "src": 52,
+    "dst": 50,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 230
+   },
+   {
+    "src": 52,
+    "dst": 50,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 320,
+    "y": 230
+   },
+   {
+    "src": 52,
+    "dst": 54,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 500,
+    "y": 95
+   },
+   {
+    "src": 54,
+    "dst": 52,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 180
+   },
+   {
+    "src": 55,
+    "dst": 53,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": -10,
+    "y": 958
+   },
+   {
+    "src": 55,
+    "dst": 56,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 246,
+    "y": 192
+   },
+   {
+    "src": 55,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 630,
+    "y": 954
+   },
+   {
+    "src": 55,
+    "dst": 54,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 194,
+    "y": 1151
+   },
+   {
+    "src": 56,
+    "dst": 58,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1390,
+    "y": 320
+   },
+   {
+    "src": 58,
+    "dst": 56,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 61,
+    "dst": 62,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 246,
+    "y": 192
+   },
+   {
+    "src": 61,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 630,
+    "y": 954
+   },
+   {
+    "src": 61,
+    "dst": 60,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 194,
+    "y": 1151
+   },
+   {
+    "src": 61,
+    "dst": 59,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": -10,
+    "y": 958
+   },
+   {
+    "src": 62,
+    "dst": 63,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 684,
+    "y": 192
+   },
+   {
+    "src": 62,
+    "dst": 229,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 520,
+    "y": 569
+   },
+   {
+    "src": 63,
+    "dst": 62,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 440,
+    "y": 990
+   },
+   {
+    "src": 63,
+    "dst": 67,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 462,
+    "y": 249
+   },
+   {
+    "src": 64,
+    "dst": 62,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 276,
+    "y": 466
+   },
+   {
+    "src": 65,
+    "dst": 62,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 392,
+    "y": 427
+   },
+   {
+    "src": 66,
+    "dst": 62,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 67,
+    "dst": 68,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 238
+   },
+   {
+    "src": 68,
+    "dst": 67,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 80,
+    "y": 457
+   },
+   {
+    "src": 69,
+    "dst": 67,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 110,
+    "y": 470
+   },
+   {
+    "src": 71,
+    "dst": 68,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 450
+   },
+   {
+    "src": 72,
+    "dst": 68,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 257,
+    "y": 465
+   },
+   {
+    "src": 75,
+    "dst": 76,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2300,
+    "y": 1200
+   },
+   {
+    "src": 76,
+    "dst": 75,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 76,
+    "dst": 77,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1260,
+    "y": 240
+   },
+   {
+    "src": 77,
+    "dst": 76,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 40,
+    "y": 80
+   },
+   {
+    "src": 78,
+    "dst": 79,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1660,
+    "y": 320
+   },
+   {
+    "src": 79,
+    "dst": 78,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 79,
+    "dst": 80,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1660,
+    "y": 160
+   },
+   {
+    "src": 80,
+    "dst": 79,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 2000
+   },
+   {
+    "src": 80,
+    "dst": 81,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1420,
+    "y": 280
+   },
+   {
+    "src": 81,
+    "dst": 80,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 81,
+    "dst": 83,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1300,
+    "y": 1000
+   },
+   {
+    "src": 81,
+    "dst": 82,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1300,
+    "y": 240
+   },
+   {
+    "src": 82,
+    "dst": 81,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 83,
+    "dst": 81,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 0,
+    "y": 160
+   },
+   {
+    "src": 83,
+    "dst": 84,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 620,
+    "y": 160
+   },
+   {
+    "src": 84,
+    "dst": 83,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 84,
+    "dst": 85,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 620,
+    "y": 240
+   },
+   {
+    "src": 85,
+    "dst": 84,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 85,
+    "dst": 86,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1860,
+    "y": 240
+   },
+   {
+    "src": 85,
+    "dst": 87,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1040,
+    "y": 0
+   },
+   {
+    "src": 86,
+    "dst": 85,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 87,
+    "dst": 85,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 2980
+   },
+   {
+    "src": 87,
+    "dst": 97,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 480,
+    "y": 0
+   },
+   {
+    "src": 87,
+    "dst": 88,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 1740,
+    "y": 720
+   },
+   {
+    "src": 88,
+    "dst": 87,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 88,
+    "dst": 96,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 2160,
+    "y": 460
+   },
+   {
+    "src": 89,
+    "dst": 230,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 230,
+    "y": 220
+   },
+   {
+    "src": 90,
+    "dst": 95,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 240,
+    "y": 8980
+   },
+   {
+    "src": 90,
+    "dst": 91,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 3100,
+    "y": 1720
+   },
+   {
+    "src": 91,
+    "dst": 90,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 360
+   },
+   {
+    "src": 92,
+    "dst": 85,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 94,
+    "dst": 95,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2140,
+    "y": 520
+   },
+   {
+    "src": 95,
+    "dst": 90,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 400,
+    "y": 0
+   },
+   {
+    "src": 95,
+    "dst": 94,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 97,
+    "dst": 87,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 98,
+    "dst": 97,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -16,
+    "y": 156
+   },
+   {
+    "src": 98,
+    "dst": 99,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1266,
+    "y": 709
+   },
+   {
+    "src": 99,
+    "dst": 98,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -16,
+    "y": 676
+   },
+   {
+    "src": 99,
+    "dst": 100,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 617,
+    "y": 58
+   },
+   {
+    "src": 100,
+    "dst": 99,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 80,
+    "y": 200
+   },
+   {
+    "src": 100,
+    "dst": 101,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1820,
+    "y": 200
+   },
+   {
+    "src": 102,
+    "dst": 84,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 275,
+    "y": -7
+   },
+   {
+    "src": 102,
+    "dst": 101,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 1513,
+    "y": -7
+   },
+   {
+    "src": 103,
+    "dst": 102,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 459
+   },
+   {
+    "src": 106,
+    "dst": 107,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 619,
+    "y": 183
+   },
+   {
+    "src": 107,
+    "dst": 106,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 184
+   },
+   {
+    "src": 108,
+    "dst": 109,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 109,
+    "dst": 108,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 201,
+    "y": 156
+   },
+   {
+    "src": 109,
+    "dst": 110,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1260,
+    "y": 200
+   },
+   {
+    "src": 110,
+    "dst": 111,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1260,
+    "y": 200
+   },
+   {
+    "src": 110,
+    "dst": 109,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 111,
+    "dst": 110,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 600
+   },
+   {
+    "src": 111,
+    "dst": 112,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 620,
+    "y": 680
+   },
+   {
+    "src": 112,
+    "dst": 113,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1900,
+    "y": 280
+   },
+   {
+    "src": 112,
+    "dst": 111,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 113,
+    "dst": 112,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 113,
+    "dst": 114,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2300,
+    "y": 280
+   },
+   {
+    "src": 114,
+    "dst": 113,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 114,
+    "dst": 115,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1260,
+    "y": 680
+   },
+   {
+    "src": 115,
+    "dst": 116,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 640,
+    "y": 460
+   },
+   {
+    "src": 115,
+    "dst": 114,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 116,
+    "dst": 117,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 120,
+    "y": 500
+   },
+   {
+    "src": 116,
+    "dst": 115,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 480,
+    "y": 0
+   },
+   {
+    "src": 117,
+    "dst": 116,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 117,
+    "dst": 118,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1060,
+    "y": 640
+   },
+   {
+    "src": 118,
+    "dst": 117,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 118,
+    "dst": 119,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2100,
+    "y": 240
+   },
+   {
+    "src": 119,
+    "dst": 138,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 720,
+    "y": 0
+   },
+   {
+    "src": 119,
+    "dst": 118,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 119,
+    "dst": 120,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1040,
+    "y": 1420
+   },
+   {
+    "src": 120,
+    "dst": 119,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 320,
+    "y": 0
+   },
+   {
+    "src": 120,
+    "dst": 121,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 1900,
+    "y": 200
+   },
+   {
+    "src": 121,
+    "dst": 122,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 620,
+    "y": 200
+   },
+   {
+    "src": 121,
+    "dst": 120,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 122,
+    "dst": 123,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2180,
+    "y": 640
+   },
+   {
+    "src": 122,
+    "dst": 121,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 123,
+    "dst": 122,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 480
+   },
+   {
+    "src": 123,
+    "dst": 124,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 320
+   },
+   {
+    "src": 124,
+    "dst": 123,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 320
+   },
+   {
+    "src": 124,
+    "dst": 125,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1140,
+    "y": 280
+   },
+   {
+    "src": 125,
+    "dst": 124,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 125,
+    "dst": 126,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1840,
+    "y": 900
+   },
+   {
+    "src": 126,
+    "dst": 125,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 40,
+    "y": 0
+   },
+   {
+    "src": 126,
+    "dst": 127,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 620,
+    "y": 80
+   },
+   {
+    "src": 127,
+    "dst": 126,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 80
+   },
+   {
+    "src": 127,
+    "dst": 128,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 1040,
+    "y": 620
+   },
+   {
+    "src": 128,
+    "dst": 127,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 80,
+    "y": 0
+   },
+   {
+    "src": 129,
+    "dst": 130,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 2120,
+    "y": 460
+   },
+   {
+    "src": 129,
+    "dst": 130,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 3151,
+    "y": 469
+   },
+   {
+    "src": 130,
+    "dst": 129,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 130,
+    "dst": 129,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1000,
+    "y": 0
+   },
+   {
+    "src": 131,
+    "dst": 129,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 131,
+    "dst": 132,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 7180,
+    "y": 1560
+   },
+   {
+    "src": 132,
+    "dst": 133,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1900,
+    "y": 240
+   },
+   {
+    "src": 132,
+    "dst": 131,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 133,
+    "dst": 134,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2060,
+    "y": 760
+   },
+   {
+    "src": 133,
+    "dst": 132,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 2240
+   },
+   {
+    "src": 134,
+    "dst": 133,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 320
+   },
+   {
+    "src": 134,
+    "dst": 135,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 4380,
+    "y": 320
+   },
+   {
+    "src": 136,
+    "dst": 135,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 137,
+    "dst": 117,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 139,
+    "dst": 117,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 620,
+    "y": 280
+   },
+   {
+    "src": 140,
+    "dst": 123,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 160,
+    "y": 460
+   },
+   {
+    "src": 141,
+    "dst": 123,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 1800,
+    "y": 460
+   },
+   {
+    "src": 142,
+    "dst": 123,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 620,
+    "y": 200
+   },
+   {
+    "src": 143,
+    "dst": 144,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2187,
+    "y": 179
+   },
+   {
+    "src": 143,
+    "dst": 142,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": -1,
+    "y": 177
+   },
+   {
+    "src": 144,
+    "dst": 143,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 144,
+    "dst": 145,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1980,
+    "y": 320
+   },
+   {
+    "src": 145,
+    "dst": 146,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1263,
+    "y": 118
+   },
+   {
+    "src": 145,
+    "dst": 144,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -12,
+    "y": 106
+   },
+   {
+    "src": 146,
+    "dst": 145,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -23,
+    "y": 189
+   },
+   {
+    "src": 146,
+    "dst": 147,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1264,
+    "y": 604
+   },
+   {
+    "src": 148,
+    "dst": 149,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 228,
+    "y": 459
+   },
+   {
+    "src": 149,
+    "dst": 150,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2386,
+    "y": 128
+   },
+   {
+    "src": 150,
+    "dst": 152,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 151,
+    "dst": 152,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 156,
+    "dst": 157,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2180,
+    "y": 240
+   },
+   {
+    "src": 157,
+    "dst": 156,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 157,
+    "dst": 158,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 900,
+    "y": 240
+   },
+   {
+    "src": 157,
+    "dst": 231,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 170,
+    "y": 443
+   },
+   {
+    "src": 158,
+    "dst": 159,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1300,
+    "y": 280
+   },
+   {
+    "src": 158,
+    "dst": 157,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 159,
+    "dst": 160,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 620,
+    "y": 280
+   },
+   {
+    "src": 159,
+    "dst": 158,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 160,
+    "dst": 159,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 160,
+    "dst": 161,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1140,
+    "y": 1120
+   },
+   {
+    "src": 161,
+    "dst": 160,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 161,
+    "dst": 162,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1340,
+    "y": 640
+   },
+   {
+    "src": 162,
+    "dst": 161,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 1400
+   },
+   {
+    "src": 162,
+    "dst": 163,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1700,
+    "y": 1400
+   },
+   {
+    "src": 162,
+    "dst": 165,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 198,
+    "y": 1256
+   },
+   {
+    "src": 163,
+    "dst": 162,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 163,
+    "dst": 164,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 960,
+    "y": 460
+   },
+   {
+    "src": 164,
+    "dst": 163,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 230,
+    "y": 190
+   },
+   {
+    "src": 164,
+    "dst": 169,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 970,
+    "y": 190
+   },
+   {
+    "src": 167,
+    "dst": 168,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 1356
+   },
+   {
+    "src": 167,
+    "dst": 166,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 4780
+   },
+   {
+    "src": 169,
+    "dst": 170,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 981,
+    "y": 462
+   },
+   {
+    "src": 169,
+    "dst": 164,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 187,
+    "y": 465
+   },
+   {
+    "src": 170,
+    "dst": 171,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 170,
+    "dst": 169,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 280,
+    "y": 0
+   },
+   {
+    "src": 171,
+    "dst": 172,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 800
+   },
+   {
+    "src": 171,
+    "dst": 170,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 920,
+    "y": 0
+   },
+   {
+    "src": 172,
+    "dst": 171,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 1900,
+    "y": 320
+   },
+   {
+    "src": 173,
+    "dst": 172,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 320,
+    "y": 460
+   },
+   {
+    "src": 174,
+    "dst": 172,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 320,
+    "y": 460
+   },
+   {
+    "src": 175,
+    "dst": 172,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 2280,
+    "y": 460
+   },
+   {
+    "src": 178,
+    "dst": 176,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 180,
+    "dst": 181,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 177,
+    "y": 96
+   },
+   {
+    "src": 180,
+    "dst": 165,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1720,
+    "y": 460
+   },
+   {
+    "src": 181,
+    "dst": 180,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 827,
+    "y": 1140
+   },
+   {
+    "src": 181,
+    "dst": 182,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 520
+   },
+   {
+    "src": 182,
+    "dst": 181,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 620,
+    "y": 280
+   },
+   {
+    "src": 183,
+    "dst": 181,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 960,
+    "y": 460
+   },
+   {
+    "src": 188,
+    "dst": 187,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 620,
+    "y": 240
+   },
+   {
+    "src": 189,
+    "dst": 187,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 190,
+    "dst": 187,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 190,
+    "dst": 191,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 3840,
+    "y": 320
+   },
+   {
+    "src": 191,
+    "dst": 204,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 100
+   },
+   {
+    "src": 191,
+    "dst": 192,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 620,
+    "y": 320
+   },
+   {
+    "src": 191,
+    "dst": 190,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 320
+   },
+   {
+    "src": 192,
+    "dst": 191,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 175
+   },
+   {
+    "src": 192,
+    "dst": 193,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 3180,
+    "y": 240
+   },
+   {
+    "src": 193,
+    "dst": 194,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1580,
+    "y": 400
+   },
+   {
+    "src": 193,
+    "dst": 192,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 760
+   },
+   {
+    "src": 194,
+    "dst": 193,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 320
+   },
+   {
+    "src": 194,
+    "dst": 195,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1140,
+    "y": 320
+   },
+   {
+    "src": 195,
+    "dst": 196,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2620,
+    "y": 440
+   },
+   {
+    "src": 195,
+    "dst": 194,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 440
+   },
+   {
+    "src": 196,
+    "dst": 195,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 196,
+    "dst": 197,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1820,
+    "y": 280
+   },
+   {
+    "src": 197,
+    "dst": 196,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 198,
+    "dst": 197,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 261
+   },
+   {
+    "src": 199,
+    "dst": 200,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 224,
+    "y": 212
+   },
+   {
+    "src": 203,
+    "dst": 194,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 230,
+    "y": 460
+   },
+   {
+    "src": 205,
+    "dst": 204,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 0,
+    "y": 320
+   },
+   {
+    "src": 205,
+    "dst": 204,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 0,
+    "y": 320
+   },
+   {
+    "src": 206,
+    "dst": 204,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 320,
+    "y": 700
+   },
+   {
+    "src": 206,
+    "dst": 207,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 400
+   },
+   {
+    "src": 207,
+    "dst": 204,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 292,
+    "y": 832
+   },
+   {
+    "src": 207,
+    "dst": 206,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 700,
+    "y": 560
+   },
+   {
+    "src": 210,
+    "dst": 209,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 0,
+    "y": 200
+   },
+   {
+    "src": 211,
+    "dst": 210,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -8,
+    "y": 265
+   },
+   {
+    "src": 212,
+    "dst": 184,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 661,
+    "y": -10
+   },
+   {
+    "src": 213,
+    "dst": 212,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 1360
+   },
+   {
+    "src": 213,
+    "dst": 214,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 4980,
+    "y": 400
+   },
+   {
+    "src": 214,
+    "dst": 215,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1426,
+    "y": 633
+   },
+   {
+    "src": 214,
+    "dst": 213,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": 0,
+    "y": 240
+   },
+   {
+    "src": 215,
+    "dst": 214,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 276,
+    "y": 456
+   },
+   {
+    "src": 216,
+    "dst": 215,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -32,
+    "y": 302
+   },
+   {
+    "src": 216,
+    "dst": 217,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 627,
+    "y": 304
+   },
+   {
+    "src": 217,
+    "dst": 218,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 617,
+    "y": 255
+   },
+   {
+    "src": 217,
+    "dst": 216,
+    "door": "obj_doorB_musfade",
+    "kind": "delta",
+    "x": -9,
+    "y": 274
+   },
+   {
+    "src": 217,
+    "dst": 157,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 350,
+    "y": 459
+   },
+   {
+    "src": 218,
+    "dst": 217,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 227,
+    "y": 1901
+   },
+   {
+    "src": 218,
+    "dst": 219,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": -15,
+    "y": 1670
+   },
+   {
+    "src": 219,
+    "dst": 218,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -9,
+    "y": 269
+   },
+   {
+    "src": 219,
+    "dst": 220,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2290,
+    "y": 270
+   },
+   {
+    "src": 220,
+    "dst": 219,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -9,
+    "y": 269
+   },
+   {
+    "src": 220,
+    "dst": 221,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 618,
+    "y": 270
+   },
+   {
+    "src": 221,
+    "dst": 220,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 1904,
+    "y": 259
+   },
+   {
+    "src": 222,
+    "dst": 223,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 3711,
+    "y": 256
+   },
+   {
+    "src": 223,
+    "dst": 222,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -35,
+    "y": 261
+   },
+   {
+    "src": 242,
+    "dst": 240,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 2980
+   },
+   {
+    "src": 242,
+    "dst": 243,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1750,
+    "y": 2720
+   },
+   {
+    "src": 244,
+    "dst": 245,
+    "door": "obj_doorA_musfade",
+    "kind": "delta",
+    "x": 717,
+    "y": 19
+   },
+   {
+    "src": 244,
+    "dst": 243,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -6,
+    "y": 221
+   },
+   {
+    "src": 244,
+    "dst": 246,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 1300,
+    "y": 880
+   },
+   {
+    "src": 245,
+    "dst": 244,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -6,
+    "y": 198
+   },
+   {
+    "src": 245,
+    "dst": 246,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 622,
+    "y": 200
+   },
+   {
+    "src": 246,
+    "dst": 245,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -11,
+    "y": 62
+   },
+   {
+    "src": 246,
+    "dst": 247,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1268,
+    "y": 749
+   },
+   {
+    "src": 247,
+    "dst": 246,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -18,
+    "y": 1689
+   },
+   {
+    "src": 247,
+    "dst": 248,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1265,
+    "y": 272
+   },
+   {
+    "src": 248,
+    "dst": 247,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -4,
+    "y": 159
+   },
+   {
+    "src": 248,
+    "dst": 249,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 629,
+    "y": 636
+   },
+   {
+    "src": 249,
+    "dst": 248,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -21,
+    "y": 576
+   },
+   {
+    "src": 249,
+    "dst": 250,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1351,
+    "y": 93
+   },
+   {
+    "src": 250,
+    "dst": 249,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 211,
+    "y": -21
+   },
+   {
+    "src": 250,
+    "dst": 251,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1266,
+    "y": 250
+   },
+   {
+    "src": 251,
+    "dst": 250,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -12,
+    "y": 100
+   },
+   {
+    "src": 251,
+    "dst": 252,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1702,
+    "y": 99
+   },
+   {
+    "src": 252,
+    "dst": 251,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 148
+   },
+   {
+    "src": 252,
+    "dst": 253,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 231,
+    "y": 947
+   },
+   {
+    "src": 254,
+    "dst": 255,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 280,
+    "y": 1330
+   },
+   {
+    "src": 254,
+    "dst": 253,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 260,
+    "y": 4780
+   },
+   {
+    "src": 255,
+    "dst": 254,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -14,
+    "y": 649
+   },
+   {
+    "src": 255,
+    "dst": 256,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 948,
+    "y": 148
+   },
+   {
+    "src": 256,
+    "dst": 255,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 0,
+    "y": 280
+   },
+   {
+    "src": 257,
+    "dst": 256,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 78,
+    "y": -18
+   },
+   {
+    "src": 257,
+    "dst": 258,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1946,
+    "y": 224
+   },
+   {
+    "src": 259,
+    "dst": 258,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -6,
+    "y": 435
+   },
+   {
+    "src": 261,
+    "dst": 260,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -10,
+    "y": 269
+   },
+   {
+    "src": 261,
+    "dst": 262,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1970,
+    "y": 257
+   },
+   {
+    "src": 262,
+    "dst": 68,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 269,
+    "y": 459
+   },
+   {
+    "src": 263,
+    "dst": 261,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 265,
+    "dst": 264,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -24,
+    "y": 149
+   },
+   {
+    "src": 265,
+    "dst": 266,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 2080,
+    "y": 120
+   }
+  ]
+ },
+ "ch3": {
+  "folder": "chapter3_windows",
+  "n_rooms": 246,
+  "room_names": [
+   "room_gms_debug_failsafe",
+   "ROOM_INITIALIZE",
+   "room_title_placeholder",
+   "room_battletest",
+   "room_cutscene_tester",
+   "room_sound_tester",
+   "room_sprite_tester",
+   "room_gif_tester",
+   "room_bullettest",
+   "room_GMS2_test",
+   "room_cutscene_tester_b",
+   "room_debug_color",
+   "room_debug_battle",
+   "room_debug_loc",
+   "PLACE_CONTACT",
+   "room_krisroom",
+   "room_krishallway",
+   "room_torroom",
+   "room_torhouse",
+   "room_torbathroom",
+   "room_town_krisyard",
+   "room_town_northwest",
+   "room_town_north",
+   "room_beach",
+   "room_town_mid",
+   "room_town_apartments",
+   "room_town_south",
+   "room_town_school",
+   "room_town_church",
+   "room_graveyard",
+   "room_town_shelter",
+   "room_hospital_lobby",
+   "room_hospital_hallway",
+   "room_hospital_rudy",
+   "room_hospital_room2",
+   "room_diner",
+   "room_townhall",
+   "room_flowershop_1f",
+   "room_flowershop_2f",
+   "room_library",
+   "room_alphysalley",
+   "room_lw_computer_lab",
+   "room_lw_library_upstairs",
+   "room_lw_police",
+   "room_lw_conbini",
+   "room_lw_icee_pizza",
+   "room_torielclass",
+   "room_schoollobby",
+   "room_alphysclass",
+   "room_schooldoor",
+   "room_insidecloset",
+   "room_school_unusedroom",
+   "room_castle_tutorial",
+   "room_dw_castle_east_door",
+   "room_dw_castle_west_cliff",
+   "room_dw_castle_area_1",
+   "room_dw_castle_town",
+   "room_dw_ralsei_castle_front",
+   "room_dw_castle_restaurant",
+   "room_dw_castle_cafe",
+   "room_dw_castle_dojo",
+   "room_dw_ralsei_castle_1f",
+   "room_dw_ralsei_castle_2f",
+   "room_dw_castle_dungeon",
+   "room_dw_castle_rooms_kris",
+   "room_dw_castle_rooms_susie",
+   "PLACE_DOG",
+   "room_legend",
+   "room_legend_neo",
+   "room_shop1",
+   "room_shop_music",
+   "room_gameover",
+   "PLACE_LOGO",
+   "PLACE_FAILURE",
+   "PLACE_NAMING_JIKKEN",
+   "PLACE_MENU",
+   "room_ed",
+   "room_empty",
+   "room_DARKempty",
+   "room_DARKbase_GMS2",
+   "room_cc_lancer",
+   "room_cc_clover",
+   "room_cc_fountain",
+   "PLACE_DOGCHECK2",
+   "room_debug_smallface_dark",
+   "room_debug_smallface",
+   "room_debug_choicer_dark",
+   "room_debug_choicer_light",
+   "room_debug_battleBalloon",
+   "room_overworldBulletEnemyTest",
+   "room_board1_oldtest",
+   "room_boardtest",
+   "room_boardtest_old",
+   "room_tennaCutsceneTest",
+   "room_tennaAnimTest",
+   "room_dw_tv_cutscene1g",
+   "room_dw_rhythm",
+   "room_board_designTest",
+   "room_dw_couch_overworld_intro",
+   "room_dw_couch_overworld_01",
+   "room_dw_couch_overworld_02",
+   "room_dw_couch_overworld_03",
+   "room_dw_couch_overworld_04",
+   "room_dw_couch_overworld_05",
+   "room_dw_nondescript_room",
+   "room_dw_nondescript_field",
+   "room_dw_nondescript_hallway",
+   "room_dw_nondescript_classroom",
+   "room_dw_backstage",
+   "room_dw_snow_zone",
+   "room_town_krisyard_dark",
+   "room_adventureboardtest",
+   "room_board_1",
+   "room_lerptest",
+   "room_shadowmantle_movementExample",
+   "room_board_dungeon_2",
+   "room_board_dungeon_3",
+   "room_board_preshadowmantle",
+   "room_shadowmantle",
+   "room_board_prepostshadowmantle",
+   "room_board_postshadowmantle",
+   "room_dw_ch3_man",
+   "room_board_boattest",
+   "room_debug_tennatexttester",
+   "room_susiezilla",
+   "room_board_intro",
+   "room_susiezilla_singleScreenMockup",
+   "room_torhouse_sepia",
+   "room_rhythmgame_editor",
+   "room_board_tests",
+   "room_board_postshadowmantle_test",
+   "room_ch3_gameshowroom",
+   "room_shootout",
+   "room_genanimtest",
+   "room_board_preshadowmantle_repeat",
+   "room_dw_green_room",
+   "room_board_1_sword",
+   "room_board_sword_intro",
+   "room_board_1_sword_trees",
+   "room_dw_changing_room",
+   "room_dw_console_room",
+   "room_board_2",
+   "room_dw_tv_closet",
+   "room_perspective_testing",
+   "room_board_3",
+   "room_dw_b3bstest",
+   "room_dw_b3bstest_big",
+   "room_dw_b3bs_interstitial",
+   "room_board_2_sword",
+   "room_bullettest_new",
+   "room_board_empty",
+   "room_dw_b3bs_rouxls_lanina",
+   "room_dw_b3bs_template",
+   "room_dw_b3bs_rouxls_boss",
+   "room_dw_b3bs_cheaterpippins",
+   "room_dw_b3bs_idcardpuzzle",
+   "room_dw_b3bs_intro",
+   "room_dw_b3bs_zapper_a",
+   "room_dw_b3bs_rabbick_a",
+   "room_dw_b3bs_lancerget",
+   "room_dw_b3bs_cooltrashy",
+   "room_dw_b3bs_zapper_c",
+   "room_dw_b3bs_rabbick_b",
+   "room_dw_b3bs_sadshadowguys",
+   "room_dw_b3bs_zapper_b",
+   "room_ch3_gameshowroom_tennatest",
+   "room_dw_susiezilla",
+   "room_dw_inbetween",
+   "room_dw_teevie_preview",
+   "room_dw_chef",
+   "room_dw_puzzlecloset_1",
+   "room_dw_puzzlecloset_2",
+   "room_dw_chef_empty",
+   "room_dw_susiezilla_empty",
+   "room_dw_rhythm_empty",
+   "room_board_3b",
+   "room_CHEFS",
+   "room_dw_b3bs_jail1",
+   "room_dw_b3bs_shop",
+   "room_dw_b3bs_mysterypuzzle",
+   "room_dw_b3bs_watercooler",
+   "room_dw_b3bs_jail2",
+   "room_dw_b3bs_zapper_d",
+   "room_dw_b3bs_extrapuzzle",
+   "room_dw_b3bs_bibliox",
+   "room_rhythmgame_tenna_test",
+   "room_board_3_sword",
+   "room_dw_couch_points",
+   "room_dw_couch_overworld_intro_left",
+   "room_dw_couch_video",
+   "room_dw_snow_zone_battle",
+   "room_dw_b3bs_zapper_a_old",
+   "room_dw_puzzlecloset_0",
+   "room_board_gsa02_b0",
+   "room_dw_tv_curtain",
+   "room_dw_teevie_intro",
+   "room_dw_teevie_large_01",
+   "room_dw_teevie_large_02",
+   "room_dw_teevie_cowboy_zone_01_intro",
+   "room_dw_teevie_cowboy_zone_01_after",
+   "room_dw_teevie_watercooler",
+   "room_dw_teevie_susiezilla",
+   "room_dw_teevie_cowboy_zone_02_intro",
+   "room_dw_teevie_cowboy_zone_02_after",
+   "room_dw_teevie_shadow_guys",
+   "room_dw_teevie_stealth_c",
+   "room_dw_teevie_stealth",
+   "room_dw_teevie_failure_cage",
+   "room_dw_teevie_rhythm",
+   "room_dw_teevie_maze_points",
+   "room_dw_teevie_maze_chef",
+   "room_dw_teevie_maze_final",
+   "room_dw_teevie_maze",
+   "room_dw_teevie_chef",
+   "room_dw_teevie_cutscene_final",
+   "room_dw_teevie_ribbick",
+   "room_dw_teevie_preview_south",
+   "room_dw_b3bs_camerareminder",
+   "room_dw_puzzlecloset_3",
+   "room_dw_teevie_sams",
+   "room_dw_teevie_bonus_zone",
+   "room_dw_teevie_audiencepits",
+   "room_dw_channelchange_test",
+   "room_dw_teevie_lightmaze",
+   "room_dw_teevie_maze_quiz",
+   "room_dw_ranking_hub",
+   "room_dw_ranking_a",
+   "room_dw_ranking_b",
+   "room_dw_ranking_c",
+   "room_dw_ranking_z",
+   "room_dw_ranking_z_hallway",
+   "room_dw_teevie_ribbicks_a",
+   "room_dw_teevie_ribbicks_b",
+   "room_dw_teevie_susiebridge",
+   "room_dw_teevie_shuttahmaze",
+   "room_dw_teevie_stealth_d",
+   "room_dw_teevie_dust",
+   "room_dw_teevie_dust_south",
+   "room_ch3_gacharoom_unknown",
+   "room_dw_ranking_t",
+   "room_dw_puzzlecloset_1a",
+   "room_dw_rhythm_countdown",
+   "room_dw_snow_zone_east_door",
+   "room_intro",
+   "room_dw_inbetweenhall",
+   "room_chapter_continue"
+  ],
+  "n_edges": 79,
+  "edges": [
+   {
+    "src": 15,
+    "dst": 16,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 155,
+    "y": 230
+   },
+   {
+    "src": 16,
+    "dst": 15,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 289,
+    "y": 104
+   },
+   {
+    "src": 16,
+    "dst": 18,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 425,
+    "y": 100
+   },
+   {
+    "src": 18,
+    "dst": 16,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 144,
+    "y": 68
+   },
+   {
+    "src": 18,
+    "dst": 19,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 84,
+    "y": 168
+   },
+   {
+    "src": 18,
+    "dst": 20,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 594,
+    "y": 149
+   },
+   {
+    "src": 19,
+    "dst": 18,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 236,
+    "y": 134
+   },
+   {
+    "src": 20,
+    "dst": 22,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 120,
+    "y": 410
+   },
+   {
+    "src": 20,
+    "dst": 18,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 150,
+    "y": 169
+   },
+   {
+    "src": 22,
+    "dst": 24,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 625,
+    "y": 230
+   },
+   {
+    "src": 22,
+    "dst": 37,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1258,
+    "y": 98
+   },
+   {
+    "src": 22,
+    "dst": 23,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1790,
+    "y": 100
+   },
+   {
+    "src": 22,
+    "dst": 20,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 378,
+    "y": -12
+   },
+   {
+    "src": 23,
+    "dst": 22,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 60
+   },
+   {
+    "src": 24,
+    "dst": 26,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 772,
+    "y": 232
+   },
+   {
+    "src": 24,
+    "dst": 22,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 780,
+    "y": 0
+   },
+   {
+    "src": 24,
+    "dst": 35,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 600,
+    "y": 90
+   },
+   {
+    "src": 26,
+    "dst": 39,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1000,
+    "y": 80
+   },
+   {
+    "src": 26,
+    "dst": 27,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1314,
+    "y": 106
+   },
+   {
+    "src": 26,
+    "dst": 28,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 798,
+    "y": 235
+   },
+   {
+    "src": 26,
+    "dst": 24,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 798,
+    "y": 1
+   },
+   {
+    "src": 27,
+    "dst": 26,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 2,
+    "y": 182
+   },
+   {
+    "src": 28,
+    "dst": 36,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 565,
+    "y": 85
+   },
+   {
+    "src": 28,
+    "dst": 30,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 380,
+    "y": 630
+   },
+   {
+    "src": 28,
+    "dst": 29,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 340
+   },
+   {
+    "src": 28,
+    "dst": 26,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 360,
+    "y": 0
+   },
+   {
+    "src": 29,
+    "dst": 28,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 595,
+    "y": 115
+   },
+   {
+    "src": 30,
+    "dst": 28,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 31,
+    "dst": 26,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 31,
+    "dst": 32,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 70,
+    "y": 76
+   },
+   {
+    "src": 32,
+    "dst": 31,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 186
+   },
+   {
+    "src": 32,
+    "dst": 33,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 79,
+    "y": 75
+   },
+   {
+    "src": 32,
+    "dst": 34,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 190,
+    "y": 77
+   },
+   {
+    "src": 33,
+    "dst": 32,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 33,
+    "dst": 32,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 34,
+    "dst": 32,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 236
+   },
+   {
+    "src": 35,
+    "dst": 24,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 36,
+    "dst": 28,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 22,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 38,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 20,
+    "y": 44
+   },
+   {
+    "src": 37,
+    "dst": 38,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 46
+   },
+   {
+    "src": 38,
+    "dst": 37,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 20,
+    "y": 235
+   },
+   {
+    "src": 38,
+    "dst": 37,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 260,
+    "y": 235
+   },
+   {
+    "src": 39,
+    "dst": 26,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 39,
+    "dst": 26,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 40,
+    "dst": 24,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 120,
+    "y": 235
+   },
+   {
+    "src": 41,
+    "dst": 39,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 130,
+    "y": 230
+   },
+   {
+    "src": 42,
+    "dst": 39,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 213,
+    "y": 231
+   },
+   {
+    "src": 44,
+    "dst": 24,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 348,
+    "y": 230
+   },
+   {
+    "src": 45,
+    "dst": 24,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 124,
+    "y": 231
+   },
+   {
+    "src": 46,
+    "dst": 47,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 57,
+    "y": 46
+   },
+   {
+    "src": 47,
+    "dst": 48,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 97,
+    "y": 195
+   },
+   {
+    "src": 47,
+    "dst": 49,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 440,
+    "y": -10
+   },
+   {
+    "src": 47,
+    "dst": 46,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 817,
+    "y": 196
+   },
+   {
+    "src": 49,
+    "dst": 47,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 300,
+    "y": 230
+   },
+   {
+    "src": 49,
+    "dst": 47,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 230
+   },
+   {
+    "src": 49,
+    "dst": 47,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 320,
+    "y": 230
+   },
+   {
+    "src": 49,
+    "dst": 51,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 500,
+    "y": 95
+   },
+   {
+    "src": 51,
+    "dst": 49,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 180
+   },
+   {
+    "src": 52,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 52,
+    "dst": 53,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1390,
+    "y": 320
+   },
+   {
+    "src": 53,
+    "dst": 52,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 54,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 630,
+    "y": 280
+   },
+   {
+    "src": 55,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 200,
+    "y": 0
+   },
+   {
+    "src": 56,
+    "dst": 57,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 684,
+    "y": 192
+   },
+   {
+    "src": 56,
+    "dst": 69,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 520,
+    "y": 569
+   },
+   {
+    "src": 57,
+    "dst": 56,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 440,
+    "y": 990
+   },
+   {
+    "src": 57,
+    "dst": 61,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 462,
+    "y": 249
+   },
+   {
+    "src": 58,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 276,
+    "y": 466
+   },
+   {
+    "src": 59,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 392,
+    "y": 427
+   },
+   {
+    "src": 60,
+    "dst": 56,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 61,
+    "dst": 62,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 238
+   },
+   {
+    "src": 62,
+    "dst": 61,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 80,
+    "y": 457
+   },
+   {
+    "src": 63,
+    "dst": 61,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 110,
+    "y": 470
+   },
+   {
+    "src": 64,
+    "dst": 62,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 450
+   },
+   {
+    "src": 65,
+    "dst": 62,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 257,
+    "y": 465
+   },
+   {
+    "src": 80,
+    "dst": 62,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 269,
+    "y": 459
+   },
+   {
+    "src": 81,
+    "dst": 79,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   },
+   {
+    "src": 110,
+    "dst": 112,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 120,
+    "y": 410
+   }
+  ]
+ },
+ "ch4": {
+  "folder": "chapter4_windows",
+  "n_rooms": 328,
+  "room_names": [
+   "room_gms_debug_failsafe",
+   "ROOM_INITIALIZE",
+   "room_title_placeholder",
+   "room_battletest",
+   "room_cutscene_tester",
+   "room_sound_tester",
+   "room_sprite_tester",
+   "room_gif_tester",
+   "room_bullettest",
+   "room_GMS2_test",
+   "room_cutscene_tester_b",
+   "room_debug_color",
+   "room_debug_battle",
+   "room_debug_loc",
+   "PLACE_CONTACT",
+   "room_krisroom",
+   "room_krishallway",
+   "room_torroom",
+   "room_torhouse",
+   "room_torbathroom",
+   "room_town_krisyard",
+   "room_town_northwest",
+   "room_town_north",
+   "room_beach",
+   "room_town_mid",
+   "room_town_apartments",
+   "room_town_south",
+   "room_town_school",
+   "room_town_church",
+   "room_graveyard",
+   "room_town_shelter",
+   "room_hospital_lobby",
+   "room_hospital_hallway",
+   "room_hospital_rudy",
+   "room_hospital_room2",
+   "room_diner",
+   "room_townhall",
+   "room_flowershop_1f",
+   "room_flowershop_2f",
+   "room_library",
+   "room_alphysalley",
+   "room_lw_computer_lab",
+   "room_lw_library_upstairs",
+   "room_lw_police",
+   "room_lw_conbini",
+   "room_lw_icee_pizza",
+   "room_lw_church_entrance",
+   "room_lw_church_main",
+   "room_lw_noellehouse_main",
+   "room_lw_noellehouse_kitchen",
+   "room_lw_noellehouse_bathroom",
+   "room_lw_noellehouse_keyroom",
+   "room_lw_noellehouse_noelle",
+   "room_lw_noellehouse_dess",
+   "room_lw_noellehouse_closet",
+   "room_torielclass",
+   "room_schoollobby",
+   "room_alphysclass",
+   "room_schooldoor",
+   "room_insidecloset",
+   "room_school_unusedroom",
+   "room_castle_tutorial",
+   "room_dw_castle_east_door",
+   "room_dw_castle_west_cliff",
+   "room_dw_castle_area_1",
+   "room_dw_castle_town",
+   "room_dw_ralsei_castle_front",
+   "room_dw_castle_restaurant",
+   "room_dw_castle_cafe",
+   "room_dw_castle_dojo",
+   "room_dw_ralsei_castle_1f",
+   "room_dw_ralsei_castle_2f",
+   "room_dw_castle_dungeon",
+   "room_dw_castle_rooms_kris",
+   "room_dw_castle_rooms_susie",
+   "PLACE_DOG",
+   "room_legend",
+   "room_legend_neo",
+   "room_shop1",
+   "room_shop_music",
+   "room_gameover",
+   "PLACE_LOGO",
+   "PLACE_FAILURE",
+   "PLACE_NAMING_JIKKEN",
+   "PLACE_MENU",
+   "room_ed",
+   "room_empty",
+   "room_DARKempty",
+   "room_test_climb_new",
+   "room_cc_lancer",
+   "room_cc_clover",
+   "room_cc_fountain",
+   "PLACE_DOGCHECK2",
+   "room_debug_smallface_dark",
+   "room_debug_smallface",
+   "room_debug_choicer_dark",
+   "room_debug_choicer_light",
+   "room_debug_battleBalloon",
+   "room_overworldBulletEnemyTest",
+   "room_debug_layeredLevelTest",
+   "room_debug_windowEffect",
+   "room_dw_church_slidingbookshelf",
+   "room_darkness_example",
+   "room_darkness_example_2",
+   "room_dw_church_bellplay",
+   "room_intro_ch4",
+   "room_dw_church_candlelighting",
+   "room_town_noellehouse",
+   "room_dw_church_intro1",
+   "room_dw_church_intro3",
+   "room_dw_church_intro_guei",
+   "room_dw_church_darkroom1_old",
+   "room_dw_church_lantern1_old_old",
+   "room_dw_church_lantern_hallway",
+   "room_dw_church_darkbell_old",
+   "room_dw_church_gersonstudy",
+   "room_dw_church_stairs_west_bell",
+   "room_dw_church_librarybookenemy",
+   "room_dw_church_bookshelfpuzzle1",
+   "room_dw_church_bookshelfpuzzle2",
+   "room_dw_church_worshiproom",
+   "room_dw_church_swingingbell",
+   "room_dw_church_tallbookcases",
+   "room_dw_church_lantern2",
+   "room_dw_church_smallbells",
+   "room_dw_church_claw",
+   "room_dw_church_shelfclimb1",
+   "room_dw_church_statueclimb",
+   "room_dw_church_offering",
+   "room_dw_church_npcroom_shelfclimb",
+   "room_dw_church_stairs_stainedglass",
+   "room_dw_church_bellsareawest",
+   "room_dw_church_stairs_topright",
+   "room_dw_church_poolsroom1",
+   "room_dw_church_candlesroom1",
+   "room_dw_church_solowaterfall",
+   "room_dw_church_statueroom",
+   "room_dw_church_poolsroom2",
+   "room_dw_church_shelfclimb2",
+   "room_dw_church_statueclimb_npcroom",
+   "room_dw_church_bellhall_west",
+   "room_dw_church_fountainconnection",
+   "room_dw_church_stainedglasspreview",
+   "room_dw_church_stairs_topleft",
+   "room_dw_church_npcroom_pools1",
+   "room_dw_church_poolsroom1_east",
+   "room_dw_church_minorlegend",
+   "room_dw_church_bookenemywest",
+   "room_dw_church_poolsroom2south",
+   "room_lw_church_office",
+   "room_dw_church_bellhall_east",
+   "room_dw_church_bellhall_central",
+   "room_dw_church_darkroom_old",
+   "room_dw_church_lantern1_old",
+   "room_dw_ralsei_castle_3f",
+   "room_dw_castle_rooms_ralsei",
+   "room_dw_rotating_tower",
+   "room_dark_twostoryTest",
+   "room_overworldDarknessBulletTest",
+   "room_krisroom_dark",
+   "room_overworld_darkmaku_ring",
+   "room_dw_church_statueroom_old",
+   "room_lw_noellehouse_vents_west",
+   "room_lerptest",
+   "room_overworld_darkmakumaze",
+   "room_overworld_darkmaku_blocks",
+   "room_town_krisyard_dark",
+   "room_dw_castle_rooms_queen",
+   "room_dw_castle_rooms_tenna",
+   "room_traintest",
+   "room_dw_church_rippletest",
+   "room_dw_church_ripplepuzzle",
+   "room_dw_church_gueitest",
+   "room_dw_church_glass",
+   "room_dw_church_staircase",
+   "room_dw_church_bellhall_bookroom",
+   "room_dw_church_bookcase",
+   "room_dw_church_savepoint",
+   "room_dw_church_dark_fire_puzzle",
+   "room_dw_church_turtles",
+   "room_dw_church_guei",
+   "room_dw_church_jackenstein",
+   "room_dw_church_bellhall_curtain",
+   "room_dw_church_lantern_hallway_old",
+   "room_dw_church_dogclimb",
+   "room_dw_church_arena",
+   "room_debug_pianotest",
+   "room_gersonbattleroomtest",
+   "room_traintest_big",
+   "room_dw_church_chase_old",
+   "room_dw_3d_tower_test",
+   "room_dw_titan_tower_test",
+   "room_dw_churchb_nongerson_post",
+   "room_lw_noellehouse_vents_north",
+   "room_lw_noellehouse_vents_east",
+   "room_lw_noellehouse_vents_south",
+   "room_bullettest_new",
+   "room_test_pianoGimmick",
+   "room_test_remotePiano",
+   "room_DARKbase_GMS2",
+   "room_test_climb_new2",
+   "room_test_climb_cameratest",
+   "room_test_climb_0001",
+   "room_test_climb_enterexit",
+   "room_dw_church_climbtut",
+   "room_dw_church_fastwater",
+   "room_dw_church_crumbletower",
+   "room_dw_church_tower1",
+   "room_lw_church_choir",
+   "room_dw_church_bellclimb",
+   "room_dw_church_shiftclimb",
+   "room_dw_church_intropiano",
+   "room_dw_church_intro_gerson",
+   "room_dw_church_pianopiece_left",
+   "room_dw_church_northprophecies",
+   "room_dw_church_darkmaze",
+   "room_dw_church_quicktest",
+   "room_dw_church_pianopiece_right",
+   "room_dw_church_pianopuzzle",
+   "room_dw_church_nwconnect",
+   "room_dw_church_rightconnect",
+   "room_dw_church_stairspreview",
+   "room_dw_church_trueclimbadventure",
+   "room_dw_church_organpuzzle",
+   "room_dw_church_mizzleencounter",
+   "room_dw_church_sideclimb",
+   "room_dw_church_secretpiano",
+   "room_dw_church_ripplepuzzle_postgers",
+   "room_dw_church_tallbookcases_backup",
+   "room_dw_church_fountain",
+   "room_dw_church_b_intro",
+   "room_dw_churchc_final_prophecy",
+   "room_dw_church_bookshelfpuzzle",
+   "room_lw_noellehouse_basement",
+   "room_dw_church_biblioxencounter",
+   "room_dw_church_darkclimb",
+   "room_dw_church_moneyfountain",
+   "room_rotating_tower_new_test",
+   "room_dw_church_pianopiece_left_b",
+   "room_dw_church_pianopiece_rightprophecy",
+   "room_rotating_tower_new_example",
+   "room_dw_church_shadowgerson",
+   "room_dw_church_holywatercooler",
+   "room_dw_church_rippleworship",
+   "room_dw_church_waterfallroom",
+   "room_dw_church_waterfalltearoom",
+   "room_dw_castle_rooms_kris_susie",
+   "room_dw_churchb_staircaseintro",
+   "room_dw_churchb_prophecyencounter",
+   "room_dw_churchb_worshiproom",
+   "room_dw_churchb_libraryconnector",
+   "room_dw_churchb_savepoint",
+   "room_dw_churchb_rotatingtower",
+   "room_dw_churchb_bellroom",
+   "room_dw_churchb_escherstaircase",
+   "room_dw_churchb_prophecymaze",
+   "room_dw_churchb_rotatingtower2",
+   "room_dw_churchb_gersonstudy",
+   "room_dw_churchb_gersonchase",
+   "room_dw_churchb_extinguisher",
+   "room_dw_church_knightclimb",
+   "room_dw_church_knightclimb_post",
+   "room_dw_rhythm",
+   "room_dw_rhythm_countdown",
+   "room_dw_rhythm_empty",
+   "room_rhythmgame_editor",
+   "room_dw_churchb_ripple1",
+   "room_dw_churchb_ripplepost",
+   "room_dw_churchb_library_alternate",
+   "room_dw_churchb_moneyfountain",
+   "room_dw_churchc_superprophecies",
+   "room_dw_churchc_encounter1",
+   "room_dw_churchc_slidingpiano",
+   "room_dw_churchc_ripplesneak_poc",
+   "room_dw_churchc_encounter2",
+   "room_dw_churchc_finalclimb",
+   "room_dw_churchc_angelprophecy_encounter",
+   "room_dw_churchc_savepoint",
+   "room_dw_churchc_darkswords",
+   "room_dw_churchc_pretitan",
+   "room_dw_churchc_prepretitan",
+   "room_dw_churchc_titandefeated",
+   "room_dw_churchb_fountain",
+   "room_dw_church_ripseq1",
+   "room_dw_church_ripseq2",
+   "room_dw_churchc_titanclimb1",
+   "room_dw_churchc_titanclimb2",
+   "room_dw_churchc_titanclimb1_old",
+   "room_dw_churchc_titanclimb2_old",
+   "room_lw_noellehouse_north",
+   "room_lw_noellehouse_vents_north_west",
+   "room_dw_channelchange_test",
+   "room_ripple_test",
+   "room_dw_churchb_prophecymaze_old",
+   "room_dw_churchb_fireplace",
+   "room_dw_churchb_nongerson",
+   "room_dw_churchb_library",
+   "room_dw_castle_tv_rhythm",
+   "room_dw_castle_tv",
+   "room_dw_churchb_windows",
+   "room_dw_churchb_bookshelf",
+   "room_dw_churchb_man",
+   "room_dw_churchb_gallery",
+   "room_dw_churchb_rotatingtower_old",
+   "room_dw_churchb_darkclimb",
+   "room_dw_churchc_titanclimb1_post",
+   "room_dw_churchc_titanclimb2_post",
+   "room_dw_churchb_darkclimb_scene",
+   "room_dw_churchc_dodge",
+   "room_dw_churchc_insidetitan",
+   "room_lightworldTest",
+   "room_dw_churchc_prophecies",
+   "room_dw_churchc_angelprophecy",
+   "room_dw_church_bookshelfpuzzle_rev",
+   "room_dw_churchc_prophecies_backup",
+   "room_dw_churchc_treasurechest",
+   "room_dw_churchc_titanclimb2_old2",
+   "room_dw_churchc_titanclimb1_tiled",
+   "room_dw_churchc_titanclimb2_tiled",
+   "room_dw_churchb_rotatingtower_tiled",
+   "room_vfx_tester",
+   "room_dw_castle_tv_zone_1",
+   "room_dw_castle_tv_zone_2",
+   "room_dw_castle_tv_zone_3",
+   "room_dw_castle_tv_zone_battle",
+   "room_dw_castle_tv_zone_minigame",
+   "room_shapetest",
+   "room_chapter_continue"
+  ],
+  "n_edges": 72,
+  "edges": [
+   {
+    "src": 15,
+    "dst": 16,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 155,
+    "y": 230
+   },
+   {
+    "src": 16,
+    "dst": 15,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 289,
+    "y": 104
+   },
+   {
+    "src": 16,
+    "dst": 18,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 425,
+    "y": 100
+   },
+   {
+    "src": 18,
+    "dst": 16,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 144,
+    "y": 68
+   },
+   {
+    "src": 18,
+    "dst": 19,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 84,
+    "y": 168
+   },
+   {
+    "src": 19,
+    "dst": 18,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 236,
+    "y": 134
+   },
+   {
+    "src": 20,
+    "dst": 22,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 120,
+    "y": 410
+   },
+   {
+    "src": 20,
+    "dst": 18,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 150,
+    "y": 169
+   },
+   {
+    "src": 22,
+    "dst": 24,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 625,
+    "y": 230
+   },
+   {
+    "src": 22,
+    "dst": 37,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1258,
+    "y": 98
+   },
+   {
+    "src": 22,
+    "dst": 23,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1790,
+    "y": 100
+   },
+   {
+    "src": 22,
+    "dst": 20,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 378,
+    "y": -12
+   },
+   {
+    "src": 23,
+    "dst": 22,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 60
+   },
+   {
+    "src": 24,
+    "dst": 26,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 772,
+    "y": 232
+   },
+   {
+    "src": 24,
+    "dst": 22,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 780,
+    "y": 0
+   },
+   {
+    "src": 24,
+    "dst": 35,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 600,
+    "y": 90
+   },
+   {
+    "src": 26,
+    "dst": 39,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1000,
+    "y": 80
+   },
+   {
+    "src": 26,
+    "dst": 27,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1314,
+    "y": 106
+   },
+   {
+    "src": 26,
+    "dst": 28,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 798,
+    "y": 235
+   },
+   {
+    "src": 26,
+    "dst": 24,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 798,
+    "y": 1
+   },
+   {
+    "src": 27,
+    "dst": 26,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 2,
+    "y": 182
+   },
+   {
+    "src": 28,
+    "dst": 36,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 565,
+    "y": 85
+   },
+   {
+    "src": 28,
+    "dst": 29,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 340
+   },
+   {
+    "src": 28,
+    "dst": 26,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 360,
+    "y": 0
+   },
+   {
+    "src": 29,
+    "dst": 28,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 595,
+    "y": 115
+   },
+   {
+    "src": 30,
+    "dst": 28,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 120,
+    "y": -80
+   },
+   {
+    "src": 31,
+    "dst": 26,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 31,
+    "dst": 32,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 70,
+    "y": 76
+   },
+   {
+    "src": 32,
+    "dst": 31,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 141,
+    "y": 197
+   },
+   {
+    "src": 32,
+    "dst": 33,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 80,
+    "y": 70
+   },
+   {
+    "src": 32,
+    "dst": 34,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 200,
+    "y": 71
+   },
+   {
+    "src": 33,
+    "dst": 32,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 33,
+    "dst": 32,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 34,
+    "dst": 32,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 237
+   },
+   {
+    "src": 35,
+    "dst": 24,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 136,
+    "y": 230
+   },
+   {
+    "src": 36,
+    "dst": 28,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 22,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 38,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 20,
+    "y": 44
+   },
+   {
+    "src": 37,
+    "dst": 38,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 46
+   },
+   {
+    "src": 38,
+    "dst": 37,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 20,
+    "y": 235
+   },
+   {
+    "src": 38,
+    "dst": 37,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 260,
+    "y": 235
+   },
+   {
+    "src": 39,
+    "dst": 26,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 39,
+    "dst": 26,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 40,
+    "dst": 24,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 120,
+    "y": 235
+   },
+   {
+    "src": 41,
+    "dst": 39,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 130,
+    "y": 230
+   },
+   {
+    "src": 42,
+    "dst": 39,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 213,
+    "y": 231
+   },
+   {
+    "src": 44,
+    "dst": 24,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 348,
+    "y": 230
+   },
+   {
+    "src": 45,
+    "dst": 24,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 124,
+    "y": 231
+   },
+   {
+    "src": 55,
+    "dst": 56,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 57,
+    "y": 46
+   },
+   {
+    "src": 56,
+    "dst": 57,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 97,
+    "y": 195
+   },
+   {
+    "src": 56,
+    "dst": 58,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 440,
+    "y": -10
+   },
+   {
+    "src": 56,
+    "dst": 55,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 817,
+    "y": 196
+   },
+   {
+    "src": 58,
+    "dst": 56,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 300,
+    "y": 230
+   },
+   {
+    "src": 58,
+    "dst": 56,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 230
+   },
+   {
+    "src": 58,
+    "dst": 56,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 320,
+    "y": 230
+   },
+   {
+    "src": 58,
+    "dst": 60,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 500,
+    "y": 95
+   },
+   {
+    "src": 60,
+    "dst": 58,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 180
+   },
+   {
+    "src": 61,
+    "dst": 65,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 61,
+    "dst": 62,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1390,
+    "y": 320
+   },
+   {
+    "src": 62,
+    "dst": 61,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 63,
+    "dst": 65,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 630,
+    "y": 280
+   },
+   {
+    "src": 64,
+    "dst": 65,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 200,
+    "y": 0
+   },
+   {
+    "src": 65,
+    "dst": 66,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 684,
+    "y": 192
+   },
+   {
+    "src": 66,
+    "dst": 65,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 440,
+    "y": 990
+   },
+   {
+    "src": 66,
+    "dst": 70,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 462,
+    "y": 249
+   },
+   {
+    "src": 67,
+    "dst": 65,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 276,
+    "y": 466
+   },
+   {
+    "src": 69,
+    "dst": 65,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 280,
+    "y": 460
+   },
+   {
+    "src": 70,
+    "dst": 71,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 238
+   },
+   {
+    "src": 71,
+    "dst": 70,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 80,
+    "y": 457
+   },
+   {
+    "src": 72,
+    "dst": 70,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 110,
+    "y": 470
+   },
+   {
+    "src": 89,
+    "dst": 71,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 269,
+    "y": 459
+   },
+   {
+    "src": 90,
+    "dst": 88,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   }
+  ]
+ },
+ "ch5": {
+  "folder": "chapter5_windows",
+  "n_rooms": 252,
+  "room_names": [
+   "room_gms_debug_failsafe",
+   "ROOM_INITIALIZE",
+   "room_battletest",
+   "room_cutscene_tester",
+   "room_sound_tester",
+   "room_sprite_tester",
+   "room_gif_tester",
+   "room_GMS2_test",
+   "room_cutscene_tester_b",
+   "room_debug_color",
+   "room_debug_battle",
+   "room_debug_loc",
+   "PLACE_CONTACT",
+   "room_krisroom",
+   "room_krishallway",
+   "room_torroom",
+   "room_torhouse",
+   "room_torbathroom",
+   "room_town_krisyard",
+   "room_town_northwest",
+   "room_town_north",
+   "room_beach",
+   "room_town_mid",
+   "room_town_apartments",
+   "room_town_south",
+   "room_town_school",
+   "room_town_church",
+   "room_graveyard",
+   "room_town_shelter",
+   "room_hospital_lobby",
+   "room_hospital_hallway",
+   "room_hospital_rudy",
+   "room_hospital_room2",
+   "room_diner",
+   "room_townhall",
+   "room_flowershop_1f",
+   "room_flowershop_2f",
+   "room_library",
+   "room_alphysalley",
+   "room_lw_computer_lab",
+   "room_lw_library_upstairs",
+   "room_lw_police",
+   "room_lw_conbini",
+   "room_lw_icee_pizza",
+   "room_torielclass",
+   "room_schoollobby",
+   "room_alphysclass",
+   "room_schooldoor",
+   "room_insidecloset",
+   "room_school_unusedroom",
+   "room_castle_tutorial",
+   "room_dw_castle_east_door",
+   "room_dw_castle_west_cliff",
+   "room_dw_castle_area_1",
+   "room_dw_castle_town",
+   "room_dw_ralsei_castle_front",
+   "room_dw_castle_restaurant",
+   "room_dw_castle_cafe",
+   "room_dw_castle_dojo",
+   "room_dw_ralsei_castle_1f",
+   "room_dw_ralsei_castle_2f",
+   "room_dw_ralsei_castle_3f",
+   "room_dw_castle_dungeon",
+   "room_dw_castle_rooms_kris",
+   "room_dw_castle_rooms_susie",
+   "room_dw_castle_rooms_ralsei",
+   "PLACE_DOG",
+   "room_legend",
+   "room_legend_neo",
+   "room_shop1",
+   "room_shop_music",
+   "room_gameover",
+   "PLACE_LOGO",
+   "PLACE_FAILURE",
+   "PLACE_NAMING_JIKKEN",
+   "PLACE_MENU",
+   "room_ed",
+   "room_empty",
+   "room_DARKempty",
+   "room_DARKbase_GMS2",
+   "room_cc_lancer",
+   "room_cc_clover",
+   "room_cc_fountain",
+   "PLACE_DOGCHECK2",
+   "room_debug_smallface_dark",
+   "room_debug_smallface",
+   "room_debug_choicer_dark",
+   "room_debug_choicer_light",
+   "room_debug_battleBalloon",
+   "room_overworldBulletEnemyTest",
+   "room_lerptest",
+   "room_bullettest",
+   "room_bullettest_new",
+   "room_animexampletest",
+   "room_climbtest",
+   "room_chapter_continue",
+   "room_towery_tester",
+   "room_animtest",
+   "PLACE_DOGCHECK_CH5",
+   "room_darkbulbTest",
+   "room_dw_fcastle_shadowplatformTest",
+   "room_plat_lab",
+   "room_lw_church_choir",
+   "room_lw_church_entrance",
+   "room_lw_church_main",
+   "room_lw_church_office",
+   "room_lw_noellehouse_dess",
+   "room_town_noellehouse",
+   "room_dw_rhythm",
+   "room_dw_rhythm_countdown",
+   "room_dw_rhythm_empty",
+   "room_rhythmgame_editor",
+   "room_dw_castle_tv",
+   "room_dw_castle_tv_rhythm",
+   "room_dw_castle_church_entrance",
+   "room_dw_castle_church_climb",
+   "room_dw_ralsei_castle_basketball",
+   "room_shop_ch5",
+   "room_dw_garden_meetflowery",
+   "room_dw_garden_video",
+   "room_dw_garden_intro",
+   "room_dw_garden_ralseicupboard",
+   "room_dw_garden_floradinnencounter",
+   "room_dw_garden_hospital",
+   "room_dw_garden_fishingspot",
+   "room_dw_garden_shearydodge",
+   "room_dw_garden_hopschef",
+   "room_dw_garden_platshortcut",
+   "room_dw_garden_riverchest",
+   "room_dw_garden_enemyrush",
+   "room_dw_garden_pedestal",
+   "room_dw_garden_mushrooms",
+   "room_dw_garden_flowerygardening",
+   "room_dw_garden_diner",
+   "room_dw_garden_starwalkerdash",
+   "room_dw_garden_hardpressureplates",
+   "room_dw_garden_aqua",
+   "room_dw_garden_finalplatforming",
+   "room_dw_garden_finalplatforming_right",
+   "room_dw_garden_wateringcan_aqua",
+   "room_dw_garden_aquadarkness",
+   "room_dw_garden_aquahole",
+   "room_dw_garden_aquashrine",
+   "room_dw_garden_aquaplatforming",
+   "room_dw_garden_cliffexit",
+   "room_dw_garden_susiechase",
+   "room_dw_garden_newdash",
+   "room_dw_garden_shearyguide",
+   "room_dw_pink_encounter",
+   "room_dw_garden_aquatransition",
+   "room_dw_garden_aquadash",
+   "room_dw_garden_aquahole_left",
+   "room_dw_garden_firstdash",
+   "room_dw_garden_aquadash_plat",
+   "room_dw_cliff_gardentransition_new",
+   "room_dw_cliff_climbrefresher",
+   "room_dw_cliff_cutdown_tutorial",
+   "room_dw_cliff_bunnyfarm",
+   "room_dw_cliff_silver_hammer",
+   "room_dw_cliff_dash_runner",
+   "room_dw_cliff_seth_miniboss",
+   "room_dw_cliff_shop",
+   "room_dw_cliff_netskieclimb",
+   "room_dw_cliff_finaldash",
+   "room_dw_cliff_yellowcave",
+   "room_dw_cliff_shicave",
+   "room_dw_cliff_verticalwind",
+   "room_dw_cliff_verticalwind_post",
+   "room_dw_cliff_netskieclimb_behind",
+   "room_dw_cliff_eastcliff",
+   "room_dw_cliff_bonuscombat",
+   "room_dw_cliff_twirlflowerplatforming",
+   "room_dw_cliff_kawkawdash",
+   "room_dw_cliff_precipice",
+   "room_dw_cliff_twirlflowerwind",
+   "room_dogplatforming",
+   "room_dw_fcastle_entrance",
+   "room_dw_fcastle_cafe",
+   "room_dw_fcastle_foyer",
+   "room_dw_fcastle_post_party_jail",
+   "room_dw_fcastle_shinobeetle_encounter",
+   "room_dw_fcastle_left_wing_floweryscene",
+   "room_dw_fcastle_bounce_1",
+   "room_dw_fcastle_left_twodoors",
+   "room_dw_fcastle_yellow_miniboss",
+   "room_dw_fcastle_sandtrap",
+   "room_dw_fcastle_dangerous_platforming",
+   "room_dw_fcastle_blueroom",
+   "room_dw_fcastle_yellowjail",
+   "room_dw_fcastle_onsen",
+   "room_dw_fcastle_left_penultimate",
+   "room_dw_flowery_tree",
+   "room_dw_fcastle_bounce_3",
+   "room_dw_fcastle_shinobeetle_3d",
+   "room_dw_fcastle_heldmushrooms",
+   "room_dw_fcastle_flowerydash",
+   "room_dw_fcastle_partyjail",
+   "room_dw_fcastle_terracotta_encounter",
+   "room_dw_fcastle_terracotta_bonus",
+   "room_dw_fcastle_right_wing_floweryscene",
+   "room_dw_fcastle_orange_puppet_introduction",
+   "room_dw_fcastle_gloves_tower",
+   "room_dw_fcastle_second_diner",
+   "room_dw_fcastle_obscured_bullets",
+   "room_dw_fcastle_foxhunt",
+   "room_dw_fcastle_right_penultimate",
+   "room_dw_fcastle_green_orange_battle",
+   "room_dw_fcastle_right_endingscene",
+   "room_dw_fcastle_right_puzzle",
+   "room_dw_castle_music",
+   "room_man",
+   "room_dw_dogballoon",
+   "room_dw_fcastle_sidepuzzle",
+   "room_dw_castle_tv_mike",
+   "room_dw_fcastle_zenlooker",
+   "room_dw_fcastle_trainroom",
+   "room_dw_post_flowery_battle",
+   "room_dw_fcastle_flowerclimb",
+   "room_dw_fcastle_top_intro",
+   "room_dw_fcastle_top_staircase_1",
+   "room_dw_fcastle_ultradash",
+   "room_dw_fcastle_yellowblue",
+   "room_dw_fcastle_top_entrance",
+   "room_dw_fcastle_top_staircase_2",
+   "room_dw_fcastle_green_checkpoint",
+   "room_dw_fcastle_final_save",
+   "room_dw_fcastle_flowery",
+   "room_dw_fcastle_seth_encounter",
+   "room_dw_fcastle_top_descent",
+   "room_dw_fcastle_top_pinkdoor",
+   "room_dw_fcastle_pinkroom",
+   "room_dw_fcastle_top_fountain",
+   "room_dw_post_fountain_close",
+   "room_dw_fcastle_pinkshop",
+   "room_dw_fcastle_foxhunt_terakota",
+   "room_dw_fcastle_foxhunt_socks",
+   "room_dw_fcastle_foxhunt_chaos",
+   "room_dw_fcastle_foxhunt_secret",
+   "room_dw_castle_tv_kikky",
+   "room_dw_fcastle_terracotta_puzzle",
+   "room_dw_fcastle_bromides",
+   "room_dw_fcastle_top_ascent",
+   "room_dw_fcastle_top_challenge",
+   "room_dw_fcastle_asgore",
+   "room_dw_fcastle_orange_gauntlet",
+   "room_dw_fcastle_fusumadodge",
+   "room_title_placeholder",
+   "room_intro_ch5",
+   "room_dw_cliff_sethaqua_battle",
+   "room_dw_fcastle_flowerclimb_for_tiling",
+   "room_dw_petaltest",
+   "room_floortex_test"
+  ],
+  "n_edges": 70,
+  "edges": [
+   {
+    "src": 14,
+    "dst": 13,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 289,
+    "y": 104
+   },
+   {
+    "src": 14,
+    "dst": 16,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 425,
+    "y": 100
+   },
+   {
+    "src": 16,
+    "dst": 14,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 144,
+    "y": 68
+   },
+   {
+    "src": 16,
+    "dst": 17,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 84,
+    "y": 168
+   },
+   {
+    "src": 16,
+    "dst": 18,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 594,
+    "y": 149
+   },
+   {
+    "src": 17,
+    "dst": 16,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 236,
+    "y": 134
+   },
+   {
+    "src": 18,
+    "dst": 20,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 120,
+    "y": 410
+   },
+   {
+    "src": 18,
+    "dst": 16,
+    "door": "obj_doorX_musfade",
+    "kind": "table",
+    "x": 150,
+    "y": 169
+   },
+   {
+    "src": 20,
+    "dst": 22,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 625,
+    "y": 230
+   },
+   {
+    "src": 20,
+    "dst": 35,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1258,
+    "y": 98
+   },
+   {
+    "src": 20,
+    "dst": 21,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1790,
+    "y": 100
+   },
+   {
+    "src": 20,
+    "dst": 18,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 378,
+    "y": -12
+   },
+   {
+    "src": 21,
+    "dst": 20,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": -15,
+    "y": 60
+   },
+   {
+    "src": 22,
+    "dst": 24,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 772,
+    "y": 232
+   },
+   {
+    "src": 22,
+    "dst": 20,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 780,
+    "y": 0
+   },
+   {
+    "src": 22,
+    "dst": 33,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 600,
+    "y": 90
+   },
+   {
+    "src": 24,
+    "dst": 37,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 1000,
+    "y": 80
+   },
+   {
+    "src": 24,
+    "dst": 25,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 1314,
+    "y": 106
+   },
+   {
+    "src": 24,
+    "dst": 26,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 798,
+    "y": 235
+   },
+   {
+    "src": 24,
+    "dst": 22,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 798,
+    "y": 1
+   },
+   {
+    "src": 25,
+    "dst": 24,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 2,
+    "y": 182
+   },
+   {
+    "src": 26,
+    "dst": 34,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 565,
+    "y": 85
+   },
+   {
+    "src": 26,
+    "dst": 28,
+    "door": "obj_doorC_musfade",
+    "kind": "delta",
+    "x": 380,
+    "y": 630
+   },
+   {
+    "src": 26,
+    "dst": 27,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 0,
+    "y": 340
+   },
+   {
+    "src": 26,
+    "dst": 24,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 360,
+    "y": 0
+   },
+   {
+    "src": 27,
+    "dst": 26,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 595,
+    "y": 115
+   },
+   {
+    "src": 28,
+    "dst": 26,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 120,
+    "y": 0
+   },
+   {
+    "src": 29,
+    "dst": 24,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 29,
+    "dst": 30,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 70,
+    "y": 76
+   },
+   {
+    "src": 30,
+    "dst": 29,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 186
+   },
+   {
+    "src": 30,
+    "dst": 31,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 79,
+    "y": 75
+   },
+   {
+    "src": 30,
+    "dst": 32,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 190,
+    "y": 77
+   },
+   {
+    "src": 31,
+    "dst": 30,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 31,
+    "dst": 30,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 32,
+    "dst": 30,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 236
+   },
+   {
+    "src": 33,
+    "dst": 22,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 34,
+    "dst": 26,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 35,
+    "dst": 20,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 24,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 140,
+    "y": 230
+   },
+   {
+    "src": 37,
+    "dst": 24,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 160,
+    "y": 230
+   },
+   {
+    "src": 38,
+    "dst": 22,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 120,
+    "y": 235
+   },
+   {
+    "src": 39,
+    "dst": 37,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 130,
+    "y": 230
+   },
+   {
+    "src": 40,
+    "dst": 37,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 213,
+    "y": 231
+   },
+   {
+    "src": 42,
+    "dst": 22,
+    "door": "obj_doorw_musfade",
+    "kind": "table",
+    "x": 348,
+    "y": 230
+   },
+   {
+    "src": 43,
+    "dst": 22,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 124,
+    "y": 231
+   },
+   {
+    "src": 44,
+    "dst": 45,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 57,
+    "y": 46
+   },
+   {
+    "src": 45,
+    "dst": 46,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 97,
+    "y": 195
+   },
+   {
+    "src": 45,
+    "dst": 47,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 440,
+    "y": -10
+   },
+   {
+    "src": 45,
+    "dst": 44,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 817,
+    "y": 196
+   },
+   {
+    "src": 47,
+    "dst": 45,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 300,
+    "y": 230
+   },
+   {
+    "src": 47,
+    "dst": 45,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 280,
+    "y": 230
+   },
+   {
+    "src": 47,
+    "dst": 45,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 320,
+    "y": 230
+   },
+   {
+    "src": 47,
+    "dst": 49,
+    "door": "obj_doorC",
+    "kind": "delta",
+    "x": 500,
+    "y": 95
+   },
+   {
+    "src": 49,
+    "dst": 47,
+    "door": "obj_doorD",
+    "kind": "delta",
+    "x": 140,
+    "y": 180
+   },
+   {
+    "src": 50,
+    "dst": 54,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 50,
+    "dst": 51,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 1390,
+    "y": 320
+   },
+   {
+    "src": 51,
+    "dst": 50,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": -10,
+    "y": 320
+   },
+   {
+    "src": 52,
+    "dst": 54,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 630,
+    "y": 280
+   },
+   {
+    "src": 53,
+    "dst": 54,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 200,
+    "y": 0
+   },
+   {
+    "src": 54,
+    "dst": 55,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 684,
+    "y": 192
+   },
+   {
+    "src": 55,
+    "dst": 54,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 440,
+    "y": 990
+   },
+   {
+    "src": 55,
+    "dst": 59,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 462,
+    "y": 249
+   },
+   {
+    "src": 56,
+    "dst": 54,
+    "door": "obj_doorX",
+    "kind": "table",
+    "x": 276,
+    "y": 466
+   },
+   {
+    "src": 59,
+    "dst": 60,
+    "door": "obj_doorA",
+    "kind": "delta",
+    "x": 260,
+    "y": 238
+   },
+   {
+    "src": 60,
+    "dst": 59,
+    "door": "obj_doorB",
+    "kind": "delta",
+    "x": 80,
+    "y": 457
+   },
+   {
+    "src": 62,
+    "dst": 59,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 110,
+    "y": 470
+   },
+   {
+    "src": 63,
+    "dst": 60,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 280,
+    "y": 450
+   },
+   {
+    "src": 64,
+    "dst": 60,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 257,
+    "y": 465
+   },
+   {
+    "src": 80,
+    "dst": 60,
+    "door": "obj_doorW",
+    "kind": "table",
+    "x": 269,
+    "y": 459
+   },
+   {
+    "src": 81,
+    "dst": 79,
+    "door": "obj_doorD_musfade",
+    "kind": "delta",
+    "x": 280,
+    "y": 470
+   }
+  ]
+ }
+}

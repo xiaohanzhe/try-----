@@ -1,0 +1,6307 @@
+{
+ "schema_version": 1,
+ "meta": {
+  "note": "原作五章「房间连接图」——由门对象实例 + 门对象 Alarm 事件反汇编共同还原。相邻关系全部来自原作，非我们发明。",
+  "rules": {
+   "obj_doorA[_musfade]": "room_goto_next()  => index + 1",
+   "obj_doorB[_musfade]": "room_goto_previous() => index - 1",
+   "obj_doorC[_musfade]": "room_goto(room_next(room_next(room))) => index + 2",
+   "obj_doorD[_musfade]": "room_goto(room_previous(room_previous(room))) => index - 2",
+   "obj_doorE": "room_next x3 => index + 3",
+   "obj_doorF": "room_previous x3 => index - 3",
+   "obj_doorX[_musfade]": "表驱动双向跳转（建筑入口）",
+   "obj_doorW[ obj_doorw_musfade]": "表驱动双向跳转（建筑入口）",
+   "obj_doorAny": "无任何代码 —— 纯占位标记，不参与换房间",
+   "obj_markerA..X": "落点：从对应 door 进入本房间时玩家的落点坐标"
+  },
+  "caveat": "边只覆盖「门对象驱动」的换房间。过场对象（obj_carcutscene / obj_krisroom / obj_insidEclosetcutscene / DEVICE_CONTACT 等）的 room_goto 属剧情转场，未计入连接图。"
+ },
+ "chapters": {
+  "ch1": {
+   "folder": "chapter1_windows",
+   "n_edges": 238,
+   "edges": [
+    {
+     "src": 2,
+     "src_name": "room_krisroom",
+     "dst": 3,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 3,
+     "src_name": "room_krishallway",
+     "dst": 2,
+     "dst_name": "room_krisroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 3,
+     "src_name": "room_krishallway",
+     "dst": 5,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 5,
+     "src_name": "room_torhouse",
+     "dst": 3,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 5,
+     "src_name": "room_torhouse",
+     "dst": 6,
+     "dst_name": "room_torbathroom",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 5,
+     "src_name": "room_torhouse",
+     "dst": 7,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 6,
+     "src_name": "room_torbathroom",
+     "dst": 5,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 7,
+     "src_name": "room_town_krisyard",
+     "dst": 9,
+     "dst_name": "room_town_north",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 7,
+     "src_name": "room_town_krisyard",
+     "dst": 5,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 9,
+     "src_name": "room_town_north",
+     "dst": 11,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 9,
+     "src_name": "room_town_north",
+     "dst": 24,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 9,
+     "src_name": "room_town_north",
+     "dst": 10,
+     "dst_name": "room_beach",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 9,
+     "src_name": "room_town_north",
+     "dst": 7,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 10,
+     "src_name": "room_beach",
+     "dst": 9,
+     "dst_name": "room_town_north",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 11,
+     "src_name": "room_town_mid",
+     "dst": 13,
+     "dst_name": "room_town_south",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 11,
+     "src_name": "room_town_mid",
+     "dst": 9,
+     "dst_name": "room_town_north",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 11,
+     "src_name": "room_town_mid",
+     "dst": 22,
+     "dst_name": "room_diner",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 11,
+     "src_name": "room_town_mid",
+     "dst": 27,
+     "dst_name": "room_alphysalley",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 13,
+     "src_name": "room_town_south",
+     "dst": 26,
+     "dst_name": "room_library",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 13,
+     "src_name": "room_town_south",
+     "dst": 18,
+     "dst_name": "room_hospital_lobby",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 13,
+     "src_name": "room_town_south",
+     "dst": 14,
+     "dst_name": "room_town_school",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 13,
+     "src_name": "room_town_south",
+     "dst": 15,
+     "dst_name": "room_town_church",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 13,
+     "src_name": "room_town_south",
+     "dst": 11,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 14,
+     "src_name": "room_town_school",
+     "dst": 13,
+     "dst_name": "room_town_south",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 14,
+     "src_name": "room_town_school",
+     "dst": 29,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 15,
+     "src_name": "room_town_church",
+     "dst": 23,
+     "dst_name": "room_townhall",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 15,
+     "src_name": "room_town_church",
+     "dst": 17,
+     "dst_name": "room_town_shelter",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 15,
+     "src_name": "room_town_church",
+     "dst": 16,
+     "dst_name": "room_graveyard",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 15,
+     "src_name": "room_town_church",
+     "dst": 13,
+     "dst_name": "room_town_south",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_graveyard",
+     "dst": 15,
+     "dst_name": "room_town_church",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 17,
+     "src_name": "room_town_shelter",
+     "dst": 15,
+     "dst_name": "room_town_church",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_hospital_lobby",
+     "dst": 13,
+     "dst_name": "room_town_south",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 18,
+     "src_name": "room_hospital_lobby",
+     "dst": 19,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 19,
+     "src_name": "room_hospital_hallway",
+     "dst": 18,
+     "dst_name": "room_hospital_lobby",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 19,
+     "src_name": "room_hospital_hallway",
+     "dst": 20,
+     "dst_name": "room_hospital_rudy",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 19,
+     "src_name": "room_hospital_hallway",
+     "dst": 21,
+     "dst_name": "room_hospital_room2",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_hospital_rudy",
+     "dst": 19,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_hospital_rudy",
+     "dst": 19,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 21,
+     "src_name": "room_hospital_room2",
+     "dst": 19,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_diner",
+     "dst": 11,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 23,
+     "src_name": "room_townhall",
+     "dst": 15,
+     "dst_name": "room_town_church",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 24,
+     "src_name": "room_flowershop_1f",
+     "dst": 9,
+     "dst_name": "room_town_north",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 24,
+     "src_name": "room_flowershop_1f",
+     "dst": 25,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_flowershop_1f",
+     "dst": 25,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 25,
+     "src_name": "room_flowershop_2f",
+     "dst": 24,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 25,
+     "src_name": "room_flowershop_2f",
+     "dst": 24,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_library",
+     "dst": 13,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 26,
+     "src_name": "room_library",
+     "dst": 13,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 27,
+     "src_name": "room_alphysalley",
+     "dst": 11,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 28,
+     "src_name": "room_torielclass",
+     "dst": 29,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_schoollobby",
+     "dst": 30,
+     "dst_name": "room_alphysclass",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_schoollobby",
+     "dst": 31,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_schoollobby",
+     "dst": 28,
+     "dst_name": "room_torielclass",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_schoollobby",
+     "dst": 14,
+     "dst_name": "room_town_school",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 31,
+     "src_name": "room_schooldoor",
+     "dst": 29,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_schooldoor",
+     "dst": 29,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_schooldoor",
+     "dst": 29,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_schooldoor",
+     "dst": 33,
+     "dst_name": "room_school_unusedroom",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_school_unusedroom",
+     "dst": 31,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 34,
+     "src_name": "room_dark1",
+     "dst": 35,
+     "dst_name": "room_dark1a",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_dark1a",
+     "dst": 34,
+     "dst_name": "room_dark1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_dark1a",
+     "dst": 36,
+     "dst_name": "room_dark2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 36,
+     "src_name": "room_dark2",
+     "dst": 35,
+     "dst_name": "room_dark1a",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 36,
+     "src_name": "room_dark2",
+     "dst": 37,
+     "dst_name": "room_dark3",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 37,
+     "src_name": "room_dark3",
+     "dst": 36,
+     "dst_name": "room_dark2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 37,
+     "src_name": "room_dark3",
+     "dst": 38,
+     "dst_name": "room_dark3a",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 37,
+     "src_name": "room_dark3",
+     "dst": 39,
+     "dst_name": "room_dark_wobbles",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 38,
+     "src_name": "room_dark3a",
+     "dst": 37,
+     "dst_name": "room_dark3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 39,
+     "src_name": "room_dark_wobbles",
+     "dst": 37,
+     "dst_name": "room_dark3",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 39,
+     "src_name": "room_dark_wobbles",
+     "dst": 40,
+     "dst_name": "room_dark_eyepuzzle",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 40,
+     "src_name": "room_dark_eyepuzzle",
+     "dst": 39,
+     "dst_name": "room_dark_wobbles",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 40,
+     "src_name": "room_dark_eyepuzzle",
+     "dst": 41,
+     "dst_name": "room_dark7",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 41,
+     "src_name": "room_dark7",
+     "dst": 42,
+     "dst_name": "room_dark_chase1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 41,
+     "src_name": "room_dark7",
+     "dst": 40,
+     "dst_name": "room_dark_eyepuzzle",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 42,
+     "src_name": "room_dark_chase1",
+     "dst": 43,
+     "dst_name": "room_dark_chase2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 42,
+     "src_name": "room_dark_chase1",
+     "dst": 41,
+     "dst_name": "room_dark7",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 44,
+     "src_name": "room_castle_outskirts",
+     "dst": 45,
+     "dst_name": "room_castle_town",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 45,
+     "src_name": "room_castle_town",
+     "dst": 44,
+     "dst_name": "room_castle_outskirts",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 45,
+     "src_name": "room_castle_town",
+     "dst": 46,
+     "dst_name": "room_castle_front",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 45,
+     "src_name": "room_castle_town",
+     "dst": 47,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 46,
+     "src_name": "room_castle_front",
+     "dst": 45,
+     "dst_name": "room_castle_town",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_castle_tutorial",
+     "dst": 45,
+     "dst_name": "room_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 47,
+     "src_name": "room_castle_tutorial",
+     "dst": 48,
+     "dst_name": "room_castle_darkdoor",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 48,
+     "src_name": "room_castle_darkdoor",
+     "dst": 47,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 49,
+     "src_name": "room_field_start",
+     "dst": 50,
+     "dst_name": "room_field_forest",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 50,
+     "src_name": "room_field_forest",
+     "dst": 51,
+     "dst_name": "room_field1",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 50,
+     "src_name": "room_field_forest",
+     "dst": 49,
+     "dst_name": "room_field_start",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 51,
+     "src_name": "room_field1",
+     "dst": 50,
+     "dst_name": "room_field_forest",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 51,
+     "src_name": "room_field1",
+     "dst": 52,
+     "dst_name": "room_field2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_field2",
+     "dst": 51,
+     "dst_name": "room_field1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_field2",
+     "dst": 53,
+     "dst_name": "room_field2A",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_field2",
+     "dst": 54,
+     "dst_name": "room_field_topchef",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 53,
+     "src_name": "room_field2A",
+     "dst": 52,
+     "dst_name": "room_field2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 54,
+     "src_name": "room_field_topchef",
+     "dst": 52,
+     "dst_name": "room_field2",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 54,
+     "src_name": "room_field_topchef",
+     "dst": 55,
+     "dst_name": "room_field_puzzle1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_field_puzzle1",
+     "dst": 54,
+     "dst_name": "room_field_topchef",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_field_puzzle1",
+     "dst": 56,
+     "dst_name": "room_field_maze",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_field_maze",
+     "dst": 55,
+     "dst_name": "room_field_puzzle1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_field_maze",
+     "dst": 57,
+     "dst_name": "room_field_puzzle2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 57,
+     "src_name": "room_field_puzzle2",
+     "dst": 56,
+     "dst_name": "room_field_maze",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 57,
+     "src_name": "room_field_puzzle2",
+     "dst": 58,
+     "dst_name": "room_field_getsusie",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 58,
+     "src_name": "room_field_getsusie",
+     "dst": 57,
+     "dst_name": "room_field_puzzle2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 59,
+     "src_name": "room_field_shop1",
+     "dst": 58,
+     "dst_name": "room_field_getsusie",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 59,
+     "src_name": "room_field_shop1",
+     "dst": 133,
+     "dst_name": "room_shop1",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 59,
+     "src_name": "room_field_shop1",
+     "dst": 61,
+     "dst_name": "room_field3",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 59,
+     "src_name": "room_field_shop1",
+     "dst": 60,
+     "dst_name": "room_field_puzzletutorial",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 60,
+     "src_name": "room_field_puzzletutorial",
+     "dst": 59,
+     "dst_name": "room_field_shop1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 61,
+     "src_name": "room_field3",
+     "dst": 62,
+     "dst_name": "room_field_boxpuzzle",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 61,
+     "src_name": "room_field3",
+     "dst": 59,
+     "dst_name": "room_field_shop1",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 62,
+     "src_name": "room_field_boxpuzzle",
+     "dst": 63,
+     "dst_name": "room_field4",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 62,
+     "src_name": "room_field_boxpuzzle",
+     "dst": 61,
+     "dst_name": "room_field3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 63,
+     "src_name": "room_field4",
+     "dst": 62,
+     "dst_name": "room_field_boxpuzzle",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 63,
+     "src_name": "room_field4",
+     "dst": 64,
+     "dst_name": "room_field_secret1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 63,
+     "src_name": "room_field4",
+     "dst": 65,
+     "dst_name": "room_field_checkers4",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 64,
+     "src_name": "room_field_secret1",
+     "dst": 63,
+     "dst_name": "room_field4",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 65,
+     "src_name": "room_field_checkers4",
+     "dst": 66,
+     "dst_name": "room_field_checkers2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 65,
+     "src_name": "room_field_checkers4",
+     "dst": 63,
+     "dst_name": "room_field4",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 66,
+     "src_name": "room_field_checkers2",
+     "dst": 65,
+     "dst_name": "room_field_checkers4",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 66,
+     "src_name": "room_field_checkers2",
+     "dst": 67,
+     "dst_name": "room_field_checkers6",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 67,
+     "src_name": "room_field_checkers6",
+     "dst": 68,
+     "dst_name": "room_field_checkers3",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 67,
+     "src_name": "room_field_checkers6",
+     "dst": 66,
+     "dst_name": "room_field_checkers2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 68,
+     "src_name": "room_field_checkers3",
+     "dst": 67,
+     "dst_name": "room_field_checkers6",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 68,
+     "src_name": "room_field_checkers3",
+     "dst": 69,
+     "dst_name": "room_field_checkers1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 69,
+     "src_name": "room_field_checkers1",
+     "dst": 70,
+     "dst_name": "room_field_checkers5",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 69,
+     "src_name": "room_field_checkers1",
+     "dst": 68,
+     "dst_name": "room_field_checkers3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 70,
+     "src_name": "room_field_checkers5",
+     "dst": 71,
+     "dst_name": "room_field_checkers7",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 70,
+     "src_name": "room_field_checkers5",
+     "dst": 69,
+     "dst_name": "room_field_checkers1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 71,
+     "src_name": "room_field_checkers7",
+     "dst": 70,
+     "dst_name": "room_field_checkers5",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 71,
+     "src_name": "room_field_checkers7",
+     "dst": 72,
+     "dst_name": "room_field_checkersboss",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 72,
+     "src_name": "room_field_checkersboss",
+     "dst": 73,
+     "dst_name": "room_forest_savepoint1",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 72,
+     "src_name": "room_field_checkersboss",
+     "dst": 71,
+     "dst_name": "room_field_checkers7",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 73,
+     "src_name": "room_forest_savepoint1",
+     "dst": 72,
+     "dst_name": "room_field_checkersboss",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 73,
+     "src_name": "room_forest_savepoint1",
+     "dst": 74,
+     "dst_name": "room_forest_area0",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 74,
+     "src_name": "room_forest_area0",
+     "dst": 73,
+     "dst_name": "room_forest_savepoint1",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 74,
+     "src_name": "room_forest_area0",
+     "dst": 75,
+     "dst_name": "room_forest_area1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 75,
+     "src_name": "room_forest_area1",
+     "dst": 76,
+     "dst_name": "room_forest_area2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 75,
+     "src_name": "room_forest_area1",
+     "dst": 74,
+     "dst_name": "room_forest_area0",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 76,
+     "src_name": "room_forest_area2",
+     "dst": 75,
+     "dst_name": "room_forest_area1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 76,
+     "src_name": "room_forest_area2",
+     "dst": 77,
+     "dst_name": "room_forest_area2A",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 76,
+     "src_name": "room_forest_area2",
+     "dst": 78,
+     "dst_name": "room_forest_puzzle1",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 77,
+     "src_name": "room_forest_area2A",
+     "dst": 76,
+     "dst_name": "room_forest_area2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 78,
+     "src_name": "room_forest_puzzle1",
+     "dst": 76,
+     "dst_name": "room_forest_area2",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 78,
+     "src_name": "room_forest_puzzle1",
+     "dst": 79,
+     "dst_name": "room_forest_beforeclover",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 79,
+     "src_name": "room_forest_beforeclover",
+     "dst": 78,
+     "dst_name": "room_forest_puzzle1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 79,
+     "src_name": "room_forest_beforeclover",
+     "dst": 81,
+     "dst_name": "room_forest_area3",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 79,
+     "src_name": "room_forest_beforeclover",
+     "dst": 80,
+     "dst_name": "room_forest_area3A",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 80,
+     "src_name": "room_forest_area3A",
+     "dst": 79,
+     "dst_name": "room_forest_beforeclover",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 81,
+     "src_name": "room_forest_area3",
+     "dst": 82,
+     "dst_name": "room_forest_savepoint2",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 81,
+     "src_name": "room_forest_area3",
+     "dst": 79,
+     "dst_name": "room_forest_beforeclover",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 82,
+     "src_name": "room_forest_savepoint2",
+     "dst": 83,
+     "dst_name": "room_forest_smith",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 82,
+     "src_name": "room_forest_savepoint2",
+     "dst": 84,
+     "dst_name": "room_forest_area4",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 82,
+     "src_name": "room_forest_savepoint2",
+     "dst": 81,
+     "dst_name": "room_forest_area3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 83,
+     "src_name": "room_forest_smith",
+     "dst": 82,
+     "dst_name": "room_forest_savepoint2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 84,
+     "src_name": "room_forest_area4",
+     "dst": 85,
+     "dst_name": "room_forest_dancers1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 84,
+     "src_name": "room_forest_area4",
+     "dst": 82,
+     "dst_name": "room_forest_savepoint2",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_forest_dancers1",
+     "dst": 84,
+     "dst_name": "room_forest_area4",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_forest_dancers1",
+     "dst": 87,
+     "dst_name": "room_forest_thrashmaker",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_forest_dancers1",
+     "dst": 86,
+     "dst_name": "room_forest_secret1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_forest_dancers1",
+     "dst": 86,
+     "dst_name": "room_forest_secret1",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 86,
+     "src_name": "room_forest_secret1",
+     "dst": 85,
+     "dst_name": "room_forest_dancers1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 86,
+     "src_name": "room_forest_secret1",
+     "dst": 85,
+     "dst_name": "room_forest_dancers1",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 87,
+     "src_name": "room_forest_thrashmaker",
+     "dst": 88,
+     "dst_name": "room_forest_starwalker",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 87,
+     "src_name": "room_forest_thrashmaker",
+     "dst": 85,
+     "dst_name": "room_forest_dancers1",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 88,
+     "src_name": "room_forest_starwalker",
+     "dst": 87,
+     "dst_name": "room_forest_thrashmaker",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 88,
+     "src_name": "room_forest_starwalker",
+     "dst": 89,
+     "dst_name": "room_forest_area5",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 89,
+     "src_name": "room_forest_area5",
+     "dst": 90,
+     "dst_name": "room_forest_savepoint_relax",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 90,
+     "src_name": "room_forest_savepoint_relax",
+     "dst": 89,
+     "dst_name": "room_forest_area5",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 91,
+     "src_name": "room_forest_maze1",
+     "dst": 90,
+     "dst_name": "room_forest_savepoint_relax",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 91,
+     "src_name": "room_forest_maze1",
+     "dst": 90,
+     "dst_name": "room_forest_savepoint_relax",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 91,
+     "src_name": "room_forest_maze1",
+     "dst": 90,
+     "dst_name": "room_forest_savepoint_relax",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 92,
+     "src_name": "room_forest_maze_deadend",
+     "dst": 91,
+     "dst_name": "room_forest_maze1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 94,
+     "src_name": "room_forest_maze2",
+     "dst": 93,
+     "dst_name": "room_forest_maze_susie",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 94,
+     "src_name": "room_forest_maze2",
+     "dst": 93,
+     "dst_name": "room_forest_maze_susie",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 94,
+     "src_name": "room_forest_maze2",
+     "dst": 93,
+     "dst_name": "room_forest_maze_susie",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 94,
+     "src_name": "room_forest_maze2",
+     "dst": 93,
+     "dst_name": "room_forest_maze_susie",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 95,
+     "src_name": "room_forest_maze_deadend2",
+     "dst": 93,
+     "dst_name": "room_forest_maze_susie",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 96,
+     "src_name": "room_forest_savepoint3",
+     "dst": 97,
+     "dst_name": "room_forest_fightsusie",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 96,
+     "src_name": "room_forest_savepoint3",
+     "dst": 90,
+     "dst_name": "room_forest_savepoint_relax",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 97,
+     "src_name": "room_forest_fightsusie",
+     "dst": 96,
+     "dst_name": "room_forest_savepoint3",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 98,
+     "src_name": "room_forest_afterthrash2",
+     "dst": 97,
+     "dst_name": "room_forest_fightsusie",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 98,
+     "src_name": "room_forest_afterthrash2",
+     "dst": 99,
+     "dst_name": "room_forest_afterthrash3",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 99,
+     "src_name": "room_forest_afterthrash3",
+     "dst": 98,
+     "dst_name": "room_forest_afterthrash2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 99,
+     "src_name": "room_forest_afterthrash3",
+     "dst": 100,
+     "dst_name": "room_forest_afterthrash4",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 100,
+     "src_name": "room_forest_afterthrash4",
+     "dst": 99,
+     "dst_name": "room_forest_afterthrash3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 100,
+     "src_name": "room_forest_afterthrash4",
+     "dst": 101,
+     "dst_name": "room_forest_castleview",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 101,
+     "src_name": "room_forest_castleview",
+     "dst": 100,
+     "dst_name": "room_forest_afterthrash4",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 101,
+     "src_name": "room_forest_castleview",
+     "dst": 102,
+     "dst_name": "room_forest_chase1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 102,
+     "src_name": "room_forest_chase1",
+     "dst": 103,
+     "dst_name": "room_forest_chase2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 103,
+     "src_name": "room_forest_chase2",
+     "dst": 104,
+     "dst_name": "room_forest_castlefront",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 104,
+     "src_name": "room_forest_castlefront",
+     "dst": 113,
+     "dst_name": "room_cc_entrance",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 105,
+     "src_name": "room_cc_prison_cells",
+     "dst": 106,
+     "dst_name": "room_cc_prisonlancer",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 105,
+     "src_name": "room_cc_prison_cells",
+     "dst": 106,
+     "dst_name": "room_cc_prisonlancer",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 106,
+     "src_name": "room_cc_prisonlancer",
+     "dst": 105,
+     "dst_name": "room_cc_prison_cells",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 106,
+     "src_name": "room_cc_prisonlancer",
+     "dst": 107,
+     "dst_name": "room_cc_prison_to_elevator",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 106,
+     "src_name": "room_cc_prisonlancer",
+     "dst": 105,
+     "dst_name": "room_cc_prison_cells",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 107,
+     "src_name": "room_cc_prison_to_elevator",
+     "dst": 108,
+     "dst_name": "room_cc_prison2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 107,
+     "src_name": "room_cc_prison_to_elevator",
+     "dst": 106,
+     "dst_name": "room_cc_prisonlancer",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 107,
+     "src_name": "room_cc_prison_to_elevator",
+     "dst": 109,
+     "dst_name": "room_cc_prisonelevator",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 108,
+     "src_name": "room_cc_prison2",
+     "dst": 107,
+     "dst_name": "room_cc_prison_to_elevator",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 111,
+     "src_name": "room_cc_prison_prejoker",
+     "dst": 109,
+     "dst_name": "room_cc_prisonelevator",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 112,
+     "src_name": "room_cc_joker",
+     "dst": 111,
+     "dst_name": "room_cc_prison_prejoker",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 113,
+     "src_name": "room_cc_entrance",
+     "dst": 114,
+     "dst_name": "room_cc_1f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 113,
+     "src_name": "room_cc_entrance",
+     "dst": 104,
+     "dst_name": "room_forest_castlefront",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 114,
+     "src_name": "room_cc_1f",
+     "dst": 109,
+     "dst_name": "room_cc_prisonelevator",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 114,
+     "src_name": "room_cc_1f",
+     "dst": 115,
+     "dst_name": "room_cc_rudinn",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 114,
+     "src_name": "room_cc_1f",
+     "dst": 116,
+     "dst_name": "room_cc_2f",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 114,
+     "src_name": "room_cc_1f",
+     "dst": 110,
+     "dst_name": "room_cc_elevator",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 114,
+     "src_name": "room_cc_1f",
+     "dst": 113,
+     "dst_name": "room_cc_entrance",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 115,
+     "src_name": "room_cc_rudinn",
+     "dst": 114,
+     "dst_name": "room_cc_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 116,
+     "src_name": "room_cc_2f",
+     "dst": 117,
+     "dst_name": "room_cc_rurus1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 116,
+     "src_name": "room_cc_2f",
+     "dst": 114,
+     "dst_name": "room_cc_1f",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 116,
+     "src_name": "room_cc_2f",
+     "dst": 118,
+     "dst_name": "room_cc_3f",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 117,
+     "src_name": "room_cc_rurus1",
+     "dst": 116,
+     "dst_name": "room_cc_2f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 118,
+     "src_name": "room_cc_3f",
+     "dst": 119,
+     "dst_name": "room_cc_hathy",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 118,
+     "src_name": "room_cc_3f",
+     "dst": 120,
+     "dst_name": "room_cc_4f",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 118,
+     "src_name": "room_cc_3f",
+     "dst": 116,
+     "dst_name": "room_cc_2f",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 119,
+     "src_name": "room_cc_hathy",
+     "dst": 118,
+     "dst_name": "room_cc_3f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 120,
+     "src_name": "room_cc_4f",
+     "dst": 121,
+     "dst_name": "room_cc_rurus2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 120,
+     "src_name": "room_cc_4f",
+     "dst": 118,
+     "dst_name": "room_cc_3f",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 120,
+     "src_name": "room_cc_4f",
+     "dst": 122,
+     "dst_name": "room_cc_clover",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 121,
+     "src_name": "room_cc_rurus2",
+     "dst": 120,
+     "dst_name": "room_cc_4f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 122,
+     "src_name": "room_cc_clover",
+     "dst": 120,
+     "dst_name": "room_cc_4f",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 123,
+     "src_name": "room_cc_5f",
+     "dst": 134,
+     "dst_name": "room_shop2",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 123,
+     "src_name": "room_cc_5f",
+     "dst": 125,
+     "dst_name": "room_cc_6f",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 123,
+     "src_name": "room_cc_5f",
+     "dst": 110,
+     "dst_name": "room_cc_elevator",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 123,
+     "src_name": "room_cc_5f",
+     "dst": 124,
+     "dst_name": "room_cc_lancer",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 124,
+     "src_name": "room_cc_lancer",
+     "dst": 123,
+     "dst_name": "room_cc_5f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 125,
+     "src_name": "room_cc_6f",
+     "dst": 123,
+     "dst_name": "room_cc_5f",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 125,
+     "src_name": "room_cc_6f",
+     "dst": 126,
+     "dst_name": "room_cc_throneroom",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 126,
+     "src_name": "room_cc_throneroom",
+     "dst": 125,
+     "dst_name": "room_cc_6f",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 126,
+     "src_name": "room_cc_throneroom",
+     "dst": 127,
+     "dst_name": "room_cc_preroof",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 127,
+     "src_name": "room_cc_preroof",
+     "dst": 128,
+     "dst_name": "room_cc_kingbattle",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 127,
+     "src_name": "room_cc_preroof",
+     "dst": 126,
+     "dst_name": "room_cc_throneroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 128,
+     "src_name": "room_cc_kingbattle",
+     "dst": 127,
+     "dst_name": "room_cc_preroof",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 128,
+     "src_name": "room_cc_kingbattle",
+     "dst": 129,
+     "dst_name": "room_cc_prefountain",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 129,
+     "src_name": "room_cc_prefountain",
+     "dst": 128,
+     "dst_name": "room_cc_kingbattle",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 129,
+     "src_name": "room_cc_prefountain",
+     "dst": 130,
+     "dst_name": "room_cc_fountain",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 142,
+     "src_name": "room_man",
+     "dst": 82,
+     "dst_name": "room_forest_savepoint2",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    }
+   ]
+  },
+  "ch2": {
+   "folder": "chapter2_windows",
+   "n_edges": 323,
+   "edges": [
+    {
+     "src": 2,
+     "src_name": "room_title_placeholder",
+     "dst": 1,
+     "dst_name": "ROOM_INITIALIZE",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 11,
+     "src_name": "room_shaun_puzzle",
+     "dst": 10,
+     "dst_name": "room_teacup_demobullets",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 11,
+     "src_name": "room_shaun_puzzle",
+     "dst": 12,
+     "dst_name": "room_GMS2_test",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_krisroom",
+     "dst": 19,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 19,
+     "src_name": "room_krishallway",
+     "dst": 18,
+     "dst_name": "room_krisroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 19,
+     "src_name": "room_krishallway",
+     "dst": 21,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 21,
+     "src_name": "room_torhouse",
+     "dst": 19,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 21,
+     "src_name": "room_torhouse",
+     "dst": 22,
+     "dst_name": "room_torbathroom",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 21,
+     "src_name": "room_torhouse",
+     "dst": 23,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 22,
+     "src_name": "room_torbathroom",
+     "dst": 21,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 23,
+     "src_name": "room_town_krisyard",
+     "dst": 25,
+     "dst_name": "room_town_north",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 23,
+     "src_name": "room_town_krisyard",
+     "dst": 21,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 25,
+     "src_name": "room_town_north",
+     "dst": 27,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 25,
+     "src_name": "room_town_north",
+     "dst": 40,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 25,
+     "src_name": "room_town_north",
+     "dst": 26,
+     "dst_name": "room_beach",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 25,
+     "src_name": "room_town_north",
+     "dst": 23,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_beach",
+     "dst": 25,
+     "dst_name": "room_town_north",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 27,
+     "src_name": "room_town_mid",
+     "dst": 29,
+     "dst_name": "room_town_south",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 27,
+     "src_name": "room_town_mid",
+     "dst": 25,
+     "dst_name": "room_town_north",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 27,
+     "src_name": "room_town_mid",
+     "dst": 38,
+     "dst_name": "room_diner",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 29,
+     "src_name": "room_town_south",
+     "dst": 42,
+     "dst_name": "room_library",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 29,
+     "src_name": "room_town_south",
+     "dst": 30,
+     "dst_name": "room_town_school",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_town_south",
+     "dst": 31,
+     "dst_name": "room_town_church",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_town_south",
+     "dst": 27,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 30,
+     "src_name": "room_town_school",
+     "dst": 29,
+     "dst_name": "room_town_south",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_town_church",
+     "dst": 39,
+     "dst_name": "room_townhall",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 31,
+     "src_name": "room_town_church",
+     "dst": 33,
+     "dst_name": "room_town_shelter",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_town_church",
+     "dst": 32,
+     "dst_name": "room_graveyard",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_town_church",
+     "dst": 29,
+     "dst_name": "room_town_south",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_graveyard",
+     "dst": 31,
+     "dst_name": "room_town_church",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_town_shelter",
+     "dst": 31,
+     "dst_name": "room_town_church",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 34,
+     "src_name": "room_hospital_lobby",
+     "dst": 29,
+     "dst_name": "room_town_south",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 34,
+     "src_name": "room_hospital_lobby",
+     "dst": 35,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_hospital_hallway",
+     "dst": 34,
+     "dst_name": "room_hospital_lobby",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_hospital_hallway",
+     "dst": 36,
+     "dst_name": "room_hospital_rudy",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_hospital_hallway",
+     "dst": 37,
+     "dst_name": "room_hospital_room2",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 36,
+     "src_name": "room_hospital_rudy",
+     "dst": 35,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 36,
+     "src_name": "room_hospital_rudy",
+     "dst": 35,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 37,
+     "src_name": "room_hospital_room2",
+     "dst": 35,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 38,
+     "src_name": "room_diner",
+     "dst": 27,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 39,
+     "src_name": "room_townhall",
+     "dst": 31,
+     "dst_name": "room_town_church",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 40,
+     "src_name": "room_flowershop_1f",
+     "dst": 25,
+     "dst_name": "room_town_north",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 40,
+     "src_name": "room_flowershop_1f",
+     "dst": 41,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 40,
+     "src_name": "room_flowershop_1f",
+     "dst": 41,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 41,
+     "src_name": "room_flowershop_2f",
+     "dst": 40,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 41,
+     "src_name": "room_flowershop_2f",
+     "dst": 40,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 42,
+     "src_name": "room_library",
+     "dst": 29,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 42,
+     "src_name": "room_library",
+     "dst": 29,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 43,
+     "src_name": "room_alphysalley",
+     "dst": 27,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 44,
+     "src_name": "room_lw_computer_lab",
+     "dst": 42,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 45,
+     "src_name": "room_lw_library_upstairs",
+     "dst": 42,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 47,
+     "src_name": "room_lw_conbini",
+     "dst": 27,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 48,
+     "src_name": "room_lw_icee_pizza",
+     "dst": 27,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 49,
+     "src_name": "room_torielclass",
+     "dst": 50,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 50,
+     "src_name": "room_schoollobby",
+     "dst": 51,
+     "dst_name": "room_alphysclass",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 50,
+     "src_name": "room_schoollobby",
+     "dst": 52,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 50,
+     "src_name": "room_schoollobby",
+     "dst": 49,
+     "dst_name": "room_torielclass",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_schooldoor",
+     "dst": 50,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_schooldoor",
+     "dst": 50,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_schooldoor",
+     "dst": 50,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_schooldoor",
+     "dst": 54,
+     "dst_name": "room_school_unusedroom",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 54,
+     "src_name": "room_school_unusedroom",
+     "dst": 52,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_castle_town",
+     "dst": 53,
+     "dst_name": "room_insidecloset",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_castle_town",
+     "dst": 56,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_castle_town",
+     "dst": 56,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 55,
+     "src_name": "room_castle_town",
+     "dst": 54,
+     "dst_name": "room_school_unusedroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_castle_tutorial",
+     "dst": 58,
+     "dst_name": "room_dw_castle_east_door",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 58,
+     "src_name": "room_dw_castle_east_door",
+     "dst": 56,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 61,
+     "src_name": "room_dw_castle_area_2",
+     "dst": 62,
+     "dst_name": "room_dw_castle_area_2_transformed",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 61,
+     "src_name": "room_dw_castle_area_2",
+     "dst": 56,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 61,
+     "src_name": "room_dw_castle_area_2",
+     "dst": 60,
+     "dst_name": "room_dw_castle_area_1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 61,
+     "src_name": "room_dw_castle_area_2",
+     "dst": 59,
+     "dst_name": "room_dw_castle_west_cliff",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 62,
+     "src_name": "room_dw_castle_area_2_transformed",
+     "dst": 63,
+     "dst_name": "room_dw_ralsei_castle_front",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 62,
+     "src_name": "room_dw_castle_area_2_transformed",
+     "dst": 229,
+     "dst_name": "room_shop1",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 63,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 62,
+     "dst_name": "room_dw_castle_area_2_transformed",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 63,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 67,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 64,
+     "src_name": "room_dw_castle_restaurant",
+     "dst": 62,
+     "dst_name": "room_dw_castle_area_2_transformed",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 65,
+     "src_name": "room_dw_castle_cafe",
+     "dst": 62,
+     "dst_name": "room_dw_castle_area_2_transformed",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 66,
+     "src_name": "room_dw_castle_dojo",
+     "dst": 62,
+     "dst_name": "room_dw_castle_area_2_transformed",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 67,
+     "src_name": "room_dw_ralsei_castle_1f",
+     "dst": 68,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 68,
+     "src_name": "room_dw_ralsei_castle_2f",
+     "dst": 67,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 69,
+     "src_name": "room_dw_castle_dungeon",
+     "dst": 67,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 71,
+     "src_name": "room_dw_castle_rooms_kris",
+     "dst": 68,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 72,
+     "src_name": "room_dw_castle_rooms_susie",
+     "dst": 68,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 75,
+     "src_name": "room_dw_cyber_intro_connector",
+     "dst": 76,
+     "dst_name": "room_dw_cyber_intro_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 76,
+     "src_name": "room_dw_cyber_intro_2",
+     "dst": 75,
+     "dst_name": "room_dw_cyber_intro_connector",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 76,
+     "src_name": "room_dw_cyber_intro_2",
+     "dst": 77,
+     "dst_name": "room_dw_cyber_rhythm_slide",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 77,
+     "src_name": "room_dw_cyber_rhythm_slide",
+     "dst": 76,
+     "dst_name": "room_dw_cyber_intro_2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 78,
+     "src_name": "room_dw_cyber_savepoint",
+     "dst": 79,
+     "dst_name": "room_dw_cyber_battle_maze_1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 79,
+     "src_name": "room_dw_cyber_battle_maze_1",
+     "dst": 78,
+     "dst_name": "room_dw_cyber_savepoint",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 79,
+     "src_name": "room_dw_cyber_battle_maze_1",
+     "dst": 80,
+     "dst_name": "room_dw_cyber_music_bullet",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 80,
+     "src_name": "room_dw_cyber_music_bullet",
+     "dst": 79,
+     "dst_name": "room_dw_cyber_battle_maze_1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 80,
+     "src_name": "room_dw_cyber_music_bullet",
+     "dst": 81,
+     "dst_name": "room_dw_cyber_tasque_battle",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 81,
+     "src_name": "room_dw_cyber_tasque_battle",
+     "dst": 80,
+     "dst_name": "room_dw_cyber_music_bullet",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 81,
+     "src_name": "room_dw_cyber_tasque_battle",
+     "dst": 83,
+     "dst_name": "room_dw_cyber_queen_boxing",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 81,
+     "src_name": "room_dw_cyber_tasque_battle",
+     "dst": 82,
+     "dst_name": "room_dw_cyber_keyboard_puzzle_1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 82,
+     "src_name": "room_dw_cyber_keyboard_puzzle_1",
+     "dst": 81,
+     "dst_name": "room_dw_cyber_tasque_battle",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 83,
+     "src_name": "room_dw_cyber_queen_boxing",
+     "dst": 81,
+     "dst_name": "room_dw_cyber_tasque_battle",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 83,
+     "src_name": "room_dw_cyber_queen_boxing",
+     "dst": 84,
+     "dst_name": "room_dw_cyber_musical_door",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 84,
+     "src_name": "room_dw_cyber_musical_door",
+     "dst": 83,
+     "dst_name": "room_dw_cyber_queen_boxing",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 84,
+     "src_name": "room_dw_cyber_musical_door",
+     "dst": 85,
+     "dst_name": "room_dw_cyber_maze_virokun",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_dw_cyber_maze_virokun",
+     "dst": 84,
+     "dst_name": "room_dw_cyber_musical_door",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_dw_cyber_maze_virokun",
+     "dst": 86,
+     "dst_name": "room_dw_cyber_keyboard_puzzle_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 85,
+     "src_name": "room_dw_cyber_maze_virokun",
+     "dst": 87,
+     "dst_name": "room_dw_cyber_battle_maze_2",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 86,
+     "src_name": "room_dw_cyber_keyboard_puzzle_2",
+     "dst": 85,
+     "dst_name": "room_dw_cyber_maze_virokun",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 87,
+     "src_name": "room_dw_cyber_battle_maze_2",
+     "dst": 85,
+     "dst_name": "room_dw_cyber_maze_virokun",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 87,
+     "src_name": "room_dw_cyber_battle_maze_2",
+     "dst": 97,
+     "dst_name": "room_dw_cyber_keyboard_puzzle_3",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 87,
+     "src_name": "room_dw_cyber_battle_maze_2",
+     "dst": 88,
+     "dst_name": "room_dw_cyber_music_final",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 88,
+     "src_name": "room_dw_cyber_music_final",
+     "dst": 87,
+     "dst_name": "room_dw_cyber_battle_maze_2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 88,
+     "src_name": "room_dw_cyber_music_final",
+     "dst": 96,
+     "dst_name": "room_dw_cyber_post_music_boss_slide",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 89,
+     "src_name": "room_dw_cyber_musical_shop",
+     "dst": 230,
+     "dst_name": "room_shop_ch2_music",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 90,
+     "src_name": "room_dw_cyber_teacup_final",
+     "dst": 95,
+     "dst_name": "room_dw_cyber_viro_ring",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 90,
+     "src_name": "room_dw_cyber_teacup_final",
+     "dst": 91,
+     "dst_name": "room_dw_cyber_rollercoaster",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 91,
+     "src_name": "room_dw_cyber_rollercoaster",
+     "dst": 90,
+     "dst_name": "room_dw_cyber_teacup_final",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 92,
+     "src_name": "room_dw_cyber_maze_fireworks",
+     "dst": 85,
+     "dst_name": "room_dw_cyber_maze_virokun",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 94,
+     "src_name": "room_dw_cyber_maze_queenscreen",
+     "dst": 95,
+     "dst_name": "room_dw_cyber_viro_ring",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 95,
+     "src_name": "room_dw_cyber_viro_ring",
+     "dst": 90,
+     "dst_name": "room_dw_cyber_teacup_final",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 95,
+     "src_name": "room_dw_cyber_viro_ring",
+     "dst": 94,
+     "dst_name": "room_dw_cyber_maze_queenscreen",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 97,
+     "src_name": "room_dw_cyber_keyboard_puzzle_3",
+     "dst": 87,
+     "dst_name": "room_dw_cyber_battle_maze_2",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 98,
+     "src_name": "room_dw_cyber_battle_maze_3",
+     "dst": 97,
+     "dst_name": "room_dw_cyber_keyboard_puzzle_3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 98,
+     "src_name": "room_dw_cyber_battle_maze_3",
+     "dst": 99,
+     "dst_name": "room_dw_cyber_teacup_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 99,
+     "src_name": "room_dw_cyber_teacup_2",
+     "dst": 98,
+     "dst_name": "room_dw_cyber_battle_maze_3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 99,
+     "src_name": "room_dw_cyber_teacup_2",
+     "dst": 100,
+     "dst_name": "room_dw_cyber_shaunsmusicalbullettunnel",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 100,
+     "src_name": "room_dw_cyber_shaunsmusicalbullettunnel",
+     "dst": 99,
+     "dst_name": "room_dw_cyber_teacup_2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 100,
+     "src_name": "room_dw_cyber_shaunsmusicalbullettunnel",
+     "dst": 101,
+     "dst_name": "room_dw_cyber_maze_rhythm",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 102,
+     "src_name": "room_dw_cyber_escalator_slide",
+     "dst": 84,
+     "dst_name": "room_dw_cyber_musical_door",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 102,
+     "src_name": "room_dw_cyber_escalator_slide",
+     "dst": 101,
+     "dst_name": "room_dw_cyber_maze_rhythm",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 103,
+     "src_name": "room_dw_cyber_nuberts_treasure",
+     "dst": 102,
+     "dst_name": "room_dw_cyber_escalator_slide",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 106,
+     "src_name": "room_dw_city_prototype_01",
+     "dst": 107,
+     "dst_name": "room_dw_city_prototype_02",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 107,
+     "src_name": "room_dw_city_prototype_02",
+     "dst": 106,
+     "dst_name": "room_dw_city_prototype_01",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 108,
+     "src_name": "room_dw_city_spamton_shop_exterior",
+     "dst": 109,
+     "dst_name": "room_dw_city_spamton_house",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 109,
+     "src_name": "room_dw_city_spamton_house",
+     "dst": 108,
+     "dst_name": "room_dw_city_spamton_shop_exterior",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 109,
+     "src_name": "room_dw_city_spamton_house",
+     "dst": 110,
+     "dst_name": "room_dw_city_intro",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 110,
+     "src_name": "room_dw_city_intro",
+     "dst": 111,
+     "dst_name": "room_dw_city_split",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 110,
+     "src_name": "room_dw_city_intro",
+     "dst": 109,
+     "dst_name": "room_dw_city_spamton_house",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 111,
+     "src_name": "room_dw_city_split",
+     "dst": 110,
+     "dst_name": "room_dw_city_intro",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 111,
+     "src_name": "room_dw_city_split",
+     "dst": 112,
+     "dst_name": "room_dw_city_entrance",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 112,
+     "src_name": "room_dw_city_entrance",
+     "dst": 113,
+     "dst_name": "room_dw_city_traffic_1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 112,
+     "src_name": "room_dw_city_entrance",
+     "dst": 111,
+     "dst_name": "room_dw_city_split",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 113,
+     "src_name": "room_dw_city_traffic_1",
+     "dst": 112,
+     "dst_name": "room_dw_city_entrance",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 113,
+     "src_name": "room_dw_city_traffic_1",
+     "dst": 114,
+     "dst_name": "room_dw_city_roadblock",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 114,
+     "src_name": "room_dw_city_roadblock",
+     "dst": 113,
+     "dst_name": "room_dw_city_traffic_1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 114,
+     "src_name": "room_dw_city_roadblock",
+     "dst": 115,
+     "dst_name": "room_dw_city_hacker",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 115,
+     "src_name": "room_dw_city_hacker",
+     "dst": 116,
+     "dst_name": "room_dw_city_mice",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 115,
+     "src_name": "room_dw_city_hacker",
+     "dst": 114,
+     "dst_name": "room_dw_city_roadblock",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 116,
+     "src_name": "room_dw_city_mice",
+     "dst": 117,
+     "dst_name": "room_dw_city_big_1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 116,
+     "src_name": "room_dw_city_mice",
+     "dst": 115,
+     "dst_name": "room_dw_city_hacker",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 117,
+     "src_name": "room_dw_city_big_1",
+     "dst": 116,
+     "dst_name": "room_dw_city_mice",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 117,
+     "src_name": "room_dw_city_big_1",
+     "dst": 118,
+     "dst_name": "room_dw_city_traffic_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 118,
+     "src_name": "room_dw_city_traffic_2",
+     "dst": 117,
+     "dst_name": "room_dw_city_big_1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 118,
+     "src_name": "room_dw_city_traffic_2",
+     "dst": 119,
+     "dst_name": "room_dw_city_big_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 119,
+     "src_name": "room_dw_city_big_2",
+     "dst": 138,
+     "dst_name": "room_dw_city_mirrorfriend",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 119,
+     "src_name": "room_dw_city_big_2",
+     "dst": 118,
+     "dst_name": "room_dw_city_traffic_2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 119,
+     "src_name": "room_dw_city_big_2",
+     "dst": 120,
+     "dst_name": "room_dw_city_queen_drunk",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 120,
+     "src_name": "room_dw_city_queen_drunk",
+     "dst": 119,
+     "dst_name": "room_dw_city_big_2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 120,
+     "src_name": "room_dw_city_queen_drunk",
+     "dst": 121,
+     "dst_name": "room_dw_city_savepoint",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 121,
+     "src_name": "room_dw_city_savepoint",
+     "dst": 122,
+     "dst_name": "room_dw_city_big_3",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 121,
+     "src_name": "room_dw_city_savepoint",
+     "dst": 120,
+     "dst_name": "room_dw_city_queen_drunk",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 122,
+     "src_name": "room_dw_city_big_3",
+     "dst": 123,
+     "dst_name": "room_dw_city_traffic_3",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 122,
+     "src_name": "room_dw_city_big_3",
+     "dst": 121,
+     "dst_name": "room_dw_city_savepoint",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 123,
+     "src_name": "room_dw_city_traffic_3",
+     "dst": 122,
+     "dst_name": "room_dw_city_big_3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 123,
+     "src_name": "room_dw_city_traffic_3",
+     "dst": 124,
+     "dst_name": "room_dw_city_mice2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 124,
+     "src_name": "room_dw_city_mice2",
+     "dst": 123,
+     "dst_name": "room_dw_city_traffic_3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 124,
+     "src_name": "room_dw_city_mice2",
+     "dst": 125,
+     "dst_name": "room_dw_city_cheesemaze",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 125,
+     "src_name": "room_dw_city_cheesemaze",
+     "dst": 124,
+     "dst_name": "room_dw_city_mice2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 125,
+     "src_name": "room_dw_city_cheesemaze",
+     "dst": 126,
+     "dst_name": "room_dw_city_mice3",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 126,
+     "src_name": "room_dw_city_mice3",
+     "dst": 125,
+     "dst_name": "room_dw_city_cheesemaze",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 126,
+     "src_name": "room_dw_city_mice3",
+     "dst": 127,
+     "dst_name": "room_dw_city_poppup",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 127,
+     "src_name": "room_dw_city_poppup",
+     "dst": 126,
+     "dst_name": "room_dw_city_mice3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 127,
+     "src_name": "room_dw_city_poppup",
+     "dst": 128,
+     "dst_name": "room_dw_city_berdly",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 128,
+     "src_name": "room_dw_city_berdly",
+     "dst": 127,
+     "dst_name": "room_dw_city_poppup",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 129,
+     "src_name": "room_dw_city_traffic_4",
+     "dst": 130,
+     "dst_name": "room_dw_city_spamton_alley",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 129,
+     "src_name": "room_dw_city_traffic_4",
+     "dst": 130,
+     "dst_name": "room_dw_city_spamton_alley",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 130,
+     "src_name": "room_dw_city_spamton_alley",
+     "dst": 129,
+     "dst_name": "room_dw_city_traffic_4",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 130,
+     "src_name": "room_dw_city_spamton_alley",
+     "dst": 129,
+     "dst_name": "room_dw_city_traffic_4",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 131,
+     "src_name": "room_dw_city_monologue",
+     "dst": 129,
+     "dst_name": "room_dw_city_traffic_4",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 131,
+     "src_name": "room_dw_city_monologue",
+     "dst": 132,
+     "dst_name": "room_dw_city_baseball",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 132,
+     "src_name": "room_dw_city_baseball",
+     "dst": 133,
+     "dst_name": "room_dw_city_postbaseball_1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 132,
+     "src_name": "room_dw_city_baseball",
+     "dst": 131,
+     "dst_name": "room_dw_city_monologue",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 133,
+     "src_name": "room_dw_city_postbaseball_1",
+     "dst": 134,
+     "dst_name": "room_dw_city_postbaseball_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 133,
+     "src_name": "room_dw_city_postbaseball_1",
+     "dst": 132,
+     "dst_name": "room_dw_city_baseball",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 134,
+     "src_name": "room_dw_city_postbaseball_2",
+     "dst": 133,
+     "dst_name": "room_dw_city_postbaseball_1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 134,
+     "src_name": "room_dw_city_postbaseball_2",
+     "dst": 135,
+     "dst_name": "room_dw_city_postbaseball_3",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 136,
+     "src_name": "room_dw_city_mansion_front",
+     "dst": 135,
+     "dst_name": "room_dw_city_postbaseball_3",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 137,
+     "src_name": "room_dw_city_susie_ralsei_fun_1",
+     "dst": 117,
+     "dst_name": "room_dw_city_big_1",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 139,
+     "src_name": "room_dw_city_treasure",
+     "dst": 117,
+     "dst_name": "room_dw_city_big_1",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 140,
+     "src_name": "room_dw_city_dog_traffic",
+     "dst": 123,
+     "dst_name": "room_dw_city_traffic_3",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 141,
+     "src_name": "room_dw_city_man",
+     "dst": 123,
+     "dst_name": "room_dw_city_traffic_3",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 142,
+     "src_name": "room_dw_city_moss",
+     "dst": 123,
+     "dst_name": "room_dw_city_traffic_3",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 143,
+     "src_name": "room_dw_city_big_3_backup_2exits",
+     "dst": 144,
+     "dst_name": "room_dw_city_traffic_3_2Entrances",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 143,
+     "src_name": "room_dw_city_big_3_backup_2exits",
+     "dst": 142,
+     "dst_name": "room_dw_city_moss",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 144,
+     "src_name": "room_dw_city_traffic_3_2Entrances",
+     "dst": 143,
+     "dst_name": "room_dw_city_big_3_backup_2exits",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 144,
+     "src_name": "room_dw_city_traffic_3_2Entrances",
+     "dst": 145,
+     "dst_name": "room_dw_city_cheese",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 145,
+     "src_name": "room_dw_city_cheese",
+     "dst": 146,
+     "dst_name": "room_dw_city_carnival",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 145,
+     "src_name": "room_dw_city_cheese",
+     "dst": 144,
+     "dst_name": "room_dw_city_traffic_3_2Entrances",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 146,
+     "src_name": "room_dw_city_carnival",
+     "dst": 145,
+     "dst_name": "room_dw_city_cheese",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 146,
+     "src_name": "room_dw_city_carnival",
+     "dst": 147,
+     "dst_name": "room_dw_city_noelle_fight_intro",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 148,
+     "src_name": "room_dw_city_spamton_shop_interior",
+     "dst": 149,
+     "dst_name": "room_dw_city_monologue_old",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 149,
+     "src_name": "room_dw_city_monologue_old",
+     "dst": 150,
+     "dst_name": "room_dw_mansion_krisroom",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 150,
+     "src_name": "room_dw_mansion_krisroom",
+     "dst": 152,
+     "dst_name": "room_dw_mansion_lightner_hallway",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 151,
+     "src_name": "room_dw_mansion_susieroom",
+     "dst": 152,
+     "dst_name": "room_dw_mansion_lightner_hallway",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 156,
+     "src_name": "room_dw_mansion_dining_a",
+     "dst": 157,
+     "dst_name": "room_dw_mansion_entrance",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 157,
+     "src_name": "room_dw_mansion_entrance",
+     "dst": 156,
+     "dst_name": "room_dw_mansion_dining_a",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 157,
+     "src_name": "room_dw_mansion_entrance",
+     "dst": 158,
+     "dst_name": "room_dw_mansion_fire_paintings",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 157,
+     "src_name": "room_dw_mansion_entrance",
+     "dst": 231,
+     "dst_name": "room_shop_ch2_swatch",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 158,
+     "src_name": "room_dw_mansion_fire_paintings",
+     "dst": 159,
+     "dst_name": "room_dw_mansion_single_pot",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 158,
+     "src_name": "room_dw_mansion_fire_paintings",
+     "dst": 157,
+     "dst_name": "room_dw_mansion_entrance",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 159,
+     "src_name": "room_dw_mansion_single_pot",
+     "dst": 160,
+     "dst_name": "room_dw_mansion_potBalance",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 159,
+     "src_name": "room_dw_mansion_single_pot",
+     "dst": 158,
+     "dst_name": "room_dw_mansion_fire_paintings",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 160,
+     "src_name": "room_dw_mansion_potBalance",
+     "dst": 159,
+     "dst_name": "room_dw_mansion_single_pot",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 160,
+     "src_name": "room_dw_mansion_potBalance",
+     "dst": 161,
+     "dst_name": "room_dw_mansion_tasquePaintings",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 161,
+     "src_name": "room_dw_mansion_tasquePaintings",
+     "dst": 160,
+     "dst_name": "room_dw_mansion_potBalance",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 161,
+     "src_name": "room_dw_mansion_tasquePaintings",
+     "dst": 162,
+     "dst_name": "room_dw_mansion_traffic",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 162,
+     "src_name": "room_dw_mansion_traffic",
+     "dst": 161,
+     "dst_name": "room_dw_mansion_tasquePaintings",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 162,
+     "src_name": "room_dw_mansion_traffic",
+     "dst": 163,
+     "dst_name": "room_dw_mansion_east_1f_e",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 162,
+     "src_name": "room_dw_mansion_traffic",
+     "dst": 165,
+     "dst_name": "room_dw_mansion_east_teacup",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 163,
+     "src_name": "room_dw_mansion_east_1f_e",
+     "dst": 162,
+     "dst_name": "room_dw_mansion_traffic",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 163,
+     "src_name": "room_dw_mansion_east_1f_e",
+     "dst": 164,
+     "dst_name": "room_dw_mansion_east_1f_secret",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 164,
+     "src_name": "room_dw_mansion_east_1f_secret",
+     "dst": 163,
+     "dst_name": "room_dw_mansion_east_1f_e",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 164,
+     "src_name": "room_dw_mansion_east_1f_secret",
+     "dst": 169,
+     "dst_name": "room_dw_mansion_b_entrance",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 167,
+     "src_name": "room_dw_mansion_east_teacup_3",
+     "dst": 168,
+     "dst_name": "room_dw_mansion_east_teacup_2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 167,
+     "src_name": "room_dw_mansion_east_teacup_3",
+     "dst": 166,
+     "dst_name": "room_dw_mansion_east_teacup_4",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 169,
+     "src_name": "room_dw_mansion_b_entrance",
+     "dst": 170,
+     "dst_name": "room_dw_mansion_b_stairs",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 169,
+     "src_name": "room_dw_mansion_b_entrance",
+     "dst": 164,
+     "dst_name": "room_dw_mansion_east_1f_secret",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 170,
+     "src_name": "room_dw_mansion_b_stairs",
+     "dst": 171,
+     "dst_name": "room_dw_mansion_b_central",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 170,
+     "src_name": "room_dw_mansion_b_stairs",
+     "dst": 169,
+     "dst_name": "room_dw_mansion_b_entrance",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 171,
+     "src_name": "room_dw_mansion_b_central",
+     "dst": 172,
+     "dst_name": "room_dw_mansion_b_west_1f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 171,
+     "src_name": "room_dw_mansion_b_central",
+     "dst": 170,
+     "dst_name": "room_dw_mansion_b_stairs",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 172,
+     "src_name": "room_dw_mansion_b_west_1f",
+     "dst": 171,
+     "dst_name": "room_dw_mansion_b_central",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 173,
+     "src_name": "room_dw_mansion_b_west_1f_a",
+     "dst": 172,
+     "dst_name": "room_dw_mansion_b_west_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 174,
+     "src_name": "room_dw_mansion_b_west_1f_b",
+     "dst": 172,
+     "dst_name": "room_dw_mansion_b_west_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 175,
+     "src_name": "room_dw_mansion_b_west_2f",
+     "dst": 172,
+     "dst_name": "room_dw_mansion_b_west_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 178,
+     "src_name": "room_dw_mansion_b_east_b",
+     "dst": 176,
+     "dst_name": "room_dw_mansion_b_east",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 180,
+     "src_name": "room_dw_mansion_east_2f_a",
+     "dst": 181,
+     "dst_name": "room_dw_mansion_east_2f_transformed_new",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 180,
+     "src_name": "room_dw_mansion_east_2f_a",
+     "dst": 165,
+     "dst_name": "room_dw_mansion_east_teacup",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 181,
+     "src_name": "room_dw_mansion_east_2f_transformed_new",
+     "dst": 180,
+     "dst_name": "room_dw_mansion_east_2f_a",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 181,
+     "src_name": "room_dw_mansion_east_2f_transformed_new",
+     "dst": 182,
+     "dst_name": "room_dw_mansion_east_2f_shortcut",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 182,
+     "src_name": "room_dw_mansion_east_2f_shortcut",
+     "dst": 181,
+     "dst_name": "room_dw_mansion_east_2f_transformed_new",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 183,
+     "src_name": "room_dw_mansion_kitchen",
+     "dst": 181,
+     "dst_name": "room_dw_mansion_east_2f_transformed_new",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 188,
+     "src_name": "room_dw_mansion_east_3f_projection",
+     "dst": 187,
+     "dst_name": "room_dw_mansion_east_3f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 189,
+     "src_name": "room_dw_mansion_east_3f_toilet",
+     "dst": 187,
+     "dst_name": "room_dw_mansion_east_3f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 190,
+     "src_name": "room_dw_mansion_acid_tunnel",
+     "dst": 187,
+     "dst_name": "room_dw_mansion_east_3f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 190,
+     "src_name": "room_dw_mansion_acid_tunnel",
+     "dst": 191,
+     "dst_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 191,
+     "src_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+     "dst": 204,
+     "dst_name": "room_dw_mansion_bridges",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 191,
+     "src_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+     "dst": 192,
+     "dst_name": "room_dw_mansion_acid_tunnel_loop_rouxls",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 191,
+     "src_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+     "dst": 190,
+     "dst_name": "room_dw_mansion_acid_tunnel",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 192,
+     "src_name": "room_dw_mansion_acid_tunnel_loop_rouxls",
+     "dst": 191,
+     "dst_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 192,
+     "src_name": "room_dw_mansion_acid_tunnel_loop_rouxls",
+     "dst": 193,
+     "dst_name": "room_dw_mansion_acid_tunnel_exit",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 193,
+     "src_name": "room_dw_mansion_acid_tunnel_exit",
+     "dst": 194,
+     "dst_name": "room_dw_mansion_east_4f_b",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 193,
+     "src_name": "room_dw_mansion_acid_tunnel_exit",
+     "dst": 192,
+     "dst_name": "room_dw_mansion_acid_tunnel_loop_rouxls",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 194,
+     "src_name": "room_dw_mansion_east_4f_b",
+     "dst": 193,
+     "dst_name": "room_dw_mansion_acid_tunnel_exit",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 194,
+     "src_name": "room_dw_mansion_east_4f_b",
+     "dst": 195,
+     "dst_name": "room_dw_mansion_east_4f_c",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 195,
+     "src_name": "room_dw_mansion_east_4f_c",
+     "dst": 196,
+     "dst_name": "room_dw_mansion_east_4f_d",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 195,
+     "src_name": "room_dw_mansion_east_4f_c",
+     "dst": 194,
+     "dst_name": "room_dw_mansion_east_4f_b",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 196,
+     "src_name": "room_dw_mansion_east_4f_d",
+     "dst": 195,
+     "dst_name": "room_dw_mansion_east_4f_c",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 196,
+     "src_name": "room_dw_mansion_east_4f_d",
+     "dst": 197,
+     "dst_name": "room_dw_mansion_top",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 197,
+     "src_name": "room_dw_mansion_top",
+     "dst": 196,
+     "dst_name": "room_dw_mansion_east_4f_d",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 198,
+     "src_name": "room_dw_mansion_top_post",
+     "dst": 197,
+     "dst_name": "room_dw_mansion_top",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 199,
+     "src_name": "room_dw_mansion_prefountain",
+     "dst": 200,
+     "dst_name": "room_dw_mansion_fountain",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 203,
+     "src_name": "room_dw_mansion_noelle_room",
+     "dst": 194,
+     "dst_name": "room_dw_mansion_east_4f_b",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 205,
+     "src_name": "room_dw_mansion_bridges_funny",
+     "dst": 204,
+     "dst_name": "room_dw_mansion_bridges",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 205,
+     "src_name": "room_dw_mansion_bridges_funny",
+     "dst": 204,
+     "dst_name": "room_dw_mansion_bridges",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 206,
+     "src_name": "room_dw_mansion_mouseLottery",
+     "dst": 204,
+     "dst_name": "room_dw_mansion_bridges",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 206,
+     "src_name": "room_dw_mansion_mouseLottery",
+     "dst": 207,
+     "dst_name": "room_dw_mansion_hands",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 207,
+     "src_name": "room_dw_mansion_hands",
+     "dst": 204,
+     "dst_name": "room_dw_mansion_bridges",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 207,
+     "src_name": "room_dw_mansion_hands",
+     "dst": 206,
+     "dst_name": "room_dw_mansion_mouseLottery",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 210,
+     "src_name": "room_dw_mansion_dining_storage",
+     "dst": 209,
+     "dst_name": "room_dw_mansion_dininghall",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 211,
+     "src_name": "room_dw_mansion_east_1f_b",
+     "dst": 210,
+     "dst_name": "room_dw_mansion_dining_storage",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 212,
+     "src_name": "room_dw_mansion_east_2f_c_b",
+     "dst": 184,
+     "dst_name": "room_dw_mansion_east_2f_c",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 213,
+     "src_name": "room_dw_mansion_traffic_original",
+     "dst": 212,
+     "dst_name": "room_dw_mansion_east_2f_c_b",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 213,
+     "src_name": "room_dw_mansion_traffic_original",
+     "dst": 214,
+     "dst_name": "room_dw_mansion_east_1f_a",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 214,
+     "src_name": "room_dw_mansion_east_1f_a",
+     "dst": 215,
+     "dst_name": "room_dw_mansion_east_2f_teacup",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 214,
+     "src_name": "room_dw_mansion_east_1f_a",
+     "dst": 213,
+     "dst_name": "room_dw_mansion_traffic_original",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 215,
+     "src_name": "room_dw_mansion_east_2f_teacup",
+     "dst": 214,
+     "dst_name": "room_dw_mansion_east_1f_a",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 216,
+     "src_name": "room_dw_mansion_east_4f_e",
+     "dst": 215,
+     "dst_name": "room_dw_mansion_east_2f_teacup",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 216,
+     "src_name": "room_dw_mansion_east_4f_e",
+     "dst": 217,
+     "dst_name": "room_dw_mansion_east_4f_a",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 217,
+     "src_name": "room_dw_mansion_east_4f_a",
+     "dst": 218,
+     "dst_name": "room_dw_mansion_east_2f_ufo_old",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 217,
+     "src_name": "room_dw_mansion_east_4f_a",
+     "dst": 216,
+     "dst_name": "room_dw_mansion_east_4f_e",
+     "door": "obj_doorB_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 217,
+     "src_name": "room_dw_mansion_east_4f_a",
+     "dst": 157,
+     "dst_name": "room_dw_mansion_entrance",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 218,
+     "src_name": "room_dw_mansion_east_2f_ufo_old",
+     "dst": 217,
+     "dst_name": "room_dw_mansion_east_4f_a",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 218,
+     "src_name": "room_dw_mansion_east_2f_ufo_old",
+     "dst": 219,
+     "dst_name": "room_dw_mansion_east_1f_d",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 219,
+     "src_name": "room_dw_mansion_east_1f_d",
+     "dst": 218,
+     "dst_name": "room_dw_mansion_east_2f_ufo_old",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 219,
+     "src_name": "room_dw_mansion_east_1f_d",
+     "dst": 220,
+     "dst_name": "room_dw_mansion_east_1f_c",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 220,
+     "src_name": "room_dw_mansion_east_1f_c",
+     "dst": 219,
+     "dst_name": "room_dw_mansion_east_1f_d",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 220,
+     "src_name": "room_dw_mansion_east_1f_c",
+     "dst": 221,
+     "dst_name": "room_dw_mansion_sparks",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 221,
+     "src_name": "room_dw_mansion_sparks",
+     "dst": 220,
+     "dst_name": "room_dw_mansion_east_1f_c",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 222,
+     "src_name": "room_dw_mansion_acid_tunnel_old",
+     "dst": 223,
+     "dst_name": "room_dw_mansion_top_post_old",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 223,
+     "src_name": "room_dw_mansion_top_post_old",
+     "dst": 222,
+     "dst_name": "room_dw_mansion_acid_tunnel_old",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 242,
+     "src_name": "room_dw_cyber_battle_maze_2_old",
+     "dst": 240,
+     "dst_name": "room_DARKempty",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 242,
+     "src_name": "room_dw_cyber_battle_maze_2_old",
+     "dst": 243,
+     "dst_name": "room_dw_cyber_keyboard_puzzle_1_old",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 244,
+     "src_name": "room_dw_cyber_tasque_battle_og",
+     "dst": 245,
+     "dst_name": "room_dw_cyber_savepoint_original",
+     "door": "obj_doorA_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 244,
+     "src_name": "room_dw_cyber_tasque_battle_og",
+     "dst": 243,
+     "dst_name": "room_dw_cyber_keyboard_puzzle_1_old",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 244,
+     "src_name": "room_dw_cyber_tasque_battle_og",
+     "dst": 246,
+     "dst_name": "room_dw_cyber_battle_maze_1_Original",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 245,
+     "src_name": "room_dw_cyber_savepoint_original",
+     "dst": 244,
+     "dst_name": "room_dw_cyber_tasque_battle_og",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 245,
+     "src_name": "room_dw_cyber_savepoint_original",
+     "dst": 246,
+     "dst_name": "room_dw_cyber_battle_maze_1_Original",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 246,
+     "src_name": "room_dw_cyber_battle_maze_1_Original",
+     "dst": 245,
+     "dst_name": "room_dw_cyber_savepoint_original",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 246,
+     "src_name": "room_dw_cyber_battle_maze_1_Original",
+     "dst": 247,
+     "dst_name": "room_dw_cyber_music_bullet_original",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 247,
+     "src_name": "room_dw_cyber_music_bullet_original",
+     "dst": 246,
+     "dst_name": "room_dw_cyber_battle_maze_1_Original",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 247,
+     "src_name": "room_dw_cyber_music_bullet_original",
+     "dst": 248,
+     "dst_name": "room_dw_cyber_maze_virokun_backuo",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 248,
+     "src_name": "room_dw_cyber_maze_virokun_backuo",
+     "dst": 247,
+     "dst_name": "room_dw_cyber_music_bullet_original",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 248,
+     "src_name": "room_dw_cyber_maze_virokun_backuo",
+     "dst": 249,
+     "dst_name": "room_dw_cyber_battle_maze_2_toby",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 249,
+     "src_name": "room_dw_cyber_battle_maze_2_toby",
+     "dst": 248,
+     "dst_name": "room_dw_cyber_maze_virokun_backuo",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 249,
+     "src_name": "room_dw_cyber_battle_maze_2_toby",
+     "dst": 250,
+     "dst_name": "room_dw_city_big_1_original",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 250,
+     "src_name": "room_dw_city_big_1_original",
+     "dst": 249,
+     "dst_name": "room_dw_cyber_battle_maze_2_toby",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 250,
+     "src_name": "room_dw_city_big_1_original",
+     "dst": 251,
+     "dst_name": "room_dw_city_traffic_2_old",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 251,
+     "src_name": "room_dw_city_traffic_2_old",
+     "dst": 250,
+     "dst_name": "room_dw_city_big_1_original",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 251,
+     "src_name": "room_dw_city_traffic_2_old",
+     "dst": 252,
+     "dst_name": "room_dw_city_big_2_OG",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 252,
+     "src_name": "room_dw_city_big_2_OG",
+     "dst": 251,
+     "dst_name": "room_dw_city_traffic_2_old",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 252,
+     "src_name": "room_dw_city_big_2_OG",
+     "dst": 253,
+     "dst_name": "room_dw_city_mice2_og",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 254,
+     "src_name": "room_dw_mansion_east_teacup_4_old",
+     "dst": 255,
+     "dst_name": "room_dw_cyber_teacup_1",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 254,
+     "src_name": "room_dw_mansion_east_teacup_4_old",
+     "dst": 253,
+     "dst_name": "room_dw_city_mice2_og",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 255,
+     "src_name": "room_dw_cyber_teacup_1",
+     "dst": 254,
+     "dst_name": "room_dw_mansion_east_teacup_4_old",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 255,
+     "src_name": "room_dw_cyber_teacup_1",
+     "dst": 256,
+     "dst_name": "room_dw_cyber_viromaze2",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 256,
+     "src_name": "room_dw_cyber_viromaze2",
+     "dst": 255,
+     "dst_name": "room_dw_cyber_teacup_1",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 257,
+     "src_name": "room_dw_city_traffic_5_old",
+     "dst": 256,
+     "dst_name": "room_dw_cyber_viromaze2",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 257,
+     "src_name": "room_dw_city_traffic_5_old",
+     "dst": 258,
+     "dst_name": "room_dw_mansion_dining_storage_old",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 259,
+     "src_name": "room_dw_cyber_virovirokun_fight",
+     "dst": 258,
+     "dst_name": "room_dw_mansion_dining_storage_old",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 261,
+     "src_name": "room_dw_city_traffic_3_backup",
+     "dst": 260,
+     "dst_name": "room_dw_mansion_east_2f_d_backup",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 261,
+     "src_name": "room_dw_city_traffic_3_backup",
+     "dst": 262,
+     "dst_name": "room_cc_lancer",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 262,
+     "src_name": "room_cc_lancer",
+     "dst": 68,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 263,
+     "src_name": "room_cc_clover",
+     "dst": 261,
+     "dst_name": "room_dw_city_traffic_3_backup",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 265,
+     "src_name": "room_dw_city_big_3_og",
+     "dst": 264,
+     "dst_name": "room_cc_fountain",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 265,
+     "src_name": "room_dw_city_big_3_og",
+     "dst": 266,
+     "dst_name": "room_dw_mansion_bridgesold",
+     "door": "obj_doorA",
+     "kind": "delta"
+    }
+   ]
+  },
+  "ch3": {
+   "folder": "chapter3_windows",
+   "n_edges": 79,
+   "edges": [
+    {
+     "src": 15,
+     "src_name": "room_krisroom",
+     "dst": 16,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_krishallway",
+     "dst": 15,
+     "dst_name": "room_krisroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_krishallway",
+     "dst": 18,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_torhouse",
+     "dst": 16,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_torhouse",
+     "dst": 19,
+     "dst_name": "room_torbathroom",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_torhouse",
+     "dst": 20,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 19,
+     "src_name": "room_torbathroom",
+     "dst": 18,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_krisyard",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_krisyard",
+     "dst": 18,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 37,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 23,
+     "dst_name": "room_beach",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 20,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 23,
+     "src_name": "room_beach",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_mid",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_mid",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_mid",
+     "dst": 35,
+     "dst_name": "room_diner",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 39,
+     "dst_name": "room_library",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 27,
+     "dst_name": "room_town_school",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 27,
+     "src_name": "room_town_school",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 36,
+     "dst_name": "room_townhall",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 30,
+     "dst_name": "room_town_shelter",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 29,
+     "dst_name": "room_graveyard",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_graveyard",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 30,
+     "src_name": "room_town_shelter",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_hospital_lobby",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 31,
+     "src_name": "room_hospital_lobby",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_hallway",
+     "dst": 31,
+     "dst_name": "room_hospital_lobby",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_hallway",
+     "dst": 33,
+     "dst_name": "room_hospital_rudy",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_hallway",
+     "dst": 34,
+     "dst_name": "room_hospital_room2",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_hospital_rudy",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_hospital_rudy",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 34,
+     "src_name": "room_hospital_room2",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_diner",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 36,
+     "src_name": "room_townhall",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 37,
+     "src_name": "room_flowershop_1f",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 37,
+     "src_name": "room_flowershop_1f",
+     "dst": 38,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 37,
+     "src_name": "room_flowershop_1f",
+     "dst": 38,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 38,
+     "src_name": "room_flowershop_2f",
+     "dst": 37,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 38,
+     "src_name": "room_flowershop_2f",
+     "dst": 37,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 39,
+     "src_name": "room_library",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 39,
+     "src_name": "room_library",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 40,
+     "src_name": "room_alphysalley",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 41,
+     "src_name": "room_lw_computer_lab",
+     "dst": 39,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 42,
+     "src_name": "room_lw_library_upstairs",
+     "dst": 39,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 44,
+     "src_name": "room_lw_conbini",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 45,
+     "src_name": "room_lw_icee_pizza",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 46,
+     "src_name": "room_torielclass",
+     "dst": 47,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schoollobby",
+     "dst": 48,
+     "dst_name": "room_alphysclass",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schoollobby",
+     "dst": 49,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schoollobby",
+     "dst": 46,
+     "dst_name": "room_torielclass",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 49,
+     "src_name": "room_schooldoor",
+     "dst": 47,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 49,
+     "src_name": "room_schooldoor",
+     "dst": 47,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 49,
+     "src_name": "room_schooldoor",
+     "dst": 47,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 49,
+     "src_name": "room_schooldoor",
+     "dst": 51,
+     "dst_name": "room_school_unusedroom",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 51,
+     "src_name": "room_school_unusedroom",
+     "dst": 49,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 52,
+     "src_name": "room_castle_tutorial",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 52,
+     "src_name": "room_castle_tutorial",
+     "dst": 53,
+     "dst_name": "room_dw_castle_east_door",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 53,
+     "src_name": "room_dw_castle_east_door",
+     "dst": 52,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 54,
+     "src_name": "room_dw_castle_west_cliff",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 55,
+     "src_name": "room_dw_castle_area_1",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 56,
+     "src_name": "room_dw_castle_town",
+     "dst": 57,
+     "dst_name": "room_dw_ralsei_castle_front",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_dw_castle_town",
+     "dst": 69,
+     "dst_name": "room_shop1",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 57,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 57,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 61,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 58,
+     "src_name": "room_dw_castle_restaurant",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 59,
+     "src_name": "room_dw_castle_cafe",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 60,
+     "src_name": "room_dw_castle_dojo",
+     "dst": 56,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 61,
+     "src_name": "room_dw_ralsei_castle_1f",
+     "dst": 62,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 62,
+     "src_name": "room_dw_ralsei_castle_2f",
+     "dst": 61,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 63,
+     "src_name": "room_dw_castle_dungeon",
+     "dst": 61,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 64,
+     "src_name": "room_dw_castle_rooms_kris",
+     "dst": 62,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 65,
+     "src_name": "room_dw_castle_rooms_susie",
+     "dst": 62,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 80,
+     "src_name": "room_cc_lancer",
+     "dst": 62,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 81,
+     "src_name": "room_cc_clover",
+     "dst": 79,
+     "dst_name": "room_DARKbase_GMS2",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 110,
+     "src_name": "room_town_krisyard_dark",
+     "dst": 112,
+     "dst_name": "room_board_1",
+     "door": "obj_doorC",
+     "kind": "delta"
+    }
+   ]
+  },
+  "ch4": {
+   "folder": "chapter4_windows",
+   "n_edges": 72,
+   "edges": [
+    {
+     "src": 15,
+     "src_name": "room_krisroom",
+     "dst": 16,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_krishallway",
+     "dst": 15,
+     "dst_name": "room_krisroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_krishallway",
+     "dst": 18,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_torhouse",
+     "dst": 16,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_torhouse",
+     "dst": 19,
+     "dst_name": "room_torbathroom",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 19,
+     "src_name": "room_torbathroom",
+     "dst": 18,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_krisyard",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_krisyard",
+     "dst": 18,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 37,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 23,
+     "dst_name": "room_beach",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_north",
+     "dst": 20,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 23,
+     "src_name": "room_beach",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_mid",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_mid",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_mid",
+     "dst": 35,
+     "dst_name": "room_diner",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 39,
+     "dst_name": "room_library",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 27,
+     "dst_name": "room_town_school",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_south",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 27,
+     "src_name": "room_town_school",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 36,
+     "dst_name": "room_townhall",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 29,
+     "dst_name": "room_graveyard",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_church",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_graveyard",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 30,
+     "src_name": "room_town_shelter",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_hospital_lobby",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 31,
+     "src_name": "room_hospital_lobby",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_hallway",
+     "dst": 31,
+     "dst_name": "room_hospital_lobby",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_hallway",
+     "dst": 33,
+     "dst_name": "room_hospital_rudy",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_hallway",
+     "dst": 34,
+     "dst_name": "room_hospital_room2",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_hospital_rudy",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_hospital_rudy",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 34,
+     "src_name": "room_hospital_room2",
+     "dst": 32,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 35,
+     "src_name": "room_diner",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 36,
+     "src_name": "room_townhall",
+     "dst": 28,
+     "dst_name": "room_town_church",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 37,
+     "src_name": "room_flowershop_1f",
+     "dst": 22,
+     "dst_name": "room_town_north",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 37,
+     "src_name": "room_flowershop_1f",
+     "dst": 38,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 37,
+     "src_name": "room_flowershop_1f",
+     "dst": 38,
+     "dst_name": "room_flowershop_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 38,
+     "src_name": "room_flowershop_2f",
+     "dst": 37,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 38,
+     "src_name": "room_flowershop_2f",
+     "dst": 37,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 39,
+     "src_name": "room_library",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 39,
+     "src_name": "room_library",
+     "dst": 26,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 40,
+     "src_name": "room_alphysalley",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 41,
+     "src_name": "room_lw_computer_lab",
+     "dst": 39,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 42,
+     "src_name": "room_lw_library_upstairs",
+     "dst": 39,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 44,
+     "src_name": "room_lw_conbini",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 45,
+     "src_name": "room_lw_icee_pizza",
+     "dst": 24,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 55,
+     "src_name": "room_torielclass",
+     "dst": 56,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_schoollobby",
+     "dst": 57,
+     "dst_name": "room_alphysclass",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_schoollobby",
+     "dst": 58,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 56,
+     "src_name": "room_schoollobby",
+     "dst": 55,
+     "dst_name": "room_torielclass",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 58,
+     "src_name": "room_schooldoor",
+     "dst": 56,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 58,
+     "src_name": "room_schooldoor",
+     "dst": 56,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 58,
+     "src_name": "room_schooldoor",
+     "dst": 56,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 58,
+     "src_name": "room_schooldoor",
+     "dst": 60,
+     "dst_name": "room_school_unusedroom",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 60,
+     "src_name": "room_school_unusedroom",
+     "dst": 58,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 61,
+     "src_name": "room_castle_tutorial",
+     "dst": 65,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 61,
+     "src_name": "room_castle_tutorial",
+     "dst": 62,
+     "dst_name": "room_dw_castle_east_door",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 62,
+     "src_name": "room_dw_castle_east_door",
+     "dst": 61,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 63,
+     "src_name": "room_dw_castle_west_cliff",
+     "dst": 65,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 64,
+     "src_name": "room_dw_castle_area_1",
+     "dst": 65,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 65,
+     "src_name": "room_dw_castle_town",
+     "dst": 66,
+     "dst_name": "room_dw_ralsei_castle_front",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 66,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 65,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 66,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 70,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 67,
+     "src_name": "room_dw_castle_restaurant",
+     "dst": 65,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 69,
+     "src_name": "room_dw_castle_dojo",
+     "dst": 65,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 70,
+     "src_name": "room_dw_ralsei_castle_1f",
+     "dst": 71,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 71,
+     "src_name": "room_dw_ralsei_castle_2f",
+     "dst": 70,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 72,
+     "src_name": "room_dw_castle_dungeon",
+     "dst": 70,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 89,
+     "src_name": "room_cc_lancer",
+     "dst": 71,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 90,
+     "src_name": "room_cc_clover",
+     "dst": 88,
+     "dst_name": "room_test_climb_new",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    }
+   ]
+  },
+  "ch5": {
+   "folder": "chapter5_windows",
+   "n_edges": 70,
+   "edges": [
+    {
+     "src": 14,
+     "src_name": "room_krishallway",
+     "dst": 13,
+     "dst_name": "room_krisroom",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 14,
+     "src_name": "room_krishallway",
+     "dst": 16,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_torhouse",
+     "dst": 14,
+     "dst_name": "room_krishallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_torhouse",
+     "dst": 17,
+     "dst_name": "room_torbathroom",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 16,
+     "src_name": "room_torhouse",
+     "dst": 18,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 17,
+     "src_name": "room_torbathroom",
+     "dst": 16,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_town_krisyard",
+     "dst": 20,
+     "dst_name": "room_town_north",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 18,
+     "src_name": "room_town_krisyard",
+     "dst": 16,
+     "dst_name": "room_torhouse",
+     "door": "obj_doorX_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_north",
+     "dst": 22,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_north",
+     "dst": 35,
+     "dst_name": "room_flowershop_1f",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_north",
+     "dst": 21,
+     "dst_name": "room_beach",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 20,
+     "src_name": "room_town_north",
+     "dst": 18,
+     "dst_name": "room_town_krisyard",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 21,
+     "src_name": "room_beach",
+     "dst": 20,
+     "dst_name": "room_town_north",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_mid",
+     "dst": 24,
+     "dst_name": "room_town_south",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_mid",
+     "dst": 20,
+     "dst_name": "room_town_north",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 22,
+     "src_name": "room_town_mid",
+     "dst": 33,
+     "dst_name": "room_diner",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_south",
+     "dst": 37,
+     "dst_name": "room_library",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_south",
+     "dst": 25,
+     "dst_name": "room_town_school",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_south",
+     "dst": 26,
+     "dst_name": "room_town_church",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 24,
+     "src_name": "room_town_south",
+     "dst": 22,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 25,
+     "src_name": "room_town_school",
+     "dst": 24,
+     "dst_name": "room_town_south",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_church",
+     "dst": 34,
+     "dst_name": "room_townhall",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_church",
+     "dst": 28,
+     "dst_name": "room_town_shelter",
+     "door": "obj_doorC_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_church",
+     "dst": 27,
+     "dst_name": "room_graveyard",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 26,
+     "src_name": "room_town_church",
+     "dst": 24,
+     "dst_name": "room_town_south",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 27,
+     "src_name": "room_graveyard",
+     "dst": 26,
+     "dst_name": "room_town_church",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 28,
+     "src_name": "room_town_shelter",
+     "dst": 26,
+     "dst_name": "room_town_church",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    },
+    {
+     "src": 29,
+     "src_name": "room_hospital_lobby",
+     "dst": 24,
+     "dst_name": "room_town_south",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 29,
+     "src_name": "room_hospital_lobby",
+     "dst": 30,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 30,
+     "src_name": "room_hospital_hallway",
+     "dst": 29,
+     "dst_name": "room_hospital_lobby",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 30,
+     "src_name": "room_hospital_hallway",
+     "dst": 31,
+     "dst_name": "room_hospital_rudy",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 30,
+     "src_name": "room_hospital_hallway",
+     "dst": 32,
+     "dst_name": "room_hospital_room2",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_hospital_rudy",
+     "dst": 30,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 31,
+     "src_name": "room_hospital_rudy",
+     "dst": 30,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 32,
+     "src_name": "room_hospital_room2",
+     "dst": 30,
+     "dst_name": "room_hospital_hallway",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 33,
+     "src_name": "room_diner",
+     "dst": 22,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 34,
+     "src_name": "room_townhall",
+     "dst": 26,
+     "dst_name": "room_town_church",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 35,
+     "src_name": "room_flowershop_1f",
+     "dst": 20,
+     "dst_name": "room_town_north",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 37,
+     "src_name": "room_library",
+     "dst": 24,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 37,
+     "src_name": "room_library",
+     "dst": 24,
+     "dst_name": "room_town_south",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 38,
+     "src_name": "room_alphysalley",
+     "dst": 22,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 39,
+     "src_name": "room_lw_computer_lab",
+     "dst": 37,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 40,
+     "src_name": "room_lw_library_upstairs",
+     "dst": 37,
+     "dst_name": "room_library",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 42,
+     "src_name": "room_lw_conbini",
+     "dst": 22,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorw_musfade",
+     "kind": "table"
+    },
+    {
+     "src": 43,
+     "src_name": "room_lw_icee_pizza",
+     "dst": 22,
+     "dst_name": "room_town_mid",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 44,
+     "src_name": "room_torielclass",
+     "dst": 45,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 45,
+     "src_name": "room_schoollobby",
+     "dst": 46,
+     "dst_name": "room_alphysclass",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 45,
+     "src_name": "room_schoollobby",
+     "dst": 47,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 45,
+     "src_name": "room_schoollobby",
+     "dst": 44,
+     "dst_name": "room_torielclass",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schooldoor",
+     "dst": 45,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schooldoor",
+     "dst": 45,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schooldoor",
+     "dst": 45,
+     "dst_name": "room_schoollobby",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 47,
+     "src_name": "room_schooldoor",
+     "dst": 49,
+     "dst_name": "room_school_unusedroom",
+     "door": "obj_doorC",
+     "kind": "delta"
+    },
+    {
+     "src": 49,
+     "src_name": "room_school_unusedroom",
+     "dst": 47,
+     "dst_name": "room_schooldoor",
+     "door": "obj_doorD",
+     "kind": "delta"
+    },
+    {
+     "src": 50,
+     "src_name": "room_castle_tutorial",
+     "dst": 54,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 50,
+     "src_name": "room_castle_tutorial",
+     "dst": 51,
+     "dst_name": "room_dw_castle_east_door",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 51,
+     "src_name": "room_dw_castle_east_door",
+     "dst": 50,
+     "dst_name": "room_castle_tutorial",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 52,
+     "src_name": "room_dw_castle_west_cliff",
+     "dst": 54,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 53,
+     "src_name": "room_dw_castle_area_1",
+     "dst": 54,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 54,
+     "src_name": "room_dw_castle_town",
+     "dst": 55,
+     "dst_name": "room_dw_ralsei_castle_front",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 54,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 55,
+     "src_name": "room_dw_ralsei_castle_front",
+     "dst": 59,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 56,
+     "src_name": "room_dw_castle_restaurant",
+     "dst": 54,
+     "dst_name": "room_dw_castle_town",
+     "door": "obj_doorX",
+     "kind": "table"
+    },
+    {
+     "src": 59,
+     "src_name": "room_dw_ralsei_castle_1f",
+     "dst": 60,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorA",
+     "kind": "delta"
+    },
+    {
+     "src": 60,
+     "src_name": "room_dw_ralsei_castle_2f",
+     "dst": 59,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorB",
+     "kind": "delta"
+    },
+    {
+     "src": 62,
+     "src_name": "room_dw_castle_dungeon",
+     "dst": 59,
+     "dst_name": "room_dw_ralsei_castle_1f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 63,
+     "src_name": "room_dw_castle_rooms_kris",
+     "dst": 60,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 64,
+     "src_name": "room_dw_castle_rooms_susie",
+     "dst": 60,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 80,
+     "src_name": "room_cc_lancer",
+     "dst": 60,
+     "dst_name": "room_dw_ralsei_castle_2f",
+     "door": "obj_doorW",
+     "kind": "table"
+    },
+    {
+     "src": 81,
+     "src_name": "room_cc_clover",
+     "dst": 79,
+     "dst_name": "room_DARKbase_GMS2",
+     "door": "obj_doorD_musfade",
+     "kind": "delta"
+    }
+   ]
+  }
+ }
+}
