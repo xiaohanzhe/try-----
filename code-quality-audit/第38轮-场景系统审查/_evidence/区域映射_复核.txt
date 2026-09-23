@@ -1,0 +1,1139 @@
+=== R1 回归锁：规则表必须复现 87 个锚点的 area_id ===
+[PASS] R1 全部复现  <- 一致 87 / 不一致 0
+
+ch1  room=147  scene=128  maybe=6   nonscene=13  区域=11
+ch2  room=278  scene=236  maybe=10  nonscene=32  区域=12
+ch3  room=246  scene=187  maybe=7   nonscene=52  区域=17
+ch4  room=328  scene=261  maybe=7   nonscene=60  区域=16
+ch5  room=252  scene=201  maybe=7   nonscene=44  区域=15
+
+合计 room=1251  scene=1013  maybe=37  nonscene=201
+
+[PASS] R2 所有 scene 都推到了区域  <- 未推 0：[]
+区域共 32 个：
+    board_world          冒险棋盘
+    card_castle          纸牌城堡
+    castle_town          城堡镇
+    cliffs               崖边
+    cold_place           冰寒之地
+    cyber_city           赛博都市
+    cyber_field          赛博原野
+    dark_sanctuary       暗之圣域
+    dark_world           黑暗世界
+    eye_puzzle           眼睛谜题
+    field                希望与梦想之原
+    flower_castle        花之城堡
+    forest               猩红森林
+    garden               希望之园
+    green_room           绿房间
+    home                 克里斯的家
+    hometown             家乡
+    kris_room            克里斯的房间
+    light_world          光世界
+    mike_zone            麦克地带
+    my_castle_town       我的城堡镇
+    noelles_house        诺艾尔家
+    puzzle_closet        谜题柜
+    queens_mansion       女王宅邸
+    ralsei_room          拉尔赛的城堡
+    ranking_world        排行榜世界
+    second_sanctuary     第二圣域
+    system               系统与演出
+    third_sanctuary      第三圣域
+    tv_backstage         电视世界后台
+    tv_world             电视世界
+    unknown              ？？？？？？
+
+
+========================================================================
+ch1
+  --- card_castle / 纸牌城堡  (26 间)
+       [105] room_cc_prison_cells                       
+       [106] room_cc_prisonlancer                       
+       [107] room_cc_prison_to_elevator                 ★已登记 纸牌城堡·牢房
+       [108] room_cc_prison2                            
+       [109] room_cc_prisonelevator                     
+       [110] room_cc_elevator                           
+       [111] room_cc_prison_prejoker                    ★已登记 纸牌城堡·？？？
+       [112] room_cc_joker                              
+       [113] room_cc_entrance                           
+       [114] room_cc_1f                                 ★已登记 纸牌城堡·一层
+       [115] room_cc_rudinn                             
+       [116] room_cc_2f                                 
+       [117] room_cc_rurus1                             
+       [118] room_cc_3f                                 
+       [119] room_cc_hathy                              
+       [120] room_cc_4f                                 
+       [121] room_cc_rurus2                             
+       [122] room_cc_clover                             
+       [123] room_cc_5f                                 ★已登记 纸牌城堡·五层
+       [124] room_cc_lancer                             
+       [125] room_cc_6f                                 
+       [126] room_cc_throneroom                         ★已登记 纸牌城堡·王座
+       [127] room_cc_preroof                            
+       [128] room_cc_kingbattle                         
+       [129] room_cc_prefountain                        
+       [130] room_cc_fountain                           
+  --- castle_town / 城堡镇  (5 间)
+       [ 44] room_castle_outskirts                      
+       [ 45] room_castle_town                           ★已登记 城堡镇
+       [ 46] room_castle_front                          
+       [ 47] room_castle_tutorial                       
+       [ 48] room_castle_darkdoor                       
+  --- dark_world / 黑暗世界  (8 间)
+       [ 34] room_dark1                                 
+       [ 36] room_dark2                                 
+       [ 37] room_dark3                                 
+       [ 38] room_dark3a                                
+       [ 39] room_dark_wobbles                          
+       [ 41] room_dark7                                 
+       [ 42] room_dark_chase1                           
+       [ 43] room_dark_chase2                           
+  --- eye_puzzle / 眼睛谜题  (1 间)
+       [ 40] room_dark_eyepuzzle                        ★已登记 眼睛谜题
+  --- field / 希望与梦想之原  (24 间)
+       [ 49] room_field_start                           ★已登记 原野·大门
+       [ 50] room_field_forest                          
+       [ 51] room_field1                                
+       [ 52] room_field2                                
+       [ 53] room_field2A                               
+       [ 54] room_field_topchef                         
+       [ 55] room_field_puzzle1                         
+       [ 56] room_field_maze                            ★已登记 原野·死亡迷宫
+       [ 57] room_field_puzzle2                         
+       [ 58] room_field_getsusie                        
+       [ 59] room_field_shop1                           ★已登记 原野·西姆的店
+       [ 60] room_field_puzzletutorial                  
+       [ 61] room_field3                                
+       [ 62] room_field_boxpuzzle                       
+       [ 63] room_field4                                
+       [ 64] room_field_secret1                         
+       [ 65] room_field_checkers4                       
+       [ 66] room_field_checkers2                       
+       [ 67] room_field_checkers6                       
+       [ 68] room_field_checkers3                       ★已登记 原野·大棋盘
+       [ 69] room_field_checkers1                       
+       [ 70] room_field_checkers5                       
+       [ 71] room_field_checkers7                       ★已登记 原野·大棋盘·二
+       [ 72] room_field_checkersboss                    
+  --- forest / 猩红森林  (32 间)
+       [ 73] room_forest_savepoint1                     ★已登记 森林·入口
+       [ 74] room_forest_area0                          
+       [ 75] room_forest_area1                          
+       [ 76] room_forest_area2                          
+       [ 77] room_forest_area2A                         
+       [ 78] room_forest_puzzle1                        
+       [ 79] room_forest_beforeclover                   
+       [ 80] room_forest_area3A                         
+       [ 81] room_forest_area3                          
+       [ 82] room_forest_savepoint2                     ★已登记 森林·义卖
+       [ 83] room_forest_smith                          
+       [ 84] room_forest_area4                          
+       [ 85] room_forest_dancers1                       
+       [ 86] room_forest_secret1                        
+       [ 87] room_forest_thrashmaker                    
+       [ 88] room_forest_starwalker                     
+       [ 89] room_forest_area5                          
+       [ 90] room_forest_savepoint_relax                ★已登记 森林·迷宫前
+       [ 91] room_forest_maze1                          
+       [ 92] room_forest_maze_deadend                   
+       [ 93] room_forest_maze_susie                     
+       [ 94] room_forest_maze2                          
+       [ 95] room_forest_maze_deadend2                  
+       [ 96] room_forest_savepoint3                     ★已登记 森林·迷宫后
+       [ 97] room_forest_fightsusie                     ★已登记 森林·痛揍之屋
+       [ 98] room_forest_afterthrash2                   
+       [ 99] room_forest_afterthrash3                   
+       [100] room_forest_afterthrash4                   
+       [101] room_forest_castleview                     
+       [102] room_forest_chase1                         
+       [103] room_forest_chase2                         
+       [104] room_forest_castlefront                    
+  --- home / 克里斯的家  (4 间)
+       [  3] room_krishallway                           
+       [  4] room_torroom                               
+       [  5] room_torhouse                              
+       [  6] room_torbathroom                           
+  --- hometown / 家乡  (26 间)
+       [  7] room_town_krisyard                         
+       [  8] room_town_northwest                        
+       [  9] room_town_north                            
+       [ 10] room_beach                                 
+       [ 11] room_town_mid                              
+       [ 12] room_town_apartments                       
+       [ 13] room_town_south                            
+       [ 14] room_town_school                           
+       [ 15] room_town_church                           
+       [ 16] room_graveyard                             
+       [ 17] room_town_shelter                          
+       [ 18] room_hospital_lobby                        
+       [ 19] room_hospital_hallway                      
+       [ 20] room_hospital_rudy                         
+       [ 21] room_hospital_room2                        
+       [ 22] room_diner                                 
+       [ 23] room_townhall                              
+       [ 24] room_flowershop_1f                         
+       [ 25] room_flowershop_2f                         
+       [ 26] room_library                               
+       [ 27] room_alphysalley                           
+       [ 28] room_torielclass                           
+       [ 29] room_schoollobby                           
+       [ 30] room_alphysclass                           
+       [ 31] room_schooldoor                            
+       [ 32] room_insidecloset                          
+  --- kris_room / 克里斯的房间  (1 间)
+       [  2] room_krisroom                              ★已登记 克里斯的房间
+  --- unknown / ？？？？？？  (1 间)
+       [ 35] room_dark1a                                ★已登记 ？？？？？？
+========================================================================
+ch2
+  --- card_castle / 纸牌城堡  (3 间)
+       [262] room_cc_lancer                             
+       [263] room_cc_clover                             
+       [264] room_cc_fountain                           
+  --- castle_town / 城堡镇  (3 间)
+       [ 55] room_castle_town                           ★已登记 城堡镇
+       [ 56] room_castle_tutorial                       
+       [ 61] room_dw_castle_area_2                      ★已登记 城堡镇
+  --- cyber_city / 赛博都市  (52 间)
+       [106] room_dw_city_prototype_01                  
+       [107] room_dw_city_prototype_02                  
+       [108] room_dw_city_spamton_shop_exterior         
+       [109] room_dw_city_spamton_house                 
+       [110] room_dw_city_intro                         
+       [111] room_dw_city_split                         
+       [112] room_dw_city_entrance                      ★已登记 赛博都市·入口
+       [113] room_dw_city_traffic_1                     
+       [114] room_dw_city_roadblock                     
+       [115] room_dw_city_hacker                        ★已登记 赛博都市·第一小巷
+       [116] room_dw_city_mice                          
+       [117] room_dw_city_big_1                         
+       [118] room_dw_city_traffic_2                     
+       [119] room_dw_city_big_2                         
+       [120] room_dw_city_queen_drunk                   
+       [121] room_dw_city_savepoint                     ★已登记 赛博都市·唱片店
+       [122] room_dw_city_big_3                         
+       [123] room_dw_city_traffic_3                     
+       [124] room_dw_city_mice2                         
+       [125] room_dw_city_cheesemaze                    
+       [126] room_dw_city_mice3                         ★已登记 赛博都市·老鼠巷
+       [127] room_dw_city_poppup                        
+       [128] room_dw_city_berdly                        ★已登记 赛博都市·第二小巷
+       [129] room_dw_city_traffic_4                     
+       [130] room_dw_city_spamton_alley                 
+       [131] room_dw_city_monologue                     
+       [132] room_dw_city_baseball                      
+       [133] room_dw_city_postbaseball_1                ★已登记 赛博都市·高处
+       [134] room_dw_city_postbaseball_2                
+       [135] room_dw_city_postbaseball_3                
+       [136] room_dw_city_mansion_front                 
+       [137] room_dw_city_susie_ralsei_fun_1            
+       [138] room_dw_city_mirrorfriend                  
+       [139] room_dw_city_treasure                      
+       [140] room_dw_city_dog_traffic                   
+       [141] room_dw_city_man                           
+       [142] room_dw_city_moss                          
+       [143] room_dw_city_big_3_backup_2exits           
+       [144] room_dw_city_traffic_3_2Entrances          
+       [145] room_dw_city_cheese                        
+       [146] room_dw_city_carnival                      
+       [147] room_dw_city_noelle_fight_intro            
+       [148] room_dw_city_spamton_shop_interior         
+       [149] room_dw_city_monologue_old                 
+       [250] room_dw_city_big_1_original                
+       [251] room_dw_city_traffic_2_old                 
+       [252] room_dw_city_big_2_OG                      
+       [253] room_dw_city_mice2_og                      
+       [257] room_dw_city_traffic_5_old                 
+       [261] room_dw_city_traffic_3_backup              
+       [265] room_dw_city_big_3_og                      
+       [267] room_dw_city_sidewayscars                  
+  --- cyber_field / 赛博原野  (43 间)
+       [ 74] room_dw_cyber_intro_1                      
+       [ 75] room_dw_cyber_intro_connector              
+       [ 76] room_dw_cyber_intro_2                      
+       [ 77] room_dw_cyber_rhythm_slide                 
+       [ 78] room_dw_cyber_savepoint                    ★已登记 赛博原野·入口
+       [ 79] room_dw_cyber_battle_maze_1                
+       [ 80] room_dw_cyber_music_bullet                 
+       [ 81] room_dw_cyber_tasque_battle                
+       [ 82] room_dw_cyber_keyboard_puzzle_1            
+       [ 83] room_dw_cyber_queen_boxing                 ★已登记 赛博原野·街机
+       [ 84] room_dw_cyber_musical_door                 
+       [ 85] room_dw_cyber_maze_virokun                 
+       [ 86] room_dw_cyber_keyboard_puzzle_2            
+       [ 87] room_dw_cyber_battle_maze_2                
+       [ 88] room_dw_cyber_music_final                  
+       [ 89] room_dw_cyber_musical_shop                 ★已登记 赛博原野·唱片店
+       [ 90] room_dw_cyber_teacup_final                 
+       [ 91] room_dw_cyber_rollercoaster                
+       [ 92] room_dw_cyber_maze_fireworks               
+       [ 93] room_dw_cyber_maze_tasque                  
+       [ 94] room_dw_cyber_maze_queenscreen             
+       [ 95] room_dw_cyber_viro_ring                    
+       [ 96] room_dw_cyber_post_music_boss_slide        
+       [ 97] room_dw_cyber_keyboard_puzzle_3            
+       [ 98] room_dw_cyber_battle_maze_3                
+       [ 99] room_dw_cyber_teacup_2                     
+       [100] room_dw_cyber_shaunsmusicalbullettunnel    
+       [101] room_dw_cyber_maze_rhythm                  
+       [102] room_dw_cyber_escalator_slide              
+       [103] room_dw_cyber_nuberts_treasure             
+       [104] room_dw_cyber_music_fight                  
+       [105] room_dw_cyber_keyboardexample              
+       [242] room_dw_cyber_battle_maze_2_old            
+       [243] room_dw_cyber_keyboard_puzzle_1_old        
+       [244] room_dw_cyber_tasque_battle_og             
+       [245] room_dw_cyber_savepoint_original           
+       [246] room_dw_cyber_battle_maze_1_Original       
+       [247] room_dw_cyber_music_bullet_original        
+       [248] room_dw_cyber_maze_virokun_backuo          
+       [249] room_dw_cyber_battle_maze_2_toby           
+       [255] room_dw_cyber_teacup_1                     
+       [256] room_dw_cyber_viromaze2                    
+       [259] room_dw_cyber_virovirokun_fight            
+  --- home / 克里斯的家  (4 间)
+       [ 19] room_krishallway                           
+       [ 20] room_torroom                               
+       [ 21] room_torhouse                              
+       [ 22] room_torbathroom                           
+  --- hometown / 家乡  (26 间)
+       [ 23] room_town_krisyard                         
+       [ 24] room_town_northwest                        
+       [ 25] room_town_north                            
+       [ 26] room_beach                                 
+       [ 27] room_town_mid                              
+       [ 28] room_town_apartments                       
+       [ 29] room_town_south                            
+       [ 30] room_town_school                           
+       [ 31] room_town_church                           
+       [ 32] room_graveyard                             
+       [ 33] room_town_shelter                          
+       [ 34] room_hospital_lobby                        
+       [ 35] room_hospital_hallway                      
+       [ 36] room_hospital_rudy                         
+       [ 37] room_hospital_room2                        
+       [ 38] room_diner                                 
+       [ 39] room_townhall                              
+       [ 40] room_flowershop_1f                         
+       [ 41] room_flowershop_2f                         
+       [ 42] room_library                               
+       [ 43] room_alphysalley                           
+       [ 49] room_torielclass                           
+       [ 50] room_schoollobby                           
+       [ 51] room_alphysclass                           
+       [ 52] room_schooldoor                            
+       [ 53] room_insidecloset                          
+  --- kris_room / 克里斯的房间  (1 间)
+       [ 18] room_krisroom                              ★已登记 克里斯的房间
+  --- light_world / 光世界  (5 间)
+       [ 44] room_lw_computer_lab                       
+       [ 45] room_lw_library_upstairs                   
+       [ 46] room_lw_police                             
+       [ 47] room_lw_conbini                            
+       [ 48] room_lw_icee_pizza                         
+  --- my_castle_town / 我的城堡镇  (13 间)
+       [ 57] room_dw_castle_west_cliff_old              
+       [ 58] room_dw_castle_east_door                   
+       [ 59] room_dw_castle_west_cliff                  
+       [ 60] room_dw_castle_area_1                      
+       [ 62] room_dw_castle_area_2_transformed          ★已登记 我的城堡镇
+       [ 64] room_dw_castle_restaurant                  
+       [ 65] room_dw_castle_cafe                        
+       [ 66] room_dw_castle_dojo                        
+       [ 69] room_dw_castle_dungeon                     
+       [ 70] room_dw_castle_rooms_hallway               
+       [ 71] room_dw_castle_rooms_kris                  
+       [ 72] room_dw_castle_rooms_susie                 
+       [ 73] room_dw_castle_rooms_lancer                
+  --- queens_mansion / 女王宅邸  (80 间)
+       [150] room_dw_mansion_krisroom                   
+       [151] room_dw_mansion_susieroom                  
+       [152] room_dw_mansion_lightner_hallway           ★已登记 女王宅邸·客殿
+       [153] room_dw_mansion_darkbulb_1                 
+       [154] room_dw_mansion_darkbulb_2                 
+       [155] room_dw_mansion_darkbulb_3                 
+       [156] room_dw_mansion_dining_a                   
+       [157] room_dw_mansion_entrance                   ★已登记 女王宅邸·入口
+       [158] room_dw_mansion_fire_paintings             
+       [159] room_dw_mansion_single_pot                 
+       [160] room_dw_mansion_potBalance                 
+       [161] room_dw_mansion_tasquePaintings            
+       [162] room_dw_mansion_traffic                    
+       [163] room_dw_mansion_east_1f_e                  
+       [164] room_dw_mansion_east_1f_secret             
+       [165] room_dw_mansion_east_teacup                
+       [166] room_dw_mansion_east_teacup_4              
+       [167] room_dw_mansion_east_teacup_3              
+       [168] room_dw_mansion_east_teacup_2              
+       [169] room_dw_mansion_b_entrance                 
+       [170] room_dw_mansion_b_stairs                   
+       [171] room_dw_mansion_b_central                  ★已登记 女王宅邸·地下室
+       [172] room_dw_mansion_b_west_1f                  
+       [173] room_dw_mansion_b_west_1f_a                
+       [174] room_dw_mansion_b_west_1f_b                
+       [175] room_dw_mansion_b_west_2f                  
+       [176] room_dw_mansion_b_east                     
+       [177] room_dw_mansion_b_east_a                   
+       [178] room_dw_mansion_b_east_b                   
+       [179] room_dw_mansion_b_east_transformed         
+       [180] room_dw_mansion_east_2f_a                  
+       [181] room_dw_mansion_east_2f_transformed_new    
+       [182] room_dw_mansion_east_2f_shortcut           
+       [183] room_dw_mansion_kitchen                    
+       [184] room_dw_mansion_east_2f_c                  
+       [185] room_dw_mansion_east_2f_c_a                
+       [186] room_dw_mansion_east_2f_d                  
+       [187] room_dw_mansion_east_3f                    ★已登记 女王宅邸·三层
+       [188] room_dw_mansion_east_3f_projection         
+       [189] room_dw_mansion_east_3f_toilet             
+       [190] room_dw_mansion_acid_tunnel                
+       [191] room_dw_mansion_acid_tunnel_puzzle_entrance 
+       [192] room_dw_mansion_acid_tunnel_loop_rouxls    
+       [193] room_dw_mansion_acid_tunnel_exit           ★已登记 女王宅邸·酸液隧道
+       [194] room_dw_mansion_east_4f_b                  
+       [195] room_dw_mansion_east_4f_c                  
+       [196] room_dw_mansion_east_4f_d                  ★已登记 女王宅邸·四层
+       [197] room_dw_mansion_top                        
+       [198] room_dw_mansion_top_post                   
+       [199] room_dw_mansion_prefountain                ★已登记 女王宅邸·屋顶
+       [200] room_dw_mansion_fountain                   ★已登记 女王宅邸·屋顶
+       [201] room_dw_mansion_ferris_wheel               
+       [202] room_dw_mansion_ferris_wheel_post          
+       [203] room_dw_mansion_noelle_room                
+       [204] room_dw_mansion_bridges                    
+       [205] room_dw_mansion_bridges_funny              
+       [206] room_dw_mansion_mouseLottery               
+       [207] room_dw_mansion_hands                      
+       [208] room_dw_mansion_dining3                    
+       [209] room_dw_mansion_dininghall                 
+       [210] room_dw_mansion_dining_storage             
+       [211] room_dw_mansion_east_1f_b                  
+       [212] room_dw_mansion_east_2f_c_b                
+       [213] room_dw_mansion_traffic_original           
+       [214] room_dw_mansion_east_1f_a                  
+       [215] room_dw_mansion_east_2f_teacup             
+       [216] room_dw_mansion_east_4f_e                  
+       [217] room_dw_mansion_east_4f_a                  
+       [218] room_dw_mansion_east_2f_ufo_old            
+       [219] room_dw_mansion_east_1f_d                  
+       [220] room_dw_mansion_east_1f_c                  
+       [221] room_dw_mansion_sparks                     
+       [222] room_dw_mansion_acid_tunnel_old            
+       [223] room_dw_mansion_top_post_old               
+       [224] room_dw_mansion_elevator                   
+       [254] room_dw_mansion_east_teacup_4_old          
+       [258] room_dw_mansion_dining_storage_old         
+       [260] room_dw_mansion_east_2f_d_backup           
+       [266] room_dw_mansion_bridgesold                 
+       [269] room_dw_mansion_gigaqueen                  
+  --- ralsei_room / 拉尔赛的城堡  (3 间)
+       [ 63] room_dw_ralsei_castle_front                
+       [ 67] room_dw_ralsei_castle_1f                   
+       [ 68] room_dw_ralsei_castle_2f                   
+  --- system / 系统与演出  (3 间)
+       [  9] room_teacup_demoauto                       
+       [ 10] room_teacup_demobullets                    
+       [ 11] room_shaun_puzzle                          
+========================================================================
+ch3
+  --- board_world / 冒险棋盘  (18 间)
+       [112] room_board_1                               
+       [115] room_board_dungeon_2                       
+       [116] room_board_dungeon_3                       
+       [117] room_board_preshadowmantle                 
+       [119] room_board_prepostshadowmantle             
+       [120] room_board_postshadowmantle                
+       [125] room_board_intro                           
+       [134] room_board_preshadowmantle_repeat          
+       [136] room_board_1_sword                         
+       [137] room_board_sword_intro                     
+       [138] room_board_1_sword_trees                   
+       [141] room_board_2                               
+       [144] room_board_3                               
+       [148] room_board_2_sword                         
+       [150] room_board_empty                           
+       [175] room_board_3b                              
+       [186] room_board_3_sword                         
+       [193] room_board_gsa02_b0                        
+  --- card_castle / 纸牌城堡  (3 间)
+       [ 80] room_cc_lancer                             
+       [ 81] room_cc_clover                             
+       [ 82] room_cc_fountain                           
+  --- castle_town / 城堡镇  (1 间)
+       [ 52] room_castle_tutorial                       
+  --- cold_place / 冰寒之地  (3 间)
+       [109] room_dw_snow_zone                          ★已登记 寒地
+       [190] room_dw_snow_zone_battle                   
+       [242] room_dw_snow_zone_east_door                
+  --- dark_world / 黑暗世界  (9 间)
+       [ 98] room_dw_couch_overworld_intro              ★已登记 黑暗世界
+       [ 99] room_dw_couch_overworld_01                 
+       [100] room_dw_couch_overworld_02                 
+       [101] room_dw_couch_overworld_03                 
+       [102] room_dw_couch_overworld_04                 
+       [103] room_dw_couch_overworld_05                 
+       [187] room_dw_couch_points                       
+       [188] room_dw_couch_overworld_intro_left         
+       [189] room_dw_couch_video                        
+  --- green_room / 绿房间  (1 间)
+       [135] room_dw_green_room                         ★已登记 后台休息室
+  --- home / 克里斯的家  (5 间)
+       [ 16] room_krishallway                           
+       [ 17] room_torroom                               
+       [ 18] room_torhouse                              
+       [ 19] room_torbathroom                           
+       [127] room_torhouse_sepia                        
+  --- hometown / 家乡  (27 间)
+       [ 20] room_town_krisyard                         
+       [ 21] room_town_northwest                        
+       [ 22] room_town_north                            
+       [ 23] room_beach                                 
+       [ 24] room_town_mid                              
+       [ 25] room_town_apartments                       
+       [ 26] room_town_south                            
+       [ 27] room_town_school                           
+       [ 28] room_town_church                           
+       [ 29] room_graveyard                             
+       [ 30] room_town_shelter                          
+       [ 31] room_hospital_lobby                        
+       [ 32] room_hospital_hallway                      
+       [ 33] room_hospital_rudy                         
+       [ 34] room_hospital_room2                        
+       [ 35] room_diner                                 
+       [ 36] room_townhall                              
+       [ 37] room_flowershop_1f                         
+       [ 38] room_flowershop_2f                         
+       [ 39] room_library                               
+       [ 40] room_alphysalley                           
+       [ 46] room_torielclass                           
+       [ 47] room_schoollobby                           
+       [ 48] room_alphysclass                           
+       [ 49] room_schooldoor                            
+       [ 50] room_insidecloset                          
+       [110] room_town_krisyard_dark                    
+  --- kris_room / 克里斯的房间  (1 间)
+       [ 15] room_krisroom                              
+  --- light_world / 光世界  (5 间)
+       [ 41] room_lw_computer_lab                       
+       [ 42] room_lw_library_upstairs                   
+       [ 43] room_lw_police                             
+       [ 44] room_lw_conbini                            
+       [ 45] room_lw_icee_pizza                         
+  --- my_castle_town / 我的城堡镇  (10 间)
+       [ 53] room_dw_castle_east_door                   
+       [ 54] room_dw_castle_west_cliff                  
+       [ 55] room_dw_castle_area_1                      
+       [ 56] room_dw_castle_town                        
+       [ 58] room_dw_castle_restaurant                  
+       [ 59] room_dw_castle_cafe                        
+       [ 60] room_dw_castle_dojo                        
+       [ 63] room_dw_castle_dungeon                     
+       [ 64] room_dw_castle_rooms_kris                  
+       [ 65] room_dw_castle_rooms_susie                 
+  --- puzzle_closet / 谜题柜  (5 间)
+       [170] room_dw_puzzlecloset_1                     
+       [171] room_dw_puzzlecloset_2                     
+       [192] room_dw_puzzlecloset_0                     
+       [218] room_dw_puzzlecloset_3                     
+       [240] room_dw_puzzlecloset_1a                    
+  --- ralsei_room / 拉尔赛的城堡  (3 间)
+       [ 57] room_dw_ralsei_castle_front                
+       [ 61] room_dw_ralsei_castle_1f                   
+       [ 62] room_dw_ralsei_castle_2f                   
+  --- ranking_world / 排行榜世界  (7 间)
+       [225] room_dw_ranking_hub                        
+       [226] room_dw_ranking_a                          
+       [227] room_dw_ranking_b                          
+       [228] room_dw_ranking_c                          
+       [229] room_dw_ranking_z                          
+       [230] room_dw_ranking_z_hallway                  
+       [239] room_dw_ranking_t                          
+  --- system / 系统与演出  (4 间)
+       [121] room_dw_ch3_man                            
+       [128] room_rhythmgame_editor                     
+       [176] room_CHEFS                                 
+       [238] room_ch3_gacharoom_unknown                 
+  --- tv_backstage / 电视世界后台  (22 间)
+       [ 96] room_dw_rhythm                             
+       [104] room_dw_nondescript_room                   
+       [105] room_dw_nondescript_field                  
+       [106] room_dw_nondescript_hallway                
+       [107] room_dw_nondescript_classroom              
+       [108] room_dw_backstage                          
+       [114] room_shadowmantle_movementExample          
+       [118] room_shadowmantle                          
+       [124] room_susiezilla                            
+       [126] room_susiezilla_singleScreenMockup         
+       [131] room_ch3_gameshowroom                      
+       [132] room_shootout                              
+       [139] room_dw_changing_room                      
+       [140] room_dw_console_room                       
+       [166] room_dw_susiezilla                         
+       [167] room_dw_inbetween                          
+       [169] room_dw_chef                               
+       [172] room_dw_chef_empty                         
+       [173] room_dw_susiezilla_empty                   
+       [174] room_dw_rhythm_empty                       
+       [241] room_dw_rhythm_countdown                   
+       [244] room_dw_inbetweenhall                      
+  --- tv_world / 电视世界  (63 间)
+       [ 95] room_dw_tv_cutscene1g                      
+       [142] room_dw_tv_closet                          
+       [147] room_dw_b3bs_interstitial                  
+       [151] room_dw_b3bs_rouxls_lanina                 
+       [152] room_dw_b3bs_template                      
+       [153] room_dw_b3bs_rouxls_boss                   
+       [154] room_dw_b3bs_cheaterpippins                
+       [155] room_dw_b3bs_idcardpuzzle                  
+       [156] room_dw_b3bs_intro                         
+       [157] room_dw_b3bs_zapper_a                      
+       [158] room_dw_b3bs_rabbick_a                     
+       [159] room_dw_b3bs_lancerget                     
+       [160] room_dw_b3bs_cooltrashy                    
+       [161] room_dw_b3bs_zapper_c                      
+       [162] room_dw_b3bs_rabbick_b                     
+       [163] room_dw_b3bs_sadshadowguys                 
+       [164] room_dw_b3bs_zapper_b                      
+       [168] room_dw_teevie_preview                     
+       [177] room_dw_b3bs_jail1                         ★已登记 电视世界·黄金萨姆
+       [178] room_dw_b3bs_shop                          
+       [179] room_dw_b3bs_mysterypuzzle                 
+       [180] room_dw_b3bs_watercooler                   
+       [181] room_dw_b3bs_jail2                         
+       [182] room_dw_b3bs_zapper_d                      
+       [183] room_dw_b3bs_extrapuzzle                   
+       [184] room_dw_b3bs_bibliox                       
+       [191] room_dw_b3bs_zapper_a_old                  
+       [194] room_dw_tv_curtain                         ★已登记 电视世界·开演前
+       [195] room_dw_teevie_intro                       ★已登记 电视世界·入口
+       [196] room_dw_teevie_large_01                    
+       [197] room_dw_teevie_large_02                    
+       [198] room_dw_teevie_cowboy_zone_01_intro        
+       [199] room_dw_teevie_cowboy_zone_01_after        
+       [200] room_dw_teevie_watercooler                 
+       [201] room_dw_teevie_susiezilla                  
+       [202] room_dw_teevie_cowboy_zone_02_intro        
+       [203] room_dw_teevie_cowboy_zone_02_after        
+       [204] room_dw_teevie_shadow_guys                 
+       [205] room_dw_teevie_stealth_c                   
+       [206] room_dw_teevie_stealth                     
+       [207] room_dw_teevie_failure_cage                
+       [208] room_dw_teevie_rhythm                      ★已登记 电视世界·演唱会
+       [209] room_dw_teevie_maze_points                 
+       [210] room_dw_teevie_maze_chef                   
+       [211] room_dw_teevie_maze_final                  
+       [212] room_dw_teevie_maze                        
+       [213] room_dw_teevie_chef                        ★已登记 电视世界·烹饪秀
+       [214] room_dw_teevie_cutscene_final              
+       [215] room_dw_teevie_ribbick                     
+       [216] room_dw_teevie_preview_south               
+       [217] room_dw_b3bs_camerareminder                
+       [219] room_dw_teevie_sams                        
+       [220] room_dw_teevie_bonus_zone                  
+       [221] room_dw_teevie_audiencepits                
+       [223] room_dw_teevie_lightmaze                   
+       [224] room_dw_teevie_maze_quiz                   
+       [231] room_dw_teevie_ribbicks_a                  
+       [232] room_dw_teevie_ribbicks_b                  
+       [233] room_dw_teevie_susiebridge                 
+       [234] room_dw_teevie_shuttahmaze                 
+       [235] room_dw_teevie_stealth_d                   
+       [236] room_dw_teevie_dust                        
+       [237] room_dw_teevie_dust_south                  
+========================================================================
+ch4
+  --- card_castle / 纸牌城堡  (3 间)
+       [ 89] room_cc_lancer                             
+       [ 90] room_cc_clover                             
+       [ 91] room_cc_fountain                           
+  --- castle_town / 城堡镇  (2 间)
+       [ 61] room_castle_tutorial                       
+       [298] room_dw_castle_tv                          ★已登记 城堡镇·电视大楼
+  --- dark_sanctuary / 暗之圣域  (105 间)
+       [101] room_dw_church_slidingbookshelf            
+       [104] room_dw_church_bellplay                    
+       [106] room_dw_church_candlelighting              
+       [108] room_dw_church_intro1                      ★已登记 暗之圣域·中庭
+       [109] room_dw_church_intro3                      
+       [110] room_dw_church_intro_guei                  
+       [111] room_dw_church_darkroom1_old               
+       [112] room_dw_church_lantern1_old_old            
+       [113] room_dw_church_lantern_hallway             
+       [114] room_dw_church_darkbell_old                
+       [115] room_dw_church_gersonstudy                 ★已登记 暗之圣域·书斋
+       [116] room_dw_church_stairs_west_bell            
+       [117] room_dw_church_librarybookenemy            
+       [118] room_dw_church_bookshelfpuzzle1            
+       [119] room_dw_church_bookshelfpuzzle2            
+       [120] room_dw_church_worshiproom                 
+       [121] room_dw_church_swingingbell                
+       [122] room_dw_church_tallbookcases               
+       [123] room_dw_church_lantern2                    
+       [124] room_dw_church_smallbells                  
+       [125] room_dw_church_claw                        
+       [126] room_dw_church_shelfclimb1                 
+       [127] room_dw_church_statueclimb                 
+       [128] room_dw_church_offering                    
+       [129] room_dw_church_npcroom_shelfclimb          
+       [130] room_dw_church_stairs_stainedglass         
+       [131] room_dw_church_bellsareawest               
+       [132] room_dw_church_stairs_topright             
+       [133] room_dw_church_poolsroom1                  
+       [134] room_dw_church_candlesroom1                
+       [135] room_dw_church_solowaterfall               
+       [136] room_dw_church_statueroom                  
+       [137] room_dw_church_poolsroom2                  
+       [138] room_dw_church_shelfclimb2                 
+       [139] room_dw_church_statueclimb_npcroom         
+       [140] room_dw_church_bellhall_west               
+       [141] room_dw_church_fountainconnection          
+       [142] room_dw_church_stainedglasspreview         
+       [143] room_dw_church_stairs_topleft              
+       [144] room_dw_church_npcroom_pools1              
+       [145] room_dw_church_poolsroom1_east             
+       [146] room_dw_church_minorlegend                 
+       [147] room_dw_church_bookenemywest               
+       [148] room_dw_church_poolsroom2south             
+       [150] room_dw_church_bellhall_east               
+       [151] room_dw_church_bellhall_central            
+       [152] room_dw_church_darkroom_old                
+       [153] room_dw_church_lantern1_old                
+       [161] room_dw_church_statueroom_old              
+       [171] room_dw_church_ripplepuzzle                
+       [173] room_dw_church_glass                       
+       [174] room_dw_church_staircase                   
+       [175] room_dw_church_bellhall_bookroom           
+       [176] room_dw_church_bookcase                    
+       [177] room_dw_church_savepoint                   ★已登记 暗之圣域·左下
+       [178] room_dw_church_dark_fire_puzzle            
+       [179] room_dw_church_turtles                     
+       [180] room_dw_church_guei                        
+       [181] room_dw_church_jackenstein                 
+       [182] room_dw_church_bellhall_curtain            
+       [183] room_dw_church_lantern_hallway_old         
+       [184] room_dw_church_dogclimb                    
+       [185] room_dw_church_arena                       
+       [189] room_dw_church_chase_old                   
+       [204] room_dw_church_climbtut                    
+       [205] room_dw_church_fastwater                   
+       [206] room_dw_church_crumbletower                
+       [207] room_dw_church_tower1                      
+       [209] room_dw_church_bellclimb                   
+       [210] room_dw_church_shiftclimb                  
+       [211] room_dw_church_intropiano                  
+       [212] room_dw_church_intro_gerson                
+       [213] room_dw_church_pianopiece_left             
+       [214] room_dw_church_northprophecies             
+       [215] room_dw_church_darkmaze                    
+       [217] room_dw_church_pianopiece_right            
+       [218] room_dw_church_pianopuzzle                 ★已登记 暗之圣域·小钢琴
+       [219] room_dw_church_nwconnect                   ★已登记 暗之圣域·书库
+       [220] room_dw_church_rightconnect                
+       [221] room_dw_church_stairspreview               
+       [222] room_dw_church_trueclimbadventure          
+       [223] room_dw_church_organpuzzle                 
+       [224] room_dw_church_mizzleencounter             
+       [225] room_dw_church_sideclimb                   
+       [226] room_dw_church_secretpiano                 
+       [227] room_dw_church_ripplepuzzle_postgers       ★已登记 暗之圣域·右下
+       [228] room_dw_church_tallbookcases_backup        
+       [229] room_dw_church_fountain                    
+       [230] room_dw_church_b_intro                     
+       [232] room_dw_church_bookshelfpuzzle             
+       [234] room_dw_church_biblioxencounter            
+       [235] room_dw_church_darkclimb                   
+       [236] room_dw_church_moneyfountain               
+       [238] room_dw_church_pianopiece_left_b           
+       [239] room_dw_church_pianopiece_rightprophecy    
+       [241] room_dw_church_shadowgerson                
+       [242] room_dw_church_holywatercooler             
+       [243] room_dw_church_rippleworship               
+       [244] room_dw_church_waterfallroom               
+       [245] room_dw_church_waterfalltearoom            
+       [260] room_dw_church_knightclimb                 
+       [261] room_dw_church_knightclimb_post            
+       [283] room_dw_church_ripseq1                     
+       [284] room_dw_church_ripseq2                     
+       [313] room_dw_church_bookshelfpuzzle_rev         
+  --- home / 克里斯的家  (5 间)
+       [ 16] room_krishallway                           
+       [ 17] room_torroom                               
+       [ 18] room_torhouse                              
+       [ 19] room_torbathroom                           
+       [159] room_krisroom_dark                         
+  --- hometown / 家乡  (28 间)
+       [ 20] room_town_krisyard                         
+       [ 21] room_town_northwest                        
+       [ 22] room_town_north                            
+       [ 23] room_beach                                 
+       [ 24] room_town_mid                              ★已登记 家乡
+       [ 25] room_town_apartments                       
+       [ 26] room_town_south                            
+       [ 27] room_town_school                           
+       [ 28] room_town_church                           
+       [ 29] room_graveyard                             
+       [ 30] room_town_shelter                          
+       [ 31] room_hospital_lobby                        
+       [ 32] room_hospital_hallway                      
+       [ 33] room_hospital_rudy                         
+       [ 34] room_hospital_room2                        
+       [ 35] room_diner                                 
+       [ 36] room_townhall                              
+       [ 37] room_flowershop_1f                         
+       [ 38] room_flowershop_2f                         
+       [ 39] room_library                               
+       [ 40] room_alphysalley                           
+       [ 55] room_torielclass                           
+       [ 56] room_schoollobby                           
+       [ 57] room_alphysclass                           
+       [ 58] room_schooldoor                            
+       [ 59] room_insidecloset                          
+       [107] room_town_noellehouse                      
+       [166] room_town_krisyard_dark                    
+  --- kris_room / 克里斯的房间  (1 间)
+       [ 15] room_krisroom                              ★已登记 克里斯的房间
+  --- light_world / 光世界  (9 间)
+       [ 41] room_lw_computer_lab                       
+       [ 42] room_lw_library_upstairs                   
+       [ 43] room_lw_police                             
+       [ 44] room_lw_conbini                            
+       [ 45] room_lw_icee_pizza                         
+       [ 46] room_lw_church_entrance                    
+       [ 47] room_lw_church_main                        
+       [149] room_lw_church_office                      
+       [208] room_lw_church_choir                       
+  --- mike_zone / 麦克地带  (10 间)
+       [102] room_darkness_example                      
+       [103] room_darkness_example_2                    
+       [156] room_dw_rotating_tower                     
+       [160] room_overworld_darkmaku_ring               
+       [164] room_overworld_darkmakumaze                
+       [165] room_overworld_darkmaku_blocks             
+       [240] room_rotating_tower_new_example            
+       [321] room_dw_castle_tv_zone_1                   
+       [322] room_dw_castle_tv_zone_2                   ★已登记 麦克地带
+       [323] room_dw_castle_tv_zone_3                   
+  --- my_castle_town / 我的城堡镇  (17 间)
+       [ 62] room_dw_castle_east_door                   
+       [ 63] room_dw_castle_west_cliff                  
+       [ 64] room_dw_castle_area_1                      
+       [ 65] room_dw_castle_town                        ★已登记 我的城堡镇
+       [ 67] room_dw_castle_restaurant                  
+       [ 68] room_dw_castle_cafe                        
+       [ 69] room_dw_castle_dojo                        
+       [ 72] room_dw_castle_dungeon                     
+       [ 73] room_dw_castle_rooms_kris                  
+       [ 74] room_dw_castle_rooms_susie                 
+       [155] room_dw_castle_rooms_ralsei                
+       [167] room_dw_castle_rooms_queen                 
+       [168] room_dw_castle_rooms_tenna                 
+       [246] room_dw_castle_rooms_kris_susie            
+       [297] room_dw_castle_tv_rhythm                   
+       [324] room_dw_castle_tv_zone_battle              
+       [325] room_dw_castle_tv_zone_minigame            
+  --- noelles_house / 诺艾尔家  (14 间)
+       [ 48] room_lw_noellehouse_main                   
+       [ 49] room_lw_noellehouse_kitchen                ★已登记 诺艾尔家
+       [ 50] room_lw_noellehouse_bathroom               
+       [ 51] room_lw_noellehouse_keyroom                
+       [ 52] room_lw_noellehouse_noelle                 
+       [ 53] room_lw_noellehouse_dess                   
+       [ 54] room_lw_noellehouse_closet                 
+       [162] room_lw_noellehouse_vents_west             
+       [193] room_lw_noellehouse_vents_north            
+       [194] room_lw_noellehouse_vents_east             
+       [195] room_lw_noellehouse_vents_south            
+       [233] room_lw_noellehouse_basement               
+       [289] room_lw_noellehouse_north                  
+       [290] room_lw_noellehouse_vents_north_west       
+  --- ralsei_room / 拉尔赛的城堡  (4 间)
+       [ 66] room_dw_ralsei_castle_front                
+       [ 70] room_dw_ralsei_castle_1f                   
+       [ 71] room_dw_ralsei_castle_2f                   
+       [154] room_dw_ralsei_castle_3f                   
+  --- second_sanctuary / 第二圣域  (31 间)
+       [192] room_dw_churchb_nongerson_post             
+       [247] room_dw_churchb_staircaseintro             ★已登记 第二圣域·中庭
+       [248] room_dw_churchb_prophecyencounter          
+       [249] room_dw_churchb_worshiproom                
+       [250] room_dw_churchb_libraryconnector           
+       [251] room_dw_churchb_savepoint                  ★已登记 第二圣域·地面层
+       [252] room_dw_churchb_rotatingtower              
+       [253] room_dw_churchb_bellroom                   
+       [254] room_dw_churchb_escherstaircase            
+       [255] room_dw_churchb_prophecymaze               
+       [256] room_dw_churchb_rotatingtower2             
+       [257] room_dw_churchb_gersonstudy                ★已登记 第二圣域·书斋
+       [258] room_dw_churchb_gersonchase                
+       [259] room_dw_churchb_extinguisher               
+       [266] room_dw_churchb_ripple1                    
+       [267] room_dw_churchb_ripplepost                 
+       [268] room_dw_churchb_library_alternate          
+       [269] room_dw_churchb_moneyfountain              
+       [282] room_dw_churchb_fountain                   
+       [293] room_dw_churchb_prophecymaze_old           
+       [294] room_dw_churchb_fireplace                  
+       [295] room_dw_churchb_nongerson                  
+       [296] room_dw_churchb_library                    
+       [299] room_dw_churchb_windows                    
+       [300] room_dw_churchb_bookshelf                  
+       [301] room_dw_churchb_man                        
+       [302] room_dw_churchb_gallery                    
+       [303] room_dw_churchb_rotatingtower_old          
+       [304] room_dw_churchb_darkclimb                  ★已登记 第二圣域·书斋
+       [307] room_dw_churchb_darkclimb_scene            
+       [319] room_dw_churchb_rotatingtower_tiled        
+  --- system / 系统与演出  (1 间)
+       [265] room_rhythmgame_editor                     
+  --- third_sanctuary / 第三圣域  (28 间)
+       [231] room_dw_churchc_final_prophecy             
+       [270] room_dw_churchc_superprophecies            ★已登记 第三圣域
+       [271] room_dw_churchc_encounter1                 
+       [272] room_dw_churchc_slidingpiano               
+       [273] room_dw_churchc_ripplesneak_poc            
+       [274] room_dw_churchc_encounter2                 
+       [275] room_dw_churchc_finalclimb                 
+       [276] room_dw_churchc_angelprophecy_encounter    
+       [277] room_dw_churchc_savepoint                  ★已登记 第三圣域·阶梯
+       [278] room_dw_churchc_darkswords                 
+       [279] room_dw_churchc_pretitan                   
+       [280] room_dw_churchc_prepretitan                ★已登记 第三圣域·最后之室
+       [281] room_dw_churchc_titandefeated              
+       [285] room_dw_churchc_titanclimb1                
+       [286] room_dw_churchc_titanclimb2                
+       [287] room_dw_churchc_titanclimb1_old            
+       [288] room_dw_churchc_titanclimb2_old            
+       [305] room_dw_churchc_titanclimb1_post           
+       [306] room_dw_churchc_titanclimb2_post           
+       [308] room_dw_churchc_dodge                      
+       [309] room_dw_churchc_insidetitan                
+       [311] room_dw_churchc_prophecies                 
+       [312] room_dw_churchc_angelprophecy              
+       [314] room_dw_churchc_prophecies_backup          
+       [315] room_dw_churchc_treasurechest              
+       [316] room_dw_churchc_titanclimb2_old2           
+       [317] room_dw_churchc_titanclimb1_tiled          
+       [318] room_dw_churchc_titanclimb2_tiled          
+  --- tv_backstage / 电视世界后台  (3 间)
+       [262] room_dw_rhythm                             
+       [263] room_dw_rhythm_countdown                   
+       [264] room_dw_rhythm_empty                       
+========================================================================
+ch5
+  --- card_castle / 纸牌城堡  (3 间)
+       [ 80] room_cc_lancer                             
+       [ 81] room_cc_clover                             
+       [ 82] room_cc_fountain                           
+  --- castle_town / 城堡镇  (2 间)
+       [ 50] room_castle_tutorial                       
+       [112] room_dw_castle_tv                          ★已登记 城堡镇·电视大楼
+  --- cliffs / 崖边  (23 间)
+       [144] room_dw_garden_cliffexit                   ★已登记 崖边·起点
+       [154] room_dw_cliff_gardentransition_new         
+       [155] room_dw_cliff_climbrefresher               
+       [156] room_dw_cliff_cutdown_tutorial             
+       [157] room_dw_cliff_bunnyfarm                    
+       [158] room_dw_cliff_silver_hammer                
+       [159] room_dw_cliff_dash_runner                  
+       [160] room_dw_cliff_seth_miniboss                
+       [161] room_dw_cliff_shop                         ★已登记 崖边·商店
+       [162] room_dw_cliff_netskieclimb                 
+       [163] room_dw_cliff_finaldash                    
+       [164] room_dw_cliff_yellowcave                   
+       [165] room_dw_cliff_shicave                      
+       [166] room_dw_cliff_verticalwind                 
+       [167] room_dw_cliff_verticalwind_post            ★已登记 崖边·城堡之下
+       [168] room_dw_cliff_netskieclimb_behind          
+       [169] room_dw_cliff_eastcliff                    
+       [170] room_dw_cliff_bonuscombat                  
+       [171] room_dw_cliff_twirlflowerplatforming       
+       [172] room_dw_cliff_kawkawdash                   
+       [173] room_dw_cliff_precipice                    
+       [174] room_dw_cliff_twirlflowerwind              
+       [248] room_dw_cliff_sethaqua_battle              
+  --- dark_world / 黑暗世界  (1 间)
+       [120] room_dw_garden_intro                       ★已登记 黑暗世界
+  --- flower_castle / 花之城堡  (69 间)
+       [148] room_dw_pink_encounter                     
+       [175] room_dogplatforming                        
+       [176] room_dw_fcastle_entrance                   
+       [177] room_dw_fcastle_cafe                       ★已登记 花之城堡·咖啡厅
+       [178] room_dw_fcastle_foyer                      
+       [179] room_dw_fcastle_post_party_jail            ★已登记 花之城堡·牢房
+       [180] room_dw_fcastle_shinobeetle_encounter      
+       [181] room_dw_fcastle_left_wing_floweryscene     
+       [182] room_dw_fcastle_bounce_1                   
+       [183] room_dw_fcastle_left_twodoors              ★已登记 花之城堡·左门
+       [184] room_dw_fcastle_yellow_miniboss            
+       [185] room_dw_fcastle_sandtrap                   
+       [186] room_dw_fcastle_dangerous_platforming      
+       [187] room_dw_fcastle_blueroom                   ★已登记 花之城堡·左舞台
+       [188] room_dw_fcastle_yellowjail                 
+       [189] room_dw_fcastle_onsen                      ★已登记 花之城堡·左侧尽头
+       [190] room_dw_fcastle_left_penultimate           
+       [191] room_dw_flowery_tree                       
+       [192] room_dw_fcastle_bounce_3                   
+       [193] room_dw_fcastle_shinobeetle_3d             
+       [194] room_dw_fcastle_heldmushrooms              
+       [195] room_dw_fcastle_flowerydash                
+       [196] room_dw_fcastle_partyjail                  
+       [197] room_dw_fcastle_terracotta_encounter       
+       [198] room_dw_fcastle_terracotta_bonus           
+       [199] room_dw_fcastle_right_wing_floweryscene    
+       [200] room_dw_fcastle_orange_puppet_introduction 
+       [201] room_dw_fcastle_gloves_tower               
+       [202] room_dw_fcastle_second_diner               ★已登记 花之城堡·右餐厅
+       [203] room_dw_fcastle_obscured_bullets           
+       [204] room_dw_fcastle_foxhunt                    
+       [205] room_dw_fcastle_right_penultimate          
+       [206] room_dw_fcastle_green_orange_battle        
+       [207] room_dw_fcastle_right_endingscene          ★已登记 花之城堡·右侧尽头
+       [208] room_dw_fcastle_right_puzzle               
+       [211] room_dw_dogballoon                         
+       [212] room_dw_fcastle_sidepuzzle                 
+       [214] room_dw_fcastle_zenlooker                  
+       [215] room_dw_fcastle_trainroom                  
+       [216] room_dw_post_flowery_battle                
+       [217] room_dw_fcastle_flowerclimb                
+       [218] room_dw_fcastle_top_intro                  
+       [219] room_dw_fcastle_top_staircase_1            
+       [220] room_dw_fcastle_ultradash                  
+       [221] room_dw_fcastle_yellowblue                 
+       [222] room_dw_fcastle_top_entrance               
+       [223] room_dw_fcastle_top_staircase_2            
+       [224] room_dw_fcastle_green_checkpoint           
+       [225] room_dw_fcastle_final_save                 
+       [226] room_dw_fcastle_flowery                    
+       [227] room_dw_fcastle_seth_encounter             
+       [228] room_dw_fcastle_top_descent                
+       [229] room_dw_fcastle_top_pinkdoor               
+       [230] room_dw_fcastle_pinkroom                   
+       [231] room_dw_fcastle_top_fountain               
+       [232] room_dw_post_fountain_close                
+       [233] room_dw_fcastle_pinkshop                   
+       [234] room_dw_fcastle_foxhunt_terakota           
+       [235] room_dw_fcastle_foxhunt_socks              
+       [236] room_dw_fcastle_foxhunt_chaos              
+       [237] room_dw_fcastle_foxhunt_secret             
+       [239] room_dw_fcastle_terracotta_puzzle          
+       [240] room_dw_fcastle_bromides                   
+       [241] room_dw_fcastle_top_ascent                 
+       [242] room_dw_fcastle_top_challenge              
+       [243] room_dw_fcastle_asgore                     
+       [244] room_dw_fcastle_orange_gauntlet            
+       [245] room_dw_fcastle_fusumadodge                
+       [249] room_dw_fcastle_flowerclimb_for_tiling     
+  --- garden / 希望之园  (33 间)
+       [118] room_dw_garden_meetflowery                 
+       [119] room_dw_garden_video                       
+       [121] room_dw_garden_ralseicupboard              
+       [122] room_dw_garden_floradinnencounter          ★已登记 希望之园·起点
+       [123] room_dw_garden_hospital                    
+       [124] room_dw_garden_fishingspot                 
+       [125] room_dw_garden_shearydodge                 
+       [126] room_dw_garden_hopschef                    
+       [127] room_dw_garden_platshortcut                
+       [128] room_dw_garden_riverchest                  
+       [129] room_dw_garden_enemyrush                   ★已登记 希望之园·花助
+       [130] room_dw_garden_pedestal                    
+       [131] room_dw_garden_mushrooms                   
+       [132] room_dw_garden_flowerygardening            
+       [133] room_dw_garden_diner                       ★已登记 希望之园·理想餐厅
+       [134] room_dw_garden_starwalkerdash              
+       [135] room_dw_garden_hardpressureplates          
+       [136] room_dw_garden_aqua                        
+       [137] room_dw_garden_finalplatforming            
+       [138] room_dw_garden_finalplatforming_right      
+       [139] room_dw_garden_wateringcan_aqua            
+       [140] room_dw_garden_aquadarkness                
+       [141] room_dw_garden_aquahole                    ★已登记 希望之园·神殿
+       [142] room_dw_garden_aquashrine                  
+       [143] room_dw_garden_aquaplatforming             
+       [145] room_dw_garden_susiechase                  
+       [146] room_dw_garden_newdash                     
+       [147] room_dw_garden_shearyguide                 
+       [149] room_dw_garden_aquatransition              
+       [150] room_dw_garden_aquadash                    ★已登记 希望之园·归途
+       [151] room_dw_garden_aquahole_left               
+       [152] room_dw_garden_firstdash                   
+       [153] room_dw_garden_aquadash_plat               
+  --- home / 克里斯的家  (4 间)
+       [ 14] room_krishallway                           
+       [ 15] room_torroom                               
+       [ 16] room_torhouse                              
+       [ 17] room_torbathroom                           
+  --- hometown / 家乡  (27 间)
+       [ 18] room_town_krisyard                         
+       [ 19] room_town_northwest                        
+       [ 20] room_town_north                            
+       [ 21] room_beach                                 
+       [ 22] room_town_mid                              
+       [ 23] room_town_apartments                       
+       [ 24] room_town_south                            ★已登记 家乡
+       [ 25] room_town_school                           
+       [ 26] room_town_church                           
+       [ 27] room_graveyard                             
+       [ 28] room_town_shelter                          
+       [ 29] room_hospital_lobby                        
+       [ 30] room_hospital_hallway                      
+       [ 31] room_hospital_rudy                         
+       [ 32] room_hospital_room2                        
+       [ 33] room_diner                                 
+       [ 34] room_townhall                              
+       [ 35] room_flowershop_1f                         
+       [ 36] room_flowershop_2f                         
+       [ 37] room_library                               
+       [ 38] room_alphysalley                           
+       [ 44] room_torielclass                           
+       [ 45] room_schoollobby                           
+       [ 46] room_alphysclass                           
+       [ 47] room_schooldoor                            
+       [ 48] room_insidecloset                          
+       [107] room_town_noellehouse                      
+  --- kris_room / 克里斯的房间  (1 间)
+       [ 13] room_krisroom                              ★已登记 克里斯的房间
+  --- light_world / 光世界  (9 间)
+       [ 39] room_lw_computer_lab                       
+       [ 40] room_lw_library_upstairs                   
+       [ 41] room_lw_police                             
+       [ 42] room_lw_conbini                            
+       [ 43] room_lw_icee_pizza                         
+       [102] room_lw_church_choir                       
+       [103] room_lw_church_entrance                    
+       [104] room_lw_church_main                        
+       [105] room_lw_church_office                      
+  --- my_castle_town / 我的城堡镇  (17 间)
+       [ 51] room_dw_castle_east_door                   
+       [ 52] room_dw_castle_west_cliff                  
+       [ 53] room_dw_castle_area_1                      
+       [ 54] room_dw_castle_town                        ★已登记 我的城堡镇
+       [ 56] room_dw_castle_restaurant                  
+       [ 57] room_dw_castle_cafe                        
+       [ 58] room_dw_castle_dojo                        
+       [ 62] room_dw_castle_dungeon                     
+       [ 63] room_dw_castle_rooms_kris                  
+       [ 64] room_dw_castle_rooms_susie                 
+       [ 65] room_dw_castle_rooms_ralsei                
+       [113] room_dw_castle_tv_rhythm                   
+       [114] room_dw_castle_church_entrance             
+       [115] room_dw_castle_church_climb                
+       [209] room_dw_castle_music                       
+       [213] room_dw_castle_tv_mike                     
+       [238] room_dw_castle_tv_kikky                    
+  --- noelles_house / 诺艾尔家  (1 间)
+       [106] room_lw_noellehouse_dess                   
+  --- ralsei_room / 拉尔赛的城堡  (5 间)
+       [ 55] room_dw_ralsei_castle_front                
+       [ 59] room_dw_ralsei_castle_1f                   
+       [ 60] room_dw_ralsei_castle_2f                   
+       [ 61] room_dw_ralsei_castle_3f                   
+       [116] room_dw_ralsei_castle_basketball           
+  --- system / 系统与演出  (3 间)
+       [101] room_plat_lab                              
+       [111] room_rhythmgame_editor                     
+       [117] room_shop_ch5                              
+  --- tv_backstage / 电视世界后台  (3 间)
+       [108] room_dw_rhythm                             
+       [109] room_dw_rhythm_countdown                   
+       [110] room_dw_rhythm_empty                       

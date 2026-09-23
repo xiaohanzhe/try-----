@@ -1,0 +1,390 @@
+########## ch2 ##########
+  [mansion] n=80
+      room_dw_mansion_krisroom | room_dw_mansion_susieroom | room_dw_mansion_lightner_hallway | room_dw_mansion_darkbulb_1 | room_dw_mansion_darkbulb_2 | room_dw_mansion_darkbulb_3
+      … 共 80
+  [city] n=52
+      room_dw_city_prototype_01 | room_dw_city_prototype_02 | room_dw_city_spamton_shop_exterior | room_dw_city_spamton_house | room_dw_city_intro | room_dw_city_split
+      … 共 52
+  [cyber] n=43
+      room_dw_cyber_intro_1 | room_dw_cyber_intro_connector | room_dw_cyber_intro_2 | room_dw_cyber_rhythm_slide | room_dw_cyber_savepoint | room_dw_cyber_battle_maze_1
+      … 共 43
+  [castle] n=16
+      room_castle_town | room_castle_tutorial | room_dw_castle_west_cliff_old | room_dw_castle_east_door | room_dw_castle_west_cliff | room_dw_castle_area_1
+      … 共 16
+  [town] n=9
+      room_town_krisyard | room_town_northwest | room_town_north | room_town_mid | room_town_apartments | room_town_south
+      … 共 9
+  [lw] n=5
+      room_lw_computer_lab | room_lw_library_upstairs | room_lw_police | room_lw_conbini | room_lw_icee_pizza
+  [hospital] n=4
+      room_hospital_lobby | room_hospital_hallway | room_hospital_rudy | room_hospital_room2
+  [ralsei] n=3
+      room_dw_ralsei_castle_front | room_dw_ralsei_castle_1f | room_dw_ralsei_castle_2f
+  [shop] n=3
+      room_shop_ch2_music | room_shop_ch2_swatch | room_shop_ch2_spamton
+  [cc] n=3
+      room_cc_lancer | room_cc_clover | room_cc_fountain
+  [teacup] n=2
+      room_teacup_demoauto | room_teacup_demobullets
+  [flowershop] n=2
+      room_flowershop_1f | room_flowershop_2f
+  [legend] n=2
+      room_legend | room_legend_neo
+  [shaun] n=1
+      room_shaun_puzzle
+  [krisroom] n=1
+      room_krisroom
+  [krishallway] n=1
+      room_krishallway
+  [torroom] n=1
+      room_torroom
+  [torhouse] n=1
+      room_torhouse
+  [torbathroom] n=1
+      room_torbathroom
+  [beach] n=1
+      room_beach
+  [graveyard] n=1
+      room_graveyard
+  [diner] n=1
+      room_diner
+  [townhall] n=1
+      room_townhall
+  [library] n=1
+      room_library
+  [alphysalley] n=1
+      room_alphysalley
+  [torielclass] n=1
+      room_torielclass
+  [schoollobby] n=1
+      room_schoollobby
+  [alphysclass] n=1
+      room_alphysclass
+  [schooldoor] n=1
+      room_schooldoor
+  [insidecloset] n=1
+      room_insidecloset
+  [school] n=1
+      room_school_unusedroom
+  [intro] n=1
+      room_intro_ch2
+  [shop1] n=1
+      room_shop1
+  [gameover] n=1
+      room_gameover
+  [ed] n=1
+      room_ed
+  [DARKbase] n=1
+      room_DARKbase_GMS2
+  [transformation] n=1
+      room_transformation_sequence
+  [chapter] n=1
+      room_chapter_continue
+
+########## ch3 ##########
+  [teevie] n=35
+      room_dw_teevie_preview | room_dw_teevie_intro | room_dw_teevie_large_01 | room_dw_teevie_large_02 | room_dw_teevie_cowboy_zone_01_intro | room_dw_teevie_cowboy_zone_01_after
+      … 共 35
+  [b3bs] n=25
+      room_dw_b3bs_interstitial | room_dw_b3bs_rouxls_lanina | room_dw_b3bs_template | room_dw_b3bs_rouxls_boss | room_dw_b3bs_cheaterpippins | room_dw_b3bs_idcardpuzzle
+      … 共 25
+  [board] n=18
+      room_board_1 | room_board_dungeon_2 | room_board_dungeon_3 | room_board_preshadowmantle | room_board_prepostshadowmantle | room_board_postshadowmantle
+      … 共 18
+  [castle] n=11
+      room_castle_tutorial | room_dw_castle_east_door | room_dw_castle_west_cliff | room_dw_castle_area_1 | room_dw_castle_town | room_dw_castle_restaurant
+      … 共 11
+  [town] n=10
+      room_town_krisyard | room_town_northwest | room_town_north | room_town_mid | room_town_apartments | room_town_south
+      … 共 10
+  [couch] n=9
+      room_dw_couch_overworld_intro | room_dw_couch_overworld_01 | room_dw_couch_overworld_02 | room_dw_couch_overworld_03 | room_dw_couch_overworld_04 | room_dw_couch_overworld_05
+      … 共 9
+  [ranking] n=7
+      room_dw_ranking_hub | room_dw_ranking_a | room_dw_ranking_b | room_dw_ranking_c | room_dw_ranking_z | room_dw_ranking_z_hallway
+      … 共 7
+  [lw] n=5
+      room_lw_computer_lab | room_lw_library_upstairs | room_lw_police | room_lw_conbini | room_lw_icee_pizza
+  [puzzlecloset] n=5
+      room_dw_puzzlecloset_1 | room_dw_puzzlecloset_2 | room_dw_puzzlecloset_0 | room_dw_puzzlecloset_3 | room_dw_puzzlecloset_1a
+  [hospital] n=4
+      room_hospital_lobby | room_hospital_hallway | room_hospital_rudy | room_hospital_room2
+  [nondescript] n=4
+      room_dw_nondescript_room | room_dw_nondescript_field | room_dw_nondescript_hallway | room_dw_nondescript_classroom
+  [susiezilla] n=4
+      room_susiezilla | room_susiezilla_singleScreenMockup | room_dw_susiezilla | room_dw_susiezilla_empty
+  [ralsei] n=3
+      room_dw_ralsei_castle_front | room_dw_ralsei_castle_1f | room_dw_ralsei_castle_2f
+  [cc] n=3
+      room_cc_lancer | room_cc_clover | room_cc_fountain
+  [tv] n=3
+      room_dw_tv_cutscene1g | room_dw_tv_closet | room_dw_tv_curtain
+  [rhythm] n=3
+      room_dw_rhythm | room_dw_rhythm_empty | room_dw_rhythm_countdown
+  [snow] n=3
+      room_dw_snow_zone | room_dw_snow_zone_battle | room_dw_snow_zone_east_door
+  [torhouse] n=2
+      room_torhouse | room_torhouse_sepia
+  [flowershop] n=2
+      room_flowershop_1f | room_flowershop_2f
+  [legend] n=2
+      room_legend | room_legend_neo
+  [shadowmantle] n=2
+      room_shadowmantle_movementExample | room_shadowmantle
+  [chef] n=2
+      room_dw_chef | room_dw_chef_empty
+  [krisroom] n=1
+      room_krisroom
+  [krishallway] n=1
+      room_krishallway
+  [torroom] n=1
+      room_torroom
+  [torbathroom] n=1
+      room_torbathroom
+  [beach] n=1
+      room_beach
+  [graveyard] n=1
+      room_graveyard
+  [diner] n=1
+      room_diner
+  [townhall] n=1
+      room_townhall
+  [library] n=1
+      room_library
+  [alphysalley] n=1
+      room_alphysalley
+  [torielclass] n=1
+      room_torielclass
+  [schoollobby] n=1
+      room_schoollobby
+  [alphysclass] n=1
+      room_alphysclass
+  [schooldoor] n=1
+      room_schooldoor
+  [insidecloset] n=1
+      room_insidecloset
+  [school] n=1
+      room_school_unusedroom
+  [shop1] n=1
+      room_shop1
+  [shop] n=1
+      room_shop_music
+  [gameover] n=1
+      room_gameover
+  [ed] n=1
+      room_ed
+  [DARKbase] n=1
+      room_DARKbase_GMS2
+  [backstage] n=1
+      room_dw_backstage
+  [ch3] n=1
+      room_dw_ch3_man
+  [rhythmgame] n=1
+      room_rhythmgame_editor
+  [gameshowroom] n=1
+      room_ch3_gameshowroom
+  [shootout] n=1
+      room_shootout
+  [green] n=1
+      room_dw_green_room
+  [changing] n=1
+      room_dw_changing_room
+  [console] n=1
+      room_dw_console_room
+  [inbetween] n=1
+      room_dw_inbetween
+  [CHEFS] n=1
+      room_CHEFS
+  [gacharoom] n=1
+      room_ch3_gacharoom_unknown
+  [intro] n=1
+      room_intro
+  [inbetweenhall] n=1
+      room_dw_inbetweenhall
+  [chapter] n=1
+      room_chapter_continue
+
+########## ch4 ##########
+  [church] n=105
+      room_dw_church_slidingbookshelf | room_dw_church_bellplay | room_dw_church_candlelighting | room_dw_church_intro1 | room_dw_church_intro3 | room_dw_church_intro_guei
+      … 共 105
+  [churchb] n=31
+      room_dw_churchb_nongerson_post | room_dw_churchb_staircaseintro | room_dw_churchb_prophecyencounter | room_dw_churchb_worshiproom | room_dw_churchb_libraryconnector | room_dw_churchb_savepoint
+      … 共 31
+  [churchc] n=28
+      room_dw_churchc_final_prophecy | room_dw_churchc_superprophecies | room_dw_churchc_encounter1 | room_dw_churchc_slidingpiano | room_dw_churchc_ripplesneak_poc | room_dw_churchc_encounter2
+      … 共 28
+  [lw] n=23
+      room_lw_computer_lab | room_lw_library_upstairs | room_lw_police | room_lw_conbini | room_lw_icee_pizza | room_lw_church_entrance
+      … 共 23
+  [castle] n=22
+      room_castle_tutorial | room_dw_castle_east_door | room_dw_castle_west_cliff | room_dw_castle_area_1 | room_dw_castle_town | room_dw_castle_restaurant
+      … 共 22
+  [town] n=11
+      room_town_krisyard | room_town_northwest | room_town_north | room_town_mid | room_town_apartments | room_town_south
+      … 共 11
+  [hospital] n=4
+      room_hospital_lobby | room_hospital_hallway | room_hospital_rudy | room_hospital_room2
+  [ralsei] n=4
+      room_dw_ralsei_castle_front | room_dw_ralsei_castle_1f | room_dw_ralsei_castle_2f | room_dw_ralsei_castle_3f
+  [cc] n=3
+      room_cc_lancer | room_cc_clover | room_cc_fountain
+  [overworld] n=3
+      room_overworld_darkmaku_ring | room_overworld_darkmakumaze | room_overworld_darkmaku_blocks
+  [rhythm] n=3
+      room_dw_rhythm | room_dw_rhythm_countdown | room_dw_rhythm_empty
+  [krisroom] n=2
+      room_krisroom | room_krisroom_dark
+  [flowershop] n=2
+      room_flowershop_1f | room_flowershop_2f
+  [legend] n=2
+      room_legend | room_legend_neo
+  [darkness] n=2
+      room_darkness_example | room_darkness_example_2
+  [rotating] n=2
+      room_dw_rotating_tower | room_rotating_tower_new_example
+  [krishallway] n=1
+      room_krishallway
+  [torroom] n=1
+      room_torroom
+  [torhouse] n=1
+      room_torhouse
+  [torbathroom] n=1
+      room_torbathroom
+  [beach] n=1
+      room_beach
+  [graveyard] n=1
+      room_graveyard
+  [diner] n=1
+      room_diner
+  [townhall] n=1
+      room_townhall
+  [library] n=1
+      room_library
+  [alphysalley] n=1
+      room_alphysalley
+  [torielclass] n=1
+      room_torielclass
+  [schoollobby] n=1
+      room_schoollobby
+  [alphysclass] n=1
+      room_alphysclass
+  [schooldoor] n=1
+      room_schooldoor
+  [insidecloset] n=1
+      room_insidecloset
+  [school] n=1
+      room_school_unusedroom
+  [shop1] n=1
+      room_shop1
+  [shop] n=1
+      room_shop_music
+  [gameover] n=1
+      room_gameover
+  [ed] n=1
+      room_ed
+  [intro] n=1
+      room_intro_ch4
+  [DARKbase] n=1
+      room_DARKbase_GMS2
+  [rhythmgame] n=1
+      room_rhythmgame_editor
+  [chapter] n=1
+      room_chapter_continue
+
+########## ch5 ##########
+  [fcastle] n=63
+      room_dw_fcastle_entrance | room_dw_fcastle_cafe | room_dw_fcastle_foyer | room_dw_fcastle_post_party_jail | room_dw_fcastle_shinobeetle_encounter | room_dw_fcastle_left_wing_floweryscene
+      … 共 63
+  [garden] n=35
+      room_dw_garden_meetflowery | room_dw_garden_video | room_dw_garden_intro | room_dw_garden_ralseicupboard | room_dw_garden_floradinnencounter | room_dw_garden_hospital
+      … 共 35
+  [cliff] n=22
+      room_dw_cliff_gardentransition_new | room_dw_cliff_climbrefresher | room_dw_cliff_cutdown_tutorial | room_dw_cliff_bunnyfarm | room_dw_cliff_silver_hammer | room_dw_cliff_dash_runner
+      … 共 22
+  [castle] n=19
+      room_castle_tutorial | room_dw_castle_east_door | room_dw_castle_west_cliff | room_dw_castle_area_1 | room_dw_castle_town | room_dw_castle_restaurant
+      … 共 19
+  [town] n=10
+      room_town_krisyard | room_town_northwest | room_town_north | room_town_mid | room_town_apartments | room_town_south
+      … 共 10
+  [lw] n=10
+      room_lw_computer_lab | room_lw_library_upstairs | room_lw_police | room_lw_conbini | room_lw_icee_pizza | room_lw_church_choir
+      … 共 10
+  [ralsei] n=5
+      room_dw_ralsei_castle_front | room_dw_ralsei_castle_1f | room_dw_ralsei_castle_2f | room_dw_ralsei_castle_3f | room_dw_ralsei_castle_basketball
+  [hospital] n=4
+      room_hospital_lobby | room_hospital_hallway | room_hospital_rudy | room_hospital_room2
+  [cc] n=3
+      room_cc_lancer | room_cc_clover | room_cc_fountain
+  [rhythm] n=3
+      room_dw_rhythm | room_dw_rhythm_countdown | room_dw_rhythm_empty
+  [flowershop] n=2
+      room_flowershop_1f | room_flowershop_2f
+  [legend] n=2
+      room_legend | room_legend_neo
+  [shop] n=2
+      room_shop_music | room_shop_ch5
+  [post] n=2
+      room_dw_post_flowery_battle | room_dw_post_fountain_close
+  [krisroom] n=1
+      room_krisroom
+  [krishallway] n=1
+      room_krishallway
+  [torroom] n=1
+      room_torroom
+  [torhouse] n=1
+      room_torhouse
+  [torbathroom] n=1
+      room_torbathroom
+  [beach] n=1
+      room_beach
+  [graveyard] n=1
+      room_graveyard
+  [diner] n=1
+      room_diner
+  [townhall] n=1
+      room_townhall
+  [library] n=1
+      room_library
+  [alphysalley] n=1
+      room_alphysalley
+  [torielclass] n=1
+      room_torielclass
+  [schoollobby] n=1
+      room_schoollobby
+  [alphysclass] n=1
+      room_alphysclass
+  [schooldoor] n=1
+      room_schooldoor
+  [insidecloset] n=1
+      room_insidecloset
+  [school] n=1
+      room_school_unusedroom
+  [shop1] n=1
+      room_shop1
+  [gameover] n=1
+      room_gameover
+  [ed] n=1
+      room_ed
+  [DARKbase] n=1
+      room_DARKbase_GMS2
+  [chapter] n=1
+      room_chapter_continue
+  [plat] n=1
+      room_plat_lab
+  [rhythmgame] n=1
+      room_rhythmgame_editor
+  [pink] n=1
+      room_dw_pink_encounter
+  [dogplatforming] n=1
+      room_dogplatforming
+  [flowery] n=1
+      room_dw_flowery_tree
+  [man] n=1
+      room_man
+  [dogballoon] n=1
+      room_dw_dogballoon
+  [intro] n=1
+      room_intro_ch5
+
