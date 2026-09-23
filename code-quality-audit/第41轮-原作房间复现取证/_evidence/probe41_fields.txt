@@ -1,0 +1,86 @@
+== [0] Data 集合 ==
+  Extensions n=0
+  Sounds n=151
+  AudioGroups n=2
+  Sprites n=1097
+  Backgrounds n=59
+  Paths n=0
+  Scripts n=692
+  GlobalInitScripts n=308
+  Shaders n=0
+  Fonts n=12
+  Timelines n=0
+  GameObjects n=353
+  Rooms n=147
+  TexturePageItems n=3013
+  Code n=1680
+  Variables n=5181
+  Functions n=742
+  CodeLocals n=1293
+  Strings n=14177
+  EmbeddedImages n=1
+  EmbeddedTextures n=21
+  TextureGroupInfo n=3
+  EmbeddedAudio n=56
+  AnimationCurves n=0
+  Sequences n=0
+  FilterEffects n=0
+  AllListProperties n=29
+
+== [1] 样本房间: Tiles=55 Instances=0 Background=0 Assets=2 ==
+
+== [2] 层内部结构 ==
+-- room[55] room_field_puzzle1 1600x480 , layer=Tiles
+   Layer : Layer { ParentRoom:UndertaleRoom=null; LayerName:UndertaleString="Tiles_1"; LayerId:UInt32=421; LayerType:LayerType=Tiles; LayerDepth:Int32=1000100; XOffset:Single=0; YOffset:Single=0; HSpeed:Single=0; VSpeed:Single=0; IsVisible:Boolean=True; Data:LayerData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerTilesData; InstancesData:LayerInstancesData=null; TilesData:LayerTilesData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerTilesData; BackgroundData:LayerBackgroundData=null; AssetsData:LayerAssetsData=null; EffectData:LayerEffectData=null; EffectEnabled:Boolean=True; EffectType:UndertaleString=null; EffectProperties:UndertaleSimpleList`1=<IEnumerable n=0>; }
+   .TilesData : LayerTilesData { ParentLayer:Layer=null; Background:UndertaleBackground=bg_darkfield_tiles_tileset (UndertaleBackground); TilesX:UInt32=40; TilesY:UInt32=12; TileData:UInt32[][]=<IEnumerable n=12>; }
+      .TileData n=12
+        first(UInt32[]) : UInt32[] { Length:Int32=40; LongLength:Int64=40; Rank:Int32=1; SyncRoot:Object=<IEnumerable n=40>; IsReadOnly:Boolean=False; IsFixedSize:Boolean=True; IsSynchronized:Boolean=False; }
+
+-- room[0] ROOM_INITIALIZE 640x480 , layer=Instances
+   Layer : Layer { ParentRoom:UndertaleRoom=null; LayerName:UndertaleString="Compatibility_Instances_Depth_0"; LayerId:UInt32=0; LayerType:LayerType=Instances; LayerDepth:Int32=0; XOffset:Single=0; YOffset:Single=0; HSpeed:Single=0; VSpeed:Single=0; IsVisible:Boolean=True; Data:LayerData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesData; InstancesData:LayerInstancesData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesData; TilesData:LayerTilesData=null; BackgroundData:LayerBackgroundData=null; AssetsData:LayerAssetsData=null; EffectData:LayerEffectData=null; EffectEnabled:Boolean=True; EffectType:UndertaleString=null; EffectProperties:UndertaleSimpleList`1=<IEnumerable n=0>; }
+   .TilesData = null
+   .InstancesData : LayerInstancesData { Instances:ObservableCollection`1=<IEnumerable n=4>; }
+      .Instances n=4
+        first(GameObject) : GameObject { X:Int32=32; Y:Int32=32; ObjectDefinition:UndertaleGameObject=obj_initializer2 (UndertaleGameObject); InstanceID:UInt32=100000; CreationCode:UndertaleCode=null; ScaleX:Single=1; ScaleY:Single=1; Color:UInt32=4294967295; Rotation:Single=0; PreCreateCode:UndertaleCode=null; ImageSpeed:Single=1; ImageIndex:Int32=0; Nonexistent:Boolean=False; WrappedImageIndex:Int32=0; OppositeRotation:Single=360; SpriteXOffset:Int32=0; SpriteYOffset:Int32=0; XOffset:Int32=32; YOffset:Int32=32; }
+
+-- room[0] ROOM_INITIALIZE 640x480 , layer=Background
+   Layer : Layer { ParentRoom:UndertaleRoom=null; LayerName:UndertaleString="Compatibility_Colour"; LayerId:UInt32=1; LayerType:LayerType=Background; LayerDepth:Int32=2147483600; XOffset:Single=0; YOffset:Single=0; HSpeed:Single=0; VSpeed:Single=0; IsVisible:Boolean=True; Data:LayerData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerBackgroundData; InstancesData:LayerInstancesData=null; TilesData:LayerTilesData=null; BackgroundData:LayerBackgroundData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerBackgroundData; AssetsData:LayerAssetsData=null; EffectData:LayerEffectData=null; EffectEnabled:Boolean=True; EffectType:UndertaleString=null; EffectProperties:UndertaleSimpleList`1=<IEnumerable n=0>; }
+   .TilesData = null
+   .InstancesData = null
+   .BackgroundData : LayerBackgroundData { ParentLayer:Layer=null; CalcScaleX:Single=0; CalcScaleY:Single=0; Visible:Boolean=True; Foreground:Boolean=False; Sprite:UndertaleSprite=null; TiledHorizontally:Boolean=False; TiledVertically:Boolean=False; Stretch:Boolean=False; Color:UInt32=4278190080; FirstFrame:Single=0; AnimationSpeed:Single=15; AnimationSpeedType:AnimationSpeedType=FPS; XOffset:Single=0; YOffset:Single=0; }
+
+-- room[2] room_krisroom 320x240 , layer=Assets
+   Layer : Layer { ParentRoom:UndertaleRoom=null; LayerName:UndertaleString="Compatibility_Tiles_Depth_15000"; LayerId:UInt32=9; LayerType:LayerType=Assets; LayerDepth:Int32=15000; XOffset:Single=0; YOffset:Single=0; HSpeed:Single=0; VSpeed:Single=0; IsVisible:Boolean=True; Data:LayerData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerAssetsData; InstancesData:LayerInstancesData=null; TilesData:LayerTilesData=null; BackgroundData:LayerBackgroundData=null; AssetsData:LayerAssetsData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerAssetsData; EffectData:LayerEffectData=null; EffectEnabled:Boolean=True; EffectType:UndertaleString=null; EffectProperties:UndertaleSimpleList`1=<IEnumerable n=0>; }
+   .TilesData = null
+   .InstancesData = null
+   .BackgroundData = null
+   .AssetsData : LayerAssetsData { LegacyTiles:UndertalePointerList`1=<IEnumerable n=1>; Sprites:UndertalePointerList`1=<IEnumerable n=0>; Sequences:UndertalePointerList`1=<IEnumerable n=0>; NineSlices:UndertalePointerList`1=null; ParticleSystems:UndertalePointerList`1=null; TextItems:UndertalePointerList`1=null; }
+      .LegacyTiles n=1
+        first(Tile) : Tile { X:Int32=41; Y:Int32=168; BackgroundDefinition:UndertaleBackground=null; SpriteDefinition:UndertaleSprite=bg_asrieldesk (UndertaleSprite); ObjectDefinition:UndertaleNamedResource=bg_asrieldesk (UndertaleSprite); SourceX:Int32=0; SourceY:Int32=0; Width:UInt32=53; Height:UInt32=52; TileDepth:Int32=15000; InstanceID:UInt32=10000000; ScaleX:Single=1; ScaleY:Single=1; Color:UInt32=4294967295; Tpag:UndertaleTexturePageItem=PageItem 1473 (UndertaleTexturePageItem); }
+
+== [3] Sprite / Object / Code ==
+  ### Sprites n=1097
+    [0] : UndertaleSprite { Name:UndertaleString="spr_face_susie_alt"; Width:UInt32=45; Height:UInt32=51; MarginLeft:Int32=0; MarginRight:Int32=44; MarginBottom:Int32=50; MarginTop:Int32=0; Transparent:Boolean=False; Smooth:Boolean=False; Preload:Boolean=False; BBoxMode:UInt32=0; SepMasks:SepMaskType=AxisAlignedRect; OriginX:Int32=0; OriginY:Int32=0; OriginXWrapper:Int32=0; OriginYWrapper:Int32=0; Textures:UndertaleSimpleList`1=<IEnumerable n=10>; CollisionMasks:ObservableCollection`1=<IEnumerable n=0>; SVersion:UInt32=3; SSpriteType:SpriteType=Normal; GMS2PlaybackSpeed:Single=1; GMS2PlaybackSpeedType:AnimSpeedType=FramesPerGameFrame; IsSpecialType:Boolean=True; SpineVersion:Int32=0; SpineCacheVersion:Int32=0; SpineJSON:String=null; SpineAtlas:String=null; SpineTextures:UndertaleSimpleList`1=null; IsSpineSprite:Boolean=False; SpineHasTextureData:Boolean=True; … }
+      .Textures n=10  first=TextureEntry { Texture:UndertaleTexturePageItem=PageItem 1191 (UndertaleTexturePageItem); }
+
+  ### GameObjects n=353
+    [0] : UndertaleGameObject { Name:UndertaleString="obj_switchAsyncHelper"; Sprite:UndertaleSprite=null; Visible:Boolean=True; Managed:Boolean=True; Solid:Boolean=False; Depth:Int32=0; Persistent:Boolean=False; ParentId:UndertaleGameObject=null; TextureMaskId:UndertaleSprite=null; UsesPhysics:Boolean=False; IsSensor:Boolean=False; CollisionShape:CollisionShapeFlags=Box; Density:Single=0.5; Restitution:Single=0.1; Group:UInt32=1; LinearDamping:Single=0.1; AngularDamping:Single=0.1; Friction:Single=0.2; Awake:Boolean=True; Kinematic:Boolean=False; PhysicsVertices:UndertaleObservableList`1=<IEnumerable n=0>; Events:UndertalePointerList`1=<IEnumerable n=15>; ProjectName:String="obj_switchAsyncHelper"; ProjectAssetType:SerializableAssetType=GameObject; ProjectExportable:Boolean=True; }
+      .Events n=15  first=UndertalePointerList`1 { Count:Int32=1; Item:Event="<err>"; }
+
+  ### Code n=1680
+    [0] : UndertaleCode { Name:UndertaleString="gml_GlobalScript_scr_debug_save_trophies"; Length:UInt32=56; LocalsCount:UInt32=1; ArgumentsCount:UInt16=0; Offset:UInt32=0; Instructions:List`1=<IEnumerable n=11>; WeirdLocalFlag:Boolean=False; ParentEntry:UndertaleCode=null; ChildEntries:List`1=<IEnumerable n=1>; ProjectName:String="gml_GlobalScript_scr_debug_save_trophies"; ProjectAssetType:SerializableAssetType=Code; ProjectExportable:Boolean=True; }
+      .Instructions n=11  first=UndertaleInstruction { Kind:Opcode=B; ComparisonKind:ComparisonType=0; Type1:DataType=Double; Type2:DataType=Double; TypeInst:InstanceType=2; ValueShort:Int16=2; ValueInt:Int32=0; ValueLong:Int64=0; ValueDouble:Double=0; ValueString:UndertaleResourceById`2=null; ValueVariable:UndertaleVariable=null; ValueFunction:UndertaleFunction=null; ReferenceType:VariableType=Array; JumpOffset:Int32=2; JumpOffsetPopenvExitMagic:Boolean=False; ArgumentsCount:UInt16=2; Extra:Byte=2; SwapExtra:UInt16=2; … }
+      .ChildEntries n=1  first=UndertaleCode { Name:UndertaleString="gml_Script_scr_debug_save_trophies"; Length:UInt32=56; LocalsCount:UInt32=0; ArgumentsCount:UInt16=0; Offset:UInt32=4; Instructions:List`1=<IEnumerable n=0>; WeirdLocalFlag:Boolean=False; ParentEntry:UndertaleCode=gml_GlobalScript_scr_debug_save_trophies (UndertaleCode); ChildEntries:List`1=<IEnumerable n=0>; ProjectName:String="gml_Script_scr_debug_save_trophies"; ProjectAssetType:SerializableAssetType=Code; ProjectExportable:Boolean=False; }
+
+  ### Backgrounds n=59
+    [0] : UndertaleBackground { Name:UndertaleString="bg_torhouse_fg_tileset"; Transparent:Boolean=False; Smooth:Boolean=False; Preload:Boolean=False; Texture:UndertaleTexturePageItem=PageItem 179 (UndertaleTexturePageItem); GMS2TilesetVersion:UInt32=2; GMS2TileWidth:UInt32=415; GMS2TileHeight:UInt32=47; GMS2OutputBorderX:UInt32=2; GMS2OutputBorderY:UInt32=2; GMS2TileColumns:UInt32=1; GMS2ItemsPerTileCount:UInt32=1; GMS2TileCount:UInt32=1; GMS2ExportedSprite:UndertaleSprite=null; GMS2FrameLength:Int64=66666; GMS2TileIds:UndertaleObservableList`1=<IEnumerable n=1>; GMS2TileSeparationX:UInt32=0; GMS2TileSeparationY:UInt32=0; ProjectName:String="bg_torhouse_fg_tileset"; ProjectAssetType:SerializableAssetType=Background; ProjectExportable:Boolean=True; }
+      .GMS2TileIds n=1  first=TileID { ID:UInt32=0; }
+
+== [3b] 含 fountain 的 GameObjects ==
+  obj_darkfountain : UndertaleGameObject { Name:UndertaleString="obj_darkfountain"; Sprite:UndertaleSprite=spr_fountainedge (UndertaleSprite); Visible:Boolean=True; Managed:Boolean=True; Solid:Boolean=False; Depth:Int32=0; Persistent:Boolean=False; ParentId:UndertaleGameObject=null; TextureMaskId:UndertaleSprite=null; UsesPhysics:Boolean=False; IsSensor:Boolean=False; CollisionShape:CollisionShapeFlags=Circle; Density:Single=0.5; Restitution:Single=0.1; Group:UInt32=0; LinearDamping:Single=0.1; AngularDamping:Single=0.1; Friction:Single=0.2; Awake:Boolean=True; Kinematic:Boolean=False; PhysicsVertices:UndertaleObservableList`1=<IEnumerable n=0>; Events:UndertalePointerList`1=<IEnumerable n=15>; ProjectName:String="obj_darkfountain"; ProjectAssetType:SerializableAssetType=GameObject; ProjectExportable:Boolean=True; }
+  obj_darkfountain_event : UndertaleGameObject { Name:UndertaleString="obj_darkfountain_event"; Sprite:UndertaleSprite=spr_heart_centered (UndertaleSprite); Visible:Boolean=True; Managed:Boolean=True; Solid:Boolean=False; Depth:Int32=0; Persistent:Boolean=False; ParentId:UndertaleGameObject=null; TextureMaskId:UndertaleSprite=null; UsesPhysics:Boolean=False; IsSensor:Boolean=False; CollisionShape:CollisionShapeFlags=Circle; Density:Single=0.5; Restitution:Single=0.1; Group:UInt32=0; LinearDamping:Single=0.1; AngularDamping:Single=0.1; Friction:Single=0.2; Awake:Boolean=True; Kinematic:Boolean=False; PhysicsVertices:UndertaleObservableList`1=<IEnumerable n=0>; Events:UndertalePointerList`1=<IEnumerable n=15>; ProjectName:String="obj_darkfountain_event"; ProjectAssetType:SerializableAssetType=GameObject; ProjectExportable:Boolean=True; }
+  obj_fountainkris : UndertaleGameObject { Name:UndertaleString="obj_fountainkris"; Sprite:UndertaleSprite=spr_krisu_bright (UndertaleSprite); Visible:Boolean=True; Managed:Boolean=True; Solid:Boolean=False; Depth:Int32=0; Persistent:Boolean=False; ParentId:UndertaleGameObject=null; TextureMaskId:UndertaleSprite=null; UsesPhysics:Boolean=False; IsSensor:Boolean=False; CollisionShape:CollisionShapeFlags=Circle; Density:Single=0.5; Restitution:Single=0.1; Group:UInt32=0; LinearDamping:Single=0.1; AngularDamping:Single=0.1; Friction:Single=0.2; Awake:Boolean=True; Kinematic:Boolean=False; PhysicsVertices:UndertaleObservableList`1=<IEnumerable n=0>; Events:UndertalePointerList`1=<IEnumerable n=15>; ProjectName:String="obj_fountainkris"; ProjectAssetType:SerializableAssetType=GameObject; ProjectExportable:Boolean=True; }
+
+== [4] 连接图原料：Code 里搜 room_goto ==
+  Code n=1680  反汇编成功=0  合计字符=0
+  含 room_goto 的条目 = 0  样例 = 

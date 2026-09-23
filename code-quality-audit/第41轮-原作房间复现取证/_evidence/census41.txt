@@ -1,0 +1,219 @@
+== [1] 房间与层 ==
+Rooms=147
+层总数=1014 ；几何非零(有视差/偏移)的层=16
+层 type 分布: 
+   Instances = 588
+   Background = 191
+   Assets = 234
+   Tiles = 1
+有 Tiles 层的房间=1 ；有 Instances 层=146 ；有 Assets 层=111 ；有 Background 层=147
+瓦片格总量(TilesX*TilesY 求和)=480
+用到的 tileset 数=1
+   bg_darkfield_tiles_tileset 用于 1 层
+
+== [2] Sprite 帧 与 tileset 动画 ==
+Sprites=1097 ；总帧数=2965 ；多帧 sprite=523
+帧数分布(Top12): 
+   frames=1 → 573 个精灵
+   frames=2 → 174 个精灵
+   frames=4 → 138 个精灵
+   frames=6 → 44 个精灵
+   frames=3 → 41 个精灵
+   frames=5 → 33 个精灵
+   frames=8 → 23 个精灵
+   frames=7 → 19 个精灵
+   frames=9 → 13 个精灵
+   frames=11 → 12 个精灵
+   frames=12 → 7 个精灵
+   frames=10 → 5 个精灵
+
+Backgrounds(tilesets)=59
+  含多帧 GMS2TileIds 的 tileset = 22（瓦片动画来源）
+  样例: bg_schooltiles_tileset  tileW=20 tileH=20 cols=10 count=108 frameLen=66666 frames=108
+
+== [3] 连接图（room_goto）==
+Code=1680 ；指令总数=290546
+ValueFunction 名含 'room' 的函数（出现次数）: 
+   gml_Script_scr_get_room_by_id x4
+   gml_Script_scr_valid_room x21
+   gml_Script_scr_get_id_by_room_index x21
+   gml_Script_scr_get_valid_room x5
+   gml_Script_scr_add_valid_room x1
+   gml_Script_scr_get_room_list x4
+   gml_Script_scr_room x132
+   room_goto x104
+   gml_Script_scr_talkroom x2
+   gml_Script_scr_roomname x4
+   room_goto_next x7
+   room_goto_previous x3
+   room_next x7
+   room_previous x7
+   room_get_name x4
+
+== [3b] 含 room_goto 的 Code 指令序列（前 6 个，各最多 26 条）==
+-- gml_GlobalScript_scr_gameover  (instr n=66)
+     [0] B T1=Double T2=Double I=0 S=75 L=0 D=0 fn= var= refType=Array
+     [1] Call T1=Int32 T2=Double I=1835 S=0 L=1835 D=9.066E-321 fn=audio_stop_all var= refType=Array
+     [2] Popz T1=Variable T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [3] PushI T1=Int16 T2=Double I=0 S=95 L=0 D=0 fn= var= refType=Array
+     [4] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [5] Call T1=Int32 T2=Double I=1156 S=1 L=1156 D=5.71E-321 fn=gml_Script_snd_play var= refType=Array
+     [6] Popz T1=Variable T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [7] PushBltn T1=Variable T2=Double I=-1610460336 S=-6 L=2684506960 D=1.326322665E-314 fn= var=room refType=Normal
+     [8] PushI T1=Int16 T2=Double I=0 S=97 L=0 D=0 fn= var= refType=Array
+     [9] Cmp T1=Int32 T2=Variable I=0 S=1024 L=0 D=0 fn= var= refType=Array
+     [10] Bf T1=Double T2=Double I=0 S=44 L=0 D=0 fn= var= refType=Array
+     [11] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [12] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [13] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [14] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [15] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [16] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [17] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [18] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [19] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [20] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [21] Push T1=Int64 T2=Double I=3 S=0 L=3 D=1.5E-323 fn= var= refType=Array
+     [22] Conv T1=Int64 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [23] Call T1=Int32 T2=Double I=32 S=2 L=32 D=1.6E-322 fn=gml_Script___view_get var= refType=Array
+     [24] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [25] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+-- gml_GlobalScript_scr_load  (instr n=1343)
+     [0] B T1=Double T2=Double I=0 S=2140 L=0 D=0 fn= var= refType=Array
+     [1] Call T1=Int32 T2=Double I=86348 S=0 L=86348 D=4.26616E-319 fn=gml_Script_snd_free_all var= refType=Array
+     [2] Popz T1=Variable T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [3] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [4] Pop T1=Variable T2=Int32 I=-1610612692 S=-1 L=2684354604 D=1.326247391E-314 fn= var=filechoicebk refType=Normal
+     [5] Push T1=String T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [6] Conv T1=String T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [7] Call T1=Int32 T2=Double I=60920 S=1 L=60920 D=3.00985E-319 fn=variable_global_exists var= refType=Array
+     [8] Conv T1=Variable T2=Boolean I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [9] Bf T1=Double T2=Double I=0 S=5 L=0 D=0 fn= var= refType=Array
+     [10] PushGlb T1=Variable T2=Double I=-1610612700 S=-5 L=2684354596 D=1.326247387E-314 fn= var=filechoice refType=Normal
+     [11] Pop T1=Variable T2=Variable I=-1610612716 S=-1 L=2684354580 D=1.326247379E-314 fn= var=filechoicebk refType=Normal
+     [12] Call T1=Int32 T2=Double I=1319212 S=0 L=1319212 D=6.517773E-318 fn=gml_Script_scr_gamestart var= refType=Array
+     [13] Popz T1=Variable T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [14] Push T1=Variable T2=Double I=-1610609494 S=-1 L=2684357802 D=1.326248971E-314 fn= var=filechoicebk refType=Normal
+     [15] Pop T1=Variable T2=Variable I=-1610612720 S=-5 L=2684354576 D=1.3262473773E-314 fn= var=filechoice refType=Normal
+     [16] Push T1=String T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [17] PushGlb T1=Variable T2=Double I=-1610604680 S=-5 L=2684362616 D=1.3262513495E-314 fn= var=filechoice refType=Normal
+     [18] Call T1=Int32 T2=Double I=8792 S=1 L=8792 D=4.344E-320 fn=string var= refType=Array
+     [19] Add T1=Variable T2=String I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [20] Pop T1=Variable T2=Variable I=-1610612728 S=-1 L=2684354568 D=1.3262473733E-314 fn= var=file refType=Normal
+     [21] Push T1=Variable T2=Double I=-1610603952 S=-1 L=2684363344 D=1.326251709E-314 fn= var=file refType=Normal
+     [22] Call T1=Int32 T2=Double I=76068 S=1 L=76068 D=3.75826E-319 fn=gml_Script_ossafe_file_text_open_read var= refType=Array
+     [23] Pop T1=Variable T2=Variable I=-1610612692 S=-1 L=2684354604 D=1.326247391E-314 fn= var=myfileid refType=Normal
+     [24] PushI T1=Int16 T2=Double I=0 S=146 L=0 D=0 fn= var= refType=Array
+     [25] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+-- gml_Object_obj_insideclosetcutscene_Step_0  (instr n=983)
+     [0] Push T1=Variable T2=Double I=-1610608996 S=-1 L=2684358300 D=1.326249217E-314 fn= var=papeshake refType=Normal
+     [1] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [2] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [3] Bf T1=Double T2=Double I=0 S=29 L=0 D=0 fn= var= refType=Array
+     [4] PushI T1=Int16 T2=Double I=0 S=11 L=0 D=0 fn= var= refType=Array
+     [5] PushEnv T1=Double T2=Double I=0 S=26 L=0 D=0 fn= var= refType=Array
+     [6] Push T1=Variable T2=Double I=-1610612456 S=-1 L=2684354840 D=1.3262475077E-314 fn= var=vspeed refType=Normal
+     [7] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [8] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [9] Bf T1=Double T2=Double I=0 S=21 L=0 D=0 fn= var= refType=Array
+     [10] Push T1=Variable T2=Double I=-1610502748 S=-1 L=2684464548 D=1.3263017106E-314 fn= var=xstart refType=Normal
+     [11] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [12] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [13] Call T1=Int32 T2=Double I=44 S=1 L=44 D=2.17E-322 fn=random var= refType=Array
+     [14] Add T1=Variable T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [15] Pop T1=Variable T2=Variable I=-1610612396 S=-1 L=2684354900 D=1.3262475373E-314 fn= var=x refType=Normal
+     [16] Push T1=Variable T2=Double I=-1610559104 S=-1 L=2684408192 D=1.326273867E-314 fn= var=ystart refType=Normal
+     [17] PushI T1=Int16 T2=Double I=0 S=10 L=0 D=0 fn= var= refType=Array
+     [18] Add T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [19] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [20] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [21] Call T1=Int32 T2=Double I=98372 S=1 L=98372 D=4.8602E-319 fn=random var= refType=Array
+     [22] Add T1=Variable T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [23] Pop T1=Variable T2=Variable I=-1610609396 S=-1 L=2684357900 D=1.3262490195E-314 fn= var=y refType=Normal
+     [24] PopEnv T1=Int16 T2=Int16 I=0 S=-25 L=0 D=0 fn= var= refType=Array
+     [25] Push T1=Variable T2=Double I=-1610608492 S=-1 L=2684358804 D=1.326249466E-314 fn= var=papefall refType=Normal
+-- gml_Object_obj_darkdoor_Step_0  (instr n=1214)
+     [0] Push T1=Variable T2=Double I=-1610612716 S=-1 L=2684354580 D=1.326247379E-314 fn= var=con refType=Normal
+     [1] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [2] Cmp T1=Int32 T2=Variable I=0 S=1536 L=0 D=0 fn= var= refType=Array
+     [3] Bf T1=Double T2=Double I=0 S=6 L=0 D=0 fn= var= refType=Array
+     [4] Push T1=Variable T2=Double I=-1610612708 S=-1 L=2684354588 D=1.326247383E-314 fn= var=con refType=Normal
+     [5] PushI T1=Int16 T2=Double I=0 S=40 L=0 D=0 fn= var= refType=Array
+     [6] Cmp T1=Int32 T2=Variable I=0 S=256 L=0 D=0 fn= var= refType=Array
+     [7] B T1=Double T2=Double I=0 S=2 L=0 D=0 fn= var= refType=Array
+     [8] Push T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [9] Bf T1=Double T2=Double I=0 S=666 L=0 D=0 fn= var= refType=Array
+     [10] Push T1=Variable T2=Double I=-1610612704 S=-1 L=2684354592 D=1.326247385E-314 fn= var=con refType=Normal
+     [11] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [12] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [13] Bf T1=Double T2=Double I=0 S=4 L=0 D=0 fn= var= refType=Array
+     [14] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [15] Pop T1=Variable T2=Int32 I=-1610609924 S=-5 L=2684357372 D=1.3262487587E-314 fn= var=interact refType=Normal
+     [16] Push T1=Variable T2=Double I=-1610612648 S=-1 L=2684354648 D=1.326247413E-314 fn= var=con refType=Normal
+     [17] PushI T1=Int16 T2=Double I=0 S=2 L=0 D=0 fn= var= refType=Array
+     [18] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [19] Bf T1=Double T2=Double I=0 S=29 L=0 D=0 fn= var= refType=Array
+     [20] Push T1=Variable T2=Double I=-1610612032 S=-1 L=2684355264 D=1.326247717E-314 fn= var=k refType=Normal
+     [21] PushI T1=Int16 T2=Double I=0 S=-9 L=0 D=0 fn= var= refType=Array
+     [22] PushEnv T1=Double T2=Double I=0 S=4 L=0 D=0 fn= var= refType=Array
+     [23] Call T1=Int32 T2=Double I=32 S=0 L=32 D=1.6E-322 fn=gml_Script_scr_halt var= refType=Array
+     [24] Popz T1=Variable T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [25] PopEnv T1=Int16 T2=Int16 I=0 S=-3 L=0 D=0 fn= var= refType=Array
+-- gml_Object_obj_schoollobbycutscene_Step_0  (instr n=2227)
+     [0] Push T1=Variable T2=Double I=-1610612688 S=-1 L=2684354608 D=1.326247393E-314 fn= var=con refType=Normal
+     [1] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [2] Cmp T1=Int32 T2=Variable I=0 S=1536 L=0 D=0 fn= var= refType=Array
+     [3] Bf T1=Double T2=Double I=0 S=6 L=0 D=0 fn= var= refType=Array
+     [4] Push T1=Variable T2=Double I=-1610611236 S=-1 L=2684356060 D=1.3262481105E-314 fn= var=type refType=Normal
+     [5] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [6] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [7] B T1=Double T2=Double I=0 S=2 L=0 D=0 fn= var= refType=Array
+     [8] Push T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [9] Bf T1=Double T2=Double I=0 S=364 L=0 D=0 fn= var= refType=Array
+     [10] Push T1=Variable T2=Double I=-1610612632 S=-1 L=2684354664 D=1.3262474207E-314 fn= var=con refType=Normal
+     [11] PushI T1=Int16 T2=Double I=0 S=2 L=0 D=0 fn= var= refType=Array
+     [12] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [13] Bf T1=Double T2=Double I=0 S=33 L=0 D=0 fn= var= refType=Array
+     [14] PushI T1=Int16 T2=Double I=0 S=30 L=0 D=0 fn= var= refType=Array
+     [15] PushEnv T1=Double T2=Double I=0 S=4 L=0 D=0 fn= var= refType=Array
+     [16] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [17] Pop T1=Variable T2=Int32 I=-1610612704 S=-1 L=2684354592 D=1.326247385E-314 fn= var=vspeed refType=Normal
+     [18] PopEnv T1=Int16 T2=Int16 I=0 S=-3 L=0 D=0 fn= var= refType=Array
+     [19] Push T1=Variable T2=Double I=-1610612612 S=-1 L=2684354684 D=1.3262474306E-314 fn= var=t refType=Normal
+     [20] PushI T1=Int16 T2=Double I=0 S=-9 L=0 D=0 fn= var= refType=Array
+     [21] PushEnv T1=Double T2=Double I=0 S=10 L=0 D=0 fn= var= refType=Array
+     [22] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [23] Pop T1=Variable T2=Int32 I=-1610611516 S=-1 L=2684355780 D=1.326247972E-314 fn= var=vspeed refType=Normal
+     [24] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [25] Pop T1=Variable T2=Int32 I=-1610612512 S=-1 L=2684354784 D=1.32624748E-314 fn= var=image_index refType=Normal
+-- gml_Object_obj_carcutscene_Step_0  (instr n=1468)
+     [0] Push T1=Variable T2=Double I=-1610612716 S=-1 L=2684354580 D=1.326247379E-314 fn= var=con refType=Normal
+     [1] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [2] Cmp T1=Int32 T2=Variable I=0 S=1536 L=0 D=0 fn= var= refType=Array
+     [3] Bf T1=Double T2=Double I=0 S=2018 L=0 D=0 fn= var= refType=Array
+     [4] Push T1=Variable T2=Double I=-1610612432 S=-1 L=2684354864 D=1.3262475195E-314 fn= var=con refType=Normal
+     [5] PushI T1=Int16 T2=Double I=0 S=2 L=0 D=0 fn= var= refType=Array
+     [6] Cmp T1=Int32 T2=Variable I=0 S=768 L=0 D=0 fn= var= refType=Array
+     [7] Bf T1=Double T2=Double I=0 S=74 L=0 D=0 fn= var= refType=Array
+     [8] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [9] Pop T1=Variable T2=Int32 I=-1610604932 S=-1 L=2684362364 D=1.326251225E-314 fn= var=persistent refType=Normal
+     [10] PushI T1=Int16 T2=Double I=0 S=-4 L=0 D=0 fn= var= refType=Array
+     [11] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [12] PushI T1=Int16 T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [13] Conv T1=Int32 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [14] Push T1=Int64 T2=Double I=9 S=0 L=9 D=4.4E-323 fn= var= refType=Array
+     [15] Conv T1=Int64 T2=Variable I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [16] Call T1=Int32 T2=Double I=2384 S=3 L=2384 D=1.178E-320 fn=gml_Script___view_set var= refType=Array
+     [17] Popz T1=Variable T2=Double I=0 S=0 L=0 D=0 fn= var= refType=Array
+     [18] Push T1=Variable T2=Double I=-1610612256 S=-1 L=2684355040 D=1.3262476065E-314 fn= var=k refType=Normal
+     [19] PushI T1=Int16 T2=Double I=0 S=-9 L=0 D=0 fn= var= refType=Array
+     [20] PushEnv T1=Double T2=Double I=0 S=7 L=0 D=0 fn= var= refType=Array
+     [21] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [22] Pop T1=Variable T2=Int32 I=-1610601032 S=-1 L=2684366264 D=1.326253152E-314 fn= var=fun refType=Normal
+     [23] PushI T1=Int16 T2=Double I=0 S=1 L=0 D=0 fn= var= refType=Array
+     [24] Pop T1=Variable T2=Int32 I=-1610610360 S=-1 L=2684356936 D=1.3262485433E-314 fn= var=cutscene refType=Normal
+     [25] PopEnv T1=Int16 T2=Int16 I=0 S=-6 L=0 D=0 fn= var= refType=Array
+
+== [4] 启发式提取 ==
+room_goto(常量) 边 = 107 ；其中目标非字面量(跳过) = 91
+room_goto_next() 出现 = 7
