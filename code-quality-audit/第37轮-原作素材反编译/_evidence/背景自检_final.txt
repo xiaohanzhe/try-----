@@ -1,0 +1,100 @@
+第 37 轮 · 场景背景自检  2026-09-23 22:47:53
+====================================================================
+总场景 87 | 新生成 84 | 已存在跳过 3 | 缺失 0 | 出错 0
+其中 原样提取 12 张 / 平铺合成 72 张
+文件内容去重后 44 份（87 个场景）
+
+来源分布：
+   area_table            78  区域代表素材
+   room.bg_layer          9  房间自带真背景
+
+逐场景核验（文件存在 / 是合法 PNG / 尺寸）：
+  [OK] ch1.kris_room.kris_s_room                      bg_myroom                          (640, 480)     room.bg_layer
+  [OK] ch1.unknown.unknown                            bg_darkfield_tiles                 (640, 480)     area_table
+  [OK] ch1.eye_puzzle.eye_puzzle                      bg_darkfield_tiles                 (1280, 451)    area_table
+  [OK] ch1.castle_town.castle_town                    bg_darktown                        (640, 1160)    room.bg_layer
+  [OK] ch1.field.field_great_door                     bg_darkfield_tiles                 (1280, 1152)   area_table
+  [OK] ch1.field.field_maze_of_death                  bg_darkfield_tiles                 (1280, 966)    area_table
+  [OK] ch1.field.field_seams_shop                     bg_darkfield_tiles                 (1280, 960)    area_table
+  [OK] ch1.field.field_great_board                    bg_darkfield_tiles                 (1280, 960)    area_table
+  [OK] ch1.field.field_great_board_2                  bg_darkfield_tiles                 (1280, 960)    area_table
+  [OK] ch1.forest.forest_entrance                     bg_darkforest_tiles                (1280, 960)    area_table
+  [OK] ch1.forest.forest_bake_sale                    bg_darkforest_tiles                (1280, 640)    area_table
+  [OK] ch1.forest.forest_before_maze                  bg_darkforest_tiles                (1280, 960)    area_table
+  [OK] ch1.forest.forest_after_maze                   bg_darkforest_tiles                (1280, 960)    area_table
+  [OK] ch1.forest.forest_thrashing_room               bg_darkforest_tiles                (1280, 640)    area_table
+  [OK] ch1.card_castle.card_castle_prison             bg_cctiles                         (1280, 960)    area_table
+  [OK] ch1.card_castle.card_castle_unknown            bg_cctiles                         (1280, 834)    area_table
+  [OK] ch1.card_castle.card_castle_1f                 bg_cctiles                         (1280, 751)    area_table
+  [OK] ch1.card_castle.card_castle_5f                 bg_cctiles                         (1280, 1152)   area_table
+  [OK] ch1.card_castle.card_castle_throne             bg_cc_throneroom                   (640, 800)     room.bg_layer
+  [OK] ch2.kris_room.kris_s_room                      bg_myroom                          (320, 240)     room.bg_layer
+  [OK] ch2.castle_town.castle_town                    bg_darktown                        (640, 1160)    room.bg_layer
+  [OK] ch2.castle_town.castle_town_2                  bg_darktown                        (640, 1160)    room.bg_layer
+  [OK] ch2.my_castle_town.my_castle_town              bg_darktown                        (640, 1160)    area_table
+  [OK] ch2.cyber_field.cyber_field_entrance           bg_dw_cyber_battle_tiles           (1280, 640)    area_table
+  [OK] ch2.cyber_field.cyber_field_arcade             bg_dw_cyber_battle_tiles           (1280, 960)    area_table
+  [OK] ch2.cyber_field.cyber_field_music_shop         bg_dw_cyber_battle_tiles           (1280, 960)    area_table
+  [OK] ch2.cyber_city.cyber_city_entrance             bg_dw_city_alleyway_street_tiles   (1280, 640)    area_table
+  [OK] ch2.cyber_city.cyber_city_alleyway_1           bg_dw_city_alleyway_street_tiles   (1280, 731)    area_table
+  [OK] ch2.cyber_city.cyber_city_music_shop           bg_dw_city_alleyway_street_tiles   (1280, 960)    area_table
+  [OK] ch2.cyber_city.cyber_city_mouse_alley          bg_dw_city_alleyway_street_tiles   (1280, 960)    area_table
+  [OK] ch2.cyber_city.cyber_city_alleyway_2           bg_dw_city_alleyway_street_tiles   (1280, 640)    area_table
+  [OK] ch2.cyber_city.cyber_city_heights              bg_dw_city_alleyway_street_tiles   (1280, 1152)   area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_guest_hall  bg_dw_mansion_acid_animated_tiles_old (1280, 640)    area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_entrance    bg_dw_mansion_acid_animated_tiles_old (1280, 1152)   area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_basement    bg_dw_mansion_acid_animated_tiles_old (1280, 640)    area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_3f          bg_dw_mansion_acid_animated_tiles_old (1280, 640)    area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_acid_tunnel bg_dw_mansion_acid_animated_tiles_old (1280, 800)    area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_4f          bg_dw_mansion_acid_animated_tiles_old (1280, 640)    area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_rooftop     bg_dw_mansion_acid_animated_tiles_old (1280, 1152)   area_table
+  [OK] ch2.queens_mansion.queen_s_mansion_rooftop_2   bg_dw_mansion_acid_animated_tiles_old (1280, 960)    area_table
+  [OK] ch3.dark_world.dark_world                      bg_darkfield_tiles                 (1280, 640)    area_table
+  [OK] ch3.cold_place.cold_place                      bg_dw_tvland_backstage_tiles_old   (1280, 640)    area_table
+  [OK] ch3.green_room.green_room                      bg_dw_tvland_backstage_tiles_old   (1280, 640)    area_table
+  [OK] ch3.tv_world.tv_world_goulden_sam              bg_dw_tvland_stage_tiles_old       (1280, 640)    area_table
+  [OK] ch3.tv_world.tv_world_before_show              bg_dw_tvland_stage_tiles_old       (1280, 640)    area_table
+  [OK] ch3.tv_world.tv_world_entrance                 bg_dw_tvland_stage_tiles_old       (1280, 640)    area_table
+  [OK] ch3.tv_world.tv_world_concert                  bg_dw_tvland_stage_tiles_old       (1280, 640)    area_table
+  [OK] ch3.tv_world.tv_world_cooking_show             bg_dw_tvland_stage_tiles_old       (1280, 640)    area_table
+  [OK] ch4.kris_room.kris_s_room                      bg_myroom                          (320, 240)     room.bg_layer
+  [OK] ch4.hometown.hometown                          bg_towntiles                       (1280, 640)    area_table
+  [OK] ch4.noelles_house.noelle_s_house               bg_noellehouse_main                (960, 720)     area_table
+  [OK] ch4.my_castle_town.my_castle_town              bg_darktown                        (640, 1160)    area_table
+  [OK] ch4.dark_sanctuary.dark_sanctuary_1_atrium     bg_darkfield_tiles                 (1280, 960)    area_table
+  [OK] ch4.dark_sanctuary.dark_sanctuary_1_study      bg_dw_gerson_base                  (960, 1200)    room.bg_layer
+  [OK] ch4.dark_sanctuary.dark_sanctuary_1_lower_left bg_darkfield_tiles                 (1280, 640)    area_table
+  [OK] ch4.dark_sanctuary.dark_sanctuary_1_small_piano bg_darkfield_tiles                 (1280, 640)    area_table
+  [OK] ch4.dark_sanctuary.dark_sanctuary_1_library    bg_darkfield_tiles                 (1280, 960)    area_table
+  [OK] ch4.dark_sanctuary.dark_sanctuary_1_lower_right bg_darkfield_tiles                 (1280, 720)    area_table
+  [OK] ch4.second_sanctuary.sanctuary_2_atrium        bg_darktiles1                      (1280, 960)    area_table
+  [OK] ch4.second_sanctuary.sanctuary_2_floor         bg_darktiles1                      (1280, 640)    area_table
+  [OK] ch4.second_sanctuary.sanctuary_2_study         bg_darktiles1                      (1280, 1152)   area_table
+  [OK] ch4.second_sanctuary.sanctuary_2_study_2       bg_darktiles1                      (1280, 1152)   area_table
+  [OK] ch4.third_sanctuary.sanctuary_3                bg_darktiles1                      (1280, 1152)   area_table
+  [OK] ch4.third_sanctuary.sanctuary_3_stairs         bg_darktiles1                      (1280, 1152)   area_table
+  [OK] ch4.third_sanctuary.sanctuary_3_last_chamber   bg_darktiles1                      (1280, 1152)   area_table
+  [OK] ch4.castle_town.castle_town_tv_building        bg_darktown                        (640, 1160)    area_table
+  [OK] ch4.mike_zone.mike_zone                        bg_darkfield_tiles                 (1280, 1152)   area_table
+  [OK] ch5.kris_room.kris_s_room                      bg_myroom                          (320, 240)     room.bg_layer
+  [OK] ch5.hometown.hometown                          bg_towntiles                       (1280, 640)    area_table
+  [OK] ch5.my_castle_town.my_castle_town              bg_towntiles                       (1280, 1152)   area_table
+  [OK] ch5.castle_town.castle_town_tv_building        bg_towntiles                       (1280, 640)    area_table
+  [OK] ch5.dark_world.dark_world                      bg_darktiles1                      (1280, 960)    area_table
+  [OK] ch5.garden.garden_beginning                    bg_towntiles                       (1280, 665)    area_table
+  [OK] ch5.garden.garden_flowery_helped               bg_towntiles                       (1280, 640)    area_table
+  [OK] ch5.garden.garden_ideal_diner                  bg_towntiles                       (1280, 640)    area_table
+  [OK] ch5.garden.garden_shrine                       bg_towntiles                       (1280, 1152)   area_table
+  [OK] ch5.garden.garden_way_home                     bg_towntiles                       (1280, 640)    area_table
+  [OK] ch5.cliffs.cliffs_beginning                    bg_darktiles1                      (1280, 640)    area_table
+  [OK] ch5.cliffs.cliffs_shop                         bg_darktiles1                      (1280, 960)    area_table
+  [OK] ch5.cliffs.cliffs_below_castle                 bg_darktiles1                      (1280, 960)    area_table
+  [OK] ch5.flower_castle.flower_castle_cafe           bg_fcastle_flower_tower_lattice_tiles_split (1280, 989)    area_table
+  [OK] ch5.flower_castle.flower_castle_jail           bg_fcastle_flower_tower_lattice_tiles_split (1280, 640)    area_table
+  [OK] ch5.flower_castle.flower_castle_left_doors     bg_fcastle_flower_tower_lattice_tiles_split (1280, 1152)   area_table
+  [OK] ch5.flower_castle.flower_castle_left_stage     bg_fcastle_flower_tower_lattice_tiles_split (1280, 640)    area_table
+  [OK] ch5.flower_castle.flower_castle_left_end       bg_fcastle_flower_tower_lattice_tiles_split (1280, 640)    area_table
+  [OK] ch5.flower_castle.flower_castle_right_diner    bg_fcastle_flower_tower_lattice_tiles_split (1280, 640)    area_table
+  [OK] ch5.flower_castle.flower_castle_right_end      bg_fcastle_flower_tower_lattice_tiles_split (1280, 640)    area_table
+
+结论：全部 87 个场景均已生成合法 PNG

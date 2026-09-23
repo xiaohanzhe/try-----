@@ -332,17 +332,19 @@ check('D6 _routes.json 的 meta 写明「priority 压过 score」这条坑',
       'priority_beats_score' in _meta)
 
 # ===========================================================================
-#  E. 素材占位口径（用户选 B：自导出）不许伪装成"没素材"
+#  E. 背景素材口径 —— 第37轮已由反编译补齐，故升级为真判据
+#     （原 E3 是 check(..., True) 的恒真占位：当时素材确实还没到位。
+#       恒真判据比不写还危险 —— 它看着像在守，其实什么都没守。）
 # ===========================================================================
 print()
-print('=== E. 背景素材占位口径 ===')
+print('=== E. 背景素材口径 ===')
 
 _no_bg = []
 for sid in sorted(_story_scenes.keys()):
     scene = ss.load_scene(sid, _SCENES)
     if scene is None or not scene.bg:
         _no_bg.append(sid)
-check('E1 每个作品内场景都声明了 bg 占位路径',
+check('E1 每个作品内场景都声明了 bg 路径',
       not _no_bg, '缺 %d: %s' % (len(_no_bg), _no_bg[:5]))
 
 _bg_dir_ok = True
@@ -352,16 +354,41 @@ for sid in sorted(_story_scenes.keys()):
         _bg_dir_ok = False
 check('E2 bg 路径统一走 bg/ 子目录（约定文件名）', _bg_dir_ok)
 
-# bg 文件确实还不存在（用户尚未导出）—— 这是**预期状态**，不是缺陷
+# bg 文件在第37轮已由反编译补齐 —— 此处升级为真判据
 _bg_base = os.path.join(_SCENES)
-_existing_bg = 0
+
+
+def _bg_health_pairs(pairs):
+    """pairs=[(sid, abs_path)] -> (missing, not_png)。判据内核，正负控制共用。"""
+    miss, bad = [], []
+    for sid, fp in pairs:
+        if not os.path.isfile(fp):
+            miss.append(sid)
+            continue
+        with open(fp, 'rb') as fh:
+            if fh.read(8) != b'\x89PNG\r\n\x1a\n':
+                bad.append(sid)
+    return miss, bad
+
+
+_scan = []
 for sid in sorted(_story_scenes.keys()):
     scene = ss.load_scene(sid, _SCENES)
     if scene and scene.bg:
-        if os.path.isfile(os.path.join(_bg_base, scene.bg)):
-            _existing_bg += 1
-check('E3 bg 占位文件当前尚不存在（等待用户导出，属预期）',
-      True, '已存在的 bg 文件数 = %d（导出后会 > 0）' % _existing_bg)
+        _scan.append((sid, os.path.join(_bg_base, scene.bg)))
+_miss, _notpng = _bg_health_pairs(_scan)
+check('E3 每个场景声明的 bg 都指向真实存在的 PNG（第37轮素材已反编译就位）',
+      (not _miss) and (not _notpng) and len(_scan) > 0,
+      '扫描 %d 个；缺失 %d %s；非PNG %d %s'
+      % (len(_scan), len(_miss), _miss[:4], len(_notpng), _notpng[:4]))
+
+_neg1, _ = _bg_health_pairs([('bogus', os.path.join(_bg_base, 'bg', '__no_such__.png'))])
+check('E3b 负控制：判据抓得住"bg 文件不存在"（有鉴别力）',
+      _neg1 == ['bogus'], 'got=%r' % _neg1)
+
+_, _neg2 = _bg_health_pairs([('json', os.path.join(_SCENES, '_index.json'))])
+check('E3c 负控制：判据抓得住"文件存在但不是 PNG"',
+      _neg2 == ['json'], 'got=%r' % _neg2)
 
 # resolve_asset_path 对 bg 走 scene_dir 口径
 _p = ss.resolve_asset_path('bg/x.png', 'bg', _SCENES)

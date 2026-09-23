@@ -1,0 +1,795 @@
+{
+  "total": 87,
+  "ok": 3,
+  "miss": 0,
+  "err": 0,
+  "min_real_bg": [
+    300,
+    200
+  ],
+  "rows": [
+    {
+      "scene_id": "ch1.kris_room.kris_s_room",
+      "chapter": "ch1",
+      "area": "kris_room",
+      "room_id": 2,
+      "asset": "bg_myroom",
+      "out": "640x480",
+      "how": "room.bg_layer"
+    },
+    {
+      "scene_id": "ch1.unknown.unknown",
+      "chapter": "ch1",
+      "area": "unknown",
+      "room_id": 35,
+      "asset": "bg_darkfield_tiles",
+      "out": "640x480 TILE",
+      "how": "area_table"
+    },
+    {
+      "scene_id": "ch1.eye_puzzle.eye_puzzle",
+      "chapter": "ch1",
+      "area": "eye_puzzle",
+      "room_id": 40,
+      "asset": "bg_darkfield_tiles",
+      "out": "1280x451 TILE",
+      "how": "area_table"
+    },
+    {
+      "scene_id": "ch1.castle_town.castle_town",
+      "chapter": "ch1",
+      "area": "castle_town",
+      "room_id": 45,
+      "asset": "bg_darktown",
+      "out": "640x1160",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch1.field.field_great_door",
+      "chapter": "ch1",
+      "area": "field",
+      "room_id": 49,
+      "asset": "bg_darkfield_tiles",
+      "out": "640x1000 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.field.field_maze_of_death",
+      "chapter": "ch1",
+      "area": "field",
+      "room_id": 56,
+      "asset": "bg_darkfield_tiles",
+      "out": "1280x966 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.field.field_seams_shop",
+      "chapter": "ch1",
+      "area": "field",
+      "room_id": 59,
+      "asset": "bg_darkfield_tiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.field.field_great_board",
+      "chapter": "ch1",
+      "area": "field",
+      "room_id": 68,
+      "asset": "bg_darkfield_tiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.field.field_great_board_2",
+      "chapter": "ch1",
+      "area": "field",
+      "room_id": 71,
+      "asset": "bg_darkfield_tiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.forest.forest_entrance",
+      "chapter": "ch1",
+      "area": "forest",
+      "room_id": 73,
+      "asset": "bg_treetiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.forest.forest_bake_sale",
+      "chapter": "ch1",
+      "area": "forest",
+      "room_id": 82,
+      "asset": "bg_treetiles",
+      "out": "1280x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.forest.forest_before_maze",
+      "chapter": "ch1",
+      "area": "forest",
+      "room_id": 90,
+      "asset": "bg_treetiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.forest.forest_after_maze",
+      "chapter": "ch1",
+      "area": "forest",
+      "room_id": 96,
+      "asset": "bg_treetiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.forest.forest_thrashing_room",
+      "chapter": "ch1",
+      "area": "forest",
+      "room_id": 97,
+      "asset": "bg_treetiles",
+      "out": "1240x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.card_castle.card_castle_prison",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 107,
+      "asset": "bg_cctiles",
+      "out": "640x480 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.card_castle.card_castle_unknown",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 111,
+      "asset": "bg_cctiles",
+      "out": "1280x834 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.card_castle.card_castle_1f",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 114,
+      "asset": "bg_cctiles",
+      "out": "1280x751 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.card_castle.card_castle_5f",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 123,
+      "asset": "bg_cctiles",
+      "out": "640x1160 TILE",
+      "how": "area_table (skip)"
+    },
+    {
+      "scene_id": "ch1.card_castle.card_castle_throne",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 126,
+      "asset": "bg_cc_throneroom",
+      "out": "640x800",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch2.kris_room.kris_s_room",
+      "chapter": "ch2",
+      "area": "kris_room",
+      "room_id": 18,
+      "asset": "bg_myroom",
+      "out": "640x480",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch2.castle_town.castle_town",
+      "chapter": "ch2",
+      "area": "castle_town",
+      "room_id": 55,
+      "asset": "bg_darktown",
+      "out": "640x1160",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch2.castle_town.castle_town_2",
+      "chapter": "ch2",
+      "area": "castle_town",
+      "room_id": 61,
+      "asset": "bg_darktown",
+      "out": "640x1160",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch2.my_castle_town.my_castle_town",
+      "chapter": "ch2",
+      "area": "my_castle_town",
+      "room_id": 62,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1216x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_field.cyber_field_entrance",
+      "chapter": "ch2",
+      "area": "cyber_field",
+      "room_id": 78,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x365",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_field.cyber_field_arcade",
+      "chapter": "ch2",
+      "area": "cyber_field",
+      "room_id": 83,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_field.cyber_field_music_shop",
+      "chapter": "ch2",
+      "area": "cyber_field",
+      "room_id": 89,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_city.cyber_city_entrance",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 112,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x320",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_city.cyber_city_alleyway_1",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 115,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "840x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_city.cyber_city_music_shop",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 121,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_city.cyber_city_mouse_alley",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 126,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_city.cyber_city_alleyway_2",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 128,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "960x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.cyber_city.cyber_city_heights",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 133,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1073x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 152,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x313",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 157,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "920x880",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_basement",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 171,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x640",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_3f",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 187,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_acid_tunnel",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 193,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x800",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_4f",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 196,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "1280x333",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_rooftop",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 199,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "640x1080",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch2.queens_mansion.queen_s_mansion_rooftop_2",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 200,
+      "asset": "bg_dw_city_coaster_entry_hood",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.dark_world.dark_world",
+      "chapter": "ch3",
+      "area": "dark_world",
+      "room_id": 98,
+      "asset": "bg_darktown",
+      "out": "1280x301",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.cold_place.cold_place",
+      "chapter": "ch3",
+      "area": "cold_place",
+      "room_id": 109,
+      "asset": "bg_darktown",
+      "out": "1280x207",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.green_room.green_room",
+      "chapter": "ch3",
+      "area": "green_room",
+      "room_id": 135,
+      "asset": "bg_darktown",
+      "out": "1280x426",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.tv_world.tv_world_goulden_sam",
+      "chapter": "ch3",
+      "area": "tv_world",
+      "room_id": 177,
+      "asset": "bg_darktown",
+      "out": "1000x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.tv_world.tv_world_before_show",
+      "chapter": "ch3",
+      "area": "tv_world",
+      "room_id": 194,
+      "asset": "bg_darktown",
+      "out": "1280x180",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.tv_world.tv_world_entrance",
+      "chapter": "ch3",
+      "area": "tv_world",
+      "room_id": 195,
+      "asset": "bg_darktown",
+      "out": "1280x301",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.tv_world.tv_world_concert",
+      "chapter": "ch3",
+      "area": "tv_world",
+      "room_id": 208,
+      "asset": "bg_darktown",
+      "out": "1280x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch3.tv_world.tv_world_cooking_show",
+      "chapter": "ch3",
+      "area": "tv_world",
+      "room_id": 213,
+      "asset": "bg_darktown",
+      "out": "1280x295",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.kris_room.kris_s_room",
+      "chapter": "ch4",
+      "area": "kris_room",
+      "room_id": 15,
+      "asset": "bg_myroom",
+      "out": "640x480",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch4.hometown.hometown",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 24,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x150",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.noelles_house.noelle_s_house",
+      "chapter": "ch4",
+      "area": "noelles_house",
+      "room_id": 49,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "680x260",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.my_castle_town.my_castle_town",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 65,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1216x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_atrium",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 108,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_study",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 115,
+      "asset": "bg_dw_gerson_base",
+      "out": "960x1200",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_lower_left",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 177,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x577",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_small_piano",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 218,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "960x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_library",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 219,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x960",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_lower_right",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 227,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x720",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.second_sanctuary.sanctuary_2_atrium",
+      "chapter": "ch4",
+      "area": "second_sanctuary",
+      "room_id": 247,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.second_sanctuary.sanctuary_2_floor",
+      "chapter": "ch4",
+      "area": "second_sanctuary",
+      "room_id": 251,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x465",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.second_sanctuary.sanctuary_2_study",
+      "chapter": "ch4",
+      "area": "second_sanctuary",
+      "room_id": 257,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "960x1200",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.second_sanctuary.sanctuary_2_study_2",
+      "chapter": "ch4",
+      "area": "second_sanctuary",
+      "room_id": 304,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.third_sanctuary.sanctuary_3",
+      "chapter": "ch4",
+      "area": "third_sanctuary",
+      "room_id": 270,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "1280x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.third_sanctuary.sanctuary_3_stairs",
+      "chapter": "ch4",
+      "area": "third_sanctuary",
+      "room_id": 277,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "640x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.third_sanctuary.sanctuary_3_last_chamber",
+      "chapter": "ch4",
+      "area": "third_sanctuary",
+      "room_id": 280,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "386x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.castle_town.castle_town_tv_building",
+      "chapter": "ch4",
+      "area": "castle_town",
+      "room_id": 298,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "960x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch4.mike_zone.mike_zone",
+      "chapter": "ch4",
+      "area": "mike_zone",
+      "room_id": 322,
+      "asset": "bg_dw_gerson_twisted_base",
+      "out": "640x960",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.kris_room.kris_s_room",
+      "chapter": "ch5",
+      "area": "kris_room",
+      "room_id": 13,
+      "asset": "bg_myroom",
+      "out": "640x480",
+      "how": "room.bg_layer (skip)"
+    },
+    {
+      "scene_id": "ch5.hometown.hometown",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 24,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x232",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.my_castle_town.my_castle_town",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 54,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1216x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.castle_town.castle_town_tv_building",
+      "chapter": "ch5",
+      "area": "castle_town",
+      "room_id": 112,
+      "asset": "bg_dw_castle_cafe",
+      "out": "960x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.dark_world.dark_world",
+      "chapter": "ch5",
+      "area": "dark_world",
+      "room_id": 120,
+      "asset": "bg_dw_castle_cafe",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.garden.garden_beginning",
+      "chapter": "ch5",
+      "area": "garden",
+      "room_id": 122,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x665",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.garden.garden_flowery_helped",
+      "chapter": "ch5",
+      "area": "garden",
+      "room_id": 129,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x560",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.garden.garden_ideal_diner",
+      "chapter": "ch5",
+      "area": "garden",
+      "room_id": 133,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x451",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.garden.garden_shrine",
+      "chapter": "ch5",
+      "area": "garden",
+      "room_id": 141,
+      "asset": "bg_dw_castle_cafe",
+      "out": "409x1280",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.garden.garden_way_home",
+      "chapter": "ch5",
+      "area": "garden",
+      "room_id": 150,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x96",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.cliffs.cliffs_beginning",
+      "chapter": "ch5",
+      "area": "cliffs",
+      "room_id": 144,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.cliffs.cliffs_shop",
+      "chapter": "ch5",
+      "area": "cliffs",
+      "room_id": 161,
+      "asset": "bg_dw_castle_cafe",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.cliffs.cliffs_below_castle",
+      "chapter": "ch5",
+      "area": "cliffs",
+      "room_id": 167,
+      "asset": "bg_dw_castle_cafe",
+      "out": "640x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_cafe",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 177,
+      "asset": "bg_dw_castle_cafe",
+      "out": "880x680",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_jail",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 179,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x480",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_left_doors",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 183,
+      "asset": "bg_dw_castle_cafe",
+      "out": "640x720",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_left_stage",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 187,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x365",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_left_end",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 189,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x180",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_right_diner",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 202,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x465",
+      "how": "chapter_fallback (skip)"
+    },
+    {
+      "scene_id": "ch5.flower_castle.flower_castle_right_end",
+      "chapter": "ch5",
+      "area": "flower_castle",
+      "room_id": 207,
+      "asset": "bg_dw_castle_cafe",
+      "out": "1280x480",
+      "how": "chapter_fallback (skip)"
+    }
+  ]
+}
