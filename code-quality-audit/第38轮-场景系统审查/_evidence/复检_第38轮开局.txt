@@ -1,0 +1,62 @@
+=== 1. 可编译 / 可解析 ===
+  本轮新增 .py：8 个 ['audit_data.py', 'ch5_gap.py', 'classify_rooms.py', 'count_rooms.py', 'recheck38.py', 'room_full.py', 'room_names.py', 'verify_roomname.py']
+[PASS] 1.1 全部新增 .py 可编译
+[PASS] 1.2 _evidence 下全部 .json 可解析
+  本轮新增 .json：['原作房间名字.json', '可当场景房间.json']
+[PASS] 1.3 记忆日志代码围栏成对（``` 计数为偶）  <- count=2
+[PASS] 1.4 csx 花括号配平  <- 7 vs 7
+
+=== 2. 结构自检 ===
+[PASS] 2.1 记忆日志含第 38 轮章节
+[PASS] 2.2 记忆日志无「标题被粘到上一行」
+[PASS] 2.3 第 38 轮三个小节齐全
+[PASS] 2.4 第 37 轮的待裁定项仍在（未被 Edit 覆盖）
+
+=== 3. 编码 ===
+[PASS] 3.1 无 BOM
+[PASS] 3.2 无 U+FFFD 替换字符
+[PASS] 3.3 被检文件数 > 0  <- 19
+  被检文件 19 个
+
+=== 4. 恒真判据复查 ===
+[PASS] 4.1 其余 .py 里无恒真判据（AST 判据，排除本复检脚本自身）
+  （注：audit_data 3.7 是弱判据 —— 只验数据形态、验不了匹配时的大小写归一，已单列为待修项）
+
+=== 5. 逐令牌回验（重算，不靠"文件里有"）===
+[PASS] 5.1 五章 room 数 = 147/278/246/328/252  <- 实得 {'ch1': 147, 'ch2': 278, 'ch3': 246, 'ch4': 328, 'ch5': 252}
+[PASS] 5.2 合计 1251  <- 1251
+[PASS] 5.3 _index.json 三级嵌套里的场景 = 88（含 desktop）  <- 88
+[PASS] 5.3b 裸 JSON 无顶层 scenes 键（扁平表由 load_index 构建）  <- ['chapters', 'default_scene', 'meta', 'schema_version']
+[PASS] 5.4 场景 JSON 文件数 = 88  <- 88
+[PASS] 5.5 scr_roomname 分支 = 20/20/9/20/26  <- {'ch1': 20, 'ch2': 20, 'ch3': 9, 'ch4': 20, 'ch5': 26}
+[PASS] 5.6 分支合计 95 / 减 5 个 --- = 90 个官方地点  <- 95
+  登记的 (chapter, original_room_id) 对 = 87
+[PASS] 5.7 登记的场景都带回溯 id（除 desktop）  <- 87
+[PASS] 5.8 ch2 多登记 = [199, 200]  <- [199, 200]
+[PASS] 5.9 ch2 无漏登记
+[PASS] 5.10 ch5 漏登记 = [205, 222, 224, 225, 230]  <- [205, 222, 224, 225, 230]
+[PASS] 5.11 ch5 无多登记
+[PASS] 5.12 bg 目录 = 88 文件 / 2,115,135 B  <- 88 / 2115135
+[PASS] 5.13 _FALLBACK_PRIORITY 定义后未被使用  <- 1
+[PASS] 5.14 全仓无 `def refresh_objects` ⇒ hasattr 恒假、scene_objects 恒为 []  <- occurrences=2 def_in_ctl=False defs=[]
+[PASS] 5.14b refresh_objects 只在 scene_controller 那一行出现（2 次）  <- 2
+[PASS] 5.15 main.py 场景状态字段预声明 = 9（文档写 6，已列为待修）  <- 9
+[PASS] 5.16 main.py 里 self.scene.<方法>() 调用点 = 0
+
+=== 6. 状态干净 ===
+  git status --porcelain 行数 = 2
+     M .workbuddy/memory/2026-09-23.md
+    ?? "code-quality-audit/\347\254\25438\350\275\256-\345\234\272\346\231\257\347\263\273\347\273\237\345\256\241\346\237\245/"
+[PASS] 6.1 没有修改任何 ralsei_pet/ 下的已跟踪文件
+[PASS] 6.2 改动只落在记忆日志 + 本轮新增目录
+
+=== 7. 异常复核（ch5 scr_get_room_list = 277 > ch5 room 数 252）===
+  文件里的 function 名 = ['scr_get_room_ids', 'scr_get_room_by_id', 'scr_get_id_by_room_index', 'scr_room', 'scr_get_room_list', 'scr_roomname']
+  scr_get_room_list() 里 new scr_room 条目 = 277
+[PASS] 7.1 ch5 文件里 new scr_room 总条目 = 277  <- 277
+[PASS] 7.2 ch2 与 ch5 的 scr_get_room_list 条目数相同 ⇒ 它是跨章共享的 id 注册表  <- ch2=277 ch5=277
+[PASS] 7.3 它比 ch5 实际 room 数(252)多 ⇒ 不能当"本章房间全集"用  <- 277 vs 252
+[PASS] 7.4 scr_roomname(arg0) 的 arg0 == rooms_map 下标（ch1 抽 3 点）
+
+==============================================================
+合计 36 项：PASS=36 FAIL=0

@@ -1,0 +1,53 @@
+=== 第 38 轮 场景系统数据面只读审查 ===
+ROOT    = C:\Users\23002\Desktop\项目文件夹\try - 副本
+SCENES  = C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\scenes
+
+--- load_index() ---
+  ok=True schema=1 default_scene='desktop' error=None
+  扁平 scenes 条数 = 88
+  样例 entry[ch1.card_castle.card_castle_1f] = {'name': '纸牌城堡·一层', 'file': 'ch1.card_castle.card_castle_1f.json', 'original_room_id': 114, 'scene_id': 'ch1.card_castle.card_castle_1f', 'chapter_id': 'ch1', 'chapter_name': '第一章 · 黑暗世界', 'area_id': 'card_castle', 'area_name': '纸牌城堡'}
+--- load_routes() ---
+  ok=True schema=1 routes=26 fallback={'to': 'desktop', 'reason': '没有匹配到任何规则时的落脚点：回桌面'} error=None
+
+--- 1. 索引自洽 ---
+[PASS] 1.1 load_index().ok 为真
+[PASS] 1.2 schema_version == SCENE_SCHEMA_VERSION  <- 1 vs 1
+[PASS] 1.3 非 _ 前缀 JSON 数 == 扁平 scenes 条数  <- 88 vs 88
+[PASS] 1.4 default_scene 已登记在索引里  <- 'desktop'
+[PASS] 1.5 索引里每个场景的 file 都真实存在
+[PASS] 1.6 磁盘上没有"未登记"的场景 JSON
+
+--- 2. 三级命名空间 ---
+  chapters   = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'desktop']
+  areas      = ['card_castle', 'castle_town', 'cliffs', 'cold_place', 'cyber_city', 'cyber_field', 'dark_sanctuary', 'dark_world', 'desktop', 'eye_puzzle', 'field', 'flower_castle', 'forest', 'garden', 'green_room', 'hometown', 'kris_room', 'mike_zone', 'my_castle_town', 'noelles_house', 'queens_mansion', 'second_sanctuary', 'third_sanctuary', 'tv_world', 'unknown']
+  场景数     = 88
+
+--- 3. 路由表逐条体检 ---
+[PASS] 3.1 每条规则的 to 都指向已登记场景
+[PASS] 3.2 每条规则的 when_scene 都指向已登记场景（"*" 除外）
+[PASS] 3.3 每条规则的 when_area 都是真实存在的区域 id
+[PASS] 3.4 每条规则的 when_chapter 都是真实存在的章节 id
+[PASS] 3.5 没有"无条件规则"（只写 to+priority 会匹配一切，极危险）
+[PASS] 3.6 _fallback.to 指向已登记场景  <- 'desktop'
+[PASS] 3.7 when_keywords 均为非空字符串列表且已小写去空白
+
+--- 4. 规则可达性（静态）---
+[PASS] 4.1 没有"同条件同优先级"的重复规则
+[PASS] 4.2 「任意场景」规则的最小 priority 比所有具体规则都大  <- wild=900 max具体=740
+
+--- 5. 场景 bg 声明 vs 磁盘 ---
+  有 bg 的场景 = 87，bg 为 null 的场景 = 1
+[PASS] 5.1 所有声明的 bg 都指向真实存在的文件
+[PASS] 5.2 所有 bg 都是真 PNG
+[PASS] 5.3 只有 desktop 一个场景的 bg 为 null（P0 零行为变化证明件）  <- null 数=1
+
+--- 6. 产品路径接线（静态扫描 main.py）---
+  main.py 里对 self.scene.<方法>() 的调用点 = []
+[PASS] 6.1 main.py 已 import SceneController
+[PASS] 6.2 'scene' 已登记进 _CONTROLLER_ATTRS
+[PASS] 6.3 控制器用到的宿主字段全部已在 main.py 预声明
+    控制器用到 = ['_routes_loaded', '_scene_anchors', '_scene_index', '_scene_loaded', '_scene_route_reason', '_scene_routes', '_scene_state', 'current_scene', 'scene_objects']
+    main 预声明 = ['_routes_loaded', '_scene_anchors', '_scene_index', '_scene_loaded', '_scene_route_reason', '_scene_routes', '_scene_state', 'current_scene', 'scene_objects']
+
+============================================================
+合计 21 项：PASS=21 FAIL=0

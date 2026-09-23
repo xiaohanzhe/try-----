@@ -1,0 +1,88 @@
+=== ch1 ===
+  room 总数        = 147
+  技术房间(实例)   = 142  (unique 142)
+  技术房间名       = ['ROOM_INITIALIZE', 'room_DARKempty', 'room_alphysalley', 'room_alphysclass', 'room_battletest', 'room_beach', 'room_castle_darkdoor', 'room_castle_front', 'room_castle_outskirts', 'room_castle_town', 'room_castle_tutorial', 'room_cc_1f']
+  非技术(实例)     = 5  →  unique 名字 = 5
+  重名(同名多房间) = 0 个名字 []
+
+=== ch2 ===
+  room 总数        = 278
+  技术房间(实例)   = 271  (unique 271)
+  技术房间名       = ['ROOM_INITIALIZE', 'room_DARKbase_GMS2', 'room_DARKempty', 'room_GMS2_test', 'room_alphysalley', 'room_alphysclass', 'room_battletest', 'room_beach', 'room_bullettest', 'room_castle_town', 'room_castle_tutorial', 'room_cc_clover']
+  非技术(实例)     = 7  →  unique 名字 = 7
+  重名(同名多房间) = 0 个名字 []
+
+=== ch3 ===
+  room 总数        = 246
+  技术房间(实例)   = 239  (unique 239)
+  技术房间名       = ['ROOM_INITIALIZE', 'room_CHEFS', 'room_DARKbase_GMS2', 'room_DARKempty', 'room_GMS2_test', 'room_adventureboardtest', 'room_alphysalley', 'room_alphysclass', 'room_battletest', 'room_beach', 'room_board1_oldtest', 'room_board_1']
+  非技术(实例)     = 7  →  unique 名字 = 7
+  重名(同名多房间) = 0 个名字 []
+
+=== ch4 ===
+  room 总数        = 328
+  技术房间(实例)   = 321  (unique 321)
+  技术房间名       = ['ROOM_INITIALIZE', 'room_DARKbase_GMS2', 'room_DARKempty', 'room_GMS2_test', 'room_alphysalley', 'room_alphysclass', 'room_battletest', 'room_beach', 'room_bullettest', 'room_bullettest_new', 'room_castle_tutorial', 'room_cc_clover']
+  非技术(实例)     = 7  →  unique 名字 = 7
+  重名(同名多房间) = 0 个名字 []
+
+=== ch5 ===
+  room 总数        = 252
+  技术房间(实例)   = 244  (unique 244)
+  技术房间名       = ['ROOM_INITIALIZE', 'room_DARKbase_GMS2', 'room_DARKempty', 'room_GMS2_test', 'room_alphysalley', 'room_alphysclass', 'room_animexampletest', 'room_animtest', 'room_battletest', 'room_beach', 'room_bullettest', 'room_bullettest_new']
+  非技术(实例)     = 8  →  unique 名字 = 8
+  重名(同名多房间) = 0 个名字 []
+
+--- 汇总 ---
+五章 room 实例合计      = 1251
+其中技术房间            = 1217
+非技术房间（实例）      = 34
+非技术 unique 名字合计  = 34  ← 跨章相加（含跨章重名）
+非技术 unique 名字去重  = 8
+我们已登记场景          = 87
+
+
+============================================================
+ch1  unique 非技术房间名 5 个
+  PLACE_CONTACT
+  PLACE_DOG
+  PLACE_LOGO
+  PLACE_FAILURE
+  PLACE_MENU
+============================================================
+ch2  unique 非技术房间名 7 个
+  PLACE_CONTACT
+  PLACE_DOG
+  PLACE_LOGO
+  PLACE_FAILURE
+  PLACE_NAMING_JIKKEN
+  PLACE_MENU
+  PLACE_DOGCHECK2
+============================================================
+ch3  unique 非技术房间名 7 个
+  PLACE_CONTACT
+  PLACE_DOG
+  PLACE_LOGO
+  PLACE_FAILURE
+  PLACE_NAMING_JIKKEN
+  PLACE_MENU
+  PLACE_DOGCHECK2
+============================================================
+ch4  unique 非技术房间名 7 个
+  PLACE_CONTACT
+  PLACE_DOG
+  PLACE_LOGO
+  PLACE_FAILURE
+  PLACE_NAMING_JIKKEN
+  PLACE_MENU
+  PLACE_DOGCHECK2
+============================================================
+ch5  unique 非技术房间名 8 个
+  PLACE_CONTACT
+  PLACE_DOG
+  PLACE_LOGO
+  PLACE_FAILURE
+  PLACE_NAMING_JIKKEN
+  PLACE_MENU
+  PLACE_DOGCHECK2
+  PLACE_DOGCHECK_CH5

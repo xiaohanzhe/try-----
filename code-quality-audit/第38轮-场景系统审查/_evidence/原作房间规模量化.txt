@@ -1,0 +1,12 @@
+--- chapter1_windows 结构样例 ---
+  type=list
+  first key = 0
+  first val = {"index": 0, "name": "ROOM_INITIALIZE", "width": 640, "height": 480, "layers": [{"name": "Compatibility_Instances_Depth_0", "type": "Instances", "depth": 0, "visible": true, "instances": ["obj_initializer2", "obj_gamecontroller", "obj_debugcontroller", "obj_roomcontroller"]}, {"name": "Compatibility_Colour", "type": "Background", "depth": 2147483600, "visible": true}]}
+
+chapter1_windows  房间数 = 147
+chapter2_windows  房间数 = 278
+chapter3_windows  房间数 = 246
+chapter4_windows  房间数 = 328
+chapter5_windows  房间数 = 252
+
+五章房间合计 = 1251

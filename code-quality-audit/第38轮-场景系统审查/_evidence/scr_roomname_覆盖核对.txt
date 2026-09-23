@@ -1,0 +1,24 @@
+=== scr_roomname 覆盖数 vs 我们登记的 id ===
+ch1   scr_roomname 分支=20   我们登记 id=20   完全相同=True
+      scr_get_room_list 条目数 = 131（若 > 分支数 ⇒ 房间列表是全量的）
+ch2   scr_roomname 分支=20   我们登记 id=22   完全相同=False
+      只在脚本里: []
+      只在我们表: [199, 200]
+      scr_get_room_list 条目数 = 277（若 > 分支数 ⇒ 房间列表是全量的）
+ch3   scr_roomname 分支=9    我们登记 id=9    完全相同=True
+      scr_get_room_list 条目数 = 195（若 > 分支数 ⇒ 房间列表是全量的）
+ch4   scr_roomname 分支=20   我们登记 id=20   完全相同=True
+      scr_get_room_list 条目数 = 243（若 > 分支数 ⇒ 房间列表是全量的）
+ch5   scr_roomname 分支=26   我们登记 id=21   完全相同=False
+      只在脚本里: [205, 222, 224, 225, 230]
+      只在我们表: []
+      scr_get_room_list 条目数 = 277（若 > 分支数 ⇒ 房间列表是全量的）
+
+=== scr_get_room_list 覆盖的房间资源名（ch1 抽样）===
+ch1 条目数 = 131
+前 8 条 = [('room_krisroom', '10283'), ('room_krishallway', '10284'), ('room_torroom', '10285'), ('room_torhouse', '10286'), ('room_torbathroom', '10287'), ('room_town_krisyard', '10288'), ('room_town_northwest', '10289'), ('room_town_north', '10290')]
+后 8 条 = [('room_cc_6f', '10406'), ('room_cc_throneroom', '10407'), ('room_cc_preroof', '10408'), ('room_cc_kingbattle', '10409'), ('room_cc_prefountain', '10410'), ('room_cc_fountain', '10411'), ('room_empty', '10422'), ('room_man', '10423')]
+
+=== 结论 ===
+scr_roomname 分支集合与 _original_rooms.json 完全一致 = False
+⇒ `_original_rooms.json` 是 scr_roomname 的忠实转写；87 个场景 = 原作「存档点地点名」全集，而不是「房间全集」。
