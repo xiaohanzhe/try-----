@@ -1,0 +1,2046 @@
+== instance_create* 调用点 = 1307 ==
+
+== 被创建的对象（按次数降序）==
+   670	obj_switchAsyncHelper
+        gml_GlobalScript_scr_writetext
+        gml_GlobalScript_scr_litemuseb
+        gml_GlobalScript_d_make
+        gml_GlobalScript_snd_init
+        gml_GlobalScript_scr_damage
+        gml_GlobalScript_scr_damage_all_overworld
+        gml_GlobalScript_scr_talkroom
+        gml_GlobalScript_scr_attackphase
+        gml_GlobalScript_scr_endcombat
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_pan
+        gml_Object_obj_chapter_continue_Alarm_0
+        gml_Object_obj_writer_Draw_0
+        gml_Object_obj_writer_Draw_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+   144	(未知)
+        gml_GlobalScript_scr_damage
+        gml_GlobalScript_scr_damage_all_overworld
+        gml_GlobalScript_scr_itemcomment
+        gml_GlobalScript_scr_boltcheck
+        gml_GlobalScript_scr_boltcheck_onebutton
+        gml_GlobalScript_scr_boltcheck_onebutton
+        gml_GlobalScript_scr_damage_enemy
+        gml_GlobalScript_scr_mnendturn
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_instance_create
+        gml_GlobalScript_instance_create
+        gml_Object_obj_writer_Draw_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_onion_event_Create_0
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Step_0
+        gml_Object_obj_lancerbakesale_event_Step_0
+        gml_Object_obj_lancerbakesale_event_Step_0
+        gml_Object_obj_cloverpuzzle_event_Create_0
+        gml_Object_obj_cloverpuzzle_event_Create_0
+        gml_Object_obj_cloverpuzzle_event_Create_0
+        gml_Object_obj_cloverpuzzle_event_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_lancerbattle2_event_Create_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_hathyfightevent_Step_0
+        gml_Object_obj_tutorialbattleevent_Create_0
+        gml_Object_obj_npc_susiedark_Create_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+   38	obj_dbulletcontroller
+        gml_Object_obj_dummyenemy_Step_0
+        gml_Object_obj_placeholderenemy_Step_0
+        gml_Object_obj_placeholderenemy_Step_0
+        gml_Object_obj_rudinnranger_Step_0
+        gml_Object_obj_jigsawryenemy_Step_0
+        gml_Object_obj_rabbick_enemy_Step_0
+        gml_Object_obj_rabbick_enemy_Step_0
+        gml_Object_obj_bloxer_enemy_Step_0
+        gml_Object_obj_bloxer_enemy_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_diamondenemy_Step_0
+        gml_Object_obj_diamondenemy_Step_0
+        gml_Object_obj_susieenemy_Step_0
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_clubsenemy_Step_0
+        gml_Object_obj_clubsenemy_Step_0
+        gml_Object_obj_clubsenemy_old_Step_0
+        gml_Object_obj_clubsenemy_old_Step_0
+        gml_Object_obj_headhathy_Step_0
+   31	DEVICE_GONERMAKER
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dummyenemy_Step_0
+        gml_Object_obj_dummyenemy_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_placeholderenemy_Step_0
+        gml_Object_obj_rudinnranger_Step_0
+        gml_Object_obj_jigsawryenemy_Step_0
+        gml_Object_obj_checkers_enemy_Step_0
+        gml_Object_obj_ponman_enemy_Step_0
+        gml_Object_obj_rabbick_enemy_Step_0
+        gml_Object_obj_bloxer_enemy_Step_0
+        gml_Object_obj_lancerboss_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_diamondenemy_Step_0
+        gml_Object_obj_susieenemy_Step_0
+        gml_Object_obj_lancerboss3_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_joker_Step_0
+        gml_Object_obj_clubsenemy_Step_0
+        gml_Object_obj_clubsenemy_old_Step_0
+        gml_Object_obj_heartenemy_Step_0
+        gml_Object_obj_headhathy_Step_0
+   24	obj_cloverpuzzle_event
+        gml_Object_obj_carcutscene_Alarm_5
+        gml_Object_obj_thrashafter_event_Step_0
+        gml_Object_obj_thrashafter_follow_Step_0
+        gml_Object_obj_darkslide_Step_0
+        gml_Object_obj_tempblock_room_Create_0
+        gml_Object_obj_glowtilepuzz_Create_0
+        gml_Object_obj_glowtilepuzz_Other_11
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_lancerbike_neo_Step_0
+        gml_Object_obj_rudebuster_anim_Step_0
+        gml_Object_DEVICE_FAILURE_Step_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+   22	obj_lancerchaseevent
+        gml_Object_obj_thrashafter_event_Create_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+   19	obj_torielclass_event
+        gml_GlobalScript_scr_dmgwriter_selfchar
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_castlefront_event_Step_0
+        gml_Object_obj_thrashafter_follow_Step_0
+        gml_Object_obj_scarelancerevent_Step_0
+        gml_Object_obj_scarelancerevent_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_lancerslideevent_Alarm_1
+        gml_Object_obj_darkslide_Collision_obj_mainchara
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_wavechain_Step_0
+        gml_Object_obj_wavechain_Step_0
+        gml_Object_obj_wavechain_Step_0
+        gml_Object_obj_wavechain_Step_0
+        gml_Object_obj_legend_Draw_0
+   18	obj_writer
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_moveheart
+        gml_Object_obj_dialoguer_Other_10
+        gml_Object_obj_dialoguer_Other_10
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_npc_puzzlemaster1_Create_0
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_rabbick_enemy_Other_12
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_heart_Create_0
+   16	obj_regularbullet
+        gml_Object_obj_lancerbike_Step_0
+        gml_Object_obj_clubsbullet_Collision_obj_battlesolid
+        gml_Object_obj_clubsbullet_Collision_obj_battlesolid
+        gml_Object_obj_clubsbullet_Collision_obj_battlesolid
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_dbullet_maker_Draw_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_heartbomb_blast_Step_0
+        gml_Object_obj_suitbomb_Step_0
+        gml_Object_obj_suitbomb_Step_0
+        gml_Object_obj_suitbomb_Step_0
+   14	obj_smallface
+        gml_GlobalScript_scr_facechoice
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_checker_animtest_Step_0
+   13	obj_mainchara
+        gml_GlobalScript_scr_battletext
+        gml_GlobalScript_scr_battletext
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_susiebadguy_event_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_king_boss_Step_0
+        gml_Object_obj_king_boss_Step_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_obj_shop2_Draw_0
+   12	obj_darkdoorevent
+        gml_Object_obj_dustpile_Alarm_0
+        gml_Object_obj_dustpile_susie_Alarm_0
+        gml_Object_obj_lancerbike_Step_0
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_centerscythe_Step_0
+        gml_Object_obj_lancerbike_neo_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_FAILURE_Step_0
+        gml_Object_obj_legend_Draw_0
+   12	obj_doorB
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dummyenemy_Other_20
+        gml_Object_obj_heartenemy_Step_0
+        gml_Object_obj_headhathy_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_FAILURE_Step_0
+   11	obj_burstbolt
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_legend_Draw_0
+   10	obj_bluhpainting
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   10	obj_chainking
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   10	obj_rabbitbullet
+        gml_Object_obj_darkdoor_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   9	obj_chapter_continue
+        gml_GlobalScript_scr_attackphase
+        gml_Object_obj_getsusieevent_Step_0
+        gml_Object_obj_hathyfightevent_Step_0
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_chaseenemy_Step_0
+        gml_Object_obj_susieenemy_Step_0
+        gml_Object_obj_dkris_event_Step_0
+   8	obj_battleblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+   8	obj_npc_facing
+        gml_Object_obj_flowershop_event_Create_0
+        gml_Object_obj_flowershop_event_Create_0
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   7	obj_backgrounder_standard
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   7	obj_npc_hammerguy
+        gml_GlobalScript_scr_healitem
+        gml_GlobalScript_scr_healitem_all
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_finalchain_Step_0
+        gml_Object_DEVICE_FAILURE_Step_0
+        gml_Object_obj_legend_Draw_0
+   6	obj_afterimage
+        gml_GlobalScript_scr_afterimage
+        gml_Object_obj_chasebullet_Destroy_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_nonsolid_growtangle_Step_0
+        gml_Object_obj_growtangle_Step_0
+   6	obj_markerv
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Create_0
+        gml_Object_obj_overworld_spademaker_Alarm_0
+        gml_Object_obj_chain_of_hell_Step_0
+        gml_Object_obj_chain_of_hell_Step_0
+   6	obj_overworldheart
+        gml_Object_obj_mainchara_Create_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_thrashafter_follow_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+   5	obj_collidebullet
+        gml_Object_obj_chain_of_hell_Step_0
+        gml_Object_obj_joker_teleport_Step_0
+        gml_Object_obj_joker_teleport_Step_0
+        gml_Object_obj_spadering_Step_0
+        gml_Object_obj_carrotthrower_Step_0
+   5	obj_defeatanim
+        gml_GlobalScript_scr_defeatrun
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   5	obj_endbattle
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   5	obj_face_parent
+        gml_Object_obj_tutorialbattleevent_Create_0
+        gml_Object_obj_dustpile_Other_10
+        gml_Object_obj_dustpile_susie_Other_10
+        gml_Object_obj_darkcontroller_Create_0
+        gml_Object_obj_dknight_slasher_Step_0
+   5	obj_healanim
+        gml_GlobalScript_scr_healitemspell
+        gml_GlobalScript_scr_healallitemspell
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_spell
+        gml_Object_obj_checkers_enemy_Step_0
+   5	obj_markerA
+        gml_Object_obj_schoollobbycutscene_Create_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_obj_legend_Draw_0
+   5	obj_sur_dark
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+   4	obj_chainpiece
+        gml_Object_obj_chain_of_hell_Step_0
+        gml_Object_obj_finalchain_Step_0
+        gml_Object_obj_finalchain_Step_0
+        gml_Object_obj_wavechain_Step_0
+   4	obj_darkener
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   4	obj_jigsawryenemy
+        gml_Object_obj_prisonevent_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_event_room_Create_0
+   4	obj_lancerbike
+        gml_Object_obj_lancerboss_Step_0
+        gml_Object_obj_lancerboss_Step_0
+        gml_Object_obj_lancerboss3_Step_0
+        gml_Object_obj_lancerboss3_Step_0
+   4	obj_npc_room
+        gml_Object_obj_rudy_Create_0
+        gml_Object_obj_rudy_Step_0
+        gml_Object_obj_lancerbakesale_event_Create_0
+        gml_Object_obj_thrashafter_event_Step_0
+   4	obj_npc_room_animated
+        gml_Object_obj_town_event_Create_0
+        gml_Object_obj_rurus_checker_event_Create_0
+        gml_Object_obj_starwalker_overworld_Step_0
+        gml_Object_obj_starwalker_offswitch_Other_10
+   4	obj_returnheart
+        gml_Object_obj_battlecontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+   4	obj_spadering
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   4	obj_spinheart
+        gml_Object_obj_darklanding_Create_0
+        gml_Object_obj_heartenemy_Step_0
+        gml_Object_obj_headhathy_Step_0
+        gml_Object_obj_smallcheckers_enemy_Step_0
+   3	obj_centerscythe
+        gml_Object_obj_centerscythe_Create_0
+        gml_Object_obj_centerscythe_Create_0
+        gml_Object_obj_centerscythe_Create_0
+   3	obj_church_event
+        gml_Object_obj_chainking_Step_0
+        gml_Object_obj_chainking_Step_0
+        gml_Object_obj_checker_animtest_Step_0
+   3	obj_flowershop_event
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_ponman_enemy_Step_0
+        gml_Object_obj_joker_Step_0
+   3	obj_npc_susiedark
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   3	obj_readable_room1
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_tempblock_room_Create_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   3	obj_schoollobbycutscene
+        gml_Object_obj_alphysalley_event_Step_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Step_0
+   3	obj_skychain
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   3	obj_susiebadguy_event
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_FAILURE_Step_0
+   3	obj_town_event
+        gml_GlobalScript_scr_battletext
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_monster1_Step_0
+   3	obj_town_shelter_event
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_prisonevent_Step_0
+   2	obj_choicer_neo
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_battleblcon_Create_0
+   2	obj_choicer_old
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_darkcontroller_Create_0
+   2	obj_event_manager_debug
+        gml_Object_obj_thrashcontroller_Create_0
+        gml_Object_obj_gameover_init_Step_0
+   2	obj_fadechain
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_skychain_Step_0
+   2	obj_heartburst
+        gml_Object_obj_moveheart_Create_0
+        gml_Object_obj_returnheart_Alarm_0
+   2	obj_heartshaper
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_heartenemy_Step_0
+   2	obj_joker_teleport
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   2	obj_lancerboss3
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_dancer_gen_Create_0
+   2	obj_marker
+        gml_GlobalScript_scr_marker
+        gml_GlobalScript_scr_dark_marker
+   2	obj_monsterparent
+        gml_Object_obj_classscene_Create_0
+        gml_Object_obj_classscene_Step_0
+   2	obj_musicer_man
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   2	obj_overworldbulletparent
+        gml_Object_obj_scissordancer_Create_0
+        gml_Object_obj_darkponman_ow_Step_0
+   2	obj_regularbullet_permanent
+        gml_Object_obj_finalchain_Step_0
+        gml_Object_obj_lancerbike_neo_Step_0
+   2	obj_rudebuster_anim
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_spell
+   2	obj_rurus_appear
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+   2	obj_shakeobj
+        gml_GlobalScript_scr_minishakeobj
+        gml_GlobalScript_scr_shakeobj
+   2	obj_solidblock
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_starwalker_overworld_Step_0
+   2	obj_soliddark
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_tempblock_room_Create_0
+   2	obj_testoverworldenemy
+        gml_Object_obj_chaseenemy_Other_10
+        gml_Object_obj_ponman_appear_Step_0
+   2	obj_throwtarget
+        gml_Object_obj_checkers_enemy_Step_0
+        gml_Object_obj_throwtarget_Create_0
+   1	obj_afterimage_grow
+        gml_Object_obj_ralseibullet_Create_0
+   1	obj_anim
+        gml_GlobalScript_scr_anim
+   1	obj_bigscythe
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_candytree_event
+        gml_Object_DEVICE_CONTACT_Step_0
+   1	obj_carrotthrower
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_castlefront_event
+        gml_Object_obj_chainking_Step_0
+   1	obj_caterpillarchara
+        gml_GlobalScript_scr_makecaterpillar
+   1	obj_chaseenemy
+        gml_Object_obj_rabbick_bush_Step_0
+   1	obj_checker_animtest
+        gml_Object_obj_checkers_enemy_Step_0
+   1	obj_checkers_leap
+        gml_Object_obj_checkers_enemy_Step_0
+   1	obj_clubsbullet
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_clubsbullet_dark
+        gml_Object_obj_classscene_Step_0
+   1	obj_dialoguer
+        gml_Object_obj_town_event_Step_0
+   1	obj_dknight_slasher
+        gml_Object_obj_rudinnranger_Step_0
+   1	obj_dummyenemy
+        gml_Object_obj_classscene_Step_0
+   1	obj_face
+        gml_Object_obj_town_event_Create_0
+   1	obj_heart
+        gml_Object_obj_moveheart_Alarm_0
+   1	obj_heartbomb_blast
+        gml_Object_obj_suitbomb_Step_0
+   1	obj_insideclosetcutscene
+        gml_Object_obj_gameover_init_Step_0
+   1	obj_joker_body
+        gml_Object_obj_joker_Create_0
+   1	obj_lancerbike_neo
+        gml_Object_obj_susieenemy_Step_0
+   1	obj_move_to_point
+        gml_GlobalScript_scr_move_to_point_over_time
+   1	obj_musicer_darkcliff
+        gml_Object_DEVICE_CONTACT_Step_0
+   1	obj_musicer_town
+        gml_Object_obj_forestmaze_controller_Create_0
+   1	obj_npc_puzzlemaster1
+        gml_Object_obj_forestmaze_controller_Create_0
+   1	obj_oflash
+        gml_GlobalScript_scr_oflash
+   1	obj_overworld_spade
+        gml_Object_obj_wobblything_evil_Step_0
+   1	obj_overworld_spade_homing
+        gml_Object_obj_overworld_spademaker_Alarm_0
+   1	obj_persistentfadein
+        gml_Object_DEVICE_CONTACT_Step_0
+   1	obj_ralseithrown
+        gml_Object_obj_throwralsei_Step_0
+   1	obj_spareanim
+        gml_GlobalScript_scr_spareanim
+   1	obj_thrashafter_follow
+        gml_Object_obj_kingcutscene_Step_0
+   1	obj_thrashzone_event
+        gml_Object_DEVICE_CONTACT_Step_0
+   1	obj_throwralsei
+        gml_Object_obj_checkers_enemy_Step_0
+   1	obj_wobblything
+        gml_Object_obj_ralseienemy_Step_0
+
+== 全部调用点 ==
+   gml_GlobalScript_scr_writetext  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_litemuseb  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_facechoice  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_GlobalScript_d_make  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_snd_init  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_healitemspell  --gml_Script_instance_create--> obj_healanim  (idx=301)
+   gml_GlobalScript_scr_healallitemspell  --gml_Script_instance_create--> obj_healanim  (idx=301)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_enemyblcon  --gml_Script_instance_create--> obj_battleblcon  (idx=309)
+   gml_GlobalScript_scr_battletext  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_GlobalScript_scr_battletext  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_GlobalScript_scr_battletext  --gml_Script_instance_create--> obj_town_event  (idx=26)
+   gml_GlobalScript_scr_dmgwriter_selfchar  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_GlobalScript_scr_damage  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_damage  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_GlobalScript_scr_damage_all_overworld  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_damage_all_overworld  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_GlobalScript_scr_healitem  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_GlobalScript_scr_healitem_all  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_GlobalScript_scr_itemcomment  --gml_Script_instance_create--> (未知)  (idx=460)
+   gml_GlobalScript_scr_talkroom  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_attackphase  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_GlobalScript_scr_attackphase  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_boltcheck  --gml_Script_instance_create--> (未知)  (idx=-1)
+   gml_GlobalScript_scr_boltcheck_onebutton  --gml_Script_instance_create--> (未知)  (idx=-1)
+   gml_GlobalScript_scr_boltcheck_onebutton  --gml_Script_instance_create--> (未知)  (idx=-1)
+   gml_GlobalScript_scr_damage_enemy  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_GlobalScript_scr_endcombat  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_mnendturn  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_GlobalScript_scr_moveheart  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> obj_healanim  (idx=301)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> obj_rudebuster_anim  (idx=303)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> obj_rudebuster_anim  (idx=303)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> obj_healanim  (idx=301)
+   gml_GlobalScript_scr_spell  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_itemuse  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_itemuse  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_itemuse  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_itemuse  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_itemuse  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_minishakeobj  --gml_Script_instance_create--> obj_shakeobj  (idx=164)
+   gml_GlobalScript_scr_anim  --gml_Script_instance_create--> obj_anim  (idx=162)
+   gml_GlobalScript_scr_shakeobj  --gml_Script_instance_create--> obj_shakeobj  (idx=164)
+   gml_GlobalScript_scr_defeatrun  --gml_Script_instance_create--> obj_defeatanim  (idx=300)
+   gml_GlobalScript_scr_oflash  --gml_Script_instance_create--> obj_oflash  (idx=302)
+   gml_GlobalScript_scr_spareanim  --gml_Script_instance_create--> obj_spareanim  (idx=306)
+   gml_GlobalScript_scr_afterimage  --gml_Script_instance_create--> obj_afterimage  (idx=192)
+   gml_GlobalScript_scr_makecaterpillar  --gml_Script_instance_create--> obj_caterpillarchara  (idx=172)
+   gml_GlobalScript_scr_move_to_point_over_time  --gml_Script_instance_create--> obj_move_to_point  (idx=329)
+   gml_GlobalScript_scr_pan  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_GlobalScript_scr_marker  --gml_Script_instance_create--> obj_marker  (idx=86)
+   gml_GlobalScript_scr_dark_marker  --gml_Script_instance_create--> obj_marker  (idx=86)
+   gml_GlobalScript_instance_create  --instance_create_depth--> (未知)  (idx=?)
+   gml_GlobalScript_instance_create  --gml_Script_instance_create--> (未知)  (idx=50096)
+   gml_Object_obj_chapter_continue_Alarm_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dialoguer_Other_10  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_dialoguer_Other_10  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_writer_Draw_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_writer_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_writer_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_insideclosetcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Create_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoor_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Create_0  --gml_Script_instance_create--> obj_monsterparent  (idx=242)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_dummyenemy  (idx=244)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_clubsbullet_dark  (idx=236)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> obj_monsterparent  (idx=242)
+   gml_Object_obj_classscene_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_schoollobbycutscene_Create_0  --gml_Script_instance_create--> obj_markerA  (idx=110)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_markerA  (idx=110)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_schoollobbycutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_interactablesolid_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_tem_school_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_unusedclassevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_unusedclassevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_unusedclassevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_unusedclassevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_unusedclassevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rudy_Create_0  --gml_Script_instance_create--> obj_npc_room  (idx=91)
+   gml_Object_obj_rudy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rudy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rudy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rudy_Step_0  --gml_Script_instance_create--> obj_npc_room  (idx=91)
+   gml_Object_obj_town_event_Create_0  --gml_Script_instance_create--> obj_npc_room_animated  (idx=92)
+   gml_Object_obj_town_event_Create_0  --gml_Script_instance_create--> obj_face  (idx=7)
+   gml_Object_obj_town_event_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_town_event_Step_0  --gml_Script_instance_create--> obj_dialoguer  (idx=9)
+   gml_Object_obj_town_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_town_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_town_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_town_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_town_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_alphysalley_event_Step_0  --gml_Script_instance_create--> obj_schoollobbycutscene  (idx=15)
+   gml_Object_obj_alphysalley_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Create_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_flowershop_event_Create_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_town_shelter_event  (idx=25)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_town_shelter_event  (idx=25)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_flowershop_event_Step_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_mainchara_Create_0  --gml_Script_instance_create--> obj_overworldheart  (idx=180)
+   gml_Object_obj_onion_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=460)
+   gml_Object_obj_onion_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Alarm_5  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_carcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_krisroom_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_krisroom_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_krisroom_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_krisroom_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_krisroom_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_krisroom_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Create_0  --gml_Script_instance_create--> obj_npc_room_animated  (idx=92)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_markerv  (idx=120)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=420)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=380)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_checker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_cc_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=1040)
+   gml_Object_obj_cc_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=800)
+   gml_Object_obj_cc_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=680)
+   gml_Object_obj_cc_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=480)
+   gml_Object_obj_cc_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=480)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jokerbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_elevatorcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbakesale_event_Create_0  --gml_Script_instance_create--> obj_npc_room  (idx=91)
+   gml_Object_obj_lancerbakesale_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbakesale_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbakesale_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_lancerbakesale_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_lancerbakesale_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_cloverpuzzle_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=500)
+   gml_Object_obj_cloverpuzzle_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=520)
+   gml_Object_obj_cloverpuzzle_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=1040)
+   gml_Object_obj_cloverpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_cloverpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_cloverpuzzle_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_prisonevent_Create_0  --gml_Script_instance_create--> obj_jigsawryenemy  (idx=260)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> (未知)  (idx=640)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_town_shelter_event  (idx=25)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_prisonevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=780)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_susiebadguy_event  (idx=50)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=640)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerbattle2_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerchase2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerchase2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_castlefront_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_castlefront_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_castlefront_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_castlefront_event_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_castlefront_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_castlefront_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=740)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=640)
+   gml_Object_obj_susieandlancer_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashcontroller_Create_0  --gml_Script_instance_create--> obj_event_manager_debug  (idx=3)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashmaker_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Create_0  --gml_Script_instance_create--> obj_overworldheart  (idx=180)
+   gml_Object_obj_suitspuzzle_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=520)
+   gml_Object_obj_suitspuzzle_event_Create_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_suitspuzzle_event_Create_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_suitspuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_susiebadguy_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Create_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_event_Step_0  --gml_Script_instance_create--> obj_npc_room  (idx=91)
+   gml_Object_obj_thrashafter_follow_Create_0  --gml_Script_instance_create--> obj_overworldheart  (idx=180)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_thrashafter_follow_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_rurus_event_Create_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_rurus_event_Create_0  --gml_Script_instance_create--> obj_jigsawryenemy  (idx=260)
+   gml_Object_obj_rurus_event_Create_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_rurus_event_Create_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_markerv  (idx=120)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_rurus_appear  (idx=53)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_rurus_appear  (idx=53)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_sur_dark  (idx=340)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_jigsawryenemy  (idx=260)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rurus_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerscare2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_scarelancerevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Create_0  --gml_Script_instance_create--> (未知)  (idx=380)
+   gml_Object_obj_getsusieevent_Create_0  --gml_Script_instance_create--> (未知)  (idx=500)
+   gml_Object_obj_getsusieevent_Create_0  --gml_Script_instance_create--> (未知)  (idx=440)
+   gml_Object_obj_getsusieevent_Create_0  --gml_Script_instance_create--> (未知)  (idx=520)
+   gml_Object_obj_getsusieevent_Create_0  --gml_Script_instance_create--> obj_fadechain  (idx=250)
+   gml_Object_obj_getsusieevent_Create_0  --gml_Script_instance_create--> (未知)  (idx=400)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_getsusieevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Create_0  --gml_Script_instance_create--> obj_markerv  (idx=120)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_lancerboss3  (idx=290)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=460)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_boxpuzzle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_hathyfightevent_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_hathyfightevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_hathyfightevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_hathyfightevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_hathyfightevent_Step_0  --gml_Script_instance_create--> (未知)  (idx=1740)
+   gml_Object_obj_hathyfightevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoorevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoorevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoorevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkdoorevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_tutorialbattleevent_Create_0  --gml_Script_instance_create--> (未知)  (idx=500)
+   gml_Object_obj_tutorialbattleevent_Create_0  --gml_Script_instance_create--> obj_face_parent  (idx=6)
+   gml_Object_obj_tutorialbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_tutorialbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_tutorialbattleevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_ralsei_runevent_Step_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_hammerguy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_hammerguy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_hammerguy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_hammerguy_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_shortcut_door_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_shortcut_door_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_puzzlemaster1_Create_0  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_npc_puzzlemaster1_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_puzzlemaster2_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_susiedark_Create_0  --gml_Script_instance_create--> (未知)  (idx=450)
+   gml_Object_obj_npc_susiedark_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcastle_event_Step_0  --gml_Script_instance_create--> obj_choicer_old  (idx=4)
+   gml_Object_obj_darklanding_Create_0  --gml_Script_instance_create--> obj_spinheart  (idx=240)
+   gml_Object_obj_lancerslideevent_Alarm_1  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> (未知)  (idx=550)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> (未知)  (idx=550)
+   gml_Object_obj_lancerslideevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerchaseevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerchaseevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerchaseevent_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkslide_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_darkslide_Collision_obj_mainchara  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_savepoint_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_savepoint_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_readable_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_readable_room1_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_readable_room1_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_toriel_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_facing_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=-100)
+   gml_Object_obj_npc_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=-100)
+   gml_Object_obj_npc_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=-100)
+   gml_Object_obj_npc_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=-100)
+   gml_Object_obj_npc_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=-100)
+   gml_Object_obj_npc_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=-100)
+   gml_Object_obj_npc_room_Alarm_11  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_npc_room_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_room_animated_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_treasure_room_Alarm_11  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_treasure_room_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_npc_sign_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> obj_soliddark  (idx=339)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> obj_readable_room1  (idx=88)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> obj_schoollobbycutscene  (idx=15)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=1600)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> obj_jigsawryenemy  (idx=260)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> obj_solidblock  (idx=17)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=1000)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=1300)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> obj_overworldheart  (idx=180)
+   gml_Object_obj_event_room_Create_0  --gml_Script_instance_create--> (未知)  (idx=400)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_schoollobbycutscene  (idx=15)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_room_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorA_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorA_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorA_musfade_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorA_musfade_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorB_musfade_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorB_musfade_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorB_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorB_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorC_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorC_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorC_musfade_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorC_musfade_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorD_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorD_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorD_musfade_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorD_musfade_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorE_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorE_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorF_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorF_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorX_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorX_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorX_musfade_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorX_musfade_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorw_musfade_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorw_musfade_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorW_Alarm_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_doorW_Other_19  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_musicer_field_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_event_manager_debug  (idx=3)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_insideclosetcutscene  (idx=12)
+   gml_Object_obj_gameover_init_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_Alarm_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_dustpile_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_Other_10  --gml_Script_instance_create--> obj_face_parent  (idx=6)
+   gml_Object_obj_dustpile_susie_Create_0  --gml_Script_instance_create--> (未知)  (idx=500)
+   gml_Object_obj_dustpile_susie_Alarm_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dustpile_susie_Other_10  --gml_Script_instance_create--> obj_face_parent  (idx=6)
+   gml_Object_obj_wobblything_evil_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_wobblything_evil_Step_0  --gml_Script_instance_create--> obj_overworld_spade  (idx=190)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_thrashafter_follow  (idx=52)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_kingcutscene_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkfountain_event_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_fountainkris_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_fountainkris_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_fountainkris_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_fountainkris_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_fountainkris_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_fountainkris_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_chaseenemy_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_chaseenemy_Other_10  --gml_Script_instance_create--> obj_testoverworldenemy  (idx=170)
+   gml_Object_obj_testoverworldenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_testoverworldenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_encounterbasic_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcontroller_Create_0  --gml_Script_instance_create--> obj_face_parent  (idx=6)
+   gml_Object_obj_darkcontroller_Create_0  --gml_Script_instance_create--> obj_choicer_old  (idx=4)
+   gml_Object_obj_darkcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_starwalker_battle_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_starwalker_overworld_Step_0  --gml_Script_instance_create--> obj_npc_room_animated  (idx=92)
+   gml_Object_obj_starwalker_overworld_Step_0  --gml_Script_instance_create--> obj_solidblock  (idx=17)
+   gml_Object_obj_starwalker_offswitch_Other_10  --gml_Script_instance_create--> (未知)  (idx=2200)
+   gml_Object_obj_starwalker_offswitch_Other_10  --gml_Script_instance_create--> obj_npc_room_animated  (idx=92)
+   gml_Object_obj_scissordancer_Create_0  --gml_Script_instance_create--> obj_overworldbulletparent  (idx=187)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> (未知)  (idx=500)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> (未知)  (idx=960)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> (未知)  (idx=960)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> (未知)  (idx=580)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> (未知)  (idx=590)
+   gml_Object_obj_dancer_gen_Create_0  --gml_Script_instance_create--> obj_lancerboss3  (idx=290)
+   gml_Object_obj_darkponman_ow_Step_0  --gml_Script_instance_create--> obj_overworldbulletparent  (idx=187)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=1202)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=1242)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=1282)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=962)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=1002)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=1042)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=722)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=762)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=802)
+   gml_Object_obj_ob_gen_Step_0  --gml_Script_instance_create--> (未知)  (idx=1442)
+   gml_Object_obj_overworld_spademaker_Alarm_0  --gml_Script_instance_create--> obj_overworld_spade_homing  (idx=189)
+   gml_Object_obj_overworld_spademaker_Alarm_0  --gml_Script_instance_create--> (未知)  (idx=500)
+   gml_Object_obj_overworld_spademaker_Alarm_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_overworld_spademaker_Alarm_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_overworld_spademaker_Alarm_0  --gml_Script_instance_create--> obj_markerv  (idx=120)
+   gml_Object_obj_attackpress_Draw_0  --gml_Script_instance_create--> (未知)  (idx=-1)
+   gml_Object_obj_battlecontroller_Create_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_battlecontroller_Create_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_battlecontroller_Create_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_battlecontroller_Create_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_battlecontroller_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_battlecontroller_Step_0  --gml_Script_instance_create--> obj_returnheart  (idx=220)
+   gml_Object_obj_chasebullet_Destroy_0  --gml_Script_instance_create--> obj_afterimage  (idx=192)
+   gml_Object_obj_healeffect_Alarm_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_lancerbike_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_lancerbike_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_heroparent_Alarm_1  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_heroparent_Alarm_1  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_heroparent_Alarm_1  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_heroparent_Draw_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_monster1_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_monster1_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_monster1_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_monster1_Step_0  --gml_Script_instance_create--> obj_town_event  (idx=26)
+   gml_Object_obj_monster1_Step_0  --gml_Script_instance_create--> obj_musicer_man  (idx=130)
+   gml_Object_obj_monster1_Step_0  --gml_Script_instance_create--> obj_town_event  (idx=26)
+   gml_Object_obj_moveheart_Create_0  --gml_Script_instance_create--> obj_heartburst  (idx=209)
+   gml_Object_obj_moveheart_Alarm_0  --gml_Script_instance_create--> obj_heart  (idx=313)
+   gml_Object_obj_returnheart_Alarm_0  --gml_Script_instance_create--> obj_heartburst  (idx=209)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_overworldheart  (idx=180)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_flowershop_event  (idx=28)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> (未知)  (idx=580)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_overworldheart  (idx=180)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> (未知)  (idx=380)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_musicer_town  (idx=126)
+   gml_Object_obj_forestmaze_controller_Create_0  --gml_Script_instance_create--> obj_npc_puzzlemaster1  (idx=72)
+   gml_Object_obj_tempblock_room_Create_0  --gml_Script_instance_create--> obj_soliddark  (idx=339)
+   gml_Object_obj_tempblock_room_Create_0  --gml_Script_instance_create--> obj_readable_room1  (idx=88)
+   gml_Object_obj_tempblock_room_Create_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_pushableblock_Other_10  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_glowtilepuzz_Create_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_glowtilepuzz_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_glowtilepuzz_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_glowtilepuzz_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_glowtilepuzz_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_glowtilepuzz_Other_11  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_darkeyepuzzle_Create_0  --gml_Script_instance_create--> (未知)  (idx=960)
+   gml_Object_obj_darkeyepuzzle_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_clubsbullet_Collision_obj_battlesolid  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_Collision_obj_battlesolid  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_Collision_obj_battlesolid  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_afterimage  (idx=192)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_clubsbullet_dark_Step_0  --gml_Script_instance_create--> obj_afterimage  (idx=192)
+   gml_Object_obj_dbullet_maker_Draw_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_heartshaper_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_clubsbullet  (idx=235)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_defeatanim  (idx=300)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=360)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_defeatanim  (idx=300)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_defeatanim  (idx=300)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_defeatanim  (idx=300)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_rabbitbullet  (idx=280)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_carrotthrower  (idx=279)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_heartshaper  (idx=239)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_skychain  (idx=255)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_skychain  (idx=255)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_skychain  (idx=255)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=580)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=530)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=540)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=-20)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bigscythe  (idx=274)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_spadering  (idx=277)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_spadering  (idx=277)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_spadering  (idx=277)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_spadering  (idx=277)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_joker_teleport  (idx=276)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_joker_teleport  (idx=276)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=570)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=450)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=540)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=580)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_musicer_man  (idx=130)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=490)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_returnheart  (idx=220)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> (未知)  (idx=400)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> obj_endbattle  (idx=310)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dbulletcontroller_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_ralseibullet_Create_0  --gml_Script_instance_create--> obj_afterimage_grow  (idx=193)
+   gml_Object_obj_dummyenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dummyenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dummyenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_dummyenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_dummyenemy_Other_20  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> (未知)  (idx=440)
+   gml_Object_obj_ralseienemy_Step_0  --gml_Script_instance_create--> obj_wobblything  (idx=160)
+   gml_Object_obj_placeholderenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_placeholderenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_placeholderenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_placeholderenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_chain_of_hell_Step_0  --gml_Script_instance_create--> obj_chainpiece  (idx=249)
+   gml_Object_obj_chain_of_hell_Step_0  --gml_Script_instance_create--> obj_collidebullet  (idx=201)
+   gml_Object_obj_chain_of_hell_Step_0  --gml_Script_instance_create--> obj_markerv  (idx=120)
+   gml_Object_obj_chain_of_hell_Step_0  --gml_Script_instance_create--> obj_markerv  (idx=120)
+   gml_Object_obj_chainking_Step_0  --gml_Script_instance_create--> obj_castlefront_event  (idx=44)
+   gml_Object_obj_chainking_Step_0  --gml_Script_instance_create--> obj_church_event  (idx=24)
+   gml_Object_obj_chainking_Step_0  --gml_Script_instance_create--> obj_church_event  (idx=24)
+   gml_Object_obj_finalchain_Step_0  --gml_Script_instance_create--> obj_chainpiece  (idx=249)
+   gml_Object_obj_finalchain_Step_0  --gml_Script_instance_create--> obj_regularbullet_permanent  (idx=204)
+   gml_Object_obj_finalchain_Step_0  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_Object_obj_finalchain_Step_0  --gml_Script_instance_create--> obj_chainpiece  (idx=249)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_sur_dark  (idx=340)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_sur_dark  (idx=340)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_endbattle  (idx=310)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_darkener  (idx=205)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_sur_dark  (idx=340)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_endbattle  (idx=310)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_sur_dark  (idx=340)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_body_Step_0  --gml_Script_instance_create--> obj_darkener  (idx=205)
+   gml_Object_obj_growtangle_bouncer_Step_2  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_nonsolid_growtangle_Step_0  --gml_Script_instance_create--> obj_afterimage  (idx=192)
+   gml_Object_obj_skychain_Step_0  --gml_Script_instance_create--> obj_fadechain  (idx=250)
+   gml_Object_obj_wavechain_Step_0  --gml_Script_instance_create--> obj_chainpiece  (idx=249)
+   gml_Object_obj_wavechain_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_wavechain_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_wavechain_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_wavechain_Step_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_dknight_slasher_Step_0  --gml_Script_instance_create--> obj_face_parent  (idx=6)
+   gml_Object_obj_rudinnranger_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rudinnranger_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_rudinnranger_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_rudinnranger_Step_0  --gml_Script_instance_create--> obj_dknight_slasher  (idx=257)
+   gml_Object_obj_jigsawryenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_jigsawryenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_jigsawryenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> obj_checkers_leap  (idx=266)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> obj_healanim  (idx=301)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> obj_throwtarget  (idx=263)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> obj_throwralsei  (idx=265)
+   gml_Object_obj_checkers_enemy_Step_0  --gml_Script_instance_create--> obj_checker_animtest  (idx=262)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_smallface  (idx=8)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_church_event  (idx=24)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checker_animtest_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_throwtarget_Create_0  --gml_Script_instance_create--> obj_throwtarget  (idx=263)
+   gml_Object_obj_throwralsei_Step_0  --gml_Script_instance_create--> obj_ralseithrown  (idx=264)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> obj_choicer_neo  (idx=5)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_checkers_leap_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_ponman_appear_Step_0  --gml_Script_instance_create--> obj_testoverworldenemy  (idx=170)
+   gml_Object_obj_ponman_enemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_ponman_enemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_ponman_enemy_Step_0  --gml_Script_instance_create--> obj_flowershop_event  (idx=28)
+   gml_Object_obj_heartbomb_blast_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_suitbomb_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_suitbomb_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_suitbomb_Step_0  --gml_Script_instance_create--> obj_heartbomb_blast  (idx=269)
+   gml_Object_obj_suitbomb_Step_0  --gml_Script_instance_create--> obj_regularbullet  (idx=203)
+   gml_Object_obj_centerscythe_Create_0  --gml_Script_instance_create--> obj_centerscythe  (idx=272)
+   gml_Object_obj_centerscythe_Create_0  --gml_Script_instance_create--> obj_centerscythe  (idx=272)
+   gml_Object_obj_centerscythe_Create_0  --gml_Script_instance_create--> obj_centerscythe  (idx=272)
+   gml_Object_obj_centerscythe_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_laserscythe_Other_15  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_joker_teleport_Step_0  --gml_Script_instance_create--> obj_collidebullet  (idx=201)
+   gml_Object_obj_joker_teleport_Step_0  --gml_Script_instance_create--> obj_collidebullet  (idx=201)
+   gml_Object_obj_spadering_Step_0  --gml_Script_instance_create--> obj_collidebullet  (idx=201)
+   gml_Object_obj_rabbick_bush_Step_0  --gml_Script_instance_create--> obj_chaseenemy  (idx=168)
+   gml_Object_obj_carrotthrower_Step_0  --gml_Script_instance_create--> obj_collidebullet  (idx=201)
+   gml_Object_obj_rabbick_enemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_rabbick_enemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_rabbick_enemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_rabbick_enemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_rabbick_enemy_Other_12  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_bloxer_enemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_bloxer_enemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_bloxer_enemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_bloxer_enemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_lancerbike_neo_Step_0  --gml_Script_instance_create--> obj_regularbullet_permanent  (idx=204)
+   gml_Object_obj_lancerbike_neo_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_lancerbike_neo_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_lancerboss_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerboss_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_lancerboss_Step_0  --gml_Script_instance_create--> obj_lancerbike  (idx=211)
+   gml_Object_obj_lancerboss_Step_0  --gml_Script_instance_create--> obj_lancerbike  (idx=211)
+   gml_Object_obj_lancerboss2_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerboss2_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_lancerboss2_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_lancerboss2_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_lancerboss2_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_diamondenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_diamondenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_diamondenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_diamondenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_susieenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_susieenemy_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_susieenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_susieenemy_Step_0  --gml_Script_instance_create--> obj_lancerbike_neo  (idx=284)
+   gml_Object_obj_susieenemy_Other_11  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerboss3_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerboss3_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_lancerboss3_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_lancerboss3_Step_0  --gml_Script_instance_create--> obj_lancerbike  (idx=211)
+   gml_Object_obj_lancerboss3_Step_0  --gml_Script_instance_create--> obj_lancerbike  (idx=211)
+   gml_Object_obj_king_boss_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_boss_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_king_boss_Step_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_endbattle  (idx=310)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_darkener  (idx=205)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_endbattle  (idx=310)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> (未知)  (idx=-9)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_chainking  (idx=248)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_darkener  (idx=205)
+   gml_Object_obj_king_boss_Other_15  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_joker_Create_0  --gml_Script_instance_create--> obj_joker_body  (idx=271)
+   gml_Object_obj_joker_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_joker_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_joker_Step_0  --gml_Script_instance_create--> obj_flowershop_event  (idx=28)
+   gml_Object_obj_joker_Step_0  --gml_Script_instance_create--> (未知)  (idx=-5)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_joker_Other_15  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_clubsenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_clubsenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_clubsenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_clubsenemy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_clubsenemy_old_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_clubsenemy_old_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_clubsenemy_old_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_clubsenemy_old_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_heartenemy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_heartenemy_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_heartenemy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_heartenemy_Step_0  --gml_Script_instance_create--> obj_spinheart  (idx=240)
+   gml_Object_obj_heartenemy_Step_0  --gml_Script_instance_create--> obj_heartshaper  (idx=239)
+   gml_Object_obj_headhathy_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_headhathy_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_obj_headhathy_Step_0  --gml_Script_instance_create--> DEVICE_GONERMAKER  (idx=320)
+   gml_Object_obj_headhathy_Step_0  --gml_Script_instance_create--> obj_spinheart  (idx=240)
+   gml_Object_obj_headhathy_Step_0  --gml_Script_instance_create--> obj_dbulletcontroller  (idx=241)
+   gml_Object_obj_smallcheckers_enemy_Step_0  --gml_Script_instance_create--> obj_spinheart  (idx=240)
+   gml_Object_obj_pacifyspell_Step_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_healanim_Step_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_rudebuster_anim_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_spareanim_Draw_0  --gml_Script_instance_create--> (未知)  (idx=?)
+   gml_Object_obj_battleblcon_Create_0  --gml_Script_instance_create--> obj_choicer_neo  (idx=5)
+   gml_Object_obj_growtangle_Step_0  --gml_Script_instance_create--> obj_afterimage  (idx=192)
+   gml_Object_obj_heart_Create_0  --gml_Script_instance_create--> obj_writer  (idx=10)
+   gml_Object_obj_shop1_Alarm_3  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_shop1_Other_11  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_shop1_Draw_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_shop1_Draw_0  --gml_Script_instance_create--> (未知)  (idx=450)
+   gml_Object_obj_shop1_Draw_0  --gml_Script_instance_create--> (未知)  (idx=440)
+   gml_Object_obj_shop1_Draw_0  --gml_Script_instance_create--> (未知)  (idx=460)
+   gml_Object_obj_shop1_Draw_0  --gml_Script_instance_create--> (未知)  (idx=450)
+   gml_Object_obj_shop1_Draw_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_shop2_Alarm_3  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_shop2_Other_11  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_shop2_Draw_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_obj_shop2_Draw_0  --gml_Script_instance_create--> (未知)  (idx=450)
+   gml_Object_obj_shop2_Draw_0  --gml_Script_instance_create--> (未知)  (idx=440)
+   gml_Object_obj_shop2_Draw_0  --gml_Script_instance_create--> (未知)  (idx=460)
+   gml_Object_obj_shop2_Draw_0  --gml_Script_instance_create--> (未知)  (idx=450)
+   gml_Object_obj_shop2_Draw_0  --gml_Script_instance_create--> obj_mainchara  (idx=30)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_markerA  (idx=110)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_bluhpainting  (idx=150)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_markerA  (idx=110)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_npc_susiedark  (idx=75)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_npc_susiedark  (idx=75)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_npc_susiedark  (idx=75)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_backgrounder_standard  (idx=140)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_susiebadguy_event  (idx=50)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_thrashzone_event  (idx=65)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_npc_facing  (idx=90)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_candytree_event  (idx=68)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_readable_room1  (idx=88)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_persistentfadein  (idx=145)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_musicer_darkcliff  (idx=125)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_DEVICE_CONTACT_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_FAILURE_Step_0  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_Object_DEVICE_FAILURE_Step_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_DEVICE_FAILURE_Step_0  --gml_Script_instance_create--> obj_doorB  (idx=100)
+   gml_Object_DEVICE_FAILURE_Step_0  --gml_Script_instance_create--> obj_susiebadguy_event  (idx=50)
+   gml_Object_DEVICE_FAILURE_Step_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_DEVICE_MENU_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_MENU_Alarm_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_DEVICE_MENU_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_PROCESS_LOGO_Create_0  --instance_create_depth--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_PROCESS_LOGO_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_PROCESS_DOG_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_credits_Create_0  --instance_create_depth--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dkris_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dkris_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_dkris_event_Step_0  --gml_Script_instance_create--> obj_chapter_continue  (idx=2)
+   gml_Object_obj_dkris_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_darkphone_event_Step_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_legend_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_returnheart  (idx=220)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_returnheart  (idx=220)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_npc_hammerguy  (idx=70)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_darkdoorevent  (idx=60)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_torielclass_event  (idx=20)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_markerA  (idx=110)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_burstbolt  (idx=200)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_lancerchaseevent  (idx=80)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_cloverpuzzle_event  (idx=40)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_legend_Draw_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_initializer2_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_initializer2_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_initializer2_Other_72  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+   gml_Object_obj_event_manager_Create_0  --gml_Script_instance_create--> obj_switchAsyncHelper  (idx=0)
+
+== 变量名复核 ==
+   initwd = 2
+   initht = 2
+   entrance = 55
+   doormarker = 5
+   cmarker = 9
+   thismarker = 6
+   darkzone = 51
+   plot = 311
+   touched = 43
+   panner = 4
+   bdir = 6
+   active = 165
+   timer = 255

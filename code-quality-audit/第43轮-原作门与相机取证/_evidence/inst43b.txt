@@ -1,0 +1,2242 @@
+== A/B 校验（ch1 已知真值）==
+  期望: obj_doorA_musfade_Alarm_2 -> obj_persistentfadein (idx 145)
+  实测: gml_Object_obj_doorA_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+
+== instance_create* 调用点 = 1307 ；参数解不出对象名 = 195 ==
+
+== 被创建的对象（按次数降序）==
+   450	obj_dialoguer
+        gml_GlobalScript_scr_writetext
+        gml_GlobalScript_scr_litemuseb
+        gml_GlobalScript_d_make
+        gml_GlobalScript_scr_talkroom
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_GlobalScript_scr_itemuse
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_insideclosetcutscene_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_interactablesolid_Other_10
+        gml_Object_obj_tem_school_Other_10
+        gml_Object_obj_unusedclassevent_Step_0
+   150	?未知(idx=?)
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_itemcomment
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_minishakeobj
+        gml_GlobalScript_scr_anim
+        gml_GlobalScript_scr_shakeobj
+        gml_GlobalScript_scr_defeatrun
+        gml_GlobalScript_scr_oflash
+        gml_GlobalScript_scr_spareanim
+        gml_GlobalScript_scr_afterimage
+        gml_GlobalScript_scr_makecaterpillar
+        gml_GlobalScript_scr_move_to_point_over_time
+        gml_GlobalScript_scr_marker
+        gml_GlobalScript_scr_dark_marker
+        gml_GlobalScript_instance_create
+        gml_GlobalScript_instance_create
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_carcutscene_Alarm_5
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_lancerbakesale_event_Create_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_thrashcontroller_Create_0
+        gml_Object_obj_thrashafter_event_Step_0
+        gml_Object_obj_thrashafter_follow_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Create_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_darkslide_Step_0
+        gml_Object_obj_npc_room_Alarm_11
+        gml_Object_obj_treasure_room_Alarm_11
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Step_0
+        gml_Object_obj_dustpile_Other_10
+        gml_Object_obj_dustpile_susie_Other_10
+        gml_Object_obj_darkcontroller_Step_0
+        gml_Object_obj_darkponman_ow_Step_0
+        gml_Object_obj_overworld_spademaker_Alarm_0
+        gml_Object_obj_overworld_spademaker_Alarm_0
+        gml_Object_obj_overworld_spademaker_Alarm_0
+        gml_Object_obj_chasebullet_Destroy_0
+        gml_Object_obj_healeffect_Alarm_0
+        gml_Object_obj_lancerbike_Step_0
+        gml_Object_obj_heroparent_Alarm_1
+        gml_Object_obj_heroparent_Draw_0
+        gml_Object_obj_moveheart_Alarm_0
+        gml_Object_obj_returnheart_Alarm_0
+        gml_Object_obj_tempblock_room_Create_0
+        gml_Object_obj_clubsbullet_Collision_obj_battlesolid
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+   98	obj_writer
+        gml_GlobalScript_scr_battletext
+        gml_GlobalScript_scr_battletext
+        gml_Object_obj_dialoguer_Other_10
+        gml_Object_obj_dialoguer_Other_10
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_scarelancerevent_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_overworld_spademaker_Alarm_0
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_battleblcon_Create_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop1_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_obj_shop2_Draw_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   45	obj_fadeout
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_krisroom_Step_0
+        gml_Object_obj_krisroom_Step_0
+        gml_Object_obj_jokerbattleevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_thrashafter_follow_Step_0
+        gml_Object_obj_lancerscare2_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_darkdoorevent_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_doorA_Other_19
+        gml_Object_obj_doorA_musfade_Other_19
+        gml_Object_obj_doorB_musfade_Other_19
+        gml_Object_obj_doorB_Other_19
+        gml_Object_obj_doorC_Other_19
+        gml_Object_obj_doorC_musfade_Other_19
+        gml_Object_obj_doorD_Other_19
+        gml_Object_obj_doorD_musfade_Other_19
+        gml_Object_obj_doorE_Other_19
+        gml_Object_obj_doorF_Other_19
+        gml_Object_obj_doorX_Other_19
+        gml_Object_obj_doorX_musfade_Other_19
+        gml_Object_obj_doorw_musfade_Other_19
+        gml_Object_obj_doorW_Other_19
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_checker_animtest_Step_0
+        gml_Object_obj_shop1_Other_11
+        gml_Object_obj_shop2_Other_11
+        gml_Object_PROCESS_LOGO_Draw_0
+        gml_Object_PROCESS_DOG_Step_0
+        gml_Object_obj_legend_Draw_0
+        gml_Object_obj_legend_Draw_0
+   45	obj_shake
+        gml_GlobalScript_scr_damage
+        gml_GlobalScript_scr_damage_all_overworld
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_cloverpuzzle_event_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_castlefront_event_Step_0
+        gml_Object_obj_thrashmaker_event_Step_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_susiebadguy_event_Step_0
+        gml_Object_obj_susiebadguy_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_darkdoorevent_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_readable_room1_Other_10
+        gml_Object_obj_event_room_Step_0
+        gml_Object_obj_event_room_Step_0
+        gml_Object_obj_event_room_Step_0
+        gml_Object_obj_dustpile_Other_10
+        gml_Object_obj_dustpile_susie_Other_10
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_heroparent_Alarm_1
+        gml_Object_obj_glowtilepuzz_Step_0
+        gml_Object_obj_darkeyepuzzle_Step_0
+        gml_Object_obj_growtangle_bouncer_Step_2
+        gml_Object_obj_checker_animtest_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_laserscythe_Other_15
+        gml_Object_obj_dkris_event_Step_0
+        gml_Object_obj_dkris_event_Step_0
+        gml_Object_obj_dkris_event_Step_0
+   37	obj_persistentfadein
+        gml_Object_obj_darkdoor_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_carcutscene_Step_0
+        gml_Object_obj_krisroom_Step_0
+        gml_Object_obj_jokerbattleevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_darkdoorevent_Step_0
+        gml_Object_obj_shortcut_door_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_doorA_Alarm_2
+        gml_Object_obj_doorA_musfade_Alarm_2
+        gml_Object_obj_doorB_musfade_Alarm_2
+        gml_Object_obj_doorB_Alarm_2
+        gml_Object_obj_doorC_Alarm_2
+        gml_Object_obj_doorC_musfade_Alarm_2
+        gml_Object_obj_doorD_Alarm_2
+        gml_Object_obj_doorD_musfade_Alarm_2
+        gml_Object_obj_doorE_Alarm_2
+        gml_Object_obj_doorF_Alarm_2
+        gml_Object_obj_doorX_Alarm_2
+        gml_Object_obj_doorX_musfade_Alarm_2
+        gml_Object_obj_doorw_musfade_Alarm_2
+        gml_Object_obj_doorW_Alarm_2
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_darkfountain_event_Draw_0
+        gml_Object_obj_checker_animtest_Step_0
+        gml_Object_obj_shop1_Alarm_3
+        gml_Object_obj_shop2_Alarm_3
+        gml_Object_obj_legend_Draw_0
+   25	?未知(idx=-9)
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_GlobalScript_scr_enemyblcon
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_rudy_Create_0
+        gml_Object_obj_lancerbakesale_event_Step_0
+        gml_Object_obj_lancerbakesale_event_Step_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_starwalker_battle_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_placeholderenemy_Step_0
+        gml_Object_obj_rudinnranger_Step_0
+        gml_Object_obj_lancerboss_Step_0
+        gml_Object_obj_lancerboss3_Step_0
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+   25	obj_switchAsyncHelper
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_mainchara_Create_0
+        gml_Object_obj_rurus_checker_event_Create_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_thrashafter_event_Create_0
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_wobblything_evil_Step_0
+        gml_Object_obj_scissordancer_Create_0
+        gml_Object_obj_battlecontroller_Step_0
+        gml_Object_obj_moveheart_Create_0
+        gml_Object_obj_tempblock_room_Create_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_joker_teleport_Step_0
+        gml_Object_obj_joker_teleport_Step_0
+        gml_Object_obj_carrotthrower_Step_0
+        gml_Object_obj_lancerboss_Step_0
+        gml_Object_obj_susieenemy_Step_0
+        gml_Object_obj_lancerboss3_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_PROCESS_LOGO_Create_0
+        gml_Object_obj_credits_Create_0
+        gml_Object_obj_legend_Create_0
+   22	obj_soliddark
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cloverpuzzle_event_Create_0
+        gml_Object_obj_cloverpuzzle_event_Create_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_npc_puzzlemaster1_Create_0
+        gml_Object_obj_npc_susiedark_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_darkeyepuzzle_Create_0
+   21	obj_darkener
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_dummyenemy_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_placeholderenemy_Step_0
+        gml_Object_obj_rudinnranger_Step_0
+        gml_Object_obj_jigsawryenemy_Step_0
+        gml_Object_obj_checkers_enemy_Step_0
+        gml_Object_obj_ponman_enemy_Step_0
+        gml_Object_obj_rabbick_enemy_Step_0
+        gml_Object_obj_bloxer_enemy_Step_0
+        gml_Object_obj_lancerboss_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_diamondenemy_Step_0
+        gml_Object_obj_susieenemy_Other_11
+        gml_Object_obj_lancerboss3_Step_0
+        gml_Object_obj_king_boss_Step_0
+        gml_Object_obj_joker_Step_0
+        gml_Object_obj_clubsenemy_Step_0
+        gml_Object_obj_clubsenemy_old_Step_0
+        gml_Object_obj_heartenemy_Step_0
+        gml_Object_obj_headhathy_Step_0
+   20	obj_debug_gui
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_spell
+        gml_Object_obj_rudy_Step_0
+        gml_Object_obj_chaseenemy_Other_10
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_chain_of_hell_Step_0
+        gml_Object_obj_finalchain_Step_0
+        gml_Object_obj_skychain_Step_0
+        gml_Object_obj_wavechain_Step_0
+        gml_Object_obj_jigsawryenemy_Step_0
+        gml_Object_obj_centerscythe_Create_0
+        gml_Object_obj_rabbick_bush_Step_0
+        gml_Object_obj_bloxer_enemy_Step_0
+        gml_Object_obj_lancerboss3_Step_0
+        gml_Object_obj_smallcheckers_enemy_Step_0
+   17	obj_chapter_continue
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_fountainkris_Step_0
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_clubsbullet_Collision_obj_battlesolid
+        gml_Object_obj_clubsbullet_Collision_obj_battlesolid
+        gml_Object_obj_clubsbullet_dark_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_bloxer_enemy_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+   15	obj_npc_room
+        gml_Object_obj_town_event_Create_0
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_rurus_event_Create_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_hathyfightevent_Step_0
+        gml_Object_obj_tutorialbattleevent_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_npc_room_Create_0
+        gml_Object_obj_starwalker_offswitch_Other_10
+   13	obj_choicer_neo
+        gml_GlobalScript_scr_facechoice
+        gml_Object_obj_writer_Draw_0
+        gml_Object_obj_dbullet_maker_Draw_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_diamondenemy_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_joker_Other_15
+        gml_Object_obj_clubsenemy_Step_0
+        gml_Object_obj_clubsenemy_old_Step_0
+        gml_Object_obj_heartenemy_Step_0
+        gml_Object_obj_headhathy_Step_0
+   12	DEVICE_CHOICE
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_FAILURE_Step_0
+   12	obj_growtangle
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   11	obj_excblcon
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_flowershop_event_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_castlefront_event_Step_0
+        gml_Object_obj_susiebadguy_event_Step_0
+        gml_Object_obj_thrashafter_event_Step_0
+        gml_Object_obj_scarelancerevent_Step_0
+        gml_Object_obj_getsusieevent_Step_0
+        gml_Object_obj_hathyfightevent_Step_0
+        gml_Object_obj_chaseenemy_Step_0
+   10	obj_nonsolid_growtangle
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   10	obj_ob_checkertile
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+        gml_Object_obj_ob_gen_Step_0
+   9	obj_dbulletcontroller
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_susieenemy_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   9	obj_encounterbasic
+        gml_Object_obj_rurus_checker_event_Step_0
+        gml_Object_obj_jokerbattleevent_Step_0
+        gml_Object_obj_scarelancerevent_Step_0
+        gml_Object_obj_hathyfightevent_Step_0
+        gml_Object_obj_tutorialbattleevent_Step_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_testoverworldenemy_Step_0
+        gml_Object_obj_checker_animtest_Step_0
+   8	obj_event_manager_debug
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_checkers_enemy_Step_0
+        gml_Object_obj_suitbomb_Step_0
+        gml_Object_obj_suitbomb_Step_0
+        gml_Object_obj_suitbomb_Step_0
+        gml_Object_obj_rabbick_enemy_Step_0
+        gml_Object_obj_event_manager_Create_0
+   8	obj_torielclass_event
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_thrashafter_follow_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_heroparent_Alarm_1
+   7	?未知(idx=-5)
+        gml_GlobalScript_scr_healitemspell
+        gml_GlobalScript_scr_healallitemspell
+        gml_GlobalScript_scr_damage_enemy
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_spell
+        gml_Object_obj_battlecontroller_Create_0
+        gml_Object_obj_joker_Other_15
+   7	obj_dicebul
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   6	obj_caterpillarchara
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_tutorialbattleevent_Create_0
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_dustpile_susie_Create_0
+        gml_Object_obj_darkcontroller_Create_0
+        gml_Object_obj_darkcontroller_Create_0
+   6	obj_fadein
+        gml_Object_obj_thrashafter_follow_Step_0
+        gml_Object_obj_lancerscare2_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_event_room_Step_0
+        gml_Object_obj_fountainkris_Create_0
+        gml_Object_DEVICE_MENU_Create_0
+   6	obj_npc_facing
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_suitspuzzle_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_boxpuzzle_event_Step_0
+        gml_Object_obj_centerscythe_Create_0
+   6	obj_overworldheart
+        gml_Object_obj_nonsolid_growtangle_Step_0
+        gml_Object_obj_centerscythe_Create_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_lancerboss2_Step_0
+        gml_Object_obj_headhathy_Step_0
+        gml_Object_obj_growtangle_Step_0
+   6	obj_readable_room1
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_darklanding_Create_0
+        gml_Object_obj_checker_animtest_Step_0
+   6	obj_suitspuzz
+        gml_Object_obj_cloverpuzzle_event_Create_0
+        gml_Object_obj_prisonevent_Create_0
+        gml_Object_obj_lancerbattle2_event_Create_0
+        gml_Object_obj_suitspuzzle_event_Create_0
+        gml_Object_obj_event_room_Create_0
+        gml_Object_obj_event_room_Create_0
+   5	obj_lancerchaseevent
+        gml_Object_obj_kingcutscene_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   4	?未知(idx=-1)
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+   4	DEVICE_GONERMAKER
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_CONTACT_Step_0
+   4	obj_battleback
+        gml_Object_obj_scarelancerevent_Step_0
+        gml_Object_obj_hathyfightevent_Step_0
+        gml_Object_obj_testoverworldenemy_Step_0
+        gml_Object_obj_checker_animtest_Step_0
+   4	obj_elevatorcontroller
+        gml_GlobalScript_scr_boltcheck
+        gml_GlobalScript_scr_boltcheck_onebutton
+        gml_GlobalScript_scr_boltcheck_onebutton
+        gml_Object_obj_attackpress_Draw_0
+   4	obj_growtangle_bouncer
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_body_Step_0
+        gml_Object_obj_king_boss_Other_15
+        gml_Object_obj_king_boss_Other_15
+   4	obj_jigsawbullet
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   4	obj_marker
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_gameover_init_Step_0
+        gml_Object_obj_checker_animtest_Step_0
+   4	obj_regularbullet
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dknight_slasher_Step_0
+        gml_Object_obj_checkers_leap_Step_0
+        gml_Object_obj_ponman_enemy_Step_0
+   4	obj_scissordancer
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_dancer_gen_Create_0
+   4	obj_wobblything_slide
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+   3	obj_battlecontroller
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_susieandlancer_event_Step_0
+        gml_Object_obj_encounterbasic_Step_0
+   3	obj_chaseenemy
+        gml_Object_obj_cloverpuzzle_event_Step_0
+        gml_Object_obj_getsusieevent_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+   3	obj_church_event
+        gml_GlobalScript_scr_damage
+        gml_GlobalScript_scr_damage_all_overworld
+        gml_GlobalScript_scr_mnendturn
+   3	obj_cloverpuzzle_event
+        gml_Object_obj_prisonevent_Step_0
+        gml_Object_obj_dancer_gen_Create_0
+        gml_Object_obj_joker_Step_0
+   3	obj_clubsbullet_dark
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   3	obj_dbullet_vert
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   3	obj_dmgwriter
+        gml_GlobalScript_scr_dmgwriter_selfchar
+        gml_Object_obj_lancerbattle2_event_Step_0
+        gml_Object_obj_checkers_enemy_Step_0
+   3	obj_face
+        gml_GlobalScript_scr_battletext
+        gml_Object_obj_monster1_Step_0
+        gml_Object_obj_monster1_Step_0
+   3	obj_overworld_spademaker
+        gml_Object_obj_lancerchase2_Step_0
+        gml_Object_obj_lancerslideevent_Step_0
+        gml_Object_obj_lancerchaseevent_Step_0
+   3	obj_ralseibullet
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+        gml_Object_obj_ralseienemy_Step_0
+   3	obj_solidblock
+        gml_Object_obj_darkdoor_Create_0
+        gml_Object_obj_classscene_Step_0
+        gml_Object_obj_schoollobbycutscene_Create_0
+   2	?未知(idx=368)
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+   2	DEVICE_OBACK_4
+        gml_Object_DEVICE_CONTACT_Step_0
+        gml_Object_DEVICE_MENU_Step_0
+   2	obj_afterimage_grow
+        gml_Object_obj_lancerbike_Step_0
+        gml_Object_obj_lancerbike_neo_Step_0
+   2	obj_animation
+        gml_Object_obj_king_boss_Step_0
+        gml_Object_obj_king_boss_Step_0
+   2	obj_backgrounder_sprite
+        gml_Object_obj_town_event_Create_0
+        gml_Object_obj_thrashafter_follow_Create_0
+   2	obj_blocktile
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+   2	obj_choicer_old
+        gml_Object_obj_writer_Draw_0
+        gml_Object_obj_heartbomb_blast_Step_0
+   2	obj_defeatanim
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+   2	obj_doorB
+        gml_Object_obj_classscene_Create_0
+        gml_Object_obj_classscene_Step_0
+   2	obj_dustball
+        gml_Object_obj_dustpile_Alarm_0
+        gml_Object_obj_dustpile_susie_Alarm_0
+   2	obj_healwriter
+        gml_GlobalScript_scr_healitem
+        gml_GlobalScript_scr_healitem_all
+   2	obj_insideclosetcutscene
+        gml_Object_obj_darkcastle_event_Step_0
+        gml_Object_obj_suitbomb_Step_0
+   2	obj_pacifyspell
+        gml_GlobalScript_scr_spell
+        gml_GlobalScript_scr_spell
+   2	obj_pushableblock
+        gml_Object_obj_rurus_event_Step_0
+        gml_Object_obj_rurus_event_Step_0
+   2	obj_rabbitbullet
+        gml_Object_obj_glowtilepuzz_Create_0
+        gml_Object_obj_glowtilepuzz_Other_11
+   2	obj_screen_loading
+        gml_Object_obj_chapter_continue_Alarm_0
+        gml_Object_DEVICE_MENU_Alarm_0
+   2	obj_slidedust
+        gml_Object_obj_lancerslideevent_Alarm_1
+        gml_Object_obj_darkslide_Collision_obj_mainchara
+   2	obj_smallface
+        gml_Object_obj_writer_Draw_0
+        gml_Object_obj_dbulletcontroller_Step_0
+   2	obj_starwalker_battle
+        gml_Object_obj_starwalker_overworld_Step_0
+        gml_Object_obj_starwalker_offswitch_Other_10
+   2	obj_starwalker_overworld
+        gml_Object_obj_forestmaze_controller_Create_0
+        gml_Object_obj_forestmaze_controller_Create_0
+   2	obj_time
+        gml_Object_obj_initializer2_Create_0
+        gml_Object_obj_initializer2_Other_72
+   2	obj_treasure_room
+        gml_Object_obj_cc_event_Create_0
+        gml_Object_obj_cc_event_Step_0
+   2	obj_wobblything
+        gml_Object_obj_flowershop_event_Create_0
+        gml_Object_obj_dancer_gen_Create_0
+   1	?未知(idx=167263)
+        gml_Object_obj_gameover_init_Step_0
+   1	?未知(idx=440)
+        gml_Object_obj_dancer_gen_Create_0
+   1	?未知(idx=450)
+        gml_Object_obj_dancer_gen_Create_0
+   1	?未知(idx=460)
+        gml_Object_obj_forestmaze_controller_Create_0
+   1	?未知(idx=502)
+        gml_Object_obj_ponman_appear_Step_0
+   1	?未知(idx=589)
+        gml_Object_obj_joker_Create_0
+   1	?未知(idx=700)
+        gml_Object_obj_checkers_enemy_Step_0
+   1	DEVICE_APPEARANCE
+        gml_Object_DEVICE_CONTACT_Step_0
+   1	obj_astream
+        gml_GlobalScript_snd_init
+   1	obj_attackpress
+        gml_GlobalScript_scr_attackphase
+   1	obj_backgrounder_standard
+        gml_Object_obj_heartenemy_Step_0
+   1	obj_battlealphaer
+        gml_Object_obj_wobblything_evil_Step_0
+   1	obj_blockbullet_fall
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_blocktree_bg
+        gml_Object_obj_tempblock_room_Create_0
+   1	obj_centerscythe
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_chain_of_hell
+        gml_Object_obj_chainking_Step_0
+   1	obj_checker_animtest
+        gml_Object_obj_flowershop_event_Create_0
+   1	obj_darkphone_event
+        gml_GlobalScript_scr_itemuse
+   1	obj_dbullet_maker
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_doorA
+        gml_Object_obj_getsusieevent_Create_0
+   1	obj_endbattle
+        gml_GlobalScript_scr_endcombat
+   1	obj_event_manager
+        gml_Object_obj_initializer2_Create_0
+   1	obj_face_parent
+        gml_Object_obj_alphysalley_event_Step_0
+   1	obj_fieldmuslogo
+        gml_Object_obj_musicer_field_Create_0
+   1	obj_finalchain
+        gml_Object_obj_chainking_Step_0
+   1	obj_grazebox
+        gml_Object_obj_heart_Create_0
+   1	obj_hallway_mirror
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_healanim
+        gml_Object_obj_kingcutscene_Step_0
+   1	obj_heartburst
+        gml_Object_obj_dkris_event_Step_0
+   1	obj_herokris
+        gml_Object_obj_battlecontroller_Create_0
+   1	obj_heroralsei
+        gml_Object_obj_battlecontroller_Create_0
+   1	obj_herosusie
+        gml_Object_obj_battlecontroller_Create_0
+   1	obj_hypnofx
+        gml_Object_obj_joker_Step_0
+   1	obj_insultzone_event
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_interactablesolid
+        gml_Object_obj_town_event_Step_0
+   1	obj_joker_body
+        gml_Object_obj_town_event_Create_0
+   1	obj_mainchara
+        gml_Object_obj_darkcastle_event_Step_0
+   1	obj_moveheart
+        gml_GlobalScript_scr_moveheart
+   1	obj_npc_hammerguy
+        gml_Object_obj_finalchain_Step_0
+   1	obj_npc_sign
+        gml_Object_obj_getsusieevent_Create_0
+   1	obj_onionbody
+        gml_Object_obj_onion_event_Create_0
+   1	obj_overworldbulletparent
+        gml_Object_obj_starwalker_overworld_Step_0
+   1	obj_panner
+        gml_GlobalScript_scr_pan
+   1	obj_ponman_enemy
+        gml_Object_obj_forestmaze_controller_Create_0
+   1	obj_preforest_event
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_regularbullet_permanent
+        gml_Object_obj_heartshaper_Step_0
+   1	obj_returnheart
+        gml_Object_obj_overworld_spademaker_Alarm_0
+   1	obj_rudebuster_bolt
+        gml_Object_obj_rudebuster_anim_Step_0
+   1	obj_savemenu
+        gml_Object_obj_savepoint_Step_0
+   1	obj_savepoint
+        gml_Object_obj_susieandlancer_event_Step_0
+   1	obj_schoollobbycutscene
+        gml_Object_obj_lancerbike_neo_Step_0
+   1	obj_spellphase
+        gml_GlobalScript_scr_attackphase
+   1	obj_spinheart
+        gml_Object_obj_joker_Other_15
+   1	obj_susiebadguy_event
+        gml_Object_obj_ralseibullet_Create_0
+   1	obj_susieenemy
+        gml_Object_obj_lancerbike_neo_Step_0
+   1	obj_tensionbar
+        gml_Object_obj_battlecontroller_Create_0
+   1	obj_testoverworldenemy
+        gml_Object_obj_dancer_gen_Create_0
+   1	obj_thrashcontroller
+        gml_Object_obj_thrashmaker_event_Step_0
+   1	obj_thrashmachine
+        gml_Object_obj_susieandlancer_event_Step_0
+   1	obj_thrashzone_event
+        gml_Object_obj_dbulletcontroller_Step_0
+   1	obj_wavechain
+        gml_Object_obj_chainking_Step_0
+
+== 全部调用点 ==
+   gml_GlobalScript_scr_writetext  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_litemuseb  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_facechoice  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_GlobalScript_d_make  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_snd_init  -> obj_astream  (idx=134, argn=3)
+   gml_GlobalScript_scr_healitemspell  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_GlobalScript_scr_healallitemspell  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_GlobalScript_scr_enemyblcon  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_GlobalScript_scr_battletext  -> obj_writer  (idx=10, argn=3)
+   gml_GlobalScript_scr_battletext  -> obj_writer  (idx=10, argn=3)
+   gml_GlobalScript_scr_battletext  -> obj_face  (idx=7, argn=3)
+   gml_GlobalScript_scr_dmgwriter_selfchar  -> obj_dmgwriter  (idx=312, argn=3)
+   gml_GlobalScript_scr_damage  -> obj_shake  (idx=147, argn=3)
+   gml_GlobalScript_scr_damage  -> obj_church_event  (idx=24, argn=3)
+   gml_GlobalScript_scr_damage_all_overworld  -> obj_shake  (idx=147, argn=3)
+   gml_GlobalScript_scr_damage_all_overworld  -> obj_church_event  (idx=24, argn=3)
+   gml_GlobalScript_scr_healitem  -> obj_healwriter  (idx=174, argn=3)
+   gml_GlobalScript_scr_healitem_all  -> obj_healwriter  (idx=174, argn=3)
+   gml_GlobalScript_scr_itemcomment  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_talkroom  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_attackphase  -> obj_attackpress  (idx=194, argn=3)
+   gml_GlobalScript_scr_attackphase  -> obj_spellphase  (idx=308, argn=3)
+   gml_GlobalScript_scr_boltcheck  -> obj_elevatorcontroller  (idx=38, argn=3)
+   gml_GlobalScript_scr_boltcheck_onebutton  -> obj_elevatorcontroller  (idx=38, argn=3)
+   gml_GlobalScript_scr_boltcheck_onebutton  -> obj_elevatorcontroller  (idx=38, argn=3)
+   gml_GlobalScript_scr_damage_enemy  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_GlobalScript_scr_endcombat  -> obj_endbattle  (idx=310, argn=3)
+   gml_GlobalScript_scr_mnendturn  -> obj_church_event  (idx=24, argn=3)
+   gml_GlobalScript_scr_moveheart  -> obj_moveheart  (idx=219, argn=3)
+   gml_GlobalScript_scr_spell  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_spell  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_GlobalScript_scr_spell  -> obj_pacifyspell  (idx=298, argn=3)
+   gml_GlobalScript_scr_spell  -> obj_debug_gui  (idx=1, argn=3)
+   gml_GlobalScript_scr_spell  -> obj_debug_gui  (idx=1, argn=3)
+   gml_GlobalScript_scr_spell  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_GlobalScript_scr_spell  -> obj_pacifyspell  (idx=298, argn=3)
+   gml_GlobalScript_scr_itemuse  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_itemuse  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_itemuse  -> obj_darkphone_event  (idx=327, argn=3)
+   gml_GlobalScript_scr_itemuse  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_itemuse  -> obj_dialoguer  (idx=9, argn=3)
+   gml_GlobalScript_scr_minishakeobj  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_anim  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_shakeobj  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_defeatrun  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_oflash  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_spareanim  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_afterimage  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_makecaterpillar  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_move_to_point_over_time  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_pan  -> obj_panner  (idx=142, argn=3)
+   gml_GlobalScript_scr_marker  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_scr_dark_marker  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_GlobalScript_instance_create  -> ?未知(idx=?)  (idx=?, argn=4)
+   gml_GlobalScript_instance_create  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_chapter_continue_Alarm_0  -> obj_screen_loading  (idx=352, argn=3)
+   gml_Object_obj_dialoguer_Other_10  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_dialoguer_Other_10  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_writer_Draw_0  -> obj_smallface  (idx=8, argn=3)
+   gml_Object_obj_writer_Draw_0  -> obj_choicer_old  (idx=4, argn=3)
+   gml_Object_obj_writer_Draw_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_insideclosetcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Create_0  -> obj_solidblock  (idx=17, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoor_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Create_0  -> obj_doorB  (idx=100, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_readable_room1  (idx=88, argn=3)
+   gml_Object_obj_classscene_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_solidblock  (idx=17, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_classscene_Step_0  -> obj_doorB  (idx=100, argn=3)
+   gml_Object_obj_classscene_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Create_0  -> obj_solidblock  (idx=17, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_readable_room1  (idx=88, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_schoollobbycutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_interactablesolid_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_tem_school_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_unusedclassevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_unusedclassevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_unusedclassevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_unusedclassevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_unusedclassevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rudy_Create_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_rudy_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rudy_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rudy_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rudy_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_town_event_Create_0  -> obj_joker_body  (idx=271, argn=3)
+   gml_Object_obj_town_event_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_town_event_Create_0  -> obj_backgrounder_sprite  (idx=141, argn=3)
+   gml_Object_obj_town_event_Step_0  -> obj_interactablesolid  (idx=18, argn=3)
+   gml_Object_obj_town_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_town_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_town_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_town_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_town_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_alphysalley_event_Step_0  -> obj_face_parent  (idx=6, argn=3)
+   gml_Object_obj_alphysalley_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Create_0  -> obj_checker_animtest  (idx=262, argn=3)
+   gml_Object_obj_flowershop_event_Create_0  -> obj_wobblything  (idx=160, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_flowershop_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_mainchara_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_onion_event_Create_0  -> obj_onionbody  (idx=29, argn=3)
+   gml_Object_obj_onion_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_carcutscene_Alarm_5  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_carcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_krisroom_Create_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_krisroom_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_krisroom_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_krisroom_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_krisroom_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_krisroom_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_rurus_checker_event_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_checker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_cc_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_cc_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_cc_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_cc_event_Create_0  -> obj_treasure_room  (idx=93, argn=3)
+   gml_Object_obj_cc_event_Step_0  -> obj_treasure_room  (idx=93, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_jokerbattleevent_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_elevatorcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbakesale_event_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerbakesale_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbakesale_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbakesale_event_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_lancerbakesale_event_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_lancerbakesale_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_cloverpuzzle_event_Create_0  -> obj_suitspuzz  (idx=225, argn=3)
+   gml_Object_obj_cloverpuzzle_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_cloverpuzzle_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_cloverpuzzle_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_cloverpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_cloverpuzzle_event_Step_0  -> obj_chaseenemy  (idx=168, argn=3)
+   gml_Object_obj_prisonevent_Create_0  -> obj_suitspuzz  (idx=225, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_npc_facing  (idx=90, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_cloverpuzzle_event  (idx=40, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_prisonevent_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_lancerbattle2_event_Create_0  -> obj_suitspuzz  (idx=225, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_battlecontroller  (idx=196, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dmgwriter  (idx=312, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_lancerbattle2_event_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_lancerchase2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerchase2_Step_0  -> obj_overworld_spademaker  (idx=191, argn=3)
+   gml_Object_obj_castlefront_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_castlefront_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_castlefront_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_castlefront_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_castlefront_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_castlefront_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_thrashmachine  (idx=47, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_battlecontroller  (idx=196, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_caterpillarchara  (idx=172, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_savepoint  (idx=83, argn=3)
+   gml_Object_obj_susieandlancer_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashcontroller_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_thrashcontroller  (idx=46, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashmaker_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Create_0  -> obj_suitspuzz  (idx=225, argn=3)
+   gml_Object_obj_suitspuzzle_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_suitspuzzle_event_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_suitspuzzle_event_Create_0  -> obj_npc_facing  (idx=90, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_npc_facing  (idx=90, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_suitspuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_susiebadguy_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_thrashafter_follow_Create_0  -> obj_backgrounder_sprite  (idx=141, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_fadein  (idx=144, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_thrashafter_follow_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rurus_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_rurus_event_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_rurus_event_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_rurus_event_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> ?未知(idx=-1)  (idx=-1, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> ?未知(idx=-1)  (idx=-1, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_pushableblock  (idx=227, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_blocktile  (idx=229, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_readable_room1  (idx=88, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> ?未知(idx=-1)  (idx=-1, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> ?未知(idx=-1)  (idx=-1, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_pushableblock  (idx=227, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_blocktile  (idx=229, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_readable_room1  (idx=88, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_rurus_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_fadein  (idx=144, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerscare2_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_battleback  (idx=307, argn=3)
+   gml_Object_obj_scarelancerevent_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_getsusieevent_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_getsusieevent_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_getsusieevent_Create_0  -> obj_doorA  (idx=97, argn=3)
+   gml_Object_obj_getsusieevent_Create_0  -> obj_npc_sign  (idx=94, argn=3)
+   gml_Object_obj_getsusieevent_Create_0  -> obj_chaseenemy  (idx=168, argn=3)
+   gml_Object_obj_getsusieevent_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_getsusieevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_npc_facing  (idx=90, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_npc_facing  (idx=90, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_fadein  (idx=144, argn=3)
+   gml_Object_obj_boxpuzzle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_hathyfightevent_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_hathyfightevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_hathyfightevent_Step_0  -> obj_battleback  (idx=307, argn=3)
+   gml_Object_obj_hathyfightevent_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_hathyfightevent_Step_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_hathyfightevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoorevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkdoorevent_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_darkdoorevent_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_darkdoorevent_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_tutorialbattleevent_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_tutorialbattleevent_Create_0  -> obj_caterpillarchara  (idx=172, argn=3)
+   gml_Object_obj_tutorialbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_tutorialbattleevent_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_tutorialbattleevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_ralsei_runevent_Step_2  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_hammerguy_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_hammerguy_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_hammerguy_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_hammerguy_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_shortcut_door_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_shortcut_door_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_puzzlemaster1_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_npc_puzzlemaster1_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_puzzlemaster2_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_susiedark_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_npc_susiedark_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_mainchara  (idx=30, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_caterpillarchara  (idx=172, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcastle_event_Step_0  -> obj_insideclosetcutscene  (idx=12, argn=3)
+   gml_Object_obj_darklanding_Create_0  -> obj_readable_room1  (idx=88, argn=3)
+   gml_Object_obj_lancerslideevent_Alarm_1  -> obj_slidedust  (idx=154, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_overworld_spademaker  (idx=191, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_wobblything_slide  (idx=78, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_wobblything_slide  (idx=78, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_wobblything_slide  (idx=78, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_wobblything_slide  (idx=78, argn=3)
+   gml_Object_obj_lancerslideevent_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_lancerchaseevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerchaseevent_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_lancerchaseevent_Step_0  -> obj_overworld_spademaker  (idx=191, argn=3)
+   gml_Object_obj_darkslide_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_darkslide_Collision_obj_mainchara  -> obj_slidedust  (idx=154, argn=3)
+   gml_Object_obj_savepoint_Step_0  -> obj_savemenu  (idx=331, argn=3)
+   gml_Object_obj_savepoint_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_readable_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_readable_room1_Other_10  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_readable_room1_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_toriel_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_facing_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_room_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_npc_room_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_npc_room_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_npc_room_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_npc_room_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_npc_room_Create_0  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_npc_room_Alarm_11  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_npc_room_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_room_animated_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_treasure_room_Alarm_11  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_treasure_room_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_npc_sign_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Create_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_event_room_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_event_room_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_event_room_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_event_room_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_event_room_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_event_room_Create_0  -> obj_suitspuzz  (idx=225, argn=3)
+   gml_Object_obj_event_room_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_event_room_Create_0  -> obj_suitspuzz  (idx=225, argn=3)
+   gml_Object_obj_event_room_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_event_room_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_fadein  (idx=144, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_event_room_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_doorA_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorA_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorA_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorA_musfade_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorB_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorB_musfade_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorB_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorB_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorC_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorC_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorC_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorC_musfade_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorD_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorD_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorD_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorD_musfade_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorE_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorE_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorF_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorF_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorX_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorX_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorX_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorX_musfade_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorw_musfade_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorw_musfade_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_doorW_Alarm_2  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_doorW_Other_19  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_musicer_field_Create_0  -> obj_fieldmuslogo  (idx=139, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> ?未知(idx=167263)  (idx=167263, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> obj_marker  (idx=86, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> obj_marker  (idx=86, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> obj_marker  (idx=86, argn=3)
+   gml_Object_obj_gameover_init_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_dustpile_Alarm_0  -> obj_dustball  (idx=156, argn=3)
+   gml_Object_obj_dustpile_Other_10  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_dustpile_Other_10  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dustpile_susie_Create_0  -> obj_caterpillarchara  (idx=172, argn=3)
+   gml_Object_obj_dustpile_susie_Alarm_0  -> obj_dustball  (idx=156, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_dustpile_susie_Other_10  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_dustpile_susie_Other_10  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_wobblything_evil_Step_0  -> obj_battlealphaer  (idx=176, argn=3)
+   gml_Object_obj_wobblything_evil_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_healanim  (idx=301, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_lancerchaseevent  (idx=80, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_kingcutscene_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkfountain_event_Draw_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_fountainkris_Create_0  -> obj_fadein  (idx=144, argn=3)
+   gml_Object_obj_fountainkris_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_fountainkris_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_fountainkris_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_fountainkris_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_fountainkris_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_chaseenemy_Step_0  -> obj_excblcon  (idx=169, argn=3)
+   gml_Object_obj_chaseenemy_Other_10  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_testoverworldenemy_Step_0  -> obj_battleback  (idx=307, argn=3)
+   gml_Object_obj_testoverworldenemy_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_encounterbasic_Step_0  -> obj_battlecontroller  (idx=196, argn=3)
+   gml_Object_obj_darkcontroller_Create_0  -> obj_caterpillarchara  (idx=172, argn=3)
+   gml_Object_obj_darkcontroller_Create_0  -> obj_caterpillarchara  (idx=172, argn=3)
+   gml_Object_obj_darkcontroller_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_darkcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_starwalker_battle_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_starwalker_overworld_Step_0  -> obj_starwalker_battle  (idx=177, argn=3)
+   gml_Object_obj_starwalker_overworld_Step_0  -> obj_overworldbulletparent  (idx=187, argn=3)
+   gml_Object_obj_starwalker_offswitch_Other_10  -> obj_npc_room  (idx=91, argn=3)
+   gml_Object_obj_starwalker_offswitch_Other_10  -> obj_starwalker_battle  (idx=177, argn=3)
+   gml_Object_obj_scissordancer_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_wobblything  (idx=160, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> ?未知(idx=450)  (idx=450, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_testoverworldenemy  (idx=170, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> ?未知(idx=440)  (idx=440, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_cloverpuzzle_event  (idx=40, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_scissordancer  (idx=183, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_scissordancer  (idx=183, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_scissordancer  (idx=183, argn=3)
+   gml_Object_obj_dancer_gen_Create_0  -> obj_scissordancer  (idx=183, argn=3)
+   gml_Object_obj_darkponman_ow_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_ob_gen_Step_0  -> obj_ob_checkertile  (idx=188, argn=3)
+   gml_Object_obj_overworld_spademaker_Alarm_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_overworld_spademaker_Alarm_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_overworld_spademaker_Alarm_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_overworld_spademaker_Alarm_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_overworld_spademaker_Alarm_0  -> obj_returnheart  (idx=220, argn=3)
+   gml_Object_obj_attackpress_Draw_0  -> obj_elevatorcontroller  (idx=38, argn=3)
+   gml_Object_obj_battlecontroller_Create_0  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_Object_obj_battlecontroller_Create_0  -> obj_herokris  (idx=213, argn=3)
+   gml_Object_obj_battlecontroller_Create_0  -> obj_herosusie  (idx=214, argn=3)
+   gml_Object_obj_battlecontroller_Create_0  -> obj_heroralsei  (idx=215, argn=3)
+   gml_Object_obj_battlecontroller_Create_0  -> obj_tensionbar  (idx=333, argn=3)
+   gml_Object_obj_battlecontroller_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_chasebullet_Destroy_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_healeffect_Alarm_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerbike_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerbike_Step_0  -> obj_afterimage_grow  (idx=193, argn=3)
+   gml_Object_obj_heroparent_Alarm_1  -> obj_torielclass_event  (idx=20, argn=3)
+   gml_Object_obj_heroparent_Alarm_1  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_heroparent_Alarm_1  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_heroparent_Draw_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_monster1_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_monster1_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_monster1_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_monster1_Step_0  -> obj_face  (idx=7, argn=3)
+   gml_Object_obj_monster1_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_monster1_Step_0  -> obj_face  (idx=7, argn=3)
+   gml_Object_obj_moveheart_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_moveheart_Alarm_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_returnheart_Alarm_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_defeatanim  (idx=300, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_chaseenemy  (idx=168, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_ponman_enemy  (idx=268, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_defeatanim  (idx=300, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> ?未知(idx=460)  (idx=460, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_starwalker_overworld  (idx=178, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_starwalker_overworld  (idx=178, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> ?未知(idx=368)  (idx=368, argn=3)
+   gml_Object_obj_forestmaze_controller_Create_0  -> ?未知(idx=368)  (idx=368, argn=3)
+   gml_Object_obj_tempblock_room_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_tempblock_room_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_tempblock_room_Create_0  -> obj_blocktree_bg  (idx=152, argn=3)
+   gml_Object_obj_pushableblock_Other_10  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_glowtilepuzz_Create_0  -> obj_rabbitbullet  (idx=280, argn=3)
+   gml_Object_obj_glowtilepuzz_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_glowtilepuzz_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_glowtilepuzz_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_glowtilepuzz_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_glowtilepuzz_Other_11  -> obj_rabbitbullet  (idx=280, argn=3)
+   gml_Object_obj_darkeyepuzzle_Create_0  -> obj_soliddark  (idx=339, argn=3)
+   gml_Object_obj_darkeyepuzzle_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_clubsbullet_Collision_obj_battlesolid  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsbullet_Collision_obj_battlesolid  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_clubsbullet_Collision_obj_battlesolid  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsbullet_dark_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_dbullet_maker_Draw_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_heartshaper_Step_0  -> obj_regularbullet_permanent  (idx=204, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dbullet_maker  (idx=237, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dbullet_vert  (idx=238, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_clubsbullet_dark  (idx=236, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_clubsbullet_dark  (idx=236, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dicebul  (idx=233, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_smallface  (idx=8, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_regularbullet  (idx=203, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_blockbullet_fall  (idx=282, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_hallway_mirror  (idx=33, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_jigsawbullet  (idx=259, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_jigsawbullet  (idx=259, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_jigsawbullet  (idx=259, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_jigsawbullet  (idx=259, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_lancerchaseevent  (idx=80, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_lancerchaseevent  (idx=80, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_lancerchaseevent  (idx=80, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_lancerchaseevent  (idx=80, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_thrashzone_event  (idx=65, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_insultzone_event  (idx=66, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_preforest_event  (idx=67, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_clubsbullet_dark  (idx=236, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dbullet_vert  (idx=238, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_dbullet_vert  (idx=238, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> obj_centerscythe  (idx=272, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dbulletcontroller_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_ralseibullet_Create_0  -> obj_susiebadguy_event  (idx=50, argn=3)
+   gml_Object_obj_dummyenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dummyenemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_dummyenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dummyenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dummyenemy_Other_20  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_ralseibullet  (idx=243, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_ralseibullet  (idx=243, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_ralseibullet  (idx=243, argn=3)
+   gml_Object_obj_ralseienemy_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_placeholderenemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_placeholderenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_placeholderenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_placeholderenemy_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_chain_of_hell_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_chain_of_hell_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_chain_of_hell_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_chain_of_hell_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_chainking_Step_0  -> obj_chain_of_hell  (idx=247, argn=3)
+   gml_Object_obj_chainking_Step_0  -> obj_wavechain  (idx=256, argn=3)
+   gml_Object_obj_chainking_Step_0  -> obj_finalchain  (idx=251, argn=3)
+   gml_Object_obj_finalchain_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_finalchain_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_finalchain_Step_0  -> obj_npc_hammerguy  (idx=70, argn=3)
+   gml_Object_obj_finalchain_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle_bouncer  (idx=253, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle_bouncer  (idx=253, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_king_body_Step_0  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_growtangle_bouncer_Step_2  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_nonsolid_growtangle_Step_0  -> obj_overworldheart  (idx=180, argn=3)
+   gml_Object_obj_skychain_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_wavechain_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_wavechain_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_wavechain_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_wavechain_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_wavechain_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_dknight_slasher_Step_0  -> obj_regularbullet  (idx=203, argn=3)
+   gml_Object_obj_rudinnranger_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_rudinnranger_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rudinnranger_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rudinnranger_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_jigsawryenemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_jigsawryenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_jigsawryenemy_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> obj_dmgwriter  (idx=312, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> ?未知(idx=700)  (idx=700, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checkers_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_encounterbasic  (idx=171, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_battleback  (idx=307, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_marker  (idx=86, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_readable_room1  (idx=88, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_checker_animtest_Step_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_throwtarget_Create_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_throwralsei_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_checkers_leap_Step_0  -> obj_regularbullet  (idx=203, argn=3)
+   gml_Object_obj_ponman_appear_Step_0  -> ?未知(idx=502)  (idx=502, argn=3)
+   gml_Object_obj_ponman_enemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_ponman_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_ponman_enemy_Step_0  -> obj_regularbullet  (idx=203, argn=3)
+   gml_Object_obj_heartbomb_blast_Step_0  -> obj_choicer_old  (idx=4, argn=3)
+   gml_Object_obj_suitbomb_Step_0  -> obj_insideclosetcutscene  (idx=12, argn=3)
+   gml_Object_obj_suitbomb_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_suitbomb_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_suitbomb_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_centerscythe_Create_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_centerscythe_Create_0  -> obj_overworldheart  (idx=180, argn=3)
+   gml_Object_obj_centerscythe_Create_0  -> obj_npc_facing  (idx=90, argn=3)
+   gml_Object_obj_centerscythe_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_laserscythe_Other_15  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_joker_teleport_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_joker_teleport_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_spadering_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rabbick_bush_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_carrotthrower_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_rabbick_enemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_rabbick_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rabbick_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rabbick_enemy_Step_0  -> obj_event_manager_debug  (idx=3, argn=3)
+   gml_Object_obj_rabbick_enemy_Other_12  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_bloxer_enemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_bloxer_enemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_bloxer_enemy_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_bloxer_enemy_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_lancerbike_neo_Step_0  -> obj_susieenemy  (idx=289, argn=3)
+   gml_Object_obj_lancerbike_neo_Step_0  -> obj_schoollobbycutscene  (idx=15, argn=3)
+   gml_Object_obj_lancerbike_neo_Step_0  -> obj_afterimage_grow  (idx=193, argn=3)
+   gml_Object_obj_lancerboss_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_lancerboss_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerboss_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_lancerboss_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_lancerboss2_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_lancerboss2_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerboss2_Step_0  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_lancerboss2_Step_0  -> obj_overworldheart  (idx=180, argn=3)
+   gml_Object_obj_lancerboss2_Step_0  -> obj_overworldheart  (idx=180, argn=3)
+   gml_Object_obj_diamondenemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_diamondenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_diamondenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_diamondenemy_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_susieenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_susieenemy_Step_0  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_susieenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_susieenemy_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_susieenemy_Other_11  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_lancerboss3_Step_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_lancerboss3_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_lancerboss3_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_lancerboss3_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_lancerboss3_Step_0  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_king_boss_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_king_boss_Step_0  -> obj_animation  (idx=85, argn=3)
+   gml_Object_obj_king_boss_Step_0  -> obj_animation  (idx=85, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle_bouncer  (idx=253, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle_bouncer  (idx=253, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_growtangle  (idx=311, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_dbulletcontroller  (idx=241, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_nonsolid_growtangle  (idx=254, argn=3)
+   gml_Object_obj_king_boss_Other_15  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_joker_Create_0  -> ?未知(idx=589)  (idx=589, argn=3)
+   gml_Object_obj_joker_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_joker_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_joker_Step_0  -> obj_cloverpuzzle_event  (idx=40, argn=3)
+   gml_Object_obj_joker_Step_0  -> obj_hypnofx  (idx=305, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-5)  (idx=-5, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_spinheart  (idx=240, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_joker_Other_15  -> ?未知(idx=-9)  (idx=-9, argn=3)
+   gml_Object_obj_joker_Other_15  -> obj_chapter_continue  (idx=2, argn=3)
+   gml_Object_obj_clubsenemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_clubsenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsenemy_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_clubsenemy_old_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_clubsenemy_old_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsenemy_old_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_clubsenemy_old_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_heartenemy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_heartenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_heartenemy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_heartenemy_Step_0  -> obj_backgrounder_standard  (idx=140, argn=3)
+   gml_Object_obj_heartenemy_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_headhathy_Step_0  -> obj_darkener  (idx=205, argn=3)
+   gml_Object_obj_headhathy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_headhathy_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_headhathy_Step_0  -> obj_overworldheart  (idx=180, argn=3)
+   gml_Object_obj_headhathy_Step_0  -> obj_choicer_neo  (idx=5, argn=3)
+   gml_Object_obj_smallcheckers_enemy_Step_0  -> obj_debug_gui  (idx=1, argn=3)
+   gml_Object_obj_pacifyspell_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_healanim_Step_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_rudebuster_anim_Step_0  -> obj_rudebuster_bolt  (idx=304, argn=3)
+   gml_Object_obj_spareanim_Draw_0  -> ?未知(idx=?)  (idx=?, argn=3)
+   gml_Object_obj_battleblcon_Create_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_growtangle_Step_0  -> obj_overworldheart  (idx=180, argn=3)
+   gml_Object_obj_heart_Create_0  -> obj_grazebox  (idx=206, argn=3)
+   gml_Object_obj_shop1_Alarm_3  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_shop1_Other_11  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_shop1_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop1_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop1_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop1_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop1_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop1_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop2_Alarm_3  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_shop2_Other_11  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_shop2_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop2_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop2_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop2_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop2_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_shop2_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_APPEARANCE  (idx=316, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_GONERMAKER  (idx=320, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_GONERMAKER  (idx=320, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_GONERMAKER  (idx=320, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_GONERMAKER  (idx=320, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_CONTACT_Step_0  -> DEVICE_OBACK_4  (idx=322, argn=3)
+   gml_Object_DEVICE_FAILURE_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_FAILURE_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_FAILURE_Step_0  -> DEVICE_CHOICE  (idx=317, argn=3)
+   gml_Object_DEVICE_FAILURE_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_FAILURE_Step_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_DEVICE_MENU_Create_0  -> obj_fadein  (idx=144, argn=3)
+   gml_Object_DEVICE_MENU_Alarm_0  -> obj_screen_loading  (idx=352, argn=3)
+   gml_Object_DEVICE_MENU_Step_0  -> DEVICE_OBACK_4  (idx=322, argn=3)
+   gml_Object_PROCESS_LOGO_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=4)
+   gml_Object_PROCESS_LOGO_Draw_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_PROCESS_DOG_Step_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_credits_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=4)
+   gml_Object_obj_dkris_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_dkris_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_dkris_event_Step_0  -> obj_heartburst  (idx=209, argn=3)
+   gml_Object_obj_dkris_event_Step_0  -> obj_shake  (idx=147, argn=3)
+   gml_Object_obj_darkphone_event_Step_0  -> obj_dialoguer  (idx=9, argn=3)
+   gml_Object_obj_legend_Create_0  -> obj_switchAsyncHelper  (idx=0, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_writer  (idx=10, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_persistentfadein  (idx=145, argn=3)
+   gml_Object_obj_legend_Draw_0  -> obj_fadeout  (idx=143, argn=3)
+   gml_Object_obj_initializer2_Create_0  -> obj_event_manager  (idx=351, argn=3)
+   gml_Object_obj_initializer2_Create_0  -> obj_time  (idx=328, argn=3)
+   gml_Object_obj_initializer2_Other_72  -> obj_time  (idx=328, argn=3)
+   gml_Object_obj_event_manager_Create_0  -> obj_event_manager_debug  (idx=3, argn=3)

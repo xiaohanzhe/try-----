@@ -1,0 +1,16 @@
+# 第43轮 重要核心文件复检（记忆文件）
+
+基准提交 = 14405084a24eb29bd290fcb8087e926d9c40398a
+MEMORY.md bytes=16241 js_len=9984 lines=76
+详版 bytes=345340 lines=4796
+
+---
+
+[PASS] ① 可解码·无控制字符  —— 控制字符=0
+[PASS] ② 结构（12 标题齐+无超长行）  —— 缺=[] 超长行=[]
+[PASS] ③ 编码（无BOM/无FFFD/纯LF）  —— BOM=False fffd=0 CRLF(mem,det)=(0,0)
+[PASS] ④ 恒真/占位复查  —— 可疑=[]
+[PASS] ⑤ 逐令牌回验（基准 1440508）  —— 令牌=329 missing=0 []
+[PASS] ⑥ 注入上限 js_len  —— js_len=9984 (limit 9999, 余量 15)
+
+总判定：全部 PASS

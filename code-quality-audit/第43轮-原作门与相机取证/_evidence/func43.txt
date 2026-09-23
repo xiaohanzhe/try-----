@@ -1,0 +1,520 @@
+== [A] Code=1680 ；指令总数=290546 ；不同函数名 = 742 ==
+-- 关键字命中的函数（按出现次数降序）--
+   gml_Script_instance_create x1304
+   gml_Script___view_get x476
+   gml_Script_scr_dark_marker x212
+   gml_Script_scr_depth x145
+   room_goto x104
+   gml_Script___view_set x61
+   gml_Script_scr_get_id_by_room_index x21
+   view_get_camera x21
+   gml_Script_scr_shakeobj x18
+   gml_Script_scr_darkbox x14
+   gml_Script_scr_oflash x14
+   gml_Script_draw_background_ext x9
+   gml_Script_scr_darkbox_black x8
+   gml_Script_tile_get_ids_at_depth x8
+   gml_Script_scr_minishakeobj x7
+   layer_get_all x7
+   room_goto_next x7
+   room_next x7
+   room_previous x7
+   gml_Script_scr_enable_screen_border x6
+   layer_get_all_elements x6
+   layer_get_element_type x6
+   gml_Script___background_set_colour x5
+   gml_Script_draw_background_tiled_ext x5
+   gml_Script___background_get_colour x4
+   gml_Script___background_set_element x4
+   gml_Script_scr_get_room_by_id x4
+   gml_Script_scr_get_room_list x4
+   gml_Script_tile_layer_shift x4
+   layer_get_depth x4
+   layer_get_name x4
+   room_get_name x4
+   camera_get_view_height x3
+   camera_get_view_width x3
+   gml_Script___background_get_colour_element x3
+   gml_Script___background_get_element x3
+   gml_Script___background_set x3
+   gml_Script_draw_background_part_ext x3
+   gml_Script_scr_become_dark x3
+   gml_Script_scr_draw_background_ps4 x3
+   gml_Script_scr_outside_camera x3
+   instance_create_depth x3
+   layer_background_blend x3
+   layer_background_get_blend x3
+   layer_depth x3
+   layer_set_visible x3
+   room_goto_previous x3
+   window_get_fullscreen x3
+   window_set_fullscreen x3
+   camera_get_view_border_x x2
+   camera_get_view_border_y x2
+   camera_get_view_speed_x x2
+   camera_get_view_speed_y x2
+   camera_get_view_x x2
+   camera_get_view_y x2
+   camera_set_view_border x2
+   camera_set_view_pos x2
+   camera_set_view_size x2
+   camera_set_view_speed x2
+   gml_Script___background_get_internal x2
+   gml_Script___background_set_internal x2
+   gml_Script___global_object_depths x2
+   gml_Script___view_set_internal x2
+   gml_Script_background_get_height x2
+   gml_Script_background_get_width x2
+   gml_Script_draw_background x2
+   gml_Script_draw_background_stretched x2
+   gml_Script_object_get_depth x2
+   gml_Script_scr_draw_screen_border x2
+   gml_Script_tile_layer_hide x2
+   layer_background_alpha x2
+   layer_background_get_alpha x2
+   layer_background_get_htiled x2
+   layer_background_get_index x2
+   layer_background_get_sprite x2
+   layer_background_get_vtiled x2
+   layer_background_get_xscale x2
+   layer_background_get_yscale x2
+   layer_background_htiled x2
+   layer_background_vtiled x2
+   layer_background_xscale x2
+   layer_background_yscale x2
+   layer_get_hspeed x2
+   layer_get_visible x2
+   layer_get_vspeed x2
+   layer_get_x x2
+   layer_get_y x2
+   layer_hspeed x2
+   layer_sprite_destroy x2
+   layer_vspeed x2
+   layer_x x2
+   layer_y x2
+   camera_create x1
+   camera_get_view_angle x1
+   camera_get_view_target x1
+   camera_set_view_angle x1
+   camera_set_view_target x1
+   gml_Script___init_background x1
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_183_gml_Object_obj_screen_loading_Create_0 x1
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_588_gml_Object_obj_screen_loading_Create_0 x1
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_961_gml_Object_obj_screen_loading_Create_0 x1
+   gml_Script_change_fountain_color_gml_Object_obj_darkfountain_Create_0 x1
+   layer_background_change x1
+   layer_background_create x1
+   layer_background_exists x1
+   layer_background_get_stretch x1
+   layer_background_stretch x1
+   layer_background_visible x1
+   layer_create x1
+   layer_destroy x1
+   layer_force_draw_depth x1
+   layer_sprite_get_sprite x1
+   layer_tile_alpha x1
+   layer_tile_get_x x1
+   layer_tile_get_y x1
+   layer_tile_visible x1
+   layer_tile_x x1
+   layer_tile_y x1
+   switch_controller_support_set_singleplayer_only x1
+   view_get_hport x1
+   view_get_surface_id x1
+   view_get_visible x1
+   view_get_wport x1
+   view_get_xport x1
+   view_get_yport x1
+   view_set_camera x1
+   view_set_hport x1
+   view_set_surface_id x1
+   view_set_visible x1
+   view_set_wport x1
+   view_set_xport x1
+   view_set_yport x1
+   window_enable_borderless_fullscreen x1
+命中函数数 = 133
+
+== [B] UndertaleCode 名单（关键字命中）==
+   gml_GlobalScript_scr_become_dark
+   gml_Script_scr_become_dark
+   gml_GlobalScript_scr_darkbox
+   gml_Script_scr_darkbox
+   gml_GlobalScript_scr_darkbox_black
+   gml_Script_scr_darkbox_black
+   gml_GlobalScript_scr_get_room_by_id
+   gml_Script_scr_get_room_by_id
+   gml_Script_scr_get_id_by_room_index
+   gml_Script_scr_get_room_list
+   gml_GlobalScript_scr_minishakeobj
+   gml_Script_scr_minishakeobj
+   gml_GlobalScript_scr_shakeobj
+   gml_Script_scr_shakeobj
+   gml_GlobalScript_scr_oflash
+   gml_Script_scr_oflash
+   gml_GlobalScript_scr_outside_camera
+   gml_Script_scr_outside_camera
+   gml_GlobalScript_scr_dark_marker
+   gml_Script_scr_dark_marker
+   gml_GlobalScript_scr_depth
+   gml_Script_scr_depth
+   gml_GlobalScript_draw_background_ext
+   gml_Script_draw_background_ext
+   gml_GlobalScript_draw_background_part_ext
+   gml_Script_draw_background_part_ext
+   gml_GlobalScript_draw_background_tiled_ext
+   gml_Script_draw_background_tiled_ext
+   gml_GlobalScript___background_get_colour
+   gml_Script___background_get_colour
+   gml_GlobalScript___background_get_colour_element
+   gml_Script___background_get_colour_element
+   gml_GlobalScript___background_set
+   gml_Script___background_set
+   gml_GlobalScript___background_set_colour
+   gml_Script___background_set_colour
+   gml_GlobalScript___background_set_element
+   gml_Script___background_set_element
+   gml_GlobalScript___background_set_internal
+   gml_Script___background_set_internal
+   gml_GlobalScript___init_background
+   gml_Script___init_background
+   gml_GlobalScript___background_get_element
+   gml_Script___background_get_element
+   gml_GlobalScript___background_get_internal
+   gml_Script___background_get_internal
+   gml_GlobalScript_background_get_width
+   gml_Script_background_get_width
+   gml_GlobalScript_background_get_height
+   gml_Script_background_get_height
+   gml_GlobalScript_draw_background
+   gml_Script_draw_background
+   gml_GlobalScript_instance_create
+   gml_Script_instance_create
+   gml_GlobalScript_object_get_depth
+   gml_Script_object_get_depth
+   gml_GlobalScript_tile_get_ids_at_depth
+   gml_Script_tile_get_ids_at_depth
+   gml_GlobalScript_tile_layer_hide
+   gml_Script_tile_layer_hide
+   gml_GlobalScript_tile_layer_shift
+   gml_Script_tile_layer_shift
+   gml_GlobalScript___view_get
+   gml_Script___view_get
+   gml_GlobalScript___view_set
+   gml_Script___view_set
+   gml_GlobalScript___view_set_internal
+   gml_Script___view_set_internal
+   gml_GlobalScript___global_object_depths
+   gml_Script___global_object_depths
+   gml_GlobalScript_scr_draw_screen_border
+   gml_Script_scr_draw_screen_border
+   gml_GlobalScript_scr_enable_screen_border
+   gml_Script_scr_enable_screen_border
+   gml_GlobalScript_scr_draw_background_ps4
+   gml_Script_scr_draw_background_ps4
+   gml_GlobalScript_draw_background_stretched
+   gml_Script_draw_background_stretched
+   gml_Object_obj_insideclosetcutscene_Create_0
+   gml_Object_obj_insideclosetcutscene_Alarm_4
+   gml_Object_obj_insideclosetcutscene_Step_0
+   gml_Object_obj_insideclosetcutscene_Draw_0
+   gml_Object_obj_darkdoor_Create_0
+   gml_Object_obj_darkdoor_Alarm_4
+   gml_Object_obj_darkdoor_Step_0
+   gml_Object_obj_darkdoor_Draw_0
+   gml_Object_obj_schoollobbycutscene_Create_0
+   gml_Object_obj_schoollobbycutscene_Alarm_5
+   gml_Object_obj_schoollobbycutscene_Alarm_4
+   gml_Object_obj_schoollobbycutscene_Step_0
+   gml_Object_obj_carcutscene_Create_0
+   gml_Object_obj_carcutscene_Alarm_5
+   gml_Object_obj_carcutscene_Alarm_4
+   gml_Object_obj_carcutscene_Step_2
+   gml_Object_obj_carcutscene_Step_0
+   gml_Object_obj_carcutscene_Draw_0
+   gml_Object_obj_krisroom_Create_0
+   gml_Object_obj_krisroom_Alarm_4
+   gml_Object_obj_krisroom_Step_0
+   gml_Object_obj_darkdoorevent_Create_0
+   gml_Object_obj_darkdoorevent_Alarm_4
+   gml_Object_obj_darkdoorevent_Step_0
+   gml_Object_obj_npc_susiedark_Create_0
+   gml_Object_obj_npc_susiedark_Step_1
+   gml_Object_obj_npc_susiedark_Other_10
+   gml_Object_obj_darkcastle_event_Create_0
+   gml_Object_obj_darkcastle_event_Alarm_4
+   gml_Object_obj_darkcastle_event_Step_0
+   gml_Object_obj_darklanding_Create_0
+   gml_Object_obj_darklanding_Alarm_4
+   gml_Object_obj_darklanding_Step_0
+   gml_Object_obj_darklanding_Draw_0
+   gml_Object_obj_darkslide_Create_0
+   gml_Object_obj_darkslide_Step_0
+   gml_Object_obj_darkslide_Collision_obj_mainchara
+   gml_Object_obj_darkwakeevent_Create_0
+   gml_Object_obj_darkwakeevent_Alarm_4
+   gml_Object_obj_darkwakeevent_Step_0
+   gml_Object_obj_npc_room_Create_0
+   gml_Object_obj_npc_room_Alarm_11
+   gml_Object_obj_npc_room_Step_1
+   gml_Object_obj_npc_room_Other_10
+   gml_Object_obj_npc_room_Draw_0
+   gml_Object_obj_npc_room_animated_Create_0
+   gml_Object_obj_npc_room_animated_Other_10
+   gml_Object_obj_npc_room_animated_Draw_0
+   gml_Object_obj_treasure_room_Create_0
+   gml_Object_obj_treasure_room_Alarm_11
+   gml_Object_obj_treasure_room_Step_1
+   gml_Object_obj_treasure_room_Other_10
+   gml_Object_obj_event_room_Create_0
+   gml_Object_obj_event_room_Alarm_4
+   gml_Object_obj_event_room_Step_0
+   gml_Object_obj_event_room_Other_13
+   gml_Object_obj_doorA_musfade_Create_0
+   gml_Object_obj_doorA_musfade_Alarm_3
+   gml_Object_obj_doorA_musfade_Alarm_2
+   gml_Object_obj_doorA_musfade_Other_19
+   gml_Object_obj_doorB_musfade_Create_0
+   gml_Object_obj_doorB_musfade_Alarm_3
+   gml_Object_obj_doorB_musfade_Alarm_2
+   gml_Object_obj_doorB_musfade_Other_19
+   gml_Object_obj_doorC_musfade_Create_0
+   gml_Object_obj_doorC_musfade_Alarm_3
+   gml_Object_obj_doorC_musfade_Alarm_2
+   gml_Object_obj_doorC_musfade_Other_19
+   gml_Object_obj_doorD_musfade_Create_0
+   gml_Object_obj_doorD_musfade_Alarm_3
+   gml_Object_obj_doorD_musfade_Alarm_2
+   gml_Object_obj_doorD_musfade_Other_19
+   gml_Object_obj_doorX_musfade_Create_0
+   gml_Object_obj_doorX_musfade_Alarm_3
+   gml_Object_obj_doorX_musfade_Alarm_2
+   gml_Object_obj_doorX_musfade_Other_19
+   gml_Object_obj_doorw_musfade_Create_0
+   gml_Object_obj_doorw_musfade_Alarm_3
+   gml_Object_obj_doorw_musfade_Alarm_2
+   gml_Object_obj_doorw_musfade_Other_19
+   gml_Object_obj_musicer_darkcliff_Create_0
+   gml_Object_obj_musicer_darkcastle_Create_0
+   gml_Object_obj_jokerbg_triangle_real_Create_0
+   gml_Object_obj_jokerbg_triangle_real_Other_10
+   gml_Object_obj_jokerbg_triangle_real_Draw_0
+   gml_Object_obj_backgrounder_standard_Create_0
+   gml_Object_obj_backgrounder_standard_Other_10
+   gml_Object_obj_backgrounder_sprite_Create_0
+   gml_Object_obj_backgrounder_sprite_Other_10
+   gml_Object_obj_backgrounder_sprite_Draw_0
+   gml_Object_obj_fadeout_Create_0
+   gml_Object_obj_fadeout_Other_5
+   gml_Object_obj_fadeout_Draw_0
+   gml_Object_obj_fadein_Create_0
+   gml_Object_obj_fadein_Other_5
+   gml_Object_obj_fadein_Draw_0
+   gml_Object_obj_persistentfadein_Create_0
+   gml_Object_obj_persistentfadein_Other_4
+   gml_Object_obj_persistentfadein_Draw_0
+   gml_Object_obj_loadscreen_Create_0
+   gml_Object_obj_loadscreen_Step_0
+   gml_Object_obj_loadscreen_Other_4
+   gml_Object_obj_loadscreen_Draw_0
+   gml_Object_obj_shake_Create_0
+   gml_Object_obj_shake_Destroy_0
+   gml_Object_obj_shake_Alarm_0
+   gml_Object_obj_shake_Step_0
+   gml_Object_obj_blocktree_bg_Create_0
+   gml_Object_obj_blocktree_bg_Step_0
+   gml_Object_obj_blocktree_bg_Draw_0
+   gml_Object_obj_darklancer_Create_0
+   gml_Object_obj_darklancer_Step_0
+   gml_Object_obj_kingcutscene_Create_0
+   gml_Object_obj_kingcutscene_Alarm_4
+   gml_Object_obj_kingcutscene_Step_0
+   gml_Object_obj_kingcutscene_Draw_0
+   gml_Object_obj_shakeobj_Create_0
+   gml_Object_obj_shakeobj_Step_0
+   gml_Object_obj_shakeobj_Other_10
+   gml_Object_obj_darkfountain_Create_0
+   gml_Script_change_fountain_color_gml_Object_obj_darkfountain_Create_0
+   gml_Object_obj_darkfountain_Draw_0
+   gml_Object_obj_darkfountain_event_Create_0
+   gml_Object_obj_darkfountain_event_Draw_0
+   gml_Object_obj_fountainkris_Create_0
+   gml_Object_obj_fountainkris_Alarm_4
+   gml_Object_obj_fountainkris_Step_0
+   gml_Object_obj_fountainkris_Draw_0
+   gml_Object_obj_darkcontroller_Create_0
+   gml_Object_obj_darkcontroller_Alarm_0
+   gml_Object_obj_darkcontroller_Step_0
+   gml_Object_obj_darkcontroller_Draw_0
+   gml_Object_obj_darkponman_ow_Create_0
+   gml_Object_obj_darkponman_ow_Step_0
+   gml_Object_obj_darkponman_ow_Draw_0
+   gml_Object_obj_darkener_Create_0
+   gml_Object_obj_darkener_Destroy_0
+   gml_Object_obj_darkener_Draw_0
+   gml_Object_obj_tempblock_room_Create_0
+   gml_Object_obj_darkeyepuzzle_switch_Other_10
+   gml_Object_obj_darkeyepuzzle_Create_0
+   gml_Object_obj_darkeyepuzzle_Alarm_4
+   gml_Object_obj_darkeyepuzzle_Step_0
+   gml_Object_obj_darkeyepuzzle_Draw_0
+   gml_Object_obj_clubsbullet_dark_Create_0
+   gml_Object_obj_clubsbullet_dark_Step_0
+   gml_Object_obj_fadechain_Create_0
+   gml_Object_obj_fadechain_Step_0
+   gml_Object_obj_joker_teleport_Create_0
+   gml_Object_obj_joker_teleport_Step_0
+   gml_Object_obj_oflash_Create_0
+   gml_Object_obj_oflash_Draw_0
+   gml_Object_obj_darkphone_event_Create_0
+   gml_Object_obj_darkphone_event_Alarm_4
+   gml_Object_obj_darkphone_event_Step_0
+   gml_Object_obj_splashscreen_Create_0
+   gml_Object_obj_splashscreen_Step_0
+   gml_Object_obj_splashscreen_Draw_0
+   gml_Object_obj_screen_loading_Create_0
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_183_gml_Object_obj_screen_loading_Create_0
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_588_gml_Object_obj_screen_loading_Create_0
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_961_gml_Object_obj_screen_loading_Create_0
+   gml_Object_obj_screen_loading_Alarm_0
+   gml_Object_obj_screen_loading_Draw_0
+命中 code 数 = 242
+
+== [C] Scripts=692 （关键字命中）==
+   scr_become_dark
+   gml_Script_scr_become_dark
+   scr_darkbox
+   gml_Script_scr_darkbox
+   scr_darkbox_black
+   gml_Script_scr_darkbox_black
+   scr_get_room_by_id
+   gml_Script_scr_get_room_by_id
+   gml_Script_scr_get_id_by_room_index
+   gml_Script_scr_get_room_list
+   scr_minishakeobj
+   gml_Script_scr_minishakeobj
+   scr_shakeobj
+   gml_Script_scr_shakeobj
+   scr_oflash
+   gml_Script_scr_oflash
+   scr_outside_camera
+   gml_Script_scr_outside_camera
+   scr_dark_marker
+   gml_Script_scr_dark_marker
+   scr_depth
+   gml_Script_scr_depth
+   draw_background_ext
+   gml_Script_draw_background_ext
+   draw_background_part_ext
+   gml_Script_draw_background_part_ext
+   draw_background_tiled_ext
+   gml_Script_draw_background_tiled_ext
+   __background_get_colour
+   gml_Script___background_get_colour
+   __background_get_colour_element
+   gml_Script___background_get_colour_element
+   __background_set
+   gml_Script___background_set
+   __background_set_colour
+   gml_Script___background_set_colour
+   __background_set_element
+   gml_Script___background_set_element
+   __background_set_internal
+   gml_Script___background_set_internal
+   __init_background
+   gml_Script___init_background
+   __background_get_element
+   gml_Script___background_get_element
+   __background_get_internal
+   gml_Script___background_get_internal
+   background_get_width
+   gml_Script_background_get_width
+   background_get_height
+   gml_Script_background_get_height
+   draw_background
+   gml_Script_draw_background
+   instance_create
+   gml_Script_instance_create
+   object_get_depth
+   gml_Script_object_get_depth
+   tile_get_ids_at_depth
+   gml_Script_tile_get_ids_at_depth
+   tile_layer_hide
+   gml_Script_tile_layer_hide
+   tile_layer_shift
+   gml_Script_tile_layer_shift
+   __view_get
+   gml_Script___view_get
+   __view_set
+   gml_Script___view_set
+   __view_set_internal
+   gml_Script___view_set_internal
+   __global_object_depths
+   gml_Script___global_object_depths
+   scr_draw_screen_border
+   gml_Script_scr_draw_screen_border
+   scr_enable_screen_border
+   gml_Script_scr_enable_screen_border
+   scr_draw_background_ps4
+   gml_Script_scr_draw_background_ps4
+   draw_background_stretched
+   gml_Script_draw_background_stretched
+   gml_Script_change_fountain_color_gml_Object_obj_darkfountain_Create_0
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_183_gml_Object_obj_screen_loading_Create_0
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_588_gml_Object_obj_screen_loading_Create_0
+   gml_Script_anon_gml_Object_obj_screen_loading_Create_0_961_gml_Object_obj_screen_loading_Create_0
+
+== [D] GameObjects=353 （关键字命中）==
+   obj_insideclosetcutscene
+   obj_darkdoor
+   obj_schoollobbycutscene
+   obj_carcutscene
+   obj_darkdoorevent
+   obj_npc_susiedark
+   obj_darkcastle_event
+   obj_darklanding
+   obj_darkslide
+   obj_darkwakeevent
+   obj_npc_room_animated
+   obj_doorA_musfade
+   obj_doorB_musfade
+   obj_doorC_musfade
+   obj_doorD_musfade
+   obj_doorX_musfade
+   obj_doorw_musfade
+   obj_musicer_darkcliff
+   obj_musicer_darkcastle
+   obj_jokerbg_triangle_real
+   obj_backgrounderparent
+   obj_backgrounder_standard
+   obj_backgrounder_sprite
+   obj_fadeout
+   obj_fadein
+   obj_persistentfadein
+   obj_loadscreen
+   obj_shake
+   obj_darklancer
+   obj_kingcutscene
+   obj_shakeobj
+   obj_darkfountain
+   obj_darkfountain_event
+   obj_fountainkris
+   obj_darkcontroller
+   obj_darkponman_ow
+   obj_darkener
+   obj_darkeyepuzzle_switch
+   obj_darkeyepuzzle
+   obj_clubsbullet_dark
+   obj_fadechain
+   obj_joker_teleport
+   obj_oflash
+   obj_darkphone_event
+   obj_soliddark
+   obj_sur_dark
+   obj_sdl_dark
+   obj_splashscreen
+   obj_screen_loading
+命中 obj 数 = 49
+
+== [E] 完整导出的 code 数 = 91 （见 func43_codes.txt）==
+

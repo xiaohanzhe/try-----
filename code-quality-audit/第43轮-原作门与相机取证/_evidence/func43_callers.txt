@@ -1,0 +1,227 @@
+== 调用者索引（ch1）==
+-- camera_set_view_pos  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- camera_set_view_size  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- camera_set_view_speed  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- camera_set_view_border  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- camera_set_view_target  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- camera_set_view_angle  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- camera_create  ← 1 处调用者
+     gml_GlobalScript___init_d3d
+-- view_get_camera  ← 2 处调用者
+     gml_GlobalScript___view_get
+     gml_GlobalScript___view_set_internal
+-- view_set_camera  ← 1 处调用者
+     gml_GlobalScript___view_set_internal
+-- gml_Script___view_set  ← 21 处调用者
+     gml_GlobalScript___view_set
+     gml_Object_obj_insideclosetcutscene_Step_0
+     gml_Object_obj_classscene_Step_0
+     gml_Object_obj_schoollobbycutscene_Alarm_5
+     gml_Object_obj_mainchara_Step_2
+     gml_Object_obj_carcutscene_Step_2
+     gml_Object_obj_carcutscene_Step_0
+     gml_Object_obj_elevatorcontroller_Step_0
+     gml_Object_obj_prisonevent_Create_0
+     gml_Object_obj_prisonevent_Step_0
+     gml_Object_obj_lancerbattle2_event_Step_0
+     gml_Object_obj_tutorialbattleevent_Step_0
+     gml_Object_obj_lancerslideevent_Step_0
+     gml_Object_obj_lancerchaseevent_Step_0
+     gml_Object_obj_panner_Step_0
+     gml_Object_obj_shake_Destroy_0
+     gml_Object_obj_shake_Alarm_0
+     gml_Object_obj_shake_Step_0
+     gml_Object_obj_kingcutscene_Create_0
+     gml_Object_obj_kingcutscene_Step_0
+     gml_Object_obj_king_boss_Step_0
+-- gml_Script___view_set_internal  ← 2 处调用者
+     gml_GlobalScript___view_set
+     gml_GlobalScript___view_set_internal
+-- gml_Script___view_get  ← 123 处调用者
+     gml_GlobalScript_scr_dbox
+     gml_GlobalScript_scr_destroyoutside
+     gml_GlobalScript_scr_battletext
+     gml_GlobalScript_scr_gameover
+     gml_GlobalScript_scr_encountersetup
+     gml_GlobalScript_scr_outside_camera
+     gml_GlobalScript_scr_pan_to_obj
+     gml_GlobalScript___view_get
+     gml_GlobalScript___view_set
+     gml_Object_obj_chapter_continue_Create_0
+     gml_Object_obj_chapter_continue_Draw_0
+     gml_Object_obj_choicer_old_Create_0
+     gml_Object_obj_choicer_neo_Create_0
+     gml_Object_obj_dialoguer_Create_0
+     gml_Object_obj_dialoguer_Other_10
+     gml_Object_obj_writer_Draw_0
+     gml_Object_obj_insideclosetcutscene_Draw_0
+     gml_Object_obj_schoollobbycutscene_Alarm_5
+     gml_Object_obj_mainchara_Step_2
+     gml_Object_obj_mainchara_Draw_0
+     gml_Object_obj_carcutscene_Alarm_5
+     gml_Object_obj_carcutscene_Step_2
+     gml_Object_obj_carcutscene_Step_0
+     gml_Object_obj_rurus_checker_event_Step_0
+     gml_Object_obj_jokerbattleevent_Step_0
+     gml_Object_obj_elevatorcontroller_Step_0
+     gml_Object_obj_lancerbakesale_event_Step_0
+     gml_Object_obj_lancerbattle2_event_Step_0
+     gml_Object_obj_susieandlancer_event_Step_0
+     gml_Object_obj_thrashcontroller_Create_0
+     gml_Object_obj_suitspuzzle_event_Step_0
+     gml_Object_obj_thrashafter_follow_Step_0
+     gml_Object_obj_scarelancerevent_Step_0
+     gml_Object_obj_hathyfightevent_Step_0
+     gml_Object_obj_tutorialbattleevent_Step_0
+     gml_Object_obj_shortcut_door_Step_0
+     gml_Object_obj_darkcastle_event_Step_0
+     gml_Object_obj_wobblything_slide_Step_0
+     gml_Object_obj_lancerslideevent_Step_0
+     gml_Object_obj_lancerchaseevent_Step_0
+     gml_Object_obj_ralseibook_Create_0
+     gml_Object_obj_jokerbg_triangle_real_Draw_0
+     gml_Object_obj_fieldmuslogo_Create_0
+     gml_Object_obj_fieldmuslogo_Other_10
+     gml_Object_obj_backgrounder_standard_Other_10
+     gml_Object_obj_backgrounder_sprite_Other_10
+     gml_Object_obj_panner_Step_0
+     gml_Object_obj_shake_Step_0
+     gml_Object_obj_darklancer_Step_0
+     gml_Object_obj_dustpile_susie_Step_0
+     gml_Object_obj_kingcutscene_Step_0
+     gml_Object_obj_kingcutscene_Draw_0
+     gml_Object_obj_darkcontroller_Create_0
+     gml_Object_obj_darkcontroller_Step_0
+     gml_Object_obj_darkcontroller_Draw_0
+     gml_Object_obj_battlealphaer_Draw_0
+     gml_Object_obj_starwalker_overworld_Step_0
+     gml_Object_obj_dancer_gen_Draw_0
+     gml_Object_obj_darkponman_ow_Draw_0
+     gml_Object_obj_ob_gen_Draw_0
+     gml_Object_obj_overworld_spade_homing_Step_0
+     gml_Object_obj_overworld_spade_Step_0
+     gml_Object_obj_overworld_spademaker_Alarm_0
+     gml_Object_obj_overworld_spademaker_Draw_0
+     gml_Object_obj_battlecontroller_Draw_0
+     gml_Object_obj_chasebullet_Draw_0
+     gml_Object_obj_regularbullet_Step_0
+     gml_Object_obj_darkener_Draw_0
+     gml_Object_obj_lancerbike_Create_0
+     gml_Object_obj_lancerbike_Step_0
+     gml_Object_obj_monster1_Step_0
+     gml_Object_obj_moveheart_Create_0
+     gml_Object_obj_dbullet_vert_Create_0
+     gml_Object_obj_dbullet_vert_Draw_0
+     gml_Object_obj_dbulletcontroller_Step_0
+     gml_Object_obj_dummyenemy_Step_0
+     gml_Object_obj_dummyenemy_Other_20
+     gml_Object_obj_ralseienemy_Step_0
+     gml_Object_obj_placeholderenemy_Step_0
+     gml_Object_obj_chain_of_hell_Step_0
+     gml_Object_obj_finalchain_Create_0
+     gml_Object_obj_finalchain_Step_0
+     gml_Object_obj_king_body_Create_0
+     gml_Object_obj_growtangle_bouncer_Create_0
+     gml_Object_obj_skychain_Draw_0
+     gml_Object_obj_wavechain_Step_0
+     gml_Object_obj_rudinnranger_Step_0
+     gml_Object_obj_jigsawryenemy_Step_0
+     gml_Object_obj_checkers_enemy_Step_0
+     gml_Object_obj_checker_animtest_Step_0
+     gml_Object_obj_ralseithrown_Create_0
+     gml_Object_obj_checkers_leap_Step_0
+     gml_Object_obj_ponman_enemy_Step_0
+     gml_Object_obj_joker_teleport_Create_0
+     gml_Object_obj_rabbick_enemy_Create_0
+     gml_Object_obj_rabbick_enemy_Step_0
+     gml_Object_obj_bloxer_enemy_Step_0
+     gml_Object_obj_lancerbike_neo_Step_0
+     gml_Object_obj_axebullet_Step_0
+     gml_Object_obj_lancerboss_Step_0
+     gml_Object_obj_lancerboss2_Step_0
+     gml_Object_obj_diamondenemy_Step_0
+     gml_Object_obj_susieenemy_Step_0
+     gml_Object_obj_lancerboss3_Step_0
+     gml_Object_obj_king_boss_Create_0
+     gml_Object_obj_king_boss_Step_0
+     gml_Object_obj_joker_Step_0
+     gml_Object_obj_clubsenemy_Step_0
+     gml_Object_obj_clubsenemy_old_Step_0
+     gml_Object_obj_heartenemy_Step_0
+     gml_Object_obj_headhathy_Step_0
+     gml_Object_obj_smallcheckers_enemy_Step_0
+     gml_Object_obj_pacifyspell_Create_0
+     gml_Object_obj_battleback_Draw_0
+     gml_Object_obj_heart_Step_0
+     gml_Object_DEVICE_GONERMAKER_Create_0
+     gml_Object_DEVICE_MENU_Draw_0
+     gml_Object_PROCESS_LOGO_Create_0
+     gml_Object_obj_credits_Draw_0
+     gml_Object_obj_savemenu_Draw_0
+     gml_Object_obj_tensionbar_Create_0
+     gml_Object_obj_overworldc_Draw_0
+     gml_Object_obj_splashscreen_Create_0
+-- layer_hspeed  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_vspeed  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_x  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_y  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_get_hspeed  ← 2 处调用者
+     gml_GlobalScript___background_set_internal
+     gml_GlobalScript___background_get_internal
+-- layer_get_vspeed  ← 2 处调用者
+     gml_GlobalScript___background_set_internal
+     gml_GlobalScript___background_get_internal
+-- layer_background_htiled  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_background_vtiled  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_background_xscale  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_background_yscale  ← 2 处调用者
+     gml_GlobalScript___background_set_element
+     gml_GlobalScript___background_set_internal
+-- layer_background_change  ← 1 处调用者
+     gml_GlobalScript___background_set_internal
+-- layer_background_create  ← 1 处调用者
+     gml_GlobalScript___background_set_element
+-- tile_layer_shift  ← 0 处调用者
+-- scr_outside_camera  ← 0 处调用者
+-- scr_depth  ← 0 处调用者
+-- scr_get_id_by_room_index  ← 0 处调用者
+-- scr_get_room_by_id  ← 0 处调用者
+-- scr_get_room_list  ← 0 处调用者
+-- scr_dark_marker  ← 0 处调用者
+-- scr_darkbox  ← 0 处调用者
+-- scr_darkbox_black  ← 0 处调用者
+-- scr_become_dark  ← 0 处调用者
+-- scr_shakeobj  ← 0 处调用者
+-- scr_minishakeobj  ← 0 处调用者
+-- scr_oflash  ← 0 处调用者
+-- scr_enable_screen_border  ← 0 处调用者
+-- instance_create  ← 0 处调用者
+-- layer_create  ← 1 处调用者
+     gml_GlobalScript___background_set_element
+-- layer_destroy  ← 1 处调用者
+     gml_GlobalScript___background_set_element
+-- draw_background_ext  ← 0 处调用者
+-- draw_background_tiled_ext  ← 0 处调用者
+-- draw_background_part_ext  ← 0 处调用者
+
+完整导出 code 数 = 65

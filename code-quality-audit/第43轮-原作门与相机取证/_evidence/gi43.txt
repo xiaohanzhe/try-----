@@ -1,0 +1,53 @@
+--- Data.GeneralInfo :: UndertaleGeneralInfo ---
+   IsDebuggerDisabled = True
+   BytecodeVersion = 17
+   Padding = 0
+   FileName = "DELTARUNE"
+   Config = "Default"
+   LastObj = 103513
+   LastTile = 10029043
+   GameID = 0
+   DirectPlayGuid = 00000000-0000-0000-0000-000000000000
+   Name = "DELTARUNE"
+   Major = 2023
+   Minor = 6
+   Release = 0
+   Build = 0
+   Branch = LTS2022_0
+   DefaultWindowWidth = 640
+   DefaultWindowHeight = 480
+   Info = Scale, ScreenKey
+   LicenseMD5 = System.Byte[]
+   LicenseCRC32 = 0
+   Timestamp = 1772778855
+   DisplayName = "DELTARUNE Chapter 1"
+   ActiveTargets = 0
+   FunctionClassifications = Gamepad, Screengrab, Math, MatrixD3D, DataStructures, File, INI, Directory, Environment, Encoding, UIDialog, MotionPlanning, ShapeCollision, Instance, Room, Game, Display, Window, DrawColor, Layer, String, Surface, IO, Variables, Array, Date, Sprite, Audio, Event, FreeType, OS, Console, Buffer, VertexBuffers
+   SteamAppID = 0
+   DebuggerPort = 0
+   RoomOrder = UndertaleModLib.UndertaleSimpleResourcesList`2[UndertaleModLib.Models.UndertaleRoom,UndertaleModLib.UndertaleChunkROOM]
+   GMS2RandomUID = System.Collections.Generic.List`1[System.Int64]
+   GMS2FPS = 30
+   GMS2AllowStatistics = True
+   GMS2GameGUID = System.Byte[]
+   InfoTimestampOffset = True
+
+--- Data.Options :: UndertaleOptions ---
+   ShaderExtensionFlag = -2147483648
+   ShaderExtensionVersion = 2
+   Info = UseNewAudio, ScreenKey, VariableErrors, FastCollisionCompatibility, DisableSandbox, EnableCopyOnWrite
+   Scale = 1
+   WindowColor = 0
+   ColorDepth = 0
+   Resolution = 0
+   Frequency = 0
+   VertexSync = 0
+   Priority = 0
+   BackImage = UndertaleModLib.Models.UndertaleSprite+TextureEntry
+   FrontImage = UndertaleModLib.Models.UndertaleSprite+TextureEntry
+   LoadImage = UndertaleModLib.Models.UndertaleSprite+TextureEntry
+   LoadAlpha = 0
+   Constants = UndertaleModLib.UndertaleSimpleList`1[UndertaleModLib.Models.UndertaleOptions+Constant]
+   NewFormat = True
+
+Data.Sequences = 有

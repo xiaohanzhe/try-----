@@ -1,0 +1,84 @@
+======================================================================
+[A] 对象索引跨章一致性
+======================================================================
+  chapter1_windows   objects=353   
+  chapter2_windows   objects=1328  
+  chapter3_windows   objects=1732  
+  chapter4_windows   objects=1576  
+  chapter5_windows   objects=1733  
+
+  对象                           ch1  ch2  ch3  ch4  ch5
+  obj_fadeout                  143    193    1299   1170   1308  ★不一致
+  obj_fadein                   144    194    1300   1172   1310  ★不一致
+  obj_persistentfadein         145    195    1301   1173   1311  ★不一致
+  obj_shake                    147    196    1302   1174   1312  ★不一致
+  obj_panner                   142    192    1298   1169   1307  ★不一致
+  obj_marker                   86     131    1231   1093   1238  ★不一致
+  obj_doorA                    97     145    1248   1112   1254  ★不一致
+  obj_doorX                    107    155    1259   1130   1266  ★不一致
+  obj_markerX                  122    171    1281   1149   1289  ★不一致
+  obj_mainchara                30     84     1185   1050   1198  ★不一致
+  obj_backgrounder_standard    140    190    1296   1167   1304  ★不一致
+  obj_backgrounder_sprite      141    191    1297   1168   1306  ★不一致
+  obj_screen_loading           352    26     736    958    612   ★不一致
+  obj_darkfountain             165    235    1325   1198   1345  ★不一致
+  obj_shakeobj                 164    234    1324   1197   1344  ★不一致
+  obj_oflash                   302    864    1500   1369   1513  ★不一致
+
+  ⇒ 索引不一致数 = 16 / 16 ⇒ 结论：对象索引【跨章不稳定】，跨章引用必须按【名字】
+
+======================================================================
+[B] ch1 view[0] / 房间尺寸
+======================================================================
+  view[0] (w,h,port_w,port_h) 分布:
+    640x480 port 640x480 : 100 间
+    320x240 port 640x320 : 33 间
+    320x240 port 640x480 : 7 间
+    1024x768 port 1024x768 : 6 间
+    640x768 port 1024x768 : 1 间
+  view[0].obj 分布:
+    (无)              : 115
+    obj_mainchara    : 32
+  房间宽 > 320 的 = 121 / 147  （需要相机横向滑动）
+    最宽: 5400x? room_dark_chase1
+    最宽: 3640x? room_dark2
+    最宽: 3000x? room_forest_chase1
+    最宽: 2640x? room_forest_starwalker
+    最宽: 2040x? room_town_mid
+
+======================================================================
+[C] ch1 层几何 / 视差 / 层特效
+======================================================================
+  层总数 = 1014
+  几何非零(XOffset/YOffset/HSpeed/VSpeed) = 16
+  ★ 视差非零(HSpeed/VSpeed) = 0  ⇒ 结论：无视差，背景靠相机滚动
+  ★ EffectType 非空 = 0  ⇒ 结论：无 GMS2 层特效
+
+======================================================================
+[D] func43_all.txt Top 函数
+======================================================================
+    6253  gml_Script_scr_84_get_lang_string
+    1304  gml_Script_instance_create
+     633  instance_destroy
+     476  gml_Script___view_get
+     462  instance_exists
+     411  gml_Script_snd_play
+     411  gml_Script_d_ex
+     387  method
+     383  draw_sprite_ext
+     361  draw_set_color
+     313  string_hash_to_newline
+     302  draw_text
+     257  gml_Script_scr_susface
+     231  random
+     221  string
+     212  gml_Script_scr_dark_marker
+     180  gml_Script_scr_ralface
+     169  sin
+     164  gml_Script_scr_halt
+     160  gml_Script_scr_lanface
+     155  @@NewGMLObject@@
+     145  gml_Script_scr_depth
+     137  choose
+     132  gml_Script_scr_room
+     116  draw_rectangle

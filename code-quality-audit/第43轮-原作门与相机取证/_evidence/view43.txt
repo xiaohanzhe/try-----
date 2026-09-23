@@ -1,0 +1,149 @@
+== [0] 反射 ==
+  --- UndertaleRoom ---
+    Name : UndertaleString
+    Caption : UndertaleString
+    Width : UInt32
+    Height : UInt32
+    Speed : UInt32
+    Persistent : Boolean
+    BackgroundColor : UInt32
+    DrawBackgroundColor : Boolean
+    CreationCodeId : UndertaleCode
+    Flags : RoomEntryFlags
+    World : Boolean
+    Top : UInt32
+    Left : UInt32
+    Right : UInt32
+    Bottom : UInt32
+    GravityX : Single
+    GravityY : Single
+    MetersPerPixel : Single
+    GridWidth : Double
+    GridHeight : Double
+    GridThicknessPx : Double
+    Backgrounds : UndertalePointerList`1
+    Views : UndertalePointerList`1
+    GameObjects : UndertalePointerList`1
+    Tiles : UndertalePointerList`1
+    InstanceCreationOrderIDs : InstanceIDList
+    Layers : UndertalePointerList`1
+    Sequences : UndertaleSimpleList`1
+    BGColorLayer : Layer
+    ProjectName : String
+    ProjectAssetType : SerializableAssetType
+    ProjectExportable : Boolean
+  --- View ---
+    Enabled : Boolean
+    ViewX : Int32
+    ViewY : Int32
+    ViewWidth : Int32
+    ViewHeight : Int32
+    PortX : Int32
+    PortY : Int32
+    PortWidth : Int32
+    PortHeight : Int32
+    BorderX : UInt32
+    BorderY : UInt32
+    SpeedX : Int32
+    SpeedY : Int32
+    ObjectId : UndertaleGameObject
+  --- Layer ---
+    ParentRoom : UndertaleRoom
+    LayerName : UndertaleString
+    LayerId : UInt32
+    LayerType : LayerType
+    LayerDepth : Int32
+    XOffset : Single
+    YOffset : Single
+    HSpeed : Single
+    VSpeed : Single
+    IsVisible : Boolean
+    Data : LayerData
+    InstancesData : LayerInstancesData
+    TilesData : LayerTilesData
+    BackgroundData : LayerBackgroundData
+    AssetsData : LayerAssetsData
+    EffectData : LayerEffectData
+    EffectEnabled : Boolean
+    EffectType : UndertaleString
+    EffectProperties : UndertaleSimpleList`1
+  --- LayerData ---
+  --- LayerBackgroundData ---
+    ParentLayer : Layer
+    CalcScaleX : Single
+    CalcScaleY : Single
+    Visible : Boolean
+    Foreground : Boolean
+    Sprite : UndertaleSprite
+    TiledHorizontally : Boolean
+    TiledVertically : Boolean
+    Stretch : Boolean
+    Color : UInt32
+    FirstFrame : Single
+    AnimationSpeed : Single
+    AnimationSpeedType : AnimationSpeedType
+    XOffset : Single
+    YOffset : Single
+  --- LayerTilesData ---
+    ParentLayer : Layer
+    Background : UndertaleBackground
+    TilesX : UInt32
+    TilesY : UInt32
+    TileData : UInt32[][]
+  --- LayerInstancesData ---
+    Instances : ObservableCollection`1
+  --- LayerAssetsData ---
+    LegacyTiles : UndertalePointerList`1
+    Sprites : UndertalePointerList`1
+    Sequences : UndertalePointerList`1
+    NineSlices : UndertalePointerList`1
+    ParticleSystems : UndertalePointerList`1
+    TextItems : UndertalePointerList`1
+  --- LayerEffectData ---
+    EffectType : UndertaleString
+    Properties : UndertaleSimpleList`1
+  --- EffectProperty ---
+    Kind : PropertyType
+    Name : UndertaleString
+    Value : UndertaleString
+  --- Background ---
+    ParentRoom : UndertaleRoom
+    CalcScaleX : Single
+    CalcScaleY : Single
+    Enabled : Boolean
+    Foreground : Boolean
+    BackgroundDefinition : UndertaleBackground
+    X : Int32
+    Y : Int32
+    SpeedX : Int32
+    SpeedY : Int32
+    Stretch : Boolean
+    TiledHorizontally : Boolean
+    TiledVertically : Boolean
+    XOffset : Int32
+    YOffset : Int32
+  --- LayerType ---
+  --- RoomEntryFlags ---
+
+== [1] Rooms=147 ==
+房间 Flags 分布: 
+   ShowColor, IsGMS2_3, IsGMS2 → 6
+   EnableViews, ShowColor, IsGMS2_3, IsGMS2 → 139
+   EnableViews, ShowColor, DoNotClearDisplayBuffer, IsGMS2_3, IsGMS2 → 1
+   IsGMS2_3, IsGMS2 → 1
+含 'View' 标志的房间 = 140 / 147
+Views 列表非空的房间 = 147
+view 尺寸分布: 
+   640x768 → 1
+   1024x768 → 1014
+   320x240 → 40
+   640x480 → 121
+view.ObjectId 分布: 
+   obj_mainchara → 32
+
+== [2] 层几何 / 视差 / 效果 ==
+层总数 = 1014 ；几何非零层 = 16 ；启用效果的层 = 1014
+EffectType 分布: 
+   (null) → 1014
+Background 层视差 (HSpeed/VSpeed 非零) 分布: 
+
