@@ -12,6 +12,7 @@
 - 远端 `https://github.com/xiaohanzhe/try-----.git`（私有），main→origin/main。真机起：`Set-Location ralsei_pet; & C:\Python311\python.exe src\main.py` + `run_in_background`；单实例锁 `Global\RalseiPetMutex`；窗口透明非置顶 FramelessWindow ⇒ **甩飞/抛物线只能离屏断言**。
 - 改代码前先跑 G2 `code-quality-audit/regress/run_all.py`（现 **32 套件 / PASS=1500 / 全 IDENTICAL**）；G2 跑 `compileall` → 改写被跟踪的 `src/__pycache__/*.pyc` → 收工前 `git checkout --`；★ 改了断言/文案 → `--only <suite> --update`（**合并模式**），**别全量 update**。
 - ★ **只读优先、改动最小化**：审查阶段不改被审文件；修复一次只动必要处，每处配独立断言。
+- ❗❗**改过"重要核心文件"必须复检**（用户口径 2026-09-23：「以后再调整重要核心文件时一定要记得复检」）→ 语法可编译 + 结构自检 + 恒真判据复查 + **逐令牌回验** + 工作区干净，逐项 PASS/FAIL 落盘（skill `core-file-recheck`）。**别只说"改完了"。**
 
 ## 1. 环境（**§1/§18/§19/§21/§23.10/§37.5/§37.8**）
 - ⚠️ **Bash 常整体坏掉**（`ls/head/cat/tail` 全 127）→ **一律 Python + Write/Read**；`Glob/Grep/Read`/`cd && git` 照常。❗别从 Bash 调 PowerShell（stdout 不回传）；❗❗**别内联 `python -c`**（反引号被吞）。
