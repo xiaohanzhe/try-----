@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景总索引。三级 = 章节 / 区域 / 场景；真正被『切到』的是场景。新增一个场景 = 在这里登记一行 + 放一个 <scene_id>.json，零改 main.py。桌面（desktop）与作品内场景完全平级，不开后门。",
+    "note": "场景总索引。三级 = 章节 / 区域 / 场景；真正被「切到」的是场景。新增一个场景 = 在这里登记一行 + 放一个 <scene_id>.json，零改 main.py。桌面（desktop）与作品内场景完全平级，不开后门。",
     "anchors_file": "_anchors.json",
     "scene_file_pattern": "<scene_id>.json",
+    "original_rooms_file": "_original_rooms.json",
+    "how_scenes_were_derived": "全部作品内场景**逐条对应原作真实房间**（见 _original_rooms.json 的 room_id）。scene_id 形如 <chapter>.<area>.<scene>，区域从原作显示名的 \" - \" 前缀推出（我们把它显式化，这是比原作强的地方）。",
     "path_rules": {
       "kind=sprite": "相对仓库根（与 SpriteLoader.sprite_dir 同源 = <仓库>/deltarune_ralsei/）",
       "kind=image/prop/bg": "相对本目录（<仓库>/ralsei_pet/assets/scenes/）"
@@ -23,7 +25,652 @@
               "name": "桌面",
               "file": "desktop.json",
               "builtin": true,
-              "note": "启动场景。P0 只用它证明『框架在位且零行为变化』。"
+              "note": "启动场景，也是任何路由的兜底落脚点。"
+            }
+          }
+        }
+      }
+    },
+    "ch1": {
+      "name": "第一章 · 黑暗世界",
+      "order": 1,
+      "alias": "The Beginning",
+      "tint": "#2b2140",
+      "areas": {
+        "kris_room": {
+          "name": "克里斯的房间",
+          "scenes": {
+            "ch1.kris_room.kris_s_room": {
+              "name": "克里斯的房间",
+              "file": "ch1.kris_room.kris_s_room.json",
+              "original_room_id": 2
+            }
+          }
+        },
+        "unknown": {
+          "name": "？？？？？？",
+          "scenes": {
+            "ch1.unknown.unknown": {
+              "name": "？？？？？？",
+              "file": "ch1.unknown.unknown.json",
+              "original_room_id": 35
+            }
+          }
+        },
+        "eye_puzzle": {
+          "name": "眼睛谜题",
+          "scenes": {
+            "ch1.eye_puzzle.eye_puzzle": {
+              "name": "眼睛谜题",
+              "file": "ch1.eye_puzzle.eye_puzzle.json",
+              "original_room_id": 40
+            }
+          }
+        },
+        "castle_town": {
+          "name": "城堡镇",
+          "scenes": {
+            "ch1.castle_town.castle_town": {
+              "name": "城堡镇",
+              "file": "ch1.castle_town.castle_town.json",
+              "original_room_id": 45
+            }
+          }
+        },
+        "field": {
+          "name": "希望与梦想之原",
+          "scenes": {
+            "ch1.field.field_great_door": {
+              "name": "原野·大门",
+              "file": "ch1.field.field_great_door.json",
+              "original_room_id": 49
+            },
+            "ch1.field.field_maze_of_death": {
+              "name": "原野·死亡迷宫",
+              "file": "ch1.field.field_maze_of_death.json",
+              "original_room_id": 56
+            },
+            "ch1.field.field_seams_shop": {
+              "name": "原野·西姆的店",
+              "file": "ch1.field.field_seams_shop.json",
+              "original_room_id": 59
+            },
+            "ch1.field.field_great_board": {
+              "name": "原野·大棋盘",
+              "file": "ch1.field.field_great_board.json",
+              "original_room_id": 68
+            },
+            "ch1.field.field_great_board_2": {
+              "name": "原野·大棋盘·二",
+              "file": "ch1.field.field_great_board_2.json",
+              "original_room_id": 71
+            }
+          }
+        },
+        "forest": {
+          "name": "猩红森林",
+          "scenes": {
+            "ch1.forest.forest_entrance": {
+              "name": "森林·入口",
+              "file": "ch1.forest.forest_entrance.json",
+              "original_room_id": 73
+            },
+            "ch1.forest.forest_bake_sale": {
+              "name": "森林·义卖",
+              "file": "ch1.forest.forest_bake_sale.json",
+              "original_room_id": 82
+            },
+            "ch1.forest.forest_before_maze": {
+              "name": "森林·迷宫前",
+              "file": "ch1.forest.forest_before_maze.json",
+              "original_room_id": 90
+            },
+            "ch1.forest.forest_after_maze": {
+              "name": "森林·迷宫后",
+              "file": "ch1.forest.forest_after_maze.json",
+              "original_room_id": 96
+            },
+            "ch1.forest.forest_thrashing_room": {
+              "name": "森林·痛揍之屋",
+              "file": "ch1.forest.forest_thrashing_room.json",
+              "original_room_id": 97
+            }
+          }
+        },
+        "card_castle": {
+          "name": "纸牌城堡",
+          "scenes": {
+            "ch1.card_castle.card_castle_prison": {
+              "name": "纸牌城堡·牢房",
+              "file": "ch1.card_castle.card_castle_prison.json",
+              "original_room_id": 107
+            },
+            "ch1.card_castle.card_castle_unknown": {
+              "name": "纸牌城堡·？？？",
+              "file": "ch1.card_castle.card_castle_unknown.json",
+              "original_room_id": 111
+            },
+            "ch1.card_castle.card_castle_1f": {
+              "name": "纸牌城堡·一层",
+              "file": "ch1.card_castle.card_castle_1f.json",
+              "original_room_id": 114
+            },
+            "ch1.card_castle.card_castle_5f": {
+              "name": "纸牌城堡·五层",
+              "file": "ch1.card_castle.card_castle_5f.json",
+              "original_room_id": 123
+            },
+            "ch1.card_castle.card_castle_throne": {
+              "name": "纸牌城堡·王座",
+              "file": "ch1.card_castle.card_castle_throne.json",
+              "original_room_id": 126
+            }
+          }
+        }
+      }
+    },
+    "ch2": {
+      "name": "第二章 · 赛博世界",
+      "order": 2,
+      "alias": "A Cyber's World",
+      "tint": "#0b2b3a",
+      "areas": {
+        "kris_room": {
+          "name": "克里斯的房间",
+          "scenes": {
+            "ch2.kris_room.kris_s_room": {
+              "name": "克里斯的房间",
+              "file": "ch2.kris_room.kris_s_room.json",
+              "original_room_id": 18
+            }
+          }
+        },
+        "castle_town": {
+          "name": "城堡镇",
+          "scenes": {
+            "ch2.castle_town.castle_town": {
+              "name": "城堡镇",
+              "file": "ch2.castle_town.castle_town.json",
+              "original_room_id": 55
+            },
+            "ch2.castle_town.castle_town_2": {
+              "name": "城堡镇",
+              "file": "ch2.castle_town.castle_town_2.json",
+              "original_room_id": 61
+            }
+          }
+        },
+        "my_castle_town": {
+          "name": "我的城堡镇",
+          "scenes": {
+            "ch2.my_castle_town.my_castle_town": {
+              "name": "我的城堡镇",
+              "file": "ch2.my_castle_town.my_castle_town.json",
+              "original_room_id": 62
+            }
+          }
+        },
+        "cyber_field": {
+          "name": "赛博原野",
+          "scenes": {
+            "ch2.cyber_field.cyber_field_entrance": {
+              "name": "赛博原野·入口",
+              "file": "ch2.cyber_field.cyber_field_entrance.json",
+              "original_room_id": 78
+            },
+            "ch2.cyber_field.cyber_field_arcade": {
+              "name": "赛博原野·街机",
+              "file": "ch2.cyber_field.cyber_field_arcade.json",
+              "original_room_id": 83
+            },
+            "ch2.cyber_field.cyber_field_music_shop": {
+              "name": "赛博原野·唱片店",
+              "file": "ch2.cyber_field.cyber_field_music_shop.json",
+              "original_room_id": 89
+            }
+          }
+        },
+        "cyber_city": {
+          "name": "赛博都市",
+          "scenes": {
+            "ch2.cyber_city.cyber_city_entrance": {
+              "name": "赛博都市·入口",
+              "file": "ch2.cyber_city.cyber_city_entrance.json",
+              "original_room_id": 112
+            },
+            "ch2.cyber_city.cyber_city_alleyway_1": {
+              "name": "赛博都市·第一小巷",
+              "file": "ch2.cyber_city.cyber_city_alleyway_1.json",
+              "original_room_id": 115
+            },
+            "ch2.cyber_city.cyber_city_music_shop": {
+              "name": "赛博都市·唱片店",
+              "file": "ch2.cyber_city.cyber_city_music_shop.json",
+              "original_room_id": 121
+            },
+            "ch2.cyber_city.cyber_city_mouse_alley": {
+              "name": "赛博都市·老鼠巷",
+              "file": "ch2.cyber_city.cyber_city_mouse_alley.json",
+              "original_room_id": 126
+            },
+            "ch2.cyber_city.cyber_city_alleyway_2": {
+              "name": "赛博都市·第二小巷",
+              "file": "ch2.cyber_city.cyber_city_alleyway_2.json",
+              "original_room_id": 128
+            },
+            "ch2.cyber_city.cyber_city_heights": {
+              "name": "赛博都市·高处",
+              "file": "ch2.cyber_city.cyber_city_heights.json",
+              "original_room_id": 133
+            }
+          }
+        },
+        "queens_mansion": {
+          "name": "女王宅邸",
+          "scenes": {
+            "ch2.queens_mansion.queen_s_mansion_guest_hall": {
+              "name": "女王宅邸·客殿",
+              "file": "ch2.queens_mansion.queen_s_mansion_guest_hall.json",
+              "original_room_id": 152
+            },
+            "ch2.queens_mansion.queen_s_mansion_entrance": {
+              "name": "女王宅邸·入口",
+              "file": "ch2.queens_mansion.queen_s_mansion_entrance.json",
+              "original_room_id": 157
+            },
+            "ch2.queens_mansion.queen_s_mansion_basement": {
+              "name": "女王宅邸·地下室",
+              "file": "ch2.queens_mansion.queen_s_mansion_basement.json",
+              "original_room_id": 171
+            },
+            "ch2.queens_mansion.queen_s_mansion_3f": {
+              "name": "女王宅邸·三层",
+              "file": "ch2.queens_mansion.queen_s_mansion_3f.json",
+              "original_room_id": 187
+            },
+            "ch2.queens_mansion.queen_s_mansion_acid_tunnel": {
+              "name": "女王宅邸·酸液隧道",
+              "file": "ch2.queens_mansion.queen_s_mansion_acid_tunnel.json",
+              "original_room_id": 193
+            },
+            "ch2.queens_mansion.queen_s_mansion_4f": {
+              "name": "女王宅邸·四层",
+              "file": "ch2.queens_mansion.queen_s_mansion_4f.json",
+              "original_room_id": 196
+            },
+            "ch2.queens_mansion.queen_s_mansion_rooftop": {
+              "name": "女王宅邸·屋顶",
+              "file": "ch2.queens_mansion.queen_s_mansion_rooftop.json",
+              "original_room_id": 199
+            },
+            "ch2.queens_mansion.queen_s_mansion_rooftop_2": {
+              "name": "女王宅邸·屋顶",
+              "file": "ch2.queens_mansion.queen_s_mansion_rooftop_2.json",
+              "original_room_id": 200
+            }
+          }
+        }
+      }
+    },
+    "ch3": {
+      "name": "第三章 · 深夜电视",
+      "order": 3,
+      "alias": "Late Night TV",
+      "tint": "#3a1030",
+      "areas": {
+        "dark_world": {
+          "name": "黑暗世界",
+          "scenes": {
+            "ch3.dark_world.dark_world": {
+              "name": "黑暗世界",
+              "file": "ch3.dark_world.dark_world.json",
+              "original_room_id": 98
+            }
+          }
+        },
+        "cold_place": {
+          "name": "寒地",
+          "scenes": {
+            "ch3.cold_place.cold_place": {
+              "name": "寒地",
+              "file": "ch3.cold_place.cold_place.json",
+              "original_room_id": 109
+            }
+          }
+        },
+        "green_room": {
+          "name": "后台休息室",
+          "scenes": {
+            "ch3.green_room.green_room": {
+              "name": "后台休息室",
+              "file": "ch3.green_room.green_room.json",
+              "original_room_id": 135
+            }
+          }
+        },
+        "tv_world": {
+          "name": "电视世界",
+          "scenes": {
+            "ch3.tv_world.tv_world_goulden_sam": {
+              "name": "电视世界·黄金萨姆",
+              "file": "ch3.tv_world.tv_world_goulden_sam.json",
+              "original_room_id": 177
+            },
+            "ch3.tv_world.tv_world_before_show": {
+              "name": "电视世界·开演前",
+              "file": "ch3.tv_world.tv_world_before_show.json",
+              "original_room_id": 194
+            },
+            "ch3.tv_world.tv_world_entrance": {
+              "name": "电视世界·入口",
+              "file": "ch3.tv_world.tv_world_entrance.json",
+              "original_room_id": 195
+            },
+            "ch3.tv_world.tv_world_concert": {
+              "name": "电视世界·演唱会",
+              "file": "ch3.tv_world.tv_world_concert.json",
+              "original_room_id": 208
+            },
+            "ch3.tv_world.tv_world_cooking_show": {
+              "name": "电视世界·烹饪秀",
+              "file": "ch3.tv_world.tv_world_cooking_show.json",
+              "original_room_id": 213
+            }
+          }
+        }
+      }
+    },
+    "ch4": {
+      "name": "第四章 · 预言",
+      "order": 4,
+      "alias": "Prophecy",
+      "tint": "#1a2e1a",
+      "areas": {
+        "kris_room": {
+          "name": "克里斯的房间",
+          "scenes": {
+            "ch4.kris_room.kris_s_room": {
+              "name": "克里斯的房间",
+              "file": "ch4.kris_room.kris_s_room.json",
+              "original_room_id": 15
+            }
+          }
+        },
+        "hometown": {
+          "name": "家乡",
+          "scenes": {
+            "ch4.hometown.hometown": {
+              "name": "家乡",
+              "file": "ch4.hometown.hometown.json",
+              "original_room_id": 24
+            }
+          }
+        },
+        "noelles_house": {
+          "name": "诺艾尔家",
+          "scenes": {
+            "ch4.noelles_house.noelle_s_house": {
+              "name": "诺艾尔家",
+              "file": "ch4.noelles_house.noelle_s_house.json",
+              "original_room_id": 49
+            }
+          }
+        },
+        "my_castle_town": {
+          "name": "我的城堡镇",
+          "scenes": {
+            "ch4.my_castle_town.my_castle_town": {
+              "name": "我的城堡镇",
+              "file": "ch4.my_castle_town.my_castle_town.json",
+              "original_room_id": 65
+            }
+          }
+        },
+        "dark_sanctuary": {
+          "name": "暗之圣域",
+          "scenes": {
+            "ch4.dark_sanctuary.dark_sanctuary_1_atrium": {
+              "name": "暗之圣域·中庭",
+              "file": "ch4.dark_sanctuary.dark_sanctuary_1_atrium.json",
+              "original_room_id": 108
+            },
+            "ch4.dark_sanctuary.dark_sanctuary_1_study": {
+              "name": "暗之圣域·书斋",
+              "file": "ch4.dark_sanctuary.dark_sanctuary_1_study.json",
+              "original_room_id": 115
+            },
+            "ch4.dark_sanctuary.dark_sanctuary_1_lower_left": {
+              "name": "暗之圣域·左下",
+              "file": "ch4.dark_sanctuary.dark_sanctuary_1_lower_left.json",
+              "original_room_id": 177
+            },
+            "ch4.dark_sanctuary.dark_sanctuary_1_small_piano": {
+              "name": "暗之圣域·小钢琴",
+              "file": "ch4.dark_sanctuary.dark_sanctuary_1_small_piano.json",
+              "original_room_id": 218
+            },
+            "ch4.dark_sanctuary.dark_sanctuary_1_library": {
+              "name": "暗之圣域·书库",
+              "file": "ch4.dark_sanctuary.dark_sanctuary_1_library.json",
+              "original_room_id": 219
+            },
+            "ch4.dark_sanctuary.dark_sanctuary_1_lower_right": {
+              "name": "暗之圣域·右下",
+              "file": "ch4.dark_sanctuary.dark_sanctuary_1_lower_right.json",
+              "original_room_id": 227
+            }
+          }
+        },
+        "second_sanctuary": {
+          "name": "第二圣域",
+          "scenes": {
+            "ch4.second_sanctuary.sanctuary_2_atrium": {
+              "name": "第二圣域·中庭",
+              "file": "ch4.second_sanctuary.sanctuary_2_atrium.json",
+              "original_room_id": 247
+            },
+            "ch4.second_sanctuary.sanctuary_2_floor": {
+              "name": "第二圣域·地面层",
+              "file": "ch4.second_sanctuary.sanctuary_2_floor.json",
+              "original_room_id": 251
+            },
+            "ch4.second_sanctuary.sanctuary_2_study": {
+              "name": "第二圣域·书斋",
+              "file": "ch4.second_sanctuary.sanctuary_2_study.json",
+              "original_room_id": 257
+            },
+            "ch4.second_sanctuary.sanctuary_2_study_2": {
+              "name": "第二圣域·书斋",
+              "file": "ch4.second_sanctuary.sanctuary_2_study_2.json",
+              "original_room_id": 304
+            }
+          }
+        },
+        "third_sanctuary": {
+          "name": "第三圣域",
+          "scenes": {
+            "ch4.third_sanctuary.sanctuary_3": {
+              "name": "第三圣域",
+              "file": "ch4.third_sanctuary.sanctuary_3.json",
+              "original_room_id": 270
+            },
+            "ch4.third_sanctuary.sanctuary_3_stairs": {
+              "name": "第三圣域·阶梯",
+              "file": "ch4.third_sanctuary.sanctuary_3_stairs.json",
+              "original_room_id": 277
+            },
+            "ch4.third_sanctuary.sanctuary_3_last_chamber": {
+              "name": "第三圣域·最后之室",
+              "file": "ch4.third_sanctuary.sanctuary_3_last_chamber.json",
+              "original_room_id": 280
+            }
+          }
+        },
+        "castle_town": {
+          "name": "城堡镇",
+          "scenes": {
+            "ch4.castle_town.castle_town_tv_building": {
+              "name": "城堡镇·电视大楼",
+              "file": "ch4.castle_town.castle_town_tv_building.json",
+              "original_room_id": 298
+            }
+          }
+        },
+        "mike_zone": {
+          "name": "麦克地带",
+          "scenes": {
+            "ch4.mike_zone.mike_zone": {
+              "name": "麦克地带",
+              "file": "ch4.mike_zone.mike_zone.json",
+              "original_room_id": 322
+            }
+          }
+        }
+      }
+    },
+    "ch5": {
+      "name": "第五章 · 希望与梦想之园",
+      "order": 5,
+      "alias": "Garden of Hopes and Dreams",
+      "tint": "#3a2a10",
+      "areas": {
+        "kris_room": {
+          "name": "克里斯的房间",
+          "scenes": {
+            "ch5.kris_room.kris_s_room": {
+              "name": "克里斯的房间",
+              "file": "ch5.kris_room.kris_s_room.json",
+              "original_room_id": 13
+            }
+          }
+        },
+        "hometown": {
+          "name": "家乡",
+          "scenes": {
+            "ch5.hometown.hometown": {
+              "name": "家乡",
+              "file": "ch5.hometown.hometown.json",
+              "original_room_id": 24
+            }
+          }
+        },
+        "my_castle_town": {
+          "name": "我的城堡镇",
+          "scenes": {
+            "ch5.my_castle_town.my_castle_town": {
+              "name": "我的城堡镇",
+              "file": "ch5.my_castle_town.my_castle_town.json",
+              "original_room_id": 54
+            }
+          }
+        },
+        "castle_town": {
+          "name": "城堡镇",
+          "scenes": {
+            "ch5.castle_town.castle_town_tv_building": {
+              "name": "城堡镇·电视大楼",
+              "file": "ch5.castle_town.castle_town_tv_building.json",
+              "original_room_id": 112
+            }
+          }
+        },
+        "dark_world": {
+          "name": "黑暗世界",
+          "scenes": {
+            "ch5.dark_world.dark_world": {
+              "name": "黑暗世界",
+              "file": "ch5.dark_world.dark_world.json",
+              "original_room_id": 120
+            }
+          }
+        },
+        "garden": {
+          "name": "希望之园",
+          "scenes": {
+            "ch5.garden.garden_beginning": {
+              "name": "希望之园·起点",
+              "file": "ch5.garden.garden_beginning.json",
+              "original_room_id": 122
+            },
+            "ch5.garden.garden_flowery_helped": {
+              "name": "希望之园·花助",
+              "file": "ch5.garden.garden_flowery_helped.json",
+              "original_room_id": 129
+            },
+            "ch5.garden.garden_ideal_diner": {
+              "name": "希望之园·理想餐厅",
+              "file": "ch5.garden.garden_ideal_diner.json",
+              "original_room_id": 133
+            },
+            "ch5.garden.garden_shrine": {
+              "name": "希望之园·神殿",
+              "file": "ch5.garden.garden_shrine.json",
+              "original_room_id": 141
+            },
+            "ch5.garden.garden_way_home": {
+              "name": "希望之园·归途",
+              "file": "ch5.garden.garden_way_home.json",
+              "original_room_id": 150
+            }
+          }
+        },
+        "cliffs": {
+          "name": "崖边",
+          "scenes": {
+            "ch5.cliffs.cliffs_beginning": {
+              "name": "崖边·起点",
+              "file": "ch5.cliffs.cliffs_beginning.json",
+              "original_room_id": 144
+            },
+            "ch5.cliffs.cliffs_shop": {
+              "name": "崖边·商店",
+              "file": "ch5.cliffs.cliffs_shop.json",
+              "original_room_id": 161
+            },
+            "ch5.cliffs.cliffs_below_castle": {
+              "name": "崖边·城堡之下",
+              "file": "ch5.cliffs.cliffs_below_castle.json",
+              "original_room_id": 167
+            }
+          }
+        },
+        "flower_castle": {
+          "name": "花之城堡",
+          "scenes": {
+            "ch5.flower_castle.flower_castle_cafe": {
+              "name": "花之城堡·咖啡厅",
+              "file": "ch5.flower_castle.flower_castle_cafe.json",
+              "original_room_id": 177
+            },
+            "ch5.flower_castle.flower_castle_jail": {
+              "name": "花之城堡·牢房",
+              "file": "ch5.flower_castle.flower_castle_jail.json",
+              "original_room_id": 179
+            },
+            "ch5.flower_castle.flower_castle_left_doors": {
+              "name": "花之城堡·左门",
+              "file": "ch5.flower_castle.flower_castle_left_doors.json",
+              "original_room_id": 183
+            },
+            "ch5.flower_castle.flower_castle_left_stage": {
+              "name": "花之城堡·左舞台",
+              "file": "ch5.flower_castle.flower_castle_left_stage.json",
+              "original_room_id": 187
+            },
+            "ch5.flower_castle.flower_castle_left_end": {
+              "name": "花之城堡·左侧尽头",
+              "file": "ch5.flower_castle.flower_castle_left_end.json",
+              "original_room_id": 189
+            },
+            "ch5.flower_castle.flower_castle_right_diner": {
+              "name": "花之城堡·右餐厅",
+              "file": "ch5.flower_castle.flower_castle_right_diner.json",
+              "original_room_id": 202
+            },
+            "ch5.flower_castle.flower_castle_right_end": {
+              "name": "花之城堡·右侧尽头",
+              "file": "ch5.flower_castle.flower_castle_right_end.json",
+              "original_room_id": 207
             }
           }
         }

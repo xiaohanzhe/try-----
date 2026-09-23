@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 —— 『什么语境下走哪条路、去哪个场景』。这是 P0 交付的**拓展接口**：规则全在这里，改路由不需要碰任何 Python。控制器 modules/scene_routing.py 只负责『读 + 匹配』。",
+    "note": "场景路由表 —— 「什么语境下走哪条路、去哪个场景」。规则全在这里，改路由不需要碰任何 Python。控制器 modules/scene_routing.py 只负责「读 + 匹配」。",
     "how_it_works": [
       "1. 控制器把当前语境（在哪个场景 / 宠物心情 / 触发了什么事件 / 聊天关键词）打包成 context。",
       "2. scene_routing.match() 按 priority 升序、命中条件多的优先，挑出第一条匹配的规则。",
-      "3. 拿规则的 to 字段去 switch()。匹配不到就是『没有理由换场景』→ 原地不动。"
+      "3. 拿规则的 to 字段去 switch()。匹配不到就是「没有理由换场景」→ 原地不动。"
     ],
     "rule_fields": {
       "to": "目标 scene_id（必填，必须登记在 _index.json）",
@@ -18,14 +18,224 @@
       "when_event": "触发事件名（单个或数组，命中任一即可）",
       "when_keywords": "聊天关键词（数组，命中任一即可）—— 注意是 OR 语义"
     },
-    "why_no_builtin_original_scenes": "原作场景（城堡镇 / 黑暗世界…）暂不登记：它们的素材还没做（见 __main__ §7 待裁定），登记了也会切到一个空场景 = 『世界突然变白』，比不切更糟。等素材到位，往 _index.json 加一行 + 往这里加一条规则即可，零改代码。",
-    "original_room_reference": "原作真实房间表见仓库根 原作场景线路研究_2026-09-22.md（抄自 code.deltarune.wiki 的 scr_roomname 反编译）。等做场景时照那张表登记。"
+    "priority_layers": {
+      "100-199": "第一章剧情推进（ch1 内部）",
+      "200-299": "第二章剧情推进",
+      "300-399": "第三章剧情推进",
+      "400-499": "第四章剧情推进",
+      "500-599": "第五章剧情推进",
+      "700-799": "软触发（心情 / 聊天关键词）—— 低于剧情，高于兜底",
+      "800-899": "场景内细节推进（如\"王座→下一章\"）",
+      "900-999": "无事可做时的归处（回桌面）",
+      "10000": "兜底（_fallback，匹配不到任何规则时）"
+    },
+    "critical_warning_priority_beats_score": "⚠️「priority 是第一排序键，压过 score」—— 所以**绝不要**给「任意场景」的兜底路线写小数字（那样它会把所有剧情路线全挡死）。第一版就是这么错的，已复现并修正：兜底一律靠 _fallback（priority 10000）或 900+。",
+    "how_routes_follow_the_original": "作品内推进顺序**逐条对照原作剧情**：ch1 城堡镇→原野→森林→纸牌城堡→王座；ch2 赛博原野→都市→女王宅邸→屋顶；ch4 家乡→暗之圣域→第二圣域→第三圣域→麦克地带；ch5 园子→崖边→花之城堡。依据见 _original_rooms.json 的 room_id 与显示名。",
+    "known_limitation": "scene_routing 目前**没有 progress 概念**，所以路线是「按区域/章节推进」而不是「按房间逐格推进」。房间级推进需要给 context 加 progress 键并让 _match_one 认它 —— 那属于 P2，见第三十六轮报告 §待裁定。",
+    "original_room_reference": "原作真实房间表见 ralsei_pet/assets/scenes/_original_rooms.json（抄自 code.deltarune.wiki 的 scr_roomname 反编译）。"
   },
   "routes": [
     {
+      "to": "ch1.castle_town.castle_town",
+      "priority": 100,
+      "reason": "从克里斯的房间跌进黑暗世界，第一站就是城堡镇 —— 这是第一章的起点",
+      "when_area": "kris_room",
+      "when_chapter": "ch1"
+    },
+    {
+      "to": "ch1.field.field_great_door",
+      "priority": 110,
+      "reason": "穿过城堡镇的大门，就踏上了希望与梦想之原",
+      "when_area": "castle_town",
+      "when_chapter": "ch1"
+    },
+    {
+      "to": "ch1.forest.forest_entrance",
+      "priority": 120,
+      "reason": "走过原野的尽头，进入猩红森林",
+      "when_area": "field",
+      "when_chapter": "ch1"
+    },
+    {
+      "to": "ch1.card_castle.card_castle_1f",
+      "priority": 130,
+      "reason": "穿过森林，就到了纸牌城堡的一层",
+      "when_area": "forest",
+      "when_chapter": "ch1"
+    },
+    {
+      "to": "ch1.card_castle.card_castle_throne",
+      "priority": 140,
+      "reason": "从纸牌城堡一层一路向上，抵达王座之间 —— 第一章的终点",
+      "when_scene": "ch1.card_castle.card_castle_5f"
+    },
+    {
+      "to": "ch2.cyber_field.cyber_field_entrance",
+      "priority": 149,
+      "reason": "第一章结束后，第二章从赛博原野的入口开始 —— 电脑里的世界",
+      "when_area": "card_castle",
+      "when_chapter": "ch1",
+      "when_scene": "ch1.card_castle.card_castle_throne"
+    },
+    {
+      "to": "ch2.cyber_city.cyber_city_entrance",
+      "priority": 210,
+      "reason": "走出赛博原野，进入赛博都市",
+      "when_area": "cyber_field",
+      "when_chapter": "ch2"
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 220,
+      "reason": "穿过赛博都市，来到女王宅邸的门前",
+      "when_area": "cyber_city",
+      "when_chapter": "ch2"
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_rooftop",
+      "priority": 230,
+      "reason": "从宅邸深处一路向上，站到屋顶 —— 第二章的终点",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_4f"
+    },
+    {
+      "to": "ch3.tv_world.tv_world_entrance",
+      "priority": 300,
+      "reason": "第三章推开电视机的门，走进电视世界",
+      "when_chapter": "ch2"
+    },
+    {
+      "to": "ch4.hometown.hometown",
+      "priority": 400,
+      "reason": "第四章回到家乡 —— 光与暗交替的地方",
+      "when_chapter": "ch3"
+    },
+    {
+      "to": "ch4.dark_sanctuary.dark_sanctuary_1_atrium",
+      "priority": 410,
+      "reason": "从家乡再度堕入黑暗，来到暗之圣域的中庭",
+      "when_area": "hometown",
+      "when_chapter": "ch4"
+    },
+    {
+      "to": "ch4.second_sanctuary.sanctuary_2_atrium",
+      "priority": 420,
+      "reason": "穿过暗之圣域，抵达第二圣域",
+      "when_area": "dark_sanctuary",
+      "when_chapter": "ch4"
+    },
+    {
+      "to": "ch4.third_sanctuary.sanctuary_3",
+      "priority": 430,
+      "reason": "继续深入，来到第三圣域",
+      "when_area": "second_sanctuary",
+      "when_chapter": "ch4"
+    },
+    {
+      "to": "ch4.mike_zone.mike_zone",
+      "priority": 440,
+      "reason": "穿过第三圣域，闯入麦克地带 —— 第四章的终点",
+      "when_area": "third_sanctuary",
+      "when_chapter": "ch4"
+    },
+    {
+      "to": "ch5.garden.garden_beginning",
+      "priority": 500,
+      "reason": "第五章从希望之园的起点开始",
+      "when_chapter": "ch4"
+    },
+    {
+      "to": "ch5.cliffs.cliffs_beginning",
+      "priority": 510,
+      "reason": "走出园子，来到崖边",
+      "when_area": "garden",
+      "when_chapter": "ch5"
+    },
+    {
+      "to": "ch5.flower_castle.flower_castle_cafe",
+      "priority": 520,
+      "reason": "从崖边走下，进入花之城堡的咖啡厅",
+      "when_area": "cliffs",
+      "when_chapter": "ch5"
+    },
+    {
+      "to": "ch5.flower_castle.flower_castle_right_end",
+      "priority": 530,
+      "reason": "一路走到花之城堡的右侧尽头 —— 第五章的终点",
+      "when_area": "flower_castle",
+      "when_chapter": "ch5"
+    },
+    {
+      "to": "ch1.castle_town.castle_town",
+      "priority": 700,
+      "reason": "聊到城堡镇 / 黑暗世界 / 家乡这些地方时，就过去看看",
+      "when_keywords": [
+        "城堡镇",
+        "黑暗世界",
+        "家乡",
+        "castle town",
+        "dark world",
+        "hometown",
+        "克里斯的房间"
+      ]
+    },
+    {
+      "to": "ch5.garden.garden_beginning",
+      "priority": 710,
+      "reason": "聊到花、花园的时候，就去希望之园",
+      "when_keywords": [
+        "花",
+        "花园",
+        "希望之园",
+        "garden",
+        "flower"
+      ]
+    },
+    {
+      "to": "ch2.cyber_city.cyber_city_entrance",
+      "priority": 710,
+      "reason": "聊到电脑、网络的时候，就去赛博都市",
+      "when_keywords": [
+        "电脑",
+        "网络",
+        "赛博",
+        "cyber",
+        "internet"
+      ]
+    },
+    {
+      "to": "ch1.card_castle.card_castle_throne",
+      "priority": 720,
+      "reason": "聊到纸牌、王座、Lancer 的时候，去纸牌城堡看看",
+      "when_keywords": [
+        "纸牌",
+        "王座",
+        "lancer",
+        "card castle"
+      ]
+    },
+    {
       "to": "desktop",
-      "priority": 10,
-      "reason": "任何时候都该能回到桌面 —— 这是桌宠的家，也是用户的正常工作区",
+      "priority": 730,
+      "reason": "宠物困了就回桌面睡觉 —— 有床的地方才是家",
+      "when_mood": [
+        "sleepy",
+        "tired"
+      ]
+    },
+    {
+      "to": "ch5.garden.garden_beginning",
+      "priority": 740,
+      "reason": "开心的时候，就想去希望与梦想之园走走",
+      "when_mood": [
+        "happy",
+        "excited",
+        "joyful"
+      ]
+    },
+    {
+      "to": "desktop",
+      "priority": 900,
+      "reason": "作品里的地方逛完了，就回到桌面 —— 那是桌宠真正的家",
       "when_scene": "*"
     }
   ],

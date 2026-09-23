@@ -554,9 +554,22 @@ ok('H2 load() 幂等（重复调用不炸、不改变状态）',
    _H.scene.load() is True and _H.current_scene == 'desktop',
    'current=%r' % _H.current_scene)
 
-ok('H3 available_scenes() 列出索引里的场景',
-   _H.scene.available_scenes() == ['desktop'],
-   'got=%r' % (_H.scene.available_scenes(),))
+# ⚠️ 这条原本写死 `== ['desktop']`，那只在"索引里刚好多只有一个场景"时成立 ——
+# 第三十六轮按原作登记了 88 个场景后它立刻变红。**写死场景数 = 把数据写进断言**，
+# 与 round5_smoke 那条「模块数随新增模块而变，勿把具体数字写进描述」是同一个错。
+# 改断言**真正的契约**：available_scenes() 必须
+#   (a) 返回索引里登记的全部场景（数量与索引一致）；
+#   (b) 排序（稳定）；
+#   (c) 含默认场景 desktop。
+# 这样它对"加场景"免疫，但对"漏登记 / 不排序 / 丢了 desktop"仍然会报红。
+_idx_now = _H.__dict__.get('_scene_index') or {}
+_expected = sorted((_idx_now.get('scenes') or {}).keys())
+_got = _H.scene.available_scenes()
+ok('H3 available_scenes() 列出索引里的场景（数量一致 + 有序 + 含 desktop）',
+   bool(_got) and _got == _expected and _got == sorted(_got)
+   and 'desktop' in _got,
+   'n_got=%d n_idx=%d sorted=%r has_desktop=%r'
+   % (len(_got), len(_expected), _got == sorted(_got), 'desktop' in _got))
 
 ok('H4 switch(不存在的场景) → False，且**保持当前场景不变**（不切空场景）',
    _H.scene.switch('__no_such__') is False and _H.current_scene == 'desktop',

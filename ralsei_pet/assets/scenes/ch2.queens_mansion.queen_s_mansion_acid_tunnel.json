@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scene_id": "ch2.queens_mansion.queen_s_mansion_acid_tunnel",
+  "name": "女王宅邸·酸液隧道",
+  "chapter_id": "ch2",
+  "chapter_name": "第二章 · 赛博世界",
+  "area_id": "queens_mansion",
+  "area_name": "女王宅邸",
+  "bg": "bg/ch2_queens_mansion_queen_s_mansion_acid_tunnel.png",
+  "bgm": "mansion.ogg",
+  "ambient": {
+    "lighting": null,
+    "weather": null,
+    "particles": null
+  },
+  "objects": [],
+  "anchors": {},
+  "transition": null,
+  "_comment": {
+    "original_room": {
+      "chapter": "ch2",
+      "room_id": 193,
+      "display_name": "Queen's Mansion - Acid Tunnel"
+    },
+    "why_bg_is_a_placeholder": "用户选 B（自行导出原作背景图）。这里写的是**约定文件名**，文件尚不存在 —— P1 渲染层会跳过不存在的 bg（不是把场景画白）。导出好后放到 assets/scenes/bg/ 并按此名保存即可，零改代码。",
+    "why_objects_is_empty": "物件需要背景图当参照才能定锚点。等 bg 到位后再按 _anchors.json 的命名锚点填 objects —— 现在硬编坐标是瞎猜。"
+  }
+}

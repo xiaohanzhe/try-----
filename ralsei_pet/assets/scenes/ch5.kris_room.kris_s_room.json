@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scene_id": "ch5.kris_room.kris_s_room",
+  "name": "克里斯的房间",
+  "chapter_id": "ch5",
+  "chapter_name": "第五章 · 希望与梦想之园",
+  "area_id": "kris_room",
+  "area_name": "克里斯的房间",
+  "bg": "bg/ch5_kris_room_kris_s_room.png",
+  "bgm": null,
+  "ambient": {
+    "lighting": null,
+    "weather": null,
+    "particles": null
+  },
+  "objects": [],
+  "anchors": {},
+  "transition": null,
+  "_comment": {
+    "original_room": {
+      "chapter": "ch5",
+      "room_id": 13,
+      "display_name": "Kris's Room"
+    },
+    "why_bg_is_a_placeholder": "用户选 B（自行导出原作背景图）。这里写的是**约定文件名**，文件尚不存在 —— P1 渲染层会跳过不存在的 bg（不是把场景画白）。导出好后放到 assets/scenes/bg/ 并按此名保存即可，零改代码。",
+    "why_objects_is_empty": "物件需要背景图当参照才能定锚点。等 bg 到位后再按 _anchors.json 的命名锚点填 objects —— 现在硬编坐标是瞎猜。"
+  }
+}

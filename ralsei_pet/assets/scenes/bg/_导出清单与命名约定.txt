@@ -1,0 +1,104 @@
+背景图导出清单 —— 第36轮场景系统
+共 88 个场景；其中 desktop 无背景（用真实桌面），其余 87 个有 bg 占位
+命名规则：导出后另存为 ralsei_pet/assets/scenes/bg/<文件名>
+================================================================================================================
+
+【desktop】
+desktop                                          room=                                      -> (无 · 真实桌面)
+
+【ch1】
+ch1.kris_room.kris_s_room                        room=2    Kris's Room                      -> ch1_kris_room_kris_s_room.png
+ch1.unknown.unknown                              room=35   ??????                           -> ch1_unknown_unknown.png
+ch1.eye_puzzle.eye_puzzle                        room=40   Eye Puzzle                       -> ch1_eye_puzzle_eye_puzzle.png
+ch1.castle_town.castle_town                      room=45   Castle Town                      -> ch1_castle_town_castle_town.png
+ch1.field.field_great_door                       room=49   Field - Great Door               -> ch1_field_field_great_door.png
+ch1.field.field_maze_of_death                    room=56   Field - Maze of Death            -> ch1_field_field_maze_of_death.png
+ch1.field.field_seams_shop                       room=59   Field - Seam's Shop              -> ch1_field_field_seams_shop.png
+ch1.field.field_great_board                      room=68   Field - Great Board              -> ch1_field_field_great_board.png
+ch1.field.field_great_board_2                    room=71   Field - Great Board 2            -> ch1_field_field_great_board_2.png
+ch1.forest.forest_entrance                       room=73   Forest - Entrance                -> ch1_forest_forest_entrance.png
+ch1.forest.forest_bake_sale                      room=82   Forest - Bake Sale               -> ch1_forest_forest_bake_sale.png
+ch1.forest.forest_before_maze                    room=90   Forest - Before Maze             -> ch1_forest_forest_before_maze.png
+ch1.forest.forest_after_maze                     room=96   Forest - After Maze              -> ch1_forest_forest_after_maze.png
+ch1.forest.forest_thrashing_room                 room=97   Forest - Thrashing Room          -> ch1_forest_forest_thrashing_room.png
+ch1.card_castle.card_castle_prison               room=107  Card Castle - Prison             -> ch1_card_castle_card_castle_prison.png
+ch1.card_castle.card_castle_unknown              room=111  Card Castle - ???                -> ch1_card_castle_card_castle_unknown.png
+ch1.card_castle.card_castle_1f                   room=114  Card Castle - 1F                 -> ch1_card_castle_card_castle_1f.png
+ch1.card_castle.card_castle_5f                   room=123  Card Castle - 5F                 -> ch1_card_castle_card_castle_5f.png
+ch1.card_castle.card_castle_throne               room=126  Card Castle - Throne             -> ch1_card_castle_card_castle_throne.png
+
+【ch2】
+ch2.kris_room.kris_s_room                        room=18   Kris's Room                      -> ch2_kris_room_kris_s_room.png
+ch2.castle_town.castle_town                      room=55   Castle Town                      -> ch2_castle_town_castle_town.png
+ch2.castle_town.castle_town_2                    room=61   Castle Town                      -> ch2_castle_town_castle_town_2.png
+ch2.my_castle_town.my_castle_town                room=62   My Castle Town                   -> ch2_my_castle_town_my_castle_town.png
+ch2.cyber_field.cyber_field_entrance             room=78   Cyber Field - Entrance           -> ch2_cyber_field_cyber_field_entrance.png
+ch2.cyber_field.cyber_field_arcade               room=83   Cyber Field - Arcade Machine     -> ch2_cyber_field_cyber_field_arcade.png
+ch2.cyber_field.cyber_field_music_shop           room=89   Cyber Field - Music Shop         -> ch2_cyber_field_cyber_field_music_shop.png
+ch2.cyber_city.cyber_city_entrance               room=112  Cyber City - Entrance            -> ch2_cyber_city_cyber_city_entrance.png
+ch2.cyber_city.cyber_city_alleyway_1             room=115  Cyber City - First Alleyway      -> ch2_cyber_city_cyber_city_alleyway_1.png
+ch2.cyber_city.cyber_city_music_shop             room=121  Cyber City - Music Shop          -> ch2_cyber_city_cyber_city_music_shop.png
+ch2.cyber_city.cyber_city_mouse_alley            room=126  Cyber City - Mouse Alley         -> ch2_cyber_city_cyber_city_mouse_alley.png
+ch2.cyber_city.cyber_city_alleyway_2             room=128  Cyber City - Second Alleyway     -> ch2_cyber_city_cyber_city_alleyway_2.png
+ch2.cyber_city.cyber_city_heights                room=133  Cyber City - Heights             -> ch2_cyber_city_cyber_city_heights.png
+ch2.queens_mansion.queen_s_mansion_guest_hall    room=152  Queen's Mansion - Guest Hall     -> ch2_queens_mansion_queen_s_mansion_guest_hall.png
+ch2.queens_mansion.queen_s_mansion_entrance      room=157  Queen's Mansion - Entrance       -> ch2_queens_mansion_queen_s_mansion_entrance.png
+ch2.queens_mansion.queen_s_mansion_basement      room=171  Queen's Mansion - Basement       -> ch2_queens_mansion_queen_s_mansion_basement.png
+ch2.queens_mansion.queen_s_mansion_3f            room=187  Queen's Mansion - 3F             -> ch2_queens_mansion_queen_s_mansion_3f.png
+ch2.queens_mansion.queen_s_mansion_acid_tunnel   room=193  Queen's Mansion - Acid Tunnel    -> ch2_queens_mansion_queen_s_mansion_acid_tunnel.png
+ch2.queens_mansion.queen_s_mansion_4f            room=196  Queen's Mansion - 4F             -> ch2_queens_mansion_queen_s_mansion_4f.png
+ch2.queens_mansion.queen_s_mansion_rooftop       room=199  Queen's Mansion - Rooftop        -> ch2_queens_mansion_queen_s_mansion_rooftop.png
+ch2.queens_mansion.queen_s_mansion_rooftop_2     room=200  Queen's Mansion - Rooftop        -> ch2_queens_mansion_queen_s_mansion_rooftop_2.png
+
+【ch3】
+ch3.dark_world.dark_world                        room=98   Dark World                       -> ch3_dark_world_dark_world.png
+ch3.cold_place.cold_place                        room=109  Cold Place                       -> ch3_cold_place_cold_place.png
+ch3.green_room.green_room                        room=135  Green Room                       -> ch3_green_room_green_room.png
+ch3.tv_world.tv_world_goulden_sam                room=177  TV World - Goulden Sam           -> ch3_tv_world_tv_world_goulden_sam.png
+ch3.tv_world.tv_world_before_show                room=194  TV World - Before the Show       -> ch3_tv_world_tv_world_before_show.png
+ch3.tv_world.tv_world_entrance                   room=195  TV World - Entrance              -> ch3_tv_world_tv_world_entrance.png
+ch3.tv_world.tv_world_concert                    room=208  TV World - Concert               -> ch3_tv_world_tv_world_concert.png
+ch3.tv_world.tv_world_cooking_show               room=213  TV World - Cooking Show          -> ch3_tv_world_tv_world_cooking_show.png
+
+【ch4】
+ch4.kris_room.kris_s_room                        room=15   Kris's Room                      -> ch4_kris_room_kris_s_room.png
+ch4.hometown.hometown                            room=24   Hometown                         -> ch4_hometown_hometown.png
+ch4.noelles_house.noelle_s_house                 room=49   Noelle's House                   -> ch4_noelles_house_noelle_s_house.png
+ch4.my_castle_town.my_castle_town                room=65   My Castle Town                   -> ch4_my_castle_town_my_castle_town.png
+ch4.dark_sanctuary.dark_sanctuary_1_atrium       room=108  Dark Sanctuary ~1 - Atrium       -> ch4_dark_sanctuary_dark_sanctuary_1_atrium.png
+ch4.dark_sanctuary.dark_sanctuary_1_study        room=115  Dark Sanctuary ~1 - Study        -> ch4_dark_sanctuary_dark_sanctuary_1_study.png
+ch4.dark_sanctuary.dark_sanctuary_1_lower_left   room=177  Dark Sanctuary ~1 - Lower Left   -> ch4_dark_sanctuary_dark_sanctuary_1_lower_left.png
+ch4.dark_sanctuary.dark_sanctuary_1_small_piano  room=218  Dark Sanctuary ~1 - Small Piano  -> ch4_dark_sanctuary_dark_sanctuary_1_small_piano.png
+ch4.dark_sanctuary.dark_sanctuary_1_library      room=219  Dark Sanctuary ~1 - Library      -> ch4_dark_sanctuary_dark_sanctuary_1_library.png
+ch4.dark_sanctuary.dark_sanctuary_1_lower_right  room=227  Dark Sanctuary ~1 - Lower Right  -> ch4_dark_sanctuary_dark_sanctuary_1_lower_right.png
+ch4.second_sanctuary.sanctuary_2_atrium          room=247  2nd Sanctuary ~1 - Atrium        -> ch4_second_sanctuary_sanctuary_2_atrium.png
+ch4.second_sanctuary.sanctuary_2_floor           room=251  2nd Sanctuary ~1 - Floor         -> ch4_second_sanctuary_sanctuary_2_floor.png
+ch4.second_sanctuary.sanctuary_2_study           room=257  2nd Sanctuary ~1 - Study         -> ch4_second_sanctuary_sanctuary_2_study.png
+ch4.second_sanctuary.sanctuary_2_study_2         room=304  2nd Sanctuary ~1 - Study         -> ch4_second_sanctuary_sanctuary_2_study_2.png
+ch4.third_sanctuary.sanctuary_3                  room=270  3rd Sanctuary                    -> ch4_third_sanctuary_sanctuary_3.png
+ch4.third_sanctuary.sanctuary_3_stairs           room=277  3rd Sanctuary ~1 - Stairs        -> ch4_third_sanctuary_sanctuary_3_stairs.png
+ch4.third_sanctuary.sanctuary_3_last_chamber     room=280  3rd Sanctuary ~1 - Last Chamber  -> ch4_third_sanctuary_sanctuary_3_last_chamber.png
+ch4.castle_town.castle_town_tv_building          room=298  Castle Town - TV Building        -> ch4_castle_town_castle_town_tv_building.png
+ch4.mike_zone.mike_zone                          room=322  MIKE ZONE                        -> ch4_mike_zone_mike_zone.png
+
+【ch5】
+ch5.kris_room.kris_s_room                        room=13   Kris's Room                      -> ch5_kris_room_kris_s_room.png
+ch5.hometown.hometown                            room=24   Hometown                         -> ch5_hometown_hometown.png
+ch5.my_castle_town.my_castle_town                room=54   My Castle Town                   -> ch5_my_castle_town_my_castle_town.png
+ch5.castle_town.castle_town_tv_building          room=112  Castle Town - TV Building        -> ch5_castle_town_castle_town_tv_building.png
+ch5.dark_world.dark_world                        room=120  Dark World                       -> ch5_dark_world_dark_world.png
+ch5.garden.garden_beginning                      room=122  Garden - Beginning               -> ch5_garden_garden_beginning.png
+ch5.garden.garden_flowery_helped                 room=129  Garden - Flowery Helped          -> ch5_garden_garden_flowery_helped.png
+ch5.garden.garden_ideal_diner                    room=133  Garden - Ideal Diner             -> ch5_garden_garden_ideal_diner.png
+ch5.garden.garden_shrine                         room=141  Garden - Shrine                  -> ch5_garden_garden_shrine.png
+ch5.garden.garden_way_home                       room=150  Garden - Way Home                -> ch5_garden_garden_way_home.png
+ch5.cliffs.cliffs_beginning                      room=144  Cliffs - Beginning               -> ch5_cliffs_cliffs_beginning.png
+ch5.cliffs.cliffs_shop                           room=161  Cliffs - Shop                    -> ch5_cliffs_cliffs_shop.png
+ch5.cliffs.cliffs_below_castle                   room=167  Cliffs - Below Castle            -> ch5_cliffs_cliffs_below_castle.png
+ch5.flower_castle.flower_castle_cafe             room=177  Flower Castle - Cafe             -> ch5_flower_castle_flower_castle_cafe.png
+ch5.flower_castle.flower_castle_jail             room=179  Flower Castle - Jail             -> ch5_flower_castle_flower_castle_jail.png
+ch5.flower_castle.flower_castle_left_doors       room=183  Flower Castle - Left Doors       -> ch5_flower_castle_flower_castle_left_doors.png
+ch5.flower_castle.flower_castle_left_stage       room=187  Flower Castle - Left Stage       -> ch5_flower_castle_flower_castle_left_stage.png
+ch5.flower_castle.flower_castle_left_end         room=189  Flower Castle - Left End         -> ch5_flower_castle_flower_castle_left_end.png
+ch5.flower_castle.flower_castle_right_diner      room=202  Flower Castle - Right Diner      -> ch5_flower_castle_flower_castle_right_diner.png
+ch5.flower_castle.flower_castle_right_end        room=207  Flower Castle - Right End        -> ch5_flower_castle_flower_castle_right_end.png

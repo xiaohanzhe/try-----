@@ -1,0 +1,99 @@
+# DELTARUNE 素材目录勘察（第36轮）
+
+勘察路径：C:\Users\23002\Desktop\项目文件夹\niko的秘密\DELTARUNE_183049\DELTARUNE
+
+## 1. 全盘统计
+
+- 文件总数：921
+- 总大小：4.23 GB
+
+| 扩展名 | 数量 |
+|---|---|
+| .ogg | 454 |
+| .mp3 | 205 |
+| .flac | 204 |
+| .json | 21 |
+| .win | 12 |
+| .mp4 | 7 |
+| .ini | 6 |
+| .dat | 5 |
+| (无) | 2 |
+| .dll | 2 |
+| .exe | 1 |
+| .png | 1 |
+| .gif | 1 |
+
+## 2. ★ 关键结论：图片素材
+
+- 图片文件总数：**2**
+  - `<ROOT>\1\cover.png` (28644 B)
+  - `<ROOT>\2\cover.gif` (30865 B)
+
+### 素材实际内容 = 音频 + GameMaker 数据包
+
+- `.ogg` 454 / `.mp3` 205 / `.flac` 204 —— **全部是音乐音效**
+- `.win` 12 —— **GameMaker data.win 编译数据包**（精灵图/房间全封在里面）
+- `.json` 21 —— **lang/*.json 游戏文本**（对话，非图片）
+- `.mp4` 7 / `.dll` 2 / `.exe` 1 —— 引擎运行时与过场视频
+
+## 3. data.win 引擎标识
+
+- `data.win` → FORM/GEN8（GameMaker Studio 2 格式），声明大小 2858888448 B
+- `chapter1_windows\data.win` → FORM/GEN8（GameMaker Studio 2 格式），声明大小 346873600 B
+- `chapter5_windows\data.win` → FORM/GEN8（GameMaker Studio 2 格式），声明大小 2496010762 B
+
+⇒ 场景背景**不是散图**，而是封在 `data.win` 里的 GameMaker TXTR/TPAG/ROOM 资源。
+   要取出散图必须先做 GameMaker 反编译（UndertaleModTool 之类）。
+
+## 4. 本项目仓库内已有素材（对照）
+
+- `ralsei_pet\assets`（场景/动画/表情/音效/人设）：9 项
+- `deltarune_ralsei`（角色精灵（spr_*））：1112 项
+- `ralsei_face`（表情）：51 项
+- `textbox`（对话框）：5 项
+
+### `deltarune_ralsei/` 1112 张素材的前缀分布（全部是 Ralsei 角色 sprite）
+
+| 前缀 | 数量 | 说明 |
+|---|---|---|
+| ralsei | 854 | 主角本体动画 |
+| cutscene | 66 | 过场专用姿势 |
+| susie | 52 | Susie 相关（含拖拽 Ralsei） |
+| tea | 35 | 茶会小游戏 |
+| board | 23 | 滑板小游戏 |
+| tiny | 19 | tiny 形态 |
+| teacup | 15 | 茶杯形态 |
+| ch3 | 12 | 第三章变体 |
+| ralseib | 9 | 毛线/玩偶形态 |
+| chefs | 4 | 厨师装 |
+| hunched | 4 | 走路姿势 |
+| shootout | 4 | 射击小游戏 |
+| gameshow | 3 | 游戏节目 |
+| susieb | 3 | Susie 变体 |
+| dw | 2 | 黑暗世界道具 |
+| quiz | 2 | 问答 |
+| susiezilla | 2 | Susie 巨大化 |
+| ja | 1 |  |
+| mannequin | 1 | 人偶 |
+| ? | 1 |  |
+
+★ **零背景 / 零地图 / 零 tileset**。全部 1112 张都是角色自身姿态。
+
+## 5. `lang_en.json` 结构（可用的"原作文本"来源）
+
+- 键总数：6242
+- 键名格式：`<对象>_slash_<事件>_gml_<行号>_<序号>`
+- 例：`DEVICE_CONTACT_slash_Step_0_gml_5_0` = ` 你听得到吗？`
+
+⇒ **这是原作真实对话文本**，可作为场景系统"原作台词"的数据源。
+   注意：它按 对象/事件 组织，**不是**按 房间/场景 组织，需要自己做映射。
+
+## 6. 结论
+
+| 需求 | 素材是否齐备 |
+|---|---|
+| 原作房间/区域**线路表** | ✅ 已从 GML 反编译抄到（`原作场景线路研究_2026-09-22.md`）|
+| 原作**台词文本** | ✅ `lang/*.json`（6242 键/章）|
+| 原作 **BGM** | ✅ `mus/` 339 个 .ogg |
+| 原作**场景背景图** | ❌ **不存在散图**，封在 `data.win` 需反编译 |
+| 原作**物件/地图素材** | ❌ 同上 |

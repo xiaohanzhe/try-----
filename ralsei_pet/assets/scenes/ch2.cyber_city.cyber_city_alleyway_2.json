@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scene_id": "ch2.cyber_city.cyber_city_alleyway_2",
+  "name": "赛博都市·第二小巷",
+  "chapter_id": "ch2",
+  "chapter_name": "第二章 · 赛博世界",
+  "area_id": "cyber_city",
+  "area_name": "赛博都市",
+  "bg": "bg/ch2_cyber_city_cyber_city_alleyway_2.png",
+  "bgm": "cybercity.ogg",
+  "ambient": {
+    "lighting": null,
+    "weather": null,
+    "particles": null
+  },
+  "objects": [],
+  "anchors": {},
+  "transition": null,
+  "_comment": {
+    "original_room": {
+      "chapter": "ch2",
+      "room_id": 128,
+      "display_name": "Cyber City - Second Alleyway"
+    },
+    "why_bg_is_a_placeholder": "用户选 B（自行导出原作背景图）。这里写的是**约定文件名**，文件尚不存在 —— P1 渲染层会跳过不存在的 bg（不是把场景画白）。导出好后放到 assets/scenes/bg/ 并按此名保存即可，零改代码。",
+    "why_objects_is_empty": "物件需要背景图当参照才能定锚点。等 bg 到位后再按 _anchors.json 的命名锚点填 objects —— 现在硬编坐标是瞎猜。"
+  }
+}

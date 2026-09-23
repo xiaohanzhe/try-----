@@ -1,0 +1,37 @@
+=== 产品进程内验证场景系统 ===
+装置已就绪: RalseiPet 构造成功
+
+--- 1. 宿主状态字段 ---
+_scene_loaded = False
+_scene_index is None = True
+current_scene = None
+_scene_state = None
+scene_objects = []
+_scene_anchors keys = 0
+
+--- 2. 经转发壳 self.scene 访问 ---
+self.scene.ready = False
+self.scene.available_scenes() 条数 = 0
+self.scene.description() = ''
+self.scene.destinations_text() 行数 = 20
+
+--- 3. 切到原作场景（走产品 switch）---
+switch('ch1.field.field_great_door') = True
+切后 current_scene = 'ch1.field.field_great_door'
+切后 _scene_state = <SceneState 'ch1.field.field_great_door' objects=0>
+切后 describe() = '第一章 · 黑暗世界、希望与梦想之原、原野·大门'
+切后 bg = 'bg/ch1_field_field_great_door.png'
+切后 bgm = 'field_of_hopes.ogg'
+
+--- 4. 往返切换 ---
+  switch(ch2.cyber_city.cyber_city_entrance           ) = True  current='ch2.cyber_city.cyber_city_entrance'
+  switch(desktop                                      ) = True  current='desktop'
+  switch(ch5.garden.garden_beginning                  ) = True  current='ch5.garden.garden_beginning'
+  switch(desktop                                      ) = True  current='desktop'
+
+--- 5. 产品路由判定 ---
+pick_route(mood=sleepy) = 'desktop'
+route_reason = ''
+
+--- 6. 收尾 ---
+close() 完成，无异常

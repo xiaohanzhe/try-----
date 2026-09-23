@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "note": "原作「房间表」——从 Deltarune 反编译脚本 scr_roomname / scr_get_room_by_id 抄录的真实房间 id 与显示名。这是『按原版路线排序』的**一手依据**，不是我们自己编的。",
+    "source": "code.deltarune.wiki 的 GML 反编译（gml_GlobalScript_scr_roomname）；研究记录见仓库根 原作场景线路研究_2026-09-22.md",
+    "why_this_file_exists": [
+      "用户口径：『开始按照原版的路线……场景系统完全遵循原作的逻辑』。",
+      "所以场景登记必须能**回溯到原作的真实房间** —— 这份表就是回溯依据。",
+      "它同时是我们命名 scene_id 的依据：scene_id 由 chapter + 原作显示名 推导，不凭空发明。"
+    ],
+    "how_original_works": {
+      "id_is_flat_int": "原作房间 ID 是扁平整数，不是字符串；roomname 由 id 反查显示名。",
+      "chapter_in_ten_thousands": "章号进万位（scr_get_room_by_id 做 chapter*10000 + local_id 合成）⇒ id 必须与 chapter 联合才唯一：ch2 的 55 与 ch1 的 45 都是 Castle Town，但 ch5 的 54 才是 My Castle Town。",
+      "two_part_naming": "stringsetsubloc 渲染成『父地点 ~1 - 子地点』两段式（ch4/ch5 大量出现）⇒『区域』这个概念在原作里是从显示名的 ' - ' 前缀**推出来的**，原作没有显式的区域数据结构。我们把它显式化，这是我们比原作更强的地方。",
+      "one_room_per_screen": "原作『一屏一房间』，走过屏边就 room_goto。桌面**不抄**这条 —— 桌面场景铺满整个虚拟桌面。"
+    },
+    "usage": "本文件是**只读参考数据**，不参与运行时加载。场景登记表是 _index.json；本文件是它的依据与溯源。"
+  },
+  "chapters": {
+    "ch1": {
+      "name": "第一章",
+      "display_alias": "The Beginning",
+      "rooms": [
+        {"id": 0, "name": "---"},
+        {"id": 2, "name": "Kris's Room"},
+        {"id": 35, "name": "??????"},
+        {"id": 40, "name": "Eye Puzzle"},
+        {"id": 45, "name": "Castle Town"},
+        {"id": 49, "name": "Field - Great Door"},
+        {"id": 56, "name": "Field - Maze of Death"},
+        {"id": 59, "name": "Field - Seam's Shop"},
+        {"id": 68, "name": "Field - Great Board"},
+        {"id": 71, "name": "Field - Great Board 2"},
+        {"id": 73, "name": "Forest - Entrance"},
+        {"id": 82, "name": "Forest - Bake Sale"},
+        {"id": 90, "name": "Forest - Before Maze"},
+        {"id": 96, "name": "Forest - After Maze"},
+        {"id": 97, "name": "Forest - Thrashing Room"},
+        {"id": 107, "name": "Card Castle - Prison"},
+        {"id": 111, "name": "Card Castle - ???"},
+        {"id": 114, "name": "Card Castle - 1F"},
+        {"id": 123, "name": "Card Castle - 5F"},
+        {"id": 126, "name": "Card Castle - Throne"}
+      ],
+      "areas": {
+        "kris_room": ["Kris's Room"],
+        "unknown": ["??????"],
+        "eye_puzzle": ["Eye Puzzle"],
+        "castle_town": ["Castle Town"],
+        "field": ["Field"],
+        "forest": ["Forest"],
+        "card_castle": ["Card Castle"]
+      }
+    },
+    "ch2": {
+      "name": "第二章",
+      "display_alias": "A Cyber's World",
+      "rooms": [
+        {"id": 0, "name": "---"},
+        {"id": 18, "name": "Kris's Room"},
+        {"id": 55, "name": "Castle Town"},
+        {"id": 61, "name": "Castle Town"},
+        {"id": 62, "name": "My Castle Town"},
+        {"id": 78, "name": "Cyber Field - Entrance"},
+        {"id": 83, "name": "Cyber Field - Arcade Machine"},
+        {"id": 89, "name": "Cyber Field - Music Shop"},
+        {"id": 112, "name": "Cyber City - Entrance"},
+        {"id": 115, "name": "Cyber City - First Alleyway"},
+        {"id": 121, "name": "Cyber City - Music Shop"},
+        {"id": 126, "name": "Cyber City - Mouse Alley"},
+        {"id": 128, "name": "Cyber City - Second Alleyway"},
+        {"id": 133, "name": "Cyber City - Heights"},
+        {"id": 152, "name": "Queen's Mansion - Guest Hall"},
+        {"id": 157, "name": "Queen's Mansion - Entrance"},
+        {"id": 171, "name": "Queen's Mansion - Basement"},
+        {"id": 187, "name": "Queen's Mansion - 3F"},
+        {"id": 193, "name": "Queen's Mansion - Acid Tunnel"},
+        {"id": 196, "name": "Queen's Mansion - 4F"},
+        {"id": 199, "name": "Queen's Mansion - Rooftop"},
+        {"id": 200, "name": "Queen's Mansion - Rooftop"}
+      ],
+      "areas": {
+        "kris_room": ["Kris's Room"],
+        "castle_town": ["Castle Town"],
+        "my_castle_town": ["My Castle Town"],
+        "cyber_field": ["Cyber Field"],
+        "cyber_city": ["Cyber City"],
+        "queens_mansion": ["Queen's Mansion"]
+      }
+    },
+    "ch3": {
+      "name": "第三章",
+      "display_alias": "Late Night TV",
+      "rooms": [
+        {"id": 0, "name": "---"},
+        {"id": 98, "name": "Dark World"},
+        {"id": 109, "name": "Cold Place"},
+        {"id": 135, "name": "Green Room"},
+        {"id": 177, "name": "TV World - Goulden Sam"},
+        {"id": 194, "name": "TV World - Before the Show"},
+        {"id": 195, "name": "TV World - Entrance"},
+        {"id": 208, "name": "TV World - Concert"},
+        {"id": 213, "name": "TV World - Cooking Show"}
+      ],
+      "areas": {
+        "dark_world": ["Dark World"],
+        "cold_place": ["Cold Place"],
+        "green_room": ["Green Room"],
+        "tv_world": ["TV World"]
+      }
+    },
+    "ch4": {
+      "name": "第四章",
+      "display_alias": "Prophecy",
+      "rooms": [
+        {"id": 0, "name": "---"},
+        {"id": 15, "name": "Kris's Room"},
+        {"id": 24, "name": "Hometown"},
+        {"id": 49, "name": "Noelle's House"},
+        {"id": 65, "name": "My Castle Town"},
+        {"id": 108, "name": "Dark Sanctuary ~1 - Atrium"},
+        {"id": 115, "name": "Dark Sanctuary ~1 - Study"},
+        {"id": 177, "name": "Dark Sanctuary ~1 - Lower Left"},
+        {"id": 218, "name": "Dark Sanctuary ~1 - Small Piano"},
+        {"id": 219, "name": "Dark Sanctuary ~1 - Library"},
+        {"id": 227, "name": "Dark Sanctuary ~1 - Lower Right"},
+        {"id": 247, "name": "2nd Sanctuary ~1 - Atrium"},
+        {"id": 251, "name": "2nd Sanctuary ~1 - Floor"},
+        {"id": 257, "name": "2nd Sanctuary ~1 - Study"},
+        {"id": 270, "name": "3rd Sanctuary"},
+        {"id": 277, "name": "3rd Sanctuary ~1 - Stairs"},
+        {"id": 280, "name": "3rd Sanctuary ~1 - Last Chamber"},
+        {"id": 298, "name": "Castle Town - TV Building"},
+        {"id": 304, "name": "2nd Sanctuary ~1 - Study"},
+        {"id": 322, "name": "MIKE ZONE"}
+      ],
+      "areas": {
+        "kris_room": ["Kris's Room"],
+        "hometown": ["Hometown"],
+        "noelles_house": ["Noelle's House"],
+        "my_castle_town": ["My Castle Town"],
+        "dark_sanctuary": ["Dark Sanctuary"],
+        "second_sanctuary": ["2nd Sanctuary"],
+        "third_sanctuary": ["3rd Sanctuary"],
+        "castle_town": ["Castle Town"],
+        "mike_zone": ["MIKE ZONE"]
+      }
+    },
+    "ch5": {
+      "name": "第五章",
+      "display_alias": "Garden of Hopes and Dreams",
+      "rooms": [
+        {"id": 0, "name": "---"},
+        {"id": 13, "name": "Kris's Room"},
+        {"id": 24, "name": "Hometown"},
+        {"id": 54, "name": "My Castle Town"},
+        {"id": 112, "name": "Castle Town - TV Building"},
+        {"id": 120, "name": "Dark World"},
+        {"id": 122, "name": "Garden - Beginning"},
+        {"id": 129, "name": "Garden - Flowery Helped"},
+        {"id": 133, "name": "Garden - Ideal Diner"},
+        {"id": 141, "name": "Garden - Shrine"},
+        {"id": 150, "name": "Garden - Way Home"},
+        {"id": 144, "name": "Cliffs - Beginning"},
+        {"id": 161, "name": "Cliffs - Shop"},
+        {"id": 167, "name": "Cliffs - Below Castle"},
+        {"id": 177, "name": "Flower Castle - Cafe"},
+        {"id": 179, "name": "Flower Castle - Jail"},
+        {"id": 183, "name": "Flower Castle - Left Doors"},
+        {"id": 187, "name": "Flower Castle - Left Stage"},
+        {"id": 189, "name": "Flower Castle - Left End"},
+        {"id": 202, "name": "Flower Castle - Right Diner"},
+        {"id": 207, "name": "Flower Castle - Right End"}
+      ],
+      "areas": {
+        "kris_room": ["Kris's Room"],
+        "hometown": ["Hometown"],
+        "my_castle_town": ["My Castle Town"],
+        "castle_town": ["Castle Town"],
+        "dark_world": ["Dark World"],
+        "garden": ["Garden"],
+        "cliffs": ["Cliffs"],
+        "flower_castle": ["Flower Castle"]
+      }
+    }
+  }
+}
