@@ -1,0 +1,476 @@
+=== 第 38 轮房间表 · 严格复检（B）===
+规则来源：build_roomtable3.py（AST 抽取，非手抄）
+RULES=42 条  NONSCENE=8 条  MAYBE=8 条
+
+房间表：5 章 / 1251 房间
+
+--- A0 判据鉴别力自检（故意用不存在的规则，必须与真规则不同）---
+[PASS] A0a 不存在的规则命中 0（判据能识别"无匹配"）  <- ZZZ=0
+[PASS] A0b 真规则命中数 ≠ 0（判据能识别"有匹配"）  <- RULES[0]=32
+
+--- A1 每条规则的命中数（全量 / 其中 scene）---
+  [ 0] system 系统与演出            全量   32  scene    0   ^room_(legend|legend_neo|chapter_continue|intro|intr
+  [ 1] system 系统与演出            全量   23  scene   11   ^room_(shop1|shop2|shop_music)$|^room_shop_ch\d+(_\w
+  [ 2] noelles_house 诺艾尔家             全量   15  scene   15   ^room_lw_noellehouse
+  [ 3] light_world 光世界              全量   28  scene   28   ^room_lw_
+  [ 4] ralsei_room 拉尔赛的城堡           全量   15  scene   15   ^room_dw_ralsei_castle
+  [ 5] card_castle 纸牌城堡             全量   38  scene   38   ^room_(dw_)?cc_
+  [ 6] kris_room 克里斯的房间           全量    5  scene    5   ^room_krisroom$
+  [ 7] home   克里斯的家            全量   22  scene   22   ^room_(krisroom_dark|krishallway|torroom|torhouse|to
+  [ 8] hometown 家乡               全量  139  scene  134   ^room_(town_\w+|beach|graveyard|diner|townhall|libra
+  [ 9] eye_puzzle 眼睛谜题             全量    1  scene    1   ^room_dark_eyepuzzle$
+  [10] unknown ？？？？？？           全量    1  scene    1   ^room_dark1a$
+  [11] dark_world 黑暗世界             全量    9  scene    8   ^room_dark(_|\d)
+  [12] castle_town 城堡镇              全量   10  scene   10   ^room_castle_
+  [13] field  希望与梦想之原          全量   24  scene   24   ^room_field
+  [14] forest 猩红森林             全量   32  scene   32   ^room_forest
+  [15] cyber_field 赛博原野             全量   43  scene   43   ^room_dw_cyber_
+  [16] cyber_city 赛博都市             全量   52  scene   52   ^room_dw_city_
+  [17] queens_mansion 女王宅邸             全量   80  scene   80   ^room_dw_mansion_
+  [18] tv_world 电视世界             全量   63  scene   63   ^room_dw_teevie_|^room_dw_tv_|^room_dw_b3bs_
+  [19] board_world 冒险棋盘             全量   25  scene   18   ^room_board
+  [20] dark_world 黑暗世界             全量    9  scene    9   ^room_dw_couch_
+  [21] ranking_world 排行榜世界            全量    7  scene    7   ^room_dw_ranking_
+  [22] puzzle_closet 谜题柜              全量    5  scene    5   ^room_dw_puzzlecloset_
+  [23] cold_place 冰寒之地             全量    3  scene    3   ^room_dw_snow_
+  [24] green_room 绿房间              全量    1  scene    1   ^room_dw_green_room$
+  [25] tv_backstage 电视世界后台           全量   22  scene   22   ^room_dw_(nondescript|susiezilla|chef|shadowmantle|b
+  [26] tv_backstage 电视世界后台           全量    7  scene    6   ^room_(susiezilla|shadowmantle|shootout|ch3_gameshow
+  [27] dark_sanctuary 暗之圣域             全量  108  scene  105   ^room_dw_church_
+  [28] second_sanctuary 第二圣域             全量   31  scene   31   ^room_dw_churchb_
+  [29] third_sanctuary 第三圣域             全量   28  scene   28   ^room_dw_churchc_
+  [30] mike_zone 麦克地带             全量    8  scene    7   ^room_(overworld|darkness)_|^room_dw_overworld|^room
+  [31] dark_world 黑暗世界             全量    1  scene    1   ^room_dw_garden_intro$
+  [32] cliffs 崖边               全量    1  scene    1   ^room_dw_garden_cliffexit$
+  [33] garden 希望之园             全量   33  scene   33   ^room_dw_garden_
+  [34] cliffs 崖边               全量   22  scene   22   ^room_dw_cliff_
+  [35] flower_castle 花之城堡             全量   64  scene   63   ^room_dw_fcastle_
+  [36] flower_castle 花之城堡             全量    6  scene    6   ^room_dw_(post|pink|flowery|dogballoon)(_|$)|^room_d
+  [37] mike_zone 麦克地带             全量    3  scene    3   ^room_dw_castle_tv_zone_\d+
+  [38] castle_town 城堡镇              全量    2  scene    2   ^room_dw_castle_tv$
+  [39] castle_town 城堡镇              全量    1  scene    1   ^room_dw_castle_area_2$
+  [40] my_castle_town 我的城堡镇            全量    8  scene    8   ^room_dw_castle_(area_\d+_transformed|town|restauran
+  [41] my_castle_town 我的城堡镇            全量   49  scene   49   ^room_dw_castle_
+[PASS] A1a 每条规则在全量房间维度都命中过 ≥1（无死规则）  <- 死规则下标=[]
+[PASS] A1b 每个 scene 都被某条规则命中（无遗漏）  <- 未命中=0
+
+--- A2 同名资源跨章区域一致性 ---
+[PASS] A2 同名资源在所有章里判到同一区域  <- 不一致 0 个
+
+--- A3 area_id 与 area_name 一对一 ---
+[PASS] A3a 一个 area_id 只对应一个 area_name  <- {}
+[PASS] A3b 一个 area_name 只对应一个 area_id  <- {}
+区域总数 = 32
+
+--- A4 分类计数与锚点 ---
+  {'nonscene': 201, 'scene': 1013, 'maybe': 37}
+[PASS] A4a 总数 = 1251  <- 1251
+[PASS] A4b 分类键只有 scene/maybe/nonscene  <- ['maybe', 'nonscene', 'scene']
+[PASS] A4c 锚点 = 87（不含 desktop）  <- 87
+[PASS] A4d 87 个锚点的 area_id 全部被复现  <- 不一致 0
+
+--- A5 nonscene 全清单（逐条人眼核，找误杀）---
+  ^ROOM_INITIALIZE$                            5 个
+        ch1:ROOM_INITIALIZE
+        ch2:ROOM_INITIALIZE
+        ch3:ROOM_INITIALIZE
+        ch4:ROOM_INITIALIZE
+        ch5:ROOM_INITIALIZE
+  ^PLACE_                                     34 个
+        ch1:PLACE_CONTACT
+        ch1:PLACE_DOG
+        ch1:PLACE_LOGO
+        ch1:PLACE_FAILURE
+        ch1:PLACE_MENU
+        ch2:PLACE_CONTACT
+        ch2:PLACE_DOG
+        ch2:PLACE_LOGO
+        ch2:PLACE_FAILURE
+        ch2:PLACE_NAMING_JIKKEN
+        ch2:PLACE_MENU
+        ch2:PLACE_DOGCHECK2
+        ch3:PLACE_CONTACT
+        ch3:PLACE_DOG
+        ch3:PLACE_LOGO
+        ch3:PLACE_FAILURE
+        ch3:PLACE_NAMING_JIKKEN
+        ch3:PLACE_MENU
+        ch3:PLACE_DOGCHECK2
+        ch4:PLACE_CONTACT
+        ch4:PLACE_DOG
+        ch4:PLACE_LOGO
+        ch4:PLACE_FAILURE
+        ch4:PLACE_NAMING_JIKKEN
+        ch4:PLACE_MENU
+        ch4:PLACE_DOGCHECK2
+        ch5:PLACE_CONTACT
+        ch5:PLACE_DOG
+        ch5:PLACE_LOGO
+        ch5:PLACE_FAILURE
+        ch5:PLACE_NAMING_JIKKEN
+        ch5:PLACE_MENU
+        ch5:PLACE_DOGCHECK2
+        ch5:PLACE_DOGCHECK_CH5
+  debug|failsafe                              40 个
+        ch2:room_gms_debug_failsafe
+        ch2:room_debug_color
+        ch2:room_debug_battle
+        ch2:room_debug_loc
+        ch2:room_debug_smallface_dark
+        ch2:room_debug_smallface
+        ch2:room_debug_choicer_dark
+        ch2:room_debug_choicer_light
+        ch2:room_debug_battleBalloon
+        ch3:room_gms_debug_failsafe
+        ch3:room_debug_color
+        ch3:room_debug_battle
+        ch3:room_debug_loc
+        ch3:room_debug_smallface_dark
+        ch3:room_debug_smallface
+        ch3:room_debug_choicer_dark
+        ch3:room_debug_choicer_light
+        ch3:room_debug_battleBalloon
+        ch3:room_debug_tennatexttester
+        ch4:room_gms_debug_failsafe
+        ch4:room_debug_color
+        ch4:room_debug_battle
+        ch4:room_debug_loc
+        ch4:room_debug_smallface_dark
+        ch4:room_debug_smallface
+        ch4:room_debug_choicer_dark
+        ch4:room_debug_choicer_light
+        ch4:room_debug_battleBalloon
+        ch4:room_debug_layeredLevelTest
+        ch4:room_debug_windowEffect
+        ch4:room_debug_pianotest
+        ch5:room_gms_debug_failsafe
+        ch5:room_debug_color
+        ch5:room_debug_battle
+        ch5:room_debug_loc
+        ch5:room_debug_smallface_dark
+        ch5:room_debug_smallface
+        ch5:room_debug_choicer_dark
+        ch5:room_debug_choicer_light
+        ch5:room_debug_battleBalloon
+  test                                        91 个
+        ch1:room_battletest
+        ch2:room_battletest
+        ch2:room_cutscene_tester
+        ch2:room_sound_tester
+        ch2:room_sprite_tester
+        ch2:room_gif_tester
+        ch2:room_bullettest
+        ch2:room_GMS2_test
+        ch2:room_cutscene_tester_b
+        ch2:room_musical_sync_test
+        ch3:room_battletest
+        ch3:room_cutscene_tester
+        ch3:room_sound_tester
+        ch3:room_sprite_tester
+        ch3:room_gif_tester
+        ch3:room_bullettest
+        ch3:room_GMS2_test
+        ch3:room_cutscene_tester_b
+        ch3:room_overworldBulletEnemyTest
+        ch3:room_board1_oldtest
+        ch3:room_boardtest
+        ch3:room_boardtest_old
+        ch3:room_tennaCutsceneTest
+        ch3:room_tennaAnimTest
+        ch3:room_board_designTest
+        ch3:room_adventureboardtest
+        ch3:room_lerptest
+        ch3:room_board_boattest
+        ch3:room_board_tests
+        ch3:room_board_postshadowmantle_test
+        ch3:room_genanimtest
+        ch3:room_perspective_testing
+        ch3:room_dw_b3bstest
+        ch3:room_dw_b3bstest_big
+        ch3:room_bullettest_new
+        ch3:room_ch3_gameshowroom_tennatest
+        ch3:room_rhythmgame_tenna_test
+        ch3:room_dw_channelchange_test
+        ch4:room_battletest
+        ch4:room_cutscene_tester
+        … 余 51
+  title_placeholder                            4 个
+        ch2:room_title_placeholder
+        ch3:room_title_placeholder
+        ch4:room_title_placeholder
+        ch5:room_title_placeholder
+  ^(room_empty|room_DARKempty)$               10 个
+        ch1:room_empty
+        ch1:room_DARKempty
+        ch2:room_empty
+        ch2:room_DARKempty
+        ch3:room_empty
+        ch3:room_DARKempty
+        ch4:room_empty
+        ch4:room_DARKempty
+        ch5:room_empty
+        ch5:room_DARKempty
+  ^room_DARKbase_GMS2$                         4 个
+        ch2:room_DARKbase_GMS2
+        ch3:room_DARKbase_GMS2
+        ch4:room_DARKbase_GMS2
+        ch5:room_DARKbase_GMS2
+  ^room_(gameover|ed|man|splashscreen)$       13 个
+        ch1:room_gameover
+        ch1:room_ed
+        ch1:room_man
+        ch1:room_splashscreen
+        ch2:room_gameover
+        ch2:room_ed
+        ch3:room_gameover
+        ch3:room_ed
+        ch4:room_gameover
+        ch4:room_ed
+        ch5:room_gameover
+        ch5:room_ed
+        ch5:room_man
+
+--- A6 maybe 全清单 ---
+  ^room_legend(_neo)?$                       9 个
+        ch1[132]:room_legend
+        ch2[227]:room_legend
+        ch2[228]:room_legend_neo
+        ch3[67]:room_legend
+        ch3[68]:room_legend_neo
+        ch4[76]:room_legend
+        ch4[77]:room_legend_neo
+        ch5[67]:room_legend
+        ch5[68]:room_legend_neo
+  ^room_chapter_continue$                    5 个
+        ch1[146]:room_chapter_continue
+        ch2[277]:room_chapter_continue
+        ch3[245]:room_chapter_continue
+        ch4[327]:room_chapter_continue
+        ch5[95]:room_chapter_continue
+  ^room_(shop1|shop2|shop_music)$            9 个
+        ch1[133]:room_shop1
+        ch1[134]:room_shop2
+        ch2[229]:room_shop1
+        ch3[69]:room_shop1
+        ch3[70]:room_shop_music
+        ch4[78]:room_shop1
+        ch4[79]:room_shop_music
+        ch5[69]:room_shop1
+        ch5[70]:room_shop_music
+  ^room_shop_ch\d_\w+$                       3 个
+        ch2[230]:room_shop_ch2_music
+        ch2[231]:room_shop_ch2_swatch
+        ch2[232]:room_shop_ch2_spamton
+  ^room_intro(_ch\d)?$                       4 个
+        ch2[225]:room_intro_ch2
+        ch3[243]:room_intro
+        ch4[105]:room_intro_ch4
+        ch5[247]:room_intro_ch5
+  ^room_transformation_sequence$             1 个
+        ch2[268]:room_transformation_sequence
+  unusedroom                                 5 个
+        ch1[33]:room_school_unusedroom
+        ch2[54]:room_school_unusedroom
+        ch3[51]:room_school_unusedroom
+        ch4[60]:room_school_unusedroom
+        ch5[49]:room_school_unusedroom
+  ^room_myroom_dark$                         1 个
+        ch1[136]:room_myroom_dark
+
+--- A7 敏感子串正则命中明细（test / debug / failsafe）---
+  ch1      room_battletest                                cls=nonscene
+  ch2      room_gms_debug_failsafe                        cls=nonscene
+  ch2      room_battletest                                cls=nonscene
+  ch2      room_cutscene_tester                           cls=nonscene
+  ch2      room_sound_tester                              cls=nonscene
+  ch2      room_sprite_tester                             cls=nonscene
+  ch2      room_gif_tester                                cls=nonscene
+  ch2      room_bullettest                                cls=nonscene
+  ch2      room_GMS2_test                                 cls=nonscene
+  ch2      room_cutscene_tester_b                         cls=nonscene
+  ch2      room_debug_color                               cls=nonscene
+  ch2      room_debug_battle                              cls=nonscene
+  ch2      room_debug_loc                                 cls=nonscene
+  ch2      room_musical_sync_test                         cls=nonscene
+  ch2      room_debug_smallface_dark                      cls=nonscene
+  ch2      room_debug_smallface                           cls=nonscene
+  ch2      room_debug_choicer_dark                        cls=nonscene
+  ch2      room_debug_choicer_light                       cls=nonscene
+  ch2      room_debug_battleBalloon                       cls=nonscene
+  ch3      room_gms_debug_failsafe                        cls=nonscene
+  ch3      room_battletest                                cls=nonscene
+  ch3      room_cutscene_tester                           cls=nonscene
+  ch3      room_sound_tester                              cls=nonscene
+  ch3      room_sprite_tester                             cls=nonscene
+  ch3      room_gif_tester                                cls=nonscene
+  ch3      room_bullettest                                cls=nonscene
+  ch3      room_GMS2_test                                 cls=nonscene
+  ch3      room_cutscene_tester_b                         cls=nonscene
+  ch3      room_debug_color                               cls=nonscene
+  ch3      room_debug_battle                              cls=nonscene
+  ch3      room_debug_loc                                 cls=nonscene
+  ch3      room_debug_smallface_dark                      cls=nonscene
+  ch3      room_debug_smallface                           cls=nonscene
+  ch3      room_debug_choicer_dark                        cls=nonscene
+  ch3      room_debug_choicer_light                       cls=nonscene
+  ch3      room_debug_battleBalloon                       cls=nonscene
+  ch3      room_overworldBulletEnemyTest                  cls=nonscene
+  ch3      room_board1_oldtest                            cls=nonscene
+  ch3      room_boardtest                                 cls=nonscene
+  ch3      room_boardtest_old                             cls=nonscene
+  ch3      room_tennaCutsceneTest                         cls=nonscene
+  ch3      room_tennaAnimTest                             cls=nonscene
+  ch3      room_board_designTest                          cls=nonscene
+  ch3      room_adventureboardtest                        cls=nonscene
+  ch3      room_lerptest                                  cls=nonscene
+  ch3      room_board_boattest                            cls=nonscene
+  ch3      room_debug_tennatexttester                     cls=nonscene
+  ch3      room_board_tests                               cls=nonscene
+  ch3      room_board_postshadowmantle_test               cls=nonscene
+  ch3      room_genanimtest                               cls=nonscene
+  ch3      room_perspective_testing                       cls=nonscene
+  ch3      room_dw_b3bstest                               cls=nonscene
+  ch3      room_dw_b3bstest_big                           cls=nonscene
+  ch3      room_bullettest_new                            cls=nonscene
+  ch3      room_ch3_gameshowroom_tennatest                cls=nonscene
+  ch3      room_rhythmgame_tenna_test                     cls=nonscene
+  ch3      room_dw_channelchange_test                     cls=nonscene
+  ch4      room_gms_debug_failsafe                        cls=nonscene
+  ch4      room_battletest                                cls=nonscene
+  ch4      room_cutscene_tester                           cls=nonscene
+  ch4      room_sound_tester                              cls=nonscene
+  ch4      room_sprite_tester                             cls=nonscene
+  ch4      room_gif_tester                                cls=nonscene
+  ch4      room_bullettest                                cls=nonscene
+  ch4      room_GMS2_test                                 cls=nonscene
+  ch4      room_cutscene_tester_b                         cls=nonscene
+  ch4      room_debug_color                               cls=nonscene
+  ch4      room_debug_battle                              cls=nonscene
+  ch4      room_debug_loc                                 cls=nonscene
+  ch4      room_test_climb_new                            cls=nonscene
+  ch4      room_debug_smallface_dark                      cls=nonscene
+  ch4      room_debug_smallface                           cls=nonscene
+  ch4      room_debug_choicer_dark                        cls=nonscene
+  ch4      room_debug_choicer_light                       cls=nonscene
+  ch4      room_debug_battleBalloon                       cls=nonscene
+  ch4      room_overworldBulletEnemyTest                  cls=nonscene
+  ch4      room_debug_layeredLevelTest                    cls=nonscene
+  ch4      room_debug_windowEffect                        cls=nonscene
+  ch4      room_dark_twostoryTest                         cls=nonscene
+  ch4      room_overworldDarknessBulletTest               cls=nonscene
+  ch4      room_lerptest                                  cls=nonscene
+  ch4      room_traintest                                 cls=nonscene
+  ch4      room_dw_church_rippletest                      cls=nonscene
+  ch4      room_dw_church_gueitest                        cls=nonscene
+  ch4      room_debug_pianotest                           cls=nonscene
+  ch4      room_gersonbattleroomtest                      cls=nonscene
+  ch4      room_traintest_big                             cls=nonscene
+  ch4      room_dw_3d_tower_test                          cls=nonscene
+  ch4      room_dw_titan_tower_test                       cls=nonscene
+  ch4      room_bullettest_new                            cls=nonscene
+  ch4      room_test_pianoGimmick                         cls=nonscene
+  ch4      room_test_remotePiano                          cls=nonscene
+  ch4      room_test_climb_new2                           cls=nonscene
+  ch4      room_test_climb_cameratest                     cls=nonscene
+  ch4      room_test_climb_0001                           cls=nonscene
+  ch4      room_test_climb_enterexit                      cls=nonscene
+  ch4      room_dw_church_quicktest                       cls=nonscene
+  ch4      room_rotating_tower_new_test                   cls=nonscene
+  ch4      room_dw_channelchange_test                     cls=nonscene
+  ch4      room_ripple_test                               cls=nonscene
+  ch4      room_lightworldTest                            cls=nonscene
+  ch4      room_vfx_tester                                cls=nonscene
+  ch4      room_shapetest                                 cls=nonscene
+  ch5      room_gms_debug_failsafe                        cls=nonscene
+  ch5      room_battletest                                cls=nonscene
+  ch5      room_cutscene_tester                           cls=nonscene
+  ch5      room_sound_tester                              cls=nonscene
+  ch5      room_sprite_tester                             cls=nonscene
+  ch5      room_gif_tester                                cls=nonscene
+  ch5      room_GMS2_test                                 cls=nonscene
+  ch5      room_cutscene_tester_b                         cls=nonscene
+  ch5      room_debug_color                               cls=nonscene
+  ch5      room_debug_battle                              cls=nonscene
+  ch5      room_debug_loc                                 cls=nonscene
+  ch5      room_debug_smallface_dark                      cls=nonscene
+  ch5      room_debug_smallface                           cls=nonscene
+  ch5      room_debug_choicer_dark                        cls=nonscene
+  ch5      room_debug_choicer_light                       cls=nonscene
+  ch5      room_debug_battleBalloon                       cls=nonscene
+  ch5      room_overworldBulletEnemyTest                  cls=nonscene
+  ch5      room_lerptest                                  cls=nonscene
+  ch5      room_bullettest                                cls=nonscene
+  ch5      room_bullettest_new                            cls=nonscene
+  ch5      room_animexampletest                           cls=nonscene
+  ch5      room_climbtest                                 cls=nonscene
+  ch5      room_towery_tester                             cls=nonscene
+  ch5      room_animtest                                  cls=nonscene
+  ch5      room_darkbulbTest                              cls=nonscene
+  ch5      room_dw_fcastle_shadowplatformTest             cls=nonscene
+  ch5      room_dw_petaltest                              cls=nonscene
+  ch5      room_floortex_test                             cls=nonscene
+
+--- A9 开发残留特征 rooms（仍算 scene，仅呈现）---
+  命中 47 个 / 共 1013 个 scene
+    ch2      room_dw_castle_west_cliff_old                  ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_keyboardexample                  (example)
+    ch2      room_dw_city_monologue_old                     ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_traffic_original               ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_east_2f_ufo_old                ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_acid_tunnel_old                ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_top_post_old                   ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_battle_maze_2_old                ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_keyboard_puzzle_1_old            ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_tasque_battle_og                 ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_savepoint_original               ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_battle_maze_1_Original           ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_cyber_music_bullet_original            ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_big_1_original                    ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_traffic_2_old                     ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_big_2_OG                          ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_mice2_og                          ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_east_teacup_4_old              ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_traffic_5_old                     ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_dining_storage_old             ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_mansion_east_2f_d_backup               ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_traffic_3_backup                  ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch2      room_dw_city_big_3_og                          ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch3      room_shadowmantle_movementExample              (example)
+    ch3      room_susiezilla_singleScreenMockup             (mockup)
+    ch3      room_dw_b3bs_zapper_a_old                      ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_darkness_example                          (example)
+    ch4      room_darkness_example_2                        (example)
+    ch4      room_dw_church_darkroom1_old                   ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_lantern1_old_old                ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_darkbell_old                    ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_darkroom_old                    ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_lantern1_old                    ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_statueroom_old                  ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_lantern_hallway_old             ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_chase_old                       ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_tallbookcases_backup            ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_rotating_tower_new_example                (example)
+    ch4      room_dw_churchc_titanclimb1_old                ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchc_titanclimb2_old                ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchb_prophecymaze_old               ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchb_rotatingtower_old              ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_church_bookshelfpuzzle_rev             ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchc_prophecies_backup              ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchc_titanclimb1_tiled              ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchc_titanclimb2_tiled              ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+    ch4      room_dw_churchb_rotatingtower_tiled            ((_old|_og|_original|_backup|_rev|_tiled|_separate)\b)
+
+--- A8 抽查：易错映射 ---
+  room_beach                         [('ch1', 'scene', 'hometown'), ('ch2', 'scene', 'hometown'), ('ch3', 'scene', 'hometown'), ('ch4', 'scene', 'hometown'), ('ch5', 'scene', 'hometown')]
+  room_town_krisyard_dark            [('ch3', 'scene', 'hometown'), ('ch4', 'scene', 'hometown')]
+  room_darkness_example              [('ch4', 'scene', 'mike_zone')]
+  room_dw_castle_area_2              [('ch2', 'scene', 'castle_town')]
+  room_dw_castle_tv                  [('ch4', 'scene', 'castle_town'), ('ch5', 'scene', 'castle_town')]
+  room_cc_lancer                     [('ch1', 'scene', 'card_castle'), ('ch2', 'scene', 'card_castle'), ('ch3', 'scene', 'card_castle'), ('ch4', 'scene', 'card_castle'), ('ch5', 'scene', 'card_castle')]
+  room_dw_green_room                 [('ch3', 'scene', 'green_room')]
+  room_dw_church_intro1              [('ch4', 'scene', 'dark_sanctuary')]
+  room_krisroom_dark                 [('ch4', 'scene', 'home')]
+  room_dogplatforming                [('ch5', 'scene', 'flower_castle')]
+  room_dw_city_mice2_og              [('ch2', 'scene', 'cyber_city')]
+
+=== 复检汇总：11 项  PASS=11  FAIL=0 ===
