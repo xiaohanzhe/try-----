@@ -32,7 +32,8 @@ P0 只做骨架，**不接渲染层**。所以唯一能证明"骨架没搞坏东
   F 纯函数：visible_objects（过滤 + 排序 + 不改原 dict）
   G SceneState（from_dict 容错 / describe 唯一入口）
   H 控制器双向转发（不成环 / 状态不劈裂 / 缺失名抛 AttributeError）
-  J main.py 三处接线（import / _CONTROLLER_ATTRS / 预声明 / 实例化）
+  J main.py 接线（import / _CONTROLLER_ATTRS / 9 字段预声明 / 实例化 /
+    **P0 期真调 load()+load_routes()** / 死名不许回来）
   K 桌面场景与作品内场景**同级同构**（不许开后门）
 
 本套件**不联网、不实例化 App、不需要显示器**（纯数据 + 桩宿主）。
@@ -517,13 +518,18 @@ class _StubHost(object):
     _CONTROLLER_ATTRS = ('scene',)
 
     def __init__(self):
-        # 复刻 main.py init_systems 里那 6 个预声明字段。
+        # 复刻 main.py init_systems 里那 9 个预声明字段（6 场景 + 3 路由）。
+        # ⚠️ 名单必须与 main.py 逐名对齐 —— 少一个，控制器首次赋值就会落到
+        #    自己的 __dict__（状态劈两份），而**桩少字段是看不出来的**。
         self._scene_index = None
         self._scene_state = None
         self.current_scene = None
         self.scene_objects = []
         self._scene_anchors = {}
         self._scene_loaded = False
+        self._scene_routes = None
+        self._routes_loaded = False
+        self._scene_route_reason = ''
         self.calls = []
         self.scene = C.SceneController(self)
 
@@ -686,8 +692,14 @@ ok('J3 init_systems 里创建了 self.scene = SceneController(self)',
 
 # 预声明：漏一个 → 该字段首次赋值会落到控制器自己的 __dict__ → 状态劈两份。
 # ⚠️ 断言写的是**字段名在这些赋值里出现**，不是断言"赋值行数"（数字会漂）。
+# 第 38 轮：字段从 6 个补成 **9 个**（原 6 个场景字段 + 3 个路由字段）——
+#   路由层落地时往宿主加了 `_scene_routes` / `_routes_loaded` / `_scene_route_reason`，
+#   而这里的名单没跟上（控制器文档与 main.py 注释也都还写着"6 个"）。
+#   漏声明的后果不是"报错"、而是**静默的状态劈裂**（本项目踩过两次），
+#   所以名单必须与 main.py 实际预声明**逐名对齐**。
 _SCENE_FIELDS = ('_scene_index', '_scene_state', 'current_scene',
-                 'scene_objects', '_scene_anchors', '_scene_loaded')
+                 'scene_objects', '_scene_anchors', '_scene_loaded',
+                 '_scene_routes', '_routes_loaded', '_scene_route_reason')
 _MAIN_NOSPACE = CODE_MAIN
 for _f in _SCENE_FIELDS:
     _assigned = ('self.%s=' % _f) in _MAIN_NOSPACE
@@ -695,10 +707,110 @@ for _f in _SCENE_FIELDS:
        _assigned,
        'main.py 里找不到 self.%s = 的预声明' % _f)
 
-# 交叉验证：控制器真正读写的字段，必须全在上面那 6 个里（防"控制器偷偷用新字段"）。
-ok('J5 控制器自身不引入任何新字段名（全部走宿主已预声明的 6 个）',
+# 交叉验证：控制器真正读写的字段，必须全在上面那 9 个里（防"控制器偷偷用新字段"）。
+ok('J5 控制器自身不引入任何新字段名（全部走宿主已预声明的 9 个）',
    [k for k in _H.scene.__dict__ if k != 'p'] == [],
    '控制器自有键=%r' % [k for k in _H.scene.__dict__ if k != 'p'])
+
+# ---------------------------------------------------------------------------
+#  J6/P0 接线（第 38 轮新增）
+# ---------------------------------------------------------------------------
+# 为什么这条必须守：本项目的**最贵坑**是「函数写对了但产品用不上」（踩过 4 次）。
+# `SceneController.load()` / `load_routes()` 写好了却**一次都没被调用**，
+# 就是同一个坑的第 5 次：产品进程里 `_scene_loaded` 恒 False、`current_scene`
+# 恒 None —— 索引躺在磁盘上，场景系统等于不存在。
+# 断言口径 = "在 main.py 里真的存在这两个调用"（走 code_only_src，剥掉注释/字符串，
+# 避免被文档里的示例文字误命中）。
+_WIRE_LOAD = 'self.scene.load()'
+_WIRE_ROUTES = 'self.scene.load_routes()'
+
+ok('J6 P0 接线：main.py 真的调用了 self.scene.load()（索引 + 默认场景）',
+   _WIRE_LOAD in CODE_MAIN,
+   'main.py 里找不到 %s 的调用（load() 又变成没人调的死接口）' % _WIRE_LOAD)
+
+ok('J6b P0 接线：main.py 真的调用了 self.scene.load_routes()（路由表）',
+   _WIRE_ROUTES in CODE_MAIN,
+   'main.py 里找不到 %s 的调用' % _WIRE_ROUTES)
+
+# 负控制：把这两个调用从源码里抹掉，判据必须**变假** —— 否则上面两条是恒真判据。
+_STRIPPED = CODE_MAIN.replace(_WIRE_LOAD, '').replace(_WIRE_ROUTES, '')
+ok('J6c 负控制：抹掉这两个调用后，J6/J6b 的判据必须变假（判据有鉴别力）',
+   (_WIRE_LOAD not in _STRIPPED) and (_WIRE_ROUTES not in _STRIPPED),
+   '抹掉后仍命中 ⇒ 判据是恒真的')
+
+# ---------------------------------------------------------------------------
+#  J7 死名不许回来（第 38 轮删掉的两处"看起来在守/在做，其实没有"）
+# ---------------------------------------------------------------------------
+# 1) `refresh_objects` —— `switch()` 里曾写
+#      `self.refresh_objects() if hasattr(self, 'refresh_objects') else []`
+#    而该方法**全仓没有任何定义** ⇒ hasattr 恒假 ⇒ scene_objects 恒为 []。
+#    已改成显式 `pet.scene_objects = []`（并注明由 resolve_objects 填）。
+# 2) `_FALLBACK_PRIORITY` —— `scene_routing` 里定义后**零引用**，且 `_routes.json`
+#    里没有任何规则用 10000。兜底走的是 match() 的独立分支，不参与 priority 排序。
+_PY_FILES = []
+for _root, _dirs, _files in os.walk(PET):
+    _dirs[:] = [d for d in _dirs if d != '__pycache__']
+    for _fn in _files:
+        if _fn.endswith('.py'):
+            _PY_FILES.append(os.path.join(_root, _fn))
+
+
+def _identifiers(src):
+    """源码里作为**标识符**出现的名字集合（注释与字符串一律不计）。
+
+    ⚠️ 为什么不用 `'name' in 源码`：这两处修复的**注释里都必须提到这两个名字**
+    （要解释"为什么删掉、别再回来"），纯文本口径会被自己的注释判红 ——
+    第 38 轮实测先红了一次，正属「报红先怀疑判据」那一类。
+    ⇒ 按铁律走 AST：能被当作标识符用到的名字才作数。
+    """
+    import ast as _ast
+    names = set()
+    try:
+        tree = _ast.parse(src)
+    except SyntaxError:
+        return names
+    for node in _ast.walk(tree):
+        if isinstance(node, _ast.Name):
+            names.add(node.id)
+        elif isinstance(node, _ast.Attribute):
+            names.add(node.attr)
+        elif isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef,
+                               _ast.ClassDef)):
+            names.add(node.name)
+        elif isinstance(node, _ast.arg):
+            names.add(node.arg)
+        elif isinstance(node, _ast.Global):
+            names.update(node.names)
+        elif isinstance(node, _ast.Nonlocal):
+            names.update(node.names)
+    return names
+
+
+_IDENTS = dict((p, _identifiers(_read(p))) for p in _PY_FILES)
+_REFRESH_DEFS = [p for p in _PY_FILES if 'refresh_objects' in _IDENTS[p]]
+_FALLBACK_USES = [p for p in _PY_FILES if '_FALLBACK_PRIORITY' in _IDENTS[p]]
+
+ok('J7 全仓无 `refresh_objects` 这个标识符（假 hasattr 不许回来）',
+   _REFRESH_DEFS == [],
+   '仍含定义的文件=%r' % [os.path.basename(p) for p in _REFRESH_DEFS])
+
+ok('J7b 全仓无 `_FALLBACK_PRIORITY` 这个标识符（零引用死常量不许回来）',
+   _FALLBACK_USES == [],
+   '仍含该名的文件=%r' % [os.path.basename(p) for p in _FALLBACK_USES])
+
+# 负控制：上面两条靠 `_identifiers` 判定，得证明它**真的会响** ——
+# 喂一份含目标标识符的合成源码，必须出现在集合里；且注释里的同名不算数。
+_SYN = 'def refresh_objects(self):\n    _FALLBACK_PRIORITY = 1\n'
+_SYN_CMT = '# 提到 refresh_objects 与 _FALLBACK_PRIORITY 但只是注释\nx = 1\n'
+ok('J7c 负控制：合成源码里的两个标识符必须都被识别到（判据有鉴别力）',
+   ('refresh_objects' in _identifiers(_SYN))
+   and ('_FALLBACK_PRIORITY' in _identifiers(_SYN)),
+   'identifiers=%r' % sorted(_identifiers(_SYN)))
+
+ok('J7d 负控制：**只出现在注释里**的名字不算数（防"被自己的注释判红"）',
+   ('refresh_objects' not in _identifiers(_SYN_CMT))
+   and ('_FALLBACK_PRIORITY' not in _identifiers(_SYN_CMT)),
+   'identifiers=%r' % sorted(_identifiers(_SYN_CMT)))
 
 # ===========================================================================
 #  K  桌面是一等场景（同级同构，不开后门）

@@ -298,7 +298,7 @@ SUITES = [
         #   · 纯函数（resolve_anchor / pick_variant / depth_of / visible_objects）
         #     的正控制 + 负控制成对；
         #   · 初始化环纪律（scene_system 禁 import Qt / 禁 import 项目内模块）；
-        #   · 控制器双向转发不成环、状态不劈裂（宿主预声明 6 字段）；
+        #   · 控制器双向转发不成环、状态不劈裂（宿主预声明 9 字段 = 6 场景 + 3 路由）；
         #   · 桌面是一等场景（同级同构、不许开后门）。
         # **不联网、不实例化 App、不需要显示器**（纯数据 + 桩宿主）。
         'id': 'scene_p0',
@@ -309,7 +309,8 @@ SUITES = [
                 '（锚点换算/多屏负坐标/算不出→None 不伪装成(0,0) / 多帧轮播 / 脚底深度排序）'
                 '+ 数据文件契约（索引/锚点/桌面场景 + 路径穿越拦截）'
                 '+ 控制器双向转发（不成环、状态不劈裂、缺失名抛 AttributeError）'
-                '+ main.py 三处接线（import / _CONTROLLER_ATTRS / 6 字段预声明）'
+                '+ main.py 四处接线（import / _CONTROLLER_ATTRS / 9 字段预声明 / '
+                'P0 期调用 load()+load_routes()）'
                 '+ 桌面与作品内场景同级同构（无 desktop 特判）',
     },
     {

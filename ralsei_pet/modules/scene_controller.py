@@ -76,15 +76,19 @@ class SceneController(object):
 
     状态全在宿主
     ------------
-    本类**不持有任何场景状态**。宿主在 `init_systems()` 里预声明了 6 个字段
-    （见 main.py「场景系统状态字段」段），本类只通过 `self.p` 读写它们：
+    本类**不持有任何场景状态**。宿主在 `init_systems()` 里预声明了 **9** 个字段
+    （**6 个场景 + 3 个路由**，见 main.py「场景系统 状态字段」段），本类只通过
+    `self.p` 读写它们：
 
-        self.p._scene_index     索引（load_index 的结果）
-        self.p._scene_state     当前 SceneState（或 None）
-        self.p.current_scene    当前场景 id（str 或 None）
-        self.p.scene_objects    当前可见物件缓存（list）
-        self.p._scene_anchors   全局锚点表（dict）
-        self.p._scene_loaded    是否已加载过索引（bool，防重复 IO）
+        self.p._scene_index         索引（load_index 的结果）
+        self.p._scene_state         当前 SceneState（或 None）
+        self.p.current_scene        当前场景 id（str 或 None）
+        self.p.scene_objects        当前可见物件缓存（list；由 resolve_objects 填）
+        self.p._scene_anchors       全局锚点表（dict）
+        self.p._scene_loaded        是否已加载过索引（bool，防重复 IO）
+        self.p._scene_routes        路由表（load_routes 的结果）
+        self.p._routes_loaded       路由表是否已加载过（bool，幂等守卫）
+        self.p._scene_route_reason  最近一次路由命中的理由（str）
 
     ⚠️ 之所以强调"宿主预声明"：本类的 `__setattr__` 转发判据是「宿主**已经拥有**
     这个名字」。若某个字段没在宿主预声明，那么首次赋值 `self.<新名> = x` 会落到
@@ -263,7 +267,14 @@ class SceneController(object):
             # 状态一次性写完（不留"改了一半"的中间态）。
             pet._scene_state = scene
             pet.current_scene = scene_id
-            pet.scene_objects = self.refresh_objects() if hasattr(self, 'refresh_objects') else []
+            # `scene_objects` = "当前可见物件缓存"。**这里不能现算** —— 算它必须有
+            # screen_rect（入口是 `resolve_objects(screen_rect)`），而切场景时拿不到。
+            # ⇒ 显式清空，避免把上一个场景的物件残影留给渲染层。
+            # ⚠️ 旧写法是 `self.refresh_objects() if hasattr(self, 'refresh_objects') else []`：
+            #    `refresh_objects` **全仓没有任何定义** ⇒ `hasattr` 恒假 ⇒ 永远走 `[]`
+            #    —— 形如"在刷新"，实则空转（第 38 轮复检删除）。
+            #    P1 的渲染层请直接调 `resolve_objects(screen_rect)` 来填这个字段。
+            pet.scene_objects = []
             return True
         except Exception as e:
             _log.warning("切换到场景 %r 失败（保持当前场景）: %s", scene_id, e)

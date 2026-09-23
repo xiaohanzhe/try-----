@@ -127,8 +127,13 @@ for st in _upd.body:
                             found_in_if.append(s2.lineno)
 
 check(len(found_in_if) >= 1,
-      '[A2] 必须存在一处 `%s = ...` 落在 if 语句体内（实测 L%s）'
-      % (TARGET_ATTR, found_in_if if found_in_if else '无'))
+      # ⚠️ 这里**故意不印绝对行号**（第 38 轮改）：原写法印 `L%s`，于是 main.py 顶部
+      #    只要插几行（第 38 轮插了 19 行 P0 接线），本套件就 DIFF —— 而与"节拍有没有
+      #    回退"毫无关系。回归锁一旦因无关改动报红，就会被人"看都不看地 --update"，
+      #    那才是真的失去鉴别力。改报**处数**：只在结构真的变了（多/少一处节拍赋值）
+      #    时才动，符合"断行为/结构，不断行号位置"。
+      '[A2] 必须存在一处 `%s = ...` 落在 if 语句体内（实测 %d 处）'
+      % (TARGET_ATTR, len(found_in_if)))
 
 # A3：节拍判据本身必须还在（反向控制：防"把节拍整个删掉"也 PASS）
 has_beat = False

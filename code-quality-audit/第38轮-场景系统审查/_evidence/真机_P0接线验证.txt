@@ -1,0 +1,25 @@
+=== 第三十八轮 真机验证：P0 接线 ===
+装置已就绪: RalseiPet 构造成功（说明接线没有拖垮启动）
+
+[PASS] L1 main.py 的 P0 接线让 _scene_loaded 变成 True（接线前恒为 False）
+[PASS] L2 启动即落在默认场景 'desktop'（用户口径：桌面当默认场景）
+[PASS] L3 索引可用且登记了场景（ok=True，场景数>0）
+      （实测场景数 = 1014，此处不写死具体数字，随素材增减）
+[PASS] L4 锚点表已加载（_scene_anchors 非空）
+[PASS] L5 P0 接线也加载了路由表（_routes_loaded=True 且 ok）
+[PASS] L6 经转发壳 self.scene.ready 读到 True（壳本身没挡住）
+[PASS] L7 能切到"区域分片里"的场景（证明 switch 把 entry 传给了数据层）
+      分片登记行: chapter='ch1' area='castle_town' file=None
+      切后描述 = '城堡镇、城堡镇·darkdoor'
+[PASS] L7b 切回 desktop 成功（桌面与作品内场景同级同构）
+[PASS] L8 scene_objects 为空列表（P0 无渲染层消费者 ⇒ 画面上零变化）
+
+pick_route(mood=sleepy) -> 'desktop'
+route_reason = ''
+destinations_text 行数 = 20
+[PASS] L9 负控制：**未调用 load()** 的控制器 _scene_loaded 仍是 False（证明 L1 的 True 来自接线而非构造自带）
+
+close() 完成，无异常
+
+============================================================
+总计 10 项，通过 10，失败 0

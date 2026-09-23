@@ -825,7 +825,8 @@ class RalseiPet(QMainWindow):
         # game_state 在 __init__ 中已完整初始化（含 is_playing/game_type/player_score/best_streak 等 12 个字段）
 
         # ========== 场景系统 状态字段（P0）==========
-        # ⚠️ 这 6 个**必须在这里预声明**，理由与上面 `_spell_*` / `_hide_*` 完全一样：
+        # ⚠️ 这 9 个（**6 个场景 + 3 个路由**）**必须在这里预声明**，
+        #    理由与上面 `_spell_*` / `_hide_*` 完全一样：
         #    SceneController 的 `__setattr__` 转发判据是「宿主**已拥有**这个名字」。
         #    未预声明 → 首次赋值会落进**控制器自己的 __dict__** → 状态劈成两份，
         #    而且这种劈裂 G2 **完全看不见**（本项目真踩过两次，见 W1-4 报告铁律 3）。
@@ -841,6 +842,24 @@ class RalseiPet(QMainWindow):
         self._scene_routes = None                   # load_routes() 的结果（含 routes/fallback）
         self._routes_loaded = False                 # 路由表是否已尝试加载过（幂等守卫）
         self._scene_route_reason = ''               # 最近一次路由命中给的"为什么走这条路"
+
+        # ---- P0 接线：让场景系统真的跑起来（第 38 轮）----
+        # 为什么放在这里：状态字段刚声明完、`self.scene` 已构造（上方 L779），
+        # 且**早于窗口显示** —— 索引就位后，P1 的渲染层不必再等一次 IO。
+        # 为什么**安全**（P0 判据 =「不切场景时零行为变化」）：
+        #   `load()` / `load_routes()` 只做「读 JSON + 写宿主状态字段」两件事，
+        #   不注册定时器、不改渲染路径、不碰物理、不调任何 Qt API；
+        #   写进去的 `current_scene` / `scene_objects` 目前**零消费者**
+        #   ⇒ 画面上看不出任何区别。
+        # 为什么**拖不垮启动**：两者都是「永不抛」契约（内部 try/except 全兜），
+        #   且**幂等**（`_scene_loaded` / `_routes_loaded` 守卫）—— 失败只记日志、
+        #   场景系统降级为空态，桌宠照常起来（与 search_summarizer / relationship
+        #   同一条纪律：非关键路径的失败不许让桌宠起不来）。
+        # ⚠️ 顺序有意义：先 `load()`（索引 + 默认场景 'desktop'）再 `load_routes()`
+        #   （路由表）。路由的 `destinations()` 要用索引过滤未登记场景，
+        #   反过来的话第一次自省会拿到空清单。
+        self.scene.load()          # 索引（1,014 场景）+ 默认场景 desktop
+        self.scene.load_routes()   # 路由表（26 条 + 兜底）；P1 才有人自动调 pick_route
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):

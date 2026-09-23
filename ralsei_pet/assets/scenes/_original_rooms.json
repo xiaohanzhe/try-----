@@ -14,6 +14,12 @@
       "two_part_naming": "stringsetsubloc 渲染成『父地点 ~1 - 子地点』两段式（ch4/ch5 大量出现）⇒『区域』这个概念在原作里是从显示名的 ' - ' 前缀**推出来的**，原作没有显式的区域数据结构。我们把它显式化，这是我们比原作更强的地方。",
       "one_room_per_screen": "原作『一屏一房间』，走过屏边就 room_goto。桌面**不抄**这条 —— 桌面场景铺满整个虚拟桌面。"
     },
+    "corrections": [
+      "第 38 轮：ch2 删除 id 199/200 —— scr_roomname 里没有这两个分支（原转写多录）。",
+      "第 38 轮：ch5 补登 id 205/222/224/225/230 —— 原转写漏了这 5 个分支。补登后逐章分支数与 scr_roomname 一致：ch1 20 / ch2 20 / ch3 9 / ch4 20 / ch5 26。",
+      "第 38 轮：ch5 的 rooms 一并按 id 升序排好（原先 144 排在 150 之后）。",
+      "第 38 轮：ch5.areas 的 flower_castle 并上 \"Top of Castle\" 前缀 —— 原作显示名虽然分成两段，但**我们的区域桶**（见 房间表_全量.json）把它们统一归在 flower_castle。"
+    ],
     "usage": "本文件是**只读参考数据**，不参与运行时加载。场景登记表是 _index.json；本文件是它的依据与溯源。"
   },
   "chapters": {
@@ -75,9 +81,7 @@
         {"id": 171, "name": "Queen's Mansion - Basement"},
         {"id": 187, "name": "Queen's Mansion - 3F"},
         {"id": 193, "name": "Queen's Mansion - Acid Tunnel"},
-        {"id": 196, "name": "Queen's Mansion - 4F"},
-        {"id": 199, "name": "Queen's Mansion - Rooftop"},
-        {"id": 200, "name": "Queen's Mansion - Rooftop"}
+        {"id": 196, "name": "Queen's Mansion - 4F"}
       ],
       "areas": {
         "kris_room": ["Kris's Room"],
@@ -160,8 +164,8 @@
         {"id": 129, "name": "Garden - Flowery Helped"},
         {"id": 133, "name": "Garden - Ideal Diner"},
         {"id": 141, "name": "Garden - Shrine"},
-        {"id": 150, "name": "Garden - Way Home"},
         {"id": 144, "name": "Cliffs - Beginning"},
+        {"id": 150, "name": "Garden - Way Home"},
         {"id": 161, "name": "Cliffs - Shop"},
         {"id": 167, "name": "Cliffs - Below Castle"},
         {"id": 177, "name": "Flower Castle - Cafe"},
@@ -170,7 +174,12 @@
         {"id": 187, "name": "Flower Castle - Left Stage"},
         {"id": 189, "name": "Flower Castle - Left End"},
         {"id": 202, "name": "Flower Castle - Right Diner"},
-        {"id": 207, "name": "Flower Castle - Right End"}
+        {"id": 205, "name": "Flower Castle - Right View"},
+        {"id": 207, "name": "Flower Castle - Right End"},
+        {"id": 222, "name": "Top of Castle - Beginning"},
+        {"id": 224, "name": "Top of Castle - Green's Shop"},
+        {"id": 225, "name": "Top of Castle - Castle Top"},
+        {"id": 230, "name": "Top of Castle - Boss?"}
       ],
       "areas": {
         "kris_room": ["Kris's Room"],
@@ -180,7 +189,7 @@
         "dark_world": ["Dark World"],
         "garden": ["Garden"],
         "cliffs": ["Cliffs"],
-        "flower_castle": ["Flower Castle"]
+        "flower_castle": ["Flower Castle", "Top of Castle"]
       }
     }
   }

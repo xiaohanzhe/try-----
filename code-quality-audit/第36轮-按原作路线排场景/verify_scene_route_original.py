@@ -9,6 +9,8 @@
 
   A. **原作依据在位**：`_original_rooms.json` 存在、可解析、五个章节齐全，
      且**每个作品内场景都能回溯到一个原作 room_id**（"按原版路线"的硬证据）。
+     ★ 第38轮加锁 A4b/A4c：逐章条数必须 == `scr_roomname` 的分支数
+     （20/20/9/20/26 —— 一手事实，不是会漂的计数），且每章 id 唯一。
   B. **桌面仍是一等场景**：`default_scene == 'desktop'`、desktop 走同一套三级结构、
      控制器源码里**不出现**任何 desktop 特判分支（P0 契约不许回退）。
   C. **路由按原作剧情推进**：逐条断言"在 X 区域 → 去 Y 场景"的推进链
@@ -88,6 +90,29 @@ for _cid, _c in (rooms.get('chapters') or {}).items():
             _room_total += 1
 check('A4 原作房间数 > 0（去掉 --- 空位后）', _room_total > 0,
       'rooms=%d' % _room_total)
+
+# A4b —— ★ 第38轮新增：逐章条数必须 == scr_roomname 的**分支数**。
+# 这几个数字**不是"会漂的计数"**，而是原作脚本 `gml_GlobalScript_scr_roomname`
+# 里 if/else 分支的个数 —— 是不变的一手事实。第38轮正是靠它们抓出了
+# "ch2 多录 2 条（199/200）/ ch5 漏录 5 条（205/222/224/225/230）"。
+# 依据：code-quality-audit/第38轮-场景系统审查/_evidence/scr_roomname_覆盖核对.txt
+_SCR_BRANCHES = {'ch1': 20, 'ch2': 20, 'ch3': 9, 'ch4': 20, 'ch5': 26}
+_bad_cnt = []
+for _cid, _exp in _SCR_BRANCHES.items():
+    _got = len((((rooms.get('chapters') or {}).get(_cid)) or {}).get('rooms') or [])
+    if _got != _exp:
+        _bad_cnt.append('%s=%d(期望%d)' % (_cid, _got, _exp))
+check('A4b 逐章条数 == scr_roomname 分支数（ch1 20 / ch2 20 / ch3 9 / ch4 20 / ch5 26）',
+      not _bad_cnt, '不一致: %s' % _bad_cnt)
+
+# A4c 每章 id 必须唯一 —— 重录最典型的症状就是同名重复条目
+#     （ch2 的 199/200 两条同名 "Queen's Mansion - Rooftop" 就是这么来的）。
+_dup_ids = []
+for _cid, _c in (rooms.get('chapters') or {}).items():
+    _ids = [r.get('id') for r in _c.get('rooms', [])]
+    if len(_ids) != len(set(_ids)):
+        _dup_ids.append(_cid)
+check('A4c 每章房间 id 唯一（防重复录入）', not _dup_ids, '重复: %s' % _dup_ids)
 
 # 索引里每个作品内场景都要能回溯 room_id
 idx = ss.load_index(_SCENES)

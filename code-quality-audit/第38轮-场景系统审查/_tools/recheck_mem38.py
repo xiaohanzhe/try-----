@@ -61,7 +61,7 @@ def main():
 
     # 5. 逐令牌回验（真令牌必须"速查本 或 详版"命中；假令牌必须查不到）
     real = ['真机打点落 CSV', '真背景原样提取', 'chapter*10000', 'prefill 远慢于 decode',
-            'os.listdir', '1505', '1,013', '270e970', '61 个']
+            'os.listdir', '1517', '1,013', '270e970', 'af12a3b', '61 个', '20/20/9/20/26']
     for tok in real:
         ok = (tok in qt) or (tok in ft)
         check('token[%s]' % tok, ok, 'quick=%s detail=%s' % (tok in qt, tok in ft))

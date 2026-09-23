@@ -61,8 +61,13 @@ _ROUTES_FILENAME = '_routes.json'
 #: 但**仍在兜底之前** —— 这正是"具体规则 > 笼统规则 > 兜底"的写法。
 _DEFAULT_PRIORITY = 500
 
-#: 兜底规则的优先级（匹配不到任何规则时才用）。比任何显式 `priority` 都大。
-_FALLBACK_PRIORITY = 10000
+#: ⚠️ 这里**故意没有** `_FALLBACK_PRIORITY`（第 38 轮删除）。
+#: 曾经的 `_FALLBACK_PRIORITY = 10000` 是个**零引用的死常量** —— 兜底走的是
+#: `match()` 里"一个候选都没有"那条**独立分支**，根本不参与
+#: `(priority, -score, 声明序)` 排序，所以"兜底优先级"是个不存在的机制；
+#: 而 `_routes.json` 里也没有任何规则用 10000（实为 100~900）。
+#: 留着它只会让人以为兜底也在排序里 —— 属"看起来在守其实没守"的一类，故删。
+#: 别再把它加回来：要表达"兜底最后"，正确的位置是 `match()` 的兜底分支。
 
 
 # ===========================================================================
@@ -292,6 +297,9 @@ def match(routes, context):
     fallback = table.get('fallback')
     if isinstance(fallback, dict) and isinstance(fallback.get('to'), str):
         # 兜底也要回一个**浅拷贝 + 标记**，让调用方能分辨"这是兜底不是命中"。
+        # ⚠️ 兜底**不参与 priority 排序**，也不该参与：能走到这一行就说明
+        #    `candidates` 是空的 —— 没有第二个候选，"排在谁后面"无从谈起。
+        #    所以本模块不含"兜底优先级"常量（见文件头常量区的说明）。
         fb = dict(fallback)
         fb['_fallback'] = True
         return fb
