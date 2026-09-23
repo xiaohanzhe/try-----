@@ -1,0 +1,473 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch3",
+ "area_id": "tv_world",
+ "area_name": "电视世界",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch3.tv_world.dw_tv_cutscene1g": {
+   "name": "电视世界·cutscene1g",
+   "name_raw": "room_dw_tv_cutscene1g",
+   "name_derived": true,
+   "original_room_id": 95,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_tv_closet": {
+   "name": "电视世界·closet",
+   "name_raw": "room_dw_tv_closet",
+   "name_derived": true,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_interstitial": {
+   "name": "电视世界·interstitial",
+   "name_raw": "room_dw_b3bs_interstitial",
+   "name_derived": true,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_rouxls_lanina": {
+   "name": "电视世界·rouxls_lanina",
+   "name_raw": "room_dw_b3bs_rouxls_lanina",
+   "name_derived": true,
+   "original_room_id": 151,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_template": {
+   "name": "电视世界·template",
+   "name_raw": "room_dw_b3bs_template",
+   "name_derived": true,
+   "original_room_id": 152,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_rouxls_boss": {
+   "name": "电视世界·rouxls_boss",
+   "name_raw": "room_dw_b3bs_rouxls_boss",
+   "name_derived": true,
+   "original_room_id": 153,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_cheaterpippins": {
+   "name": "电视世界·cheaterpippins",
+   "name_raw": "room_dw_b3bs_cheaterpippins",
+   "name_derived": true,
+   "original_room_id": 154,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_idcardpuzzle": {
+   "name": "电视世界·idcardpuzzle",
+   "name_raw": "room_dw_b3bs_idcardpuzzle",
+   "name_derived": true,
+   "original_room_id": 155,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_intro": {
+   "name": "电视世界·intro",
+   "name_raw": "room_dw_b3bs_intro",
+   "name_derived": true,
+   "original_room_id": 156,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_zapper_a": {
+   "name": "电视世界·zapper_a",
+   "name_raw": "room_dw_b3bs_zapper_a",
+   "name_derived": true,
+   "original_room_id": 157,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_rabbick_a": {
+   "name": "电视世界·rabbick_a",
+   "name_raw": "room_dw_b3bs_rabbick_a",
+   "name_derived": true,
+   "original_room_id": 158,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_lancerget": {
+   "name": "电视世界·lancerget",
+   "name_raw": "room_dw_b3bs_lancerget",
+   "name_derived": true,
+   "original_room_id": 159,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_cooltrashy": {
+   "name": "电视世界·cooltrashy",
+   "name_raw": "room_dw_b3bs_cooltrashy",
+   "name_derived": true,
+   "original_room_id": 160,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_zapper_c": {
+   "name": "电视世界·zapper_c",
+   "name_raw": "room_dw_b3bs_zapper_c",
+   "name_derived": true,
+   "original_room_id": 161,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_rabbick_b": {
+   "name": "电视世界·rabbick_b",
+   "name_raw": "room_dw_b3bs_rabbick_b",
+   "name_derived": true,
+   "original_room_id": 162,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_sadshadowguys": {
+   "name": "电视世界·sadshadowguys",
+   "name_raw": "room_dw_b3bs_sadshadowguys",
+   "name_derived": true,
+   "original_room_id": 163,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_zapper_b": {
+   "name": "电视世界·zapper_b",
+   "name_raw": "room_dw_b3bs_zapper_b",
+   "name_derived": true,
+   "original_room_id": 164,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_preview": {
+   "name": "电视世界·teevie_preview",
+   "name_raw": "room_dw_teevie_preview",
+   "name_derived": true,
+   "original_room_id": 168,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_shop": {
+   "name": "电视世界·shop",
+   "name_raw": "room_dw_b3bs_shop",
+   "name_derived": true,
+   "original_room_id": 178,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_mysterypuzzle": {
+   "name": "电视世界·mysterypuzzle",
+   "name_raw": "room_dw_b3bs_mysterypuzzle",
+   "name_derived": true,
+   "original_room_id": 179,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_watercooler": {
+   "name": "电视世界·watercooler",
+   "name_raw": "room_dw_b3bs_watercooler",
+   "name_derived": true,
+   "original_room_id": 180,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_jail2": {
+   "name": "电视世界·jail2",
+   "name_raw": "room_dw_b3bs_jail2",
+   "name_derived": true,
+   "original_room_id": 181,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_zapper_d": {
+   "name": "电视世界·zapper_d",
+   "name_raw": "room_dw_b3bs_zapper_d",
+   "name_derived": true,
+   "original_room_id": 182,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_extrapuzzle": {
+   "name": "电视世界·extrapuzzle",
+   "name_raw": "room_dw_b3bs_extrapuzzle",
+   "name_derived": true,
+   "original_room_id": 183,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_bibliox": {
+   "name": "电视世界·bibliox",
+   "name_raw": "room_dw_b3bs_bibliox",
+   "name_derived": true,
+   "original_room_id": 184,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_zapper_a_old": {
+   "name": "电视世界·zapper_a_old",
+   "name_raw": "room_dw_b3bs_zapper_a_old",
+   "name_derived": true,
+   "original_room_id": 191,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_large_01": {
+   "name": "电视世界·teevie_large_01",
+   "name_raw": "room_dw_teevie_large_01",
+   "name_derived": true,
+   "original_room_id": 196,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_large_02": {
+   "name": "电视世界·teevie_large_02",
+   "name_raw": "room_dw_teevie_large_02",
+   "name_derived": true,
+   "original_room_id": 197,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_cowboy_zone_01_intro": {
+   "name": "电视世界·teevie_cowboy_zone_01_intro",
+   "name_raw": "room_dw_teevie_cowboy_zone_01_intro",
+   "name_derived": true,
+   "original_room_id": 198,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_cowboy_zone_01_after": {
+   "name": "电视世界·teevie_cowboy_zone_01_after",
+   "name_raw": "room_dw_teevie_cowboy_zone_01_after",
+   "name_derived": true,
+   "original_room_id": 199,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_watercooler": {
+   "name": "电视世界·teevie_watercooler",
+   "name_raw": "room_dw_teevie_watercooler",
+   "name_derived": true,
+   "original_room_id": 200,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_susiezilla": {
+   "name": "电视世界·teevie_susiezilla",
+   "name_raw": "room_dw_teevie_susiezilla",
+   "name_derived": true,
+   "original_room_id": 201,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_cowboy_zone_02_intro": {
+   "name": "电视世界·teevie_cowboy_zone_02_intro",
+   "name_raw": "room_dw_teevie_cowboy_zone_02_intro",
+   "name_derived": true,
+   "original_room_id": 202,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_cowboy_zone_02_after": {
+   "name": "电视世界·teevie_cowboy_zone_02_after",
+   "name_raw": "room_dw_teevie_cowboy_zone_02_after",
+   "name_derived": true,
+   "original_room_id": 203,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_shadow_guys": {
+   "name": "电视世界·teevie_shadow_guys",
+   "name_raw": "room_dw_teevie_shadow_guys",
+   "name_derived": true,
+   "original_room_id": 204,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_stealth_c": {
+   "name": "电视世界·teevie_stealth_c",
+   "name_raw": "room_dw_teevie_stealth_c",
+   "name_derived": true,
+   "original_room_id": 205,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_stealth": {
+   "name": "电视世界·teevie_stealth",
+   "name_raw": "room_dw_teevie_stealth",
+   "name_derived": true,
+   "original_room_id": 206,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_failure_cage": {
+   "name": "电视世界·teevie_failure_cage",
+   "name_raw": "room_dw_teevie_failure_cage",
+   "name_derived": true,
+   "original_room_id": 207,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_maze_points": {
+   "name": "电视世界·teevie_maze_points",
+   "name_raw": "room_dw_teevie_maze_points",
+   "name_derived": true,
+   "original_room_id": 209,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_maze_chef": {
+   "name": "电视世界·teevie_maze_chef",
+   "name_raw": "room_dw_teevie_maze_chef",
+   "name_derived": true,
+   "original_room_id": 210,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_maze_final": {
+   "name": "电视世界·teevie_maze_final",
+   "name_raw": "room_dw_teevie_maze_final",
+   "name_derived": true,
+   "original_room_id": 211,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_maze": {
+   "name": "电视世界·teevie_maze",
+   "name_raw": "room_dw_teevie_maze",
+   "name_derived": true,
+   "original_room_id": 212,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_cutscene_final": {
+   "name": "电视世界·teevie_cutscene_final",
+   "name_raw": "room_dw_teevie_cutscene_final",
+   "name_derived": true,
+   "original_room_id": 214,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_ribbick": {
+   "name": "电视世界·teevie_ribbick",
+   "name_raw": "room_dw_teevie_ribbick",
+   "name_derived": true,
+   "original_room_id": 215,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_preview_south": {
+   "name": "电视世界·teevie_preview_south",
+   "name_raw": "room_dw_teevie_preview_south",
+   "name_derived": true,
+   "original_room_id": 216,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_b3bs_camerareminder": {
+   "name": "电视世界·camerareminder",
+   "name_raw": "room_dw_b3bs_camerareminder",
+   "name_derived": true,
+   "original_room_id": 217,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_sams": {
+   "name": "电视世界·teevie_sams",
+   "name_raw": "room_dw_teevie_sams",
+   "name_derived": true,
+   "original_room_id": 219,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_bonus_zone": {
+   "name": "电视世界·teevie_bonus_zone",
+   "name_raw": "room_dw_teevie_bonus_zone",
+   "name_derived": true,
+   "original_room_id": 220,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_audiencepits": {
+   "name": "电视世界·teevie_audiencepits",
+   "name_raw": "room_dw_teevie_audiencepits",
+   "name_derived": true,
+   "original_room_id": 221,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_lightmaze": {
+   "name": "电视世界·teevie_lightmaze",
+   "name_raw": "room_dw_teevie_lightmaze",
+   "name_derived": true,
+   "original_room_id": 223,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_maze_quiz": {
+   "name": "电视世界·teevie_maze_quiz",
+   "name_raw": "room_dw_teevie_maze_quiz",
+   "name_derived": true,
+   "original_room_id": 224,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_ribbicks_a": {
+   "name": "电视世界·teevie_ribbicks_a",
+   "name_raw": "room_dw_teevie_ribbicks_a",
+   "name_derived": true,
+   "original_room_id": 231,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_ribbicks_b": {
+   "name": "电视世界·teevie_ribbicks_b",
+   "name_raw": "room_dw_teevie_ribbicks_b",
+   "name_derived": true,
+   "original_room_id": 232,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_susiebridge": {
+   "name": "电视世界·teevie_susiebridge",
+   "name_raw": "room_dw_teevie_susiebridge",
+   "name_derived": true,
+   "original_room_id": 233,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_shuttahmaze": {
+   "name": "电视世界·teevie_shuttahmaze",
+   "name_raw": "room_dw_teevie_shuttahmaze",
+   "name_derived": true,
+   "original_room_id": 234,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_stealth_d": {
+   "name": "电视世界·teevie_stealth_d",
+   "name_raw": "room_dw_teevie_stealth_d",
+   "name_derived": true,
+   "original_room_id": 235,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_dust": {
+   "name": "电视世界·teevie_dust",
+   "name_raw": "room_dw_teevie_dust",
+   "name_derived": true,
+   "original_room_id": 236,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.tv_world.dw_teevie_dust_south": {
+   "name": "电视世界·teevie_dust_south",
+   "name_raw": "room_dw_teevie_dust_south",
+   "name_derived": true,
+   "original_room_id": 237,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

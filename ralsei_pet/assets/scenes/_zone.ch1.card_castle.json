@@ -1,0 +1,177 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch1",
+ "area_id": "card_castle",
+ "area_name": "纸牌城堡",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch1.card_castle.cc_prison_cells": {
+   "name": "纸牌城堡·prison_cells",
+   "name_raw": "room_cc_prison_cells",
+   "name_derived": true,
+   "original_room_id": 105,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_prisonlancer": {
+   "name": "纸牌城堡·prisonlancer",
+   "name_raw": "room_cc_prisonlancer",
+   "name_derived": true,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_prison2": {
+   "name": "纸牌城堡·prison2",
+   "name_raw": "room_cc_prison2",
+   "name_derived": true,
+   "original_room_id": 108,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_prisonelevator": {
+   "name": "纸牌城堡·prisonelevator",
+   "name_raw": "room_cc_prisonelevator",
+   "name_derived": true,
+   "original_room_id": 109,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_elevator": {
+   "name": "纸牌城堡·elevator",
+   "name_raw": "room_cc_elevator",
+   "name_derived": true,
+   "original_room_id": 110,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_joker": {
+   "name": "纸牌城堡·joker",
+   "name_raw": "room_cc_joker",
+   "name_derived": true,
+   "original_room_id": 112,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_entrance": {
+   "name": "纸牌城堡·entrance",
+   "name_raw": "room_cc_entrance",
+   "name_derived": true,
+   "original_room_id": 113,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_rudinn": {
+   "name": "纸牌城堡·rudinn",
+   "name_raw": "room_cc_rudinn",
+   "name_derived": true,
+   "original_room_id": 115,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_2f": {
+   "name": "纸牌城堡·2f",
+   "name_raw": "room_cc_2f",
+   "name_derived": true,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_rurus1": {
+   "name": "纸牌城堡·rurus1",
+   "name_raw": "room_cc_rurus1",
+   "name_derived": true,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_3f": {
+   "name": "纸牌城堡·3f",
+   "name_raw": "room_cc_3f",
+   "name_derived": true,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_hathy": {
+   "name": "纸牌城堡·hathy",
+   "name_raw": "room_cc_hathy",
+   "name_derived": true,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_4f": {
+   "name": "纸牌城堡·4f",
+   "name_raw": "room_cc_4f",
+   "name_derived": true,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_rurus2": {
+   "name": "纸牌城堡·rurus2",
+   "name_raw": "room_cc_rurus2",
+   "name_derived": true,
+   "original_room_id": 121,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_clover": {
+   "name": "纸牌城堡·clover",
+   "name_raw": "room_cc_clover",
+   "name_derived": true,
+   "original_room_id": 122,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_lancer": {
+   "name": "纸牌城堡·lancer",
+   "name_raw": "room_cc_lancer",
+   "name_derived": true,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_6f": {
+   "name": "纸牌城堡·6f",
+   "name_raw": "room_cc_6f",
+   "name_derived": true,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_preroof": {
+   "name": "纸牌城堡·preroof",
+   "name_raw": "room_cc_preroof",
+   "name_derived": true,
+   "original_room_id": 127,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_kingbattle": {
+   "name": "纸牌城堡·kingbattle",
+   "name_raw": "room_cc_kingbattle",
+   "name_derived": true,
+   "original_room_id": 128,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_prefountain": {
+   "name": "纸牌城堡·prefountain",
+   "name_raw": "room_cc_prefountain",
+   "name_derived": true,
+   "original_room_id": 129,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.card_castle.cc_fountain": {
+   "name": "纸牌城堡·fountain",
+   "name_raw": "room_cc_fountain",
+   "name_derived": true,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

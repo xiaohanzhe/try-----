@@ -245,11 +245,15 @@ class SceneController(object):
                 self.load(scene_dir_path)
 
             index = pet.__dict__.get('_scene_index') or {}
-            if scene_id not in (index.get('scenes') or {}):
+            scenes = index.get('scenes') or {}
+            if scene_id not in scenes:
                 _log.warning("要切换的场景 %r 未登记在索引里，保持当前场景", scene_id)
                 return False
 
-            scene = load_scene(scene_id, scene_dir_path)
+            # ★ 把**登记行**一起交给数据层：场景数据有两个来源（独立文件 / 区域分片），
+            #   数据层要靠 entry 里的 chapter_id/area_id 才知道去读哪一片。
+            #   不给它的话，926 个"住在分片里"的场景会全部加载失败。
+            scene = load_scene(scene_id, scene_dir_path, entry=scenes.get(scene_id))
             if scene is None:
                 _log.warning("场景 %r 定义加载失败，保持当前场景", scene_id)
                 return False

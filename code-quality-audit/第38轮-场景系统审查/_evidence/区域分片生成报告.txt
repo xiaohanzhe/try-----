@@ -1,0 +1,41 @@
+=== 生成区域分片 v2（诚实命名）===
+已有登记：chapters=6  锚点=87
+新增场景 = 926 个，分布于 61 个 (章, 区域) 组合
+撞名回退改名 2 条
+[PASS] Z0 新增场景数 = 1013 - 87  <- 926
+[PASS] Z1 分片文件数 = (章,区域) 组合数【查磁盘，不查内存】  <- disk=61  expect=61
+[PASS] Z1b 每个预期文件都真实存在  <- 缺 0 个
+[PASS] Z2 新增了区域行  <- 35 个
+[PASS] Z3 新增场景登记数 = 新增场景数，且无重名冲突  <- 新增 926 / 期望 926 / 冲突 0
+[PASS] Z4 87 个锚点登记行序列化后逐条未变  <- 改了 0 条：[]
+  （幂等性提示：裸 id 未加后缀的 0 条 —— 仅作参考）
+[PASS] Z5 无残留 .tmp 文件  <- []
+[PASS] Z6 同区域内场景名不重复  <- 0 组：[]
+[PASS] Z7 _index.json 仍为 CRLF（与原文件一致）  <- CRLF=8325 lone_LF=0
+
+_index.json 25046 → 269478 字节
+分片总字节 = 234102
+
+抽样 20 条：
+  ch1.card_castle.cc_prison_cells                纸牌城堡·prison_cells              room_cc_prison_cells
+  ch1.card_castle.cc_prisonlancer                纸牌城堡·prisonlancer              room_cc_prisonlancer
+  ch1.card_castle.cc_prison2                     纸牌城堡·prison2                   room_cc_prison2
+  ch1.card_castle.cc_prisonelevator              纸牌城堡·prisonelevator            room_cc_prisonelevator
+  ch1.card_castle.cc_elevator                    纸牌城堡·elevator                  room_cc_elevator
+  ch1.card_castle.cc_joker                       纸牌城堡·joker                     room_cc_joker
+  ch1.card_castle.cc_entrance                    纸牌城堡·entrance                  room_cc_entrance
+  ch1.card_castle.cc_rudinn                      纸牌城堡·rudinn                    room_cc_rudinn
+  ch1.card_castle.cc_2f                          纸牌城堡·2f                        room_cc_2f
+  ch1.card_castle.cc_rurus1                      纸牌城堡·rurus1                    room_cc_rurus1
+  ch1.card_castle.cc_3f                          纸牌城堡·3f                        room_cc_3f
+  ch1.card_castle.cc_hathy                       纸牌城堡·hathy                     room_cc_hathy
+  ch1.card_castle.cc_4f                          纸牌城堡·4f                        room_cc_4f
+  ch1.card_castle.cc_rurus2                      纸牌城堡·rurus2                    room_cc_rurus2
+  ch1.card_castle.cc_clover                      纸牌城堡·clover                    room_cc_clover
+  ch1.card_castle.cc_lancer                      纸牌城堡·lancer                    room_cc_lancer
+  ch1.card_castle.cc_6f                          纸牌城堡·6f                        room_cc_6f
+  ch1.card_castle.cc_preroof                     纸牌城堡·preroof                   room_cc_preroof
+  ch1.card_castle.cc_kingbattle                  纸牌城堡·kingbattle                room_cc_kingbattle
+  ch1.card_castle.cc_prefountain                 纸牌城堡·prefountain               room_cc_prefountain
+
+=== 生成汇总：9 项 PASS=9 FAIL=0 ===

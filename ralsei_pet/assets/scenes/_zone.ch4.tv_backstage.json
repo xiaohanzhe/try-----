@@ -1,0 +1,33 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch4",
+ "area_id": "tv_backstage",
+ "area_name": "电视世界后台",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch4.tv_backstage.dw_rhythm": {
+   "name": "电视世界后台·rhythm",
+   "name_raw": "room_dw_rhythm",
+   "name_derived": true,
+   "original_room_id": 262,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.tv_backstage.dw_rhythm_countdown": {
+   "name": "电视世界后台·rhythm_countdown",
+   "name_raw": "room_dw_rhythm_countdown",
+   "name_derived": true,
+   "original_room_id": 263,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.tv_backstage.dw_rhythm_empty": {
+   "name": "电视世界后台·rhythm_empty",
+   "name_raw": "room_dw_rhythm_empty",
+   "name_derived": true,
+   "original_room_id": 264,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

@@ -1,0 +1,377 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch2",
+ "area_id": "cyber_city",
+ "area_name": "赛博都市",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch2.cyber_city.dw_city_prototype_01": {
+   "name": "赛博都市·prototype_01",
+   "name_raw": "room_dw_city_prototype_01",
+   "name_derived": true,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_prototype_02": {
+   "name": "赛博都市·prototype_02",
+   "name_raw": "room_dw_city_prototype_02",
+   "name_derived": true,
+   "original_room_id": 107,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_spamton_shop_exterior": {
+   "name": "赛博都市·spamton_shop_exterior",
+   "name_raw": "room_dw_city_spamton_shop_exterior",
+   "name_derived": true,
+   "original_room_id": 108,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_spamton_house": {
+   "name": "赛博都市·spamton_house",
+   "name_raw": "room_dw_city_spamton_house",
+   "name_derived": true,
+   "original_room_id": 109,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_intro": {
+   "name": "赛博都市·intro",
+   "name_raw": "room_dw_city_intro",
+   "name_derived": true,
+   "original_room_id": 110,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_split": {
+   "name": "赛博都市·split",
+   "name_raw": "room_dw_city_split",
+   "name_derived": true,
+   "original_room_id": 111,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_1": {
+   "name": "赛博都市·traffic_1",
+   "name_raw": "room_dw_city_traffic_1",
+   "name_derived": true,
+   "original_room_id": 113,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_roadblock": {
+   "name": "赛博都市·roadblock",
+   "name_raw": "room_dw_city_roadblock",
+   "name_derived": true,
+   "original_room_id": 114,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_mice": {
+   "name": "赛博都市·mice",
+   "name_raw": "room_dw_city_mice",
+   "name_derived": true,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_1": {
+   "name": "赛博都市·big_1",
+   "name_raw": "room_dw_city_big_1",
+   "name_derived": true,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_2": {
+   "name": "赛博都市·traffic_2",
+   "name_raw": "room_dw_city_traffic_2",
+   "name_derived": true,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_2": {
+   "name": "赛博都市·big_2",
+   "name_raw": "room_dw_city_big_2",
+   "name_derived": true,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_queen_drunk": {
+   "name": "赛博都市·queen_drunk",
+   "name_raw": "room_dw_city_queen_drunk",
+   "name_derived": true,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_3": {
+   "name": "赛博都市·big_3",
+   "name_raw": "room_dw_city_big_3",
+   "name_derived": true,
+   "original_room_id": 122,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_3": {
+   "name": "赛博都市·traffic_3",
+   "name_raw": "room_dw_city_traffic_3",
+   "name_derived": true,
+   "original_room_id": 123,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_mice2": {
+   "name": "赛博都市·mice2",
+   "name_raw": "room_dw_city_mice2",
+   "name_derived": true,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_cheesemaze": {
+   "name": "赛博都市·cheesemaze",
+   "name_raw": "room_dw_city_cheesemaze",
+   "name_derived": true,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_poppup": {
+   "name": "赛博都市·poppup",
+   "name_raw": "room_dw_city_poppup",
+   "name_derived": true,
+   "original_room_id": 127,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_4": {
+   "name": "赛博都市·traffic_4",
+   "name_raw": "room_dw_city_traffic_4",
+   "name_derived": true,
+   "original_room_id": 129,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_spamton_alley": {
+   "name": "赛博都市·spamton_alley",
+   "name_raw": "room_dw_city_spamton_alley",
+   "name_derived": true,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_monologue": {
+   "name": "赛博都市·monologue",
+   "name_raw": "room_dw_city_monologue",
+   "name_derived": true,
+   "original_room_id": 131,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_baseball": {
+   "name": "赛博都市·baseball",
+   "name_raw": "room_dw_city_baseball",
+   "name_derived": true,
+   "original_room_id": 132,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_postbaseball_2": {
+   "name": "赛博都市·postbaseball_2",
+   "name_raw": "room_dw_city_postbaseball_2",
+   "name_derived": true,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_postbaseball_3": {
+   "name": "赛博都市·postbaseball_3",
+   "name_raw": "room_dw_city_postbaseball_3",
+   "name_derived": true,
+   "original_room_id": 135,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_mansion_front": {
+   "name": "赛博都市·mansion_front",
+   "name_raw": "room_dw_city_mansion_front",
+   "name_derived": true,
+   "original_room_id": 136,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_susie_ralsei_fun_1": {
+   "name": "赛博都市·susie_ralsei_fun_1",
+   "name_raw": "room_dw_city_susie_ralsei_fun_1",
+   "name_derived": true,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_mirrorfriend": {
+   "name": "赛博都市·mirrorfriend",
+   "name_raw": "room_dw_city_mirrorfriend",
+   "name_derived": true,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_treasure": {
+   "name": "赛博都市·treasure",
+   "name_raw": "room_dw_city_treasure",
+   "name_derived": true,
+   "original_room_id": 139,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_dog_traffic": {
+   "name": "赛博都市·dog_traffic",
+   "name_raw": "room_dw_city_dog_traffic",
+   "name_derived": true,
+   "original_room_id": 140,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_man": {
+   "name": "赛博都市·man",
+   "name_raw": "room_dw_city_man",
+   "name_derived": true,
+   "original_room_id": 141,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_moss": {
+   "name": "赛博都市·moss",
+   "name_raw": "room_dw_city_moss",
+   "name_derived": true,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_3_backup_2exits": {
+   "name": "赛博都市·big_3_backup_2exits",
+   "name_raw": "room_dw_city_big_3_backup_2exits",
+   "name_derived": true,
+   "original_room_id": 143,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_3_2entrances": {
+   "name": "赛博都市·traffic_3_2Entrances",
+   "name_raw": "room_dw_city_traffic_3_2Entrances",
+   "name_derived": true,
+   "original_room_id": 144,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_cheese": {
+   "name": "赛博都市·cheese",
+   "name_raw": "room_dw_city_cheese",
+   "name_derived": true,
+   "original_room_id": 145,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_carnival": {
+   "name": "赛博都市·carnival",
+   "name_raw": "room_dw_city_carnival",
+   "name_derived": true,
+   "original_room_id": 146,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_noelle_fight_intro": {
+   "name": "赛博都市·noelle_fight_intro",
+   "name_raw": "room_dw_city_noelle_fight_intro",
+   "name_derived": true,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_spamton_shop_interior": {
+   "name": "赛博都市·spamton_shop_interior",
+   "name_raw": "room_dw_city_spamton_shop_interior",
+   "name_derived": true,
+   "original_room_id": 148,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_monologue_old": {
+   "name": "赛博都市·monologue_old",
+   "name_raw": "room_dw_city_monologue_old",
+   "name_derived": true,
+   "original_room_id": 149,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_1_original": {
+   "name": "赛博都市·big_1_original",
+   "name_raw": "room_dw_city_big_1_original",
+   "name_derived": true,
+   "original_room_id": 250,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_2_old": {
+   "name": "赛博都市·traffic_2_old",
+   "name_raw": "room_dw_city_traffic_2_old",
+   "name_derived": true,
+   "original_room_id": 251,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_2_og": {
+   "name": "赛博都市·big_2_OG",
+   "name_raw": "room_dw_city_big_2_OG",
+   "name_derived": true,
+   "original_room_id": 252,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_mice2_og": {
+   "name": "赛博都市·mice2_og",
+   "name_raw": "room_dw_city_mice2_og",
+   "name_derived": true,
+   "original_room_id": 253,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_5_old": {
+   "name": "赛博都市·traffic_5_old",
+   "name_raw": "room_dw_city_traffic_5_old",
+   "name_derived": true,
+   "original_room_id": 257,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_traffic_3_backup": {
+   "name": "赛博都市·traffic_3_backup",
+   "name_raw": "room_dw_city_traffic_3_backup",
+   "name_derived": true,
+   "original_room_id": 261,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_big_3_og": {
+   "name": "赛博都市·big_3_og",
+   "name_raw": "room_dw_city_big_3_og",
+   "name_derived": true,
+   "original_room_id": 265,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_city.dw_city_sidewayscars": {
+   "name": "赛博都市·sidewayscars",
+   "name_raw": "room_dw_city_sidewayscars",
+   "name_derived": true,
+   "original_room_id": 267,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

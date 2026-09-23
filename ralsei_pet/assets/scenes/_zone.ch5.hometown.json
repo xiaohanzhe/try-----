@@ -1,0 +1,217 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch5",
+ "area_id": "hometown",
+ "area_name": "家乡",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch5.hometown.town_krisyard": {
+   "name": "家乡·town_krisyard",
+   "name_raw": "room_town_krisyard",
+   "name_derived": true,
+   "original_room_id": 18,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_northwest": {
+   "name": "家乡·town_northwest",
+   "name_raw": "room_town_northwest",
+   "name_derived": true,
+   "original_room_id": 19,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_north": {
+   "name": "家乡·town_north",
+   "name_raw": "room_town_north",
+   "name_derived": true,
+   "original_room_id": 20,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.beach": {
+   "name": "家乡·beach",
+   "name_raw": "room_beach",
+   "name_derived": true,
+   "original_room_id": 21,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_mid": {
+   "name": "家乡·town_mid",
+   "name_raw": "room_town_mid",
+   "name_derived": true,
+   "original_room_id": 22,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_apartments": {
+   "name": "家乡·town_apartments",
+   "name_raw": "room_town_apartments",
+   "name_derived": true,
+   "original_room_id": 23,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_school": {
+   "name": "家乡·town_school",
+   "name_raw": "room_town_school",
+   "name_derived": true,
+   "original_room_id": 25,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_church": {
+   "name": "家乡·town_church",
+   "name_raw": "room_town_church",
+   "name_derived": true,
+   "original_room_id": 26,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.graveyard": {
+   "name": "家乡·graveyard",
+   "name_raw": "room_graveyard",
+   "name_derived": true,
+   "original_room_id": 27,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_shelter": {
+   "name": "家乡·town_shelter",
+   "name_raw": "room_town_shelter",
+   "name_derived": true,
+   "original_room_id": 28,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.hospital_lobby": {
+   "name": "家乡·hospital_lobby",
+   "name_raw": "room_hospital_lobby",
+   "name_derived": true,
+   "original_room_id": 29,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.hospital_hallway": {
+   "name": "家乡·hospital_hallway",
+   "name_raw": "room_hospital_hallway",
+   "name_derived": true,
+   "original_room_id": 30,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.hospital_rudy": {
+   "name": "家乡·hospital_rudy",
+   "name_raw": "room_hospital_rudy",
+   "name_derived": true,
+   "original_room_id": 31,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.hospital_room2": {
+   "name": "家乡·hospital_room2",
+   "name_raw": "room_hospital_room2",
+   "name_derived": true,
+   "original_room_id": 32,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.diner": {
+   "name": "家乡·diner",
+   "name_raw": "room_diner",
+   "name_derived": true,
+   "original_room_id": 33,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.townhall": {
+   "name": "家乡·townhall",
+   "name_raw": "room_townhall",
+   "name_derived": true,
+   "original_room_id": 34,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.flowershop_1f": {
+   "name": "家乡·flowershop_1f",
+   "name_raw": "room_flowershop_1f",
+   "name_derived": true,
+   "original_room_id": 35,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.flowershop_2f": {
+   "name": "家乡·flowershop_2f",
+   "name_raw": "room_flowershop_2f",
+   "name_derived": true,
+   "original_room_id": 36,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.library": {
+   "name": "家乡·library",
+   "name_raw": "room_library",
+   "name_derived": true,
+   "original_room_id": 37,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.alphysalley": {
+   "name": "家乡·alphysalley",
+   "name_raw": "room_alphysalley",
+   "name_derived": true,
+   "original_room_id": 38,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.torielclass": {
+   "name": "家乡·torielclass",
+   "name_raw": "room_torielclass",
+   "name_derived": true,
+   "original_room_id": 44,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.schoollobby": {
+   "name": "家乡·schoollobby",
+   "name_raw": "room_schoollobby",
+   "name_derived": true,
+   "original_room_id": 45,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.alphysclass": {
+   "name": "家乡·alphysclass",
+   "name_raw": "room_alphysclass",
+   "name_derived": true,
+   "original_room_id": 46,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.schooldoor": {
+   "name": "家乡·schooldoor",
+   "name_raw": "room_schooldoor",
+   "name_derived": true,
+   "original_room_id": 47,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.insidecloset": {
+   "name": "家乡·insidecloset",
+   "name_raw": "room_insidecloset",
+   "name_derived": true,
+   "original_room_id": 48,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.hometown.town_noellehouse": {
+   "name": "家乡·town_noellehouse",
+   "name_raw": "room_town_noellehouse",
+   "name_derived": true,
+   "original_room_id": 107,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

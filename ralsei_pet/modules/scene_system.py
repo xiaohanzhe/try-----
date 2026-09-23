@@ -3,7 +3,10 @@
 
 这个模块是「把原作的世界搬到桌面上」这条需求的**地基**。它只做两件事：
 
-  1. 把 `assets/scenes/` 下的 JSON 读进内存（`load_index` / `load_scene` / `load_anchors`）；
+  1. 把 `assets/scenes/` 下的 JSON 读进内存（`load_index` / `load_scene` /
+     `load_zone` / `load_anchors`）；场景数据有**两个来源**：独立
+     `<scene_id>.json`（87 个"锚点"）与**区域分片** `_zone.<章>.<区>.json`
+     （其余场景）。分片是"拿火把赶夜路"的那支火把 —— 走到哪读到哪。
   2. 提供一组**无副作用、可单独测**的纯函数做几何/选帧/深度计算
      （`resolve_anchor` / `pick_variant` / `visible_objects` / `depth_of`）。
 
@@ -106,6 +109,13 @@ _DEPTH_BASE = 1000000
 #: 无锚点时的兜底位置（屏幕比例）。用比例不用像素，是为了多屏/不同 DPI 下
 #: 都能落在"大致同一个视觉位置"。
 _DEFAULT_ANCHOR = (0.5, 1.0)
+
+#: 区域分片的文件名模板：`_zone.<chapter>.<area>.json`。
+#: 「分片」= 把同一 (章, 区域) 下**没有独立 `<scene_id>.json`** 的场景打包成一个
+#: 文件。它是「拿火把赶夜路」里那支火把 —— 走进一片区域时**整片读一次**，
+#: 而不是读 1,013 个小文件（实测 835 ms）或启动时全读进来。
+_ZONE_PREFIX = '_zone.'
+_ZONE_SUFFIX = '.json'
 
 
 # ===========================================================================
@@ -245,8 +255,75 @@ def load_index(scene_dir_path=None):
     return result
 
 
-def load_scene(scene_id, scene_dir_path=None):
+def zone_filename(chapter_id, area_id):
+    """`(章, 区域)` → 分片文件名。**对名字做裁剪**（它会被拼进路径）。
+
+    裁剪规则与 `load_scene` 拦路径穿越同源：只留字母/数字/`_`/`-`，
+    其余一律丢掉。空掉的话用 `unknown` 兜底（宁可读不到，也不越界读）。
+    """
+    def clean(value):
+        text = str(value or '').strip()
+        text = ''.join(ch for ch in text if ch.isalnum() or ch in '_-')
+        return text or 'unknown'
+    return '%s%s.%s%s' % (_ZONE_PREFIX, clean(chapter_id), clean(area_id),
+                          _ZONE_SUFFIX)
+
+
+def load_zone(chapter_id, area_id, scene_dir_path=None):
+    """读一个**区域分片** → `{scene_id: SceneState}`。**永不抛**；读不到返回 `{}`。
+
+    为什么按"区域"打包而不是"一个房间一个文件"：见 `_ZONE_PREFIX` 的注释。
+    这里只负责**读一片**；"什么时候读"是控制器的事（P0 里它跟着 `switch` 走）。
+
+    返回 `{}` 的四种情况（都属于**正常路径**，不该报错）：
+    该区域全是锚点场景（没有分片）、分片文件不存在、JSON 坏了、schema 不符。
+    """
+    if not chapter_id or not area_id:
+        return {}
+    base = scene_dir_path or scenes_dir()
+    path = os.path.join(base, zone_filename(chapter_id, area_id))
+    if not os.path.isfile(path):
+        return {}
+    raw = _read_json(path)
+    if not isinstance(raw, dict):
+        return {}
+    if raw.get('schema_version') != SCENE_SCHEMA_VERSION:
+        return {}
+
+    out = {}
+    for scene_id, entry in (raw.get('scenes') or {}).items():
+        if not isinstance(entry, dict):
+            continue
+        merged = dict(entry)
+        # 分片里的场景**不重复写**这四样（章/区标签由分片自己给），
+        # 但 `load_scene` 走独立文件那条路时它们来自 `load_index` 的 merge
+        # ⇒ 这里补齐，保证两条来源产出的 `SceneState` 形状完全一致。
+        merged.setdefault('scene_id', scene_id)
+        merged.setdefault('chapter_id', raw.get('chapter_id'))
+        merged.setdefault('area_id', raw.get('area_id'))
+        merged.setdefault('area_name', raw.get('area_name'))
+        scene = SceneState.from_dict(merged)
+        scene.dir_path = base
+        out[scene_id] = scene
+    return out
+
+
+def load_scene(scene_id, scene_dir_path=None, entry=None):
     """读一个场景定义 → `SceneState`。**永不抛**；读不到返回 `None`。
+
+    两个来源，**查找顺序固定**（同一场景只出现在一个来源，不会二选一）：
+
+      1. 独立文件 `<scene_id>.json` —— 第 36 轮登记的 87 个"锚点"场景走这条；
+      2. **区域分片** `_zone.<chapter>.<area>.json` —— 第 38 轮新增的 926 个走这条。
+         需要 `entry`（索引里的登记行）来知道自己在哪个 (章, 区域)。
+
+    :param entry: 可选。`load_index()['scenes'][scene_id]`。给了它，
+                  独立文件缺失时才会去分片里找；不给就只认独立文件
+                  （向后兼容：老调用方 `load_scene(sid)` 行为完全不变）。
+
+    为什么独立文件"存在但坏掉"时不静默改读分片：那会让一份半坏的数据
+    **悄悄换一个数据源**，产出的场景看起来正常但来源已经不是你预期的那份。
+    宁可返回 `None`（调用方保持当前场景），也不静默换源。
 
     找不到文件 / JSON 坏掉 / schema 不符 → `None`。调用方（控制器）拿到 None
     时应当**保持当前场景不变**，而不是切到一个空场景 —— 后者会让桌宠所在的世界
@@ -260,18 +337,23 @@ def load_scene(scene_id, scene_dir_path=None):
     if os.sep in scene_id or '/' in scene_id or scene_id in ('.', '..'):
         return None
     path = os.path.join(base, scene_id + '.json')
-    if not os.path.isfile(path):
-        return None
+    if os.path.isfile(path):
+        raw = _read_json(path)
+        if not isinstance(raw, dict):
+            return None
+        if raw.get('schema_version') != SCENE_SCHEMA_VERSION:
+            return None
+        scene = SceneState.from_dict(raw)
+        scene.dir_path = base
+        return scene
 
-    raw = _read_json(path)
-    if not isinstance(raw, dict):
-        return None
-    if raw.get('schema_version') != SCENE_SCHEMA_VERSION:
-        return None
-
-    scene = SceneState.from_dict(raw)
-    scene.dir_path = base
-    return scene
+    # ---- 来源 2：区域分片 ----
+    if isinstance(entry, dict):
+        chapter_id = entry.get('chapter_id')
+        area_id = entry.get('area_id')
+        if chapter_id and area_id:
+            return load_zone(chapter_id, area_id, base).get(scene_id)
+    return None
 
 
 def load_anchors(scene_dir_path=None):

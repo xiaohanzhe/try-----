@@ -1,0 +1,17 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch5",
+ "area_id": "noelles_house",
+ "area_name": "诺艾尔家",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch5.noelles_house.lw_noellehouse_dess": {
+   "name": "诺艾尔家·noellehouse_dess",
+   "name_raw": "room_lw_noellehouse_dess",
+   "name_derived": true,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

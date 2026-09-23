@@ -1,0 +1,153 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch3",
+ "area_id": "board_world",
+ "area_name": "冒险棋盘",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch3.board_world.board_1": {
+   "name": "冒险棋盘·1",
+   "name_raw": "room_board_1",
+   "name_derived": true,
+   "original_room_id": 112,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_dungeon_2": {
+   "name": "冒险棋盘·dungeon_2",
+   "name_raw": "room_board_dungeon_2",
+   "name_derived": true,
+   "original_room_id": 115,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_dungeon_3": {
+   "name": "冒险棋盘·dungeon_3",
+   "name_raw": "room_board_dungeon_3",
+   "name_derived": true,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_preshadowmantle": {
+   "name": "冒险棋盘·preshadowmantle",
+   "name_raw": "room_board_preshadowmantle",
+   "name_derived": true,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_prepostshadowmantle": {
+   "name": "冒险棋盘·prepostshadowmantle",
+   "name_raw": "room_board_prepostshadowmantle",
+   "name_derived": true,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_postshadowmantle": {
+   "name": "冒险棋盘·postshadowmantle",
+   "name_raw": "room_board_postshadowmantle",
+   "name_derived": true,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_intro": {
+   "name": "冒险棋盘·intro",
+   "name_raw": "room_board_intro",
+   "name_derived": true,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_preshadowmantle_repeat": {
+   "name": "冒险棋盘·preshadowmantle_repeat",
+   "name_raw": "room_board_preshadowmantle_repeat",
+   "name_derived": true,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_1_sword": {
+   "name": "冒险棋盘·1_sword",
+   "name_raw": "room_board_1_sword",
+   "name_derived": true,
+   "original_room_id": 136,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_sword_intro": {
+   "name": "冒险棋盘·sword_intro",
+   "name_raw": "room_board_sword_intro",
+   "name_derived": true,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_1_sword_trees": {
+   "name": "冒险棋盘·1_sword_trees",
+   "name_raw": "room_board_1_sword_trees",
+   "name_derived": true,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_2": {
+   "name": "冒险棋盘·2",
+   "name_raw": "room_board_2",
+   "name_derived": true,
+   "original_room_id": 141,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_3": {
+   "name": "冒险棋盘·3",
+   "name_raw": "room_board_3",
+   "name_derived": true,
+   "original_room_id": 144,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_2_sword": {
+   "name": "冒险棋盘·2_sword",
+   "name_raw": "room_board_2_sword",
+   "name_derived": true,
+   "original_room_id": 148,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_empty": {
+   "name": "冒险棋盘·empty",
+   "name_raw": "room_board_empty",
+   "name_derived": true,
+   "original_room_id": 150,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_3b": {
+   "name": "冒险棋盘·3b",
+   "name_raw": "room_board_3b",
+   "name_derived": true,
+   "original_room_id": 175,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_3_sword": {
+   "name": "冒险棋盘·3_sword",
+   "name_raw": "room_board_3_sword",
+   "name_derived": true,
+   "original_room_id": 186,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.board_world.board_gsa02_b0": {
+   "name": "冒险棋盘·gsa02_b0",
+   "name_raw": "room_board_gsa02_b0",
+   "name_derived": true,
+   "original_room_id": 193,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

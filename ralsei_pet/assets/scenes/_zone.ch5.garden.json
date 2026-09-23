@@ -1,0 +1,233 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch5",
+ "area_id": "garden",
+ "area_name": "希望之园",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch5.garden.dw_garden_meetflowery": {
+   "name": "希望之园·meetflowery",
+   "name_raw": "room_dw_garden_meetflowery",
+   "name_derived": true,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_video": {
+   "name": "希望之园·video",
+   "name_raw": "room_dw_garden_video",
+   "name_derived": true,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_ralseicupboard": {
+   "name": "希望之园·ralseicupboard",
+   "name_raw": "room_dw_garden_ralseicupboard",
+   "name_derived": true,
+   "original_room_id": 121,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_hospital": {
+   "name": "希望之园·hospital",
+   "name_raw": "room_dw_garden_hospital",
+   "name_derived": true,
+   "original_room_id": 123,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_fishingspot": {
+   "name": "希望之园·fishingspot",
+   "name_raw": "room_dw_garden_fishingspot",
+   "name_derived": true,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_shearydodge": {
+   "name": "希望之园·shearydodge",
+   "name_raw": "room_dw_garden_shearydodge",
+   "name_derived": true,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_hopschef": {
+   "name": "希望之园·hopschef",
+   "name_raw": "room_dw_garden_hopschef",
+   "name_derived": true,
+   "original_room_id": 126,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_platshortcut": {
+   "name": "希望之园·platshortcut",
+   "name_raw": "room_dw_garden_platshortcut",
+   "name_derived": true,
+   "original_room_id": 127,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_riverchest": {
+   "name": "希望之园·riverchest",
+   "name_raw": "room_dw_garden_riverchest",
+   "name_derived": true,
+   "original_room_id": 128,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_pedestal": {
+   "name": "希望之园·pedestal",
+   "name_raw": "room_dw_garden_pedestal",
+   "name_derived": true,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_mushrooms": {
+   "name": "希望之园·mushrooms",
+   "name_raw": "room_dw_garden_mushrooms",
+   "name_derived": true,
+   "original_room_id": 131,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_flowerygardening": {
+   "name": "希望之园·flowerygardening",
+   "name_raw": "room_dw_garden_flowerygardening",
+   "name_derived": true,
+   "original_room_id": 132,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_starwalkerdash": {
+   "name": "希望之园·starwalkerdash",
+   "name_raw": "room_dw_garden_starwalkerdash",
+   "name_derived": true,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_hardpressureplates": {
+   "name": "希望之园·hardpressureplates",
+   "name_raw": "room_dw_garden_hardpressureplates",
+   "name_derived": true,
+   "original_room_id": 135,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aqua": {
+   "name": "希望之园·aqua",
+   "name_raw": "room_dw_garden_aqua",
+   "name_derived": true,
+   "original_room_id": 136,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_finalplatforming": {
+   "name": "希望之园·finalplatforming",
+   "name_raw": "room_dw_garden_finalplatforming",
+   "name_derived": true,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_finalplatforming_right": {
+   "name": "希望之园·finalplatforming_right",
+   "name_raw": "room_dw_garden_finalplatforming_right",
+   "name_derived": true,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_wateringcan_aqua": {
+   "name": "希望之园·wateringcan_aqua",
+   "name_raw": "room_dw_garden_wateringcan_aqua",
+   "name_derived": true,
+   "original_room_id": 139,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aquadarkness": {
+   "name": "希望之园·aquadarkness",
+   "name_raw": "room_dw_garden_aquadarkness",
+   "name_derived": true,
+   "original_room_id": 140,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aquashrine": {
+   "name": "希望之园·aquashrine",
+   "name_raw": "room_dw_garden_aquashrine",
+   "name_derived": true,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aquaplatforming": {
+   "name": "希望之园·aquaplatforming",
+   "name_raw": "room_dw_garden_aquaplatforming",
+   "name_derived": true,
+   "original_room_id": 143,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_susiechase": {
+   "name": "希望之园·susiechase",
+   "name_raw": "room_dw_garden_susiechase",
+   "name_derived": true,
+   "original_room_id": 145,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_newdash": {
+   "name": "希望之园·newdash",
+   "name_raw": "room_dw_garden_newdash",
+   "name_derived": true,
+   "original_room_id": 146,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_shearyguide": {
+   "name": "希望之园·shearyguide",
+   "name_raw": "room_dw_garden_shearyguide",
+   "name_derived": true,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aquatransition": {
+   "name": "希望之园·aquatransition",
+   "name_raw": "room_dw_garden_aquatransition",
+   "name_derived": true,
+   "original_room_id": 149,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aquahole_left": {
+   "name": "希望之园·aquahole_left",
+   "name_raw": "room_dw_garden_aquahole_left",
+   "name_derived": true,
+   "original_room_id": 151,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_firstdash": {
+   "name": "希望之园·firstdash",
+   "name_raw": "room_dw_garden_firstdash",
+   "name_derived": true,
+   "original_room_id": 152,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.garden.dw_garden_aquadash_plat": {
+   "name": "希望之园·aquadash_plat",
+   "name_raw": "room_dw_garden_aquadash_plat",
+   "name_derived": true,
+   "original_room_id": 153,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

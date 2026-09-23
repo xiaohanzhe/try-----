@@ -1,0 +1,73 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch3",
+ "area_id": "dark_world",
+ "area_name": "黑暗世界",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch3.dark_world.dw_couch_overworld_01": {
+   "name": "黑暗世界·couch_overworld_01",
+   "name_raw": "room_dw_couch_overworld_01",
+   "name_derived": true,
+   "original_room_id": 99,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_overworld_02": {
+   "name": "黑暗世界·couch_overworld_02",
+   "name_raw": "room_dw_couch_overworld_02",
+   "name_derived": true,
+   "original_room_id": 100,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_overworld_03": {
+   "name": "黑暗世界·couch_overworld_03",
+   "name_raw": "room_dw_couch_overworld_03",
+   "name_derived": true,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_overworld_04": {
+   "name": "黑暗世界·couch_overworld_04",
+   "name_raw": "room_dw_couch_overworld_04",
+   "name_derived": true,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_overworld_05": {
+   "name": "黑暗世界·couch_overworld_05",
+   "name_raw": "room_dw_couch_overworld_05",
+   "name_derived": true,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_points": {
+   "name": "黑暗世界·couch_points",
+   "name_raw": "room_dw_couch_points",
+   "name_derived": true,
+   "original_room_id": 187,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_overworld_intro_left": {
+   "name": "黑暗世界·couch_overworld_intro_left",
+   "name_raw": "room_dw_couch_overworld_intro_left",
+   "name_derived": true,
+   "original_room_id": 188,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch3.dark_world.dw_couch_video": {
+   "name": "黑暗世界·couch_video",
+   "name_raw": "room_dw_couch_video",
+   "name_derived": true,
+   "original_room_id": 189,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

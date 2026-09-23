@@ -100,27 +100,76 @@ check('A6 作品内场景已登记（>0）', len(_story_scenes) > 0,
 
 _missing_room = []
 for sid, entry in _story_scenes.items():
-    scene = ss.load_scene(sid, _SCENES)
+    # ★ 第38轮更新：场景数据有两个来源（独立文件 / 区域分片），一律用产品函数
+    #   并**把登记行传下去**（分片场景靠它才知道该读哪一片）。
+    scene = ss.load_scene(sid, _SCENES, entry=entry)
     if scene is None:
-        _missing_room.append(sid + '(文件读不到)')
+        _missing_room.append(sid + '(加载失败)')
         continue
     raw = scene.raw or {}
     orig = (raw.get('_comment') or {}).get('original_room')
-    if not isinstance(orig, dict) or 'room_id' not in orig:
-        _missing_room.append(sid)
+    if isinstance(orig, dict) and 'room_id' in orig:
+        continue
+    # 分片场景的可回溯载体在**登记行**上（第38轮生成器写进去的 original_room_id）
+    if entry.get('original_room_id') is not None:
+        continue
+    _missing_room.append(sid)
 check('A7 每个作品内场景都可回溯原作 room_id',
       not _missing_room,
       '缺失 %d 个: %s' % (len(_missing_room), _missing_room[:5]))
 
-# 场景数与房间数不应差太远（同房间重名会各占一个场景）
-check('A8 场景数与原作房间数量级一致',
-      abs(len(_story_scenes) - _room_total) <= 5,
-      'scenes=%d rooms=%d' % (len(_story_scenes), _room_total))
+# A8 —— ★ 第38轮换判据。旧判据是「场景数与官方命名地点数量级一致（差 ≤5）」，
+# 它把 `_original_rooms.json` 里的 87 个**官方命名地点**当成了「房间全集」。
+# 第38轮实测：原作五章共 1,251 个 room，其中 1,013 个可当场景 —— user 口径
+# 「把所有都拿出来啊，别就拿87个」。旧判据随新数据失效，换成**更强的逐条覆盖**判据。
+_rooms_tbl_path = os.path.join(_ROOT, 'code-quality-audit',
+                               '第38轮-场景系统审查', '_evidence',
+                               '房间表_全量.json')
+_reg_keys = set()
+for _sid, _e in _story_scenes.items():
+    _rid = _e.get('original_room_id')
+    if _rid is not None:
+        _reg_keys.add((_e.get('chapter_id'), int(_rid)))
+
+_tbl = load_json(_rooms_tbl_path) if os.path.isfile(_rooms_tbl_path) else None
+_uncovered = []
+if isinstance(_tbl, dict):
+    for _ch in _tbl:
+        for _r in _tbl[_ch]:
+            if _r.get('cls') != 'scene':
+                continue
+            if (_ch, int(_r['room_index'])) not in _reg_keys:
+                _uncovered.append('%s:%s' % (_ch, _r['resource']))
+check('A8 原作房间表里每个 scene 类房间都已登记为场景（「把所有都拿出来」）',
+      isinstance(_tbl, dict) and not _uncovered,
+      ('房间表读不到: %s' % _rooms_tbl_path) if not isinstance(_tbl, dict)
+      else '未登记 %d 个: %s' % (len(_uncovered), _uncovered[:4]))
+
+# A8b 负控制：从登记键里挖掉一个，判据必须报红（证明 A8 不是恒真）
+if isinstance(_tbl, dict):
+    _neg_keys = set(_reg_keys)
+    for _ch in _tbl:
+        for _r in _tbl[_ch]:
+            if _r.get('cls') == 'scene' and (_ch, int(_r['room_index'])) in _neg_keys:
+                _neg_keys.discard((_ch, int(_r['room_index'])))
+                break
+        else:
+            continue
+        break
+    _neg_uncov = 0
+    for _ch in _tbl:
+        for _r in _tbl[_ch]:
+            if _r.get('cls') != 'scene':
+                continue
+            if (_ch, int(_r['room_index'])) not in _neg_keys:
+                _neg_uncov += 1
+    check('A8b 负控制：挖掉一个登记键后 A8 确实报红（有鉴别力）',
+          _neg_uncov == 1, 'got=%d' % _neg_uncov)
 
 # --- 负控制：把 room_id 抹掉必须被抓 ---
 _neg = dict(_story_scenes)
 _sample_sid = sorted(_story_scenes.keys())[0]
-_sample = ss.load_scene(_sample_sid, _SCENES)
+_sample = ss.load_scene(_sample_sid, _SCENES, entry=_story_scenes.get(_sample_sid))
 _raw_neg = dict(_sample.raw)
 _raw_neg['_comment'] = {}
 _neg_view = ss.SceneState.from_dict(_raw_neg)
@@ -339,17 +388,45 @@ check('D6 _routes.json 的 meta 写明「priority 压过 score」这条坑',
 print()
 print('=== E. 背景素材口径 ===')
 
-_no_bg = []
+# E1 —— ★ 第38轮换判据。旧判据「每个作品内场景都声明了 bg 路径」建立在
+#     「场景只有 88 个、且第37轮已给每个都反编译出背景」之上。第38轮之后场景变
+#     1,013 个，其中 926 个**原作本来就没有背景精灵**（实测 147 个房间里只有 40 层带
+#     bg_sprite）⇒ 旧判据无法满足。**不编造"区域代表素材"来让它继续绿**：那是把
+#     "我没有这张图"伪装成"就是这张图"，违反本项目「算不出 → None，绝不伪装」铁律。
+#     新判据保留原强度（锚点必须有真 bg），并把"没有 bg"这件事变成**必须显式声明**。
+_bg_missing_key, _bg_null_undeclared, _anchor_no_bg = [], [], []
+_anchor_total = 0
 for sid in sorted(_story_scenes.keys()):
-    scene = ss.load_scene(sid, _SCENES)
-    if scene is None or not scene.bg:
-        _no_bg.append(sid)
-check('E1 每个作品内场景都声明了 bg 路径',
-      not _no_bg, '缺 %d: %s' % (len(_no_bg), _no_bg[:5]))
+    entry = _story_scenes[sid]
+    scene = ss.load_scene(sid, _SCENES, entry=entry)
+    if scene is None:
+        _bg_missing_key.append(sid + '(加载失败)')
+        continue
+    raw = scene.raw or {}
+    if 'bg' not in raw:
+        _bg_missing_key.append(sid)
+        continue
+    if not scene.bg:
+        if raw.get('bg_source') != 'none':
+            _bg_null_undeclared.append(sid)
+    if entry.get('file'):
+        _anchor_total += 1
+        if not scene.bg:
+            _anchor_no_bg.append(sid)
+check('E1a 每个场景条目都显式声明了 bg 键（null 也算「声明」）',
+      not _bg_missing_key,
+      '缺 %d: %s' % (len(_bg_missing_key), _bg_missing_key[:5]))
+check('E1b 没有 bg 的场景必须显式声明 bg_source="none"',
+      not _bg_null_undeclared,
+      '未声明 %d: %s' % (len(_bg_null_undeclared), _bg_null_undeclared[:5]))
+check('E1c 有独立文件的锚点场景全部有非空 bg（原 E1 的强度保留在锚点上）',
+      _anchor_total > 0 and not _anchor_no_bg,
+      '锚点 %d 个，其中没 bg 的 %d: %s'
+      % (_anchor_total, len(_anchor_no_bg), _anchor_no_bg[:5]))
 
 _bg_dir_ok = True
 for sid in sorted(_story_scenes.keys()):
-    scene = ss.load_scene(sid, _SCENES)
+    scene = ss.load_scene(sid, _SCENES, entry=_story_scenes[sid])
     if scene and scene.bg and not scene.bg.startswith('bg/'):
         _bg_dir_ok = False
 check('E2 bg 路径统一走 bg/ 子目录（约定文件名）', _bg_dir_ok)
@@ -373,7 +450,7 @@ def _bg_health_pairs(pairs):
 
 _scan = []
 for sid in sorted(_story_scenes.keys()):
-    scene = ss.load_scene(sid, _SCENES)
+    scene = ss.load_scene(sid, _SCENES, entry=_story_scenes[sid])
     if scene and scene.bg:
         _scan.append((sid, os.path.join(_bg_base, scene.bg)))
 _miss, _notpng = _bg_health_pairs(_scan)

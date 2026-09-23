@@ -1,0 +1,329 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch2",
+ "area_id": "cyber_field",
+ "area_name": "赛博原野",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch2.cyber_field.dw_cyber_intro_1": {
+   "name": "赛博原野·intro_1",
+   "name_raw": "room_dw_cyber_intro_1",
+   "name_derived": true,
+   "original_room_id": 74,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_intro_connector": {
+   "name": "赛博原野·intro_connector",
+   "name_raw": "room_dw_cyber_intro_connector",
+   "name_derived": true,
+   "original_room_id": 75,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_intro_2": {
+   "name": "赛博原野·intro_2",
+   "name_raw": "room_dw_cyber_intro_2",
+   "name_derived": true,
+   "original_room_id": 76,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_rhythm_slide": {
+   "name": "赛博原野·rhythm_slide",
+   "name_raw": "room_dw_cyber_rhythm_slide",
+   "name_derived": true,
+   "original_room_id": 77,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_1": {
+   "name": "赛博原野·battle_maze_1",
+   "name_raw": "room_dw_cyber_battle_maze_1",
+   "name_derived": true,
+   "original_room_id": 79,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_music_bullet": {
+   "name": "赛博原野·music_bullet",
+   "name_raw": "room_dw_cyber_music_bullet",
+   "name_derived": true,
+   "original_room_id": 80,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_tasque_battle": {
+   "name": "赛博原野·tasque_battle",
+   "name_raw": "room_dw_cyber_tasque_battle",
+   "name_derived": true,
+   "original_room_id": 81,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_1": {
+   "name": "赛博原野·keyboard_puzzle_1",
+   "name_raw": "room_dw_cyber_keyboard_puzzle_1",
+   "name_derived": true,
+   "original_room_id": 82,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_musical_door": {
+   "name": "赛博原野·musical_door",
+   "name_raw": "room_dw_cyber_musical_door",
+   "name_derived": true,
+   "original_room_id": 84,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_maze_virokun": {
+   "name": "赛博原野·maze_virokun",
+   "name_raw": "room_dw_cyber_maze_virokun",
+   "name_derived": true,
+   "original_room_id": 85,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_2": {
+   "name": "赛博原野·keyboard_puzzle_2",
+   "name_raw": "room_dw_cyber_keyboard_puzzle_2",
+   "name_derived": true,
+   "original_room_id": 86,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_2": {
+   "name": "赛博原野·battle_maze_2",
+   "name_raw": "room_dw_cyber_battle_maze_2",
+   "name_derived": true,
+   "original_room_id": 87,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_music_final": {
+   "name": "赛博原野·music_final",
+   "name_raw": "room_dw_cyber_music_final",
+   "name_derived": true,
+   "original_room_id": 88,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_teacup_final": {
+   "name": "赛博原野·teacup_final",
+   "name_raw": "room_dw_cyber_teacup_final",
+   "name_derived": true,
+   "original_room_id": 90,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_rollercoaster": {
+   "name": "赛博原野·rollercoaster",
+   "name_raw": "room_dw_cyber_rollercoaster",
+   "name_derived": true,
+   "original_room_id": 91,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_maze_fireworks": {
+   "name": "赛博原野·maze_fireworks",
+   "name_raw": "room_dw_cyber_maze_fireworks",
+   "name_derived": true,
+   "original_room_id": 92,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_maze_tasque": {
+   "name": "赛博原野·maze_tasque",
+   "name_raw": "room_dw_cyber_maze_tasque",
+   "name_derived": true,
+   "original_room_id": 93,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_maze_queenscreen": {
+   "name": "赛博原野·maze_queenscreen",
+   "name_raw": "room_dw_cyber_maze_queenscreen",
+   "name_derived": true,
+   "original_room_id": 94,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_viro_ring": {
+   "name": "赛博原野·viro_ring",
+   "name_raw": "room_dw_cyber_viro_ring",
+   "name_derived": true,
+   "original_room_id": 95,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_post_music_boss_slide": {
+   "name": "赛博原野·post_music_boss_slide",
+   "name_raw": "room_dw_cyber_post_music_boss_slide",
+   "name_derived": true,
+   "original_room_id": 96,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_3": {
+   "name": "赛博原野·keyboard_puzzle_3",
+   "name_raw": "room_dw_cyber_keyboard_puzzle_3",
+   "name_derived": true,
+   "original_room_id": 97,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_3": {
+   "name": "赛博原野·battle_maze_3",
+   "name_raw": "room_dw_cyber_battle_maze_3",
+   "name_derived": true,
+   "original_room_id": 98,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_teacup_2": {
+   "name": "赛博原野·teacup_2",
+   "name_raw": "room_dw_cyber_teacup_2",
+   "name_derived": true,
+   "original_room_id": 99,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel": {
+   "name": "赛博原野·shaunsmusicalbullettunnel",
+   "name_raw": "room_dw_cyber_shaunsmusicalbullettunnel",
+   "name_derived": true,
+   "original_room_id": 100,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_maze_rhythm": {
+   "name": "赛博原野·maze_rhythm",
+   "name_raw": "room_dw_cyber_maze_rhythm",
+   "name_derived": true,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_escalator_slide": {
+   "name": "赛博原野·escalator_slide",
+   "name_raw": "room_dw_cyber_escalator_slide",
+   "name_derived": true,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_nuberts_treasure": {
+   "name": "赛博原野·nuberts_treasure",
+   "name_raw": "room_dw_cyber_nuberts_treasure",
+   "name_derived": true,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_music_fight": {
+   "name": "赛博原野·music_fight",
+   "name_raw": "room_dw_cyber_music_fight",
+   "name_derived": true,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_keyboardexample": {
+   "name": "赛博原野·keyboardexample",
+   "name_raw": "room_dw_cyber_keyboardexample",
+   "name_derived": true,
+   "original_room_id": 105,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_2_old": {
+   "name": "赛博原野·battle_maze_2_old",
+   "name_raw": "room_dw_cyber_battle_maze_2_old",
+   "name_derived": true,
+   "original_room_id": 242,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_1_old": {
+   "name": "赛博原野·keyboard_puzzle_1_old",
+   "name_raw": "room_dw_cyber_keyboard_puzzle_1_old",
+   "name_derived": true,
+   "original_room_id": 243,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_tasque_battle_og": {
+   "name": "赛博原野·tasque_battle_og",
+   "name_raw": "room_dw_cyber_tasque_battle_og",
+   "name_derived": true,
+   "original_room_id": 244,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_savepoint_original": {
+   "name": "赛博原野·savepoint_original",
+   "name_raw": "room_dw_cyber_savepoint_original",
+   "name_derived": true,
+   "original_room_id": 245,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_1_original": {
+   "name": "赛博原野·battle_maze_1_Original",
+   "name_raw": "room_dw_cyber_battle_maze_1_Original",
+   "name_derived": true,
+   "original_room_id": 246,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_music_bullet_original": {
+   "name": "赛博原野·music_bullet_original",
+   "name_raw": "room_dw_cyber_music_bullet_original",
+   "name_derived": true,
+   "original_room_id": 247,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_maze_virokun_backuo": {
+   "name": "赛博原野·maze_virokun_backuo",
+   "name_raw": "room_dw_cyber_maze_virokun_backuo",
+   "name_derived": true,
+   "original_room_id": 248,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_2_toby": {
+   "name": "赛博原野·battle_maze_2_toby",
+   "name_raw": "room_dw_cyber_battle_maze_2_toby",
+   "name_derived": true,
+   "original_room_id": 249,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_teacup_1": {
+   "name": "赛博原野·teacup_1",
+   "name_raw": "room_dw_cyber_teacup_1",
+   "name_derived": true,
+   "original_room_id": 255,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_viromaze2": {
+   "name": "赛博原野·viromaze2",
+   "name_raw": "room_dw_cyber_viromaze2",
+   "name_derived": true,
+   "original_room_id": 256,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch2.cyber_field.dw_cyber_virovirokun_fight": {
+   "name": "赛博原野·virovirokun_fight",
+   "name_raw": "room_dw_cyber_virovirokun_fight",
+   "name_derived": true,
+   "original_room_id": 259,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

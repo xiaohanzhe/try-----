@@ -1,0 +1,225 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch1",
+ "area_id": "forest",
+ "area_name": "猩红森林",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch1.forest.forest_area0": {
+   "name": "猩红森林·area0",
+   "name_raw": "room_forest_area0",
+   "name_derived": true,
+   "original_room_id": 74,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area1": {
+   "name": "猩红森林·area1",
+   "name_raw": "room_forest_area1",
+   "name_derived": true,
+   "original_room_id": 75,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area2": {
+   "name": "猩红森林·area2",
+   "name_raw": "room_forest_area2",
+   "name_derived": true,
+   "original_room_id": 76,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area2a": {
+   "name": "猩红森林·area2A",
+   "name_raw": "room_forest_area2A",
+   "name_derived": true,
+   "original_room_id": 77,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_puzzle1": {
+   "name": "猩红森林·puzzle1",
+   "name_raw": "room_forest_puzzle1",
+   "name_derived": true,
+   "original_room_id": 78,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_beforeclover": {
+   "name": "猩红森林·beforeclover",
+   "name_raw": "room_forest_beforeclover",
+   "name_derived": true,
+   "original_room_id": 79,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area3a": {
+   "name": "猩红森林·area3A",
+   "name_raw": "room_forest_area3A",
+   "name_derived": true,
+   "original_room_id": 80,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area3": {
+   "name": "猩红森林·area3",
+   "name_raw": "room_forest_area3",
+   "name_derived": true,
+   "original_room_id": 81,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_smith": {
+   "name": "猩红森林·smith",
+   "name_raw": "room_forest_smith",
+   "name_derived": true,
+   "original_room_id": 83,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area4": {
+   "name": "猩红森林·area4",
+   "name_raw": "room_forest_area4",
+   "name_derived": true,
+   "original_room_id": 84,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_dancers1": {
+   "name": "猩红森林·dancers1",
+   "name_raw": "room_forest_dancers1",
+   "name_derived": true,
+   "original_room_id": 85,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_secret1": {
+   "name": "猩红森林·secret1",
+   "name_raw": "room_forest_secret1",
+   "name_derived": true,
+   "original_room_id": 86,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_thrashmaker": {
+   "name": "猩红森林·thrashmaker",
+   "name_raw": "room_forest_thrashmaker",
+   "name_derived": true,
+   "original_room_id": 87,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_starwalker": {
+   "name": "猩红森林·starwalker",
+   "name_raw": "room_forest_starwalker",
+   "name_derived": true,
+   "original_room_id": 88,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_area5": {
+   "name": "猩红森林·area5",
+   "name_raw": "room_forest_area5",
+   "name_derived": true,
+   "original_room_id": 89,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_maze1": {
+   "name": "猩红森林·maze1",
+   "name_raw": "room_forest_maze1",
+   "name_derived": true,
+   "original_room_id": 91,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_maze_deadend": {
+   "name": "猩红森林·maze_deadend",
+   "name_raw": "room_forest_maze_deadend",
+   "name_derived": true,
+   "original_room_id": 92,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_maze_susie": {
+   "name": "猩红森林·maze_susie",
+   "name_raw": "room_forest_maze_susie",
+   "name_derived": true,
+   "original_room_id": 93,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_maze2": {
+   "name": "猩红森林·maze2",
+   "name_raw": "room_forest_maze2",
+   "name_derived": true,
+   "original_room_id": 94,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_maze_deadend2": {
+   "name": "猩红森林·maze_deadend2",
+   "name_raw": "room_forest_maze_deadend2",
+   "name_derived": true,
+   "original_room_id": 95,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_afterthrash2": {
+   "name": "猩红森林·afterthrash2",
+   "name_raw": "room_forest_afterthrash2",
+   "name_derived": true,
+   "original_room_id": 98,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_afterthrash3": {
+   "name": "猩红森林·afterthrash3",
+   "name_raw": "room_forest_afterthrash3",
+   "name_derived": true,
+   "original_room_id": 99,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_afterthrash4": {
+   "name": "猩红森林·afterthrash4",
+   "name_raw": "room_forest_afterthrash4",
+   "name_derived": true,
+   "original_room_id": 100,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_castleview": {
+   "name": "猩红森林·castleview",
+   "name_raw": "room_forest_castleview",
+   "name_derived": true,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_chase1": {
+   "name": "猩红森林·chase1",
+   "name_raw": "room_forest_chase1",
+   "name_derived": true,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_chase2": {
+   "name": "猩红森林·chase2",
+   "name_raw": "room_forest_chase2",
+   "name_derived": true,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch1.forest.forest_castlefront": {
+   "name": "猩红森林·castlefront",
+   "name_raw": "room_forest_castlefront",
+   "name_derived": true,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

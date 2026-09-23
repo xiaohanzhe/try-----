@@ -1,0 +1,81 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch5",
+ "area_id": "light_world",
+ "area_name": "光世界",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch5.light_world.lw_computer_lab": {
+   "name": "光世界·computer_lab",
+   "name_raw": "room_lw_computer_lab",
+   "name_derived": true,
+   "original_room_id": 39,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_library_upstairs": {
+   "name": "光世界·library_upstairs",
+   "name_raw": "room_lw_library_upstairs",
+   "name_derived": true,
+   "original_room_id": 40,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_police": {
+   "name": "光世界·police",
+   "name_raw": "room_lw_police",
+   "name_derived": true,
+   "original_room_id": 41,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_conbini": {
+   "name": "光世界·conbini",
+   "name_raw": "room_lw_conbini",
+   "name_derived": true,
+   "original_room_id": 42,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_icee_pizza": {
+   "name": "光世界·icee_pizza",
+   "name_raw": "room_lw_icee_pizza",
+   "name_derived": true,
+   "original_room_id": 43,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_church_choir": {
+   "name": "光世界·church_choir",
+   "name_raw": "room_lw_church_choir",
+   "name_derived": true,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_church_entrance": {
+   "name": "光世界·church_entrance",
+   "name_raw": "room_lw_church_entrance",
+   "name_derived": true,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_church_main": {
+   "name": "光世界·church_main",
+   "name_raw": "room_lw_church_main",
+   "name_derived": true,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.light_world.lw_church_office": {
+   "name": "光世界·church_office",
+   "name_raw": "room_lw_church_office",
+   "name_derived": true,
+   "original_room_id": 105,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

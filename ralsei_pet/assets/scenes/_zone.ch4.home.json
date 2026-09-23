@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch4",
+ "area_id": "home",
+ "area_name": "克里斯的家",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch4.home.krishallway": {
+   "name": "克里斯的家·krishallway",
+   "name_raw": "room_krishallway",
+   "name_derived": true,
+   "original_room_id": 16,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.home.torroom": {
+   "name": "克里斯的家·torroom",
+   "name_raw": "room_torroom",
+   "name_derived": true,
+   "original_room_id": 17,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.home.torhouse": {
+   "name": "克里斯的家·torhouse",
+   "name_raw": "room_torhouse",
+   "name_derived": true,
+   "original_room_id": 18,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.home.torbathroom": {
+   "name": "克里斯的家·torbathroom",
+   "name_raw": "room_torbathroom",
+   "name_derived": true,
+   "original_room_id": 19,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.home.krisroom_dark": {
+   "name": "克里斯的家·krisroom_dark",
+   "name_raw": "room_krisroom_dark",
+   "name_derived": true,
+   "original_room_id": 159,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

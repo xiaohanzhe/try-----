@@ -1,0 +1,801 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch4",
+ "area_id": "dark_sanctuary",
+ "area_name": "暗之圣域",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch4.dark_sanctuary.dw_church_slidingbookshelf": {
+   "name": "暗之圣域·church_slidingbookshelf",
+   "name_raw": "room_dw_church_slidingbookshelf",
+   "name_derived": true,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellplay": {
+   "name": "暗之圣域·church_bellplay",
+   "name_raw": "room_dw_church_bellplay",
+   "name_derived": true,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_candlelighting": {
+   "name": "暗之圣域·church_candlelighting",
+   "name_raw": "room_dw_church_candlelighting",
+   "name_derived": true,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_intro3": {
+   "name": "暗之圣域·church_intro3",
+   "name_raw": "room_dw_church_intro3",
+   "name_derived": true,
+   "original_room_id": 109,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_intro_guei": {
+   "name": "暗之圣域·church_intro_guei",
+   "name_raw": "room_dw_church_intro_guei",
+   "name_derived": true,
+   "original_room_id": 110,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_darkroom1_old": {
+   "name": "暗之圣域·church_darkroom1_old",
+   "name_raw": "room_dw_church_darkroom1_old",
+   "name_derived": true,
+   "original_room_id": 111,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_lantern1_old_old": {
+   "name": "暗之圣域·church_lantern1_old_old",
+   "name_raw": "room_dw_church_lantern1_old_old",
+   "name_derived": true,
+   "original_room_id": 112,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_lantern_hallway": {
+   "name": "暗之圣域·church_lantern_hallway",
+   "name_raw": "room_dw_church_lantern_hallway",
+   "name_derived": true,
+   "original_room_id": 113,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_darkbell_old": {
+   "name": "暗之圣域·church_darkbell_old",
+   "name_raw": "room_dw_church_darkbell_old",
+   "name_derived": true,
+   "original_room_id": 114,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_stairs_west_bell": {
+   "name": "暗之圣域·church_stairs_west_bell",
+   "name_raw": "room_dw_church_stairs_west_bell",
+   "name_derived": true,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_librarybookenemy": {
+   "name": "暗之圣域·church_librarybookenemy",
+   "name_raw": "room_dw_church_librarybookenemy",
+   "name_derived": true,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bookshelfpuzzle1": {
+   "name": "暗之圣域·church_bookshelfpuzzle1",
+   "name_raw": "room_dw_church_bookshelfpuzzle1",
+   "name_derived": true,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bookshelfpuzzle2": {
+   "name": "暗之圣域·church_bookshelfpuzzle2",
+   "name_raw": "room_dw_church_bookshelfpuzzle2",
+   "name_derived": true,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_worshiproom": {
+   "name": "暗之圣域·church_worshiproom",
+   "name_raw": "room_dw_church_worshiproom",
+   "name_derived": true,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_swingingbell": {
+   "name": "暗之圣域·church_swingingbell",
+   "name_raw": "room_dw_church_swingingbell",
+   "name_derived": true,
+   "original_room_id": 121,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_tallbookcases": {
+   "name": "暗之圣域·church_tallbookcases",
+   "name_raw": "room_dw_church_tallbookcases",
+   "name_derived": true,
+   "original_room_id": 122,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_lantern2": {
+   "name": "暗之圣域·church_lantern2",
+   "name_raw": "room_dw_church_lantern2",
+   "name_derived": true,
+   "original_room_id": 123,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_smallbells": {
+   "name": "暗之圣域·church_smallbells",
+   "name_raw": "room_dw_church_smallbells",
+   "name_derived": true,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_claw": {
+   "name": "暗之圣域·church_claw",
+   "name_raw": "room_dw_church_claw",
+   "name_derived": true,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_shelfclimb1": {
+   "name": "暗之圣域·church_shelfclimb1",
+   "name_raw": "room_dw_church_shelfclimb1",
+   "name_derived": true,
+   "original_room_id": 126,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_statueclimb": {
+   "name": "暗之圣域·church_statueclimb",
+   "name_raw": "room_dw_church_statueclimb",
+   "name_derived": true,
+   "original_room_id": 127,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_offering": {
+   "name": "暗之圣域·church_offering",
+   "name_raw": "room_dw_church_offering",
+   "name_derived": true,
+   "original_room_id": 128,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_npcroom_shelfclimb": {
+   "name": "暗之圣域·church_npcroom_shelfclimb",
+   "name_raw": "room_dw_church_npcroom_shelfclimb",
+   "name_derived": true,
+   "original_room_id": 129,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_stairs_stainedglass": {
+   "name": "暗之圣域·church_stairs_stainedglass",
+   "name_raw": "room_dw_church_stairs_stainedglass",
+   "name_derived": true,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellsareawest": {
+   "name": "暗之圣域·church_bellsareawest",
+   "name_raw": "room_dw_church_bellsareawest",
+   "name_derived": true,
+   "original_room_id": 131,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_stairs_topright": {
+   "name": "暗之圣域·church_stairs_topright",
+   "name_raw": "room_dw_church_stairs_topright",
+   "name_derived": true,
+   "original_room_id": 132,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_poolsroom1": {
+   "name": "暗之圣域·church_poolsroom1",
+   "name_raw": "room_dw_church_poolsroom1",
+   "name_derived": true,
+   "original_room_id": 133,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_candlesroom1": {
+   "name": "暗之圣域·church_candlesroom1",
+   "name_raw": "room_dw_church_candlesroom1",
+   "name_derived": true,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_solowaterfall": {
+   "name": "暗之圣域·church_solowaterfall",
+   "name_raw": "room_dw_church_solowaterfall",
+   "name_derived": true,
+   "original_room_id": 135,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_statueroom": {
+   "name": "暗之圣域·church_statueroom",
+   "name_raw": "room_dw_church_statueroom",
+   "name_derived": true,
+   "original_room_id": 136,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_poolsroom2": {
+   "name": "暗之圣域·church_poolsroom2",
+   "name_raw": "room_dw_church_poolsroom2",
+   "name_derived": true,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_shelfclimb2": {
+   "name": "暗之圣域·church_shelfclimb2",
+   "name_raw": "room_dw_church_shelfclimb2",
+   "name_derived": true,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_statueclimb_npcroom": {
+   "name": "暗之圣域·church_statueclimb_npcroom",
+   "name_raw": "room_dw_church_statueclimb_npcroom",
+   "name_derived": true,
+   "original_room_id": 139,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellhall_west": {
+   "name": "暗之圣域·church_bellhall_west",
+   "name_raw": "room_dw_church_bellhall_west",
+   "name_derived": true,
+   "original_room_id": 140,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_fountainconnection": {
+   "name": "暗之圣域·church_fountainconnection",
+   "name_raw": "room_dw_church_fountainconnection",
+   "name_derived": true,
+   "original_room_id": 141,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_stainedglasspreview": {
+   "name": "暗之圣域·church_stainedglasspreview",
+   "name_raw": "room_dw_church_stainedglasspreview",
+   "name_derived": true,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_stairs_topleft": {
+   "name": "暗之圣域·church_stairs_topleft",
+   "name_raw": "room_dw_church_stairs_topleft",
+   "name_derived": true,
+   "original_room_id": 143,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_npcroom_pools1": {
+   "name": "暗之圣域·church_npcroom_pools1",
+   "name_raw": "room_dw_church_npcroom_pools1",
+   "name_derived": true,
+   "original_room_id": 144,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_poolsroom1_east": {
+   "name": "暗之圣域·church_poolsroom1_east",
+   "name_raw": "room_dw_church_poolsroom1_east",
+   "name_derived": true,
+   "original_room_id": 145,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_minorlegend": {
+   "name": "暗之圣域·church_minorlegend",
+   "name_raw": "room_dw_church_minorlegend",
+   "name_derived": true,
+   "original_room_id": 146,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bookenemywest": {
+   "name": "暗之圣域·church_bookenemywest",
+   "name_raw": "room_dw_church_bookenemywest",
+   "name_derived": true,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_poolsroom2south": {
+   "name": "暗之圣域·church_poolsroom2south",
+   "name_raw": "room_dw_church_poolsroom2south",
+   "name_derived": true,
+   "original_room_id": 148,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellhall_east": {
+   "name": "暗之圣域·church_bellhall_east",
+   "name_raw": "room_dw_church_bellhall_east",
+   "name_derived": true,
+   "original_room_id": 150,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellhall_central": {
+   "name": "暗之圣域·church_bellhall_central",
+   "name_raw": "room_dw_church_bellhall_central",
+   "name_derived": true,
+   "original_room_id": 151,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_darkroom_old": {
+   "name": "暗之圣域·church_darkroom_old",
+   "name_raw": "room_dw_church_darkroom_old",
+   "name_derived": true,
+   "original_room_id": 152,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_lantern1_old": {
+   "name": "暗之圣域·church_lantern1_old",
+   "name_raw": "room_dw_church_lantern1_old",
+   "name_derived": true,
+   "original_room_id": 153,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_statueroom_old": {
+   "name": "暗之圣域·church_statueroom_old",
+   "name_raw": "room_dw_church_statueroom_old",
+   "name_derived": true,
+   "original_room_id": 161,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_ripplepuzzle": {
+   "name": "暗之圣域·church_ripplepuzzle",
+   "name_raw": "room_dw_church_ripplepuzzle",
+   "name_derived": true,
+   "original_room_id": 171,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_glass": {
+   "name": "暗之圣域·church_glass",
+   "name_raw": "room_dw_church_glass",
+   "name_derived": true,
+   "original_room_id": 173,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_staircase": {
+   "name": "暗之圣域·church_staircase",
+   "name_raw": "room_dw_church_staircase",
+   "name_derived": true,
+   "original_room_id": 174,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellhall_bookroom": {
+   "name": "暗之圣域·church_bellhall_bookroom",
+   "name_raw": "room_dw_church_bellhall_bookroom",
+   "name_derived": true,
+   "original_room_id": 175,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bookcase": {
+   "name": "暗之圣域·church_bookcase",
+   "name_raw": "room_dw_church_bookcase",
+   "name_derived": true,
+   "original_room_id": 176,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_dark_fire_puzzle": {
+   "name": "暗之圣域·church_fire_puzzle",
+   "name_raw": "room_dw_church_dark_fire_puzzle",
+   "name_derived": true,
+   "original_room_id": 178,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_turtles": {
+   "name": "暗之圣域·church_turtles",
+   "name_raw": "room_dw_church_turtles",
+   "name_derived": true,
+   "original_room_id": 179,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_guei": {
+   "name": "暗之圣域·church_guei",
+   "name_raw": "room_dw_church_guei",
+   "name_derived": true,
+   "original_room_id": 180,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_jackenstein": {
+   "name": "暗之圣域·church_jackenstein",
+   "name_raw": "room_dw_church_jackenstein",
+   "name_derived": true,
+   "original_room_id": 181,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellhall_curtain": {
+   "name": "暗之圣域·church_bellhall_curtain",
+   "name_raw": "room_dw_church_bellhall_curtain",
+   "name_derived": true,
+   "original_room_id": 182,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_lantern_hallway_old": {
+   "name": "暗之圣域·church_lantern_hallway_old",
+   "name_raw": "room_dw_church_lantern_hallway_old",
+   "name_derived": true,
+   "original_room_id": 183,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_dogclimb": {
+   "name": "暗之圣域·church_dogclimb",
+   "name_raw": "room_dw_church_dogclimb",
+   "name_derived": true,
+   "original_room_id": 184,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_arena": {
+   "name": "暗之圣域·church_arena",
+   "name_raw": "room_dw_church_arena",
+   "name_derived": true,
+   "original_room_id": 185,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_chase_old": {
+   "name": "暗之圣域·church_chase_old",
+   "name_raw": "room_dw_church_chase_old",
+   "name_derived": true,
+   "original_room_id": 189,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_climbtut": {
+   "name": "暗之圣域·church_climbtut",
+   "name_raw": "room_dw_church_climbtut",
+   "name_derived": true,
+   "original_room_id": 204,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_fastwater": {
+   "name": "暗之圣域·church_fastwater",
+   "name_raw": "room_dw_church_fastwater",
+   "name_derived": true,
+   "original_room_id": 205,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_crumbletower": {
+   "name": "暗之圣域·church_crumbletower",
+   "name_raw": "room_dw_church_crumbletower",
+   "name_derived": true,
+   "original_room_id": 206,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_tower1": {
+   "name": "暗之圣域·church_tower1",
+   "name_raw": "room_dw_church_tower1",
+   "name_derived": true,
+   "original_room_id": 207,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bellclimb": {
+   "name": "暗之圣域·church_bellclimb",
+   "name_raw": "room_dw_church_bellclimb",
+   "name_derived": true,
+   "original_room_id": 209,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_shiftclimb": {
+   "name": "暗之圣域·church_shiftclimb",
+   "name_raw": "room_dw_church_shiftclimb",
+   "name_derived": true,
+   "original_room_id": 210,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_intropiano": {
+   "name": "暗之圣域·church_intropiano",
+   "name_raw": "room_dw_church_intropiano",
+   "name_derived": true,
+   "original_room_id": 211,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_intro_gerson": {
+   "name": "暗之圣域·church_intro_gerson",
+   "name_raw": "room_dw_church_intro_gerson",
+   "name_derived": true,
+   "original_room_id": 212,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_pianopiece_left": {
+   "name": "暗之圣域·church_pianopiece_left",
+   "name_raw": "room_dw_church_pianopiece_left",
+   "name_derived": true,
+   "original_room_id": 213,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_northprophecies": {
+   "name": "暗之圣域·church_northprophecies",
+   "name_raw": "room_dw_church_northprophecies",
+   "name_derived": true,
+   "original_room_id": 214,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_darkmaze": {
+   "name": "暗之圣域·church_darkmaze",
+   "name_raw": "room_dw_church_darkmaze",
+   "name_derived": true,
+   "original_room_id": 215,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_pianopiece_right": {
+   "name": "暗之圣域·church_pianopiece_right",
+   "name_raw": "room_dw_church_pianopiece_right",
+   "name_derived": true,
+   "original_room_id": 217,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_rightconnect": {
+   "name": "暗之圣域·church_rightconnect",
+   "name_raw": "room_dw_church_rightconnect",
+   "name_derived": true,
+   "original_room_id": 220,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_stairspreview": {
+   "name": "暗之圣域·church_stairspreview",
+   "name_raw": "room_dw_church_stairspreview",
+   "name_derived": true,
+   "original_room_id": 221,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_trueclimbadventure": {
+   "name": "暗之圣域·church_trueclimbadventure",
+   "name_raw": "room_dw_church_trueclimbadventure",
+   "name_derived": true,
+   "original_room_id": 222,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_organpuzzle": {
+   "name": "暗之圣域·church_organpuzzle",
+   "name_raw": "room_dw_church_organpuzzle",
+   "name_derived": true,
+   "original_room_id": 223,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_mizzleencounter": {
+   "name": "暗之圣域·church_mizzleencounter",
+   "name_raw": "room_dw_church_mizzleencounter",
+   "name_derived": true,
+   "original_room_id": 224,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_sideclimb": {
+   "name": "暗之圣域·church_sideclimb",
+   "name_raw": "room_dw_church_sideclimb",
+   "name_derived": true,
+   "original_room_id": 225,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_secretpiano": {
+   "name": "暗之圣域·church_secretpiano",
+   "name_raw": "room_dw_church_secretpiano",
+   "name_derived": true,
+   "original_room_id": 226,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_tallbookcases_backup": {
+   "name": "暗之圣域·church_tallbookcases_backup",
+   "name_raw": "room_dw_church_tallbookcases_backup",
+   "name_derived": true,
+   "original_room_id": 228,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_fountain": {
+   "name": "暗之圣域·church_fountain",
+   "name_raw": "room_dw_church_fountain",
+   "name_derived": true,
+   "original_room_id": 229,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_b_intro": {
+   "name": "暗之圣域·church_b_intro",
+   "name_raw": "room_dw_church_b_intro",
+   "name_derived": true,
+   "original_room_id": 230,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bookshelfpuzzle": {
+   "name": "暗之圣域·church_bookshelfpuzzle",
+   "name_raw": "room_dw_church_bookshelfpuzzle",
+   "name_derived": true,
+   "original_room_id": 232,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_biblioxencounter": {
+   "name": "暗之圣域·church_biblioxencounter",
+   "name_raw": "room_dw_church_biblioxencounter",
+   "name_derived": true,
+   "original_room_id": 234,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_darkclimb": {
+   "name": "暗之圣域·church_darkclimb",
+   "name_raw": "room_dw_church_darkclimb",
+   "name_derived": true,
+   "original_room_id": 235,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_moneyfountain": {
+   "name": "暗之圣域·church_moneyfountain",
+   "name_raw": "room_dw_church_moneyfountain",
+   "name_derived": true,
+   "original_room_id": 236,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_pianopiece_left_b": {
+   "name": "暗之圣域·church_pianopiece_left_b",
+   "name_raw": "room_dw_church_pianopiece_left_b",
+   "name_derived": true,
+   "original_room_id": 238,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_pianopiece_rightprophecy": {
+   "name": "暗之圣域·church_pianopiece_rightprophecy",
+   "name_raw": "room_dw_church_pianopiece_rightprophecy",
+   "name_derived": true,
+   "original_room_id": 239,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_shadowgerson": {
+   "name": "暗之圣域·church_shadowgerson",
+   "name_raw": "room_dw_church_shadowgerson",
+   "name_derived": true,
+   "original_room_id": 241,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_holywatercooler": {
+   "name": "暗之圣域·church_holywatercooler",
+   "name_raw": "room_dw_church_holywatercooler",
+   "name_derived": true,
+   "original_room_id": 242,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_rippleworship": {
+   "name": "暗之圣域·church_rippleworship",
+   "name_raw": "room_dw_church_rippleworship",
+   "name_derived": true,
+   "original_room_id": 243,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_waterfallroom": {
+   "name": "暗之圣域·church_waterfallroom",
+   "name_raw": "room_dw_church_waterfallroom",
+   "name_derived": true,
+   "original_room_id": 244,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_waterfalltearoom": {
+   "name": "暗之圣域·church_waterfalltearoom",
+   "name_raw": "room_dw_church_waterfalltearoom",
+   "name_derived": true,
+   "original_room_id": 245,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_knightclimb": {
+   "name": "暗之圣域·church_knightclimb",
+   "name_raw": "room_dw_church_knightclimb",
+   "name_derived": true,
+   "original_room_id": 260,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_knightclimb_post": {
+   "name": "暗之圣域·church_knightclimb_post",
+   "name_raw": "room_dw_church_knightclimb_post",
+   "name_derived": true,
+   "original_room_id": 261,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_ripseq1": {
+   "name": "暗之圣域·church_ripseq1",
+   "name_raw": "room_dw_church_ripseq1",
+   "name_derived": true,
+   "original_room_id": 283,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_ripseq2": {
+   "name": "暗之圣域·church_ripseq2",
+   "name_raw": "room_dw_church_ripseq2",
+   "name_derived": true,
+   "original_room_id": 284,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.dark_sanctuary.dw_church_bookshelfpuzzle_rev": {
+   "name": "暗之圣域·church_bookshelfpuzzle_rev",
+   "name_raw": "room_dw_church_bookshelfpuzzle_rev",
+   "name_derived": true,
+   "original_room_id": 313,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

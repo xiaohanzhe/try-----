@@ -1,0 +1,32 @@
+=== 场景数据「两来源」端到端验证 ===
+
+[PASS] V1 load_index 成功  <- None
+[PASS] V2 索引登记场景数 = 1,014（1,013 原作房间 + desktop）  <- 1014
+    load_index 耗时 = 3.58 ms
+
+[PASS] V3 1,014 个场景**全部**可加载（走产品函数）  <- 失败 0：[]
+    经独立文件 = 88 ；经区域分片 = 926
+    逐个加载 1,014 个总耗时 = 828.0 ms（平均 0.82 ms/个）
+[PASS] V4 独立文件来源 = 87 个锚点 + desktop  <- 88
+[PASS] V5 分片来源 = 926 个新增场景  <- 926
+
+[PASS] V6 ★双向判别力：分片场景【不给 entry】必须失败  <- ch1.castle_town.castle_outskirts → None
+[PASS] V7 ★双向判别力：分片场景【给 entry】必须成功  <- ch1.castle_town.castle_outskirts → <SceneState 'ch1.castle_town.castle_outskirts' objects=0>
+    探针 = ch1.castle_town.castle_outskirts（城堡镇·outskirts）
+
+[PASS] V8 没有任何场景同时出现在"独立文件"和"分片"里（无双真源）  <- 重叠 0：[]
+[PASS] V9 分片场景总数 = 926  <- 926
+
+[PASS] V10 负控制：乱造的场景 id → None
+[PASS] V11 负控制：路径穿越 id → None
+[PASS] V12 负控制：乱造的区域分片 → {}
+[PASS] V13 分片文件名已裁剪（不含分隔符 / 不含 ..）  <- ['_zone.etc.passwd.json', '_zone.ab.cd.json', '_zone.unknown.unknown.json']
+[PASS] V14 分片里的场景形状与独立文件一致（chapter/area/scene_id 齐全）  <- ('ch1.castle_town.castle_outskirts', 'ch1', 'castle_town')
+
+[PASS] V15 走遍全部 61 片只读 61 次（不是 1,013 次）  <- 61 片
+    读全部 61 片总耗时 = 48.48 ms（平均 0.79 ms/片）
+    常驻内存增量 ≈ 0.74 MB
+    「火把」语义：只读 1 片 ≈ 0.79 ms
+    分片文件数 = 61，总体积 = 228.6 KB
+
+=== 验证汇总：15 项 PASS=15 FAIL=0 ===

@@ -1,0 +1,33 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch5",
+ "area_id": "card_castle",
+ "area_name": "纸牌城堡",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch5.card_castle.cc_lancer": {
+   "name": "纸牌城堡·lancer",
+   "name_raw": "room_cc_lancer",
+   "name_derived": true,
+   "original_room_id": 80,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.card_castle.cc_clover": {
+   "name": "纸牌城堡·clover",
+   "name_raw": "room_cc_clover",
+   "name_derived": true,
+   "original_room_id": 81,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch5.card_castle.cc_fountain": {
+   "name": "纸牌城堡·fountain",
+   "name_raw": "room_cc_fountain",
+   "name_derived": true,
+   "original_room_id": 82,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}

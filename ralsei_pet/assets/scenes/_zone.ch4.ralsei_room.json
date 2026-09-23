@@ -1,0 +1,41 @@
+{
+ "schema_version": 1,
+ "chapter_id": "ch4",
+ "area_id": "ralsei_room",
+ "area_name": "拉尔赛的城堡",
+ "note": "区域分片：只装\"第 38 轮新增\"的场景。已有独立 <scene_id>.json 的87 个锚点不在这里，避免双源。name 为机械裁剪后的原样名，name_raw 是可溯源的完整原作资源名。",
+ "scenes": {
+  "ch4.ralsei_room.dw_ralsei_castle_front": {
+   "name": "拉尔赛的城堡·castle_front",
+   "name_raw": "room_dw_ralsei_castle_front",
+   "name_derived": true,
+   "original_room_id": 66,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.ralsei_room.dw_ralsei_castle_1f": {
+   "name": "拉尔赛的城堡·castle_1f",
+   "name_raw": "room_dw_ralsei_castle_1f",
+   "name_derived": true,
+   "original_room_id": 70,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.ralsei_room.dw_ralsei_castle_2f": {
+   "name": "拉尔赛的城堡·castle_2f",
+   "name_raw": "room_dw_ralsei_castle_2f",
+   "name_derived": true,
+   "original_room_id": 71,
+   "bg": null,
+   "bg_source": "none"
+  },
+  "ch4.ralsei_room.dw_ralsei_castle_3f": {
+   "name": "拉尔赛的城堡·castle_3f",
+   "name_raw": "room_dw_ralsei_castle_3f",
+   "name_derived": true,
+   "original_room_id": 154,
+   "bg": null,
+   "bg_source": "none"
+  }
+ }
+}
