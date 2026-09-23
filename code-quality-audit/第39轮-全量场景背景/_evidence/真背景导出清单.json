@@ -1,0 +1,3632 @@
+{
+  "generated_at": "2026-09-24 01:35:01",
+  "min_real_bg": [
+    300,
+    200
+  ],
+  "total_scenes": 1013,
+  "real": 157,
+  "approx": 856,
+  "unset": 0,
+  "new_files": 0,
+  "exists": 157,
+  "errors": 0,
+  "disk_before": 236,
+  "disk_after": 236,
+  "how_counts": {
+    "room.bg_layer": 157
+  },
+  "rows": [
+    {
+      "scene_id": "ch1.kris_room.kris_s_room",
+      "chapter": "ch1",
+      "area": "kris_room",
+      "room_id": 2,
+      "asset": "bg_myroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_kris_room_kris_s_room.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": false
+    },
+    {
+      "scene_id": "ch1.castle_town.castle_town",
+      "chapter": "ch1",
+      "area": "castle_town",
+      "room_id": 45,
+      "asset": "bg_darktown",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 640,
+      "room_h": 1160,
+      "file": "ch1_castle_town_castle_town.png",
+      "src_dims": [
+        640,
+        1160
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        1160
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.castle_town.castle_front",
+      "chapter": "ch1",
+      "area": "castle_town",
+      "room_id": 46,
+      "asset": "bg_darkcastle_front",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1000,
+      "room_h": 1000,
+      "file": "ch1_castle_town_castle_front.png",
+      "src_dims": [
+        660,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        660,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.forest.forest_castlefront",
+      "chapter": "ch1",
+      "area": "forest",
+      "room_id": 104,
+      "asset": "bg_cardcastle_outside",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 1200,
+      "file": "ch1_forest_forest_castlefront.png",
+      "src_dims": [
+        640,
+        440
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        440
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.card_castle.card_castle_throne",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 126,
+      "asset": "bg_cc_throneroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 640,
+      "room_h": 800,
+      "file": "ch1_card_castle_card_castle_throne.png",
+      "src_dims": [
+        640,
+        800
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        800
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.card_castle.cc_prisonelevator",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 109,
+      "asset": "bg_cc_elevator",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch1_card_castle_cc_prisonelevator.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.card_castle.cc_elevator",
+      "chapter": "ch1",
+      "area": "card_castle",
+      "room_id": 110,
+      "asset": "bg_cc_elevator",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch1_card_castle_cc_elevator.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.dark_world.dark_chase1",
+      "chapter": "ch1",
+      "area": "dark_world",
+      "room_id": 42,
+      "asset": "bg_darkstone_1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 5400,
+      "room_h": 1000,
+      "file": "ch1_dark_world_dark_chase1.png",
+      "src_dims": [
+        614,
+        214
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        614,
+        214
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.dark_world.dark_chase2",
+      "chapter": "ch1",
+      "area": "dark_world",
+      "room_id": 43,
+      "asset": "bg_darkstone_1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 1840,
+      "file": "ch1_dark_world_dark_chase2.png",
+      "src_dims": [
+        614,
+        214
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        614,
+        214
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.home.krishallway",
+      "chapter": "ch1",
+      "area": "home",
+      "room_id": 3,
+      "asset": "bg_myhallway",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch1_home_krishallway.png",
+      "src_dims": [
+        538,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        538,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.home.torhouse",
+      "chapter": "ch1",
+      "area": "home",
+      "room_id": 5,
+      "asset": "bg_torhouse_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 700,
+      "room_h": 240,
+      "file": "ch1_home_torhouse.png",
+      "src_dims": [
+        707,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        707,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.home.torbathroom",
+      "chapter": "ch1",
+      "area": "home",
+      "room_id": 6,
+      "asset": "bg_mybathroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_home_torbathroom.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.hospital_lobby",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 18,
+      "asset": "bg_hospital_lobby",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_hospital_lobby.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.hospital_hallway",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 19,
+      "asset": "bg_hospital_lobby2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_hospital_hallway.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.hospital_rudy",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 20,
+      "asset": "bg_hospital_rudyroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_hospital_rudy.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.hospital_room2",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 21,
+      "asset": "bg_hospital_room2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_hospital_room2.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.diner",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 22,
+      "asset": "bg_diner",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_diner.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.townhall",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 23,
+      "asset": "bg_townhall",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_townhall.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.flowershop_1f",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 24,
+      "asset": "bg_flowershop_f1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_flowershop_1f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.flowershop_2f",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 25,
+      "asset": "bg_flowershop_f2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_flowershop_2f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.library",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 26,
+      "asset": "bg_library",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_library.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.alphysalley",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 27,
+      "asset": "bg_alphysalley",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_alphysalley.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.torielclass",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 28,
+      "asset": "bg_lang_ja_torielclass",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_torielclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch1.hometown.alphysclass",
+      "chapter": "ch1",
+      "area": "hometown",
+      "room_id": 30,
+      "asset": "bg_alphysclass",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch1_hometown_alphysclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.kris_room.kris_s_room",
+      "chapter": "ch2",
+      "area": "kris_room",
+      "room_id": 18,
+      "asset": "bg_myroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_kris_room_kris_s_room.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.castle_town.castle_town",
+      "chapter": "ch2",
+      "area": "castle_town",
+      "room_id": 55,
+      "asset": "bg_darktown",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 640,
+      "room_h": 1160,
+      "file": "ch2_castle_town_castle_town.png",
+      "src_dims": [
+        640,
+        1160
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        1160
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.castle_town.castle_town_2",
+      "chapter": "ch2",
+      "area": "castle_town",
+      "room_id": 61,
+      "asset": "bg_darktown",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 640,
+      "room_h": 1160,
+      "file": "ch2_castle_town_castle_town_2.png",
+      "src_dims": [
+        640,
+        1160
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        1160
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.my_castle_town.dw_castle_west_cliff",
+      "chapter": "ch2",
+      "area": "my_castle_town",
+      "room_id": 59,
+      "asset": "bg_darkwest_fixed",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_my_castle_town_dw_castle_west_cliff.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.my_castle_town.dw_castle_restaurant",
+      "chapter": "ch2",
+      "area": "my_castle_town",
+      "room_id": 64,
+      "asset": "bg_dw_bakery_counter",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_my_castle_town_dw_castle_restaurant.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.my_castle_town.dw_castle_cafe",
+      "chapter": "ch2",
+      "area": "my_castle_town",
+      "room_id": 65,
+      "asset": "bg_dw_castle_cafe_in",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_my_castle_town_dw_castle_cafe.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.my_castle_town.dw_castle_rooms_kris",
+      "chapter": "ch2",
+      "area": "my_castle_town",
+      "room_id": 71,
+      "asset": "bg_dw_kris_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_my_castle_town_dw_castle_rooms_kris.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.my_castle_town.dw_castle_rooms_susie",
+      "chapter": "ch2",
+      "area": "my_castle_town",
+      "room_id": 72,
+      "asset": "bg_dw_susie_room_1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_my_castle_town_dw_castle_rooms_susie.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.cyber_city.dw_city_traffic_4",
+      "chapter": "ch2",
+      "area": "cyber_city",
+      "room_id": 129,
+      "asset": "spr_city_bridge_lining",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 4600,
+      "room_h": 480,
+      "file": "ch2_cyber_city_dw_city_traffic_4.png",
+      "src_dims": [
+        480,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        480,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_krisroom",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 150,
+      "asset": "spr_dw_mansion_room_kris_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_krisroom.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_susieroom",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 151,
+      "asset": "spr_dw_mansion_room_susie_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_susieroom.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_b_east",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 176,
+      "asset": "spr_dw_mansion_basement_loop",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 2720,
+      "room_h": 960,
+      "file": "ch2_queens_mansion_dw_mansion_b_east.png",
+      "src_dims": [
+        1280,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        1280,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_top",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 197,
+      "asset": "spr_cutscene_26_rocks_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 2560,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_top.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_top_post",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 198,
+      "asset": "spr_cutscene_26_rocks_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 2560,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_top_post.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_ferris_wheel",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 201,
+      "asset": "spr_mansion_ferris_wheel_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_ferris_wheel.png",
+      "src_dims": [
+        428,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        428,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_ferris_wheel_post",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 202,
+      "asset": "bg_dw_noelle_ferris_wheel_left",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_ferris_wheel_post.png",
+      "src_dims": [
+        336,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        336,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_noelle_room",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 203,
+      "asset": "bg_dw_noelle_ferris_wheel",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1600,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_noelle_room.png",
+      "src_dims": [
+        1586,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        1586,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.queens_mansion.dw_mansion_top_post_old",
+      "chapter": "ch2",
+      "area": "queens_mansion",
+      "room_id": 223,
+      "asset": "spr_mansion_ferris_wheel_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 2560,
+      "room_h": 480,
+      "file": "ch2_queens_mansion_dw_mansion_top_post_old.png",
+      "src_dims": [
+        428,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        428,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.home.krishallway",
+      "chapter": "ch2",
+      "area": "home",
+      "room_id": 19,
+      "asset": "bg_myhallway",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch2_home_krishallway.png",
+      "src_dims": [
+        538,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        538,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.home.torhouse",
+      "chapter": "ch2",
+      "area": "home",
+      "room_id": 21,
+      "asset": "bg_torhouse_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 700,
+      "room_h": 240,
+      "file": "ch2_home_torhouse.png",
+      "src_dims": [
+        707,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        707,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.home.torbathroom",
+      "chapter": "ch2",
+      "area": "home",
+      "room_id": 22,
+      "asset": "spr_bg_torbathroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_home_torbathroom.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.beach",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 26,
+      "asset": "bg_beach",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 600,
+      "room_h": 240,
+      "file": "ch2_hometown_beach.png",
+      "src_dims": [
+        600,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        600,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.hospital_lobby",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 34,
+      "asset": "bg_hospital_lobby",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_hospital_lobby.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.hospital_hallway",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 35,
+      "asset": "bg_hospital_lobby2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_hospital_hallway.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.hospital_rudy",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 36,
+      "asset": "bg_hospital_rudyroom_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_hospital_rudy.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.hospital_room2",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 37,
+      "asset": "bg_hospital_room2_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_hospital_room2.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.diner",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 38,
+      "asset": "bg_diner",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_diner.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.townhall",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 39,
+      "asset": "bg_townhall",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_townhall.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.flowershop_1f",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 40,
+      "asset": "bg_flowershop_f1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_flowershop_1f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.flowershop_2f",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 41,
+      "asset": "bg_flowershop_f2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_flowershop_2f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.library",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 42,
+      "asset": "bg_library",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_library.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.alphysalley",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 43,
+      "asset": "bg_alphysalley",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_alphysalley.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.torielclass",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 49,
+      "asset": "bg_torielclass_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_torielclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.hometown.alphysclass",
+      "chapter": "ch2",
+      "area": "hometown",
+      "room_id": 51,
+      "asset": "bg_alphysclass",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_hometown_alphysclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.light_world.lw_computer_lab",
+      "chapter": "ch2",
+      "area": "light_world",
+      "room_id": 44,
+      "asset": "bg_lw_computer_lab",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_light_world_lw_computer_lab.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.light_world.lw_library_upstairs",
+      "chapter": "ch2",
+      "area": "light_world",
+      "room_id": 45,
+      "asset": "bg_lw_library_upstairs",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_light_world_lw_library_upstairs.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.light_world.lw_police",
+      "chapter": "ch2",
+      "area": "light_world",
+      "room_id": 46,
+      "asset": "bg_lw_police_house_base",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_light_world_lw_police.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.light_world.lw_conbini",
+      "chapter": "ch2",
+      "area": "light_world",
+      "room_id": 47,
+      "asset": "bg_lw_sans_conbini",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch2_light_world_lw_conbini.png",
+      "src_dims": [
+        460,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        460,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.light_world.lw_icee_pizza",
+      "chapter": "ch2",
+      "area": "light_world",
+      "room_id": 48,
+      "asset": "bg_lw_ice_e_pizza",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch2_light_world_lw_icee_pizza.png",
+      "src_dims": [
+        305,
+        239
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        305,
+        239
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch2.ralsei_room.dw_ralsei_castle_front",
+      "chapter": "ch2",
+      "area": "ralsei_room",
+      "room_id": 63,
+      "asset": "bg_darkcastle_front",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1000,
+      "room_h": 1000,
+      "file": "ch2_ralsei_room_dw_ralsei_castle_front.png",
+      "src_dims": [
+        660,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        660,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.home.krishallway",
+      "chapter": "ch3",
+      "area": "home",
+      "room_id": 16,
+      "asset": "bg_myhallway",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch3_home_krishallway.png",
+      "src_dims": [
+        538,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        538,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.home.torhouse",
+      "chapter": "ch3",
+      "area": "home",
+      "room_id": 18,
+      "asset": "bg_torhouse_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 700,
+      "room_h": 240,
+      "file": "ch3_home_torhouse.png",
+      "src_dims": [
+        707,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        707,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.home.torbathroom",
+      "chapter": "ch3",
+      "area": "home",
+      "room_id": 19,
+      "asset": "spr_bg_torbathroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_home_torbathroom.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.beach",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 23,
+      "asset": "bg_beach",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 600,
+      "room_h": 240,
+      "file": "ch3_hometown_beach.png",
+      "src_dims": [
+        600,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        600,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.hospital_lobby",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 31,
+      "asset": "bg_hospital_lobby",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_hospital_lobby.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.hospital_hallway",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 32,
+      "asset": "bg_hospital_lobby2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_hospital_hallway.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.hospital_rudy",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 33,
+      "asset": "bg_hospital_rudyroom_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_hospital_rudy.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.hospital_room2",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 34,
+      "asset": "bg_hospital_room2_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_hospital_room2.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.diner",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 35,
+      "asset": "bg_diner",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_diner.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.townhall",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 36,
+      "asset": "bg_townhall",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_townhall.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.flowershop_1f",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 37,
+      "asset": "bg_flowershop_f1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_flowershop_1f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.flowershop_2f",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 38,
+      "asset": "bg_flowershop_f2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_flowershop_2f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.library",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 39,
+      "asset": "bg_library",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_library.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.alphysalley",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 40,
+      "asset": "bg_alphysalley",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_alphysalley.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.torielclass",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 46,
+      "asset": "bg_torielclass_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_torielclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.hometown.alphysclass",
+      "chapter": "ch3",
+      "area": "hometown",
+      "room_id": 48,
+      "asset": "bg_alphysclass",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_hometown_alphysclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.kris_room.krisroom",
+      "chapter": "ch3",
+      "area": "kris_room",
+      "room_id": 15,
+      "asset": "bg_myroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_kris_room_krisroom.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.light_world.lw_computer_lab",
+      "chapter": "ch3",
+      "area": "light_world",
+      "room_id": 41,
+      "asset": "bg_lw_computer_lab",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_light_world_lw_computer_lab.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.light_world.lw_library_upstairs",
+      "chapter": "ch3",
+      "area": "light_world",
+      "room_id": 42,
+      "asset": "bg_lw_library_upstairs",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_light_world_lw_library_upstairs.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.light_world.lw_police",
+      "chapter": "ch3",
+      "area": "light_world",
+      "room_id": 43,
+      "asset": "bg_lw_police_house_base",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_light_world_lw_police.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.light_world.lw_conbini",
+      "chapter": "ch3",
+      "area": "light_world",
+      "room_id": 44,
+      "asset": "bg_lw_sans_conbini",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch3_light_world_lw_conbini.png",
+      "src_dims": [
+        460,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        460,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.light_world.lw_icee_pizza",
+      "chapter": "ch3",
+      "area": "light_world",
+      "room_id": 45,
+      "asset": "bg_lw_ice_e_pizza",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch3_light_world_lw_icee_pizza.png",
+      "src_dims": [
+        305,
+        239
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        305,
+        239
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.my_castle_town.dw_castle_west_cliff",
+      "chapter": "ch3",
+      "area": "my_castle_town",
+      "room_id": 54,
+      "asset": "bg_darkwest_fixed",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch3_my_castle_town_dw_castle_west_cliff.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.my_castle_town.dw_castle_restaurant",
+      "chapter": "ch3",
+      "area": "my_castle_town",
+      "room_id": 58,
+      "asset": "bg_dw_bakery_counter",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch3_my_castle_town_dw_castle_restaurant.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.my_castle_town.dw_castle_cafe",
+      "chapter": "ch3",
+      "area": "my_castle_town",
+      "room_id": 59,
+      "asset": "bg_dw_castle_cafe_in",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch3_my_castle_town_dw_castle_cafe.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.my_castle_town.dw_castle_rooms_kris",
+      "chapter": "ch3",
+      "area": "my_castle_town",
+      "room_id": 64,
+      "asset": "bg_dw_kris_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch3_my_castle_town_dw_castle_rooms_kris.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.my_castle_town.dw_castle_rooms_susie",
+      "chapter": "ch3",
+      "area": "my_castle_town",
+      "room_id": 65,
+      "asset": "bg_dw_susie_room_1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch3_my_castle_town_dw_castle_rooms_susie.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.ralsei_room.dw_ralsei_castle_front",
+      "chapter": "ch3",
+      "area": "ralsei_room",
+      "room_id": 57,
+      "asset": "bg_darkcastle_front",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1000,
+      "room_h": 1000,
+      "file": "ch3_ralsei_room_dw_ralsei_castle_front.png",
+      "src_dims": [
+        660,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        660,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.tv_backstage.shootout",
+      "chapter": "ch3",
+      "area": "tv_backstage",
+      "room_id": 132,
+      "asset": "spr_desert_loop_foreground",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch3_tv_backstage_shootout.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch3.tv_backstage.dw_console_room",
+      "chapter": "ch3",
+      "area": "tv_backstage",
+      "room_id": 140,
+      "asset": "bg_console_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1000,
+      "room_h": 480,
+      "file": "ch3_tv_backstage_dw_console_room.png",
+      "src_dims": [
+        1000,
+        520
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        1000,
+        520
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.kris_room.kris_s_room",
+      "chapter": "ch4",
+      "area": "kris_room",
+      "room_id": 15,
+      "asset": "bg_myroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_kris_room_kris_s_room.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.beach",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 23,
+      "asset": "bg_beach",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 600,
+      "room_h": 240,
+      "file": "ch4_hometown_beach.png",
+      "src_dims": [
+        600,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        600,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.hospital_lobby",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 31,
+      "asset": "bg_hospital_lobby",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_hospital_lobby.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.hospital_hallway",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 32,
+      "asset": "bg_hospital_lobby2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_hospital_hallway.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.hospital_rudy",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 33,
+      "asset": "bg_hospital_rudyroom_ch4",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_hospital_rudy.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.hospital_room2",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 34,
+      "asset": "bg_hospital_room2_ch4",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_hospital_room2.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.diner",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 35,
+      "asset": "bg_diner",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_diner.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.townhall",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 36,
+      "asset": "bg_townhall",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_townhall.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.flowershop_1f",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 37,
+      "asset": "bg_flowershop_f1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_flowershop_1f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.flowershop_2f",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 38,
+      "asset": "bg_flowershop_f2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_flowershop_2f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.library",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 39,
+      "asset": "bg_library",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_library.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.alphysalley",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 40,
+      "asset": "bg_alphysalley_ch4",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_alphysalley.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.torielclass",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 55,
+      "asset": "bg_torielclass_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_torielclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.hometown.alphysclass",
+      "chapter": "ch4",
+      "area": "hometown",
+      "room_id": 57,
+      "asset": "bg_alphysclass",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_hometown_alphysclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_west_cliff",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 63,
+      "asset": "bg_darkwest_fixed",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_west_cliff.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_restaurant",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 67,
+      "asset": "bg_dw_bakery_counter",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_restaurant.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_cafe",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 68,
+      "asset": "bg_dw_castle_cafe",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 960,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_cafe.png",
+      "src_dims": [
+        920,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        920,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_rooms_kris",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 73,
+      "asset": "bg_dw_kris_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_rooms_kris.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_rooms_susie",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 74,
+      "asset": "bg_dw_susie_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_rooms_susie.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_rooms_ralsei",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 155,
+      "asset": "bg_dw_ralsei_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_rooms_ralsei.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_rooms_queen",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 167,
+      "asset": "bg_dw_castle_queen_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1160,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_rooms_queen.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.my_castle_town.dw_castle_rooms_kris_susie",
+      "chapter": "ch4",
+      "area": "my_castle_town",
+      "room_id": 246,
+      "asset": "bg_dw_kris_susie_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 920,
+      "room_h": 480,
+      "file": "ch4_my_castle_town_dw_castle_rooms_kris_susie.png",
+      "src_dims": [
+        922,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        922,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.dark_sanctuary.dark_sanctuary_1_study",
+      "chapter": "ch4",
+      "area": "dark_sanctuary",
+      "room_id": 115,
+      "asset": "bg_dw_gerson_base",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 960,
+      "room_h": 1200,
+      "file": "ch4_dark_sanctuary_dark_sanctuary_1_study.png",
+      "src_dims": [
+        960,
+        1200
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        960,
+        1200
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.home.krishallway",
+      "chapter": "ch4",
+      "area": "home",
+      "room_id": 16,
+      "asset": "bg_myhallway",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch4_home_krishallway.png",
+      "src_dims": [
+        538,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        538,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.home.torhouse",
+      "chapter": "ch4",
+      "area": "home",
+      "room_id": 18,
+      "asset": "bg_torhouse_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 700,
+      "room_h": 240,
+      "file": "ch4_home_torhouse.png",
+      "src_dims": [
+        707,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        707,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.home.torbathroom",
+      "chapter": "ch4",
+      "area": "home",
+      "room_id": 19,
+      "asset": "spr_bg_torbathroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_home_torbathroom.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.home.krisroom_dark",
+      "chapter": "ch4",
+      "area": "home",
+      "room_id": 159,
+      "asset": "bg_myroom_dark",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_home_krisroom_dark.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_computer_lab",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 41,
+      "asset": "bg_lw_computer_lab",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_computer_lab.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_library_upstairs",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 42,
+      "asset": "bg_lw_library_upstairs",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_library_upstairs.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_police",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 43,
+      "asset": "bg_lw_police_house_base",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_police.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_conbini",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 44,
+      "asset": "bg_lw_sans_conbini",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_conbini.png",
+      "src_dims": [
+        460,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        460,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_icee_pizza",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 45,
+      "asset": "bg_lw_ice_e_pizza",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_icee_pizza.png",
+      "src_dims": [
+        305,
+        239
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        305,
+        239
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_church_entrance",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 46,
+      "asset": "bg_church_entrance",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_church_entrance.png",
+      "src_dims": [
+        640,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_church_office",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 149,
+      "asset": "bg_church_office",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_church_office.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.light_world.lw_church_choir",
+      "chapter": "ch4",
+      "area": "light_world",
+      "room_id": 208,
+      "asset": "bg_church_choir",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch4_light_world_lw_church_choir.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch4.ralsei_room.dw_ralsei_castle_front",
+      "chapter": "ch4",
+      "area": "ralsei_room",
+      "room_id": 66,
+      "asset": "bg_darkcastle_front",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1000,
+      "room_h": 1000,
+      "file": "ch4_ralsei_room_dw_ralsei_castle_front.png",
+      "src_dims": [
+        660,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        660,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.kris_room.kris_s_room",
+      "chapter": "ch5",
+      "area": "kris_room",
+      "room_id": 13,
+      "asset": "bg_myroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "anchor",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_kris_room_kris_s_room.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.hospital_lobby",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 29,
+      "asset": "bg_hospital_lobby",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_hospital_lobby.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.hospital_hallway",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 30,
+      "asset": "bg_hospital_lobby2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_hospital_hallway.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.hospital_rudy",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 31,
+      "asset": "bg_hospital_rudyroom_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_hospital_rudy.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.hospital_room2",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 32,
+      "asset": "bg_hospital_room2_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_hospital_room2.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.diner",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 33,
+      "asset": "bg_diner",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_diner.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.townhall",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 34,
+      "asset": "bg_townhall",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_townhall.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.flowershop_1f",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 35,
+      "asset": "bg_flowershop_f1",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_flowershop_1f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.flowershop_2f",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 36,
+      "asset": "bg_flowershop_ch5",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_flowershop_2f.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.library",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 37,
+      "asset": "bg_library",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_library.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.alphysalley",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 38,
+      "asset": "bg_alphysalley",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_alphysalley.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.torielclass",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 44,
+      "asset": "bg_torielclass_ch2",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_torielclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.hometown.alphysclass",
+      "chapter": "ch5",
+      "area": "hometown",
+      "room_id": 46,
+      "asset": "bg_alphysclass",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_hometown_alphysclass.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.my_castle_town.dw_castle_west_cliff",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 52,
+      "asset": "bg_darkwest_fixed",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch5_my_castle_town_dw_castle_west_cliff.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.my_castle_town.dw_castle_restaurant",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 56,
+      "asset": "bg_dw_bakery_counter",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch5_my_castle_town_dw_castle_restaurant.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.my_castle_town.dw_castle_cafe",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 57,
+      "asset": "bg_dw_castle_cafe",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 960,
+      "room_h": 480,
+      "file": "ch5_my_castle_town_dw_castle_cafe.png",
+      "src_dims": [
+        920,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        920,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.my_castle_town.dw_castle_rooms_kris",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 63,
+      "asset": "bg_dw_kris_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch5_my_castle_town_dw_castle_rooms_kris.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.my_castle_town.dw_castle_rooms_susie",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 64,
+      "asset": "bg_dw_susie_room_ch5",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch5_my_castle_town_dw_castle_rooms_susie.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.my_castle_town.dw_castle_rooms_ralsei",
+      "chapter": "ch5",
+      "area": "my_castle_town",
+      "room_id": 65,
+      "asset": "bg_dw_ralsei_room",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 480,
+      "file": "ch5_my_castle_town_dw_castle_rooms_ralsei.png",
+      "src_dims": [
+        640,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        480
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.home.krishallway",
+      "chapter": "ch5",
+      "area": "home",
+      "room_id": 14,
+      "asset": "bg_myhallway",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 540,
+      "room_h": 240,
+      "file": "ch5_home_krishallway.png",
+      "src_dims": [
+        538,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        538,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.home.torhouse",
+      "chapter": "ch5",
+      "area": "home",
+      "room_id": 16,
+      "asset": "bg_torhouse_bg",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 700,
+      "room_h": 240,
+      "file": "ch5_home_torhouse.png",
+      "src_dims": [
+        707,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        707,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.home.torbathroom",
+      "chapter": "ch5",
+      "area": "home",
+      "room_id": 17,
+      "asset": "spr_bg_torbathroom",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_home_torbathroom.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.light_world.lw_library_upstairs",
+      "chapter": "ch5",
+      "area": "light_world",
+      "room_id": 40,
+      "asset": "bg_lw_library_upstairs",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_light_world_lw_library_upstairs.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.light_world.lw_police",
+      "chapter": "ch5",
+      "area": "light_world",
+      "room_id": 41,
+      "asset": "bg_lw_police_house_base",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_light_world_lw_police.png",
+      "src_dims": [
+        320,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        320,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.light_world.lw_icee_pizza",
+      "chapter": "ch5",
+      "area": "light_world",
+      "room_id": 43,
+      "asset": "bg_lw_ice_e_pizza",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 320,
+      "room_h": 240,
+      "file": "ch5_light_world_lw_icee_pizza.png",
+      "src_dims": [
+        305,
+        239
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        305,
+        239
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.light_world.lw_church_entrance",
+      "chapter": "ch5",
+      "area": "light_world",
+      "room_id": 103,
+      "asset": "bg_church_entrance",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 640,
+      "room_h": 240,
+      "file": "ch5_light_world_lw_church_entrance.png",
+      "src_dims": [
+        640,
+        240
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        640,
+        240
+      ],
+      "dims_match": true
+    },
+    {
+      "scene_id": "ch5.ralsei_room.dw_ralsei_castle_front",
+      "chapter": "ch5",
+      "area": "ralsei_room",
+      "room_id": 55,
+      "asset": "bg_darkcastle_front",
+      "tiled": false,
+      "how": "room.bg_layer",
+      "kind": "zone",
+      "room_w": 1000,
+      "room_h": 1000,
+      "file": "ch5_ralsei_room_dw_ralsei_castle_front.png",
+      "src_dims": [
+        660,
+        480
+      ],
+      "mode": "EXISTS",
+      "out_dims": [
+        660,
+        480
+      ],
+      "dims_match": true
+    }
+  ]
+}

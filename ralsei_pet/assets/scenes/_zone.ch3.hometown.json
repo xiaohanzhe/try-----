@@ -34,8 +34,9 @@
    "name_raw": "room_beach",
    "name_derived": true,
    "original_room_id": 23,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_beach.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_beach"
   },
   "ch3.hometown.town_mid": {
    "name": "家乡·town_mid",
@@ -98,88 +99,99 @@
    "name_raw": "room_hospital_lobby",
    "name_derived": true,
    "original_room_id": 31,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_hospital_lobby.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_hospital_lobby"
   },
   "ch3.hometown.hospital_hallway": {
    "name": "家乡·hospital_hallway",
    "name_raw": "room_hospital_hallway",
    "name_derived": true,
    "original_room_id": 32,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_hospital_hallway.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_hospital_lobby2"
   },
   "ch3.hometown.hospital_rudy": {
    "name": "家乡·hospital_rudy",
    "name_raw": "room_hospital_rudy",
    "name_derived": true,
    "original_room_id": 33,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_hospital_rudy.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_hospital_rudyroom_ch2"
   },
   "ch3.hometown.hospital_room2": {
    "name": "家乡·hospital_room2",
    "name_raw": "room_hospital_room2",
    "name_derived": true,
    "original_room_id": 34,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_hospital_room2.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_hospital_room2_ch2"
   },
   "ch3.hometown.diner": {
    "name": "家乡·diner",
    "name_raw": "room_diner",
    "name_derived": true,
    "original_room_id": 35,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_diner.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_diner"
   },
   "ch3.hometown.townhall": {
    "name": "家乡·townhall",
    "name_raw": "room_townhall",
    "name_derived": true,
    "original_room_id": 36,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_townhall.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_townhall"
   },
   "ch3.hometown.flowershop_1f": {
    "name": "家乡·flowershop_1f",
    "name_raw": "room_flowershop_1f",
    "name_derived": true,
    "original_room_id": 37,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_flowershop_1f.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_flowershop_f1"
   },
   "ch3.hometown.flowershop_2f": {
    "name": "家乡·flowershop_2f",
    "name_raw": "room_flowershop_2f",
    "name_derived": true,
    "original_room_id": 38,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_flowershop_2f.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_flowershop_f2"
   },
   "ch3.hometown.library": {
    "name": "家乡·library",
    "name_raw": "room_library",
    "name_derived": true,
    "original_room_id": 39,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_library.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_library"
   },
   "ch3.hometown.alphysalley": {
    "name": "家乡·alphysalley",
    "name_raw": "room_alphysalley",
    "name_derived": true,
    "original_room_id": 40,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_alphysalley.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_alphysalley"
   },
   "ch3.hometown.torielclass": {
    "name": "家乡·torielclass",
    "name_raw": "room_torielclass",
    "name_derived": true,
    "original_room_id": 46,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_torielclass.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_torielclass_ch2"
   },
   "ch3.hometown.schoollobby": {
    "name": "家乡·schoollobby",
@@ -194,8 +206,9 @@
    "name_raw": "room_alphysclass",
    "name_derived": true,
    "original_room_id": 48,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_hometown_alphysclass.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_alphysclass"
   },
   "ch3.hometown.schooldoor": {
    "name": "家乡·schooldoor",

@@ -26,8 +26,9 @@
    "name_raw": "room_dw_castle_west_cliff",
    "name_derived": true,
    "original_room_id": 59,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_my_castle_town_dw_castle_west_cliff.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_darkwest_fixed"
   },
   "ch2.my_castle_town.dw_castle_area_1": {
    "name": "我的城堡镇·area_1",
@@ -42,16 +43,18 @@
    "name_raw": "room_dw_castle_restaurant",
    "name_derived": true,
    "original_room_id": 64,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_my_castle_town_dw_castle_restaurant.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_bakery_counter"
   },
   "ch2.my_castle_town.dw_castle_cafe": {
    "name": "我的城堡镇·cafe",
    "name_raw": "room_dw_castle_cafe",
    "name_derived": true,
    "original_room_id": 65,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_my_castle_town_dw_castle_cafe.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_castle_cafe_in"
   },
   "ch2.my_castle_town.dw_castle_dojo": {
    "name": "我的城堡镇·dojo",
@@ -82,16 +85,18 @@
    "name_raw": "room_dw_castle_rooms_kris",
    "name_derived": true,
    "original_room_id": 71,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_my_castle_town_dw_castle_rooms_kris.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_kris_room"
   },
   "ch2.my_castle_town.dw_castle_rooms_susie": {
    "name": "我的城堡镇·rooms_susie",
    "name_raw": "room_dw_castle_rooms_susie",
    "name_derived": true,
    "original_room_id": 72,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_my_castle_town_dw_castle_rooms_susie.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_susie_room_1"
   },
   "ch2.my_castle_town.dw_castle_rooms_lancer": {
    "name": "我的城堡镇·rooms_lancer",

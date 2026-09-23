@@ -98,8 +98,9 @@
    "name_raw": "room_shootout",
    "name_derived": true,
    "original_room_id": 132,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_tv_backstage_shootout.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_desert_loop_foreground"
   },
   "ch3.tv_backstage.dw_changing_room": {
    "name": "电视世界后台·changing_room",
@@ -114,8 +115,9 @@
    "name_raw": "room_dw_console_room",
    "name_derived": true,
    "original_room_id": 140,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch3_tv_backstage_dw_console_room.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_console_room"
   },
   "ch3.tv_backstage.dw_susiezilla": {
    "name": "电视世界后台·dw_susiezilla",

@@ -1,0 +1,211 @@
+第 39 轮 · 真背景落盘  2026-09-24 01:35:01   
+==============================================================================
+判据：房间自带 bg_sprite / asset_sprites 且宽高均 ≥ (300, 200)
+全量场景 1013 个（87 锚点 + 926 分片）
+
+分类：真背景 157 ｜ 近似 856 ｜ 未配上 0
+
+落盘：新建 0 ｜ 已存在(核验) 157 ｜ 出错 0
+磁盘核验：bg/ 之前 236 项 → 之后 236 项，实际新增 0 项
+
+──────────────────────────────────────────────────────────────────────────────
+逐条明细（157 条真背景）
+──────────────────────────────────────────────────────────────────────────────
+  scene_id                                       章         模式             素材                             尺寸(源->落盘)
+  ch1.kris_room.kris_s_room                      ch1       EXISTS         bg_myroom                      320x240->[640, 480]   ❗尺寸不一致
+  ch1.castle_town.castle_town                    ch1       EXISTS         bg_darktown                    640x1160->[640, 1160]
+  ch1.castle_town.castle_front                   ch1       EXISTS         bg_darkcastle_front            660x480->[660, 480]
+  ch1.forest.forest_castlefront                  ch1       EXISTS         bg_cardcastle_outside          640x440->[640, 440]
+  ch1.card_castle.card_castle_throne             ch1       EXISTS         bg_cc_throneroom               640x800->[640, 800]
+  ch1.card_castle.cc_prisonelevator              ch1       EXISTS         bg_cc_elevator                 320x240->[320, 240]
+  ch1.card_castle.cc_elevator                    ch1       EXISTS         bg_cc_elevator                 320x240->[320, 240]
+  ch1.dark_world.dark_chase1                     ch1       EXISTS         bg_darkstone_1                 614x214->[614, 214]
+  ch1.dark_world.dark_chase2                     ch1       EXISTS         bg_darkstone_1                 614x214->[614, 214]
+  ch1.home.krishallway                           ch1       EXISTS         bg_myhallway                   538x240->[538, 240]
+  ch1.home.torhouse                              ch1       EXISTS         bg_torhouse_bg                 707x240->[707, 240]
+  ch1.home.torbathroom                           ch1       EXISTS         bg_mybathroom                  320x240->[320, 240]
+  ch1.hometown.hospital_lobby                    ch1       EXISTS         bg_hospital_lobby              320x240->[320, 240]
+  ch1.hometown.hospital_hallway                  ch1       EXISTS         bg_hospital_lobby2             320x240->[320, 240]
+  ch1.hometown.hospital_rudy                     ch1       EXISTS         bg_hospital_rudyroom           320x240->[320, 240]
+  ch1.hometown.hospital_room2                    ch1       EXISTS         bg_hospital_room2              320x240->[320, 240]
+  ch1.hometown.diner                             ch1       EXISTS         bg_diner                       320x240->[320, 240]
+  ch1.hometown.townhall                          ch1       EXISTS         bg_townhall                    320x240->[320, 240]
+  ch1.hometown.flowershop_1f                     ch1       EXISTS         bg_flowershop_f1               320x240->[320, 240]
+  ch1.hometown.flowershop_2f                     ch1       EXISTS         bg_flowershop_f2               320x240->[320, 240]
+  ch1.hometown.library                           ch1       EXISTS         bg_library                     320x240->[320, 240]
+  ch1.hometown.alphysalley                       ch1       EXISTS         bg_alphysalley                 320x240->[320, 240]
+  ch1.hometown.torielclass                       ch1       EXISTS         bg_lang_ja_torielclass         320x240->[320, 240]
+  ch1.hometown.alphysclass                       ch1       EXISTS         bg_alphysclass                 320x240->[320, 240]
+  ch2.kris_room.kris_s_room                      ch2       EXISTS         bg_myroom                      320x240->[320, 240]
+  ch2.castle_town.castle_town                    ch2       EXISTS         bg_darktown                    640x1160->[640, 1160]
+  ch2.castle_town.castle_town_2                  ch2       EXISTS         bg_darktown                    640x1160->[640, 1160]
+  ch2.my_castle_town.dw_castle_west_cliff        ch2       EXISTS         bg_darkwest_fixed              640x480->[640, 480]
+  ch2.my_castle_town.dw_castle_restaurant        ch2       EXISTS         bg_dw_bakery_counter           640x480->[640, 480]
+  ch2.my_castle_town.dw_castle_cafe              ch2       EXISTS         bg_dw_castle_cafe_in           640x480->[640, 480]
+  ch2.my_castle_town.dw_castle_rooms_kris        ch2       EXISTS         bg_dw_kris_room                640x480->[640, 480]
+  ch2.my_castle_town.dw_castle_rooms_susie       ch2       EXISTS         bg_dw_susie_room_1             640x480->[640, 480]
+  ch2.cyber_city.dw_city_traffic_4               ch2       EXISTS         spr_city_bridge_lining         480x480->[480, 480]
+  ch2.queens_mansion.dw_mansion_krisroom         ch2       EXISTS         spr_dw_mansion_room_kris_bg    640x480->[640, 480]
+  ch2.queens_mansion.dw_mansion_susieroom        ch2       EXISTS         spr_dw_mansion_room_susie_bg   640x480->[640, 480]
+  ch2.queens_mansion.dw_mansion_b_east           ch2       EXISTS         spr_dw_mansion_basement_loop   1280x480->[1280, 480]
+  ch2.queens_mansion.dw_mansion_top              ch2       EXISTS         spr_cutscene_26_rocks_bg       640x480->[640, 480]
+  ch2.queens_mansion.dw_mansion_top_post         ch2       EXISTS         spr_cutscene_26_rocks_bg       640x480->[640, 480]
+  ch2.queens_mansion.dw_mansion_ferris_wheel     ch2       EXISTS         spr_mansion_ferris_wheel_bg    428x480->[428, 480]
+  ch2.queens_mansion.dw_mansion_ferris_wheel_post ch2       EXISTS         bg_dw_noelle_ferris_wheel_left 336x480->[336, 480]
+  ch2.queens_mansion.dw_mansion_noelle_room      ch2       EXISTS         bg_dw_noelle_ferris_wheel      1586x480->[1586, 480]
+  ch2.queens_mansion.dw_mansion_top_post_old     ch2       EXISTS         spr_mansion_ferris_wheel_bg    428x480->[428, 480]
+  ch2.home.krishallway                           ch2       EXISTS         bg_myhallway                   538x240->[538, 240]
+  ch2.home.torhouse                              ch2       EXISTS         bg_torhouse_bg                 707x240->[707, 240]
+  ch2.home.torbathroom                           ch2       EXISTS         spr_bg_torbathroom             320x240->[320, 240]
+  ch2.hometown.beach                             ch2       EXISTS         bg_beach                       600x240->[600, 240]
+  ch2.hometown.hospital_lobby                    ch2       EXISTS         bg_hospital_lobby              320x240->[320, 240]
+  ch2.hometown.hospital_hallway                  ch2       EXISTS         bg_hospital_lobby2             320x240->[320, 240]
+  ch2.hometown.hospital_rudy                     ch2       EXISTS         bg_hospital_rudyroom_ch2       320x240->[320, 240]
+  ch2.hometown.hospital_room2                    ch2       EXISTS         bg_hospital_room2_ch2          320x240->[320, 240]
+  ch2.hometown.diner                             ch2       EXISTS         bg_diner                       320x240->[320, 240]
+  ch2.hometown.townhall                          ch2       EXISTS         bg_townhall                    320x240->[320, 240]
+  ch2.hometown.flowershop_1f                     ch2       EXISTS         bg_flowershop_f1               320x240->[320, 240]
+  ch2.hometown.flowershop_2f                     ch2       EXISTS         bg_flowershop_f2               320x240->[320, 240]
+  ch2.hometown.library                           ch2       EXISTS         bg_library                     320x240->[320, 240]
+  ch2.hometown.alphysalley                       ch2       EXISTS         bg_alphysalley                 320x240->[320, 240]
+  ch2.hometown.torielclass                       ch2       EXISTS         bg_torielclass_ch2             320x240->[320, 240]
+  ch2.hometown.alphysclass                       ch2       EXISTS         bg_alphysclass                 320x240->[320, 240]
+  ch2.light_world.lw_computer_lab                ch2       EXISTS         bg_lw_computer_lab             320x240->[320, 240]
+  ch2.light_world.lw_library_upstairs            ch2       EXISTS         bg_lw_library_upstairs         320x240->[320, 240]
+  ch2.light_world.lw_police                      ch2       EXISTS         bg_lw_police_house_base        320x240->[320, 240]
+  ch2.light_world.lw_conbini                     ch2       EXISTS         bg_lw_sans_conbini             460x240->[460, 240]
+  ch2.light_world.lw_icee_pizza                  ch2       EXISTS         bg_lw_ice_e_pizza              305x239->[305, 239]
+  ch2.ralsei_room.dw_ralsei_castle_front         ch2       EXISTS         bg_darkcastle_front            660x480->[660, 480]
+  ch3.home.krishallway                           ch3       EXISTS         bg_myhallway                   538x240->[538, 240]
+  ch3.home.torhouse                              ch3       EXISTS         bg_torhouse_bg                 707x240->[707, 240]
+  ch3.home.torbathroom                           ch3       EXISTS         spr_bg_torbathroom             320x240->[320, 240]
+  ch3.hometown.beach                             ch3       EXISTS         bg_beach                       600x240->[600, 240]
+  ch3.hometown.hospital_lobby                    ch3       EXISTS         bg_hospital_lobby              320x240->[320, 240]
+  ch3.hometown.hospital_hallway                  ch3       EXISTS         bg_hospital_lobby2             320x240->[320, 240]
+  ch3.hometown.hospital_rudy                     ch3       EXISTS         bg_hospital_rudyroom_ch2       320x240->[320, 240]
+  ch3.hometown.hospital_room2                    ch3       EXISTS         bg_hospital_room2_ch2          320x240->[320, 240]
+  ch3.hometown.diner                             ch3       EXISTS         bg_diner                       320x240->[320, 240]
+  ch3.hometown.townhall                          ch3       EXISTS         bg_townhall                    320x240->[320, 240]
+  ch3.hometown.flowershop_1f                     ch3       EXISTS         bg_flowershop_f1               320x240->[320, 240]
+  ch3.hometown.flowershop_2f                     ch3       EXISTS         bg_flowershop_f2               320x240->[320, 240]
+  ch3.hometown.library                           ch3       EXISTS         bg_library                     320x240->[320, 240]
+  ch3.hometown.alphysalley                       ch3       EXISTS         bg_alphysalley                 320x240->[320, 240]
+  ch3.hometown.torielclass                       ch3       EXISTS         bg_torielclass_ch2             320x240->[320, 240]
+  ch3.hometown.alphysclass                       ch3       EXISTS         bg_alphysclass                 320x240->[320, 240]
+  ch3.kris_room.krisroom                         ch3       EXISTS         bg_myroom                      320x240->[320, 240]
+  ch3.light_world.lw_computer_lab                ch3       EXISTS         bg_lw_computer_lab             320x240->[320, 240]
+  ch3.light_world.lw_library_upstairs            ch3       EXISTS         bg_lw_library_upstairs         320x240->[320, 240]
+  ch3.light_world.lw_police                      ch3       EXISTS         bg_lw_police_house_base        320x240->[320, 240]
+  ch3.light_world.lw_conbini                     ch3       EXISTS         bg_lw_sans_conbini             460x240->[460, 240]
+  ch3.light_world.lw_icee_pizza                  ch3       EXISTS         bg_lw_ice_e_pizza              305x239->[305, 239]
+  ch3.my_castle_town.dw_castle_west_cliff        ch3       EXISTS         bg_darkwest_fixed              640x480->[640, 480]
+  ch3.my_castle_town.dw_castle_restaurant        ch3       EXISTS         bg_dw_bakery_counter           640x480->[640, 480]
+  ch3.my_castle_town.dw_castle_cafe              ch3       EXISTS         bg_dw_castle_cafe_in           640x480->[640, 480]
+  ch3.my_castle_town.dw_castle_rooms_kris        ch3       EXISTS         bg_dw_kris_room                640x480->[640, 480]
+  ch3.my_castle_town.dw_castle_rooms_susie       ch3       EXISTS         bg_dw_susie_room_1             640x480->[640, 480]
+  ch3.ralsei_room.dw_ralsei_castle_front         ch3       EXISTS         bg_darkcastle_front            660x480->[660, 480]
+  ch3.tv_backstage.shootout                      ch3       EXISTS         spr_desert_loop_foreground     320x240->[320, 240]
+  ch3.tv_backstage.dw_console_room               ch3       EXISTS         bg_console_room                1000x520->[1000, 520]
+  ch4.kris_room.kris_s_room                      ch4       EXISTS         bg_myroom                      320x240->[320, 240]
+  ch4.hometown.beach                             ch4       EXISTS         bg_beach                       600x240->[600, 240]
+  ch4.hometown.hospital_lobby                    ch4       EXISTS         bg_hospital_lobby              320x240->[320, 240]
+  ch4.hometown.hospital_hallway                  ch4       EXISTS         bg_hospital_lobby2             320x240->[320, 240]
+  ch4.hometown.hospital_rudy                     ch4       EXISTS         bg_hospital_rudyroom_ch4       320x240->[320, 240]
+  ch4.hometown.hospital_room2                    ch4       EXISTS         bg_hospital_room2_ch4          320x240->[320, 240]
+  ch4.hometown.diner                             ch4       EXISTS         bg_diner                       320x240->[320, 240]
+  ch4.hometown.townhall                          ch4       EXISTS         bg_townhall                    320x240->[320, 240]
+  ch4.hometown.flowershop_1f                     ch4       EXISTS         bg_flowershop_f1               320x240->[320, 240]
+  ch4.hometown.flowershop_2f                     ch4       EXISTS         bg_flowershop_f2               320x240->[320, 240]
+  ch4.hometown.library                           ch4       EXISTS         bg_library                     320x240->[320, 240]
+  ch4.hometown.alphysalley                       ch4       EXISTS         bg_alphysalley_ch4             320x240->[320, 240]
+  ch4.hometown.torielclass                       ch4       EXISTS         bg_torielclass_ch2             320x240->[320, 240]
+  ch4.hometown.alphysclass                       ch4       EXISTS         bg_alphysclass                 320x240->[320, 240]
+  ch4.my_castle_town.dw_castle_west_cliff        ch4       EXISTS         bg_darkwest_fixed              640x480->[640, 480]
+  ch4.my_castle_town.dw_castle_restaurant        ch4       EXISTS         bg_dw_bakery_counter           640x480->[640, 480]
+  ch4.my_castle_town.dw_castle_cafe              ch4       EXISTS         bg_dw_castle_cafe              920x480->[920, 480]
+  ch4.my_castle_town.dw_castle_rooms_kris        ch4       EXISTS         bg_dw_kris_room                640x480->[640, 480]
+  ch4.my_castle_town.dw_castle_rooms_susie       ch4       EXISTS         bg_dw_susie_room               640x480->[640, 480]
+  ch4.my_castle_town.dw_castle_rooms_ralsei      ch4       EXISTS         bg_dw_ralsei_room              640x480->[640, 480]
+  ch4.my_castle_town.dw_castle_rooms_queen       ch4       EXISTS         bg_dw_castle_queen_room        640x480->[640, 480]
+  ch4.my_castle_town.dw_castle_rooms_kris_susie  ch4       EXISTS         bg_dw_kris_susie_room          922x480->[922, 480]
+  ch4.dark_sanctuary.dark_sanctuary_1_study      ch4       EXISTS         bg_dw_gerson_base              960x1200->[960, 1200]
+  ch4.home.krishallway                           ch4       EXISTS         bg_myhallway                   538x240->[538, 240]
+  ch4.home.torhouse                              ch4       EXISTS         bg_torhouse_bg                 707x240->[707, 240]
+  ch4.home.torbathroom                           ch4       EXISTS         spr_bg_torbathroom             320x240->[320, 240]
+  ch4.home.krisroom_dark                         ch4       EXISTS         bg_myroom_dark                 320x240->[320, 240]
+  ch4.light_world.lw_computer_lab                ch4       EXISTS         bg_lw_computer_lab             320x240->[320, 240]
+  ch4.light_world.lw_library_upstairs            ch4       EXISTS         bg_lw_library_upstairs         320x240->[320, 240]
+  ch4.light_world.lw_police                      ch4       EXISTS         bg_lw_police_house_base        320x240->[320, 240]
+  ch4.light_world.lw_conbini                     ch4       EXISTS         bg_lw_sans_conbini             460x240->[460, 240]
+  ch4.light_world.lw_icee_pizza                  ch4       EXISTS         bg_lw_ice_e_pizza              305x239->[305, 239]
+  ch4.light_world.lw_church_entrance             ch4       EXISTS         bg_church_entrance             640x240->[640, 240]
+  ch4.light_world.lw_church_office               ch4       EXISTS         bg_church_office               320x240->[320, 240]
+  ch4.light_world.lw_church_choir                ch4       EXISTS         bg_church_choir                320x240->[320, 240]
+  ch4.ralsei_room.dw_ralsei_castle_front         ch4       EXISTS         bg_darkcastle_front            660x480->[660, 480]
+  ch5.kris_room.kris_s_room                      ch5       EXISTS         bg_myroom                      320x240->[320, 240]
+  ch5.hometown.hospital_lobby                    ch5       EXISTS         bg_hospital_lobby              320x240->[320, 240]
+  ch5.hometown.hospital_hallway                  ch5       EXISTS         bg_hospital_lobby2             320x240->[320, 240]
+  ch5.hometown.hospital_rudy                     ch5       EXISTS         bg_hospital_rudyroom_ch2       320x240->[320, 240]
+  ch5.hometown.hospital_room2                    ch5       EXISTS         bg_hospital_room2_ch2          320x240->[320, 240]
+  ch5.hometown.diner                             ch5       EXISTS         bg_diner                       320x240->[320, 240]
+  ch5.hometown.townhall                          ch5       EXISTS         bg_townhall                    320x240->[320, 240]
+  ch5.hometown.flowershop_1f                     ch5       EXISTS         bg_flowershop_f1               320x240->[320, 240]
+  ch5.hometown.flowershop_2f                     ch5       EXISTS         bg_flowershop_ch5              320x240->[320, 240]
+  ch5.hometown.library                           ch5       EXISTS         bg_library                     320x240->[320, 240]
+  ch5.hometown.alphysalley                       ch5       EXISTS         bg_alphysalley                 320x240->[320, 240]
+  ch5.hometown.torielclass                       ch5       EXISTS         bg_torielclass_ch2             320x240->[320, 240]
+  ch5.hometown.alphysclass                       ch5       EXISTS         bg_alphysclass                 320x240->[320, 240]
+  ch5.my_castle_town.dw_castle_west_cliff        ch5       EXISTS         bg_darkwest_fixed              640x480->[640, 480]
+  ch5.my_castle_town.dw_castle_restaurant        ch5       EXISTS         bg_dw_bakery_counter           640x480->[640, 480]
+  ch5.my_castle_town.dw_castle_cafe              ch5       EXISTS         bg_dw_castle_cafe              920x480->[920, 480]
+  ch5.my_castle_town.dw_castle_rooms_kris        ch5       EXISTS         bg_dw_kris_room                640x480->[640, 480]
+  ch5.my_castle_town.dw_castle_rooms_susie       ch5       EXISTS         bg_dw_susie_room_ch5           640x480->[640, 480]
+  ch5.my_castle_town.dw_castle_rooms_ralsei      ch5       EXISTS         bg_dw_ralsei_room              640x480->[640, 480]
+  ch5.home.krishallway                           ch5       EXISTS         bg_myhallway                   538x240->[538, 240]
+  ch5.home.torhouse                              ch5       EXISTS         bg_torhouse_bg                 707x240->[707, 240]
+  ch5.home.torbathroom                           ch5       EXISTS         spr_bg_torbathroom             320x240->[320, 240]
+  ch5.light_world.lw_library_upstairs            ch5       EXISTS         bg_lw_library_upstairs         320x240->[320, 240]
+  ch5.light_world.lw_police                      ch5       EXISTS         bg_lw_police_house_base        320x240->[320, 240]
+  ch5.light_world.lw_icee_pizza                  ch5       EXISTS         bg_lw_ice_e_pizza              305x239->[305, 239]
+  ch5.light_world.lw_church_entrance             ch5       EXISTS         bg_church_entrance             640x240->[640, 240]
+  ch5.ralsei_room.dw_ralsei_castle_front         ch5       EXISTS         bg_darkcastle_front            660x480->[660, 480]
+
+★ 与当前口径源图尺寸不一致的已存在文件：1 个
+   ch1.kris_room.kris_s_room                      bg_myroom                      源 320x240 / 磁盘 [640, 480]
+
+源图尺寸分布（按出现次数降序）：
+   320x240         87
+   640x480         25
+   660x480          5
+   538x240          5
+   707x240          5
+   305x239          4
+   640x1160         3
+   600x240          3
+   460x240          3
+   614x214          2
+   428x480          2
+   920x480          2
+   640x240          2
+   640x440          1
+   640x800          1
+   480x480          1
+   1280x480         1
+   336x480          1
+   1586x480         1
+   1000x520         1
+   922x480          1
+   960x1200         1
+
+源图宽 vs 房间宽（>1 表示素材比房间宽，缩放余地大）：
+   最小 0.10  ch2.cyber_city.dw_city_traffic_4             素材 [480, 480] / 房间 4600x480
+   最小 0.11  ch1.dark_world.dark_chase1                   素材 [614, 214] / 房间 5400x1000
+   最小 0.17  ch2.queens_mansion.dw_mansion_top_post_old   素材 [428, 480] / 房间 2560x480
+   最小 0.25  ch2.queens_mansion.dw_mansion_top            素材 [640, 480] / 房间 2560x480
+   最小 0.25  ch2.queens_mansion.dw_mansion_top_post       素材 [640, 480] / 房间 2560x480
+   最大 1.01  ch3.home.torhouse                            素材 [707, 240] / 房间 700x240
+   最大 1.01  ch4.home.torhouse                            素材 [707, 240] / 房间 700x240
+   最大 1.01  ch5.home.torhouse                            素材 [707, 240] / 房间 700x240
+
+耗时 1.2s
+结论：OK

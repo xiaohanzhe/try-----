@@ -7,6 +7,8 @@
   "area_id": "cyber_city",
   "area_name": "赛博都市",
   "bg": "bg/ch2_cyber_city_cyber_city_alleyway_2.png",
+  "bg_source": "area_table",
+  "bg_asset": "bg_dw_city_alleyway_street_tiles",
   "bgm": "cybercity.ogg",
   "ambient": {
     "lighting": null,
@@ -22,7 +24,7 @@
       "room_id": 128,
       "display_name": "Cyber City - Second Alleyway"
     },
-    "why_bg_is_a_placeholder": "用户选 B（自行导出原作背景图）。这里写的是**约定文件名**，文件尚不存在 —— P1 渲染层会跳过不存在的 bg（不是把场景画白）。导出好后放到 assets/scenes/bg/ 并按此名保存即可，零改代码。",
+    "why_bg_is_a_placeholder": "第36轮写这个字段时背景文件确实还不存在（用户当时选 B 自行导出）。第37轮已按原作素材反编译生成并落盘到 bg/，第39轮起 bg_source 标注来源档次、bg_asset 标注原作用的是哪个精灵资源。",
     "why_objects_is_empty": "物件需要背景图当参照才能定锚点。等 bg 到位后再按 _anchors.json 的命名锚点填 objects —— 现在硬编坐标是瞎猜。"
   }
 }

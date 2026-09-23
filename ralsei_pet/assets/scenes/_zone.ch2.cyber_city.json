@@ -154,8 +154,9 @@
    "name_raw": "room_dw_city_traffic_4",
    "name_derived": true,
    "original_room_id": 129,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_cyber_city_dw_city_traffic_4.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_city_bridge_lining"
   },
   "ch2.cyber_city.dw_city_spamton_alley": {
    "name": "赛博都市·spamton_alley",

@@ -1,0 +1,34 @@
+第 39 轮 · 背景覆盖量化  2026-09-24 01:30:58
+============================================================================
+房间表：{'ch1': 147, 'ch2': 278, 'ch3': 246, 'ch4': 328, 'ch5': 252}
+精灵表（仅"可能用到"的名字）：{'ch1': 96, 'ch2': 162, 'ch3': 131, 'ch4': 235, 'ch5': 177}
+
+1) 房间级真背景可达性（判据：bg_sprite / asset_sprites 尺寸 ≥ (300, 200)）
+   章          房间       有bg层        真背景    仅asset真
+   ch1       147         36         27          0
+   ch2       278         46         42          0
+   ch3       246         35         35          0
+   ch4       328         39         39          0
+   ch5       252         29         29          0
+
+2) 场景级分类（全量 1013 个场景，逐字套用 37 轮 pick_asset）
+   来源分布：
+     area_table          700
+     room.bg_layer       157
+     chapter_tiles       156
+
+   逐章：
+     ch1   {'room.bg_layer': 24, 'area_table': 83, 'chapter_tiles': 21}
+     ch2   {'room.bg_layer': 40, 'area_table': 174, 'chapter_tiles': 22}
+     ch3   {'area_table': 76, 'chapter_tiles': 81, 'room.bg_layer': 30}
+     ch4   {'room.bg_layer': 36, 'area_table': 213, 'chapter_tiles': 12}
+     ch5   {'room.bg_layer': 27, 'area_table': 154, 'chapter_tiles': 20}
+
+   ★ 真背景（可直接落地，零编造） = 157
+   ⚠️ 近似（区域代表素材/章节兜底，需用户口径） = 856
+   ✗ 未配上 = 0
+
+3) 87 锚点复看：37 轮实际给了什么，现在是否还能升级为真背景
+   37 轮 how 分布：{'room.bg_layer': 9, 'area_table': 78}
+   ★ 可用真背景替换掉近似的锚点 = 0
+

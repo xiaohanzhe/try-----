@@ -18,8 +18,9 @@
    "name_raw": "room_dw_castle_west_cliff",
    "name_derived": true,
    "original_room_id": 63,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_west_cliff.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_darkwest_fixed"
   },
   "ch4.my_castle_town.dw_castle_area_1": {
    "name": "我的城堡镇·area_1",
@@ -34,16 +35,18 @@
    "name_raw": "room_dw_castle_restaurant",
    "name_derived": true,
    "original_room_id": 67,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_restaurant.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_bakery_counter"
   },
   "ch4.my_castle_town.dw_castle_cafe": {
    "name": "我的城堡镇·cafe",
    "name_raw": "room_dw_castle_cafe",
    "name_derived": true,
    "original_room_id": 68,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_cafe.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_castle_cafe"
   },
   "ch4.my_castle_town.dw_castle_dojo": {
    "name": "我的城堡镇·dojo",
@@ -66,32 +69,36 @@
    "name_raw": "room_dw_castle_rooms_kris",
    "name_derived": true,
    "original_room_id": 73,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_rooms_kris.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_kris_room"
   },
   "ch4.my_castle_town.dw_castle_rooms_susie": {
    "name": "我的城堡镇·rooms_susie",
    "name_raw": "room_dw_castle_rooms_susie",
    "name_derived": true,
    "original_room_id": 74,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_rooms_susie.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_susie_room"
   },
   "ch4.my_castle_town.dw_castle_rooms_ralsei": {
    "name": "我的城堡镇·rooms_ralsei",
    "name_raw": "room_dw_castle_rooms_ralsei",
    "name_derived": true,
    "original_room_id": 155,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_rooms_ralsei.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_ralsei_room"
   },
   "ch4.my_castle_town.dw_castle_rooms_queen": {
    "name": "我的城堡镇·rooms_queen",
    "name_raw": "room_dw_castle_rooms_queen",
    "name_derived": true,
    "original_room_id": 167,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_rooms_queen.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_castle_queen_room"
   },
   "ch4.my_castle_town.dw_castle_rooms_tenna": {
    "name": "我的城堡镇·rooms_tenna",
@@ -106,8 +113,9 @@
    "name_raw": "room_dw_castle_rooms_kris_susie",
    "name_derived": true,
    "original_room_id": 246,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_my_castle_town_dw_castle_rooms_kris_susie.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_kris_susie_room"
   },
   "ch4.my_castle_town.dw_castle_tv_rhythm": {
    "name": "我的城堡镇·tv_rhythm",

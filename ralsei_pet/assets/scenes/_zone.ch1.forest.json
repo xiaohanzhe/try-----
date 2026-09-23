@@ -218,8 +218,9 @@
    "name_raw": "room_forest_castlefront",
    "name_derived": true,
    "original_room_id": 104,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch1_forest_forest_castlefront.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_cardcastle_outside"
   }
  }
 }

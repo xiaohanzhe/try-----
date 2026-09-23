@@ -10,16 +10,18 @@
    "name_raw": "room_dw_mansion_krisroom",
    "name_derived": true,
    "original_room_id": 150,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_krisroom.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_dw_mansion_room_kris_bg"
   },
   "ch2.queens_mansion.dw_mansion_susieroom": {
    "name": "女王宅邸·susieroom",
    "name_raw": "room_dw_mansion_susieroom",
    "name_derived": true,
    "original_room_id": 151,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_susieroom.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_dw_mansion_room_susie_bg"
   },
   "ch2.queens_mansion.dw_mansion_darkbulb_1": {
    "name": "女王宅邸·darkbulb_1",
@@ -194,8 +196,9 @@
    "name_raw": "room_dw_mansion_b_east",
    "name_derived": true,
    "original_room_id": 176,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_b_east.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_dw_mansion_basement_loop"
   },
   "ch2.queens_mansion.dw_mansion_b_east_a": {
    "name": "女王宅邸·b_east_a",
@@ -338,40 +341,45 @@
    "name_raw": "room_dw_mansion_top",
    "name_derived": true,
    "original_room_id": 197,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_top.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_cutscene_26_rocks_bg"
   },
   "ch2.queens_mansion.dw_mansion_top_post": {
    "name": "女王宅邸·top_post",
    "name_raw": "room_dw_mansion_top_post",
    "name_derived": true,
    "original_room_id": 198,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_top_post.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_cutscene_26_rocks_bg"
   },
   "ch2.queens_mansion.dw_mansion_ferris_wheel": {
    "name": "女王宅邸·ferris_wheel",
    "name_raw": "room_dw_mansion_ferris_wheel",
    "name_derived": true,
    "original_room_id": 201,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_ferris_wheel.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_mansion_ferris_wheel_bg"
   },
   "ch2.queens_mansion.dw_mansion_ferris_wheel_post": {
    "name": "女王宅邸·ferris_wheel_post",
    "name_raw": "room_dw_mansion_ferris_wheel_post",
    "name_derived": true,
    "original_room_id": 202,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_ferris_wheel_post.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_noelle_ferris_wheel_left"
   },
   "ch2.queens_mansion.dw_mansion_noelle_room": {
    "name": "女王宅邸·noelle_room",
    "name_raw": "room_dw_mansion_noelle_room",
    "name_derived": true,
    "original_room_id": 203,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_noelle_room.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_dw_noelle_ferris_wheel"
   },
   "ch2.queens_mansion.dw_mansion_bridges": {
    "name": "女王宅邸·bridges",
@@ -530,8 +538,9 @@
    "name_raw": "room_dw_mansion_top_post_old",
    "name_derived": true,
    "original_room_id": 223,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch2_queens_mansion_dw_mansion_top_post_old.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_mansion_ferris_wheel_bg"
   },
   "ch2.queens_mansion.dw_mansion_elevator": {
    "name": "女王宅邸·elevator",

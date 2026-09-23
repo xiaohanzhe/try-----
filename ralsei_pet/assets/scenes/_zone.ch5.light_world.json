@@ -18,16 +18,18 @@
    "name_raw": "room_lw_library_upstairs",
    "name_derived": true,
    "original_room_id": 40,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch5_light_world_lw_library_upstairs.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_library_upstairs"
   },
   "ch5.light_world.lw_police": {
    "name": "光世界·police",
    "name_raw": "room_lw_police",
    "name_derived": true,
    "original_room_id": 41,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch5_light_world_lw_police.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_police_house_base"
   },
   "ch5.light_world.lw_conbini": {
    "name": "光世界·conbini",
@@ -42,8 +44,9 @@
    "name_raw": "room_lw_icee_pizza",
    "name_derived": true,
    "original_room_id": 43,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch5_light_world_lw_icee_pizza.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_ice_e_pizza"
   },
   "ch5.light_world.lw_church_choir": {
    "name": "光世界·church_choir",
@@ -58,8 +61,9 @@
    "name_raw": "room_lw_church_entrance",
    "name_derived": true,
    "original_room_id": 103,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch5_light_world_lw_church_entrance.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_church_entrance"
   },
   "ch5.light_world.lw_church_main": {
    "name": "光世界·church_main",

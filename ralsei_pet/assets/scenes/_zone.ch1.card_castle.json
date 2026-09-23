@@ -34,16 +34,18 @@
    "name_raw": "room_cc_prisonelevator",
    "name_derived": true,
    "original_room_id": 109,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch1_card_castle_cc_prisonelevator.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_cc_elevator"
   },
   "ch1.card_castle.cc_elevator": {
    "name": "纸牌城堡·elevator",
    "name_raw": "room_cc_elevator",
    "name_derived": true,
    "original_room_id": 110,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch1_card_castle_cc_elevator.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_cc_elevator"
   },
   "ch1.card_castle.cc_joker": {
    "name": "纸牌城堡·joker",

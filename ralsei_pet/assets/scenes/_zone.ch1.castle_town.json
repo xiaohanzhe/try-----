@@ -18,8 +18,9 @@
    "name_raw": "room_castle_front",
    "name_derived": true,
    "original_room_id": 46,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch1_castle_town_castle_front.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_darkcastle_front"
   },
   "ch1.castle_town.castle_tutorial": {
    "name": "城堡镇·tutorial",

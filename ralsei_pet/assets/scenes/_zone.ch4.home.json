@@ -10,8 +10,9 @@
    "name_raw": "room_krishallway",
    "name_derived": true,
    "original_room_id": 16,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_home_krishallway.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_myhallway"
   },
   "ch4.home.torroom": {
    "name": "克里斯的家·torroom",
@@ -26,24 +27,27 @@
    "name_raw": "room_torhouse",
    "name_derived": true,
    "original_room_id": 18,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_home_torhouse.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_torhouse_bg"
   },
   "ch4.home.torbathroom": {
    "name": "克里斯的家·torbathroom",
    "name_raw": "room_torbathroom",
    "name_derived": true,
    "original_room_id": 19,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_home_torbathroom.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "spr_bg_torbathroom"
   },
   "ch4.home.krisroom_dark": {
    "name": "克里斯的家·krisroom_dark",
    "name_raw": "room_krisroom_dark",
    "name_derived": true,
    "original_room_id": 159,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_home_krisroom_dark.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_myroom_dark"
   }
  }
 }

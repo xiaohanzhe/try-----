@@ -58,16 +58,18 @@
    "name_raw": "room_dark_chase1",
    "name_derived": true,
    "original_room_id": 42,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch1_dark_world_dark_chase1.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_darkstone_1"
   },
   "ch1.dark_world.dark_chase2": {
    "name": "黑暗世界·chase2",
    "name_raw": "room_dark_chase2",
    "name_derived": true,
    "original_room_id": 43,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch1_dark_world_dark_chase2.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_darkstone_1"
   }
  }
 }

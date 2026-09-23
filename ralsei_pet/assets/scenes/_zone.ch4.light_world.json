@@ -10,48 +10,54 @@
    "name_raw": "room_lw_computer_lab",
    "name_derived": true,
    "original_room_id": 41,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_computer_lab.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_computer_lab"
   },
   "ch4.light_world.lw_library_upstairs": {
    "name": "光世界·library_upstairs",
    "name_raw": "room_lw_library_upstairs",
    "name_derived": true,
    "original_room_id": 42,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_library_upstairs.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_library_upstairs"
   },
   "ch4.light_world.lw_police": {
    "name": "光世界·police",
    "name_raw": "room_lw_police",
    "name_derived": true,
    "original_room_id": 43,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_police.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_police_house_base"
   },
   "ch4.light_world.lw_conbini": {
    "name": "光世界·conbini",
    "name_raw": "room_lw_conbini",
    "name_derived": true,
    "original_room_id": 44,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_conbini.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_sans_conbini"
   },
   "ch4.light_world.lw_icee_pizza": {
    "name": "光世界·icee_pizza",
    "name_raw": "room_lw_icee_pizza",
    "name_derived": true,
    "original_room_id": 45,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_icee_pizza.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_lw_ice_e_pizza"
   },
   "ch4.light_world.lw_church_entrance": {
    "name": "光世界·church_entrance",
    "name_raw": "room_lw_church_entrance",
    "name_derived": true,
    "original_room_id": 46,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_church_entrance.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_church_entrance"
   },
   "ch4.light_world.lw_church_main": {
    "name": "光世界·church_main",
@@ -66,16 +72,18 @@
    "name_raw": "room_lw_church_office",
    "name_derived": true,
    "original_room_id": 149,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_church_office.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_church_office"
   },
   "ch4.light_world.lw_church_choir": {
    "name": "光世界·church_choir",
    "name_raw": "room_lw_church_choir",
    "name_derived": true,
    "original_room_id": 208,
-   "bg": null,
-   "bg_source": "none"
+   "bg": "bg/ch4_light_world_lw_church_choir.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_church_choir"
   }
  }
 }

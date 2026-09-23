@@ -1,0 +1,1307 @@
+{
+  "generated_at": "2026-09-24 01:36:16",
+  "targets": {
+    "ch1.kris_room.kris_s_room": [
+      "bg/ch1_kris_room_kris_s_room.png",
+      "room.bg_layer",
+      "bg_myroom"
+    ],
+    "ch1.castle_town.castle_town": [
+      "bg/ch1_castle_town_castle_town.png",
+      "room.bg_layer",
+      "bg_darktown"
+    ],
+    "ch1.castle_town.castle_front": [
+      "bg/ch1_castle_town_castle_front.png",
+      "room.bg_layer",
+      "bg_darkcastle_front"
+    ],
+    "ch1.forest.forest_castlefront": [
+      "bg/ch1_forest_forest_castlefront.png",
+      "room.bg_layer",
+      "bg_cardcastle_outside"
+    ],
+    "ch1.card_castle.card_castle_throne": [
+      "bg/ch1_card_castle_card_castle_throne.png",
+      "room.bg_layer",
+      "bg_cc_throneroom"
+    ],
+    "ch1.card_castle.cc_prisonelevator": [
+      "bg/ch1_card_castle_cc_prisonelevator.png",
+      "room.bg_layer",
+      "bg_cc_elevator"
+    ],
+    "ch1.card_castle.cc_elevator": [
+      "bg/ch1_card_castle_cc_elevator.png",
+      "room.bg_layer",
+      "bg_cc_elevator"
+    ],
+    "ch1.dark_world.dark_chase1": [
+      "bg/ch1_dark_world_dark_chase1.png",
+      "room.bg_layer",
+      "bg_darkstone_1"
+    ],
+    "ch1.dark_world.dark_chase2": [
+      "bg/ch1_dark_world_dark_chase2.png",
+      "room.bg_layer",
+      "bg_darkstone_1"
+    ],
+    "ch1.home.krishallway": [
+      "bg/ch1_home_krishallway.png",
+      "room.bg_layer",
+      "bg_myhallway"
+    ],
+    "ch1.home.torhouse": [
+      "bg/ch1_home_torhouse.png",
+      "room.bg_layer",
+      "bg_torhouse_bg"
+    ],
+    "ch1.home.torbathroom": [
+      "bg/ch1_home_torbathroom.png",
+      "room.bg_layer",
+      "bg_mybathroom"
+    ],
+    "ch1.hometown.hospital_lobby": [
+      "bg/ch1_hometown_hospital_lobby.png",
+      "room.bg_layer",
+      "bg_hospital_lobby"
+    ],
+    "ch1.hometown.hospital_hallway": [
+      "bg/ch1_hometown_hospital_hallway.png",
+      "room.bg_layer",
+      "bg_hospital_lobby2"
+    ],
+    "ch1.hometown.hospital_rudy": [
+      "bg/ch1_hometown_hospital_rudy.png",
+      "room.bg_layer",
+      "bg_hospital_rudyroom"
+    ],
+    "ch1.hometown.hospital_room2": [
+      "bg/ch1_hometown_hospital_room2.png",
+      "room.bg_layer",
+      "bg_hospital_room2"
+    ],
+    "ch1.hometown.diner": [
+      "bg/ch1_hometown_diner.png",
+      "room.bg_layer",
+      "bg_diner"
+    ],
+    "ch1.hometown.townhall": [
+      "bg/ch1_hometown_townhall.png",
+      "room.bg_layer",
+      "bg_townhall"
+    ],
+    "ch1.hometown.flowershop_1f": [
+      "bg/ch1_hometown_flowershop_1f.png",
+      "room.bg_layer",
+      "bg_flowershop_f1"
+    ],
+    "ch1.hometown.flowershop_2f": [
+      "bg/ch1_hometown_flowershop_2f.png",
+      "room.bg_layer",
+      "bg_flowershop_f2"
+    ],
+    "ch1.hometown.library": [
+      "bg/ch1_hometown_library.png",
+      "room.bg_layer",
+      "bg_library"
+    ],
+    "ch1.hometown.alphysalley": [
+      "bg/ch1_hometown_alphysalley.png",
+      "room.bg_layer",
+      "bg_alphysalley"
+    ],
+    "ch1.hometown.torielclass": [
+      "bg/ch1_hometown_torielclass.png",
+      "room.bg_layer",
+      "bg_lang_ja_torielclass"
+    ],
+    "ch1.hometown.alphysclass": [
+      "bg/ch1_hometown_alphysclass.png",
+      "room.bg_layer",
+      "bg_alphysclass"
+    ],
+    "ch2.kris_room.kris_s_room": [
+      "bg/ch2_kris_room_kris_s_room.png",
+      "room.bg_layer",
+      "bg_myroom"
+    ],
+    "ch2.castle_town.castle_town": [
+      "bg/ch2_castle_town_castle_town.png",
+      "room.bg_layer",
+      "bg_darktown"
+    ],
+    "ch2.castle_town.castle_town_2": [
+      "bg/ch2_castle_town_castle_town_2.png",
+      "room.bg_layer",
+      "bg_darktown"
+    ],
+    "ch2.my_castle_town.dw_castle_west_cliff": [
+      "bg/ch2_my_castle_town_dw_castle_west_cliff.png",
+      "room.bg_layer",
+      "bg_darkwest_fixed"
+    ],
+    "ch2.my_castle_town.dw_castle_restaurant": [
+      "bg/ch2_my_castle_town_dw_castle_restaurant.png",
+      "room.bg_layer",
+      "bg_dw_bakery_counter"
+    ],
+    "ch2.my_castle_town.dw_castle_cafe": [
+      "bg/ch2_my_castle_town_dw_castle_cafe.png",
+      "room.bg_layer",
+      "bg_dw_castle_cafe_in"
+    ],
+    "ch2.my_castle_town.dw_castle_rooms_kris": [
+      "bg/ch2_my_castle_town_dw_castle_rooms_kris.png",
+      "room.bg_layer",
+      "bg_dw_kris_room"
+    ],
+    "ch2.my_castle_town.dw_castle_rooms_susie": [
+      "bg/ch2_my_castle_town_dw_castle_rooms_susie.png",
+      "room.bg_layer",
+      "bg_dw_susie_room_1"
+    ],
+    "ch2.cyber_city.dw_city_traffic_4": [
+      "bg/ch2_cyber_city_dw_city_traffic_4.png",
+      "room.bg_layer",
+      "spr_city_bridge_lining"
+    ],
+    "ch2.queens_mansion.dw_mansion_krisroom": [
+      "bg/ch2_queens_mansion_dw_mansion_krisroom.png",
+      "room.bg_layer",
+      "spr_dw_mansion_room_kris_bg"
+    ],
+    "ch2.queens_mansion.dw_mansion_susieroom": [
+      "bg/ch2_queens_mansion_dw_mansion_susieroom.png",
+      "room.bg_layer",
+      "spr_dw_mansion_room_susie_bg"
+    ],
+    "ch2.queens_mansion.dw_mansion_b_east": [
+      "bg/ch2_queens_mansion_dw_mansion_b_east.png",
+      "room.bg_layer",
+      "spr_dw_mansion_basement_loop"
+    ],
+    "ch2.queens_mansion.dw_mansion_top": [
+      "bg/ch2_queens_mansion_dw_mansion_top.png",
+      "room.bg_layer",
+      "spr_cutscene_26_rocks_bg"
+    ],
+    "ch2.queens_mansion.dw_mansion_top_post": [
+      "bg/ch2_queens_mansion_dw_mansion_top_post.png",
+      "room.bg_layer",
+      "spr_cutscene_26_rocks_bg"
+    ],
+    "ch2.queens_mansion.dw_mansion_ferris_wheel": [
+      "bg/ch2_queens_mansion_dw_mansion_ferris_wheel.png",
+      "room.bg_layer",
+      "spr_mansion_ferris_wheel_bg"
+    ],
+    "ch2.queens_mansion.dw_mansion_ferris_wheel_post": [
+      "bg/ch2_queens_mansion_dw_mansion_ferris_wheel_post.png",
+      "room.bg_layer",
+      "bg_dw_noelle_ferris_wheel_left"
+    ],
+    "ch2.queens_mansion.dw_mansion_noelle_room": [
+      "bg/ch2_queens_mansion_dw_mansion_noelle_room.png",
+      "room.bg_layer",
+      "bg_dw_noelle_ferris_wheel"
+    ],
+    "ch2.queens_mansion.dw_mansion_top_post_old": [
+      "bg/ch2_queens_mansion_dw_mansion_top_post_old.png",
+      "room.bg_layer",
+      "spr_mansion_ferris_wheel_bg"
+    ],
+    "ch2.home.krishallway": [
+      "bg/ch2_home_krishallway.png",
+      "room.bg_layer",
+      "bg_myhallway"
+    ],
+    "ch2.home.torhouse": [
+      "bg/ch2_home_torhouse.png",
+      "room.bg_layer",
+      "bg_torhouse_bg"
+    ],
+    "ch2.home.torbathroom": [
+      "bg/ch2_home_torbathroom.png",
+      "room.bg_layer",
+      "spr_bg_torbathroom"
+    ],
+    "ch2.hometown.beach": [
+      "bg/ch2_hometown_beach.png",
+      "room.bg_layer",
+      "bg_beach"
+    ],
+    "ch2.hometown.hospital_lobby": [
+      "bg/ch2_hometown_hospital_lobby.png",
+      "room.bg_layer",
+      "bg_hospital_lobby"
+    ],
+    "ch2.hometown.hospital_hallway": [
+      "bg/ch2_hometown_hospital_hallway.png",
+      "room.bg_layer",
+      "bg_hospital_lobby2"
+    ],
+    "ch2.hometown.hospital_rudy": [
+      "bg/ch2_hometown_hospital_rudy.png",
+      "room.bg_layer",
+      "bg_hospital_rudyroom_ch2"
+    ],
+    "ch2.hometown.hospital_room2": [
+      "bg/ch2_hometown_hospital_room2.png",
+      "room.bg_layer",
+      "bg_hospital_room2_ch2"
+    ],
+    "ch2.hometown.diner": [
+      "bg/ch2_hometown_diner.png",
+      "room.bg_layer",
+      "bg_diner"
+    ],
+    "ch2.hometown.townhall": [
+      "bg/ch2_hometown_townhall.png",
+      "room.bg_layer",
+      "bg_townhall"
+    ],
+    "ch2.hometown.flowershop_1f": [
+      "bg/ch2_hometown_flowershop_1f.png",
+      "room.bg_layer",
+      "bg_flowershop_f1"
+    ],
+    "ch2.hometown.flowershop_2f": [
+      "bg/ch2_hometown_flowershop_2f.png",
+      "room.bg_layer",
+      "bg_flowershop_f2"
+    ],
+    "ch2.hometown.library": [
+      "bg/ch2_hometown_library.png",
+      "room.bg_layer",
+      "bg_library"
+    ],
+    "ch2.hometown.alphysalley": [
+      "bg/ch2_hometown_alphysalley.png",
+      "room.bg_layer",
+      "bg_alphysalley"
+    ],
+    "ch2.hometown.torielclass": [
+      "bg/ch2_hometown_torielclass.png",
+      "room.bg_layer",
+      "bg_torielclass_ch2"
+    ],
+    "ch2.hometown.alphysclass": [
+      "bg/ch2_hometown_alphysclass.png",
+      "room.bg_layer",
+      "bg_alphysclass"
+    ],
+    "ch2.light_world.lw_computer_lab": [
+      "bg/ch2_light_world_lw_computer_lab.png",
+      "room.bg_layer",
+      "bg_lw_computer_lab"
+    ],
+    "ch2.light_world.lw_library_upstairs": [
+      "bg/ch2_light_world_lw_library_upstairs.png",
+      "room.bg_layer",
+      "bg_lw_library_upstairs"
+    ],
+    "ch2.light_world.lw_police": [
+      "bg/ch2_light_world_lw_police.png",
+      "room.bg_layer",
+      "bg_lw_police_house_base"
+    ],
+    "ch2.light_world.lw_conbini": [
+      "bg/ch2_light_world_lw_conbini.png",
+      "room.bg_layer",
+      "bg_lw_sans_conbini"
+    ],
+    "ch2.light_world.lw_icee_pizza": [
+      "bg/ch2_light_world_lw_icee_pizza.png",
+      "room.bg_layer",
+      "bg_lw_ice_e_pizza"
+    ],
+    "ch2.ralsei_room.dw_ralsei_castle_front": [
+      "bg/ch2_ralsei_room_dw_ralsei_castle_front.png",
+      "room.bg_layer",
+      "bg_darkcastle_front"
+    ],
+    "ch3.home.krishallway": [
+      "bg/ch3_home_krishallway.png",
+      "room.bg_layer",
+      "bg_myhallway"
+    ],
+    "ch3.home.torhouse": [
+      "bg/ch3_home_torhouse.png",
+      "room.bg_layer",
+      "bg_torhouse_bg"
+    ],
+    "ch3.home.torbathroom": [
+      "bg/ch3_home_torbathroom.png",
+      "room.bg_layer",
+      "spr_bg_torbathroom"
+    ],
+    "ch3.hometown.beach": [
+      "bg/ch3_hometown_beach.png",
+      "room.bg_layer",
+      "bg_beach"
+    ],
+    "ch3.hometown.hospital_lobby": [
+      "bg/ch3_hometown_hospital_lobby.png",
+      "room.bg_layer",
+      "bg_hospital_lobby"
+    ],
+    "ch3.hometown.hospital_hallway": [
+      "bg/ch3_hometown_hospital_hallway.png",
+      "room.bg_layer",
+      "bg_hospital_lobby2"
+    ],
+    "ch3.hometown.hospital_rudy": [
+      "bg/ch3_hometown_hospital_rudy.png",
+      "room.bg_layer",
+      "bg_hospital_rudyroom_ch2"
+    ],
+    "ch3.hometown.hospital_room2": [
+      "bg/ch3_hometown_hospital_room2.png",
+      "room.bg_layer",
+      "bg_hospital_room2_ch2"
+    ],
+    "ch3.hometown.diner": [
+      "bg/ch3_hometown_diner.png",
+      "room.bg_layer",
+      "bg_diner"
+    ],
+    "ch3.hometown.townhall": [
+      "bg/ch3_hometown_townhall.png",
+      "room.bg_layer",
+      "bg_townhall"
+    ],
+    "ch3.hometown.flowershop_1f": [
+      "bg/ch3_hometown_flowershop_1f.png",
+      "room.bg_layer",
+      "bg_flowershop_f1"
+    ],
+    "ch3.hometown.flowershop_2f": [
+      "bg/ch3_hometown_flowershop_2f.png",
+      "room.bg_layer",
+      "bg_flowershop_f2"
+    ],
+    "ch3.hometown.library": [
+      "bg/ch3_hometown_library.png",
+      "room.bg_layer",
+      "bg_library"
+    ],
+    "ch3.hometown.alphysalley": [
+      "bg/ch3_hometown_alphysalley.png",
+      "room.bg_layer",
+      "bg_alphysalley"
+    ],
+    "ch3.hometown.torielclass": [
+      "bg/ch3_hometown_torielclass.png",
+      "room.bg_layer",
+      "bg_torielclass_ch2"
+    ],
+    "ch3.hometown.alphysclass": [
+      "bg/ch3_hometown_alphysclass.png",
+      "room.bg_layer",
+      "bg_alphysclass"
+    ],
+    "ch3.kris_room.krisroom": [
+      "bg/ch3_kris_room_krisroom.png",
+      "room.bg_layer",
+      "bg_myroom"
+    ],
+    "ch3.light_world.lw_computer_lab": [
+      "bg/ch3_light_world_lw_computer_lab.png",
+      "room.bg_layer",
+      "bg_lw_computer_lab"
+    ],
+    "ch3.light_world.lw_library_upstairs": [
+      "bg/ch3_light_world_lw_library_upstairs.png",
+      "room.bg_layer",
+      "bg_lw_library_upstairs"
+    ],
+    "ch3.light_world.lw_police": [
+      "bg/ch3_light_world_lw_police.png",
+      "room.bg_layer",
+      "bg_lw_police_house_base"
+    ],
+    "ch3.light_world.lw_conbini": [
+      "bg/ch3_light_world_lw_conbini.png",
+      "room.bg_layer",
+      "bg_lw_sans_conbini"
+    ],
+    "ch3.light_world.lw_icee_pizza": [
+      "bg/ch3_light_world_lw_icee_pizza.png",
+      "room.bg_layer",
+      "bg_lw_ice_e_pizza"
+    ],
+    "ch3.my_castle_town.dw_castle_west_cliff": [
+      "bg/ch3_my_castle_town_dw_castle_west_cliff.png",
+      "room.bg_layer",
+      "bg_darkwest_fixed"
+    ],
+    "ch3.my_castle_town.dw_castle_restaurant": [
+      "bg/ch3_my_castle_town_dw_castle_restaurant.png",
+      "room.bg_layer",
+      "bg_dw_bakery_counter"
+    ],
+    "ch3.my_castle_town.dw_castle_cafe": [
+      "bg/ch3_my_castle_town_dw_castle_cafe.png",
+      "room.bg_layer",
+      "bg_dw_castle_cafe_in"
+    ],
+    "ch3.my_castle_town.dw_castle_rooms_kris": [
+      "bg/ch3_my_castle_town_dw_castle_rooms_kris.png",
+      "room.bg_layer",
+      "bg_dw_kris_room"
+    ],
+    "ch3.my_castle_town.dw_castle_rooms_susie": [
+      "bg/ch3_my_castle_town_dw_castle_rooms_susie.png",
+      "room.bg_layer",
+      "bg_dw_susie_room_1"
+    ],
+    "ch3.ralsei_room.dw_ralsei_castle_front": [
+      "bg/ch3_ralsei_room_dw_ralsei_castle_front.png",
+      "room.bg_layer",
+      "bg_darkcastle_front"
+    ],
+    "ch3.tv_backstage.shootout": [
+      "bg/ch3_tv_backstage_shootout.png",
+      "room.bg_layer",
+      "spr_desert_loop_foreground"
+    ],
+    "ch3.tv_backstage.dw_console_room": [
+      "bg/ch3_tv_backstage_dw_console_room.png",
+      "room.bg_layer",
+      "bg_console_room"
+    ],
+    "ch4.kris_room.kris_s_room": [
+      "bg/ch4_kris_room_kris_s_room.png",
+      "room.bg_layer",
+      "bg_myroom"
+    ],
+    "ch4.hometown.beach": [
+      "bg/ch4_hometown_beach.png",
+      "room.bg_layer",
+      "bg_beach"
+    ],
+    "ch4.hometown.hospital_lobby": [
+      "bg/ch4_hometown_hospital_lobby.png",
+      "room.bg_layer",
+      "bg_hospital_lobby"
+    ],
+    "ch4.hometown.hospital_hallway": [
+      "bg/ch4_hometown_hospital_hallway.png",
+      "room.bg_layer",
+      "bg_hospital_lobby2"
+    ],
+    "ch4.hometown.hospital_rudy": [
+      "bg/ch4_hometown_hospital_rudy.png",
+      "room.bg_layer",
+      "bg_hospital_rudyroom_ch4"
+    ],
+    "ch4.hometown.hospital_room2": [
+      "bg/ch4_hometown_hospital_room2.png",
+      "room.bg_layer",
+      "bg_hospital_room2_ch4"
+    ],
+    "ch4.hometown.diner": [
+      "bg/ch4_hometown_diner.png",
+      "room.bg_layer",
+      "bg_diner"
+    ],
+    "ch4.hometown.townhall": [
+      "bg/ch4_hometown_townhall.png",
+      "room.bg_layer",
+      "bg_townhall"
+    ],
+    "ch4.hometown.flowershop_1f": [
+      "bg/ch4_hometown_flowershop_1f.png",
+      "room.bg_layer",
+      "bg_flowershop_f1"
+    ],
+    "ch4.hometown.flowershop_2f": [
+      "bg/ch4_hometown_flowershop_2f.png",
+      "room.bg_layer",
+      "bg_flowershop_f2"
+    ],
+    "ch4.hometown.library": [
+      "bg/ch4_hometown_library.png",
+      "room.bg_layer",
+      "bg_library"
+    ],
+    "ch4.hometown.alphysalley": [
+      "bg/ch4_hometown_alphysalley.png",
+      "room.bg_layer",
+      "bg_alphysalley_ch4"
+    ],
+    "ch4.hometown.torielclass": [
+      "bg/ch4_hometown_torielclass.png",
+      "room.bg_layer",
+      "bg_torielclass_ch2"
+    ],
+    "ch4.hometown.alphysclass": [
+      "bg/ch4_hometown_alphysclass.png",
+      "room.bg_layer",
+      "bg_alphysclass"
+    ],
+    "ch4.my_castle_town.dw_castle_west_cliff": [
+      "bg/ch4_my_castle_town_dw_castle_west_cliff.png",
+      "room.bg_layer",
+      "bg_darkwest_fixed"
+    ],
+    "ch4.my_castle_town.dw_castle_restaurant": [
+      "bg/ch4_my_castle_town_dw_castle_restaurant.png",
+      "room.bg_layer",
+      "bg_dw_bakery_counter"
+    ],
+    "ch4.my_castle_town.dw_castle_cafe": [
+      "bg/ch4_my_castle_town_dw_castle_cafe.png",
+      "room.bg_layer",
+      "bg_dw_castle_cafe"
+    ],
+    "ch4.my_castle_town.dw_castle_rooms_kris": [
+      "bg/ch4_my_castle_town_dw_castle_rooms_kris.png",
+      "room.bg_layer",
+      "bg_dw_kris_room"
+    ],
+    "ch4.my_castle_town.dw_castle_rooms_susie": [
+      "bg/ch4_my_castle_town_dw_castle_rooms_susie.png",
+      "room.bg_layer",
+      "bg_dw_susie_room"
+    ],
+    "ch4.my_castle_town.dw_castle_rooms_ralsei": [
+      "bg/ch4_my_castle_town_dw_castle_rooms_ralsei.png",
+      "room.bg_layer",
+      "bg_dw_ralsei_room"
+    ],
+    "ch4.my_castle_town.dw_castle_rooms_queen": [
+      "bg/ch4_my_castle_town_dw_castle_rooms_queen.png",
+      "room.bg_layer",
+      "bg_dw_castle_queen_room"
+    ],
+    "ch4.my_castle_town.dw_castle_rooms_kris_susie": [
+      "bg/ch4_my_castle_town_dw_castle_rooms_kris_susie.png",
+      "room.bg_layer",
+      "bg_dw_kris_susie_room"
+    ],
+    "ch4.dark_sanctuary.dark_sanctuary_1_study": [
+      "bg/ch4_dark_sanctuary_dark_sanctuary_1_study.png",
+      "room.bg_layer",
+      "bg_dw_gerson_base"
+    ],
+    "ch4.home.krishallway": [
+      "bg/ch4_home_krishallway.png",
+      "room.bg_layer",
+      "bg_myhallway"
+    ],
+    "ch4.home.torhouse": [
+      "bg/ch4_home_torhouse.png",
+      "room.bg_layer",
+      "bg_torhouse_bg"
+    ],
+    "ch4.home.torbathroom": [
+      "bg/ch4_home_torbathroom.png",
+      "room.bg_layer",
+      "spr_bg_torbathroom"
+    ],
+    "ch4.home.krisroom_dark": [
+      "bg/ch4_home_krisroom_dark.png",
+      "room.bg_layer",
+      "bg_myroom_dark"
+    ],
+    "ch4.light_world.lw_computer_lab": [
+      "bg/ch4_light_world_lw_computer_lab.png",
+      "room.bg_layer",
+      "bg_lw_computer_lab"
+    ],
+    "ch4.light_world.lw_library_upstairs": [
+      "bg/ch4_light_world_lw_library_upstairs.png",
+      "room.bg_layer",
+      "bg_lw_library_upstairs"
+    ],
+    "ch4.light_world.lw_police": [
+      "bg/ch4_light_world_lw_police.png",
+      "room.bg_layer",
+      "bg_lw_police_house_base"
+    ],
+    "ch4.light_world.lw_conbini": [
+      "bg/ch4_light_world_lw_conbini.png",
+      "room.bg_layer",
+      "bg_lw_sans_conbini"
+    ],
+    "ch4.light_world.lw_icee_pizza": [
+      "bg/ch4_light_world_lw_icee_pizza.png",
+      "room.bg_layer",
+      "bg_lw_ice_e_pizza"
+    ],
+    "ch4.light_world.lw_church_entrance": [
+      "bg/ch4_light_world_lw_church_entrance.png",
+      "room.bg_layer",
+      "bg_church_entrance"
+    ],
+    "ch4.light_world.lw_church_office": [
+      "bg/ch4_light_world_lw_church_office.png",
+      "room.bg_layer",
+      "bg_church_office"
+    ],
+    "ch4.light_world.lw_church_choir": [
+      "bg/ch4_light_world_lw_church_choir.png",
+      "room.bg_layer",
+      "bg_church_choir"
+    ],
+    "ch4.ralsei_room.dw_ralsei_castle_front": [
+      "bg/ch4_ralsei_room_dw_ralsei_castle_front.png",
+      "room.bg_layer",
+      "bg_darkcastle_front"
+    ],
+    "ch5.kris_room.kris_s_room": [
+      "bg/ch5_kris_room_kris_s_room.png",
+      "room.bg_layer",
+      "bg_myroom"
+    ],
+    "ch5.hometown.hospital_lobby": [
+      "bg/ch5_hometown_hospital_lobby.png",
+      "room.bg_layer",
+      "bg_hospital_lobby"
+    ],
+    "ch5.hometown.hospital_hallway": [
+      "bg/ch5_hometown_hospital_hallway.png",
+      "room.bg_layer",
+      "bg_hospital_lobby2"
+    ],
+    "ch5.hometown.hospital_rudy": [
+      "bg/ch5_hometown_hospital_rudy.png",
+      "room.bg_layer",
+      "bg_hospital_rudyroom_ch2"
+    ],
+    "ch5.hometown.hospital_room2": [
+      "bg/ch5_hometown_hospital_room2.png",
+      "room.bg_layer",
+      "bg_hospital_room2_ch2"
+    ],
+    "ch5.hometown.diner": [
+      "bg/ch5_hometown_diner.png",
+      "room.bg_layer",
+      "bg_diner"
+    ],
+    "ch5.hometown.townhall": [
+      "bg/ch5_hometown_townhall.png",
+      "room.bg_layer",
+      "bg_townhall"
+    ],
+    "ch5.hometown.flowershop_1f": [
+      "bg/ch5_hometown_flowershop_1f.png",
+      "room.bg_layer",
+      "bg_flowershop_f1"
+    ],
+    "ch5.hometown.flowershop_2f": [
+      "bg/ch5_hometown_flowershop_2f.png",
+      "room.bg_layer",
+      "bg_flowershop_ch5"
+    ],
+    "ch5.hometown.library": [
+      "bg/ch5_hometown_library.png",
+      "room.bg_layer",
+      "bg_library"
+    ],
+    "ch5.hometown.alphysalley": [
+      "bg/ch5_hometown_alphysalley.png",
+      "room.bg_layer",
+      "bg_alphysalley"
+    ],
+    "ch5.hometown.torielclass": [
+      "bg/ch5_hometown_torielclass.png",
+      "room.bg_layer",
+      "bg_torielclass_ch2"
+    ],
+    "ch5.hometown.alphysclass": [
+      "bg/ch5_hometown_alphysclass.png",
+      "room.bg_layer",
+      "bg_alphysclass"
+    ],
+    "ch5.my_castle_town.dw_castle_west_cliff": [
+      "bg/ch5_my_castle_town_dw_castle_west_cliff.png",
+      "room.bg_layer",
+      "bg_darkwest_fixed"
+    ],
+    "ch5.my_castle_town.dw_castle_restaurant": [
+      "bg/ch5_my_castle_town_dw_castle_restaurant.png",
+      "room.bg_layer",
+      "bg_dw_bakery_counter"
+    ],
+    "ch5.my_castle_town.dw_castle_cafe": [
+      "bg/ch5_my_castle_town_dw_castle_cafe.png",
+      "room.bg_layer",
+      "bg_dw_castle_cafe"
+    ],
+    "ch5.my_castle_town.dw_castle_rooms_kris": [
+      "bg/ch5_my_castle_town_dw_castle_rooms_kris.png",
+      "room.bg_layer",
+      "bg_dw_kris_room"
+    ],
+    "ch5.my_castle_town.dw_castle_rooms_susie": [
+      "bg/ch5_my_castle_town_dw_castle_rooms_susie.png",
+      "room.bg_layer",
+      "bg_dw_susie_room_ch5"
+    ],
+    "ch5.my_castle_town.dw_castle_rooms_ralsei": [
+      "bg/ch5_my_castle_town_dw_castle_rooms_ralsei.png",
+      "room.bg_layer",
+      "bg_dw_ralsei_room"
+    ],
+    "ch5.home.krishallway": [
+      "bg/ch5_home_krishallway.png",
+      "room.bg_layer",
+      "bg_myhallway"
+    ],
+    "ch5.home.torhouse": [
+      "bg/ch5_home_torhouse.png",
+      "room.bg_layer",
+      "bg_torhouse_bg"
+    ],
+    "ch5.home.torbathroom": [
+      "bg/ch5_home_torbathroom.png",
+      "room.bg_layer",
+      "spr_bg_torbathroom"
+    ],
+    "ch5.light_world.lw_library_upstairs": [
+      "bg/ch5_light_world_lw_library_upstairs.png",
+      "room.bg_layer",
+      "bg_lw_library_upstairs"
+    ],
+    "ch5.light_world.lw_police": [
+      "bg/ch5_light_world_lw_police.png",
+      "room.bg_layer",
+      "bg_lw_police_house_base"
+    ],
+    "ch5.light_world.lw_icee_pizza": [
+      "bg/ch5_light_world_lw_icee_pizza.png",
+      "room.bg_layer",
+      "bg_lw_ice_e_pizza"
+    ],
+    "ch5.light_world.lw_church_entrance": [
+      "bg/ch5_light_world_lw_church_entrance.png",
+      "room.bg_layer",
+      "bg_church_entrance"
+    ],
+    "ch5.ralsei_room.dw_ralsei_castle_front": [
+      "bg/ch5_ralsei_room_dw_ralsei_castle_front.png",
+      "room.bg_layer",
+      "bg_darkcastle_front"
+    ],
+    "ch1.unknown.unknown": [
+      "bg/ch1_unknown_unknown.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.eye_puzzle.eye_puzzle": [
+      "bg/ch1_eye_puzzle_eye_puzzle.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.field.field_great_door": [
+      "bg/ch1_field_field_great_door.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.field.field_maze_of_death": [
+      "bg/ch1_field_field_maze_of_death.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.field.field_seams_shop": [
+      "bg/ch1_field_field_seams_shop.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.field.field_great_board": [
+      "bg/ch1_field_field_great_board.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.field.field_great_board_2": [
+      "bg/ch1_field_field_great_board_2.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch1.forest.forest_entrance": [
+      "bg/ch1_forest_forest_entrance.png",
+      "area_table",
+      "bg_darkforest_tiles"
+    ],
+    "ch1.forest.forest_bake_sale": [
+      "bg/ch1_forest_forest_bake_sale.png",
+      "area_table",
+      "bg_darkforest_tiles"
+    ],
+    "ch1.forest.forest_before_maze": [
+      "bg/ch1_forest_forest_before_maze.png",
+      "area_table",
+      "bg_darkforest_tiles"
+    ],
+    "ch1.forest.forest_after_maze": [
+      "bg/ch1_forest_forest_after_maze.png",
+      "area_table",
+      "bg_darkforest_tiles"
+    ],
+    "ch1.forest.forest_thrashing_room": [
+      "bg/ch1_forest_forest_thrashing_room.png",
+      "area_table",
+      "bg_darkforest_tiles"
+    ],
+    "ch1.card_castle.card_castle_prison": [
+      "bg/ch1_card_castle_card_castle_prison.png",
+      "area_table",
+      "bg_cctiles"
+    ],
+    "ch1.card_castle.card_castle_unknown": [
+      "bg/ch1_card_castle_card_castle_unknown.png",
+      "area_table",
+      "bg_cctiles"
+    ],
+    "ch1.card_castle.card_castle_1f": [
+      "bg/ch1_card_castle_card_castle_1f.png",
+      "area_table",
+      "bg_cctiles"
+    ],
+    "ch1.card_castle.card_castle_5f": [
+      "bg/ch1_card_castle_card_castle_5f.png",
+      "area_table",
+      "bg_cctiles"
+    ],
+    "ch2.my_castle_town.my_castle_town": [
+      "bg/ch2_my_castle_town_my_castle_town.png",
+      "area_table",
+      "bg_darktown"
+    ],
+    "ch2.cyber_field.cyber_field_entrance": [
+      "bg/ch2_cyber_field_cyber_field_entrance.png",
+      "area_table",
+      "bg_dw_cyber_battle_tiles"
+    ],
+    "ch2.cyber_field.cyber_field_arcade": [
+      "bg/ch2_cyber_field_cyber_field_arcade.png",
+      "area_table",
+      "bg_dw_cyber_battle_tiles"
+    ],
+    "ch2.cyber_field.cyber_field_music_shop": [
+      "bg/ch2_cyber_field_cyber_field_music_shop.png",
+      "area_table",
+      "bg_dw_cyber_battle_tiles"
+    ],
+    "ch2.cyber_city.cyber_city_entrance": [
+      "bg/ch2_cyber_city_cyber_city_entrance.png",
+      "area_table",
+      "bg_dw_city_alleyway_street_tiles"
+    ],
+    "ch2.cyber_city.cyber_city_alleyway_1": [
+      "bg/ch2_cyber_city_cyber_city_alleyway_1.png",
+      "area_table",
+      "bg_dw_city_alleyway_street_tiles"
+    ],
+    "ch2.cyber_city.cyber_city_music_shop": [
+      "bg/ch2_cyber_city_cyber_city_music_shop.png",
+      "area_table",
+      "bg_dw_city_alleyway_street_tiles"
+    ],
+    "ch2.cyber_city.cyber_city_mouse_alley": [
+      "bg/ch2_cyber_city_cyber_city_mouse_alley.png",
+      "area_table",
+      "bg_dw_city_alleyway_street_tiles"
+    ],
+    "ch2.cyber_city.cyber_city_alleyway_2": [
+      "bg/ch2_cyber_city_cyber_city_alleyway_2.png",
+      "area_table",
+      "bg_dw_city_alleyway_street_tiles"
+    ],
+    "ch2.cyber_city.cyber_city_heights": [
+      "bg/ch2_cyber_city_cyber_city_heights.png",
+      "area_table",
+      "bg_dw_city_alleyway_street_tiles"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_guest_hall": [
+      "bg/ch2_queens_mansion_queen_s_mansion_guest_hall.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_entrance": [
+      "bg/ch2_queens_mansion_queen_s_mansion_entrance.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_basement": [
+      "bg/ch2_queens_mansion_queen_s_mansion_basement.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_3f": [
+      "bg/ch2_queens_mansion_queen_s_mansion_3f.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_acid_tunnel": [
+      "bg/ch2_queens_mansion_queen_s_mansion_acid_tunnel.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_4f": [
+      "bg/ch2_queens_mansion_queen_s_mansion_4f.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_rooftop": [
+      "bg/ch2_queens_mansion_queen_s_mansion_rooftop.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch2.queens_mansion.queen_s_mansion_rooftop_2": [
+      "bg/ch2_queens_mansion_queen_s_mansion_rooftop_2.png",
+      "area_table",
+      "bg_dw_mansion_acid_animated_tiles_old"
+    ],
+    "ch3.dark_world.dark_world": [
+      "bg/ch3_dark_world_dark_world.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch3.cold_place.cold_place": [
+      "bg/ch3_cold_place_cold_place.png",
+      "area_table",
+      "bg_dw_tvland_backstage_tiles_old"
+    ],
+    "ch3.green_room.green_room": [
+      "bg/ch3_green_room_green_room.png",
+      "area_table",
+      "bg_dw_tvland_backstage_tiles_old"
+    ],
+    "ch3.tv_world.tv_world_goulden_sam": [
+      "bg/ch3_tv_world_tv_world_goulden_sam.png",
+      "area_table",
+      "bg_dw_tvland_stage_tiles_old"
+    ],
+    "ch3.tv_world.tv_world_before_show": [
+      "bg/ch3_tv_world_tv_world_before_show.png",
+      "area_table",
+      "bg_dw_tvland_stage_tiles_old"
+    ],
+    "ch3.tv_world.tv_world_entrance": [
+      "bg/ch3_tv_world_tv_world_entrance.png",
+      "area_table",
+      "bg_dw_tvland_stage_tiles_old"
+    ],
+    "ch3.tv_world.tv_world_concert": [
+      "bg/ch3_tv_world_tv_world_concert.png",
+      "area_table",
+      "bg_dw_tvland_stage_tiles_old"
+    ],
+    "ch3.tv_world.tv_world_cooking_show": [
+      "bg/ch3_tv_world_tv_world_cooking_show.png",
+      "area_table",
+      "bg_dw_tvland_stage_tiles_old"
+    ],
+    "ch4.hometown.hometown": [
+      "bg/ch4_hometown_hometown.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch4.noelles_house.noelle_s_house": [
+      "bg/ch4_noelles_house_noelle_s_house.png",
+      "area_table",
+      "bg_noellehouse_main"
+    ],
+    "ch4.my_castle_town.my_castle_town": [
+      "bg/ch4_my_castle_town_my_castle_town.png",
+      "area_table",
+      "bg_darktown"
+    ],
+    "ch4.dark_sanctuary.dark_sanctuary_1_atrium": [
+      "bg/ch4_dark_sanctuary_dark_sanctuary_1_atrium.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch4.dark_sanctuary.dark_sanctuary_1_lower_left": [
+      "bg/ch4_dark_sanctuary_dark_sanctuary_1_lower_left.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch4.dark_sanctuary.dark_sanctuary_1_small_piano": [
+      "bg/ch4_dark_sanctuary_dark_sanctuary_1_small_piano.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch4.dark_sanctuary.dark_sanctuary_1_library": [
+      "bg/ch4_dark_sanctuary_dark_sanctuary_1_library.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch4.dark_sanctuary.dark_sanctuary_1_lower_right": [
+      "bg/ch4_dark_sanctuary_dark_sanctuary_1_lower_right.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch4.second_sanctuary.sanctuary_2_atrium": [
+      "bg/ch4_second_sanctuary_sanctuary_2_atrium.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.second_sanctuary.sanctuary_2_floor": [
+      "bg/ch4_second_sanctuary_sanctuary_2_floor.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.second_sanctuary.sanctuary_2_study": [
+      "bg/ch4_second_sanctuary_sanctuary_2_study.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.second_sanctuary.sanctuary_2_study_2": [
+      "bg/ch4_second_sanctuary_sanctuary_2_study_2.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.third_sanctuary.sanctuary_3": [
+      "bg/ch4_third_sanctuary_sanctuary_3.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.third_sanctuary.sanctuary_3_stairs": [
+      "bg/ch4_third_sanctuary_sanctuary_3_stairs.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.third_sanctuary.sanctuary_3_last_chamber": [
+      "bg/ch4_third_sanctuary_sanctuary_3_last_chamber.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch4.castle_town.castle_town_tv_building": [
+      "bg/ch4_castle_town_castle_town_tv_building.png",
+      "area_table",
+      "bg_darktown"
+    ],
+    "ch4.mike_zone.mike_zone": [
+      "bg/ch4_mike_zone_mike_zone.png",
+      "area_table",
+      "bg_darkfield_tiles"
+    ],
+    "ch5.hometown.hometown": [
+      "bg/ch5_hometown_hometown.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.my_castle_town.my_castle_town": [
+      "bg/ch5_my_castle_town_my_castle_town.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.castle_town.castle_town_tv_building": [
+      "bg/ch5_castle_town_castle_town_tv_building.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.dark_world.dark_world": [
+      "bg/ch5_dark_world_dark_world.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch5.garden.garden_beginning": [
+      "bg/ch5_garden_garden_beginning.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.garden.garden_flowery_helped": [
+      "bg/ch5_garden_garden_flowery_helped.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.garden.garden_ideal_diner": [
+      "bg/ch5_garden_garden_ideal_diner.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.garden.garden_shrine": [
+      "bg/ch5_garden_garden_shrine.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.garden.garden_way_home": [
+      "bg/ch5_garden_garden_way_home.png",
+      "area_table",
+      "bg_towntiles"
+    ],
+    "ch5.cliffs.cliffs_beginning": [
+      "bg/ch5_cliffs_cliffs_beginning.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch5.cliffs.cliffs_shop": [
+      "bg/ch5_cliffs_cliffs_shop.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch5.cliffs.cliffs_below_castle": [
+      "bg/ch5_cliffs_cliffs_below_castle.png",
+      "area_table",
+      "bg_darktiles1"
+    ],
+    "ch5.flower_castle.flower_castle_cafe": [
+      "bg/ch5_flower_castle_flower_castle_cafe.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ],
+    "ch5.flower_castle.flower_castle_jail": [
+      "bg/ch5_flower_castle_flower_castle_jail.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ],
+    "ch5.flower_castle.flower_castle_left_doors": [
+      "bg/ch5_flower_castle_flower_castle_left_doors.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ],
+    "ch5.flower_castle.flower_castle_left_stage": [
+      "bg/ch5_flower_castle_flower_castle_left_stage.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ],
+    "ch5.flower_castle.flower_castle_left_end": [
+      "bg/ch5_flower_castle_flower_castle_left_end.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ],
+    "ch5.flower_castle.flower_castle_right_diner": [
+      "bg/ch5_flower_castle_flower_castle_right_diner.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ],
+    "ch5.flower_castle.flower_castle_right_end": [
+      "bg/ch5_flower_castle_flower_castle_right_end.png",
+      "area_table",
+      "bg_fcastle_flower_tower_lattice_tiles_split"
+    ]
+  },
+  "stats": {
+    "zone_changed": 148,
+    "anchor_wired": 87,
+    "anchor_comment_fixed": 87,
+    "zone_files": [
+      [
+        "_zone.ch1.card_castle.json",
+        2
+      ],
+      [
+        "_zone.ch1.castle_town.json",
+        1
+      ],
+      [
+        "_zone.ch1.dark_world.json",
+        2
+      ],
+      [
+        "_zone.ch1.forest.json",
+        1
+      ],
+      [
+        "_zone.ch1.home.json",
+        3
+      ],
+      [
+        "_zone.ch1.hometown.json",
+        12
+      ],
+      [
+        "_zone.ch2.cyber_city.json",
+        1
+      ],
+      [
+        "_zone.ch2.home.json",
+        3
+      ],
+      [
+        "_zone.ch2.hometown.json",
+        13
+      ],
+      [
+        "_zone.ch2.light_world.json",
+        5
+      ],
+      [
+        "_zone.ch2.my_castle_town.json",
+        5
+      ],
+      [
+        "_zone.ch2.queens_mansion.json",
+        9
+      ],
+      [
+        "_zone.ch2.ralsei_room.json",
+        1
+      ],
+      [
+        "_zone.ch3.home.json",
+        3
+      ],
+      [
+        "_zone.ch3.hometown.json",
+        13
+      ],
+      [
+        "_zone.ch3.kris_room.json",
+        1
+      ],
+      [
+        "_zone.ch3.light_world.json",
+        5
+      ],
+      [
+        "_zone.ch3.my_castle_town.json",
+        5
+      ],
+      [
+        "_zone.ch3.ralsei_room.json",
+        1
+      ],
+      [
+        "_zone.ch3.tv_backstage.json",
+        2
+      ],
+      [
+        "_zone.ch4.home.json",
+        4
+      ],
+      [
+        "_zone.ch4.hometown.json",
+        13
+      ],
+      [
+        "_zone.ch4.light_world.json",
+        8
+      ],
+      [
+        "_zone.ch4.my_castle_town.json",
+        8
+      ],
+      [
+        "_zone.ch4.ralsei_room.json",
+        1
+      ],
+      [
+        "_zone.ch5.home.json",
+        3
+      ],
+      [
+        "_zone.ch5.hometown.json",
+        12
+      ],
+      [
+        "_zone.ch5.light_world.json",
+        4
+      ],
+      [
+        "_zone.ch5.my_castle_town.json",
+        6
+      ],
+      [
+        "_zone.ch5.ralsei_room.json",
+        1
+      ]
+    ]
+  }
+}

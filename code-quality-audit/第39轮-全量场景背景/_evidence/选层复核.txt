@@ -1,0 +1,59 @@
+==============================================================================
+A. 真背景房间里"有几个 bg_sprite 层"
+==============================================================================
+   真背景场景 157 个；其中房间有 >1 个 bg 层的 = 20
+   ch1.dark_world.dark_chase1                   层数=2 取到=bg_darkstone_1
+        bg_darkstone_1                     面积=   131396  ← 本次取此
+        bg_darkstone_2                     面积=    33264  
+   ch1.dark_world.dark_chase2                   层数=2 取到=bg_darkstone_1
+        bg_darkstone_1                     面积=   131396  ← 本次取此
+        bg_darkstone_2                     面积=    33264  
+   ch1.hometown.flowershop_2f                   层数=2 取到=bg_flowershop_f2
+        bg_flowershop_f2                   面积=    76800  ← 本次取此
+        bg_flowershop_f1                   面积=    76800  
+   ch1.hometown.torielclass                     层数=2 取到=bg_lang_ja_torielclass
+        bg_lang_ja_torielclass             面积=    76800  ← 本次取此
+        bg_torielclass                     面积=    76800  
+   ch2.my_castle_town.dw_castle_restaurant      层数=2 取到=bg_dw_bakery_counter
+        bg_dw_bakery_counter               面积=   307200  ← 本次取此
+        bg_dw_bakery                       面积=   307200  
+   ch2.cyber_city.dw_city_traffic_4             层数=3 取到=spr_city_bridge_lining
+        spr_city_road_girder_tile          面积=    76800  
+        spr_city_road_railing_tile         面积=    76800  
+        spr_city_bridge_lining             面积=   230400  ← 本次取此
+   ch2.queens_mansion.dw_mansion_top            层数=2 取到=spr_cutscene_26_rocks_bg
+        spr_cutscene_26_rocks_bg           面积=   307200  ← 本次取此
+        spr_cutscene_26_rocks_bg_2         面积=    76800  
+   ch2.queens_mansion.dw_mansion_top_post       层数=2 取到=spr_cutscene_26_rocks_bg
+        spr_cutscene_26_rocks_bg           面积=   307200  ← 本次取此
+        spr_cutscene_26_rocks_bg_2         面积=    76800  
+   ch2.queens_mansion.dw_mansion_ferris_wheel_post 层数=2 取到=bg_dw_noelle_ferris_wheel_left
+        bg_dw_noelle_ferris_wheel_left     面积=   161280  ← 本次取此
+        spr_mansion_ferris_wheel_bg        面积=   205440  
+   ch2.queens_mansion.dw_mansion_noelle_room    层数=3 取到=bg_dw_noelle_ferris_wheel
+        bg_dw_noelle_ferris_wheel          面积=   761280  ← 本次取此
+        bg_dw_noelle_room                  面积=   761280  
+        bg_dw_noelle_room_moon             面积=   761280  
+   ch2.hometown.flowershop_2f                   层数=2 取到=bg_flowershop_f2
+        bg_flowershop_f2                   面积=    76800  ← 本次取此
+        bg_flowershop_f1                   面积=    76800  
+   ch3.hometown.flowershop_2f                   层数=2 取到=bg_flowershop_f2
+        bg_flowershop_f2                   面积=    76800  ← 本次取此
+        bg_flowershop_f1                   面积=    76800  
+
+==============================================================================
+B. 本次取到的层 vs 该房间最大 bg 层：取小了的有多少
+==============================================================================
+   取到的不是最大层 的场景 = 1 / 157
+   0.79  ch2.queens_mansion.dw_mansion_ferris_wheel_post 取 bg_dw_noelle_ferris_wheel_left(161280) 最大 ['spr_mansion_ferris_wheel_bg']
+
+==============================================================================
+C. 取到的层宽 / 房间宽 < 0.5 的（疑似"大号装饰"而非整幅背景）
+==============================================================================
+   共 6 个：
+   ch1.dark_world.dark_chase1                   素材 614x214 房间 5400x1000 素材名 bg_darkstone_1
+   ch2.cyber_city.dw_city_traffic_4             素材 480x480 房间 4600x480 素材名 spr_city_bridge_lining
+   ch2.queens_mansion.dw_mansion_b_east         素材 1280x480 房间 2720x960 素材名 spr_dw_mansion_basement_loop
+   ch2.queens_mansion.dw_mansion_top            素材 640x480 房间 2560x480 素材名 spr_cutscene_26_rocks_bg
+   ch2.queens_mansion.dw_mansion_top_post       素材 640x480 房间 2560x480 素材名 spr_cutscene_26_rocks_bg
+   ch2.queens_mansion.dw_mansion_top_post_old   素材 428x480 房间 2560x480 素材名 spr_mansion_ferris_wheel_bg
