@@ -1,0 +1,59 @@
+==============================================================================
+[数据] 原作房 + 产品索引 + 产品路由
+  原作房 = 1251
+  产品场景 = 1014 ；有 room_id = 1013
+  产品路由规则 = 443
+
+[A] 锚点自检：用 gen_routes44 同一机制重算原作 A/B/C 边
+  原作重算边 = 443 ；产品边 = 443
+  交集 = 443 ；仅原作 = 0 ；仅产品 = 0
+  门型普查：字母门=507 验证通过=455 （源未登记=1 目标房不存在=0 无同字母落点=46 目标未登记=5）
+  [ANCHOR PASS] 产品边 ⊂ 原作重算边 —— 探针与生成机制等价，可用。
+
+[B] 断链归因：to 无出边的场景，回原作查是否有 A/B/C 门
+  断链场景数 = 29
+  scene_id                                   原作房       有字母门   该房字母门明细
+  ch1.card_castle.card_castle_unknown        ch1:111   0      -
+  ch1.card_castle.cc_clover                  ch1:122   0      -
+  ch1.dark_world.dark_chase2                 ch1:43    0      -
+  ch1.forest.forest_castlefront              ch1:104   0      -
+  ch1.forest.forest_maze1                    ch1:91    0      -
+  ch1.hometown.alphysclass                   ch1:30    0      -
+  ch1.hometown.hospital_room2                ch1:21    0      -
+  ch1.hometown.schooldoor                    ch1:31    1      ['C']
+  ch1.hometown.town_shelter                  ch1:17    0      -
+  ch2.cyber_city.dw_city_mice2_og            ch2:253   0      -
+  ch2.cyber_city.dw_city_spamton_shop_exterior ch2:108   1      ['A']
+  ch2.hometown.alphysclass                   ch2:51    0      -
+  ch2.hometown.hospital_room2                ch2:37    0      -
+  ch2.hometown.schooldoor                    ch2:52    1      ['C']
+  ch2.hometown.town_shelter                  ch2:33    0      -
+  ch2.my_castle_town.dw_castle_area_1        ch2:60    0      -
+  ch3.hometown.alphysclass                   ch3:48    0      -
+  ch3.hometown.hospital_room2                ch3:34    0      -
+  ch3.hometown.schooldoor                    ch3:49    1      ['C']
+  ch3.hometown.town_shelter                  ch3:30    0      -
+  ch4.hometown.alphysclass                   ch4:57    0      -
+  ch4.hometown.hospital_room2                ch4:34    0      -
+  ch4.hometown.hospital_rudy                 ch4:33    2      ['B', 'B']
+  ch4.hometown.schooldoor                    ch4:58    1      ['C']
+  ch5.hometown.alphysclass                   ch5:46    0      -
+  ch5.hometown.hospital_room2                ch5:32    0      -
+  ch5.hometown.schooldoor                    ch5:47    1      ['C']
+  ch5.hometown.town_shelter                  ch5:28    0      -
+  ch5.kris_room.kris_s_room                  ch5:13    0      -
+
+  ---- 归因结果：真缺口 = 7 ；原作死胡同（正常）= 22
+  真缺口清单: ['ch1.hometown.schooldoor', 'ch2.cyber_city.dw_city_spamton_shop_exterior', 'ch2.hometown.schooldoor', 'ch3.hometown.schooldoor', 'ch4.hometown.hospital_rudy', 'ch4.hometown.schooldoor', 'ch5.hometown.schooldoor']
+  正常死胡同: ['ch1.card_castle.card_castle_unknown', 'ch1.card_castle.cc_clover', 'ch1.dark_world.dark_chase2', 'ch1.forest.forest_castlefront', 'ch1.forest.forest_maze1', 'ch1.hometown.alphysclass', 'ch1.hometown.hospital_room2', 'ch1.hometown.town_shelter', 'ch2.cyber_city.dw_city_mice2_og', 'ch2.hometown.alphysclass', 'ch2.hometown.hospital_room2', 'ch2.hometown.town_shelter', 'ch2.my_castle_town.dw_castle_area_1', 'ch3.hometown.alphysclass', 'ch3.hometown.hospital_room2', 'ch3.hometown.town_shelter', 'ch4.hometown.alphysclass', 'ch4.hometown.hospital_room2', 'ch5.hometown.alphysclass', 'ch5.hometown.hospital_room2', 'ch5.hometown.town_shelter', 'ch5.kris_room.kris_s_room']
+
+[C] 完备性：原作有 A/B/C 门、且源/目标都已登记的场景，产品是否都编了边
+  原作有边但产品缺 = 0
+
+[D] 连接顺序：同一起点场景内，出边是否按门字母 A<B<C 稳定排布
+  多出边场景 = 125 / 297（单出边 172）
+  字母序不递增的场景 = 0 []
+  priority 全局声明序单调不减 = True（）
+  priority 回绕点（下降次数）= 0 ；说明 order 超过 240 后取模回绕
+
+[done]

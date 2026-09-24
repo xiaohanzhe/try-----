@@ -50,7 +50,9 @@ P1 加渲染层时，那些方法一定需要读宿主的 `sprite_label` / `curr
 * 日志用标准库 `logging`；
 * 宿主的能力（sprite / floor / dialogue 等）一律经 `self.p` 动态取用，不 import。
 """
+import json
 import logging
+import os
 
 from scene_system import (  # noqa: F401  (同目录扁平导入，见 main.py 的 sys.path 处理)
     SCENE_SCHEMA_VERSION,
@@ -67,6 +69,8 @@ from scene_system import (  # noqa: F401  (同目录扁平导入，见 main.py �
     visible_objects,
 )
 import scene_routing  # 同为纯标准库模块，接环风险为零（见 scene_routing 的零依赖纪律）
+import scene_camera   # 同上：纯标准库，无反向依赖（第44轮相机）
+import scene_render   # 同上：纯标准库（第44轮渲染层 —— 只出"绘制指令"，不画）
 
 _log = logging.getLogger(__name__)
 
@@ -226,6 +230,156 @@ class SceneController(object):
         except Exception as e:
             _log.warning("场景系统加载失败（降级为空态）: %s", e)
             return False
+
+    # ------------------------------------------------------------------
+    #  相机（第44轮）
+    # ------------------------------------------------------------------
+    def init_camera(self, camera_size=None, border=None, scale=None):
+        """建相机实例 + 从宿主读放大系数。**幂等**、**永不抛**。
+
+        用户对操控的裁定：「人物走到中间后一直居中然后背景相对运动」
+        ⇒ 用 `scene_camera.Camera`（居中式跟随，非视差）。
+
+        为什么单独一个方法而不是塞进 `load()`：`load()` 是 P0 契约
+        （「不切场景时零行为变化」），相机虽然也不注册定时器，
+        但它是**渲染层的前置件**，放在独立方法里更容易在回归里单独断言
+        "它到底有没有被调用"（防"模块写了没人用"复演 —— 本项目最贵的坑）。
+
+        **不注册定时器、不改渲染路径、不调任何 Qt API** —— 与 P0 同一条纪律。
+        """
+        pet = self.p
+        try:
+            cam = pet.__dict__.get('_scene_camera')
+            if cam is None:
+                if camera_size is None:
+                    camera_size = scene_camera.DEFAULT_CAMERA_SIZE
+                if border is None:
+                    border = scene_camera.DEFAULT_BORDER
+                if scale is None:
+                    scale = pet.__dict__.get('scene_scale', 1.0)
+                cam = scene_camera.Camera(camera_size, border, scale)
+                pet._scene_camera = cam
+            else:
+                # 已存在 → 只同步一次可能被外部改过的 scale（幂等）
+                if scale is not None:
+                    cam.set_scale(scale)
+            pet.camera_rect = cam.rect
+            return cam
+        except Exception as e:
+            _log.warning("相机初始化失败（渲染层降级为无相机）: %s", e)
+            return None
+
+    def camera_follow(self, room_rect, target_rect):
+        """让相机跟随目标并写回 `pet.camera_rect`。没相机 → `None`（不伪装）。
+
+        P1 渲染层每帧调它；P0 期零消费者。
+        """
+        pet = self.p
+        cam = pet.__dict__.get('_scene_camera')
+        if cam is None:
+            return None
+        try:
+            rect = cam.follow(room_rect, target_rect)
+            pet.camera_rect = rect
+            return rect
+        except Exception as e:
+            _log.warning("相机跟随失败: %s", e)
+            return None
+
+    # ------------------------------------------------------------------
+    #  渲染层（第44轮 P1）—— 只出"绘制指令"，一笔都不画
+    # ------------------------------------------------------------------
+    def load_geometry(self, scene_dir_path=None):
+        """读 `_room_geometry.json` → 房间世界几何表。**幂等**、**永不抛**。
+
+        为什么独立于 `load()`：房间几何是**渲染层专属数据**（相机钳制/背景铺排/
+        物件裁剪）。索引（`load()`）失败 = 没有场景可去；几何失败 = 场景都在、
+        只是"房间多大不知道"，渲染退化为"一屏一房间"。两者的失败面不重叠，
+        合在一起会让后者拖垮前者。
+
+        返回 `{rooms: {...}, error: str|None}` 形状（与 `load_index` 同一约定：
+        **永远返回同一种 dict**，调用方不必防 None）。
+        """
+        pet = self.p
+        result = {'rooms': {}, 'error': None}
+        try:
+            if not pet.__dict__.get('_geometry_loaded'):
+                path = os.path.join(scene_dir_path or scenes_dir(), '_room_geometry.json')
+                raw = None
+                try:
+                    with open(path, 'r', encoding='utf-8') as fh:
+                        raw = json.load(fh)
+                except Exception:
+                    raw = None
+                if isinstance(raw, dict) and isinstance(raw.get('rooms'), dict):
+                    rooms = {}
+                    for k, v in raw['rooms'].items():
+                        if isinstance(v, dict) and isinstance(v.get('w'), int) \
+                                and isinstance(v.get('h'), int):
+                            rooms[k] = v
+                    result['rooms'] = rooms
+                else:
+                    result['error'] = '_room_geometry.json 不存在或格式不符'
+                    _log.warning("房间几何表不可用（渲染退化为'一屏一房间'）: %s",
+                                 result['error'])
+                pet._scene_geometry = result['rooms']
+                pet._geometry_loaded = True
+            else:
+                result['rooms'] = pet.__dict__.get('_scene_geometry') or {}
+            return result
+        except Exception as e:
+            _log.warning("房间几何表加载失败（渲染退化）: %s", e)
+            result['error'] = str(e)
+            return result
+
+    def plan_frame(self, tick=0, sprite_size=None):
+        """产出这一帧的绘制指令清单（**纯数据**，由 Qt 壳去画）。
+
+        返回 `[]` 的四种情况（都**不是错误**，是"这一刻没东西可画"）：
+        场景未加载 / 相机未 follow / 几何表读不到（此时相机退化为视口大小，
+        仍会画占位）/ `scene_render.plan_frame` 内部判定无交集。
+
+        ⚠️ **不在这里调 Qt**：本方法只算几何。真正的 `QPainter` 调用在
+        `main.py` 的绘制壳里 —— 这样本方法能被回归锁逐条断言（第 44 轮
+        实测离屏渲染在沙箱里不稳定，所以"能断言计划"比"能截屏"更可靠）。
+        """
+        pet = self.p
+        scene = pet.__dict__.get('_scene_state')
+        cam = pet.__dict__.get('_scene_camera')
+        geo = pet.__dict__.get('_scene_geometry') or {}
+        try:
+            return scene_render.plan_frame(scene, cam, geo, tick=tick,
+                                          sprite_size=sprite_size)
+        except Exception as e:
+            _log.warning("渲染计划生成失败（本帧不画）: %s", e)
+            return []
+
+    def plan_viewport(self):
+        """这一帧的**画布像素尺寸** `(w, h)` —— Qt 壳按它 `resize()` 自身。
+
+        与 `plan_frame()` 分开（不是它的一部分）：画布尺寸是**容器属性**，
+        指令是**内容**。分开的两个好处：
+          · `render_summary()` 的计数不会把画布算成一条指令（否则回归锁要写特例）；
+          · "尺寸算错"和"内容算错"在回归里可分别断言。
+
+        收缩语义见 `scene_render.viewport_size()`：小房间收缩到房间像素、
+        大房间用相机像素（两轴独立）。
+        """
+        pet = self.p
+        scene = pet.__dict__.get('_scene_state')
+        cam = pet.__dict__.get('_scene_camera')
+        geo = pet.__dict__.get('_scene_geometry') or {}
+        try:
+            return scene_render.plan_viewport(scene, cam, geo)
+        except Exception as e:
+            _log.warning("画布尺寸计算失败（退化为相机尺寸）: %s", e)
+            if cam is not None:
+                return (int(cam.size[0]), int(cam.size[1]))
+            return (0, 0)
+
+    def render_summary(self, tick=0):
+        """当前帧绘制计划的一行中文摘要（自省/日志用）。"""
+        return scene_render.plan_summary(self.plan_frame(tick=tick))
 
     def switch(self, scene_id, scene_dir_path=None, _from_load=False):
         """切到 `scene_id`。成功返回 True。

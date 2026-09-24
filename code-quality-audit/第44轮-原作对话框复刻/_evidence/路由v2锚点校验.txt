@@ -1,0 +1,26 @@
+==========================================================================
+路由 v2 · 已知真值锚点校验
+==========================================================================
+
+A. 已知真值锚点（全命中才允许使用生成物）
+  映射: krisroom=ch1.kris_room.kris_s_room krishallway=ch1.home.krishallway torhouse=ch1.home.torhouse
+  [PASS] A1a krisroom 有出边（doorA 生效）    出边=1
+  [PASS] A1b krisroom 有入边（markerB 生效）    入边=1
+  [PASS] A2  krisroom 的 doorA 落到 krishallway（对方有 markerA）    实际出边=['ch1.home.krishallway']
+  [PASS] A3  torhouse 有出边    出边=1
+
+B. 负控制（这些必须为"无"）
+  [PASS] N1 无自环（to != when_scene）    自环=0 []
+  [PASS] N2 目标全部已登记（否则切场景会失败）    未登记=0 []
+  [PASS] N3 无跨章规则    跨章=0 []
+
+C. 形式-信息（表的健康度）
+  [PASS] C1 priority 全部为 int    n=443
+  [PASS] C2 每条规则都有 reason    缺 reason=0
+  [PASS] C3 每条规则都有原作依据 _original    缺 _original=0
+  [info] 有歧义标记的规则 = 0 / 443 (0.0%)
+  [PASS] C4 歧义比例 < 50%（否则"取最近"这个启发式不可信）    0.0%
+
+==========================================================================
+锚点校验结论：FAIL = 0
+==========================================================================

@@ -13,13 +13,17 @@
      （20/20/9/20/26 —— 一手事实，不是会漂的计数），且每章 id 唯一。
   B. **桌面仍是一等场景**：`default_scene == 'desktop'`、desktop 走同一套三级结构、
      控制器源码里**不出现**任何 desktop 特判分支（P0 契约不许回退）。
-  C. **路由按原作剧情推进**：逐条断言"在 X 区域 → 去 Y 场景"的推进链
-     （ch1 城堡镇→原野→森林→纸牌城堡→王座；ch2/ch4/ch5 同理），
-     并**配负控制**：把某条剧情路线的 priority 调到比兜底还大时，
-     它必须**不再命中**（证明这些断言有鉴别力，不是恒真）。
-  D. **★ 第一版真实缺陷的回归锁**：「任意场景」的兜底路线**不许**用小于
-     剧情段的 priority —— 否则它会压死全部剧情路线（priority 是第一排序键，
-     压过 score）。这条是本轮施工期用产品函数复现出来的真 bug，必须有锁。
+  C. **路由按原作连接推进**：第36~38轮断言的是"区域级剧情链"（26 条手工规则）；
+     ★第44轮用户裁定「所有 room 排序/连接都按照原作」+「路由重建你自己判断」，
+     路由表换成**由原作门机制生成**的 443 条规则（obj_doorA +1 / obj_doorB -1 /
+     obj_doorC +2，且目标房必须有同字母落点作独立验证）⇒ C 段改锁**机制自洽** +
+     **三个已知真值锚点**（krisroom↔krishallway 双向 + torhouse 出边）+ 覆盖面。
+     守的东西没变（"路由真的按原作走"），换的是"从哪拿期望值"。
+  D. **★ 真实缺陷的回归锁**：priority 是第一排序键、压过 score ⇒「任意场景」的
+     兜底路线**不许**用小于剧情段的 priority（否则压死全部剧情路线）。
+     第36轮用产品函数复现过这个真 bug。第44轮路由表已无通配兜底，
+     故 D1/D3 换成对当前表的结构/行为断言；D4/D5（合成坏写法 + 正控制）
+     与数据版本无关，**原样保留** —— 它们是这条坑的永恒证明。
 
 零依赖 / 不联网 / 不实例化 App / 不需要显示器（纯数据 + 纯函数）。
 """
@@ -60,7 +64,7 @@ def load_json(path):
 
 def mk_ctx(**kw):
     c = {'scene_id': None, 'area_id': None, 'chapter_id': None,
-         'mood': None, 'event': None, 'keywords': set()}
+         'mood': None, 'event': None, 'keywords': set(), 'door': None}
     c.update(kw)
     return c
 
@@ -238,139 +242,138 @@ check('B6 负控制：含 desktop 特判的合成源码会被判出'
       ('desktop' in _synth) is True)
 
 # ===========================================================================
-#  C. 路由按原作剧情推进
+#  C. 路由按原作连接推进
+#
+#  ★ 第44轮换判据（路由表 v1 → v2）
+#  ------------------------------------------------------------------------
+#  v1 是**手工按区域写死的 26 条剧情链**（"在 castle_town 区域 → 去 field 大门"），
+#  断言的是"区域级推进"。第44轮用户裁定「路由重建我也不懂，你自己判断」+
+#  「所有 room 排序/连接都按照原作」，于是改成**由原作门机制生成**的 443 条规则
+#  （when_scene 级精确连接）。旧断言的**前提对象消失**（没有 when_area 规则了），
+#  但**要守的东西没变**：路由必须真的按原作连接走、且真有鉴别力。
+#  ⇒ 换的是"从哪拿期望值"，不是降低强度：新期望值来自**原作门的下标位移机制**
+#     （obj_doorA +1 / obj_doorB -1 / obj_doorC +2，五章命中率 80~100%），
+#     这比 v1 的手工链更硬（v1 的链是人写的，v2 的边是数据生成的 + 锚点校验过）。
 # ===========================================================================
 print()
-print('=== C. 路由按原作剧情推进 ===')
+print('=== C. 路由按原作连接推进 ===')
 
 routes = sr.load_routes(_SCENES)
 check('C1 路由表加载成功', routes.get('ok') is True, str(routes.get('error')))
-check('C2 路由条数 > 10（不止"回桌面"一条）', len(routes.get('routes') or []) > 10,
+check('C2 路由条数 > 100（由原作连接生成，不再是 26 条手工链）',
+      len(routes.get('routes') or []) > 100,
       'n=%d' % len(routes.get('routes') or []))
 
-# 剧情推进链：每个用例 = (语境, 期望去往的场景)
-CHAIN = [
-    ('ch1 克里斯的房间 → 城堡镇',
-     mk_ctx(chapter_id='ch1', area_id='kris_room'),
-     'ch1.castle_town.castle_town'),
-    ('ch1 城堡镇 → 原野大门',
-     mk_ctx(chapter_id='ch1', area_id='castle_town',
-            scene_id='ch1.castle_town.castle_town'),
-     'ch1.field.field_great_door'),
-    ('ch1 原野 → 森林入口',
-     mk_ctx(chapter_id='ch1', area_id='field'),
-     'ch1.forest.forest_entrance'),
-    ('ch1 森林 → 纸牌城堡一层',
-     mk_ctx(chapter_id='ch1', area_id='forest'),
-     'ch1.card_castle.card_castle_1f'),
-    ('ch1 王座 → 第二章赛博原野',
-     mk_ctx(chapter_id='ch1', area_id='card_castle',
-            scene_id='ch1.card_castle.card_castle_throne'),
-     'ch2.cyber_field.cyber_field_entrance'),
-    ('ch2 赛博原野 → 赛博都市',
-     mk_ctx(chapter_id='ch2', area_id='cyber_field'),
-     'ch2.cyber_city.cyber_city_entrance'),
-    ('ch2 赛博都市 → 女王宅邸',
-     mk_ctx(chapter_id='ch2', area_id='cyber_city'),
-     'ch2.queens_mansion.queen_s_mansion_entrance'),
-    ('ch2 宅邸四层 → 屋顶',
-     mk_ctx(chapter_id='ch2', area_id='queens_mansion',
-            scene_id='ch2.queens_mansion.queen_s_mansion_4f'),
-     'ch2.queens_mansion.queen_s_mansion_rooftop'),
-    ('ch3 电视世界 → 第四章家乡',
-     mk_ctx(chapter_id='ch3', area_id='tv_world'),
-     'ch4.hometown.hometown'),
-    ('ch4 家乡 → 暗之圣域',
-     mk_ctx(chapter_id='ch4', area_id='hometown'),
-     'ch4.dark_sanctuary.dark_sanctuary_1_atrium'),
-    ('ch4 暗之圣域 → 第二圣域',
-     mk_ctx(chapter_id='ch4', area_id='dark_sanctuary'),
-     'ch4.second_sanctuary.sanctuary_2_atrium'),
-    ('ch4 第二圣域 → 第三圣域',
-     mk_ctx(chapter_id='ch4', area_id='second_sanctuary'),
-     'ch4.third_sanctuary.sanctuary_3'),
-    ('ch4 第三圣域 → 麦克地带',
-     mk_ctx(chapter_id='ch4', area_id='third_sanctuary'),
-     'ch4.mike_zone.mike_zone'),
-    ('ch5 园子 → 崖边',
-     mk_ctx(chapter_id='ch5', area_id='garden'),
-     'ch5.cliffs.cliffs_beginning'),
-    ('ch5 崖边 → 花之城堡',
-     mk_ctx(chapter_id='ch5', area_id='cliffs'),
-     'ch5.flower_castle.flower_castle_cafe'),
-]
+# --- C3：机制级断言 —— 每条规则的 _original 必须自洽于门的下标位移表 ---
+#     （这是 v2 的核心不变量：规则不是"编"的，是"推"出来的。）
+_DOOR_DELTA = {'A': 1, 'B': -1, 'C': 2}
+_struct_bad = []
+for _r in (routes.get('routes') or []):
+    _o = _r.get('_original')
+    if not isinstance(_o, dict):
+        _struct_bad.append('%s(无_original)' % _r.get('to'))
+        continue
+    _L = _o.get('door_letter')
+    if _L not in _DOOR_DELTA:
+        _struct_bad.append('%s(字母=%r)' % (_r.get('to'), _L))
+        continue
+    if _o.get('room_delta') != _DOOR_DELTA[_L]:
+        _struct_bad.append('%s(位移=%r≠%d)' % (_r.get('to'), _o.get('room_delta'),
+                                              _DOOR_DELTA[_L]))
+check('C3 每条规则的 _original 自洽于门的下标位移表（A+1 / B-1 / C+2）',
+      not _struct_bad,
+      '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
 
-for label, ctx, want in CHAIN:
-    hit = sr.match(routes, ctx)
-    got = sr.route_target(hit)
-    check('C3 %s' % label, got == want, 'got=%r want=%r' % (got, want))
+# C3b 规则只用了「已实证」的三种字母门 —— 不许悄悄混进 D/E/F/W/X
+_LETTERS = sorted(set((r.get('_original') or {}).get('door_letter')
+                      for r in (routes.get('routes') or [])))
+check('C3b 只用 A/B/C 三种已实证字母门（D/E/F/W/X 一律不编边）',
+      set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
 
-# 软触发
-_soft = [
-    ('C4 睡意 → 回桌面',
-     mk_ctx(scene_id='desktop', area_id='desktop', mood='sleepy'), 'desktop'),
-    ('C5 聊花 → 希望之园',
-     mk_ctx(scene_id='desktop', keywords={'花'}),
-     'ch5.garden.garden_beginning'),
-    ('C6 聊电脑 → 赛博都市',
-     mk_ctx(scene_id='desktop', keywords={'电脑'}),
-     'ch2.cyber_city.cyber_city_entrance'),
-]
-for label, ctx, want in _soft:
-    got = sr.route_target(sr.match(routes, ctx))
-    check(label, got == want, 'got=%r want=%r' % (got, want))
+# --- C4：锚点 —— krisroom 的 doorA 必须落到 krishallway（第44轮实证的真值）---
+#     这是「解析器输出必须先过已知真值锚点」在产品侧的固化。
+_anchor_ctx = mk_ctx(chapter_id='ch1', scene_id='ch1.kris_room.kris_s_room')
+_hit = sr.match(routes, _anchor_ctx)
+check('C4 锚点：克里斯的房间（doorA）→ 克里斯的走廊',
+      sr.route_target(_hit) == 'ch1.home.krishallway',
+      'got=%r' % sr.route_target(_hit))
 
-# --- 负控制：把所有剧情路线抹掉后，语境必须落回兜底 ---
-_routes_only_fallback = {'ok': True, 'routes': [], 'fallback': routes.get('fallback')}
-_nc = sr.match(_routes_only_fallback, mk_ctx(chapter_id='ch1', area_id='kris_room'))
-check('C7 负控制：无剧情路线时落回 _fallback（证明 C3 有鉴别力）',
-      _nc is None or sr.route_target(_nc) == 'desktop',
-      'got=%r' % sr.route_target(_nc))
+# C4b 反向锚点：krishallway 的 doorB(-1) 必须回到 krisroom
+#     ★ 注意：krishallway 有**两个出口**（doorB 回卧房 / doorC 去浴室），
+#     这是用户点名的「共同卡口」。不指定 door 时走 priority 最小者（字母序 B<C）； 
+#     要精确走 B 就必须在 context 里给 door —— 这正是 when_door 的用途。
+_hit_b = sr.match(routes, mk_ctx(chapter_id='ch1',
+                                 scene_id='ch1.home.krishallway', door='B'))
+check('C4b 反向锚点：克里斯的走廊（指定 door=B）→ 克里斯的房间（位移 -1 回退）',
+      sr.route_target(_hit_b) == 'ch1.kris_room.kris_s_room',
+      'got=%r' % sr.route_target(_hit_b))
 
-# --- 负控制：把某条剧情路线的 priority 调到 9999，它必须不再赢 ---
-_bad_routes = json.loads(json.dumps(routes.get('routes')))
-_broken_target = None
-for _r in _bad_routes:
-    if _r.get('when_area') == 'kris_room':
-        _broken_target = _r['to']
-        _r['priority'] = 9999
-        break
-_bad_table = {'ok': True, 'routes': _bad_routes, 'fallback': routes.get('fallback')}
-_hit_bad = sr.match(_bad_table, mk_ctx(chapter_id='ch1', area_id='kris_room'))
-check('C8 负控制：把"克里斯房间→城堡镇"降到最低优先级后不再命中它',
-      sr.route_target(_hit_bad) != _broken_target,
-      'still=%r' % sr.route_target(_hit_bad))
+# C4b2 —— ★第44轮新机制：共同卡口的两个出口都必须可达且互不串味
+_hit_c = sr.match(routes, mk_ctx(chapter_id='ch1',
+                                 scene_id='ch1.home.krishallway', door='C'))
+check('C4b2 指定 door=C 时同一场景分流去另一个出口（torhouse）',
+      sr.route_target(_hit_c) == 'ch1.home.torhouse',
+      'got=%r' % sr.route_target(_hit_c))
+
+# C4b3 —— 负控制：给了**不存在的门**时不许乱走（必须判不匹配 → 落兜底）
+_hit_bad_door = sr.match(routes, mk_ctx(chapter_id='ch1',
+                                       scene_id='ch1.home.krishallway',
+                                       door='Z'))
+check('C4b3 负控制：指定不存在的门 Z 时不命中任何出口规则',
+      sr.route_target(_hit_bad_door) in (None, 'desktop'),
+      'got=%r' % sr.route_target(_hit_bad_door))
+
+# C4c 第三锚点：torhouse 有 1 条出边（doorD/D 不编边，故只有 doorA 生效）
+_hit_c = sr.match(routes, mk_ctx(chapter_id='ch1', scene_id='ch1.home.torhouse'))
+check('C4c 锚点：托丽尔家（doorA）有出边且不是兜底',
+      sr.route_target(_hit_c) not in (None, 'desktop'),
+      'got=%r' % sr.route_target(_hit_c))
+
+# C5 覆盖度：不再是 2%（26 条手工链），而是覆盖绝大部分原作连接
+_reached = set(r.get('to') for r in (routes.get('routes') or []))
+check('C5 可达场景数 > 250（原作连接生成后应大幅超过旧的 20 个）',
+      len(_reached) > 250, '可达=%d' % len(_reached))
 
 # ===========================================================================
-#  D. ★ 第一版真实缺陷的回归锁（兜底不许压死剧情）
+#  D. ★ 真实缺陷的回归锁（兜底不许压死剧情）
+#
+#  第44轮更新：v2 已**没有**「when_scene == '*'」的通配兜底路线（那是 v1 的写法）。
+#  但**这条坑本身不过时** —— 它守的是「priority 是第一排序键、压过 score」这个
+#  匹配语义，任何一版路由表都可能再犯。所以：
+#    · D1/D2/D3 换成对**当前表**的真实结构性断言（不再找通配规则）；
+#    · D4/D5 原样保留（合成坏写法 + 正控制）—— 这两条与数据版本无关，永远有效；
+#    · D6/D7 保留留痕与语义断言。
 # ===========================================================================
 print()
-print('=== D. 兜底路线不许压死剧情（本轮真实缺陷回归锁）===')
+print('=== D. 兜底不许压死剧情（真实缺陷回归锁）===')
 
-# D1: 全通配兜底路线的 priority 必须**大于**所有剧情路线的 priority
-_wild = [r for r in (routes.get('routes') or []) if r.get('when_scene') == '*']
-check('D1 存在「任意场景」的兜底路线', len(_wild) >= 1, 'n=%d' % len(_wild))
+# D1 —— ★ 换判据：当前表里**不许有** priority 小于 100 的规则。
+#     第44轮生成器把规则排在 110~309；若有人手写一条 priority<100 的
+#     "任意场景"规则，它会把后面 443 条全部挡死。这条把该风险钉住。
+_low_prio = [r.get('to') for r in (routes.get('routes') or [])
+             if isinstance(r.get('priority'), int) and r['priority'] < 100]
+check('D1 不存在 priority < 100 的规则（防"压死式"兜底混入）',
+      not _low_prio, '越界 %d 条: %s' % (len(_low_prio), _low_prio[:4]))
 
-_story_prios = [r.get('priority', 500) for r in (routes.get('routes') or [])
-                if r.get('when_scene') != '*'
-                and r.get('when_area') is not None]
-_min_story = min(_story_prios) if _story_prios else 0
-_wild_prios = [r.get('priority', 500) for r in _wild]
-_max_wild = max(_wild_prios) if _wild_prios else 10000
-check('D2 通配兜底的 priority > 所有区域级剧情路线的 priority',
-      _max_wild > _min_story,
-      'wild=%s story_min=%s' % (_wild_prios, _min_story))
+# D2 兜底本身走独立分支（_fallback），且目标已登记
+_fb = routes.get('fallback')
+check('D2 兜底走 _fallback 独立分支（不参与 priority 排序）',
+      isinstance(_fb, dict) and isinstance(_fb.get('to'), str),
+      'fallback=%r' % (_fb,))
 
-# D3: 行为级 —— 站在作品内某区域时，命中的**不是**通配兜底
-for area, ch, sid in [('castle_town', 'ch1', 'ch1.castle_town.castle_town'),
-                      ('field', 'ch1', 'ch1.field.field_great_door'),
-                      ('cyber_city', 'ch2', 'ch2.cyber_city.cyber_city_entrance'),
-                      ('garden', 'ch5', 'ch5.garden.garden_beginning')]:
-    hit = sr.match(routes, mk_ctx(chapter_id=ch, area_id=area, scene_id=sid))
-    tgt = sr.route_target(hit)
-    check('D3 %s/%s 命中的不是通配兜底' % (ch, area),
-          tgt is not None and tgt != 'desktop' or area == 'desk',
-          'to=%r' % tgt)
+# D3 —— ★ 换判据：行为级证明"剧情规则真的赢过兜底"。
+#     站在 5 个原作连接起点上，match 必须返回**具体规则**而不是 desktop。
+_wired = {}
+for _r in (routes.get('routes') or []):
+    _wired.setdefault(_r.get('when_scene'), _r['to'])
+_d3_bad = []
+for _sid in list(_wired.keys())[:5]:
+    _e = _registered.get(_sid) or {}
+    _h = sr.match(routes, mk_ctx(chapter_id=_e.get('chapter_id'), scene_id=_sid))
+    if sr.route_target(_h) in (None, 'desktop'):
+        _d3_bad.append(_sid)
+check('D3 站在原作连接起点时命中的是具体剧情规则（不是兜底回桌面）',
+      not _d3_bad, '落回兜底: %s' % _d3_bad)
 
 # D4: 复现第一版的坏写法 —— 必须是"会被抓"的
 _bad_v1 = [
@@ -404,6 +407,11 @@ check('D5 正控制：修好后同一语境走到剧情路线',
 _meta = io.open(os.path.join(_SCENES, '_routes.json'), 'r', encoding='utf-8').read()
 check('D6 _routes.json 的 meta 写明「priority 压过 score」这条坑',
       'priority_beats_score' in _meta)
+
+# D7 —— ★ 第44轮新增：机制必须写进 meta（否则后人不知道边是怎么来的）
+check('D7 _routes.json 的 meta 写明门的下标位移机制与"不编边"口径',
+      'mechanism' in _meta and 'coverage_policy' in _meta
+      and 'obj_doorA' in _meta)
 
 # ===========================================================================
 #  E. 背景素材口径 —— 第37轮已由反编译补齐，故升级为真判据

@@ -341,6 +341,10 @@ from modules.file_sheet_controller import FileSheetController
 # P0 阶段是空壳（只加载索引 + 存状态，不动任何画面）—— 用户要求「留好拓展接口」，
 # 所以接口必须先真的在位、能被调、能过 G2，而不是只写在文档里。
 from modules.scene_controller import SceneController
+# 场景画布（第44轮 P1）：把 SceneController.plan_frame() 的绘制指令**真正画出来**。
+# 这是"渲染层"的最后一跳 —— 前面 scene_system/scene_camera/scene_render 都只出数据，
+# 没有消费者就是"函数写对了但产品用不上"（本项目最贵的坑，见记忆铁律 §4）。
+from modules.scene_canvas import SceneCanvas
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -630,6 +634,19 @@ class RalseiPet(QMainWindow):
         self.setGeometry(init_x, init_y, 100, 100)  # 初始大小
         self.setWindowTitle("Ralsei Pet")
         
+        # ---- 场景画布（第44轮 P1：把 scene_render 的绘制指令真正画出来）----
+        # 为什么是**子控件而不是主窗口自绘**：主窗口的 `paintEvent` 已经承担
+        # "填透明"这一条职责（见其 docstring），而场景层要画背景 + 物件 + 边框，
+        # 生命周期与尺寸都跟着"当前房间"变 —— 独立控件能自己 resize/update，
+        # 不必让主窗口的绘制路径长出分支（那会让 P0「不切场景时零行为变化」
+        # 的判据失去意义）。
+        # ⚠️ `SceneCanvas.__init__` 末尾 **显式 hide()**：默认不显示。
+        #    宿主确认要显示场景（见 `_update_scene_layer`）后才 show —— 这样
+        #    桌面场景（无 bg / 无物件）跑起来时画面上**零变化**。
+        self.scene_canvas = SceneCanvas(self)
+        self.scene_canvas.move(0, 0)
+        self._scene_layer_visible = False
+
         # 创建主标签用于显示精灵
         self.sprite_label = QLabel(self)
         self.sprite_label.setGeometry(0, 0, 100, 100)
@@ -842,6 +859,26 @@ class RalseiPet(QMainWindow):
         self._scene_routes = None                   # load_routes() 的结果（含 routes/fallback）
         self._routes_loaded = False                 # 路由表是否已尝试加载过（幂等守卫）
         self._scene_route_reason = ''               # 最近一次路由命中给的"为什么走这条路"
+        # ---- 相机（第44轮：居中式跟随 + 背景相对运动）状态 ----
+        # 同一条铁律：控制器会用到的名字必须在**宿主**预声明。
+        self._scene_camera = None                   # Camera 实例（scene_camera.Camera）
+        # ★ 房间放大系数（用户 44 轮口径："Ralsei 是人物，房间是场景，要看到所有
+        #   属于 Ralsei 的东西，缩放至少要与当前 Ralsei 的大小一致"）。
+        #   实测推导（第44轮，两个独立来源交叉验证）：
+        #     · 原作 Ralsei 行走精灵 = 21×41 px（`deltarune_ralsei/spr_ralsei_walk_*.png`）
+        #     · 原作现实世界 = 320×240 逻辑像素，**×2 输出** = 640×480 屏幕像素
+        #     · 产品当前把 Ralsei 画成 21×41 × 2.0 = **42×82 屏幕像素**
+        #       （`main.py` 的 `scale_factor = getattr(self,'_cached_scale_factor', 2.0)`
+        #        —— 注意 `_cached_scale_factor` **全仓从未被赋值**，实际恒走默认 2.0）
+        #   ⇒ 产品人物视觉大小 ≡ 原作人物视觉大小 ⇒ 场景取 **2.0** 才同比例。
+        #   ✅ 这条同时满足"至少与 Ralsei 一致"（取等号 = 一致）与
+        #      "不必全屏"（640×480 的房间在 1080p 上只占约 1/3 宽）。
+        self.scene_scale = 2.0                      # ★ 房间放大系数（= 原作输出倍率）
+        self.camera_rect = None                     # 相机矩形缓存（P1 渲染层消费）
+        # ---- 渲染层（第44轮 P1：房间几何 + 绘制计划）状态 ----
+        self._scene_geometry = {}                   # 房间世界几何表（_room_geometry.json 的 rooms）
+        self._geometry_loaded = False               # 几何表是否已尝试加载过（幂等守卫）
+        self.scene_plan = []                        # 最近一帧的绘制指令清单（Qt 绘制壳消费）
 
         # ---- P0 接线：让场景系统真的跑起来（第 38 轮）----
         # 为什么放在这里：状态字段刚声明完、`self.scene` 已构造（上方 L779），
@@ -859,7 +896,20 @@ class RalseiPet(QMainWindow):
         #   （路由表）。路由的 `destinations()` 要用索引过滤未登记场景，
         #   反过来的话第一次自省会拿到空清单。
         self.scene.load()          # 索引（1,014 场景）+ 默认场景 desktop
-        self.scene.load_routes()   # 路由表（26 条 + 兜底）；P1 才有人自动调 pick_route
+        self.scene.load_routes()   # 路由表（443 条原作连接 + 兜底）；P1 才有人自动调 pick_route
+        # ---- 相机接线（第44轮）----
+        # 用户对"操控效果"的裁定：「人物走到中间后一直居中然后背景相对运动」
+        # —— 这正是原作口径（GMS2 原生相机 camera_set_view_target，见 scene_camera）。
+        # `init_camera()` 只做「建 Camera 实例 + 从宿主读放大系数」，
+        # **不注册定时器、不改渲染路径**（与 P0「不切场景时零行为变化」同一条纪律）。
+        self.scene.init_camera()
+        # ---- 渲染层接线（第44轮 P1）----
+        # 房间几何表：渲染层要画房间（相机钳制 / 背景铺排 / 物件裁剪）必须知道
+        # **房间的世界尺寸**（原作里 6,220×1,920 的大房间也有）—— 产品场景 JSON
+        # 里没有 w/h（第 36~40 轮只登记了 bg / original_room_id），所以第 44 轮
+        # 从五章普查结果蒸馏出 `_room_geometry.json`（1,251 间，锚点校验 100% 命中）。
+        # `load_geometry()` 只做「读 JSON + 写宿主字段」，不注册定时器、不碰 Qt。
+        self.scene.load_geometry()
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):
@@ -1669,6 +1719,174 @@ class RalseiPet(QMainWindow):
         self.is_moving = True
         self.moving_duration = 0
         
+    # ------------------------------------------------------------------
+    #  场景渲染层（第44轮 P1）—— 相机跟随 + 绘制指令消费
+    # ------------------------------------------------------------------
+    #: 渲染层总开关。**默认 False** ⇒ 不切场景时零行为变化（P0 判据）不破。
+    #  用户裁定「逐章验收」⇒ 由显式开启（或未来的 UI 开关/配置项）来点亮，
+    #  而不是一上来就默认接管画面。这同时让"渲染层引入的回归"可被一刀关掉定位。
+    SCENE_LAYER_ENABLED = False
+
+    def _pet_target_rect(self, room_rect=None):
+        """宠物在**房间世界坐标**里的包围盒 —— 相机的跟随目标（`camera_set_view_target`）。
+
+        ★★★ 为什么必须做「屏幕 → 房间」的归一化映射（第44轮实测教训）
+        --------------------------------------------------------------
+        最初版本把**窗口屏幕坐标直接当房间世界坐标**。真机一跑就露馅：
+        宠物初始位置在 1920×1080 屏的右下角（≈ `(1770, 930)`），而现实世界房间
+        只有 320×240 逻辑（×2 = 640×480 像素）—— 目标坐标比房间**大 5 倍**，
+        相机第一次 follow 就被钳到房间右下角，之后无论宠物怎么动都**钉死在那**
+        （冒烟测试 E2 报红：两次采样完全相同）。这是"输入量级不真实"的典型
+        （记忆铁律：「行为判据必须用真实量级输入」）。
+
+        正确映射 = **把屏幕可用区域按比例压进房间世界矩形**：
+
+            屏幕 x ∈ [0, sw]  →  世界 x ∈ [0, room_w]
+
+        这样：
+          · 宠物在屏幕正中 → 世界坐标落在房间正中（相机居中，符合原作观感）；
+          · 宠物走到屏幕左/右边缘 → 走到房间左/右边缘（相机贴边钳制，
+            正是原作"走到地图边缘人物就偏离中心"的表现）；
+          · **量级天然正确**（映射值的值域就是房间尺寸，不会溢出）。
+
+        ⚠️ 这仍是一个**产品口径**（原作里人物在世界里走，这里人物在桌面上走），
+           不是原作物理。但它满足用户要的观感：「人物走到中间后一直居中，
+           然后背景相对运动」——且量级正确、可验证、无自由度。
+           将来要更严格（比如"桌面上走 1 像素 = 房间里走 1 逻辑单位"），
+           只需改本方法。
+
+        :param room_rect: 房间世界矩形 `(l, t, r, b)`（逻辑坐标）。`None` → 退回旧口径。
+        :return: `(l, t, r, b)`；拿不到位置 → `None`（不伪装成 0）。
+        """
+        try:
+            win = self.pos()               # 窗口左上（屏幕坐标）
+            w = max(1, self.width())
+            h = max(1, self.height())
+            cx = win.x() + w / 2.0         # 窗口中心（屏幕坐标）
+            cy = win.y() + h / 2.0
+            if not room_rect or len(room_rect) != 4:
+                # 房间未知 → 旧口径（屏幕坐标当世界坐标）。
+                # 只在"退化房间"（= 相机视口大小）时走这里，仍是安全的：
+                # 退化房间的尺寸就是相机尺寸，量级基本吻合。
+                return (cx - w / 2.0, cy - h / 2.0, cx + w / 2.0, cy + h / 2.0)
+            rl, rt, rr, rb = (float(room_rect[0]), float(room_rect[1]),
+                              float(room_rect[2]), float(room_rect[3]))
+            rw = max(1.0, rr - rl)
+            rh = max(1.0, rb - rt)
+            # 屏幕可用区域（虚拟屏，含副屏；用不到时退回主屏）
+            sw, sh = self._virtual_screen_size()
+            fx = min(1.0, max(0.0, cx / float(sw))) if sw > 0 else 0.5
+            fy = min(1.0, max(0.0, cy / float(sh))) if sh > 0 else 0.5
+            # 归一化比例 → 房间世界坐标；目标矩形 = 房间内一小块（= 宠物大小映射）
+            kx = rw / float(sw) if sw > 0 else 1.0
+            ky = rh / float(sh) if sh > 0 else 1.0
+            tw = max(1.0, w * kx)
+            th = max(1.0, h * ky)
+            tcx = rl + rw * fx
+            tcy = rt + rh * fy
+            return (tcx - tw / 2.0, tcy - th / 2.0, tcx + tw / 2.0, tcy + th / 2.0)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return None
+
+    def _virtual_screen_size(self):
+        """虚拟屏尺寸 `(w, h)`（多屏合并）。取不到 → 主屏；再取不到 → (1920,1080)。
+
+        ★ 必用虚拟屏（`availableGeometry` 只返主屏）—— 与场景系统的
+          `_virtual_screen_rect()` 同一条铁律（记忆 §3 契约①）：宠物能跑到副屏，
+          只用主屏尺寸会让副屏上的归一化比例算错（>1 → 又被钳死）。
+        """
+        try:
+            rect = self._virtual_screen_rect()
+            if rect and len(rect) == 4 and rect[2] > 0 and rect[3] > 0:
+                return (rect[2], rect[3])
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        try:
+            g = QApplication.desktop().availableGeometry()
+            return (max(1, g.width()), max(1, g.height()))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return (1920, 1080)
+
+    def _update_scene_layer(self):
+        """每帧推进渲染层：相机跟随 → 出绘制指令 → 交给画布。
+
+        **失败一律静默**（渲染层不是关键路径，绝不能拖垮移动/对话主循环 ——
+        与 search_summarizer / relationship 同一条纪律）。
+
+        为什么每帧都做而不是只在换场景时做：相机是**跟随**相机，
+        宠物每移动一像素画面就该相对移动一像素（原作 30fps 硬跟随，
+        见 scene_camera 的零缓动说明）。只在换场景时算 = 画面永远静止。
+        """
+        if not getattr(self, 'SCENE_LAYER_ENABLED', False):
+            return
+        try:
+            canvas = getattr(self, 'scene_canvas', None)
+            scene = getattr(self, 'scene', None)
+            if canvas is None or scene is None:
+                return
+            cam = self.__dict__.get('_scene_camera')
+            state = self.__dict__.get('_scene_state')
+            if cam is None or state is None:
+                self._hide_scene_layer()
+                return
+
+            # 1) 相机跟随：房间矩形 + 目标矩形（全逻辑坐标，见 scene_camera.scoped_size）
+            rooms = self.__dict__.get('_scene_geometry') or {}
+            rid = getattr(state, 'original_room_id', None)
+            ch = getattr(state, 'chapter_id', None)
+            geo = None
+            if isinstance(rid, int) and ch:
+                rec = rooms.get('%s:%d' % (ch, rid))
+                if isinstance(rec, dict) and isinstance(rec.get('w'), int):
+                    geo = rec
+            if geo:
+                room_rect = (0.0, 0.0, float(geo['w']), float(geo['h']))
+            else:
+                # 房间未知 → 退化为"一屏一房间"（相机不动，画面照常出）
+                sz = cam.scoped_size()
+                room_rect = (0.0, 0.0, float(sz[0]), float(sz[1]))
+            scene.camera_follow(room_rect, self._pet_target_rect(room_rect))
+
+            # 2) 出指令（sprite_size 让剔除用真实素材尺寸 —— 见 SceneAssetCache）
+            plan = scene.plan_frame(sprite_size=canvas.assets.sprite_size)
+            # 3) 交给画布（画布自己 resize + update）。
+            #    画布尺寸用 `plan_viewport()`（= 收缩后的小房间尺寸 / 大房间的相机尺寸），
+            #    而不是相机原始尺寸 —— 小房间要收缩，否则房间只占中间一块
+            #    （与用户「房间放大些」的意图相反，见 scene_render.viewport_size）。
+            view = scene.plan_viewport()
+            canvas.set_plan(plan, view)
+
+            # 4) 有 bg 或物件才显示画布；纯占位/空 → 隐藏（保持桌面原样）
+            if plan and any(it.get('kind') in ('bg', 'obj') for it in plan):
+                self._show_scene_layer()
+            else:
+                self._hide_scene_layer()
+        except Exception as e:
+            _log.debug("场景渲染层更新失败（本帧跳过）: %s", e)
+
+    def _show_scene_layer(self):
+        """显示场景画布（并把它压到精灵之下 —— 场景是背景层）。"""
+        try:
+            canvas = self.scene_canvas
+            if not canvas.isVisible():
+                canvas.show()
+                self._scene_layer_visible = True
+            canvas.lower()   # 背景层：永远在 sprite_label 之下
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def _hide_scene_layer(self):
+        """隐藏场景画布（桌面场景 / 场景系统不可用时）。"""
+        try:
+            canvas = self.scene_canvas
+            if canvas.isVisible():
+                canvas.hide()
+            self._scene_layer_visible = False
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
     # 移动相关代码 - 更新移动逻辑
     @monitor_performance
     def update_movement(self):
@@ -1699,6 +1917,14 @@ class RalseiPet(QMainWindow):
             self.update_environment()
             self.update_mood()
             self._last_env_update = current_time
+
+        # ---- 场景渲染层（第44轮 P1）：相机跟随 + 绘制指令消费 ----
+        # 挂在这里而不是 update_animation(100ms)：原作相机是 **30fps 硬跟随**
+        # （`GMS2FPS = 30`，见 scene_camera 的零缓动说明），本定时器正好 30ms。
+        # 挂在动画定时器上会让相机以 10fps 跟随 —— 画面"一跳一跳"，与原作不符。
+        # ⚠️ 由 `SCENE_LAYER_ENABLED`（默认 False）总控；关闭时本调用**立即返回**，
+        #    P0「不切场景时零行为变化」的判据不受任何影响。
+        self._update_scene_layer()
         
         # 低频检查附近的桌面元素（每5秒一次；修复：此前 check_nearby_desktop_elements
         # 从未被调用，Ralsei 对桌面文件夹/文件的"靠近反应"从未触发）

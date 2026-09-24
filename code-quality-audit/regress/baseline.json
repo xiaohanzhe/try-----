@@ -7,11 +7,35 @@
       "pass": 30,
       "sha256": "2a281832341eb626b7f3c7c890ef9fef7a0377ccc1fcfb3c1d02bb06f8b5cdca"
     },
+    "box_round44": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 49,
+      "sha256": "cbfd5350bf0e4484368a2ccc8396e8c01afa5091e97e6c9393fbf90484c8df32"
+    },
+    "camera_round44": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 56,
+      "sha256": "94a1151924505881e45a697cd03e9d202d0c3273e396af02d6a9d2f3fcecce9b"
+    },
+    "canvas_round44": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 57,
+      "sha256": "7b0a553224d96ff8904d7988694cd2f762ed3688363f3fc8bb512219cd83510b"
+    },
     "persona_chat": {
       "exit": 0,
       "fail": 0,
       "pass": 156,
       "sha256": "8b43c338165a07c8c4a05e3f51fc259962fe4c0bc855a0c9671bdb1c004e7c44"
+    },
+    "render_round44": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 94,
+      "sha256": "8e60f5efefecc3da359e34efc4819d17b1436d965e14f5f9d0ac1b3264ecf6a6"
     },
     "round10_graph": {
       "exit": 0,
@@ -94,8 +118,8 @@
     "round5_smoke": {
       "exit": 0,
       "fail": 0,
-      "pass": 39,
-      "sha256": "69e0f84626fc81bf8c62bd8875e788dcc2153a090e8153f6f24d7adc2a011a45"
+      "pass": 43,
+      "sha256": "2a691385542bb313ef11c6c5e3c51368b3286c06dde5891c6021014c1806ce29"
     },
     "round5_verify": {
       "exit": 0,
@@ -125,7 +149,7 @@
       "exit": 0,
       "fail": 0,
       "pass": 20,
-      "sha256": "e84fd6ae8ca03c6bc1f67c4431725dbafc13174bffcc09f94f1cc304ffa0ffe6"
+      "sha256": "42780e102d1d1212f8d8e28bb310210eded1346840226d3a54b83463152521f6"
     },
     "round8_fling": {
       "exit": 0,
@@ -150,6 +174,12 @@
       "fail": 0,
       "pass": 51,
       "sha256": "3b500755c06c4c4bb5d245e40ba6a9b4dd8b656ac53703acdc7fd2173bdbcb0b"
+    },
+    "routes_order44": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 17,
+      "sha256": "3ce29133c290d51187ebecc365fa977ef7a94da95b7e323c1c9c63bfb9ecb68a"
     },
     "s1_anim_miss": {
       "exit": 0,
@@ -190,14 +220,14 @@
     "scene_route_original": {
       "exit": 0,
       "fail": 0,
-      "pass": 57,
-      "sha256": "13fb6afee2b682bef5448d75fbdeaf923ecc682a55de35eda1069f561631d3f5"
+      "pass": 43,
+      "sha256": "0b5bf972ed6ba4ea5e84ff5e2dedc0913992a1e674a2dc44c731c5f1ac7b025a"
     },
     "scene_routing": {
       "exit": 0,
       "fail": 0,
-      "pass": 106,
-      "sha256": "a6f338e36c406a9ea507dd92c92da2122f8b6145eb23ff9aa914d5d2f36d40c5"
+      "pass": 114,
+      "sha256": "d6360773bc900f3b1edfbe57452a1954c16f5cf5881850a3d7f7eb36671779b7"
     }
   },
   "version": 1

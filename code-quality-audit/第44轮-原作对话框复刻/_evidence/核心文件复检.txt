@@ -1,0 +1,161 @@
+==============================================================================
+第 44 轮 · 重要核心文件复检
+==============================================================================
+
+① 语法 / 可编译
+  [PASS] C1 dr_textbox.py             rc=0 
+  [PASS] C2 dialogue_ui.py            rc=0 
+  [PASS] C3 run_all.py                rc=0 
+  [SKIP] C4 baseline.json             （非 .py）
+  [PASS] C5 verify_box_round44.py     rc=0 
+  [PASS] C6 verify_round8_dialogue.py rc=0 
+  [PASS] C7 scene_camera.py           rc=0 
+  [PASS] C8 scene_routing.py          rc=0 
+  [PASS] C9 scene_controller.py       rc=0 
+  [PASS] C10 main.py                  rc=0 
+  [SKIP] C11 _routes.json             （非 .py）
+  [PASS] C12 verify_camera_round44.py rc=0 
+  [PASS] C13 verify_scene_route_original.py rc=0 
+  [PASS] C14 scene_render.py          rc=0 
+  [PASS] C15 scene_canvas.py          rc=0 
+  [PASS] C16 verify_render_round44.py rc=0 
+  [PASS] C17 verify_canvas_round44.py rc=0 
+  [PASS] C18 verify_routes_order44.py rc=0 
+  [PASS] C19 gen_routes44.py          rc=0 
+  [PASS] C4 baseline.json             JSON 可解析，顶层条目=38
+  [PASS] C11 _routes.json             JSON 可解析，顶层条目=4
+
+② 结构自检（关键符号在位、无粘连）
+  [PASS] C1 dr_textbox.py             缺=无
+  [PASS] C2 dialogue_ui.py            缺=无
+  [PASS] C3 run_all.py                缺=无
+  [PASS] C5 verify_box_round44.py     缺=无
+  [PASS] C6 verify_round8_dialogue.py 缺=无
+  [PASS] C7 scene_camera.py           缺=无
+  [PASS] C8 scene_routing.py          缺=无
+  [PASS] C9 scene_controller.py       缺=无
+  [PASS] C10 main.py                  缺=无
+  [PASS] C11 _routes.json             缺=无
+  [PASS] C13 verify_scene_route_original.py 缺=无
+  [PASS] C14 scene_render.py          缺=无
+  [PASS] C15 scene_canvas.py          缺=无
+  [PASS] C16 verify_render_round44.py 缺=无
+  [PASS] C17 verify_canvas_round44.py 缺=无
+  [PASS] C18 verify_routes_order44.py 缺=无
+  [PASS] C19 gen_routes44.py          缺=无
+  [PASS] C1 dr_textbox.py             超长行(>200)=0 []
+  [PASS] C2 dialogue_ui.py            超长行(>200)=0 []
+  [PASS] C3 run_all.py                超长行(>200)=0 []
+  [PASS] C4 baseline.json             超长行(>200)=0 []
+  [PASS] C5 verify_box_round44.py     超长行(>200)=0 []
+  [PASS] C6 verify_round8_dialogue.py 超长行(>200)=0 []
+  [PASS] C7 scene_camera.py           超长行(>200)=0 []
+  [PASS] C8 scene_routing.py          超长行(>200)=0 []
+  [PASS] C9 scene_controller.py       超长行(>200)=0 []
+  [PASS] C10 main.py                  超长行(>200)=0 []
+  [PASS] C11 _routes.json             超长行(>200)=0 []
+  [PASS] C12 verify_camera_round44.py 超长行(>200)=0 []
+  [PASS] C13 verify_scene_route_original.py 超长行(>200)=0 []
+  [PASS] C14 scene_render.py          超长行(>200)=0 []
+  [PASS] C15 scene_canvas.py          超长行(>200)=0 []
+  [PASS] C16 verify_render_round44.py 超长行(>200)=0 []
+  [PASS] C17 verify_canvas_round44.py 超长行(>200)=0 []
+  [PASS] C18 verify_routes_order44.py 超长行(>200)=0 []
+  [PASS] C19 gen_routes44.py          超长行(>200)=0 []
+
+③ 编码（无 BOM / 无 U+FFFD / EOL 一致）
+  [PASS] C1 dr_textbox.py             bytes=12408    BOM=False CRLF=0     LF=301   FFFD=0
+  [PASS] C2 dialogue_ui.py            bytes=93844    BOM=False CRLF=0     LF=1859  FFFD=0
+  [PASS] C3 run_all.py                bytes=61599    BOM=False CRLF=0     LF=971   FFFD=0
+  [PASS] C4 baseline.json             bytes=6463     BOM=False CRLF=0     LF=234   FFFD=0
+  [PASS] C5 verify_box_round44.py     bytes=20068    BOM=False CRLF=0     LF=438   FFFD=0
+  [PASS] C6 verify_round8_dialogue.py bytes=13230    BOM=False CRLF=0     LF=337   FFFD=0
+  [PASS] C7 scene_camera.py           bytes=14386    BOM=False CRLF=0     LF=313   FFFD=0
+  [PASS] C8 scene_routing.py          bytes=19598    BOM=False CRLF=0     LF=443   FFFD=0
+  [PASS] C9 scene_controller.py       bytes=32810    BOM=False CRLF=0     LF=618   FFFD=0
+  [PASS] C10 main.py                  bytes=512001   BOM=False CRLF=9212  LF=0     FFFD=0
+  [PASS] C11 _routes.json             bytes=232004   BOM=False CRLF=0     LF=6231  FFFD=0
+  [PASS] C12 verify_camera_round44.py bytes=18464    BOM=False CRLF=0     LF=373   FFFD=0
+  [PASS] C13 verify_scene_route_original.py bytes=26128    BOM=False CRLF=0     LF=521   FFFD=0
+  [PASS] C14 scene_render.py          bytes=18728    BOM=False CRLF=0     LF=387   FFFD=0
+  [PASS] C15 scene_canvas.py          bytes=15086    BOM=False CRLF=0     LF=359   FFFD=0
+  [PASS] C16 verify_render_round44.py bytes=20690    BOM=False CRLF=0     LF=423   FFFD=0
+  [PASS] C17 verify_canvas_round44.py bytes=17438    BOM=False CRLF=0     LF=419   FFFD=0
+  [PASS] C18 verify_routes_order44.py bytes=12125    BOM=False CRLF=0     LF=312   FFFD=0
+  [PASS] C19 gen_routes44.py          bytes=15910    BOM=False CRLF=0     LF=320   FFFD=0
+
+④ 恒真 / 占位判据复查
+  [PASS] C1 dr_textbox.py             check(…,True)=0 assert True=0
+  [PASS] C2 dialogue_ui.py            check(…,True)=0 assert True=0
+  [PASS] C3 run_all.py                check(…,True)=0 assert True=0
+  [PASS] C5 verify_box_round44.py     check(…,True)=0 assert True=0
+  [PASS] C6 verify_round8_dialogue.py check(…,True)=0 assert True=0
+  [PASS] C7 scene_camera.py           check(…,True)=0 assert True=0
+  [PASS] C8 scene_routing.py          check(…,True)=0 assert True=0
+  [PASS] C9 scene_controller.py       check(…,True)=0 assert True=0
+  [PASS] C10 main.py                  check(…,True)=0 assert True=0
+  [PASS] C12 verify_camera_round44.py check(…,True)=0 assert True=0
+  [PASS] C13 verify_scene_route_original.py check(…,True)=0 assert True=0
+  [PASS] C14 scene_render.py          check(…,True)=0 assert True=0
+  [PASS] C15 scene_canvas.py          check(…,True)=0 assert True=0
+  [PASS] C16 verify_render_round44.py check(…,True)=0 assert True=0
+  [PASS] C17 verify_canvas_round44.py check(…,True)=0 assert True=0
+  [PASS] C18 verify_routes_order44.py check(…,True)=0 assert True=0
+  [PASS] C19 gen_routes44.py          check(…,True)=0 assert True=0
+
+⑤ 逐令牌回验（改/删过的关键令牌，逐个回原文 in 一次）
+  [PASS] C1 dr_textbox.py             令牌=11 缺=无
+  [PASS] C2 dialogue_ui.py            令牌=7 缺=无
+  [PASS] C3 run_all.py                令牌=2 缺=无
+  [PASS] C4 baseline.json             令牌=3 缺=无
+  [PASS] C5 verify_box_round44.py     令牌=4 缺=无
+  [PASS] C6 verify_round8_dialogue.py 令牌=4 缺=无
+  [PASS] C7 scene_camera.py           令牌=10 缺=无
+  [PASS] C8 scene_routing.py          令牌=4 缺=无
+  [PASS] C9 scene_controller.py       令牌=5 缺=无
+  [PASS] C10 main.py                  令牌=5 缺=无
+  [PASS] C11 _routes.json             令牌=5 缺=无
+  [PASS] C12 verify_camera_round44.py 令牌=5 缺=无
+  [PASS] C13 verify_scene_route_original.py 令牌=4 缺=无
+  [PASS] C14 scene_render.py          令牌=10 缺=无
+  [PASS] C15 scene_canvas.py          令牌=9 缺=无
+  [PASS] C16 verify_render_round44.py 令牌=4 缺=无
+  [PASS] C17 verify_canvas_round44.py 令牌=3 缺=无
+  [PASS] C18 verify_routes_order44.py 令牌=3 缺=无
+  [PASS] C19 gen_routes44.py          令牌=4 缺=无
+  ---- 令牌合计 = 102 ；missing = 0
+
+  负控制（被删的不许回来）:
+  [PASS] C2 dialogue_ui.py            回来了=无
+  [PASS] C6 verify_round8_dialogue.py 回来了=无
+  [PASS] C7 scene_camera.py           回来了=无
+  [PASS] C9 scene_controller.py       回来了=无
+
+⑥ 工作区干净（git status --porcelain）
+  M code-quality-audit/regress/baseline.json
+   M code-quality-audit/regress/run_all.py
+   M "code-quality-audit/\345\234\272\346\231\257\347\263\273\347\273\237-P0/verify_scene_p0.py"
+   M "code-quality-audit/\345\234\272\346\231\257\347\263\273\347\273\237-P0/verify_scene_routing.py"
+   M "code-quality-audit/\347\254\25436\350\275\256-\346\214\211\345\216\237\344\275\234\350\267\257\347\272\277\346\216\222\345\234\272\346\231\257/verify_scene_route_original.py"
+   M "code-quality-audit/\347\254\254\345\205\253\350\275\256/verify_round8_dialogue.py"
+   M ralsei_pet/assets/scenes/_routes.json
+   M ralsei_pet/modules/dialogue_ui.py
+   M ralsei_pet/modules/scene_controller.py
+   M ralsei_pet/modules/scene_routing.py
+   M ralsei_pet/modules/scene_system.py
+   M ralsei_pet/src/__pycache__/main.cpython-311.pyc
+   M ralsei_pet/src/main.py
+  ?? "code-quality-audit/\347\254\25444\350\275\256-\345\216\237\344\275\234\345\257\271\350\257\235\346\241\206\345\244\215\345\210\273/"
+  ?? ralsei_pet/assets/scenes/_room_geometry.json
+  ?? ralsei_pet/assets/ui/
+  ?? ralsei_pet/modules/dr_textbox.py
+  ?? ralsei_pet/modules/scene_camera.py
+  ?? ralsei_pet/modules/scene_canvas.py
+  ?? ralsei_pet/modules/scene_render.py
+  ?? "\347\254\25444\350\275\256\346\212\245\345\221\212-\345\216\237\344\275\234\345\257\271\350\257\235\346\241\206\345\244\215\345\210\273.md"
+  ?? "\347\254\25444\350\275\256\346\212\245\345\221\212\347\273\255-\345\244\215\346\243\200\344\270\216\346\213\215\346\235\277\346\216\250\350\277\233.md"
+  → 本轮是"待提交"状态，清单即为本轮改动；提交后应为空。
+
+==============================================================================
+复检结论：FAIL 行 = 0
+==============================================================================

@@ -1,0 +1,387 @@
+# -*- coding: utf-8 -*-
+"""房间渲染层（P1）—— 「把原作的世界搬到桌面上」的绘制**计划书**。
+
+本模块只算"要画什么、画在哪"，**一笔都不画**
+------------------------------------------------
+分工（与 scene_system / scene_camera 同源的三段式）：
+
+    scene_system   → 读 JSON，出「场景是什么」（数据）
+    scene_camera   → 出「相机在哪」（几何）
+    scene_render   → 出「这一帧要提交哪些绘制指令」（计划）  ← 本模块
+    main.py 的绘制壳 → 把计划变成 QPainter 调用（Qt）
+
+为什么把"计划"单独一层（而不是直接在 paintEvent 里算）：
+
+1. **可测**：本项目最贵的坑是"函数写对了但产品没用上"，反之也成立 ——
+   "画对了但没人测过"。绘制指令是纯数据（tuple/dict），回归锁能逐条断言，
+   不需要真机截屏（截屏依赖 OpenGL/离屏，第 44 轮实测不稳定）。
+2. **可断言漂移**：程序化化生成的东西最容易"某天悄悄变了个值"。
+   指令清单进基线后，`run_all.py` 的 IDENTICAL 判据直接管住它。
+3. **零 Qt**：与 scene_system 同一条初始化环纪律 —— main.py 在 import 期
+   会 import scene_controller，控制器 import 本模块；本模块一旦 import Qt
+   或 import 项目内模块就会接环（已踩 4 次）。
+
+绘制顺序（**从后到前**，等价原作的 depth 排序）
+-----------------------------------------------
+    1. `bg`         —— 背景铺满整个房间世界矩形（相机裁剪）
+    2. `objects`    —— 物件，按 `depth_of` 升序（远的先画）
+    3. `overlay`    —— 本模块产出的"提示层"（缺背景时的占位斜纹 / 房间边框）
+
+★ 「背景相对运动」的算术就在 `camera.to_view_rect()`：
+  视口矩形 = (世界矩形 × scale) − 相机原点。背景与物件**共用同一个变换**
+  ⇒ 天然同步，不存在"背景动得慢一点"（那不是原作，见 scene_camera 文档）。
+
+缺数据时的行为（**全部显式标注，不静默降级**）
+---------------------------------------------
+| 情形 | 行为 | 指令里的标记 |
+|---|---|---|
+| 房间几何查不到 | 退化为「房间 = 相机视口」（相机不移动） | `room_known=False` |
+| 背景文件找不到 | 不产 bg 指令，改产一条 `placeholder` | `bg_missing=True` |
+| 物件没素材 | 仍产指令（`pixmap=None`）—— 物件可能只是逻辑锚点 | `asset=None` |
+
+**为什么不"算不出就整段不画"**：整段不画会让桌面突然空掉，用户以为坏了；
+而"画个斜纹占位"传达了正确信息（这里本来有东西，只是素材没到）。
+
+四条设计律（与 scene_camera / scene_system 同源）
+-------------------------------------------------
+1. 算不出 → 返回 `None` / 空列表，**不伪装成 (0,0)**。
+2. 越界一律钳，不报错。
+3. 纯函数优先 —— `plan_frame()` 不持有状态。
+4. **不 import Qt、不 import 项目内模块**（初始化环纪律）。
+"""
+import logging
+
+_log = logging.getLogger(__name__)
+
+#: 缺背景时的占位斜纹的间距（px）。选 16 是因为它是原作边框带 BAND 的一半 ——
+#: 不与任何原作素材尺寸冲突，视觉上一眼能看出"这是占位不是内容"。
+PLACEHOLDER_STRIPE = 16
+
+#: 房间边框线宽（px）。只为让"房间到底多大"可见 —— 大房间（6220×1920）
+#: 没有这个框，用户看不出自己是在一个房间里。
+ROOM_BORDER_W = 2
+
+#: 指令 kind 常量（渲染壳按这些分派）
+K_BG = 'bg'
+K_OBJ = 'obj'
+K_PLACEHOLDER = 'placeholder'
+K_ROOM_BORDER = 'room_border'
+
+
+def output_size(camera):
+    """相机视口在**输出像素**下的尺寸 = 相机**原始**尺寸（= `camera.size`）。
+
+    ★ 推导（与 `scene_camera.scoped_size()` 配套，务必一致）
+    ---------------------------------------------------
+    · 相机**逻辑**窗口 = `size / scale`（`scoped_size()`）；
+    · 输出像素 = 逻辑 × scale；
+    · ⇒ 输出像素 = `(size / scale) × scale` = **`size`**。scale 约掉。
+
+    **这才是正确的**:"放大"不改变"相机看到多少逻辑范围"与"输出多少像素"的
+    比例关系 —— 它改变的是**每逻辑单位占多少屏幕像素**。
+
+    ⚠️ 曾经写成 `size × scale`（因为误以为相机逻辑窗口是 `size`）——
+       那会让 `output_size` 比真实画布大一倍，`viewport_size` 的上限也跟着错。
+    """
+    if camera is None:
+        return (640, 480)
+    size = camera.size
+    return (int(size[0]), int(size[1]))
+
+
+def viewport_size(camera, geo):
+    """这一帧的**视口像素尺寸** —— 小房间时收缩到房间大小，大房间用相机尺寸。
+
+    为什么不能无条件用相机尺寸（`640×480`）：
+    原作里绝大多数房间比相机小（`320×240` = 现实世界标准房），
+    若视口固定 640×480，小房间只会占中间一小块，四周是空的 ——
+    观感上"房间没放大"，与用户「房间放大些，但不必全屏」的意图相反。
+
+    规则（与 `camera_rect` 的"房间比相机小 → 居中"配对）：
+      · 房间**比相机窗口小**（该轴）→ 视口取**房间像素**（= `geo × scale`），
+        房间正好填满；
+      · 房间**比相机窗口大**（该轴）→ 视口取**相机像素**（= `camera.size`），
+        靠相机平移看全景；
+      · 房间未知 → 相机像素（唯一安全的默认）。
+
+    ⚠️ 两个轴**独立判断**：原作里有 640×1160 这种"宽=相机、高=2.4×相机"的房，
+       横向不该收缩、纵向才有滚动。一刀切会把这种房压扁。
+
+    ★ 返回的是**输出像素**尺寸。相机逻辑窗口 = `size/scale`，房间逻辑 = `geo`，
+      所以"房间像素 = geo × scale"，"相机像素 = size"（见 `output_size` 推导）。
+    """
+    if camera is None:
+        return (640, 480)
+    base_w, base_h = camera.size
+    scale = camera.scale if camera.scale > 0 else 1.0
+    if not geo:
+        return (int(base_w), int(base_h))
+    gw = geo.get('w')
+    gh = geo.get('h')
+    if not isinstance(gw, int) or not isinstance(gh, int) or gw <= 0 or gh <= 0:
+        return (int(base_w), int(base_h))
+    w_px = int(round(gw * scale))
+    h_px = int(round(gh * scale))
+    return (min(int(base_w), w_px), min(int(base_h), h_px))
+
+
+def to_output(rect_ws, camera):
+    """把**视口逻辑坐标**矩形换算成**输出像素**矩形 `(x, y, w, h)`。
+
+    `rect_ws` = `(l, t, r, b)`（逻辑坐标，来自 `camera.to_view_rect`）。
+    **乘** `camera.scale` 即得像素 —— 这是"放大"在数学上唯一发生的位置。
+
+    ★ 第 44 轮修正：曾写成"÷scale"。那是错的 —— 当时 `to_view_rect` 内部
+      先把坐标 ×scale 了，所以要用除法抵消。修正后 `scene_camera` 全程走逻辑
+      坐标（见其 `scoped_size()` 文档），于是这里**乘法**才是对的，
+      也才是"输出放大倍数"这个语义该有的样子。
+    """
+    if not rect_ws or len(rect_ws) != 4:
+        return None
+    s = camera.scale if camera is not None and camera.scale > 0 else 1.0
+    l, t, r, b = rect_ws
+    return (int(round(l * s)), int(round(t * s)),
+            int(round((r - l) * s)), int(round((b - t) * s)))
+
+
+def room_geometry(room_id, chapter_id, geo_table=None):
+    """查房间世界几何 → `{'w','h','name'?}`；查不到 → `None`（不伪造）。
+
+    :param room_id: 原作 `Data.Rooms` 下标（产品里叫 `original_room_id`）。
+    :param chapter_id: 章号字符串，如 `'ch1'`。
+    :param geo_table: `_room_geometry.json` 的 `rooms` 子表。`None`/空 → `None`。
+    """
+    if not isinstance(geo_table, dict) or not isinstance(room_id, int):
+        return None
+    if not chapter_id:
+        return None
+    rec = geo_table.get('%s:%d' % (chapter_id, room_id))
+    if not isinstance(rec, dict):
+        return None
+    w = rec.get('w')
+    h = rec.get('h')
+    if not isinstance(w, int) or not isinstance(h, int) or w <= 0 or h <= 0:
+        return None
+    out = {'w': w, 'h': h}
+    if isinstance(rec.get('name'), str):
+        out['name'] = rec['name']
+    return out
+
+
+def room_world_rect(geo, camera=None):
+    """房间世界矩形 `(0, 0, w, h)`；`geo` 为空 → 退化为相机视口（仍返回合法矩形）。
+
+    ⚠️ 退化值**必须是相机的世界尺寸**而不是 `(0,0,0,0)`：
+       零尺寸矩形会让相机钳制逻辑除以零 / 把物件全裁掉。
+       用相机尺寸作退化 = "房间刚好一屏" —— 这是**安全的默认**（画面正常，
+       只是不能滚动），符合"宁可少动，不要崩"。
+    """
+    if geo and isinstance(geo.get('w'), int) and isinstance(geo.get('h'), int):
+        return (0.0, 0.0, float(geo['w']), float(geo['h']))
+    if camera is not None:
+        size = camera.size
+        return (0.0, 0.0, float(size[0]), float(size[1]))
+    return (0.0, 0.0, 640.0, 480.0)
+
+
+def visible_in_view(rect, view_size):
+    """视口剔除：`rect` 与 `(0,0,vw,vh)` 有无交集。
+
+    为什么必须有这一步：大房间（6,220 宽）里可能站着几十个物件，
+    逐个 `drawPixmap` 是纯浪费。剔除是**渲染层唯一的性能开关**，
+    所以判据要能单独测（见回归锁 `render_round44` 的 E 段）。
+
+    `rect` = `(x, y, w, h)`（**视口坐标**）；`view_size` = `(vw, vh)`。
+    """
+    if not rect or len(rect) != 4 or not view_size or len(view_size) != 2:
+        return False
+    x, y, w, h = rect
+    vw, vh = view_size
+    if w <= 0 or h <= 0 or vw <= 0 or vh <= 0:
+        return False
+    return not (x + w <= 0 or y + h <= 0 or x >= vw or y >= vh)
+
+
+def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
+    """产出这一帧的**绘制指令清单**（列表，从后到前）。
+
+    :param scene: `SceneState`（含 `.objects` / `.bg` / `.original_room_id`）。
+                  `None` → 返回 `[]`（没有场景 = 没有要画的东西，不报错）。
+    :param camera: `scene_camera.Camera`。`None` 或未 follow → 返回 `[]`
+                   （**没有相机就不画** —— 因为所有坐标都要相机变换，
+                     硬画会把世界坐标当成屏幕坐标，画出完全错的位置）。
+    :param geo_table: `_room_geometry.json['rooms']`。
+    :param tick: 帧号（驱动 `pick_variant` 的多帧轮播）。
+    :param sprite_size: 可选的 `callable(name) -> (w, h)`，告诉渲染层每个
+                        素材的像素尺寸（用于剔除与居中）。缺省时按 `(1,1)` 处理
+                        —— 即"不参与剔除的保守假设"？不，是**参与但极小**，
+                        保证不掉帧；真正的尺寸由 Qt 壳注入。
+
+    :return: `[dict]`，每条含 `kind` + 几何 + 素材名。顺序即绘制顺序。
+    """
+    if scene is None or camera is None:
+        return []
+    cam = camera.rect
+    if cam is None:
+        return []
+
+    room_id = getattr(scene, 'original_room_id', None)
+    chapter_id = getattr(scene, 'chapter_id', None)
+    # ⚠️ `geo` 参数是**全表**（`{'ch1:2': {...}}`）；`viewport_size` 要的是**该房间
+    #    的记录**（`{'w','h'}`）。第 44 轮首跑 D5a 报"物件全被剔除"，根因就是把全表
+    #    直接传给了它 —— 全表没有 `'w'` 键 ⇒ 内部走退化分支 ⇒ 视口被当成 1280×960
+    #    （相机尺寸×scale），而实际该是 640×480（房间 320×240 ×2），于是坐标算错。
+    geo = room_geometry(room_id, chapter_id, geo_table)
+    room_known = geo is not None
+    world = room_world_rect(geo, camera)
+    # ★ 视口 = 小房间收缩到房间尺寸、大房间用相机尺寸（见 viewport_size 文档）。
+    #   两轴独立判断：原作里有 640×1160 这种"宽=相机、高=2.4×相机"的房间。
+    view = viewport_size(camera, geo)
+
+    out = []
+
+    # ---- 1. 背景（**按素材原尺寸**铺在房间原点，相机裁剪）----
+    # ★★★ 第44轮真机实测修正（务必理解，这是最容易再写错的一处）
+    #   早先版本把"房间世界矩形"整个拉伸给背景（`drawPixmap(room_px, bg)`）。
+    #   真机一跑就错：`castle_front` 的房间世界是 1000×1000，而导出背景只有
+    #   660×480 —— 拉伸会把背景**放大 1.5 倍**，像素风素材立刻糊掉，
+    #   而且画面内容对不上（背景画的是原尺寸取景，不是整个房间）。
+    #
+    #   正确模型：背景素材**自带尺寸**（`sprite_size(name)` 给），落到屏幕上就是
+    #   `素材像素 × scale`，位置在**房间原点**（原作背景层的 X/Y 偏移为 0 ——
+    #   第43轮已实证 1,014 图层里 HSpeed/VSpeed 非零 = 0，无偏移、无视差）。
+    #
+    #   链路：世界矩形 `(0,0,bgw,bgh)` → `to_view_rect` 得视口逻辑 → `to_output` 乘 scale。
+    bg = getattr(scene, 'bg', None)
+    bg_name = bg if isinstance(bg, str) and bg else None
+    room_rect_ws = camera.to_view_rect(world)
+    room_px = to_output(room_rect_ws, camera) if room_rect_ws is not None else None
+    if bg_name:
+        # 背景素材的真实像素尺寸（未乘 scale）。拿不到 → 退回房间世界矩形
+        # （**保守且安全**：至少铺满可见区，不会留白；只是可能有拉伸）。
+        bg_w = bg_h = None
+        if callable(sprite_size):
+            try:
+                got = sprite_size(bg_name)
+                if isinstance(got, (list, tuple)) and len(got) == 2 \
+                        and got[0] > 0 and got[1] > 0:
+                    bg_w, bg_h = int(got[0]), int(got[1])
+            except Exception:
+                bg_w = bg_h = None
+        if bg_w and bg_h:
+            # 背景世界矩形 = 原点 + 素材尺寸（原作背景层偏移恒 0）
+            bg_world = (0.0, 0.0, float(bg_w), float(bg_h))
+            bg_ws = camera.to_view_rect(bg_world)
+            bg_px = to_output(bg_ws, camera) if bg_ws is not None else None
+        else:
+            bg_px = room_px
+        if bg_px is not None and visible_in_view(bg_px, view):
+            out.append({
+                'kind': K_BG,
+                'name': bg_name,
+                'rect': bg_px,
+                'world': world,
+                'native': (bg_w, bg_h),
+                'room_known': room_known,
+            })
+        elif bg_px is None:
+            out.append({
+                'kind': K_PLACEHOLDER,
+                'rect': (0, 0, int(view[0]), int(view[1])),
+                'stripe': PLACEHOLDER_STRIPE,
+                'room_known': room_known,
+                'reason': '相机未 follow（背景算不出）',
+            })
+    else:
+        # 没背景 → 占位（不静默空着，见模块 docstring 的表）
+        out.append({
+            'kind': K_PLACEHOLDER,
+            'rect': (0, 0, int(view[0]), int(view[1])),
+            'stripe': PLACEHOLDER_STRIPE,
+            'room_known': room_known,
+            'reason': 'scene.bg 为空',
+        })
+
+    # ---- 2. 物件（按 depth 升序；本层只做变换 + 剔除，不排序 —— 排序在 scene_system）----
+    scale = camera.scale if camera.scale > 0 else 1.0
+    for obj in (getattr(scene, 'objects', None) or []):
+        if not isinstance(obj, dict):
+            continue
+        pos = obj.get('pos')
+        if not (isinstance(pos, (list, tuple)) and len(pos) == 2):
+            continue
+        v = camera.to_view((float(pos[0]), float(pos[1])))
+        if v is None:
+            continue
+        # 视口逻辑坐标 → 输出像素（× scale）
+        px = (int(round(v[0] * scale)), int(round(v[1] * scale)))
+        name = obj.get('sprite') or obj.get('image') or obj.get('asset')
+        size = (1, 1)
+        if callable(sprite_size) and isinstance(name, str) and name:
+            try:
+                got = sprite_size(name)
+                if isinstance(got, (list, tuple)) and len(got) == 2:
+                    size = (max(1, int(round(got[0] * scale))),
+                            max(1, int(round(got[1] * scale))))
+            except Exception:
+                size = (1, 1)
+        if not visible_in_view((px[0], px[1], size[0], size[1]), view):
+            continue
+        alpha = obj.get('alpha', 1.0)
+        try:
+            alpha = float(alpha)
+        except (TypeError, ValueError):
+            alpha = 1.0
+        out.append({
+            'kind': K_OBJ,
+            'name': name if isinstance(name, str) else None,
+            'rect': (px[0], px[1], size[0], size[1]),
+            'depth': obj.get('depth'),
+            'alpha': alpha,
+            'room_known': room_known,
+        })
+
+    # ---- 3. 房间边框（房间比**相机**宽才画：满了屏幕就不必再框）----
+    #   判据用 `to_output(camera.rect)`（相机视口像素）而不是 `view` ——
+    #   后者在小房间时已被收缩成房间大小，那时 `rw == view[0]`，
+    #   用 `view` 判会**永远不画**（本套件 D4a 首跑就是这样报红的）。
+    #   语义上"要不要画边框"取决于"相机能不能看到房间外面"。
+    if room_known and room_px is not None:
+        cam_px = to_output(camera.visible_world_rect(), camera)
+        cam_w = cam_px[2] if cam_px else view[0]
+        if room_px[2] > cam_w:
+            out.append({
+                'kind': K_ROOM_BORDER,
+                'rect': room_px,
+                'width': ROOM_BORDER_W,
+                'room_known': True,
+            })
+
+    return out
+
+
+def plan_viewport(scene, camera, geo_table=None):
+    """这一帧的**画布像素尺寸** `(w, h)` —— Qt 壳按它 `resize()` 自己的画布。
+
+    与 `plan_frame` 分开（而不是塞进指令清单的第一个元素）：
+    画布尺寸是"容器属性"，指令是"内容"；混在一起会让 `plan_summary` 的计数
+    把画布也算成一条指令（回归锁就必须为它写特例）。分开则各自可断言。
+    """
+    if scene is None or camera is None or camera.rect is None:
+        return (0, 0)
+    room_id = getattr(scene, 'original_room_id', None)
+    chapter_id = getattr(scene, 'chapter_id', None)
+    geo = room_geometry(room_id, chapter_id, geo_table)
+    return viewport_size(camera, geo)
+
+
+def plan_summary(plan):
+    """把指令清单压成一行中文摘要（日志/自省/回归断言用）。"""
+    if not plan:
+        return '（无绘制指令）'
+    counts = {}
+    for it in plan:
+        k = it.get('kind')
+        counts[k] = counts.get(k, 0) + 1
+    parts = ['%s×%d' % (k, counts[k]) for k in sorted(counts)]
+    return '、'.join(parts)

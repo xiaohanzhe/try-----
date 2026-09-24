@@ -1,0 +1,660 @@
+== [A] Rooms 总数 = 147 ==
+0	ROOM_INITIALIZE	640x480	pers=False	layers=2(tile0/bg1)	inst=4	doors=0	markers=0
+1	PLACE_CONTACT	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+2	room_krisroom	320x240	pers=False	layers=8(tile0/bg2)	inst=26	doors=1	markers=1
+      D 155,230,obj_doorA
+      M 155,185,obj_markerB
+3	room_krishallway	540x240	pers=False	layers=8(tile0/bg2)	inst=22	doors=2	markers=2
+      D 289,104,obj_doorB
+      D 425,100,obj_doorC
+      M 289,112,obj_markerA
+      M 426,118,obj_markerD
+4	room_torroom	320x240	pers=False	layers=3(tile0/bg1)	inst=2	doors=0	markers=0
+5	room_torhouse	700x240	pers=False	layers=8(tile0/bg2)	inst=42	doors=3	markers=3
+      D 144,68,obj_doorD
+      D 84,168,obj_doorA
+      D 594,149,obj_doorX_musfade
+      M 144,90,obj_markerC
+      M 108,148,obj_markerB
+      M 567,136,obj_markerX
+6	room_torbathroom	320x240	pers=False	layers=7(tile0/bg2)	inst=16	doors=1	markers=1
+      D 236,134,obj_doorB
+      M 216,120,obj_markerA
+7	room_town_krisyard	320x420	pers=False	layers=9(tile0/bg1)	inst=28	doors=2	markers=2
+      D 120,410,obj_doorC
+      D 158,168,obj_doorX_musfade
+      M 160,362,obj_markerD
+      M 158,182,obj_markerX
+8	room_town_northwest	320x240	pers=False	layers=3(tile0/bg1)	inst=2	doors=0	markers=0
+9	room_town_north	1800x240	pers=False	layers=11(tile0/bg1)	inst=52	doors=4	markers=4
+      D 625,230,obj_doorC
+      D 1258,98,obj_doorX
+      D 1790,100,obj_doorA
+      D 378,-12,obj_doorD
+      M 660,180,obj_markerD
+      M 1258,112,obj_markerX
+      M 1764,104,obj_markerB
+      M 418,4,obj_markerC
+10	room_beach	600x240	pers=False	layers=11(tile0/bg2)	inst=13	doors=1	markers=1
+      D -15,60,obj_doorB
+      M 10,100,obj_markerA
+11	room_town_mid	2040x240	pers=False	layers=10(tile0/bg1)	inst=57	doors=4	markers=4
+      D 772,232,obj_doorC
+      D 780,0,obj_doorD
+      D 600,90,obj_doorX
+      D 1740,-10,obj_doorW
+      M 820,184,obj_markerD
+      M 820,8,obj_markerC
+      M 600,105,obj_markerX
+      M 1768,0,obj_markerw
+12	room_town_apartments	920x240	pers=False	layers=3(tile0/bg1)	inst=2	doors=0	markers=0
+13	room_town_south	1320x240	pers=False	layers=12(tile0/bg1)	inst=41	doors=5	markers=5
+      D 1000,80,obj_doorX
+      D 600,80,obj_doorW
+      D 1314,106,obj_doorA
+      D 798,235,obj_doorC
+      D 798,1,obj_doorD
+      M 1005,95,obj_markerX
+      M 611,91,obj_markerw
+      M 1288,129,obj_markerB
+      M 839,188,obj_markerD
+      M 839,9,obj_markerC
+14	room_town_school	580x320	pers=False	layers=10(tile0/bg1)	inst=21	doors=2	markers=2
+      D 2,182,obj_doorB
+      D 360,120,obj_doorX_musfade
+      M 373,135,obj_markerX
+      M 12,210,obj_markerA
+15	room_town_church	760x640	pers=False	layers=10(tile0/bg1)	inst=39	doors=4	markers=4
+      D 565,85,obj_doorX
+      D 380,630,obj_doorC_musfade
+      D 0,340,obj_doorA
+      D 360,0,obj_doorD
+      M 572,95,obj_markerX
+      M 430,580,obj_markerD
+      M 10,350,obj_markerB
+      M 420,0,obj_markerC
+16	room_graveyard	600x240	pers=False	layers=12(tile0/bg2)	inst=27	doors=1	markers=2
+      D 595,115,obj_doorB
+      M 570,130,obj_markerX
+      M 570,130,obj_markerA
+17	room_town_shelter	320x1240	pers=False	layers=12(tile0/bg1)	inst=29	doors=1	markers=1
+      D 120,0,obj_doorD_musfade
+      M 150,20,obj_markerC
+18	room_hospital_lobby	320x240	pers=False	layers=7(tile0/bg2)	inst=24	doors=2	markers=2
+      D 140,230,obj_doorW
+      D 70,76,obj_doorA
+      M 76,88,obj_markerB
+      M 150,188,obj_markerw
+19	room_hospital_hallway	320x240	pers=False	layers=6(tile0/bg2)	inst=18	doors=3	markers=3
+      D 140,186,obj_doorB
+      D 79,75,obj_doorA
+      D 190,77,obj_doorC
+      M 150,138,obj_markerA
+      M 90,84,obj_markerB
+      M 210,85,obj_markerD
+20	room_hospital_rudy	320x240	pers=False	layers=7(tile0/bg2)	inst=25	doors=2	markers=1
+      D 140,230,obj_doorB
+      D 160,230,obj_doorB
+      M 150,190,obj_markerA
+21	room_hospital_room2	320x240	pers=False	layers=6(tile0/bg2)	inst=19	doors=1	markers=1
+      D 140,236,obj_doorD
+      M 150,186,obj_markerC
+22	room_diner	320x240	pers=False	layers=8(tile0/bg2)	inst=25	doors=1	markers=1
+      D 140,230,obj_doorX
+      M 150,190,obj_markerX
+23	room_townhall	320x240	pers=False	layers=7(tile0/bg2)	inst=21	doors=1	markers=1
+      D 140,230,obj_doorX
+      M 150,190,obj_markerX
+24	room_flowershop_1f	320x240	pers=False	layers=8(tile0/bg2)	inst=29	doors=3	markers=3
+      D 140,230,obj_doorX
+      D 20,44,obj_doorA
+      D 260,46,obj_doorA
+      M 150,190,obj_markerX
+      M 36,56,obj_markerB
+      M 262,56,obj_markerB
+25	room_flowershop_2f	320x240	pers=False	layers=8(tile0/bg3)	inst=35	doors=2	markers=2
+      D 20,235,obj_doorB
+      D 260,235,obj_doorB
+      M 30,195,obj_markerA
+      M 270,195,obj_markerA
+26	room_library	320x240	pers=False	layers=9(tile0/bg2)	inst=32	doors=2	markers=1
+      D 140,230,obj_doorX
+      D 160,230,obj_doorX
+      M 150,180,obj_markerX
+27	room_alphysalley	320x240	pers=False	layers=7(tile0/bg2)	inst=14	doors=1	markers=1
+      D 120,235,obj_doorW
+      M 150,190,obj_markerw
+28	room_torielclass	320x240	pers=False	layers=8(tile0/bg3)	inst=31	doors=1	markers=1
+      D 57,46,obj_doorA
+      M 57,55,obj_markerB
+29	room_schoollobby	940x420	pers=False	layers=8(tile0/bg1)	inst=46	doors=4	markers=4
+      D 110,194,obj_doorA
+      D 440,-10,obj_doorC
+      D 830,194,obj_doorB
+      D 440,415,obj_doorX_musfade
+      M 110,200,obj_markerB
+      M 460,-6,obj_markerD
+      M 460,360,obj_markerX
+      M 830,202,obj_markerA
+30	room_alphysclass	320x240	pers=False	layers=7(tile0/bg2)	inst=41	doors=0	markers=1
+      M 242,52,obj_markerA
+31	room_schooldoor	620x240	pers=False	layers=8(tile0/bg1)	inst=20	doors=4	markers=2
+      D 300,230,obj_doorD
+      D 280,230,obj_doorD
+      D 320,230,obj_doorD
+      D 500,95,obj_doorC
+      M 300,190,obj_markerC
+      M 510,100,obj_markerD
+32	room_insidecloset	820x500	pers=False	layers=8(tile0/bg2)	inst=29	doors=0	markers=0
+33	room_school_unusedroom	320x240	pers=False	layers=8(tile0/bg2)	inst=21	doors=1	markers=1
+      D 140,180,obj_doorD
+      M 150,136,obj_markerC
+34	room_dark1	640x480	pers=False	layers=7(tile0/bg1)	inst=19	doors=1	markers=1
+      D 630,200,obj_doorA
+      M 590,180,obj_markerB
+35	room_dark1a	640x480	pers=False	layers=7(tile0/bg1)	inst=17	doors=2	markers=2
+      D -10,200,obj_doorB
+      D 630,200,obj_doorA
+      M 10,180,obj_markerA
+      M 590,180,obj_markerB
+36	room_dark2	3640x520	pers=False	layers=8(tile0/bg1)	inst=51	doors=2	markers=2
+      D -10,200,obj_doorB
+      D 3630,320,obj_doorA
+      M 10,180,obj_markerA
+      M 3570,290,obj_markerB
+37	room_dark3	1520x1280	pers=False	layers=8(tile0/bg1)	inst=35	doors=3	markers=3
+      D 0,360,obj_doorB
+      D 1000,1270,obj_doorA
+      D 1510,920,obj_doorC
+      M 20,340,obj_markerA
+      M 1020,1180,obj_markerB
+      M 1460,900,obj_markerD
+38	room_dark3a	640x480	pers=False	layers=6(tile0/bg1)	inst=13	doors=1	markers=1
+      D 400,-20,obj_doorB
+      M 440,0,obj_markerA
+39	room_dark_wobbles	1320x480	pers=False	layers=7(tile0/bg1)	inst=11	doors=2	markers=2
+      D -10,320,obj_doorD
+      D 1310,320,obj_doorA
+      M 10,300,obj_markerC
+      M 1260,300,obj_markerB
+40	room_dark_eyepuzzle	1360x480	pers=False	layers=9(tile0/bg1)	inst=15	doors=2	markers=2
+      D 0,280,obj_doorB
+      D 1340,320,obj_doorA
+      M 40,300,obj_markerA
+      M 1300,300,obj_markerB
+41	room_dark7	2040x880	pers=False	layers=6(tile0/bg1)	inst=38	doors=2	markers=2
+      D 2030,680,obj_doorA
+      D -10,240,obj_doorB
+      M 1980,660,obj_markerB
+      M 10,220,obj_markerA
+42	room_dark_chase1	5400x1000	pers=False	layers=10(tile0/bg4)	inst=19	doors=2	markers=1
+      D 5390,800,obj_doorA
+      D -10,520,obj_doorB
+      M 10,500,obj_markerA
+43	room_dark_chase2	640x1840	pers=False	layers=8(tile0/bg3)	inst=6	doors=0	markers=1
+      M 0,320,obj_markerA
+44	room_castle_outskirts	640x480	pers=False	layers=6(tile0/bg2)	inst=8	doors=1	markers=1
+      D 630,280,obj_doorA
+      M 580,260,obj_markerB
+45	room_castle_town	640x1160	pers=False	layers=8(tile0/bg2)	inst=54	doors=3	markers=3
+      D -10,958,obj_doorB
+      D 246,192,obj_doorA
+      D 630,954,obj_doorX
+      M 24,940,obj_markerA
+      M 302,200,obj_markerB
+      M 578,942,obj_markerX
+46	room_castle_front	1000x1000	pers=False	layers=9(tile0/bg2)	inst=23	doors=1	markers=1
+      D 440,990,obj_doorB
+      M 500,884,obj_markerA
+47	room_castle_tutorial	1400x480	pers=False	layers=5(tile0/bg1)	inst=13	doors=2	markers=2
+      D -10,320,obj_doorX
+      D 1390,320,obj_doorA
+      M 10,310,obj_markerX
+      M 1350,300,obj_markerB
+48	room_castle_darkdoor	640x480	pers=False	layers=6(tile0/bg1)	inst=11	doors=1	markers=1
+      D -10,320,obj_doorB
+      M 10,300,obj_markerA
+49	room_field_start	640x1000	pers=False	layers=9(tile0/bg1)	inst=16	doors=1	markers=2
+      D 200,980,obj_doorA
+      M 300,900,obj_markerB
+      M 300,380,obj_markerA
+50	room_field_forest	1040x480	pers=False	layers=8(tile0/bg1)	inst=11	doors=2	markers=2
+      D 1030,280,obj_doorA_musfade
+      D 240,160,obj_doorB
+      M 280,160,obj_markerA
+      M 990,300,obj_markerB
+51	room_field1	2000x680	pers=False	layers=6(tile0/bg1)	inst=30	doors=2	markers=2
+      D -10,310,obj_doorB_musfade
+      D 1680,670,obj_doorA
+      M 10,300,obj_markerA
+      M 1690,590,obj_markerB
+52	room_field2	2000x680	pers=False	layers=7(tile0/bg1)	inst=44	doors=3	markers=3
+      D 240,-10,obj_doorB
+      D 640,670,obj_doorA
+      D 1990,320,obj_doorC
+      M 1950,300,obj_markerD
+      M 260,10,obj_markerA
+      M 670,590,obj_markerB
+53	room_field2A	640x480	pers=False	layers=6(tile0/bg1)	inst=14	doors=1	markers=1
+      D 400,-10,obj_doorB
+      M 430,10,obj_markerA
+54	room_field_topchef	640x480	pers=False	layers=6(tile0/bg1)	inst=16	doors=2	markers=2
+      D -10,240,obj_doorD
+      D 630,240,obj_doorA
+      M 10,220,obj_markerC
+      M 590,220,obj_markerB
+55	room_field_puzzle1	1600x480	pers=False	layers=10(tile1/bg1)	inst=37	doors=2	markers=2
+      D -10,280,obj_doorB
+      D 1590,280,obj_doorA
+      M 20,260,obj_markerA
+      M 1540,260,obj_markerB
+56	room_field_maze	1960x1480	pers=False	layers=7(tile0/bg1)	inst=79	doors=2	markers=2
+      D -10,280,obj_doorB
+      D 1940,1160,obj_doorA
+      M 1900,1120,obj_markerB
+      M 20,260,obj_markerA
+57	room_field_puzzle2	640x480	pers=False	layers=9(tile0/bg1)	inst=23	doors=2	markers=2
+      D -10,280,obj_doorB
+      D 630,280,obj_doorA
+      M 10,260,obj_markerA
+      M 590,260,obj_markerB
+58	room_field_getsusie	640x480	pers=False	layers=6(tile0/bg1)	inst=14	doors=1	markers=2
+      D -10,240,obj_doorB
+      M 10,200,obj_markerA
+      M 440,140,obj_markerB
+59	room_field_shop1	640x480	pers=False	layers=7(tile0/bg1)	inst=22	doors=4	markers=4
+      D 240,470,obj_doorB
+      D 260,160,obj_doorX_musfade
+      D 620,200,obj_doorC
+      D 0,200,obj_doorA
+      M 280,180,obj_markerX
+      M 280,390,obj_markerA
+      M 580,180,obj_markerD
+      M 20,180,obj_markerB
+60	room_field_puzzletutorial	640x480	pers=False	layers=6(tile0/bg1)	inst=26	doors=1	markers=1
+      D 620,200,obj_doorB
+      M 580,200,obj_markerA
+61	room_field3	1200x480	pers=False	layers=7(tile0/bg1)	inst=25	doors=2	markers=3
+      D 1190,240,obj_doorA
+      D -10,240,obj_doorD
+      M 1150,220,obj_markerB
+      M 10,220,obj_markerC
+      M 318,176,obj_markerw
+62	room_field_boxpuzzle	640x480	pers=False	layers=8(tile0/bg1)	inst=36	doors=2	markers=2
+      D 280,100,obj_doorA
+      D -20,240,obj_doorB
+      M 0,220,obj_markerA
+      M 300,120,obj_markerB
+63	room_field4	1040x480	pers=False	layers=8(tile0/bg1)	inst=40	doors=3	markers=3
+      D 160,460,obj_doorB
+      D 160,0,obj_doorA
+      D 1030,240,obj_doorC_musfade
+      M 180,380,obj_markerA
+      M 180,10,obj_markerB
+      M 970,220,obj_markerD
+64	room_field_secret1	1640x480	pers=False	layers=8(tile0/bg1)	inst=32	doors=1	markers=1
+      D 120,470,obj_doorB
+      M 140,370,obj_markerA
+65	room_field_checkers4	2000x480	pers=False	layers=10(tile0/bg2)	inst=27	doors=2	markers=2
+      D 1980,240,obj_doorA
+      D 0,240,obj_doorD_musfade
+      M 1940,220,obj_markerB
+      M 20,220,obj_markerC
+66	room_field_checkers2	1720x480	pers=False	layers=10(tile0/bg2)	inst=37	doors=2	markers=2
+      D 0,240,obj_doorB
+      D 1700,240,obj_doorA
+      M 20,220,obj_markerA
+      M 1660,220,obj_markerB
+67	room_field_checkers6	2000x480	pers=False	layers=11(tile0/bg2)	inst=29	doors=2	markers=2
+      D 1980,240,obj_doorA
+      D 0,240,obj_doorB
+      M 20,220,obj_markerA
+      M 1940,220,obj_markerB
+68	room_field_checkers3	640x480	pers=False	layers=8(tile0/bg2)	inst=10	doors=2	markers=2
+      D 0,240,obj_doorB
+      D 630,240,obj_doorA
+      M 20,240,obj_markerA
+      M 580,220,obj_markerB
+69	room_field_checkers1	2000x480	pers=False	layers=9(tile0/bg2)	inst=11	doors=2	markers=2
+      D 1980,240,obj_doorA
+      D 0,240,obj_doorB
+      M 20,220,obj_markerA
+      M 1940,220,obj_markerB
+70	room_field_checkers5	2000x480	pers=False	layers=10(tile0/bg2)	inst=45	doors=2	markers=2
+      D 1980,240,obj_doorA
+      D 0,240,obj_doorB
+      M 20,220,obj_markerA
+      M 1940,220,obj_markerB
+71	room_field_checkers7	640x480	pers=False	layers=7(tile0/bg2)	inst=11	doors=2	markers=2
+      D 0,240,obj_doorB
+      D 630,240,obj_doorA
+      M 20,220,obj_markerA
+      M 580,220,obj_markerB
+72	room_field_checkersboss	1040x480	pers=False	layers=8(tile0/bg2)	inst=11	doors=2	markers=2
+      D 1020,240,obj_doorA_musfade
+      D 0,240,obj_doorB
+      M 20,220,obj_markerA
+      M 980,220,obj_markerB
+73	room_forest_savepoint1	640x480	pers=False	layers=8(tile0/bg1)	inst=22	doors=2	markers=3
+      D 0,230,obj_doorB_musfade
+      D 620,230,obj_doorA_musfade
+      M 20,220,obj_markerA
+      M 570,220,obj_markerB
+      M 300,130,obj_markerw
+74	room_forest_area0	840x480	pers=False	layers=8(tile0/bg1)	inst=20	doors=2	markers=2
+      D 0,200,obj_doorB_musfade
+      D 830,200,obj_doorA
+      M 10,200,obj_markerA
+      M 790,200,obj_markerB
+75	room_forest_area1	1400x920	pers=False	layers=9(tile0/bg1)	inst=41	doors=2	markers=2
+      D 1390,760,obj_doorA
+      D 0,160,obj_doorB
+      M 40,160,obj_markerA
+      M 1340,760,obj_markerB
+76	room_forest_area2	1400x1000	pers=False	layers=7(tile0/bg1)	inst=56	doors=3	markers=3
+      D 0,640,obj_doorB
+      D 80,0,obj_doorA
+      D 1360,200,obj_doorC
+      M 40,640,obj_markerA
+      M 120,0,obj_markerB
+      M 1320,200,obj_markerD
+77	room_forest_area2A	640x480	pers=False	layers=5(tile0/bg1)	inst=14	doors=1	markers=1
+      D 280,460,obj_doorB
+      M 300,380,obj_markerA
+78	room_forest_puzzle1	640x480	pers=False	layers=8(tile0/bg1)	inst=20	doors=2	markers=2
+      D 0,240,obj_doorD
+      D 630,240,obj_doorA
+      M 20,240,obj_markerC
+      M 590,240,obj_markerB
+79	room_forest_beforeclover	1520x800	pers=False	layers=7(tile0/bg1)	inst=30	doors=3	markers=3
+      D 0,280,obj_doorB
+      D 1500,280,obj_doorC
+      D 400,0,obj_doorA
+      M 1460,240,obj_markerD
+      M 420,20,obj_markerB
+      M 20,240,obj_markerA
+80	room_forest_area3A	640x480	pers=False	layers=6(tile0/bg1)	inst=15	doors=1	markers=1
+      D 320,460,obj_doorB
+      M 340,380,obj_markerA
+81	room_forest_area3	1340x720	pers=False	layers=9(tile0/bg1)	inst=39	doors=2	markers=2
+      D 520,0,obj_doorA_musfade
+      D 0,400,obj_doorD
+      M 540,20,obj_markerB
+      M 20,400,obj_markerC
+82	room_forest_savepoint2	1280x480	pers=False	layers=9(tile0/bg1)	inst=27	doors=3	markers=5
+      D 360,0,obj_doorA
+      D 1260,240,obj_doorC_musfade
+      D 520,460,obj_doorB
+      M 1200,220,obj_markerX
+      M 1220,220,obj_markerD
+      M 380,20,obj_markerB
+      M 540,380,obj_markerA
+      M 142,208,obj_markerw
+83	room_forest_smith	640x480	pers=False	layers=6(tile0/bg1)	inst=12	doors=1	markers=1
+      D 280,460,obj_doorB
+      M 300,360,obj_markerA
+84	room_forest_area4	1400x1000	pers=False	layers=7(tile0/bg1)	inst=45	doors=2	markers=3
+      D 1390,720,obj_doorA
+      D 0,720,obj_doorD_musfade
+      M 1340,700,obj_markerX
+      M 20,700,obj_markerC
+      M 1340,700,obj_markerB
+85	room_forest_dancers1	1640x1480	pers=False	layers=10(tile0/bg1)	inst=166	doors=4	markers=4
+      D 0,280,obj_doorB
+      D 1620,640,obj_doorC
+      D 440,1470,obj_doorA
+      D 1400,1470,obj_doorX
+      M 20,280,obj_markerA
+      M 1580,620,obj_markerD
+      M 460,1360,obj_markerB
+      M 1400,1360,obj_markerX
+86	room_forest_secret1	1120x480	pers=False	layers=5(tile0/bg1)	inst=26	doors=2	markers=2
+      D 200,0,obj_doorB
+      D 800,0,obj_doorX
+      M 220,10,obj_markerA
+      M 800,10,obj_markerX
+87	room_forest_thrashmaker	640x480	pers=False	layers=7(tile0/bg1)	inst=20	doors=2	markers=2
+      D 600,200,obj_doorA
+      D 0,200,obj_doorD
+      M 560,200,obj_markerB
+      M 40,200,obj_markerC
+88	room_forest_starwalker	2640x480	pers=False	layers=10(tile0/bg1)	inst=55	doors=2	markers=3
+      D 0,280,obj_doorB
+      D 2620,280,obj_doorA
+      M 20,280,obj_markerA
+      M 2580,280,obj_markerB
+      M 2580,280,obj_markerX
+89	room_forest_area5	1680x1040	pers=False	layers=10(tile0/bg1)	inst=45	doors=2	markers=2
+      D 0,520,obj_doorX_musfade
+      D 1660,520,obj_doorA
+      M 20,520,obj_markerA
+      M 1620,520,obj_markerB
+90	room_forest_savepoint_relax	640x480	pers=False	layers=7(tile0/bg1)	inst=25	doors=2	markers=3
+      D 0,200,obj_doorB
+      D 240,0,obj_doorX
+      M 20,180,obj_markerA
+      M 260,20,obj_markerB
+      M 260,20,obj_markerX
+91	room_forest_maze1	640x680	pers=False	layers=8(tile0/bg1)	inst=24	doors=3	markers=3
+      D 280,665,obj_doorX
+      D 160,0,obj_doorX
+      D 400,0,obj_doorX
+      M 300,580,obj_markerX
+      M 300,580,obj_markerA
+      M 295,195,obj_markerB
+92	room_forest_maze_deadend	640x480	pers=False	layers=7(tile0/bg1)	inst=12	doors=1	markers=1
+      D 280,464,obj_doorB
+      M 300,382,obj_markerX
+93	room_forest_maze_susie	640x680	pers=False	layers=5(tile0/bg1)	inst=18	doors=2	markers=3
+      D 280,665,obj_doorX
+      D 280,0,obj_doorX
+      M 300,580,obj_markerX
+      M 300,580,obj_markerA
+      M 300,20,obj_markerD
+94	room_forest_maze2	640x880	pers=False	layers=8(tile0/bg1)	inst=23	doors=4	markers=3
+      D 280,860,obj_doorX
+      D 120,0,obj_doorX
+      D 440,0,obj_doorX
+      D 280,0,obj_doorX
+      M 300,770,obj_markerX
+      M 300,770,obj_markerA
+      M 295,195,obj_markerB
+95	room_forest_maze_deadend2	640x480	pers=False	layers=7(tile0/bg1)	inst=12	doors=1	markers=1
+      D 280,470,obj_doorD
+      M 300,382,obj_markerX
+96	room_forest_savepoint3	640x480	pers=False	layers=7(tile0/bg1)	inst=23	doors=2	markers=2
+      D 630,200,obj_doorA_musfade
+      D 280,460,obj_doorX
+      M 580,200,obj_markerB
+      M 300,360,obj_markerX
+97	room_forest_fightsusie	1240x480	pers=False	layers=8(tile0/bg1)	inst=23	doors=2	markers=4
+      D 1220,200,obj_doorX
+      D 0,200,obj_doorB_musfade
+      M 1180,200,obj_markerB
+      M 1180,200,obj_markerX
+      M 20,200,obj_markerA
+      M 965,100,obj_markerw
+98	room_forest_afterthrash2	1520x480	pers=False	layers=9(tile0/bg1)	inst=21	doors=2	markers=3
+      D 0,200,obj_doorB
+      D 1480,200,obj_doorA
+      M 40,200,obj_markerA
+      M 1440,200,obj_markerB
+      M 40,200,obj_markerX
+99	room_forest_afterthrash3	1520x480	pers=False	layers=7(tile0/bg1)	inst=18	doors=2	markers=2
+      D 0,200,obj_doorB
+      D 1480,200,obj_doorA
+      M 40,200,obj_markerA
+      M 1440,200,obj_markerB
+100	room_forest_afterthrash4	1520x480	pers=False	layers=7(tile0/bg1)	inst=18	doors=2	markers=2
+      D 0,200,obj_doorB
+      D 1480,200,obj_doorA
+      M 40,200,obj_markerA
+      M 1440,200,obj_markerB
+101	room_forest_castleview	2000x480	pers=False	layers=9(tile0/bg1)	inst=9	doors=2	markers=2
+      D 0,240,obj_doorB
+      D 1960,240,obj_doorA
+      M 40,240,obj_markerA
+      M 1920,240,obj_markerB
+102	room_forest_chase1	3000x480	pers=False	layers=7(tile0/bg1)	inst=20	doors=1	markers=2
+      D 2960,200,obj_doorA
+      M 40,240,obj_markerA
+      M 2920,200,obj_markerB
+103	room_forest_chase2	640x3000	pers=False	layers=8(tile0/bg1)	inst=21	doors=1	markers=3
+      D 280,0,obj_doorA
+      M 0,2720,obj_markerA
+      M 300,40,obj_markerB
+      M 300,40,obj_markerX
+104	room_forest_castlefront	640x1200	pers=False	layers=9(tile0/bg2)	inst=15	doors=2	markers=3
+      D 280,1180,obj_doorX
+      D 240,630,obj_doorw_musfade
+      M 300,1080,obj_markerA
+      M 300,1080,obj_markerX
+      M 300,660,obj_markerw
+105	room_cc_prison_cells	1260x680	pers=False	layers=5(tile0/bg1)	inst=35	doors=2	markers=2
+      D 640,660,obj_doorA
+      D 200,660,obj_doorX
+      M 660,580,obj_markerB
+      M 220,580,obj_markerX
+106	room_cc_prisonlancer	2000x480	pers=False	layers=7(tile0/bg1)	inst=22	doors=3	markers=3
+      D 1680,0,obj_doorB
+      D 1980,200,obj_doorA
+      D 480,0,obj_doorX
+      M 1700,20,obj_markerA
+      M 1940,160,obj_markerB
+      M 500,0,obj_markerX
+107	room_cc_prison_to_elevator	640x480	pers=False	layers=7(tile0/bg1)	inst=15	doors=3	markers=3
+      D 630,230,obj_doorA
+      D 0,210,obj_doorB
+      D 280,120,obj_doorX_musfade
+      M 570,210,obj_markerB
+      M 20,210,obj_markerA
+      M 300,120,obj_markerX
+108	room_cc_prison2	1440x480	pers=False	layers=5(tile0/bg1)	inst=19	doors=1	markers=1
+      D 0,240,obj_doorB
+      M 20,240,obj_markerA
+109	room_cc_prisonelevator	640x480	pers=False	layers=6(tile0/bg2)	inst=15	doors=1	markers=1
+      D 280,460,obj_doorX_musfade
+      M 300,380,obj_markerX
+110	room_cc_elevator	640x480	pers=False	layers=6(tile0/bg2)	inst=15	doors=1	markers=1
+      D 280,460,obj_doorw_musfade
+      M 300,380,obj_markerw
+111	room_cc_prison_prejoker	1840x1200	pers=False	layers=8(tile0/bg1)	inst=62	doors=1	markers=2
+      D 160,160,obj_doorX_musfade
+      M 1560,1000,obj_markerB
+      M 180,160,obj_markerX
+112	room_cc_joker	640x480	pers=False	layers=5(tile0/bg1)	inst=6	doors=1	markers=1
+      D 0,240,obj_doorB
+      M 40,240,obj_markerA
+113	room_cc_entrance	640x480	pers=False	layers=5(tile0/bg1)	inst=8	doors=2	markers=2
+      D 240,0,obj_doorA
+      D 240,460,obj_doorw_musfade
+      M 300,20,obj_markerB
+      M 300,360,obj_markerw
+114	room_cc_1f	1840x1080	pers=False	layers=8(tile0/bg1)	inst=49	doors=5	markers=5
+      D 1494,596,obj_doorX_musfade
+      D 288,432,obj_doorA
+      D 736,168,obj_doorC
+      D 1058,158,obj_doorw_musfade
+      D 846,1070,obj_doorB
+      M 1522,640,obj_markerX
+      M 318,462,obj_markerB
+      M 754,176,obj_markerD
+      M 1078,176,obj_markerw
+      M 900,980,obj_markerA
+115	room_cc_rudinn	640x480	pers=False	layers=6(tile0/bg1)	inst=15	doors=1	markers=1
+      D 280,470,obj_doorB
+      M 300,390,obj_markerA
+116	room_cc_2f	1600x1680	pers=False	layers=10(tile0/bg1)	inst=61	doors=3	markers=3
+      D 1580,760,obj_doorA
+      D 115,720,obj_doorD
+      D 800,170,obj_doorC
+      M 1540,740,obj_markerB
+      M 125,745,obj_markerC
+      M 820,180,obj_markerD
+117	room_cc_rurus1	640x480	pers=False	layers=6(tile0/bg1)	inst=22	doors=1	markers=1
+      D 0,240,obj_doorB
+      M 28,226,obj_markerA
+118	room_cc_3f	1240x880	pers=False	layers=6(tile0/bg1)	inst=67	doors=3	markers=3
+      D 974,120,obj_doorA
+      D 180,120,obj_doorC
+      D 580,280,obj_doorD
+      M 1000,130,obj_markerB
+      M 190,130,obj_markerD
+      M 600,290,obj_markerC
+119	room_cc_hathy	640x480	pers=False	layers=6(tile0/bg1)	inst=18	doors=1	markers=1
+      D 280,470,obj_doorB
+      M 300,390,obj_markerA
+120	room_cc_4f	1360x1200	pers=False	layers=9(tile0/bg1)	inst=57	doors=4	markers=4
+      D 1340,440,obj_doorA
+      D 130,410,obj_doorD
+      D 550,910,obj_doorC_musfade
+      D 800,920,obj_doorE
+      M 1300,420,obj_markerB
+      M 160,400,obj_markerC
+      M 580,930,obj_markerD
+      M 840,930,obj_markerF
+121	room_cc_rurus2	640x480	pers=False	layers=6(tile0/bg1)	inst=24	doors=1	markers=1
+      D 0,236,obj_doorB
+      M 20,240,obj_markerA
+122	room_cc_clover	640x480	pers=False	layers=6(tile0/bg1)	inst=20	doors=1	markers=1
+      D 280,470,obj_doorD_musfade
+      M 300,390,obj_markerC
+123	room_cc_5f	640x1160	pers=False	layers=8(tile0/bg1)	inst=48	doors=5	markers=5
+      D 400,685,obj_doorX_musfade
+      D 275,205,obj_doorC
+      D 280,445,obj_doorw_musfade
+      D 155,685,obj_doorA
+      D 450,965,obj_doorF
+      M 300,215,obj_markerD
+      M 185,690,obj_markerB
+      M 425,690,obj_markerX
+      M 305,455,obj_markerw
+      M 485,970,obj_markerE
+124	room_cc_lancer	640x480	pers=False	layers=7(tile0/bg1)	inst=23	doors=1	markers=1
+      D 280,470,obj_doorB
+      M 300,390,obj_markerA
+125	room_cc_6f	1440x480	pers=False	layers=7(tile0/bg1)	inst=22	doors=2	markers=2
+      D 180,160,obj_doorD
+      D 1130,170,obj_doorA_musfade
+      M 200,170,obj_markerC
+      M 1150,170,obj_markerB
+126	room_cc_throneroom	640x800	pers=False	layers=6(tile0/bg2)	inst=27	doors=2	markers=2
+      D 282,782,obj_doorB_musfade
+      D 280,0,obj_doorA
+      M 300,670,obj_markerA
+      M 300,0,obj_markerB
+127	room_cc_preroof	1040x480	pers=False	layers=6(tile0/bg1)	inst=22	doors=2	markers=2
+      D 1020,200,obj_doorA
+      D 160,460,obj_doorB
+      M 980,220,obj_markerB
+      M 200,380,obj_markerA
+128	room_cc_kingbattle	2000x480	pers=False	layers=7(tile0/bg1)	inst=24	doors=2	markers=2
+      D 0,160,obj_doorB
+      D 1980,160,obj_doorA
+      M 20,160,obj_markerA
+      M 1940,160,obj_markerB
+129	room_cc_prefountain	640x1080	pers=False	layers=6(tile0/bg1)	inst=13	doors=2	markers=1
+      D 0,760,obj_doorB
+      D 240,150,obj_doorA_musfade
+      M 40,760,obj_markerA
+130	room_cc_fountain	640x480	pers=False	layers=4(tile0/bg1)	inst=2	doors=0	markers=0
+131	PLACE_DOG	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+132	room_legend	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+133	room_shop1	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+134	room_shop2	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+135	room_gameover	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+136	room_myroom_dark	320x240	pers=False	layers=3(tile0/bg2)	inst=1	doors=0	markers=0
+137	PLACE_LOGO	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+138	PLACE_FAILURE	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+139	PLACE_MENU	640x480	pers=False	layers=3(tile0/bg1)	inst=2	doors=0	markers=0
+140	room_ed	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+141	room_empty	320x240	pers=False	layers=3(tile0/bg1)	inst=2	doors=0	markers=0
+142	room_man	640x480	pers=False	layers=6(tile0/bg1)	inst=17	doors=1	markers=1
+      D 280,460,obj_doorX_musfade
+      M 300,360,obj_markerX
+143	room_DARKempty	640x480	pers=False	layers=3(tile0/bg1)	inst=2	doors=0	markers=0
+144	room_battletest	2x2	pers=False	layers=2(tile0/bg2)	inst=0	doors=0	markers=0
+145	room_splashscreen	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+146	room_chapter_continue	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+
+== [C] 门实例总数 = 248 ；落点实例总数 = 262 ==

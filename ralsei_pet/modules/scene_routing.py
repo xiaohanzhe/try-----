@@ -208,12 +208,33 @@ def _match_one(route, context):
       · `when_scene`   当前场景 id —— 支持 `"*"` 表示"任意场景"
       · `when_area`    当前区域 id
       · `when_chapter` 当前章节 id
+      · `when_door`    ★第44轮：出口标识（门）。**语义与其他键相反，见下**。
       · `when_mood`    宠物心情（控制器从 emotion_system 投影进来）
       · `when_event`   触发事件名（如 `"user_idle_5min"`）
       · `when_keywords` 语境关键词 —— context 里需有 `keywords` 集合，
                         任一命中即可（**OR 语义**，与其余键的 AND 语义不同，
                         这是刻意的：关键词是"说到某类话题"，多条同类词当然该
                         只要中一个）
+
+    ★ `when_door` 为什么是"反向"语义（第44轮新增）
+    ------------------------------------------
+    原作一个房间常有多个出口（实测 297 个起点场景里 **125 个有多于 1 条出边**，
+    最多 3 条）—— 比如 `room_krishallway` 同时有 doorB(-1，回卧房) 与
+    doorC(+2，去浴室)。这正是用户点名的「**共同卡口**」问题：
+    `when_scene` 单条件无法区分"从哪个门出去"。
+
+    如果 `when_door` 走"非空即需命中"，那么带 `when_door` 的规则在
+    **context 没给 door 时**会判不匹配 ⇒ 只剩不带 `when_door` 的那条能赢，
+    于是"随便走一个门"这件事永远轮不到门规则。所以要反过来：
+
+      · `when_door` 为空 / 缺省 → **本键不参与判定**（与其它键一致，放行）；
+      · `when_door` 有值，且 context **也没给** `door` → **放行**（记为命中，
+        但 score 不加）—— 这是"没指定就走它"，让多出口场景仍有确定归宿；
+      · `when_door` 有值，且 context **给了** `door` → 相等才命中。
+        `when_door: "*"` = "指定了任意门都行"。
+
+    这样既保住"没指定时有个确定答案"，又能在指定门时精确分流。
+    仍然**不伪造**：没有匹配规则时照常返回 `None`（设计律 1）。
 
     **未知键一律忽略**（设计律 3）——将来加 `when_weather` / `when_hour`
     时，老版本读到不认识的条件会选择**放行**而不是"判不匹配"。
@@ -241,6 +262,16 @@ def _match_one(route, context):
         if have != want:
             return False, 0
         score += 1
+
+    # --- ★ 门（出口）：反向语义，见 docstring ---
+    want_door = route.get('when_door')
+    if isinstance(want_door, str) and want_door:
+        have_door = _get(context, 'door')
+        if isinstance(have_door, str) and have_door:
+            if want_door != '*' and have_door != want_door:
+                return False, 0
+            score += 1
+        # context 没给 door → 放行但不加分（"没指定就走它"）
 
     # --- 多值集合：交集非空即命中 ---
     for key, field in (('when_mood', 'mood'), ('when_event', 'event')):

@@ -13,9 +13,8 @@ import os
 
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
                              QTextEdit, QPushButton, QFrame, QSizePolicy,
-                             QApplication)
-from PyQt5.QtGui import (QPixmap, QFont, QPainter, QBrush, QColor,
-                         QPen, QFontMetrics, QFontDatabase)
+                             QApplication, QGraphicsDropShadowEffect)
+from PyQt5.QtGui import QFont, QColor, QFontDatabase
 from PyQt5.QtCore import Qt, QPoint, QTimer, QPropertyAnimation, QEasingCurve, QRect
 
 try:
@@ -36,6 +35,14 @@ except ImportError:  # 允许被包外单独导入（如单测直接跑本文件
         from conversation_focus import ConversationFocus
     except ImportError:
         ConversationFocus = None
+
+try:
+    import dr_textbox as _drbox
+except ImportError:  # 允许被包外单独导入（如单测直接跑本文件）
+    import os as _os2
+    import sys as _sys2
+    _sys2.path.append(_os2.path.dirname(_os2.path.abspath(__file__)))
+    import dr_textbox as _drbox
 
 _log = get_logger(__name__)
 
@@ -61,6 +68,39 @@ def _load_ralsei_font():
     except Exception as e:  # 修复：原先静默吞噬
         _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
     return _FONT_FAMILY
+
+
+# 像素字体是否关闭抗锯齿：原作 fnt_main 是位图字体（8bitoperator JVE），
+# 关掉 AA 才有同等锐利感。置 False 可回退到平滑渲染（对照用）。
+_PIXEL_NOAA = True
+
+
+def _ralsei_font(point_size, bold=False):
+    """对话框用字体：优先项目根的像素字体（`普通字体.ttf` = FZXS12）。"""
+    fam = _load_ralsei_font()
+    f = QFont(fam if fam else "微软雅黑", point_size)
+    f.setBold(bool(bold))
+    if fam and _PIXEL_NOAA:
+        f.setStyleStrategy(QFont.NoAntialias)
+    else:
+        f.setStyleStrategy(QFont.PreferAntialias)
+    return f
+
+
+# 原作 scr_textsound() 的规则：这些字符**不**播打字音（空格与标点）。
+# 原文逐个 if 列出 12 个：`&` `" "` `^` `!` `.` `?` `,` `:` `/` `\` `|` `*`
+# （`\` 在源码里写作 `"\\"`）。中文正文用的是全角标点，故一并补上。
+_TEXT_SOUND_SKIP = frozenset(
+    " &^!?.,:/\|*"                     # 原作 ASCII 表（12 个，含 ?）
+    "　，。！？：；、…—～·「」『』（）《》〈〉“”‘’"  # 全角/中文标点
+)
+
+
+def _should_play_text_sound(ch):
+    """等价 scr_textsound 的 play 判定：空格与标点静音。"""
+    if not ch:
+        return False
+    return ch not in _TEXT_SOUND_SKIP
 
 
 # ---------------------------------------------------------------------------
@@ -169,6 +209,15 @@ class DialogueUI(QWidget):
     ACTIVE_CONVERSATION_SECONDS = 150.0
 
     # ------------------------------------------------------------------
+    # 原作对话框几何（第 44 轮，反编译实证，细则见 modules/dr_textbox.py）
+    #   BOX_INSET = 34px —— 原作里文字相对框左上角的内缩（32 边框 + 2）
+    #   BASE_WIDTH/MIN_BOX_HEIGHT —— 为容纳 32px 边框带而放大的基准尺寸
+    # ------------------------------------------------------------------
+    BOX_INSET = _drbox.CONTENT_INSET
+    BASE_WIDTH = 620
+    MIN_BOX_HEIGHT = 220
+
+    # ------------------------------------------------------------------
     # 第十八轮 · 关键词指令的命中规则分两类
     #
     # 旧实现一律 `kw in raw` 纯子串匹配，于是：
@@ -230,18 +279,12 @@ class DialogueUI(QWidget):
         )
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setWindowOpacity(0.0)  # 初始完全透明，显示时淡入
-        self.resize(540, 180)
+        self.resize(self.BASE_WIDTH, self.MIN_BOX_HEIGHT)
 
-        # —— 主容器（带 Deltarune 风格黑底边框）——
-        self._frame = QFrame(self)
-        self._frame.setObjectName("drFrame")
-        self._frame.setStyleSheet("""
-            QFrame#drFrame {
-                background-color: rgba(10, 10, 16, 0.96);
-                border: 2px solid #ffffff;
-                border-radius: 18px;
-            }
-        """)
+        # —— 主容器：原作 Deltarune 对话框（自绘，见 modules/dr_textbox.py）——
+        # 不再用样式表画框：纯黑内芯 / 32px 白边框 / 8 帧动画角 全部由
+        # DrTextboxFrame.paintEvent 绘制，逐行对应反编译的 scr_darkbox()。
+        self._frame = _drbox.DrTextboxFrame(self)
         outer = QVBoxLayout(self)
         outer.setContentsMargins(0, 0, 0, 0)
         outer.addWidget(self._frame)
@@ -258,25 +301,27 @@ class DialogueUI(QWidget):
         # 正文看起来"一上一下地抖"。改成独立 QLabel 后，闪烁只切换它的可见性，
         # 完全不触碰正文文档，抖动从根上消失（也顺带让滚动条不再被闪烁重置）。
         self._cursor_label = QLabel("▼", self._frame)
+        self._cursor_label.setFont(_ralsei_font(11))
         self._cursor_label.setStyleSheet(
-            "QLabel { color: #ffffff; background: transparent; font-size: 12px; }")
+            "QLabel { color: #ffffff; background: transparent; }")
         self._cursor_label.setAlignment(Qt.AlignCenter)
-        self._cursor_label.setFixedSize(12, 12)
+        self._cursor_label.setFixedSize(14, 14)
         self._cursor_label.hide()
 
         inner = QHBoxLayout(self._frame)
-        inner.setContentsMargins(18, 14, 18, 14)
+        # 内容整体内缩 BOX_INSET(34px)：避开原作那圈 32px 边框带
+        inner.setContentsMargins(self.BOX_INSET, self.BOX_INSET,
+                                 self.BOX_INSET, self.BOX_INSET)
         inner.setSpacing(14)
 
-        # —— 左侧：Ralsei 头像 ——
+        # —— 左侧：Ralsei 头像（原作的"表情框"：方角 2px 白边，无圆角/无底色）——
         self.face_label = QLabel(self)
         self.face_label.setFixedSize(84, 84)
         self.face_label.setAlignment(Qt.AlignCenter)
         self.face_label.setStyleSheet("""
             QLabel {
-                background-color: rgba(255, 255, 255, 0.08);
+                background-color: transparent;
                 border: 2px solid #ffffff;
-                border-radius: 10px;
             }
         """)
         inner.addWidget(self.face_label, 0, Qt.AlignTop)
@@ -286,9 +331,9 @@ class DialogueUI(QWidget):
         right_col.setSpacing(4)
 
         self.name_label = QLabel("RALSEI", self)
-        f = QFont("微软雅黑", 11, QFont.Bold)
-        self.name_label.setFont(f)
-        self.name_label.setStyleSheet("color: #ffffff; letter-spacing: 2px;")
+        self.name_label.setFont(_ralsei_font(12, bold=True))
+        self.name_label.setStyleSheet("color: #ffffff; letter-spacing: 2px; "
+                                      "background: transparent;")
         right_col.addWidget(self.name_label)
 
         self.dialogue_content = QTextEdit(self)
@@ -299,10 +344,8 @@ class DialogueUI(QWidget):
         self.dialogue_content.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.dialogue_content.setSizePolicy(
             QSizePolicy.Expanding, QSizePolicy.Minimum)
-        # Ralsei 说话字体：使用系统普通字体（微软雅黑），平滑抗锯齿
-        f2 = QFont("微软雅黑", 13)
-        f2.setStyleStrategy(QFont.PreferAntialias)
-        self.dialogue_content.setFont(f2)
+        # Ralsei 说话字体：项目根像素字体 `普通字体.ttf`（FZXS12，含中文）
+        self.dialogue_content.setFont(_ralsei_font(13))
         self.dialogue_content.setStyleSheet("""
             QTextEdit {
                 background-color: transparent;
@@ -311,10 +354,19 @@ class DialogueUI(QWidget):
                 padding: 2px 0 6px 0;
             }
         """)
+        # 等价原作的 draw_text_shadow()：白字 + 右下 1px 纯黑投影
+        try:
+            _shadow = QGraphicsDropShadowEffect(self.dialogue_content)
+            _shadow.setBlurRadius(0)
+            _shadow.setOffset(1, 1)
+            _shadow.setColor(QColor(0, 0, 0))
+            self.dialogue_content.setGraphicsEffect(_shadow)
+        except Exception as e:  # 防御性：投影失败不影响正文
+            _log.debug("dialogue_ui 文字投影未启用: %s", e)
         # 初始最小高度（约 3 行），之后随内容动态变化
         self.dialogue_content.setMinimumHeight(72)
         # 保存初始固定宽度，供 recalc 使用
-        self._base_width = 540
+        self._base_width = self.BASE_WIDTH
         self._min_dialogue_h = 72
         self._max_dialogue_h = 380  # 上限防止占满全屏
         right_col.addWidget(self.dialogue_content, 1)
@@ -323,9 +375,8 @@ class DialogueUI(QWidget):
         self._input_bar = QFrame(self)
         self._input_bar.setStyleSheet("""
             QFrame {
-                background-color: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 8px;
+                background-color: transparent;
+                border: 2px solid #ffffff;
             }
         """)
         input_layout = QHBoxLayout(self._input_bar)
@@ -335,31 +386,25 @@ class DialogueUI(QWidget):
         self.input_field = QTextEdit(self)
         self.input_field.setFixedHeight(48)
         self.input_field.setFrameShape(QFrame.NoFrame)
+        self.input_field.setFont(_ralsei_font(11))
         self.input_field.setStyleSheet("""
             QTextEdit {
-                background-color: rgba(0, 0, 0, 0.3);
+                background-color: transparent;
                 color: #ffffff;
-                border: 1px solid rgba(255, 255, 255, 0.4);
-                border-radius: 6px;
+                border: none;
                 padding: 6px 8px;
-                font-family: "微软雅黑";
-                font-size: 12pt;
-            }
-            QTextEdit:focus {
-                border-color: #ffffff;
             }
         """)
         input_layout.addWidget(self.input_field, 1)
 
         self.send_button = QPushButton("SEND", self)
         self.send_button.setFixedSize(72, 48)
-        self.send_button.setFont(QFont("微软雅黑", 10, QFont.Bold))
+        self.send_button.setFont(_ralsei_font(9, bold=True))
         self.send_button.setStyleSheet("""
             QPushButton {
                 background-color: #ffffff;
-                color: #0a0a10;
+                color: #000000;
                 border: none;
-                border-radius: 6px;
             }
             QPushButton:hover { background-color: #cccccc; }
             QPushButton:pressed { background-color: #aaaaaa; }
@@ -694,8 +739,9 @@ class DialogueUI(QWidget):
             lbl = getattr(self, '_cursor_label', None)
             if lbl is None:
                 return
-            margin_r = 8
-            margin_b = 8
+            # 原作里 ▼ 贴在框内右下；这里留出 32px 边框带 + 2px 余量
+            margin_r = self.BOX_INSET - 18
+            margin_b = self.BOX_INSET - 18
             # 用 self 的尺寸（窗口==frame，outer 布局 0 边距）：resizeEvent 触发时
             # self 的几何已更新，而子控件 frame 可能还没同步，故取 self 更稳。
             lbl.move(max(0, self.width() - margin_r - lbl.width()),
@@ -782,7 +828,7 @@ class DialogueUI(QWidget):
             self.dialogue_content.setFixedHeight(clamped_h)
 
             # —— 根据输入框是否可见 + 内容高度，计算整个窗口的目标高度 ——
-            frame_v_pad = 28  # 14 + 14
+            frame_v_pad = 2 * self.BOX_INSET   # 原作框四周各 34px 内缩
             name_label_h = 18
             right_spacing = 4
             face_h = 84
@@ -791,7 +837,7 @@ class DialogueUI(QWidget):
                 body_h += right_spacing + self._input_bar.sizeHint().height()
             right_col_h = max(face_h, body_h)
             target_h = frame_v_pad + right_col_h
-            target_h = max(target_h, 180)
+            target_h = max(target_h, self.MIN_BOX_HEIGHT)
             target_w = self._base_width
 
             old_geom = self.geometry()
@@ -845,13 +891,16 @@ class DialogueUI(QWidget):
 
     def _type_next_char(self):
         if self.typing_index < len(self.typing_text):
+            ch = self.typing_text[self.typing_index]
             self.typing_index += 1
             self._refresh_display()
-            # 每打一个字播放一次 txtralsei.ogg（打字声）
+            # 打字声：每打一个字一声，但**空格与标点静音** —— 等价原作
+            # scr_textsound() 里 getchar == " "/"!"/"."/","/... 时 play = 0 的判定。
             try:
-                sm = getattr(self.parent, 'sound_manager', None)
-                if sm is not None:
-                    sm.play_typewriter()
+                if _should_play_text_sound(ch):
+                    sm = getattr(self.parent, 'sound_manager', None)
+                    if sm is not None:
+                        sm.play_typewriter()
             except Exception as e:  # 修复：原先静默吞噬
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         else:

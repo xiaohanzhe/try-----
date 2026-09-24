@@ -345,6 +345,13 @@ def load_scene(scene_id, scene_dir_path=None, entry=None):
             return None
         scene = SceneState.from_dict(raw)
         scene.dir_path = base
+        # ★ 独立文件场景（第 36 轮登记的 87 个）**不带** original_room_id ——
+        #   它写在 `_index.json` 的登记行里。从 entry 补一次，让渲染层
+        #   无论走哪条来源都能查房间几何（否则这 87 个场景会退化为"房间未知"）。
+        if scene.original_room_id is None and isinstance(entry, dict):
+            _oid = entry.get('original_room_id')
+            if isinstance(_oid, int):
+                scene.original_room_id = _oid
         return scene
 
     # ---- 来源 2：区域分片 ----
@@ -352,7 +359,12 @@ def load_scene(scene_id, scene_dir_path=None, entry=None):
         chapter_id = entry.get('chapter_id')
         area_id = entry.get('area_id')
         if chapter_id and area_id:
-            return load_zone(chapter_id, area_id, base).get(scene_id)
+            scene = load_zone(chapter_id, area_id, base).get(scene_id)
+            if scene is not None and scene.original_room_id is None:
+                _oid = entry.get('original_room_id')
+                if isinstance(_oid, int):
+                    scene.original_room_id = _oid
+            return scene
     return None
 
 
@@ -623,7 +635,7 @@ class SceneState(object):
 
     __slots__ = ('scene_id', 'name', 'chapter_id', 'chapter_name', 'area_id',
                  'area_name', 'bg', 'bgm', 'ambient', 'objects', 'anchors',
-                 'transition', 'raw', 'dir_path')
+                 'transition', 'raw', 'dir_path', 'original_room_id')
 
     def __init__(self):
         self.scene_id = None
@@ -633,6 +645,7 @@ class SceneState(object):
         self.area_id = None
         self.area_name = None
         self.bg = None          # 背景声明（str | dict | None）
+        self.original_room_id = None   # ★ 原作 Data.Rooms 下标（渲染层查房间几何用）
         self.bgm = None         # BGM 路径（str | None）—— "在放就不换"由控制器判
         self.ambient = None     # 环境氛围声明（光照/天气/粒子，dict | None）
         self.objects = []       # 物件列表（list[dict]）
@@ -655,6 +668,12 @@ class SceneState(object):
         self.area_id = raw.get('area_id')
         self.area_name = raw.get('area_name')
         self.bg = raw.get('bg')
+        # ★ 原作房间下标：**两个来源，一个字段**。
+        #   分片里的场景自带 `original_room_id`；独立文件场景（第 36 轮登记）
+        #   写在 `_index.json` 的登记行里（`entry`），所以 `from_dict` 之后
+        #   控制器可能还要用 `entry` 补一次 —— 见 `load_scene()`。
+        _oid = raw.get('original_room_id')
+        self.original_room_id = _oid if isinstance(_oid, int) else None
         self.bgm = raw.get('bgm')
         self.ambient = raw.get('ambient')
 

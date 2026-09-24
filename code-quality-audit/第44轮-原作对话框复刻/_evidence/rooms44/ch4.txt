@@ -1,0 +1,1262 @@
+== [A] Rooms 总数 = 328 ==
+0	room_gms_debug_failsafe	640x480	pers=False	layers=2(tile0/bg1)	inst=2	doors=0	markers=0
+1	ROOM_INITIALIZE	640x480	pers=False	layers=2(tile0/bg1)	inst=2	doors=0	markers=0
+2	room_title_placeholder	640x480	pers=False	layers=4(tile1/bg1)	inst=1	doors=0	markers=0
+3	room_battletest	640x480	pers=False	layers=3(tile0/bg1)	inst=4	doors=0	markers=0
+4	room_cutscene_tester	1280x480	pers=False	layers=4(tile0/bg1)	inst=20	doors=1	markers=0
+      D 200,80,obj_doorAny
+5	room_sound_tester	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+6	room_sprite_tester	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+7	room_gif_tester	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+8	room_bullettest	640x480	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+9	room_GMS2_test	640x480	pers=False	layers=4(tile1/bg1)	inst=8	doors=0	markers=0
+10	room_cutscene_tester_b	1280x480	pers=False	layers=3(tile0/bg1)	inst=3	doors=0	markers=0
+11	room_debug_color	1024x768	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+12	room_debug_battle	640x480	pers=False	layers=4(tile1/bg1)	inst=2	doors=0	markers=0
+13	room_debug_loc	540x240	pers=False	layers=6(tile0/bg2)	inst=16	doors=0	markers=0
+14	PLACE_CONTACT	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+15	room_krisroom	320x240	pers=False	layers=6(tile0/bg2)	inst=28	doors=1	markers=1
+      D 155,230,obj_doorA
+      M 155,185,obj_markerB
+16	room_krishallway	540x240	pers=False	layers=6(tile0/bg2)	inst=21	doors=2	markers=2
+      D 289,104,obj_doorB
+      D 425,100,obj_doorC
+      M 289,112,obj_markerA
+      M 425,109,obj_markerD
+17	room_torroom	320x240	pers=False	layers=2(tile0/bg1)	inst=2	doors=0	markers=0
+18	room_torhouse	700x240	pers=False	layers=5(tile0/bg2)	inst=45	doors=3	markers=3
+      D 144,68,obj_doorD
+      D 84,168,obj_doorA
+      D 594,149,obj_doorX_musfade
+      M 144,80,obj_markerC
+      M 108,148,obj_markerB
+      M 567,136,obj_markerX
+19	room_torbathroom	320x240	pers=False	layers=4(tile0/bg2)	inst=16	doors=1	markers=1
+      D 236,134,obj_doorB
+      M 216,120,obj_markerA
+20	room_town_krisyard	320x420	pers=False	layers=7(tile0/bg1)	inst=29	doors=2	markers=2
+      D 120,410,obj_doorC
+      D 150,169,obj_doorX_musfade
+      M 160,362,obj_markerD
+      M 160,184,obj_markerX
+21	room_town_northwest	960x480	pers=False	layers=2(tile0/bg1)	inst=2	doors=0	markers=0
+22	room_town_north	1800x240	pers=False	layers=7(tile0/bg1)	inst=64	doors=5	markers=5
+      D 625,230,obj_doorC
+      D 1258,98,obj_doorX
+      D 1790,100,obj_doorA
+      D 378,-12,obj_doorD
+      D -9,104,obj_doorAny
+      M 660,180,obj_markerD
+      M 1258,112,obj_markerX
+      M 1764,110,obj_markerB
+      M 418,4,obj_markerC
+      M 9,134,obj_markerAny
+23	room_beach	600x240	pers=False	layers=12(tile3/bg2)	inst=17	doors=1	markers=1
+      D -15,60,obj_doorB
+      M 10,100,obj_markerA
+24	room_town_mid	2040x240	pers=False	layers=7(tile0/bg1)	inst=61	doors=6	markers=6
+      D 772,232,obj_doorC
+      D 780,0,obj_doorD
+      D 600,90,obj_doorX
+      D 1740,-10,obj_doorW
+      D 301,94,obj_doorW
+      D 1082,77,obj_doorw_musfade
+      M 820,184,obj_markerD
+      M 820,8,obj_markerC
+      M 600,105,obj_markerX
+      M 1768,0,obj_markerw
+      M 1096,91,obj_markerv
+      M 321,99,obj_markert
+25	room_town_apartments	920x240	pers=False	layers=2(tile0/bg1)	inst=2	doors=0	markers=0
+26	room_town_south	1320x240	pers=False	layers=8(tile0/bg1)	inst=44	doors=6	markers=6
+      D 1000,80,obj_doorX
+      D 600,80,obj_doorW
+      D 1314,106,obj_doorA
+      D 798,235,obj_doorC
+      D 798,1,obj_doorD
+      D 240,79,obj_doorW
+      M 1005,95,obj_markerX
+      M 611,91,obj_markerw
+      M 1288,129,obj_markerB
+      M 839,188,obj_markerD
+      M 839,9,obj_markerC
+      M 247,88,obj_markerv
+27	room_town_school	580x320	pers=False	layers=8(tile0/bg1)	inst=24	doors=2	markers=2
+      D 2,182,obj_doorB
+      D 353,129,obj_doorAny
+      M 373,135,obj_markerX
+      M 18,216,obj_markerA
+28	room_town_church	760x640	pers=False	layers=8(tile0/bg1)	inst=56	doors=5	markers=5
+      D 565,85,obj_doorX
+      D 0,340,obj_doorA
+      D 360,0,obj_doorD
+      D 379,630,obj_doorAny
+      D 280,280,obj_doorAny
+      M 574,95,obj_markerX
+      M 430,580,obj_markerD
+      M 10,350,obj_markerB
+      M 420,0,obj_markerC
+      M 290,313,obj_markerAny
+29	room_graveyard	600x240	pers=False	layers=9(tile0/bg2)	inst=30	doors=1	markers=2
+      D 595,115,obj_doorB
+      M 570,130,obj_markerX
+      M 570,130,obj_markerA
+30	room_town_shelter	320x1240	pers=False	layers=11(tile0/bg1)	inst=33	doors=2	markers=1
+      D 120,-80,obj_doorD_musfade
+      D 117,-9,obj_doorAny
+      M 150,20,obj_markerC
+31	room_hospital_lobby	320x240	pers=False	layers=5(tile0/bg2)	inst=24	doors=2	markers=2
+      D 140,230,obj_doorW
+      D 70,76,obj_doorA
+      M 76,88,obj_markerB
+      M 150,190,obj_markerw
+32	room_hospital_hallway	320x240	pers=False	layers=4(tile0/bg2)	inst=20	doors=3	markers=3
+      D 141,197,obj_doorB
+      D 80,70,obj_doorA
+      D 200,71,obj_doorC
+      M 150,157,obj_markerA
+      M 90,68,obj_markerAny
+      M 210,68,obj_markerAny
+33	room_hospital_rudy	320x240	pers=False	layers=4(tile0/bg2)	inst=25	doors=2	markers=1
+      D 140,230,obj_doorB
+      D 160,230,obj_doorB
+      M 150,190,obj_markerA
+34	room_hospital_room2	320x240	pers=False	layers=4(tile0/bg2)	inst=20	doors=1	markers=1
+      D 140,237,obj_doorD
+      M 150,196,obj_markerC
+35	room_diner	320x240	pers=False	layers=5(tile0/bg2)	inst=20	doors=1	markers=1
+      D 136,230,obj_doorX
+      M 150,190,obj_markerX
+36	room_townhall	320x240	pers=False	layers=6(tile0/bg2)	inst=21	doors=1	markers=1
+      D 140,230,obj_doorX
+      M 150,190,obj_markerX
+37	room_flowershop_1f	320x240	pers=False	layers=5(tile0/bg2)	inst=29	doors=3	markers=3
+      D 140,230,obj_doorX
+      D 20,44,obj_doorA
+      D 260,46,obj_doorA
+      M 150,190,obj_markerX
+      M 36,56,obj_markerB
+      M 262,56,obj_markerB
+38	room_flowershop_2f	320x240	pers=False	layers=6(tile0/bg3)	inst=35	doors=2	markers=2
+      D 20,235,obj_doorB
+      D 260,235,obj_doorB
+      M 30,195,obj_markerA
+      M 270,195,obj_markerA
+39	room_library	320x240	pers=False	layers=6(tile0/bg2)	inst=38	doors=3	markers=3
+      D 140,230,obj_doorX
+      D 160,230,obj_doorX
+      D 218,49,obj_doorW
+      M 150,185,obj_markerX
+      M 142,63,obj_markerw
+      M 226,56,obj_markert
+40	room_alphysalley	320x240	pers=False	layers=4(tile0/bg2)	inst=12	doors=1	markers=1
+      D 120,235,obj_doorW
+      M 150,190,obj_markerw
+41	room_lw_computer_lab	320x240	pers=False	layers=4(tile0/bg1)	inst=32	doors=1	markers=1
+      D 130,230,obj_doorW
+      M 152,178,obj_markerw
+42	room_lw_library_upstairs	320x240	pers=False	layers=3(tile0/bg1)	inst=14	doors=1	markers=1
+      D 213,231,obj_doorW
+      M 231,188,obj_markert
+43	room_lw_police	320x240	pers=False	layers=3(tile0/bg1)	inst=18	doors=1	markers=1
+      D 125,233,obj_doorAny
+      M 148,187,obj_markerv
+44	room_lw_conbini	540x240	pers=False	layers=5(tile0/bg2)	inst=31	doors=1	markers=1
+      D 348,230,obj_doorw_musfade
+      M 369,183,obj_markerv
+45	room_lw_icee_pizza	320x240	pers=False	layers=4(tile0/bg1)	inst=19	doors=1	markers=1
+      D 124,231,obj_doorW
+      M 141,177,obj_markert
+46	room_lw_church_entrance	640x240	pers=False	layers=4(tile0/bg1)	inst=28	doors=4	markers=4
+      D 280,240,obj_doorAny
+      D 420,93,obj_doorAny
+      D 302,74,obj_doorAny
+      D 179,93,obj_doorAny
+      M 310,78,obj_markerAny
+      M 310,197,obj_markerAny
+      M 431,95,obj_markerAny
+      M 190,95,obj_markerAny
+47	room_lw_church_main	860x620	pers=False	layers=10(tile0/bg1)	inst=66	doors=1	markers=1
+      D 360,620,obj_doorAny
+      M 412,578,obj_markerAny
+48	room_lw_noellehouse_main	960x720	pers=False	layers=6(tile0/bg1)	inst=129	doors=5	markers=5
+      D 795,498,obj_doorAny
+      D 420,340,obj_doorAny
+      D 320,340,obj_doorAny
+      D 360,480,obj_doorAny
+      D 540,480,obj_doorAny
+      M 772,490,obj_markerAny
+      M 431,336,obj_markerAny
+      M 329,335,obj_markerAny
+      M 370,474,obj_markerAny
+      M 547,476,obj_markerAny
+49	room_lw_noellehouse_kitchen	680x260	pers=False	layers=7(tile2/bg1)	inst=53	doors=1	markers=1
+      D 109,258,obj_doorAny
+      M 129,212,obj_markerAny
+50	room_lw_noellehouse_bathroom	320x240	pers=False	layers=5(tile1/bg1)	inst=24	doors=1	markers=1
+      D 140,240,obj_doorAny
+      M 150,197,obj_markerAny
+51	room_lw_noellehouse_keyroom	320x240	pers=False	layers=4(tile0/bg1)	inst=9	doors=1	markers=1
+      D 140,230,obj_doorAny
+      M 150,187,obj_markerAny
+52	room_lw_noellehouse_noelle	320x240	pers=False	layers=6(tile1/bg1)	inst=38	doors=1	markers=1
+      D 207,236,obj_doorAny
+      M 228,189,obj_markerAny
+53	room_lw_noellehouse_dess	320x240	pers=False	layers=6(tile1/bg1)	inst=40	doors=1	markers=1
+      D 122,234,obj_doorAny
+      M 133,191,obj_markerAny
+54	room_lw_noellehouse_closet	320x240	pers=False	layers=8(tile1/bg1)	inst=19	doors=1	markers=1
+      D 135,236,obj_doorAny
+      M 151,197,obj_markerAny
+55	room_torielclass	320x240	pers=False	layers=6(tile0/bg2)	inst=29	doors=1	markers=1
+      D 57,46,obj_doorA
+      M 57,55,obj_markerB
+56	room_schoollobby	940x420	pers=False	layers=5(tile0/bg1)	inst=47	doors=4	markers=4
+      D 97,195,obj_doorA
+      D 440,-10,obj_doorC
+      D 817,196,obj_doorB
+      D 412,413,obj_doorAny
+      M 110,200,obj_markerB
+      M 460,-6,obj_markerD
+      M 460,360,obj_markerX
+      M 830,202,obj_markerA
+57	room_alphysclass	320x240	pers=False	layers=5(tile0/bg2)	inst=36	doors=0	markers=1
+      M 242,52,obj_markerA
+58	room_schooldoor	620x240	pers=False	layers=6(tile0/bg1)	inst=24	doors=4	markers=3
+      D 300,230,obj_doorD
+      D 280,230,obj_doorD
+      D 320,230,obj_doorD
+      D 500,95,obj_doorC
+      M 300,190,obj_markerC
+      M 510,100,obj_markerD
+      M 300,110,obj_markerX
+59	room_insidecloset	820x500	pers=False	layers=5(tile0/bg2)	inst=5	doors=0	markers=0
+60	room_school_unusedroom	320x240	pers=False	layers=5(tile0/bg2)	inst=21	doors=1	markers=1
+      D 140,180,obj_doorD
+      M 150,136,obj_markerC
+61	room_castle_tutorial	1400x480	pers=False	layers=5(tile1/bg1)	inst=14	doors=2	markers=2
+      D -10,320,obj_doorX
+      D 1390,320,obj_doorW
+      M 10,310,obj_markerX
+      M 1350,300,obj_markerw
+62	room_dw_castle_east_door	640x480	pers=False	layers=5(tile0/bg1)	inst=12	doors=1	markers=1
+      D -10,320,obj_doorW
+      M 20,300,obj_markerw
+63	room_dw_castle_west_cliff	640x480	pers=False	layers=4(tile0/bg2)	inst=10	doors=1	markers=2
+      D 630,280,obj_doorX
+      M 567,260,obj_markerX
+      M 567,261,obj_markerD
+64	room_dw_castle_area_1	640x480	pers=False	layers=5(tile2/bg1)	inst=20	doors=1	markers=2
+      D 200,0,obj_doorX
+      M 297,23,obj_markerX
+      M 297,25,obj_markerB
+65	room_dw_castle_town	1520x1600	pers=False	layers=14(tile7/bg1)	inst=112	doors=10	markers=10
+      D 702,1587,obj_doorX
+      D 1510,1266,obj_doorX
+      D -16,1268,obj_doorX
+      D 684,192,obj_doorA
+      D 886,960,obj_doorAny
+      D 271,545,obj_doorAny
+      D 499,546,obj_doorAny
+      D 1140,550,obj_doorAny
+      D 523,984,obj_doorAny
+      D 949,550,obj_doorAny
+      M 740,200,obj_markerB
+      M 746,1495,obj_markerw
+      M 40,1254,obj_markerr
+      M 1441,1251,obj_markerX
+      M 911,995,obj_markerAny
+      M 315,560,obj_markerAny
+      M 539,560,obj_markerAny
+      M 1160,560,obj_markerAny
+      M 544,995,obj_markerAny
+      M 971,560,obj_markerAny
+66	room_dw_ralsei_castle_front	1000x1000	pers=False	layers=7(tile0/bg2)	inst=25	doors=2	markers=2
+      D 440,990,obj_doorB
+      D 462,249,obj_doorW
+      M 500,884,obj_markerA
+      M 502,262,obj_markerX
+67	room_dw_castle_restaurant	640x480	pers=False	layers=7(tile1/bg3)	inst=15	doors=1	markers=1
+      D 276,466,obj_doorX
+      M 308,380,obj_markerX
+68	room_dw_castle_cafe	960x480	pers=False	layers=6(tile0/bg3)	inst=18	doors=1	markers=1
+      D 696,469,obj_doorAny
+      M 740,382,obj_markerAny
+69	room_dw_castle_dojo	640x480	pers=False	layers=7(tile2/bg1)	inst=18	doors=1	markers=1
+      D 280,460,obj_doorX
+      M 300,379,obj_markerX
+70	room_dw_ralsei_castle_1f	1240x480	pers=False	layers=5(tile1/bg1)	inst=24	doors=3	markers=3
+      D 857,241,obj_doorW
+      D 551,459,obj_doorW
+      D 260,238,obj_doorA
+      M 880,240,obj_markerw
+      M 600,360,obj_markerX
+      M 280,240,obj_markerB
+71	room_dw_ralsei_castle_2f	1280x480	pers=False	layers=5(tile1/bg1)	inst=21	doors=5	markers=5
+      D 247,233,obj_doorAny
+      D 522,234,obj_doorAny
+      D 808,229,obj_doorW
+      D 80,457,obj_doorB
+      D 1059,221,obj_doorAny
+      M 823,230,obj_markerX
+      M 120,361,obj_markerA
+      M 1082,223,obj_markerAny
+      M 272,235,obj_markerAny
+      M 542,233,obj_markerAny
+72	room_dw_castle_dungeon	1640x480	pers=False	layers=7(tile3/bg1)	inst=14	doors=1	markers=1
+      D 110,470,obj_doorW
+      M 150,360,obj_markerw
+73	room_dw_castle_rooms_kris	640x480	pers=False	layers=4(tile1/bg1)	inst=17	doors=1	markers=1
+      D 280,461,obj_doorAny
+      M 314,361,obj_markerAny
+74	room_dw_castle_rooms_susie	640x480	pers=False	layers=4(tile1/bg1)	inst=17	doors=1	markers=1
+      D 257,465,obj_doorAny
+      M 292,362,obj_markerAny
+75	PLACE_DOG	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+76	room_legend	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+77	room_legend_neo	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+78	room_shop1	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+79	room_shop_music	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+80	room_gameover	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+81	PLACE_LOGO	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+82	PLACE_FAILURE	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+83	PLACE_NAMING_JIKKEN	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+84	PLACE_MENU	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+85	room_ed	320x240	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+86	room_empty	320x240	pers=False	layers=4(tile0/bg1)	inst=2	doors=0	markers=0
+87	room_DARKempty	640x480	pers=False	layers=2(tile0/bg1)	inst=2	doors=0	markers=0
+88	room_test_climb_new	1280x960	pers=False	layers=4(tile1/bg1)	inst=38	doors=0	markers=0
+89	room_cc_lancer	1160x480	pers=False	layers=9(tile2/bg1)	inst=30	doors=1	markers=1
+      D 269,459,obj_doorW
+      M 300,366,obj_markerX
+90	room_cc_clover	640x480	pers=False	layers=5(tile0/bg1)	inst=19	doors=1	markers=1
+      D 280,470,obj_doorD_musfade
+      M 300,390,obj_markerC
+91	room_cc_fountain	640x480	pers=False	layers=4(tile0/bg1)	inst=3	doors=0	markers=0
+92	PLACE_DOGCHECK2	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+93	room_debug_smallface_dark	640x480	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+94	room_debug_smallface	320x240	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+95	room_debug_choicer_dark	640x480	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+96	room_debug_choicer_light	320x240	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+97	room_debug_battleBalloon	640x480	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+98	room_overworldBulletEnemyTest	640x480	pers=False	layers=5(tile2/bg1)	inst=9	doors=0	markers=0
+99	room_debug_layeredLevelTest	640x480	pers=False	layers=5(tile2/bg1)	inst=11	doors=0	markers=0
+100	room_debug_windowEffect	1920x1080	pers=False	layers=5(tile1/bg1)	inst=24	doors=0	markers=0
+101	room_dw_church_slidingbookshelf	3240x480	pers=False	layers=8(tile3/bg1)	inst=54	doors=4	markers=4
+      D 3220,280,obj_doorAny
+      D 2920,460,obj_doorAny
+      D 160,80,obj_doorAny
+      D 0,280,obj_doorAny
+      M 3176,278,obj_markerAny
+      M 2920,380,obj_markerAny
+      M 162,106,obj_markerAny
+      M 26,278,obj_markerAny
+102	room_darkness_example	1280x960	pers=False	layers=6(tile3/bg1)	inst=27	doors=0	markers=0
+103	room_darkness_example_2	1280x960	pers=False	layers=7(tile3/bg1)	inst=22	doors=0	markers=0
+104	room_dw_church_bellplay	640x480	pers=False	layers=7(tile4/bg1)	inst=15	doors=0	markers=0
+105	room_intro_ch4	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+106	room_dw_church_candlelighting	1960x480	pers=False	layers=5(tile2/bg1)	inst=37	doors=0	markers=0
+107	room_town_noellehouse	960x480	pers=False	layers=18(tile12/bg1)	inst=28	doors=2	markers=2
+      D 956,376,obj_doorAny
+      D 300,209,obj_doorAny
+      M 931,384,obj_markerAny
+      M 311,212,obj_markerAny
+108	room_dw_church_intro1	640x480	pers=False	layers=11(tile7/bg1)	inst=15	doors=1	markers=1
+      D 640,280,obj_doorAny
+      M 590,233,obj_markerAny
+109	room_dw_church_intro3	1440x2000	pers=False	layers=5(tile1/bg1)	inst=53	doors=2	markers=2
+      D 0,1000,obj_doorAny
+      D 1420,200,obj_doorAny
+      M 26,982,obj_markerAny
+      M 1376,182,obj_markerAny
+110	room_dw_church_intro_guei	4400x1920	pers=False	layers=17(tile5/bg1)	inst=86	doors=2	markers=2
+      D -34,1640,obj_doorAny
+      D 4394,880,obj_doorAny
+      M 12,1622,obj_markerAny
+      M 4350,865,obj_markerAny
+111	room_dw_church_darkroom1_old	1640x1040	pers=False	layers=6(tile2/bg1)	inst=45	doors=3	markers=3
+      D 0,200,obj_doorAny
+      D 880,476,obj_doorAny
+      D 1620,200,obj_doorAny
+      M 26,182,obj_markerAny
+      M 900,452,obj_markerAny
+      M 1576,190,obj_markerAny
+112	room_dw_church_lantern1_old_old	2560x480	pers=False	layers=8(tile3/bg1)	inst=56	doors=7	markers=4
+      D 480,240,obj_door_solid
+      D 1040,240,obj_door_solid
+      D 1600,240,obj_door_solid
+      D 0,360,obj_doorAny
+      D 480,316,obj_doorAny
+      D 1040,316,obj_doorAny
+      D 1600,316,obj_doorAny
+      M 26,318,obj_markerAny
+      M 500,318,obj_markerAny
+      M 1060,318,obj_markerAny
+      M 1620,318,obj_markerAny
+113	room_dw_church_lantern_hallway	3840x2200	pers=False	layers=13(tile3/bg1)	inst=67	doors=2	markers=2
+      D 1280,868,obj_doorAny
+      D 2320,1754,obj_doorAny
+      M 1320,864,obj_markerAny
+      M 2340,1674,obj_markerAny
+114	room_dw_church_darkbell_old	2080x1000	pers=False	layers=4(tile1/bg1)	inst=14	doors=2	markers=2
+      D 2060,320,obj_doorAny
+      D 240,980,obj_doorAny
+      M 2016,310,obj_markerAny
+      M 260,900,obj_markerAny
+115	room_dw_church_gersonstudy	960x1200	pers=False	layers=7(tile1/bg1)	inst=81	doors=5	markers=6
+      D 955,899,obj_doorAny
+      D 160,254,obj_doorAny
+      D 400,254,obj_doorAny
+      D 421,627,obj_doorAny
+      D -34,921,obj_doorAny
+      M 890,910,obj_markerAny
+      M 220,240,obj_markerAny
+      M 460,240,obj_markerAny
+      M 460,612,obj_markerAny
+      M 12,900,obj_markerAny
+      M 460,636,obj_markerAny
+116	room_dw_church_stairs_west_bell	1480x1240	pers=False	layers=5(tile1/bg1)	inst=49	doors=2	markers=2
+      D 0,920,obj_doorAny
+      D 1460,200,obj_doorAny
+      M 26,902,obj_markerAny
+      M 1416,182,obj_markerAny
+117	room_dw_church_librarybookenemy	640x1440	pers=False	layers=4(tile1/bg1)	inst=31	doors=3	markers=3
+      D 0,680,obj_doorAny
+      D 280,0,obj_doorAny
+      D 620,1240,obj_doorAny
+      M 26,662,obj_markerAny
+      M 300,26,obj_markerAny
+      M 576,1222,obj_markerAny
+118	room_dw_church_bookshelfpuzzle1	2240x2160	pers=False	layers=10(tile1/bg1)	inst=58	doors=4	markers=4
+      D 2234,1200,obj_doorAny
+      D 1720,754,obj_doorAny
+      D 320,1154,obj_doorAny
+      D 320,1034,obj_doorAny
+      M 2190,1178,obj_markerAny
+      M 1740,762,obj_markerAny
+      M 340,1030,obj_markerAny
+      M 340,1150,obj_markerAny
+119	room_dw_church_bookshelfpuzzle2	1280x480	pers=False	layers=4(tile1/bg1)	inst=17	doors=4	markers=4
+      D 1280,280,obj_doorAny
+      D 1280,160,obj_doorAny
+      D 200,240,obj_doorAny
+      D 200,120,obj_doorAny
+      M 1216,262,obj_markerAny
+      M 1216,118,obj_markerAny
+      M 220,116,obj_markerAny
+      M 220,236,obj_markerAny
+120	room_dw_church_worshiproom	960x480	pers=False	layers=6(tile1/bg1)	inst=24	doors=1	markers=1
+      D 440,474,obj_doorAny
+      M 460,394,obj_markerAny
+121	room_dw_church_swingingbell	640x480	pers=False	layers=4(tile1/bg1)	inst=6	doors=2	markers=2
+      D 280,460,obj_doorAny
+      D 280,0,obj_doorAny
+      M 300,380,obj_markerAny
+      M 300,26,obj_markerAny
+122	room_dw_church_tallbookcases	1920x480	pers=False	layers=11(tile4/bg1)	inst=55	doors=4	markers=4
+      D 920,474,obj_doorAny
+      D -34,320,obj_doorAny
+      D 920,176,obj_doorAny
+      D 1914,320,obj_doorAny
+      M 940,394,obj_markerAny
+      M 12,318,obj_markerAny
+      M 940,172,obj_markerAny
+      M 1870,318,obj_markerAny
+123	room_dw_church_lantern2	1280x480	pers=False	layers=4(tile1/bg1)	inst=12	doors=1	markers=1
+      D 1276,332,obj_doorAny
+      M 1216,318,obj_markerAny
+124	room_dw_church_smallbells	640x480	pers=False	layers=5(tile2/bg1)	inst=20	doors=2	markers=2
+      D 280,460,obj_doorAny
+      D 280,154,obj_doorAny
+      M 300,380,obj_markerAny
+      M 300,150,obj_markerAny
+125	room_dw_church_claw	2400x960	pers=False	layers=4(tile1/bg1)	inst=16	doors=2	markers=2
+      D 280,460,obj_doorAny
+      D 2383,829,obj_doorAny
+      M 300,380,obj_markerAny
+      M 2320,798,obj_markerAny
+126	room_dw_church_shelfclimb1	640x480	pers=False	layers=4(tile1/bg1)	inst=8	doors=2	markers=2
+      D 280,459,obj_doorAny
+      D 280,0,obj_doorAny
+      M 300,379,obj_markerAny
+      M 300,26,obj_markerAny
+127	room_dw_church_statueclimb	640x480	pers=False	layers=4(tile1/bg1)	inst=21	doors=3	markers=3
+      D 280,460,obj_doorAny
+      D 620,240,obj_doorAny
+      D 0,240,obj_doorAny
+      M 280,380,obj_markerAny
+      M 576,222,obj_markerAny
+      M 26,222,obj_markerAny
+128	room_dw_church_offering	1280x480	pers=False	layers=4(tile1/bg1)	inst=15	doors=1	markers=1
+      D 1260,240,obj_doorAny
+      M 1216,222,obj_markerAny
+129	room_dw_church_npcroom_shelfclimb	640x480	pers=False	layers=4(tile1/bg1)	inst=11	doors=1	markers=1
+      D 280,460,obj_doorAny
+      M 300,380,obj_markerAny
+130	room_dw_church_stairs_stainedglass	1280x960	pers=False	layers=4(tile1/bg1)	inst=42	doors=2	markers=2
+      D 1260,720,obj_doorAny
+      D 0,200,obj_doorAny
+      M 1216,702,obj_markerAny
+      M 26,182,obj_markerAny
+131	room_dw_church_bellsareawest	640x480	pers=False	layers=6(tile2/bg1)	inst=12	doors=3	markers=3
+      D 0,240,obj_doorAny
+      D 620,240,obj_doorAny
+      D 160,460,obj_doorAny
+      M 26,222,obj_markerAny
+      M 576,222,obj_markerAny
+      M 180,380,obj_markerAny
+132	room_dw_church_stairs_topright	2280x1400	pers=False	layers=5(tile1/bg1)	inst=68	doors=3	markers=3
+      D 320,1380,obj_doorAny
+      D 720,920,obj_doorAny
+      D 2260,320,obj_doorAny
+      M 340,1300,obj_markerAny
+      M 722,946,obj_markerAny
+      M 2216,302,obj_markerAny
+133	room_dw_church_poolsroom1	1440x1120	pers=False	layers=5(tile2/bg1)	inst=51	doors=4	markers=4
+      D 0,440,obj_doorAny
+      D 740,1100,obj_doorAny
+      D 580,0,obj_doorAny
+      D 1420,440,obj_doorAny
+      M 26,422,obj_markerAny
+      M 760,1020,obj_markerAny
+      M 599,26,obj_markerAny
+      M 1376,422,obj_markerAny
+134	room_dw_church_candlesroom1	1920x480	pers=False	layers=7(tile4/bg1)	inst=29	doors=3	markers=3
+      D 240,460,obj_doorAny
+      D 940,314,obj_doorAny
+      D 1760,314,obj_doorAny
+      M 260,380,obj_markerAny
+      M 960,310,obj_markerAny
+      M 1780,310,obj_markerAny
+135	room_dw_church_solowaterfall	640x480	pers=False	layers=4(tile1/bg1)	inst=11	doors=1	markers=1
+      D 280,460,obj_doorAny
+      M 300,380,obj_markerAny
+136	room_dw_church_statueroom	640x2080	pers=False	layers=8(tile1/bg1)	inst=62	doors=2	markers=3
+      D 0,1680,obj_doorAny
+      D 400,2060,obj_doorAny
+      M 26,1662,obj_markerAny
+      M 482,803,obj_markerAny
+      M 420,1980,obj_markerAny
+137	room_dw_church_poolsroom2	1440x1200	pers=False	layers=5(tile2/bg1)	inst=46	doors=3	markers=3
+      D 0,440,obj_doorAny
+      D 1420,440,obj_doorAny
+      D 640,1180,obj_doorAny
+      M 26,438,obj_markerAny
+      M 1376,422,obj_markerAny
+      M 680,1100,obj_markerAny
+138	room_dw_church_shelfclimb2	640x480	pers=False	layers=6(tile3/bg1)	inst=18	doors=4	markers=4
+      D 280,460,obj_doorAny
+      D 280,134,obj_doorAny
+      D 0,240,obj_doorAny
+      D 620,240,obj_doorAny
+      M 300,380,obj_markerAny
+      M 300,110,obj_markerAny
+      M 26,222,obj_markerAny
+      M 576,222,obj_markerAny
+139	room_dw_church_statueclimb_npcroom	640x480	pers=False	layers=4(tile1/bg1)	inst=8	doors=1	markers=1
+      D 0,280,obj_doorAny
+      M 26,262,obj_markerAny
+140	room_dw_church_bellhall_west	840x480	pers=False	layers=5(tile1/bg1)	inst=13	doors=3	markers=3
+      D 0,280,obj_doorAny
+      D 820,240,obj_doorAny
+      D 280,196,obj_doorAny
+      M 26,262,obj_markerAny
+      M 776,262,obj_markerAny
+      M 300,166,obj_markerAny
+141	room_dw_church_fountainconnection	2560x1800	pers=False	layers=4(tile1/bg1)	inst=52	doors=2	markers=2
+      D 240,1780,obj_doorAny
+      D -35,1207,obj_doorAny
+      M 260,1700,obj_markerAny
+      M 30,1220,obj_markerAny
+142	room_dw_church_stainedglasspreview	1920x480	pers=False	layers=6(tile3/bg1)	inst=7	doors=1	markers=1
+      D 0,280,obj_doorAny
+      M 26,262,obj_markerAny
+143	room_dw_church_stairs_topleft	1480x1160	pers=False	layers=5(tile1/bg1)	inst=51	doors=2	markers=2
+      D 1120,1140,obj_doorAny
+      D 0,200,obj_doorAny
+      M 1140,1060,obj_markerAny
+      M 26,182,obj_markerAny
+144	room_dw_church_npcroom_pools1	640x480	pers=False	layers=4(tile1/bg1)	inst=12	doors=1	markers=1
+      D 440,0,obj_doorAny
+      M 460,26,obj_markerAny
+145	room_dw_church_poolsroom1_east	640x480	pers=False	layers=4(tile1/bg1)	inst=7	doors=1	markers=1
+      D 0,240,obj_doorAny
+      M 26,222,obj_markerAny
+146	room_dw_church_minorlegend	640x480	pers=False	layers=7(tile1/bg1)	inst=12	doors=1	markers=1
+      D 280,474,obj_doorAny
+      M 303,394,obj_markerAny
+147	room_dw_church_bookenemywest	640x480	pers=False	layers=4(tile1/bg1)	inst=9	doors=1	markers=1
+      D 620,240,obj_doorAny
+      M 576,222,obj_markerAny
+148	room_dw_church_poolsroom2south	640x480	pers=False	layers=4(tile1/bg1)	inst=11	doors=1	markers=1
+      D 280,0,obj_doorAny
+      M 300,26,obj_markerAny
+149	room_lw_church_office	320x240	pers=False	layers=6(tile0/bg2)	inst=18	doors=1	markers=1
+      D 140,234,obj_doorAny
+      M 150,190,obj_markerAny
+150	room_dw_church_bellhall_east	840x480	pers=False	layers=5(tile1/bg1)	inst=10	doors=2	markers=2
+      D 0,240,obj_doorAny
+      D 820,280,obj_doorAny
+      M 26,262,obj_markerAny
+      M 776,262,obj_markerAny
+151	room_dw_church_bellhall_central	640x480	pers=False	layers=5(tile1/bg1)	inst=11	doors=2	markers=2
+      D -11,226,obj_doorAny
+      D 635,218,obj_doorAny
+      M 26,262,obj_markerAny
+      M 576,262,obj_markerAny
+152	room_dw_church_darkroom_old	1640x1040	pers=False	layers=6(tile2/bg1)	inst=49	doors=1	markers=3
+      D 880,476,obj_doorAny
+      M 26,182,obj_markerAny
+      M 900,452,obj_markerAny
+      M 1576,190,obj_markerAny
+153	room_dw_church_lantern1_old	2560x480	pers=False	layers=8(tile3/bg1)	inst=65	doors=7	markers=4
+      D 480,240,obj_door_solid
+      D 1040,240,obj_door_solid
+      D 1600,240,obj_door_solid
+      D 0,360,obj_doorAny
+      D 480,316,obj_doorAny
+      D 1040,316,obj_doorAny
+      D 1600,316,obj_doorAny
+      M 26,318,obj_markerAny
+      M 500,318,obj_markerAny
+      M 1060,318,obj_markerAny
+      M 1620,318,obj_markerAny
+154	room_dw_ralsei_castle_3f	2080x480	pers=False	layers=6(tile1/bg1)	inst=21	doors=4	markers=4
+      D 1840,240,obj_doorAny
+      D 436,241,obj_doorAny
+      D 1554,241,obj_doorAny
+      D 1276,242,obj_doorAny
+      M 1878,248,obj_markerAny
+      M 469,246,obj_markerAny
+      M 1318,247,obj_markerAny
+      M 1609,245,obj_markerAny
+155	room_dw_castle_rooms_ralsei	640x480	pers=False	layers=4(tile1/bg1)	inst=12	doors=1	markers=1
+      D 257,455,obj_doorAny
+      M 303,366,obj_markerAny
+156	room_dw_rotating_tower	640x480	pers=False	layers=4(tile0/bg1)	inst=55	doors=0	markers=1
+      M 304,191,obj_markerAny
+157	room_dark_twostoryTest	1280x480	pers=False	layers=4(tile1/bg1)	inst=33	doors=0	markers=0
+158	room_overworldDarknessBulletTest	1280x480	pers=False	layers=7(tile4/bg1)	inst=25	doors=0	markers=0
+159	room_krisroom_dark	320x240	pers=False	layers=4(tile0/bg2)	inst=5	doors=0	markers=0
+160	room_overworld_darkmaku_ring	1280x480	pers=False	layers=7(tile4/bg1)	inst=23	doors=0	markers=0
+161	room_dw_church_statueroom_old	640x1600	pers=False	layers=6(tile1/bg1)	inst=18	doors=4	markers=3
+      D 0,1200,obj_doorAny
+      D 280,0,obj_doorAny
+      D 452,0,obj_doorAny
+      D 400,1580,obj_doorAny
+      M 26,1182,obj_markerAny
+      M 280,26,obj_markerAny
+      M 420,1500,obj_markerAny
+162	room_lw_noellehouse_vents_west	320x600	pers=False	layers=5(tile1/bg1)	inst=15	doors=0	markers=0
+163	room_lerptest	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+164	room_overworld_darkmakumaze	1280x960	pers=False	layers=7(tile4/bg1)	inst=34	doors=0	markers=0
+165	room_overworld_darkmaku_blocks	1280x960	pers=False	layers=7(tile3/bg1)	inst=42	doors=0	markers=0
+166	room_town_krisyard_dark	320x500	pers=False	layers=7(tile0/bg1)	inst=22	doors=0	markers=0
+167	room_dw_castle_rooms_queen	1160x480	pers=False	layers=5(tile1/bg1)	inst=13	doors=1	markers=1
+      D 257,455,obj_doorAny
+      M 300,366,obj_markerAny
+168	room_dw_castle_rooms_tenna	640x480	pers=False	layers=6(tile1/bg1)	inst=12	doors=1	markers=1
+      D 258,465,obj_doorAny
+      M 303,379,obj_markerAny
+169	room_traintest	320x240	pers=False	layers=4(tile0/bg1)	inst=52	doors=0	markers=0
+170	room_dw_church_rippletest	3840x2160	pers=False	layers=7(tile2/bg2)	inst=39	doors=0	markers=0
+171	room_dw_church_ripplepuzzle	4000x2160	pers=False	layers=15(tile6/bg2)	inst=59	doors=1	markers=1
+      D -34,1120,obj_doorAny
+      M 12,1078,obj_markerAny
+172	room_dw_church_gueitest	2560x480	pers=False	layers=8(tile3/bg1)	inst=56	doors=7	markers=4
+      D 480,240,obj_door_solid
+      D 1040,240,obj_door_solid
+      D 1600,240,obj_door_solid
+      D 0,360,obj_doorAny
+      D 480,316,obj_doorAny
+      D 1040,316,obj_doorAny
+      D 1600,316,obj_doorAny
+      M 26,318,obj_markerAny
+      M 500,318,obj_markerAny
+      M 1060,318,obj_markerAny
+      M 1620,318,obj_markerAny
+173	room_dw_church_glass	640x480	pers=False	layers=8(tile4/bg1)	inst=11	doors=1	markers=1
+      D 630,264,obj_doorAny
+      M 577,265,obj_markerAny
+174	room_dw_church_staircase	640x4320	pers=False	layers=9(tile3/bg1)	inst=40	doors=4	markers=3
+      D -34,4080,obj_doorAny
+      D 634,4080,obj_doorAny
+      D 247,193,obj_doorAny
+      D -74,240,obj_doorAny
+      M 12,4138,obj_markerAny
+      M 590,4138,obj_markerAny
+      M 12,218,obj_markerAny
+175	room_dw_church_bellhall_bookroom	1280x480	pers=False	layers=9(tile5/bg1)	inst=26	doors=2	markers=3
+      D -34,240,obj_doorAny
+      D 680,160,obj_doorAny
+      M 12,216,obj_markerAny
+      M 700,149,obj_markerAny
+      M 1010,218,obj_markerAny
+176	room_dw_church_bookcase	640x480	pers=False	layers=11(tile6/bg1)	inst=13	doors=3	markers=3
+      D 634,222,obj_doorAny
+      D 160,142,obj_doorAny
+      D -34,240,obj_doorAny
+      M 590,218,obj_markerAny
+      M 179,138,obj_markerAny
+      M 12,218,obj_markerAny
+177	room_dw_church_savepoint	3280x1480	pers=False	layers=15(tile6/bg1)	inst=101	doors=2	markers=2
+      D -34,1280,obj_doorAny
+      D 3274,480,obj_doorAny
+      M 12,1260,obj_markerAny
+      M 3230,460,obj_markerAny
+178	room_dw_church_dark_fire_puzzle	640x480	pers=False	layers=5(tile2/bg1)	inst=12	doors=3	markers=3
+      D -31,264,obj_doorAny
+      D 631,260,obj_doorAny
+      D 278,225,obj_doorAny
+      M 570,260,obj_markerAny
+      M 30,260,obj_markerAny
+      M 303,235,obj_markerAny
+179	room_dw_church_turtles	1280x480	pers=False	layers=9(tile2/bg1)	inst=38	doors=2	markers=2
+      D -34,360,obj_doorAny
+      D 1274,360,obj_doorAny
+      M 12,318,obj_markerAny
+      M 1230,318,obj_markerAny
+180	room_dw_church_guei	640x480	pers=False	layers=4(tile1/bg1)	inst=8	doors=2	markers=2
+      D -31,264,obj_doorAny
+      D 631,260,obj_doorAny
+      M 570,260,obj_markerAny
+      M 30,260,obj_markerAny
+181	room_dw_church_jackenstein	3840x2660	pers=False	layers=11(tile4/bg1)	inst=105	doors=2	markers=3
+      D 3074,1081,obj_doorAny
+      D -34,200,obj_doorAny
+      M 3030,1078,obj_markerAny
+      M 12,200,obj_markerAny
+      M 2120,1960,obj_markerAny
+182	room_dw_church_bellhall_curtain	1280x480	pers=False	layers=6(tile2/bg1)	inst=16	doors=1	markers=1
+      D 966,471,obj_doorAny
+      M 1022,377,obj_markerAny
+183	room_dw_church_lantern_hallway_old	1360x1440	pers=False	layers=5(tile1/bg1)	inst=25	doors=4	markers=4
+      D 280,1420,obj_doorAny
+      D 640,1420,obj_doorAny
+      D 1000,1420,obj_doorAny
+      D 640,0,obj_doorAny
+      M 300,1340,obj_markerAny
+      M 660,1340,obj_markerAny
+      M 1020,1340,obj_markerAny
+      M 660,26,obj_markerAny
+184	room_dw_church_dogclimb	860x9000	pers=False	layers=12(tile4/bg1)	inst=319	doors=2	markers=1
+      D 880,200,obj_doorAny
+      D 280,9000,obj_doorAny
+      M 300,8907,obj_markerAny
+185	room_dw_church_arena	1280x480	pers=False	layers=8(tile4/bg1)	inst=15	doors=1	markers=1
+      D 260,471,obj_doorAny
+      M 301,381,obj_markerAny
+186	room_debug_pianotest	640x480	pers=False	layers=4(tile1/bg1)	inst=5	doors=0	markers=0
+187	room_gersonbattleroomtest	640x480	pers=False	layers=4(tile1/bg1)	inst=4	doors=0	markers=0
+188	room_traintest_big	320x240	pers=False	layers=4(tile0/bg1)	inst=136	doors=0	markers=0
+189	room_dw_church_chase_old	3840x480	pers=False	layers=4(tile1/bg1)	inst=9	doors=1	markers=1
+      D -19,223,obj_doorAny
+      M 24,217,obj_markerAny
+190	room_dw_3d_tower_test	640x480	pers=False	layers=4(tile0/bg1)	inst=9	doors=0	markers=1
+      M 304,191,obj_markerAny
+191	room_dw_titan_tower_test	640x480	pers=False	layers=4(tile0/bg1)	inst=9	doors=0	markers=1
+      M 304,191,obj_markerAny
+192	room_dw_churchb_nongerson_post	1440x480	pers=False	layers=11(tile5/bg1)	inst=12	doors=1	markers=1
+      D 1434,280,obj_doorAny
+      M 1390,241,obj_markerAny
+193	room_lw_noellehouse_vents_north	320x240	pers=False	layers=5(tile1/bg1)	inst=12	doors=0	markers=0
+194	room_lw_noellehouse_vents_east	320x240	pers=False	layers=6(tile1/bg1)	inst=16	doors=0	markers=0
+195	room_lw_noellehouse_vents_south	960x240	pers=False	layers=6(tile1/bg1)	inst=16	doors=0	markers=0
+196	room_bullettest_new	640x480	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+197	room_test_pianoGimmick	640x480	pers=False	layers=4(tile1/bg1)	inst=6	doors=0	markers=0
+198	room_test_remotePiano	1920x1080	pers=False	layers=4(tile1/bg1)	inst=10	doors=0	markers=0
+199	room_DARKbase_GMS2	640x480	pers=False	layers=4(tile1/bg1)	inst=2	doors=0	markers=0
+200	room_test_climb_new2	640x480	pers=False	layers=4(tile1/bg1)	inst=19	doors=0	markers=0
+201	room_test_climb_cameratest	1280x960	pers=False	layers=4(tile1/bg1)	inst=28	doors=0	markers=0
+202	room_test_climb_0001	1280x960	pers=False	layers=4(tile1/bg1)	inst=40	doors=0	markers=0
+203	room_test_climb_enterexit	1280x960	pers=False	layers=6(tile1/bg1)	inst=37	doors=0	markers=0
+204	room_dw_church_climbtut	1360x960	pers=False	layers=7(tile1/bg1)	inst=67	doors=2	markers=2
+      D 1354,160,obj_doorAny
+      D -34,680,obj_doorAny
+      M 1309,138,obj_markerAny
+      M 12,658,obj_markerAny
+205	room_dw_church_fastwater	1160x960	pers=False	layers=7(tile1/bg1)	inst=34	doors=2	markers=2
+      D -34,680,obj_doorAny
+      D 1154,400,obj_doorAny
+      M 12,658,obj_markerAny
+      M 1110,378,obj_markerAny
+206	room_dw_church_crumbletower	720x960	pers=False	layers=8(tile1/bg1)	inst=29	doors=2	markers=2
+      D 714,120,obj_doorAny
+      D -34,800,obj_doorAny
+      M 670,98,obj_markerAny
+      M 12,778,obj_markerAny
+207	room_dw_church_tower1	880x1920	pers=False	layers=8(tile1/bg1)	inst=77	doors=3	markers=3
+      D 1364,480,obj_doorAny
+      D -34,1720,obj_doorAny
+      D 360,480,obj_doorAny
+      M 1320,458,obj_markerAny
+      M 12,1698,obj_markerAny
+      M 380,456,obj_markerAny
+208	room_lw_church_choir	320x240	pers=False	layers=6(tile0/bg2)	inst=17	doors=1	markers=1
+      D 160,231,obj_doorAny
+      M 170,191,obj_markerAny
+209	room_dw_church_bellclimb	1160x1920	pers=False	layers=8(tile1/bg1)	inst=34	doors=2	markers=2
+      D 40,1914,obj_doorAny
+      D 1154,1720,obj_doorAny
+      M 60,1834,obj_markerAny
+      M 1110,1698,obj_markerAny
+210	room_dw_church_shiftclimb	1360x960	pers=False	layers=7(tile1/bg1)	inst=47	doors=2	markers=2
+      D 1354,160,obj_doorAny
+      D -34,680,obj_doorAny
+      M 1309,138,obj_markerAny
+      M 12,658,obj_markerAny
+211	room_dw_church_intropiano	1800x640	pers=False	layers=11(tile6/bg1)	inst=41	doors=2	markers=2
+      D 1794,240,obj_doorAny
+      D -34,240,obj_doorAny
+      M 1747,244,obj_markerAny
+      M 12,218,obj_markerAny
+212	room_dw_church_intro_gerson	2440x2160	pers=False	layers=13(tile6/bg1)	inst=126	doors=3	markers=3
+      D -34,1880,obj_doorAny
+      D 2240,1440,obj_doorAny
+      D 2434,840,obj_doorAny
+      M 12,1858,obj_markerAny
+      M 2390,818,obj_markerAny
+      M 2260,1430,obj_markerAny
+213	room_dw_church_pianopiece_left	2280x2740	pers=False	layers=15(tile8/bg1)	inst=124	doors=1	markers=1
+      D 2274,2320,obj_doorAny
+      M 2230,2298,obj_markerAny
+214	room_dw_church_northprophecies	2000x2000	pers=False	layers=11(tile4/bg1)	inst=22	doors=2	markers=2
+      D 1400,1994,obj_doorAny
+      D -34,920,obj_doorAny
+      M 1420,1914,obj_markerAny
+      M 12,898,obj_markerAny
+215	room_dw_church_darkmaze	3200x1120	pers=False	layers=11(tile6/bg1)	inst=76	doors=2	markers=2
+      D 1320,1114,obj_doorAny
+      D 2234,840,obj_doorAny
+      M 1340,1034,obj_markerAny
+      M 2190,818,obj_markerAny
+216	room_dw_church_quicktest	640x480	pers=False	layers=5(tile1/bg1)	inst=6	doors=0	markers=0
+217	room_dw_church_pianopiece_right	1680x1120	pers=False	layers=17(tile4/bg1)	inst=130	doors=2	markers=2
+      D 86,760,obj_doorAny
+      D 1320,348,obj_doorAny
+      M 132,738,obj_markerAny
+      M 1340,350,obj_markerAny
+218	room_dw_church_pianopuzzle	960x480	pers=False	layers=15(tile6/bg1)	inst=30	doors=2	markers=2
+      D 280,474,obj_doorAny
+      D 954,200,obj_doorAny
+      M 300,394,obj_markerAny
+      M 913,197,obj_markerAny
+219	room_dw_church_nwconnect	1280x960	pers=False	layers=16(tile7/bg1)	inst=40	doors=3	markers=3
+      D 320,954,obj_doorAny
+      D 80,714,obj_doorAny
+      D -34,320,obj_doorAny
+      M 340,874,obj_markerAny
+      M 100,716,obj_markerAny
+      M 12,320,obj_markerAny
+220	room_dw_church_rightconnect	2440x2240	pers=False	layers=19(tile9/bg1)	inst=166	doors=3	markers=4
+      D 2434,1520,obj_doorAny
+      D -34,1800,obj_doorAny
+      D 860,888,obj_doorAny
+      M 240,1382,obj_markerAny
+      M 2390,1498,obj_markerAny
+      M 12,1778,obj_markerAny
+      M 880,910,obj_markerAny
+221	room_dw_church_stairspreview	1920x480	pers=False	layers=15(tile6/bg1)	inst=12	doors=1	markers=1
+      D -34,280,obj_doorAny
+      M 12,258,obj_markerAny
+222	room_dw_church_trueclimbadventure	2680x2160	pers=False	layers=14(tile6/bg1)	inst=211	doors=3	markers=3
+      D 440,2154,obj_doorAny
+      D 2674,1520,obj_doorAny
+      D 1080,640,obj_doorAny
+      M 460,2074,obj_markerAny
+      M 2622,1470,obj_markerAny
+      M 1100,646,obj_markerAny
+223	room_dw_church_organpuzzle	1760x480	pers=False	layers=10(tile4/bg1)	inst=29	doors=2	markers=3
+      D 1760,360,obj_doorAny
+      D 160,474,obj_doorAny
+      M 1720,320,obj_markerAny
+      M 180,393,obj_markerAny
+      M 193,313,obj_markerAny
+224	room_dw_church_mizzleencounter	2040x960	pers=False	layers=9(tile4/bg1)	inst=62	doors=2	markers=2
+      D -34,520,obj_doorAny
+      D 2034,520,obj_doorAny
+      M 12,518,obj_markerAny
+      M 1990,498,obj_markerAny
+225	room_dw_church_sideclimb	3240x2360	pers=False	layers=17(tile11/bg1)	inst=125	doors=1	markers=1
+      D -34,2040,obj_doorAny
+      M 12,2018,obj_markerAny
+226	room_dw_church_secretpiano	640x480	pers=False	layers=12(tile5/bg1)	inst=25	doors=0	markers=0
+227	room_dw_church_ripplepuzzle_postgers	3840x2160	pers=False	layers=17(tile7/bg1)	inst=86	doors=2	markers=3
+      D 1246,1240,obj_doorAny
+      D 2000,748,obj_doorAny
+      M 1292,1219,obj_markerAny
+      M 2510,1120,obj_markerAny
+      M 2022,750,obj_markerAny
+228	room_dw_church_tallbookcases_backup	1920x480	pers=False	layers=5(tile2/bg1)	inst=46	doors=4	markers=4
+      D 880,520,obj_doorAny
+      D -40,360,obj_doorAny
+      D 400,280,obj_doorAny
+      D 1920,360,obj_doorAny
+      M 900,420,obj_markerAny
+      M 26,358,obj_markerAny
+      M 422,276,obj_markerAny
+      M 1860,338,obj_markerAny
+229	room_dw_church_fountain	640x480	pers=False	layers=4(tile0/bg1)	inst=2	doors=0	markers=0
+230	room_dw_church_b_intro	640x480	pers=False	layers=5(tile1/bg1)	inst=8	doors=0	markers=0
+231	room_dw_churchc_final_prophecy	7240x1200	pers=False	layers=10(tile5/bg1)	inst=21	doors=2	markers=1
+      D 7000,200,obj_doorAny
+      D 280,1200,obj_doorAny
+      M 302,1109,obj_markerAny
+232	room_dw_church_bookshelfpuzzle	2240x1400	pers=False	layers=16(tile5/bg1)	inst=165	doors=3	markers=3
+      D 1392,376,obj_doorAny
+      D 600,496,obj_doorAny
+      D 1000,1394,obj_doorAny
+      M 1400,372,obj_markerAny
+      M 622,491,obj_markerAny
+      M 1022,1314,obj_markerAny
+233	room_lw_noellehouse_basement	640x240	pers=False	layers=5(tile0/bg1)	inst=16	doors=0	markers=0
+234	room_dw_church_biblioxencounter	640x1160	pers=False	layers=11(tile4/bg1)	inst=39	doors=3	markers=3
+      D 280,1154,obj_doorAny
+      D 280,136,obj_doorAny
+      D -74,480,obj_doorAny
+      M 300,1074,obj_markerAny
+      M 300,132,obj_markerAny
+      M 12,458,obj_markerAny
+235	room_dw_church_darkclimb	1160x2160	pers=False	layers=5(tile1/bg1)	inst=48	doors=2	markers=2
+      D 1154,880,obj_doorAny
+      D -40,641,obj_doorAny
+      M 1110,858,obj_markerAny
+      M 20,634,obj_markerAny
+236	room_dw_church_moneyfountain	920x960	pers=False	layers=14(tile6/bg1)	inst=21	doors=2	markers=2
+      D 914,320,obj_doorAny
+      D 280,148,obj_doorAny
+      M 870,298,obj_markerAny
+      M 300,144,obj_markerAny
+237	room_rotating_tower_new_test	640x20000	pers=False	layers=7(tile1/bg1)	inst=15	doors=0	markers=1
+      M 12,19698,obj_markerAny
+238	room_dw_church_pianopiece_left_b	1000x920	pers=False	layers=11(tile4/bg1)	inst=21	doors=1	markers=1
+      D 994,760,obj_doorAny
+      M 950,738,obj_markerAny
+239	room_dw_church_pianopiece_rightprophecy	1000x920	pers=False	layers=8(tile2/bg1)	inst=16	doors=1	markers=1
+      D 560,920,obj_doorAny
+      M 560,840,obj_markerAny
+240	room_rotating_tower_new_example	640x20000	pers=False	layers=7(tile1/bg1)	inst=77	doors=0	markers=1
+      M 12,19698,obj_markerAny
+241	room_dw_church_shadowgerson	1960x1200	pers=False	layers=15(tile5/bg1)	inst=71	doors=2	markers=2
+      D -34,880,obj_doorAny
+      D 1954,480,obj_doorAny
+      M 12,858,obj_markerAny
+      M 1910,458,obj_markerAny
+242	room_dw_church_holywatercooler	3840x3840	pers=False	layers=17(tile7/bg1)	inst=158	doors=0	markers=0
+243	room_dw_church_rippleworship	4000x1440	pers=False	layers=8(tile3/bg2)	inst=59	doors=1	markers=1
+      D 1640,1434,obj_doorAny
+      M 1662,1354,obj_markerAny
+244	room_dw_church_waterfallroom	4000x4000	pers=False	layers=9(tile2/bg2)	inst=83	doors=1	markers=1
+      D 3240,3994,obj_doorAny
+      M 3260,3914,obj_markerAny
+245	room_dw_church_waterfalltearoom	1920x1080	pers=False	layers=10(tile4/bg1)	inst=16	doors=1	markers=1
+      D 1240,834,obj_doorAny
+      M 1260,754,obj_markerAny
+246	room_dw_castle_rooms_kris_susie	920x480	pers=False	layers=5(tile1/bg1)	inst=18	doors=2	markers=2
+      D 237,472,obj_doorAny
+      D 570,472,obj_doorAny
+      M 281,390,obj_markerAny
+      M 607,390,obj_markerAny
+247	room_dw_churchb_staircaseintro	640x480	pers=False	layers=7(tile1/bg1)	inst=29	doors=3	markers=3
+      D 240,200,obj_doorAny
+      D 634,240,obj_doorAny
+      D -34,240,obj_doorAny
+      M 300,196,obj_markerAny
+      M 590,212,obj_markerAny
+      M 12,212,obj_markerAny
+248	room_dw_churchb_prophecyencounter	4160x2160	pers=False	layers=18(tile4/bg2)	inst=110	doors=2	markers=2
+      D 846,440,obj_doorAny
+      D 4154,1400,obj_doorAny
+      M 892,418,obj_markerAny
+      M 4110,1378,obj_markerAny
+249	room_dw_churchb_worshiproom	960x480	pers=False	layers=6(tile1/bg1)	inst=26	doors=1	markers=1
+      D 440,474,obj_doorAny
+      M 460,394,obj_markerAny
+250	room_dw_churchb_libraryconnector	2680x2480	pers=False	layers=20(tile5/bg1)	inst=160	doors=2	markers=2
+      D 1200,2640,obj_doorAny
+      D 2440,840,obj_doorAny
+      M 1880,2280,obj_markerAny
+      M 2320,800,obj_markerAny
+251	room_dw_churchb_savepoint	1320x480	pers=False	layers=10(tile3/bg1)	inst=49	doors=3	markers=3
+      D -34,320,obj_doorAny
+      D 1314,320,obj_doorAny
+      D 280,474,obj_doorAny
+      M 9,318,obj_markerAny
+      M 1270,318,obj_markerAny
+      M 300,394,obj_markerAny
+252	room_dw_churchb_rotatingtower	2280x3840	pers=False	layers=23(tile10/bg2)	inst=180	doors=3	markers=3
+      D -34,3600,obj_doorAny
+      D -40,600,obj_doorAny
+      D 1400,536,obj_doorAny
+      M 12,3578,obj_markerAny
+      M 40,600,obj_markerAny
+      M 1421,532,obj_markerAny
+253	room_dw_churchb_bellroom	1760x480	pers=False	layers=11(tile1/bg1)	inst=20	doors=2	markers=2
+      D 1760,355,obj_doorAny
+      D -34,360,obj_doorAny
+      M 1680,326,obj_markerAny
+      M 12,338,obj_markerAny
+254	room_dw_churchb_escherstaircase	3840x2160	pers=False	layers=13(tile4/bg1)	inst=16	doors=2	markers=2
+      D 3834,2040,obj_doorAny
+      D 1034,2040,obj_doorAny
+      M 3790,2018,obj_markerAny
+      M 1080,2024,obj_markerAny
+255	room_dw_churchb_prophecymaze	1840x1240	pers=False	layers=8(tile1/bg1)	inst=37	doors=2	markers=2
+      D 1834,680,obj_doorAny
+      D -34,280,obj_doorAny
+      M 1783,656,obj_markerAny
+      M 22,264,obj_markerAny
+256	room_dw_churchb_rotatingtower2	2400x6000	pers=False	layers=10(tile3/bg2)	inst=286	doors=2	markers=2
+      D 2400,5440,obj_doorAny
+      D 1086,1240,obj_doorAny
+      M 2340,5420,obj_markerAny
+      M 1132,1218,obj_markerAny
+257	room_dw_churchb_gersonstudy	960x1200	pers=False	layers=11(tile1/bg1)	inst=76	doors=2	markers=2
+      D 954,920,obj_doorAny
+      D 425,618,obj_doorAny
+      M 910,898,obj_markerAny
+      M 460,636,obj_markerAny
+258	room_dw_churchb_gersonchase	6000x3840	pers=False	layers=9(tile2/bg2)	inst=57	doors=0	markers=1
+      M 4607,2154,obj_markerAny
+259	room_dw_churchb_extinguisher	6000x3840	pers=False	layers=15(tile6/bg1)	inst=113	doors=2	markers=2
+      D 3154,740,obj_doorAny
+      D -34,3520,obj_doorAny
+      M 3110,712,obj_markerAny
+      M 12,3498,obj_markerAny
+260	room_dw_church_knightclimb	6840x7400	pers=False	layers=15(tile7/bg1)	inst=150	doors=0	markers=0
+261	room_dw_church_knightclimb_post	3560x2160	pers=False	layers=10(tile4/bg1)	inst=66	doors=2	markers=3
+      D 3560,1360,obj_doorAny
+      D 313,408,obj_doorAny
+      M 3510,1338,obj_markerAny
+      M 337,436,obj_markerAny
+      M 580,436,obj_markerAny
+262	room_dw_rhythm	640x480	pers=False	layers=4(tile1/bg1)	inst=3	doors=0	markers=0
+263	room_dw_rhythm_countdown	640x480	pers=False	layers=4(tile1/bg1)	inst=3	doors=0	markers=0
+264	room_dw_rhythm_empty	640x480	pers=False	layers=4(tile1/bg1)	inst=0	doors=0	markers=0
+265	room_rhythmgame_editor	640x480	pers=False	layers=4(tile1/bg1)	inst=1	doors=0	markers=0
+266	room_dw_churchb_ripple1	2800x1080	pers=False	layers=7(tile2/bg2)	inst=45	doors=2	markers=2
+      D 2794,680,obj_doorAny
+      D -34,600,obj_doorAny
+      M 12,578,obj_markerAny
+      M 2750,658,obj_markerAny
+267	room_dw_churchb_ripplepost	1520x1080	pers=False	layers=15(tile4/bg1)	inst=43	doors=3	markers=3
+      D -34,560,obj_doorAny
+      D 3834,480,obj_doorAny
+      D 1514,320,obj_doorAny
+      M 12,538,obj_markerAny
+      M 3790,458,obj_markerAny
+      M 1470,298,obj_markerAny
+268	room_dw_churchb_library_alternate	3200x3840	pers=False	layers=8(tile1/bg1)	inst=154	doors=3	markers=3
+      D -36,1280,obj_doorAny
+      D 2960,214,obj_doorAny
+      D 3200,880,obj_doorAny
+      M 10,1258,obj_markerAny
+      M 2982,190,obj_markerAny
+      M 3120,858,obj_markerAny
+269	room_dw_churchb_moneyfountain	2800x1160	pers=False	layers=12(tile5/bg1)	inst=19	doors=1	markers=1
+      D 1720,748,obj_doorAny
+      M 1740,750,obj_markerAny
+270	room_dw_churchc_superprophecies	1920x1920	pers=False	layers=11(tile1/bg1)	inst=19	doors=2	markers=3
+      D 280,1914,obj_doorAny
+      D 1480,216,obj_doorAny
+      M 300,1834,obj_markerAny
+      M 1500,252,obj_markerAny
+      M 400,280,obj_markerAny
+271	room_dw_churchc_encounter1	2600x1600	pers=False	layers=16(tile3/bg1)	inst=165	doors=3	markers=3
+      D 1640,324,obj_doorAny
+      D 160,1594,obj_doorAny
+      D 2594,720,obj_doorAny
+      M 1680,320,obj_markerAny
+      M 180,1514,obj_markerAny
+      M 2550,738,obj_markerAny
+272	room_dw_churchc_slidingpiano	4800x9800	pers=False	layers=16(tile5/bg1)	inst=163	doors=2	markers=2
+      D 620,9520,obj_doorAny
+      D 280,4920,obj_doorAny
+      M 660,9440,obj_markerAny
+      M 300,4960,obj_markerAny
+273	room_dw_churchc_ripplesneak_poc	2880x3840	pers=False	layers=10(tile3/bg1)	inst=51	doors=2	markers=2
+      D 2880,2840,obj_doorAny
+      D -80,200,obj_doorAny
+      M 2800,2840,obj_markerAny
+      M 40,200,obj_markerAny
+274	room_dw_churchc_encounter2	1960x1600	pers=False	layers=15(tile5/bg2)	inst=88	doors=3	markers=3
+      D 1640,1056,obj_doorAny
+      D -74,1320,obj_doorAny
+      D -74,640,obj_doorAny
+      M 1660,1092,obj_markerAny
+      M 12,1298,obj_markerAny
+      M 12,618,obj_markerAny
+275	room_dw_churchc_finalclimb	640x2880	pers=False	layers=15(tile5/bg1)	inst=17	doors=2	markers=2
+      D 240,2874,obj_doorAny
+      D 280,-190,obj_doorAny
+      M 300,2794,obj_markerAny
+      M 300,6,obj_markerAny
+276	room_dw_churchc_angelprophecy_encounter	2880x480	pers=False	layers=12(tile3/bg1)	inst=41	doors=3	markers=3
+      D 2520,474,obj_doorAny
+      D 2874,320,obj_doorAny
+      D 806,218,obj_doorAny
+      M 2540,394,obj_markerAny
+      M 2830,278,obj_markerAny
+      M 820,254,obj_markerAny
+277	room_dw_churchc_savepoint	640x1280	pers=False	layers=13(tile5/bg1)	inst=31	doors=2	markers=4
+      D 280,216,obj_doorAny
+      D 280,1274,obj_doorAny
+      M 438,1076,obj_markerAny
+      M 300,252,obj_markerAny
+      M 300,1194,obj_markerAny
+      M 174,1076,obj_markerAny
+278	room_dw_churchc_darkswords	4800x4320	pers=False	layers=10(tile4/bg1)	inst=46	doors=2	markers=2
+      D 3840,700,obj_doorAny
+      D 280,4314,obj_doorAny
+      M 4160,760,obj_markerAny
+      M 300,4234,obj_markerAny
+279	room_dw_churchc_pretitan	640x2640	pers=False	layers=7(tile1/bg1)	inst=8	doors=1	markers=1
+      D 200,2634,obj_doorAny
+      M 300,2554,obj_markerAny
+280	room_dw_churchc_prepretitan	640x2120	pers=False	layers=11(tile4/bg1)	inst=24	doors=2	markers=3
+      D 160,10,obj_doorAny
+      D 280,2114,obj_doorAny
+      M 300,6,obj_markerAny
+      M 300,2034,obj_markerAny
+      M 102,1916,obj_markerAny
+281	room_dw_churchc_titandefeated	640x480	pers=False	layers=6(tile1/bg1)	inst=18	doors=1	markers=1
+      D 200,160,obj_doorAny
+      M 301,203,obj_markerAny
+282	room_dw_churchb_fountain	640x480	pers=False	layers=3(tile0/bg1)	inst=8	doors=1	markers=1
+      D 160,474,obj_doorAny
+      M 300,394,obj_markerAny
+283	room_dw_church_ripseq1	4000x4000	pers=False	layers=9(tile2/bg2)	inst=56	doors=0	markers=0
+284	room_dw_church_ripseq2	4000x4000	pers=False	layers=9(tile2/bg2)	inst=48	doors=0	markers=0
+285	room_dw_churchc_titanclimb1	2000x5800	pers=False	layers=14(tile5/bg2)	inst=252	doors=0	markers=0
+286	room_dw_churchc_titanclimb2	2000x8000	pers=False	layers=15(tile5/bg2)	inst=284	doors=0	markers=0
+287	room_dw_churchc_titanclimb1_old	2000x20000	pers=False	layers=14(tile7/bg1)	inst=141	doors=0	markers=1
+      M 0,5440,obj_markerAny
+288	room_dw_churchc_titanclimb2_old	2000x20000	pers=False	layers=13(tile6/bg1)	inst=131	doors=0	markers=1
+      M 12,7658,obj_markerAny
+289	room_lw_noellehouse_north	320x240	pers=False	layers=5(tile1/bg1)	inst=11	doors=0	markers=0
+290	room_lw_noellehouse_vents_north_west	320x240	pers=False	layers=5(tile1/bg1)	inst=9	doors=0	markers=0
+291	room_dw_channelchange_test	640x480	pers=False	layers=6(tile2/bg1)	inst=3	doors=0	markers=0
+292	room_ripple_test	1280x960	pers=False	layers=7(tile3/bg1)	inst=24	doors=0	markers=0
+293	room_dw_churchb_prophecymaze_old	2400x2400	pers=False	layers=8(tile1/bg1)	inst=31	doors=2	markers=2
+      D 2240,1040,obj_doorAny
+      D 360,1040,obj_doorAny
+      M 2183,1016,obj_markerAny
+      M 422,1024,obj_markerAny
+294	room_dw_churchb_fireplace	3840x1280	pers=False	layers=12(tile4/bg1)	inst=42	doors=1	markers=1
+      D 3400,1274,obj_doorAny
+      M 3420,1194,obj_markerAny
+295	room_dw_churchb_nongerson	640x480	pers=False	layers=4(tile1/bg1)	inst=3	doors=0	markers=0
+296	room_dw_churchb_library	3840x3840	pers=False	layers=23(tile6/bg1)	inst=147	doors=3	markers=3
+      D -36,2000,obj_doorAny
+      D 1360,1214,obj_doorAny
+      D 2640,1320,obj_doorAny
+      M 10,1978,obj_markerAny
+      M 1382,1190,obj_markerAny
+      M 2680,1360,obj_markerAny
+297	room_dw_castle_tv_rhythm	1480x480	pers=False	layers=6(tile1/bg1)	inst=15	doors=1	markers=4
+      D 920,480,obj_doorAny
+      M 942,397,obj_markerAny
+      M 230,190,obj_markerAny
+      M 490,190,obj_markerAny
+      M 750,190,obj_markerAny
+298	room_dw_castle_tv	960x480	pers=False	layers=7(tile1/bg1)	inst=22	doors=3	markers=3
+      D 720,480,obj_doorAny
+      D 389,201,obj_doorAny
+      D 149,200,obj_doorAny
+      M 741,397,obj_markerAny
+      M 448,226,obj_markerAny
+      M 205,226,obj_markerAny
+299	room_dw_churchb_windows	3880x480	pers=False	layers=8(tile1/bg1)	inst=31	doors=3	markers=2
+      D 2640,480,obj_doorAny
+      D 2760,480,obj_doorAny
+      D 240,474,obj_doorAny
+      M 2700,242,obj_markerAny
+      M 300,392,obj_markerAny
+300	room_dw_churchb_bookshelf	1920x480	pers=False	layers=10(tile3/bg1)	inst=22	doors=1	markers=1
+      D 280,474,obj_doorAny
+      M 300,394,obj_markerAny
+301	room_dw_churchb_man	1580x1000	pers=False	layers=8(tile1/bg1)	inst=31	doors=1	markers=1
+      D 1574,810,obj_doorAny
+      M 1530,788,obj_markerAny
+302	room_dw_churchb_gallery	3840x3840	pers=False	layers=18(tile2/bg2)	inst=83	doors=2	markers=2
+      D 3394,1040,obj_doorAny
+      D 606,640,obj_doorAny
+      M 3350,1018,obj_markerAny
+      M 652,618,obj_markerAny
+303	room_dw_churchb_rotatingtower_old	2280x3840	pers=False	layers=14(tile4/bg2)	inst=245	doors=2	markers=2
+      D -34,3600,obj_doorAny
+      D -40,1200,obj_doorAny
+      M 12,3578,obj_markerAny
+      M 40,1200,obj_markerAny
+304	room_dw_churchb_darkclimb	6000x6000	pers=False	layers=18(tile6/bg1)	inst=372	doors=1	markers=1
+      D 2126,2200,obj_doorAny
+      M 2172,2178,obj_markerAny
+305	room_dw_churchc_titanclimb1_post	3560x960	pers=False	layers=12(tile7/bg1)	inst=12	doors=0	markers=0
+306	room_dw_churchc_titanclimb2_post	4400x480	pers=False	layers=15(tile3/bg1)	inst=36	doors=0	markers=0
+307	room_dw_churchb_darkclimb_scene	1800x1200	pers=False	layers=9(tile1/bg1)	inst=35	doors=1	markers=1
+      D 1794,440,obj_doorAny
+      M 1750,394,obj_markerAny
+308	room_dw_churchc_dodge	3200x3840	pers=False	layers=13(tile3/bg1)	inst=83	doors=3	markers=3
+      D 600,3240,obj_doorAny
+      D 2840,1480,obj_doorAny
+      D 3194,2040,obj_doorAny
+      M 680,3160,obj_markerAny
+      M 2880,1600,obj_markerAny
+      M 3150,2018,obj_markerAny
+309	room_dw_churchc_insidetitan	640x480	pers=False	layers=2(tile0/bg1)	inst=3	doors=0	markers=0
+310	room_lightworldTest	1920x1920	pers=False	layers=3(tile0/bg2)	inst=3	doors=0	markers=0
+311	room_dw_churchc_prophecies	4120x480	pers=False	layers=16(tile5/bg1)	inst=101	doors=1	markers=1
+      D -74,280,obj_doorAny
+      M 12,258,obj_markerAny
+312	room_dw_churchc_angelprophecy	1260x480	pers=False	layers=12(tile3/bg1)	inst=22	doors=1	markers=1
+      D -34,320,obj_doorAny
+      M 12,278,obj_markerAny
+313	room_dw_church_bookshelfpuzzle_rev	1800x840	pers=False	layers=14(tile3/bg1)	inst=170	doors=3	markers=3
+      D 1040,176,obj_doorAny
+      D 160,176,obj_doorAny
+      D 1240,834,obj_doorAny
+      M 1060,172,obj_markerAny
+      M 180,172,obj_markerAny
+      M 1262,754,obj_markerAny
+314	room_dw_churchc_prophecies_backup	4120x480	pers=False	layers=9(tile1/bg1)	inst=84	doors=1	markers=1
+      D -74,280,obj_doorAny
+      M 12,258,obj_markerAny
+315	room_dw_churchc_treasurechest	1280x480	pers=False	layers=5(tile2/bg1)	inst=15	doors=1	markers=1
+      D 1274,240,obj_doorAny
+      M 1230,218,obj_markerAny
+316	room_dw_churchc_titanclimb2_old2	2000x8000	pers=False	layers=15(tile5/bg2)	inst=246	doors=0	markers=0
+317	room_dw_churchc_titanclimb1_tiled	2000x5800	pers=False	layers=14(tile5/bg2)	inst=262	doors=0	markers=0
+318	room_dw_churchc_titanclimb2_tiled	2000x8000	pers=False	layers=15(tile5/bg2)	inst=529	doors=0	markers=0
+319	room_dw_churchb_rotatingtower_tiled	2280x3840	pers=False	layers=23(tile10/bg2)	inst=180	doors=3	markers=3
+      D -34,3600,obj_doorAny
+      D -40,600,obj_doorAny
+      D 1400,536,obj_doorAny
+      M 12,3578,obj_markerAny
+      M 40,600,obj_markerAny
+      M 1421,532,obj_markerAny
+320	room_vfx_tester	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+321	room_dw_castle_tv_zone_1	1560x480	pers=False	layers=6(tile1/bg1)	inst=14	doors=2	markers=2
+      D 240,480,obj_doorAny
+      D 1560,240,obj_doorAny
+      M 263,384,obj_markerAny
+      M 1503,227,obj_markerAny
+322	room_dw_castle_tv_zone_2	640x960	pers=False	layers=8(tile1/bg1)	inst=33	doors=3	markers=3
+      D -40,760,obj_doorAny
+      D 640,760,obj_doorAny
+      D 240,240,obj_doorAny
+      M 11,750,obj_markerAny
+      M 589,750,obj_markerAny
+      M 301,232,obj_markerAny
+323	room_dw_castle_tv_zone_3	1280x480	pers=False	layers=6(tile1/bg1)	inst=22	doors=1	markers=1
+      D -40,240,obj_doorAny
+      M 15,227,obj_markerAny
+324	room_dw_castle_tv_zone_battle	4160x480	pers=False	layers=7(tile1/bg1)	inst=14	doors=1	markers=1
+      D 280,480,obj_doorAny
+      M 302,381,obj_markerAny
+325	room_dw_castle_tv_zone_minigame	640x480	pers=False	layers=7(tile1/bg1)	inst=18	doors=1	markers=1
+      D 280,480,obj_doorAny
+      M 302,381,obj_markerAny
+326	room_shapetest	640x480	pers=False	layers=4(tile1/bg1)	inst=3	doors=0	markers=0
+327	room_chapter_continue	640x480	pers=False	layers=2(tile0/bg1)	inst=1	doors=0	markers=0
+
+== [C] 门实例总数 = 460 ；落点实例总数 = 471 ==

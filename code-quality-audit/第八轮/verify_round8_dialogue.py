@@ -18,11 +18,16 @@
     用户翻上去就原地不动；
   - 用户拖动滚动条（sliderPressed）期间不抢位置。
 
+第 44 轮备注：对话框外框已从"圆角样式表框"换成**原作风格的方角自绘框**
+（`modules/dr_textbox.py` 复刻原作 `scr_darkbox()`）。因此 T4.5 那
+"覆盖层不被圆角切掉"的判据前提（`border-radius`）已不存在，判据升级为
+等价的"4 个角都落在黑底可见区内"（内缩 `dr_textbox.BLACK_INSET`），
+语义仍是"▼ 不被框的边缘装饰压住/切掉"。
+
 本脚本在 offscreen Qt 下把渲染管线真跑一遍，用「文档高度/滚动值是否随闪烁变化」
 作为抖动的量化判据。全部断言均不需人工看屏幕。
 """
 import os
-import re
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -89,9 +94,23 @@ def build_ui():
     return app, ui
 
 
-def radius_of(ui):
-    m = re.search(r'border-radius:\s*(\d+)px', ui._frame.styleSheet())
-    return int(m.group(1)) if m else 0
+def visible_inset_of(ui):
+    """框的"可见黑底区"相对矩形边缘的内缩量。
+
+    第 44 轮起对话框改成**原作风格的方角框**（`modules/dr_textbox.py` 自绘的
+    `scr_darkbox()` 复刻：外圈 8px 透明 + 4px 白线 + 黑芯），样式表里的
+    `border-radius` 已整体移除。于是"被圆角切掉"这一前提对象消失，
+    判据必须升级成等价口径 —— 见 t4 末尾。
+
+    单一真源是 `dr_textbox.BLACK_INSET`（=14，源自原作 `scr_dbox` 的
+    `draw_rectangle(xxx+38, yyy+16, ...)` 相对框矩形各内缩 14px）。
+    取不到时回落到同名常量，保证套件在极端环境下仍可执行。
+    """
+    try:
+        import dr_textbox as _drb
+        return int(_drb.BLACK_INSET)
+    except Exception:
+        return 14
 
 
 # ------------------------------------------------------------------------ tests
@@ -201,13 +220,20 @@ def t4_cursor_overlay_toggles_and_fits(app, ui):
           g.right() <= ui.width() - 1 and g.bottom() <= ui.height() - 1,
           "lbl=%s win=%s" % (g, ui.size()))
 
-    r = radius_of(ui)
-    cx, cy = ui.width() - r, ui.height() - r
+    # 【第 44 轮升级】原标题「覆盖层未被圆角切掉」。对话框已改成原作方角框
+    # （`dr_textbox.DrTextboxFrame`，样式表 border-radius 全清），方角不存在裁切，
+    # 但**边框带仍在**（32px：外圈 8px 透明 + 4px 白线 + 黑芯）⇒ 等价的新口径是：
+    # ▼ 的 4 个角必须全部落在框的**可见黑底区**内（各边内缩 BLACK_INSET），
+    # 既不被白线/四角宝石装饰压住，也不越出框。
+    # 鉴别力：把 `_position_cursor_overlay` 的 margin 改成 0 或负数 → 立刻报红。
+    inset = visible_inset_of(ui)
+    vis = (inset, inset, ui.width() - inset, ui.height() - inset)
     corners = [(g.left(), g.top()), (g.right(), g.top()),
                (g.left(), g.bottom()), (g.right(), g.bottom())]
-    worst = max(((px - cx) ** 2 + (py - cy) ** 2) ** 0.5 for px, py in corners)
-    check("T4.5 覆盖层未被圆角切掉（4 角都在圆角内）",
-          worst <= r, "最远角距圆心=%.1f <= radius=%d" % (worst, r))
+    outside = [c for c in corners
+               if not (vis[0] <= c[0] <= vis[2] and vis[1] <= c[1] <= vis[3])]
+    check("T4.5 覆盖层未被方角边框带切掉（4 角都在黑底可见区内）",
+          not outside, "可见区=%s 越界角=%s inset=%d" % (vis, outside, inset))
 
 
 def t5_scroll_position_is_preserved(app, ui):

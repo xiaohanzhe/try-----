@@ -1,0 +1,62 @@
+==============================================================================
+[A] 门 ↔ 落点配对（按同房内的字母后缀）
+  ch1   门=248   落点=262   同字母配对=119   (48.0%)
+  ch2   门=465   落点=472   同字母配对=172   (37.0%)
+  ch3   门=286   落点=311   同字母配对=212   (74.1%)
+  ch4   门=460   落点=471   同字母配对=381   (82.8%)
+  ch5   门=381   落点=420   同字母配对=266   (69.8%)
+  ---- 合计 门=1840 落点=1936 配对=1150 (62.5%)
+  未配对 top15: [('门无落点:W', 213), ('落点无门:B', 112), ('落点无门:A', 112), ('落点无门:X', 102), ('门无落点:B', 99), ('落点无门:w', 91), ('门无落点:A', 88), ('落点无门:Any', 55), ("落点无门:('?', 'obj_markerAny40px')", 48), ('落点无门:C', 44), ('门无落点:AnyHorz', 42), ('落点无门:v', 39), ('落点无门:D', 38), ('落点无门:t', 38), ('门无落点:C', 32)]
+
+[B] 门的类型普查（跨五章）
+  门对象 18 种，top25:
+    obj_doorAny                  830
+    obj_doorW                    213
+    obj_doorB                    210
+    obj_doorA                    204
+    obj_doorX                    106
+    obj_doorD                    66
+    obj_doorC                    54
+    obj_doorAnyHorz              42
+    obj_doorX_musfade            23
+    obj_doorw_musfade            21
+    obj_doorA_musfade            17
+    obj_doorB_musfade            15
+    obj_doorD_musfade            12
+    obj_door_solid               9
+    obj_doorAnyVert              9
+    obj_doorC_musfade            7
+    obj_doorE                    1
+    obj_doorF                    1
+  落点对象 15 种，top20:
+    obj_markerAny                919
+    obj_markerA                  228
+    obj_markerB                  223
+    obj_markerX                  183
+    obj_markerw                  91
+    obj_markerD                  66
+    obj_markerC                  66
+    obj_markerAny40px            48
+    obj_markerv                  39
+    obj_markert                  38
+    obj_markeru                  20
+    obj_markers                  8
+    obj_markerr                  5
+    obj_markerF                  1
+    obj_markerE                  1
+
+[C] 房间名前缀 → 区域（与产品 area 对照）
+  房间名首段 top25: [('dw', 665), ('town', 49), ('lw', 43), ('cc', 38), ('debug', 36), ('PLACE', 34), ('forest', 32), ('board', 22), ('hospital', 20), ('field', 19), ('flowershop', 10), ('castle', 10), ('legend', 9), ('cutscene', 8), ('bullettest', 7), ('shop', 7), ('test', 7), ('krisroom', 6), ('torhouse', 6), ('ROOM', 5), ('krishallway', 5), ('torroom', 5), ('torbathroom', 5), ('beach', 5), ('graveyard', 5)]
+
+[D] 产品路由连通性
+  场景总数 = 1014 ；路由规则 = 443
+  规则能到达的场景 = 310 / 1014 (30.6%)
+  ★ 未纳入任何规则的场景 = 704
+  逐章覆盖: {'ch1': '111/128', 'ch2': '125/236', 'ch3': '26/187', 'ch4': '25/261', 'ch5': '23/201', 'desktop': '0/1'}
+
+[D2] 原作侧 vs 产品侧的连接规模
+  原作门实例 = 1840（每条门 ≈ 一条连接；含可见性/门控变体）
+  产品路由规则 = 443
+  ⇒ 缺口 ≈ 1397 条
+
+[done] -> C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第44轮-原作对话框复刻\_evidence\连接顺序分析.txt

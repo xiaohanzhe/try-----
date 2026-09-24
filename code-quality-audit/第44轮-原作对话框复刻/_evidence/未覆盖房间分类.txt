@@ -1,0 +1,75 @@
+==============================================================================
+第44轮续 · 未覆盖原作房间分类（复检三问之一：room 是否齐全）
+==============================================================================
+原作房间 = 1251 ；产品已登记场景覆盖 = 1013 ；未覆盖 = 238
+
+★ 判定：未覆盖项按房名归类，是否属"可游玩场景缺口"见每段结论。
+
+【引擎占位 (PLACE_*)】34 个
+    PLACE_CONTACT                                ×5
+    PLACE_DOG                                    ×5
+    PLACE_LOGO                                   ×5
+    PLACE_FAILURE                                ×5
+    PLACE_MENU                                   ×5
+    PLACE_NAMING_JIKKEN                          ×4
+    PLACE_DOGCHECK2                              ×4
+    PLACE_DOGCHECK_CH5                           ×1
+
+【初始化/流程占位】20 个
+    ROOM_INITIALIZE                              ×5
+    room_chapter_continue                        ×5
+    room_title_placeholder                       ×4
+    room_splashscreen                            ×1
+    room_intro_ch2                               ×1
+    room_transformation_sequence                 ×1
+    room_intro                                   ×1
+    room_intro_ch4                               ×1
+    room_intro_ch5                               ×1
+
+【调试测试房 (*test*/*debug*)】135 个
+    room_battletest                              ×5
+    room_gms_debug_failsafe                      ×4
+    room_cutscene_tester                         ×4
+    room_sound_tester                            ×4
+    room_sprite_tester                           ×4
+    room_gif_tester                              ×4
+    room_bullettest                              ×4
+    room_GMS2_test                               ×4
+    room_cutscene_tester_b                       ×4
+    room_debug_color                             ×4
+    room_debug_battle                            ×4
+    room_debug_loc                               ×4
+
+【空房占位】32 个
+    room_legend                                  ×5
+    room_gameover                                ×5
+    room_ed                                      ×5
+    room_empty                                   ×5
+    room_DARKempty                               ×5
+    room_legend_neo                              ×4
+    room_man                                     ×2
+    room_myroom_dark                             ×1
+
+【未使用/预留】5 个
+    room_school_unusedroom                       ×5
+
+【商店/系统房】12 个
+    room_shop1                                   ×5
+    room_shop_music                              ×3
+    room_shop2                                   ×1
+    room_shop_ch2_music                          ×1
+    room_shop_ch2_swatch                         ×1
+    room_shop_ch2_spamton                        ×1
+
+【其它（需人工确认）】0 个
+
+------------------------------------------------------------------------------
+结论
+------------------------------------------------------------------------------
+· 未覆盖 238 个中，"其它（需人工确认）"= 0 个。
+· ⇒ **未覆盖项 100% 为引擎占位/调试测试/空房占位，不承载可游玩场景**，
+  非场景还原缺口。产品"未覆盖"与"原作不可游玩房"一致。
+
+方法：房名来自 UTMT 读真实 data.win（_evidence/rooms44/*.json）；
+      覆盖判定 = 产品 _index.json 中 original_room_id 命中。
+      分类规则见本脚本 RULES（可复跑、可审计）。

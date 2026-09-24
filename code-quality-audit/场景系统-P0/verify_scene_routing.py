@@ -397,6 +397,51 @@ _m = R.match(_tbl([_r('a', 10, when_weather='rain', when_scene='s1')]),
              {'scene_id': 's2'})
 ok('D6 未知键放行 ≠ 整条规则放行（已知键仍须满足）', _m is None, _m)
 
+# ===========================================================================
+#  D2  when_door —— 多出口「共同卡口」（第44轮新增机制）
+#
+#  原作一个房间常有多个门（实测 297 个起点里 125 个有多于 1 条出边）。
+#  when_door 的语义**故意与其它键相反**：context 没给 door 时**放行**
+#  （这样"随便走一个门"仍有个确定归宿），给了 door 才精确分流。
+#  四条语义 + 三条负控制 + 一条共同卡口行为级。
+# ===========================================================================
+section('D2 when_door 多出口分流（第44轮）')
+
+# 语义 1：context 没给 door → 带 when_door 的规则**放行**
+_m = R.match(_tbl([_r('a', 10, when_door='A')]), {'scene_id': 'x'})
+ok('D2a when_door 有值但 context 没给 door → 放行（"没指定就走它"）',
+   R.route_target(_m) == 'a', _m)
+
+# 语义 2：给了 door 且相等 → 命中
+_m = R.match(_tbl([_r('a', 10, when_door='A')]), {'scene_id': 'x', 'door': 'A'})
+ok('D2b door 相等 → 命中', R.route_target(_m) == 'a', _m)
+
+# 语义 3：给了 door 且不等 → **拒绝**（这是分流的关键）
+_m = R.match(_tbl([_r('a', 10, when_door='A')]), {'scene_id': 'x', 'door': 'B'})
+ok('D2c 负控制：door 不等 → 拒绝（否则多出口无法分流）', _m is None, _m)
+
+# 语义 4：when_door='*' = 指定了任意门都行
+_m = R.match(_tbl([_r('a', 10, when_door='*')]), {'scene_id': 'x', 'door': 'Z'})
+ok('D2d when_door="*" → 指定任意门都命中', R.route_target(_m) == 'a', _m)
+
+# 共同卡口行为级：同一场景两个门 → 不指定走 priority 小者；指定则精确分流
+_hall = _tbl([_r('to_bedroom', 249, when_scene='hall', when_door='B'),
+              _r('to_bath', 248, when_scene='hall', when_door='C')])
+ok('D2e 共同卡口：不指定 door → 走 priority 最小者（结果确定、可复现）',
+   R.route_target(R.match(_hall, {'scene_id': 'hall'})) == 'to_bath',
+   R.route_target(R.match(_hall, {'scene_id': 'hall'})))
+ok('D2f 共同卡口：指定 door=B → 精确分流（不再被 priority 决定）',
+   R.route_target(R.match(_hall, {'scene_id': 'hall', 'door': 'B'})) == 'to_bedroom',
+   R.route_target(R.match(_hall, {'scene_id': 'hall', 'door': 'B'})))
+ok('D2g 共同卡口：指定 door=C → 另一出口',
+   R.route_target(R.match(_hall, {'scene_id': 'hall', 'door': 'C'})) == 'to_bath',
+   R.route_target(R.match(_hall, {'scene_id': 'hall', 'door': 'C'})))
+
+# 负控制：指定了不存在的门 → 不许"随便挑一个"（必须 None / 兜底）
+ok('D2h 负控制：指定不存在的门 → 不命中任何出口规则（不伪造）',
+   R.match(_hall, {'scene_id': 'hall', 'door': 'Z'}) is None,
+   R.match(_hall, {'scene_id': 'hall', 'door': 'Z'}))
+
 # 坏规则不得作废整表（律 2 的行为面 —— B11 是数据面）
 _m = R.match(_tbl([{'bogus': 1}, _r('good', 10)]), {'scene_id': 'x'})
 ok('D7 律2：表里混进畸形规则，好规则照样能命中',

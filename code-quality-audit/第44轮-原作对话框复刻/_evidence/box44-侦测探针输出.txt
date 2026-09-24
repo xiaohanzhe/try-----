@@ -1,0 +1,139 @@
+=== 锚点 ===
+A1 spr_pixel_white = True
+A2 Fonts.Count = 12
+A3 obj_writer = True
+
+=== [A] Sprite（总 1097）命中关键词 ===
+button_xbox_down  frames=1  L=10 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2939
+spr_housewindow  frames=2  L=49 R=44 ox=0 oy=0 w= h= sprW= tex=PageItem 1271
+spr_toriel_windowopen  frames=3  L=33 R=55 ox=4 oy=2 w= h= sprW= tex=PageItem 1423
+button_xbox_right_stick  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2924
+button_xbox_menu  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2923
+spr_treasurebox  frames=2  L=20 R=20 ox=0 oy=0 w= h= sprW= tex=PageItem 2734
+button_xbox_b  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2921
+spr_policewindow  frames=4  L=79 R=35 ox=0 oy=0 w= h= sprW= tex=PageItem 964
+button_xbox_share  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2925
+spr_cc_boombox  frames=2  L=35 R=20 ox=0 oy=0 w= h= sprW= tex=PageItem 2564
+button_xbox_up  frames=1  L=10 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2942
+spr_bouncebox_spike  frames=1  L=7 R=13 ox=0 oy=0 w= h= sprW= tex=PageItem 2962
+spr_battlemsg  frames=5  L=74 R=20 ox=74 oy=0 w= h= sprW= tex=PageItem 1612
+button_xbox_y  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2927
+spr_textbox_topleft  frames=8  L=16 R=16 ox=0 oy=0 w= h= sprW= tex=PageItem 2831
+spr_textbox_top  frames=1  L=1 R=16 ox=0 oy=0 w= h= sprW= tex=PageItem 3007
+spr_textbox_left  frames=1  L=16 R=1 ox=0 oy=0 w= h= sprW= tex=PageItem 3006
+bg_border_line_1080  frames=1  L=1920 R=1080 ox=0 oy=0 w= h= sprW= tex=
+border_dark  frames=1  L=1920 R=1080 ox=0 oy=0 w= h= sprW= tex=
+border_light  frames=1  L=1920 R=1080 ox=0 oy=0 w= h= sprW= tex=
+button_xbox_left_stick  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2922
+button_xbox_x  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2926
+button_xbox_left_bumper  frames=1  L=13 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2876
+button_xbox_right_trigger  frames=1  L=11 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2930
+button_xbox_left  frames=1  L=10 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2940
+button_xbox_right  frames=1  L=10 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2941
+button_xbox_a  frames=1  L=12 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2920
+button_xbox_left_trigger  frames=1  L=11 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2929
+button_xbox_right_bumper  frames=1  L=13 R=14 ox=0 oy=0 w= h= sprW= tex=PageItem 2877
+
+=== [B] Font（总 12）===
+font: fnt_ja_comicsans  display=HappyRuikaKyohkan-07  em=30  bold=False  range=32..65439  glyphs=1709
+font: fnt_ja_main  display=JF Dot Shinonome Gothic 14  em=14  bold=False  range=32..65439  glyphs=1302
+font: fnt_ja_tinynoelle  display=FTT-UDKakugoC80 M  em=10  bold=False  range=32..65439  glyphs=1316
+font: fnt_tinynoelle  display=DotumChe  em=7  bold=False  range=1..65535  glyphs=2517
+font: fnt_dotumche  display=DotumChe  em=12  bold=True  range=1..65535  glyphs=2532
+font: fnt_mainbig  display=8bitoperator JVE  em=24  bold=False  range=1..65535  glyphs=2531
+font: fnt_main  display=8bitoperator JVE  em=12  bold=False  range=1..65535  glyphs=2531
+font: fnt_small  display=Crypt of Tomorrow  em=6  bold=False  range=32..127  glyphs=96
+font: fnt_ja_small  display=FTT-UDKakugoC80 M  em=10  bold=False  range=32..65439  glyphs=1316
+font: fnt_ja_dotumche  display=DotumChe  em=14  bold=False  range=32..65439  glyphs=1316
+font: fnt_ja_mainbig  display=JF Dot Shinonome Gothic 14  em=28  bold=False  range=32..65439  glyphs=1316
+font: fnt_comicsans  display=Comic Sans MS - DO NOT EDIT IN GAMEMAKER  em=10  bold=True  range=1..65535  glyphs=2531
+
+=== [C] Object（总 353）命中关键词 ===
+obj_dialoguer  sprite=  visible=True
+obj_boxpuzzle_event  sprite=spr_fencedoor  visible=True
+obj_grazebox  sprite=spr_grazeappear  visible=True
+
+=== [D] Code（总 1680）命中关键词 ===
+gml_GlobalScript_scr_writetext  ins=264
+gml_Script_scr_writetext  ins=264
+gml_GlobalScript_scr_darkbox  ins=1476
+gml_Script_scr_darkbox  ins=1476
+gml_GlobalScript_scr_darkbox_black  ins=204
+gml_Script_scr_darkbox_black  ins=204
+gml_GlobalScript_scr_dbox  ins=876
+gml_Script_scr_dbox  ins=876
+gml_GlobalScript_scr_nextmsg  ins=300
+gml_Script_scr_nextmsg  ins=300
+gml_GlobalScript_scr_text  ins=71464
+gml_Script_scr_text  ins=71464
+gml_GlobalScript_scr_textsetup  ins=260
+gml_Script_scr_textsetup  ins=260
+gml_GlobalScript_scr_textsound  ins=844
+gml_Script_scr_textsound  ins=844
+gml_GlobalScript_scr_texttype  ins=7280
+gml_Script_scr_texttype  ins=7280
+gml_GlobalScript_scr_getmsgno  ins=92
+gml_Script_scr_getmsgno  ins=92
+gml_GlobalScript_draw_text_shadow  ins=216
+gml_Script_draw_text_shadow  ins=216
+gml_GlobalScript_scr_windowcaption  ins=140
+gml_Script_scr_windowcaption  ins=140
+gml_GlobalScript_scr_battletext  ins=460
+gml_Script_scr_battletext  ins=460
+gml_GlobalScript_scr_battletext_default  ins=104
+gml_Script_scr_battletext_default  ins=104
+gml_GlobalScript_scr_charbox  ins=6068
+gml_Script_scr_charbox  ins=6068
+gml_GlobalScript_scr_charbox_x  ins=416
+gml_Script_scr_charbox_x  ins=416
+gml_GlobalScript_scr_spelltext  ins=5508
+gml_Script_scr_spelltext  ins=5508
+gml_GlobalScript_scr_prefetch_textures  ins=488
+gml_Script_scr_prefetch_textures  ins=488
+gml_GlobalScript_scr_84_draw_text_outline  ins=404
+gml_Script_scr_84_draw_text_outline  ins=404
+gml_GlobalScript_ossafe_file_text_close  ins=248
+gml_Script_ossafe_file_text_close  ins=248
+gml_GlobalScript_ossafe_file_text_eof  ins=184
+gml_Script_ossafe_file_text_eof  ins=184
+gml_GlobalScript_ossafe_file_text_open_read  ins=932
+gml_Script_ossafe_file_text_open_read  ins=932
+gml_GlobalScript_ossafe_file_text_open_write  ins=260
+gml_Script_ossafe_file_text_open_write  ins=260
+gml_GlobalScript_ossafe_file_text_read_real  ins=368
+gml_Script_ossafe_file_text_read_real  ins=368
+gml_GlobalScript_ossafe_file_text_read_string  ins=368
+gml_Script_ossafe_file_text_read_string  ins=368
+gml_GlobalScript_ossafe_file_text_readln  ins=364
+gml_Script_ossafe_file_text_readln  ins=364
+gml_GlobalScript_ossafe_file_text_write_real  ins=204
+gml_Script_ossafe_file_text_write_real  ins=204
+gml_GlobalScript_ossafe_file_text_write_string  ins=196
+gml_Script_ossafe_file_text_write_string  ins=196
+gml_GlobalScript_ossafe_file_text_writeln  ins=188
+gml_Script_ossafe_file_text_writeln  ins=188
+gml_GlobalScript_texture_set_interpolation  ins=76
+gml_Script_texture_set_interpolation  ins=76
+gml_GlobalScript_scr_draw_screen_border  ins=1752
+gml_Script_scr_draw_screen_border  ins=1752
+gml_GlobalScript_scr_enable_screen_border  ins=180
+gml_Script_scr_enable_screen_border  ins=180
+gml_Object_obj_dialoguer_Create_0  ins=388
+gml_Object_obj_dialoguer_Destroy_0  ins=64
+gml_Object_obj_dialoguer_Alarm_0  ins=20
+gml_Object_obj_dialoguer_Other_10  ins=612
+gml_Object_obj_dialoguer_Draw_0  ins=72
+gml_Object_obj_boxpuzzle_event_Create_0  ins=304
+gml_Object_obj_boxpuzzle_event_Alarm_4  ins=24
+gml_Object_obj_boxpuzzle_event_Step_0  ins=7068
+gml_Object_obj_grazebox_Create_0  ins=84
+gml_Object_obj_grazebox_Step_2  ins=88
+gml_Object_obj_grazebox_Collision_obj_collidebullet  ins=404
+gml_Object_obj_grazebox_Draw_0  ins=260
+
+=== [E] Strings 命中（总 14177）===
+str: textbox_width
+str: textbox_height
+str: spr_textbox_topleft
+str: spr_textbox_top
+str: spr_textbox_left

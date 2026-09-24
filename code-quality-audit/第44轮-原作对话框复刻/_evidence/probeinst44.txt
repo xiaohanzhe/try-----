@@ -1,0 +1,133 @@
+Rooms = 147
+命中房间 index=8 name=room_town_northwest
+
+=== room 的属性 ===
+Room :: UndertaleModLib.Models.UndertaleRoom
+   .Name : UndertaleString = UndertaleString("room_town_northwest")
+   .Caption : UndertaleString = null
+   .Width : UInt32 = UInt32(320)
+   .Height : UInt32 = UInt32(240)
+   .Speed : UInt32 = UInt32(0)
+   .Persistent : Boolean = Boolean(False)
+   .BackgroundColor : UInt32 = UInt32(4278190080)
+   .DrawBackgroundColor : Boolean = Boolean(False)
+   .CreationCodeId : UndertaleCode = null
+   .Flags : RoomEntryFlags = RoomEntryFlags(EnableViews, ShowColor, IsGMS2_3, IsGMS2)
+   .World : Boolean = Boolean(False)
+   .Top : UInt32 = UInt32(0)
+   .Left : UInt32 = UInt32(0)
+   .Right : UInt32 = UInt32(0)
+   .Bottom : UInt32 = UInt32(0)
+   .GravityX : Single = Single(0)
+   .GravityY : Single = Single(10)
+   .MetersPerPixel : Single = Single(0.1)
+   .GridWidth : Double = Double(16)
+   .GridHeight : Double = Double(16)
+   .GridThicknessPx : Double = Double(1)
+   .Backgrounds : UndertalePointerList`1 = UndertalePointerList`1(UndertaleModLib.UndertalePointerList`1[UndertaleModLib.Model)
+   .Views : UndertalePointerList`1 = UndertalePointerList`1(UndertaleModLib.UndertalePointerList`1[UndertaleModLib.Model)
+   .GameObjects : UndertalePointerList`1 = UndertalePointerList`1(UndertaleModLib.UndertalePointerList`1[UndertaleModLib.Model)
+   .Tiles : UndertalePointerList`1 = UndertalePointerList`1(UndertaleModLib.UndertalePointerList`1[UndertaleModLib.Model)
+   .InstanceCreationOrderIDs : InstanceIDList = null
+   .Layers : UndertalePointerList`1 = UndertalePointerList`1(UndertaleModLib.UndertalePointerList`1[UndertaleModLib.Model)
+   .Sequences : UndertaleSimpleList`1 = UndertaleSimpleList`1(UndertaleModLib.UndertaleSimpleList`1[UndertaleModLib.Undert)
+   .BGColorLayer : Layer = Layer(Layer "Compatibility_Colour")
+   .ProjectName : String = String(room_town_northwest)
+   .ProjectAssetType : SerializableAssetType = SerializableAssetType(Room)
+   .ProjectExportable : Boolean = Boolean(True)
+
+=== Layers = 3 ===
+--- layer[0] 的属性 ---
+Layer :: UndertaleModLib.Models.UndertaleRoom+Layer
+   .ParentRoom : UndertaleRoom = null
+   .LayerName : UndertaleString = UndertaleString("Compatibility_Instances_Depth_-20")
+   .LayerId : UInt32 = UInt32(47)
+   .LayerType : LayerType = LayerType(Instances)
+   .LayerDepth : Int32 = Int32(-20)
+   .XOffset : Single = Single(0)
+   .YOffset : Single = Single(0)
+   .HSpeed : Single = Single(0)
+   .VSpeed : Single = Single(0)
+   .IsVisible : Boolean = Boolean(True)
+   .Data : LayerData = LayerInstancesData(UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesDat)
+   .InstancesData : LayerInstancesData = LayerInstancesData(UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesDat)
+   .TilesData : LayerTilesData = null
+   .BackgroundData : LayerBackgroundData = null
+   .AssetsData : LayerAssetsData = null
+   .EffectData : LayerEffectData = null
+   .EffectEnabled : Boolean = Boolean(True)
+   .EffectType : UndertaleString = null
+   .EffectProperties : UndertaleSimpleList`1 = UndertaleSimpleList`1(UndertaleModLib.UndertaleSimpleList`1[UndertaleModLib.Models)
+  [0] type=Instances instances=- tiles=-
+     InstancesData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesData
+     <InstancesData> :: UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesData
+   .Instances : ObservableCollection`1 = ObservableCollection`1(System.Collections.ObjectModel.ObservableCollection`1[Undert)
+     InstancesData.Instances = 1
+     <Instance[0]> :: UndertaleModLib.Models.UndertaleRoom+GameObject
+   .X : Int32 = Int32(140)
+   .Y : Int32 = Int32(100)
+   .ObjectDefinition : UndertaleGameObject = UndertaleGameObject(obj_mainchara (UndertaleGameObject))
+   .InstanceID : UInt32 = UInt32(100141)
+   .CreationCode : UndertaleCode = null
+   .ScaleX : Single = Single(1)
+   .ScaleY : Single = Single(1)
+   .Color : UInt32 = UInt32(4294967295)
+   .Rotation : Single = Single(0)
+   .PreCreateCode : UndertaleCode = null
+   .ImageSpeed : Single = Single(1)
+   .ImageIndex : Int32 = Int32(0)
+   .Nonexistent : Boolean = Boolean(False)
+   .WrappedImageIndex : Int32 = Int32(0)
+   .OppositeRotation : Single = Single(360)
+   .SpriteXOffset : Int32 = Int32(0)
+   .SpriteYOffset : Int32 = Int32(0)
+   .XOffset : Int32 = Int32(140)
+   .YOffset : Int32 = Int32(100)
+     Object 属性类型 = null
+     <ObjRef> = null
+  [1] type=Instances instances=- tiles=-
+     InstancesData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesData
+     <InstancesData> :: UndertaleModLib.Models.UndertaleRoom+Layer+LayerInstancesData
+   .Instances : ObservableCollection`1 = ObservableCollection`1(System.Collections.ObjectModel.ObservableCollection`1[Undert)
+     InstancesData.Instances = 1
+     <Instance[0]> :: UndertaleModLib.Models.UndertaleRoom+GameObject
+   .X : Int32 = Int32(0)
+   .Y : Int32 = Int32(0)
+   .ObjectDefinition : UndertaleGameObject = UndertaleGameObject(obj_overworldc (UndertaleGameObject))
+   .InstanceID : UInt32 = UInt32(100142)
+   .CreationCode : UndertaleCode = null
+   .ScaleX : Single = Single(1)
+   .ScaleY : Single = Single(1)
+   .Color : UInt32 = UInt32(4294967295)
+   .Rotation : Single = Single(0)
+   .PreCreateCode : UndertaleCode = null
+   .ImageSpeed : Single = Single(1)
+   .ImageIndex : Int32 = Int32(0)
+   .Nonexistent : Boolean = Boolean(False)
+   .WrappedImageIndex : Int32 = Int32(0)
+   .OppositeRotation : Single = Single(360)
+   .SpriteXOffset : Int32 = Int32(0)
+   .SpriteYOffset : Int32 = Int32(0)
+   .XOffset : Int32 = Int32(0)
+   .YOffset : Int32 = Int32(0)
+     Object 属性类型 = null
+     <ObjRef> = null
+  [2] type=Background instances=- tiles=-
+     InstancesData=UndertaleModLib.Models.UndertaleRoom+Layer+LayerBackgroundData
+     <InstancesData> :: UndertaleModLib.Models.UndertaleRoom+Layer+LayerBackgroundData
+   .ParentLayer : Layer = null
+   .CalcScaleX : Single = Single(0)
+   .CalcScaleY : Single = Single(0)
+   .Visible : Boolean = Boolean(True)
+   .Foreground : Boolean = Boolean(False)
+   .Sprite : UndertaleSprite = null
+   .TiledHorizontally : Boolean = Boolean(False)
+   .TiledVertically : Boolean = Boolean(False)
+   .Stretch : Boolean = Boolean(False)
+   .Color : UInt32 = UInt32(4278190080)
+   .FirstFrame : Single = Single(0)
+   .AnimationSpeed : Single = Single(15)
+   .AnimationSpeedType : AnimationSpeedType = AnimationSpeedType(FPS)
+   .XOffset : Single = Single(0)
+   .YOffset : Single = Single(0)
+     InstancesData.Instances = null

@@ -1,0 +1,7521 @@
+{
+ "schema_version": 1,
+ "source": "第44轮 rooms44.csx [B] 段（UTMT 现场反编译五章 data.win）",
+ "authority": "原作 Data.Rooms[i].Width/Height。键 = \"<章>:<原作 room_id>\"，id 即 Data.Rooms 下标（与 scr_roomname 对齐）。",
+ "note": "渲染层用它做相机钳制 / 背景铺排 / 物件裁剪。★ 采不到的 (章,room) 不写进表 —— 不伪造 640x480。缺项由调用方按\"未知房间\"退化处理。",
+ "stats": {
+  "ch1": 147,
+  "ch2": 278,
+  "ch3": 246,
+  "ch4": 328,
+  "ch5": 252
+ },
+ "rooms": {
+  "ch1:0": {
+   "w": 640,
+   "h": 480,
+   "name": "ROOM_INITIALIZE",
+   "n_layers": 2
+  },
+  "ch1:1": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_CONTACT",
+   "n_layers": 2
+  },
+  "ch1:2": {
+   "w": 320,
+   "h": 240,
+   "name": "room_krisroom",
+   "n_layers": 8
+  },
+  "ch1:3": {
+   "w": 540,
+   "h": 240,
+   "name": "room_krishallway",
+   "n_layers": 8
+  },
+  "ch1:4": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torroom",
+   "n_layers": 3
+  },
+  "ch1:5": {
+   "w": 700,
+   "h": 240,
+   "name": "room_torhouse",
+   "n_layers": 8
+  },
+  "ch1:6": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torbathroom",
+   "n_layers": 7
+  },
+  "ch1:7": {
+   "w": 320,
+   "h": 420,
+   "name": "room_town_krisyard",
+   "n_layers": 9
+  },
+  "ch1:8": {
+   "w": 320,
+   "h": 240,
+   "name": "room_town_northwest",
+   "n_layers": 3
+  },
+  "ch1:9": {
+   "w": 1800,
+   "h": 240,
+   "name": "room_town_north",
+   "n_layers": 11
+  },
+  "ch1:10": {
+   "w": 600,
+   "h": 240,
+   "name": "room_beach",
+   "n_layers": 11
+  },
+  "ch1:11": {
+   "w": 2040,
+   "h": 240,
+   "name": "room_town_mid",
+   "n_layers": 10
+  },
+  "ch1:12": {
+   "w": 920,
+   "h": 240,
+   "name": "room_town_apartments",
+   "n_layers": 3
+  },
+  "ch1:13": {
+   "w": 1320,
+   "h": 240,
+   "name": "room_town_south",
+   "n_layers": 12
+  },
+  "ch1:14": {
+   "w": 580,
+   "h": 320,
+   "name": "room_town_school",
+   "n_layers": 10
+  },
+  "ch1:15": {
+   "w": 760,
+   "h": 640,
+   "name": "room_town_church",
+   "n_layers": 10
+  },
+  "ch1:16": {
+   "w": 600,
+   "h": 240,
+   "name": "room_graveyard",
+   "n_layers": 12
+  },
+  "ch1:17": {
+   "w": 320,
+   "h": 1240,
+   "name": "room_town_shelter",
+   "n_layers": 12
+  },
+  "ch1:18": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_lobby",
+   "n_layers": 7
+  },
+  "ch1:19": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_hallway",
+   "n_layers": 6
+  },
+  "ch1:20": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_rudy",
+   "n_layers": 7
+  },
+  "ch1:21": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_room2",
+   "n_layers": 6
+  },
+  "ch1:22": {
+   "w": 320,
+   "h": 240,
+   "name": "room_diner",
+   "n_layers": 8
+  },
+  "ch1:23": {
+   "w": 320,
+   "h": 240,
+   "name": "room_townhall",
+   "n_layers": 7
+  },
+  "ch1:24": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_1f",
+   "n_layers": 8
+  },
+  "ch1:25": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_2f",
+   "n_layers": 8
+  },
+  "ch1:26": {
+   "w": 320,
+   "h": 240,
+   "name": "room_library",
+   "n_layers": 9
+  },
+  "ch1:27": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysalley",
+   "n_layers": 7
+  },
+  "ch1:28": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torielclass",
+   "n_layers": 8
+  },
+  "ch1:29": {
+   "w": 940,
+   "h": 420,
+   "name": "room_schoollobby",
+   "n_layers": 8
+  },
+  "ch1:30": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysclass",
+   "n_layers": 7
+  },
+  "ch1:31": {
+   "w": 620,
+   "h": 240,
+   "name": "room_schooldoor",
+   "n_layers": 8
+  },
+  "ch1:32": {
+   "w": 820,
+   "h": 500,
+   "name": "room_insidecloset",
+   "n_layers": 8
+  },
+  "ch1:33": {
+   "w": 320,
+   "h": 240,
+   "name": "room_school_unusedroom",
+   "n_layers": 8
+  },
+  "ch1:34": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dark1",
+   "n_layers": 7
+  },
+  "ch1:35": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dark1a",
+   "n_layers": 7
+  },
+  "ch1:36": {
+   "w": 3640,
+   "h": 520,
+   "name": "room_dark2",
+   "n_layers": 8
+  },
+  "ch1:37": {
+   "w": 1520,
+   "h": 1280,
+   "name": "room_dark3",
+   "n_layers": 8
+  },
+  "ch1:38": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dark3a",
+   "n_layers": 6
+  },
+  "ch1:39": {
+   "w": 1320,
+   "h": 480,
+   "name": "room_dark_wobbles",
+   "n_layers": 7
+  },
+  "ch1:40": {
+   "w": 1360,
+   "h": 480,
+   "name": "room_dark_eyepuzzle",
+   "n_layers": 9
+  },
+  "ch1:41": {
+   "w": 2040,
+   "h": 880,
+   "name": "room_dark7",
+   "n_layers": 6
+  },
+  "ch1:42": {
+   "w": 5400,
+   "h": 1000,
+   "name": "room_dark_chase1",
+   "n_layers": 10
+  },
+  "ch1:43": {
+   "w": 640,
+   "h": 1840,
+   "name": "room_dark_chase2",
+   "n_layers": 8
+  },
+  "ch1:44": {
+   "w": 640,
+   "h": 480,
+   "name": "room_castle_outskirts",
+   "n_layers": 6
+  },
+  "ch1:45": {
+   "w": 640,
+   "h": 1160,
+   "name": "room_castle_town",
+   "n_layers": 8
+  },
+  "ch1:46": {
+   "w": 1000,
+   "h": 1000,
+   "name": "room_castle_front",
+   "n_layers": 9
+  },
+  "ch1:47": {
+   "w": 1400,
+   "h": 480,
+   "name": "room_castle_tutorial",
+   "n_layers": 5
+  },
+  "ch1:48": {
+   "w": 640,
+   "h": 480,
+   "name": "room_castle_darkdoor",
+   "n_layers": 6
+  },
+  "ch1:49": {
+   "w": 640,
+   "h": 1000,
+   "name": "room_field_start",
+   "n_layers": 9
+  },
+  "ch1:50": {
+   "w": 1040,
+   "h": 480,
+   "name": "room_field_forest",
+   "n_layers": 8
+  },
+  "ch1:51": {
+   "w": 2000,
+   "h": 680,
+   "name": "room_field1",
+   "n_layers": 6
+  },
+  "ch1:52": {
+   "w": 2000,
+   "h": 680,
+   "name": "room_field2",
+   "n_layers": 7
+  },
+  "ch1:53": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field2A",
+   "n_layers": 6
+  },
+  "ch1:54": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_topchef",
+   "n_layers": 6
+  },
+  "ch1:55": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_field_puzzle1",
+   "n_layers": 10
+  },
+  "ch1:56": {
+   "w": 1960,
+   "h": 1480,
+   "name": "room_field_maze",
+   "n_layers": 7
+  },
+  "ch1:57": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_puzzle2",
+   "n_layers": 9
+  },
+  "ch1:58": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_getsusie",
+   "n_layers": 6
+  },
+  "ch1:59": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_shop1",
+   "n_layers": 7
+  },
+  "ch1:60": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_puzzletutorial",
+   "n_layers": 6
+  },
+  "ch1:61": {
+   "w": 1200,
+   "h": 480,
+   "name": "room_field3",
+   "n_layers": 7
+  },
+  "ch1:62": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_boxpuzzle",
+   "n_layers": 8
+  },
+  "ch1:63": {
+   "w": 1040,
+   "h": 480,
+   "name": "room_field4",
+   "n_layers": 8
+  },
+  "ch1:64": {
+   "w": 1640,
+   "h": 480,
+   "name": "room_field_secret1",
+   "n_layers": 8
+  },
+  "ch1:65": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_field_checkers4",
+   "n_layers": 10
+  },
+  "ch1:66": {
+   "w": 1720,
+   "h": 480,
+   "name": "room_field_checkers2",
+   "n_layers": 10
+  },
+  "ch1:67": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_field_checkers6",
+   "n_layers": 11
+  },
+  "ch1:68": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_checkers3",
+   "n_layers": 8
+  },
+  "ch1:69": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_field_checkers1",
+   "n_layers": 9
+  },
+  "ch1:70": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_field_checkers5",
+   "n_layers": 10
+  },
+  "ch1:71": {
+   "w": 640,
+   "h": 480,
+   "name": "room_field_checkers7",
+   "n_layers": 7
+  },
+  "ch1:72": {
+   "w": 1040,
+   "h": 480,
+   "name": "room_field_checkersboss",
+   "n_layers": 8
+  },
+  "ch1:73": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_savepoint1",
+   "n_layers": 8
+  },
+  "ch1:74": {
+   "w": 840,
+   "h": 480,
+   "name": "room_forest_area0",
+   "n_layers": 8
+  },
+  "ch1:75": {
+   "w": 1400,
+   "h": 920,
+   "name": "room_forest_area1",
+   "n_layers": 9
+  },
+  "ch1:76": {
+   "w": 1400,
+   "h": 1000,
+   "name": "room_forest_area2",
+   "n_layers": 7
+  },
+  "ch1:77": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_area2A",
+   "n_layers": 5
+  },
+  "ch1:78": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_puzzle1",
+   "n_layers": 8
+  },
+  "ch1:79": {
+   "w": 1520,
+   "h": 800,
+   "name": "room_forest_beforeclover",
+   "n_layers": 7
+  },
+  "ch1:80": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_area3A",
+   "n_layers": 6
+  },
+  "ch1:81": {
+   "w": 1340,
+   "h": 720,
+   "name": "room_forest_area3",
+   "n_layers": 9
+  },
+  "ch1:82": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_forest_savepoint2",
+   "n_layers": 9
+  },
+  "ch1:83": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_smith",
+   "n_layers": 6
+  },
+  "ch1:84": {
+   "w": 1400,
+   "h": 1000,
+   "name": "room_forest_area4",
+   "n_layers": 7
+  },
+  "ch1:85": {
+   "w": 1640,
+   "h": 1480,
+   "name": "room_forest_dancers1",
+   "n_layers": 10
+  },
+  "ch1:86": {
+   "w": 1120,
+   "h": 480,
+   "name": "room_forest_secret1",
+   "n_layers": 5
+  },
+  "ch1:87": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_thrashmaker",
+   "n_layers": 7
+  },
+  "ch1:88": {
+   "w": 2640,
+   "h": 480,
+   "name": "room_forest_starwalker",
+   "n_layers": 10
+  },
+  "ch1:89": {
+   "w": 1680,
+   "h": 1040,
+   "name": "room_forest_area5",
+   "n_layers": 10
+  },
+  "ch1:90": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_savepoint_relax",
+   "n_layers": 7
+  },
+  "ch1:91": {
+   "w": 640,
+   "h": 680,
+   "name": "room_forest_maze1",
+   "n_layers": 8
+  },
+  "ch1:92": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_maze_deadend",
+   "n_layers": 7
+  },
+  "ch1:93": {
+   "w": 640,
+   "h": 680,
+   "name": "room_forest_maze_susie",
+   "n_layers": 5
+  },
+  "ch1:94": {
+   "w": 640,
+   "h": 880,
+   "name": "room_forest_maze2",
+   "n_layers": 8
+  },
+  "ch1:95": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_maze_deadend2",
+   "n_layers": 7
+  },
+  "ch1:96": {
+   "w": 640,
+   "h": 480,
+   "name": "room_forest_savepoint3",
+   "n_layers": 7
+  },
+  "ch1:97": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_forest_fightsusie",
+   "n_layers": 8
+  },
+  "ch1:98": {
+   "w": 1520,
+   "h": 480,
+   "name": "room_forest_afterthrash2",
+   "n_layers": 9
+  },
+  "ch1:99": {
+   "w": 1520,
+   "h": 480,
+   "name": "room_forest_afterthrash3",
+   "n_layers": 7
+  },
+  "ch1:100": {
+   "w": 1520,
+   "h": 480,
+   "name": "room_forest_afterthrash4",
+   "n_layers": 7
+  },
+  "ch1:101": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_forest_castleview",
+   "n_layers": 9
+  },
+  "ch1:102": {
+   "w": 3000,
+   "h": 480,
+   "name": "room_forest_chase1",
+   "n_layers": 7
+  },
+  "ch1:103": {
+   "w": 640,
+   "h": 3000,
+   "name": "room_forest_chase2",
+   "n_layers": 8
+  },
+  "ch1:104": {
+   "w": 640,
+   "h": 1200,
+   "name": "room_forest_castlefront",
+   "n_layers": 9
+  },
+  "ch1:105": {
+   "w": 1260,
+   "h": 680,
+   "name": "room_cc_prison_cells",
+   "n_layers": 5
+  },
+  "ch1:106": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_cc_prisonlancer",
+   "n_layers": 7
+  },
+  "ch1:107": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_prison_to_elevator",
+   "n_layers": 7
+  },
+  "ch1:108": {
+   "w": 1440,
+   "h": 480,
+   "name": "room_cc_prison2",
+   "n_layers": 5
+  },
+  "ch1:109": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_prisonelevator",
+   "n_layers": 6
+  },
+  "ch1:110": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_elevator",
+   "n_layers": 6
+  },
+  "ch1:111": {
+   "w": 1840,
+   "h": 1200,
+   "name": "room_cc_prison_prejoker",
+   "n_layers": 8
+  },
+  "ch1:112": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_joker",
+   "n_layers": 5
+  },
+  "ch1:113": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_entrance",
+   "n_layers": 5
+  },
+  "ch1:114": {
+   "w": 1840,
+   "h": 1080,
+   "name": "room_cc_1f",
+   "n_layers": 8
+  },
+  "ch1:115": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_rudinn",
+   "n_layers": 6
+  },
+  "ch1:116": {
+   "w": 1600,
+   "h": 1680,
+   "name": "room_cc_2f",
+   "n_layers": 10
+  },
+  "ch1:117": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_rurus1",
+   "n_layers": 6
+  },
+  "ch1:118": {
+   "w": 1240,
+   "h": 880,
+   "name": "room_cc_3f",
+   "n_layers": 6
+  },
+  "ch1:119": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_hathy",
+   "n_layers": 6
+  },
+  "ch1:120": {
+   "w": 1360,
+   "h": 1200,
+   "name": "room_cc_4f",
+   "n_layers": 9
+  },
+  "ch1:121": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_rurus2",
+   "n_layers": 6
+  },
+  "ch1:122": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_clover",
+   "n_layers": 6
+  },
+  "ch1:123": {
+   "w": 640,
+   "h": 1160,
+   "name": "room_cc_5f",
+   "n_layers": 8
+  },
+  "ch1:124": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_lancer",
+   "n_layers": 7
+  },
+  "ch1:125": {
+   "w": 1440,
+   "h": 480,
+   "name": "room_cc_6f",
+   "n_layers": 7
+  },
+  "ch1:126": {
+   "w": 640,
+   "h": 800,
+   "name": "room_cc_throneroom",
+   "n_layers": 6
+  },
+  "ch1:127": {
+   "w": 1040,
+   "h": 480,
+   "name": "room_cc_preroof",
+   "n_layers": 6
+  },
+  "ch1:128": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_cc_kingbattle",
+   "n_layers": 7
+  },
+  "ch1:129": {
+   "w": 640,
+   "h": 1080,
+   "name": "room_cc_prefountain",
+   "n_layers": 6
+  },
+  "ch1:130": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_fountain",
+   "n_layers": 4
+  },
+  "ch1:131": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_DOG",
+   "n_layers": 2
+  },
+  "ch1:132": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend",
+   "n_layers": 2
+  },
+  "ch1:133": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop1",
+   "n_layers": 2
+  },
+  "ch1:134": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop2",
+   "n_layers": 2
+  },
+  "ch1:135": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gameover",
+   "n_layers": 2
+  },
+  "ch1:136": {
+   "w": 320,
+   "h": 240,
+   "name": "room_myroom_dark",
+   "n_layers": 3
+  },
+  "ch1:137": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_LOGO",
+   "n_layers": 2
+  },
+  "ch1:138": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_FAILURE",
+   "n_layers": 2
+  },
+  "ch1:139": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_MENU",
+   "n_layers": 3
+  },
+  "ch1:140": {
+   "w": 320,
+   "h": 240,
+   "name": "room_ed",
+   "n_layers": 2
+  },
+  "ch1:141": {
+   "w": 320,
+   "h": 240,
+   "name": "room_empty",
+   "n_layers": 3
+  },
+  "ch1:142": {
+   "w": 640,
+   "h": 480,
+   "name": "room_man",
+   "n_layers": 6
+  },
+  "ch1:143": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKempty",
+   "n_layers": 3
+  },
+  "ch1:144": {
+   "w": 2,
+   "h": 2,
+   "name": "room_battletest",
+   "n_layers": 2
+  },
+  "ch1:145": {
+   "w": 640,
+   "h": 480,
+   "name": "room_splashscreen",
+   "n_layers": 2
+  },
+  "ch1:146": {
+   "w": 640,
+   "h": 480,
+   "name": "room_chapter_continue",
+   "n_layers": 2
+  },
+  "ch2:0": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gms_debug_failsafe",
+   "n_layers": 2
+  },
+  "ch2:1": {
+   "w": 640,
+   "h": 480,
+   "name": "ROOM_INITIALIZE",
+   "n_layers": 2
+  },
+  "ch2:2": {
+   "w": 640,
+   "h": 480,
+   "name": "room_title_placeholder",
+   "n_layers": 3
+  },
+  "ch2:3": {
+   "w": 640,
+   "h": 480,
+   "name": "room_battletest",
+   "n_layers": 3
+  },
+  "ch2:4": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester",
+   "n_layers": 4
+  },
+  "ch2:5": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sound_tester",
+   "n_layers": 2
+  },
+  "ch2:6": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sprite_tester",
+   "n_layers": 2
+  },
+  "ch2:7": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gif_tester",
+   "n_layers": 2
+  },
+  "ch2:8": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest",
+   "n_layers": 2
+  },
+  "ch2:9": {
+   "w": 640,
+   "h": 2400,
+   "name": "room_teacup_demoauto",
+   "n_layers": 3
+  },
+  "ch2:10": {
+   "w": 640,
+   "h": 3600,
+   "name": "room_teacup_demobullets",
+   "n_layers": 3
+  },
+  "ch2:11": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shaun_puzzle",
+   "n_layers": 4
+  },
+  "ch2:12": {
+   "w": 640,
+   "h": 480,
+   "name": "room_GMS2_test",
+   "n_layers": 4
+  },
+  "ch2:13": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester_b",
+   "n_layers": 3
+  },
+  "ch2:14": {
+   "w": 1024,
+   "h": 768,
+   "name": "room_debug_color",
+   "n_layers": 2
+  },
+  "ch2:15": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battle",
+   "n_layers": 4
+  },
+  "ch2:16": {
+   "w": 540,
+   "h": 240,
+   "name": "room_debug_loc",
+   "n_layers": 6
+  },
+  "ch2:17": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_CONTACT",
+   "n_layers": 2
+  },
+  "ch2:18": {
+   "w": 320,
+   "h": 240,
+   "name": "room_krisroom",
+   "n_layers": 6
+  },
+  "ch2:19": {
+   "w": 540,
+   "h": 240,
+   "name": "room_krishallway",
+   "n_layers": 6
+  },
+  "ch2:20": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torroom",
+   "n_layers": 2
+  },
+  "ch2:21": {
+   "w": 700,
+   "h": 240,
+   "name": "room_torhouse",
+   "n_layers": 5
+  },
+  "ch2:22": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torbathroom",
+   "n_layers": 4
+  },
+  "ch2:23": {
+   "w": 320,
+   "h": 420,
+   "name": "room_town_krisyard",
+   "n_layers": 7
+  },
+  "ch2:24": {
+   "w": 960,
+   "h": 480,
+   "name": "room_town_northwest",
+   "n_layers": 2
+  },
+  "ch2:25": {
+   "w": 1800,
+   "h": 240,
+   "name": "room_town_north",
+   "n_layers": 7
+  },
+  "ch2:26": {
+   "w": 600,
+   "h": 240,
+   "name": "room_beach",
+   "n_layers": 12
+  },
+  "ch2:27": {
+   "w": 2040,
+   "h": 240,
+   "name": "room_town_mid",
+   "n_layers": 7
+  },
+  "ch2:28": {
+   "w": 920,
+   "h": 240,
+   "name": "room_town_apartments",
+   "n_layers": 2
+  },
+  "ch2:29": {
+   "w": 1320,
+   "h": 240,
+   "name": "room_town_south",
+   "n_layers": 8
+  },
+  "ch2:30": {
+   "w": 580,
+   "h": 320,
+   "name": "room_town_school",
+   "n_layers": 8
+  },
+  "ch2:31": {
+   "w": 760,
+   "h": 640,
+   "name": "room_town_church",
+   "n_layers": 8
+  },
+  "ch2:32": {
+   "w": 600,
+   "h": 240,
+   "name": "room_graveyard",
+   "n_layers": 9
+  },
+  "ch2:33": {
+   "w": 320,
+   "h": 1240,
+   "name": "room_town_shelter",
+   "n_layers": 11
+  },
+  "ch2:34": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_lobby",
+   "n_layers": 5
+  },
+  "ch2:35": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_hallway",
+   "n_layers": 4
+  },
+  "ch2:36": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_rudy",
+   "n_layers": 4
+  },
+  "ch2:37": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_room2",
+   "n_layers": 4
+  },
+  "ch2:38": {
+   "w": 320,
+   "h": 240,
+   "name": "room_diner",
+   "n_layers": 5
+  },
+  "ch2:39": {
+   "w": 320,
+   "h": 240,
+   "name": "room_townhall",
+   "n_layers": 5
+  },
+  "ch2:40": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_1f",
+   "n_layers": 5
+  },
+  "ch2:41": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_2f",
+   "n_layers": 6
+  },
+  "ch2:42": {
+   "w": 320,
+   "h": 240,
+   "name": "room_library",
+   "n_layers": 6
+  },
+  "ch2:43": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysalley",
+   "n_layers": 4
+  },
+  "ch2:44": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_computer_lab",
+   "n_layers": 4
+  },
+  "ch2:45": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_library_upstairs",
+   "n_layers": 3
+  },
+  "ch2:46": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_police",
+   "n_layers": 3
+  },
+  "ch2:47": {
+   "w": 540,
+   "h": 240,
+   "name": "room_lw_conbini",
+   "n_layers": 5
+  },
+  "ch2:48": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_icee_pizza",
+   "n_layers": 4
+  },
+  "ch2:49": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torielclass",
+   "n_layers": 6
+  },
+  "ch2:50": {
+   "w": 940,
+   "h": 420,
+   "name": "room_schoollobby",
+   "n_layers": 5
+  },
+  "ch2:51": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysclass",
+   "n_layers": 5
+  },
+  "ch2:52": {
+   "w": 620,
+   "h": 240,
+   "name": "room_schooldoor",
+   "n_layers": 6
+  },
+  "ch2:53": {
+   "w": 820,
+   "h": 500,
+   "name": "room_insidecloset",
+   "n_layers": 5
+  },
+  "ch2:54": {
+   "w": 320,
+   "h": 240,
+   "name": "room_school_unusedroom",
+   "n_layers": 5
+  },
+  "ch2:55": {
+   "w": 640,
+   "h": 1160,
+   "name": "room_castle_town",
+   "n_layers": 5
+  },
+  "ch2:56": {
+   "w": 1400,
+   "h": 480,
+   "name": "room_castle_tutorial",
+   "n_layers": 5
+  },
+  "ch2:57": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_west_cliff_old",
+   "n_layers": 4
+  },
+  "ch2:58": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_east_door",
+   "n_layers": 5
+  },
+  "ch2:59": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_west_cliff",
+   "n_layers": 4
+  },
+  "ch2:60": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_area_1",
+   "n_layers": 5
+  },
+  "ch2:61": {
+   "w": 640,
+   "h": 1160,
+   "name": "room_dw_castle_area_2",
+   "n_layers": 6
+  },
+  "ch2:62": {
+   "w": 1520,
+   "h": 1600,
+   "name": "room_dw_castle_area_2_transformed",
+   "n_layers": 9
+  },
+  "ch2:63": {
+   "w": 1000,
+   "h": 1000,
+   "name": "room_dw_ralsei_castle_front",
+   "n_layers": 7
+  },
+  "ch2:64": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_restaurant",
+   "n_layers": 7
+  },
+  "ch2:65": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_cafe",
+   "n_layers": 4
+  },
+  "ch2:66": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_dojo",
+   "n_layers": 6
+  },
+  "ch2:67": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_1f",
+   "n_layers": 5
+  },
+  "ch2:68": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_2f",
+   "n_layers": 5
+  },
+  "ch2:69": {
+   "w": 1640,
+   "h": 480,
+   "name": "room_dw_castle_dungeon",
+   "n_layers": 7
+  },
+  "ch2:70": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_hallway",
+   "n_layers": 4
+  },
+  "ch2:71": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_kris",
+   "n_layers": 4
+  },
+  "ch2:72": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_susie",
+   "n_layers": 4
+  },
+  "ch2:73": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_lancer",
+   "n_layers": 4
+  },
+  "ch2:74": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_intro_1",
+   "n_layers": 6
+  },
+  "ch2:75": {
+   "w": 2320,
+   "h": 1520,
+   "name": "room_dw_cyber_intro_connector",
+   "n_layers": 9
+  },
+  "ch2:76": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_cyber_intro_2",
+   "n_layers": 7
+  },
+  "ch2:77": {
+   "w": 640,
+   "h": 1840,
+   "name": "room_dw_cyber_rhythm_slide",
+   "n_layers": 7
+  },
+  "ch2:78": {
+   "w": 1680,
+   "h": 480,
+   "name": "room_dw_cyber_savepoint",
+   "n_layers": 8
+  },
+  "ch2:79": {
+   "w": 1680,
+   "h": 1280,
+   "name": "room_dw_cyber_battle_maze_1",
+   "n_layers": 7
+  },
+  "ch2:80": {
+   "w": 1440,
+   "h": 2240,
+   "name": "room_dw_cyber_music_bullet",
+   "n_layers": 8
+  },
+  "ch2:81": {
+   "w": 1320,
+   "h": 1240,
+   "name": "room_dw_cyber_tasque_battle",
+   "n_layers": 8
+  },
+  "ch2:82": {
+   "w": 1040,
+   "h": 480,
+   "name": "room_dw_cyber_keyboard_puzzle_1",
+   "n_layers": 10
+  },
+  "ch2:83": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_queen_boxing",
+   "n_layers": 6
+  },
+  "ch2:84": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_musical_door",
+   "n_layers": 7
+  },
+  "ch2:85": {
+   "w": 1879,
+   "h": 560,
+   "name": "room_dw_cyber_maze_virokun",
+   "n_layers": 9
+  },
+  "ch2:86": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_keyboard_puzzle_2",
+   "n_layers": 9
+  },
+  "ch2:87": {
+   "w": 1760,
+   "h": 3000,
+   "name": "room_dw_cyber_battle_maze_2",
+   "n_layers": 7
+  },
+  "ch2:88": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_cyber_music_final",
+   "n_layers": 8
+  },
+  "ch2:89": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_musical_shop",
+   "n_layers": 7
+  },
+  "ch2:90": {
+   "w": 3120,
+   "h": 9000,
+   "name": "room_dw_cyber_teacup_final",
+   "n_layers": 10
+  },
+  "ch2:91": {
+   "w": 1780,
+   "h": 480,
+   "name": "room_dw_cyber_rollercoaster",
+   "n_layers": 4
+  },
+  "ch2:92": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_maze_fireworks",
+   "n_layers": 6
+  },
+  "ch2:93": {
+   "w": 1920,
+   "h": 840,
+   "name": "room_dw_cyber_maze_tasque",
+   "n_layers": 7
+  },
+  "ch2:94": {
+   "w": 2160,
+   "h": 1120,
+   "name": "room_dw_cyber_maze_queenscreen",
+   "n_layers": 8
+  },
+  "ch2:95": {
+   "w": 2160,
+   "h": 1640,
+   "name": "room_dw_cyber_viro_ring",
+   "n_layers": 10
+  },
+  "ch2:96": {
+   "w": 3200,
+   "h": 2800,
+   "name": "room_dw_cyber_post_music_boss_slide",
+   "n_layers": 8
+  },
+  "ch2:97": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_keyboard_puzzle_3",
+   "n_layers": 7
+  },
+  "ch2:98": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_cyber_battle_maze_3",
+   "n_layers": 4
+  },
+  "ch2:99": {
+   "w": 640,
+   "h": 960,
+   "name": "room_dw_cyber_teacup_2",
+   "n_layers": 4
+  },
+  "ch2:100": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_cyber_shaunsmusicalbullettunnel",
+   "n_layers": 4
+  },
+  "ch2:101": {
+   "w": 640,
+   "h": 2600,
+   "name": "room_dw_cyber_maze_rhythm",
+   "n_layers": 4
+  },
+  "ch2:102": {
+   "w": 1920,
+   "h": 1840,
+   "name": "room_dw_cyber_escalator_slide",
+   "n_layers": 4
+  },
+  "ch2:103": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_nuberts_treasure",
+   "n_layers": 4
+  },
+  "ch2:104": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_music_fight",
+   "n_layers": 4
+  },
+  "ch2:105": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_keyboardexample",
+   "n_layers": 4
+  },
+  "ch2:106": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_prototype_01",
+   "n_layers": 9
+  },
+  "ch2:107": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_prototype_02",
+   "n_layers": 9
+  },
+  "ch2:108": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_spamton_shop_exterior",
+   "n_layers": 7
+  },
+  "ch2:109": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_city_spamton_house",
+   "n_layers": 10
+  },
+  "ch2:110": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_city_intro",
+   "n_layers": 9
+  },
+  "ch2:111": {
+   "w": 640,
+   "h": 880,
+   "name": "room_dw_city_split",
+   "n_layers": 9
+  },
+  "ch2:112": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_city_entrance",
+   "n_layers": 18
+  },
+  "ch2:113": {
+   "w": 2320,
+   "h": 480,
+   "name": "room_dw_city_traffic_1",
+   "n_layers": 17
+  },
+  "ch2:114": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_city_roadblock",
+   "n_layers": 17
+  },
+  "ch2:115": {
+   "w": 840,
+   "h": 480,
+   "name": "room_dw_city_hacker",
+   "n_layers": 8
+  },
+  "ch2:116": {
+   "w": 640,
+   "h": 520,
+   "name": "room_dw_city_mice",
+   "n_layers": 9
+  },
+  "ch2:117": {
+   "w": 1080,
+   "h": 840,
+   "name": "room_dw_city_big_1",
+   "n_layers": 16
+  },
+  "ch2:118": {
+   "w": 2120,
+   "h": 480,
+   "name": "room_dw_city_traffic_2",
+   "n_layers": 16
+  },
+  "ch2:119": {
+   "w": 1400,
+   "h": 1440,
+   "name": "room_dw_city_big_2",
+   "n_layers": 18
+  },
+  "ch2:120": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_city_queen_drunk",
+   "n_layers": 12
+  },
+  "ch2:121": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_savepoint",
+   "n_layers": 13
+  },
+  "ch2:122": {
+   "w": 2200,
+   "h": 1720,
+   "name": "room_dw_city_big_3",
+   "n_layers": 17
+  },
+  "ch2:123": {
+   "w": 2000,
+   "h": 2920,
+   "name": "room_dw_city_traffic_3",
+   "n_layers": 16
+  },
+  "ch2:124": {
+   "w": 1160,
+   "h": 480,
+   "name": "room_dw_city_mice2",
+   "n_layers": 14
+  },
+  "ch2:125": {
+   "w": 2160,
+   "h": 920,
+   "name": "room_dw_city_cheesemaze",
+   "n_layers": 14
+  },
+  "ch2:126": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_mice3",
+   "n_layers": 12
+  },
+  "ch2:127": {
+   "w": 5000,
+   "h": 640,
+   "name": "room_dw_city_poppup",
+   "n_layers": 16
+  },
+  "ch2:128": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_city_berdly",
+   "n_layers": 7
+  },
+  "ch2:129": {
+   "w": 4600,
+   "h": 480,
+   "name": "room_dw_city_traffic_4",
+   "n_layers": 30
+  },
+  "ch2:130": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_city_spamton_alley",
+   "n_layers": 11
+  },
+  "ch2:131": {
+   "w": 7200,
+   "h": 2440,
+   "name": "room_dw_city_monologue",
+   "n_layers": 11
+  },
+  "ch2:132": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_city_baseball",
+   "n_layers": 10
+  },
+  "ch2:133": {
+   "w": 2080,
+   "h": 2480,
+   "name": "room_dw_city_postbaseball_1",
+   "n_layers": 10
+  },
+  "ch2:134": {
+   "w": 4400,
+   "h": 480,
+   "name": "room_dw_city_postbaseball_2",
+   "n_layers": 7
+  },
+  "ch2:135": {
+   "w": 2800,
+   "h": 480,
+   "name": "room_dw_city_postbaseball_3",
+   "n_layers": 14
+  },
+  "ch2:136": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_dw_city_mansion_front",
+   "n_layers": 6
+  },
+  "ch2:137": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_susie_ralsei_fun_1",
+   "n_layers": 10
+  },
+  "ch2:138": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_mirrorfriend",
+   "n_layers": 6
+  },
+  "ch2:139": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_treasure",
+   "n_layers": 8
+  },
+  "ch2:140": {
+   "w": 2080,
+   "h": 480,
+   "name": "room_dw_city_dog_traffic",
+   "n_layers": 5
+  },
+  "ch2:141": {
+   "w": 2080,
+   "h": 480,
+   "name": "room_dw_city_man",
+   "n_layers": 4
+  },
+  "ch2:142": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_moss",
+   "n_layers": 12
+  },
+  "ch2:143": {
+   "w": 2200,
+   "h": 1720,
+   "name": "room_dw_city_big_3_backup_2exits",
+   "n_layers": 17
+  },
+  "ch2:144": {
+   "w": 2000,
+   "h": 2920,
+   "name": "room_dw_city_traffic_3_2Entrances",
+   "n_layers": 14
+  },
+  "ch2:145": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_city_cheese",
+   "n_layers": 6
+  },
+  "ch2:146": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_city_carnival",
+   "n_layers": 7
+  },
+  "ch2:147": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_city_noelle_fight_intro",
+   "n_layers": 4
+  },
+  "ch2:148": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_city_spamton_shop_interior",
+   "n_layers": 4
+  },
+  "ch2:149": {
+   "w": 2400,
+   "h": 480,
+   "name": "room_dw_city_monologue_old",
+   "n_layers": 7
+  },
+  "ch2:150": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_krisroom",
+   "n_layers": 5
+  },
+  "ch2:151": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_susieroom",
+   "n_layers": 5
+  },
+  "ch2:152": {
+   "w": 1960,
+   "h": 480,
+   "name": "room_dw_mansion_lightner_hallway",
+   "n_layers": 7
+  },
+  "ch2:153": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_darkbulb_1",
+   "n_layers": 4
+  },
+  "ch2:154": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_darkbulb_2",
+   "n_layers": 4
+  },
+  "ch2:155": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_darkbulb_3",
+   "n_layers": 4
+  },
+  "ch2:156": {
+   "w": 2200,
+   "h": 480,
+   "name": "room_dw_mansion_dining_a",
+   "n_layers": 8
+  },
+  "ch2:157": {
+   "w": 920,
+   "h": 880,
+   "name": "room_dw_mansion_entrance",
+   "n_layers": 7
+  },
+  "ch2:158": {
+   "w": 1320,
+   "h": 1320,
+   "name": "room_dw_mansion_fire_paintings",
+   "n_layers": 10
+  },
+  "ch2:159": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_single_pot",
+   "n_layers": 5
+  },
+  "ch2:160": {
+   "w": 1160,
+   "h": 1320,
+   "name": "room_dw_mansion_potBalance",
+   "n_layers": 6
+  },
+  "ch2:161": {
+   "w": 1360,
+   "h": 1000,
+   "name": "room_dw_mansion_tasquePaintings",
+   "n_layers": 8
+  },
+  "ch2:162": {
+   "w": 1720,
+   "h": 1640,
+   "name": "room_dw_mansion_traffic",
+   "n_layers": 16
+  },
+  "ch2:163": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_mansion_east_1f_e",
+   "n_layers": 12
+  },
+  "ch2:164": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_mansion_east_1f_secret",
+   "n_layers": 8
+  },
+  "ch2:165": {
+   "w": 640,
+   "h": 4800,
+   "name": "room_dw_mansion_east_teacup",
+   "n_layers": 8
+  },
+  "ch2:166": {
+   "w": 640,
+   "h": 4800,
+   "name": "room_dw_mansion_east_teacup_4",
+   "n_layers": 9
+  },
+  "ch2:167": {
+   "w": 640,
+   "h": 4800,
+   "name": "room_dw_mansion_east_teacup_3",
+   "n_layers": 8
+  },
+  "ch2:168": {
+   "w": 640,
+   "h": 4800,
+   "name": "room_dw_mansion_east_teacup_2",
+   "n_layers": 8
+  },
+  "ch2:169": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_mansion_b_entrance",
+   "n_layers": 5
+  },
+  "ch2:170": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_b_stairs",
+   "n_layers": 4
+  },
+  "ch2:171": {
+   "w": 1920,
+   "h": 960,
+   "name": "room_dw_mansion_b_central",
+   "n_layers": 7
+  },
+  "ch2:172": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_mansion_b_west_1f",
+   "n_layers": 10
+  },
+  "ch2:173": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_b_west_1f_a",
+   "n_layers": 6
+  },
+  "ch2:174": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_b_west_1f_b",
+   "n_layers": 6
+  },
+  "ch2:175": {
+   "w": 2560,
+   "h": 2560,
+   "name": "room_dw_mansion_b_west_2f",
+   "n_layers": 8
+  },
+  "ch2:176": {
+   "w": 2720,
+   "h": 960,
+   "name": "room_dw_mansion_b_east",
+   "n_layers": 8
+  },
+  "ch2:177": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_b_east_a",
+   "n_layers": 6
+  },
+  "ch2:178": {
+   "w": 1720,
+   "h": 480,
+   "name": "room_dw_mansion_b_east_b",
+   "n_layers": 11
+  },
+  "ch2:179": {
+   "w": 640,
+   "h": 960,
+   "name": "room_dw_mansion_b_east_transformed",
+   "n_layers": 7
+  },
+  "ch2:180": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_a",
+   "n_layers": 6
+  },
+  "ch2:181": {
+   "w": 1480,
+   "h": 1160,
+   "name": "room_dw_mansion_east_2f_transformed_new",
+   "n_layers": 17
+  },
+  "ch2:182": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_shortcut",
+   "n_layers": 6
+  },
+  "ch2:183": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_dw_mansion_kitchen",
+   "n_layers": 7
+  },
+  "ch2:184": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_c",
+   "n_layers": 9
+  },
+  "ch2:185": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_c_a",
+   "n_layers": 7
+  },
+  "ch2:186": {
+   "w": 1800,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_d",
+   "n_layers": 5
+  },
+  "ch2:187": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_mansion_east_3f",
+   "n_layers": 9
+  },
+  "ch2:188": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_3f_projection",
+   "n_layers": 6
+  },
+  "ch2:189": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_3f_toilet",
+   "n_layers": 5
+  },
+  "ch2:190": {
+   "w": 3880,
+   "h": 480,
+   "name": "room_dw_mansion_acid_tunnel",
+   "n_layers": 9
+  },
+  "ch2:191": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+   "n_layers": 7
+  },
+  "ch2:192": {
+   "w": 3200,
+   "h": 480,
+   "name": "room_dw_mansion_acid_tunnel_loop_rouxls",
+   "n_layers": 14
+  },
+  "ch2:193": {
+   "w": 1600,
+   "h": 1000,
+   "name": "room_dw_mansion_acid_tunnel_exit",
+   "n_layers": 7
+  },
+  "ch2:194": {
+   "w": 1160,
+   "h": 480,
+   "name": "room_dw_mansion_east_4f_b",
+   "n_layers": 10
+  },
+  "ch2:195": {
+   "w": 2640,
+   "h": 960,
+   "name": "room_dw_mansion_east_4f_c",
+   "n_layers": 8
+  },
+  "ch2:196": {
+   "w": 1840,
+   "h": 480,
+   "name": "room_dw_mansion_east_4f_d",
+   "n_layers": 10
+  },
+  "ch2:197": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_mansion_top",
+   "n_layers": 9
+  },
+  "ch2:198": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_mansion_top_post",
+   "n_layers": 9
+  },
+  "ch2:199": {
+   "w": 640,
+   "h": 1080,
+   "name": "room_dw_mansion_prefountain",
+   "n_layers": 11
+  },
+  "ch2:200": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_fountain",
+   "n_layers": 4
+  },
+  "ch2:201": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_ferris_wheel",
+   "n_layers": 4
+  },
+  "ch2:202": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_ferris_wheel_post",
+   "n_layers": 8
+  },
+  "ch2:203": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_dw_mansion_noelle_room",
+   "n_layers": 6
+  },
+  "ch2:204": {
+   "w": 1640,
+   "h": 1400,
+   "name": "room_dw_mansion_bridges",
+   "n_layers": 14
+  },
+  "ch2:205": {
+   "w": 1840,
+   "h": 640,
+   "name": "room_dw_mansion_bridges_funny",
+   "n_layers": 11
+  },
+  "ch2:206": {
+   "w": 1240,
+   "h": 720,
+   "name": "room_dw_mansion_mouseLottery",
+   "n_layers": 17
+  },
+  "ch2:207": {
+   "w": 720,
+   "h": 840,
+   "name": "room_dw_mansion_hands",
+   "n_layers": 12
+  },
+  "ch2:208": {
+   "w": 1280,
+   "h": 1440,
+   "name": "room_dw_mansion_dining3",
+   "n_layers": 14
+  },
+  "ch2:209": {
+   "w": 640,
+   "h": 3200,
+   "name": "room_dw_mansion_dininghall",
+   "n_layers": 10
+  },
+  "ch2:210": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_dining_storage",
+   "n_layers": 7
+  },
+  "ch2:211": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_mansion_east_1f_b",
+   "n_layers": 4
+  },
+  "ch2:212": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_c_b",
+   "n_layers": 4
+  },
+  "ch2:213": {
+   "w": 5000,
+   "h": 1600,
+   "name": "room_dw_mansion_traffic_original",
+   "n_layers": 4
+  },
+  "ch2:214": {
+   "w": 1440,
+   "h": 880,
+   "name": "room_dw_mansion_east_1f_a",
+   "n_layers": 5
+  },
+  "ch2:215": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_teacup",
+   "n_layers": 4
+  },
+  "ch2:216": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_4f_e",
+   "n_layers": 4
+  },
+  "ch2:217": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_4f_a",
+   "n_layers": 4
+  },
+  "ch2:218": {
+   "w": 640,
+   "h": 1920,
+   "name": "room_dw_mansion_east_2f_ufo_old",
+   "n_layers": 6
+  },
+  "ch2:219": {
+   "w": 2320,
+   "h": 720,
+   "name": "room_dw_mansion_east_1f_d",
+   "n_layers": 4
+  },
+  "ch2:220": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_east_1f_c",
+   "n_layers": 4
+  },
+  "ch2:221": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_mansion_sparks",
+   "n_layers": 4
+  },
+  "ch2:222": {
+   "w": 3720,
+   "h": 480,
+   "name": "room_dw_mansion_acid_tunnel_old",
+   "n_layers": 10
+  },
+  "ch2:223": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_mansion_top_post_old",
+   "n_layers": 5
+  },
+  "ch2:224": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_elevator",
+   "n_layers": 4
+  },
+  "ch2:225": {
+   "w": 640,
+   "h": 480,
+   "name": "room_intro_ch2",
+   "n_layers": 2
+  },
+  "ch2:226": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_DOG",
+   "n_layers": 2
+  },
+  "ch2:227": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend",
+   "n_layers": 2
+  },
+  "ch2:228": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend_neo",
+   "n_layers": 2
+  },
+  "ch2:229": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop1",
+   "n_layers": 2
+  },
+  "ch2:230": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_ch2_music",
+   "n_layers": 2
+  },
+  "ch2:231": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_ch2_swatch",
+   "n_layers": 2
+  },
+  "ch2:232": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_ch2_spamton",
+   "n_layers": 2
+  },
+  "ch2:233": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gameover",
+   "n_layers": 2
+  },
+  "ch2:234": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_LOGO",
+   "n_layers": 2
+  },
+  "ch2:235": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_FAILURE",
+   "n_layers": 2
+  },
+  "ch2:236": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_NAMING_JIKKEN",
+   "n_layers": 2
+  },
+  "ch2:237": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_MENU",
+   "n_layers": 2
+  },
+  "ch2:238": {
+   "w": 320,
+   "h": 240,
+   "name": "room_ed",
+   "n_layers": 2
+  },
+  "ch2:239": {
+   "w": 320,
+   "h": 240,
+   "name": "room_empty",
+   "n_layers": 2
+  },
+  "ch2:240": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKempty",
+   "n_layers": 2
+  },
+  "ch2:241": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKbase_GMS2",
+   "n_layers": 4
+  },
+  "ch2:242": {
+   "w": 1760,
+   "h": 3000,
+   "name": "room_dw_cyber_battle_maze_2_old",
+   "n_layers": 4
+  },
+  "ch2:243": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_keyboard_puzzle_1_old",
+   "n_layers": 4
+  },
+  "ch2:244": {
+   "w": 1320,
+   "h": 1080,
+   "name": "room_dw_cyber_tasque_battle_og",
+   "n_layers": 4
+  },
+  "ch2:245": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cyber_savepoint_original",
+   "n_layers": 4
+  },
+  "ch2:246": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_cyber_battle_maze_1_Original",
+   "n_layers": 4
+  },
+  "ch2:247": {
+   "w": 1280,
+   "h": 1920,
+   "name": "room_dw_cyber_music_bullet_original",
+   "n_layers": 4
+  },
+  "ch2:248": {
+   "w": 640,
+   "h": 960,
+   "name": "room_dw_cyber_maze_virokun_backuo",
+   "n_layers": 4
+  },
+  "ch2:249": {
+   "w": 1360,
+   "h": 1040,
+   "name": "room_dw_cyber_battle_maze_2_toby",
+   "n_layers": 6
+  },
+  "ch2:250": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_city_big_1_original",
+   "n_layers": 7
+  },
+  "ch2:251": {
+   "w": 1720,
+   "h": 480,
+   "name": "room_dw_city_traffic_2_old",
+   "n_layers": 6
+  },
+  "ch2:252": {
+   "w": 1880,
+   "h": 960,
+   "name": "room_dw_city_big_2_OG",
+   "n_layers": 9
+  },
+  "ch2:253": {
+   "w": 1160,
+   "h": 480,
+   "name": "room_dw_city_mice2_og",
+   "n_layers": 5
+  },
+  "ch2:254": {
+   "w": 640,
+   "h": 4800,
+   "name": "room_dw_mansion_east_teacup_4_old",
+   "n_layers": 4
+  },
+  "ch2:255": {
+   "w": 960,
+   "h": 960,
+   "name": "room_dw_cyber_teacup_1",
+   "n_layers": 4
+  },
+  "ch2:256": {
+   "w": 2160,
+   "h": 1240,
+   "name": "room_dw_cyber_viromaze2",
+   "n_layers": 4
+  },
+  "ch2:257": {
+   "w": 1960,
+   "h": 480,
+   "name": "room_dw_city_traffic_5_old",
+   "n_layers": 7
+  },
+  "ch2:258": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_dining_storage_old",
+   "n_layers": 6
+  },
+  "ch2:259": {
+   "w": 2560,
+   "h": 640,
+   "name": "room_dw_cyber_virovirokun_fight",
+   "n_layers": 5
+  },
+  "ch2:260": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_mansion_east_2f_d_backup",
+   "n_layers": 5
+  },
+  "ch2:261": {
+   "w": 2000,
+   "h": 2800,
+   "name": "room_dw_city_traffic_3_backup",
+   "n_layers": 7
+  },
+  "ch2:262": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_lancer",
+   "n_layers": 6
+  },
+  "ch2:263": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_clover",
+   "n_layers": 5
+  },
+  "ch2:264": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_fountain",
+   "n_layers": 4
+  },
+  "ch2:265": {
+   "w": 2120,
+   "h": 1720,
+   "name": "room_dw_city_big_3_og",
+   "n_layers": 7
+  },
+  "ch2:266": {
+   "w": 800,
+   "h": 960,
+   "name": "room_dw_mansion_bridgesold",
+   "n_layers": 6
+  },
+  "ch2:267": {
+   "w": 800,
+   "h": 800,
+   "name": "room_dw_city_sidewayscars",
+   "n_layers": 4
+  },
+  "ch2:268": {
+   "w": 640,
+   "h": 480,
+   "name": "room_transformation_sequence",
+   "n_layers": 4
+  },
+  "ch2:269": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_mansion_gigaqueen",
+   "n_layers": 5
+  },
+  "ch2:270": {
+   "w": 640,
+   "h": 480,
+   "name": "room_musical_sync_test",
+   "n_layers": 2
+  },
+  "ch2:271": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_DOGCHECK2",
+   "n_layers": 2
+  },
+  "ch2:272": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_smallface_dark",
+   "n_layers": 2
+  },
+  "ch2:273": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_smallface",
+   "n_layers": 2
+  },
+  "ch2:274": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_choicer_dark",
+   "n_layers": 2
+  },
+  "ch2:275": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_choicer_light",
+   "n_layers": 2
+  },
+  "ch2:276": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battleBalloon",
+   "n_layers": 2
+  },
+  "ch2:277": {
+   "w": 640,
+   "h": 480,
+   "name": "room_chapter_continue",
+   "n_layers": 2
+  },
+  "ch3:0": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gms_debug_failsafe",
+   "n_layers": 2
+  },
+  "ch3:1": {
+   "w": 640,
+   "h": 480,
+   "name": "ROOM_INITIALIZE",
+   "n_layers": 2
+  },
+  "ch3:2": {
+   "w": 640,
+   "h": 480,
+   "name": "room_title_placeholder",
+   "n_layers": 4
+  },
+  "ch3:3": {
+   "w": 640,
+   "h": 480,
+   "name": "room_battletest",
+   "n_layers": 3
+  },
+  "ch3:4": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester",
+   "n_layers": 6
+  },
+  "ch3:5": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sound_tester",
+   "n_layers": 2
+  },
+  "ch3:6": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sprite_tester",
+   "n_layers": 2
+  },
+  "ch3:7": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gif_tester",
+   "n_layers": 2
+  },
+  "ch3:8": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest",
+   "n_layers": 2
+  },
+  "ch3:9": {
+   "w": 640,
+   "h": 480,
+   "name": "room_GMS2_test",
+   "n_layers": 4
+  },
+  "ch3:10": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester_b",
+   "n_layers": 3
+  },
+  "ch3:11": {
+   "w": 1024,
+   "h": 768,
+   "name": "room_debug_color",
+   "n_layers": 2
+  },
+  "ch3:12": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battle",
+   "n_layers": 4
+  },
+  "ch3:13": {
+   "w": 540,
+   "h": 240,
+   "name": "room_debug_loc",
+   "n_layers": 6
+  },
+  "ch3:14": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_CONTACT",
+   "n_layers": 2
+  },
+  "ch3:15": {
+   "w": 320,
+   "h": 240,
+   "name": "room_krisroom",
+   "n_layers": 6
+  },
+  "ch3:16": {
+   "w": 540,
+   "h": 240,
+   "name": "room_krishallway",
+   "n_layers": 6
+  },
+  "ch3:17": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torroom",
+   "n_layers": 2
+  },
+  "ch3:18": {
+   "w": 700,
+   "h": 240,
+   "name": "room_torhouse",
+   "n_layers": 5
+  },
+  "ch3:19": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torbathroom",
+   "n_layers": 4
+  },
+  "ch3:20": {
+   "w": 320,
+   "h": 420,
+   "name": "room_town_krisyard",
+   "n_layers": 7
+  },
+  "ch3:21": {
+   "w": 960,
+   "h": 480,
+   "name": "room_town_northwest",
+   "n_layers": 2
+  },
+  "ch3:22": {
+   "w": 1800,
+   "h": 240,
+   "name": "room_town_north",
+   "n_layers": 7
+  },
+  "ch3:23": {
+   "w": 600,
+   "h": 240,
+   "name": "room_beach",
+   "n_layers": 12
+  },
+  "ch3:24": {
+   "w": 2040,
+   "h": 240,
+   "name": "room_town_mid",
+   "n_layers": 7
+  },
+  "ch3:25": {
+   "w": 920,
+   "h": 240,
+   "name": "room_town_apartments",
+   "n_layers": 2
+  },
+  "ch3:26": {
+   "w": 1320,
+   "h": 240,
+   "name": "room_town_south",
+   "n_layers": 8
+  },
+  "ch3:27": {
+   "w": 580,
+   "h": 320,
+   "name": "room_town_school",
+   "n_layers": 8
+  },
+  "ch3:28": {
+   "w": 760,
+   "h": 640,
+   "name": "room_town_church",
+   "n_layers": 8
+  },
+  "ch3:29": {
+   "w": 600,
+   "h": 240,
+   "name": "room_graveyard",
+   "n_layers": 9
+  },
+  "ch3:30": {
+   "w": 320,
+   "h": 1240,
+   "name": "room_town_shelter",
+   "n_layers": 9
+  },
+  "ch3:31": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_lobby",
+   "n_layers": 5
+  },
+  "ch3:32": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_hallway",
+   "n_layers": 4
+  },
+  "ch3:33": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_rudy",
+   "n_layers": 4
+  },
+  "ch3:34": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_room2",
+   "n_layers": 4
+  },
+  "ch3:35": {
+   "w": 320,
+   "h": 240,
+   "name": "room_diner",
+   "n_layers": 5
+  },
+  "ch3:36": {
+   "w": 320,
+   "h": 240,
+   "name": "room_townhall",
+   "n_layers": 5
+  },
+  "ch3:37": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_1f",
+   "n_layers": 5
+  },
+  "ch3:38": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_2f",
+   "n_layers": 6
+  },
+  "ch3:39": {
+   "w": 320,
+   "h": 240,
+   "name": "room_library",
+   "n_layers": 6
+  },
+  "ch3:40": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysalley",
+   "n_layers": 4
+  },
+  "ch3:41": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_computer_lab",
+   "n_layers": 4
+  },
+  "ch3:42": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_library_upstairs",
+   "n_layers": 3
+  },
+  "ch3:43": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_police",
+   "n_layers": 3
+  },
+  "ch3:44": {
+   "w": 540,
+   "h": 240,
+   "name": "room_lw_conbini",
+   "n_layers": 5
+  },
+  "ch3:45": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_icee_pizza",
+   "n_layers": 4
+  },
+  "ch3:46": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torielclass",
+   "n_layers": 6
+  },
+  "ch3:47": {
+   "w": 940,
+   "h": 420,
+   "name": "room_schoollobby",
+   "n_layers": 5
+  },
+  "ch3:48": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysclass",
+   "n_layers": 5
+  },
+  "ch3:49": {
+   "w": 620,
+   "h": 240,
+   "name": "room_schooldoor",
+   "n_layers": 6
+  },
+  "ch3:50": {
+   "w": 820,
+   "h": 500,
+   "name": "room_insidecloset",
+   "n_layers": 5
+  },
+  "ch3:51": {
+   "w": 320,
+   "h": 240,
+   "name": "room_school_unusedroom",
+   "n_layers": 5
+  },
+  "ch3:52": {
+   "w": 1400,
+   "h": 480,
+   "name": "room_castle_tutorial",
+   "n_layers": 5
+  },
+  "ch3:53": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_east_door",
+   "n_layers": 5
+  },
+  "ch3:54": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_west_cliff",
+   "n_layers": 4
+  },
+  "ch3:55": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_area_1",
+   "n_layers": 5
+  },
+  "ch3:56": {
+   "w": 1520,
+   "h": 1600,
+   "name": "room_dw_castle_town",
+   "n_layers": 9
+  },
+  "ch3:57": {
+   "w": 1000,
+   "h": 1000,
+   "name": "room_dw_ralsei_castle_front",
+   "n_layers": 7
+  },
+  "ch3:58": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_restaurant",
+   "n_layers": 7
+  },
+  "ch3:59": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_cafe",
+   "n_layers": 4
+  },
+  "ch3:60": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_dojo",
+   "n_layers": 6
+  },
+  "ch3:61": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_1f",
+   "n_layers": 5
+  },
+  "ch3:62": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_2f",
+   "n_layers": 5
+  },
+  "ch3:63": {
+   "w": 1640,
+   "h": 480,
+   "name": "room_dw_castle_dungeon",
+   "n_layers": 7
+  },
+  "ch3:64": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_kris",
+   "n_layers": 4
+  },
+  "ch3:65": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_susie",
+   "n_layers": 4
+  },
+  "ch3:66": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_DOG",
+   "n_layers": 2
+  },
+  "ch3:67": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend",
+   "n_layers": 2
+  },
+  "ch3:68": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend_neo",
+   "n_layers": 2
+  },
+  "ch3:69": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop1",
+   "n_layers": 2
+  },
+  "ch3:70": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_music",
+   "n_layers": 2
+  },
+  "ch3:71": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gameover",
+   "n_layers": 2
+  },
+  "ch3:72": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_LOGO",
+   "n_layers": 2
+  },
+  "ch3:73": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_FAILURE",
+   "n_layers": 2
+  },
+  "ch3:74": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_NAMING_JIKKEN",
+   "n_layers": 2
+  },
+  "ch3:75": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_MENU",
+   "n_layers": 2
+  },
+  "ch3:76": {
+   "w": 320,
+   "h": 240,
+   "name": "room_ed",
+   "n_layers": 2
+  },
+  "ch3:77": {
+   "w": 320,
+   "h": 240,
+   "name": "room_empty",
+   "n_layers": 2
+  },
+  "ch3:78": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKempty",
+   "n_layers": 2
+  },
+  "ch3:79": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKbase_GMS2",
+   "n_layers": 4
+  },
+  "ch3:80": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_lancer",
+   "n_layers": 6
+  },
+  "ch3:81": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_clover",
+   "n_layers": 5
+  },
+  "ch3:82": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_fountain",
+   "n_layers": 4
+  },
+  "ch3:83": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_DOGCHECK2",
+   "n_layers": 2
+  },
+  "ch3:84": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_smallface_dark",
+   "n_layers": 2
+  },
+  "ch3:85": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_smallface",
+   "n_layers": 2
+  },
+  "ch3:86": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_choicer_dark",
+   "n_layers": 2
+  },
+  "ch3:87": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_choicer_light",
+   "n_layers": 2
+  },
+  "ch3:88": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battleBalloon",
+   "n_layers": 2
+  },
+  "ch3:89": {
+   "w": 640,
+   "h": 480,
+   "name": "room_overworldBulletEnemyTest",
+   "n_layers": 6
+  },
+  "ch3:90": {
+   "w": 2880,
+   "h": 1920,
+   "name": "room_board1_oldtest",
+   "n_layers": 6
+  },
+  "ch3:91": {
+   "w": 1920,
+   "h": 1920,
+   "name": "room_boardtest",
+   "n_layers": 4
+  },
+  "ch3:92": {
+   "w": 1920,
+   "h": 1920,
+   "name": "room_boardtest_old",
+   "n_layers": 4
+  },
+  "ch3:93": {
+   "w": 640,
+   "h": 480,
+   "name": "room_tennaCutsceneTest",
+   "n_layers": 4
+  },
+  "ch3:94": {
+   "w": 640,
+   "h": 480,
+   "name": "room_tennaAnimTest",
+   "n_layers": 4
+  },
+  "ch3:95": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_tv_cutscene1g",
+   "n_layers": 6
+  },
+  "ch3:96": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm",
+   "n_layers": 4
+  },
+  "ch3:97": {
+   "w": 2880,
+   "h": 1920,
+   "name": "room_board_designTest",
+   "n_layers": 6
+  },
+  "ch3:98": {
+   "w": 2040,
+   "h": 480,
+   "name": "room_dw_couch_overworld_intro",
+   "n_layers": 5
+  },
+  "ch3:99": {
+   "w": 2200,
+   "h": 1320,
+   "name": "room_dw_couch_overworld_01",
+   "n_layers": 6
+  },
+  "ch3:100": {
+   "w": 2200,
+   "h": 3060,
+   "name": "room_dw_couch_overworld_02",
+   "n_layers": 9
+  },
+  "ch3:101": {
+   "w": 2200,
+   "h": 1800,
+   "name": "room_dw_couch_overworld_03",
+   "n_layers": 8
+  },
+  "ch3:102": {
+   "w": 2200,
+   "h": 5560,
+   "name": "room_dw_couch_overworld_04",
+   "n_layers": 6
+  },
+  "ch3:103": {
+   "w": 3800,
+   "h": 1200,
+   "name": "room_dw_couch_overworld_05",
+   "n_layers": 5
+  },
+  "ch3:104": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_nondescript_room",
+   "n_layers": 3
+  },
+  "ch3:105": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_nondescript_field",
+   "n_layers": 5
+  },
+  "ch3:106": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_nondescript_hallway",
+   "n_layers": 4
+  },
+  "ch3:107": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_nondescript_classroom",
+   "n_layers": 3
+  },
+  "ch3:108": {
+   "w": 1400,
+   "h": 480,
+   "name": "room_dw_backstage",
+   "n_layers": 14
+  },
+  "ch3:109": {
+   "w": 2960,
+   "h": 480,
+   "name": "room_dw_snow_zone",
+   "n_layers": 5
+  },
+  "ch3:110": {
+   "w": 320,
+   "h": 420,
+   "name": "room_town_krisyard_dark",
+   "n_layers": 7
+  },
+  "ch3:111": {
+   "w": 6220,
+   "h": 1920,
+   "name": "room_adventureboardtest",
+   "n_layers": 6
+  },
+  "ch3:112": {
+   "w": 6220,
+   "h": 1920,
+   "name": "room_board_1",
+   "n_layers": 8
+  },
+  "ch3:113": {
+   "w": 640,
+   "h": 480,
+   "name": "room_lerptest",
+   "n_layers": 2
+  },
+  "ch3:114": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shadowmantle_movementExample",
+   "n_layers": 4
+  },
+  "ch3:115": {
+   "w": 6220,
+   "h": 6220,
+   "name": "room_board_dungeon_2",
+   "n_layers": 8
+  },
+  "ch3:116": {
+   "w": 6220,
+   "h": 6220,
+   "name": "room_board_dungeon_3",
+   "n_layers": 6
+  },
+  "ch3:117": {
+   "w": 2460,
+   "h": 960,
+   "name": "room_board_preshadowmantle",
+   "n_layers": 5
+  },
+  "ch3:118": {
+   "w": 800,
+   "h": 800,
+   "name": "room_shadowmantle",
+   "n_layers": 9
+  },
+  "ch3:119": {
+   "w": 640,
+   "h": 960,
+   "name": "room_board_prepostshadowmantle",
+   "n_layers": 5
+  },
+  "ch3:120": {
+   "w": 640,
+   "h": 480,
+   "name": "room_board_postshadowmantle",
+   "n_layers": 5
+  },
+  "ch3:121": {
+   "w": 1920,
+   "h": 960,
+   "name": "room_dw_ch3_man",
+   "n_layers": 7
+  },
+  "ch3:122": {
+   "w": 6220,
+   "h": 6220,
+   "name": "room_board_boattest",
+   "n_layers": 6
+  },
+  "ch3:123": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_tennatexttester",
+   "n_layers": 4
+  },
+  "ch3:124": {
+   "w": 1914,
+   "h": 480,
+   "name": "room_susiezilla",
+   "n_layers": 6
+  },
+  "ch3:125": {
+   "w": 6220,
+   "h": 1920,
+   "name": "room_board_intro",
+   "n_layers": 6
+  },
+  "ch3:126": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_susiezilla_singleScreenMockup",
+   "n_layers": 2
+  },
+  "ch3:127": {
+   "w": 640,
+   "h": 480,
+   "name": "room_torhouse_sepia",
+   "n_layers": 2
+  },
+  "ch3:128": {
+   "w": 640,
+   "h": 480,
+   "name": "room_rhythmgame_editor",
+   "n_layers": 4
+  },
+  "ch3:129": {
+   "w": 6220,
+   "h": 1920,
+   "name": "room_board_tests",
+   "n_layers": 6
+  },
+  "ch3:130": {
+   "w": 640,
+   "h": 480,
+   "name": "room_board_postshadowmantle_test",
+   "n_layers": 5
+  },
+  "ch3:131": {
+   "w": 640,
+   "h": 480,
+   "name": "room_ch3_gameshowroom",
+   "n_layers": 8
+  },
+  "ch3:132": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shootout",
+   "n_layers": 7
+  },
+  "ch3:133": {
+   "w": 640,
+   "h": 480,
+   "name": "room_genanimtest",
+   "n_layers": 4
+  },
+  "ch3:134": {
+   "w": 2460,
+   "h": 960,
+   "name": "room_board_preshadowmantle_repeat",
+   "n_layers": 5
+  },
+  "ch3:135": {
+   "w": 1440,
+   "h": 480,
+   "name": "room_dw_green_room",
+   "n_layers": 14
+  },
+  "ch3:136": {
+   "w": 6220,
+   "h": 1920,
+   "name": "room_board_1_sword",
+   "n_layers": 8
+  },
+  "ch3:137": {
+   "w": 640,
+   "h": 480,
+   "name": "room_board_sword_intro",
+   "n_layers": 5
+  },
+  "ch3:138": {
+   "w": 3840,
+   "h": 3840,
+   "name": "room_board_1_sword_trees",
+   "n_layers": 5
+  },
+  "ch3:139": {
+   "w": 1840,
+   "h": 480,
+   "name": "room_dw_changing_room",
+   "n_layers": 6
+  },
+  "ch3:140": {
+   "w": 1000,
+   "h": 480,
+   "name": "room_dw_console_room",
+   "n_layers": 4
+  },
+  "ch3:141": {
+   "w": 4816,
+   "h": 4224,
+   "name": "room_board_2",
+   "n_layers": 10
+  },
+  "ch3:142": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_tv_closet",
+   "n_layers": 6
+  },
+  "ch3:143": {
+   "w": 1440,
+   "h": 480,
+   "name": "room_perspective_testing",
+   "n_layers": 13
+  },
+  "ch3:144": {
+   "w": 3968,
+   "h": 3392,
+   "name": "room_board_3",
+   "n_layers": 8
+  },
+  "ch3:145": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bstest",
+   "n_layers": 7
+  },
+  "ch3:146": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bstest_big",
+   "n_layers": 7
+  },
+  "ch3:147": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_interstitial",
+   "n_layers": 8
+  },
+  "ch3:148": {
+   "w": 5184,
+   "h": 4736,
+   "name": "room_board_2_sword",
+   "n_layers": 12
+  },
+  "ch3:149": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest_new",
+   "n_layers": 2
+  },
+  "ch3:150": {
+   "w": 640,
+   "h": 480,
+   "name": "room_board_empty",
+   "n_layers": 5
+  },
+  "ch3:151": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_rouxls_lanina",
+   "n_layers": 14
+  },
+  "ch3:152": {
+   "w": 720,
+   "h": 480,
+   "name": "room_dw_b3bs_template",
+   "n_layers": 5
+  },
+  "ch3:153": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_rouxls_boss",
+   "n_layers": 6
+  },
+  "ch3:154": {
+   "w": 880,
+   "h": 480,
+   "name": "room_dw_b3bs_cheaterpippins",
+   "n_layers": 13
+  },
+  "ch3:155": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_idcardpuzzle",
+   "n_layers": 10
+  },
+  "ch3:156": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_intro",
+   "n_layers": 14
+  },
+  "ch3:157": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_dw_b3bs_zapper_a",
+   "n_layers": 8
+  },
+  "ch3:158": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_b3bs_rabbick_a",
+   "n_layers": 8
+  },
+  "ch3:159": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_dw_b3bs_lancerget",
+   "n_layers": 8
+  },
+  "ch3:160": {
+   "w": 2120,
+   "h": 480,
+   "name": "room_dw_b3bs_cooltrashy",
+   "n_layers": 8
+  },
+  "ch3:161": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_zapper_c",
+   "n_layers": 7
+  },
+  "ch3:162": {
+   "w": 800,
+   "h": 560,
+   "name": "room_dw_b3bs_rabbick_b",
+   "n_layers": 8
+  },
+  "ch3:163": {
+   "w": 1120,
+   "h": 480,
+   "name": "room_dw_b3bs_sadshadowguys",
+   "n_layers": 13
+  },
+  "ch3:164": {
+   "w": 2760,
+   "h": 480,
+   "name": "room_dw_b3bs_zapper_b",
+   "n_layers": 8
+  },
+  "ch3:165": {
+   "w": 640,
+   "h": 480,
+   "name": "room_ch3_gameshowroom_tennatest",
+   "n_layers": 8
+  },
+  "ch3:166": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_susiezilla",
+   "n_layers": 4
+  },
+  "ch3:167": {
+   "w": 640,
+   "h": 920,
+   "name": "room_dw_inbetween",
+   "n_layers": 6
+  },
+  "ch3:168": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_teevie_preview",
+   "n_layers": 9
+  },
+  "ch3:169": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_chef",
+   "n_layers": 5
+  },
+  "ch3:170": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_dw_puzzlecloset_1",
+   "n_layers": 13
+  },
+  "ch3:171": {
+   "w": 3840,
+   "h": 980,
+   "name": "room_dw_puzzlecloset_2",
+   "n_layers": 15
+  },
+  "ch3:172": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_chef_empty",
+   "n_layers": 5
+  },
+  "ch3:173": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_susiezilla_empty",
+   "n_layers": 6
+  },
+  "ch3:174": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm_empty",
+   "n_layers": 4
+  },
+  "ch3:175": {
+   "w": 3968,
+   "h": 3392,
+   "name": "room_board_3b",
+   "n_layers": 9
+  },
+  "ch3:176": {
+   "w": 640,
+   "h": 480,
+   "name": "room_CHEFS",
+   "n_layers": 3
+  },
+  "ch3:177": {
+   "w": 1000,
+   "h": 480,
+   "name": "room_dw_b3bs_jail1",
+   "n_layers": 8
+  },
+  "ch3:178": {
+   "w": 720,
+   "h": 480,
+   "name": "room_dw_b3bs_shop",
+   "n_layers": 8
+  },
+  "ch3:179": {
+   "w": 720,
+   "h": 480,
+   "name": "room_dw_b3bs_mysterypuzzle",
+   "n_layers": 14
+  },
+  "ch3:180": {
+   "w": 2280,
+   "h": 1200,
+   "name": "room_dw_b3bs_watercooler",
+   "n_layers": 9
+  },
+  "ch3:181": {
+   "w": 880,
+   "h": 480,
+   "name": "room_dw_b3bs_jail2",
+   "n_layers": 8
+  },
+  "ch3:182": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_zapper_d",
+   "n_layers": 8
+  },
+  "ch3:183": {
+   "w": 800,
+   "h": 480,
+   "name": "room_dw_b3bs_extrapuzzle",
+   "n_layers": 14
+  },
+  "ch3:184": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_b3bs_bibliox",
+   "n_layers": 15
+  },
+  "ch3:185": {
+   "w": 640,
+   "h": 480,
+   "name": "room_rhythmgame_tenna_test",
+   "n_layers": 4
+  },
+  "ch3:186": {
+   "w": 3968,
+   "h": 3392,
+   "name": "room_board_3_sword",
+   "n_layers": 8
+  },
+  "ch3:187": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_couch_points",
+   "n_layers": 4
+  },
+  "ch3:188": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_couch_overworld_intro_left",
+   "n_layers": 5
+  },
+  "ch3:189": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_couch_video",
+   "n_layers": 4
+  },
+  "ch3:190": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_snow_zone_battle",
+   "n_layers": 5
+  },
+  "ch3:191": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_zapper_a_old",
+   "n_layers": 8
+  },
+  "ch3:192": {
+   "w": 1560,
+   "h": 480,
+   "name": "room_dw_puzzlecloset_0",
+   "n_layers": 12
+  },
+  "ch3:193": {
+   "w": 6220,
+   "h": 1920,
+   "name": "room_board_gsa02_b0",
+   "n_layers": 6
+  },
+  "ch3:194": {
+   "w": 3400,
+   "h": 480,
+   "name": "room_dw_tv_curtain",
+   "n_layers": 8
+  },
+  "ch3:195": {
+   "w": 2040,
+   "h": 480,
+   "name": "room_dw_teevie_intro",
+   "n_layers": 10
+  },
+  "ch3:196": {
+   "w": 2080,
+   "h": 1480,
+   "name": "room_dw_teevie_large_01",
+   "n_layers": 14
+  },
+  "ch3:197": {
+   "w": 1480,
+   "h": 1360,
+   "name": "room_dw_teevie_large_02",
+   "n_layers": 8
+  },
+  "ch3:198": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_cowboy_zone_01_intro",
+   "n_layers": 12
+  },
+  "ch3:199": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_cowboy_zone_01_after",
+   "n_layers": 10
+  },
+  "ch3:200": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_watercooler",
+   "n_layers": 8
+  },
+  "ch3:201": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_teevie_susiezilla",
+   "n_layers": 12
+  },
+  "ch3:202": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_cowboy_zone_02_intro",
+   "n_layers": 9
+  },
+  "ch3:203": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_cowboy_zone_02_after",
+   "n_layers": 9
+  },
+  "ch3:204": {
+   "w": 2120,
+   "h": 480,
+   "name": "room_dw_teevie_shadow_guys",
+   "n_layers": 15
+  },
+  "ch3:205": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_teevie_stealth_c",
+   "n_layers": 7
+  },
+  "ch3:206": {
+   "w": 2560,
+   "h": 960,
+   "name": "room_dw_teevie_stealth",
+   "n_layers": 7
+  },
+  "ch3:207": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_failure_cage",
+   "n_layers": 4
+  },
+  "ch3:208": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_teevie_rhythm",
+   "n_layers": 4
+  },
+  "ch3:209": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_maze_points",
+   "n_layers": 4
+  },
+  "ch3:210": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_maze_chef",
+   "n_layers": 4
+  },
+  "ch3:211": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_maze_final",
+   "n_layers": 4
+  },
+  "ch3:212": {
+   "w": 2160,
+   "h": 2160,
+   "name": "room_dw_teevie_maze",
+   "n_layers": 6
+  },
+  "ch3:213": {
+   "w": 2080,
+   "h": 480,
+   "name": "room_dw_teevie_chef",
+   "n_layers": 5
+  },
+  "ch3:214": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_cutscene_final",
+   "n_layers": 4
+  },
+  "ch3:215": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_teevie_ribbick",
+   "n_layers": 4
+  },
+  "ch3:216": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_preview_south",
+   "n_layers": 4
+  },
+  "ch3:217": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_b3bs_camerareminder",
+   "n_layers": 10
+  },
+  "ch3:218": {
+   "w": 3840,
+   "h": 3840,
+   "name": "room_dw_puzzlecloset_3",
+   "n_layers": 16
+  },
+  "ch3:219": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_teevie_sams",
+   "n_layers": 5
+  },
+  "ch3:220": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_teevie_bonus_zone",
+   "n_layers": 4
+  },
+  "ch3:221": {
+   "w": 1880,
+   "h": 1280,
+   "name": "room_dw_teevie_audiencepits",
+   "n_layers": 8
+  },
+  "ch3:222": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_channelchange_test",
+   "n_layers": 6
+  },
+  "ch3:223": {
+   "w": 1360,
+   "h": 920,
+   "name": "room_dw_teevie_lightmaze",
+   "n_layers": 7
+  },
+  "ch3:224": {
+   "w": 3280,
+   "h": 1480,
+   "name": "room_dw_teevie_maze_quiz",
+   "n_layers": 8
+  },
+  "ch3:225": {
+   "w": 1120,
+   "h": 480,
+   "name": "room_dw_ranking_hub",
+   "n_layers": 7
+  },
+  "ch3:226": {
+   "w": 1200,
+   "h": 480,
+   "name": "room_dw_ranking_a",
+   "n_layers": 5
+  },
+  "ch3:227": {
+   "w": 640,
+   "h": 560,
+   "name": "room_dw_ranking_b",
+   "n_layers": 7
+  },
+  "ch3:228": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_ranking_c",
+   "n_layers": 7
+  },
+  "ch3:229": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_ranking_z",
+   "n_layers": 5
+  },
+  "ch3:230": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_ranking_z_hallway",
+   "n_layers": 4
+  },
+  "ch3:231": {
+   "w": 1360,
+   "h": 480,
+   "name": "room_dw_teevie_ribbicks_a",
+   "n_layers": 5
+  },
+  "ch3:232": {
+   "w": 1040,
+   "h": 880,
+   "name": "room_dw_teevie_ribbicks_b",
+   "n_layers": 8
+  },
+  "ch3:233": {
+   "w": 800,
+   "h": 480,
+   "name": "room_dw_teevie_susiebridge",
+   "n_layers": 14
+  },
+  "ch3:234": {
+   "w": 1920,
+   "h": 1080,
+   "name": "room_dw_teevie_shuttahmaze",
+   "n_layers": 7
+  },
+  "ch3:235": {
+   "w": 6320,
+   "h": 480,
+   "name": "room_dw_teevie_stealth_d",
+   "n_layers": 8
+  },
+  "ch3:236": {
+   "w": 3240,
+   "h": 1080,
+   "name": "room_dw_teevie_dust",
+   "n_layers": 9
+  },
+  "ch3:237": {
+   "w": 820,
+   "h": 480,
+   "name": "room_dw_teevie_dust_south",
+   "n_layers": 5
+  },
+  "ch3:238": {
+   "w": 4080,
+   "h": 4080,
+   "name": "room_ch3_gacharoom_unknown",
+   "n_layers": 6
+  },
+  "ch3:239": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_ranking_t",
+   "n_layers": 6
+  },
+  "ch3:240": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_puzzlecloset_1a",
+   "n_layers": 5
+  },
+  "ch3:241": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm_countdown",
+   "n_layers": 4
+  },
+  "ch3:242": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_snow_zone_east_door",
+   "n_layers": 5
+  },
+  "ch3:243": {
+   "w": 320,
+   "h": 240,
+   "name": "room_intro",
+   "n_layers": 4
+  },
+  "ch3:244": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_inbetweenhall",
+   "n_layers": 7
+  },
+  "ch3:245": {
+   "w": 640,
+   "h": 480,
+   "name": "room_chapter_continue",
+   "n_layers": 2
+  },
+  "ch4:0": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gms_debug_failsafe",
+   "n_layers": 2
+  },
+  "ch4:1": {
+   "w": 640,
+   "h": 480,
+   "name": "ROOM_INITIALIZE",
+   "n_layers": 2
+  },
+  "ch4:2": {
+   "w": 640,
+   "h": 480,
+   "name": "room_title_placeholder",
+   "n_layers": 4
+  },
+  "ch4:3": {
+   "w": 640,
+   "h": 480,
+   "name": "room_battletest",
+   "n_layers": 3
+  },
+  "ch4:4": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester",
+   "n_layers": 4
+  },
+  "ch4:5": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sound_tester",
+   "n_layers": 2
+  },
+  "ch4:6": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sprite_tester",
+   "n_layers": 2
+  },
+  "ch4:7": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gif_tester",
+   "n_layers": 2
+  },
+  "ch4:8": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest",
+   "n_layers": 2
+  },
+  "ch4:9": {
+   "w": 640,
+   "h": 480,
+   "name": "room_GMS2_test",
+   "n_layers": 4
+  },
+  "ch4:10": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester_b",
+   "n_layers": 3
+  },
+  "ch4:11": {
+   "w": 1024,
+   "h": 768,
+   "name": "room_debug_color",
+   "n_layers": 2
+  },
+  "ch4:12": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battle",
+   "n_layers": 4
+  },
+  "ch4:13": {
+   "w": 540,
+   "h": 240,
+   "name": "room_debug_loc",
+   "n_layers": 6
+  },
+  "ch4:14": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_CONTACT",
+   "n_layers": 2
+  },
+  "ch4:15": {
+   "w": 320,
+   "h": 240,
+   "name": "room_krisroom",
+   "n_layers": 6
+  },
+  "ch4:16": {
+   "w": 540,
+   "h": 240,
+   "name": "room_krishallway",
+   "n_layers": 6
+  },
+  "ch4:17": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torroom",
+   "n_layers": 2
+  },
+  "ch4:18": {
+   "w": 700,
+   "h": 240,
+   "name": "room_torhouse",
+   "n_layers": 5
+  },
+  "ch4:19": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torbathroom",
+   "n_layers": 4
+  },
+  "ch4:20": {
+   "w": 320,
+   "h": 420,
+   "name": "room_town_krisyard",
+   "n_layers": 7
+  },
+  "ch4:21": {
+   "w": 960,
+   "h": 480,
+   "name": "room_town_northwest",
+   "n_layers": 2
+  },
+  "ch4:22": {
+   "w": 1800,
+   "h": 240,
+   "name": "room_town_north",
+   "n_layers": 7
+  },
+  "ch4:23": {
+   "w": 600,
+   "h": 240,
+   "name": "room_beach",
+   "n_layers": 12
+  },
+  "ch4:24": {
+   "w": 2040,
+   "h": 240,
+   "name": "room_town_mid",
+   "n_layers": 7
+  },
+  "ch4:25": {
+   "w": 920,
+   "h": 240,
+   "name": "room_town_apartments",
+   "n_layers": 2
+  },
+  "ch4:26": {
+   "w": 1320,
+   "h": 240,
+   "name": "room_town_south",
+   "n_layers": 8
+  },
+  "ch4:27": {
+   "w": 580,
+   "h": 320,
+   "name": "room_town_school",
+   "n_layers": 8
+  },
+  "ch4:28": {
+   "w": 760,
+   "h": 640,
+   "name": "room_town_church",
+   "n_layers": 8
+  },
+  "ch4:29": {
+   "w": 600,
+   "h": 240,
+   "name": "room_graveyard",
+   "n_layers": 9
+  },
+  "ch4:30": {
+   "w": 320,
+   "h": 1240,
+   "name": "room_town_shelter",
+   "n_layers": 11
+  },
+  "ch4:31": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_lobby",
+   "n_layers": 5
+  },
+  "ch4:32": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_hallway",
+   "n_layers": 4
+  },
+  "ch4:33": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_rudy",
+   "n_layers": 4
+  },
+  "ch4:34": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_room2",
+   "n_layers": 4
+  },
+  "ch4:35": {
+   "w": 320,
+   "h": 240,
+   "name": "room_diner",
+   "n_layers": 5
+  },
+  "ch4:36": {
+   "w": 320,
+   "h": 240,
+   "name": "room_townhall",
+   "n_layers": 6
+  },
+  "ch4:37": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_1f",
+   "n_layers": 5
+  },
+  "ch4:38": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_2f",
+   "n_layers": 6
+  },
+  "ch4:39": {
+   "w": 320,
+   "h": 240,
+   "name": "room_library",
+   "n_layers": 6
+  },
+  "ch4:40": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysalley",
+   "n_layers": 4
+  },
+  "ch4:41": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_computer_lab",
+   "n_layers": 4
+  },
+  "ch4:42": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_library_upstairs",
+   "n_layers": 3
+  },
+  "ch4:43": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_police",
+   "n_layers": 3
+  },
+  "ch4:44": {
+   "w": 540,
+   "h": 240,
+   "name": "room_lw_conbini",
+   "n_layers": 5
+  },
+  "ch4:45": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_icee_pizza",
+   "n_layers": 4
+  },
+  "ch4:46": {
+   "w": 640,
+   "h": 240,
+   "name": "room_lw_church_entrance",
+   "n_layers": 4
+  },
+  "ch4:47": {
+   "w": 860,
+   "h": 620,
+   "name": "room_lw_church_main",
+   "n_layers": 10
+  },
+  "ch4:48": {
+   "w": 960,
+   "h": 720,
+   "name": "room_lw_noellehouse_main",
+   "n_layers": 6
+  },
+  "ch4:49": {
+   "w": 680,
+   "h": 260,
+   "name": "room_lw_noellehouse_kitchen",
+   "n_layers": 7
+  },
+  "ch4:50": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_bathroom",
+   "n_layers": 5
+  },
+  "ch4:51": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_keyroom",
+   "n_layers": 4
+  },
+  "ch4:52": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_noelle",
+   "n_layers": 6
+  },
+  "ch4:53": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_dess",
+   "n_layers": 6
+  },
+  "ch4:54": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_closet",
+   "n_layers": 8
+  },
+  "ch4:55": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torielclass",
+   "n_layers": 6
+  },
+  "ch4:56": {
+   "w": 940,
+   "h": 420,
+   "name": "room_schoollobby",
+   "n_layers": 5
+  },
+  "ch4:57": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysclass",
+   "n_layers": 5
+  },
+  "ch4:58": {
+   "w": 620,
+   "h": 240,
+   "name": "room_schooldoor",
+   "n_layers": 6
+  },
+  "ch4:59": {
+   "w": 820,
+   "h": 500,
+   "name": "room_insidecloset",
+   "n_layers": 5
+  },
+  "ch4:60": {
+   "w": 320,
+   "h": 240,
+   "name": "room_school_unusedroom",
+   "n_layers": 5
+  },
+  "ch4:61": {
+   "w": 1400,
+   "h": 480,
+   "name": "room_castle_tutorial",
+   "n_layers": 5
+  },
+  "ch4:62": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_east_door",
+   "n_layers": 5
+  },
+  "ch4:63": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_west_cliff",
+   "n_layers": 4
+  },
+  "ch4:64": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_area_1",
+   "n_layers": 5
+  },
+  "ch4:65": {
+   "w": 1520,
+   "h": 1600,
+   "name": "room_dw_castle_town",
+   "n_layers": 14
+  },
+  "ch4:66": {
+   "w": 1000,
+   "h": 1000,
+   "name": "room_dw_ralsei_castle_front",
+   "n_layers": 7
+  },
+  "ch4:67": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_restaurant",
+   "n_layers": 7
+  },
+  "ch4:68": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_castle_cafe",
+   "n_layers": 6
+  },
+  "ch4:69": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_dojo",
+   "n_layers": 7
+  },
+  "ch4:70": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_1f",
+   "n_layers": 5
+  },
+  "ch4:71": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_2f",
+   "n_layers": 5
+  },
+  "ch4:72": {
+   "w": 1640,
+   "h": 480,
+   "name": "room_dw_castle_dungeon",
+   "n_layers": 7
+  },
+  "ch4:73": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_kris",
+   "n_layers": 4
+  },
+  "ch4:74": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_susie",
+   "n_layers": 4
+  },
+  "ch4:75": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_DOG",
+   "n_layers": 2
+  },
+  "ch4:76": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend",
+   "n_layers": 2
+  },
+  "ch4:77": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend_neo",
+   "n_layers": 2
+  },
+  "ch4:78": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop1",
+   "n_layers": 2
+  },
+  "ch4:79": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_music",
+   "n_layers": 2
+  },
+  "ch4:80": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gameover",
+   "n_layers": 2
+  },
+  "ch4:81": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_LOGO",
+   "n_layers": 2
+  },
+  "ch4:82": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_FAILURE",
+   "n_layers": 2
+  },
+  "ch4:83": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_NAMING_JIKKEN",
+   "n_layers": 2
+  },
+  "ch4:84": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_MENU",
+   "n_layers": 2
+  },
+  "ch4:85": {
+   "w": 320,
+   "h": 240,
+   "name": "room_ed",
+   "n_layers": 2
+  },
+  "ch4:86": {
+   "w": 320,
+   "h": 240,
+   "name": "room_empty",
+   "n_layers": 4
+  },
+  "ch4:87": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKempty",
+   "n_layers": 2
+  },
+  "ch4:88": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_test_climb_new",
+   "n_layers": 4
+  },
+  "ch4:89": {
+   "w": 1160,
+   "h": 480,
+   "name": "room_cc_lancer",
+   "n_layers": 9
+  },
+  "ch4:90": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_clover",
+   "n_layers": 5
+  },
+  "ch4:91": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_fountain",
+   "n_layers": 4
+  },
+  "ch4:92": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_DOGCHECK2",
+   "n_layers": 2
+  },
+  "ch4:93": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_smallface_dark",
+   "n_layers": 2
+  },
+  "ch4:94": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_smallface",
+   "n_layers": 2
+  },
+  "ch4:95": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_choicer_dark",
+   "n_layers": 2
+  },
+  "ch4:96": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_choicer_light",
+   "n_layers": 2
+  },
+  "ch4:97": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battleBalloon",
+   "n_layers": 2
+  },
+  "ch4:98": {
+   "w": 640,
+   "h": 480,
+   "name": "room_overworldBulletEnemyTest",
+   "n_layers": 5
+  },
+  "ch4:99": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_layeredLevelTest",
+   "n_layers": 5
+  },
+  "ch4:100": {
+   "w": 1920,
+   "h": 1080,
+   "name": "room_debug_windowEffect",
+   "n_layers": 5
+  },
+  "ch4:101": {
+   "w": 3240,
+   "h": 480,
+   "name": "room_dw_church_slidingbookshelf",
+   "n_layers": 8
+  },
+  "ch4:102": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_darkness_example",
+   "n_layers": 6
+  },
+  "ch4:103": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_darkness_example_2",
+   "n_layers": 7
+  },
+  "ch4:104": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_bellplay",
+   "n_layers": 7
+  },
+  "ch4:105": {
+   "w": 640,
+   "h": 480,
+   "name": "room_intro_ch4",
+   "n_layers": 2
+  },
+  "ch4:106": {
+   "w": 1960,
+   "h": 480,
+   "name": "room_dw_church_candlelighting",
+   "n_layers": 5
+  },
+  "ch4:107": {
+   "w": 960,
+   "h": 480,
+   "name": "room_town_noellehouse",
+   "n_layers": 18
+  },
+  "ch4:108": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_intro1",
+   "n_layers": 11
+  },
+  "ch4:109": {
+   "w": 1440,
+   "h": 2000,
+   "name": "room_dw_church_intro3",
+   "n_layers": 5
+  },
+  "ch4:110": {
+   "w": 4400,
+   "h": 1920,
+   "name": "room_dw_church_intro_guei",
+   "n_layers": 17
+  },
+  "ch4:111": {
+   "w": 1640,
+   "h": 1040,
+   "name": "room_dw_church_darkroom1_old",
+   "n_layers": 6
+  },
+  "ch4:112": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_church_lantern1_old_old",
+   "n_layers": 8
+  },
+  "ch4:113": {
+   "w": 3840,
+   "h": 2200,
+   "name": "room_dw_church_lantern_hallway",
+   "n_layers": 13
+  },
+  "ch4:114": {
+   "w": 2080,
+   "h": 1000,
+   "name": "room_dw_church_darkbell_old",
+   "n_layers": 4
+  },
+  "ch4:115": {
+   "w": 960,
+   "h": 1200,
+   "name": "room_dw_church_gersonstudy",
+   "n_layers": 7
+  },
+  "ch4:116": {
+   "w": 1480,
+   "h": 1240,
+   "name": "room_dw_church_stairs_west_bell",
+   "n_layers": 5
+  },
+  "ch4:117": {
+   "w": 640,
+   "h": 1440,
+   "name": "room_dw_church_librarybookenemy",
+   "n_layers": 4
+  },
+  "ch4:118": {
+   "w": 2240,
+   "h": 2160,
+   "name": "room_dw_church_bookshelfpuzzle1",
+   "n_layers": 10
+  },
+  "ch4:119": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_bookshelfpuzzle2",
+   "n_layers": 4
+  },
+  "ch4:120": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_church_worshiproom",
+   "n_layers": 6
+  },
+  "ch4:121": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_swingingbell",
+   "n_layers": 4
+  },
+  "ch4:122": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_church_tallbookcases",
+   "n_layers": 11
+  },
+  "ch4:123": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_lantern2",
+   "n_layers": 4
+  },
+  "ch4:124": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_smallbells",
+   "n_layers": 5
+  },
+  "ch4:125": {
+   "w": 2400,
+   "h": 960,
+   "name": "room_dw_church_claw",
+   "n_layers": 4
+  },
+  "ch4:126": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_shelfclimb1",
+   "n_layers": 4
+  },
+  "ch4:127": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_statueclimb",
+   "n_layers": 4
+  },
+  "ch4:128": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_offering",
+   "n_layers": 4
+  },
+  "ch4:129": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_npcroom_shelfclimb",
+   "n_layers": 4
+  },
+  "ch4:130": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_church_stairs_stainedglass",
+   "n_layers": 4
+  },
+  "ch4:131": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_bellsareawest",
+   "n_layers": 6
+  },
+  "ch4:132": {
+   "w": 2280,
+   "h": 1400,
+   "name": "room_dw_church_stairs_topright",
+   "n_layers": 5
+  },
+  "ch4:133": {
+   "w": 1440,
+   "h": 1120,
+   "name": "room_dw_church_poolsroom1",
+   "n_layers": 5
+  },
+  "ch4:134": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_church_candlesroom1",
+   "n_layers": 7
+  },
+  "ch4:135": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_solowaterfall",
+   "n_layers": 4
+  },
+  "ch4:136": {
+   "w": 640,
+   "h": 2080,
+   "name": "room_dw_church_statueroom",
+   "n_layers": 8
+  },
+  "ch4:137": {
+   "w": 1440,
+   "h": 1200,
+   "name": "room_dw_church_poolsroom2",
+   "n_layers": 5
+  },
+  "ch4:138": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_shelfclimb2",
+   "n_layers": 6
+  },
+  "ch4:139": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_statueclimb_npcroom",
+   "n_layers": 4
+  },
+  "ch4:140": {
+   "w": 840,
+   "h": 480,
+   "name": "room_dw_church_bellhall_west",
+   "n_layers": 5
+  },
+  "ch4:141": {
+   "w": 2560,
+   "h": 1800,
+   "name": "room_dw_church_fountainconnection",
+   "n_layers": 4
+  },
+  "ch4:142": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_church_stainedglasspreview",
+   "n_layers": 6
+  },
+  "ch4:143": {
+   "w": 1480,
+   "h": 1160,
+   "name": "room_dw_church_stairs_topleft",
+   "n_layers": 5
+  },
+  "ch4:144": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_npcroom_pools1",
+   "n_layers": 4
+  },
+  "ch4:145": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_poolsroom1_east",
+   "n_layers": 4
+  },
+  "ch4:146": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_minorlegend",
+   "n_layers": 7
+  },
+  "ch4:147": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_bookenemywest",
+   "n_layers": 4
+  },
+  "ch4:148": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_poolsroom2south",
+   "n_layers": 4
+  },
+  "ch4:149": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_church_office",
+   "n_layers": 6
+  },
+  "ch4:150": {
+   "w": 840,
+   "h": 480,
+   "name": "room_dw_church_bellhall_east",
+   "n_layers": 5
+  },
+  "ch4:151": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_bellhall_central",
+   "n_layers": 5
+  },
+  "ch4:152": {
+   "w": 1640,
+   "h": 1040,
+   "name": "room_dw_church_darkroom_old",
+   "n_layers": 6
+  },
+  "ch4:153": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_church_lantern1_old",
+   "n_layers": 8
+  },
+  "ch4:154": {
+   "w": 2080,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_3f",
+   "n_layers": 6
+  },
+  "ch4:155": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_ralsei",
+   "n_layers": 4
+  },
+  "ch4:156": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rotating_tower",
+   "n_layers": 4
+  },
+  "ch4:157": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dark_twostoryTest",
+   "n_layers": 4
+  },
+  "ch4:158": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_overworldDarknessBulletTest",
+   "n_layers": 7
+  },
+  "ch4:159": {
+   "w": 320,
+   "h": 240,
+   "name": "room_krisroom_dark",
+   "n_layers": 4
+  },
+  "ch4:160": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_overworld_darkmaku_ring",
+   "n_layers": 7
+  },
+  "ch4:161": {
+   "w": 640,
+   "h": 1600,
+   "name": "room_dw_church_statueroom_old",
+   "n_layers": 6
+  },
+  "ch4:162": {
+   "w": 320,
+   "h": 600,
+   "name": "room_lw_noellehouse_vents_west",
+   "n_layers": 5
+  },
+  "ch4:163": {
+   "w": 640,
+   "h": 480,
+   "name": "room_lerptest",
+   "n_layers": 2
+  },
+  "ch4:164": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_overworld_darkmakumaze",
+   "n_layers": 7
+  },
+  "ch4:165": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_overworld_darkmaku_blocks",
+   "n_layers": 7
+  },
+  "ch4:166": {
+   "w": 320,
+   "h": 500,
+   "name": "room_town_krisyard_dark",
+   "n_layers": 7
+  },
+  "ch4:167": {
+   "w": 1160,
+   "h": 480,
+   "name": "room_dw_castle_rooms_queen",
+   "n_layers": 5
+  },
+  "ch4:168": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_tenna",
+   "n_layers": 6
+  },
+  "ch4:169": {
+   "w": 320,
+   "h": 240,
+   "name": "room_traintest",
+   "n_layers": 4
+  },
+  "ch4:170": {
+   "w": 3840,
+   "h": 2160,
+   "name": "room_dw_church_rippletest",
+   "n_layers": 7
+  },
+  "ch4:171": {
+   "w": 4000,
+   "h": 2160,
+   "name": "room_dw_church_ripplepuzzle",
+   "n_layers": 15
+  },
+  "ch4:172": {
+   "w": 2560,
+   "h": 480,
+   "name": "room_dw_church_gueitest",
+   "n_layers": 8
+  },
+  "ch4:173": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_glass",
+   "n_layers": 8
+  },
+  "ch4:174": {
+   "w": 640,
+   "h": 4320,
+   "name": "room_dw_church_staircase",
+   "n_layers": 9
+  },
+  "ch4:175": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_bellhall_bookroom",
+   "n_layers": 9
+  },
+  "ch4:176": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_bookcase",
+   "n_layers": 11
+  },
+  "ch4:177": {
+   "w": 3280,
+   "h": 1480,
+   "name": "room_dw_church_savepoint",
+   "n_layers": 15
+  },
+  "ch4:178": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_dark_fire_puzzle",
+   "n_layers": 5
+  },
+  "ch4:179": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_turtles",
+   "n_layers": 9
+  },
+  "ch4:180": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_guei",
+   "n_layers": 4
+  },
+  "ch4:181": {
+   "w": 3840,
+   "h": 2660,
+   "name": "room_dw_church_jackenstein",
+   "n_layers": 11
+  },
+  "ch4:182": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_bellhall_curtain",
+   "n_layers": 6
+  },
+  "ch4:183": {
+   "w": 1360,
+   "h": 1440,
+   "name": "room_dw_church_lantern_hallway_old",
+   "n_layers": 5
+  },
+  "ch4:184": {
+   "w": 860,
+   "h": 9000,
+   "name": "room_dw_church_dogclimb",
+   "n_layers": 12
+  },
+  "ch4:185": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_church_arena",
+   "n_layers": 8
+  },
+  "ch4:186": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_pianotest",
+   "n_layers": 4
+  },
+  "ch4:187": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gersonbattleroomtest",
+   "n_layers": 4
+  },
+  "ch4:188": {
+   "w": 320,
+   "h": 240,
+   "name": "room_traintest_big",
+   "n_layers": 4
+  },
+  "ch4:189": {
+   "w": 3840,
+   "h": 480,
+   "name": "room_dw_church_chase_old",
+   "n_layers": 4
+  },
+  "ch4:190": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_3d_tower_test",
+   "n_layers": 4
+  },
+  "ch4:191": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_titan_tower_test",
+   "n_layers": 4
+  },
+  "ch4:192": {
+   "w": 1440,
+   "h": 480,
+   "name": "room_dw_churchb_nongerson_post",
+   "n_layers": 11
+  },
+  "ch4:193": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_vents_north",
+   "n_layers": 5
+  },
+  "ch4:194": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_vents_east",
+   "n_layers": 6
+  },
+  "ch4:195": {
+   "w": 960,
+   "h": 240,
+   "name": "room_lw_noellehouse_vents_south",
+   "n_layers": 6
+  },
+  "ch4:196": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest_new",
+   "n_layers": 2
+  },
+  "ch4:197": {
+   "w": 640,
+   "h": 480,
+   "name": "room_test_pianoGimmick",
+   "n_layers": 4
+  },
+  "ch4:198": {
+   "w": 1920,
+   "h": 1080,
+   "name": "room_test_remotePiano",
+   "n_layers": 4
+  },
+  "ch4:199": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKbase_GMS2",
+   "n_layers": 4
+  },
+  "ch4:200": {
+   "w": 640,
+   "h": 480,
+   "name": "room_test_climb_new2",
+   "n_layers": 4
+  },
+  "ch4:201": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_test_climb_cameratest",
+   "n_layers": 4
+  },
+  "ch4:202": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_test_climb_0001",
+   "n_layers": 4
+  },
+  "ch4:203": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_test_climb_enterexit",
+   "n_layers": 6
+  },
+  "ch4:204": {
+   "w": 1360,
+   "h": 960,
+   "name": "room_dw_church_climbtut",
+   "n_layers": 7
+  },
+  "ch4:205": {
+   "w": 1160,
+   "h": 960,
+   "name": "room_dw_church_fastwater",
+   "n_layers": 7
+  },
+  "ch4:206": {
+   "w": 720,
+   "h": 960,
+   "name": "room_dw_church_crumbletower",
+   "n_layers": 8
+  },
+  "ch4:207": {
+   "w": 880,
+   "h": 1920,
+   "name": "room_dw_church_tower1",
+   "n_layers": 8
+  },
+  "ch4:208": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_church_choir",
+   "n_layers": 6
+  },
+  "ch4:209": {
+   "w": 1160,
+   "h": 1920,
+   "name": "room_dw_church_bellclimb",
+   "n_layers": 8
+  },
+  "ch4:210": {
+   "w": 1360,
+   "h": 960,
+   "name": "room_dw_church_shiftclimb",
+   "n_layers": 7
+  },
+  "ch4:211": {
+   "w": 1800,
+   "h": 640,
+   "name": "room_dw_church_intropiano",
+   "n_layers": 11
+  },
+  "ch4:212": {
+   "w": 2440,
+   "h": 2160,
+   "name": "room_dw_church_intro_gerson",
+   "n_layers": 13
+  },
+  "ch4:213": {
+   "w": 2280,
+   "h": 2740,
+   "name": "room_dw_church_pianopiece_left",
+   "n_layers": 15
+  },
+  "ch4:214": {
+   "w": 2000,
+   "h": 2000,
+   "name": "room_dw_church_northprophecies",
+   "n_layers": 11
+  },
+  "ch4:215": {
+   "w": 3200,
+   "h": 1120,
+   "name": "room_dw_church_darkmaze",
+   "n_layers": 11
+  },
+  "ch4:216": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_quicktest",
+   "n_layers": 5
+  },
+  "ch4:217": {
+   "w": 1680,
+   "h": 1120,
+   "name": "room_dw_church_pianopiece_right",
+   "n_layers": 17
+  },
+  "ch4:218": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_church_pianopuzzle",
+   "n_layers": 15
+  },
+  "ch4:219": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_church_nwconnect",
+   "n_layers": 16
+  },
+  "ch4:220": {
+   "w": 2440,
+   "h": 2240,
+   "name": "room_dw_church_rightconnect",
+   "n_layers": 19
+  },
+  "ch4:221": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_church_stairspreview",
+   "n_layers": 15
+  },
+  "ch4:222": {
+   "w": 2680,
+   "h": 2160,
+   "name": "room_dw_church_trueclimbadventure",
+   "n_layers": 14
+  },
+  "ch4:223": {
+   "w": 1760,
+   "h": 480,
+   "name": "room_dw_church_organpuzzle",
+   "n_layers": 10
+  },
+  "ch4:224": {
+   "w": 2040,
+   "h": 960,
+   "name": "room_dw_church_mizzleencounter",
+   "n_layers": 9
+  },
+  "ch4:225": {
+   "w": 3240,
+   "h": 2360,
+   "name": "room_dw_church_sideclimb",
+   "n_layers": 17
+  },
+  "ch4:226": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_secretpiano",
+   "n_layers": 12
+  },
+  "ch4:227": {
+   "w": 3840,
+   "h": 2160,
+   "name": "room_dw_church_ripplepuzzle_postgers",
+   "n_layers": 17
+  },
+  "ch4:228": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_church_tallbookcases_backup",
+   "n_layers": 5
+  },
+  "ch4:229": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_fountain",
+   "n_layers": 4
+  },
+  "ch4:230": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_church_b_intro",
+   "n_layers": 5
+  },
+  "ch4:231": {
+   "w": 7240,
+   "h": 1200,
+   "name": "room_dw_churchc_final_prophecy",
+   "n_layers": 10
+  },
+  "ch4:232": {
+   "w": 2240,
+   "h": 1400,
+   "name": "room_dw_church_bookshelfpuzzle",
+   "n_layers": 16
+  },
+  "ch4:233": {
+   "w": 640,
+   "h": 240,
+   "name": "room_lw_noellehouse_basement",
+   "n_layers": 5
+  },
+  "ch4:234": {
+   "w": 640,
+   "h": 1160,
+   "name": "room_dw_church_biblioxencounter",
+   "n_layers": 11
+  },
+  "ch4:235": {
+   "w": 1160,
+   "h": 2160,
+   "name": "room_dw_church_darkclimb",
+   "n_layers": 5
+  },
+  "ch4:236": {
+   "w": 920,
+   "h": 960,
+   "name": "room_dw_church_moneyfountain",
+   "n_layers": 14
+  },
+  "ch4:237": {
+   "w": 640,
+   "h": 20000,
+   "name": "room_rotating_tower_new_test",
+   "n_layers": 7
+  },
+  "ch4:238": {
+   "w": 1000,
+   "h": 920,
+   "name": "room_dw_church_pianopiece_left_b",
+   "n_layers": 11
+  },
+  "ch4:239": {
+   "w": 1000,
+   "h": 920,
+   "name": "room_dw_church_pianopiece_rightprophecy",
+   "n_layers": 8
+  },
+  "ch4:240": {
+   "w": 640,
+   "h": 20000,
+   "name": "room_rotating_tower_new_example",
+   "n_layers": 7
+  },
+  "ch4:241": {
+   "w": 1960,
+   "h": 1200,
+   "name": "room_dw_church_shadowgerson",
+   "n_layers": 15
+  },
+  "ch4:242": {
+   "w": 3840,
+   "h": 3840,
+   "name": "room_dw_church_holywatercooler",
+   "n_layers": 17
+  },
+  "ch4:243": {
+   "w": 4000,
+   "h": 1440,
+   "name": "room_dw_church_rippleworship",
+   "n_layers": 8
+  },
+  "ch4:244": {
+   "w": 4000,
+   "h": 4000,
+   "name": "room_dw_church_waterfallroom",
+   "n_layers": 9
+  },
+  "ch4:245": {
+   "w": 1920,
+   "h": 1080,
+   "name": "room_dw_church_waterfalltearoom",
+   "n_layers": 10
+  },
+  "ch4:246": {
+   "w": 920,
+   "h": 480,
+   "name": "room_dw_castle_rooms_kris_susie",
+   "n_layers": 5
+  },
+  "ch4:247": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_churchb_staircaseintro",
+   "n_layers": 7
+  },
+  "ch4:248": {
+   "w": 4160,
+   "h": 2160,
+   "name": "room_dw_churchb_prophecyencounter",
+   "n_layers": 18
+  },
+  "ch4:249": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_churchb_worshiproom",
+   "n_layers": 6
+  },
+  "ch4:250": {
+   "w": 2680,
+   "h": 2480,
+   "name": "room_dw_churchb_libraryconnector",
+   "n_layers": 20
+  },
+  "ch4:251": {
+   "w": 1320,
+   "h": 480,
+   "name": "room_dw_churchb_savepoint",
+   "n_layers": 10
+  },
+  "ch4:252": {
+   "w": 2280,
+   "h": 3840,
+   "name": "room_dw_churchb_rotatingtower",
+   "n_layers": 23
+  },
+  "ch4:253": {
+   "w": 1760,
+   "h": 480,
+   "name": "room_dw_churchb_bellroom",
+   "n_layers": 11
+  },
+  "ch4:254": {
+   "w": 3840,
+   "h": 2160,
+   "name": "room_dw_churchb_escherstaircase",
+   "n_layers": 13
+  },
+  "ch4:255": {
+   "w": 1840,
+   "h": 1240,
+   "name": "room_dw_churchb_prophecymaze",
+   "n_layers": 8
+  },
+  "ch4:256": {
+   "w": 2400,
+   "h": 6000,
+   "name": "room_dw_churchb_rotatingtower2",
+   "n_layers": 10
+  },
+  "ch4:257": {
+   "w": 960,
+   "h": 1200,
+   "name": "room_dw_churchb_gersonstudy",
+   "n_layers": 11
+  },
+  "ch4:258": {
+   "w": 6000,
+   "h": 3840,
+   "name": "room_dw_churchb_gersonchase",
+   "n_layers": 9
+  },
+  "ch4:259": {
+   "w": 6000,
+   "h": 3840,
+   "name": "room_dw_churchb_extinguisher",
+   "n_layers": 15
+  },
+  "ch4:260": {
+   "w": 6840,
+   "h": 7400,
+   "name": "room_dw_church_knightclimb",
+   "n_layers": 15
+  },
+  "ch4:261": {
+   "w": 3560,
+   "h": 2160,
+   "name": "room_dw_church_knightclimb_post",
+   "n_layers": 10
+  },
+  "ch4:262": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm",
+   "n_layers": 4
+  },
+  "ch4:263": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm_countdown",
+   "n_layers": 4
+  },
+  "ch4:264": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm_empty",
+   "n_layers": 4
+  },
+  "ch4:265": {
+   "w": 640,
+   "h": 480,
+   "name": "room_rhythmgame_editor",
+   "n_layers": 4
+  },
+  "ch4:266": {
+   "w": 2800,
+   "h": 1080,
+   "name": "room_dw_churchb_ripple1",
+   "n_layers": 7
+  },
+  "ch4:267": {
+   "w": 1520,
+   "h": 1080,
+   "name": "room_dw_churchb_ripplepost",
+   "n_layers": 15
+  },
+  "ch4:268": {
+   "w": 3200,
+   "h": 3840,
+   "name": "room_dw_churchb_library_alternate",
+   "n_layers": 8
+  },
+  "ch4:269": {
+   "w": 2800,
+   "h": 1160,
+   "name": "room_dw_churchb_moneyfountain",
+   "n_layers": 12
+  },
+  "ch4:270": {
+   "w": 1920,
+   "h": 1920,
+   "name": "room_dw_churchc_superprophecies",
+   "n_layers": 11
+  },
+  "ch4:271": {
+   "w": 2600,
+   "h": 1600,
+   "name": "room_dw_churchc_encounter1",
+   "n_layers": 16
+  },
+  "ch4:272": {
+   "w": 4800,
+   "h": 9800,
+   "name": "room_dw_churchc_slidingpiano",
+   "n_layers": 16
+  },
+  "ch4:273": {
+   "w": 2880,
+   "h": 3840,
+   "name": "room_dw_churchc_ripplesneak_poc",
+   "n_layers": 10
+  },
+  "ch4:274": {
+   "w": 1960,
+   "h": 1600,
+   "name": "room_dw_churchc_encounter2",
+   "n_layers": 15
+  },
+  "ch4:275": {
+   "w": 640,
+   "h": 2880,
+   "name": "room_dw_churchc_finalclimb",
+   "n_layers": 15
+  },
+  "ch4:276": {
+   "w": 2880,
+   "h": 480,
+   "name": "room_dw_churchc_angelprophecy_encounter",
+   "n_layers": 12
+  },
+  "ch4:277": {
+   "w": 640,
+   "h": 1280,
+   "name": "room_dw_churchc_savepoint",
+   "n_layers": 13
+  },
+  "ch4:278": {
+   "w": 4800,
+   "h": 4320,
+   "name": "room_dw_churchc_darkswords",
+   "n_layers": 10
+  },
+  "ch4:279": {
+   "w": 640,
+   "h": 2640,
+   "name": "room_dw_churchc_pretitan",
+   "n_layers": 7
+  },
+  "ch4:280": {
+   "w": 640,
+   "h": 2120,
+   "name": "room_dw_churchc_prepretitan",
+   "n_layers": 11
+  },
+  "ch4:281": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_churchc_titandefeated",
+   "n_layers": 6
+  },
+  "ch4:282": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_churchb_fountain",
+   "n_layers": 3
+  },
+  "ch4:283": {
+   "w": 4000,
+   "h": 4000,
+   "name": "room_dw_church_ripseq1",
+   "n_layers": 9
+  },
+  "ch4:284": {
+   "w": 4000,
+   "h": 4000,
+   "name": "room_dw_church_ripseq2",
+   "n_layers": 9
+  },
+  "ch4:285": {
+   "w": 2000,
+   "h": 5800,
+   "name": "room_dw_churchc_titanclimb1",
+   "n_layers": 14
+  },
+  "ch4:286": {
+   "w": 2000,
+   "h": 8000,
+   "name": "room_dw_churchc_titanclimb2",
+   "n_layers": 15
+  },
+  "ch4:287": {
+   "w": 2000,
+   "h": 20000,
+   "name": "room_dw_churchc_titanclimb1_old",
+   "n_layers": 14
+  },
+  "ch4:288": {
+   "w": 2000,
+   "h": 20000,
+   "name": "room_dw_churchc_titanclimb2_old",
+   "n_layers": 13
+  },
+  "ch4:289": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_north",
+   "n_layers": 5
+  },
+  "ch4:290": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_vents_north_west",
+   "n_layers": 5
+  },
+  "ch4:291": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_channelchange_test",
+   "n_layers": 6
+  },
+  "ch4:292": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_ripple_test",
+   "n_layers": 7
+  },
+  "ch4:293": {
+   "w": 2400,
+   "h": 2400,
+   "name": "room_dw_churchb_prophecymaze_old",
+   "n_layers": 8
+  },
+  "ch4:294": {
+   "w": 3840,
+   "h": 1280,
+   "name": "room_dw_churchb_fireplace",
+   "n_layers": 12
+  },
+  "ch4:295": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_churchb_nongerson",
+   "n_layers": 4
+  },
+  "ch4:296": {
+   "w": 3840,
+   "h": 3840,
+   "name": "room_dw_churchb_library",
+   "n_layers": 23
+  },
+  "ch4:297": {
+   "w": 1480,
+   "h": 480,
+   "name": "room_dw_castle_tv_rhythm",
+   "n_layers": 6
+  },
+  "ch4:298": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_castle_tv",
+   "n_layers": 7
+  },
+  "ch4:299": {
+   "w": 3880,
+   "h": 480,
+   "name": "room_dw_churchb_windows",
+   "n_layers": 8
+  },
+  "ch4:300": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_churchb_bookshelf",
+   "n_layers": 10
+  },
+  "ch4:301": {
+   "w": 1580,
+   "h": 1000,
+   "name": "room_dw_churchb_man",
+   "n_layers": 8
+  },
+  "ch4:302": {
+   "w": 3840,
+   "h": 3840,
+   "name": "room_dw_churchb_gallery",
+   "n_layers": 18
+  },
+  "ch4:303": {
+   "w": 2280,
+   "h": 3840,
+   "name": "room_dw_churchb_rotatingtower_old",
+   "n_layers": 14
+  },
+  "ch4:304": {
+   "w": 6000,
+   "h": 6000,
+   "name": "room_dw_churchb_darkclimb",
+   "n_layers": 18
+  },
+  "ch4:305": {
+   "w": 3560,
+   "h": 960,
+   "name": "room_dw_churchc_titanclimb1_post",
+   "n_layers": 12
+  },
+  "ch4:306": {
+   "w": 4400,
+   "h": 480,
+   "name": "room_dw_churchc_titanclimb2_post",
+   "n_layers": 15
+  },
+  "ch4:307": {
+   "w": 1800,
+   "h": 1200,
+   "name": "room_dw_churchb_darkclimb_scene",
+   "n_layers": 9
+  },
+  "ch4:308": {
+   "w": 3200,
+   "h": 3840,
+   "name": "room_dw_churchc_dodge",
+   "n_layers": 13
+  },
+  "ch4:309": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_churchc_insidetitan",
+   "n_layers": 2
+  },
+  "ch4:310": {
+   "w": 1920,
+   "h": 1920,
+   "name": "room_lightworldTest",
+   "n_layers": 3
+  },
+  "ch4:311": {
+   "w": 4120,
+   "h": 480,
+   "name": "room_dw_churchc_prophecies",
+   "n_layers": 16
+  },
+  "ch4:312": {
+   "w": 1260,
+   "h": 480,
+   "name": "room_dw_churchc_angelprophecy",
+   "n_layers": 12
+  },
+  "ch4:313": {
+   "w": 1800,
+   "h": 840,
+   "name": "room_dw_church_bookshelfpuzzle_rev",
+   "n_layers": 14
+  },
+  "ch4:314": {
+   "w": 4120,
+   "h": 480,
+   "name": "room_dw_churchc_prophecies_backup",
+   "n_layers": 9
+  },
+  "ch4:315": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_churchc_treasurechest",
+   "n_layers": 5
+  },
+  "ch4:316": {
+   "w": 2000,
+   "h": 8000,
+   "name": "room_dw_churchc_titanclimb2_old2",
+   "n_layers": 15
+  },
+  "ch4:317": {
+   "w": 2000,
+   "h": 5800,
+   "name": "room_dw_churchc_titanclimb1_tiled",
+   "n_layers": 14
+  },
+  "ch4:318": {
+   "w": 2000,
+   "h": 8000,
+   "name": "room_dw_churchc_titanclimb2_tiled",
+   "n_layers": 15
+  },
+  "ch4:319": {
+   "w": 2280,
+   "h": 3840,
+   "name": "room_dw_churchb_rotatingtower_tiled",
+   "n_layers": 23
+  },
+  "ch4:320": {
+   "w": 640,
+   "h": 480,
+   "name": "room_vfx_tester",
+   "n_layers": 2
+  },
+  "ch4:321": {
+   "w": 1560,
+   "h": 480,
+   "name": "room_dw_castle_tv_zone_1",
+   "n_layers": 6
+  },
+  "ch4:322": {
+   "w": 640,
+   "h": 960,
+   "name": "room_dw_castle_tv_zone_2",
+   "n_layers": 8
+  },
+  "ch4:323": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_castle_tv_zone_3",
+   "n_layers": 6
+  },
+  "ch4:324": {
+   "w": 4160,
+   "h": 480,
+   "name": "room_dw_castle_tv_zone_battle",
+   "n_layers": 7
+  },
+  "ch4:325": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_tv_zone_minigame",
+   "n_layers": 7
+  },
+  "ch4:326": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shapetest",
+   "n_layers": 4
+  },
+  "ch4:327": {
+   "w": 640,
+   "h": 480,
+   "name": "room_chapter_continue",
+   "n_layers": 2
+  },
+  "ch5:0": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gms_debug_failsafe",
+   "n_layers": 2
+  },
+  "ch5:1": {
+   "w": 640,
+   "h": 480,
+   "name": "ROOM_INITIALIZE",
+   "n_layers": 2
+  },
+  "ch5:2": {
+   "w": 640,
+   "h": 480,
+   "name": "room_battletest",
+   "n_layers": 2
+  },
+  "ch5:3": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester",
+   "n_layers": 6
+  },
+  "ch5:4": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sound_tester",
+   "n_layers": 2
+  },
+  "ch5:5": {
+   "w": 640,
+   "h": 480,
+   "name": "room_sprite_tester",
+   "n_layers": 2
+  },
+  "ch5:6": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gif_tester",
+   "n_layers": 2
+  },
+  "ch5:7": {
+   "w": 640,
+   "h": 480,
+   "name": "room_GMS2_test",
+   "n_layers": 4
+  },
+  "ch5:8": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_cutscene_tester_b",
+   "n_layers": 3
+  },
+  "ch5:9": {
+   "w": 1024,
+   "h": 768,
+   "name": "room_debug_color",
+   "n_layers": 2
+  },
+  "ch5:10": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battle",
+   "n_layers": 4
+  },
+  "ch5:11": {
+   "w": 540,
+   "h": 240,
+   "name": "room_debug_loc",
+   "n_layers": 6
+  },
+  "ch5:12": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_CONTACT",
+   "n_layers": 2
+  },
+  "ch5:13": {
+   "w": 320,
+   "h": 240,
+   "name": "room_krisroom",
+   "n_layers": 6
+  },
+  "ch5:14": {
+   "w": 540,
+   "h": 240,
+   "name": "room_krishallway",
+   "n_layers": 6
+  },
+  "ch5:15": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torroom",
+   "n_layers": 2
+  },
+  "ch5:16": {
+   "w": 700,
+   "h": 240,
+   "name": "room_torhouse",
+   "n_layers": 6
+  },
+  "ch5:17": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torbathroom",
+   "n_layers": 4
+  },
+  "ch5:18": {
+   "w": 320,
+   "h": 420,
+   "name": "room_town_krisyard",
+   "n_layers": 25
+  },
+  "ch5:19": {
+   "w": 960,
+   "h": 480,
+   "name": "room_town_northwest",
+   "n_layers": 2
+  },
+  "ch5:20": {
+   "w": 1800,
+   "h": 240,
+   "name": "room_town_north",
+   "n_layers": 41
+  },
+  "ch5:21": {
+   "w": 1200,
+   "h": 240,
+   "name": "room_beach",
+   "n_layers": 19
+  },
+  "ch5:22": {
+   "w": 2040,
+   "h": 240,
+   "name": "room_town_mid",
+   "n_layers": 43
+  },
+  "ch5:23": {
+   "w": 920,
+   "h": 240,
+   "name": "room_town_apartments",
+   "n_layers": 2
+  },
+  "ch5:24": {
+   "w": 1320,
+   "h": 240,
+   "name": "room_town_south",
+   "n_layers": 44
+  },
+  "ch5:25": {
+   "w": 580,
+   "h": 320,
+   "name": "room_town_school",
+   "n_layers": 27
+  },
+  "ch5:26": {
+   "w": 760,
+   "h": 640,
+   "name": "room_town_church",
+   "n_layers": 31
+  },
+  "ch5:27": {
+   "w": 600,
+   "h": 240,
+   "name": "room_graveyard",
+   "n_layers": 17
+  },
+  "ch5:28": {
+   "w": 320,
+   "h": 1240,
+   "name": "room_town_shelter",
+   "n_layers": 16
+  },
+  "ch5:29": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_lobby",
+   "n_layers": 5
+  },
+  "ch5:30": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_hallway",
+   "n_layers": 4
+  },
+  "ch5:31": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_rudy",
+   "n_layers": 4
+  },
+  "ch5:32": {
+   "w": 320,
+   "h": 240,
+   "name": "room_hospital_room2",
+   "n_layers": 4
+  },
+  "ch5:33": {
+   "w": 320,
+   "h": 240,
+   "name": "room_diner",
+   "n_layers": 5
+  },
+  "ch5:34": {
+   "w": 320,
+   "h": 240,
+   "name": "room_townhall",
+   "n_layers": 5
+  },
+  "ch5:35": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_1f",
+   "n_layers": 5
+  },
+  "ch5:36": {
+   "w": 320,
+   "h": 240,
+   "name": "room_flowershop_2f",
+   "n_layers": 7
+  },
+  "ch5:37": {
+   "w": 320,
+   "h": 240,
+   "name": "room_library",
+   "n_layers": 6
+  },
+  "ch5:38": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysalley",
+   "n_layers": 4
+  },
+  "ch5:39": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_computer_lab",
+   "n_layers": 4
+  },
+  "ch5:40": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_library_upstairs",
+   "n_layers": 3
+  },
+  "ch5:41": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_police",
+   "n_layers": 3
+  },
+  "ch5:42": {
+   "w": 540,
+   "h": 240,
+   "name": "room_lw_conbini",
+   "n_layers": 5
+  },
+  "ch5:43": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_icee_pizza",
+   "n_layers": 4
+  },
+  "ch5:44": {
+   "w": 320,
+   "h": 240,
+   "name": "room_torielclass",
+   "n_layers": 6
+  },
+  "ch5:45": {
+   "w": 940,
+   "h": 420,
+   "name": "room_schoollobby",
+   "n_layers": 13
+  },
+  "ch5:46": {
+   "w": 320,
+   "h": 240,
+   "name": "room_alphysclass",
+   "n_layers": 5
+  },
+  "ch5:47": {
+   "w": 620,
+   "h": 240,
+   "name": "room_schooldoor",
+   "n_layers": 6
+  },
+  "ch5:48": {
+   "w": 820,
+   "h": 500,
+   "name": "room_insidecloset",
+   "n_layers": 5
+  },
+  "ch5:49": {
+   "w": 320,
+   "h": 240,
+   "name": "room_school_unusedroom",
+   "n_layers": 5
+  },
+  "ch5:50": {
+   "w": 1400,
+   "h": 480,
+   "name": "room_castle_tutorial",
+   "n_layers": 4
+  },
+  "ch5:51": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_east_door",
+   "n_layers": 4
+  },
+  "ch5:52": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_west_cliff",
+   "n_layers": 4
+  },
+  "ch5:53": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_area_1",
+   "n_layers": 5
+  },
+  "ch5:54": {
+   "w": 1520,
+   "h": 1600,
+   "name": "room_dw_castle_town",
+   "n_layers": 13
+  },
+  "ch5:55": {
+   "w": 1000,
+   "h": 1000,
+   "name": "room_dw_ralsei_castle_front",
+   "n_layers": 7
+  },
+  "ch5:56": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_restaurant",
+   "n_layers": 7
+  },
+  "ch5:57": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_castle_cafe",
+   "n_layers": 5
+  },
+  "ch5:58": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_dojo",
+   "n_layers": 7
+  },
+  "ch5:59": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_1f",
+   "n_layers": 5
+  },
+  "ch5:60": {
+   "w": 1080,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_2f",
+   "n_layers": 5
+  },
+  "ch5:61": {
+   "w": 2080,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_3f",
+   "n_layers": 6
+  },
+  "ch5:62": {
+   "w": 1640,
+   "h": 480,
+   "name": "room_dw_castle_dungeon",
+   "n_layers": 7
+  },
+  "ch5:63": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_kris",
+   "n_layers": 4
+  },
+  "ch5:64": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_susie",
+   "n_layers": 4
+  },
+  "ch5:65": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_rooms_ralsei",
+   "n_layers": 7
+  },
+  "ch5:66": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_DOG",
+   "n_layers": 2
+  },
+  "ch5:67": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend",
+   "n_layers": 2
+  },
+  "ch5:68": {
+   "w": 320,
+   "h": 240,
+   "name": "room_legend_neo",
+   "n_layers": 2
+  },
+  "ch5:69": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop1",
+   "n_layers": 2
+  },
+  "ch5:70": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_music",
+   "n_layers": 2
+  },
+  "ch5:71": {
+   "w": 640,
+   "h": 480,
+   "name": "room_gameover",
+   "n_layers": 2
+  },
+  "ch5:72": {
+   "w": 320,
+   "h": 240,
+   "name": "PLACE_LOGO",
+   "n_layers": 2
+  },
+  "ch5:73": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_FAILURE",
+   "n_layers": 2
+  },
+  "ch5:74": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_NAMING_JIKKEN",
+   "n_layers": 2
+  },
+  "ch5:75": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_MENU",
+   "n_layers": 2
+  },
+  "ch5:76": {
+   "w": 320,
+   "h": 240,
+   "name": "room_ed",
+   "n_layers": 2
+  },
+  "ch5:77": {
+   "w": 320,
+   "h": 240,
+   "name": "room_empty",
+   "n_layers": 2
+  },
+  "ch5:78": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKempty",
+   "n_layers": 2
+  },
+  "ch5:79": {
+   "w": 640,
+   "h": 480,
+   "name": "room_DARKbase_GMS2",
+   "n_layers": 4
+  },
+  "ch5:80": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_lancer",
+   "n_layers": 6
+  },
+  "ch5:81": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_clover",
+   "n_layers": 5
+  },
+  "ch5:82": {
+   "w": 640,
+   "h": 480,
+   "name": "room_cc_fountain",
+   "n_layers": 4
+  },
+  "ch5:83": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_DOGCHECK2",
+   "n_layers": 2
+  },
+  "ch5:84": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_smallface_dark",
+   "n_layers": 2
+  },
+  "ch5:85": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_smallface",
+   "n_layers": 2
+  },
+  "ch5:86": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_choicer_dark",
+   "n_layers": 2
+  },
+  "ch5:87": {
+   "w": 320,
+   "h": 240,
+   "name": "room_debug_choicer_light",
+   "n_layers": 2
+  },
+  "ch5:88": {
+   "w": 640,
+   "h": 480,
+   "name": "room_debug_battleBalloon",
+   "n_layers": 2
+  },
+  "ch5:89": {
+   "w": 640,
+   "h": 480,
+   "name": "room_overworldBulletEnemyTest",
+   "n_layers": 6
+  },
+  "ch5:90": {
+   "w": 640,
+   "h": 480,
+   "name": "room_lerptest",
+   "n_layers": 2
+  },
+  "ch5:91": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest",
+   "n_layers": 2
+  },
+  "ch5:92": {
+   "w": 640,
+   "h": 480,
+   "name": "room_bullettest_new",
+   "n_layers": 2
+  },
+  "ch5:93": {
+   "w": 640,
+   "h": 480,
+   "name": "room_animexampletest",
+   "n_layers": 5
+  },
+  "ch5:94": {
+   "w": 640,
+   "h": 480,
+   "name": "room_climbtest",
+   "n_layers": 3
+  },
+  "ch5:95": {
+   "w": 640,
+   "h": 480,
+   "name": "room_chapter_continue",
+   "n_layers": 2
+  },
+  "ch5:96": {
+   "w": 640,
+   "h": 480,
+   "name": "room_towery_tester",
+   "n_layers": 2
+  },
+  "ch5:97": {
+   "w": 640,
+   "h": 480,
+   "name": "room_animtest",
+   "n_layers": 2
+  },
+  "ch5:98": {
+   "w": 640,
+   "h": 480,
+   "name": "PLACE_DOGCHECK_CH5",
+   "n_layers": 2
+  },
+  "ch5:99": {
+   "w": 640,
+   "h": 480,
+   "name": "room_darkbulbTest",
+   "n_layers": 5
+  },
+  "ch5:100": {
+   "w": 1920,
+   "h": 1080,
+   "name": "room_dw_fcastle_shadowplatformTest",
+   "n_layers": 6
+  },
+  "ch5:101": {
+   "w": 1920,
+   "h": 960,
+   "name": "room_plat_lab",
+   "n_layers": 8
+  },
+  "ch5:102": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_church_choir",
+   "n_layers": 6
+  },
+  "ch5:103": {
+   "w": 640,
+   "h": 240,
+   "name": "room_lw_church_entrance",
+   "n_layers": 8
+  },
+  "ch5:104": {
+   "w": 860,
+   "h": 620,
+   "name": "room_lw_church_main",
+   "n_layers": 8
+  },
+  "ch5:105": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_church_office",
+   "n_layers": 6
+  },
+  "ch5:106": {
+   "w": 320,
+   "h": 240,
+   "name": "room_lw_noellehouse_dess",
+   "n_layers": 6
+  },
+  "ch5:107": {
+   "w": 960,
+   "h": 480,
+   "name": "room_town_noellehouse",
+   "n_layers": 21
+  },
+  "ch5:108": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm",
+   "n_layers": 4
+  },
+  "ch5:109": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm_countdown",
+   "n_layers": 4
+  },
+  "ch5:110": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_rhythm_empty",
+   "n_layers": 4
+  },
+  "ch5:111": {
+   "w": 640,
+   "h": 480,
+   "name": "room_rhythmgame_editor",
+   "n_layers": 4
+  },
+  "ch5:112": {
+   "w": 960,
+   "h": 480,
+   "name": "room_dw_castle_tv",
+   "n_layers": 7
+  },
+  "ch5:113": {
+   "w": 1720,
+   "h": 480,
+   "name": "room_dw_castle_tv_rhythm",
+   "n_layers": 6
+  },
+  "ch5:114": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_dw_castle_church_entrance",
+   "n_layers": 11
+  },
+  "ch5:115": {
+   "w": 3840,
+   "h": 3840,
+   "name": "room_dw_castle_church_climb",
+   "n_layers": 18
+  },
+  "ch5:116": {
+   "w": 1880,
+   "h": 480,
+   "name": "room_dw_ralsei_castle_basketball",
+   "n_layers": 8
+  },
+  "ch5:117": {
+   "w": 640,
+   "h": 480,
+   "name": "room_shop_ch5",
+   "n_layers": 2
+  },
+  "ch5:118": {
+   "w": 1400,
+   "h": 880,
+   "name": "room_dw_garden_meetflowery",
+   "n_layers": 8
+  },
+  "ch5:119": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_garden_video",
+   "n_layers": 4
+  },
+  "ch5:120": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_garden_intro",
+   "n_layers": 7
+  },
+  "ch5:121": {
+   "w": 2000,
+   "h": 1320,
+   "name": "room_dw_garden_ralseicupboard",
+   "n_layers": 14
+  },
+  "ch5:122": {
+   "w": 5000,
+   "h": 2600,
+   "name": "room_dw_garden_floradinnencounter",
+   "n_layers": 18
+  },
+  "ch5:123": {
+   "w": 920,
+   "h": 480,
+   "name": "room_dw_garden_hospital",
+   "n_layers": 7
+  },
+  "ch5:124": {
+   "w": 2760,
+   "h": 480,
+   "name": "room_dw_garden_fishingspot",
+   "n_layers": 12
+  },
+  "ch5:125": {
+   "w": 1280,
+   "h": 3000,
+   "name": "room_dw_garden_shearydodge",
+   "n_layers": 19
+  },
+  "ch5:126": {
+   "w": 1680,
+   "h": 2200,
+   "name": "room_dw_garden_hopschef",
+   "n_layers": 16
+  },
+  "ch5:127": {
+   "w": 1600,
+   "h": 1280,
+   "name": "room_dw_garden_platshortcut",
+   "n_layers": 12
+  },
+  "ch5:128": {
+   "w": 640,
+   "h": 960,
+   "name": "room_dw_garden_riverchest",
+   "n_layers": 13
+  },
+  "ch5:129": {
+   "w": 1280,
+   "h": 560,
+   "name": "room_dw_garden_enemyrush",
+   "n_layers": 23
+  },
+  "ch5:130": {
+   "w": 640,
+   "h": 720,
+   "name": "room_dw_garden_pedestal",
+   "n_layers": 12
+  },
+  "ch5:131": {
+   "w": 1520,
+   "h": 1800,
+   "name": "room_dw_garden_mushrooms",
+   "n_layers": 10
+  },
+  "ch5:132": {
+   "w": 640,
+   "h": 1520,
+   "name": "room_dw_garden_flowerygardening",
+   "n_layers": 15
+  },
+  "ch5:133": {
+   "w": 1360,
+   "h": 480,
+   "name": "room_dw_garden_diner",
+   "n_layers": 15
+  },
+  "ch5:134": {
+   "w": 3320,
+   "h": 480,
+   "name": "room_dw_garden_starwalkerdash",
+   "n_layers": 11
+  },
+  "ch5:135": {
+   "w": 2000,
+   "h": 480,
+   "name": "room_dw_garden_hardpressureplates",
+   "n_layers": 13
+  },
+  "ch5:136": {
+   "w": 640,
+   "h": 1040,
+   "name": "room_dw_garden_aqua",
+   "n_layers": 21
+  },
+  "ch5:137": {
+   "w": 640,
+   "h": 5440,
+   "name": "room_dw_garden_finalplatforming",
+   "n_layers": 32
+  },
+  "ch5:138": {
+   "w": 640,
+   "h": 4000,
+   "name": "room_dw_garden_finalplatforming_right",
+   "n_layers": 13
+  },
+  "ch5:139": {
+   "w": 5000,
+   "h": 2320,
+   "name": "room_dw_garden_wateringcan_aqua",
+   "n_layers": 12
+  },
+  "ch5:140": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_garden_aquadarkness",
+   "n_layers": 11
+  },
+  "ch5:141": {
+   "w": 640,
+   "h": 2000,
+   "name": "room_dw_garden_aquahole",
+   "n_layers": 15
+  },
+  "ch5:142": {
+   "w": 640,
+   "h": 1240,
+   "name": "room_dw_garden_aquashrine",
+   "n_layers": 16
+  },
+  "ch5:143": {
+   "w": 5840,
+   "h": 1000,
+   "name": "room_dw_garden_aquaplatforming",
+   "n_layers": 17
+  },
+  "ch5:144": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_garden_cliffexit",
+   "n_layers": 9
+  },
+  "ch5:145": {
+   "w": 1280,
+   "h": 1280,
+   "name": "room_dw_garden_susiechase",
+   "n_layers": 21
+  },
+  "ch5:146": {
+   "w": 1800,
+   "h": 1360,
+   "name": "room_dw_garden_newdash",
+   "n_layers": 17
+  },
+  "ch5:147": {
+   "w": 1720,
+   "h": 1440,
+   "name": "room_dw_garden_shearyguide",
+   "n_layers": 14
+  },
+  "ch5:148": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_pink_encounter",
+   "n_layers": 12
+  },
+  "ch5:149": {
+   "w": 1920,
+   "h": 480,
+   "name": "room_dw_garden_aquatransition",
+   "n_layers": 11
+  },
+  "ch5:150": {
+   "w": 6400,
+   "h": 480,
+   "name": "room_dw_garden_aquadash",
+   "n_layers": 17
+  },
+  "ch5:151": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_garden_aquahole_left",
+   "n_layers": 13
+  },
+  "ch5:152": {
+   "w": 3320,
+   "h": 480,
+   "name": "room_dw_garden_firstdash",
+   "n_layers": 10
+  },
+  "ch5:153": {
+   "w": 6400,
+   "h": 480,
+   "name": "room_dw_garden_aquadash_plat",
+   "n_layers": 14
+  },
+  "ch5:154": {
+   "w": 7000,
+   "h": 2120,
+   "name": "room_dw_cliff_gardentransition_new",
+   "n_layers": 17
+  },
+  "ch5:155": {
+   "w": 640,
+   "h": 2000,
+   "name": "room_dw_cliff_climbrefresher",
+   "n_layers": 18
+  },
+  "ch5:156": {
+   "w": 3160,
+   "h": 1320,
+   "name": "room_dw_cliff_cutdown_tutorial",
+   "n_layers": 17
+  },
+  "ch5:157": {
+   "w": 1520,
+   "h": 1520,
+   "name": "room_dw_cliff_bunnyfarm",
+   "n_layers": 19
+  },
+  "ch5:158": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cliff_silver_hammer",
+   "n_layers": 12
+  },
+  "ch5:159": {
+   "w": 10440,
+   "h": 480,
+   "name": "room_dw_cliff_dash_runner",
+   "n_layers": 18
+  },
+  "ch5:160": {
+   "w": 1440,
+   "h": 640,
+   "name": "room_dw_cliff_seth_miniboss",
+   "n_layers": 18
+  },
+  "ch5:161": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cliff_shop",
+   "n_layers": 11
+  },
+  "ch5:162": {
+   "w": 4000,
+   "h": 2120,
+   "name": "room_dw_cliff_netskieclimb",
+   "n_layers": 23
+  },
+  "ch5:163": {
+   "w": 9760,
+   "h": 2200,
+   "name": "room_dw_cliff_finaldash",
+   "n_layers": 20
+  },
+  "ch5:164": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cliff_yellowcave",
+   "n_layers": 10
+  },
+  "ch5:165": {
+   "w": 1080,
+   "h": 800,
+   "name": "room_dw_cliff_shicave",
+   "n_layers": 13
+  },
+  "ch5:166": {
+   "w": 640,
+   "h": 9000,
+   "name": "room_dw_cliff_verticalwind",
+   "n_layers": 15
+  },
+  "ch5:167": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cliff_verticalwind_post",
+   "n_layers": 12
+  },
+  "ch5:168": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_cliff_netskieclimb_behind",
+   "n_layers": 8
+  },
+  "ch5:169": {
+   "w": 1280,
+   "h": 3200,
+   "name": "room_dw_cliff_eastcliff",
+   "n_layers": 12
+  },
+  "ch5:170": {
+   "w": 1200,
+   "h": 1720,
+   "name": "room_dw_cliff_bonuscombat",
+   "n_layers": 14
+  },
+  "ch5:171": {
+   "w": 3800,
+   "h": 1680,
+   "name": "room_dw_cliff_twirlflowerplatforming",
+   "n_layers": 20
+  },
+  "ch5:172": {
+   "w": 4000,
+   "h": 480,
+   "name": "room_dw_cliff_kawkawdash",
+   "n_layers": 17
+  },
+  "ch5:173": {
+   "w": 1160,
+   "h": 2680,
+   "name": "room_dw_cliff_precipice",
+   "n_layers": 16
+  },
+  "ch5:174": {
+   "w": 2480,
+   "h": 1600,
+   "name": "room_dw_cliff_twirlflowerwind",
+   "n_layers": 18
+  },
+  "ch5:175": {
+   "w": 2560,
+   "h": 1360,
+   "name": "room_dogplatforming",
+   "n_layers": 14
+  },
+  "ch5:176": {
+   "w": 1960,
+   "h": 560,
+   "name": "room_dw_fcastle_entrance",
+   "n_layers": 14
+  },
+  "ch5:177": {
+   "w": 880,
+   "h": 680,
+   "name": "room_dw_fcastle_cafe",
+   "n_layers": 21
+  },
+  "ch5:178": {
+   "w": 960,
+   "h": 1800,
+   "name": "room_dw_fcastle_foyer",
+   "n_layers": 25
+  },
+  "ch5:179": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_fcastle_post_party_jail",
+   "n_layers": 13
+  },
+  "ch5:180": {
+   "w": 2920,
+   "h": 800,
+   "name": "room_dw_fcastle_shinobeetle_encounter",
+   "n_layers": 15
+  },
+  "ch5:181": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_fcastle_left_wing_floweryscene",
+   "n_layers": 15
+  },
+  "ch5:182": {
+   "w": 3920,
+   "h": 3480,
+   "name": "room_dw_fcastle_bounce_1",
+   "n_layers": 21
+  },
+  "ch5:183": {
+   "w": 640,
+   "h": 720,
+   "name": "room_dw_fcastle_left_twodoors",
+   "n_layers": 10
+  },
+  "ch5:184": {
+   "w": 3200,
+   "h": 1480,
+   "name": "room_dw_fcastle_yellow_miniboss",
+   "n_layers": 18
+  },
+  "ch5:185": {
+   "w": 3840,
+   "h": 2160,
+   "name": "room_dw_fcastle_sandtrap",
+   "n_layers": 23
+  },
+  "ch5:186": {
+   "w": 5600,
+   "h": 3600,
+   "name": "room_dw_fcastle_dangerous_platforming",
+   "n_layers": 24
+  },
+  "ch5:187": {
+   "w": 1680,
+   "h": 480,
+   "name": "room_dw_fcastle_blueroom",
+   "n_layers": 15
+  },
+  "ch5:188": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_fcastle_yellowjail",
+   "n_layers": 12
+  },
+  "ch5:189": {
+   "w": 3400,
+   "h": 480,
+   "name": "room_dw_fcastle_onsen",
+   "n_layers": 18
+  },
+  "ch5:190": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_left_penultimate",
+   "n_layers": 13
+  },
+  "ch5:191": {
+   "w": 1600,
+   "h": 480,
+   "name": "room_dw_flowery_tree",
+   "n_layers": 7
+  },
+  "ch5:192": {
+   "w": 880,
+   "h": 3000,
+   "name": "room_dw_fcastle_bounce_3",
+   "n_layers": 15
+  },
+  "ch5:193": {
+   "w": 4600,
+   "h": 640,
+   "name": "room_dw_fcastle_shinobeetle_3d",
+   "n_layers": 14
+  },
+  "ch5:194": {
+   "w": 2080,
+   "h": 480,
+   "name": "room_dw_fcastle_heldmushrooms",
+   "n_layers": 13
+  },
+  "ch5:195": {
+   "w": 700,
+   "h": 480,
+   "name": "room_dw_fcastle_flowerydash",
+   "n_layers": 8
+  },
+  "ch5:196": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_fcastle_partyjail",
+   "n_layers": 9
+  },
+  "ch5:197": {
+   "w": 2320,
+   "h": 840,
+   "name": "room_dw_fcastle_terracotta_encounter",
+   "n_layers": 12
+  },
+  "ch5:198": {
+   "w": 840,
+   "h": 480,
+   "name": "room_dw_fcastle_terracotta_bonus",
+   "n_layers": 9
+  },
+  "ch5:199": {
+   "w": 1280,
+   "h": 960,
+   "name": "room_dw_fcastle_right_wing_floweryscene",
+   "n_layers": 11
+  },
+  "ch5:200": {
+   "w": 1120,
+   "h": 3200,
+   "name": "room_dw_fcastle_orange_puppet_introduction",
+   "n_layers": 11
+  },
+  "ch5:201": {
+   "w": 1600,
+   "h": 3200,
+   "name": "room_dw_fcastle_gloves_tower",
+   "n_layers": 15
+  },
+  "ch5:202": {
+   "w": 1320,
+   "h": 480,
+   "name": "room_dw_fcastle_second_diner",
+   "n_layers": 15
+  },
+  "ch5:203": {
+   "w": 3200,
+   "h": 2800,
+   "name": "room_dw_fcastle_obscured_bullets",
+   "n_layers": 26
+  },
+  "ch5:204": {
+   "w": 3200,
+   "h": 2280,
+   "name": "room_dw_fcastle_foxhunt",
+   "n_layers": 19
+  },
+  "ch5:205": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_right_penultimate",
+   "n_layers": 11
+  },
+  "ch5:206": {
+   "w": 1440,
+   "h": 520,
+   "name": "room_dw_fcastle_green_orange_battle",
+   "n_layers": 16
+  },
+  "ch5:207": {
+   "w": 1280,
+   "h": 480,
+   "name": "room_dw_fcastle_right_endingscene",
+   "n_layers": 14
+  },
+  "ch5:208": {
+   "w": 1760,
+   "h": 2200,
+   "name": "room_dw_fcastle_right_puzzle",
+   "n_layers": 17
+  },
+  "ch5:209": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_music",
+   "n_layers": 4
+  },
+  "ch5:210": {
+   "w": 640,
+   "h": 480,
+   "name": "room_man",
+   "n_layers": 5
+  },
+  "ch5:211": {
+   "w": 1720,
+   "h": 1200,
+   "name": "room_dw_dogballoon",
+   "n_layers": 5
+  },
+  "ch5:212": {
+   "w": 1160,
+   "h": 1320,
+   "name": "room_dw_fcastle_sidepuzzle",
+   "n_layers": 16
+  },
+  "ch5:213": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_tv_mike",
+   "n_layers": 6
+  },
+  "ch5:214": {
+   "w": 1920,
+   "h": 1080,
+   "name": "room_dw_fcastle_zenlooker",
+   "n_layers": 11
+  },
+  "ch5:215": {
+   "w": 1010,
+   "h": 480,
+   "name": "room_dw_fcastle_trainroom",
+   "n_layers": 14
+  },
+  "ch5:216": {
+   "w": 3000,
+   "h": 1280,
+   "name": "room_dw_post_flowery_battle",
+   "n_layers": 12
+  },
+  "ch5:217": {
+   "w": 880,
+   "h": 13000,
+   "name": "room_dw_fcastle_flowerclimb",
+   "n_layers": 6
+  },
+  "ch5:218": {
+   "w": 2400,
+   "h": 960,
+   "name": "room_dw_fcastle_top_intro",
+   "n_layers": 15
+  },
+  "ch5:219": {
+   "w": 1640,
+   "h": 920,
+   "name": "room_dw_fcastle_top_staircase_1",
+   "n_layers": 8
+  },
+  "ch5:220": {
+   "w": 15480,
+   "h": 1520,
+   "name": "room_dw_fcastle_ultradash",
+   "n_layers": 16
+  },
+  "ch5:221": {
+   "w": 4800,
+   "h": 6200,
+   "name": "room_dw_fcastle_yellowblue",
+   "n_layers": 20
+  },
+  "ch5:222": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_top_entrance",
+   "n_layers": 8
+  },
+  "ch5:223": {
+   "w": 2360,
+   "h": 2400,
+   "name": "room_dw_fcastle_top_staircase_2",
+   "n_layers": 8
+  },
+  "ch5:224": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_green_checkpoint",
+   "n_layers": 13
+  },
+  "ch5:225": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_final_save",
+   "n_layers": 7
+  },
+  "ch5:226": {
+   "w": 1960,
+   "h": 1280,
+   "name": "room_dw_fcastle_flowery",
+   "n_layers": 10
+  },
+  "ch5:227": {
+   "w": 2280,
+   "h": 1080,
+   "name": "room_dw_fcastle_seth_encounter",
+   "n_layers": 12
+  },
+  "ch5:228": {
+   "w": 1000,
+   "h": 3840,
+   "name": "room_dw_fcastle_top_descent",
+   "n_layers": 15
+  },
+  "ch5:229": {
+   "w": 1040,
+   "h": 600,
+   "name": "room_dw_fcastle_top_pinkdoor",
+   "n_layers": 11
+  },
+  "ch5:230": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_pinkroom",
+   "n_layers": 14
+  },
+  "ch5:231": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_top_fountain",
+   "n_layers": 5
+  },
+  "ch5:232": {
+   "w": 3000,
+   "h": 960,
+   "name": "room_dw_post_fountain_close",
+   "n_layers": 7
+  },
+  "ch5:233": {
+   "w": 1280,
+   "h": 1200,
+   "name": "room_dw_fcastle_pinkshop",
+   "n_layers": 12
+  },
+  "ch5:234": {
+   "w": 3200,
+   "h": 2280,
+   "name": "room_dw_fcastle_foxhunt_terakota",
+   "n_layers": 20
+  },
+  "ch5:235": {
+   "w": 3200,
+   "h": 2280,
+   "name": "room_dw_fcastle_foxhunt_socks",
+   "n_layers": 18
+  },
+  "ch5:236": {
+   "w": 3200,
+   "h": 2280,
+   "name": "room_dw_fcastle_foxhunt_chaos",
+   "n_layers": 16
+  },
+  "ch5:237": {
+   "w": 3200,
+   "h": 2280,
+   "name": "room_dw_fcastle_foxhunt_secret",
+   "n_layers": 19
+  },
+  "ch5:238": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_castle_tv_kikky",
+   "n_layers": 6
+  },
+  "ch5:239": {
+   "w": 1240,
+   "h": 480,
+   "name": "room_dw_fcastle_terracotta_puzzle",
+   "n_layers": 10
+  },
+  "ch5:240": {
+   "w": 640,
+   "h": 480,
+   "name": "room_dw_fcastle_bromides",
+   "n_layers": 7
+  },
+  "ch5:241": {
+   "w": 2480,
+   "h": 6000,
+   "name": "room_dw_fcastle_top_ascent",
+   "n_layers": 19
+  },
+  "ch5:242": {
+   "w": 6600,
+   "h": 1320,
+   "name": "room_dw_fcastle_top_challenge",
+   "n_layers": 17
+  },
+  "ch5:243": {
+   "w": 640,
+   "h": 5000,
+   "name": "room_dw_fcastle_asgore",
+   "n_layers": 9
+  },
+  "ch5:244": {
+   "w": 2800,
+   "h": 1040,
+   "name": "room_dw_fcastle_orange_gauntlet",
+   "n_layers": 19
+  },
+  "ch5:245": {
+   "w": 3400,
+   "h": 1120,
+   "name": "room_dw_fcastle_fusumadodge",
+   "n_layers": 21
+  },
+  "ch5:246": {
+   "w": 640,
+   "h": 480,
+   "name": "room_title_placeholder",
+   "n_layers": 4
+  },
+  "ch5:247": {
+   "w": 640,
+   "h": 480,
+   "name": "room_intro_ch5",
+   "n_layers": 4
+  },
+  "ch5:248": {
+   "w": 880,
+   "h": 1440,
+   "name": "room_dw_cliff_sethaqua_battle",
+   "n_layers": 24
+  },
+  "ch5:249": {
+   "w": 880,
+   "h": 5000,
+   "name": "room_dw_fcastle_flowerclimb_for_tiling",
+   "n_layers": 3
+  },
+  "ch5:250": {
+   "w": 5000,
+   "h": 2600,
+   "name": "room_dw_petaltest",
+   "n_layers": 16
+  },
+  "ch5:251": {
+   "w": 640,
+   "h": 480,
+   "name": "room_floortex_test",
+   "n_layers": 8
+  }
+ }
+}

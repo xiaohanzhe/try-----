@@ -87,7 +87,8 @@ HERMETIC_IDS = frozenset({
     's1_anim_miss', 's2_anim_json', 's3_alias_legacy',
     'round8_dialogue', 'round8_floor', 'round8_fling',
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
-    'persona_chat', 's8_stream', 's7_event_speech',
+    'persona_chat', 's8_stream', 's7_event_speech', 'box_round44',
+    'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
 })
 
 
@@ -332,6 +333,8 @@ SUITES = [
         'offscreen': False,
         'desc': '场景路由层：数据层零依赖 + match() 匹配语义（场景/区域/章节/心情/'
                 '事件/关键词，AND 主 + 关键词 OR，priority→命中数→声明序三级排序）'
+                '+ ★第44轮 when_door「共同卡口」反向语义（context 没给 door 时放行，'
+                '给了就精确分流；多出口场景 125/297）'
                 '+ 三条设计律正负成对（匹配不到→None 不伪装 / 坏规则跳过 / 未知键放行）'
                 '+ destinations 过滤未登记场景 + 控制器 load_routes 幂等与状态不劈裂'
                 '+ main.py 预声明 3 个路由字段 + **零行为变化**（无定时器 / 无动画 / '
@@ -361,9 +364,12 @@ SUITES = [
         'offscreen': False,
         'desc': '场景系统按原作路线排序：原作房间表依据在位（每场景可回溯 room_id，'
                 '含负控制）+ 桌面仍是一等场景（default_scene / 同构三级 / 控制器零 '
-                'desktop 特判 + 合成源码负控制）+ 路由按原作剧情推进（15 条推进链'
-                'ch1→ch5 逐条断言 + 2 条负控制）+ ★兜底路线不许压死剧情'
-                '（priority 压过 score 的真实缺陷回归锁，D4 复现坏写法 / D5 正控制）'
+                'desktop 特判 + 合成源码负控制）+ ★第44轮路由换判据：不再锁 26 条手工'
+                '剧情链，改锁**门的下标位移机制自洽**（A+1/B-1/C+2）+ 三个已知真值锚点'
+                '（krisroom↔krishallway 双向 + torhouse 出边）+ 共同卡口精确分流'
+                '（door=B/C 两条出口互不串味 + 假门负控制）+ 覆盖面 >250 场景'
+                '+ ★兜底路线不许压死剧情（priority 压过 score 的真实缺陷回归锁，'
+                'D4 复现坏写法 / D5 正控制；第44轮路由已无通配兜底，改锁"无 priority<100"）'
                 '+ 背景素材口径（每场景有 bg、统一 bg/、★第37轮起 E3 为真判据：'
                 '每个 bg 都是真实存在的 PNG + E3b/E3c 负控制）',
     },
@@ -528,6 +534,127 @@ SUITES = [
                 '锚点标注逐条等于第 37 轮实际产出 E3/E4）'
                 '+ 文本格式保真（无 BOM/U+FFFD、不混用换行，F1–F4）'
                 '+ 过期注释已修正（G1–G3）+ 产品函数真能解析出 bg 文件（H1–H3）',
+    },
+    {
+        # 第四十四轮：用户口径「对话框改成和原作风格一样的，最好就是原作的对话框」。
+        # 对话框外框从"圆角样式表框"换成**原作 scr_darkbox() 的 9-slice 复刻**
+        # （32px 边框带 + 32×32 八帧动画角 + 纯黑内芯），字体换项目根像素字体，
+        # 打字音按原作 scr_textsound 跳标点。
+        #
+        # 本套件的核心**不是**"我写的常量等于我写的常量"（那是恒真判据），
+        # 而是让产品常量必须能从**原作反编译源码**里被反推出来：A 段直接从
+        # `_evidence/gml/*.gml`（UTMT `dump` 出的真 GML）解析 63 / 32 / 10 / 8 帧 /
+        # 黑底 14 内缩 / 静音字符表，逐条与产品常量对齐 —— 源码被换、常量被手改都报红。
+        # 判据单一真源 = `modules/dr_textbox.py`；素材签名 = `assets/ui/textbox/`。
+        # **不联网、不调 Ollama、不需要显示器**（Qt 走 offscreen）。
+        # 鉴别力已体检：BAND 32→31 + 静音表删 `?` ⇒ 10 条精确报红（A2/A7/A8/B×2/D2–D5/F6），
+        # 其余 39 条不受影响；还原 ⇒ 49/49 PASS。
+        'id': 'box_round44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_box_round44.py'),
+        'offscreen': True,
+        'desc': '第四十四轮：原作对话框复刻不许静默漂移 —— '
+                'A 原作源码反推（63 长度差 / 32 带宽 / cur_jewel÷10 / 负宽高钳 0 / '
+                'top·left·topleft 调用数 / 黑底 14 内缩 / 文字内缩 34 / '
+                'scr_textsound 静音表被产品全覆盖含 ? / 30fps→33ms）+ '
+                'B 九个常量逐条 + C 纯函数语义（jewel_frame 边界与周期、metrics 钳制）+ '
+                'D darkbox_blits 几何逐条对应原作 draw 调用（含极扁框负控制）+ '
+                'E 素材结构（16×16×8 帧 / 图案签名 5 种 / 剖条 1×16 与 16×1 / '
+                '剖面外透明→白线→黑芯）+ F 产品接线（无 border-radius、'
+                '_frame 真是 DrTextboxFrame、隐藏即停表、打字音正负控制、'
+                'AST 证明判据真被调用、▼ 仍在黑底可见区）+ G 恒真判据自查',
+    },
+    {
+        # 相机（第四十四轮）。用户原话：「操控效果是游戏里那种人物走到中间后
+        # 一直居中然后背景相对运动还是背景固定？我更倾向原作的那种，代码用原作
+        # 的参考就好」⇒ 本套件守「原作口径 = 居中式相机跟随，**不是视差**」。
+        # 依据 = 第43轮取证：ch1 的 1014 个图层里 HSpeed/VSpeed 非零 = 0、
+        # EffectType 恒 null；原作走 GMS2 原生相机族
+        # （camera_set_view_target/border/pos/size，包在 __view_set_internal）。
+        # ★ 首跑抓到真 bug：死区实现用"重算出的相机中心"做基准 ⇒ 每帧都居中
+        #   ⇒ border 恒不生效；修法 = 用上一帧相机位置（B7b/B7c/B7d 就是它的锁）。
+        # **不联网、不需要显示器**（纯标准库 + 纯函数）。
+        'id': 'camera_round44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_camera_round44.py'),
+        'offscreen': False,
+        'desc': '第四十四轮：相机（居中式跟随 + 背景相对运动）不许静默漂移 —— '
+                'A 原作依据在位（源码记录 camera_set_view_* 三连 + 写明"不是视差" + '
+                '相机尺寸 640×480 + 死区默认 0 + 第43轮取证文件与其内容双查 + '
+                '零依赖 AST + 负控制）+ B 纯函数语义正负成对（clamp 三向 / 目标居中 / '
+                '四向钳制两角 + 非恒真负控制 / 小房间居中 / 非法输入→None + 正控制 / '
+                '★死区四条：无 prev 退化居中 + 区内不动 + 区外推边缘 + border=0 关闭 / '
+                'world_to_view 相对运动性质 / 裁剪框 / scale_rect）+ '
+                'C Camera 壳（未 follow→None / ★scale = 输出倍率：21x41 逻辑在 '
+                'scale2 下屏幕 42x82 / to_view 换算 / 拒绝非法 set / '
+                '★不做缓动不做定时器 / 套件自身恒真自查）',
+    },
+    # ---- 第44轮 · 房间渲染层（scene_render）----
+    # 只出"绘制指令"、一笔不画 ⇒ 可逐条断言，不必离屏截屏（沙箱里离屏不稳）。
+    # 关键判据是 B22/B23/B24 的**坐标系自洽**：相机逻辑窗口 = size/scale、
+    # 320x240 逻辑房间 @scale2 → 640x480 像素（= 原作现实世界输出尺寸）。
+    # ★ 首跑抓到两个真 bug：① 视口误用全表 geo（走退化分支 ⇒ 物件全被剔除）；
+    #   ② 相机窗口误写 size×scale（房间比窗口小 ⇒ 相机居中到房外 ⇒ 物件出界）。
+    # **不联网、不需要显示器**（纯标准库 + 纯函数）。
+    {
+        'id': 'render_round44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_render_round44.py'),
+        'offscreen': False,
+        'desc': '第四十四轮：房间渲染层（P1）不许静默漂移 —— '
+                'A 原作依据在位（"背景移动=相机平移"出处可查 + 几何资产带 '
+                'source/authority + ★scene_render 零 Qt 零项目内依赖 AST）+ '
+                'B 纯函数正负成对（room_geometry 六向 / room_world_rect 退化须'
+                '面积>0 / viewport_size 两轴独立 / to_output ×scale / '
+                '★坐标系自洽：scoped_size=size/scale、320x240@2→640x480）+ '
+                'C 视口剔除（四角 + 半开区间边界 + 四类坏输入→False）+ '
+                'D 绘制计划（空输入→[] 不崩 / ★真实数据 ch1 克里斯房间 / '
+                '未登记房间→placeholder 不静默 / 大房间→room_border / '
+                '物件剔除正负成对 / 21x41@2=42x82）+ '
+                'E 产品接线（控制器三方法 + import + ★main.py 真调 load_geometry + '
+                '三字段预声明 + ★scene_scale=2.0 与 Ralsei 同比例 + 无 QTimer + '
+                '★D7 背景按素材原尺寸 660x480@2=1320x960 而非房间 2000x2000 + '
+                'D8 相机右移 100 逻辑→背景左移 200 像素（零视差算术）+ '
+                'D9 背景出界不产 placeholder）',
+    },
+    # ---- 第44轮 · 场景画布（scene_canvas，Qt 绘制壳）----
+    # 把 scene_render 的指令清单**真正画出来** —— 补上"渲染层最后一跳"
+    # （本项目最贵的坑 = 函数写对了但产品用不上）。
+    # ★ 用假画笔 + 假素材做**确定性**断言，不真机截屏（沙箱离屏不稳）。
+    # ★ 首跑抓到真 bug：`paint_on` 无条件 `drawn += 1` ⇒ 几何非法的指令
+    #   也算"画了"，自省输出会骗人；修法 = 各 `_paint_*` 返回是否真落笔。
+    {
+        'id': 'canvas_round44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_canvas_round44.py'),
+        'offscreen': False,
+        'desc': '第四十四轮：场景画布（Qt 绘制壳）不许静默漂移 —— '
+                'A 常量与 scene_render 一字对齐（改一边忘另一边立刻报红）+ '
+                '★画布不自带间距常量（间距随指令走）+ 零项目内反向依赖 AST + 默认 hide + '
+                'B 素材缓存（真文件命中 / 二次命中同一对象 / 不存在→None + 记 missing / '
+                'name=None/""→None / ★sprite_size 返回原始尺寸未乘 scale / clear）+ '
+                'C 绘制分派（四种 kind 各一条 + ★bg 先于 obj 顺序 + 未知 kind 不计成功 + '
+                '坏指令不崩）+ D 缺素材占位（缺背景→fillRect 斜纹不调 drawPixmap / '
+                '缺物件→drawRect 描边 / 无 name 也画框）+ 异常兜底（单条抛→其余仍画 / '
+                '全抛→返回 0 不抛出）+ E 产品接线（★main.py 真调 camera_follow/'
+                'plan_frame/set_plan/plan_viewport 四连 + 控制器补 plan_viewport + '
+                '默认关闭 + ★屏幕→房间归一化映射防"目标比房间大被钳死" + 画布无 QTimer）',
+    },
+    # ★ 第44轮续新增：复检时抓到「priority 回绕」真缺陷（G2 未覆盖），
+    #   故立此锁 —— 锁"同一场景内门字母序 == priority 序"这条不变量。
+    {
+        'id': 'routes_order44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_routes_order44.py'),
+        'offscreen': False,
+        'desc': '第四十四轮续：路由表「连接顺序」不许静默漂移 —— '
+                'A 生成器静态锚点（代码里不再有 `order % n` 全局取模 + 改用'
+                '「场景段 + 段内序」+ 注释留痕）+ B ★同场景内门字母序==priority '
+                '序（0 例外，125 个多出口场景；★B2b 负控制：旧写法必复现错乱，'
+                '证明判据有鉴别力）+ 无回绕 + 值域安全 + 全规则显式 priority/'
+                'when_door + C 原作锚点（产品边集合 == 原作门表独立重算，断链'
+                '全为原作死胡同且不放过真缺口）+ D 兜底与结构（_fallback / '
+                'schema / 警告保留 / 字母互异样本）',
     },
 ]
 

@@ -176,16 +176,24 @@ ok('A5 负控制：A3/A4 的判据真能抓到越界 import（合成样本）',
 
 # scene_controller 只许 import 标准库 + 零依赖的姊妹数据层模块
 #
-# 白名单里为什么有两个 data 层模块（第 29 轮扩的）：
+# 白名单里为什么有三个 data 层模块（第 29 轮扩两个，第 44 轮再扩一个）：
 #   · `scene_system`  —— 场景数据 + 几何纯函数；
-#   · `scene_routing` —— 路由数据 + 匹配纯函数（第 29 轮新增）。
-# 两者是**平级的零依赖模块**（各自都禁 Qt / 禁项目内业务模块，有 A2/A3 与
-# 路由套件的 A2/A3 双份断言守着）。控制器 import 它们不会接上初始化环 ——
-# 环的风险来自"回头 import 有反向依赖的业务模块"（logger_utils / data_store…），
-# 而不是来自这两个纯数据模块。
+#   · `scene_routing` —— 路由数据 + 匹配纯函数（第 29 轮新增）；
+#   · `scene_camera`  —— 相机纯函数 + 薄壳（第 44 轮新增，用户要的
+#     「人物走到中间后一直居中然后背景相对运动」= 居中式跟随，非视差）。
+# 三者是**平级的零依赖模块**（各自都禁 Qt / 禁项目内业务模块，有 A2/A3 与
+# 路由/相机套件的同名断言守着）。控制器 import 它们不会接上初始化环 ——
+# 环的风险来自"回头 import 有业务反向依赖的模块"（logger_utils / data_store…），
+# 而不是来自这些纯数据模块。
 # ⚠️ 本白名单是**显式**的：新增一条必须在这里加一行。这个"麻烦"是刻意的 ——
-#    它逼每次放宽都成为一次有意识的决定（本轮就是被这条断言逮到的）。
-_CTL_ALLOWED = {'logging', 'scene_system', 'scene_routing'}
+#    它逼每次放宽都成为一次有意识的决定（第 29、44 轮都是被这条断言逮到的）。
+# 第44轮新增（渲染层）：
+#   · 'scene_render' —— 与 scene_camera/scene_routing 同级：纯标准库、
+#     零项目内依赖、"只出绘制指令不画"（有 render_round44 的 A5 AST 断言守着）。
+#   · 'os' / 'json'   —— 控制器 `load_geometry()` 要读 `_room_geometry.json`。
+#     这两个是**最基础的标准库**，不构成初始化环风险。
+_CTL_ALLOWED = {'logging', 'os', 'json',
+                'scene_system', 'scene_routing', 'scene_camera', 'scene_render'}
 _CTL_OVER = ((SCENE_CTL_IMPORTS & _QT_MODULES)
              | (SCENE_CTL_IMPORTS & (_PROJECT_INTERNAL - {'scene_system'}))
              | (SCENE_CTL_IMPORTS - _CTL_ALLOWED))
@@ -194,7 +202,11 @@ ok('A6 scene_controller.py 只 import 标准库 + 零依赖数据层（不 impor
    'imports=%s（越界=%s）' % (sorted(SCENE_CTL_IMPORTS), sorted(_CTL_OVER)))
 
 # 负控制：A6 的白名单不许宽到"什么都放得过"
-_FAKE_CTL_BAD = 'import logging\nimport json\nfrom data_store import x\n'
+#   ⚠️ 用 `collections`（**不在**白名单里的标准库）而不是 `json` —— 第 44 轮把
+#      `json`/`os` 加进白名单后，旧的 `import json` 样本会让本负控制**恒假**
+#      （白名单里有它 ⇒ 越界集为空 ⇒ 负控制永远"不通过"…… 见 A6b 的失败条件）。
+#      换成 `collections` 后，负控制重新有鉴别力（判据自身不许因白名单变化而失能）。
+_FAKE_CTL_BAD = 'import logging\nimport collections\nfrom data_store import x\n'
 _FCB = _imports_of(_FAKE_CTL_BAD)
 ok('A6b 负控制：A6 的判据真能抓到"业务模块 + 未列入白名单的标准库"',
    bool(_FCB & _PROJECT_INTERNAL)
