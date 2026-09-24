@@ -6,8 +6,8 @@
 ## 0. 铁律
 - 每轮改动即 **commit + push**；称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。报告放项目根、证据进 `code-quality-audit/<轮次>/_evidence/`、下载/生成物落 `E:\Download`（`_tmp\` 用后即删）；**仓库内产物留项目目录**。
 - ❗**仓库根 = `try - 副本`**（`ralsei_pet` 是其子目录）⇒ **跑 G2 的 cwd 是仓库根**。远端 `https://github.com/xiaohanzhe/try-----.git`（★**公开**），main→origin/main。真机起 `Set-Location ralsei_pet; & C:\Python311\python.exe src\main.py`（后台）；单实例锁 `Global\RalseiPetMutex`；窗口透明非置顶 ⇒ **甩飞/抛物线只能离屏断言**。
-- 改代码前先跑 G2 `regress/run_all.py`（**41 套件 / PASS=1879 / 全 IDENTICAL**）；★ 改断言/文案 → `--only <suite> --update`（**合并模式**）。★★ **新增合法零依赖模块会撞两处既有闸**：`round5_smoke`（模块数）与 `scene_p0` **A6 显式白名单**（须手加 `_CTL_ALLOWED`，**"麻烦"是刻意的**）。★ 寻路锁 = `pathfind_round45`（进 `HERMETIC_IDS`）。
-- ★ **只读优先、改动最小化**；★"写了 N 个文件"必须 `os.listdir` 查磁盘；★★ **回归套件不许依赖"用后即删"的临时区** ⇒ 据要的事实**蒸馏进仓库**。
+- 改代码前先跑 G2 `regress/run_all.py`（**41 套件 / PASS=1879 / 全 IDENTICAL**）；★ 改断言/文案 → `--only <suite> --update`（**合并模式**）。★★ **新增合法零依赖模块会撞两处既有闸**：`round5_smoke`（模块数）与 `scene_p0` **A6 白名单**（须手加 `_CTL_ALLOWED`，**"麻烦"是刻意的**）。★ 寻路锁 `pathfind_round45`（进 `HERMETIC_IDS`）。
+- ★ **只读优先、改动最小**；★"写了 N 个文件"必须 `os.listdir` 查磁盘；★★ **回归套件不许依赖"用后即删"的临时区** ⇒ 据要的事实**蒸馏进仓库**。
 - ❗❗**改过"重要核心文件"必复检**：可编译／结构／编码／恒真判据／**逐令牌回验**／工作区干净，逐项 PASS/FAIL 落盘（skill `core-file-recheck`）。
 ## 1. 环境（细则 §1/§18/§19/§21/§23.10/§37.5/§37.8）
 - ⚠️ **Bash 常整体坏掉**（`ls/head/cat/tail` 全 127）→ **一律 Python + Write/Read**；`Glob/Grep/Read`／`cd && git` 照常。❗别从 Bash 调 PowerShell；❗❗**别内联 `python -c`**（反引号/`\n` 被吞）。**报告一律 Python 自写 UTF-8**；`current_time` 滞后 → 先 `Get-Date`；❗**"能力自评失准"比"能力不足"更危险**。Python 一律 **`C:\Python311\python.exe`**；起进程 `&`+`run_in_background:true`，杀进程用 psutil。★ 大目录遍历**先 `os.listdir` 只列一次**。
@@ -17,7 +17,7 @@
 ## 2. git push（skill `win-git-utf8-push`；**§39.5 + §37.13**）
 - 提交信息 **Write 写 UTF-8 文件 + `git commit -F`**（`-m @'...'@` 被 PS 5.1 拆 argv ⇒ 退 0 **假成功**）；提交后必核 `git log --oneline -1`。`subprocess.run(input=...)` **必须喂 bytes**（str ⇒ `TypeError` 被吞 ⇒ 静默跳过，像网络故障）。
 - ❗**核验命令自己会说谎** ⇒ `ls-remote` **独立构造** + 重试 3~5 次 + `git rev-parse origin/main` 交叉验证。★ **本仓库公开 ⇒ `ls-remote` 是恒真判据**。
-- ★★ 两根因（全部细节见详版 §39.5，**别手搓**）：**TLS** = `schannel` 吊销检查必失败 ⇒ `sslBackend=openssl`+`http.version=HTTP/1.1`；**凭据** = 宿主注入的 `helper-selector` **不读** Win 凭据管理器 ⇒ 弹 GUI 挂死 ⇒ 直取 GCM（`GCM_CREDENTIAL_STORE=wincredman` 非 "windows"、`GCM_INTERACTIVE=never`）。★ **工具 `_tools/gitpush.py` 一把跑完**（add→numstat 守卫→commit -F→GCM→push→双向核验）。⛔ **绝不循环重试 push**。
+- ★★ 两根因（全部细节见详版 §39.5，**别手搓**）：**TLS** = `schannel` 吊销检查必失败 ⇒ `sslBackend=openssl`+`http.version=HTTP/1.1`；**凭据** = 宿主注入的 `helper-selector` **不读** Win 凭据管理器 ⇒ 弹 GUI 挂死 ⇒ 直取 GCM（`GCM_CREDENTIAL_STORE=wincredman` 非 "windows"、`GCM_INTERACTIVE=never`）。★ **工具 `_tools/gitpush.py` 一把跑完**（add→numstat 守卫→commit -F→GCM→push→双向核验）。⛔ **绝不循环重试 push**；★ 其日志已落 `_tmp`（45轮修）。
 
 ## 3. 勿回退契约（详版 **§4.1–§4.12 + §10 + §23.9**，开工前必读）
 13 组契约。最易踩六条：① **`availableGeometry()` 只返主屏 → 必用 `_virtual_screen_rect()`**；
@@ -34,10 +34,10 @@
 - ★ **判据别拿"源码字面量"代替"产物输出"** ⇒ 查 `'[PASS] '` 会漏 ⇒ **真跑一次数输出行**。★ **复检不许改变被测状态**（`py_compile` 产 `.pyc` ⇒ 改 `ast.parse`）。★★ **判据过窄 = 会误报，与"过宽 = 恒真"同样要防**（令牌写错字；id 归属写错文件）。★ **判据串 no-op 必须显式打印**（否则假绿）。
 
 ## 5. 人味改造线（细则 **§23.13.1 + §6.1–§6.10**）
-回归锁 `persona_chat`(156)／`s8_stream`(69)／`s7_event_speech`(138)，均进 G2、不联网。**人设单一真源 = `assets/ralsei_persona.md`**（**别只写 Modelfile** —— messages 的 system **整体替换**它）；**禁 markdown**、**❗不许叫"主人"**、**K3 < 10000 B**。★★ **失真头号来源 = "可逐字搬走的固定例句"**（锁 **A12d**）；**"口癖多"≠ 全砍**（真结巴 8.3%）。**护栏 `_clean_ai_reply(reply, recent=)` 顺序即优先级**（括号/markdown/禁说/自问自答/判退/超长）；**判退必重采样**、**不 append 进 recent**。**`AI_REPLY_MAX_CHARS` = 220**；余见 §23.13.1。
+回归锁 `persona_chat`(156)／`s8_stream`(69)／`s7_event_speech`(138)，均进 G2、不联网。**人设单一真源 = `assets/ralsei_persona.md`**（**别只写 Modelfile** —— messages 的 system **替换**它）；**禁 markdown**、**❗不许叫"主人"**、**K3 < 10000 B**。★★ **失真头号来源 = "可逐字搬走的固定例句"**（锁 **A12d**）；**"口癖多"≠ 全砍**（真结巴 8.3%）。**护栏 `_clean_ai_reply(reply, recent=)` 顺序即优先级**（括号/markdown/禁说/自问自答/判退/超长）；**判退必重采样**、**不 append 进 recent**。**`AI_REPLY_MAX_CHARS` = 220**；余见 §23.13.1。
 
 ## 6. H4/H5 上帝类拆分（详版 §8.1–§8.6；Wave 1 已完成，**休眠线**）
-基线 `code-quality-audit/架构改造-H4H5/`（**勿重测**）；**预声明区 = 宿主 `init_systems()`**（`main.py` L660，**不是 `__init__`**）。⚠️ **W1 转发铁律**：宿主侧**只能** `getattr(type(ctrl),name)`、**绝不** `hasattr(ctrl,name)`（崩在构造期 ⇒ G2 抓不到）；`_CONTROLLER_ATTRS` 在 L512；§8.5/§8.6。
+基线 `code-quality-audit/架构改造-H4H5/`（**勿重测**）；**预声明区 = 宿主 `init_systems()`**（`main.py` L660，非 `__init__`）。⚠️ **W1 转发铁律**：宿主侧**只能** `getattr(type(ctrl),name)`、**绝不** `hasattr(ctrl,name)`（崩在构造期 ⇒ G2 抓不到）；`_CONTROLLER_ATTRS` 在 L512；§8.5/§8.6。
 
 ## 7. 场景系统线 / 原作素材 ★ 动手前**必须 Read 详版 §16/§36/§37/§39~§46**
 口径：**「把原作的世界搬到桌面上…桌面也被当成一个场景」**＋**「一切根据原作」**＋**「所有 room 排序/连接按原作 = 场景复现，连动态效果也做」**（传送门/首站见 §11）。
@@ -55,8 +55,8 @@
 
 ## 9. 用户口径（**优先于我的技术判断**）
 - **「prompt 尽量完整」** ⇒ 提速只能靠**缓存／后端／换模型质量**，不许砍 prompt。**「用 7B 目的就是让他贴合人物并且不出 bug」** ⇒ 动机是**质量**。**「结巴…这有点不好」**=**减少但不许到 0**（真 8.3%）；❗**未实现**：结巴率随 trust **下降**、只在紧张时 ⇒ **待排期**。**「开机自启…是选项，不是硬性代码」** ⇒ 配置项（默认 false），留到收尾。
-- ★★ **当前主轴**：**场景系统**（36–45轮）；**移动/行为**已收（34轮）；**严查现有基础代码纰漏**；**这一阶段完全 ok 才进下一阶段**。★★ **工作方式（34轮）**：「**测完了没问题后按你的计划来**」⇒ **测绿了连续推进**。
-- ★★ **记忆口径**：「**只要不影响读取就 OK，但影响的话就尽量别动**」＋41「**记忆不要随便修改，三思而后行**」⇒ 门槛：**实证超限或被要求** + 先补详版 + 逐令牌回验 + **改动守恒**，否则不动。- ★ **范围修正（42轮）**：41 轮"所有 room 按原作"只是起点；42 轮明确「**和原作一样，暗世界也做**」⇒ 范围 = **原作全部 1,251 间**。★ **历轮口径**：36 按原版路线／37 自行反编译／38 走到哪亮到哪／39-40 授权自主推进。
+- ★★ **当前主轴**：**场景系统**（36–45轮）；**移动/行为**已收（34轮）；**严查现有基础代码纰漏**；**这一阶段完全 ok 才进下一阶段**。★★ **工作方式（34轮）**：「**测完了没问题后按你的计划来**」⇒ **测绿即连续推进**。
+- ★★ **记忆口径**：「**只要不影响读取就 OK，但影响的话就尽量别动**」＋41「**记忆不要随便修改，三思而后行**」⇒ 门槛：**实证超限或被要求** + 先补详版 + 逐令牌回验 + **改动守恒**，否则不动。- ★ **范围修正（42轮）**：41 轮"所有 room 按原作"只是起点；42 轮明确「**和原作一样，暗世界也做**」⇒ 范围 = **全部 1,251 间**。★ **历轮口径**：36 按原版路线／37 自反编译／38 走到哪亮到哪／39-40 自主推进。
 
 ## 10. 历轮索引（**详版 §14–§46 有完整版** + 各轮报告）**26–45**：H4H5／AI 失真／场景 P0／路由／首字／7B／结巴／移动严查／素材反编译／1,013 场景+P0 接线／真背景 157／40 注入上限／41 原作复现取证／**42 门机制 + 五章拓扑**／**43 换房 + 相机平移**／**44 对话框复刻 + 渲染层 + 路由 v2 + objects + 动效**／**45 场景自主寻路（`scene_pathfind` + `_aliases.json`）**（§41~§46）。
 `8f95f5e` `21b520d` `7b9d10a` `8824e81` `555c797`（38~39 全表见详版 §41.10）
