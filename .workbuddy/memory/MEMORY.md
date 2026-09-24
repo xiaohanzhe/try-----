@@ -6,7 +6,7 @@
 ## 0. 铁律
 - 每轮改动即 **commit + push**；称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。报告放项目根、证据进 `code-quality-audit/<轮次>/_evidence/`、下载/生成物落 `E:\Download`（`_tmp\` 用后即删）；**仓库内产物留项目目录**。
 - ❗**仓库根 = `try - 副本`**（`ralsei_pet` 是其子目录）⇒ **跑 G2 的 cwd 是仓库根**。远端 `https://github.com/xiaohanzhe/try-----.git`（★**公开**），main→origin/main。真机起 `Set-Location ralsei_pet; & C:\Python311\python.exe src\main.py`（后台）；单实例锁 `Global\RalseiPetMutex`；窗口透明非置顶 ⇒ **甩飞/抛物线只能离屏断言**。
-- 改代码前先跑 G2 `regress/run_all.py`（**38 套件 / PASS=1818 / 全 IDENTICAL**）；★ 改断言/文案 → `--only <suite> --update`（**合并模式**）；❗**判据消息别印绝对行号/会漂的计数**。
+- 改代码前先跑 G2 `regress/run_all.py`（**40 套件 / PASS=1843 / 全 IDENTICAL**）；★ 改断言/文案 → `--only <suite> --update`（**合并模式**）。
 - ★ **只读优先、改动最小化**；★"写了 N 个文件"必须 `os.listdir` 查磁盘；★★ **回归套件不许依赖"用后即删"的临时区** ⇒ 判据要的事实**蒸馏进仓库**。
 - ❗❗**改过"重要核心文件"必须复检**：可编译／结构／编码／恒真判据复查／**逐令牌回验**／工作区干净，逐项 PASS/FAIL 落盘（skill `core-file-recheck`）。
 
@@ -33,7 +33,8 @@
 ## 4. 验证脚本教训（详版 **§5 + §23.4/§23.5/§23.12/§35.6 + §41.6/§43.7/§44.6**）
 - ⭐**能上 AST 就上 AST**：`code_only_src()` **会剥 STRING token** ⇒ 断言**字面量**必恒假（**踩 7 次**）；含字面量走 `code_no_comment()`；❗扫属性要同时扫 `ast.Constant` 里的同名字符串。
 - **恒真判据比不写还危险**；**正/负控制成对**；**断行为/结构不断赋值**；❗**报红先自问"夹具真把破坏写进去了吗"**、★★ **再怀疑判据本身**（38/40/42 轮共 7 次均在判据侧）。**探针不保真=报假问题**（踩 5 次）⇒ **能从源码拿的别 import／能 import 的别重写／不得不重写必须锁等价**；★★★ **行为判据必须用真实量级输入**；**需真人操作的判据严禁离线模拟**；**"函数写对了"≠"产品用上了"（最贵坑）**；**A/B 先断言 A ≠ B**；**「删掉重复行」≠「去掉重」**（以**运行时等价**为准）。
-- ★★★ **反汇编/解析器必须先过 A/B 锚点**（43轮）：**"提取成功"≠"提取正确"** ⇒ 先设 3 个"已知真值"站点、**全命中才用其输出**（实例：GMS2 实参**从右往左压栈**、变量 push 也占一槽；每脚本**两个 code**：`gml_Script_X` 空桩 ins=0／`gml_GlobalScript_X` 真体 ⇒ §44.6）。
+- ★★★ **反汇编/解析器必须先过 A/B 锚点**（43轮）：**"提取成功"≠"提取正确"** ⇒ 先设 3 个"已知真值"站点、**全命中才用其输出**（实例：GMS2 实参**从右往左压栈**、变量 push 也占一槽；每脚本**两个 code**：`gml_Script_X` 空桩 ins=0／`gml_GlobalScript_X` 真体 ⇒ §44.6）。★ **字段名也要先探**（44轮）⇒ `UndertaleSprite` 速度字段真名 = `GMS2PlaybackSpeed`（写 `Speed`/`PlaybackSpeed` **不存在** ⇒ 静默 null ⇒ **全表假数据**，险致「原作无动画」误判，§45.10.3）。
+- ★ **判据别拿"源码字面量"代替"产物输出"**（44轮）：查 `'[PASS] '` 源码串会漏（运行时才拼）⇒ **真跑一次数输出行**。★ **复检动作不许改变被测状态**（`py_compile` 产 `.pyc` 污染工作区 ⇒ 改 `ast.parse`，§45.10.5）。
 
 ## 5. 人味改造线（细则 **§23.13.1 + §6.1–§6.10**）
 回归锁 `persona_chat`(156)／`s8_stream`(69)／`s7_event_speech`(138)，均进 G2、不联网。**人设单一真源 = `assets/ralsei_persona.md`**（**别只写 Modelfile** —— messages 的 system **整体替换**它）；**禁 markdown**、**❗不许叫"主人"**、**K3 < 10000 B**。★★ **失真头号来源 = "可逐字搬走的固定例句"**（锁 **A12d**）；**"口癖多"≠ 全砍**（真结巴仅 8.3%）。**护栏 `_clean_ai_reply(reply, recent=)` 顺序即优先级**（0a 括号→0b markdown→0c 禁说→1 自问自答截断→2 判退「只看 recent」→3 超长）；**判退必重采样**、**不 append 进 recent**。**`AI_REPLY_MAX_CHARS` = 220**；余下（`TRUST_INITIAL=0.12`／`ralsei:v4`／**A12e**）见 §23.13.1。
@@ -43,13 +44,15 @@
 
 ## 7. 场景系统线 / 原作素材 ★ 动手前**必须 Read 详版 §16/§36/§37/§39~§45**
 用户口径：**「把原作的世界搬到桌面上…桌面也会被我当成一个场景」**＋**「一切根据原作」**＋**「所有 room 排序/连接按原作 = 场景复现，连动态效果也做」**（传送门/首站见 §11）。
-- ★★★ **原作「换房」与「背景移动」（43轮全解，§44）**：**背景移动 = 相机平移，不是视差**（ch1 **1014 层**里 `HSpeed`/`VSpeed` 非零 = **0**、`EffectType` 恒 null）。相机 **现实 320×240（2×）／暗世界 640×480（1:1）**、`GMS2FPS=30`、每帧硬跟随+四向钳制、收口 `__view_set_internal`。**换房 = `obj_fadeout` 淡出 0.417s → `alarm[3]=14` 停 BGM → `alarm[2]=15` 建 `obj_persistentfadein` + `room_goto*` → 淡入 0.417s ⇒ ≈0.92s**；`depth = 100000-(y+sprite_height)*10`。★★★ **对象索引跨章不稳定（16/16）⇒ 跨章按名字**。
-- ★ **原作门机制（42轮，§43.2）+ 44轮补齐**：`obj_doorA~F` = `Data.Rooms` **下标 ±1/±2/±3**（**A+1／B-1／C+2** 已实证，须同字母 `obj_marker` 校验）；`obj_doorX`／`W` = **表驱动双向**（`if(room==X) room_goto(Y)`）；`obj_doorAny` 无代码；**门全 `visible:False`**，落点 = `obj_marker*`；★ **「排序」＝「连接」**、**无门 = 不可达**。
-- **桌面接入（§43.6）**：桌面 = **独立前置章**；桌面上放**暗之泉**（`spr_fountainedge`）→ 切 `ch1` 的 **`room_town_north`**；小镇内按 **27 条原作边**。**范围 = 原作全部 1,251 间，含暗世界**。
-- **P0＝「不切场景零行为变化」**（`switch()` 只写状态）；**已接线**（`init_systems()` 末尾 `scene.load()`+`load_routes()`，真机 **10/10**）⇒ **P1 才是渲染层**。**路由 = 数据不是代码**（`scene_routing.py` 纯标准库零 Qt + `_routes.json`；只有 `follow_route` 能调 `switch`）；★★★ **排序键 `(priority 升序, -score 降序, 声明序)` ⇒ `priority` 压过 `score`**。
-- **规模**：五章 **1,251 room** ⇒ **1,013 场景**；`(章,区域)` **61** 分片 `_zone.<章>.<区>.json` + 87 锚点；`load_scene(sid,dir,entry)` **独立文件优先**、**`switch()` 必须传 entry**；房间 ID = **扁平整数+章号进万位**；`_original_rooms.json` = `scr_roomname()` 转写、**id == `Data.Rooms` index**。**数据资产**：`_room_order.json`（1,251 全序）＋`_room_graph.json`（782 边）；**小镇拓扑五章一致**。
-- **命名 = 不译**（`区域中文名·尾段原样` + `name_raw`）。**素材**：真背景 **157 / 1,013**、近似 **856**（零扩大）；**判据真源 = `第39轮/_tools/bg_common.py::classify()`**；字段 `bg`／`bg_source`／`bg_asset`。**工具 UTMT CLI v0.9.2.0**（`E:\Download\UTMT_CLI_v0.9.2.0\`）；**背景在 `room.Layers`**（`Backgrounds` 空）。⚠️ 早期 `ROOM/SPRT/OBJT.json` **不可信**。
-- ⚠️ **P1 前置**：`dump_rooms.csx` **缺 4 项**（层几何 `XOffset/YOffset/HSpeed/VSpeed`／`LegacyTiles` 几何／`TileData` 真矩阵／实例变换）⇒ **§42.6**；**瓦片数据本就在**；43 轮已补 `View` 族 + `Layer.EffectType`（null）+ `GMS2FPS`。
+- ★★★ **原作「换房」与「背景移动」（§44）**：**背景移动 = 相机平移，不是视差**（ch1 **1014 层** `HSpeed`/`VSpeed` 非零 = **0**、`EffectType` 恒 null）。相机 **现实 320×240（2×）／暗世界 640×480（1:1）**、`GMS2FPS=30`、每帧硬跟随+四向钳制。**换房 ≈0.92s**（`obj_fadeout` 淡出 0.417s → `room_goto*` → 淡入 0.417s）。★★★ **对象索引跨章不稳定 ⇒ 跨章按名字**。
+- ★ **原作门机制（§43.2）**：`obj_doorA~F` = `Data.Rooms` **下标 ±1/±2/±3**（**A+1／B-1／C+2** 已实证，须同字母 `obj_marker` 校验）；`obj_doorX`／`W` = **表驱动双向**；`obj_doorAny` 无代码；**门全 `visible:False`**，落点 = `obj_marker*`；★ **「排序」＝「连接」**、**无门 = 不可达**。
+- **桌面接入（§43.6）**：桌面 = **独立前置章**；放**暗之泉**（`spr_fountainedge`）→ 切 `ch1.room_town_north`。**范围 = 原作全部 1,251 间，含暗世界**。
+- **规模**：五章 **1,251 room** ⇒ **1,013 场景**；`(章,区域)` **61** 分片。`_original_rooms.json`**id == `Data.Rooms` index**；`_room_order.json`（1,251 全序）＋`_room_graph.json`（782 边）。
+- **★ 两种载体（坑）**：分片 `_zone.<ch>.<区>.json`（**顶层 `scenes`**）／独立 `<scene_id>.json`（**`objects` 在顶层**）；独立文件的 `original_room_id` **只在 `_index.json`**。★ 分片名以 `_` 开头 ⇒ `startswith('_')` 一刀切**漏全部**。
+- **命名 = 不译**（`区域中文名·尾段原样` + `name_raw`）。**素材**：真背景 **157 / 1,013**、近似 **856**；**判据真源 = `第39轮/_tools/bg_common.py::classify()`**。**工具 UTMT CLI v0.9.2.0**；背景在 `room.Layers`。⚠️ 早期 `ROOM/SPRT/OBJT.json` **不可信**。
+- ★★★ **objects 补全（§45.10.2）**：5,523 实例里仅 **2,067（37.4%）能映射 sprite**，余 3,456 是**纯逻辑锚点**（`visible=false` 不该画）⇒ **532 场景 / 2,043 条**；8 个未登记房间（24 条）**有意不产**。
+- ★★★ **动效 = sprite 逐帧（§45.10.3）**：背景 HSpeed/效果/瓦片/Sequence **全 0**，唯一载体 = 多帧 sprite（523/1097）；`GMS2PlaybackSpeed=1`+`FPS=30` ⇒ **33.3ms/帧**，本产品 **105 条带动画**。
+- ⚠️ **P1 前置**：`dump_rooms.csx` **缺 4 项**（层几何 `XOffset/YOffset/HSpeed/VSpeed`／`LegacyTiles` 几何／`TileData` 真矩阵／实例变换）⇒ **§42.6**。
 
 ## 8. 性能线 ★ 铁律（详版 §17.3/§18/§19/§20.3）
 - 硬件：Core Ultra 5 125H + **Arc 核显 + 31.6 GiB 内存**；Ollama **纯 CPU** ⇒ **Vulkan 救不回冷 prefill**。
@@ -61,13 +64,12 @@
 - ★★ **记忆口径**：「**只要不影响读取就 OK，但影响的话就尽量别动**」＋41「**记忆不要随便修改，三思而后行**」⇒ 门槛：**实证超限或被要求** + 先补详版 + 逐令牌回验 + **改动守恒**，否则不动。
 - ★ **范围修正（42轮）**：41 轮"所有 room 按原作"只是起点；42 轮明确「**和原作一样，暗世界也做**」⇒ 范围 = **原作全部 1,251 间**。★ **历轮口径**：36 按原版路线／37 自行反编译／38 走到哪亮到哪／39-40 授权自主推进。
 
-## 10. 历轮索引（**详版 §14–§45 有完整版** + 各轮报告）**26–44**：H4H5／AI 失真／场景 P0／路由／首字／7B／结巴／移动严查／素材反编译（87 背景）／1,013 场景+P0 接线（10/10）／真背景 157（856 留空，1547/33）／40 注入上限／41 原作复现取证／**42 门机制全解 + 五章拓扑（782 边/1,251 间）**／**43 换房 ≈0.92s + 相机平移（零视差）**／**44 原作对话框复刻 + 渲染层落地（`dr_textbox`/`scene_render`/`scene_canvas`）+ 路由 v2（26→443 条）+ 复检（`_room_geometry.json` 1,251 条、238 间全占位、修 priority 回绕 + 锁 `routes_order44`、`scene_scale=2.0`）**（§41~§45）。
-`8f95f5e` `21b520d` `7b9d10a`（38~39 全表见详版 §41.10）
+## 10. 历轮索引（**详版 §14–§45 有完整版** + 各轮报告）**26–44**：H4H5／AI 失真／场景 P0／路由／首字／7B／结巴／移动严查／素材反编译（87 背景）／1,013 场景+P0 接线／真背景 157（856 留空）／40 注入上限／41 原作复现取证／**42 门机制全解 + 五章拓扑（782 边/1,251 间）**／**43 换房 ≈0.92s + 相机平移（零视差）**／**44 原作对话框复刻 + 渲染层落地（`dr_textbox`/`scene_render`/`scene_canvas`）+ 路由 v2（26→443）+ 复检 + ★续做 objects 补全（2,043 条/532 场景，`8824e81`）+ 动效=sprite 逐帧（105 条/33.3ms，`555c797`）**（§41~§45.10）。
+`8f95f5e` `21b520d` `7b9d10a` `8824e81` `555c797`（38~39 全表见详版 §41.10）
 
 ## 11. 🔴 待用户裁定（**全文见详版 §23.13.3＋§36.8＋§37.11＋§39.10＋§40.8＋§43.6＋§44.8＋§45.9**）
 1. ★★ **Q1 已拍板（41+42轮）**：所有 room 排序/连接按原作 = 场景复现（含动态效果）；**传送门 = 暗之泉**、**第一站 = `room_town_north`**、**范围含暗世界** ⇒ 157 真背景只是起点、**856 留空项按原作补齐**（含 Q4 78/87）。❗平铺画布口径待重议（1280／`clamp(rh/rw,0.5,0.9)`）。
-2. **Q2/Q3 仍待**：`ch1.kris_room` 640×480 放大件是否换回｜2 处选层（`torielclass`→`bg_lang_ja_torielclass`／`dw_castle_restaurant`→柜台层）是否定向覆盖（需 GML 语言门控证据）。
-3. 低优先：场景粒度｜BGM｜原作版权｜`dialogue_ui._rule_reply()` 罐头皮｜`.gitattributes` 换行｜`src/` 顶层 `.bak`/`test_*`/`monitor_*.txt`（**不得批量删**）｜自启+预热。
+2. **Q2/Q3 仍待**：`ch1.kris_room` 640×480 放大件是否换回｜2 处选层（`torielclass`→`bg_lang_ja_torielclass`／`dw_castle_restaurant`→柜台层）是否定向覆盖（需 GML 语言门控证据）。3. 低优先：场景粒度｜BGM｜原作版权｜`dialogue_ui._rule_reply()` 罐头皮｜`.gitattributes` 换行｜`src/` 顶层 `.bak`/`test_*`/`monitor_*.txt`（**不得批量删**）｜自启+预热。
 4. ★ **P3**：`nearest_visible_point`／`get_jump_destinations` 闭区间 vs `_rect_tuple` 半开；`_sleep` 拼错（35轮）；`play_animation_once` 51 处仅 8 处传 `restore_to`；`pet_interaction.py`（365 行零接线）→ A 删／B 接线／**C 暂缓**；动态结巴率是否进 `relationship.py`。
-5. ★ **44轮遗留**（§45.9）：**动效全做（含暗之泉）逐章接入**；**逐章验收 ch1**（渲染层默认关 `SCENE_LAYER_ENABLED=False`）；`_original_rooms.json` 加 `scope` 或改名（95 条精选非全表）；路由 30.6%→`obj_doorAny/W/X` 需读对象代码。
-6. ★ **43/42轮遗留**（§44.8/§42.6）：落点表未配对导出 `entries`；`initwd`/`initht` 来源未定位；`global.darkzone`/`plot` 取值域；**相机/过渡/深度是否落码**待拍板；ch2~ch5 未做 `view43` 普查；扩 `dump_rooms.csx`（4 项）+ 重跑五章 UTMT。
+5. ★ **44轮**（§45.9/§45.10）：✅ objects 补全 + 动效 + 逐章验收**已完成**；余 `_original_rooms.json` 加 `scope` 改名；路由 30.6%→`obj_doorAny/W/X`；`SCENE_LAYER_ENABLED` 默认 False 待定开关。
+6. ★ **42/43轮**（§42.6/§44.8）：落点表未配对导出 `entries`；`initwd`/`initht` 来源未定位；`global.darkzone`/`plot` 取值域；**相机/过渡/深度是否落码**待拍板；ch2~ch5 未做 `view43` 普查；扩 `dump_rooms.csx`（4 项）+ 重跑五章。
