@@ -153,7 +153,7 @@ tokens = {
                'verify_pathfind45.py'],
     'SCENEP0': ["'scene_pathfind'"],
     'REPORT': ['7 跳', '782', '先章后精度', '第42轮', 'pathfind_round45',
-               '1878'],
+               '1879'],
     'EVID': ['ch4', 'ch5', 'torhouse', 'town_krisyard', 'False'],
 }
 tok_bad = []
