@@ -89,7 +89,7 @@ HERMETIC_IDS = frozenset({
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
     'persona_chat', 's8_stream', 's7_event_speech', 'box_round44',
     'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
-    'objects_round44', 'anim_round44',
+    'objects_round44', 'anim_round44', 'pathfind_round45',
 })
 
 
@@ -694,6 +694,44 @@ SUITES = [
                 '★ 动效口径来自实测：原作 191 个背景层 HSpeed/VSpeed 非零 = 0、'
                 'EffectType 非空 = 0、瓦片动画 = 0、房间 Sequence = 0，'
                 '唯一动效载体 = 523/1097 多帧 sprite。',
+    },
+    # ---- 第45轮 · 场景自主寻路 ----
+    # 用户口径：「假设 Ralsei 和我说话，语境里表达了我们该去教堂看看，
+    # 那 Ralsei 怎么自主地按路线去教堂这类的路线问题」。
+    # 本轮把这句话拆成**三个不同的问题**，只锁其中两个可离线回归的：
+    #   ① 意图（文本→目标词）吃 AI ⇒ 留给 P1，只留接口；
+    #   ② 定位（『教堂』→ scene_id）★ 锁；
+    #   ③ 寻路（起点+终点→路径，吃原作 782 条边）★ 锁。
+    # ★ 头号判据是 **②消歧顺序 = 先章、后精度** —— 第一版写成"先精度"，
+    #   于是『医院』在 ch1 会被送到 **ch5 的花园医院**（真缺陷，C4 就是它的锁）。
+    # ★ 第二头是 **分级匹配** —— 不分级时『教堂』全域命中 166 个场景
+    #   （ch4 暗之圣域 100+ 个 church_*），C5/C6 锁住它。
+    # ★ 第三头是 **设计律 1：走不到就返回 None，不就近凑** —— B4/B7/D9。
+    # 数据依赖：`_aliases.json`（仓库内）+ 第42轮 `_room_graph.json`（仓库内）
+    #   ⇒ **刻意不依赖 E:\Download\_tmp**（那目录"用后即删"，
+    #   一旦依赖，临时区被清后不是报红而是**静默失去鉴别力**）。
+    # 鉴别力已体检：消歧回退 → 6 条报红；走不到返回 [] → B4；
+    #   分级失效 → C1/D6；switch 不投影章 → E6；还原 → 35/35 PASS。
+    # **不联网、不调 Ollama、不实例化 App、不需要显示器**（纯数据 + 纯函数 + AST）。
+    {
+        'id': 'pathfind_round45',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第45轮-场景自主寻路',
+                               'verify_pathfind45.py'),
+        'offscreen': False,
+        'desc': '第四十五轮：场景自主寻路不许静默漂移 —— '
+                'A 数据（别名表 schema/★零命中词条=0 / 原作 782 边五章分章数 / 邻接表守恒 / 1,014 场景索引）'
+                '+ B ★③ BFS 纯函数（ch1 krisroom(2)→town_church(15) 恰 7 跳 / 逐边接得上无环 / '
+                '起终点相同→[] 区别于 None / ★负控制无回边→None 不就近凑 / 坏输入不抛 / 确定性）+ '
+                '★如实报告 ch4/ch5 走不到（第42轮取证缺口）'
+                '+ C ★② 语义定位（『教堂』+ch1 唯一命中 / 负控制不存在→ok=False / '
+                '★消歧顺序先章后精度：『医院』+ch1 绝不跨 ch5 / 无章多解→ambiguous 不猜 / '
+                '分级匹配把候选压到 ≤10 / 别名词条真实生效即不可省）'
+                '+ D 端到端门面（用户原场景全链路 7 跳 / path 首尾与 steps / describe_plan 中文计划 / '
+                '负控制：不可用→空串、目标不存在、跨章（第三圣域唯一→ch4）、非字符串、当前场景未知、'
+                '★失败不留半个计划）'
+                '+ E 产品接线 AST（scene_pathfind 零 Qt 零本地依赖除 scene_system / '
+                '控制器真调 5 个函数 / 4 只读方法在 / ★零行为变化无 switch·QTimer / '
+                'main.py 预声明 4 字段 / ★switch 里 _scene_chapter_id 恰赋值 1 次 / 幂等守卫）',
     },
 ]
 

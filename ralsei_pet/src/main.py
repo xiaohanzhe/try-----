@@ -859,6 +859,12 @@ class RalseiPet(QMainWindow):
         self._scene_routes = None                   # load_routes() 的结果（含 routes/fallback）
         self._routes_loaded = False                 # 路由表是否已尝试加载过（幂等守卫）
         self._scene_route_reason = ''               # 最近一次路由命中给的"为什么走这条路"
+        # ---- 自主寻路（第45轮："语境说去教堂 → 自己走过去"）状态 ----
+        # 同一条铁律：控制器会用到的名字必须在**宿主**预声明。
+        self._scene_aliases = None                  # load_aliases() 的结果（中文目的地→英文关键词）
+        self._scene_room_graph = None               # load_room_graph() 的结果（原作 782 条边）
+        self._pathfind_loaded = False               # 寻路数据是否已尝试加载过（幂等守卫）
+        self._scene_chapter_id = None               # 当前章 id（寻路②消歧用，从 SceneState 投影）
         # ---- 相机（第44轮：居中式跟随 + 背景相对运动）状态 ----
         # 同一条铁律：控制器会用到的名字必须在**宿主**预声明。
         self._scene_camera = None                   # Camera 实例（scene_camera.Camera）

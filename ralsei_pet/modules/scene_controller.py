@@ -71,6 +71,7 @@ from scene_system import (  # noqa: F401  (同目录扁平导入，见 main.py �
 import scene_routing  # 同为纯标准库模块，接环风险为零（见 scene_routing 的零依赖纪律）
 import scene_camera   # 同上：纯标准库，无反向依赖（第44轮相机）
 import scene_render   # 同上：纯标准库（第44轮渲染层 —— 只出"绘制指令"，不画）
+import scene_pathfind  # 同上：纯标准库（第45轮自主寻路 —— 语境→目的地→路径）
 
 _log = logging.getLogger(__name__)
 
@@ -81,7 +82,7 @@ class SceneController(object):
     状态全在宿主
     ------------
     本类**不持有任何场景状态**。宿主在 `init_systems()` 里预声明了 **9** 个字段
-    （**6 个场景 + 3 个路由**，见 main.py「场景系统 状态字段」段），本类只通过
+    （**6 个场景 + 3 个路由 + 4 个寻路**，见 main.py「场景系统 状态字段」段），本类只通过
     `self.p` 读写它们：
 
         self.p._scene_index         索引（load_index 的结果）
@@ -93,6 +94,10 @@ class SceneController(object):
         self.p._scene_routes        路由表（load_routes 的结果）
         self.p._routes_loaded       路由表是否已加载过（bool，幂等守卫）
         self.p._scene_route_reason  最近一次路由命中的理由（str）
+        self.p._scene_aliases       ★第45轮 目的地别名表（load_aliases 的结果）
+        self.p._scene_room_graph    ★第45轮 原作房间图（load_room_graph 的结果）
+        self.p._pathfind_loaded     ★第45轮 寻路数据是否已加载（bool，幂等守卫）
+        self.p._scene_chapter_id    ★第45轮 当前章 id（消歧用；从 SceneState 投影）
 
     ⚠️ 之所以强调"宿主预声明"：本类的 `__setattr__` 转发判据是「宿主**已经拥有**
     这个名字」。若某个字段没在宿主预声明，那么首次赋值 `self.<新名> = x` 会落到
@@ -421,6 +426,11 @@ class SceneController(object):
             # 状态一次性写完（不留"改了一半"的中间态）。
             pet._scene_state = scene
             pet.current_scene = scene_id
+            # ★第45轮：把当前**章**也投影成宿主状态 —— 寻路的②（目的地定位）
+            #   要拿它消歧（"去医院"时人在 ch1，绝不该被送到 ch5 的花园医院）。
+            #   从 SceneState 取（它有 chapter_id），取不到给 None（不伪造）。
+            _ch = getattr(scene, 'chapter_id', None)
+            pet._scene_chapter_id = _ch if isinstance(_ch, str) and _ch else None
             # `scene_objects` = "当前可见物件缓存"。**这里不能现算** —— 算它必须有
             # screen_rect（入口是 `resolve_objects(screen_rect)`），而切场景时拿不到。
             # ⇒ 显式清空，避免把上一个场景的物件残影留给渲染层。
@@ -611,6 +621,86 @@ class SceneController(object):
                 routes, self.p.__dict__.get('_scene_index'))
         except Exception as e:
             _log.warning("可达场景描述生成失败: %s", e)
+            return ''
+
+    # -----------------------------------------------------------------
+    #  第45轮 · 自主寻路（"语境说去教堂 → 自己走过去"）
+    #
+    #  ★ 这三个方法**全部只读**：加载数据 + 算计划，**不 switch、不起定时器**。
+    #    与第 38 轮路由层"零行为变化"是同一条纪律 —— 计划算出来了，
+    #    但"要不要真的走"由 P1 的 AI 决策链决定（用户口径见第45轮报告 §6）。
+    # -----------------------------------------------------------------
+
+    def load_pathfind_data(self, scene_dir_path=None):
+        """加载寻路所需的三份数据（别名表 / 房间图）。**幂等**，返回是否可用。
+
+        ⚠️ 为什么单独一个方法而不是塞进 `load_routes()`：三份数据用途不同、
+        失败后果也不同 —— 别名表缺失只让 ② 退化（纯场景名匹配），
+        房间图缺失只让 ③ 退化（只能走一步）。**分开加载 = 分开降级**。
+        """
+        pet = self.p
+        try:
+            if not pet.__dict__.get('_pathfind_loaded'):
+                pet._scene_aliases = scene_pathfind.load_aliases(scene_dir_path)
+                pet._scene_room_graph = scene_pathfind.load_room_graph()
+                pet._pathfind_loaded = True
+                if not pet._scene_aliases.get('ok'):
+                    _log.info("别名表不可用（目的地匹配退化为纯场景名）: %s",
+                              pet._scene_aliases.get('error'))
+                if not pet._scene_room_graph.get('ok'):
+                    _log.info("房间图不可用（多跳寻路退化为直连）: %s",
+                              pet._scene_room_graph.get('error'))
+        except Exception as e:
+            _log.warning("寻路数据加载失败（寻路不可用）: %s", e)
+            return False
+        return bool(pet.__dict__.get('_scene_room_graph', {}).get('ok'))
+
+    def resolve_destination(self, target):
+        """② 语义定位：把『教堂』这类词翻成一个/一组场景（**只读**）。
+
+        返回 `scene_pathfind.resolve_target()` 的结果。多解时 `ambiguous=True`
+        且 `scene_id=None` —— 调用方（或 AI）需要自己选（**不替用户决定**）。
+        """
+        try:
+            if not self.load_pathfind_data():
+                # 房间图不可用不影响②，这里**不 return** —— 别名表可能仍可用。
+                pass
+            aliases = (self.p.__dict__.get('_scene_aliases') or {}).get('entries') or {}
+            chapter = self.p.__dict__.get('_scene_chapter_id')
+            return scene_pathfind.resolve_target(
+                target, self.p.__dict__.get('_scene_index'), aliases,
+                current_chapter=chapter)
+        except Exception as e:
+            _log.warning("目的地定位失败: %s", e)
+            return {'ok': False, 'scene_id': None, 'candidates': [],
+                    'ambiguous': False, 'error': str(e)}
+
+    def plan_route_to(self, target):
+        """①②③ 串起来：从**当前场景**出发，规划去 `target` 的路线（**只读**）。
+
+        返回 `scene_pathfind.plan_from_text()` 的结果形状（见其 docstring）。
+        走不到 → `ok=False` + `error`（**如实报告，不就近凑**）。
+        """
+        try:
+            self.load_pathfind_data()
+            pet = self.p
+            aliases = (pet.__dict__.get('_scene_aliases') or {}).get('entries') or {}
+            graph = pet.__dict__.get('_scene_room_graph') or {}
+            return scene_pathfind.plan_from_text(
+                target, pet.__dict__.get('_scene_index'), graph, aliases,
+                current_scene_id=pet.__dict__.get('current_scene'))
+        except Exception as e:
+            _log.warning("路线规划失败: %s", e)
+            return {'ok': False, 'goal': None, 'scene_id': None, 'ambiguous': False,
+                    'candidates': [], 'path': [], 'steps': [], 'hops': 0,
+                    'error': str(e)}
+
+    def plan_route_text(self, target):
+        """把路线计划拼成给 AI 看的自然语言（`''` = 不可用 → 整段不注入）。"""
+        try:
+            return scene_pathfind.describe_plan(self.plan_route_to(target))
+        except Exception as e:
+            _log.warning("路线描述生成失败: %s", e)
             return ''
 
     def route_reason(self):

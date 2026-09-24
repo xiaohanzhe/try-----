@@ -176,24 +176,31 @@ ok('A5 负控制：A3/A4 的判据真能抓到越界 import（合成样本）',
 
 # scene_controller 只许 import 标准库 + 零依赖的姊妹数据层模块
 #
-# 白名单里为什么有三个 data 层模块（第 29 轮扩两个，第 44 轮再扩一个）：
+# 白名单里为什么有四个 data 层模块（第 29 轮扩两个，第 44 轮再扩一个，第 45 轮再扩一个）：
 #   · `scene_system`  —— 场景数据 + 几何纯函数；
 #   · `scene_routing` —— 路由数据 + 匹配纯函数（第 29 轮新增）；
 #   · `scene_camera`  —— 相机纯函数 + 薄壳（第 44 轮新增，用户要的
 #     「人物走到中间后一直居中然后背景相对运动」= 居中式跟随，非视差）。
-# 三者是**平级的零依赖模块**（各自都禁 Qt / 禁项目内业务模块，有 A2/A3 与
-# 路由/相机套件的同名断言守着）。控制器 import 它们不会接上初始化环 ——
+# 四者（含下面的 scene_render / scene_pathfind）是**平级的零依赖模块**
+# （各自都禁 Qt / 禁项目内业务模块，有 A2/A3 与路由/相机/渲染/寻路套件的
+# 同名断言守着）。控制器 import 它们不会接上初始化环 ——
 # 环的风险来自"回头 import 有业务反向依赖的模块"（logger_utils / data_store…），
 # 而不是来自这些纯数据模块。
 # ⚠️ 本白名单是**显式**的：新增一条必须在这里加一行。这个"麻烦"是刻意的 ——
-#    它逼每次放宽都成为一次有意识的决定（第 29、44 轮都是被这条断言逮到的）。
+#    它逼每次放宽都成为一次有意识的决定（第 29、44、45 轮都是被这条断言逮到的）。
 # 第44轮新增（渲染层）：
 #   · 'scene_render' —— 与 scene_camera/scene_routing 同级：纯标准库、
 #     零项目内依赖、"只出绘制指令不画"（有 render_round44 的 A5 AST 断言守着）。
 #   · 'os' / 'json'   —— 控制器 `load_geometry()` 要读 `_room_geometry.json`。
 #     这两个是**最基础的标准库**，不构成初始化环风险。
+# 第45轮新增（自主寻路）：
+#   · 'scene_pathfind' —— 同样是纯标准库零 Qt 的姊妹数据层：BFS 寻路 + 语义定位。
+#     唯一允许的项目内 import 是 `scene_system`（取 `_read_json` / `scenes_dir`）。
+#     「语境说去教堂 → 自己走过去」的②③两层都在它里面（有 pathfind_round45 的
+#     E1 AST 断言守着：零 Qt + 本地依赖 ⊆ {scene_system}）。
 _CTL_ALLOWED = {'logging', 'os', 'json',
-                'scene_system', 'scene_routing', 'scene_camera', 'scene_render'}
+                'scene_system', 'scene_routing', 'scene_camera', 'scene_render',
+                'scene_pathfind'}
 _CTL_OVER = ((SCENE_CTL_IMPORTS & _QT_MODULES)
              | (SCENE_CTL_IMPORTS & (_PROJECT_INTERNAL - {'scene_system'}))
              | (SCENE_CTL_IMPORTS - _CTL_ALLOWED))

@@ -1,0 +1,17 @@
+第45轮 · 五章可达性实测（数据源 = 第42轮 _room_graph.json，782 边）
+====================================================================
+
+ch1: n_edges=238  room_krisroom=2  krisroom 出度=1  从 krisroom 可达房间数=28
+ch2: n_edges=323  room_krisroom=18  krisroom 出度=1  从 krisroom 可达房间数=18
+ch3: n_edges=79  room_krisroom=15  krisroom 出度=1  从 krisroom 可达房间数=18
+ch4: n_edges=72  room_krisroom=15  krisroom 出度=1  从 krisroom 可达房间数=4
+ch5: n_edges=70  room_krisroom=13  krisroom 出度=0  从 krisroom 可达房间数=1
+
+★ 缺口实证（ch4 缺 torhouse → town_krisyard 回程边）:
+  ch4: room_torhouse=18 room_town_krisyard=20  边存在? False
+  ch5: room_torhouse=16 room_town_krisyard=18  边存在? True
+
+结论：ch4 该边缺失（第42轮取证漏采，非代码 bug）⇒ ch4 从 krisroom
+      只能走到 4 间房；ch5 room_krisroom 出边 = 0 ⇒ 只可达 1 间。
+      寻路器**如实报告"走不到"**（设计律 1），不就近凑。
+      修复 = 重跑 UTMT 补采（已列入待办）。
