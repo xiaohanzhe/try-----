@@ -1,0 +1,64 @@
+== A. 对象属性（sprite / mask / 尺寸）==
+  obj_solidblock  sprite=spr_solidsmall  sw=20 sh=20  marginR=19  bboxMode=Circle  solid=False  visible=False  persistent=False  parentId=  spriteMask=
+  obj_interactablesolid  sprite=spr_interactable  sw=20 sh=20  marginR=19  bboxMode=Circle  solid=False  visible=False  persistent=False  parentId=obj_solidblock (UndertaleGameObject)  spriteMask=
+  obj_mainchara  sprite=spr_krisd  sw=19 sh=38  marginR=18  bboxMode=Circle  solid=False  visible=True  persistent=False  parentId=  spriteMask=
+  obj_herokris  sprite=spr_krisplace  sw=30 sh=60  marginR=27  bboxMode=Circle  solid=False  visible=True  persistent=False  parentId=obj_heroparent (UndertaleGameObject)  spriteMask=
+  obj_herosusie  sprite=spr_krisplace  sw=30 sh=60  marginR=27  bboxMode=Circle  solid=False  visible=True  persistent=False  parentId=obj_heroparent (UndertaleGameObject)  spriteMask=
+  obj_heroralsei  sprite=spr_krisplace  sw=30 sh=60  marginR=27  bboxMode=Circle  solid=False  visible=True  persistent=False  parentId=obj_heroparent (UndertaleGameObject)  spriteMask=
+  obj_tempblock_room  sprite=spr_solidenemy  sw=40 sh=40  marginR=39  bboxMode=Circle  solid=False  visible=False  persistent=False  parentId=  spriteMask=
+  obj_pushableblock  sprite=spr_npc_block  sw=20 sh=20  marginR=19  bboxMode=Circle  solid=False  visible=True  persistent=False  parentId=obj_interactablesolid (UndertaleGameObject)  spriteMask=
+  obj_blocktile  sprite=spr_glowtile_step  sw=20 sh=20  marginR=14  bboxMode=Circle  solid=False  visible=True  persistent=False  parentId=  spriteMask=
+  obj_soliddark  sprite=spr_soliddark  sw=40 sh=40  marginR=39  bboxMode=Circle  solid=False  visible=False  persistent=False  parentId=obj_solidblock (UndertaleGameObject)  spriteMask=
+  obj_solidlong  sprite=spr_solidlong  sw=20 sh=20  marginR=19  bboxMode=Circle  solid=False  visible=False  persistent=False  parentId=obj_solidblock (UndertaleGameObject)  spriteMask=
+
+== B. 障碍实例坐标样本（room_krishallway / room_town_north / room_dark1）==
+--- [3] room_krishallway 540x240 ---
+   layer=  obj_mainchara  x=242 y=128  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=61 y=109  xs=11.05263 ys=0.9  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=457 y=108  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=479 y=123  xs=1.25 ys=2.21  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=40 y=108  xs=1 ys=3.45  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=172 y=114  xs=2.6 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=238 y=112  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=344 y=110  xs=2.1 ys=1.1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=314 y=107  xs=5.25 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=57 y=166  xs=21.10263 ys=0.9  rot=0  imgx= imgy=
+--- [9] room_town_north 1800x240 ---
+   layer=  obj_mainchara  x=660 y=180  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=720 y=220  xs=37 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=0 y=220  xs=31 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=0 y=90  xs=19 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=360 y=-10  xs=1 ys=5  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=120 y=200  xs=3 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=492 y=0  xs=8.8 ys=4.6  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=656 y=26  xs=4.4 ys=1.1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=676 y=46  xs=2.4 ys=0.9  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=738 y=-10  xs=2.7 ys=6  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=790 y=0  xs=10.4 ys=4.7  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=980 y=-2  xs=2.9 ys=5.6  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1026 y=14  xs=8 ys=3.6  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1162 y=16  xs=3 ys=4.7  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1223 y=3  xs=1.4 ys=5.789474  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1430 y=22  xs=5.1 ys=0.9  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1542 y=40  xs=14.1 ys=3  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1496 y=202  xs=15.2 ys=1.9  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1460 y=220  xs=1.8 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1286 y=39  xs=7.5 ys=4  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1082 y=88  xs=2.7 ys=1  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1250 y=68  xs=1.8 ys=1.2  rot=0  imgx= imgy=
+   layer=  obj_solidblock  x=1520 y=40  xs=1 ys=2  rot=0  imgx= imgy=
+--- [34] room_dark1 640x480 ---
+   layer=  obj_mainchara  x=280 y=200  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=160 y=320  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=120 y=120  xs=1 ys=5  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=160 y=120  xs=8 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=480 y=160  xs=9 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=480 y=280  xs=9 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=440 y=320  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=200 y=360  xs=6 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=840 y=320  xs=7 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=1120 y=280  xs=7 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=840 y=120  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=880 y=80  xs=5 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=1080 y=120  xs=1 ys=1  rot=0  imgx= imgy=
+   layer=  obj_soliddark  x=1120 y=160  xs=7 ys=1  rot=0  imgx= imgy=

@@ -1,0 +1,137 @@
+== 目标对象 id ==
+  obj_solidblock -> 17
+  obj_interactablesolid -> 18
+  obj_blocktile -> 229
+  obj_solidlong -> 342
+  obj_soliddark -> 339
+  obj_pushableblock -> 227
+  obj_tempblock_room -> 224
+
+房间总数 = 147
+含目标障碍实例的房间数 = 125 ; 实例总数 = 1599
+-- 明细（前 250 间）--
+  [2] room_krisroom : obj_solidblock=13 
+  [3] room_krishallway : obj_solidblock=9 
+  [5] room_torhouse : obj_solidlong=1 obj_solidblock=12 
+  [6] room_torbathroom : obj_solidblock=5 
+  [7] room_town_krisyard : obj_solidblock=15 
+  [9] room_town_north : obj_solidblock=22 
+  [10] room_beach : obj_solidblock=3 
+  [11] room_town_mid : obj_solidblock=33 
+  [13] room_town_south : obj_solidblock=15 
+  [14] room_town_school : obj_solidblock=12 
+  [15] room_town_church : obj_solidblock=21 obj_soliddark=1 
+  [16] room_graveyard : obj_solidblock=15 
+  [17] room_town_shelter : obj_solidblock=11 
+  [18] room_hospital_lobby : obj_solidblock=15 
+  [19] room_hospital_hallway : obj_solidblock=9 
+  [20] room_hospital_rudy : obj_solidblock=13 
+  [21] room_hospital_room2 : obj_solidblock=10 
+  [22] room_diner : obj_solidblock=11 
+  [23] room_townhall : obj_solidblock=10 
+  [24] room_flowershop_1f : obj_solidblock=12 
+  [25] room_flowershop_2f : obj_solidblock=13 
+  [26] room_library : obj_solidblock=14 
+  [27] room_alphysalley : obj_solidblock=5 
+  [28] room_torielclass : obj_solidblock=16 
+  [29] room_schoollobby : obj_solidblock=20 
+  [30] room_alphysclass : obj_solidblock=16 
+  [31] room_schooldoor : obj_solidblock=9 
+  [32] room_insidecloset : obj_solidblock=3 
+  [33] room_school_unusedroom : obj_solidblock=8 
+  [34] room_dark1 : obj_soliddark=13 
+  [35] room_dark1a : obj_soliddark=10 
+  [36] room_dark2 : obj_soliddark=34 
+  [37] room_dark3 : obj_soliddark=17 
+  [38] room_dark3a : obj_soliddark=5 
+  [39] room_dark_wobbles : obj_soliddark=2 
+  [40] room_dark_eyepuzzle : obj_solidblock=2 
+  [41] room_dark7 : obj_soliddark=22 
+  [42] room_dark_chase1 : obj_soliddark=11 
+  [43] room_dark_chase2 : obj_soliddark=2 
+  [44] room_castle_outskirts : obj_soliddark=3 
+  [45] room_castle_town : obj_soliddark=24 
+  [46] room_castle_front : obj_soliddark=11 
+  [47] room_castle_tutorial : obj_soliddark=6 
+  [48] room_castle_darkdoor : obj_soliddark=6 
+  [49] room_field_start : obj_soliddark=9 
+  [50] room_field_forest : obj_soliddark=4 
+  [51] room_field1 : obj_soliddark=14 
+  [52] room_field2 : obj_soliddark=21 
+  [53] room_field2A : obj_soliddark=5 
+  [54] room_field_topchef : obj_soliddark=6 
+  [55] room_field_puzzle1 : obj_soliddark=16 
+  [56] room_field_maze : obj_soliddark=44 
+  [57] room_field_puzzle2 : obj_soliddark=8 
+  [58] room_field_getsusie : obj_soliddark=5 
+  [59] room_field_shop1 : obj_soliddark=6 
+  [60] room_field_puzzletutorial : obj_soliddark=11 
+  [61] room_field3 : obj_soliddark=10 
+  [62] room_field_boxpuzzle : obj_pushableblock=2 obj_soliddark=8 obj_blocktile=2 
+  [63] room_field4 : obj_soliddark=22 
+  [64] room_field_secret1 : obj_soliddark=15 
+  [65] room_field_checkers4 : obj_soliddark=2 
+  [66] room_field_checkers2 : obj_soliddark=14 
+  [67] room_field_checkers6 : obj_soliddark=4 
+  [68] room_field_checkers3 : obj_soliddark=2 
+  [69] room_field_checkers1 : obj_soliddark=2 
+  [70] room_field_checkers5 : obj_soliddark=16 
+  [71] room_field_checkers7 : obj_soliddark=2 
+  [72] room_field_checkersboss : obj_soliddark=2 
+  [73] room_forest_savepoint1 : obj_soliddark=10 
+  [74] room_forest_area0 : obj_soliddark=10 
+  [75] room_forest_area1 : obj_soliddark=27 
+  [76] room_forest_area2 : obj_soliddark=43 
+  [77] room_forest_area2A : obj_soliddark=7 
+  [78] room_forest_puzzle1 : obj_soliddark=9 
+  [79] room_forest_beforeclover : obj_soliddark=17 
+  [80] room_forest_area3A : obj_soliddark=8 
+  [81] room_forest_area3 : obj_soliddark=21 
+  [82] room_forest_savepoint2 : obj_soliddark=11 
+  [83] room_forest_smith : obj_soliddark=7 
+  [84] room_forest_area4 : obj_soliddark=32 
+  [85] room_forest_dancers1 : obj_soliddark=51 
+  [86] room_forest_secret1 : obj_soliddark=17 
+  [87] room_forest_thrashmaker : obj_soliddark=12 
+  [88] room_forest_starwalker : obj_soliddark=16 
+  [89] room_forest_area5 : obj_tempblock_room=1 obj_soliddark=20 
+  [90] room_forest_savepoint_relax : obj_soliddark=10 
+  [91] room_forest_maze1 : obj_soliddark=11 
+  [92] room_forest_maze_deadend : obj_soliddark=7 
+  [93] room_forest_maze_susie : obj_soliddark=10 
+  [94] room_forest_maze2 : obj_soliddark=10 
+  [95] room_forest_maze_deadend2 : obj_soliddark=7 
+  [96] room_forest_savepoint3 : obj_soliddark=14 
+  [97] room_forest_fightsusie : obj_soliddark=11 
+  [98] room_forest_afterthrash2 : obj_soliddark=10 
+  [99] room_forest_afterthrash3 : obj_soliddark=10 
+  [100] room_forest_afterthrash4 : obj_soliddark=10 
+  [101] room_forest_castleview : obj_soliddark=2 
+  [102] room_forest_chase1 : obj_soliddark=9 
+  [103] room_forest_chase2 : obj_soliddark=10 
+  [104] room_forest_castlefront : obj_soliddark=6 
+  [105] room_cc_prison_cells : obj_soliddark=22 
+  [106] room_cc_prisonlancer : obj_soliddark=10 
+  [107] room_cc_prison_to_elevator : obj_soliddark=5 
+  [108] room_cc_prison2 : obj_soliddark=10 
+  [109] room_cc_prisonelevator : obj_soliddark=9 
+  [110] room_cc_elevator : obj_soliddark=9 
+  [111] room_cc_prison_prejoker : obj_soliddark=6 
+  [113] room_cc_entrance : obj_soliddark=2 
+  [114] room_cc_1f : obj_soliddark=23 
+  [115] room_cc_rudinn : obj_soliddark=7 
+  [116] room_cc_2f : obj_soliddark=36 
+  [117] room_cc_rurus1 : obj_soliddark=8 
+  [118] room_cc_3f : obj_soliddark=57 
+  [119] room_cc_hathy : obj_soliddark=8 
+  [120] room_cc_4f : obj_soliddark=35 
+  [121] room_cc_rurus2 : obj_soliddark=9 
+  [122] room_cc_clover : obj_soliddark=8 
+  [123] room_cc_5f : obj_solidblock=2 obj_soliddark=28 
+  [124] room_cc_lancer : obj_soliddark=8 
+  [125] room_cc_6f : obj_soliddark=15 
+  [126] room_cc_throneroom : obj_soliddark=8 
+  [127] room_cc_preroof : obj_soliddark=4 
+  [128] room_cc_kingbattle : obj_soliddark=6 
+  [129] room_cc_prefountain : obj_soliddark=7 
+  [142] room_man : obj_soliddark=9 
