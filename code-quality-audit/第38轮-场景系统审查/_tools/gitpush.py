@@ -25,8 +25,13 @@ REPO = r'C:\Users\23002\Desktop\项目文件夹\try - 副本'
 GCM = (r'C:\Users\23002\.workbuddy\binaries\PortableGit\versions\1.2.0'
        r'\mingw64\bin\git-credential-manager.exe')
 CA = os.path.join(os.environ.get('TEMP', r'C:\Windows\Temp'), 'win_root_ca.pem')
-LOG = os.path.join(REPO, 'code-quality-audit', '第38轮-场景系统审查',
-                   '_evidence', '提交推送日志.txt')
+# ★ 第45轮修正：日志**不写进仓库**。原写法落在 tracked 文件里、每次运行覆盖
+#   ⇒ 每次 push 后该文件必然变脏，逼出「为日志再提一次」的死循环。
+#   改落 E:\Download\_tmp\（用户口径的临时区，用后即删，不跟踪）。
+_TMP = r'E:\Download\_tmp'
+if not os.path.isdir(_TMP):
+    _TMP = os.environ.get('TEMP', r'C:\Windows\Temp')
+LOG = os.path.join(_TMP, '提交推送日志.txt')
 DEL_LIMIT = 1000          # ★ 单次提交删除行数硬上限（来自 memory 铁律）
 # 例外：`--allow-del N` 显式抬线。仅在「删除行已逐条归因、确认无信息丢失」时使用，
 # 且必须在提交信息里写明归因（本仓库第44轮 objects 补全首次用到）。
