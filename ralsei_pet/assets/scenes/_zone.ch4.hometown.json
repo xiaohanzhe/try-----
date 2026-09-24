@@ -817,7 +817,13 @@
      "sprite": "objs/spr_darkdoor_0.png",
      "src": "obj_darkdoor",
      "depth": 900000,
-     "sprite_frames": 3
+     "sprite_frames": 3,
+     "anim": {
+      "base": "objs/spr_darkdoor",
+      "frames": 3,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     }
    ]
   },

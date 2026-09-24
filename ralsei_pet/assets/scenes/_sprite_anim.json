@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "_comment": {
+    "source": "第43轮 UTMT 导出 + 第44轮 spranim44.csx（字段名 GMS2PlaybackSpeed）",
+    "fps": 30,
+    "unit": "speed 单位 = 帧/游戏帧（GMS2PlaybackSpeedType=FramesPerGameFrame）；单帧时长 ms = 1000 / (30 * speed)",
+    "why": "scene_render.plan_frame 按 (t * 30 * speed) % frames 取帧",
+    "only_used": "只蒸馏 objs/ 里实际用到的 sprite，避免引入无用体量"
+  },
+  "fps": 30,
+  "sprites": {
+    "spr_darkdoor": {
+      "frames": 3,
+      "speed": 1.0,
+      "speed_type": "FramesPerGameFrame",
+      "frame_ms": 33.3
+    },
+    "spr_giantdarkdoor": {
+      "frames": 2,
+      "speed": 1.0,
+      "speed_type": "FramesPerGameFrame",
+      "frame_ms": 33.3
+    },
+    "spr_krisu_bright": {
+      "frames": 4,
+      "speed": 1.0,
+      "speed_type": "FramesPerGameFrame",
+      "frame_ms": 33.3
+    },
+    "spr_savepoint": {
+      "frames": 6,
+      "speed": 1.0,
+      "speed_type": "FramesPerGameFrame",
+      "frame_ms": 33.3
+    },
+    "spr_shortcut_door": {
+      "frames": 2,
+      "speed": 1.0,
+      "speed_type": "FramesPerGameFrame",
+      "frame_ms": 33.3
+    },
+    "spr_susier_plain": {
+      "frames": 4,
+      "speed": 1.0,
+      "speed_type": "FramesPerGameFrame",
+      "frame_ms": 33.3
+    }
+  }
+}

@@ -21,7 +21,13 @@
       "sprite": "objs/spr_savepoint_0.png",
       "src": "obj_savepoint",
       "depth": -10,
-      "sprite_frames": 6
+      "sprite_frames": 6,
+      "anim": {
+        "base": "objs/spr_savepoint",
+        "frames": 6,
+        "frame_ms": 33.3,
+        "src": "original"
+      }
     },
     {
       "pos": [1560, 1000],

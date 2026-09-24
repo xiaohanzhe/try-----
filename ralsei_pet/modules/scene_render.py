@@ -202,6 +202,55 @@ def visible_in_view(rect, view_size):
     return not (x + w <= 0 or y + h <= 0 or x >= vw or y >= vh)
 
 
+def _anim_frame_index(anim, tick):
+    """多帧物件的**当前帧号** —— 原作 sprite 逐帧动画的等价实现。
+
+    :param anim: `{'base': 'objs/spr_x', 'frames': n, 'frame_ms': ms, 'src': ...}`
+                 或 `None`（单帧物件）。
+    :param tick: 见 `plan_frame` 的 `tick` 说明（毫秒时间戳优先）。
+
+    :return: `(帧号, 总帧数)`；非动画 → `(0, 1)`（调用方据帧号拼文件名）。
+
+    ★★★ 为什么用**毫秒时间戳**而不是"帧计数器"
+    -------------------------------------------------
+    原作口径（第44轮实测）：`GMS2PlaybackSpeed = 1`、
+    `GMS2PlaybackSpeedType = FramesPerGameFrame`、`GMS2FPS = 30`
+    ⇒ 单帧 33.3ms，**每 33.3ms 走一帧**。
+    产品主循环的 tick 间隔并不严格 30ms（截断到 100ms 上限、Qt 定时器抖动），
+    若按"第 N 次调用 → 第 N 帧"计数，速度会随负载漂移（机器卡就变慢）。
+    用**墙钟时间**取模则与帧率无关 —— 与 `main.py` 把相机挂在 30ms
+    定时器的理由一致：宁可与原作速度严格对齐，也不要"看起来在动但速度不对"。
+
+    ★ 边界：`frames <= 1` 或 `frame_ms` 非法 → 退 `(0, 1)`，**绝不抛**。
+    """
+    if not isinstance(anim, dict):
+        return (0, 1)
+    try:
+        n = int(anim.get('frames') or 1)
+    except (TypeError, ValueError):
+        return (0, 1)
+    if n <= 1:
+        return (0, 1)
+    try:
+        ms = float(anim.get('frame_ms') or 0.0)
+    except (TypeError, ValueError):
+        ms = 0.0
+    try:
+        t = float(tick or 0)
+    except (TypeError, ValueError):
+        t = 0.0
+    if ms > 0.0:
+        # 毫秒口径（真实主循环的必经分支）：每 ms 毫秒走一帧。
+        # ★ 修正记录：初版写成 `ms > 0.0 and t >= ms` —— 于是 `t < ms`（例如
+        #   t=16ms、ms=33.3ms，即"还在第 0 帧内"）会**掉进回落分支**，
+        #   算出 `16 % 6 = 4`（凭空的第 4 帧）。本套件 B1 首跑就是这样报红的：
+        #   那不是测试写错，是**实现里门槛写错**。正确口径只看 ms 是否有效。
+        return (int(t // ms) % n, n)
+    # ms 非法（缺参/为 0）→ 保守回落：每 tick 走一帧。
+    # 这保证"tick=0 永远第 0 帧"（回归锁据此写确定性断言），也不至于死住不动。
+    return (int(t) % n, n)
+
+
 def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
     """产出这一帧的**绘制指令清单**（列表，从后到前）。
 
@@ -211,7 +260,10 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
                    （**没有相机就不画** —— 因为所有坐标都要相机变换，
                      硬画会把世界坐标当成屏幕坐标，画出完全错的位置）。
     :param geo_table: `_room_geometry.json['rooms']`。
-    :param tick: 帧号（驱动 `pick_variant` 的多帧轮播）。
+    :param tick: 帧号（驱动多帧轮播）。**动效**用它算当前帧 —— 见
+                 `_anim_frame_index()`。约定它是**毫秒时间戳**（`int(time*1000)`）
+                 时按 `anim.frame_ms` 精确取帧；若不是毫秒量级（比如测试里
+                 传小整数），按"每 tick 一帧"的保守口径取模，保证仍会动。
     :param sprite_size: 可选的 `callable(name) -> (w, h)`，告诉渲染层每个
                         素材的像素尺寸（用于剔除与居中）。缺省时按 `(1,1)` 处理
                         —— 即"不参与剔除的保守假设"？不，是**参与但极小**，
@@ -316,6 +368,16 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
         # 视口逻辑坐标 → 输出像素（× scale）
         px = (int(round(v[0] * scale)), int(round(v[1] * scale)))
         name = obj.get('sprite') or obj.get('image') or obj.get('asset')
+        # ★ 动效：多帧物件按时间取当前帧（`anim` 由数据层写入，见 gen_objects44）。
+        #   拼名规则 `objs/spr_x` + `_<n>` + `.png` —— 与磁盘文件名一致
+        #   （搬运脚本按 `<spr>_<i>.png` 落盘）。取不到 `anim` → 名不变（单帧）。
+        n_frames = 1
+        anim = obj.get('anim')
+        if isinstance(anim, dict) and isinstance(anim.get('base'), str) \
+                and anim.get('base'):
+            fi, n_frames = _anim_frame_index(anim, tick)
+            if n_frames > 1:
+                name = '%s_%d.png' % (anim['base'], fi)
         size = (1, 1)
         if callable(sprite_size) and isinstance(name, str) and name:
             try:
@@ -332,14 +394,21 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
             alpha = float(alpha)
         except (TypeError, ValueError):
             alpha = 1.0
-        out.append({
+        item = {
             'kind': K_OBJ,
             'name': name if isinstance(name, str) else None,
             'rect': (px[0], px[1], size[0], size[1]),
             'depth': obj.get('depth'),
             'alpha': alpha,
             'room_known': room_known,
-        })
+        }
+        # ★ 动效自省：把帧号/总帧数带进指令（回归锁据此断言"真的在动"，
+        #   不必去比对文件名字符串 —— 后者在改名时会静默假过）。
+        if isinstance(anim, dict) and n_frames > 1:
+            item['anim_frame'] = int(name.rsplit('_', 1)[-1].split('.')[0]) \
+                if isinstance(name, str) else 0
+            item['anim_frames'] = n_frames
+        out.append(item)
 
     # ---- 3. 房间边框（房间比**相机**宽才画：满了屏幕就不必再框）----
     #   判据用 `to_output(camera.rect)`（相机视口像素）而不是 `view` ——

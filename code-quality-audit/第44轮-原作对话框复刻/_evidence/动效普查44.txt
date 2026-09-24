@@ -1,0 +1,256 @@
+=== 原作动效全量普查（第44轮续 · anim44.csx @ chapter1_windows/data.win）===
+
+== 动效普查 anim44 ==
+source = E:\Download\_tmp\drw\chapter1_windows\data.win
+[AN1] Rooms = 147
+[AN3] Sprites = 1097
+[AN2] HSpeed/VSpeed 非零的背景层 = 0（第43轮结论 = 0）
+背景层总数 = 191 ；瓦片层总数 = 1
+图层特效(EffectType 非空) = 0（第43轮结论 = 0）
+动画瓦片(AnimationFrames>1) = 0
+房间级 Sequence 总数 = 0
+
+-- 背景层速度值分布（key=hs,vs → 层数）--
+   0,0 → 191
+
+== [D] 对象/sprite 动画 ==
+多帧 sprite 数 = 523 / 1097
+   spr_face_susie_alt x10
+   spr_face_sB x2
+   spr_face_n0 x2
+   spr_face_n1 x2
+   spr_face_t0 x2
+   spr_face_t1 x2
+   spr_face_t2 x2
+   spr_face_t6 x2
+   spr_face_t7 x2
+   spr_face_t9 x2
+   spr_face_r_dark x13
+   spr_face_r_nohat x3
+   spr_face_r_hood x2
+   spr_face_l0 x15
+   spr_face_rudy x8
+   spr_face_asgore0 x2
+   spr_face_asgore1 x2
+   spr_face_asgore2 x2
+   spr_face_asgore3 x2
+   spr_face_asgore4 x2
+   spr_face_asgore6 x2
+   spr_face_catty x9
+   spr_face_bratty x7
+   spr_face_burgerpants x9
+   spr_face_rurus x7
+   spr_face_undyne x8
+   spr_face_king x9
+   spr_alphysface x12
+   spr_chairiel x2
+   spr_bedsheet x2
+   spr_housewindow x2
+   spr_torcar_r x2
+   spr_torcar_l x2
+   spr_torcar_d x8
+   spr_torcar_u x2
+   spr_toriel_hug x4
+   spr_toriel_handhold_r x4
+   spr_toriel_handhold_u x4
+   spr_toriel_d x4
+   spr_toriel_dt x2
+   spr_toriel_u x4
+   spr_toriel_windowopen x3
+   spr_toriel_r x4
+   spr_toriel_rt x2
+   spr_toriel_l x4
+   spr_toriel_lt x2
+   spr_paperfly x3
+   spr_darkdoor x3
+   spr_classdoorslam x8
+   spr_classdoor x2
+   spr_alphysd x4
+   spr_alphysu x2
+   spr_alphysl x4
+   spr_alphysr x4
+   spr_noelle_dt x2
+   spr_noelle_d x4
+   spr_noelle_r x4
+   spr_noelle_l x4
+   spr_noelle_rt x2
+   spr_noelle_lt x2
+   spr_noelle_ut_r x2
+   spr_noelle_ut_l x2
+   spr_berdly_dt x2
+   spr_berdly_ut_l x2
+   spr_berdly_ut_r x2
+   spr_catti_ut x2
+   spr_jockington_rt x2
+   spr_jockington_lt x2
+   spr_tem_sit_l x2
+   spr_tem_sit_r x2
+   spr_tem_eggput x7
+   spr_snowy_dt x2
+   spr_mkid_dt x2
+   spr_susie_grablancer x9
+   spr_susie_laughlancer x2
+   spr_susie_krisshoulder x6
+   spr_susie_krisshoulder_r x6
+   spr_susie_krisgrab x6
+   spr_susie_grabsmile x5
+   spr_susie_krisdrop x6
+   spr_susie_krisgrab_eat x7
+   spr_susie_eatchalk x22
+   spr_susiel x4
+   spr_susiel_plain x4
+   spr_susiel_eyes x4
+   spr_susier_eyes x4
+   spr_susier x4
+   spr_susier_plain x4
+   spr_susieu x4
+   spr_susied x4
+   spr_susied_eyes x4
+   spr_susied_plain x4
+   spr_susiel_dark x4
+   spr_susiel_dark_unhappy x4
+   spr_susier_dark x4
+   spr_susier_dark_unhappy x4
+   spr_susied_dark x4
+   spr_susied_dark_unhappy x4
+   spr_susieu_dark x4
+   spr_susier_dark_laugh x2
+   spr_susiel_dark_laugh x2
+   spr_susied_dark_eyes x4
+   spr_susiel_dark_eyes x4
+   spr_susier_dark_eyes x4
+   spr_ralsei_sit x4
+   spr_ralsei_hood x2
+   spr_ralsei_removehood x8
+   spr_ralseid x4
+   spr_ralseid_blush x4
+   spr_ralseiu x4
+   spr_ralseil x4
+   spr_ralseil_blush x4
+   spr_ralseir x4
+   spr_ralseir_blush x4
+   spr_lancer_lt_laugh x2
+   spr_lancer_lt_laugh_mustache x2
+   spr_lancer_rt_laugh x2
+   spr_ironshackle x2
+   spr_suitsicon_fade x4
+   spr_suitsicon_vandal x4
+   spr_suitsicon x5
+   spr_suitsbutton x6
+   spr_fencedoor x3
+   spr_drdoor x2
+   spr_treasurebox x2
+   spr_hourglass_switch_on x9
+   spr_glowtile_step x11
+   spr_spiketile x2
+   spr_rudy_cough x4
+   spr_rudy_laugh x2
+   spr_onionsan_kawaii x2
+   spr_onionsan_sing x2
+   spr_npc_icewolf x2
+   spr_npc_qc x2
+   spr_npc_most_improved_1997 x2
+   spr_npc_greenfire x4
+   spr_npc_flanneldemon x2
+   spr_npc_dragonfamily x2
+   spr_npc_dresslion x2
+   spr_flowercontainer x7
+   spr_asgored x4
+   spr_asgore_hug x18
+   spr_asgorel x4
+   spr_asgorer x4
+   spr_asgoreu_notpiss x2
+   spr_asgoreu x4
+   spr_npc_icemascot1 x4
+   spr_npc_icemascot2 x4
+   spr_npc_icemascot_fake x4
+   spr_npc_icemascot_takeoff x14
+   spr_npc_burgerpants x2
+   spr_undyne_dt x2
+   spr_undyne_lt x2
+   spr_undyne_rt x2
+   spr_npc_cattydad x2
+   spr_npc_bratty x2
+   spr_npc_catty x2
+   spr_sans_d x4
+   spr_sans_l x4
+   spr_sans_r x4
+   spr_sans_u x4
+   spr_npc_froggit x4
+   spr_npc_heats_wave x2
+   spr_npc_qc_wave x2
+   spr_npc_catty_wave x2
+   spr_npc_cattydad_wave x2
+   spr_undyne_d_wave x2
+   spr_policewindow x4
+   spr_npc_donutcar x2
+   spr_npc_snailcar x2
+   spr_npc_alvin x2
+   spr_npc_rgbun x2
+   spr_npc_rgdragon x2
+   spr_npc_businessguy x2
+   spr_npc_receptionist x2
+   spr_npc_politicsbear x2
+   spr_npc_nurse x2
+   spr_normalnpc x2
+   spr_rurus_idle x2
+   spr_rurus_appear x11
+   spr_puzzlemaster_body x4
+   spr_puzzlemaster_face1 x4
+   spr_npc_puzzlepiece x2
+   spr_npc_puzzlepiece_happy x2
+   spr_npc_puzzlepiece_shaved x2
+   spr_npc_puzzlepiece_jail x2
+   spr_npc_puzzlepiece_shock1 x2
+   spr_npc_puzzlepiece_shock2 x4
+   spr_hammerguy x4
+   spr_hammerguy_hit x9
+   spr_hammerguy_powerup_old x2
+   spr_hammerguy_powerup x2
+   spr_hammerguy_hit_old x9
+   spr_jokerdoor x3
+   spr_jackperson x4
+   spr_ballperson x2
+   spr_npc_gouldensam x4
+   spr_blockler_b x6
+   spr_blockler_o x4
+   spr_bakesale_rudinn x2
+
+=== sprite 播放参数（spranim44.csx，字段名 GMS2PlaybackSpeed）===
+  == 多帧 sprite 播放参数 spranim44 ==
+  [AN1] Sprites = 1097
+  [AN2] watch 命中 = 11 / 11
+  多帧 sprite = 523 / 1097
+  spr_darkdoor	frames=3	speed=1	stype=FramesPerGameFrame	44x56	origin=0,0
+  spr_susier_plain	frames=4	speed=1	stype=FramesPerGameFrame	25x46	origin=0,0
+  spr_shortcut_door	frames=2	speed=1	stype=FramesPerGameFrame	36x52	origin=0,0
+  spr_savepoint	frames=6	speed=1	stype=FramesPerGameFrame	20x19	origin=0,0
+  spr_giantdarkdoor	frames=2	speed=1	stype=FramesPerGameFrame	180x155	origin=35,0
+  spr_fountainedge	frames=1	speed=1	stype=FramesPerGameFrame	100x140	origin=0,0
+  spr_krisu_bright	frames=4	speed=1	stype=FramesPerGameFrame	19x38	origin=0,0
+  [AN3] 关键锚点抽查（下游只在这些命中时才消费）
+     spr_savepoint	frames=6	speed=1	stype=FramesPerGameFrame	20x19	origin=0,0
+
+=== 关键发现 ===
+1) 背景层 HSpeed/VSpeed 非零 = 0 / 191  ⇒ 无背景滚动（复核第43轮：背景移动=相机平移，不是视差）
+2) 图层 EffectType 非空 = 0       ⇒ 无 shader 特效层
+3) 瓦片 AnimationFrames>1 = 0      ⇒ 无瓦片动画
+4) 房间级 Sequence = 0             ⇒ 无时间轴演出
+5) 多帧 sprite = 523 / 1097 (47.7%) ⇒ 唯一动效载体 = sprite 逐帧动画
+6) GMS2PlaybackSpeed 全为 1、Type=FramesPerGameFrame、FPS=30 ⇒ 单帧 33.3ms
+
+=== 产品落地（第44轮续）===
+· 数据层：多帧物件的 objects 元素加 anim{base,frames,frame_ms,src}
+· 参数源：ralsei_pet/assets/scenes/_sprite_anim.json（6 个多帧 sprite）
+· 渲染层：scene_render._anim_frame_index 按毫秒时间戳取帧
+· 覆盖：532 场景 / 2043 objects 中 105 条带动画
+    spr_savepoint 72 / spr_shortcut_door 23 / spr_darkdoor 5 /
+    spr_krisu_bright 3 / spr_giantdarkdoor 1 / spr_susier_plain 1
+
+=== 踩坑留痕（必须保留）===
+第一版脚本用 Speed / PlaybackSpeed 字段名（那是 GML 变量名），
+在 UTMT 的 UndertaleSprite 上这两个属性**根本不存在** ⇒ 静默取到 null
+⇒ 全表 speed=0 的**假数据**（会误推出「原作 sprite 都不动」的错误结论）。
+正确字段名 = GMS2PlaybackSpeed / GMS2PlaybackSpeedType，
+靠打印属性名清单（probespr44.csx）才发现。
+教训：解析器/探针的输出必须先过「已知真值」锚点，否则"提取成功"不等于"提取正确"。

@@ -112,7 +112,13 @@
      "sprite": "objs/spr_shortcut_door_0.png",
      "src": "obj_shortcut_door",
      "depth": 0,
-     "sprite_frames": 2
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_shortcut_door",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     },
     {
      "pos": [750, 175],
@@ -1386,7 +1392,13 @@
      "sprite": "objs/spr_savepoint_0.png",
      "src": "obj_savepoint",
      "depth": 0,
-     "sprite_frames": 6
+     "sprite_frames": 6,
+     "anim": {
+      "base": "objs/spr_savepoint",
+      "frames": 6,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     },
     {
      "pos": [78, -18],

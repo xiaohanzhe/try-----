@@ -880,7 +880,13 @@
      "sprite": "objs/spr_darkdoor_0.png",
      "src": "obj_darkdoor",
      "depth": 900000,
-     "sprite_frames": 3
+     "sprite_frames": 3,
+     "anim": {
+      "base": "objs/spr_darkdoor",
+      "frames": 3,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     }
    ]
   },
@@ -897,7 +903,13 @@
      "sprite": "objs/spr_susier_plain_0.png",
      "src": "obj_insideclosetcutscene",
      "depth": 500000,
-     "sprite_frames": 4
+     "sprite_frames": 4,
+     "anim": {
+      "base": "objs/spr_susier_plain",
+      "frames": 4,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     },
     {
      "pos": [68, 114],

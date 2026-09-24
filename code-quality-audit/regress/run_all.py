@@ -89,7 +89,7 @@ HERMETIC_IDS = frozenset({
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
     'persona_chat', 's8_stream', 's7_event_speech', 'box_round44',
     'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
-    'objects_round44',
+    'objects_round44', 'anim_round44',
 })
 
 
@@ -675,6 +675,25 @@ SUITES = [
                 '（532 个场景 / ★2043 条 == 普查×objmap×objs 三源独立重算）'
                 '+ D 负控制（编造 sprite 名必须判缺 / 普查缺席房间 objects==[] '
                 '且键存在）',
+    },
+    # ★ 第44轮续新增：动效（sprite 逐帧动画）。
+    #   为什么单独立锁：动效是**时间相关**的 —— 它不会在静态数据里"变错"，
+    #   而是在**时间轴上**变错（速度不对 / 永远第 0 帧 / 单帧物件乱动）。
+    #   判据用毫秒量级的真实输入，并配对负控制（单帧不许动、非法 anim 不许抛）。
+    {
+        'id': 'anim_round44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_anim44.py'),
+        'offscreen': False,
+        'desc': '第四十四轮续：动效（sprite 逐帧动画）不许静默失效 —— '
+                'A 数据（_sprite_anim.json 合法 fps=30 / anim 字段齐全 / '
+                'base 的帧文件全在磁盘 / frame_ms 与 1000/(30*speed) 自洽）+ '
+                'B 渲染（帧号随时间前进且周期正确 / plan_frame 传不同 tick 换帧 / '
+                'tick=0 确定性恒第0帧）+ C 负控制（单帧物件名不随 tick 变 / '
+                '非法 anim 不抛且退单帧）。'
+                '★ 动效口径来自实测：原作 191 个背景层 HSpeed/VSpeed 非零 = 0、'
+                'EffectType 非空 = 0、瓦片动画 = 0、房间 Sequence = 0，'
+                '唯一动效载体 = 523/1097 多帧 sprite。',
     },
 ]
 

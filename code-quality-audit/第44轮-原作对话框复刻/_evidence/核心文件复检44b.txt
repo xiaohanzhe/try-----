@@ -1,0 +1,48 @@
+=== 第44轮续 核心文件复检 ===
+时间：2026-09-25 01:30:39
+
+--- 1. 可编译 / 可解析 ---
+[PASS] 1      ralsei_pet\modules\scene_render.py ast.parse 通过（只读，不产 .pyc）
+[PASS] 1      ralsei_pet\src\main.py ast.parse 通过（只读，不产 .pyc）
+[PASS] 1      code-quality-audit\regress\run_all.py ast.parse 通过（只读，不产 .pyc）
+[PASS] 1      code-quality-audit\第44轮-原作对话框复刻\verify_anim44.py ast.parse 通过（只读，不产 .pyc）
+[PASS] 1      code-quality-audit\第44轮-原作对话框复刻\_tools\gen_objects44.py ast.parse 通过（只读，不产 .pyc）
+[PASS] 1      ralsei_pet\assets\scenes\_sprite_anim.json json.load 通过
+
+--- 2. 结构自检 ---
+[PASS] 2a     scene_render 两个关键函数都在
+[PASS] 2b     scene_render 引用 _anim_frame_index 次数 = 3（定义1+调用≥1+注释）
+[PASS] 2c     main.py 真把毫秒 tick 传给 plan_frame
+[PASS] 2d     run_all HERMETIC_IDS 含 two new ids
+[PASS] 2e     run_all SUITES 两个 id 都在
+[PASS] 2f     verify_anim44 真跑：rc=0 输出 [PASS]=11 [FAIL]=0（run_all 按行首 [PASS] 计数 ⇒ 口径一致）
+[PASS] 2g     scene_render 无粘连的 def（可疑行 []）
+
+--- 3. 编码 ---
+[PASS] 3      ralsei_pet\modules\scene_render.py BOM=False U+FFFD=False
+[PASS] 3      ralsei_pet\src\main.py BOM=False U+FFFD=False
+[PASS] 3      code-quality-audit\regress\run_all.py BOM=False U+FFFD=False
+[PASS] 3      code-quality-audit\第44轮-原作对话框复刻\verify_anim44.py BOM=False U+FFFD=False
+[PASS] 3      code-quality-audit\第44轮-原作对话框复刻\_tools\gen_objects44.py BOM=False U+FFFD=False
+[PASS] 3      ralsei_pet\assets\scenes\_sprite_anim.json BOM=False U+FFFD=False
+
+--- 4. 恒真判据复查 ---
+[PASS] 4      code-quality-audit\regress\run_all.py 无恒真判据写法（无）
+[PASS] 4      code-quality-audit\第44轮-原作对话框复刻\verify_anim44.py 无恒真判据写法（无）
+[PASS] 4      code-quality-audit\第44轮-原作对话框复刻\_tools\gen_objects44.py 无恒真判据写法（无）
+
+--- 5. 逐令牌回验（本轮引入的关键令牌必须都在）---
+[PASS] 5      ralsei_pet\modules\scene_render.py 令牌全在（丢 无）
+[PASS] 5      ralsei_pet\src\main.py 令牌全在（丢 无）
+[PASS] 5      code-quality-audit\regress\run_all.py 令牌全在（丢 无）
+[PASS] 5      code-quality-audit\第44轮-原作对话框复刻\verify_anim44.py 令牌全在（丢 无）
+[PASS] 5      code-quality-audit\第44轮-原作对话框复刻\_tools\gen_objects44.py 令牌全在（丢 无）
+[PASS] 5b     _sprite_anim.json 6 个多帧 sprite 全在（丢 无，实有 6）
+[PASS] 5c     数值令牌（fps=30、frame_ms=33.3±0.11）全对（异常 无）
+
+--- 6. 状态与回归 ---
+[PASS] 6a     生产**手写源码**改动恰为 2 个（scene_render.py + main.py）；实测 ['ralsei_pet/modules/scene_render.py', 'ralsei_pet/src/main.py']
+[PASS] 6b     scene_render AST 函数表含两者
+[PASS] 6c     plan_frame 形参含 tick（['scene', 'camera', 'geo_table', 'tick', 'sprite_size']）
+
+=== 结论：PASS=47 FAIL=0 ===

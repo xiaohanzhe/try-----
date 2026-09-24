@@ -1850,7 +1850,12 @@ class RalseiPet(QMainWindow):
             scene.camera_follow(room_rect, self._pet_target_rect(room_rect))
 
             # 2) 出指令（sprite_size 让剔除用真实素材尺寸 —— 见 SceneAssetCache）
-            plan = scene.plan_frame(sprite_size=canvas.assets.sprite_size)
+            #    ★ 动效（第44轮续）：tick 传**毫秒时间戳**，渲染层据此按原作速度
+            #      （30fps × GMS2PlaybackSpeed）取 sprite 当前帧。传墙钟时间而
+            #      不是帧计数器 —— 理由见 scene_render._anim_frame_index 的长注释
+            #      （负载抖动不该改变动画速度）。
+            plan = scene.plan_frame(sprite_size=canvas.assets.sprite_size,
+                                    tick=int(time.time() * 1000))
             # 3) 交给画布（画布自己 resize + update）。
             #    画布尺寸用 `plan_viewport()`（= 收缩后的小房间尺寸 / 大房间的相机尺寸），
             #    而不是相机原始尺寸 —— 小房间要收缩，否则房间只占中间一块

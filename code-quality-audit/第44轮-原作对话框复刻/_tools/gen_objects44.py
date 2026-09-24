@@ -196,7 +196,37 @@ def depth_of(inst):
     return None
 
 
-def object(inst, objmap, frame_idx):
+def load_sprite_anim():
+    """`_sprite_anim.json` → `{'spr_x': {'frames':n,'speed':s,'frame_ms':ms}}`。
+
+    ★ 第44轮续：动效接入。原作 5,523 条实例里**唯一的动效载体 = sprite 逐帧动画**
+      （背景层 HSpeed/VSpeed 非零 = 0、图层 EffectType = 0、瓦片动画 = 0、
+        房间 Sequence = 0 —— 见 `_evidence/动效普查44.txt`）。
+      所以"动效全做"= 让这些物件按原作速度播放。
+    ★ 失败一律当"无动画"（渲染层退回单帧），绝不因此让生成器中止。
+    """
+    p = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', '_sprite_anim.json')
+    if not os.path.isfile(p):
+        return {}
+    try:
+        with io.open(p, 'r', encoding='utf-8') as fh:
+            d = json.load(fh)
+        out = {}
+        for name, rec in (d.get('sprites') or {}).items():
+            if not isinstance(rec, dict):
+                continue
+            try:
+                n = int(rec.get('frames') or 0)
+            except (TypeError, ValueError):
+                continue
+            if n > 1:
+                out[name] = rec
+        return out
+    except Exception:
+        return {}
+
+
+def object(inst, objmap, frame_idx, sprite_anim=None):
     """一条实例 → objects 元素；**不可画（无 sprite）→ None**。
 
     这条 if 是"不画逻辑锚点"的唯一实现点 —— 想改成画锚点只需放宽这里。
@@ -222,8 +252,28 @@ def object(inst, objmap, frame_idx):
     d = depth_of(inst)
     if d is not None:
         out['depth'] = d
-    if len(frames) > 1:
-        out['sprite_frames'] = len(frames)
+    # ★ 动效：多帧 sprite 写 `anim`（基名 + 帧数 + 单帧毫秒）。
+    #   `sprite` 仍指第 0 帧 ⇒ 旧消费者（只认 `sprite`）行为**完全不变**，
+    #   新消费者（渲染层）看到 `anim` 才做逐帧替换。这样动效是**纯增量**。
+    n = len(frames)
+    if n > 1:
+        out['sprite_frames'] = n
+        rec = (sprite_anim or {}).get(spr)
+        ms = None
+        if isinstance(rec, dict):
+            ms = rec.get('frame_ms')
+        if ms is None:
+            # 源参数缺失 → 用原作默认（30fps × speed 1 = 33.3ms），并标注来源。
+            ms = 33.3
+            src = 'default_30fps'
+        else:
+            src = 'original'
+        out['anim'] = {
+            'base': 'objs/%s' % spr,     # 不带帧号的基名（渲染层拼 `_<n>.png`）
+            'frames': n,
+            'frame_ms': float(ms),
+            'src': src,
+        }
     return out
 
 
@@ -231,11 +281,14 @@ def main():
     objmap = parse_objmap(os.path.join(E43, 'objmap43.txt'))
     frame_idx = build_frame_index()
     ok('objs/ 帧索引 %d 个 sprite' % len(frame_idx))
+    sprite_anim = load_sprite_anim()
+    ok('_sprite_anim.json 多帧参数 %d 个 sprite' % len(sprite_anim))
 
     # ---- 1. 建「章:房间id → [objects]」----
     by_room = {}
     inst_total = 0
     drawable_total = 0
+    anim_total = 0
     for ch in INST:
         d = load(os.path.join(E42, INST[ch]))
         for rec in (d.get('rooms') or []):
@@ -246,10 +299,13 @@ def main():
             slot = by_room.setdefault(key, [])
             for it in (rec.get('insts') or []):
                 inst_total += 1
-                ob = object(it, objmap, frame_idx)
+                ob = object(it, objmap, frame_idx, sprite_anim)
                 if ob is not None:
                     slot.append(ob)
                     drawable_total += 1
+                    if ob.get('anim'):
+                        anim_total += 1
+    ok('动画物件（带 anim 字段）= %d' % anim_total)
 
     print('实例总条数 = %d；可绘制 = %d；不可绘（逻辑锚点/无素材） = %d' %
           (inst_total, drawable_total, inst_total - drawable_total))

@@ -109,7 +109,13 @@
      "sprite": "objs/spr_giantdarkdoor_0.png",
      "src": "obj_darkdoorevent",
      "depth": 500000,
-     "sprite_frames": 2
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_giantdarkdoor",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     }
    ]
   }

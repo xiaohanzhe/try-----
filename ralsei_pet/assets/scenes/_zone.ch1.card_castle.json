@@ -652,7 +652,13 @@
      "sprite": "objs/spr_krisu_bright_0.png",
      "src": "obj_fountainkris",
      "depth": 10,
-     "sprite_frames": 4
+     "sprite_frames": 4,
+     "anim": {
+      "base": "objs/spr_krisu_bright",
+      "frames": 4,
+      "frame_ms": 33.3,
+      "src": "original"
+     }
     },
     {
      "pos": [224, 0],

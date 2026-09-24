@@ -21,14 +21,26 @@
       "sprite": "objs/spr_savepoint_0.png",
       "src": "obj_savepoint",
       "depth": 0,
-      "sprite_frames": 6
+      "sprite_frames": 6,
+      "anim": {
+        "base": "objs/spr_savepoint",
+        "frames": 6,
+        "frame_ms": 33.3,
+        "src": "original"
+      }
     },
     {
       "pos": [980, 280],
       "sprite": "objs/spr_savepoint_0.png",
       "src": "obj_savepoint",
       "depth": 0,
-      "sprite_frames": 6
+      "sprite_frames": 6,
+      "anim": {
+        "base": "objs/spr_savepoint",
+        "frames": 6,
+        "frame_ms": 33.3,
+        "src": "original"
+      }
     }
   ],
   "anchors": {},
