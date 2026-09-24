@@ -11,7 +11,21 @@
    "name_derived": true,
    "original_room_id": 80,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [307, 361],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [269, 459],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 0
+    }
+   ]
   },
   "ch3.card_castle.cc_clover": {
    "name": "纸牌城堡·clover",
@@ -19,7 +33,21 @@
    "name_derived": true,
    "original_room_id": 81,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 470],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 390],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    }
+   ]
   },
   "ch3.card_castle.cc_fountain": {
    "name": "纸牌城堡·fountain",
@@ -27,7 +55,22 @@
    "name_derived": true,
    "original_room_id": 82,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 260],
+     "sprite": "objs/spr_krisu_bright_0.png",
+     "src": "obj_fountainkris",
+     "depth": 10,
+     "sprite_frames": 4
+    },
+    {
+     "pos": [224, 0],
+     "sprite": "objs/spr_fountainedge_0.png",
+     "src": "obj_darkfountain",
+     "depth": 1100000
+    }
+   ]
   }
  }
 }

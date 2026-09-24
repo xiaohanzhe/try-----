@@ -1,0 +1,32 @@
+索引顶层键 = ['chapters', 'default_scene', 'meta', 'schema_version']
+索引登记场景（三级展开）= 1014
+索引章 = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'desktop']
+[PASS] A1 索引登记场景 1014 条（三级 chapters[章].areas[区].scenes）
+
+=== 数据面统计（分片实体） ===
+场景实体总数           : 926
+带 objects 的场景      : 0 (0.0%)
+objects 总条数         : 0
+单场景 objects 最大值  : 0
+物件带 sprite/image/asset : 0
+物件带 pos(len==2)     : 0
+带 bg 非空的场景       : 148 (16.0%)
+带 original_room_id    : 926 (100.0%)
+
+=== 逐章（章号取自文件名） ===
+章          场景     带obj      带bg     带oid     obj数
+ch1       109        0       21      109        0
+ch2       215        0       37      215        0
+ch3       179        0       30      179        0
+ch4       242        0       34      242        0
+ch5       181        0       26      181        0
+
+!! 没有任何场景带 objects
+
+=== 判据 ===
+[PASS] C1 索引登记场景 1014 条
+[PASS] C2 分片实体 926 条
+[PASS] C3 逐章统计非空（5 章）
+[PASS] C4 original_room_id 覆盖 926/926
+
+RESULT: FAIL=0

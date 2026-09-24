@@ -12,7 +12,21 @@
    "original_room_id": 44,
    "bg": "bg/ch2_light_world_lw_computer_lab.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_lw_computer_lab"
+   "bg_asset": "bg_lw_computer_lab",
+   "objects": [
+    {
+     "pos": [152, 178],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 0
+    },
+    {
+     "pos": [130, 230],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.light_world.lw_library_upstairs": {
    "name": "光世界·library_upstairs",
@@ -21,7 +35,21 @@
    "original_room_id": 45,
    "bg": "bg/ch2_light_world_lw_library_upstairs.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_lw_library_upstairs"
+   "bg_asset": "bg_lw_library_upstairs",
+   "objects": [
+    {
+     "pos": [231, 188],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 0
+    },
+    {
+     "pos": [213, 231],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.light_world.lw_police": {
    "name": "光世界·police",
@@ -30,7 +58,15 @@
    "original_room_id": 46,
    "bg": "bg/ch2_light_world_lw_police.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_lw_police_house_base"
+   "bg_asset": "bg_lw_police_house_base",
+   "objects": [
+    {
+     "pos": [148, 187],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 0
+    }
+   ]
   },
   "ch2.light_world.lw_conbini": {
    "name": "光世界·conbini",
@@ -39,7 +75,21 @@
    "original_room_id": 47,
    "bg": "bg/ch2_light_world_lw_conbini.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_lw_sans_conbini"
+   "bg_asset": "bg_lw_sans_conbini",
+   "objects": [
+    {
+     "pos": [369, 183],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    },
+    {
+     "pos": [348, 230],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.light_world.lw_icee_pizza": {
    "name": "光世界·icee_pizza",
@@ -48,7 +98,21 @@
    "original_room_id": 48,
    "bg": "bg/ch2_light_world_lw_icee_pizza.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_lw_ice_e_pizza"
+   "bg_asset": "bg_lw_ice_e_pizza",
+   "objects": [
+    {
+     "pos": [124, 231],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [141, 177],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    }
+   ]
   }
  }
 }

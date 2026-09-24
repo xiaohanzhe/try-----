@@ -1,0 +1,18 @@
+[PASS] objs/ 帧索引 25 个 sprite
+实例总条数 = 5523；可绘制 = 2067；不可绘（逻辑锚点/无素材） = 3456
+[PASS] A1 可绘制实例 2067 条（>0）
+[PASS] B1 索引里独立文件场景 87 个
+
+分片文件写回 0 / 61
+覆盖场景（分片，有 original_room_id） = 926，其中带可绘制物件 = 455
+独立文件场景 = 87，其中带可绘制物件 = 77，写入 = 0
+
+=== 锚点自检（磁盘真值）===
+ch1:3 (ch1.home.krishallway) objects=[{"pos": [289, 104], "sprite": "objs/spr_doorB_0.png", "src": "obj_doorB", "depth": 0}, {"pos": [289, 112], "sprite": "objs/spr_markerA_0.png", "src": "obj_markerA", "depth": 0}, {"pos": [425, 100], "sprite": "objs/spr_doorC_0.png", "src": "obj_doorC", "depth": 0}, {"pos": [426, 118], "sprite": "objs/spr_markerD_0.png", "src": "obj_markerD", "depth": 0}]
+[PASS] A2 ch1:3 objects == 4
+ch1:2 (ch1.kris_room.kris_s_room) objects=[{"pos": [155, 230], "sprite": "objs/spr_doorA_0.png", "src": "obj_doorA", "depth": 0}, {"pos": [155, 185], "sprite": "objs/spr_markerB_0.png", "src": "obj_markerB", "depth": 0}]
+[PASS] A3 ch1:2（独立文件载体）objects == 2
+负控制 ch1:4 (ch1.home.torroom) objects=[]
+[PASS] A4 负控制 ch1:4（普查缺席）objects == [] 且存在键
+
+RESULT: FAIL=0

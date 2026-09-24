@@ -11,7 +11,33 @@
    "name_derived": true,
    "original_room_id": 74,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [10, 200],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [830, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [790, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area1": {
    "name": "猩红森林·area1",
@@ -19,7 +45,33 @@
    "name_derived": true,
    "original_room_id": 75,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [40, 160],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1390, 760],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1340, 760],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area2": {
    "name": "猩红森林·area2",
@@ -27,7 +79,45 @@
    "name_derived": true,
    "original_room_id": 76,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 640],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [40, 640],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [80, 0],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [120, 0],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1360, 200],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [1320, 200],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area2a": {
    "name": "猩红森林·area2A",
@@ -35,7 +125,21 @@
    "name_derived": true,
    "original_room_id": 77,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_puzzle1": {
    "name": "猩红森林·puzzle1",
@@ -43,7 +147,33 @@
    "name_derived": true,
    "original_room_id": 78,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [20, 240],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [630, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [590, 240],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_beforeclover": {
    "name": "猩红森林·beforeclover",
@@ -51,7 +181,45 @@
    "name_derived": true,
    "original_room_id": 79,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [1500, 280],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [1460, 240],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 0
+    },
+    {
+     "pos": [400, 0],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [420, 20],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [20, 240],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area3a": {
    "name": "猩红森林·area3A",
@@ -59,7 +227,21 @@
    "name_derived": true,
    "original_room_id": 80,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 460],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [340, 380],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area3": {
    "name": "猩红森林·area3",
@@ -67,7 +249,33 @@
    "name_derived": true,
    "original_room_id": 81,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [540, 20],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [520, 0],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 400],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [20, 400],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_smith": {
    "name": "猩红森林·smith",
@@ -75,7 +283,21 @@
    "name_derived": true,
    "original_room_id": 83,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 360],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area4": {
    "name": "猩红森林·area4",
@@ -83,7 +305,39 @@
    "name_derived": true,
    "original_room_id": 84,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1390, 720],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1340, 700],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [20, 700],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 720],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [1340, 700],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_dancers1": {
    "name": "猩红森林·dancers1",
@@ -91,7 +345,57 @@
    "name_derived": true,
    "original_room_id": 85,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [20, 280],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1620, 640],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [1580, 620],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 0
+    },
+    {
+     "pos": [440, 1470],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [460, 1360],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1400, 1360],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [1400, 1470],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_secret1": {
    "name": "猩红森林·secret1",
@@ -99,7 +403,33 @@
    "name_derived": true,
    "original_room_id": 86,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [200, 0],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [800, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [220, 10],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [800, 10],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_thrashmaker": {
    "name": "猩红森林·thrashmaker",
@@ -107,7 +437,33 @@
    "name_derived": true,
    "original_room_id": 87,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [560, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [40, 200],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_starwalker": {
    "name": "猩红森林·starwalker",
@@ -115,7 +471,39 @@
    "name_derived": true,
    "original_room_id": 88,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [20, 280],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [2620, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [2580, 280],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [2580, 280],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_area5": {
    "name": "猩红森林·area5",
@@ -123,7 +511,33 @@
    "name_derived": true,
    "original_room_id": 89,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 520],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [20, 520],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1660, 520],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1620, 520],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_maze1": {
    "name": "猩红森林·maze1",
@@ -131,7 +545,45 @@
    "name_derived": true,
    "original_room_id": 91,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 665],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 580],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 580],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [400, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [295, 195],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_maze_deadend": {
    "name": "猩红森林·maze_deadend",
@@ -139,7 +591,21 @@
    "name_derived": true,
    "original_room_id": 92,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 464],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 382],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_maze_susie": {
    "name": "猩红森林·maze_susie",
@@ -147,7 +613,39 @@
    "name_derived": true,
    "original_room_id": 93,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 665],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 580],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 580],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [280, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 20],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_maze2": {
    "name": "猩红森林·maze2",
@@ -155,7 +653,51 @@
    "name_derived": true,
    "original_room_id": 94,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 860],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 770],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 770],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [120, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [440, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [295, 195],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [280, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_maze_deadend2": {
    "name": "猩红森林·maze_deadend2",
@@ -163,7 +705,21 @@
    "name_derived": true,
    "original_room_id": 95,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 382],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [280, 470],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_afterthrash2": {
    "name": "猩红森林·afterthrash2",
@@ -171,7 +727,39 @@
    "name_derived": true,
    "original_room_id": 98,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [40, 200],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1440, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1480, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [40, 200],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_afterthrash3": {
    "name": "猩红森林·afterthrash3",
@@ -179,7 +767,33 @@
    "name_derived": true,
    "original_room_id": 99,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [40, 200],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1440, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1480, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_afterthrash4": {
    "name": "猩红森林·afterthrash4",
@@ -187,7 +801,33 @@
    "name_derived": true,
    "original_room_id": 100,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [40, 200],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1440, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1480, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_castleview": {
    "name": "猩红森林·castleview",
@@ -195,7 +835,33 @@
    "name_derived": true,
    "original_room_id": 101,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [40, 240],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1920, 240],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1960, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_chase1": {
    "name": "猩红森林·chase1",
@@ -203,7 +869,27 @@
    "name_derived": true,
    "original_room_id": 102,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [40, 240],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [2920, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [2960, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_chase2": {
    "name": "猩红森林·chase2",
@@ -211,7 +897,33 @@
    "name_derived": true,
    "original_room_id": 103,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 2720],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [280, 0],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [300, 40],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 40],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   },
   "ch1.forest.forest_castlefront": {
    "name": "猩红森林·castlefront",
@@ -220,7 +932,39 @@
    "original_room_id": 104,
    "bg": "bg/ch1_forest_forest_castlefront.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_cardcastle_outside"
+   "bg_asset": "bg_cardcastle_outside",
+   "objects": [
+    {
+     "pos": [300, 1080],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [280, 1180],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [300, 1080],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [240, 630],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 660],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 0
+    }
+   ]
   }
  }
 }

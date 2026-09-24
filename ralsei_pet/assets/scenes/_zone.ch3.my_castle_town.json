@@ -11,7 +11,21 @@
    "name_derived": true,
    "original_room_id": 53,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 50000
+    },
+    {
+     "pos": [20, 300],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 50000
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_west_cliff": {
    "name": "我的城堡镇·west_cliff",
@@ -20,7 +34,27 @@
    "original_room_id": 54,
    "bg": "bg/ch3_my_castle_town_dw_castle_west_cliff.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_darkwest_fixed"
+   "bg_asset": "bg_darkwest_fixed",
+   "objects": [
+    {
+     "pos": [567, 260],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 50000
+    },
+    {
+     "pos": [630, 280],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 50000
+    },
+    {
+     "pos": [567, 261],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 50000
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_area_1": {
    "name": "我的城堡镇·area_1",
@@ -28,7 +62,27 @@
    "name_derived": true,
    "original_room_id": 55,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [297, 23],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [200, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [297, 25],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_town": {
    "name": "我的城堡镇·dw_castle_town",
@@ -36,7 +90,112 @@
    "name_derived": true,
    "original_room_id": 56,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [833, 297],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    },
+    {
+     "pos": [702, 1587],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [1512, 1151],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [-12, 1159],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [684, 192],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [740, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [990, 838],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [878, 578],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [472, 813],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    },
+    {
+     "pos": [746, 1495],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [26, 1135],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerr",
+     "depth": 100
+    },
+    {
+     "pos": [1441, 1125],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [889, 577],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markers",
+     "depth": 100
+    },
+    {
+     "pos": [986, 800],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [499, 806],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    },
+    {
+     "pos": [567, 566],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    },
+    {
+     "pos": [520, 569],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_restaurant": {
    "name": "我的城堡镇·restaurant",
@@ -45,7 +204,21 @@
    "original_room_id": 58,
    "bg": "bg/ch3_my_castle_town_dw_castle_restaurant.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_dw_bakery_counter"
+   "bg_asset": "bg_dw_bakery_counter",
+   "objects": [
+    {
+     "pos": [308, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [276, 466],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_cafe": {
    "name": "我的城堡镇·cafe",
@@ -54,7 +227,21 @@
    "original_room_id": 59,
    "bg": "bg/ch3_my_castle_town_dw_castle_cafe.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_dw_castle_cafe_in"
+   "bg_asset": "bg_dw_castle_cafe_in",
+   "objects": [
+    {
+     "pos": [440, 320],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [392, 427],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_dojo": {
    "name": "我的城堡镇·dojo",
@@ -62,7 +249,21 @@
    "name_derived": true,
    "original_room_id": 60,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 379],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_dungeon": {
    "name": "我的城堡镇·dungeon",
@@ -70,7 +271,21 @@
    "name_derived": true,
    "original_room_id": 63,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [110, 470],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [150, 360],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_rooms_kris": {
    "name": "我的城堡镇·rooms_kris",
@@ -79,7 +294,21 @@
    "original_room_id": 64,
    "bg": "bg/ch3_my_castle_town_dw_castle_rooms_kris.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_dw_kris_room"
+   "bg_asset": "bg_dw_kris_room",
+   "objects": [
+    {
+     "pos": [280, 450],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [320, 360],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    }
+   ]
   },
   "ch3.my_castle_town.dw_castle_rooms_susie": {
    "name": "我的城堡镇·rooms_susie",
@@ -88,7 +317,21 @@
    "original_room_id": 65,
    "bg": "bg/ch3_my_castle_town_dw_castle_rooms_susie.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_dw_susie_room_1"
+   "bg_asset": "bg_dw_susie_room_1",
+   "objects": [
+    {
+     "pos": [257, 465],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [288, 362],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   }
  }
 }

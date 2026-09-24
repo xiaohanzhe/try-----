@@ -11,7 +11,27 @@
    "name_derived": true,
    "original_room_id": 34,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [630, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [590, 180],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [80, 50],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_darkwakeevent",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark2": {
    "name": "黑暗世界·dark2",
@@ -19,7 +39,33 @@
    "name_derived": true,
    "original_room_id": 36,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [10, 180],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [3630, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [3570, 290],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark3": {
    "name": "黑暗世界·dark3",
@@ -27,7 +73,45 @@
    "name_derived": true,
    "original_room_id": 37,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 360],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [20, 340],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [1000, 1270],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1510, 920],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [1020, 1180],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [1460, 900],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark3a": {
    "name": "黑暗世界·dark3a",
@@ -35,7 +119,21 @@
    "name_derived": true,
    "original_room_id": 38,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [400, -20],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [440, 0],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark_wobbles": {
    "name": "黑暗世界·wobbles",
@@ -43,7 +141,33 @@
    "name_derived": true,
    "original_room_id": 39,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 320],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [10, 300],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [1310, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1260, 300],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark7": {
    "name": "黑暗世界·dark7",
@@ -51,7 +175,33 @@
    "name_derived": true,
    "original_room_id": 41,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [2030, 680],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1980, 660],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [10, 220],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark_chase1": {
    "name": "黑暗世界·chase1",
@@ -60,7 +210,27 @@
    "original_room_id": 42,
    "bg": "bg/ch1_dark_world_dark_chase1.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_darkstone_1"
+   "bg_asset": "bg_darkstone_1",
+   "objects": [
+    {
+     "pos": [5390, 800],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 520],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [10, 500],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.dark_world.dark_chase2": {
    "name": "黑暗世界·chase2",
@@ -69,7 +239,15 @@
    "original_room_id": 43,
    "bg": "bg/ch1_dark_world_dark_chase2.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_darkstone_1"
+   "bg_asset": "bg_darkstone_1",
+   "objects": [
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   }
  }
 }

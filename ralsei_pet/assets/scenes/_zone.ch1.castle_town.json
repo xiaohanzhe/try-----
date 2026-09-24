@@ -11,7 +11,21 @@
    "name_derived": true,
    "original_room_id": 44,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [630, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [580, 260],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.castle_town.castle_front": {
    "name": "城堡镇·front",
@@ -20,7 +34,21 @@
    "original_room_id": 46,
    "bg": "bg/ch1_castle_town_castle_front.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_darkcastle_front"
+   "bg_asset": "bg_darkcastle_front",
+   "objects": [
+    {
+     "pos": [440, 990],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [500, 884],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch1.castle_town.castle_tutorial": {
    "name": "城堡镇·tutorial",
@@ -28,7 +56,33 @@
    "name_derived": true,
    "original_room_id": 47,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [10, 310],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [1390, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1350, 300],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   },
   "ch1.castle_town.castle_darkdoor": {
    "name": "城堡镇·darkdoor",
@@ -36,7 +90,28 @@
    "name_derived": true,
    "original_room_id": 48,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 320],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [10, 300],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [330, 10],
+     "sprite": "objs/spr_giantdarkdoor_0.png",
+     "src": "obj_darkdoorevent",
+     "depth": 500000,
+     "sprite_frames": 2
+    }
+   ]
   }
  }
 }

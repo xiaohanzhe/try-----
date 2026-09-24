@@ -1,0 +1,536 @@
+{
+ "schema_version": 1,
+ "note": "实例普查里可绘制 obj 的 sprite 复制清单（第44轮 objects 补全用）",
+ "source_root": "E:\\Download\\_tmp\\dr_out",
+ "spr_names": [
+  "spr_darkdoor",
+  "spr_doorA",
+  "spr_doorB",
+  "spr_doorC",
+  "spr_doorD",
+  "spr_doorE",
+  "spr_doorF",
+  "spr_doorW",
+  "spr_doorX",
+  "spr_event",
+  "spr_fountainedge",
+  "spr_giantdarkdoor",
+  "spr_krisu_bright",
+  "spr_markerA",
+  "spr_markerB",
+  "spr_markerC",
+  "spr_markerD",
+  "spr_markerE",
+  "spr_markerF",
+  "spr_markerW",
+  "spr_markerX",
+  "spr_papersit",
+  "spr_savepoint",
+  "spr_shortcut_door",
+  "spr_susier_plain"
+ ],
+ "plan": {
+  "spr_darkdoor": {
+   "ch1": [
+    "spr_darkdoor_0.png",
+    "spr_darkdoor_1.png",
+    "spr_darkdoor_2.png"
+   ],
+   "ch2": [
+    "spr_darkdoor_0.png",
+    "spr_darkdoor_1.png",
+    "spr_darkdoor_2.png"
+   ],
+   "ch3": [
+    "spr_darkdoor_0.png",
+    "spr_darkdoor_1.png",
+    "spr_darkdoor_2.png"
+   ],
+   "ch4": [
+    "spr_darkdoor_0.png",
+    "spr_darkdoor_1.png",
+    "spr_darkdoor_2.png"
+   ],
+   "ch5": [
+    "spr_darkdoor_0.png",
+    "spr_darkdoor_1.png",
+    "spr_darkdoor_2.png"
+   ]
+  },
+  "spr_doorA": {
+   "ch1": [
+    "spr_doorA_0.png"
+   ],
+   "ch2": [
+    "spr_doorA_0.png"
+   ],
+   "ch3": [
+    "spr_doorA_0.png"
+   ],
+   "ch4": [
+    "spr_doorA_0.png"
+   ],
+   "ch5": [
+    "spr_doorA_0.png"
+   ]
+  },
+  "spr_doorB": {
+   "ch1": [
+    "spr_doorB_0.png"
+   ],
+   "ch2": [
+    "spr_doorB_0.png"
+   ],
+   "ch3": [
+    "spr_doorB_0.png"
+   ],
+   "ch4": [
+    "spr_doorB_0.png"
+   ],
+   "ch5": [
+    "spr_doorB_0.png"
+   ]
+  },
+  "spr_doorC": {
+   "ch1": [
+    "spr_doorC_0.png"
+   ],
+   "ch2": [
+    "spr_doorC_0.png"
+   ],
+   "ch3": [
+    "spr_doorC_0.png"
+   ],
+   "ch4": [
+    "spr_doorC_0.png"
+   ],
+   "ch5": [
+    "spr_doorC_0.png"
+   ]
+  },
+  "spr_doorD": {
+   "ch1": [
+    "spr_doorD_0.png"
+   ],
+   "ch2": [
+    "spr_doorD_0.png"
+   ],
+   "ch3": [
+    "spr_doorD_0.png"
+   ],
+   "ch4": [
+    "spr_doorD_0.png"
+   ],
+   "ch5": [
+    "spr_doorD_0.png"
+   ]
+  },
+  "spr_doorE": {
+   "ch1": [
+    "spr_doorE_0.png"
+   ],
+   "ch2": [
+    "spr_doorE_0.png"
+   ],
+   "ch3": [
+    "spr_doorE_0.png"
+   ],
+   "ch4": [
+    "spr_doorE_0.png"
+   ],
+   "ch5": [
+    "spr_doorE_0.png"
+   ]
+  },
+  "spr_doorF": {
+   "ch1": [
+    "spr_doorF_0.png"
+   ],
+   "ch2": [
+    "spr_doorF_0.png"
+   ],
+   "ch3": [
+    "spr_doorF_0.png"
+   ],
+   "ch4": [
+    "spr_doorF_0.png"
+   ],
+   "ch5": [
+    "spr_doorF_0.png"
+   ]
+  },
+  "spr_doorW": {
+   "ch1": [
+    "spr_doorW_0.png"
+   ],
+   "ch2": [
+    "spr_doorW_0.png"
+   ],
+   "ch3": [
+    "spr_doorW_0.png"
+   ],
+   "ch4": [
+    "spr_doorW_0.png"
+   ],
+   "ch5": [
+    "spr_doorW_0.png"
+   ]
+  },
+  "spr_doorX": {
+   "ch1": [
+    "spr_doorX_0.png"
+   ],
+   "ch2": [
+    "spr_doorX_0.png"
+   ],
+   "ch3": [
+    "spr_doorX_0.png"
+   ],
+   "ch4": [
+    "spr_doorX_0.png"
+   ],
+   "ch5": [
+    "spr_doorX_0.png"
+   ]
+  },
+  "spr_event": {
+   "ch1": [
+    "spr_event_0.png"
+   ],
+   "ch2": [
+    "spr_event_0.png"
+   ],
+   "ch3": [
+    "spr_event_0.png"
+   ],
+   "ch4": [
+    "spr_event_0.png"
+   ],
+   "ch5": [
+    "spr_event_0.png"
+   ]
+  },
+  "spr_fountainedge": {
+   "ch1": [
+    "spr_fountainedge_0.png"
+   ],
+   "ch2": [
+    "spr_fountainedge_0.png"
+   ],
+   "ch3": [
+    "spr_fountainedge_0.png"
+   ],
+   "ch4": [
+    "spr_fountainedge_0.png"
+   ],
+   "ch5": [
+    "spr_fountainedge_0.png"
+   ]
+  },
+  "spr_giantdarkdoor": {
+   "ch1": [
+    "spr_giantdarkdoor_0.png",
+    "spr_giantdarkdoor_1.png"
+   ],
+   "ch2": [
+    "spr_giantdarkdoor_0.png",
+    "spr_giantdarkdoor_1.png"
+   ],
+   "ch3": [
+    "spr_giantdarkdoor_0.png",
+    "spr_giantdarkdoor_1.png"
+   ],
+   "ch4": [
+    "spr_giantdarkdoor_0.png",
+    "spr_giantdarkdoor_1.png"
+   ],
+   "ch5": [
+    "spr_giantdarkdoor_0.png",
+    "spr_giantdarkdoor_1.png"
+   ]
+  },
+  "spr_krisu_bright": {
+   "ch1": [
+    "spr_krisu_bright_0.png",
+    "spr_krisu_bright_1.png",
+    "spr_krisu_bright_2.png",
+    "spr_krisu_bright_3.png"
+   ],
+   "ch2": [
+    "spr_krisu_bright_0.png",
+    "spr_krisu_bright_1.png",
+    "spr_krisu_bright_2.png",
+    "spr_krisu_bright_3.png"
+   ],
+   "ch3": [
+    "spr_krisu_bright_0.png",
+    "spr_krisu_bright_1.png",
+    "spr_krisu_bright_2.png",
+    "spr_krisu_bright_3.png"
+   ],
+   "ch4": [
+    "spr_krisu_bright_0.png",
+    "spr_krisu_bright_1.png",
+    "spr_krisu_bright_2.png",
+    "spr_krisu_bright_3.png"
+   ],
+   "ch5": [
+    "spr_krisu_bright_0.png",
+    "spr_krisu_bright_1.png",
+    "spr_krisu_bright_2.png",
+    "spr_krisu_bright_3.png"
+   ]
+  },
+  "spr_markerA": {
+   "ch1": [
+    "spr_markerA_0.png"
+   ],
+   "ch2": [
+    "spr_markerA_0.png"
+   ],
+   "ch3": [
+    "spr_markerA_0.png"
+   ],
+   "ch4": [
+    "spr_markerA_0.png"
+   ],
+   "ch5": [
+    "spr_markerA_0.png"
+   ]
+  },
+  "spr_markerB": {
+   "ch1": [
+    "spr_markerB_0.png"
+   ],
+   "ch2": [
+    "spr_markerB_0.png"
+   ],
+   "ch3": [
+    "spr_markerB_0.png"
+   ],
+   "ch4": [
+    "spr_markerB_0.png"
+   ],
+   "ch5": [
+    "spr_markerB_0.png"
+   ]
+  },
+  "spr_markerC": {
+   "ch1": [
+    "spr_markerC_0.png"
+   ],
+   "ch2": [
+    "spr_markerC_0.png"
+   ],
+   "ch3": [
+    "spr_markerC_0.png"
+   ],
+   "ch4": [
+    "spr_markerC_0.png"
+   ],
+   "ch5": [
+    "spr_markerC_0.png"
+   ]
+  },
+  "spr_markerD": {
+   "ch1": [
+    "spr_markerD_0.png"
+   ],
+   "ch2": [
+    "spr_markerD_0.png"
+   ],
+   "ch3": [
+    "spr_markerD_0.png"
+   ],
+   "ch4": [
+    "spr_markerD_0.png"
+   ],
+   "ch5": [
+    "spr_markerD_0.png"
+   ]
+  },
+  "spr_markerE": {
+   "ch1": [
+    "spr_markerE_0.png"
+   ],
+   "ch2": [
+    "spr_markerE_0.png"
+   ],
+   "ch3": [
+    "spr_markerE_0.png"
+   ],
+   "ch4": [
+    "spr_markerE_0.png"
+   ],
+   "ch5": [
+    "spr_markerE_0.png"
+   ]
+  },
+  "spr_markerF": {
+   "ch1": [
+    "spr_markerF_0.png"
+   ],
+   "ch2": [
+    "spr_markerF_0.png"
+   ],
+   "ch3": [
+    "spr_markerF_0.png"
+   ],
+   "ch4": [
+    "spr_markerF_0.png"
+   ],
+   "ch5": [
+    "spr_markerF_0.png"
+   ]
+  },
+  "spr_markerW": {
+   "ch1": [
+    "spr_markerW_0.png"
+   ],
+   "ch2": [
+    "spr_markerW_0.png"
+   ],
+   "ch3": [
+    "spr_markerW_0.png"
+   ],
+   "ch4": [
+    "spr_markerW_0.png"
+   ],
+   "ch5": [
+    "spr_markerW_0.png"
+   ]
+  },
+  "spr_markerX": {
+   "ch1": [
+    "spr_markerX_0.png"
+   ],
+   "ch2": [
+    "spr_markerX_0.png"
+   ],
+   "ch3": [
+    "spr_markerX_0.png"
+   ],
+   "ch4": [
+    "spr_markerX_0.png"
+   ],
+   "ch5": [
+    "spr_markerX_0.png"
+   ]
+  },
+  "spr_papersit": {
+   "ch1": [
+    "spr_papersit_0.png"
+   ],
+   "ch2": [
+    "spr_papersit_0.png"
+   ],
+   "ch3": [
+    "spr_papersit_0.png"
+   ],
+   "ch4": [
+    "spr_papersit_0.png"
+   ],
+   "ch5": [
+    "spr_papersit_0.png"
+   ]
+  },
+  "spr_savepoint": {
+   "ch1": [
+    "spr_savepoint_0.png",
+    "spr_savepoint_1.png",
+    "spr_savepoint_2.png",
+    "spr_savepoint_3.png",
+    "spr_savepoint_4.png",
+    "spr_savepoint_5.png"
+   ],
+   "ch2": [
+    "spr_savepoint_0.png",
+    "spr_savepoint_1.png",
+    "spr_savepoint_2.png",
+    "spr_savepoint_3.png",
+    "spr_savepoint_4.png",
+    "spr_savepoint_5.png"
+   ],
+   "ch3": [
+    "spr_savepoint_0.png",
+    "spr_savepoint_1.png",
+    "spr_savepoint_2.png",
+    "spr_savepoint_3.png",
+    "spr_savepoint_4.png",
+    "spr_savepoint_5.png"
+   ],
+   "ch4": [
+    "spr_savepoint_0.png",
+    "spr_savepoint_1.png",
+    "spr_savepoint_2.png",
+    "spr_savepoint_3.png",
+    "spr_savepoint_4.png",
+    "spr_savepoint_5.png"
+   ],
+   "ch5": [
+    "spr_savepoint_0.png",
+    "spr_savepoint_1.png",
+    "spr_savepoint_2.png",
+    "spr_savepoint_3.png",
+    "spr_savepoint_4.png",
+    "spr_savepoint_5.png"
+   ]
+  },
+  "spr_shortcut_door": {
+   "ch1": [
+    "spr_shortcut_door_0.png",
+    "spr_shortcut_door_1.png"
+   ],
+   "ch2": [
+    "spr_shortcut_door_0.png",
+    "spr_shortcut_door_1.png"
+   ],
+   "ch3": [
+    "spr_shortcut_door_0.png",
+    "spr_shortcut_door_1.png"
+   ],
+   "ch4": [
+    "spr_shortcut_door_0.png",
+    "spr_shortcut_door_1.png"
+   ],
+   "ch5": [
+    "spr_shortcut_door_0.png",
+    "spr_shortcut_door_1.png"
+   ]
+  },
+  "spr_susier_plain": {
+   "ch1": [
+    "spr_susier_plain_0.png",
+    "spr_susier_plain_1.png",
+    "spr_susier_plain_2.png",
+    "spr_susier_plain_3.png"
+   ],
+   "ch2": [
+    "spr_susier_plain_0.png",
+    "spr_susier_plain_1.png",
+    "spr_susier_plain_2.png",
+    "spr_susier_plain_3.png"
+   ],
+   "ch3": [
+    "spr_susier_plain_0.png",
+    "spr_susier_plain_1.png",
+    "spr_susier_plain_2.png",
+    "spr_susier_plain_3.png"
+   ],
+   "ch4": [
+    "spr_susier_plain_0.png",
+    "spr_susier_plain_1.png",
+    "spr_susier_plain_2.png",
+    "spr_susier_plain_3.png"
+   ],
+   "ch5": [
+    "spr_susier_plain_0.png",
+    "spr_susier_plain_1.png",
+    "spr_susier_plain_2.png",
+    "spr_susier_plain_3.png"
+   ]
+  }
+ },
+ "total_files": 200,
+ "total_bytes": 131762
+}

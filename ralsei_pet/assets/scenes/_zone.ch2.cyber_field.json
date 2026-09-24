@@ -11,7 +11,15 @@
    "name_derived": true,
    "original_room_id": 74,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_intro_connector": {
    "name": "赛博原野·intro_connector",
@@ -19,7 +27,22 @@
    "name_derived": true,
    "original_room_id": 75,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [440, 202],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    },
+    {
+     "pos": [2300, 1200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_intro_2": {
    "name": "赛博原野·intro_2",
@@ -27,7 +50,33 @@
    "name_derived": true,
    "original_room_id": 76,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1260, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1216, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_rhythm_slide": {
    "name": "赛博原野·rhythm_slide",
@@ -35,7 +84,21 @@
    "name_derived": true,
    "original_room_id": 77,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [40, 80],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [69, 100],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_battle_maze_1": {
    "name": "赛博原野·battle_maze_1",
@@ -43,7 +106,33 @@
    "name_derived": true,
    "original_room_id": 79,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1660, 160],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [26, 182],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1616, 166],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_music_bullet": {
    "name": "赛博原野·music_bullet",
@@ -51,7 +140,33 @@
    "name_derived": true,
    "original_room_id": 80,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 2000],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 2006],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1420, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1376, 262],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_tasque_battle": {
    "name": "赛博原野·tasque_battle",
@@ -59,7 +174,45 @@
    "name_derived": true,
    "original_room_id": 81,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1256, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1300, 1000],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 100
+    },
+    {
+     "pos": [1256, 982],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 100
+    },
+    {
+     "pos": [1300, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_keyboard_puzzle_1": {
    "name": "赛博原野·keyboard_puzzle_1",
@@ -67,7 +220,21 @@
    "name_derived": true,
    "original_room_id": 82,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_musical_door": {
    "name": "赛博原野·musical_door",
@@ -75,7 +242,58 @@
    "name_derived": true,
    "original_room_id": 84,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [457, 80],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    },
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [620, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [280, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_maze_virokun": {
    "name": "赛博原野·maze_virokun",
@@ -83,7 +301,69 @@
    "name_derived": true,
    "original_room_id": 85,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [240, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [640, 540],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1860, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1815, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [660, 460],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [260, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    },
+    {
+     "pos": [1040, 0],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 100
+    },
+    {
+     "pos": [1060, 6],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_keyboard_puzzle_2": {
    "name": "赛博原野·keyboard_puzzle_2",
@@ -91,7 +371,21 @@
    "name_derived": true,
    "original_room_id": 86,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_battle_maze_2": {
    "name": "赛博原野·battle_maze_2",
@@ -99,7 +393,45 @@
    "name_derived": true,
    "original_room_id": 87,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 2900],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 100
+    },
+    {
+     "pos": [280, 2980],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 100
+    },
+    {
+     "pos": [480, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [500, 6],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [1696, 702],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1740, 720],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_music_final": {
    "name": "赛博原野·music_final",
@@ -107,7 +439,33 @@
    "name_derived": true,
    "original_room_id": 88,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [2180, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [2160, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_teacup_final": {
    "name": "赛博原野·teacup_final",
@@ -115,7 +473,33 @@
    "name_derived": true,
    "original_room_id": 90,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [260, 8896],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [240, 8980],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [3056, 1702],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [3100, 1720],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_rollercoaster": {
    "name": "赛博原野·rollercoaster",
@@ -123,7 +507,21 @@
    "name_derived": true,
    "original_room_id": 91,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 360],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 342],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_maze_fireworks": {
    "name": "赛博原野·maze_fireworks",
@@ -131,7 +529,21 @@
    "name_derived": true,
    "original_room_id": 92,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_maze_tasque": {
    "name": "赛博原野·maze_tasque",
@@ -139,7 +551,21 @@
    "name_derived": true,
    "original_room_id": 93,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_maze_queenscreen": {
    "name": "赛博原野·maze_queenscreen",
@@ -147,7 +573,33 @@
    "name_derived": true,
    "original_room_id": 94,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 520],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 502],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    },
+    {
+     "pos": [2140, 520],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2096, 502],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_viro_ring": {
    "name": "赛博原野·viro_ring",
@@ -155,7 +607,33 @@
    "name_derived": true,
    "original_room_id": 95,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [420, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [400, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 0
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_post_music_boss_slide": {
    "name": "赛博原野·post_music_boss_slide",
@@ -163,7 +641,33 @@
    "name_derived": true,
    "original_room_id": 96,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [160, 2280],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [2880, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [180, 2280],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [2900, 6],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_keyboard_puzzle_3": {
    "name": "赛博原野·keyboard_puzzle_3",
@@ -171,7 +675,21 @@
    "name_derived": true,
    "original_room_id": 97,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [302, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_battle_maze_3": {
    "name": "赛博原野·battle_maze_3",
@@ -179,7 +697,33 @@
    "name_derived": true,
    "original_room_id": 98,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-16, 156],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1266, 709],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [43, 144],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1203, 703],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_teacup_2": {
    "name": "赛博原野·teacup_2",
@@ -187,7 +731,33 @@
    "name_derived": true,
    "original_room_id": 99,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-16, 676],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [36, 653],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [617, 58],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [556, 55],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel": {
    "name": "赛博原野·shaunsmusicalbullettunnel",
@@ -195,7 +765,21 @@
    "name_derived": true,
    "original_room_id": 100,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [80, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1820, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_maze_rhythm": {
    "name": "赛博原野·maze_rhythm",
@@ -203,7 +787,33 @@
    "name_derived": true,
    "original_room_id": 101,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [271, 1],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [299, 51],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [269, 2593],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 2509],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_escalator_slide": {
    "name": "赛博原野·escalator_slide",
@@ -211,7 +821,33 @@
    "name_derived": true,
    "original_room_id": 102,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [275, -7],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [296, 18],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [1513, -7],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1544, 36],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_nuberts_treasure": {
    "name": "赛博原野·nuberts_treasure",
@@ -219,7 +855,21 @@
    "name_derived": true,
    "original_room_id": 103,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 381],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [280, 459],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_music_fight": {
    "name": "赛博原野·music_fight",
@@ -227,7 +877,15 @@
    "name_derived": true,
    "original_room_id": 104,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [40, 216],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_keyboardexample": {
    "name": "赛博原野·keyboardexample",
@@ -235,7 +893,8 @@
    "name_derived": true,
    "original_room_id": 105,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch2.cyber_field.dw_cyber_battle_maze_2_old": {
    "name": "赛博原野·battle_maze_2_old",
@@ -243,7 +902,45 @@
    "name_derived": true,
    "original_room_id": 242,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [299, 2893],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 100
+    },
+    {
+     "pos": [280, 2980],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 100
+    },
+    {
+     "pos": [920, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [955, 21],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [1704, 2703],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1750, 2720],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_keyboard_puzzle_1_old": {
    "name": "赛博原野·keyboard_puzzle_1_old",
@@ -251,7 +948,8 @@
    "name_derived": true,
    "original_room_id": 243,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch2.cyber_field.dw_cyber_tasque_battle_og": {
    "name": "赛博原野·tasque_battle_og",
@@ -259,7 +957,45 @@
    "name_derived": true,
    "original_room_id": 244,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [717, 19],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    },
+    {
+     "pos": [-6, 221],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [45, 213],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [759, 22],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1300, 880],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 100
+    },
+    {
+     "pos": [1261, 880],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_savepoint_original": {
    "name": "赛博原野·savepoint_original",
@@ -267,7 +1003,40 @@
    "name_derived": true,
    "original_room_id": 245,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 160],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    },
+    {
+     "pos": [-6, 198],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [622, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [32, 178],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [563, 182],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_battle_maze_1_original": {
    "name": "赛博原野·battle_maze_1_Original",
@@ -275,7 +1044,45 @@
    "name_derived": true,
    "original_room_id": 246,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-11, 62],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1268, 749],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [40, 40],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1200, 720],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1201, 68],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    },
+    {
+     "pos": [1261, 61],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_music_bullet_original": {
    "name": "赛博原野·music_bullet_original",
@@ -283,7 +1090,33 @@
    "name_derived": true,
    "original_room_id": 247,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-18, 1689],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [40, 1680],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1265, 272],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1194, 250],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_maze_virokun_backuo": {
    "name": "赛博原野·maze_virokun_backuo",
@@ -291,7 +1124,57 @@
    "name_derived": true,
    "original_room_id": 248,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [161, -12],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [-4, 159],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [23, 157],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [158, 944],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [629, 636],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [558, 636],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [178, 878],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [175, 24],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_battle_maze_2_toby": {
    "name": "赛博原野·battle_maze_2_toby",
@@ -299,7 +1182,69 @@
    "name_derived": true,
    "original_room_id": 249,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-21, 576],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [33, 563],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1351, 93],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1294, 102],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [154, 1029],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [171, 949],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    },
+    {
+     "pos": [471, 1027],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [498, 945],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    },
+    {
+     "pos": [791, -7],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [818, 26],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_teacup_1": {
    "name": "赛博原野·teacup_1",
@@ -307,7 +1252,45 @@
    "name_derived": true,
    "original_room_id": 255,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-14, 649],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [39, 647],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [948, 148],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [879, 137],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [-16, 159],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [44, 143],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_viromaze2": {
    "name": "赛博原野·viromaze2",
@@ -315,7 +1298,21 @@
    "name_derived": true,
    "original_room_id": 256,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [24, 266],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_field.dw_cyber_virovirokun_fight": {
    "name": "赛博原野·virovirokun_fight",
@@ -323,7 +1320,21 @@
    "name_derived": true,
    "original_room_id": 259,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-6, 435],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [20, 416],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   }
  }
 }

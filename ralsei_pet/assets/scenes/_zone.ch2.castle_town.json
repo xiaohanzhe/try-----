@@ -11,7 +11,39 @@
    "name_derived": true,
    "original_room_id": 56,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX",
+     "depth": 0
+    },
+    {
+     "pos": [10, 310],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [1390, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 0
+    },
+    {
+     "pos": [1350, 300],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 0
+    },
+    {
+     "pos": [654, 125],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markers",
+     "depth": 50000
+    }
+   ]
   }
  }
 }

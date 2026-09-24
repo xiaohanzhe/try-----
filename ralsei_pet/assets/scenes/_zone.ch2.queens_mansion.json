@@ -12,7 +12,27 @@
    "original_room_id": 150,
    "bg": "bg/ch2_queens_mansion_dw_mansion_krisroom.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_dw_mansion_room_kris_bg"
+   "bg_asset": "spr_dw_mansion_room_kris_bg",
+   "objects": [
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 0
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markers",
+     "depth": 0
+    },
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_susieroom": {
    "name": "女王宅邸·susieroom",
@@ -21,7 +41,27 @@
    "original_room_id": 151,
    "bg": "bg/ch2_queens_mansion_dw_mansion_susieroom.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_dw_mansion_room_susie_bg"
+   "bg_asset": "spr_dw_mansion_room_susie_bg",
+   "objects": [
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 0
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 0
+    },
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_darkbulb_1": {
    "name": "女王宅邸·darkbulb_1",
@@ -29,7 +69,33 @@
    "name_derived": true,
    "original_room_id": 153,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [620, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_darkbulb_2": {
    "name": "女王宅邸·darkbulb_2",
@@ -37,7 +103,33 @@
    "name_derived": true,
    "original_room_id": 154,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [620, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markers",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_darkbulb_3": {
    "name": "女王宅邸·darkbulb_3",
@@ -45,7 +137,33 @@
    "name_derived": true,
    "original_room_id": 155,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [620, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markers",
+     "depth": 100
+    },
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_dining_a": {
    "name": "女王宅邸·dining_a",
@@ -53,7 +171,33 @@
    "name_derived": true,
    "original_room_id": 156,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [2180, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2136, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_fire_paintings": {
    "name": "女王宅邸·fire_paintings",
@@ -61,7 +205,33 @@
    "name_derived": true,
    "original_room_id": 158,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1300, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1256, 262],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_single_pot": {
    "name": "女王宅邸·single_pot",
@@ -69,7 +239,33 @@
    "name_derived": true,
    "original_room_id": 159,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [620, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [576, 262],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_potbalance": {
    "name": "女王宅邸·potBalance",
@@ -77,7 +273,33 @@
    "name_derived": true,
    "original_room_id": 160,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 200
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 200
+    },
+    {
+     "pos": [1140, 1120],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 200
+    },
+    {
+     "pos": [1096, 1102],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 200
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_tasquepaintings": {
    "name": "女王宅邸·tasquePaintings",
@@ -85,7 +307,33 @@
    "name_derived": true,
    "original_room_id": 161,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1340, 640],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1296, 622],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_traffic": {
    "name": "女王宅邸·traffic",
@@ -93,7 +341,39 @@
    "name_derived": true,
    "original_room_id": 162,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 1400],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 1382],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1700, 1400],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1656, 1382],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [198, 1256],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_1f_e": {
    "name": "女王宅邸·east_1f_e",
@@ -101,7 +381,33 @@
    "name_derived": true,
    "original_room_id": 163,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [960, 460],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [27, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [980, 380],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_1f_secret": {
    "name": "女王宅邸·east_1f_secret",
@@ -109,7 +415,27 @@
    "name_derived": true,
    "original_room_id": 164,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [230, 190],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [970, 190],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    },
+    {
+     "pos": [26, 302],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_teacup": {
    "name": "女王宅邸·east_teacup",
@@ -117,7 +443,27 @@
    "name_derived": true,
    "original_room_id": 165,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 4780],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 4700],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [280, 1516],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_teacup_4": {
    "name": "女王宅邸·east_teacup_4",
@@ -125,7 +471,8 @@
    "name_derived": true,
    "original_room_id": 166,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch2.queens_mansion.dw_mansion_east_teacup_3": {
    "name": "女王宅邸·east_teacup_3",
@@ -133,7 +480,27 @@
    "name_derived": true,
    "original_room_id": 167,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 1356],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [280, 4780],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [300, 4700],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_teacup_2": {
    "name": "女王宅邸·east_teacup_2",
@@ -141,7 +508,27 @@
    "name_derived": true,
    "original_room_id": 168,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 1356],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [280, 4780],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 4700],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_entrance": {
    "name": "女王宅邸·b_entrance",
@@ -149,7 +536,33 @@
    "name_derived": true,
    "original_room_id": 169,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [981, 462],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [227, 369],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [1017, 373],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [187, 465],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_stairs": {
    "name": "女王宅邸·b_stairs",
@@ -157,7 +570,33 @@
    "name_derived": true,
    "original_room_id": 170,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [280, 0],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [300, 6],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_west_1f": {
    "name": "女王宅邸·b_west_1f",
@@ -165,7 +604,39 @@
    "name_derived": true,
    "original_room_id": 172,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [235, 255],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [863, 255],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1429, 254],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1900, 320],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1856, 302],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_west_1f_a": {
    "name": "女王宅邸·b_west_1f_a",
@@ -173,7 +644,21 @@
    "name_derived": true,
    "original_room_id": 173,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [320, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_west_1f_b": {
    "name": "女王宅邸·b_west_1f_b",
@@ -181,7 +666,21 @@
    "name_derived": true,
    "original_room_id": 174,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [320, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_west_2f": {
    "name": "女王宅邸·b_west_2f",
@@ -189,7 +688,21 @@
    "name_derived": true,
    "original_room_id": 175,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [2280, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [2280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_east": {
    "name": "女王宅邸·b_east",
@@ -198,7 +711,33 @@
    "original_room_id": 176,
    "bg": "bg/ch2_queens_mansion_dw_mansion_b_east.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_dw_mansion_basement_loop"
+   "bg_asset": "spr_dw_mansion_basement_loop",
+   "objects": [
+    {
+     "pos": [0, 800],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 200
+    },
+    {
+     "pos": [40, 760],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 200
+    },
+    {
+     "pos": [1120, 156],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 200
+    },
+    {
+     "pos": [120, 156],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 200
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_east_a": {
    "name": "女王宅邸·b_east_a",
@@ -206,7 +745,21 @@
    "name_derived": true,
    "original_room_id": 177,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_east_b": {
    "name": "女王宅邸·b_east_b",
@@ -214,7 +767,21 @@
    "name_derived": true,
    "original_room_id": 178,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_b_east_transformed": {
    "name": "女王宅邸·b_east_transformed",
@@ -222,7 +789,27 @@
    "name_derived": true,
    "original_room_id": 179,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 800],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 782],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [280, 156],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_a": {
    "name": "女王宅邸·east_2f_a",
@@ -230,7 +817,27 @@
    "name_derived": true,
    "original_room_id": 180,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [177, 96],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1720, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1740, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_transformed_new": {
    "name": "女王宅邸·east_2f_transformed_new",
@@ -238,7 +845,45 @@
    "name_derived": true,
    "original_room_id": 181,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [642, 154],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1000, 156],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [827, 1140],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [840, 1060],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 520],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [26, 542],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_shortcut": {
    "name": "女王宅邸·east_2f_shortcut",
@@ -246,7 +891,27 @@
    "name_derived": true,
    "original_room_id": 182,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [620, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [576, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [240, 116],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_kitchen": {
    "name": "女王宅邸·kitchen",
@@ -254,7 +919,21 @@
    "name_derived": true,
    "original_room_id": 183,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [960, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [982, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_c": {
    "name": "女王宅邸·east_2f_c",
@@ -262,7 +941,45 @@
    "name_derived": true,
    "original_room_id": 184,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [2540, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1560, 156],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [360, 156],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [2497, 246],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_c_a": {
    "name": "女王宅邸·east_2f_c_a",
@@ -270,7 +987,33 @@
    "name_derived": true,
    "original_room_id": 185,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1580, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [1560, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_d": {
    "name": "女王宅邸·east_2f_d",
@@ -278,7 +1021,27 @@
    "name_derived": true,
    "original_room_id": 186,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1780, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1736, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [300, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_3f_projection": {
    "name": "女王宅邸·east_3f_projection",
@@ -286,7 +1049,21 @@
    "name_derived": true,
    "original_room_id": 188,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [620, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_3f_toilet": {
    "name": "女王宅邸·east_3f_toilet",
@@ -294,7 +1071,21 @@
    "name_derived": true,
    "original_room_id": 189,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [302, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_acid_tunnel": {
    "name": "女王宅邸·acid_tunnel",
@@ -302,7 +1093,33 @@
    "name_derived": true,
    "original_room_id": 190,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [3840, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [3796, 302],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance": {
    "name": "女王宅邸·acid_tunnel_puzzle_entrance",
@@ -310,7 +1127,39 @@
    "name_derived": true,
    "original_room_id": 191,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 100],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [620, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [567, 323],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [37, 322],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_acid_tunnel_loop_rouxls": {
    "name": "女王宅邸·acid_tunnel_loop_rouxls",
@@ -318,7 +1167,33 @@
    "name_derived": true,
    "original_room_id": 192,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [3136, 246],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [-15, 175],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [17, 194],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [3180, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_4f_b": {
    "name": "女王宅邸·east_4f_b",
@@ -326,7 +1201,33 @@
    "name_derived": true,
    "original_room_id": 194,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 302],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1140, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1097, 302],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_4f_c": {
    "name": "女王宅邸·east_4f_c",
@@ -334,7 +1235,33 @@
    "name_derived": true,
    "original_room_id": 195,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [2620, 440],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 200
+    },
+    {
+     "pos": [2576, 446],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 200
+    },
+    {
+     "pos": [0, 440],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 200
+    },
+    {
+     "pos": [26, 422],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 200
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_top": {
    "name": "女王宅邸·top",
@@ -343,7 +1270,27 @@
    "original_room_id": 197,
    "bg": "bg/ch2_queens_mansion_dw_mansion_top.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_cutscene_26_rocks_bg"
+   "bg_asset": "spr_cutscene_26_rocks_bg",
+   "objects": [
+    {
+     "pos": [26, 246],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [2480, 240],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_top_post": {
    "name": "女王宅邸·top_post",
@@ -352,7 +1299,21 @@
    "original_room_id": 198,
    "bg": "bg/ch2_queens_mansion_dw_mansion_top_post.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_cutscene_26_rocks_bg"
+   "bg_asset": "spr_cutscene_26_rocks_bg",
+   "objects": [
+    {
+     "pos": [26, 246],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 261],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_ferris_wheel": {
    "name": "女王宅邸·ferris_wheel",
@@ -361,7 +1322,8 @@
    "original_room_id": 201,
    "bg": "bg/ch2_queens_mansion_dw_mansion_ferris_wheel.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_mansion_ferris_wheel_bg"
+   "bg_asset": "spr_mansion_ferris_wheel_bg",
+   "objects": []
   },
   "ch2.queens_mansion.dw_mansion_ferris_wheel_post": {
    "name": "女王宅邸·ferris_wheel_post",
@@ -370,7 +1332,8 @@
    "original_room_id": 202,
    "bg": "bg/ch2_queens_mansion_dw_mansion_ferris_wheel_post.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_dw_noelle_ferris_wheel_left"
+   "bg_asset": "bg_dw_noelle_ferris_wheel_left",
+   "objects": []
   },
   "ch2.queens_mansion.dw_mansion_noelle_room": {
    "name": "女王宅邸·noelle_room",
@@ -379,7 +1342,21 @@
    "original_room_id": 203,
    "bg": "bg/ch2_queens_mansion_dw_mansion_noelle_room.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_dw_noelle_ferris_wheel"
+   "bg_asset": "bg_dw_noelle_ferris_wheel",
+   "objects": [
+    {
+     "pos": [252, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [230, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_bridges": {
    "name": "女王宅邸·bridges",
@@ -387,7 +1364,57 @@
    "name_derived": true,
    "original_room_id": 204,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 600],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 0
+    },
+    {
+     "pos": [299, 606],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 0
+    },
+    {
+     "pos": [1620, 720],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [580, 1300],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [560, 1380],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1440, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1576, 675],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [1440, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_bridges_funny": {
    "name": "女王宅邸·bridges_funny",
@@ -395,7 +1422,27 @@
    "name_derived": true,
    "original_room_id": 205,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 0
+    },
+    {
+     "pos": [26, 268],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_mouselottery": {
    "name": "女王宅邸·mouseLottery",
@@ -403,7 +1450,33 @@
    "name_derived": true,
    "original_room_id": 206,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 700],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 200
+    },
+    {
+     "pos": [320, 620],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 200
+    },
+    {
+     "pos": [0, 400],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 200
+    },
+    {
+     "pos": [26, 382],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 200
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_hands": {
    "name": "女王宅邸·hands",
@@ -411,7 +1484,33 @@
    "name_derived": true,
    "original_room_id": 207,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [292, 832],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 0
+    },
+    {
+     "pos": [304, 741],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [700, 560],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [656, 542],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_dining3": {
    "name": "女王宅邸·dining3",
@@ -419,7 +1518,33 @@
    "name_derived": true,
    "original_room_id": 208,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [680, -80],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 200
+    },
+    {
+     "pos": [620, 166],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 200
+    },
+    {
+     "pos": [600, 1420],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 200
+    },
+    {
+     "pos": [620, 1340],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 200
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_dininghall": {
    "name": "女王宅邸·dininghall",
@@ -427,7 +1552,45 @@
    "name_derived": true,
    "original_room_id": 209,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [576, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [620, 200],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [280, 3180],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [301, 3080],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_dining_storage": {
    "name": "女王宅邸·dining_storage",
@@ -435,7 +1598,21 @@
    "name_derived": true,
    "original_room_id": 210,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [25, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_1f_b": {
    "name": "女王宅邸·east_1f_b",
@@ -443,7 +1620,21 @@
    "name_derived": true,
    "original_room_id": 211,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-8, 265],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [41, 257],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_c_b": {
    "name": "女王宅邸·east_2f_c_b",
@@ -451,7 +1642,21 @@
    "name_derived": true,
    "original_room_id": 212,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [661, -10],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [696, 43],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_traffic_original": {
    "name": "女王宅邸·traffic_original",
@@ -459,7 +1664,33 @@
    "name_derived": true,
    "original_room_id": 213,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 1360],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [32, 1380],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [4980, 400],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [4900, 353],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_1f_a": {
    "name": "女王宅邸·east_1f_a",
@@ -467,7 +1698,33 @@
    "name_derived": true,
    "original_room_id": 214,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1426, 633],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 200
+    },
+    {
+     "pos": [40, 202],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 200
+    },
+    {
+     "pos": [1366, 611],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 200
+    },
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB_musfade",
+     "depth": 200
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_teacup": {
    "name": "女王宅邸·east_2f_teacup",
@@ -475,7 +1732,27 @@
    "name_derived": true,
    "original_room_id": 215,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [480, 40],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 0
+    },
+    {
+     "pos": [276, 456],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [302, 374],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_4f_e": {
    "name": "女王宅邸·east_4f_e",
@@ -483,7 +1760,33 @@
    "name_derived": true,
    "original_room_id": 216,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-32, 302],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [40, 280],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [627, 304],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [560, 280],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_4f_a": {
    "name": "女王宅邸·east_4f_a",
@@ -491,7 +1794,52 @@
    "name_derived": true,
    "original_room_id": 217,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [240, 240],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    },
+    {
+     "pos": [617, 255],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [570, 257],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [-9, 274],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB_musfade",
+     "depth": 100
+    },
+    {
+     "pos": [24, 253],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [350, 459],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [377, 361],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markers",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_ufo_old": {
    "name": "女王宅邸·east_2f_ufo_old",
@@ -499,7 +1847,57 @@
    "name_derived": true,
    "original_room_id": 218,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [155, 223],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [179, 285],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    },
+    {
+     "pos": [412, 267],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markeru",
+     "depth": 100
+    },
+    {
+     "pos": [395, 222],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [227, 1901],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [298, 1804],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [-15, 1670],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [39, 1691],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_1f_d": {
    "name": "女王宅邸·east_1f_d",
@@ -507,7 +1905,33 @@
    "name_derived": true,
    "original_room_id": 219,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-9, 269],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [2290, 270],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [36, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [2218, 240],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_1f_c": {
    "name": "女王宅邸·east_1f_c",
@@ -515,7 +1939,45 @@
    "name_derived": true,
    "original_room_id": 220,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [244, 147],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [-9, 269],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [618, 270],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [40, 280],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [553, 257],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [281, 160],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_sparks": {
    "name": "女王宅邸·sparks",
@@ -523,7 +1985,21 @@
    "name_derived": true,
    "original_room_id": 221,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1904, 259],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1816, 265],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_acid_tunnel_old": {
    "name": "女王宅邸·acid_tunnel_old",
@@ -531,7 +2007,33 @@
    "name_derived": true,
    "original_room_id": 222,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-16, 280],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [40, 240],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [3711, 256],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [3597, 278],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_top_post_old": {
    "name": "女王宅邸·top_post_old",
@@ -540,7 +2042,21 @@
    "original_room_id": 223,
    "bg": "bg/ch2_queens_mansion_dw_mansion_top_post_old.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_mansion_ferris_wheel_bg"
+   "bg_asset": "spr_mansion_ferris_wheel_bg",
+   "objects": [
+    {
+     "pos": [42, 257],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [-35, 261],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_elevator": {
    "name": "女王宅邸·elevator",
@@ -548,7 +2064,21 @@
    "name_derived": true,
    "original_room_id": 224,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [262, 466],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [280, 360],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_teacup_4_old": {
    "name": "女王宅邸·east_teacup_4_old",
@@ -556,7 +2086,33 @@
    "name_derived": true,
    "original_room_id": 254,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 1360],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [280, 1330],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [260, 4780],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [300, 4680],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_dining_storage_old": {
    "name": "女王宅邸·dining_storage_old",
@@ -564,7 +2120,21 @@
    "name_derived": true,
    "original_room_id": 258,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [25, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_2f_d_backup": {
    "name": "女王宅邸·east_2f_d_backup",
@@ -572,7 +2142,33 @@
    "name_derived": true,
    "original_room_id": 260,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1261, 265],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1210, 258],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markert",
+     "depth": 100
+    },
+    {
+     "pos": [193, -17],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [217, 14],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_bridgesold": {
    "name": "女王宅邸·bridgesold",
@@ -580,7 +2176,45 @@
    "name_derived": true,
    "original_room_id": 266,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [780, 560],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [60, 860],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [40, 940],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [640, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [736, 515],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [640, 24],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_gigaqueen": {
    "name": "女王宅邸·gigaqueen",
@@ -588,7 +2222,8 @@
    "name_derived": true,
    "original_room_id": 269,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   }
  }
 }

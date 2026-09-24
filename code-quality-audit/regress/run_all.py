@@ -89,6 +89,7 @@ HERMETIC_IDS = frozenset({
     'round9_focus', 'round13_build', 'round14_move', 'round15_cleanup',
     'persona_chat', 's8_stream', 's7_event_speech', 'box_round44',
     'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
+    'objects_round44',
 })
 
 
@@ -655,6 +656,25 @@ SUITES = [
                 'when_door + C 原作锚点（产品边集合 == 原作门表独立重算，断链'
                 '全为原作死胡同且不放过真缺口）+ D 兜底与结构（_fallback / '
                 'schema / 警告保留 / 字母互异样本）',
+    },
+    # ★ 第44轮续新增：objects 补全（把原作实例普查蒸馏进场景 JSON）。
+    #   为什么单独立锁：objects 是**程序化生成的数据**（503 场景 / 2043 条），
+    #   IDENTICAL 判据只比判据输出文本，数据本身悄悄变了不会被发现。
+    #   本锁**直接把数据当事实断言**，并且独立重算期望值（不信生成器自报）。
+    {
+        'id': 'objects_round44',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第44轮-原作对话框复刻',
+                               'verify_objects44.py'),
+        'offscreen': False,
+        'desc': '第四十四轮续：场景 objects 补全不许静默漂移 —— '
+                'A 结构不变量（每条 object pos=2×int / sprite 指向 objs/ 下'
+                '真实文件 / ★无过期的 why_objects_is_empty 假话注释）+ '
+                'B 真值锚点两种载体各一（ch1:2 krismro 独立文件 = doorA(155,230)'
+                '+markerB(155,185)；ch1:3 krishallway 分片 = doorB/markerA/'
+                'doorC/markerD，内容与原作普查逐条相等）+ C 覆盖与守恒'
+                '（532 个场景 / ★2043 条 == 普查×objmap×objs 三源独立重算）'
+                '+ D 负控制（编造 sprite 名必须判缺 / 普查缺席房间 objects==[] '
+                '且键存在）',
     },
 ]
 

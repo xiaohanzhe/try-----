@@ -1,0 +1,23 @@
+== A 结构不变量 ==
+[PASS] A1 objs/ 素材目录存在且有 40 个文件
+[PASS] A2 分片文件 61 个
+[PASS] A3 所有 object 形状合法（pos=2×int / sprite=非空 str）坏=0
+[PASS] A4 所有 sprite 指向 objs/ 下真实文件 缺=0
+[PASS] A5 无过期的 why_objects_is_empty 假话注释 余=0
+
+== B 真值锚点（两种载体各一）==
+[PASS] B1a ch1:2 krisroom（独立文件）objects == 2 实际=2
+[PASS] B1b ch1:2 内容与原作普查一致（doorA(155,230)+markerB(155,185)）实际=[('obj_doorA', (155, 230)), ('obj_markerB', (155, 185))]
+[PASS] B2a ch1:3 krishallway（分片）objects == 4 实际=4
+[PASS] B2b ch1:3 内容与原作普查一致 实际=[('obj_doorB', (289, 104)), ('obj_doorC', (425, 100)), ('obj_markerA', (289, 112)), ('obj_markerD', (426, 118))]
+
+== C 覆盖与守恒 ==
+[PASS] C1 带 objects 的场景数 == 532（分片 455 + 独立 77）实际=532
+[PASS] C2 ★守恒：objects 总条数 == 可绘制实例数 2043 实际=2043
+[PASS] C3 ★判据独立重算（普查×objmap×objs 三源）== 实得 独立算=2043 实得=2043
+
+== D 负控制（证明判据有鉴别力）==
+[PASS] D1 负控制：编造的 sprite 名不在 objs/（A4 会对它报红）
+[PASS] D2 负控制：普查缺席的 ch1:4 objects == [] 且键存在
+
+合计：PASS=14 FAIL=0

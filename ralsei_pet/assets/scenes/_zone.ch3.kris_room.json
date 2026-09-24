@@ -12,7 +12,21 @@
    "original_room_id": 15,
    "bg": "bg/ch3_kris_room_krisroom.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_myroom"
+   "bg_asset": "bg_myroom",
+   "objects": [
+    {
+     "pos": [155, 230],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [155, 185],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    }
+   ]
   }
  }
 }

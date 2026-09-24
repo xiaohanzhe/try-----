@@ -15,7 +15,87 @@
     "weather": null,
     "particles": null
   },
-  "objects": [],
+  "objects": [
+    {
+      "pos": [772, 232],
+      "sprite": "objs/spr_doorC_0.png",
+      "src": "obj_doorC",
+      "depth": 0
+    },
+    {
+      "pos": [820, 184],
+      "sprite": "objs/spr_markerD_0.png",
+      "src": "obj_markerD",
+      "depth": 0
+    },
+    {
+      "pos": [780, 0],
+      "sprite": "objs/spr_doorD_0.png",
+      "src": "obj_doorD",
+      "depth": 0
+    },
+    {
+      "pos": [820, 8],
+      "sprite": "objs/spr_markerC_0.png",
+      "src": "obj_markerC",
+      "depth": 0
+    },
+    {
+      "pos": [600, 90],
+      "sprite": "objs/spr_doorX_0.png",
+      "src": "obj_doorX",
+      "depth": 0
+    },
+    {
+      "pos": [600, 105],
+      "sprite": "objs/spr_markerX_0.png",
+      "src": "obj_markerX",
+      "depth": 0
+    },
+    {
+      "pos": [1740, -10],
+      "sprite": "objs/spr_doorX_0.png",
+      "src": "obj_doorW",
+      "depth": 0
+    },
+    {
+      "pos": [1768, 0],
+      "sprite": "objs/spr_markerW_0.png",
+      "src": "obj_markerw",
+      "depth": 0
+    },
+    {
+      "pos": [1096, 91],
+      "sprite": "objs/spr_markerX_0.png",
+      "src": "obj_markerv",
+      "depth": 0
+    },
+    {
+      "pos": [321, 99],
+      "sprite": "objs/spr_markerX_0.png",
+      "src": "obj_markert",
+      "depth": 0
+    },
+    {
+      "pos": [740, 90],
+      "sprite": "objs/spr_savepoint_0.png",
+      "src": "obj_savepoint",
+      "depth": 0,
+      "sprite_frames": 6
+    },
+    {
+      "pos": [301, 94],
+      "sprite": "objs/spr_doorX_0.png",
+      "src": "obj_doorW",
+      "depth": 50000
+    },
+    {
+      "pos": [1082, 77],
+      "sprite": "objs/spr_doorW_0.png",
+      "src": "obj_doorw_musfade",
+      "depth": 50000
+    }
+  ],
   "anchors": {},
   "transition": null,
   "_comment": {
@@ -25,6 +105,6 @@
       "display_name": "Hometown"
     },
     "why_bg_is_a_placeholder": "第36轮写这个字段时背景文件确实还不存在（用户当时选 B 自行导出）。第37轮已按原作素材反编译生成并落盘到 bg/，第39轮起 bg_source 标注来源档次、bg_asset 标注原作用的是哪个精灵资源。",
-    "why_objects_is_empty": "物件需要背景图当参照才能定锚点。等 bg 到位后再按 _anchors.json 的命名锚点填 objects —— 现在硬编坐标是瞎猜。"
+    "how_objects_were_filled": "第44轮：从原作实例普查（第42轮 inst42 系）按 original_room_id 归位，obj→spr 走 objmap43 映射，精灵落 assets/scenes/objs/。只收「有 sprite 的实例」（全五章 2,067 条中属已登记场景的 2,043 条）；纯逻辑锚点（obj_markerAny/obj_doorAny 等，原作 visible=false）不入 objects。"
   }
 }

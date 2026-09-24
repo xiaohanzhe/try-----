@@ -12,7 +12,33 @@
    "original_room_id": 63,
    "bg": "bg/ch2_ralsei_room_dw_ralsei_castle_front.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_darkcastle_front"
+   "bg_asset": "bg_darkcastle_front",
+   "objects": [
+    {
+     "pos": [440, 990],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [500, 884],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [502, 262],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [462, 249],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 50000
+    }
+   ]
   },
   "ch2.ralsei_room.dw_ralsei_castle_1f": {
    "name": "拉尔赛的城堡·castle_1f",
@@ -20,7 +46,45 @@
    "name_derived": true,
    "original_room_id": 67,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [880, 240],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 0
+    },
+    {
+     "pos": [600, 360],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [280, 240],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [857, 241],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [551, 459],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [260, 238],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.ralsei_room.dw_ralsei_castle_2f": {
    "name": "拉尔赛的城堡·castle_2f",
@@ -28,7 +92,57 @@
    "name_derived": true,
    "original_room_id": 68,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [279, 226],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 0
+    },
+    {
+     "pos": [551, 226],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 0
+    },
+    {
+     "pos": [823, 230],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [120, 361],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [255, 235],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [530, 234],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [808, 229],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [80, 457],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   }
  }
 }

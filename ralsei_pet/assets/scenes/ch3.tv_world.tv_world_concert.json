@@ -15,7 +15,15 @@
     "weather": null,
     "particles": null
   },
-  "objects": [],
+  "objects": [
+    {
+      "pos": [1080, 310],
+      "sprite": "objs/spr_savepoint_0.png",
+      "src": "obj_savepoint",
+      "depth": 0,
+      "sprite_frames": 6
+    }
+  ],
   "anchors": {},
   "transition": null,
   "_comment": {
@@ -25,6 +33,6 @@
       "display_name": "TV World - Concert"
     },
     "why_bg_is_a_placeholder": "第36轮写这个字段时背景文件确实还不存在（用户当时选 B 自行导出）。第37轮已按原作素材反编译生成并落盘到 bg/，第39轮起 bg_source 标注来源档次、bg_asset 标注原作用的是哪个精灵资源。",
-    "why_objects_is_empty": "物件需要背景图当参照才能定锚点。等 bg 到位后再按 _anchors.json 的命名锚点填 objects —— 现在硬编坐标是瞎猜。"
+    "how_objects_were_filled": "第44轮：从原作实例普查（第42轮 inst42 系）按 original_room_id 归位，obj→spr 走 objmap43 映射，精灵落 assets/scenes/objs/。只收「有 sprite 的实例」（全五章 2,067 条中属已登记场景的 2,043 条）；纯逻辑锚点（obj_markerAny/obj_doorAny 等，原作 visible=false）不入 objects。"
   }
 }

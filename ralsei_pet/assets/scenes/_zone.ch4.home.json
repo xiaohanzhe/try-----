@@ -12,7 +12,33 @@
    "original_room_id": 16,
    "bg": "bg/ch4_home_krishallway.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_myhallway"
+   "bg_asset": "bg_myhallway",
+   "objects": [
+    {
+     "pos": [289, 104],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [289, 112],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [425, 100],
+     "sprite": "objs/spr_doorC_0.png",
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [425, 109],
+     "sprite": "objs/spr_markerD_0.png",
+     "src": "obj_markerD",
+     "depth": 0
+    }
+   ]
   },
   "ch4.home.torroom": {
    "name": "克里斯的家·torroom",
@@ -20,7 +46,8 @@
    "name_derived": true,
    "original_room_id": 17,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch4.home.torhouse": {
    "name": "克里斯的家·torhouse",
@@ -29,7 +56,45 @@
    "original_room_id": 18,
    "bg": "bg/ch4_home_torhouse.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_torhouse_bg"
+   "bg_asset": "bg_torhouse_bg",
+   "objects": [
+    {
+     "pos": [144, 68],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [144, 80],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [84, 168],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [108, 148],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [594, 149],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [567, 136],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   },
   "ch4.home.torbathroom": {
    "name": "克里斯的家·torbathroom",
@@ -38,7 +103,21 @@
    "original_room_id": 19,
    "bg": "bg/ch4_home_torbathroom.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_bg_torbathroom"
+   "bg_asset": "spr_bg_torbathroom",
+   "objects": [
+    {
+     "pos": [236, 134],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [216, 120],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 0
+    }
+   ]
   },
   "ch4.home.krisroom_dark": {
    "name": "克里斯的家·krisroom_dark",
@@ -47,7 +126,8 @@
    "original_room_id": 159,
    "bg": "bg/ch4_home_krisroom_dark.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "bg_myroom_dark"
+   "bg_asset": "bg_myroom_dark",
+   "objects": []
   }
  }
 }

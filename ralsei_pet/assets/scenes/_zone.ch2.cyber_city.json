@@ -11,7 +11,21 @@
    "name_derived": true,
    "original_room_id": 106,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [619, 183],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": -100
+    },
+    {
+     "pos": [575, 215],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": -100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_prototype_02": {
    "name": "赛博都市·prototype_02",
@@ -19,7 +33,21 @@
    "name_derived": true,
    "original_room_id": 107,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 184],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": -100
+    },
+    {
+     "pos": [29, 201],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": -100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_spamton_shop_exterior": {
    "name": "赛博都市·spamton_shop_exterior",
@@ -27,7 +55,21 @@
    "name_derived": true,
    "original_room_id": 108,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [300, 380],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_spamton_house": {
    "name": "赛博都市·spamton_house",
@@ -35,7 +77,27 @@
    "name_derived": true,
    "original_room_id": 109,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1216, 238],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [201, 156],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1260, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_intro": {
    "name": "赛博都市·intro",
@@ -43,7 +105,46 @@
    "name_derived": true,
    "original_room_id": 110,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [732, 119],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    },
+    {
+     "pos": [750, 175],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 0
+    },
+    {
+     "pos": [26, 238],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1260, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1216, 238],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_split": {
    "name": "赛博都市·split",
@@ -51,7 +152,33 @@
    "name_derived": true,
    "original_room_id": 111,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 600],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [620, 680],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [576, 662],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 646],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_1": {
    "name": "赛博都市·traffic_1",
@@ -59,7 +186,33 @@
    "name_derived": true,
    "original_room_id": 113,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [2300, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2256, 262],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_roadblock": {
    "name": "赛博都市·roadblock",
@@ -67,7 +220,33 @@
    "name_derived": true,
    "original_room_id": 114,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1260, 680],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1216, 686],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_mice": {
    "name": "赛博都市·mice",
@@ -75,7 +254,21 @@
    "name_derived": true,
    "original_room_id": 116,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [120, 500],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [480, 0],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_1": {
    "name": "赛博都市·big_1",
@@ -83,7 +276,51 @@
    "name_derived": true,
    "original_room_id": 117,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [760, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [0, 640],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1060, 640],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1016, 622],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 622],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [780, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_2": {
    "name": "赛博都市·traffic_2",
@@ -91,7 +328,33 @@
    "name_derived": true,
    "original_room_id": 118,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [2100, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2056, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_2": {
    "name": "赛博都市·big_2",
@@ -99,7 +362,45 @@
    "name_derived": true,
    "original_room_id": 119,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [720, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [740, 6],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1040, 1420],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1060, 1340],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_queen_drunk": {
    "name": "赛博都市·queen_drunk",
@@ -107,7 +408,33 @@
    "name_derived": true,
    "original_room_id": 120,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [320, 0],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [340, 6],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1856, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1900, 200],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_3": {
    "name": "赛博都市·big_3",
@@ -115,7 +442,27 @@
    "name_derived": true,
    "original_room_id": 122,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [2180, 640],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2136, 662],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_3": {
    "name": "赛博都市·traffic_3",
@@ -123,7 +470,45 @@
    "name_derived": true,
    "original_room_id": 123,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 480],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1980, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [26, 502],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [26, 2102],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [1936, 302],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [0, 2080],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_mice2": {
    "name": "赛博都市·mice2",
@@ -131,7 +516,33 @@
    "name_derived": true,
    "original_room_id": 124,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [26, 302],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1140, 280],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1096, 262],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_cheesemaze": {
    "name": "赛博都市·cheesemaze",
@@ -139,7 +550,33 @@
    "name_derived": true,
    "original_room_id": 125,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [26, 262],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 280],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1840, 900],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1860, 820],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_poppup": {
    "name": "赛博都市·poppup",
@@ -147,7 +584,39 @@
    "name_derived": true,
    "original_room_id": 127,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [34, 61],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 80],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1060, 540],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1422, 540],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [1040, 620],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_4": {
    "name": "赛博都市·traffic_4",
@@ -156,7 +625,57 @@
    "original_room_id": 129,
    "bg": "bg/ch2_cyber_city_dw_city_traffic_4.png",
    "bg_source": "room.bg_layer",
-   "bg_asset": "spr_city_bridge_lining"
+   "bg_asset": "spr_city_bridge_lining",
+   "objects": [
+    {
+     "pos": [2140, 380],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [3180, 380],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [4580, 320],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [4536, 302],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [0, 120],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 102],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerv",
+     "depth": 100
+    },
+    {
+     "pos": [2120, 460],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA_musfade",
+     "depth": 100
+    },
+    {
+     "pos": [3151, 469],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_spamton_alley": {
    "name": "赛博都市·spamton_alley",
@@ -164,7 +683,33 @@
    "name_derived": true,
    "original_room_id": 130,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1000, 0],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1020, 6],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [140, 6],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_monologue": {
    "name": "赛博都市·monologue",
@@ -172,7 +717,33 @@
    "name_derived": true,
    "original_room_id": 131,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [7180, 1560],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [7136, 1542],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_baseball": {
    "name": "赛博都市·baseball",
@@ -180,7 +751,33 @@
    "name_derived": true,
    "original_room_id": 132,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1900, 240],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 182],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1856, 222],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_postbaseball_2": {
    "name": "赛博都市·postbaseball_2",
@@ -188,7 +785,21 @@
    "name_derived": true,
    "original_room_id": 134,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 320],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [4380, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_postbaseball_3": {
    "name": "赛博都市·postbaseball_3",
@@ -196,7 +807,8 @@
    "name_derived": true,
    "original_room_id": 135,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch2.cyber_city.dw_city_mansion_front": {
    "name": "赛博都市·mansion_front",
@@ -204,7 +816,27 @@
    "name_derived": true,
    "original_room_id": 136,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 240],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1422, 226],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_susie_ralsei_fun_1": {
    "name": "赛博都市·susie_ralsei_fun_1",
@@ -212,7 +844,21 @@
    "name_derived": true,
    "original_room_id": 137,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [320, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_mirrorfriend": {
    "name": "赛博都市·mirrorfriend",
@@ -220,7 +866,21 @@
    "name_derived": true,
    "original_room_id": 138,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [240, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [260, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_treasure": {
    "name": "赛博都市·treasure",
@@ -228,7 +888,21 @@
    "name_derived": true,
    "original_room_id": 139,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [620, 280],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [576, 262],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_dog_traffic": {
    "name": "赛博都市·dog_traffic",
@@ -236,7 +910,21 @@
    "name_derived": true,
    "original_room_id": 140,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [160, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [180, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_man": {
    "name": "赛博都市·man",
@@ -244,7 +932,21 @@
    "name_derived": true,
    "original_room_id": 141,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1820, 380],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [1800, 460],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_moss": {
    "name": "赛博都市·moss",
@@ -252,7 +954,21 @@
    "name_derived": true,
    "original_room_id": 142,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [620, 200],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [576, 206],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_3_backup_2exits": {
    "name": "赛博都市·big_3_backup_2exits",
@@ -260,7 +976,45 @@
    "name_derived": true,
    "original_room_id": 143,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [2187, 179],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2120, 228],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [39, 219],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [2183, 753],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [2128, 811],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [-1, 177],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_3_2entrances": {
    "name": "赛博都市·traffic_3_2Entrances",
@@ -268,7 +1022,57 @@
    "name_derived": true,
    "original_room_id": 144,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [0, 200],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1980, 320],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [26, 222],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [26, 782],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [0, 760],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [54, 2297],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [1936, 302],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [-15, 2258],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_cheese": {
    "name": "赛博都市·cheese",
@@ -276,7 +1080,33 @@
    "name_derived": true,
    "original_room_id": 145,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1263, 118],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [-12, 106],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [40, 160],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1200, 160],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_carnival": {
    "name": "赛博都市·carnival",
@@ -284,7 +1114,33 @@
    "name_derived": true,
    "original_room_id": 146,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-23, 189],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [40, 240],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1264, 604],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1200, 640],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_noelle_fight_intro": {
    "name": "赛博都市·noelle_fight_intro",
@@ -292,7 +1148,8 @@
    "name_derived": true,
    "original_room_id": 147,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch2.cyber_city.dw_city_spamton_shop_interior": {
    "name": "赛博都市·spamton_shop_interior",
@@ -300,7 +1157,21 @@
    "name_derived": true,
    "original_room_id": 148,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [228, 459],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [293, 342],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_monologue_old": {
    "name": "赛博都市·monologue_old",
@@ -308,7 +1179,33 @@
    "name_derived": true,
    "original_room_id": 149,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-7, 135],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [45, 187],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [2386, 128],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2315, 180],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_1_original": {
    "name": "赛博都市·big_1_original",
@@ -316,7 +1213,57 @@
    "name_derived": true,
    "original_room_id": 250,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [211, -21],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [280, 40],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [889, -16],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [-22, 264],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1266, 250],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1200, 280],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [40, 280],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [960, 40],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_2_old": {
    "name": "赛博都市·traffic_2_old",
@@ -324,7 +1271,45 @@
    "name_derived": true,
    "original_room_id": 251,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-12, 100],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [80, 160],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1702, 99],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1600, 160],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [1342, -11],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [1400, 40],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_2_og": {
    "name": "赛博都市·big_2_OG",
@@ -332,7 +1317,45 @@
    "name_derived": true,
    "original_room_id": 252,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [705, -13],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [840, 40],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [-15, 148],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [80, 200],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [231, 947],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [360, 840],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_mice2_og": {
    "name": "赛博都市·mice2_og",
@@ -340,7 +1363,15 @@
    "name_derived": true,
    "original_room_id": 253,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [22, 240],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_5_old": {
    "name": "赛博都市·traffic_5_old",
@@ -348,7 +1379,40 @@
    "name_derived": true,
    "original_room_id": 257,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [445, 229],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    },
+    {
+     "pos": [78, -18],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [200, 40],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [1946, 224],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [1840, 240],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_traffic_3_backup": {
    "name": "赛博都市·traffic_3_backup",
@@ -356,7 +1420,57 @@
    "name_derived": true,
    "original_room_id": 261,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-10, 269],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [1970, 257],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [40, 246],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [80, 720],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    },
+    {
+     "pos": [-35, 722],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [80, 2299],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [1875, 320],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [-21, 2277],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorw_musfade",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_big_3_og": {
    "name": "赛博都市·big_3_og",
@@ -364,7 +1478,45 @@
    "name_derived": true,
    "original_room_id": 265,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [-24, 149],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 100
+    },
+    {
+     "pos": [2080, 120],
+     "sprite": "objs/spr_doorA_0.png",
+     "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [2000, 200],
+     "sprite": "objs/spr_markerB_0.png",
+     "src": "obj_markerB",
+     "depth": 100
+    },
+    {
+     "pos": [80, 200],
+     "sprite": "objs/spr_markerA_0.png",
+     "src": "obj_markerA",
+     "depth": 100
+    },
+    {
+     "pos": [2101, 835],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [2000, 880],
+     "sprite": "objs/spr_markerW_0.png",
+     "src": "obj_markerw",
+     "depth": 100
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_sidewayscars": {
    "name": "赛博都市·sidewayscars",
@@ -372,7 +1524,8 @@
    "name_derived": true,
    "original_room_id": 267,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   }
  }
 }

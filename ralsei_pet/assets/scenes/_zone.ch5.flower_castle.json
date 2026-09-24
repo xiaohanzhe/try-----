@@ -11,7 +11,8 @@
    "name_derived": true,
    "original_room_id": 148,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dogplatforming": {
    "name": "花之城堡·dogplatforming",
@@ -19,7 +20,8 @@
    "name_derived": true,
    "original_room_id": 175,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_entrance": {
    "name": "花之城堡·fcastle_entrance",
@@ -27,7 +29,8 @@
    "name_derived": true,
    "original_room_id": 176,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_foyer": {
    "name": "花之城堡·fcastle_foyer",
@@ -35,7 +38,16 @@
    "name_derived": true,
    "original_room_id": 178,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [124, 1146],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 400,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_shinobeetle_encounter": {
    "name": "花之城堡·fcastle_shinobeetle_encounter",
@@ -43,7 +55,8 @@
    "name_derived": true,
    "original_room_id": 180,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_left_wing_floweryscene": {
    "name": "花之城堡·fcastle_left_wing_floweryscene",
@@ -51,7 +64,8 @@
    "name_derived": true,
    "original_room_id": 181,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_bounce_1": {
    "name": "花之城堡·fcastle_bounce_1",
@@ -59,7 +73,8 @@
    "name_derived": true,
    "original_room_id": 182,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_yellow_miniboss": {
    "name": "花之城堡·fcastle_yellow_miniboss",
@@ -67,7 +82,8 @@
    "name_derived": true,
    "original_room_id": 184,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_sandtrap": {
    "name": "花之城堡·fcastle_sandtrap",
@@ -75,7 +91,8 @@
    "name_derived": true,
    "original_room_id": 185,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_dangerous_platforming": {
    "name": "花之城堡·fcastle_dangerous_platforming",
@@ -83,7 +100,8 @@
    "name_derived": true,
    "original_room_id": 186,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_yellowjail": {
    "name": "花之城堡·fcastle_yellowjail",
@@ -91,7 +109,8 @@
    "name_derived": true,
    "original_room_id": 188,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_left_penultimate": {
    "name": "花之城堡·fcastle_left_penultimate",
@@ -99,7 +118,8 @@
    "name_derived": true,
    "original_room_id": 190,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_flowery_tree": {
    "name": "花之城堡·flowery_tree",
@@ -107,7 +127,8 @@
    "name_derived": true,
    "original_room_id": 191,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_bounce_3": {
    "name": "花之城堡·fcastle_bounce_3",
@@ -115,7 +136,8 @@
    "name_derived": true,
    "original_room_id": 192,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_shinobeetle_3d": {
    "name": "花之城堡·fcastle_shinobeetle_3d",
@@ -123,7 +145,8 @@
    "name_derived": true,
    "original_room_id": 193,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_heldmushrooms": {
    "name": "花之城堡·fcastle_heldmushrooms",
@@ -131,7 +154,8 @@
    "name_derived": true,
    "original_room_id": 194,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_flowerydash": {
    "name": "花之城堡·fcastle_flowerydash",
@@ -139,7 +163,8 @@
    "name_derived": true,
    "original_room_id": 195,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_partyjail": {
    "name": "花之城堡·fcastle_partyjail",
@@ -147,7 +172,8 @@
    "name_derived": true,
    "original_room_id": 196,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_terracotta_encounter": {
    "name": "花之城堡·fcastle_terracotta_encounter",
@@ -155,7 +181,8 @@
    "name_derived": true,
    "original_room_id": 197,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_terracotta_bonus": {
    "name": "花之城堡·fcastle_terracotta_bonus",
@@ -163,7 +190,8 @@
    "name_derived": true,
    "original_room_id": 198,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_right_wing_floweryscene": {
    "name": "花之城堡·fcastle_right_wing_floweryscene",
@@ -171,7 +199,8 @@
    "name_derived": true,
    "original_room_id": 199,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_orange_puppet_introduction": {
    "name": "花之城堡·fcastle_orange_puppet_introduction",
@@ -179,7 +208,8 @@
    "name_derived": true,
    "original_room_id": 200,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_gloves_tower": {
    "name": "花之城堡·fcastle_gloves_tower",
@@ -187,7 +217,8 @@
    "name_derived": true,
    "original_room_id": 201,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_obscured_bullets": {
    "name": "花之城堡·fcastle_obscured_bullets",
@@ -195,7 +226,8 @@
    "name_derived": true,
    "original_room_id": 203,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_foxhunt": {
    "name": "花之城堡·fcastle_foxhunt",
@@ -203,7 +235,8 @@
    "name_derived": true,
    "original_room_id": 204,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_right_penultimate": {
    "name": "花之城堡·fcastle_right_penultimate",
@@ -211,7 +244,16 @@
    "name_derived": true,
    "original_room_id": 205,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [140, 200],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_green_orange_battle": {
    "name": "花之城堡·fcastle_green_orange_battle",
@@ -219,7 +261,8 @@
    "name_derived": true,
    "original_room_id": 206,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_right_puzzle": {
    "name": "花之城堡·fcastle_right_puzzle",
@@ -227,7 +270,16 @@
    "name_derived": true,
    "original_room_id": 208,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1524, 1826],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.flower_castle.dw_dogballoon": {
    "name": "花之城堡·dogballoon",
@@ -235,7 +287,8 @@
    "name_derived": true,
    "original_room_id": 211,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_sidepuzzle": {
    "name": "花之城堡·fcastle_sidepuzzle",
@@ -243,7 +296,8 @@
    "name_derived": true,
    "original_room_id": 212,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_zenlooker": {
    "name": "花之城堡·fcastle_zenlooker",
@@ -251,7 +305,8 @@
    "name_derived": true,
    "original_room_id": 214,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_trainroom": {
    "name": "花之城堡·fcastle_trainroom",
@@ -259,7 +314,8 @@
    "name_derived": true,
    "original_room_id": 215,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_post_flowery_battle": {
    "name": "花之城堡·post_flowery_battle",
@@ -267,7 +323,8 @@
    "name_derived": true,
    "original_room_id": 216,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_flowerclimb": {
    "name": "花之城堡·fcastle_flowerclimb",
@@ -275,7 +332,8 @@
    "name_derived": true,
    "original_room_id": 217,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_intro": {
    "name": "花之城堡·fcastle_top_intro",
@@ -283,7 +341,8 @@
    "name_derived": true,
    "original_room_id": 218,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_staircase_1": {
    "name": "花之城堡·fcastle_top_staircase_1",
@@ -291,7 +350,8 @@
    "name_derived": true,
    "original_room_id": 219,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_ultradash": {
    "name": "花之城堡·fcastle_ultradash",
@@ -299,7 +359,8 @@
    "name_derived": true,
    "original_room_id": 220,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_yellowblue": {
    "name": "花之城堡·fcastle_yellowblue",
@@ -307,7 +368,8 @@
    "name_derived": true,
    "original_room_id": 221,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_entrance": {
    "name": "花之城堡·fcastle_top_entrance",
@@ -315,7 +377,16 @@
    "name_derived": true,
    "original_room_id": 222,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [120, 220],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_top_staircase_2": {
    "name": "花之城堡·fcastle_top_staircase_2",
@@ -323,7 +394,8 @@
    "name_derived": true,
    "original_room_id": 223,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_green_checkpoint": {
    "name": "花之城堡·fcastle_green_checkpoint",
@@ -331,7 +403,16 @@
    "name_derived": true,
    "original_room_id": 224,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [484, 144],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_final_save": {
    "name": "花之城堡·fcastle_final_save",
@@ -339,7 +420,23 @@
    "name_derived": true,
    "original_room_id": 225,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [300, 200],
+     "sprite": "objs/spr_savepoint_0.png",
+     "src": "obj_savepoint",
+     "depth": 0,
+     "sprite_frames": 6
+    },
+    {
+     "pos": [124, 144],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_flowery": {
    "name": "花之城堡·fcastle_flowery",
@@ -347,7 +444,8 @@
    "name_derived": true,
    "original_room_id": 226,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_seth_encounter": {
    "name": "花之城堡·fcastle_seth_encounter",
@@ -355,7 +453,8 @@
    "name_derived": true,
    "original_room_id": 227,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_descent": {
    "name": "花之城堡·fcastle_top_descent",
@@ -363,7 +462,8 @@
    "name_derived": true,
    "original_room_id": 228,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_pinkdoor": {
    "name": "花之城堡·fcastle_top_pinkdoor",
@@ -371,7 +471,16 @@
    "name_derived": true,
    "original_room_id": 229,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [804, 268],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_pinkroom": {
    "name": "花之城堡·fcastle_pinkroom",
@@ -379,7 +488,8 @@
    "name_derived": true,
    "original_room_id": 230,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_fountain": {
    "name": "花之城堡·fcastle_top_fountain",
@@ -387,7 +497,8 @@
    "name_derived": true,
    "original_room_id": 231,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_post_fountain_close": {
    "name": "花之城堡·post_fountain_close",
@@ -395,7 +506,8 @@
    "name_derived": true,
    "original_room_id": 232,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_pinkshop": {
    "name": "花之城堡·fcastle_pinkshop",
@@ -403,7 +515,8 @@
    "name_derived": true,
    "original_room_id": 233,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_foxhunt_terakota": {
    "name": "花之城堡·fcastle_foxhunt_terakota",
@@ -411,7 +524,8 @@
    "name_derived": true,
    "original_room_id": 234,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_foxhunt_socks": {
    "name": "花之城堡·fcastle_foxhunt_socks",
@@ -419,7 +533,8 @@
    "name_derived": true,
    "original_room_id": 235,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_foxhunt_chaos": {
    "name": "花之城堡·fcastle_foxhunt_chaos",
@@ -427,7 +542,8 @@
    "name_derived": true,
    "original_room_id": 236,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_foxhunt_secret": {
    "name": "花之城堡·fcastle_foxhunt_secret",
@@ -435,7 +551,8 @@
    "name_derived": true,
    "original_room_id": 237,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_terracotta_puzzle": {
    "name": "花之城堡·fcastle_terracotta_puzzle",
@@ -443,7 +560,8 @@
    "name_derived": true,
    "original_room_id": 239,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_bromides": {
    "name": "花之城堡·fcastle_bromides",
@@ -451,7 +569,8 @@
    "name_derived": true,
    "original_room_id": 240,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_ascent": {
    "name": "花之城堡·fcastle_top_ascent",
@@ -459,7 +578,8 @@
    "name_derived": true,
    "original_room_id": 241,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_top_challenge": {
    "name": "花之城堡·fcastle_top_challenge",
@@ -467,7 +587,8 @@
    "name_derived": true,
    "original_room_id": 242,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_asgore": {
    "name": "花之城堡·fcastle_asgore",
@@ -475,7 +596,8 @@
    "name_derived": true,
    "original_room_id": 243,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_orange_gauntlet": {
    "name": "花之城堡·fcastle_orange_gauntlet",
@@ -483,7 +605,8 @@
    "name_derived": true,
    "original_room_id": 244,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_fusumadodge": {
    "name": "花之城堡·fcastle_fusumadodge",
@@ -491,7 +614,8 @@
    "name_derived": true,
    "original_room_id": 245,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.flower_castle.dw_fcastle_flowerclimb_for_tiling": {
    "name": "花之城堡·fcastle_flowerclimb_for_tiling",
@@ -499,7 +623,8 @@
    "name_derived": true,
    "original_room_id": 249,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   }
  }
 }

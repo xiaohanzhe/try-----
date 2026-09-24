@@ -11,7 +11,8 @@
    "name_derived": true,
    "original_room_id": 154,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_climbrefresher": {
    "name": "崖边·cliff_climbrefresher",
@@ -19,7 +20,16 @@
    "name_derived": true,
    "original_room_id": 155,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [340, 184],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_cutdown_tutorial": {
    "name": "崖边·cliff_cutdown_tutorial",
@@ -27,7 +37,8 @@
    "name_derived": true,
    "original_room_id": 156,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_bunnyfarm": {
    "name": "崖边·cliff_bunnyfarm",
@@ -35,7 +46,8 @@
    "name_derived": true,
    "original_room_id": 157,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_silver_hammer": {
    "name": "崖边·cliff_silver_hammer",
@@ -43,7 +55,8 @@
    "name_derived": true,
    "original_room_id": 158,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_dash_runner": {
    "name": "崖边·cliff_dash_runner",
@@ -51,7 +64,8 @@
    "name_derived": true,
    "original_room_id": 159,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_seth_miniboss": {
    "name": "崖边·cliff_seth_miniboss",
@@ -59,7 +73,16 @@
    "name_derived": true,
    "original_room_id": 160,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [1005, 342],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 200,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_netskieclimb": {
    "name": "崖边·cliff_netskieclimb",
@@ -67,7 +90,16 @@
    "name_derived": true,
    "original_room_id": 162,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [746, 1786],
+     "sprite": "objs/spr_shortcut_door_0.png",
+     "src": "obj_shortcut_door",
+     "depth": 0,
+     "sprite_frames": 2
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_finaldash": {
    "name": "崖边·cliff_finaldash",
@@ -75,7 +107,8 @@
    "name_derived": true,
    "original_room_id": 163,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_yellowcave": {
    "name": "崖边·cliff_yellowcave",
@@ -83,7 +116,8 @@
    "name_derived": true,
    "original_room_id": 164,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_shicave": {
    "name": "崖边·cliff_shicave",
@@ -91,7 +125,8 @@
    "name_derived": true,
    "original_room_id": 165,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_verticalwind": {
    "name": "崖边·cliff_verticalwind",
@@ -99,7 +134,8 @@
    "name_derived": true,
    "original_room_id": 166,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_netskieclimb_behind": {
    "name": "崖边·cliff_netskieclimb_behind",
@@ -107,7 +143,8 @@
    "name_derived": true,
    "original_room_id": 168,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_eastcliff": {
    "name": "崖边·cliff_eastcliff",
@@ -115,7 +152,8 @@
    "name_derived": true,
    "original_room_id": 169,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_bonuscombat": {
    "name": "崖边·cliff_bonuscombat",
@@ -123,7 +161,8 @@
    "name_derived": true,
    "original_room_id": 170,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_twirlflowerplatforming": {
    "name": "崖边·cliff_twirlflowerplatforming",
@@ -131,7 +170,8 @@
    "name_derived": true,
    "original_room_id": 171,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_kawkawdash": {
    "name": "崖边·cliff_kawkawdash",
@@ -139,7 +179,8 @@
    "name_derived": true,
    "original_room_id": 172,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_precipice": {
    "name": "崖边·cliff_precipice",
@@ -147,7 +188,8 @@
    "name_derived": true,
    "original_room_id": 173,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_twirlflowerwind": {
    "name": "崖边·cliff_twirlflowerwind",
@@ -155,7 +197,8 @@
    "name_derived": true,
    "original_room_id": 174,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   },
   "ch5.cliffs.dw_cliff_sethaqua_battle": {
    "name": "崖边·cliff_sethaqua_battle",
@@ -163,7 +206,8 @@
    "name_derived": true,
    "original_room_id": 248,
    "bg": null,
-   "bg_source": "none"
+   "bg_source": "none",
+   "objects": []
   }
  }
 }

@@ -1,0 +1,50 @@
+objmap43 头部声明 GameObjects = 353；解析出 353 条
+[PASS] D1 objmap43 解析自洽（353 == 353）
+
+实例总条数 = 5523；不同 obj = 158
+obj 名在 objmap 里      : 40 / 158
+obj 名有非空 spr        : 40 / 158
+obj 名在 objmap 但无 spr: 0
+obj 名不在 objmap       : 118
+
+按**实例条数**加权：
+  能拿到 spr 的实例 : 2067 / 5523 (37.4%)
+  只在 objmap 内的  : 2067 / 5523 (37.4%)
+
+=== 无 spr 的 obj（逻辑锚点，前 30） ===
+
+=== 不在 objmap 的 obj（前 20） ===
+     919  obj_markerAny
+     830  obj_doorAny
+     373  obj_genmarker
+     223  obj_krmarker
+     185  obj_sumarker
+     136  obj_charmarker
+     122  obj_ramarker
+     110  obj_plat_movemarker
+      68  obj_climb_animationmarker
+      58  obj_board_warptouch
+      48  obj_markerAny40px
+      42  obj_doorAnyHorz
+      29  obj_climb_marker
+      25  obj_board_treasuremarker
+      25  obj_mansion_door
+      25  obj_plat_sequence_marker
+      23  obj_climb_door
+      16  obj_fusuma_door_small
+      12  obj_board_b1_shadowteaseentrance
+       9  obj_doorAnyVert
+
+=== sprite 文件存在性抽验 ===
+抽样 obj: ['obj_markerA', 'obj_markerB', 'obj_doorW', 'obj_doorB', 'obj_doorA']
+  ch1: obj_markerA->spr_markerA:1 | obj_markerB->spr_markerB:1 | obj_doorW->spr_doorX:1 | obj_doorB->spr_doorB:1 | obj_doorA->spr_doorA:1
+  ch2: obj_markerA->spr_markerA:1 | obj_markerB->spr_markerB:1 | obj_doorW->spr_doorX:1 | obj_doorB->spr_doorB:1 | obj_doorA->spr_doorA:1
+  ch3: obj_markerA->spr_markerA:1 | obj_markerB->spr_markerB:1 | obj_doorW->spr_doorX:1 | obj_doorB->spr_doorB:1 | obj_doorA->spr_doorA:1
+  ch4: obj_markerA->spr_markerA:1 | obj_markerB->spr_markerB:1 | obj_doorW->spr_doorX:1 | obj_doorB->spr_doorB:1 | obj_doorA->spr_doorA:1
+  ch5: obj_markerA->spr_markerA:1 | obj_markerB->spr_markerB:1 | obj_doorW->spr_doorX:1 | obj_doorB->spr_doorB:1 | obj_doorA->spr_doorA:1
+
+[PASS] D-负控制 不存在的 obj 名判为不可映射（obj_this_does_not_exist_zzz）
+[PASS] D2 objmap 规模正常（353 ≥ 300）
+[PASS] D3 有非空 spr 的 obj 名 40 个
+
+RESULT: FAIL=0
