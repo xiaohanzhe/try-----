@@ -1,0 +1,89 @@
+第47轮 · ch1/2/4/5 房间全量普查（四个权威源交叉）
+==============================================================================
+权威源：① _room_geometry.json.stats  ② _room_order.json  ③ _index.json  ④ _room_graph.json
+
+章         原作   system    debug       其它 playable     产品已覆盖     ★未覆盖
+ch1      147       15        0        0      132       128        4
+ch2      278       16       31        0      231       223        8
+ch3      246       16       24        0      206       187       19
+ch4      328       17       35        0      276       260       16
+ch5      252       18       20        0      214       201       13
+------------------------------------------------------------------------------
+合计      1251       82      110        0     1059       999       60
+
+全部五章：原作 1251 间；产品场景 1014 个（ch1~ch5 = 1013，另含 desktop 章 1 个）
+
+★ 缺口归因：未覆盖 playable 房间里，**原作门图里有边**的（= 原作能进 ⇒ 必须做）
+------------------------------------------------------------------------------
+有门可达（真缺口）= 13 间：
+   ch1 下标 33   room_school_unusedroom       kind=town_life  in=1 out=1
+   ch1 下标 133  room_shop1                   kind=other      in=1 out=0
+   ch1 下标 134  room_shop2                   kind=other      in=1 out=0
+   ch2 下标 54   room_school_unusedroom       kind=town_life  in=2 out=1
+   ch2 下标 229  room_shop1                   kind=other      in=1 out=0
+   ch2 下标 230  room_shop_ch2_music          kind=other      in=1 out=0
+   ch2 下标 231  room_shop_ch2_swatch         kind=other      in=1 out=0
+   ch3 下标 51   room_school_unusedroom       kind=town_life  in=1 out=1
+   ch3 下标 69   room_shop1                   kind=other      in=1 out=0
+   ch3 下标 79   room_DARKbase_GMS2           kind=dark       in=1 out=0
+   ch4 下标 60   room_school_unusedroom       kind=town_life  in=1 out=1
+   ch5 下标 49   room_school_unusedroom       kind=town_life  in=1 out=1
+   ch5 下标 79   room_DARKbase_GMS2           kind=dark       in=1 out=0
+
+无门孤立（原作里也进不去，按原作逻辑**不该做**）= 47 间
+   room_shop_music                  × 3
+   room_overworldBulletEnemyTest    × 3
+   room_lerptest                    × 3
+   room_DARKbase_GMS2               × 2
+   room_shop1                       × 2
+   room_myroom_dark                 × 1
+   room_intro_ch2                   × 1
+   room_shop_ch2_spamton            × 1
+   room_transformation_sequence     × 1
+   room_board1_oldtest              × 1
+   room_boardtest                   × 1
+   room_boardtest_old               × 1
+   room_tennaCutsceneTest           × 1
+   room_tennaAnimTest               × 1
+   room_board_designTest            × 1
+   room_adventureboardtest          × 1
+   room_board_boattest              × 1
+   room_genanimtest                 × 1
+   room_dw_b3bstest                 × 1
+   room_dw_b3bstest_big             × 1
+   room_ch3_gameshowroom_tennatest  × 1
+   room_intro                       × 1
+   room_intro_ch4                   × 1
+   room_dark_twostoryTest           × 1
+   room_traintest                   × 1
+   room_dw_church_rippletest        × 1
+   room_dw_church_gueitest          × 1
+   room_gersonbattleroomtest        × 1
+   room_traintest_big               × 1
+   room_dw_church_quicktest         × 1
+   room_lightworldTest              × 1
+   room_shapetest                   × 1
+   room_animexampletest             × 1
+   room_climbtest                   × 1
+   room_animtest                    × 1
+   room_darkbulbTest                × 1
+   room_dw_fcastle_shadowplatformTest × 1
+   room_intro_ch5                   × 1
+   room_dw_petaltest                × 1
+
+★ 与第38轮 `cls` 交叉（maybe = 当年留的"待裁定"）
+------------------------------------------------------------------------------
+   ch1:33     maybe
+   ch1:133    maybe
+   ch1:134    maybe
+   ch2:54     maybe
+   ch2:229    maybe
+   ch2:230    maybe
+   ch2:231    maybe
+   ch3:51     maybe
+   ch3:69     maybe
+   ch3:79     nonscene
+   ch4:60     maybe
+   ch5:49     maybe
+   ch5:79     nonscene
+   真缺口的 38 轮 cls 分布：{'maybe': 11, 'nonscene': 2}

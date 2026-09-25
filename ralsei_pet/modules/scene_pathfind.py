@@ -40,12 +40,19 @@
 桌面宠物没有剧作者，**决策者只能是 AI**；但 AI 只需要决定"去哪"（②），
 "怎么去"**完全由原作拓扑决定**（③）—— 这正是用户说的「相当于场景复现」。
 """
+import heapq
+import itertools
 import logging
 import os
 
 from scene_system import _read_json, scenes_dir  # noqa: F401
 
 _log = logging.getLogger(__name__)
+
+#: ★ 原作门对象的最大下标位移绝对值（`obj_doorE` / `obj_doorF` = ±3 个下标）。
+#: 只用于 A* 启发式 `h = ceil(|n - goal| / MAX_DOOR_DELTA)` —— 它是「还要走
+#: 几扇门」的**下界**（一扇门最多挪 3 个下标），所以 A* 仍保证门数最优。
+MAX_DOOR_DELTA = 3
 
 #: 别名表 schema 版本。读到不认识 → 拒绝加载（同 scene_system 纪律）。
 ALIASES_SCHEMA_VERSION = 1
@@ -208,22 +215,30 @@ def build_adjacency(graph):
 # ===========================================================================
 
 def shortest_path(adjacency, start, goal):
-    """章内 **BFS 最短路径**（= 最少门数）。走不到 → `None`。
+    """章内路线：**门数最少**；门数相同时**折返最少**（= 更像人找路）。
 
     :param adjacency: `build_adjacency()` 的结果（**单章**的 `{src:[edge]}`）。
     :param start/goal: 房间下标（int）。
     :return: `[edge, edge, ...]`（从 start 到 goal 的边序列）；走不到 → None。
 
-    **为什么 BFS 不是 Dijkstra**：原作门是**等权**的（走一扇门就是一扇门，
-    没有"这扇门更费劲"），所以最短路径 = 最少门数 = BFS。加权重只会引入一个
-    假的"代价"概念。
+    **为什么门数优先**：原作门是**等权**的（走一扇门就是一扇门，没有"这扇门
+    更费劲"），所以第一判据只能是"最少门数"。加权重会让"绕远但少走一扇门"
+    这类反直觉结果胜出。
 
     **为什么不按几何距离**：第 44 轮已证伪 —— 落点坐标是**房间自己坐标系里的
-    局部坐标**（10~300 的小数值），跨房比距离**在原理上不成立**
-    （见 第44轮/_evidence/routes44/路由重建说明.txt 第二节）。**只能走图**。
+    局部坐标**（10~300 的小数值），跨房比距离**在原理上不成立**。**只能走图**。
 
-    **确定性**：同层扩展顺序 = `adjacency` 里边的出现顺序（原作取证顺序），
-    所以同一对起终点**每次给同一条路径** —— 可回归、可解释。
+    ★★ 为什么不是纯 BFS（第 46 轮续；用户口径「寻路要符合真人逻辑，别和机器人
+    一样」）：BFS 在多条**等长**路径里按边表的出现顺序任取一条，于是会产出
+    「先朝反方向走一扇门、再折回来」这种**机器人式路线** —— 人找路不会这么走。
+    ⇒ 改成**字典序 A\\***，优先队列键 = `(f, 门数, 折返次数, 插入序)`：
+        · 主判据仍是**门数**（不被权重污染）；
+        · 次判据 = **折返次数**（相邻两步的下标位移反号 ⇒ 记一次折返）；
+        · 末位用插入序号保**确定性**（同输入必同输出）。
+      启发式 `h(n) = ceil(|n - goal| / MAX_DOOR_DELTA)` 是门数的下界
+      （一扇门最多挪 3 个下标）⇒ **不会**为了少折返而多走门。
+
+    **确定性**：同一对起终点每次给同一条路径 —— 可回归、可解释。
     """
     if not isinstance(adjacency, dict):
         return None
@@ -231,22 +246,43 @@ def shortest_path(adjacency, start, goal):
         return []          # 已在目的地：空路径（不是 None —— "不需要走"）
     if start is None or goal is None:
         return None
+    try:
+        start = int(start)
+        goal = int(goal)
+    except (TypeError, ValueError):
+        return None
 
-    # BFS：队列存 (当前房, 到当前房的边序列)
-    from collections import deque
-    queue = deque([(start, [])])
-    seen = {start}
-    while queue:
-        cur, path = queue.popleft()
+    def _h(node):
+        # 「还要走几扇门」的下界；除法向上取整。
+        return (abs(int(node) - goal) + MAX_DOOR_DELTA - 1) // MAX_DOOR_DELTA
+
+    counter = itertools.count()
+    # 状态 = (房间, 上一步位移符号)。同一房间从不同方向到达 ⇒ 折返代价不同，
+    # 必须分开记（否则会把"从东边进来"和"从西边进来"当成同一状态）。
+    start_key = (start, 0)
+    best = {start_key: (0, 0)}                      # state -> (门数, 折返数)
+    heap = [((_h(start), 0, 0), next(counter), start, 0, ())]
+    while heap:
+        pri, _, cur, prev_sign, path = heapq.heappop(heap)
+        hops, turns = pri[1], pri[2]
+        if best.get((cur, prev_sign), (10 ** 9, 10 ** 9)) < (hops, turns):
+            continue                                # 已有更优到达 ⇒ 丢弃
+        if cur == goal:
+            return list(path)
         for edge in adjacency.get(cur) or []:
-            nxt = edge['dst']
-            if nxt in seen:
+            nxt = edge.get('dst')
+            if not isinstance(nxt, int):
+                continue                            # 坏边跳过（设计律 2）
+            delta = nxt - cur
+            sign = 1 if delta > 0 else (-1 if delta < 0 else 0)
+            new_turns = turns + (1 if (prev_sign and sign and sign != prev_sign) else 0)
+            new_hops = hops + 1
+            key = (nxt, sign)
+            if best.get(key, (10 ** 9, 10 ** 9)) <= (new_hops, new_turns):
                 continue
-            new_path = path + [edge]
-            if nxt == goal:
-                return new_path
-            seen.add(nxt)
-            queue.append((nxt, new_path))
+            best[key] = (new_hops, new_turns)
+            heapq.heappush(heap, ((new_hops + _h(nxt), new_hops, new_turns),
+                                  next(counter), nxt, sign, path + (edge,)))
     return None            # 不伪造：真的走不到
 
 

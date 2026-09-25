@@ -1,0 +1,618 @@
+{
+ "ch1": {
+  "orig": 147,
+  "system": 15,
+  "debug": 0,
+  "other_None": 0,
+  "playable": 132,
+  "covered": 128,
+  "missing": 4,
+  "missing_rooms": [
+   33,
+   133,
+   134,
+   136
+  ]
+ },
+ "ch2": {
+  "orig": 278,
+  "system": 16,
+  "debug": 31,
+  "other_None": 0,
+  "playable": 231,
+  "covered": 223,
+  "missing": 8,
+  "missing_rooms": [
+   54,
+   225,
+   229,
+   230,
+   231,
+   232,
+   241,
+   268
+  ]
+ },
+ "ch3": {
+  "orig": 246,
+  "system": 16,
+  "debug": 24,
+  "other_None": 0,
+  "playable": 206,
+  "covered": 187,
+  "missing": 19,
+  "missing_rooms": [
+   51,
+   69,
+   70,
+   79,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   97,
+   111,
+   113,
+   122,
+   133,
+   145,
+   146,
+   165,
+   243
+  ]
+ },
+ "ch4": {
+  "orig": 328,
+  "system": 17,
+  "debug": 35,
+  "other_None": 0,
+  "playable": 276,
+  "covered": 260,
+  "missing": 16,
+  "missing_rooms": [
+   60,
+   78,
+   79,
+   98,
+   105,
+   157,
+   163,
+   169,
+   170,
+   172,
+   187,
+   188,
+   199,
+   216,
+   310,
+   326
+  ]
+ },
+ "ch5": {
+  "orig": 252,
+  "system": 18,
+  "debug": 20,
+  "other_None": 0,
+  "playable": 214,
+  "covered": 201,
+  "missing": 13,
+  "missing_rooms": [
+   49,
+   69,
+   70,
+   79,
+   89,
+   90,
+   93,
+   94,
+   97,
+   99,
+   100,
+   247,
+   250
+  ]
+ },
+ "_totals": {
+  "orig": 1251,
+  "sys": 82,
+  "dbg": 110,
+  "oth": 0,
+  "play": 1059,
+  "prod": 999,
+  "miss": 60
+ },
+ "_n_product_scenes": 1014,
+ "_real_gaps": [
+  {
+   "chapter": "ch1",
+   "room_index": 33,
+   "name": "room_school_unusedroom",
+   "kind": "town_life",
+   "in": 1,
+   "out": 1
+  },
+  {
+   "chapter": "ch1",
+   "room_index": 133,
+   "name": "room_shop1",
+   "kind": "other",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch1",
+   "room_index": 134,
+   "name": "room_shop2",
+   "kind": "other",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 54,
+   "name": "room_school_unusedroom",
+   "kind": "town_life",
+   "in": 2,
+   "out": 1
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 229,
+   "name": "room_shop1",
+   "kind": "other",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 230,
+   "name": "room_shop_ch2_music",
+   "kind": "other",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 231,
+   "name": "room_shop_ch2_swatch",
+   "kind": "other",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 51,
+   "name": "room_school_unusedroom",
+   "kind": "town_life",
+   "in": 1,
+   "out": 1
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 69,
+   "name": "room_shop1",
+   "kind": "other",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 79,
+   "name": "room_DARKbase_GMS2",
+   "kind": "dark",
+   "in": 1,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 60,
+   "name": "room_school_unusedroom",
+   "kind": "town_life",
+   "in": 1,
+   "out": 1
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 49,
+   "name": "room_school_unusedroom",
+   "kind": "town_life",
+   "in": 1,
+   "out": 1
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 79,
+   "name": "room_DARKbase_GMS2",
+   "kind": "dark",
+   "in": 1,
+   "out": 0
+  }
+ ],
+ "_isolated_missing": [
+  {
+   "chapter": "ch1",
+   "room_index": 136,
+   "name": "room_myroom_dark",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 225,
+   "name": "room_intro_ch2",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 232,
+   "name": "room_shop_ch2_spamton",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 241,
+   "name": "room_DARKbase_GMS2",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch2",
+   "room_index": 268,
+   "name": "room_transformation_sequence",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 70,
+   "name": "room_shop_music",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 89,
+   "name": "room_overworldBulletEnemyTest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 90,
+   "name": "room_board1_oldtest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 91,
+   "name": "room_boardtest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 92,
+   "name": "room_boardtest_old",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 93,
+   "name": "room_tennaCutsceneTest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 94,
+   "name": "room_tennaAnimTest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 97,
+   "name": "room_board_designTest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 111,
+   "name": "room_adventureboardtest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 113,
+   "name": "room_lerptest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 122,
+   "name": "room_board_boattest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 133,
+   "name": "room_genanimtest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 145,
+   "name": "room_dw_b3bstest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 146,
+   "name": "room_dw_b3bstest_big",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 165,
+   "name": "room_ch3_gameshowroom_tennatest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch3",
+   "room_index": 243,
+   "name": "room_intro",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 78,
+   "name": "room_shop1",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 79,
+   "name": "room_shop_music",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 98,
+   "name": "room_overworldBulletEnemyTest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 105,
+   "name": "room_intro_ch4",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 157,
+   "name": "room_dark_twostoryTest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 163,
+   "name": "room_lerptest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 169,
+   "name": "room_traintest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 170,
+   "name": "room_dw_church_rippletest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 172,
+   "name": "room_dw_church_gueitest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 187,
+   "name": "room_gersonbattleroomtest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 188,
+   "name": "room_traintest_big",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 199,
+   "name": "room_DARKbase_GMS2",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 216,
+   "name": "room_dw_church_quicktest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 310,
+   "name": "room_lightworldTest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch4",
+   "room_index": 326,
+   "name": "room_shapetest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 69,
+   "name": "room_shop1",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 70,
+   "name": "room_shop_music",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 89,
+   "name": "room_overworldBulletEnemyTest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 90,
+   "name": "room_lerptest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 93,
+   "name": "room_animexampletest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 94,
+   "name": "room_climbtest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 97,
+   "name": "room_animtest",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 99,
+   "name": "room_darkbulbTest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 100,
+   "name": "room_dw_fcastle_shadowplatformTest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 247,
+   "name": "room_intro_ch5",
+   "kind": "other",
+   "in": 0,
+   "out": 0
+  },
+  {
+   "chapter": "ch5",
+   "room_index": 250,
+   "name": "room_dw_petaltest",
+   "kind": "dark",
+   "in": 0,
+   "out": 0
+  }
+ ],
+ "_authority_stats": {
+  "ch1": 147,
+  "ch2": 278,
+  "ch3": 246,
+  "ch4": 328,
+  "ch5": 252
+ }
+}
