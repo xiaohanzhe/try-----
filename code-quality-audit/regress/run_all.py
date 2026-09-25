@@ -90,7 +90,7 @@ HERMETIC_IDS = frozenset({
     'persona_chat', 's8_stream', 's7_event_speech', 'box_round44',
     'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
     'objects_round44', 'anim_round44', 'pathfind_round45',
-    'rooms_round47', 'walk_round47',
+    'rooms_round47', 'walk_round47', 'npc_round49',
 })
 
 
@@ -885,6 +885,45 @@ SUITES = [
                 'G 接线 AST（★4 模块顶层白名单+函数内只许 Qt·标准库 / ★★热键必须带修饰键 / '
                 '11 字段预声明 / ★切换钩子真被调用 / keyPressEvent 是真 Qt 钩子）+ '
                 'H 恒真自查（数据在位 / 负控制 12 例在位 / 三常量真参与判定）',
+    },
+    # ================================================================
+    # 第四十九轮：NPC 分层 / 跟随策略 / 世界门控 / 光世界「扭蛋球」容器
+    #   口径：用户第49轮原话（主线 NPC 配 4B / 纯 NPC 4~10 句内置对话 /
+    #   都能跟但只有主线自主 / 不可脱离暗世界·不可进非本属暗世界 /
+    #   Ralsei 只能靠球进光世界 / 球要遮住角色·不穿模·塑料滤镜 /
+    #   其他主角团与 Lancer 也能进球，除 Lancer 外可随时脱下）。
+    # ★★ 关键锚定：H 段**直接读 `_evidence/gml/` 的原作 GML 逐字产物**
+    #   断言「球的帧序 = [2,3,1]」且「角色确实被夹在后层与前层之间」
+    #   ⇒ "遮住/透出"这套做法有原作出处，不是我们自己编的。
+    # ★ 依赖 `_evidence/gml/`+`spr49_log.txt`+`assets/bubble/`（都进仓库），
+    #   零 `E:\Download\_tmp` 依赖（那目录"用后即删"，依赖它 ⇒ 静默失去鉴别力）。
+    # ★ A 段用 AST 守「零依赖 + 无函数内 import」：
+    #   ⚠️ 判据坑已踩过 —— 模块级 `try: from logger_utils import …` 的父节点是
+    #   `Try` 不是 `Module`，按"直接子节点"写会把降级写法误判成函数内 import
+    #   ⇒ 本项目统一按"是否位于函数体内"判。
+    # ★ 正/负控制成对：E6/E7（Ralsei 光世界默认拒、carried 才放）、E8（别人 carried 不放）、
+    #   F5/F6（Ralsei 暗世界可脱 / Lancer 永远不可脱）、F14/F15（回暗世界自动脱 / Lancer 脱不掉）、
+    #   G1/G2（越界钳回 / 球内不动）。
+    # **不联网、不调 Ollama、不实例化 App、不需要显示器**（纯数据 + 纯函数 + AST + 读 PNG 计数）。
+    {
+        'id': 'npc_round49',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第49轮-NPC与球容器',
+                               'verify_npc49.py'),
+        'offscreen': False,
+        'desc': '第四十九轮：NPC 分层/跟随/世界门控/光世界球容器不许静默漂移 —— '
+                'A 零依赖契约（AST：顶层白名单 + ★无函数内 import，含 Try 降级写法） + '
+                'B 注册表（33 条·主线15/纯18 / 每条有原作物件名与章节 / 主线全标 needs_setting）+ '
+                'C 纯 NPC 内置对话（★每组 4~10 句 / 主线取空表） + '
+                'D 跟随策略（主线=AUTONOMOUS·纯=CONSENT / ★两类都能跟 / 状态机 idle→pending→active / '
+                'denied 不许被重复表态翻盘 / 未知 id 不抛） + '
+                'E 世界门控（不可脱离暗世界 / ★不可进非本属暗世界·两个原因码分开 / '
+                '★Ralsei carried 才放行且别人不认这条豁免 / tick 踢出不可进入者） + '
+                'F 球容器（★绘制序=后层→角色→前层→上罩 且帧号 2/0/3/1 / '
+                '★Lancer 永远脱不掉·Ralsei 光世界脱不掉·Susie 随时可脱 / 回暗世界自动脱）+ '
+                'G 几何·旋转·滤镜（★4 方向=基准角+N×45° / 越界钳回球内 / alpha lerp / 塑料滤镜半透 / '
+                'Susie 特例 2.02）+ '
+                'H 原作锚定（★★GML 逐字帧序 [2,3,1] 且角色夹在中间 / 精灵日志 62×62 四帧 / '
+                '误认候选 obj_ch3_ballcon=对话气泡框已排除 / 资产落盘 43+28 个 PNG 逐个点清）',
     },
 ]
 

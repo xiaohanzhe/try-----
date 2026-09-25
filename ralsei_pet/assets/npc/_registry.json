@@ -1,0 +1,621 @@
+{
+ "schema_version": 1,
+ "source": "第49轮 UTMT 反编译（names49 普查）+ 本项目撰写",
+ "tiers": {
+  "main": "主线 NPC：非主角团但有重大影响（Toriel/Asgore/各章 Boss/少数关键角色）；配 4B 模型，设定由用户提供。",
+  "plain": "纯 NPC：没有重大帮助对话；用 4~10 句内置对话，不走模型。"
+ },
+ "counts": {
+  "main": 15,
+  "plain": 18
+ },
+ "npcs": [
+  {
+   "id": "ralsei",
+   "name": "Ralsei",
+   "name_cn": "雷尔赛",
+   "tier": "main",
+   "chapters": [
+    "ch1",
+    "ch2",
+    "ch3",
+    "ch4",
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_heroralsei"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": true,
+   "notes": "主角团成员，但同时是暗世界居民 ⇒ 受\"不可脱离暗世界\"约束；唯一豁免 = 第49轮的扭蛋球容器。"
+  },
+  {
+   "id": "toriel",
+   "name": "Toriel",
+   "name_cn": "托丽尔",
+   "tier": "main",
+   "chapters": [
+    "ch1",
+    "ch2",
+    "ch3",
+    "ch4",
+    "ch5"
+   ],
+   "home_world": "light",
+   "objects": [
+    "obj_npc_toriel"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "光世界的母亲，五章都有戏份；照顾者，口吻温和但会唠叨。"
+  },
+  {
+   "id": "asgore",
+   "name": "Asgore",
+   "name_cn": "艾斯戈尔",
+   "tier": "main",
+   "chapters": [
+    "ch5"
+   ],
+   "home_world": "light",
+   "objects": [
+    "obj_ch5_DW30_asgore",
+    "obj_dw_fcastle_asgore",
+    "obj_town_north_asgore"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "五章才正式登场；温和、笨拙、有心事的花店老板。"
+  },
+  {
+   "id": "king",
+   "name": "King",
+   "name_cn": "黑桃王",
+   "tier": "main",
+   "chapters": [
+    "ch1",
+    "ch2",
+    "ch3"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_king_boss",
+    "obj_npc_king"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "ch1 的 Boss，傲慢、威严；后续以被关押/旁白形象出现。"
+  },
+  {
+   "id": "lancer",
+   "name": "Lancer",
+   "name_cn": "兰瑟",
+   "tier": "main",
+   "chapters": [
+    "ch1",
+    "ch2",
+    "ch3",
+    "ch4"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_darklancer",
+    "obj_lancerboss",
+    "obj_lancerboss2",
+    "obj_lancerboss3",
+    "obj_b1lancer"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "黑桃王之子；自称\"坏蛋\"，其实是好孩子。★ 他也能进球，但**不能脱下**。"
+  },
+  {
+   "id": "queen",
+   "name": "Queen",
+   "name_cn": "女王",
+   "tier": "main",
+   "chapters": [
+    "ch2",
+    "ch4"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_queen_social_media",
+    "obj_room_castle_queen"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "ch2 的 Boss；机械、夸张、口癖是\"哦呵呵\"。"
+  },
+  {
+   "id": "spamton",
+   "name": "Spamton",
+   "name_cn": "斯帕姆顿",
+   "tier": "main",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_spamton_enemy",
+    "obj_spamton_neo_enemy"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "ch2 的隐藏 Boss；推销员口吻，全大写，神经质。"
+  },
+  {
+   "id": "berdly",
+   "name": "Berdly",
+   "name_cn": "伯德利",
+   "tier": "main",
+   "chapters": [
+    "ch2",
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_berdlyb_enemy",
+    "obj_berdlyb2_enemy",
+    "obj_town_north_berdly"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "自命不凡的优等生；爱说大词，其实很在意朋友。"
+  },
+  {
+   "id": "noelle",
+   "name": "Noelle",
+   "name_cn": "诺艾尔",
+   "tier": "main",
+   "chapters": [
+    "ch2",
+    "ch4",
+    "ch5"
+   ],
+   "home_world": "light",
+   "objects": [
+    "obj_heronoelle",
+    "obj_noellehouse_noelle"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "胆小的驯鹿女孩；后来变得坚强。"
+  },
+  {
+   "id": "tenna",
+   "name": "Tenna",
+   "name_cn": "天娜",
+   "tier": "main",
+   "chapters": [
+    "ch3",
+    "ch4"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_actor_tenna",
+    "obj_tenna_enemy"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "ch3 的 Boss；电视综艺主持人式的高能量口吻。"
+  },
+  {
+   "id": "rouxls",
+   "name": "Rouxls Kaard",
+   "name_cn": "鲁尔斯·卡德",
+   "tier": "main",
+   "chapters": [
+    "ch3"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_rouxls_yarnball"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "自封的\"谜题公爵\"；古英语腔的滑稽反派。"
+  },
+  {
+   "id": "gerson",
+   "name": "Gerson",
+   "name_cn": "格森",
+   "tier": "main",
+   "chapters": [
+    "ch4"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_gerson",
+    "obj_dw_church_gerson_follow"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "老当益壮的老人；原作里唯一的暗世界 NPC 跟随者。"
+  },
+  {
+   "id": "mike",
+   "name": "Mike",
+   "name_cn": "迈克",
+   "tier": "main",
+   "chapters": [
+    "ch4",
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_mike",
+    "obj_mike_battle",
+    "obj_mike_lancer"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "ch4 的对手/主持人；浮夸的节目腔。"
+  },
+  {
+   "id": "knight",
+   "name": "Roaring Knight",
+   "name_cn": "咆哮骑士",
+   "tier": "main",
+   "chapters": [
+    "ch3",
+    "ch4"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_knight_enemy",
+    "obj_ch4_DCA01_roaringknight"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "主线反派；不说话/极少说话，压迫感来自沉默。"
+  },
+  {
+   "id": "flowey",
+   "name": "Flowey",
+   "name_cn": "小花",
+   "tier": "main",
+   "chapters": [
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_flowery_throwkris",
+    "obj_flowery_kristhrown"
+   ],
+   "model": "ralsei-npc:4b",
+   "needs_setting": true,
+   "escape_via_bubble": false,
+   "notes": "ch5 的 Boss；甜腻的恶意。"
+  },
+  {
+   "id": "hammerguy",
+   "name": "Hammer Guy",
+   "name_cn": "锤子哥",
+   "tier": "plain",
+   "chapters": [
+    "ch1",
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_hammerguy"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "puzzlemaster1",
+   "name": "Puzzle Master",
+   "name_cn": "谜题大师·甲",
+   "tier": "plain",
+   "chapters": [
+    "ch1"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_puzzlemaster1"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "puzzlemaster2",
+   "name": "Puzzle Master",
+   "name_cn": "谜题大师·乙",
+   "tier": "plain",
+   "chapters": [
+    "ch1"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_puzzlemaster2"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "sign",
+   "name": "Sign",
+   "name_cn": "告示牌",
+   "tier": "plain",
+   "chapters": [
+    "ch1",
+    "ch2",
+    "ch3"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_sign"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "npc_room",
+   "name": "???",
+   "name_cn": "空房间",
+   "tier": "plain",
+   "chapters": [
+    "ch1"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_room",
+    "obj_npc_room_animated"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "conbini",
+   "name": "Shopkeeper",
+   "name_cn": "便利店店员",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_conbini"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "police",
+   "name": "Officer",
+   "name_cn": "警察",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_police"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "catti",
+   "name": "Catti",
+   "name_cn": "卡蒂",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_catti"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "rudy",
+   "name": "Rudy",
+   "name_cn": "鲁迪",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_rudy"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "dumpster",
+   "name": "Dumpster",
+   "name_cn": "垃圾桶",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_dumpster"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "addison_tea",
+   "name": "Addison",
+   "name_cn": "艾迪森",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_addison_tea"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "castle_cafe",
+   "name": "Cafe Owner",
+   "name_cn": "咖啡店老板",
+   "tier": "plain",
+   "chapters": [
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_castle_cafe",
+    "obj_npc_cafe"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "rabbits",
+   "name": "Rabbits",
+   "name_cn": "兔子们",
+   "tier": "plain",
+   "chapters": [
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_rabbits"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "wrapper",
+   "name": "Wrapper",
+   "name_cn": "包装怪",
+   "tier": "plain",
+   "chapters": [
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_wrapper"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "doubter",
+   "name": "Doubter",
+   "name_cn": "质疑者",
+   "tier": "plain",
+   "chapters": [
+    "ch5"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_doubter"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "zapper",
+   "name": "Zapper",
+   "name_cn": "电击者",
+   "tier": "plain",
+   "chapters": [
+    "ch4"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_zapper",
+    "obj_npc_castle_tutorial_zapper"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "susiedark",
+   "name": "Susie?",
+   "name_cn": "暗之苏西",
+   "tier": "plain",
+   "chapters": [
+    "ch1",
+    "ch2",
+    "ch3"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_susiedark"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  },
+  {
+   "id": "mansion_room",
+   "name": "Room Note",
+   "name_cn": "宅邸房间",
+   "tier": "plain",
+   "chapters": [
+    "ch2"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "obj_npc_mansion_room"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": ""
+  }
+ ]
+}

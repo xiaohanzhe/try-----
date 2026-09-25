@@ -1,0 +1,10 @@
+myinteract = 0;
+talked = 0;
+image_speed = 0;
+con = 0;
+scr_depth();
+image_speed = 0;
+type = 0;
+siner = 0;
+active = 0;
+emotion = 0;
