@@ -11,7 +11,7 @@
    "kind=image/prop/bg": "相对本目录（<仓库>/ralsei_pet/assets/scenes/）"
   },
   "zone_file_pattern": "_zone.<chapter>.<area>.json",
-  "zone_note": "场景数据有两个来源，**优先级：独立 <scene_id>.json > 区域分片**。87 个\"锚点\"场景（第 36 轮登记）各有独立文件；其余场景住在所在 (章,区域) 分片里，进区域时整片读一次（\"拿火把赶夜路\"）。同一场景只出现在一个来源。zone 场景的 name 是机械裁剪后的原样名（name_derived=true），name_raw 保存完整原作资源名。"
+  "zone_note": "场景数据有两个来源，**优先级：独立 <scene_id>.json > 区域分片**。88 个\"锚点\"场景（第 36 轮登记，含桌面 desktop）各有独立文件；另有 926 个场景住在所在 (章,区域) 分片里（**合计 1,014 个**，全部登记在 _index.json），进区域时整片读一次（\"拿火把赶夜路\"）。同一场景只出现在一个来源。zone 场景的 name 是机械裁剪后的原样名（name_derived=true），name_raw 保存完整原作资源名。"
  },
  "default_scene": "desktop",
  "chapters": {
