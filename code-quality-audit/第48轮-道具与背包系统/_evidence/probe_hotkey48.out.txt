@@ -1,0 +1,46 @@
+# 第48轮 · 真实平台「全局热键全链路」验证 —— 证据留痕（逐字输出）
+#
+# 脚本：_evidence/probe_hotkey48.py
+# 跑法：C:\Python311\python.exe "code-quality-audit/第48轮-道具与背包系统/_evidence/probe_hotkey48.py"
+#       （**不要**设 QT_QPA_PLATFORM=offscreen，否则 winId 是假句柄）
+#
+# ⚠️ 本文件是「证据留痕」，不是判据 —— 判据在 verify_items48.py（G2 基线，零 Qt、可离线）。
+#    理由：本脚本要真起窗口，比套件脆；把它做成判据会让 G2 变成看环境脸色。
+
+## 1) 本次运行（2026-09-26 02:35）逐字输出
+#    ⚠️ 进程在**退出阶段**被沙箱 SIGTERM（真窗口 GUI 的已知瞬时故障，~25min 自愈），
+#       所以外壳报了 `exit=1 / Signal: SIGTERM`；但**脚本本身已跑完**（见下面的 FAIL = []）。
+------------------------------------------------------------
+[WARNING] Ignore caches that are heterogeneous
+平台 = windows  winId = 524776
+真实平台的 winId 不是假句柄                              PASS 524776
+install → done=['ctrl+alt+S', 'ctrl+alt+E'] bad=[]
+★ 两个全局热键都真注册上了                                 PASS (['ctrl+alt+S', 'ctrl+alt+E'], [])
+已注册 id: {'ctrl+alt+S': 4096, 'ctrl+alt+E': 4097}
+★ WM_HOTKEY 投递 → 回调 menu                       PASS ['menu', 'menu']
+★ WM_HOTKEY 投递 → 回调 interact                   PASS ['menu', 'menu', 'interact', 'interact']
+热键过滤器收到了消息                                     PASS 4
+注销干净                                           PASS (2, [])
+
+FAIL = []
+can't open file for write !
+------------------------------------------------------------
+（末行 `can't open file for write !` 是进程被掐期间外壳重定向的竞态产物，非产品输出。）
+
+## 2) ★★ 这份输出本身就是「WM_HOTKEY 双投递」的铁证
+第 7/8 行的 `fired` 列表里，**一次** `PostMessage(WM_HOTKEY)` 对应**两个**回调：
+      'menu'      ← 1 次投递
+      'menu'      ← 真的来了两次
+      'menu','menu','interact','interact'   ← 两次投递共 4 次回调
+     seen = 4（= 2 次投递 × 2）
+⇒ 菜单开关是"取反"，重复一次正好等于**没开**（开了又立刻关），界面上表现为"按了没反应"。
+   产品侧对策 = `item_menu.TOGGLE_DEBOUNCE_SEC = 0.25`
+   （`main.toggle_item_menu` 的去抖），见 verify_items48.py D 段与报告 §限制。
+   诊断脚本：`_evidence/probe_hotkey48_dup.py`。
+
+## 3) 对照组：离屏平台下**必然失败**（平台假象，不是缺陷）
+同一次会话里，离屏跑的 e2e_wire48.py 输出（见 e2e_wire48.out.txt 末行）：
+      hotkey done=() bad=('ctrl+alt+S', 'ctrl+alt+E')
+原因：offscreen 平台的 `winId()` 是假句柄（实测 = 1），`RegisterHotKey(hwnd=1)` 必失败。
+⇒ 这两条放在一起看，才说明"热键没装上"是**平台**的问题而不是**代码**的问题。
+   （本项目最贵的坑是"函数写对了但产品用不上"；反过来"把假象当成缺陷"同样要防。）

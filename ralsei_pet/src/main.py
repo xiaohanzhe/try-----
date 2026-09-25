@@ -345,6 +345,26 @@ from modules.scene_controller import SceneController
 # 这是"渲染层"的最后一跳 —— 前面 scene_system/scene_camera/scene_render 都只出数据，
 # 没有消费者就是"函数写对了但产品用不上"（本项目最贵的坑，见记忆铁律 §4）。
 from modules.scene_canvas import SceneCanvas
+# ---- 道具 / 背包 / S 键菜单（第48轮）----------------------------------------
+# 用户口径：「可互动的道具也要做到可以互动；道具效果不可带出当前章节的场景；
+#   在其他场景使用非当前场景的道具就显示"一股神秘的力量阻止了你"；
+#   游戏里的背包这类的通过 S 键实现的菜单也要应用哦，但，设置不应用」。
+# 分工（**判定与显示严格分开**，见各模块 docstring）：
+#   item_system   两个袋子 + 垃圾团 + 全部"能不能用"的判定（零依赖纯逻辑）
+#   item_menu     状态机：按键 → MenuFrame（零 Qt，可离线回归）
+#   item_menu_ui  绘制：MenuFrame → 屏幕面板（复用第44轮原作对话框框体）
+#   item_interact 场景 objects → 可交互物（存档点/暗之泉/拾取，含数据缺口登记）
+#   global_hotkey 全局热键（★ 只注册带修饰键的组合，绝不劫持裸字母）
+from modules import item_system as item_system_mod
+from modules import item_menu as item_menu_mod
+from modules import item_menu_ui as item_menu_ui_mod
+from modules import item_interact as item_interact_mod
+from modules import global_hotkey as global_hotkey_mod
+from modules import scene_system as scene_system_mod
+# 伙伴交互协议（第46轮）：`InteractBus`（= 原作 `global.interact` 全局锁）+
+# `Interactable`（= 原作 `myinteract` 三态）。道具/场景可交互物都挂在这套协议上，
+# 不另起一套 —— 那会让"对话时能不能点东西"出现两套互相不知道的锁。
+from modules import companion as companion_mod
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -916,6 +936,303 @@ class RalseiPet(QMainWindow):
         # 从五章普查结果蒸馏出 `_room_geometry.json`（1,251 间，锚点校验 100% 命中）。
         # `load_geometry()` 只做「读 JSON + 写宿主字段」，不注册定时器、不碰 Qt。
         self.scene.load_geometry()
+
+        # ---- 道具 / 背包 / S 键菜单 接线（第48轮）----
+        # 为什么放在**最后**：道具域（明/暗世界）要从"当前场景"推出来，而
+        # `current_scene` / `_scene_state` 刚刚在上面几行才被写进去；放在前面会拿到 None。
+        self.init_item_systems()
+
+    # ==================================================================
+    #  道具 / 背包 / S 键菜单（第48轮）
+    # ==================================================================
+    def init_item_systems(self):
+        """建道具目录 + 两个袋子 + S 键菜单，并把"场景切换"接上道具域。
+
+        失败语义：**任何一步失败都只降级、不抛出**（与 search_summarizer /
+        relationship 同一条纪律：非关键路径不许让桌宠起不来）。
+        降级后果写进日志，且 `self.inventory is None` 时所有入口方法都**直接返回**，
+        不会半死不活地"点得动但没反应"。
+
+        接线清单（少一项就等于没做，本项目最贵的坑）：
+          1. 道具表（`assets/items/`）         → `self.item_catalog`
+          2. 两个袋子 + 垃圾团 + 当前域         → `self.inventory`
+          3. S 键菜单状态机 + 浮层 UI           → `self.item_menu` / `self.item_menu_ui`
+          4. **场景切换钩子**（切场景 ⇒ 道具域跟着换 ⇒ 回光世界时暗道具变垃圾）
+          5. **全局热键**（Ctrl+Alt+S；裸 S 走窗口焦点，见 keyPressEvent）
+          6. 当前场景的**可交互物**（存档点 / 暗之泉 / …）
+        """
+        # 先全部预声明成 None/空 —— 中途任何一步失败，宿主也不缺属性
+        # （本项目踩过"状态只在成功路径上创建"的坑：失败后别处 getattr 就炸）。
+        self.item_catalog = None
+        self.inventory = None
+        self.item_menu = None
+        self.item_menu_ui = None
+        self.item_props = []            # 当前场景的可交互物
+        self.interact_bus = None
+        self._scene_switch_hooks = []
+        self._item_hotkey_done = ()
+        self._item_hotkey_bad = ()
+        self._item_last_frame = None
+        self._item_menu_toggle_at = 0.0     #: 开关去抖用（见 toggle_item_menu）
+
+        try:
+            self.item_catalog = item_system_mod.load_catalog(item_system_mod.assets_dir())
+            scene = self.__dict__.get('_scene_state')
+            chapter = getattr(scene, 'chapter_id', None) or 'ch1'
+            # ⚠️ 启动兜底：**这一步不是判据**。判据永远来自 `_worlds.json`
+            #    （`scene_system.world_of_scene`）；只有在"连当前场景都还没有"时
+            #    才需要一个初值，取暗世界并**记一条日志**，不静默。
+            world = scene_system_mod.world_of_scene(scene) or item_system_mod.WORLD_DARK
+            if scene_system_mod.world_of_scene(scene) is None:
+                _log.info('启动时判不出明/暗世界（无当前场景）⇒ 道具域初值取暗世界（仅初值）')
+            room_id = getattr(scene, 'original_room_id', None)
+            sid = getattr(scene, 'scene_id', None)
+
+            self.interact_bus = companion_mod.default_bus()
+            self.inventory = item_system_mod.Inventory(
+                self.item_catalog, chapter, world, sid, room_id)
+            self.item_menu = item_menu_mod.build(self.inventory)
+            self.item_menu_ui = item_menu_ui_mod.ItemMenuUI(
+                self,
+                menu=self.item_menu,
+                on_message=self._item_menu_message,
+                anchor=self._item_menu_anchor,
+                # ★ 屏幕矩形必须用宿主的 `_virtual_screen_rect()`（契约①：
+                #   `availableGeometry()` 只返主屏，多屏会算错）。
+                screen_rect=self._virtual_screen_rect,
+            )
+            # 4) 场景切换钩子 —— `SceneController.switch()` 里会调它。
+            self._scene_switch_hooks = [self._on_scene_switched_items]
+            # 6) 当前场景的可交互物（首次）
+            self._rebuild_item_props()
+        except Exception:
+            _log.exception('道具系统初始化失败（S 键菜单与道具将不可用，宠物照常运行）')
+            return
+
+        # 5) 全局热键。**务必带修饰键** —— 注册裸 's' 会系统级劫持 S 键，
+        #    让用户在任何程序里都打不出那个字母（见 global_hotkey 的说明）。
+        try:
+            done, bad = global_hotkey_mod.install(self, {
+                global_hotkey_mod.HOTKEY_DEFAULT_MENU: self.toggle_item_menu,
+                global_hotkey_mod.HOTKEY_DEFAULT_INTERACT: self.interact_scene_prop,
+            })
+            self._item_hotkey_done, self._item_hotkey_bad = tuple(done), tuple(bad)
+            if bad:
+                _log.warning('全局热键未装上：%s ⇒ 仍可用"宠物窗口有焦点时按 S / E"', bad)
+        except Exception:
+            _log.exception('全局热键安装异常（已降级为窗口级 S / E 键）')
+
+        _log.info('道具系统就绪：%s；可交互物 %d 个；热键=%s',
+                  self.inventory.describe(), len(self.item_props),
+                  self._item_hotkey_done)
+
+    # ---------------------------------------------------------------- 域
+    def _on_scene_switched_items(self, scene_id, scene):
+        """★ 场景切换钩子：换域 ⇒ 回光世界时把暗世界道具变成垃圾团里的东西。
+
+        由 `SceneController._fire_switch_hooks()` 调（钩子抛异常会被它吞掉并记日志，
+        不影响切换本身，所以这里不必再包一层 try）。
+        """
+        if self.inventory is None:
+            return
+        chapter = getattr(scene, 'chapter_id', None) or self.inventory.chapter
+        world = scene_system_mod.world_of_scene(scene)
+        room_id = getattr(scene, 'original_room_id', None)
+        if world is None:
+            # ★ 判不出世界 ⇒ **保持不变**，而不是猜一个。
+            #   猜错的代价是把玩家的道具冤枉地变成垃圾（不可逆，见 JUNK_IS_PERMANENT）。
+            _log.warning('场景 %s 判不出明/暗世界 ⇒ 道具域保持不变（当前=%s）',
+                         scene_id, self.inventory.world)
+            world = self.inventory.world
+        moved = self.inventory.enter(chapter, world, scene_id, room_id)
+        if moved:
+            # 用户口径的可观察点：回光世界时明确告诉他"东西变成垃圾团里的了"。
+            self._item_menu_message('* 暗世界的东西在光下一件件散开了……变成垃圾团里的东西：%s'
+                                    % '、'.join(moved))
+        self._rebuild_item_props()
+        self._refresh_item_menu()
+
+    def _rebuild_item_props(self):
+        """按当前场景重建可交互物（存档点 / 暗之泉 / 拾取）。
+
+        ⚠️ 数据现状（第48轮实测，如实登记）：场景 objects 来自第44轮生成器，
+        它只收录**有 sprite 的实例**，且第42轮普查只覆盖 146 个对象类 ⇒
+        `obj_readable` / 宝箱 / 拾取 这些类**一件都没进数据**。
+        `item_interact.PROP_CLASSES` 把这些类标注成 `in_data=False + gap`，
+        `build_props()` 遇到它们会**跳过而不是造假可交互物**。数据补齐后不用改代码。
+        """
+        self.item_props = []
+        if self.inventory is None:
+            return
+        scene = self.__dict__.get('_scene_state')
+        if scene is None:
+            return
+        try:
+            self.item_props = item_interact_mod.build_props(
+                scene,
+                self.inventory.chapter,
+                self.inventory.world,
+                present=self._item_prop_present,
+                heal_all=self._item_heal_all,
+                on_enter=self._item_enter_scene,
+                inventory=self.inventory,
+                bus=self.interact_bus,
+            )
+        except Exception:
+            _log.exception('可交互物构建失败（本场景没有可交互物，不影响其它功能）')
+
+    def _refresh_item_menu(self):
+        """让已开着的菜单立刻反映新状态（换场景后道具列表可能变了/菜单该关掉）。"""
+        if self.item_menu is None or self.item_menu_ui is None:
+            return
+        try:
+            if self.item_menu_ui.is_open():
+                self.item_menu_ui.show_frame(self.item_menu.frame())
+        except Exception:
+            _log.exception('菜单刷新失败（忽略）')
+
+    # ---------------------------------------------------------------- 入口
+    def toggle_item_menu(self):
+        """开/关 S 键菜单。**全局热键与窗口按键都走这里**（单一入口）。
+
+        为什么单一入口：热键回调和 Qt 事件是两条线程/两条路径，各写一份"开菜单"
+        迟早会分叉（本项目踩过"同一个动作两处实现"的坑）。
+
+        ★ 去抖（`item_menu.TOGGLE_DEBOUNCE_SEC`）：热键回调实测可能被投递两次，
+        而"开关"是取反 —— 重复一次等于**没开**，界面上表现为"按了没反应"。
+        """
+        if self.item_menu_ui is None:
+            _log.info('菜单请求被忽略：道具系统未就绪')
+            return False
+        try:
+            now = time.monotonic()
+            last = self.__dict__.get('_item_menu_toggle_at', 0.0)
+            if now - last < item_menu_mod.TOGGLE_DEBOUNCE_SEC:
+                _log.info('菜单开关去抖：距上次 %.3fs（< %.2fs），忽略本次',
+                          now - last, item_menu_mod.TOGGLE_DEBOUNCE_SEC)
+                return False
+            self._item_menu_toggle_at = now
+            self.item_menu_ui.handle_key('menu')
+            return True
+        except Exception:
+            _log.exception('开关菜单失败')
+            return False
+
+    def item_menu_key(self, name):
+        """把一次按键交给菜单（窗口有焦点时由 `keyPressEvent` 转发）。"""
+        if self.item_menu_ui is None or not self.item_menu_ui.is_open():
+            return False
+        try:
+            self.item_menu_ui.handle_key(name)
+            return True
+        except Exception:
+            _log.exception('菜单按键处理失败（已忽略）')
+            return False
+
+    def _item_menu_message(self, text):
+        """菜单要弹一句话 —— 借对话气泡（与全项目其它"说话"同一出口）。"""
+        try:
+            self.dialogue_ui.add_dialogue('ralsei', text, 'normal')
+            self.dialogue_ui.show_dialogue()
+        except Exception:
+            _log.exception('菜单文案弹出失败：%s', text)
+
+    def _item_menu_anchor(self):
+        """宠物窗口的屏幕矩形（全局坐标）—— 菜单据此摆位。"""
+        return (self.x(), self.y(), self.width(), self.height())
+
+    # ---------------------------------------------------------------- 可交互物回调
+    def _item_prop_present(self, text, actor=None):
+        """可交互物要说话（存档点/告示/拾取提示）——同样走对话气泡。"""
+        self._item_menu_message(text)
+        return text
+
+    def _item_heal_all(self):
+        """★ 存档点"全队回满 HP"。
+
+        ⚠️ 本产品**没有**队伍 HP 模型（第48轮实测：全仓无 maxhp/party HP）。
+        所以这里**如实返回 False**，而不是假装回血成功 ——
+        `item_interact.SavePointProp.on_interact` 只把"回血失败"记日志，
+        台词照出（台词才是用户能看见的东西）。等有了队伍数值再在这里接上。
+        """
+        _log.info('存档点回血：本产品当前无队伍 HP 模型 ⇒ 未执行（如实返回 False）')
+        return False
+
+    def _item_enter_scene(self, scene_id):
+        """暗之泉"进泉"——切到目标场景。返回是否真的切成功（**不假装成功**）。"""
+        if not scene_id:
+            return False
+        try:
+            return bool(self.scene.switch(scene_id))
+        except Exception:
+            _log.exception('暗之泉切场景失败：%s', scene_id)
+            return False
+
+    def interact_scene_prop(self):
+        """与当前场景的可交互物交互（对应原作的 `scr_interact()`）。
+
+        ★ 为什么**不**叫"最近的那个"：本产品没有"宠物站在房间的哪个位置"这个信息
+        （宠物在**屏幕坐标**里跑，而物件坐标是**房间局部坐标**，两者之间还隔着
+        相机与缩放）。假装算一次距离只会得到看着像真的的假结果，
+        所以这里老老实实按**场景登记顺序取第一个**，并在日志里说明本场景一共几个。
+        同一个房间里有两件可交互物时，"选哪件"目前是登记顺序决定的 ——
+        这是**已知限制**，写进报告，不藏。
+
+        范围内没有可交互物 ⇒ 返回 False（**不静默**：日志会说是哪一步没成）。
+        """
+        props = getattr(self, 'item_props', None) or []
+        if not props:
+            _log.info('交互请求：当前场景 %s 没有可交互物',
+                      getattr(self, 'current_scene', None))
+            return False
+        target = props[0]
+        ok = bool(target.interact())
+        _log.info('交互 ⇒ %s（本场景共 %d 件可交互物）：%s',
+                  target.describe(), len(props),
+                  '发生了' if ok else '什么也没发生')
+        return ok
+
+    # ---------------------------------------------------------------- 键盘
+    def keyPressEvent(self, event):                       # noqa: N802 (Qt 命名)
+        """窗口级键盘入口 —— ★ **裸 `S` 开菜单就是从这里进来的**。
+
+        为什么不是全局热键注册裸 `S`：`RegisterHotKey` 不带修饰键时是**系统级抢占**，
+        注册了裸 `S`，用户在任何程序里都打不出那个字母。所以裸 `S` 只在
+        宠物窗口有焦点时生效（正好等同"游戏里按 S"的手感），
+        而无焦点的场景由 `Ctrl+Alt+S`（见 `global_hotkey.HOTKEY_DEFAULT_MENU`）覆盖。
+
+        ⚠️ 本窗口此前**没有任何键盘入口**，所以这里的行为改动面必须最小：
+        只有"菜单开着"或"按的是 S"两种情况下才 accept，
+        其余一律 `event.ignore()` 交回默认处理（等于原行为）。
+        """
+        try:
+            from PyQt5.QtCore import Qt as _Qt
+            key = event.key()
+            ui = getattr(self, 'item_menu_ui', None)
+            if ui is not None and ui.is_open():
+                name = item_menu_ui_mod.key_name_for_qt(key)
+                if name is not None:
+                    self.item_menu_key(name)
+                    event.accept()
+                    return
+                if key == _Qt.Key_S:
+                    self.toggle_item_menu()
+                    event.accept()
+                    return
+                event.ignore()
+                return
+            if key == _Qt.Key_S:
+                self.toggle_item_menu()
+                event.accept()
+                return
+            if key == _Qt.Key_E:
+                # 与场景可交互物交互（原作的 `scr_interact()`，见 `interact_scene_prop`）。
+                self.interact_scene_prop()
+                event.accept()
+                return
+        except Exception:
+            _log.exception('keyPressEvent 处理异常（已忽略，不拖垮主窗口）')
+        event.ignore()
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):

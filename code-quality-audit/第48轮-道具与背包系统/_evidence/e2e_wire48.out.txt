@@ -1,0 +1,40 @@
+[日志] 文件日志初始化失败，仅使用控制台: [Errno 13] Permission denied: 'E:\\RalseiMemory\\logs\\ralsei_pet.log'
+2026-09-26 02:34:28 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 112 组动画（legacy 28 组，schema=1）
+RegisterHotKey 失败 key=ctrl+alt+S vk=0x53 err=0（可能已被别的程序占用）
+RegisterHotKey 失败 key=ctrl+alt+E vk=0x45 err=0（可能已被别的程序占用）
+2026-09-26 02:34:29 [WARNING] ralsei_pet.main — 全局热键未装上：['ctrl+alt+S', 'ctrl+alt+E'] ⇒ 仍可用"宠物窗口有焦点时按 S / E"
+2026-09-26 02:34:29 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 0 个；热键=()
+① App 起来了                                      PASS 
+① 道具表就绪                                        PASS []
+① 两个袋子就绪                                       PASS 域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件
+① 菜单 UI 就绪                                     PASS 
+① 全局热键有结果记录                                    PASS done=() bad=('ctrl+alt+S', 'ctrl+alt+E')
+① 场景切换钩子挂上了                                    PASS 
+② 初始场景 = desktop                               PASS desktop
+② desktop ⇒ 光世界（overrides）                     PASS light
+③ 切到城堡镇成功                                      PASS 
+③ 城堡镇 ⇒ 暗世界                                    PASS dark
+③ 章节 = ch1                                     PASS ch1
+③ 原作房间 = 45                                    PASS 45
+④ 暗世界捡起 2 件                                    PASS 
+2026-09-26 02:34:30 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\memory.json.tmp' -> 'E:\\RalseiMemory\\memory.json'
+④ 切回桌面成功                                       PASS 
+④ 桌面 ⇒ 光世界                                     PASS light
+★④ 暗世界道具全变垃圾团                                  PASS ['黑暗糖果', '顶尖蛋糕']
+★④ 效果被掏空                                       PASS 
+⑤ 菜单打开                                         PASS 
+⑤ 菜单标题 = 菜单                                    PASS 菜单
+⑤ 根菜单含垃圾团入口                                    PASS ['道具', '垃圾团（2 件）']
+⑤ 菜单关上                                         PASS 
+④ 回暗世界仍是暗世界                                    PASS dark
+★④ 垃圾件用不出效果（走 UI 路径）                           PASS ['它已经变成垃圾团里的东西了，什么也不会发生。']
+⑥ 城堡镇有可交互物（存档点）                                PASS ['存档点(obj_savepoint)']
+2026-09-26 02:34:31 [INFO] ralsei_pet.main — 存档点回血：本产品当前无队伍 HP 模型 ⇒ 未执行（如实返回 False）
+2026-09-26 02:34:31 [INFO] ralsei_pet.main — 交互 ⇒ 存档点(obj_savepoint)（本场景共 1 件可交互物）：发生了
+⑥ 交互发生了                                        PASS 
+⑥ 存档点台词出来了                                     PASS ['* 存档点。光芒笼罩下来——伤口全都愈合了。']
+★⑤ 神秘力量（异章节）                                   PASS 一股神秘的力量阻止了你
+
+FAIL = []
+hotkey done=() bad=('ctrl+alt+S', 'ctrl+alt+E')
+2026-09-26 02:34:31 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 493 组）

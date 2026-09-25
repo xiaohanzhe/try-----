@@ -439,10 +439,32 @@ class SceneController(object):
             #    —— 形如"在刷新"，实则空转（第 38 轮复检删除）。
             #    P1 的渲染层请直接调 `resolve_objects(screen_rect)` 来填这个字段。
             pet.scene_objects = []
+            # ★ 第48轮：切场景后**通知宿主的钩子**（道具域切换 / 可交互物重建）。
+            #   为什么不在这里直接调道具系统：本文件的 import 面被
+            #   `verify_scene_p0` 的 A6 白名单锁着（只准标准库 + 零依赖数据层），
+            #   加一个业务 import 会把那条闸打红。所以走**鸭子类型的回调**：
+            #   宿主往 `_scene_switch_hooks` 里塞函数，本方法只负责叫它们。
+            #   ⚠️ 宿主没挂钩子时（列表为空）这里是**零行为** —— 这是刻意的：
+            #      P0 的"不切场景时零行为变化"判据不能被这行破坏。
+            self._fire_switch_hooks(scene_id, scene)
             return True
         except Exception as e:
             _log.warning("切换到场景 %r 失败（保持当前场景）: %s", scene_id, e)
             return False
+
+    def _fire_switch_hooks(self, scene_id, scene):
+        """把"切完了"这件事通知宿主。**任何钩子抛异常都不许影响切换结果**。
+
+        钩子签名：`hook(scene_id, scene)`；返回值忽略（只看副作用）。
+        逐个 try 是为了"一个钩子坏掉不影响其它钩子"——本项目多次踩过
+        "一个可选组件把主路径拖垮"。
+        """
+        hooks = self.p.__dict__.get('_scene_switch_hooks') or ()
+        for hook in list(hooks):
+            try:
+                hook(scene_id, scene)
+            except Exception:
+                _log.exception('场景切换钩子 %r 抛异常（已吞掉，切换本身已成功）', hook)
 
     def resolve_objects(self, screen_rect):
         """算出当前场景在 `screen_rect` 下该画的物件（已排序、已带屏幕坐标）。

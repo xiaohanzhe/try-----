@@ -1,0 +1,39 @@
+{
+ "schema_version": 1,
+ "note": "道具数据表索引。效果由原作 GML 机器抽取；名字只在有据可依时填写，查不到留空（UI 显示 ？？？）。生成器见 code-quality-audit/第48轮-道具与背包系统/_tools/gen_items48.py。",
+ "bag_capacity": {
+  "dark": 12,
+  "light": 8
+ },
+ "worlds": [
+  "dark",
+  "light"
+ ],
+ "chapters": {
+  "ch1": {
+   "file": "ch1.json",
+   "dark_items": 20,
+   "light_items": 12
+  },
+  "ch2": {
+   "file": "ch2.json",
+   "dark_items": 39,
+   "light_items": 17
+  },
+  "ch3": {
+   "file": "ch3.json",
+   "dark_items": 45,
+   "light_items": 17
+  },
+  "ch4": {
+   "file": "ch4.json",
+   "dark_items": 51,
+   "light_items": 21
+  },
+  "ch5": {
+   "file": "ch5.json",
+   "dark_items": 62,
+   "light_items": 26
+  }
+ }
+}

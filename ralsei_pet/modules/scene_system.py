@@ -255,6 +255,103 @@ def load_index(scene_dir_path=None):
     return result
 
 
+# ---------------------------------------------------------------------------
+#  明 / 暗世界（第48轮：道具效果"不可带出当前章节"的判据基础）
+# ---------------------------------------------------------------------------
+#  ★ 为什么需要这一层
+#    用户口径：「回到光世界的时候暗世界的任何道具都会变成垃圾团里包含的东西」。
+#    要判"是不是回到了光世界"，就得知道**当前场景属于哪个世界**。
+#    原作判据是 `global.darkzone`（0=光明世界 / 1=暗世界，第46轮实证），
+#    但它写在**每间房的创建代码**里 —— 属第42轮 `dump_rooms.csx` 的取证缺口。
+#    ⇒ 本轮改用"原作房间 resource 名"这条**可审计替代判据**，
+#      产物 = `_worlds.json`（生成器与自检见
+#      `code-quality-audit/第48轮-道具与背包系统/_tools/gen_worlds48.py`）。
+#    ⇒ 本模块只负责**读**，判据本身不在这里（数据在文件里，可单独复核）。
+
+WORLDS_FILENAME = '_worlds.json'
+
+#: 世界取值（与 `item_system.WORLD_*` 同字面量；本模块零依赖，不 import 它）。
+WORLD_LIGHT = 'light'
+WORLD_DARK = 'dark'
+
+
+def load_worlds(scene_dir_path=None):
+    """读 `_worlds.json` → 场景明暗世界表。
+
+    返回（**永不抛**，形状恒定 —— 与 `load_index` 同一条约定）::
+
+        {'ok': bool,
+         'rooms': {chapter_id: {str(room_id): 'light'|'dark'|'unknown'}},
+         'areas': {chapter_id: {area_id: 'light'|'dark'|'mixed'}},
+         'overrides': {scene_id: 'light'|'dark'},   # 产品口径的场景级覆盖
+         'meta': {...},                              # 判据说明 / 未判定清单
+         'error': str | None}
+
+    `ok=False` 时 `rooms` 为空 —— 调用方按"不知道世界"处理（**不要**默认成暗世界：
+    猜错会让"回到光世界"在不该触发的时候触发，把玩家的道具变成垃圾）。
+    """
+    result = {'ok': False, 'rooms': {}, 'areas': {}, 'overrides': {},
+              'meta': {}, 'error': None}
+    base = scene_dir_path or scenes_dir()
+    path = os.path.join(base, WORLDS_FILENAME)
+    raw = _read_json(path)
+    if raw is None:
+        result['error'] = '%s 不存在或不可读' % WORLDS_FILENAME
+        return result
+    if not isinstance(raw, dict):
+        result['error'] = '%s 顶层不是对象' % WORLDS_FILENAME
+        return result
+    rooms = raw.get('rooms')
+    if not isinstance(rooms, dict):
+        result['error'] = '%s 缺 rooms' % WORLDS_FILENAME
+        return result
+    result['rooms'] = rooms
+    result['areas'] = raw.get('areas') if isinstance(raw.get('areas'), dict) else {}
+    ov = raw.get('overrides')
+    result['overrides'] = ov if isinstance(ov, dict) else {}
+    result['meta'] = raw.get('meta') if isinstance(raw.get('meta'), dict) else {}
+    result['ok'] = True
+    return result
+
+
+def world_of_scene(scene, worlds=None, scene_dir_path=None):
+    """一个场景属于哪个世界 → `'light'` / `'dark'`，**判不出来就 `None`**。
+
+    判据顺序（**先场景级覆盖，再按原作房间 id**）：
+      1. `overrides[scene_id]` —— 只用于我们自建、不对应原作房间的场景（如 `desktop`）；
+      2. `rooms[chapter_id][str(original_room_id)]` —— 主力判据；
+      3. 都查不到 ⇒ `None`（**不猜**）。
+
+    参数 `scene` 可以是 `SceneState`，也可以是原始 dict（渲染层/接线层都可能调）。
+    """
+    if scene is None:
+        return None
+    if isinstance(scene, dict):
+        sid = scene.get('scene_id') or scene.get('id')
+        ch = scene.get('chapter_id')
+        rid = scene.get('original_room_id')
+    else:
+        sid = getattr(scene, 'scene_id', None)
+        ch = getattr(scene, 'chapter_id', None)
+        rid = getattr(scene, 'original_room_id', None)
+    table = worlds if isinstance(worlds, dict) else load_worlds(scene_dir_path)
+    if not table.get('ok'):
+        return None
+    ov = table.get('overrides') or {}
+    if sid and sid in ov:
+        return ov[sid]
+    if not ch or rid is None:
+        return None
+    rec = (table.get('rooms') or {}).get(ch)
+    if not isinstance(rec, dict):
+        return None
+    w = rec.get(str(rid))
+    if w == 'unknown':
+        # 「未判定」是一个**显式状态**，不是"暗世界"（见 gen_worlds48 的未判定清单）。
+        return None
+    return w if w in (WORLD_LIGHT, WORLD_DARK) else None
+
+
 def zone_filename(chapter_id, area_id):
     """`(章, 区域)` → 分片文件名。**对名字做裁剪**（它会被拼进路径）。
 
