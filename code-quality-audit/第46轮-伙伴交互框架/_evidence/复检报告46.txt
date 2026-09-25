@@ -1,0 +1,134 @@
+=== 第46轮 核心文件复检 ===
+仓库: C:\Users\23002\Desktop\项目文件夹\try - 副本
+
+-- 1. 可编译 / 可解析 --
+  [PASS] 1.PY 可编译 code-quality-audit/regress/run_all.py
+  [PASS] 1.PY 可编译 ralsei_pet/modules/companion.py
+  [PASS] 1.PY 可编译 ralsei_pet/modules/companion_dialog.py
+  [PASS] 1.PY 可编译 ralsei_pet/modules/companion_roster.py
+  [PASS] 1.PY 可编译 code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py
+  [PASS] 1.PY 可编译 code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py
+  [PASS] 1.PY 可编译 code-quality-audit/第46轮-伙伴交互框架/recheck46.py
+  [PASS] 1.JSON 可解析 code-quality-audit/regress/baseline.json
+  [PASS] 1.MD 代码围栏成对 伙伴交互系统_框架设计_2026-09-25.md
+  [PASS] 1.MD 代码围栏成对 第46轮报告-伙伴交互系统框架.md
+  [PASS] 1.MD 代码围栏成对 code-quality-audit/第46轮-伙伴交互框架/_evidence/伙伴框架骨架46.md
+  [PASS] 1.5 本轮没产生 .pyc（复检不许改变被测状态）
+
+-- 2. 结构自检 --
+  [PASS] 2.1 run_all.py 套件 id 无重复
+  [PASS] 2.2 套件数 == 42（本轮 41 → 42）
+  [PASS] 2.3 新套件 companion_round46 已登记
+  [PASS] 2.4 新套件的 script 指向真文件
+  [PASS] 2.5 baseline.json 里的套件数 == 42
+  [PASS] 2.6 baseline 与 run_all 的 id 集合一致
+  [PASS] 2.7 每个基线项都有 sha256/exit/pass/fail 四键
+  [PASS] 2.8 无标题粘连 伙伴交互系统_框架设计_2026-09-25.md
+  [PASS] 2.8 无标题粘连 第46轮报告-伙伴交互系统框架.md
+  [PASS] 2.8 无标题粘连 code-quality-audit/第46轮-伙伴交互框架/_evidence/伙伴框架骨架46.md
+  [PASS] 2.8b 负控制：人为把标题粘到正文尾部能被抓到
+  [PASS] 2.8c 正控制：正常标题不被误报
+  [PASS] 2.8d 正控制：代码围栏内的 ## 不被误报
+  [PASS] 2.9 设计文档 §0 标题仍在
+  [PASS] 2.9 设计文档 §1 标题仍在
+  [PASS] 2.9 设计文档 §2 标题仍在
+  [PASS] 2.9 设计文档 §3 标题仍在
+  [PASS] 2.9 设计文档 §4 标题仍在
+  [PASS] 2.9 设计文档 §5 标题仍在
+  [PASS] 2.9 设计文档 §6 标题仍在
+  [PASS] 2.9 设计文档 §7 标题仍在
+  [PASS] 2.9 设计文档 §8 标题仍在
+  [PASS] 2.9 设计文档 §9 标题仍在
+  [PASS] 2.9 设计文档 §10 标题仍在
+  [PASS] 2.10 报告 §0 标题仍在
+  [PASS] 2.10 报告 §1 标题仍在
+  [PASS] 2.10 报告 §2 标题仍在
+  [PASS] 2.10 报告 §3 标题仍在
+  [PASS] 2.10 报告 §4 标题仍在
+  [PASS] 2.10 报告 §5 标题仍在
+  [PASS] 2.10 报告 §6 标题仍在
+
+-- 3. 编码 --
+  [PASS] 3.1 无 BOM code-quality-audit/regress/run_all.py
+  [PASS] 3.2 无 U+FFFD code-quality-audit/regress/run_all.py
+  [PASS] 3.1 无 BOM ralsei_pet/modules/companion.py
+  [PASS] 3.2 无 U+FFFD ralsei_pet/modules/companion.py
+  [PASS] 3.1 无 BOM ralsei_pet/modules/companion_dialog.py
+  [PASS] 3.2 无 U+FFFD ralsei_pet/modules/companion_dialog.py
+  [PASS] 3.1 无 BOM ralsei_pet/modules/companion_roster.py
+  [PASS] 3.2 无 U+FFFD ralsei_pet/modules/companion_roster.py
+  [PASS] 3.1 无 BOM code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py
+  [PASS] 3.2 无 U+FFFD code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py
+  [PASS] 3.1 无 BOM code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py
+  [PASS] 3.2 无 U+FFFD code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py
+  [PASS] 3.1 无 BOM code-quality-audit/第46轮-伙伴交互框架/recheck46.py
+  [PASS] 3.2 无 U+FFFD code-quality-audit/第46轮-伙伴交互框架/recheck46.py
+  [PASS] 3.1 无 BOM 伙伴交互系统_框架设计_2026-09-25.md
+  [PASS] 3.2 无 U+FFFD 伙伴交互系统_框架设计_2026-09-25.md
+  [PASS] 3.1 无 BOM 第46轮报告-伙伴交互系统框架.md
+  [PASS] 3.2 无 U+FFFD 第46轮报告-伙伴交互系统框架.md
+  [PASS] 3.1 无 BOM code-quality-audit/第46轮-伙伴交互框架/_evidence/伙伴框架骨架46.md
+  [PASS] 3.2 无 U+FFFD code-quality-audit/第46轮-伙伴交互框架/_evidence/伙伴框架骨架46.md
+  [PASS] 3.1 无 BOM code-quality-audit/regress/baseline.json
+  [PASS] 3.2 无 U+FFFD code-quality-audit/regress/baseline.json
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）code-quality-audit/regress/run_all.py
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）ralsei_pet/modules/companion.py
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）ralsei_pet/modules/companion_dialog.py
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）ralsei_pet/modules/companion_roster.py
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py
+  [PASS] 3.3 EOL 与既有模块一致（LF，无 CRLF）code-quality-audit/第46轮-伙伴交互框架/recheck46.py
+
+-- 4. 恒真判据复查（扫的是"去注释去字符串"后的代码） --
+  [PASS] 4.1 无恒真写法 code-quality-audit/regress/run_all.py
+  [PASS] 4.1 无恒真写法 ralsei_pet/modules/companion.py
+  [PASS] 4.1 无恒真写法 ralsei_pet/modules/companion_dialog.py
+  [PASS] 4.1 无恒真写法 ralsei_pet/modules/companion_roster.py
+  [PASS] 4.1 无恒真写法 code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py
+  [PASS] 4.1 无恒真写法 code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py
+  [PASS] 4.1 无恒真写法 code-quality-audit/第46轮-伙伴交互框架/recheck46.py
+  [PASS] 4.2 负控制：扫描器对假样本确实会报（4.1 有鉴别力）
+  [PASS] 4.3 正控制：字符串里"提到" check(..., True) 不算违规（首跑假报红的根因）
+  [PASS] 4.3b 同一个判据对"真判据"仍然报（证明 4.3 不是靠放宽而恒真）
+  [PASS] 4.4 套件自己的 AST 式恒真判据自查也通过（与 4.1 双路互证）
+
+-- 5. 逐令牌回验（本轮改过/新增的标识符与数字必须都在） --
+  [PASS] 5.1 code-quality-audit/regress/run_all.py 令牌齐全（1 个）
+  [PASS] 5.1 code-quality-audit/regress/baseline.json 令牌齐全（2 个）
+  [PASS] 5.1 ralsei_pet/modules/companion.py 令牌齐全（11 个）
+  [PASS] 5.1 ralsei_pet/modules/companion_dialog.py 令牌齐全（14 个）
+  [PASS] 5.1 ralsei_pet/modules/companion_roster.py 令牌齐全（12 个）
+  [PASS] 5.1 code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py 令牌齐全（6 个）
+  [PASS] 5.2 TRACE_LEN 真值 25
+  [PASS] 5.3 FOLLOW_LAG_BASE 真值 12
+  [PASS] 5.4 MAX_COMPANIONS 真值 2
+  [PASS] 5.5 DARK_SCALE 真值 2
+  [PASS] 5.6 INTERACT_COOLDOWN_FRAMES 真值 5
+  [PASS] 5.7 报告里「216」与基线一致
+  [PASS] 5.8 报告里「42 套件」与实测一致
+  [PASS] 5.9 报告里「17 项破坏」与 disc 的 CASES 数一致
+
+-- 6. 状态干净 --
+   git status --porcelain（未转义）:
+      M code-quality-audit/regress/baseline.json
+      M code-quality-audit/regress/run_all.py
+      M 伙伴交互系统_框架设计_2026-09-25.md
+     ?? code-quality-audit/第46轮-伙伴交互框架/
+     ?? ralsei_pet/modules/companion.py
+     ?? ralsei_pet/modules/companion_dialog.py
+     ?? ralsei_pet/modules/companion_roster.py
+     ?? 第46轮报告-伙伴交互系统框架.md
+   （本轮允许有未提交改动 —— 复检发生在 commit 之前；这条判据守的是"没有改到不该改的文件"）
+  [PASS] 6.1 改动只在预期文件里
+  [PASS] 6.1b 负控制：quotepath 已关掉（路径里没有 \ 转义）
+  [PASS] 6.2 没有 .disc_bak 残留（体检备份已落 %TEMP%）
+  [PASS] 6.3 baseline.json 的 sha256 全是 64 位十六进制
+  [PASS] 6.4 仓库根没有本轮产生的临时文件（*.tmp/bisect_probe/复检*.txt.bak）
+
+PASS=102 FAIL=0
+
+-- 首跑教训（都已修，且**一次都没改产品代码**）--
+  · 2.8 正则 `^#{1,3}\S` 因回溯把正常标题 `## 0. x` 也匹配 → 36 行假报红
+  · 4.1 文本扫描咬到"描述判据的字符串" → 1 行假报红（已加 4.3 正控制）
+  · 6.1 未关 core.quotepath，中文路径被 git 转义 → 3 条假报红
+  · 我自己的死循环 `for ln in out: w(ln)` → 进程 SIGTERM、零输出
