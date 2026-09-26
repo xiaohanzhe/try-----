@@ -1575,6 +1575,20 @@ class RalseiPet(QMainWindow):
         self.is_moving = True
         self.idle_timer = 0
         self.moving_duration = 0
+
+        # ★★ 第52轮：待机（窝着）状态 —— 字段集中声明（scene_p0 的"9 字段预声明"同一纪律：
+        #    属性必须在这里出现，别靠 getattr 兜底，否则"没接线"会伪装成"运行时正常"）。
+        #    进入条件 = 距上次**用户互动**满 IDLE_LOUNGE_AFTER_SECONDS（默认 10 分钟）；
+        #    进入后：关掉随机漫游 → 走到"任务栏（快捷栏）上沿"待着 → 切待机动画。
+        self._lounge_since = None            # 进入待机状态的时刻；None = 未在待机
+        self._lounge_perch = None            # 窝点 QPoint（屏幕坐标，窗口左上角落点）
+        self._lounge_walking = False         # 正在走向窝点（这一趟不算"用户造成的移动"）
+        self._lounge_interaction_ref = None  # 进入待机时的 last_interaction_time 基线
+
+        # ★★ 第52轮：就寝状态
+        self._bedtime_fired_date = None      # 已就寝的日期（'YYYY-MM-DD'）；每晚只触发一次
+        self._bedtime_sleep = False          # 当前这次睡眠是不是"就寝睡"（决定早上自动醒）
+        self._last_bedtime_check = 0.0       # 判定节拍时间戳（避免每 30ms 都算日期）
         
         # 摔倒和恢复相关变量
         # 第三十四轮去重：`fall_start_time` 整体删除（6 处写、AST 证实 0 处读的纯死字段）；
@@ -2541,6 +2555,12 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.warning(f"check_nearby_desktop_elements 异常: {e}")
         
+        # ★★ 第52轮：就寝判定。**必须排在"睡眠状态处理"之前** ——
+        #   白天的 5 分钟小憩（`max_sleep_idle_duration`）几乎必然覆盖 23:00；
+        #   就寝要做的是把那场小憩**升级**成"就寝睡"（并回房间），不是被它挡掉。
+        #   节流在 `_bedtime_tick` 内部（BEDTIME_CHECK_INTERVAL=5s），这里每 tick 调是安全的。
+        self._bedtime_tick(current_time)
+
         # 睡眠状态处理
         if self.is_sleeping:
             self.current_activity = "sleeping"
@@ -2556,9 +2576,12 @@ class RalseiPet(QMainWindow):
                         self.play_animation_once("look_up")
                     except Exception:
                         pass
-                    stir_msgs = ["唔...别吵...", "嗯...再睡五分钟...", "zzz...别闹..."]
-                    self.dialogue_ui.add_dialogue("ralsei", random.choice(stir_msgs), "sleepy")
-                    self.dialogue_ui.show_dialogue()
+                    # ★★ 第52轮：`唔...别吵...` 三句内置台词**已迁到事件通道**
+                    #   （用户口径「把他内置的对话去掉」「聊天系统全权由7B接管」）。
+                    try:
+                        self.speak_event("sleep_stir", None, "sleepy")
+                    except Exception as e:
+                        _log.debug("main 防御性异常（已忽略）: %s", e)
                 elif (current_time - self._sleep_stir_time < 5.0
                       and getattr(self, '_sleep_stir_count', 0) == 1):
                     # 5秒内第二次被吵：才真正醒来
@@ -2934,7 +2957,16 @@ class RalseiPet(QMainWindow):
         else:
             # 空闲状态，随机化移动模式
             self.idle_timer += timer_dt        # ★ 计时器口径，见 update_movement 顶部说明
-            if self.idle_timer >= self.max_idle_duration:
+            # ★★ 第52轮：待机（窝着）状态**优先于**随机漫游 ——
+            #    进入待机后必须关掉 `randomize_movement_pattern`，否则刚走到
+            #    任务栏上沿就又被随机漫游赶走（"待不住"）。
+            #    注意：待机期间不再靠 `idle_timer` 记门限（它会被随机漫游清零，
+            #    见 IDLE_LOUNGE_AFTER_SECONDS 的说明），门限走"距上次用户互动"。
+            _lounging = self._idle_lounge_tick(current_time)
+            if _lounging:
+                if not self.is_moving:
+                    self.idle_timer = 0
+            elif self.idle_timer >= self.max_idle_duration:
                 # ===== Spell / 躲猫猫 / 拖拽等关键过程：禁止随机启动移动 =====
                 if getattr(self, '_spell_stage', None) is not None:
                     self.idle_timer = 0
@@ -4766,6 +4798,8 @@ class RalseiPet(QMainWindow):
     def wake_up(self):
         # 唤醒Ralsei
         self.is_sleeping = False
+        # ★ 第52轮：就寝睡结束（早上自动醒 / 被叫醒都算）
+        self._bedtime_sleep = False
         # 清理睡眠迷糊状态
         for attr in ('_sleep_stir_time', '_sleep_stir_count'):
             if hasattr(self, attr):
@@ -4780,10 +4814,12 @@ class RalseiPet(QMainWindow):
         # 切换到苏醒动画
         self.change_animation("pose", force=True)
         
-        # 显示苏醒消息
-        wake_up_messages = ["嗯？什么事？", "哎呀！我睡着了！", "早上好！"]
-        self.dialogue_ui.add_dialogue("ralsei", random.choice(wake_up_messages), "surprised")
-        self.dialogue_ui.show_dialogue()
+        # ★★ 第52轮：`嗯？什么事？` 三句内置台词**已迁到事件通道**（同 `enter_sleep_mode`，
+        #   用户口径「把他内置的对话去掉」「聊天系统全权由7B接管」）。
+        try:
+            self.speak_event("wake_up", None, "surprised")
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         
         # 重置睡眠计时器
         self.last_interaction_time = time.time()
@@ -5154,18 +5190,164 @@ class RalseiPet(QMainWindow):
                 self.desktop_interaction.close_window(window['title'])
                 break
     
-    def enter_sleep_mode(self):
+    # ==============================================================
+    # ★★ 第52轮：就寝（回房间睡觉）—— 常量与口径见 BEDTIME_* 区块
+    # ==============================================================
+    def _bedtime_target_time(self, date_obj):
+        """当晚的就寝时刻（datetime）：23:00 ± BEDTIME_JITTER_MINUTES。
+
+        用**日期做种**（`random.Random(YYYYMMDD)`）：同一天里反复调用得到同一个
+        时刻，不同天不同 —— 既有"±10 分钟"的随机感，又不会在同一晚抖动。
+        """
+        import datetime as _dt
+        seed = int(date_obj.strftime('%Y%m%d'))
+        rnd = random.Random(seed)
+        jitter = rnd.randint(-int(self.BEDTIME_JITTER_MINUTES),
+                             int(self.BEDTIME_JITTER_MINUTES))
+        base = _dt.datetime(date_obj.year, date_obj.month, date_obj.day,
+                            int(self.BEDTIME_HOUR), 0, 0)
+        return base + _dt.timedelta(minutes=jitter)
+
+    def _bedtime_busy(self):
+        """「有事」的判定 —— 逐条对应用户原话「除非有事（冒险，和我聊天等）」。
+
+        ⚠️ **不含 `is_sleeping`**：白天的 5 分钟小憩（`max_sleep_idle_duration`）
+        几乎必然覆盖 23:00，如果这里把"正在睡"当忙碌，就寝永远不会发生。
+        就寝要做的是把小憩**升级**成就寝睡（见 `go_to_bed`），不是被它挡掉。
+        """
+        if getattr(self, 'game_state', {}).get('is_playing'):
+            return True                       # 冒险 / 小游戏
+        for attr in ('is_falling', 'is_recovering', 'is_splat', 'is_jumping',
+                     'is_gravity_falling', '_is_being_dragged',
+                     'is_following_mouse', 'is_watching_video'):
+            if getattr(self, attr, False):
+                return True
+        if getattr(self, '_spell_stage', None) is not None:
+            return True
+        if getattr(self, '_hide_stage', None) is not None:
+            return True
+        dui = getattr(self, 'dialogue_ui', None)
+        if dui is not None:
+            try:
+                if callable(getattr(dui, 'has_active_conversation', None)) \
+                        and dui.has_active_conversation():
+                    return True               # 正在聊天（有来有回 / 刚说完没静下来）
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+            try:
+                if callable(getattr(dui, '_is_user_inputting', None)) \
+                        and dui._is_user_inputting():
+                    return True               # 用户正在打字
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+            if getattr(dui, '_ai_inflight', False):
+                return True                   # 模型回复在途
+        return False
+
+    def go_to_bed(self):
+        """回房间 + 就寝。返回 True 表示这一晚的就寝动作已执行。
+
+        · 场景切换复用既有 `self.scene.switch()`（不新开通道、不绕过世界门控）；
+        · 落点复用待机窝点（屏幕底部 · 快捷栏上沿）——"回房间"在视觉上就是
+          走到屏幕下方他的位置躺下；
+        · 已经在睡（白天小憩）⇒ 只**升级**成"就寝睡"，不重放一次入睡台词。
+        """
+        self._exit_idle_lounge("就寝")
+        home = getattr(self, 'BEDTIME_HOME_SCENE', 'desktop')
+        try:
+            if getattr(self, 'current_scene', None) != home:
+                ok = bool(self.scene.switch(home))
+                _log.info("[就寝] 回房间 %s -> %s（%s）", getattr(self, 'current_scene', None),
+                          home, "成功" if ok else "切换未成功，仍就地就寝")
+        except Exception as e:
+            _log.warning("[就寝] 回房间失败（忽略，就地就寝）: %s", e)
+        # 走到窝点（快捷栏上沿）再睡
+        try:
+            perch = self._lounge_perch_point()
+            if perch is not None:
+                self.move(perch)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        if getattr(self, 'is_sleeping', False):
+            # 已经是小憩睡 ⇒ 只升级标记，不重放入睡台词
+            self._bedtime_sleep = True
+            _log.info("[就寝] 由小憩升级为就寝睡")
+        else:
+            self.enter_sleep_mode(bedtime=True)
+        return True
+
+    def _bedtime_tick(self, now=None):
+        """就寝判定（节流 BEDTIME_CHECK_INTERVAL 秒调一次）。返回 True = 本次执行了就寝。"""
+        try:
+            if not getattr(self, 'BEDTIME_ENABLED', True):
+                return False
+            now_ts = time.time() if now is None else float(now)
+            # 节流：窗口 ±10 分钟，5 秒一次足够
+            if now_ts - float(getattr(self, '_last_bedtime_check', 0.0)) \
+                    < float(getattr(self, 'BEDTIME_CHECK_INTERVAL', 5.0)):
+                return False
+            self._last_bedtime_check = now_ts
+
+            import datetime as _dt
+            dt_now = _dt.datetime.fromtimestamp(now_ts)
+
+            # ---- ① 早上自动醒（**只**对"就寝睡"生效；小憩不自动醒）----
+            if getattr(self, '_bedtime_sleep', False) and getattr(self, 'is_sleeping', False) \
+                    and dt_now.hour >= int(self.BEDTIME_WAKE_HOUR):
+                _log.info("[就寝] 早上 %02d 点，自动醒来", dt_now.hour)
+                self.wake_up()
+                return False
+
+            # ---- ② 到点就寝（每晚一次）----
+            today = dt_now.strftime('%Y-%m-%d')
+            if getattr(self, '_bedtime_fired_date', None) == today:
+                return False
+            date_obj = dt_now.date()
+            target = self._bedtime_target_time(date_obj)
+            window_end = target + _dt.timedelta(minutes=int(self.BEDTIME_JITTER_MINUTES))
+            if dt_now < target:
+                return False                      # 还没到点
+            if dt_now > window_end:
+                # 窗口已过（多半是"有事"占满了，或程序那时没运行）
+                # ⇒ 记一笔今晚不再尝试，**不做"半夜补睡"**
+                self._bedtime_fired_date = today
+                _log.info("[就寝] 今晚（%s）窗口 %s~%s 已过，不再补睡",
+                          today, target.strftime('%H:%M'), window_end.strftime('%H:%M'))
+                return False
+            if self._bedtime_busy():
+                _log.debug("[就寝] 到点但「有事」（冒险/聊天中），本次推迟")
+                return False                      # 窗口内继续等，不标记 fired
+            self._bedtime_fired_date = today
+            _log.info("[就寝] 到点（目标 %s），回房间睡觉", target.strftime('%H:%M'))
+            return bool(self.go_to_bed())
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return False
+
+    def enter_sleep_mode(self, bedtime=False):
         # 进入睡眠状态
         self.is_sleeping = True
         self.is_moving = False
+        # ★ 第52轮：睡觉优先于"待机窝着"（别一边睡着一边还惦记着窝点）
+        self._exit_idle_lounge("进入睡眠")
+        # ★ 第52轮：区分"就寝睡"与"小憩睡" —— 只有就寝睡才会在早上
+        #   `BEDTIME_WAKE_HOUR` 自动醒（见 `_bedtime_tick`）。
+        self._bedtime_sleep = bool(bedtime)
         # 清理睡眠迷糊状态
         for attr in ('_sleep_stir_time', '_sleep_stir_count'):
             if hasattr(self, attr):
                 delattr(self, attr)
         self.change_animation("idle", force=True)  # force=True 确保即使冷却期内也切换
-        sleep_msgs = ["zzz... 晚安，做个好梦！", "zzz... 我困了...", "zzz... 好舒服..."]
-        self.dialogue_ui.add_dialogue("ralsei", random.choice(sleep_msgs), "sleepy")
-        self.dialogue_ui.show_dialogue()
+        # ★★ 第52轮：`zzz... 晚安，做个好梦！` 三句内置台词**已迁到事件通道**。
+        #   用户口径逐字：「还有把他内置的对话去掉！！！！」／
+        #   「记住，聊天系统全权由7B接管，别放内置对话了，太木讷了」。
+        #   `pool=None` = 不给内置台词（AI 不可用就安静地睡，而不是甩一句写死的 zzz）。
+        #   ⚠️ 本模块**不能**用 `_log_()`（那是 hide_controller 的私有方法），
+        #   本文件用的是模块级 `_log`。
+        try:
+            self.speak_event("sleep_enter", None, "sleepy")
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         # 重置各种状态
         self.is_watching_video = False
         self.is_moving = False
@@ -5434,6 +5616,64 @@ class RalseiPet(QMainWindow):
     # 用户要求："待机动画要在原地不动3分钟以上才会播放哦，而不是停止就播"。
     # 单位秒；idle_timer 由 update_movement 维护，移动时清零。
     IDLE_LOOP_MIN_SECONDS = 600.0  # ★ 第51轮：10 分钟（用户口径「他待机只会在静止超过10分钟后触发」）
+
+    # ==============================================================
+    # ★★ 第52轮：「待机（窝着）」状态
+    #   用户口径逐字：
+    #     「他这一直站着不动是什么情况，像贴图似的，而且就算静止不动那也要来屏幕底下
+    #       那个快捷栏上面待着吧，就偶尔聊几句天这样的感觉」
+    #
+    #   ❗先修**根因**（不然上面那句"待机只会在静止超过10分钟后触发"是句空话）：
+    #     判据 `_idle_loop_active = idle_timer >= IDLE_LOOP_MIN_SECONDS` 在真机上
+    #     **恒为假** —— `update_movement` 的空闲分支只要休息满 `max_idle_duration`
+    #     就会调 `randomize_movement_pattern()` 并把 `idle_timer` 清零
+    #     （见 2936~2954 行），而 `max_idle_duration` 被随机成 **2~12 秒**
+    #     （见 `randomize_movement_pattern`）。⇒ `idle_timer` 最多涨到 ~12s，
+    #     **永远够不到 600s** ⇒ "待机动画"结构性地从未播放过，宠物永远定格在
+    #     最初那一帧站姿 —— 这正是用户看到的"像贴图似的"。
+    #     （第51轮曾据此把休息时长从 25s 缩到 12s，方向是反的：休息越短、
+    #       `idle_timer` 被清零得越勤，门限越不可能达成。）
+    #
+    #   ⇒ 判据改用「**距上次用户互动**已满多久」——这个量不会被自主漫游清零；
+    #     并在进入待机后**关掉随机漫游**（否则刚坐下就又被赶走）。
+    #
+    #   进入后做什么：
+    #     ① 走到「屏幕底部 · 任务栏（快捷栏）上沿之上」待着（用户原话）；
+    #     ② 切到待机动画（idle 的 5 帧循环）；
+    #     ③ "偶尔聊几句"沿用既有通道 `start_autonomous_speech`（10 分钟一次），
+    #        **不新开第二条说话通道**；
+    #     ④ 一有用户互动（或睡眠/游戏/拖拽等忙碌状态）立刻退出待机。
+    # ==============================================================
+    IDLE_LOUNGE_ENABLED = True
+    IDLE_LOUNGE_AFTER_SECONDS = 600.0    # 与 IDLE_LOOP_MIN_SECONDS 同口径（10 分钟）
+    IDLE_LOUNGE_PERCH_X_RATIO = 0.72     # 窝点横向位置：所在屏的 72% 处（偏右，不压桌面图标区）
+
+    # ==============================================================
+    # ★★ 第52轮：就寝（回房间睡觉）
+    #   用户口径逐字：
+    #     「在晚上的时候他会自己回到自己的房间里除非有事（冒险，和我聊天等），
+    #       要他就会在晚上11点左右（也就是上下10分钟）的时候回去睡觉」
+    #
+    #   口径拆解（逐句对应）：
+    #     · "晚上11点左右（上下10分钟）" ⇒ 触发窗口 = 23:00 ± `BEDTIME_JITTER_MINUTES`。
+    #       每晚的落点**随机但当日稳定**（用日期做种）：否则天天同一秒回房，
+    #       机械得像定时器崩了；日期内稳定是为了"同一晚多次 tick 不会算出不同时刻"。
+    #     · "除非有事（冒险，和我聊天等）" ⇒ 窗口内只要处于忙碌状态就**推迟**
+    #       （`_bedtime_busy()`：游戏/冒险、正在聊天/用户在打字、物理过程、拖拽…）。
+    #       窗口过完还没空 ⇒ **当晚就不睡了**，不做"半夜补睡"（那是另一种吓人）。
+    #     · "回到自己的房间里" ⇒ 走既有 `self.scene.switch()` 回 `BEDTIME_HOME_SCENE`。
+    #       ★ 本项目的桌宠"家"就是**桌面**（`_index.json` 的 `default_scene`）。
+    #         要改成某个城堡房间（如 `ch2.ralsei_room.dw_ralsei_castle_2f`）只改这一个
+    #         常量——但**未经用户确认不擅自选**（已在第52轮报告里列为待裁定）。
+    #     · 早上 `BEDTIME_WAKE_HOUR` 自动醒；**只对"就寝睡"生效**，
+    #       白天的 5 分钟小憩不自动醒（那样会变成"刚躺下就起来"）。
+    # ==============================================================
+    BEDTIME_ENABLED = True
+    BEDTIME_HOUR = 23
+    BEDTIME_JITTER_MINUTES = 10          # 23:00 ± 10 分钟
+    BEDTIME_WAKE_HOUR = 7
+    BEDTIME_HOME_SCENE = 'desktop'       # "他的房间"（本项目的家＝桌面）
+    BEDTIME_CHECK_INTERVAL = 5.0         # 判定节拍（秒）；窗口 ±10 分钟，5s 精度绰绰有余
 
     def _can_speak_now(self):
         """此刻开口是否"合时宜"（硬条件，与频率无关）。"""
@@ -8568,8 +8808,15 @@ class RalseiPet(QMainWindow):
                 #
                 # 现在：`idle` 的 5 帧循环只在原地静止 ≥ IDLE_LOOP_MIN_SECONDS 后播放；
                 # 在此之前显示站立静帧（第 0 帧，由 _need_advance 抑制帧推进会自然停住）。
+                # ★★ 第52轮：待机（窝着）状态**也算**待机动画的激活条件。
+                #    为什么必须加这一项：`idle_timer >= IDLE_LOOP_MIN_SECONDS` 在真机上
+                #    **恒为假**（随机漫游每次把 idle_timer 清零，而 max_idle_duration
+                #    只有 2~12s，永远涨不到 600s —— 完整推导见常量区
+                #    IDLE_LOUNGE_AFTER_SECONDS 的注释），所以只靠右边那一项，
+                #    "待机动画"结构性地从未播放过。
                 self._idle_loop_active = bool(
-                    self.idle_timer >= self.IDLE_LOOP_MIN_SECONDS)
+                    self._lounge_since is not None
+                    or self.idle_timer >= self.IDLE_LOOP_MIN_SECONDS)
                 if hasattr(self, 'is_being_thrown') and self.is_being_thrown:
                     new_animation = "hatless_throw"
                     # 确保图像始终向速度向量的方向冲着
@@ -9466,6 +9713,160 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
             return QApplication.desktop().availableGeometry().height() - max(1, self.height())
+
+    # ==============================================================
+    # ★ 第52轮：任务栏（快捷栏）上沿 —— "静止时到快捷栏上面待着"的落点基准
+    #
+    #   ⚠️ 为什么不能用 `_virtual_screen_rect()` / `_desktop_floor_y()`：
+    #      那两个量都是**整块屏幕**（含任务栏覆盖的那一条）。窗口"贴屏幕底边"
+    #      会被任务栏盖住下半截 —— 用户看到的就是"人沉到快捷栏底下去了"。
+    #      要"在快捷栏**上面**待着"，就必须用**工作区**（work area = 屏幕减去任务栏）。
+    #
+    #   取法（与 Qt 原生口径同源，按 Ralsei **当前所在的那块屏**取，不写死主屏）：
+    #      ① `QDesktopWidget.availableGeometry(self)` —— Qt 给的"可用区域"，
+    #         Windows 上就是 SPI_GETWORKAREA（已扣掉任务栏）；
+    #      ② 失败则退 `_virtual_screen_rect()`（最坏情况 = 老行为，绝不崩）。
+    # ==============================================================
+    def _work_area_rect(self):
+        """Ralsei 当前所在显示器的**工作区**矩形（QRect，已扣掉任务栏/快捷栏）。
+
+        退化时退回 `_virtual_screen_rect()`（= 旧行为），保证调用方永远拿到一个矩形。
+        """
+        try:
+            desk = QApplication.desktop()
+            if desk is not None:
+                wa = desk.availableGeometry(self) if self is not None \
+                    else desk.availableGeometry()
+                if wa is not None and wa.width() > 0 and wa.height() > 0:
+                    return wa
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return self._virtual_screen_rect()
+
+    def _taskbar_top_y(self):
+        """任务栏（快捷栏）上沿的 y 坐标（窗口左上角贴工作区底边时的 y）。
+
+        = 工作区底边 − 窗口高。宠物站在这个 y 上时，脚正好压在任务栏上沿之上。
+        """
+        try:
+            wa = self._work_area_rect()
+            return wa.y() + wa.height() - max(1, self.height())
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return self._desktop_floor_y()
+
+    def _lounge_perch_point(self):
+        """待机窝点（QPoint）：屏幕底部 · 任务栏上沿之上 · 偏右三分之一处。
+
+        横向取所在屏宽度的 `IDLE_LOUNGE_PERCH_X_RATIO` 比例处，避免和桌面图标
+        左列/中间的应用窗口打架；再走 `_clamp_pos_to_desktop()` 夹回虚拟桌面内。
+        任何一步失败 → 返回 None（调用方**不许就近凑**，直接不进入待机即可）。
+        """
+        try:
+            ratio = float(getattr(self, 'IDLE_LOUNGE_PERCH_X_RATIO', 0.72))
+            wa = self._work_area_rect()
+            x = int(wa.x() + wa.width() * ratio)
+            y = int(self._taskbar_top_y())
+            x, y = self._clamp_pos_to_desktop(x, y)
+            return QPoint(int(x), int(y))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return None
+
+    # ---- 待机（窝着）状态的进入 / 退出 -------------------------------------
+    def _idle_lounge_busy(self):
+        """"现在**不该**进入（或该退出）待机"的忙碌状态集合。
+
+        与 `_can_speak_now()` 的"合时宜"口径对齐：睡眠/游戏/物理过程/拖拽/施法/
+        跟鼠标/躲猫猫，一律不待机。宁可待机晚一点触发，也不要在这些过程中把宠物
+        从半空中拽到任务栏去。
+        """
+        for attr in ('is_sleeping', 'is_falling', 'is_recovering', 'is_splat',
+                     'is_jumping', 'is_gravity_falling', '_is_being_dragged',
+                     'is_following_mouse', 'is_watching_video'):
+            if getattr(self, attr, False):
+                return True
+        if getattr(self, 'game_state', {}).get('is_playing'):
+            return True
+        if getattr(self, '_spell_stage', None) is not None:
+            return True
+        if getattr(self, '_hide_stage', None) is not None:
+            return True
+        return False
+
+    def _enter_idle_lounge(self, now=None):
+        """进入待机状态：选窝点 → 走过去 → 清掉随机漫游。
+
+        返回 True 表示已进入。
+        """
+        if not getattr(self, 'IDLE_LOUNGE_ENABLED', True):
+            return False
+        perch = self._lounge_perch_point()
+        if perch is None:
+            return False            # 算不出窝点（几何异常）⇒ 不进入，绝不就近凑
+        now = time.time() if now is None else now
+        self._lounge_since = now
+        self._lounge_perch = perch
+        self._lounge_interaction_ref = getattr(self, 'last_interaction_time', None)
+        # 走向窝点：复用既有"目标点 + is_moving"通道（不新开移动实现）。
+        self.target_pos = QPoint(perch)
+        self.is_moving = True
+        self._lounge_walking = True
+        self.idle_timer = 0
+        _log.debug("[待机] 进入待机状态，窝点=(%d, %d)", perch.x(), perch.y())
+        return True
+
+    def _exit_idle_lounge(self, reason=""):
+        """退出待机状态（回到平常的自主漫游）。幂等。"""
+        if self._lounge_since is None and self._lounge_perch is None:
+            return False
+        self._lounge_since = None
+        self._lounge_perch = None
+        self._lounge_walking = False
+        self._lounge_interaction_ref = None
+        _log.debug("[待机] 退出待机状态 reason=%s", reason or "-")
+        return True
+
+    def _idle_lounge_tick(self, current_time):
+        """待机状态机（每 tick 调一次，由 update_movement 空闲分支驱动）。
+
+        规则：
+          · 未待机 + 距上次互动 ≥ 门限 + 不忙 → 进入；
+          · 已待机 + 有互动（`last_interaction_time` 变了）/ 变忙 → 退出；
+          · 已待机期间**不许**随机漫游（调用方据此跳过 randomize）。
+        返回 True = 本 tick 处于待机（调用方应跳过随机漫游）。
+        """
+        try:
+            if not getattr(self, 'IDLE_LOUNGE_ENABLED', True):
+                return False
+            if self._lounge_since is not None:
+                # 退出条件 1：用户互动过（时间戳变了）
+                ref = self._lounge_interaction_ref
+                cur = getattr(self, 'last_interaction_time', None)
+                if ref is not None and cur is not None and cur != ref:
+                    self._exit_idle_lounge("用户互动")
+                    return False
+                # 退出条件 2：进入忙碌状态
+                if self._idle_lounge_busy():
+                    self._exit_idle_lounge("忙碌状态")
+                    return False
+                # 还在待机：到窝点就停住别动（走的过程由 update_movement 的目标点驱动）
+                if self._lounge_walking and not self.is_moving:
+                    self._lounge_walking = False
+                return True
+            # 未待机 → 判断是否该进入
+            if self._idle_lounge_busy():
+                return False
+            last = getattr(self, 'last_interaction_time', None)
+            if last is None:
+                return False
+            gap = float(getattr(self, 'IDLE_LOUNGE_AFTER_SECONDS', 600.0))
+            if (current_time - last) < gap:
+                return False
+            return bool(self._enter_idle_lounge(current_time))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return False
 
     def cleanup_on_exit(self):
         """程序退出时的清理工作，根据隐私设置清理用户数据"""

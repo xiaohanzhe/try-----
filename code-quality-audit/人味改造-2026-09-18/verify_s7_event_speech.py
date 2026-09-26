@@ -456,9 +456,17 @@ ok('B22f 对话路径（dialogue_ui → parent.chat_with_ai）确实**不传** l
 section('C. 迁移完整性')
 
 _calls = re.findall(r'speak_event\(\s*"([a-z_]+)"', code_no_comment(MAIN_TEXT))
-# 抚摸那处的事件名由 pet_kind(部位) 动态给出（无字面量）→ 字面量 19 + 动态 1 = 20
-ok('C1 迁移点计数 = 20（字面量 %d + pet_kind 动态 1）' % len(_calls),
-   code_no_comment(MAIN_TEXT).count('self.speak_event(') == 20 and len(_calls) == 19,
+# 抚摸那处的事件名由 pet_kind(部位) 动态给出（无字面量）→ 字面量 22 + 动态 1 = 23
+#
+# ★ 第52轮：+3 处字面量迁移（`sleep_enter` / `sleep_stir` / `wake_up`）——
+#   入睡 zzz / 被吵醒哼哼 / 醒来应答这三组内置台词迁到事件通道，用户口径逐字
+#   「还有把他内置的对话去掉！！！！」「聊天系统全权由7B接管，别放内置对话了」。
+#   ⇒ 字面量 19→22、总数 20→23。
+#   ⚠️ 这条计数锁的用途是**迁移面清单**（少了、名字抄错了都得报红），
+#   所以"随迁移同步改数字"是正确处置；**不许**为省事放宽成 `>= 20`
+#   —— 那样删掉一半迁移点也不会报红，锁就废了。
+ok('C1 迁移点计数 = 23（字面量 %d + pet_kind 动态 1）' % len(_calls),
+   code_no_comment(MAIN_TEXT).count('self.speak_event(') == 23 and len(_calls) == 22,
    '字面量 %d 处：%s' % (len(_calls), sorted(_calls)))
 _unknown = sorted(set(k for k in _calls if k not in E.EVENT_TIERS))
 ok('C2 每个迁移点的事件名都在 EVENT_TIERS 里登记（防手抄错名字 → 静默退回罐头）',
