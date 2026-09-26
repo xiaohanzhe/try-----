@@ -567,45 +567,108 @@ class RalseiPet(QMainWindow):
                 return getattr(ctrl, name)
         raise AttributeError(name)
         
+    def _make_tray_icon(self):
+        """托盘图标：优先用真素材 `spr_ralsei_idle_0.png`，拿不到再退回程序内画的圆头。
+
+        ★ 为什么不再只用"程序内画的圆头"（第51轮用户口径）：
+          用户原话「让他后台运行的时候有个图标，我可以方便关掉他」——
+          托盘存在的意义是**一眼认出这是 Ralsei**，所以优先用原作素材。
+          但素材可能缺失（`deltarune_ralsei/` 是可选目录）⇒ 必须保留纯绘制兜底，
+          否则托盘会整体初始化失败，退化到"任务管理器才能杀"的更差状态。
+        """
+        from PyQt5.QtGui import QPixmap, QPainter, QBrush, QColor, QIcon
+        from PyQt5.QtCore import Qt
+        try:
+            loader = getattr(self, 'sprite_loader', None)
+            base = getattr(loader, 'sprite_dir', None)
+            if base:
+                cand = os.path.join(base, 'spr_ralsei_idle_0.png')
+                if os.path.isfile(cand):
+                    pm = QPixmap(cand)
+                    if not pm.isNull():
+                        return QIcon(pm.scaled(64, 64, Qt.KeepAspectRatio,
+                                               Qt.SmoothTransformation))
+        except Exception as e:
+            _log.debug("托盘图标读素材失败，退回绘制图标: %s", e)
+        pix = QPixmap(64, 64)
+        pix.fill(Qt.transparent)
+        p = QPainter(pix)
+        p.setRenderHint(QPainter.Antialiasing)
+        p.setBrush(QBrush(QColor(96, 200, 210)))
+        p.setPen(Qt.NoPen)
+        p.drawEllipse(6, 4, 52, 44)   # 头
+        p.drawEllipse(18, 34, 28, 26)  # 身体
+        p.end()
+        return QIcon(pix)
+
     def _setup_tray(self):
-        # 修复：右键"隐藏"后原实现无任何 GUI 恢复入口（无托盘/热键），而顶层单实例
+        # 历史修复：右键"隐藏"后原实现无任何 GUI 恢复入口（无托盘/热键），而顶层单实例
         # 互斥又拒绝重启新实例 → 宠物"永久丢失"，只能任务管理器杀进程。
-        # 系统托盘提供"显示 Ralsei / 退出"；托盘不可用环境由 _hide_ralsei 退化为最小化。
+        #
+        # ★★ 第51轮修复（用户口径：「加一个托盘图标，后台运行的时候有个图标，
+        #    我可以方便关掉他」）：**图标建好却从没 `show()` 过** ——
+        #    `tray.show()` 原先只在 `_hide_ralsei()` 里调用，于是"没隐藏过"的用户
+        #    在整个会话里**根本看不到托盘图标**，菜单里的"退出"也就无从点起。
+        #    现在：建好即常驻显示；显隐由菜单项控制，**不再**随"显示 Ralsei"一起消失
+        #    （图标消失=用户又失去唯一的退出入口，那是同一个坑的另一种形态）。
         try:
             from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction
-            from PyQt5.QtGui import QPixmap, QPainter, QBrush, QColor, QIcon
-            from PyQt5.QtCore import Qt
             if not QSystemTrayIcon.isSystemTrayAvailable():
                 self._tray = None
                 return
-            # 程序内生成一个简单头像图标，不依赖外部资源文件
-            pix = QPixmap(64, 64)
-            pix.fill(Qt.transparent)
-            p = QPainter(pix)
-            p.setRenderHint(QPainter.Antialiasing)
-            p.setBrush(QBrush(QColor(96, 200, 210)))
-            p.setPen(Qt.NoPen)
-            p.drawEllipse(6, 4, 52, 44)   # 头
-            p.drawEllipse(18, 34, 28, 26)  # 身体
-            p.end()
-            # 修复：QSystemTrayIcon 首参须为 QIcon，直接传 QPixmap 会抛
-            # "arguments did not match any overloaded call" → 托盘初始化失败。
-            tray = QSystemTrayIcon(QIcon(pix), self)
+            tray = QSystemTrayIcon(self._make_tray_icon(), self)
             menu = QMenu(self)
             show_action = QAction("显示 Ralsei", self)
             show_action.triggered.connect(self._show_from_tray)
-            quit_action = QAction("退出", self)
-            quit_action.triggered.connect(QApplication.quit)
+            hide_action = QAction("隐藏 Ralsei", self)
+            hide_action.triggered.connect(self._hide_ralsei)
+            quit_action = QAction("退出 Ralsei", self)
+            quit_action.triggered.connect(self._quit_from_tray)
             menu.addAction(show_action)
+            menu.addAction(hide_action)
             menu.addSeparator()
             menu.addAction(quit_action)
             tray.setContextMenu(menu)
-            tray.setToolTip("Ralsei 桌宠")
+            tray.setToolTip("Ralsei 桌宠（右键可退出）")
             tray.activated.connect(self._on_tray_activated)
+            tray.show()                      # ★ 常驻显示（第51轮修复点）
             self._tray = tray
+            # ★ 首次启动弹一次气泡：Windows 11 默认把**新注册**的托盘图标收进
+            #   "隐藏的图标"溢出区（系统行为，程序无法直接改）—— 不提示的话
+            #   用户还是会以为"没有图标、关不掉"。气泡同时会让系统把图标
+            #   临时显示在可见区，是这条提示之外的实际收益。
+            #   只弹一次（config 落盘），避免每次开机都打扰。
+            try:
+                if not self.config_manager.get('ui.tray_hint_shown', False):
+                    tray.showMessage(
+                        "Ralsei",
+                        "我到托盘里待着啦～ 右键这个图标可以退出我",
+                        QSystemTrayIcon.Information, 6000)
+                    self.config_manager.set('ui.tray_hint_shown', True)
+            except Exception as e:
+                _log.debug("托盘首次提示失败（不影响使用）: %s", e)
         except Exception as e:
             _log.warning(f"系统托盘初始化失败（不影响使用）: {e}")
             self._tray = None
+
+    def _quit_from_tray(self):
+        """托盘"退出"：走与菜单退出同一条清理路径，再退 Qt 事件循环。
+
+        ★ 为什么不能只 `QApplication.quit()`（原实现）：那样会跳过
+          `cleanup_on_exit()`，托盘图标/全局热键/常驻线程都留着残留，
+          用户下次启动可能被单实例互斥挡住（"明明关了却起不来"）。
+        """
+        try:
+            self.cleanup_on_exit()
+        except Exception as e:
+            _log.warning("托盘退出时清理异常（仍继续退出）: %s", e)
+        tray = getattr(self, '_tray', None)
+        if tray is not None:
+            try:
+                tray.hide()
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+        QApplication.quit()
 
     def _hide_ralsei(self):
         # "隐藏"菜单动作：缩到托盘（可找回）；托盘不可用时最小化到任务栏
@@ -627,20 +690,30 @@ class RalseiPet(QMainWindow):
             self.showMinimized()
 
     def _show_from_tray(self):
+        """把宠物从托盘/最小化状态恢复出来。
+
+        ⚠️ 第51轮：**不再**顺手 `self._tray.hide()`。原写法把托盘图标当成
+        "隐藏态指示器"，恢复后就把唯一的退出入口一起抹掉 —— 与"常驻图标"的口径冲突。
+        """
         self.show()
-        self.raise_()
-        self.activateWindow()
         try:
-            if getattr(self, '_tray', None) is not None:
-                self._tray.hide()
+            self.setWindowState(self.windowState() & ~Qt.WindowMinimized)
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
+        self.raise_()
+        self.activateWindow()
 
     def _on_tray_activated(self, reason):
         try:
             from PyQt5.QtWidgets import QSystemTrayIcon
-            if reason == QSystemTrayIcon.Trigger:  # 单击/双击托盘图标
+            # 单击=显示（Windows 上 Trigger 即单击）；中键/双击=在显隐之间切换
+            if reason == QSystemTrayIcon.Trigger:
                 self._show_from_tray()
+            elif reason == QSystemTrayIcon.DoubleClick:
+                if self.isVisible():
+                    self._hide_ralsei()
+                else:
+                    self._show_from_tray()
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
@@ -1476,7 +1549,7 @@ class RalseiPet(QMainWindow):
         self.movement_timer = QTimer(self)
         self.movement_timer.timeout.connect(self.update_movement)
         self.movement_timer.start(30)  # 30ms更新一次，提高平滑度
-        
+
         self.target_pos = QPoint(100, 100)
         
         # 从配置中获取移动设置，增加移动速度，使Ralsei动作更快
@@ -1847,21 +1920,24 @@ class RalseiPet(QMainWindow):
             time_since_last_move = current_time - self.last_movement_end_time
             
             # 根据情绪调整移动概率
+            # ★ 第51轮：整体上调（+0.15~0.2），理由同 `generate_new_move_target` 的距离注释
+            #   —— 实测"完全静止"占了 70% 时长，动静比例失衡到观感上像没在动。
+            #   保留各情绪的相对排序（兴奋最活跃 / 疲惫最安静）。
             if dominant_emotion == 'excited' or dominant_emotion == 'energetic':
                 # 兴奋或精力充沛时更倾向于移动
-                move_probability = 0.7
+                move_probability = 0.85
             elif dominant_emotion == 'shy' or dominant_emotion == 'peaceful':
-                # 害羞或平静时更倾向于休息
-                move_probability = 0.3
+                # 害羞或平静时更倾向于休息（第51轮：0.3 -> 0.5）
+                move_probability = 0.5
             elif dominant_emotion == 'curious':
                 # 好奇时更倾向于探索移动
-                move_probability = 0.6
+                move_probability = 0.7
             elif dominant_emotion == 'sad' or dominant_emotion == 'tired':
-                # 悲伤或疲惫时更倾向于休息
-                move_probability = 0.2
+                # 悲伤或疲惫时更倾向于休息（第51轮：0.2 -> 0.35）
+                move_probability = 0.35
             else:
                 # 其他情绪时的默认移动概率
-                move_probability = 0.4
+                move_probability = 0.55
             
             # 根据概率决定是否继续移动
             if random.random() < move_probability or time_since_last_move < 1.0:
@@ -1871,49 +1947,52 @@ class RalseiPet(QMainWindow):
                 self.generate_new_move_target()
             else:
                 # 根据情绪调整休息时间
+                # ★ 第51轮整体缩短（最长档 25s -> 12s）：实测**最长静息 33.5s**
+                #   （= 连续两次长休息叠加），而"待机动画"要静止满 180s 才播 ⇒
+                #   这几十秒里画面上**一格都不动**，是"像卡住了"的主要来源。
                 if dominant_emotion == 'excited' or dominant_emotion == 'energetic':
                     # 兴奋时休息时间较短
-                    self.max_idle_duration = random.uniform(3.0, 8.0)
+                    self.max_idle_duration = random.uniform(2.0, 5.0)
                 elif dominant_emotion == 'shy' or dominant_emotion == 'peaceful':
-                    # 害羞或平静时休息时间较长
-                    self.max_idle_duration = random.uniform(8.0, 20.0)
+                    # 害羞或平静时休息时间较长（第51轮：8~20 -> 4~10）
+                    self.max_idle_duration = random.uniform(4.0, 10.0)
                 elif dominant_emotion == 'curious':
                     # 好奇时休息时间适中
-                    self.max_idle_duration = random.uniform(5.0, 12.0)
+                    self.max_idle_duration = random.uniform(3.0, 7.0)
                 elif dominant_emotion == 'sad' or dominant_emotion == 'tired':
-                    # 悲伤或疲惫时休息时间较长
-                    self.max_idle_duration = random.uniform(10.0, 25.0)
+                    # 悲伤或疲惫时休息时间较长（第51轮：10~25 -> 5~12，仍为最长档）
+                    self.max_idle_duration = random.uniform(5.0, 12.0)
                 else:
                     # 其他情绪时的默认休息时间
-                    self.max_idle_duration = random.uniform(6.0, 15.0)
+                    self.max_idle_duration = random.uniform(4.0, 9.0)
                 # 确保在休息状态
                 self.is_moving = False
         else:
-            # 第一次移动，根据情绪调整起始行为
+            # 第一次移动，根据情绪调整起始行为（★ 第51轮：概率与休息时长与上面同步收紧）
             if dominant_emotion == 'excited' or dominant_emotion == 'energetic':
                 # 兴奋时更可能直接开始移动
-                if random.random() < 0.6:
+                if random.random() < 0.75:
                     # 修复：见上方注释——必须生成新目标，否则原地踏步
                     self.generate_new_move_target()
                 else:
                     self.is_moving = False
-                    self.max_idle_duration = random.uniform(3.0, 8.0)
+                    self.max_idle_duration = random.uniform(2.0, 5.0)
             elif dominant_emotion == 'shy' or dominant_emotion == 'peaceful':
-                # 害羞或平静时更可能先休息
-                if random.random() < 0.2:
+                # 害羞或平静时更可能先休息（第51轮：0.2 -> 0.45）
+                if random.random() < 0.45:
                     # 修复：见上方注释
                     self.generate_new_move_target()
                 else:
                     self.is_moving = False
-                    self.max_idle_duration = random.uniform(8.0, 20.0)
+                    self.max_idle_duration = random.uniform(4.0, 10.0)
             else:
                 # 其他情绪时的默认起始行为
-                if random.random() < 0.3:
+                if random.random() < 0.5:
                     # 修复：见上方注释
                     self.generate_new_move_target()
                 else:
                     self.is_moving = False
-                    self.max_idle_duration = random.uniform(6.0, 15.0)
+                    self.max_idle_duration = random.uniform(4.0, 9.0)
         
     def generate_new_move_target(self):
         # 生成新的移动目标
@@ -1987,21 +2066,27 @@ class RalseiPet(QMainWindow):
             direction = random.choice(['up', 'down', 'left', 'right'])
         
         # 根据情绪调整移动距离
+        # ★★ 第51轮按真机实测上调（用户口径：「他现在光有那个移动的动画，没有实际移动」）：
+        #   实测 240s 内 35 段行走、**单段位移中位数仅 49.5px** —— Ralsei 自身才 38px 宽，
+        #   即"走一次只挪 1.3 个身位"；在 2560px 宽的屏上肉眼几乎分辨不出位置变化，
+        #   观感就是"动画在播、人没动"。原值（30~150）量级过小，这里统一放大到
+        #   **最小 120px（≈3 个身位，肉眼可辨）**，并保留各情绪的相对远近关系。
+        #   ⚠️ 不动 `IDLE_LOOP_MIN_SECONDS`（180s）——那是用户明确要求，不得回退。
         if dominant_emotion == 'excited' or dominant_emotion == 'energetic':
             # 兴奋时移动距离更远
-            move_distance = random.randint(100, 300)
+            move_distance = random.randint(180, 420)
         elif dominant_emotion == 'shy' or dominant_emotion == 'peaceful':
-            # 害羞或平静时移动距离较近
-            move_distance = random.randint(50, 150)
+            # 害羞或平静时移动距离较近（第51轮：50~150 -> 150~340）
+            move_distance = random.randint(150, 340)
         elif dominant_emotion == 'curious':
             # 好奇时移动距离适中
-            move_distance = random.randint(80, 250)
+            move_distance = random.randint(160, 380)
         elif dominant_emotion == 'sad' or dominant_emotion == 'tired':
-            # 悲伤或疲惫时移动距离很短
-            move_distance = random.randint(30, 100)
+            # 悲伤或疲惫时移动距离很短（第51轮：30~100 -> 120~280，仍为最短档）
+            move_distance = random.randint(120, 280)
         else:
             # 其他情绪时的默认移动距离
-            move_distance = random.randint(80, 250)
+            move_distance = random.randint(150, 360)
         
         # 添加更多的横向移动，减少纵向移动，使Ralsei更多地在屏幕上水平探索
         if random.random() < 0.6:  # 60%的概率横向移动
@@ -2383,6 +2468,7 @@ class RalseiPet(QMainWindow):
         # 计算实际经过的时间
         current_time = time.time()
         elapsed_time = current_time - self.last_update_time
+        raw_elapsed = elapsed_time          # ★ 截断前的真实间隔（计时器用，见下）
         self.last_update_time = current_time
         # dt 截断（瞬移防治）：本函数内部会做窗口枚举（check_window_movement →
         # floor_manager.update_floors）、COM 调用等**可能阻塞主线程**的动作，阻塞耗时会被
@@ -2390,11 +2476,31 @@ class RalseiPet(QMainWindow):
         # `速度 += g*dt` 后再 `× dt`，对 dt 呈二次放大），一旦 dt 变成 1~2 秒，
         # 宠物就会"啪"地跳出去一大段——这就是用户看到的偶发瞬移。
         # 上限 0.1s（约 10FPS 的容差）：正常 tick 30ms 不受影响，异常长 tick 只按 100ms 结算。
+        # ⚠️ 本截断**只作用于位移**（下面所有 `速度 × elapsed_time` 的算式）。
         if not isinstance(elapsed_time, (int, float)) or elapsed_time < 0:
             elapsed_time = 0.0
         elif elapsed_time > 0.1:
             elapsed_time = 0.1
-        
+
+        # ★★ 第51轮新增：**状态机计时器用未截断的真实经过时间**（上限 2s 防呆）。
+        #
+        # 为什么必须和上面的 `elapsed_time` 分开（真机实测催生）：
+        #   0.1s 截断是给**位移**用的（防瞬移，理由见上），但 `idle_timer` /
+        #   `moving_duration` 是**状态机节拍**，不是位移量 —— 它们只需要"过了多久"。
+        #   一旦主线程被阻塞（真机实测见过 **6.68s** 的一次：窗口枚举 / 首次
+        #   `psutil.getloadavg()` 在 Windows 上要初始化计数器，单次就 1.1s），
+        #   紧接着的每一 tick 都只结算 0.1s ⇒ **内部时钟最慢被拉长 10 倍**：
+        #   `max_idle_duration = 15s` 的现实等待变成约 150s。
+        #   用户看到的现象就是：「光有那个移动的动画，没有实际移动」——
+        #   他其实在按自己的节拍走，只是那个节拍被 dt 截断偷走了 90% 的时间。
+        #   （实测：被阻塞的会话 55s 只走 2 段；干净会话 55s 走 **12** 段、均速 56px/s。）
+        # 上限取 2.0s 而不是不设限：真挂起 30s 时不该一口气把 30s 全算成"休息已结束"
+        # （那会退化成"一醒来就立刻暴走"）。2s 足以盖住实测到的最坏阻塞。
+        try:
+            timer_dt = min(max(float(raw_elapsed), 0.0), 2.0)
+        except Exception:
+            timer_dt = float(elapsed_time)
+
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:
             if current_time - self._last_env_update > 5.0:
@@ -2649,7 +2755,7 @@ class RalseiPet(QMainWindow):
         # 移动状态处理
         if self.is_moving:
             self.current_activity = "walking"
-            self.moving_duration += elapsed_time
+            self.moving_duration += timer_dt   # ★ 计时器口径，见 update_movement 顶部说明
             
             current_pos = self.pos()
             dx = self.target_pos.x() - current_pos.x()
@@ -2762,7 +2868,7 @@ class RalseiPet(QMainWindow):
                 
                 # 移动Ralsei
                 self.move(new_x, new_y)
-                
+
                 # 优化：使用速度向量来确定动画方向，确保方向一致
                 # 基于当前速度向量决定动画方向，确保动画方向与实际移动方向一致
                 speed_magnitude = math.hypot(self.current_speed_x, self.current_speed_y)
@@ -2827,7 +2933,7 @@ class RalseiPet(QMainWindow):
                 self._notify_arrived_if_needed()
         else:
             # 空闲状态，随机化移动模式
-            self.idle_timer += elapsed_time
+            self.idle_timer += timer_dt        # ★ 计时器口径，见 update_movement 顶部说明
             if self.idle_timer >= self.max_idle_duration:
                 # ===== Spell / 躲猫猫 / 拖拽等关键过程：禁止随机启动移动 =====
                 if getattr(self, '_spell_stage', None) is not None:

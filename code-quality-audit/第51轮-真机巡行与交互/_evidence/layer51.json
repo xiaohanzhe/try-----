@@ -1,0 +1,29 @@
+{
+ "n_cases": 75,
+ "variants": {
+  "0 原样": {
+   "ok": 75,
+   "penetrate": 75
+  },
+  "1 monotone=恒等": {
+   "ok": 75,
+   "penetrate": 75
+  },
+  "2 despike=恒等": {
+   "ok": 75,
+   "penetrate": 63
+  },
+  "3 两者=恒等": {
+   "ok": 75,
+   "penetrate": 63
+  },
+  "4 smooth链=恒等": {
+   "ok": 75,
+   "penetrate": 4
+  },
+  "5 simplify=恒等": {
+   "ok": 75,
+   "penetrate": 4
+  }
+ }
+}

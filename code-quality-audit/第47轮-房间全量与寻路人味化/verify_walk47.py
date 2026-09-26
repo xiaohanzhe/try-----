@@ -19,7 +19,9 @@
 -------------
 A **真实全量**（ch1/2/4/5 有障碍房间 × 最远采样对，193 组）：
   ① 最深回溯 ≤ `BACKTRACK_TOL`（"真人不会倒着走"的可断言形式）
-  ② 可见硬拐角（转角 ≥80° 且两腿都 ≥5px）**逐对不劣于**原折线
+  ② **本可删的**硬拐角（转角 ≥80°、两腿 ≥5px、且删掉该顶点不穿墙）**逐对不劣于**
+     原折线，且被清成 0（第51轮细化的口径；纯"可见硬拐角总数"会把
+     "删了会穿墙"的正当保留也误判成劣化 —— 见 `removable_hard` 的说明）
   ③ 逐点 + 逐段不穿墙   ④ 首尾点 == 起终点
 B **负控制**：把**改前版本**（已随证据入库 `_evidence/_scene_walk_HEAD47.py`）用
   同一批夹具跑 —— 它必须**违反**①（实得 228.4px）并**劣于**②（318 vs 180）。
@@ -27,7 +29,7 @@ B **负控制**：把**改前版本**（已随证据入库 `_evidence/_scene_wal
 C **合成夹具**：`_monotone_forward` 在"删点会穿墙"时必须**保住**那个倒走点；
   并配一个"无脑删（不看安全）会穿墙"的反面对照 —— 证明安全回验不可省。
 D **常量与接线**：`BACKTRACK_TOL` 取值被钉住；`smooth_keep_walkable` 真的用了
-  `_monotone_forward`（防"函数写对了没人调"）。
+  `_monotone_forward` / `_despike`（防"函数写对了没人调"），且单调过滤先于去尖刺。
 
 判据纪律：**每条都 print `[PASS] ` 字面量**（`run_all.py` 按此计数）；
 不联网 / 不调 Ollama / 不 import Qt / 不需要显示器。
@@ -93,6 +95,73 @@ def visible_hard(path):
         if turn_deg(a, b, c) >= HARD_DEG:
             n += 1
     return n
+
+
+def hard_idx(path):
+    """可见硬拐角的**顶点下标**（口径与 `visible_hard` 完全一致）。"""
+    out = []
+    for i in range(1, len(path) - 1):
+        a, b, c = path[i - 1], path[i], path[i + 1]
+        if math.hypot(b[0] - a[0], b[1] - a[1]) < MIN_LEG:
+            continue
+        if math.hypot(c[0] - b[0], c[1] - b[1]) < MIN_LEG:
+            continue
+        if turn_deg(a, b, c) >= HARD_DEG:
+            out.append(i)
+    return out
+
+
+def removable_hard(W, obs, path):
+    """★ 第51轮细化的口径：**删掉该顶点也不穿墙**的硬拐角个数。
+
+    为什么需要它（而不是直接数 `visible_hard`）：
+      `_despike()` **刻意不删"抄近路会穿墙"的尖刺**（宁可生硬，绝不穿墙）。
+      于是"平滑后硬拐角比原折线多 1 个"未必是产品缺陷 —— 可能恰恰是
+      "删了就穿墙"的正当保留，和 A2b 认的"残留倒走点必须不可删"同源。
+      实测（第51轮）：ch1:105 的两个 81° 拐角 `_segment_clear(prev, next)` 均为
+      False ⇒ 属**必须保留**；而真正"本可顺却没顺"的硬拐角，
+      全量 193 组里 raw 有 **194** 个、平滑后是 **0** 个。
+      所以真正的质量不变量是「本可删的硬拐角逐对不劣化」，
+      比"可见硬拐角总数不劣化"**更精确**（后者会把正当保留也算成劣化）。
+    """
+    n = 0
+    for i in hard_idx(path):
+        if seg_clear(W, obs, path[i - 1], path[i + 1]):
+            n += 1
+    return n
+
+
+def despike_fed(fn):
+    """AST：`fn` 里 `_despike` 的首参是不是 `_monotone_forward` 的产出？
+
+    返回 `(fed, mono_vars)`。判据只看**数据流**，不看行号先后 ——
+    理由见 D2 处那段长注释（`bailed` 是早返回分支，源码里排在前面是正常的）。
+    D2（真实源码）与 D2b（负控制合成源码）**共用本函数**，避免判定抄两遍。
+    """
+    if fn is None:
+        return False, set()
+    mono_vars = set()
+    for sub in ast.walk(fn):
+        if isinstance(sub, ast.Assign) and isinstance(sub.value, ast.Call):
+            vf = sub.value.func
+            if isinstance(vf, ast.Name) and vf.id == '_monotone_forward':
+                for tg in sub.targets:
+                    if isinstance(tg, ast.Name):
+                        mono_vars.add(tg.id)
+    fed = False
+    for sub in ast.walk(fn):
+        if not (isinstance(sub, ast.Call) and sub.args):
+            continue
+        f = sub.func
+        if not (isinstance(f, ast.Name) and f.id == '_despike'):
+            continue
+        a0 = sub.args[0]
+        if isinstance(a0, ast.Name) and a0.id in mono_vars:
+            fed = True
+        if isinstance(a0, ast.Call) and isinstance(a0.func, ast.Name) \
+                and a0.func.id == '_monotone_forward':
+            fed = True
+    return fed, mono_vars
 
 
 def max_regress(W, path, ref):
@@ -166,7 +235,9 @@ def main():
     reg_now = 0.0
     reg_head = 0.0
     hard_now = hard_raw = hard_head = 0
-    worse_pairs = []
+    rem_now = rem_raw = 0
+    worse_pairs = []          # ★ 新口径：**本可删却没删**的硬拐角逐对劣化
+    visible_more = []         # 仅记录（可能是正当保留，不作为判定依据）
     worst_deg = 0
     leftover = []          # 残留倒走点：(ch, idx, i, 倒退px, 是否可删)
     bad_pt = bad_seg = bad_ends = 0
@@ -187,9 +258,18 @@ def main():
         hard_now += hn
         hard_raw += hr
         hard_head += hh
+        # ★ A3b 用"本可删的硬拐角"（见 `removable_hard` 的说明）；
+        #   纯粹的 `visible_hard` 变多只作 INFO —— 它会把"删了会穿墙"的
+        #   正当保留也误判成劣化（第51轮实测：ch1:105 两个 81° 拐角即此类）。
+        rn = removable_hard(W, obs, now['path'])
+        rr = removable_hard(W, obs, raw['path'])
+        rem_now += rn
+        rem_raw += rr
+        if rn > rr:
+            worse_pairs.append((ch, idx, rr, rn))
+            worst_deg = max(worst_deg, rn - rr)
         if hn > hr:
-            worse_pairs.append((ch, idx, hr, hn))
-            worst_deg = max(worst_deg, hn - hr)
+            visible_more.append((ch, idx, hr, hn))
         # ★ 残留倒走点：逐条记录，并当场判定"删了它会不会穿墙"
         arcs = [W._arc_pos(q, raw['path']) for q in now['path']]
         for i in range(1, len(now['path']) - 1):
@@ -226,14 +306,32 @@ def main():
     check('A3a ★ 平滑后可见硬拐角总数显著少于原折线',
           hard_now < hard_raw * 0.7,
           '平滑 %d vs 原折线 %d' % (hard_now, hard_raw))
-    check('A3b ★★ 可见硬拐角逐对不劣于原折线（0 对劣化）',
+    check('A3b ★★「本可删的硬拐角」逐对不劣于原折线（0 对劣化）',
           not worse_pairs,
           '劣化 %d 对：%r' % (len(worse_pairs), worse_pairs[:5]))
+    check('A3c ★★ 平滑把"本可删的硬拐角"清成 0（raw → now 净减 ≥ raw 的 90%）',
+          rem_now == 0 and rem_raw > 100,
+          'raw=%d now=%d' % (rem_raw, rem_now))
+    # ★★ A3d/A3e —— `removable_hard` 自身的**鉴别力体检**（正负成对）。
+    #   没有这一对，A3b/A3c 可能是**恒真判据**（"数出来永远是 0"也能让它们全绿）。
+    #   正控制：无障碍时那个 90° 直角必须被数到（=1）；
+    #   负控制：同一个直角，但 a→c 直连线上摆一块障碍 ⇒ 删了就穿墙 ⇒ 必须数不到（=0）。
+    _ca, _cb, _cc = (0.0, 0.0), (30.0, 30.0), (60.0, 0.0)   # 90° 直角，两腿各 42.4px
+    _pos_ctrl = removable_hard(W, [], [_ca, _cb, _cc])
+    _neg_ctrl = removable_hard(W, [(20.0, 10.0, 20.0, 20.0, 'solid')],
+                               [_ca, _cb, _cc])
+    check('A3d 鉴别力正控制：无障碍的可删硬拐角必须被数到（=1）',
+          _pos_ctrl == 1, 'got=%r' % _pos_ctrl)
+    check('A3e 鉴别力负控制：删了会穿墙的硬拐角必须数不到（=0）',
+          _neg_ctrl == 0, 'got=%r' % _neg_ctrl)
     check('A4 ★ 平滑后逐点不穿模', bad_pt == 0, '穿模对=%d/%d' % (bad_pt, n_ok))
     check('A5 ★ 平滑后逐段不穿模', bad_seg == 0, '穿模对=%d/%d' % (bad_seg, n_ok))
     check('A6 首尾点仍等于起终点', bad_ends == 0, '错的对=%d' % bad_ends)
-    print('   [INFO] 可见硬拐角：原折线 %d → 新平滑 %d；残留倒走 %d 条（可删 0）'
-          % (hard_raw, hard_now, len(leftover)))
+    print('   [INFO] 可见硬拐角：原折线 %d → 新平滑 %d；**本可删的**硬拐角 %d → %d；'
+          '残留倒走 %d 条（可删 0）'
+          % (hard_raw, hard_now, rem_raw, rem_now, len(leftover)))
+    print('   [INFO] "可见拐角变多但删了会穿墙"的对：%d 组 %r（正当保留，不计劣化）'
+          % (len(visible_more), visible_more[:4]))
 
     print()
     print('== B. 负控制（改前版本必须更差）==')
@@ -338,15 +436,53 @@ def main():
     src = io.open(MOD, 'r', encoding='utf-8').read()
     tree = ast.parse(src)
     want = ('_monotone_forward', '_despike')
-    wired = {}
+    fn = None
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef) and node.name == 'smooth_keep_walkable':
-            for sub in ast.walk(node):
-                if isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name) \
-                        and sub.func.id in want:
-                    wired.setdefault(sub.func.id, []).append(sub.lineno)
-    check('D2 ★ smooth_keep_walkable 真的调用 %s（防"写了没人用"）' % '/'.join(want),
-          all(len(wired.get(f) or []) == 1 for f in want), '命中 %r' % wired)
+            fn = node
+    wired = {}
+    if fn is not None:
+        for sub in ast.walk(fn):
+            if isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name) \
+                    and sub.func.id in want:
+                wired.setdefault(sub.func.id, []).append(sub.lineno)
+
+    # ★★ 第51轮修正 —— D2 由「每层**恰好** 1 次调用」改为「每层**至少** 1 次调用，
+    #    且 monotone 的产出**真的被喂进** despike」。
+    #
+    # 为什么原判据过窄（会误报）：第51轮给 `bailed` 兜底分支补了**第 2 个**
+    #   `_despike` 调用点（`return _despike(list(points), ...)`）—— 旧写法在
+    #   "平滑弧修不动"时直接 `return list(points)`，让 82 个"削了不穿墙却没削"的
+    #   尖刺永远没人削。这是**语义正当**的第二调用点，"恰好 1 次"把它判成了缺陷。
+    #
+    # 为什么也不能用"行号先后"判顺序：`bailed` 分支是**早返回**，
+    #   它那句 `_despike(list(points), ...)` 在源码里**排在 monotone 之前**
+    #   （实测行号 626 vs 628）⇒ 行号比较会把完全正常的结构误判成"顺序颠倒"。
+    #
+    # 真正要守的是**数据流**：正常路径必须把 monotone 的结果交给 despike
+    #   （先治倒走、再削尖刺；反了会先删掉 monotone 赖以判定的锚点）。
+    #   实现上是两句：`mono = _monotone_forward(...)` → `return _despike(mono, ...)`，
+    #   所以判据 = 找到 monotone 返回值绑定的变量名，再看它有没有作为
+    #   `_despike` 的首参出现（同时接受直接嵌套写法）。
+    fed_ok, mono_vars = despike_fed(fn)
+    check('D2 ★ smooth_keep_walkable 真的调用 %s，且 monotone 的产出真被喂进 despike'
+          % '/'.join(want),
+          bool(wired.get('_monotone_forward')) and bool(wired.get('_despike'))
+          and fed_ok,
+          '命中 %r mono_vars=%r fed=%s' % (wired, sorted(mono_vars), fed_ok))
+    # ★ D2b 鉴别力负控制：合成一段"两层各写各的、产出没接上"的源码，
+    #    用**同一个** `despike_fed()` 跑，必须得到 False ——
+    #    否则 fed_ok 是恒真判据（"随便什么写法都能找到连线"）。
+    #    注意复用同一函数而不是把判定再抄一遍：抄一遍就可能一边写错、假绿。
+    _neg_fn = ast.parse(
+        'def smooth_keep_walkable(points, obstacles):\n'
+        '    other = _monotone_forward(points, obstacles)\n'
+        '    junk = list(points)\n'
+        '    return _despike(junk, obstacles)\n').body[0]
+    _neg_fed, _neg_vars = despike_fed(_neg_fn)
+    check('D2b 鉴别力负控制：产出没接上时必须判 False（证明 D2 不是恒真）',
+          _neg_fed is False,
+          'got_fed=%r mono_vars=%r' % (_neg_fed, sorted(_neg_vars)))
 
     print()
     print('=== RESULT: PASS=%d FAIL=%d ===' % (PASS, FAIL))

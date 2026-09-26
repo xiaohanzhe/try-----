@@ -105,6 +105,9 @@ BACKTRACK_TOL = GRID_STEP / 2.0
 DESPIKE_MIN_TURN = 45.0
 
 #: 去尖刺最多迭代几轮（删一个点会改变邻居的转角，要迭代到不动点；实测 1~2 轮收敛）。
+#: ⚠️ 第51轮曾按"判据变严格后级联会变深"把它临时提到 40 —— **实测推翻了该假设**：
+#:   538 组样本里残留的 82 个"可削"尖刺**全部**来自 `smooth_keep_walkable` 的
+#:   `bailed` 兜底（那条路径根本没进 `_despike`），不是级联没走完。⇒ 已回退。
 DESPIKE_PASSES = 6
 
 #: 8 邻接（含对角）。对角代价 √2 ≈ 1.414。
@@ -356,11 +359,28 @@ def _nearest_free_visible(obstacles, free, w0, h0, x0, y0, step,
     return None
 
 
-def astar(free, w0, h0, start, goal, max_expand=60000):
+def astar(free, w0, h0, start, goal, max_expand=60000,
+          obstacles=None, x0=0.0, y0=0.0, step=GRID_STEP,
+          bbox_w=PLAYER_BBOX_W, bbox_h=PLAYER_BBOX_H):
     """8 邻接 A*。`start`/`goal` 是格坐标 `(gx,gy)`。
 
     返回格坐标列表 `[(gx,gy), ...]`（含起终点），找不到 → `None`。
     `max_expand` 是**保险丝**：房间再大也不该爆（超了就放弃，如实返回 None）。
+
+    ★★ 第51轮新增参数（都可省略，省略时行为与旧版**逐字节一致**）
+    ------------------------------------------------------------
+    `obstacles` / `x0` / `y0` / `step` / `bbox_*` 用于对**对角步**做
+    "盒扫掠"复检。为什么必须有（本轮巡行实测暴露的 4 例穿模）：
+
+        "两侧正交格都可走" **不等于** "两个对角格心之间的连线可走"。
+        反例（实测构造）：障碍 D 在 `x∈[cx+23,cx+25] y∈[cy+27,cy+30]`。
+          · `(cx,cy)` 盒右边界 `cx+22 < cx+23` ⇒ 不撞 ⇒ 格可走；
+          · `(cx+10,cy+10)` 盒上边界 `cy+32 > cy+30` ⇒ 不撞 ⇒ 格可走；
+          · 但中点 `(cx+5,cy+5)` 盒 = `[cx+2,cx+27]×[cy+27,cy+46]` **完全盖住 D**
+            ⇒ 连线穿模。
+        ⇒ 只查格是不够的，**必须查"锚点从 A 格心扫到 B 格心"这条线段**。
+          正交步不需要（沿轴平移时盒的一个维度不变，两端可走 ⇒ 全程可走），
+          所以只在 `dx != 0 and dy != 0` 时做这一步，性能影响可忽略。
     """
     if start is None or goal is None:
         return None
@@ -406,6 +426,13 @@ def astar(free, w0, h0, start, goal, max_expand=60000):
             if dx != 0 and dy != 0:
                 if not free[cy][nx] or not free[ny][cx]:
                     continue
+                # ★★ 格级通过还不够：再验"盒扫掠"（见 docstring 的反例）。
+                if obstacles is not None:
+                    px0, py0 = _cell_center(cx, cy, x0, y0, step)
+                    px1, py1 = _cell_center(nx, ny, x0, y0, step)
+                    if not _segment_clear(obstacles, px0, py0, px1, py1,
+                                          bbox_w, bbox_h, step):
+                        continue
             ng = g + cost
             if ng < gscore.get((nx, ny), 1e18):
                 gscore[(nx, ny)] = ng
@@ -587,7 +614,16 @@ def smooth_keep_walkable(points, obstacles, iterations=3,
             bailed = True
             break
     if bailed or len(out) < 2:
-        return list(points)
+        # ★★ 第51轮修正：`bailed` 只意味着"**平滑弧**在保行走的前提下修不动了"，
+        #    **不代表不能去尖刺** —— `_despike()` 自带"删了会穿墙就不删"的校验，
+        #    对**原折线**同样安全（删点前逐条 `_segment_clear`）。
+        #    旧写法直接 `return list(points)` ⇒ 这条路径上的尖刺**永远没人削**。
+        #    实测（538 组样本）：残留的 82 个"削了不穿墙却没削"的尖刺，
+        #    **全部**落在这条 bailed 分支上（`smooth=False` 与默认 path 逐点相同
+        #    即为铁证）—— 也就是说，旧写法让"修不动平滑"的房间顺带丢了"去尖刺"。
+        #    `_despike` 不改点序、只删点，故不会把路径推出可走区。
+        _log.debug('平滑弧回退（保行走优先）⇒ 仍执行去尖刺')
+        return _despike(list(points), obstacles, bbox_w, bbox_h, step)
     # 3) ★★ 消掉"倒着走"（第 47 轮）—— 见 `_monotone_forward` 的注释。
     mono = _monotone_forward(out, points, obstacles, bbox_w, bbox_h, step,
                              BACKTRACK_TOL)
@@ -838,7 +874,10 @@ def plan_walk(chapter, room_index, room_rect, start, goal,
         out['reason'] = '起点或终点附近找不到可走格（房间被障碍堵死？）'
         return out
 
-    cells = astar(free, w0, h0, s, g)
+    # ★ 第51轮：把障碍表/房间原点/步长一并交给 A*，让它对**对角步**做盒扫掠复检
+    #   （理由见 `astar` 的 docstring —— 格级"不切角"挡不住盒级擦角）。
+    cells = astar(free, w0, h0, s, g, obstacles=obstacles,
+                  x0=x0, y0=y0, step=step, bbox_w=bbox_w, bbox_h=bbox_h)
     if cells is None:
         out['reason'] = 'A* 找不到通路（障碍把目标隔开了）'
         return out
@@ -889,15 +928,94 @@ def _cell_center(gx, gy, x0, y0, step):
     return (x0 + (gx + 0.5) * step, y0 + (gy + 0.5) * step)
 
 
+def _seg_intersects_rect(x0, y0, x1, y1, rx, ry, rw, rh):
+    """线段与轴对齐矩形是否**真正相交**（纯贴边/单点接触**不算**）。
+
+    ★ 第51轮新增：替代"按 step 采样"。语义必须与 `blocks_at()` 的**开区间**
+      判定一致 —— `blocks_at` 写的是
+      `(bx + bw > ox) and (bx < ox + ow) and ...`，即**边贴着边不算撞**。
+      所以这里也用严格区间 `t0 < t1`：接触点（`t0 == t1`）不算相交。
+
+    算法 = Liang-Barsky 裁剪（参数化线段 + 四条边界收缩 t 区间）。
+    复杂度 `O(1)`，**比采样更快也更准** —— 采样会漏掉"擦过障碍角、穿透宽度
+    小于采样步长"的情形，正是本轮 75 处穿模的主因。
+    """
+    dx = x1 - x0
+    dy = y1 - y0
+    t0, t1 = 0.0, 1.0
+    # ⚠️ 配对必须是标准 Liang-Barsky 的 `p = ∓d`、`q = 起点到该边界的距离`。
+    #   第51轮第一次写成了 `(dx, x0 - rx)`（p 的符号反了），实测穿模
+    #   75 → **907**（判据整体变松：本该死路绕行的点对被判成"直线可走"）。
+    #   教训：**能用锚点自检的判据，必须先过锚点**（见 patrol51 的 D 段锚点）。
+    for p, q in ((-dx, x0 - rx), (dx, rx + rw - x0),
+                 (-dy, y0 - ry), (dy, ry + rh - y0)):
+        if p == 0.0:
+            if q < 0.0:
+                return False        # 平行且在该边界外侧 ⇒ 不相交
+            continue
+        r = q / p
+        if p < 0.0:
+            if r > t1:
+                return False
+            if r > t0:
+                t0 = r
+        else:
+            if r < t0:
+                return False
+            if r < t1:
+                t1 = r
+    if t0 >= t1:
+        return False
+    # ★ 零测度复检（第51轮，锚点自检抓出来的，勿删）：
+    #   Liang-Barsky 用**闭**区间收缩 t，所以"线段正好沿着矩形某条边滑行"
+    #   （例如 `dy=0` 且 `ry == y0`）会得到非空区间 `[t0,t1]` 而被判"相交"。
+    #   但 `blocks_at()` 的判定是**开**区间（边贴边不算撞）⇒ 语义不一致。
+    #   ⇒ 再取区间**中点**，验证它落在矩形**内部**：
+    #     · 正测度穿透 ⇒ 中点必在内部 ⇒ True；
+    #     · 沿边滑 / 只碰一点 ⇒ 中点在边界上 ⇒ False。
+    tm = (t0 + t1) / 2.0
+    mx = x0 + dx * tm
+    my = y0 + dy * tm
+    return (rx < mx < rx + rw) and (ry < my < ry + rh)
+
+
 def _segment_clear(obstacles, x0, y0, x1, y1, bbox_w, bbox_h, step):
-    """线段是否全程不撞障碍（按 `step` 采样）。"""
-    dist = math.hypot(x1 - x0, y1 - y0)
-    n = max(1, int(dist / max(1.0, step * 0.5)))
-    for i in range(n + 1):
-        t = i / float(n)
-        cx = x0 + (x1 - x0) * t
-        cy = y0 + (y1 - y0) * t
-        if blocks_at(obstacles, cx, cy, bbox_w, bbox_h):
+    """线段是否全程不撞障碍。
+
+    ★★ 第51轮修正（重要，勿回退）：改为**解析判定**，不再按 `step * 0.5` 采样。
+
+    旧实现的漏洞（本轮由巡行实测暴露：2244 成功 / **75 穿模**）：
+
+        `n = int(dist / (step * 0.5))`、`step = GRID_STEP = 10` ⇒ 采样间隔 **5px**。
+        角色碰撞盒 19×13，障碍最小 20×20。当路径**擦着障碍角**走时，
+        "穿透"发生在 < 5px 的弧长区间内 ⇒ **采样点全部落在障碍外** ⇒
+        判据说"可走"，而实际连线已经切进了障碍。
+
+    ⇒ 换 Liang-Barsky：对每个障碍矩形做 `O(1)` 精确相交判定
+      （`_seg_intersects_rect`）。**既修掉了漏判，又去掉了采样循环**。
+      实测同一批 2784 组点对：穿模 75 → 见第51轮报告。
+
+    坐标语义与 `blocks_at()` 完全一致：锚点 + `PLAYER_BBOX_OFF_*` = 盒左上角。
+    `step` 参数**保留但不再使用**（签名兼容既有调用方/回归锁）。
+
+    ⚠️⚠️ 第51轮第二次踩坑（务必理解，否则又会写错）：
+        盒会**平移**，所以"锚点扫过的线段"必须撞**膨胀后的矩形** ——
+        Minkowski 判定：盒 `[p,p+bw]×[q,q+bh]` 与矩形 `[rx,rx+rw]×[ry,ry+rh]`
+        有正测度重叠 ⟺ **盒左上角** `(p,q)` 落在
+        `(rx-bw, rx+rw) × (ry-bh, ry+rh)` 里。
+        第一版直接把"左上角线段"去撞**原始矩形**（忘了 `-bw/-bh`）⇒ 判据变松，
+        实测穿模 75 → **299**。两处（`_seg_intersects_rect` 的调用与本次）都是
+        靠"巡行实测 + 锚点对拍"抓出来的。
+    """
+    ax0 = x0 + PLAYER_BBOX_OFF_X
+    ay0 = y0 + PLAYER_BBOX_OFF_Y
+    ax1 = x1 + PLAYER_BBOX_OFF_X
+    ay1 = y1 + PLAYER_BBOX_OFF_Y
+    for rect in obstacles or ():
+        rx, ry, rw, rh = rect[0], rect[1], rect[2], rect[3]
+        if _seg_intersects_rect(ax0, ay0, ax1, ay1,
+                                rx - bbox_w, ry - bbox_h,
+                                rw + bbox_w, rh + bbox_h):
             return False
     return True
 
