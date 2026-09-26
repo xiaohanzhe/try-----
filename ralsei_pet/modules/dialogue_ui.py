@@ -218,6 +218,31 @@ class DialogueUI(QWidget):
     MIN_BOX_HEIGHT = 220
 
     # ------------------------------------------------------------------
+    # ★★ 第52轮 · 单轮显示 + 常驻输入栏
+    #
+    # 用户口径逐字：
+    #   「别整这种对话框，就一轮一轮的而不是一次性全放出来，，你现在对话框就像是
+    #     原作把一章节的全部对话都放了进来，而事实上原作一次只放一轮对话，
+    #     所以你要贴合原作哦，还有，预留出来输入框」
+    #
+    # 原作 `scr_darkbox()` 的行为是**一次只显示当前这一轮** —— 你说的那句 + 他回
+    # 的那句；你再次开口时框体先清空再打新的，不会把整段历史堆在框里往下滚。
+    #
+    # ⚠️ 只改**显示层**：`_ai_history`（喂给 7B 的上下文缓冲）依旧保留最近 N 轮，
+    #    所以"屏幕上只看得见一轮"**不等于**"它忘了前面聊过什么"。
+    # ------------------------------------------------------------------
+    SINGLE_TURN_MODE = True
+    # 「同一拍」的间隔阈值：小于它算"同一轮里的下一句"（**不丢**），
+    # 大于它算"新一轮"（旧的整块让位）。
+    # 取 1.5s 的依据：同拍的连续几句是同一个同步代码块里发出的（间隔 ~0ms），
+    # 而两次独立开口之间至少隔着一次模型往返（实测首字 0.55~1.9s）
+    # 或 `EVENT_SPEAK_MIN_INTERVAL = 2.0s` 的频率闸 —— 两边量级差得很开，不会误判。
+    TURN_GAP_SECONDS = 1.5
+    # 输入栏常驻（不再"单击才展开"，用户根本不知道能打字）+ 一句占位提示
+    ALWAYS_SHOW_INPUT_BAR = True
+    INPUT_PLACEHOLDER = "说点什么…（Enter 发送 / Shift+Enter 换行）"
+
+    # ------------------------------------------------------------------
     # 第十八轮 · 关键词指令的命中规则分两类
     #
     # 旧实现一律 `kw in raw` 纯子串匹配，于是：
@@ -413,8 +438,17 @@ class DialogueUI(QWidget):
         input_layout.addWidget(self.send_button, 0)
 
         right_col.addWidget(self._input_bar)
-        self._input_bar.hide()
-        self._recalc_size_to_content()  # 默认折叠
+        if self.ALWAYS_SHOW_INPUT_BAR:
+            # ★ 第52轮（用户口径「预留出来输入框」）：输入栏常驻。
+            # 旧行为是默认折叠、必须**单击对话框**才展开 —— 用户根本不知道能打字。
+            try:
+                self.input_field.setPlaceholderText(self.INPUT_PLACEHOLDER)
+            except Exception as e:  # 占位提示失败不影响可用性
+                _log.debug("dialogue_ui 输入框占位提示未启用: %s", e)
+            self._input_bar.show()
+        else:
+            self._input_bar.hide()
+        self._recalc_size_to_content()  # 默认折叠（常驻模式下即含输入栏的完整高度）
 
         inner.addLayout(right_col, 1)
 
@@ -535,6 +569,8 @@ class DialogueUI(QWidget):
         # 对"已转义的整串"切片会在逐字显示过程中闪出 &am / &lt / &quot 之类的实体残片。
         # 现在保留原文用于逐字显示，只在真正拼进 HTML 的那一刻转义。
         safe_message = _html.escape(message)
+        # ★ 第52轮：轮次间隔必须在 `_note_focus()` 之前算（它会把 _last_activity 刷新）
+        _turn_gap = self._current_turn_gap()
         # 前台若是 AI 思考占位文本，先丢弃它（无论新消息还是真实回复到达），
         # 占位只是"等待"提示，绝不能并入历史或当成正式消息。
         if self.typing_text == self.AI_THINKING_PLACEHOLDER:
@@ -561,11 +597,20 @@ class DialogueUI(QWidget):
                 self.stop_typing()
                 # 把上一条 Ralsei 完整并入历史，然后再开新的打字机，防止消息覆盖
                 self._commit_previous_ralsei_into_history()
+                # ★ 第52轮：隔了一会儿的独立开口 = 新一轮 → 把上一轮整块清掉。
+                #   必须放在上面那句 commit **之后**（否则刚清完又被追加回来）。
+                self._maybe_break_turn(_turn_gap)
                 self._start_typing(message)   # 传原文，渲染时才转义（见 _refresh_display）
         else:
             # 用户说的话：先打断打字机，再把上一条Ralsei并入历史，然后追加用户消息
             self.stop_typing()
             self._commit_previous_ralsei_into_history()
+            if self.SINGLE_TURN_MODE:
+                # ★ 第52轮：主人一开口 = **无条件**新一轮 → 上一轮整块让位。
+                # 原作是"翻页"而不是"往下堆"：框体先清空，只留当前这一轮
+                # （你这句 + 他下面回的那句）。这里不按间隔判断 ——
+                # 主人开口本身就是最强的"新一轮"信号。
+                self._history_html = ""
             self._history_html += (
                 f'<div style="color:#9aa0aa;font-size:10pt;line-height:1.45;'
                 f'margin:2px 0 4px 0;">▸ YOU: {safe_message}</div>')
@@ -653,6 +698,40 @@ class DialogueUI(QWidget):
             return list(self._ai_history[-limit:])
         except Exception:
             return []
+
+    def _current_turn_gap(self):
+        """距上次对话活动过了多久（秒）。取不到就返回 0.0。
+
+        返回 0.0 的语义是"**判为同一轮**"——宁可多留一句，也不能误删主人的信息。
+        """
+        try:
+            import time as _time
+            return _time.time() - float(getattr(self, '_last_activity', 0.0) or 0.0)
+        except Exception:
+            return 0.0
+
+    def _maybe_break_turn(self, gap):
+        """★ 第52轮 · 单轮显示：这一句是不是"新一轮的开头"？是就把上一轮整块清掉。
+
+        判据 = 距上次对话活动超过 `TURN_GAP_SECONDS`。这样正好分开两种相邻情况：
+
+          · **同一拍的连续几句**（石头剪刀布的「结算」+「统计」+「谢谢你陪我玩」）
+            间隔 ~0ms ⇒ 同轮 ⇒ **一句都不丢**（宁可多留一句，也不能静默丢信息）；
+          · **隔了一会儿的独立开口**（先被戳、过几秒又被摸）⇒ 新一轮 ⇒
+            旧的一整块让位，屏幕上永远只有"当前这一轮"。
+
+        ⚠️ 两条使用约束（踩了就会静默失效，函数头写死在这里）：
+          ① `gap` 必须由调用方**在 `_note_focus()` 之前**算好传进来 ——
+             `_note_focus` 会把 `_last_activity` 刷成"现在"，之后再算恒为 0；
+          ② 必须在 `_commit_previous_ralsei_into_history()` **之后**调用 ——
+             否则清空后那一句又会被 commit 追加回来，等于没清。
+        """
+        if not self.SINGLE_TURN_MODE:
+            return False
+        if float(gap or 0.0) > self.TURN_GAP_SECONDS:
+            self._history_html = ""
+            return True
+        return False
 
     def _commit_previous_ralsei_into_history(self):
         """如果前台还有一条 Ralsei 消息（typing_text 非空），把它完整并入历史。"""
@@ -813,6 +892,20 @@ class DialogueUI(QWidget):
         from PyQt5.QtCore import QRect
         return QRect(x, y, w, h)
 
+    def _input_bar_reserved(self):
+        """输入栏是否要**占位**（高度计算用）。
+
+        ★ 第52轮：不能直接问 `isVisible()` —— 对话框自身不可见时，
+        Qt 对子控件的 `isVisible()` 恒为 False（父链未 show），于是常驻模式下
+        窗口高度会漏算输入栏，输入框被挤没或框体忽高忽低。这里按**策略**回答。
+        """
+        if self.ALWAYS_SHOW_INPUT_BAR:
+            return True
+        try:
+            return bool(self._input_bar.isVisible())
+        except Exception:
+            return False
+
     def _recalc_size_to_content(self):
         """根据 dialogue_content 文档实际高度，
         重新设置 dialogue_content 高度 + 整个对话框尺寸。
@@ -833,7 +926,7 @@ class DialogueUI(QWidget):
             right_spacing = 4
             face_h = 84
             body_h = name_label_h + right_spacing + clamped_h
-            if self._input_bar.isVisible():
+            if self._input_bar_reserved():
                 body_h += right_spacing + self._input_bar.sizeHint().height()
             right_col_h = max(face_h, body_h)
             target_h = frame_v_pad + right_col_h
@@ -1284,7 +1377,9 @@ class DialogueUI(QWidget):
         # —— 用户消息回显：把自己说的话显示在对话框里（灰色 YOU 前缀），不经过打字机
         self.add_dialogue("user", user_input, "normal")
 
-        self._input_bar.hide()
+        # ★ 第52轮：输入栏常驻后**不再收起**（用户要"预留出来"，发完一句还要接着打）
+        if not self.ALWAYS_SHOW_INPUT_BAR:
+            self._input_bar.hide()
         self._recalc_size_to_content()
 
         # 先检查聊天指令
@@ -1454,6 +1549,9 @@ class DialogueUI(QWidget):
         try:
             self.stop_typing()
             self._commit_previous_ralsei_into_history()
+            # ★ 第52轮：事件链路（speak_event）也会走这里 —— 隔了一会儿的
+            #   独立开口要判成新一轮，把上一轮让出去（放在 commit 之后）。
+            self._maybe_break_turn(self._current_turn_gap())
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 显示 Ralsei 式省略号 + 思考表情（不写"正在想怎么回答你"这类暴露文字）
@@ -1518,18 +1616,27 @@ class DialogueUI(QWidget):
         # 用户拖过一次就记住：之后 _follow_timer 不再强制定位到正下方
         if was_dragging:
             self._user_moved = True
-        # 单击（没拖动）→ 展开输入框让用户说话；若正在打字则跳过打字显示完整文本
+        # 单击（没拖动）→ 让用户能立刻说话；若正在打字则跳过打字显示完整文本
         if not was_dragging:
-            if not self.is_typing and not self._input_bar.isVisible():
+            if self.is_typing:
+                # 打字中单击 = "跳过"（原作按键推进的同义），优先于聚焦输入框
+                self.stop_typing()
+            elif self.ALWAYS_SHOW_INPUT_BAR:
+                # ★ 第52轮：输入栏常驻 → 不再需要"单击展开"，直接把光标送进去
+                self.input_field.setFocus()
+            elif not self._input_bar.isVisible():
                 self._input_bar.show()
                 self._recalc_size_to_content()
                 self.input_field.setFocus()
-            elif self.is_typing:
-                self.stop_typing()
         event.accept() if was_dragging else super().mouseReleaseEvent(event)
 
     def mouseDoubleClickEvent(self, event):
         # 双击 → 切换输入框显示
+        # ★ 第52轮：常驻模式下**不允许收起**（用户要"预留出来输入框"），
+        #   双击只把光标送进输入框；只有旧折叠模式才保留开关语义。
+        if self.ALWAYS_SHOW_INPUT_BAR:
+            self.input_field.setFocus()
+            return
         if self._input_bar.isVisible():
             self._input_bar.hide()
             self._recalc_size_to_content()

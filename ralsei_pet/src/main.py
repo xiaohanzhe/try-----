@@ -5011,29 +5011,26 @@ class RalseiPet(QMainWindow):
         # 更新情绪
         self.emotion_system.add_emotion(reaction['emotion'], 30)
             
-        # 随机决定是否主动与桌面元素互动（25%概率）
-        import random
-        if random.random() < 0.25:
-            # 根据元素类型决定互动方式
-            if element['type'] == 'folder':
-                # 对文件夹的互动
-                self.interact_with_folder(element)
-            elif element['type'] == 'file':
-                # 对文件的互动
-                self.interact_with_file(element)
-            
-        # 检查是否是浏览器相关文件
-        file_name = os.path.basename(elem_path).lower()
-        if 'browser' in file_name or 'chrome' in file_name or 'firefox' in file_name or 'edge' in file_name:
-            # 纯文案修复（零成本）：原句「需要我帮你打开浏览器或搜索什么吗？」是
-            # persona 第 40~41 行**明令禁说**的助手腔，但它写死在代码里、persona 管不到，
-            # 所以会一直说下去（S7 第二批分类文档 §五 的顺带发现）。
-            # 改成"看到浏览器"的纯观察 —— 是 Ralsei 的口吻，也**不再**是工具人说辞。
-            self.dialogue_ui.add_dialogue(
-                "ralsei", "咦，是浏览器呀……我平时不太敢乱碰里面的东西呢。", "surprised")
-            self.dialogue_ui.show_dialogue()
+        # ★★ 第51轮：**删除「与文件夹 / 文件交互」功能**（用户口径逐字：
+        #    「并且去掉那个与文件夹交互的功能吧，感觉过于鸡肋了」）。
+        #
+        #    原实现：`random.random() < 0.25` 时按元素类型调
+        #    `interact_with_folder()` / `interact_with_file()`，而那两个方法体里
+        #    只有一串**按文件夹名硬编码的固定台词**
+        #    （"哇，XX文件夹里有游戏吗？我也想玩~"、"XX文件夹里有很多重要的文件吧？" …）
+        #    —— 既没有真实能力（"鸡肋"），又把罐头句子和 AI 生成的话混在同一个
+        #    对话框里（用户："看不出哪句是他自己说的"）。整个删掉。
+        #
+        #    连带删除下面"看到浏览器文件就说一句固定观察"的分支 —— 它同样是硬编码
+        #    台词，属用户「把他内置的对话去掉」的范围。
+        #
+        #    **保留**：上面已执行的 `_note_desktop_observation()`（把"我凑近了什么、
+        #    它是什么质地"上报给 AI，第八轮的成果）与情绪累积 —— 那是**状态**，
+        #    不是台词；AI 想说什么由它自己决定。
         # 如果是工作相关文件，可以提供帮助
-        else:
+        # ★ 第51轮起由 `SHOW_FILE_HELP_HINTS`（默认 False）总控 —— 用户要求
+        #   「把他内置的对话去掉」。原来的 `else:` 改成开关判断，结构不变。
+        if self.SHOW_FILE_HELP_HINTS:
             file_ext = os.path.splitext(elem_path)[1].lower()
             work_file_extensions = [
                 '.pptx', '.ppt',  # PowerPoint文件
@@ -5073,6 +5070,23 @@ class RalseiPet(QMainWindow):
     
     
     
+    #: ★★ 第51轮：按文件扩展名给"助手腔提示"的总开关（**默认关**）。
+    #:
+    #: 用户口径逐字：「把他内置的对话去掉！！！！…记住，**聊天系统全权由7B接管**，
+    #: 别放内置对话了，太木讷了」。
+    #: 关掉的是 `check_nearby_desktop_elements()` 里 `if file_ext in
+    #: work_file_extensions` 那一整段 —— 16 条按扩展名写死的助手腔提示
+    #: （"需要我帮你控制这个PPT吗？我可以帮你播放、切换幻灯片哦！"）。它们同时
+    #: 踩了两条线：
+    #:   ① persona 明令禁说的**助手腔**；
+    #:   ② 与 AI 生成的句子混在同一个对话框里 ⇒ 用户"看不出哪句是他自己说的"。
+    #:
+    #: 为什么用**开关**而不是直接删掉那段：`check_nearby_desktop_elements()` 里
+    #: 的 if/else 是**配对的**，本轮第一次改动只删了 `if` 分支、留下了悬空的
+    #: `else:`，直接造成 `SyntaxError`（由 `ast.parse` 自检抓到）。改用开关 =
+    #: 结构零变动、行为已停用、原文可回溯。
+    SHOW_FILE_HELP_HINTS = False
+
     # 动画名 → 口语化的"心痒"描述（只作提示，AI 可以不理）
     _URGE_WORDS = {
         'look_up': '抬头看看', 'act': '比划一下', 'surprised': '惊讶一下',
@@ -5419,7 +5433,7 @@ class RalseiPet(QMainWindow):
     # 待机动画（idle 的 5 帧循环）启动门限：必须**原地静止**满这么久才播。
     # 用户要求："待机动画要在原地不动3分钟以上才会播放哦，而不是停止就播"。
     # 单位秒；idle_timer 由 update_movement 维护，移动时清零。
-    IDLE_LOOP_MIN_SECONDS = 180.0  # 3 分钟
+    IDLE_LOOP_MIN_SECONDS = 600.0  # ★ 第51轮：10 分钟（用户口径「他待机只会在静止超过10分钟后触发」）
 
     def _can_speak_now(self):
         """此刻开口是否"合时宜"（硬条件，与频率无关）。"""
@@ -6816,7 +6830,14 @@ class RalseiPet(QMainWindow):
     
     def play_game(self):
         # 玩游戏
-        games = ["dance", "sing", "chase_cursor", "hide_and_seek", "rock_paper_scissors", "guess_number"]
+        # ★★ 第52轮：`hide_and_seek` **从"随机挑一个"的名单里移除**。
+        # 用户口径逐字：「他捉迷藏只是用户提出来才能玩而且必须是在桌面上」。
+        # 原实现是"点一次『玩游戏』随机抽"，抽到躲猫猫就会满地变出障碍物文件夹 ——
+        # 那属于"没提也玩"。现在只有两条**明确提出**的路进来：
+        #   ① 主人在输入框里说「躲猫猫 / 捉迷藏」（dialogue_ui 的 _HARD_CMDS）；
+        #   ② 主人在输入框里说「玩躲猫猫」这类指令（command_manager）。
+        # 两道门之外，hide_controller.start_hide_and_seek_game 还有"必须在桌面"的闸。
+        games = ["dance", "sing", "chase_cursor", "rock_paper_scissors", "guess_number"]
         game = random.choice(games)
         if game == "dance":
             self.play_animation_once("dance")
@@ -6830,12 +6851,10 @@ class RalseiPet(QMainWindow):
             # 修复：原来只弹一句对话，从未调用 start_following_mouse()，
             # "追鼠标"游戏实际没有启动。现在真正启动追鼠标模式。
             self.start_following_mouse()
-        elif game == "hide_and_seek":
-            # 修复：此前只弹一句对话，从未调用 start_hide_and_seek_game()，
-            # 从"玩游戏"菜单进入躲猫猫根本不会启动游戏。
-            self.dialogue_ui.add_dialogue("ralsei", "我们来玩躲猫猫吧！我先藏起来~", "happy")
-            self.dialogue_ui.show_dialogue()
-            self.start_hide_and_seek_game()
+        # ★ 第52轮：原 `elif game == "hide_and_seek":` 整段已删除 ——
+        #   `games` 名单里不再含躲猫猫，这个分支永远走不到；留着就是死代码。
+        #   （历史说明：那一段原本修过"只弹对话不启动"的 bug，现在由
+        #     "明确提出才玩"的新口径取代，弹的那句内置台词也一并去掉。）
         elif game == "rock_paper_scissors":
             # 开始石头剪刀布游戏
             self.start_rock_paper_scissors()
@@ -9017,54 +9036,28 @@ class RalseiPet(QMainWindow):
         # 移动到新位置
         self.move(start_pos.x(), new_y)
     
+    # ★★ 第51轮：`interact_with_file` / `interact_with_folder` **已删除**。
+    #
+    # 用户口径逐字：「并且去掉那个与文件夹交互的功能吧，感觉过于鸡肋了」。
+    # 被删掉的原实现（见本仓库 2026-09-26 及更早的提交）只有"按文件名 / 文件夹名
+    # 硬编码一串固定台词"，例如：
+    #     if '游戏' in folder_name:  "哇，{folder_name}文件夹里有游戏吗？我也想玩~"
+    #     elif '文档' in folder_name: "{folder_name}文件夹里有很多重要的文件吧？"
+    # 既没有真实能力（用户说的"鸡肋"），又把罐头句子混进 AI 对话流里
+    # （用户：「看不出哪句是他自己说的」）。
+    #
+    # 调用点已从 `check_nearby_desktop_elements()` 一并删除（那里有长注释）。
+    # 保留这两个**空壳**而不是彻底移除符号：桌面元素感知链路（`desktop_elements` /
+    # 双击回调）将来若要复用这两个名字，不必再做一次全仓搜索；同时避免任何
+    # 尚未发现的动态调用变成 AttributeError（本项目踩过"删了看着没用的方法"）。
     def interact_with_file(self, file_info):
-        # 与文件互动，根据文件类型和内容产生不同反应
-        if not file_info:
-            return
-            
-        file_path = file_info.get('path', '')
-        file_name = file_info.get('name', os.path.basename(file_path) if file_path else '未知文件')
-        file_type = file_info.get('type', 'file')
+        """已停用（第51轮）。保留签名，静默返回。"""
+        return
 
-        # 检查是否是自己的代码
-        if self.is_own_code(file_path):
-            self.react_to_vs_code_code()
-            return
-            
-        # 检查是否是Deltarune/Undertale相关文件
-        if self.desktop_interaction.is_deltarune_related(file_path):
-            self.dialogue_ui.show_dialogue(f"哇，这是关于{file_name}的文件！我很感兴趣呢~")
-            self.emotion_system.react_to_event("found_interesting_file", file_info)
-            return
-            
-        # 检查文件内容，产生不同反应
-        content_reaction = self.check_file_content(file_path)
-        if content_reaction:
-            self.dialogue_ui.show_dialogue(content_reaction)
-            return
-            
-        # 默认反应
-        self.dialogue_ui.show_dialogue(f"这是{file_name}呢，让我看看里面有什么...")
-        
     def interact_with_folder(self, folder_info):
-        # 与文件夹互动
-        if not folder_info:
-            return
-            
-        folder_path = folder_info.get('path', '')
-        folder_name = folder_info.get('name', os.path.basename(folder_path) if folder_path else '未知文件夹')
+        """已停用（第51轮）。保留签名，静默返回。"""
+        return
 
-        # 根据文件夹名称产生不同反应
-        if '游戏' in folder_name or 'game' in folder_name.lower():
-            self.dialogue_ui.show_dialogue(f"哇，{folder_name}文件夹里有游戏吗？我也想玩~")
-        elif '文档' in folder_name or 'doc' in folder_name.lower():
-            self.dialogue_ui.show_dialogue(f"{folder_name}文件夹里有很多重要的文件吧？")
-        elif '图片' in folder_name or 'image' in folder_name.lower():
-            self.dialogue_ui.show_dialogue(f"{folder_name}文件夹里一定有很多漂亮的图片~")
-        else:
-            self.dialogue_ui.show_dialogue(f"这是{folder_name}文件夹呢，让我看看里面有什么...")
-            
-        
     def check_file_content(self, file_path):
         # 检查文件内容，产生不同反应
         file_ext = os.path.splitext(file_path)[1].lower()

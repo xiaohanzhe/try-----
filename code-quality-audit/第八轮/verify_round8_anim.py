@@ -389,12 +389,17 @@ def force_idle_static(p):
         p.game_state['is_playing'] = False
 
 
-# ---------------------------------------------------------------- #13c 待机 3 分钟
+# ---------------------------------------------------------------- #13c 待机 10 分钟
 def t_e_idle_needs_3min():
-    """用户："待机动画要在原地不动3分钟以上才会播放哦，而不是停止就播"。"""
+    """用户（第八轮原话）："待机动画要在原地不动3分钟以上才会播放哦，而不是停止就播"。
+
+    ★ 第52轮门限变更：用户改了口径 ——「他待机只会在**静止超过10分钟**后触发」
+      ⇒ `IDLE_LOOP_MIN_SECONDS` 由 180.0 抬到 600.0，本夹具的断言与静止时长同步改。
+      函数名沿用（改名要动 `run_all.py` 的套件登记，收益不抵风险）。
+    """
     p = pet()
-    check("E1.1 存在 IDLE_LOOP_MIN_SECONDS=180 且初值为未激活",
-          RalseiPet.IDLE_LOOP_MIN_SECONDS == 180.0
+    check("E1.1 存在 IDLE_LOOP_MIN_SECONDS=600 且初值为未激活",
+          RalseiPet.IDLE_LOOP_MIN_SECONDS == 600.0
           and pet_init_idle_flag_is_false(),
           "const=%s" % RalseiPet.IDLE_LOOP_MIN_SECONDS)
 
@@ -410,15 +415,17 @@ def t_e_idle_needs_3min():
           p._idle_loop_active is False and set(frames_short) == {0},
           "loop=%s frames=%s" % (p._idle_loop_active, frames_short))
 
-    # 静止 200 秒：待机循环启动，帧会推进
+    # 静止 700 秒（> 600 门限）：待机循环启动，帧会推进
+    # ★ 第52轮：门限 180 → 600（用户口径「他待机只会在静止超过10分钟后触发」），
+    #   夹具时长必须同步抬到门限之上，否则 E1.3 会红 —— 那不是产品坏，是夹具过期。
     force_idle_static(p)
-    p.idle_timer = 200.0
+    p.idle_timer = 700.0
     tick(p, 1)
     frames_long = []
     for _ in range(6):
         tick(p, 1)
         frames_long.append(p.current_frame)
-    check("E1.3 静止 200s：待机循环启动且帧会推进",
+    check("E1.3 静止 700s：待机循环启动且帧会推进",
           p._idle_loop_active is True and max(frames_long) > 0,
           "loop=%s frames=%s" % (p._idle_loop_active, frames_long))
 

@@ -170,6 +170,42 @@ class ConfigManager:
             if api_section.get("model", "").lower().startswith("doubao"):
                 api_section["model"] = "local-model"
                 needs_migration = True
+
+            # ★★ 第51轮：旧默认底座自动升级（用户口径原话：
+            #    「我现在都没看到过7B模型启用，就是看不出哪句是他自己说的」）
+            #
+            #    实测（`ollama show`）：
+            #        ralsei:v3 = qwen3   **4.0B** / 2.5 GB
+            #        ralsei:v4 = qwen2   **7.6B** / 4.7 GB   ← 用户要的 7B
+            #    用户的 vault（E:\RalseiMemory\config.json）里 `api.model` 写死着
+            #    旧默认 `ralsei:v3`，而**该卷写盘失败**（见第51轮报告 §5）⇒ 他在设置
+            #    界面改成 v4 也存不下来，于是**一直在跑 4B**，观感就是"看不出 7B
+            #    启用 / 回复很木讷"。
+            #
+            #    ⇒ 在这里做**幂等升级**。三条纪律：
+            #      ① 只升"**确定是我们自己的旧默认值**"（`_LEGACY_DEFAULT_MODELS`），
+            #         **绝不碰**用户显式选过的任何其它模型 —— 否则就是替用户做决定；
+            #      ② 升级后同步 base_url（旧本地默认是 `:8000`，Ollama 是 `:11434`），
+            #         否则会把一个 Ollama 模型名发给 OpenAI 兼容的 `:8000`（连不上）；
+            #      ③ **写盘失败不影响本次运行** —— `merged_config` 是返回值，
+            #         而 `_save_config` 内部自吞异常（只记 ERROR，见 5.1 的实测日志）。
+            #         下次启动会再升一次，幂等无害。
+            _LEGACY_DEFAULT_MODELS = ("ralsei:v1", "ralsei:v2", "ralsei:v3",
+                                      "local-model")
+            _RECOMMENDED_MODEL = "ralsei:v4"          # 7.6B / qwen2
+            _OLLAMA_URL = "http://localhost:11434"
+            _LEGACY_LOCAL_URLS = ("", "http://localhost:8000",
+                                  "http://127.0.0.1:8000")
+            _cur_model = str(api_section.get("model") or "").strip()
+            if _cur_model.lower() in _LEGACY_DEFAULT_MODELS:
+                api_section["model"] = _RECOMMENDED_MODEL
+                if str(api_section.get("base_url") or "").strip().lower() \
+                        in _LEGACY_LOCAL_URLS:
+                    api_section["base_url"] = _OLLAMA_URL
+                needs_migration = True
+                _log.info("模型底座自动升级：%s -> %s（7.6B / qwen2；旧默认值自动迁移）",
+                          _cur_model, _RECOMMENDED_MODEL)
+
             if needs_migration:
                 _log.info("检测到旧版云服务配置，已自动迁移为本地 AI 默认值")
 

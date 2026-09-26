@@ -293,7 +293,17 @@ class GamesController(object):
         
         self.dialogue_ui.add_dialogue("ralsei", final_message, "happy")
         self.dialogue_ui.add_dialogue("ralsei", stats_message, "neutral")
-        self.dialogue_ui.add_dialogue("ralsei", "谢谢你陪我玩！", "grateful")
+        # ★ 第52轮：纯情绪的内置台词删掉（用户口径：「把他内置的对话去掉！！！！」）
+        #   → 走事件唯一出口，`pool=None` = 不给内置台词（模型不可用就安静）。
+        #   注意：**上面两句不迁** —— 结算与统计带比分/场次数值，属功能播报，
+        #   交模型会丢信息（与 energy_hunger 的拒绝说明同一口径）。
+        try:
+            self.speak_event("game_thanks", None, "grateful")
+        except Exception:
+            # ⚠️ 本模块**没有**日志设施（模块头写明"方法体一行日志都不打"，
+            #    也只 import random/time）—— 所以这里只能静默兜底，
+            #    不要写 `self._log_()`（那个方法在本模块不存在，会二次抛）。
+            pass
         
         # 重置游戏状态
         self.game_state["is_playing"] = False
@@ -417,7 +427,17 @@ class GamesController(object):
             self.emotion_system.add_emotion("playful", 10)
         
         self.dialogue_ui.add_dialogue("ralsei", final_message, "happy")
-        self.dialogue_ui.add_dialogue("ralsei", "谢谢你陪我玩！", "grateful")
+        # ★ 第52轮：纯情绪的内置台词删掉（用户口径：「把他内置的对话去掉！！！！」）
+        #   → 走事件唯一出口，`pool=None` = 不给内置台词（模型不可用就安静）。
+        #   注意：**上面两句不迁** —— 结算与统计带比分/场次数值，属功能播报，
+        #   交模型会丢信息（与 energy_hunger 的拒绝说明同一口径）。
+        try:
+            self.speak_event("game_thanks", None, "grateful")
+        except Exception:
+            # ⚠️ 本模块**没有**日志设施（模块头写明"方法体一行日志都不打"，
+            #    也只 import random/time）—— 所以这里只能静默兜底，
+            #    不要写 `self._log_()`（那个方法在本模块不存在，会二次抛）。
+            pass
         
         # 重置游戏状态
         self.game_state["is_playing"] = False

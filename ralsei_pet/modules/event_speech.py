@@ -74,6 +74,29 @@ EVENT_TIERS = {
     # 每次点都同一句。它们**不在** main.py 里，而在 modules/energy_hunger.py。
     "rest_start": TIER_AI,      # 用户点"休息"按钮 → energy_hunger.rest()
     "eat_start": TIER_AI,       # 用户点"喂食"按钮 → energy_hunger.eat()
+    # —— 第三批（第52轮）：精力/饥饿的**纯情绪**播报 ——
+    # 用户口径逐字：「把他内置的对话去掉！！！！……记住，聊天系统全权由7B接管，
+    #                别放内置对话了，太木讷了」。
+    # 这一批是"每次跨越档位都说同一句"的典型（原本 6 句写死），且**零信息量**
+    # （只说"我好累/我好饿/我吃饱了"，不带任何数值）⇒ 全部交给模型。
+    # ★ 这一批在 `energy_hunger._speak()` 里一律 **pool=None**（不给内置台词）。
+    # ★ 反例（有意**不**迁）：`rest()`/`eat()` 里"已经吃饱/还不累"的**拒绝说明**——
+    #   那是"为什么没反应"的唯一提示，属功能反馈，交模型会丢信息
+    #   （verify_s7_event_speech 的 C12 锁着这条口径）。
+    "energy_critical": TIER_AI,
+    "energy_low": TIER_AI,
+    "hunger_critical": TIER_AI,
+    "hunger_low": TIER_AI,
+    "ate_enough": TIER_AI,
+    "rested_well": TIER_AI,
+    # —— 第四批（第52轮）：躲猫猫的"桌面闸"拒绝说明 ——
+    # 用户口径：「他捉迷藏只是用户提出来才能玩而且必须是在桌面上」。
+    # 属"为什么没反应"的功能说明 ⇒ 走 AI，但**保留罐头兜底**（同 batch 1/2 口径）。
+    "hide_seek_not_desktop": TIER_AI,
+    # —— 第五批（第52轮）：一局游戏结束时的道谢 ——
+    # 纯情绪、零信息量（原来的「谢谢你陪我玩！」是同一句写死） ⇒ pool=None。
+    # ⚠️ 同一次结算里的**比分**与**统计**两句不迁：带数值，属功能播报。
+    "game_thanks": TIER_AI,
     # —— 有意保持罐头（TIER_INSTANT）：物理状态机 / 极短拟声 / 连点机关 ——
     "fling": TIER_INSTANT,      # 被甩飞时的「哇啊——！」
     "splat_poked": TIER_INSTANT,  # 摔扁形态下被戳
@@ -109,6 +132,17 @@ EVENT_DIRECTIVES = {
     # —— 第二批：菜单按钮触发的开始休息 / 开始进食 ——
     "rest_start": "（主人让你去休息，你乖乖躺下了。）",
     "eat_start": "（主人喂了你东西，你开心地吃了起来。）",
+    # —— 第三批（第52轮）：精力/饥饿的纯情绪播报 ——
+    # 旁白只描述"状态"，**不写台词示范**（写示例 = 复读机的直接成因，
+    # 见 _PROMPT_TAIL 上方那条第十八轮的教训）。
+    "energy_critical": "（你累得快走不动了。）",
+    "energy_low": "（你开始有些累了。）",
+    "hunger_critical": "（你饿得受不了了。）",
+    "hunger_low": "（你开始有些饿了。）",
+    "ate_enough": "（主人喂你吃了东西，你已经吃饱了。）",
+    "rested_well": "（你休息够了，精力恢复了过来。）",
+    "hide_seek_not_desktop": "（主人想和你玩躲猫猫，可你们现在不在桌面上。）",
+    "game_thanks": "（主人刚陪你玩完一局游戏。）",
     "fling": "（主人把你甩了出去。）",
     "splat_poked": "（你已经摔扁了，主人又戳了你一下。）",
     "ear_ruffle": "（主人连着弹了三次你的耳朵。）",

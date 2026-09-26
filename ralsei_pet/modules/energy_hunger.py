@@ -94,13 +94,31 @@ class EnergyHungerSystem:
             return 'high'
         return 'normal'
 
+    def _speak(self, kind, face):
+        """★ 第52轮：精力/饥饿的**纯情绪**台词统一走事件唯一出口。
+
+        用户口径逐字：「把他内置的对话去掉！！！！……记住，聊天系统全权由7B接管，
+        别放内置对话了，太木讷了」。
+
+        `pool=None` = **不给内置台词**（`speak_event` 的 docstring 写明的
+        "全权交给 AI" 口径）：模型说了就听模型的，模型不可用/超时/判退就**安静**，
+        不再甩一句写死的台词。这与本文件 `rest_start`/`eat_start`（S7 batch 2）
+        的 `pool=[罐头]` 不同 —— 那两处是历史口径，本批新迁移一律不保留罐头。
+
+        ⚠️ 但 `rest()`/`eat()` 里"**为什么没反应**"的拒绝说明**不迁**：
+        那是功能反馈（交模型会丢信息），`verify_s7_event_speech` 的 C12 锁着这条。
+        """
+        try:
+            self.parent.speak_event(kind, None, face)
+        except Exception as e:
+            _log.debug("energy_hunger 防御性异常（已忽略）: %s", e)
+
     def check_status_changes(self):
         # 只在档位发生跨越时弹一次对话，避免每个 tick 重复刷屏
         energy_tier = self._energy_tier()
         if energy_tier != self._prev_energy_tier:
             if energy_tier == 'critical':
-                self.parent.dialogue_ui.add_dialogue("ralsei", "呜... 我真的好累好累... 几乎走不动了...", "sad")
-                self.parent.dialogue_ui.show_dialogue()
+                self._speak("energy_critical", "sad")
                 # 修复：原代码直接 self.parent.current_animation="idle"，绕过
                 # change_animation 的冷却/优先级/施法(spell)/游戏硬拦截——若恰好处于
                 # spell casting 或躲猫猫关键阶段会打断流程。改走受保护接口，
@@ -116,8 +134,7 @@ class EnergyHungerSystem:
                 # 自动进入休息状态
                 self.is_resting = True
             elif energy_tier == 'low':
-                self.parent.dialogue_ui.add_dialogue("ralsei", "我有点累了... 能不能休息一下？", "sad")
-                self.parent.dialogue_ui.show_dialogue()
+                self._speak("energy_low", "sad")
             self._prev_energy_tier = energy_tier
 
         # 检查饥饿状态
@@ -125,12 +142,10 @@ class EnergyHungerSystem:
         if hunger_tier != self._prev_hunger_tier:
             if hunger_tier == 'critical':
                 # 饥饿严重
-                self.parent.dialogue_ui.add_dialogue("ralsei", "肚子好饿好饿... 我快饿死了...", "sad")
-                self.parent.dialogue_ui.show_dialogue()
+                self._speak("hunger_critical", "sad")
             elif hunger_tier == 'low':
                 # 有点饿
-                self.parent.dialogue_ui.add_dialogue("ralsei", "嗯... 我有点饿了... 有没有什么吃的？", "sad")
-                self.parent.dialogue_ui.show_dialogue()
+                self._speak("hunger_low", "sad")
             self._prev_hunger_tier = hunger_tier
 
         # ===== 修复：进食 / 休息的结束条件必须独立判定，不能挂在"档位跨越"上 =====
@@ -140,12 +155,10 @@ class EnergyHungerSystem:
         # 此后 Ralsei 永远不会饿，饥饿系统彻底失效（实测 30 个 tick 后仍是
         # hunger=100.0 / is_eating=True）。这里改为每 tick 独立判定，且只在真正结束时提示一次。
         if self.is_eating and self.hunger >= self.full_hunger_threshold:
-            self.parent.dialogue_ui.add_dialogue("ralsei", "好吃！我已经吃饱了！谢谢你的食物！", "happy")
-            self.parent.dialogue_ui.show_dialogue()
+            self._speak("ate_enough", "happy")
             self.is_eating = False
         if self.is_resting and self.energy >= self.full_energy_threshold:
-            self.parent.dialogue_ui.add_dialogue("ralsei", "哇！我感觉好多了！谢谢你让我休息！", "happy")
-            self.parent.dialogue_ui.show_dialogue()
+            self._speak("rested_well", "happy")
             self.is_resting = False
     
     def rest(self):

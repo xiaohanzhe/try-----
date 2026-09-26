@@ -91,6 +91,7 @@ HERMETIC_IDS = frozenset({
     'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
     'objects_round44', 'anim_round44', 'pathfind_round45',
     'rooms_round47', 'walk_round47', 'npc_round49', 'bubble_round50',
+    'dialog_turn52', 'dialog_clean52',
 })
 
 
@@ -161,7 +162,7 @@ SUITES = [
         'script': os.path.join(ROOT, 'code-quality-audit', '第八轮', 'verify_round8_anim.py'),
         'offscreen': True,
         'env': _make_hermetic_env,     # 会 RalseiPet()，必须隔离真实存储（见该函数注释）
-        'desc': '第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 3 分钟 + 鞠躬锚点',
+        'desc': '第八轮：特殊动画只由 AI 触发（来源闸门）+ 播完不打断不移动 + 待机 10 分钟（第52轮由 3 分钟改口）+ 鞠躬锚点',
     },
     {
         'id': 'round9_focus',
@@ -975,6 +976,74 @@ SUITES = [
                 'transfer_world · toggle_bubble 只转发 · fit_scale / BubbleOverlay：鼠标穿透·默认hide·三接口） + '
                 'H 原作锚定（★★GML 逐字帧序 [2,3,1] 且角色夹中间 / 三原因码实测可达 / '
                 '主球四帧 PNG 在位）',
+    },
+    # -------------------------------- 第五十二轮：对话框"一轮一轮" + 输入框常驻
+    # 用户口径逐字：「别整这种对话框，就一轮一轮的而不是一次性全放出来，，你现在
+    #   对话框就像是原作把一章节的全部对话都放了进来，而事实上原作一次只放一轮对话，
+    #   所以你要贴合原作哦，还有，预留出来输入框」
+    # ★ A 段是**源码级**（AST，不用字符串子串 —— 第52轮真踩过"判据匹配到自己写的
+    #   docstring"）；B 段在 offscreen Qt 下真建 DialogueUI 跑行为。
+    # ★★ 三处判据自纠留痕（都是"先怀疑判据"救回来的）：
+    #   1. A2b 第一版只认 `ast.Assign`，漏掉产品里的 `self._history_html += (...)`
+    #      （AugAssign）⇒ 误报"没有守卫" ⇒ 判据**过窄**；
+    #   2. A3a 第一版把 `self.isVisible()`（窗口自身）也当成 `_input_bar.isVisible()`
+    #      ⇒ 误报"还在问 isVisible" ⇒ 同样过窄；
+    #   3. H5b 第一版在**同一个**控件上翻 `ALWAYS_SHOW_INPUT_BAR` 再量窗口高度 ——
+    #      QLayout 的 SetDefaultConstraint 已把 minimumSize 钉在"含输入栏"的值上，
+    #      运行时 setattr 不触发重新 activate，`resize(更矮)` 被 Qt 顶回 ⇒ 差 0
+    #      ⇒ **夹具坏了，不是产品坏了**。改成两个独立控件 + 记录 `resize` 请求值。
+    # ★ 关键分工：H1（单轮，正）↔ H2（关掉开关后历史必须堆积，反）= A≠B；
+    #   ★★ H3 守"别把记忆一起删了" —— 屏上只留一轮，但 `_ai_history` 必须仍有全部 6 条。
+    # **不联网、不调 Ollama、不实例化主程序**；需要 offscreen Qt（会真建 DialogueUI）。
+    {
+        'id': 'dialog_turn52',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第52轮-对话与人味收口',
+                               '_tools', 'check52a.py'),
+        'offscreen': True,
+        'desc': '第五十二轮：对话框「一轮一轮」+ 输入框常驻不许静默漂移 —— '
+                'A 源码级（★AST 可编译 / 四个契约常量真取得到（防「名字打错⇒判据恒真」）/ '
+                '★add_dialogue 里存在新一轮重置 / '
+                '★跨轮让位 `_maybe_break_turn` 同时受 SINGLE_TURN_MODE 与 '
+                'TURN_GAP_SECONDS 约束且真的清历史 / '
+                '★调用序 1：`_current_turn_gap()` 必须排在 `_note_focus()` 之前（否则间隔恒 0）/ '
+                '★调用序 2：`_maybe_break_turn` 必须排在 commit **之后**（顺序反了就静默失效）/ '
+                '★高度计算改走 `_input_bar_reserved()` 且不再问 `_input_bar.isVisible()` / '
+                '★★判据鉴别力体检：合成的旧写法必须被同一条判据抓出 / 双击常驻分支提前 return）+ '
+                'B 行为级（★三轮聊完屏上只剩最后一句 + 关掉开关后必须堆积（A≠B）/ '
+                '★★上下文不许被顺带清掉：屏上 1 轮但 `_ai_history` 仍 6 条 / '
+                '★同一拍的连续两句**都不丢**（甲入历史+乙在前台）↔ 跨轮才让位 ↔ '
+                '★阈值调大后同一组输入不再让位（证明是阈值在起作用，A≠B）/ '
+                '★两个独立控件的目标高度差 == 输入栏项（4+64=68）/ '
+                '双击后仍占位 / 占位提示已挂上）',
+    },
+    # -------------------------------- 第五十二轮：内置对话清理 + 捉迷藏双闸
+    # 用户口径逐字：「还有把他内置的对话去掉！！！！并且去掉那个与文件夹交互的功能吧，
+    #   感觉过于鸡肋了，还有，他捉迷藏只是用户提出来才能玩而且必须是在桌面上。」
+    # ★ 本套件守的是**那条线**（不迁/迁的边界），而不只是"删了几个字"：
+    #   · 纯情绪/零信息量 → 删掉，改 `speak_event(kind, pool=None)`（不给内置台词）；
+    #   · 带数值/带名字/规则提示 → **不迁**（交模型必丢信息）。
+    #   这条线不是本轮发明 —— `verify_s7_event_speech` 的 **C12** 早就锁着它。
+    # ★★ 判据全是 AST 取函数体字面量，**不用** `'台词' in 源码`：
+    #   第52轮真踩过，那种写法会匹配到自己新写的注释/docstring，报假 FAIL。
+    # ★ 正/负控制成对：迁走的东西要"真不在了"（A1/B1），**有意保留**的要"真还在"
+    #   （A2 拒绝说明 / A5 rest·eat 各剩 1 处 / B3 比分与统计 / C2 其余 5 个游戏）。
+    # ★ D 段是**行为级**：桩宿主 + **真控制器**，负控制（非桌面→拒绝且 `game_state`
+    #   零污染）+ 正控制（桌面→用一个"越过闸才会抛"的哨兵证明放行）+ D7 自证桩真被调到。
+    # ★ A8 判据坑：`check(...)` 的标题里带半角引号容易被当成字符串结束 —— 用「」。
+    # **不联网、不调 Ollama、不实例化主程序、不需要显示器**（D 段纯 Python 桩）。
+    {
+        'id': 'dialog_clean52',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第52轮-对话与人味收口',
+                               '_tools', 'check52b.py'),
+        'offscreen': False,
+        'desc': '第五十二轮：内置对话清理 + 捉迷藏双闸不许静默漂移 —— '
+                'A energy_hunger（★6 句纯情绪已从函数体删干净 / 反控制：rest·eat 的**拒绝说明**仍在 / '
+                '★`_speak()` 真走 pool=None / 6 处播报全接上新通道 / 反控制：rest·eat 各仍恰 1 处 add_dialogue） + '
+                'A6~A8 事件名登记（★8 个新 kind 全在 EVENT_TIERS 且 AI 档 / 全有旁白 / 旁白不含台词示范） + '
+                'B games_controller（★「谢谢你陪我玩！」已删 / 2 处终局都改 speak_event / 反控制：带数值的比分与统计仍在） + '
+                'C play_game（★随机名单不再含 hide_and_seek / 反控制：其余 5 个游戏仍在 / 原死分支已删） + '
+                'D 桌面闸（源码级 + ★行为级：非桌面→False 且 game_state 零污染、不去 suspend 代理 / '
+                '★正控制：桌面→放行 / 自证桩真被调到）',
     },
 ]
 

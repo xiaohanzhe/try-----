@@ -178,6 +178,25 @@ class HideAndSeekController(object):
             return False
         if getattr(self, '_hide_stage', None) is not None:
             return False
+        # ★★ 第52轮 · 桌面闸（用户口径逐字）：
+        #   「还有，他捉迷藏只是用户提出来才能玩**而且必须是在桌面上**」
+        #   ⇒ ① 菜单里的「玩游戏」不再**随机**挑中躲猫猫（见 main.play_game 的注释），
+        #        只有主人明确说要玩才进得来；
+        #     ② 场景不在桌面时直接拒绝，不能在他"走进房间"时满地变出障碍物文件夹。
+        #   判据与 main.py 的 `current_scene` 同源（默认值就是 'desktop'，
+        #   见 main.py:961 的字段声明）。
+        _scene = getattr(self, 'current_scene', None)
+        if _scene not in (None, '', 'desktop'):
+            # 这是"为什么没反应"的**功能说明**（不是闲聊）⇒ 保留罐头兜底，
+            # 与 energy_hunger 里 rest()/eat() 的拒绝原因同一口径。
+            try:
+                self.speak_event(
+                    "hide_seek_not_desktop",
+                    pool=["这里不是桌面呀，等我们回到桌面上再玩躲猫猫好不好？"],
+                    face="confused")
+            except Exception as e:  # 防御性：宿主没接这条事件也不能炸
+                self._log_().debug("hide_controller 防御性异常（已忽略）: %s", e)
+            return False
         # 暂停自主代理
         try:
             self.autonomous_agent.suspend()

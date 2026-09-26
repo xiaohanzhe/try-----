@@ -406,30 +406,28 @@ class VideoController(object):
             self._react_to_video()
 
     def _react_to_video(self):
-        # 观看视频时的随机反应
-        import random
-        reactions = [
-            ("haha！这个好好笑！", "happy", "laugh", 15),
-            ("哇！这个太厉害了！", "surprised", "surprised", 10),
-            ("嗯...挺有意思的。", "happy", "smile", 5),
-            ("嘿嘿，我也想试试！", "excited", "happy", 12),
-            ("这段音乐真好听~", "happy", "dance", 8),
-            ("啊！吓我一跳！", "surprised", "surprised", 15),
-            ("太好看了，根本停不下来！", "excited", "happy", 10),
-            ("这个角色好可爱啊~", "happy", "smile", 8),
-        ]
-        msg, emotion, _anim, happy_delta = random.choice(reactions)
-        self.dialogue_ui.add_dialogue("ralsei", msg, emotion)
-        self.dialogue_ui.show_dialogue()
-        # 修复：原来固定 add_emotion("happy")，忽略元组里的 'surprised'/'excited' 等情绪；
-        # 现在统一走 emotion_system，旧版 self.emotions 通过 _sync_system_to_emotions 自动同步。
-        self.emotion_system.add_emotion(emotion, happy_delta)
-        # ===== 第八轮：陪看视频时的"反应动画"不再自行播放 =====
-        # 用户要求："所有特殊动画……只交给 AI 判断是否播放，别和抽风似的突然一下。"
-        # 原来这里是 play_animation_once(anim)（10% 概率随机播 laugh/dance/surprised…），
-        # 属于非 AI 的随机特殊动画。现在只把"我正在陪主人看视频"上报给 AI，
-        # 由 AI 决定要不要做个动作；AI 未启用 / 不回应时，宠物就安静地陪着看。
-        # TODO(#15 对话全 AI 接管)：上面那句 msg 仍来自内置台词表，属缺陷 1 的范围。
+        """陪看视频时的反应。**只上报事件，不说话**。
+
+        ★★ 第51轮：**删除内置台词表**（用户口径逐字：「把他内置的对话去掉！！！！
+        ……记住，**聊天系统全权由7B接管**，别放内置对话了，太木讷了」）。
+
+        原实现是第八轮遗留：随机抽 8 条罐头台词
+        （"haha！这个好好笑！" "哇！这个太厉害了！" …）直接 `add_dialogue` 显示 ——
+        正是本文件下一行那条 `#15 对话全 AI 接管` TODO 点名的缺陷：
+        **同一段对话里既有 AI 生成的句子、又有固定罐头**，用户根本分不清哪句是
+        模型说的，观感就是"木讷"。
+
+        现在只做两件**非对话**的事：
+          · 记一次情绪（陪看视频确实让 Ralsei 开心 —— 这是状态，不是台词）；
+          · 把"我在陪看视频"上报给 AI，**由 AI 决定说不说、说什么、做不做动作**。
+        AI 未启用 / 不回应 ⇒ **安静陪着看**（与第八轮「特殊动画只交给 AI 判断」、
+        以及 main.py「AI 不可用就沉默，绝不回落内置台词」是同一条纪律）。
+        """
+        emotion = 'happy'
+        try:
+            self.emotion_system.add_emotion(emotion, 10)
+        except Exception as e:
+            self._log_().debug("main 防御性异常（已忽略）: %s", e)
         try:
             _driver = getattr(self, 'ai_driver', None)
             if _driver is not None and callable(getattr(_driver, 'note_event', None)):
