@@ -11,14 +11,20 @@
 * 「这些npc都不可脱离暗世界或是进入不属于他们的暗世界」
 * 「ralsei也不可以脱离暗世界，除非是…第3章…那个球」
 
+★ 第50轮用户口径（逐字，**修订上面后两条**）
+* 「16项要，但只有ralsei能自由在其他暗世界走，其他人无法通过球去其他世界，
+   只能去光世界或是回原先他们的暗世界（这个不需要他们套上球）」
+
 设计
 ----
 1. **分层**：`NpcTier.MAIN`（主线，配 4B 模型）/ `NpcTier.PLAIN`（纯 NPC，内置短对话）。
 2. **跟随**：主线 = `FollowPolicy.AUTONOMOUS`；纯 NPC = `FollowPolicy.CONSENT`
    （要主角同意或主动要求）。两者**都能跟**，差别只在"谁发起"。
-3. **世界门控**：NPC 不可脱离暗世界、不可进入不属于自己的暗世界；
-   唯一的豁免是第 49 轮的**球容器**（`bubble_system`）——被装进球里才能进光世界。
-   Ralsei 同样受此约束（他是主角团，但同为暗世界居民）。
+3. **世界门控**（★ 第50轮口径修订，逐字原话与推导见 `world_gate`）：
+   · 光世界 —— **谁都能去，且不需要球**；
+   · 暗世界 —— 只能进**自己登记过的那几章**（"回原先他们的暗世界"）；
+   · 跨暗世界 —— **只有 Ralsei**（`free_dark_roam`）；
+   · Ralsei 的例外性 = 他是**纯暗世界居民** ⇒ 脱离暗世界**必须**被装进球容器。
 
 跟随的**轨迹数学**不在本模块：复用第46轮的 `companion.py`（`obj_caterpillarchara` 采样轨迹
 + `scr_makecaterpillar` 间距 + `scr_setparty` 2 个队友位）。本模块只负责**策略与门控**。
@@ -80,9 +86,11 @@ WORLD_DARK = 'dark'
 
 # 门控结果码
 REASON_OK = 'ok'
-REASON_LEAVE_DARK = 'leave_dark_world'    # 想脱离暗世界
-REASON_FOREIGN_DARK = 'foreign_dark_world'  # 进入不属于他的暗世界
-REASON_NO_CHAPTERS = 'no_chapters'        # 登记里没有可用章节 ⇒ 不硬判，拒绝
+REASON_LEAVE_DARK = 'leave_dark_world'      # 未知/非法世界
+REASON_FOREIGN_DARK = 'foreign_dark_world'  # 进入不属于他的暗世界（且无跨章权限）
+REASON_NO_CHAPTERS = 'no_chapters'          # 登记里没有可用章节 ⇒ 不硬判，拒绝
+#: ★ 第50轮：Ralsei 想脱离暗世界却没被装进球（他是纯暗世界居民）
+REASON_LIGHT_NEEDS_BUBBLE = 'light_needs_bubble'
 
 # 跟随状态
 FOLLOW_IDLE = 'idle'          # 没跟
@@ -283,30 +291,82 @@ class GateResult(object):
         return '<GateResult %s %s>' % ('OK' if self.ok else 'DENY', self.reason)
 
 
+# ---------------------------------------------------------------- 世界归属特例
+
+#: ★ 第50轮：**纯暗世界居民**（只有 Ralsei）。这一个事实推出两条特例 ——
+#:   ① 进光世界**必须**被装进球（「ralsei也不可以脱离暗世界，除非是…那个球」）；
+#:   ② 反而**可以自由在别的暗世界走**（「只有ralsei能自由在其他暗世界走」）。
+#:   `_registry.json` 里用 `escape_via_bubble` 这一个登记位表达。
+DARK_ONLY_IDS = ('ralsei',)
+
+
+def is_dark_only(npc):
+    """是不是**纯暗世界居民**（仅 Ralsei）。"""
+    if getattr(npc, 'id', None) in DARK_ONLY_IDS:
+        return True
+    return bool(getattr(npc, 'escape_via_bubble', False))
+
+
+def light_needs_bubble(npc):
+    """进光世界**是否必须靠球**（仅 Ralsei）。
+
+    「其他人…只能去光世界或是回原先他们的暗世界（**这个不需要他们套上球**）」
+    ⇒ 除 Ralsei 外一律 False。
+    """
+    return is_dark_only(npc)
+
+
+def free_dark_roam(npc):
+    """能否**自由在别的暗世界走**（★ 仅 Ralsei）。
+
+    「只有ralsei能自由在其他暗世界走」—— 其他人「只能…回原先他们的暗世界」，
+    跨章即拒（`REASON_FOREIGN_DARK`）。★ 这**不是**球给的能力
+    （「其他人无法通过球去其他世界」）⇒ 与 `carried` 无关。
+    """
+    return is_dark_only(npc)
+
+
 def world_gate(npc, world, scene_id=None, carried=False):
     """NPC 能否进入 `world`（`'light'` / `'dark'`）的 `scene_id`。
 
-    * `carried=True` 表示**被装进球容器里**（只有 `escape_via_bubble` 的 NPC 才认这一条）。
-    * 光世界：一律拒绝（「不可脱离暗世界」），除非 `carried` 且该 NPC 允许靠球脱离。
-    * 暗世界：`scene_id` 所属章节必须在该 NPC 的登记章节里，否则「不属于他的暗世界」。
-    * `scene_id` 缺失 ⇒ 只按世界判，不做章节判（不硬判）。
+    ★ 第50轮口径（用户原话逐字）
+    -----------------------------
+    「16项要，但只有ralsei能自由在其他暗世界走，其他人无法通过球去其他世界，
+      只能去光世界或是回原先他们的暗世界（这个不需要他们套上球）」
+
+    三条规则：
+    1. **光世界**：**谁都能去，且不需要球**（"这个不需要他们套上球"）。
+       唯一例外 = **Ralsei**（纯暗世界居民）：脱离暗世界**必须**被装进球
+       （第49轮原口径「ralsei也不可以脱离暗世界，除非是…那个球」）。
+    2. **暗世界**：只进**自己登记过的那几章**（"回原先他们的暗世界"）。
+    3. **跨暗世界**：只有 Ralsei 自由（`free_dark_roam`）。
+       「其他人无法通过球去其他世界」⇒ **球不给**跨暗世界能力。
+
+    :param carried: 是否**被装进球容器里**（只有 Ralsei 认这一条）。
+    :param scene_id: 缺省 ⇒ 只按世界判，**不做章节判**（不猜）。
     """
+    # ---- 光世界：谁都能去；只有"纯暗世界居民"必须靠球 ----
     if world == WORLD_LIGHT:
-        if carried and npc.escape_via_bubble:
+        if not light_needs_bubble(npc):
+            return GateResult(True, REASON_OK, 'light_free')
+        if carried:
             return GateResult(True, REASON_OK, 'carried_in_bubble')
-        return GateResult(False, REASON_LEAVE_DARK,
-                          '%s 不能脱离暗世界' % npc.name_cn)
+        return GateResult(False, REASON_LIGHT_NEEDS_BUBBLE,
+                          '%s 是暗世界居民，脱离暗世界必须被装进球' % npc.name_cn)
     if world != WORLD_DARK:
         return GateResult(False, REASON_LEAVE_DARK, '未知世界 %r' % (world,))
+    # ---- 暗世界 ----
     if not npc.chapters:
         return GateResult(False, REASON_NO_CHAPTERS, '%s 没有登记任何暗世界' % npc.name_cn)
     ch = scene_chapter(scene_id)
     if ch is None:
         return GateResult(True, REASON_OK, 'no_scene_id')
-    if ch not in npc.chapters:
-        return GateResult(False, REASON_FOREIGN_DARK,
-                          '%s 不属于 %s' % (ch, npc.name_cn))
-    return GateResult(True, REASON_OK, ch)
+    if ch in npc.chapters:
+        return GateResult(True, REASON_OK, ch)
+    if free_dark_roam(npc):
+        return GateResult(True, REASON_OK, 'free_dark_roam:%s' % ch)
+    return GateResult(False, REASON_FOREIGN_DARK,
+                      '%s 不属于 %s' % (ch, npc.name_cn))
 
 
 # ---------------------------------------------------------------- 运行时：跟随板

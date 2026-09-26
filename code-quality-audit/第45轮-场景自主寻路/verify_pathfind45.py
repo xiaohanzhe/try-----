@@ -473,9 +473,12 @@ def seg_e(ctx):
                         if (isinstance(t, ast.Attribute)
                                 and t.attr == '_scene_chapter_id'):
                             asgn_in_switch.append(sub.lineno)
+    # ⚠️ 判据噪声修正（第50轮）：原先把 `行号` 打进消息 —— 任何**无关**改动
+    #   （第50轮给 main.py 加球容器接线）都会让行号位移 ⇒ 基线 DIFF（假警报）。
+    #   行号不是稳定可观测，消息里只留**计数**（计数才是判据本体）。
     check('E6', len(asgn_in_switch) == 1,
-          'E6 ★switch() 里 _scene_chapter_id 恰被赋值 1 次（实得 %d 处，行 %r）'
-          % (len(asgn_in_switch), asgn_in_switch))
+          'E6 ★switch() 里 _scene_chapter_id 恰被赋值 1 次（实得 %d 处）'
+          % len(asgn_in_switch))
 
     # ---- E7 幂等守卫：load_pathfind_data 必须读 _pathfind_loaded ----
     guard = False

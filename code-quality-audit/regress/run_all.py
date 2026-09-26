@@ -90,7 +90,7 @@ HERMETIC_IDS = frozenset({
     'persona_chat', 's8_stream', 's7_event_speech', 'box_round44',
     'camera_round44', 'render_round44', 'canvas_round44', 'routes_order44',
     'objects_round44', 'anim_round44', 'pathfind_round45',
-    'rooms_round47', 'walk_round47', 'npc_round49',
+    'rooms_round47', 'walk_round47', 'npc_round49', 'bubble_round50',
 })
 
 
@@ -640,7 +640,8 @@ SUITES = [
                 '缺物件→drawRect 描边 / 无 name 也画框）+ 异常兜底（单条抛→其余仍画 / '
                 '全抛→返回 0 不抛出）+ E 产品接线（★main.py 真调 camera_follow/'
                 'plan_frame/set_plan/plan_viewport 四连 + 控制器补 plan_viewport + '
-                '默认关闭 + ★屏幕→房间归一化映射防"目标比房间大被钳死" + 画布无 QTimer）',
+                '★总开关=开（第50轮口径：贴近原作） + ★屏幕→房间归一化映射防"目标比房间大被钳死"'
+                ' + 画布无 QTimer）',
     },
     # ★ 第44轮续新增：复检时抓到「priority 回绕」真缺陷（G2 未覆盖），
     #   故立此锁 —— 锁"同一场景内门字母序 == priority 序"这条不变量。
@@ -924,6 +925,53 @@ SUITES = [
                 'Susie 特例 2.02）+ '
                 'H 原作锚定（★★GML 逐字帧序 [2,3,1] 且角色夹在中间 / 精灵日志 62×62 四帧 / '
                 '误认候选 obj_ch3_ballcon=对话气泡框已排除 / 资产落盘 43+28 个 PNG 逐个点清）',
+    },
+    # ================================================================
+    # 第五十轮：光世界「扭蛋球」容器**接线** —— 规则层到像素层的最后一跳
+    #   为什么要单开一套：第49轮锁的是**规则**（能不能进/能不能脱/画几层）；
+    #   本轮锁**接线**（规则全对、球却没人画 = 本项目最贵的坑，记忆铁律 §4）。
+    #   ★ A 段用 AST 守 `scene_render` 零依赖（顶层 import ⊆ {logging}）+
+    #     常量同源（scene_render ↔ bubble_system 的两份帧号/前缀必须一致）。
+    #   ★ B/C 段锁「四层指令（顺序/帧号/滤镜载荷）」与「稳定分桶分流」，
+    #     ★★ 判据坑已踩过：`behind+front` **不等于** plan 全局序（边框在球后却属
+    #     behind）⇒ 只断"无丢失 + 各自保相对序"（首版误报 C3）。
+    #   ★ D 段把后层/前层**真喂给假画笔**，看它是否真落笔（drawPixmap / 滤镜 fillRect）。
+    #   ★★ D4 断言塑料滤镜强度 = 1 - alpha(0.88) = 0.12（真读 QBrush 的 alphaF）。
+    #   ★★ D9~D11 用**真素材**断言三层帧尺寸各异（60×51 / 60×47 / 60×48）+ 同心
+    #     ⇒ 钉住"每层取自己尺寸 + 按球心居中"（导出 PNG 无 per-frame offset）。
+    #   ★ E/F 段：球规则表 + 世界门控三规则；★★ F10 是关键负控制 ——
+    #     Gerson carried=True 走异章**仍拒** ⇒ 球在暗分支**不被读**（不给跨暗世界）。
+    #   ★ G 段 AST 守 main.py 的装配（import / SCENE_LAYER_ENABLED=True /
+    #     split_bubble_layers + _update_bubble_overlay / plan_frame(bubbles=) /
+    #     toggle_bubble 只转发不作规则 + BubbleOverlay 的 raise_/鼠标穿透）。
+    #     ⚠️ 判据坑：`toggle_bubble(char_id=None)` 是**哨兵**，体内兜底 'ralsei'
+    #     ⇒ 断言"缺省=='ralsei'"是过窄判据（首跑误报 G11）。
+    #   ★ H 段直接读**仓库内**第49轮 GML 逐字产物，把帧序钉到原作 [2,3,1]。
+    # ★ 依赖 assets/bubble/ + 第49轮 `_evidence/gml/`（都进仓库），
+    #   零 `E:\Download\_tmp` 依赖（那目录"用后即删" ⇒ 依赖它=静默失去鉴别力）。
+    # **不联网、不调 Ollama、不实例化 App、不需要显示器**（Qt 走 offscreen）；
+    #   读 QPixmap 前先建 QApplication（记忆铁律）。
+    {
+        'id': 'bubble_round50',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第50轮-球容器接线',
+                               'verify_wire50.py'),
+        'offscreen': True,
+        'desc': '第五十轮：光世界球容器**接线**不许静默漂移 —— '
+                'A 零依赖+常量同源（★AST：scene_render 顶层 import⊆{logging}、无函数内 import / '
+                '★球名·三层帧号(1,2,3)·前缀与 bubble_system 一致） + '
+                'B 计划四层（★序=back→char→front→top / ★帧号 2/3/1 / 角色层不带素材名带滤镜 / '
+                '★球在物件之后·边框之前 / 缺省不产·非法项只跳过不抛） + '
+                'C 分流（behind 只含 back / front=char+front+top / ★无丢失+各自保相对序 / 空·None 不抛） + '
+                'D 画布消费（后层真 drawPixmap / 前层 2壳+1滤镜 / ★滤镜强度=1-alpha=0.12 / '
+                'tint 兜底 / 角色层不画 pixmap / 素材缺失描边 / ★三层尺寸各异且同心） + '
+                'E 球规则（★不给跨暗世界恒 False / Lancer 永不可脱 / Ralsei 光不可脱暗可脱 / '
+                'Kris·Susie 随时 / 90°均分 / must_stay_inside） + '
+                'F 世界门控三规则（Ralsei 无球拒光·有球放行 / 他人去光不需球 / '
+                '★只 Ralsei 跨暗世界 / 他人本属章放行异章拒 / ★★球在暗分支不被读） + '
+                'G 接线 AST（main：import · SCENE_LAYER_ENABLED=True · split+overlay · bubbles= · '
+                'transfer_world · toggle_bubble 只转发 · fit_scale / BubbleOverlay：鼠标穿透·默认hide·三接口） + '
+                'H 原作锚定（★★GML 逐字帧序 [2,3,1] 且角色夹中间 / 三原因码实测可达 / '
+                '主球四帧 PNG 在位）',
     },
 ]
 

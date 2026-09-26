@@ -66,6 +66,67 @@ K_BG = 'bg'
 K_OBJ = 'obj'
 K_PLACEHOLDER = 'placeholder'
 K_ROOM_BORDER = 'room_border'
+#: ★ 第50轮：光世界「扭蛋球」容器 —— 一个球产出 **4 条**指令（保序）。
+K_BUBBLE = 'bubble'
+
+# ---------------------------------------------------------------------------
+# 球容器（第50轮）—— ★ 这里的常量与 `bubble_system` 是**两份**（刻意重复）：
+# 本模块是纯数据层，**不许 import 项目内模块**（初始化环纪律）；
+# 重复写能让"改了一边忘了另一边"被回归锁立刻抓到（与 K_* 同一手法）。
+# ---------------------------------------------------------------------------
+BUBBLE_SPRITE = 'spr_dw_tv_gachaball_transparent'
+#: 帧号（0=整球 / 1=上罩 / 2=下半后层 / 3=下半前层）—— 与 `bubble_system` 同源
+BUBBLE_FRAME_TOP = 1
+BUBBLE_FRAME_BACK = 2
+BUBBLE_FRAME_FRONT = 3
+#: 素材名前缀（`SceneAssetCache` 认这个前缀 → `assets/bubble/`）
+BUBBLE_PREFIX = 'bubble:'
+#: 角色与球同尺寸时的安全余量（保证"装得下、不穿模"）
+BUBBLE_FIT_MARGIN = 1.25
+#: 球的**名义原点**（原作 sprite origin = (31,31)）—— 仅作参考/归档，
+#: **不用于绘制对齐**：三层帧的尺寸不同（实测 back 60×51 / front 60×47 /
+#: top 60×48，而整球 62×62），且 UTMT 的 PNG 导出**没带每帧 offset**，
+#: 按 origin 硬对齐会让三层整体偏下。⇒ 统一按**球心居中**（见 `_bubble_items`）。
+#: ⚠️ 缺口已登记：要精确复刻分层对齐需导出每帧 offset（见第50轮报告）。
+BUBBLE_ORIGIN = 31
+
+#: 四层的 `role` 取值（顺序即原作 `Draw_0` 的绘制序）
+BUBBLE_ROLE_BACK = 'back'
+BUBBLE_ROLE_CHAR = 'character'
+BUBBLE_ROLE_FRONT = 'front'
+BUBBLE_ROLE_TOP = 'top'
+BUBBLE_DRAW_ROLES = (BUBBLE_ROLE_BACK, BUBBLE_ROLE_CHAR,
+                     BUBBLE_ROLE_FRONT, BUBBLE_ROLE_TOP)
+
+
+def bubble_sprite_name(frame):
+    """球的第 `frame` 帧素材名（带 `bubble:` 前缀，供 `SceneAssetCache` 解析）。"""
+    return '%s%s_%d.png' % (BUBBLE_PREFIX, BUBBLE_SPRITE, int(frame))
+
+
+def fit_scale(char_w, char_h, sprite_w=62.0, sprite_h=62.0,
+              margin=BUBBLE_FIT_MARGIN):
+    """按**角色的显示像素**反推球的缩放，保证球装得下角色（「不要穿模」）。
+
+    ★ 为什么不能直接拿 `bubble_system.SCALE_DEFAULT`（1.55）当产品尺寸：
+    1.55 是**原作 GameMaker** 里的倍率，原作角色就是 62px 级别的 sprite；
+    而本产品里角色被 `sprite_label` 按窗口尺寸放大/缩小过 ⇒ 固定 1.55 可能让
+    球**比角色小**（角色顶出球外 = 用户明确要避免的"穿模"）。
+    改成"由角色尺寸反推"后，两者分工是：
+    `bubble_system` 管**规则**（谁能进/何时脱），本函数管**渲染几何**。
+
+    :return: 缩放；`char_w/h` 非法 → 退回 `1.0`（不伪装成某个"看起来合理"的值）。
+    """
+    try:
+        cw = float(char_w or 0.0)
+        ch = float(char_h or 0.0)
+        sw = float(sprite_w or 62.0)
+        sh = float(sprite_h or 62.0)
+    except (TypeError, ValueError):
+        return 1.0
+    if cw <= 0 or ch <= 0 or sw <= 0 or sh <= 0:
+        return 1.0
+    return max(0.1, max(cw / sw, ch / sh) * float(margin or BUBBLE_FIT_MARGIN))
 
 
 def output_size(camera):
@@ -251,7 +312,8 @@ def _anim_frame_index(anim, tick):
     return (int(t) % n, n)
 
 
-def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
+def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
+               bubbles=None):
     """产出这一帧的**绘制指令清单**（列表，从后到前）。
 
     :param scene: `SceneState`（含 `.objects` / `.bg` / `.original_room_id`）。
@@ -268,6 +330,17 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
                         素材的像素尺寸（用于剔除与居中）。缺省时按 `(1,1)` 处理
                         —— 即"不参与剔除的保守假设"？不，是**参与但极小**，
                         保证不掉帧；真正的尺寸由 Qt 壳注入。
+
+    :param bubbles: ★ 第50轮 —— 「谁被装在光世界的扭蛋球里」。每项是
+                    `{'char', 'ball_xy', 'char_xy', 'scale', 'angle', 'alpha',
+                      'char_sprite', 'char_frame', 'char_size', 'filter'}`，
+                    **坐标是世界（房间逻辑）坐标**（由宿主组装，见
+                    `main._update_scene_layer`）。缺省 ⇒ 不产球指令，
+                    老调用方**零行为变化**。
+                    每个球产出 **4 条**指令（`back → 角色 → front → top`），
+                    顺序逐字取自原作 `ch3.obj_tenna_board4_gacha_Draw_0.gml`：
+                    角色夹在"下半后层"与"下半前层"之间、最后盖上罩 ——
+                    不透明像素自然遮挡 ⇒ **不需要 mask**。
 
     :return: `[dict]`，每条含 `kind` + 几何 + 素材名。顺序即绘制顺序。
     """
@@ -410,6 +483,10 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
             item['anim_frames'] = n_frames
         out.append(item)
 
+    # ---- 2.5 球容器（第50轮）：★ 顺序 = 原作 Draw_0：back → 角色 → front → top ----
+    #   放在**物件之后**（球压住物件）、**边框之前**（边框是提示层，永远最上）。
+    out.extend(_bubble_items(bubbles, camera, view, sprite_size))
+
     # ---- 3. 房间边框（房间比**相机**宽才画：满了屏幕就不必再框）----
     #   判据用 `to_output(camera.rect)`（相机视口像素）而不是 `view` ——
     #   后者在小房间时已被收缩成房间大小，那时 `rw == view[0]`，
@@ -427,6 +504,137 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None):
             })
 
     return out
+
+
+def _bubble_items(bubbles, camera, view, sprite_size=None):
+    """把「谁在球里」翻译成绘制指令（每个球 **4 条**，顺序 = 原作 Draw_0）。
+
+    ★ 三个容易写错的点（都是本轮实测踩出来的，别再踩）：
+    1. **三层帧尺寸不同**：`_2`（下半后层）实测是 **60×51**、不是 62×62
+       ⇒ 每层必须取**自己**的素材尺寸；拿一个尺寸套三层会把球壳拉变形。
+    2. **必须对齐到同一原点**（`BUBBLE_ORIGIN` = 原作 sprite origin 31,31），
+       而不是各自的中心 —— 否则尺寸大的层会整体偏移。
+    3. **角色层按中心对齐**：角色的像素由 `sprite_label` 画，本层只用来
+       定位「塑料滤镜」的覆盖范围。
+
+    :param bubbles: 见 `plan_frame` 的 `:param bubbles:`。
+    :return: `[dict]`（可能为空）；任何一项非法只跳过该项，**绝不抛**。
+    """
+    out = []
+    if not bubbles:
+        return out
+    cam_scale = camera.scale if camera.scale > 0 else 1.0
+
+    def _size_of(name, fb=(62, 62)):
+        if callable(sprite_size):
+            try:
+                got = sprite_size(name)
+                if isinstance(got, (list, tuple)) and len(got) == 2 \
+                        and got[0] > 0 and got[1] > 0:
+                    return (int(got[0]), int(got[1]))
+            except Exception:
+                pass
+        return fb
+
+    def _f(v, d):
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return d
+
+    for b in bubbles or ():
+        if not isinstance(b, dict):
+            continue
+        ball_xy = b.get('ball_xy') or b.get('char_xy')
+        if not (isinstance(ball_xy, (list, tuple)) and len(ball_xy) == 2):
+            continue
+        anchor = camera.to_view((float(ball_xy[0]), float(ball_xy[1])))
+        if anchor is None:
+            continue
+        ax = anchor[0] * cam_scale
+        ay = anchor[1] * cam_scale
+        bscale = _f(b.get('scale'), 1.0)
+        if bscale <= 0:
+            bscale = 1.0
+        alpha = max(0.0, min(1.0, _f(b.get('alpha'), 1.0)))
+        angle = _f(b.get('angle'), 0.0)
+        # 角色层：按**中心**对齐（尺寸缺省 → 1×1 占位，不伪造）
+        char_xy = b.get('char_xy') or ball_xy
+        csize = b.get('char_size')
+        if isinstance(csize, (list, tuple)) and len(csize) == 2:
+            cw = max(1, int(round(_f(csize[0], 1.0) * cam_scale)))
+            chh = max(1, int(round(_f(csize[1], 1.0) * cam_scale)))
+        else:
+            cw = chh = 1
+        canchor = camera.to_view((float(char_xy[0]), float(char_xy[1])))
+        crect = None
+        if canchor is not None:
+            crect = (int(round(canchor[0] * cam_scale - cw / 2.0)),
+                     int(round(canchor[1] * cam_scale - chh / 2.0)), cw, chh)
+
+        seq = (
+            ('ball', BUBBLE_ROLE_BACK, bubble_sprite_name(BUBBLE_FRAME_BACK)),
+            ('char', BUBBLE_ROLE_CHAR, b.get('char_sprite')),
+            ('ball', BUBBLE_ROLE_FRONT, bubble_sprite_name(BUBBLE_FRAME_FRONT)),
+            ('ball', BUBBLE_ROLE_TOP, bubble_sprite_name(BUBBLE_FRAME_TOP)),
+        )
+        for layer_type, role, name in seq:
+            if layer_type == 'char':
+                rect = crect
+            else:
+                sw_i, sh_i = _size_of(name)
+                w_i = max(1, int(round(sw_i * bscale)))
+                h_i = max(1, int(round(sh_i * bscale)))
+                # 与角色同口径：**按球心居中**（理由见 `BUBBLE_ORIGIN` 的说明）
+                rect = (int(round(ax - w_i / 2.0)), int(round(ay - h_i / 2.0)),
+                        w_i, h_i)
+            if rect is None or not visible_in_view(rect, view):
+                continue
+            is_char = (role == BUBBLE_ROLE_CHAR)
+            item = {
+                'kind': K_BUBBLE,
+                'role': role,
+                'char': b.get('char'),
+                'name': name,
+                'rect': rect,
+                'angle': 0.0 if is_char else angle,
+                'alpha': 1.0 if is_char else alpha,
+                'room_known': True,
+            }
+            flt = b.get('filter')
+            if is_char and isinstance(flt, dict):
+                item['filter'] = dict(flt)
+            out.append(item)
+    return out
+
+
+def split_bubble_layers(plan):
+    """把计划拆成「角色**之下**」与「角色**之上**」两份（★ 第50轮接线用）。
+
+    为什么必须拆：桌宠的**角色**是 `sprite_label` 画的（Qt 原生控件），
+    **场景**是 `scene_canvas` 画的，两者是同级的兄弟控件。要让球**包住**角色，
+    球的后半层必须在 `sprite_label` 之下、前半层（front/top）必须在**之上** ——
+    这正等价于原作的 `frame2 → 角色 → frame3 → frame1`：两层各占一个控件，
+    靠**绘制序**物理遮挡，不需要任何 mask。
+
+    :return: `(behind, front)`。
+             `behind` = bg / obj / 边框 / 球**后**层（`back`）；
+             `front`  = 球**角色层 + 前层**（`character` / `front` / `top`）。
+
+    ★ 角色层为什么归 `front`：它**不画角色像素**（角色由 `sprite_label` 自己画），
+      而是携带**塑料滤镜**、必须叠在角色**之上**才生效
+      （见 `scene_canvas._paint_bubble_filter`）。
+    """
+    behind = []
+    front = []
+    for it in (plan or ()):
+        if (isinstance(it, dict) and it.get('kind') == K_BUBBLE
+                and it.get('role') in (BUBBLE_ROLE_CHAR, BUBBLE_ROLE_FRONT,
+                                       BUBBLE_ROLE_TOP)):
+            front.append(it)
+        else:
+            behind.append(it)
+    return (behind, front)
 
 
 def plan_viewport(scene, camera, geo_table=None):

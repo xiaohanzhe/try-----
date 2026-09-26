@@ -153,9 +153,21 @@ def sec_a():
                                      'sprite_loader', 'data_store',
                                      'dialogue_ui', 'main')]
     ok(not banned, 'A2 不 import 项目内反向依赖模块（实际越界=%s）' % banned)
-    # 反过来：scene_render 必须**不**认识 scene_canvas（单向依赖）
+    # 反过来：scene_render 必须**不**认识 scene_canvas（单向依赖）。
+    # ⚠️ 判据修正（第50轮）：首版是 `'scene_canvas' not in rsrc` 的**裸子串扫描** ——
+    #   连**文档字符串里提到**模块名都会误报（第50轮给 `split_bubble_layers` 写注释
+    #   指向消费方就撞上了）。真正的风险是 **import 反向依赖** ⇒ 改用 AST 看 import；
+    #   模块级"零依赖"另由 render_round44 的 AST 判据（顶层 import ⊆ {logging}）看住。
     rsrc = _read(os.path.join(MOD, 'scene_render.py'))
-    ok('scene_canvas' not in rsrc, 'A3 scene_render 不认识 scene_canvas（依赖单向）')
+    rimports = []
+    for _n in ast.walk(ast.parse(rsrc)):
+        if isinstance(_n, ast.Import):
+            rimports += [a.name for a in _n.names]
+        elif isinstance(_n, ast.ImportFrom):
+            if _n.module:
+                rimports.append(_n.module)
+    rcin = [n for n in rimports if n.split('.')[0] == 'scene_canvas']
+    ok(not rcin, 'A3 scene_render 不 import scene_canvas（依赖单向；实际=%s）' % rcin)
 
     # A4 绘制失败纪律写在模块里（可被复查）
     ok('except Exception' in src, 'A4a 有异常兜底')
@@ -380,9 +392,12 @@ def sec_e():
     # E3 控制器补了 plan_viewport（画布尺寸入口）
     ok('def plan_viewport(' in ctl, 'E3 控制器定义 plan_viewport')
 
-    # E4 默认关闭（逐章验收 / P0 不破）
-    ok('SCENE_LAYER_ENABLED = False' in main,
-       'E4a 渲染层默认关闭（SCENE_LAYER_ENABLED = False）')
+    # E4 场景层总开关（口径变更：第44轮 P0 期默认 **False**；
+    #    第50轮用户第18项「怎么和原作效果贴近怎么来」⇒ 改 **True**（贴近原作）。
+    #    「不切场景时零行为变化」的 P0 判据改由 scene_p0 的"无定时器/仅 follow_route 调 switch"
+    #    等结构判据看住，不再靠"总开关关着"。
+    ok('SCENE_LAYER_ENABLED = True' in main,
+       'E4a 渲染层默认开启（SCENE_LAYER_ENABLED = True，第50轮口径贴近原作）')
     ok('_scene_layer_visible' in main, 'E4b 预声明 _scene_layer_visible')
 
     # E5 相机映射必须做"屏幕→房间"归一化（第44轮真机实测修正）

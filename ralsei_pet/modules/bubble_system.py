@@ -12,6 +12,12 @@
 * 「其他主角团的人和lancer也可以进去，要求和上述一样，
    只不过他们可以随时脱下来（除了lancer）」
 
+★ 第50轮用户口径（逐字）
+* 「16项要，但只有ralsei能自由在其他暗世界走，其他人无法通过球去其他世界，
+   只能去光世界或是回原先他们的暗世界（这个不需要他们套上球）」
+  ⇒ 球**只**给 Ralsei「出暗世界·去光世界」这一条能力；
+    **不给**任何跨暗世界能力（见 `grants_foreign_dark()`，恒 `False`）。
+
 原作依据（`_evidence/取证与设计49.md` §1，逐字取自
 `ch3.obj_tenna_board4_gacha_Draw_0.gml` / `ch3.obj_ch3_GSC07_gacha_{Create,Draw}_0.gml`）
 ------------------------------------------------------------------------------------
@@ -95,7 +101,9 @@ ALWAYS_EJECTABLE = ('kris', 'susie')
 #: 「除了 lancer」——永远脱不下来
 NEVER_EJECTABLE = ('lancer',)
 
-#: 只能靠球离开暗世界的角色（Ralsei）；其余 NPC 一律不许离开
+#: **必须靠球才能出暗世界（去光世界）**的角色（Ralsei）。
+#: ★ 第50轮微调：别的角色去光世界**不需要球**（见 `npc_system.world_gate`），
+#:   所以这条现在专指"必须靠球"的那一个特例，而不是"只有他能出暗世界"。
 BUBBLE_ESCAPE = ('ralsei',)
 
 #: 球的人名（进 prompt / 提示语用）
@@ -156,6 +164,17 @@ def must_stay_inside(char_id, world):
         return True
     if char_id == 'ralsei':
         return world == 'light'
+    return False
+
+
+def grants_foreign_dark(char_id=None):
+    """球**能否**让人进入别的暗世界。
+
+    ★ 第50轮口径：「其他人无法通过球去其他世界」⇒ **恒 `False`**。
+    跨暗世界是 Ralsei **自身**的能力（`npc_system.free_dark_roam`），与球无关 ——
+    把这条写成函数而不是"省略不写"，是为了让回归锁能**正面断言**它永远为假
+    （否则"没实现"和"实现成永远拒绝"在测试上是同一件事）。
+    """
     return False
 
 

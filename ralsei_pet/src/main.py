@@ -344,7 +344,14 @@ from modules.scene_controller import SceneController
 # 场景画布（第44轮 P1）：把 SceneController.plan_frame() 的绘制指令**真正画出来**。
 # 这是"渲染层"的最后一跳 —— 前面 scene_system/scene_camera/scene_render 都只出数据，
 # 没有消费者就是"函数写对了但产品用不上"（本项目最贵的坑，见记忆铁律 §4）。
-from modules.scene_canvas import SceneCanvas
+from modules.scene_canvas import SceneCanvas, BubbleOverlay
+# 球容器（第50轮）：Ralsei 在光世界**必须被"扭蛋球"罩住**才能存身。
+# 分工（三层各管一段，与场景系统同源）：
+#   bubble_system  → 规则（谁能进 / 何时脱 / 4 向旋转 / 塑料滤镜参数），零依赖
+#   scene_render   → 几何（球画在哪、多大、四层的绘制序）—— 纯数据
+#   src/main.py    → 组装（谁在球里 → 交给渲染计划）+ 触发入口（toggle_bubble）
+from modules import bubble_system as bubble_system_mod
+from modules import scene_render as scene_render_mod
 # ---- 道具 / 背包 / S 键菜单（第48轮）----------------------------------------
 # 用户口径：「可互动的道具也要做到可以互动；道具效果不可带出当前章节的场景；
 #   在其他场景使用非当前场景的道具就显示"一股神秘的力量阻止了你"；
@@ -666,6 +673,14 @@ class RalseiPet(QMainWindow):
         self.scene_canvas = SceneCanvas(self)
         self.scene_canvas.move(0, 0)
         self._scene_layer_visible = False
+
+        # ---- 球容器前层（第50轮）：★ 必须**盖在 sprite_label 之上** ----
+        # 球的绘制序是 `back → 角色 → front → top`；角色是 `sprite_label` 画的，
+        # 若把 front/top 也画进 `scene_canvas`（在角色**之下**），球壳会被角色盖住
+        # ⇒ 看着像"角色站在球前面"，与用户要的「ralsei是在球里面」相反。
+        # 所以前层要有**自己的控件**（见 `BubbleOverlay`），并在每帧 `raise_()`。
+        self.bubble_overlay = BubbleOverlay(self)
+        self.bubble_overlay.move(0, 0)
 
         # 创建主标签用于显示精灵
         self.sprite_label = QLabel(self)
@@ -2045,10 +2060,12 @@ class RalseiPet(QMainWindow):
     # ------------------------------------------------------------------
     #  场景渲染层（第44轮 P1）—— 相机跟随 + 绘制指令消费
     # ------------------------------------------------------------------
-    #: 渲染层总开关。**默认 False** ⇒ 不切场景时零行为变化（P0 判据）不破。
-    #  用户裁定「逐章验收」⇒ 由显式开启（或未来的 UI 开关/配置项）来点亮，
-    #  而不是一上来就默认接管画面。这同时让"渲染层引入的回归"可被一刀关掉定位。
-    SCENE_LAYER_ENABLED = False
+    #: 渲染层总开关。★ 第50轮按用户裁定改为 **True**（18 项原话：「怎么和原作
+    #  效果贴近怎么来」）—— 原作里房间就是**画出来**的，关着反而不像原作。
+    #  P0「不切场景时零行为变化」的判据仍成立：桌面场景（无 bg / 无物件）时
+    #  `_update_scene_layer` 走收尾的 `_hide_scene_layer()` 分支，画面零变化。
+    #  ⚠️ 保留这个开关本身：渲染出问题时可一刀关掉定位（不是死代码）。
+    SCENE_LAYER_ENABLED = True
 
     def _pet_target_rect(self, room_rect=None):
         """宠物在**房间世界坐标**里的包围盒 —— 相机的跟随目标（`camera_set_view_target`）。
@@ -2177,17 +2194,33 @@ class RalseiPet(QMainWindow):
             #      （30fps × GMS2PlaybackSpeed）取 sprite 当前帧。传墙钟时间而
             #      不是帧计数器 —— 理由见 scene_render._anim_frame_index 的长注释
             #      （负载抖动不该改变动画速度）。
+            # 2.5) 球容器（第50轮）：世界一变就先用**规则**收一次
+            #      （回暗世界 ⇒ 自动脱下球，符合"效果不带出章节"的同类口径）。
+            world_now = self._current_world()
+            if self.__dict__.get('_bubble_world') != world_now:
+                fld = self._ensure_bubble_field()
+                if fld is not None:
+                    dropped = fld.transfer_world(world_now)
+                    if dropped:
+                        _log.info('回到暗世界，自动脱下扭蛋球：%s', dropped)
+                self._bubble_world = world_now
+
             plan = scene.plan_frame(sprite_size=canvas.assets.sprite_size,
-                                    tick=int(time.time() * 1000))
+                                    tick=int(time.time() * 1000),
+                                    bubbles=self._active_bubbles(room_rect))
             # 3) 交给画布（画布自己 resize + update）。
             #    画布尺寸用 `plan_viewport()`（= 收缩后的小房间尺寸 / 大房间的相机尺寸），
             #    而不是相机原始尺寸 —— 小房间要收缩，否则房间只占中间一块
             #    （与用户「房间放大些」的意图相反，见 scene_render.viewport_size）。
             view = scene.plan_viewport()
-            canvas.set_plan(plan, view)
+            # ★ 第50轮：球的前层（含"塑料滤镜"）必须叠在**角色之上** ⇒ 分流给
+            #   overlay 控件；后层留在画布（在角色之下）。合起来即原作 Draw_0 的序。
+            behind, front = scene_render_mod.split_bubble_layers(plan)
+            canvas.set_plan(behind, view)
+            self._update_bubble_overlay(front, view)
 
-            # 4) 有 bg 或物件才显示画布；纯占位/空 → 隐藏（保持桌面原样）
-            if plan and any(it.get('kind') in ('bg', 'obj') for it in plan):
+            # 4) 有 bg / 物件 才显示画布；纯占位/空 → 隐藏（保持桌面原样）
+            if behind and any(it.get('kind') in ('bg', 'obj') for it in behind):
                 self._show_scene_layer()
             else:
                 self._hide_scene_layer()
@@ -2214,6 +2247,133 @@ class RalseiPet(QMainWindow):
             self._scene_layer_visible = False
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    # ------------------------------------------------------------------
+    #  球容器（第50轮）—— 「Ralsei 在光世界必须被扭蛋球罩住」
+    # ------------------------------------------------------------------
+    def _ensure_bubble_field(self):
+        """惰性建 `BubbleField`（避免在 `__init__` 里新增构造期依赖）。"""
+        fld = self.__dict__.get('_bubble_field')
+        if fld is None:
+            try:
+                fld = bubble_system_mod.BubbleField()
+            except Exception as e:
+                _log.warning('扭蛋球字段初始化失败（球不可用，其余功能照常）: %s', e)
+                fld = None
+            self._bubble_field = fld
+        return fld
+
+    def _current_world(self):
+        """当前场景的明 / 暗世界（判据来自 `_worlds.json`；判不出 → `'dark'`）。
+
+        ⚠️ `'dark'` 只是**兜底初值**（与第48轮道具域同口径，且记日志不静默）：
+           判不出时取暗世界 —— 而球只在光世界被需要 ⇒ 判不出时**不显示球**
+           是更保守的一侧。
+        """
+        try:
+            scene = self.__dict__.get('_scene_state')
+            if scene is not None:
+                w = scene_system_mod.world_of_scene(scene)
+                if w in ('light', 'dark'):
+                    return w
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return 'dark'
+
+    def _active_bubbles(self, room_rect):
+        """组装「谁被装在扭蛋球里」（★ 第50轮）—— `plan_frame(bubbles=)` 的入参。
+
+        没有球在场 → `[]`（老调用方**零行为变化**）。
+
+        ★ 坐标口径（与 `_pet_target_rect` 同一套"屏幕 → 房间世界"归一化）：
+          球心 = 角色在房间世界里的位置 ⇒ 角色恒在球心 ⇒ **不穿模**。
+        ★ 球的**缩放**由角色显示像素反推（`scene_render.fit_scale`），
+          而不是硬用原作的 1.55 —— 后者在小角色上会让角色顶出球外。
+        """
+        fld = self._ensure_bubble_field()
+        if fld is None or len(fld) == 0:
+            return []
+        rect = self._pet_target_rect(room_rect)
+        if not rect or len(rect) != 4:
+            return []
+        cx = (float(rect[0]) + float(rect[2])) / 2.0
+        cy = (float(rect[1]) + float(rect[3])) / 2.0
+        try:
+            lw = max(1, int(self.sprite_label.width()))
+            lh = max(1, int(self.sprite_label.height()))
+        except Exception:
+            lw = lh = 1
+        out = []
+        for cid in fld.holders():
+            b = fld.get(cid)
+            if b is None:
+                continue
+            try:
+                b.tick(1)          # 推进"出现/消失"的 alpha 与旋转缓动
+            except Exception as e:
+                _log.debug("球 %s 推进失败（已忽略）: %s", cid, e)
+            try:
+                scale = scene_render_mod.fit_scale(lw, lh)
+            except Exception:
+                scale = 1.0
+            try:
+                flt = b.filters()
+            except Exception:
+                flt = None
+            out.append({
+                'char': cid,
+                'ball_xy': (cx, cy),
+                'char_xy': (cx, cy),
+                'scale': scale,
+                'angle': getattr(b, 'angle', 0.0),
+                'alpha': getattr(b, 'alpha', 1.0),
+                'char_size': (lw, lh),
+                'char_sprite': None,   # 角色像素由 `sprite_label` 画，本层只带滤镜
+                'char_frame': 0,
+                'filter': flt,
+            })
+        return out
+
+    def _update_bubble_overlay(self, front_plan, view):
+        """把球的前层（含"塑料滤镜"）画到**角色之上**（★ 第50轮）。"""
+        ov = self.__dict__.get('bubble_overlay')
+        if ov is None:
+            return
+        try:
+            if front_plan:
+                ov.set_plan(front_plan, view)
+                if not ov.isVisible():
+                    ov.show()
+                ov.raise_()   # 保证在 `sprite_label` 之上（否则球壳被角色盖住）
+            elif ov.isVisible():
+                ov.hide()
+        except Exception as e:
+            _log.debug("球前层更新失败（本帧跳过）: %s", e)
+
+    def toggle_bubble(self, char_id=None, on=None):
+        """套上 / 脱下扭蛋球（★ 第50轮的**交互入口**，供菜单 / 对话 / 热键调用）。
+
+        * `char_id` 缺省 = `'ralsei'`（用户口径里唯一"必须靠球"的角色）。
+        * `on=None` ⇒ 反转当前状态；`on=True/False` ⇒ 显式指定。
+        * 「可以随时脱下来（除了 lancer）」与"Ralsei 在光世界不能脱"这两条由
+          `bubble_system` 判定，本方法**只转发**（不重复实现规则 —— 否则规则
+          会长出第二份真源）。
+        * 拿不到球字段 / 操作被规则拒绝 ⇒ 返回 False（**不抛**）。
+        """
+        fld = self._ensure_bubble_field()
+        if fld is None:
+            return False
+        cid = char_id or 'ralsei'
+        try:
+            cur = cid in fld
+            want = (not cur) if on is None else bool(on)
+            world = self._current_world()
+            if want:
+                return fld.equip(cid, by='kris', world=world) is not None
+            return fld.unequip(cid, world=world)
+        except Exception as e:
+            _log.warning('切换扭蛋球失败（%s）: %s', cid, e)
+            return False
 
     # 移动相关代码 - 更新移动逻辑
     @monitor_performance

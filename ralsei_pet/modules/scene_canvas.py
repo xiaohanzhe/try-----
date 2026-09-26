@@ -58,6 +58,8 @@ K_BG = 'bg'
 K_OBJ = 'obj'
 K_PLACEHOLDER = 'placeholder'
 K_ROOM_BORDER = 'room_border'
+#: ★ 第50轮：光世界「扭蛋球」容器（四层：back / character / front / top）
+K_BUBBLE = 'bubble'
 
 #: 占位斜纹的线色（深灰）与底色（浅灰）—— 只在**浅色画布**上出现，
 #: 与桌宠默认的工作区色调不冲突，且一眼能看出"这不是内容"。
@@ -106,6 +108,10 @@ class SceneAssetCache(object):
             if rel.startswith('sprite:'):
                 rel = rel[len('sprite:'):]
                 base = _project_root()
+            elif rel.startswith('bubble:'):
+                # ★ 第50轮：球容器素材住在 `assets/bubble/`（不在 scenes/ 下）
+                rel = rel[len('bubble:'):]
+                base = _bubble_dir()
             else:
                 base = self.base
             path = rel if os.path.isabs(rel) else os.path.normpath(
@@ -153,6 +159,12 @@ def _project_root():
     return os.path.abspath(os.path.join(here, '..', '..'))
 
 
+def _bubble_dir():
+    """球容器素材目录 `ralsei_pet/assets/bubble/`（`bubble:` 前缀解析到这里）。"""
+    here = os.path.dirname(os.path.abspath(__file__))
+    return os.path.abspath(os.path.join(here, '..', 'assets', 'bubble'))
+
+
 def _rect(t):
     """`(x, y, w, h)` tuple → `QRect`（防御：长度不足 → 空 QRect）。"""
     if not t or len(t) != 4:
@@ -186,6 +198,8 @@ def paint_on(painter, plan, assets, view_size=None):
                 drew = _paint_placeholder(painter, item)
             elif kind == K_ROOM_BORDER:
                 drew = _paint_room_border(painter, item)
+            elif kind == K_BUBBLE:
+                drew = _paint_bubble(painter, item, assets)
             else:
                 # 未知 kind：**不静默吞**，记一条 debug（将来新增 kind 时
                 # 回归锁的"每种 kind 都被画过"判据会抓到）。
@@ -296,6 +310,88 @@ def _paint_room_border(painter, item):
     return True
 
 
+def _paint_bubble(painter, item, assets):
+    """画球的**一层**（`role` ∈ `back` / `character` / `front` / `top`）。
+
+    ★ 关键：`role == 'character'` 时**不画角色像素**，只画「透过塑料看人」的
+    **滤镜覆盖层** —— 角色本体由 `sprite_label` 画（见
+    `scene_render.split_bubble_layers` 的分层说明）。于是：
+      · `scene_canvas` 只遇得到 `back`（在角色**之下**）；
+      · `BubbleOverlay` 只遇得到 `character` / `front` / `top`（在角色**之上**）。
+    两个控件各画各的 ⇒ 绘制序等价原作 `frame2 → 角色 → frame3 → frame1`。
+
+    旋转（原作的 `ball_angle` 缓动）在真机上用 `save/translate/rotate` 实现；
+    假画笔没有这些方法时**退化为不旋转**（保证回归锁不必模拟 Qt 变换）。
+
+    :return: 是否**真的落笔**。
+    """
+    rect = _rect(item.get('rect'))
+    if rect.isEmpty():
+        return False
+    if item.get('role') == 'character':
+        return _paint_bubble_filter(painter, item)
+    name = item.get('name')
+    pm = assets.get(name) if name else None
+    if pm is None or pm.isNull():
+        # 球素材缺失：品红描边（**不静默空着**，与缺物件同一条纪律）
+        painter.setPen(QPen(MISSING_OBJ_PEN))
+        painter.drawRect(rect)
+        return True
+    alpha = item.get('alpha', 1.0)
+    ang = item.get('angle')
+    rotate = (isinstance(ang, (int, float)) and abs(float(ang)) > 0.01
+              and hasattr(painter, 'save') and hasattr(painter, 'rotate'))
+    target = rect
+    if rotate:
+        painter.save()
+        painter.translate(rect.center().x(), rect.center().y())
+        painter.rotate(float(ang))
+        target = QRect(-rect.width() // 2, -rect.height() // 2,
+                       rect.width(), rect.height())
+    if isinstance(alpha, (int, float)) and 0.0 <= alpha < 1.0:
+        painter.setOpacity(float(alpha))
+        painter.drawPixmap(target, pm)
+        painter.setOpacity(1.0)
+    else:
+        painter.drawPixmap(target, pm)
+    if rotate:
+        painter.restore()
+    return True
+
+
+#: 「塑料滤镜」覆盖层的兜底色（与 bubble_system.FILTER_DEFAULT 的 tint 同源）
+BUBBLE_TINT_FALLBACK = (222, 231, 238)
+
+
+def _paint_bubble_filter(painter, item):
+    """「透过塑料看人」—— 在角色**之上**叠一层半透明冷色（球壳反光）。
+
+    为什么不是给 `sprite_label` 换 pixmap：那会**污染 sprite 缓存**
+    （同一张图两种外观），换球/脱球时还得重建缓存。叠一层色是**可逆、零副作用**的。
+
+    覆盖强度由「球越透明、人越清楚」推出：`cover = 1 - alpha`
+    （球 alpha 0.88 ⇒ 覆盖 0.12，肉眼是"隔着一层壳"而不是"蒙了块布"）。
+
+    :return: 是否**真的落笔**。
+    """
+    rect = _rect(item.get('rect'))
+    if rect.isEmpty():
+        return False
+    f = item.get('filter') or {}
+    tint = f.get('tint')
+    if not (isinstance(tint, (list, tuple)) and len(tint) >= 3):
+        tint = BUBBLE_TINT_FALLBACK
+    try:
+        a = float(f.get('alpha', 0.88))
+    except (TypeError, ValueError):
+        a = 0.88
+    cover = max(0.06, min(0.6, 1.0 - max(0.0, min(1.0, a))))
+    col = QColor(int(tint[0]), int(tint[1]), int(tint[2]))
+    col.setAlphaF(cover)
+    painter.fillRect(rect, QBrush(col))
+    return True
+
+
 class SceneCanvas(QWidget):
     """场景画布控件 —— 自绘 room 背景 / 物件 / 占位 / 边框。
 
@@ -357,3 +453,60 @@ class SceneCanvas(QWidget):
         except Exception as e:
             # 绘制失败不能拖垮主窗口（常驻进程纪律，见模块 docstring）。
             _log.debug("scene_canvas 绘制异常（已忽略）: %s", e)
+
+
+class BubbleOverlay(QWidget):
+    """★★ 第50轮：**盖在角色之上**的球前层 —— 让球真正"包住"Ralsei。
+
+    为什么必须单独一个控件：球的绘制序是 `back → 角色 → front → top`，
+    而角色（`sprite_label`）在 `scene_canvas` **之上**。若把 front/top 也画进
+    `scene_canvas`，球壳会被角色盖住（看着像"角色站在球前面"），与用户要的
+    「ralsei是在球里面」正好相反。所以前层要有**自己的控件**并 `raise_()` 到
+    `sprite_label` 之上 —— 两个控件靠绘制序完成**物理遮挡**（等价原作分层）。
+
+    它同时承载「透过塑料看人」的滤镜层：`role='character'` 的指令**不画角色**，
+    只叠一层半透明冷色（见 `_paint_bubble_filter`）。
+
+    ⚠️ 两条自我约束：
+    · `WA_TransparentForMouseEvents` —— **不许挡住拖拽/点击**（桌宠是交互窗口）；
+    · 默认 `hide()`；只有真的有前层可画时才显示（否则桌面多一个透明控件白耗）。
+    """
+
+    def __init__(self, parent=None, assets=None):
+        super().__init__(parent)
+        self.setObjectName("bubbleOverlay")
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        self.assets = assets or SceneAssetCache()
+        self._plan = []
+        self._view_size = (0, 0)
+        self.last_drawn = 0
+        self.hide()
+
+    def set_plan(self, plan, view_size=None):
+        """提交球前层的绘制指令（语义同 `SceneCanvas.set_plan`）。"""
+        plan = plan or []
+        if view_size is None:
+            view_size = self._view_size
+        changed = (len(plan) != len(self._plan) or
+                   tuple(view_size) != tuple(self._view_size) or
+                   plan != self._plan)
+        self._plan = plan
+        if view_size and len(view_size) == 2:
+            self._view_size = (int(view_size[0]), int(view_size[1]))
+            self.resize(max(0, self._view_size[0]), max(0, self._view_size[1]))
+        if changed:
+            self.update()
+        return changed
+
+    def plan(self):
+        return list(self._plan)
+
+    def paintEvent(self, event):  # noqa: N802 (Qt 命名)
+        try:
+            p = QPainter(self)
+            p.setRenderHint(QPainter.SmoothPixmapTransform, False)
+            self.last_drawn = paint_on(p, self._plan, self.assets, self._view_size)
+            p.end()
+        except Exception as e:
+            _log.debug("bubble_overlay 绘制异常（已忽略）: %s", e)

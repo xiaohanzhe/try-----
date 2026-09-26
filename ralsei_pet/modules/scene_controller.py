@@ -337,12 +337,16 @@ class SceneController(object):
             result['error'] = str(e)
             return result
 
-    def plan_frame(self, tick=0, sprite_size=None):
+    def plan_frame(self, tick=0, sprite_size=None, bubbles=None):
         """产出这一帧的绘制指令清单（**纯数据**，由 Qt 壳去画）。
 
         返回 `[]` 的四种情况（都**不是错误**，是"这一刻没东西可画"）：
         场景未加载 / 相机未 follow / 几何表读不到（此时相机退化为视口大小，
         仍会画占位）/ `scene_render.plan_frame` 内部判定无交集。
+
+        ★ 第50轮：`bubbles`（「谁被装在光世界的扭蛋球里」）原样转发给
+        `scene_render.plan_frame` —— 本层**不解释**它（保持"控制器只转发、
+        渲染层只算几何"的分工）。缺省 ⇒ 不产球指令，老调用方零行为变化。
 
         ⚠️ **不在这里调 Qt**：本方法只算几何。真正的 `QPainter` 调用在
         `main.py` 的绘制壳里 —— 这样本方法能被回归锁逐条断言（第 44 轮
@@ -354,7 +358,8 @@ class SceneController(object):
         geo = pet.__dict__.get('_scene_geometry') or {}
         try:
             return scene_render.plan_frame(scene, cam, geo, tick=tick,
-                                          sprite_size=sprite_size)
+                                          sprite_size=sprite_size,
+                                          bubbles=bubbles)
         except Exception as e:
             _log.warning("渲染计划生成失败（本帧不画）: %s", e)
             return []

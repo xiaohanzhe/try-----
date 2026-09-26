@@ -171,10 +171,14 @@ check('D12', _B.request('no_such_npc_xyz') == NS.FOLLOW_IDLE,
 _T = REG.get('toriel')
 _L = REG.get('lancer')
 _R = REG.get('ralsei')
-check('E1', not NS.world_gate(_L, NS.WORLD_LIGHT).ok,
-      'NPC 不可脱离暗世界（%s）' % NS.world_gate(_L, NS.WORLD_LIGHT).reason)
-check('E2', NS.world_gate(_L, NS.WORLD_LIGHT).reason == NS.REASON_LEAVE_DARK,
-      '拒绝原因码 = leave_dark_world（可与"异世界"区分）')
+# ★ 第50轮口径修订（用户原话）：「其他人…只能去光世界或是回原先他们的暗世界
+#   （这个不需要他们套上球）」⇒ 光世界**谁都能去**；唯一例外是 Ralsei
+#   （纯暗世界居民，脱离暗世界**必须**靠球）。
+check('E1', NS.world_gate(_L, NS.WORLD_LIGHT).ok,
+      '其他人去光世界**不需要球**（第50轮口径）')
+check('E2', NS.world_gate(_R, NS.WORLD_LIGHT).reason
+      == NS.REASON_LIGHT_NEEDS_BUBBLE,
+      'Ralsei 无球去光世界 ⇒ light_needs_bubble（与 foreign_dark_world 分开）')
 check('E3', NS.world_gate(_L, NS.WORLD_DARK, 'ch1.field.field_great_door').ok,
       '回到自己的暗世界（ch1）⇒ 允许')
 check('E4', not NS.world_gate(_L, NS.WORLD_DARK, 'ch5.garden.garden_shrine').ok,
@@ -197,9 +201,12 @@ check('E12', not _B.may_enter('no_such_npc_xyz', NS.WORLD_DARK).ok,
       'FollowerBoard.may_enter 对未知 id 拒绝')
 _B3 = NS.FollowerBoard(REG)
 _B3.request(_L.id)
-_kicked = _B3.tick(NS.WORLD_LIGHT)
-check('E13', _kicked == [_L.id] and _B3.state_of(_L.id) == NS.FOLLOW_IDLE,
-      'tick 在光世界把不可进入的跟随者踢出（实得 %r）' % (_kicked,))
+_kicked_light = _B3.tick(NS.WORLD_LIGHT)
+_kicked_foreign = _B3.tick(NS.WORLD_DARK, 'ch5.garden.garden_shrine')
+check('E13', _kicked_light == [] and _kicked_foreign == [_L.id]
+      and _B3.state_of(_L.id) == NS.FOLLOW_IDLE,
+      '光世界**不踢**（第50轮）· 异属暗世界才踢（实得 %r / %r）'
+      % (_kicked_light, _kicked_foreign))
 
 # ================================================================ F 球容器
 _F = BS.BubbleField()

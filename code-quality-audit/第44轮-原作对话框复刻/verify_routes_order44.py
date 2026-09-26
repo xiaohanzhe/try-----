@@ -177,11 +177,27 @@ ok(all(isinstance(r.get('when_door'), str) and r.get('when_door')
 # C 锚点：产品边可由原作门表独立重算
 # ===========================================================================
 print('--- C 原作锚点 ---')
+# ⚠️ 基线不封闭缺陷（第50轮复检抓到，已修）：
+#   首版读 `E:\Download\_tmp\drw\chapter*_windows\rooms44.json` —— 那是**用后即删的临时区**。
+#   临时区一被清（或 E 盘掉线），C 段就静默退化成 SKIP ⇒ 输出随**外部状态**漂移
+#   ⇒ G2 基线不封闭（同一份代码，E 盘在不在线两个结果）。
+#   修法（记忆铁律）：**据要的事实蒸馏进仓库** —— 原件已落
+#   `_evidence/rooms44/ch{1..5}.json`（结构同 rooms44.json：`{'n_rooms','source','rooms'}`）。
+#   现以**仓库内**为准，E 盘临时区仅作兜底。
+EVID_ROOMS = os.path.join(HERE, '_evidence', 'rooms44')
 DRW = r'E:\Download\_tmp\drw'
 CHS = ['chapter1_windows', 'chapter2_windows', 'chapter3_windows',
        'chapter4_windows', 'chapter5_windows']
 TAG = {CHS[i]: 'ch%d' % (i + 1) for i in range(5)}
 DELTA = {'A': 1, 'B': -1, 'C': 2}
+
+
+def rooms_path(i):
+    """第 i 章门表路径：优先**仓库内证据**，再退到 E 盘临时区。"""
+    p = os.path.join(EVID_ROOMS, 'ch%d.json' % (i + 1))
+    if os.path.isfile(p):
+        return p
+    return os.path.join(DRW, CHS[i], 'rooms44.json')
 
 
 def dletter(n):
@@ -214,12 +230,11 @@ def pts(l):
     return o
 
 
-have_rooms = all(os.path.isfile(os.path.join(DRW, w, 'rooms44.json'))
-                 for w in CHS)
+have_rooms = all(os.path.isfile(rooms_path(i)) for i in range(len(CHS)))
 if have_rooms:
     rooms = {}
-    for w in CHS:
-        d = jload(os.path.join(DRW, w, 'rooms44.json'))
+    for i, w in enumerate(CHS):
+        d = jload(rooms_path(i))
         for r in d['rooms']:
             rooms[(TAG[w], r['id'])] = r
 
@@ -285,8 +300,8 @@ if have_rooms:
        'C2b 断链中有 %d 个房带字母门却编不出边（目标未登记/无落点）——'
        '证明 C2 未把真缺口一并放过' % lettered_dead)
 else:
-    print('[SKIP] C 段：原作 rooms44.json 不在（临时区，可能已清）——'
-          '跳过锚点，但 B 段不变量仍生效')
+    print('[SKIP] C 段：原作门表不在（既不在仓库内 %s，也不在 E 盘临时区）——'
+          '跳过锚点，但 B 段不变量仍生效' % EVID_ROOMS)
 
 # ===========================================================================
 # D 兜底与结构
