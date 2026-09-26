@@ -1,0 +1,73 @@
+=== 跨房间配对验证（第51轮）===
+by_room 键数=1013（章,房间下标 → scene_id）
+房间图 ok=True  err=None
+
+[A] 锚点自检：ch1 room 45(Castle Town) 的 doorA 应指向 room 46 且那边有 markerA
+    src=ch1.castle_town.castle_town doors={'B': (-10, 958), 'A': (246, 192), 'X': (630, 954)} markers={'A': (24, 940), 'B': (302, 200), 'X': (578, 942)}
+    dst(ch1:46)=ch1.castle_town.castle_front doors={'B': (440, 990)} markers={'A': (500, 884)}
+    markerA 在目标房间？ True
+
+[B] 全量逐边核对（边总数 782）
+    两端场景都没登记的边 = 未登记 src 7 / dst 17
+    门坐标命中        = 758 / 782  (96.9%)
+    落点坐标命中      = 689 / 782  (88.1%)
+    **两端都齐（可逐门执行）= 689 / 782  (88.1%)**
+
+    分章：
+      ch1  边  238  门命中  233  落点命中  232  两端齐  232  (未登记 src 2/dst 3)
+      ch2  边  323  门命中  314  落点命中  251  两端齐  251  (未登记 src 2/dst 7)
+      ch3  边   79  门命中   75  落点命中   74  两端齐   74  (未登记 src 1/dst 3)
+      ch4  边   72  门命中   69  落点命中   65  两端齐   65  (未登记 src 1/dst 2)
+      ch5  边   70  门命中   67  落点命中   67  两端齐   67  (未登记 src 1/dst 2)
+
+    未两端齐的样本（前 25）：
+      ch1 129->130 obj_doorA_musfade(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 11->10 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 55->53 obj_doorD(D) door_hit=True marker_hit=False
+         src_doors=['A', 'B', 'D', 'X']  dst_markers=[]
+      ch2 55->56 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B', 'D', 'X']  dst_markers=['S', 'W', 'X']
+      ch2 61->62 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B', 'D', 'X']  dst_markers=['B', 'R', 'S', 'T', 'U', 'V', 'W', 'X']
+      ch2 76->75 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 90->95 obj_doorW(W) door_hit=True marker_hit=False
+         src_doors=['A', 'W']  dst_markers=['A', 'X']
+      ch2 92->85 obj_doorW(W) door_hit=True marker_hit=False
+         src_doors=['W']  dst_markers=['A', 'B', 'D', 'T', 'U']
+      ch2 98->97 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=['W']
+      ch2 99->100 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 100->101 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=['T', 'W']
+      ch2 102->84 obj_doorW(W) door_hit=True marker_hit=False
+         src_doors=['B', 'W']  dst_markers=['A', 'B', 'T']
+      ch2 102->101 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['B', 'W']  dst_markers=['T', 'W']
+      ch2 103->102 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['B']  dst_markers=['A', 'T']
+      ch2 108->109 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A']  dst_markers=['B']
+      ch2 115->116 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 116->117 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=['B', 'W', 'X']
+      ch2 117->116 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['A', 'B', 'W']  dst_markers=[]
+      ch2 119->138 obj_doorW(W) door_hit=True marker_hit=False
+         src_doors=['A', 'B', 'W']  dst_markers=['X']
+      ch2 121->122 obj_doorA_musfade(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=['B']
+      ch2 133->134 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 134->135 obj_doorA(A) door_hit=True marker_hit=False
+         src_doors=['A', 'B']  dst_markers=[]
+      ch2 136->135 obj_doorB(B) door_hit=True marker_hit=False
+         src_doors=['B']  dst_markers=[]
+      ch2 140->123 obj_doorW(W) door_hit=True marker_hit=False
+         src_doors=['W']  dst_markers=['A', 'B', 'X']
+      ch2 141->123 obj_doorw_musfade(W) door_hit=True marker_hit=False
+         src_doors=['W']  dst_markers=['A', 'B', 'X']

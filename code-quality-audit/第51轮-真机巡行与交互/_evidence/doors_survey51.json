@@ -1,0 +1,12361 @@
+{
+ "anchor_check": {
+  "scene": "ch1.castle_town.castle_town",
+  "doors": {
+   "B": [
+    -10,
+    958
+   ],
+   "A": [
+    246,
+    192
+   ],
+   "X": [
+    630,
+    954
+   ]
+  },
+  "markers": {
+   "A": [
+    24,
+    940
+   ],
+   "B": [
+    302,
+    200
+   ],
+   "X": [
+    578,
+    942
+   ]
+  },
+  "pass": true
+ },
+ "negative_check": {
+  "scene": "desktop",
+  "doors": {},
+  "markers": {}
+ },
+ "totals": {
+  "scenes": 1014,
+  "load_fail": 0,
+  "with_doors": 465,
+  "with_markers": 475,
+  "both": 460,
+  "door_instances": 828,
+  "marker_instances": 953,
+  "letter_mismatch_scenes": 356
+ },
+ "by_chapter": {
+  "ch1": {
+   "n": 128,
+   "doors": 121,
+   "markers": 123,
+   "both": 121
+  },
+  "ch2": {
+   "n": 236,
+   "doors": 212,
+   "markers": 212,
+   "both": 207
+  },
+  "ch3": {
+   "n": 187,
+   "doors": 47,
+   "markers": 49,
+   "both": 47
+  },
+  "ch4": {
+   "n": 261,
+   "doors": 43,
+   "markers": 45,
+   "both": 43
+  },
+  "ch5": {
+   "n": 201,
+   "doors": 42,
+   "markers": 46,
+   "both": 42
+  },
+  "desktop": {
+   "n": 1,
+   "doors": 0,
+   "markers": 0,
+   "both": 0
+  }
+ },
+ "scenes": {
+  "ch1.card_castle.card_castle_1f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     288,
+     432
+    ],
+    "B": [
+     846,
+     1070
+    ],
+    "C": [
+     736,
+     168
+    ],
+    "W": [
+     1058,
+     158
+    ],
+    "X": [
+     1494,
+     596
+    ]
+   },
+   "markers": {
+    "A": [
+     900,
+     980
+    ],
+    "B": [
+     318,
+     462
+    ],
+    "D": [
+     754,
+     176
+    ],
+    "W": [
+     1078,
+     176
+    ],
+    "X": [
+     1522,
+     640
+    ]
+   }
+  },
+  "ch1.card_castle.card_castle_5f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     155,
+     685
+    ],
+    "C": [
+     275,
+     205
+    ],
+    "F": [
+     450,
+     965
+    ],
+    "W": [
+     280,
+     445
+    ],
+    "X": [
+     400,
+     685
+    ]
+   },
+   "markers": {
+    "B": [
+     185,
+     690
+    ],
+    "D": [
+     300,
+     215
+    ],
+    "E": [
+     485,
+     970
+    ],
+    "W": [
+     305,
+     455
+    ],
+    "X": [
+     425,
+     690
+    ]
+   }
+  },
+  "ch1.card_castle.card_castle_prison": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     230
+    ],
+    "B": [
+     0,
+     210
+    ],
+    "X": [
+     280,
+     120
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     210
+    ],
+    "B": [
+     570,
+     210
+    ],
+    "X": [
+     300,
+     120
+    ]
+   }
+  },
+  "ch1.card_castle.card_castle_throne": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     280,
+     0
+    ],
+    "B": [
+     282,
+     782
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     670
+    ],
+    "B": [
+     300,
+     0
+    ]
+   }
+  },
+  "ch1.card_castle.card_castle_unknown": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     160,
+     160
+    ]
+   },
+   "markers": {
+    "B": [
+     1560,
+     1000
+    ],
+    "X": [
+     180,
+     160
+    ]
+   }
+  },
+  "ch1.card_castle.cc_2f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1580,
+     760
+    ],
+    "C": [
+     800,
+     170
+    ],
+    "D": [
+     115,
+     720
+    ]
+   },
+   "markers": {
+    "B": [
+     1540,
+     740
+    ],
+    "C": [
+     125,
+     745
+    ],
+    "D": [
+     820,
+     180
+    ]
+   }
+  },
+  "ch1.card_castle.cc_3f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     974,
+     120
+    ],
+    "C": [
+     180,
+     120
+    ],
+    "D": [
+     580,
+     280
+    ]
+   },
+   "markers": {
+    "B": [
+     1000,
+     130
+    ],
+    "C": [
+     600,
+     290
+    ],
+    "D": [
+     190,
+     130
+    ]
+   }
+  },
+  "ch1.card_castle.cc_4f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1340,
+     440
+    ],
+    "C": [
+     550,
+     910
+    ],
+    "D": [
+     130,
+     410
+    ],
+    "E": [
+     800,
+     920
+    ]
+   },
+   "markers": {
+    "B": [
+     1300,
+     420
+    ],
+    "C": [
+     160,
+     400
+    ],
+    "D": [
+     580,
+     930
+    ],
+    "F": [
+     840,
+     930
+    ]
+   }
+  },
+  "ch1.card_castle.cc_6f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1130,
+     170
+    ],
+    "D": [
+     180,
+     160
+    ]
+   },
+   "markers": {
+    "B": [
+     1150,
+     170
+    ],
+    "C": [
+     200,
+     170
+    ]
+   }
+  },
+  "ch1.card_castle.cc_clover": {
+   "chapter": "ch1",
+   "doors": {
+    "D": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch1.card_castle.cc_elevator": {
+   "chapter": "ch1",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "W": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch1.card_castle.cc_entrance": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     240,
+     0
+    ],
+    "W": [
+     240,
+     460
+    ]
+   },
+   "markers": {
+    "B": [
+     300,
+     20
+    ],
+    "W": [
+     300,
+     360
+    ]
+   }
+  },
+  "ch1.card_castle.cc_hathy": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch1.card_castle.cc_joker": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     240
+    ]
+   }
+  },
+  "ch1.card_castle.cc_kingbattle": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1980,
+     160
+    ],
+    "B": [
+     0,
+     160
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     160
+    ],
+    "B": [
+     1940,
+     160
+    ]
+   }
+  },
+  "ch1.card_castle.cc_lancer": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch1.card_castle.cc_prefountain": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     240,
+     150
+    ],
+    "B": [
+     0,
+     760
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     760
+    ]
+   }
+  },
+  "ch1.card_castle.cc_preroof": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1020,
+     200
+    ],
+    "B": [
+     160,
+     460
+    ]
+   },
+   "markers": {
+    "A": [
+     200,
+     380
+    ],
+    "B": [
+     980,
+     220
+    ]
+   }
+  },
+  "ch1.card_castle.cc_prison2": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     240
+    ]
+   }
+  },
+  "ch1.card_castle.cc_prison_cells": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     640,
+     660
+    ],
+    "X": [
+     200,
+     660
+    ]
+   },
+   "markers": {
+    "B": [
+     660,
+     580
+    ],
+    "X": [
+     220,
+     580
+    ]
+   }
+  },
+  "ch1.card_castle.cc_prisonelevator": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch1.card_castle.cc_prisonlancer": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1980,
+     200
+    ],
+    "B": [
+     1680,
+     0
+    ],
+    "X": [
+     480,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     1700,
+     20
+    ],
+    "B": [
+     1940,
+     160
+    ],
+    "X": [
+     500,
+     0
+    ]
+   }
+  },
+  "ch1.card_castle.cc_rudinn": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch1.card_castle.cc_rurus1": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     28,
+     226
+    ]
+   }
+  },
+  "ch1.card_castle.cc_rurus2": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     0,
+     236
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     240
+    ]
+   }
+  },
+  "ch1.castle_town.castle_darkdoor": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     300
+    ]
+   }
+  },
+  "ch1.castle_town.castle_front": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     440,
+     990
+    ]
+   },
+   "markers": {
+    "A": [
+     500,
+     884
+    ]
+   }
+  },
+  "ch1.castle_town.castle_outskirts": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     280
+    ]
+   },
+   "markers": {
+    "B": [
+     580,
+     260
+    ]
+   }
+  },
+  "ch1.castle_town.castle_town": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     246,
+     192
+    ],
+    "B": [
+     -10,
+     958
+    ],
+    "X": [
+     630,
+     954
+    ]
+   },
+   "markers": {
+    "A": [
+     24,
+     940
+    ],
+    "B": [
+     302,
+     200
+    ],
+    "X": [
+     578,
+     942
+    ]
+   }
+  },
+  "ch1.castle_town.castle_tutorial": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1390,
+     320
+    ],
+    "X": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "B": [
+     1350,
+     300
+    ],
+    "X": [
+     10,
+     310
+    ]
+   }
+  },
+  "ch1.dark_world.dark1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     200
+    ]
+   },
+   "markers": {
+    "B": [
+     590,
+     180
+    ]
+   }
+  },
+  "ch1.dark_world.dark2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     3630,
+     320
+    ],
+    "B": [
+     -10,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     180
+    ],
+    "B": [
+     3570,
+     290
+    ]
+   }
+  },
+  "ch1.dark_world.dark3": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1000,
+     1270
+    ],
+    "B": [
+     0,
+     360
+    ],
+    "C": [
+     1510,
+     920
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     340
+    ],
+    "B": [
+     1020,
+     1180
+    ],
+    "D": [
+     1460,
+     900
+    ]
+   }
+  },
+  "ch1.dark_world.dark3a": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     400,
+     -20
+    ]
+   },
+   "markers": {
+    "A": [
+     440,
+     0
+    ]
+   }
+  },
+  "ch1.dark_world.dark7": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     2030,
+     680
+    ],
+    "B": [
+     -10,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     220
+    ],
+    "B": [
+     1980,
+     660
+    ]
+   }
+  },
+  "ch1.dark_world.dark_chase1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     5390,
+     800
+    ],
+    "B": [
+     -10,
+     520
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     500
+    ]
+   }
+  },
+  "ch1.dark_world.dark_chase2": {
+   "chapter": "ch1",
+   "doors": {},
+   "markers": {
+    "A": [
+     0,
+     320
+    ]
+   }
+  },
+  "ch1.dark_world.dark_wobbles": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1310,
+     320
+    ],
+    "D": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "B": [
+     1260,
+     300
+    ],
+    "C": [
+     10,
+     300
+    ]
+   }
+  },
+  "ch1.eye_puzzle.eye_puzzle": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1340,
+     320
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     300
+    ],
+    "B": [
+     1300,
+     300
+    ]
+   }
+  },
+  "ch1.field.field1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1680,
+     670
+    ],
+    "B": [
+     -10,
+     310
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     300
+    ],
+    "B": [
+     1690,
+     590
+    ]
+   }
+  },
+  "ch1.field.field2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     640,
+     670
+    ],
+    "B": [
+     240,
+     -10
+    ],
+    "C": [
+     1990,
+     320
+    ]
+   },
+   "markers": {
+    "A": [
+     260,
+     10
+    ],
+    "B": [
+     670,
+     590
+    ],
+    "D": [
+     1950,
+     300
+    ]
+   }
+  },
+  "ch1.field.field2a": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     400,
+     -10
+    ]
+   },
+   "markers": {
+    "A": [
+     430,
+     10
+    ]
+   }
+  },
+  "ch1.field.field3": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1190,
+     240
+    ],
+    "D": [
+     -10,
+     240
+    ]
+   },
+   "markers": {
+    "B": [
+     1150,
+     220
+    ],
+    "C": [
+     10,
+     220
+    ],
+    "W": [
+     318,
+     176
+    ]
+   }
+  },
+  "ch1.field.field4": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     160,
+     0
+    ],
+    "B": [
+     160,
+     460
+    ],
+    "C": [
+     1030,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     180,
+     380
+    ],
+    "B": [
+     180,
+     10
+    ],
+    "D": [
+     970,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_boxpuzzle": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     280,
+     100
+    ],
+    "B": [
+     -20,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     0,
+     220
+    ],
+    "B": [
+     300,
+     120
+    ]
+   }
+  },
+  "ch1.field.field_checkers1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1980,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     1940,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_checkers2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1700,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     1660,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_checkers4": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1980,
+     240
+    ],
+    "D": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "B": [
+     1940,
+     220
+    ],
+    "C": [
+     20,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_checkers5": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1980,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     1940,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_checkers6": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1980,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     1940,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_checkersboss": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1020,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     980,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_forest": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1030,
+     280
+    ],
+    "B": [
+     240,
+     160
+    ]
+   },
+   "markers": {
+    "A": [
+     280,
+     160
+    ],
+    "B": [
+     990,
+     300
+    ]
+   }
+  },
+  "ch1.field.field_getsusie": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     -10,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     200
+    ],
+    "B": [
+     440,
+     140
+    ]
+   }
+  },
+  "ch1.field.field_great_board": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     240
+    ],
+    "B": [
+     580,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_great_board_2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     580,
+     220
+    ]
+   }
+  },
+  "ch1.field.field_great_door": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     200,
+     980
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     380
+    ],
+    "B": [
+     300,
+     900
+    ]
+   }
+  },
+  "ch1.field.field_maze_of_death": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1940,
+     1160
+    ],
+    "B": [
+     -10,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     260
+    ],
+    "B": [
+     1900,
+     1120
+    ]
+   }
+  },
+  "ch1.field.field_puzzle1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1590,
+     280
+    ],
+    "B": [
+     -10,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     260
+    ],
+    "B": [
+     1540,
+     260
+    ]
+   }
+  },
+  "ch1.field.field_puzzle2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     280
+    ],
+    "B": [
+     -10,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     260
+    ],
+    "B": [
+     590,
+     260
+    ]
+   }
+  },
+  "ch1.field.field_puzzletutorial": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     620,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     580,
+     200
+    ]
+   }
+  },
+  "ch1.field.field_seams_shop": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     0,
+     200
+    ],
+    "B": [
+     240,
+     470
+    ],
+    "C": [
+     620,
+     200
+    ],
+    "X": [
+     260,
+     160
+    ]
+   },
+   "markers": {
+    "A": [
+     280,
+     390
+    ],
+    "B": [
+     20,
+     180
+    ],
+    "D": [
+     580,
+     180
+    ],
+    "X": [
+     280,
+     180
+    ]
+   }
+  },
+  "ch1.field.field_secret1": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     120,
+     470
+    ]
+   },
+   "markers": {
+    "A": [
+     140,
+     370
+    ]
+   }
+  },
+  "ch1.field.field_topchef": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     240
+    ],
+    "D": [
+     -10,
+     240
+    ]
+   },
+   "markers": {
+    "B": [
+     590,
+     220
+    ],
+    "C": [
+     10,
+     220
+    ]
+   }
+  },
+  "ch1.forest.forest_after_maze": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     200
+    ],
+    "X": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "B": [
+     580,
+     200
+    ],
+    "X": [
+     300,
+     360
+    ]
+   }
+  },
+  "ch1.forest.forest_afterthrash2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1480,
+     200
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     200
+    ],
+    "B": [
+     1440,
+     200
+    ],
+    "X": [
+     40,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_afterthrash3": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1480,
+     200
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     200
+    ],
+    "B": [
+     1440,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_afterthrash4": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1480,
+     200
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     200
+    ],
+    "B": [
+     1440,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_area0": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     830,
+     200
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     200
+    ],
+    "B": [
+     790,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_area1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1390,
+     760
+    ],
+    "B": [
+     0,
+     160
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     160
+    ],
+    "B": [
+     1340,
+     760
+    ]
+   }
+  },
+  "ch1.forest.forest_area2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     80,
+     0
+    ],
+    "B": [
+     0,
+     640
+    ],
+    "C": [
+     1360,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     640
+    ],
+    "B": [
+     120,
+     0
+    ],
+    "D": [
+     1320,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_area2a": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch1.forest.forest_area3": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     520,
+     0
+    ],
+    "D": [
+     0,
+     400
+    ]
+   },
+   "markers": {
+    "B": [
+     540,
+     20
+    ],
+    "C": [
+     20,
+     400
+    ]
+   }
+  },
+  "ch1.forest.forest_area3a": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     320,
+     460
+    ]
+   },
+   "markers": {
+    "A": [
+     340,
+     380
+    ]
+   }
+  },
+  "ch1.forest.forest_area4": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1390,
+     720
+    ],
+    "D": [
+     0,
+     720
+    ]
+   },
+   "markers": {
+    "B": [
+     1340,
+     700
+    ],
+    "C": [
+     20,
+     700
+    ],
+    "X": [
+     1340,
+     700
+    ]
+   }
+  },
+  "ch1.forest.forest_area5": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1660,
+     520
+    ],
+    "X": [
+     0,
+     520
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     520
+    ],
+    "B": [
+     1620,
+     520
+    ]
+   }
+  },
+  "ch1.forest.forest_bake_sale": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     360,
+     0
+    ],
+    "B": [
+     520,
+     460
+    ],
+    "C": [
+     1260,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     540,
+     380
+    ],
+    "B": [
+     380,
+     20
+    ],
+    "D": [
+     1220,
+     220
+    ],
+    "W": [
+     142,
+     208
+    ],
+    "X": [
+     1200,
+     220
+    ]
+   }
+  },
+  "ch1.forest.forest_before_maze": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     0,
+     200
+    ],
+    "X": [
+     240,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     180
+    ],
+    "B": [
+     260,
+     20
+    ],
+    "X": [
+     260,
+     20
+    ]
+   }
+  },
+  "ch1.forest.forest_beforeclover": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     400,
+     0
+    ],
+    "B": [
+     0,
+     280
+    ],
+    "C": [
+     1500,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     240
+    ],
+    "B": [
+     420,
+     20
+    ],
+    "D": [
+     1460,
+     240
+    ]
+   }
+  },
+  "ch1.forest.forest_castlefront": {
+   "chapter": "ch1",
+   "doors": {
+    "W": [
+     240,
+     630
+    ],
+    "X": [
+     280,
+     1180
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     1080
+    ],
+    "W": [
+     300,
+     660
+    ],
+    "X": [
+     300,
+     1080
+    ]
+   }
+  },
+  "ch1.forest.forest_castleview": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1960,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     240
+    ],
+    "B": [
+     1920,
+     240
+    ]
+   }
+  },
+  "ch1.forest.forest_chase1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     2960,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     240
+    ],
+    "B": [
+     2920,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_chase2": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     280,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     0,
+     2720
+    ],
+    "B": [
+     300,
+     40
+    ],
+    "X": [
+     300,
+     40
+    ]
+   }
+  },
+  "ch1.forest.forest_dancers1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     440,
+     1470
+    ],
+    "B": [
+     0,
+     280
+    ],
+    "C": [
+     1620,
+     640
+    ],
+    "X": [
+     1400,
+     1470
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     280
+    ],
+    "B": [
+     460,
+     1360
+    ],
+    "D": [
+     1580,
+     620
+    ],
+    "X": [
+     1400,
+     1360
+    ]
+   }
+  },
+  "ch1.forest.forest_entrance": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     620,
+     230
+    ],
+    "B": [
+     0,
+     230
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     220
+    ],
+    "B": [
+     570,
+     220
+    ],
+    "W": [
+     300,
+     130
+    ]
+   }
+  },
+  "ch1.forest.forest_maze1": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     280,
+     665
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     580
+    ],
+    "B": [
+     295,
+     195
+    ],
+    "X": [
+     300,
+     580
+    ]
+   }
+  },
+  "ch1.forest.forest_maze2": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     280,
+     860
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     770
+    ],
+    "B": [
+     295,
+     195
+    ],
+    "X": [
+     300,
+     770
+    ]
+   }
+  },
+  "ch1.forest.forest_maze_deadend": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     280,
+     464
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     382
+    ]
+   }
+  },
+  "ch1.forest.forest_maze_deadend2": {
+   "chapter": "ch1",
+   "doors": {
+    "D": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     382
+    ]
+   }
+  },
+  "ch1.forest.forest_maze_susie": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     280,
+     665
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     580
+    ],
+    "D": [
+     300,
+     20
+    ],
+    "X": [
+     300,
+     580
+    ]
+   }
+  },
+  "ch1.forest.forest_puzzle1": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     240
+    ],
+    "D": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "B": [
+     590,
+     240
+    ],
+    "C": [
+     20,
+     240
+    ]
+   }
+  },
+  "ch1.forest.forest_secret1": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     200,
+     0
+    ],
+    "X": [
+     800,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     220,
+     10
+    ],
+    "X": [
+     800,
+     10
+    ]
+   }
+  },
+  "ch1.forest.forest_smith": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     360
+    ]
+   }
+  },
+  "ch1.forest.forest_starwalker": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     2620,
+     280
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     280
+    ],
+    "B": [
+     2580,
+     280
+    ],
+    "X": [
+     2580,
+     280
+    ]
+   }
+  },
+  "ch1.forest.forest_thrashing_room": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     0,
+     200
+    ],
+    "X": [
+     1220,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     200
+    ],
+    "B": [
+     1180,
+     200
+    ],
+    "W": [
+     965,
+     100
+    ],
+    "X": [
+     1180,
+     200
+    ]
+   }
+  },
+  "ch1.forest.forest_thrashmaker": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     600,
+     200
+    ],
+    "D": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "B": [
+     560,
+     200
+    ],
+    "C": [
+     40,
+     200
+    ]
+   }
+  },
+  "ch1.home.krishallway": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     289,
+     104
+    ],
+    "C": [
+     425,
+     100
+    ]
+   },
+   "markers": {
+    "A": [
+     289,
+     112
+    ],
+    "D": [
+     426,
+     118
+    ]
+   }
+  },
+  "ch1.home.torbathroom": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     236,
+     134
+    ]
+   },
+   "markers": {
+    "A": [
+     216,
+     120
+    ]
+   }
+  },
+  "ch1.home.torhouse": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     84,
+     168
+    ],
+    "D": [
+     144,
+     68
+    ],
+    "X": [
+     594,
+     149
+    ]
+   },
+   "markers": {
+    "B": [
+     108,
+     148
+    ],
+    "C": [
+     144,
+     90
+    ],
+    "X": [
+     567,
+     136
+    ]
+   }
+  },
+  "ch1.hometown.alphysalley": {
+   "chapter": "ch1",
+   "doors": {
+    "W": [
+     120,
+     235
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch1.hometown.alphysclass": {
+   "chapter": "ch1",
+   "doors": {},
+   "markers": {
+    "A": [
+     242,
+     52
+    ]
+   }
+  },
+  "ch1.hometown.beach": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     -15,
+     60
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     100
+    ]
+   }
+  },
+  "ch1.hometown.diner": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch1.hometown.flowershop_1f": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     20,
+     44
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     36,
+     56
+    ],
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch1.hometown.flowershop_2f": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     20,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     30,
+     195
+    ]
+   }
+  },
+  "ch1.hometown.graveyard": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     595,
+     115
+    ]
+   },
+   "markers": {
+    "A": [
+     570,
+     130
+    ],
+    "X": [
+     570,
+     130
+    ]
+   }
+  },
+  "ch1.hometown.hospital_hallway": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     79,
+     75
+    ],
+    "B": [
+     140,
+     186
+    ],
+    "C": [
+     190,
+     77
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     138
+    ],
+    "B": [
+     90,
+     84
+    ],
+    "D": [
+     210,
+     85
+    ]
+   }
+  },
+  "ch1.hometown.hospital_lobby": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     70,
+     76
+    ],
+    "W": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     76,
+     88
+    ],
+    "W": [
+     150,
+     188
+    ]
+   }
+  },
+  "ch1.hometown.hospital_room2": {
+   "chapter": "ch1",
+   "doors": {
+    "D": [
+     140,
+     236
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     186
+    ]
+   }
+  },
+  "ch1.hometown.hospital_rudy": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch1.hometown.library": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     180
+    ]
+   }
+  },
+  "ch1.hometown.schooldoor": {
+   "chapter": "ch1",
+   "doors": {
+    "C": [
+     500,
+     95
+    ],
+    "D": [
+     300,
+     230
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     190
+    ],
+    "D": [
+     510,
+     100
+    ]
+   }
+  },
+  "ch1.hometown.schoollobby": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     110,
+     194
+    ],
+    "B": [
+     830,
+     194
+    ],
+    "C": [
+     440,
+     -10
+    ],
+    "X": [
+     440,
+     415
+    ]
+   },
+   "markers": {
+    "A": [
+     830,
+     202
+    ],
+    "B": [
+     110,
+     200
+    ],
+    "D": [
+     460,
+     -6
+    ],
+    "X": [
+     460,
+     360
+    ]
+   }
+  },
+  "ch1.hometown.torielclass": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     57,
+     46
+    ]
+   },
+   "markers": {
+    "B": [
+     57,
+     55
+    ]
+   }
+  },
+  "ch1.hometown.town_church": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     0,
+     340
+    ],
+    "C": [
+     380,
+     630
+    ],
+    "D": [
+     360,
+     0
+    ],
+    "X": [
+     565,
+     85
+    ]
+   },
+   "markers": {
+    "B": [
+     10,
+     350
+    ],
+    "C": [
+     420,
+     0
+    ],
+    "D": [
+     430,
+     580
+    ],
+    "X": [
+     572,
+     95
+    ]
+   }
+  },
+  "ch1.hometown.town_krisyard": {
+   "chapter": "ch1",
+   "doors": {
+    "C": [
+     120,
+     410
+    ],
+    "X": [
+     158,
+     168
+    ]
+   },
+   "markers": {
+    "D": [
+     160,
+     362
+    ],
+    "X": [
+     158,
+     182
+    ]
+   }
+  },
+  "ch1.hometown.town_mid": {
+   "chapter": "ch1",
+   "doors": {
+    "C": [
+     772,
+     232
+    ],
+    "D": [
+     780,
+     0
+    ],
+    "W": [
+     1740,
+     -10
+    ],
+    "X": [
+     600,
+     90
+    ]
+   },
+   "markers": {
+    "C": [
+     820,
+     8
+    ],
+    "D": [
+     820,
+     184
+    ],
+    "W": [
+     1768,
+     0
+    ],
+    "X": [
+     600,
+     105
+    ]
+   }
+  },
+  "ch1.hometown.town_north": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1790,
+     100
+    ],
+    "C": [
+     625,
+     230
+    ],
+    "D": [
+     378,
+     -12
+    ],
+    "X": [
+     1258,
+     98
+    ]
+   },
+   "markers": {
+    "B": [
+     1764,
+     104
+    ],
+    "C": [
+     418,
+     4
+    ],
+    "D": [
+     660,
+     180
+    ],
+    "X": [
+     1258,
+     112
+    ]
+   }
+  },
+  "ch1.hometown.town_school": {
+   "chapter": "ch1",
+   "doors": {
+    "B": [
+     2,
+     182
+    ],
+    "X": [
+     360,
+     120
+    ]
+   },
+   "markers": {
+    "A": [
+     12,
+     210
+    ],
+    "X": [
+     373,
+     135
+    ]
+   }
+  },
+  "ch1.hometown.town_shelter": {
+   "chapter": "ch1",
+   "doors": {
+    "D": [
+     120,
+     0
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     20
+    ]
+   }
+  },
+  "ch1.hometown.town_south": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     1314,
+     106
+    ],
+    "C": [
+     798,
+     235
+    ],
+    "D": [
+     798,
+     1
+    ],
+    "W": [
+     600,
+     80
+    ],
+    "X": [
+     1000,
+     80
+    ]
+   },
+   "markers": {
+    "B": [
+     1288,
+     129
+    ],
+    "C": [
+     839,
+     9
+    ],
+    "D": [
+     839,
+     188
+    ],
+    "W": [
+     611,
+     91
+    ],
+    "X": [
+     1005,
+     95
+    ]
+   }
+  },
+  "ch1.hometown.townhall": {
+   "chapter": "ch1",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch1.kris_room.kris_s_room": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     155,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     155,
+     185
+    ]
+   }
+  },
+  "ch1.unknown.unknown": {
+   "chapter": "ch1",
+   "doors": {
+    "A": [
+     630,
+     200
+    ],
+    "B": [
+     -10,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     180
+    ],
+    "B": [
+     590,
+     180
+    ]
+   }
+  },
+  "ch2.card_castle.cc_clover": {
+   "chapter": "ch2",
+   "doors": {
+    "D": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch2.card_castle.cc_lancer": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     269,
+     459
+    ]
+   },
+   "markers": {
+    "X": [
+     307,
+     361
+    ]
+   }
+  },
+  "ch2.castle_town.castle_town": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     246,
+     192
+    ],
+    "B": [
+     194,
+     1151
+    ],
+    "D": [
+     -10,
+     958
+    ],
+    "X": [
+     630,
+     954
+    ]
+   },
+   "markers": {
+    "A": [
+     160,
+     1120
+    ],
+    "B": [
+     302,
+     200
+    ],
+    "C": [
+     42,
+     937
+    ],
+    "X": [
+     578,
+     942
+    ]
+   }
+  },
+  "ch2.castle_town.castle_town_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     246,
+     192
+    ],
+    "B": [
+     194,
+     1151
+    ],
+    "D": [
+     -10,
+     958
+    ],
+    "X": [
+     630,
+     954
+    ]
+   },
+   "markers": {
+    "B": [
+     302,
+     200
+    ],
+    "R": [
+     42,
+     937
+    ],
+    "W": [
+     302,
+     1051
+    ],
+    "X": [
+     578,
+     942
+    ]
+   }
+  },
+  "ch2.castle_town.castle_tutorial": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     1390,
+     320
+    ],
+    "X": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "S": [
+     654,
+     125
+    ],
+    "W": [
+     1350,
+     300
+    ],
+    "X": [
+     10,
+     310
+    ]
+   }
+  },
+  "ch2.cyber_city.cyber_city_alleyway_1": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     640,
+     460
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     246
+    ],
+    "B": [
+     660,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_city.cyber_city_alleyway_2": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     80,
+     0
+    ],
+    "W": [
+     940,
+     120
+    ]
+   },
+   "markers": {
+    "A": [
+     100,
+     6
+    ],
+    "V": [
+     896,
+     142
+    ],
+    "X": [
+     460,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_city.cyber_city_entrance": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1900,
+     280
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     1856,
+     262
+    ]
+   }
+  },
+  "ch2.cyber_city.cyber_city_heights": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2060,
+     760
+    ],
+    "B": [
+     0,
+     2240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     2222
+    ],
+    "B": [
+     2016,
+     718
+    ]
+   }
+  },
+  "ch2.cyber_city.cyber_city_mouse_alley": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     80
+    ],
+    "B": [
+     40,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     60,
+     6
+    ],
+    "B": [
+     576,
+     60
+    ]
+   }
+  },
+  "ch2.cyber_city.cyber_city_music_shop": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     200
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     576,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_baseball": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1900,
+     240
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     182
+    ],
+    "B": [
+     1856,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_1": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1060,
+     640
+    ],
+    "B": [
+     120,
+     0
+    ],
+    "W": [
+     760,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     1016,
+     622
+    ],
+    "W": [
+     26,
+     622
+    ],
+    "X": [
+     780,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_1_original": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1266,
+     250
+    ],
+    "B": [
+     211,
+     -21
+    ],
+    "W": [
+     889,
+     -16
+    ]
+   },
+   "markers": {
+    "A": [
+     280,
+     40
+    ],
+    "B": [
+     1200,
+     280
+    ],
+    "W": [
+     40,
+     280
+    ],
+    "X": [
+     960,
+     40
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1040,
+     1420
+    ],
+    "B": [
+     0,
+     240
+    ],
+    "W": [
+     720,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     1060,
+     1340
+    ],
+    "X": [
+     740,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_2_og": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     231,
+     947
+    ],
+    "B": [
+     -15,
+     148
+    ],
+    "W": [
+     705,
+     -13
+    ]
+   },
+   "markers": {
+    "A": [
+     80,
+     200
+    ],
+    "B": [
+     360,
+     840
+    ],
+    "X": [
+     840,
+     40
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_3": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2180,
+     640
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "B": [
+     2136,
+     662
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_3_backup_2exits": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2187,
+     179
+    ],
+    "B": [
+     -1,
+     177
+    ],
+    "W": [
+     2183,
+     753
+    ]
+   },
+   "markers": {
+    "A": [
+     39,
+     219
+    ],
+    "B": [
+     2120,
+     228
+    ],
+    "W": [
+     2128,
+     811
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_big_3_og": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2080,
+     120
+    ],
+    "B": [
+     -24,
+     149
+    ],
+    "W": [
+     2101,
+     835
+    ]
+   },
+   "markers": {
+    "A": [
+     80,
+     200
+    ],
+    "B": [
+     2000,
+     200
+    ],
+    "W": [
+     2000,
+     880
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_carnival": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1264,
+     604
+    ],
+    "B": [
+     -23,
+     189
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     240
+    ],
+    "B": [
+     1200,
+     640
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_cheese": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1263,
+     118
+    ],
+    "B": [
+     -12,
+     106
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     160
+    ],
+    "B": [
+     1200,
+     160
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_cheesemaze": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1840,
+     900
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     1860,
+     820
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_dog_traffic": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     160,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     180,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_intro": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1260,
+     200
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     238
+    ],
+    "B": [
+     1216,
+     238
+    ],
+    "W": [
+     750,
+     175
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_man": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     1800,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     1820,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_mansion_front": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "X": [
+     1422,
+     226
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_mice": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     120,
+     500
+    ],
+    "B": [
+     480,
+     0
+    ]
+   },
+   "markers": {}
+  },
+  "ch2.cyber_city.dw_city_mice2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1140,
+     280
+    ],
+    "B": [
+     0,
+     320
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     302
+    ],
+    "B": [
+     1096,
+     262
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_mice2_og": {
+   "chapter": "ch2",
+   "doors": {},
+   "markers": {
+    "A": [
+     22,
+     240
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_mirrorfriend": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     240,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     260,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_monologue": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     7180,
+     1560
+    ],
+    "W": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "B": [
+     7136,
+     1542
+    ],
+    "X": [
+     26,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_monologue_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2386,
+     128
+    ],
+    "W": [
+     -7,
+     135
+    ]
+   },
+   "markers": {
+    "B": [
+     2315,
+     180
+    ],
+    "X": [
+     45,
+     187
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_moss": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     620,
+     200
+    ]
+   },
+   "markers": {
+    "X": [
+     576,
+     206
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_poppup": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1040,
+     620
+    ],
+    "B": [
+     0,
+     80
+    ]
+   },
+   "markers": {
+    "A": [
+     34,
+     61
+    ],
+    "B": [
+     1060,
+     540
+    ],
+    "X": [
+     1422,
+     540
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_postbaseball_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     4380,
+     320
+    ],
+    "B": [
+     0,
+     320
+    ]
+   },
+   "markers": {}
+  },
+  "ch2.cyber_city.dw_city_prototype_01": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     619,
+     183
+    ]
+   },
+   "markers": {
+    "B": [
+     575,
+     215
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_prototype_02": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     -10,
+     184
+    ]
+   },
+   "markers": {
+    "A": [
+     29,
+     201
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_queen_drunk": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1900,
+     200
+    ],
+    "B": [
+     320,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     340,
+     6
+    ],
+    "B": [
+     1856,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_roadblock": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1260,
+     680
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     1216,
+     686
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_spamton_alley": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     120,
+     0
+    ],
+    "W": [
+     1000,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     140,
+     6
+    ],
+    "W": [
+     1020,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_spamton_house": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1260,
+     200
+    ],
+    "B": [
+     201,
+     156
+    ]
+   },
+   "markers": {
+    "B": [
+     1216,
+     238
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_spamton_shop_exterior": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "B": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_spamton_shop_interior": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     228,
+     459
+    ]
+   },
+   "markers": {
+    "B": [
+     293,
+     342
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_split": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     680
+    ],
+    "B": [
+     0,
+     600
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     646
+    ],
+    "B": [
+     576,
+     662
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_susie_ralsei_fun_1": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     320,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_1": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2300,
+     280
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     2256,
+     262
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2100,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     2056,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_2_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1702,
+     99
+    ],
+    "B": [
+     -12,
+     100
+    ],
+    "W": [
+     1342,
+     -11
+    ]
+   },
+   "markers": {
+    "A": [
+     80,
+     160
+    ],
+    "B": [
+     1600,
+     160
+    ],
+    "W": [
+     1400,
+     40
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_3": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1980,
+     320
+    ],
+    "B": [
+     0,
+     480
+    ],
+    "W": [
+     0,
+     2080
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     502
+    ],
+    "B": [
+     1936,
+     302
+    ],
+    "X": [
+     26,
+     2102
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_3_2entrances": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1980,
+     320
+    ],
+    "B": [
+     0,
+     200
+    ],
+    "W": [
+     0,
+     760
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     1936,
+     302
+    ],
+    "W": [
+     26,
+     782
+    ],
+    "X": [
+     54,
+     2297
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_3_backup": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1970,
+     257
+    ],
+    "B": [
+     -10,
+     269
+    ],
+    "W": [
+     -35,
+     722
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     246
+    ],
+    "B": [
+     1875,
+     320
+    ],
+    "W": [
+     80,
+     720
+    ],
+    "X": [
+     80,
+     2299
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_4": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2120,
+     460
+    ],
+    "W": [
+     4580,
+     320
+    ]
+   },
+   "markers": {
+    "B": [
+     2140,
+     380
+    ],
+    "V": [
+     26,
+     102
+    ],
+    "W": [
+     3180,
+     380
+    ],
+    "X": [
+     4536,
+     302
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_traffic_5_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1946,
+     224
+    ],
+    "B": [
+     78,
+     -18
+    ]
+   },
+   "markers": {
+    "A": [
+     200,
+     40
+    ],
+    "B": [
+     1840,
+     240
+    ]
+   }
+  },
+  "ch2.cyber_city.dw_city_treasure": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     620,
+     280
+    ]
+   },
+   "markers": {
+    "W": [
+     576,
+     262
+    ]
+   }
+  },
+  "ch2.cyber_field.cyber_field_arcade": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     160
+    ],
+    "D": [
+     0,
+     160
+    ]
+   },
+   "markers": {
+    "B": [
+     576,
+     142
+    ],
+    "C": [
+     26,
+     142
+    ]
+   }
+  },
+  "ch2.cyber_field.cyber_field_entrance": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1660,
+     320
+    ]
+   },
+   "markers": {
+    "A": [
+     301,
+     307
+    ],
+    "B": [
+     1616,
+     302
+    ]
+   }
+  },
+  "ch2.cyber_field.cyber_field_music_shop": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     320,
+     460
+    ],
+    "X": [
+     230,
+     220
+    ]
+   },
+   "markers": {
+    "T": [
+     576,
+     182
+    ],
+    "U": [
+     340,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_1": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1660,
+     160
+    ],
+    "B": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     182
+    ],
+    "B": [
+     1616,
+     166
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_1_original": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1268,
+     749
+    ],
+    "B": [
+     -11,
+     62
+    ],
+    "W": [
+     1261,
+     61
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     40
+    ],
+    "B": [
+     1200,
+     720
+    ],
+    "U": [
+     1201,
+     68
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1740,
+     720
+    ],
+    "D": [
+     280,
+     2980
+    ],
+    "W": [
+     480,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     1696,
+     702
+    ],
+    "C": [
+     300,
+     2900
+    ],
+    "W": [
+     500,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_2_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1750,
+     2720
+    ],
+    "D": [
+     280,
+     2980
+    ],
+    "W": [
+     920,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     1704,
+     2703
+    ],
+    "C": [
+     299,
+     2893
+    ],
+    "W": [
+     955,
+     21
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_2_toby": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1351,
+     93
+    ],
+    "B": [
+     -21,
+     576
+    ],
+    "W": [
+     154,
+     1029
+    ]
+   },
+   "markers": {
+    "A": [
+     33,
+     563
+    ],
+    "B": [
+     1294,
+     102
+    ],
+    "U": [
+     171,
+     949
+    ],
+    "V": [
+     498,
+     945
+    ],
+    "W": [
+     818,
+     26
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_battle_maze_3": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1266,
+     709
+    ],
+    "B": [
+     -16,
+     156
+    ]
+   },
+   "markers": {
+    "A": [
+     43,
+     144
+    ],
+    "B": [
+     1203,
+     703
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_escalator_slide": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     1513,
+     -7
+    ],
+    "W": [
+     275,
+     -7
+    ]
+   },
+   "markers": {
+    "A": [
+     1544,
+     36
+    ],
+    "T": [
+     296,
+     18
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_intro_1": {
+   "chapter": "ch2",
+   "doors": {},
+   "markers": {
+    "B": [
+     576,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_intro_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1260,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     1216,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_intro_connector": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2300,
+     1200
+    ]
+   },
+   "markers": {}
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_1": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_2": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_keyboard_puzzle_3": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "W": [
+     302,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_maze_fireworks": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "U": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_maze_queenscreen": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2140,
+     520
+    ],
+    "W": [
+     0,
+     520
+    ]
+   },
+   "markers": {
+    "B": [
+     2096,
+     502
+    ],
+    "U": [
+     26,
+     502
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_maze_rhythm": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     271,
+     1
+    ]
+   },
+   "markers": {
+    "T": [
+     299,
+     51
+    ],
+    "W": [
+     300,
+     2509
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_maze_tasque": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     0
+    ]
+   },
+   "markers": {
+    "T": [
+     300,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_maze_virokun": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1860,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ],
+    "C": [
+     1040,
+     0
+    ],
+    "W": [
+     240,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     1815,
+     222
+    ],
+    "D": [
+     1060,
+     6
+    ],
+    "T": [
+     660,
+     460
+    ],
+    "U": [
+     260,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_maze_virokun_backuo": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     629,
+     636
+    ],
+    "B": [
+     -4,
+     159
+    ],
+    "W": [
+     161,
+     -12
+    ]
+   },
+   "markers": {
+    "A": [
+     23,
+     157
+    ],
+    "B": [
+     558,
+     636
+    ],
+    "T": [
+     178,
+     878
+    ],
+    "U": [
+     175,
+     24
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_music_bullet": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1420,
+     280
+    ],
+    "B": [
+     0,
+     2000
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     2006
+    ],
+    "B": [
+     1376,
+     262
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_music_bullet_original": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1265,
+     272
+    ],
+    "B": [
+     -18,
+     1689
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     1680
+    ],
+    "B": [
+     1194,
+     250
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_music_fight": {
+   "chapter": "ch2",
+   "doors": {},
+   "markers": {
+    "A": [
+     40,
+     216
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_music_final": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     240
+    ],
+    "W": [
+     2160,
+     460
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "T": [
+     2180,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_musical_door": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ],
+    "W": [
+     280,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     576,
+     222
+    ],
+    "T": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_nuberts_treasure": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     280,
+     459
+    ]
+   },
+   "markers": {
+    "A": [
+     320,
+     381
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_post_music_boss_slide": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     160,
+     2280
+    ]
+   },
+   "markers": {
+    "T": [
+     180,
+     2280
+    ],
+    "W": [
+     2900,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_rhythm_slide": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     40,
+     80
+    ]
+   },
+   "markers": {
+    "A": [
+     69,
+     100
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_rollercoaster": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     360
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     342
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_savepoint_original": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     622,
+     200
+    ],
+    "B": [
+     -6,
+     198
+    ]
+   },
+   "markers": {
+    "A": [
+     32,
+     178
+    ],
+    "B": [
+     563,
+     182
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1820,
+     200
+    ],
+    "B": [
+     80,
+     200
+    ]
+   },
+   "markers": {}
+  },
+  "ch2.cyber_field.dw_cyber_tasque_battle": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1300,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ],
+    "C": [
+     1300,
+     1000
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     1256,
+     222
+    ],
+    "D": [
+     1256,
+     982
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_tasque_battle_og": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     717,
+     19
+    ],
+    "B": [
+     -6,
+     221
+    ],
+    "C": [
+     1300,
+     880
+    ]
+   },
+   "markers": {
+    "A": [
+     45,
+     213
+    ],
+    "B": [
+     759,
+     22
+    ],
+    "D": [
+     1261,
+     880
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_teacup_1": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     948,
+     148
+    ],
+    "B": [
+     -14,
+     649
+    ],
+    "W": [
+     -16,
+     159
+    ]
+   },
+   "markers": {
+    "A": [
+     39,
+     647
+    ],
+    "B": [
+     879,
+     137
+    ],
+    "U": [
+     44,
+     143
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_teacup_2": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     617,
+     58
+    ],
+    "B": [
+     -16,
+     676
+    ]
+   },
+   "markers": {
+    "A": [
+     36,
+     653
+    ],
+    "B": [
+     556,
+     55
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_teacup_final": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     3100,
+     1720
+    ],
+    "W": [
+     240,
+     8980
+    ]
+   },
+   "markers": {
+    "B": [
+     3056,
+     1702
+    ],
+    "W": [
+     260,
+     8896
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_viro_ring": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     280
+    ],
+    "W": [
+     400,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "X": [
+     420,
+     6
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_viromaze2": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     24,
+     266
+    ]
+   }
+  },
+  "ch2.cyber_field.dw_cyber_virovirokun_fight": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     -6,
+     435
+    ]
+   },
+   "markers": {
+    "A": [
+     20,
+     416
+    ]
+   }
+  },
+  "ch2.home.krishallway": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     289,
+     104
+    ],
+    "C": [
+     425,
+     100
+    ]
+   },
+   "markers": {
+    "A": [
+     289,
+     112
+    ],
+    "D": [
+     425,
+     109
+    ]
+   }
+  },
+  "ch2.home.torbathroom": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     236,
+     134
+    ]
+   },
+   "markers": {
+    "A": [
+     216,
+     120
+    ]
+   }
+  },
+  "ch2.home.torhouse": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     84,
+     168
+    ],
+    "D": [
+     144,
+     68
+    ],
+    "X": [
+     594,
+     149
+    ]
+   },
+   "markers": {
+    "B": [
+     108,
+     148
+    ],
+    "C": [
+     144,
+     80
+    ],
+    "X": [
+     567,
+     136
+    ]
+   }
+  },
+  "ch2.hometown.alphysalley": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     120,
+     235
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch2.hometown.alphysclass": {
+   "chapter": "ch2",
+   "doors": {},
+   "markers": {
+    "A": [
+     242,
+     52
+    ]
+   }
+  },
+  "ch2.hometown.beach": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     -15,
+     60
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     100
+    ]
+   }
+  },
+  "ch2.hometown.diner": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch2.hometown.flowershop_1f": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     20,
+     44
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     36,
+     56
+    ],
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch2.hometown.flowershop_2f": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     20,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     30,
+     195
+    ]
+   }
+  },
+  "ch2.hometown.graveyard": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     595,
+     115
+    ]
+   },
+   "markers": {
+    "A": [
+     570,
+     130
+    ],
+    "X": [
+     570,
+     130
+    ]
+   }
+  },
+  "ch2.hometown.hospital_hallway": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     79,
+     75
+    ],
+    "B": [
+     140,
+     186
+    ],
+    "C": [
+     190,
+     77
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     138
+    ],
+    "B": [
+     90,
+     84
+    ],
+    "D": [
+     210,
+     85
+    ]
+   }
+  },
+  "ch2.hometown.hospital_lobby": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     70,
+     76
+    ],
+    "W": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     76,
+     88
+    ],
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch2.hometown.hospital_room2": {
+   "chapter": "ch2",
+   "doors": {
+    "D": [
+     140,
+     236
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     186
+    ]
+   }
+  },
+  "ch2.hometown.hospital_rudy": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch2.hometown.library": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     218,
+     49
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "T": [
+     226,
+     56
+    ],
+    "W": [
+     142,
+     63
+    ],
+    "X": [
+     150,
+     185
+    ]
+   }
+  },
+  "ch2.hometown.schooldoor": {
+   "chapter": "ch2",
+   "doors": {
+    "C": [
+     500,
+     95
+    ],
+    "D": [
+     300,
+     230
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     190
+    ],
+    "D": [
+     510,
+     100
+    ],
+    "X": [
+     300,
+     110
+    ]
+   }
+  },
+  "ch2.hometown.schoollobby": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     97,
+     195
+    ],
+    "B": [
+     817,
+     196
+    ],
+    "C": [
+     440,
+     -10
+    ]
+   },
+   "markers": {
+    "A": [
+     830,
+     202
+    ],
+    "B": [
+     110,
+     200
+    ],
+    "D": [
+     460,
+     -6
+    ],
+    "X": [
+     460,
+     360
+    ]
+   }
+  },
+  "ch2.hometown.torielclass": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     57,
+     46
+    ]
+   },
+   "markers": {
+    "B": [
+     57,
+     55
+    ]
+   }
+  },
+  "ch2.hometown.town_church": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     0,
+     340
+    ],
+    "C": [
+     380,
+     630
+    ],
+    "D": [
+     360,
+     0
+    ],
+    "X": [
+     565,
+     85
+    ]
+   },
+   "markers": {
+    "B": [
+     10,
+     350
+    ],
+    "C": [
+     420,
+     0
+    ],
+    "D": [
+     430,
+     580
+    ],
+    "X": [
+     574,
+     95
+    ]
+   }
+  },
+  "ch2.hometown.town_krisyard": {
+   "chapter": "ch2",
+   "doors": {
+    "C": [
+     120,
+     410
+    ],
+    "X": [
+     150,
+     169
+    ]
+   },
+   "markers": {
+    "D": [
+     160,
+     362
+    ],
+    "X": [
+     160,
+     184
+    ]
+   }
+  },
+  "ch2.hometown.town_mid": {
+   "chapter": "ch2",
+   "doors": {
+    "C": [
+     772,
+     232
+    ],
+    "D": [
+     780,
+     0
+    ],
+    "W": [
+     1740,
+     -10
+    ],
+    "X": [
+     600,
+     90
+    ]
+   },
+   "markers": {
+    "C": [
+     820,
+     8
+    ],
+    "D": [
+     820,
+     184
+    ],
+    "T": [
+     321,
+     99
+    ],
+    "V": [
+     1096,
+     91
+    ],
+    "W": [
+     1768,
+     0
+    ],
+    "X": [
+     600,
+     105
+    ]
+   }
+  },
+  "ch2.hometown.town_north": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1790,
+     100
+    ],
+    "C": [
+     625,
+     230
+    ],
+    "D": [
+     378,
+     -12
+    ],
+    "X": [
+     1258,
+     98
+    ]
+   },
+   "markers": {
+    "B": [
+     1764,
+     110
+    ],
+    "C": [
+     418,
+     4
+    ],
+    "D": [
+     660,
+     180
+    ],
+    "X": [
+     1258,
+     112
+    ]
+   }
+  },
+  "ch2.hometown.town_school": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     2,
+     182
+    ]
+   },
+   "markers": {
+    "A": [
+     18,
+     216
+    ],
+    "X": [
+     373,
+     135
+    ]
+   }
+  },
+  "ch2.hometown.town_shelter": {
+   "chapter": "ch2",
+   "doors": {
+    "D": [
+     120,
+     0
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     20
+    ]
+   }
+  },
+  "ch2.hometown.town_south": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1314,
+     106
+    ],
+    "C": [
+     798,
+     235
+    ],
+    "D": [
+     798,
+     1
+    ],
+    "W": [
+     600,
+     80
+    ],
+    "X": [
+     1000,
+     80
+    ]
+   },
+   "markers": {
+    "B": [
+     1288,
+     129
+    ],
+    "C": [
+     839,
+     9
+    ],
+    "D": [
+     839,
+     188
+    ],
+    "V": [
+     247,
+     88
+    ],
+    "W": [
+     611,
+     91
+    ],
+    "X": [
+     1005,
+     95
+    ]
+   }
+  },
+  "ch2.hometown.townhall": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch2.kris_room.kris_s_room": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     155,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     155,
+     185
+    ]
+   }
+  },
+  "ch2.light_world.lw_computer_lab": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     130,
+     230
+    ]
+   },
+   "markers": {
+    "W": [
+     152,
+     178
+    ]
+   }
+  },
+  "ch2.light_world.lw_conbini": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     348,
+     230
+    ]
+   },
+   "markers": {
+    "V": [
+     369,
+     183
+    ]
+   }
+  },
+  "ch2.light_world.lw_icee_pizza": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     124,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     141,
+     177
+    ]
+   }
+  },
+  "ch2.light_world.lw_library_upstairs": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     213,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     231,
+     188
+    ]
+   }
+  },
+  "ch2.light_world.lw_police": {
+   "chapter": "ch2",
+   "doors": {},
+   "markers": {
+    "V": [
+     148,
+     187
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_area_1": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     200,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     297,
+     25
+    ],
+    "X": [
+     297,
+     23
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_cafe": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     392,
+     427
+    ]
+   },
+   "markers": {
+    "X": [
+     440,
+     320
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_dojo": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     379
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_dungeon": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     110,
+     470
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     360
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_east_door": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "W": [
+     20,
+     300
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_restaurant": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     276,
+     466
+    ]
+   },
+   "markers": {
+    "X": [
+     308,
+     380
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_rooms_kris": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     450
+    ]
+   },
+   "markers": {
+    "V": [
+     320,
+     360
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_rooms_susie": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     257,
+     465
+    ]
+   },
+   "markers": {
+    "W": [
+     288,
+     362
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_west_cliff": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     630,
+     280
+    ]
+   },
+   "markers": {
+    "D": [
+     567,
+     261
+    ],
+    "X": [
+     567,
+     260
+    ]
+   }
+  },
+  "ch2.my_castle_town.dw_castle_west_cliff_old": {
+   "chapter": "ch2",
+   "doors": {
+    "X": [
+     630,
+     280
+    ]
+   },
+   "markers": {
+    "X": [
+     567,
+     260
+    ]
+   }
+  },
+  "ch2.my_castle_town.my_castle_town": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     684,
+     192
+    ],
+    "X": [
+     702,
+     1587
+    ]
+   },
+   "markers": {
+    "B": [
+     740,
+     200
+    ],
+    "R": [
+     26,
+     1135
+    ],
+    "S": [
+     889,
+     577
+    ],
+    "T": [
+     986,
+     800
+    ],
+    "U": [
+     499,
+     806
+    ],
+    "V": [
+     567,
+     566
+    ],
+    "W": [
+     746,
+     1495
+    ],
+    "X": [
+     1441,
+     1125
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_acid_tunnel": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     3840,
+     320
+    ],
+    "W": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "B": [
+     3796,
+     302
+    ],
+    "X": [
+     26,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_acid_tunnel_loop_rouxls": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     3180,
+     240
+    ],
+    "B": [
+     -15,
+     175
+    ]
+   },
+   "markers": {
+    "A": [
+     17,
+     194
+    ],
+    "B": [
+     3136,
+     246
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_acid_tunnel_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     3711,
+     256
+    ],
+    "W": [
+     -16,
+     280
+    ]
+   },
+   "markers": {
+    "B": [
+     3597,
+     278
+    ],
+    "X": [
+     40,
+     240
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     320
+    ],
+    "B": [
+     0,
+     320
+    ],
+    "W": [
+     280,
+     100
+    ]
+   },
+   "markers": {
+    "A": [
+     37,
+     322
+    ],
+    "B": [
+     567,
+     323
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_east": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     800
+    ]
+   },
+   "markers": {
+    "X": [
+     40,
+     760
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_east_a": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "V": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_east_b": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "W": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_east_transformed": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     800
+    ]
+   },
+   "markers": {
+    "X": [
+     26,
+     782
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_entrance": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     981,
+     462
+    ],
+    "W": [
+     187,
+     465
+    ]
+   },
+   "markers": {
+    "B": [
+     1017,
+     373
+    ],
+    "T": [
+     227,
+     369
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_stairs": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     280,
+     460
+    ],
+    "B": [
+     280,
+     0
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     6
+    ],
+    "B": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_west_1f": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     1900,
+     320
+    ],
+    "W": [
+     235,
+     255
+    ]
+   },
+   "markers": {
+    "A": [
+     1856,
+     302
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_west_1f_a": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     320,
+     460
+    ]
+   },
+   "markers": {
+    "V": [
+     320,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_west_1f_b": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     320,
+     460
+    ]
+   },
+   "markers": {
+    "W": [
+     320,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_b_west_2f": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     2280,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     2280,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_bridges": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     600
+    ]
+   },
+   "markers": {
+    "T": [
+     299,
+     606
+    ],
+    "V": [
+     1440,
+     6
+    ],
+    "W": [
+     1576,
+     675
+    ],
+    "X": [
+     580,
+     1300
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_bridges_funny": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     320
+    ]
+   },
+   "markers": {
+    "X": [
+     26,
+     268
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_bridgesold": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     780,
+     560
+    ]
+   },
+   "markers": {
+    "V": [
+     640,
+     24
+    ],
+    "W": [
+     736,
+     515
+    ],
+    "X": [
+     60,
+     860
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_darkbulb_1": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "T": [
+     576,
+     222
+    ],
+    "U": [
+     26,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_darkbulb_2": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "S": [
+     576,
+     222
+    ],
+    "T": [
+     26,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_darkbulb_3": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "S": [
+     26,
+     222
+    ],
+    "T": [
+     576,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_dining3": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     680,
+     -80
+    ]
+   },
+   "markers": {
+    "U": [
+     620,
+     166
+    ],
+    "X": [
+     620,
+     1340
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_dining_a": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2180,
+     240
+    ],
+    "W": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "B": [
+     2136,
+     222
+    ],
+    "T": [
+     26,
+     262
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_dining_storage": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "X": [
+     25,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_dining_storage_old": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "X": [
+     25,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_dininghall": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     0,
+     200
+    ]
+   },
+   "markers": {
+    "U": [
+     301,
+     3080
+    ],
+    "W": [
+     26,
+     222
+    ],
+    "X": [
+     576,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_1f_a": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1426,
+     633
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     202
+    ],
+    "B": [
+     1366,
+     611
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_1f_b": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     -8,
+     265
+    ]
+   },
+   "markers": {
+    "A": [
+     41,
+     257
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_1f_c": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     618,
+     270
+    ],
+    "B": [
+     -9,
+     269
+    ],
+    "W": [
+     244,
+     147
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     280
+    ],
+    "B": [
+     553,
+     257
+    ],
+    "X": [
+     281,
+     160
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_1f_d": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2290,
+     270
+    ],
+    "B": [
+     -9,
+     269
+    ]
+   },
+   "markers": {
+    "A": [
+     36,
+     262
+    ],
+    "B": [
+     2218,
+     240
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_1f_e": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     960,
+     460
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     27,
+     222
+    ],
+    "B": [
+     980,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_1f_secret": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     230,
+     190
+    ],
+    "W": [
+     970,
+     190
+    ]
+   },
+   "markers": {
+    "U": [
+     26,
+     302
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_a": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     177,
+     96
+    ],
+    "W": [
+     1720,
+     460
+    ]
+   },
+   "markers": {
+    "W": [
+     1740,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_c": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     2540,
+     240
+    ]
+   },
+   "markers": {
+    "T": [
+     26,
+     222
+    ],
+    "U": [
+     2497,
+     246
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_c_a": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "V": [
+     1580,
+     380
+    ],
+    "W": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_c_b": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     661,
+     -10
+    ]
+   },
+   "markers": {
+    "X": [
+     696,
+     43
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_d": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     1780,
+     240
+    ]
+   },
+   "markers": {
+    "T": [
+     1736,
+     222
+    ],
+    "X": [
+     300,
+     6
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_d_backup": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     1261,
+     265
+    ]
+   },
+   "markers": {
+    "T": [
+     1210,
+     258
+    ],
+    "X": [
+     217,
+     14
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_shortcut": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     620,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     576,
+     262
+    ],
+    "T": [
+     240,
+     116
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_teacup": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     276,
+     456
+    ]
+   },
+   "markers": {
+    "A": [
+     302,
+     374
+    ],
+    "V": [
+     480,
+     40
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_transformed_new": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     0,
+     520
+    ],
+    "B": [
+     827,
+     1140
+    ],
+    "W": [
+     642,
+     154
+    ]
+   },
+   "markers": {
+    "A": [
+     840,
+     1060
+    ],
+    "B": [
+     26,
+     542
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_2f_ufo_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     -15,
+     1670
+    ],
+    "B": [
+     227,
+     1901
+    ],
+    "W": [
+     155,
+     223
+    ]
+   },
+   "markers": {
+    "A": [
+     298,
+     1804
+    ],
+    "B": [
+     39,
+     1691
+    ],
+    "U": [
+     412,
+     267
+    ],
+    "V": [
+     179,
+     285
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_3f_projection": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     620,
+     240
+    ]
+   },
+   "markers": {
+    "U": [
+     576,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_3f_toilet": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "W": [
+     302,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_4f_a": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     617,
+     255
+    ],
+    "B": [
+     -9,
+     274
+    ],
+    "W": [
+     350,
+     459
+    ]
+   },
+   "markers": {
+    "A": [
+     24,
+     253
+    ],
+    "B": [
+     570,
+     257
+    ],
+    "S": [
+     377,
+     361
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_4f_b": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1140,
+     320
+    ],
+    "B": [
+     0,
+     320
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     302
+    ],
+    "B": [
+     1097,
+     302
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_4f_c": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     2620,
+     440
+    ],
+    "B": [
+     0,
+     440
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     422
+    ],
+    "B": [
+     2576,
+     446
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_4f_e": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     627,
+     304
+    ],
+    "B": [
+     -32,
+     302
+    ]
+   },
+   "markers": {
+    "A": [
+     40,
+     280
+    ],
+    "B": [
+     560,
+     280
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_teacup": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     4780
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     4700
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_teacup_2": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     1356
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     4700
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_teacup_3": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     280,
+     1356
+    ],
+    "B": [
+     280,
+     4780
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     4700
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_east_teacup_4_old": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     280,
+     1330
+    ],
+    "B": [
+     260,
+     4780
+    ]
+   },
+   "markers": {
+    "A": [
+     300,
+     4680
+    ],
+    "B": [
+     300,
+     1360
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_elevator": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     262,
+     466
+    ]
+   },
+   "markers": {
+    "X": [
+     280,
+     360
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_fire_paintings": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1300,
+     280
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     1256,
+     262
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_hands": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     700,
+     560
+    ],
+    "W": [
+     292,
+     832
+    ]
+   },
+   "markers": {
+    "A": [
+     656,
+     542
+    ],
+    "X": [
+     304,
+     741
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_kitchen": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     960,
+     460
+    ]
+   },
+   "markers": {
+    "V": [
+     982,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_krisroom": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "S": [
+     300,
+     380
+    ],
+    "V": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_mouselottery": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     0,
+     400
+    ],
+    "W": [
+     320,
+     700
+    ]
+   },
+   "markers": {
+    "B": [
+     26,
+     382
+    ],
+    "X": [
+     320,
+     620
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_noelle_room": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     230,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     252,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_potbalance": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1140,
+     1120
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     1096,
+     1102
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_single_pot": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     620,
+     280
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     576,
+     262
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_sparks": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     1904,
+     259
+    ]
+   },
+   "markers": {
+    "A": [
+     1816,
+     265
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_susieroom": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "T": [
+     300,
+     380
+    ],
+    "V": [
+     300,
+     380
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_tasquepaintings": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1340,
+     640
+    ],
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     262
+    ],
+    "B": [
+     1296,
+     622
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_top": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     280
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     246
+    ],
+    "B": [
+     2480,
+     240
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_top_post": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     0,
+     261
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     246
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_top_post_old": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     -35,
+     261
+    ]
+   },
+   "markers": {
+    "A": [
+     42,
+     257
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_traffic": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1700,
+     1400
+    ],
+    "B": [
+     0,
+     1400
+    ],
+    "W": [
+     198,
+     1256
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     1382
+    ],
+    "B": [
+     1656,
+     1382
+    ]
+   }
+  },
+  "ch2.queens_mansion.dw_mansion_traffic_original": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     4980,
+     400
+    ],
+    "B": [
+     0,
+     1360
+    ]
+   },
+   "markers": {
+    "A": [
+     32,
+     1380
+    ],
+    "B": [
+     4900,
+     353
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_3f": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     1260,
+     240
+    ]
+   },
+   "markers": {
+    "U": [
+     26,
+     222
+    ],
+    "V": [
+     260,
+     372
+    ],
+    "W": [
+     980,
+     156
+    ],
+    "X": [
+     1216,
+     222
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_4f": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1820,
+     280
+    ],
+    "B": [
+     0,
+     240
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     246
+    ],
+    "B": [
+     1782,
+     246
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_acid_tunnel": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     1580,
+     400
+    ],
+    "B": [
+     0,
+     760
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     766
+    ],
+    "B": [
+     1536,
+     382
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_basement": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     0,
+     800
+    ],
+    "B": [
+     920,
+     0
+    ],
+    "W": [
+     1900,
+     800
+    ]
+   },
+   "markers": {
+    "A": [
+     940,
+     6
+    ],
+    "B": [
+     26,
+     782
+    ],
+    "X": [
+     1856,
+     782
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_entrance": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     900,
+     240
+    ],
+    "B": [
+     0,
+     240
+    ],
+    "W": [
+     170,
+     443
+    ]
+   },
+   "markers": {
+    "A": [
+     26,
+     222
+    ],
+    "B": [
+     856,
+     222
+    ],
+    "U": [
+     856,
+     702
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_guest_hall": {
+   "chapter": "ch2",
+   "doors": {
+    "W": [
+     508,
+     235
+    ]
+   },
+   "markers": {
+    "U": [
+     1896,
+     302
+    ]
+   }
+  },
+  "ch2.queens_mansion.queen_s_mansion_rooftop": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     224,
+     212
+    ]
+   },
+   "markers": {
+    "A": [
+     19,
+     840
+    ]
+   }
+  },
+  "ch2.ralsei_room.dw_ralsei_castle_1f": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     260,
+     238
+    ],
+    "W": [
+     857,
+     241
+    ]
+   },
+   "markers": {
+    "B": [
+     280,
+     240
+    ],
+    "W": [
+     880,
+     240
+    ],
+    "X": [
+     600,
+     360
+    ]
+   }
+  },
+  "ch2.ralsei_room.dw_ralsei_castle_2f": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     80,
+     457
+    ],
+    "W": [
+     255,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     120,
+     361
+    ],
+    "V": [
+     279,
+     226
+    ],
+    "W": [
+     551,
+     226
+    ],
+    "X": [
+     823,
+     230
+    ]
+   }
+  },
+  "ch2.ralsei_room.dw_ralsei_castle_front": {
+   "chapter": "ch2",
+   "doors": {
+    "B": [
+     440,
+     990
+    ],
+    "W": [
+     462,
+     249
+    ]
+   },
+   "markers": {
+    "A": [
+     500,
+     884
+    ],
+    "X": [
+     502,
+     262
+    ]
+   }
+  },
+  "ch2.system.shaun_puzzle": {
+   "chapter": "ch2",
+   "doors": {
+    "A": [
+     580,
+     200
+    ],
+    "B": [
+     80,
+     200
+    ]
+   },
+   "markers": {}
+  },
+  "ch3.card_castle.cc_clover": {
+   "chapter": "ch3",
+   "doors": {
+    "D": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch3.card_castle.cc_lancer": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     269,
+     459
+    ]
+   },
+   "markers": {
+    "X": [
+     307,
+     361
+    ]
+   }
+  },
+  "ch3.castle_town.castle_tutorial": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     1390,
+     320
+    ],
+    "X": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "S": [
+     654,
+     125
+    ],
+    "W": [
+     1350,
+     300
+    ],
+    "X": [
+     10,
+     310
+    ]
+   }
+  },
+  "ch3.home.krishallway": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     289,
+     104
+    ],
+    "C": [
+     425,
+     100
+    ]
+   },
+   "markers": {
+    "A": [
+     289,
+     112
+    ],
+    "D": [
+     425,
+     109
+    ]
+   }
+  },
+  "ch3.home.torbathroom": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     236,
+     134
+    ]
+   },
+   "markers": {
+    "A": [
+     216,
+     120
+    ]
+   }
+  },
+  "ch3.home.torhouse": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     84,
+     168
+    ],
+    "D": [
+     144,
+     68
+    ],
+    "X": [
+     594,
+     149
+    ]
+   },
+   "markers": {
+    "B": [
+     108,
+     148
+    ],
+    "C": [
+     144,
+     80
+    ],
+    "X": [
+     567,
+     136
+    ]
+   }
+  },
+  "ch3.hometown.alphysalley": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     120,
+     235
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch3.hometown.alphysclass": {
+   "chapter": "ch3",
+   "doors": {},
+   "markers": {
+    "A": [
+     242,
+     52
+    ]
+   }
+  },
+  "ch3.hometown.beach": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     -15,
+     60
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     100
+    ]
+   }
+  },
+  "ch3.hometown.diner": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch3.hometown.flowershop_1f": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     20,
+     44
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     36,
+     56
+    ],
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch3.hometown.flowershop_2f": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     20,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     30,
+     195
+    ]
+   }
+  },
+  "ch3.hometown.graveyard": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     595,
+     115
+    ]
+   },
+   "markers": {
+    "A": [
+     570,
+     130
+    ],
+    "X": [
+     570,
+     130
+    ]
+   }
+  },
+  "ch3.hometown.hospital_hallway": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     79,
+     75
+    ],
+    "B": [
+     140,
+     186
+    ],
+    "C": [
+     190,
+     77
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     138
+    ],
+    "B": [
+     90,
+     84
+    ],
+    "D": [
+     210,
+     85
+    ]
+   }
+  },
+  "ch3.hometown.hospital_lobby": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     70,
+     76
+    ],
+    "W": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     76,
+     88
+    ],
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch3.hometown.hospital_room2": {
+   "chapter": "ch3",
+   "doors": {
+    "D": [
+     140,
+     236
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     186
+    ]
+   }
+  },
+  "ch3.hometown.hospital_rudy": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch3.hometown.library": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     218,
+     49
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "T": [
+     226,
+     56
+    ],
+    "W": [
+     142,
+     63
+    ],
+    "X": [
+     150,
+     185
+    ]
+   }
+  },
+  "ch3.hometown.schooldoor": {
+   "chapter": "ch3",
+   "doors": {
+    "C": [
+     500,
+     95
+    ],
+    "D": [
+     300,
+     230
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     190
+    ],
+    "D": [
+     510,
+     100
+    ],
+    "X": [
+     300,
+     110
+    ]
+   }
+  },
+  "ch3.hometown.schoollobby": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     97,
+     195
+    ],
+    "B": [
+     817,
+     196
+    ],
+    "C": [
+     440,
+     -10
+    ]
+   },
+   "markers": {
+    "A": [
+     830,
+     202
+    ],
+    "B": [
+     110,
+     200
+    ],
+    "D": [
+     460,
+     -6
+    ],
+    "X": [
+     460,
+     360
+    ]
+   }
+  },
+  "ch3.hometown.torielclass": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     57,
+     46
+    ]
+   },
+   "markers": {
+    "B": [
+     57,
+     55
+    ]
+   }
+  },
+  "ch3.hometown.town_church": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     0,
+     340
+    ],
+    "C": [
+     380,
+     630
+    ],
+    "D": [
+     360,
+     0
+    ],
+    "X": [
+     565,
+     85
+    ]
+   },
+   "markers": {
+    "B": [
+     10,
+     350
+    ],
+    "C": [
+     420,
+     0
+    ],
+    "D": [
+     430,
+     580
+    ],
+    "X": [
+     574,
+     95
+    ]
+   }
+  },
+  "ch3.hometown.town_krisyard": {
+   "chapter": "ch3",
+   "doors": {
+    "C": [
+     120,
+     410
+    ],
+    "X": [
+     150,
+     169
+    ]
+   },
+   "markers": {
+    "D": [
+     160,
+     362
+    ],
+    "X": [
+     160,
+     184
+    ]
+   }
+  },
+  "ch3.hometown.town_krisyard_dark": {
+   "chapter": "ch3",
+   "doors": {
+    "C": [
+     120,
+     410
+    ]
+   },
+   "markers": {
+    "D": [
+     160,
+     362
+    ]
+   }
+  },
+  "ch3.hometown.town_mid": {
+   "chapter": "ch3",
+   "doors": {
+    "C": [
+     772,
+     232
+    ],
+    "D": [
+     780,
+     0
+    ],
+    "W": [
+     1740,
+     -10
+    ],
+    "X": [
+     600,
+     90
+    ]
+   },
+   "markers": {
+    "C": [
+     820,
+     8
+    ],
+    "D": [
+     820,
+     184
+    ],
+    "T": [
+     321,
+     99
+    ],
+    "V": [
+     1096,
+     91
+    ],
+    "W": [
+     1768,
+     0
+    ],
+    "X": [
+     600,
+     105
+    ]
+   }
+  },
+  "ch3.hometown.town_north": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     1790,
+     100
+    ],
+    "C": [
+     625,
+     230
+    ],
+    "D": [
+     378,
+     -12
+    ],
+    "X": [
+     1258,
+     98
+    ]
+   },
+   "markers": {
+    "B": [
+     1764,
+     110
+    ],
+    "C": [
+     418,
+     4
+    ],
+    "D": [
+     660,
+     180
+    ],
+    "X": [
+     1258,
+     112
+    ]
+   }
+  },
+  "ch3.hometown.town_school": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     2,
+     182
+    ]
+   },
+   "markers": {
+    "A": [
+     18,
+     216
+    ],
+    "X": [
+     373,
+     135
+    ]
+   }
+  },
+  "ch3.hometown.town_shelter": {
+   "chapter": "ch3",
+   "doors": {
+    "D": [
+     120,
+     0
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     20
+    ]
+   }
+  },
+  "ch3.hometown.town_south": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     1314,
+     106
+    ],
+    "C": [
+     798,
+     235
+    ],
+    "D": [
+     798,
+     1
+    ],
+    "W": [
+     600,
+     80
+    ],
+    "X": [
+     1000,
+     80
+    ]
+   },
+   "markers": {
+    "B": [
+     1288,
+     129
+    ],
+    "C": [
+     839,
+     9
+    ],
+    "D": [
+     839,
+     188
+    ],
+    "V": [
+     247,
+     88
+    ],
+    "W": [
+     611,
+     91
+    ],
+    "X": [
+     1005,
+     95
+    ]
+   }
+  },
+  "ch3.hometown.townhall": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch3.kris_room.krisroom": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     155,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     155,
+     185
+    ]
+   }
+  },
+  "ch3.light_world.lw_computer_lab": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     130,
+     230
+    ]
+   },
+   "markers": {
+    "W": [
+     152,
+     178
+    ]
+   }
+  },
+  "ch3.light_world.lw_conbini": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     348,
+     230
+    ]
+   },
+   "markers": {
+    "V": [
+     369,
+     183
+    ]
+   }
+  },
+  "ch3.light_world.lw_icee_pizza": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     124,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     141,
+     177
+    ]
+   }
+  },
+  "ch3.light_world.lw_library_upstairs": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     213,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     231,
+     188
+    ]
+   }
+  },
+  "ch3.light_world.lw_police": {
+   "chapter": "ch3",
+   "doors": {},
+   "markers": {
+    "V": [
+     148,
+     187
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_area_1": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     200,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     297,
+     25
+    ],
+    "X": [
+     297,
+     23
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_cafe": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     392,
+     427
+    ]
+   },
+   "markers": {
+    "X": [
+     440,
+     320
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_dojo": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     379
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_dungeon": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     110,
+     470
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     360
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_east_door": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "W": [
+     20,
+     300
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_restaurant": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     276,
+     466
+    ]
+   },
+   "markers": {
+    "X": [
+     308,
+     380
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_rooms_kris": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     280,
+     450
+    ]
+   },
+   "markers": {
+    "V": [
+     320,
+     360
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_rooms_susie": {
+   "chapter": "ch3",
+   "doors": {
+    "W": [
+     257,
+     465
+    ]
+   },
+   "markers": {
+    "W": [
+     288,
+     362
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_town": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     684,
+     192
+    ],
+    "X": [
+     702,
+     1587
+    ]
+   },
+   "markers": {
+    "B": [
+     740,
+     200
+    ],
+    "R": [
+     26,
+     1135
+    ],
+    "S": [
+     889,
+     577
+    ],
+    "T": [
+     986,
+     800
+    ],
+    "U": [
+     499,
+     806
+    ],
+    "V": [
+     567,
+     566
+    ],
+    "W": [
+     746,
+     1495
+    ],
+    "X": [
+     1441,
+     1125
+    ]
+   }
+  },
+  "ch3.my_castle_town.dw_castle_west_cliff": {
+   "chapter": "ch3",
+   "doors": {
+    "X": [
+     630,
+     280
+    ]
+   },
+   "markers": {
+    "D": [
+     567,
+     261
+    ],
+    "X": [
+     567,
+     260
+    ]
+   }
+  },
+  "ch3.ralsei_room.dw_ralsei_castle_1f": {
+   "chapter": "ch3",
+   "doors": {
+    "A": [
+     260,
+     238
+    ],
+    "W": [
+     857,
+     241
+    ]
+   },
+   "markers": {
+    "B": [
+     280,
+     240
+    ],
+    "W": [
+     880,
+     240
+    ],
+    "X": [
+     600,
+     360
+    ]
+   }
+  },
+  "ch3.ralsei_room.dw_ralsei_castle_2f": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     80,
+     457
+    ],
+    "W": [
+     255,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     120,
+     361
+    ],
+    "V": [
+     279,
+     226
+    ],
+    "W": [
+     551,
+     226
+    ],
+    "X": [
+     823,
+     230
+    ]
+   }
+  },
+  "ch3.ralsei_room.dw_ralsei_castle_front": {
+   "chapter": "ch3",
+   "doors": {
+    "B": [
+     440,
+     990
+    ],
+    "W": [
+     462,
+     249
+    ]
+   },
+   "markers": {
+    "A": [
+     500,
+     884
+    ],
+    "X": [
+     502,
+     262
+    ]
+   }
+  },
+  "ch4.card_castle.cc_clover": {
+   "chapter": "ch4",
+   "doors": {
+    "D": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch4.card_castle.cc_lancer": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     269,
+     459
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     366
+    ]
+   }
+  },
+  "ch4.castle_town.castle_tutorial": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     1390,
+     320
+    ],
+    "X": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "W": [
+     1350,
+     300
+    ],
+    "X": [
+     10,
+     310
+    ]
+   }
+  },
+  "ch4.home.krishallway": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     289,
+     104
+    ],
+    "C": [
+     425,
+     100
+    ]
+   },
+   "markers": {
+    "A": [
+     289,
+     112
+    ],
+    "D": [
+     425,
+     109
+    ]
+   }
+  },
+  "ch4.home.torbathroom": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     236,
+     134
+    ]
+   },
+   "markers": {
+    "A": [
+     216,
+     120
+    ]
+   }
+  },
+  "ch4.home.torhouse": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     84,
+     168
+    ],
+    "D": [
+     144,
+     68
+    ],
+    "X": [
+     594,
+     149
+    ]
+   },
+   "markers": {
+    "B": [
+     108,
+     148
+    ],
+    "C": [
+     144,
+     80
+    ],
+    "X": [
+     567,
+     136
+    ]
+   }
+  },
+  "ch4.hometown.alphysalley": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     120,
+     235
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch4.hometown.alphysclass": {
+   "chapter": "ch4",
+   "doors": {},
+   "markers": {
+    "A": [
+     242,
+     52
+    ]
+   }
+  },
+  "ch4.hometown.beach": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     -15,
+     60
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     100
+    ]
+   }
+  },
+  "ch4.hometown.diner": {
+   "chapter": "ch4",
+   "doors": {
+    "X": [
+     136,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch4.hometown.flowershop_1f": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     20,
+     44
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     36,
+     56
+    ],
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch4.hometown.flowershop_2f": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     20,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     30,
+     195
+    ]
+   }
+  },
+  "ch4.hometown.graveyard": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     595,
+     115
+    ]
+   },
+   "markers": {
+    "A": [
+     570,
+     130
+    ],
+    "X": [
+     570,
+     130
+    ]
+   }
+  },
+  "ch4.hometown.hometown": {
+   "chapter": "ch4",
+   "doors": {
+    "C": [
+     772,
+     232
+    ],
+    "D": [
+     780,
+     0
+    ],
+    "W": [
+     1740,
+     -10
+    ],
+    "X": [
+     600,
+     90
+    ]
+   },
+   "markers": {
+    "C": [
+     820,
+     8
+    ],
+    "D": [
+     820,
+     184
+    ],
+    "T": [
+     321,
+     99
+    ],
+    "V": [
+     1096,
+     91
+    ],
+    "W": [
+     1768,
+     0
+    ],
+    "X": [
+     600,
+     105
+    ]
+   }
+  },
+  "ch4.hometown.hospital_hallway": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     80,
+     70
+    ],
+    "B": [
+     141,
+     197
+    ],
+    "C": [
+     200,
+     71
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     157
+    ]
+   }
+  },
+  "ch4.hometown.hospital_lobby": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     70,
+     76
+    ],
+    "W": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     76,
+     88
+    ],
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch4.hometown.hospital_room2": {
+   "chapter": "ch4",
+   "doors": {
+    "D": [
+     140,
+     237
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     196
+    ]
+   }
+  },
+  "ch4.hometown.hospital_rudy": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch4.hometown.library": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     218,
+     49
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "T": [
+     226,
+     56
+    ],
+    "W": [
+     142,
+     63
+    ],
+    "X": [
+     150,
+     185
+    ]
+   }
+  },
+  "ch4.hometown.schooldoor": {
+   "chapter": "ch4",
+   "doors": {
+    "C": [
+     500,
+     95
+    ],
+    "D": [
+     300,
+     230
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     190
+    ],
+    "D": [
+     510,
+     100
+    ],
+    "X": [
+     300,
+     110
+    ]
+   }
+  },
+  "ch4.hometown.schoollobby": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     97,
+     195
+    ],
+    "B": [
+     817,
+     196
+    ],
+    "C": [
+     440,
+     -10
+    ]
+   },
+   "markers": {
+    "A": [
+     830,
+     202
+    ],
+    "B": [
+     110,
+     200
+    ],
+    "D": [
+     460,
+     -6
+    ],
+    "X": [
+     460,
+     360
+    ]
+   }
+  },
+  "ch4.hometown.torielclass": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     57,
+     46
+    ]
+   },
+   "markers": {
+    "B": [
+     57,
+     55
+    ]
+   }
+  },
+  "ch4.hometown.town_church": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     0,
+     340
+    ],
+    "D": [
+     360,
+     0
+    ],
+    "X": [
+     565,
+     85
+    ]
+   },
+   "markers": {
+    "B": [
+     10,
+     350
+    ],
+    "C": [
+     420,
+     0
+    ],
+    "D": [
+     430,
+     580
+    ],
+    "X": [
+     574,
+     95
+    ]
+   }
+  },
+  "ch4.hometown.town_krisyard": {
+   "chapter": "ch4",
+   "doors": {
+    "C": [
+     120,
+     410
+    ],
+    "X": [
+     150,
+     169
+    ]
+   },
+   "markers": {
+    "D": [
+     160,
+     362
+    ],
+    "X": [
+     160,
+     184
+    ]
+   }
+  },
+  "ch4.hometown.town_north": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     1790,
+     100
+    ],
+    "C": [
+     625,
+     230
+    ],
+    "D": [
+     378,
+     -12
+    ],
+    "X": [
+     1258,
+     98
+    ]
+   },
+   "markers": {
+    "B": [
+     1764,
+     110
+    ],
+    "C": [
+     418,
+     4
+    ],
+    "D": [
+     660,
+     180
+    ],
+    "X": [
+     1258,
+     112
+    ]
+   }
+  },
+  "ch4.hometown.town_school": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     2,
+     182
+    ]
+   },
+   "markers": {
+    "A": [
+     18,
+     216
+    ],
+    "X": [
+     373,
+     135
+    ]
+   }
+  },
+  "ch4.hometown.town_shelter": {
+   "chapter": "ch4",
+   "doors": {
+    "D": [
+     120,
+     -80
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     20
+    ]
+   }
+  },
+  "ch4.hometown.town_south": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     1314,
+     106
+    ],
+    "C": [
+     798,
+     235
+    ],
+    "D": [
+     798,
+     1
+    ],
+    "W": [
+     600,
+     80
+    ],
+    "X": [
+     1000,
+     80
+    ]
+   },
+   "markers": {
+    "B": [
+     1288,
+     129
+    ],
+    "C": [
+     839,
+     9
+    ],
+    "D": [
+     839,
+     188
+    ],
+    "V": [
+     247,
+     88
+    ],
+    "W": [
+     611,
+     91
+    ],
+    "X": [
+     1005,
+     95
+    ]
+   }
+  },
+  "ch4.hometown.townhall": {
+   "chapter": "ch4",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch4.kris_room.kris_s_room": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     155,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     155,
+     185
+    ]
+   }
+  },
+  "ch4.light_world.lw_computer_lab": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     130,
+     230
+    ]
+   },
+   "markers": {
+    "W": [
+     152,
+     178
+    ]
+   }
+  },
+  "ch4.light_world.lw_conbini": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     348,
+     230
+    ]
+   },
+   "markers": {
+    "V": [
+     369,
+     183
+    ]
+   }
+  },
+  "ch4.light_world.lw_icee_pizza": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     124,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     141,
+     177
+    ]
+   }
+  },
+  "ch4.light_world.lw_library_upstairs": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     213,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     231,
+     188
+    ]
+   }
+  },
+  "ch4.light_world.lw_police": {
+   "chapter": "ch4",
+   "doors": {},
+   "markers": {
+    "V": [
+     148,
+     187
+    ]
+   }
+  },
+  "ch4.my_castle_town.dw_castle_area_1": {
+   "chapter": "ch4",
+   "doors": {
+    "X": [
+     200,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     297,
+     25
+    ],
+    "X": [
+     297,
+     23
+    ]
+   }
+  },
+  "ch4.my_castle_town.dw_castle_dojo": {
+   "chapter": "ch4",
+   "doors": {
+    "X": [
+     280,
+     460
+    ]
+   },
+   "markers": {
+    "X": [
+     300,
+     379
+    ]
+   }
+  },
+  "ch4.my_castle_town.dw_castle_dungeon": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     110,
+     470
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     360
+    ]
+   }
+  },
+  "ch4.my_castle_town.dw_castle_east_door": {
+   "chapter": "ch4",
+   "doors": {
+    "W": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "W": [
+     20,
+     300
+    ]
+   }
+  },
+  "ch4.my_castle_town.dw_castle_restaurant": {
+   "chapter": "ch4",
+   "doors": {
+    "X": [
+     276,
+     466
+    ]
+   },
+   "markers": {
+    "X": [
+     308,
+     380
+    ]
+   }
+  },
+  "ch4.my_castle_town.dw_castle_west_cliff": {
+   "chapter": "ch4",
+   "doors": {
+    "X": [
+     630,
+     280
+    ]
+   },
+   "markers": {
+    "D": [
+     567,
+     261
+    ],
+    "X": [
+     567,
+     260
+    ]
+   }
+  },
+  "ch4.my_castle_town.my_castle_town": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     684,
+     192
+    ],
+    "X": [
+     702,
+     1587
+    ]
+   },
+   "markers": {
+    "B": [
+     740,
+     200
+    ],
+    "R": [
+     40,
+     1254
+    ],
+    "W": [
+     746,
+     1495
+    ],
+    "X": [
+     1441,
+     1251
+    ]
+   }
+  },
+  "ch4.ralsei_room.dw_ralsei_castle_1f": {
+   "chapter": "ch4",
+   "doors": {
+    "A": [
+     260,
+     238
+    ],
+    "W": [
+     857,
+     241
+    ]
+   },
+   "markers": {
+    "B": [
+     280,
+     240
+    ],
+    "W": [
+     880,
+     240
+    ],
+    "X": [
+     600,
+     360
+    ]
+   }
+  },
+  "ch4.ralsei_room.dw_ralsei_castle_2f": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     80,
+     457
+    ],
+    "W": [
+     808,
+     229
+    ]
+   },
+   "markers": {
+    "A": [
+     120,
+     361
+    ],
+    "X": [
+     823,
+     230
+    ]
+   }
+  },
+  "ch4.ralsei_room.dw_ralsei_castle_front": {
+   "chapter": "ch4",
+   "doors": {
+    "B": [
+     440,
+     990
+    ],
+    "W": [
+     462,
+     249
+    ]
+   },
+   "markers": {
+    "A": [
+     500,
+     884
+    ],
+    "X": [
+     502,
+     262
+    ]
+   }
+  },
+  "ch5.card_castle.cc_clover": {
+   "chapter": "ch5",
+   "doors": {
+    "D": [
+     280,
+     470
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     390
+    ]
+   }
+  },
+  "ch5.card_castle.cc_lancer": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     269,
+     459
+    ]
+   },
+   "markers": {
+    "X": [
+     307,
+     361
+    ]
+   }
+  },
+  "ch5.castle_town.castle_tutorial": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     1390,
+     320
+    ],
+    "X": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "W": [
+     1350,
+     300
+    ],
+    "X": [
+     10,
+     310
+    ]
+   }
+  },
+  "ch5.home.krishallway": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     289,
+     104
+    ],
+    "C": [
+     425,
+     100
+    ]
+   },
+   "markers": {
+    "A": [
+     289,
+     112
+    ],
+    "D": [
+     425,
+     109
+    ]
+   }
+  },
+  "ch5.home.torbathroom": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     236,
+     134
+    ]
+   },
+   "markers": {
+    "A": [
+     216,
+     120
+    ]
+   }
+  },
+  "ch5.home.torhouse": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     84,
+     168
+    ],
+    "D": [
+     144,
+     68
+    ],
+    "X": [
+     594,
+     149
+    ]
+   },
+   "markers": {
+    "B": [
+     108,
+     148
+    ],
+    "C": [
+     144,
+     80
+    ],
+    "X": [
+     567,
+     136
+    ]
+   }
+  },
+  "ch5.hometown.alphysalley": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     120,
+     235
+    ]
+   },
+   "markers": {
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch5.hometown.alphysclass": {
+   "chapter": "ch5",
+   "doors": {},
+   "markers": {
+    "A": [
+     242,
+     52
+    ]
+   }
+  },
+  "ch5.hometown.beach": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     -15,
+     60
+    ]
+   },
+   "markers": {
+    "A": [
+     10,
+     100
+    ]
+   }
+  },
+  "ch5.hometown.diner": {
+   "chapter": "ch5",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch5.hometown.flowershop_1f": {
+   "chapter": "ch5",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch5.hometown.graveyard": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     595,
+     115
+    ]
+   },
+   "markers": {
+    "A": [
+     570,
+     130
+    ],
+    "X": [
+     570,
+     130
+    ]
+   }
+  },
+  "ch5.hometown.hometown": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     1314,
+     106
+    ],
+    "C": [
+     798,
+     235
+    ],
+    "D": [
+     798,
+     1
+    ],
+    "W": [
+     600,
+     80
+    ],
+    "X": [
+     1000,
+     80
+    ]
+   },
+   "markers": {
+    "B": [
+     1288,
+     129
+    ],
+    "C": [
+     839,
+     9
+    ],
+    "D": [
+     839,
+     188
+    ],
+    "V": [
+     247,
+     88
+    ],
+    "W": [
+     611,
+     91
+    ],
+    "X": [
+     1005,
+     95
+    ]
+   }
+  },
+  "ch5.hometown.hospital_hallway": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     79,
+     75
+    ],
+    "B": [
+     140,
+     186
+    ],
+    "C": [
+     190,
+     77
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     138
+    ],
+    "B": [
+     90,
+     84
+    ],
+    "D": [
+     210,
+     85
+    ]
+   }
+  },
+  "ch5.hometown.hospital_lobby": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     70,
+     76
+    ],
+    "W": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "B": [
+     76,
+     88
+    ],
+    "W": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch5.hometown.hospital_room2": {
+   "chapter": "ch5",
+   "doors": {
+    "D": [
+     140,
+     236
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     186
+    ]
+   }
+  },
+  "ch5.hometown.hospital_rudy": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "A": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch5.hometown.library": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     218,
+     49
+    ],
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "T": [
+     226,
+     56
+    ],
+    "W": [
+     142,
+     63
+    ],
+    "X": [
+     150,
+     185
+    ]
+   }
+  },
+  "ch5.hometown.schooldoor": {
+   "chapter": "ch5",
+   "doors": {
+    "C": [
+     500,
+     95
+    ],
+    "D": [
+     300,
+     230
+    ]
+   },
+   "markers": {
+    "C": [
+     300,
+     190
+    ],
+    "D": [
+     510,
+     100
+    ],
+    "X": [
+     300,
+     110
+    ]
+   }
+  },
+  "ch5.hometown.schoollobby": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     97,
+     195
+    ],
+    "B": [
+     817,
+     196
+    ],
+    "C": [
+     440,
+     -10
+    ]
+   },
+   "markers": {
+    "A": [
+     830,
+     202
+    ],
+    "B": [
+     110,
+     200
+    ],
+    "D": [
+     460,
+     -6
+    ],
+    "X": [
+     460,
+     360
+    ]
+   }
+  },
+  "ch5.hometown.torielclass": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     57,
+     46
+    ]
+   },
+   "markers": {
+    "B": [
+     57,
+     55
+    ]
+   }
+  },
+  "ch5.hometown.town_church": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     0,
+     340
+    ],
+    "C": [
+     380,
+     630
+    ],
+    "D": [
+     360,
+     0
+    ],
+    "X": [
+     565,
+     85
+    ]
+   },
+   "markers": {
+    "B": [
+     10,
+     350
+    ],
+    "C": [
+     420,
+     0
+    ],
+    "D": [
+     430,
+     580
+    ],
+    "X": [
+     574,
+     95
+    ]
+   }
+  },
+  "ch5.hometown.town_krisyard": {
+   "chapter": "ch5",
+   "doors": {
+    "C": [
+     120,
+     410
+    ],
+    "X": [
+     150,
+     169
+    ]
+   },
+   "markers": {
+    "D": [
+     160,
+     362
+    ],
+    "X": [
+     160,
+     184
+    ]
+   }
+  },
+  "ch5.hometown.town_mid": {
+   "chapter": "ch5",
+   "doors": {
+    "C": [
+     772,
+     232
+    ],
+    "D": [
+     780,
+     0
+    ],
+    "W": [
+     1740,
+     -10
+    ],
+    "X": [
+     600,
+     90
+    ]
+   },
+   "markers": {
+    "C": [
+     820,
+     8
+    ],
+    "D": [
+     820,
+     184
+    ],
+    "T": [
+     321,
+     99
+    ],
+    "V": [
+     1096,
+     91
+    ],
+    "W": [
+     1768,
+     0
+    ],
+    "X": [
+     600,
+     105
+    ]
+   }
+  },
+  "ch5.hometown.town_north": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     1790,
+     100
+    ],
+    "C": [
+     625,
+     230
+    ],
+    "D": [
+     378,
+     -12
+    ],
+    "X": [
+     1258,
+     98
+    ]
+   },
+   "markers": {
+    "B": [
+     1764,
+     110
+    ],
+    "C": [
+     418,
+     4
+    ],
+    "D": [
+     660,
+     180
+    ],
+    "X": [
+     1258,
+     112
+    ]
+   }
+  },
+  "ch5.hometown.town_school": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     2,
+     182
+    ]
+   },
+   "markers": {
+    "A": [
+     18,
+     216
+    ],
+    "X": [
+     373,
+     135
+    ]
+   }
+  },
+  "ch5.hometown.town_shelter": {
+   "chapter": "ch5",
+   "doors": {
+    "D": [
+     120,
+     0
+    ]
+   },
+   "markers": {
+    "C": [
+     150,
+     20
+    ]
+   }
+  },
+  "ch5.hometown.townhall": {
+   "chapter": "ch5",
+   "doors": {
+    "X": [
+     140,
+     230
+    ]
+   },
+   "markers": {
+    "X": [
+     150,
+     190
+    ]
+   }
+  },
+  "ch5.kris_room.kris_s_room": {
+   "chapter": "ch5",
+   "doors": {},
+   "markers": {
+    "B": [
+     155,
+     185
+    ]
+   }
+  },
+  "ch5.light_world.lw_computer_lab": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     130,
+     230
+    ]
+   },
+   "markers": {
+    "W": [
+     152,
+     178
+    ]
+   }
+  },
+  "ch5.light_world.lw_conbini": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     348,
+     230
+    ]
+   },
+   "markers": {
+    "V": [
+     369,
+     183
+    ]
+   }
+  },
+  "ch5.light_world.lw_icee_pizza": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     124,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     141,
+     177
+    ]
+   }
+  },
+  "ch5.light_world.lw_library_upstairs": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     213,
+     231
+    ]
+   },
+   "markers": {
+    "T": [
+     231,
+     188
+    ]
+   }
+  },
+  "ch5.light_world.lw_police": {
+   "chapter": "ch5",
+   "doors": {},
+   "markers": {
+    "V": [
+     148,
+     187
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_area_1": {
+   "chapter": "ch5",
+   "doors": {
+    "X": [
+     200,
+     0
+    ]
+   },
+   "markers": {
+    "B": [
+     297,
+     25
+    ],
+    "X": [
+     297,
+     23
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_dojo": {
+   "chapter": "ch5",
+   "doors": {},
+   "markers": {
+    "X": [
+     302,
+     375
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_dungeon": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     110,
+     470
+    ]
+   },
+   "markers": {
+    "W": [
+     141,
+     386
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_east_door": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     -10,
+     320
+    ]
+   },
+   "markers": {
+    "W": [
+     20,
+     300
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_restaurant": {
+   "chapter": "ch5",
+   "doors": {
+    "X": [
+     276,
+     466
+    ]
+   },
+   "markers": {
+    "X": [
+     308,
+     380
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_rooms_kris": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     280,
+     450
+    ]
+   },
+   "markers": {
+    "V": [
+     312,
+     366
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_rooms_susie": {
+   "chapter": "ch5",
+   "doors": {
+    "W": [
+     257,
+     465
+    ]
+   },
+   "markers": {
+    "W": [
+     292,
+     380
+    ]
+   }
+  },
+  "ch5.my_castle_town.dw_castle_west_cliff": {
+   "chapter": "ch5",
+   "doors": {
+    "X": [
+     630,
+     280
+    ]
+   },
+   "markers": {
+    "D": [
+     567,
+     261
+    ],
+    "X": [
+     567,
+     260
+    ]
+   }
+  },
+  "ch5.my_castle_town.my_castle_town": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     684,
+     192
+    ],
+    "X": [
+     702,
+     1587
+    ]
+   },
+   "markers": {
+    "B": [
+     740,
+     200
+    ],
+    "R": [
+     40,
+     1254
+    ],
+    "W": [
+     746,
+     1495
+    ],
+    "X": [
+     1441,
+     1251
+    ]
+   }
+  },
+  "ch5.ralsei_room.dw_ralsei_castle_1f": {
+   "chapter": "ch5",
+   "doors": {
+    "A": [
+     260,
+     238
+    ],
+    "W": [
+     857,
+     241
+    ]
+   },
+   "markers": {
+    "B": [
+     280,
+     240
+    ],
+    "W": [
+     880,
+     240
+    ],
+    "X": [
+     600,
+     360
+    ]
+   }
+  },
+  "ch5.ralsei_room.dw_ralsei_castle_2f": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     80,
+     457
+    ],
+    "W": [
+     255,
+     235
+    ]
+   },
+   "markers": {
+    "A": [
+     120,
+     361
+    ],
+    "V": [
+     279,
+     226
+    ],
+    "W": [
+     551,
+     226
+    ]
+   }
+  },
+  "ch5.ralsei_room.dw_ralsei_castle_front": {
+   "chapter": "ch5",
+   "doors": {
+    "B": [
+     440,
+     990
+    ],
+    "W": [
+     462,
+     249
+    ]
+   },
+   "markers": {
+    "A": [
+     500,
+     884
+    ],
+    "X": [
+     502,
+     262
+    ]
+   }
+  }
+ },
+ "mismatch": [
+  {
+   "scene": "ch1.card_castle.card_castle_1f",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.card_castle_5f",
+   "door_only": [
+    "A",
+    "C",
+    "F"
+   ],
+   "marker_only": [
+    "B",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.card_castle_unknown",
+   "door_only": [],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_2f",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_3f",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_4f",
+   "door_only": [
+    "A",
+    "E"
+   ],
+   "marker_only": [
+    "B",
+    "F"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_6f",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_clover",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_entrance",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_hathy",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_joker",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_lancer",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_prefountain",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch1.card_castle.cc_prison2",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_prison_cells",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_rudinn",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_rurus1",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.card_castle.cc_rurus2",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.castle_town.castle_darkdoor",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.castle_town.castle_front",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.castle_town.castle_outskirts",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.castle_town.castle_tutorial",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.dark_world.dark1",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.dark_world.dark3",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.dark_world.dark3a",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.dark_world.dark_chase1",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch1.dark_world.dark_chase2",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.dark_world.dark_wobbles",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.field.field2",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.field.field2a",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.field.field3",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C",
+    "W"
+   ]
+  },
+  {
+   "scene": "ch1.field.field4",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_checkers4",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_getsusie",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_great_door",
+   "door_only": [],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_puzzletutorial",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_seams_shop",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_secret1",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.field.field_topchef",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_after_maze",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_afterthrash2",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_area2",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_area2a",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_area3",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_area3a",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_area4",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_area5",
+   "door_only": [
+    "X"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_bake_sale",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D",
+    "W",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_before_maze",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_beforeclover",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_castlefront",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_chase1",
+   "door_only": [],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_chase2",
+   "door_only": [],
+   "marker_only": [
+    "B",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_dancers1",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_entrance",
+   "door_only": [],
+   "marker_only": [
+    "W"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_maze1",
+   "door_only": [],
+   "marker_only": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_maze2",
+   "door_only": [],
+   "marker_only": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_maze_deadend",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_maze_deadend2",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_maze_susie",
+   "door_only": [],
+   "marker_only": [
+    "A",
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_puzzle1",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_secret1",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_smith",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_starwalker",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_thrashing_room",
+   "door_only": [],
+   "marker_only": [
+    "A",
+    "W"
+   ]
+  },
+  {
+   "scene": "ch1.forest.forest_thrashmaker",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.home.krishallway",
+   "door_only": [
+    "B",
+    "C"
+   ],
+   "marker_only": [
+    "A",
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.home.torbathroom",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.home.torhouse",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.alphysclass",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.beach",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.flowershop_1f",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.flowershop_2f",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.graveyard",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.hospital_hallway",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.hospital_lobby",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.hospital_room2",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.hospital_rudy",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.schoollobby",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.torielclass",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.town_church",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.town_krisyard",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.town_north",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.town_school",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.town_shelter",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch1.hometown.town_south",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch1.kris_room.kris_s_room",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.card_castle.cc_clover",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.card_castle.cc_lancer",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.castle_town.castle_town",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.castle_town.castle_town_2",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "R",
+    "W"
+   ]
+  },
+  {
+   "scene": "ch2.castle_town.castle_tutorial",
+   "door_only": [],
+   "marker_only": [
+    "S"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.cyber_city_alleyway_2",
+   "door_only": [
+    "B",
+    "W"
+   ],
+   "marker_only": [
+    "A",
+    "V",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_1",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_1_original",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_2",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_2_og",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_3",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_dog_traffic",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_intro",
+   "door_only": [],
+   "marker_only": [
+    "W"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_man",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_mansion_front",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_mice",
+   "door_only": [
+    "A",
+    "B"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_mice2_og",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_mirrorfriend",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_monologue",
+   "door_only": [
+    "A",
+    "W"
+   ],
+   "marker_only": [
+    "B",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_monologue_old",
+   "door_only": [
+    "A",
+    "W"
+   ],
+   "marker_only": [
+    "B",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_moss",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_poppup",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_postbaseball_2",
+   "door_only": [
+    "A",
+    "B"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_prototype_01",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_prototype_02",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_spamton_alley",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_spamton_house",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_spamton_shop_exterior",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_spamton_shop_interior",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_susie_ralsei_fun_1",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_traffic_3",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_traffic_3_2entrances",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_traffic_3_backup",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B",
+    "V",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.cyber_field_arcade",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.cyber_field_entrance",
+   "door_only": [],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.cyber_field_music_shop",
+   "door_only": [
+    "W",
+    "X"
+   ],
+   "marker_only": [
+    "T",
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_battle_maze_1_original",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_battle_maze_2",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_battle_maze_2_old",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_battle_maze_2_toby",
+   "door_only": [],
+   "marker_only": [
+    "U",
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+   "door_only": [
+    "B",
+    "W"
+   ],
+   "marker_only": [
+    "A",
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_intro_1",
+   "door_only": [],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_intro_connector",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_keyboard_puzzle_1",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_keyboard_puzzle_2",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "door_only": [
+    "A",
+    "W"
+   ],
+   "marker_only": [
+    "B",
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "door_only": [],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_tasque",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "door_only": [
+    "C",
+    "W"
+   ],
+   "marker_only": [
+    "D",
+    "T",
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_virokun_backuo",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "T",
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_music_fight",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_music_final",
+   "door_only": [
+    "B",
+    "W"
+   ],
+   "marker_only": [
+    "A",
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_musical_door",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_nuberts_treasure",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "door_only": [],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_rhythm_slide",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_rollercoaster",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel",
+   "door_only": [
+    "A",
+    "B"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_tasque_battle",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_tasque_battle_og",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_teacup_1",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "U"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_teacup_final",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_viro_ring",
+   "door_only": [
+    "B",
+    "W"
+   ],
+   "marker_only": [
+    "A",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_viromaze2",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.cyber_field.dw_cyber_virovirokun_fight",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.home.krishallway",
+   "door_only": [
+    "B",
+    "C"
+   ],
+   "marker_only": [
+    "A",
+    "D"
+   ]
+  },
+  {
+   "scene": "ch2.home.torbathroom",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.home.torhouse",
+   "door_only": [
+    "A",
+    "D"
+   ],
+   "marker_only": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.alphysclass",
+   "door_only": [],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.beach",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.flowershop_1f",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.flowershop_2f",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.graveyard",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.hospital_hallway",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.hospital_lobby",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.hospital_room2",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.hospital_rudy",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.library",
+   "door_only": [],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.schooldoor",
+   "door_only": [],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.schoollobby",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.torielclass",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_church",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_krisyard",
+   "door_only": [
+    "C"
+   ],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_mid",
+   "door_only": [],
+   "marker_only": [
+    "T",
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_north",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_school",
+   "door_only": [
+    "B"
+   ],
+   "marker_only": [
+    "A",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_shelter",
+   "door_only": [
+    "D"
+   ],
+   "marker_only": [
+    "C"
+   ]
+  },
+  {
+   "scene": "ch2.hometown.town_south",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B",
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.kris_room.kris_s_room",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.light_world.lw_conbini",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.light_world.lw_icee_pizza",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.light_world.lw_library_upstairs",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.light_world.lw_police",
+   "door_only": [],
+   "marker_only": [
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.my_castle_town.dw_castle_area_1",
+   "door_only": [],
+   "marker_only": [
+    "B"
+   ]
+  },
+  {
+   "scene": "ch2.my_castle_town.dw_castle_rooms_kris",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.my_castle_town.dw_castle_west_cliff",
+   "door_only": [],
+   "marker_only": [
+    "D"
+   ]
+  },
+  {
+   "scene": "ch2.my_castle_town.my_castle_town",
+   "door_only": [
+    "A"
+   ],
+   "marker_only": [
+    "B",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_acid_tunnel",
+   "door_only": [
+    "A",
+    "W"
+   ],
+   "marker_only": [
+    "B",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_acid_tunnel_old",
+   "door_only": [
+    "A",
+    "W"
+   ],
+   "marker_only": [
+    "B",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": []
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_east",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "door_only": [
+    "A",
+    "W"
+   ],
+   "marker_only": [
+    "B",
+    "T"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "door_only": [
+    "B",
+    "W"
+   ],
+   "marker_only": [
+    "A"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f_a",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "V"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_2f",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_bridges",
+   "door_only": [],
+   "marker_only": [
+    "T",
+    "V",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_bridges_funny",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_bridgesold",
+   "door_only": [],
+   "marker_only": [
+    "V",
+    "X"
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "door_only": [
+    "W"
+   ],
+   "marker_only": [
+    "T",
+    "U"
+   ]
+  }
+ ]
+}

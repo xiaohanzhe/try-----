@@ -1,0 +1,509 @@
+{
+ "edges_total": 782,
+ "no_src_scene": 7,
+ "no_dst_scene": 17,
+ "door_hit": 758,
+ "marker_hit": 689,
+ "both_ends": 689,
+ "by_chapter": {
+  "ch1": {
+   "edges": 238,
+   "door": 233,
+   "marker": 232,
+   "both": 232,
+   "no_src": 2,
+   "no_dst": 3
+  },
+  "ch2": {
+   "edges": 323,
+   "door": 314,
+   "marker": 251,
+   "both": 251,
+   "no_src": 2,
+   "no_dst": 7
+  },
+  "ch3": {
+   "edges": 79,
+   "door": 75,
+   "marker": 74,
+   "both": 74,
+   "no_src": 1,
+   "no_dst": 3
+  },
+  "ch4": {
+   "edges": 72,
+   "door": 69,
+   "marker": 65,
+   "both": 65,
+   "no_src": 1,
+   "no_dst": 2
+  },
+  "ch5": {
+   "edges": 70,
+   "door": 67,
+   "marker": 67,
+   "both": 67,
+   "no_src": 1,
+   "no_dst": 2
+  }
+ },
+ "miss_samples": [
+  {
+   "ch": "ch1",
+   "src": 129,
+   "dst": 130,
+   "door": "obj_doorA_musfade",
+   "letter": "A",
+   "src_scene": "ch1.card_castle.cc_prefountain",
+   "dst_scene": "ch1.card_castle.cc_fountain",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 11,
+   "dst": 10,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.system.shaun_puzzle",
+   "dst_scene": "ch2.system.teacup_demobullets",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 55,
+   "dst": 53,
+   "door": "obj_doorD",
+   "letter": "D",
+   "src_scene": "ch2.castle_town.castle_town",
+   "dst_scene": "ch2.hometown.insidecloset",
+   "src_doors": [
+    "A",
+    "B",
+    "D",
+    "X"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 55,
+   "dst": 56,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.castle_town.castle_town",
+   "dst_scene": "ch2.castle_town.castle_tutorial",
+   "src_doors": [
+    "A",
+    "B",
+    "D",
+    "X"
+   ],
+   "dst_markers": [
+    "S",
+    "W",
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 61,
+   "dst": 62,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.castle_town.castle_town_2",
+   "dst_scene": "ch2.my_castle_town.my_castle_town",
+   "src_doors": [
+    "A",
+    "B",
+    "D",
+    "X"
+   ],
+   "dst_markers": [
+    "B",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 76,
+   "dst": 75,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.cyber_field.dw_cyber_intro_2",
+   "dst_scene": "ch2.cyber_field.dw_cyber_intro_connector",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 90,
+   "dst": 95,
+   "door": "obj_doorW",
+   "letter": "W",
+   "src_scene": "ch2.cyber_field.dw_cyber_teacup_final",
+   "dst_scene": "ch2.cyber_field.dw_cyber_viro_ring",
+   "src_doors": [
+    "A",
+    "W"
+   ],
+   "dst_markers": [
+    "A",
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 92,
+   "dst": 85,
+   "door": "obj_doorW",
+   "letter": "W",
+   "src_scene": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "dst_scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "src_doors": [
+    "W"
+   ],
+   "dst_markers": [
+    "A",
+    "B",
+    "D",
+    "T",
+    "U"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 98,
+   "dst": 97,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.cyber_field.dw_cyber_battle_maze_3",
+   "dst_scene": "ch2.cyber_field.dw_cyber_keyboard_puzzle_3",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [
+    "W"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 99,
+   "dst": 100,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_field.dw_cyber_teacup_2",
+   "dst_scene": "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 100,
+   "dst": 101,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel",
+   "dst_scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [
+    "T",
+    "W"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 102,
+   "dst": 84,
+   "door": "obj_doorW",
+   "letter": "W",
+   "src_scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+   "dst_scene": "ch2.cyber_field.dw_cyber_musical_door",
+   "src_doors": [
+    "B",
+    "W"
+   ],
+   "dst_markers": [
+    "A",
+    "B",
+    "T"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 102,
+   "dst": 101,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+   "dst_scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "src_doors": [
+    "B",
+    "W"
+   ],
+   "dst_markers": [
+    "T",
+    "W"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 103,
+   "dst": 102,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.cyber_field.dw_cyber_nuberts_treasure",
+   "dst_scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+   "src_doors": [
+    "B"
+   ],
+   "dst_markers": [
+    "A",
+    "T"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 108,
+   "dst": 109,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_city.dw_city_spamton_shop_exterior",
+   "dst_scene": "ch2.cyber_city.dw_city_spamton_house",
+   "src_doors": [
+    "A"
+   ],
+   "dst_markers": [
+    "B"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 115,
+   "dst": 116,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_city.cyber_city_alleyway_1",
+   "dst_scene": "ch2.cyber_city.dw_city_mice",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 116,
+   "dst": 117,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_city.dw_city_mice",
+   "dst_scene": "ch2.cyber_city.dw_city_big_1",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [
+    "B",
+    "W",
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 117,
+   "dst": 116,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.cyber_city.dw_city_big_1",
+   "dst_scene": "ch2.cyber_city.dw_city_mice",
+   "src_doors": [
+    "A",
+    "B",
+    "W"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 119,
+   "dst": 138,
+   "door": "obj_doorW",
+   "letter": "W",
+   "src_scene": "ch2.cyber_city.dw_city_big_2",
+   "dst_scene": "ch2.cyber_city.dw_city_mirrorfriend",
+   "src_doors": [
+    "A",
+    "B",
+    "W"
+   ],
+   "dst_markers": [
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 121,
+   "dst": 122,
+   "door": "obj_doorA_musfade",
+   "letter": "A",
+   "src_scene": "ch2.cyber_city.cyber_city_music_shop",
+   "dst_scene": "ch2.cyber_city.dw_city_big_3",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [
+    "B"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 133,
+   "dst": 134,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_city.cyber_city_heights",
+   "dst_scene": "ch2.cyber_city.dw_city_postbaseball_2",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 134,
+   "dst": 135,
+   "door": "obj_doorA",
+   "letter": "A",
+   "src_scene": "ch2.cyber_city.dw_city_postbaseball_2",
+   "dst_scene": "ch2.cyber_city.dw_city_postbaseball_3",
+   "src_doors": [
+    "A",
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 136,
+   "dst": 135,
+   "door": "obj_doorB",
+   "letter": "B",
+   "src_scene": "ch2.cyber_city.dw_city_mansion_front",
+   "dst_scene": "ch2.cyber_city.dw_city_postbaseball_3",
+   "src_doors": [
+    "B"
+   ],
+   "dst_markers": [],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 140,
+   "dst": 123,
+   "door": "obj_doorW",
+   "letter": "W",
+   "src_scene": "ch2.cyber_city.dw_city_dog_traffic",
+   "dst_scene": "ch2.cyber_city.dw_city_traffic_3",
+   "src_doors": [
+    "W"
+   ],
+   "dst_markers": [
+    "A",
+    "B",
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  },
+  {
+   "ch": "ch2",
+   "src": 141,
+   "dst": 123,
+   "door": "obj_doorw_musfade",
+   "letter": "W",
+   "src_scene": "ch2.cyber_city.dw_city_man",
+   "dst_scene": "ch2.cyber_city.dw_city_traffic_3",
+   "src_doors": [
+    "W"
+   ],
+   "dst_markers": [
+    "A",
+    "B",
+    "X"
+   ],
+   "door_hit": true,
+   "marker_hit": false
+  }
+ ]
+}

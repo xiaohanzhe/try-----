@@ -1,0 +1,38 @@
+=== 门坐标全量普查（第51轮）===
+索引 ok=True  场景数=1014  default='desktop'
+
+[A] 锚点自检 scene=ch1.castle_town.castle_town
+    doors   = {'B': (-10, 958), 'A': (246, 192), 'X': (630, 954)}
+    markers = {'A': (24, 940), 'B': (302, 200), 'X': (578, 942)}
+    期望 doors ⊇ ['A', 'B', 'X'] / markers ⊇ ['A', 'B', 'X']  => PASS
+
+[B] 负对照 scene=desktop  doors={} markers={} => 期望都为空 => PASS
+
+[C] 全量扫描（场景 1014）
+    加载失败            = 0
+    含 obj_door*        = 465
+    含 obj_marker*      = 475
+    两者都有            = 460  <== "逐门执行"可用的场景数
+    door 实例总数       = 828
+    marker 实例总数     = 953
+    字母不配对的场景    = 356
+
+    分章：
+      ch1  场景  128  有门  121  有落点  123  两者都有  121
+      ch2  场景  236  有门  212  有落点  212  两者都有  207
+      ch3  场景  187  有门   47  有落点   49  两者都有   47
+      ch4  场景  261  有门   43  有落点   45  两者都有   43
+      ch5  场景  201  有门   42  有落点   46  两者都有   42
+      desktop 场景    1  有门    0  有落点    0  两者都有    0
+
+    字母不配对样本（前 10）：
+      ch1.card_castle.card_castle_1f  door_only=['C'] marker_only=['D']
+      ch1.card_castle.card_castle_5f  door_only=['A', 'C', 'F'] marker_only=['B', 'D', 'E']
+      ch1.card_castle.card_castle_unknown  door_only=[] marker_only=['B']
+      ch1.card_castle.cc_2f  door_only=['A'] marker_only=['B']
+      ch1.card_castle.cc_3f  door_only=['A'] marker_only=['B']
+      ch1.card_castle.cc_4f  door_only=['A', 'E'] marker_only=['B', 'F']
+      ch1.card_castle.cc_6f  door_only=['A', 'D'] marker_only=['B', 'C']
+      ch1.card_castle.cc_clover  door_only=['D'] marker_only=['C']
+      ch1.card_castle.cc_entrance  door_only=['A'] marker_only=['B']
+      ch1.card_castle.cc_hathy  door_only=['B'] marker_only=['A']
