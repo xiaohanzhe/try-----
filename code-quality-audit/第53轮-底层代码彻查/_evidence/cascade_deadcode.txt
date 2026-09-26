@@ -1,0 +1,529 @@
+defs 总数 = 1613 ；可达 = 1181 ；不可达（级联死代码）= 432 ；迭代 6 轮
+
+=== 按文件分组的不可达符号 ===
+--- ralsei_pet\modules\api_client.py  (1 个) ---
+  def     register_provider:431
+
+--- ralsei_pet\modules\autonomous_agent.py  (2 个) ---
+  def     AutonomousAgent.notify_position_changed:294
+  def     InteractionTarget.nearest_edge:75
+
+--- ralsei_pet\modules\bubble_system.py  (13 个) ---
+  class   Bubble:236
+  def     Bubble.__init__:243
+  def     Bubble.can_eject:295
+  def     Bubble.keep_inside:281
+  def     Bubble.spin_to:255
+  def     BubbleField.equip:319
+  def     BubbleField.keep_inside_all:365
+  def     BubbleField.tick_all:361
+  def     BubbleField.unequip:338
+  def     clamp_inside:195
+  def     grants_foreign_dark:170
+  def     must_stay_inside:155
+  def     scale_for:121
+
+--- ralsei_pet\modules\companion.py  (5 个) ---
+  def     Interactable.busy:443
+  class   ReadableInteractable:451
+  def     ReadableInteractable.__init__:459
+  def     describe_companion:476
+  def     reset_default_bus:333
+
+--- ralsei_pet\modules\companion_dialog.py  (15 个) ---
+  class   DialogueLog:399
+  def     DialogueLog.__init__:408
+  def     DialogueLog.__len__:457
+  def     DialogueLog.context_text:471
+  def     DialogueLog.last_from_id:460
+  def     DialogueLog.rejected:474
+  def     Message.effective_typer:137
+  def     Message.norm_from:191
+  def     Message.norm_to:195
+  def     _name_tokens:259
+  def     build_speaker_header:362
+  def     check_reply:337
+  def     detect_foreign_speaker_lines:266
+  def     detect_wrong_self_claim:303
+  def     format_context:249
+
+--- ralsei_pet\modules\companion_roster.py  (19 个) ---
+  class   ChatScheduler:191
+  def     ChatScheduler.__init__:209
+  def     ChatScheduler.__repr__:345
+  def     ChatScheduler.abort:319
+  def     ChatScheduler.busy:228
+  def     ChatScheduler.fail_count:244
+  def     ChatScheduler.last_from:240
+  def     ChatScheduler.pending_id:232
+  def     ChatScheduler.reset:334
+  class   CompanionStage:438
+  def     CompanionStage.__init__:445
+  class   Roster:57
+  def     Roster.__contains__:123
+  def     Roster.__init__:65
+  def     Roster.__len__:120
+  def     Roster.__repr__:183
+  def     Roster.active_ids:174
+  def     Roster.by_id:105
+  def     Roster.deactivate_all:177
+
+--- ralsei_pet\modules\config_manager.py  (13 个) ---
+  def     ConfigManager.add_observer:412
+  def     ConfigManager.enable_api:594
+  def     ConfigManager.get_full_config:517
+  def     ConfigManager.get_security_config:615
+  def     ConfigManager.is_activity_tracking_enabled:611
+  def     ConfigManager.is_api_enabled:590
+  def     ConfigManager.is_encryption_enabled:624
+  def     ConfigManager.is_usage_data_enabled:607
+  def     ConfigManager.remove_observer:417
+  def     ConfigManager.reset_config:488
+  def     ConfigManager.update_privacy_config:602
+  def     ConfigManager.update_security_config:619
+  def     ConfigManager.validate_config:521
+
+--- ralsei_pet\modules\conversation_focus.py  (2 个) ---
+  def     ConversationFocus.current_label:495
+  def     ConversationFocus.is_empty:498
+
+--- ralsei_pet\modules\customization_system.py  (43 个) ---
+  def     CustomizationSystem.apply_appearance_changes:378
+  def     CustomizationSystem.apply_appearance_changes_DEPRECATED:171
+  def     CustomizationSystem.apply_behavior_changes:416
+  def     CustomizationSystem.apply_content_changes:426
+  def     CustomizationSystem.get_available_accessories:462
+  def     CustomizationSystem.get_available_accessories_DEPRECATED:264
+  def     CustomizationSystem.get_available_activity_levels:276
+  def     CustomizationSystem.get_available_backgrounds:308
+  def     CustomizationSystem.get_available_color_schemes:466
+  def     CustomizationSystem.get_available_color_schemes_DEPRECATED:268
+  def     CustomizationSystem.get_available_conversation_topics:300
+  def     CustomizationSystem.get_available_creativity_levels:328
+  def     CustomizationSystem.get_available_emotional_intensities:360
+  def     CustomizationSystem.get_available_environment_locations:336
+  def     CustomizationSystem.get_available_formality_levels:288
+  def     CustomizationSystem.get_available_humor_levels:284
+  def     CustomizationSystem.get_available_humor_types:332
+  def     CustomizationSystem.get_available_initiative_levels:356
+  def     CustomizationSystem.get_available_interaction_frequencies:280
+  def     CustomizationSystem.get_available_interests:296
+  def     CustomizationSystem.get_available_knowledge_areas:292
+  def     CustomizationSystem.get_available_language_styles:320
+  def     CustomizationSystem.get_available_lighting_effects:312
+  def     CustomizationSystem.get_available_outfits:458
+  def     CustomizationSystem.get_available_outfits_DEPRECATED:260
+  def     CustomizationSystem.get_available_personality_traits:316
+  def     CustomizationSystem.get_available_privacy_levels:304
+  def     CustomizationSystem.get_available_relationship_types:352
+  def     CustomizationSystem.get_available_response_lengths:324
+  def     CustomizationSystem.get_available_sizes:272
+  def     CustomizationSystem.get_available_temperature_preferences:348
+  def     CustomizationSystem.get_available_time_preferences:340
+  def     CustomizationSystem.get_available_verbosity_levels:364
+  def     CustomizationSystem.get_available_weather_preferences:344
+  def     CustomizationSystem.get_customization_data:185
+  def     CustomizationSystem.reset_customization:189
+  def     CustomizationSystem.update_appearance:136
+  def     CustomizationSystem.update_behavior:431
+  def     CustomizationSystem.update_behavior_DEPRECATED:143
+  def     CustomizationSystem.update_content_preferences:451
+  def     CustomizationSystem.update_content_preferences_DEPRECATED:161
+  def     CustomizationSystem.update_privacy_settings:166
+  def     CustomizationSystem.update_relationship:373
+
+--- ralsei_pet\modules\desktop_interaction.py  (32 个) ---
+  def     DesktopInteraction._get_folder_at_pos:1453
+  def     DesktopInteraction._is_valid_filename:1507
+  def     DesktopInteraction.add_scheduled_task:572
+  def     DesktopInteraction.copy_file:1699
+  def     DesktopInteraction.create_folder:1641
+  def     DesktopInteraction.create_new_excel:2742
+  def     DesktopInteraction.cut_file:1779
+  def     DesktopInteraction.double_click_file:1883
+  def     DesktopInteraction.drag_file:1412
+  def     DesktopInteraction.enable_scheduled_task:582
+  def     DesktopInteraction.get_browser_url:2984
+  def     DesktopInteraction.get_interesting_files:1970
+  def     DesktopInteraction.get_privacy_apps:1404
+  def     DesktopInteraction.get_scheduled_tasks:590
+  def     DesktopInteraction.get_storage_usage:606
+  def     DesktopInteraction.get_user_opened_privacy_apps:1408
+  def     DesktopInteraction.get_window_rect:1082
+  def     DesktopInteraction.identify_excel_windows:2840
+  def     DesktopInteraction.identify_ppt_windows:2788
+  def     DesktopInteraction.identify_word_windows:2892
+  def     DesktopInteraction.is_deltarune_related:1927
+  def     DesktopInteraction.is_element_nearby:2406
+  def     DesktopInteraction.is_mouse_over_desktop_element:1323
+  def     DesktopInteraction.mark_app_as_closed:1368
+  def     DesktopInteraction.mark_app_as_opened:1331
+  def     DesktopInteraction.mark_app_as_opened.enum_callback:1348
+  def     DesktopInteraction.remove_scheduled_task:577
+  def     DesktopInteraction.rename_file:1462
+  def     DesktopInteraction.restore_data:652
+  def     DesktopInteraction.right_click_file:1904
+  def     get_root_window:149
+  def     window_from_point:160
+
+--- ralsei_pet\modules\dialogue_system.py  (5 个) ---
+  def     DialogueSystem._get_response_from_template:619
+  def     DialogueSystem._weighted_random_choice:611
+  def     DialogueSystem.get_personalized_greeting:1459
+  def     DialogueSystem.get_random_greeting:1288
+  def     DialogueSystem.update_context_DEPRECATED:1275
+
+--- ralsei_pet\modules\dr_textbox.py  (1 个) ---
+  def     DrTextboxFrame.animation_enabled:280
+
+--- ralsei_pet\modules\emotion_system.py  (7 个) ---
+  def     EmotionSystem.get_animation_for_emotion:837
+  def     EmotionSystem.get_dialogue_for_emotion:1180
+  def     EmotionSystem.get_emotion_intensity:576
+  def     EmotionSystem.get_face_for_emotion_DEPRECATED:995
+  def     EmotionSystem.get_personality_trait:567
+  def     EmotionSystem.set_emotion:493
+  def     EmotionSystem.set_personality_trait:571
+
+--- ralsei_pet\modules\energy_hunger.py  (4 个) ---
+  def     EnergyHungerSystem._set_eating:221
+  def     EnergyHungerSystem._set_resting:212
+  def     EnergyHungerSystem.get_energy_percentage:238
+  def     EnergyHungerSystem.get_hunger_percentage:242
+
+--- ralsei_pet\modules\entertainment_system.py  (18 个) ---
+  def     EntertainmentSystem._add_recent_activity:509
+  def     EntertainmentSystem._check_creative_achievements:537
+  def     EntertainmentSystem._check_game_achievements:520
+  def     EntertainmentSystem.answer_riddle:470
+  def     EntertainmentSystem.end_creative_activity:403
+  def     EntertainmentSystem.end_game:319
+  def     EntertainmentSystem.generate_story:484
+  def     EntertainmentSystem.get_activity_stats:557
+  def     EntertainmentSystem.get_available_creative_features:281
+  def     EntertainmentSystem.get_available_games:272
+  def     EntertainmentSystem.get_creative_achievements:569
+  def     EntertainmentSystem.get_game_achievements:565
+  def     EntertainmentSystem.get_recent_activities:561
+  def     EntertainmentSystem.get_riddle:465
+  def     EntertainmentSystem.save_entertainment_data:246
+  def     EntertainmentSystem.start_creative_activity:378
+  def     EntertainmentSystem.start_game:290
+  def     EntertainmentSystem.tell_joke:458
+
+--- ralsei_pet\modules\floor_manager.py  (2 个) ---
+  def     FloorManager.is_above:353
+  def     FloorManager.z_order_index:331
+
+--- ralsei_pet\modules\global_hotkey.py  (4 个) ---
+  def     HotkeyFilter._F.nativeEventFilter:284
+  def     HotkeyRegistrar.dispatch:143
+  def     HotkeyRegistrar.unregister_all:129
+  def     reset_default:168
+
+--- ralsei_pet\modules\item_interact.py  (4 个) ---
+  def     data_gaps:157
+  def     is_interactive:151
+  def     load_pickups:387
+  def     survey:403
+
+--- ralsei_pet\modules\item_menu.py  (1 个) ---
+  def     ItemMenu.toggle:331
+
+--- ralsei_pet\modules\item_menu_ui.py  (1 个) ---
+  def     ItemMenuUI.close_panel:278
+
+--- ralsei_pet\modules\item_system.py  (2 个) ---
+  def     ItemCatalog.chapter_ids:202
+  def     ItemCatalog.has:220
+
+--- ralsei_pet\modules\logger_utils.py  (3 个) ---
+  def     _SafeTimedRotatingFileHandler.doRollover:67
+  def     get_log_dir:204
+  def     set_level:186
+
+--- ralsei_pet\modules\memory_graph.py  (1 个) ---
+  def     MemoryGraph.feedback:539
+
+--- ralsei_pet\modules\memory_system.py  (25 个) ---
+  def     MemorySystem.add_experience:345
+  def     MemorySystem.add_important_date:336
+  def     MemorySystem.add_memory:158
+  def     MemorySystem.check_level_up:351
+  def     MemorySystem.get_associated_memories:274
+  def     MemorySystem.get_important_date:341
+  def     MemorySystem.get_knowledge_summary:900
+  def     MemorySystem.get_memory_stats:1701
+  def     MemorySystem.get_memory_strength:828
+  def     MemorySystem.get_recent_memory:201
+  def     MemorySystem.get_skill_level:814
+  def     MemorySystem.get_user_behavior_patterns:751
+  def     MemorySystem.has_skill:818
+  def     MemorySystem.improve_skill:804
+  def     MemorySystem.integrate_knowledge:857
+  def     MemorySystem.learn_from_experience:832
+  def     MemorySystem.learn_new_skill:771
+  def     MemorySystem.query_memory:213
+  def     MemorySystem.recall_feedback:1377
+  def     MemorySystem.recall_report:1421
+  def     MemorySystem.reconstruct_scene:1530
+  def     MemorySystem.remember_key:1102
+  def     MemorySystem.remember_user_behavior:740
+  def     MemorySystem.set_verifier:1411
+  def     MemorySystem.update_memory_strength:822
+
+--- ralsei_pet\modules\npc_system.py  (28 个) ---
+  class   FollowerBoard:374
+  def     FollowerBoard.__init__:381
+  def     FollowerBoard.followers:393
+  def     FollowerBoard.is_following:390
+  def     FollowerBoard.request:403
+  def     FollowerBoard.respond:419
+  def     FollowerBoard.state_of:387
+  class   NpcDef:104
+  def     NpcDef.__init__:111
+  def     NpcDef.__repr__:138
+  def     NpcDef.to_dict:128
+  class   NpcRegistry:169
+  def     NpcRegistry.__contains__:183
+  def     NpcRegistry.__init__:172
+  def     NpcRegistry.__len__:180
+  def     NpcRegistry.lines_of:204
+  def     NpcRegistry.main_npcs:198
+  def     NpcRegistry.of_tier:195
+  def     NpcRegistry.plain_npcs:201
+  def     _as_tuple:142
+  def     _default_root:211
+  def     can_follow:260
+  def     dialogue_source:265
+  def     follow_policy:250
+  def     load_registry:222
+  def     needs_consent:255
+  def     npc_from_dict:150
+  def     registry_paths:216
+
+--- ralsei_pet\modules\pet_ai.py  (1 个) ---
+  def     PetAI.trigger_event:732
+
+--- ralsei_pet\modules\pet_interaction.py  (23 个) ---
+  class   BodyRegionMapper:75
+  def     BodyRegionMapper.__init__:85
+  def     BodyRegionMapper._build_alpha_mask:104
+  def     BodyRegionMapper.set_sprite:91
+  class   Gesture:43
+  class   GestureTracker:187
+  def     GestureTracker.__init__:207
+  def     GestureTracker.on_move:281
+  def     GestureTracker.on_press:222
+  def     GestureTracker.on_release:231
+  class   PetEvent:53
+  class   PetInteractionTracker:308
+  def     PetInteractionTracker.__init__:311
+  def     PetInteractionTracker.handle_move:354
+  def     PetInteractionTracker.handle_press:340
+  def     PetInteractionTracker.handle_release:347
+  def     PetInteractionTracker.set_drag_active:320
+  def     PetInteractionTracker.set_follow_active:325
+  def     PetInteractionTracker.set_sprite:317
+  class   _StrokeDetector:142
+  def     _StrokeDetector.__init__:145
+  def     _StrokeDetector.feed:160
+  def     _StrokeDetector.reset:155
+
+--- ralsei_pet\modules\relationship.py  (3 个) ---
+  class   Relationship:158
+  def     Relationship.__init__:168
+  def     progress_to_next:135
+
+--- ralsei_pet\modules\scene_camera.py  (3 个) ---
+  def     Camera.set_border:228
+  def     Camera.set_size:224
+  def     scale_rect:172
+
+--- ralsei_pet\modules\scene_controller.py  (15 个) ---
+  def     SceneController.available_scenes:177
+  def     SceneController.context_snapshot:523
+  def     SceneController.destinations:629
+  def     SceneController.destinations_text:641
+  def     SceneController.follow_route:600
+  def     SceneController.load_pathfind_data:661
+  def     SceneController.pick_route:582
+  def     SceneController.plan_route_text:725
+  def     SceneController.plan_route_to:705
+  def     SceneController.ready:163
+  def     SceneController.render_summary:390
+  def     SceneController.resolve_destination:685
+  def     SceneController.resolve_objects:474
+  def     SceneController.route_reason:733
+  def     SceneController.scene_info:182
+
+--- ralsei_pet\modules\scene_pathfind.py  (18 个) ---
+  def     _default_extract_goal:502
+  def     _haystack:364
+  def     _locate_scene:618
+  def     _match_tier:382
+  def     _name_tail:374
+  def     _scene_id_by_room:634
+  def     _scene_pool:320
+  def     _step_reason:646
+  def     aliases_path:74
+  def     build_adjacency:200
+  def     describe_plan:657
+  def     load_aliases:89
+  def     load_room_graph:142
+  def     plan_from_text:519
+  def     plan_route:289
+  def     resolve_target:413
+  def     room_graph_path:79
+  def     shortest_path:217
+
+--- ralsei_pet\modules\scene_render.py  (2 个) ---
+  def     output_size:132
+  def     plan_summary:655
+
+--- ralsei_pet\modules\scene_routing.py  (5 个) ---
+  def     describe_destinations:420
+  def     describe_route:365
+  def     destinations:383
+  def     route_reason:352
+  def     route_target:340
+
+--- ralsei_pet\modules\scene_system.py  (7 个) ---
+  def     _as_rect:506
+  def     _cond_ok:666
+  def     depth_of:687
+  def     pick_variant:564
+  def     resolve_anchor:516
+  def     resolve_asset_path:142
+  def     visible_objects:608
+
+--- ralsei_pet\modules\scene_walk.py  (23 个) ---
+  def     _arc_pos:766
+  def     _backtrack_segment:794
+  def     _build_grid:275
+  def     _despike:700
+  def     _grid_of:923
+  def     _inflate:227
+  def     _monotone_forward:634
+  def     _nearest_free:304
+  def     _nearest_free_visible:323
+  def     _nearest_vertex:756
+  def     _parse_rect:192
+  def     _turn_deg:688
+  def     astar:362
+  def     blocks_at:233
+  def     chaikin:448
+  def     describe_walk:1023
+  def     hit_obstacle:255
+  def     load_obstacles:138
+  def     obstacles_path:124
+  def     plan_walk:830
+  def     room_obstacles:210
+  def     simplify_collinear:475
+  def     smooth_keep_walkable:525
+
+--- ralsei_pet\modules\search_summarizer.py  (8 个) ---
+  def     SearchSummarizer._clamp_num_results:28
+  def     SearchSummarizer._extract_keywords:128
+  def     SearchSummarizer._fetch_results:36
+  def     SearchSummarizer._search_any:83
+  def     SearchSummarizer.get_brief_summary:111
+  def     SearchSummarizer.search_bing:76
+  def     SearchSummarizer.search_google:69
+  def     SearchSummarizer.summarize_search_results:94
+
+--- ralsei_pet\modules\social_growth_system.py  (17 个) ---
+  def     SocialGrowthSystem._check_achievements:533
+  def     SocialGrowthSystem._check_evolution:513
+  def     SocialGrowthSystem._check_level_up:494
+  def     SocialGrowthSystem._get_relationship_level:679
+  def     SocialGrowthSystem._unlock_achievement:607
+  def     SocialGrowthSystem._unlock_achievement_impl:622
+  def     SocialGrowthSystem.add_experience:469
+  def     SocialGrowthSystem.check_other_pets:686
+  def     SocialGrowthSystem.get_achievements:716
+  def     SocialGrowthSystem.get_evolution_stage:724
+  def     SocialGrowthSystem.get_next_level_experience:728
+  def     SocialGrowthSystem.get_progress_to_next_level:737
+  def     SocialGrowthSystem.get_relationships:720
+  def     SocialGrowthSystem.get_remaining_experience:732
+  def     SocialGrowthSystem.initiate_interaction:695
+  def     SocialGrowthSystem.save_growth_data:450
+  def     SocialGrowthSystem.update_relationship:634
+
+--- ralsei_pet\modules\sound_manager.py  (9 个) ---
+  def     SoundManager.get_volume:68
+  def     SoundManager.play_click:149
+  def     SoundManager.play_footstep:161
+  def     SoundManager.play_happy:152
+  def     SoundManager.play_jump:158
+  def     SoundManager.play_sad:155
+  def     SoundManager.play_spellcast:141
+  def     SoundManager.set_enabled:57
+  def     SoundManager.set_volume:60
+
+--- ralsei_pet\modules\sprite_loader.py  (11 个) ---
+  def     SpriteLoader.add_animation:917
+  def     SpriteLoader.clear_cache:906
+  def     SpriteLoader.get_all_animations:890
+  def     SpriteLoader.get_animation_config_report:384
+  def     SpriteLoader.get_animation_files:941
+  def     SpriteLoader.get_cache_stats:896
+  def     SpriteLoader.get_frame_count:826
+  def     SpriteLoader.get_position_offset:882
+  def     SpriteLoader.get_sprite:802
+  def     SpriteLoader.get_unconfigured_asset_report:403
+  def     SpriteLoader.set_position_offset:886
+
+--- ralsei_pet\modules\text_segmenter.py  (1 个) ---
+  def     disable:188
+
+--- ralsei_pet\modules\weather_system.py  (2 个) ---
+  def     WeatherSystem.set_api_key:314
+  def     WeatherSystem.set_location:308
+
+--- ralsei_pet\modules\worldview_recall.py  (2 个) ---
+  def     load_blocks:183
+  def     load_graph:188
+
+--- ralsei_pet\src\main.py  (31 个) ---
+  def     RalseiPet._async_api_request:7744
+  def     RalseiPet._async_api_request._request_thread:7748
+  def     RalseiPet._is_falling_through_window:3794
+  def     RalseiPet._recover_from_sadness:9433
+  def     RalseiPet.check_desktop_element_at_target:3067
+  def     RalseiPet.check_file_content:9308
+  def     RalseiPet.check_image_content:9374
+  def     RalseiPet.check_recycle_bin:9550
+  def     RalseiPet.check_text_content:9332
+  def     RalseiPet.get_element_at_pos:1538
+  def     RalseiPet.init_api_client:7142
+  def     RalseiPet.interact_with_file:9300
+  def     RalseiPet.interact_with_folder:9304
+  def     RalseiPet.is_own_code:9440
+  def     RalseiPet.move_to_edge_and_shrink:5359
+  def     RalseiPet.move_to_edge_and_shrink._move_step:5384
+  def     RalseiPet.on_animation_complete:9198
+  def     RalseiPet.react_to_file_emotionally:9390
+  def     RalseiPet.react_to_vs_code_code:9417
+  def     RalseiPet.rename_file:9648
+  def     RalseiPet.reset_special_states:4891
+  def     RalseiPet.send_api_request:7209
+  def     RalseiPet.start_mouse_drag:3085
+  def     RalseiPet.suggest_game:5475
+  def     RalseiPet.tell_joke:5460
+  def     RalseiPet.toggle_bubble:2452
+  def     RalseiPet.trigger_shy:4869
+  def     RalseiPet.trigger_surprise:4863
+  def     RalseiPet.trigger_teasplash:4886
+  def     RalseiPet.trigger_unhappy:4875
+  def     RalseiPet.trigger_victory:4881
+
+=== 整个类「所有方法都不可达」的类（最可疑：被实例化但从不使用）===
+  DesktopInteraction.mark_app_as_opened          ralsei_pet\modules\desktop_interaction.py:1331   方法数=1
+  GestureTracker                                 ralsei_pet\modules\pet_interaction.py:187   方法数=4
+  NpcDef                                         ralsei_pet\modules\npc_system.py:104   方法数=3
+  RalseiPet._async_api_request                   ralsei_pet\src\main.py:7744   方法数=1
+  RalseiPet.move_to_edge_and_shrink              ralsei_pet\src\main.py:5359   方法数=1
+  _SafeTimedRotatingFileHandler                  ralsei_pet\modules\logger_utils.py:48   方法数=1
+  _StrokeDetector                                ralsei_pet\modules\pet_interaction.py:142   方法数=3

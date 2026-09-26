@@ -1,0 +1,4 @@
+exit=1  stdout_lines=125
+syntax: ok=89 fail=0
+deadcode A(真零引用)=227  B(仅字符串提及)=30
+same-scope dupes = 0 ; cross-file same-name groups = 88

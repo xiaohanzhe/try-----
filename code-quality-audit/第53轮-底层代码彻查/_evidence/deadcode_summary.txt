@@ -1,0 +1,525 @@
+=== 按模块汇总（A = 直接零引用；级联 = 从入口不可达）===
+
+---- 本轮范围（除 AI / 场景系统）----
+autonomous_agent       A=2   级联=2   【本轮范围】
+bubble_system          A=6   级联=13  【本轮范围】
+config_manager         A=12  级联=13  【本轮范围】
+conversation_focus     A=2   级联=2   【本轮范围】
+customization_system   A=39  级联=43  【本轮范围】
+desktop_interaction    A=16  级联=32  【本轮范围】
+dialogue_system        A=5   级联=5   【本轮范围】
+dr_textbox             A=1   级联=1   【本轮范围】
+emotion_system         A=6   级联=7   【本轮范围】
+energy_hunger          A=4   级联=4   【本轮范围】
+entertainment_system   A=14  级联=18  【本轮范围】
+floor_manager          A=1   级联=2   【本轮范围】
+global_hotkey          A=2   级联=4   【本轮范围】
+logger_utils           A=2   级联=3   【本轮范围】
+main                   A=23  级联=38  【本轮范围】
+pet_interaction        A=6   级联=23  【本轮范围】
+relationship           A=2   级联=3   【本轮范围】
+social_growth_system   A=7   级联=17  【本轮范围】
+sound_manager          A=9   级联=9   【本轮范围】
+sprite_loader          A=11  级联=11  【本轮范围】
+test_office_functions  A=2   级联=0   【本轮范围】
+text_segmenter         A=1   级联=1   【本轮范围】
+weather_system         A=2   级联=2   【本轮范围】
+
+---- 已排除（AI 线 / 场景线，本轮不判）----
+api_client             A=1   级联=1   (AI/场景线)
+companion              A=4   级联=5   (AI/场景线)
+companion_dialog       A=8   级联=15  (AI/场景线)
+companion_roster       A=8   级联=19  (AI/场景线)
+item_interact          A=3   级联=4   (AI/场景线)
+item_menu              A=1   级联=1   (AI/场景线)
+item_menu_ui           A=1   级联=1   (AI/场景线)
+item_system            A=2   级联=2   (AI/场景线)
+memory_graph           A=0   级联=1   (AI/场景线)
+memory_system          A=18  级联=25  (AI/场景线)
+npc_system             A=11  级联=28  (AI/场景线)
+pet_ai                 A=0   级联=1   (AI/场景线)
+scene_camera           A=3   级联=3   (AI/场景线)
+scene_controller       A=9   级联=15  (AI/场景线)
+scene_pathfind         A=0   级联=18  (AI/场景线)
+scene_render           A=1   级联=2   (AI/场景线)
+scene_routing          A=1   级联=5   (AI/场景线)
+scene_system           A=2   级联=7   (AI/场景线)
+scene_walk             A=5   级联=23  (AI/场景线)
+search_summarizer      A=2   级联=8   (AI/场景线)
+worldview_recall       A=2   级联=2   (AI/场景线)
+
+=== 本轮范围内的符号明细 ===
+
+## autonomous_agent  (4 条)
+   A零引用 | def    AutonomousAgent.notify_position_changed    ralsei_pet\modules\autonomous_agent.py:294
+   A零引用 | def    InteractionTarget.nearest_edge             ralsei_pet\modules\autonomous_agent.py:75
+   级联 | def     AutonomousAgent.notify_position_changed:294
+   级联 | def     InteractionTarget.nearest_edge:75
+
+## bubble_system  (19 条)
+   A零引用 | def    Bubble.can_eject                           ralsei_pet\modules\bubble_system.py:295
+   A零引用 | def    Bubble.spin_to                             ralsei_pet\modules\bubble_system.py:255
+   A零引用 | def    BubbleField.keep_inside_all                ralsei_pet\modules\bubble_system.py:365
+   A零引用 | def    BubbleField.tick_all                       ralsei_pet\modules\bubble_system.py:361
+   A零引用 | def    must_stay_inside                           ralsei_pet\modules\bubble_system.py:155
+   A零引用 | def    grants_foreign_dark                        ralsei_pet\modules\bubble_system.py:170
+   级联 | class   Bubble:236
+   级联 | def     Bubble.__init__:243
+   级联 | def     Bubble.can_eject:295
+   级联 | def     Bubble.keep_inside:281
+   级联 | def     Bubble.spin_to:255
+   级联 | def     BubbleField.equip:319
+   级联 | def     BubbleField.keep_inside_all:365
+   级联 | def     BubbleField.tick_all:361
+   级联 | def     BubbleField.unequip:338
+   级联 | def     clamp_inside:195
+   级联 | def     grants_foreign_dark:170
+   级联 | def     must_stay_inside:155
+   级联 | def     scale_for:121
+
+## config_manager  (25 条)
+   A零引用 | def    ConfigManager.add_observer                 ralsei_pet\modules\config_manager.py:412
+   A零引用 | def    ConfigManager.enable_api                   ralsei_pet\modules\config_manager.py:594
+   A零引用 | def    ConfigManager.get_full_config              ralsei_pet\modules\config_manager.py:517
+   A零引用 | def    ConfigManager.get_security_config          ralsei_pet\modules\config_manager.py:615
+   A零引用 | def    ConfigManager.is_api_enabled               ralsei_pet\modules\config_manager.py:590
+   A零引用 | def    ConfigManager.is_encryption_enabled        ralsei_pet\modules\config_manager.py:624
+   A零引用 | def    ConfigManager.is_usage_data_enabled        ralsei_pet\modules\config_manager.py:607
+   A零引用 | def    ConfigManager.remove_observer              ralsei_pet\modules\config_manager.py:417
+   A零引用 | def    ConfigManager.reset_config                 ralsei_pet\modules\config_manager.py:488
+   A零引用 | def    ConfigManager.update_privacy_config        ralsei_pet\modules\config_manager.py:602
+   A零引用 | def    ConfigManager.update_security_config       ralsei_pet\modules\config_manager.py:619
+   A零引用 | def    ConfigManager.validate_config              ralsei_pet\modules\config_manager.py:521
+   级联 | def     ConfigManager.add_observer:412
+   级联 | def     ConfigManager.enable_api:594
+   级联 | def     ConfigManager.get_full_config:517
+   级联 | def     ConfigManager.get_security_config:615
+   级联 | def     ConfigManager.is_activity_tracking_enabled:611
+   级联 | def     ConfigManager.is_api_enabled:590
+   级联 | def     ConfigManager.is_encryption_enabled:624
+   级联 | def     ConfigManager.is_usage_data_enabled:607
+   级联 | def     ConfigManager.remove_observer:417
+   级联 | def     ConfigManager.reset_config:488
+   级联 | def     ConfigManager.update_privacy_config:602
+   级联 | def     ConfigManager.update_security_config:619
+   级联 | def     ConfigManager.validate_config:521
+
+## conversation_focus  (4 条)
+   A零引用 | def    ConversationFocus.current_label            ralsei_pet\modules\conversation_focus.py:495
+   A零引用 | def    ConversationFocus.is_empty                 ralsei_pet\modules\conversation_focus.py:498
+   级联 | def     ConversationFocus.current_label:495
+   级联 | def     ConversationFocus.is_empty:498
+
+## customization_system  (82 条)
+   A零引用 | def    CustomizationSystem.apply_appearance_changes_DEPRECATED ralsei_pet\modules\customization_system.py:171
+   A零引用 | def    CustomizationSystem.get_available_accessories ralsei_pet\modules\customization_system.py:462
+   A零引用 | def    CustomizationSystem.get_available_accessories_DEPRECATED ralsei_pet\modules\customization_system.py:264
+   A零引用 | def    CustomizationSystem.get_available_activity_levels ralsei_pet\modules\customization_system.py:276
+   A零引用 | def    CustomizationSystem.get_available_backgrounds ralsei_pet\modules\customization_system.py:308
+   A零引用 | def    CustomizationSystem.get_available_color_schemes ralsei_pet\modules\customization_system.py:466
+   A零引用 | def    CustomizationSystem.get_available_color_schemes_DEPRECATED ralsei_pet\modules\customization_system.py:268
+   A零引用 | def    CustomizationSystem.get_available_conversation_topics ralsei_pet\modules\customization_system.py:300
+   A零引用 | def    CustomizationSystem.get_available_creativity_levels ralsei_pet\modules\customization_system.py:328
+   A零引用 | def    CustomizationSystem.get_available_emotional_intensities ralsei_pet\modules\customization_system.py:360
+   A零引用 | def    CustomizationSystem.get_available_environment_locations ralsei_pet\modules\customization_system.py:336
+   A零引用 | def    CustomizationSystem.get_available_formality_levels ralsei_pet\modules\customization_system.py:288
+   A零引用 | def    CustomizationSystem.get_available_humor_levels ralsei_pet\modules\customization_system.py:284
+   A零引用 | def    CustomizationSystem.get_available_humor_types ralsei_pet\modules\customization_system.py:332
+   A零引用 | def    CustomizationSystem.get_available_initiative_levels ralsei_pet\modules\customization_system.py:356
+   A零引用 | def    CustomizationSystem.get_available_interaction_frequencies ralsei_pet\modules\customization_system.py:280
+   A零引用 | def    CustomizationSystem.get_available_interests ralsei_pet\modules\customization_system.py:296
+   A零引用 | def    CustomizationSystem.get_available_knowledge_areas ralsei_pet\modules\customization_system.py:292
+   A零引用 | def    CustomizationSystem.get_available_language_styles ralsei_pet\modules\customization_system.py:320
+   A零引用 | def    CustomizationSystem.get_available_lighting_effects ralsei_pet\modules\customization_system.py:312
+   A零引用 | def    CustomizationSystem.get_available_outfits  ralsei_pet\modules\customization_system.py:458
+   A零引用 | def    CustomizationSystem.get_available_outfits_DEPRECATED ralsei_pet\modules\customization_system.py:260
+   A零引用 | def    CustomizationSystem.get_available_personality_traits ralsei_pet\modules\customization_system.py:316
+   A零引用 | def    CustomizationSystem.get_available_privacy_levels ralsei_pet\modules\customization_system.py:304
+   A零引用 | def    CustomizationSystem.get_available_relationship_types ralsei_pet\modules\customization_system.py:352
+   A零引用 | def    CustomizationSystem.get_available_response_lengths ralsei_pet\modules\customization_system.py:324
+   A零引用 | def    CustomizationSystem.get_available_sizes    ralsei_pet\modules\customization_system.py:272
+   A零引用 | def    CustomizationSystem.get_available_temperature_preferences ralsei_pet\modules\customization_system.py:348
+   A零引用 | def    CustomizationSystem.get_available_time_preferences ralsei_pet\modules\customization_system.py:340
+   A零引用 | def    CustomizationSystem.get_available_verbosity_levels ralsei_pet\modules\customization_system.py:364
+   A零引用 | def    CustomizationSystem.get_available_weather_preferences ralsei_pet\modules\customization_system.py:344
+   A零引用 | def    CustomizationSystem.get_customization_data ralsei_pet\modules\customization_system.py:185
+   A零引用 | def    CustomizationSystem.reset_customization    ralsei_pet\modules\customization_system.py:189
+   A零引用 | def    CustomizationSystem.update_appearance      ralsei_pet\modules\customization_system.py:136
+   A零引用 | def    CustomizationSystem.update_behavior        ralsei_pet\modules\customization_system.py:431
+   A零引用 | def    CustomizationSystem.update_behavior_DEPRECATED ralsei_pet\modules\customization_system.py:143
+   A零引用 | def    CustomizationSystem.update_content_preferences ralsei_pet\modules\customization_system.py:451
+   A零引用 | def    CustomizationSystem.update_content_preferences_DEPRECATED ralsei_pet\modules\customization_system.py:161
+   A零引用 | def    CustomizationSystem.update_privacy_settings ralsei_pet\modules\customization_system.py:166
+   级联 | def     CustomizationSystem.apply_appearance_changes:378
+   级联 | def     CustomizationSystem.apply_appearance_changes_DEPRECATED:171
+   级联 | def     CustomizationSystem.apply_behavior_changes:416
+   级联 | def     CustomizationSystem.apply_content_changes:426
+   级联 | def     CustomizationSystem.get_available_accessories:462
+   级联 | def     CustomizationSystem.get_available_accessories_DEPRECATED:264
+   级联 | def     CustomizationSystem.get_available_activity_levels:276
+   级联 | def     CustomizationSystem.get_available_backgrounds:308
+   级联 | def     CustomizationSystem.get_available_color_schemes:466
+   级联 | def     CustomizationSystem.get_available_color_schemes_DEPRECATED:268
+   级联 | def     CustomizationSystem.get_available_conversation_topics:300
+   级联 | def     CustomizationSystem.get_available_creativity_levels:328
+   级联 | def     CustomizationSystem.get_available_emotional_intensities:360
+   级联 | def     CustomizationSystem.get_available_environment_locations:336
+   级联 | def     CustomizationSystem.get_available_formality_levels:288
+   级联 | def     CustomizationSystem.get_available_humor_levels:284
+   级联 | def     CustomizationSystem.get_available_humor_types:332
+   级联 | def     CustomizationSystem.get_available_initiative_levels:356
+   级联 | def     CustomizationSystem.get_available_interaction_frequencies:280
+   级联 | def     CustomizationSystem.get_available_interests:296
+   级联 | def     CustomizationSystem.get_available_knowledge_areas:292
+   级联 | def     CustomizationSystem.get_available_language_styles:320
+   级联 | def     CustomizationSystem.get_available_lighting_effects:312
+   级联 | def     CustomizationSystem.get_available_outfits:458
+   级联 | def     CustomizationSystem.get_available_outfits_DEPRECATED:260
+   级联 | def     CustomizationSystem.get_available_personality_traits:316
+   级联 | def     CustomizationSystem.get_available_privacy_levels:304
+   级联 | def     CustomizationSystem.get_available_relationship_types:352
+   级联 | def     CustomizationSystem.get_available_response_lengths:324
+   级联 | def     CustomizationSystem.get_available_sizes:272
+   级联 | def     CustomizationSystem.get_available_temperature_preferences:348
+   级联 | def     CustomizationSystem.get_available_time_preferences:340
+   级联 | def     CustomizationSystem.get_available_verbosity_levels:364
+   级联 | def     CustomizationSystem.get_available_weather_preferences:344
+   级联 | def     CustomizationSystem.get_customization_data:185
+   级联 | def     CustomizationSystem.reset_customization:189
+   级联 | def     CustomizationSystem.update_appearance:136
+   级联 | def     CustomizationSystem.update_behavior:431
+   级联 | def     CustomizationSystem.update_behavior_DEPRECATED:143
+   级联 | def     CustomizationSystem.update_content_preferences:451
+   级联 | def     CustomizationSystem.update_content_preferences_DEPRECATED:161
+   级联 | def     CustomizationSystem.update_privacy_settings:166
+   级联 | def     CustomizationSystem.update_relationship:373
+
+## desktop_interaction  (48 条)
+   A零引用 | def    DesktopInteraction.add_scheduled_task      ralsei_pet\modules\desktop_interaction.py:572
+   A零引用 | def    DesktopInteraction.enable_scheduled_task   ralsei_pet\modules\desktop_interaction.py:582
+   A零引用 | def    DesktopInteraction.get_browser_url         ralsei_pet\modules\desktop_interaction.py:2984
+   A零引用 | def    DesktopInteraction.get_interesting_files   ralsei_pet\modules\desktop_interaction.py:1970
+   A零引用 | def    DesktopInteraction.get_privacy_apps        ralsei_pet\modules\desktop_interaction.py:1404
+   A零引用 | def    DesktopInteraction.get_scheduled_tasks     ralsei_pet\modules\desktop_interaction.py:590
+   A零引用 | def    DesktopInteraction.get_storage_usage       ralsei_pet\modules\desktop_interaction.py:606
+   A零引用 | def    DesktopInteraction.get_user_opened_privacy_apps ralsei_pet\modules\desktop_interaction.py:1408
+   A零引用 | def    DesktopInteraction.get_window_rect         ralsei_pet\modules\desktop_interaction.py:1082
+   A零引用 | def    DesktopInteraction.is_mouse_over_desktop_element ralsei_pet\modules\desktop_interaction.py:1323
+   A零引用 | def    DesktopInteraction.mark_app_as_closed      ralsei_pet\modules\desktop_interaction.py:1368
+   A零引用 | def    DesktopInteraction.mark_app_as_opened      ralsei_pet\modules\desktop_interaction.py:1331
+   A零引用 | def    DesktopInteraction.remove_scheduled_task   ralsei_pet\modules\desktop_interaction.py:577
+   A零引用 | def    DesktopInteraction.restore_data            ralsei_pet\modules\desktop_interaction.py:652
+   A零引用 | def    window_from_point                          ralsei_pet\modules\desktop_interaction.py:160
+   A零引用 | def    DesktopInteraction.create_folder           ralsei_pet\modules\desktop_interaction.py:1641
+   级联 | def     DesktopInteraction._get_folder_at_pos:1453
+   级联 | def     DesktopInteraction._is_valid_filename:1507
+   级联 | def     DesktopInteraction.add_scheduled_task:572
+   级联 | def     DesktopInteraction.copy_file:1699
+   级联 | def     DesktopInteraction.create_folder:1641
+   级联 | def     DesktopInteraction.create_new_excel:2742
+   级联 | def     DesktopInteraction.cut_file:1779
+   级联 | def     DesktopInteraction.double_click_file:1883
+   级联 | def     DesktopInteraction.drag_file:1412
+   级联 | def     DesktopInteraction.enable_scheduled_task:582
+   级联 | def     DesktopInteraction.get_browser_url:2984
+   级联 | def     DesktopInteraction.get_interesting_files:1970
+   级联 | def     DesktopInteraction.get_privacy_apps:1404
+   级联 | def     DesktopInteraction.get_scheduled_tasks:590
+   级联 | def     DesktopInteraction.get_storage_usage:606
+   级联 | def     DesktopInteraction.get_user_opened_privacy_apps:1408
+   级联 | def     DesktopInteraction.get_window_rect:1082
+   级联 | def     DesktopInteraction.identify_excel_windows:2840
+   级联 | def     DesktopInteraction.identify_ppt_windows:2788
+   级联 | def     DesktopInteraction.identify_word_windows:2892
+   级联 | def     DesktopInteraction.is_deltarune_related:1927
+   级联 | def     DesktopInteraction.is_element_nearby:2406
+   级联 | def     DesktopInteraction.is_mouse_over_desktop_element:1323
+   级联 | def     DesktopInteraction.mark_app_as_closed:1368
+   级联 | def     DesktopInteraction.mark_app_as_opened:1331
+   级联 | def     DesktopInteraction.mark_app_as_opened.enum_callback:1348
+   级联 | def     DesktopInteraction.remove_scheduled_task:577
+   级联 | def     DesktopInteraction.rename_file:1462
+   级联 | def     DesktopInteraction.restore_data:652
+   级联 | def     DesktopInteraction.right_click_file:1904
+   级联 | def     get_root_window:149
+   级联 | def     window_from_point:160
+
+## dialogue_system  (10 条)
+   A零引用 | def    DialogueSystem._get_response_from_template ralsei_pet\modules\dialogue_system.py:619
+   A零引用 | def    DialogueSystem._weighted_random_choice     ralsei_pet\modules\dialogue_system.py:611
+   A零引用 | def    DialogueSystem.get_personalized_greeting   ralsei_pet\modules\dialogue_system.py:1459
+   A零引用 | def    DialogueSystem.get_random_greeting         ralsei_pet\modules\dialogue_system.py:1288
+   A零引用 | def    DialogueSystem.update_context_DEPRECATED   ralsei_pet\modules\dialogue_system.py:1275
+   级联 | def     DialogueSystem._get_response_from_template:619
+   级联 | def     DialogueSystem._weighted_random_choice:611
+   级联 | def     DialogueSystem.get_personalized_greeting:1459
+   级联 | def     DialogueSystem.get_random_greeting:1288
+   级联 | def     DialogueSystem.update_context_DEPRECATED:1275
+
+## dr_textbox  (2 条)
+   A零引用 | def    DrTextboxFrame.animation_enabled           ralsei_pet\modules\dr_textbox.py:280
+   级联 | def     DrTextboxFrame.animation_enabled:280
+
+## emotion_system  (13 条)
+   A零引用 | def    EmotionSystem.get_dialogue_for_emotion     ralsei_pet\modules\emotion_system.py:1180
+   A零引用 | def    EmotionSystem.get_emotion_intensity        ralsei_pet\modules\emotion_system.py:576
+   A零引用 | def    EmotionSystem.get_face_for_emotion_DEPRECATED ralsei_pet\modules\emotion_system.py:995
+   A零引用 | def    EmotionSystem.get_personality_trait        ralsei_pet\modules\emotion_system.py:567
+   A零引用 | def    EmotionSystem.set_emotion                  ralsei_pet\modules\emotion_system.py:493
+   A零引用 | def    EmotionSystem.get_animation_for_emotion    ralsei_pet\modules\emotion_system.py:837
+   级联 | def     EmotionSystem.get_animation_for_emotion:837
+   级联 | def     EmotionSystem.get_dialogue_for_emotion:1180
+   级联 | def     EmotionSystem.get_emotion_intensity:576
+   级联 | def     EmotionSystem.get_face_for_emotion_DEPRECATED:995
+   级联 | def     EmotionSystem.get_personality_trait:567
+   级联 | def     EmotionSystem.set_emotion:493
+   级联 | def     EmotionSystem.set_personality_trait:571
+
+## energy_hunger  (8 条)
+   A零引用 | def    EnergyHungerSystem._set_eating             ralsei_pet\modules\energy_hunger.py:221
+   A零引用 | def    EnergyHungerSystem._set_resting            ralsei_pet\modules\energy_hunger.py:212
+   A零引用 | def    EnergyHungerSystem.get_energy_percentage   ralsei_pet\modules\energy_hunger.py:238
+   A零引用 | def    EnergyHungerSystem.get_hunger_percentage   ralsei_pet\modules\energy_hunger.py:242
+   级联 | def     EnergyHungerSystem._set_eating:221
+   级联 | def     EnergyHungerSystem._set_resting:212
+   级联 | def     EnergyHungerSystem.get_energy_percentage:238
+   级联 | def     EnergyHungerSystem.get_hunger_percentage:242
+
+## entertainment_system  (32 条)
+   A零引用 | def    EntertainmentSystem.answer_riddle          ralsei_pet\modules\entertainment_system.py:470
+   A零引用 | def    EntertainmentSystem.end_creative_activity  ralsei_pet\modules\entertainment_system.py:403
+   A零引用 | def    EntertainmentSystem.end_game               ralsei_pet\modules\entertainment_system.py:319
+   A零引用 | def    EntertainmentSystem.generate_story         ralsei_pet\modules\entertainment_system.py:484
+   A零引用 | def    EntertainmentSystem.get_activity_stats     ralsei_pet\modules\entertainment_system.py:557
+   A零引用 | def    EntertainmentSystem.get_available_creative_features ralsei_pet\modules\entertainment_system.py:281
+   A零引用 | def    EntertainmentSystem.get_available_games    ralsei_pet\modules\entertainment_system.py:272
+   A零引用 | def    EntertainmentSystem.get_creative_achievements ralsei_pet\modules\entertainment_system.py:569
+   A零引用 | def    EntertainmentSystem.get_game_achievements  ralsei_pet\modules\entertainment_system.py:565
+   A零引用 | def    EntertainmentSystem.get_recent_activities  ralsei_pet\modules\entertainment_system.py:561
+   A零引用 | def    EntertainmentSystem.get_riddle             ralsei_pet\modules\entertainment_system.py:465
+   A零引用 | def    EntertainmentSystem.start_creative_activity ralsei_pet\modules\entertainment_system.py:378
+   A零引用 | def    EntertainmentSystem.start_game             ralsei_pet\modules\entertainment_system.py:290
+   A零引用 | def    EntertainmentSystem.tell_joke              ralsei_pet\modules\entertainment_system.py:458
+   级联 | def     EntertainmentSystem._add_recent_activity:509
+   级联 | def     EntertainmentSystem._check_creative_achievements:537
+   级联 | def     EntertainmentSystem._check_game_achievements:520
+   级联 | def     EntertainmentSystem.answer_riddle:470
+   级联 | def     EntertainmentSystem.end_creative_activity:403
+   级联 | def     EntertainmentSystem.end_game:319
+   级联 | def     EntertainmentSystem.generate_story:484
+   级联 | def     EntertainmentSystem.get_activity_stats:557
+   级联 | def     EntertainmentSystem.get_available_creative_features:281
+   级联 | def     EntertainmentSystem.get_available_games:272
+   级联 | def     EntertainmentSystem.get_creative_achievements:569
+   级联 | def     EntertainmentSystem.get_game_achievements:565
+   级联 | def     EntertainmentSystem.get_recent_activities:561
+   级联 | def     EntertainmentSystem.get_riddle:465
+   级联 | def     EntertainmentSystem.save_entertainment_data:246
+   级联 | def     EntertainmentSystem.start_creative_activity:378
+   级联 | def     EntertainmentSystem.start_game:290
+   级联 | def     EntertainmentSystem.tell_joke:458
+
+## floor_manager  (3 条)
+   A零引用 | def    FloorManager.is_above                      ralsei_pet\modules\floor_manager.py:353
+   级联 | def     FloorManager.is_above:353
+   级联 | def     FloorManager.z_order_index:331
+
+## global_hotkey  (6 条)
+   A零引用 | def    reset_default                              ralsei_pet\modules\global_hotkey.py:168
+   A零引用 | def    HotkeyFilter._F.nativeEventFilter          ralsei_pet\modules\global_hotkey.py:284
+   级联 | def     HotkeyFilter._F.nativeEventFilter:284
+   级联 | def     HotkeyRegistrar.dispatch:143
+   级联 | def     HotkeyRegistrar.unregister_all:129
+   级联 | def     reset_default:168
+
+## logger_utils  (5 条)
+   A零引用 | def    get_log_dir                                ralsei_pet\modules\logger_utils.py:204
+   A零引用 | def    set_level                                  ralsei_pet\modules\logger_utils.py:186
+   级联 | def     _SafeTimedRotatingFileHandler.doRollover:67
+   级联 | def     get_log_dir:204
+   级联 | def     set_level:186
+
+## main  (61 条)
+   A零引用 | def    RalseiPet._is_falling_through_window       ralsei_pet\src\main.py:3794
+   A零引用 | def    RalseiPet.check_desktop_element_at_target  ralsei_pet\src\main.py:3067
+   A零引用 | def    RalseiPet.check_recycle_bin                ralsei_pet\src\main.py:9550
+   A零引用 | def    RalseiPet.get_element_at_pos               ralsei_pet\src\main.py:1538
+   A零引用 | def    RalseiPet.init_api_client                  ralsei_pet\src\main.py:7142
+   A零引用 | def    RalseiPet.interact_with_file               ralsei_pet\src\main.py:9300
+   A零引用 | def    RalseiPet.interact_with_folder             ralsei_pet\src\main.py:9304
+   A零引用 | def    RalseiPet.is_own_code                      ralsei_pet\src\main.py:9440
+   A零引用 | def    RalseiPet.move_to_edge_and_shrink          ralsei_pet\src\main.py:5359
+   A零引用 | def    RalseiPet.on_animation_complete            ralsei_pet\src\main.py:9198
+   A零引用 | def    RalseiPet.react_to_vs_code_code            ralsei_pet\src\main.py:9417
+   A零引用 | def    RalseiPet.reset_special_states             ralsei_pet\src\main.py:4891
+   A零引用 | def    RalseiPet.start_mouse_drag                 ralsei_pet\src\main.py:3085
+   A零引用 | def    RalseiPet.suggest_game                     ralsei_pet\src\main.py:5475
+   A零引用 | def    RalseiPet.tell_joke                        ralsei_pet\src\main.py:5460
+   A零引用 | def    RalseiPet.toggle_bubble                    ralsei_pet\src\main.py:2452
+   A零引用 | def    RalseiPet.trigger_shy                      ralsei_pet\src\main.py:4869
+   A零引用 | def    RalseiPet.trigger_surprise                 ralsei_pet\src\main.py:4863
+   A零引用 | def    RalseiPet.trigger_teasplash                ralsei_pet\src\main.py:4886
+   A零引用 | def    RalseiPet.trigger_unhappy                  ralsei_pet\src\main.py:4875
+   A零引用 | def    RalseiPet.trigger_victory                  ralsei_pet\src\main.py:4881
+   A零引用 | def    RalseiPet._async_api_request               ralsei_pet\src\main.py:7744
+   A零引用 | def    RalseiPet.react_to_file_emotionally        ralsei_pet\src\main.py:9390
+   级联 | def     RalseiPet._async_api_request:7744
+   级联 | def     RalseiPet._async_api_request._request_thread:7748
+   级联 | def     RalseiPet._is_falling_through_window:3794
+   级联 | def     RalseiPet._recover_from_sadness:9433
+   级联 | def     RalseiPet.check_desktop_element_at_target:3067
+   级联 | def     RalseiPet.check_file_content:9308
+   级联 | def     RalseiPet.check_image_content:9374
+   级联 | def     RalseiPet.check_recycle_bin:9550
+   级联 | def     RalseiPet.check_text_content:9332
+   级联 | def     RalseiPet.get_element_at_pos:1538
+   级联 | def     RalseiPet.init_api_client:7142
+   级联 | def     RalseiPet.interact_with_file:9300
+   级联 | def     RalseiPet.interact_with_folder:9304
+   级联 | def     RalseiPet.is_own_code:9440
+   级联 | def     RalseiPet.move_to_edge_and_shrink:5359
+   级联 | def     RalseiPet.move_to_edge_and_shrink._move_step:5384
+   级联 | def     RalseiPet.on_animation_complete:9198
+   级联 | def     RalseiPet.react_to_file_emotionally:9390
+   级联 | def     RalseiPet.react_to_vs_code_code:9417
+   级联 | def     RalseiPet.rename_file:9648
+   级联 | def     RalseiPet.reset_special_states:4891
+   级联 | def     RalseiPet.send_api_request:7209
+   级联 | def     RalseiPet.start_mouse_drag:3085
+   级联 | def     RalseiPet.suggest_game:5475
+   级联 | def     RalseiPet.tell_joke:5460
+   级联 | def     RalseiPet.toggle_bubble:2452
+   级联 | def     RalseiPet.trigger_shy:4869
+   级联 | def     RalseiPet.trigger_surprise:4863
+   级联 | def     RalseiPet.trigger_teasplash:4886
+   级联 | def     RalseiPet.trigger_unhappy:4875
+   级联 | def     RalseiPet.trigger_victory:4881
+   级联 | DesktopInteraction.mark_app_as_opened          ralsei_pet\modules\desktop_interaction.py:1331   方法数=1
+   级联 | GestureTracker                                 ralsei_pet\modules\pet_interaction.py:187   方法数=4
+   级联 | NpcDef                                         ralsei_pet\modules\npc_system.py:104   方法数=3
+   级联 | RalseiPet._async_api_request                   ralsei_pet\src\main.py:7744   方法数=1
+   级联 | RalseiPet.move_to_edge_and_shrink              ralsei_pet\src\main.py:5359   方法数=1
+   级联 | _SafeTimedRotatingFileHandler                  ralsei_pet\modules\logger_utils.py:48   方法数=1
+   级联 | _StrokeDetector                                ralsei_pet\modules\pet_interaction.py:142   方法数=3
+
+## pet_interaction  (29 条)
+   A零引用 | def    PetInteractionTracker.handle_move          ralsei_pet\modules\pet_interaction.py:354
+   A零引用 | def    PetInteractionTracker.handle_press         ralsei_pet\modules\pet_interaction.py:340
+   A零引用 | def    PetInteractionTracker.handle_release       ralsei_pet\modules\pet_interaction.py:347
+   A零引用 | def    PetInteractionTracker.set_drag_active      ralsei_pet\modules\pet_interaction.py:320
+   A零引用 | def    PetInteractionTracker.set_follow_active    ralsei_pet\modules\pet_interaction.py:325
+   A零引用 | class  PetInteractionTracker                      ralsei_pet\modules\pet_interaction.py:308
+   级联 | class   BodyRegionMapper:75
+   级联 | def     BodyRegionMapper.__init__:85
+   级联 | def     BodyRegionMapper._build_alpha_mask:104
+   级联 | def     BodyRegionMapper.set_sprite:91
+   级联 | class   Gesture:43
+   级联 | class   GestureTracker:187
+   级联 | def     GestureTracker.__init__:207
+   级联 | def     GestureTracker.on_move:281
+   级联 | def     GestureTracker.on_press:222
+   级联 | def     GestureTracker.on_release:231
+   级联 | class   PetEvent:53
+   级联 | class   PetInteractionTracker:308
+   级联 | def     PetInteractionTracker.__init__:311
+   级联 | def     PetInteractionTracker.handle_move:354
+   级联 | def     PetInteractionTracker.handle_press:340
+   级联 | def     PetInteractionTracker.handle_release:347
+   级联 | def     PetInteractionTracker.set_drag_active:320
+   级联 | def     PetInteractionTracker.set_follow_active:325
+   级联 | def     PetInteractionTracker.set_sprite:317
+   级联 | class   _StrokeDetector:142
+   级联 | def     _StrokeDetector.__init__:145
+   级联 | def     _StrokeDetector.feed:160
+   级联 | def     _StrokeDetector.reset:155
+
+## relationship  (5 条)
+   A零引用 | class  Relationship                               ralsei_pet\modules\relationship.py:158
+   A零引用 | def    progress_to_next                           ralsei_pet\modules\relationship.py:135
+   级联 | class   Relationship:158
+   级联 | def     Relationship.__init__:168
+   级联 | def     progress_to_next:135
+
+## social_growth_system  (24 条)
+   A零引用 | def    SocialGrowthSystem.check_other_pets        ralsei_pet\modules\social_growth_system.py:686
+   A零引用 | def    SocialGrowthSystem.get_achievements        ralsei_pet\modules\social_growth_system.py:716
+   A零引用 | def    SocialGrowthSystem.get_evolution_stage     ralsei_pet\modules\social_growth_system.py:724
+   A零引用 | def    SocialGrowthSystem.get_progress_to_next_level ralsei_pet\modules\social_growth_system.py:737
+   A零引用 | def    SocialGrowthSystem.get_relationships       ralsei_pet\modules\social_growth_system.py:720
+   A零引用 | def    SocialGrowthSystem.get_remaining_experience ralsei_pet\modules\social_growth_system.py:732
+   A零引用 | def    SocialGrowthSystem.initiate_interaction    ralsei_pet\modules\social_growth_system.py:695
+   级联 | def     SocialGrowthSystem._check_achievements:533
+   级联 | def     SocialGrowthSystem._check_evolution:513
+   级联 | def     SocialGrowthSystem._check_level_up:494
+   级联 | def     SocialGrowthSystem._get_relationship_level:679
+   级联 | def     SocialGrowthSystem._unlock_achievement:607
+   级联 | def     SocialGrowthSystem._unlock_achievement_impl:622
+   级联 | def     SocialGrowthSystem.add_experience:469
+   级联 | def     SocialGrowthSystem.check_other_pets:686
+   级联 | def     SocialGrowthSystem.get_achievements:716
+   级联 | def     SocialGrowthSystem.get_evolution_stage:724
+   级联 | def     SocialGrowthSystem.get_next_level_experience:728
+   级联 | def     SocialGrowthSystem.get_progress_to_next_level:737
+   级联 | def     SocialGrowthSystem.get_relationships:720
+   级联 | def     SocialGrowthSystem.get_remaining_experience:732
+   级联 | def     SocialGrowthSystem.initiate_interaction:695
+   级联 | def     SocialGrowthSystem.save_growth_data:450
+   级联 | def     SocialGrowthSystem.update_relationship:634
+
+## sound_manager  (18 条)
+   A零引用 | def    SoundManager.get_volume                    ralsei_pet\modules\sound_manager.py:68
+   A零引用 | def    SoundManager.play_click                    ralsei_pet\modules\sound_manager.py:149
+   A零引用 | def    SoundManager.play_footstep                 ralsei_pet\modules\sound_manager.py:161
+   A零引用 | def    SoundManager.play_happy                    ralsei_pet\modules\sound_manager.py:152
+   A零引用 | def    SoundManager.play_jump                     ralsei_pet\modules\sound_manager.py:158
+   A零引用 | def    SoundManager.play_sad                      ralsei_pet\modules\sound_manager.py:155
+   A零引用 | def    SoundManager.play_spellcast                ralsei_pet\modules\sound_manager.py:141
+   A零引用 | def    SoundManager.set_enabled                   ralsei_pet\modules\sound_manager.py:57
+   A零引用 | def    SoundManager.set_volume                    ralsei_pet\modules\sound_manager.py:60
+   级联 | def     SoundManager.get_volume:68
+   级联 | def     SoundManager.play_click:149
+   级联 | def     SoundManager.play_footstep:161
+   级联 | def     SoundManager.play_happy:152
+   级联 | def     SoundManager.play_jump:158
+   级联 | def     SoundManager.play_sad:155
+   级联 | def     SoundManager.play_spellcast:141
+   级联 | def     SoundManager.set_enabled:57
+   级联 | def     SoundManager.set_volume:60
+
+## sprite_loader  (22 条)
+   A零引用 | def    SpriteLoader.add_animation                 ralsei_pet\modules\sprite_loader.py:917
+   A零引用 | def    SpriteLoader.clear_cache                   ralsei_pet\modules\sprite_loader.py:906
+   A零引用 | def    SpriteLoader.get_all_animations            ralsei_pet\modules\sprite_loader.py:890
+   A零引用 | def    SpriteLoader.get_animation_config_report   ralsei_pet\modules\sprite_loader.py:384
+   A零引用 | def    SpriteLoader.get_animation_files           ralsei_pet\modules\sprite_loader.py:941
+   A零引用 | def    SpriteLoader.get_cache_stats               ralsei_pet\modules\sprite_loader.py:896
+   A零引用 | def    SpriteLoader.get_frame_count               ralsei_pet\modules\sprite_loader.py:826
+   A零引用 | def    SpriteLoader.get_position_offset           ralsei_pet\modules\sprite_loader.py:882
+   A零引用 | def    SpriteLoader.get_unconfigured_asset_report ralsei_pet\modules\sprite_loader.py:403
+   A零引用 | def    SpriteLoader.set_position_offset           ralsei_pet\modules\sprite_loader.py:886
+   A零引用 | def    SpriteLoader.get_sprite                    ralsei_pet\modules\sprite_loader.py:802
+   级联 | def     SpriteLoader.add_animation:917
+   级联 | def     SpriteLoader.clear_cache:906
+   级联 | def     SpriteLoader.get_all_animations:890
+   级联 | def     SpriteLoader.get_animation_config_report:384
+   级联 | def     SpriteLoader.get_animation_files:941
+   级联 | def     SpriteLoader.get_cache_stats:896
+   级联 | def     SpriteLoader.get_frame_count:826
+   级联 | def     SpriteLoader.get_position_offset:882
+   级联 | def     SpriteLoader.get_sprite:802
+   级联 | def     SpriteLoader.get_unconfigured_asset_report:403
+   级联 | def     SpriteLoader.set_position_offset:886
+
+## test_office_functions  (2 条)
+   A零引用 | def    TestDesktopInteraction.test_excel_control  ralsei_pet\test_office_functions.py:88
+   A零引用 | def    TestDesktopInteraction.test_ppt_control    ralsei_pet\test_office_functions.py:68
+
+## text_segmenter  (2 条)
+   A零引用 | def    disable                                    ralsei_pet\modules\text_segmenter.py:188
+   级联 | def     disable:188
+
+## weather_system  (4 条)
+   A零引用 | def    WeatherSystem.set_api_key                  ralsei_pet\modules\weather_system.py:314
+   A零引用 | def    WeatherSystem.set_location                 ralsei_pet\modules\weather_system.py:308
+   级联 | def     WeatherSystem.set_api_key:314
+   级联 | def     WeatherSystem.set_location:308
