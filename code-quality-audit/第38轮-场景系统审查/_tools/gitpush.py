@@ -12,10 +12,12 @@
    ⇒ 清空 helper 链 + 直取 GCM 凭据 + `http.extraheader` 注入。
 3. TLS：本机 schannel 吊销检查必失败 ⇒ openssl 后端 + 系统 CA PEM + HTTP/1.1。
 4. 退出码会说谎 ⇒ 必须 `ls-remote` **且** `rev-parse origin/main` 双向核验。
-5. ★ 第57轮补：**代理必须逐端口实测 CONNECT 再选**。直连 github 会被
-   `Recv failure: Connection was reset`（本机只有 Clash `7897` 真通、`7375` 死）。
-   现在脚本自己探：env 代理 → netstat 的 127.0.0.1 LISTENING → 已知端口兜底，
-   只认 `CONNECT github.com:443` 响应首行含 200 的那个。
+5. ★ 第57轮补：**代理必须逐端口实测，且要真的握一次 TLS 才算数**。直连 github 会被
+   `Recv failure: Connection was reset`。三级判据：TCP 能连 → 隧道建得起（HTTP CONNECT
+   或 SOCKS5）→ **TLS 握手成功**。
+   ⚠️ 「CONNECT 回 200」是**假阳性**：本机 7897 的 HTTP 隧道对裸 `github.com` 回 200
+   却立刻 `unexpected eof while reading`（`api.github.com` 通、`github.com` 不通），
+   而**同一端口的 SOCKS5 通道是好的** ⇒ 两条路都要试、且必须走到 TLS 这一步。
    另加 `--push-only`：push 失败后重推时不再被"没有可提交的改动"提前返回。
 
 安全：凭据只在进程内；报告里只写长度，绝不写 token。
@@ -25,6 +27,7 @@ import io
 import os
 import re
 import socket
+import ssl
 import subprocess
 import sys
 import time
@@ -77,15 +80,98 @@ def run(args, timeout=240, env=None, inp=None):
         return (-998, '', 'EXC %r' % (e,))
 
 
-def _probe_proxy():
-    """★ 第57轮：逐端口实测 `CONNECT github.com:443`，只认响应首行含 200 的那个。
+def _recv_exact(s, n):
+    buf = b''
+    while len(buf) < n:
+        c = s.recv(n - len(buf))
+        if not c:
+            raise OSError('对端提前关闭')
+        buf += c
+    return buf
 
-    ⚠️ 三种坑都要防：
-      · **不能只看 TCP 能连** —— 本机多个端口 accept 后直接空响应或回 404
-        （`11434` 是 Ollama、`39099` 回 404 Error），连得上但过不了隧道。
-      · **不能把端口写死** —— 换个环境就变；先 env、再 netstat，最后才兜底常量。
-      · **超时必须短** —— 空响应端口会一直吊着，6 秒足够。
-    返回 `http://127.0.0.1:<port>` 或 `''`（没探到，调用方应直连并如实报告）。
+
+def _http_tunnel(port, host, hp, timeout):
+    """HTTP CONNECT 隧道。"""
+    s = socket.create_connection(('127.0.0.1', port), timeout=timeout)
+    s.settimeout(timeout)
+    s.sendall(('CONNECT %s:%d HTTP/1.1\r\nHost: %s:%d\r\n\r\n'
+               % (host, hp, host, hp)).encode())
+    buf = b''
+    while b'\r\n\r\n' not in buf and len(buf) < 8192:
+        c = s.recv(512)
+        if not c:
+            break
+        buf += c
+    first = buf.split(b'\r\n')[0].decode('latin-1', 'replace')
+    if '200' not in first:
+        s.close()
+        raise OSError(first or '(空响应)')
+    return s
+
+
+def _socks5_tunnel(port, host, hp, timeout):
+    """SOCKS5（无认证）隧道。★ 第57轮实测：本机 Clash 的 7897 对裸 `github.com`
+    的 **HTTP-CONNECT 规则坏了**（回 200 却握不上 TLS），但同一端口的
+    **SOCKS5 通道正常** ⇒ 两条路都要试。"""
+    s = socket.create_connection(('127.0.0.1', port), timeout=timeout)
+    s.settimeout(timeout)
+    s.sendall(b'\x05\x01\x00')                       # VER=5 / 1 method / NOAUTH
+    if _recv_exact(s, 2) != b'\x05\x00':
+        s.close()
+        raise OSError('SOCKS5 握手被拒')
+    hb = host.encode('ascii')
+    s.sendall(b'\x05\x01\x00\x03' + bytes([len(hb)]) + hb
+              + hp.to_bytes(2, 'big'))
+    head = _recv_exact(s, 4)
+    if head[1] != 0:
+        s.close()
+        raise OSError('SOCKS5 应答码 %d' % head[1])
+    atyp = head[3]
+    n = 4 if atyp == 1 else 16 if atyp == 4 else None
+    if atyp == 3:
+        n = _recv_exact(s, 1)[0]
+    if n is None:
+        s.close()
+        raise OSError('SOCKS5 未知 ATYP %d' % atyp)
+    _recv_exact(s, n + 2)
+    return s
+
+
+def _tls_ok(sock):
+    """★ 判据核心：把隧道**真的套上 TLS 握一次手**。
+
+    ⚠️ 「CONNECT 回 200」是**假阳性**：本机 7897 的 HTTP 隧道回 200 后
+       立刻 `unexpected eof while reading`（`api.github.com` 通、裸 `github.com` 不通）。
+       这与本项目的老教训同型 —— **看着通了 ≠ 真能用**，判据必须走到端。
+    """
+    try:
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE          # 只探"能不能建会话"，不校证书
+        w = ctx.wrap_socket(sock, server_hostname='github.com')
+        ver = w.version()
+        w.close()
+        return bool(ver)
+    except Exception:                                                 # noqa: BLE001
+        try:
+            sock.close()
+        except Exception:                                             # noqa: BLE001
+            pass
+        return False
+
+
+def _probe_proxies(limit=3):
+    """★ 第57轮：逐端口实测 —— **TCP 能连 → 隧道建得起 → TLS 握得上**，三级都过才算数。
+
+    ⚠️ 四个坑都踩过：
+      · **不能只看 TCP 能连** —— 多个端口 accept 后空响应或回 404
+        （`11434` 是 Ollama、`39099` 回 404 Error）。
+      · **不能只看 CONNECT 回 200** —— 见 `_tls_ok()` 注释（本站点的真坑）。
+      · **不能只试 HTTP 隧道** —— 需要 SOCKS5 兜底。
+      · **端口不能写死** —— 先 env、再 netstat、最后才兜底常量。
+    返回**可用代理 URL 列表**（按探测顺序，最多 `limit` 个）或 `[]`。
+    ★ 返回列表而非单个：本机这条路是**抖的**（同一配置两次里成一次），
+      调用方按列表逐个试，比"认定一个然后反复重试同一个"更接近事实。
     """
     cands = []
     for k in ('HTTPS_PROXY', 'HTTP_PROXY', 'https_proxy', 'http_proxy',
@@ -111,27 +197,25 @@ def _probe_proxy():
     for p in cands:
         if p not in seen:
             seen.append(p)
+
+    found = []
+    deadline = time.time() + 120.0
     for port in seen:
-        try:
-            s = socket.create_connection(('127.0.0.1', int(port)), timeout=6.0)
-            s.settimeout(6.0)
-            s.sendall(b'CONNECT github.com:443 HTTP/1.1\r\n'
-                      b'Host: github.com:443\r\n\r\n')
-            buf = b''
+        if len(found) >= limit or time.time() > deadline:
+            break
+        for scheme, opener in (('http', _http_tunnel),
+                               ('socks5h', _socks5_tunnel)):
             try:
-                buf = s.recv(200)
-            except socket.timeout:
-                pass
-            s.close()
-            first = buf.split(b'\r\n')[0].decode('latin-1', 'replace')
-            good = '200' in first
-            w('     proxy %-6s %s %s' % (port, 'OK ' if good else '-- ',
-                                         first or '(空响应)'))
-            if good:
-                return 'http://127.0.0.1:%s' % port
-        except Exception as e:                                        # noqa: BLE001
-            w('     proxy %-6s -- %s' % (port, e))
-    return ''
+                s = opener(int(port), 'github.com', 443, 4.0)
+            except Exception:                                         # noqa: BLE001
+                continue          # 静默跳过"不是代理"的端口，别刷屏
+            ok = _tls_ok(s)
+            w('     proxy %-6s (%-7s) %s'
+              % (port, scheme, 'OK —— TLS 握手成功' if ok else '-- TLS 握手失败'))
+            if ok:
+                found.append(('http://127.0.0.1:%d' % int(port)) if scheme == 'http'
+                             else ('socks5h://127.0.0.1:%d' % int(port)))
+    return found
 
 
 def main():
@@ -220,27 +304,52 @@ def _push():
     b64 = base64.b64encode(('%s:%s' % (usr, pw)).encode('ascii')).decode('ascii')
     del pw
 
-    w('[5b] 探测可用代理（CONNECT github.com:443）')
-    proxy = _probe_proxy()
-    w('[5c] 采用代理 = %s' % (proxy or '(无 ⇒ 直连)'))
+    w('[5b] 探测可用代理（TCP → 隧道 → TLS 握手，三级都过）')
+    proxies = _probe_proxies()
+    w('[5c] 可用代理 %d 个：%s' % (len(proxies), proxies or '(无 ⇒ 直连)'))
 
-    COMMON = ['-c', 'credential.helper=',
-              '-c', 'http.sslBackend=openssl',
-              '-c', 'http.sslCAInfo=' + CA.replace('\\', '/'),
-              '-c', 'http.version=HTTP/1.1',
-              '-c', 'http.extraheader=Authorization: Basic ' + b64]
-    if proxy:
-        COMMON += ['-c', 'http.proxy=' + proxy, '-c', 'https.proxy=' + proxy]
-    rc, o, e = run(['git'] + COMMON + ['push', 'origin', 'main'], timeout=300)
-    w('[6] push rc=%d' % rc)
-    for ln in (o + e).splitlines():
-        if ln.strip():
-            w('     %s' % ln[:170])
+    BASE = ['-c', 'credential.helper=',
+            '-c', 'http.sslBackend=openssl',
+            '-c', 'http.sslCAInfo=' + CA.replace('\\', '/'),
+            '-c', 'http.version=HTTP/1.1',
+            '-c', 'http.extraheader=Authorization: Basic ' + b64]
 
-    rc, o, _ = run(['git'] + COMMON + ['ls-remote', 'origin',
-                                       'refs/heads/main'], timeout=90)
-    remote = o.strip().split('\t')[0] if o.strip() else ''
-    w('[7] ls-remote = %s' % (remote or '(空)'))
+    def _opts(proxy):
+        if not proxy:
+            return list(BASE)
+        return BASE + ['-c', 'http.proxy=' + proxy,
+                       '-c', 'https.proxy=' + proxy]
+
+    # ★ 有界尝试：候选之间是**不同配置**（http 隧道 / socks5h / 不同端口），
+    #   不是拿同一个配置反复砸。上限 = `_probe_proxies(limit=3)`。
+    used = ''
+    for i, proxy in enumerate(proxies if proxies else [''], 1):
+        w('[6.%d] push 尝试（代理=%s）' % (i, proxy or '直连'))
+        rc, o, e = run(['git'] + _opts(proxy) + ['push', 'origin', 'main'],
+                       timeout=300)
+        w('      rc=%d' % rc)
+        for ln in (o + e).splitlines():
+            if ln.strip():
+                w('      %s' % ln[:170])
+        if rc == 0:
+            used = proxy
+            break
+        blob = o + e
+        if ('Authentication failed' in blob or ' 403' in blob
+                or ' 401' in blob):
+            w('      ⇒ 认证类失败：换代理无用，停止')
+            break
+    w('[6] push 循环结束（采用代理=%s）' % (used or '(直连/未成功)'))
+
+    # ★ 核验也必须走代理：直连的 ls-remote 必然空 ⇒ 会把"其实推上去了"报成 NOT_PUSHED。
+    remote = ''
+    for cand in ([used] if used else (proxies or [''])):
+        rc, o, _ = run(['git'] + _opts(cand) + ['ls-remote', 'origin',
+                                                'refs/heads/main'], timeout=90)
+        remote = o.strip().split('\t')[0] if o.strip() else ''
+        w('[7] ls-remote（代理=%s）= %s' % (cand or '直连', remote or '(空)'))
+        if remote:
+            break
     tracking = run(['git', 'rev-parse', 'origin/main'], timeout=60)[1].strip()
     w('[8] origin/main = %s' % tracking)
     ok = bool(local) and local == remote == tracking
