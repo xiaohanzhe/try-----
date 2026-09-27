@@ -405,6 +405,11 @@ from modules import companion as companion_mod
 #   **测试桩替换 / 后续改名**都要动多处调用点；模块引用只有一处（本行）。
 from modules import npc_system as npc_system_mod
 from modules import npc_persona as npc_persona_mod
+# NPC 站位 / 游荡 / 编队 / 结对（★ 第56轮新增，零依赖纯逻辑）。
+# ★ 与 `npc_system` **刻意分成两个模块**：后者管"能不能进这个世界"（政策），
+#   前者管"他在这个世界里怎么走"（运动学）。混在一起会让
+#   `verify_npc49` 的零依赖 AST 闸（A 段）面对一个体积翻倍的模块。
+from modules import npc_placement as npc_placement_mod
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -1513,6 +1518,19 @@ class RalseiPet(QMainWindow):
         self._npc_follow_pending = []   # 纯 NPC 的"想跟但等你点头"
         self._npc_talking = None        # 最近一次在跟谁说话
         self._npc_last_decision = None  # 最近一次跟随决策 (npc_id, choice, source)
+        # ---- 第56轮：站位 / 游荡 / 编队（与说话、跟随**正交**的三件事）----
+        #: `npc_placement.PlacementBook`（34 条站位 + 1 条编队 + 9 条结对 + 桌面白名单）。
+        self.npc_placement = None
+        #: `{npc_id: npc_placement.Body}` —— **只在"当前场景"里**，切场景就重建。
+        self.npc_bodies = {}
+        #: `npc_placement.PartyRig`（主角团三人，leader=kris，lag=[0,12,24]）。
+        self.npc_rig = None
+        #: 编队采样主角轨迹用的环形缓冲（`Trail`，25 帧）。
+        self.npc_trail = None
+        #: 已按哪个场景播下过身体（避免每帧重复重建）。
+        self._npc_bodies_scene = None
+        #: 上一帧各 body 的位置快照，用于"是否真的动了"（给将来渲染层省重绘）。
+        self._npc_bodies_moved = []
 
         if not RalseiPet.NPC_ENABLED:
             _log.info('NPC 系统已关闭（NPC_ENABLED=False）⇒ NPC 不说话、不跟随')
@@ -1563,6 +1581,33 @@ class RalseiPet(QMainWindow):
             _log.exception('跟随板建立失败（跟随决策降级为不可用）')
             self.npc_followers = None
 
+        # ---- 第56轮：站位表（原作站位 + 游荡 + 编队 + 结对 + 桌面白名单）----
+        # 读不到 ⇒ 空簿（`EMPTY_BOOK` 形状恒定）⇒ `npc_bodies` 恒空 ⇒ 本功能整体静默降级，
+        # 别的入口（说话 / 跟随 / 道具）**一点不受影响**。
+        try:
+            self.npc_placement = npc_placement_mod.load_placement(root)
+        except Exception:
+            _log.exception('NPC 站位表加载失败（站位与游荡降级为不可用）')
+            self.npc_placement = None
+        # ★ 数据镜像自查：`_placement.json` 的 `desktop.allowed` 必须与
+        #   `npc_system.DESKTOP_ALLOWED_IDS` 逐字一致。不一致 = 有人只改了一处，
+        #   结果是"能站在桌面"和"能跟你上桌面"给出两个答案 —— 这种矛盾必须吵出来，
+        #   不能静默取其中一个（第45轮"多解闸"教训）。
+        if self.npc_placement is not None:
+            _mirror = tuple(self.npc_placement.desktop_allowed_ids)
+            if _mirror and _mirror != tuple(npc_system_mod.DESKTOP_ALLOWED_IDS):
+                _log.warning('桌面白名单两处不一致：_placement.json=%s / 代码=%s'
+                             '（以代码为准）', _mirror,
+                             tuple(npc_system_mod.DESKTOP_ALLOWED_IDS))
+        # 建编队（不依赖当前场景；anchor 是**当前主控角色**，见 `_npc_anchor_id()`）。
+        try:
+            if self.npc_placement is not None:
+                self.npc_trail = npc_placement_mod.Trail()
+                self.npc_rig = self.npc_placement.rig('party')
+        except Exception as e:
+            _log.warning('NPC 编队建立失败（主角团不结伴走）: %s', e)
+            self.npc_rig = None
+
         # ---- 别名表：id / 英文名 / 中文名 三个都收（点名两层都认）----
         try:
             self._npc_aliases = npc_persona_mod.address_aliases(
@@ -1586,6 +1631,14 @@ class RalseiPet(QMainWindow):
                   len(self.npc_registry), len(self.npc_registry.main_npcs()),
                   len(self.npc_registry.plain_npcs()), len(self.npc_personas),
                   len(self._npc_aliases), mem_dir or '内存态')
+        if self.npc_placement is not None:
+            _log.info('NPC 站位：%s', self.npc_placement.describe())
+        # ★ 开局就播一次身体 —— 启动场景是 `desktop`（`SceneController.load()` 定的），
+        #   而 `_scene_switch_hooks` 只在**发生切换**时触发 ⇒ 不主动播一次就永远没人站位。
+        try:
+            self._npc_seed_bodies(self._npc_scene_id())
+        except Exception as e:
+            _log.warning('NPC 站位初始化失败（开局无站位）: %s', e)
 
     # ---------------------------------------------------------------- 点名
     def _npc_scene_id(self):
@@ -1870,11 +1923,13 @@ class RalseiPet(QMainWindow):
             return False
 
     def _on_scene_switched_npc(self, scene_id, scene):
-        """★ 场景切换钩子：① 清掉"进不来"的跟随者；② 问一个 NPC"跟不跟"。
+        """★ 场景切换钩子：① 清掉"进不来"的跟随者；② 问一个 NPC"跟不跟"；
+        ③ **按新场景重建站位与游荡**（★ 第56轮新增）。
 
         由 `SceneController._fire_switch_hooks()` 调（钩子抛异常会被它吞掉并记日志）。
-        顺序有意义：**先清理再决策** —— 反过来的话，刚被"清掉又决定要跟"的人
-        会在下一个不合法场景里再被清一次，日志里会看到两次矛盾记录。
+        顺序有意义：**先清理再决策、最后布局** —— 反过来的话，
+        ①刚被"清掉又决定要跟"的人会在下一个不合法场景里再被清一次（日志里两次矛盾记录）；
+        ②布局若排在清理前，会把"刚被判定进不来的人"也画进新场景。
         """
         board = self.npc_followers
         if board is None or self.npc_registry is None:
@@ -1882,11 +1937,7 @@ class RalseiPet(QMainWindow):
         world = self._current_world()
         # `carried` = 谁被装进球里。**只用现成状态查询**（`BubbleField.__contains__`），
         # 不去调 `toggle_bubble` —— 那是"改状态"的入口，在这里调会把球开开关关。
-        try:
-            _fld = self._ensure_bubble_field()
-            carried = ['ralsei'] if (_fld is not None and 'ralsei' in _fld) else []
-        except Exception:
-            carried = []
+        carried = self._npc_carried_ids()
         try:
             kicked = board.tick(world, scene_id=scene_id, carried_ids=carried)
         except Exception as e:
@@ -1898,6 +1949,13 @@ class RalseiPet(QMainWindow):
                       scene_id, world, '、'.join(kicked))
             self._npc_menu_message('* %s 没法跟你进这里，先在原地等着了。'
                                    % '、'.join(self.npc_label(k) for k in kicked))
+            # ★ 第56轮：被踢出的人**不可能**出现在新场景里"站着不动"——
+            #   他会落在旧场景继续游荡（身体是**按场景重建**的，见 `_npc_seed_bodies`）。
+        # ①·5 重建站位与游荡，并**同时**用世界门控筛一遍（桌面白名单在这里生效）
+        try:
+            self._npc_seed_bodies(scene_id)
+        except Exception as e:
+            _log.debug('切换后重建站位异常（已忽略）: %s', e)
         # ② 只问"最近说过话的那一个"（每次问都是一次真实推理，见常量注释）
         n = 0
         for nid in reversed(self._npc_invited):
@@ -1907,6 +1965,215 @@ class RalseiPet(QMainWindow):
                 continue
             self.npc_follow_decide(nid, dist=None)
             n += 1
+
+    # ==================================================================
+    #  站位 / 游荡 / 结伴（★ 第56轮）
+    # ==================================================================
+    #  用户口径（逐字）
+    #    「对于那些npc参考原作给他们设定的初始在城堡镇里的位置再加一些自己游荡的
+    #      特性，就像是，主角团会总凑在一起，其他npc一部分也会有相互经常互动的
+    #      情节，参考原作，其次，只有主角团最多加个lancer能来电脑桌面，其余的不能」
+    #
+    #  四件事落在四个地方（**别把它们混成一个函数**）：
+    #    · 初始位置 + 游荡 + 结对的数据   → `assets/npc/_placement.json`（可审计）
+    #    · 运动学（三个模式 / 编队 / 结对）→ `modules/npc_placement.py`（零依赖）
+    #    · 桌面白名单（"能不能上桌面"）    → `npc_system.world_gate`（政策）
+    #    · **每帧把谁摆在哪**（本节三个方法）→ 宿主接线
+    #
+    #  ⚠️ 现在**只算位置**，还没有把 NPC 画出来：
+    #     渲染要 34 个 NPC × 四向的精灵帧，而 `assets/sprites/` 里**一个 NPC 帧都没有**
+    #     （第49轮只导出了扭蛋球 + 四个可进球角色，见 `spr49_log.txt`）。
+    #     ⇒ 本节的产物是 `self.npc_bodies`（`{id: Body}`，含 x/y/facing），
+    #       下一轮导精灵后，渲染层直接读它即可，**不必再改这里**。
+
+    #: 桌面上的主角团站位（相对桌宠中心，单位 = 屏幕像素）。
+    #: ★ 为什么**不复用** `_placement.json` 的城堡镇坐标：桌面不是房间，
+    #:   没有 1000×1000 的房间盒，硬套会把人摆到屏幕外（这一点在关卡里有对照：
+    #:   `ralsei` 的城堡卧室是 1000×1000，而桌面只有 ~1920×1080 的图标区）。
+    DESKTOP_PARTY_OFFSETS = (0.0, -44.0, 44.0)
+
+    def _npc_carried_ids(self):
+        """谁正被装进球里（**只查状态**，不改状态 —— 见 `_on_scene_switched_npc`）。"""
+        try:
+            fld = self._ensure_bubble_field()
+            return ['ralsei'] if (fld is not None and 'ralsei' in fld) else []
+        except Exception:
+            return []
+
+    def _npc_anchor_id(self):
+        """编队的**锚**是谁 —— 桌面 = 桌宠本身（Ralsei）；房间 = 编队 leader。
+
+        ★ 刻意**不写死** `'kris'`：原作里主控恒为 Kris（`scr_makecaterpillar`
+          把主角 `char_id` 放进 `char_id`、队友按 slot 落后 12/24 帧），
+          所以房间里 leader 就是他；但**桌面上主控是 Ralsei 本人**。
+          把"谁在带队"收成一个函数，将来换主控不必改三处。
+        """
+        if self._npc_scene_id() == npc_system_mod.DESKTOP_SCENE:
+            return 'ralsei'
+        rig = getattr(self, 'npc_rig', None)
+        leader = getattr(rig, 'leader', None) if rig is not None else None
+        return leader or 'kris'
+
+    def _npc_anchor_pos(self):
+        """锚的当前位置。桌面 = 桌宠窗口中心（屏幕坐标）；房间 = leader 身体的位置。"""
+        if self._npc_bodies_scene == npc_system_mod.DESKTOP_SCENE:
+            try:
+                return (float(self.x()) + self.width() / 2.0,
+                        float(self.y()) + self.height() / 2.0)
+            except Exception:
+                return (0.0, 0.0)
+        b = (self.npc_bodies or {}).get(self._npc_anchor_id())
+        return b.pos if b is not None else (0.0, 0.0)
+
+    def _npc_scene_roster(self, scene_id):
+        """**房间场景**里该有谁：站位表的居民 ∩ 注册表 ∩ 世界门控。
+
+        ★ 两道筛子都不能省：
+          · **注册表** —— 站位表里有、注册表里没有的人**不凭空造**
+            （否则会出现一个说话走 `npc_system_prompt` 却查不到人设的幽灵）。
+          · **世界门控** —— 让"他站在这一间"和"他能不能进这一间"给出**同一个答案**
+            （同一条判据两处算两份，正是本项目最贵的坑）。
+        """
+        book = getattr(self, 'npc_placement', None)
+        if book is None or self.npc_registry is None:
+            return []
+        world = self._current_world()
+        carried = self._npc_carried_ids()
+        out = []
+        for nid in book.ids():
+            if book.scene_of(nid) != scene_id:
+                continue
+            npc = self.npc_registry.get(nid)
+            if npc is None:
+                _log.debug('站位表有 %s 但注册表没有 ⇒ 不造人', nid)
+                continue
+            g = npc_system_mod.world_gate(npc, world, scene_id=scene_id,
+                                          carried=nid in carried)
+            if not g.ok:
+                _log.debug('站位跳过 %s：%s（%s）', nid, g.reason, g.detail)
+                continue
+            out.append(nid)
+        return out
+
+    def _npc_desktop_roster(self):
+        """**桌面上**该在的人：白名单 ∩ 正在跟随（桌宠本人除外）。
+
+        ★ 判据**只有一处** = `world_gate`（它读 `npc_system.DESKTOP_ALLOWED_IDS`）。
+          ⚠️ 这里**刻意不**再查一遍 `_placement.json` 的 `desktop.allowed`：
+            同一份规则两处算，就会出现"改了代码那边不生效 / 改了 JSON 那边不生效"
+            的两个真相（本项目最贵的坑）。数据那边只作**人类可读的留痕**，
+            由 `check56` 断言两边逐字相等、并在 `init_npc_systems` 里记 warning 兜底。
+
+        ★ 为什么必须叠加"正在跟随"：用户说「只有主角团最多加个 lancer **能来**电脑
+          桌面」—— "能来"是**许可**，不是"默认就站在你桌上"。桌宠本人（Ralsei）
+          本来就住在桌面（`BEDTIME_HOME_SCENE = 'desktop'`），所以他不进这份名单
+          （**他就是锚**）。
+        """
+        if self.npc_placement is None or self.npc_registry is None:
+            return []
+        board = getattr(self, 'npc_followers', None)
+        world = self._current_world()
+        out = []
+        for nid in npc_system_mod.DESKTOP_ALLOWED_IDS:
+            if nid == 'ralsei':
+                continue
+            npc = self.npc_registry.get(nid)
+            if npc is None:
+                continue
+            g = npc_system_mod.world_gate(
+                npc, world, scene_id=npc_system_mod.DESKTOP_SCENE)
+            if not g.ok:
+                _log.debug('桌面站位跳过 %s：%s', nid, g.reason)
+                continue
+            if board is None or not board.is_following(nid):
+                continue                    # 「能来」≠「已经来了」
+            out.append(nid)
+        return out
+
+    def _npc_build_desktop_bodies(self, ids):
+        """把桌面上该在的人摆到桌宠身边（**屏幕坐标**，站立）。"""
+        ax, ay = self._npc_anchor_pos()
+        out = {}
+        for i, nid in enumerate(ids):
+            off = self.DESKTOP_PARTY_OFFSETS[(i + 1) % len(self.DESKTOP_PARTY_OFFSETS)]
+            out[nid] = npc_placement_mod.Body(
+                nid, scene=npc_system_mod.DESKTOP_SCENE, x=ax + off, y=ay,
+                facing=npc_placement_mod.FACE_DOWN,
+                mode=npc_placement_mod.MODE_STAND)
+        return out
+
+    def _npc_seed_bodies(self, scene_id=None):
+        """按场景重建身体，返回建立了几个。
+
+        两种场景、两套空间（**别混**）：
+          · **房间** —— 位置来自 `_placement.json`（房间世界坐标），锚 = 编队 leader；
+          · **桌面** —— 位置由**桌宠本体**推（屏幕坐标），锚 = Ralsei。
+        ★ 两条路径都过 `world_gate` ⇒ 桌面白名单在两条路径上都生效
+          （这就是"同一份判据只算一次"的落地）。
+        """
+        scene_id = scene_id or self._npc_scene_id()
+        self._npc_bodies_scene = scene_id
+        self.npc_bodies = {}
+        self._npc_bodies_moved = []
+        book = getattr(self, 'npc_placement', None)
+        if book is None:
+            return 0
+        try:
+            if scene_id == npc_system_mod.DESKTOP_SCENE:
+                self.npc_bodies = self._npc_build_desktop_bodies(
+                    self._npc_desktop_roster())
+            else:
+                self.npc_bodies = book.initial_bodies(
+                    self._npc_scene_roster(scene_id))
+        except Exception as e:
+            _log.warning('站位初始化失败（%s ⇒ 本场景无 NPC 身体）: %s', scene_id, e)
+            self.npc_bodies = {}
+        # 轨迹清零：编队采样的是"主角走过的路"，换场景后旧轨迹会把队友
+        # 拉到上一个房间的位置上（第46轮 caterpillar 的同类坑）。
+        if self.npc_trail is not None:
+            try:
+                self.npc_trail.reset(*self._npc_anchor_pos())
+            except Exception:
+                pass
+        return len(self.npc_bodies)
+
+    def npc_placement_tick(self, dt):
+        """每帧推进：**游荡**（stand/patrol/pace）+ **结对**（approach/face）。
+
+        挂在 `update_movement`（30ms，= 原作 `GMS2FPS = 30`）上，
+        dt 复用已钳到 0.1s 的 `elapsed_time`（与 `npc_placement.MAX_DT` 同口径）。
+        ★ 为什么**不**在这里做编队的 `place()`：编队的锚是**主角本人的实时位置**，
+          它由渲染层（或主控更新）提供；本函数只保证"身体各自在游荡"。
+        """
+        bodies = getattr(self, 'npc_bodies', None)
+        if not bodies:
+            return []
+        moved = []
+        try:
+            moved = npc_placement_mod.step_bodies(bodies, dt)
+        except Exception as e:
+            _log.debug('NPC 游荡推进异常（本帧跳过）: %s', e)
+            return []
+        # ---- 结对：同一场景内才生效（`BOND_SAME_SCENE_ONLY`）----
+        book = getattr(self, 'npc_placement', None)
+        if book is not None and len(bodies) > 1:
+            try:
+                for bond in book.bonds:
+                    ba, bb = bodies.get(bond.a), bodies.get(bond.b)
+                    if ba is None or bb is None:
+                        continue          # 两人不同场景 / 有人不在场 ⇒ 本帧不凑
+                    r = bond.resolve(ba.pos, bb.pos, dt,
+                                     speed=npc_placement_mod.BOND_APPROACH_SPEED,
+                                     box=ba.box or bb.box)
+                    if r['moved']:
+                        ba.x, ba.y = r['a']
+                        bb.x, bb.y = r['b']
+                        moved.extend([bond.a, bond.b])
+                    ba.facing, bb.facing = r['facing_a'], r['facing_b']
+            except Exception as e:
+                _log.debug('NPC 结对推进异常（本帧跳过）: %s', e)
+        self._npc_bodies_moved = sorted(set(moved))
+        return self._npc_bodies_moved
 
     def _npc_menu_message(self, text):
         """往用户能看见的地方说一句（复用道具菜单那条通道；没有就只记日志）。
@@ -3508,6 +3775,14 @@ class RalseiPet(QMainWindow):
         # dt 复用上面的 `elapsed_time`（已钳 0.1s，与 `soul_entity.MAX_DT` 同口径，
         # 双重保险 —— 那边的钳制是给"别处调用本模块"用的）。
         self._soul_tick(elapsed_time)
+
+        # ---- NPC 站位 / 游荡 / 结伴（第56轮）：每帧推进 ----
+        # ★ 与灵魂同一位置（`update_movement` 的**所有早退分支之前**）：NPC 是独立实体，
+        #   宠物睡着 / 施法 / 躲猫猫时他们照样该在城堡镇里晃。
+        # ★ 为什么挂在 30ms 定时器上而不是动画定时器（100ms）：原作的游荡速度是
+        #   **px/帧**（`GMS2FPS = 30`），挂在 10fps 上会让 NPC 走成"一跳一跳"。
+        # dt 复用已钳到 0.1s 的 `elapsed_time`（`npc_placement.MAX_DT` 同口径，双保险）。
+        self.npc_placement_tick(elapsed_time)
 
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:

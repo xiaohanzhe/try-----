@@ -265,10 +265,19 @@ _i_rand = _u_src.find('self.randomize_movement_pattern()',
                       _u_src.find('def update_movement'))
 _i_bed = _u_src.find('self._bedtime_tick(current_time)')
 _i_sleep = _u_src.find('if self.is_sleeping:', _u_src.find('def update_movement'))
+# ⚠️ 诊断串**不许**打 `main.py` 的绝对字节偏移（第56轮修正）：`main.py` 每轮
+#    合法变长，偏移必然漂移 ⇒ 套件每轮都报"输出与基线不一致"。这是**判据过窄＝
+#    误报**，且危害不止于噪音：它训练出"闭眼 `--update`"的习惯，
+#    于是一条**真回归**会被顺手一起吞掉。
+#    ⇒ 只报**判定结果**：稳定，失败时也比两个天书数字好读。
 check("A3c `_idle_lounge_tick` 排在 `randomize_movement_pattern` **之前**（待机优先于漫游）",
-      -1 < _i_lounge < _i_rand, "lounge=%d rand=%d" % (_i_lounge, _i_rand))
+      -1 < _i_lounge < _i_rand,
+      "顺序=%s" % ("lounge→rand" if (-1 < _i_lounge < _i_rand) else
+                   ("lounge 未找到" if _i_lounge < 0 else "rand 未找到或不在其后")))
 check("A3d `_bedtime_tick` 排在 `if self.is_sleeping:` **之前**（就寝要能升级小憩）",
-      -1 < _i_bed < _i_sleep, "bed=%d sleep=%d" % (_i_bed, _i_sleep))
+      -1 < _i_bed < _i_sleep,
+      "顺序=%s" % ("bed→sleep" if (-1 < _i_bed < _i_sleep) else
+                   ("bed 未找到" if _i_bed < 0 else "sleep 未找到或不在其后")))
 
 # ---- A4 忙碌集合 ----
 _busy = RV.body_src('_idle_lounge_busy')
@@ -307,8 +316,14 @@ check("A7b 正控制：同一条判据套到 `_idle_lounge_busy` 上**必须说�
       'is_sleeping' in _busy_code)
 
 # ---- A8 睡/醒/哼 的内置台词已迁移（含正向证据）----
+#: A8c 用的**稳定**下限：判据真正关心的是"样本不是空的"，不是"正好 1519 个"。
+#: ⚠️ 别把它调成贴着当前值的数（那是把"绝对量"改头换面又请回来）。
+_CONSTS_FLOOR = 1000
 check("A8c 前置：`_const_strings` 真的取到了字符串字面量（判据不空转）",
-      'sleep_enter' in MAIN_CONSTS, "取样数=%d" % len(MAIN_CONSTS))
+      'sleep_enter' in MAIN_CONSTS and len(MAIN_CONSTS) >= _CONSTS_FLOOR,
+      # ⚠️ 同 A3c：**不许**打 `len(MAIN_CONSTS)` 具体值（随 main.py 合法增长而变：
+      #    1519 → 1548）⇒ 每轮假 DIFF。只报"够不够用"。
+      "取样充足=%s（阀值 %d）" % (len(MAIN_CONSTS) >= _CONSTS_FLOOR, _CONSTS_FLOOR))
 for _dead in ("zzz... 晚安，做个好梦！", "zzz... 我困了...", "zzz... 好舒服...",
               "唔...别吵...", "嗯...再睡五分钟...", "zzz...别闹...",
               "嗯？什么事？", "哎呀！我睡着了！", "早上好！"):

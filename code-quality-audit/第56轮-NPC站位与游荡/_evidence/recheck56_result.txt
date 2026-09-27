@@ -1,0 +1,44 @@
+========================================================================
+第56轮 · 核心文件复检（recheck56）
+========================================================================
+
+【1】可解析（ast.parse；不用 py_compile，避免落 .pyc）
+  [PASS] 1     全部 8 个 .py 都能 ast.parse
+  [PASS] 1b    全部 3 个 .json 都能解析
+
+【2】结构自检
+  [PASS] 2a    报告章节 1~8 全在  :: 缺 []
+  [PASS] 2b    报告无章节标题粘连（`#` 必须在行首）
+  [PASS] 2c    _placement.json 顶层键集合 == 预期  :: ok
+  [PASS] 2d    counts 自洽：placed+unplaced==注册表(35)、by_source 求和==placed、groups/bonds/desktop_allowed 与实体条数一致  :: placed=34 unplaced=1 by_source={'original': 17, 'derived': 8, 'authored': 9} groups=1 bonds=9 allowed=4
+  [PASS] 2e    站位 ⊎ 未安置 == 注册表 35 个 id（精确相等）  :: 缺=[] 多=[] 重叠=[]
+  [PASS] 2f    baseline.json 里有 54 个套件且**登记了** npc_place56  :: n=54 has_npc_place56=True
+  [PASS] 2g    run_all.SUITES == 基线套件集合（54 个）
+  [PASS] 2h    npc_place56 已登记进 HERMETIC_IDS（真机会写真实存储 ⇒ 必须隔离）
+  [PASS] 2h2   三个真机套件（npc_place56 / soul_round55 / npc_persona55）都在 HERMETIC_IDS
+
+【3】编码（无 BOM / 无 U+FFFD）
+  [PASS] 3a    无 BOM
+  [PASS] 3b    无 U+FFFD 且都是合法 UTF-8
+
+【4】恒真判据复查（判据脚本里不许把常量当条件）
+  [PASS] 4a    本轮 2 个判据脚本里没有"裸写"的常量条件
+  [PASS] 4a2   4a 有鉴别力：合成的裸写必须被抓出（正控制）且 try/except 形状不被误报（负控制）  :: positive=True negative=True
+  [PASS] 4b    check56 的 6 条骨架判据（数据溯源 / 零长度 / 不重复入队 / 不过冲 / 前缀不误放行 / 单判据）全在
+
+【5】逐令牌回验（改/删过的令牌逐个回原文件 in 一次）
+  [PASS] 5a    本轮**新增/保留**的 21 个令牌逐个回验在位
+  [PASS] 5b    三条**旧的**漂移诊断串已从 check52c.py 消失
+  [PASS] 5c    报告里 4 个关键数字与实测一致（数据/条数/G2 状态）
+  [PASS] 5d    记忆压缩的 6 个"被移除令牌"逐个在详版里找到（逐令牌回验）
+  [PASS] 5e    速查本 js_len(9994) <= 10000（注入上限）  :: 余量 6
+
+【6】状态干净 + 改动集合
+  [PASS] 6a    工作区里没有意外的改名/删除记录（R/D 行）
+  · git status 条目数 = 11（本轮尚未提交，属正常）
+  · 工作区+暂存区删除行数 = 31（守卫阈值 1000）
+  [PASS] 6b    删除行数 < 1000  :: 31
+
+------------------------------------------------------------------------
+结果：PASS=23 FAIL=0
+

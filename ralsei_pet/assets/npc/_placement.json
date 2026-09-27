@@ -1,0 +1,706 @@
+{
+ "schema_version": 1,
+ "note": "NPC 的**初始站位 / 游荡 / 编队 / 结对**表。站位尽量回溯原作（每条带 evidence），回溯不到的**如实标 authored**，绝不假装是原作数据。",
+ "source": "第56轮：从第49轮 UTMT 反编译的 366 个 GML 现场脚本取证（`code-quality-audit/第49轮-NPC与球容器/_evidence/gml/`）+ `assets/scenes/_index.json` / `_room_geometry.json` 的房间与几何。",
+ "how_original_works": {
+  "npc_in_room": "原作往房间里放 NPC = `instance_create(x, y, obj_npc_room)` 再设 `sprite_index`（ch1.obj_npc_room_Create_0.gml / ch4.obj_room_castle_lancer_Create_0.gml）。同一间房里的多个 NPC = 多个实例，**各带自己的 (x, y)**；id 为 -4 表示\"这一支不存在\"（原作惯用的空实例哨兵值）。",
+  "stand": "**站定**是原作的默认态：`obj_npc_room` 的 Create 里 `image_speed = 0`（只有显式设 `image_speed` / `normalanim` 的才播动画）。⇒ 我们的 `stand` = 站在出生点、只做朝向与待机帧，**不移动**。",
+  "patrol": "★ **折返巡逻**（照抄原作写法，`ch4.obj_room_castle_lancer_Step_0.gml` 三例）：到端点就换目标 `target = (alt % 2) ? (xstart + N) : xstart`，**同时** `scr_flip(\"x\")` 转身，每帧 `x = scr_movetowards(x, target, speed)`。原作实数：maus N=180 speed=2；poppup N=124 speed=1；tasque N=130 speed=1。",
+  "pace": "★ **踱步**（**概括自**原作 `ch2.obj_npc_king_Step_0.gml`，⚠️ 不是逐字复刻）：原作那段是 `hspeed` 逐步累加/递减 —— `if (x < 1380) { hspeed 加到 3 以上; y -= 4 }`、`else if (x > xstart) { hspeed -= 1; y += 4 }`、`else hspeed = 0`，末尾再 `if (x > 1455) x = 1455` 硬钳制。**要点是\"离开出生点后会慢慢把速度降回来、走回 xstart，并带轻微上下起伏\"**。但那个右行分支被剧情态 `global.flag[20] == 3` 门控（那是他喝酒的过场），所以我们的 `pace` 只借它的**形状**（区间 + 软起停 + y 起伏 + 硬钳制），不假装是原作逐帧行为。",
+  "party": "★ **主角团**（照抄原作 `scr_makecaterpillar` + `scr_setparty`）：每个队友的 `target = 12 + slot * 12`，含义是**落后主角多少帧**；`obj_caterpillarchara` 存 25 帧位置历史做延迟插值。⇒ 队友是\"走主角走过的路\"，不是各自寻路 ⇒ 天然不撞墙、不卡住。这正是用户说的\"主角团会总凑在一起\"的原作形态。",
+  "bonds": "★ **并肩/互动**（原作实况）：`ch4.obj_room_castle_lancer_Create_0.gml` 里Lancer 在 (793, 92)、Mr. Elegance 在 (869, 92) —— **同一 y、x 相距 76**；`ch4.obj_room_castle_queen_Create_0.gml` 里 Queen(200,150) 与Rouxls(127,275) **同房**；`ch5.obj_npc_castle_cafe_Create_0.gml` 里Rouxls(760,60) 与 Coody(360,83) **同房**。⇒ 原作把\"经常互动的两人\"放进同一间房、并让他们在同一水平线上相邻。"
+ },
+ "rules": {
+  "default_mode": "stand",
+  "wander_margin": 24,
+  "face_each_other": true,
+  "clamp_into_room": "★ 初始坐标与游荡端点一律**钳进房间盒**（`_room_geometry.json` 的 w/h 减 margin）。本项目第44轮踩过\"把 NPC 放在墙外\"；钳制是兜底，站位表本身也已逐条校验过。",
+  "bond_scope": "★ 结对**只在两人同处一个场景时**才生效 —— 不在同一间房就不硬凑（原作里跨房间的两人也不会隔空互动）。",
+  "desktop_scene": "desktop",
+  "unknown_room_policy": "拿不到房间几何时**不钳制**、也**不编一个 640x480**（沿用第44轮口径：缺项一律按\"未知房间\"退化处理，绝不伪造尺寸）。"
+ },
+ "hubs": {
+  "ch1": "ch1.castle_town.castle_town",
+  "ch2": "ch2.my_castle_town.my_castle_town",
+  "ch3": "ch3.my_castle_town.dw_castle_town",
+  "ch4": "ch4.my_castle_town.my_castle_town",
+  "ch5": "ch5.my_castle_town.my_castle_town",
+  "note": "各章的\"城堡镇广场\"。ch2 的 `room_dw_castle_area_2_transformed`（1520x1600）是原作里镇民最集中的地方 ⇒ 默认 hub。桌面是独立前置章，不属于这里。"
+ },
+ "groups": [
+  {
+   "id": "party",
+   "name": "主角团",
+   "members": [
+    "kris",
+    "susie",
+    "ralsei"
+   ],
+   "leader": "kris",
+   "lag": [
+    0,
+    12,
+    24
+   ],
+   "source": "original",
+   "evidence": "`scr_makecaterpillar(x, y, char_id, slot)` 里 `target = 12 + slot * 12` \"落后主角多少帧\"；`scr_setparty(arg0, arg1)` 正好两个队友位。",
+   "note": "★ 团长在原作里恒为 `obj_mainchara`（Kris）。桌面上主控是 Ralsei（宠物本体），所以运行时允许把 leader 换成\"当前主控角色\"（见 `PartyRig(anchor=)`）。"
+  }
+ ],
+ "bonds": [
+  {
+   "a": "king",
+   "b": "lancer",
+   "kind": "family",
+   "meet": "approach",
+   "gap": 64,
+   "source": "original",
+   "evidence": "原作父子。ch1 `obj_npc_room_Create_0` 里两人都在纸牌城堡（`room_cc_prison2` 的笼中 King / `room_cc_throneroom`）；ch2 起同住城堡镇（King 在地牢、Lancer 有自己房间）。",
+   "note": "King 在地牢踱步、Lancer 在纸牌城堡 ⇒ 分处两章，实际只在同章时才会凑到一起。"
+  },
+  {
+   "a": "queen",
+   "b": "rouxls",
+   "kind": "colleague",
+   "meet": "face",
+   "gap": 96,
+   "source": "original",
+   "evidence": "`ch4.obj_room_castle_queen_Create_0.gml`：Queen(200,150) 与 Rouxls 台灯(127,275) **同一间房**。"
+  },
+  {
+   "a": "kris",
+   "b": "susie",
+   "kind": "friend",
+   "meet": "approach",
+   "gap": 48,
+   "source": "original",
+   "evidence": "原作里最紧的一对：`room_dw_castle_rooms_kris_susie`（ch4:246, 920x480）是**以两人名字合起来的**房间名；`scr_setparty` 的两个队友位里 Susie 恒为第一。",
+   "note": "★ 站位上两人分处 `dw_castle_rooms_kris` / `dw_castle_rooms_susie`（原作 ch2 就是两间客房）⇒ 这条结对在**当前站位下不生效**；\"主角团总凑在一起\"由编队 `party`（caterpillar 跟随）承担。保留它 = 将来把两人放进同一间时自动成立，不是死数据。"
+  },
+  {
+   "a": "toriel",
+   "b": "asgore",
+   "kind": "family",
+   "meet": "face",
+   "gap": 96,
+   "source": "derived",
+   "evidence": "原作夫妻（已分居）。两人的站位分别在教室与家乡北街，同属 ch1/ch5 的光世界。",
+   "note": "因为分处不同章节的场景，这条结对在当前站位下**永不生效** —— 保留它是为了\"将来把两人放进同一场景时自动成立\"，不是死数据。"
+  },
+  {
+   "a": "berdly",
+   "b": "noelle",
+   "kind": "classmate",
+   "meet": "face",
+   "gap": 80,
+   "source": "derived",
+   "evidence": "同班同学（原作学校）。本项目把两人放在同一间教室的同一水平线上相邻。"
+  },
+  {
+   "a": "mike",
+   "b": "tenna",
+   "kind": "colleague",
+   "meet": "face",
+   "gap": 96,
+   "source": "derived",
+   "evidence": "两人的原作房间都在城堡镇的电视区：`room_dw_castle_tv_mike`（ch5:213）与 `room_dw_castle_rooms_tenna`（ch4:168）；ch4 还有一整组 `dw_castle_tv_*`。"
+  },
+  {
+   "a": "castle_cafe",
+   "b": "rouxls",
+   "kind": "colleague",
+   "meet": "face",
+   "gap": 96,
+   "source": "original",
+   "evidence": "`ch5.obj_npc_castle_cafe_Create_0.gml` 里 Rouxls 就站在这间咖啡店里(760,60)，与咖啡店主同处一房。"
+  },
+  {
+   "a": "lancer",
+   "b": "susie",
+   "kind": "friend",
+   "meet": "approach",
+   "gap": 56,
+   "source": "derived",
+   "evidence": "原作里 Lancer 与 Susie 的关系线最重（他一口一个 \"Suzie\"，从对手变好友）。⚠️ 这条是**按原作剧情关系**登记，不是按站位坐标证据 —— 故标 derived。"
+  },
+  {
+   "a": "spamton",
+   "b": "addison_tea",
+   "kind": "family",
+   "meet": "face",
+   "gap": 96,
+   "source": "derived",
+   "evidence": "原作设定里 Spamton 与 Addison 一族同源（他自嘲是\"被抛弃的那个\"）。⚠️ 同样按剧情关系登记，标 derived。"
+  }
+ ],
+ "placement": [
+  {
+   "id": "ralsei",
+   "scene": "ch2.ralsei_room.dw_ralsei_castle_front",
+   "pos": [
+    500,
+    620
+   ],
+   "facing": "down",
+   "mode": "patrol",
+   "patrol": {
+    "offset": 180,
+    "speed": 1
+   },
+   "room_id": 63,
+   "room_raw": "room_dw_ralsei_castle_front",
+   "source": "original",
+   "evidence": "原作房间 `room_dw_ralsei_castle_front`（ch2:63, 1000x1000）= 他的城堡正门；另有 `room_dw_castle_rooms_ralsei`（ch4:155 / ch5:65）= 他在城堡镇的客房。",
+   "why": "他是城堡镇的主人，日常在自家城堡正门一带迎客；巡逻段长与速度照原作 patrol 写法，具体走向本项目布置。"
+  },
+  {
+   "id": "kris",
+   "scene": "ch2.my_castle_town.dw_castle_rooms_kris",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 71,
+   "room_raw": "room_dw_castle_rooms_kris",
+   "source": "original",
+   "evidence": "原作房间名 `room_dw_castle_rooms_kris`（ch2:71）就是他在城堡镇的客房。",
+   "why": "客房是他\"回到城里\"的落脚点；日常活动由主角团编队（跟着团长走）表达，不靠固定站位。"
+  },
+  {
+   "id": "susie",
+   "scene": "ch2.my_castle_town.dw_castle_rooms_susie",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 72,
+   "room_raw": "room_dw_castle_rooms_susie",
+   "source": "original",
+   "evidence": "原作房间名 `room_dw_castle_rooms_susie`（ch2:72）；另有 `room_dw_castle_rooms_kris_susie`（ch4:246）= 两人合房。",
+   "why": "同上：客房是落脚点，日常在主角团里。"
+  },
+  {
+   "id": "toriel",
+   "scene": "ch1.hometown.torielclass",
+   "pos": [
+    160,
+    170
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 28,
+   "room_raw": "room_torielclass",
+   "source": "original",
+   "evidence": "原作房间名 `room_torielclass`（ch1:28）= 她的教室；她是学校的老师。",
+   "why": "★ 原作里她**不是**暗世界城堡镇居民（她是光世界角色）⇒ 按原作放在她的教室，而不是硬塞进城堡镇。"
+  },
+  {
+   "id": "asgore",
+   "scene": "ch5.hometown.town_north",
+   "pos": [
+    900,
+    180
+   ],
+   "facing": "down",
+   "mode": "pace",
+   "pace": {
+    "end": 1400,
+    "clamp": 1780,
+    "speed": 3
+   },
+   "room_id": 20,
+   "room_raw": "room_town_north",
+   "source": "derived",
+   "evidence": "原作对象 `obj_town_north_asgore`（ch5）= 他在家乡北边摆摊；房间 `room_town_north`（ch5:20, 1800x240）是横向长街。",
+   "why": "沿街缓慢踱步（pace 照原作 King 的写法）；具体端点本项目布置。"
+  },
+  {
+   "id": "king",
+   "scene": "ch2.my_castle_town.dw_castle_dungeon",
+   "pos": [
+    1180,
+    380
+   ],
+   "facing": "right",
+   "mode": "pace",
+   "pace": {
+    "end": 1380,
+    "clamp": 1455,
+    "speed": 3
+   },
+   "room_id": 69,
+   "room_raw": "room_dw_castle_dungeon",
+   "source": "original",
+   "evidence": "`ch2.obj_npc_king_Step_0.gml`：`x < 1380` 时把 `hspeed` 累计加到 3 以上并 `y -= 4`；否则若 `x > xstart` 则 `hspeed -= 1` 且 `y += 4`（**走回出生点**）；末尾 `x = min(x, 1455)` 硬钳制。⚠️ 右行那一支被剧情态 `global.flag[20] == 3` 门控（喝酒过场）⇒ 我们的 `pace` 借它的形状，不声称逐帧一致。端点 1455 ⇒ 房间宽度必 ≥1455，本仓库满足的城堡系房间是 `room_dw_castle_dungeon`（ch2:69, 1640x480）。另 ch1 证据显示他关在笼中（`ch1.obj_npc_room_Create_0` 的 `room_cc_prison2` → `spr_npc_cage_king`，x 落在 240~440）。",
+   "why": "按原作脚本的端点 1380 / 钳制 1455 踱步；`xstart`（走回哪里）脚本没写死，本项目取 1180 —— 这是本条里**唯一**标 derived 的数。"
+  },
+  {
+   "id": "lancer",
+   "scene": "ch4.card_castle.cc_lancer",
+   "pos": [
+    793,
+    92
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 89,
+   "room_raw": "room_cc_lancer",
+   "source": "original",
+   "evidence": "`ch4.obj_room_castle_lancer_Create_0.gml` 硬坐标：Lancer=(793,92)、Mr. Elegance=(869,92)、Dozer=(940,47)、Ponman=(665,268)、Hacker=(740,254)、Swatchling=(656,26)。坐标 x 最大到 940 ⇒ 房间宽度必 ≥1000；本仓库满足条件的城堡系房间是 `room_cc_lancer`（ch4:89, 1160x480，注意它比其它章的 640x480 同名列宽）⇒ 认定这就是它。",
+   "why": "直接用原作硬坐标 (793,92)。他与 Mr. Elegance 并排站（同 y、x 差 76）⇒ 见 bonds 里的 `lancer↔rouxls`/`lancer↔susie`。"
+  },
+  {
+   "id": "queen",
+   "scene": "ch4.my_castle_town.dw_castle_rooms_queen",
+   "pos": [
+    200,
+    150
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 167,
+   "room_raw": "room_dw_castle_rooms_queen",
+   "source": "original",
+   "evidence": "`ch4.obj_room_castle_queen_Create_0.gml` 硬坐标：`instance_create(200, 150, obj_npc_room)` 且 `sprite_index = spr_queen_walk_up`；同房还有 trashy(315,175)、Rouxls 台灯(127,275)、werewerewire(982,272)、hathy(720,302)。",
+   "why": "直接用原作硬坐标 (200,150)。"
+  },
+  {
+   "id": "spamton",
+   "scene": "ch2.cyber_city.dw_city_spamton_shop_interior",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 148,
+   "room_raw": "room_dw_city_spamton_shop_interior",
+   "source": "original",
+   "evidence": "原作房间名 `room_dw_city_spamton_shop_interior`（ch2:148）与 `room_dw_city_spamton_shop_exterior`（ch2:108）就是他的店。",
+   "why": "他的店就是他的位置（原作里他基本不挪窝）。房内坐标本项目布置。"
+  },
+  {
+   "id": "berdly",
+   "scene": "ch2.hometown.town_school",
+   "pos": [
+    300,
+    170
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 30,
+   "room_raw": "room_town_school",
+   "source": "derived",
+   "evidence": "原作房间名 `room_town_school`（ch2:30）= 家乡的学校；他是学生。",
+   "why": "★ 光世界角色 ⇒ 按原作放学校，不放暗世界城堡镇。"
+  },
+  {
+   "id": "noelle",
+   "scene": "ch2.hometown.town_school",
+   "pos": [
+    380,
+    170
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 30,
+   "room_raw": "room_town_school",
+   "source": "derived",
+   "evidence": "原作房间名 `room_town_school`（ch2:30）；她是学生，与 Berdly 同班。",
+   "why": "与 berdly 同房、同一水平线相邻（原作式\"经常互动两人\"的摆法）。"
+  },
+  {
+   "id": "tenna",
+   "scene": "ch4.my_castle_town.dw_castle_rooms_tenna",
+   "pos": [
+    478,
+    376
+   ],
+   "facing": "up",
+   "mode": "stand",
+   "room_id": 168,
+   "room_raw": "room_dw_castle_rooms_tenna",
+   "source": "original",
+   "evidence": "`ch4.obj_room_castle_tenna_Step_0.gml` 里 `x = 478; y = 376;`（他跳舞的那一支）；同房还有 Rouxls 台灯。",
+   "why": "直接用原作硬坐标 (478,376)。"
+  },
+  {
+   "id": "rouxls",
+   "scene": "ch3.my_castle_town.dw_castle_cafe",
+   "pos": [
+    500,
+    60
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 59,
+   "room_raw": "room_dw_castle_cafe",
+   "source": "derived",
+   "evidence": "原作者在**咖啡店**值班：`ch5.obj_npc_castle_cafe_Create_0.gml` 里`_rouxls_npc = scr_dark_marker(760, 60, spr_rurus_idle_half)`；ch4 里他则在 Queen 房当台灯 (127,275)。⚠️ 他的注册表 `chapters` 只写了 ch3 ⇒ 不能放 ch5/ch4（会被世界门控拒）。",
+   "why": "用 ch3 同型房间 `room_dw_castle_cafe`（640x480）；坐标按原作 ch5 咖啡店(760,60)/(960 宽) 的比例折算到 640 宽的房（x 约 500，y 保持贴近柜台）。★ 数据不一致已登记进报告：他实际横跨 ch4/ch5，注册表 `chapters` 偏窄。"
+  },
+  {
+   "id": "gerson",
+   "scene": "ch4.my_castle_town.dw_castle_dojo",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 69,
+   "room_raw": "room_dw_castle_dojo",
+   "source": "authored",
+   "evidence": "`ch4.obj_npc_gerson_Create_0.gml` 有完整状态机（写字/想事/纸稿/旋转）但**没有站位脚本**，也没有 `room ==` 分派 ⇒ 拿不到原作房间与坐标。",
+   "why": "依据不足 ⇒ 放城堡镇的道场（原作 ch4 的城堡镇建筑之一），坐标本项目布置。⚠️ 等 UTMT 补采实例后校正（见报告遗留）。"
+  },
+  {
+   "id": "mike",
+   "scene": "ch5.my_castle_town.dw_castle_tv_mike",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 213,
+   "room_raw": "room_dw_castle_tv_mike",
+   "source": "original",
+   "evidence": "原作房间名 `room_dw_castle_tv_mike`（ch5:213）—— 房间名就是他的名字。",
+   "why": "他的电视房就是他的位置；房内坐标本项目布置。"
+  },
+  {
+   "id": "flowery",
+   "scene": "ch5.flower_castle.flower_castle_cafe",
+   "pos": [
+    320,
+    300
+   ],
+   "facing": "down",
+   "mode": "patrol",
+   "patrol": {
+    "offset": 160,
+    "speed": 1
+   },
+   "room_id": 177,
+   "room_raw": "room_dw_fcastle_cafe",
+   "source": "authored",
+   "evidence": "原作房间 `room_dw_fcastle_cafe`（ch5:177, 880x680，显示名 `Flower Castle - Cafe`）= 花之城堡·咖啡厅；他的据点房间 `room_dw_fcastle_flowery`(ch5:226) 也在同一片区域。",
+   "why": "依据不足（没有 `obj_npc_flowery` 的站位脚本）⇒ 放花之城堡的咖啡厅并慢速巡逻；坐标本项目布置。"
+  },
+  {
+   "id": "hammerguy",
+   "scene": "ch1.hometown.town_mid",
+   "pos": [
+    900,
+    120
+   ],
+   "facing": "left",
+   "mode": "pace",
+   "pace": {
+    "end": 1200,
+    "clamp": 1500,
+    "speed": 2
+   },
+   "room_id": 11,
+   "room_raw": "room_town_mid",
+   "source": "authored",
+   "evidence": "`ch1.obj_npc_hammerguy_Create_0.gml` 只有 119 B 的初值（没有站位脚本）。",
+   "why": "依据不足 ⇒ 放家乡街区并沿街慢走；坐标本项目布置。"
+  },
+  {
+   "id": "puzzlemaster1",
+   "scene": "ch1.field.field_puzzletutorial",
+   "pos": [
+    240,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 60,
+   "room_raw": "room_field_puzzletutorial",
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_room_Create_0.gml` 的暗世界分支：`room == room_field_puzzletutorial` → `sprite_index = spr_npc_puzzlepiece`。",
+   "why": "谜题房是他的台位；房内坐标本项目布置。"
+  },
+  {
+   "id": "puzzlemaster2",
+   "scene": "ch1.field.field_puzzle1",
+   "pos": [
+    600,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 55,
+   "room_raw": "room_field_puzzle1",
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_puzzlemaster2_Create_0.gml` 用 `x < 350 / 250 / 150` 分档决定他戴几顶帽子（beanie[0..2]），⇒ 同一对象按 x 位置区分多个谜题大师。",
+   "why": "放在另一间谜题房；房内坐标本项目布置（原作靠 x 分档，说明他确实是\"按 x 摆一排\"的存在）。"
+  },
+  {
+   "id": "sign",
+   "scene": "ch1.hometown.town_krisyard",
+   "pos": [
+    240,
+    300
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 7,
+   "room_raw": "room_town_krisyard",
+   "source": "original",
+   "evidence": "`ch1.obj_npc_sign_Create_0.gml` 按房间换精灵：`room == room_town_krisyard` → `spr_torcar_u`；`room == room_town_north` → `spr_npc_asgoretruck`；`room == room_beach` → `spr_npc_beachtable`；`room == room_flowershop_2f` → `spr_flowercontainer`。",
+   "why": "取 `room_town_krisyard` 那一支（克里斯家院子）。"
+  },
+  {
+   "id": "npc_room",
+   "scene": "ch1.unknown.unknown",
+   "pos": [
+    320,
+    240
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 35,
+   "room_raw": "room_dark1a",
+   "source": "derived",
+   "evidence": "注册表里他的 name 是 `???`、name_cn 是\"空房间\"；对应原作通用占位对象 `obj_npc_room`。原作 room 35 的**显示名**就是 `??????`（内部名 `room_dark1a`，640x480）。",
+   "why": "他本来就是\"占位\"，⇒ 放在原作那个显示名为 `??????` 的房间里，坐标没有实际含义（也不该有）。"
+  },
+  {
+   "id": "mansion_room",
+   "scene": "ch2.queens_mansion.dw_mansion_krisroom",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 150,
+   "room_raw": "room_dw_mansion_krisroom",
+   "source": "original",
+   "evidence": "`ch2.obj_npc_mansion_room_Create_0.gml`：`room == room_dw_mansion_krisroom` 分支里给出 6 组硬坐标（bathbombs 120,152 / jongler 124,323 / toriel_piano 448,326 / knife_jello 124,275 / calendar 199,345 / casette 470,266），`room == room_dw_mansion_susieroom` 另有 7 组。",
+   "why": "他本就是\"宅邸房间里的一堆陈设\"（注册表 name 是 `Room Note`）⇒ 放在原作宅邸的克里斯房；房内坐标本项目布置。"
+  },
+  {
+   "id": "conbini",
+   "scene": "ch2.light_world.lw_conbini",
+   "pos": [
+    270,
+    180
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 47,
+   "room_raw": "room_lw_conbini",
+   "source": "original",
+   "evidence": "原作房间名 `room_lw_conbini`（ch2:47, 540x240）= 便利店。",
+   "why": "店员站在店里；房内坐标本项目布置。"
+  },
+  {
+   "id": "police",
+   "scene": "ch2.light_world.lw_police",
+   "pos": [
+    160,
+    180
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 46,
+   "room_raw": "room_lw_police",
+   "source": "original",
+   "evidence": "原作房间名 `room_lw_police`（ch2:46, 320x240）= 警察局；`ch2.obj_npc_police_Create_0.gml` 给出同房硬坐标（napstablook 92,84；办公桌 128,97；笼子 177,35）。",
+   "why": "警察站在局里；坐标参考原作同房布点（靠桌面一侧）。"
+  },
+  {
+   "id": "catti",
+   "scene": "ch2.hometown.diner",
+   "pos": [
+    90,
+    170
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 38,
+   "room_raw": "room_diner",
+   "source": "original",
+   "evidence": "`ch1.obj_npc_room_Create_0.gml`：`room == room_diner` 且 `x < 120` → `sprite_index = spr_npc_cattiwaitress`（女侍）。同房其它 NPC 也靠 x 档位区分（如 120<=x<=140 → `spr_npc_qc`）。",
+   "why": "取原作 `x < 120` 那一档 ⇒ 本项目给 x=90（她**就是**原作里那个靠左侧的女侍）。"
+  },
+  {
+   "id": "rudy",
+   "scene": "ch2.hometown.hospital_rudy",
+   "pos": [
+    160,
+    170
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 36,
+   "room_raw": "room_hospital_rudy",
+   "source": "original",
+   "evidence": "`ch1.obj_npc_room_Create_0.gml`：`room == room_hospital_rudy` → `sprite_index = spr_rudy_d`；`ch2.obj_npc_rudy_Create_0.gml` 里`global.flag[316] == 1` 时 `x += 5`。",
+   "why": "他在医院病房；房内坐标本项目布置。"
+  },
+  {
+   "id": "dumpster",
+   "scene": "ch2.hometown.town_apartments",
+   "pos": [
+    300,
+    190
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 28,
+   "room_raw": "room_town_apartments",
+   "source": "authored",
+   "evidence": "`ch2.obj_npc_dumpster_Step_0.gml` 里出现 Susie 的互动，但没有 `room ==` 分派 ⇒ 拿不到原作房间。",
+   "why": "依据不足 ⇒ 放家乡公寓区的巷子（垃圾桶的合理位置）；坐标本项目布置。"
+  },
+  {
+   "id": "addison_tea",
+   "scene": "ch2.my_castle_town.dw_castle_cafe",
+   "pos": [
+    300,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 65,
+   "room_raw": "room_dw_castle_cafe",
+   "source": "authored",
+   "evidence": "原作里\"Addison 一族\"在赛博世界摆摊；城堡镇的咖啡厅是同类店员值守的地方（ch5 实证 Rouxls 就在咖啡店代班：`ch5.obj_npc_castle_cafe_Create_0.gml`）。但他本人的站位无可溯源证据。",
+   "why": "依据不足 ⇒ 放城堡镇咖啡厅；坐标本项目布置。"
+  },
+  {
+   "id": "castle_cafe",
+   "scene": "ch5.my_castle_town.dw_castle_cafe",
+   "pos": [
+    620,
+    300
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 57,
+   "room_raw": "room_dw_castle_cafe",
+   "source": "original",
+   "evidence": "`ch5.obj_npc_castle_cafe_Create_0.gml` 整段就是这间咖啡店的布点：Rouxls(760,60)、Coody(360,83)、6 组吊灯(178+i*76, 10)、10 处壁炉火（145,4 / 222,73 / 150,50 / 625,11 / 640,67 / 550,98 / 597,125 / 305,92 / 730,120 / 861,130）。房间 960x480。",
+   "why": "他是这间店的老板 ⇒ 站在店内空处（避开原作那些硬点位的落点）。"
+  },
+  {
+   "id": "rabbits",
+   "scene": "ch5.my_castle_town.dw_castle_restaurant",
+   "pos": [
+    420,
+    330
+   ],
+   "facing": "down",
+   "mode": "patrol",
+   "patrol": {
+    "offset": 120,
+    "speed": 1
+   },
+   "room_id": 56,
+   "room_raw": "room_dw_castle_restaurant",
+   "source": "authored",
+   "evidence": "原作有 `spr_npc_rabbick_*`（ch3 `room_dw_b3bs_rabbick_a/b`）与`spr_npc_rabbick_car`（ch4 Queen 房 720,239）⇒ \"兔子\"确实成群出现，但注册表把他登记在 ch5，而 ch5 没有对应房间证据。",
+   "why": "依据不足 ⇒ 放 ch5 城堡镇餐厅，用原作 patrol 写法成组走动；坐标本项目布置。"
+  },
+  {
+   "id": "wrapper",
+   "scene": "ch5.my_castle_town.my_castle_town",
+   "pos": [
+    1180,
+    1300
+   ],
+   "facing": "left",
+   "mode": "patrol",
+   "patrol": {
+    "offset": 150,
+    "speed": 1
+   },
+   "room_id": 54,
+   "room_raw": "room_dw_castle_town",
+   "source": "authored",
+   "evidence": "没有找到 `obj_npc_wrapper` 的站位脚本。",
+   "why": "依据不足 ⇒ 放城堡镇广场当镇民；坐标本项目布置。"
+  },
+  {
+   "id": "doubter",
+   "scene": "ch5.my_castle_town.my_castle_town",
+   "pos": [
+    420,
+    1320
+   ],
+   "facing": "right",
+   "mode": "stand",
+   "room_id": 54,
+   "room_raw": "room_dw_castle_town",
+   "source": "authored",
+   "evidence": "没有找到 `obj_npc_doubter` 的站位脚本。",
+   "why": "依据不足 ⇒ 放城堡镇广场当镇民；坐标本项目布置。"
+  },
+  {
+   "id": "zapper",
+   "scene": "ch4.my_castle_town.dw_castle_tv_zone_minigame",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 325,
+   "room_raw": "room_dw_castle_tv_zone_minigame",
+   "source": "derived",
+   "evidence": "原作有 `room_dw_b3bs_zapper_a/b/c/d`（ch3:157/164/161/182，宽度 1600/2760/640/640）⇒ zapper 是电视世界的\"电击者\"，成排出现、按房间分区。",
+   "why": "注册表把他登记在 ch4 ⇒ 取 ch4 城堡镇电视区的小游戏房（同类场景）；房内坐标本项目布置。"
+  },
+  {
+   "id": "susiedark",
+   "scene": "ch1.dark_world.dark1",
+   "pos": [
+    320,
+    330
+   ],
+   "facing": "down",
+   "mode": "stand",
+   "room_id": 34,
+   "room_raw": "room_dark1",
+   "source": "authored",
+   "evidence": "`ch1.obj_npc_susiedark_Other_10.gml` / `ch2` / `ch3` 都有这个对象，但都是对话脚本，没有 `room ==` 分派。注册表把她记为 `Susie?`（暗之苏西），与主角 Susie 不是同一条。",
+   "why": "依据不足 ⇒ 放 ch1 黑暗世界入口区（她首次出现的地方）；坐标本项目布置。"
+  }
+ ],
+ "unplaced": {
+  "knight": "咆哮骑士（Roaring Knight）在原作里是神秘敌对实体，**不是城堡镇居民**，也没有任何 `obj_npc_*` 站位脚本 ⇒ 不给他编一个安身之所（编了就是假的）。等有原作依据再补。"
+ },
+ "desktop": {
+  "allowed": [
+   "ralsei",
+   "kris",
+   "susie",
+   "lancer"
+  ],
+  "source": "user",
+  "quote": "「只有主角团最多加个lancer能来电脑桌面，其余的不能」（第56轮用户原话，逐字）",
+  "evidence": "主角团 = `scr_setparty` 的三人（Kris / Susie / Ralsei，见 `_registry.json` 的 tier=main 且 objects 为 `obj_hero*` 的三条）；Lancer 是用户明确开的唯一外挂名额。",
+  "note": "★ 门控的**单一真源在代码里**（`npc_system.DESKTOP_ALLOWED_IDS`），这里是数据镜像 + 来由说明；回归套件 `check56` 会断言两边**逐字一致**，防止有人只改一边造成\"文案说能进、代码其实不放行\"。"
+ },
+ "counts": {
+  "placed": 34,
+  "unplaced": 1,
+  "groups": 1,
+  "bonds": 9,
+  "by_source": {
+   "original": 17,
+   "derived": 8,
+   "authored": 9
+  },
+  "desktop_allowed": 4
+ }
+}

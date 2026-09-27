@@ -33,6 +33,9 @@
    · 暗世界 —— 只能进**自己登记过的那几章**（"回原先他们的暗世界"）；
    · 跨暗世界 —— **只有 Ralsei**（`free_dark_roam`）；
    · Ralsei 的例外性 = 他是**纯暗世界居民** ⇒ 脱离暗世界**必须**被装进球容器。
+4. **电脑桌面**（★ 第56轮新增，逐字原话见 `world_gate`）：**只有主角团 + Lancer 能上桌面**
+   （`DESKTOP_ALLOWED_IDS`），其余一律拒。⚠️ 这一条必须在光世界分支**之前**判 ——
+   见 `world_gate` 里 `DESKTOP_SCENE` 那段的三条理由。
 
 跟随的**轨迹数学**不在本模块：复用第46轮的 `companion.py`（`obj_caterpillarchara` 采样轨迹
 + `scr_makecaterpillar` 间距 + `scr_setparty` 2 个队友位）。本模块只负责**策略与门控**。
@@ -115,6 +118,24 @@ REASON_FOREIGN_DARK = 'foreign_dark_world'  # 进入不属于他的暗世界（�
 REASON_NO_CHAPTERS = 'no_chapters'          # 登记里没有可用章节 ⇒ 不硬判，拒绝
 #: ★ 第50轮：Ralsei 想脱离暗世界却没被装进球（他是纯暗世界居民）
 REASON_LIGHT_NEEDS_BUBBLE = 'light_needs_bubble'
+#: ★ 第56轮：想上电脑桌面，但不在白名单里
+REASON_DESKTOP_FORBIDDEN = 'desktop_forbidden'
+
+#: ★ 第56轮：**电脑桌面**这个场景 id。
+#: `scene_system` 里 `desktop` 与作品内场景**完全平级**（`_index.json` 顶层就有），
+#: 而 `_worlds.json` 的 `overrides.desktop == "light"` ⇒ 只按世界判的话
+#: **所有 NPC 都能上桌面**，与用户口径相反 ⇒ 必须单独设一道闸（`DESKTOP_GATED`）。
+DESKTOP_SCENE = 'desktop'
+
+#: ★ 第56轮用户口径（逐字）：
+#:   「其次，只有主角团最多加个lancer能来电脑桌面，其余的不能」
+#: 主角团 = Ralsei / Kris / Susie（`ralsei_pet/assets/npc/_placement.json` 的
+#: `groups[0].members`，同一个集合），"最多加个 lancer" ⇒ 共 **4** 个。
+#: ⚠️ 这是**代码侧单一真源**；`_placement.json` 的 `desktop.allowed` 是**数据镜像**
+#:   （回归锁 `check56.py` 会断言两者逐字相等，防止改一处忘一处）。
+#: ★ 也**不要**把它写成"从 tier 推" —— 主角团里 kris/susie 是 `main`，
+#:   但 `main` 里还有 toriel/asgore/king/queen 等一堆**不许上桌面**的人。
+DESKTOP_ALLOWED_IDS = ('ralsei', 'kris', 'susie', 'lancer')
 
 # 跟随状态
 FOLLOW_IDLE = 'idle'          # 没跟
@@ -358,6 +379,19 @@ def free_dark_roam(npc):
     return is_dark_only(npc)
 
 
+# ---------------------------------------------------------------- 电脑桌面闸
+
+def desktop_allowed(npc):
+    """这个 NPC **能不能上电脑桌面**。
+
+    ★ 第56轮用户口径（逐字）：
+      「其次，只有主角团最多加个lancer能来电脑桌面，其余的不能」
+    ⇒ 白名单 = `DESKTOP_ALLOWED_IDS`（Ralsei / Kris / Susie / Lancer），
+      取 `id` 的**精确相等**（不做前缀/别名匹配 —— `susiedark` 不是 `susie`）。
+    """
+    return getattr(npc, 'id', None) in DESKTOP_ALLOWED_IDS
+
+
 def world_gate(npc, world, scene_id=None, carried=False):
     """NPC 能否进入 `world`（`'light'` / `'dark'`）的 `scene_id`。
 
@@ -366,7 +400,13 @@ def world_gate(npc, world, scene_id=None, carried=False):
     「16项要，但只有ralsei能自由在其他暗世界走，其他人无法通过球去其他世界，
       只能去光世界或是回原先他们的暗世界（这个不需要他们套上球）」
 
-    三条规则：
+    ★ 第56轮口径（用户原话逐字，**新增第 0 条**）
+    ------------------------------------------
+    「其次，只有主角团最多加个lancer能来电脑桌面，其余的不能」
+
+    四条规则（**按本函数里的判断顺序**）：
+    0. **电脑桌面**（`scene_id == 'desktop'`）—— **只有 `DESKTOP_ALLOWED_IDS` 能进**
+       （Ralsei / Kris / Susie / Lancer）。
     1. **光世界**：**谁都能去，且不需要球**（"这个不需要他们套上球"）。
        唯一例外 = **Ralsei**（纯暗世界居民）：脱离暗世界**必须**被装进球
        （第49轮原口径「ralsei也不可以脱离暗世界，除非是…那个球」）。
@@ -374,9 +414,27 @@ def world_gate(npc, world, scene_id=None, carried=False):
     3. **跨暗世界**：只有 Ralsei 自由（`free_dark_roam`）。
        「其他人无法通过球去其他世界」⇒ **球不给**跨暗世界能力。
 
-    :param carried: 是否**被装进球容器里**（只有 Ralsei 认这一条）。
+    ★★ 为什么第 0 条必须**排在第 1 条前面**（三条理由，缺一不可）
+    ---------------------------------------------------------
+    a) **数据层不区分**：`_worlds.json` 的 `overrides.desktop == "light"`
+       ⇒ `scene_system.world_of_scene('desktop')` 返回 `'light'`，所以进到本函数时
+       `world == 'light'`。若不先判 `scene_id`，第 1 条会直接 `light_free` 放行**所有** NPC
+       —— 与用户口径完全相反。
+    b) **桌面是 Ralsei 的家，不是"光世界"这个剧情概念**：`main.BEDTIME_HOME_SCENE == 'desktop'`，
+       他**本来就住在桌面上**。若让它走第 1 条，Ralsei（纯暗世界居民）反而会被
+       `REASON_LIGHT_NEEDS_BUBBLE` 拦下 ⇒ **他回不了自己家**。先判桌面即可解开这个矛盾。
+    c) **契约不回归**：既有 13 组断言的 E 段（`verify_npc49.py` E1~E11）**没有任何一条**
+       传 `scene_id='desktop'`，所以把新闸放在最前面**不会**改变它们的结论。
+
+    :param carried: 是否**被装进球容器里**（只有 Ralsei 认这一条；桌面上不适用）。
     :param scene_id: 缺省 ⇒ 只按世界判，**不做章节判**（不猜）。
     """
+    # ---- 0. 电脑桌面：白名单之外一律进不来（★ 必须先于光世界判，理由见 docstring）----
+    if scene_id == DESKTOP_SCENE or world == DESKTOP_SCENE:
+        if desktop_allowed(npc):
+            return GateResult(True, REASON_OK, 'desktop_allowed')
+        return GateResult(False, REASON_DESKTOP_FORBIDDEN,
+                          '%s 不能来电脑桌面（只有主角团和 Lancer 可以）' % npc.name_cn)
     # ---- 光世界：谁都能去；只有"纯暗世界居民"必须靠球 ----
     if world == WORLD_LIGHT:
         if not light_needs_bubble(npc):
