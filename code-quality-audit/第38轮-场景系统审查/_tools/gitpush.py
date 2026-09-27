@@ -12,12 +12,16 @@
    ⇒ 清空 helper 链 + 直取 GCM 凭据 + `http.extraheader` 注入。
 3. TLS：本机 schannel 吊销检查必失败 ⇒ openssl 后端 + 系统 CA PEM + HTTP/1.1。
 4. 退出码会说谎 ⇒ 必须 `ls-remote` **且** `rev-parse origin/main` 双向核验。
-5. ★ 第57轮补：**代理必须逐端口实测，且要真的握一次 TLS 才算数**。直连 github 会被
-   `Recv failure: Connection was reset`。三级判据：TCP 能连 → 隧道建得起（HTTP CONNECT
-   或 SOCKS5）→ **TLS 握手成功**。
-   ⚠️ 「CONNECT 回 200」是**假阳性**：本机 7897 的 HTTP 隧道对裸 `github.com` 回 200
-   却立刻 `unexpected eof while reading`（`api.github.com` 通、`github.com` 不通），
-   而**同一端口的 SOCKS5 通道是好的** ⇒ 两条路都要试、且必须走到 TLS 这一步。
+5. ★ 第57轮补：**代理必须逐端口实测，且判据要走到"git 自己走一次"**。直连 github 会被
+   `Recv failure: Connection was reset`。四级判据：
+   `TCP 能连` → `隧道建得起（HTTP CONNECT / SOCKS5）` → `TLS 握得上` →
+   **`git ls-remote` 真能读到 refs`（末级才算数，仓库公开 ⇒ 匿名可读、不需凭据）**。
+   ⚠️ 两个**假阳性**都实测踩到：
+   · 「CONNECT 回 200」≠ 能用：本机 7897 的 http 隧道对裸 `github.com` 回 200 却
+     立刻 `unexpected eof while reading`（`api.github.com` 通、`github.com` 不通），
+     而**同端口的 SOCKS5 通道**当时是好的；
+   · 「ssl 握手成功」也 ≠ 能用：后来碰上一次 http 隧道 TLS 能过、push 仍报同一个 eof。
+   ⇒ 探针不能自造，必须**用产品自己那条路**去问（本项目铁律"探针不保真 = 报假问题"）。
    另加 `--push-only`：push 失败后重推时不再被"没有可提交的改动"提前返回。
 
 安全：凭据只在进程内；报告里只写长度，绝不写 token。
@@ -78,6 +82,36 @@ def run(args, timeout=240, env=None, inp=None):
         return (-999, '', 'TIMEOUT %ss' % timeout)
     except Exception as e:
         return (-998, '', 'EXC %r' % (e,))
+
+
+def _base_opts():
+    """与推送共用的底层 `-c`（TLS 后端 / CA / HTTP 版本 / 清掉会弹窗的 helper）。"""
+    return ['-c', 'credential.helper=',
+            '-c', 'http.sslBackend=openssl',
+            '-c', 'http.sslCAInfo=' + CA.replace('\\', '/'),
+            '-c', 'http.version=HTTP/1.1']
+
+
+def _proxy_opts(proxy, base=None):
+    """把代理并进 `-c` 参数列表（`base` 为空时只给 `credential.helper=`）。"""
+    opts = list(base) if base else ['-c', 'credential.helper=']
+    if proxy:
+        opts += ['-c', 'http.proxy=' + proxy, '-c', 'https.proxy=' + proxy]
+    return opts
+
+
+def _git_reachable(proxy, timeout=60):
+    """★★ 终极判据：**真的跑一次 `git ls-remote`**（本仓库公开 ⇒ 匿名可读、不需凭据）。
+
+    第57轮实测：Python 侧 `ssl` 握手成功**仍不等于** git 推得上去 ——
+    同一个 `7897` 的 http 隧道，探测握手能过，push 依旧
+    `unexpected eof while reading`。所以探针不能自造（"探针不保真 = 报假问题"），
+    必须**用产品自己那条路**去问一次。
+    """
+    args = (['git'] + _proxy_opts(proxy, _base_opts())
+            + ['ls-remote', 'origin', 'refs/heads/main'])
+    rc, o, e = run(args, timeout=timeout)
+    return rc == 0 and bool(o.strip())
 
 
 def _recv_exact(s, n):
@@ -210,11 +244,19 @@ def _probe_proxies(limit=3):
             except Exception:                                         # noqa: BLE001
                 continue          # 静默跳过"不是代理"的端口，别刷屏
             ok = _tls_ok(s)
-            w('     proxy %-6s (%-7s) %s'
-              % (port, scheme, 'OK —— TLS 握手成功' if ok else '-- TLS 握手失败'))
-            if ok:
-                found.append(('http://127.0.0.1:%d' % int(port)) if scheme == 'http'
-                             else ('socks5h://127.0.0.1:%d' % int(port)))
+            url = (('http://127.0.0.1:%d' % int(port)) if scheme == 'http'
+                   else ('socks5h://127.0.0.1:%d' % int(port)))
+            if not ok:
+                w('     proxy %-6s (%-7s) -- TLS 握手失败' % (port, scheme))
+                continue
+            # ★★ TLS 过了也**不算数**：还得让 git 自己走一次（见 `_git_reachable`）。
+            if _git_reachable(url):
+                w('     proxy %-6s (%-7s) OK —— TLS + `git ls-remote` 双过'
+                  % (port, scheme))
+                found.append(url)
+            else:
+                w('     proxy %-6s (%-7s) -- TLS 能过但 **git 仍不可达**'
+                  '（真判据是 git，不是 ssl）' % (port, scheme))
     return found
 
 
@@ -304,21 +346,14 @@ def _push():
     b64 = base64.b64encode(('%s:%s' % (usr, pw)).encode('ascii')).decode('ascii')
     del pw
 
-    w('[5b] 探测可用代理（TCP → 隧道 → TLS 握手，三级都过）')
+    w('[5b] 探测可用代理（TCP → 隧道 → TLS → **`git ls-remote`**，四级都过才算）')
     proxies = _probe_proxies()
     w('[5c] 可用代理 %d 个：%s' % (len(proxies), proxies or '(无 ⇒ 直连)'))
 
-    BASE = ['-c', 'credential.helper=',
-            '-c', 'http.sslBackend=openssl',
-            '-c', 'http.sslCAInfo=' + CA.replace('\\', '/'),
-            '-c', 'http.version=HTTP/1.1',
-            '-c', 'http.extraheader=Authorization: Basic ' + b64]
+    BASE = _base_opts() + ['-c', 'http.extraheader=Authorization: Basic ' + b64]
 
     def _opts(proxy):
-        if not proxy:
-            return list(BASE)
-        return BASE + ['-c', 'http.proxy=' + proxy,
-                       '-c', 'https.proxy=' + proxy]
+        return _proxy_opts(proxy, BASE)
 
     # ★ 有界尝试：候选之间是**不同配置**（http 隧道 / socks5h / 不同端口），
     #   不是拿同一个配置反复砸。上限 = `_probe_proxies(limit=3)`。
