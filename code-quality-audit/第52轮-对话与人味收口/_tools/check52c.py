@@ -603,8 +603,16 @@ h._last_bedtime_check = NOW
 r = _RP._bedtime_tick(h, NOW + 1.0)
 check("C9 节流：距上次判定不足 5s ⇒ 直接跳过（不每 30ms 算日期）",
       r is False and h.calls == [], "ret=%r" % (r,))
-h._last_bedtime_check = NOW
-r = _RP._bedtime_tick(h, NOW + 6.0)
+# ★ 第54轮修：C9b 原先用 `NOW = time.time()`（**真实时钟**）——若真机时钟正好
+#   落在 23:00±10 的就寝窗口内，`_bedtime_tick` 会真的走到"到点就寝"并调
+#   `go_to_bed()`，判据输出随之变成 `ret=True calls=['bed']` ⇒ **同一条判据
+#   在窗口内跑必然 DIFF**（复现时间 2026-09-27 22:58）。
+#   这与第52轮 §5.2 的"基线不许被时间戳污染"是同一类缺陷，处置也一致：
+#   **改判据、不改基线**。改成一个**固定地方时 12:00** 的时间戳 —— 距节流已过，
+#   又离就寝窗口与起床时刻都远 ⇒ 恒定 `ret=False calls=[]`。
+_FIXED_NOON = _dt.datetime(2026, 9, 27, 12, 0, 0).timestamp()
+h._last_bedtime_check = _FIXED_NOON - 60.0
+r = _RP._bedtime_tick(h, _FIXED_NOON)
 check("C9b 正控制：超过 5s ⇒ 恢复正常判定（A≠B）", r in (True, False),
       "ret=%r calls=%r" % (r, h.calls))
 

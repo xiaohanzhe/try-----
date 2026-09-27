@@ -45,8 +45,52 @@ _initializing = False    # 重入保护，见 _init_logging 的文档字符串
 _root_logger = None
 
 
-class _SafeTimedRotatingFileHandler(TimedRotatingFileHandler):
-    """按天切割的日志 handler，但**绝不让切割失败把异常吐给用户**。
+class _SafeEmitStreamHandler(logging.StreamHandler):
+    """★ 第54轮：写日志/刷缓冲期的**磁盘与管道故障**不许变成用户屏幕上的 Traceback。
+
+    背景（第34轮续，真机暴露）：实测 `E:\\RalseiMemory\\logs`（exFAT）间歇性拒写、
+    以及 `sys.stdout` 指向已关闭/半关闭的管道时，都会在
+    `logging/__init__.py:1094` 的 `self.stream.flush()` 抛
+    `OSError: [Errno 22] Invalid argument`。
+    原生行为有两层后果，都不该由用户承担：① 控制台刷一屏
+    `--- Logging error ---` + Traceback；② 这条日志其实也没写进去。
+
+    ⚠️ 拦截点必须是 `handleError`，**不是 `emit`**：
+    `StreamHandler.emit()` 自己已经把所有异常吃掉了并转交 `handleError`
+    （native 源码 `except Exception: self.handleError(record)`），
+    所以在 `emit` 外面再包一层 try/except 是**完全无效**的死代码 ——
+    这一点在第54轮被 F1/F2 判据当场抓出来（先写错过一版）。
+
+    处置口径与 `_SafeTimedRotatingFileHandler.doRollover` 一致：兜住，绝不打 Traceback。
+    差别是这里**不静默**地留一个计数器 `emit_failures`，便于诊断时判断
+    "日志是不是早就在丢"（次数上去了就是日志落盘真的坏了）。
+
+    `flush()` 也一并兜：除了 `emit` 会调它，`logging.shutdown()` 收尾时也会直接调 ——
+    那里抛出去会打断程序退出流程。
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.emit_failures = 0
+
+    def flush(self):
+        try:
+            super().flush()
+        except (OSError, ValueError):
+            self.emit_failures += 1
+
+    def handleError(self, record):
+        # 原生实现 = 往 stderr 写 `--- Logging error ---` + Traceback。
+        # 日志落盘坏了是**环境**问题，不是代码 bug；噪音留给用户没有意义。
+        self.emit_failures += 1
+
+
+class _SafeTimedRotatingFileHandler(_SafeEmitStreamHandler, TimedRotatingFileHandler):
+    """按天切割的日志 handler，但**绝不让日志系统自身成为故障源**。
+
+    两层保护：
+      1. `emit`/`flush` 期故障（写不进、flush 报 Errno 22）→ 见 `_SafeEmitStreamHandler`；
+      2. 切割（rollover）期故障 → 见下面的 `doRollover`。
 
     第三十四轮修复（真机实测暴露）：
         `TimedRotatingFileHandler.doRollover()` 在 emit() 内部被调用，也就是
@@ -138,7 +182,10 @@ def _init_logging_impl():
 
     # --- 控制台输出 ---
     try:
-        console_handler = logging.StreamHandler(sys.stdout)
+        # ★ 第54轮：用兜住 emit/flush 的版本。实测 `sys.stdout` 指向已关闭/半关闭的
+        #   管道时，原生 StreamHandler 会抛 OSError Errno 22 并把 `--- Logging error ---`
+        #   + Traceback 喷到 stderr（同时这条日志也丢了）。
+        console_handler = _SafeEmitStreamHandler(sys.stdout)
         console_handler.setLevel(_DEFAULT_LEVEL)
         console_handler.setFormatter(formatter)
         _root_logger.addHandler(console_handler)

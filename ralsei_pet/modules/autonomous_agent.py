@@ -624,8 +624,15 @@ class AutonomousAgent:
                     d.drag_file_background(t.target.path, t.drag_to)
 
             elif t.action == InteractionType.DELETE:
-                if t.target.path:
-                    d.delete_file(t.target.path, confirm=False, send_to_recycle=True)
+                # ★ 第54轮 P1（第53轮彻查发现）：**硬拒绝**。
+                #   `_pick_action` 早已不再产出 DELETE（按用户口径"删除文件需要找
+                #   用户确认"移除，见本文件 475 行附近的注释），所以这条分支目前
+                #   **不可达**；但 `desktop_interaction.delete_file(confirm=False)`
+                #   的 `confirm` 只是个 `log.debug`（原文写着"模拟确认对话框"）——
+                #   一旦将来有人从别处塞进 DELETE 任务，就会**无任何确认地删掉
+                #   用户文件**。这里不依赖上游"不选它"，直接拒绝。
+                _log.warning("自主代理请求删除 %r ⇒ 已硬拒绝（删除须经用户确认）",
+                             t.target.path)
 
             elif t.action == InteractionType.CLOSE_WINDOW:
                 if t.target.hwnd:

@@ -1,0 +1,86 @@
+核心文件复检（第54轮）
+============================================================
+=== 1. 可解析（.py 走 ast.parse；不落 .pyc）===
+  [PASS] C1-main.py 可解析：main.py
+  [PASS] C1-sprite_loader.py 可解析：sprite_loader.py
+  [PASS] C1-autonomous_agent.py 可解析：autonomous_agent.py
+  [PASS] C1-logger_utils.py 可解析：logger_utils.py
+  [PASS] C1-run_all.py 可解析：run_all.py
+  [PASS] C1-_seed_runner.py 可解析：_seed_runner.py
+  [PASS] C1-extract_animations_json.py 可解析：extract_animations_json.py
+  [PASS] C1-verify_round8_anim.py 可解析：verify_round8_anim.py
+  [PASS] C1-check52c.py 可解析：check52c.py
+  [PASS] C1-check54a.py 可解析：check54a.py
+  [PASS] J1-animations.json 可 json.load：animations.json
+  [PASS] J1-baseline.json 可 json.load：baseline.json
+  [PASS] J1-animations.json 可 json.load：animations.json
+
+=== 2. 结构自检 ===
+  [PASS] S1    报告章节 0..9 全在  :: 缺=[]
+  [PASS] S2    标题无粘连（## 都在行首）  :: 粘连行=[]
+  [PASS] S3    报告代码围栏成对  :: count=8
+  [PASS] S4    animations.json 组数 == 报告里的 114  :: n=114
+  [PASS] S5    素材库条目数 == 报告里的 1116（其中 PNG 1115 + 1 个无扩展名历史文件）  :: entries=1116 png=1115
+
+=== 3. 编码（无 BOM / 无 U+FFFD）===
+  [PASS] E-main.py 无 BOM 且无 U+FFFD：main.py  :: bom=False fffd=False
+  [PASS] E-sprite_loader.py 无 BOM 且无 U+FFFD：sprite_loader.py  :: bom=False fffd=False
+  [PASS] E-autonomous_agent.py 无 BOM 且无 U+FFFD：autonomous_agent.py  :: bom=False fffd=False
+  [PASS] E-logger_utils.py 无 BOM 且无 U+FFFD：logger_utils.py  :: bom=False fffd=False
+  [PASS] E-run_all.py 无 BOM 且无 U+FFFD：run_all.py  :: bom=False fffd=False
+  [PASS] E-_seed_runner.py 无 BOM 且无 U+FFFD：_seed_runner.py  :: bom=False fffd=False
+  [PASS] E-extract_animations_json.py 无 BOM 且无 U+FFFD：extract_animations_json.py  :: bom=False fffd=False
+  [PASS] E-verify_round8_anim.py 无 BOM 且无 U+FFFD：verify_round8_anim.py  :: bom=False fffd=False
+  [PASS] E-check52c.py 无 BOM 且无 U+FFFD：check52c.py  :: bom=False fffd=False
+  [PASS] E-check54a.py 无 BOM 且无 U+FFFD：check54a.py  :: bom=False fffd=False
+  [PASS] E-animations.json 无 BOM 且无 U+FFFD：animations.json  :: bom=False fffd=False
+  [PASS] E-baseline.json 无 BOM 且无 U+FFFD：baseline.json  :: bom=False fffd=False
+  [PASS] E-第54轮报告-电梯坐姿与底层修复.md 无 BOM 且无 U+FFFD：第54轮报告-电梯坐姿与底层修复.md  :: bom=False fffd=False
+  [PASS] E-elevator_evidence.md 无 BOM 且无 U+FFFD：elevator_evidence.md  :: bom=False fffd=False
+
+=== 4. 恒真判据复查（同名非恒真分支口径）===
+  [PASS] T-verify_round8_anim.py 无"只以常量 True 出现"的 check：verify_round8_anim.py  :: 可疑=[]
+  [PASS] T-check52c.py 无"只以常量 True 出现"的 check：check52c.py  :: 可疑=[]
+  [PASS] T-check54a.py 无"只以常量 True 出现"的 check：check54a.py  :: 可疑=[]
+
+=== 5. 逐令牌回验 ===
+  [PASS] K-animations.json 令牌全在：animations.json  :: 丢失=[]
+  [PASS] K-sprite_loader.py 令牌全在：sprite_loader.py  :: 丢失=[]
+  [PASS] K-main.py 令牌全在：main.py  :: 丢失=[]
+  [PASS] K-logger_utils.py 令牌全在：logger_utils.py  :: 丢失=[]
+  [PASS] K-autonomous_agent.py 令牌全在：autonomous_agent.py  :: 丢失=[]
+  [PASS] K-run_all.py 令牌全在：run_all.py  :: 丢失=[]
+  [PASS] K-baseline.json 令牌全在：baseline.json  :: 丢失=[]
+  [PASS] K-extract_animations_json.py 令牌全在：extract_animations_json.py  :: 丢失=[]
+  [PASS] K-verify_round8_anim.py 令牌全在：verify_round8_anim.py  :: 丢失=[]
+  [PASS] K-check54a.py 令牌全在：check54a.py  :: 丢失=[]
+  [PASS] K-png0 真 PNG 在位：spr_ralsei_sit_0.png
+  [PASS] K-png1 真 PNG 在位：spr_ralsei_sit_1.png
+  [PASS] K-png2 真 PNG 在位：spr_ralsei_sit_2.png
+  [PASS] K-png3 真 PNG 在位：spr_ralsei_sit_3.png
+
+=== 6. 状态干净 / 改动集合 ==
+  git status --porcelain -z（共 16 项）：
+    code-quality-audit/regress/baseline.json
+    code-quality-audit/regress/run_all.py
+    code-quality-audit/架构改造-H4H5/extract_animations_json.py
+    code-quality-audit/第52轮-对话与人味收口/_tools/check52c.py
+    code-quality-audit/第54轮-电梯坐姿与底层修复/
+    code-quality-audit/第八轮/verify_round8_anim.py
+    deltarune_ralsei/spr_ralsei_sit_0.png
+    deltarune_ralsei/spr_ralsei_sit_1.png
+    deltarune_ralsei/spr_ralsei_sit_2.png
+    deltarune_ralsei/spr_ralsei_sit_3.png
+    ralsei_pet/assets/animations.json
+    ralsei_pet/modules/autonomous_agent.py
+    ralsei_pet/modules/logger_utils.py
+    ralsei_pet/modules/sprite_loader.py
+    ralsei_pet/src/main.py
+    第54轮报告-电梯坐姿与底层修复.md
+  [PASS] G0    负控制：默认（转义）输出确实会漏判中文路径（证明用 -z 是必要的）
+  [PASS] G1    改动集合只含本轮预期目录（无临时/备份文件混入）  :: 意外=[]
+  [PASS] G2    没有被顺手改到的 .pyc / 临时产物
+  [PASS] G3    工作区删除行数远低于 1000 停手线  :: deletions=26
+
+============================================================
+PASS=53  FAIL=0

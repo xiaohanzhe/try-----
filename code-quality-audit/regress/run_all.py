@@ -92,6 +92,7 @@ HERMETIC_IDS = frozenset({
     'objects_round44', 'anim_round44', 'pathfind_round45',
     'rooms_round47', 'walk_round47', 'npc_round49', 'bubble_round50',
     'dialog_turn52', 'dialog_clean52', 'dialog_lounge52',
+    'sit_round54',
 })
 
 
@@ -1091,6 +1092,39 @@ SUITES = [
                 '到点真调 go_to_bed 且记当晚 / 当晚只一次 / 窗口过后**不半夜补睡** / '
                 '「有事」推迟且**不**标记当晚已处理，配正控制：解除后同窗口内立刻去睡 / '
                 '★早上 7 点只对「就寝睡」自动醒，配反控制：白天小憩不自动醒 / 5s 节流成对）',
+    },
+    # ------------------------------------------------------------------
+    # 第54轮。★ 本套件**不联网、不调 Ollama、不构造完整 RalseiPet**：
+    #   · B 组用 `ast` 从 main.py **逐字抽取** __init__ 的钳位片段再 exec（配 B10 负控制：
+    #     修复前写法 + fps=0 必须真抛 ZeroDivisionError）；
+    #   · C 组用 `__new__` 式 StubPet 直调真 `_idle_lounge_tick`（与 check52c 同思路）；
+    #   · D 组用假 desktop 直调真 `_execute_action`（配 D3 正控制证明 harness 有鉴别力）。
+    {
+        'id': 'sit_round54',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第54轮-电梯坐姿与底层修复',
+                               '_tools', 'check54a.py'),
+        'offscreen': True,
+        'desc': '第五十四轮：原作电梯坐姿 + 两处底层修复不许静默回退 —— '
+                'A 素材与动作表（★四帧在位且是真 PNG / 尺寸 24x44 / ★sit_0≠sit_2 负控制 + '
+                'sit_2==sit_3 定格 / SpriteLoader 与 animations.json **逐字相等** / '
+                '★不存在的 sit_zzz 取不到防「名字打错⇒恒真」）+ '
+                'B P0 animation.fps 钳位（★从 main.py 逐字抽取片段真跑：0/-3/"abc"/None/True⇒6、'
+                '999⇒120；★正控制 6 与 6.5 **原样保留且不告警**；'
+                '★★负控制：修复前写法 + fps=0 必须真抛 ZeroDivisionError）+ '
+                'C 待机⇒坐下接线（AST：update_animation 选 `sit_rest` 且被 `_lounge_since` 守卫、'
+                '★★复检修正：守卫**不许**再用 `_idle_loop_active`（静止满10分钟 ≠ 窝着；'
+                '那么写时 round8 E1.3 是靠跨组切换冷却 1.6s 侥幸为绿的假绿）/ '
+                '★分类与闸门一致：`sit`/`sit_rest` 必须**非**特殊动画、'
+                'round8 来源闸门白名单必须已放行 `_idle_lounge_tick`（两处各配负控制）、'
+                '`_idle_lounge_tick` 到窝点播一次 `sit(restore_to=sit_rest)` / 行为级真跑 + '
+                '★负控制：已在窝点不许重播）+ '
+                'D P1 自主代理删除硬拒绝（★AST 判据不吃注释，配 D1b 鉴别力体检 / '
+                '行为级 DELETE 零调用 / ★正控制 OPEN 真调 open_folder / 上游 _pick_action 仍无 DELETE）+ '
+                'F 日志系统自身不许成为故障源（★★拦截点是 `handleError` 而不是 `emit`'
+                '——`StreamHandler.emit` 自己就把异常吃掉转交 handleError 了，在 emit 外面包 try 是死代码；'
+                '坏流夹具真造 `OSError(22)`，断言 stderr 上不再出现 `Logging error` 且失败被计数；'
+                '配 F3/F3b 负控制证明原生实现确实会喷 Traceback；'
+                '另锁"文件 handler 继承 emit 保护 + rollover 保护未被删 + console 接线"）',
     },
 ]
 

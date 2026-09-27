@@ -569,6 +569,13 @@ _ALLOWED_PLAY_ONCE_OWNERS = {
     'update_movement', 'update_animation', 'handle_fall', 'handle_jump',
     'start_fall', 'start_falling', 'handle_gravity_fall', 'trigger_splat',
     'wake_up', 'play_animation_once',
+    # —— 待机（窝着）状态机（第54轮新增）：确定性触发，不是"环境事件驱动的表演"。
+    #   `_idle_lounge_tick` 只在"距上次互动 ≥ IDLE_LOUNGE_AFTER_SECONDS(600s)"后走一次
+    #   「到窝点 → 播 sit 过渡 → 保持 sit_rest」，与 `wake_up` 同性质。
+    #   本闸的本意是拦"看窗口就挥手/随机跳舞"这类抽风式触发（用户第8轮原话），
+    #   待机坐下不属于此类；且 `sit`/`sit_rest` 已登记为非特殊姿态动画
+    #   （见 main.py `_NON_SPECIAL_ANIM_GROUPS` 的第54轮说明），两边口径一致。
+    '_idle_lounge_tick',
     # —— AI 决策 / AI 发起的特殊行动（施法与躲猫猫）
     '_execute_api_action', '_tick_spell_flow', '_cast_spell_then',
     '_hide_move_to_point', '_hide_end_game', '_hide_destroy_obstacles',

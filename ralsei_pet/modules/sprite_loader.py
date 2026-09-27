@@ -123,6 +123,16 @@ class SpriteLoader:
             "item": ["spr_ralsei_item_0.png", "spr_ralsei_item_1.png", "spr_ralsei_item_2.png", "spr_ralsei_item_3.png", "spr_ralsei_item_4.png", "spr_ralsei_item_5.png", "spr_ralsei_item_6.png"],
             "darkchurch_sit_happy": ["spr_ralsei_darkchurch_sit_happy_0.png"],
             "darkchurch_sit_sad": ["spr_ralsei_darkchurch_sit_sad_0.png"],
+            # ★ 第54轮：原作 CH1 纸牌城堡电梯场景的「坐下」动画。
+            # 出处（反编译逐字）：`gml_Object_obj_elevatorcontroller_Step_0.gml`
+            #   con==11 → `with (r) { sprite_index = spr_ralsei_sit; image_speed = 0.25; }`
+            #   con==13 → `with (r) { image_speed = 0; image_index = 2; }`（坐定定格）
+            # 台词 `gml_419_0`：「大家怎么舒服怎么来吧！」（"Get comfy, everyone!"）
+            # 帧序：0=站立 → 1=下沉 → 2=坐定 → 3=同 2。
+            # ⇒ `sit` 是**过渡**（配 play_animation_once 用，播完恢复 `sit_rest`）；
+            #   `sit_rest` 是**坐定静帧**（待机窝着时保持，不再站着循环 idle）。
+            "sit": ["spr_ralsei_sit_0.png", "spr_ralsei_sit_1.png", "spr_ralsei_sit_2.png", "spr_ralsei_sit_3.png"],
+            "sit_rest": ["spr_ralsei_sit_2.png"],
             "susie_throw_ready": ["spr_susieb_throwralseiready.png"],
             
             # 互动动画

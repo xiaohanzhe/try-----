@@ -100,16 +100,43 @@ def resolve_groups(doc):
     return {name: resolve(name, set()) for name in groups}
 
 
-def build_document(mapping, comments):
+# 帧以代码为真值来源；这几个字段只存在于 JSON 里（S2/S3 的标注），重导出必须继承。
+# `frames` 不在其中：它永远以代码为准。
+CARRIED_KEYS = ('comment', 'loop', 'offset')
+
+
+def build_document(mapping, comments, existing=None):
     """构造 JSON 文档（保持源码顺序）。本函数是导出格式的唯一出口。
 
     注释只保留在**组内**（`comment` 字段）：源码里的 `# 行走动画（不同情绪）` 这类
     分块标题本来就贴在它所属的第一个键前面，因此组内注释已经无损承载了全部说明，
     再往 meta 里抄一份就是冗余——冗余的配置项迟早会漂移。
+
+    ★ 合并语义（2026-09 修复）：`_builtin_animation_mapping` 只是一个 {名: [帧]} 的
+    字典，**承载不了 `comment` / `alias_of` / `legacy` 这三种标注**，而这三者在 S2/S3
+    轮次里已经从源码搬迁到 JSON 独存。因此本导出器是**保留式**的：
+      - `frames`：一律以代码字面量为准（代码是唯一真值来源）；
+      - `comment` / `loop` / `offset` / `alias_of` / `legacy`：若现有 JSON 的同名组
+        带这些字段，则原样继承；`alias_of` 的组仍写成 `frames: []`（S3 口径）。
+    不这么做的话，任何一次"改内置表 → 重新导出"都会静默抹掉标注，
+    而 `verify_s3_alias_legacy.py` 会立刻报 FAIL（这正是它该做的事）。
     """
+    prev = (existing or {}).get('groups')
+    prev = prev if isinstance(prev, dict) else {}
     groups = {}
     for name, frames in mapping.items():
         entry = {'frames': list(frames)}
+        old = prev.get(name)
+        if isinstance(old, dict):
+            for key in CARRIED_KEYS:
+                if key in old:
+                    entry[key] = old[key]
+            if old.get('alias_of'):
+                entry['alias_of'] = old['alias_of']
+                entry['frames'] = []          # 别名组不再重复写帧
+            if old.get('legacy') is True:
+                entry['legacy'] = True
+        # 源码注释优先于继承来的注释（若哪天源码里补了注释，以源码为准）
         if name in comments:
             entry['comment'] = comments[name]
         groups[name] = entry
@@ -176,17 +203,25 @@ def main():
 
     mapping, node, lines = extract_literal()
     comments = collect_comments(lines, node)
-    doc = build_document(mapping, comments)
+    raw = None
+    if os.path.exists(TARGET):
+        with io.open(TARGET, encoding='utf-8') as fh:
+            raw = fh.read()
+    existing = json.loads(raw) if raw is not None else None
+    doc = build_document(mapping, comments, existing)
     text = dumps(doc)
     parsed = json.loads(text)
 
-    # 自校验：序列化后再解析，groups 必须与源码字面量逐组相等（防止导出器本身写错）
-    back = {name: entry['frames'] for name, entry in parsed['groups'].items()}
+    # 自校验：序列化后再解析，**按别名展开后**必须与源码字面量逐组相等
+    # （别名组的 frames 按 S3 口径写成空，所以不能直接比原始 frames 字段）
+    try:
+        back = resolve_groups(parsed)
+    except ValueError as exc:
+        raise SystemExit('导出器自校验失败：%s' % exc)
     if back != mapping:
         raise SystemExit('导出器自校验失败：JSON 还原的 groups 与源码字面量不一致')
 
     if args.check:
-        existing = load_existing()
         if existing is None:
             print('FAIL 目标文件不存在: %s' % TARGET)
             return 1
@@ -195,16 +230,24 @@ def main():
         except Exception as exc:
             print('FAIL 解析失败: %s' % exc)
             return 1
-        # 自校验：导出器幂等（同一输入连续两次导出必须逐字节一致）
-        idem = dumps(build_document(mapping, comments)) == dumps(build_document(mapping, comments))
-        ok = resolved == mapping and idem
+        # 自校验 1：导出器幂等（同一输入连续两次导出必须逐字节一致）
+        idem = dumps(build_document(mapping, comments, existing)) \
+            == dumps(build_document(mapping, comments, existing))
+        # 自校验 2：**往返一致** —— 把现有 JSON 当合并源重导一遍，必须逐字节复现该文件。
+        # 这是"重导出会不会静默抹掉 comment/alias_of/legacy 标注"的唯一硬判据；
+        # 少了它，标注被抹掉要等到 S3 套件报 FAIL 才被发现。
+        roundtrip = (raw == text)
+        ok = resolved == mapping and idem and roundtrip
         print('%s 现有 JSON **解析后**与代码字面量%s'
               % ('PASS' if ok else 'FAIL', '一致' if resolved == mapping else '不一致'))
-        print('  组数：JSON=%s 代码=%s；导出器幂等=%s' % (
-            len(existing.get('groups', {})), len(mapping), idem))
+        print('  组数：JSON=%s 代码=%s；导出器幂等=%s；往返逐字节一致=%s' % (
+            len(existing.get('groups', {})), len(mapping), idem, roundtrip))
         if resolved != mapping:
             bad = [k for k in mapping if resolved.get(k) != mapping[k]]
             print('  不一致的组：%s' % bad)
+        if not roundtrip:
+            print('  !! 重导出与现有文件不一致 —— 标注（comment/alias_of/legacy）'
+                  '可能丢失，或文件未经本导出器写出；请人工核对后再覆盖。')
         return 0 if ok else 1
 
     if args.stdout:

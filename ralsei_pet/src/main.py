@@ -229,12 +229,23 @@ def _should_splat_on_landing(pet, landed_floor):
 #   idle / walk_* / run_*        常规移动与待机
 #   jump_* / fall* / splat* / land / hatless_throw / slide / roll   物理与摔倒流程
 #   spell* / item                施法与道具
+#   sit / sit_rest               待机（窝着）坐姿 —— 见下方第54轮说明
 # 其余（laugh / dance / sing / wave / curtsy / hug / pose / tea / nuzzle / victory /
 # spin / bow / look_up / surprised / cry / sad / happy / act / book_look …）= 特殊动画。
+#
+# ★ 第54轮：`sit` 为什么算"姿态"而不是"表演"
+#   `sit`（站→下沉→坐定的 4 帧过渡）与 `sit_rest`（坐定静帧）由**确定性状态机**
+#   `_idle_lounge_tick` 驱动：静止满 IDLE_LOUNGE_AFTER_SECONDS 才发生，一天里至多几次。
+#   这与 `splat` / `land`（摔倒流程）同类 —— 都是"状态真的变了"的姿态/流程动画，
+#   而不是"走着走着突然跳舞"那类表演动画。第8轮契约（特殊动画只由用户/AI 触发、
+#   播完为止、播放期不移动）针对的正是后者；把 `sit` 留在特殊类里会与"它由状态机触发"
+#   这一事实自相矛盾（同一份表既说它特殊、又允许状态机自动触发它）。
+#   注意：`_is_special_anim` 按 `name.split('_')[0]` 取组，所以登记 `'sit'` 即同时覆盖
+#   `sit_rest`。过渡期间"播完为止"由 `_play_once_active` 保证，不依赖本表。
 _NON_SPECIAL_ANIM_GROUPS = frozenset({
     'idle', 'walk', 'run',
     'jump', 'fall', 'splat', 'land', 'hatless_throw', 'slide', 'roll',
-    'spell', 'item',
+    'spell', 'item', 'sit',
 })
 
 
@@ -1359,7 +1370,23 @@ class RalseiPet(QMainWindow):
         self.last_animation_change = time.time() - self.animation_change_cooldown  # 初始化为冷却时间之前，确保第一次切换也受到冷却时间限制
         
         # 从配置中获取动画设置（默认 6FPS：桌宠逐帧播放按 30fps 会显得"快进抽搐"）
-        self.animation_fps = self.config_manager.get("animation.fps", 6)
+        # ★★ 第54轮 P0 修复（第53轮彻查发现）：
+        #   `config_manager.get()` **只做 dict 遍历、不做任何校验**（同文件里的
+        #   `validate_config()` 有 fps 校验但是**零调用**），所以手改
+        #   `E:\RalseiMemory\config.json` 把 fps 写成 0 / 负数 / 字符串时，
+        #   下一行的默认参数 `int(1000 / self.animation_fps)` 会**先于一切**
+        #   抛 ZeroDivisionError（或 TypeError），程序**直接起不来**。
+        #   处置：在**使用点**先钳位（非正数/非法 → 6；>120 → 120，与
+        #   `validate_config` 的口径一致）。合法值**原样保留**（含 6.5 这类小数），
+        #   不改变既有行为。
+        _fps_raw = self.config_manager.get("animation.fps", 6)
+        if isinstance(_fps_raw, bool) or not isinstance(_fps_raw, (int, float)) or _fps_raw <= 0:
+            _log.warning("animation.fps = %r 非法（须为正数），回退为 6", _fps_raw)
+            _fps_raw = 6
+        elif _fps_raw > 120:
+            _log.warning("animation.fps = %r 过大（>120），钳到 120", _fps_raw)
+            _fps_raw = 120
+        self.animation_fps = _fps_raw
         self.animation_frame_delay = self.config_manager.get("animation.frame_delay", int(1000 / self.animation_fps))  # 毫秒，转换为整数
 
         # 修复：动画定时器原来固定 167ms（≈6FPS），导致配置 fps>6 完全无效
@@ -8826,7 +8853,27 @@ class RalseiPet(QMainWindow):
                     # 统一由用户交互或 AI 通过 play_animation_once 触发，避免"走着走着突然跳舞"。
                     # is_happy/is_surprised/is_shy/is_waving 状态标志仍可被设置（供对话/情绪系统使用），
                     # 但不再驱动动画自动切换。
-                    new_animation = "idle"
+                    #
+                    # ★★ 第54轮：待机（窝着）时**不再是站着循环 idle**，改为保持"坐下"静帧
+                    #   —— 原作 CH1 纸牌城堡电梯场景的 `spr_ralsei_sit`。用户第52轮问
+                    #   "待机动画换成哪一组"、第54轮明确指认的就是这一组。
+                    #   "站 → 坐"的过渡由 `_idle_lounge_tick` 走到窝点时用
+                    #   `play_animation_once("sit")` 播一次，这里只负责"坐定后保持"。
+                    #
+                    # ★★ 第54轮复检修正：判据从 `_idle_loop_active` 收紧为 `_lounge_since`。
+                    #   原来用 `_idle_loop_active`（= 窝着 **或** idle_timer>=600）会把
+                    #   "只是原地静止满 10 分钟、并未进入窝着状态"那一支也变成坐姿 ——
+                    #   等于把第52轮的"待机动画 = idle 5 帧循环"整条删掉了
+                    #   （round8 E1.3 断言的正是这条：静止 700s 后帧必须会推进）。
+                    #   实测该断言当时是靠"跨组切换冷却 1.6s 恰好挡住 sit_rest"才侥幸为绿的
+                    #   （假绿）。现在只认真正的窝着标志 `_lounge_since`：
+                    #     窝着 → sit_rest（坐定静帧，不再站着循环）；
+                    #     仅静止满 10 分钟 → idle（第52轮原语义，5 帧循环照旧）。
+                    if getattr(self, '_lounge_since', None) is not None \
+                            and 'sit_rest' in self.sprite_loader.sprites:
+                        new_animation = "sit_rest"
+                    else:
+                        new_animation = "idle"
         
 
         
@@ -9853,6 +9900,13 @@ class RalseiPet(QMainWindow):
                 # 还在待机：到窝点就停住别动（走的过程由 update_movement 的目标点驱动）
                 if self._lounge_walking and not self.is_moving:
                     self._lounge_walking = False
+                    # ★ 第54轮：**刚到窝点这一拍**补一次"坐下"过渡（原作 CH1 电梯里的
+                    #   `spr_ralsei_sit`：0=站 → 1=下沉 → 2=坐定）。
+                    #   放在"到达"而不是"出发"是必须的：走路期间 `play_animation_once`
+                    #   会压掉 `walk_*` 动画（"特殊动画播放期间不允许状态逻辑切换动画"），
+                    #   那样会变成**坐着滑行**到窝点。
+                    if 'sit' in self.sprite_loader.sprites:
+                        self.play_animation_once("sit", restore_to="sit_rest")
                 return True
             # 未待机 → 判断是否该进入
             if self._idle_lounge_busy():
