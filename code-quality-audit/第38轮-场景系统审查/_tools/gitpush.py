@@ -3,6 +3,7 @@
 
 用法：
     C:\\Python311\\python.exe _tools/gitpush.py <提交信息文件路径> [--no-push]
+    C:\\Python311\\python.exe _tools/gitpush.py --push-only      # 只推当前 HEAD
 
 为什么不是一行 git 命令
 ----------------------
@@ -11,12 +12,19 @@
    ⇒ 清空 helper 链 + 直取 GCM 凭据 + `http.extraheader` 注入。
 3. TLS：本机 schannel 吊销检查必失败 ⇒ openssl 后端 + 系统 CA PEM + HTTP/1.1。
 4. 退出码会说谎 ⇒ 必须 `ls-remote` **且** `rev-parse origin/main` 双向核验。
+5. ★ 第57轮补：**代理必须逐端口实测 CONNECT 再选**。直连 github 会被
+   `Recv failure: Connection was reset`（本机只有 Clash `7897` 真通、`7375` 死）。
+   现在脚本自己探：env 代理 → netstat 的 127.0.0.1 LISTENING → 已知端口兜底，
+   只认 `CONNECT github.com:443` 响应首行含 200 的那个。
+   另加 `--push-only`：push 失败后重推时不再被"没有可提交的改动"提前返回。
 
 安全：凭据只在进程内；报告里只写长度，绝不写 token。
 """
 import base64
 import io
 import os
+import re
+import socket
 import subprocess
 import sys
 import time
@@ -40,6 +48,9 @@ if '--allow-del' in sys.argv:
         DEL_LIMIT = int(sys.argv[sys.argv.index('--allow-del') + 1])
     except Exception:
         pass
+
+# ★ 第57轮：已知可用的本地代理端口（只是兜底候选，**必须实测 CONNECT 才采用**）
+PROXY_PORTS = ['7897', '7375', '7890', '10809', '1080']
 
 buf = []
 
@@ -66,13 +77,77 @@ def run(args, timeout=240, env=None, inp=None):
         return (-998, '', 'EXC %r' % (e,))
 
 
+def _probe_proxy():
+    """★ 第57轮：逐端口实测 `CONNECT github.com:443`，只认响应首行含 200 的那个。
+
+    ⚠️ 三种坑都要防：
+      · **不能只看 TCP 能连** —— 本机多个端口 accept 后直接空响应或回 404
+        （`11434` 是 Ollama、`39099` 回 404 Error），连得上但过不了隧道。
+      · **不能把端口写死** —— 换个环境就变；先 env、再 netstat，最后才兜底常量。
+      · **超时必须短** —— 空响应端口会一直吊着，6 秒足够。
+    返回 `http://127.0.0.1:<port>` 或 `''`（没探到，调用方应直连并如实报告）。
+    """
+    cands = []
+    for k in ('HTTPS_PROXY', 'HTTP_PROXY', 'https_proxy', 'http_proxy',
+              'ALL_PROXY', 'all_proxy'):
+        v = os.environ.get(k)
+        if v:
+            m = re.search(r'(\d+)', v.split('//')[-1])
+            if m:
+                cands.append(m.group(1))
+    try:
+        r = subprocess.run(['netstat', '-ano'], capture_output=True, text=True,
+                           encoding='utf-8', errors='replace', timeout=30)
+        for line in r.stdout.splitlines():
+            if 'LISTENING' in line and '127.0.0.1:' in line:
+                m = re.search(r'127\.0\.0\.1:(\d+)', line)
+                if m:
+                    cands.append(m.group(1))
+    except Exception as e:                                            # noqa: BLE001
+        w('     (netstat 取端口失败：%s)' % e)
+    cands += PROXY_PORTS
+
+    seen = []
+    for p in cands:
+        if p not in seen:
+            seen.append(p)
+    for port in seen:
+        try:
+            s = socket.create_connection(('127.0.0.1', int(port)), timeout=6.0)
+            s.settimeout(6.0)
+            s.sendall(b'CONNECT github.com:443 HTTP/1.1\r\n'
+                      b'Host: github.com:443\r\n\r\n')
+            buf = b''
+            try:
+                buf = s.recv(200)
+            except socket.timeout:
+                pass
+            s.close()
+            first = buf.split(b'\r\n')[0].decode('latin-1', 'replace')
+            good = '200' in first
+            w('     proxy %-6s %s %s' % (port, 'OK ' if good else '-- ',
+                                         first or '(空响应)'))
+            if good:
+                return 'http://127.0.0.1:%s' % port
+        except Exception as e:                                        # noqa: BLE001
+            w('     proxy %-6s -- %s' % (port, e))
+    return ''
+
+
 def main():
     if len(sys.argv) < 2:
-        w('usage: gitpush.py <msgfile> [--no-push]')
+        w('usage: gitpush.py <msgfile> [--no-push] | gitpush.py --push-only')
         return 1
+    push_only = '--push-only' in sys.argv
     msg = sys.argv[1]
     do_push = '--no-push' not in sys.argv
     w('=== 提交推送日志 ===  %s' % time.strftime('%Y-%m-%d %H:%M:%S'))
+
+    if push_only:
+        w('[0] --push-only：跳过 add/commit，直接推当前 HEAD')
+        o = run(['git', 'log', '--oneline', '-1'], timeout=60)[1].strip()
+        w('[4] HEAD = %s' % o)
+        return _push()
 
     if not os.path.isfile(msg):
         w('!! 提交信息文件不存在：%s' % msg)
@@ -110,12 +185,16 @@ def main():
     w('[3] commit rc=%d %s %s' % (rc, o.strip()[:200], e.strip()[:200]))
     rc, o, e = run(['git', 'log', '--oneline', '-1'], timeout=60)
     w('[4] HEAD = %s' % o.strip())
-    local = run(['git', 'rev-parse', 'HEAD'], timeout=60)[1].strip()
 
     if not do_push:
         w('=== 结论 = COMMITTED_ONLY ===')
         return 0
+    return _push()
 
+
+def _push():
+    """取凭据 → 探代理 → push → 双向核验。返回 0 表示确已同步。"""
+    local = run(['git', 'rev-parse', 'HEAD'], timeout=60)[1].strip()
     env = dict(os.environ)
     env['GCM_INTERACTIVE'] = 'never'
     env['GCM_PROVIDER'] = 'github'
@@ -141,11 +220,17 @@ def main():
     b64 = base64.b64encode(('%s:%s' % (usr, pw)).encode('ascii')).decode('ascii')
     del pw
 
+    w('[5b] 探测可用代理（CONNECT github.com:443）')
+    proxy = _probe_proxy()
+    w('[5c] 采用代理 = %s' % (proxy or '(无 ⇒ 直连)'))
+
     COMMON = ['-c', 'credential.helper=',
               '-c', 'http.sslBackend=openssl',
               '-c', 'http.sslCAInfo=' + CA.replace('\\', '/'),
               '-c', 'http.version=HTTP/1.1',
               '-c', 'http.extraheader=Authorization: Basic ' + b64]
+    if proxy:
+        COMMON += ['-c', 'http.proxy=' + proxy, '-c', 'https.proxy=' + proxy]
     rc, o, e = run(['git'] + COMMON + ['push', 'origin', 'main'], timeout=300)
     w('[6] push rc=%d' % rc)
     for ln in (o + e).splitlines():
