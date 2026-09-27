@@ -13,11 +13,19 @@
 
 ★ 第50轮用户口径（逐字，**修订上面后两条**）
 * 「16项要，但只有ralsei能自由在其他暗世界走，其他人无法通过球去其他世界，
-   只能去光世界或是回原先他们的暗世界（这个不需要他们套上球）」
+  只能去光世界或是回原先他们的暗世界（这个不需要他们套上球）」
+
+★ 第55轮用户口径（逐字，**修订模型档位**）
+* 「我突然觉得4B貌似没办法支撑起来这些角色的灵魂，所以，给他们也升级成7B吧，
+  但如果这非常吃性能那就慎重，但又不是同时运行所有，应该不至于」
 
 设计
 ----
-1. **分层**：`NpcTier.MAIN`（主线，配 4B 模型）/ `NpcTier.PLAIN`（纯 NPC，内置短对话）。
+1. **分层**：`NpcTier.MAIN`（主线，**走模型**）/ `NpcTier.PLAIN`（纯 NPC，内置短对话）。
+   ⚠️ 上面那句 4B 是**第49轮的历史原话**（当时登记的 `ralsei-npc:4b` 从未被代码读过），
+   第55轮一度改成 `ralsei-npc:7b`，**最终定为 `None`** —— 因为 App 实际发的
+   `config.json.api.model` 就是 7B（`ralsei:v4` = qwen2.5:7b），NPC 拿到的本就是 7B；
+   再建一个同名句柄只会让 Ralsei 与 NPC 各常驻一份 ~4.7GB 权重。见 `DEFAULT_MAIN_MODEL`。
 2. **跟随**：主线 = `FollowPolicy.AUTONOMOUS`；纯 NPC = `FollowPolicy.CONSENT`
    （要主角同意或主动要求）。两者**都能跟**，差别只在"谁发起"。
 3. **世界门控**（★ 第50轮口径修订，逐字原话与推导见 `world_gate`）：
@@ -52,7 +60,23 @@ SCHEMA_VERSION = 1
 PLAIN_LINES_MIN = 4
 PLAIN_LINES_MAX = 10
 
-DEFAULT_MAIN_MODEL = 'ralsei-npc:4b'      # 主线 NPC 的 4B 句柄（设定由用户提供后再定稿）
+#: 主线 NPC 的模型口径 —— ★ **`None` = 跟随 App 配置（这就是"7B"的落地方式）**。
+#:
+#: 演进（三段，别把历史引述当现状）：
+#:   · 第49轮登记 `ralsei-npc:4b`：那只是**计划值**，Ollama 侧从未建过，也**从未被任何
+#:     代码读取** —— 也就是说"主线 NPC 用 4B"这句话在运行时从来不成立。
+#:   · 第55轮用户口径：「4B 貌似没办法支撑起来这些角色的灵魂，所以，给他们也升级成
+#:     7B 吧，但如果这非常吃性能那就慎重，但又不是同时运行所有，应该不至于」。
+#:   · 第55轮最终做法：**改成 `None`（不单独指定）**。因为 App 实际发的
+#:     `config.json.api.model` = `ralsei:v4` = `qwen2.5:7b-instruct-q4_K_M`
+#:     ⇒ **NPC 拿到的本来就是 7B**，用户要的效果已经成立。
+#:     再建一个 `ralsei-npc:7b` 的**唯一**后果是：同名不同句柄不共享实例，
+#:     Ralsei 与 NPC 会各常驻一份 ~4.7GB 权重，而收益为零 —— 正是用户提醒的
+#:     「非常吃性能那就慎重」。
+#: ★ 字段本身**已经接线**（`main._npc_model` → `chat_with_ai(model=)` →
+#:   `api_client._chat_payload`），所以将来真要给 NPC 单独换模型，
+#:   把它填成 Ollama 里**真实存在**的句柄即可，不必改代码。
+DEFAULT_MAIN_MODEL = None
 
 
 class NpcTier(object):
@@ -77,7 +101,7 @@ TIER_FOLLOW_POLICY = {
 
 #: 分层 → 对话来源
 TIER_DIALOGUE = {
-    NpcTier.MAIN: 'llm',        # 走模型（4B）
+    NpcTier.MAIN: 'llm',        # 走模型（`DEFAULT_MAIN_MODEL`，第55轮起为 7B）
     NpcTier.PLAIN: 'builtin',   # 走内置短对话
 }
 
@@ -106,11 +130,12 @@ class NpcDef(object):
 
     __slots__ = ('id', 'name', 'name_cn', 'tier', 'chapters', 'home_world',
                  'objects', 'model', 'needs_setting', 'notes',
-                 'escape_via_bubble', 'lines')
+                 'escape_via_bubble', 'lines', 'persona')
 
     def __init__(self, id, name='', name_cn='', tier=NpcTier.PLAIN,
                  chapters=(), home_world=WORLD_DARK, objects=(), model=None,
-                 needs_setting=False, notes='', escape_via_bubble=False, lines=()):
+                 needs_setting=False, notes='', escape_via_bubble=False, lines=(),
+                 persona=None):
         self.id = id
         self.name = name or id
         self.name_cn = name_cn or self.name
@@ -124,6 +149,11 @@ class NpcDef(object):
         #: 是否**只能靠球**离开暗世界（Ralsei 专属；其他 NPC 一律不许离开）
         self.escape_via_bubble = bool(escape_via_bubble)
         self.lines = tuple(lines)
+        #: ★ 第55轮：人设文件路径（相对 `assets/npc/`）；`None` = 还没装设定。
+        #: 与 `needs_setting` 的关系是**唯一**的：`needs_setting = (persona is None)`。
+        #: 为什么新增这个字段而不是把 `needs_setting` 翻成 False 就完事：
+        #:   `needs_setting` 只说"要不要"，说不了"设放在哪" —— 装上之后必须能**找到**它。
+        self.persona = persona or None
 
     def to_dict(self):
         return collections.OrderedDict((
@@ -132,6 +162,7 @@ class NpcDef(object):
             ('home_world', self.home_world), ('objects', list(self.objects)),
             ('model', self.model), ('needs_setting', self.needs_setting),
             ('escape_via_bubble', self.escape_via_bubble),
+            ('persona', self.persona),
             ('notes', self.notes),
         ))
 
@@ -163,6 +194,7 @@ def npc_from_dict(d):
         needs_setting=d.get('needs_setting', False),
         notes=d.get('notes', ''),
         escape_via_bubble=d.get('escape_via_bubble', False),
+        persona=d.get('persona') or None,
     )
 
 

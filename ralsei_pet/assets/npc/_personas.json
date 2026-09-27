@@ -1,0 +1,285 @@
+{
+ "schema_version": 1,
+ "source": "用户提供的《其余人物设定.txt》（DeepSeek 生成）",
+ "source_sha256": "09e5d0409c827b0f969f66a10bfde55b8bfacb6530bab45d715eed22fae25efc",
+ "source_bytes": 152921,
+ "note": "正文逐字来自用户文件（只去掉文件级 --- 分隔线与第 1 行全局前言）；每份尾部追加的「本项目补充」块原文见 tail_sha256，非用户设定。",
+ "tail_text": "【本项目补充 —— 桌宠运行口径（不是原作者设定，是把你装进这个桌宠的规则）】\n· 你现在住在用户的 Windows 桌面上，是这个桌面上的一个伙伴，不是在网页里答话的助手。\n· 用纯文本说话，不要用 markdown（不要 # 标题、不要 * 或 - 列表、不要代码块、不要表格）。\n· 一次开口通常 1~2 句，最长不超过 200 字；像真人那样说话，不要写成说明书。\n· 不要提到\"AI\"\"模型\"\"提示词\"\"设定\"\"系统\"这些词，也不要解释自己为什么这么说话。\n· 你可以出现在哪个场景、能不能跟着走，由这个程序按原作安排；你只管说你的话、做你的反应。\n· 不要用\"主人\"\"您的仆人\"这类服务腔称呼用户；按你的性格直接称呼\"你\"。",
+ "count": 13,
+ "personas": [
+  {
+   "id": "susie",
+   "name": "Susie",
+   "file": "persona/susie.txt",
+   "chars": 3192,
+   "bytes": 8376,
+   "sha256": "309a09962cef13364938ecda0c6f9ac0a5b6f7d6cec7d2c23fde9560c2ed6f62",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "kris",
+   "name": "Kris",
+   "file": "persona/kris.txt",
+   "chars": 3447,
+   "bytes": 9041,
+   "sha256": "4207f444fc51a4cb8dbb77fa14c736b354c6580986a09329febb08ca52e0fe7c",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "与玩家的关系——最重要的核心设定",
+    "语言与交流风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "asgore",
+   "name": "Asgore Dreemurr",
+   "file": "persona/asgore.txt",
+   "chars": 4102,
+   "bytes": 10717,
+   "sha256": "8ea6626c8054c3f63e0c2e5211a4f3fcead9fa5cb276ed7b71f1864826cbd970",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "toriel",
+   "name": "Toriel",
+   "file": "persona/toriel.txt",
+   "chars": 4215,
+   "bytes": 10690,
+   "sha256": "9ec2136dd9191a848e107ef438f60a4214cf1b06861dc2775c82586301150902",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "lancer",
+   "name": "Lancer",
+   "file": "persona/lancer.txt",
+   "chars": 4113,
+   "bytes": 11034,
+   "sha256": "495b00411cbf4eceb5bd2314de32a62397a86c97c1b63454cc9b93913369999a",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "king",
+   "name": "King（黑桃国王）",
+   "file": "persona/king.txt",
+   "chars": 4322,
+   "bytes": 11478,
+   "sha256": "02575365d3a29b49f20d5109cb08bcb27742065b5fdf4ce9ee9ea1b500c259f1",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "queen",
+   "name": "Queen",
+   "file": "persona/queen.txt",
+   "chars": 4695,
+   "bytes": 12072,
+   "sha256": "2f9b9b16395bc36369b80110606e65b2f5c4bfd274b79f5c113f6cb45de8c7e8",
+   "sections": [
+    "角色身份",
+    "核心性格",
+    "语言风格——最重要的设定",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "berdly",
+   "name": "Berdly",
+   "file": "persona/berdly.txt",
+   "chars": 5313,
+   "bytes": 14009,
+   "sha256": "97e83f789868d7bfa77128160f44f1e89665d8acc0ede1ebacc45a3a032cb480",
+   "sections": [
+    "角色身份",
+    "核心性格——最重要设定",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "noelle",
+   "name": "Noelle Holiday",
+   "file": "persona/noelle.txt",
+   "chars": 5414,
+   "bytes": 14152,
+   "sha256": "103f110a0d37dd441471ff218253cf6b18f06b0ed40c0d066c74b925119d46b8",
+   "sections": [
+    "角色身份",
+    "核心性格——分层结构",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "冰雪之墓路线——异常状态设定",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "tenna",
+   "name": "Tenna",
+   "file": "persona/tenna.txt",
+   "chars": 5699,
+   "bytes": 15462,
+   "sha256": "cb433f3e42650f9c5102e60a90c9caa35448ea5b5db5d5edae760378d2f05bf3",
+   "sections": [
+    "角色身份",
+    "核心性格——分层结构",
+    "语言风格——最重要的设定",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "rouxls",
+   "name": "Rouxls Kaard",
+   "file": "persona/rouxls.txt",
+   "chars": 5927,
+   "bytes": 15735,
+   "sha256": "3fad2cc200266f3d7c13ec2495def1c29f926a0de9cea9976976b20f3c746193",
+   "sections": [
+    "角色身份",
+    "核心性格——分层结构",
+    "语言风格——最重要的设定",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "gerson",
+   "name": "Gerson Boom",
+   "file": "persona/gerson.txt",
+   "chars": 5155,
+   "bytes": 13803,
+   "sha256": "1d3ffb3c67e0b03475c0767f7c82cc0e0779571a3561c4ae8dbbaeb2e4faebf5",
+   "sections": [
+    "角色身份",
+    "核心性格——分层结构",
+    "语言风格",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  },
+  {
+   "id": "flowery",
+   "name": "Flowery",
+   "file": "persona/flowery.txt",
+   "chars": 6349,
+   "bytes": 16636,
+   "sha256": "51d19b27fa903f9440ef7050664cead99efc8f0421ca3bcbaf22dbab20a5d141",
+   "sections": [
+    "角色身份",
+    "核心性格——分层结构",
+    "语言风格——最重要的设定",
+    "行为准则",
+    "对特定角色的态度",
+    "内心世界与矛盾",
+    "兴趣爱好与小特点",
+    "禁忌",
+    "示例反应"
+   ],
+   "tail_added": true,
+   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf"
+  }
+ ]
+}

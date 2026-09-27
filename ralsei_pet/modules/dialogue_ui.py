@@ -577,14 +577,38 @@ class DialogueUI(QWidget):
             self.typing_text = ""
             self.typing_index = 0
             self.is_typing = False
+        # ★ 第55轮：NPC 的话**不进** Ralsei 的对话历史 / 话题锚 / 拟人记忆 ——
+        #   那三样都是 Ralsei 自己的。混进去，下一秒 Ralsei 就会把别人说的话
+        #   当成自己或主人说过的（用户说的"葫芦娃千里眼顺风耳"就是这个）。
+        _npc_line = self._is_npc_speaker(speaker)
         # 记录对话轮次（供本地 AI 上下文用）：占位/空消息不入历史
-        if message.strip():
+        if message.strip() and not _npc_line:
             self._push_ai_history(speaker, message)
             # 对话注意力：把这一轮交给话题锚，并刷新"刚有过对话活动"时间戳
             self._note_focus(speaker, message)
             # 记忆（第九轮）：把这一轮作为"日常小片段"喂给拟人记忆系统
             self._note_memory(speaker, message)
-        if speaker == "ralsei":
+        if _npc_line:
+            # NPC 的话**直接落历史区**：不走打字机、不换表情 ——
+            # 打字机与表情位都是 **Ralsei 的显示位**，借来显示别人会看起来像他在说。
+            # 名字取宿主给的标签（中文名优先），拿不到就退回 id。
+            _label = speaker
+            try:
+                _fn = getattr(self.parent, 'npc_label', None)
+                if callable(_fn):
+                    _label = _fn(speaker) or speaker
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+                _label = speaker
+            self._reset_front_stage()
+            self._history_html += (
+                f'<div style="color:#c9a86a;font-size:10pt;line-height:1.45;'
+                f'margin:2px 0 2px 0;">▸ {_html.escape(str(_label))}: {safe_message}</div>')
+            self.typing_text = ""
+            self.typing_index = 0
+            self.is_typing = False
+            self._refresh_display()
+        elif speaker == "ralsei":
             self.set_face(face_type)
             if _streamed:
                 # 流式（S8）：这段回复在流式期间**已经逐字显示在前台**了，所以
@@ -616,6 +640,90 @@ class DialogueUI(QWidget):
                 f'margin:2px 0 4px 0;">▸ YOU: {safe_message}</div>')
             self.typing_text = ""   # 前台清空：最新的一条是用户消息
             self._refresh_display()
+
+    # ---------------------------------------------- NPC 说话人（★ 第55轮）
+
+    #: 说话人只有三种：`'ralsei'`（本体）/ `'user'`（用户）/ 其余 = **NPC id**。
+    #: 为什么用"白名单之外一律当 NPC"而不是拿 NPC 注册表来查：
+    #:   显示层不该依赖注册表（那是 main 的活儿）；而且走到这里的第三种本来只有 NPC。
+    @staticmethod
+    def _is_npc_speaker(speaker):
+        return isinstance(speaker, str) and speaker not in ("ralsei", "user")
+
+    def _reset_front_stage(self):
+        """把前台收拾干净，准备写一条新内容（占位 / 打字机 / 上一条 Ralsei 都收掉）。
+
+        为什么把这三步收成一个方法：`add_dialogue` 的 ralsei 分支里这三步是散着写的，
+        顺序错了会出两种真问题 —— 占位被并进历史（"……"当成他说的话）、
+        或上一条没 commit 就被覆盖（丢一句话）。NPC 分支直接复用同一段。
+        """
+        if self.typing_text == self.AI_THINKING_PLACEHOLDER:
+            self.typing_text = ""
+            self.typing_index = 0
+            self.is_typing = False
+        self.stop_typing()
+        self._commit_previous_ralsei_into_history()
+
+    def add_npc_addressed(self, label, text):
+        """「你对某人说：…」的回显（★ 第55轮）—— **刻意不复用 `add_dialogue('user')`**。
+
+        为什么必须分开：`add_dialogue('user', …)` 会把这句话写进 **Ralsei 的**
+        对话历史与话题锚。而这句是**对别人说的**，进了 Ralsei 的历史就等于让他偷听，
+        下次聊天他会以为你刚跟他说过这句 —— 这就是用户最担心的串味。
+
+        `SINGLE_TURN_MODE` 下先清空历史区：这一轮 =「你对他说的这句 + 他的回答」。
+        """
+        import html as _html
+        import time as _time
+        if text is None:
+            text = ""
+        elif not isinstance(text, str):
+            try:
+                text = str(text)
+            except Exception:
+                text = ""
+        safe_label = _html.escape(str(label or '?'))
+        safe_msg = _html.escape(text)
+        self._reset_front_stage()
+        if self.SINGLE_TURN_MODE:
+            self._history_html = ""
+        self._history_html += (
+            f'<div style="color:#9aa0aa;font-size:10pt;line-height:1.45;'
+            f'margin:2px 0 2px 0;">▸ 你对 {safe_label} 说: {safe_msg}</div>')
+        self.typing_text = ""
+        self.typing_index = 0
+        self.is_typing = False
+        # 刷新活动时间戳（**只是时间戳**，不动话题锚）：不刷新的话，
+        # 随后 `_ai_thinking_on()` 里的 `_maybe_break_turn(旧间隔)` 会把刚写的
+        # 这一行当成"上一轮"清掉 —— 用户就看不到自己说了什么。
+        try:
+            self._last_activity = _time.time()
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        self._refresh_display()
+        return True
+
+    def add_npc_line(self, label, text):
+        """「某人说：…」的显示出口（★ 第55轮）。**不进 Ralsei 的历史/话题锚/拟人记忆。**"""
+        import html as _html
+        if text is None:
+            text = ""
+        elif not isinstance(text, str):
+            try:
+                text = str(text)
+            except Exception:
+                text = ""
+        safe_label = _html.escape(str(label or '?'))
+        safe_msg = _html.escape(text)
+        self._reset_front_stage()
+        self._history_html += (
+            f'<div style="color:#c9a86a;font-size:10pt;line-height:1.45;'
+            f'margin:2px 0 2px 0;">▸ {safe_label}: {safe_msg}</div>')
+        self.typing_text = ""
+        self.typing_index = 0
+        self.is_typing = False
+        self._refresh_display()
+        return True
 
     # -------------------------------------------------------- display helper
 
@@ -1357,6 +1465,80 @@ class DialogueUI(QWidget):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
+    # ---------------------------------------------------------------- NPC 定向对话
+    def _send_npc_message(self, npc_id, rest):
+        """★ 第55轮：把一句「@某人 内容」交给那个 NPC（走**他自己的** system 与记忆）。
+
+        与 Ralsei 那条链路的每一处差别，都是为了让"别人的话"不留进 Ralsei 身上：
+          · 回显走 `add_npc_addressed`（**不写** Ralsei 的对话历史 / 话题锚）；
+          · 请求走 `parent.npc_speak(...)`（system = 那个人的人设 + 他自己的记忆）；
+          · **不开流式** —— 流式分片会打到 Ralsei 的显示位（那样看起来像他在说）；
+          · 模型不可用 / 那个人没装设定 ⇒ **明确沉默**，
+            **绝不**退回 Ralsei 的规则对话（那才是把身份搞混）。
+        """
+        label = npc_id
+        try:
+            _fn = getattr(self.parent, 'npc_label', None)
+            if callable(_fn):
+                label = _fn(npc_id) or npc_id
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            label = npc_id
+        text = (rest or '').strip() if isinstance(rest, str) else ''
+        self.add_npc_addressed(label, text or '（叫了一声）')
+        try:
+            if not self.isVisible():
+                self.show()
+            self._position_above_ralsei()
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        if not text:
+            # 只叫了一声、没说话 ⇒ **不发请求**（把空话喂给模型只会得到一段空转）
+            _log.info('只点了名没说话（%s）⇒ 不发起请求', npc_id)
+            return False
+        speak = getattr(self.parent, 'npc_speak', None)
+        if not callable(speak):
+            return False
+        # 世代号：与 Ralsei 那条链路共用同一个 `_ai_seq` —— 同一时刻只允许一个
+        # 请求往这个框里写字（用户已经问了别的，旧回复就不该再显示）。
+        self._ai_seq = getattr(self, '_ai_seq', 0) + 1
+        req_seq = self._ai_seq
+        self._ai_inflight = True
+        try:
+            self._ai_thinking_on()
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
+        def _on_reply(reply_text):
+            if req_seq != getattr(self, '_ai_seq', 0):
+                return
+            self._ai_inflight = False
+            try:
+                self._ai_thinking_off()
+            except Exception as e:
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            if reply_text:
+                self.add_npc_line(label, reply_text)
+                if not self.isVisible():
+                    try:
+                        self.show()
+                        self._position_above_ralsei()
+                    except Exception as e:
+                        _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            else:
+                _log.info('%s 这一句没有回应（模型不可用 / 没装设定）', npc_id)
+
+        try:
+            return bool(speak(npc_id, text, _on_reply, None))
+        except Exception as e:
+            _log.debug('[NPC对话] 发起失败: %s', e)
+            self._ai_inflight = False
+            try:
+                self._ai_thinking_off()
+            except Exception as e2:
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e2)
+            return False
+
     # ---------------------------------------------------------------- input
     def send_message(self):
         user_input = self.input_field.toPlainText().strip()
@@ -1373,6 +1555,24 @@ class DialogueUI(QWidget):
         if getattr(self, '_ai_inflight', False):
             self._ai_seq = getattr(self, '_ai_seq', 0) + 1
             self._ai_inflight = False
+
+        # ★ 第55轮：`@某人 内容` = **定向对话**（这是"对别人说"，不是"对 Ralsei 说"）。
+        #   位置有两处讲究：
+        #     ① 必须在下面 `add_dialogue("user", …)` **之前** —— 那句会写进 Ralsei 的
+        #        对话历史与话题锚，而"你对苏西说的话"不该被 Ralsei 记住（串味）；
+        #     ② 必须在 `handle_chat_commands` **之前** —— 否则点名后面的字可能被
+        #        关键词指令误命中（本项目踩过"退出游戏被闲聊指令截获"）。
+        _addr = None
+        try:
+            _addr_fn = getattr(self.parent, 'npc_address', None)
+            if callable(_addr_fn):
+                _addr = _addr_fn(user_input)
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            _addr = None
+        if _addr is not None:
+            self._send_npc_message(_addr[0], _addr[1])
+            return
 
         # —— 用户消息回显：把自己说的话显示在对话框里（灰色 YOU 前缀），不经过打字机
         self.add_dialogue("user", user_input, "normal")

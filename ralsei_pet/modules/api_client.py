@@ -233,11 +233,28 @@ class HTTPLocalAI(LocalAIBase):
         return messages, temperature, max_tokens
 
     def _chat_payload(self, prompt, system_prompt, kwargs, stream):
-        """构造请求体。`chat` / `chat_stream` 共用，只有 stream 标志不同。"""
+        """构造请求体。`chat` / `chat_stream` 共用，只有 stream 标志不同。
+
+        ★ 第55轮：允许**按请求**覆盖模型名（`model=` 走 kwargs）。
+          为什么必须有这一条：`self.model` 是**构造时**从 config 定下的全局值，
+          而每个 NPC 在 `assets/npc/_registry.json` 里都有自己的 `model` 字段 ——
+          不做覆盖的话，"NPC 自己的模型"就是一纸空文：**登记了，但没人读**
+          （本项目最贵的那类坑：「函数写对了 ≠ 产品用上了」）。
+          语义（刻意这样定）：
+            · `model` 给了**非空字符串** ⇒ 覆盖 payload 里的 `model`；
+            · `None` / 空串 / 非字符串 ⇒ **不覆盖**，逐字沿用 `self.model`
+              —— 老路径（Ralsei 对话 / 事件台词）行为**零变化**，这是硬要求。
+          注意：`kwargs` 是 `**kwargs` 生成的**局部**字典，pop 掉 `model`
+          不会影响调用方；且必须**先 pop 再**喂给 `_chat_messages`，
+          免得它把这个键当成采样参数继续往下传。
+        """
+        _override = kwargs.pop('model', None)
+        _model = (_override if isinstance(_override, str) and _override.strip()
+                  else self.model)
         messages, temperature, max_tokens = self._chat_messages(
             prompt, system_prompt, kwargs)
         payload = {
-            "model": self.model,
+            "model": _model,
             "messages": messages,
             "temperature": temperature,
             "max_tokens": max_tokens,

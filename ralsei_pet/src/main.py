@@ -356,6 +356,20 @@ from modules.scene_controller import SceneController
 # 这是"渲染层"的最后一跳 —— 前面 scene_system/scene_camera/scene_render 都只出数据，
 # 没有消费者就是"函数写对了但产品用不上"（本项目最贵的坑，见记忆铁律 §4）。
 from modules.scene_canvas import SceneCanvas, BubbleOverlay
+# ---- 灵魂（SOUL，第55轮）----------------------------------------------------
+# 用户口径：「别换鼠标的样子了，改成可移动的那个灵魂图标…鼠标可拖拽灵魂，键盘可操控移动…
+#   原先和你说的鼠标附身换成就是这个灵魂的功能…灵魂也可自由出入各个场景，
+#   相当于这也是一个有互动的实体」
+# 分工：
+#   soul_entity  纯逻辑：位置/速度/按键/拖拽/钳制/场景位置簿/门控（零依赖，可离线回归）
+#   soul_overlay 绘制：把 state 画成桌面上的那只 48×48 SOUL（独立顶层窗口）
+#   src/main.py  组装：热键 / 每帧推进 / 键盘桥 / 与场景和可交互物的接线
+# ⚠️ `SoulOverlay` 走**模块引用**（`soul_overlay_mod.SoulOverlay`）而不是直接名字导入：
+#    第55轮要同时用到 `load_soul_sprites` 与 `direction_of_qt_key`，
+#    三个名字混着导会让"这个函数到底在哪一层"变得说不清。
+from modules import soul_entity as soul_entity_mod
+from modules import soul_overlay as soul_overlay_mod
+from modules.soul_overlay import load_soul_sprites
 # 球容器（第50轮）：Ralsei 在光世界**必须被"扭蛋球"罩住**才能存身。
 # 分工（三层各管一段，与场景系统同源）：
 #   bubble_system  → 规则（谁能进 / 何时脱 / 4 向旋转 / 塑料滤镜参数），零依赖
@@ -383,6 +397,14 @@ from modules import scene_system as scene_system_mod
 # `Interactable`（= 原作 `myinteract` 三态）。道具/场景可交互物都挂在这套协议上，
 # 不另起一套 —— 那会让"对话时能不能点东西"出现两套互相不知道的锁。
 from modules import companion as companion_mod
+# NPC 分层 / 跟随策略 / 世界门控（第49~50轮，P0~P2 零接线骨架；★ 第55轮**接线**）
+# 与 NPC 人设 / 独立记忆 / 跟随决策（★ 第55轮新增，零依赖纯逻辑）。
+#
+# ⚠️ 为什么用 `import ... as ..._mod` 而不是 `from ... import load_registry`：
+#   两个模块都是"多处取用同一个名字"的形状，直接导入具体名字会让
+#   **测试桩替换 / 后续改名**都要动多处调用点；模块引用只有一处（本行）。
+from modules import npc_system as npc_system_mod
+from modules import npc_persona as npc_persona_mod
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -1041,6 +1063,869 @@ class RalseiPet(QMainWindow):
         # `current_scene` / `_scene_state` 刚刚在上面几行才被写进去；放在前面会拿到 None。
         self.init_item_systems()
 
+        # ---- 灵魂（SOUL）接线（第55轮）----
+        # 为什么排在**最末**：灵魂要往 `_scene_switch_hooks` 里**追加**一个钩子，
+        # 而那个列表是 `init_item_systems()` 里以 `self._scene_switch_hooks = [...]`
+        # **整体赋值**出来的 —— 提前追加会被覆盖掉。
+        # （"一个列表被整体赋值"是本项目状态劈裂的老坑，见 W1-4 报告铁律 3。）
+        self.init_soul()
+
+        # ---- NPC 人设 / 独立记忆 / 跟随决策 接线（第55轮）----
+        # 为什么排在**灵魂之后**（即整条链的最末）：
+        #   NPC 层也要往 `_scene_switch_hooks` 里追加一个钩子，而那个列表是
+        #   `init_item_systems()` 里**整体赋值**出来的 ⇒ 任何"提前追加"都会被覆盖。
+        #   灵魂已经是"追加型"的先例，这里跟着它排（顺序只看这一条依赖）。
+        self.init_npc_systems()
+
+    # ==================================================================
+    #  灵魂（SOUL，第55轮）—— 可拖拽 / 可键盘操控 / 可自由出入各场景
+    # ==================================================================
+    #: 灵魂总开关。与 `SCENE_LAYER_ENABLED` 同一形状：渲染/交互出问题时可一刀关掉定位。
+    #: ⚠️ 保留它本身（不是死代码）：`False` 时 `init_soul()` 直接返回、
+    #:    `self.soul = None`，所有入口都退化成"什么都没发生"。
+    SOUL_ENABLED = True
+
+    def init_soul(self):
+        """建灵魂：素材 → 状态 → 独立顶层窗口 → 场景位置簿 → 场景切换钩子。
+
+        用户口径（第55轮原话）：「鼠标可拖拽灵魂，键盘可操控移动…灵魂也可自由出入
+        各个场景，相当于这也是一个有互动的实体」。
+
+        失败语义：**只降级、不抛出**（与道具/关系/搜索同一条纪律；灵魂坏了桌宠照常跑），
+        且 `self.soul is None` 时所有入口（热键 / 键盘 / 交互选目标）都**直接返回**，
+        不会半死不活地"点得动但没反应"。
+        """
+        # 先全部预声明成 None/空 —— 中途任何一步失败，宿主也不缺属性
+        # （本项目踩过"状态只在成功路径上创建"的坑：失败后别处 getattr 就炸）。
+        self.soul = None
+        self.soul_bookmarks = None
+        self._soul_scene_id = None
+
+        if not getattr(self, 'SOUL_ENABLED', True):
+            _log.info('灵魂总开关 SOUL_ENABLED=False ⇒ 不建灵魂（用它定位问题）')
+            return
+
+        try:
+            state = soul_entity_mod.SoulState()
+            self.soul_bookmarks = soul_entity_mod.SoulBookmarks()
+            # ★ parent=None：灵魂是**独立顶层窗口**，不隶属宠物窗口 ——
+            #   宠物换房间 / 开菜单 / 缩进托盘时灵魂都留在原地，
+            #   这才是用户要的「自由出入各个场景」。
+            self.soul = soul_overlay_mod.SoulOverlay(
+                None,
+                sprites=load_soul_sprites(),
+                state=state,
+                on_clicked=self._soul_on_clicked,
+                on_drag_end=self._soul_on_drag_end,
+                on_hide=self.hide_soul,
+            )
+            self._soul_respawn()      # 出生点 = 宠物窗口中心 + 原作 scr_moveheart 的 (10,40)
+            self._soul_scene_id = getattr(self, 'current_scene', None)
+            if self.soul.show_soul():
+                _log.info('灵魂就绪：%s；%s',
+                          self.soul.state.describe(), self.soul_bookmarks.describe())
+        except Exception:
+            _log.exception('灵魂初始化失败（灵魂功能不可用，宠物照常运行）')
+            self.soul = None
+            return
+
+        # 场景切换钩子：**追加**而不是整体赋值 —— `_scene_switch_hooks` 是
+        # `init_item_systems()` 赋值出来的列表，整体赋值会把道具的钩子挤掉。
+        try:
+            hooks = self.__dict__.get('_scene_switch_hooks')
+            if isinstance(hooks, list):
+                if self._on_scene_switched_soul not in hooks:
+                    hooks.append(self._on_scene_switched_soul)
+            else:
+                self._scene_switch_hooks = [self._on_scene_switched_soul]
+        except Exception:
+            _log.exception('灵魂场景切换钩子注册失败（换场景时灵魂不记位置）')
+
+    def _soul_respawn(self):
+        """把灵魂放到"宠物 + 原作偏移"。宠物位置不可用 ⇒ 屏幕中心（**不静默**）。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        try:
+            cx = self.x() + self.width() / 2.0
+            cy = self.y() + self.height() / 2.0
+        except Exception:
+            b = soul.screen_bounds() or (0.0, 0.0, 1920.0, 1080.0)
+            cx = (b[0] + b[2]) / 2.0
+            cy = (b[1] + b[3]) / 2.0
+            _log.info('灵魂出生点退回屏幕中心（宠物窗口位置不可用）')
+        try:
+            x, y = soul_entity_mod.spawn_point(cx, cy, soul.state.scale)
+            soul.state.x = x
+            soul.state.y = y
+            b = soul.screen_bounds()
+            if b:
+                soul.state.clamp_to(b)
+                if self.soul_bookmarks is not None:
+                    self.soul_bookmarks.set_screen(b[2] - b[0], b[3] - b[1])
+            soul.apply_state_pos()
+            return True
+        except Exception:
+            _log.exception('灵魂出生点设置失败（忽略）')
+            return False
+
+    # ---------------------------------------------------------------- 显示 / 收起
+    def toggle_soul(self):
+        """显示/收起灵魂。**全局热键与右键都走这里**（单一入口，与 `toggle_item_menu`
+        同一条纪律：同一个动作两处实现迟早分叉）。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            _log.info('灵魂请求被忽略：灵魂未就绪（SOUL_ENABLED=%s）',
+                      getattr(self, 'SOUL_ENABLED', None))
+            return False
+        try:
+            if soul.isVisible():
+                return self.hide_soul()
+            return self.show_soul()
+        except Exception:
+            _log.exception('切换灵魂显示失败')
+            return False
+
+    def show_soul(self):
+        """显示灵魂（叫回来的入口；右键收起后靠这个或热键再叫出来）。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        try:
+            ok = bool(soul.show_soul(activate=True))
+            if ok:
+                self._soul_scene_id = getattr(self, 'current_scene', None)
+            return ok
+        except Exception:
+            _log.exception('显示灵魂失败')
+            return False
+
+    def hide_soul(self):
+        """收起灵魂。★ 收起前**记一次位置** —— 否则"收起再叫出来"会回到出生点，
+        对用户来说是"它忘了我把它放哪了"。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        try:
+            self._soul_bookmark_save()
+            return bool(soul.hide_soul())
+        except Exception:
+            _log.exception('收起灵魂失败')
+            return False
+
+    # ---------------------------------------------------------------- 每帧推进
+    def _soul_tick(self, dt):
+        """每帧推进灵魂（挂在 30ms 的 `update_movement` 上）。
+
+        ★ 为什么挂在 `update_movement` 而**不自己开一个 QTimer**：
+          本项目已有一个 30ms 定时器（正好等于原作 `GMS2FPS = 30`，与
+          `soul_overlay.SOUL_TICK_MS = 33` 对齐），再开一个只会多一条
+          "两个节拍器互不同步"的隐患 —— 而灵魂的 `clamp_to` / 拖拽判定
+          都要求"位置变化与窗口移动在同一拍里"。
+        ★ 调用点必须在 `update_movement` 的**所有早退分支之前**（睡眠 / 施法 /
+          躲猫猫 / 拖拽保护 / 特殊动画都会 return）：灵魂是独立实体，
+          宠物睡着时它照样该能动。
+        """
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        try:
+            if not soul.isVisible():
+                return False
+            return bool(soul.tick(dt))
+        except Exception as e:
+            _log.debug('灵魂推进异常（本帧跳过）: %s', e)
+            return False
+
+    def _soul_visible(self):
+        soul = getattr(self, 'soul', None)
+        try:
+            return bool(soul is not None and soul.isVisible())
+        except Exception:
+            return False
+
+    # ---------------------------------------------------------------- 灵魂的回调
+    def _soul_on_clicked(self):
+        """灵魂被**单击**（按住没怎么动）⇒ 原作的"被碰到"表现 = 受击闪烁。
+
+        ★ 刻意**不**说话：宠物说话要走事件台词通道（S7），把它挂到"点了灵魂"上
+          会让用户随手一点就触发一次 AI 请求 —— 那是本项目最忌讳的"平时乱开口"。
+          受击闪烁同时也是灵魂**唯一**有帧动画的时刻（照抄原作：常态定格第 0 帧）。
+        """
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return
+        try:
+            soul.state.hit()
+            soul.update()
+            _log.info('灵魂被点击（原地）⇒ 受击闪烁：%s', soul.state.describe())
+        except Exception as e:
+            _log.debug('灵魂点击回应失败（忽略）: %s', e)
+
+    def _soul_on_drag_end(self):
+        """灵魂被拖动结束 ⇒ 记一次位置。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return
+        try:
+            _log.info('灵魂被拖到 %s', soul.state.describe())
+            self._soul_bookmark_save()
+        except Exception as e:
+            _log.debug('灵魂拖拽收尾失败（忽略）: %s', e)
+
+    # ---------------------------------------------------------------- 场景位置簿
+    def _soul_bookmark_save(self):
+        """把灵魂当前位置记到**当前场景**名下（归一化比例，抗分辨率/插拔屏变化）。"""
+        soul = getattr(self, 'soul', None)
+        bm = getattr(self, 'soul_bookmarks', None)
+        if soul is None or bm is None:
+            return False
+        sid = self.__dict__.get('_soul_scene_id')
+        if not isinstance(sid, str) or not sid:
+            return False
+        try:
+            b = soul.screen_bounds()
+            if not b:
+                return False
+            # 存**相对虚拟屏左上角**的比例：多屏并存时虚拟屏原点可能不是 (0,0)
+            # （副屏在主屏左侧时为负值），只除宽高会把位置算歪。
+            bm.set_screen(b[2] - b[0], b[3] - b[1])
+            return bool(bm.save(sid, soul.state.x - b[0], soul.state.y - b[1]))
+        except Exception as e:
+            _log.debug('灵魂位置记录失败（忽略）: %s', e)
+            return False
+
+    def _soul_bookmark_restore(self, scene_id):
+        """把灵魂放到 `scene_id` 上次的位置；没记过 ⇒ 按"宠物 + 原作偏移"重新出生。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        self._soul_scene_id = scene_id
+        bm = getattr(self, 'soul_bookmarks', None)
+        pos = bm.resolve(scene_id) if bm is not None else None
+        if pos is None:
+            _log.info('灵魂第一次到场景 %s ⇒ 按"宠物 + 原作偏移"出生', scene_id)
+            return self._soul_respawn()
+        try:
+            b = soul.screen_bounds() or (0.0, 0.0, 0.0, 0.0)
+            soul.state.x = float(pos[0]) + b[0]
+            soul.state.y = float(pos[1]) + b[1]
+            if b:
+                soul.state.clamp_to(b)
+            soul.apply_state_pos()
+            soul.update()
+            _log.info('灵魂回到场景 %s 的原位置 (%.0f, %.0f)',
+                      scene_id, soul.state.x, soul.state.y)
+            return True
+        except Exception:
+            _log.exception('灵魂位置还原失败（改按出生点重放）')
+            return self._soul_respawn()
+
+    def _on_scene_switched_soul(self, scene_id, scene):
+        """★ 场景切换钩子：「灵魂自由出入各场景」的落地 —— 先记旧场景的位置，
+        再恢复新场景的位置。
+
+        由 `SceneController._fire_switch_hooks()` 调（钩子抛异常会被它吞掉并记日志，
+        不影响切换本身，所以这里不必再包一层 try —— 与 `_on_scene_switched_items` 同）。
+        """
+        if getattr(self, 'soul', None) is None:
+            return
+        try:
+            self._soul_bookmark_save()          # 旧场景（`_soul_scene_id` 此刻还没更新）
+            self._soul_bookmark_restore(scene_id)
+        except Exception:
+            _log.exception('灵魂场景位置簿更新失败（忽略）')
+
+    # ---------------------------------------------------------------- 键盘桥
+    def _soul_press(self, direction):
+        """把方向键转给灵魂。返回"这次是不是一次新的按下"（自动重复为 False）。"""
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        try:
+            return bool(soul.press_dir(direction))
+        except Exception:
+            return False
+
+    def _soul_release(self, direction):
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            return False
+        try:
+            return bool(soul.release_dir(direction))
+        except Exception:
+            return False
+
+    # ---------------------------------------------------------------- 交互选目标
+    @staticmethod
+    def _soul_prop_index(key):
+        """可交互物的 key → `objects` 下标。
+
+        key 规则由 `item_interact.build_props` 定义：
+          `<scene_id>#<下标>`（拾取物再加 `@<item_id>` 后缀）。
+        认不出返回 `None`（**不猜**）。这条规则是**跨模块契约** ——
+        那边改了这里必须跟着改，回归锁 `check55` 用真实 key 做正/负控制。
+        """
+        if not isinstance(key, str):
+            return None
+        parts = key.rsplit('#', 1)
+        if len(parts) != 2:
+            return None
+        num = parts[1].split('@', 1)[0]
+        if not num.isdigit():
+            return None
+        return int(num)
+
+    def _soul_room_rect(self):
+        """当前房间的世界矩形 `(0, 0, w, h)`（**逻辑坐标**）；不知道 ⇒ `None`。
+
+        与 `_update_scene_layer` 里那段**同源同判据**（`_scene_geometry['章节:房间id']`），
+        刻意抄同一套 key 规则而不是新写一套：两处对"当前是哪个房间"的理解一旦分叉，
+        灵魂的交互目标就会和画面上的房间不是同一个。
+        """
+        try:
+            rooms = self.__dict__.get('_scene_geometry') or {}
+            state = self.__dict__.get('_scene_state')
+            rid = getattr(state, 'original_room_id', None)
+            ch = getattr(state, 'chapter_id', None)
+            if isinstance(rid, int) and ch:
+                rec = rooms.get('%s:%d' % (ch, rid))
+                if isinstance(rec, dict) and isinstance(rec.get('w'), int):
+                    return (0.0, 0.0, float(rec['w']), float(rec['h']))
+        except Exception as e:
+            _log.debug('main 防御性异常（已忽略）: %s', e)
+        return None
+
+    def _soul_pick_prop(self, props):
+        """按**灵魂到各可交互物的距离**选一件。返回 `(prop, 说明)`；选不出 `(None, 说明)`。
+
+        ★ 坐标从哪来（第55轮实证，不是估的）
+        ------------------------------------
+        两套坐标都落在**同一套逻辑房间坐标**里，可直接比距离：
+          · 灵魂 → 房间：`soul_entity.screen_to_room(灵魂中心, room_rect, 虚拟屏尺寸)`
+            （= `_pet_target_rect` 的逆映射；`room_rect` 来自 `_scene_geometry`）；
+          · 物件 → 房间：`objects[i]['pos']`（`build_props` 的 key 让下标可逆）。
+        实证：`ch1.castle_town.castle_outskirts` 房间 `w=640, h=480`，
+        而 `obj_doorA` 的 `pos=[630, 280]` —— 量级吻合，是同一空间。
+
+        ★★ 为什么取 `_scene_state.objects` 而**不是** `scene_objects`
+        ------------------------------------------------------------
+        `scene_objects`（"当前可见物件缓存"）**全仓没有任何人填过它** ——
+        `SceneController.switch()` 里显式 `pet.scene_objects = []`，
+        而唯一会填它的 `resolve_objects(screen_rect)` **零调用**（第38轮留下的
+        "接口先立、消费者后到"，到第55轮仍无人消费）。
+        若用 `scene_objects`，本方法会**永远**走"没有一件带坐标"的退路 ——
+        这就是本项目最贵的坑：「函数写对了但产品用不上」。
+        `_scene_state.objects` 则正是 `build_props` 消费的那一份、**同一顺序**，
+        所以"key 里的下标 → objects 下标"是**恒成立**的（不是碰巧）。
+        ⚠️ 不混用两者：`resolve_objects` 返回的是**变换后且可能被裁剪**的列表，
+        下标与本列表不对应，混用会选错物件。
+
+        ★ 三条「不伪造」
+        -----------------
+        1. 算不出灵魂的房间坐标（无房间几何 / 无屏幕尺寸）⇒ 返回 `(None, 原因)`，
+           由调用方退回"登记顺序第一个"并**把原因写进日志**；
+        2. 某件可交互物没有坐标（key 对不上 objects）⇒ 它**不参与比较**，
+           绝不拿 (0,0) 顶替 —— 那会让"房间左上角"凭空多出一个候选
+           （本项目最难看的那种假结果）；
+        3. 一件候选都没有 ⇒ 同上退回，并如实说明。
+
+        ★ 为什么**不**传"够不着就别选"（`max_dist`）：离得远时的正确表现是
+          "走过去交互"，而不是"按 E 没反应"。所以永远取最近的那件。
+        """
+        soul = getattr(self, 'soul', None)
+        if soul is None or not self._soul_visible():
+            return (None, '灵魂未显示 ⇒ 无从比较位置')
+        state = self.__dict__.get('_scene_state')
+        objs = getattr(state, 'objects', None)
+        if not isinstance(objs, (list, tuple)) or not objs:
+            return (None, '拿不到当前场景的 objects（无场景 / 空场景）')
+        pt = soul_entity_mod.screen_to_room(
+            soul.state.center()[0], soul.state.center()[1],
+            self._soul_room_rect(), self._virtual_screen_size())
+        if pt is None:
+            return (None, '算不出灵魂的房间坐标（无房间几何 / 屏幕尺寸）')
+        targets = []
+        for p in props:
+            i = self._soul_prop_index(getattr(p, 'key', None))
+            if i is None or i >= len(objs):
+                continue
+            o = objs[i]
+            pos = o.get('pos') if isinstance(o, dict) else None
+            if not (isinstance(pos, (list, tuple)) and len(pos) == 2):
+                continue
+            targets.append((getattr(p, 'key', None), pos[0], pos[1]))
+        if not targets:
+            return (None, '本场景没有一件可交互物带坐标')
+        key, dist = soul_entity_mod.pick_nearest(pt, targets)
+        if key is None:
+            return (None, '最近判定失败（候选为空 / 坐标非法）')
+        for p in props:
+            if getattr(p, 'key', None) == key:
+                return (p, '按灵魂位置选最近那件（距离 %.0f 逻辑单位）' % dist)
+        return (None, '最近的那件对不上可交互物（key 失配）')
+
+    # ==================================================================
+    #  NPC 人设 / 独立记忆 / 跟随决策（第55轮）
+    # ==================================================================
+    # 用户口径（第55轮原话，逐字要点）
+    #   *「我会给你每个人的设定（deepseek生成的），**你给装上就好**」
+    #   *「具体会不会主动跟随我觉得**可以给 AI 决策**」
+    #   *「4B 貌似没办法支撑起来这些角色的灵魂，所以，给他们也升级成 7B 吧」
+    #   *「★★ 每个人都需要分每个人的记忆，不要搞混了，整的和有葫芦娃那个
+    #      千里眼顺风耳似的那就离谱了」
+    #
+    # ★★ 本轮交付的**边界**（先说清楚，免得把"接口就位"说成"已经能用了"）
+    #   NPC 的**实例坐标**目前拿不到 —— `obj_herokris` / `obj_herosusie` 这类实例在
+    #   `assets/scenes/*` 里**零命中**（第55轮实测，只有第49轮取证里的 id 常量）。
+    #   所以"把 NPC 画进场景、让他在地图上走动"这一步**做不了**，要等重跑 UTMT 补采实例。
+    #   本轮做的是**它下面那一层**，而且每一件事都有唯一出口：
+    #     · 谁能说话、说什么   → `npc_system_prompt()` / `npc_speak()`
+    #     · 他记得什么         → `npc_memory`（一角色一份，物理分开）
+    #     · 他会不会跟         → `npc_follow_decide()`（**AI 决策**）
+    #   上层的"把人画出来"接上之后，直接调这三个出口即可，不必再改这里。
+    # ==================================================================
+
+    #: NPC 系统总开关（与 `SOUL_ENABLED` / `SCENE_LAYER_ENABLED` 同形）。
+    #: `False` ⇒ `init_npc_systems()` 建完空壳就返回，所有入口退化成"什么都没发生"。
+    #: ⚠️ 保留它本身不是死代码：这是"NPC 说话出问题"时的一刀定位开关。
+    NPC_ENABLED = True
+
+    #: 一次场景切换里最多问**几个** NPC"跟不跟"。
+    #: 为什么是 1：每问一次就是一次**真实推理**（7B 纯 CPU）⇒ 问的人越多，换场景越卡。
+    #: 取 1 = "换一次场景问最近说过话的那一个"，观感上够用且不会成倍放大延迟。
+    NPC_FOLLOW_ASK_PER_SWITCH = 1
+
+    def init_npc_systems(self):
+        """建 NPC 服务层：注册表 + 人设 + 一角色一份记忆 + 跟随板 + 别名表。
+
+        失败语义与道具 / 搜索 / 关系同规：**任何一步失败都只降级、不抛出**
+        （非关键路径不许让桌宠起不来）。降级后果写进日志，且所有字段先预声明成
+        空值 —— 中途失败宿主也不缺属性（本项目踩过"状态只在成功路径上创建"的坑）。
+        """
+        # 先预声明 —— 中途任何一步失败也不能让别处的 getattr 炸
+        self.npc_registry = None
+        self.npc_personas = {}
+        self.npc_memory = None
+        self.npc_followers = None
+        self._npc_aliases = {}
+        self._npc_invited = []          # 说上过话的 NPC（换场景时才有资格被问"跟不跟"）
+        self._npc_follow_pending = []   # 纯 NPC 的"想跟但等你点头"
+        self._npc_talking = None        # 最近一次在跟谁说话
+        self._npc_last_decision = None  # 最近一次跟随决策 (npc_id, choice, source)
+
+        if not RalseiPet.NPC_ENABLED:
+            _log.info('NPC 系统已关闭（NPC_ENABLED=False）⇒ NPC 不说话、不跟随')
+            return
+
+        root = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+        try:
+            self.npc_registry = npc_system_mod.load_registry(root)
+        except Exception:
+            _log.exception('NPC 注册表加载失败（NPC 相关功能整体降级为不可用）')
+            return
+        try:
+            self.npc_personas = npc_persona_mod.load_personas(root) or {}
+        except Exception:
+            _log.exception('NPC 人设装载失败（NPC 一律不开口；注册表与跟随规则仍在）')
+            self.npc_personas = {}
+
+        # ---- 记忆落盘目录：交给 `data_store`（唯一存储入口）算，取不到就退内存态 ----
+        # ⚠️ 这里**不把 data_store 提到模块顶部**：它会反向依赖 memory 层，
+        #    顶部 import 会做出一条初始化环（本项目栽过 4 次，见第12轮回归锁）。
+        # ⚠️ `data_root()` 返回的是 **`(路径, 'vault'|'staging')` 元组**，不是字符串 ——
+        #    直接拿去拼路径会得到一个叫 "(E:\\..., 'vault')" 的怪目录。
+        mem_dir = None
+        try:
+            import data_store
+            _dr = data_store.data_root(create=True)
+            _path = _dr[0] if isinstance(_dr, tuple) else _dr
+            mem_dir = npc_persona_mod.memory_root(_path)
+        except Exception as e:
+            _log.warning('NPC 记忆落盘目录取不到 ⇒ 退内存态（不写盘）: %s', e)
+        try:
+            self.npc_memory = npc_persona_mod.MiniMemory(root=mem_dir)
+        except Exception:
+            _log.exception('NPC 独立记忆建立失败（NPC 一律不开口）')
+            self.npc_memory = None
+        if self.npc_memory is not None and mem_dir:
+            for _nid in self.npc_registry.ids():
+                try:
+                    _n = self.npc_memory.load(_nid)   # 一角色一文件；读不到就是空
+                    if _n:
+                        _log.debug('NPC %s 读回记忆 %d 条', _nid, _n)
+                except Exception as e:
+                    _log.debug('NPC %s 记忆读回异常（已忽略）: %s', _nid, e)
+
+        try:
+            self.npc_followers = npc_system_mod.FollowerBoard(self.npc_registry)
+        except Exception:
+            _log.exception('跟随板建立失败（跟随决策降级为不可用）')
+            self.npc_followers = None
+
+        # ---- 别名表：id / 英文名 / 中文名 三个都收（点名两层都认）----
+        try:
+            self._npc_aliases = npc_persona_mod.address_aliases(
+                [(n.id, n.name, n.name_cn) for n in self.npc_registry.all()])
+        except Exception as e:
+            _log.warning('NPC 别名表建立失败（@点名不可用）: %s', e)
+            self._npc_aliases = {}
+
+        # ---- 场景切换钩子：按新场景清掉"进不来"的跟随者 ----
+        try:
+            hooks = getattr(self, '_scene_switch_hooks', None)
+            if isinstance(hooks, list):
+                hooks.append(self._on_scene_switched_npc)
+            else:
+                _log.warning('场景切换钩子列表不存在 ⇒ NPC 跟随不随场景变化')
+        except Exception as e:
+            _log.warning('NPC 场景钩子挂载失败: %s', e)
+
+        _log.info('NPC 系统就绪：登记 %d 个（主线 %d / 纯 NPC %d）；人设 %d 份；'
+                  '点名别名 %d 条；记忆落盘=%s',
+                  len(self.npc_registry), len(self.npc_registry.main_npcs()),
+                  len(self.npc_registry.plain_npcs()), len(self.npc_personas),
+                  len(self._npc_aliases), mem_dir or '内存态')
+
+    # ---------------------------------------------------------------- 点名
+    def _npc_scene_id(self):
+        """当前场景 id（取不到 ⇒ `None`，不编一个）。"""
+        sid = getattr(self.__dict__.get('_scene_state'), 'scene_id', None)
+        return sid if isinstance(sid, str) and sid else None
+
+    def npc_address(self, text):
+        """`'@苏西 你好'` → `('susie', '你好')`；不是点名 / 认不出 → `None`。
+
+        纯转发（解析逻辑全在 `npc_persona.parse_address`，这边只补异常兜底）——
+        规则只留一份真源，判据才好写。
+        """
+        if not isinstance(text, str):
+            return None
+        try:
+            return npc_persona_mod.parse_address(text, self._npc_aliases)
+        except Exception as e:
+            _log.debug('点名解析异常（已忽略）: %s', e)
+            return None
+
+    def npc_label(self, npc_id):
+        """对话里显示的名字（优先中文名）。没登记 ⇒ 原样回传 id。"""
+        npc = self.npc_registry.get(npc_id) if self.npc_registry else None
+        if npc is None:
+            return '' if npc_id is None else str(npc_id)
+        return npc_persona_mod.speaker_label(npc.name, npc.name_cn) or npc.name
+
+    def npc_persona_of(self, npc_id):
+        """该 NPC 的人设全文；没有 ⇒ `None`（**不返回空串**，空串会被当成"有但空"）。"""
+        t = (self.npc_personas or {}).get(npc_id)
+        return t if isinstance(t, str) and t.strip() else None
+
+    # ---------------------------------------------------------------- 系统提示词
+    def _build_npc_context(self, npc_id=None):
+        """NPC 的「此刻」块 —— ★ **只放共有的世界状态**（时段 / 天气 / 在哪）。
+
+        为什么不复用 `_build_ai_context()`（Ralsei 那一份）：
+          那一份里有"你累得快撑不住了""你站在一个打开的窗口上""你有很久没跟对方
+          说话了"—— 这些描述的是**桌宠本体**。混进 NPC 的提示词，下一句就会听到
+          苏西说"我站在一个打开的窗口上"。
+          用户最怕的"葫芦娃千里眼顺风耳"，串的正是这种**别人的私人体感**，
+          所以这里宁可少给，也不给不属于他的状态。
+        """
+        parts = []
+        try:
+            _h = time.localtime().tm_hour
+            if 5 <= _h < 8:
+                _tod = '清晨'
+            elif 8 <= _h < 11:
+                _tod = '上午'
+            elif 11 <= _h < 13:
+                _tod = '中午'
+            elif 13 <= _h < 17:
+                _tod = '下午'
+            elif 17 <= _h < 19:
+                _tod = '傍晚'
+            elif 19 <= _h < 23:
+                _tod = '晚上'
+            else:
+                _tod = '深夜'
+            parts.append('现在是%s' % _tod)
+        except Exception as e:
+            _log.debug('NPC 上下文：时段分片失败（已忽略）: %s', e)
+        try:
+            _w = self.weather_system.get_current_weather()
+            if _w:
+                parts.append('天气%s' % _w)
+        except Exception as e:
+            _log.debug('NPC 上下文：天气分片失败（已忽略）: %s', e)
+        if not parts:
+            return ''
+        return ('【此刻】' + '，'.join(parts)
+                + '。（这是当下的环境，可以自然地带一点出来，但别逐条念。）')
+
+    def npc_system_prompt(self, npc_id):
+        """某个 NPC 的 system prompt —— **唯一出口**。
+
+        装不了（没登记 / 没装人设）⇒ 返回 `''`，调用方据此**拒绝这次对话**。
+        为什么是"拒绝"而不是"退回 Ralsei 的人设"：那正是用户最怕的那种串味
+        （拿别人的身份说话，还看不出来）。宁可这一句没有回应。
+        """
+        npc = self.npc_registry.get(npc_id) if self.npc_registry else None
+        if npc is None:
+            return ''
+        persona = self.npc_persona_of(npc_id)
+        if not persona:
+            return ''
+        entries = []
+        try:
+            if self.npc_memory is not None:
+                entries = self.npc_memory.history(npc_id)   # ★ 只取他自己的
+        except Exception as e:
+            _log.debug('NPC %s 记忆读取异常（按无记忆处理）: %s', npc_id, e)
+        return npc_persona_mod.build_system_prompt(
+            npc.name, persona, entries, npc_id, self._build_npc_context(npc_id))
+
+    def _npc_model(self, npc_id):
+        """这个 NPC 该用哪个 Ollama 句柄 —— `None` = **跟随 App 配置**。
+
+        ★ 为什么要有这个函数（而不是让调用方直接读 `npc.model`）：
+          注册表里的 `model` 字段曾经**只登记、没人读** —— 于是"主线 NPC 用 4B"
+          这句话在代码里根本不成立（实际跑的是 `config.json` 的 `api.model`）。
+          把"读它"收成一个出口，以后换名字/加回落只需改这一处。
+        ★ 为什么现在注册表里全是 `None`：`config.json` 里那个模型就是
+          `ralsei:v4` = `qwen2.5:7b-instruct-q4_K_M` ⇒ **NPC 拿到的本来就是 7B**。
+          再建一个 `ralsei-npc:7b` 只会让 Ollama 在 Ralsei 与 NPC 之间**各常驻一份
+          4.7GB 权重**（同名不同句柄不会共享实例），纯亏 —— 用户那句
+          「如果这非常吃性能那就慎重」正是这个意思。
+          真需要单独给 NPC 换模型：把它填成 Ollama 里**真实存在**的句柄即可，
+          接线已就绪（`api_client._chat_payload` 收 `model=` 覆盖）。
+        """
+        try:
+            npc = self.npc_registry.get(npc_id) if self.npc_registry else None
+            val = getattr(npc, 'model', None) if npc is not None else None
+        except Exception as e:
+            _log.debug('NPC %s 模型句柄解析异常（按不覆盖处理）: %s', npc_id, e)
+            return None
+        return val if isinstance(val, str) and val.strip() else None
+
+    # ---------------------------------------------------------------- 说话
+    def npc_speak(self, npc_id, text, on_reply, on_delta=None):
+        """★ NPC 说话的唯一出口 —— 「@某人 内容」最终走到这里。
+
+        返回 `True` = 请求已发出；`False` = **明确拒绝**（并已回调 `on_reply(None)`）。
+        拒绝的四种情形：NPC 系统没建起来 / id 没登记 / 这个人还没装人设
+        （用户没给设定的人**不许**开口 —— 更不许借别人的设定开口）/ 模型不可用。
+
+        ★ 顺序讲究：**"对方说的这句"先记进他的记忆，再去拦"模型不可用"**。
+          理由是本项目那条"宁可多留一句，也不静默丢信息"—— 模型可能只是临时没起来，
+          而"你对他说过这句话"是个事实，不该因为回复拿不到就一起丢掉
+          （下一轮模型起来时，他是能看见你说过的这句的）。
+        """
+        if self.npc_registry is None or self.npc_memory is None:
+            on_reply(None)
+            return False
+        npc = self.npc_registry.get(npc_id)
+        if npc is None:
+            _log.info('点名了未登记的 NPC %r ⇒ 不当成任何一个角色回话', npc_id)
+            on_reply(None)
+            return False
+        if not self.npc_persona_of(npc_id):
+            _log.info('NPC %s 还没装设定 ⇒ 不开口（不许借别人的人设）', npc_id)
+            on_reply(None)
+            return False
+        # 对方说的这句进**他自己**的记忆（不是 Ralsei 的，也不是别的 NPC 的）
+        try:
+            self.npc_memory.remember(npc_id, text, who='player',
+                                     scene=self._npc_scene_id())
+        except Exception as e:
+            _log.debug('NPC %s 记忆写入异常（已忽略）: %s', npc_id, e)
+        self._npc_talking = npc_id
+        if npc_id not in self._npc_invited:
+            self._npc_invited.append(npc_id)
+        # 模型不可用 ⇒ **明确拒绝**（返回 False），而不是"发了一个不会回来的请求"。
+        # 为什么非要在这一步拦：`chat_with_ai` 在 API 关闭时也会回调 None，
+        # 那样调用方拿到的 `True` 会让人以为"请求已经发出去了"（本项目最烦的假信号）。
+        if not self._npc_ai_available():
+            _log.info('本地模型不可用 ⇒ NPC %s 这一句不说话（但你说的这句已经记下了）', npc_id)
+            on_reply(None)
+            return False
+        try:
+            self.chat_with_ai(text, on_reply, on_delta, speaker=npc_id,
+                              model=self._npc_model(npc_id))
+        except Exception:
+            _log.exception('NPC %s 对话发起异常', npc_id)
+            on_reply(None)
+            return False
+        return True
+
+    # ---------------------------------------------------------------- 跟随（AI 决策）
+    def _npc_follow_policy(self, npc):
+        """分层策略字面量（主线 = autonomous / 纯 NPC = consent）。取不到 ⇒ `''`。"""
+        try:
+            return npc_system_mod.follow_policy(npc)
+        except Exception:
+            return ''
+
+    def _npc_apply_follow(self, npc_id, choice):
+        """把决策落到 `FollowerBoard`（+ 日志）。返回落定后的状态字符串。"""
+        board = self.npc_followers
+        if board is None:
+            return ''
+        try:
+            if choice in (npc_persona_mod.FOLLOW_FOLLOW, npc_persona_mod.FOLLOW_RALLY):
+                st = board.request(npc_id)
+                if st == npc_system_mod.FOLLOW_PENDING:
+                    # 纯 NPC 想跟：按第49轮口径要**主角点头** ⇒ 挂起等许可
+                    if npc_id not in self._npc_follow_pending:
+                        self._npc_follow_pending.append(npc_id)
+                    _log.info('NPC %s 想跟上来，但纯 NPC 需要你同意（暂挂起）', npc_id)
+                else:
+                    if npc_id in self._npc_follow_pending:
+                        self._npc_follow_pending.remove(npc_id)
+                return st
+            board.stop(npc_id)
+            if npc_id in self._npc_follow_pending:
+                self._npc_follow_pending.remove(npc_id)
+            return npc_system_mod.FOLLOW_IDLE
+        except Exception as e:
+            _log.debug('NPC %s 跟随状态落定异常（已忽略）: %s', npc_id, e)
+            return ''
+
+    def npc_follow_approve(self, npc_id, approved=True):
+        """主角对「纯 NPC 的跟随请求」表态（跟随规则的出口，供菜单/对话调用）。"""
+        board = self.npc_followers
+        if board is None:
+            return False
+        try:
+            ok = bool(board.respond(npc_id, bool(approved)))
+        except Exception as e:
+            _log.debug('NPC %s 跟随许可异常（已忽略）: %s', npc_id, e)
+            return False
+        if npc_id in self._npc_follow_pending:
+            self._npc_follow_pending.remove(npc_id)
+        _log.info('NPC %s 跟随请求：%s', npc_id, '同意' if approved else '拒绝')
+        return ok
+
+    def npc_follow_decide(self, npc_id, dist=None, on_result=None):
+        """让 **NPC 自己**决定跟不跟 —— ★ 用户口径「可以给 AI 决策」。
+
+        判定链（**完全复用 `npc_persona.decide_follow`，这里不重写一遍规则**）：
+          · AI 说了合法的一个词（`follow`/`stay`/`rally`/`leave`）⇒ 用它（`source='ai'`）；
+          · AI 没表态 / 乱说 / 模型不可用 ⇒ 落回 `npc_system` 的分层策略：
+            主线（`autonomous`）按距离自主判，纯 NPC（`consent`）不主动跟。
+
+        ★ 为什么"模型不可用"也算"没表态"而不是"报错"：
+          跟随决策是**可降级**的 —— 模型没起来时按分层策略走，桌面照样能用；
+          反之若在这儿抛错，会顺着场景切换把整条切换链带崩。
+
+        返回 `True` = 已发起（结果走 `on_result(choice, source)` 或日志）。
+        """
+        if self.npc_registry is None or self.npc_followers is None:
+            return False
+        npc = self.npc_registry.get(npc_id)
+        if npc is None:
+            return False
+        policy = self._npc_follow_policy(npc)
+        world = self._current_world()
+        far = getattr(companion_mod, 'FOLLOW_FAR_THRESHOLD', 160.0)
+        persona = self.npc_persona_of(npc_id)
+
+        def _finish(ai_reply=None):
+            ai_choice = npc_persona_mod.parse_follow_choice(ai_reply) \
+                if isinstance(ai_reply, str) else None
+            choice, source = npc_persona_mod.decide_follow(
+                ai_choice, policy=policy, dist=dist, far_threshold=far, world=world)
+            st = self._npc_apply_follow(npc_id, choice)
+            self._npc_last_decision = (npc_id, choice, source)
+            _log.info('跟随决策 %s：%s（模型回 %r ⇒ 跟随板状态 %s）',
+                      npc_id, npc_persona_mod.decision_reason(choice, source),
+                      ai_reply, st or 'n/a')
+            if callable(on_result):
+                try:
+                    on_result(choice, source)
+                except Exception as e:
+                    _log.debug('跟随决策回调异常（已忽略）: %s', e)
+            return (choice, source)
+
+        # 模型不可用 ⇒ 直接按策略落定（不发明一次假请求）
+        if not self._npc_ai_available() or not persona:
+            _finish(None)
+            return True
+        system = npc_persona_mod.build_follow_system(
+            npc.name, persona, dist=dist, world=world)
+        try:
+            self.chat_with_ai('现在决定：跟，还是不跟？', _finish, None,
+                              lean=True, speaker=npc_id, system_override=system,
+                              remember=False, model=self._npc_model(npc_id))
+        except Exception:
+            _log.exception('跟随决策请求发起失败（按策略落定）')
+            _finish(None)
+        return True
+
+    def _npc_ai_available(self):
+        """本地模型能不能用（与对话链路同一条判据，不另立一个）。"""
+        try:
+            cli = getattr(self, 'api_client', None)
+            return bool(getattr(self, 'api_enabled', False)
+                        and cli is not None and getattr(cli, 'enabled', False))
+        except Exception:
+            return False
+
+    def _on_scene_switched_npc(self, scene_id, scene):
+        """★ 场景切换钩子：① 清掉"进不来"的跟随者；② 问一个 NPC"跟不跟"。
+
+        由 `SceneController._fire_switch_hooks()` 调（钩子抛异常会被它吞掉并记日志）。
+        顺序有意义：**先清理再决策** —— 反过来的话，刚被"清掉又决定要跟"的人
+        会在下一个不合法场景里再被清一次，日志里会看到两次矛盾记录。
+        """
+        board = self.npc_followers
+        if board is None or self.npc_registry is None:
+            return
+        world = self._current_world()
+        # `carried` = 谁被装进球里。**只用现成状态查询**（`BubbleField.__contains__`），
+        # 不去调 `toggle_bubble` —— 那是"改状态"的入口，在这里调会把球开开关关。
+        try:
+            _fld = self._ensure_bubble_field()
+            carried = ['ralsei'] if (_fld is not None and 'ralsei' in _fld) else []
+        except Exception:
+            carried = []
+        try:
+            kicked = board.tick(world, scene_id=scene_id, carried_ids=carried)
+        except Exception as e:
+            _log.debug('跟随板清理异常（已忽略）: %s', e)
+            kicked = []
+        if kicked:
+            # ★ 如实说"他没跟来"，而不是让用户以为人还在
+            _log.info('这些 NPC 跟不进 %s（%s 世界）⇒ 停在原地：%s',
+                      scene_id, world, '、'.join(kicked))
+            self._npc_menu_message('* %s 没法跟你进这里，先在原地等着了。'
+                                   % '、'.join(self.npc_label(k) for k in kicked))
+        # ② 只问"最近说过话的那一个"（每次问都是一次真实推理，见常量注释）
+        n = 0
+        for nid in reversed(self._npc_invited):
+            if n >= RalseiPet.NPC_FOLLOW_ASK_PER_SWITCH:
+                break
+            if board.is_following(nid):
+                continue
+            self.npc_follow_decide(nid, dist=None)
+            n += 1
+
+    def _npc_menu_message(self, text):
+        """往用户能看见的地方说一句（复用道具菜单那条通道；没有就只记日志）。
+
+        ⚠️ 为什么复用这条通道而不是自己造一个：本项目已经有"宠物能对用户说一句
+           轻量提示"的成例（`_item_menu_message`），再造一个就会出现两套提示
+           互相盖住（第48轮踩过）。没有它时**降级为纯日志**，不抛。
+        """
+        if not text:
+            return False
+        try:
+            fn = getattr(self, '_item_menu_message', None)
+            if callable(fn):
+                return bool(fn(text))
+        except Exception as e:
+            _log.debug('NPC 提示显示异常（已忽略）: %s', e)
+        _log.info('NPC：%s', text)
+        return False
+
     # ==================================================================
     #  道具 / 背包 / S 键菜单（第48轮）
     # ==================================================================
@@ -1114,6 +1999,14 @@ class RalseiPet(QMainWindow):
             done, bad = global_hotkey_mod.install(self, {
                 global_hotkey_mod.HOTKEY_DEFAULT_MENU: self.toggle_item_menu,
                 global_hotkey_mod.HOTKEY_DEFAULT_INTERACT: self.interact_scene_prop,
+                # ★ 第55轮：灵魂（SOUL）显示 / 收起。
+                # ❗**必须挤在同一次 install() 里**，不能另起一次调用：
+                #   `install()` 把新建的 `HotkeyFilter` 存进**单一引用槽**
+                #   `widget._ralsei_hotkey_filter`，第二次调用会用新过滤器覆盖它，
+                #   而旧过滤器**仍安装在 QApplication 上** ⇒ 被 GC 掉之后
+                #   事件还会往它身上派发（悬空指针）。这是"不许调两次"的 API，
+                #   不是代码风格问题。
+                global_hotkey_mod.HOTKEY_DEFAULT_SOUL: self.toggle_soul,
             })
             self._item_hotkey_done, self._item_hotkey_bad = tuple(done), tuple(bad)
             if bad:
@@ -1270,12 +2163,17 @@ class RalseiPet(QMainWindow):
     def interact_scene_prop(self):
         """与当前场景的可交互物交互（对应原作的 `scr_interact()`）。
 
-        ★ 为什么**不**叫"最近的那个"：本产品没有"宠物站在房间的哪个位置"这个信息
-        （宠物在**屏幕坐标**里跑，而物件坐标是**房间局部坐标**，两者之间还隔着
-        相机与缩放）。假装算一次距离只会得到看着像真的的假结果，
-        所以这里老老实实按**场景登记顺序取第一个**，并在日志里说明本场景一共几个。
-        同一个房间里有两件可交互物时，"选哪件"目前是登记顺序决定的 ——
-        这是**已知限制**，写进报告，不藏。
+        ★ 第55轮改动：**按灵魂的位置选目标**（用户口径「灵魂…相当于这也是一个
+        有互动的实体」）。
+
+        在此之前这里是"老实按场景登记顺序取第一个"，理由是本产品**没有**"宠物站在
+        房间哪个位置"这个信息。★ 那个理由现在**不成立**了 —— 灵魂有屏幕坐标，
+        而"屏幕 → 房间世界坐标"的映射早就存在（`_pet_target_rect` 的逆 =
+        `soul_entity.screen_to_room`），物件坐标也一直在数据里（`objects[].pos`，
+        与 `room_rect` 同一套逻辑坐标，已实证）。
+
+        选不出时**退回"登记顺序第一个"并记日志**（不是静默退回）——
+        宁可"位置算不出时按老规矩来"，也不要"算不出就当没有可交互物"。
 
         范围内没有可交互物 ⇒ 返回 False（**不静默**：日志会说是哪一步没成）。
         """
@@ -1284,31 +2182,54 @@ class RalseiPet(QMainWindow):
             _log.info('交互请求：当前场景 %s 没有可交互物',
                       getattr(self, 'current_scene', None))
             return False
-        target = props[0]
+        target, why = self._soul_pick_prop(props)
+        if target is None:
+            target = props[0]
+            why = '%s ⇒ 退回登记顺序第一个' % why
         ok = bool(target.interact())
-        _log.info('交互 ⇒ %s（本场景共 %d 件可交互物）：%s',
-                  target.describe(), len(props),
+        _log.info('交互 ⇒ %s（本场景共 %d 件可交互物；%s）：%s',
+                  target.describe(), len(props), why,
                   '发生了' if ok else '什么也没发生')
         return ok
 
     # ---------------------------------------------------------------- 键盘
     def keyPressEvent(self, event):                       # noqa: N802 (Qt 命名)
-        """窗口级键盘入口 —— ★ **裸 `S` 开菜单就是从这里进来的**。
+        """窗口级键盘入口 —— ★ **裸 `S` 开菜单、方向键操控灵魂，都从这里进来**。
 
         为什么不是全局热键注册裸 `S`：`RegisterHotKey` 不带修饰键时是**系统级抢占**，
         注册了裸 `S`，用户在任何程序里都打不出那个字母。所以裸 `S` 只在
         宠物窗口有焦点时生效（正好等同"游戏里按 S"的手感），
         而无焦点的场景由 `Ctrl+Alt+S`（见 `global_hotkey.HOTKEY_DEFAULT_MENU`）覆盖。
 
-        ⚠️ 本窗口此前**没有任何键盘入口**，所以这里的行为改动面必须最小：
-        只有"菜单开着"或"按的是 S"两种情况下才 accept，
+        ★ 第55轮追加：**方向键 = 操控灵魂**（用户口径「键盘可操控移动」）。
+          为什么是方向键而不是 WASD：`S` 已经是菜单键，`W/A/D` 将来也可能被占
+          —— "一个键两个意思"是本项目反复踩过的坑；而方向键在本项目里
+          **零占用**（`global_hotkey.vk_for_letter` 只认字母/数字，方向键压根
+          注册不了全局热键，所以不存在冲突）。
+          ⚠️ 方向键仍然**只在本窗口（或灵魂窗口）有焦点时**生效 ——
+          `RegisterHotKey` 不带修饰键 = 系统级抢占，全局"按住方向键移动"
+          需要 low-level keyboard hook，本轮**不做**，如实写进报告。
+
+        ⚠️ 改动面仍守最小：`S` / `E` / 方向键 / 菜单开着，四种情况才 accept，
         其余一律 `event.ignore()` 交回默认处理（等于原行为）。
         """
         try:
             from PyQt5.QtCore import Qt as _Qt
             key = event.key()
             ui = getattr(self, 'item_menu_ui', None)
-            if ui is not None and ui.is_open():
+            menu_open = bool(ui is not None and ui.is_open())
+            # ★ 方向键归灵魂 —— 但**菜单开着时归菜单**（菜单要上下选条目）。
+            #   两者互斥：菜单是"模态浮层"，此刻用户的意图明确是在菜单里。
+            if not menu_open:
+                d = soul_overlay_mod.direction_of_qt_key(key)
+                if d is not None and self._soul_visible():
+                    self._soul_press(d)
+                    # ⚠️ accept **不看** `_soul_press` 的返回值：自动重复的按下
+                    #    返回 False（`state.press` 对同一键幂等），但事件照样要吃掉，
+                    #    否则方向键会漏回主窗口的默认处理。
+                    event.accept()
+                    return
+            if menu_open:
                 name = item_menu_ui_mod.key_name_for_qt(key)
                 if name is not None:
                     self.item_menu_key(name)
@@ -1332,6 +2253,45 @@ class RalseiPet(QMainWindow):
         except Exception:
             _log.exception('keyPressEvent 处理异常（已忽略，不拖垮主窗口）')
         event.ignore()
+
+    def keyReleaseEvent(self, event):                     # noqa: N802 (Qt 命名)
+        """方向键松开 ⇒ 放开灵魂的那个方向。
+
+        ⚠️ 为什么必须实现它（第55轮）：灵魂是"按键即满速、松键即停"
+        —— 照抄原作 `obj_heart` Step 里 `px/py` 每帧从 0 重新赋值，
+        没有任何残速。一旦收不到 release，那个方向就**永不停止**。
+        （第二道防线在 `SoulOverlay.focusOutEvent`：灵魂窗口失焦时放开所有键。）
+        """
+        try:
+            d = soul_overlay_mod.direction_of_qt_key(event.key())
+            if d is not None and self._soul_visible():
+                self._soul_release(d)
+                event.accept()
+                return
+        except Exception:
+            _log.exception('keyReleaseEvent 处理异常（已忽略）')
+        event.ignore()
+
+    def focusOutEvent(self, event):                       # noqa: N802 (Qt 命名)
+        """宠物窗口失焦 ⇒ 放开灵魂按住的键。
+
+        `SoulOverlay` 自己有 `focusOutEvent`，但"按住方向键的同时 Alt-Tab 切走"时
+        按键事件是送给**宠物窗口**的 ⇒ 那道防线盖不到这里。
+        不做这件事的后果很具体：灵魂会一直朝那个方向飞，直到用户回来再点它一次。
+        （与 `SoulOverlay.focusOutEvent` 同一条道理，两处都要有。）
+        """
+        try:
+            soul = getattr(self, 'soul', None)
+            if soul is not None and soul.state.pressed():
+                _log.info('宠物窗口失焦 ⇒ 放开灵魂按住的键 %s',
+                          ','.join(soul.state.pressed()))
+                soul.release_all()
+        except Exception:
+            _log.exception('focusOutEvent 处理异常（已忽略）')
+        try:
+            super(RalseiPet, self).focusOutEvent(event)
+        except Exception as e:
+            _log.debug('main 防御性异常（已忽略）: %s', e)
 
     # 帧动画播放相关代码 - 初始化动画系统
     def init_animation(self):
@@ -2542,6 +3502,13 @@ class RalseiPet(QMainWindow):
         except Exception:
             timer_dt = float(elapsed_time)
 
+        # ---- 灵魂（SOUL，第55轮）：每帧推进 ----
+        # ★ 位置必须在**所有早退分支之前**（睡眠 / 施法 / 躲猫猫 / 拖拽保护 /
+        #   特殊动画都会 return）：灵魂是独立实体，宠物睡着时它照样该能动。
+        # dt 复用上面的 `elapsed_time`（已钳 0.1s，与 `soul_entity.MAX_DT` 同口径，
+        # 双重保险 —— 那边的钳制是给"别处调用本模块"用的）。
+        self._soul_tick(elapsed_time)
+
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:
             if current_time - self._last_env_update > 5.0:
@@ -3110,25 +4077,54 @@ class RalseiPet(QMainWindow):
         return
     
     def start_mouse_drag(self, target_pos):
-        # 开始拖动鼠标
+        """「我来帮你移动」—— ★ 第55轮：**被移动的对象从系统光标换成了灵魂**。
+
+        用户口径（逐字）：「别换鼠标的样子了，改成可移动的那个灵魂图标…
+        原先和你说的**鼠标附身换成就是这个灵魂的功能**」。
+
+        状态机（`is_dragging_mouse` / `drag_start_pos` / `drag_target_pos` /
+        缓动 / `drag_duration`）**原样保留**，只把输出端从
+        `win32api.SetCursorPos`（真搬动用户的鼠标指针）改成**推动那团红色 SOUL**。
+        理由不只是"用户要求"：搬动别人的鼠标指针会打断用户正在做的事，
+        而推动一个宠物自己的小窗口完全无害 —— 同一个"我来帮你"的表达，
+        换个无害的落点就成立了。
+        """
+        if getattr(self, 'soul', None) is None:
+            _log.info('"帮你移动"请求被忽略：灵魂未就绪（SOUL_ENABLED=%s）',
+                      getattr(self, 'SOUL_ENABLED', None))
+            return False
         self.is_dragging_mouse = True
-        self.drag_start_pos = QCursor.pos()
+        # 起点 = 灵魂**当前**位置（原来是 `QCursor.pos()`）。
+        self.drag_start_pos = QPoint(int(self.soul.state.x), int(self.soul.state.y))
         self.drag_target_pos = target_pos
         self.drag_start_time = time.time()
-        
+
         # 显示对话
-        self.dialogue_ui.add_dialogue("ralsei", "我来帮你拖动鼠标吧！", "playful")
+        self.dialogue_ui.add_dialogue("ralsei", "我来帮你把灵魂推过去吧！", "playful")
         self.dialogue_ui.show_dialogue()
-        
+
         # 播放动画
         self.play_animation_once("act")
-        
+
         # 启动拖动定时器：按 ~60FPS 推进，直到 update_mouse_drag 判定时间到后自行停止
         self.mouse_drag_timer.start(16)
-    
+        return True
+
     def update_mouse_drag(self):
-        # 更新鼠标拖动位置
+        """把灵魂缓动推往 `drag_target_pos`（**不再**移动用户的系统光标）。
+
+        ★ 第55轮的改动（用户口径见 `start_mouse_drag`）：
+          原实现 `win32api.SetCursorPos(...)` / `QCursor.setPos(...)` ——
+          真的搬动用户光标。现在这两行**已下线**，同一个缓动只作用于灵魂。
+          区别是可观察的：用户的鼠标指针**一动不动**。
+        """
+        # 更新灵魂的拖动位置
         if not self.is_dragging_mouse:
+            return
+
+        soul = getattr(self, 'soul', None)
+        if soul is None:
+            self.is_dragging_mouse = False
             return
 
         # 防御：stop_mouse_drag 可能在另一处将 pos 清空为 None
@@ -3138,42 +4134,41 @@ class RalseiPet(QMainWindow):
 
         current_time = time.time()
         elapsed = current_time - self.drag_start_time
-        
+
         if elapsed >= self.drag_duration:
             # 拖动结束
             self.stop_mouse_drag()
             return
-        
+
         # 计算拖动进度
         progress = elapsed / self.drag_duration
-        
+
         # 使用缓动函数使拖动更自然
         import math
         eased_progress = 1 - math.pow(1 - progress, 3)  # 缓出效果
-        
+
         # 计算当前位置
         dx = self.drag_target_pos.x() - self.drag_start_pos.x()
         dy = self.drag_target_pos.y() - self.drag_start_pos.y()
-        
+
         current_x = int(self.drag_start_pos.x() + dx * eased_progress)
         current_y = int(self.drag_start_pos.y() + dy * eased_progress)
-        
-        # 移动鼠标
-        # 修复：本函数作用域内从未 import win32api（只有 2868/7597 行各自 import 过），
-        # 这里必然抛 NameError 并被下方 except 静默吞掉 → "帮你拖动鼠标"功能从未真正生效。
-        # 现在补上导入，并用 QCursor 作为 win32 不可用时的兜底。
+
+        # 推动**灵魂**（钳制交给灵魂自己：`clamp_to` 用的是虚拟屏并集，
+        # 与宠物窗口不同 —— 灵魂能横跨到副屏去）。
         try:
-            import win32api
-            win32api.SetCursorPos((current_x, current_y))
+            soul.state.x = float(current_x)
+            soul.state.y = float(current_y)
+            b = soul.screen_bounds()
+            if b:
+                soul.state.clamp_to(b)
+            soul.apply_state_pos()
+            soul.update()
         except Exception as e:
-            _log.debug("win32api 移动光标失败，改用 QCursor: %s", e)
-            try:
-                QCursor.setPos(int(current_x), int(current_y))
-            except Exception as e2:
-                _log.debug("QCursor 移动光标也失败: %s", e2)
-    
+            _log.debug('推动灵魂失败（本帧跳过）: %s', e)
+
     def stop_mouse_drag(self):
-        # 停止拖动鼠标
+        # 停止推动灵魂
         # 修复：改为周期定时器后必须显式停止，否则会以 16ms 空转
         try:
             self.mouse_drag_timer.stop()
@@ -3183,11 +4178,14 @@ class RalseiPet(QMainWindow):
         self.drag_start_pos = None
         self.drag_target_pos = None
         self.drag_start_time = None
-        
+
+        # ★ 推完把位置记进场景位置簿（否则换一圈场景回来它会忘了自己在哪）
+        self._soul_bookmark_save()
+
         # 显示对话
-        self.dialogue_ui.add_dialogue("ralsei", "拖动完成啦！", "happy")
+        self.dialogue_ui.add_dialogue("ralsei", "推到位啦！", "happy")
         self.dialogue_ui.show_dialogue()
-        
+
         # 播放动画
         self.play_animation_once("wave")
     
@@ -7789,7 +8787,9 @@ class RalseiPet(QMainWindow):
         thread.start()
         return thread
 
-    def chat_with_ai(self, text, on_reply, on_delta=None, lean=False):
+    def chat_with_ai(self, text, on_reply, on_delta=None, lean=False,
+                     speaker=None, system_override=None, remember=True,
+                     model=None):
         """把用户输入交给本地 AI（后台线程，不卡 UI），完成后在主线程回调
         on_reply(reply_str 或 None)。
 
@@ -7811,16 +8811,68 @@ class RalseiPet(QMainWindow):
           证据：`code-quality-audit/人味改造-2026-09-18/_evidence/probe_prefix_cache.txt`。
           代价：事件回复不再知道"现在几点/刚才在聊什么"—— 事件是 ≤24 字的触觉反应，
           不需要这些；**对话路径（send_message）不传 lean，行为不变**。
+        - ★ **`speaker`（第55轮）**：这一轮开口的是谁。
+          `None` / `'ralsei'` ⇒ 老路径，**一个字节都不变**（人设、上下文、话题锚、
+          记忆召回、关系、历史、护栏比对集合全部照旧）。
+          传了别的 id ⇒ NPC 路径：system 只由 `npc_system_prompt()` 装配
+          （人设 + 他自己的记忆 + 共有的环境），**且回复只写进他自己的记忆**。
+          ★ 为什么 NPC 路径连"关系档位 / 世界观召回 / 话题锚"都跳过：
+            这些状态全都归属 **Ralsei 本人**（信任度是对主人的、话题锚是这一场对话的）。
+            给 NPC 挂上去，就会听到"苏西"用自己的口吻讲出 Ralsei 和主人的关系 ——
+            那正是用户说的「葫芦娃千里眼顺风耳」。
+        - ★ **`system_override`（第55轮）**：直接指定 system（用于"跟随决策"这种
+          一问一答、不值得跑整套装配的场合）。给了它就**跳过全部装配**。
+        - ★ **`remember`（第55轮）**：NPC 路径下"要不要把这一问一答记进他自己的记忆"。
+          跟随决策是**内部问句**（"跟不跟？"不是台词），它必须显式传 `False`：
+            ① 把"follow"这种单词记成他说过的话，下一次拼 prompt 会显得莫名其妙；
+            ② 更要命的是护栏的"车轱辘话"判定会拿它当历史 —— 同一个决策词被问两次时
+               第二次会被判成"重复自己"直接判退，决策就**静默退回分层策略**了。
+        - ★ **`model`（第55轮）**：**按请求**覆盖 Ollama 模型名。
+          `None` / 空串 ⇒ 不覆盖，用 `config.json` 的 `api.model`（**Ralsei 与 NPC
+          共用同一个**）—— 也就是说 NPC 拿到的本就是 7B（`ralsei:v4` = qwen2.5:7b）。
+          为什么保留这个口子：`assets/npc/_registry.json` 每条 NPC 都有自己的 `model`，
+          不接线的字段就是"登记了没人读"的假账（见 `api_client._chat_payload` 的注释）。
+          当前注册表里该字段**故意全为 `None`**：不额外常驻第二份 7B 权重，
+          真需要单独换模型时填一个 Ollama 里真实存在的句柄即可。
         """
+        # ★ 第55轮：这一轮是不是 NPC 在说话（`''` 与 `'ralsei'` 都算老路径）
+        _npc_id = speaker if (isinstance(speaker, str) and speaker
+                              and speaker != 'ralsei') else None
+        _is_npc = _npc_id is not None
+        _sys_fixed = _is_npc or (system_override is not None)
+        # NPC 回复要在**主线程**里落进他自己的记忆（工作线程绝不碰共享状态）
+        if _is_npc and remember:
+            _npc_reply_cb = on_reply
+
+            def on_reply(_resp, _npc_id=_npc_id, _cb=_npc_reply_cb):  # noqa: F811
+                """★ NPC 的回复先落进**他自己**的记忆，再交给上层显示。
+
+                为什么在这里（而不是工作线程里）：`MiniMemory` 不是线程安全的，
+                而这条回调经 Qt 队列投递、**在主线程**执行；工作线程只负责推理。
+                """
+                try:
+                    if isinstance(_resp, str) and _resp.strip() \
+                            and self.npc_memory is not None:
+                        self.npc_memory.remember(
+                            _npc_id, _resp, who=_npc_id, scene=self._npc_scene_id())
+                        self.npc_memory.save(_npc_id)
+                except Exception as e:
+                    _log.debug('NPC %s 记忆落盘异常（已忽略）: %s', _npc_id, e)
+                if _cb is not None:
+                    _cb(_resp)
+
         # 载体层状态：记下"主人刚开口"的时刻。主线程写、主线程读（本方法在主线程调用），
         # 供 _build_ai_context 派生"被冷落多久"这类语气 —— 模型自己看不到时钟，
         # 也看不到"主人已经很久没理我"这种**跨轮**事实，这类状态只有 App（载体）持有。
         # 刻意放在 api_enabled 判断**之前**：AI 关着的时候也要记，否则一关开关就"失忆"，
         # 再打开会立刻说"主人很久没跟我说话了"（把开关当成冷落）。
-        try:
-            self._last_user_chat_ts = time.time()
-        except Exception as e:
-            _log.debug("main 防御性异常（已忽略）: %s", e)
+        # ★ 第55轮：**只对 Ralsei 记**。它是"主人和 Ralsei 之间"的事实，
+        #   跟 NPC 聊两句不该让 Ralsei 觉得"刚才跟你聊过"（状态层面的串味）。
+        if not _is_npc:
+            try:
+                self._last_user_chat_ts = time.time()
+            except Exception as e:
+                _log.debug("main 防御性异常（已忽略）: %s", e)
         if not self.api_enabled:
             try:
                 on_reply(None)
@@ -7845,11 +8897,24 @@ class RalseiPet(QMainWindow):
         history = []
         # lean（事件台词）**不发历史**：历史每轮都在变，同样让前缀缓存失效
         # （实测 +0.52s），而且触点反应本来就不需要"接着上一句说"。
-        if not lean:
+        # ★ 第55轮：`_sys_fixed`（NPC / 自定义 system）也不发 ——
+        #   NPC 的历史已由 `npc_system_prompt()` 折进他自己的 system，
+        #   而 `dialogue_ui` 的历史是 **Ralsei 的**，取来就是把别人的记忆喂给他。
+        if not lean and not _sys_fixed:
             try:
                 history = self.dialogue_ui.get_ai_history(limit=6) \
                     if getattr(self, 'dialogue_ui', None) else []
             except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("main 防御性异常（已忽略）: %s", e)
+        # NPC 路径的护栏比对集合 = **他自己**说过的话（不是 Ralsei 的历史）。
+        # 在主线程先取快照：`MiniMemory` 非线程安全，工作线程只读这份快照。
+        _npc_recent = []
+        if _is_npc:
+            try:
+                _npc_recent = [it.get('text') for it in
+                               self.npc_memory.history(_npc_id, limit=12)
+                               if isinstance(it, dict) and it.get('who') == _npc_id]
+            except Exception as e:
                 _log.debug("main 防御性异常（已忽略）: %s", e)
         # 角色系统提示词：**单一真源 = assets/ralsei_persona.md**（内含"我是谁 /
         # 我现在在哪 / 我怎么说 / 示范"四节）。
@@ -7857,12 +8922,26 @@ class RalseiPet(QMainWindow):
         # Modelfile 的 SYSTEM（不传 system 时角色设定生效 prompt_eval_count=1237，
         # 传了之后骤降到 41）——也就是说，只把设定写在模型的 Modelfile 里，
         # 在真实应用里**一次都不会生效**。
-        system = self._build_persona_prompt()
+        # ★ 第55轮：`_sys_fixed` 时 system 由别处给定，这里**不覆盖**。
+        if _sys_fixed:
+            if system_override is not None:
+                system = str(system_override)
+            else:
+                system = self.npc_system_prompt(_npc_id)
+                if not system:
+                    # 没登记 / 没装设定 ⇒ **明确沉默**。
+                    # 不许退回 Ralsei 的人设：那会让"苏西"用雷尔赛的口吻说话，
+                    # 而用户看不出这是降级（正是最该防的那种假象）。
+                    _log.info('NPC %s 没有 system（未登记或没装设定）⇒ 这一句不说话', _npc_id)
+                    on_reply(None)
+                    return
+        else:
+            system = self._build_persona_prompt()
         # lean（事件台词）：**只发 persona，一个字节都不变** → 每次事件都命中
         # KV 前缀缓存 → 首字回到 0.6s 量级（实测见 docstring 的 probe 出处）。
         # 注意这里连 `_build_ai_context()` 都跳过：它内部会读天气/情绪/记忆，
         # 开销虽小但**每轮结果不同**，挂了就等于把缓存打掉。
-        _ctx = "" if lean else self._build_ai_context()
+        _ctx = "" if (lean or _sys_fixed) else self._build_ai_context()
         # 环境信息作为独立小节挂在 system 尾部，而不是塞进用户消息
         if _ctx:
             system = system + "\n\n" + _ctx
@@ -7877,7 +8956,7 @@ class RalseiPet(QMainWindow):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
             _focus = ""
-        if _focus and not lean:
+        if _focus and not lean and not _sys_fixed:
             system = system + "\n\n" + _focus
 
         # 记忆（第九轮）：由主人这句话联想"零星的记忆片段"，让 Ralsei 自然地想起来。
@@ -7892,7 +8971,7 @@ class RalseiPet(QMainWindow):
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
             _recall = ""
-        if _recall and not lean:
+        if _recall and not lean and not _sys_fixed:
             system = system + "\n\n" + _recall
 
         # 初始记忆（第二十轮）：世界观**不再常驻 system 前缀**，改成按需召回。
@@ -7908,7 +8987,7 @@ class RalseiPet(QMainWindow):
         # 失败一律静默：召回不到就当这轮没聊到那边（返回空串），绝不让链路掉线。
         try:
             _wv = ""
-            if not lean:
+            if not lean and not _sys_fixed:
                 _wv = getattr(self, '_worldview_recall_text', None)
                 if not callable(_wv):
                     from modules import worldview_recall as _wr
@@ -7918,7 +8997,7 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
             _wv = ""
-        if _wv:
+        if _wv and not _sys_fixed:
             system = system + "\n\n" + _wv
 
         # 关系（第二十轮）：把**当前档位**变成一句话挂进 system。
@@ -7931,7 +9010,7 @@ class RalseiPet(QMainWindow):
         _rel_brief = ""
         try:
             _rel = getattr(self, 'relationship', None)
-            if _rel is not None and not lean:
+            if _rel is not None and not lean and not _sys_fixed:
                 # 先记账再取 brief：这样"这一轮"的影响立刻体现在语气上，
                 # 而不是延迟一轮（用户能感知到的延迟 = "他反应慢半拍"）。
                 # 事件类型由轻量规则判定（modules/relationship.classify），
@@ -7978,7 +9057,7 @@ class RalseiPet(QMainWindow):
         # ★ 这一段只改**排布**，不改任何一段的内容 —— persona、上下文、
         #   焦点、记忆、关系、历史，一个字都没删（符合用户口径「prompt 尽量完整」）。
         _hist_block = ""
-        if history and not lean:
+        if history and not lean and not _sys_fixed:
             _hist_lines = []
             for _hr, _hc in history:
                 _hist_lines.append("[%s] %s" % (
@@ -8000,8 +9079,16 @@ class RalseiPet(QMainWindow):
                     self._api_result.emit(None, on_reply)
                     return
                 opts = self._ai_chat_options()
+                # ★ 第55轮：按请求覆盖模型名（NPC 自己的 `model` 字段真被读到这里）。
+                #   只在**给了非空字符串**时才塞进 opts —— 否则键都不出现，
+                #   `api_client._chat_payload` 走"不覆盖"分支，老路径逐字不变。
+                if isinstance(model, str) and model.strip():
+                    opts['model'] = model
                 # 最近说过的台词（车轱辘话判定的唯一比对集合，见 _is_repeat_of_recent）
-                recent = [c for _r, c in history if _r == 'assistant']
+                # ★ 第55轮：NPC 路径取**他自己**说过的话（`_npc_recent`，主线程取的快照）——
+                #   拿 Ralsei 的历史来判，等于用别人的话去"抓"他的重复。
+                recent = (list(_npc_recent) if _is_npc
+                          else [c for _r, c in history if _r == 'assistant'])
                 # ★ 第三十轮：历史已折进 system 尾部（见上方 _hist_block），
                 # 这里**不再重复发** messages 形式的历史 —— 发两份既浪费 token，
                 # 又会让"历史"重新出现在 system 之后、把缓存尾巴拉长。
@@ -9953,6 +11040,31 @@ class RalseiPet(QMainWindow):
             if getattr(self, '_tray', None) is not None:
                 self._tray.hide()
         except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # 2.53 ★ 第55轮：收起灵魂窗口。
+        # ⚠️ 灵魂是 **parent=None 的独立顶层窗口**，不会随主窗口一起销毁 ——
+        #    不显式收掉的话，宠物退出后桌面上会留一块 48×48 的红方块。
+        #    （这是"独立窗口"的代价，必须在这里还上。）
+        try:
+            soul = getattr(self, 'soul', None)
+            if soul is not None:
+                soul.hide_soul()
+                soul.close()
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # 2.54 ★ 第55轮：把每个 NPC 的独立记忆各写回**他自己的文件**。
+        # ⚠️ 为什么在退出时还要再写一遍（对话后已经写过）：NPC 记忆是"一角色一文件"
+        #    的物理隔离结构，这里做的是**收尾兜底** —— 万一某次落盘被占位/被拒，
+        #    退出时还有一次机会。失败只记日志（绝不拖住退出流程）。
+        try:
+            mem = getattr(self, 'npc_memory', None)
+            if mem is not None:
+                n = mem.save_all()
+                if n:
+                    _log.debug('NPC 独立记忆已落盘 %d 份（%s）', n, mem.describe())
+        except Exception as e:  # 观测代码绝不能影响退出流程
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
         # 2.55 H5 S1：输出"动画名未命中"汇总（纯日志，不改任何状态）

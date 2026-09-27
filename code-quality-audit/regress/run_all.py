@@ -93,6 +93,8 @@ HERMETIC_IDS = frozenset({
     'rooms_round47', 'walk_round47', 'npc_round49', 'bubble_round50',
     'dialog_turn52', 'dialog_clean52', 'dialog_lounge52',
     'sit_round54',
+    # 第55轮：两者都真机 `RalseiPet()`（灵魂窗口 + NPC 服务建在真 App 上）
+    'soul_round55', 'npc_persona55',
 })
 
 
@@ -918,7 +920,9 @@ SUITES = [
         'offscreen': False,
         'desc': '第四十九轮：NPC 分层/跟随/世界门控/光世界球容器不许静默漂移 —— '
                 'A 零依赖契约（AST：顶层白名单 + ★无函数内 import，含 Try 降级写法） + '
-                'B 注册表（33 条·主线15/纯18 / 每条有原作物件名与章节 / 主线全标 needs_setting）+ '
+                'B 注册表（条数只锁下限，随加人设正常增长 / 每条有原作物件名与章节 / '
+                '★★第55轮改判据：needs_setting 与"有没有 persona"**严格互逆**，'
+                '并配真值锚点——仍未拿到设定的正好是 knight·mike·spamton）+ '
                 'C 纯 NPC 内置对话（★每组 4~10 句 / 主线取空表） + '
                 'D 跟随策略（主线=AUTONOMOUS·纯=CONSENT / ★两类都能跟 / 状态机 idle→pending→active / '
                 'denied 不许被重复表态翻盘 / 未知 id 不抛） + '
@@ -1125,6 +1129,37 @@ SUITES = [
                 '坏流夹具真造 `OSError(22)`，断言 stderr 上不再出现 `Logging error` 且失败被计数；'
                 '配 F3/F3b 负控制证明原生实现确实会喷 Traceback；'
                 '另锁"文件 handler 继承 emit 保护 + rollover 保护未被删 + console 接线"）',
+    },
+    # ---------------------------------------------------------- 第55轮
+    {
+        'id': 'soul_round55',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第55轮-灵魂实体与NPC人设',
+                               'verify_soul55.py'),
+        'offscreen': True,
+        'desc': '第五十五轮①：那个可拖拽的"灵魂"实体（原作口径）—— '
+                'S 尺寸/速度/出生点取自原作常量（16px 精灵 ×DISPLAY_SCALE、'
+                '满速按 GMS2FPS 反推、出生点 = 主角 +（10,40））/ '
+                'K 键盘操控（分轴不归一化：斜向 √2；★dt 上限只结算 MAX_DT 那一截，'
+                '配 dt=5s 负控制）/ P 鼠标拖拽 + 松手抛掷 / '
+                'B 自由出入各场景（★两次选**不同**暗之泉 —— 先断言 A ≠ B 才证明不是恒取第一个；'
+                '回到旧场景位置还原）/ D 缓动量与门控 / H 热键三件套 / X 退出收窗。'
+                '★ 真机 `RalseiPet()`，窗口透明非置顶 ⇒ 甩飞/抛物线只能离屏断言',
+    },
+    {
+        'id': 'npc_persona55',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第55轮-灵魂实体与NPC人设',
+                               'check55.py'),
+        'offscreen': True,
+        'desc': '第五十五轮②③④：NPC 人设 13 份 + **一角色一份独立记忆**（★用户口径'
+                '「不要搞混了…葫芦娃千里眼顺风耳」）+ 跟随决策可给 AI（★模型没表态 ⇒ '
+                '降级走分层策略，不是报错）+ 点名解析 `@名字`/`名字：` + ★★门控对照 '
+                '（同一组输入同时喂 world_gate 与 soul_can_enter，断言「NPC 被拒而灵魂放行」'
+                '—— 那条"灵魂恒可入"的判据全靠这里才有鉴别力）+ W 产品接线'
+                '（AST + 真机：main.py 真 import 了、init_systems 真调了、'
+                'NPC 回复真以 who=<他自己> 落进他自己的记忆、system 真用他自己的人设）。'
+                '★ 自带 Hermetic 起点：开跑前清掉隔离区 `npc_memory/*.json`'
+                '（不清就会因"上一次写过的话被读出来 ⇒ 固定台词被判成重复自己'
+                '⇒ 护栏判退 ⇒ 回调 None"而**自强化**地翻红）',
     },
 ]
 

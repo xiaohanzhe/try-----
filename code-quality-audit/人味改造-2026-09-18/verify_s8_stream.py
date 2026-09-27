@@ -259,8 +259,13 @@ CHAT_SRC = func_src(MAIN_TEXT, 'chat_with_ai')
 CHAT_NC = code_no_comment(CHAT_SRC)
 CHAT_CO = code_only_src(CHAT_SRC)
 
-ok('B1 chat_with_ai 签名接受 on_delta（S7 之后末尾多了 lean，见 S7 §11.11）',
-   'defchat_with_ai(self,text,on_reply,on_delta=None,lean=False)' in CHAT_CO,
+ok('B1 chat_with_ai 签名接受 on_delta（S7 之后末尾多了 lean，'
+   '第55轮再加 speaker/system_override/remember —— 判据只锁**前缀**，'
+   '不锁右括号，免得以后每加个形参都要来改这里）',
+   'defchat_with_ai(self,text,on_reply,on_delta=None,lean=False' in CHAT_CO
+   and 'speaker=None' in CHAT_CO
+   and 'system_override=None' in CHAT_CO
+   and 'remember=True' in CHAT_CO,
    CHAT_CO[:0])
 ok('B2 新增跨线程分片信号 _api_delta（object, object）',
    '_api_delta=pyqtSignal(object,object)' in code_only_src(MAIN_TEXT))

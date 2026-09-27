@@ -1,0 +1,5 @@
+原作 SOUL 贴图 spr_heart（16×16）。
+来源：chapter1_windows/data.win，UTMT CLI v0.9.2.0 导出。
+ch1..ch5 的 spr_heart_0/1 的 md5 完全相同（五章无版本分歧）。
+用法（照原作 obj_heart）：常态 image_speed=0 / image_index=0 ⇒ 定格第 0 帧；
+第 1 帧只用于「受击闪烁」（原作 image_speed=0.25）。

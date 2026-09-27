@@ -432,17 +432,30 @@ ok('B21 事件提示词走 build_prompt（不在 main 里手拼文案）',
 _cw = code_no_comment(func_src(MAIN_TEXT, 'chat_with_ai'))
 ok('B22 事件请求必须带 lean=True（不带 = 生产里事件 AI 全灭，静默）',
    'lean=True' in _se_struct)
-ok('B22b chat_with_ai 的 lean 分支必须跳过"每轮都在变"的三处：此刻 / 话题锚 / 记忆召回',
-   '_ctx=""ifleanelseself._build_ai_context()' in _cw
-   and 'if_focusandnotlean:' in _cw
-   and 'if_recallandnotlean:' in _cw,
-   _cw[:0])
-ok('B22c lean 分支还必须跳过对话历史（history 每轮都变，同样打掉前缀缓存）',
-   'ifnotlean:' in _cw, _cw[:0])
+ok('B22b chat_with_ai 的 lean 分支必须跳过"每轮都在变"的三处：此刻 / 话题锚 / 记忆召回'
+   '＋★第55轮：`_sys_fixed`（NPC 路径）同样跳过',
+   # ⚠️ 第55轮把这三处的条件都加了一个 `and not _sys_fixed`：
+   #   NPC 的 system 里塞 Ralsei 的【此刻】/话题锚/记忆召回 = 状态串味 + 打掉缓存。
+   #   原判据写的是 `ifleanelse…`（一个 needle），形参一多就整条失配 ——
+   #   改成**三段条件各自断言**，既是新契约又比原来更细。
+   '_ctx=""if(leanor_sys_fixed)elseself._build_ai_context()' in _cw
+   and 'if_focusandnotleanandnot_sys_fixed:' in _cw
+   and 'if_recallandnotleanandnot_sys_fixed:' in _cw,
+   'ctx=%s focus=%s recall=%s' % (
+       '_ctx=""if(leanor_sys_fixed)' in _cw,
+       'if_focusandnotleanandnot_sys_fixed:' in _cw,
+       'if_recallandnotleanandnot_sys_fixed:' in _cw))
+ok('B22c lean 分支还必须跳过对话历史（history 每轮都变，同样打掉前缀缓存）'
+   '＋★第55轮：`_sys_fixed` 也跳过（NPC 的历史已折进他自己的 system）',
+   # 原文 `if history and not lean:` → 第55轮加上 `and not _sys_fixed`。
+   # ⚠️ 不许退化成"整份源码里含 `notlean`"这种宽判据（那连注释都能满足）。
+   'ifhistoryandnotleanandnot_sys_fixed:' in _cw,
+   'ifhistoryandnotleanandnot_sys_fixed:' in _cw)
 ok('B22d recall_text 在 lean 下**不被调用**（它会跑记忆图检索，比其它几项都贵）',
    'ifnotleanand_msisnotNone' in _cw, _cw[:0])
-ok('B22e lean 是**默认 False**（对话路径不传就保持原行为：带话题锚与记忆召回）',
-   'defchat_with_ai(self,text,on_reply,on_delta=None,lean=False):' in _cw, _cw[:0])
+ok('B22e lean 是**默认 False**（对话路径不传就保持原行为：带话题锚与记忆召回）'
+   '—— 判据只锁到 `lean=False` 为止（第55轮之后还有 speaker/system_override/remember）',
+   'defchat_with_ai(self,text,on_reply,on_delta=None,lean=False' in _cw, _cw[:0])
 _dui_c = code_no_comment(DUI_TEXT)
 # 判据只用"**带右括号的整调用**"这一个 needle：调用参数一旦多出 `lean=True`，
 # 这个串就不再匹配 —— 比另写一条 `'lean=' not in …` 更准。

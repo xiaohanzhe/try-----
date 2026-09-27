@@ -359,15 +359,26 @@ ok('B1 chat_with_ai 里用户消息保持纯原话（user_msg = text）',
    'user_msg=text' in code_only_src(_f_chat))
 ok('B2 chat_with_ai 的 system 来自 _build_persona_prompt()',
    'system=self._build_persona_prompt()' in _CHAT2)
-ok('B3 【此刻】挂 system 尾部（不再是 user 消息前缀）',
+ok('B3 【此刻】挂 system 尾部（不再是 user 消息前缀）'
+   '＋★第55轮：`_sys_fixed`（NPC 路径 / 自定义 system）也跳过它',
    # S7 之后 `_build_ai_context()` 被包进 lean 分支（事件请求不发上下文，
    # 否则 system 每轮都变 → Ollama KV 前缀缓存失效 → 首字 0.63s→1.82s）。
-   # 这里只要求"**非 lean** 时仍然调用它"，尾部拼接的断言不变。
-   'ifleanelseself._build_ai_context()' in _CHAT2
+   # ★ 第55轮起连 `_sys_fixed` 也跳过 —— 它读的是**桌宠本体**的体感
+   #   （累 / 站窗口上 / 被冷落），给 NPC 挂上就是状态串味，
+   #   而且每轮都在变，同样打掉前缀缓存。这两条都要在，缺一即回退。
+   # 这里只要求"**既非 lean 也非 _sys_fixed** 时仍然调用它"，尾部拼接的断言不变。
+   '_ctx=""if(leanor_sys_fixed)elseself._build_ai_context()' in _CHAT2
    and 'system=system+"\\n\\n"+_ctx' in _CHAT2,
    _CHAT2[:0])
-ok('B4 抽取 recent（role==assistant 的历史回复）传给护栏',
-   "recent=[cfor_r,cinhistoryif_r=='assistant']" in _CHAT2)
+ok('B4 抽取 recent（role==assistant 的历史回复）传给护栏'
+   '＋★第55轮：NPC 路径换成**他自己**说过的话（`_npc_recent`）',
+   # ⚠️ 第55轮把这一行改成了三元：`list(_npc_recent) if _is_npc else [...]`。
+   #   为什么必须显式写出来：拿 Ralsei 的历史去判 NPC 的"车轱辘话"，
+   #   等于用别人的话抓他的重复 —— 判据得同时盯住**两个分支都在**。
+   "recent=(list(_npc_recent)if_is_npcelse[cfor_r,cinhistoryif_r=='assistant'])"
+   in _CHAT2,
+   'NPC 分支=%s 老分支=%s' % ('list(_npc_recent)if_is_npc' in _CHAT2,
+                              "[cfor_r,cinhistoryif_r=='assistant']" in _CHAT2))
 # B5 在 S8（流式）那一轮被**加强**过：原来是数 `cli.chat(` 出现 2 次，
 # 但引入流式后两次请求被收进同一个助手 `_ask()`（它负责"能流式就流式"），
 # 计数法失效。改成直接断言"两次请求都存在、且都走同一个助手" ——

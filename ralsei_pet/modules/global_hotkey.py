@@ -55,6 +55,14 @@ HOTKEY_DEFAULT_MENU = 'ctrl+alt+s'
 #: ⇒ 用"与当前场景的可交互物交互"来近似原作的"走到它面前按交互"。
 HOTKEY_DEFAULT_INTERACT = 'ctrl+alt+e'
 
+#: ★ 第55轮：灵魂（SOUL）显示 / 收起的全局热键。
+#: 为什么需要它：灵魂是**桌面上的一个独立窗口**，用户可能在任何一个程序里干活，
+#: 想"把灵魂叫出来/收起来"时不该被迫先点宠物 —— 与 S 键菜单同一条口径。
+#: 为什么是 `ctrl+alt+h` 而不是方向键：`vk_for_letter` 只认字母/数字，
+#: 方向键压根注册不了；而**裸方向键**是系统级抢占（会毁掉所有程序的上下左右），
+#: 与裸 `S` 属于同一类绝不能做的改动（见本模块 docstring）。
+HOTKEY_DEFAULT_SOUL = 'ctrl+alt+h'
+
 #: 修饰键名 → MOD_* 位。**只认这 4 个**（不认识的整条热键拒绝，不猜）。
 _MOD_NAMES = {
     'ctrl': MOD_CONTROL, 'control': MOD_CONTROL,
@@ -189,9 +197,12 @@ def vk_for_letter(letter):
 def parse_hotkey(spec):
     """`'ctrl+alt+s'` → `(规范名, 修饰键掩码, vk)`；**认不出返回 `(None, 0, None)`**。
 
-    规范名的写法固定为「修饰键按 ctrl/alt/shift/win 顺序 + 主键小写」，
-    例如 `'alt+ctrl+S'` 与 `'ctrl+alt+s'` 都会规范成 `'ctrl+alt+s'` ——
+    规范名的写法固定为「修饰键按 ctrl/alt/shift/win 顺序 + 主键**大写**」，
+    例如 `'alt+ctrl+S'` 与 `'ctrl+alt+s'` 都会规范成 `'ctrl+alt+S'` ——
     否则同一个热键用不同写法注册两次，去重会失效（`_by_key` 按名字查）。
+    ⚠️ 第55轮更正：本文档原写"主键小写"，与下面 `main.upper()` 的实现**不符**。
+    以实现为准（大写）—— 回归锁 `verify_items48` 断言的也是大写形状
+    （`name.endswith('S')` / `name.endswith('E')`）。
 
     **不猜**：未识别的修饰键名、多主键、空主键一律整条拒绝（返回 None 三元组），
     由调用方如实报"这条没装上"。

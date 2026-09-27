@@ -113,8 +113,23 @@ for _nid in ('toriel', 'asgore', 'lancer', 'tenna', 'ralsei'):
     _n = REG.get(_nid)
     check('B6', _n is not None and _n.tier == NS.NpcTier.MAIN,
           '%s 在主线层（实得 %s）' % (_nid, _n.tier if _n else 'MISSING'))
-check('B7', all(n.needs_setting for n in REG.main_npcs()),
-      '主线 NPC 全部标 needs_setting=True（等用户给设定）')
+# ★★ 第55轮改判据（原判据是「主线 NPC **全部**标 needs_setting=True」）：
+#   用户在这一轮把 13 份设定交上来并已装进注册表，于是"主线全都在等设定"这句
+#   **不再成立** —— 这不是回退，是契约本身变了。
+#   ⚠️ 但不许简单放宽成"随便"：改成更贴意图的**不变量** ——
+#   「标着 needs_setting」当且仅当「确实没装 persona」（两者互逆）。
+#   脱钩就是脏数据：标着等设定会让已装好的角色被当成未装（拒绝开口），
+#   反之会让人以为没设定的角色能开口（借别人的人设说话）。
+check('B7', all(n.needs_setting == (not n.persona) for n in REG.main_npcs()),
+      '主线 %d 条：needs_setting 与"有没有 persona"严格互逆（脱钩 = %r）'
+      % (len(REG.main_npcs()),
+         sorted(n.id for n in REG.main_npcs() if n.needs_setting == bool(n.persona))))
+# 配一条**真值锚点**：光有互逆还不够（全 True + 全无 persona 也能满足）。
+# 用户原话「其余我没提到的人物就先不做」⇒ 仍等的正好是这三位。
+check('B7b', sorted(n.id for n in REG.main_npcs() if n.needs_setting)
+      == ['knight', 'mike', 'spamton'],
+      '仍未拿到设定 = %r（第55轮：13 份已装，剩这三人等用户给）'
+      % sorted(n.id for n in REG.main_npcs() if n.needs_setting))
 
 # 注册表与磁盘 JSON 一致（不靠内存自证）
 _raw = json.loads(rd(os.path.join(NPCJSON, '_registry.json')))
