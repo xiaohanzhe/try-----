@@ -16,7 +16,10 @@
 ----
   T1  速查本 `js_len <= 10000`（★真判据 = JS 字符数 `len(t.strip().encode('utf-16-le'))//2`，
       **不是**字节数/行数 —— 那两种是"假安全"，见 §41.1）
-  T2  差集：`git show HEAD:.workbuddy/memory/MEMORY.md`（**压缩前**）有、**现在没有**的令牌
+  T2  差集：**压缩前**的速查本（仓库内冻结副本 `_evidence/MEMORY_pre57_baseline.md`，
+      ★不是 `git show HEAD:` —— HEAD 会漂移成压缩后版本，差集就恒空了）
+      有、**现在没有**的令牌
+  T2b ★ 基线有效性自检（基线 == 当前文件 ⇒ 判据退化成恒真，必须报红）
   T3  每个被删令牌必须能在详版 `in` 到（或在**显式白名单**里、且白名单必须写理由）
   T4  正控制：合成的"必然缺失"令牌必须被判为缺失（证明判据有鉴别力，不是恒真）
   T5  负控制：两边都在的令牌**不许**出现在"被删"列表里（证明差集方向没写反）
@@ -42,7 +45,16 @@ ROOT = os.path.abspath(os.path.join(RDIR, '..', '..'))
 QUICK_REL = '.workbuddy/memory/MEMORY.md'
 QUICK = os.path.join(ROOT, '.workbuddy', 'memory', 'MEMORY.md')
 DETAIL = os.path.join(ROOT, '.workbuddy', 'memory', '参考-契约与历轮（详版）.md')
-OUT = os.path.join(RDIR, '_evidence', 'token_verify57_result.txt')
+EVID = os.path.join(RDIR, '_evidence')
+OUT = os.path.join(EVID, 'token_verify57_result.txt')
+
+# ★★ 基线必须**冻结进仓库**（不要用 `git show HEAD:`）。
+#   第57轮实测踩到：第一次运行报"被删 30"；把那批改动**提交之后**再跑就报"被删 0" ——
+#   因为 `HEAD` 已经变成**压缩后**的版本了 ⇒ 差集恒空 ⇒ 判据退化成**恒真**
+#   （看着全绿、其实什么都没验；与本项目"恒真判据比不写还危险"同型）。
+#   ⇒ 压缩前的速查本是一次性事实，蒸馏成仓库内文件；rev 只作回退用。
+BASELINE_FILE = os.path.join(EVID, 'MEMORY_pre57_baseline.md')
+BASELINE_REV = '666230c'          # 第56轮收口 = 压缩前
 
 RE_A = re.compile(r'§\d+(?:\.\d+)*|[A-Za-z_][A-Za-z0-9_]{2,}|\d+(?:\.\d+)?%?')
 RE_CJK = re.compile(r'[\u4e00-\u9fff]{4,}')
@@ -95,12 +107,15 @@ def tokens(text):
 
 
 def head_quick():
-    """压缩前的速查本（HEAD 里的版本；本轮压缩尚未提交）。"""
-    r = subprocess.run(['git', 'show', 'HEAD:' + QUICK_REL], cwd=ROOT,
-                       capture_output=True, text=True,
+    """**压缩前**的速查本：优先用仓库内冻结副本，回退到固定 rev（★不是 `HEAD`）。"""
+    if os.path.isfile(BASELINE_FILE):
+        with open(BASELINE_FILE, 'rb') as fh:
+            return fh.read().decode('utf-8')
+    r = subprocess.run(['git', 'show', '%s:%s' % (BASELINE_REV, QUICK_REL)],
+                       cwd=ROOT, capture_output=True, text=True,
                        encoding='utf-8', errors='replace')
     if r.returncode != 0:
-        raise RuntimeError('git show 失败：%s' % (r.stderr or r.stdout))
+        raise RuntimeError('基线取不到：%s' % (r.stderr or r.stdout))
     return r.stdout
 
 
@@ -117,12 +132,17 @@ print('=' * 78)
 print('【T2】差集：压缩前 vs 现在')
 print('=' * 78)
 _old = head_quick()
-assert _old and len(_old) > 1000, 'HEAD 版速查本取不到'
+assert _old and len(_old) > 1000, '压缩前速查本取不到'
 _t_old, _t_new = tokens(_old), tokens(_q)
 _deleted = sorted(_t_old - _t_new)
 print('  · 压缩前 js_len = %d ｜ 现在 js_len = %d' % (js_len(_old), _j))
 print('  · 令牌数：压缩前 %d ／ 现在 %d ／ **被删 %d**'
       % (len(_t_old), len(_t_new), len(_deleted)))
+# ★ 鉴别力自检：基线一旦漂移成"当前文件"，差集恒空、判据退化成恒真。
+check('T2b ★ 基线有效（压缩前副本 ≠ 当前速查本）',
+      _old.strip() != _q.strip(),
+      '基线来源=%s' % ('冻结副本' if os.path.isfile(BASELINE_FILE)
+                      else 'rev ' + BASELINE_REV))
 
 print()
 print('=' * 78)
