@@ -1,0 +1,544 @@
+{
+ "suite_pass_counts": {
+  "anim_round44": 11,
+  "bg_round39": 30,
+  "box_round44": 49,
+  "bubble_round50": 76,
+  "camera_round44": 56,
+  "canvas_round44": 57,
+  "companion_round46": 216,
+  "dialog_clean52": 25,
+  "dialog_lounge52": 82,
+  "dialog_turn52": 25,
+  "items_round48": 53,
+  "model_conc57": 27,
+  "npc_persona55": 151,
+  "npc_place56": 137,
+  "npc_round49": 83,
+  "objects_round44": 14,
+  "pathfind_round45": 35,
+  "persona_chat": 156,
+  "render_round44": 94,
+  "rooms_round47": 22,
+  "round10_graph": 98,
+  "round11_input": 64,
+  "round12_store": 58,
+  "round13_build": 72,
+  "round14_move": 41,
+  "round15_cleanup": 30,
+  "round17_build_fall": 18,
+  "round18_climb": 53,
+  "round34_floor_manager": 15,
+  "round34_movement": 36,
+  "round34_store_config": 17,
+  "round34b_move_beat": 13,
+  "round34c_privacy_wire": 10,
+  "round5_smoke": 59,
+  "round5_verify": 16,
+  "round6_verify": 39,
+  "round7_launch": 5,
+  "round8_anim": 28,
+  "round8_dialogue": 20,
+  "round8_fling": 31,
+  "round8_floor": 17,
+  "round9_focus": 54,
+  "round9_memory": 51,
+  "routes_order44": 17,
+  "s1_anim_miss": 17,
+  "s2_anim_json": 40,
+  "s3_alias_legacy": 19,
+  "s7_event_speech": 138,
+  "s8_stream": 69,
+  "scene_p0": 90,
+  "scene_route_original": 43,
+  "scene_routing": 114,
+  "sit_round54": 53,
+  "soul_round55": 44,
+  "walk_round47": 37,
+  "warm58": 55
+ },
+ "zero_pass": [],
+ "n_suites": 56,
+ "n_scanned": 56,
+ "n_sites": 2769,
+ "hollow": [],
+ "guarded": [
+  {
+   "line": 161,
+   "fn": "ok",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "try/except 兜底（异常分支会报 False）",
+   "verdict": "guarded_true",
+   "code": "ok('A17 坏快照不致崩且仍可用', True, None)",
+   "suite": "round9_focus",
+   "path": "code-quality-audit/第九轮/verify_round9_focus.py"
+  },
+  {
+   "line": 224,
+   "fn": "check",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "前置守卫兜底（上方 30 行内同名助手报过 False）",
+   "verdict": "guarded_true",
+   "code": "check('前置：模块与改前证据都在位', True)",
+   "suite": "walk_round47",
+   "path": "code-quality-audit/第47轮-房间全量与寻路人味化/verify_walk47.py"
+  },
+  {
+   "line": 826,
+   "fn": "check",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "try/except 兜底（异常分支会报 False）",
+   "verdict": "guarded_true",
+   "code": "check('W35 cleanup_on_exit 不抛（NPC 记忆收尾落盘）', True)",
+   "suite": "npc_persona55",
+   "path": "code-quality-audit/第55轮-灵魂实体与NPC人设/check55.py"
+  },
+  {
+   "line": 712,
+   "fn": "check",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "try/except 兜底（异常分支会报 False）",
+   "verdict": "guarded_true",
+   "code": "check('T28 cleanup_on_exit 不抛（站位新代码没有留副作用）', True)",
+   "suite": "npc_place56",
+   "path": "code-quality-audit/第56轮-NPC站位与游荡/check56.py"
+  },
+  {
+   "line": 132,
+   "fn": "check",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "try/except 兜底（异常分支会报 False）",
+   "verdict": "guarded_true",
+   "code": "check('A0 ralsei_pet/config.json 可解析', True)",
+   "suite": "warm58",
+   "path": "code-quality-audit/第58轮-模型常驻与预热/check58.py"
+  },
+  {
+   "line": 266,
+   "fn": "check",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "try/except 兜底（异常分支会报 False）",
+   "verdict": "guarded_true",
+   "code": "check('C0 main.py / api_client.py 可解析', True)",
+   "suite": "warm58",
+   "path": "code-quality-audit/第58轮-模型常驻与预热/check58.py"
+  },
+  {
+   "line": 399,
+   "fn": "check",
+   "cond": "True",
+   "ci": 1,
+   "kind": "const_true",
+   "why": "True",
+   "exempt": "try/except 兜底（异常分支会报 False）",
+   "verdict": "guarded_true",
+   "code": "check('D0 能导入 WarmKeeper', True)",
+   "suite": "warm58",
+   "path": "code-quality-audit/第58轮-模型常驻与预热/check58.py"
+  }
+ ],
+ "signatures": {
+  "round5_smoke": {},
+  "round5_verify": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "round6_verify": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "round7_launch": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "s1_anim_miss": {
+   "check": [
+    "tid",
+    "title",
+    "cond",
+    "detail"
+   ]
+  },
+  "s2_anim_json": {
+   "check": [
+    "tid",
+    "title",
+    "cond",
+    "detail"
+   ]
+  },
+  "s3_alias_legacy": {
+   "check": [
+    "tid",
+    "title",
+    "cond",
+    "detail"
+   ]
+  },
+  "round8_dialogue": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "round8_floor": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "round8_fling": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "round8_anim": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "round9_focus": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round9_memory": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round10_graph": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round11_input": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round12_store": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round13_build": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round14_move": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round15_cleanup": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round17_build_fall": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round18_climb": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "persona_chat": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "s8_stream": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "s7_event_speech": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "scene_p0": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "scene_routing": {
+   "ok": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "scene_route_original": {
+   "check": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "round34_movement": {
+   "check": [
+    "cond",
+    "msg"
+   ]
+  },
+  "round34_floor_manager": {
+   "check": [
+    "cond",
+    "msg"
+   ]
+  },
+  "round34_store_config": {
+   "check": [
+    "cond",
+    "msg"
+   ]
+  },
+  "round34b_move_beat": {
+   "check": [
+    "cond",
+    "msg"
+   ]
+  },
+  "round34c_privacy_wire": {
+   "check": [
+    "cid",
+    "cond",
+    "msg"
+   ]
+  },
+  "bg_round39": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "box_round44": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "camera_round44": {
+   "check": [
+    "name",
+    "cond",
+    "detail"
+   ]
+  },
+  "render_round44": {
+   "ok": [
+    "cond",
+    "msg"
+   ],
+   "main": []
+  },
+  "canvas_round44": {
+   "ok": [
+    "cond",
+    "msg"
+   ],
+   "main": []
+  },
+  "routes_order44": {
+   "ok": [
+    "cond",
+    "msg"
+   ]
+  },
+  "objects_round44": {
+   "ok": [
+    "cond",
+    "msg"
+   ]
+  },
+  "anim_round44": {
+   "check": [
+    "cid",
+    "ok",
+    "msg"
+   ]
+  },
+  "pathfind_round45": {
+   "check": [
+    "cid",
+    "ok",
+    "msg"
+   ]
+  },
+  "companion_round46": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "rooms_round47": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "walk_round47": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "items_round48": {
+   "check": [
+    "cid",
+    "ok",
+    "msg"
+   ]
+  },
+  "npc_round49": {
+   "check": [
+    "cid",
+    "ok",
+    "msg"
+   ]
+  },
+  "bubble_round50": {
+   "check": [
+    "cid",
+    "ok",
+    "msg"
+   ]
+  },
+  "dialog_turn52": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "dialog_clean52": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "dialog_lounge52": {
+   "check": [
+    "name",
+    "ok",
+    "detail"
+   ]
+  },
+  "sit_round54": {
+   "check": [
+    "tid",
+    "title",
+    "cond",
+    "detail"
+   ]
+  },
+  "soul_round55": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "npc_persona55": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "npc_place56": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "model_conc57": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  },
+  "warm58": {
+   "check": [
+    "name",
+    "cond",
+    "extra"
+   ]
+  }
+ }
+}

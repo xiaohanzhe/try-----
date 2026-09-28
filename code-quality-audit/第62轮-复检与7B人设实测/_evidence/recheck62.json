@@ -1,0 +1,101 @@
+{
+ "results": [
+  {
+   "name": "R1 本轮 .py 全部可 ast.parse（检查 10 个）",
+   "ok": true,
+   "extra": "[]"
+  },
+  {
+   "name": "R1b 负控制：故意坏语法必须被判不可解析",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R2a 索引仍是 13 条",
+   "ok": true,
+   "extra": "实际 13"
+  },
+  {
+   "name": "R2b 13 份人设末行都是 SPEAK_RULES 收束句（结构未被删坏）",
+   "ok": true,
+   "extra": "未收束: []"
+  },
+  {
+   "name": "R2b2 负控制：把末行换成别的文本必须被判未收束",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R2c 索引带 extraction_fix 记录（可追溯本轮改了什么）",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R3a 13 份人设无 BOM / 无 U+FFFD",
+   "ok": true,
+   "extra": "[]"
+  },
+  {
+   "name": "R3b 证据区无 BOM / 无 U+FFFD",
+   "ok": true,
+   "extra": "[]"
+  },
+  {
+   "name": "R4 本轮 10 个工具无\"非守卫型\"的 check(名字, True)",
+   "ok": true,
+   "extra": "[]"
+  },
+  {
+   "name": "R4b 守卫型豁免清单",
+   "ok": true,
+   "info": true,
+   "extra": "['deps62.py:145']"
+  },
+  {
+   "name": "R4b2 ★ 独立复核：豁免项确实位于 `else:` 之下（1 项）",
+   "ok": true,
+   "extra": "与 AST 不符: []"
+  },
+  {
+   "name": "R4c 正控制：裸 check(..., True) 必须被抓到",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R4d 正控制：守卫型 check(..., True) 必须落进豁免而不是裸红",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R4e 正/负控制：文本 oracle 对 `else:` 之下返回 True、对裸行返回 False",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R5a 索引 sha256/bytes/chars 与磁盘逐条一致（保留 EOL 读）",
+   "ok": true,
+   "extra": "不一致: []"
+  },
+  {
+   "name": "R5b 逐令牌回验：外来开场白行已从全部 13 份消失",
+   "ok": true,
+   "extra": "仍有: []"
+  },
+  {
+   "name": "R6 工作区改动 ⊆ 本轮预期（15 项）",
+   "ok": true,
+   "extra": "意外项: []"
+  },
+  {
+   "name": "R6b 负控制：仓库外路径必须被判为意外项",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "R6c 负控制：路径解析不得残留转义（无 \\\\3xx 八进制）",
+   "ok": true,
+   "extra": ""
+  }
+ ],
+ "n_fail": 0
+}

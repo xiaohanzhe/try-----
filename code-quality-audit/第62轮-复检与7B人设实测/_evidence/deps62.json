@@ -1,0 +1,182 @@
+{
+ "n_files": 93,
+ "n_modules": 93,
+ "lowlevel_min": 5,
+ "lowlevel": [
+  {
+   "module": "logger_utils",
+   "in_degree": 30
+  },
+  {
+   "module": "data_store",
+   "in_degree": 7
+  }
+ ],
+ "in_degree_top30": [
+  {
+   "module": "logger_utils",
+   "in_degree": 30,
+   "qt": false
+  },
+  {
+   "module": "data_store",
+   "in_degree": 7,
+   "qt": false
+  },
+  {
+   "module": "companion",
+   "in_degree": 3,
+   "qt": false
+  },
+  {
+   "module": "conversation_focus",
+   "in_degree": 3,
+   "qt": false
+  },
+  {
+   "module": "scene_system",
+   "in_degree": 3,
+   "qt": false
+  },
+  {
+   "module": "lazy_log",
+   "in_degree": 2,
+   "qt": false
+  },
+  {
+   "module": "memory_store",
+   "in_degree": 2,
+   "qt": false
+  },
+  {
+   "module": "dr_textbox",
+   "in_degree": 2,
+   "qt": true
+  },
+  {
+   "module": "companion_dialog",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "desktop_interaction",
+   "in_degree": 1,
+   "qt": true
+  },
+  {
+   "module": "item_system",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "dialogue_ui",
+   "in_degree": 1,
+   "qt": true
+  },
+  {
+   "module": "memory_graph",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "scene_render",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "scene_pathfind",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "scene_camera",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "scene_routing",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "soul_entity",
+   "in_degree": 1,
+   "qt": false
+  },
+  {
+   "module": "text_segmenter",
+   "in_degree": 1,
+   "qt": false
+  }
+ ],
+ "qt_modules": [
+  "command_manager",
+  "desktop_interaction",
+  "diag_logic",
+  "diag_spell",
+  "diag_state",
+  "dialogue_ui",
+  "dr_textbox",
+  "floor_manager",
+  "global_hotkey",
+  "hide_controller",
+  "item_menu_ui",
+  "main",
+  "main_simple",
+  "monitor_animation",
+  "monitor_coordinates",
+  "pet_ai",
+  "pet_interaction",
+  "scene_canvas",
+  "soul_overlay",
+  "sound_manager",
+  "spell_controller",
+  "sprite_loader",
+  "test_basic",
+  "test_interaction",
+  "test_interaction_detailed",
+  "test_jump_simple",
+  "test_pyqt",
+  "test_pyqt_import",
+  "test_pyqt_simple",
+  "test_ralsei_features",
+  "test_sprite_loader",
+  "test_with_log",
+  "video_controller"
+ ],
+ "cycles": [],
+ "broken_imports": {},
+ "syntax_errors": {},
+ "checks": [
+  {
+   "name": "D1 依赖图建起来了（93 个模块 / 63 条内部边）",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "D1b 全部文件可 ast.parse",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "name": "D2 底层集合非空且都**不** import PyQt5",
+   "ok": true,
+   "extra": "2 个: logger_utils, data_store"
+  },
+  {
+   "name": "D3 ★ 反向控制：`main.py` 入度应很低（它是顶层装配点，不是底层）",
+   "ok": true,
+   "extra": "main 入度 = 0"
+  },
+  {
+   "name": "D4 无两两循环依赖（A→B 且 B→A）",
+   "ok": true,
+   "extra": "0 对: []"
+  },
+  {
+   "name": "D5 产品代码里无\"import 了仓库里不存在的模块\"（断链/拼错）",
+   "ok": true,
+   "extra": "0 个文件: {}"
+  }
+ ]
+}

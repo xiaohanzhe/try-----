@@ -1,0 +1,1657 @@
+{
+ "n_suites": 56,
+ "missing": [],
+ "selftest": [
+  {
+   "name": "E3 负控制：无易变调用 ⇒ 不算 RISK",
+   "ok": true
+  },
+  {
+   "name": "E4 正控制：可变量被格式化进断言消息 ⇒ 必须 RISK-HIGH",
+   "ok": true
+  },
+  {
+   "name": "E5 正控制：只有易变调用、没进消息 ⇒ RISK-MID",
+   "ok": true
+  },
+  {
+   "name": "E6 ★ 负控制：注释里的 time.time() 不得计为易变调用",
+   "ok": true
+  },
+  {
+   "name": "E7 ★ 负控制：三元形态的助手打印行不得计入 fmt",
+   "ok": true
+  },
+  {
+   "name": "E8 ★ 负控制：print('') 不得因邻行 %s 被计入（实际 fmt 行=[3]）",
+   "ok": true
+  }
+ ],
+ "e2_known_sample": true,
+ "rows": [
+  {
+   "id": "dialog_lounge52",
+   "script": "code-quality-audit\\第52轮-对话与人味收口\\_tools\\check52c.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 3,
+   "n_fmt": 21,
+   "volatile": [
+    {
+     "line": 392,
+     "label": "time.time(",
+     "code": "h.last_interaction_time = time.time() - interaction_age"
+    },
+    {
+     "line": 413,
+     "label": "time.time(",
+     "code": "NOW = time.time()"
+    },
+    {
+     "line": 441,
+     "label": "time.time(",
+     "code": "h.last_interaction_time = time.time()          # 用户来互动了"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 247,
+     "code": "check(\"A2b ★★ 该表达式含 `_lounge_since`（否则 600s 判据在真机上恒假）\",",
+     "win": "check(\"A2b ★★ 该表达式含 `_lounge_since`（否则 600s 判据在真机上恒假）\",\n      bool(_EXPR) and '_lounge_since' in _EXPR,\n      \"expr=%s\" % ((_EXPR or '').replace('\\n', ' ')[:110"
+    },
+    {
+     "line": 258,
+     "code": "check(\"A3 update_movement 里真的调用了 `_idle_lounge_tick`\",",
+     "win": "check(\"A3 update_movement 里真的调用了 `_idle_lounge_tick`\",\n      '_idle_lounge_tick' in _um_calls, \"调用表尾=%s\" % (_um_calls[-8:],))"
+    },
+    {
+     "line": 260,
+     "code": "check(\"A3b `_bedtime_tick` 也在 update_movement 里被调用\",",
+     "win": "check(\"A3b `_bedtime_tick` 也在 update_movement 里被调用\",\n      '_bedtime_tick' in _um_calls, \"调用表尾=%s\" % (_um_calls[-8:],))"
+    }
+   ]
+  },
+  {
+   "id": "npc_persona55",
+   "script": "code-quality-audit\\第55轮-灵魂实体与NPC人设\\check55.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 2,
+   "n_fmt": 22,
+   "volatile": [
+    {
+     "line": 639,
+     "label": "time.time(",
+     "code": "t0 = _time.time()"
+    },
+    {
+     "line": 640,
+     "label": "time.time(",
+     "code": "while _time.time() - t0 < timeout:"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 55,
+     "code": "print('[note] 清理隔离区 NPC 记忆失败（已忽略）: %s' % _e)",
+     "win": "print('[note] 清理隔离区 NPC 记忆失败（已忽略）: %s' % _e)"
+    },
+    {
+     "line": 133,
+     "code": "check('A1 %s.py 模块级 import 只在白名单内' % m, not bad, str(bad))",
+     "win": "check('A1 %s.py 模块级 import 只在白名单内' % m, not bad, str(bad))"
+    },
+    {
+     "line": 134,
+     "code": "check('A2 %s.py 函数体内零 import' % m, not inner, str(inner))",
+     "win": "check('A2 %s.py 函数体内零 import' % m, not inner, str(inner))"
+    }
+   ]
+  },
+  {
+   "id": "persona_chat",
+   "script": "code-quality-audit\\人味改造-2026-09-18\\verify_persona_chat.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 11,
+   "n_fmt": 37,
+   "volatile": [
+    {
+     "line": 370,
+     "label": "Ralsei环境块",
+     "code": "'_ctx=\"\"if(leanor_sys_fixed)elseself._build_ai_context()' in _CHAT2"
+    },
+    {
+     "line": 736,
+     "label": "time.time(",
+     "code": "'_last_user_chat_ts=time.time()' in _F_CHAT_CODE"
+    },
+    {
+     "line": 737,
+     "label": "time.time(",
+     "code": "and _F_CHAT_CODE.index('_last_user_chat_ts=time.time()')"
+    },
+    {
+     "line": 756,
+     "label": "天气取值",
+     "code": "\"\"\"**故意不挂** weather_system / emotion_system / memory_system ——"
+    },
+    {
+     "line": 765,
+     "label": "time.time(",
+     "code": "s._last_user_chat_ts = time.time() - idle"
+    },
+    {
+     "line": 769,
+     "label": "Ralsei环境块",
+     "code": "_c1 = R._build_ai_context(make_ctx_stub(energy=10, hunger=10))"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 82,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 159,
+     "code": "ok('A1 persona 文件存在且非空', os.path.exists(PERSONA_MD) and os.path.getsize(PERSONA_MD) > 800,",
+     "win": "ok('A1 persona 文件存在且非空', os.path.exists(PERSONA_MD) and os.path.getsize(PERSONA_MD) > 800,\n   'size=%s' % (os.path.getsize(PERSONA_MD) if os.path.exists(PERSONA"
+    },
+    {
+     "line": 166,
+     "code": "ok('%s（%s）' % (label, tag), tag in PERSONA)",
+     "win": "ok('%s（%s）' % (label, tag), tag in PERSONA)"
+    }
+   ]
+  },
+  {
+   "id": "round10_graph",
+   "script": "code-quality-audit\\第十轮\\verify_round10_graph.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 3,
+   "n_fmt": 12,
+   "volatile": [
+    {
+     "line": 346,
+     "label": "time.time(",
+     "code": "_old = time.time() - 100 * 86400.0"
+    },
+    {
+     "line": 350,
+     "label": "time.time(",
+     "code": "_cs = _cg.consolidate(now=time.time(),"
+    },
+    {
+     "line": 511,
+     "label": "time.time(",
+     "code": "'fragments': [{'id': 1, 't': time.time(), 'day': '2026-09-15',"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 149,
+     "code": "ok('G5 每点邻居上限生效', len(g3.edges['hub']) <= 3, len(g3.edges.get('hub', {})))",
+     "win": "ok('G5 每点邻居上限生效', len(g3.edges['hub']) <= 3, len(g3.edges.get('hub', {})))"
+    },
+    {
+     "line": 151,
+     "code": "ok('G5b cap_keys(limit) 公开可用并生效',",
+     "win": "ok('G5b cap_keys(limit) 公开可用并生效',\n   MG.MemoryGraph.cap_keys(g3, 2) <= 2 and len(g3.edges) <= 2, len(g3.edges))"
+    },
+    {
+     "line": 204,
+     "code": "ok('G8d 有界子图：节点数被 max_nodes 卡住', len(_n2) <= 2, _n2)",
+     "win": "ok('G8d 有界子图：节点数被 max_nodes 卡住', len(_n2) <= 2, _n2)"
+    }
+   ]
+  },
+  {
+   "id": "round11_input",
+   "script": "code-quality-audit\\第十一轮\\verify_round11_input.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 1,
+   "n_fmt": 9,
+   "volatile": [
+    {
+     "line": 354,
+     "label": "time.time(",
+     "code": "_now = time.time()"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 130,
+     "code": "ok('%s 碎片灭·真词留：%s' % (tag, text),",
+     "win": "ok('%s 碎片灭·真词留：%s' % (tag, text),\n       not hit_bad and not miss_good, (hit_bad, miss_good, kws))"
+    },
+    {
+     "line": 167,
+     "code": "ok('A20 三层择优：严格档全空 → 回落到宽松档（不返回空）',",
+     "win": "ok('A20 三层择优：严格档全空 → 回落到宽松档（不返回空）',\n   len(_emp_kw) > 0 and _emp_kw == CF._extract('晚上想吃点什么好呢', strict=False),\n   _emp_kw)"
+    },
+    {
+     "line": 204,
+     "code": "ok('A28 _STOP_MULTI 只含多字停用词（单字停用词不进来）',",
+     "win": "ok('A28 _STOP_MULTI 只含多字停用词（单字停用词不进来）',\n   all(len(w) >= 2 for w in CF._STOP_MULTI) and '想' not in CF._STOP_MULTI\n   and '今天' in CF._STOP_MULTI)"
+    }
+   ]
+  },
+  {
+   "id": "round12_store",
+   "script": "code-quality-audit\\第十二轮\\verify_round12_store.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 2,
+   "n_fmt": 8,
+   "volatile": [
+    {
+     "line": 264,
+     "label": "time.time(",
+     "code": "os.utime(os.path.join(_vlt, 'config.json'), (time.time() - 3600, time.time() - 3600))"
+    },
+    {
+     "line": 278,
+     "label": "time.time(",
+     "code": "_old_t = time.time() - 7200"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 70,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 144,
+     "code": "ok('A7 长句词条数显著下降（%d → %d）' % (len(b), len(a)), len(a) < len(b), (b, a))",
+     "win": "ok('A7 长句词条数显著下降（%d → %d）' % (len(b), len(a)), len(a) < len(b), (b, a))"
+    },
+    {
+     "line": 148,
+     "code": "ok('A8 六句词条总数下降（%d → %d）' % (n_b, n_a), n_a < n_b, (n_b, n_a))",
+     "win": "ok('A8 六句词条总数下降（%d → %d）' % (n_b, n_a), n_a < n_b, (n_b, n_a))"
+    }
+   ]
+  },
+  {
+   "id": "round17_build_fall",
+   "script": "code-quality-audit\\第十七轮\\verify_round17_build_fall.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 1,
+   "n_fmt": 6,
+   "volatile": [
+    {
+     "line": 378,
+     "label": "time.time(",
+     "code": "RalseiPet.handle_fall(pet, dt, time.time())"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 81,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 401,
+     "code": "ok('B2 时长由起因纯派生（关窗 5.0 / 挪楼板 3.0 / 无起因 1.0），不再另存实例属性',",
+     "win": "ok('B2 时长由起因纯派生（关窗 5.0 / 挪楼板 3.0 / 无起因 1.0），不再另存实例属性',\n   FALL_SPLAT_HOLD.get('floor_removed') == 5.0\n   and FALL_SPLAT_HOLD.get('window_move') == 3.0\n   and FA"
+    },
+    {
+     "line": 414,
+     "code": "ok('B3 关窗摔落：生气动画（splat 阶段）真的停满 ≥5s 才转晕乎',",
+     "win": "ok('B3 关窗摔落：生气动画（splat 阶段）真的停满 ≥5s 才转晕乎',\n   _t5 is not None and 5.0 <= _t5 < 5.3,\n   'dazed_at=%s hold=%s' % (_t5, _fall_splat_hold(_pet_b3)))"
+    }
+   ]
+  },
+  {
+   "id": "round6_verify",
+   "script": "code-quality-audit\\第六轮\\verify_round6_fixes.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 5,
+   "n_fmt": 21,
+   "volatile": [
+    {
+     "line": 149,
+     "label": "time.time(",
+     "code": "s2._last_autonomous_speech_time = time.time() - 599.0"
+    },
+    {
+     "line": 152,
+     "label": "time.time(",
+     "code": "s3._last_autonomous_speech_time = time.time() - 601.0"
+    },
+    {
+     "line": 262,
+     "label": "time.time(",
+     "code": "now = time.time()"
+    },
+    {
+     "line": 358,
+     "label": "time.time(",
+     "code": "RalseiPet.handle_fall(f, 0.033, time.time())"
+    },
+    {
+     "line": 384,
+     "label": "time.time(",
+     "code": "RalseiPet.handle_fall(f2, 0.033, time.time())"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 54,
+     "code": "check(\"A1 RalseiPet 上 20 个内置台词/假搬运方法全部不存在\",",
+     "win": "check(\"A1 RalseiPet 上 20 个内置台词/假搬运方法全部不存在\",\n      not missing, \"still present=%s\" % missing)"
+    },
+    {
+     "line": 63,
+     "code": "check(\"A3 main.py 源码里已无这些方法的调用点\",",
+     "win": "check(\"A3 main.py 源码里已无这些方法的调用点\",\n      not dead_calls, \"calls=%s\" % sorted(set(dead_calls)))"
+    },
+    {
+     "line": 144,
+     "code": "check(\"B2 首次开口成功、紧接着第二次被 10 分钟闸门挡住\",",
+     "win": "check(\"B2 首次开口成功、紧接着第二次被 10 分钟闸门挡住\",\n      first is True and second is False and len(s.dialogue_ui.history) == 1,\n      \"first=%s second=%s shown=%d\" % (first, "
+    }
+   ]
+  },
+  {
+   "id": "round8_anim",
+   "script": "code-quality-audit\\第八轮\\verify_round8_anim.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 1,
+   "n_fmt": 24,
+   "volatile": [
+    {
+     "line": 457,
+     "label": "random",
+     "code": "not any('random.random() < 0.01' in ln for ln in code_lines))"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 246,
+     "code": "check(\"D0.1 idle 素材存在且为 69x47 宽画布\", bool(idle) and idle[0].width() == 69",
+     "win": "check(\"D0.1 idle 素材存在且为 69x47 宽画布\", bool(idle) and idle[0].width() == 69\n          and idle[0].height() == 47,\n          \"idle[0]=%sx%s\" % (idle[0].width(), idl"
+    },
+    {
+     "line": 251,
+     "code": "check(\"D0.2 idle 锚点偏移≈(-20, +2.5)（角色偏左，右侧 41px 透明留白）\",",
+     "win": "check(\"D0.2 idle 锚点偏移≈(-20, +2.5)（角色偏左，右侧 41px 透明留白）\",\n          abs(off_idle[0] + 20.0) <= 1.5 and abs(off_idle[1] - 2.5) <= 1.5,\n          \"idle off=%s\" % (of"
+    },
+    {
+     "line": 255,
+     "code": "check(\"D0.3 bow 锚点偏移≈(0, 0)（素材本身居中）\",",
+     "win": "check(\"D0.3 bow 锚点偏移≈(0, 0)（素材本身居中）\",\n          abs(off_bow[0]) <= 1.0 and abs(off_bow[1]) <= 1.0, \"bow off=%s\" % (off_bow,))"
+    }
+   ]
+  },
+  {
+   "id": "round8_fling",
+   "script": "code-quality-audit\\第八轮\\verify_round8_fling.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 2,
+   "n_fmt": 18,
+   "volatile": [
+    {
+     "line": 121,
+     "label": "time.time(",
+     "code": "RalseiPet.handle_fall(o, dt, time.time())"
+    },
+    {
+     "line": 234,
+     "label": "time.time(",
+     "code": "cb['t0'] = time.time() - frac          # 模拟已过 frac 秒"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 150,
+     "code": "check(\"F2.1 水平甩出后首帧即下落（y 增大），没有被强行上抛\",",
+     "win": "check(\"F2.1 水平甩出后首帧即下落（y 增大），没有被强行上抛\",\n          len(ys) >= 2 and ys[0] > 500, \"ys[:4]=%s\" % ys[:4])"
+    },
+    {
+     "line": 152,
+     "code": "check(\"F2.2 水平方向持续朝甩出方向前进（x 递增）\",",
+     "win": "check(\"F2.2 水平方向持续朝甩出方向前进（x 递增）\",\n          len(xs) >= 2 and xs[0] > 400 and xs[1] > xs[0], \"xs[:4]=%s\" % xs[:4])"
+    },
+    {
+     "line": 162,
+     "code": "check(\"F3.1 下甩不会原地秒落地（至少飞了多帧）\", len(ys) > 3, \"frames=%d\" % len(ys))",
+     "win": "check(\"F3.1 下甩不会原地秒落地（至少飞了多帧）\", len(ys) > 3, \"frames=%d\" % len(ys))"
+    }
+   ]
+  },
+  {
+   "id": "round8_floor",
+   "script": "code-quality-audit\\第八轮\\verify_round8_floor.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 1,
+   "n_fmt": 18,
+   "volatile": [
+    {
+     "line": 348,
+     "label": "time.time(",
+     "code": "RalseiPet.handle_gravity_fall(pet, 0.033, time.time())"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 240,
+     "code": "check(\"W1.1 同一窗口重建 dict（高度/层序/标题变化）不再触发摔倒\",",
+     "win": "check(\"W1.1 同一窗口重建 dict（高度/层序/标题变化）不再触发摔倒\",\n          not any(c[0] in ('start_fall', 'start_falling') for c in calls), \"calls=%s\" % calls)"
+    },
+    {
+     "line": 242,
+     "code": "check(\"W1.2 当前楼层被刷新为最新那份 dict（无身份漂移）\",",
+     "win": "check(\"W1.2 当前楼层被刷新为最新那份 dict（无身份漂移）\",\n          pet.current_floor is a2 and pet.current_floor['platform_height'] == 25,\n          \"ph=%s\" % pet.current_floor.g"
+    },
+    {
+     "line": 255,
+     "code": "check(\"W2 窗口未移动时零副作用（不摔不落不跟）\", calls == [], \"calls=%s\" % calls)",
+     "win": "check(\"W2 窗口未移动时零副作用（不摔不落不跟）\", calls == [], \"calls=%s\" % calls)"
+    }
+   ]
+  },
+  {
+   "id": "round9_focus",
+   "script": "code-quality-audit\\第九轮\\verify_round9_focus.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 9,
+   "n_fmt": 3,
+   "volatile": [
+    {
+     "line": 117,
+     "label": "time.time(",
+     "code": "f5.topic.last_at = time.time() - (CF.ConversationFocus.IDLE_ARCHIVE_SECONDS + 60)"
+    },
+    {
+     "line": 124,
+     "label": "time.time(",
+     "code": "f6.topic.pending = [(f6.topic.pending[-1][0], time.time() - (CF.ConversationFocus.PENDING_TTL + 60))]"
+    },
+    {
+     "line": 185,
+     "label": "time.time(",
+     "code": "s._last_activity = time.time()"
+    },
+    {
+     "line": 196,
+     "label": "time.time(",
+     "code": "s = bind(stub(_last_activity=time.time()), 'has_active_conversation')"
+    },
+    {
+     "line": 199,
+     "label": "time.time(",
+     "code": "s2 = bind(stub(_last_activity=time.time() - 1000), 'has_active_conversation')"
+    },
+    {
+     "line": 202,
+     "label": "time.time(",
+     "code": "s3 = bind(stub(_last_activity=time.time() - 1000, _ai_inflight=True), 'has_active_conversation')"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 119,
+     "code": "ok('A10 冷场超时 → 归档并重开', r5 == 'new' and len(f5.history) >= 1, (r5, len(f5.history)))",
+     "win": "ok('A10 冷场超时 → 归档并重开', r5 == 'new' and len(f5.history) >= 1, (r5, len(f5.history)))"
+    },
+    {
+     "line": 159,
+     "code": "ok('A17 坏快照不致崩且仍可用', False, '%s: %s' % (type(_e).__name__, _e))",
+     "win": "ok('A17 坏快照不致崩且仍可用', False, '%s: %s' % (type(_e).__name__, _e))"
+    },
+    {
+     "line": 377,
+     "code": "print('PASS = %d   FAIL = %d' % (len(PASS), len(FAIL)))",
+     "win": "print('PASS = %d   FAIL = %d' % (len(PASS), len(FAIL)))"
+    }
+   ]
+  },
+  {
+   "id": "round9_memory",
+   "script": "code-quality-audit\\第九轮\\verify_round9_memory.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 3,
+   "n_fmt": 12,
+   "volatile": [
+    {
+     "line": 237,
+     "label": "time.time(",
+     "code": "importance=0.4, now=time.time() - (i + 1) * 90000)"
+    },
+    {
+     "line": 300,
+     "label": "time.time(",
+     "code": "now = time.time()"
+    },
+    {
+     "line": 331,
+     "label": "time.time(",
+     "code": "t0 = time.time()"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 208,
+     "code": "ok('F3 超长片段被截断到上限',",
+     "win": "ok('F3 超长片段被截断到上限',\n       len(str(f2.get('text'))) <= ms.FRAGMENT_TEXT_MAX, len(str(f2.get('text'))))"
+    },
+    {
+     "line": 215,
+     "code": "ok('F4 2 小时内重复同句 → 不新增，只当作复习',",
+     "win": "ok('F4 2 小时内重复同句 → 不新增，只当作复习',\n       len(ms.fragments) == n0 and f1b is not None\n       and int(f1b.get('rehearsals', 0)) >= 2\n       and float(f1b.get('streng"
+    },
+    {
+     "line": 229,
+     "code": "ok('F6 同一条关键记忆不去重堆积（只累计次数）',",
+     "win": "ok('F6 同一条关键记忆不去重堆积（只累计次数）',\n       len([k for k in ms.keys if k.get('kind') == 'achievement_unlocked']) == 1\n       and int(k2.get('count', 0)) >= 2, k2.get('c"
+    }
+   ]
+  },
+  {
+   "id": "s7_event_speech",
+   "script": "code-quality-audit\\人味改造-2026-09-18\\verify_s7_event_speech.py",
+   "level": "RISK-HIGH",
+   "n_volatile": 6,
+   "n_fmt": 29,
+   "volatile": [
+    {
+     "line": 441,
+     "label": "Ralsei环境块",
+     "code": "'_ctx=\"\"if(leanor_sys_fixed)elseself._build_ai_context()' in _cw"
+    },
+    {
+     "line": 539,
+     "label": "time.time(",
+     "code": "t0 = time.time()"
+    },
+    {
+     "line": 540,
+     "label": "time.time(",
+     "code": "while (time.time() - t0) * 1000 < ms:"
+    },
+    {
+     "line": 820,
+     "label": "random",
+     "code": "ok('D19 罐头连续 3 次不说重样（改造前 random.choice 三选一很容易撞）',"
+    },
+    {
+     "line": 1034,
+     "label": "time.time(",
+     "code": "t0 = time.time()"
+    },
+    {
+     "line": 1035,
+     "label": "time.time(",
+     "code": "while not done and time.time() - t0 < 5:"
+    }
+   ],
+   "fmt": [
+    {
+     "line": 62,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 136,
+     "code": "ok('A4 第一批 23 个事件全部登记（漏登记 = 静默退回罐头，白改）',",
+     "win": "ok('A4 第一批 23 个事件全部登记（漏登记 = 静默退回罐头，白改）',\n   not _missing, '未登记: %s' % _missing)"
+    },
+    {
+     "line": 139,
+     "code": "ok('A5 每个登记事件都有提示词文案（否则 build_prompt 退化成通用旁白）',",
+     "win": "ok('A5 每个登记事件都有提示词文案（否则 build_prompt 退化成通用旁白）',\n   not _undirected, '缺文案: %s' % _undirected)"
+    }
+   ]
+  },
+  {
+   "id": "anim_round44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_anim44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 16,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 62,
+     "code": "check('A1', int(anim_doc.get('fps') or 0) == 30 and len(sp) > 0,",
+     "win": "check('A1', int(anim_doc.get('fps') or 0) == 30 and len(sp) > 0,\n          'A1 _sprite_anim.json 合法（fps=%s，多帧 sprite=%d）'\n          % (anim_doc.get('fps'), len("
+    },
+    {
+     "line": 81,
+     "code": "check('A2', len(found) > 0,",
+     "win": "check('A2', len(found) > 0,\n          'A2 场景数据里带 anim 的物件 = %d 条（全仓）' % len(found))"
+    },
+    {
+     "line": 99,
+     "code": "check('A2b', not bad_field,",
+     "win": "check('A2b', not bad_field,\n          'A2b anim 字段齐全（base/frames>=2/frame_ms>0/src 合法）；异常 %d'\n          % len(bad_field))"
+    }
+   ]
+  },
+  {
+   "id": "bg_round39",
+   "script": "code-quality-audit\\第39轮-全量场景背景\\verify_bg_round39.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 25,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 121,
+     "code": "check('A0 溯源表 schema 正确且逐章房间数与原作一致',",
+     "win": "check('A0 溯源表 schema 正确且逐章房间数与原作一致',\n      prov.get('schema') == 'ralsei_pet.original_room_bg_provenance/1'\n      and set(prov['chapters'].keys()) == set(C.CHS)"
+    },
+    {
+     "line": 129,
+     "code": "check('A1 场景登记表可读，且分两类来源（独立文件 / 区域分片）',",
+     "win": "check('A1 场景登记表可读，且分两类来源（独立文件 / 区域分片）',\n      len(ENTRIES) > 0 and len(ANCHORS) > 0 and len(ZONES) > 0,\n      '总 %d = 独立文件 %d + 分片 %d' % (len(ENTRIES), len(ANCH"
+    },
+    {
+     "line": 133,
+     "code": "check('A2 每个场景都能在溯源表里定位到自己的房间',",
+     "win": "check('A2 每个场景都能在溯源表里定位到自己的房间',\n      all(str(e[3]) in (prov['chapters'].get(e[1], {}).get('rooms') or {})\n          for e in ENTRIES),\n      '缺 %d 个' % sum(1 f"
+    }
+   ]
+  },
+  {
+   "id": "box_round44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_box_round44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 41,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 93,
+     "code": "check('A1 边框带长度差 63 是你从原作源码反推出来的（不是自己写的）',",
+     "win": "check('A1 边框带长度差 63 是你从原作源码反推出来的（不是自己写的）',\n      _a2 == 63 and drb.STRETCH_GAP == _a2,\n      'gml arg2-arg0-%d ；产品 STRETCH_GAP=%d' % (_a2, drb.STRETCH_GAP))"
+    },
+    {
+     "line": 101,
+     "code": "check('A2 边框带厚度 = 上带 x 偏移 = 实绘高（原作同一数字）',",
+     "win": "check('A2 边框带厚度 = 上带 x 偏移 = 实绘高（原作同一数字）',\n      _band == 32 and _bh == 32 and drb.BAND == _band and drb.CORNER_SIZE == _band,\n      'gml x+%d / h=%d ；产品 BAND=%d"
+    },
+    {
+     "line": 108,
+     "code": "check('A3 角帧切换步长 = cur_jewel/10（原作）',",
+     "win": "check('A3 角帧切换步长 = cur_jewel/10（原作）',\n      _jt == 10 and drb.JEWEL_TICKS_PER_FRAME == _jt,\n      'gml /%d ；产品 JEWEL_TICKS_PER_FRAME=%d' % (_jt, drb.JEWEL_TICKS"
+    }
+   ]
+  },
+  {
+   "id": "bubble_round50",
+   "script": "code-quality-audit\\第50轮-球容器接线\\verify_wire50.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 18,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 58,
+     "code": "print('%s %-5s %s' % (tag, cid, msg))",
+     "win": "print('%s %-5s %s' % (tag, cid, msg))"
+    },
+    {
+     "line": 108,
+     "code": "check('A1', _r_top <= ALLOWED_TOP,",
+     "win": "check('A1', _r_top <= ALLOWED_TOP,\n      'scene_render 顶层 import ⊆ %s（实得 %s）—— 纯数据层不许 import 项目内模块/Qt'\n      % (sorted(ALLOWED_TOP), sorted(_r_top)))"
+    },
+    {
+     "line": 164,
+     "code": "check('B1', len(bub) == 4, '一个球 ⇒ 4 条指令（实得 %d）' % len(bub))",
+     "win": "check('B1', len(bub) == 4, '一个球 ⇒ 4 条指令（实得 %d）' % len(bub))"
+    }
+   ]
+  },
+  {
+   "id": "camera_round44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_camera_round44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 14,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 65,
+     "code": "check('A1 源码记录原作相机调用 %s' % _fn, _fn in SRC)",
+     "win": "check('A1 源码记录原作相机调用 %s' % _fn, _fn in SRC)"
+    },
+    {
+     "line": 102,
+     "code": "check('A6 零依赖：不 import Qt / 不 import 项目内模块（只标准库）',",
+     "win": "check('A6 零依赖：不 import Qt / 不 import 项目内模块（只标准库）',\n      all(('PyQt' not in m) and ('Qt' not in m) for m in _imports)\n      and not any(m in ('scene_system', 's"
+    },
+    {
+     "line": 120,
+     "code": "check('B1 clamp 三向正确',",
+     "win": "check('B1 clamp 三向正确',\n      SC.clamp(5, 0, 10) == 5 and SC.clamp(-1, 0, 10) == 0 and SC.clamp(11, 0, 10) == 10,\n      '%s %s %s' % (SC.clamp(5, 0, 10), SC.clam"
+    }
+   ]
+  },
+  {
+   "id": "canvas_round44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_canvas_round44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 22,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 131,
+     "code": "ok(C.K_BG == SR.K_BG, 'A1a K_BG 与 scene_render 一致（%s）' % C.K_BG)",
+     "win": "ok(C.K_BG == SR.K_BG, 'A1a K_BG 与 scene_render 一致（%s）' % C.K_BG)"
+    },
+    {
+     "line": 155,
+     "code": "ok(not banned, 'A2 不 import 项目内反向依赖模块（实际越界=%s）' % banned)",
+     "win": "ok(not banned, 'A2 不 import 项目内反向依赖模块（实际越界=%s）' % banned)"
+    },
+    {
+     "line": 170,
+     "code": "ok(not rcin, 'A3 scene_render 不 import scene_canvas（依赖单向；实际=%s）' % rcin)",
+     "win": "ok(not rcin, 'A3 scene_render 不 import scene_canvas（依赖单向；实际=%s）' % rcin)"
+    }
+   ]
+  },
+  {
+   "id": "companion_round46",
+   "script": "code-quality-audit\\第46轮-伙伴交互框架\\verify_companion46.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 50,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 60,
+     "code": "print('== %s ==' % title)",
+     "win": "print('== %s ==' % title)"
+    },
+    {
+     "line": 148,
+     "code": "print('模块目录: %s' % MODS)",
+     "win": "print('模块目录: %s' % MODS)"
+    },
+    {
+     "line": 161,
+     "code": "print('RESULT: PASS=%d FAIL=%d' % (PASS, FAIL))",
+     "win": "print('RESULT: PASS=%d FAIL=%d' % (PASS, FAIL))"
+    }
+   ]
+  },
+  {
+   "id": "dialog_clean52",
+   "script": "code-quality-audit\\第52轮-对话与人味收口\\_tools\\check52b.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 14,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 135,
+     "code": "check(\"A2 反控制：rest()/eat() 的**拒绝说明**仍在（功能反馈，删了主人就不知道为什么没反应）\",",
+     "win": "check(\"A2 反控制：rest()/eat() 的**拒绝说明**仍在（功能反馈，删了主人就不知道为什么没反应）\",\n      _keep_ok, \"rest 有=%s eat 有=%s\"\n      % (any('我现在精神得很' in s for s in _rest_s),\n         any('"
+    },
+    {
+     "line": 147,
+     "code": "check(\"A3 `_speak()` 走 `speak_event(kind, None, face)`（pool=None = 不给内置台词）\",",
+     "win": "check(\"A3 `_speak()` 走 `speak_event(kind, None, face)`（pool=None = 不给内置台词）\",\n      bool(_spk_args) and _plain_none,\n      \"speak_event 调用 %d 处 / 第二参数为 None = %s"
+    },
+    {
+     "line": 154,
+     "code": "check(\"A4 check_status_changes 里 6 处纯情绪播报全改走 `self._speak(...)`\",",
+     "win": "check(\"A4 check_status_changes 里 6 处纯情绪播报全改走 `self._speak(...)`\",\n      _speak_calls == 6, \"self._speak( 出现 %d 次\" % _speak_calls)"
+    }
+   ]
+  },
+  {
+   "id": "dialog_turn52",
+   "script": "code-quality-audit\\第52轮-对话与人味收口\\_tools\\check52a.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 18,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 130,
+     "code": "check(\"A1c 输入框占位提示是字符串且非空\",",
+     "win": "check(\"A1c 输入框占位提示是字符串且非空\",\n      isinstance(_ph, str) and len(_ph.strip()) > 4, \"取到 %r\" % (_ph,))"
+    },
+    {
+     "line": 165,
+     "code": "check(\"A2a add_dialogue 里存在 `self._history_html = <...>`（新一轮重置）\",",
+     "win": "check(\"A2a add_dialogue 里存在 `self._history_html = <...>`（新一轮重置）\",\n      _a2_reset >= 1, \"找到 %d 处\" % _a2_reset)"
+    },
+    {
+     "line": 181,
+     "code": "check(\"A2b `_maybe_break_turn` 同时受 SINGLE_TURN_MODE 与 TURN_GAP_SECONDS 约束且真的清历史\",",
+     "win": "check(\"A2b `_maybe_break_turn` 同时受 SINGLE_TURN_MODE 与 TURN_GAP_SECONDS 约束且真的清历史\",\n      _a2b_guard and _a2b_reset >= 1,\n      \"受约束=%s 清历史=%d 处\" % (_a2b_guard, _"
+    }
+   ]
+  },
+  {
+   "id": "items_round48",
+   "script": "code-quality-audit\\第48轮-道具与背包系统\\verify_items48.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 42,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 163,
+     "code": "check('A2', not bad and tot > 0,",
+     "win": "check('A2', not bad and tot > 0,\n          'A2 五章索引声明 == 实际条目（共 %d 条；不一致 %d 处）' % (tot, len(bad)))"
+    },
+    {
+     "line": 166,
+     "code": "print('      [MISMATCH] %s' % b)",
+     "win": "print('      [MISMATCH] %s' % b)"
+    },
+    {
+     "line": 191,
+     "code": "check('A3', n_ev > 0 and not diff,",
+     "win": "check('A3', n_ev > 0 and not diff,\n          'A3 效果抽取可复算：仓库内 GML 蒸馏副本重跑 == items_effects48.json（%d 条；差异 %d 处）'\n          % (n_ev, len(diff)))"
+    }
+   ]
+  },
+  {
+   "id": "model_conc57",
+   "script": "code-quality-audit\\第57轮-模型并发实测\\check57.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 17,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 98,
+     "code": "check('A5  注册表 35 条 NPC 的 model 字段**全为 None**（= 跟随 App 配置，不各自常驻）',",
+     "win": "check('A5  注册表 35 条 NPC 的 model 字段**全为 None**（= 跟随 App 配置，不各自常驻）',\n      len(_npcs) >= 30 and all(n.get('model') is None for n in _npcs),\n      'n=%d 非 None 的=%"
+    },
+    {
+     "line": 105,
+     "code": "check('A7  model_policy 的 note 里点明了\"再建一个 7B = 各常驻一份 4.7GB\"这条理由',",
+     "win": "check('A7  model_policy 的 note 里点明了\"再建一个 7B = 各常驻一份 4.7GB\"这条理由',\n      '常驻' in str(_pol.get('note') or ''),\n      'note 前 40 字=%r' % str(_pol.get('note') or '')"
+    },
+    {
+     "line": 112,
+     "code": "check('A8  13 份人设在位（A5 的\"跟随配置\"要有东西可跟）', len(_files) == 13,",
+     "win": "check('A8  13 份人设在位（A5 的\"跟随配置\"要有东西可跟）', len(_files) == 13,\n      'n=%d %s' % (len(_files), _files))"
+    }
+   ]
+  },
+  {
+   "id": "npc_place56",
+   "script": "code-quality-audit\\第56轮-NPC站位与游荡\\check56.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 33,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 134,
+     "code": "check('A1 npc_placement 模块级 import 全在白名单内（禁 Qt / 禁项目内模块）',",
+     "win": "check('A1 npc_placement 模块级 import 全在白名单内（禁 Qt / 禁项目内模块）',\n      not _bad, '越界=%s 实得=%s' % (_bad or '无', _mod_imp))"
+    },
+    {
+     "line": 141,
+     "code": "check('A3b 负控制：判据能抓到函数体内 import（拿 main.py 试，必须非空）',",
+     "win": "check('A3b 负控制：判据能抓到函数体内 import（拿 main.py 试，必须非空）',\n      len(inner_imports(os.path.join(PET, 'src', 'main.py'))) > 0)"
+    },
+    {
+     "line": 151,
+     "code": "check('D3 counts 与实际条数一致',",
+     "win": "check('D3 counts 与实际条数一致',\n      _cnt.get('placed') == len(RAW['placement']) == 34\n      and _cnt.get('groups') == len(RAW['groups'])\n      and _cnt.get('bonds'"
+    }
+   ]
+  },
+  {
+   "id": "npc_round49",
+   "script": "code-quality-audit\\第49轮-NPC与球容器\\verify_npc49.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 20,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 37,
+     "code": "print('%s %-5s %s' % (tag, cid, msg))",
+     "win": "print('%s %-5s %s' % (tag, cid, msg))"
+    },
+    {
+     "line": 92,
+     "code": "check('A1', os.path.isfile(_p) and not _inner,",
+     "win": "check('A1', os.path.isfile(_p) and not _inner,\n          '%s 无函数内 import（实得 %r）' % (_f, _inner))"
+    },
+    {
+     "line": 95,
+     "code": "check('A2', not _bad, '%s 顶层 import 全在白名单内（越界 %r）' % (_f, _bad))",
+     "win": "check('A2', not _bad, '%s 顶层 import 全在白名单内（越界 %r）' % (_f, _bad))"
+    }
+   ]
+  },
+  {
+   "id": "objects_round44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_objects44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 14,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 78,
+     "code": "ok(len(obj_files) >= 25, 'A1 objs/ 素材目录存在且有 %d 个文件' % len(obj_files))",
+     "win": "ok(len(obj_files) >= 25, 'A1 objs/ 素材目录存在且有 %d 个文件' % len(obj_files))"
+    },
+    {
+     "line": 82,
+     "code": "ok(len(zone_files) == 61, 'A2 分片文件 %d 个' % len(zone_files))",
+     "win": "ok(len(zone_files) == 61, 'A2 分片文件 %d 个' % len(zone_files))"
+    },
+    {
+     "line": 145,
+     "code": "ok(not bad_shape, 'A3 所有 object 形状合法（pos=2×int / sprite=非空 str）坏=%d'",
+     "win": "ok(not bad_shape, 'A3 所有 object 形状合法（pos=2×int / sprite=非空 str）坏=%d'\n       % len(bad_shape))"
+    }
+   ]
+  },
+  {
+   "id": "pathfind_round45",
+   "script": "code-quality-audit\\第45轮-场景自主寻路\\verify_pathfind45.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 16,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 84,
+     "code": "check('A1', al.get('ok') and al.get('entries'),",
+     "win": "check('A1', al.get('ok') and al.get('entries'),\n          'A1 别名表可加载且非空（schema_version=%r，词条 %d 条）'\n          % (SP.ALIASES_SCHEMA_VERSION, len(al.get('entries'"
+    },
+    {
+     "line": 98,
+     "code": "check('A2', not dead,",
+     "win": "check('A2', not dead,\n          'A2 别名表零命中词条 = 0（共 %d 条，真实索引 1,014 场景）'\n          % len(al.get('entries') or {}))"
+    },
+    {
+     "line": 102,
+     "code": "print('      [DEAD] %s' % d)",
+     "win": "print('      [DEAD] %s' % d)"
+    }
+   ]
+  },
+  {
+   "id": "render_round44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_render_round44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 36,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 93,
+     "code": "ok(bad == [], 'A5b scene_render 只依赖标准库 logging（实际 %s）' % bad)",
+     "win": "ok(bad == [], 'A5b scene_render 只依赖标准库 logging（实际 %s）' % bad)"
+    },
+    {
+     "line": 105,
+     "code": "ok(r == {'w': 320, 'h': 240, 'name': 'room_krisroom'},",
+     "win": "ok(r == {'w': 320, 'h': 240, 'name': 'room_krisroom'},\n       'B1 ch1:2 = 320x240 room_krisroom 实际=%s' % (r,))"
+    },
+    {
+     "line": 124,
+     "code": "ok(SR.viewport_size(cam, {'w': 320, 'h': 240}) == (320, 240),",
+     "win": "ok(SR.viewport_size(cam, {'w': 320, 'h': 240}) == (320, 240),\n       'B10 小房间（320x240,scale=1）→ 视口收缩到房间 实际=%s'\n       % (SR.viewport_size(cam, {'w': 320, 'h': 2"
+    }
+   ]
+  },
+  {
+   "id": "rooms_round47",
+   "script": "code-quality-audit\\第47轮-房间全量与寻路人味化\\verify_rooms47.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 12,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 146,
+     "code": "check('A5 产品场景 == 1,014 个（含 desktop 1）；ch1/2/4/5 == 826 个',",
+     "win": "check('A5 产品场景 == 1,014 个（含 desktop 1）；ch1/2/4/5 == 826 个',\n          n_scenes == 1014 and n_scenes_4 == 826 and per_ch_scenes.get('desktop') == 1,\n          '总"
+    },
+    {
+     "line": 156,
+     "code": "check('A6 ch1/2/4/5 playable == 853；已覆盖 == 812；未覆盖 == 41',",
+     "win": "check('A6 ch1/2/4/5 playable == 853；已覆盖 == 812；未覆盖 == 41',\n          sum(len(play[c]) for c in FOUR) == 853\n          and sum(len(cov[c]) for c in FOUR) == 812\n"
+    },
+    {
+     "line": 174,
+     "code": "check('A8 ★ 负控制：真缺口(10) 严格少于未覆盖(41) —— 归因这步真筛过',",
+     "win": "check('A8 ★ 负控制：真缺口(10) 严格少于未覆盖(41) —— 归因这步真筛过',\n          len(real) == 10 and len(real) + len(iso) == 41,\n          'real=%d iso=%d' % (len(real), len(iso)))"
+    }
+   ]
+  },
+  {
+   "id": "round13_build",
+   "script": "code-quality-audit\\第十三轮\\verify_round13_build.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 17,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 71,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 159,
+     "code": "ok('A1 挖洞后面积正确（与独立采样网格 oracle 一致）',",
+     "win": "ok('A1 挖洞后面积正确（与独立采样网格 oracle 一致）',\n   sum(FM._area(p) for p in pieces) == expect_area,\n   'sum=%d oracle=%d' % (sum(FM._area(p) for p in pieces), expect_area))"
+    },
+    {
+     "line": 183,
+     "code": "ok('B1 两层都在 → 生成 2 块楼板', len(fm.floors) == 2, len(fm.floors))",
+     "win": "ok('B1 两层都在 → 生成 2 块楼板', len(fm.floors) == 2, len(fm.floors))"
+    }
+   ]
+  },
+  {
+   "id": "round14_move",
+   "script": "code-quality-audit\\第十四轮\\verify_round14_move.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 12,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 87,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 283,
+     "code": "ok('B1 无遮挡时跳到窗口：落点在可见区域内',",
+     "win": "ok('B1 无遮挡时跳到窗口：落点在可见区域内',\n   bool(_pet.jump_target_pos) and in_visible(_f101, _pet.jump_target_pos),\n   'land=%s visible=%s' % (_pet.jump_target_pos, _f101.get"
+    },
+    {
+     "line": 294,
+     "code": "ok('B2 起跳后落点必然落在**所跳目标层**的可见区域内',",
+     "win": "ok('B2 起跳后落点必然落在**所跳目标层**的可见区域内',\n   _pet2.is_jumping is True\n   and in_visible(_pet2.jump_target_floor, _pet2.jump_target_pos),\n   'jumping=%r target=%r land=%"
+    }
+   ]
+  },
+  {
+   "id": "round15_cleanup",
+   "script": "code-quality-audit\\第十五轮\\verify_round15_cleanup.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 6,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 69,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 260,
+     "code": "ok('B2 楼层不可用（无可见窗口）→ 直接返回：不查桌面窗口、不抛（老路径已删）',",
+     "win": "ok('B2 楼层不可用（无可见窗口）→ 直接返回：不查桌面窗口、不抛（老路径已删）',\n   _err is None and not _pet_empty.calls, 'err=%s calls=%s' % (_err, _pet_empty.calls))"
+    },
+    {
+     "line": 408,
+     "code": "ok('C5 is_floor_valid 在 check_window_movement 里被真正调用（判别一次成因）',",
+     "win": "ok('C5 is_floor_valid 在 check_window_movement 里被真正调用（判别一次成因）',\n   getattr(_fm_c1, 'valid_calls', 0) >= 1 and getattr(_fm_c2, 'valid_calls', 0) >= 1,\n   'c1=%s c"
+    }
+   ]
+  },
+  {
+   "id": "round18_climb",
+   "script": "code-quality-audit\\第十八轮\\verify_round18_climb.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 16,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 85,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 325,
+     "code": "ok('A4 落点落在目标层的**可见区域**内',",
+     "win": "ok('A4 落点落在目标层的**可见区域**内',\n   in_visible(_f201, _pet_a.jump_target_pos),\n   'land=%s visible=%s' % (_pet_a.jump_target_pos, _f201.get('visible_rects')))"
+    },
+    {
+     "line": 328,
+     "code": "ok('A5 落点与宠物**预留了水平距离**（用户：\"别看着和垂直起跳一样\"）',",
+     "win": "ok('A5 落点与宠物**预留了水平距离**（用户：\"别看着和垂直起跳一样\"）',\n   abs(_pet_a.jump_target_pos.x() - 500) >= CLIMB_MIN_RESERVE,\n   'dx=%s（要求 ≥%s）' % (abs(_pet_a.jump_target_pos.x() -"
+    }
+   ]
+  },
+  {
+   "id": "round34_floor_manager",
+   "script": "code-quality-audit\\第34轮-移动行为基础代码严查\\verify_round34_floor_manager.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 10,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 90,
+     "code": "check(idx != -1,",
+     "win": "check(idx != -1,\n      '[A1] stale 楼层(h=15)高于所有活楼层(10/5/0) → 下标不得为 -1（实测 %s）' % idx)"
+    },
+    {
+     "line": 92,
+     "code": "check(idx == 0,",
+     "win": "check(idx == 0,\n      '[A2] 该情形必须规范成 0（=「高于最高活楼层」，留出向下扫的起点；实测 %s）' % idx)"
+    },
+    {
+     "line": 97,
+     "code": "check(idx_lo == len(_sorted_all(fm)) - 1,",
+     "win": "check(idx_lo == len(_sorted_all(fm)) - 1,\n      '[A3] 反向控制：stale 比所有活楼层都低 → 仍返回末位（实测 %s）' % idx_lo)"
+    }
+   ]
+  },
+  {
+   "id": "round34_movement",
+   "script": "code-quality-audit\\第34轮-移动行为基础代码严查\\verify_round34_movement.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 16,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 80,
+     "code": "print('  NOTE  %s' % msg)",
+     "win": "print('  NOTE  %s' % msg)"
+    },
+    {
+     "line": 123,
+     "code": "check(_func(tree, fake) is None,",
+     "win": "check(_func(tree, fake) is None,\n              'main.py 里不得再定义 %s（AST FunctionDef）' % fake)"
+    },
+    {
+     "line": 128,
+     "code": "check(_func(tree, real) is not None,",
+     "win": "check(_func(tree, real) is not None,\n              '反向控制：真 Qt 钩子 %s 仍在（判据有鉴别力）' % real)"
+    }
+   ]
+  },
+  {
+   "id": "round34_store_config",
+   "script": "code-quality-audit\\第34轮-移动行为基础代码严查\\verify_round34_store_config.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 9,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 63,
+     "code": "check(_nb <= _keep, \"A1 .backup.* 收敛到 <= %d（实测 %d）\" % (_keep, _nb))",
+     "win": "check(_nb <= _keep, \"A1 .backup.* 收敛到 <= %d（实测 %d）\" % (_keep, _nb))"
+    },
+    {
+     "line": 64,
+     "code": "check(_nc <= _keep, \"A2 .corrupt.* 也收敛到 <= %d（实测 %d）—— 原先一份都不清\"",
+     "win": "check(_nc <= _keep, \"A2 .corrupt.* 也收敛到 <= %d（实测 %d）—— 原先一份都不清\"\n          % (_keep, _nc))"
+    },
+    {
+     "line": 67,
+     "code": "check(_nb == _keep and _nc == _keep,",
+     "win": "check(_nb == _keep and _nc == _keep,\n          \"A3 两类各自独立保留 %d 份、互不挤占（backup=%d corrupt=%d）\"\n          % (_keep, _nb, _nc))"
+    }
+   ]
+  },
+  {
+   "id": "round34b_move_beat",
+   "script": "code-quality-audit\\第34轮-移动行为基础代码严查\\verify_round34b_move_beat.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 12,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 59,
+     "code": "check(_upd is not None, '[PRE] 找到 update_movement（实测 %s）'",
+     "win": "check(_upd is not None, '[PRE] 找到 update_movement（实测 %s）'\n      % ('找到' if _upd is not None else '未找到'))"
+    },
+    {
+     "line": 63,
+     "code": "print('SUITE_SUMMARY pass=%d fail=%d' % (len(_results) - sum(_results), sum(_results)))",
+     "win": "print('SUITE_SUMMARY pass=%d fail=%d' % (len(_results) - sum(_results), sum(_results)))"
+    },
+    {
+     "line": 112,
+     "code": "check(len(top_level_bare) == 0,",
+     "win": "check(len(top_level_bare) == 0,\n      '[A1] update_movement 本级**不得**有裸的 `%s = ...`（原缺陷写法；实测 L%s）'\n      % (TARGET_ATTR, top_level_bare if top_level_bare else '无"
+    }
+   ]
+  },
+  {
+   "id": "round34c_privacy_wire",
+   "script": "code-quality-audit\\第34轮-移动行为基础代码严查\\verify_round34c_privacy_wire.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 6,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 92,
+     "code": "check('A1', wnames == ['mark_app_as_closed', 'mark_app_as_opened'],",
+     "win": "check('A1', wnames == ['mark_app_as_closed', 'mark_app_as_opened'],\n          '写入点仅 mark_app_as_opened/mark_app_as_closed -> %s' % wnames)"
+    },
+    {
+     "line": 115,
+     "code": "check('A2', len(external_calls) == 0,",
+     "win": "check('A2', len(external_calls) == 0,\n          'mark_app_as_* 仍零外部调用 -> %d 处' % len(external_calls))"
+    },
+    {
+     "line": 145,
+     "code": "check('A4', not missing, 'privacy_apps 含关键应用 %s -> 缺 %s' % (need, missing or '无'))",
+     "win": "check('A4', not missing, 'privacy_apps 含关键应用 %s -> 缺 %s' % (need, missing or '无'))"
+    }
+   ]
+  },
+  {
+   "id": "round5_smoke",
+   "script": "code-quality-audit\\第五轮\\smoke_import_round5.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 3,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 18,
+     "code": "print(\"待导入模块数:\", len(files))",
+     "win": "print(\"待导入模块数:\", len(files))"
+    },
+    {
+     "line": 29,
+     "code": "print(\"导入失败数:\", len(fail))",
+     "win": "print(\"导入失败数:\", len(fail))"
+    },
+    {
+     "line": 82,
+     "code": "print(\"!! 定位器失败：_tick_spell_flow 在 %d 个候选模块里都没找到\"",
+     "win": "print(\"!! 定位器失败：_tick_spell_flow 在 %d 个候选模块里都没找到\"\n          % len(_CANDIDATES))"
+    }
+   ]
+  },
+  {
+   "id": "round5_verify",
+   "script": "code-quality-audit\\第五轮\\verify_round5_fixes.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 16,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 66,
+     "code": "check(\"V1a 问'内存使用率'触达 get_system_resources\",",
+     "win": "check(\"V1a 问'内存使用率'触达 get_system_resources\",\n      \"get_system_resources\" in calls,\n      \"calls=%s reply=%r\" % (calls, r1))"
+    },
+    {
+     "line": 76,
+     "code": "print(\"   [debug] 优化 -> calls=%s reply=%r\" % (calls, r2))",
+     "win": "print(\"   [debug] 优化 -> calls=%s reply=%r\" % (calls, r2))"
+    },
+    {
+     "line": 77,
+     "code": "check(\"V1c 说'优化'触达 optimize_system\",",
+     "win": "check(\"V1c 说'优化'触达 optimize_system\",\n      \"optimize_system\" in calls, \"calls=%s reply=%r\" % (calls, r2))"
+    }
+   ]
+  },
+  {
+   "id": "round7_launch",
+   "script": "code-quality-audit\\第七轮\\verify_round7_launch_import.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 6,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 72,
+     "code": "check('R1 仅 src/ 在 path 时 import main 成功（文档化启动不再崩）', ok_import,",
+     "win": "check('R1 仅 src/ 在 path 时 import main 成功（文档化启动不再崩）', ok_import,\n      'exit=%s' % proc.returncode)"
+    },
+    {
+     "line": 75,
+     "code": "check('R2 main 自身把 modules/ 加进了 sys.path', bool(m) and m.group(1) == 'True',",
+     "win": "check('R2 main 自身把 modules/ 加进了 sys.path', bool(m) and m.group(1) == 'True',\n      'MODULES_ON_PATH=%s' % (m.group(1) if m else '缺失'))"
+    },
+    {
+     "line": 86,
+     "code": "check('R3 main.py 源码包含把 modules 目录加入 sys.path 的逻辑', found_path_fix,",
+     "win": "check('R3 main.py 源码包含把 modules 目录加入 sys.path 的逻辑', found_path_fix,\n      'found=%s' % found_path_fix)"
+    }
+   ]
+  },
+  {
+   "id": "round8_dialogue",
+   "script": "code-quality-audit\\第八轮\\verify_round8_dialogue.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 16,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 134,
+     "code": "check(\"T1.1 闪烁不再改变文档高度（文字不抖）\",",
+     "win": "check(\"T1.1 闪烁不再改变文档高度（文字不抖）\",\n          len(set(doc_h)) == 1, \"doc_h=%s\" % doc_h)"
+    },
+    {
+     "line": 136,
+     "code": "check(\"T1.2 闪烁不再改变正文控件高度\",",
+     "win": "check(\"T1.2 闪烁不再改变正文控件高度\",\n          len(set(widget_h)) == 1, \"widget_h=%s\" % widget_h)"
+    },
+    {
+     "line": 138,
+     "code": "check(\"T1.3 闪烁不再改变整框高度\",",
+     "win": "check(\"T1.3 闪烁不再改变整框高度\",\n          len(set(win_h)) == 1, \"win_h=%s\" % win_h)"
+    }
+   ]
+  },
+  {
+   "id": "routes_order44",
+   "script": "code-quality-audit\\第44轮-原作对话框复刻\\verify_routes_order44.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 12,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 121,
+     "code": "ok(len(multi) > 100,",
+     "win": "ok(len(multi) > 100,\n   'B1 多出边场景数 > 100（实测 %d，确保判据有真实样本）' % len(multi))"
+    },
+    {
+     "line": 131,
+     "code": "ok(not bad,",
+     "win": "ok(not bad,\n   'B2 ★同场景内「字母序 == priority 序」（0 例外；实测 %d 个多出口场景）'\n   % len(multi))"
+    },
+    {
+     "line": 153,
+     "code": "ok(len(old_bad) >= 1,",
+     "win": "ok(len(old_bad) >= 1,\n   'B2b 负控制：旧写法确实复现字母序错乱（%d 个，证明 B2 有鉴别力）'\n   % len(old_bad))"
+    }
+   ]
+  },
+  {
+   "id": "s1_anim_miss",
+   "script": "code-quality-audit\\架构改造-H4H5\\verify_s1_animation_miss.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 8,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 74,
+     "code": "print('  已加载动画组: %d，帧总数: %d'",
+     "win": "print('  已加载动画组: %d，帧总数: %d'\n      % (len(loader.sprites), sum(len(v) for v in loader.sprites.values())))"
+    },
+    {
+     "line": 79,
+     "code": "check('A1', 'load_sprites 阶段未产生任何 miss（加载不应被误记为请求）',",
+     "win": "check('A1', 'load_sprites 阶段未产生任何 miss（加载不应被误记为请求）',\n      loader.animation_misses == {}, 'misses=%d' % len(loader.animation_misses))"
+    },
+    {
+     "line": 145,
+     "code": "check('B1', '全部 %d 个样本的落点与改造前算法一致' % len(samples),",
+     "win": "check('B1', '全部 %d 个样本的落点与改造前算法一致' % len(samples),\n      not bad, '不一致 %d 例: %s' % (len(bad), bad[:6]) if bad else '')"
+    }
+   ]
+  },
+  {
+   "id": "s2_anim_json",
+   "script": "code-quality-audit\\架构改造-H4H5\\verify_s2_animations_json.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 25,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 89,
+     "code": "check('A2', 'schema_version == 1（受支持）', doc.get('schema_version') == 1,",
+     "win": "check('A2', 'schema_version == 1（受支持）', doc.get('schema_version') == 1,\n      'version=%r' % doc.get('schema_version'))"
+    },
+    {
+     "line": 92,
+     "code": "check('A3', 'groups 非空且每个组都有 frames 列表',",
+     "win": "check('A3', 'groups 非空且每个组都有 frames 列表',\n      bool(groups) and all(isinstance(e.get('frames'), list) for e in groups.values()),\n      'groups=%d' % len(groups)"
+    },
+    {
+     "line": 98,
+     "code": "check('A4', '导出器幂等：同一输入连续两次导出逐字节一致',",
+     "win": "check('A4', '导出器幂等：同一输入连续两次导出逐字节一致',\n      _regen_a == _regen_b, '%d 字节' % len(_regen_a.encode('utf-8')))"
+    }
+   ]
+  },
+  {
+   "id": "s3_alias_legacy",
+   "script": "code-quality-audit\\架构改造-H4H5\\verify_s3_alias_legacy.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 11,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 62,
+     "code": "check('A1', '别名组与既定方向一致（happy→laugh / neutral→idle / sad→cry_start / splat_mad→fall_mad）',",
+     "win": "check('A1', '别名组与既定方向一致（happy→laugh / neutral→idle / sad→cry_start / splat_mad→fall_mad）',\n      aliases == dict(a3.ALIAS_MAP), '%s' % sorted(aliases.items()))"
+    },
+    {
+     "line": 64,
+     "code": "check('A2', '别名组自身的 frames 已清空', all(not (groups[n].get('frames') or []) for n in aliases),",
+     "win": "check('A2', '别名组自身的 frames 已清空', all(not (groups[n].get('frames') or []) for n in aliases),\n      '%s' % sorted(aliases))"
+    },
+    {
+     "line": 66,
+     "code": "check('A3', '别名目标都存在且 frames 非空',",
+     "win": "check('A3', '别名目标都存在且 frames 非空',\n      all(t in groups and (groups[t].get('frames') or []) for t in aliases.values()),\n      '%s' % sorted(set(aliases.values()"
+    }
+   ]
+  },
+  {
+   "id": "s8_stream",
+   "script": "code-quality-audit\\人味改造-2026-09-18\\verify_s8_stream.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 13,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 68,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 137,
+     "code": "ok('A1 基类给出具体（非抽象）的 chat_stream，老 provider 不会被新功能打破',",
+     "win": "ok('A1 基类给出具体（非抽象）的 chat_stream，老 provider 不会被新功能打破',\n   hasattr(A.LocalAIBase, 'chat_stream')\n   and not getattr(A.LocalAIBase.chat_stream, '__isabstractmethod"
+    },
+    {
+     "line": 233,
+     "code": "ok('A13 回调抛异常不中断接收（回复不会被 UI 异常连带丢掉）',",
+     "win": "ok('A13 回调抛异常不中断接收（回复不会被 UI 异常连带丢掉）',\n   full3 == '一二三' and len(got3) == 3, 'full=%r got=%r' % (full3, got3))"
+    }
+   ]
+  },
+  {
+   "id": "scene_p0",
+   "script": "code-quality-audit\\场景系统-P0\\verify_scene_p0.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 22,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 68,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 159,
+     "code": "ok('A3 scene_system.py 不 import 任何 Qt 模块',",
+     "win": "ok('A3 scene_system.py 不 import 任何 Qt 模块',\n   not (SCENE_SYS_IMPORTS & _QT_MODULES),\n   'imports=%s' % sorted(SCENE_SYS_IMPORTS))"
+    },
+    {
+     "line": 163,
+     "code": "ok('A4 scene_system.py 不 import 任何项目内模块（初始化环纪律）',",
+     "win": "ok('A4 scene_system.py 不 import 任何项目内模块（初始化环纪律）',\n   not (SCENE_SYS_IMPORTS & _PROJECT_INTERNAL),\n   '越界=%s' % sorted(SCENE_SYS_IMPORTS & _PROJECT_INTERNAL))"
+    }
+   ]
+  },
+  {
+   "id": "scene_route_original",
+   "script": "code-quality-audit\\第36轮-按原作路线排场景\\verify_scene_route_original.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 28,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 53,
+     "code": "print('[ OK ] %s' % name)",
+     "win": "print('[ OK ] %s' % name)"
+    },
+    {
+     "line": 81,
+     "code": "check('A2 原作房间表可解析且有 chapters', isinstance(rooms.get('chapters'), dict)",
+     "win": "check('A2 原作房间表可解析且有 chapters', isinstance(rooms.get('chapters'), dict)\n      and len(rooms.get('chapters', {})) == 5,\n      'chapters=%d' % len(rooms.get('chap"
+    },
+    {
+     "line": 95,
+     "code": "check('A4 原作房间数 > 0（去掉 --- 空位后）', _room_total > 0,",
+     "win": "check('A4 原作房间数 > 0（去掉 --- 空位后）', _room_total > 0,\n      'rooms=%d' % _room_total)"
+    }
+   ]
+  },
+  {
+   "id": "scene_routing",
+   "script": "code-quality-audit\\场景系统-P0\\verify_scene_routing.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 22,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 69,
+     "code": "print('=== %s ===' % title)",
+     "win": "print('=== %s ===' % title)"
+    },
+    {
+     "line": 161,
+     "code": "ok('A2 scene_routing.py 不 import 任何 Qt 模块',",
+     "win": "ok('A2 scene_routing.py 不 import 任何 Qt 模块',\n   not (ROUTING_IMPORTS & _QT_MODULES),\n   'imports=%s' % sorted(ROUTING_IMPORTS))"
+    },
+    {
+     "line": 165,
+     "code": "ok('A3 scene_routing.py 不 import 任何项目内业务模块（初始化环纪律）',",
+     "win": "ok('A3 scene_routing.py 不 import 任何项目内业务模块（初始化环纪律）',\n   not (ROUTING_IMPORTS & _PROJECT_INTERNAL),\n   '越界=%s' % sorted(ROUTING_IMPORTS & _PROJECT_INTERNAL))"
+    }
+   ]
+  },
+  {
+   "id": "sit_round54",
+   "script": "code-quality-audit\\第54轮-电梯坐姿与底层修复\\_tools\\check54a.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 21,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 129,
+     "code": "check('A1%d' % i, '素材在位且是真 PNG：%s' % fn, ok, str(_sizes.get(fn)))",
+     "win": "check('A1%d' % i, '素材在位且是真 PNG：%s' % fn, ok, str(_sizes.get(fn)))"
+    },
+    {
+     "line": 131,
+     "code": "check('A2', '四帧尺寸一致且为 24x44（原作 spr_ralsei_sit 原始尺寸）',",
+     "win": "check('A2', '四帧尺寸一致且为 24x44（原作 spr_ralsei_sit 原始尺寸）',\n      len(set(_sizes.values())) == 1 and list(_sizes.values())[0] == (24, 44),\n      str(_sizes))"
+    },
+    {
+     "line": 152,
+     "code": "check('A4', \"SpriteLoader 里 `sit` == 四帧（顺序与磁盘同名）\",",
+     "win": "check('A4', \"SpriteLoader 里 `sit` == 四帧（顺序与磁盘同名）\",\n      bool(_got_sit) and len(_got_sit) == 4,\n      'n=%d' % (len(_got_sit or []),))"
+    }
+   ]
+  },
+  {
+   "id": "soul_round55",
+   "script": "code-quality-audit\\第55轮-灵魂实体与NPC人设\\verify_soul55.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 14,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 98,
+     "code": "check('S3 满速 = 原作 4px/帧 * 30fps * 3 倍',",
+     "win": "check('S3 满速 = 原作 4px/帧 * 30fps * 3 倍',\n      almost(soul.state.speed_per_sec, 360.0), '%.1f' % soul.state.speed_per_sec)"
+    },
+    {
+     "line": 137,
+     "code": "check('K0 负控制：没按键时推进 0.1s 位置不变（松键即停的反面）',",
+     "win": "check('K0 负控制：没按键时推进 0.1s 位置不变（松键即停的反面）',\n      (soul.state.x, soul.state.y) == (base_x, base_y),\n      '(%s,%s)' % (soul.state.x, soul.state.y))"
+    },
+    {
+     "line": 185,
+     "code": "check('K7 负控制：F5 不被灵魂吃掉（isAccepted=False）',",
+     "win": "check('K7 负控制：F5 不被灵魂吃掉（isAccepted=False）',\n      not ev.isAccepted(), 'accepted=%s' % ev.isAccepted())"
+    }
+   ]
+  },
+  {
+   "id": "walk_round47",
+   "script": "code-quality-audit\\第47轮-房间全量与寻路人味化\\verify_walk47.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 24,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 221,
+     "code": "check('前置：模块与改前证据都在位', False,",
+     "win": "check('前置：模块与改前证据都在位', False,\n              'mod=%s head_ev=%s' % (os.path.isfile(MOD), os.path.isfile(HEAD_EV)))"
+    },
+    {
+     "line": 233,
+     "code": "print('== A. 真实全量（%d 组）==' % len(samples))",
+     "win": "print('== A. 真实全量（%d 组）==' % len(samples))"
+    },
+    {
+     "line": 291,
+     "code": "check('A1 样本量 >= 150（证明判据真跑了）', n_ok >= 150, 'got=%d' % n_ok)",
+     "win": "check('A1 样本量 >= 150（证明判据真跑了）', n_ok >= 150, 'got=%d' % n_ok)"
+    }
+   ]
+  },
+  {
+   "id": "warm58",
+   "script": "code-quality-audit\\第58轮-模型常驻与预热\\check58.py",
+   "level": "INFO",
+   "n_volatile": 0,
+   "n_fmt": 25,
+   "volatile": [],
+   "fmt": [
+    {
+     "line": 181,
+     "code": "check('B2 正控制：原生端点**确实**能改窗口（480 < Δ < 900，实得 %s）'",
+     "win": "check('B2 正控制：原生端点**确实**能改窗口（480 < Δ < 900，实得 %s）'\n          % (('%.0f' % nd) if nd else '?',), nd is not None and 480 < nd < 900)"
+    },
+    {
+     "line": 194,
+     "code": "check('B4 ★ keep_alive 黏住：普通请求沿用黏住值（Q3 ≈ 600s，实得 %s）'",
+     "win": "check('B4 ★ keep_alive 黏住：普通请求沿用黏住值（Q3 ≈ 600s，实得 %s）'\n          % (('%.0f' % q3) if _num(q3) else '?',), _num(q3) and 540 < q3 < 660)"
+    },
+    {
+     "line": 213,
+     "code": "check('B8 同前缀冷 prefill 真是\"大\"（> 10s，实得 %s）'",
+     "win": "check('B8 同前缀冷 prefill 真是\"大\"（> 10s，实得 %s）'\n          % (('%.2fs' % cold) if cold else '?',), cold is not None and cold > 10.0)"
+    }
+   ]
+  }
+ ]
+}
