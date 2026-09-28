@@ -16,10 +16,18 @@ import io
 import os
 import subprocess
 import sys
+import tempfile
 import time
 
 EXE = u'E:\\Download\\UTMT_CLI_v0.9.2.0\\UndertaleModCli.exe'
-LOGDIR = u'E:\\Download\\_tmp\\utmt61_logs'
+#: 候选日志目录（按序探测可写性）。★ E 盘 dirty 是常态（Errno 22 / WinError 1），
+#: 所以**不能写死一个目录**：`_tmp` 时好时坏，落到 %TEMP% 兜底。
+LOGDIR_CANDIDATES = [
+    u'E:\\Download\\_tmp_63\\utmt63_logs',
+    u'E:\\Download\\_tmp\\utmt61_logs',
+    os.path.join(tempfile.gettempdir(), u'utmt_logs'),
+]
+LOGDIR = None
 
 
 def ensure_dir(d):
@@ -36,24 +44,70 @@ def ensure_dir(d):
     return os.path.isdir(d)
 
 
+def writable(d):
+    u"""真判据：**写一个探针文件**，而不是只看目录存在。"""
+    if not ensure_dir(d):
+        return False
+    probe = os.path.join(d, u'_w.tmp')
+    for _ in range(6):
+        try:
+            with io.open(probe, u'wb') as fh:
+                fh.write(b'ok')
+            try:
+                os.remove(probe)
+            except OSError:
+                pass
+            return True
+        except OSError:
+            time.sleep(0.35)
+    return False
+
+
+def pick_logdir():
+    global LOGDIR
+    if LOGDIR:
+        return LOGDIR
+    for d in LOGDIR_CANDIDATES:
+        if writable(d):
+            LOGDIR = d
+            print(u'[logdir] %s  可写' % d)
+            return d
+    return None
+
+
+def _open_log(log):
+    u"""打开日志文件（带重试）。返回 fh 或 None。"""
+    for _ in range(8):
+        try:
+            return io.open(log, u'wb')
+        except OSError as e:
+            print(u'    !! 打开日志失败(%s)，重试' % e)
+            time.sleep(0.4)
+    return None
+
+
 def run_utmt(args, tag, timeout=900):
     u"""跑 UTMT CLI；stdout/stderr 落文件。返回 (rc, 输出全文)。"""
-    if not ensure_dir(LOGDIR):
-        return (-1, u'<无法创建日志目录>')
-    log = os.path.join(LOGDIR, u'%s.log' % tag)
+    d = pick_logdir()
+    if not d:
+        return (-1, u'<无可用日志目录>')
+    log = os.path.join(d, u'%s.log' % tag)
     cmd = [EXE] + list(args)
     print(u'>>> %s' % u' '.join(cmd))
     t0 = time.time()
+    fh = _open_log(log)
+    if fh is None:
+        return (-1, u'<日志不可写: %s>' % log)
     try:
-        with io.open(log, u'wb') as fh:
+        with fh:
             p = subprocess.run(cmd, stdout=fh, stderr=subprocess.STDOUT,
                                stdin=subprocess.DEVNULL, timeout=timeout)
     except subprocess.TimeoutExpired:
         return (-2, u'<超时 %ds>' % timeout)
     dt = time.time() - t0
     try:
-        with io.open(log, u'rb') as fh:
-            txt = fh.read().decode(u'utf-8', u'replace')
+        with io.open(log, u'rb') as fh2:
+            txt = fh2.read().decode(u'utf-8', u'replace')
     except OSError as e:
         txt = u'<读日志失败: %s>' % e
     print(u'    rc=%s  %.1fs  输出 %d 字节  (log=%s)' % (p.returncode, dt, len(txt), log))

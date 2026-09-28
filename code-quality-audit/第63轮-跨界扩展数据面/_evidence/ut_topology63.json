@@ -1,0 +1,10878 @@
+{
+ "source": "undertale game.droid (UTMT v0.9.2.0, dump_instances63.csx)",
+ "room_count": 338,
+ "rooms": [
+  {
+   "index": 0,
+   "name": "room_start",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 1,
+   "name": "room_introstory",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 2,
+   "name": "room_introimage",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 3,
+   "name": "room_intromenu",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 4,
+   "name": "room_area1",
+   "w": 680,
+   "h": 260
+  },
+  {
+   "index": 5,
+   "name": "room_area1_2",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 6,
+   "name": "room_ruins1",
+   "w": 320,
+   "h": 480
+  },
+  {
+   "index": 7,
+   "name": "room_ruins2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 8,
+   "name": "room_ruins3",
+   "w": 740,
+   "h": 240
+  },
+  {
+   "index": 9,
+   "name": "room_ruins4",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 10,
+   "name": "room_ruins5",
+   "w": 1200,
+   "h": 240
+  },
+  {
+   "index": 11,
+   "name": "room_ruins6",
+   "w": 2500,
+   "h": 240
+  },
+  {
+   "index": 12,
+   "name": "room_ruins7",
+   "w": 320,
+   "h": 480
+  },
+  {
+   "index": 13,
+   "name": "room_ruins7A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 14,
+   "name": "room_ruins8",
+   "w": 320,
+   "h": 640
+  },
+  {
+   "index": 15,
+   "name": "room_ruins9",
+   "w": 480,
+   "h": 240
+  },
+  {
+   "index": 16,
+   "name": "room_ruins10",
+   "w": 580,
+   "h": 760
+  },
+  {
+   "index": 17,
+   "name": "room_ruins11",
+   "w": 560,
+   "h": 240
+  },
+  {
+   "index": 18,
+   "name": "room_ruins12A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 19,
+   "name": "room_ruins12",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 20,
+   "name": "room_ruins12B",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 21,
+   "name": "room_ruins13",
+   "w": 640,
+   "h": 300
+  },
+  {
+   "index": 22,
+   "name": "room_ruins14",
+   "w": 640,
+   "h": 720
+  },
+  {
+   "index": 23,
+   "name": "room_ruins15A",
+   "w": 400,
+   "h": 440
+  },
+  {
+   "index": 24,
+   "name": "room_ruins15B",
+   "w": 400,
+   "h": 440
+  },
+  {
+   "index": 25,
+   "name": "room_ruins15C",
+   "w": 400,
+   "h": 440
+  },
+  {
+   "index": 26,
+   "name": "room_ruins15D",
+   "w": 400,
+   "h": 440
+  },
+  {
+   "index": 27,
+   "name": "room_ruins15E",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 28,
+   "name": "room_ruins16",
+   "w": 600,
+   "h": 400
+  },
+  {
+   "index": 29,
+   "name": "room_ruins17",
+   "w": 320,
+   "h": 640
+  },
+  {
+   "index": 30,
+   "name": "room_ruins18OLD",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 31,
+   "name": "room_ruins19",
+   "w": 320,
+   "h": 540
+  },
+  {
+   "index": 32,
+   "name": "room_torhouse1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 33,
+   "name": "room_torhouse2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 34,
+   "name": "room_torhouse3",
+   "w": 800,
+   "h": 240
+  },
+  {
+   "index": 35,
+   "name": "room_torielroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 36,
+   "name": "room_asrielroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 37,
+   "name": "room_kitchen",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 38,
+   "name": "room_basement1",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 39,
+   "name": "room_basement2",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 40,
+   "name": "room_basement3",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 41,
+   "name": "room_basement4",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 42,
+   "name": "room_basement5",
+   "w": 320,
+   "h": 1620
+  },
+  {
+   "index": 43,
+   "name": "room_ruinsexit",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 44,
+   "name": "room_tundra1",
+   "w": 440,
+   "h": 240
+  },
+  {
+   "index": 45,
+   "name": "room_tundra2",
+   "w": 2720,
+   "h": 240
+  },
+  {
+   "index": 46,
+   "name": "room_tundra3",
+   "w": 400,
+   "h": 240
+  },
+  {
+   "index": 47,
+   "name": "room_tundra3A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 48,
+   "name": "room_tundra4",
+   "w": 560,
+   "h": 240
+  },
+  {
+   "index": 49,
+   "name": "room_tundra5",
+   "w": 460,
+   "h": 240
+  },
+  {
+   "index": 50,
+   "name": "room_tundra6",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 51,
+   "name": "room_tundra6A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 52,
+   "name": "room_tundra7",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 53,
+   "name": "room_tundra8",
+   "w": 760,
+   "h": 580
+  },
+  {
+   "index": 54,
+   "name": "room_tundra8A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 55,
+   "name": "room_tundra9",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 56,
+   "name": "room_tundra_spaghetti",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 57,
+   "name": "room_tundra_snowpuzz",
+   "w": 620,
+   "h": 580
+  },
+  {
+   "index": 58,
+   "name": "room_tundra_xoxosmall",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 59,
+   "name": "room_tundra_xoxopuzz",
+   "w": 820,
+   "h": 240
+  },
+  {
+   "index": 60,
+   "name": "room_tundra_randoblock",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 61,
+   "name": "room_tundra_lesserdog",
+   "w": 560,
+   "h": 240
+  },
+  {
+   "index": 62,
+   "name": "room_tundra_icehole",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 63,
+   "name": "room_tundra_iceentrance",
+   "w": 940,
+   "h": 240
+  },
+  {
+   "index": 64,
+   "name": "room_tundra_iceexit_new",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "index": 65,
+   "name": "room_tundra_iceexit",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "index": 66,
+   "name": "room_tundra_poffzone",
+   "w": 560,
+   "h": 240
+  },
+  {
+   "index": 67,
+   "name": "room_tundra_dangerbridge",
+   "w": 1040,
+   "h": 240
+  },
+  {
+   "index": 68,
+   "name": "room_tundra_town",
+   "w": 2720,
+   "h": 240
+  },
+  {
+   "index": 69,
+   "name": "room_tundra_town2",
+   "w": 800,
+   "h": 240
+  },
+  {
+   "index": 70,
+   "name": "room_tundra_dock",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 71,
+   "name": "room_tundra_inn",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 72,
+   "name": "room_tundra_inn_2f",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 73,
+   "name": "room_tundra_grillby",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 74,
+   "name": "room_tundra_library",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 75,
+   "name": "room_tundra_garage",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 76,
+   "name": "room_tundra_sanshouse",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 77,
+   "name": "room_tundra_paproom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 78,
+   "name": "room_tundra_sansroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 79,
+   "name": "room_tundra_sansroom_dark",
+   "w": 1000,
+   "h": 580
+  },
+  {
+   "index": 80,
+   "name": "room_tundra_sansbasement",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 81,
+   "name": "room_fogroom",
+   "w": 900,
+   "h": 240
+  },
+  {
+   "index": 82,
+   "name": "room_water1",
+   "w": 640,
+   "h": 240
+  },
+  {
+   "index": 83,
+   "name": "room_water2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 84,
+   "name": "room_water3",
+   "w": 580,
+   "h": 540
+  },
+  {
+   "index": 85,
+   "name": "room_water3A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 86,
+   "name": "room_water4",
+   "w": 560,
+   "h": 400
+  },
+  {
+   "index": 87,
+   "name": "room_water_bridgepuzz1",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 88,
+   "name": "room_water5",
+   "w": 500,
+   "h": 500
+  },
+  {
+   "index": 89,
+   "name": "room_water5A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 90,
+   "name": "room_water6",
+   "w": 740,
+   "h": 380
+  },
+  {
+   "index": 91,
+   "name": "room_water7",
+   "w": 1100,
+   "h": 340
+  },
+  {
+   "index": 92,
+   "name": "room_water8",
+   "w": 2100,
+   "h": 300
+  },
+  {
+   "index": 93,
+   "name": "room_water9",
+   "w": 860,
+   "h": 240
+  },
+  {
+   "index": 94,
+   "name": "room_water_savepoint1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 95,
+   "name": "room_water11",
+   "w": 660,
+   "h": 340
+  },
+  {
+   "index": 96,
+   "name": "room_water_nicecream",
+   "w": 320,
+   "h": 440
+  },
+  {
+   "index": 97,
+   "name": "room_water12",
+   "w": 1280,
+   "h": 820
+  },
+  {
+   "index": 98,
+   "name": "room_water_shoe",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 99,
+   "name": "room_water_bird",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 100,
+   "name": "room_water_onionsan",
+   "w": 1220,
+   "h": 240
+  },
+  {
+   "index": 101,
+   "name": "room_water14",
+   "w": 740,
+   "h": 240
+  },
+  {
+   "index": 102,
+   "name": "room_water_piano",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 103,
+   "name": "room_water_dogroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 104,
+   "name": "room_water_statue",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 105,
+   "name": "room_water_prewaterfall",
+   "w": 340,
+   "h": 240
+  },
+  {
+   "index": 106,
+   "name": "room_water_waterfall",
+   "w": 1640,
+   "h": 240
+  },
+  {
+   "index": 107,
+   "name": "room_water_waterfall2",
+   "w": 320,
+   "h": 1040
+  },
+  {
+   "index": 108,
+   "name": "room_water_waterfall3",
+   "w": 1400,
+   "h": 240
+  },
+  {
+   "index": 109,
+   "name": "room_water_waterfall4",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 110,
+   "name": "room_water_preundyne",
+   "w": 720,
+   "h": 240
+  },
+  {
+   "index": 111,
+   "name": "room_water_undynebridge",
+   "w": 1940,
+   "h": 1240
+  },
+  {
+   "index": 112,
+   "name": "room_water_undynebridgeend",
+   "w": 820,
+   "h": 1140
+  },
+  {
+   "index": 113,
+   "name": "room_water_trashzone1",
+   "w": 820,
+   "h": 240
+  },
+  {
+   "index": 114,
+   "name": "room_water_trashsavepoint",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 115,
+   "name": "room_water_trashzone2",
+   "w": 320,
+   "h": 940
+  },
+  {
+   "index": 116,
+   "name": "room_water_friendlyhub",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 117,
+   "name": "room_water_undyneyard",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 118,
+   "name": "room_water_undynehouse",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 119,
+   "name": "room_water_blookyard",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 120,
+   "name": "room_water_blookhouse",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 121,
+   "name": "room_water_hapstablook",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 122,
+   "name": "room_water_farm",
+   "w": 760,
+   "h": 240
+  },
+  {
+   "index": 123,
+   "name": "room_water_prebird",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 124,
+   "name": "room_water_shop",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 125,
+   "name": "room_water_dock",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 126,
+   "name": "room_water15",
+   "w": 1020,
+   "h": 240
+  },
+  {
+   "index": 127,
+   "name": "room_water16",
+   "w": 620,
+   "h": 640
+  },
+  {
+   "index": 128,
+   "name": "room_water_temvillage",
+   "w": 660,
+   "h": 300
+  },
+  {
+   "index": 129,
+   "name": "room_water17",
+   "w": 640,
+   "h": 540
+  },
+  {
+   "index": 130,
+   "name": "room_water18",
+   "w": 1020,
+   "h": 240
+  },
+  {
+   "index": 131,
+   "name": "room_water19",
+   "w": 320,
+   "h": 640
+  },
+  {
+   "index": 132,
+   "name": "room_water20",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 133,
+   "name": "room_water21",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 134,
+   "name": "room_water_undynefinal",
+   "w": 320,
+   "h": 740
+  },
+  {
+   "index": 135,
+   "name": "room_water_undynefinal2",
+   "w": 320,
+   "h": 480
+  },
+  {
+   "index": 136,
+   "name": "room_water_undynefinal3",
+   "w": 720,
+   "h": 240
+  },
+  {
+   "index": 137,
+   "name": "room_fire1",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 138,
+   "name": "room_fire2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 139,
+   "name": "room_fire_prelab",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "index": 140,
+   "name": "room_fire_dock",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 141,
+   "name": "room_fire_lab1",
+   "w": 1100,
+   "h": 240
+  },
+  {
+   "index": 142,
+   "name": "room_fire_lab2",
+   "w": 860,
+   "h": 240
+  },
+  {
+   "index": 143,
+   "name": "room_fire3",
+   "w": 480,
+   "h": 340
+  },
+  {
+   "index": 144,
+   "name": "room_fire5",
+   "w": 320,
+   "h": 1640
+  },
+  {
+   "index": 145,
+   "name": "room_fire6",
+   "w": 860,
+   "h": 440
+  },
+  {
+   "index": 146,
+   "name": "room_fire6A",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 147,
+   "name": "room_fire_lasers1",
+   "w": 1160,
+   "h": 240
+  },
+  {
+   "index": 148,
+   "name": "room_fire7",
+   "w": 520,
+   "h": 560
+  },
+  {
+   "index": 149,
+   "name": "room_fire8",
+   "w": 360,
+   "h": 240
+  },
+  {
+   "index": 150,
+   "name": "room_fire_shootguy_2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 151,
+   "name": "room_fire9",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 152,
+   "name": "room_fire_shootguy_1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 153,
+   "name": "room_fire_turn",
+   "w": 800,
+   "h": 240
+  },
+  {
+   "index": 154,
+   "name": "room_fire_cookingshow",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 155,
+   "name": "room_fire_savepoint1",
+   "w": 720,
+   "h": 240
+  },
+  {
+   "index": 156,
+   "name": "room_fire_elevator_r1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 157,
+   "name": "room_fire_elevator_r2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 158,
+   "name": "room_fire_hotdog",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 159,
+   "name": "room_fire_walkandbranch",
+   "w": 820,
+   "h": 240
+  },
+  {
+   "index": 160,
+   "name": "room_fire_sorry",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 161,
+   "name": "room_fire_apron",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 162,
+   "name": "room_fire10",
+   "w": 840,
+   "h": 240
+  },
+  {
+   "index": 163,
+   "name": "room_fire_rpuzzle",
+   "w": 620,
+   "h": 540
+  },
+  {
+   "index": 164,
+   "name": "room_fire_mewmew2",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 165,
+   "name": "room_fire_boysnightout",
+   "w": 620,
+   "h": 440
+  },
+  {
+   "index": 166,
+   "name": "room_fire_newsreport",
+   "w": 980,
+   "h": 660
+  },
+  {
+   "index": 167,
+   "name": "room_fire_coreview2",
+   "w": 720,
+   "h": 240
+  },
+  {
+   "index": 168,
+   "name": "room_fire_elevator_l2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 169,
+   "name": "room_fire_elevator_l3",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 170,
+   "name": "room_fire_spidershop",
+   "w": 480,
+   "h": 240
+  },
+  {
+   "index": 171,
+   "name": "room_fire_walkandbranch2",
+   "w": 900,
+   "h": 660
+  },
+  {
+   "index": 172,
+   "name": "room_fire_conveyorlaser",
+   "w": 1000,
+   "h": 440
+  },
+  {
+   "index": 173,
+   "name": "room_fire_shootguy_3",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 174,
+   "name": "room_fire_preshootguy4",
+   "w": 320,
+   "h": 320
+  },
+  {
+   "index": 175,
+   "name": "room_fire_shootguy_4",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 176,
+   "name": "room_fire_savepoint2",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 177,
+   "name": "room_fire_spider",
+   "w": 1020,
+   "h": 240
+  },
+  {
+   "index": 178,
+   "name": "room_fire_pacing",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 179,
+   "name": "room_fire_operatest",
+   "w": 320,
+   "h": 380
+  },
+  {
+   "index": 180,
+   "name": "room_fire_multitile",
+   "w": 1360,
+   "h": 240
+  },
+  {
+   "index": 181,
+   "name": "room_fire_hotelfront_1",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 182,
+   "name": "room_fire_hotelfront_2",
+   "w": 480,
+   "h": 400
+  },
+  {
+   "index": 183,
+   "name": "room_fire_hotellobby",
+   "w": 520,
+   "h": 600
+  },
+  {
+   "index": 184,
+   "name": "room_fire_restaurant",
+   "w": 1020,
+   "h": 320
+  },
+  {
+   "index": 185,
+   "name": "room_fire_hoteldoors",
+   "w": 820,
+   "h": 240
+  },
+  {
+   "index": 186,
+   "name": "room_fire_hotelbed",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 187,
+   "name": "room_fire_elevator_r3",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 188,
+   "name": "room_fire_precore",
+   "w": 320,
+   "h": 560
+  },
+  {
+   "index": 189,
+   "name": "room_fire_core1",
+   "w": 320,
+   "h": 300
+  },
+  {
+   "index": 190,
+   "name": "room_fire_core2",
+   "w": 320,
+   "h": 340
+  },
+  {
+   "index": 191,
+   "name": "room_fire_core3",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 192,
+   "name": "room_fire_core4",
+   "w": 680,
+   "h": 240
+  },
+  {
+   "index": 193,
+   "name": "room_fire_core5",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 194,
+   "name": "room_fire_core_freebattle",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 195,
+   "name": "room_fire_core_laserfun",
+   "w": 1200,
+   "h": 240
+  },
+  {
+   "index": 196,
+   "name": "room_fire_core_branch",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 197,
+   "name": "room_fire_core_bottomleft",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 198,
+   "name": "room_fire_core_left",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 199,
+   "name": "room_fire_core_topleft",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 200,
+   "name": "room_fire_core_top",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 201,
+   "name": "room_fire_core_topright",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 202,
+   "name": "room_fire_core_right",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 203,
+   "name": "room_fire_core_bottomright",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 204,
+   "name": "room_fire_core_center",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 205,
+   "name": "room_fire_shootguy_5",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 206,
+   "name": "room_fire_core_treasureleft",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 207,
+   "name": "room_fire_core_treasureright",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 208,
+   "name": "room_fire_core_warrior",
+   "w": 780,
+   "h": 240
+  },
+  {
+   "index": 209,
+   "name": "room_fire_core_bridge",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 210,
+   "name": "room_fire_core_premett",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 211,
+   "name": "room_fire_core_metttest",
+   "w": 320,
+   "h": 1000
+  },
+  {
+   "index": 212,
+   "name": "room_fire_core_final",
+   "w": 1220,
+   "h": 240
+  },
+  {
+   "index": 213,
+   "name": "room_fire_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 214,
+   "name": "room_fire_elevator_l1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 215,
+   "name": "room_fire_finalelevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 216,
+   "name": "room_castle_elevatorout",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 217,
+   "name": "room_castle_precastle",
+   "w": 1300,
+   "h": 240
+  },
+  {
+   "index": 218,
+   "name": "room_castle_hook",
+   "w": 320,
+   "h": 940
+  },
+  {
+   "index": 219,
+   "name": "room_castle_front",
+   "w": 320,
+   "h": 540
+  },
+  {
+   "index": 220,
+   "name": "room_asghouse1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 221,
+   "name": "room_asghouse2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 222,
+   "name": "room_asghouse3",
+   "w": 800,
+   "h": 240
+  },
+  {
+   "index": 223,
+   "name": "room_asgoreroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 224,
+   "name": "room_asrielroom_final",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 225,
+   "name": "room_kitchen_final",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 226,
+   "name": "room_basement1_final",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 227,
+   "name": "room_basement2_final",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 228,
+   "name": "room_basement3_final",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 229,
+   "name": "room_basement4_final",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 230,
+   "name": "room_lastruins_corridor",
+   "w": 2120,
+   "h": 240
+  },
+  {
+   "index": 231,
+   "name": "room_sanscorridor",
+   "w": 1400,
+   "h": 240
+  },
+  {
+   "index": 232,
+   "name": "room_castle_finalshoehorn",
+   "w": 820,
+   "h": 540
+  },
+  {
+   "index": 233,
+   "name": "room_castle_coffins1",
+   "w": 320,
+   "h": 540
+  },
+  {
+   "index": 234,
+   "name": "room_castle_coffins2",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 235,
+   "name": "room_castle_throneroom",
+   "w": 320,
+   "h": 600
+  },
+  {
+   "index": 236,
+   "name": "room_castle_prebarrier",
+   "w": 680,
+   "h": 260
+  },
+  {
+   "index": 237,
+   "name": "room_castle_barrier",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 238,
+   "name": "room_castle_exit",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 239,
+   "name": "room_undertale_end",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 240,
+   "name": "room_castle_trueexit",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 241,
+   "name": "room_outsideworld",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 242,
+   "name": "room_fire_labelevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 243,
+   "name": "room_truelab_elevatorinside",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 244,
+   "name": "room_truelab_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 245,
+   "name": "room_truelab_hall1",
+   "w": 840,
+   "h": 240
+  },
+  {
+   "index": 246,
+   "name": "room_truelab_hub",
+   "w": 500,
+   "h": 620
+  },
+  {
+   "index": 247,
+   "name": "room_truelab_hall2",
+   "w": 420,
+   "h": 240
+  },
+  {
+   "index": 248,
+   "name": "room_truelab_operatingroom",
+   "w": 580,
+   "h": 240
+  },
+  {
+   "index": 249,
+   "name": "room_truelab_redlever",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 250,
+   "name": "room_truelab_prebed",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "index": 251,
+   "name": "room_truelab_bedroom",
+   "w": 540,
+   "h": 540
+  },
+  {
+   "index": 252,
+   "name": "room_truelab_mirror",
+   "w": 1000,
+   "h": 240
+  },
+  {
+   "index": 253,
+   "name": "room_truelab_bluelever",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 254,
+   "name": "room_truelab_hall3",
+   "w": 1160,
+   "h": 240
+  },
+  {
+   "index": 255,
+   "name": "room_truelab_shower",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 256,
+   "name": "room_truelab_determination",
+   "w": 460,
+   "h": 240
+  },
+  {
+   "index": 257,
+   "name": "room_truelab_tv",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 258,
+   "name": "room_truelab_cooler",
+   "w": 720,
+   "h": 240
+  },
+  {
+   "index": 259,
+   "name": "room_truelab_greenlever",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 260,
+   "name": "room_truelab_fan",
+   "w": 580,
+   "h": 240
+  },
+  {
+   "index": 261,
+   "name": "room_truelab_castle_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 262,
+   "name": "room_truelab_prepower",
+   "w": 580,
+   "h": 240
+  },
+  {
+   "index": 263,
+   "name": "room_truelab_power",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 264,
+   "name": "room_gaster",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 265,
+   "name": "room_icecave1",
+   "w": 320,
+   "h": 580
+  },
+  {
+   "index": 266,
+   "name": "room_ice_dog",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 267,
+   "name": "room2",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 268,
+   "name": "room_water_fakehallway",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 269,
+   "name": "room_mysteryman",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 270,
+   "name": "room_soundtest",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 271,
+   "name": "TESTROOM",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 272,
+   "name": "room_water_redacted",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 273,
+   "name": "room_water13",
+   "w": 320,
+   "h": 640
+  },
+  {
+   "index": 274,
+   "name": "room_overworld",
+   "w": 1280,
+   "h": 640
+  },
+  {
+   "index": 275,
+   "name": "room_overworld3",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 276,
+   "name": "bullettest",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 277,
+   "name": "room_water16A",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 278,
+   "name": "room_end_castroll",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 279,
+   "name": "room_end_highway",
+   "w": 640,
+   "h": 240
+  },
+  {
+   "index": 280,
+   "name": "room_end_beach",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 281,
+   "name": "room_end_metta",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 282,
+   "name": "room_end_school",
+   "w": 320,
+   "h": 480
+  },
+  {
+   "index": 283,
+   "name": "room_end_mtebott",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 284,
+   "name": "room_creditsdodger",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 285,
+   "name": "room_end_myroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 286,
+   "name": "room_end_theend",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 287,
+   "name": "room_spritecheck",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 288,
+   "name": "room_settings",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 289,
+   "name": "room_controltest",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 290,
+   "name": "room_f_start",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 291,
+   "name": "room_f_intro",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 292,
+   "name": "room_f_menu",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 293,
+   "name": "room_f_room",
+   "w": 320,
+   "h": 520
+  },
+  {
+   "index": 294,
+   "name": "room_floweyx",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 295,
+   "name": "room_f_phrase",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 296,
+   "name": "room_fire4",
+   "w": 1420,
+   "h": 540
+  },
+  {
+   "index": 297,
+   "name": "room_fire10_old",
+   "w": 1320,
+   "h": 240
+  },
+  {
+   "index": 298,
+   "name": "room_fire10A_old",
+   "w": 1220,
+   "h": 240
+  },
+  {
+   "index": 299,
+   "name": "room_tundra_placeholder",
+   "w": 320,
+   "h": 800
+  },
+  {
+   "index": 300,
+   "name": "room_ruins12B_old",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 301,
+   "name": "room_tundra_rollsnow",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 302,
+   "name": "room_water7_older",
+   "w": 800,
+   "h": 340
+  },
+  {
+   "index": 303,
+   "name": "room_meetundyne_old",
+   "w": 560,
+   "h": 240
+  },
+  {
+   "index": 304,
+   "name": "room_water_mushroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 305,
+   "name": "room_monsteralign_test",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 306,
+   "name": "room_battle",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 307,
+   "name": "room_floweybattle",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 308,
+   "name": "room_fastbattle",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 309,
+   "name": "room_storybattle",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 310,
+   "name": "room_gameover",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 311,
+   "name": "room_shop1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 312,
+   "name": "room_shop2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 313,
+   "name": "room_shop3",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 314,
+   "name": "room_shop4",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 315,
+   "name": "room_shop5",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 316,
+   "name": "room_riverman_transition",
+   "w": 660,
+   "h": 240
+  },
+  {
+   "index": 317,
+   "name": "room_papdate",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 318,
+   "name": "room_adate",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 319,
+   "name": "room_flowey_endchoice",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 320,
+   "name": "room_flowey_regret",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 321,
+   "name": "room_empty",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 322,
+   "name": "room_emptywhite",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 323,
+   "name": "room_emptyblack",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 324,
+   "name": "room_nothingness",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 325,
+   "name": "room_undertale",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 326,
+   "name": "room_of_dog",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 327,
+   "name": "room_quizholder",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 328,
+   "name": "room_friendtest",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 329,
+   "name": "room_bringitinguys",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 330,
+   "name": "room_asrielappears",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 331,
+   "name": "room_goodbyeasriel",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 332,
+   "name": "room_asrielmemory",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 333,
+   "name": "room_asrieltest",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 334,
+   "name": "room_afinaltest",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 335,
+   "name": "room_dogshrine",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 336,
+   "name": "room_dogshrine_ruined",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 337,
+   "name": "room_dogshrine_mewmew",
+   "w": 320,
+   "h": 240
+  }
+ ],
+ "door_offsets": {
+  "A": 1,
+  "B": -1,
+  "C": 2,
+  "D": -2
+ },
+ "offset_evidence": {
+  "A": [
+   [
+    1,
+    132,
+    135,
+    0.9777777777777777
+   ],
+   [
+    3,
+    98,
+    135,
+    0.725925925925926
+   ],
+   [
+    -3,
+    96,
+    135,
+    0.7111111111111111
+   ]
+  ],
+  "B": [
+   [
+    -1,
+    131,
+    132,
+    0.9924242424242424
+   ],
+   [
+    1,
+    97,
+    132,
+    0.7348484848484849
+   ],
+   [
+    -2,
+    95,
+    132,
+    0.7196969696969697
+   ]
+  ],
+  "C": [
+   [
+    2,
+    22,
+    24,
+    0.9166666666666666
+   ],
+   [
+    -2,
+    5,
+    24,
+    0.20833333333333334
+   ],
+   [
+    6,
+    5,
+    24,
+    0.20833333333333334
+   ]
+  ],
+  "D": [
+   [
+    -2,
+    22,
+    25,
+    0.88
+   ],
+   [
+    -6,
+    6,
+    25,
+    0.24
+   ],
+   [
+    2,
+    4,
+    25,
+    0.16
+   ]
+  ]
+ },
+ "base_rate": {
+  "A": 0.5650887573964497,
+  "B": 0.5473372781065089,
+  "C": 0.09171597633136094,
+  "D": 0.08284023668639054
+ },
+ "edges": [
+  {
+   "from": 4,
+   "from_name": "room_area1",
+   "door": "A",
+   "offset": 1,
+   "to": 5,
+   "to_name": "room_area1_2",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     610,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 5,
+   "from_name": "room_area1_2",
+   "door": "B",
+   "offset": -1,
+   "to": 4,
+   "to_name": "room_area1",
+   "landing_ok": true,
+   "landing": [
+    [
+     610,
+     152
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     410
+    ],
+    [
+     140,
+     410
+    ],
+    [
+     160,
+     410
+    ],
+    [
+     180,
+     410
+    ]
+   ]
+  },
+  {
+   "from": 6,
+   "from_name": "room_ruins1",
+   "door": "A",
+   "offset": 1,
+   "to": 7,
+   "to_name": "room_ruins2",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     100
+    ],
+    [
+     160,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 7,
+   "from_name": "room_ruins2",
+   "door": "A",
+   "offset": 1,
+   "to": 8,
+   "to_name": "room_ruins3",
+   "landing_ok": true,
+   "landing": [
+    [
+     130,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     60
+    ],
+    [
+     140,
+     60
+    ]
+   ]
+  },
+  {
+   "from": 7,
+   "from_name": "room_ruins2",
+   "door": "B",
+   "offset": -1,
+   "to": 6,
+   "to_name": "room_ruins1",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     110
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 8,
+   "from_name": "room_ruins3",
+   "door": "A",
+   "offset": 1,
+   "to": 9,
+   "to_name": "room_ruins4",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     720,
+     140
+    ],
+    [
+     720,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 8,
+   "from_name": "room_ruins3",
+   "door": "B",
+   "offset": -1,
+   "to": 7,
+   "to_name": "room_ruins2",
+   "landing_ok": true,
+   "landing": [
+    [
+     130,
+     70
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 9,
+   "from_name": "room_ruins4",
+   "door": "A",
+   "offset": 1,
+   "to": 10,
+   "to_name": "room_ruins5",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     150,
+     62
+    ]
+   ]
+  },
+  {
+   "from": 9,
+   "from_name": "room_ruins4",
+   "door": "B",
+   "offset": -1,
+   "to": 8,
+   "to_name": "room_ruins3",
+   "landing_ok": true,
+   "landing": [
+    [
+     700,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 10,
+   "from_name": "room_ruins5",
+   "door": "A",
+   "offset": 1,
+   "to": 11,
+   "to_name": "room_ruins6",
+   "landing_ok": true,
+   "landing": [
+    [
+     30,
+     102
+    ]
+   ],
+   "door_xy": [
+    [
+     1180,
+     100
+    ],
+    [
+     1180,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 10,
+   "from_name": "room_ruins5",
+   "door": "B",
+   "offset": -1,
+   "to": 9,
+   "to_name": "room_ruins4",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     75
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 12,
+   "from_name": "room_ruins7",
+   "door": "A",
+   "offset": 1,
+   "to": 13,
+   "to_name": "room_ruins7A",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     60
+    ],
+    [
+     160,
+     60
+    ]
+   ]
+  },
+  {
+   "from": 12,
+   "from_name": "room_ruins7",
+   "door": "C",
+   "offset": 2,
+   "to": 14,
+   "to_name": "room_ruins8",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     340
+    ],
+    [
+     300,
+     360
+    ]
+   ]
+  },
+  {
+   "from": 13,
+   "from_name": "room_ruins7A",
+   "door": "B",
+   "offset": -1,
+   "to": 12,
+   "to_name": "room_ruins7",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     70
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 14,
+   "from_name": "room_ruins8",
+   "door": "A",
+   "offset": 1,
+   "to": 15,
+   "to_name": "room_ruins9",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 14,
+   "from_name": "room_ruins8",
+   "door": "D",
+   "offset": -2,
+   "to": 12,
+   "to_name": "room_ruins7",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     340
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 15,
+   "from_name": "room_ruins9",
+   "door": "A",
+   "offset": 1,
+   "to": 16,
+   "to_name": "room_ruins10",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     460,
+     100
+    ],
+    [
+     460,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 15,
+   "from_name": "room_ruins9",
+   "door": "B",
+   "offset": -1,
+   "to": 14,
+   "to_name": "room_ruins8",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     102
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 16,
+   "from_name": "room_ruins10",
+   "door": "A",
+   "offset": 1,
+   "to": 17,
+   "to_name": "room_ruins11",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     560,
+     220
+    ],
+    [
+     560,
+     240
+    ]
+   ]
+  },
+  {
+   "from": 16,
+   "from_name": "room_ruins10",
+   "door": "B",
+   "offset": -1,
+   "to": 15,
+   "to_name": "room_ruins9",
+   "landing_ok": true,
+   "landing": [
+    [
+     440,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 17,
+   "from_name": "room_ruins11",
+   "door": "A",
+   "offset": 1,
+   "to": 18,
+   "to_name": "room_ruins12A",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     540,
+     120
+    ],
+    [
+     540,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 17,
+   "from_name": "room_ruins11",
+   "door": "B",
+   "offset": -1,
+   "to": 16,
+   "to_name": "room_ruins10",
+   "landing_ok": true,
+   "landing": [
+    [
+     540,
+     220
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 18,
+   "from_name": "room_ruins12A",
+   "door": "A",
+   "offset": 1,
+   "to": 19,
+   "to_name": "room_ruins12",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     120
+    ],
+    [
+     300,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 18,
+   "from_name": "room_ruins12A",
+   "door": "B",
+   "offset": -1,
+   "to": 17,
+   "to_name": "room_ruins11",
+   "landing_ok": true,
+   "landing": [
+    [
+     520,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 19,
+   "from_name": "room_ruins12",
+   "door": "A",
+   "offset": 1,
+   "to": 20,
+   "to_name": "room_ruins12B",
+   "landing_ok": true,
+   "landing": [
+    [
+     22,
+     122
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     120
+    ],
+    [
+     300,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 19,
+   "from_name": "room_ruins12",
+   "door": "B",
+   "offset": -1,
+   "to": 18,
+   "to_name": "room_ruins12A",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 20,
+   "from_name": "room_ruins12B",
+   "door": "B",
+   "offset": -1,
+   "to": 19,
+   "to_name": "room_ruins12",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     138
+    ],
+    [
+     0,
+     122
+    ]
+   ]
+  },
+  {
+   "from": 21,
+   "from_name": "room_ruins13",
+   "door": "A",
+   "offset": 1,
+   "to": 22,
+   "to_name": "room_ruins14",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     620,
+     160
+    ],
+    [
+     620,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 22,
+   "from_name": "room_ruins14",
+   "door": "A",
+   "offset": 1,
+   "to": 23,
+   "to_name": "room_ruins15A",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     620,
+     160
+    ],
+    [
+     620,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 22,
+   "from_name": "room_ruins14",
+   "door": "B",
+   "offset": -1,
+   "to": 21,
+   "to_name": "room_ruins13",
+   "landing_ok": true,
+   "landing": [
+    [
+     600,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 23,
+   "from_name": "room_ruins15A",
+   "door": "A",
+   "offset": 1,
+   "to": 24,
+   "to_name": "room_ruins15B",
+   "landing_ok": true,
+   "landing": [
+    [
+     260,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     240,
+     420
+    ],
+    [
+     260,
+     420
+    ]
+   ]
+  },
+  {
+   "from": 23,
+   "from_name": "room_ruins15A",
+   "door": "B",
+   "offset": -1,
+   "to": 22,
+   "to_name": "room_ruins14",
+   "landing_ok": true,
+   "landing": [
+    [
+     600,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 24,
+   "from_name": "room_ruins15B",
+   "door": "A",
+   "offset": 1,
+   "to": 25,
+   "to_name": "room_ruins15C",
+   "landing_ok": true,
+   "landing": [
+    [
+     360,
+     320
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     320
+    ],
+    [
+     0,
+     340
+    ]
+   ]
+  },
+  {
+   "from": 24,
+   "from_name": "room_ruins15B",
+   "door": "B",
+   "offset": -1,
+   "to": 23,
+   "to_name": "room_ruins15A",
+   "landing_ok": true,
+   "landing": [
+    [
+     250,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     240,
+     100
+    ],
+    [
+     260,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 25,
+   "from_name": "room_ruins15C",
+   "door": "A",
+   "offset": 1,
+   "to": 26,
+   "to_name": "room_ruins15D",
+   "landing_ok": true,
+   "landing": [
+    [
+     120,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     100
+    ],
+    [
+     140,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 25,
+   "from_name": "room_ruins15C",
+   "door": "B",
+   "offset": -1,
+   "to": 24,
+   "to_name": "room_ruins15B",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     320
+    ]
+   ],
+   "door_xy": [
+    [
+     380,
+     340
+    ],
+    [
+     380,
+     320
+    ]
+   ]
+  },
+  {
+   "from": 26,
+   "from_name": "room_ruins15D",
+   "door": "B",
+   "offset": -1,
+   "to": 25,
+   "to_name": "room_ruins15C",
+   "landing_ok": true,
+   "landing": [
+    [
+     120,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     420
+    ],
+    [
+     120,
+     420
+    ]
+   ]
+  },
+  {
+   "from": 26,
+   "from_name": "room_ruins15D",
+   "door": "C",
+   "offset": 2,
+   "to": 28,
+   "to_name": "room_ruins16",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     280
+    ]
+   ],
+   "door_xy": [
+    [
+     380,
+     160
+    ],
+    [
+     380,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 28,
+   "from_name": "room_ruins16",
+   "door": "A",
+   "offset": 1,
+   "to": 29,
+   "to_name": "room_ruins17",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     580,
+     280
+    ],
+    [
+     580,
+     300
+    ]
+   ]
+  },
+  {
+   "from": 28,
+   "from_name": "room_ruins16",
+   "door": "D",
+   "offset": -2,
+   "to": 26,
+   "to_name": "room_ruins15D",
+   "landing_ok": true,
+   "landing": [
+    [
+     360,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     280
+    ],
+    [
+     0,
+     300
+    ]
+   ]
+  },
+  {
+   "from": 29,
+   "from_name": "room_ruins17",
+   "door": "A",
+   "offset": 1,
+   "to": 30,
+   "to_name": "room_ruins18OLD",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     150,
+     64
+    ]
+   ]
+  },
+  {
+   "from": 29,
+   "from_name": "room_ruins17",
+   "door": "B",
+   "offset": -1,
+   "to": 28,
+   "to_name": "room_ruins16",
+   "landing_ok": true,
+   "landing": [
+    [
+     560,
+     280
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 30,
+   "from_name": "room_ruins18OLD",
+   "door": "B",
+   "offset": -1,
+   "to": 29,
+   "to_name": "room_ruins17",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     78
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 32,
+   "from_name": "room_torhouse1",
+   "door": "A",
+   "offset": 1,
+   "to": 33,
+   "to_name": "room_torhouse2",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     150
+    ],
+    [
+     0,
+     170
+    ],
+    [
+     0,
+     190
+    ]
+   ]
+  },
+  {
+   "from": 32,
+   "from_name": "room_torhouse1",
+   "door": "C",
+   "offset": 2,
+   "to": 34,
+   "to_name": "room_torhouse3",
+   "landing_ok": true,
+   "landing": [
+    [
+     23,
+     144
+    ]
+   ],
+   "door_xy": [
+    [
+     298,
+     146
+    ],
+    [
+     298,
+     166
+    ],
+    [
+     298,
+     186
+    ]
+   ]
+  },
+  {
+   "from": 33,
+   "from_name": "room_torhouse2",
+   "door": "B",
+   "offset": -1,
+   "to": 32,
+   "to_name": "room_torhouse1",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     150
+    ],
+    [
+     300,
+     176
+    ]
+   ]
+  },
+  {
+   "from": 34,
+   "from_name": "room_torhouse3",
+   "door": "A",
+   "offset": 1,
+   "to": 35,
+   "to_name": "room_torielroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     110,
+     202
+    ]
+   ],
+   "door_xy": [
+    [
+     360,
+     124
+    ]
+   ]
+  },
+  {
+   "from": 34,
+   "from_name": "room_torhouse3",
+   "door": "C",
+   "offset": 2,
+   "to": 36,
+   "to_name": "room_asrielroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     192,
+     182
+    ]
+   ],
+   "door_xy": [
+    [
+     152,
+     122
+    ]
+   ]
+  },
+  {
+   "from": 34,
+   "from_name": "room_torhouse3",
+   "door": "D",
+   "offset": -2,
+   "to": 32,
+   "to_name": "room_torhouse1",
+   "landing_ok": true,
+   "landing": [
+    [
+     274,
+     164
+    ]
+   ],
+   "door_xy": [
+    [
+     -3,
+     142
+    ],
+    [
+     -1,
+     168
+    ],
+    [
+     0,
+     183
+    ]
+   ]
+  },
+  {
+   "from": 35,
+   "from_name": "room_torielroom",
+   "door": "B",
+   "offset": -1,
+   "to": 34,
+   "to_name": "room_torhouse3",
+   "landing_ok": true,
+   "landing": [
+    [
+     360,
+     136
+    ]
+   ],
+   "door_xy": [
+    [
+     110,
+     232
+    ]
+   ]
+  },
+  {
+   "from": 36,
+   "from_name": "room_asrielroom",
+   "door": "D",
+   "offset": -2,
+   "to": 34,
+   "to_name": "room_torhouse3",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     196,
+     218
+    ]
+   ]
+  },
+  {
+   "from": 38,
+   "from_name": "room_basement1",
+   "door": "A",
+   "offset": 1,
+   "to": 39,
+   "to_name": "room_basement2",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     480,
+     120
+    ],
+    [
+     480,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 39,
+   "from_name": "room_basement2",
+   "door": "A",
+   "offset": 1,
+   "to": 40,
+   "to_name": "room_basement3",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     480,
+     120
+    ],
+    [
+     480,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 39,
+   "from_name": "room_basement2",
+   "door": "B",
+   "offset": -1,
+   "to": 38,
+   "to_name": "room_basement1",
+   "landing_ok": true,
+   "landing": [
+    [
+     450,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 40,
+   "from_name": "room_basement3",
+   "door": "A",
+   "offset": 1,
+   "to": 41,
+   "to_name": "room_basement4",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     180,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 40,
+   "from_name": "room_basement3",
+   "door": "B",
+   "offset": -1,
+   "to": 39,
+   "to_name": "room_basement2",
+   "landing_ok": true,
+   "landing": [
+    [
+     450,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 41,
+   "from_name": "room_basement4",
+   "door": "B",
+   "offset": -1,
+   "to": 40,
+   "to_name": "room_basement3",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ],
+    [
+     180,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 42,
+   "from_name": "room_basement5",
+   "door": "A",
+   "offset": 1,
+   "to": 43,
+   "to_name": "room_ruinsexit",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     365
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     80
+    ],
+    [
+     160,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 42,
+   "from_name": "room_basement5",
+   "door": "B",
+   "offset": -1,
+   "to": 41,
+   "to_name": "room_basement4",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     75
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     1610
+    ],
+    [
+     160,
+     1610
+    ]
+   ]
+  },
+  {
+   "from": 43,
+   "from_name": "room_ruinsexit",
+   "door": "B",
+   "offset": -1,
+   "to": 42,
+   "to_name": "room_basement5",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     410
+    ],
+    [
+     160,
+     410
+    ]
+   ]
+  },
+  {
+   "from": 44,
+   "from_name": "room_tundra1",
+   "door": "A",
+   "offset": 1,
+   "to": 45,
+   "to_name": "room_tundra2",
+   "landing_ok": true,
+   "landing": [
+    [
+     40,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     420,
+     160
+    ],
+    [
+     420,
+     180
+    ],
+    [
+     420,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 45,
+   "from_name": "room_tundra2",
+   "door": "A",
+   "offset": 1,
+   "to": 46,
+   "to_name": "room_tundra3",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     2700,
+     160
+    ],
+    [
+     2700,
+     180
+    ],
+    [
+     2700,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 45,
+   "from_name": "room_tundra2",
+   "door": "B",
+   "offset": -1,
+   "to": 44,
+   "to_name": "room_tundra1",
+   "landing_ok": true,
+   "landing": [
+    [
+     390,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ],
+    [
+     0,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 46,
+   "from_name": "room_tundra3",
+   "door": "A",
+   "offset": 1,
+   "to": 47,
+   "to_name": "room_tundra3A",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     180,
+     0
+    ],
+    [
+     200,
+     0
+    ],
+    [
+     220,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 46,
+   "from_name": "room_tundra3",
+   "door": "B",
+   "offset": -1,
+   "to": 45,
+   "to_name": "room_tundra2",
+   "landing_ok": true,
+   "landing": [
+    [
+     2670,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ],
+    [
+     0,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 46,
+   "from_name": "room_tundra3",
+   "door": "C",
+   "offset": 2,
+   "to": 48,
+   "to_name": "room_tundra4",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     380,
+     147
+    ],
+    [
+     380,
+     174
+    ],
+    [
+     380,
+     201
+    ]
+   ]
+  },
+  {
+   "from": 47,
+   "from_name": "room_tundra3A",
+   "door": "B",
+   "offset": -1,
+   "to": 46,
+   "to_name": "room_tundra3",
+   "landing_ok": true,
+   "landing": [
+    [
+     200,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     115,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     165,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 48,
+   "from_name": "room_tundra4",
+   "door": "A",
+   "offset": 1,
+   "to": 49,
+   "to_name": "room_tundra5",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     550,
+     95
+    ],
+    [
+     550,
+     115
+    ],
+    [
+     550,
+     135
+    ],
+    [
+     550,
+     155
+    ],
+    [
+     550,
+     175
+    ],
+    [
+     550,
+     195
+    ]
+   ]
+  },
+  {
+   "from": 48,
+   "from_name": "room_tundra4",
+   "door": "D",
+   "offset": -2,
+   "to": 46,
+   "to_name": "room_tundra3",
+   "landing_ok": true,
+   "landing": [
+    [
+     360,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 49,
+   "from_name": "room_tundra5",
+   "door": "A",
+   "offset": 1,
+   "to": 50,
+   "to_name": "room_tundra6",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     440,
+     160
+    ],
+    [
+     440,
+     180
+    ],
+    [
+     440,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 49,
+   "from_name": "room_tundra5",
+   "door": "B",
+   "offset": -1,
+   "to": 48,
+   "to_name": "room_tundra4",
+   "landing_ok": true,
+   "landing": [
+    [
+     520,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ],
+    [
+     0,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 50,
+   "from_name": "room_tundra6",
+   "door": "A",
+   "offset": 1,
+   "to": 51,
+   "to_name": "room_tundra6A",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     320,
+     0
+    ],
+    [
+     340,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 50,
+   "from_name": "room_tundra6",
+   "door": "B",
+   "offset": -1,
+   "to": 49,
+   "to_name": "room_tundra5",
+   "landing_ok": true,
+   "landing": [
+    [
+     420,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ],
+    [
+     0,
+     200
+    ]
+   ]
+  },
+  {
+   "from": 50,
+   "from_name": "room_tundra6",
+   "door": "C",
+   "offset": 2,
+   "to": 52,
+   "to_name": "room_tundra7",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     600,
+     120
+    ],
+    [
+     600,
+     140
+    ],
+    [
+     600,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 51,
+   "from_name": "room_tundra6A",
+   "door": "B",
+   "offset": -1,
+   "to": 50,
+   "to_name": "room_tundra6",
+   "landing_ok": true,
+   "landing": [
+    [
+     320,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 52,
+   "from_name": "room_tundra7",
+   "door": "A",
+   "offset": 1,
+   "to": 53,
+   "to_name": "room_tundra8",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     120
+    ],
+    [
+     300,
+     140
+    ],
+    [
+     300,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 52,
+   "from_name": "room_tundra7",
+   "door": "D",
+   "offset": -2,
+   "to": 50,
+   "to_name": "room_tundra6",
+   "landing_ok": true,
+   "landing": [
+    [
+     580,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 53,
+   "from_name": "room_tundra8",
+   "door": "A",
+   "offset": 1,
+   "to": 54,
+   "to_name": "room_tundra8A",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     740,
+     120
+    ],
+    [
+     740,
+     100
+    ],
+    [
+     740,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 53,
+   "from_name": "room_tundra8",
+   "door": "B",
+   "offset": -1,
+   "to": 52,
+   "to_name": "room_tundra7",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 53,
+   "from_name": "room_tundra8",
+   "door": "C",
+   "offset": 2,
+   "to": 55,
+   "to_name": "room_tundra9",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     740,
+     420
+    ],
+    [
+     740,
+     440
+    ],
+    [
+     740,
+     460
+    ]
+   ]
+  },
+  {
+   "from": 54,
+   "from_name": "room_tundra8A",
+   "door": "B",
+   "offset": -1,
+   "to": 53,
+   "to_name": "room_tundra8",
+   "landing_ok": true,
+   "landing": [
+    [
+     720,
+     80
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 55,
+   "from_name": "room_tundra9",
+   "door": "A",
+   "offset": 1,
+   "to": 56,
+   "to_name": "room_tundra_spaghetti",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     140
+    ],
+    [
+     300,
+     160
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 55,
+   "from_name": "room_tundra9",
+   "door": "D",
+   "offset": -2,
+   "to": 53,
+   "to_name": "room_tundra8",
+   "landing_ok": true,
+   "landing": [
+    [
+     720,
+     420
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 56,
+   "from_name": "room_tundra_spaghetti",
+   "door": "A",
+   "offset": 1,
+   "to": 57,
+   "to_name": "room_tundra_snowpuzz",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     120
+    ],
+    [
+     300,
+     140
+    ],
+    [
+     300,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 56,
+   "from_name": "room_tundra_spaghetti",
+   "door": "B",
+   "offset": -1,
+   "to": 55,
+   "to_name": "room_tundra9",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 57,
+   "from_name": "room_tundra_snowpuzz",
+   "door": "A",
+   "offset": 1,
+   "to": 58,
+   "to_name": "room_tundra_xoxosmall",
+   "landing_ok": true,
+   "landing": [
+    [
+     110,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     440,
+     560
+    ],
+    [
+     460,
+     560
+    ],
+    [
+     420,
+     560
+    ],
+    [
+     480,
+     560
+    ]
+   ]
+  },
+  {
+   "from": 57,
+   "from_name": "room_tundra_snowpuzz",
+   "door": "B",
+   "offset": -1,
+   "to": 56,
+   "to_name": "room_tundra_spaghetti",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 58,
+   "from_name": "room_tundra_xoxosmall",
+   "door": "A",
+   "offset": 1,
+   "to": 59,
+   "to_name": "room_tundra_xoxopuzz",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     480,
+     100
+    ],
+    [
+     480,
+     120
+    ],
+    [
+     480,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 58,
+   "from_name": "room_tundra_xoxosmall",
+   "door": "B",
+   "offset": -1,
+   "to": 57,
+   "to_name": "room_tundra_snowpuzz",
+   "landing_ok": true,
+   "landing": [
+    [
+     450,
+     520
+    ]
+   ],
+   "door_xy": [
+    [
+     100,
+     0
+    ],
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     80,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 59,
+   "from_name": "room_tundra_xoxopuzz",
+   "door": "A",
+   "offset": 1,
+   "to": 60,
+   "to_name": "room_tundra_randoblock",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     800,
+     100
+    ],
+    [
+     800,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 59,
+   "from_name": "room_tundra_xoxopuzz",
+   "door": "B",
+   "offset": -1,
+   "to": 58,
+   "to_name": "room_tundra_xoxosmall",
+   "landing_ok": true,
+   "landing": [
+    [
+     460,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 60,
+   "from_name": "room_tundra_randoblock",
+   "door": "A",
+   "offset": 1,
+   "to": 61,
+   "to_name": "room_tundra_lesserdog",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     140
+    ],
+    [
+     300,
+     160
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 60,
+   "from_name": "room_tundra_randoblock",
+   "door": "B",
+   "offset": -1,
+   "to": 59,
+   "to_name": "room_tundra_xoxopuzz",
+   "landing_ok": true,
+   "landing": [
+    [
+     780,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 61,
+   "from_name": "room_tundra_lesserdog",
+   "door": "B",
+   "offset": -1,
+   "to": 60,
+   "to_name": "room_tundra_randoblock",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 61,
+   "from_name": "room_tundra_lesserdog",
+   "door": "C",
+   "offset": 2,
+   "to": 63,
+   "to_name": "room_tundra_iceentrance",
+   "landing_ok": true,
+   "landing": [
+    [
+     5,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     540,
+     100
+    ],
+    [
+     540,
+     120
+    ],
+    [
+     540,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 62,
+   "from_name": "room_tundra_icehole",
+   "door": "A",
+   "offset": 1,
+   "to": 63,
+   "to_name": "room_tundra_iceentrance",
+   "landing_ok": true,
+   "landing": [
+    [
+     25,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     20,
+     0
+    ],
+    [
+     40,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 63,
+   "from_name": "room_tundra_iceentrance",
+   "door": "A",
+   "offset": 1,
+   "to": 64,
+   "to_name": "room_tundra_iceexit_new",
+   "landing_ok": true,
+   "landing": [
+    [
+     500,
+     20
+    ],
+    [
+     520,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     840,
+     220
+    ],
+    [
+     860,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 63,
+   "from_name": "room_tundra_iceentrance",
+   "door": "B",
+   "offset": -1,
+   "to": 62,
+   "to_name": "room_tundra_icehole",
+   "landing_ok": true,
+   "landing": [
+    [
+     30,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     18,
+     222
+    ],
+    [
+     36,
+     222
+    ]
+   ]
+  },
+  {
+   "from": 63,
+   "from_name": "room_tundra_iceentrance",
+   "door": "C",
+   "offset": 2,
+   "to": 65,
+   "to_name": "room_tundra_iceexit",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     2400,
+     80
+    ],
+    [
+     2400,
+     100
+    ],
+    [
+     2400,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 63,
+   "from_name": "room_tundra_iceentrance",
+   "door": "D",
+   "offset": -2,
+   "to": 61,
+   "to_name": "room_tundra_lesserdog",
+   "landing_ok": true,
+   "landing": [
+    [
+     520,
+     110
+    ]
+   ],
+   "door_xy": [
+    [
+     -15,
+     100
+    ],
+    [
+     -15,
+     120
+    ],
+    [
+     -15,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 64,
+   "from_name": "room_tundra_iceexit_new",
+   "door": "A",
+   "offset": 1,
+   "to": 65,
+   "to_name": "room_tundra_iceexit",
+   "landing_ok": true,
+   "landing": [
+    [
+     560,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 64,
+   "from_name": "room_tundra_iceexit_new",
+   "door": "B",
+   "offset": -1,
+   "to": 63,
+   "to_name": "room_tundra_iceentrance",
+   "landing_ok": true,
+   "landing": [
+    [
+     840,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     500,
+     0
+    ],
+    [
+     520,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 65,
+   "from_name": "room_tundra_iceexit",
+   "door": "B",
+   "offset": -1,
+   "to": 64,
+   "to_name": "room_tundra_iceexit_new",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     580,
+     100
+    ],
+    [
+     580,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 66,
+   "from_name": "room_tundra_poffzone",
+   "door": "A",
+   "offset": 1,
+   "to": 67,
+   "to_name": "room_tundra_dangerbridge",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     540,
+     140
+    ],
+    [
+     540,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 67,
+   "from_name": "room_tundra_dangerbridge",
+   "door": "B",
+   "offset": -1,
+   "to": 66,
+   "to_name": "room_tundra_poffzone",
+   "landing_ok": true,
+   "landing": [
+    [
+     518,
+     134
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 68,
+   "from_name": "room_tundra_town",
+   "door": "A",
+   "offset": 1,
+   "to": 69,
+   "to_name": "room_tundra_town2",
+   "landing_ok": true,
+   "landing": [
+    [
+     210,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     1600,
+     0
+    ],
+    [
+     1620,
+     0
+    ],
+    [
+     1580,
+     0
+    ],
+    [
+     1640,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 69,
+   "from_name": "room_tundra_town2",
+   "door": "B",
+   "offset": -1,
+   "to": 68,
+   "to_name": "room_tundra_town",
+   "landing_ok": true,
+   "landing": [
+    [
+     1600,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     200,
+     220
+    ],
+    [
+     220,
+     220
+    ],
+    [
+     180,
+     220
+    ],
+    [
+     240,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 77,
+   "from_name": "room_tundra_paproom",
+   "door": "B",
+   "offset": -1,
+   "to": 76,
+   "to_name": "room_tundra_sanshouse",
+   "landing_ok": true,
+   "landing": [
+    [
+     41,
+     51
+    ]
+   ],
+   "door_xy": [
+    [
+     200,
+     230
+    ],
+    [
+     220,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 84,
+   "from_name": "room_water3",
+   "door": "A",
+   "offset": 1,
+   "to": 85,
+   "to_name": "room_water3A",
+   "landing_ok": true,
+   "landing": [
+    [
+     130,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     290,
+     30
+    ]
+   ]
+  },
+  {
+   "from": 84,
+   "from_name": "room_water3",
+   "door": "C",
+   "offset": 2,
+   "to": 86,
+   "to_name": "room_water4",
+   "landing_ok": true,
+   "landing": [
+    [
+     15,
+     275
+    ]
+   ],
+   "door_xy": [
+    [
+     560,
+     120
+    ],
+    [
+     560,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 85,
+   "from_name": "room_water3A",
+   "door": "B",
+   "offset": -1,
+   "to": 84,
+   "to_name": "room_water3",
+   "landing_ok": true,
+   "landing": [
+    [
+     290,
+     50
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 86,
+   "from_name": "room_water4",
+   "door": "A",
+   "offset": 1,
+   "to": 87,
+   "to_name": "room_water_bridgepuzz1",
+   "landing_ok": true,
+   "landing": [
+    [
+     15,
+     135
+    ]
+   ],
+   "door_xy": [
+    [
+     550,
+     280
+    ],
+    [
+     550,
+     300
+    ]
+   ]
+  },
+  {
+   "from": 86,
+   "from_name": "room_water4",
+   "door": "D",
+   "offset": -2,
+   "to": 84,
+   "to_name": "room_water3",
+   "landing_ok": true,
+   "landing": [
+    [
+     540,
+     115
+    ]
+   ],
+   "door_xy": [
+    [
+     -10,
+     280
+    ],
+    [
+     -10,
+     300
+    ]
+   ]
+  },
+  {
+   "from": 87,
+   "from_name": "room_water_bridgepuzz1",
+   "door": "A",
+   "offset": 1,
+   "to": 88,
+   "to_name": "room_water5",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     340
+    ]
+   ],
+   "door_xy": [
+    [
+     500,
+     140
+    ],
+    [
+     500,
+     160
+    ],
+    [
+     500,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 87,
+   "from_name": "room_water_bridgepuzz1",
+   "door": "B",
+   "offset": -1,
+   "to": 86,
+   "to_name": "room_water4",
+   "landing_ok": true,
+   "landing": [
+    [
+     520,
+     275
+    ]
+   ],
+   "door_xy": [
+    [
+     -15,
+     140
+    ],
+    [
+     -15,
+     155
+    ]
+   ]
+  },
+  {
+   "from": 88,
+   "from_name": "room_water5",
+   "door": "A",
+   "offset": 1,
+   "to": 89,
+   "to_name": "room_water5A",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     165
+    ]
+   ],
+   "door_xy": [
+    [
+     480,
+     400
+    ],
+    [
+     480,
+     420
+    ],
+    [
+     480,
+     440
+    ]
+   ]
+  },
+  {
+   "from": 88,
+   "from_name": "room_water5",
+   "door": "B",
+   "offset": -1,
+   "to": 87,
+   "to_name": "room_water_bridgepuzz1",
+   "landing_ok": true,
+   "landing": [
+    [
+     480,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     340
+    ],
+    [
+     0,
+     360
+    ],
+    [
+     0,
+     380
+    ]
+   ]
+  },
+  {
+   "from": 88,
+   "from_name": "room_water5",
+   "door": "C",
+   "offset": 2,
+   "to": 90,
+   "to_name": "room_water6",
+   "landing_ok": true,
+   "landing": [
+    [
+     110,
+     340
+    ]
+   ],
+   "door_xy": [
+    [
+     100,
+     70
+    ],
+    [
+     120,
+     70
+    ]
+   ]
+  },
+  {
+   "from": 89,
+   "from_name": "room_water5A",
+   "door": "B",
+   "offset": -1,
+   "to": 88,
+   "to_name": "room_water5",
+   "landing_ok": true,
+   "landing": [
+    [
+     460,
+     390
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 90,
+   "from_name": "room_water6",
+   "door": "A",
+   "offset": 1,
+   "to": 91,
+   "to_name": "room_water7",
+   "landing_ok": true,
+   "landing": [
+    [
+     130,
+     300
+    ]
+   ],
+   "door_xy": [
+    [
+     500,
+     75
+    ]
+   ]
+  },
+  {
+   "from": 90,
+   "from_name": "room_water6",
+   "door": "D",
+   "offset": -2,
+   "to": 88,
+   "to_name": "room_water5",
+   "landing_ok": true,
+   "landing": [
+    [
+     110,
+     90
+    ]
+   ],
+   "door_xy": [
+    [
+     100,
+     370
+    ],
+    [
+     120,
+     370
+    ]
+   ]
+  },
+  {
+   "from": 91,
+   "from_name": "room_water7",
+   "door": "A",
+   "offset": 1,
+   "to": 92,
+   "to_name": "room_water8",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     1080,
+     120
+    ],
+    [
+     1080,
+     140
+    ],
+    [
+     1080,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 92,
+   "from_name": "room_water8",
+   "door": "A",
+   "offset": 1,
+   "to": 93,
+   "to_name": "room_water9",
+   "landing_ok": true,
+   "landing": [
+    [
+     24,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     2080,
+     200
+    ],
+    [
+     2080,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 92,
+   "from_name": "room_water8",
+   "door": "B",
+   "offset": -1,
+   "to": 91,
+   "to_name": "room_water7",
+   "landing_ok": true,
+   "landing": [
+    [
+     1060,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     -10,
+     180
+    ],
+    [
+     -10,
+     200
+    ],
+    [
+     -10,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 93,
+   "from_name": "room_water9",
+   "door": "B",
+   "offset": -1,
+   "to": 92,
+   "to_name": "room_water8",
+   "landing_ok": true,
+   "landing": [
+    [
+     2060,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 95,
+   "from_name": "room_water11",
+   "door": "A",
+   "offset": 1,
+   "to": 96,
+   "to_name": "room_water_nicecream",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     280,
+     75
+    ],
+    [
+     300,
+     75
+    ]
+   ]
+  },
+  {
+   "from": 96,
+   "from_name": "room_water_nicecream",
+   "door": "B",
+   "offset": -1,
+   "to": 95,
+   "to_name": "room_water11",
+   "landing_ok": true,
+   "landing": [
+    [
+     290,
+     90
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     420
+    ],
+    [
+     160,
+     420
+    ]
+   ]
+  },
+  {
+   "from": 97,
+   "from_name": "room_water12",
+   "door": "A",
+   "offset": 1,
+   "to": 98,
+   "to_name": "room_water_shoe",
+   "landing_ok": true,
+   "landing": [
+    [
+     290,
+     110
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     440
+    ],
+    [
+     0,
+     460
+    ],
+    [
+     0,
+     480
+    ]
+   ]
+  },
+  {
+   "from": 98,
+   "from_name": "room_water_shoe",
+   "door": "B",
+   "offset": -1,
+   "to": 97,
+   "to_name": "room_water12",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     440
+    ]
+   ],
+   "door_xy": [
+    [
+     310,
+     100
+    ],
+    [
+     310,
+     120
+    ],
+    [
+     310,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 100,
+   "from_name": "room_water_onionsan",
+   "door": "A",
+   "offset": 1,
+   "to": 101,
+   "to_name": "room_water14",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     115
+    ]
+   ],
+   "door_xy": [
+    [
+     1210,
+     120
+    ],
+    [
+     1210,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 101,
+   "from_name": "room_water14",
+   "door": "B",
+   "offset": -1,
+   "to": 100,
+   "to_name": "room_water_onionsan",
+   "landing_ok": true,
+   "landing": [
+    [
+     1190,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     -15,
+     140
+    ],
+    [
+     -15,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 102,
+   "from_name": "room_water_piano",
+   "door": "A",
+   "offset": 1,
+   "to": 103,
+   "to_name": "room_water_dogroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     54
+    ]
+   ]
+  },
+  {
+   "from": 103,
+   "from_name": "room_water_dogroom",
+   "door": "B",
+   "offset": -1,
+   "to": 102,
+   "to_name": "room_water_piano",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     72
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     230
+    ],
+    [
+     140,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 104,
+   "from_name": "room_water_statue",
+   "door": "A",
+   "offset": 1,
+   "to": 105,
+   "to_name": "room_water_prewaterfall",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     120
+    ],
+    [
+     300,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 105,
+   "from_name": "room_water_prewaterfall",
+   "door": "A",
+   "offset": 1,
+   "to": 106,
+   "to_name": "room_water_waterfall",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     330,
+     120
+    ],
+    [
+     330,
+     140
+    ],
+    [
+     330,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 105,
+   "from_name": "room_water_prewaterfall",
+   "door": "B",
+   "offset": -1,
+   "to": 104,
+   "to_name": "room_water_statue",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     -10,
+     120
+    ],
+    [
+     -10,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 106,
+   "from_name": "room_water_waterfall",
+   "door": "A",
+   "offset": 1,
+   "to": 107,
+   "to_name": "room_water_waterfall2",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     1520,
+     220
+    ],
+    [
+     1540,
+     220
+    ],
+    [
+     1560,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 106,
+   "from_name": "room_water_waterfall",
+   "door": "B",
+   "offset": -1,
+   "to": 105,
+   "to_name": "room_water_prewaterfall",
+   "landing_ok": true,
+   "landing": [
+    [
+     310,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 107,
+   "from_name": "room_water_waterfall2",
+   "door": "A",
+   "offset": 1,
+   "to": 108,
+   "to_name": "room_water_waterfall3",
+   "landing_ok": true,
+   "landing": [
+    [
+     22,
+     165
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     880
+    ],
+    [
+     300,
+     900
+    ],
+    [
+     300,
+     920
+    ]
+   ]
+  },
+  {
+   "from": 107,
+   "from_name": "room_water_waterfall2",
+   "door": "B",
+   "offset": -1,
+   "to": 106,
+   "to_name": "room_water_waterfall",
+   "landing_ok": true,
+   "landing": [
+    [
+     1540,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 108,
+   "from_name": "room_water_waterfall3",
+   "door": "A",
+   "offset": 1,
+   "to": 109,
+   "to_name": "room_water_waterfall4",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     110
+    ]
+   ],
+   "door_xy": [
+    [
+     1380,
+     183
+    ],
+    [
+     1380,
+     174
+    ]
+   ]
+  },
+  {
+   "from": 108,
+   "from_name": "room_water_waterfall3",
+   "door": "B",
+   "offset": -1,
+   "to": 107,
+   "to_name": "room_water_waterfall2",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     900
+    ]
+   ],
+   "door_xy": [
+    [
+     -2,
+     178
+    ]
+   ]
+  },
+  {
+   "from": 109,
+   "from_name": "room_water_waterfall4",
+   "door": "A",
+   "offset": 1,
+   "to": 110,
+   "to_name": "room_water_preundyne",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     60
+    ]
+   ],
+   "door_xy": [
+    [
+     510,
+     60
+    ],
+    [
+     510,
+     80
+    ],
+    [
+     510,
+     95
+    ]
+   ]
+  },
+  {
+   "from": 109,
+   "from_name": "room_water_waterfall4",
+   "door": "B",
+   "offset": -1,
+   "to": 108,
+   "to_name": "room_water_waterfall3",
+   "landing_ok": true,
+   "landing": [
+    [
+     1358,
+     165
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 110,
+   "from_name": "room_water_preundyne",
+   "door": "A",
+   "offset": 1,
+   "to": 111,
+   "to_name": "room_water_undynebridge",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     80
+    ]
+   ],
+   "door_xy": [
+    [
+     700,
+     60
+    ],
+    [
+     700,
+     80
+    ],
+    [
+     700,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 110,
+   "from_name": "room_water_preundyne",
+   "door": "B",
+   "offset": -1,
+   "to": 109,
+   "to_name": "room_water_waterfall4",
+   "landing_ok": true,
+   "landing": [
+    [
+     480,
+     60
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     60
+    ],
+    [
+     0,
+     80
+    ],
+    [
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 111,
+   "from_name": "room_water_undynebridge",
+   "door": "A",
+   "offset": 1,
+   "to": 112,
+   "to_name": "room_water_undynebridgeend",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     1920,
+     1000
+    ],
+    [
+     1920,
+     1020
+    ],
+    [
+     1920,
+     1040
+    ]
+   ]
+  },
+  {
+   "from": 111,
+   "from_name": "room_water_undynebridge",
+   "door": "B",
+   "offset": -1,
+   "to": 110,
+   "to_name": "room_water_preundyne",
+   "landing_ok": true,
+   "landing": [
+    [
+     680,
+     60
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     80
+    ],
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 113,
+   "from_name": "room_water_trashzone1",
+   "door": "A",
+   "offset": 1,
+   "to": 114,
+   "to_name": "room_water_trashsavepoint",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     800,
+     100
+    ],
+    [
+     800,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 114,
+   "from_name": "room_water_trashsavepoint",
+   "door": "A",
+   "offset": 1,
+   "to": 115,
+   "to_name": "room_water_trashzone2",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     780
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 114,
+   "from_name": "room_water_trashsavepoint",
+   "door": "B",
+   "offset": -1,
+   "to": 113,
+   "to_name": "room_water_trashzone1",
+   "landing_ok": true,
+   "landing": [
+    [
+     780,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "room_water_trashzone2",
+   "door": "B",
+   "offset": -1,
+   "to": 114,
+   "to_name": "room_water_trashsavepoint",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     800
+    ],
+    [
+     0,
+     780
+    ]
+   ]
+  },
+  {
+   "from": 126,
+   "from_name": "room_water15",
+   "door": "A",
+   "offset": 1,
+   "to": 127,
+   "to_name": "room_water16",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     1000,
+     120
+    ],
+    [
+     1000,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "room_water16",
+   "door": "B",
+   "offset": -1,
+   "to": 126,
+   "to_name": "room_water15",
+   "landing_ok": true,
+   "landing": [
+    [
+     980,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "room_water16",
+   "door": "C",
+   "offset": 2,
+   "to": 129,
+   "to_name": "room_water17",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     90
+    ]
+   ],
+   "door_xy": [
+    [
+     600,
+     240
+    ]
+   ]
+  },
+  {
+   "from": 129,
+   "from_name": "room_water17",
+   "door": "D",
+   "offset": -2,
+   "to": 127,
+   "to_name": "room_water16",
+   "landing_ok": true,
+   "landing": [
+    [
+     580,
+     230
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 130,
+   "from_name": "room_water18",
+   "door": "A",
+   "offset": 1,
+   "to": 131,
+   "to_name": "room_water19",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     580
+    ]
+   ],
+   "door_xy": [
+    [
+     340,
+     0
+    ],
+    [
+     360,
+     0
+    ],
+    [
+     380,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 131,
+   "from_name": "room_water19",
+   "door": "A",
+   "offset": 1,
+   "to": 132,
+   "to_name": "room_water20",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     310,
+     120
+    ],
+    [
+     310,
+     140
+    ],
+    [
+     310,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 131,
+   "from_name": "room_water19",
+   "door": "B",
+   "offset": -1,
+   "to": 130,
+   "to_name": "room_water18",
+   "landing_ok": true,
+   "landing": [
+    [
+     360,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     620
+    ],
+    [
+     140,
+     620
+    ],
+    [
+     160,
+     620
+    ]
+   ]
+  },
+  {
+   "from": 132,
+   "from_name": "room_water20",
+   "door": "A",
+   "offset": 1,
+   "to": 133,
+   "to_name": "room_water21",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     600,
+     100
+    ],
+    [
+     600,
+     120
+    ],
+    [
+     600,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 132,
+   "from_name": "room_water20",
+   "door": "B",
+   "offset": -1,
+   "to": 131,
+   "to_name": "room_water19",
+   "landing_ok": true,
+   "landing": [
+    [
+     290,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 133,
+   "from_name": "room_water21",
+   "door": "B",
+   "offset": -1,
+   "to": 132,
+   "to_name": "room_water20",
+   "landing_ok": true,
+   "landing": [
+    [
+     580,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     -15,
+     120
+    ],
+    [
+     -15,
+     140
+    ],
+    [
+     -15,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 134,
+   "from_name": "room_water_undynefinal",
+   "door": "A",
+   "offset": 1,
+   "to": 135,
+   "to_name": "room_water_undynefinal2",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     420
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     520
+    ],
+    [
+     140,
+     520
+    ],
+    [
+     160,
+     520
+    ],
+    [
+     180,
+     520
+    ]
+   ]
+  },
+  {
+   "from": 135,
+   "from_name": "room_water_undynefinal2",
+   "door": "A",
+   "offset": 1,
+   "to": 136,
+   "to_name": "room_water_undynefinal3",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     180,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 135,
+   "from_name": "room_water_undynefinal2",
+   "door": "B",
+   "offset": -1,
+   "to": 134,
+   "to_name": "room_water_undynefinal",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     540
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     460
+    ],
+    [
+     140,
+     460
+    ],
+    [
+     160,
+     460
+    ],
+    [
+     180,
+     460
+    ]
+   ]
+  },
+  {
+   "from": 136,
+   "from_name": "room_water_undynefinal3",
+   "door": "B",
+   "offset": -1,
+   "to": 135,
+   "to_name": "room_water_undynefinal2",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 137,
+   "from_name": "room_fire1",
+   "door": "A",
+   "offset": 1,
+   "to": 138,
+   "to_name": "room_fire2",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     90
+    ]
+   ],
+   "door_xy": [
+    [
+     500,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 137,
+   "from_name": "room_fire1",
+   "door": "B",
+   "offset": -1,
+   "to": 136,
+   "to_name": "room_water_undynefinal3",
+   "landing_ok": true,
+   "landing": [
+    [
+     680,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 138,
+   "from_name": "room_fire2",
+   "door": "A",
+   "offset": 1,
+   "to": 139,
+   "to_name": "room_fire_prelab",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     95
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 138,
+   "from_name": "room_fire2",
+   "door": "B",
+   "offset": -1,
+   "to": 137,
+   "to_name": "room_fire1",
+   "landing_ok": true,
+   "landing": [
+    [
+     480,
+     108
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 139,
+   "from_name": "room_fire_prelab",
+   "door": "B",
+   "offset": -1,
+   "to": 138,
+   "to_name": "room_fire2",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     95
+    ]
+   ],
+   "door_xy": [
+    [
+     -15,
+     105
+    ],
+    [
+     -15,
+     115
+    ]
+   ]
+  },
+  {
+   "from": 141,
+   "from_name": "room_fire_lab1",
+   "door": "A",
+   "offset": 1,
+   "to": 142,
+   "to_name": "room_fire_lab2",
+   "landing_ok": true,
+   "landing": [
+    [
+     740,
+     220
+    ]
+   ],
+   "door_xy": [
+    [
+     980,
+     -5
+    ]
+   ]
+  },
+  {
+   "from": 142,
+   "from_name": "room_fire_lab2",
+   "door": "B",
+   "offset": -1,
+   "to": 141,
+   "to_name": "room_fire_lab1",
+   "landing_ok": true,
+   "landing": [
+    [
+     300,
+     0
+    ]
+   ],
+   "door_xy": [
+    [
+     60,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 144,
+   "from_name": "room_fire5",
+   "door": "A",
+   "offset": 1,
+   "to": 145,
+   "to_name": "room_fire6",
+   "landing_ok": true,
+   "landing": [
+    [
+     100,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     180,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 145,
+   "from_name": "room_fire6",
+   "door": "A",
+   "offset": 1,
+   "to": 146,
+   "to_name": "room_fire6A",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     740,
+     420
+    ],
+    [
+     760,
+     420
+    ],
+    [
+     780,
+     420
+    ]
+   ]
+  },
+  {
+   "from": 145,
+   "from_name": "room_fire6",
+   "door": "B",
+   "offset": -1,
+   "to": 144,
+   "to_name": "room_fire5",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     80,
+     420
+    ],
+    [
+     100,
+     420
+    ],
+    [
+     120,
+     420
+    ]
+   ]
+  },
+  {
+   "from": 145,
+   "from_name": "room_fire6",
+   "door": "C",
+   "offset": 2,
+   "to": 147,
+   "to_name": "room_fire_lasers1",
+   "landing_ok": true,
+   "landing": [
+    [
+     120,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     340,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 146,
+   "from_name": "room_fire6A",
+   "door": "B",
+   "offset": -1,
+   "to": 145,
+   "to_name": "room_fire6",
+   "landing_ok": true,
+   "landing": [
+    [
+     760,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     260,
+     0
+    ],
+    [
+     280,
+     0
+    ],
+    [
+     300,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 147,
+   "from_name": "room_fire_lasers1",
+   "door": "A",
+   "offset": 1,
+   "to": 148,
+   "to_name": "room_fire7",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     440
+    ]
+   ],
+   "door_xy": [
+    [
+     1150,
+     120
+    ],
+    [
+     1150,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 147,
+   "from_name": "room_fire_lasers1",
+   "door": "D",
+   "offset": -2,
+   "to": 145,
+   "to_name": "room_fire6",
+   "landing_ok": true,
+   "landing": [
+    [
+     320,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     100,
+     220
+    ],
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 148,
+   "from_name": "room_fire7",
+   "door": "A",
+   "offset": 1,
+   "to": 149,
+   "to_name": "room_fire8",
+   "landing_ok": true,
+   "landing": [
+    [
+     320,
+     110
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     240
+    ],
+    [
+     0,
+     260
+    ],
+    [
+     0,
+     275
+    ]
+   ]
+  },
+  {
+   "from": 148,
+   "from_name": "room_fire7",
+   "door": "B",
+   "offset": -1,
+   "to": 147,
+   "to_name": "room_fire_lasers1",
+   "landing_ok": true,
+   "landing": [
+    [
+     1125,
+     95
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     440
+    ],
+    [
+     0,
+     460
+    ]
+   ]
+  },
+  {
+   "from": 149,
+   "from_name": "room_fire8",
+   "door": "A",
+   "offset": 1,
+   "to": 150,
+   "to_name": "room_fire_shootguy_2",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     80
+    ],
+    [
+     180,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 149,
+   "from_name": "room_fire8",
+   "door": "B",
+   "offset": -1,
+   "to": 148,
+   "to_name": "room_fire7",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     245
+    ]
+   ],
+   "door_xy": [
+    [
+     350,
+     100
+    ],
+    [
+     350,
+     115
+    ],
+    [
+     350,
+     135
+    ]
+   ]
+  },
+  {
+   "from": 150,
+   "from_name": "room_fire_shootguy_2",
+   "door": "B",
+   "offset": -1,
+   "to": 149,
+   "to_name": "room_fire8",
+   "landing_ok": true,
+   "landing": [
+    [
+     170,
+     95
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     235
+    ],
+    [
+     140,
+     235
+    ],
+    [
+     180,
+     235
+    ]
+   ]
+  },
+  {
+   "from": 151,
+   "from_name": "room_fire9",
+   "door": "A",
+   "offset": 1,
+   "to": 152,
+   "to_name": "room_fire_shootguy_1",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     175,
+     80
+    ],
+    [
+     165,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 152,
+   "from_name": "room_fire_shootguy_1",
+   "door": "B",
+   "offset": -1,
+   "to": 151,
+   "to_name": "room_fire9",
+   "landing_ok": true,
+   "landing": [
+    [
+     170,
+     95
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     235
+    ],
+    [
+     120,
+     235
+    ],
+    [
+     160,
+     235
+    ]
+   ]
+  },
+  {
+   "from": 159,
+   "from_name": "room_fire_walkandbranch",
+   "door": "C",
+   "offset": 2,
+   "to": 161,
+   "to_name": "room_fire_apron",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     200,
+     226
+    ],
+    [
+     220,
+     226
+    ],
+    [
+     240,
+     226
+    ]
+   ]
+  },
+  {
+   "from": 161,
+   "from_name": "room_fire_apron",
+   "door": "D",
+   "offset": -2,
+   "to": 159,
+   "to_name": "room_fire_walkandbranch",
+   "landing_ok": true,
+   "landing": [
+    [
+     220,
+     186
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 162,
+   "from_name": "room_fire10",
+   "door": "A",
+   "offset": 1,
+   "to": 163,
+   "to_name": "room_fire_rpuzzle",
+   "landing_ok": true,
+   "landing": [
+    [
+     580,
+     260
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 163,
+   "from_name": "room_fire_rpuzzle",
+   "door": "A",
+   "offset": 1,
+   "to": 164,
+   "to_name": "room_fire_mewmew2",
+   "landing_ok": true,
+   "landing": [
+    [
+     492,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 163,
+   "from_name": "room_fire_rpuzzle",
+   "door": "B",
+   "offset": -1,
+   "to": 162,
+   "to_name": "room_fire10",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     600,
+     260
+    ],
+    [
+     600,
+     280
+    ],
+    [
+     600,
+     300
+    ]
+   ]
+  },
+  {
+   "from": 164,
+   "from_name": "room_fire_mewmew2",
+   "door": "A",
+   "offset": 1,
+   "to": 165,
+   "to_name": "room_fire_boysnightout",
+   "landing_ok": true,
+   "landing": [
+    [
+     580,
+     320
+    ]
+   ],
+   "door_xy": [
+    [
+     -15,
+     120
+    ],
+    [
+     -15,
+     140
+    ],
+    [
+     -15,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 164,
+   "from_name": "room_fire_mewmew2",
+   "door": "B",
+   "offset": -1,
+   "to": 163,
+   "to_name": "room_fire_rpuzzle",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     516,
+     120
+    ],
+    [
+     519,
+     140
+    ],
+    [
+     516,
+     140
+    ],
+    [
+     516,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 165,
+   "from_name": "room_fire_boysnightout",
+   "door": "B",
+   "offset": -1,
+   "to": 164,
+   "to_name": "room_fire_mewmew2",
+   "landing_ok": true,
+   "landing": [
+    [
+     9,
+     124
+    ]
+   ],
+   "door_xy": [
+    [
+     600,
+     320
+    ],
+    [
+     600,
+     340
+    ],
+    [
+     600,
+     360
+    ]
+   ]
+  },
+  {
+   "from": 171,
+   "from_name": "room_fire_walkandbranch2",
+   "door": "A",
+   "offset": 1,
+   "to": 172,
+   "to_name": "room_fire_conveyorlaser",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     340,
+     640
+    ],
+    [
+     360,
+     640
+    ],
+    [
+     380,
+     640
+    ]
+   ]
+  },
+  {
+   "from": 172,
+   "from_name": "room_fire_conveyorlaser",
+   "door": "A",
+   "offset": 1,
+   "to": 173,
+   "to_name": "room_fire_shootguy_3",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     850,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 172,
+   "from_name": "room_fire_conveyorlaser",
+   "door": "B",
+   "offset": -1,
+   "to": 171,
+   "to_name": "room_fire_walkandbranch2",
+   "landing_ok": true,
+   "landing": [
+    [
+     360,
+     600
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 173,
+   "from_name": "room_fire_shootguy_3",
+   "door": "B",
+   "offset": -1,
+   "to": 172,
+   "to_name": "room_fire_conveyorlaser",
+   "landing_ok": true,
+   "landing": [
+    [
+     850,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     235
+    ],
+    [
+     140,
+     235
+    ],
+    [
+     180,
+     235
+    ]
+   ]
+  },
+  {
+   "from": 174,
+   "from_name": "room_fire_preshootguy4",
+   "door": "A",
+   "offset": 1,
+   "to": 175,
+   "to_name": "room_fire_shootguy_4",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     75
+    ],
+    [
+     155,
+     75
+    ]
+   ]
+  },
+  {
+   "from": 175,
+   "from_name": "room_fire_shootguy_4",
+   "door": "B",
+   "offset": -1,
+   "to": 174,
+   "to_name": "room_fire_preshootguy4",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     110
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     235
+    ],
+    [
+     140,
+     235
+    ],
+    [
+     180,
+     235
+    ]
+   ]
+  },
+  {
+   "from": 179,
+   "from_name": "room_fire_operatest",
+   "door": "C",
+   "offset": 2,
+   "to": 181,
+   "to_name": "room_fire_hotelfront_1",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     310,
+     240
+    ],
+    [
+     310,
+     260
+    ],
+    [
+     310,
+     280
+    ],
+    [
+     310,
+     300
+    ],
+    [
+     310,
+     320
+    ]
+   ]
+  },
+  {
+   "from": 180,
+   "from_name": "room_fire_multitile",
+   "door": "A",
+   "offset": 1,
+   "to": 181,
+   "to_name": "room_fire_hotelfront_1",
+   "landing_ok": true,
+   "landing": [
+    [
+     240,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     1220,
+     0
+    ],
+    [
+     1240,
+     0
+    ],
+    [
+     1260,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 181,
+   "from_name": "room_fire_hotelfront_1",
+   "door": "B",
+   "offset": -1,
+   "to": 180,
+   "to_name": "room_fire_multitile",
+   "landing_ok": true,
+   "landing": [
+    [
+     1240,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     220,
+     220
+    ],
+    [
+     240,
+     220
+    ],
+    [
+     260,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 181,
+   "from_name": "room_fire_hotelfront_1",
+   "door": "D",
+   "offset": -2,
+   "to": 179,
+   "to_name": "room_fire_operatest",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     240
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 183,
+   "from_name": "room_fire_hotellobby",
+   "door": "A",
+   "offset": 1,
+   "to": 184,
+   "to_name": "room_fire_restaurant",
+   "landing_ok": true,
+   "landing": [
+    [
+     980,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     360
+    ],
+    [
+     0,
+     380
+    ],
+    [
+     0,
+     400
+    ]
+   ]
+  },
+  {
+   "from": 183,
+   "from_name": "room_fire_hotellobby",
+   "door": "C",
+   "offset": 2,
+   "to": 185,
+   "to_name": "room_fire_hoteldoors",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     150
+    ]
+   ],
+   "door_xy": [
+    [
+     510,
+     360
+    ],
+    [
+     510,
+     380
+    ],
+    [
+     510,
+     400
+    ]
+   ]
+  },
+  {
+   "from": 184,
+   "from_name": "room_fire_restaurant",
+   "door": "B",
+   "offset": -1,
+   "to": 183,
+   "to_name": "room_fire_hotellobby",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     360
+    ]
+   ],
+   "door_xy": [
+    [
+     1000,
+     140
+    ],
+    [
+     1000,
+     160
+    ],
+    [
+     1000,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 185,
+   "from_name": "room_fire_hoteldoors",
+   "door": "D",
+   "offset": -2,
+   "to": 183,
+   "to_name": "room_fire_hotellobby",
+   "landing_ok": true,
+   "landing": [
+    [
+     490,
+     360
+    ]
+   ],
+   "door_xy": [
+    [
+     -10,
+     140
+    ],
+    [
+     -10,
+     160
+    ],
+    [
+     -10,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 189,
+   "from_name": "room_fire_core1",
+   "door": "A",
+   "offset": 1,
+   "to": 190,
+   "to_name": "room_fire_core2",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     280
+    ]
+   ],
+   "door_xy": [
+    [
+     260,
+     60
+    ],
+    [
+     280,
+     60
+    ]
+   ]
+  },
+  {
+   "from": 189,
+   "from_name": "room_fire_core1",
+   "door": "C",
+   "offset": 2,
+   "to": 191,
+   "to_name": "room_fire_core3",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     360
+    ]
+   ],
+   "door_xy": [
+    [
+     20,
+     60
+    ],
+    [
+     40,
+     60
+    ]
+   ]
+  },
+  {
+   "from": 190,
+   "from_name": "room_fire_core2",
+   "door": "B",
+   "offset": -1,
+   "to": 189,
+   "to_name": "room_fire_core1",
+   "landing_ok": true,
+   "landing": [
+    [
+     270,
+     80
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     320
+    ],
+    [
+     140,
+     320
+    ]
+   ]
+  },
+  {
+   "from": 191,
+   "from_name": "room_fire_core3",
+   "door": "A",
+   "offset": 1,
+   "to": 192,
+   "to_name": "room_fire_core4",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     80
+    ],
+    [
+     160,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 191,
+   "from_name": "room_fire_core3",
+   "door": "D",
+   "offset": -2,
+   "to": 189,
+   "to_name": "room_fire_core1",
+   "landing_ok": true,
+   "landing": [
+    [
+     30,
+     80
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     400
+    ],
+    [
+     160,
+     400
+    ]
+   ]
+  },
+  {
+   "from": 192,
+   "from_name": "room_fire_core4",
+   "door": "A",
+   "offset": 1,
+   "to": 193,
+   "to_name": "room_fire_core5",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     660,
+     120
+    ],
+    [
+     660,
+     100
+    ],
+    [
+     660,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 192,
+   "from_name": "room_fire_core4",
+   "door": "B",
+   "offset": -1,
+   "to": 191,
+   "to_name": "room_fire_core3",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 193,
+   "from_name": "room_fire_core5",
+   "door": "A",
+   "offset": 1,
+   "to": 194,
+   "to_name": "room_fire_core_freebattle",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 193,
+   "from_name": "room_fire_core5",
+   "door": "B",
+   "offset": -1,
+   "to": 192,
+   "to_name": "room_fire_core4",
+   "landing_ok": true,
+   "landing": [
+    [
+     640,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 193,
+   "from_name": "room_fire_core5",
+   "door": "C",
+   "offset": 2,
+   "to": 195,
+   "to_name": "room_fire_core_laserfun",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ],
+    [
+     300,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 194,
+   "from_name": "room_fire_core_freebattle",
+   "door": "B",
+   "offset": -1,
+   "to": 193,
+   "to_name": "room_fire_core5",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 195,
+   "from_name": "room_fire_core_laserfun",
+   "door": "A",
+   "offset": 1,
+   "to": 196,
+   "to_name": "room_fire_core_branch",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     1060,
+     0
+    ],
+    [
+     1080,
+     0
+    ],
+    [
+     1100,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 195,
+   "from_name": "room_fire_core_laserfun",
+   "door": "D",
+   "offset": -2,
+   "to": 193,
+   "to_name": "room_fire_core5",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 196,
+   "from_name": "room_fire_core_branch",
+   "door": "A",
+   "offset": 1,
+   "to": 197,
+   "to_name": "room_fire_core_bottomleft",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 196,
+   "from_name": "room_fire_core_branch",
+   "door": "B",
+   "offset": -1,
+   "to": 195,
+   "to_name": "room_fire_core_laserfun",
+   "landing_ok": true,
+   "landing": [
+    [
+     1080,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     230
+    ],
+    [
+     140,
+     230
+    ],
+    [
+     160,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 197,
+   "from_name": "room_fire_core_bottomleft",
+   "door": "A",
+   "offset": 1,
+   "to": 198,
+   "to_name": "room_fire_core_left",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 197,
+   "from_name": "room_fire_core_bottomleft",
+   "door": "B",
+   "offset": -1,
+   "to": 196,
+   "to_name": "room_fire_core_branch",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 198,
+   "from_name": "room_fire_core_left",
+   "door": "A",
+   "offset": 1,
+   "to": 199,
+   "to_name": "room_fire_core_topleft",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 198,
+   "from_name": "room_fire_core_left",
+   "door": "B",
+   "offset": -1,
+   "to": 197,
+   "to_name": "room_fire_core_bottomleft",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 199,
+   "from_name": "room_fire_core_topleft",
+   "door": "A",
+   "offset": 1,
+   "to": 200,
+   "to_name": "room_fire_core_top",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 199,
+   "from_name": "room_fire_core_topleft",
+   "door": "B",
+   "offset": -1,
+   "to": 198,
+   "to_name": "room_fire_core_left",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     120,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 200,
+   "from_name": "room_fire_core_top",
+   "door": "A",
+   "offset": 1,
+   "to": 201,
+   "to_name": "room_fire_core_topright",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 200,
+   "from_name": "room_fire_core_top",
+   "door": "B",
+   "offset": -1,
+   "to": 199,
+   "to_name": "room_fire_core_topleft",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 201,
+   "from_name": "room_fire_core_topright",
+   "door": "A",
+   "offset": 1,
+   "to": 202,
+   "to_name": "room_fire_core_right",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     160,
+     220
+    ],
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 201,
+   "from_name": "room_fire_core_topright",
+   "door": "B",
+   "offset": -1,
+   "to": 200,
+   "to_name": "room_fire_core_top",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 202,
+   "from_name": "room_fire_core_right",
+   "door": "A",
+   "offset": 1,
+   "to": 203,
+   "to_name": "room_fire_core_bottomright",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 202,
+   "from_name": "room_fire_core_right",
+   "door": "B",
+   "offset": -1,
+   "to": 201,
+   "to_name": "room_fire_core_topright",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     140,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 202,
+   "from_name": "room_fire_core_right",
+   "door": "C",
+   "offset": 2,
+   "to": 204,
+   "to_name": "room_fire_core_center",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 203,
+   "from_name": "room_fire_core_bottomright",
+   "door": "B",
+   "offset": -1,
+   "to": 202,
+   "to_name": "room_fire_core_right",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 204,
+   "from_name": "room_fire_core_center",
+   "door": "D",
+   "offset": -2,
+   "to": 202,
+   "to_name": "room_fire_core_right",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     100
+    ],
+    [
+     300,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 209,
+   "from_name": "room_fire_core_bridge",
+   "door": "A",
+   "offset": 1,
+   "to": 210,
+   "to_name": "room_fire_core_premett",
+   "landing_ok": true,
+   "landing": [
+    [
+     10,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     600,
+     100
+    ],
+    [
+     600,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 210,
+   "from_name": "room_fire_core_premett",
+   "door": "B",
+   "offset": -1,
+   "to": 209,
+   "to_name": "room_fire_core_bridge",
+   "landing_ok": true,
+   "landing": [
+    [
+     580,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     -10,
+     100
+    ],
+    [
+     -10,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 211,
+   "from_name": "room_fire_core_metttest",
+   "door": "A",
+   "offset": 1,
+   "to": 212,
+   "to_name": "room_fire_core_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     150,
+     580
+    ]
+   ]
+  },
+  {
+   "from": 212,
+   "from_name": "room_fire_core_final",
+   "door": "B",
+   "offset": -1,
+   "to": 211,
+   "to_name": "room_fire_core_metttest",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     600
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ],
+    [
+     180,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 216,
+   "from_name": "room_castle_elevatorout",
+   "door": "A",
+   "offset": 1,
+   "to": 217,
+   "to_name": "room_castle_precastle",
+   "landing_ok": true,
+   "landing": [
+    [
+     130,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     320,
+     0
+    ],
+    [
+     340,
+     0
+    ],
+    [
+     380,
+     0
+    ],
+    [
+     360,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 217,
+   "from_name": "room_castle_precastle",
+   "door": "A",
+   "offset": 1,
+   "to": 218,
+   "to_name": "room_castle_hook",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     840
+    ]
+   ],
+   "door_xy": [
+    [
+     1280,
+     160
+    ],
+    [
+     1280,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 217,
+   "from_name": "room_castle_precastle",
+   "door": "B",
+   "offset": -1,
+   "to": 216,
+   "to_name": "room_castle_elevatorout",
+   "landing_ok": true,
+   "landing": [
+    [
+     350,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     100,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     120,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 218,
+   "from_name": "room_castle_hook",
+   "door": "A",
+   "offset": 1,
+   "to": 219,
+   "to_name": "room_castle_front",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     490
+    ],
+    [
+     160,
+     490
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 218,
+   "from_name": "room_castle_hook",
+   "door": "B",
+   "offset": -1,
+   "to": 217,
+   "to_name": "room_castle_precastle",
+   "landing_ok": true,
+   "landing": [
+    [
+     1260,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     840
+    ],
+    [
+     0,
+     860
+    ]
+   ]
+  },
+  {
+   "from": 219,
+   "from_name": "room_castle_front",
+   "door": "A",
+   "offset": 1,
+   "to": 220,
+   "to_name": "room_asghouse1",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     160
+    ],
+    [
+     160,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 220,
+   "from_name": "room_asghouse1",
+   "door": "A",
+   "offset": 1,
+   "to": 221,
+   "to_name": "room_asghouse2",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     150
+    ],
+    [
+     0,
+     170
+    ],
+    [
+     0,
+     190
+    ]
+   ]
+  },
+  {
+   "from": 220,
+   "from_name": "room_asghouse1",
+   "door": "B",
+   "offset": -1,
+   "to": 219,
+   "to_name": "room_castle_front",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     158,
+     232
+    ],
+    [
+     138,
+     232
+    ]
+   ]
+  },
+  {
+   "from": 220,
+   "from_name": "room_asghouse1",
+   "door": "C",
+   "offset": 2,
+   "to": 222,
+   "to_name": "room_asghouse3",
+   "landing_ok": true,
+   "landing": [
+    [
+     23,
+     144
+    ]
+   ],
+   "door_xy": [
+    [
+     298,
+     146
+    ],
+    [
+     298,
+     166
+    ],
+    [
+     298,
+     186
+    ]
+   ]
+  },
+  {
+   "from": 221,
+   "from_name": "room_asghouse2",
+   "door": "B",
+   "offset": -1,
+   "to": 220,
+   "to_name": "room_asghouse1",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     150
+    ],
+    [
+     300,
+     176
+    ]
+   ]
+  },
+  {
+   "from": 222,
+   "from_name": "room_asghouse3",
+   "door": "A",
+   "offset": 1,
+   "to": 223,
+   "to_name": "room_asgoreroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     176,
+     201
+    ]
+   ],
+   "door_xy": [
+    [
+     570,
+     123
+    ]
+   ]
+  },
+  {
+   "from": 222,
+   "from_name": "room_asghouse3",
+   "door": "C",
+   "offset": 2,
+   "to": 224,
+   "to_name": "room_asrielroom_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     192,
+     182
+    ]
+   ],
+   "door_xy": [
+    [
+     151,
+     124
+    ]
+   ]
+  },
+  {
+   "from": 222,
+   "from_name": "room_asghouse3",
+   "door": "D",
+   "offset": -2,
+   "to": 220,
+   "to_name": "room_asghouse1",
+   "landing_ok": true,
+   "landing": [
+    [
+     274,
+     164
+    ]
+   ],
+   "door_xy": [
+    [
+     -3,
+     142
+    ],
+    [
+     -1,
+     168
+    ],
+    [
+     0,
+     183
+    ]
+   ]
+  },
+  {
+   "from": 223,
+   "from_name": "room_asgoreroom",
+   "door": "B",
+   "offset": -1,
+   "to": 222,
+   "to_name": "room_asghouse3",
+   "landing_ok": true,
+   "landing": [
+    [
+     570,
+     137
+    ]
+   ],
+   "door_xy": [
+    [
+     174,
+     234
+    ]
+   ]
+  },
+  {
+   "from": 224,
+   "from_name": "room_asrielroom_final",
+   "door": "D",
+   "offset": -2,
+   "to": 222,
+   "to_name": "room_asghouse3",
+   "landing_ok": true,
+   "landing": [
+    [
+     151,
+     136
+    ]
+   ],
+   "door_xy": [
+    [
+     196,
+     218
+    ]
+   ]
+  },
+  {
+   "from": 226,
+   "from_name": "room_basement1_final",
+   "door": "A",
+   "offset": 1,
+   "to": 227,
+   "to_name": "room_basement2_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     480,
+     120
+    ],
+    [
+     480,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 227,
+   "from_name": "room_basement2_final",
+   "door": "A",
+   "offset": 1,
+   "to": 228,
+   "to_name": "room_basement3_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     480,
+     120
+    ],
+    [
+     480,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 227,
+   "from_name": "room_basement2_final",
+   "door": "B",
+   "offset": -1,
+   "to": 226,
+   "to_name": "room_basement1_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     450,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 228,
+   "from_name": "room_basement3_final",
+   "door": "A",
+   "offset": 1,
+   "to": 229,
+   "to_name": "room_basement4_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     0
+    ],
+    [
+     140,
+     0
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     180,
+     0
+    ]
+   ]
+  },
+  {
+   "from": 228,
+   "from_name": "room_basement3_final",
+   "door": "B",
+   "offset": -1,
+   "to": 227,
+   "to_name": "room_basement2_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     450,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 229,
+   "from_name": "room_basement4_final",
+   "door": "A",
+   "offset": 1,
+   "to": 230,
+   "to_name": "room_lastruins_corridor",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     160
+    ],
+    [
+     300,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 229,
+   "from_name": "room_basement4_final",
+   "door": "B",
+   "offset": -1,
+   "to": 228,
+   "to_name": "room_basement3_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     220
+    ],
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ],
+    [
+     180,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 230,
+   "from_name": "room_lastruins_corridor",
+   "door": "A",
+   "offset": 1,
+   "to": 231,
+   "to_name": "room_sanscorridor",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     1860,
+     220
+    ],
+    [
+     1880,
+     220
+    ],
+    [
+     1900,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 230,
+   "from_name": "room_lastruins_corridor",
+   "door": "B",
+   "offset": -1,
+   "to": 229,
+   "to_name": "room_basement4_final",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     150
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     160
+    ],
+    [
+     0,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 231,
+   "from_name": "room_sanscorridor",
+   "door": "A",
+   "offset": 1,
+   "to": 232,
+   "to_name": "room_castle_finalshoehorn",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     480
+    ]
+   ],
+   "door_xy": [
+    [
+     1220,
+     90
+    ],
+    [
+     1240,
+     90
+    ]
+   ]
+  },
+  {
+   "from": 231,
+   "from_name": "room_sanscorridor",
+   "door": "B",
+   "offset": -1,
+   "to": 230,
+   "to_name": "room_lastruins_corridor",
+   "landing_ok": true,
+   "landing": [
+    [
+     1880,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     90
+    ],
+    [
+     160,
+     90
+    ]
+   ]
+  },
+  {
+   "from": 232,
+   "from_name": "room_castle_finalshoehorn",
+   "door": "B",
+   "offset": -1,
+   "to": 231,
+   "to_name": "room_sanscorridor",
+   "landing_ok": true,
+   "landing": [
+    [
+     1230,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     520
+    ],
+    [
+     160,
+     520
+    ],
+    [
+     180,
+     520
+    ]
+   ]
+  },
+  {
+   "from": 233,
+   "from_name": "room_castle_coffins1",
+   "door": "A",
+   "offset": 1,
+   "to": 234,
+   "to_name": "room_castle_coffins2",
+   "landing_ok": true,
+   "landing": [
+    [
+     60,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     520
+    ],
+    [
+     140,
+     520
+    ],
+    [
+     160,
+     520
+    ]
+   ]
+  },
+  {
+   "from": 234,
+   "from_name": "room_castle_coffins2",
+   "door": "B",
+   "offset": -1,
+   "to": 233,
+   "to_name": "room_castle_coffins1",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     480
+    ]
+   ],
+   "door_xy": [
+    [
+     60,
+     120
+    ],
+    [
+     80,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 235,
+   "from_name": "room_castle_throneroom",
+   "door": "A",
+   "offset": 1,
+   "to": 236,
+   "to_name": "room_castle_prebarrier",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     210
+    ]
+   ],
+   "door_xy": [
+    [
+     80,
+     95
+    ],
+    [
+     100,
+     95
+    ],
+    [
+     120,
+     95
+    ]
+   ]
+  },
+  {
+   "from": 244,
+   "from_name": "room_truelab_elevator",
+   "door": "A",
+   "offset": 1,
+   "to": 245,
+   "to_name": "room_truelab_hall1",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     300,
+     140
+    ],
+    [
+     300,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 245,
+   "from_name": "room_truelab_hall1",
+   "door": "B",
+   "offset": -1,
+   "to": 244,
+   "to_name": "room_truelab_elevator",
+   "landing_ok": true,
+   "landing": [
+    [
+     280,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 246,
+   "from_name": "room_truelab_hub",
+   "door": "A",
+   "offset": 1,
+   "to": 247,
+   "to_name": "room_truelab_hall2",
+   "landing_ok": true,
+   "landing": [
+    [
+     380,
+     80
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 246,
+   "from_name": "room_truelab_hub",
+   "door": "B",
+   "offset": -1,
+   "to": 245,
+   "to_name": "room_truelab_hall1",
+   "landing_ok": true,
+   "landing": [
+    [
+     730,
+     20
+    ]
+   ],
+   "door_xy": [
+    [
+     240,
+     600
+    ],
+    [
+     260,
+     600
+    ]
+   ]
+  },
+  {
+   "from": 247,
+   "from_name": "room_truelab_hall2",
+   "door": "A",
+   "offset": 1,
+   "to": 248,
+   "to_name": "room_truelab_operatingroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     540,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     80
+    ],
+    [
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 247,
+   "from_name": "room_truelab_hall2",
+   "door": "B",
+   "offset": -1,
+   "to": 246,
+   "to_name": "room_truelab_hub",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     400,
+     80
+    ],
+    [
+     400,
+     100
+    ]
+   ]
+  },
+  {
+   "from": 248,
+   "from_name": "room_truelab_operatingroom",
+   "door": "A",
+   "offset": 1,
+   "to": 249,
+   "to_name": "room_truelab_redlever",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     190,
+     96
+    ]
+   ]
+  },
+  {
+   "from": 248,
+   "from_name": "room_truelab_operatingroom",
+   "door": "B",
+   "offset": -1,
+   "to": 247,
+   "to_name": "room_truelab_hall2",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     80
+    ]
+   ],
+   "door_xy": [
+    [
+     560,
+     140
+    ],
+    [
+     560,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 249,
+   "from_name": "room_truelab_redlever",
+   "door": "B",
+   "offset": -1,
+   "to": 248,
+   "to_name": "room_truelab_operatingroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     190,
+     114
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     230
+    ],
+    [
+     160,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 250,
+   "from_name": "room_truelab_prebed",
+   "door": "A",
+   "offset": 1,
+   "to": 251,
+   "to_name": "room_truelab_bedroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     380
+    ]
+   ],
+   "door_xy": [
+    [
+     580,
+     100
+    ],
+    [
+     580,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 251,
+   "from_name": "room_truelab_bedroom",
+   "door": "A",
+   "offset": 1,
+   "to": 252,
+   "to_name": "room_truelab_mirror",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     120
+    ]
+   ],
+   "door_xy": [
+    [
+     520,
+     160
+    ],
+    [
+     520,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 251,
+   "from_name": "room_truelab_bedroom",
+   "door": "B",
+   "offset": -1,
+   "to": 250,
+   "to_name": "room_truelab_prebed",
+   "landing_ok": true,
+   "landing": [
+    [
+     560,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     380
+    ],
+    [
+     0,
+     400
+    ]
+   ]
+  },
+  {
+   "from": 252,
+   "from_name": "room_truelab_mirror",
+   "door": "A",
+   "offset": 1,
+   "to": 253,
+   "to_name": "room_truelab_bluelever",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     890,
+     95
+    ]
+   ]
+  },
+  {
+   "from": 252,
+   "from_name": "room_truelab_mirror",
+   "door": "B",
+   "offset": -1,
+   "to": 251,
+   "to_name": "room_truelab_bedroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     500,
+     160
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 253,
+   "from_name": "room_truelab_bluelever",
+   "door": "B",
+   "offset": -1,
+   "to": 252,
+   "to_name": "room_truelab_mirror",
+   "landing_ok": true,
+   "landing": [
+    [
+     890,
+     115
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     230
+    ],
+    [
+     160,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 254,
+   "from_name": "room_truelab_hall3",
+   "door": "A",
+   "offset": 1,
+   "to": 255,
+   "to_name": "room_truelab_shower",
+   "landing_ok": true,
+   "landing": [
+    [
+     160,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     170,
+     118
+    ]
+   ]
+  },
+  {
+   "from": 254,
+   "from_name": "room_truelab_hall3",
+   "door": "C",
+   "offset": 2,
+   "to": 256,
+   "to_name": "room_truelab_determination",
+   "landing_ok": true,
+   "landing": [
+    [
+     420,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 255,
+   "from_name": "room_truelab_shower",
+   "door": "B",
+   "offset": -1,
+   "to": 254,
+   "to_name": "room_truelab_hall3",
+   "landing_ok": true,
+   "landing": [
+    [
+     170,
+     138
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ],
+    [
+     180,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 256,
+   "from_name": "room_truelab_determination",
+   "door": "A",
+   "offset": 1,
+   "to": 257,
+   "to_name": "room_truelab_tv",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     180
+    ]
+   ],
+   "door_xy": [
+    [
+     330,
+     56
+    ]
+   ]
+  },
+  {
+   "from": 256,
+   "from_name": "room_truelab_determination",
+   "door": "C",
+   "offset": 2,
+   "to": 258,
+   "to_name": "room_truelab_cooler",
+   "landing_ok": true,
+   "landing": [
+    [
+     660,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     140
+    ],
+    [
+     0,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 256,
+   "from_name": "room_truelab_determination",
+   "door": "D",
+   "offset": -2,
+   "to": 254,
+   "to_name": "room_truelab_hall3",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     440,
+     140
+    ],
+    [
+     440,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 257,
+   "from_name": "room_truelab_tv",
+   "door": "B",
+   "offset": -1,
+   "to": 256,
+   "to_name": "room_truelab_determination",
+   "landing_ok": true,
+   "landing": [
+    [
+     330,
+     78
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     220
+    ],
+    [
+     160,
+     220
+    ]
+   ]
+  },
+  {
+   "from": 258,
+   "from_name": "room_truelab_cooler",
+   "door": "A",
+   "offset": 1,
+   "to": 259,
+   "to_name": "room_truelab_greenlever",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     200
+    ]
+   ],
+   "door_xy": [
+    [
+     90,
+     96
+    ]
+   ]
+  },
+  {
+   "from": 258,
+   "from_name": "room_truelab_cooler",
+   "door": "D",
+   "offset": -2,
+   "to": 256,
+   "to_name": "room_truelab_determination",
+   "landing_ok": true,
+   "landing": [
+    [
+     20,
+     140
+    ]
+   ],
+   "door_xy": [
+    [
+     700,
+     140
+    ],
+    [
+     700,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 259,
+   "from_name": "room_truelab_greenlever",
+   "door": "B",
+   "offset": -1,
+   "to": 258,
+   "to_name": "room_truelab_cooler",
+   "landing_ok": true,
+   "landing": [
+    [
+     90,
+     114
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     230
+    ],
+    [
+     160,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 262,
+   "from_name": "room_truelab_prepower",
+   "door": "A",
+   "offset": 1,
+   "to": 263,
+   "to_name": "room_truelab_power",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     370
+    ]
+   ],
+   "door_xy": [
+    [
+     90,
+     96
+    ]
+   ]
+  },
+  {
+   "from": 263,
+   "from_name": "room_truelab_power",
+   "door": "B",
+   "offset": -1,
+   "to": 262,
+   "to_name": "room_truelab_prepower",
+   "landing_ok": true,
+   "landing": [
+    [
+     90,
+     114
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     400
+    ],
+    [
+     160,
+     400
+    ]
+   ]
+  },
+  {
+   "from": 273,
+   "from_name": "room_water13",
+   "door": "A",
+   "offset": 1,
+   "to": 274,
+   "to_name": "room_overworld",
+   "landing_ok": true,
+   "landing": [
+    [
+     600,
+     320
+    ]
+   ],
+   "door_xy": [
+    [
+     310,
+     440
+    ],
+    [
+     310,
+     460
+    ]
+   ]
+  },
+  {
+   "from": 274,
+   "from_name": "room_overworld",
+   "door": "A",
+   "offset": 1,
+   "to": 275,
+   "to_name": "room_overworld3",
+   "landing_ok": true,
+   "landing": [
+    [
+     120,
+     340
+    ]
+   ],
+   "door_xy": [
+    [
+     880,
+     240
+    ]
+   ]
+  },
+  {
+   "from": 275,
+   "from_name": "room_overworld3",
+   "door": "B",
+   "offset": -1,
+   "to": 274,
+   "to_name": "room_overworld",
+   "landing_ok": true,
+   "landing": [
+    [
+     840,
+     320
+    ]
+   ],
+   "door_xy": [
+    [
+     0,
+     180
+    ]
+   ]
+  },
+  {
+   "from": 296,
+   "from_name": "room_fire4",
+   "door": "A",
+   "offset": 1,
+   "to": 297,
+   "to_name": "room_fire10_old",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     1400,
+     120
+    ],
+    [
+     1400,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 296,
+   "from_name": "room_fire4",
+   "door": "D",
+   "offset": -2,
+   "to": 294,
+   "to_name": "room_floweyx",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     120,
+     520
+    ],
+    [
+     140,
+     520
+    ]
+   ]
+  },
+  {
+   "from": 297,
+   "from_name": "room_fire10_old",
+   "door": "A",
+   "offset": 1,
+   "to": 298,
+   "to_name": "room_fire10A_old",
+   "landing_ok": true,
+   "landing": [
+    [
+     1130,
+     95
+    ]
+   ],
+   "door_xy": [
+    [
+     1200,
+     80
+    ],
+    [
+     1220,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 297,
+   "from_name": "room_fire10_old",
+   "door": "C",
+   "offset": 2,
+   "to": 299,
+   "to_name": "room_tundra_placeholder",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     0,
+     80
+    ],
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 298,
+   "from_name": "room_fire10A_old",
+   "door": "B",
+   "offset": -1,
+   "to": 297,
+   "to_name": "room_fire10_old",
+   "landing_ok": true,
+   "landing": [
+    [
+     1210,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     1120,
+     80
+    ],
+    [
+     1140,
+     80
+    ]
+   ]
+  },
+  {
+   "from": 300,
+   "from_name": "room_ruins12B_old",
+   "door": "D",
+   "offset": -2,
+   "to": 298,
+   "to_name": "room_fire10A_old",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 302,
+   "from_name": "room_water7_older",
+   "door": "A",
+   "offset": 1,
+   "to": 303,
+   "to_name": "room_meetundyne_old",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     780,
+     120
+    ],
+    [
+     780,
+     140
+    ],
+    [
+     780,
+     160
+    ]
+   ]
+  },
+  {
+   "from": 302,
+   "from_name": "room_water7_older",
+   "door": "B",
+   "offset": -1,
+   "to": 301,
+   "to_name": "room_tundra_rollsnow",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     320,
+     330
+    ],
+    [
+     340,
+     330
+    ]
+   ]
+  },
+  {
+   "from": 303,
+   "from_name": "room_meetundyne_old",
+   "door": "A",
+   "offset": 1,
+   "to": 304,
+   "to_name": "room_water_mushroom",
+   "landing_ok": true,
+   "landing": [
+    [
+     140,
+     190
+    ]
+   ],
+   "door_xy": [
+    [
+     540,
+     100
+    ],
+    [
+     540,
+     120
+    ],
+    [
+     540,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 303,
+   "from_name": "room_meetundyne_old",
+   "door": "D",
+   "offset": -2,
+   "to": 301,
+   "to_name": "room_tundra_rollsnow",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     120
+    ],
+    [
+     0,
+     140
+    ]
+   ]
+  },
+  {
+   "from": 304,
+   "from_name": "room_water_mushroom",
+   "door": "A",
+   "offset": 1,
+   "to": 305,
+   "to_name": "room_monsteralign_test",
+   "landing_ok": false,
+   "landing": [],
+   "door_xy": [
+    [
+     310,
+     100
+    ],
+    [
+     310,
+     120
+    ]
+   ]
+  },
+  {
+   "from": 304,
+   "from_name": "room_water_mushroom",
+   "door": "B",
+   "offset": -1,
+   "to": 303,
+   "to_name": "room_meetundyne_old",
+   "landing_ok": true,
+   "landing": [
+    [
+     520,
+     100
+    ]
+   ],
+   "door_xy": [
+    [
+     120,
+     230
+    ],
+    [
+     140,
+     230
+    ],
+    [
+     160,
+     230
+    ]
+   ]
+  },
+  {
+   "from": 337,
+   "from_name": "room_dogshrine_mewmew",
+   "door": "B",
+   "offset": -1,
+   "to": 336,
+   "to_name": "room_dogshrine_ruined",
+   "landing_ok": true,
+   "landing": [
+    [
+     150,
+     55
+    ]
+   ],
+   "door_xy": [
+    [
+     140,
+     230
+    ],
+    [
+     160,
+     230
+    ]
+   ]
+  }
+ ],
+ "components": {
+  "count": 172,
+  "largest": 22,
+  "top_sizes": [
+   [
+    14,
+    22
+   ],
+   [
+    83,
+    16
+   ],
+   [
+    30,
+    10
+   ],
+   [
+    7,
+    9
+   ],
+   [
+    8,
+    9
+   ],
+   [
+    37,
+    9
+   ],
+   [
+    93,
+    9
+   ],
+   [
+    56,
+    7
+   ]
+  ],
+  "comp_of_room": {
+   "0": 1,
+   "1": 2,
+   "2": 3,
+   "3": 4,
+   "4": 5,
+   "5": 5,
+   "6": 6,
+   "7": 6,
+   "8": 6,
+   "9": 6,
+   "10": 6,
+   "11": 6,
+   "12": 7,
+   "13": 7,
+   "14": 7,
+   "15": 7,
+   "16": 7,
+   "17": 7,
+   "18": 7,
+   "19": 7,
+   "20": 7,
+   "21": 8,
+   "22": 8,
+   "23": 8,
+   "24": 8,
+   "25": 8,
+   "26": 8,
+   "27": 9,
+   "28": 8,
+   "29": 8,
+   "30": 8,
+   "31": 10,
+   "32": 11,
+   "33": 11,
+   "34": 11,
+   "35": 11,
+   "36": 11,
+   "37": 12,
+   "38": 13,
+   "39": 13,
+   "40": 13,
+   "41": 13,
+   "42": 13,
+   "43": 13,
+   "44": 14,
+   "45": 14,
+   "46": 14,
+   "47": 14,
+   "48": 14,
+   "49": 14,
+   "50": 14,
+   "51": 14,
+   "52": 14,
+   "53": 14,
+   "54": 14,
+   "55": 14,
+   "56": 14,
+   "57": 14,
+   "58": 14,
+   "59": 14,
+   "60": 14,
+   "61": 14,
+   "62": 14,
+   "63": 14,
+   "64": 14,
+   "65": 14,
+   "66": 15,
+   "67": 15,
+   "68": 16,
+   "69": 16,
+   "70": 17,
+   "71": 18,
+   "72": 19,
+   "73": 20,
+   "74": 21,
+   "75": 22,
+   "76": 23,
+   "77": 23,
+   "78": 24,
+   "79": 25,
+   "80": 26,
+   "81": 27,
+   "82": 28,
+   "83": 29,
+   "84": 30,
+   "85": 30,
+   "86": 30,
+   "87": 30,
+   "88": 30,
+   "89": 30,
+   "90": 30,
+   "91": 30,
+   "92": 30,
+   "93": 30,
+   "94": 31,
+   "95": 32,
+   "96": 32,
+   "97": 33,
+   "98": 33,
+   "99": 34,
+   "100": 35,
+   "101": 35,
+   "102": 36,
+   "103": 36,
+   "104": 37,
+   "105": 37,
+   "106": 37,
+   "107": 37,
+   "108": 37,
+   "109": 37,
+   "110": 37,
+   "111": 37,
+   "112": 37,
+   "113": 38,
+   "114": 38,
+   "115": 38,
+   "116": 39,
+   "117": 40,
+   "118": 41,
+   "119": 42,
+   "120": 43,
+   "121": 44,
+   "122": 45,
+   "123": 46,
+   "124": 47,
+   "125": 48,
+   "126": 49,
+   "127": 49,
+   "128": 50,
+   "129": 49,
+   "130": 51,
+   "131": 51,
+   "132": 51,
+   "133": 51,
+   "134": 52,
+   "135": 52,
+   "136": 52,
+   "137": 52,
+   "138": 52,
+   "139": 52,
+   "140": 53,
+   "141": 54,
+   "142": 54,
+   "143": 55,
+   "144": 56,
+   "145": 56,
+   "146": 56,
+   "147": 56,
+   "148": 56,
+   "149": 56,
+   "150": 56,
+   "151": 57,
+   "152": 57,
+   "153": 58,
+   "154": 59,
+   "155": 60,
+   "156": 61,
+   "157": 62,
+   "158": 63,
+   "159": 64,
+   "160": 65,
+   "161": 64,
+   "162": 66,
+   "163": 66,
+   "164": 66,
+   "165": 66,
+   "166": 67,
+   "167": 68,
+   "168": 69,
+   "169": 70,
+   "170": 71,
+   "171": 72,
+   "172": 72,
+   "173": 72,
+   "174": 73,
+   "175": 73,
+   "176": 74,
+   "177": 75,
+   "178": 76,
+   "179": 77,
+   "180": 77,
+   "181": 77,
+   "182": 78,
+   "183": 79,
+   "184": 79,
+   "185": 79,
+   "186": 80,
+   "187": 81,
+   "188": 82,
+   "189": 83,
+   "190": 83,
+   "191": 83,
+   "192": 83,
+   "193": 83,
+   "194": 83,
+   "195": 83,
+   "196": 83,
+   "197": 83,
+   "198": 83,
+   "199": 83,
+   "200": 83,
+   "201": 83,
+   "202": 83,
+   "203": 83,
+   "204": 83,
+   "205": 84,
+   "206": 85,
+   "207": 86,
+   "208": 87,
+   "209": 88,
+   "210": 88,
+   "211": 89,
+   "212": 89,
+   "213": 90,
+   "214": 91,
+   "215": 92,
+   "216": 93,
+   "217": 93,
+   "218": 93,
+   "219": 93,
+   "220": 93,
+   "221": 93,
+   "222": 93,
+   "223": 93,
+   "224": 93,
+   "225": 94,
+   "226": 95,
+   "227": 95,
+   "228": 95,
+   "229": 95,
+   "230": 95,
+   "231": 95,
+   "232": 95,
+   "233": 96,
+   "234": 96,
+   "235": 97,
+   "236": 97,
+   "237": 98,
+   "238": 99,
+   "239": 100,
+   "240": 101,
+   "241": 102,
+   "242": 103,
+   "243": 104,
+   "244": 105,
+   "245": 105,
+   "246": 105,
+   "247": 105,
+   "248": 105,
+   "249": 105,
+   "250": 106,
+   "251": 106,
+   "252": 106,
+   "253": 106,
+   "254": 107,
+   "255": 107,
+   "256": 107,
+   "257": 107,
+   "258": 107,
+   "259": 107,
+   "260": 108,
+   "261": 109,
+   "262": 110,
+   "263": 110,
+   "264": 111,
+   "265": 112,
+   "266": 113,
+   "267": 114,
+   "268": 115,
+   "269": 116,
+   "270": 117,
+   "271": 118,
+   "272": 119,
+   "273": 120,
+   "274": 120,
+   "275": 120,
+   "276": 121,
+   "277": 122,
+   "278": 123,
+   "279": 124,
+   "280": 125,
+   "281": 126,
+   "282": 127,
+   "283": 128,
+   "284": 129,
+   "285": 130,
+   "286": 131,
+   "287": 132,
+   "288": 133,
+   "289": 134,
+   "290": 135,
+   "291": 136,
+   "292": 137,
+   "293": 138,
+   "294": 139,
+   "295": 140,
+   "296": 139,
+   "297": 139,
+   "298": 139,
+   "299": 139,
+   "300": 139,
+   "301": 141,
+   "302": 141,
+   "303": 141,
+   "304": 141,
+   "305": 141,
+   "306": 142,
+   "307": 143,
+   "308": 144,
+   "309": 145,
+   "310": 146,
+   "311": 147,
+   "312": 148,
+   "313": 149,
+   "314": 150,
+   "315": 151,
+   "316": 152,
+   "317": 153,
+   "318": 154,
+   "319": 155,
+   "320": 156,
+   "321": 157,
+   "322": 158,
+   "323": 159,
+   "324": 160,
+   "325": 161,
+   "326": 162,
+   "327": 163,
+   "328": 164,
+   "329": 165,
+   "330": 166,
+   "331": 167,
+   "332": 168,
+   "333": 169,
+   "334": 170,
+   "335": 171,
+   "336": 172,
+   "337": 172
+  }
+ },
+ "stats": {
+  "edges": 316,
+  "out_of_range": 0,
+  "landing_ok": 307,
+  "largest_component": 22,
+  "code_driven_rooms": 29
+ }
+}
