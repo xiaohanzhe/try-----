@@ -1,0 +1,67 @@
+第60轮收尾复检（记忆追加 + 归档入册）
+[PASS] ① ast.parse 通过：_append60.py（归档版）
+[PASS] ② 详版：§56 标题存在
+[PASS] ② 详版：§56 前有换行分隔（无粘连）
+[PASS] ② 详版：§56.8 小节存在
+[PASS] ② 详版：无 U+FFFD
+[PASS] ② 详版：无 BOM
+[PASS] ② 详版：体量 > 3000 字符
+[PASS] ② 负控制：标题改掉 ⇒ 判据按预期报红（False）
+[PASS] ② 负控制：KEY 紧邻前字符换成 X ⇒ 判据按预期报红（False）
+[PASS] ② 负控制：尾部塞 U+FFFD ⇒ 判据按预期报红（False）
+[PASS] ② 负控制：头部塞 BOM ⇒ 判据按预期报红（False）
+[PASS] ② 负控制：截成 100 字 ⇒ 判据按预期报红（False）
+[PASS] ② 当日日志含第60轮条目
+[PASS] ② 日志第60轮条目前有换行分隔（无粘连）
+[PASS] ③ 无 BOM：详版
+[PASS] ③ 无 U+FFFD：详版
+[PASS] ③ 无 BOM：日志
+[PASS] ③ 无 U+FFFD：日志
+[PASS] ③ 无 BOM：归档脚本
+[PASS] ③ 无 U+FFFD：归档脚本
+[PASS] ③ 无 BOM：报告
+[PASS] ③ 无 U+FFFD：报告
+[PASS] ③ 无 BOM：summary.txt
+[PASS] ③ 无 U+FFFD：summary.txt
+[PASS] ③ 无 BOM：recheck60.txt
+[PASS] ③ 无 U+FFFD：recheck60.txt
+[PASS] ④ 归档脚本的幂等判据读的是**文本内容**（不是恒真的常量）
+[PASS] ④ 幂等判据的负控制成立（去掉标记 ⇒ 判否）
+[PASS] ④ 归档脚本对详版/日志都用追加模式（a），不是覆盖模式（w）
+[PASS] ④ 负控制：脚本内不存在覆盖式写入（若有人改成 w 会立刻报红）
+[PASS] ④ 负控制集非空且逐条带名字（no-op 不会假绿）
+[PASS] ⑤ 静态：活代码文件 = 93（证据 93）
+[PASS] ⑤ 静态：总行数 = 52,401（证据求和 52401）
+[PASS] ⑤ 恒真：判据点 = 2769（证据 2769）
+[PASS] ⑤ 恒真：hollow_true = 0（证据 0）
+[PASS] ⑤ 恒真：「有兜底」= 7（证据 7）
+[PASS] ⑤ 接线：产品层零接线模块 = 3（证据 3）
+[PASS] ⑤ 接线：产品层静默吞异常 = 40（证据 40）
+[PASS] ⑤ 接线：hasattr 总数 = 103（证据 103）
+[PASS] ⑤ 接线：main.py hasattr = 53（证据 53，键=['ralsei_pet/src/main.py']）
+[PASS] ⑤ 接线：companion_roster 审查层引用 = 15（证据 15）
+[PASS] ⑤ 接线：scene_walk 审查层引用 = 9（证据 9）
+[PASS] ⑤ 接线：开发残留文件 = 32（证据 32）
+[PASS] ⑤ 接线：locked_only（有锁但没接线）= 2（证据 ['companion_roster', 'scene_walk']）
+[PASS] ⑤ 全量 G2：PASS=2980 / FAIL=0 / 套件=56（回 summary.txt）
+[PASS] ⑤ 第一轮复检：43 PASS / 0 FAIL（回 recheck60.txt）
+[PASS] ⑤ 报告含令牌 "93"
+[PASS] ⑤ 报告含令牌 "52,401"
+[PASS] ⑤ 报告含令牌 "2769"
+[PASS] ⑤ 报告含令牌 "2980"
+[PASS] ⑤ 报告在复检处指向证据文件（而不是只写结论）
+[PASS] ⑤ §56 段落切出成功（4062 字符，占全文 293244）
+[PASS] ⑤ §56 **段落内**含令牌 "2769"
+[PASS] ⑤ §56 **段落内**含令牌 "52,401"
+[PASS] ⑤ §56 **段落内**含令牌 "2 处真·空洞"
+[PASS] ⑤ 当日日志含复检合计 "43 PASS"（事实清单在日志、教训在详版）
+[PASS] ⑥ 临时脚本未留在工作区 .workbuddy/memory/（防被 git add -A 误收）
+--- git status --porcelain（供人工确认"改动恰为本轮意图"）---
+     M .workbuddy/memory/2026-09-28.md
+     M ".workbuddy/memory/\345\217\202\350\200\203-\345\245\221\347\272\246\344\270\216\345\216\206\350\275\256\357\274\210\350\257\246\347\211\210\357\274\211.md"
+    ?? "code-quality-audit/\347\254\25460\350\275\256-\345\205\250\351\235\242\346\216\222\346\237\245/_evidence/recheck_append60.txt"
+    ?? "code-quality-audit/\347\254\25460\350\275\256-\345\205\250\351\235\242\346\216\222\346\237\245/_tools/_append60.py"
+    ?? "code-quality-audit/\347\254\25460\350\275\256-\345\205\250\351\235\242\346\216\222\346\237\245/_tools/recheck_append60.py"
+--- 共 5 项 ---
+[PASS] ⑥ 工作区没有文件被误删（deletions=0）
+合计 PASS=58 FAIL=0
