@@ -223,6 +223,7 @@ R6_ALLOWED = (
     u'code-quality-audit/第63轮-跨界扩展数据面/',
     u'第63轮报告-跨界扩展数据面',
     u'code-quality-audit/第61轮-跨界扩展动工/_tools/utmt61.py',
+    u'.workbuddy/memory/',          # 每轮的记忆留痕（日志 + 详版）
 )
 
 
