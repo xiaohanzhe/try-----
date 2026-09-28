@@ -1,0 +1,761 @@
+{
+  "Undertale": {
+    "exists": true,
+    "entries": 335,
+    "tops": {
+      "AndroidManifest.xml": 1,
+      "META-INF": 29,
+      "assets": 216,
+      "classes.dex": 1,
+      "lib": 8,
+      "res": 79,
+      "resources.arsc": 1
+    },
+    "assets_lvl1": {
+      "abc_123_a.ogg": 1,
+      "game.droid": 1,
+      "mus_a2.ogg": 1,
+      "mus_alphysfix.ogg": 1,
+      "mus_amalgam.ogg": 1,
+      "mus_ambientwater.ogg": 1,
+      "mus_anothermedium.ogg": 1,
+      "mus_bad.ogg": 1,
+      "mus_barrier.ogg": 1,
+      "mus_battle1.ogg": 1,
+      "mus_battle2.ogg": 1,
+      "mus_bergentruckung.ogg": 1,
+      "mus_bgflameA.ogg": 1,
+      "mus_birdnoise.ogg": 1,
+      "mus_birdsong.ogg": 1,
+      "mus_boss1.ogg": 1,
+      "mus_cast_1.ogg": 1,
+      "mus_cast_2.ogg": 1,
+      "mus_cast_3.ogg": 1,
+      "mus_cast_4.ogg": 1,
+      "mus_cast_5.ogg": 1,
+      "mus_cast_6.ogg": 1,
+      "mus_cast_7.ogg": 1,
+      "mus_chokedup.ogg": 1,
+      "mus_churchbell.ogg": 1,
+      "mus_computer.ogg": 1,
+      "mus_confession.ogg": 1,
+      "mus_coolbeat.ogg": 1,
+      "mus_core.ogg": 1,
+      "mus_core_ambience.ogg": 1,
+      "mus_coretransition.ogg": 1,
+      "mus_creepy_ambience.ogg": 1,
+      "mus_crickets.ogg": 1,
+      "mus_cymbal.ogg": 1,
+      "mus_dance_of_dog.ogg": 1,
+      "mus_date.ogg": 1,
+      "mus_date_fight.ogg": 1,
+      "mus_date_tense.ogg": 1,
+      "mus_deeploop2.ogg": 1,
+      "mus_disturbing.ogg": 1,
+      "mus_dogappear.ogg": 1,
+      "mus_dogmeander.ogg": 1,
+      "mus_dogroom.ogg": 1,
+      "mus_dogshrine_1.ogg": 1,
+      "mus_dogshrine_2.ogg": 1,
+      "mus_dogsong.ogg": 1,
+      "mus_dontgiveup.ogg": 1,
+      "mus_doorclose.ogg": 1,
+      "mus_dooropen.ogg": 1,
+      "mus_drone.ogg": 1,
+      "mus_dummybattle.ogg": 1,
+      "mus_dununnn.ogg": 1,
+      "mus_elevator.ogg": 1,
+      "mus_elevator_last.ogg": 1,
+      "mus_endarea_parta.ogg": 1,
+      "mus_endarea_partb.ogg": 1,
+      "mus_endingexcerpt1.ogg": 1,
+      "mus_endingexcerpt2.ogg": 1,
+      "mus_express_myself.ogg": 1,
+      "mus_f_6s_1.ogg": 1,
+      "mus_f_6s_2.ogg": 1,
+      "mus_f_6s_3.ogg": 1,
+      "mus_f_6s_4.ogg": 1,
+      "mus_f_6s_5.ogg": 1,
+      "mus_f_6s_6.ogg": 1,
+      "mus_f_alarm.ogg": 1,
+      "mus_f_destroyed.ogg": 1,
+      "mus_f_destroyed2.ogg": 1,
+      "mus_f_destroyed3.ogg": 1,
+      "mus_f_finale_1.ogg": 1,
+      "mus_f_finale_1_l.ogg": 1,
+      "mus_f_finale_2.ogg": 1,
+      "mus_f_finale_3.ogg": 1,
+      "mus_f_intro.ogg": 1,
+      "mus_f_newlaugh.ogg": 1,
+      "mus_f_newlaugh_low.ogg": 1,
+      "mus_f_part1.ogg": 1,
+      "mus_f_part2.ogg": 1,
+      "mus_f_part3.ogg": 1,
+      "mus_f_saved.ogg": 1,
+      "mus_f_wind1.ogg": 1,
+      "mus_f_wind2.ogg": 1,
+      "mus_fallendown2.ogg": 1,
+      "mus_fearsting.ogg": 1,
+      "mus_flowey.ogg": 1,
+      "mus_gameover.ogg": 1,
+      "mus_ghostbattle.ogg": 1,
+      "mus_harpnoise.ogg": 1,
+      "mus_hereweare.ogg": 1,
+      "mus_hotel.ogg": 1,
+      "mus_hotel_battle.ogg": 1,
+      "mus_house1.ogg": 1,
+      "mus_house2.ogg": 1,
+      "mus_intronoise.ogg": 1,
+      "mus_kingdescription.ogg": 1,
+      "mus_lab.ogg": 1,
+      "mus_leave.ogg": 1,
+      "mus_menu0.ogg": 1,
+      "mus_menu1.ogg": 1,
+      "mus_menu2.ogg": 1,
+      "mus_menu3.ogg": 1,
+      "mus_menu4.ogg": 1,
+      "mus_menu5.ogg": 1,
+      "mus_menu6.ogg": 1,
+      "mus_mett_applause.ogg": 1,
+      "mus_mett_cheer.ogg": 1,
+      "mus_mettafly.ogg": 1,
+      "mus_mettaton_ex.ogg": 1,
+      "mus_mettaton_neo.ogg": 1,
+      "mus_mettaton_pretransform.ogg": 1,
+      "mus_mettatonbattle.ogg": 1,
+      "mus_mettmusical1.ogg": 1,
+      "mus_mettmusical2.ogg": 1,
+      "mus_mettmusical3.ogg": 1,
+      "mus_mettmusical4.ogg": 1,
+      "mus_mettsad.ogg": 1,
+      "mus_mode.ogg": 1,
+      "mus_mtgameshow.ogg": 1,
+      "mus_muscle.ogg": 1,
+      "mus_musicbox.ogg": 1,
+      "mus_myemeow.ogg": 1,
+      "mus_mysteriousroom2.ogg": 1,
+      "mus_mystery.ogg": 1,
+      "mus_napstachords.ogg": 1,
+      "mus_napstahouse.ogg": 1,
+      "mus_news.ogg": 1,
+      "mus_news_battle.ogg": 1,
+      "mus_ohyes.ogg": 1,
+      "mus_oogloop.ogg": 1,
+      "mus_operatile.ogg": 1,
+      "mus_options_fall.ogg": 1,
+      "mus_options_summer.ogg": 1,
+      "mus_options_winter.ogg": 1,
+      "mus_papyrus.ogg": 1,
+      "mus_papyrusboss.ogg": 1,
+      "mus_piano.ogg": 1,
+      "mus_prebattle1.ogg": 1,
+      "mus_predummy.ogg": 1,
+      "mus_race.ogg": 1,
+      "mus_rain.ogg": 1,
+      "mus_rain_deep.ogg": 1,
+      "mus_repeat_1.ogg": 1,
+      "mus_repeat_2.ogg": 1,
+      "mus_reunited.ogg": 1,
+      "mus_rimshot.ogg": 1,
+      "mus_ruins.ogg": 1,
+      "mus_ruinspiano.ogg": 1,
+      "mus_sansdate.ogg": 1,
+      "mus_sfx_a_grab.ogg": 1,
+      "mus_sfx_chainsaw.ogg": 1,
+      "mus_sfx_hypergoner_charge.ogg": 1,
+      "mus_sfx_hypergoner_laugh.ogg": 1,
+      "mus_sfx_rainbowbeam_hold.ogg": 1,
+      "mus_shop.ogg": 1,
+      "mus_sigh_of_dog.ogg": 1,
+      "mus_silence.ogg": 1,
+      "mus_smallshock.ogg": 1,
+      "mus_smile.ogg": 1,
+      "mus_snoresymphony.ogg": 1,
+      "mus_snowwalk.ogg": 1,
+      "mus_snowy.ogg": 1,
+      "mus_spider.ogg": 1,
+      "mus_spoopy.ogg": 1,
+      "mus_spoopy_holiday.ogg": 1,
+      "mus_spoopy_wave.ogg": 1,
+      "mus_st_happytown.ogg": 1,
+      "mus_st_him.ogg": 1,
+      "mus_st_meatfactory.ogg": 1,
+      "mus_st_troubledingle.ogg": 1,
+      "mus_star.ogg": 1,
+      "mus_sticksnap.ogg": 1,
+      "mus_story.ogg": 1,
+      "mus_story_stuck.ogg": 1,
+      "mus_temshop.ogg": 1,
+      "mus_temvillage.ogg": 1,
+      "mus_tension.ogg": 1,
+      "mus_tone2.ogg": 1,
+      "mus_tone3.ogg": 1,
+      "mus_toomuch.ogg": 1,
+      "mus_toriel.ogg": 1,
+      "mus_town.ogg": 1,
+      "mus_tv.ogg": 1,
+      "mus_undyneboss.ogg": 1,
+      "mus_undynefast.ogg": 1,
+      "mus_undynepiano.ogg": 1,
+      "mus_undynescary.ogg": 1,
+      "mus_undynetheme.ogg": 1,
+      "mus_undynetruetheme.ogg": 1,
+      "mus_vsasgore.ogg": 1,
+      "mus_waterfall.ogg": 1,
+      "mus_waterquiet.ogg": 1,
+      "mus_wawa.ogg": 1,
+      "mus_whoopee.ogg": 1,
+      "mus_wind.ogg": 1,
+      "mus_woofenstein.ogg": 1,
+      "mus_woofenstein_loop.ogg": 1,
+      "mus_wrongnumbersong.ogg": 1,
+      "mus_wrongworld.ogg": 1,
+      "mus_x_undyne.ogg": 1,
+      "mus_x_undyne_pre.ogg": 1,
+      "mus_xpart.ogg": 1,
+      "mus_xpart_2.ogg": 1,
+      "mus_xpart_a.ogg": 1,
+      "mus_xpart_b.ogg": 1,
+      "mus_xpart_back.ogg": 1,
+      "mus_yourbestfriend_3.ogg": 1,
+      "mus_z_ending.ogg": 1,
+      "mus_zz_megalovania.ogg": 1,
+      "mus_zzz_c.ogg": 1,
+      "mus_zzz_c2.ogg": 1,
+      "options.ini": 1,
+      "portrait_splash.png": 1,
+      "snd_ballchime.ogg": 1,
+      "snd_curtgunshot.ogg": 1,
+      "snd_mushroomdance.ogg": 1,
+      "splash.png": 1
+    },
+    "exts": {
+      ".xml": 45,
+      ".version": 25,
+      ".pro": 1,
+      ".ogg": 212,
+      ".droid": 1,
+      ".ini": 1,
+      ".png": 37,
+      ".dex": 1,
+      ".so": 8,
+      ".arsc": 1,
+      ".mf": 1,
+      ".sf": 1,
+      ".rsa": 1
+    },
+    "assets_big": [
+      [
+        "assets/game.droid",
+        79628496
+      ],
+      [
+        "assets/mus_reunited.ogg",
+        3032892
+      ],
+      [
+        "assets/mus_endarea_parta.ogg",
+        2188141
+      ],
+      [
+        "assets/mus_sansdate.ogg",
+        2155251
+      ],
+      [
+        "assets/mus_endarea_partb.ogg",
+        2134581
+      ],
+      [
+        "assets/mus_z_ending.ogg",
+        2115643
+      ],
+      [
+        "assets/mus_xpart.ogg",
+        2070525
+      ],
+      [
+        "assets/mus_core.ogg",
+        2019126
+      ],
+      [
+        "assets/mus_zz_megalovania.ogg",
+        1867146
+      ],
+      [
+        "assets/mus_x_undyne.ogg",
+        1839786
+      ],
+      [
+        "assets/mus_vsasgore.ogg",
+        1757194
+      ],
+      [
+        "assets/mus_express_myself.ogg",
+        1724516
+      ],
+      [
+        "assets/mus_chokedup.ogg",
+        1663093
+      ],
+      [
+        "assets/mus_dummybattle.ogg",
+        1637070
+      ],
+      [
+        "assets/mus_mettaton_ex.ogg",
+        1634836
+      ],
+      [
+        "assets/mus_anothermedium.ogg",
+        1631371
+      ],
+      [
+        "assets/mus_hereweare.ogg",
+        1607956
+      ],
+      [
+        "assets/mus_fallendown2.ogg",
+        1520179
+      ],
+      [
+        "assets/mus_waterfall.ogg",
+        1479629
+      ],
+      [
+        "assets/mus_dontgiveup.ogg",
+        1424917
+      ],
+      [
+        "assets/mus_undyneboss.ogg",
+        1327244
+      ],
+      [
+        "assets/mus_date.ogg",
+        1315019
+      ],
+      [
+        "assets/mus_house2.ogg",
+        1311196
+      ],
+      [
+        "assets/mus_boss1.ogg",
+        1268539
+      ],
+      [
+        "assets/mus_xpart_2.ogg",
+        1253912
+      ]
+    ],
+    "audio_count": 212,
+    "www": []
+  },
+  "outertale": {
+    "exists": true,
+    "entries": 4032,
+    "tops": {
+      "META-INF": 35,
+      "classes.dex": 1,
+      "classes2.dex": 1,
+      "classes3.dex": 1,
+      "classes4.dex": 1,
+      "classes5.dex": 1,
+      "assets": 3637,
+      "DebugProbesKt.bin": 1,
+      "kotlin": 7,
+      "org": 2,
+      "AndroidManifest.xml": 1,
+      "res": 343,
+      "resources.arsc": 1
+    },
+    "assets_lvl1": {
+      "www": 3637
+    },
+    "exts": {
+      ".properties": 1,
+      ".dex": 5,
+      ".json": 1066,
+      ".png": 2365,
+      ".csv": 25,
+      ".mp3": 347,
+      ".js": 2,
+      ".css": 1,
+      ".html": 3,
+      ".gif": 1,
+      ".bin": 1,
+      ".version": 32,
+      ".coroutineexceptionhandler": 1,
+      ".maindispatcherfactory": 1,
+      ".kotlin_builtins": 7,
+      ".xml": 173,
+      ".arsc": 1
+    },
+    "assets_big": [
+      [
+        "assets/www/index-BIKawlPs.js",
+        27589549
+      ],
+      [
+        "assets/www/outertale-CB5JeysL.mp3",
+        5303737
+      ],
+      [
+        "assets/www/approach-D2_ynONB.mp3",
+        5245640
+      ],
+      [
+        "assets/www/theend-D0LlFEOo.mp3",
+        4920886
+      ],
+      [
+        "assets/www/reunited-CGOCPCnp.mp3",
+        4864879
+      ],
+      [
+        "assets/www/choice-BxSlSQXM.mp3",
+        4831443
+      ],
+      [
+        "assets/www/aerialis-CGHu90vJ.mp3",
+        3584670
+      ],
+      [
+        "assets/www/aerialisArchive-mu-5DVh1.mp3",
+        3584670
+      ],
+      [
+        "assets/www/aerialisEmpty-bL7sSGKq.mp3",
+        3584670
+      ],
+      [
+        "assets/www/arms-BPe_UIRr.mp3",
+        3462208
+      ],
+      [
+        "assets/www/archive-DqFOD6Rk.mp3",
+        3259080
+      ],
+      [
+        "assets/www/sansdate-DCDpxjUN.mp3",
+        3200984
+      ],
+      [
+        "assets/www/asrielboss-tBFFrZpx.mp3",
+        3096076
+      ],
+      [
+        "assets/www/core-DWBJs_tY.mp3",
+        2943939
+      ],
+      [
+        "assets/www/ending-BJ5YNOHr.mp3",
+        2844465
+      ],
+      [
+        "assets/www/undynegeno-CqwVabOw.mp3",
+        2815626
+      ],
+      [
+        "assets/www/emotion-C6Rja7IZ.mp3",
+        2793474
+      ],
+      [
+        "assets/www/dummyboss-BVfau6rb.mp3",
+        2788040
+      ],
+      [
+        "assets/www/outlands-BJT33ABp.mp3",
+        2663488
+      ],
+      [
+        "assets/www/outlandsArchive-DznO0Hhe.mp3",
+        2663488
+      ],
+      [
+        "assets/www/mall-D8h3E1wT.mp3",
+        2498395
+      ],
+      [
+        "assets/www/sansboss-C7oZ0WB0.mp3",
+        2482094
+      ],
+      [
+        "assets/www/uwa-OH71q64J.mp3",
+        2458270
+      ],
+      [
+        "assets/www/asgore-DZx6eWAq.mp3",
+        2401010
+      ],
+      [
+        "assets/www/credits2-BmYq2BIv.mp3",
+        2397248
+      ]
+    ],
+    "audio_count": 347,
+    "www": [
+      "assets/www/86-D16Sv77D.json",
+      "assets/www/86-DqU84JZS.png",
+      "assets/www/98-DbGnyct7.json",
+      "assets/www/98-i9yIhmnm.png",
+      "assets/www/AYAYA-CLoY7mWt.json",
+      "assets/www/AYAYA-DwU5Yw7N.png",
+      "assets/www/AYAYA-TBKWE3P5.png",
+      "assets/www/CORE-CBvQ9swK.png",
+      "assets/www/CORE-DtkqgNq-.json",
+      "assets/www/CORE_critical-3N0OlLud.json",
+      "assets/www/CORE_critical-DCTlXmbf.png",
+      "assets/www/CORE_overlay-BxyPxQ8I.png",
+      "assets/www/CORE_overlay-CjxzuGyY.json",
+      "assets/www/ComicSans-5hImFI08.csv",
+      "assets/www/ComicSans-B8LNG7FV.png",
+      "assets/www/ComicSans-Bvk7YH6u.png",
+      "assets/www/ComicSans-DQ1QjnHm.csv",
+      "assets/www/ComicSans-hIujIAzF.png",
+      "assets/www/ComicSans-rlP4P9RD.csv",
+      "assets/www/CryptOfTomorrow-Bge-gFwi.csv",
+      "assets/www/CryptOfTomorrow-BmusrJUB.png",
+      "assets/www/CryptOfTomorrow-Bvbg7pV1.png",
+      "assets/www/CryptOfTomorrow-CYdd8xbr.png",
+      "assets/www/CryptOfTomorrow-EpwwIyv4.png",
+      "assets/www/CryptOfTomorrow-ZX_PK22n.csv",
+      "assets/www/CryptOfTomorrow-fUDDiyl9.csv",
+      "assets/www/DeterminationMono-BAi0KnK5.png",
+      "assets/www/DeterminationMono-BzDIpeAw.png",
+      "assets/www/DeterminationMono-CADZK0Ry.png",
+      "assets/www/DeterminationMono-CfGJv_0X.csv",
+      "assets/www/DeterminationMono-CnDfpQzz.csv",
+      "assets/www/DeterminationMono-DFBU0HOI.csv",
+      "assets/www/DeterminationSans-5N6Bpt-Z.png",
+      "assets/www/DeterminationSans-B3wnBWPr.csv",
+      "assets/www/DeterminationSans-C6HkIBWL.png",
+      "assets/www/DeterminationSans-CvRpwRy7.csv",
+      "assets/www/DeterminationSans-ocECn_bC.csv",
+      "assets/www/DiaryOfAn8BitMage--kmb39Jj.png",
+      "assets/www/DiaryOfAn8BitMage-CGF2onA2.csv",
+      "assets/www/DiaryOfAn8BitMage-D2RrJZUz.csv",
+      "assets/www/DiaryOfAn8BitMage-D9Gi9QnF.png",
+      "assets/www/DiaryOfAn8BitMage-UUrx6Dgq.csv",
+      "assets/www/DiaryOfAn8BitMage-hZ_Gs03K.png",
+      "assets/www/DotumChe-B1mOAAfm.csv",
+      "assets/www/DotumChe-CEn1-OyS.csv",
+      "assets/www/DotumChe-Ca2OkUov.png",
+      "assets/www/DotumChe-CiNK2Gne.csv",
+      "assets/www/DotumChe-CuAEPZbu.csv",
+      "assets/www/DotumChe-CwGH2ibs.png",
+      "assets/www/DotumChe-DC5xNpyj.png",
+      "assets/www/DotumChe-DGHe5w-B.png",
+      "assets/www/HP-DdC8OtvT.png",
+      "assets/www/HP-lhBfgWi-.png",
+      "assets/www/MarsNeedsCunnilingus-BT1Cq--6.png",
+      "assets/www/MarsNeedsCunnilingus-BoDfvraj.csv",
+      "assets/www/MarsNeedsCunnilingus-C1qi3cD_.csv",
+      "assets/www/MarsNeedsCunnilingus-CZAXd91d.png",
+      "assets/www/MarsNeedsCunnilingus-CevI05HI.png",
+      "assets/www/MarsNeedsCunnilingus-DBjtp2zR.png",
+      "assets/www/MarsNeedsCunnilingus-DMUcSHoa.csv",
+      "assets/www/Papyrus-B7TQQAjq.csv",
+      "assets/www/Papyrus-BAOBifxR.png",
+      "assets/www/Papyrus-CBvAH73F.png",
+      "assets/www/Papyrus-CWWcubsX.csv",
+      "assets/www/Papyrus-CnWBw_V3.png",
+      "assets/www/Papyrus-DUHHE8uA.csv",
+      "assets/www/SOUL-BACGB8L_.png",
+      "assets/www/SOUL-CUdrQuWQ.png",
+      "assets/www/SOUL-CloevrLi.json",
+      "assets/www/THATSTHESTUFF-BAlDUflh.png",
+      "assets/www/THATSTHESTUFF-DMk6BPnH.json",
+      "assets/www/_-Boim-WkG.png",
+      "assets/www/_-CgD_LWGP.json",
+      "assets/www/abreak1-BLKSaxSM.mp3",
+      "assets/www/abreak2-C3JW1Oim.mp3",
+      "assets/www/act-BLBeQ2xS.png",
+      "assets/www/act-BonovcON.png",
+      "assets/www/act-CIsSMrB_.json",
+      "assets/www/act-CQigLHL9.png",
+      "assets/www/act-D7OSIzDk.json",
+      "assets/www/act-DD_Xq6Q5.png",
+      "assets/www/act-T-POm1fH.png",
+      "assets/www/aerialis-CGHu90vJ.mp3",
+      "assets/www/aerialis-a-CjzYCNaB.json",
+      "assets/www/aerialis-a-lO2yblTu.png",
+      "assets/www/aerialis-a-overlay-D1PlPmy1.json",
+      "assets/www/aerialis-a-overlay-MaEdlCvH.png",
+      "assets/www/aerialis-b-BY8QAz9J.json",
+      "assets/www/aerialis-b-dark-C6S-FUux.png",
+      "assets/www/aerialis-b-dark-CBKgBPc6.json",
+      "assets/www/aerialis-b-fofs_OMu.png",
+      "assets/www/aerialis-nb0f2pWy.png",
+      "assets/www/aerialisArchive-mu-5DVh1.mp3",
+      "assets/www/aerialisEmpty-bL7sSGKq.mp3",
+      "assets/www/alphys-D30vBe3W.mp3",
+      "assets/www/alphysfix-Vmk3QceS.mp3",
+      "assets/www/amalgam-CcNzGXCY.mp3",
+      "assets/www/anchorDotdotdot-B9M1HtrJ.png",
+      "assets/www/anchorDotdotdot-Cdh2yMMR.json",
+      "assets/www/anchorFlyer-DRTf-Anw.png",
+      "assets/www/anchorFlyer-_7aqht41.json",
+      "assets/www/anchorG-B2zcf_aJ.json",
+      "assets/www/anchorG-C-gfA8Fc.png",
+      "assets/www/anchorLaugh-CgLJLxVI.png",
+      "assets/www/anchorLaugh-deTU2Iz_.json",
+      "assets/www/anchorOMG-1jhqtLKN.json",
+      "assets/www/anchorOMG-CBfgmDNp.png",
+      "assets/www/anchorPoint-C5lLcAbJ.json",
+      "assets/www/anchorPoint-CQg7zH7V.png",
+      "assets/www/angery-CaZtBK6J.png",
+      "assets/www/angery-DaRDgADp.json",
+      "assets/www/angryTomato-QPtwGGW3.png",
+      "assets/www/anime-CgRgKCQd.json",
+      "assets/www/anime-RjRViOTc.png",
+      "assets/www/animeChargeUpSequence-BXhCvUM9.png",
+      "assets/www/animeChargeUpSequence-Ft3HWCbD.json",
+      "assets/www/antenna-CQb3476m.png",
+      "assets/www/appear-4YtSse0H.mp3",
+      "assets/www/applause-DS392R9f.mp3",
+      "assets/www/approach-D2_ynONB.mp3"
+    ]
+  },
+  "黄魂": {
+    "exists": true,
+    "entries": 811,
+    "tops": {
+      "AndroidManifest.xml": 1,
+      "META-INF": 3,
+      "assets": 389,
+      "classes.dex": 1,
+      "lib": 6,
+      "res": 409,
+      "resources.arsc": 1,
+      "你好啊.txt": 1
+    },
+    "assets_lvl1": {
+      "game.droid": 1,
+      "lang": 159,
+      "mus": 206,
+      "options.ini": 1,
+      "portrait_splash.png": 1,
+      "snd": 19,
+      "splash.png": 1,
+      "看看.txt": 1
+    },
+    "exts": {
+      ".xml": 224,
+      ".rsa": 1,
+      ".sf": 1,
+      ".mf": 1,
+      ".droid": 1,
+      ".json": 4,
+      ".png": 327,
+      ".ogg": 241,
+      ".ini": 1,
+      ".txt": 2,
+      ".dex": 1,
+      ".so": 6,
+      ".arsc": 1
+    },
+    "assets_big": [
+      [
+        "assets/game.droid",
+        182498500
+      ],
+      [
+        "assets/mus/nothing_but_the_truth.ogg",
+        2515705
+      ],
+      [
+        "assets/mus/credits.ogg",
+        2227327
+      ],
+      [
+        "assets/mus/apprehension_yellow.ogg",
+        2169296
+      ],
+      [
+        "assets/lang/ru/strings.json",
+        2104212
+      ],
+      [
+        "assets/mus/steamworks_overworld.ogg",
+        1948247
+      ],
+      [
+        "assets/mus/card_game.ogg",
+        1934074
+      ],
+      [
+        "assets/mus/dalv_diary.ogg",
+        1834629
+      ],
+      [
+        "assets/mus/honest_days_work.ogg",
+        1818191
+      ],
+      [
+        "assets/mus/genobattle_yellow.ogg",
+        1694264
+      ],
+      [
+        "assets/mus/medium.ogg",
+        1675247
+      ],
+      [
+        "assets/mus/remedy.ogg",
+        1668509
+      ],
+      [
+        "assets/mus/darkruins.ogg",
+        1630328
+      ],
+      [
+        "assets/mus/martletbattle_yellow.ogg",
+        1620488
+      ],
+      [
+        "assets/mus/deal_em_out_yellow.ogg",
+        1572942
+      ],
+      [
+        "assets/mus/dunes_cave_outdoors.ogg",
+        1568102
+      ],
+      [
+        "assets/mus/dunes_cave.ogg",
+        1548381
+      ],
+      [
+        "assets/mus/deal_em_out_ace_yellow.ogg",
+        1477003
+      ],
+      [
+        "assets/mus/the_trek.ogg",
+        1418791
+      ],
+      [
+        "assets/mus/flowey_world.ogg",
+        1332334
+      ],
+      [
+        "assets/mus/deal_em_out_moray_yellow.ogg",
+        1275968
+      ],
+      [
+        "assets/mus/guns_blazing.ogg",
+        1254159
+      ],
+      [
+        "assets/mus/flowey_final_boss_1_main.ogg",
+        1182163
+      ],
+      [
+        "assets/mus/deal_em_out_mooch_yellow.ogg",
+        1165862
+      ],
+      [
+        "assets/mus/trial_by_fury.ogg",
+        1164990
+      ]
+    ],
+    "audio_count": 241,
+    "www": []
+  }
+}

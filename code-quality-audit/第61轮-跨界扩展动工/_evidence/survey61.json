@@ -1,0 +1,682 @@
+{
+  "round": 61,
+  "stage": "A 素材源勘查",
+  "sources": {
+    "S1": {
+      "label": "OneShot (PC 目录)",
+      "path": "C:\\Users\\23002\\Desktop\\项目文件夹\\niko的秘密\\OneShot.World.Machine.Edition.Build.16512634",
+      "exists": true,
+      "is_dir": true,
+      "top_count": 26,
+      "top_entries": [
+        "INIFileParser.dll",
+        "INIFileParser.xml",
+        "MonoGame.Framework.dll",
+        "MonoGame.Framework.dll.config",
+        "MonoGame.Framework.xml",
+        "Newtonsoft.Json.dll",
+        "Newtonsoft.Json.xml",
+        "OneShotMG.exe",
+        "OneShotMG.exe.config",
+        "Steamworks.NET.dll",
+        "System.ValueTuple.dll",
+        "System.ValueTuple.xml",
+        "WWW.XDGAME.COM - 玩游戏请添加收藏夹防迷路.url",
+        "config.ini",
+        "content",
+        "gamedata",
+        "libSDL2-2.0.0.dylib",
+        "libopenal.1.dylib",
+        "log.txt",
+        "steam_api64.dll",
+        "steam_api64.dll.bak",
+        "steam_appid.txt",
+        "steam_settings",
+        "x64",
+        "x86",
+        "游戏启动说明.txt"
+      ],
+      "bytes": 1520389344,
+      "human": "1.42 GB",
+      "file_count": 4681,
+      "size_truncated": false,
+      "interesting": [
+        [
+          "INIFileParser.dll",
+          28672
+        ],
+        [
+          "MonoGame.Framework.dll",
+          1489920
+        ],
+        [
+          "Newtonsoft.Json.dll",
+          675752
+        ],
+        [
+          "OneShotMG.exe",
+          924672
+        ],
+        [
+          "Steamworks.NET.dll",
+          380416
+        ],
+        [
+          "steam_api64.dll",
+          6127016
+        ],
+        [
+          "System.ValueTuple.dll",
+          78992
+        ],
+        [
+          "gamedata\\button_glyph_map_nnx.json",
+          391
+        ],
+        [
+          "gamedata\\button_glyph_map_ps4.json",
+          413
+        ],
+        [
+          "gamedata\\button_glyph_map_steamdeck.json",
+          386
+        ],
+        [
+          "gamedata\\button_glyph_map_xbox.json",
+          408
+        ],
+        [
+          "gamedata\\glyph_map_nintendo.json",
+          311
+        ],
+        [
+          "gamedata\\glyph_map_playstation.json",
+          335
+        ],
+        [
+          "gamedata\\glyph_map_xbox.json",
+          325
+        ],
+        [
+          "gamedata\\key_glyph_map.json",
+          2753
+        ],
+        [
+          "gamedata\\oneshot_common_events.json",
+          215339
+        ],
+        [
+          "gamedata\\oneshot_flag_names.json",
+          17311
+        ],
+        [
+          "gamedata\\oneshot_items.json",
+          10916
+        ],
+        [
+          "gamedata\\oneshot_map_colors.json",
+          2868
+        ],
+        [
+          "gamedata\\oneshot_map_names.json",
+          8802
+        ],
+        [
+          "gamedata\\oneshot_map_zone_names.json",
+          118
+        ],
+        [
+          "gamedata\\oneshot_minimap_info.json",
+          8210
+        ],
+        [
+          "gamedata\\oneshot_minimap_nodes.json",
+          5867
+        ],
+        [
+          "gamedata\\oneshot_tilesets.json",
+          194567
+        ],
+        [
+          "gamedata\\oneshot_var_names.json",
+          4123
+        ],
+        [
+          "gamedata\\loc\\language_metadata.json",
+          2034
+        ],
+        [
+          "gamedata\\maps\\events_map1.json",
+          5241
+        ],
+        [
+          "gamedata\\maps\\events_map10.json",
+          16
+        ],
+        [
+          "gamedata\\maps\\events_map100.json",
+          16
+        ],
+        [
+          "gamedata\\maps\\events_map101.json",
+          59354
+        ],
+        [
+          "gamedata\\maps\\events_map102.json",
+          68369
+        ],
+        [
+          "gamedata\\maps\\events_map103.json",
+          16
+        ],
+        [
+          "gamedata\\maps\\events_map104.json",
+          10919
+        ],
+        [
+          "gamedata\\maps\\events_map105.json",
+          14361
+        ],
+        [
+          "gamedata\\maps\\events_map106.json",
+          16782
+        ],
+        [
+          "gamedata\\maps\\events_map107.json",
+          11384
+        ],
+        [
+          "gamedata\\maps\\events_map108.json",
+          11955
+        ],
+        [
+          "gamedata\\maps\\events_map109.json",
+          10306
+        ],
+        [
+          "gamedata\\maps\\events_map11.json",
+          137702
+        ],
+        [
+          "gamedata\\maps\\events_map110.json",
+          6639
+        ]
+      ],
+      "ok": true
+    },
+    "S2": {
+      "label": "Undertale (apk)",
+      "path": "C:\\Users\\23002\\Downloads\\undertale.apk",
+      "exists": true,
+      "is_dir": false,
+      "bytes": 151094771,
+      "human": "144.10 MB",
+      "is_zip": true,
+      "zip_entries": 335,
+      "zip_top": [
+        "AndroidManifest.xml",
+        "META-INF",
+        "assets",
+        "classes.dex",
+        "lib",
+        "res",
+        "resources.arsc"
+      ],
+      "zip_top_count": 7,
+      "has_dex": true,
+      "has_assets": true,
+      "has_lib": true,
+      "has_meta": true,
+      "largest": [
+        [
+          "assets/game.droid",
+          79628496
+        ],
+        [
+          "lib/x86_64/libyoyo.so",
+          6288520
+        ],
+        [
+          "lib/x86/libyoyo.so",
+          6088352
+        ],
+        [
+          "lib/arm64-v8a/libyoyo.so",
+          6083096
+        ],
+        [
+          "lib/armeabi-v7a/libyoyo.so",
+          5383968
+        ],
+        [
+          "assets/mus_reunited.ogg",
+          3032892
+        ],
+        [
+          "assets/mus_endarea_parta.ogg",
+          2188141
+        ],
+        [
+          "assets/mus_sansdate.ogg",
+          2155251
+        ],
+        [
+          "assets/mus_endarea_partb.ogg",
+          2134581
+        ],
+        [
+          "assets/mus_z_ending.ogg",
+          2115643
+        ],
+        [
+          "assets/mus_xpart.ogg",
+          2070525
+        ],
+        [
+          "assets/mus_core.ogg",
+          2019126
+        ],
+        [
+          "assets/mus_zz_megalovania.ogg",
+          1867146
+        ],
+        [
+          "assets/mus_x_undyne.ogg",
+          1839786
+        ],
+        [
+          "classes.dex",
+          1807040
+        ]
+      ],
+      "sample": [
+        "AndroidManifest.xml",
+        "META-INF/android.arch.core_runtime.version",
+        "META-INF/android.arch.lifecycle_livedata-core.version",
+        "META-INF/android.arch.lifecycle_livedata.version",
+        "META-INF/android.arch.lifecycle_runtime.version",
+        "META-INF/android.arch.lifecycle_viewmodel.version",
+        "META-INF/androidx.asynclayoutinflater_asynclayoutinflater.version",
+        "META-INF/androidx.coordinatorlayout_coordinatorlayout.version",
+        "META-INF/androidx.core_core.version",
+        "META-INF/androidx.cursoradapter_cursoradapter.version",
+        "META-INF/androidx.customview_customview.version",
+        "META-INF/androidx.documentfile_documentfile.version",
+        "META-INF/androidx.drawerlayout_drawerlayout.version",
+        "META-INF/androidx.fragment_fragment.version",
+        "META-INF/androidx.interpolator_interpolator.version",
+        "META-INF/androidx.legacy_legacy-support-core-ui.version",
+        "META-INF/androidx.legacy_legacy-support-core-utils.version",
+        "META-INF/androidx.legacy_legacy-support-v4.version",
+        "META-INF/androidx.loader_loader.version",
+        "META-INF/androidx.localbroadcastmanager_localbroadcastmanager.version",
+        "META-INF/androidx.media_media.version",
+        "META-INF/androidx.print_print.version",
+        "META-INF/androidx.slidingpanelayout_slidingpanelayout.version",
+        "META-INF/androidx.swiperefreshlayout_swiperefreshlayout.version",
+        "META-INF/androidx.versionedparcelable_versionedparcelable.version",
+        "META-INF/androidx.viewpager_viewpager.version",
+        "META-INF/proguard/androidx-annotations.pro",
+        "assets/abc_123_a.ogg",
+        "assets/game.droid",
+        "assets/mus_a2.ogg",
+        "assets/mus_alphysfix.ogg",
+        "assets/mus_amalgam.ogg",
+        "assets/mus_ambientwater.ogg",
+        "assets/mus_anothermedium.ogg",
+        "assets/mus_bad.ogg",
+        "assets/mus_barrier.ogg",
+        "assets/mus_battle1.ogg",
+        "assets/mus_battle2.ogg",
+        "assets/mus_bergentruckung.ogg",
+        "assets/mus_bgflameA.ogg",
+        "assets/mus_birdnoise.ogg",
+        "assets/mus_birdsong.ogg",
+        "assets/mus_boss1.ogg",
+        "assets/mus_cast_1.ogg",
+        "assets/mus_cast_2.ogg",
+        "assets/mus_cast_3.ogg",
+        "assets/mus_cast_4.ogg",
+        "assets/mus_cast_5.ogg",
+        "assets/mus_cast_6.ogg",
+        "assets/mus_cast_7.ogg",
+        "assets/mus_chokedup.ogg",
+        "assets/mus_churchbell.ogg",
+        "assets/mus_computer.ogg",
+        "assets/mus_confession.ogg",
+        "assets/mus_coolbeat.ogg",
+        "assets/mus_core.ogg",
+        "assets/mus_core_ambience.ogg",
+        "assets/mus_coretransition.ogg",
+        "assets/mus_creepy_ambience.ogg",
+        "assets/mus_crickets.ogg"
+      ],
+      "ok": true
+    },
+    "S3": {
+      "label": "outertale (apk)",
+      "path": "C:\\Users\\23002\\Downloads\\outertale.apk",
+      "exists": true,
+      "is_dir": false,
+      "bytes": 253813288,
+      "human": "242.06 MB",
+      "is_zip": true,
+      "zip_entries": 4032,
+      "zip_top": [
+        "AndroidManifest.xml",
+        "DebugProbesKt.bin",
+        "META-INF",
+        "assets",
+        "classes.dex",
+        "classes2.dex",
+        "classes3.dex",
+        "classes4.dex",
+        "classes5.dex",
+        "kotlin",
+        "org",
+        "res",
+        "resources.arsc"
+      ],
+      "zip_top_count": 13,
+      "has_dex": true,
+      "has_assets": true,
+      "has_lib": false,
+      "has_meta": true,
+      "largest": [
+        [
+          "assets/www/index-BIKawlPs.js",
+          27589549
+        ],
+        [
+          "classes.dex",
+          6407312
+        ],
+        [
+          "assets/www/outertale-CB5JeysL.mp3",
+          5303737
+        ],
+        [
+          "assets/www/approach-D2_ynONB.mp3",
+          5245640
+        ],
+        [
+          "assets/www/theend-D0LlFEOo.mp3",
+          4920886
+        ],
+        [
+          "assets/www/reunited-CGOCPCnp.mp3",
+          4864879
+        ],
+        [
+          "assets/www/choice-BxSlSQXM.mp3",
+          4831443
+        ],
+        [
+          "assets/www/aerialis-CGHu90vJ.mp3",
+          3584670
+        ],
+        [
+          "assets/www/aerialisArchive-mu-5DVh1.mp3",
+          3584670
+        ],
+        [
+          "assets/www/aerialisEmpty-bL7sSGKq.mp3",
+          3584670
+        ],
+        [
+          "assets/www/arms-BPe_UIRr.mp3",
+          3462208
+        ],
+        [
+          "assets/www/archive-DqFOD6Rk.mp3",
+          3259080
+        ],
+        [
+          "assets/www/sansdate-DCDpxjUN.mp3",
+          3200984
+        ],
+        [
+          "assets/www/asrielboss-tBFFrZpx.mp3",
+          3096076
+        ],
+        [
+          "assets/www/core-DWBJs_tY.mp3",
+          2943939
+        ]
+      ],
+      "sample": [
+        "META-INF/com/android/build/gradle/app-metadata.properties",
+        "classes.dex",
+        "classes2.dex",
+        "classes3.dex",
+        "classes4.dex",
+        "classes5.dex",
+        "assets/www/86-D16Sv77D.json",
+        "assets/www/86-DqU84JZS.png",
+        "assets/www/98-DbGnyct7.json",
+        "assets/www/98-i9yIhmnm.png",
+        "assets/www/AYAYA-CLoY7mWt.json",
+        "assets/www/AYAYA-DwU5Yw7N.png",
+        "assets/www/AYAYA-TBKWE3P5.png",
+        "assets/www/CORE-CBvQ9swK.png",
+        "assets/www/CORE-DtkqgNq-.json",
+        "assets/www/CORE_critical-3N0OlLud.json",
+        "assets/www/CORE_critical-DCTlXmbf.png",
+        "assets/www/CORE_overlay-BxyPxQ8I.png",
+        "assets/www/CORE_overlay-CjxzuGyY.json",
+        "assets/www/ComicSans-5hImFI08.csv",
+        "assets/www/ComicSans-B8LNG7FV.png",
+        "assets/www/ComicSans-Bvk7YH6u.png",
+        "assets/www/ComicSans-DQ1QjnHm.csv",
+        "assets/www/ComicSans-hIujIAzF.png",
+        "assets/www/ComicSans-rlP4P9RD.csv",
+        "assets/www/CryptOfTomorrow-Bge-gFwi.csv",
+        "assets/www/CryptOfTomorrow-BmusrJUB.png",
+        "assets/www/CryptOfTomorrow-Bvbg7pV1.png",
+        "assets/www/CryptOfTomorrow-CYdd8xbr.png",
+        "assets/www/CryptOfTomorrow-EpwwIyv4.png",
+        "assets/www/CryptOfTomorrow-ZX_PK22n.csv",
+        "assets/www/CryptOfTomorrow-fUDDiyl9.csv",
+        "assets/www/DeterminationMono-BAi0KnK5.png",
+        "assets/www/DeterminationMono-BzDIpeAw.png",
+        "assets/www/DeterminationMono-CADZK0Ry.png",
+        "assets/www/DeterminationMono-CfGJv_0X.csv",
+        "assets/www/DeterminationMono-CnDfpQzz.csv",
+        "assets/www/DeterminationMono-DFBU0HOI.csv",
+        "assets/www/DeterminationSans-5N6Bpt-Z.png",
+        "assets/www/DeterminationSans-B3wnBWPr.csv",
+        "assets/www/DeterminationSans-C6HkIBWL.png",
+        "assets/www/DeterminationSans-CvRpwRy7.csv",
+        "assets/www/DeterminationSans-ocECn_bC.csv",
+        "assets/www/DiaryOfAn8BitMage--kmb39Jj.png",
+        "assets/www/DiaryOfAn8BitMage-CGF2onA2.csv",
+        "assets/www/DiaryOfAn8BitMage-D2RrJZUz.csv",
+        "assets/www/DiaryOfAn8BitMage-D9Gi9QnF.png",
+        "assets/www/DiaryOfAn8BitMage-UUrx6Dgq.csv",
+        "assets/www/DiaryOfAn8BitMage-hZ_Gs03K.png",
+        "assets/www/DotumChe-B1mOAAfm.csv",
+        "assets/www/DotumChe-CEn1-OyS.csv",
+        "assets/www/DotumChe-Ca2OkUov.png",
+        "assets/www/DotumChe-CiNK2Gne.csv",
+        "assets/www/DotumChe-CuAEPZbu.csv",
+        "assets/www/DotumChe-CwGH2ibs.png",
+        "assets/www/DotumChe-DC5xNpyj.png",
+        "assets/www/DotumChe-DGHe5w-B.png",
+        "assets/www/HP-DdC8OtvT.png",
+        "assets/www/HP-lhBfgWi-.png",
+        "assets/www/MarsNeedsCunnilingus-BT1Cq--6.png"
+      ],
+      "ok": true
+    },
+    "S4": {
+      "label": "黄魂 (apk)",
+      "path": "C:\\Users\\23002\\Downloads\\黄魂.apk",
+      "exists": true,
+      "is_dir": false,
+      "bytes": 266759518,
+      "human": "254.40 MB",
+      "is_zip": true,
+      "zip_entries": 811,
+      "zip_top": [
+        "AndroidManifest.xml",
+        "META-INF",
+        "assets",
+        "classes.dex",
+        "lib",
+        "res",
+        "resources.arsc",
+        "你好啊.txt"
+      ],
+      "zip_top_count": 8,
+      "has_dex": true,
+      "has_assets": true,
+      "has_lib": true,
+      "has_meta": true,
+      "largest": [
+        [
+          "assets/game.droid",
+          182498500
+        ],
+        [
+          "lib/x86_64/libyoyo.so",
+          10106104
+        ],
+        [
+          "lib/arm64-v8a/libyoyo.so",
+          9522784
+        ],
+        [
+          "lib/armeabi-v7a/libyoyo.so",
+          8283940
+        ],
+        [
+          "classes.dex",
+          2804500
+        ],
+        [
+          "assets/mus/nothing_but_the_truth.ogg",
+          2515705
+        ],
+        [
+          "assets/mus/credits.ogg",
+          2227327
+        ],
+        [
+          "assets/mus/apprehension_yellow.ogg",
+          2169296
+        ],
+        [
+          "assets/lang/ru/strings.json",
+          2104212
+        ],
+        [
+          "assets/mus/steamworks_overworld.ogg",
+          1948247
+        ],
+        [
+          "assets/mus/card_game.ogg",
+          1934074
+        ],
+        [
+          "assets/mus/dalv_diary.ogg",
+          1834629
+        ],
+        [
+          "assets/mus/honest_days_work.ogg",
+          1818191
+        ],
+        [
+          "assets/mus/genobattle_yellow.ogg",
+          1694264
+        ],
+        [
+          "assets/mus/medium.ogg",
+          1675247
+        ]
+      ],
+      "sample": [
+        "AndroidManifest.xml",
+        "META-INF/ANDROID.RSA",
+        "META-INF/ANDROID.SF",
+        "META-INF/MANIFEST.MF",
+        "assets/game.droid",
+        "assets/lang/en/settings.json",
+        "assets/lang/en/sprites/bg_introduction.png",
+        "assets/lang/en/strings.json",
+        "assets/lang/ru/settings.json",
+        "assets/lang/ru/sounds/snd_f_great.ogg",
+        "assets/lang/ru/sounds/snd_f_whatwouldyoulike.ogg",
+        "assets/lang/ru/sounds/snd_mew_die_1.ogg",
+        "assets/lang/ru/sounds/snd_mew_die_2.ogg",
+        "assets/lang/ru/sounds/snd_mew_die_3.ogg",
+        "assets/lang/ru/sounds/snd_mew_die_4.ogg",
+        "assets/lang/ru/sounds/snd_mew_gameover_1.ogg",
+        "assets/lang/ru/sounds/snd_mew_gameover_2.ogg",
+        "assets/lang/ru/sounds/snd_mew_gameover_3.ogg",
+        "assets/lang/ru/sounds/snd_mew_seeya.ogg",
+        "assets/lang/ru/sounds/snd_mew_title.ogg",
+        "assets/lang/ru/sounds/snd_mew_upgrade_rapid.ogg",
+        "assets/lang/ru/sounds/snd_mew_upgrade_shotgun.ogg",
+        "assets/lang/ru/sounds/snd_mew_win.ogg",
+        "assets/lang/ru/sounds/snd_mew_win_1.ogg",
+        "assets/lang/ru/sounds/snd_mew_win_2.ogg",
+        "assets/lang/ru/sprites/bg_hotland_complex.png",
+        "assets/lang/ru/sprites/bg_hotland_complex_dark.png",
+        "assets/lang/ru/sprites/bg_hotland_lab_entrance.png",
+        "assets/lang/ru/sprites/bg_introduction.png",
+        "assets/lang/ru/sprites/bg_shop_honeydew_resort.png",
+        "assets/lang/ru/sprites/bg_shop_hotel.png",
+        "assets/lang/ru/sprites/bg_shop_hotel_geno.png",
+        "assets/lang/ru/sprites/bg_snowdin_14b_yellow.png",
+        "assets/lang/ru/sprites/credits_resort.png",
+        "assets/lang/ru/sprites/fg_mew_border.png",
+        "assets/lang/ru/sprites/logo_yellow.png",
+        "assets/lang/ru/sprites/sp_spr_battle_enemy_attack_tellyvis_logo.png",
+        "assets/lang/ru/sprites/sp_spr_blueprint_overlay.png",
+        "assets/lang/ru/sprites/sp_spr_card_ace.png",
+        "assets/lang/ru/sprites/sp_spr_card_ceroba.png",
+        "assets/lang/ru/sprites/sp_spr_card_mooch.png",
+        "assets/lang/ru/sprites/sp_spr_card_starlo.png",
+        "assets/lang/ru/sprites/sp_spr_crayon_id.png",
+        "assets/lang/ru/sprites/sp_spr_honeydew_entrance.png",
+        "assets/lang/ru/sprites/sp_spr_hotland_bits_n_bites_sign.png",
+        "assets/lang/ru/sprites/sp_spr_hotland_complex_1_dark.png",
+        "assets/lang/ru/sprites/sp_spr_npc_train_down.png",
+        "assets/lang/ru/sprites/sp_spr_npc_train_fall.png",
+        "assets/lang/ru/sprites/sp_spr_steamworks_06_b_sign.png",
+        "assets/lang/ru/sprites/spr_act.png",
+        "assets/lang/ru/sprites/spr_arcade_controls.png",
+        "assets/lang/ru/sprites/spr_arcade_logo.png",
+        "assets/lang/ru/sprites/spr_arcade_start.png",
+        "assets/lang/ru/sprites/spr_arcade_title.png",
+        "assets/lang/ru/sprites/spr_arcade_tutorial.png",
+        "assets/lang/ru/sprites/spr_attack_flowey_intermission_ha.png",
+        "assets/lang/ru/sprites/spr_attack_garbage_soap.png",
+        "assets/lang/ru/sprites/spr_attack_warning_slippery_floor.png",
+        "assets/lang/ru/sprites/spr_audience_joy_sign.png",
+        "assets/lang/ru/sprites/spr_ava_breaks.png"
+      ],
+      "ok": true
+    }
+  },
+  "selfcheck": [
+    [
+      "A1 伪造路径必不存在",
+      true
+    ],
+    [
+      "A2 空 zip 必被识别为 zip",
+      true
+    ],
+    [
+      "A3 非 zip 必不被识别为 zip",
+      true
+    ],
+    [
+      "A4 本脚本自身存在",
+      true
+    ]
+  ],
+  "ok": true,
+  "selfcheck_ok": true
+}
