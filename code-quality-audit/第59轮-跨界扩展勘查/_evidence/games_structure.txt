@@ -1,0 +1,89 @@
+==============================================================================
+[1] GameMaker data 文件头（判断引擎/版本）
+  undertale  assets\game.droid            75.9 MB
+       hex=464f524dc808bf0447454e3810060000
+       raw=b'FORM\xc8\x08\xbf\x04GEN8\x10\x06\x00\x00\x01\x10\x00\x000\xbbR\x01>\xbbR\x01-\xbd\x01\x00'
+  huanghun   assets\game.droid           174.0 MB
+       hex=464f524dbcb4e00a47454e3840050000
+       raw=b'FORM\xbc\xb4\xe0\nGEN8@\x05\x00\x00\x01\x11\x00\x00 \xb9\x97\x018\xb9\x97\x01x\xa4\x01\x00'
+
+==============================================================================
+[2] undertale assets/ 非 ogg 的文件
+   game.droid                             75.9 MB
+   options.ini                             0.0 MB
+   portrait_splash.png                     0.0 MB
+   splash.png                              0.0 MB
+
+==============================================================================
+[3] huanghun assets/ 结构
+  [.] 3 dirs 5 files
+       game.droid                                    178221.2 KB
+       options.ini                                        0.4 KB
+       portrait_splash.png                               45.5 KB
+       splash.png                                        45.5 KB
+       看看.txt                                             0.1 KB
+  [lang] 2 dirs 0 files
+  [lang\en] 1 dirs 2 files
+       settings.json                                      0.0 KB
+       strings.json                                       0.0 KB
+  [lang\ru] 2 dirs 2 files
+       settings.json                                      1.7 KB
+       strings.json                                    2054.9 KB
+  [mus] 0 dirs 206 files
+       a_call_to_action.ogg                             182.7 KB
+       a_new_partner.ogg                                545.2 KB
+       a_place_to_rest.ogg                             1025.6 KB
+       abandoned.ogg                                    438.1 KB
+       acquittal.ogg                                    344.7 KB
+       after_hours.ogg                                  496.6 KB
+       ajourned.ogg                                     884.5 KB
+       ambient_river.ogg                                 21.9 KB
+       apex.ogg                                         154.5 KB
+       apprehension_yellow.ogg                         2118.5 KB
+       asgoreop.ogg                                     228.3 KB
+       aviation.ogg                                     627.0 KB
+  [snd] 0 dirs 19 files
+       axis_flashlight.ogg                              318.0 KB
+       clover_jump_dunes.ogg                             11.8 KB
+       doorclose.ogg                                     17.2 KB
+       doorlock.ogg                                      18.3 KB
+       elevator_long.ogg                                290.5 KB
+       fall2.ogg                                         14.1 KB
+       flame_loop.ogg                                   214.0 KB
+       mail_jingle_alt.ogg                              114.5 KB
+       manta_sail.ogg                                   396.7 KB
+       microsprings_froggits.ogg                        182.1 KB
+       mo_pop.ogg                                         6.0 KB
+       pinkgoo_move.ogg                                 395.2 KB
+
+==============================================================================
+[4] outertale assets/www 入口文件
+   cordova.js                          62.3 KB
+   index-BIKawlPs.js                26942.9 KB
+   index-DHNqGAJy.css                   1.0 KB
+   index.html                           0.8 KB
+   --- index.html 前 800 ---
+<!DOCTYPE html>
+
+<head>
+    <title>OUTERTALE</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="icon" href="./icon-GRYx8iC2.png">
+  <script type="module" crossorigin src="./index-BIKawlPs.js"></script>
+  <link rel="stylesheet" crossorigin href="./index-DHNqGAJy.css">
+</head>
+
+<body>
+    <input id="freetext">
+    <div id="frame">
+        <img id="splash" draggable="false" src="./splash-Du-jthK4.gif">
+        <div id="border-container">
+            <div id="wrapper"></div>
+        </div>
+        <div id="mobile-controller">
+            <div id="function-keys"></div>
+            <div id="arrow-keys"></div>
+            <div id="joystick"></div>
+            <div id
