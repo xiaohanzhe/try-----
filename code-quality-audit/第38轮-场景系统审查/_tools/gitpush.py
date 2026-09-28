@@ -246,17 +246,21 @@ def _probe_proxies(limit=3):
             ok = _tls_ok(s)
             url = (('http://127.0.0.1:%d' % int(port)) if scheme == 'http'
                    else ('socks5h://127.0.0.1:%d' % int(port)))
+            # ★★ 第61轮修正：`_tls_ok` 是**自造探针**（Python 的 ssl），**不是门**。
+            #    实测（2026-09-29）：7897 上 Python ssl 握手失败，同一时刻
+            #    `git -c http.proxy=http://127.0.0.1:7897 -c http.sslBackend=openssl
+            #     ls-remote` **成功**。若在此 `continue`，就把 git 明明能走的路否掉了，
+            #    与文件头「探针不能自造，必须用产品自己那条路去问」自相矛盾。
             if not ok:
-                w('     proxy %-6s (%-7s) -- TLS 握手失败' % (port, scheme))
-                continue
-            # ★★ TLS 过了也**不算数**：还得让 git 自己走一次（见 `_git_reachable`）。
-            if _git_reachable(url):
-                w('     proxy %-6s (%-7s) OK —— TLS + `git ls-remote` 双过'
+                w('     proxy %-6s (%-7s) -- Python ssl 握手失败（仅供参考，继续让 git 走）'
                   % (port, scheme))
+            # ★★ 真判据：让 git 自己走一次（见 `_git_reachable`）。
+            if _git_reachable(url):
+                w('     proxy %-6s (%-7s) OK —— `git ls-remote` 可达%s'
+                  % (port, scheme, '' if ok else '（ssl 探针未过，以 git 为准）'))
                 found.append(url)
             else:
-                w('     proxy %-6s (%-7s) -- TLS 能过但 **git 仍不可达**'
-                  '（真判据是 git，不是 ssl）' % (port, scheme))
+                w('     proxy %-6s (%-7s) -- git 也不可达' % (port, scheme))
     return found
 
 
@@ -346,8 +350,21 @@ def _push():
     b64 = base64.b64encode(('%s:%s' % (usr, pw)).encode('ascii')).decode('ascii')
     del pw
 
-    w('[5b] 探测可用代理（TCP → 隧道 → TLS → **`git ls-remote`**，四级都过才算）')
-    proxies = _probe_proxies()
+    w('[5b] 探测可用代理（逐端口实测；**真判据 = 让 git 自己 `ls-remote` 一次**）')
+    # ★ 第61轮：支持 `--proxy <url>` 显式指定（跳过自动探测）。
+    #   用途：自动探测慢/误判时，用一条已验证的路直接推。
+    #   传字面量 `direct` 表示显式不走代理。
+    forced = ''
+    if '--proxy' in sys.argv:
+        try:
+            forced = sys.argv[sys.argv.index('--proxy') + 1]
+        except Exception:                                             # noqa: BLE001
+            forced = ''
+    if forced:
+        proxies = [''] if forced.lower() in ('direct', 'none', '直连') else [forced]
+        w('[5b] 显式指定代理：%s（跳过自动探测）' % (forced or '直连'))
+    else:
+        proxies = _probe_proxies()
     w('[5c] 可用代理 %d 个：%s' % (len(proxies), proxies or '(无 ⇒ 直连)'))
 
     BASE = _base_opts() + ['-c', 'http.extraheader=Authorization: Basic ' + b64]
