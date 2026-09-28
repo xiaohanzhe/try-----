@@ -27,10 +27,24 @@ FROM qwen2.5:7b-instruct-q4_K_M
 # 为什么必须写在这里而不是请求里：
 #   App 走的是 Ollama 的 OpenAI 兼容端点 /v1/chat/completions，
 #   实测该端点**不接受** num_ctx 与 repeat_penalty —— 无论放在顶层还是
-#   塞进 options，都会被静默忽略（长提示词恒定截断在 ~2050 tokens）。
-#   只有 Ollama 原生 /api/chat 的 options.num_ctx 生效，或写进这里。
-#   对照组实测：/v1 + num_ctx=8192 → prompt_tokens=2050；
-#               /api/chat + options.num_ctx=8192 → prompt_tokens=5032。
+#   塞进 options，都会被静默忽略。只有 Ollama 原生 /api/chat 的
+#   options.num_ctx 生效，或写进这里。
+#
+#   ⚠️ 第58轮更正（Ollama 0.34.4 实测，证据见
+#      code-quality-audit/第58轮-模型常驻与预热/_evidence/compat_truncation.json）：
+#      这里原先记的"长提示词恒定截断在 ~2050 tokens"**已经不成立**。
+#      同一段人设（3604 字 / 9941 字节）：兼容端点报 prompt_tokens=2371，
+#      原生端点报 prompt_eval_count=2371 —— **逐字相等，没有任何截断**；
+#      且兼容端点还会回 prompt_tokens_details.cached_tokens（实测 2370），
+#      说明 num_ctx=8192 这条 PARAMETER 在兼容端点上**也生效了**。
+#      ⇒ 把 2050 当常量会误导判断（"反正会被砍"是最危险的那类结论）。
+#        要判"到底喂进去多少"，读 usage.prompt_tokens 就行，别再靠推断。
+#
+#   ★ 第58轮新增一条同型事实：`keep_alive` **也被兼容端点静默丢弃**
+#      （设 30m 之后 ollama ps 的 expires_at 增量仍是默认 300s，|Δ差|=0s），
+#      只有原生 /api/chat 认 ⇒ 保温必须走原生端点，
+#      见 modules/api_client.py 的 WarmKeeper。这是同型的第三个字段
+#      （num_ctx / repeat_penalty / keep_alive）——"兼容端点会丢字段"是常态，不是意外。
 #   ⚠️ 这也是**换底座时必须重新 build 而不是只改 config.json**的原因：
 #      `api_client` 只发 temperature + max_tokens，top_p / repeat_penalty / num_ctx
 #      全部继承自这里 —— 直接指向一个裸模型会**静默**换掉采样参数。

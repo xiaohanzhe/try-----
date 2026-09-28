@@ -336,7 +336,7 @@ from modules.entertainment_system import EntertainmentSystem
 from modules.config_manager import ConfigManager
 
 from modules.floor_manager import FloorManager
-from modules.api_client import create_client
+from modules.api_client import create_client, WarmKeeper
 from modules.ai_driver import AiActionDriver
 from modules.command_manager import CommandManager
 from modules.autonomous_agent import AutonomousAgent
@@ -477,6 +477,11 @@ class RalseiPet(QMainWindow):
         self.api_enabled = api_config['enabled']
         self.api_client = None
         self.api_config = api_config
+        # 保温看门狗（第58轮）：把 keep_alive 立到"模型载入实例"上，见 _sync_warm_keeper。
+        # 先置 None —— 下面 init_systems() 里拿到真 client 之后再按配置启起来。
+        self._warm_keeper = None
+        #: 启动预热只做一次（QTimer 迟到触发/重复调用都不该重复发包）
+        self._prewarm_started = False
         
         self.init_ui()
         self.load_resources()
@@ -900,6 +905,19 @@ class RalseiPet(QMainWindow):
         api_config = self.config_manager.get_api_config()
         self.api_client = create_client(api_config)
         self.command_manager = CommandManager(self)
+
+        # 保温（第58轮）：client 一到位就按配置把看门狗启起来。
+        # 为什么放在 create_client **紧后面**：配置保存/连接测试那两处也会重建 client
+        # （main.py 的 create_client 一共三个调用点），三处都必须同步 —— 否则会出现
+        # "看门狗还握着旧 base_url 在发请求"这种最难看的问题。
+        self._sync_warm_keeper()
+        # 启动预热（startup.prewarm，默认 false）：用 singleShot 推到事件循环起来之后，
+        # 不阻塞 __init__。见 _prewarm_ai_cache。
+        try:
+            if bool(self.config_manager.get('startup.prewarm', False)):
+                QTimer.singleShot(1500, self._prewarm_ai_cache)
+        except Exception as e:  # 预热是可选优化，绝不能拖垮启动
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         
         # 本地 AI 行动驱动（行为大脑）：模型周期性挑选白名单动作让 Ralsei 表演。
         # 独立于对话（chat_with_ai）；模型不可用时完全静默，规则行为照常。
@@ -8342,6 +8360,9 @@ class RalseiPet(QMainWindow):
             self.api_client = create_client(api_config)
         except Exception as e:
             _log.warning(f"重建 API 客户端失败: {e}")
+        # 第58轮：client 换了就必须同步保温看门狗（它握着 client 引用；
+        # 不同步 = 旧看门狗继续对着旧 base_url 发请求）。
+        self._sync_warm_keeper()
         self.animation_fps = fps
         self.animation_frame_delay = frame_delay
         # 让新的帧率立即生效：定时器周期需跟随重启（半周期，节拍由帧闸门决定）
@@ -8498,6 +8519,8 @@ class RalseiPet(QMainWindow):
                 self.api_client = create_client(api_config)
             except Exception as e:
                 _log.warning(f"重建 API 客户端失败: {e}")
+            # 第58轮：同"保存配置"那处 —— client 一换就得同步保温看门狗。
+            self._sync_warm_keeper()
             
             return True
         except Exception as e:
@@ -9585,10 +9608,19 @@ class RalseiPet(QMainWindow):
         """对话采样参数：读 config.json 的 api.options，缺省保持旧行为（0.7 / 256）。
 
         为什么 num_ctx / repeat_penalty **不在这里**：App 走 Ollama 的 OpenAI 兼容
-        端点 /v1/chat/completions，实测该端点会**静默忽略**这两个参数 ——
-        无论放顶层还是塞进 options，长提示词都恒定截断在 ~2050 tokens
-        （对照组：/api/chat 的 options.num_ctx 才生效，5032 tokens）。
-        它们只能写进 assets/ralsei.modelfile 的 PARAMETER。
+        端点 /v1/chat/completions，实测该端点会**静默忽略**这两个参数 —— 无论放
+        顶层还是塞进 options 都一样。所以只能写进 assets/ralsei_v4.modelfile 的
+        PARAMETER（也只有那样才在换底座时不会被漏掉）。
+
+        ⚠️ 第58轮更正：这里原先接着写"长提示词都恒定截断在 ~2050 tokens"，
+        **对 Ollama 0.34.4 已经不成立**。同一段人设（3604 字）：兼容端点报
+        `usage.prompt_tokens=2371`、原生端点报 `prompt_eval_count=2371`，
+        **逐字相等、没有任何截断**；且兼容端点还会回
+        `prompt_tokens_details.cached_tokens`（实测 2370）⇒ 说明
+        num_ctx=8192 这条 PARAMETER 在兼容端点上**也生效了**。
+        证据：code-quality-audit/第58轮-模型常驻与预热/_evidence/compat_truncation.json
+        ⇒ 要判"到底喂进去多少 token"，直接读 `usage.prompt_tokens`，
+        别再靠推断：把一个过期的数字当常量，会把"其实没被砍"误判成"反正会被砍"。
         """
         opts = {}
         try:
@@ -9622,6 +9654,89 @@ class RalseiPet(QMainWindow):
         except Exception as e:  # 防御性：配置异常不能拖垮对话
             _log.debug("main 防御性异常（已忽略）: %s", e)
         return True
+
+    # ---------------- 保温 / 预热（第58轮） ----------------
+    def _sync_warm_keeper(self):
+        """按配置启停保温看门狗（`api.keep_warm` / `api.keep_alive` / `api.keep_warm_poll`）。
+
+        ★ 为什么必须"client 重建后立刻再调一次"：`self.api_client` 是**运行时快照**
+          （见 api_client.py 文件头第 1 条注释）；配置一改就换了个新对象，
+          旧看门狗还握着旧的 —— 又一处「函数写对了 ≠ 产品用上了」。
+          所以 main.py 里 `create_client` 的**三个**调用点后面都跟了本方法。
+
+        用**鸭子类型**而不是 isinstance：用户可以用 register_provider 注册自己的实现，
+        只要实现了 loaded_models() / ensure_keep_alive() 这两个方法就自动获得保温能力
+        （没实现就安静地不保温、绝不报错 —— 协议留白是 api_client 的既有约定）。
+        """
+        try:
+            old = getattr(self, '_warm_keeper', None)
+            if old is not None:
+                old.stop()
+            self._warm_keeper = None
+            cfg = getattr(self, 'api_config', None)
+            if not isinstance(cfg, dict) or not cfg.get('enabled'):
+                return
+            if not cfg.get('keep_warm', True):
+                return
+            ka = cfg.get('keep_alive', '')
+            if ka is None or ka == 0 or (isinstance(ka, str) and not ka.strip()):
+                return          # 留空/0 = 明确表示"不设"，回到 Ollama 默认 5 分钟
+            cli = getattr(self, 'api_client', None)
+            if cli is None or not hasattr(cli, 'loaded_models') \
+                    or not hasattr(cli, 'ensure_keep_alive'):
+                return
+            self._warm_keeper = WarmKeeper(cli, keep_alive=ka,
+                                           interval=cfg.get('keep_warm_poll', 30))
+            self._warm_keeper.start()
+            _log.info('保温看门狗已启动：keep_alive=%s（只在模型"新载入"时设一次）', ka)
+        except Exception as e:   # 保温是优化，绝不能拖垮配置保存/启动
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def _prewarm_ai_cache(self):
+        """启动预热（`startup.prewarm`，默认 false）。
+
+        口径与事件台词那条路径**完全一致**：只发 persona，一个字节都不变
+        （见 chat_with_ai 里 lean=True 的注释）—— 这样预热命中的前缀与真实对话
+        是**同一段字节**，用户第一句话就直接吃缓存。
+
+        实测代价（第58轮）：人设 2371 token 冷 prefill 55.8s（23.5 ms/token），
+        热 0.149s（快 375 倍）。这个开关买的就是把"用户开口先等一分钟"
+        换成"启动时后台付掉"。
+
+        超时用 `startup.prewarm_timeout`（默认 180s）而**不是**对话的 timeout：
+        冷 prefill 远超 30s，拿对话预算去发预热会被自己的客户端判成超时（假失败）
+        —— 为此本轮顺便给 `chat()` 加了按请求超时（见 api_client.py）。
+        """
+        if getattr(self, '_prewarm_started', False):
+            return
+        self._prewarm_started = True
+        try:
+            if not bool(self.config_manager.get('startup.prewarm', False)):
+                return
+            cli = getattr(self, 'api_client', None)
+            if cli is None or not getattr(cli, 'enabled', False):
+                return
+            timeout = float(self.config_manager.get(
+                'startup.prewarm_timeout', 180) or 180)
+        except Exception as e:   # 配置异常 ⇒ 静默不预热，绝不弹错
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return
+
+        def _worker():
+            try:
+                system = self._build_persona_prompt()
+                opts = self._ai_chat_options()
+                # 只发 persona、只要 1 个 token：目的是让 prefill 进缓存，不是要内容。
+                t0 = time.time()
+                cli.chat('嗯。', system_prompt=system,
+                         temperature=opts.get('temperature', 0.7),
+                         max_tokens=1, timeout=timeout)
+                _log.info('启动预热已发出，用时 %.1fs（此后同一段 persona 前缀应命中缓存）',
+                          time.time() - t0)
+            except Exception as e:
+                _log.info('启动预热失败（忽略，不影响使用）: %s', e)
+
+        threading.Thread(target=_worker, name='AiPrewarm', daemon=True).start()
 
     # 模型输出里出现这些"对话标记"，说明它在自问自答续写，从这里截断
     _AI_ROLE_MARKER = None      # 惰性编译（见 _role_marker_re）
@@ -11307,6 +11422,18 @@ class RalseiPet(QMainWindow):
             if hasattr(self, 'ai_thread') and self.ai_thread is not None:
                 self.ai_thread_running = False
                 self.ai_thread.join(timeout=2)
+        except Exception as e:  # 修复：原先静默吞噬
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # 2.1 ★ 第58轮：停保温看门狗。它是守护线程，但**会真的发 HTTP 请求** ——
+        #     不停掉的话，退出那一刻还可能对着正要关闭的网络再发一次。
+        #     ⚠️ stop() **不会去卸载模型**：保温只负责"让它别过期"，
+        #     过期后由 Ollama 自己回收（用户口径：不硬性占资源）。
+        try:
+            keeper = getattr(self, '_warm_keeper', None)
+            if keeper is not None:
+                keeper.stop()
+                self._warm_keeper = None
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
 

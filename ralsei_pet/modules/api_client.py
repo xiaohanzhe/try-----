@@ -35,6 +35,7 @@
 import json
 import time
 import logging
+import threading
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 
@@ -274,10 +275,16 @@ class HTTPLocalAI(LocalAIBase):
         if not self.enabled:
             return None
         try:
+            # ★ 第58轮新增：**按请求超时**（`timeout=` 走 kwargs）。
+            #   为什么必须能按请求给：启动预热要发一个"人设满长"的请求，冷 prefill
+            #   实测 55.8~64.3s（2371 token），而对话用的 `self.timeout` 默认只有 30s
+            #   —— 拿对话的超时去发预热请求，会被自己的客户端判成超时（假失败）。
+            #   语义与 `model=` 一致：给了才覆盖，不给逐字沿用 self.timeout（老路径零变化）。
+            _timeout = kwargs.pop('timeout', None)
             payload = self._chat_payload(prompt, system_prompt, kwargs, False)
             # 修复：原先 chat() 与 _post_json() 各写一份 POST/状态码/异常处理逻辑
             # （重复编码），统一走 _post_json，非 200 也统一记 warning 日志。
-            data = self._post_json(self.chat_endpoint(), payload)
+            data = self._post_json(self.chat_endpoint(), payload, timeout=_timeout)
             if not data:
                 return None
             choices = data.get("choices") or []
@@ -404,8 +411,13 @@ class HTTPLocalAI(LocalAIBase):
             return None
         return self._post_json(endpoint, command)
 
-    def _post_json(self, url: str, body: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def _post_json(self, url: str, body: Dict[str, Any],
+                   timeout: Optional[float] = None) -> Optional[Dict[str, Any]]:
         """POST JSON；网络异常/5xx 按 max_retries/retry_delay 重试（4xx 不重试）。
+
+        ★ 第58轮：新增可选 `timeout`（秒）。**不给就逐字沿用 `self.timeout`**
+          —— 老路径（get_commands/send_status/execute_command，全都只传两个参数）
+          行为零变化；给了只影响这一次请求。用途见 `chat()` 里那段注释。
 
         注意：此方法为**阻塞调用**，使用 requests.post() 同步发送 HTTP 请求，
         超时时间由 self.timeout 控制（从配置读取，默认 30 秒）。
@@ -416,12 +428,16 @@ class HTTPLocalAI(LocalAIBase):
             import requests
         except Exception:
             return None
+        try:
+            _to = self.timeout if timeout is None else max(1.0, float(timeout))
+        except (TypeError, ValueError):
+            _to = self.timeout
         max_retries = max(0, int(getattr(self, "max_retries", 0) or 0))
         retry_delay = max(0.0, float(getattr(self, "retry_delay", 0.0) or 0.0))
         for attempt in range(max_retries + 1):
             try:
                 resp = requests.post(url, json=body, headers=self._auth_headers(),
-                                     timeout=self.timeout)
+                                     timeout=_to)
                 if resp.status_code == 200:
                     return resp.json()
                 if resp.status_code < 500:
@@ -439,6 +455,190 @@ class HTTPLocalAI(LocalAIBase):
             if attempt < max_retries and retry_delay > 0:
                 time.sleep(retry_delay)
         return None
+
+
+    # ---------------- 保温（第58轮）：keep_alive 只能靠**原生端点**设 ----------------
+    # 实测证据：code-quality-audit/第58轮-模型常驻与预热/_evidence/keepalive_semantics.json
+    #   · `/v1/chat/completions` **静默丢弃** `keep_alive` ——
+    #     设 30m 之后 `ollama ps` 的 expires_at 增量仍是 300s，
+    #     与"不传"那一档**完全相等**（|Δ差| = 0s）；
+    #   · `/api/chat` 采纳（10m ⇒ Δ=600s）；
+    #   · 且 keep_alive **黏在"模型载入实例"上**：之后每个请求（走兼容端点的普通对话也算）
+    #     都用它刷新截止时刻 —— 静置时窗口真的在倒计时（599.96s → 529.96s / 70s），
+    #     而随便来一个普通请求就跳回 599.80s。
+    # ⇒ 结论：**不需要周期性心跳**，只要在"模型新载入"时设一次。
+    #   （同型的既有事实：这个兼容端点也丢 num_ctx / repeat_penalty，
+    #     见 assets/ralsei_v4.modelfile 的 PARAMETER 注释。）
+    def native_chat_endpoint(self) -> str:
+        """Ollama **原生**对话端点。非 Ollama 后端没有它 —— 调用方必须容错。"""
+        return f"{self.base_url}/api/chat"
+
+    def ps_endpoint(self) -> str:
+        return f"{self.base_url}/api/ps"
+
+    def loaded_models(self) -> Optional[list]:
+        """GET `{base_url}/api/ps` 里的已载入模型列表。
+
+        ★ **不触发推理** —— 不会拉模型、也不会刷新 keep_alive 窗口。
+          正因为这样，看门狗才敢 30 秒轮询一次（开销≈0）。
+        连不上 / 不是 Ollama（404 等）⇒ 返回 **None**（"探测不通"），
+        与空列表（"Ollama 在，但没载入任何模型"）**语义严格区分**：
+        看门狗据此"退让"而不是"以为没载入就去拉起模型"。
+        """
+        try:
+            import requests
+        except Exception:
+            return None
+        try:
+            to = min(10.0, float(getattr(self, 'timeout', 10.0) or 10.0))
+        except (TypeError, ValueError):
+            to = 10.0
+        try:
+            resp = requests.get(self.ps_endpoint(), headers=self._auth_headers(),
+                                timeout=to)
+            if resp.status_code != 200:
+                return None
+            data = resp.json() or {}
+            return list(data.get('models') or [])
+        except Exception as e:
+            _logger.debug("本地 AI /api/ps 探测失败（忽略）: %s", e)
+            return None
+
+    def ensure_keep_alive(self, keep_alive) -> bool:
+        """用**原生端点**发一个 1-token 极小请求，把 `keep_alive` 立到当前载入实例上。
+
+        为什么敢真发请求：它只有 1 个 token 输出；模型已载入时实测 0.1~0.3s，
+        而且它顺带把窗口往后推 —— 这正是目的，不是副作用。
+        失败（端点不存在 / 服务没开 / 超时）一律返回 False，**不抛异常**。
+        """
+        if not self.enabled:
+            return False
+        try:
+            import requests
+            payload = {
+                "model": self.model,
+                "messages": [{"role": "user", "content": "…"}],
+                "stream": False,
+                "keep_alive": keep_alive,
+                "options": {"num_predict": 1, "temperature": 0.0},
+            }
+            resp = requests.post(self.native_chat_endpoint(), json=payload,
+                                 headers=self._auth_headers(), timeout=self.timeout)
+            if resp.status_code != 200:
+                _logger.info("保温请求 HTTP %s（忽略）: %s", resp.status_code,
+                             resp.text[:120])
+                return False
+            return True
+        except Exception as e:
+            _logger.info("保温请求失败（忽略）: %s", e)
+            return False
+
+
+class WarmKeeper:
+    """保温看门狗（第58轮）：别让 5 分钟自动卸载把"已经热起来"的前缀缓存抹掉。
+
+    第58轮实测的代价（同一个人设前缀，2371 token）::
+
+        冷 55.79s（23.5 ms/token） → 热 0.149s（**快 375 倍**）
+        显式卸载后再发      → 61.07s（**缓存随卸载全丢**）
+
+    ⇒ 保温买的不是"更快"，是"别每次见面都从零重算一遍"。
+      它**不会**让 CPU 一直忙：只在"模型是新载入的"那一次发一个 1-token 请求。
+
+    设计要点（都是实测逼出来的）：
+      · **不做周期心跳**：keep_alive 黏在载入实例上、普通请求自带续期（见
+        `ensure_keep_alive` 上方注释），所以"新载入时设一次"就够；
+      · **不主动拉起模型**：`/api/ps` 为空时什么都不做 —— 用户没在用，就不该占内存；
+      · **非 Ollama 后端自动退让**：探测连续失败 N 次就自己停掉（不下发任何请求）；
+      · **`/api/ps` 只是探测**，不触发推理，所以 30 秒一轮没有代价。
+
+    用法::
+
+        keeper = WarmKeeper(client, keep_alive='30m', interval=30.0)
+        keeper.start()
+        ...
+        keeper.stop()          # 退出时务必停，否则守护线程还在发请求
+    """
+
+    def __init__(self, client, keep_alive='30m', interval=30.0):
+        self.client = client
+        self.keep_alive = keep_alive
+        try:
+            self.interval = max(5.0, float(interval))
+        except (TypeError, ValueError):
+            self.interval = 30.0
+        self._stop = threading.Event()
+        self._thread = None
+        self._fails = 0
+        #: 当前这个"载入实例"是否已经立过规。卸载（ps 变空）时清 False，
+        #: 于是"卸载 → 再载入"会被识别成一次新的载入 ⇒ 补设一次。
+        self._armed = False
+        #: 观测用：一共设了几次 / 为什么停的（给判据和日志用，不参与逻辑判断）
+        self.armed_count = 0
+        self.disabled_reason = ''
+
+    # ---- 生命周期 ----
+    def start(self):
+        if self._thread is not None:
+            return
+        self._stop.clear()
+        self._thread = threading.Thread(target=self._loop, name='WarmKeeper',
+                                        daemon=True)
+        self._thread.start()
+
+    def stop(self, timeout=2.0):
+        self._stop.set()
+        t, self._thread = self._thread, None
+        if t is not None:
+            try:
+                t.join(timeout=timeout)
+            except Exception:                                     # noqa: BLE001
+                pass
+
+    # ---- 主循环 ----
+    def tick(self) -> str:
+        """跑一轮，返回本轮动作（`'idle'` / `'armed'` / `'unloaded'` / `'probe_fail'`）。
+
+        单独抽出来是为了**可离线测**：判据可以直接喂一个假 client 调 tick()，
+        不必真起 Ollama、不必真发请求。
+        """
+        models = self.client.loaded_models()
+        if models is None:
+            self._fails += 1
+            return 'probe_fail'
+        self._fails = 0
+        if not models:
+            self._armed = False
+            return 'unloaded'
+        if self._armed:
+            return 'idle'
+        if self.client.ensure_keep_alive(self.keep_alive):
+            self._armed = True
+            self.armed_count += 1
+            return 'armed'
+        return 'idle'
+
+    def _loop(self):
+        while not self._stop.is_set():
+            try:
+                act = self.tick()
+            except Exception as e:                                # noqa: BLE001
+                _logger.debug("保温看门狗本轮异常（忽略）: %s", e)
+                act = 'probe_fail'
+            if act == 'probe_fail':
+                self._fails += 1
+                if self._fails >= 5:
+                    self.disabled_reason = 'ps_unreachable'
+                    _logger.info("保温看门狗：连续 %d 次探测不到 /api/ps ⇒ 停用"
+                                 "（非 Ollama 后端或服务未启动，属正常退让）",
+                                 self._fails)
+                    return
+                self._stop.wait(self.interval * 2)
+                continue
+            if act == 'armed':
+                _logger.info("保温：模型是新载入的 ⇒ 已设 keep_alive=%s"
+                             "（之后每个请求都会自动续期）", self.keep_alive)
+            self._stop.wait(self.interval)
 
 
 # ---------------- 可插拔 provider 注册 ----------------

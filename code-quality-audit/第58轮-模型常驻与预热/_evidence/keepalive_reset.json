@@ -1,0 +1,37 @@
+{
+  "steps": {
+    "A 原生 keep_alive=30m（撑到 30 分钟）": {
+      "rc": 200,
+      "delta_s": 1798.319545,
+      "expect_s": 1800,
+      "expires_at": "2026-09-28T21:40:03.6657705+08:00"
+    },
+    "B 兼容端点**不带** keep_alive": {
+      "rc": 200,
+      "delta_s": 1798.13808,
+      "expect_s": 300,
+      "expires_at": "2026-09-28T21:40:04.8387199+08:00"
+    },
+    "C 原生 keep_alive=30m（再撑一次）": {
+      "rc": 200,
+      "delta_s": 1798.979984,
+      "expect_s": 1800,
+      "expires_at": "2026-09-28T21:40:06.0169506+08:00"
+    },
+    "D 兼容端点**带上** keep_alive=30m": {
+      "rc": 200,
+      "delta_s": 1798.822496,
+      "expect_s": 300,
+      "expires_at": "2026-09-28T21:40:07.1749935+08:00"
+    },
+    "E 原生 keep_alive=30m（收尾恢复）": {
+      "rc": 200,
+      "delta_s": 1798.620156,
+      "expect_s": 1800,
+      "expires_at": "2026-09-28T21:40:08.3471973+08:00"
+    }
+  },
+  "needs_heartbeat": false,
+  "all_pass": false,
+  "final_delta": null
+}

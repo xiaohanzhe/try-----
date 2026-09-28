@@ -1209,6 +1209,35 @@ SUITES = [
                 '实测每个 NPC **首次**开口要 58~107s（速率 27~29 ms/token））/ '
                 'D 结论打印（不做环境耦合的硬断言）',
     },
+    # ---------------------------------------------------------- 第58轮
+    {
+        'id': 'warm58',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第58轮-模型常驻与预热',
+                               'check58.py'),
+        'offscreen': False,
+        'desc': '第五十八轮：模型常驻（keep_alive 保温）与启动预热 —— '
+                'A 配置锚点（★ api.timeout 必须 >= 60：冷 prefill 实测 55.8~64.3s，'
+                '老默认 30s 会把一次**正常**请求判成超时 —— 那是最难查的"假失败" / '
+                'startup.prewarm 默认 false（用户口径：选项非硬性））/ '
+                'B ★★ 实测四条（读 `_evidence`，不联网、不碰 Ollama）：'
+                '① **兼容端点 `/v1/chat/completions` 静默丢弃 keep_alive**'
+                '（设 30m 与不传的 Δ 完全相等 ⇒ 这是继 num_ctx / repeat_penalty 之后'
+                '第三个被丢的字段）/ '
+                '② **keep_alive 黏在"模型载入实例"上**：设一次之后每个请求都给它续期、'
+                '静置时真在倒计时 ⇒ **不需要周期心跳**，方案从"心跳"降成"看门狗" / '
+                '③ **一卸载缓存全丢**：同前缀冷 55.79s → 热 0.149s（375 倍）→ 卸载后 61.07s / '
+                '④ **兼容端点不截断长提示词**（prompt_tokens == 原生 prompt_eval_count == 2371），'
+                '且会回 `prompt_tokens_details.cached_tokens`（冷 0 / 热 2370）'
+                '⇒ 更正了 main.py 与 modelfile 里过期多年的"~2050 截断"注释 / '
+                'C 产品接线（AST：三个 create_client 点后都跟 `_sync_warm_keeper` / '
+                '★ 鸭子类型 not isinstance（否则 register_provider 的用户实现拿不到保温）/ '
+                'singleShot 调度 `_prewarm_ai_cache`（★ 回调是 Attribute 引用、不是 Call 节点，'
+                '`call_names()` 抓不到 —— 本套件第一版就写错过）/ 退出时 stop）/ '
+                'D 行为判据（**离线喂假 client** 真调 `WarmKeeper.tick`：'
+                '不主动拉起模型 / 不重复发包 / 边沿重 arm / 探测不通安静退让 / '
+                '失败不假装成功 / interval 钳位 / start 幂等 / stop 真结束）/ '
+                'E 反向（WarmKeeper 全项目只定义一次 / **不许**把 keep_alive 塞进兼容端点 payload）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

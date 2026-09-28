@@ -15,7 +15,13 @@
       "max_tokens": 256
     },
     "stream": true,
-    "event_speech": true
+    "event_speech": true,
+    "keep_alive": "30m",
+    "keep_alive_comment": "★ 只有 Ollama 原生端点 /api/chat 认这个字段；对话走的 /v1/chat/completions 会**静默丢弃**它（第58轮实测：设 30m 之后窗口仍停在默认 300s，Δ 与不传时完全相等）。所以它的实际作用对象是下面的保温看门狗。★ 实测语义：keep_alive **黏在「模型载入实例」上**，之后每个请求（普通对话也算）都用它刷新截止时刻 —— 于是**不需要周期性心跳**，只要在「新载入」时设一次。留空或 0 = 不设，回到 Ollama 默认 5 分钟。",
+    "keep_warm": true,
+    "keep_warm_comment": "保温看门狗：轮询 /api/ps（**不触发推理**，开销≈0），发现模型是「新载入」的就用原生端点补设一次 keep_alive。买的是前缀缓存 —— 第58轮实测同一个人设前缀：冷 55.8s（2371 token，23.5 ms/token）→ 热 0.149s（**差 375 倍**），而**模型一卸载缓存就全丢**（卸载后重发 61.1s）。用户走开后没有请求 ⇒ 窗口自然过期（30 分钟）⇒ 内存自动归还，不硬性占资源。非 Ollama 后端（探测不到 /api/ps）会自动退让，不下发任何请求。",
+    "keep_warm_poll": 30,
+    "keep_warm_poll_comment": "看门狗轮询间隔（秒）。"
   },
   "privacy": {
     "enable_usage_data": false,
