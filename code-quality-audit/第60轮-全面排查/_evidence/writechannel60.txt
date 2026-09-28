@@ -1,0 +1,49 @@
+========================================================================
+探针 F —— 写入通道逐项体检（新建 / 覆写 / replace / append）
+========================================================================
+
+【E盘_临时区】E:\Download\_tmp
+      !! A_新建               OSError: [Errno 22] Invalid argument: 'E:\\Download\\_tmp\\_wchk60_a.txt'
+         B_覆写已有             OK
+         _C_目标确已存在          YES
+      !! C_replace到已有       PermissionError: [WinError 5] 拒绝访问。: 'E:\\Download\\_tmp\\_wchk60_c.tmp' -> 'E:\\Download\\_tmp\\_wchk60_c.txt
+      !! D_replace到新建       PermissionError: [WinError 5] 拒绝访问。: 'E:\\Download\\_tmp\\_wchk60_d.tmp' -> 'E:\\Download\\_tmp\\_wchk60_d_tar
+         E_append已有         OK
+      !! F_replace_目标被持有    PermissionError: [WinError 5] 拒绝访问。: 'E:\\Download\\_tmp\\_wchk60_f.tmp' -> 'E:\\Download\\_tmp\\_wchk60_f.txt
+
+【E盘_vault】E:\RalseiMemory
+         A_新建               OK
+         B_覆写已有             OK
+         _C_目标确已存在          YES
+      !! C_replace到已有       PermissionError: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\_wchk60_c.tmp' -> 'E:\\RalseiMemory\\_wchk60_c.txt'
+      !! D_replace到新建       PermissionError: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\_wchk60_d.tmp' -> 'E:\\RalseiMemory\\_wchk60_d_target.
+         E_append已有         OK
+      !! F_replace_目标被持有    PermissionError: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\_wchk60_f.tmp' -> 'E:\\RalseiMemory\\_wchk60_f.txt'
+
+【工作区】C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第60轮-全面排查\_evidence
+         A_新建               OK
+         B_覆写已有             OK
+         _C_目标确已存在          YES
+         C_replace到已有       OK
+         D_replace到新建       OK
+         E_append已有         OK
+      !! F_replace_目标被持有    PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\code-quality-audit\\第60轮-全面排
+
+【系统TEMP】C:\Users\23002\AppData\Local\Temp
+         A_新建               OK
+         B_覆写已有             OK
+         _C_目标确已存在          YES
+         C_replace到已有       OK
+         D_replace到新建       OK
+         E_append已有         OK
+      !! F_replace_目标被持有    PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\23002\\AppData\\Local\\Temp\\_wchk60_f.tmp' -> 'C:\\Users\\23
+
+------------------------------------------------------------------------
+[FAIL] E盘_临时区：新建文件必须成功
+[PASS] E盘_vault：新建文件必须成功
+[PASS] 工作区：新建文件必须成功
+[PASS] 系统TEMP：新建文件必须成功
+
+  结论性事实：新建=有失败；覆写已有被拒的目标=无
+  ⇒ 不符合该假设，需另找原因
+========================================================================

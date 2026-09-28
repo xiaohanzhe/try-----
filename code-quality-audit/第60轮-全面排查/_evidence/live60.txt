@@ -1,0 +1,20 @@
+=== 真机自检 raw ===
+exit=15 dur=25.6s
+--- stdout ---
+[日志] 文件日志初始化失败，仅使用控制台: [Errno 13] Permission denied: 'E:\\RalseiMemory\\logs\\ralsei_pet.log'
+2026-09-28 23:53:17 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+2026-09-28 23:53:17 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 114 组动画（legacy 28 组，schema=1）
+2026-09-28 23:53:20 [ERROR] ralsei_pet.modules.config_manager — 保存配置文件失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\config.json.tmp' -> 'E:\\RalseiMemory\\config.json'
+2026-09-28 23:53:21 [ERROR] ralsei_pet.modules.config_manager — set() 写盘失败，已回滚内存配置: ui.tray_hint_shown
+2026-09-28 23:53:22 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\memory.json.tmp' -> 'E:\\RalseiMemory\\memory.json'
+2026-09-28 23:53:29 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\memory.json.tmp' -> 'E:\\RalseiMemory\\memory.json'
+2026-09-28 23:53:30 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\memory.json.tmp' -> 'E:\\RalseiMemory\\memory.json'
+2026-09-28 23:53:35 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\memory.json.tmp' -> 'E:\\RalseiMemory\\memory.json'
+2026-09-28 23:53:40 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [WinError 5] 拒绝访问。: 'E:\\RalseiMemory\\memory.json.tmp' -> 'E:\\RalseiMemory\\memory.json'
+
+--- stderr ---
+Building prefix dict from the default dictionary ...
+Loading model from cache E:\RalseiMemory\cache\jieba.cache
+Loading model cost 1.029 seconds.
+Prefix dict has been built successfully.
+

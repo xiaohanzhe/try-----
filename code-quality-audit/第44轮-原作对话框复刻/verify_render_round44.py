@@ -260,7 +260,18 @@ def sec_d():
         ok(len(rb) == 1, 'D4a 宽房间（%s）产 1 条房间边框 实际=%d'
            % (g4, len(rb)))
         # 负控制：小房间不该有边框
-        ok(True, 'D4b 小房间无边框（见 D2d 计划里无 room_border）')
+        # ★ 第60轮：原来是 `ok(True, 'D4b …')` —— 字面量恒真、无兜底，
+        #   属"看着在守、其实没守"（第60轮恒真普查 B7 抓出）。
+        #   现在补成**真的负控制**：与 D2 同一间 320x240 的房间，
+        #   相机视口正好等于整间房 ⇒ 全房可见 ⇒ 不该画房间边框。
+        #   （D4a 是正控制"宽房间要 1 条"，此处是它的镜像。）
+        _w_small = SR.room_world_rect({'w': 320, 'h': 240}, cam)
+        _cam_small = SC.Camera((640, 480), 0, 2.0)
+        _cam_small.follow(_w_small, (152, 104, 168, 120))
+        _plan_small = SR.plan_frame(sc, _cam_small, geo)
+        _rb_small = [i for i in _plan_small if i['kind'] == SR.K_ROOM_BORDER]
+        ok(len(_rb_small) == 0,
+           'D4b 小房间（320x240，视口=整间房）不产房间边框 实际=%d' % len(_rb_small))
 
     # D5 物件：合成一个带 pos 的场景（**真实坐标量级**：320x240 房间内）
     st = SS.SceneState()

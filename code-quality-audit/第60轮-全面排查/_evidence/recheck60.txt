@@ -1,0 +1,45 @@
+第60轮复检（六类判据）
+[PASS] ① ast.parse 通过：run_all.py
+[PASS] ① JSON 可解析：baseline.json
+[PASS] ① ast.parse 通过：verify_round8_anim.py
+[PASS] ① ast.parse 通过：verify_round9_focus.py
+[PASS] ① ast.parse 通过：verify_render_round44.py
+[PASS] ① Markdown 非空且体量合理（11902 字符）：第60轮报告-全面排查.md
+[PASS] ② run_all.py 含新增的 say() 摘要输出函数
+[PASS] ② run_all.py 把摘要写进 _out/summary.txt
+[PASS] ② run_suite 定义唯一（没被改坏成重复）
+[PASS] ② 报告章节数 ≥8（实际 9）
+[PASS] ② 报告含"供其他 AI 复核的清单"这一节
+[PASS] ② 报告对 R5（真机段会报红）做了"是环境证据不是代码判据"的显式说明
+[PASS] ③ 无 BOM：run_all.py
+[PASS] ③ 无 U+FFFD：run_all.py
+[PASS] ③ 无 BOM：baseline.json
+[PASS] ③ 无 U+FFFD：baseline.json
+[PASS] ③ 无 BOM：verify_round8_anim.py
+[PASS] ③ 无 U+FFFD：verify_round8_anim.py
+[PASS] ③ 无 BOM：verify_round9_focus.py
+[PASS] ③ 无 U+FFFD：verify_round9_focus.py
+[PASS] ③ 无 BOM：verify_render_round44.py
+[PASS] ③ 无 U+FFFD：verify_render_round44.py
+[PASS] ③ 无 BOM：第60轮报告-全面排查.md
+[PASS] ③ 无 U+FFFD：第60轮报告-全面排查.md
+[PASS] ④ 第九轮/verify_round9_focus.py 无 hollow_true（实际 0 处）[]
+[PASS] ④ 第44轮-原作对话框复刻/verify_render_round44.py 无 hollow_true（实际 0 处）[]
+[PASS] ④ 第八轮/verify_round8_anim.py 无 hollow_true（实际 0 处）[]
+[PASS] ④ 时间炸弹已拆（夹具显式关掉就寝）
+[PASS] ④ 反向：被关掉的那个开关在产品里**真实存在**（否则关了个不存在的名字＝假修复）
+[PASS] ④ 第九轮已补上 except 分支报 False（否则是"删了判据"而不是"修好判据"）
+[PASS] ④ 第44轮已补成真负控制（断言边框数为 0）
+[PASS] ⑤ 报告"93 个活代码文件" == static60.json（实际 93）
+[PASS] ⑤ 报告"52,401 行" == 证据求和（实际 52401）
+[PASS] ⑤ 证据判据点 = 2769（实际 2769）
+[PASS] ⑤ 修完后 hollow_true 必须为 0（实际 0）
+[PASS] ⑤ 证据"有兜底" = 7（实际 7）
+[PASS] ⑤ 报告同时写明了修复后读数（2769）与修复前读数（2768）—— 漂移已留痕
+[PASS] ⑤ 报告里"有兜底"的处数已同步为 7
+[PASS] ⑤ 报告"3 个孤儿" == wiring60.json（实际 ['companion_roster', 'pet_interaction', 'scene_walk']）
+[PASS] ⑤ 报告"产品层 40 处静默吞异常" == 证据（实际 40）
+[PASS] ⑤ 报告"main.py 53 处 hasattr" == 证据（实际 53）
+[PASS] ⑤ 报告点名的 6 处"有兜底"逐条命中证据（缺 []）
+[PASS] ⑥ 已列出工作区状态（供人工确认"改动恰为本轮意图"，不做恒真断言）
+合计 PASS=43 FAIL=0

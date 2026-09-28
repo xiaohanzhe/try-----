@@ -148,10 +148,17 @@ def test_focus():
        and f9.topic.turns == f8.topic.turns
        and set(f9.topic.keywords) == set(f8.topic.keywords), (f9.current_label(), f9.topic.turns))
     f10 = CF.ConversationFocus()
-    for junk in (None, 123, 'x', {'topic': 'bad'}, {'topic': {'keywords': 'no'}}):
-        f10.restore(junk)
-        f10.note_user('随便说点什么')   # 坏数据后仍可用
-    ok('A17 坏快照不致崩且仍可用', True, None)
+    # ★ 第60轮：原来是 `ok('A17 …', True, None)` —— 字面量恒真，**没有任何兜底**，
+    #   属于"看着在守、其实没守"（第60轮恒真普查 B7 抓出）。
+    #   改成 try/except/else 范式：真的抛了就报 False（PASS 文本不变 ⇒ 基线不动）。
+    try:
+        for junk in (None, 123, 'x', {'topic': 'bad'}, {'topic': {'keywords': 'no'}}):
+            f10.restore(junk)
+            f10.note_user('随便说点什么')   # 坏数据后仍可用
+    except Exception as _e:                                   # noqa: BLE001
+        ok('A17 坏快照不致崩且仍可用', False, '%s: %s' % (type(_e).__name__, _e))
+    else:
+        ok('A17 坏快照不致崩且仍可用', True, None)
 
     # 标签质量 & 滑窗碎片（第九轮修：原来 label 取 keywords[0] 会得到"今天"）
     f11 = CF.ConversationFocus()

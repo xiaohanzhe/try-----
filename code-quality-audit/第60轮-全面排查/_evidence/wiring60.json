@@ -1,0 +1,1304 @@
+{
+ "n_product": 93,
+ "n_audit": 228,
+ "unwired": [
+  {
+   "module": "companion_roster",
+   "path": "ralsei_pet/modules/companion_roster.py",
+   "product_refs": [],
+   "audit_refs": [
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py"
+   ],
+   "product_lits": [],
+   "audit_lits": [
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/disc_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第57轮-模型并发实测/check57.py"
+   ]
+  },
+  {
+   "module": "pet_interaction",
+   "path": "ralsei_pet/modules/pet_interaction.py",
+   "product_refs": [],
+   "audit_refs": [],
+   "product_lits": [
+    "ralsei_pet/modules/emotion_system.py",
+    "ralsei_pet/modules/pet_ai.py",
+    "ralsei_pet/modules/social_growth_system.py"
+   ],
+   "audit_lits": []
+  },
+  {
+   "module": "scene_walk",
+   "path": "ralsei_pet/modules/scene_walk.py",
+   "product_refs": [],
+   "audit_refs": [],
+   "product_lits": [],
+   "audit_lits": [
+    "code-quality-audit/第45轮-场景自主寻路/disc_walk45.py",
+    "code-quality-audit/第45轮-场景自主寻路/verify_walk45.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第46轮-伙伴交互框架/verify_companion46.py",
+    "code-quality-audit/第47轮-房间全量与寻路人味化/recheck47.py",
+    "code-quality-audit/第47轮-房间全量与寻路人味化/recheck47.py",
+    "code-quality-audit/第47轮-房间全量与寻路人味化/recheck47.py",
+    "code-quality-audit/第47轮-房间全量与寻路人味化/verify_walk47.py"
+   ]
+  }
+ ],
+ "locked_only": [
+  "companion_roster",
+  "scene_walk"
+ ],
+ "scratch": [
+  "diag30",
+  "diag_logic",
+  "diag_screen",
+  "diag_spell",
+  "diag_state",
+  "monitor_animation",
+  "monitor_coordinates",
+  "main_simple",
+  "test_animation",
+  "test_basic",
+  "test_interaction",
+  "test_interaction_detailed",
+  "test_pyqt",
+  "test_pyqt_import",
+  "test_pyqt_simple",
+  "test_sprite_loader",
+  "test_with_log",
+  "test_excel_creation",
+  "test_get_visible_windows",
+  "test_jump_simple",
+  "test_non_transparent_windows",
+  "test_office_functions",
+  "test_ralsei_features",
+  "test_simple_window_detection",
+  "test_visible_windows",
+  "test_window_details",
+  "test_window_detection",
+  "test_window_detection_detailed",
+  "test_window_detection_final",
+  "test_window_detection_fixed",
+  "test_window_detection_simplified",
+  "test_window_detection_updated"
+ ],
+ "swallow_pass": [
+  {
+   "path": "ralsei_pet/diag_spell.py",
+   "line": 31,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/ai_driver.py",
+   "line": 412,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/api_client.py",
+   "line": 385,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/api_client.py",
+   "line": 595,
+   "bare": false,
+   "code": "except Exception:                                     # noqa: BLE001"
+  },
+  {
+   "path": "ralsei_pet/modules/command_manager.py",
+   "line": 63,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/config_manager.py",
+   "line": 275,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/modules/customization_system.py",
+   "line": 120,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/data_store.py",
+   "line": 236,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/modules/data_store.py",
+   "line": 327,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/data_store.py",
+   "line": 315,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/desktop_interaction.py",
+   "line": 1961,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/entertainment_system.py",
+   "line": 269,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/floor_manager.py",
+   "line": 313,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/games_controller.py",
+   "line": 302,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/games_controller.py",
+   "line": 436,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/logger_utils.py",
+   "line": 137,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/logger_utils.py",
+   "line": 192,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/logger_utils.py",
+   "line": 216,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/memory_store.py",
+   "line": 347,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/memory_system.py",
+   "line": 611,
+   "bare": false,
+   "code": "except FileNotFoundError:"
+  },
+  {
+   "path": "ralsei_pet/modules/npc_persona.py",
+   "line": 176,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/npc_persona.py",
+   "line": 370,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/pet_ai.py",
+   "line": 725,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/relationship.py",
+   "line": 197,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_camera.py",
+   "line": 231,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_render.py",
+   "line": 535,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_system.py",
+   "line": 706,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_system.py",
+   "line": 712,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/soul_entity.py",
+   "line": 510,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11608,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11620,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 2154,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11701,
+   "bare": false,
+   "code": "except (ValueError, OSError):"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11708,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 5999,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 7125,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 8859,
+   "bare": false,
+   "code": "except IndexError:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11698,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 3864,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/test_visible_windows.py",
+   "line": 44,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/regress/run_all.py",
+   "line": 1339,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "code-quality-audit/regress/run_all.py",
+   "line": 1581,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "code-quality-audit/tools/check_evidence_encoding.py",
+   "line": 215,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/tools/check_evidence_encoding.py",
+   "line": 194,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/人味改造-2026-09-18/probe_models_compare.py",
+   "line": 65,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/复审_2026-09-12/scan_dup.py",
+   "line": 63,
+   "bare": false,
+   "code": "except Exception: pass"
+  },
+  {
+   "path": "code-quality-audit/复审_2026-09-12/scan_resources.py",
+   "line": 47,
+   "bare": false,
+   "code": "except Exception: pass"
+  },
+  {
+   "path": "code-quality-audit/复审_2026-09-12/smoke_test.py",
+   "line": 69,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/复审_2026-09-12/smoke_test.py",
+   "line": 57,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/make_asset_contact_sheet.py",
+   "line": 77,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/scan_refactor_baseline.py",
+   "line": 117,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_2_ab.py",
+   "line": 818,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_2_e2e.py",
+   "line": 538,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_3_e2e.py",
+   "line": 227,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_6_e2e.py",
+   "line": 613,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_6_e2e.py",
+   "line": 284,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_6_e2e.py",
+   "line": 437,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_6_e2e.py",
+   "line": 472,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/架构改造-H4H5/verify_w1_6_e2e.py",
+   "line": 144,
+   "bare": false,
+   "code": "except AttributeError:"
+  },
+  {
+   "path": "code-quality-audit/模型选型-4B-2026-09-18/probe_4b_vs_3b.py",
+   "line": 113,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第34轮-移动行为基础代码严查/verify_round34_movement.py",
+   "line": 349,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第35轮-真机用户视角10分钟监测/monitor_10min.py",
+   "line": 78,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第35轮-真机用户视角10分钟监测/monitor_10min.py",
+   "line": 42,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第35轮-真机用户视角10分钟监测/monitor_10min.py",
+   "line": 73,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第46轮-伙伴交互框架/recheck46.py",
+   "line": 109,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第55轮-灵魂实体与NPC人设/check55.py",
+   "line": 506,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第55轮-灵魂实体与NPC人设/verify_soul55.py",
+   "line": 82,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第56轮-NPC站位与游荡/check56.py",
+   "line": 601,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第58轮-模型常驻与预热/check58.py",
+   "line": 556,
+   "bare": false,
+   "code": "except Exception:                                                 # noqa: BLE001"
+  },
+  {
+   "path": "code-quality-audit/第七轮/_recon/capture_pet.py",
+   "line": 31,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第七轮/_recon/kill_pet_py.py",
+   "line": 37,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第七轮/_recon/probe_mutex.py",
+   "line": 28,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第八轮/verify_round8_dialogue.py",
+   "line": 92,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第八轮/verify_round8_dialogue.py",
+   "line": 323,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第六轮/verify_round6_fixes.py",
+   "line": 258,
+   "bare": false,
+   "code": "except _Sentinel:"
+  },
+  {
+   "path": "code-quality-audit/第十三轮/_probe_dpi.py",
+   "line": 66,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第十三轮/_probe_dpi.py",
+   "line": 92,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第十三轮/probe_native_occlusion.py",
+   "line": 77,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第十三轮/probe_native_occlusion.py",
+   "line": 105,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第十二轮/probe_vault_real.py",
+   "line": 53,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "code-quality-audit/第十二轮/verify_round12_store.py",
+   "line": 314,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第十二轮/verify_round12_store.py",
+   "line": 475,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "code-quality-audit/第十二轮/verify_round12_store.py",
+   "line": 398,
+   "bare": false,
+   "code": "except Exception:"
+  }
+ ],
+ "product_swallow": [
+  {
+   "path": "ralsei_pet/diag_spell.py",
+   "line": 31,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/ai_driver.py",
+   "line": 412,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/api_client.py",
+   "line": 385,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/api_client.py",
+   "line": 595,
+   "bare": false,
+   "code": "except Exception:                                     # noqa: BLE001"
+  },
+  {
+   "path": "ralsei_pet/modules/command_manager.py",
+   "line": 63,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/config_manager.py",
+   "line": 275,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/modules/customization_system.py",
+   "line": 120,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/data_store.py",
+   "line": 236,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/modules/data_store.py",
+   "line": 327,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/data_store.py",
+   "line": 315,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/desktop_interaction.py",
+   "line": 1961,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/entertainment_system.py",
+   "line": 269,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/floor_manager.py",
+   "line": 313,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/games_controller.py",
+   "line": 302,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/games_controller.py",
+   "line": 436,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/logger_utils.py",
+   "line": 137,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/logger_utils.py",
+   "line": 192,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/logger_utils.py",
+   "line": 216,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/memory_store.py",
+   "line": 347,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/memory_system.py",
+   "line": 611,
+   "bare": false,
+   "code": "except FileNotFoundError:"
+  },
+  {
+   "path": "ralsei_pet/modules/npc_persona.py",
+   "line": 176,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/npc_persona.py",
+   "line": 370,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/pet_ai.py",
+   "line": 725,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/relationship.py",
+   "line": 197,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_camera.py",
+   "line": 231,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_render.py",
+   "line": 535,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_system.py",
+   "line": 706,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/scene_system.py",
+   "line": 712,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/modules/soul_entity.py",
+   "line": 510,
+   "bare": false,
+   "code": "except (TypeError, ValueError):"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11608,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11620,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 2154,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11701,
+   "bare": false,
+   "code": "except (ValueError, OSError):"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11708,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 5999,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 7125,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 8859,
+   "bare": false,
+   "code": "except IndexError:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 11698,
+   "bare": false,
+   "code": "except OSError:"
+  },
+  {
+   "path": "ralsei_pet/src/main.py",
+   "line": 3864,
+   "bare": false,
+   "code": "except Exception:"
+  },
+  {
+   "path": "ralsei_pet/test_visible_windows.py",
+   "line": 44,
+   "bare": false,
+   "code": "except Exception:"
+  }
+ ],
+ "hasattr": {
+  "ralsei_pet/diag_spell.py": [
+   {
+    "line": 59,
+    "code": "'spell_interrupt_reason': w._spell_interrupted_reason() if hasattr(w,'_spell_interrupted_reason') else None,"
+   }
+  ],
+  "ralsei_pet/modules/autonomous_agent.py": [
+   {
+    "line": 455,
+    "code": "if owner is not None and hasattr(owner, 'emotion_system'):"
+   },
+   {
+    "line": 308,
+    "code": "if owner is not None and hasattr(owner, 'target_pos') and owner.target_pos:"
+   },
+   {
+    "line": 252,
+    "code": "if owner is not None and hasattr(owner, 'target_pos') and owner.target_pos:"
+   }
+  ],
+  "ralsei_pet/modules/companion.py": [
+   {
+    "line": 437,
+    "code": "if self.actor is not None and hasattr(self.actor, 'interact_cooldown'):"
+   }
+  ],
+  "ralsei_pet/modules/customization_system.py": [
+   {
+    "line": 180,
+    "code": "if hasattr(self.parent, 'animation_timer'):"
+   },
+   {
+    "line": 395,
+    "code": "if hasattr(self.parent, 'animation_timer'):"
+   }
+  ],
+  "ralsei_pet/modules/desktop_interaction.py": [
+   {
+    "line": 852,
+    "code": "screen_x = screen_geometry.x() if hasattr(screen_geometry, 'x') else 0"
+   },
+   {
+    "line": 853,
+    "code": "screen_y = screen_geometry.y() if hasattr(screen_geometry, 'y') else 0"
+   },
+   {
+    "line": 341,
+    "code": "if not hasattr(self, 'last_desktop_update') or current_time - self.last_desktop_update > 10.0:"
+   },
+   {
+    "line": 730,
+    "code": "if hasattr(self.parent, 'emotion_system') and self.parent.emotion_system:"
+   },
+   {
+    "line": 738,
+    "code": "if hasattr(self.parent, 'emotion_system') and self.parent.emotion_system:"
+   },
+   {
+    "line": 2066,
+    "code": "if hasattr(presentation, 'SlideShowWindow') and presentation.SlideShowWindow.View is not None:"
+   },
+   {
+    "line": 2075,
+    "code": "if hasattr(presentation, 'SlideShowWindow') and presentation.SlideShowWindow.View is not None:"
+   },
+   {
+    "line": 2084,
+    "code": "if hasattr(presentation, 'SlideShowWindow'):"
+   },
+   {
+    "line": 2119,
+    "code": "if hasattr(presentation, 'SlideShowWindow') and presentation.SlideShowWindow.View is not None:"
+   }
+  ],
+  "ralsei_pet/modules/dialogue_ui.py": [
+   {
+    "line": 1617,
+    "code": "and hasattr(self.parent, 'chat_with_ai'))"
+   },
+   {
+    "line": 2156,
+    "code": "if hasattr(self.parent, 'handle_window_operation'):"
+   },
+   {
+    "line": 543,
+    "code": "if hasattr(loader, 'has_face') and not loader.has_face(name):"
+   },
+   {
+    "line": 2124,
+    "code": "if matched_path and hasattr(self.parent, 'delete_file') and callable(self.parent.delete_file):"
+   },
+   {
+    "line": 1907,
+    "code": "self.parent.wake_up() if hasattr(self.parent, 'wake_up') else None,"
+   },
+   {
+    "line": 1911,
+    "code": "self.parent.wake_up() if hasattr(self.parent, 'wake_up') else None,"
+   }
+  ],
+  "ralsei_pet/modules/floor_manager.py": [
+   {
+    "line": 171,
+    "code": "if not self.parent or not hasattr(self.parent, 'desktop_interaction'):"
+   }
+  ],
+  "ralsei_pet/modules/global_hotkey.py": [
+   {
+    "line": 126,
+    "code": "err = ctypes.get_last_error() if hasattr(ctypes, 'get_last_error') else 0"
+   }
+  ],
+  "ralsei_pet/modules/npc_placement.py": [
+   {
+    "line": 848,
+    "code": "members = g.members if hasattr(g, 'members') else g.get('members')"
+   },
+   {
+    "line": 851,
+    "code": "gid = g.id if hasattr(g, 'id') else g.get('id')"
+   },
+   {
+    "line": 854,
+    "code": "leader = g.leader if hasattr(g, 'leader') else g.get('leader')"
+   },
+   {
+    "line": 855,
+    "code": "lag = g.lag if hasattr(g, 'lag') else g.get('lag')"
+   },
+   {
+    "line": 790,
+    "code": "if npc_id in (g.members if hasattr(g, 'members') else g.get('members', ())):"
+   }
+  ],
+  "ralsei_pet/modules/pet_ai.py": [
+   {
+    "line": 384,
+    "code": "if not hasattr(self, '_last_special_event_say'):"
+   },
+   {
+    "line": 319,
+    "code": "if not hasattr(self, '_last_action_check') or current_time - self._last_action_check >= 0.5:"
+   },
+   {
+    "line": 324,
+    "code": "if not hasattr(self, '_last_special_check') or current_time - self._last_special_check >= 1.0:"
+   }
+  ],
+  "ralsei_pet/modules/scene_canvas.py": [
+   {
+    "line": 343,
+    "code": "and hasattr(painter, 'save') and hasattr(painter, 'rotate'))"
+   },
+   {
+    "line": 343,
+    "code": "and hasattr(painter, 'save') and hasattr(painter, 'rotate'))"
+   }
+  ],
+  "ralsei_pet/modules/spell_controller.py": [
+   {
+    "line": 383,
+    "code": "if not hasattr(self, '_spell_cast_start_time') or self._spell_cast_start_time is None:"
+   }
+  ],
+  "ralsei_pet/modules/video_controller.py": [
+   {
+    "line": 514,
+    "code": "if not hasattr(self, 'video_watching_timer') or self.video_watching_timer is None:"
+   }
+  ],
+  "ralsei_pet/src/main.py": [
+   {
+    "line": 5149,
+    "code": "if not hasattr(self, 'jump_target_pos'):"
+   },
+   {
+    "line": 5421,
+    "code": "if hasattr(self, _a):"
+   },
+   {
+    "line": 5789,
+    "code": "if not hasattr(self, 'fall_velocity_x'):"
+   },
+   {
+    "line": 5923,
+    "code": "_is_ballistic = hasattr(self, '_fall_vy')"
+   },
+   {
+    "line": 6123,
+    "code": "if hasattr(self, attr):"
+   },
+   {
+    "line": 6656,
+    "code": "if hasattr(self, attr):"
+   },
+   {
+    "line": 7729,
+    "code": "if hasattr(self, '_is_being_dragged'):"
+   },
+   {
+    "line": 7731,
+    "code": "if hasattr(self, '_drag_speed'):"
+   },
+   {
+    "line": 7868,
+    "code": "if hasattr(self, '_is_being_dragged'):"
+   },
+   {
+    "line": 7870,
+    "code": "if hasattr(self, '_drag_speed'):"
+   },
+   {
+    "line": 8789,
+    "code": "if _is_perf and hasattr(self, '_last_perf_anim_time'):"
+   },
+   {
+    "line": 10123,
+    "code": "if hasattr(self, '_is_being_dragged') and self._is_being_dragged and hasattr(self, '_drag_speed'):"
+   },
+   {
+    "line": 10123,
+    "code": "if hasattr(self, '_is_being_dragged') and self._is_being_dragged and hasattr(self, '_drag_speed'):"
+   },
+   {
+    "line": 10360,
+    "code": "if hasattr(self, 'is_splat') and self.is_splat and not hasattr(self, '_fall_phase'):"
+   },
+   {
+    "line": 7010,
+    "code": "if hasattr(dui, '_is_user_inputting') and dui._is_user_inputting():"
+   },
+   {
+    "line": 7054,
+    "code": "if not getattr(self, 'api_enabled', False) or not hasattr(self, 'chat_with_ai'):"
+   },
+   {
+    "line": 7855,
+    "code": "if hasattr(self, '_pet_detection_state'):"
+   },
+   {
+    "line": 7998,
+    "code": "if hasattr(self, '_drag_elastic_pos'):"
+   },
+   {
+    "line": 8000,
+    "code": "if hasattr(self, '_drag_surprised'):"
+   },
+   {
+    "line": 8002,
+    "code": "if hasattr(self, '_last_drag_pos'):"
+   },
+   {
+    "line": 8005,
+    "code": "if hasattr(self, '_pet_detection_state') and self._pet_detection_state['is_pressing'] and not getattr(self, 'is_falling', False):"
+   },
+   {
+    "line": 10166,
+    "code": "if not hasattr(self, 'jump_phase'):"
+   },
+   {
+    "line": 10360,
+    "code": "if hasattr(self, 'is_splat') and self.is_splat and not hasattr(self, '_fall_phase'):"
+   },
+   {
+    "line": 11422,
+    "code": "if hasattr(self, 'ai_thread') and self.ai_thread is not None:"
+   },
+   {
+    "line": 3839,
+    "code": "if not hasattr(self, '_last_desktop_elem_check') or current_time - self._last_desktop_elem_check > 5.0:"
+   },
+   {
+    "line": 3858,
+    "code": "if not hasattr(self, '_sleep_stir_time'):"
+   },
+   {
+    "line": 3877,
+    "code": "elif hasattr(self, '_sleep_stir_time') and current_time - self._sleep_stir_time > 5.0:"
+   },
+   {
+    "line": 3879,
+    "code": "if hasattr(self, '_sleep_stir_time'):"
+   },
+   {
+    "line": 3881,
+    "code": "if hasattr(self, '_sleep_stir_count'):"
+   },
+   {
+    "line": 4136,
+    "code": "if not hasattr(self, '_speed_variation'):"
+   },
+   {
+    "line": 5971,
+    "code": "if hasattr(self, 'fall_slide_speed_x'):"
+   },
+   {
+    "line": 6004,
+    "code": "if hasattr(self, attr):"
+   },
+   {
+    "line": 6069,
+    "code": "if hasattr(self, _a):"
+   },
+   {
+    "line": 6086,
+    "code": "if hasattr(self, '_speed_variation'):"
+   },
+   {
+    "line": 7118,
+    "code": "if hasattr(dui, '_is_user_inputting') and dui._is_user_inputting():"
+   },
+   {
+    "line": 7553,
+    "code": "if not hasattr(self, '_pet_detection_state'):"
+   },
+   {
+    "line": 7748,
+    "code": "if not hasattr(self, '_pet_detection_state'):"
+   },
+   {
+    "line": 9685,
+    "code": "if cli is None or not hasattr(cli, 'loaded_models') \\"
+   },
+   {
+    "line": 9686,
+    "code": "or not hasattr(cli, 'ensure_keep_alive'):"
+   },
+   {
+    "line": 10362,
+    "code": "if not hasattr(self, 'splat_start_time') or self.splat_start_time is None:"
+   },
+   {
+    "line": 3941,
+    "code": "elif hasattr(self, 'is_recovering') and self.is_recovering:"
+   },
+   {
+    "line": 4101,
+    "code": "if not hasattr(self, '_cached_mood_factor') or current_time - getattr(self, '_last_mood_check', 0) > 2.0:"
+   },
+   {
+    "line": 4161,
+    "code": "if not hasattr(self, '_cached_screen_geom') or current_time - getattr(self, '_last_screen_check', 0) > 3.0:"
+   },
+   {
+    "line": 7846,
+    "code": "if not hasattr(self, '_last_hover_time') or time.time() - self._last_hover_time > 0.5:"
+   },
+   {
+    "line": 10514,
+    "code": "elif hasattr(self, '_rotation_damping'):"
+   },
+   {
+    "line": 7981,
+    "code": "if not hasattr(self, '_bounce_timer'):"
+   },
+   {
+    "line": 10565,
+    "code": "if not hasattr(self, '_sprite_cache'):"
+   },
+   {
+    "line": 10674,
+    "code": "if not hasattr(self, '_sprite_cache'):"
+   },
+   {
+    "line": 6053,
+    "code": "if hasattr(self, attr):"
+   },
+   {
+    "line": 10277,
+    "code": "if hasattr(self, 'is_shocked') and self.is_shocked:"
+   },
+   {
+    "line": 10324,
+    "code": "if hasattr(self, 'is_being_thrown') and self.is_being_thrown:"
+   },
+   {
+    "line": 10260,
+    "code": "if not hasattr(self, 'surprised_jump'):"
+   },
+   {
+    "line": 10283,
+    "code": "if not hasattr(self, 'shocked_start_time') or self.shocked_start_time is None:"
+   }
+  ],
+  "ralsei_pet/test_office_functions.py": [
+   {
+    "line": 74,
+    "code": "if hasattr(self.desktop_interaction, 'ppt_control'):"
+   },
+   {
+    "line": 81,
+    "code": "if hasattr(self.desktop_interaction, '_execute_ppt_action'):"
+   },
+   {
+    "line": 94,
+    "code": "if hasattr(self.desktop_interaction, 'excel_control'):"
+   },
+   {
+    "line": 101,
+    "code": "if hasattr(self.desktop_interaction, '_execute_excel_action'):"
+   },
+   {
+    "line": 114,
+    "code": "if hasattr(self.desktop_interaction, 'drag_file'):"
+   },
+   {
+    "line": 121,
+    "code": "if hasattr(self.desktop_interaction, 'rename_file'):"
+   },
+   {
+    "line": 128,
+    "code": "if hasattr(self.desktop_interaction, 'copy_file'):"
+   },
+   {
+    "line": 135,
+    "code": "if hasattr(self.desktop_interaction, 'cut_file'):"
+   },
+   {
+    "line": 142,
+    "code": "if hasattr(self.desktop_interaction, 'double_click_file'):"
+   },
+   {
+    "line": 149,
+    "code": "if hasattr(self.desktop_interaction, 'right_click_file'):"
+   },
+   {
+    "line": 35,
+    "code": "if hasattr(DesktopInteraction, method):"
+   },
+   {
+    "line": 48,
+    "code": "if hasattr(DesktopInteraction, method):"
+   },
+   {
+    "line": 61,
+    "code": "if hasattr(DesktopInteraction, method):"
+   }
+  ],
+  "ralsei_pet/test_ralsei_features.py": [
+   {
+    "line": 200,
+    "code": "if hasattr(self.ralsei, 'is_falling') and self.ralsei.is_falling:"
+   }
+  ]
+ },
+ "known_unwired": {
+  "pet_interaction": {
+   "tier": "product",
+   "reason": "第11轮登记：365 行手势/情绪交互模块，全模块零接线",
+   "status": "待用户裁定（删除 vs 接线）"
+  },
+  "companion_roster": {
+   "tier": "product",
+   "reason": "第46轮 P0~P2 骨架三模块之一；产品层 import = 0（只有第46轮的锁在引用）",
+   "status": "P3 接线已获授权（第二批），尚未施工"
+  },
+  "scene_walk": {
+   "tier": "product",
+   "reason": "第45/47轮房间内行走层；产品层 import = 0（只有第45/47轮的锁在引用）",
+   "status": "P1 待办：①意图接 AI + ④逐门执行 未施工"
+  }
+ }
+}

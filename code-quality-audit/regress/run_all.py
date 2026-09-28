@@ -1315,6 +1315,31 @@ def sha256(text):
 
 
 # ---------------------------------------------------------------- 执行
+# ---------------------------------------------------------------- 摘要输出
+_SUMMARY_BUF = []
+
+
+def say(text=''):
+    """摘要输出专用：**既打印、也进缓冲**。
+
+    ★ 第60轮修复。起因：一次全量回归把 stdout 重定向到 E 盘，56 个套件全部跑完、
+      结果表也打了几十行，然后在打印第 N 行时抛
+          OSError: [Errno 22] Invalid argument
+      —— `main()` 当场退出，**"合计 PASS/FAIL"与【问题】清单一起丢了**，
+      只能靠重跑一遍才拿回来（且重跑时 E 盘又正常，属瞬时抖动，无法复现）。
+
+    ⇒ 教训：**结果不能只活在 stdout 上**。stdout 可能落在不稳的介质上
+      （本项目既有教训同源："回归套件不许依赖外部盘"）。
+      现在摘要同时写进 `_out/summary.txt`（在仓库内、已 gitignore），
+      stdout 写失败也不影响取回结果。
+    """
+    _SUMMARY_BUF.append(str(text))
+    try:
+        print(text)
+    except OSError:
+        pass
+
+
 def run_suite(suite, verbose=False):
     script = suite['script']
     if not os.path.exists(script):
@@ -1482,20 +1507,20 @@ def main():
             tofile='now', n=3)))
         return 0
 
-    print('=' * 72)
-    print('回归基线（G2）  ROOT = %s' % ROOT)
-    print('解释器 = %s' % PYTHON)
-    print('=' * 72)
+    say('=' * 72)
+    say('回归基线（G2）  ROOT = %s' % ROOT)
+    say('解释器 = %s' % PYTHON)
+    say('=' * 72)
 
     results = [run_suite(s, verbose=args.verbose) for s in picked]
 
-    print()
-    print('%-16s %-6s %-6s %-6s %-8s %s' % ('suite', 'exit', 'PASS', 'FAIL', '比对', '说明'))
-    print('-' * 72)
+    say()
+    say('%-16s %-6s %-6s %-6s %-8s %s' % ('suite', 'exit', 'PASS', 'FAIL', '比对', '说明'))
+    say('-' * 72)
     verdicts, problems = {}, []
     for s, r in zip(picked, results):
         if r['status'] == 'SKIP':
-            print('%-16s %-6s %-6s %-6s %-8s %s' % (r['id'], '-', '-', '-', 'SKIP', r.get('reason', '')))
+            say('%-16s %-6s %-6s %-6s %-8s %s' % (r['id'], '-', '-', '-', 'SKIP', r.get('reason', '')))
             continue
         old = (baseline or {}).get('suites', {}).get(r['id'])
         if args.update or old is None:
@@ -1505,7 +1530,7 @@ def main():
         else:
             cmp_txt = 'DIFF'
         verdicts[r['id']] = cmp_txt
-        print('%-16s %-6s %-6s %-6s %-8s %s' % (
+        say('%-16s %-6s %-6s %-6s %-8s %s' % (
             r['id'], r['exit'], r['pass'], r['fail'], cmp_txt, s['desc']))
         if cmp_txt == 'DIFF':
             old_norm = None
@@ -1521,10 +1546,10 @@ def main():
 
     if args.update:
         save_baseline(results)
-        print()
-        print('基线已更新（合并模式）：%s' % BASELINE)
+        say()
+        say('基线已更新（合并模式）：%s' % BASELINE)
         if args.only:
-            print('  注意：本次只重建了 %d 个被 --only 选中的套件，其余套件的基线保持不动。' % len(picked))
+            say('  注意：本次只重建了 %d 个被 --only 选中的套件，其余套件的基线保持不动。' % len(picked))
         # 留一份原始文本供下次 DIFF 时做行级对比
         for r in results:
             if r['status'] == 'SKIP':
@@ -1535,18 +1560,28 @@ def main():
 
     tot_pass = sum(r.get('pass') or 0 for r in results)
     tot_fail = sum(r.get('fail') or 0 for r in results)
-    print()
-    print('合计：PASS=%d FAIL=%d  套件=%d' % (tot_pass, tot_fail, len(results)))
+    say()
+    say('合计：PASS=%d FAIL=%d  套件=%d' % (tot_pass, tot_fail, len(results)))
     if problems:
-        print()
-        print('【问题】')
+        say()
+        say('【问题】')
         for p in problems:
-            print('  - ' + p)
-        return 1
-    if not args.update and baseline is None:
-        print()
-        print('提示：本次基线为空，已按现状比对为 BASELINE。请用 --update 固化基线。')
-    return 0
+            say('  - ' + p)
+    elif not args.update and baseline is None:
+        say()
+        say('提示：本次基线为空，已按现状比对为 BASELINE。请用 --update 固化基线。')
+
+    # ★ 第60轮：摘要落盘（stdout 可能落在不稳的介质上，见 `say()` 注释）
+    try:
+        if not os.path.isdir(OUT_DIR):
+            os.makedirs(OUT_DIR)
+        with open(os.path.join(OUT_DIR, 'summary.txt'), 'w',
+                  encoding='utf-8', newline='\n') as fh:
+            fh.write('\n'.join(_SUMMARY_BUF).replace('\r\n', '\n') + '\n')
+    except OSError:
+        pass                      # 摘要落盘失败也不该改变退出码
+
+    return 1 if problems else 0
 
 
 if __name__ == '__main__':
