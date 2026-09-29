@@ -1,0 +1,55 @@
+{
+ "note": "拓扑边引用到的 GML 出处文件（蒸馏进仓，避免依赖 E 盘）。obj_doorA_Alarm_2 是 SPECIAL 边的代码位置标签，非文件。",
+ "works": {
+  "ut": {
+   "topology": "ut_topology65.json",
+   "src_dir": "E:/Download/_extract61/_data/undertale/u65/gml65ut",
+   "referenced": 10,
+   "copied": 9,
+   "copied_files": [
+    "gml_Object_obj_doorXmusicfade_Alarm_2.gml",
+    "gml_Object_obj_door_ruins13_Alarm_2.gml",
+    "gml_Object_obj_door_s_musfade_Alarm_2.gml",
+    "gml_Object_obj_door_t_Alarm_2.gml",
+    "gml_Object_obj_door_u_Alarm_2.gml",
+    "gml_Object_obj_door_v_Alarm_2.gml",
+    "gml_Object_obj_door_w_Alarm_2.gml",
+    "gml_Object_obj_paphouse_entrance_Alarm_2.gml",
+    "gml_Object_obj_underground_exit_Step_0.gml"
+   ],
+   "label_only": [
+    "obj_doorA_Alarm_2"
+   ]
+  },
+  "uty": {
+   "topology": "uty_topology65.json",
+   "src_dir": "E:/Download/_extract61/_data/undertale_yellow/uty65/gml65",
+   "referenced": 1,
+   "copied": 1,
+   "copied_files": [
+    "gml_Object_obj_drexit_Alarm_1.gml"
+   ],
+   "label_only": []
+  },
+  "ry": {
+   "topology": "ry_topology65.json",
+   "src_dir": "E:/Download/_extract64/assets/redyellow65/gml65",
+   "referenced": 10,
+   "copied": 9,
+   "copied_files": [
+    "gml_Object_obj_doorXmusicfade_Alarm_2.gml",
+    "gml_Object_obj_door_ruins13_Alarm_2.gml",
+    "gml_Object_obj_door_s_musfade_Alarm_2.gml",
+    "gml_Object_obj_door_t_Alarm_2.gml",
+    "gml_Object_obj_door_u_Alarm_2.gml",
+    "gml_Object_obj_door_v_Alarm_2.gml",
+    "gml_Object_obj_door_w_Alarm_2.gml",
+    "gml_Object_obj_paphouse_entrance_Alarm_2.gml",
+    "gml_Object_obj_underground_exit_Step_0.gml"
+   ],
+   "label_only": [
+    "obj_doorA_Alarm_2"
+   ]
+  }
+ }
+}

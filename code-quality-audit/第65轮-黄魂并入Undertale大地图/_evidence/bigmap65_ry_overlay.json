@@ -1,0 +1,494 @@
+{
+ "round": 65,
+ "generated_by": "_tools/merge_bigmap65.py",
+ "purpose": "《红与黄》= Undertale + mod，其 20 间增量房如何挂到原版 338 间上。**待裁定**：是否把 mod 房并入正典图（第65轮只出数据，不接线）。",
+ "base_room_count": 338,
+ "extra_rooms": [
+  {
+   "index": 338,
+   "name": "room_of_bog",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 339,
+   "name": "room_fire_elevator_s",
+   "w": 780,
+   "h": 240
+  },
+  {
+   "index": 340,
+   "name": "room_steamworks_36",
+   "w": 760,
+   "h": 240
+  },
+  {
+   "index": 341,
+   "name": "room_steamworks_35",
+   "w": 1400,
+   "h": 240
+  },
+  {
+   "index": 342,
+   "name": "room_steamworks_34",
+   "w": 1560,
+   "h": 240
+  },
+  {
+   "index": 343,
+   "name": "room_steamworks_33",
+   "w": 580,
+   "h": 400
+  },
+  {
+   "index": 344,
+   "name": "room_steamworks_32",
+   "w": 1000,
+   "h": 420
+  },
+  {
+   "index": 345,
+   "name": "room_steamworks_factory_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 346,
+   "name": "room_newhome_01",
+   "w": 507,
+   "h": 240
+  },
+  {
+   "index": 347,
+   "name": "room_newhome_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 348,
+   "name": "room_newhome_02",
+   "w": 1340,
+   "h": 1760
+  },
+  {
+   "index": 349,
+   "name": "room_newhome_03",
+   "w": 320,
+   "h": 720
+  },
+  {
+   "index": 350,
+   "name": "room_newhome_04",
+   "w": 460,
+   "h": 340
+  },
+  {
+   "index": 351,
+   "name": "room_modcredits",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 352,
+   "name": "room_smile",
+   "w": 1400,
+   "h": 240
+  },
+  {
+   "index": 353,
+   "name": "room_god",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 354,
+   "name": "room_water_yellow",
+   "w": 480,
+   "h": 600
+  },
+  {
+   "index": 355,
+   "name": "coming_soon",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 356,
+   "name": "room_fire_alley",
+   "w": 420,
+   "h": 240
+  },
+  {
+   "index": 357,
+   "name": "room_fire_rooftop",
+   "w": 680,
+   "h": 620
+  }
+ ],
+ "attach_points": [
+  {
+   "base_index": 123,
+   "base_name": "room_water_prebird",
+   "via": "obj_door_s_musfade",
+   "to_index": 354,
+   "to_name": "room_water_yellow",
+   "evidence_kind": "cond",
+   "evidence_file": "gml_Object_obj_door_s_musfade_Alarm_2.gml"
+  },
+  {
+   "base_index": 182,
+   "base_name": "room_fire_hotelfront_2",
+   "via": "obj_doorXmusicfade",
+   "to_index": 356,
+   "to_name": "room_fire_alley",
+   "evidence_kind": "cond",
+   "evidence_file": "gml_Object_obj_doorXmusicfade_Alarm_2.gml"
+  },
+  {
+   "base_index": 183,
+   "base_name": "room_fire_hotellobby",
+   "via": "obj_door_s_musfade",
+   "to_index": 347,
+   "to_name": "room_newhome_elevator",
+   "evidence_kind": "uncond",
+   "evidence_file": "gml_Object_obj_door_s_musfade_Alarm_2.gml"
+  },
+  {
+   "base_index": 213,
+   "base_name": "room_fire_elevator",
+   "via": "obj_door_s_musfade",
+   "to_index": 339,
+   "to_name": "room_fire_elevator_s",
+   "evidence_kind": "cond",
+   "evidence_file": "gml_Object_obj_door_s_musfade_Alarm_2.gml"
+  },
+  {
+   "base_index": 230,
+   "base_name": "room_lastruins_corridor",
+   "via": "obj_door_s_musfade",
+   "to_index": 347,
+   "to_name": "room_newhome_elevator",
+   "evidence_kind": "cond",
+   "evidence_file": "gml_Object_obj_door_s_musfade_Alarm_2.gml"
+  }
+ ],
+ "extra_edges": [
+  {
+   "from": 123,
+   "to": 354,
+   "from_name": "room_water_prebird",
+   "to_name": "room_water_yellow",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 182,
+   "to": 356,
+   "from_name": "room_fire_hotelfront_2",
+   "to_name": "room_fire_alley",
+   "via": "obj_doorXmusicfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 183,
+   "to": 347,
+   "from_name": "room_fire_hotellobby",
+   "to_name": "room_newhome_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "uncond"
+  },
+  {
+   "from": 213,
+   "to": 339,
+   "from_name": "room_fire_elevator",
+   "to_name": "room_fire_elevator_s",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 230,
+   "to": 347,
+   "from_name": "room_lastruins_corridor",
+   "to_name": "room_newhome_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 339,
+   "to": 213,
+   "from_name": "room_fire_elevator_s",
+   "to_name": "room_fire_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 339,
+   "to": 340,
+   "from_name": "room_fire_elevator_s",
+   "to_name": "room_steamworks_36",
+   "via": "obj_door_t",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 340,
+   "to": 339,
+   "from_name": "room_steamworks_36",
+   "to_name": "room_fire_elevator_s",
+   "via": "obj_door_t",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 340,
+   "to": 341,
+   "from_name": "room_steamworks_36",
+   "to_name": "room_steamworks_35",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 341,
+   "to": 342,
+   "from_name": "room_steamworks_35",
+   "to_name": "room_steamworks_34",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 341,
+   "to": 340,
+   "from_name": "room_steamworks_35",
+   "to_name": "room_steamworks_36",
+   "via": "obj_doorB",
+   "evidence_kind": "offset=-1"
+  },
+  {
+   "from": 342,
+   "to": 341,
+   "from_name": "room_steamworks_34",
+   "to_name": "room_steamworks_35",
+   "via": "obj_doorB",
+   "evidence_kind": "offset=-1"
+  },
+  {
+   "from": 342,
+   "to": 343,
+   "from_name": "room_steamworks_34",
+   "to_name": "room_steamworks_33",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 343,
+   "to": 342,
+   "from_name": "room_steamworks_33",
+   "to_name": "room_steamworks_34",
+   "via": "obj_doorB",
+   "evidence_kind": "offset=-1"
+  },
+  {
+   "from": 343,
+   "to": 344,
+   "from_name": "room_steamworks_33",
+   "to_name": "room_steamworks_32",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 344,
+   "to": 343,
+   "from_name": "room_steamworks_32",
+   "to_name": "room_steamworks_33",
+   "via": "obj_doorB",
+   "evidence_kind": "offset=-1"
+  },
+  {
+   "from": 344,
+   "to": 345,
+   "from_name": "room_steamworks_32",
+   "to_name": "room_steamworks_factory_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 345,
+   "to": 344,
+   "from_name": "room_steamworks_factory_elevator",
+   "to_name": "room_steamworks_32",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 346,
+   "to": 347,
+   "from_name": "room_newhome_01",
+   "to_name": "room_newhome_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 346,
+   "to": 348,
+   "from_name": "room_newhome_01",
+   "to_name": "room_newhome_02",
+   "via": "obj_doorC",
+   "evidence_kind": "offset=+2"
+  },
+  {
+   "from": 347,
+   "to": 183,
+   "from_name": "room_newhome_elevator",
+   "to_name": "room_fire_hotellobby",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 347,
+   "to": 346,
+   "from_name": "room_newhome_elevator",
+   "to_name": "room_newhome_01",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 347,
+   "to": 230,
+   "from_name": "room_newhome_elevator",
+   "to_name": "room_lastruins_corridor",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 347,
+   "to": 350,
+   "from_name": "room_newhome_elevator",
+   "to_name": "room_newhome_04",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 347,
+   "to": 217,
+   "from_name": "room_newhome_elevator",
+   "to_name": "room_castle_precastle",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 348,
+   "to": 346,
+   "from_name": "room_newhome_02",
+   "to_name": "room_newhome_01",
+   "via": "obj_doorD",
+   "evidence_kind": "offset=-2"
+  },
+  {
+   "from": 348,
+   "to": 349,
+   "from_name": "room_newhome_02",
+   "to_name": "room_newhome_03",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 348,
+   "to": 350,
+   "from_name": "room_newhome_02",
+   "to_name": "room_newhome_04",
+   "via": "obj_doorC",
+   "evidence_kind": "offset=+2"
+  },
+  {
+   "from": 348,
+   "to": 349,
+   "from_name": "room_newhome_02",
+   "to_name": "room_newhome_03",
+   "via": "obj_doorAmusicfade",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 349,
+   "to": 348,
+   "from_name": "room_newhome_03",
+   "to_name": "room_newhome_02",
+   "via": "obj_doorB",
+   "evidence_kind": "offset=-1"
+  },
+  {
+   "from": 350,
+   "to": 348,
+   "from_name": "room_newhome_04",
+   "to_name": "room_newhome_02",
+   "via": "obj_doorD",
+   "evidence_kind": "offset=-2"
+  },
+  {
+   "from": 350,
+   "to": 347,
+   "from_name": "room_newhome_04",
+   "to_name": "room_newhome_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 354,
+   "to": 123,
+   "from_name": "room_water_yellow",
+   "to_name": "room_water_prebird",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "uncond"
+  },
+  {
+   "from": 354,
+   "to": 314,
+   "from_name": "room_water_yellow",
+   "to_name": "room_shop4",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "uncond"
+  },
+  {
+   "from": 354,
+   "to": 347,
+   "from_name": "room_water_yellow",
+   "to_name": "room_newhome_elevator",
+   "via": "obj_door_s_musfade",
+   "evidence_kind": "uncond"
+  },
+  {
+   "from": 355,
+   "to": 356,
+   "from_name": "coming_soon",
+   "to_name": "room_fire_alley",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 356,
+   "to": 182,
+   "from_name": "room_fire_alley",
+   "to_name": "room_fire_hotelfront_2",
+   "via": "obj_doorXmusicfade",
+   "evidence_kind": "cond"
+  },
+  {
+   "from": 356,
+   "to": 357,
+   "from_name": "room_fire_alley",
+   "to_name": "room_fire_rooftop",
+   "via": "obj_doorA",
+   "evidence_kind": "offset=+1"
+  },
+  {
+   "from": 357,
+   "to": 356,
+   "from_name": "room_fire_rooftop",
+   "to_name": "room_fire_alley",
+   "via": "obj_doorB",
+   "evidence_kind": "offset=-1"
+  }
+ ],
+ "stats": {
+  "extra_rooms": 20,
+  "attach_points": 5,
+  "extra_edges": 39
+ }
+}

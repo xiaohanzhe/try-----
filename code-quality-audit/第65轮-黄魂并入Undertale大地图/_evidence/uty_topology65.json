@@ -1,0 +1,8518 @@
+{
+ "work": "黄魂UndertaleYellow",
+ "source": {
+  "rooms": "E:/Download/_extract61/_data/undertale_yellow/uty65/r65_rooms.json",
+  "instances": "E:/Download/_extract61/_data/undertale_yellow/uty65/r65_doorinst.json",
+  "gml": "E:/Download/_extract61/_data/undertale_yellow/uty65/gml65"
+ },
+ "room_count": 287,
+ "rooms": [
+  {
+   "index": 0,
+   "name": "rm_intro",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 1,
+   "name": "rm_logos",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 2,
+   "name": "rm_mmfirst",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 3,
+   "name": "rm_mainmenu",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 4,
+   "name": "rm_mainmenu_debug",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 5,
+   "name": "rm_live_buffer",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 6,
+   "name": "rm_ruins00",
+   "w": 684,
+   "h": 264
+  },
+  {
+   "index": 7,
+   "name": "rm_ruins01",
+   "w": 320,
+   "h": 400
+  },
+  {
+   "index": 8,
+   "name": "rm_ruins02",
+   "w": 320,
+   "h": 480
+  },
+  {
+   "index": 9,
+   "name": "rm_ruins03",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 10,
+   "name": "rm_ruins04",
+   "w": 740,
+   "h": 240
+  },
+  {
+   "index": 11,
+   "name": "ruins_outro",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 12,
+   "name": "rm_darkruinsintro",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 13,
+   "name": "rm_darkruins_01",
+   "w": 500,
+   "h": 360
+  },
+  {
+   "index": 14,
+   "name": "rm_darkruins_02",
+   "w": 1024,
+   "h": 840
+  },
+  {
+   "index": 15,
+   "name": "rm_darkruins_03",
+   "w": 320,
+   "h": 460
+  },
+  {
+   "index": 16,
+   "name": "rm_darkruins_04",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 17,
+   "name": "rm_darkruins_05",
+   "w": 320,
+   "h": 800
+  },
+  {
+   "index": 18,
+   "name": "rm_darkruins_06",
+   "w": 320,
+   "h": 320
+  },
+  {
+   "index": 19,
+   "name": "rm_darkruins_07",
+   "w": 1100,
+   "h": 300
+  },
+  {
+   "index": 20,
+   "name": "rm_darkruins_08",
+   "w": 520,
+   "h": 420
+  },
+  {
+   "index": 21,
+   "name": "rm_darkruins_08b",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 22,
+   "name": "rm_darkruins_09",
+   "w": 680,
+   "h": 520
+  },
+  {
+   "index": 23,
+   "name": "rm_darkruins_09b",
+   "w": 320,
+   "h": 400
+  },
+  {
+   "index": 24,
+   "name": "rm_darkruins_10",
+   "w": 760,
+   "h": 640
+  },
+  {
+   "index": 25,
+   "name": "rm_darkruins_11",
+   "w": 320,
+   "h": 1200
+  },
+  {
+   "index": 26,
+   "name": "rm_darkruins_12",
+   "w": 1080,
+   "h": 500
+  },
+  {
+   "index": 27,
+   "name": "rm_darkruins_13",
+   "w": 520,
+   "h": 300
+  },
+  {
+   "index": 28,
+   "name": "rm_darkruins_14",
+   "w": 540,
+   "h": 900
+  },
+  {
+   "index": 29,
+   "name": "rm_darkruins_14b",
+   "w": 940,
+   "h": 300
+  },
+  {
+   "index": 30,
+   "name": "rm_darkruins_15",
+   "w": 540,
+   "h": 240
+  },
+  {
+   "index": 31,
+   "name": "rm_darkruins_16",
+   "w": 700,
+   "h": 580
+  },
+  {
+   "index": 32,
+   "name": "rm_darkruins_16b",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 33,
+   "name": "rm_darkruins_17",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 34,
+   "name": "rm_darkruins_18",
+   "w": 320,
+   "h": 595
+  },
+  {
+   "index": 35,
+   "name": "rm_darkruins_19",
+   "w": 320,
+   "h": 600
+  },
+  {
+   "index": 36,
+   "name": "rm_dalvhallway",
+   "w": 320,
+   "h": 560
+  },
+  {
+   "index": 37,
+   "name": "rm_dalvshouse",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 38,
+   "name": "rm_dalvsroom",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 39,
+   "name": "rm_dalvroomhall",
+   "w": 328,
+   "h": 240
+  },
+  {
+   "index": 40,
+   "name": "rm_dalvExit",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 41,
+   "name": "rm_dalvExit_pacifist",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 42,
+   "name": "rm_dalvExit_genocide",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 43,
+   "name": "rm_snowdin_01_yellow",
+   "w": 760,
+   "h": 340
+  },
+  {
+   "index": 44,
+   "name": "rm_snowdin_02_yellow",
+   "w": 500,
+   "h": 900
+  },
+  {
+   "index": 45,
+   "name": "rm_snowdin_03_yellow",
+   "w": 520,
+   "h": 520
+  },
+  {
+   "index": 46,
+   "name": "rm_snowdin_03b_yellow",
+   "w": 480,
+   "h": 500
+  },
+  {
+   "index": 47,
+   "name": "rm_snowdin_04_yellow",
+   "w": 840,
+   "h": 560
+  },
+  {
+   "index": 48,
+   "name": "rm_snowdin_05_yellow",
+   "w": 700,
+   "h": 260
+  },
+  {
+   "index": 49,
+   "name": "rm_snowdin_06_yellow",
+   "w": 420,
+   "h": 660
+  },
+  {
+   "index": 50,
+   "name": "rm_snowdin_07_yellow",
+   "w": 400,
+   "h": 420
+  },
+  {
+   "index": 51,
+   "name": "rm_snowdin_08_yellow",
+   "w": 800,
+   "h": 400
+  },
+  {
+   "index": 52,
+   "name": "rm_snowdin_08b_yellow",
+   "w": 420,
+   "h": 280
+  },
+  {
+   "index": 53,
+   "name": "rm_snowdin_09_yellow",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 54,
+   "name": "rm_snowdin_10_yellow",
+   "w": 620,
+   "h": 620
+  },
+  {
+   "index": 55,
+   "name": "rm_snowdin_10b_yellow",
+   "w": 580,
+   "h": 420
+  },
+  {
+   "index": 56,
+   "name": "rm_snowdin_11_yellow",
+   "w": 380,
+   "h": 640
+  },
+  {
+   "index": 57,
+   "name": "rm_snowdin_12_yellow",
+   "w": 440,
+   "h": 340
+  },
+  {
+   "index": 58,
+   "name": "rm_snowdin_13_yellow",
+   "w": 320,
+   "h": 680
+  },
+  {
+   "index": 59,
+   "name": "rm_snowdin_14_yellow",
+   "w": 800,
+   "h": 580
+  },
+  {
+   "index": 60,
+   "name": "rm_snowdin_14b_yellow",
+   "w": 428,
+   "h": 500
+  },
+  {
+   "index": 61,
+   "name": "rm_snowdin_14c_yellow",
+   "w": 320,
+   "h": 380
+  },
+  {
+   "index": 62,
+   "name": "rm_snowdin_14d_yellow",
+   "w": 320,
+   "h": 540
+  },
+  {
+   "index": 63,
+   "name": "rm_snowdin_14e_yellow",
+   "w": 400,
+   "h": 400
+  },
+  {
+   "index": 64,
+   "name": "rm_snowdin_15_yellow",
+   "w": 400,
+   "h": 260
+  },
+  {
+   "index": 65,
+   "name": "rm_snowdin_16_yellow",
+   "w": 740,
+   "h": 280
+  },
+  {
+   "index": 66,
+   "name": "rm_snowdin_16b_yellow",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 67,
+   "name": "rm_snowdin_17_yellow",
+   "w": 1040,
+   "h": 320
+  },
+  {
+   "index": 68,
+   "name": "rm_snowdin_18_yellow",
+   "w": 400,
+   "h": 360
+  },
+  {
+   "index": 69,
+   "name": "rm_snowdin_19_yellow",
+   "w": 420,
+   "h": 500
+  },
+  {
+   "index": 70,
+   "name": "rm_snowdin_20_yellow",
+   "w": 320,
+   "h": 400
+  },
+  {
+   "index": 71,
+   "name": "rm_snowdin_21_yellow",
+   "w": 440,
+   "h": 700
+  },
+  {
+   "index": 72,
+   "name": "rm_snowdin_22_yellow",
+   "w": 540,
+   "h": 460
+  },
+  {
+   "index": 73,
+   "name": "rm_waterfall_og",
+   "w": 1656,
+   "h": 240
+  },
+  {
+   "index": 74,
+   "name": "rm_hotland",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 75,
+   "name": "rm_lava_tubes",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 76,
+   "name": "rm_wildeast_cave",
+   "w": 2060,
+   "h": 240
+  },
+  {
+   "index": 77,
+   "name": "rm_dunes_01",
+   "w": 280,
+   "h": 300
+  },
+  {
+   "index": 78,
+   "name": "rm_dunes_02",
+   "w": 760,
+   "h": 400
+  },
+  {
+   "index": 79,
+   "name": "rm_dunes_03",
+   "w": 1260,
+   "h": 360
+  },
+  {
+   "index": 80,
+   "name": "rm_dunes_04",
+   "w": 500,
+   "h": 440
+  },
+  {
+   "index": 81,
+   "name": "rm_dunes_05",
+   "w": 1200,
+   "h": 440
+  },
+  {
+   "index": 82,
+   "name": "rm_dunes_06",
+   "w": 1720,
+   "h": 460
+  },
+  {
+   "index": 83,
+   "name": "rm_dunes_06b",
+   "w": 440,
+   "h": 680
+  },
+  {
+   "index": 84,
+   "name": "rm_dunes_07",
+   "w": 1740,
+   "h": 460
+  },
+  {
+   "index": 85,
+   "name": "rm_dunes_08",
+   "w": 520,
+   "h": 720
+  },
+  {
+   "index": 86,
+   "name": "rm_dunes_08b",
+   "w": 400,
+   "h": 580
+  },
+  {
+   "index": 87,
+   "name": "rm_dunes_09",
+   "w": 560,
+   "h": 240
+  },
+  {
+   "index": 88,
+   "name": "rm_dunes_10",
+   "w": 1200,
+   "h": 560
+  },
+  {
+   "index": 89,
+   "name": "rm_dunes_11",
+   "w": 860,
+   "h": 400
+  },
+  {
+   "index": 90,
+   "name": "rm_dunes_12",
+   "w": 520,
+   "h": 300
+  },
+  {
+   "index": 91,
+   "name": "rm_dunes_12b",
+   "w": 460,
+   "h": 400
+  },
+  {
+   "index": 92,
+   "name": "rm_dunes_13",
+   "w": 600,
+   "h": 400
+  },
+  {
+   "index": 93,
+   "name": "rm_dunes_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 94,
+   "name": "rm_dunes_14",
+   "w": 560,
+   "h": 300
+  },
+  {
+   "index": 95,
+   "name": "rm_dunes_15",
+   "w": 540,
+   "h": 240
+  },
+  {
+   "index": 96,
+   "name": "rm_dunes_16",
+   "w": 660,
+   "h": 520
+  },
+  {
+   "index": 97,
+   "name": "rm_dunes_17",
+   "w": 360,
+   "h": 500
+  },
+  {
+   "index": 98,
+   "name": "rm_dunes_18",
+   "w": 1100,
+   "h": 400
+  },
+  {
+   "index": 99,
+   "name": "rm_dunes_19",
+   "w": 420,
+   "h": 500
+  },
+  {
+   "index": 100,
+   "name": "rm_dunes_19B",
+   "w": 360,
+   "h": 240
+  },
+  {
+   "index": 101,
+   "name": "rm_dunes_20",
+   "w": 580,
+   "h": 300
+  },
+  {
+   "index": 102,
+   "name": "rm_dunes_21",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 103,
+   "name": "rm_dunes_22",
+   "w": 1560,
+   "h": 580
+  },
+  {
+   "index": 104,
+   "name": "rm_dunes_23",
+   "w": 460,
+   "h": 520
+  },
+  {
+   "index": 105,
+   "name": "rm_dunes_24",
+   "w": 580,
+   "h": 440
+  },
+  {
+   "index": 106,
+   "name": "rm_dunes_25",
+   "w": 400,
+   "h": 540
+  },
+  {
+   "index": 107,
+   "name": "rm_dunes_25b",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 108,
+   "name": "rm_dunes_26",
+   "w": 2400,
+   "h": 280
+  },
+  {
+   "index": 109,
+   "name": "rm_dunes_27",
+   "w": 640,
+   "h": 460
+  },
+  {
+   "index": 110,
+   "name": "rm_dunes_28",
+   "w": 600,
+   "h": 600
+  },
+  {
+   "index": 111,
+   "name": "rm_dunes_28b",
+   "w": 440,
+   "h": 400
+  },
+  {
+   "index": 112,
+   "name": "rm_dunes_28c",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 113,
+   "name": "rm_dunes_29",
+   "w": 700,
+   "h": 400
+  },
+  {
+   "index": 114,
+   "name": "rm_dunes_29b",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "index": 115,
+   "name": "rm_dunes_30_old",
+   "w": 1080,
+   "h": 940
+  },
+  {
+   "index": 116,
+   "name": "rm_dunes_30b",
+   "w": 400,
+   "h": 600
+  },
+  {
+   "index": 117,
+   "name": "rm_dunes_30_house_1",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 118,
+   "name": "rm_dunes_30_house_2",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 119,
+   "name": "rm_dunes_30_house_3",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 120,
+   "name": "rm_dunes_31",
+   "w": 422,
+   "h": 240
+  },
+  {
+   "index": 121,
+   "name": "rm_dunes_32",
+   "w": 660,
+   "h": 400
+  },
+  {
+   "index": 122,
+   "name": "rm_dunes_33",
+   "w": 580,
+   "h": 500
+  },
+  {
+   "index": 123,
+   "name": "rm_dunes_34",
+   "w": 500,
+   "h": 480
+  },
+  {
+   "index": 124,
+   "name": "rm_dunes_35",
+   "w": 680,
+   "h": 500
+  },
+  {
+   "index": 125,
+   "name": "rm_dunes_35b",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 126,
+   "name": "rm_dunes_36",
+   "w": 900,
+   "h": 1000
+  },
+  {
+   "index": 127,
+   "name": "rm_dunes_37",
+   "w": 1100,
+   "h": 1000
+  },
+  {
+   "index": 128,
+   "name": "rm_dunes_37_saloon",
+   "w": 400,
+   "h": 440
+  },
+  {
+   "index": 129,
+   "name": "rm_dunes_37_feistyhouse",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 130,
+   "name": "rm_dunes_37_barn",
+   "w": 320,
+   "h": 332
+  },
+  {
+   "index": 131,
+   "name": "rm_dunes_37_jail",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 132,
+   "name": "rm_dunes_37_hospital",
+   "w": 331,
+   "h": 240
+  },
+  {
+   "index": 133,
+   "name": "rm_dunes_38",
+   "w": 1080,
+   "h": 640
+  },
+  {
+   "index": 134,
+   "name": "rm_dunes_39",
+   "w": 780,
+   "h": 480
+  },
+  {
+   "index": 135,
+   "name": "rm_dunes_40",
+   "w": 320,
+   "h": 480
+  },
+  {
+   "index": 136,
+   "name": "rm_dunes_41",
+   "w": 320,
+   "h": 800
+  },
+  {
+   "index": 137,
+   "name": "rm_dunes_42",
+   "w": 700,
+   "h": 680
+  },
+  {
+   "index": 138,
+   "name": "rm_dunes_42_b",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 139,
+   "name": "rm_dunes_42_c",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 140,
+   "name": "rm_dunes_43",
+   "w": 440,
+   "h": 740
+  },
+  {
+   "index": 141,
+   "name": "rm_steamworks_01",
+   "w": 320,
+   "h": 560
+  },
+  {
+   "index": 142,
+   "name": "rm_steamworks_02",
+   "w": 680,
+   "h": 300
+  },
+  {
+   "index": 143,
+   "name": "rm_steamworks_03",
+   "w": 420,
+   "h": 580
+  },
+  {
+   "index": 144,
+   "name": "Steams",
+   "w": 440,
+   "h": 520
+  },
+  {
+   "index": 145,
+   "name": "rm_steamworks_04_transition_b",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 146,
+   "name": "footsteps",
+   "w": 380,
+   "h": 360
+  },
+  {
+   "index": 147,
+   "name": "rm_steamworks_04_transition_c",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 148,
+   "name": "rm_steamworks_04c",
+   "w": 340,
+   "h": 360
+  },
+  {
+   "index": 149,
+   "name": "rm_steamworks_05",
+   "w": 400,
+   "h": 600
+  },
+  {
+   "index": 150,
+   "name": "rm_steamworks_05b",
+   "w": 340,
+   "h": 300
+  },
+  {
+   "index": 151,
+   "name": "rm_steamworks_05c",
+   "w": 560,
+   "h": 300
+  },
+  {
+   "index": 152,
+   "name": "rm_steamworks_05d",
+   "w": 740,
+   "h": 300
+  },
+  {
+   "index": 153,
+   "name": "rm_steamworks_06",
+   "w": 500,
+   "h": 600
+  },
+  {
+   "index": 154,
+   "name": "rm_steamworks_07",
+   "w": 900,
+   "h": 440
+  },
+  {
+   "index": 155,
+   "name": "rm_steamworks_08",
+   "w": 400,
+   "h": 600
+  },
+  {
+   "index": 156,
+   "name": "rm_steamworks_09",
+   "w": 1000,
+   "h": 360
+  },
+  {
+   "index": 157,
+   "name": "rm_steamworks_10",
+   "w": 700,
+   "h": 360
+  },
+  {
+   "index": 158,
+   "name": "rm_steamworks_11",
+   "w": 520,
+   "h": 220
+  },
+  {
+   "index": 159,
+   "name": "randomflower",
+   "w": 740,
+   "h": 300
+  },
+  {
+   "index": 160,
+   "name": "rm_steamworks_13",
+   "w": 512,
+   "h": 600
+  },
+  {
+   "index": 161,
+   "name": "rm_steamworks_13b",
+   "w": 320,
+   "h": 340
+  },
+  {
+   "index": 162,
+   "name": "steamworks",
+   "w": 480,
+   "h": 240
+  },
+  {
+   "index": 163,
+   "name": "rm_steamworks_15",
+   "w": 500,
+   "h": 340
+  },
+  {
+   "index": 164,
+   "name": "rm_steamworks_16",
+   "w": 600,
+   "h": 400
+  },
+  {
+   "index": 165,
+   "name": "rm_steamworks_17",
+   "w": 1540,
+   "h": 980
+  },
+  {
+   "index": 166,
+   "name": "chait",
+   "w": 700,
+   "h": 480
+  },
+  {
+   "index": 167,
+   "name": "npc",
+   "w": 1180,
+   "h": 460
+  },
+  {
+   "index": 168,
+   "name": "rm_steamworks_18b",
+   "w": 420,
+   "h": 600
+  },
+  {
+   "index": 169,
+   "name": "rm_steamworks_19",
+   "w": 860,
+   "h": 240
+  },
+  {
+   "index": 170,
+   "name": "rm_steamworks_20",
+   "w": 820,
+   "h": 240
+  },
+  {
+   "index": 171,
+   "name": "rm_steamworks_21",
+   "w": 2200,
+   "h": 1080
+  },
+  {
+   "index": 172,
+   "name": "interactable",
+   "w": 320,
+   "h": 380
+  },
+  {
+   "index": 173,
+   "name": "rm_steamworks_22",
+   "w": 2400,
+   "h": 240
+  },
+  {
+   "index": 174,
+   "name": "rm_steamworks_23",
+   "w": 1240,
+   "h": 360
+  },
+  {
+   "index": 175,
+   "name": "rm_steamworks_24",
+   "w": 820,
+   "h": 240
+  },
+  {
+   "index": 176,
+   "name": "rm_steamworks_25",
+   "w": 320,
+   "h": 600
+  },
+  {
+   "index": 177,
+   "name": "rm_steamworks_26",
+   "w": 520,
+   "h": 520
+  },
+  {
+   "index": 178,
+   "name": "rm_score_room",
+   "w": 428,
+   "h": 500
+  },
+  {
+   "index": 179,
+   "name": "rm_mew_mew",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 180,
+   "name": "rm_battle",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 181,
+   "name": "rm_config",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 182,
+   "name": "rm_death_screen",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 183,
+   "name": "rm_debug",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 184,
+   "name": "rm_credits",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 185,
+   "name": "rm_shop",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 186,
+   "name": "rm_build_ending",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 187,
+   "name": "rm_steamworks_27",
+   "w": 480,
+   "h": 380
+  },
+  {
+   "index": 188,
+   "name": "rm_steamworks_31",
+   "w": 660,
+   "h": 400
+  },
+  {
+   "index": 189,
+   "name": "colliders",
+   "w": 880,
+   "h": 320
+  },
+  {
+   "index": 190,
+   "name": "rm_steamworks_30",
+   "w": 820,
+   "h": 400
+  },
+  {
+   "index": 191,
+   "name": "rm_steamworks_29",
+   "w": 360,
+   "h": 1460
+  },
+  {
+   "index": 192,
+   "name": "rm_steamworks_factory_01",
+   "w": 760,
+   "h": 520
+  },
+  {
+   "index": 193,
+   "name": "rm_steamworks_chem_01",
+   "w": 360,
+   "h": 480
+  },
+  {
+   "index": 194,
+   "name": "Instances",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 195,
+   "name": "rm_steamworks_chem_02",
+   "w": 320,
+   "h": 700
+  },
+  {
+   "index": 196,
+   "name": "rm_steamworks_chem_03",
+   "w": 840,
+   "h": 320
+  },
+  {
+   "index": 197,
+   "name": "rm_steamworks_chem_hermit",
+   "w": 320,
+   "h": 320
+  },
+  {
+   "index": 198,
+   "name": "rm_steamworks_chem_04",
+   "w": 440,
+   "h": 240
+  },
+  {
+   "index": 199,
+   "name": "rm_steamworks_chem_06",
+   "w": 640,
+   "h": 340
+  },
+  {
+   "index": 200,
+   "name": "rm_steamworks_chem_07",
+   "w": 560,
+   "h": 500
+  },
+  {
+   "index": 201,
+   "name": "rm_steamworks_chem_05",
+   "w": 620,
+   "h": 440
+  },
+  {
+   "index": 202,
+   "name": "rm_steamworks_32",
+   "w": 1000,
+   "h": 420
+  },
+  {
+   "index": 203,
+   "name": "rm_steamworks_34",
+   "w": 1560,
+   "h": 240
+  },
+  {
+   "index": 204,
+   "name": "rm_steamworks_35",
+   "w": 1400,
+   "h": 240
+  },
+  {
+   "index": 205,
+   "name": "rm_steamworks_33",
+   "w": 580,
+   "h": 400
+  },
+  {
+   "index": 206,
+   "name": "rm_steamworks_36",
+   "w": 760,
+   "h": 240
+  },
+  {
+   "index": 207,
+   "name": "Decorations",
+   "w": 780,
+   "h": 240
+  },
+  {
+   "index": 208,
+   "name": "#FF3D3636",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 209,
+   "name": "rm_steamworks_factory_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 210,
+   "name": "rm_hotland_01",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 211,
+   "name": "Interactables",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 212,
+   "name": "rm_hotland_03",
+   "w": 480,
+   "h": 400
+  },
+  {
+   "index": 213,
+   "name": "rm_hotland_03b",
+   "w": 420,
+   "h": 240
+  },
+  {
+   "index": 214,
+   "name": "Doorways",
+   "w": 1340,
+   "h": 240
+  },
+  {
+   "index": 215,
+   "name": "building",
+   "w": 320,
+   "h": 320
+  },
+  {
+   "index": 216,
+   "name": "SpooderWall",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 217,
+   "name": "rm_hotland_complex_1",
+   "w": 520,
+   "h": 560
+  },
+  {
+   "index": 218,
+   "name": "Objects",
+   "w": 980,
+   "h": 320
+  },
+  {
+   "index": 219,
+   "name": "rm_hotland_complex_1c",
+   "w": 500,
+   "h": 240
+  },
+  {
+   "index": 220,
+   "name": "Clockman",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 221,
+   "name": "rm_hotland_roof",
+   "w": 680,
+   "h": 620
+  },
+  {
+   "index": 222,
+   "name": "rm_flashback_01",
+   "w": 1860,
+   "h": 840
+  },
+  {
+   "index": 223,
+   "name": "stalagmites",
+   "w": 2440,
+   "h": 240
+  },
+  {
+   "index": 224,
+   "name": "rm_flashback_03",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 225,
+   "name": "rm_battle_flowey",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 226,
+   "name": "rm_battle_flashback_01",
+   "w": 2800,
+   "h": 480
+  },
+  {
+   "index": 227,
+   "name": "rm_battle_flashback_02",
+   "w": 2840,
+   "h": 500
+  },
+  {
+   "index": 228,
+   "name": "Water",
+   "w": 600,
+   "h": 2800
+  },
+  {
+   "index": 229,
+   "name": "rm_battle_flashback_04",
+   "w": 2860,
+   "h": 560
+  },
+  {
+   "index": 230,
+   "name": "Bridge",
+   "w": 600,
+   "h": 2800
+  },
+  {
+   "index": 231,
+   "name": "rm_battle_flashback_06",
+   "w": 2800,
+   "h": 700
+  },
+  {
+   "index": 232,
+   "name": "rm_battle_flashback_final",
+   "w": 3400,
+   "h": 240
+  },
+  {
+   "index": 233,
+   "name": "WallsInst",
+   "w": 1300,
+   "h": 1600
+  },
+  {
+   "index": 234,
+   "name": "rm_battle_flashback_final_2",
+   "w": 6400,
+   "h": 240
+  },
+  {
+   "index": 235,
+   "name": "rm_battle_flowey_phase_2",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 236,
+   "name": "rm_summary",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 237,
+   "name": "MachineFront2F",
+   "w": 800,
+   "h": 840
+  },
+  {
+   "index": 238,
+   "name": "电 梯",
+   "w": 820,
+   "h": 860
+  },
+  {
+   "index": 239,
+   "name": "iwalsl",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 240,
+   "name": "rm_steamworks_factory_04",
+   "w": 500,
+   "h": 860
+  },
+  {
+   "index": 241,
+   "name": "rm_mansion_entrance",
+   "w": 320,
+   "h": 397
+  },
+  {
+   "index": 242,
+   "name": "Kotatsu",
+   "w": 320,
+   "h": 397
+  },
+  {
+   "index": 243,
+   "name": "rm_mansion_hallway_west",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 244,
+   "name": "rm_mansion_hallway_east",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 245,
+   "name": "rm_mansion_hallway_east_2",
+   "w": 580,
+   "h": 600
+  },
+  {
+   "index": 246,
+   "name": "0.4",
+   "w": 320,
+   "h": 420
+  },
+  {
+   "index": 247,
+   "name": "rm_mansion_hallway_west_2",
+   "w": 580,
+   "h": 600
+  },
+  {
+   "index": 248,
+   "name": "rm_mansion_office",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 249,
+   "name": "rm_mansion_kanakos_room",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 250,
+   "name": "rm_mansion_study",
+   "w": 280,
+   "h": 480
+  },
+  {
+   "index": 251,
+   "name": "path",
+   "w": 980,
+   "h": 900
+  },
+  {
+   "index": 252,
+   "name": "fg",
+   "w": 320,
+   "h": 440
+  },
+  {
+   "index": 253,
+   "name": "rm_newhome_01",
+   "w": 507,
+   "h": 240
+  },
+  {
+   "index": 254,
+   "name": "rm_newhome_02",
+   "w": 1340,
+   "h": 1760
+  },
+  {
+   "index": 255,
+   "name": "rm_newhome_03",
+   "w": 320,
+   "h": 720
+  },
+  {
+   "index": 256,
+   "name": "buildings",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 257,
+   "name": "rm_newhome_02b",
+   "w": 460,
+   "h": 340
+  },
+  {
+   "index": 258,
+   "name": "rm_dunes_30d",
+   "w": 320,
+   "h": 600
+  },
+  {
+   "index": 259,
+   "name": "rm_hotland_elevator",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 260,
+   "name": "forestfront",
+   "w": 380,
+   "h": 800
+  },
+  {
+   "index": 261,
+   "name": "rm_hotland_lab_entrance",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 262,
+   "name": "doorframe",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 263,
+   "name": "rm_castle_01",
+   "w": 2120,
+   "h": 240
+  },
+  {
+   "index": 264,
+   "name": "rm_castle_02",
+   "w": 1400,
+   "h": 240
+  },
+  {
+   "index": 265,
+   "name": "floorandwalls",
+   "w": 820,
+   "h": 540
+  },
+  {
+   "index": 266,
+   "name": "rm_castle_04",
+   "w": 320,
+   "h": 540
+  },
+  {
+   "index": 267,
+   "name": "rm_castle_05",
+   "w": 520,
+   "h": 240
+  },
+  {
+   "index": 268,
+   "name": "rm_castle_throne_room",
+   "w": 320,
+   "h": 600
+  },
+  {
+   "index": 269,
+   "name": "rm_castle_barrier",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 270,
+   "name": "rm_credits_geno",
+   "w": 640,
+   "h": 480
+  },
+  {
+   "index": 271,
+   "name": "rm_credits_paci",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 272,
+   "name": "rm_credits_paci_intermission",
+   "w": 480,
+   "h": 1340
+  },
+  {
+   "index": 273,
+   "name": "rm_castle_pre_barrier",
+   "w": 684,
+   "h": 264
+  },
+  {
+   "index": 274,
+   "name": "rm_menu_flowey",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 275,
+   "name": "rm_steamworks_macro_froggit_room",
+   "w": 320,
+   "h": 410
+  },
+  {
+   "index": 276,
+   "name": "rm_dunes_30",
+   "w": 1200,
+   "h": 940
+  },
+  {
+   "index": 277,
+   "name": "rm_steamworks_06_b",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "index": 278,
+   "name": "Vents",
+   "w": 820,
+   "h": 260
+  },
+  {
+   "index": 279,
+   "name": "Assets",
+   "w": 1240,
+   "h": 480
+  },
+  {
+   "index": 280,
+   "name": "rm_steamworks_25_b",
+   "w": 920,
+   "h": 400
+  },
+  {
+   "index": 281,
+   "name": "rm_steamworks_30_b",
+   "w": 620,
+   "h": 240
+  },
+  {
+   "index": 282,
+   "name": "#FFFFFFFF",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 283,
+   "name": "rm_dunes_42_d",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 284,
+   "name": "rm_snowdin_secret_to_everybody",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 285,
+   "name": "rm_dunes_secret",
+   "w": 320,
+   "h": 240
+  },
+  {
+   "index": 286,
+   "name": "fallbacktexture.png",
+   "w": 640,
+   "h": 480
+  }
+ ],
+ "struct_rules": {},
+ "edges": [
+  {
+   "from": 6,
+   "from_name": "rm_ruins00",
+   "to": 7,
+   "to_name": "rm_ruins01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    360
+   ]
+  },
+  {
+   "from": 7,
+   "from_name": "rm_ruins01",
+   "to": 8,
+   "to_name": "rm_ruins02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    440
+   ]
+  },
+  {
+   "from": 7,
+   "from_name": "rm_ruins01",
+   "to": 6,
+   "to_name": "rm_ruins00",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    620,
+    160
+   ]
+  },
+  {
+   "from": 8,
+   "from_name": "rm_ruins02",
+   "to": 9,
+   "to_name": "rm_ruins03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    200
+   ]
+  },
+  {
+   "from": 8,
+   "from_name": "rm_ruins02",
+   "to": 7,
+   "to_name": "rm_ruins01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    120
+   ]
+  },
+  {
+   "from": 9,
+   "from_name": "rm_ruins03",
+   "to": null,
+   "to_name": null,
+   "via": "obj_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 9,
+   "from_name": "rm_ruins03",
+   "to": 10,
+   "to_name": "rm_ruins04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    140,
+    200
+   ]
+  },
+  {
+   "from": 9,
+   "from_name": "rm_ruins03",
+   "to": 8,
+   "to_name": "rm_ruins02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    120
+   ]
+  },
+  {
+   "from": 10,
+   "from_name": "rm_ruins04",
+   "to": null,
+   "to_name": null,
+   "via": "obj_fakedoorway",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 13,
+   "from_name": "rm_darkruins_01",
+   "to": 14,
+   "to_name": "rm_darkruins_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    520,
+    800
+   ]
+  },
+  {
+   "from": 14,
+   "from_name": "rm_darkruins_02",
+   "to": 13,
+   "to_name": "rm_darkruins_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    83
+   ]
+  },
+  {
+   "from": 14,
+   "from_name": "rm_darkruins_02",
+   "to": 15,
+   "to_name": "rm_darkruins_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    420
+   ]
+  },
+  {
+   "from": 15,
+   "from_name": "rm_darkruins_03",
+   "to": 14,
+   "to_name": "rm_darkruins_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    520,
+    200
+   ]
+  },
+  {
+   "from": 15,
+   "from_name": "rm_darkruins_03",
+   "to": 17,
+   "to_name": "rm_darkruins_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    750
+   ]
+  },
+  {
+   "from": 16,
+   "from_name": "rm_darkruins_04",
+   "to": 17,
+   "to_name": "rm_darkruins_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    160
+   ]
+  },
+  {
+   "from": 16,
+   "from_name": "rm_darkruins_04",
+   "to": 18,
+   "to_name": "rm_darkruins_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    170
+   ]
+  },
+  {
+   "from": 17,
+   "from_name": "rm_darkruins_05",
+   "to": 16,
+   "to_name": "rm_darkruins_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    140,
+    200
+   ]
+  },
+  {
+   "from": 17,
+   "from_name": "rm_darkruins_05",
+   "to": 15,
+   "to_name": "rm_darkruins_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    30
+   ]
+  },
+  {
+   "from": 18,
+   "from_name": "rm_darkruins_06",
+   "to": 16,
+   "to_name": "rm_darkruins_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    150
+   ]
+  },
+  {
+   "from": 18,
+   "from_name": "rm_darkruins_06",
+   "to": 19,
+   "to_name": "rm_darkruins_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    160
+   ]
+  },
+  {
+   "from": 19,
+   "from_name": "rm_darkruins_07",
+   "to": 20,
+   "to_name": "rm_darkruins_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    320
+   ]
+  },
+  {
+   "from": 19,
+   "from_name": "rm_darkruins_07",
+   "to": 18,
+   "to_name": "rm_darkruins_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    180
+   ]
+  },
+  {
+   "from": 20,
+   "from_name": "rm_darkruins_08",
+   "to": 19,
+   "to_name": "rm_darkruins_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1060,
+    140
+   ]
+  },
+  {
+   "from": 20,
+   "from_name": "rm_darkruins_08",
+   "to": 21,
+   "to_name": "rm_darkruins_08b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    140
+   ]
+  },
+  {
+   "from": 20,
+   "from_name": "rm_darkruins_08",
+   "to": 22,
+   "to_name": "rm_darkruins_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    350,
+    480
+   ]
+  },
+  {
+   "from": 21,
+   "from_name": "rm_darkruins_08b",
+   "to": 20,
+   "to_name": "rm_darkruins_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    320
+   ]
+  },
+  {
+   "from": 22,
+   "from_name": "rm_darkruins_09",
+   "to": 24,
+   "to_name": "rm_darkruins_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    180
+   ]
+  },
+  {
+   "from": 22,
+   "from_name": "rm_darkruins_09",
+   "to": 20,
+   "to_name": "rm_darkruins_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    400,
+    110
+   ]
+  },
+  {
+   "from": 22,
+   "from_name": "rm_darkruins_09",
+   "to": 23,
+   "to_name": "rm_darkruins_09b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    110,
+    345
+   ]
+  },
+  {
+   "from": 23,
+   "from_name": "rm_darkruins_09b",
+   "to": 22,
+   "to_name": "rm_darkruins_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    50,
+    81
+   ]
+  },
+  {
+   "from": 24,
+   "from_name": "rm_darkruins_10",
+   "to": 22,
+   "to_name": "rm_darkruins_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    640,
+    80
+   ]
+  },
+  {
+   "from": 24,
+   "from_name": "rm_darkruins_10",
+   "to": 25,
+   "to_name": "rm_darkruins_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    103
+   ]
+  },
+  {
+   "from": 24,
+   "from_name": "rm_darkruins_10",
+   "to": 33,
+   "to_name": "rm_darkruins_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    35,
+    140
+   ]
+  },
+  {
+   "from": 25,
+   "from_name": "rm_darkruins_11",
+   "to": 24,
+   "to_name": "rm_darkruins_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    540,
+    595
+   ]
+  },
+  {
+   "from": 25,
+   "from_name": "rm_darkruins_11",
+   "to": 26,
+   "to_name": "rm_darkruins_12",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    165
+   ]
+  },
+  {
+   "from": 26,
+   "from_name": "rm_darkruins_12",
+   "to": 27,
+   "to_name": "rm_darkruins_13",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    160
+   ]
+  },
+  {
+   "from": 26,
+   "from_name": "rm_darkruins_12",
+   "to": 25,
+   "to_name": "rm_darkruins_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    1160
+   ]
+  },
+  {
+   "from": 27,
+   "from_name": "rm_darkruins_13",
+   "to": 26,
+   "to_name": "rm_darkruins_12",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1030,
+    400
+   ]
+  },
+  {
+   "from": 27,
+   "from_name": "rm_darkruins_13",
+   "to": null,
+   "to_name": null,
+   "via": "obj_hiddenentrance",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 28,
+   "from_name": "rm_darkruins_14",
+   "to": 27,
+   "to_name": "rm_darkruins_13",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    140
+   ]
+  },
+  {
+   "from": 28,
+   "from_name": "rm_darkruins_14",
+   "to": 30,
+   "to_name": "rm_darkruins_15",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    505,
+    140
+   ]
+  },
+  {
+   "from": 28,
+   "from_name": "rm_darkruins_14",
+   "to": 29,
+   "to_name": "rm_darkruins_14b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    180
+   ]
+  },
+  {
+   "from": 29,
+   "from_name": "rm_darkruins_14b",
+   "to": 28,
+   "to_name": "rm_darkruins_14",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    510,
+    90
+   ]
+  },
+  {
+   "from": 30,
+   "from_name": "rm_darkruins_15",
+   "to": 31,
+   "to_name": "rm_darkruins_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    650,
+    400
+   ]
+  },
+  {
+   "from": 30,
+   "from_name": "rm_darkruins_15",
+   "to": 28,
+   "to_name": "rm_darkruins_14",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    200
+   ]
+  },
+  {
+   "from": 31,
+   "from_name": "rm_darkruins_16",
+   "to": 30,
+   "to_name": "rm_darkruins_15",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    140
+   ]
+  },
+  {
+   "from": 31,
+   "from_name": "rm_darkruins_16",
+   "to": 33,
+   "to_name": "rm_darkruins_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    120
+   ]
+  },
+  {
+   "from": 31,
+   "from_name": "rm_darkruins_16",
+   "to": 32,
+   "to_name": "rm_darkruins_16b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    25
+   ]
+  },
+  {
+   "from": 31,
+   "from_name": "rm_darkruins_16",
+   "to": 34,
+   "to_name": "rm_darkruins_18",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    560
+   ]
+  },
+  {
+   "from": 32,
+   "from_name": "rm_darkruins_16b",
+   "to": 31,
+   "to_name": "rm_darkruins_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    300,
+    520
+   ]
+  },
+  {
+   "from": 33,
+   "from_name": "rm_darkruins_17",
+   "to": 24,
+   "to_name": "rm_darkruins_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    710,
+    200
+   ]
+  },
+  {
+   "from": 33,
+   "from_name": "rm_darkruins_17",
+   "to": 31,
+   "to_name": "rm_darkruins_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    380
+   ]
+  },
+  {
+   "from": 34,
+   "from_name": "rm_darkruins_18",
+   "to": 31,
+   "to_name": "rm_darkruins_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    300,
+    125
+   ]
+  },
+  {
+   "from": 34,
+   "from_name": "rm_darkruins_18",
+   "to": 37,
+   "to_name": "rm_dalvshouse",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    200
+   ]
+  },
+  {
+   "from": 35,
+   "from_name": "rm_darkruins_19",
+   "to": 41,
+   "to_name": "rm_dalvExit_pacifist",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    110
+   ]
+  },
+  {
+   "from": 35,
+   "from_name": "rm_darkruins_19",
+   "to": null,
+   "to_name": null,
+   "via": "obj_darkruins_doorExit",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 35,
+   "from_name": "rm_darkruins_19",
+   "to": null,
+   "to_name": null,
+   "via": "obj_darkruins_doorLight",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 35,
+   "from_name": "rm_darkruins_19",
+   "to": 43,
+   "to_name": "rm_snowdin_01_yellow",
+   "via": "obj_drexit",
+   "rule": "uncond",
+   "evidence_file": "gml_Object_obj_drexit_Alarm_1.gml",
+   "evidence_kind": "uncond",
+   "note": "unconditional/positional/flag branch"
+  },
+  {
+   "from": 36,
+   "from_name": "rm_dalvhallway",
+   "to": 37,
+   "to_name": "rm_dalvshouse",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    20
+   ]
+  },
+  {
+   "from": 36,
+   "from_name": "rm_dalvhallway",
+   "to": 42,
+   "to_name": "rm_dalvExit_genocide",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    170
+   ]
+  },
+  {
+   "from": 37,
+   "from_name": "rm_dalvshouse",
+   "to": 39,
+   "to_name": "rm_dalvroomhall",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    145
+   ]
+  },
+  {
+   "from": 37,
+   "from_name": "rm_dalvshouse",
+   "to": 34,
+   "to_name": "rm_darkruins_18",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    150
+   ]
+  },
+  {
+   "from": 37,
+   "from_name": "rm_dalvshouse",
+   "to": 36,
+   "to_name": "rm_dalvhallway",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    156,
+    530
+   ]
+  },
+  {
+   "from": 37,
+   "from_name": "rm_dalvshouse",
+   "to": null,
+   "to_name": null,
+   "via": "obj_doorway_blocker_dalvshouse",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 38,
+   "from_name": "rm_dalvsroom",
+   "to": 39,
+   "to_name": "rm_dalvroomhall",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    120
+   ]
+  },
+  {
+   "from": 39,
+   "from_name": "rm_dalvroomhall",
+   "to": 37,
+   "to_name": "rm_dalvshouse",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    286,
+    110
+   ]
+  },
+  {
+   "from": 39,
+   "from_name": "rm_dalvroomhall",
+   "to": 38,
+   "to_name": "rm_dalvsroom",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    170
+   ]
+  },
+  {
+   "from": 40,
+   "from_name": "rm_dalvExit",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dalvDoor",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 40,
+   "from_name": "rm_dalvExit",
+   "to": 36,
+   "to_name": "rm_dalvhallway",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    156,
+    20
+   ]
+  },
+  {
+   "from": 41,
+   "from_name": "rm_dalvExit_pacifist",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dalvDoor",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 41,
+   "from_name": "rm_dalvExit_pacifist",
+   "to": 35,
+   "to_name": "rm_darkruins_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    550
+   ]
+  },
+  {
+   "from": 42,
+   "from_name": "rm_dalvExit_genocide",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dalvDoor",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 42,
+   "from_name": "rm_dalvExit_genocide",
+   "to": 35,
+   "to_name": "rm_darkruins_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    550
+   ]
+  },
+  {
+   "from": 42,
+   "from_name": "rm_dalvExit_genocide",
+   "to": 36,
+   "to_name": "rm_dalvhallway",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    156,
+    20
+   ]
+  },
+  {
+   "from": 43,
+   "from_name": "rm_snowdin_01_yellow",
+   "to": 44,
+   "to_name": "rm_snowdin_02_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    740
+   ]
+  },
+  {
+   "from": 44,
+   "from_name": "rm_snowdin_02_yellow",
+   "to": 45,
+   "to_name": "rm_snowdin_03_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    480
+   ]
+  },
+  {
+   "from": 44,
+   "from_name": "rm_snowdin_02_yellow",
+   "to": 43,
+   "to_name": "rm_snowdin_01_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    720,
+    240
+   ]
+  },
+  {
+   "from": 45,
+   "from_name": "rm_snowdin_03_yellow",
+   "to": 44,
+   "to_name": "rm_snowdin_02_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    340,
+    40
+   ]
+  },
+  {
+   "from": 45,
+   "from_name": "rm_snowdin_03_yellow",
+   "to": 47,
+   "to_name": "rm_snowdin_04_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    280
+   ]
+  },
+  {
+   "from": 45,
+   "from_name": "rm_snowdin_03_yellow",
+   "to": 46,
+   "to_name": "rm_snowdin_03b_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    240,
+    460
+   ]
+  },
+  {
+   "from": 46,
+   "from_name": "rm_snowdin_03b_yellow",
+   "to": 45,
+   "to_name": "rm_snowdin_03_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    40
+   ]
+  },
+  {
+   "from": 47,
+   "from_name": "rm_snowdin_04_yellow",
+   "to": 45,
+   "to_name": "rm_snowdin_03_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    260
+   ]
+  },
+  {
+   "from": 47,
+   "from_name": "rm_snowdin_04_yellow",
+   "to": 48,
+   "to_name": "rm_snowdin_05_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    120
+   ]
+  },
+  {
+   "from": 48,
+   "from_name": "rm_snowdin_05_yellow",
+   "to": 47,
+   "to_name": "rm_snowdin_04_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    800,
+    320
+   ]
+  },
+  {
+   "from": 48,
+   "from_name": "rm_snowdin_05_yellow",
+   "to": 49,
+   "to_name": "rm_snowdin_06_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    580
+   ]
+  },
+  {
+   "from": 49,
+   "from_name": "rm_snowdin_06_yellow",
+   "to": 48,
+   "to_name": "rm_snowdin_05_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    660,
+    120
+   ]
+  },
+  {
+   "from": 49,
+   "from_name": "rm_snowdin_06_yellow",
+   "to": 50,
+   "to_name": "rm_snowdin_07_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    380
+   ]
+  },
+  {
+   "from": 50,
+   "from_name": "rm_snowdin_07_yellow",
+   "to": 50,
+   "to_name": "rm_snowdin_07_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    380
+   ]
+  },
+  {
+   "from": 50,
+   "from_name": "rm_snowdin_07_yellow",
+   "to": 49,
+   "to_name": "rm_snowdin_06_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    360,
+    40
+   ]
+  },
+  {
+   "from": 50,
+   "from_name": "rm_snowdin_07_yellow",
+   "to": 51,
+   "to_name": "rm_snowdin_08_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    150
+   ]
+  },
+  {
+   "from": 51,
+   "from_name": "rm_snowdin_08_yellow",
+   "to": 50,
+   "to_name": "rm_snowdin_07_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    360,
+    110
+   ]
+  },
+  {
+   "from": 51,
+   "from_name": "rm_snowdin_08_yellow",
+   "to": 52,
+   "to_name": "rm_snowdin_08b_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    180
+   ]
+  },
+  {
+   "from": 51,
+   "from_name": "rm_snowdin_08_yellow",
+   "to": 53,
+   "to_name": "rm_snowdin_09_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    380
+   ]
+  },
+  {
+   "from": 52,
+   "from_name": "rm_snowdin_08b_yellow",
+   "to": 51,
+   "to_name": "rm_snowdin_08_yellow",
+   "via": "obj_doorway_snowdin_warp",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    770,
+    290
+   ]
+  },
+  {
+   "from": 53,
+   "from_name": "rm_snowdin_09_yellow",
+   "to": 51,
+   "to_name": "rm_snowdin_08_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    540,
+    40
+   ]
+  },
+  {
+   "from": 53,
+   "from_name": "rm_snowdin_09_yellow",
+   "to": 54,
+   "to_name": "rm_snowdin_10_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    580
+   ]
+  },
+  {
+   "from": 54,
+   "from_name": "rm_snowdin_10_yellow",
+   "to": 53,
+   "to_name": "rm_snowdin_09_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    30
+   ]
+  },
+  {
+   "from": 54,
+   "from_name": "rm_snowdin_10_yellow",
+   "to": 56,
+   "to_name": "rm_snowdin_11_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    600
+   ]
+  },
+  {
+   "from": 54,
+   "from_name": "rm_snowdin_10_yellow",
+   "to": 55,
+   "to_name": "rm_snowdin_10b_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    220
+   ]
+  },
+  {
+   "from": 55,
+   "from_name": "rm_snowdin_10b_yellow",
+   "to": 54,
+   "to_name": "rm_snowdin_10_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    580,
+    240
+   ]
+  },
+  {
+   "from": 56,
+   "from_name": "rm_snowdin_11_yellow",
+   "to": 54,
+   "to_name": "rm_snowdin_10_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    400,
+    40
+   ]
+  },
+  {
+   "from": 56,
+   "from_name": "rm_snowdin_11_yellow",
+   "to": 57,
+   "to_name": "rm_snowdin_12_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    120,
+    300
+   ]
+  },
+  {
+   "from": 57,
+   "from_name": "rm_snowdin_12_yellow",
+   "to": 56,
+   "to_name": "rm_snowdin_11_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    40
+   ]
+  },
+  {
+   "from": 57,
+   "from_name": "rm_snowdin_12_yellow",
+   "to": 58,
+   "to_name": "rm_snowdin_13_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    640
+   ]
+  },
+  {
+   "from": 58,
+   "from_name": "rm_snowdin_13_yellow",
+   "to": 57,
+   "to_name": "rm_snowdin_12_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    320,
+    40
+   ]
+  },
+  {
+   "from": 58,
+   "from_name": "rm_snowdin_13_yellow",
+   "to": 59,
+   "to_name": "rm_snowdin_14_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    460,
+    540
+   ]
+  },
+  {
+   "from": 58,
+   "from_name": "rm_snowdin_13_yellow",
+   "to": null,
+   "to_name": null,
+   "via": "obj_honeydew_entrance",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 59,
+   "from_name": "rm_snowdin_14_yellow",
+   "to": 60,
+   "to_name": "rm_snowdin_14b_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    215,
+    460
+   ]
+  },
+  {
+   "from": 59,
+   "from_name": "rm_snowdin_14_yellow",
+   "to": 63,
+   "to_name": "rm_snowdin_14e_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    360
+   ]
+  },
+  {
+   "from": 59,
+   "from_name": "rm_snowdin_14_yellow",
+   "to": 61,
+   "to_name": "rm_snowdin_14c_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    340
+   ]
+  },
+  {
+   "from": 59,
+   "from_name": "rm_snowdin_14_yellow",
+   "to": 58,
+   "to_name": "rm_snowdin_13_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    40
+   ]
+  },
+  {
+   "from": 59,
+   "from_name": "rm_snowdin_14_yellow",
+   "to": 64,
+   "to_name": "rm_snowdin_15_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    130
+   ]
+  },
+  {
+   "from": 60,
+   "from_name": "rm_snowdin_14b_yellow",
+   "to": 59,
+   "to_name": "rm_snowdin_14_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    460,
+    340
+   ]
+  },
+  {
+   "from": 61,
+   "from_name": "rm_snowdin_14c_yellow",
+   "to": 59,
+   "to_name": "rm_snowdin_14_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    40
+   ]
+  },
+  {
+   "from": 61,
+   "from_name": "rm_snowdin_14c_yellow",
+   "to": 62,
+   "to_name": "rm_snowdin_14d_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    120,
+    500
+   ]
+  },
+  {
+   "from": 62,
+   "from_name": "rm_snowdin_14d_yellow",
+   "to": 61,
+   "to_name": "rm_snowdin_14c_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    270,
+    30
+   ]
+  },
+  {
+   "from": 63,
+   "from_name": "rm_snowdin_14e_yellow",
+   "to": 59,
+   "to_name": "rm_snowdin_14_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    380,
+    40
+   ]
+  },
+  {
+   "from": 64,
+   "from_name": "rm_snowdin_15_yellow",
+   "to": 59,
+   "to_name": "rm_snowdin_14_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    760,
+    180
+   ]
+  },
+  {
+   "from": 64,
+   "from_name": "rm_snowdin_15_yellow",
+   "to": 65,
+   "to_name": "rm_snowdin_16_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    160
+   ]
+  },
+  {
+   "from": 65,
+   "from_name": "rm_snowdin_16_yellow",
+   "to": 66,
+   "to_name": "rm_snowdin_16b_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    420,
+    -20
+   ]
+  },
+  {
+   "from": 65,
+   "from_name": "rm_snowdin_16_yellow",
+   "to": 64,
+   "to_name": "rm_snowdin_15_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    360,
+    130
+   ]
+  },
+  {
+   "from": 65,
+   "from_name": "rm_snowdin_16_yellow",
+   "to": 67,
+   "to_name": "rm_snowdin_17_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    150
+   ]
+  },
+  {
+   "from": 66,
+   "from_name": "rm_snowdin_16b_yellow",
+   "to": 65,
+   "to_name": "rm_snowdin_16_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    130,
+    240
+   ]
+  },
+  {
+   "from": 67,
+   "from_name": "rm_snowdin_17_yellow",
+   "to": 65,
+   "to_name": "rm_snowdin_16_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    680,
+    150
+   ]
+  },
+  {
+   "from": 67,
+   "from_name": "rm_snowdin_17_yellow",
+   "to": 68,
+   "to_name": "rm_snowdin_18_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    230
+   ]
+  },
+  {
+   "from": 68,
+   "from_name": "rm_snowdin_18_yellow",
+   "to": 67,
+   "to_name": "rm_snowdin_17_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1000,
+    150
+   ]
+  },
+  {
+   "from": 68,
+   "from_name": "rm_snowdin_18_yellow",
+   "to": 69,
+   "to_name": "rm_snowdin_19_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    460
+   ]
+  },
+  {
+   "from": 69,
+   "from_name": "rm_snowdin_19_yellow",
+   "to": 68,
+   "to_name": "rm_snowdin_18_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    288,
+    40
+   ]
+  },
+  {
+   "from": 69,
+   "from_name": "rm_snowdin_19_yellow",
+   "to": 70,
+   "to_name": "rm_snowdin_20_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    360
+   ]
+  },
+  {
+   "from": 70,
+   "from_name": "rm_snowdin_20_yellow",
+   "to": 69,
+   "to_name": "rm_snowdin_19_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    40
+   ]
+  },
+  {
+   "from": 70,
+   "from_name": "rm_snowdin_20_yellow",
+   "to": 71,
+   "to_name": "rm_snowdin_21_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    660
+   ]
+  },
+  {
+   "from": 71,
+   "from_name": "rm_snowdin_21_yellow",
+   "to": 70,
+   "to_name": "rm_snowdin_20_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    40
+   ]
+  },
+  {
+   "from": 71,
+   "from_name": "rm_snowdin_21_yellow",
+   "to": 72,
+   "to_name": "rm_snowdin_22_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    380,
+    420
+   ]
+  },
+  {
+   "from": 72,
+   "from_name": "rm_snowdin_22_yellow",
+   "to": 71,
+   "to_name": "rm_snowdin_21_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    20
+   ]
+  },
+  {
+   "from": 72,
+   "from_name": "rm_snowdin_22_yellow",
+   "to": 260,
+   "to_name": "forestfront",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    150,
+    760
+   ]
+  },
+  {
+   "from": 77,
+   "from_name": "rm_dunes_01",
+   "to": 78,
+   "to_name": "rm_dunes_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    200
+   ]
+  },
+  {
+   "from": 78,
+   "from_name": "rm_dunes_02",
+   "to": 77,
+   "to_name": "rm_dunes_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    250,
+    158
+   ]
+  },
+  {
+   "from": 78,
+   "from_name": "rm_dunes_02",
+   "to": 79,
+   "to_name": "rm_dunes_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    180,
+    180
+   ]
+  },
+  {
+   "from": 78,
+   "from_name": "rm_dunes_02",
+   "to": 285,
+   "to_name": "rm_dunes_secret",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    200
+   ]
+  },
+  {
+   "from": 78,
+   "from_name": "rm_dunes_02",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dunes_2_gerson_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 79,
+   "from_name": "rm_dunes_03",
+   "to": 78,
+   "to_name": "rm_dunes_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    720,
+    200
+   ]
+  },
+  {
+   "from": 79,
+   "from_name": "rm_dunes_03",
+   "to": 80,
+   "to_name": "rm_dunes_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    180
+   ]
+  },
+  {
+   "from": 80,
+   "from_name": "rm_dunes_04",
+   "to": 79,
+   "to_name": "rm_dunes_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1200,
+    140
+   ]
+  },
+  {
+   "from": 80,
+   "from_name": "rm_dunes_04",
+   "to": 81,
+   "to_name": "rm_dunes_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    220
+   ]
+  },
+  {
+   "from": 81,
+   "from_name": "rm_dunes_05",
+   "to": 80,
+   "to_name": "rm_dunes_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    460,
+    220
+   ]
+  },
+  {
+   "from": 81,
+   "from_name": "rm_dunes_05",
+   "to": 82,
+   "to_name": "rm_dunes_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    210
+   ]
+  },
+  {
+   "from": 82,
+   "from_name": "rm_dunes_06",
+   "to": 81,
+   "to_name": "rm_dunes_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1170,
+    210
+   ]
+  },
+  {
+   "from": 82,
+   "from_name": "rm_dunes_06",
+   "to": 84,
+   "to_name": "rm_dunes_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    160
+   ]
+  },
+  {
+   "from": 82,
+   "from_name": "rm_dunes_06",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dunes_06_cave_entrance",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 82,
+   "from_name": "rm_dunes_06",
+   "to": 83,
+   "to_name": "rm_dunes_06b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    640
+   ]
+  },
+  {
+   "from": 83,
+   "from_name": "rm_dunes_06b",
+   "to": 82,
+   "to_name": "rm_dunes_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    810,
+    415
+   ]
+  },
+  {
+   "from": 84,
+   "from_name": "rm_dunes_07",
+   "to": 84,
+   "to_name": "rm_dunes_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    360
+   ]
+  },
+  {
+   "from": 84,
+   "from_name": "rm_dunes_07",
+   "to": 82,
+   "to_name": "rm_dunes_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1680,
+    200
+   ]
+  },
+  {
+   "from": 84,
+   "from_name": "rm_dunes_07",
+   "to": 85,
+   "to_name": "rm_dunes_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    680
+   ]
+  },
+  {
+   "from": 85,
+   "from_name": "rm_dunes_08",
+   "to": 86,
+   "to_name": "rm_dunes_08b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    540
+   ]
+  },
+  {
+   "from": 85,
+   "from_name": "rm_dunes_08",
+   "to": 84,
+   "to_name": "rm_dunes_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1500,
+    40
+   ]
+  },
+  {
+   "from": 85,
+   "from_name": "rm_dunes_08",
+   "to": 87,
+   "to_name": "rm_dunes_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    120
+   ]
+  },
+  {
+   "from": 86,
+   "from_name": "rm_dunes_08b",
+   "to": 85,
+   "to_name": "rm_dunes_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    30
+   ]
+  },
+  {
+   "from": 86,
+   "from_name": "rm_dunes_08b",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dunes_08b_fence_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 87,
+   "from_name": "rm_dunes_09",
+   "to": 85,
+   "to_name": "rm_dunes_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    260
+   ]
+  },
+  {
+   "from": 87,
+   "from_name": "rm_dunes_09",
+   "to": 88,
+   "to_name": "rm_dunes_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    200
+   ]
+  },
+  {
+   "from": 88,
+   "from_name": "rm_dunes_10",
+   "to": 87,
+   "to_name": "rm_dunes_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    512,
+    128
+   ]
+  },
+  {
+   "from": 88,
+   "from_name": "rm_dunes_10",
+   "to": 89,
+   "to_name": "rm_dunes_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    260
+   ]
+  },
+  {
+   "from": 88,
+   "from_name": "rm_dunes_10",
+   "to": null,
+   "to_name": null,
+   "via": "obj_sorter_exit",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 89,
+   "from_name": "rm_dunes_11",
+   "to": 88,
+   "to_name": "rm_dunes_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1170,
+    420
+   ]
+  },
+  {
+   "from": 89,
+   "from_name": "rm_dunes_11",
+   "to": 90,
+   "to_name": "rm_dunes_12",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    250,
+    260
+   ]
+  },
+  {
+   "from": 89,
+   "from_name": "rm_dunes_11",
+   "to": 111,
+   "to_name": "rm_dunes_28b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    280
+   ]
+  },
+  {
+   "from": 90,
+   "from_name": "rm_dunes_12",
+   "to": 89,
+   "to_name": "rm_dunes_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    660,
+    210
+   ]
+  },
+  {
+   "from": 90,
+   "from_name": "rm_dunes_12",
+   "to": 92,
+   "to_name": "rm_dunes_13",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    35,
+    255
+   ]
+  },
+  {
+   "from": 90,
+   "from_name": "rm_dunes_12",
+   "to": 91,
+   "to_name": "rm_dunes_12b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    420,
+    310
+   ]
+  },
+  {
+   "from": 91,
+   "from_name": "rm_dunes_12b",
+   "to": 90,
+   "to_name": "rm_dunes_12",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    180
+   ]
+  },
+  {
+   "from": 92,
+   "from_name": "rm_dunes_13",
+   "to": 90,
+   "to_name": "rm_dunes_12",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    180
+   ]
+  },
+  {
+   "from": 94,
+   "from_name": "rm_dunes_14",
+   "to": 95,
+   "to_name": "rm_dunes_15",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    120
+   ]
+  },
+  {
+   "from": 95,
+   "from_name": "rm_dunes_15",
+   "to": 94,
+   "to_name": "rm_dunes_14",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    520,
+    205
+   ]
+  },
+  {
+   "from": 95,
+   "from_name": "rm_dunes_15",
+   "to": 96,
+   "to_name": "rm_dunes_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    220
+   ]
+  },
+  {
+   "from": 96,
+   "from_name": "rm_dunes_16",
+   "to": 95,
+   "to_name": "rm_dunes_15",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    500,
+    128
+   ]
+  },
+  {
+   "from": 96,
+   "from_name": "rm_dunes_16",
+   "to": 97,
+   "to_name": "rm_dunes_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    150
+   ]
+  },
+  {
+   "from": 97,
+   "from_name": "rm_dunes_17",
+   "to": 96,
+   "to_name": "rm_dunes_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    620,
+    330
+   ]
+  },
+  {
+   "from": 97,
+   "from_name": "rm_dunes_17",
+   "to": 98,
+   "to_name": "rm_dunes_18",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1030,
+    220
+   ]
+  },
+  {
+   "from": 98,
+   "from_name": "rm_dunes_18",
+   "to": 97,
+   "to_name": "rm_dunes_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    460
+   ]
+  },
+  {
+   "from": 98,
+   "from_name": "rm_dunes_18",
+   "to": 99,
+   "to_name": "rm_dunes_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    180,
+    460
+   ]
+  },
+  {
+   "from": 99,
+   "from_name": "rm_dunes_19",
+   "to": 100,
+   "to_name": "rm_dunes_19B",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    140
+   ]
+  },
+  {
+   "from": 99,
+   "from_name": "rm_dunes_19",
+   "to": 101,
+   "to_name": "rm_dunes_20",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    190
+   ]
+  },
+  {
+   "from": 99,
+   "from_name": "rm_dunes_19",
+   "to": 98,
+   "to_name": "rm_dunes_18",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    150
+   ]
+  },
+  {
+   "from": 100,
+   "from_name": "rm_dunes_19B",
+   "to": 99,
+   "to_name": "rm_dunes_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    360,
+    340
+   ]
+  },
+  {
+   "from": 101,
+   "from_name": "rm_dunes_20",
+   "to": 99,
+   "to_name": "rm_dunes_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    380,
+    150
+   ]
+  },
+  {
+   "from": 103,
+   "from_name": "rm_dunes_22",
+   "to": 104,
+   "to_name": "rm_dunes_23",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    150
+   ]
+  },
+  {
+   "from": 104,
+   "from_name": "rm_dunes_23",
+   "to": 103,
+   "to_name": "rm_dunes_22",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1520,
+    280
+   ]
+  },
+  {
+   "from": 104,
+   "from_name": "rm_dunes_23",
+   "to": 105,
+   "to_name": "rm_dunes_24",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    185
+   ]
+  },
+  {
+   "from": 105,
+   "from_name": "rm_dunes_24",
+   "to": 104,
+   "to_name": "rm_dunes_23",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    300,
+    480
+   ]
+  },
+  {
+   "from": 106,
+   "from_name": "rm_dunes_25",
+   "to": 107,
+   "to_name": "rm_dunes_25b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    600,
+    210
+   ]
+  },
+  {
+   "from": 106,
+   "from_name": "rm_dunes_25",
+   "to": 108,
+   "to_name": "rm_dunes_26",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    250
+   ]
+  },
+  {
+   "from": 107,
+   "from_name": "rm_dunes_25b",
+   "to": 106,
+   "to_name": "rm_dunes_25",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    250
+   ]
+  },
+  {
+   "from": 108,
+   "from_name": "rm_dunes_26",
+   "to": 106,
+   "to_name": "rm_dunes_25",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    370,
+    250
+   ]
+  },
+  {
+   "from": 108,
+   "from_name": "rm_dunes_26",
+   "to": 109,
+   "to_name": "rm_dunes_27",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    230
+   ]
+  },
+  {
+   "from": 109,
+   "from_name": "rm_dunes_27",
+   "to": 108,
+   "to_name": "rm_dunes_26",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    2360,
+    250
+   ]
+  },
+  {
+   "from": 110,
+   "from_name": "rm_dunes_28",
+   "to": 111,
+   "to_name": "rm_dunes_28b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    400,
+    280
+   ]
+  },
+  {
+   "from": 110,
+   "from_name": "rm_dunes_28",
+   "to": 113,
+   "to_name": "rm_dunes_29",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    220
+   ]
+  },
+  {
+   "from": 111,
+   "from_name": "rm_dunes_28b",
+   "to": 112,
+   "to_name": "rm_dunes_28c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    200
+   ]
+  },
+  {
+   "from": 111,
+   "from_name": "rm_dunes_28b",
+   "to": 110,
+   "to_name": "rm_dunes_28",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    280
+   ]
+  },
+  {
+   "from": 111,
+   "from_name": "rm_dunes_28b",
+   "to": 89,
+   "to_name": "rm_dunes_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    800,
+    280
+   ]
+  },
+  {
+   "from": 112,
+   "from_name": "rm_dunes_28c",
+   "to": 111,
+   "to_name": "rm_dunes_28b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    210
+   ]
+  },
+  {
+   "from": 113,
+   "from_name": "rm_dunes_29",
+   "to": 110,
+   "to_name": "rm_dunes_28",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    560,
+    280
+   ]
+  },
+  {
+   "from": 113,
+   "from_name": "rm_dunes_29",
+   "to": 114,
+   "to_name": "rm_dunes_29b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    150
+   ]
+  },
+  {
+   "from": 114,
+   "from_name": "rm_dunes_29b",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    320
+   ]
+  },
+  {
+   "from": 114,
+   "from_name": "rm_dunes_29b",
+   "to": 113,
+   "to_name": "rm_dunes_29",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    660,
+    220
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": 114,
+   "to_name": "rm_dunes_29b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    570,
+    150
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": 120,
+   "to_name": "rm_dunes_31",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    120
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": 117,
+   "to_name": "rm_dunes_30_house_1",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    160
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": 118,
+   "to_name": "rm_dunes_30_house_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    255,
+    120
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": 119,
+   "to_name": "rm_dunes_30_house_3",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    150,
+    180
+   ]
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": null,
+   "to_name": null,
+   "via": "obj_knockable_door_dunes_30",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 115,
+   "from_name": "rm_dunes_30_old",
+   "to": 116,
+   "to_name": "rm_dunes_30b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    540
+   ]
+  },
+  {
+   "from": 116,
+   "from_name": "rm_dunes_30b",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    630,
+    30
+   ]
+  },
+  {
+   "from": 116,
+   "from_name": "rm_dunes_30b",
+   "to": 251,
+   "to_name": "path",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    490,
+    860
+   ]
+  },
+  {
+   "from": 117,
+   "from_name": "rm_dunes_30_house_1",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    434,
+    261
+   ]
+  },
+  {
+   "from": 118,
+   "from_name": "rm_dunes_30_house_2",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    248,
+    774
+   ]
+  },
+  {
+   "from": 119,
+   "from_name": "rm_dunes_30_house_3",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    734,
+    223
+   ]
+  },
+  {
+   "from": 120,
+   "from_name": "rm_dunes_31",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1000,
+    780
+   ]
+  },
+  {
+   "from": 120,
+   "from_name": "rm_dunes_31",
+   "to": 121,
+   "to_name": "rm_dunes_32",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    233
+   ]
+  },
+  {
+   "from": 121,
+   "from_name": "rm_dunes_32",
+   "to": null,
+   "to_name": null,
+   "via": "obj_market_exit",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 121,
+   "from_name": "rm_dunes_32",
+   "to": 120,
+   "to_name": "rm_dunes_31",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    390,
+    120
+   ]
+  },
+  {
+   "from": 121,
+   "from_name": "rm_dunes_32",
+   "to": 122,
+   "to_name": "rm_dunes_33",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    300
+   ]
+  },
+  {
+   "from": 122,
+   "from_name": "rm_dunes_33",
+   "to": 121,
+   "to_name": "rm_dunes_32",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    620,
+    240
+   ]
+  },
+  {
+   "from": 122,
+   "from_name": "rm_dunes_33",
+   "to": 123,
+   "to_name": "rm_dunes_34",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    180
+   ]
+  },
+  {
+   "from": 123,
+   "from_name": "rm_dunes_34",
+   "to": 122,
+   "to_name": "rm_dunes_33",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    540,
+    300
+   ]
+  },
+  {
+   "from": 123,
+   "from_name": "rm_dunes_34",
+   "to": 126,
+   "to_name": "rm_dunes_36",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    770
+   ]
+  },
+  {
+   "from": 124,
+   "from_name": "rm_dunes_35",
+   "to": 123,
+   "to_name": "rm_dunes_34",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    470,
+    180
+   ]
+  },
+  {
+   "from": 124,
+   "from_name": "rm_dunes_35",
+   "to": 125,
+   "to_name": "rm_dunes_35b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    180,
+    200
+   ]
+  },
+  {
+   "from": 124,
+   "from_name": "rm_dunes_35",
+   "to": 126,
+   "to_name": "rm_dunes_36",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    770
+   ]
+  },
+  {
+   "from": 125,
+   "from_name": "rm_dunes_35b",
+   "to": 276,
+   "to_name": "rm_dunes_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1033,
+    445
+   ]
+  },
+  {
+   "from": 126,
+   "from_name": "rm_dunes_36",
+   "to": 123,
+   "to_name": "rm_dunes_34",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    470,
+    180
+   ]
+  },
+  {
+   "from": 126,
+   "from_name": "rm_dunes_36",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    720,
+    960
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 128,
+   "to_name": "rm_dunes_37_saloon",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    400
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 130,
+   "to_name": "rm_dunes_37_barn",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    280
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 133,
+   "to_name": "rm_dunes_38",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    450
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 131,
+   "to_name": "rm_dunes_37_jail",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    65,
+    180
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 132,
+   "to_name": "rm_dunes_37_hospital",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    270,
+    150
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 129,
+   "to_name": "rm_dunes_37_feistyhouse",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    62,
+    190
+   ]
+  },
+  {
+   "from": 127,
+   "from_name": "rm_dunes_37",
+   "to": 126,
+   "to_name": "rm_dunes_36",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    600,
+    30
+   ]
+  },
+  {
+   "from": 128,
+   "from_name": "rm_dunes_37_saloon",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    720,
+    180
+   ]
+  },
+  {
+   "from": 129,
+   "from_name": "rm_dunes_37_feistyhouse",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    391
+   ]
+  },
+  {
+   "from": 130,
+   "from_name": "rm_dunes_37_barn",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1040,
+    380
+   ]
+  },
+  {
+   "from": 130,
+   "from_name": "rm_dunes_37_barn",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dunes_37_barn_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 131,
+   "from_name": "rm_dunes_37_jail",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    860,
+    244
+   ]
+  },
+  {
+   "from": 132,
+   "from_name": "rm_dunes_37_hospital",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    543,
+    345
+   ]
+  },
+  {
+   "from": 133,
+   "from_name": "rm_dunes_38",
+   "to": 127,
+   "to_name": "rm_dunes_37",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1060,
+    495
+   ]
+  },
+  {
+   "from": 133,
+   "from_name": "rm_dunes_38",
+   "to": null,
+   "to_name": null,
+   "via": "obj_wild_east_exit_gate",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 133,
+   "from_name": "rm_dunes_38",
+   "to": 134,
+   "to_name": "rm_dunes_39",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    440
+   ]
+  },
+  {
+   "from": 134,
+   "from_name": "rm_dunes_39",
+   "to": 135,
+   "to_name": "rm_dunes_40",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    440
+   ]
+  },
+  {
+   "from": 134,
+   "from_name": "rm_dunes_39",
+   "to": 133,
+   "to_name": "rm_dunes_38",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    620,
+    40
+   ]
+  },
+  {
+   "from": 135,
+   "from_name": "rm_dunes_40",
+   "to": 134,
+   "to_name": "rm_dunes_39",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    600,
+    40
+   ]
+  },
+  {
+   "from": 135,
+   "from_name": "rm_dunes_40",
+   "to": 136,
+   "to_name": "rm_dunes_41",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    760
+   ]
+  },
+  {
+   "from": 136,
+   "from_name": "rm_dunes_41",
+   "to": 135,
+   "to_name": "rm_dunes_40",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    40
+   ]
+  },
+  {
+   "from": 136,
+   "from_name": "rm_dunes_41",
+   "to": 137,
+   "to_name": "rm_dunes_42",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    320,
+    640
+   ]
+  },
+  {
+   "from": 137,
+   "from_name": "rm_dunes_42",
+   "to": 136,
+   "to_name": "rm_dunes_41",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    140,
+    40
+   ]
+  },
+  {
+   "from": 137,
+   "from_name": "rm_dunes_42",
+   "to": 140,
+   "to_name": "rm_dunes_43",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    700
+   ]
+  },
+  {
+   "from": 137,
+   "from_name": "rm_dunes_42",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dunes_42_cellar_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 137,
+   "from_name": "rm_dunes_42",
+   "to": 138,
+   "to_name": "rm_dunes_42_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    180
+   ]
+  },
+  {
+   "from": 138,
+   "from_name": "rm_dunes_42_b",
+   "to": 137,
+   "to_name": "rm_dunes_42",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    441,
+    361
+   ]
+  },
+  {
+   "from": 138,
+   "from_name": "rm_dunes_42_b",
+   "to": 139,
+   "to_name": "rm_dunes_42_c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    120
+   ]
+  },
+  {
+   "from": 139,
+   "from_name": "rm_dunes_42_c",
+   "to": 138,
+   "to_name": "rm_dunes_42_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    240,
+    60
+   ]
+  },
+  {
+   "from": 139,
+   "from_name": "rm_dunes_42_c",
+   "to": null,
+   "to_name": null,
+   "via": "obj_dunes_42_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 139,
+   "from_name": "rm_dunes_42_c",
+   "to": null,
+   "to_name": null,
+   "via": "obj_locked_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 140,
+   "from_name": "rm_dunes_43",
+   "to": 137,
+   "to_name": "rm_dunes_42",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    600,
+    30
+   ]
+  },
+  {
+   "from": 141,
+   "from_name": "rm_steamworks_01",
+   "to": 142,
+   "to_name": "rm_steamworks_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    570,
+    260
+   ]
+  },
+  {
+   "from": 141,
+   "from_name": "rm_steamworks_01",
+   "to": 140,
+   "to_name": "rm_dunes_43",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    219,
+    155
+   ]
+  },
+  {
+   "from": 142,
+   "from_name": "rm_steamworks_02",
+   "to": 141,
+   "to_name": "rm_steamworks_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    30
+   ]
+  },
+  {
+   "from": 142,
+   "from_name": "rm_steamworks_02",
+   "to": 143,
+   "to_name": "rm_steamworks_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    390,
+    480
+   ]
+  },
+  {
+   "from": 143,
+   "from_name": "rm_steamworks_03",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_03_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 143,
+   "from_name": "rm_steamworks_03",
+   "to": 142,
+   "to_name": "rm_steamworks_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    150
+   ]
+  },
+  {
+   "from": 143,
+   "from_name": "rm_steamworks_03",
+   "to": 144,
+   "to_name": "Steams",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    480
+   ]
+  },
+  {
+   "from": 144,
+   "from_name": "Steams",
+   "to": 143,
+   "to_name": "rm_steamworks_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    190,
+    130
+   ]
+  },
+  {
+   "from": 144,
+   "from_name": "Steams",
+   "to": 145,
+   "to_name": "rm_steamworks_04_transition_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    130
+   ]
+  },
+  {
+   "from": 144,
+   "from_name": "Steams",
+   "to": 147,
+   "to_name": "rm_steamworks_04_transition_c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    130
+   ]
+  },
+  {
+   "from": 144,
+   "from_name": "Steams",
+   "to": 149,
+   "to_name": "rm_steamworks_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    560
+   ]
+  },
+  {
+   "from": 144,
+   "from_name": "Steams",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_04_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 145,
+   "from_name": "rm_steamworks_04_transition_b",
+   "to": 146,
+   "to_name": "footsteps",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    340,
+    230
+   ]
+  },
+  {
+   "from": 145,
+   "from_name": "rm_steamworks_04_transition_b",
+   "to": 144,
+   "to_name": "Steams",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    20,
+    260
+   ]
+  },
+  {
+   "from": 146,
+   "from_name": "footsteps",
+   "to": 145,
+   "to_name": "rm_steamworks_04_transition_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    130
+   ]
+  },
+  {
+   "from": 147,
+   "from_name": "rm_steamworks_04_transition_c",
+   "to": 144,
+   "to_name": "Steams",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    420,
+    260
+   ]
+  },
+  {
+   "from": 147,
+   "from_name": "rm_steamworks_04_transition_c",
+   "to": 148,
+   "to_name": "rm_steamworks_04c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    230
+   ]
+  },
+  {
+   "from": 148,
+   "from_name": "rm_steamworks_04c",
+   "to": 147,
+   "to_name": "rm_steamworks_04_transition_c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    130
+   ]
+  },
+  {
+   "from": 149,
+   "from_name": "rm_steamworks_05",
+   "to": 144,
+   "to_name": "Steams",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    20
+   ]
+  },
+  {
+   "from": 149,
+   "from_name": "rm_steamworks_05",
+   "to": 150,
+   "to_name": "rm_steamworks_05b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    310,
+    190
+   ]
+  },
+  {
+   "from": 149,
+   "from_name": "rm_steamworks_05",
+   "to": 151,
+   "to_name": "rm_steamworks_05c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    190
+   ]
+  },
+  {
+   "from": 149,
+   "from_name": "rm_steamworks_05",
+   "to": 153,
+   "to_name": "rm_steamworks_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    320,
+    560
+   ]
+  },
+  {
+   "from": 150,
+   "from_name": "rm_steamworks_05b",
+   "to": 149,
+   "to_name": "rm_steamworks_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    150
+   ]
+  },
+  {
+   "from": 151,
+   "from_name": "rm_steamworks_05c",
+   "to": 149,
+   "to_name": "rm_steamworks_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    370,
+    150
+   ]
+  },
+  {
+   "from": 151,
+   "from_name": "rm_steamworks_05c",
+   "to": 152,
+   "to_name": "rm_steamworks_05d",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    190
+   ]
+  },
+  {
+   "from": 151,
+   "from_name": "rm_steamworks_05c",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_05c_locker_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 152,
+   "from_name": "rm_steamworks_05d",
+   "to": 151,
+   "to_name": "rm_steamworks_05c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    530,
+    190
+   ]
+  },
+  {
+   "from": 153,
+   "from_name": "rm_steamworks_06",
+   "to": 149,
+   "to_name": "rm_steamworks_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    90
+   ]
+  },
+  {
+   "from": 153,
+   "from_name": "rm_steamworks_06",
+   "to": 277,
+   "to_name": "rm_steamworks_06_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    560,
+    130
+   ]
+  },
+  {
+   "from": 154,
+   "from_name": "rm_steamworks_07",
+   "to": 153,
+   "to_name": "rm_steamworks_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    220
+   ]
+  },
+  {
+   "from": 154,
+   "from_name": "rm_steamworks_07",
+   "to": 155,
+   "to_name": "rm_steamworks_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    370,
+    440
+   ]
+  },
+  {
+   "from": 155,
+   "from_name": "rm_steamworks_08",
+   "to": 278,
+   "to_name": "Vents",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    120
+   ]
+  },
+  {
+   "from": 155,
+   "from_name": "rm_steamworks_08",
+   "to": 156,
+   "to_name": "rm_steamworks_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    800,
+    226
+   ]
+  },
+  {
+   "from": 156,
+   "from_name": "rm_steamworks_09",
+   "to": 155,
+   "to_name": "rm_steamworks_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    250,
+    160
+   ]
+  },
+  {
+   "from": 156,
+   "from_name": "rm_steamworks_09",
+   "to": 157,
+   "to_name": "rm_steamworks_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    665,
+    245
+   ]
+  },
+  {
+   "from": 157,
+   "from_name": "rm_steamworks_10",
+   "to": 156,
+   "to_name": "rm_steamworks_09",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    210
+   ]
+  },
+  {
+   "from": 157,
+   "from_name": "rm_steamworks_10",
+   "to": 158,
+   "to_name": "rm_steamworks_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    130
+   ]
+  },
+  {
+   "from": 158,
+   "from_name": "rm_steamworks_11",
+   "to": 157,
+   "to_name": "rm_steamworks_10",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    225,
+    240
+   ]
+  },
+  {
+   "from": 158,
+   "from_name": "rm_steamworks_11",
+   "to": 159,
+   "to_name": "randomflower",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    650,
+    30
+   ]
+  },
+  {
+   "from": 159,
+   "from_name": "randomflower",
+   "to": 158,
+   "to_name": "rm_steamworks_11",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    90,
+    180
+   ]
+  },
+  {
+   "from": 159,
+   "from_name": "randomflower",
+   "to": 162,
+   "to_name": "steamworks",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    360,
+    120
+   ]
+  },
+  {
+   "from": 160,
+   "from_name": "rm_steamworks_13",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_13_axis_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 162,
+   "from_name": "steamworks",
+   "to": 159,
+   "to_name": "randomflower",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    140
+   ]
+  },
+  {
+   "from": 162,
+   "from_name": "steamworks",
+   "to": 163,
+   "to_name": "rm_steamworks_15",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    320,
+    220
+   ]
+  },
+  {
+   "from": 163,
+   "from_name": "rm_steamworks_15",
+   "to": 162,
+   "to_name": "steamworks",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    35,
+    130
+   ]
+  },
+  {
+   "from": 163,
+   "from_name": "rm_steamworks_15",
+   "to": 164,
+   "to_name": "rm_steamworks_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    560,
+    190
+   ]
+  },
+  {
+   "from": 164,
+   "from_name": "rm_steamworks_16",
+   "to": 163,
+   "to_name": "rm_steamworks_15",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    210
+   ]
+  },
+  {
+   "from": 164,
+   "from_name": "rm_steamworks_16",
+   "to": 165,
+   "to_name": "rm_steamworks_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1500,
+    530
+   ]
+  },
+  {
+   "from": 165,
+   "from_name": "rm_steamworks_17",
+   "to": 164,
+   "to_name": "rm_steamworks_16",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    35,
+    190
+   ]
+  },
+  {
+   "from": 165,
+   "from_name": "rm_steamworks_17",
+   "to": 279,
+   "to_name": "Assets",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1200,
+    150
+   ]
+  },
+  {
+   "from": 165,
+   "from_name": "rm_steamworks_17",
+   "to": 167,
+   "to_name": "npc",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    450,
+    410
+   ]
+  },
+  {
+   "from": 165,
+   "from_name": "rm_steamworks_17",
+   "to": 220,
+   "to_name": "Clockman",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    380
+   ]
+  },
+  {
+   "from": 166,
+   "from_name": "chait",
+   "to": 165,
+   "to_name": "rm_steamworks_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    340
+   ]
+  },
+  {
+   "from": 167,
+   "from_name": "npc",
+   "to": 165,
+   "to_name": "rm_steamworks_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    690,
+    30
+   ]
+  },
+  {
+   "from": 167,
+   "from_name": "npc",
+   "to": 169,
+   "to_name": "rm_steamworks_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    790,
+    120
+   ]
+  },
+  {
+   "from": 167,
+   "from_name": "npc",
+   "to": 168,
+   "to_name": "rm_steamworks_18b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    210,
+    560
+   ]
+  },
+  {
+   "from": 167,
+   "from_name": "npc",
+   "to": 275,
+   "to_name": "rm_steamworks_macro_froggit_room",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    380
+   ]
+  },
+  {
+   "from": 168,
+   "from_name": "rm_steamworks_18b",
+   "to": 167,
+   "to_name": "npc",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    310,
+    30
+   ]
+  },
+  {
+   "from": 169,
+   "from_name": "rm_steamworks_19",
+   "to": 167,
+   "to_name": "npc",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    360
+   ]
+  },
+  {
+   "from": 169,
+   "from_name": "rm_steamworks_19",
+   "to": 170,
+   "to_name": "rm_steamworks_20",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    790,
+    150
+   ]
+  },
+  {
+   "from": 170,
+   "from_name": "rm_steamworks_20",
+   "to": 169,
+   "to_name": "rm_steamworks_19",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    120,
+    110
+   ]
+  },
+  {
+   "from": 170,
+   "from_name": "rm_steamworks_20",
+   "to": 171,
+   "to_name": "rm_steamworks_21",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    2100,
+    120
+   ]
+  },
+  {
+   "from": 171,
+   "from_name": "rm_steamworks_21",
+   "to": 170,
+   "to_name": "rm_steamworks_20",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    200
+   ]
+  },
+  {
+   "from": 171,
+   "from_name": "rm_steamworks_21",
+   "to": 173,
+   "to_name": "rm_steamworks_22",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    2360,
+    150
+   ]
+  },
+  {
+   "from": 171,
+   "from_name": "rm_steamworks_21",
+   "to": null,
+   "to_name": null,
+   "via": "obj_locked_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 173,
+   "from_name": "rm_steamworks_22",
+   "to": 171,
+   "to_name": "rm_steamworks_21",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    760
+   ]
+  },
+  {
+   "from": 173,
+   "from_name": "rm_steamworks_22",
+   "to": 174,
+   "to_name": "rm_steamworks_23",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1080,
+    250
+   ]
+  },
+  {
+   "from": 174,
+   "from_name": "rm_steamworks_23",
+   "to": 175,
+   "to_name": "rm_steamworks_24",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    780,
+    130
+   ]
+  },
+  {
+   "from": 174,
+   "from_name": "rm_steamworks_23",
+   "to": 173,
+   "to_name": "rm_steamworks_22",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    140
+   ]
+  },
+  {
+   "from": 175,
+   "from_name": "rm_steamworks_24",
+   "to": 174,
+   "to_name": "rm_steamworks_23",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    260
+   ]
+  },
+  {
+   "from": 175,
+   "from_name": "rm_steamworks_24",
+   "to": 176,
+   "to_name": "rm_steamworks_25",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    80
+   ]
+  },
+  {
+   "from": 176,
+   "from_name": "rm_steamworks_25",
+   "to": 175,
+   "to_name": "rm_steamworks_24",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    100
+   ]
+  },
+  {
+   "from": 176,
+   "from_name": "rm_steamworks_25",
+   "to": 280,
+   "to_name": "rm_steamworks_25_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    889,
+    298
+   ]
+  },
+  {
+   "from": 176,
+   "from_name": "rm_steamworks_25",
+   "to": 190,
+   "to_name": "rm_steamworks_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    780,
+    120
+   ]
+  },
+  {
+   "from": 177,
+   "from_name": "rm_steamworks_26",
+   "to": 280,
+   "to_name": "rm_steamworks_25_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    300
+   ]
+  },
+  {
+   "from": 177,
+   "from_name": "rm_steamworks_26",
+   "to": 187,
+   "to_name": "rm_steamworks_27",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    320,
+    340
+   ]
+  },
+  {
+   "from": 178,
+   "from_name": "rm_score_room",
+   "to": 59,
+   "to_name": "rm_snowdin_14_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    460,
+    340
+   ]
+  },
+  {
+   "from": 187,
+   "from_name": "rm_steamworks_27",
+   "to": 177,
+   "to_name": "rm_steamworks_26",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    165
+   ]
+  },
+  {
+   "from": 187,
+   "from_name": "rm_steamworks_27",
+   "to": 189,
+   "to_name": "colliders",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    840,
+    210
+   ]
+  },
+  {
+   "from": 188,
+   "from_name": "rm_steamworks_31",
+   "to": 281,
+   "to_name": "rm_steamworks_30_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    150
+   ]
+  },
+  {
+   "from": 188,
+   "from_name": "rm_steamworks_31",
+   "to": 193,
+   "to_name": "rm_steamworks_chem_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    180,
+    440
+   ]
+  },
+  {
+   "from": 188,
+   "from_name": "rm_steamworks_31",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_31_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 188,
+   "from_name": "rm_steamworks_31",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_31_door_left",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 189,
+   "from_name": "colliders",
+   "to": 187,
+   "to_name": "rm_steamworks_27",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    180
+   ]
+  },
+  {
+   "from": 189,
+   "from_name": "colliders",
+   "to": 191,
+   "to_name": "rm_steamworks_29",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    320,
+    1360
+   ]
+  },
+  {
+   "from": 190,
+   "from_name": "rm_steamworks_30",
+   "to": 176,
+   "to_name": "rm_steamworks_25",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    80
+   ]
+  },
+  {
+   "from": 190,
+   "from_name": "rm_steamworks_30",
+   "to": 191,
+   "to_name": "rm_steamworks_29",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    100
+   ]
+  },
+  {
+   "from": 190,
+   "from_name": "rm_steamworks_30",
+   "to": 281,
+   "to_name": "rm_steamworks_30_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    580,
+    150
+   ]
+  },
+  {
+   "from": 191,
+   "from_name": "rm_steamworks_29",
+   "to": 189,
+   "to_name": "colliders",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    200
+   ]
+  },
+  {
+   "from": 191,
+   "from_name": "rm_steamworks_29",
+   "to": 190,
+   "to_name": "rm_steamworks_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    310,
+    360
+   ]
+  },
+  {
+   "from": 192,
+   "from_name": "rm_steamworks_factory_01",
+   "to": 188,
+   "to_name": "rm_steamworks_31",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    180,
+    310
+   ]
+  },
+  {
+   "from": 192,
+   "from_name": "rm_steamworks_factory_01",
+   "to": 237,
+   "to_name": "MachineFront2F",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    120,
+    800
+   ]
+  },
+  {
+   "from": 193,
+   "from_name": "rm_steamworks_chem_01",
+   "to": 195,
+   "to_name": "rm_steamworks_chem_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    650
+   ]
+  },
+  {
+   "from": 193,
+   "from_name": "rm_steamworks_chem_01",
+   "to": 188,
+   "to_name": "rm_steamworks_31",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    350,
+    200
+   ]
+  },
+  {
+   "from": 195,
+   "from_name": "rm_steamworks_chem_02",
+   "to": 193,
+   "to_name": "rm_steamworks_chem_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    120,
+    130
+   ]
+  },
+  {
+   "from": 195,
+   "from_name": "rm_steamworks_chem_02",
+   "to": 196,
+   "to_name": "rm_steamworks_chem_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    740,
+    280
+   ]
+  },
+  {
+   "from": 196,
+   "from_name": "rm_steamworks_chem_03",
+   "to": 195,
+   "to_name": "rm_steamworks_chem_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    40
+   ]
+  },
+  {
+   "from": 196,
+   "from_name": "rm_steamworks_chem_03",
+   "to": 198,
+   "to_name": "rm_steamworks_chem_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    400,
+    130
+   ]
+  },
+  {
+   "from": 196,
+   "from_name": "rm_steamworks_chem_03",
+   "to": null,
+   "to_name": null,
+   "via": "obj_locked_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 197,
+   "from_name": "rm_steamworks_chem_hermit",
+   "to": 198,
+   "to_name": "rm_steamworks_chem_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    220,
+    130
+   ]
+  },
+  {
+   "from": 198,
+   "from_name": "rm_steamworks_chem_04",
+   "to": 196,
+   "to_name": "rm_steamworks_chem_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    150
+   ]
+  },
+  {
+   "from": 198,
+   "from_name": "rm_steamworks_chem_04",
+   "to": 201,
+   "to_name": "rm_steamworks_chem_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    580,
+    170
+   ]
+  },
+  {
+   "from": 198,
+   "from_name": "rm_steamworks_chem_04",
+   "to": 197,
+   "to_name": "rm_steamworks_chem_hermit",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    280
+   ]
+  },
+  {
+   "from": 199,
+   "from_name": "rm_steamworks_chem_06",
+   "to": 201,
+   "to_name": "rm_steamworks_chem_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    300,
+    140
+   ]
+  },
+  {
+   "from": 199,
+   "from_name": "rm_steamworks_chem_06",
+   "to": 200,
+   "to_name": "rm_steamworks_chem_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    520,
+    140
+   ]
+  },
+  {
+   "from": 200,
+   "from_name": "rm_steamworks_chem_07",
+   "to": 199,
+   "to_name": "rm_steamworks_chem_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    140
+   ]
+  },
+  {
+   "from": 200,
+   "from_name": "rm_steamworks_chem_07",
+   "to": 202,
+   "to_name": "rm_steamworks_32",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    620,
+    140
+   ]
+  },
+  {
+   "from": 200,
+   "from_name": "rm_steamworks_chem_07",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_chem_07_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 201,
+   "from_name": "rm_steamworks_chem_05",
+   "to": 198,
+   "to_name": "rm_steamworks_chem_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    140
+   ]
+  },
+  {
+   "from": 201,
+   "from_name": "rm_steamworks_chem_05",
+   "to": null,
+   "to_name": null,
+   "via": "obj_chem_05_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 201,
+   "from_name": "rm_steamworks_chem_05",
+   "to": 199,
+   "to_name": "rm_steamworks_chem_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    300
+   ]
+  },
+  {
+   "from": 202,
+   "from_name": "rm_steamworks_32",
+   "to": 200,
+   "to_name": "rm_steamworks_chem_07",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    460
+   ]
+  },
+  {
+   "from": 202,
+   "from_name": "rm_steamworks_32",
+   "to": 205,
+   "to_name": "rm_steamworks_33",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    540,
+    190
+   ]
+  },
+  {
+   "from": 203,
+   "from_name": "rm_steamworks_34",
+   "to": 205,
+   "to_name": "rm_steamworks_33",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    190
+   ]
+  },
+  {
+   "from": 203,
+   "from_name": "rm_steamworks_34",
+   "to": 204,
+   "to_name": "rm_steamworks_35",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    950,
+    140
+   ]
+  },
+  {
+   "from": 204,
+   "from_name": "rm_steamworks_35",
+   "to": 206,
+   "to_name": "rm_steamworks_36",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    630,
+    170
+   ]
+  },
+  {
+   "from": 204,
+   "from_name": "rm_steamworks_35",
+   "to": 203,
+   "to_name": "rm_steamworks_34",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    50,
+    165
+   ]
+  },
+  {
+   "from": 205,
+   "from_name": "rm_steamworks_33",
+   "to": 202,
+   "to_name": "rm_steamworks_32",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    290
+   ]
+  },
+  {
+   "from": 205,
+   "from_name": "rm_steamworks_33",
+   "to": 203,
+   "to_name": "rm_steamworks_34",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1520,
+    170
+   ]
+  },
+  {
+   "from": 206,
+   "from_name": "rm_steamworks_36",
+   "to": 204,
+   "to_name": "rm_steamworks_35",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    420,
+    140
+   ]
+  },
+  {
+   "from": 206,
+   "from_name": "rm_steamworks_36",
+   "to": 207,
+   "to_name": "Decorations",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    740,
+    160
+   ]
+  },
+  {
+   "from": 207,
+   "from_name": "Decorations",
+   "to": 206,
+   "to_name": "rm_steamworks_36",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    160
+   ]
+  },
+  {
+   "from": 210,
+   "from_name": "rm_hotland_01",
+   "to": 211,
+   "to_name": "Interactables",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    480,
+    140
+   ]
+  },
+  {
+   "from": 211,
+   "from_name": "Interactables",
+   "to": 210,
+   "to_name": "rm_hotland_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    120
+   ]
+  },
+  {
+   "from": 211,
+   "from_name": "Interactables",
+   "to": 212,
+   "to_name": "rm_hotland_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    240,
+    360
+   ]
+  },
+  {
+   "from": 211,
+   "from_name": "Interactables",
+   "to": 214,
+   "to_name": "Doorways",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1250,
+    30
+   ]
+  },
+  {
+   "from": 211,
+   "from_name": "Interactables",
+   "to": 215,
+   "to_name": "building",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    290,
+    210
+   ]
+  },
+  {
+   "from": 212,
+   "from_name": "rm_hotland_03",
+   "to": 211,
+   "to_name": "Interactables",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    250,
+    30
+   ]
+  },
+  {
+   "from": 212,
+   "from_name": "rm_hotland_03",
+   "to": 213,
+   "to_name": "rm_hotland_03b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    60,
+    200
+   ]
+  },
+  {
+   "from": 212,
+   "from_name": "rm_hotland_03",
+   "to": 217,
+   "to_name": "rm_hotland_complex_1",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    520
+   ]
+  },
+  {
+   "from": 213,
+   "from_name": "rm_hotland_03b",
+   "to": 212,
+   "to_name": "rm_hotland_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    420,
+    50
+   ]
+  },
+  {
+   "from": 213,
+   "from_name": "rm_hotland_03b",
+   "to": null,
+   "to_name": null,
+   "via": "obj_complex_1c_doors",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 213,
+   "from_name": "rm_hotland_03b",
+   "to": 221,
+   "to_name": "rm_hotland_roof",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    551,
+    442
+   ]
+  },
+  {
+   "from": 214,
+   "from_name": "Doorways",
+   "to": 211,
+   "to_name": "Interactables",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    250,
+    200
+   ]
+  },
+  {
+   "from": 214,
+   "from_name": "Doorways",
+   "to": 215,
+   "to_name": "building",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    280
+   ]
+  },
+  {
+   "from": 215,
+   "from_name": "building",
+   "to": 214,
+   "to_name": "Doorways",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    30
+   ]
+  },
+  {
+   "from": 215,
+   "from_name": "building",
+   "to": 211,
+   "to_name": "Interactables",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    140
+   ]
+  },
+  {
+   "from": 215,
+   "from_name": "building",
+   "to": 216,
+   "to_name": "SpooderWall",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    290,
+    210
+   ]
+  },
+  {
+   "from": 216,
+   "from_name": "SpooderWall",
+   "to": 215,
+   "to_name": "building",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    230
+   ]
+  },
+  {
+   "from": 217,
+   "from_name": "rm_hotland_complex_1",
+   "to": 212,
+   "to_name": "rm_hotland_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    240,
+    210
+   ]
+  },
+  {
+   "from": 217,
+   "from_name": "rm_hotland_complex_1",
+   "to": 218,
+   "to_name": "Objects",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    940,
+    180
+   ]
+  },
+  {
+   "from": 217,
+   "from_name": "rm_hotland_complex_1",
+   "to": 219,
+   "to_name": "rm_hotland_complex_1c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    160
+   ]
+  },
+  {
+   "from": 218,
+   "from_name": "Objects",
+   "to": 217,
+   "to_name": "rm_hotland_complex_1",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    360
+   ]
+  },
+  {
+   "from": 218,
+   "from_name": "Objects",
+   "to": null,
+   "to_name": null,
+   "via": "obj_complex_1c_doors",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 219,
+   "from_name": "rm_hotland_complex_1c",
+   "to": 217,
+   "to_name": "rm_hotland_complex_1",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    485,
+    360
+   ]
+  },
+  {
+   "from": 219,
+   "from_name": "rm_hotland_complex_1c",
+   "to": null,
+   "to_name": null,
+   "via": "obj_complex_1c_doors",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 220,
+   "from_name": "Clockman",
+   "to": 165,
+   "to_name": "rm_steamworks_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    230,
+    800
+   ]
+  },
+  {
+   "from": 221,
+   "from_name": "rm_hotland_roof",
+   "to": 213,
+   "to_name": "rm_hotland_03b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    344,
+    20
+   ]
+  },
+  {
+   "from": 222,
+   "from_name": "rm_flashback_01",
+   "to": 222,
+   "to_name": "rm_flashback_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    380,
+    190
+   ]
+  },
+  {
+   "from": 237,
+   "from_name": "MachineFront2F",
+   "to": 192,
+   "to_name": "rm_steamworks_factory_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    140
+   ]
+  },
+  {
+   "from": 237,
+   "from_name": "MachineFront2F",
+   "to": null,
+   "to_name": null,
+   "via": "obj_steamworks_factory_02_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 238,
+   "from_name": "电 梯",
+   "to": 240,
+   "to_name": "rm_steamworks_factory_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    400,
+    760
+   ]
+  },
+  {
+   "from": 238,
+   "from_name": "电 梯",
+   "to": 237,
+   "to_name": "MachineFront2F",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    120,
+    190
+   ]
+  },
+  {
+   "from": 239,
+   "from_name": "iwalsl",
+   "to": 192,
+   "to_name": "rm_steamworks_factory_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    460,
+    140
+   ]
+  },
+  {
+   "from": 240,
+   "from_name": "rm_steamworks_factory_04",
+   "to": 238,
+   "to_name": "电 梯",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    740,
+    770
+   ]
+  },
+  {
+   "from": 241,
+   "from_name": "rm_mansion_entrance",
+   "to": null,
+   "to_name": null,
+   "via": "obj_room_controller_mansion_entrance",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 241,
+   "from_name": "rm_mansion_entrance",
+   "to": null,
+   "to_name": null,
+   "via": "obj_mansion_entrance_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 241,
+   "from_name": "rm_mansion_entrance",
+   "to": null,
+   "to_name": null,
+   "via": "obj_mansion_entrance_doors",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 241,
+   "from_name": "rm_mansion_entrance",
+   "to": 251,
+   "to_name": "path",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    485,
+    430
+   ]
+  },
+  {
+   "from": 242,
+   "from_name": "Kotatsu",
+   "to": 244,
+   "to_name": "rm_mansion_hallway_east",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    170
+   ]
+  },
+  {
+   "from": 242,
+   "from_name": "Kotatsu",
+   "to": 243,
+   "to_name": "rm_mansion_hallway_west",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    170
+   ]
+  },
+  {
+   "from": 243,
+   "from_name": "rm_mansion_hallway_west",
+   "to": 242,
+   "to_name": "Kotatsu",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    150
+   ]
+  },
+  {
+   "from": 243,
+   "from_name": "rm_mansion_hallway_west",
+   "to": 247,
+   "to_name": "rm_mansion_hallway_west_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    160
+   ]
+  },
+  {
+   "from": 244,
+   "from_name": "rm_mansion_hallway_east",
+   "to": 245,
+   "to_name": "rm_mansion_hallway_east_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    310,
+    170
+   ]
+  },
+  {
+   "from": 244,
+   "from_name": "rm_mansion_hallway_east",
+   "to": 242,
+   "to_name": "Kotatsu",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    290,
+    150
+   ]
+  },
+  {
+   "from": 245,
+   "from_name": "rm_mansion_hallway_east_2",
+   "to": 244,
+   "to_name": "rm_mansion_hallway_east",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    280,
+    170
+   ]
+  },
+  {
+   "from": 245,
+   "from_name": "rm_mansion_hallway_east_2",
+   "to": 241,
+   "to_name": "rm_mansion_entrance",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    260,
+    170
+   ]
+  },
+  {
+   "from": 245,
+   "from_name": "rm_mansion_hallway_east_2",
+   "to": null,
+   "to_name": null,
+   "via": "obj_mansion_hall_bedroom_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 246,
+   "from_name": "0.4",
+   "to": 245,
+   "to_name": "rm_mansion_hallway_east_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    140,
+    510
+   ]
+  },
+  {
+   "from": 247,
+   "from_name": "rm_mansion_hallway_west_2",
+   "to": null,
+   "to_name": null,
+   "via": "obj_locked_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 247,
+   "from_name": "rm_mansion_hallway_west_2",
+   "to": 243,
+   "to_name": "rm_mansion_hallway_west",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    170
+   ]
+  },
+  {
+   "from": 247,
+   "from_name": "rm_mansion_hallway_west_2",
+   "to": 249,
+   "to_name": "rm_mansion_kanakos_room",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    228,
+    205
+   ]
+  },
+  {
+   "from": 247,
+   "from_name": "rm_mansion_hallway_west_2",
+   "to": 241,
+   "to_name": "rm_mansion_entrance",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    60,
+    160
+   ]
+  },
+  {
+   "from": 247,
+   "from_name": "rm_mansion_hallway_west_2",
+   "to": null,
+   "to_name": null,
+   "via": "obj_mansion_hall_study_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 248,
+   "from_name": "rm_mansion_office",
+   "to": 247,
+   "to_name": "rm_mansion_hallway_west_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    215,
+    130
+   ]
+  },
+  {
+   "from": 249,
+   "from_name": "rm_mansion_kanakos_room",
+   "to": 247,
+   "to_name": "rm_mansion_hallway_west_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    110,
+    85
+   ]
+  },
+  {
+   "from": 250,
+   "from_name": "rm_mansion_study",
+   "to": 242,
+   "to_name": "Kotatsu",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    200
+   ]
+  },
+  {
+   "from": 251,
+   "from_name": "path",
+   "to": 116,
+   "to_name": "rm_dunes_30b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    210,
+    40
+   ]
+  },
+  {
+   "from": 251,
+   "from_name": "path",
+   "to": 241,
+   "to_name": "rm_mansion_entrance",
+   "via": "obj_doorway_cerobas_mansion",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    360
+   ]
+  },
+  {
+   "from": 251,
+   "from_name": "path",
+   "to": 258,
+   "to_name": "rm_dunes_30d",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    560
+   ]
+  },
+  {
+   "from": 252,
+   "from_name": "fg",
+   "to": 258,
+   "to_name": "rm_dunes_30d",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    40
+   ]
+  },
+  {
+   "from": 253,
+   "from_name": "rm_newhome_01",
+   "to": 254,
+   "to_name": "rm_newhome_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1300,
+    1590
+   ]
+  },
+  {
+   "from": 254,
+   "from_name": "rm_newhome_02",
+   "to": 253,
+   "to_name": "rm_newhome_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    90
+   ]
+  },
+  {
+   "from": 254,
+   "from_name": "rm_newhome_02",
+   "to": 255,
+   "to_name": "rm_newhome_03",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    680
+   ]
+  },
+  {
+   "from": 254,
+   "from_name": "rm_newhome_02",
+   "to": 257,
+   "to_name": "rm_newhome_02b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    260
+   ]
+  },
+  {
+   "from": 254,
+   "from_name": "rm_newhome_02",
+   "to": null,
+   "to_name": null,
+   "via": "obj_newhome_locked_doors",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 255,
+   "from_name": "rm_newhome_03",
+   "to": 254,
+   "to_name": "rm_newhome_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    800,
+    40
+   ]
+  },
+  {
+   "from": 256,
+   "from_name": "buildings",
+   "to": null,
+   "to_name": null,
+   "via": "obj_exit",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 257,
+   "from_name": "rm_newhome_02b",
+   "to": 254,
+   "to_name": "rm_newhome_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1300,
+    780
+   ]
+  },
+  {
+   "from": 258,
+   "from_name": "rm_dunes_30d",
+   "to": 251,
+   "to_name": "path",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    70,
+    40
+   ]
+  },
+  {
+   "from": 258,
+   "from_name": "rm_dunes_30d",
+   "to": 252,
+   "to_name": "fg",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    400
+   ]
+  },
+  {
+   "from": 260,
+   "from_name": "forestfront",
+   "to": 72,
+   "to_name": "rm_snowdin_22_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    98,
+    25
+   ]
+  },
+  {
+   "from": 260,
+   "from_name": "forestfront",
+   "to": null,
+   "to_name": null,
+   "via": "obj_locked_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 262,
+   "from_name": "doorframe",
+   "to": null,
+   "to_name": null,
+   "via": "obj_truelab_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 263,
+   "from_name": "rm_castle_01",
+   "to": 264,
+   "to_name": "rm_castle_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    125
+   ]
+  },
+  {
+   "from": 264,
+   "from_name": "rm_castle_02",
+   "to": 263,
+   "to_name": "rm_castle_01",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1890,
+    200
+   ]
+  },
+  {
+   "from": 264,
+   "from_name": "rm_castle_02",
+   "to": 265,
+   "to_name": "floorandwalls",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    170,
+    500
+   ]
+  },
+  {
+   "from": 265,
+   "from_name": "floorandwalls",
+   "to": 264,
+   "to_name": "rm_castle_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    1240,
+    130
+   ]
+  },
+  {
+   "from": 265,
+   "from_name": "floorandwalls",
+   "to": 266,
+   "to_name": "rm_castle_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    150,
+    30
+   ]
+  },
+  {
+   "from": 265,
+   "from_name": "floorandwalls",
+   "to": 268,
+   "to_name": "rm_castle_throne_room",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    160,
+    560
+   ]
+  },
+  {
+   "from": 266,
+   "from_name": "rm_castle_04",
+   "to": 265,
+   "to_name": "floorandwalls",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    670,
+    500
+   ]
+  },
+  {
+   "from": 266,
+   "from_name": "rm_castle_04",
+   "to": 267,
+   "to_name": "rm_castle_05",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    80,
+    150
+   ]
+  },
+  {
+   "from": 267,
+   "from_name": "rm_castle_05",
+   "to": 266,
+   "to_name": "rm_castle_04",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    150,
+    500
+   ]
+  },
+  {
+   "from": 268,
+   "from_name": "rm_castle_throne_room",
+   "to": 265,
+   "to_name": "floorandwalls",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    390,
+    130
+   ]
+  },
+  {
+   "from": 275,
+   "from_name": "rm_steamworks_macro_froggit_room",
+   "to": 167,
+   "to_name": "npc",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    450,
+    155
+   ]
+  },
+  {
+   "from": 275,
+   "from_name": "rm_steamworks_macro_froggit_room",
+   "to": null,
+   "to_name": null,
+   "via": "obj_macro_froggit_room_door",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 118,
+   "to_name": "rm_dunes_30_house_2",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    255,
+    120
+   ]
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": null,
+   "to_name": null,
+   "via": "obj_knockable_door_dunes_30",
+   "rule": "unresolved",
+   "evidence_file": null,
+   "evidence_kind": "no-rule"
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 117,
+   "to_name": "rm_dunes_30_house_1",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    100,
+    160
+   ]
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 119,
+   "to_name": "rm_dunes_30_house_3",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    150,
+    180
+   ]
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 116,
+   "to_name": "rm_dunes_30b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    200,
+    540
+   ]
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 125,
+   "to_name": "rm_dunes_35b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    180,
+    200
+   ]
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 120,
+   "to_name": "rm_dunes_31",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    120
+   ]
+  },
+  {
+   "from": 276,
+   "from_name": "rm_dunes_30",
+   "to": 114,
+   "to_name": "rm_dunes_29b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    570,
+    150
+   ]
+  },
+  {
+   "from": 277,
+   "from_name": "rm_steamworks_06_b",
+   "to": 278,
+   "to_name": "Vents",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    790,
+    130
+   ]
+  },
+  {
+   "from": 277,
+   "from_name": "rm_steamworks_06_b",
+   "to": 153,
+   "to_name": "rm_steamworks_06",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    30,
+    220
+   ]
+  },
+  {
+   "from": 278,
+   "from_name": "Vents",
+   "to": 155,
+   "to_name": "rm_steamworks_08",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    370,
+    440
+   ]
+  },
+  {
+   "from": 278,
+   "from_name": "Vents",
+   "to": 277,
+   "to_name": "rm_steamworks_06_b",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    32,
+    130
+   ]
+  },
+  {
+   "from": 279,
+   "from_name": "Assets",
+   "to": 165,
+   "to_name": "rm_steamworks_17",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    340
+   ]
+  },
+  {
+   "from": 280,
+   "from_name": "rm_steamworks_25_b",
+   "to": 177,
+   "to_name": "rm_steamworks_26",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    485,
+    480
+   ]
+  },
+  {
+   "from": 280,
+   "from_name": "rm_steamworks_25_b",
+   "to": 176,
+   "to_name": "rm_steamworks_25",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    520
+   ]
+  },
+  {
+   "from": 281,
+   "from_name": "rm_steamworks_30_b",
+   "to": 188,
+   "to_name": "rm_steamworks_31",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    620,
+    320
+   ]
+  },
+  {
+   "from": 281,
+   "from_name": "rm_steamworks_30_b",
+   "to": 190,
+   "to_name": "rm_steamworks_30",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    40,
+    150
+   ]
+  },
+  {
+   "from": 283,
+   "from_name": "rm_dunes_42_d",
+   "to": 139,
+   "to_name": "rm_dunes_42_c",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    82,
+    90
+   ]
+  },
+  {
+   "from": 284,
+   "from_name": "rm_snowdin_secret_to_everybody",
+   "to": 51,
+   "to_name": "rm_snowdin_08_yellow",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    190,
+    360
+   ]
+  },
+  {
+   "from": 285,
+   "from_name": "rm_dunes_secret",
+   "to": 78,
+   "to_name": "rm_dunes_02",
+   "via": "obj_doorway",
+   "rule": "cc-nextroom",
+   "evidence_file": "instance_creation_code",
+   "evidence_kind": "cc-nextroom",
+   "landing": [
+    508,
+    185
+   ]
+  }
+ ],
+ "stats": {
+  "instances_raw": 1054,
+  "instances_dedup": 526,
+  "instances_by_src": {
+   "gameobjects": 527,
+   "layer": 527
+  },
+  "markers": 0,
+  "landing_ok": 0,
+  "edges": 491,
+  "resolved": 444,
+  "unresolved": 47,
+  "to_out_of_range": 0,
+  "by_via": {
+   "obj_doorway": 441,
+   "obj_door": 1,
+   "obj_fakedoorway": 1,
+   "obj_hiddenentrance": 1,
+   "obj_darkruins_doorExit": 1,
+   "obj_darkruins_doorLight": 1,
+   "obj_drexit": 1,
+   "obj_doorway_blocker_dalvshouse": 1,
+   "obj_dalvDoor": 3,
+   "obj_doorway_snowdin_warp": 1,
+   "obj_honeydew_entrance": 1,
+   "obj_dunes_2_gerson_door": 1,
+   "obj_dunes_06_cave_entrance": 1,
+   "obj_dunes_08b_fence_door": 1,
+   "obj_sorter_exit": 1,
+   "obj_knockable_door_dunes_30": 2,
+   "obj_market_exit": 1,
+   "obj_dunes_37_barn_door": 1,
+   "obj_wild_east_exit_gate": 1,
+   "obj_dunes_42_cellar_door": 1,
+   "obj_dunes_42_door": 1,
+   "obj_locked_door": 5,
+   "obj_steamworks_03_door": 1,
+   "obj_steamworks_04_door": 1,
+   "obj_steamworks_05c_locker_door": 1,
+   "obj_steamworks_13_axis_door": 1,
+   "obj_steamworks_31_door": 1,
+   "obj_steamworks_31_door_left": 1,
+   "obj_steamworks_chem_07_door": 1,
+   "obj_chem_05_door": 1,
+   "obj_complex_1c_doors": 3,
+   "obj_steamworks_factory_02_door": 1,
+   "obj_room_controller_mansion_entrance": 1,
+   "obj_mansion_entrance_door": 1,
+   "obj_mansion_entrance_doors": 1,
+   "obj_mansion_hall_bedroom_door": 1,
+   "obj_mansion_hall_study_door": 1,
+   "obj_doorway_cerobas_mansion": 1,
+   "obj_newhome_locked_doors": 1,
+   "obj_exit": 1,
+   "obj_truelab_door": 1,
+   "obj_macro_froggit_room_door": 1
+  },
+  "by_evidence": {
+   "cc-nextroom": 443,
+   "no-rule": 47,
+   "uncond": 1
+  },
+  "components": 64,
+  "largest_component": 128,
+  "top_sizes": [
+   [
+    15,
+    128
+   ],
+   [
+    10,
+    63
+   ],
+   [
+    35,
+    11
+   ],
+   [
+    17,
+    8
+   ],
+   [
+    56,
+    6
+   ],
+   [
+    7,
+    5
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    51,
+    4
+   ]
+  ]
+ }
+}
