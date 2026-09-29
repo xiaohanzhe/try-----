@@ -1,0 +1,68 @@
+===== 第65轮 记忆复检 =====
+
+① 体积 / 编码
+  [PASS] 速查本 js_len ≤ 10000                                       js_len=9774 margin=226
+  [PASS] 速查本 js_len ≤ 9800（留余量）                                   js_len=9774
+  [PASS] 速查本 无 BOM                                                
+  [PASS] 速查本 无 U+FFFD                                             
+  [PASS] 详版 无 BOM                                                 
+  [PASS] 详版 无 U+FFFD                                              
+  [PASS] 日记 无 BOM                                                 
+  [PASS] 日记 无 U+FFFD                                              
+  [PASS] 负控制 · U+FFFD 检出器可用                                       
+
+② 结构 / 指针可达
+  [PASS] 详版存在 §61 主标题                                             
+  [PASS] 详版有 §61.1                                                
+  [PASS] 详版有 §61.2                                                
+  [PASS] 详版有 §61.3                                                
+  [PASS] 详版有 §61.4                                                
+  [PASS] 详版有 §61.5                                                
+  [PASS] 详版有 §61.6                                                
+  [PASS] 详版有 §61.7                                                
+  [PASS] 详版有 §61.8                                                
+  [PASS] 详版有 §61.9                                                
+  [PASS] 详版有 §61.10                                               
+  [PASS] 详版有 §61.11                                               
+  [PASS] 负控制 · 不存在的 §99.9 应判缺失                                    
+
+③ 逐令牌回验（速查本新令牌 ← 事实）
+  [PASS] token 速查本 §0–§61 指针 在                                    repr='§0–§61'
+  [PASS] token 速查本 §14–§61 指针 在                                   repr='§14–§61'
+  [PASS] token 速查本轮次区间 26–65 在                                    repr='**26–65**'
+  [PASS] token 速查本 65 索引条目 在                                      repr='65 黄魂并入数据面'
+  [PASS] token 速查本 大图文件名 在                                        repr='bigmap65.json'
+  [PASS] token 速查本 §61.9 引用 在                                     repr='§61.9'
+  [PASS] token 速查本 §61.2.2 引用 在                                   repr='§61.2.2'
+  [PASS] token 速查本 黄魂 nextroom 事实 在                               repr='nextroom'
+  [PASS] token 速查本 obj_doorA~D 偏移 在                               repr='obj_doorA~D'
+  [PASS] token 速查本 §7 必读含 §61 在                                   repr='§60/§61'
+  [PASS] token 旧口径已删除（"数据未动"） 不在                                  repr='**数据未动**'
+  [PASS] token 旧口径已删除（obj_doorway/obj_exit） 不在                    repr='`obj_doorway`/`obj_exit`'
+
+④ 详版令牌
+  [PASS] 详版含 'bigmap65.json'                                      
+  [PASS] 详版含 'bigmap65_ry_overlay.json'                           
+  [PASS] 详版含 'gml_evidence65'                                     
+  [PASS] 详版含 'recheck65.py'                                       
+  [PASS] 详版含 'nextroom'                                           
+  [PASS] 详版含 'room_next'                                          
+  [PASS] 详版含 'obj_door_s_musfade'                                 
+  [PASS] 详版含 '625'                                                
+  [PASS] 详版含 '988'                                                
+  [PASS] 详版含 '125'                                                
+  [PASS] 详版含 '287'                                                
+  [PASS] 详版含 '338'                                                
+  [PASS] 详版含 '358'                                                
+  [PASS] 详版含 '5 个「基础房'                                            
+
+⑤ 日记
+  [PASS] 日记存在且 CRLF 一致                                            CRLF=80 LF-only=0
+  [PASS] 日记含 '第65轮'                                               
+  [PASS] 日记含 'bigmap65.json'                                      
+  [PASS] 日记含 '62 / 62'                                            
+  [PASS] 日记含 'nextroom'                                           
+  [PASS] 日记含 '47'                                                 
+  [PASS] 日记含 '分量数守恒'                                              
+
+===== 合计 55 项：PASS 55 / FAIL 0 ⇒ ALL PASS =====
