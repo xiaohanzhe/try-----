@@ -109,10 +109,24 @@ check('A7  model_policy 的 note 里点明了"再建一个 7B = 各常驻一份 
 _files = sorted(f for f in os.listdir(PERSONA_DIR) if f.endswith('.txt')) \
     if os.path.isdir(PERSONA_DIR) else []
 _lens = [len(read_text(os.path.join(PERSONA_DIR, f))) for f in _files]
-check('A8  13 份人设在位（A5 的"跟随配置"要有东西可跟）', len(_files) == 13,
-      'n=%d %s' % (len(_files), _files))
-check('A9  人设字数量级 2000~9000（★C 段的 2533~3905 token 就是由这些字产生的）',
-      bool(_lens) and all(2000 <= x <= 9000 for x in _lens),
+# ⚠️ 判据修正记录（第64轮）：A8 / A9 原先**写死 13 份**（第55/62轮时的真实份数）。
+#    第64轮把用户 30 万字原文里其余 37 份一并入仓（13 → 50）⇒ 写死份数 = 过窄判据。
+#    改法（保留鉴别力，不靠"改成 50"这种同样会过期的写法）：
+#      A8  份数**下限** ≥ 13（不许被削）+ **每条 registry persona 都真在磁盘上**
+#          （后者才是"A5 的跟随配置要有东西可跟"的硬约束）；
+#      A9  字数量级区间**放宽上限**到 12000 —— 实测 50 份的分布是 min=3033 /
+#          max=10920（`ut_flowey`，Undertale 那份最长）/ 中位=6248，
+#          没有一份 < 2500 ⇒ 下限 2000 仍然有鉴别力（砍到空壳会被抓到）。
+_persona_refs = [n.get('persona') for n in _npcs if n.get('persona')]
+_missing_p = [p for p in _persona_refs
+              if p != '../ralsei_persona.md'
+              and not os.path.isfile(os.path.join(NPC_DIR, p))]
+check('A8  人设份数 ≥ 13 且注册表里每条 persona 都在磁盘上（不写死份数）',
+      len(_files) >= 13 and not _missing_p,
+      'n=%d 缺失=%r' % (len(_files), _missing_p))
+check('A9  人设字数量级 2000~12000（★C 段的 token 就是由这些字产生的；'
+      '第64轮最长 ut_flowey=10920）',
+      bool(_lens) and all(2000 <= x <= 12000 for x in _lens),
       'min=%d max=%d avg=%d' % (min(_lens), max(_lens), sum(_lens) // len(_lens)))
 
 

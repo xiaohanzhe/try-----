@@ -125,10 +125,14 @@ check('B7', all(n.needs_setting == (not n.persona) for n in REG.main_npcs()),
       % (len(REG.main_npcs()),
          sorted(n.id for n in REG.main_npcs() if n.needs_setting == bool(n.persona))))
 # 配一条**真值锚点**：光有互逆还不够（全 True + 全无 persona 也能满足）。
-# 用户原话「其余我没提到的人物就先不做」⇒ 仍等的正好是这三位。
+# 用户原话「其余我没提到的人物就先不做」⇒ 仍等的正好是还没交设定的人。
+# ★★ 第64轮再改判据：用户交了新的《其余人物设定.txt》（785,360 字节），
+#   Spamton / Mike 两份已到并已接进注册表 ⇒ 待设定集合从
+#   {knight, mike, spamton} 缩到 {knight}。这不是放宽（判据仍要求**恰好等于**，
+#   不是"包含"），是**事实变了**；剩下的 Roaring Knight（咆哮骑士）原文里没有。
 check('B7b', sorted(n.id for n in REG.main_npcs() if n.needs_setting)
-      == ['knight', 'mike', 'spamton'],
-      '仍未拿到设定 = %r（第55轮：13 份已装，剩这三人等用户给）'
+      == ['knight'],
+      '仍未拿到设定 = %r（第64轮：Spamton/Mike 已到，剩咆哮骑士等用户给）'
       % sorted(n.id for n in REG.main_npcs() if n.needs_setting))
 
 # 注册表与磁盘 JSON 一致（不靠内存自证）

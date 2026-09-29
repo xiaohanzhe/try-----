@@ -8,7 +8,9 @@
 段一览（每段都配正/负控制）
 --------------------------
   A 零依赖纪律（AST，含 try/if 里的模块级 import）
-  P 人设装载（13 份 + 索引 + 磁盘一致 + 无 BOM / 无 U+FFFD / 无 markdown）
+  P 人设装载（索引 ↔ 磁盘 ↔ 装载 三者自洽 + 无 BOM / 无 U+FFFD / 无 markdown）
+      ★ 第64轮：人设 13 份 → 50 份（用户 30 万字原文里其余 37 份入仓）⇒
+        P 段的份数判据已由"写死 13"改为**不变式**，见 P1 处的判据修正记录。
   R 注册表（条数 / 分层 / 模型句柄 / persona 字段 / flowery 命名修正）
   M 独立记忆不串味（★ 用户口径「不要搞混了」—— 正面 + 反面成对断言）
   F 跟随决策 `decide_follow` 正负控制
@@ -166,14 +168,31 @@ check('A4 负控制：白名单判据对 "main" / 业务模块会报红（不是
 print('== P 人设装载 ==')
 idx = P.load_index(assets_dir=ASSETS)
 recs = (idx or {}).get('personas') or []
-check('P1 索引可读且登记 13 份', len(recs) == 13, '%d 份' % len(recs))
-check('P2 索引登记的 id 与 role 文件一一对应',
-      sorted(r['id'] for r in recs) ==
-      sorted(['kris', 'susie', 'asgore', 'toriel', 'lancer', 'king', 'queen',
-              'berdly', 'noelle', 'tenna', 'rouxls', 'gerson', 'flowery']),
-      str(sorted(r['id'] for r in recs)))
 _pdir = P.persona_dir(assets_dir=ASSETS)
 check('P3 人设目录存在', os.path.isdir(_pdir), _pdir)
+
+# ⚠️ 判据修正记录（第64轮）——P1 / P2 / P8 原先**写死 13 份**（第55轮用户只交了 13 份）。
+#    第64轮把用户 30 万字原文里**其余 37 份**一并入仓（13 → 50）⇒ "写死份数"这条形状
+#    立刻变成**过窄判据**（事实变了就报红，而且报的是假问题）。
+#    真正该守的从来不是"13"这个数字，而是 **索引 / 磁盘 / 装载 三者自洽**：
+#      P1  索引登记的 id 集合 == 磁盘上的 .txt 集合（去扩展名）
+#      P2  每条记录的 id == 自己 `file` 的 basename（防两人指同一份档）
+#      P8  装载出来的份数 == 索引登记的份数
+#    这样无论以后加多少份都成立，且照样能抓到"登记了但文件没落盘 / 落了盘但没登记 /
+#    两个 id 共用一个文件"这三类真错。★ 本轮的教训：**判据过窄 = 会误报**，与
+#    "恒真判据"同样是元级坑（详见 report §5）。
+_disk_txt = sorted(f for f in os.listdir(_pdir) if f.endswith('.txt')) \
+    if os.path.isdir(_pdir) else []
+check('P1 索引可读，且登记的 id 与磁盘上的 .txt **一一对应**（不写死份数）',
+      bool(recs) and sorted(r['id'] for r in recs) == [f[:-4] for f in _disk_txt],
+      '索引 %d 份 / 磁盘 %d 个 .txt' % (len(recs), len(_disk_txt)))
+_pairs = [(r['id'], os.path.basename(r.get('file') or '')) for r in recs]
+_bad_pair = [p for p in _pairs if not p[1].endswith('.txt') or p[1][:-4] != p[0]]
+check('P2 每条记录的 id == 自己 file 的 basename（去扩展名）—— 防两人指同一份档',
+      not _bad_pair
+      and len({p[0] for p in _pairs}) == len(_pairs)
+      and len({p[1] for p in _pairs}) == len(_pairs),
+      '异常=%r' % (_bad_pair,))
 _missing, _empty, _bom, _bad = [], [], [], []
 for r in recs:
     fp = os.path.join(_pdir, os.path.basename(r.get('file') or ''))
@@ -191,16 +210,27 @@ for r in recs:
     for mark in ('**', '##', '```'):
         if mark in txt:
             _bad.append('%s:%s' % (r['id'], mark))
-check('P4 13 份文件都在磁盘上', not _missing, str(_missing))
-check('P5 13 份正文都非空', not _empty, str(_empty))
+check('P4 索引登记的文件都在磁盘上（%d 份）' % len(recs), not _missing, str(_missing))
+check('P5 登记的正文都非空', not _empty, str(_empty))
 check('P6 无 BOM', not _bom, str(_bom))
 check('P7 无 U+FFFD / 无 markdown 标记', not _bad, str(_bad))
 
 _loaded = P.load_personas(assets_dir=ASSETS, index=idx)
-check('P8 load_personas 取到 13 份正文', len(_loaded) == 13, '%d' % len(_loaded))
-check('P9 persona_text 对没装的 id 返回 None（不是空串）',
-      P.persona_text('mike', personas=_loaded) is None
-      and P.persona_text('susie', personas=_loaded) is not None)
+check('P8 load_personas 取到的份数 == 索引登记的份数（不写死份数）',
+      len(_loaded) == len(recs), '%d / 登记 %d' % (len(_loaded), len(recs)))
+# ⚠️ 判据修正记录（第64轮）：本条原先拿 `'mike'` 当"没装设定的样本"。第64轮 mike
+#    装上了 ⇒ 这个样本失效。改成**不依赖具体谁没装**的两条腿：
+#      ① 负控制用**根本不存在的 id**（`__no_such_npc__`）—— 永远不会因为"谁装上了"而失效；
+#      ② 再从**注册表实时**取"当前确实没装 persona 的 id"，逐个断言也返回 None
+#         （这样无论用户以后交上来多少份，这一条都不用再改）。
+_unset_ids = sorted(n.id for n in S.load_registry().all() if n.persona is None)
+check('P9 persona_text 对**没装**的 id 返回 None（不是空串）：'
+      '负控制=不存在的 id + 实时取自注册表的未装 id',
+      P.persona_text('__no_such_npc__', personas=_loaded) is None
+      and bool(_unset_ids)
+      and all(P.persona_text(i, personas=_loaded) is None for i in _unset_ids)
+      and P.persona_text('susie', personas=_loaded) is not None,
+      '不存在的 id ⇒ None；注册表里 %d 个未装 id 全 ⇒ None' % len(_unset_ids))
 _s = _loaded.get('susie') or ''
 check('P10 载入的正文里带用户给的节标题（【角色身份】等）',
       '【' in _s, _s[:40].replace('\n', '|'))
@@ -234,21 +264,37 @@ check('R5 纯 NPC 同样不配模型句柄（走内置短对话）',
 _NPCMODEL_HEAD = 'ralsei-npc:'
 _p_with = [n for n in reg.all() if n.persona]
 _p_without = [n for n in reg.all() if not n.persona]
-check('R6 persona 字段贯通：共 14 条（含 Ralsei 自己那份 md）',
-      len(_p_with) == 14, '%d' % len(_p_with))
+# ⚠️ 判据修正记录（第64轮）：本条原先写死 `== 14 条`（13 份 txt + Ralsei 那份 md）。
+#    第64轮人设 13 → 50，且 spamton / mike 接上 persona ⇒ 数字变成 16。
+#    数字本身不是要守的东西；要守的是**"Ralsei 自己那份 md 有且只有一个，
+#    其余 persona 一律指向 `persona/` 下的 txt"** 这条结构不变式（+ 份数不被削的下限）。
+_md_persona = [n for n in reg.all() if n.persona == '../ralsei_persona.md']
+_txt_persona = [n for n in reg.all()
+                if n.persona and n.persona != '../ralsei_persona.md']
+check('R6 persona 贯通：恰好 1 条指向 Ralsei 自己那份 md，'
+      '其余一律 persona/*.txt（不写死条数）',
+      len(_md_persona) == 1
+      and all(n.persona.startswith('persona/') for n in _txt_persona)
+      and len(_txt_persona) >= 13,
+      'md=%d txt=%d' % (len(_md_persona), len(_txt_persona)))
 check('R7 needs_setting 与 persona 归实一致（persona is None ⇔ 还在等设定）',
       all(bool(n.needs_setting) == (n.persona is None) for n in reg.all()))
 # ⚠️ 判据修正记录（第55轮）：本条原先拿**全部 35 条**去比，报红后查明是**判据过窄** ——
 #    18 个纯 NPC（hammerguy / sign / …）按设计就是**没有** persona 的（走内置 4~10 句），
 #    所以"没 persona"在一半条目上是**正常状态**。真正该守的是：
-#    **主线里**persona 为 None 的，只能是用户没给设定的那三个人。
+#    **主线里**persona 为 None 的只能是"用户还没给设定的"那些人。
+# ⚠️ 判据修正记录（第64轮）：本条原先断言"没设定的正是 mike / knight / spamton 三人"。
+#    第64轮用户把 Spamton / Mike 的设定交上来了（已接线）⇒ **事实变了**，
+#    于是这条从"三人"收窄成"只剩 knight"（咆哮骑士，用户还没给）。
+#    ★ 这不是"放宽判据"，而是**真值锚点随事实更新** —— 判据的形状（名单精确相等）
+#      一个字没动；变的只是被期待的那个事实。与第49轮 `B7b` 是同一套做法。
 _main_no_persona = sorted(n.id for n in reg.main_npcs() if n.persona is None)
-check('R8 ★ 主线里"还在等设定"的正是用户没给的那三人（mike / knight / spamton）',
-      _main_no_persona == ['knight', 'mike', 'spamton'], str(_main_no_persona))
+check('R8 ★ 主线里"还在等设定"的只剩 knight（第64轮：Spamton/Mike 已到）',
+      _main_no_persona == ['knight'], str(_main_no_persona))
 check('R8b 纯 NPC 一律没有 persona（按设计走内置短对话）',
       all(n.persona is None for n in reg.plain_npcs()))
 _persona_files = [n.persona for n in _p_with if n.persona != '../ralsei_persona.md']
-check('R9 13 条 persona 相对路径都在磁盘上',
+check('R9 persona 相对路径都在磁盘上（%d 条）' % len(_persona_files),
       all(os.path.isfile(os.path.join(NPC_DIR, f)) for f in _persona_files),
       str([f for f in _persona_files
            if not os.path.isfile(os.path.join(NPC_DIR, f))]))
@@ -506,10 +552,11 @@ for _a in ('animation_timer', 'ai_timer', 'stats_timer', 'dialogue_init_timer',
     except Exception:
         pass
 
-check('W11 真机：NPC 服务建起来了（注册表 35 / 人设 13 / 别名表非空）',
+check('W11 真机：NPC 服务建起来了（注册表 35 / 人设数 == 索引登记数 / 别名表非空）',
       pet.npc_registry is not None and len(pet.npc_registry) == 35
-      and len(pet.npc_personas) == 13 and len(pet._npc_aliases) > 0,
-      '人设 %d 份，别名 %d 条' % (len(pet.npc_personas), len(pet._npc_aliases)))
+      and len(pet.npc_personas) == len(recs) and len(pet._npc_aliases) > 0,
+      '人设 %d 份（索引登记 %d），别名 %d 条'
+      % (len(pet.npc_personas), len(recs), len(pet._npc_aliases)))
 check('W12 真机：跟随板建起来了', pet.npc_followers is not None)
 check('W13 真机：NPC 记忆的落盘目录以 npc_memory 结尾',
       pet.npc_memory is not None and pet.npc_memory.root is not None
@@ -541,8 +588,18 @@ check('W18 真机：susie 的 system prompt 以**她自己的**人设开头',
       repr(_prompt[:30]))
 check('W19 ★ susie 的 prompt 里**不含** Ralsei 人设的特征句（不串味）',
       '你是《Deltarune》中的 Ralsei' not in _prompt)
-check('W20 真机：没装设定的人（mike）prompt 为空 ⇒ 会拒绝说话',
-      pet.npc_system_prompt('mike') == '')
+# ⚠️ 判据修正记录（第64轮）：原 W20 / W22 拿 `mike` 当"没装设定的样本"。第64轮 mike
+#    装上了 ⇒ ① W20（prompt == ''）会直接翻红；② **W22 更阴**：它现在落在
+#    "模型不可用"那条分支上（夹具 `api_enabled=False`）而**照样返回 False** ⇒
+#    判据**变成恒真**（谁都过），但名字还写着"没装设定的 mike" ⇒ 典型的
+#    "判据名与事实脱节 + 恒真"（本项目的头号坑）。
+#    改成**实时从注册表取"当前确实没装 persona 的那一个"**（main 优先，其次纯 NPC）。
+#    这样用户以后交多少份设定都不用再动这两条，且永远落在真正的"还没装设定"分支上。
+_unset_main_w = sorted(n.id for n in pet.npc_registry.main_npcs() if n.persona is None)
+_unset_any_w = sorted(n.id for n in pet.npc_registry.all() if n.persona is None)
+_probe_unset = (_unset_main_w or _unset_any_w or ['__no_such_npc__'])[0]
+check('W20 真机：没装设定的人（当前=%s）prompt 为空 ⇒ 会拒绝说话' % _probe_unset,
+      pet.npc_system_prompt(_probe_unset) == '')
 
 # —— npc_speak：拒绝路径 + 记忆归属 ——
 # ★ 受控夹具：把本地模型**关掉**，让"模型不可用"这条分支真的被走到。
@@ -561,9 +618,10 @@ check('W21 拒绝：未登记的 id ⇒ False + 回调 None',
       pet.npc_speak('nobody-xyz', '在吗',
                     lambda r: _calls.append(('unknown', r))) is False
       and _calls[-1] == ('unknown', None))
-check('W22 拒绝：没装设定的 mike ⇒ False + 回调 None',
-      pet.npc_speak('mike', '在吗', lambda r: _calls.append(('mike', r))) is False
-      and _calls[-1] == ('mike', None))
+check('W22 拒绝：没装设定的 %s ⇒ False + 回调 None' % _probe_unset,
+      pet.npc_speak(_probe_unset, '在吗',
+                    lambda r: _calls.append((_probe_unset, r))) is False
+      and _calls[-1] == (_probe_unset, None))
 _n_before = pet.npc_memory.count_of('susie')
 _k_before = pet.npc_memory.count_of('kris')
 _r = pet.npc_speak('susie', '我最喜欢巧克力', lambda t: _calls.append(('susie', t)))
