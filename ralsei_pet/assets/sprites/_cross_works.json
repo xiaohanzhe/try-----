@@ -1,0 +1,4492 @@
+{
+ "schema_version": 1,
+ "round": 71,
+ "why": "第70轮注册表 96 人里，跨作品 61 人**有名字没画**（assets/sprites/ 此前只有 ghost/）。本轮把 ut/hy/ot/os 四作的贴图落地。",
+ "how": {
+  "ut": "UTMT 定向导出 game.droid 的指定 sprite，逐帧 PNG",
+  "hy": "同上（黄魂 game.droid）",
+  "ot": "Aseprite 图集按 json 的 frame 矩形切片",
+  "os": "MonoGame 未压缩 XNB 解 Texture2D（raw RGBA），逐文件复核 fmt/size/EOF 三恒等式"
+ },
+ "size_semantics": {
+  "png": "★ 权威：帧的实际像素尺寸（绘图用这个）。由 PNG IHDR 真读。",
+  "gms_meta": "GameMaker 的 sprite Width/Height，是**设计画布含 margin**，与导出 PNG 不等 —— UT 侧 169 张里 141 张不等（83%）、黄魂侧 163 张里 122 张不等（75%）。只作参考，**不要拿来算绘制位置**。"
+ },
+ "plan": [
+  {
+   "id": "os_niko",
+   "work": "os",
+   "declared": "niko",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_the_world_machine",
+   "work": "os",
+   "declared": "en",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_the_author",
+   "work": "os",
+   "declared": "clovers",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_prophetbot",
+   "work": "os",
+   "declared": "blue_npc_prophet",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_silver",
+   "work": "os",
+   "declared": "blue_npc_silver",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_rowbot",
+   "work": "os",
+   "declared": "contacts_rowbot",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_prototype",
+   "work": "os",
+   "declared": "blue_npc_prototype",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_calamus",
+   "work": "os",
+   "declared": "green_npc_calamus",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_alula",
+   "work": "os",
+   "declared": "green_npc_alula",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_maize",
+   "work": "os",
+   "declared": "contacts_maize",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_magpie",
+   "work": "os",
+   "declared": "green_npc_magpie",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_shepherd",
+   "work": "os",
+   "declared": "contacts_shepherd",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_cedric",
+   "work": "os",
+   "declared": "green_npc_cedric",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_lamplighter",
+   "work": "os",
+   "declared": "red_lamplighter",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_watcher",
+   "work": "os",
+   "declared": "contacts_watcher",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_ling",
+   "work": "os",
+   "declared": "contacts_ling",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_mason",
+   "work": "os",
+   "declared": "contacts_mason",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_kelvin",
+   "work": "os",
+   "declared": "contacts_kelvin",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_kip",
+   "work": "os",
+   "declared": "red_kip",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_george",
+   "work": "os",
+   "declared": "red_npc_george1",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "os_rue",
+   "work": "os",
+   "declared": "red_rue",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ut_toriel",
+   "work": "ut",
+   "declared": "spr_toriel_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_toriel_u",
+    "spr_toriel_l",
+    "spr_toriel_r"
+   ],
+   "absent": [],
+   "family_size": 51
+  },
+  {
+   "id": "ut_sans",
+   "work": "ut",
+   "declared": "spr_sans_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_sans_u",
+    "spr_sans_l",
+    "spr_sans_r"
+   ],
+   "absent": [],
+   "family_size": 51
+  },
+  {
+   "id": "ut_papyrus",
+   "work": "ut",
+   "declared": "spr_papyrus_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_papyrus_u",
+    "spr_papyrus_l",
+    "spr_papyrus_r"
+   ],
+   "absent": [],
+   "family_size": 52
+  },
+  {
+   "id": "ut_undyne",
+   "work": "ut",
+   "declared": "spr_undyne_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_undyne_u",
+    "spr_undyne_l",
+    "spr_undyne_r"
+   ],
+   "absent": [],
+   "family_size": 128
+  },
+  {
+   "id": "ut_alphys",
+   "work": "ut",
+   "declared": "spr_alphys_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_alphys_u",
+    "spr_alphys_l",
+    "spr_alphys_r"
+   ],
+   "absent": [],
+   "family_size": 67
+  },
+  {
+   "id": "ut_mettaton",
+   "work": "ut",
+   "declared": "spr_mettatonb",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ut_muffet",
+   "work": "ut",
+   "declared": "spr_muffet_overworld",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ut_napstablook",
+   "work": "ut",
+   "declared": "spr_napstablook_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_napstablook_u",
+    "spr_napstablook_l",
+    "spr_napstablook_r"
+   ],
+   "absent": [],
+   "family_size": 12
+  },
+  {
+   "id": "ut_monster_kid",
+   "work": "ut",
+   "declared": "spr_mkid_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_mkid_u",
+    "spr_mkid_l",
+    "spr_mkid_r"
+   ],
+   "absent": [],
+   "family_size": 29
+  },
+  {
+   "id": "ut_asgore",
+   "work": "ut",
+   "declared": "spr_asgore_d",
+   "declared_in_source": true,
+   "rule": "ut._d",
+   "also": [
+    "spr_asgore_u",
+    "spr_asgore_l",
+    "spr_asgore_r"
+   ],
+   "absent": [],
+   "family_size": 49
+  },
+  {
+   "id": "ut_flowey",
+   "work": "ut",
+   "declared": "spr_floweyfly",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ut_frisk",
+   "work": "ut",
+   "declared": "spr_f_maincharad",
+   "declared_in_source": true,
+   "rule": "ut.letter",
+   "also": [
+    "spr_f_maincharau",
+    "spr_f_maincharal",
+    "spr_f_maincharar"
+   ],
+   "absent": [],
+   "family_size": 4
+  },
+  {
+   "id": "ut_chara",
+   "work": "ut",
+   "declared": "spr_charad",
+   "declared_in_source": true,
+   "rule": "ut.letter",
+   "also": [
+    "spr_charau",
+    "spr_charal",
+    "spr_charar"
+   ],
+   "absent": [],
+   "family_size": 10
+  },
+  {
+   "id": "ut_gaster",
+   "work": "ut",
+   "declared": "spr_gasterblaster",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_ace",
+   "work": "hy",
+   "declared": "spr_ace_down_walk",
+   "declared_in_source": true,
+   "rule": "hy._down_walk",
+   "also": [
+    "spr_ace_up_walk",
+    "spr_ace_left_walk",
+    "spr_ace_right_walk"
+   ],
+   "absent": [],
+   "family_size": 11
+  },
+  {
+   "id": "hy_axis",
+   "work": "hy",
+   "declared": "spr_axis_down",
+   "declared_in_source": true,
+   "rule": "hy._down",
+   "also": [
+    "spr_axis_up",
+    "spr_axis_left",
+    "spr_axis_right"
+   ],
+   "absent": [],
+   "family_size": 57
+  },
+  {
+   "id": "hy_bowll",
+   "work": "hy",
+   "declared": "spr_bowll_body_normal",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_ceroba_ketsukane",
+   "work": "hy",
+   "declared": "spr_ceroba_down_walk",
+   "declared_in_source": true,
+   "rule": "hy._down_walk",
+   "also": [
+    "spr_ceroba_up_walk",
+    "spr_ceroba_left_walk",
+    "spr_ceroba_right_walk"
+   ],
+   "absent": [],
+   "family_size": 144
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "work": "hy",
+   "declared": "spr_chujin_npc",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_clover",
+   "work": "hy",
+   "declared": "spr_clover_casual",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_dalv",
+   "work": "hy",
+   "declared": "dalv_down",
+   "declared_in_source": true,
+   "rule": "hy._down",
+   "also": [
+    "dalv_up",
+    "dalv_left",
+    "dalv_right"
+   ],
+   "absent": [],
+   "family_size": 8
+  },
+  {
+   "id": "hy_ed",
+   "work": "hy",
+   "declared": "spr_ed_down_walk",
+   "declared_in_source": true,
+   "rule": "hy._down_walk",
+   "also": [
+    "spr_ed_up_walk",
+    "spr_ed_left_walk",
+    "spr_ed_right_walk"
+   ],
+   "absent": [],
+   "family_size": 17
+  },
+  {
+   "id": "hy_flowey",
+   "work": "hy",
+   "declared": "spr_flowey",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_guardener",
+   "work": "hy",
+   "declared": "spr_guardener_body",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_martlet",
+   "work": "hy",
+   "declared": "spr_martlet_down_talk",
+   "declared_in_source": true,
+   "rule": "hy._down_talk",
+   "also": [
+    "spr_martlet_up_talk",
+    "spr_martlet_left_talk",
+    "spr_martlet_right_talk"
+   ],
+   "absent": [],
+   "family_size": 219
+  },
+  {
+   "id": "hy_mooch",
+   "work": "hy",
+   "declared": "spr_mooch_down_walk",
+   "declared_in_source": true,
+   "rule": "hy._down_walk",
+   "also": [
+    "spr_mooch_up_walk",
+    "spr_mooch_left_walk",
+    "spr_mooch_right_walk"
+   ],
+   "absent": [],
+   "family_size": 11
+  },
+  {
+   "id": "hy_moray",
+   "work": "hy",
+   "declared": "spr_moray_down_walk",
+   "declared_in_source": true,
+   "rule": "hy._down_walk",
+   "also": [
+    "spr_moray_up_walk",
+    "spr_moray_left_walk",
+    "spr_moray_right_walk"
+   ],
+   "absent": [],
+   "family_size": 12
+  },
+  {
+   "id": "hy_sousborg",
+   "work": "hy",
+   "declared": "spr_sousborg_npc",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "hy_starlo",
+   "work": "hy",
+   "declared": "spr_starlo_down_walk",
+   "declared_in_source": true,
+   "rule": "hy._down_walk",
+   "also": [
+    "spr_starlo_up_walk",
+    "spr_starlo_left_walk",
+    "spr_starlo_right_walk"
+   ],
+   "absent": [],
+   "family_size": 47
+  },
+  {
+   "id": "ot_alphys",
+   "work": "ot",
+   "declared": "iocAlphysDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocAlphysUp",
+    "iocAlphysLeft",
+    "iocAlphysRight"
+   ],
+   "absent": [],
+   "family_size": 15
+  },
+  {
+   "id": "ot_asgore",
+   "work": "ot",
+   "declared": "iocAsgoreDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocAsgoreUp",
+    "iocAsgoreLeft",
+    "iocAsgoreRight"
+   ],
+   "absent": [],
+   "family_size": 18
+  },
+  {
+   "id": "ot_asriel_twinkly",
+   "work": "ot",
+   "declared": "iocAsrielDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocAsrielUp",
+    "iocAsrielLeft",
+    "iocAsrielRight"
+   ],
+   "absent": [],
+   "family_size": 40
+  },
+  {
+   "id": "ot_asriel_twinkly",
+   "work": "ot",
+   "declared": "iocTwinklyMain",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ot_kidd",
+   "work": "ot",
+   "declared": "iocKiddDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocKiddUp",
+    "iocKiddLeft",
+    "iocKiddRight"
+   ],
+   "absent": [],
+   "family_size": 24
+  },
+  {
+   "id": "ot_mettaton",
+   "work": "ot",
+   "declared": "iocMettatonDressIdle",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ot_muffet",
+   "work": "ot",
+   "declared": "ionFMuffet",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ot_napstablook",
+   "work": "ot",
+   "declared": "iocNapstablookBody",
+   "declared_in_source": true,
+   "rule": null,
+   "also": [],
+   "absent": [],
+   "family_size": 0
+  },
+  {
+   "id": "ot_papyrus",
+   "work": "ot",
+   "declared": "iocPapyrusDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocPapyrusUp",
+    "iocPapyrusLeft",
+    "iocPapyrusRight"
+   ],
+   "absent": [],
+   "family_size": 27
+  },
+  {
+   "id": "ot_sans",
+   "work": "ot",
+   "declared": "iocSansDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocSansUp",
+    "iocSansLeft",
+    "iocSansRight"
+   ],
+   "absent": [],
+   "family_size": 20
+  },
+  {
+   "id": "ot_toriel",
+   "work": "ot",
+   "declared": "iocTorielDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocTorielUp",
+    "iocTorielLeft",
+    "iocTorielRight"
+   ],
+   "absent": [],
+   "family_size": 20
+  },
+  {
+   "id": "ot_undyne",
+   "work": "ot",
+   "declared": "iocUndyneDown",
+   "declared_in_source": true,
+   "rule": "ot.Down",
+   "also": [
+    "iocUndyneUp",
+    "iocUndyneLeft",
+    "iocUndyneRight"
+   ],
+   "absent": [],
+   "family_size": 57
+  }
+ ],
+ "need": {
+  "ut": [
+   "bg_elevarmL",
+   "bg_elevarmR",
+   "bg_elevbelow",
+   "bg_elevbottom",
+   "bg_elevleg",
+   "bg_elevtop",
+   "bg_elevunit",
+   "spr_alphys_d",
+   "spr_alphys_l",
+   "spr_alphys_r",
+   "spr_alphys_u",
+   "spr_asgore_d",
+   "spr_asgore_l",
+   "spr_asgore_r",
+   "spr_asgore_u",
+   "spr_charad",
+   "spr_charal",
+   "spr_charar",
+   "spr_charau",
+   "spr_darkelevator_l",
+   "spr_darkelevator_r",
+   "spr_elevatordoor",
+   "spr_elevatordoor_vines",
+   "spr_elevatordoorframe",
+   "spr_elevatorgem_l",
+   "spr_elevatorgem_r",
+   "spr_elevatorpanel",
+   "spr_f_maincharad",
+   "spr_f_maincharal",
+   "spr_f_maincharar",
+   "spr_f_maincharau",
+   "spr_floweyfly",
+   "spr_gasterblaster",
+   "spr_mettatonb",
+   "spr_mkid_d",
+   "spr_mkid_l",
+   "spr_mkid_r",
+   "spr_mkid_u",
+   "spr_muffet_overworld",
+   "spr_napstablook_d",
+   "spr_napstablook_l",
+   "spr_napstablook_r",
+   "spr_napstablook_u",
+   "spr_papyrus_d",
+   "spr_papyrus_l",
+   "spr_papyrus_r",
+   "spr_papyrus_u",
+   "spr_sans_d",
+   "spr_sans_l",
+   "spr_sans_r",
+   "spr_sans_u",
+   "spr_toriel_d",
+   "spr_toriel_l",
+   "spr_toriel_r",
+   "spr_toriel_u",
+   "spr_undyne_d",
+   "spr_undyne_l",
+   "spr_undyne_r",
+   "spr_undyne_u"
+  ],
+  "hy": [
+   "dalv_down",
+   "dalv_left",
+   "dalv_right",
+   "dalv_up",
+   "spr_ace_down_walk",
+   "spr_ace_left_walk",
+   "spr_ace_right_walk",
+   "spr_ace_up_walk",
+   "spr_axis_down",
+   "spr_axis_left",
+   "spr_axis_right",
+   "spr_axis_up",
+   "spr_bowll_body_normal",
+   "spr_ceroba_down_walk",
+   "spr_ceroba_left_walk",
+   "spr_ceroba_right_walk",
+   "spr_ceroba_up_walk",
+   "spr_chujin_npc",
+   "spr_clover_casual",
+   "spr_ed_down_walk",
+   "spr_ed_left_walk",
+   "spr_ed_right_walk",
+   "spr_ed_up_walk",
+   "spr_flowey",
+   "spr_guardener_body",
+   "spr_martlet_down_talk",
+   "spr_martlet_left_talk",
+   "spr_martlet_right_talk",
+   "spr_martlet_up_talk",
+   "spr_mooch_down_walk",
+   "spr_mooch_left_walk",
+   "spr_mooch_right_walk",
+   "spr_mooch_up_walk",
+   "spr_moray_down_walk",
+   "spr_moray_left_walk",
+   "spr_moray_right_walk",
+   "spr_moray_up_walk",
+   "spr_sousborg_npc",
+   "spr_starlo_down_walk",
+   "spr_starlo_left_walk",
+   "spr_starlo_right_walk",
+   "spr_starlo_up_walk"
+  ],
+  "ot": [
+   "iocAlphysDown",
+   "iocAlphysLeft",
+   "iocAlphysRight",
+   "iocAlphysUp",
+   "iocAsgoreDown",
+   "iocAsgoreLeft",
+   "iocAsgoreRight",
+   "iocAsgoreUp",
+   "iocAsrielDown",
+   "iocAsrielLeft",
+   "iocAsrielRight",
+   "iocAsrielUp",
+   "iocKiddDown",
+   "iocKiddLeft",
+   "iocKiddRight",
+   "iocKiddUp",
+   "iocMettatonDressIdle",
+   "iocNapstablookBody",
+   "iocPapyrusDown",
+   "iocPapyrusLeft",
+   "iocPapyrusRight",
+   "iocPapyrusUp",
+   "iocSansDown",
+   "iocSansLeft",
+   "iocSansRight",
+   "iocSansUp",
+   "iocTorielDown",
+   "iocTorielLeft",
+   "iocTorielRight",
+   "iocTorielUp",
+   "iocTwinklyMain",
+   "iocUndyneDown",
+   "iocUndyneLeft",
+   "iocUndyneRight",
+   "iocUndyneUp",
+   "ionFMuffet"
+  ],
+  "os": [
+   "blue_npc_prophet",
+   "blue_npc_prototype",
+   "blue_npc_silver",
+   "clovers",
+   "contacts_kelvin",
+   "contacts_ling",
+   "contacts_maize",
+   "contacts_mason",
+   "contacts_rowbot",
+   "contacts_shepherd",
+   "contacts_watcher",
+   "en",
+   "green_npc_alula",
+   "green_npc_calamus",
+   "green_npc_cedric",
+   "green_npc_magpie",
+   "niko",
+   "red_kip",
+   "red_lamplighter",
+   "red_npc_george1",
+   "red_rue"
+  ]
+ },
+ "landed": {
+  "ut": {
+   "bg_elevarmL": [
+    "bg_elevarmL_0.png"
+   ],
+   "bg_elevarmR": [
+    "bg_elevarmR_0.png"
+   ],
+   "bg_elevbelow": [
+    "bg_elevbelow_0.png"
+   ],
+   "bg_elevbottom": [
+    "bg_elevbottom_0.png"
+   ],
+   "bg_elevleg": [
+    "bg_elevleg_0.png"
+   ],
+   "bg_elevtop": [
+    "bg_elevtop_0.png"
+   ],
+   "bg_elevunit": [
+    "bg_elevunit_0.png"
+   ],
+   "spr_alphys_d": [
+    "spr_alphys_d_0.png",
+    "spr_alphys_d_1.png",
+    "spr_alphys_d_2.png",
+    "spr_alphys_d_3.png"
+   ],
+   "spr_alphys_l": [
+    "spr_alphys_l_0.png",
+    "spr_alphys_l_1.png",
+    "spr_alphys_l_2.png",
+    "spr_alphys_l_3.png"
+   ],
+   "spr_alphys_r": [
+    "spr_alphys_r_0.png",
+    "spr_alphys_r_1.png",
+    "spr_alphys_r_2.png",
+    "spr_alphys_r_3.png"
+   ],
+   "spr_alphys_u": [
+    "spr_alphys_u_0.png",
+    "spr_alphys_u_1.png"
+   ],
+   "spr_asgore_d": [
+    "spr_asgore_d_0.png",
+    "spr_asgore_d_1.png",
+    "spr_asgore_d_2.png",
+    "spr_asgore_d_3.png"
+   ],
+   "spr_asgore_l": [
+    "spr_asgore_l_0.png",
+    "spr_asgore_l_1.png"
+   ],
+   "spr_asgore_r": [
+    "spr_asgore_r_0.png",
+    "spr_asgore_r_1.png"
+   ],
+   "spr_asgore_u": [
+    "spr_asgore_u_0.png",
+    "spr_asgore_u_1.png"
+   ],
+   "spr_charad": [
+    "spr_charad_0.png",
+    "spr_charad_1.png",
+    "spr_charad_2.png",
+    "spr_charad_3.png"
+   ],
+   "spr_charal": [
+    "spr_charal_0.png",
+    "spr_charal_1.png"
+   ],
+   "spr_charar": [
+    "spr_charar_0.png",
+    "spr_charar_1.png"
+   ],
+   "spr_charau": [
+    "spr_charau_0.png",
+    "spr_charau_1.png",
+    "spr_charau_2.png",
+    "spr_charau_3.png"
+   ],
+   "spr_darkelevator_l": [
+    "spr_darkelevator_l_0.png"
+   ],
+   "spr_darkelevator_r": [
+    "spr_darkelevator_r_0.png"
+   ],
+   "spr_elevatordoor": [
+    "spr_elevatordoor_0.png"
+   ],
+   "spr_elevatordoor_vines": [
+    "spr_elevatordoor_vines_0.png"
+   ],
+   "spr_elevatordoorframe": [
+    "spr_elevatordoorframe_0.png",
+    "spr_elevatordoorframe_1.png"
+   ],
+   "spr_elevatorgem_l": [
+    "spr_elevatorgem_l_0.png",
+    "spr_elevatorgem_l_1.png",
+    "spr_elevatorgem_l_2.png",
+    "spr_elevatorgem_l_3.png",
+    "spr_elevatorgem_l_4.png",
+    "spr_elevatorgem_l_5.png"
+   ],
+   "spr_elevatorgem_r": [
+    "spr_elevatorgem_r_0.png",
+    "spr_elevatorgem_r_1.png",
+    "spr_elevatorgem_r_2.png",
+    "spr_elevatorgem_r_3.png",
+    "spr_elevatorgem_r_4.png",
+    "spr_elevatorgem_r_5.png"
+   ],
+   "spr_elevatorpanel": [
+    "spr_elevatorpanel_0.png"
+   ],
+   "spr_f_maincharad": [
+    "spr_f_maincharad_0.png",
+    "spr_f_maincharad_1.png",
+    "spr_f_maincharad_2.png",
+    "spr_f_maincharad_3.png"
+   ],
+   "spr_f_maincharal": [
+    "spr_f_maincharal_0.png",
+    "spr_f_maincharal_1.png"
+   ],
+   "spr_f_maincharar": [
+    "spr_f_maincharar_0.png",
+    "spr_f_maincharar_1.png"
+   ],
+   "spr_f_maincharau": [
+    "spr_f_maincharau_0.png",
+    "spr_f_maincharau_1.png",
+    "spr_f_maincharau_2.png",
+    "spr_f_maincharau_3.png"
+   ],
+   "spr_floweyfly": [
+    "spr_floweyfly_0.png",
+    "spr_floweyfly_1.png"
+   ],
+   "spr_gasterblaster": [
+    "spr_gasterblaster_0.png",
+    "spr_gasterblaster_1.png",
+    "spr_gasterblaster_2.png",
+    "spr_gasterblaster_3.png",
+    "spr_gasterblaster_4.png",
+    "spr_gasterblaster_5.png"
+   ],
+   "spr_mettatonb": [
+    "spr_mettatonb_0.png"
+   ],
+   "spr_mkid_d": [
+    "spr_mkid_d_0.png",
+    "spr_mkid_d_1.png",
+    "spr_mkid_d_2.png",
+    "spr_mkid_d_3.png"
+   ],
+   "spr_mkid_l": [
+    "spr_mkid_l_0.png",
+    "spr_mkid_l_1.png",
+    "spr_mkid_l_2.png",
+    "spr_mkid_l_3.png"
+   ],
+   "spr_mkid_r": [
+    "spr_mkid_r_0.png",
+    "spr_mkid_r_1.png",
+    "spr_mkid_r_2.png",
+    "spr_mkid_r_3.png"
+   ],
+   "spr_mkid_u": [
+    "spr_mkid_u_0.png",
+    "spr_mkid_u_1.png",
+    "spr_mkid_u_2.png",
+    "spr_mkid_u_3.png"
+   ],
+   "spr_muffet_overworld": [
+    "spr_muffet_overworld_0.png",
+    "spr_muffet_overworld_1.png",
+    "spr_muffet_overworld_2.png",
+    "spr_muffet_overworld_3.png",
+    "spr_muffet_overworld_4.png",
+    "spr_muffet_overworld_5.png"
+   ],
+   "spr_napstablook_d": [
+    "spr_napstablook_d_0.png"
+   ],
+   "spr_napstablook_l": [
+    "spr_napstablook_l_0.png"
+   ],
+   "spr_napstablook_r": [
+    "spr_napstablook_r_0.png"
+   ],
+   "spr_napstablook_u": [
+    "spr_napstablook_u_0.png"
+   ],
+   "spr_papyrus_d": [
+    "spr_papyrus_d_0.png",
+    "spr_papyrus_d_1.png",
+    "spr_papyrus_d_2.png",
+    "spr_papyrus_d_3.png"
+   ],
+   "spr_papyrus_l": [
+    "spr_papyrus_l_0.png",
+    "spr_papyrus_l_1.png",
+    "spr_papyrus_l_2.png",
+    "spr_papyrus_l_3.png"
+   ],
+   "spr_papyrus_r": [
+    "spr_papyrus_r_0.png",
+    "spr_papyrus_r_1.png",
+    "spr_papyrus_r_2.png",
+    "spr_papyrus_r_3.png"
+   ],
+   "spr_papyrus_u": [
+    "spr_papyrus_u_0.png",
+    "spr_papyrus_u_1.png",
+    "spr_papyrus_u_2.png",
+    "spr_papyrus_u_3.png"
+   ],
+   "spr_sans_d": [
+    "spr_sans_d_0.png",
+    "spr_sans_d_1.png",
+    "spr_sans_d_2.png",
+    "spr_sans_d_3.png"
+   ],
+   "spr_sans_l": [
+    "spr_sans_l_0.png",
+    "spr_sans_l_1.png",
+    "spr_sans_l_2.png",
+    "spr_sans_l_3.png"
+   ],
+   "spr_sans_r": [
+    "spr_sans_r_0.png",
+    "spr_sans_r_1.png",
+    "spr_sans_r_2.png",
+    "spr_sans_r_3.png"
+   ],
+   "spr_sans_u": [
+    "spr_sans_u_0.png",
+    "spr_sans_u_1.png",
+    "spr_sans_u_2.png",
+    "spr_sans_u_3.png"
+   ],
+   "spr_toriel_d": [
+    "spr_toriel_d_0.png",
+    "spr_toriel_d_1.png",
+    "spr_toriel_d_2.png",
+    "spr_toriel_d_3.png"
+   ],
+   "spr_toriel_l": [
+    "spr_toriel_l_0.png",
+    "spr_toriel_l_1.png",
+    "spr_toriel_l_2.png",
+    "spr_toriel_l_3.png"
+   ],
+   "spr_toriel_r": [
+    "spr_toriel_r_0.png",
+    "spr_toriel_r_1.png",
+    "spr_toriel_r_2.png",
+    "spr_toriel_r_3.png"
+   ],
+   "spr_toriel_u": [
+    "spr_toriel_u_0.png",
+    "spr_toriel_u_1.png",
+    "spr_toriel_u_2.png",
+    "spr_toriel_u_3.png"
+   ],
+   "spr_undyne_d": [
+    "spr_undyne_d_0.png",
+    "spr_undyne_d_1.png",
+    "spr_undyne_d_2.png",
+    "spr_undyne_d_3.png"
+   ],
+   "spr_undyne_l": [
+    "spr_undyne_l_0.png",
+    "spr_undyne_l_1.png"
+   ],
+   "spr_undyne_r": [
+    "spr_undyne_r_0.png",
+    "spr_undyne_r_1.png"
+   ],
+   "spr_undyne_u": [
+    "spr_undyne_u_0.png",
+    "spr_undyne_u_1.png",
+    "spr_undyne_u_2.png",
+    "spr_undyne_u_3.png"
+   ]
+  },
+  "hy": {
+   "dalv_down": [
+    "dalv_down_0.png",
+    "dalv_down_1.png",
+    "dalv_down_2.png",
+    "dalv_down_3.png"
+   ],
+   "dalv_left": [
+    "dalv_left_0.png",
+    "dalv_left_1.png",
+    "dalv_left_2.png",
+    "dalv_left_3.png"
+   ],
+   "dalv_right": [
+    "dalv_right_0.png",
+    "dalv_right_1.png",
+    "dalv_right_2.png",
+    "dalv_right_3.png"
+   ],
+   "dalv_up": [
+    "dalv_up_0.png",
+    "dalv_up_1.png",
+    "dalv_up_2.png",
+    "dalv_up_3.png"
+   ],
+   "spr_ace_down_walk": [
+    "spr_ace_down_walk_0.png",
+    "spr_ace_down_walk_1.png",
+    "spr_ace_down_walk_2.png",
+    "spr_ace_down_walk_3.png"
+   ],
+   "spr_ace_left_walk": [
+    "spr_ace_left_walk_0.png",
+    "spr_ace_left_walk_1.png",
+    "spr_ace_left_walk_2.png",
+    "spr_ace_left_walk_3.png"
+   ],
+   "spr_ace_right_walk": [
+    "spr_ace_right_walk_0.png",
+    "spr_ace_right_walk_1.png",
+    "spr_ace_right_walk_2.png",
+    "spr_ace_right_walk_3.png"
+   ],
+   "spr_ace_up_walk": [
+    "spr_ace_up_walk_0.png",
+    "spr_ace_up_walk_1.png",
+    "spr_ace_up_walk_2.png",
+    "spr_ace_up_walk_3.png"
+   ],
+   "spr_axis_down": [
+    "spr_axis_down_0.png",
+    "spr_axis_down_1.png",
+    "spr_axis_down_2.png",
+    "spr_axis_down_3.png",
+    "spr_axis_down_4.png",
+    "spr_axis_down_5.png",
+    "spr_axis_down_6.png"
+   ],
+   "spr_axis_left": [
+    "spr_axis_left_0.png",
+    "spr_axis_left_1.png",
+    "spr_axis_left_2.png",
+    "spr_axis_left_3.png",
+    "spr_axis_left_4.png",
+    "spr_axis_left_5.png",
+    "spr_axis_left_6.png"
+   ],
+   "spr_axis_right": [
+    "spr_axis_right_0.png",
+    "spr_axis_right_1.png",
+    "spr_axis_right_2.png",
+    "spr_axis_right_3.png",
+    "spr_axis_right_4.png",
+    "spr_axis_right_5.png",
+    "spr_axis_right_6.png"
+   ],
+   "spr_axis_up": [
+    "spr_axis_up_0.png",
+    "spr_axis_up_1.png",
+    "spr_axis_up_2.png",
+    "spr_axis_up_3.png",
+    "spr_axis_up_4.png",
+    "spr_axis_up_5.png",
+    "spr_axis_up_6.png"
+   ],
+   "spr_bowll_body_normal": [
+    "spr_bowll_body_normal_0.png"
+   ],
+   "spr_ceroba_down_walk": [
+    "spr_ceroba_down_walk_0.png",
+    "spr_ceroba_down_walk_1.png",
+    "spr_ceroba_down_walk_2.png",
+    "spr_ceroba_down_walk_3.png"
+   ],
+   "spr_ceroba_left_walk": [
+    "spr_ceroba_left_walk_0.png",
+    "spr_ceroba_left_walk_1.png",
+    "spr_ceroba_left_walk_2.png",
+    "spr_ceroba_left_walk_3.png"
+   ],
+   "spr_ceroba_right_walk": [
+    "spr_ceroba_right_walk_0.png",
+    "spr_ceroba_right_walk_1.png",
+    "spr_ceroba_right_walk_2.png",
+    "spr_ceroba_right_walk_3.png"
+   ],
+   "spr_ceroba_up_walk": [
+    "spr_ceroba_up_walk_0.png",
+    "spr_ceroba_up_walk_1.png",
+    "spr_ceroba_up_walk_2.png",
+    "spr_ceroba_up_walk_3.png"
+   ],
+   "spr_chujin_npc": [
+    "spr_chujin_npc_0.png",
+    "spr_chujin_npc_1.png"
+   ],
+   "spr_clover_casual": [
+    "spr_clover_casual_0.png"
+   ],
+   "spr_ed_down_walk": [
+    "spr_ed_down_walk_0.png",
+    "spr_ed_down_walk_1.png",
+    "spr_ed_down_walk_2.png",
+    "spr_ed_down_walk_3.png"
+   ],
+   "spr_ed_left_walk": [
+    "spr_ed_left_walk_0.png",
+    "spr_ed_left_walk_1.png",
+    "spr_ed_left_walk_2.png",
+    "spr_ed_left_walk_3.png"
+   ],
+   "spr_ed_right_walk": [
+    "spr_ed_right_walk_0.png",
+    "spr_ed_right_walk_1.png",
+    "spr_ed_right_walk_2.png",
+    "spr_ed_right_walk_3.png"
+   ],
+   "spr_ed_up_walk": [
+    "spr_ed_up_walk_0.png",
+    "spr_ed_up_walk_1.png",
+    "spr_ed_up_walk_2.png",
+    "spr_ed_up_walk_3.png"
+   ],
+   "spr_flowey": [
+    "spr_flowey_0.png",
+    "spr_flowey_1.png"
+   ],
+   "spr_guardener_body": [
+    "spr_guardener_body_0.png"
+   ],
+   "spr_martlet_down_talk": [
+    "spr_martlet_down_talk_0.png",
+    "spr_martlet_down_talk_1.png"
+   ],
+   "spr_martlet_left_talk": [
+    "spr_martlet_left_talk_0.png",
+    "spr_martlet_left_talk_1.png"
+   ],
+   "spr_martlet_right_talk": [
+    "spr_martlet_right_talk_0.png",
+    "spr_martlet_right_talk_1.png"
+   ],
+   "spr_martlet_up_talk": [
+    "spr_martlet_up_talk_0.png"
+   ],
+   "spr_mooch_down_walk": [
+    "spr_mooch_down_walk_0.png",
+    "spr_mooch_down_walk_1.png",
+    "spr_mooch_down_walk_2.png",
+    "spr_mooch_down_walk_3.png"
+   ],
+   "spr_mooch_left_walk": [
+    "spr_mooch_left_walk_0.png",
+    "spr_mooch_left_walk_1.png",
+    "spr_mooch_left_walk_2.png",
+    "spr_mooch_left_walk_3.png"
+   ],
+   "spr_mooch_right_walk": [
+    "spr_mooch_right_walk_0.png",
+    "spr_mooch_right_walk_1.png",
+    "spr_mooch_right_walk_2.png",
+    "spr_mooch_right_walk_3.png"
+   ],
+   "spr_mooch_up_walk": [
+    "spr_mooch_up_walk_0.png",
+    "spr_mooch_up_walk_1.png",
+    "spr_mooch_up_walk_2.png",
+    "spr_mooch_up_walk_3.png"
+   ],
+   "spr_moray_down_walk": [
+    "spr_moray_down_walk_0.png",
+    "spr_moray_down_walk_1.png",
+    "spr_moray_down_walk_2.png",
+    "spr_moray_down_walk_3.png"
+   ],
+   "spr_moray_left_walk": [
+    "spr_moray_left_walk_0.png",
+    "spr_moray_left_walk_1.png",
+    "spr_moray_left_walk_2.png",
+    "spr_moray_left_walk_3.png"
+   ],
+   "spr_moray_right_walk": [
+    "spr_moray_right_walk_0.png",
+    "spr_moray_right_walk_1.png",
+    "spr_moray_right_walk_2.png",
+    "spr_moray_right_walk_3.png"
+   ],
+   "spr_moray_up_walk": [
+    "spr_moray_up_walk_0.png",
+    "spr_moray_up_walk_1.png",
+    "spr_moray_up_walk_2.png",
+    "spr_moray_up_walk_3.png"
+   ],
+   "spr_sousborg_npc": [
+    "spr_sousborg_npc_0.png",
+    "spr_sousborg_npc_1.png",
+    "spr_sousborg_npc_2.png",
+    "spr_sousborg_npc_3.png",
+    "spr_sousborg_npc_4.png",
+    "spr_sousborg_npc_5.png",
+    "spr_sousborg_npc_6.png",
+    "spr_sousborg_npc_7.png",
+    "spr_sousborg_npc_8.png"
+   ],
+   "spr_starlo_down_walk": [
+    "spr_starlo_down_walk_0.png",
+    "spr_starlo_down_walk_1.png",
+    "spr_starlo_down_walk_2.png",
+    "spr_starlo_down_walk_3.png"
+   ],
+   "spr_starlo_left_walk": [
+    "spr_starlo_left_walk_0.png",
+    "spr_starlo_left_walk_1.png",
+    "spr_starlo_left_walk_2.png",
+    "spr_starlo_left_walk_3.png"
+   ],
+   "spr_starlo_right_walk": [
+    "spr_starlo_right_walk_0.png",
+    "spr_starlo_right_walk_1.png",
+    "spr_starlo_right_walk_2.png",
+    "spr_starlo_right_walk_3.png"
+   ],
+   "spr_starlo_up_walk": [
+    "spr_starlo_up_walk_0.png",
+    "spr_starlo_up_walk_1.png",
+    "spr_starlo_up_walk_2.png",
+    "spr_starlo_up_walk_3.png"
+   ]
+  },
+  "ot": {
+   "iocAlphysDown": [
+    "iocAlphysDown_0.png",
+    "iocAlphysDown_1.png",
+    "iocAlphysDown_2.png",
+    "iocAlphysDown_3.png"
+   ],
+   "iocAlphysLeft": [
+    "iocAlphysLeft_0.png",
+    "iocAlphysLeft_1.png",
+    "iocAlphysLeft_2.png",
+    "iocAlphysLeft_3.png"
+   ],
+   "iocAlphysRight": [
+    "iocAlphysRight_0.png",
+    "iocAlphysRight_1.png",
+    "iocAlphysRight_2.png",
+    "iocAlphysRight_3.png"
+   ],
+   "iocAlphysUp": [
+    "iocAlphysUp_0.png",
+    "iocAlphysUp_1.png"
+   ],
+   "iocAsgoreDown": [
+    "iocAsgoreDown_0.png",
+    "iocAsgoreDown_1.png",
+    "iocAsgoreDown_2.png",
+    "iocAsgoreDown_3.png"
+   ],
+   "iocAsgoreLeft": [
+    "iocAsgoreLeft_0.png",
+    "iocAsgoreLeft_1.png"
+   ],
+   "iocAsgoreRight": [
+    "iocAsgoreRight_0.png",
+    "iocAsgoreRight_1.png"
+   ],
+   "iocAsgoreUp": [
+    "iocAsgoreUp_0.png",
+    "iocAsgoreUp_1.png"
+   ],
+   "iocAsrielDown": [
+    "iocAsrielDown_0.png",
+    "iocAsrielDown_1.png",
+    "iocAsrielDown_2.png",
+    "iocAsrielDown_3.png"
+   ],
+   "iocAsrielLeft": [
+    "iocAsrielLeft_0.png",
+    "iocAsrielLeft_1.png",
+    "iocAsrielLeft_2.png",
+    "iocAsrielLeft_3.png"
+   ],
+   "iocAsrielRight": [
+    "iocAsrielRight_0.png",
+    "iocAsrielRight_1.png",
+    "iocAsrielRight_2.png",
+    "iocAsrielRight_3.png"
+   ],
+   "iocAsrielUp": [
+    "iocAsrielUp_0.png",
+    "iocAsrielUp_1.png",
+    "iocAsrielUp_2.png",
+    "iocAsrielUp_3.png"
+   ],
+   "iocKiddDown": [
+    "iocKiddDown_0.png",
+    "iocKiddDown_1.png",
+    "iocKiddDown_2.png",
+    "iocKiddDown_3.png"
+   ],
+   "iocKiddLeft": [
+    "iocKiddLeft_0.png",
+    "iocKiddLeft_1.png",
+    "iocKiddLeft_2.png",
+    "iocKiddLeft_3.png"
+   ],
+   "iocKiddRight": [
+    "iocKiddRight_0.png",
+    "iocKiddRight_1.png",
+    "iocKiddRight_2.png",
+    "iocKiddRight_3.png"
+   ],
+   "iocKiddUp": [
+    "iocKiddUp_0.png",
+    "iocKiddUp_1.png",
+    "iocKiddUp_2.png",
+    "iocKiddUp_3.png"
+   ],
+   "iocMettatonDressIdle": [
+    "iocMettatonDressIdle_0.png",
+    "iocMettatonDressIdle_1.png",
+    "iocMettatonDressIdle_10.png",
+    "iocMettatonDressIdle_11.png",
+    "iocMettatonDressIdle_12.png",
+    "iocMettatonDressIdle_2.png",
+    "iocMettatonDressIdle_3.png",
+    "iocMettatonDressIdle_4.png",
+    "iocMettatonDressIdle_5.png",
+    "iocMettatonDressIdle_6.png",
+    "iocMettatonDressIdle_7.png",
+    "iocMettatonDressIdle_8.png",
+    "iocMettatonDressIdle_9.png"
+   ],
+   "iocNapstablookBody": [
+    "iocNapstablookBody_0.png",
+    "iocNapstablookBody_1.png",
+    "iocNapstablookBody_2.png",
+    "iocNapstablookBody_3.png",
+    "iocNapstablookBody_4.png",
+    "iocNapstablookBody_5.png",
+    "iocNapstablookBody_6.png",
+    "iocNapstablookBody_7.png"
+   ],
+   "iocPapyrusDown": [
+    "iocPapyrusDown_0.png",
+    "iocPapyrusDown_1.png",
+    "iocPapyrusDown_2.png",
+    "iocPapyrusDown_3.png"
+   ],
+   "iocPapyrusLeft": [
+    "iocPapyrusLeft_0.png",
+    "iocPapyrusLeft_1.png",
+    "iocPapyrusLeft_2.png",
+    "iocPapyrusLeft_3.png"
+   ],
+   "iocPapyrusRight": [
+    "iocPapyrusRight_0.png",
+    "iocPapyrusRight_1.png",
+    "iocPapyrusRight_2.png",
+    "iocPapyrusRight_3.png"
+   ],
+   "iocPapyrusUp": [
+    "iocPapyrusUp_0.png",
+    "iocPapyrusUp_1.png",
+    "iocPapyrusUp_2.png",
+    "iocPapyrusUp_3.png"
+   ],
+   "iocSansDown": [
+    "iocSansDown_0.png",
+    "iocSansDown_1.png",
+    "iocSansDown_2.png",
+    "iocSansDown_3.png"
+   ],
+   "iocSansLeft": [
+    "iocSansLeft_0.png",
+    "iocSansLeft_1.png",
+    "iocSansLeft_2.png",
+    "iocSansLeft_3.png"
+   ],
+   "iocSansRight": [
+    "iocSansRight_0.png",
+    "iocSansRight_1.png",
+    "iocSansRight_2.png",
+    "iocSansRight_3.png"
+   ],
+   "iocSansUp": [
+    "iocSansUp_0.png",
+    "iocSansUp_1.png",
+    "iocSansUp_2.png",
+    "iocSansUp_3.png"
+   ],
+   "iocTorielDown": [
+    "iocTorielDown_0.png",
+    "iocTorielDown_1.png",
+    "iocTorielDown_2.png",
+    "iocTorielDown_3.png"
+   ],
+   "iocTorielLeft": [
+    "iocTorielLeft_0.png",
+    "iocTorielLeft_1.png",
+    "iocTorielLeft_2.png",
+    "iocTorielLeft_3.png"
+   ],
+   "iocTorielRight": [
+    "iocTorielRight_0.png",
+    "iocTorielRight_1.png",
+    "iocTorielRight_2.png",
+    "iocTorielRight_3.png"
+   ],
+   "iocTorielUp": [
+    "iocTorielUp_0.png",
+    "iocTorielUp_1.png",
+    "iocTorielUp_2.png",
+    "iocTorielUp_3.png"
+   ],
+   "iocTwinklyMain": [
+    "iocTwinklyMain_0.png",
+    "iocTwinklyMain_1.png"
+   ],
+   "iocUndyneDown": [
+    "iocUndyneDown_0.png",
+    "iocUndyneDown_1.png",
+    "iocUndyneDown_2.png",
+    "iocUndyneDown_3.png"
+   ],
+   "iocUndyneLeft": [
+    "iocUndyneLeft_0.png",
+    "iocUndyneLeft_1.png",
+    "iocUndyneLeft_2.png",
+    "iocUndyneLeft_3.png"
+   ],
+   "iocUndyneRight": [
+    "iocUndyneRight_0.png",
+    "iocUndyneRight_1.png",
+    "iocUndyneRight_2.png",
+    "iocUndyneRight_3.png"
+   ],
+   "iocUndyneUp": [
+    "iocUndyneUp_0.png",
+    "iocUndyneUp_1.png",
+    "iocUndyneUp_2.png",
+    "iocUndyneUp_3.png"
+   ],
+   "ionFMuffet": [
+    "ionFMuffet_0.png",
+    "ionFMuffet_1.png",
+    "ionFMuffet_2.png",
+    "ionFMuffet_3.png",
+    "ionFMuffet_4.png",
+    "ionFMuffet_5.png",
+    "ionFMuffet_6.png"
+   ]
+  },
+  "os": {
+   "blue_npc_prophet": [
+    "blue_npc_prophet.png"
+   ],
+   "blue_npc_prototype": [
+    "blue_npc_prototype.png"
+   ],
+   "blue_npc_silver": [
+    "blue_npc_silver.png"
+   ],
+   "clovers": [
+    "clovers.png"
+   ],
+   "contacts_kelvin": [
+    "contacts_kelvin.png"
+   ],
+   "contacts_ling": [
+    "contacts_ling.png"
+   ],
+   "contacts_maize": [
+    "contacts_maize.png"
+   ],
+   "contacts_mason": [
+    "contacts_mason.png"
+   ],
+   "contacts_rowbot": [
+    "contacts_rowbot.png"
+   ],
+   "contacts_shepherd": [
+    "contacts_shepherd.png"
+   ],
+   "contacts_watcher": [
+    "contacts_watcher.png"
+   ],
+   "en": [
+    "en.png"
+   ],
+   "green_npc_alula": [
+    "green_npc_alula.png"
+   ],
+   "green_npc_calamus": [
+    "green_npc_calamus.png"
+   ],
+   "green_npc_cedric": [
+    "green_npc_cedric.png"
+   ],
+   "green_npc_magpie": [
+    "green_npc_magpie.png"
+   ],
+   "niko": [
+    "niko.png"
+   ],
+   "red_kip": [
+    "red_kip.png"
+   ],
+   "red_lamplighter": [
+    "red_lamplighter.png"
+   ],
+   "red_npc_george1": [
+    "red_npc_george1.png"
+   ],
+   "red_rue": [
+    "red_rue.png"
+   ]
+  }
+ },
+ "png_sizes": {
+  "ut": {
+   "bg_elevarmL": {
+    "bg_elevarmL_0.png": [
+     62,
+     39
+    ]
+   },
+   "bg_elevarmR": {
+    "bg_elevarmR_0.png": [
+     62,
+     39
+    ]
+   },
+   "bg_elevbelow": {
+    "bg_elevbelow_0.png": [
+     82,
+     42
+    ]
+   },
+   "bg_elevbottom": {
+    "bg_elevbottom_0.png": [
+     85,
+     103
+    ]
+   },
+   "bg_elevleg": {
+    "bg_elevleg_0.png": [
+     30,
+     43
+    ]
+   },
+   "bg_elevtop": {
+    "bg_elevtop_0.png": [
+     118,
+     100
+    ]
+   },
+   "bg_elevunit": {
+    "bg_elevunit_0.png": [
+     83,
+     27
+    ]
+   },
+   "spr_alphys_d": {
+    "spr_alphys_d_0.png": [
+     19,
+     31
+    ],
+    "spr_alphys_d_1.png": [
+     19,
+     31
+    ],
+    "spr_alphys_d_2.png": [
+     19,
+     31
+    ],
+    "spr_alphys_d_3.png": [
+     19,
+     31
+    ]
+   },
+   "spr_alphys_l": {
+    "spr_alphys_l_0.png": [
+     29,
+     31
+    ],
+    "spr_alphys_l_1.png": [
+     29,
+     30
+    ],
+    "spr_alphys_l_2.png": [
+     29,
+     31
+    ],
+    "spr_alphys_l_3.png": [
+     29,
+     30
+    ]
+   },
+   "spr_alphys_r": {
+    "spr_alphys_r_0.png": [
+     29,
+     31
+    ],
+    "spr_alphys_r_1.png": [
+     29,
+     30
+    ],
+    "spr_alphys_r_2.png": [
+     29,
+     31
+    ],
+    "spr_alphys_r_3.png": [
+     29,
+     30
+    ]
+   },
+   "spr_alphys_u": {
+    "spr_alphys_u_0.png": [
+     19,
+     31
+    ],
+    "spr_alphys_u_1.png": [
+     19,
+     30
+    ]
+   },
+   "spr_asgore_d": {
+    "spr_asgore_d_0.png": [
+     55,
+     61
+    ],
+    "spr_asgore_d_1.png": [
+     56,
+     61
+    ],
+    "spr_asgore_d_2.png": [
+     55,
+     61
+    ],
+    "spr_asgore_d_3.png": [
+     56,
+     61
+    ]
+   },
+   "spr_asgore_l": {
+    "spr_asgore_l_0.png": [
+     39,
+     61
+    ],
+    "spr_asgore_l_1.png": [
+     40,
+     60
+    ]
+   },
+   "spr_asgore_r": {
+    "spr_asgore_r_0.png": [
+     39,
+     61
+    ],
+    "spr_asgore_r_1.png": [
+     40,
+     60
+    ]
+   },
+   "spr_asgore_u": {
+    "spr_asgore_u_0.png": [
+     55,
+     62
+    ],
+    "spr_asgore_u_1.png": [
+     57,
+     61
+    ]
+   },
+   "spr_charad": {
+    "spr_charad_0.png": [
+     19,
+     29
+    ],
+    "spr_charad_1.png": [
+     19,
+     29
+    ],
+    "spr_charad_2.png": [
+     19,
+     29
+    ],
+    "spr_charad_3.png": [
+     19,
+     29
+    ]
+   },
+   "spr_charal": {
+    "spr_charal_0.png": [
+     17,
+     29
+    ],
+    "spr_charal_1.png": [
+     17,
+     28
+    ]
+   },
+   "spr_charar": {
+    "spr_charar_0.png": [
+     17,
+     29
+    ],
+    "spr_charar_1.png": [
+     17,
+     28
+    ]
+   },
+   "spr_charau": {
+    "spr_charau_0.png": [
+     19,
+     29
+    ],
+    "spr_charau_1.png": [
+     19,
+     29
+    ],
+    "spr_charau_2.png": [
+     19,
+     29
+    ],
+    "spr_charau_3.png": [
+     19,
+     29
+    ]
+   },
+   "spr_darkelevator_l": {
+    "spr_darkelevator_l_0.png": [
+     20,
+     60
+    ]
+   },
+   "spr_darkelevator_r": {
+    "spr_darkelevator_r_0.png": [
+     20,
+     60
+    ]
+   },
+   "spr_elevatordoor": {
+    "spr_elevatordoor_0.png": [
+     20,
+     50
+    ]
+   },
+   "spr_elevatordoor_vines": {
+    "spr_elevatordoor_vines_0.png": [
+     63,
+     56
+    ]
+   },
+   "spr_elevatordoorframe": {
+    "spr_elevatordoorframe_0.png": [
+     57,
+     55
+    ],
+    "spr_elevatordoorframe_1.png": [
+     37,
+     49
+    ]
+   },
+   "spr_elevatorgem_l": {
+    "spr_elevatorgem_l_0.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_l_1.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_l_2.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_l_3.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_l_4.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_l_5.png": [
+     6,
+     15
+    ]
+   },
+   "spr_elevatorgem_r": {
+    "spr_elevatorgem_r_0.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_r_1.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_r_2.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_r_3.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_r_4.png": [
+     6,
+     15
+    ],
+    "spr_elevatorgem_r_5.png": [
+     6,
+     15
+    ]
+   },
+   "spr_elevatorpanel": {
+    "spr_elevatorpanel_0.png": [
+     40,
+     20
+    ]
+   },
+   "spr_f_maincharad": {
+    "spr_f_maincharad_0.png": [
+     19,
+     29
+    ],
+    "spr_f_maincharad_1.png": [
+     19,
+     29
+    ],
+    "spr_f_maincharad_2.png": [
+     19,
+     29
+    ],
+    "spr_f_maincharad_3.png": [
+     19,
+     29
+    ]
+   },
+   "spr_f_maincharal": {
+    "spr_f_maincharal_0.png": [
+     17,
+     29
+    ],
+    "spr_f_maincharal_1.png": [
+     17,
+     28
+    ]
+   },
+   "spr_f_maincharar": {
+    "spr_f_maincharar_0.png": [
+     17,
+     29
+    ],
+    "spr_f_maincharar_1.png": [
+     17,
+     28
+    ]
+   },
+   "spr_f_maincharau": {
+    "spr_f_maincharau_0.png": [
+     19,
+     29
+    ],
+    "spr_f_maincharau_1.png": [
+     19,
+     29
+    ],
+    "spr_f_maincharau_2.png": [
+     19,
+     29
+    ],
+    "spr_f_maincharau_3.png": [
+     19,
+     29
+    ]
+   },
+   "spr_floweyfly": {
+    "spr_floweyfly_0.png": [
+     35,
+     44
+    ],
+    "spr_floweyfly_1.png": [
+     35,
+     29
+    ]
+   },
+   "spr_gasterblaster": {
+    "spr_gasterblaster_0.png": [
+     42,
+     57
+    ],
+    "spr_gasterblaster_1.png": [
+     40,
+     57
+    ],
+    "spr_gasterblaster_2.png": [
+     38,
+     57
+    ],
+    "spr_gasterblaster_3.png": [
+     43,
+     57
+    ],
+    "spr_gasterblaster_4.png": [
+     43,
+     57
+    ],
+    "spr_gasterblaster_5.png": [
+     43,
+     57
+    ]
+   },
+   "spr_mettatonb": {
+    "spr_mettatonb_0.png": [
+     52,
+     85
+    ]
+   },
+   "spr_mkid_d": {
+    "spr_mkid_d_0.png": [
+     21,
+     27
+    ],
+    "spr_mkid_d_1.png": [
+     21,
+     27
+    ],
+    "spr_mkid_d_2.png": [
+     21,
+     27
+    ],
+    "spr_mkid_d_3.png": [
+     21,
+     27
+    ]
+   },
+   "spr_mkid_l": {
+    "spr_mkid_l_0.png": [
+     20,
+     27
+    ],
+    "spr_mkid_l_1.png": [
+     20,
+     26
+    ],
+    "spr_mkid_l_2.png": [
+     20,
+     27
+    ],
+    "spr_mkid_l_3.png": [
+     20,
+     26
+    ]
+   },
+   "spr_mkid_r": {
+    "spr_mkid_r_0.png": [
+     20,
+     27
+    ],
+    "spr_mkid_r_1.png": [
+     20,
+     26
+    ],
+    "spr_mkid_r_2.png": [
+     20,
+     27
+    ],
+    "spr_mkid_r_3.png": [
+     20,
+     26
+    ]
+   },
+   "spr_mkid_u": {
+    "spr_mkid_u_0.png": [
+     19,
+     27
+    ],
+    "spr_mkid_u_1.png": [
+     19,
+     27
+    ],
+    "spr_mkid_u_2.png": [
+     19,
+     27
+    ],
+    "spr_mkid_u_3.png": [
+     19,
+     27
+    ]
+   },
+   "spr_muffet_overworld": {
+    "spr_muffet_overworld_0.png": [
+     26,
+     35
+    ],
+    "spr_muffet_overworld_1.png": [
+     26,
+     35
+    ],
+    "spr_muffet_overworld_2.png": [
+     25,
+     35
+    ],
+    "spr_muffet_overworld_3.png": [
+     25,
+     35
+    ],
+    "spr_muffet_overworld_4.png": [
+     25,
+     35
+    ],
+    "spr_muffet_overworld_5.png": [
+     25,
+     34
+    ]
+   },
+   "spr_napstablook_d": {
+    "spr_napstablook_d_0.png": [
+     17,
+     33
+    ]
+   },
+   "spr_napstablook_l": {
+    "spr_napstablook_l_0.png": [
+     17,
+     33
+    ]
+   },
+   "spr_napstablook_r": {
+    "spr_napstablook_r_0.png": [
+     17,
+     33
+    ]
+   },
+   "spr_napstablook_u": {
+    "spr_napstablook_u_0.png": [
+     17,
+     33
+    ]
+   },
+   "spr_papyrus_d": {
+    "spr_papyrus_d_0.png": [
+     25,
+     42
+    ],
+    "spr_papyrus_d_1.png": [
+     23,
+     42
+    ],
+    "spr_papyrus_d_2.png": [
+     25,
+     42
+    ],
+    "spr_papyrus_d_3.png": [
+     23,
+     42
+    ]
+   },
+   "spr_papyrus_l": {
+    "spr_papyrus_l_0.png": [
+     15,
+     42
+    ],
+    "spr_papyrus_l_1.png": [
+     20,
+     41
+    ],
+    "spr_papyrus_l_2.png": [
+     15,
+     42
+    ],
+    "spr_papyrus_l_3.png": [
+     23,
+     41
+    ]
+   },
+   "spr_papyrus_r": {
+    "spr_papyrus_r_0.png": [
+     15,
+     42
+    ],
+    "spr_papyrus_r_1.png": [
+     20,
+     41
+    ],
+    "spr_papyrus_r_2.png": [
+     15,
+     42
+    ],
+    "spr_papyrus_r_3.png": [
+     23,
+     41
+    ]
+   },
+   "spr_papyrus_u": {
+    "spr_papyrus_u_0.png": [
+     25,
+     42
+    ],
+    "spr_papyrus_u_1.png": [
+     25,
+     41
+    ],
+    "spr_papyrus_u_2.png": [
+     25,
+     42
+    ],
+    "spr_papyrus_u_3.png": [
+     25,
+     41
+    ]
+   },
+   "spr_sans_d": {
+    "spr_sans_d_0.png": [
+     23,
+     30
+    ],
+    "spr_sans_d_1.png": [
+     23,
+     30
+    ],
+    "spr_sans_d_2.png": [
+     23,
+     30
+    ],
+    "spr_sans_d_3.png": [
+     23,
+     30
+    ]
+   },
+   "spr_sans_l": {
+    "spr_sans_l_0.png": [
+     17,
+     30
+    ],
+    "spr_sans_l_1.png": [
+     17,
+     29
+    ],
+    "spr_sans_l_2.png": [
+     17,
+     30
+    ],
+    "spr_sans_l_3.png": [
+     17,
+     29
+    ]
+   },
+   "spr_sans_r": {
+    "spr_sans_r_0.png": [
+     17,
+     30
+    ],
+    "spr_sans_r_1.png": [
+     17,
+     29
+    ],
+    "spr_sans_r_2.png": [
+     17,
+     30
+    ],
+    "spr_sans_r_3.png": [
+     17,
+     29
+    ]
+   },
+   "spr_sans_u": {
+    "spr_sans_u_0.png": [
+     23,
+     30
+    ],
+    "spr_sans_u_1.png": [
+     23,
+     30
+    ],
+    "spr_sans_u_2.png": [
+     23,
+     30
+    ],
+    "spr_sans_u_3.png": [
+     23,
+     30
+    ]
+   },
+   "spr_toriel_d": {
+    "spr_toriel_d_0.png": [
+     25,
+     52
+    ],
+    "spr_toriel_d_1.png": [
+     25,
+     52
+    ],
+    "spr_toriel_d_2.png": [
+     25,
+     52
+    ],
+    "spr_toriel_d_3.png": [
+     25,
+     52
+    ]
+   },
+   "spr_toriel_l": {
+    "spr_toriel_l_0.png": [
+     20,
+     52
+    ],
+    "spr_toriel_l_1.png": [
+     25,
+     51
+    ],
+    "spr_toriel_l_2.png": [
+     20,
+     52
+    ],
+    "spr_toriel_l_3.png": [
+     25,
+     51
+    ]
+   },
+   "spr_toriel_r": {
+    "spr_toriel_r_0.png": [
+     20,
+     52
+    ],
+    "spr_toriel_r_1.png": [
+     25,
+     51
+    ],
+    "spr_toriel_r_2.png": [
+     20,
+     52
+    ],
+    "spr_toriel_r_3.png": [
+     25,
+     51
+    ]
+   },
+   "spr_toriel_u": {
+    "spr_toriel_u_0.png": [
+     25,
+     51
+    ],
+    "spr_toriel_u_1.png": [
+     25,
+     51
+    ],
+    "spr_toriel_u_2.png": [
+     25,
+     51
+    ],
+    "spr_toriel_u_3.png": [
+     25,
+     51
+    ]
+   },
+   "spr_undyne_d": {
+    "spr_undyne_d_0.png": [
+     25,
+     54
+    ],
+    "spr_undyne_d_1.png": [
+     25,
+     53
+    ],
+    "spr_undyne_d_2.png": [
+     25,
+     54
+    ],
+    "spr_undyne_d_3.png": [
+     26,
+     53
+    ]
+   },
+   "spr_undyne_l": {
+    "spr_undyne_l_0.png": [
+     24,
+     54
+    ],
+    "spr_undyne_l_1.png": [
+     26,
+     53
+    ]
+   },
+   "spr_undyne_r": {
+    "spr_undyne_r_0.png": [
+     24,
+     54
+    ],
+    "spr_undyne_r_1.png": [
+     26,
+     53
+    ]
+   },
+   "spr_undyne_u": {
+    "spr_undyne_u_0.png": [
+     25,
+     54
+    ],
+    "spr_undyne_u_1.png": [
+     26,
+     53
+    ],
+    "spr_undyne_u_2.png": [
+     25,
+     54
+    ],
+    "spr_undyne_u_3.png": [
+     25,
+     53
+    ]
+   }
+  },
+  "hy": {
+   "dalv_down": {
+    "dalv_down_0.png": [
+     23,
+     44
+    ],
+    "dalv_down_1.png": [
+     24,
+     44
+    ],
+    "dalv_down_2.png": [
+     24,
+     44
+    ],
+    "dalv_down_3.png": [
+     23,
+     44
+    ]
+   },
+   "dalv_left": {
+    "dalv_left_0.png": [
+     22,
+     44
+    ],
+    "dalv_left_1.png": [
+     21,
+     43
+    ],
+    "dalv_left_2.png": [
+     22,
+     44
+    ],
+    "dalv_left_3.png": [
+     22,
+     43
+    ]
+   },
+   "dalv_right": {
+    "dalv_right_0.png": [
+     22,
+     44
+    ],
+    "dalv_right_1.png": [
+     21,
+     43
+    ],
+    "dalv_right_2.png": [
+     22,
+     44
+    ],
+    "dalv_right_3.png": [
+     22,
+     43
+    ]
+   },
+   "dalv_up": {
+    "dalv_up_0.png": [
+     23,
+     45
+    ],
+    "dalv_up_1.png": [
+     24,
+     44
+    ],
+    "dalv_up_2.png": [
+     24,
+     45
+    ],
+    "dalv_up_3.png": [
+     23,
+     44
+    ]
+   },
+   "spr_ace_down_walk": {
+    "spr_ace_down_walk_0.png": [
+     23,
+     46
+    ],
+    "spr_ace_down_walk_1.png": [
+     22,
+     48
+    ],
+    "spr_ace_down_walk_2.png": [
+     23,
+     46
+    ],
+    "spr_ace_down_walk_3.png": [
+     22,
+     48
+    ]
+   },
+   "spr_ace_left_walk": {
+    "spr_ace_left_walk_0.png": [
+     19,
+     46
+    ],
+    "spr_ace_left_walk_1.png": [
+     19,
+     47
+    ],
+    "spr_ace_left_walk_2.png": [
+     19,
+     46
+    ],
+    "spr_ace_left_walk_3.png": [
+     19,
+     47
+    ]
+   },
+   "spr_ace_right_walk": {
+    "spr_ace_right_walk_0.png": [
+     19,
+     46
+    ],
+    "spr_ace_right_walk_1.png": [
+     19,
+     47
+    ],
+    "spr_ace_right_walk_2.png": [
+     19,
+     46
+    ],
+    "spr_ace_right_walk_3.png": [
+     19,
+     47
+    ]
+   },
+   "spr_ace_up_walk": {
+    "spr_ace_up_walk_0.png": [
+     23,
+     46
+    ],
+    "spr_ace_up_walk_1.png": [
+     23,
+     48
+    ],
+    "spr_ace_up_walk_2.png": [
+     23,
+     46
+    ],
+    "spr_ace_up_walk_3.png": [
+     23,
+     48
+    ]
+   },
+   "spr_axis_down": {
+    "spr_axis_down_0.png": [
+     35,
+     45
+    ],
+    "spr_axis_down_1.png": [
+     35,
+     45
+    ],
+    "spr_axis_down_2.png": [
+     35,
+     45
+    ],
+    "spr_axis_down_3.png": [
+     33,
+     45
+    ],
+    "spr_axis_down_4.png": [
+     33,
+     45
+    ],
+    "spr_axis_down_5.png": [
+     33,
+     45
+    ],
+    "spr_axis_down_6.png": [
+     35,
+     45
+    ]
+   },
+   "spr_axis_left": {
+    "spr_axis_left_0.png": [
+     24,
+     44
+    ],
+    "spr_axis_left_1.png": [
+     25,
+     44
+    ],
+    "spr_axis_left_2.png": [
+     25,
+     44
+    ],
+    "spr_axis_left_3.png": [
+     24,
+     44
+    ],
+    "spr_axis_left_4.png": [
+     21,
+     44
+    ],
+    "spr_axis_left_5.png": [
+     21,
+     44
+    ],
+    "spr_axis_left_6.png": [
+     23,
+     44
+    ]
+   },
+   "spr_axis_right": {
+    "spr_axis_right_0.png": [
+     24,
+     44
+    ],
+    "spr_axis_right_1.png": [
+     25,
+     44
+    ],
+    "spr_axis_right_2.png": [
+     25,
+     44
+    ],
+    "spr_axis_right_3.png": [
+     24,
+     44
+    ],
+    "spr_axis_right_4.png": [
+     21,
+     44
+    ],
+    "spr_axis_right_5.png": [
+     21,
+     44
+    ],
+    "spr_axis_right_6.png": [
+     23,
+     44
+    ]
+   },
+   "spr_axis_up": {
+    "spr_axis_up_0.png": [
+     35,
+     45
+    ],
+    "spr_axis_up_1.png": [
+     35,
+     45
+    ],
+    "spr_axis_up_2.png": [
+     35,
+     45
+    ],
+    "spr_axis_up_3.png": [
+     33,
+     45
+    ],
+    "spr_axis_up_4.png": [
+     33,
+     45
+    ],
+    "spr_axis_up_5.png": [
+     33,
+     45
+    ],
+    "spr_axis_up_6.png": [
+     33,
+     45
+    ]
+   },
+   "spr_bowll_body_normal": {
+    "spr_bowll_body_normal_0.png": [
+     164,
+     88
+    ]
+   },
+   "spr_ceroba_down_walk": {
+    "spr_ceroba_down_walk_0.png": [
+     25,
+     52
+    ],
+    "spr_ceroba_down_walk_1.png": [
+     25,
+     52
+    ],
+    "spr_ceroba_down_walk_2.png": [
+     25,
+     52
+    ],
+    "spr_ceroba_down_walk_3.png": [
+     25,
+     52
+    ]
+   },
+   "spr_ceroba_left_walk": {
+    "spr_ceroba_left_walk_0.png": [
+     25,
+     53
+    ],
+    "spr_ceroba_left_walk_1.png": [
+     26,
+     54
+    ],
+    "spr_ceroba_left_walk_2.png": [
+     25,
+     53
+    ],
+    "spr_ceroba_left_walk_3.png": [
+     26,
+     54
+    ]
+   },
+   "spr_ceroba_right_walk": {
+    "spr_ceroba_right_walk_0.png": [
+     25,
+     53
+    ],
+    "spr_ceroba_right_walk_1.png": [
+     26,
+     54
+    ],
+    "spr_ceroba_right_walk_2.png": [
+     25,
+     53
+    ],
+    "spr_ceroba_right_walk_3.png": [
+     26,
+     54
+    ]
+   },
+   "spr_ceroba_up_walk": {
+    "spr_ceroba_up_walk_0.png": [
+     25,
+     52
+    ],
+    "spr_ceroba_up_walk_1.png": [
+     26,
+     53
+    ],
+    "spr_ceroba_up_walk_2.png": [
+     25,
+     52
+    ],
+    "spr_ceroba_up_walk_3.png": [
+     26,
+     53
+    ]
+   },
+   "spr_chujin_npc": {
+    "spr_chujin_npc_0.png": [
+     34,
+     56
+    ],
+    "spr_chujin_npc_1.png": [
+     34,
+     56
+    ]
+   },
+   "spr_clover_casual": {
+    "spr_clover_casual_0.png": [
+     19,
+     26
+    ]
+   },
+   "spr_ed_down_walk": {
+    "spr_ed_down_walk_0.png": [
+     64,
+     48
+    ],
+    "spr_ed_down_walk_1.png": [
+     62,
+     47
+    ],
+    "spr_ed_down_walk_2.png": [
+     64,
+     48
+    ],
+    "spr_ed_down_walk_3.png": [
+     62,
+     47
+    ]
+   },
+   "spr_ed_left_walk": {
+    "spr_ed_left_walk_0.png": [
+     46,
+     52
+    ],
+    "spr_ed_left_walk_1.png": [
+     54,
+     52
+    ],
+    "spr_ed_left_walk_2.png": [
+     48,
+     52
+    ],
+    "spr_ed_left_walk_3.png": [
+     46,
+     52
+    ]
+   },
+   "spr_ed_right_walk": {
+    "spr_ed_right_walk_0.png": [
+     46,
+     52
+    ],
+    "spr_ed_right_walk_1.png": [
+     54,
+     52
+    ],
+    "spr_ed_right_walk_2.png": [
+     48,
+     52
+    ],
+    "spr_ed_right_walk_3.png": [
+     46,
+     52
+    ]
+   },
+   "spr_ed_up_walk": {
+    "spr_ed_up_walk_0.png": [
+     64,
+     52
+    ],
+    "spr_ed_up_walk_1.png": [
+     62,
+     53
+    ],
+    "spr_ed_up_walk_2.png": [
+     64,
+     52
+    ],
+    "spr_ed_up_walk_3.png": [
+     62,
+     53
+    ]
+   },
+   "spr_flowey": {
+    "spr_flowey_0.png": [
+     21,
+     21
+    ],
+    "spr_flowey_1.png": [
+     21,
+     21
+    ]
+   },
+   "spr_guardener_body": {
+    "spr_guardener_body_0.png": [
+     31,
+     59
+    ]
+   },
+   "spr_martlet_down_talk": {
+    "spr_martlet_down_talk_0.png": [
+     27,
+     49
+    ],
+    "spr_martlet_down_talk_1.png": [
+     27,
+     48
+    ]
+   },
+   "spr_martlet_left_talk": {
+    "spr_martlet_left_talk_0.png": [
+     21,
+     50
+    ],
+    "spr_martlet_left_talk_1.png": [
+     21,
+     49
+    ]
+   },
+   "spr_martlet_right_talk": {
+    "spr_martlet_right_talk_0.png": [
+     21,
+     50
+    ],
+    "spr_martlet_right_talk_1.png": [
+     21,
+     49
+    ]
+   },
+   "spr_martlet_up_talk": {
+    "spr_martlet_up_talk_0.png": [
+     27,
+     49
+    ]
+   },
+   "spr_mooch_down_walk": {
+    "spr_mooch_down_walk_0.png": [
+     29,
+     43
+    ],
+    "spr_mooch_down_walk_1.png": [
+     30,
+     44
+    ],
+    "spr_mooch_down_walk_2.png": [
+     29,
+     43
+    ],
+    "spr_mooch_down_walk_3.png": [
+     30,
+     44
+    ]
+   },
+   "spr_mooch_left_walk": {
+    "spr_mooch_left_walk_0.png": [
+     31,
+     42
+    ],
+    "spr_mooch_left_walk_1.png": [
+     32,
+     43
+    ],
+    "spr_mooch_left_walk_2.png": [
+     31,
+     42
+    ],
+    "spr_mooch_left_walk_3.png": [
+     32,
+     43
+    ]
+   },
+   "spr_mooch_right_walk": {
+    "spr_mooch_right_walk_0.png": [
+     31,
+     42
+    ],
+    "spr_mooch_right_walk_1.png": [
+     32,
+     43
+    ],
+    "spr_mooch_right_walk_2.png": [
+     31,
+     42
+    ],
+    "spr_mooch_right_walk_3.png": [
+     32,
+     43
+    ]
+   },
+   "spr_mooch_up_walk": {
+    "spr_mooch_up_walk_0.png": [
+     30,
+     43
+    ],
+    "spr_mooch_up_walk_1.png": [
+     31,
+     44
+    ],
+    "spr_mooch_up_walk_2.png": [
+     30,
+     43
+    ],
+    "spr_mooch_up_walk_3.png": [
+     31,
+     44
+    ]
+   },
+   "spr_moray_down_walk": {
+    "spr_moray_down_walk_0.png": [
+     25,
+     56
+    ],
+    "spr_moray_down_walk_1.png": [
+     25,
+     55
+    ],
+    "spr_moray_down_walk_2.png": [
+     25,
+     55
+    ],
+    "spr_moray_down_walk_3.png": [
+     25,
+     55
+    ]
+   },
+   "spr_moray_left_walk": {
+    "spr_moray_left_walk_0.png": [
+     17,
+     54
+    ],
+    "spr_moray_left_walk_1.png": [
+     17,
+     53
+    ],
+    "spr_moray_left_walk_2.png": [
+     17,
+     54
+    ],
+    "spr_moray_left_walk_3.png": [
+     17,
+     53
+    ]
+   },
+   "spr_moray_right_walk": {
+    "spr_moray_right_walk_0.png": [
+     17,
+     54
+    ],
+    "spr_moray_right_walk_1.png": [
+     17,
+     53
+    ],
+    "spr_moray_right_walk_2.png": [
+     17,
+     54
+    ],
+    "spr_moray_right_walk_3.png": [
+     17,
+     53
+    ]
+   },
+   "spr_moray_up_walk": {
+    "spr_moray_up_walk_0.png": [
+     25,
+     55
+    ],
+    "spr_moray_up_walk_1.png": [
+     25,
+     55
+    ],
+    "spr_moray_up_walk_2.png": [
+     25,
+     55
+    ],
+    "spr_moray_up_walk_3.png": [
+     25,
+     55
+    ]
+   },
+   "spr_sousborg_npc": {
+    "spr_sousborg_npc_0.png": [
+     45,
+     83
+    ],
+    "spr_sousborg_npc_1.png": [
+     45,
+     84
+    ],
+    "spr_sousborg_npc_2.png": [
+     45,
+     83
+    ],
+    "spr_sousborg_npc_3.png": [
+     45,
+     84
+    ],
+    "spr_sousborg_npc_4.png": [
+     45,
+     83
+    ],
+    "spr_sousborg_npc_5.png": [
+     45,
+     83
+    ],
+    "spr_sousborg_npc_6.png": [
+     45,
+     82
+    ],
+    "spr_sousborg_npc_7.png": [
+     45,
+     81
+    ],
+    "spr_sousborg_npc_8.png": [
+     45,
+     84
+    ]
+   },
+   "spr_starlo_down_walk": {
+    "spr_starlo_down_walk_0.png": [
+     25,
+     55
+    ],
+    "spr_starlo_down_walk_1.png": [
+     25,
+     56
+    ],
+    "spr_starlo_down_walk_2.png": [
+     25,
+     57
+    ],
+    "spr_starlo_down_walk_3.png": [
+     25,
+     57
+    ]
+   },
+   "spr_starlo_left_walk": {
+    "spr_starlo_left_walk_0.png": [
+     24,
+     55
+    ],
+    "spr_starlo_left_walk_1.png": [
+     24,
+     55
+    ],
+    "spr_starlo_left_walk_2.png": [
+     24,
+     57
+    ],
+    "spr_starlo_left_walk_3.png": [
+     24,
+     56
+    ]
+   },
+   "spr_starlo_right_walk": {
+    "spr_starlo_right_walk_0.png": [
+     24,
+     55
+    ],
+    "spr_starlo_right_walk_1.png": [
+     24,
+     55
+    ],
+    "spr_starlo_right_walk_2.png": [
+     24,
+     57
+    ],
+    "spr_starlo_right_walk_3.png": [
+     24,
+     56
+    ]
+   },
+   "spr_starlo_up_walk": {
+    "spr_starlo_up_walk_0.png": [
+     25,
+     55
+    ],
+    "spr_starlo_up_walk_1.png": [
+     25,
+     56
+    ],
+    "spr_starlo_up_walk_2.png": [
+     25,
+     57
+    ],
+    "spr_starlo_up_walk_3.png": [
+     25,
+     57
+    ]
+   }
+  },
+  "ot": {
+   "iocAlphysDown": {
+    "iocAlphysDown_0.png": [
+     19,
+     32
+    ],
+    "iocAlphysDown_1.png": [
+     19,
+     32
+    ],
+    "iocAlphysDown_2.png": [
+     19,
+     32
+    ],
+    "iocAlphysDown_3.png": [
+     19,
+     32
+    ]
+   },
+   "iocAlphysLeft": {
+    "iocAlphysLeft_0.png": [
+     29,
+     31
+    ],
+    "iocAlphysLeft_1.png": [
+     29,
+     31
+    ],
+    "iocAlphysLeft_2.png": [
+     29,
+     31
+    ],
+    "iocAlphysLeft_3.png": [
+     29,
+     31
+    ]
+   },
+   "iocAlphysRight": {
+    "iocAlphysRight_0.png": [
+     29,
+     31
+    ],
+    "iocAlphysRight_1.png": [
+     29,
+     31
+    ],
+    "iocAlphysRight_2.png": [
+     29,
+     31
+    ],
+    "iocAlphysRight_3.png": [
+     29,
+     31
+    ]
+   },
+   "iocAlphysUp": {
+    "iocAlphysUp_0.png": [
+     19,
+     32
+    ],
+    "iocAlphysUp_1.png": [
+     19,
+     32
+    ]
+   },
+   "iocAsgoreDown": {
+    "iocAsgoreDown_0.png": [
+     57,
+     63
+    ],
+    "iocAsgoreDown_1.png": [
+     57,
+     63
+    ],
+    "iocAsgoreDown_2.png": [
+     57,
+     63
+    ],
+    "iocAsgoreDown_3.png": [
+     57,
+     63
+    ]
+   },
+   "iocAsgoreLeft": {
+    "iocAsgoreLeft_0.png": [
+     56,
+     62
+    ],
+    "iocAsgoreLeft_1.png": [
+     56,
+     62
+    ]
+   },
+   "iocAsgoreRight": {
+    "iocAsgoreRight_0.png": [
+     56,
+     62
+    ],
+    "iocAsgoreRight_1.png": [
+     56,
+     62
+    ]
+   },
+   "iocAsgoreUp": {
+    "iocAsgoreUp_0.png": [
+     57,
+     63
+    ],
+    "iocAsgoreUp_1.png": [
+     57,
+     63
+    ]
+   },
+   "iocAsrielDown": {
+    "iocAsrielDown_0.png": [
+     16,
+     28
+    ],
+    "iocAsrielDown_1.png": [
+     16,
+     28
+    ],
+    "iocAsrielDown_2.png": [
+     16,
+     28
+    ],
+    "iocAsrielDown_3.png": [
+     16,
+     28
+    ]
+   },
+   "iocAsrielLeft": {
+    "iocAsrielLeft_0.png": [
+     16,
+     28
+    ],
+    "iocAsrielLeft_1.png": [
+     16,
+     28
+    ],
+    "iocAsrielLeft_2.png": [
+     16,
+     28
+    ],
+    "iocAsrielLeft_3.png": [
+     16,
+     28
+    ]
+   },
+   "iocAsrielRight": {
+    "iocAsrielRight_0.png": [
+     16,
+     28
+    ],
+    "iocAsrielRight_1.png": [
+     16,
+     28
+    ],
+    "iocAsrielRight_2.png": [
+     16,
+     28
+    ],
+    "iocAsrielRight_3.png": [
+     16,
+     28
+    ]
+   },
+   "iocAsrielUp": {
+    "iocAsrielUp_0.png": [
+     16,
+     28
+    ],
+    "iocAsrielUp_1.png": [
+     16,
+     28
+    ],
+    "iocAsrielUp_2.png": [
+     16,
+     28
+    ],
+    "iocAsrielUp_3.png": [
+     16,
+     28
+    ]
+   },
+   "iocKiddDown": {
+    "iocKiddDown_0.png": [
+     23,
+     27
+    ],
+    "iocKiddDown_1.png": [
+     23,
+     27
+    ],
+    "iocKiddDown_2.png": [
+     23,
+     27
+    ],
+    "iocKiddDown_3.png": [
+     23,
+     27
+    ]
+   },
+   "iocKiddLeft": {
+    "iocKiddLeft_0.png": [
+     21,
+     27
+    ],
+    "iocKiddLeft_1.png": [
+     21,
+     27
+    ],
+    "iocKiddLeft_2.png": [
+     21,
+     27
+    ],
+    "iocKiddLeft_3.png": [
+     21,
+     27
+    ]
+   },
+   "iocKiddRight": {
+    "iocKiddRight_0.png": [
+     21,
+     27
+    ],
+    "iocKiddRight_1.png": [
+     21,
+     27
+    ],
+    "iocKiddRight_2.png": [
+     21,
+     27
+    ],
+    "iocKiddRight_3.png": [
+     21,
+     27
+    ]
+   },
+   "iocKiddUp": {
+    "iocKiddUp_0.png": [
+     19,
+     28
+    ],
+    "iocKiddUp_1.png": [
+     19,
+     28
+    ],
+    "iocKiddUp_2.png": [
+     19,
+     28
+    ],
+    "iocKiddUp_3.png": [
+     19,
+     28
+    ]
+   },
+   "iocMettatonDressIdle": {
+    "iocMettatonDressIdle_0.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_1.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_10.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_11.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_12.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_2.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_3.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_4.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_5.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_6.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_7.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_8.png": [
+     79,
+     46
+    ],
+    "iocMettatonDressIdle_9.png": [
+     79,
+     46
+    ]
+   },
+   "iocNapstablookBody": {
+    "iocNapstablookBody_0.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_1.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_2.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_3.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_4.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_5.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_6.png": [
+     35,
+     30
+    ],
+    "iocNapstablookBody_7.png": [
+     35,
+     30
+    ]
+   },
+   "iocPapyrusDown": {
+    "iocPapyrusDown_0.png": [
+     25,
+     43
+    ],
+    "iocPapyrusDown_1.png": [
+     25,
+     43
+    ],
+    "iocPapyrusDown_2.png": [
+     25,
+     43
+    ],
+    "iocPapyrusDown_3.png": [
+     25,
+     43
+    ]
+   },
+   "iocPapyrusLeft": {
+    "iocPapyrusLeft_0.png": [
+     23,
+     43
+    ],
+    "iocPapyrusLeft_1.png": [
+     23,
+     43
+    ],
+    "iocPapyrusLeft_2.png": [
+     23,
+     43
+    ],
+    "iocPapyrusLeft_3.png": [
+     23,
+     43
+    ]
+   },
+   "iocPapyrusRight": {
+    "iocPapyrusRight_0.png": [
+     23,
+     43
+    ],
+    "iocPapyrusRight_1.png": [
+     23,
+     43
+    ],
+    "iocPapyrusRight_2.png": [
+     23,
+     43
+    ],
+    "iocPapyrusRight_3.png": [
+     23,
+     43
+    ]
+   },
+   "iocPapyrusUp": {
+    "iocPapyrusUp_0.png": [
+     25,
+     43
+    ],
+    "iocPapyrusUp_1.png": [
+     25,
+     43
+    ],
+    "iocPapyrusUp_2.png": [
+     25,
+     43
+    ],
+    "iocPapyrusUp_3.png": [
+     25,
+     43
+    ]
+   },
+   "iocSansDown": {
+    "iocSansDown_0.png": [
+     23,
+     31
+    ],
+    "iocSansDown_1.png": [
+     23,
+     31
+    ],
+    "iocSansDown_2.png": [
+     23,
+     31
+    ],
+    "iocSansDown_3.png": [
+     23,
+     31
+    ]
+   },
+   "iocSansLeft": {
+    "iocSansLeft_0.png": [
+     17,
+     31
+    ],
+    "iocSansLeft_1.png": [
+     17,
+     31
+    ],
+    "iocSansLeft_2.png": [
+     17,
+     31
+    ],
+    "iocSansLeft_3.png": [
+     17,
+     31
+    ]
+   },
+   "iocSansRight": {
+    "iocSansRight_0.png": [
+     17,
+     31
+    ],
+    "iocSansRight_1.png": [
+     17,
+     31
+    ],
+    "iocSansRight_2.png": [
+     17,
+     31
+    ],
+    "iocSansRight_3.png": [
+     17,
+     31
+    ]
+   },
+   "iocSansUp": {
+    "iocSansUp_0.png": [
+     23,
+     31
+    ],
+    "iocSansUp_1.png": [
+     23,
+     31
+    ],
+    "iocSansUp_2.png": [
+     23,
+     31
+    ],
+    "iocSansUp_3.png": [
+     23,
+     31
+    ]
+   },
+   "iocTorielDown": {
+    "iocTorielDown_0.png": [
+     25,
+     53
+    ],
+    "iocTorielDown_1.png": [
+     25,
+     53
+    ],
+    "iocTorielDown_2.png": [
+     25,
+     53
+    ],
+    "iocTorielDown_3.png": [
+     25,
+     53
+    ]
+   },
+   "iocTorielLeft": {
+    "iocTorielLeft_0.png": [
+     25,
+     53
+    ],
+    "iocTorielLeft_1.png": [
+     25,
+     53
+    ],
+    "iocTorielLeft_2.png": [
+     25,
+     53
+    ],
+    "iocTorielLeft_3.png": [
+     25,
+     53
+    ]
+   },
+   "iocTorielRight": {
+    "iocTorielRight_0.png": [
+     25,
+     53
+    ],
+    "iocTorielRight_1.png": [
+     25,
+     53
+    ],
+    "iocTorielRight_2.png": [
+     25,
+     53
+    ],
+    "iocTorielRight_3.png": [
+     25,
+     53
+    ]
+   },
+   "iocTorielUp": {
+    "iocTorielUp_0.png": [
+     25,
+     52
+    ],
+    "iocTorielUp_1.png": [
+     25,
+     52
+    ],
+    "iocTorielUp_2.png": [
+     25,
+     52
+    ],
+    "iocTorielUp_3.png": [
+     25,
+     52
+    ]
+   },
+   "iocTwinklyMain": {
+    "iocTwinklyMain_0.png": [
+     21,
+     21
+    ],
+    "iocTwinklyMain_1.png": [
+     21,
+     21
+    ]
+   },
+   "iocUndyneDown": {
+    "iocUndyneDown_0.png": [
+     35,
+     54
+    ],
+    "iocUndyneDown_1.png": [
+     35,
+     54
+    ],
+    "iocUndyneDown_2.png": [
+     35,
+     54
+    ],
+    "iocUndyneDown_3.png": [
+     35,
+     54
+    ]
+   },
+   "iocUndyneLeft": {
+    "iocUndyneLeft_0.png": [
+     26,
+     49
+    ],
+    "iocUndyneLeft_1.png": [
+     26,
+     49
+    ],
+    "iocUndyneLeft_2.png": [
+     26,
+     49
+    ],
+    "iocUndyneLeft_3.png": [
+     26,
+     49
+    ]
+   },
+   "iocUndyneRight": {
+    "iocUndyneRight_0.png": [
+     26,
+     49
+    ],
+    "iocUndyneRight_1.png": [
+     26,
+     49
+    ],
+    "iocUndyneRight_2.png": [
+     26,
+     49
+    ],
+    "iocUndyneRight_3.png": [
+     26,
+     49
+    ]
+   },
+   "iocUndyneUp": {
+    "iocUndyneUp_0.png": [
+     35,
+     54
+    ],
+    "iocUndyneUp_1.png": [
+     35,
+     54
+    ],
+    "iocUndyneUp_2.png": [
+     35,
+     54
+    ],
+    "iocUndyneUp_3.png": [
+     35,
+     54
+    ]
+   },
+   "ionFMuffet": {
+    "ionFMuffet_0.png": [
+     26,
+     35
+    ],
+    "ionFMuffet_1.png": [
+     26,
+     35
+    ],
+    "ionFMuffet_2.png": [
+     26,
+     35
+    ],
+    "ionFMuffet_3.png": [
+     26,
+     35
+    ],
+    "ionFMuffet_4.png": [
+     26,
+     35
+    ],
+    "ionFMuffet_5.png": [
+     26,
+     35
+    ],
+    "ionFMuffet_6.png": [
+     26,
+     35
+    ]
+   }
+  },
+  "os": {
+   "blue_npc_prophet": {
+    "blue_npc_prophet.png": [
+     96,
+     128
+    ]
+   },
+   "blue_npc_prototype": {
+    "blue_npc_prototype.png": [
+     96,
+     128
+    ]
+   },
+   "blue_npc_silver": {
+    "blue_npc_silver.png": [
+     120,
+     200
+    ]
+   },
+   "clovers": {
+    "clovers.png": [
+     64,
+     64
+    ]
+   },
+   "contacts_kelvin": {
+    "contacts_kelvin.png": [
+     448,
+     320
+    ]
+   },
+   "contacts_ling": {
+    "contacts_ling.png": [
+     30,
+     50
+    ]
+   },
+   "contacts_maize": {
+    "contacts_maize.png": [
+     24,
+     32
+    ]
+   },
+   "contacts_mason": {
+    "contacts_mason.png": [
+     120,
+     200
+    ]
+   },
+   "contacts_rowbot": {
+    "contacts_rowbot.png": [
+     48,
+     48
+    ]
+   },
+   "contacts_shepherd": {
+    "contacts_shepherd.png": [
+     96,
+     128
+    ]
+   },
+   "contacts_watcher": {
+    "contacts_watcher.png": [
+     120,
+     200
+    ]
+   },
+   "en": {
+    "en.png": [
+     96,
+     128
+    ]
+   },
+   "green_npc_alula": {
+    "green_npc_alula.png": [
+     96,
+     128
+    ]
+   },
+   "green_npc_calamus": {
+    "green_npc_calamus.png": [
+     96,
+     128
+    ]
+   },
+   "green_npc_cedric": {
+    "green_npc_cedric.png": [
+     96,
+     128
+    ]
+   },
+   "green_npc_magpie": {
+    "green_npc_magpie.png": [
+     96,
+     128
+    ]
+   },
+   "niko": {
+    "niko.png": [
+     96,
+     128
+    ]
+   },
+   "red_kip": {
+    "red_kip.png": [
+     120,
+     200
+    ]
+   },
+   "red_lamplighter": {
+    "red_lamplighter.png": [
+     120,
+     200
+    ]
+   },
+   "red_npc_george1": {
+    "red_npc_george1.png": [
+     96,
+     128
+    ]
+   },
+   "red_rue": {
+    "red_rue.png": [
+     96,
+     128
+    ]
+   }
+  }
+ },
+ "gms_meta": {
+  "bg_elevarmL": [
+   68,
+   41
+  ],
+  "bg_elevarmR": [
+   68,
+   41
+  ],
+  "bg_elevbelow": [
+   82,
+   42
+  ],
+  "bg_elevbottom": [
+   85,
+   103
+  ],
+  "bg_elevleg": [
+   33,
+   45
+  ],
+  "bg_elevtop": [
+   120,
+   100
+  ],
+  "bg_elevunit": [
+   83,
+   27
+  ],
+  "spr_alphys_d": [
+   29,
+   34
+  ],
+  "spr_alphys_l": [
+   29,
+   34
+  ],
+  "spr_alphys_r": [
+   29,
+   34
+  ],
+  "spr_alphys_u": [
+   29,
+   34
+  ],
+  "spr_asgore_d": [
+   57,
+   63
+  ],
+  "spr_asgore_l": [
+   56,
+   62
+  ],
+  "spr_asgore_r": [
+   56,
+   62
+  ],
+  "spr_asgore_u": [
+   57,
+   63
+  ],
+  "spr_charad": [
+   20,
+   30
+  ],
+  "spr_charal": [
+   20,
+   30
+  ],
+  "spr_charar": [
+   20,
+   30
+  ],
+  "spr_charau": [
+   20,
+   30
+  ],
+  "spr_darkelevator_l": [
+   20,
+   60
+  ],
+  "spr_darkelevator_r": [
+   20,
+   60
+  ],
+  "spr_elevatordoor": [
+   20,
+   50
+  ],
+  "spr_elevatordoor_vines": [
+   63,
+   56
+  ],
+  "spr_elevatordoorframe": [
+   63,
+   55
+  ],
+  "spr_elevatorgem_l": [
+   6,
+   15
+  ],
+  "spr_elevatorgem_r": [
+   6,
+   15
+  ],
+  "spr_elevatorpanel": [
+   40,
+   36
+  ],
+  "spr_f_maincharad": [
+   20,
+   30
+  ],
+  "spr_f_maincharal": [
+   20,
+   30
+  ],
+  "spr_f_maincharar": [
+   20,
+   30
+  ],
+  "spr_f_maincharau": [
+   20,
+   30
+  ],
+  "spr_floweyfly": [
+   40,
+   45
+  ],
+  "spr_gasterblaster": [
+   43,
+   57
+  ],
+  "spr_mettatonb": [
+   108,
+   92
+  ],
+  "spr_mkid_d": [
+   22,
+   29
+  ],
+  "spr_mkid_l": [
+   22,
+   29
+  ],
+  "spr_mkid_r": [
+   22,
+   29
+  ],
+  "spr_mkid_u": [
+   22,
+   29
+  ],
+  "spr_muffet_overworld": [
+   26,
+   35
+  ],
+  "spr_napstablook_d": [
+   17,
+   33
+  ],
+  "spr_napstablook_l": [
+   17,
+   33
+  ],
+  "spr_napstablook_r": [
+   17,
+   33
+  ],
+  "spr_napstablook_u": [
+   17,
+   33
+  ],
+  "spr_papyrus_d": [
+   27,
+   44
+  ],
+  "spr_papyrus_l": [
+   27,
+   44
+  ],
+  "spr_papyrus_r": [
+   27,
+   44
+  ],
+  "spr_papyrus_u": [
+   27,
+   44
+  ],
+  "spr_sans_d": [
+   25,
+   32
+  ],
+  "spr_sans_l": [
+   25,
+   32
+  ],
+  "spr_sans_r": [
+   25,
+   32
+  ],
+  "spr_sans_u": [
+   25,
+   32
+  ],
+  "spr_toriel_d": [
+   32,
+   58
+  ],
+  "spr_toriel_l": [
+   32,
+   58
+  ],
+  "spr_toriel_r": [
+   32,
+   58
+  ],
+  "spr_toriel_u": [
+   32,
+   58
+  ],
+  "spr_undyne_d": [
+   26,
+   54
+  ],
+  "spr_undyne_l": [
+   26,
+   54
+  ],
+  "spr_undyne_r": [
+   26,
+   54
+  ],
+  "spr_undyne_u": [
+   26,
+   54
+  ],
+  "dalv_down": [
+   24,
+   45
+  ],
+  "dalv_left": [
+   22,
+   44
+  ],
+  "dalv_right": [
+   22,
+   44
+  ],
+  "dalv_up": [
+   24,
+   45
+  ],
+  "spr_ace_down_walk": [
+   23,
+   48
+  ],
+  "spr_ace_left_walk": [
+   19,
+   47
+  ],
+  "spr_ace_right_walk": [
+   19,
+   47
+  ],
+  "spr_ace_up_walk": [
+   23,
+   48
+  ],
+  "spr_axis_down": [
+   35,
+   45
+  ],
+  "spr_axis_left": [
+   34,
+   48
+  ],
+  "spr_axis_right": [
+   34,
+   48
+  ],
+  "spr_axis_up": [
+   35,
+   45
+  ],
+  "spr_bowll_body_normal": [
+   164,
+   88
+  ],
+  "spr_ceroba_down_walk": [
+   25,
+   53
+  ],
+  "spr_ceroba_left_walk": [
+   26,
+   54
+  ],
+  "spr_ceroba_right_walk": [
+   26,
+   54
+  ],
+  "spr_ceroba_up_walk": [
+   27,
+   53
+  ],
+  "spr_chujin_npc": [
+   34,
+   56
+  ],
+  "spr_clover_casual": [
+   37,
+   38
+  ],
+  "spr_ed_down_walk": [
+   66,
+   49
+  ],
+  "spr_ed_left_walk": [
+   54,
+   53
+  ],
+  "spr_ed_right_walk": [
+   54,
+   53
+  ],
+  "spr_ed_up_walk": [
+   64,
+   53
+  ],
+  "spr_flowey": [
+   21,
+   21
+  ],
+  "spr_guardener_body": [
+   41,
+   62
+  ],
+  "spr_martlet_down_talk": [
+   27,
+   49
+  ],
+  "spr_martlet_left_talk": [
+   21,
+   50
+  ],
+  "spr_martlet_right_talk": [
+   21,
+   50
+  ],
+  "spr_martlet_up_talk": [
+   27,
+   49
+  ],
+  "spr_mooch_down_walk": [
+   30,
+   45
+  ],
+  "spr_mooch_left_walk": [
+   32,
+   44
+  ],
+  "spr_mooch_right_walk": [
+   32,
+   44
+  ],
+  "spr_mooch_up_walk": [
+   31,
+   45
+  ],
+  "spr_moray_down_walk": [
+   25,
+   56
+  ],
+  "spr_moray_left_walk": [
+   17,
+   54
+  ],
+  "spr_moray_right_walk": [
+   17,
+   54
+  ],
+  "spr_moray_up_walk": [
+   25,
+   56
+  ],
+  "spr_sousborg_npc": [
+   45,
+   84
+  ],
+  "spr_starlo_down_walk": [
+   25,
+   58
+  ],
+  "spr_starlo_left_walk": [
+   24,
+   57
+  ],
+  "spr_starlo_right_walk": [
+   24,
+   57
+  ],
+  "spr_starlo_up_walk": [
+   25,
+   58
+  ]
+ },
+ "sources": {
+  "ut_data": "E:\\Download\\_extract61\\_data\\undertale\\game.droid",
+  "hy_data": "E:\\Download\\_extract61\\_data\\undertale_yellow\\game.droid",
+  "ot_www": "E:\\Download\\_extract61\\outertale\\www",
+  "os_npc": "C:\\Users\\23002\\Desktop\\项目文件夹\\niko的秘密\\OneShot.World.Machine.Edition.Build.16512634\\content\\npc"
+ }
+}
