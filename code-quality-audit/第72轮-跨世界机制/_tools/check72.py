@@ -314,9 +314,24 @@ print('=' * 74)
 print('E 诚实判据：只准把真接线的写成 wired')
 print('=' * 74)
 _w = CROSSJ['wiring']
-check('E1 接线台账只把 roam 记为 wired（其余五项必须如实 spec_only）',
-      _w.get('wired') == ['roam'] and len(_w.get('spec_only') or []) >= 4,
-      'wired=%s spec_only=%d 项' % (_w.get('wired'), len(_w.get('spec_only') or [])))
+# ★ 第73轮更新：`scene_traits` / `familiarity_seed` / `identity_blind` / `twin_groups`
+#   也已接线（自由生活）。本判据**不再写死"只有 roam"** ——
+#   写死会把"将来接线"变成"必须报红"，那是判据过窄（本项目踩过：
+#   判据名与事实脱节却照样 PASS，以及"判据过窄会漏报"）。
+#   改成守**两件不许撒谎的事**：
+#     ① 宣布 `wired` 的块，自己 `status` 必须也是 `wired`（台账与正文不许打架）；
+#     ② 每一块 `wired` 都必须写明 `used_by`（谁在用它）——
+#        "标了 wired 却说不清用在哪"正是「函数写对了 ≠ 产品用上了」的变体。
+_wired = set(_w.get('wired') or [])
+_tag_mismatch = [k for k in _wired if CROSSJ.get(k, {}).get('status') != 'wired']
+check('E1 台账 wired 与正文 status 一致，且至少 roam 在（第73轮起可增长）',
+      'roam' in _wired and not _tag_mismatch
+      and not [k for k in (_w.get('spec_only') or [])
+               if CROSSJ.get(k, {}).get('status') != 'spec_only'],
+      'wired=%s 正文不一致=%s' % (sorted(_wired), _tag_mismatch))
+check('E1b ★ 每一项 wired 都必须写明 used_by（谁在用），否则"标了 wired 说不清用在哪"',
+      all(CROSSJ.get(k, {}).get('used_by') for k in _wired),
+      str({k: bool(CROSSJ.get(k, {}).get('used_by')) for k in sorted(_wired)}))
 check('E2 接线台账列了 not_yet（不许只说"做完了"）', bool(_w.get('not_yet')),
       '%d 条' % len(_w.get('not_yet') or []))
 # 反向：契约里每个 spec_only 的块，自己也要带 status 字段
@@ -324,6 +339,10 @@ _missing_status = [k for k in (_w.get('spec_only') or [])
                    if CROSSJ.get(k, {}).get('status') != 'spec_only']
 check('E3 每个 spec_only 的块自己带 status 字段且值一致（台账与正文不许打架）',
       not _missing_status, str(_missing_status or '(一致)'))
+check('E4 ★ `visitor` 必须仍为 spec_only（跨作品场景面没进 `_index.json`，'
+      '不许跟着一起翻绿 —— 翻绿就等于宣称"访客已经能用"）',
+      CROSSJ.get('visitor', {}).get('status') == 'spec_only',
+      str(CROSSJ.get('visitor', {}).get('status')))
 
 # --------------------------------------------------------------------------
 print('=' * 74)

@@ -441,6 +441,12 @@ from modules import npc_persona as npc_persona_mod
 #   前者管"他在这个世界里怎么走"（运动学）。混在一起会让
 #   `verify_npc49` 的零依赖 AST 闸（A 段）面对一个体积翻倍的模块。
 from modules import npc_placement as npc_placement_mod
+# NPC 「自由生活」策略层（★ 第73轮新增，零依赖纯策略：场景特质 / 熟络度 / 传话 / 自主节拍）。
+# ★ 与 `npc_system` 的分工：后者答"**能不能进这个世界**"（许可，第72轮），
+#   本模块答"**进去了之后怎么过日子**"（行为）——"对场景有反应 / 循序渐进地熟起来 /
+#   把自己知道的说给别人"。再糊回 `npc_system` 会让 49 轮那道零依赖 AST 闸面对一个
+#   体积翻倍的模块（与 `npc_placement` 分出去的同一个理由）。
+from modules import npc_life as npc_life_mod
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -1857,6 +1863,18 @@ class RalseiPet(QMainWindow):
     #: ⚠️ 保留它本身不是死代码：这是"NPC 说话出问题"时的一刀定位开关。
     NPC_ENABLED = True
 
+    #: NPC **自由生活**（第73轮）总开关 —— 与 `NPC_ENABLED` **分成两个**：
+    #: 前者管"NPC 系统在不在"，这个管"他们会不会**自己过日子**"。
+    #: 为什么要分：用户可能想留着 NPC 说话/跟随，但不想让他们**未经发起就开口**
+    #: （自主开口会占 CPU-only 单并发的模型；见 `_npc_life_gate`）。
+    NPC_LIFE_ENABLED = True
+
+    #: 自主闲聊的节拍（秒）。★ 比"用户对话"松得多 —— 自发闲聊是背景音，不该抢注意力。
+    NPC_LIFE_MIN_GAP = 45.0
+
+    #: 一轮（一个场景）里最多让 NPC 自己说起几句。
+    NPC_LIFE_MAX_TURNS = 2
+
     #: 一次场景切换里最多问**几个** NPC"跟不跟"。
     #: 为什么是 1：每问一次就是一次**真实推理**（7B 纯 CPU）⇒ 问的人越多，换场景越卡。
     #: 取 1 = "换一次场景问最近说过话的那一个"，观感上够用且不会成倍放大延迟。
@@ -1892,6 +1910,22 @@ class RalseiPet(QMainWindow):
         self._npc_bodies_scene = None
         #: 上一帧各 body 的位置快照，用于"是否真的动了"（给将来渲染层省重绘）。
         self._npc_bodies_moved = []
+        # ---- 第73轮：自由生活（场景反应 / 熟络度 / 传话 / 自主节拍）----
+        #: `npc_life.Bonds` —— NPC 两两之间的熟络度（per-pair、对称、渐增）。
+        #: 用 `seed_lookup` 从**注册表 + 同名组**推初值（同 AU 0.55 / 同作品 0.30 / 陌生 0）。
+        self.npc_bonds = None
+        #: 跨世界契约（`assets/npc/_crossworld.json`）；读不到 ⇒ `{}`（降级，不抛）。
+        self.npc_crossworld = {}
+        #: 「同一角色的不同 AU 版本」配对集合（`set[frozenset]`，只含 `au_family_members`）。
+        self._npc_au_pairs = set()
+        #: `npc_life.LifeLoop` —— 自主开口的节拍（不并发 / 不自我对话 / 失败必解锁 / 反活锁）。
+        self.npc_life = None
+        #: `{npc_id: set[int]}` —— 该 NPC 的内置对话池已经说过哪几句（纯 NPC 用）。
+        self._npc_line_used = {}
+        #: 上一次"自由生活"节拍累计到的时间（`LifeLoop` 之外再兜一层限流）。
+        self._npc_life_last = 0.0
+        #: 自主开口是否因模型忙/用户在说话而被跳过（诊断用，一次性日志去重）。
+        self._npc_life_skipped = 0
 
         if not RalseiPet.NPC_ENABLED:
             _log.info('NPC 系统已关闭（NPC_ENABLED=False）⇒ NPC 不说话、不跟随')
@@ -1968,6 +2002,31 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.warning('NPC 编队建立失败（主角团不结伴走）: %s', e)
             self.npc_rig = None
+
+        # ---- 第73轮：自由生活（读跨世界契约 → 熟络度初值 → 自主节拍）----
+        # 全链降级：契约读不到 ⇒ `au_pairs` 空、`Bonds` 仍可用（初值一律"陌生"）。
+        # ★ `Bonds` / `LifeLoop` 的构造**不读文件**（零依赖纯策略），所以这里不会失败；
+        #   真正可能失败的是契约读取，失败也只是"少了 AU 加速"，不是"整块没了"。
+        try:
+            self.npc_crossworld = npc_system_mod.load_crossworld(root) or {}
+            self._npc_au_pairs = npc_system_mod.au_twin_pairs(self.npc_crossworld)
+            self.npc_bonds = npc_life_mod.Bonds(seed_lookup=self._npc_seed_lookup)
+        except Exception:
+            _log.exception('自由生活：契约/熟络度建立失败（退化为"一律陌生"）')
+            self.npc_crossworld = {}
+            self._npc_au_pairs = set()
+            self.npc_bonds = None
+        try:
+            # ★ `gate` = 让路闸：用户正在说话 / 模型在忙 / 总开关关 ⇒ 不自主开口。
+            #   `LifeLoop` 把它当成纯函数问，**不推进轮转**（不是 NPC 的错）。
+            self.npc_life = npc_life_mod.LifeLoop(
+                min_gap=RalseiPet.NPC_LIFE_MIN_GAP,
+                max_turns=RalseiPet.NPC_LIFE_MAX_TURNS,
+                gate=self._npc_life_gate)
+        except Exception:
+            _log.exception('自由生活：节拍器建立失败（NPC 不自主开口）')
+            self.npc_life = None
+        self._npc_line_used = {}
 
         # ---- 别名表：id / 英文名 / 中文名 三个都收（点名两层都认）----
         try:
@@ -2095,7 +2154,8 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug('NPC %s 记忆读取异常（按无记忆处理）: %s', npc_id, e)
         return npc_persona_mod.build_system_prompt(
-            npc.name, persona, entries, npc_id, self._build_npc_context(npc_id))
+            npc.name, persona, entries, npc_id, self._build_npc_context(npc_id),
+            life=self._npc_life_blocks(npc_id))
 
     def _npc_model(self, npc_id):
         """这个 NPC 该用哪个 Ollama 句柄 —— `None` = **跟随 App 配置**。
@@ -2151,6 +2211,19 @@ class RalseiPet(QMainWindow):
                                      scene=self._npc_scene_id())
         except Exception as e:
             _log.debug('NPC %s 记忆写入异常（已忽略）: %s', npc_id, e)
+        # ---- 第73轮：他**转告**同场的另一位（★ 显式、带署名，不共享容器）----
+        # ★ 语义：B 记下的是"**A 说过这句话**"（`who=A`），不是"我知道了这件事"。
+        #   这正是用户那句「怪物之间**没有身份标识**，所以**那需要自己判断**」的落地：
+        #   信息**带着来源走**，但不带"他是哪个世界的"。
+        # ★ 只在**真的有人在场**时才传（`_npc_life_ids` 的判据只有一处 = `npc_bodies`）。
+        try:
+            _others = [n for n in self._npc_life_ids() if n != npc_id]
+            if _others:
+                npc_life_mod.transmit(self.npc_memory, npc_id, _others[0])
+                if self.npc_bonds is not None:
+                    self.npc_bonds.meet(npc_id, _others[0])
+        except Exception as e:
+            _log.debug('NPC 传话异常（已忽略）: %s', e)
         self._npc_talking = npc_id
         if npc_id not in self._npc_invited:
             self._npc_invited.append(npc_id)
@@ -2535,6 +2608,282 @@ class RalseiPet(QMainWindow):
                 _log.debug('NPC 结对推进异常（本帧跳过）: %s', e)
         self._npc_bodies_moved = sorted(set(moved))
         return self._npc_bodies_moved
+
+    # ==================================================================
+    #  NPC 自由生活（第73轮）
+    #  ------------------------------------------------------------------
+    #  用户口径（逐字）：
+    #    「我希望他们是**生活在这**而不是我走到哪他们加载到哪……
+    #      我希望他们是**能对场景有反应**的，比如 sans 来到 oneshot 会吐槽，
+    #      这地方真黑之类的话……之后不同世界的人一开始也不认识，所以他们也是
+    #      **循序渐进的熟悉起来**，当然，**面对不同版本的自己熟悉的会更快**」
+    #
+    #  交付边界（★ 先说清楚，免得把"接口就位"说成"已经能用了"）：
+    #    ✅ 已接线：场景反应（进 prompt）/ 熟络度（同场共处上涨 + 进 prompt）/
+    #               传话（说完一句就告诉同场的另一位）/ 纯 NPC 自主开口（零模型）
+    #    ⏳ 未接线（如实登记 `not_yet`）：**主线 NPC 自主开口** —— 那需要把"无用户发起的
+    #       生成"接进现有异步回调链，且必须与用户请求排队（CPU-only 单并发），留给下一轮。
+    # ==================================================================
+
+    def _npc_production_of(self, npc_id):
+        """作品前缀（`ut`/`hy`/`ot`/`os`/`dr`）。★ 判据只有一处 = `npc_system.production_of`。"""
+        try:
+            return npc_system_mod.production_of(npc_id)
+        except Exception:
+            return ''
+
+    def _npc_seed_lookup(self, a, b):
+        """两人**初见**时的熟络度初值 —— 落用户那句「面对不同版本的自己熟悉的会更快」。
+
+        · 同一角色的不同 AU 版本（`ut_sans` ↔ `ot_sans`）→ `SEED_SAME_AU_TWIN` 0.55
+        · 同一作品内的人                                  → `SEED_SAME_PRODUCTION` 0.30
+        · 跨作品陌生人                                    → `SEED_STRANGER` 0.0
+
+        ★★ 为什么 AU 判定读的是**契约**（`_crossworld.json#twin_groups`）而不是在这里
+          再配一次对：契约里已经写死了"谁是另一个版本的我 / 谁只是同名" ——
+          Toriel 组 3 人里**只有** `ut_toriel`/`ot_toriel` 是 AU，`toriel`（Deltarune）
+          只是同名。在这里重配一次就会有两个真相，而且很容易把"同名"错当成"另一个我"，
+          白送 0.55 的起手熟络度（正是用户那句话被读歪的地方）。
+        """
+        try:
+            if frozenset((a, b)) in self._npc_au_pairs:
+                return npc_life_mod.SEED_SAME_AU_TWIN
+            pa, pb = self._npc_production_of(a), self._npc_production_of(b)
+            if pa and pa == pb:
+                return npc_life_mod.SEED_SAME_PRODUCTION
+        except Exception:
+            pass
+        return npc_life_mod.SEED_STRANGER
+
+    def _npc_life_gate(self):
+        """「现在允不允许 NPC 自己开口」—— 一句话：**先让路给用户**。
+
+        ★ 为什么必须有这道闸：模型是 **CPU-only、单实例、`NUM_PARALLEL=1`**
+          （第57轮实测「并发 = 排队」）。NPC 自发闲聊若跟用户对话抢队，
+          用户就得等几十秒。⇒ 只要"正在跟用户说话 / 模型忙 / 宠物在施法·躲猫猫·拖拽"
+          一律不自主开口。
+        ★ 返回 `False` **不推进轮转**（`LifeLoop` 的语义）：被让路的是这一次机会，
+          不是这个人 —— 下一拍还是他。
+        """
+        if not RalseiPet.NPC_LIFE_ENABLED:
+            return False
+        if getattr(self, '_npc_talking', None):
+            return False
+        if getattr(self, '_ai_inflight', 0):
+            return False
+        if getattr(self, '_event_speaking', False):
+            return False
+        if getattr(self, '_busy', False):
+            return False
+        if getattr(self, 'is_sleeping', False) or getattr(self, 'is_dragging', False):
+            return False
+        return True
+
+    def _npc_life_ids(self):
+        """此刻在场的人。★ 判据**只有一处** = `self.npc_bodies`（已过世界门控 + 站位表）。
+
+        ⚠️ 这里**刻意不**再查一遍 `_npc_scene_roster()`：那会变成"同一份规则两处算"
+          （本项目最贵的坑）—— `npc_bodies` 就是 `_npc_scene_roster` 播下来的结果。
+        """
+        bodies = getattr(self, 'npc_bodies', None)
+        if not bodies:
+            return []
+        return sorted(nid for nid in bodies.keys() if isinstance(nid, str) and nid)
+
+    def _npc_plain_ids(self, ids):
+        """把在场的人筛成**纯 NPC**（走内置对话池、零模型成本）。
+
+        ★ 为什么只让纯 NPC 自发开口：主线 NPC 的台词靠 7B 生成，而"无用户发起的生成"
+          本轮**未接线**（见本节抬头）。若把主线 NPC 也塞进节拍器，他会被选中却发不出话，
+          一路 `abort` 到"连续失败 ≥3 ⇒ 停手"，把整条生活线拖死。
+          ⇒ 宁可不选他（**如实留白**），也不选一个发不出声的人。
+        """
+        reg = self.npc_registry
+        if reg is None:
+            return []
+        out = []
+        for nid in ids:
+            try:
+                npc = reg.get(nid)
+                if npc is not None and npc.tier == npc_system_mod.NpcTier.PLAIN \
+                        and reg.lines_of(nid):
+                    out.append(nid)
+            except Exception:
+                continue
+        return out
+
+    def _npc_say_line(self, npc_id, text):
+        """让某个 NPC 用**自己的身份**说一句（走全项目唯一的气泡出口）。
+
+        ⚠️ 走 `dialogue_ui.add_dialogue(<npc_id>, ...)` 而不是 `_item_menu_message()`：
+          后者的说话人**写死是 ralsei**，NPC 的闲聊挂上去会变成"雷尔赛在替苏西说话"
+          ——正是用户最怕的串味。这里第一条参数就是说话人 id。
+        """
+        if not text:
+            return False
+        try:
+            self.dialogue_ui.add_dialogue(npc_id, text, 'normal')
+            self.dialogue_ui.show_dialogue()
+            return True
+        except Exception as e:
+            _log.debug('NPC %s 自主台词显示异常（已忽略）: %s', npc_id, e)
+            return False
+
+    def _npc_scene_text(self):
+        """推断场景特质用的文本 = **当前场景 id**（+ 站位表里的场景内部名）。
+
+        ★ 为什么是"id + 内部名"这两处：`npc_life` 不读文件（零依赖），它要的只是
+          **一段文本**；"这段文本从哪来"是宿主的事。id 里带着 `dark_world` / `castle_town`
+          / `cyber_city` 这些真信息，够用了。
+        """
+        parts = []
+        try:
+            sid = self._npc_scene_id()
+            if isinstance(sid, str) and sid:
+                parts.append(sid)
+        except Exception:
+            pass
+        try:
+            book = getattr(self, 'npc_placement', None)
+            if book is not None:
+                raw = getattr(book, 'room_raw', None)
+                if isinstance(raw, str) and raw:
+                    parts.append(raw)
+        except Exception:
+            pass
+        return ' '.join(parts)
+
+    def _npc_life_blocks(self, npc_id):
+        """NPC 的「自由生活」两块提示 —— ★ **只加"他此刻能看见的"，不加"他是谁"**。
+
+        ① 【你周围】= 场景特质（用户那句"能对场景有反应"的落地）。
+        ② 【你认识谁】= 熟络到一定程度的**显示名**，带一句"多熟"。
+
+        ★★ **绝不注入**的东西（用户口径「怪物们之间**没有身份标识**说你是哪个世界观的，
+          所以那需要自己判断」）：对方的**作品归属 / 版本 / npc id / 人设**——
+          `_crossworld.json#identity_blind.not_injected` 已把这条列死。这里只给
+          "他叫什么、你跟他熟到什么程度"，**怎么判断来人是谁，是 NPC 自己的事**。
+        """
+        out = []
+        try:
+            traits = npc_life_mod.scene_traits(self._npc_scene_text())
+            hint = npc_life_mod.trait_hint(traits)
+            if hint:
+                out.append(hint)
+        except Exception as e:
+            _log.debug('场景特质分片失败（已忽略）: %s', e)
+        try:
+            if self.npc_bonds is not None:
+                known = self.npc_bonds.known(npc_id)
+                if known:
+                    reg = self.npc_registry
+                    names = []
+                    for nid in known[:6]:
+                        npc = reg.get(nid) if reg is not None else None
+                        nm = npc_persona_mod.speaker_label(
+                            getattr(npc, 'name', None), getattr(npc, 'name_cn', None)) \
+                            if npc is not None else ''
+                        if nm:
+                            names.append(nm)
+                    if names:
+                        out.append('【你认识谁】你已经比较熟的有：' + '、'.join(names)
+                                   + '。（熟不熟看相处，不看别的 —— 对方是哪里来的、'
+                                     '是哪个版本，你并不知道，也别去猜。）')
+        except Exception as e:
+            _log.debug('熟络度分片失败（已忽略）: %s', e)
+        return '\n\n'.join(out)
+
+    def _npc_life_tick(self, dt):
+        """第73轮：NPC「自由生活」每帧推进。→ 本帧真正开了口的 NPC id 列表。
+
+        挂在与 `npc_placement_tick` **同一处**（`update_movement` 的早退分支之前）：
+        他们是独立实体，宠物睡着 / 施法 / 躲猫猫时照样该过日子。
+
+        本函数做三件事，**前两件不花一分钱**：
+
+          1. **熟络度**：在场两两之间缓慢上涨（纯算）。★ 涨幅按 dt 折算成"满速 30fps 的
+             等价帧数"，所以挂 10fps 还是 30fps 定时器，涨得一样快（不然换定时器就会
+             悄悄改变数值 —— 那是"同一份规则被两处算"的另一种模样）。
+          2. **纯 NPC 自主开口**：从**内置对话池**取一句（**零模型成本**，用户第49轮口径
+             「纯 npc……就用 4~10 句内置对话就好」），记进他自己的记忆，再**传话**给同场
+             另一位（带署名）。说过的句子不重复，一圈说完自动开新圈。
+          3. **主线 NPC 自主开口**：`not_yet`（见本节抬头）。
+        """
+        if not RalseiPet.NPC_LIFE_ENABLED:
+            return []
+        ids = self._npc_life_ids()
+        if len(ids) < npc_life_mod.MIN_TALKERS:
+            return []
+        # ---- 1) 熟络度：同处一室，缓慢上涨 ----
+        if self.npc_bonds is not None:
+            try:
+                frames = max(0.0, min(float(dt), 0.1)) * 30.0     # 等价 30fps 帧数
+            except Exception:
+                frames = 0.0
+            if frames > 0:
+                for k in range(len(ids)):
+                    for m in range(k + 1, len(ids)):
+                        try:
+                            self.npc_bonds.tick(ids[k], ids[m],
+                                                amount=npc_life_mod.GAIN_PER_TICK * frames)
+                        except Exception:
+                            pass
+        # ---- 2) 自主开口节拍 ----
+        loop = self.npc_life
+        if loop is None:
+            return []
+        # 换场景 ⇒ 重新开一轮（不然 `max_turns` 用完就再也不开口了）。
+        try:
+            sid = self._npc_scene_id()
+        except Exception:
+            sid = None
+        if getattr(self, '_npc_life_scene', None) != sid:
+            self._npc_life_scene = sid
+            loop.reset(keep_turns=False)
+        plain = self._npc_plain_ids(ids)
+        if len(plain) < npc_life_mod.MIN_TALKERS:
+            return []
+        try:
+            now = time.monotonic()
+        except Exception:
+            return []
+        speaker = loop.tick(now, plain)
+        if speaker is None:
+            return []
+        # ---- 挑一句（不重复）----
+        try:
+            lines = self.npc_registry.lines_of(speaker)
+        except Exception:
+            lines = []
+        used = self._npc_line_used.get(speaker)
+        text, used_new = npc_life_mod.pick_line(lines, used)
+        if not text:
+            # 池子空 —— 不该发生（`_npc_plain_ids` 已保证非空），如实解锁并记账
+            loop.abort(now)
+            return []
+        self._npc_line_used[speaker] = used_new
+        # ---- 落他自己的记忆（★ `who` 是他自己：这是"他自己说的"，不是用户说的）----
+        try:
+            if self.npc_memory is not None:
+                self.npc_memory.remember(speaker, text, who=speaker)
+        except Exception as e:
+            _log.debug('NPC %s 自主台词落记忆异常（已忽略）: %s', speaker, e)
+        # ---- 传话给同场的另一位（★ 显式、带署名；不违反"一角色一份物理分开"）----
+        others = [n for n in ids if n != speaker]
+        if others and self.npc_memory is not None:
+            try:
+                npc_life_mod.transmit(self.npc_memory, speaker, others[0])
+            except Exception as e:
+                _log.debug('传话 %s → %s 异常（已忽略）: %s', speaker, others[0], e)
+            if self.npc_bonds is not None:
+                try:
+                    self.npc_bonds.meet(speaker, others[0])
+                except Exception:
+                    pass
+        # ---- 显示 + 收束 ----
+        self._npc_say_line(speaker, text)
+        loop.finish(now, speaker)
+        return [speaker]
 
     def _npc_menu_message(self, text):
         """往用户能看见的地方说一句（复用道具菜单那条通道；没有就只记日志）。
@@ -4151,6 +4500,13 @@ class RalseiPet(QMainWindow):
         # ★ 同时喂**接触计时**：它读 `self.npc_bodies`（当前场景在场的人，已过世界门控），
         #   判据只有一处，不在这里重算"谁该在场"。
         self._ghost_tick(elapsed_time)
+
+        # ---- NPC「自由生活」（第73轮）：每帧推进 ----
+        # ★ 与灵魂 / 站位 / 幽灵同一位置（`update_movement` 的**所有早退分支之前**）：
+        #   他们过日子不该看宠物睡没睡。dt 同口径（已钳 0.1s）。
+        # ★ 本函数内部**自己**再判一次 `NPC_LIFE_ENABLED` 与"在场 ≥2 人"，
+        #   所以这里不重复判（同一份规则不许两处算）。
+        self._npc_life_tick(elapsed_time)
 
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:

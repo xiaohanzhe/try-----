@@ -1374,9 +1374,42 @@ SUITES = [
                 '★负控制：Niko 降档后必须进不去） / '
                 'D 同名组（集合 == 注册表推出 · ★Toriel 三人且"Deltarune 那位只是同名" · '
                 '成员全在册 + 无重复 · has_au 逐组一致 · 编造组名负控制） / '
-                'E 诚实判据（接线台账只把 roam 记 wired，其余五项必须 spec_only · '
-                'not_yet 非空 · 台账与正文的 status 不许打架） / '
+                'E 诚实判据（接线台账 wired 与正文 status 一致 · ★每一项 wired 必须有 used_by · '
+                'not_yet 非空 · ★`visitor` 必须仍 spec_only 不许跟着翻绿） / '
                 'F 判据自身体检',
+    },
+    # 第73轮 · NPC「自由生活」（场景反应 / 熟络度 / 传话 / 纯 NPC 自主开口）。
+    # ★ 本轮的真源 = `assets/npc/_crossworld.json`（数据面契约）+ 新模块 `npc_life.py`。
+    # ★ 纯数据 + 真 import 真跑 `npc_life` + 真机 `RalseiPet()`（隔离内存记忆，
+    #   **绝不碰用户 E:\RalseiMemory 保管库**）⇒ `offscreen=False`，但**零网络、零外部盘**。
+    # ★★ 最值钱的两段：**C 段**（对现网**全部**场景 id 真跑特质推断）与
+    #   **E 段**（真机验证 `_npc_life_tick` 真开口 + 真传话）—— 静态检查证明不了
+    #   "产品用上了"，只有真跑能。
+    {
+        'id': 'check73',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第73轮-自由生活',
+                               '_tools', 'check73.py'),
+        'offscreen': False,
+        'desc': '第七十三轮：NPC 自由生活不许静默漂移 —— '
+                'A 契约与镜像（七段齐且 round=73 · ★特质 id 与中文词表与契约**逐字同源** · '
+                '熟络度三初值与契约逐值相等 · ★Toriel 组 AU 只两人且另一人记为同名） / '
+                'B 代码面（AST：`npc_life` 零依赖零函数内 import · ★`update_movement` 里**真调用** '
+                '`_npc_life_tick` 且与站位/幽灵同一处钩子 · `npc_system_prompt` 真带 `life=` · '
+                '`build_system_prompt` 的 life 真进 parts · `npc_speak` 真调 transmit） / '
+                'C 行为面（★对现网**全部** id 键真跑特质：不抛/形状合法/档位在枚举内 · '
+                '★口径诚实：松口径 ⊇ 真场景且差集只含章/区域名，结论一律以**真场景**为准 · '
+                '★如实登记 ruined·cosmic·bright **零命中** · 复合词边界规则正负成对'
+                '（ash 不中 afterthrash2 / night 不中 knightclimb / cave 中 shicave） · '
+                '无命中⇒不猜 · 熟络度**对称**+封顶+seed 不覆盖 · 传话**不共享容器**且带署名 · '
+                '节拍四不变量（不并发/不重复 speaker/失败必解锁/反活锁）+ 让路闸） / '
+                'D 镜像与出处（本位令牌**逐条**现网 ≥1 命中 · 预留令牌**逐条** 0 命中 · '
+                '禁词两类分别被"匹配规则/不入表"挡住 · 作品前缀与贴图目录对账） / '
+                'E 真机（三件套建起 · AU 配对不含同名 · 初值三档实测 · 【你周围】/【你认识谁】'
+                '真产出且**不含**任何归属泄露词 · 让路闸正负成对 · ★★`_npc_life_tick` **真开口**'
+                '并落记忆+传话 · 单人时不开口的负控制 · `npc_speak` 转话接线） / '
+                'F 诚实判据（五块 wired 各有 used_by/wired_how · not_yet 列明主线 NPC 自主开口未做 · '
+                '★`scene_traits` 必须**写明** ruined/cosmic 零命中） / '
+                'G 判据自身体检',
     },
 ]
 

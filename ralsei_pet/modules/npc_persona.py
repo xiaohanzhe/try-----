@@ -617,17 +617,24 @@ def history_block(entries, npc_id=None, max_lines=12):
             + '\n'.join(rows))
 
 
-def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''):
+def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context='',
+                        life=''):
     """某个 NPC 的 system prompt —— **唯一出口**。
 
     结构（顺序即含义）：
       ① 人设正文（用户给的原文，**不再改写**）；
       ② `SPEAK_RULES`（说话方式硬约束）；
       ③ 他自己的记忆（`history_block`）；
-      ④ 此刻状态（`context`，由宿主提供）。
+      ④ 此刻状态（`context`，由宿主提供）；
+      ⑤ **自由生活块**（`life`，第73轮：场景特质 + 他认识谁）。
 
     `persona` 为空 ⇒ 返回 `''`（调用方据此**拒绝**这次对话，而不是发一份空人设
     过去让模型自由发挥 —— 那正是"人设没装上但看起来在工作"的假象）。
+
+    ★ 为什么 `life` 单列一个参数而不是往 `context` 里拼：`context` 是**宿主给的
+      "此刻"**（时段/天气），`life` 是**NPC 自己的处境**（这地方什么样 / 我认识谁）。
+      合成一个参数之后，"谁该往里面放什么"就说不清了，而这两块的**产生位置不同**
+      （`_build_npc_context` vs `_npc_life_blocks`）。
     """
     if not isinstance(persona, str) or not persona.strip():
         return ''
@@ -635,6 +642,8 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
     hb = history_block(entries, npc_id=npc_id)
     if hb:
         parts.append(hb)
+    if isinstance(life, str) and life.strip():
+        parts.append(life.strip())
     if isinstance(context, str) and context.strip():
         parts.append(context.strip())
     return '\n\n'.join(parts)

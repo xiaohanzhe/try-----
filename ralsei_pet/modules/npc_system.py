@@ -351,6 +351,70 @@ def load_registry(root=None):
     return NpcRegistry(npcs, dialogue)
 
 
+# ---------------------------------------------------------------- 跨世界契约（第72轮）
+#
+# ★ 为什么放这里而不是 `npc_life`：`npc_life` 是**零依赖纯策略**（不碰 IO）。
+#   "从磁盘读契约"是**数据面**的活，归已经管着 `_registry.json` / `_dialogue.json`
+#   的 `npc_system`。两个模块的分工 = 「**读**在这一侧，**算**在那一侧」。
+
+def crossworld_path(root=None):
+    """`assets/npc/_crossworld.json` 的路径。"""
+    root = root or _default_root()
+    return os.path.join(root, 'assets', 'npc', '_crossworld.json')
+
+
+def load_crossworld(root=None):
+    """读跨世界契约。读不到 / 解析失败 ⇒ `{}`（**绝不让调用方起不来**，同注册表口径）。"""
+    p = crossworld_path(root)
+    try:
+        with open(p, 'r', encoding='utf-8') as fh:
+            raw = json.load(fh)
+        return raw if isinstance(raw, dict) else {}
+    except Exception as e:
+        _log.warning('跨世界契约读取失败 %s: %s', p, e)
+        return {}
+
+
+#: id 前缀 → 作品。★ 这是**从 id 约定反推**（第70/71轮落素材时定的前缀），
+#: 不是猜：`ut_`/`hy_`/`ot_`/`os_` 四作 + 其余归 Deltarune（本作角色不带前缀）。
+#: ⚠️ 前缀表与 `assets/sprites/<前缀>/` 的目录名**同源**（check73 D6 对账）。
+PRODUCTION_PREFIXES = ('ut_', 'hy_', 'ot_', 'os_')
+DEFAULT_PRODUCTION = 'dr'
+
+
+def production_of(npc_id):
+    """NPC 的**作品**。非法 id ⇒ `''`（**不猜**）。"""
+    if not isinstance(npc_id, str) or not npc_id.strip():
+        return ''
+    n = npc_id.strip()
+    for p in PRODUCTION_PREFIXES:
+        if n.startswith(p):
+            return p[:-1]
+    return DEFAULT_PRODUCTION
+
+
+def au_twin_pairs(crossworld):
+    """从契约推「**同一角色的不同 AU 版本**」两两配对。→ `set[frozenset]`（**无向**）。
+
+    ★★ 只取 `au_family_members`，**不是**整个 `members`：
+      Toriel 组有 `[ot_toriel, toriel, ut_toriel]`，但 `toriel`（Deltarune）与另外两位
+      **只是同名**（契约里 `namesake_members=['toriel']`，`why` 已写明）。
+      拿整个 `members` 配对会把"同名"错当成"另一个版本的我"，
+      起手就把熟络度给到 0.55 —— 正是用户那句「**面对不同版本的自己**熟悉的会更快」
+      被读歪的地方（同名的两个人**不该**享受这条加速）。
+    """
+    out = set()
+    tg = (crossworld or {}).get('twin_groups') or {}
+    for g in (tg.get('groups') or []):
+        if not isinstance(g, dict):
+            continue
+        fam = [m for m in (g.get('au_family_members') or []) if isinstance(m, str)]
+        for i in range(len(fam)):
+            for j in range(i + 1, len(fam)):
+                out.add(frozenset((fam[i], fam[j])))
+    return out
+
+
 # ---------------------------------------------------------------- 策略（纯函数）
 
 def follow_policy(npc):

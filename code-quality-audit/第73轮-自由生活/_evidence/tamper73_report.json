@@ -1,0 +1,65 @@
+{
+ "round": 73,
+ "all_detected": true,
+ "tasks": [
+  {
+   "id": "T1",
+   "desc": "npc_life.TRAIT_WORDS_CN 的 dark 改一个词 ⇒ A3 镜像判据报红",
+   "result": "DETECTED",
+   "rc": 1,
+   "rc_alt": null,
+   "rc_alt_suite": ""
+  },
+  {
+   "id": "T2",
+   "desc": "L.SEED_SAME_AU_TWIN 0.55 → 0.9 ⇒ A4 逐值相等报红",
+   "result": "DETECTED",
+   "rc": 1,
+   "rc_alt": null,
+   "rc_alt_suite": ""
+  },
+  {
+   "id": "T3",
+   "desc": "`_token_hits` 退回朴素子串 ⇒ C3 负控制报红（ash 命中 afterthrash2）",
+   "result": "DETECTED",
+   "rc": 1,
+   "rc_alt": null,
+   "rc_alt_suite": ""
+  },
+  {
+   "id": "T4",
+   "desc": "把禁词 `room` 塞回 `TRAIT_TOKENS[quiet]` ⇒ D1/D3 报红",
+   "result": "DETECTED",
+   "rc": 1,
+   "rc_alt": null,
+   "rc_alt_suite": ""
+  },
+  {
+   "id": "T5",
+   "desc": "契约里 `visitor.status` 改成 wired ⇒ 诚实判据报红（不许跟着翻绿）",
+   "result": "DETECTED",
+   "rc": 0,
+   "rc_alt": 1,
+   "rc_alt_suite": "check72"
+  },
+  {
+   "id": "T6",
+   "desc": "main.py 的 `npc_system_prompt` 去掉 `life=` ⇒ 端到端生活块断线报红",
+   "result": "DETECTED",
+   "rc": 1,
+   "rc_alt": null,
+   "rc_alt_suite": ""
+  }
+ ],
+ "sha256_before": {
+  "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\modules\\npc_life.py": "bebed4dec057572f63a547389b0ab37c59cac2195386ba6444e33d758c7876f4",
+  "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\src\\main.py": "6f4b03d1adbfe648b0fe7c9c42c4a4f3e651b73059d6f3d4bb58a1b16d9a9375",
+  "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\assets\\npc\\_crossworld.json": "762e6b4b9202ad864a150940ddd1c9f2a27fbcd2863edd3cb88caf4dfee0ad5c"
+ },
+ "sha256_after": {
+  "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\modules\\npc_life.py": "bebed4dec057572f63a547389b0ab37c59cac2195386ba6444e33d758c7876f4",
+  "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\src\\main.py": "6f4b03d1adbfe648b0fe7c9c42c4a4f3e651b73059d6f3d4bb58a1b16d9a9375",
+  "C:\\Users\\23002\\Desktop\\项目文件夹\\try - 副本\\ralsei_pet\\assets\\npc\\_crossworld.json": "762e6b4b9202ad864a150940ddd1c9f2a27fbcd2863edd3cb88caf4dfee0ad5c"
+ },
+ "restored_byte_exact": true
+}
