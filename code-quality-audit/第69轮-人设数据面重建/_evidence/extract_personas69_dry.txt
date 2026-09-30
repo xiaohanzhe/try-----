@@ -1,0 +1,32 @@
+源文件 C:\Users\23002\Desktop\其余人物设定.txt
+  字节=1303723  字符=544800  行=8024
+[PASS] 切块 76 份（期望 76）
+
+=== 期望表核对（作品名 + 角色名 必须命中）===
+[PASS] ★ 76 条全部命中期望（作品名 + 角色名，逐条）
+[PASS] 补充块真源 = _personas.json.tail_text（318 字符）
+[PASS] ★ 校准：tail_text 与现有文件尾块等价（仅差末尾换行）
+
+=== 与现有 persona/*.txt 对比 ===
+
+=== 逐字节复现（旧索引 sha256 当硬真值）===
+  逐字节复现 = 47 ／ 与旧 hash 不符 = 3
+  风格使用：1lf=12, 2lf=64
+[PASS] ★ 与旧 hash 不符的恰好是 EXPECT_CHANGED 的 3 条 ⇒ 其余 47 条逐字节复现
+
+[PASS] 负控制：ut_gaster 正文不含 'I reckon'
+[PASS] 负控制：ut_gaster 正文不含 'Gun-Hat'
+[PASS] 正控制：ut_gaster 保留了自身收尾语（"请始终以 W.D. Gaster 的身份回应…"）
+
+相同 = 76 ／ 有差异 = 0 ／ 新增 = 0
+有差异：(无)
+新增：(无)
+★ 已写盘 76 个文件
+
+=== 写盘后自检 ===
+[PASS] persona/*.txt = 76（与源文件块数一致）
+[PASS] 无 BOM
+[PASS] 无 U+FFFD（编码干净）
+[PASS] 每份都以正文起点行开头
+[PASS] 每份都带「本项目补充」尾块
+[PASS] ★ 回读磁盘：47 条与旧索引 sha256 逐字节相同，仅 3 条内容真改（ut_chara, ut_flowey, ut_toriel）

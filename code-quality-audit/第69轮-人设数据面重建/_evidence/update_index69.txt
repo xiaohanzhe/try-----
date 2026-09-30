@@ -1,0 +1,31 @@
+源文件 C:\Users\23002\Desktop\其余人物设定.txt
+  bytes=1303723  sha256=d6ad1d6c9e07e6d5
+  chars=552823（LF 归一化后 544800）
+
+persona/*.txt = 76
+
+沿用既有索引的 = 76 ／ 新增 = 0 ／ 合计 = 76
+
+=== 新增记录（26 条）===
+
+=== by_work ===
+  Deltarune          15
+  OneShot            21
+  Outertale          11
+  Undertale          14
+  Undertale Yellow   15
+
+=== 既有 76 条的字段级差异（49→50 那份索引里应当只有 3 条变）===
+  （无）
+  ⇒ 实际变动 0 条
+
+=== 多作品开场白（以《A》与《B》中的 X 的身份）===
+  ut_chara               Undertale + Undertale: Red & Yellow
+
+
+★ 已写盘 _personas.json（62109 字节）
+
+=== 回读自检 ===
+[PASS] count=76 与磁盘文件数一致
+[PASS] 索引 id 集合 == 磁盘文件名集合（双向）
+[PASS] ★ 76 条的 bytes / chars / sha256 全部与实际文件逐一相符

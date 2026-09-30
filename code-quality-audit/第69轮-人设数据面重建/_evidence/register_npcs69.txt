@@ -1,0 +1,12 @@
+_registry.json 现有 = 70 条
+_personas.json = 76 条
+待登记 = 26 条
+
+=== 素材证据闸（`objects` 必须有据；否则会撞 `verify_npc49` B4）===
+[FAIL] 素材未就位：undertale_yellow（缺 objects_undertale_yellow.json）
+[FAIL] 素材未就位：outertale（缺 objects_outertale.json）
+
+⇒ **拒绝注册**。理由：`verify_npc49.py:110` 的 B4 = 「每条 NPC 都有原作物件名」，26 位新人 `objects` 为空会立刻报红；而 `objects` 只能来自解包产物（第66轮 N4 的既有次序：先有素材证据、再注册）。
+⇒ 另外：`objects` 为空的 NPC 没有贴图、没法定点位 ⇒ 会变成"登记了但画不出来"的隐形 NPC（本项目最贵的坑）。
+⇒ 落地动作留在「素材提取」轮：先解 `黄魂.apk`/`outertale.apk`/`红与黄.apk`，
+   产出 `_evidence/objects_undertale_yellow.json` 与 `objects_outertale.json`，再跑本工具。

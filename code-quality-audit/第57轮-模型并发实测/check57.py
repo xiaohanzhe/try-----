@@ -118,9 +118,13 @@ _lens = [len(read_text(os.path.join(PERSONA_DIR, f))) for f in _files]
 #    改法（保留鉴别力，不靠"改成 50"这种同样会过期的写法）：
 #      A8  份数**下限** ≥ 13（不许被削）+ **每条 registry persona 都真在磁盘上**
 #          （后者才是"A5 的跟随配置要有东西可跟"的硬约束）；
-#      A9  字数量级区间**放宽上限**到 12000 —— 实测 50 份的分布是 min=3033 /
-#          max=10920（`ut_flowey`，Undertale 那份最长）/ 中位=6248，
-#          没有一份 < 2500 ⇒ 下限 2000 仍然有鉴别力（砍到空壳会被抓到）。
+#      A9  字数量级区间**放宽上限**。
+# ⚠️ 判据修正记录（第69轮）：用户换了一版《其余人物设定.txt》（785KB → 1.30MB）⇒ 50 → 76 份，
+#    最长由 `ut_flowey`=10920 变成 `hy_dalv`（黄魂）=**12792** ⇒ 原上限 12000 报红。
+#    ★ 这是"事实变了"，不是"判据错了" —— 但**上限必须连同判据名一起改**
+#      （判据名还写着"2000~12000"而实测放到 15000，就是本项目头号坑
+#       "判据名与事实脱节"，见 §60.3）。改后：12000 → 15000（12792 留 ~17% 余量）；
+#    下限 2000 **不动** —— 76 份的实测 min=3117（`susie`）⇒ 下限仍有鉴别力（砍到空壳会被抓到）。
 _persona_refs = [n.get('persona') for n in _npcs if n.get('persona')]
 _missing_p = [p for p in _persona_refs
               if p != '../ralsei_persona.md'
@@ -128,9 +132,9 @@ _missing_p = [p for p in _persona_refs
 check('A8  人设份数 ≥ 13 且注册表里每条 persona 都在磁盘上（不写死份数）',
       len(_files) >= 13 and not _missing_p,
       'n=%d 缺失=%r' % (len(_files), _missing_p))
-check('A9  人设字数量级 2000~12000（★C 段的 token 就是由这些字产生的；'
-      '第64轮最长 ut_flowey=10920）',
-      bool(_lens) and all(2000 <= x <= 12000 for x in _lens),
+check('A9  人设字数量级 2000~15000（★C 段的 token 就是由这些字产生的；'
+      '第69轮最长 hy_dalv=12792）',
+      bool(_lens) and all(2000 <= x <= 15000 for x in _lens),
       'min=%d max=%d avg=%d' % (min(_lens), max(_lens), sum(_lens) // len(_lens)))
 
 
