@@ -1,0 +1,355 @@
+{
+ "schema_version": 1,
+ "round": 72,
+ "kind": "cross_world_contract",
+ "why": "各个世界观里有重复的角色，要求他们能够共存；niko 可自由穿行所有世界，其余 UT 及其同人只能在非暗世界穿梭；不同世界的人一开始不认识、循序渐熟（同版本更快）；互相没有身份标识、要自己判断；要对场景有反应。",
+ "user_words": "（逐字）「niko可自由穿行所有世界，其余ut及其同人的任务只能在非暗世界穿梭」「怪物们之间没有身份标识说，你是哪个世界观的，所以那需要自己判断」「面对不同版本的自己熟悉的会更快，比如toriel，有ut的，三角符文的，黄魂里的，outertale里的，他们四个会熟悉的很快」「做好不同世界的角色在不同世界的兼容性哦」",
+ "roam": {
+  "status": "wired",
+  "gate_impl": "ralsei_pet/modules/npc_system.py 的 RoamScope + world_gate 暗世界分支",
+  "data_impl": "ralsei_pet/assets/npc/_registry.json 的 roam_scope 字段（全 96 条显式）",
+  "scope_values": {
+   "home": "只在自己登记的世界/章节（Deltarune 侧 35 位；= 第49/50轮原口径）",
+   "non_dark": "可穿行所有非暗世界（跨作品 60 位的默认档）",
+   "all": "所有世界（含 Deltarune 暗世界）—— 仅 Niko"
+  },
+  "counts": {
+   "home": 35,
+   "non_dark": 60,
+   "all": 1
+  },
+  "all_ids": [
+   "os_niko"
+  ],
+  "why_foreign": "跨作品 61 位的 `home_world` 由 `dark` 改为 `foreign`：`light/dark` 是 Deltarune 语汇（暗之泉那一侧），UT 的地下世界与 OneShot 的城市都不是\"暗世界\"；第66轮写 `dark` 是借用（当时世界模型只有两分）。★ 这不改变运行时行为 —— 拦人的是 `escape_via_bubble`，不是 `home_world`（第71轮实证）。",
+  "light_side_note": "光世界一侧**不用改**：`light_needs_bubble` 只认 `is_dark_only`，跨作品角色从来不在其中 ⇒ 他们本来就能进光世界。"
+ },
+ "twin_groups": {
+  "status": "spec_only",
+  "why": "「各个世界观里有重复的角色，我要求他们能够共存」+「面对不同版本的自己熟悉的会更快……他们四个会熟悉的很快」",
+  "rule": "同名 ≠ 同一人。组内**同属 UT 衍生家族**（ut/hy/ot）的才是\"另一个版本的我\"；Deltarune 与 OneShot 的人只能算同名。",
+  "au_family": [
+   "ut",
+   "hy",
+   "ot"
+  ],
+  "au_family_why": "Outertale 与黄魂（Undertale Yellow）都是《Undertale》的同人衍生作品；OneShot 是独立作品，不在家族内。",
+  "count": 10,
+  "groups": [
+   {
+    "name": "Alphys",
+    "members": [
+     "ot_alphys",
+     "ut_alphys"
+    ],
+    "works": {
+     "ot_alphys": "ot",
+     "ut_alphys": "ut"
+    },
+    "au_family_members": [
+     "ot_alphys",
+     "ut_alphys"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_alphys/ut_alphys 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Asgore",
+    "members": [
+     "asgore",
+     "ot_asgore"
+    ],
+    "works": {
+     "asgore": "deltarune",
+     "ot_asgore": "ot"
+    },
+    "au_family_members": [
+     "ot_asgore"
+    ],
+    "namesake_members": [
+     "asgore"
+    ],
+    "has_au": false,
+    "why": "组内 ot_asgore 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；asgore 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Flowey",
+    "members": [
+     "hy_flowey",
+     "ut_flowey"
+    ],
+    "works": {
+     "hy_flowey": "hy",
+     "ut_flowey": "ut"
+    },
+    "au_family_members": [
+     "hy_flowey",
+     "ut_flowey"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 hy_flowey/ut_flowey 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Mettaton",
+    "members": [
+     "ot_mettaton",
+     "ut_mettaton"
+    ],
+    "works": {
+     "ot_mettaton": "ot",
+     "ut_mettaton": "ut"
+    },
+    "au_family_members": [
+     "ot_mettaton",
+     "ut_mettaton"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_mettaton/ut_mettaton 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Muffet",
+    "members": [
+     "ot_muffet",
+     "ut_muffet"
+    ],
+    "works": {
+     "ot_muffet": "ot",
+     "ut_muffet": "ut"
+    },
+    "au_family_members": [
+     "ot_muffet",
+     "ut_muffet"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_muffet/ut_muffet 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Napstablook",
+    "members": [
+     "ot_napstablook",
+     "ut_napstablook"
+    ],
+    "works": {
+     "ot_napstablook": "ot",
+     "ut_napstablook": "ut"
+    },
+    "au_family_members": [
+     "ot_napstablook",
+     "ut_napstablook"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_napstablook/ut_napstablook 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Papyrus",
+    "members": [
+     "ot_papyrus",
+     "ut_papyrus"
+    ],
+    "works": {
+     "ot_papyrus": "ot",
+     "ut_papyrus": "ut"
+    },
+    "au_family_members": [
+     "ot_papyrus",
+     "ut_papyrus"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_papyrus/ut_papyrus 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Sans",
+    "members": [
+     "ot_sans",
+     "ut_sans"
+    ],
+    "works": {
+     "ot_sans": "ot",
+     "ut_sans": "ut"
+    },
+    "au_family_members": [
+     "ot_sans",
+     "ut_sans"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_sans/ut_sans 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Toriel",
+    "members": [
+     "ot_toriel",
+     "toriel",
+     "ut_toriel"
+    ],
+    "works": {
+     "ot_toriel": "ot",
+     "toriel": "deltarune",
+     "ut_toriel": "ut"
+    },
+    "au_family_members": [
+     "ot_toriel",
+     "ut_toriel"
+    ],
+    "namesake_members": [
+     "toriel"
+    ],
+    "has_au": true,
+    "why": "组内 ot_toriel/ut_toriel 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；toriel 与它们**只是同名**（另一个作品里的人）。"
+   },
+   {
+    "name": "Undyne",
+    "members": [
+     "ot_undyne",
+     "ut_undyne"
+    ],
+    "works": {
+     "ot_undyne": "ot",
+     "ut_undyne": "ut"
+    },
+    "au_family_members": [
+     "ot_undyne",
+     "ut_undyne"
+    ],
+    "namesake_members": [],
+    "has_au": true,
+    "why": "组内 ot_undyne/ut_undyne 互为\"同一角色的不同版本\"（Outertale / 黄魂都是 Undertale 的同人衍生）；(无) 与它们**只是同名**（另一个作品里的人）。"
+   }
+  ]
+ },
+ "identity_blind": {
+  "status": "spec_only",
+  "why": "「怪物们之间没有身份标识说，你是哪个世界观的，所以那需要自己判断，而非每次都精准的知道那是哪个人」",
+  "rule": "相遇时**不注入**对方的作品归属与版本；只知道\"他长这样、他这么说话\"。",
+  "injected": [
+   "对方的显示名（他自己说的 / 别人叫的）",
+   "对方此刻的样子（贴图）"
+  ],
+  "not_injected": [
+   "对方来自哪个作品",
+   "对方是哪个版本",
+   "对方的 npc id",
+   "对方人设文件里的任何内容"
+  ],
+  "how_to_judge": "从对话里推断：口癖、称呼、提到的人与地。这正是 AI 该干的活，也是\"像人\"的地方 —— 精准知道反而假。"
+ },
+ "familiarity_seed": {
+  "status": "spec_only",
+  "why": "「不同世界的人一开始也不认识……循序渐进的熟悉起来，当然，面对不同版本的自己熟悉的会更快」",
+  "seed_values": {
+   "same_au_twin": 0.55,
+   "same_production": 0.3,
+   "stranger": 0.0
+  },
+  "rule": "初见一律低；同 AU 版本的\"另一个我\"起手最高（\"我认得你，但你不是他\"）；同一作品内的人次之；跨作品陌生人从 0 开始。",
+  "growth": "靠相处累加（同处一室 / 互动），**不是一次到位**；与 `_placement.json` 的 `rules.bond_scope`（结对只在同场景生效）同源。"
+ },
+ "scene_traits": {
+  "status": "spec_only",
+  "why": "「他们是能对场景有反应的，比如sans来到oneshot会吐槽，这地方真黑之类的话（当然，不止黑，破败这类的词也需要有能力识别）」",
+  "traits": [
+   {
+    "id": "dark",
+    "words": [
+     "黑",
+     "暗",
+     "没有光",
+     "伸手不见五指"
+    ],
+    "sample": "这地方真黑"
+   },
+   {
+    "id": "ruined",
+    "words": [
+     "破败",
+     "荒废",
+     "废墟",
+     "残破",
+     "没人住"
+    ],
+    "sample": "这里像是很久没人来过了"
+   },
+   {
+    "id": "bright",
+    "words": [
+     "亮",
+     "明亮",
+     "刺眼"
+    ],
+    "sample": null
+   },
+   {
+    "id": "crowded",
+    "words": [
+     "人多",
+     "热闹",
+     "挤"
+    ],
+    "sample": null
+   },
+   {
+    "id": "quiet",
+    "words": [
+     "安静",
+     "死寂",
+     "没声音"
+    ],
+    "sample": null
+   },
+   {
+    "id": "cosmic",
+    "words": [
+     "宇宙",
+     "星空",
+     "失重",
+     "太空"
+    ],
+    "sample": "……这比我想的还要高"
+   }
+  ],
+  "how": "场景侧给 traits，NPC 侧据 traits + 自己的人设生成反应。★ traits 的**来源**本轮未定（候选：背景图亮度 / 房间资源名语义），不猜、不先写死一个会撒谎的推断器。"
+ },
+ "visitor": {
+  "status": "spec_only",
+  "why": "「对了做好不同世界的角色在不同世界的兼容性哦」",
+  "rule": "跨作品角色在**非自己作品**的场景里以「访客」身份出现：没有原作站位 ⇒ 不硬编坐标；台词不假设自己熟悉此地。",
+  "unplaced_policy": "61 位跨作品 + knight 共 62 位保持 `_placement.json` 的 `unplaced`，**不编坐标**（沿用第44轮口径：缺依据就如实缺着）。",
+  "works_today": [
+   "门控：能进哪些世界（本轮，wired）",
+   "人设：76 份 persona 文件在位（第64/69轮）",
+   "贴图：四作 529 张已落地（第71轮）"
+  ],
+  "not_yet": [
+   "跨作品作品的**场景**还没进 `assets/scenes/_index.json`（目前只有 desktop + ch1~ch5）⇒ 他们眼下只能出现在 Deltarune 的场景里",
+   "没有站位 ⇒ 需要一个\"访客落点\"策略（跟随落点 / 场景入口落点）",
+   "访客台词模板（\"我不太熟这里\"）尚未接入对话层"
+  ]
+ },
+ "wiring": {
+  "wired": [
+   "roam"
+  ],
+  "spec_only": [
+   "twin_groups",
+   "identity_blind",
+   "familiarity_seed",
+   "scene_traits",
+   "visitor"
+  ],
+  "not_yet": [
+   "同名相认：`twin_groups` 只有数据，没有接进对话层（相遇时该怎么开口）",
+   "无身份标识：需要改 `npc_persona` 的 system 拼装（**不注入**对方作品归属）",
+   "熟络初值：需要一个 per-pair 的 familiarity 存储（现在只有 per-npc 记忆）",
+   "场景反应：traits 的来源（亮度 / 资源名语义）未定",
+   "访客兼容：跨作品场景未接入 + 访客落点策略未做",
+   "自由生活（私下闲聊、传播信息、不以用户发起为起点）= 轮次 73"
+  ],
+  "honesty_note": "写 `spec_only` 是刻意的 —— 本项目最贵的坑就是「函数写对了 != 产品用上了」。"
+ }
+}

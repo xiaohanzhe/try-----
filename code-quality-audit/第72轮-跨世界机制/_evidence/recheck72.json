@@ -1,0 +1,163 @@
+{
+ "round": 72,
+ "items": [
+  {
+   "no": "1.1",
+   "name": "npc_system.py 可被 ast.parse",
+   "ok": true,
+   "extra": "50 顶层语句"
+  },
+  {
+   "no": "1.2",
+   "name": "_registry.json 是合法 JSON",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "1.2",
+   "name": "_crossworld.json 是合法 JSON",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "2.1",
+   "name": "RoamScope 类存在且三档常量齐",
+   "ok": true,
+   "extra": "常量=['all', 'home', 'non_dark']"
+  },
+  {
+   "no": "2.2",
+   "name": "WORLD_FOREIGN 常量存在且只定义一次",
+   "ok": true,
+   "extra": "出现 1 次"
+  },
+  {
+   "no": "2.3",
+   "name": "world_gate 仍只有一个定义",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "2.4",
+   "name": "★ 定义顺序：class RoamScope 在 class NpcDef 之前（否则 import 期 NameError）",
+   "ok": true,
+   "extra": "RoamScope@3891 NpcDef@6059"
+  },
+  {
+   "no": "2.5",
+   "name": "★ 判断顺序：跨作品分支在 chapters 判空之前",
+   "ok": true,
+   "extra": "roam@17698 chapters@18211"
+  },
+  {
+   "no": "3.1",
+   "name": "npc_system.py 无 BOM",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "3.2",
+   "name": "npc_system.py 无 U+FFFD（乱码替换符）",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "3.3",
+   "name": "_registry.json 无 BOM 且无 U+FFFD",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "3.3",
+   "name": "_crossworld.json 无 BOM 且无 U+FFFD",
+   "ok": true,
+   "extra": ""
+  },
+  {
+   "no": "4.1",
+   "name": "npc_system 里没有 check(..., True) 型恒真判据",
+   "ok": true,
+   "extra": "(无)"
+  },
+  {
+   "no": "4.2",
+   "name": "check72 里没有 check(..., True) 型恒真判据",
+   "ok": true,
+   "extra": "越界行号 (无)（★False 不算——那是主动报红）"
+  },
+  {
+   "no": "5.x",
+   "name": "REG 已删掉旧的\"一律显式 dark\"那句",
+   "ok": true,
+   "extra": "found=False want=False"
+  },
+  {
+   "no": "5.x",
+   "name": "REG 的 source 里有第72轮说明",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "REG 有 roam_scope 字段",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "REG 保留 foreign 值",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "NPSYS 有 WORLD_FOREIGN 值",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "NPSYS 有 RoamScope.NON_DARK 用法",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "NPSYS 有 home_production 理由",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "NPSYS 有 roam_all 理由",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "CROSS 有 twin_groups 段",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "5.x",
+   "name": "CROSS 有 spec_only 台账",
+   "ok": true,
+   "extra": "found=True want=True"
+  },
+  {
+   "no": "6.1",
+   "name": "工作区改动都是本轮的（列出，不要求为空——提交前就该有改动）",
+   "ok": true,
+   "extra": "6 项"
+  },
+  {
+   "no": "6.2",
+   "name": "import 后真跑：niko 进暗世界 ok 且 跨作品 non_dark 被拒",
+   "ok": true,
+   "extra": "niko=True ut_toriel=foreign_dark_world"
+  }
+ ],
+ "pass": 26,
+ "fail": 0
+}

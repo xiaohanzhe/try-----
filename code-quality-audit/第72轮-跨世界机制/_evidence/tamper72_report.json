@@ -1,0 +1,68 @@
+{
+ "round": 72,
+ "why": "鉴别力体检必须改文件（内存负控制只证明\"函数写对了\"）",
+ "cases": [
+  {
+   "tag": "T1",
+   "file": "ralsei_pet\\assets\\npc\\_registry.json",
+   "tamper": "ut_toriel 档位 non_dark -> all",
+   "expect": "A4",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] A4 全域通行**只有 Niko 一人**（负控制：多一个就该报红） all = ['os_niko', 'ut_toriel']"
+  },
+  {
+   "tag": "T2",
+   "file": "ralsei_pet\\assets\\npc\\_registry.json",
+   "tamper": "os_niko 档位 all -> non_dark",
+   "expect": "A2",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] A2 每条的档位 == 按「来处 + niko 特例」推出的档位 [('os_niko', 'all', 'non_dark')]"
+  },
+  {
+   "tag": "T3",
+   "file": "ralsei_pet\\modules\\npc_system.py",
+   "tamper": "npc_system.py: chapters 判空挪到跨作品分支之前",
+   "expect": "B5",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] B5 跨作品分支排在 chapters 判空**之前**（顺序反了会给误导性理由码） roam@3478 chapters@2900"
+  },
+  {
+   "tag": "T4",
+   "file": "ralsei_pet\\assets\\npc\\_crossworld.json",
+   "tamper": "twin_groups 被谎记成 wired",
+   "expect": "E1",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] E1 接线台账只把 roam 记为 wired（其余五项必须如实 spec_only） wired=['roam', 'twin_groups'] spec_only=5 项"
+  }
+ ],
+ "baseline": {
+  "rc": 0,
+  "fails": []
+ },
+ "restore": {
+  "ralsei_pet\\assets\\npc\\_registry.json": {
+   "sha_before": "b75463d0a0eb8853",
+   "sha_after": "b75463d0a0eb8853",
+   "identical": true
+  },
+  "ralsei_pet\\assets\\npc\\_crossworld.json": {
+   "sha_before": "26afbce520c9385c",
+   "sha_after": "26afbce520c9385c",
+   "identical": true
+  },
+  "ralsei_pet\\modules\\npc_system.py": {
+   "sha_before": "87c7570204a2f7fb",
+   "sha_after": "87c7570204a2f7fb",
+   "identical": true
+  }
+ },
+ "after_restore": {
+  "rc": 0,
+  "fails": []
+ },
+ "verdict": "ALL_DETECTED"
+}

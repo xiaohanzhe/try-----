@@ -110,6 +110,44 @@ TIER_DIALOGUE = {
 
 WORLD_LIGHT = 'light'
 WORLD_DARK = 'dark'
+#: ★ 第72轮：**本作之外的世界**（Undertale / 黄魂 / Outertale / OneShot 各自的世界）。
+#:
+#: 为什么不能沿用 `light` / `dark`：这两个值是 **Deltarune 语汇**（暗之泉的明暗二分）。
+#: UT 的地下世界、OneShot 的城市都**不是"暗世界"** —— 硬塞进 `dark` 会得出
+#: 「他要靠球才能出门」这种荒唐结论（第71轮复查时实证：61 位跨作品角色的
+#: `home_world` 全是 `dark`，而 `dark` 在本项目里的唯一语义就是"暗之泉那一侧"）。
+#: ⇒ 跨作品角色的 `home_world` 一律记 `foreign`，他们的来处由 `chapters`
+#:   （作品名，如 `'undertale'` / `'oneshot'`）承载。
+WORLD_FOREIGN = 'foreign'
+
+
+class RoamScope(object):
+    """★ 第72轮：**穿行域** —— 一个 NPC 能去哪些世界。
+
+    用户口径（第72轮原话，逐字）：
+      「niko可自由穿行所有世界，其余ut及其同人的任务只能在非暗世界穿梭」
+
+    三档（值即 `_registry.json` 里的字面量）：
+
+    * ``HOME``     —— **只在自己登记的世界/章节里活动**。
+      **Deltarune 侧 35 位全部走这一档**，行为 = 第49/50轮原口径
+      （光世界自由 / 暗世界限本作品章 / 跨暗只有 Ralsei）⇒ **零回归**。
+    * ``NON_DARK`` —— 可以穿行**所有非暗世界**（Deltarune 的光世界 + 自己作品的世界），
+      但**进不了 Deltarune 的暗世界**。**跨作品角色的默认档**
+      （「其余ut及其同人的任务只能在非暗世界穿梭」）。
+    * ``ALL``      —— 所有世界（**含** Deltarune 的暗世界）。**仅 Niko 一人**
+      （「niko可自由穿行所有世界」）。
+
+    ⚠️ 为什么不复用 `home_world`：`home_world` 说的是"他打哪儿来"（静态归属），
+    `roam_scope` 说的是"他能去哪儿"（动态许可）。用户那句话改的正是**后者**
+    （"可自由穿行" / "只能在非暗世界穿梭"都是许可句），两者混为一谈会让
+    "Niko 是 OneShot 人" 和 "Niko 哪都能去" 互相打架。
+    """
+    HOME = 'home'
+    NON_DARK = 'non_dark'
+    ALL = 'all'
+
+    ALL_VALUES = ('home', 'non_dark', 'all')
 
 # 门控结果码
 REASON_OK = 'ok'
@@ -151,18 +189,21 @@ class NpcDef(object):
 
     __slots__ = ('id', 'name', 'name_cn', 'tier', 'chapters', 'home_world',
                  'objects', 'model', 'needs_setting', 'notes',
-                 'escape_via_bubble', 'lines', 'persona')
+                 'escape_via_bubble', 'lines', 'persona', 'roam_scope')
 
     def __init__(self, id, name='', name_cn='', tier=NpcTier.PLAIN,
                  chapters=(), home_world=WORLD_DARK, objects=(), model=None,
                  needs_setting=False, notes='', escape_via_bubble=False, lines=(),
-                 persona=None):
+                 persona=None, roam_scope=None):
         self.id = id
         self.name = name or id
         self.name_cn = name_cn or self.name
         self.tier = tier if tier in NpcTier.ALL else NpcTier.PLAIN
         self.chapters = tuple(chapters)
-        self.home_world = home_world if home_world in (WORLD_LIGHT, WORLD_DARK) else WORLD_DARK
+        #: ★ 第72轮：允许第三个值 `WORLD_FOREIGN`（本作之外的世界）。见常量注释。
+        self.home_world = (home_world if home_world in (WORLD_LIGHT, WORLD_DARK,
+                                                        WORLD_FOREIGN)
+                           else WORLD_DARK)
         self.objects = tuple(objects)
         self.model = model
         self.needs_setting = bool(needs_setting)
@@ -175,6 +216,16 @@ class NpcDef(object):
         #: 为什么新增这个字段而不是把 `needs_setting` 翻成 False 就完事：
         #:   `needs_setting` 只说"要不要"，说不了"设放在哪" —— 装上之后必须能**找到**它。
         self.persona = persona or None
+        #: ★ 第72轮：穿行域（`RoamScope` 三档）。
+        #: 归一规则（**必须放在 `home_world` 之后**，否则读到的是旧值）：
+        #:   显式给了合法值 ⇒ 用它；否则按来处推 —— 本作之外的居民默认 `NON_DARK`，
+        #:   其余（Deltarune 侧）一律 `HOME`。
+        #:   为什么要兜底而不是拒绝：老注册表（第70轮及以前）没有这个字段，
+        #:   读到时必须退化成第49/50轮的原有行为，**不能因为缺字段就崩或改行为**。
+        self.roam_scope = (roam_scope if roam_scope in RoamScope.ALL_VALUES
+                           else (RoamScope.NON_DARK
+                                 if self.home_world == WORLD_FOREIGN
+                                 else RoamScope.HOME))
 
     def to_dict(self):
         return collections.OrderedDict((
@@ -184,6 +235,7 @@ class NpcDef(object):
             ('model', self.model), ('needs_setting', self.needs_setting),
             ('escape_via_bubble', self.escape_via_bubble),
             ('persona', self.persona),
+            ('roam_scope', self.roam_scope),
             ('notes', self.notes),
         ))
 
@@ -216,6 +268,7 @@ def npc_from_dict(d):
         notes=d.get('notes', ''),
         escape_via_bubble=d.get('escape_via_bubble', False),
         persona=d.get('persona') or None,
+        roam_scope=d.get('roam_scope'),
     )
 
 
@@ -413,6 +466,15 @@ def world_gate(npc, world, scene_id=None, carried=False):
     2. **暗世界**：只进**自己登记过的那几章**（"回原先他们的暗世界"）。
     3. **跨暗世界**：只有 Ralsei 自由（`free_dark_roam`）。
        「其他人无法通过球去其他世界」⇒ **球不给**跨暗世界能力。
+    4. ★ **第72轮 —— 跨作品角色的穿行域**（`RoamScope`，**排在"暗世界"分支最前面**）：
+       「niko可自由穿行所有世界，其余ut及其同人的任务只能在非暗世界穿梭」
+       · `NON_DARK`（跨作品 60 位的默认档）：自己作品那一侧 ✅ / Deltarune 暗世界 ❌
+       · `ALL`（**仅 Niko 一人**）：全部世界 ✅
+       ⚠️ **光世界一侧不用改**：`light_needs_bubble` 只认 `is_dark_only`
+       （`DARK_ONLY_IDS` + `escape_via_bubble`），跨作品角色从来就不在其中
+       ⇒ 他们**从第49轮起本来就能进光世界**，与本条口径天然一致。
+       这也是第71轮"跨作品角色 `home_world=dark` 会不会被球闸拦"那个疑点的答案：
+       **不会** —— 拦人的是 `escape_via_bubble`，不是 `home_world`。
 
     ★★ 为什么第 0 条必须**排在第 1 条前面**（三条理由，缺一不可）
     ---------------------------------------------------------
@@ -446,9 +508,30 @@ def world_gate(npc, world, scene_id=None, carried=False):
     if world != WORLD_DARK:
         return GateResult(False, REASON_LEAVE_DARK, '未知世界 %r' % (world,))
     # ---- 暗世界 ----
+    ch = scene_chapter(scene_id)
+    # ★ 第72轮：**跨作品角色的穿行域**先判。
+    #
+    # 用户口径（逐字）：「niko可自由穿行所有世界，其余ut及其同人的任务只能在
+    #   非暗世界穿梭」⇒ `RoamScope.NON_DARK` / `ALL` 两档在这里落地。
+    #
+    # ★★ 为什么必须排在 `npc.chapters` 判空**之前**：
+    #   跨作品角色的 `chapters` 填的是**作品名**（`'undertale'` / `'oneshot'` …），
+    #   拿它去比 `'ch1'~'ch5'` 必然不命中 ⇒ 会掉进 `REASON_NO_CHAPTERS`
+    #   （"没有登记任何暗世界"）—— 那是个**误导性**的拒绝理由：他们不是没登记，
+    #   是**本来就不该来**。理由码必须说真话，否则调用方那句"他不能跟你去那里"
+    #   会被读成"这孩子没家"。
+    if npc.roam_scope != RoamScope.HOME:
+        # ① 回自己作品的那一侧（`undertale.*` / `oneshot.*` …）—— 放行
+        if ch is not None and ch in npc.chapters:
+            return GateResult(True, REASON_OK, 'home_production:%s' % ch)
+        # ② 全域通行 —— 仅 Niko（Deltarune 的暗世界也放行）
+        if npc.roam_scope == RoamScope.ALL:
+            return GateResult(True, REASON_OK, 'roam_all')
+        # ③ 其余跨作品角色：Deltarune 的暗世界进不去
+        return GateResult(False, REASON_FOREIGN_DARK,
+                          '%s 只能在非暗世界穿梭' % npc.name_cn)
     if not npc.chapters:
         return GateResult(False, REASON_NO_CHAPTERS, '%s 没有登记任何暗世界' % npc.name_cn)
-    ch = scene_chapter(scene_id)
     if ch is None:
         return GateResult(True, REASON_OK, 'no_scene_id')
     if ch in npc.chapters:

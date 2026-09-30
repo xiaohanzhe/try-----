@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "source": "第49轮 UTMT 反编译（names49 普查）+ 本项目撰写；第55轮：用户提供 13 份人设（assets/npc/persona/）+ 模型口径修正（见 model_policy）；第64轮：用户重新提供《其余人物设定.txt》⇒ 人设 13 → 50（含 OneShot 21 / Undertale 14）；第66轮（N4）：把 OneShot 21 + Undertale 14 共 35 条**跨作品 NPC 注册进本表**（此前只到人设层、无人注册）。取值口径 —— OneShot 用官方 contacts_metadata.json 的 `title` / `subtitle`(区域) / `walkspriteId`；Undertale 用用户 UT素材/ 文件名里的原作 sprite 名；两作品 `home_world` 一律显式 `dark`（本项目世界模型只有两分），`chapters` 用作品 id 作未来场景前缀锚。证据见 code-quality-audit/第66轮-大图连通与mod并入/_evidence/。",
+ "source": "第49轮 UTMT 反编译（names49 普查）+ 本项目撰写；第55轮：用户提供 13 份人设（assets/npc/persona/）+ 模型口径修正（见 model_policy）；第64轮：用户重新提供《其余人物设定.txt》⇒ 人设 13 → 50（含 OneShot 21 / Undertale 14）；第66轮（N4）：把 OneShot 21 + Undertale 14 共 35 条**跨作品 NPC 注册进本表**（此前只到人设层、无人注册）。取值口径 —— OneShot 用官方 contacts_metadata.json 的 `title` / `subtitle`(区域) / `walkspriteId`；Undertale 用用户 UT素材/ 文件名里的原作 sprite 名。★ 第72轮：**世界模型补了第三档 `foreign`（本作之外的世界）** —— 原先把跨作品角色的 `home_world` 记成 `dark` 是**借用 Deltarune 的二分**（暗之泉那一侧），语义上站不住：UT 的地下世界、OneShot 的城市都不是\"暗世界\"。现已改为 `foreign`（来处由 `chapters` 的作品名承载），并给**全 96 条**显式加 `roam_scope`（穿行域）：`os_niko=all`（用户口径「niko可自由穿行所有世界」）、其余 60 位跨作品 `=non_dark`（「其余ut及其同人的任务只能在非暗世界穿梭」）、Deltarune 侧 35 位 `=home`（= 第49/50轮原口径，零回归）。契约与理由见 `assets/npc/_crossworld.json`；门控实现见 `modules/npc_system.py` 的 `RoamScope` 与 `world_gate` 暗世界分支。`chapters` 用作品 id 作未来场景前缀锚。证据见 code-quality-audit/第66轮-大图连通与mod并入/_evidence/。",
  "tiers": {
   "main": "主线 NPC：非主角团但有重大影响（Toriel/Asgore/各章 Boss/少数关键角色）；★走模型，用**App 配置的那个 7B**（`model=null` ⇒ 跟随 `config.json.api.model`，即 ralsei:v4 = qwen2.5:7b。用户口径「4B 貌似没办法支撑起来这些角色的灵魂」，而第49轮那个 `ralsei-npc:4b` 其实从未被代码读取 —— 详见 model_policy）；设定由用户提供。",
   "plain": "纯 NPC：没有重大帮助对话；用 4~10 句内置对话，不走模型。"
@@ -30,7 +30,8 @@
    "needs_setting": false,
    "escape_via_bubble": true,
    "notes": "主角团成员，但同时是暗世界居民 ⇒ 受\"不可脱离暗世界\"约束；唯一豁免 = 第49轮的扭蛋球容器。",
-   "persona": "../ralsei_persona.md"
+   "persona": "../ralsei_persona.md",
+   "roam_scope": "home"
   },
   {
    "id": "kris",
@@ -52,7 +53,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "主角团核心、光世界 Dreemurr 家的孩子（养子）。★ 第55轮登记：设定由用户提供。物件名 `obj_herokris` 出自第49轮取证 （`_evidence/取证与设计49.md` §1.3：1409 = Kris）。",
-   "persona": "persona/kris.txt"
+   "persona": "persona/kris.txt",
+   "roam_scope": "home"
   },
   {
    "id": "susie",
@@ -74,7 +76,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "主角团成员、Kris 最重要的搭档。★ 第55轮登记：设定由用户提供。物件名 `obj_herosusie` 出自第49轮取证（同上，1411 = Susie）。注意与既有的 `susiedark`（暗之苏西，纯 NPC）**不是同一条**。",
-   "persona": "persona/susie.txt"
+   "persona": "persona/susie.txt",
+   "roam_scope": "home"
   },
   {
    "id": "toriel",
@@ -96,7 +99,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "光世界的母亲，五章都有戏份；照顾者，口吻温和但会唠叨。",
-   "persona": "persona/toriel.txt"
+   "persona": "persona/toriel.txt",
+   "roam_scope": "home"
   },
   {
    "id": "asgore",
@@ -116,7 +120,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "五章才正式登场；温和、笨拙、有心事的花店老板。",
-   "persona": "persona/asgore.txt"
+   "persona": "persona/asgore.txt",
+   "roam_scope": "home"
   },
   {
    "id": "king",
@@ -137,7 +142,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "ch1 的 Boss，傲慢、威严；后续以被关押/旁白形象出现。",
-   "persona": "persona/king.txt"
+   "persona": "persona/king.txt",
+   "roam_scope": "home"
   },
   {
    "id": "lancer",
@@ -162,7 +168,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "黑桃王之子；自称\"坏蛋\"，其实是好孩子。★ 他也能进球，但**不能脱下**。",
-   "persona": "persona/lancer.txt"
+   "persona": "persona/lancer.txt",
+   "roam_scope": "home"
   },
   {
    "id": "queen",
@@ -182,7 +189,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "ch2 的 Boss；机械、夸张、口癖是\"哦呵呵\"。",
-   "persona": "persona/queen.txt"
+   "persona": "persona/queen.txt",
+   "roam_scope": "home"
   },
   {
    "id": "spamton",
@@ -201,7 +209,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "ch2 的隐藏 Boss；推销员口吻，全大写，神经质。★ 第64轮接线：设定已到（《其余人物设定.txt》「Spamton G. Spamton」）。",
-   "persona": "persona/spamton.txt"
+   "persona": "persona/spamton.txt",
+   "roam_scope": "home"
   },
   {
    "id": "berdly",
@@ -222,7 +231,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "自命不凡的优等生；爱说大词，其实很在意朋友。",
-   "persona": "persona/berdly.txt"
+   "persona": "persona/berdly.txt",
+   "roam_scope": "home"
   },
   {
    "id": "noelle",
@@ -243,7 +253,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "胆小的驯鹿女孩；后来变得坚强。",
-   "persona": "persona/noelle.txt"
+   "persona": "persona/noelle.txt",
+   "roam_scope": "home"
   },
   {
    "id": "tenna",
@@ -263,7 +274,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "ch3 的 Boss；电视综艺主持人式的高能量口吻。",
-   "persona": "persona/tenna.txt"
+   "persona": "persona/tenna.txt",
+   "roam_scope": "home"
   },
   {
    "id": "rouxls",
@@ -281,7 +293,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "自封的\"谜题公爵\"；古英语腔的滑稽反派。",
-   "persona": "persona/rouxls.txt"
+   "persona": "persona/rouxls.txt",
+   "roam_scope": "home"
   },
   {
    "id": "gerson",
@@ -300,7 +313,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "老当益壮的老人；原作里唯一的暗世界 NPC 跟随者。",
-   "persona": "persona/gerson.txt"
+   "persona": "persona/gerson.txt",
+   "roam_scope": "home"
   },
   {
    "id": "mike",
@@ -321,7 +335,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "ch4 的对手/主持人；浮夸的节目腔。★ 第64轮接线：设定已到（《其余人物设定.txt》「Mike」）。",
-   "persona": "persona/mike.txt"
+   "persona": "persona/mike.txt",
+   "roam_scope": "home"
   },
   {
    "id": "knight",
@@ -341,7 +356,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "主线反派；不说话/极少说话，压迫感来自沉默。",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "flowery",
@@ -360,7 +376,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "ch5 的 Boss。★ 第55轮改名：原 id 写成 `flowey`、名字写成 Undertale 的 Flowey，但它的物件全是 `obj_flowery_*`；用户的关系文件亦明确「它和《Undertale》的 Flowey 不是同一个存在」。它是 Asgore 求婚花束里的那朵金色花，唯一的行动核心是保护 Asgore。",
-   "persona": "persona/flowery.txt"
+   "persona": "persona/flowery.txt",
+   "roam_scope": "home"
   },
   {
    "id": "hammerguy",
@@ -379,7 +396,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "puzzlemaster1",
@@ -397,7 +415,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "puzzlemaster2",
@@ -415,7 +434,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "sign",
@@ -435,7 +455,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "npc_room",
@@ -454,7 +475,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "conbini",
@@ -472,7 +494,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "police",
@@ -490,7 +513,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "catti",
@@ -508,7 +532,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "rudy",
@@ -526,7 +551,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "dumpster",
@@ -544,7 +570,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "addison_tea",
@@ -562,7 +589,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "castle_cafe",
@@ -581,7 +609,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "rabbits",
@@ -599,7 +628,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "wrapper",
@@ -617,7 +647,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "doubter",
@@ -635,7 +666,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "zapper",
@@ -654,7 +686,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "susiedark",
@@ -674,7 +707,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "mansion_room",
@@ -692,7 +726,8 @@
    "needs_setting": true,
    "escape_via_bubble": false,
    "notes": "",
-   "persona": null
+   "persona": null,
+   "roam_scope": "home"
   },
   {
    "id": "os_niko",
@@ -702,7 +737,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "niko"
    ],
@@ -710,7 +745,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = ???（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_niko.txt"
+   "persona": "persona/os_niko.txt",
+   "roam_scope": "all"
   },
   {
    "id": "os_the_world_machine",
@@ -720,7 +756,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "en"
    ],
@@ -728,7 +764,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = ???（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_the_world_machine.txt"
+   "persona": "persona/os_the_world_machine.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_the_author",
@@ -738,7 +775,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "clovers"
    ],
@@ -746,7 +783,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = ???（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_the_author.txt"
+   "persona": "persona/os_the_author.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_prophetbot",
@@ -756,7 +794,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "blue_npc_prophet"
    ],
@@ -764,7 +802,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_prophetbot.txt"
+   "persona": "persona/os_prophetbot.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_silver",
@@ -774,7 +813,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "blue_npc_silver"
    ],
@@ -782,7 +821,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_silver.txt"
+   "persona": "persona/os_silver.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_rowbot",
@@ -792,7 +832,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_rowbot"
    ],
@@ -800,7 +840,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_rowbot.txt"
+   "persona": "persona/os_rowbot.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_prototype",
@@ -810,7 +851,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "blue_npc_prototype"
    ],
@@ -818,7 +859,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_prototype.txt"
+   "persona": "persona/os_prototype.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_calamus",
@@ -828,7 +870,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "green_npc_calamus"
    ],
@@ -836,7 +878,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_calamus.txt"
+   "persona": "persona/os_calamus.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_alula",
@@ -846,7 +889,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "green_npc_alula"
    ],
@@ -854,7 +897,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_alula.txt"
+   "persona": "persona/os_alula.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_maize",
@@ -864,7 +908,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_maize"
    ],
@@ -872,7 +916,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_maize.txt"
+   "persona": "persona/os_maize.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_magpie",
@@ -882,7 +927,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "green_npc_magpie"
    ],
@@ -890,7 +935,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_magpie.txt"
+   "persona": "persona/os_magpie.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_shepherd",
@@ -900,7 +946,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_shepherd"
    ],
@@ -908,7 +954,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_shepherd.txt"
+   "persona": "persona/os_shepherd.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_cedric",
@@ -918,7 +965,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "green_npc_cedric"
    ],
@@ -926,7 +973,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_cedric.txt"
+   "persona": "persona/os_cedric.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_lamplighter",
@@ -936,7 +984,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "red_lamplighter"
    ],
@@ -944,7 +992,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_lamplighter.txt"
+   "persona": "persona/os_lamplighter.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_watcher",
@@ -954,7 +1003,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_watcher"
    ],
@@ -962,7 +1011,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_watcher.txt"
+   "persona": "persona/os_watcher.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_ling",
@@ -972,7 +1022,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_ling"
    ],
@@ -980,7 +1030,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_ling.txt"
+   "persona": "persona/os_ling.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_mason",
@@ -990,7 +1041,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_mason"
    ],
@@ -998,7 +1049,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_mason.txt"
+   "persona": "persona/os_mason.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_kelvin",
@@ -1008,7 +1060,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "contacts_kelvin"
    ],
@@ -1016,7 +1068,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_kelvin.txt"
+   "persona": "persona/os_kelvin.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_kip",
@@ -1026,7 +1079,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "red_kip"
    ],
@@ -1034,7 +1087,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_kip.txt"
+   "persona": "persona/os_kip.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_george",
@@ -1044,7 +1098,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "red_npc_george1"
    ],
@@ -1052,7 +1106,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）；官方 26 条 profile 里 George 有 george1..george6 六个变体，本条第 1 号。",
-   "persona": "persona/os_george.txt"
+   "persona": "persona/os_george.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "os_rue",
@@ -1062,7 +1117,7 @@
    "chapters": [
     "oneshot"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "red_rue"
    ],
@@ -1070,7 +1125,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
-   "persona": "persona/os_rue.txt"
+   "persona": "persona/os_rue.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_toriel",
@@ -1080,7 +1136,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_toriel_d"
    ],
@@ -1088,7 +1144,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_toriel.txt"
+   "persona": "persona/ut_toriel.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_sans",
@@ -1098,7 +1155,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_sans_d"
    ],
@@ -1106,7 +1163,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_sans.txt"
+   "persona": "persona/ut_sans.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_papyrus",
@@ -1116,7 +1174,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_papyrus_d"
    ],
@@ -1124,7 +1182,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_papyrus.txt"
+   "persona": "persona/ut_papyrus.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_undyne",
@@ -1134,7 +1193,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_undyne_d"
    ],
@@ -1142,7 +1201,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_undyne.txt"
+   "persona": "persona/ut_undyne.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_alphys",
@@ -1152,7 +1212,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_alphys_d"
    ],
@@ -1160,7 +1220,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_alphys.txt"
+   "persona": "persona/ut_alphys.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_mettaton",
@@ -1170,7 +1231,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_mettatonb"
    ],
@@ -1178,7 +1239,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_mettaton.txt"
+   "persona": "persona/ut_mettaton.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_muffet",
@@ -1188,7 +1250,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_muffet_overworld"
    ],
@@ -1196,7 +1258,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（原作用 `overworld` 标的那一版，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_muffet.txt"
+   "persona": "persona/ut_muffet.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_napstablook",
@@ -1206,7 +1269,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_napstablook_d"
    ],
@@ -1214,7 +1277,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_napstablook.txt"
+   "persona": "persona/ut_napstablook.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_monster_kid",
@@ -1224,7 +1288,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_mkid_d"
    ],
@@ -1232,7 +1296,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_monster_kid.txt"
+   "persona": "persona/ut_monster_kid.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_asgore",
@@ -1242,7 +1307,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_asgore_d"
    ],
@@ -1250,7 +1315,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_asgore.txt"
+   "persona": "persona/ut_asgore.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_flowey",
@@ -1260,7 +1326,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_floweyfly"
    ],
@@ -1268,7 +1334,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_flowey.txt"
+   "persona": "persona/ut_flowey.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_frisk",
@@ -1278,7 +1345,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_f_maincharad"
    ],
@@ -1286,7 +1353,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_frisk.txt"
+   "persona": "persona/ut_frisk.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_chara",
@@ -1296,7 +1364,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_charad"
    ],
@@ -1304,7 +1372,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_chara.txt"
+   "persona": "persona/ut_chara.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ut_gaster",
@@ -1314,7 +1383,7 @@
    "chapters": [
     "undertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_gasterblaster"
    ],
@@ -1322,7 +1391,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
-   "persona": "persona/ut_gaster.txt"
+   "persona": "persona/ut_gaster.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_ace",
@@ -1332,7 +1402,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_ace_down_walk"
    ],
@@ -1340,7 +1410,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_ace.txt"
+   "persona": "persona/hy_ace.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_axis",
@@ -1350,7 +1421,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_axis_down"
    ],
@@ -1358,7 +1429,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_axis.txt"
+   "persona": "persona/hy_axis.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_bowll",
@@ -1368,7 +1440,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_bowll_body_normal"
    ],
@@ -1376,7 +1448,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_bowll.txt"
+   "persona": "persona/hy_bowll.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_ceroba_ketsukane",
@@ -1386,7 +1459,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_ceroba_down_walk"
    ],
@@ -1394,7 +1467,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_ceroba_ketsukane.txt"
+   "persona": "persona/hy_ceroba_ketsukane.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_chujin_ketsukane",
@@ -1404,7 +1478,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_chujin_npc"
    ],
@@ -1412,7 +1486,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_chujin_ketsukane.txt"
+   "persona": "persona/hy_chujin_ketsukane.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_clover",
@@ -1422,7 +1497,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_clover_casual"
    ],
@@ -1430,7 +1505,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_clover.txt"
+   "persona": "persona/hy_clover.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_dalv",
@@ -1440,7 +1516,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "dalv_down"
    ],
@@ -1448,7 +1524,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_dalv.txt"
+   "persona": "persona/hy_dalv.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_ed",
@@ -1458,7 +1535,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_ed_down_walk"
    ],
@@ -1466,7 +1543,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_ed.txt"
+   "persona": "persona/hy_ed.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_flowey",
@@ -1476,7 +1554,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_flowey"
    ],
@@ -1484,7 +1562,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_flowey.txt"
+   "persona": "persona/hy_flowey.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_guardener",
@@ -1494,7 +1573,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_guardener_body"
    ],
@@ -1502,7 +1581,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_guardener.txt"
+   "persona": "persona/hy_guardener.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_martlet",
@@ -1512,7 +1592,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_martlet_down_talk"
    ],
@@ -1520,7 +1600,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_martlet.txt"
+   "persona": "persona/hy_martlet.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_mooch",
@@ -1530,7 +1611,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_mooch_down_walk"
    ],
@@ -1538,7 +1619,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_mooch.txt"
+   "persona": "persona/hy_mooch.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_moray",
@@ -1548,7 +1630,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_moray_down_walk"
    ],
@@ -1556,7 +1638,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_moray.txt"
+   "persona": "persona/hy_moray.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_sousborg",
@@ -1566,7 +1649,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_sousborg_npc"
    ],
@@ -1574,7 +1657,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_sousborg.txt"
+   "persona": "persona/hy_sousborg.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "hy_starlo",
@@ -1584,7 +1668,7 @@
    "chapters": [
     "undertale_yellow"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "spr_starlo_down_walk"
    ],
@@ -1592,7 +1676,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
-   "persona": "persona/hy_starlo.txt"
+   "persona": "persona/hy_starlo.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_alphys",
@@ -1602,7 +1687,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocAlphysDown"
    ],
@@ -1610,7 +1695,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_alphys.txt"
+   "persona": "persona/ot_alphys.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_asgore",
@@ -1620,7 +1706,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocAsgoreDown"
    ],
@@ -1628,7 +1714,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_asgore.txt"
+   "persona": "persona/ot_asgore.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_asriel_twinkly",
@@ -1638,7 +1725,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocAsrielDown",
     "iocTwinklyMain"
@@ -1647,7 +1734,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_asriel_twinkly.txt"
+   "persona": "persona/ot_asriel_twinkly.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_kidd",
@@ -1657,7 +1745,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocKiddDown"
    ],
@@ -1665,7 +1753,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_kidd.txt"
+   "persona": "persona/ot_kidd.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_mettaton",
@@ -1675,7 +1764,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocMettatonDressIdle"
    ],
@@ -1683,7 +1772,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_mettaton.txt"
+   "persona": "persona/ot_mettaton.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_muffet",
@@ -1693,7 +1783,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "ionFMuffet"
    ],
@@ -1701,7 +1791,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_muffet.txt"
+   "persona": "persona/ot_muffet.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_napstablook",
@@ -1711,7 +1802,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocNapstablookBody"
    ],
@@ -1719,7 +1810,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_napstablook.txt"
+   "persona": "persona/ot_napstablook.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_papyrus",
@@ -1729,7 +1821,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocPapyrusDown"
    ],
@@ -1737,7 +1829,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_papyrus.txt"
+   "persona": "persona/ot_papyrus.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_sans",
@@ -1747,7 +1840,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocSansDown"
    ],
@@ -1755,7 +1848,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_sans.txt"
+   "persona": "persona/ot_sans.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_toriel",
@@ -1765,7 +1859,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocTorielDown"
    ],
@@ -1773,7 +1867,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_toriel.txt"
+   "persona": "persona/ot_toriel.txt",
+   "roam_scope": "non_dark"
   },
   {
    "id": "ot_undyne",
@@ -1783,7 +1878,7 @@
    "chapters": [
     "outertale"
    ],
-   "home_world": "dark",
+   "home_world": "foreign",
    "objects": [
     "iocUndyneDown"
    ],
@@ -1791,7 +1886,8 @@
    "needs_setting": false,
    "escape_via_bubble": false,
    "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
-   "persona": "persona/ot_undyne.txt"
+   "persona": "persona/ot_undyne.txt",
+   "roam_scope": "non_dark"
   }
  ],
  "model_policy": {
