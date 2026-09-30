@@ -1,0 +1,19 @@
+基线 sha256：
+  main  bd26ccfef4cacc045f74e3cb9aadccf0b3fd1f336c04f54f54708594390ea698
+  gs    544e56751603b30f211fe6aacc12e2e654533879182238cf24e45d7e41023c21
+  go    cf12f9f0e8d59901dcc9fed7b3124236c8d53aefd20d834df8180bc65d96e1fb
+
+未篡改：PASS=114 FAIL=[]
+[OK] 1 关掉总开关                PASS 114→90  报红=2  命中期望=['E1']  还原=True
+[OK] 2 摘掉每帧推进调用             PASS 114→112  报红=2  命中期望=['E4', 'E5']  还原=True
+[OK] 3 改暗档常量 0.6→0.5        PASS 114→109  报红=5  命中期望=['B7', 'C26', 'E14', 'E21']  还原=True
+[OK] 4 偷偷把幽灵置顶              PASS 114→112  报红=2  命中期望=['E8']  还原=True
+[OK] 5 往函数里塞 import         PASS 114→113  报红=1  命中期望=['A5']  还原=True
+[OK] 6 改浮动步长 0.1→0.2        PASS 114→111  报红=3  命中期望=['B8', 'C10']  还原=True
+
+最终还原核验：
+  main  SAME bd26ccfef4cacc045f74e3cb9aadccf0b3fd1f336c04f54f54708594390ea698
+  gs    SAME 544e56751603b30f211fe6aacc12e2e654533879182238cf24e45d7e41023c21
+  go    SAME cf12f9f0e8d59901dcc9fed7b3124236c8d53aefd20d834df8180bc65d96e1fb
+
+鉴别力体检：ALL OK

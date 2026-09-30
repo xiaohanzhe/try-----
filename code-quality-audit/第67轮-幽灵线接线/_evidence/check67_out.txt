@@ -1,0 +1,158 @@
+===== 第67轮 · 幽灵线接线回归锁 =====
+ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+
+=== A 零依赖纪律（AST） ===
+[PASS] A0 仓库根已定位（找到含 ralsei_pet 的那一层）
+[PASS] A1 两个模块文件都在
+[PASS] A2 ghost_system（L1）只 import 标准库（math / os / io / json）
+[PASS] A3 ghost_system 不 import 任何 PyQt
+[PASS] A4 ghost_system 零项目内 import（初始化环）
+[PASS] A5 ghost_system 零函数内 import（L1 铁律）
+[PASS] A6 ghost_overlay（L2）顶层名只在 标准库 / PyQt5 / modules / 三个上游 之内
+[PASS] A7 ghost_overlay 的项目内依赖 ⊆ {ghost_system, soul_overlay, logger_utils}
+[PASS] A8 ghost_overlay **不** import 存储层（data_store / memory_*）
+[PASS] A9 ghost_overlay 复用 soul_overlay.virtual_screen_rect（唯一实现，不重写）
+[PASS] A10 main.py 真导入了两个幽灵模块
+[PASS] A11 负控制 · 判据能抓到 Qt / 业务模块 / 函数内 import
+
+=== B 照抄锚点回原文（从 _evidence/gml64 重新解析） ===
+[PASS] B0 三份原文物证都在
+[PASS] B1 原文正则全部命中（未命中 = 判据失效，必须报红）
+    [info] 从原文解析出的量: {"bright": "0.9", "dim": "0.6", "dist_max": "0.9", "fade": "0.05", "frame_def": "0", "goup0": "0", "image_speed": "0", "lev_span": "2", "lev_step": "0.1", "murderlv": "12", "near_dist": "100", "num": "10", "simp1": "1"}
+[PASS] B2 看得见的距离 == 原文 `dist < 100`
+[PASS] B3 距离式 alpha == 原文 `10 / (dist + 1)`（用 dist=49 ⇒ 真实量级）
+[PASS] B4 封顶 == 原文 `disto > 0.9`
+[PASS] B5 淡出步长 == 原文 `image_alpha -= 0.05`
+[PASS] B6 亮档 == 原文 cutscene 上界 `image_alpha < 0.9`
+[PASS] B7 暗档 == 原文 cutscene `image_alpha > 0.6`
+[PASS] B8 浮动步长 == 原文 `y += 0.1`
+[PASS] B9 浮动范围 == 原文 `starty + 2`
+[PASS] B10 定点幽灵不播动画 == 原文 `image_speed = 0`
+[PASS] B11 帧兜底值 == 原文 `image_index = 0`（表情映射的起始赋值）
+[PASS] B12 浮动初值 == 原文 Create `goup = 0; simplecheck = 1`
+[PASS] B13 `starty = y` 被照抄（出生时 starty == home_y）
+[PASS] B14 Chara 的定点幽灵**也有**销毁门槛（`obj_mainchara.kill == 1`） —— 首版 docstring 曾写"没有任何门槛"，是假事实
+[PASS] B15 Clover 的销毁门槛 == 原文 `scr_murderlv() >= 12`
+[PASS] B16 门槛方向与用户口径**相反**这件事已被正文写明（不许静默改语义）
+[PASS] B17 负控制 · 篡改原文分子 10→8 后解析值随之变（判据有鉴别力）
+[PASS] B18 负控制 · 拿掉 kill 门槛后 B14 的判据会翻假
+
+=== C 行为（真实量级：真实像素 / 真实秒数） ===
+[PASS] C1 贴脸（dist=0）⇒ 顶到封顶 0.9
+[PASS] C2 半程（dist=49）⇒ 0.2 = 10/50（真实量级，不是 0.001 这种玩具量级）
+[PASS] C3 边缘（dist=99，仍在 <100 内）⇒ 0.1
+[PASS] C4 正分支：近 ⇒ 直接赋值（不是插值/平滑）
+[PASS] C5 正分支：近且现值很大 ⇒ **往下调到距离值**
+[PASS] C6 负分支：远且 alpha>0 ⇒ 每帧 -0.05（真实帧率量级）
+[PASS] C7 兜底分支：远且 alpha==0 ⇒ 恒 0（不是 -0.05 掉进负数）
+[PASS] C8 负控制 · 远距离**不会**涨（0.85 再走一帧仍是 0.80）
+[PASS] C9 对照控制 · 同输入只翻 cap ⇒ 输出必须不同（"档位真的接到 cap 上"）
+[PASS] C10 浮动区间 = [starty-2.0, starty+1.9]（★ 不对称，是原文语句顺序的产物）
+[PASS] C11 对照控制 · 振幅**不是** 4.0（有人"顺手修对称"会在这里报红）
+[PASS] C12 不变量 · 永不出界 |y - starty| <= 2（长跑 400 帧后仍成立）
+[PASS] C13 决心 0s ⇒ 0；3h ⇒ 1.0；6h ⇒ 仍 1.0（饱和，不许涨到无穷）
+[PASS] C14 门槛表（Ralsei 特例）：0s⇒dim，29min⇒dim，30min⇒dim，3h⇒bright
+[PASS] C15 门槛表（非特例）：0s⇒hidden，29min⇒hidden，30min⇒dim，3h⇒bright
+[PASS] C16 对照控制 · 同输入只翻"特例"开关 ⇒ 门槛必须不同（否则"特例"测不到）
+[PASS] C17 负控制 · 非法输入不抛且退到最保守（负时长 / None / NaN ⇒ hidden）
+[PASS] C18 alpha_cap：bright⇒0.9 / dim⇒0.6 / hidden⇒0 / 未知⇒0
+[PASS] C19 负控制 · contact=False 时**完全不计**（宠物独自待着不涨决心）
+[PASS] C20 正控制 · contact=True 时按 dt 累加
+[PASS] C21 dt 防呆 · 超大 dt 被钳到 MAX_DT=0.1（不许一口气把 5s 全算进去）
+[PASS] C22 存取往返：to_dict → load 后 total 回到原值（原来的 999 被覆盖）
+[PASS] C23 负控制 · load 非法数据**保持现值**（不清零、不抛）
+[PASS] C24 在场判据：kris/susie/lancer 都算；ralsei / 路人 / None 不算
+[PASS] C25 在场判据 · 空集合 ⇒ False；负控制：只有 ralsei ⇒ False
+[PASS] C26 对照控制 · 同为"贴脸 + 零接触"，只翻特例开关 ⇒ alpha 0.6 vs 0.0
+[PASS] C27 hidden 档 ⇒ 贴脸 50 帧后 alpha 仍恒 0（"看不见"是真的看不见）
+[PASS] C28 正控制 · 满决心 + 贴脸 ⇒ 顶到亮档 0.9（与 C26 的 0.6 形成对照）
+[PASS] C29 正控制 · 从贴脸走远后 alpha 逐帧掉（一帧 -0.05）
+[PASS] C30 负控制 · 走远足够多帧后 alpha 恰好 0（不剩负数、不卡在 0.05）
+[PASS] C31 坐标缺失 ⇒ 视为"无穷远"（alpha 只减不增，且不抛）
+
+=== D 素材对账（45 PNG 的 sha256 逐个对 _source.json） ===
+[PASS] D0 幽灵素材目录 + _source.json 都在
+[PASS] D1 磁盘 PNG 数 == _source.json 登记数（45）
+[PASS] D2 磁盘文件名集合 == 登记键集合（防"多一张 / 少一张"）
+[日志] 文件日志初始化失败，仅使用控制台: [Errno 13] Permission denied: 'E:\\RalseiMemory\\logs\\ralsei_pet.log'
+[PASS] D3 模块写的精灵名 == 登记里真有的那只
+[PASS] D4 帧数 == 登记 meta.frames（8）
+[PASS] D5 原生尺寸 == 登记 meta.w/h（22×29）
+[PASS] D6 `ghost_frame_names()` 推出的 8 个名字全在登记里
+[PASS] D7 全部 PNG 的 sha256 + 字节数逐个对上（这不是"文件在"，是"内容一模一样"）
+[PASS] D8 负控制 · 判据能抓到内容被改（真文件的 sha256 对一条假值必须不等）
+[PASS] D9 load_ghost_sprites() 真加载出 8 帧且全非空
+[PASS] D10 帧的真实像素尺寸 == 原生 22×29
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_0.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_1.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_2.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_3.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_4.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_5.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_6.png（该帧将画品红框）
+2026-09-30 10:24:14 [WARNING] ralsei_pet.ghost_overlay — 幽灵素材缺失：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\sprites\ghost\__nope__\spr_ghost_chara_down_7.png（该帧将画品红框）
+[PASS] D11 负控制 · 目录不存在 ⇒ 返回 None 帧（**不伪造**、不抛）
+
+=== E 接线（AST + 真机） ===
+[PASS] E1 `GHOST_ENABLED = True` 真的作为**类属性**存在
+[PASS] E2 五个幽灵方法都定义了
+[PASS] E3 `init_ghost()` 有**恰好一处**调用点（在初始化链上，不是死方法）
+[PASS] E4 `update_movement` 里真调了 `_ghost_tick`
+[PASS] E5 ★ 调用点在**所有早退分支之前**（幽灵是独立实体，宠物睡着也该按距离显淡）
+[PASS] E6 与灵魂同一节拍（两者都在第一个 return 之前）
+[PASS] E7 退出收尾：`_ghost_save` 被调 + 独立顶层窗口被 `hide_ghost`+`close` 收掉
+[PASS] E8 ★ 幽灵**不置顶**（AST 看代码属性，不看注释里那几个字）
+[PASS] E9 幽灵**一个鼠标事件都不吃**（比灵魂更严格）
+[PASS] E10 幽灵绘制失败不拖垮进程（存在 `paintEvent`，且内部有 except 兜底）
+[PASS] E11 负控制 · 判据能抓到真写成 `Qt.WindowStaysOnTopHint` 的代码；且注释里提它**不会**误报
+2026-09-30 10:24:18 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 114 组动画（legacy 28 组，schema=1）
+2026-09-30 10:24:22 [INFO] ralsei_pet.modules.memory_system — 新位置无记忆，已从旧版 memory.json 继承: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\modules\..\memory.json
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+RegisterHotKey 失败 key=ctrl+alt+S vk=0x53 err=0（可能已被别的程序占用）
+RegisterHotKey 失败 key=ctrl+alt+E vk=0x45 err=0（可能已被别的程序占用）
+RegisterHotKey 失败 key=ctrl+alt+H vk=0x48 err=0（可能已被别的程序占用）
+2026-09-30 10:24:22 [WARNING] ralsei_pet.main — 全局热键未装上：['ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H'] ⇒ 仍可用"宠物窗口有焦点时按 S / E"
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 0 个；热键=()
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (730, 551) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — NPC 系统就绪：登记 70 个（主线 52 / 纯 NPC 18）；人设 50 份；点名别名 154 条；记忆落盘=C:\Users\23002\AppData\Local\Temp\ralsei_ghost67\npc_memory
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 34 人（{'original': 17, 'derived': 8, 'authored': 9}）；未安置 36；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=4s 决心=0.000 档位=dim
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 幽灵定点在 x=796.0 y=494.0 alpha=0.000 档=dim | 接触=4s 决心=0.000 档位=dim
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 幽灵就绪：x=796.0 y=494.0 alpha=0.000 档=dim | 接触=4s 决心=0.000 档位=dim
+[PASS] E12 真机：幽灵建起来了（素材 + 状态 + 窗口 + 接触时钟）
+[PASS] E13 真机：出生距离 == GHOST_SPAWN_OFFSET 的长度（96.2）
+[PASS] E14 真机：档位 = dim / cap = 0.6（Ralsei 自动是特例）
+[PASS] E15 真机：**不置顶**（不是"源码里没写"，是窗口标志真的不带）
+[PASS] E16 真机：鼠标穿透属性真的生效
+[PASS] E17 真机：`ghost.state.frame` 恒为 0（定点幽灵不播动画）
+[PASS] E18 真机：开局 alpha==0（不闪一下满亮度）
+[PASS] E19 真机：一帧后 alpha == min(10/(dist+1), 0.6)（距离式真的在算）
+[PASS] E20 真机：alpha>0 ⇒ 窗口**真的显示**（`wants_show` 与窗口同步）
+[PASS] E21 真机：贴脸 ⇒ 顶到**暗档封顶 0.6**（不是 0.9 —— 决心没满）
+[PASS] E22 真机：拖远 ⇒ alpha 归 0，且窗口**自动收掉**（不留隐形空窗口）
+[PASS] E23 真机：没人在场 ⇒ 判据 False 且总时长不涨
+[PASS] E24 真机：kris/susie 在场 ⇒ 判据 True（数据源真的接在 npc_bodies 上）
+[PASS] E25 真机：有接触 ⇒ 总时长按帧累加
+[PASS] E26 负控制：清空在场后总时长**停住**（接触是唯一输入）
+[PASS] E27 真机：接触时长落盘成功，且落在 **RALSEI_MEMORY_DIR 隔离目录**内（不写用户真实 vault）
+2026-09-30 10:24:22 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=4s 决心=0.000 档位=dim
+[PASS] E28 真机：回读后总时长 == 落盘前的值（往返一致）
+[PASS] E29 真机：`update_movement()` 真跑一遍不抛（接线没把主循环搞坏）
+2026-09-30 10:24:24 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 496 组）
+[PASS] E30 真机：退出收尾把幽灵窗口收掉了（独立顶层窗口的代价必须还上）
+[PASS] E31 退出收尾把 soul / ghost 引用**置 None**（`cleanup_on_exit` 有"显式退出 + atexit"两个调用点，第二遍不许再打在已析构的窗口上）
+2026-09-30 10:24:24 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 496 组）
+[PASS] E32 退出收尾可重入（二次调用不抛）
+[PASS] E33 ★ `modules/` 入 sys.path 必须**早于** `from logger_utils import get_logger`（否则 main 的日志器退化成 `__main__`、main 自身日志全被静默丢弃）（行号由 AST 定，注释里的同名字面量不会误命中）
+[PASS] E34 负/正控制成对：不挂 `modules/` ⇒ `import logger_utils` 失败；挂了 ⇒ 成功（E33 那条顺序**确实承重**，不是摆设）
+
+=== F 判据自身体检（负控制 + no-op 显式） ===
+[PASS] F1 报告口打印的成功/失败标记，能被 run_all.count_results 的正则数到（每行恰好一个，不多不少）
+[PASS] F2 记账口真的把 False 记成失败（F1/F2 都不是 no-op）
+[PASS] F3 恒真体检 · `存在` 与 `不存在` 两条判据结论不同（不是 `A in rev[B]` 那种恒真）
+[PASS] F4 原文物证目录真的被读到（防路径写错后静默变绿）
+[PASS] F5 新模块真的在磁盘上（F1 的"模块数"判据才不是空话）
+[PASS] F6 已打印的 113 行里，每行**恰好一个**成功/失败标记（判据名不许自带标记）
+
+合计：PASS=114 FAIL=0
+2026-09-30 10:24:25 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 496 组）

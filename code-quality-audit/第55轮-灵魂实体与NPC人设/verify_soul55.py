@@ -69,6 +69,20 @@ def almost(a, b, tol=0.51):
     return abs(float(a) - float(b)) <= tol
 
 
+class _FrozenClock(object):
+    """给 `main.time` 用的假时钟（第67轮新增）—— 只提供 `time()`，返回**固定值**。
+
+    为什么需要它：`RalseiPet.update_mouse_drag` 内部自己取 `time.time()`，
+    夹具无法通过参数注入 elapsed ⇒ 只能把产品的时钟冻结住，`elapsed` 才精确可复现。
+    """
+
+    def __init__(self, t):
+        self._t = float(t)
+
+    def time(self):
+        return self._t
+
+
 app = QApplication.instance() or QApplication([])
 pet = M.RalseiPet()
 for a in ('animation_timer', 'ai_timer', 'stats_timer', 'dialogue_init_timer',
@@ -315,8 +329,25 @@ check('D2 起点 = 灵魂当前位置（不是 QCursor.pos()）',
       and almost(pet.drag_start_pos.x(), before[0], 1.01)
       and almost(pet.drag_start_pos.y(), before[1], 1.01),
       str((pet.drag_start_pos.x(), pet.drag_start_pos.y())))
-pet.drag_start_time -= 1.0          # 谎报已过 1s（占 2s 的一半）
-pet.update_mouse_drag()
+# ★ 判据可复现性修正（第67轮，实测命中过一次**假 DIFF**）
+#   `update_mouse_drag` 内部取 `time.time()`；原夹具只把 `drag_start_time` 往前挪 1s，
+#   于是真实 elapsed = 1s + 「上一行到这一行之间消耗的墙钟」（实测抖 0~15ms）
+#   ⇒ `progress` / `eased` 抖动 ⇒ `int()` 截断后位移在 **175 / 176 之间跳**。
+#   断言本身有 ±2 容差（两种都 PASS，判据是好的），**问题在打印**：
+#   `位移 (%.1f, …)` 把墙钟相关的数字写进了 stdout，而 G2 是**逐字节**比对基线
+#   ⇒ 偶发假 DIFF（第66→67轮之间实测命中一次：175.0 → 176.0，两行都还是 PASS）。
+#   ⇒ 正解不是放大容差、也不是每次 `--update` 盖掉，而是**把时钟冻结**，
+#     让 elapsed **精确等于** `drag_duration` 的一半（1.0 / 2.0）。
+#     此时 progress = 0.5、eased = 0.875，位移恒为 (175.0, 87.0)
+#     —— 与既有基线逐字节相同（y 的 87.5 被产品的 `int()` 截断成 87，也是确定行为）。
+_t_origin = pet.drag_start_time                 # 产品自己记的起点
+pet.drag_start_time -= 1.0                      # ⇒ 冻结时钟下 elapsed 恰为 1.0
+_old_time = M.time
+M.time = _FrozenClock(_t_origin)
+try:
+    pet.update_mouse_drag()
+finally:
+    M.time = _old_time
 moved = (soul.state.x - before[0], soul.state.y - before[1])
 check('D3 update_mouse_drag 推动的是**灵魂**（位置变了）',
       moved[0] > 0 and moved[1] > 0, '位移 (%.1f, %.1f)' % moved)

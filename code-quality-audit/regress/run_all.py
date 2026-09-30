@@ -97,6 +97,11 @@ HERMETIC_IDS = frozenset({
     'soul_round55', 'npc_persona55',
     # 第56轮：真机 `RalseiPet()`（站位 / 游荡 / 编队 / 桌面闸都建在真 App 上）
     'npc_place56',
+    # 第67轮：真机 `RalseiPet()`（幽灵窗口 + 接触时钟建在真 App 上）——
+    #   ⚠️ 它**自己**也会 `setdefault('RALSEI_MEMORY_DIR', %TEMP%)`，
+    #   所以这里给它 hermetic 环境是**双保险**：run_all 给的是"每轮全新 mkdtemp"，
+    #   基线才封闭（否则会随"上次跑留下的 ghost_state.json"漂移）。
+    'check67',
 })
 
 
@@ -1241,6 +1246,39 @@ SUITES = [
                 '不主动拉起模型 / 不重复发包 / 边沿重 arm / 探测不通安静退让 / '
                 '失败不假装成功 / interval 钳位 / start 幂等 / stop 真结束）/ '
                 'E 反向（WarmKeeper 全项目只定义一次 / **不许**把 keep_alive 塞进兼容端点 payload）',
+    },
+    # ---------------------------------------------------------- 第67轮
+    # 为什么把它**纳入 G2**（而第60~66轮的数据型交付没纳入）：
+    #   本轮是**产品级特性**（三个文件：ghost_system / ghost_overlay / main.py 接线），
+    #   不是一次性数据产物 ⇒ 必须有常驻锁，否则下一轮谁动了 `update_movement` 的
+    #   调用位置、或者谁"顺手"把幽灵置顶，都没有东西会报红。
+    # ★ 它会真机 `RalseiPet()`（只起 offscreen 实例、关掉所有定时器、不联网），
+    #   所以进 `HERMETIC_IDS`（见那份名单的注释）。
+    {
+        'id': 'check67',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第67轮-幽灵线接线',
+                               '_tools', 'check67.py'),
+        'offscreen': True,
+        'desc': '第六十七轮：幽灵线接线不许静默漂移 —— '
+                'A 零依赖纪律（AST：ghost_system 顶层只有标准库 math·os·io·json / '
+                '零项目内 import / ★零函数内 import；ghost_overlay 的项目内依赖 '
+                '⊆ {ghost_system, soul_overlay, logger_utils}）/ '
+                'B ★★ 照抄锚点**回原文重新解析**（不是拿模块字面量自比）：'
+                'dist<100 · 10/(dist+1) · 封顶 0.9 · 淡出 0.05 · 亮档 0.9 / 暗档 0.6 · '
+                '浮动 0.1 与 starty±2 · image_speed=0 · image_index 兜底 0 · '
+                'goup=0/simplecheck=1 · scr_murderlv()>=12，逐条比 `_evidence/gml64/*.gml`；'
+                '★ 并**钉住**"两只定点幽灵都有杀戮/LV 门槛"（首版 docstring 写"没有门槛"是假事实）/ '
+                'C 行为（真实量级）：距离三分支正负成对 + cap 对照 + 浮动实测区间 '
+                '[starty-2.0, starty+1.9]（**不对称**，且振幅≠4.0 有对照）+ 决心饱和 + '
+                '门槛表（特例/非特例对照）+ 接触时钟 dt 钳位与存取往返 / '
+                'D 素材对账（45 个 PNG 的 sha256 + 字节数逐个对 `_source.json`，'
+                '帧数/原生尺寸/精灵名三向一致）/ '
+                'E 接线（AST + 真机）：GHOST_ENABLED 在位 · `_ghost_tick` 真被调且'
+                '**在所有早退分支之前** · 真机 alpha == 公式 · 窗口自动收放 · '
+                '接触计时真读 `npc_bodies` · 落盘走 data_store 且落在隔离目录 · '
+                '**不置顶**（AST 看代码属性，不吃注释）· 鼠标穿透 · 退出收尾可重入 / '
+                'F 判据自身体检（标记字面量计数、记账口非 no-op、恒真体检、'
+                '原文目录真被读到、新模块真在盘上）',
     },
 ]
 

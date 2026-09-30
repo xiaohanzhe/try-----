@@ -4,6 +4,24 @@ import os
 import time
 import functools
 
+# ★ 第67轮修复（既有缺陷，真机取证暴露）：`modules/` 必须**赶在
+#   `from logger_utils import get_logger`（下方第 20 行附近）之前**进 sys.path。
+#   原顺序把这一步放在第 308 行附近（PyQt 导入之后），对 `logger_utils` 来说**太晚**：
+#   import 期必然 ImportError ⇒ 落到兜底的 `logging.getLogger(name)`，而
+#   `__name__ == '__main__'` 得到的 logger 名叫 **`__main__`** —— 它**不在 `ralsei_pet`
+#   树下、没有任何 handler** ⇒ main.py 自己的日志（灵魂就绪 / NPC 就绪 / 幽灵就绪…）
+#   在真实运行里**全部被静默丢弃**，只有 `modules/*` 的日志能落到文件里。
+#   取证方式（第67轮）：用 PYTHONPATH 注入 sitecustomize 在 **logging 调用点**打钩，
+#   看到 `[DIAG:INFO] __main__ | 幽灵就绪：…` —— 即"日志文件里查无此行"的根因是
+#   **日志器接错了地方**，不是幽灵没跑。教训：产物侧（日志文件）看不见，不等于
+#   调用侧没发生；判据必须两边都站。
+#   这里只提前**路径**，不改任何导入语句、不改日志内容。
+_project_root_early = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+_modules_dir_early = os.path.join(_project_root_early, 'modules')
+for _p_early in (_project_root_early, _modules_dir_early):
+    if _p_early not in sys.path:
+        sys.path.append(_p_early)
+
 # 注意：单实例检查已封装为 check_single_instance() 函数
 # 在 if __name__ == '__main__': 中调用，避免 import 时就触发退出
 # 也便于单元测试和 mock
@@ -370,6 +388,19 @@ from modules.scene_canvas import SceneCanvas, BubbleOverlay
 from modules import soul_entity as soul_entity_mod
 from modules import soul_overlay as soul_overlay_mod
 from modules.soul_overlay import load_soul_sprites
+# ---- 幽灵（GHOST，第67轮）---------------------------------------------------
+# 用户口径（第64轮原话）：「我把 chara 改了一下，就用红与黄.apk 里面的幽灵就好，
+#   只有决心强的人能看到幽灵（ralsei 是个特例）」；
+# 第66轮补裁定：N1 =「用和 kris 等人接触的时间算」、N2 =「定点距离」、
+#   N3 =「接线时机你来看就好」（⇒ 本轮接线）。
+# 分工（与灵魂同构，三层各管一段）：
+#   ghost_system  纯逻辑：距离式 alpha / 上下浮动 / 决心门槛 / 接触时钟（零依赖，可离线回归）
+#   ghost_overlay 绘制：把 state 画成桌面上那只定点幽灵（独立顶层窗口，**纯视觉不吃事件**）
+#   src/main.py   组装：接触计时（谁在场）/ 每帧推进 / 显示与藏起 / 落盘
+# ⚠️ `ghost_overlay` 从 `soul_overlay` **import** `virtual_screen_rect`（唯一实现，
+#    契约①：禁用 `availableGeometry()`）；这里只做组装，不重复那 20 行。
+from modules import ghost_system as ghost_system_mod
+from modules import ghost_overlay as ghost_overlay_mod
 # 球容器（第50轮）：Ralsei 在光世界**必须被"扭蛋球"罩住**才能存身。
 # 分工（三层各管一段，与场景系统同源）：
 #   bubble_system  → 规则（谁能进 / 何时脱 / 4 向旋转 / 塑料滤镜参数），零依赖
@@ -1100,6 +1131,13 @@ class RalseiPet(QMainWindow):
         #   灵魂已经是"追加型"的先例，这里跟着它排（顺序只看这一条依赖）。
         self.init_npc_systems()
 
+        # ---- 幽灵（第67轮）----
+        # 为什么排在**最末**：幽灵要从 `self.npc_bodies` 读"谁在场"（接触计时的数据源），
+        # 而那份身体表是 `init_npc_systems()` 里播下的 ⇒ 提前建会拿到空表。
+        # ⚠️ 幽灵**不**往 `_scene_switch_hooks` 里追加东西（它是**定点**的，
+        #    "换场景就换位置"恰好是它不该有的行为）⇒ 没有那条例外的顺序依赖。
+        self.init_ghost()
+
     # ==================================================================
     #  灵魂（SOUL，第55轮）—— 可拖拽 / 可键盘操控 / 可自由出入各场景
     # ==================================================================
@@ -1487,6 +1525,311 @@ class RalseiPet(QMainWindow):
             if getattr(p, 'key', None) == key:
                 return (p, '按灵魂位置选最近那件（距离 %.0f 逻辑单位）' % dist)
         return (None, '最近的那件对不上可交互物（key 失配）')
+
+    # ==================================================================
+    #  幽灵（GHOST，第67轮）—— 定点幽灵：走近才清晰，决心强才看得清
+    # ==================================================================
+    # 用户口径（第64轮原话，逐字）
+    #   *「我把 chara 改了一下，就用红与黄.apk 里面的幽灵就好，
+    #     只有决心强的人能看到幽灵（ralsei 是个特例）」
+    # 第66轮补裁定
+    #   N1「从上轮 N1 开始，用和 kris 等人接触的时间算吧」⇒ **决心 = 接触时长**
+    #      （★ 用户改了口径：此前我建议的是"Ralsei↔用户信任度"，`relationship.py`
+    #       里**没有"与 NPC 接触时长"这个量**，所以这条只能新建。）
+    #   N2「N2 定点距离」                                ⇒ 照抄原作**定点距离式** alpha
+    #   N3「`sprites/ghost/` 接线时机你来看就好」          ⇒ 我定：**本轮就接线**
+    #
+    # 为什么是"逐字照抄"而不是"看着差不多"
+    # ----------------------------------
+    # 距离式 alpha（`10/(dist+1)` 封顶 0.9）/ 上下浮动那四行 / 亮暗档 0.9·0.6
+    # **全部有原文出处**（第64轮反编译物证 `_evidence/gml64/`）。`ghost_system` 的
+    # docstring 里挂着"值 → 原文出处"对照表，回归锁 `check67` 的 D 段逐条回原文验。
+    #
+    # ★★ 与原作**方向相反**的一处，必须记住
+    # --------------------------------
+    # **两只**定点幽灵都带**"杀戮 / LV"方向**的销毁门槛：
+    #   · Chara（`obj_ghostint2.Create_0`）：`obj_mainchara.kill == 1` ⇒ `instance_destroy()`
+    #   · Clover（`obj_ghostint.Create_0`）：再加 `global.flag[7] == 1 || scr_murderlv() >= 12`
+    # ⇒ 原作轴是「**杀过人 / LV 高 ⇒ 幽灵消失**」，而用户要的是「**决心强 ⇒ 看得见**」。
+    # 两者方向相反 ⇒ 处置：**机制形状照抄、轴换成用户口径**，并在报告里如实
+    # 标注为**本项目扩展**（记忆 §9：用户口径优先于我的技术判断）。
+    # ⚠️ 首版这里曾写「Chara 的幽灵在 Create 里**没有任何门槛**」—— **那是假事实**
+    #    （凭印象写的）。第67轮逐条回 `_evidence/gml64/` 原文时被自己的判据逮到并改正。
+    # ==================================================================
+
+    #: 幽灵总开关（与 `SOUL_ENABLED` / `NPC_ENABLED` / `SCENE_LAYER_ENABLED` 同形）。
+    #: `False` ⇒ `init_ghost()` 建完空壳就返回，所有入口退化成"什么都没发生"。
+    #: ⚠️ 保留它本身**不是死代码**：这是"幽灵出问题"时的一刀定位开关。
+    GHOST_ENABLED = True
+
+    #: 接触时长落盘文件（走 `data_store` 唯一存储入口，与 `RELATIONSHIP_FILE` 同规）。
+    GHOST_FILE = 'ghost_state.json'
+
+    #: 幽灵相对桌宠中心的**出生偏移**（屏幕像素）。
+    #: ★ 为什么是 96 而不是 0：`dist < 100` 才会显形（照抄 `Step_1`），取 96 正好落在
+    #:   "刚好看得见的边缘" —— 用户第一眼看到的就是那只**几乎透明的**幽灵，把宠物
+    #:   拖近它会变亮、拖远会淡出，机制**一眼可见**（贴脸出生反而看不出"距离式"）。
+    #: ⚠️ 只决定**出生**位置：之后它**定点不动**（"定点"的定义，见 `ghost_system`）。
+    GHOST_SPAWN_OFFSET = (96.0, -6.0)
+
+    #: 接触时长多久落一次盘（秒）。★ 别每帧写：那是 30 次/秒的小文件 IO。
+    #: 另有退出兜底（`cleanup_on_exit`），所以 30s 丢不了多少。
+    GHOST_SAVE_EVERY = 30.0
+
+    def init_ghost(self):
+        """建幽灵：素材 → 状态（含接触时钟）→ 独立顶层窗口 → 出生点。
+
+        失败语义与灵魂 / 道具 / NPC 同规：**只降级、不抛出**（幽灵坏了桌宠照常跑），
+        且 `self.ghost is None` 时 `_ghost_tick()` 直接返回、所有入口退化成
+        "什么都没发生"，不会半死不活地"看得见窗口但不动"。
+        """
+        # 先全部预声明成 None/空 —— 中途任何一步失败，宿主也不缺属性
+        # （本项目踩过"状态只在成功路径上创建"的坑：失败后别处 getattr 就炸）。
+        self.ghost = None
+        self.ghost_state = None
+        self.ghost_contact = None
+        self._ghost_path = None
+        self._ghost_last_save = 0.0
+
+        if not getattr(self, 'GHOST_ENABLED', True):
+            _log.info('幽灵总开关 GHOST_ENABLED=False ⇒ 不建幽灵（用它定位问题）')
+            return
+
+        try:
+            state = ghost_system_mod.GhostState(
+                home_x=0.0, home_y=0.0, contact_seconds=0.0,
+                # ★ 「Ralsei 是个特例」：**看的人就是 Ralsei 本人**（桌宠就是他）
+                #   ⇒ 走"不靠决心也至少看得见暗档"那条通路。
+                #   ⚠️ `ralsei_special=False` 那条路不是摆设：回归锁用它做**对照控制**
+                #      （同输入、只翻这一个开关 ⇒ 输出必须不同），否则"特例"无法被测到。
+                ralsei_special=ghost_system_mod.RALSEI_SPECIAL)
+            # ★ parent=None：与灵魂同一个决策 —— 幽灵站在**桌面**上，而宠物窗口只有
+            #   ~42×82 屏幕像素，子控件会被裁剪，"定点站在桌面某处"根本无从表达。
+            self.ghost = ghost_overlay_mod.GhostOverlay(
+                None,
+                sprites=ghost_overlay_mod.load_ghost_sprites(),
+                state=state,
+            )
+            self.ghost_state = state
+            self.ghost_contact = state.contact
+            # ---- 接触时长：读回上次的累计（读不到就是 0，**不编造**）----
+            self._ghost_path = self._ghost_state_path()
+            self._ghost_load()
+            # ★ 出生点：宠物中心 + `GHOST_SPAWN_OFFSET`，就在 96px 上
+            #   （`alpha = 10/(96+1) ≈ 0.103`，刚好看得见的边缘）。
+            #  ⚠️ 第67轮真机取证的一段弯路，记在这里免得后人再走一遍：
+            #     外部用 Win32 `GetWindowRect` 量这个窗口时，若探针**不是 DPI-aware**，
+            #     坐标会被**按缩放宽高比缩小**（本机 150% ⇒ ÷1.5）。曾因此把
+            #     "窗口在 (2515,1393) 44×58"误读成"幽灵跑到了 (1677,927) 29×39"，
+            #     进而误判"出生点差了 1000px ⇒ 幽灵永不显形"，白改了一版延迟定点。
+            #     真相：**这笔账本来就算得对**（`幽灵帧` 诊断实测
+            #     `距离=96.19 want=True vis=True`）。⇒ 量桌宠要先声明 DPI 感知。
+            self._ghost_respawn()
+            # ★ 开局**不** `show()`：`wants_show()` 由**距离**决定，出生点就在 96px 上
+            #   （刚好看得见的边缘），第一帧 tick 之后自然会亮起来；
+            #   在这里提前 show 只会在宠物还没定位时先闪一个空窗口。
+            _log.info('幽灵就绪：%s', self.ghost_state.describe())
+        except Exception:
+            _log.exception('幽灵初始化失败（幽灵功能不可用，宠物照常运行）')
+            self.ghost = None
+            self.ghost_state = None
+            self.ghost_contact = None
+
+    # ---------------------------------------------------------------- 落盘
+    def _ghost_state_path(self):
+        """接触时长的落盘路径（`data_store` 唯一入口；取不到 ⇒ `None` = 退内存态）。
+
+        ⚠️ 与 `_make_relationship()` 同一条纪律：**不在底层模块里 import data_store**
+           （它会反向依赖 memory 层，构成初始化环 —— 本项目栽过 4 次），
+           路径一律由**调用方注入**，这里只当那个调用方。
+        """
+        try:
+            import data_store
+            return data_store.app_file(RalseiPet.GHOST_FILE)
+        except Exception as e:
+            _log.debug('幽灵接触时长落盘路径不可用（退内存态）: %s', e)
+            return None
+
+    def _ghost_load(self):
+        """把上次的接触时长读回来。读不到 / 文件损坏 ⇒ **保持现值**（不抛、不清零）。"""
+        clock = getattr(self, 'ghost_contact', None)
+        path = getattr(self, '_ghost_path', None)
+        if clock is None or not path:
+            return False
+        try:
+            import io
+            import json
+            import os
+            if not os.path.isfile(path):
+                return False
+            with io.open(path, encoding='utf-8') as fh:
+                d = json.load(fh)
+            clock.load(d)
+            _log.info('幽灵：接触时长已读回 %s', clock.describe())
+            return True
+        except Exception as e:
+            _log.warning('幽灵接触时长读取失败（按 0 起算）: %s', e)
+            return False
+
+    def _ghost_save(self, force=False):
+        """把接触时长写回盘。★ 由 `_ghost_tick()` 按 `GHOST_SAVE_EVERY` 节流调。
+
+        **绝不因为"记不上时间"影响宠物运行** ⇒ 失败只记日志。
+        """
+        clock = getattr(self, 'ghost_contact', None)
+        path = getattr(self, '_ghost_path', None)
+        if clock is None or not path:
+            return False
+        now = time.time()
+        last = getattr(self, '_ghost_last_save', 0.0)
+        if not force and (now - last) < getattr(self, 'GHOST_SAVE_EVERY', 30.0):
+            return False
+        self._ghost_last_save = now
+        try:
+            return bool(clock.save_to(path))
+        except Exception as e:
+            _log.debug('幽灵接触时长落盘失败（已忽略）: %s', e)
+            return False
+
+    # ---------------------------------------------------------------- 出生点
+    def _ghost_respawn(self):
+        """把幽灵放到"宠物中心 + `GHOST_SPAWN_OFFSET`"；宠物位置不可用 ⇒ 屏幕中心。"""
+        gh = getattr(self, 'ghost', None)
+        st = getattr(self, 'ghost_state', None)
+        if gh is None or st is None:
+            return False
+        try:
+            cx = float(self.x()) + self.width() / 2.0
+            cy = float(self.y()) + self.height() / 2.0
+        except Exception:
+            b = gh.screen_bounds() or (0.0, 0.0, 1920.0, 1080.0)
+            cx = (b[0] + b[2]) / 2.0
+            cy = (b[1] + b[3]) / 2.0
+            _log.info('幽灵出生点退回屏幕中心（宠物窗口位置不可用）')
+        try:
+            dx, dy = RalseiPet.GHOST_SPAWN_OFFSET
+            st.respawn(cx + dx, cy + dy)
+            # ★ 钳制交给 `apply_state_pos()`：它按**虚拟屏并集**钳锚点（契约①），
+            #   否则"出生点落在屏幕外 ⇒ 距离式永久为 0 ⇒ 用户以为功能坏了"。
+            gh.apply_state_pos()
+            _log.info('幽灵定点在 %s', st.describe())
+            return True
+        except Exception:
+            _log.exception('幽灵出生点设置失败（忽略）')
+            return False
+
+    def ghost_respawn(self, x, y):
+        """**外部**改定点位置（留给将来的"把幽灵搬到别处"/多只幽灵用）。
+
+        ⚠️ 本轮**没有**任何热键 / 菜单调它 —— 它是"接口真的在位"的那部分
+           （用户要求「留好拓展接口」），不是"写了就算接线"（本项目最贵的坑）。
+        """
+        st = getattr(self, 'ghost_state', None)
+        if st is None:
+            return False
+        try:
+            st.respawn(x, y)
+            gh = getattr(self, 'ghost', None)
+            if gh is not None:
+                gh.apply_state_pos()
+            return True
+        except Exception:
+            _log.exception('幽灵重新定点失败')
+            return False
+
+    # ---------------------------------------------------------------- 显示 / 藏起
+    def ghost_visible(self):
+        """幽灵窗口现在是不是**可见**（不是"该不该可见" —— 那个是 `wants_show`）。"""
+        gh = getattr(self, 'ghost', None)
+        try:
+            return bool(gh is not None and gh.isVisible())
+        except Exception:
+            return False
+
+    def show_ghost(self):
+        """显示幽灵（外部入口）。**绝不置顶**（建楼契约建立在正常 z 序上）。"""
+        gh = getattr(self, 'ghost', None)
+        if gh is None:
+            return False
+        try:
+            return bool(gh.show_ghost())
+        except Exception:
+            _log.exception('显示幽灵失败')
+            return False
+
+    def hide_ghost(self):
+        gh = getattr(self, 'ghost', None)
+        if gh is None:
+            return False
+        try:
+            return bool(gh.hide_ghost())
+        except Exception:
+            _log.exception('藏起幽灵失败')
+            return False
+
+    # ---------------------------------------------------------------- 每帧推进
+    def _ghost_contact_now(self):
+        """当前**是否处于接触状态** —— 判据 = 「在场的人里有 Kris 等人」。
+
+        ★ 数据源用 `self.npc_bodies`（`{npc_id: Body}`，**只在当前场景**）：
+          它已经同时覆盖两种场景（房间 = 站位表居民、桌面 = 已跟随的人），
+          而且它**已经过世界门控** —— 这里再自己算一遍"谁该在场"就会造出
+          第二份真相（本项目最贵的坑）。
+        ★ 拿不到 ⇒ `False`（**不接触**）。宁可少涨决心，也不凭空涨：
+          "决心"是这条线唯一的输入，它按错的方向涨就是功能整条走歪。
+        """
+        try:
+            bodies = getattr(self, 'npc_bodies', None)
+            if not bodies:
+                return False
+            return bool(ghost_system_mod.contact_from_npcs(list(bodies.keys())))
+        except Exception:
+            return False
+
+    def _ghost_tick(self, dt):
+        """每帧推进幽灵（挂在 30ms 的 `update_movement` 上）。
+
+        ★ 为什么挂在 `update_movement` 而**不自己开 QTimer**：与灵魂同一条理由 ——
+          本项目已有一个 30ms 定时器（正好等于原作 `GMS2FPS = 30`，与
+          `ghost_overlay.GHOST_TICK_MS = 33` 对齐）。再开一个只会多一条
+          "两个节拍器互不同步"的隐患。
+        ★ 调用点必须在 `update_movement` 的**所有早退分支之前**（睡眠 / 施法 /
+          躲猫猫 / 拖拽保护 / 特殊动画都会 return）：幽灵是独立实体，
+          宠物睡着 / 被拖走时它照样该按距离显淡。
+        """
+        gh = getattr(self, 'ghost', None)
+        st = getattr(self, 'ghost_state', None)
+        if gh is None or st is None:
+            return False
+        try:
+            contact = self._ghost_contact_now()
+            # 宠物**中心**坐标 —— 距离式 alpha 是"中心到中心"，与锚点同一个点。
+            try:
+                px = float(self.x()) + self.width() / 2.0
+                py = float(self.y()) + self.height() / 2.0
+            except Exception:
+                px = py = None
+            gh.tick(dt, pet_x=px, pet_y=py, contact=contact)
+            # ★ 窗口开 / 停由**距离**决定（`wants_show`）：alpha 掉到 0 就该收掉，
+            #   否则会在屏幕上留一个"看不见但吃焦点"的空窗口（幽灵不吃鼠标事件，
+            #   所以危害小于灵魂，但白白多一个顶层窗口仍然是错的）。
+            want = bool(gh.wants_show())
+            if want and not gh.isVisible():
+                gh.show_ghost()
+            elif not want and gh.isVisible():
+                gh.hide_ghost()
+            # 诊断（DEBUG 级，平时不输出）：把"这一帧凭什么显示/不显示"打出来。
+            try:
+                _log.debug('幽灵帧：alpha=%.4f 距离=%.2f want=%s vis=%s geo=%s 锚=(%.1f,%.1f)',
+                           float(st.alpha), st.distance_to(px, py) if px is not None else -1.0,
+                           want, gh.isVisible(), gh.geometry().getRect(), st.x, st.y)
+            except Exception:
+                pass
+            self._ghost_save()
+            return True
+        except Exception as e:
+            _log.debug('幽灵推进异常（本帧跳过）: %s', e)
+            return False
 
     # ==================================================================
     #  NPC 人设 / 独立记忆 / 跟随决策（第55轮）
@@ -3801,6 +4144,13 @@ class RalseiPet(QMainWindow):
         #   **px/帧**（`GMS2FPS = 30`），挂在 10fps 上会让 NPC 走成"一跳一跳"。
         # dt 复用已钳到 0.1s 的 `elapsed_time`（`npc_placement.MAX_DT` 同口径，双保险）。
         self.npc_placement_tick(elapsed_time)
+
+        # ---- 幽灵（第67轮）：每帧推进 ----
+        # ★ 与灵魂 / NPC 同一位置（`update_movement` 的**所有早退分支之前**）：
+        #   幽灵是独立实体，宠物睡着 / 施法 / 被拖着时它照样该按距离显淡。
+        # ★ 同时喂**接触计时**：它读 `self.npc_bodies`（当前场景在场的人，已过世界门控），
+        #   判据只有一处，不在这里重算"谁该在场"。
+        self._ghost_tick(elapsed_time)
 
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:
@@ -11453,6 +11803,12 @@ class RalseiPet(QMainWindow):
             if soul is not None:
                 soul.hide_soul()
                 soul.close()
+            # ★ 第67轮补：收完**置 None** —— 本函数有**两个**调用点（托盘/退出路径
+            #   显式调一次 + `atexit` 再调一次），第二次会打在已经析构的窗口上，
+            #   抛 `RuntimeError: wrapped C/C++ object ... has been deleted`
+            #   并刷出一整片 traceback（真机实测）。置 None 后第二遍自然跳过，
+            #   同时**不动**其余步骤 —— 那些步骤刻意保留"再跑一次"的兜底语义。
+            self.soul = None
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
@@ -11466,6 +11822,21 @@ class RalseiPet(QMainWindow):
                 n = mem.save_all()
                 if n:
                     _log.debug('NPC 独立记忆已落盘 %d 份（%s）', n, mem.describe())
+        except Exception as e:  # 观测代码绝不能影响退出流程
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # 2.55 ★ 第67轮：幽灵收尾 —— ①把接触时长**强制**写一次盘（平时是按
+        #      `GHOST_SAVE_EVERY` 节流的，退出时那一次可能还没到点）；
+        #      ②收掉幽灵窗口。
+        # ⚠️ 与灵魂同一个代价：幽灵是 **parent=None 的独立顶层窗口**，不会随主窗口
+        #    一起销毁 —— 不显式收掉的话，宠物退出后桌面上会留一块 44×58 的空窗口。
+        try:
+            gh = getattr(self, 'ghost', None)
+            if gh is not None:
+                self._ghost_save(force=True)
+                gh.hide_ghost()
+                gh.close()
+            self.ghost = None          # 同上：二次收尾直接跳过（见 2.53 的说明）
         except Exception as e:  # 观测代码绝不能影响退出流程
             _log.debug("main 防御性异常（已忽略）: %s", e)
 

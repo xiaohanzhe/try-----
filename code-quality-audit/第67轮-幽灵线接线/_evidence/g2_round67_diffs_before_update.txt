@@ -1,0 +1,35 @@
+########## model_conc57.diff.txt ##########
+--- model_conc57 (baseline)
++++ model_conc57 (now)
+@@ -19,7 +19,7 @@
+   · 如实登记 B3：全项目并发闸（Semaphore）出现 0 处 （当前**没有**全局串行闸）
+ [PASS] B4  ChatScheduler 确实存在于 companion_roster（第46轮的调度器）
+ [PASS] B5  ★ ChatScheduler 在 main.py 里**零引用**（P3 未授权 ⇒ 那道闸没接上）
+-[PASS] B6  chat_with_ai 的调用点 >= 4 处（NPC说话 / 跟随决策 / 自主开口 / 事件台词 等） 行号=[2131, 2235, 7450, 7703, 7734]
++[PASS] B6  chat_with_ai 的调用点 >= 4 处（NPC说话 / 跟随决策 / 自主开口 / 事件台词 等） 行号=[2165, 2269, 7484, 7737, 7768]
+ [PASS] B7  ai_driver 有自保：`_busy` 防重入
+ [PASS] B8  ai_driver 会**让路给正在回复的对话**（查 dialogue_ui 的 _ai_inflight）
+ [PASS] B9  event_speech 路径有 `_event_speaking` 自保
+
+########## check67.diff.txt ##########
+--- check67 (baseline)
++++ check67 (now)
+@@ -143,6 +143,8 @@
+ [PASS] E31 退出收尾把 soul / ghost 引用**置 None**（`cleanup_on_exit` 有"显式退出 + atexit"两个调用点，第二遍不许再打在已析构的窗口上）
+ <TS> [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 496 组）
+ [PASS] E32 退出收尾可重入（二次调用不抛）
++[PASS] E33 ★ `modules/` 入 sys.path 必须**早于** `from logger_utils import get_logger`（否则 main 的日志器退化成 `__main__`、main 自身日志全被静默丢弃）（行号由 AST 定，注释里的同名字面量不会误命中）
++[PASS] E34 负/正控制成对：不挂 `modules/` ⇒ `import logger_utils` 失败；挂了 ⇒ 成功（E33 那条顺序**确实承重**，不是摆设）
+ 
+ === F 判据自身体检（负控制 + no-op 显式） ===
+ [PASS] F1 报告口打印的成功/失败标记，能被 run_all.count_results 的正则数到（每行恰好一个，不多不少）
+@@ -150,7 +152,7 @@
+ [PASS] F3 恒真体检 · `存在` 与 `不存在` 两条判据结论不同（不是 `A in rev[B]` 那种恒真）
+ [PASS] F4 原文物证目录真的被读到（防路径写错后静默变绿）
+ [PASS] F5 新模块真的在磁盘上（F1 的"模块数"判据才不是空话）
+-[PASS] F6 已打印的 111 行里，每行**恰好一个**成功/失败标记（判据名不许自带标记）
++[PASS] F6 已打印的 113 行里，每行**恰好一个**成功/失败标记（判据名不许自带标记）
+ 
+-合计：PASS=112 FAIL=0
++合计：PASS=114 FAIL=0
+ <TS> [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 496 组）

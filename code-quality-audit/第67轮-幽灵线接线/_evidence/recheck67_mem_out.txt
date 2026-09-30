@@ -1,0 +1,83 @@
+========================================================================
+第67轮 记忆文件复检（速查本 vs 详版）
+========================================================================
+[PASS] M0 三份输入都在（速查本/详版/快照）
+[PASS] M1 速查本 js_len <= 10000  js_len = 9841  上限 = 10000  余量 = 159
+[PASS] M2 头部段号 == 详版实际最大段号  头部 §0–§63  详版 max = 63（容忍 `§` 前缀）
+[PASS] M3 详版 §63 小节 63.1~63.15 全在  实得 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
+[PASS] M4 §10 索引含 67 / §63 / 幽灵线接线  67=True §63=True 幽灵线接线=True
+[PASS] M5 §11 的 N1~N4 四条裁定 + 落地状态都在  N1 接触时间=True N2 定点距离式=True N3 接线我定=True N4 已注册=True ①②③ 已落地=True
+-- M6 反向：被删令牌 57 个（自动 diff 得出）
+     [auto raw      ] collections/logging/math
+     [auto raw      ] _original_rooms.json
+     [auto raw      ] The World Machine
+     [auto raw      ] companion_dialog
+     [auto raw      ] companion_roster
+     [auto raw      ] recheck66.py
+     [auto raw      ] 只有决心强的人能看到幽灵
+     [auto raw      ] collections
+     [auto subphrase] 可交互道具类当前无实例   ← 子串 可交互道
+     [auto raw      ] EffectType
+     [auto subphrase] 校验值一律回磁盘实测   ← 子串 回磁盘实
+     [auto subphrase] 份与仓库逐字相同   ← 子串 逐字相同
+     [auto raw      ] Machine
+     [auto raw      ] from_id
+     [auto raw      ] logging
+     [auto raw      ] resolve
+     [auto subphrase] 补蒸馏守恒判据   ← 子串 蒸馏守恒
+     [auto raw      ] schema
+     [auto raw      ] 各取自己尺寸
+     [auto raw      ] 数值照抄原作
+     [auto raw      ] 轮转不接自己
+     [auto raw      ] World
+     [auto raw      ] doorX
+     [auto raw      ] index
+     [auto raw      ] to_id
+     [auto raw      ] 不独立寻路
+     [auto raw      ] 按球心居中
+     [auto raw      ] 是逐个核对
+     [auto raw      ] 每帧硬跟随
+     [auto raw      ] 独立前置章
+     [auto raw      ] 表驱动双向
+     [auto squashed ] 轮四例自纠
+     [auto raw      ] [名字]
+     [auto raw      ] math
+     [auto raw      ] 不就近凑
+     [auto raw      ] 不按几何
+     [auto raw      ] 只增不改
+     [auto squashed ] 命名不译
+     [auto raw      ] 暂不接线
+     [auto raw      ] 条跨作品
+     [auto raw      ] 105
+     [auto raw      ] 66.
+     [auto raw      ] GML
+     [auto raw      ] The
+     [auto raw      ] mod
+     [auto raw      ] 两控件
+     [auto raw      ] 仅点名
+     [auto raw      ] 待落地
+     [auto raw      ] 必填可
+     [auto raw      ] 新原文
+     [auto raw      ] 每行进
+     [auto raw      ] 红与黄
+     [auto raw      ] 走不到
+     [auto raw      ] 门等权
+     [auto raw      ] 24
+     [auto raw      ] W
+     [whitelist] 例见详版   —— 是"另 2 例见详版 §62.9"的**指向短语**；指向本体仍在（§62.9 内文）
+[PASS] M6 被删令牌全部**自动命中或已白名单**（无未处置）  自动 56 / 白名单 1 / 未处置 0
+[PASS] M6a no-op 控制：自动命中数 > 0（判据确实在干活）  自动命中 = 56
+[PASS] M6b0 负控制夹具自证：4-gram 与伪造标识符都不在详版（夹具是真阴性）  4-gram 7 个；脏子串 = 无
+[PASS] M6b 负控制：伪造令牌不命中且不在白名单（判据有鉴别力）  cjk=None code=None
+[PASS] M6c 白名单每条锚点真在详版（白名单不免检）  1 条锚点全部命中
+[PASS] M7 本轮新增令牌全部在速查本  15 条全部命中
+[PASS] M8 无 BOM / 无 U+FFFD  ok
+[PASS] M9 快照 LF-only（换行口径与仓库一致）  CR 个数 = 0
+【记录 / 非判据】速查本 js_len：9888 → 9841，净增 -47
+[PASS] M10 改动守恒：净增 <= 200 且余量 >= 100  净增 -47（额度 200）  余量 159（下限 100）
+[PASS] M11 速查本 §0~§11 标题全在且严格递增、无粘连  实得 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]；粘连行 无
+[PASS] M12 §7 幽灵线口径已翻转：含「已接线（§63」且**不再含**「暂不接线」  新说法=True 旧说法残留=False
+[PASS] M13 §3 含本轮两条新教训（DPI 感知 / 产物侧看不见）  DPI=True 产物侧=True
+------------------------------------------------------------------------
+合计：PASS=18 FAIL=0
+ALL PASS
