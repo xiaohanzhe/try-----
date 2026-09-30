@@ -1,0 +1,20 @@
+_registry.json 现有 = 70 条
+_personas.json = 76 条
+待登记 = 26 条
+
+=== 素材证据闸（`objects` 必须有据；否则会撞 `verify_npc49` B4）===
+[PASS] ★ 两个作品的素材证据都在盘上（26 个 id 有 objects）
+[PASS] ★ 新记录的键集 ⊆ 既有记录的键集（同构）
+
+合并后 = 96 条，counts = {'main': 78, 'plain': 18}
+
+★ 已写盘 _registry.json（57651 字节）
+
+=== 回读自检 ===
+[PASS] 回读 count=96
+[PASS] counts 与实际分层一致：{'main': 78, 'plain': 18}
+[PASS] ★ 所有 persona 引用都指向真实文件
+[PASS] ★ B4 预检通过：全部 96 条都有原作物件名
+[PASS] ★ `load_registry()` 实测载入 96 条（含 26 位新人）
+[PASS] ★ 26 位新人全部可被产品代码查到
+  产品侧分层：main=78 plain=18

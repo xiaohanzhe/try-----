@@ -177,15 +177,24 @@ check('D6 站位 ∪ 未安置 == 注册表（一个不少一个不多）',
 #    "**Deltarune 侧**未安置的只有 knight" ⇒ 加一个"排除跨作品 id 前缀"的口径，
 #    并补一条 D7b 守"跨作品那批确实都挂在 unplaced、且每条理由非空"。
 #    （`os_` / `ut_` 是本项目的 id 命名规范，`_personas.json.by_work` 里已有体现。）
-_XWORK_PREFIX = ('os_', 'ut_')
+_XWORK_PREFIX = ('os_', 'ut_', 'hy_', 'ot_')
 _unpl_delta = sorted(i for i in _unpl_ids if not i.startswith(_XWORK_PREFIX))
 check('D7 ★ Deltarune 侧未安置的只有 knight（★ 不给他编一个安身之所）',
       _unpl_delta == ['knight'], str(_unpl_delta))
-check('D7b 跨作品 NPC（os_/ut_）如实挂在 unplaced，且每条理由非空',
-      len(_unpl_ids) - len(_unpl_delta) == 35
+# ⚠️ 判据修正记录（第70轮）：本条原先只在 `os_/ut_` 两前缀下、且把条数**写死 35**。
+#    第70轮注册了黄魂 15 + Outertale 11（`hy_`/`ot_`），它们同样是跨作品 NPC；
+#    按既有次序（先素材证据、再注册、再如实挂 unplaced）挂进 `unplaced` 后
+#    跨作品条数 35 → 61。**意图一个字没动**，但"写死 35"这种写法会随事实变化误报
+#    （本项目铁律：判据过窄 = 会误报）⇒ 改成**参数化**：拿注册表里所有跨作品 id
+#    去比 unplaced 里实际挂着的，要求**两者集合相等**（既不许多、也不许少）。
+#    这比原来的算术更严：漏挂任意一条都会报红。
+_XW_IN_UNPL = sorted(i for i in _unpl_ids if i.startswith(_XWORK_PREFIX))
+_XW_IN_REG = sorted(i for i in _reg_ids if i.startswith(_XWORK_PREFIX))
+check('D7b 跨作品 NPC（os_/ut_/hy_/ot_）**全部**如实挂在 unplaced，且每条理由非空',
+      set(_XW_IN_UNPL) == set(_XW_IN_REG)
       and all((RAW['unplaced'].get(i) or '').strip() for i in _unpl_ids),
-      '跨作品 %d 条 / unplaced 共 %d 条'
-      % (len(_unpl_ids) - len(_unpl_delta), len(_unpl_ids)))
+      '跨作品 注册表 %d / unplaced %d / unplaced 共 %d 条'
+      % (len(_XW_IN_REG), len(_XW_IN_UNPL), len(_unpl_ids)))
 
 # 逐条：room_raw 与几何表真实内部名**逐字**一致 + 坐标与巡逻端点落在房间盒内
 _bad_raw, _bad_box, _bad_end = [], [], []

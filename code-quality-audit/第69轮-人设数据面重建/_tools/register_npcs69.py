@@ -1,7 +1,25 @@
 # -*- coding: utf-8 -*-
-"""第69轮 · 注册 26 位新增角色（黄魂 15 + Outertale 11）—— **当前被素材阻塞，故意拒写**。
+"""第69轮 · 注册 26 位新增角色（黄魂 15 + Outertale 11）—— **第70轮已放行**。
 
-★★★ 为什么本轮**不注册**（这是结论，不是漏做）
+★ 第70轮更新（本工具**原样复用**，不另写一套，免得口径分叉）
+----------------------------------------------------------
+第69轮写这个工具时，素材还压在 apk 里 ⇒ 它被做成"**缺证据就拒写**"的闸，实测 `FAIL=2`。
+第70轮把 4 个 apk 与历轮解包产物逐一核验（同源），并产出 `objects` 证据：
+
+    code-quality-audit/第70轮-素材提取与角色注册/_evidence/
+        objects_undertale_yellow.json   (15 条)
+        objects_outertale.json          (11 条)
+    工具：`第70轮-素材提取与角色注册/_tools/extract_assets70.py`（三层锚点 A/B/C 全绿）
+
+⇒ 第70轮用它跑注册：
+    python _tools/register_npcs69.py --write --round 70 --ev <第70轮/_evidence>
+`--round` / `--ev` 是第70轮加的两个**后向兼容**参数（不传 = 行为与第69轮完全一致），
+作用是把**留痕落在真正动手的那一轮**，同时**不覆盖**第69轮那份"被阻塞"的历史证据。
+
+-------------------------------------------------------------------------------
+（以下为第69轮原文，保留作决策留痕）
+
+★★★ 为什么第69轮**不注册**（这是结论，不是漏做）
 ------------------------------------------------
 `npc_system.load_registry()` 是"这个 NPC 在不在世上"的唯一登记处 —— 所以第69轮
 确实**应该**登记这 26 位。但注册表有一条**硬契约**：
@@ -64,6 +82,24 @@ DO_WRITE = '--write' in sys.argv
 FAIL = 0
 LINES = []
 
+#: ★ 第70轮新增（后向兼容）：本工具本来是"缺素材就拒写"的闸；素材（第70轮）到位后
+#: 由那一轮来跑它。为了让 **留痕落在真正动手的那一轮**，加两个可选参数：
+#:   `--round N`  写进 `_registry.json` 的轮次标签从 `round69` 变成 `roundN`；
+#:   `--ev DIR`   证据目录（读 objects 证据 + 写本次日志）指到该轮 `_evidence/`。
+#: 不传时行为与第69轮**完全一致**（标签 69、证据目录 = 本目录 `_evidence`）。
+ROUND_NO = '69'
+if '--round' in sys.argv:
+    try:
+        ROUND_NO = sys.argv[sys.argv.index('--round') + 1]
+    except Exception:                                            # noqa: BLE001
+        pass
+_EV_DEFAULT = os.path.join(ROOT, 'code-quality-audit', '第69轮-人设数据面重建', '_evidence')
+if '--ev' in sys.argv:
+    try:
+        EV = sys.argv[sys.argv.index('--ev') + 1]
+    except Exception:                                            # noqa: BLE001
+        EV = _EV_DEFAULT
+
 
 def w(s=''):
     print(s)
@@ -92,7 +128,9 @@ EXPECT_TOTAL = 96
 
 
 def _dump():
-    out = os.path.join(EV, 'register_npcs69.txt')
+    # 文件名带轮次：第69轮跑 ⇒ `register_npcs69.txt`（与历史一致）；
+    # 第70轮带 `--round 70` 跑 ⇒ `register_npcs70.txt`，**不覆盖**第69轮那份"被阻塞"的证据。
+    out = os.path.join(EV, 'register_npcs%s.txt' % ROUND_NO)
     if not os.path.isdir(EV):
         os.makedirs(EV)
     with io.open(out, 'w', encoding='utf-8', newline='\n') as fh:
@@ -171,8 +209,8 @@ def main():
             ('tier', 'main'), ('chapters', [slug]), ('home_world', 'dark'),
             ('objects', list(objs[i])), ('model', None), ('needs_setting', False),
             ('escape_via_bubble', False),
-            ('notes', '《%s》角色。本次由 `_tools/register_npcs69.py` 登记（第69轮）；'
-                      '`objects` 出自解包产出 `_evidence/objects_%s.json`。' % (r['work'], slug)),
+            ('notes', '《%s》角色。本次由 `_tools/register_npcs69.py` 登记（第%s轮）；'
+                      '`objects` 出自解包产出 `_evidence/objects_%s.json`。' % (r['work'], ROUND_NO, slug)),
             ('persona', 'persona/%s.txt' % i),
         )))
     if blocked:
@@ -208,10 +246,12 @@ def main():
             nxt[k] = v
     nxt.setdefault('npcs', merged)
     nxt.setdefault('counts', counts)
-    nxt['round69'] = {
+    nxt['round%s' % ROUND_NO] = {
         'what': '注册 26 位新增角色（黄魂 15 hy_* + Outertale 11 ot_*）⇒ 70 → %d 条' % EXPECT_TOTAL,
         'why': 'load_registry() 是"这个 NPC 在不在世上"的唯一登记处；只加 persona 文件不登记 ⇒ 场景里不出现。',
-        'objects': '来自解包产出（第66轮 N4 的既有次序：先素材证据、再注册）。',
+        'objects': ('来自解包产出（第66轮 N4 的既有次序：先素材证据、再注册）。'
+                    '第70轮补：`_tools/extract_assets70.py` 产出 objects 证据并上三层锚点，'
+                    '本闸随之放行。'),
         '★ 未落表的用户口径': ('「niko 可自由穿行所有世界，其余 ut 及其同人只能在非暗世界穿梭」'
                         '= **穿行域**，不是 home_world；`NpcDef.__slots__` 固定，塞未知键会被静默忽略 ⇒ '
                         '留给"跨世界机制"轮（先改 NpcDef 再落数据 + 配回归锁位）。'),

@@ -6,7 +6,7 @@
   "plain": "纯 NPC：没有重大帮助对话；用 4~10 句内置对话，不走模型。"
  },
  "counts": {
-  "main": 52,
+  "main": 78,
   "plain": 18
  },
  "npcs": [
@@ -1323,11 +1323,487 @@
    "escape_via_bubble": false,
    "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
    "persona": "persona/ut_gaster.txt"
+  },
+  {
+   "id": "hy_ace",
+   "name": "Ace",
+   "name_cn": "Ace",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_ace_down_walk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_ace.txt"
+  },
+  {
+   "id": "hy_axis",
+   "name": "Axis",
+   "name_cn": "Axis",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_axis_down"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_axis.txt"
+  },
+  {
+   "id": "hy_bowll",
+   "name": "Bowll",
+   "name_cn": "Bowll",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_bowll_body_normal"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_bowll.txt"
+  },
+  {
+   "id": "hy_ceroba_ketsukane",
+   "name": "Ceroba Ketsukane",
+   "name_cn": "Ceroba Ketsukane",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_ceroba_down_walk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_ceroba_ketsukane.txt"
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "name": "Chujin Ketsukane",
+   "name_cn": "Chujin Ketsukane",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_chujin_npc"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_chujin_ketsukane.txt"
+  },
+  {
+   "id": "hy_clover",
+   "name": "Clover",
+   "name_cn": "Clover",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_clover_casual"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_clover.txt"
+  },
+  {
+   "id": "hy_dalv",
+   "name": "Dalv",
+   "name_cn": "Dalv",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "dalv_down"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_dalv.txt"
+  },
+  {
+   "id": "hy_ed",
+   "name": "Ed",
+   "name_cn": "Ed",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_ed_down_walk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_ed.txt"
+  },
+  {
+   "id": "hy_flowey",
+   "name": "Flowey",
+   "name_cn": "Flowey",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_flowey"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_flowey.txt"
+  },
+  {
+   "id": "hy_guardener",
+   "name": "Guardener",
+   "name_cn": "Guardener",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_guardener_body"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_guardener.txt"
+  },
+  {
+   "id": "hy_martlet",
+   "name": "Martlet",
+   "name_cn": "Martlet",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_martlet_down_talk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_martlet.txt"
+  },
+  {
+   "id": "hy_mooch",
+   "name": "Mooch",
+   "name_cn": "Mooch",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_mooch_down_walk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_mooch.txt"
+  },
+  {
+   "id": "hy_moray",
+   "name": "Moray",
+   "name_cn": "Moray",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_moray_down_walk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_moray.txt"
+  },
+  {
+   "id": "hy_sousborg",
+   "name": "Sousborg",
+   "name_cn": "Sousborg",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_sousborg_npc"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_sousborg.txt"
+  },
+  {
+   "id": "hy_starlo",
+   "name": "Starlo",
+   "name_cn": "Starlo",
+   "tier": "main",
+   "chapters": [
+    "undertale_yellow"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_starlo_down_walk"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale Yellow》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_undertale_yellow.json`。",
+   "persona": "persona/hy_starlo.txt"
+  },
+  {
+   "id": "ot_alphys",
+   "name": "Alphys",
+   "name_cn": "Alphys",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocAlphysDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_alphys.txt"
+  },
+  {
+   "id": "ot_asgore",
+   "name": "Asgore",
+   "name_cn": "Asgore",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocAsgoreDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_asgore.txt"
+  },
+  {
+   "id": "ot_asriel_twinkly",
+   "name": "Asriel Dreemurr 与 Twinkly",
+   "name_cn": "Asriel Dreemurr 与 Twinkly",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocAsrielDown",
+    "iocTwinklyMain"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_asriel_twinkly.txt"
+  },
+  {
+   "id": "ot_kidd",
+   "name": "Kidd",
+   "name_cn": "Kidd",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocKiddDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_kidd.txt"
+  },
+  {
+   "id": "ot_mettaton",
+   "name": "Mettaton",
+   "name_cn": "Mettaton",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocMettatonDressIdle"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_mettaton.txt"
+  },
+  {
+   "id": "ot_muffet",
+   "name": "Muffet",
+   "name_cn": "Muffet",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "ionFMuffet"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_muffet.txt"
+  },
+  {
+   "id": "ot_napstablook",
+   "name": "Napstablook",
+   "name_cn": "Napstablook",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocNapstablookBody"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_napstablook.txt"
+  },
+  {
+   "id": "ot_papyrus",
+   "name": "Papyrus",
+   "name_cn": "Papyrus",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocPapyrusDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_papyrus.txt"
+  },
+  {
+   "id": "ot_sans",
+   "name": "Sans",
+   "name_cn": "Sans",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocSansDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_sans.txt"
+  },
+  {
+   "id": "ot_toriel",
+   "name": "Toriel",
+   "name_cn": "Toriel",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocTorielDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_toriel.txt"
+  },
+  {
+   "id": "ot_undyne",
+   "name": "Undyne",
+   "name_cn": "Undyne",
+   "tier": "main",
+   "chapters": [
+    "outertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "iocUndyneDown"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Outertale》角色。本次由 `_tools/register_npcs69.py` 登记（第70轮）；`objects` 出自解包产出 `_evidence/objects_outertale.json`。",
+   "persona": "persona/ot_undyne.txt"
   }
  ],
  "model_policy": {
   "main": null,
   "plain": null,
   "note": "★ 第55轮最终口径：**所有 NPC 都不单独指定模型**（`null` = 跟随 App 配置）。为什么不再建 `ralsei-npc:7b`：① `config.json` 的 `api.model` 本就是 `ralsei:v4` = qwen2.5:7b-instruct-q4_K_M ⇒ **NPC 拿到的已经是 7B**（用户要的\"升级到 7B\"其实已成立；倒是第49轮那个 `ralsei-npc:4b` 从来没被任何代码读过，只是一纸登记）；② 同名不同句柄不会共享实例，再建一个 7B 会让 Ralsei 与 NPC **各常驻一份 ~4.7GB** 权重而收益为零 —— 用户原话「如果这非常吃性能那就慎重」；③ 该字段**已经接线**（`api_client._chat_payload` 收 `model=` 覆盖 / `main._npc_model` 解析），将来真要单独换模型，填成 Ollama 里真实存在的句柄即可，不必改代码；④ 每个 NPC 必须使用**自己独立的记忆文件**（见 `npc_persona.MiniMemory`），绝不许共用一份历史 —— 这与模型是否共用**无关**。"
+ },
+ "round70": {
+  "what": "注册 26 位新增角色（黄魂 15 hy_* + Outertale 11 ot_*）⇒ 70 → 96 条",
+  "why": "load_registry() 是\"这个 NPC 在不在世上\"的唯一登记处；只加 persona 文件不登记 ⇒ 场景里不出现。",
+  "objects": "来自解包产出（第66轮 N4 的既有次序：先素材证据、再注册）。第70轮补：`_tools/extract_assets70.py` 产出 objects 证据并上三层锚点，本闸随之放行。",
+  "★ 未落表的用户口径": "「niko 可自由穿行所有世界，其余 ut 及其同人只能在非暗世界穿梭」= **穿行域**，不是 home_world；`NpcDef.__slots__` 固定，塞未知键会被静默忽略 ⇒ 留给\"跨世界机制\"轮（先改 NpcDef 再落数据 + 配回归锁位）。",
+  "tool": "code-quality-audit/第69轮-人设数据面重建/_tools/register_npcs69.py"
  }
 }

@@ -1,0 +1,224 @@
+{
+ "round": 70,
+ "what": "4 个 apk 同源核验 + 26 位新增角色的 objects 证据",
+ "sources": {
+  "apk": {
+   "undertale": "C:\\Users\\23002\\Downloads\\undertale.apk",
+   "undertale_yellow": "C:\\Users\\23002\\Downloads\\黄魂.apk",
+   "outertale": "C:\\Users\\23002\\Downloads\\outertale.apk",
+   "红与黄": "C:\\Users\\23002\\Downloads\\红与黄.apk"
+  },
+  "ut_dir": "E:\\Download\\_extract61\\_data\\undertale",
+  "hy_dir": "E:\\Download\\_extract61\\_data\\undertale_yellow",
+  "ot_www": "E:\\Download\\_extract61\\outertale\\www",
+  "ry_dir": "E:\\Download\\_extract64\\assets"
+ },
+ "stage0_same_source": {
+  "outertale_apk_www": 3637,
+  "outertale_disk_www": 3637
+ },
+ "stage1_hy": {
+  "count": 15,
+  "objects": {
+   "hy_ace": [
+    "spr_ace_down_walk"
+   ],
+   "hy_axis": [
+    "spr_axis_down"
+   ],
+   "hy_bowll": [
+    "spr_bowll_body_normal"
+   ],
+   "hy_ceroba_ketsukane": [
+    "spr_ceroba_down_walk"
+   ],
+   "hy_chujin_ketsukane": [
+    "spr_chujin_npc"
+   ],
+   "hy_clover": [
+    "spr_clover_casual"
+   ],
+   "hy_dalv": [
+    "dalv_down"
+   ],
+   "hy_ed": [
+    "spr_ed_down_walk"
+   ],
+   "hy_flowey": [
+    "spr_flowey"
+   ],
+   "hy_guardener": [
+    "spr_guardener_body"
+   ],
+   "hy_martlet": [
+    "spr_martlet_down_talk"
+   ],
+   "hy_mooch": [
+    "spr_mooch_down_walk"
+   ],
+   "hy_moray": [
+    "spr_moray_down_walk"
+   ],
+   "hy_sousborg": [
+    "spr_sousborg_npc"
+   ],
+   "hy_starlo": [
+    "spr_starlo_down_walk"
+   ]
+  },
+  "reasons": {
+   "hy_ace": "overworld 下行行走图（本作 overworld 命名 = `spr_<名>_down_walk`）",
+   "hy_axis": "★ 该角色**没有** `_down_walk` ⇒ 取最接近的方向帧 `spr_axis_down`",
+   "hy_bowll": "★ 他是**不移动的狗**（Steamworks 里趴着）⇒ 取本体 `spr_bowll_body_normal`",
+   "hy_ceroba_ketsukane": "overworld 下行行走图",
+   "hy_chujin_ketsukane": "★ 只在回忆/NPC 场合出现 ⇒ 取**显式 NPC 立绘** `spr_chujin_npc`",
+   "hy_clover": "★★ 主角：本作**没有** `spr_clover_down*`（玩家行走图不在这套命名里）⇒ 取唯一站姿 `spr_clover_casual`；对比：红与黄 mod 里才有 UT 式 `spr_clover_d`（见负控制 B1）",
+   "hy_dalv": "★★ 该角色的行走图**不带 `spr_` 前缀**（本作独有写法：`dalv_down`/`dalv_downt`）",
+   "hy_ed": "overworld 下行行走图",
+   "hy_flowey": "★ 本体花 `spr_flowey`（该作 overworld 的那朵花）",
+   "hy_guardener": "★ 植物型 Boss（不动）⇒ 取本体 `spr_guardener_body`",
+   "hy_martlet": "★ 没有 `_down_walk` ⇒ 取下行对话帧 `spr_martlet_down_talk`",
+   "hy_mooch": "overworld 下行行走图",
+   "hy_moray": "overworld 下行行走图",
+   "hy_sousborg": "★ 静止机器 Boss ⇒ 取**显式 NPC 件** `spr_sousborg_npc`",
+   "hy_starlo": "overworld 下行行走图"
+  },
+  "negatives": {
+   "spr_clover_d": "红与黄(UTRY) mod 专有；黄魂本体没有 ⇒ 若命中说明读错了表",
+   "spr_ace_down_ZZZ": "不存在的名字（纯哨兵）"
+  }
+ },
+ "stage2_ot": {
+  "count": 11,
+  "objects": {
+   "ot_alphys": [
+    "iocAlphysDown"
+   ],
+   "ot_asgore": [
+    "iocAsgoreDown"
+   ],
+   "ot_asriel_twinkly": [
+    "iocAsrielDown",
+    "iocTwinklyMain"
+   ],
+   "ot_kidd": [
+    "iocKiddDown"
+   ],
+   "ot_mettaton": [
+    "iocMettatonDressIdle"
+   ],
+   "ot_muffet": [
+    "ionFMuffet"
+   ],
+   "ot_napstablook": [
+    "iocNapstablookBody"
+   ],
+   "ot_papyrus": [
+    "iocPapyrusDown"
+   ],
+   "ot_sans": [
+    "iocSansDown"
+   ],
+   "ot_toriel": [
+    "iocTorielDown"
+   ],
+   "ot_undyne": [
+    "iocUndyneDown"
+   ]
+  },
+  "reasons": {
+   "ot_alphys": "`ioc` = overworld character 家族・下行帧",
+   "ot_asgore": "同上",
+   "ot_asriel_twinkly": "★ 一个 id 覆盖两个身份（Asriel / Twinkly）⇒ 两个资源名都收：`iocAsrielDown`（羊形变身）+ `iocTwinklyMain`（小花本体）",
+   "ot_kidd": "同上",
+   "ot_mettaton": "★ 他**没有** `iocMettatonDown`（本作里多为他「Anchor/姿势」件）⇒ 取站姿 `iocMettatonDressIdle`",
+   "ot_muffet": "★ Muffet 只在 `ionF*`（front 家族）里有整体件 ⇒ `ionFMuffet`",
+   "ot_napstablook": "★ 他**没有**方向帧 ⇒ 取本体 `iocNapstablookBody`",
+   "ot_papyrus": "`ioc` 家族・下行帧",
+   "ot_sans": "`ioc` 家族・下行帧",
+   "ot_toriel": "`ioc` 家族・下行帧",
+   "ot_undyne": "`ioc` 家族・下行帧"
+  },
+  "negatives": {
+   "spr_sans_d": "Undertale(GameMaker) 专有；Outertale 是 Web 打包 ⇒ 若命中说明读错了表",
+   "iocSansDownTalkZZZ": "不存在的名字（纯哨兵）"
+  }
+ },
+ "stage3_ry": {
+  "counts": {
+   "rooms": 358,
+   "sprites": 3616,
+   "objects": 1800,
+   "backgrounds": 73,
+   "sounds": 501,
+   "fonts": 22,
+   "strings": 75035,
+   "code": 8374
+  },
+  "sprite_total": 3616,
+  "probe": {
+   "clover": [
+    "spr_clover_brace",
+    "spr_clover_cheer",
+    "spr_clover_cheer_a",
+    "spr_clover_cheer_ah",
+    "spr_clover_cheer_harder",
+    "spr_clover_d"
+   ],
+   "ceroba": [
+    "spr_ceroba_attack_petal_1",
+    "spr_ceroba_attack_petal_pile",
+    "spr_ceroba_dt",
+    "spr_ceroba_lt",
+    "spr_ceroba_rt",
+    "spr_ceroba_ut"
+   ],
+   "martlet": [
+    "spr_martlet_down",
+    "spr_martlet_dt",
+    "spr_martlet_head_content",
+    "spr_martlet_head_determined",
+    "spr_martlet_head_downer",
+    "spr_martlet_head_happy"
+   ],
+   "dalv": [
+    "spr_credits_dalv_crib",
+    "spr_dalv_dt",
+    "spr_dalv_head_confused",
+    "spr_dalv_head_content",
+    "spr_dalv_head_content_2",
+    "spr_dalv_head_happy"
+   ],
+   "starlo": [],
+   "ed": [
+    "bg_boxbed",
+    "bg_hotelbed",
+    "bg_mebed",
+    "bg_rededge",
+    "bg_rededge_2",
+    "bg_rededge_2_flip"
+   ],
+   "mooch": [
+    "spr_adate_smooch",
+    "spr_adate_smooch_s",
+    "spr_undyneb_smooch",
+    "spr_undyneb_smooch_s"
+   ],
+   "moray": [],
+   "ace": [
+    "bg_cookshowplaceholder",
+    "bg_greyruinsplaceholder",
+    "bg_grillbyplaceholder",
+    "bg_labplaceholder",
+    "bg_labplaceholder2",
+    "bg_ruinsplaceholder"
+   ],
+   "axis": [],
+   "bowll": [],
+   "sousborg": [],
+   "guardener": [],
+   "chujin": []
+  }
+ },
+ "口径": "沿用第66轮 N4：「该作品里标识角色的资源名」；GameMaker 作品取 spr_*，Web 打包取逻辑资源名。"
+}

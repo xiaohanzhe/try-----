@@ -1,0 +1,18 @@
+注册表 96 条 / 站位 34 条 / 未安置 36 条
+
+待补进 unplaced（hy_/ot_）= 26 条
+
+   hy_ace                 :: 《Undertale Yellow》 角色（第70轮注册）：**不属于 Deltarune 的任何房间** ⇒ 没有 `obj_npc_*` 站位脚本，也没有原作坐标可抄 ⇒ 如实挂在"未安置"，不给他编一个安身之所。
+   hy_axis                :: 《Undertale Yellow》 角色（第70轮注册）：**不属于 Deltarune 的任何房间** ⇒ 没有 `obj_npc_*` 站位脚本，也没有原作坐标可抄 ⇒ 如实挂在"未安置"，不给他编一个安身之所。
+   hy_bowll               :: 《Undertale Yellow》 角色（第70轮注册）：**不属于 Deltarune 的任何房间** ⇒ 没有 `obj_npc_*` 站位脚本，也没有原作坐标可抄 ⇒ 如实挂在"未安置"，不给他编一个安身之所。
+   ...（共 26 条）
+
+合并后 unplaced = 62 条（36 + 26）
+counts.unplaced: 36 → 62
+[PASS] D6 预检：站位 ∪ 未安置 == 注册表（96 条）
+[PASS] D7 预检：Deltarune 侧未安置的仍只有 knight（实得 ['knight']）
+[PASS] 理由非空：62 条全部有解释
+
+★ 已写盘 _placement.json（42635 字节）
+[PASS] 回读一致：unplaced=62 counts={'placed': 34, 'unplaced': 62, 'groups': 1, 'bonds': 9, 'by_source': {'original': 17, 'derived': 8, 'authored': 9}, 'desktop_allowed': 4}
+[PASS] 顶层键集未变（12 个）

@@ -1,0 +1,99 @@
+第70轮 · 素材提取与 objects 证据
+证据目录：C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第70轮-素材提取与角色注册\_evidence
+
+==============================================================================
+[STAGE 0] 4 个 apk 与历轮已解包产物的**同源核验**
+==============================================================================
+  UT     zip_size=79628496   disk_size=79628496   crc=0x64671C05 head_same=True
+[PASS] UT：apk 与盘上 game.droid 同源
+  黄魂     zip_size=182498500  disk_size=182498500  crc=0xD12CA368 head_same=True
+[PASS] 黄魂：apk 与盘上 game.droid 同源
+  红与黄    zip_size=134313139  disk_size=134313139  crc=0xC43B94DE head_same=True
+[PASS] 红与黄：apk 与盘上 game.droid 同源
+  outertale  apk_www=3637   disk_www=3637   only_apk=0 only_disk=0
+[PASS] outertale：apk 与盘上 www 文件集完全相等
+
+==============================================================================
+[STAGE 1] 黄魂 objects 证据（15 条）
+==============================================================================
+  ut_sprites.json 名表 = 3814 条
+    A[hy_ace] spr_ace_down_walk          <- overworld 下行行走图（本作 overworld 命名 = `spr_<名>_down_walk`）
+    A[hy_axis] spr_axis_down              <- ★ 该角色**没有** `_down_walk` ⇒ 取最接近的方向帧 `spr_axis_down`
+    A[hy_bowll] spr_bowll_body_normal      <- ★ 他是**不移动的狗**（Steamworks 里趴着）⇒ 取本体 `spr_bowll_body_normal`
+    A[hy_ceroba_ketsukane] spr_ceroba_down_walk       <- overworld 下行行走图
+    A[hy_chujin_ketsukane] spr_chujin_npc             <- ★ 只在回忆/NPC 场合出现 ⇒ 取**显式 NPC 立绘** `spr_chujin_npc`
+    A[hy_clover] spr_clover_casual          <- ★★ 主角：本作**没有** `spr_clover_down*`（玩家行走图不在这套命名里）⇒ 取唯一站姿 `spr_clover_casual`；对比：红与黄 mod 里才有 UT 式 `spr_clover_d`（见负控制 B1）
+    A[hy_dalv] dalv_down                  <- ★★ 该角色的行走图**不带 `spr_` 前缀**（本作独有写法：`dalv_down`/`dalv_downt`）
+    A[hy_ed] spr_ed_down_walk           <- overworld 下行行走图
+    A[hy_flowey] spr_flowey                 <- ★ 本体花 `spr_flowey`（该作 overworld 的那朵花）
+    A[hy_guardener] spr_guardener_body         <- ★ 植物型 Boss（不动）⇒ 取本体 `spr_guardener_body`
+    A[hy_martlet] spr_martlet_down_talk      <- ★ 没有 `_down_walk` ⇒ 取下行对话帧 `spr_martlet_down_talk`
+    A[hy_mooch] spr_mooch_down_walk        <- overworld 下行行走图
+    A[hy_moray] spr_moray_down_walk        <- overworld 下行行走图
+    A[hy_sousborg] spr_sousborg_npc           <- ★ 静止机器 Boss ⇒ 取**显式 NPC 件** `spr_sousborg_npc`
+    A[hy_starlo] spr_starlo_down_walk       <- overworld 下行行走图
+[PASS] A 锚：15 条 × 15 个名字**全部**在黄魂名表里逐字命中
+  --- B 负控制（必须不存在）---
+    B[ok] spr_ace_down_ZZZ       不存在 — 不存在的名字（纯哨兵）
+    B[ok] spr_clover_d           不存在 — 红与黄(UTRY) mod 专有；黄魂本体没有 ⇒ 若命中说明读错了表
+  C1 两表交集占比：|HY∩UT|=12    |HY∪UT|=6706  jaccard=0.0018
+[PASS] C1：黄魂表与 UT 表**不是同一张表**（jaccard=0.0018 < 0.9）
+    C2[ok] 白名单内交集 spr_flowey     — Flowey 在 UT 与 黄魂 **两作都有** ⇒ 同名合理。★ 这同时是第72轮「无身份标识」的一条实证：**只按 sprite 名查角色会撞车**，运行期必须按作品分别解析。
+[PASS] C2：15 条与 UT 表的交集（1 个）**全部在白名单内**
+
+==============================================================================
+[STAGE 2] Outertale objects 证据（11 条）
+==============================================================================
+  outertale63_assets.json 的 named sprite = 1027 条（另有 image-only 760 条）
+  第63轮 anchors：{"url_vars": 4718, "unresolved": 0, "missing_on_disk": 0, "geom_ok": 1026, "geom_bad": 1}
+    A[ot_alphys] iocAlphysDown            <- `ioc` = overworld character 家族・下行帧
+    A[ot_asgore] iocAsgoreDown            <- 同上
+    A[ot_asriel_twinkly] iocAsrielDown            <- ★ 一个 id 覆盖两个身份（Asriel / Twinkly）⇒ 两个资源名都收：`iocAsrielDown`（羊形变身）+ `iocTwinklyMain`（小花本体）
+    A[ot_asriel_twinkly] iocTwinklyMain           <- ★ 一个 id 覆盖两个身份（Asriel / Twinkly）⇒ 两个资源名都收：`iocAsrielDown`（羊形变身）+ `iocTwinklyMain`（小花本体）
+    A[ot_kidd] iocKiddDown              <- 同上
+    A[ot_mettaton] iocMettatonDressIdle     <- ★ 他**没有** `iocMettatonDown`（本作里多为他「Anchor/姿势」件）⇒ 取站姿 `iocMettatonDressIdle`
+    A[ot_muffet] ionFMuffet               <- ★ Muffet 只在 `ionF*`（front 家族）里有整体件 ⇒ `ionFMuffet`
+    A[ot_napstablook] iocNapstablookBody       <- ★ 他**没有**方向帧 ⇒ 取本体 `iocNapstablookBody`
+    A[ot_papyrus] iocPapyrusDown           <- `ioc` 家族・下行帧
+    A[ot_sans] iocSansDown              <- `ioc` 家族・下行帧
+    A[ot_toriel] iocTorielDown            <- `ioc` 家族・下行帧
+    A[ot_undyne] iocUndyneDown            <- `ioc` 家族・下行帧
+[PASS] A 锚：11 条 × 12 个名字**全部**在 Outertale 名表里逐字命中
+  --- B 负控制（必须不存在）---
+    B[ok] iocSansDownTalkZZZ     不存在 — 不存在的名字（纯哨兵）
+    B[ok] spr_sans_d             不存在 — Undertale(GameMaker) 专有；Outertale 是 Web 打包 ⇒ 若命中说明读错了表
+[PASS] C 互斥：11 条里没有一个名字出现在 UT / 黄魂 的名称表里
+
+==============================================================================
+[STAGE 3] 红与黄(UTRY) 只读勘查 —— 本轮**不注册**（它不是独立世界观）
+==============================================================================
+  counts = {"rooms": 358, "sprites": 3616, "objects": 1800, "backgrounds": 73, "sounds": 501, "fonts": 22, "strings": 75035, "code": 8374}
+  sprite 名 3616 条
+    clover      n=80   ['spr_clover_brace', 'spr_clover_cheer', 'spr_clover_cheer_a', 'spr_clover_cheer_ah']
+    ceroba      n=13   ['spr_ceroba_attack_petal_1', 'spr_ceroba_attack_petal_pile', 'spr_ceroba_dt', 'spr_ceroba_lt']
+    martlet     n=16   ['spr_martlet_down', 'spr_martlet_dt', 'spr_martlet_head_content', 'spr_martlet_head_determined']
+    dalv        n=12   ['spr_credits_dalv_crib', 'spr_dalv_dt', 'spr_dalv_head_confused', 'spr_dalv_head_content']
+    starlo      n=0    []
+    ed          n=168  ['bg_boxbed', 'bg_hotelbed', 'bg_mebed', 'bg_rededge']
+    mooch       n=4    ['spr_adate_smooch', 'spr_adate_smooch_s', 'spr_undyneb_smooch', 'spr_undyneb_smooch_s']
+    moray       n=0    []
+    ace         n=212  ['bg_cookshowplaceholder', 'bg_greyruinsplaceholder', 'bg_grillbyplaceholder', 'bg_labplaceholder']
+    axis        n=0    []
+    bowll       n=0    []
+    sousborg    n=0    []
+    guardener   n=0    []
+    chujin      n=0    []
+  ★ 说明：红与黄 = **_extract64 已证**的 "Undertale 本体 + mod"（同命名空间），
+    它的房间表 = 358（原版 338 + 追加 20），已在第65轮并入正典大图。
+    ⇒ 它不是"第 5 个世界观"，不产生新 NPC；此处只留名表证据供后续取贴图用。
+
+==============================================================================
+[产物]
+==============================================================================
+  objects_undertale_yellow.json = 15 条
+  objects_outertale.json        = 11 条
+  合计 = 26 条（= 第69轮待登记数 26）
+[PASS] 产出条数 = 26，与第69轮 `register_npcs69.py` 的 EXPECT_NEW 一致
+[PASS] 已写 objects_undertale_yellow.json（15 条 / 639 字节）并回读一致
+[PASS] 已写 objects_outertale.json（11 条 / 458 字节）并回读一致
+  已写 assets70.json（6237 字节）
