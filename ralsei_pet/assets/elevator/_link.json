@@ -1,0 +1,180 @@
+{
+ "schema_version": 1,
+ "round": 71,
+ "kind": "cross_work_link",
+ "id": "ut-ot-elevator",
+ "user_words": "outertale 和 ut 联通是通过在 ut 第一个 room 里放一个电梯（具体就是素材图里的）然后你也知道 outertale 是设计在宇宙上的，所以那个电梯要很高，当然，外面设计一下就好，内部动画你也知道如何处理吧，就时间长一点就好",
+ "why": "Outertale 与 UT 的**唯一通道**：在 UT 的第一间房立一部电梯，升到宇宙。本文件 = 这条通道的规格（落点/几何/外景/内部动画），零件见 _source.json。",
+ "endpoints": {
+  "lower": {
+   "work": "ut",
+   "title": "Undertale",
+   "room_index": 4,
+   "room_resource": "room_area1",
+   "room_size": [
+    680,
+    260
+   ],
+   "role": "电梯井底部（地面侧，玩家站在这里按面板）",
+   "status": "evidenced",
+   "evidence": [
+    "assets/elevator/_source.json#site",
+    "code-quality-audit/第66轮-大图连通与mod并入/_evidence/bigmap66.json#/nodes/ut:4"
+   ],
+   "cross_check": {
+    "bigmap66_node": "ut:4",
+    "name": "room_area1",
+    "size": [
+     680,
+     260
+    ]
+   }
+  },
+  "upper": {
+   "work": "ot",
+   "title": "Outertale",
+   "room_index": null,
+   "room_resource": null,
+   "role": "电梯顶端 = 宇宙（Outertale 设定在宇宙上）",
+   "status": "pending_room_table",
+   "pending_why": "Outertale 的房间表还没并进跨作品大图 —— bigmap66 的世界枢纽只有 hub:ut / hub:uty（外加 hub:desktop），**没有 hub:ot**。所以上端本轮只能先记到\"世界级\"落点，等房间表并入后再细到具体房间。",
+   "provisional_node": "hub:ot",
+   "why_provisional_is_ok": "电梯的\"上面\"本来就还没建（宇宙侧的场景面是后续轮次的活）；写 hub:ot 是**如实标注缺口**，不是拿假房间号充数。"
+  }
+ },
+ "shaft": {
+  "why_high": "Outertale 设在宇宙上 ⇒ 电梯要跨\"地表 → 宇宙\"，不是楼内两层高。",
+  "unit": "px",
+  "screen_px": 240.0,
+  "screen_note": "换算基准 = UT 内部分辨率 320x240 的**屏高**；Deltarune 用的是 640x480，跨作品比高度一律以 UT 这侧为准。",
+  "speed_px_per_s": 60.0,
+  "ascend_s": 72.0,
+  "height_px": 4320.0,
+  "screens": 18.0,
+  "min_screens_for_high": 12.0,
+  "self_consistency": "speed_px_per_s * ascend_s == height_px；screens == height_px / screen_px —— 三个数互为校验，改一个不同步会被 check71 的 G4/G5 抓住。",
+  "why_this_speed": "用户只说\"很高\"\"时间长一点\"，没给数字 ⇒ 我把它定义成「匀速上升 60 px/s 跑 72 s」，时长与井道高同时满足。"
+ },
+ "exterior": {
+  "why": "用户口径：「外面设计一下就好」⇒ 外面**只做到\"看得出是部电梯\"**即可，不做精细建筑。",
+  "parts": [
+   "bg_elevbottom",
+   "bg_elevleg",
+   "bg_elevarmL",
+   "bg_elevarmR",
+   "bg_elevunit",
+   "bg_elevtop"
+  ],
+  "assembly": "vertical_stack",
+  "assembly_order": [
+   "bg_elevbottom",
+   "bg_elevleg",
+   "bg_elevunit",
+   "bg_elevarmL",
+   "bg_elevarmR",
+   "bg_elevtop"
+  ],
+  "align": "center_bottom",
+  "derived_by": "本项目设计（用户授权「外面设计一下就好」）；**不是**原作装配 —— 原作只给了这 6 张零件图，没给坐标。"
+ },
+ "interior": {
+  "why": "用户口径：「内部动画你也知道如何处理吧，就时间长一点就好」",
+  "cabin_parts": [
+   "spr_elevatordoor",
+   "spr_elevatordoorframe",
+   "spr_elevatordoor_vines",
+   "spr_elevatorpanel",
+   "spr_elevatorgem_l",
+   "spr_elevatorgem_r"
+  ],
+  "shaft_parts": [
+   "bg_elevbelow",
+   "spr_darkelevator_l",
+   "spr_darkelevator_r"
+  ],
+  "animation": {
+   "loop": false,
+   "total_ms": 74800,
+   "phases": [
+    {
+     "id": "door_close",
+     "ms": 800,
+     "what": "轿厢门合上",
+     "parts": [
+      "spr_elevatordoorframe"
+     ]
+    },
+    {
+     "id": "ascend",
+     "ms": 72000,
+     "what": "匀速上升 —— 井道背景循环滚动（bg_elevbelow 平铺），两侧指示灯跑帧",
+     "parts": [
+      "bg_elevbelow",
+      "spr_elevatorgem_l",
+      "spr_elevatorgem_r",
+      "spr_darkelevator_l",
+      "spr_darkelevator_r"
+     ]
+    },
+    {
+     "id": "arrive",
+     "ms": 1200,
+     "what": "到顶：外景（宇宙）淡入",
+     "parts": [
+      "bg_elevtop"
+     ]
+    },
+    {
+     "id": "door_open",
+     "ms": 800,
+     "what": "轿厢门打开",
+     "parts": [
+      "spr_elevatordoorframe"
+     ]
+    }
+   ],
+   "frame_source": "spr_elevatorgem_l/r 各 6 帧（指示灯跑动）；spr_elevatordoorframe 2 帧（开/合）；bg_elevbelow 平铺滚动表示\"上升中\"。",
+   "why_long": "电梯要爬 18 屏（4320 px），按 60 px/s 得 72 s —— 「时间长一点」是**几何的结果**，不是随意拉长的过场。"
+  }
+ },
+ "parts_ref": "assets/elevator/_source.json",
+ "parts_cover": {
+  "exterior": [
+   "bg_elevbottom",
+   "bg_elevleg",
+   "bg_elevarmL",
+   "bg_elevarmR",
+   "bg_elevunit",
+   "bg_elevtop"
+  ],
+  "cabin": [
+   "spr_elevatordoor",
+   "spr_elevatordoorframe",
+   "spr_elevatordoor_vines",
+   "spr_elevatorpanel",
+   "spr_elevatorgem_l",
+   "spr_elevatorgem_r"
+  ],
+  "shaft": [
+   "bg_elevbelow",
+   "spr_darkelevator_l",
+   "spr_darkelevator_r"
+  ],
+  "count": 15
+ },
+ "wiring": {
+  "status": "spec_only",
+  "not_yet": [
+   "ut 侧房间还没作为场景登记进 assets/scenes/_index.json（该索引目前只有 desktop + ch1~ch5）",
+   "Outertale 房间表未并入 ⇒ 上端只能停在 hub:ot",
+   "跨作品大图仍在 code-quality-audit/第66轮…/_evidence/bigmap66.json，产品侧寻路图 _room_graph.json 只有 Deltarune 五章",
+   "跨世界穿行规则（谁能走暗世界）属轮次 72，本轮不碰"
+  ],
+  "how_to_consume": "后续轮次把本条 link 作为「跨作品边」的证据源：lower 端 = ut:4，upper 端 = hub:ot，载体 = 电梯动画。",
+  "honesty_note": "写 spec_only 是刻意的 —— 本项目最贵的坑就是「函数写对了 ≠ 产品用上了」。"
+ },
+ "evidence": [
+  "code-quality-audit/第71轮-电梯与跨作品贴图/_evidence/fetch71_ut.json",
+  "code-quality-audit/第71轮-电梯与跨作品贴图/_evidence/fetch71_plan.json"
+ ]
+}

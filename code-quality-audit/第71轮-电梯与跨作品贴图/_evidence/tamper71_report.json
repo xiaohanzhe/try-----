@@ -1,0 +1,49 @@
+{
+ "round": 71,
+ "target": "ralsei_pet/assets/elevator/_link.json",
+ "why": "鉴别力体检必须改文件（内存负控制只证明\"函数写对了\"）",
+ "cases": [
+  {
+   "tag": "T1",
+   "tamper": "height_px +1（几何不再自洽）",
+   "expect": "G4",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] G4 井道几何自洽：速度 × 时长 == 高度，屏数 == 高度 / 屏高 60.0 px/s × 72.0 s = 4321.0 px；4321.0 / 240.0 = 18.0 屏"
+  },
+  {
+   "tag": "T2",
+   "tamper": "room_resource 改一字（与 _source.json / bigmap66 都对不上）",
+   "expect": "G2",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] G2 下端落点与零件表 _source.json#site 完全一致（两处不许各说各话） 4:room_area1_X71 [680, 260]"
+  },
+  {
+   "tag": "T3",
+   "tamper": "parts_cover 删一件（15 件不再全覆盖）",
+   "expect": "G6",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] G6 15 个零件内外分工恰好全覆盖（无重复 / 无凭空 / 无遗漏） 外景 6 + 轿厢 5 + 井道 3 = 14（真源 15）"
+  },
+  {
+   "tag": "T4",
+   "tamper": "wiring.status 改成 wired（谎称已接线）",
+   "expect": "G8",
+   "rc": 1,
+   "detected": true,
+   "fail_line": "[FAIL] G8 接线状态如实写 spec_only，且 not_yet 非空（不许谎称\"电梯已经能坐了\"） status='wired'；not_yet 4 条"
+  }
+ ],
+ "baseline": {
+  "rc": 0,
+  "fails": []
+ },
+ "after_restore": {
+  "rc": 0,
+  "fails": [],
+  "file_identical": true
+ },
+ "verdict": "ALL_DETECTED"
+}

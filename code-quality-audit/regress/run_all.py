@@ -1320,6 +1320,12 @@ SUITES = [
     # ★★ 本锁最值钱的一条：**D2b/D2c** —— 钉住"size 字段必须是 PNG 实际像素，
     #   不能拿 GameMaker 的 Width/Height 顶替"。本轮第一版就是这么写错的
     #   （bg_elevarmL 声明 68x41，实际 62x39），UT 侧 83%、黄魂侧 75% 的帧都不等。
+    # ★ 数据面（G 段）：本轮后半把电梯从"素材"推到"规格" —— `assets/elevator/_link.json`
+    #   写清**落点 / 井道几何（很高）/ 外景装配 / 内部动画（时间长）**四件事，
+    #   并**如实标 `spec_only`**（产品侧跨作品场景面还没建：`_index.json` 只有
+    #   desktop + ch1~ch5，寻路图也只有这五章）⇒ 谁谎称"已接线"，G8 必须报红。
+    #   鉴别力体检走 `_tools/tamper71.py`（**真改文件**，四种破坏逐条验证会报红，
+    #   报告落 `_evidence/tamper71_report.json`）—— 光有内存负控制只证明"函数写对了"。
     {
         'id': 'check71',
         'script': os.path.join(ROOT, 'code-quality-audit', '第71轮-电梯与跨作品贴图',
@@ -1335,6 +1341,11 @@ SUITES = [
                 '确实存在"两者不等"的零件以证明该区分非空谈 · 跨作品 png_sizes 逐张一致） / '
                 'E 计划与数据面契约（plan 集合 == 注册表推出的集合 · 声明名全在源清单 · '
                 '每条兄弟帧都记了规则） / '
+                'G 电梯**数据面**（落点三处一致 _source/bigmap66 · 井道三数自洽 '
+                'speed×ascend==height 且 screens==height/screen_px · ★「很高」过量化下限 · '
+                '★4 条负控制证明几何内核有鉴别力 · 15 零件内外分工恰好全覆盖 · '
+                '动画四拍之和 == total 且"上升"拍 == 几何时长 · '
+                '★诚实判据：wiring 只许 spec_only 且必须列 not_yet） / '
                 'F 判据自身体检（四作目录非空 · 判据条数经记账 · 判据名无计数标记字样）',
     },
 ]
