@@ -240,8 +240,18 @@ check('P11 正文里带"本项目补充"尾注（且明确标注不是原作者�
 # ================================================================== R 注册表
 print('== R 注册表 ==')
 reg = S.load_registry()
-check('R1 注册表 35 条（main 17 / plain 18）',
-      len(reg) == 35 and len(reg.main_npcs()) == 17 and len(reg.plain_npcs()) == 18,
+# ⚠️ 判据修正记录（第66轮）：本条原先写死 `== 35 and main == 17 and plain == 18`。
+#    第66轮 N4 把 OneShot 21 + Undertale 14 共 35 条**跨作品 NPC** 注册进表
+#    ⇒ 数字变成 70 / 52 / 18。"数字本身"从来不是要守的东西；要守的是
+#    ① **不许被意外削掉**（下限：总 ≥ 35、main ≥ 17、plain ≥ 15）；
+#    ② 「main + plain == 总数」（分层不许丢人）；
+#    ③ 「id 唯一」（**加条目时加重复了**的照妖镜 —— 这条是本次新增的，比原来更强）。
+#    与 R6/R8 的第64轮修正记录同一套做法：判据形状改，事实锚点随事实走。
+check('R1 注册表 ≥ 基线 35 条（分层守恒 + id 唯一；不写死条数）',
+      len(reg) >= 35
+      and len(reg.main_npcs()) >= 17 and len(reg.plain_npcs()) >= 15
+      and len(reg.main_npcs()) + len(reg.plain_npcs()) == len(reg)
+      and len(set(reg.ids())) == len(reg),
       '%d / %d / %d' % (len(reg), len(reg.main_npcs()), len(reg.plain_npcs())))
 check('R2 修掉的命名：有 flowery、没有 flowey',
       reg.get('flowery') is not None and reg.get('flowey') is None)
@@ -552,8 +562,8 @@ for _a in ('animation_timer', 'ai_timer', 'stats_timer', 'dialogue_init_timer',
     except Exception:
         pass
 
-check('W11 真机：NPC 服务建起来了（注册表 35 / 人设数 == 索引登记数 / 别名表非空）',
-      pet.npc_registry is not None and len(pet.npc_registry) == 35
+check('W11 真机：NPC 服务建起来了（注册表 ≥ 基线 35 / 人设数 == 索引登记数 / 别名表非空）',
+      pet.npc_registry is not None and len(pet.npc_registry) >= 35
       and len(pet.npc_personas) == len(recs) and len(pet._npc_aliases) > 0,
       '人设 %d 份（索引登记 %d），别名 %d 条'
       % (len(pet.npc_personas), len(recs), len(pet._npc_aliases)))

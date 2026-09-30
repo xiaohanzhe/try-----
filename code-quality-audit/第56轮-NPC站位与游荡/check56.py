@@ -166,12 +166,26 @@ _reg = S.load_registry(PET)
 _reg_ids = set(_reg.ids())
 _pl_ids = set(x['id'] for x in RAW['placement'])
 _unpl_ids = set(RAW['unplaced'].keys())
-check('D6 站位 ∪ 未安置 == 注册表（35 个，一个不少一个不多）',
+check('D6 站位 ∪ 未安置 == 注册表（一个不少一个不多）',
       _pl_ids | _unpl_ids == _reg_ids,
       '缺=%s 多=%s' % (sorted(_reg_ids - _pl_ids - _unpl_ids),
                       sorted((_pl_ids | _unpl_ids) - _reg_ids)))
-check('D7 未安置的只有 knight（★ 不给他编一个安身之所）',
-      _unpl_ids == {'knight'}, str(sorted(_unpl_ids)))
+# ⚠️ 判据修正记录（第66轮）：本条原先写死 `_unpl_ids == {'knight'}`。
+#    第66轮 N4 把 OneShot 21 + Undertale 14 条跨作品 NPC 注册进表，它们
+#    **不属于 Deltarune 的任何房间**（没有 `obj_npc_*` 站位脚本、没有原作坐标）
+#    ⇒ 如实挂进 unplaced，名单从 1 条变 36 条。**意图一个字没动**：
+#    "**Deltarune 侧**未安置的只有 knight" ⇒ 加一个"排除跨作品 id 前缀"的口径，
+#    并补一条 D7b 守"跨作品那批确实都挂在 unplaced、且每条理由非空"。
+#    （`os_` / `ut_` 是本项目的 id 命名规范，`_personas.json.by_work` 里已有体现。）
+_XWORK_PREFIX = ('os_', 'ut_')
+_unpl_delta = sorted(i for i in _unpl_ids if not i.startswith(_XWORK_PREFIX))
+check('D7 ★ Deltarune 侧未安置的只有 knight（★ 不给他编一个安身之所）',
+      _unpl_delta == ['knight'], str(_unpl_delta))
+check('D7b 跨作品 NPC（os_/ut_）如实挂在 unplaced，且每条理由非空',
+      len(_unpl_ids) - len(_unpl_delta) == 35
+      and all((RAW['unplaced'].get(i) or '').strip() for i in _unpl_ids),
+      '跨作品 %d 条 / unplaced 共 %d 条'
+      % (len(_unpl_ids) - len(_unpl_delta), len(_unpl_ids)))
 
 # 逐条：room_raw 与几何表真实内部名**逐字**一致 + 坐标与巡逻端点落在房间盒内
 _bad_raw, _bad_box, _bad_end = [], [], []

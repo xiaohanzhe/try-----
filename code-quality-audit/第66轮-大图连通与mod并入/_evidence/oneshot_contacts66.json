@@ -1,0 +1,515 @@
+{
+ "source": "C:/Users/23002/Desktop/项目文件夹/niko的秘密/OneShot.World.Machine.Edition.Build.16512634/gamedata/twm/contacts_metadata.json",
+ "source_bytes": 26038,
+ "n_profiles": 26,
+ "n_unique_unlock": 26,
+ "region_counts": {
+  "Barrens": 4,
+  "Glen": 6,
+  "Refuge": 13,
+  "???": 3
+ },
+ "profiles": [
+  {
+   "unlockId": "prophetbot",
+   "title": "ProphetBot",
+   "subtitle": "Met: Barrens",
+   "region": "Barrens",
+   "walkspriteId": "blue_npc_prophet",
+   "uxColorTheme": "teal",
+   "facepics": [
+    "prophet",
+    "prophet_hmm",
+    "prophet_omg",
+    "prophet_sigh"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "silver",
+   "title": "Silver",
+   "subtitle": "Met: Barrens",
+   "region": "Barrens",
+   "walkspriteId": "blue_npc_silver",
+   "uxColorTheme": "teal",
+   "facepics": [
+    "silver",
+    "silver2",
+    "silver_eyeclosed",
+    "silver_worry"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "rowbot",
+   "title": "Rowbot",
+   "subtitle": "Met: Barrens",
+   "region": "Barrens",
+   "walkspriteId": "contacts_rowbot",
+   "uxColorTheme": "teal",
+   "facepics": [
+    "rowbot",
+    "rowbot_off"
+   ],
+   "singleSprite": "true",
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "calamus",
+   "title": "Calamus",
+   "subtitle": "Met: Glen",
+   "region": "Glen",
+   "walkspriteId": "green_npc_calamus",
+   "uxColorTheme": "white",
+   "facepics": [
+    "calamus",
+    "calamus_heh",
+    "calamus_sad",
+    "calamus_shame",
+    "calamus_shock",
+    "calamus_smile",
+    "calamus_smile2",
+    "calamus_speak",
+    "calamus_unknown"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "alula",
+   "title": "Alula",
+   "subtitle": "Met: Glen",
+   "region": "Glen",
+   "walkspriteId": "green_npc_alula",
+   "uxColorTheme": "white",
+   "facepics": [
+    "alula",
+    "alula_gasp",
+    "alula_gasp2",
+    "alula_oh",
+    "alula_pout",
+    "alula_speak"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "maize",
+   "title": "Maize",
+   "subtitle": "Met: Glen",
+   "region": "Glen",
+   "walkspriteId": "contacts_maize",
+   "uxColorTheme": "teal",
+   "facepics": [
+    "maize",
+    "maize_smile1",
+    "maize_smile2"
+   ],
+   "singleSprite": "true",
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "magpie",
+   "title": "Magpie",
+   "subtitle": "Met: Glen",
+   "region": "Glen",
+   "walkspriteId": "green_npc_magpie",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "magpie",
+    "magpie_hm",
+    "magpie_oh",
+    "magpie_smile"
+   ],
+   "singleSprite": null,
+   "walkAnimation": "false"
+  },
+  {
+   "unlockId": "shepherd",
+   "title": "Shepherd",
+   "subtitle": "Met: Glen",
+   "region": "Glen",
+   "walkspriteId": "contacts_shepherd",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "shepherd"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "lamplighter",
+   "title": "Lamplighter",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_lamplighter",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "plight",
+    "plight_2",
+    "plight_2b",
+    "plight_scared",
+    "plight_shock",
+    "plight_sigh",
+    "plight_unknown",
+    "plight_why",
+    "plight_worry",
+    "plight_worry2",
+    "plight_wtf",
+    "plight3"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "watcher",
+   "title": "Watcher",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "contacts_watcher",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "watcher"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "ling",
+   "title": "Ling",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "contacts_ling",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "ling",
+    "ling_hm",
+    "ling_hm2",
+    "ling_oh",
+    "ling_shock",
+    "ling_sigh",
+    "ling_smile",
+    "ling2",
+    "ling3"
+   ],
+   "singleSprite": "true",
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "mason",
+   "title": "Mason",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "contacts_mason",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "mason"
+   ],
+   "singleSprite": null,
+   "walkAnimation": "false"
+  },
+  {
+   "unlockId": "kelvin",
+   "title": "Kelvin",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "contacts_kelvin",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "kelvin"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "kip",
+   "title": "Kip",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_kip",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "kip",
+    "kip_heh",
+    "kip_huh",
+    "kip_pout",
+    "kip_sad",
+    "kip_sigh",
+    "kip_wink",
+    "kip_worry",
+    "kip2"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "george1",
+   "title": "George",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_npc_george1",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "george1",
+    "george1_hm",
+    "george1_smile",
+    "george1_smug"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "george2",
+   "title": "George",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_npc_george2",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "george2",
+    "george2_grr",
+    "george2_no",
+    "george2_sigh",
+    "george2_stress"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "george3",
+   "title": "George",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_npc_george3",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "george3",
+    "george3_cry",
+    "george3_sad",
+    "george3_sigh",
+    "george3_worry"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "george4",
+   "title": "George",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_npc_george4",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "george4",
+    "george4_golly",
+    "george4_omg",
+    "george4_oops",
+    "george4_smile"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "george5",
+   "title": "George",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_npc_george5",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "george5",
+    "george5_aww",
+    "george5_heh",
+    "george5_hmm",
+    "george5_sad",
+    "george5_sigh",
+    "george5_smile"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "george6",
+   "title": "George",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_npc_george6",
+   "uxColorTheme": "pink",
+   "facepics": [
+    "george6",
+    "george6_fingerguns",
+    "george6_point",
+    "george6_shrug",
+    "george6_smile"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "prototype",
+   "title": "Prototype",
+   "subtitle": "Met: Barrens",
+   "region": "Barrens",
+   "walkspriteId": "blue_npc_prototype",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "proto1",
+    "proto1b",
+    "proto1c",
+    "proto2",
+    "proto2b",
+    "proto_disk",
+    "proto_eyeclosed",
+    "proto_gasp1",
+    "proto_gasp2",
+    "proto_jealous"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "cedric",
+   "title": "Cedric",
+   "subtitle": "Met: Glen",
+   "region": "Glen",
+   "walkspriteId": "green_npc_cedric",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "cedric",
+    "cedric_eek",
+    "cedric_hmm",
+    "cedric_sigh",
+    "cedric_sigh2",
+    "cedric_smile",
+    "cedric_talk",
+    "cedric_upset",
+    "cedric2",
+    "cedric3",
+    "cedric4"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "rue",
+   "title": "Rue",
+   "subtitle": "Met: Refuge",
+   "region": "Refuge",
+   "walkspriteId": "red_rue",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "rue",
+    "rue_dark",
+    "rue_oh",
+    "rue_sad",
+    "rue_sigh",
+    "rue_smile",
+    "rue_talk"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "world_machine",
+   "title": "The World Machine",
+   "subtitle": "Met: ???",
+   "region": "???",
+   "walkspriteId": "en",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "en",
+    "en2",
+    "en3",
+    "en4",
+    "en5",
+    "en6",
+    "en_83c",
+    "en_cry",
+    "en_distressed",
+    "en_distressed2",
+    "en_distressed_meow",
+    "en_distressed_talk",
+    "en_eyeclosed",
+    "en_eyeclosed2",
+    "en_gasmask",
+    "en_huh",
+    "en_less_sad",
+    "en_pancakes",
+    "en_sad",
+    "en_shock",
+    "en_smile",
+    "en_speak",
+    "en_surprised",
+    "en_upset",
+    "en_upset2",
+    "en_upset_meow",
+    "en_what",
+    "en_what2",
+    "en_wtf",
+    "en_wtf2",
+    "en_yawn"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  },
+  {
+   "unlockId": "author",
+   "title": "The Author",
+   "subtitle": "Met: ???",
+   "region": "???",
+   "walkspriteId": "clovers",
+   "uxColorTheme": "purple",
+   "facepics": [
+    "blank"
+   ],
+   "singleSprite": null,
+   "walkAnimation": "false"
+  },
+  {
+   "unlockId": "niko",
+   "title": "Niko",
+   "subtitle": "Met: ???",
+   "region": "???",
+   "walkspriteId": "niko",
+   "uxColorTheme": "blue",
+   "facepics": [
+    "niko",
+    "niko2",
+    "niko3",
+    "niko4",
+    "niko5",
+    "niko6",
+    "niko_83c",
+    "niko_cry",
+    "niko_distressed",
+    "niko_distressed2",
+    "niko_distressed_meow",
+    "niko_distressed_talk",
+    "niko_eyeclosed",
+    "niko_eyeclosed2",
+    "niko_gasmask",
+    "niko_huh",
+    "niko_less_sad",
+    "niko_pancakes",
+    "niko_sad",
+    "niko_shock",
+    "niko_smile",
+    "niko_speak",
+    "niko_surprised",
+    "niko_upset",
+    "niko_upset2",
+    "niko_upset_meow",
+    "niko_what",
+    "niko_what2",
+    "niko_wtf",
+    "niko_wtf2",
+    "niko_yawn"
+   ],
+   "singleSprite": null,
+   "walkAnimation": null
+  }
+ ],
+ "note": "权威来源 = 用户给定的 OneShot: World Machine Edition 官方 contacts 数据；`george1..6` 是同一角色 George 的 6 个变体 ⇒ 唯一角色 21 个。`walkspriteId` 即 OneShot 原作里这个角色的 sprite 标识。"
+}

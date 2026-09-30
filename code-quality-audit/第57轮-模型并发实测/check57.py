@@ -95,7 +95,11 @@ check('A4  timeout >= 60s（★冷 prefill 70~110s ⇒ 老默认 30s 会把正�
 _reg = read_json(os.path.join(NPC_DIR, '_registry.json'), {})
 _npcs = _reg.get('npcs') or []
 _pol = _reg.get('model_policy') or {}
-check('A5  注册表 35 条 NPC 的 model 字段**全为 None**（= 跟随 App 配置，不各自常驻）',
+# ⚠️ 判据修正记录（第66轮）：判据名原先写死"注册表 35 条"（第55/62轮时的真实条数）。
+#    第66轮 N4 注册了 35 条跨作品 NPC ⇒ 实际 70 条，**判据名与事实脱节**正是本项目
+#    的头号坑（判据名还写着"35 条"，实测 n=70 却照样 PASS —— 见 §60.3）。
+#    判据体本来就只锁下限 ⇒ 把名字里的条数拿掉，改成"**每条**"。
+check('A5  注册表**每条** NPC 的 model 字段全为 None（= 跟随 App 配置，不各自常驻）',
       len(_npcs) >= 30 and all(n.get('model') is None for n in _npcs),
       'n=%d 非 None 的=%r' % (len(_npcs),
                              [n.get('id') for n in _npcs if n.get('model') is not None]))

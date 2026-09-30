@@ -1,0 +1,463 @@
+{
+ "source": "C:/Users/23002/Desktop/项目文件夹/UT素材",
+ "n_png_bases": 2213,
+ "roles": {
+  "ut_toriel": {
+   "key": "toriel",
+   "objects": [
+    "spr_toriel_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_toriel_d"
+    ],
+    "l": [
+     "spr_toriel_l"
+    ],
+    "r": [
+     "spr_toriel_r"
+    ],
+    "u": [
+     "spr_toriel_u"
+    ]
+   },
+   "n_hits": 85,
+   "top_hits": [
+    "spr_toriel_d",
+    "spr_toriel_l",
+    "spr_toriel_r",
+    "spr_toriel_u",
+    "spr_toriel_dt",
+    "spr_toriel_lt",
+    "spr_toriel_rt",
+    "spr_toriel_ut"
+   ],
+   "evidence": [
+    "人物素材/Toriel/Overworld/spr_toriel_d_0.png",
+    "人物素材/Toriel/Overworld/spr_toriel_l_0.png",
+    "人物素材/Toriel/Overworld/spr_toriel_r_0.png"
+   ]
+  },
+  "ut_sans": {
+   "key": "sans",
+   "objects": [
+    "spr_sans_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_sans_d"
+    ],
+    "l": [
+     "spr_sans_l"
+    ],
+    "r": [
+     "spr_sans_r"
+    ],
+    "u": [
+     "spr_sans_u"
+    ]
+   },
+   "n_hits": 57,
+   "top_hits": [
+    "spr_sans_d",
+    "spr_sans_l",
+    "spr_sans_r",
+    "spr_sans_u",
+    "spr_sans_dt",
+    "spr_sansdoor",
+    "spr_sanswrap",
+    "spr_snowsans"
+   ],
+   "evidence": [
+    "人物素材/sans/Overworld/spr_sans_d_0.png",
+    "人物素材/sans/Overworld/spr_sans_l_0.png",
+    "人物素材/sans/Overworld/spr_sans_r_0.png"
+   ]
+  },
+  "ut_papyrus": {
+   "key": "papyrus",
+   "objects": [
+    "spr_papyrus_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_papyrus_d"
+    ],
+    "l": [
+     "spr_papyrus_l"
+    ],
+    "r": [
+     "spr_papyrus_r"
+    ],
+    "u": [
+     "spr_papyrus_u"
+    ]
+   },
+   "n_hits": 63,
+   "top_hits": [
+    "spr_papyrus_d",
+    "spr_papyrus_l",
+    "spr_papyrus_r",
+    "spr_papyrus_u",
+    "spr_papyrus_dt",
+    "spr_papyrus_lt",
+    "spr_papyrus_rt",
+    "spr_papyrus_ut"
+   ],
+   "evidence": [
+    "人物素材/Papyrus/Overworld/spr_papyrus_d_0.png",
+    "人物素材/Papyrus/Overworld/spr_papyrus_l_0.png",
+    "人物素材/Papyrus/Overworld/spr_papyrus_r_0.png"
+   ]
+  },
+  "ut_undyne": {
+   "key": "undyne",
+   "objects": [
+    "spr_undyne_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_undyne_d"
+    ],
+    "l": [
+     "spr_undyne_l"
+    ],
+    "r": [
+     "spr_undyne_r"
+    ],
+    "u": [
+     "spr_undyne_u"
+    ]
+   },
+   "n_hits": 140,
+   "top_hits": [
+    "spr_undyneb",
+    "spr_undyne_d",
+    "spr_undyne_l",
+    "spr_undyne_r",
+    "spr_undyne_u",
+    "spr_undyneb2",
+    "spr_undyne_dt",
+    "spr_undyne_lt"
+   ],
+   "evidence": [
+    "人物素材/Undyne/Battle/spr_undyneb_0.png",
+    "人物素材/Undyne/Overworld/spr_undyne_d_0.png",
+    "人物素材/Undyne/Overworld/spr_undyne_l_0.png"
+   ]
+  },
+  "ut_alphys": {
+   "key": "alphys",
+   "objects": [
+    "spr_alphys_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_alphys_d"
+    ],
+    "l": [
+     "spr_alphys_l"
+    ],
+    "r": [
+     "spr_alphys_r"
+    ],
+    "u": [
+     "spr_alphys_u"
+    ]
+   },
+   "n_hits": 67,
+   "top_hits": [
+    "spr_alphys_d",
+    "spr_alphys_l",
+    "spr_alphys_r",
+    "spr_alphys_u",
+    "spr_alphys_dt",
+    "spr_alphys_lt",
+    "spr_alphys_rt",
+    "spr_alphys_ut"
+   ],
+   "evidence": [
+    "人物素材/Alphys/Overworld/spr_alphys_d_0.png",
+    "人物素材/Alphys/Overworld/spr_alphys_l_0.png",
+    "人物素材/Alphys/Overworld/spr_alphys_r_0.png"
+   ]
+  },
+  "ut_mettaton": {
+   "key": "mettaton",
+   "objects": [
+    "spr_mettatonb"
+   ],
+   "how": "nearest_base",
+   "overworld_dirs": {},
+   "n_hits": 29,
+   "top_hits": [
+    "spr_mettatonb",
+    "spr_mettatonhole",
+    "spr_mettaton_clap",
+    "spr_mettaton_talk",
+    "spr_mettaton_wave",
+    "spr_mettaton_noarm",
+    "spr_mettatonb_nuts",
+    "spr_mettaton_cackle"
+   ],
+   "evidence": [
+    "人物素材/Mettaton/Square/Battle/spr_mettatonb_0.png",
+    "背景/Hotland/Lab/spr_mettatonhole_0.png",
+    "人物素材/Mettaton/Square/Overworld/spr_mettaton_clap_0.png"
+   ]
+  },
+  "ut_muffet": {
+   "key": "muffet",
+   "objects": [
+    "spr_muffet_overworld"
+   ],
+   "how": "overworld_tagged",
+   "overworld_dirs": {},
+   "n_hits": 3,
+   "top_hits": [
+    "spr_muffethurt",
+    "spr_muffet_buysell",
+    "spr_muffet_overworld"
+   ],
+   "evidence": [
+    "人物素材/Muffet/Battle/spr_muffethurt_0.png",
+    "人物素材/Muffet/Overworld/spr_muffet_buysell_0.png",
+    "人物素材/Muffet/Overworld/spr_muffet_overworld_0.png"
+   ]
+  },
+  "ut_napstablook": {
+   "key": "napstablook",
+   "objects": [
+    "spr_napstablook_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_napstablook_d"
+    ],
+    "l": [
+     "spr_napstablook_l"
+    ],
+    "r": [
+     "spr_napstablook_r"
+    ],
+    "u": [
+     "spr_napstablook_u"
+    ]
+   },
+   "n_hits": 12,
+   "top_hits": [
+    "spr_napstablook_d",
+    "spr_napstablook_l",
+    "spr_napstablook_r",
+    "spr_napstablook_u",
+    "spr_napstablook_gr",
+    "spr_napstablook_grsm",
+    "spr_napstablook_adjust",
+    "spr_napstablook_d_headphone"
+   ],
+   "evidence": [
+    "人物素材/Napstablook/Overworld/spr_napstablook_d_0.png",
+    "人物素材/Napstablook/Overworld/spr_napstablook_l_0.png",
+    "人物素材/Napstablook/Overworld/spr_napstablook_r_0.png"
+   ]
+  },
+  "ut_monster_kid": {
+   "key": "mkid",
+   "objects": [
+    "spr_mkid_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_mkid_d"
+    ],
+    "l": [
+     "spr_mkid_l"
+    ],
+    "r": [
+     "spr_mkid_r"
+    ],
+    "u": [
+     "spr_mkid_u"
+    ]
+   },
+   "n_hits": 29,
+   "top_hits": [
+    "spr_mkid_d",
+    "spr_mkid_l",
+    "spr_mkid_r",
+    "spr_mkid_u",
+    "spr_mkid_dt",
+    "spr_mkid_lt",
+    "spr_mkid_rt",
+    "spr_mkid_ut"
+   ],
+   "evidence": [
+    "人物素材/Monster Kid/Overworld/spr_mkid_d_0.png",
+    "人物素材/Monster Kid/Overworld/spr_mkid_l_0.png",
+    "人物素材/Monster Kid/Overworld/spr_mkid_r_0.png"
+   ]
+  },
+  "ut_asgore": {
+   "key": "asgore",
+   "objects": [
+    "spr_asgore_d"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_asgore_d"
+    ],
+    "l": [
+     "spr_asgore_l"
+    ],
+    "r": [
+     "spr_asgore_r"
+    ],
+    "u": [
+     "spr_asgore_u"
+    ]
+   },
+   "n_hits": 51,
+   "top_hits": [
+    "spr_asgore_d",
+    "spr_asgore_l",
+    "spr_asgore_r",
+    "spr_asgore_u",
+    "spr_asgore_dt",
+    "spr_asgore_lt",
+    "spr_asgore_rt",
+    "spr_asgore_ut"
+   ],
+   "evidence": [
+    "人物素材/Asgore/Overworld/spr_asgore_d_0.png",
+    "人物素材/Asgore/Overworld/spr_asgore_l_0.png",
+    "人物素材/Asgore/Overworld/spr_asgore_r_0.png"
+   ]
+  },
+  "ut_flowey": {
+   "key": "flowey",
+   "objects": [
+    "spr_floweyfly"
+   ],
+   "how": "nearest_base",
+   "overworld_dirs": {},
+   "n_hits": 23,
+   "top_hits": [
+    "spr_floweyfly",
+    "spr_floweynuke",
+    "spr_floweyx_tv",
+    "spr_vines_flowey",
+    "spr_floweyx_flame",
+    "spr_floweyx_behind",
+    "spr_floweyx_dimple",
+    "spr_floweyx_mouthl"
+   ],
+   "evidence": [
+    "人物素材/Flowey/6魂Flowey/Attacks/spr_floweyfly_0.png",
+    "人物素材/Flowey/6魂Flowey/Attacks/spr_floweynuke_0.png",
+    "人物素材/Flowey/6魂Flowey/Attacks/spr_floweyx_tv_0.png"
+   ]
+  },
+  "ut_frisk": {
+   "key": "f_mainchara",
+   "objects": [
+    "spr_f_maincharad"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_f_maincharad"
+    ],
+    "l": [
+     "spr_f_maincharal"
+    ],
+    "r": [
+     "spr_f_maincharar"
+    ],
+    "u": [
+     "spr_f_maincharau"
+    ]
+   },
+   "n_hits": 4,
+   "top_hits": [
+    "spr_f_maincharad",
+    "spr_f_maincharal",
+    "spr_f_maincharar",
+    "spr_f_maincharau"
+   ],
+   "evidence": [
+    "人物素材/Frisk/spr_f_maincharad_0.png",
+    "人物素材/Frisk/spr_f_maincharal_0.png",
+    "人物素材/Frisk/spr_f_maincharar_0.png"
+   ]
+  },
+  "ut_chara": {
+   "key": "chara",
+   "objects": [
+    "spr_charad"
+   ],
+   "how": "overworld_4dir",
+   "overworld_dirs": {
+    "d": [
+     "spr_charad",
+     "spr_f_maincharad",
+     "spr_maincharad"
+    ],
+    "l": [
+     "spr_charal",
+     "spr_f_maincharal",
+     "spr_maincharal"
+    ],
+    "r": [
+     "spr_charar",
+     "spr_f_maincharar",
+     "spr_maincharar"
+    ],
+    "u": [
+     "spr_charau",
+     "spr_f_maincharau",
+     "spr_maincharau"
+    ]
+   },
+   "n_hits": 59,
+   "top_hits": [
+    "spr_charad",
+    "spr_charal",
+    "spr_charar",
+    "spr_charau",
+    "spr_charahead",
+    "spr_truechara",
+    "spr_charaphoto",
+    "spr_maincharad"
+   ],
+   "evidence": [
+    "人物素材/Chara/spr_charad_0.png",
+    "人物素材/Chara/spr_charal_0.png",
+    "人物素材/Chara/spr_charar_0.png"
+   ]
+  },
+  "ut_gaster": {
+   "key": "gaster",
+   "objects": [
+    "spr_gasterblaster"
+   ],
+   "how": "nearest_base",
+   "overworld_dirs": {},
+   "n_hits": 1,
+   "top_hits": [
+    "spr_gasterblaster"
+   ],
+   "evidence": [
+    "人物素材/sans/Attacks/spr_gasterblaster_0.png"
+   ]
+  }
+ },
+ "note": "Undertale 侧**没有** contacts 那样的官方归属文件 ⇒ 这里的 `objects` 取用户素材目录里的**原作 sprite 名**（`spr_*`），逐条记 evidence（哪个文件）。无 overworld 四向的角色（mettaton / flowey / gaster）取最接近本体的 base，已在 `how` 里标出（`nearest_base`）—— 如实登记，不假装是行走图。"
+}

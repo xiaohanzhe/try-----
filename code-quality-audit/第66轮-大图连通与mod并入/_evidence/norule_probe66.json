@@ -1,0 +1,466 @@
+{
+ "ut": {
+  "obj_alabdoor_l": {
+   "no_rule_edges": 2,
+   "files": 5,
+   "events": [
+    "Alarm_4",
+    "Create_0",
+    "Draw_0",
+    "PreCreate_0",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "global_flag": 2,
+    "instance_create": 2,
+    "room_set": 1
+   }
+  },
+  "obj_chipdoor_l": {
+   "no_rule_edges": 2,
+   "files": 5,
+   "events": [
+    "Alarm_0",
+    "Create_0",
+    "Other_11",
+    "PreCreate_0",
+    "Step_2"
+   ],
+   "pattern_hits": {
+    "instance_create": 2,
+    "room_set": 2,
+    "global_flag": 1
+   }
+  },
+  "obj_chipdoor_r": {
+   "no_rule_edges": 2,
+   "files": 4,
+   "events": [
+    "Alarm_0",
+    "Create_0",
+    "PreCreate_0",
+    "Step_2"
+   ],
+   "pattern_hits": {
+    "instance_create": 2,
+    "room_set": 2,
+    "global_flag": 1
+   }
+  },
+  "obj_chipdoor_trigger": {
+   "no_rule_edges": 2,
+   "files": 4,
+   "events": [
+    "Alarm_4",
+    "Create_0",
+    "PreCreate_0",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "room_set": 2
+   }
+  },
+  "obj_bigcoredoor_anim": {
+   "no_rule_edges": 2,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "PreCreate_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_door_s_musfade": {
+   "no_rule_edges": 1,
+   "files": 4,
+   "events": [
+    "Alarm_2",
+    "Create_0",
+    "Other_19",
+    "PreCreate_0"
+   ],
+   "pattern_hits": {
+    "room_goto": 1,
+    "global_flag": 2,
+    "instance_create": 2,
+    "room_set": 1
+   }
+  },
+  "obj_coredoor_anim": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "PreCreate_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_door_t": {
+   "no_rule_edges": 1,
+   "files": 4,
+   "events": [
+    "Alarm_2",
+    "Create_0",
+    "Other_19",
+    "PreCreate_0"
+   ],
+   "pattern_hits": {
+    "room_goto": 1,
+    "global_flag": 2,
+    "instance_create": 2,
+    "room_set": 2
+   }
+  }
+ },
+ "uty": {
+  "obj_locked_door": {
+   "no_rule_edges": 5,
+   "files": 1,
+   "events": [
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_dalvDoor": {
+   "no_rule_edges": 3,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_complex_1c_doors": {
+   "no_rule_edges": 3,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_knockable_door_dunes_30": {
+   "no_rule_edges": 2,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_door": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_fakedoorway": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Alarm_0",
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_hiddenentrance": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "global_flag": 1,
+    "instance_create": 1,
+    "room_set": 1
+   }
+  },
+  "obj_darkruins_doorExit": {
+   "no_rule_edges": 1,
+   "files": 0,
+   "events": [],
+   "pattern_hits": {}
+  },
+  "obj_darkruins_doorLight": {
+   "no_rule_edges": 1,
+   "files": 0,
+   "events": [],
+   "pattern_hits": {}
+  },
+  "obj_doorway_blocker_dalvshouse": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Other_10",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "global_flag": 1,
+    "instance_create": 1
+   }
+  },
+  "obj_honeydew_entrance": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_dunes_2_gerson_door": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_dunes_06_cave_entrance": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_dunes_08b_fence_door": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Other_7",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_sorter_exit": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {
+    "instance_create": 1
+   }
+  },
+  "obj_market_exit": {
+   "no_rule_edges": 1,
+   "files": 0,
+   "events": [],
+   "pattern_hits": {}
+  },
+  "obj_dunes_37_barn_door": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_wild_east_exit_gate": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Draw_0",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_dunes_42_cellar_door": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_dunes_42_door": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Other_5",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_steamworks_03_door": {
+   "no_rule_edges": 1,
+   "files": 0,
+   "events": [],
+   "pattern_hits": {}
+  },
+  "obj_steamworks_04_door": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Create_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_steamworks_05c_locker_door": {
+   "no_rule_edges": 1,
+   "files": 0,
+   "events": [],
+   "pattern_hits": {}
+  },
+  "obj_steamworks_13_axis_door": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "instance_create": 1
+   }
+  },
+  "obj_steamworks_31_door": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Other_7",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_steamworks_31_door_left": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Other_7",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "room_set": 1
+   }
+  },
+  "obj_steamworks_chem_07_door": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Other_7"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_chem_05_door": {
+   "no_rule_edges": 1,
+   "files": 7,
+   "events": [
+    "Alarm_0",
+    "Alarm_1",
+    "Alarm_2",
+    "Create_0",
+    "Other_10",
+    "Other_76",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "instance_create": 3,
+    "room_set": 1
+   }
+  },
+  "obj_steamworks_factory_02_door": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Other_7"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_room_controller_mansion_entrance": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "instance_create": 1
+   }
+  },
+  "obj_mansion_entrance_door": {
+   "no_rule_edges": 1,
+   "files": 1,
+   "events": [
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_mansion_entrance_doors": {
+   "no_rule_edges": 1,
+   "files": 5,
+   "events": [
+    "Alarm_0",
+    "Create_0",
+    "Other_5",
+    "Other_7",
+    "Step_0"
+   ],
+   "pattern_hits": {
+    "room_set": 1
+   }
+  },
+  "obj_mansion_hall_bedroom_door": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Other_5",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_mansion_hall_study_door": {
+   "no_rule_edges": 1,
+   "files": 2,
+   "events": [
+    "Other_5",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_newhome_locked_doors": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Alarm_0",
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_exit": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Alarm_0",
+    "Create_0",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  },
+  "obj_truelab_door": {
+   "no_rule_edges": 1,
+   "files": 0,
+   "events": [],
+   "pattern_hits": {}
+  },
+  "obj_macro_froggit_room_door": {
+   "no_rule_edges": 1,
+   "files": 3,
+   "events": [
+    "Create_0",
+    "Other_7",
+    "Step_0"
+   ],
+   "pattern_hits": {}
+  }
+ }
+}

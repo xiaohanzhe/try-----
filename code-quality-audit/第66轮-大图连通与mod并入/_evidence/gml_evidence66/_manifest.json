@@ -1,0 +1,557 @@
+{
+ "source": {
+  "ut": "E:/Download/_extract61/_data/undertale/u65/gml65ut",
+  "uty": "E:/Download/_extract61/_data/undertale_yellow/uty65/gml65",
+  "ry": "E:/Download/_extract64/assets/redyellow65/gml65"
+ },
+ "note": "第66轮复检 ⑥ 段要回查的 GML（non_doors 引用的全部事件 + 3 个控制文件）。★ 蒸馏进仓的理由：转储在 E 盘、用后即删 ⇒ 回归/复检不许依赖它。",
+ "n_expected": 105,
+ "n_copied": 105,
+ "missing": [],
+ "controls": [
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_hiddenentrance_Step_0.gml"
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_door_t_Alarm_2.gml"
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_doorway_Collision_obj_pl.gml"
+  }
+ ],
+ "files": [
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_alabdoor_l_Alarm_4.gml",
+   "bytes": 10
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_alabdoor_l_Create_0.gml",
+   "bytes": 772
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_alabdoor_l_Draw_0.gml",
+   "bytes": 2244
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_alabdoor_l_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_alabdoor_l_Step_0.gml",
+   "bytes": 3616
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_bigcoredoor_anim_Create_0.gml",
+   "bytes": 21
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_bigcoredoor_anim_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_l_Alarm_0.gml",
+   "bytes": 517
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_l_Create_0.gml",
+   "bytes": 635
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_l_Other_11.gml",
+   "bytes": 137
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_l_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_l_Step_2.gml",
+   "bytes": 29
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_r_Alarm_0.gml",
+   "bytes": 517
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_r_Create_0.gml",
+   "bytes": 643
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_r_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_r_Step_2.gml",
+   "bytes": 35
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_trigger_Alarm_4.gml",
+   "bytes": 10
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_trigger_Create_0.gml",
+   "bytes": 187
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_trigger_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_chipdoor_trigger_Step_0.gml",
+   "bytes": 725
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_coredoor_anim_Create_0.gml",
+   "bytes": 21
+  },
+  {
+   "work": "ry",
+   "file": "gml_Object_obj_coredoor_anim_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_alabdoor_l_Alarm_4.gml",
+   "bytes": 10
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_alabdoor_l_Create_0.gml",
+   "bytes": 772
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_alabdoor_l_Draw_0.gml",
+   "bytes": 2244
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_alabdoor_l_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_alabdoor_l_Step_0.gml",
+   "bytes": 3616
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_bigcoredoor_anim_Create_0.gml",
+   "bytes": 21
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_bigcoredoor_anim_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_l_Alarm_0.gml",
+   "bytes": 517
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_l_Create_0.gml",
+   "bytes": 635
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_l_Other_11.gml",
+   "bytes": 137
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_l_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_l_Step_2.gml",
+   "bytes": 29
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_r_Alarm_0.gml",
+   "bytes": 517
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_r_Create_0.gml",
+   "bytes": 643
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_r_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_r_Step_2.gml",
+   "bytes": 35
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_trigger_Alarm_4.gml",
+   "bytes": 10
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_trigger_Create_0.gml",
+   "bytes": 187
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_trigger_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_chipdoor_trigger_Step_0.gml",
+   "bytes": 725
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_coredoor_anim_Create_0.gml",
+   "bytes": 21
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_coredoor_anim_PreCreate_0.gml",
+   "bytes": 19
+  },
+  {
+   "work": "ut",
+   "file": "gml_Object_obj_door_t_Alarm_2.gml",
+   "bytes": 1916
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_complex_1c_doors_Create_0.gml",
+   "bytes": 48
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_complex_1c_doors_Step_0.gml",
+   "bytes": 1346
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dalvDoor_Create_0.gml",
+   "bytes": 17
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_door_Step_0.gml",
+   "bytes": 59
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_doorway_Collision_obj_pl.gml",
+   "bytes": 363
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_doorway_blocker_dalvshouse_Create_0.gml",
+   "bytes": 208
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_doorway_blocker_dalvshouse_Other_10.gml",
+   "bytes": 4626
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_doorway_blocker_dalvshouse_Step_0.gml",
+   "bytes": 111
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_06_cave_entrance_Create_0.gml",
+   "bytes": 60
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_08b_fence_door_Create_0.gml",
+   "bytes": 34
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_08b_fence_door_Other_7.gml",
+   "bytes": 38
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_08b_fence_door_Step_0.gml",
+   "bytes": 481
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_2_gerson_door_Create_0.gml",
+   "bytes": 88
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_37_barn_door_Create_0.gml",
+   "bytes": 69
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_42_cellar_door_Create_0.gml",
+   "bytes": 272
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_42_door_Create_0.gml",
+   "bytes": 35
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_42_door_Other_5.gml",
+   "bytes": 25
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_dunes_42_door_Step_0.gml",
+   "bytes": 283
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_exit_Alarm_0.gml",
+   "bytes": 166
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_exit_Create_0.gml",
+   "bytes": 32
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_exit_Step_0.gml",
+   "bytes": 64
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_fakedoorway_Alarm_0.gml",
+   "bytes": 75
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_fakedoorway_Create_0.gml",
+   "bytes": 12
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_hiddenentrance_Step_0.gml",
+   "bytes": 871
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_honeydew_entrance_Create_0.gml",
+   "bytes": 12
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_knockable_door_dunes_30_Create_0.gml",
+   "bytes": 42
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_knockable_door_dunes_30_Step_0.gml",
+   "bytes": 509
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_locked_door_Step_0.gml",
+   "bytes": 99
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_macro_froggit_room_door_Create_0.gml",
+   "bytes": 17
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_macro_froggit_room_door_Other_7.gml",
+   "bytes": 49
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_macro_froggit_room_door_Step_0.gml",
+   "bytes": 223
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_entrance_door_Step_0.gml",
+   "bytes": 566
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_entrance_doors_Alarm_0.gml",
+   "bytes": 60
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_entrance_doors_Create_0.gml",
+   "bytes": 80
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_entrance_doors_Other_5.gml",
+   "bytes": 45
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_entrance_doors_Other_7.gml",
+   "bytes": 87
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_entrance_doors_Step_0.gml",
+   "bytes": 161
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_hall_bedroom_door_Other_5.gml",
+   "bytes": 25
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_hall_bedroom_door_Step_0.gml",
+   "bytes": 141
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_hall_study_door_Other_5.gml",
+   "bytes": 25
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_mansion_hall_study_door_Step_0.gml",
+   "bytes": 142
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_newhome_locked_doors_Alarm_0.gml",
+   "bytes": 12
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_newhome_locked_doors_Create_0.gml",
+   "bytes": 47
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_newhome_locked_doors_Step_0.gml",
+   "bytes": 713
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_room_controller_mansion_entrance_Create_0.gml",
+   "bytes": 185
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_room_controller_mansion_entrance_Step_0.gml",
+   "bytes": 2624
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_sorter_exit_Create_0.gml",
+   "bytes": 82
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_04_door_Create_0.gml",
+   "bytes": 89
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_13_axis_door_Create_0.gml",
+   "bytes": 189
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_13_axis_door_Step_0.gml",
+   "bytes": 5038
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_31_door_Create_0.gml",
+   "bytes": 141
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_31_door_Other_7.gml",
+   "bytes": 75
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_31_door_Step_0.gml",
+   "bytes": 52
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_chem_07_door_Create_0.gml",
+   "bytes": 151
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_chem_07_door_Other_7.gml",
+   "bytes": 15
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_factory_02_door_Create_0.gml",
+   "bytes": 130
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_steamworks_factory_02_door_Other_7.gml",
+   "bytes": 15
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_wild_east_exit_gate_Create_0.gml",
+   "bytes": 135
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_wild_east_exit_gate_Draw_0.gml",
+   "bytes": 13
+  },
+  {
+   "work": "uty",
+   "file": "gml_Object_obj_wild_east_exit_gate_Step_0.gml",
+   "bytes": 278
+  }
+ ],
+ "by_work": {
+  "ry": 22,
+  "ut": 23,
+  "uty": 60
+ }
+}

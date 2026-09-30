@@ -1,12 +1,12 @@
 {
  "schema_version": 1,
- "source": "第49轮 UTMT 反编译（names49 普查）+ 本项目撰写；第55轮：用户提供 13 份人设（assets/npc/persona/）+ 模型口径修正（见 model_policy）",
+ "source": "第49轮 UTMT 反编译（names49 普查）+ 本项目撰写；第55轮：用户提供 13 份人设（assets/npc/persona/）+ 模型口径修正（见 model_policy）；第64轮：用户重新提供《其余人物设定.txt》⇒ 人设 13 → 50（含 OneShot 21 / Undertale 14）；第66轮（N4）：把 OneShot 21 + Undertale 14 共 35 条**跨作品 NPC 注册进本表**（此前只到人设层、无人注册）。取值口径 —— OneShot 用官方 contacts_metadata.json 的 `title` / `subtitle`(区域) / `walkspriteId`；Undertale 用用户 UT素材/ 文件名里的原作 sprite 名；两作品 `home_world` 一律显式 `dark`（本项目世界模型只有两分），`chapters` 用作品 id 作未来场景前缀锚。证据见 code-quality-audit/第66轮-大图连通与mod并入/_evidence/。",
  "tiers": {
   "main": "主线 NPC：非主角团但有重大影响（Toriel/Asgore/各章 Boss/少数关键角色）；★走模型，用**App 配置的那个 7B**（`model=null` ⇒ 跟随 `config.json.api.model`，即 ralsei:v4 = qwen2.5:7b。用户口径「4B 貌似没办法支撑起来这些角色的灵魂」，而第49轮那个 `ralsei-npc:4b` 其实从未被代码读取 —— 详见 model_policy）；设定由用户提供。",
   "plain": "纯 NPC：没有重大帮助对话；用 4~10 句内置对话，不走模型。"
  },
  "counts": {
-  "main": 17,
+  "main": 52,
   "plain": 18
  },
  "npcs": [
@@ -693,6 +693,636 @@
    "escape_via_bubble": false,
    "notes": "",
    "persona": null
+  },
+  {
+   "id": "os_niko",
+   "name": "Niko",
+   "name_cn": "Niko",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "niko"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = ???（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_niko.txt"
+  },
+  {
+   "id": "os_the_world_machine",
+   "name": "The World Machine",
+   "name_cn": "The Entity / 本体",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "en"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = ???（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_the_world_machine.txt"
+  },
+  {
+   "id": "os_the_author",
+   "name": "The Author",
+   "name_cn": "The Author",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "clovers"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = ???（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_the_author.txt"
+  },
+  {
+   "id": "os_prophetbot",
+   "name": "ProphetBot",
+   "name_cn": "先知机器人",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "blue_npc_prophet"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_prophetbot.txt"
+  },
+  {
+   "id": "os_silver",
+   "name": "Silver",
+   "name_cn": "Silver",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "blue_npc_silver"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_silver.txt"
+  },
+  {
+   "id": "os_rowbot",
+   "name": "Rowbot",
+   "name_cn": "Rowbot",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_rowbot"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_rowbot.txt"
+  },
+  {
+   "id": "os_prototype",
+   "name": "Prototype",
+   "name_cn": "Prototype",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "blue_npc_prototype"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Barrens（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_prototype.txt"
+  },
+  {
+   "id": "os_calamus",
+   "name": "Calamus",
+   "name_cn": "Calamus",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "green_npc_calamus"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_calamus.txt"
+  },
+  {
+   "id": "os_alula",
+   "name": "Alula",
+   "name_cn": "Alula",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "green_npc_alula"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_alula.txt"
+  },
+  {
+   "id": "os_maize",
+   "name": "Maize",
+   "name_cn": "Maize",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_maize"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_maize.txt"
+  },
+  {
+   "id": "os_magpie",
+   "name": "Magpie",
+   "name_cn": "Magpie",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "green_npc_magpie"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_magpie.txt"
+  },
+  {
+   "id": "os_shepherd",
+   "name": "Shepherd",
+   "name_cn": "牧羊人",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_shepherd"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_shepherd.txt"
+  },
+  {
+   "id": "os_cedric",
+   "name": "Cedric",
+   "name_cn": "Cedric",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "green_npc_cedric"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Glen（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_cedric.txt"
+  },
+  {
+   "id": "os_lamplighter",
+   "name": "Lamplighter",
+   "name_cn": "灯夫",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "red_lamplighter"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_lamplighter.txt"
+  },
+  {
+   "id": "os_watcher",
+   "name": "Watcher",
+   "name_cn": "Watcher",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_watcher"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_watcher.txt"
+  },
+  {
+   "id": "os_ling",
+   "name": "Ling",
+   "name_cn": "Ling",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_ling"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_ling.txt"
+  },
+  {
+   "id": "os_mason",
+   "name": "Mason",
+   "name_cn": "Mason",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_mason"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_mason.txt"
+  },
+  {
+   "id": "os_kelvin",
+   "name": "Kelvin",
+   "name_cn": "Kelvin",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "contacts_kelvin"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_kelvin.txt"
+  },
+  {
+   "id": "os_kip",
+   "name": "Kip",
+   "name_cn": "Kip",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "red_kip"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_kip.txt"
+  },
+  {
+   "id": "os_george",
+   "name": "George",
+   "name_cn": "George",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "red_npc_george1"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）；官方 26 条 profile 里 George 有 george1..george6 六个变体，本条第 1 号。",
+   "persona": "persona/os_george.txt"
+  },
+  {
+   "id": "os_rue",
+   "name": "Rue",
+   "name_cn": "Rue",
+   "tier": "main",
+   "chapters": [
+    "oneshot"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "red_rue"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《OneShot》角色（第66轮注册）。原作区域 = Refuge（出处：用户提供的 contacts_metadata.json 的 subtitle）。`objects` = 官方 `walkspriteId`。★ `home_world` 显式写 `dark`（本项目的世界模型只有 光/暗 两分；写 `oneshot` 会被 `NpcDef` 静默改判成 `dark`）；`chapters=[oneshot]` 是**未来场景前缀锚**（当前无 oneshot.* 场景）。",
+   "persona": "persona/os_rue.txt"
+  },
+  {
+   "id": "ut_toriel",
+   "name": "Toriel",
+   "name_cn": "Toriel",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_toriel_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_toriel.txt"
+  },
+  {
+   "id": "ut_sans",
+   "name": "Sans",
+   "name_cn": "Sans",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_sans_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_sans.txt"
+  },
+  {
+   "id": "ut_papyrus",
+   "name": "Papyrus",
+   "name_cn": "Papyrus",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_papyrus_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_papyrus.txt"
+  },
+  {
+   "id": "ut_undyne",
+   "name": "Undyne",
+   "name_cn": "Undyne",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_undyne_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_undyne.txt"
+  },
+  {
+   "id": "ut_alphys",
+   "name": "Alphys",
+   "name_cn": "Alphys",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_alphys_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_alphys.txt"
+  },
+  {
+   "id": "ut_mettaton",
+   "name": "Mettaton",
+   "name_cn": "Mettaton",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_mettatonb"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_mettaton.txt"
+  },
+  {
+   "id": "ut_muffet",
+   "name": "Muffet",
+   "name_cn": "Muffet",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_muffet_overworld"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（原作用 `overworld` 标的那一版，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_muffet.txt"
+  },
+  {
+   "id": "ut_napstablook",
+   "name": "Napstablook",
+   "name_cn": "Napstablook",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_napstablook_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_napstablook.txt"
+  },
+  {
+   "id": "ut_monster_kid",
+   "name": "Monster Kid",
+   "name_cn": "Monster Kid",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_mkid_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_monster_kid.txt"
+  },
+  {
+   "id": "ut_asgore",
+   "name": "Asgore Dreemurr",
+   "name_cn": "Asgore Dreemurr",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_asgore_d"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_asgore.txt"
+  },
+  {
+   "id": "ut_flowey",
+   "name": "Flowey",
+   "name_cn": "Flowey",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_floweyfly"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_flowey.txt"
+  },
+  {
+   "id": "ut_frisk",
+   "name": "Frisk",
+   "name_cn": "Frisk",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_f_maincharad"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_frisk.txt"
+  },
+  {
+   "id": "ut_chara",
+   "name": "Chara",
+   "name_cn": "Chara",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_charad"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（有四向行走图（取 down 帧），证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_chara.txt"
+  },
+  {
+   "id": "ut_gaster",
+   "name": "W.D. Gaster",
+   "name_cn": "W.D. Gaster",
+   "tier": "main",
+   "chapters": [
+    "undertale"
+   ],
+   "home_world": "dark",
+   "objects": [
+    "spr_gasterblaster"
+   ],
+   "model": null,
+   "needs_setting": false,
+   "escape_via_bubble": false,
+   "notes": "《Undertale》角色（第66轮注册）。`objects` = 原作 sprite 名（★ 该角色在本素材集里**没有** overworld 行走图 ⇒ 取最接近本体的原作 sprite，证据 `_evidence/ut_sprites66.json`）。★ 用户**没有**给 Undertale 侧的 contacts 式归属文件 ⇒ 这里登记的是**sprite 名**（`spr_*`），不是 GameMaker 对象名（`obj_*`）；与 OneShot 侧（官方 walkspriteId）同口径，都是\"该作品里标识角色的资源名\"。`chapters=[undertale]` 是未来场景前缀锚（当前无 undertale.* 场景）。",
+   "persona": "persona/ut_gaster.txt"
   }
  ],
  "model_policy": {

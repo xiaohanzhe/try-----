@@ -1,0 +1,983 @@
+{
+ "ut": {
+  "obj_alabdoor_l": {
+   "no_rule_edges": 2,
+   "rooms": [
+    139,
+    143
+   ],
+   "files": 5,
+   "pattern_hits": {
+    "inst_create": 9,
+    "inherit": 1
+   },
+   "samples": {
+    "inst_create": {
+     "file": "gml_Object_obj_alabdoor_l_Create_0.gml",
+     "text": [
+      "instance_create(x + 0, y + 52, obj_solidsmall)",
+      "instance_create(x + 0, y + 50, obj_doorCmusicfade)",
+      "instance_create(x + 15, y + 51, obj_solidsmall)"
+     ]
+    },
+    "inherit": {
+     "file": "gml_Object_obj_alabdoor_l_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT",
+    "CREATE(['instance_create(x + 0, y + 52, obj_solidsmall)', 'instance_create(x + 0, y + 50, obj_doorCmusicfade)', 'instance_create(x + 15, y + 51, obj_solidsmall)'])"
+   ]
+  },
+  "obj_chipdoor_l": {
+   "no_rule_edges": 2,
+   "rooms": [
+    148,
+    171
+   ],
+   "files": 5,
+   "pattern_hits": {
+    "inst_create": 2,
+    "with_block": 1,
+    "inherit": 1
+   },
+   "samples": {
+    "inst_create": {
+     "file": "gml_Object_obj_chipdoor_l_Alarm_0.gml",
+     "text": [
+      "instance_create(0, 0, obj_dialoguer)"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_chipdoor_l_Other_11.gml",
+     "text": [
+      "with ("
+     ]
+    },
+    "inherit": {
+     "file": "gml_Object_obj_chipdoor_l_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT",
+    "CREATE(['instance_create(0, 0, obj_dialoguer)'])"
+   ]
+  },
+  "obj_chipdoor_r": {
+   "no_rule_edges": 2,
+   "rooms": [
+    148,
+    171
+   ],
+   "files": 4,
+   "pattern_hits": {
+    "inst_create": 2,
+    "inherit": 1
+   },
+   "samples": {
+    "inst_create": {
+     "file": "gml_Object_obj_chipdoor_r_Alarm_0.gml",
+     "text": [
+      "instance_create(0, 0, obj_dialoguer)"
+     ]
+    },
+    "inherit": {
+     "file": "gml_Object_obj_chipdoor_r_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT",
+    "CREATE(['instance_create(0, 0, obj_dialoguer)'])"
+   ]
+  },
+  "obj_chipdoor_trigger": {
+   "no_rule_edges": 2,
+   "rooms": [
+    148,
+    171
+   ],
+   "files": 4,
+   "pattern_hits": {
+    "inherit": 1,
+    "with_block": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_chipdoor_trigger_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_chipdoor_trigger_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_bigcoredoor_anim": {
+   "no_rule_edges": 2,
+   "rooms": [
+    191,
+    210
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_bigcoredoor_anim_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_door_s_musfade": {
+   "no_rule_edges": 1,
+   "rooms": [
+    123
+   ],
+   "files": 4,
+   "pattern_hits": {
+    "room_goto_txt": 39,
+    "inst_create": 3,
+    "inherit": 1
+   },
+   "samples": {
+    "room_goto_txt": {
+     "file": "gml_Object_obj_door_s_musfade_Alarm_2.gml",
+     "text": [
+      "room_goto(room_water_bird)",
+      "room_goto(room_water_friendlyhub)",
+      "room_goto(room_tundra_town)"
+     ]
+    },
+    "inst_create": {
+     "file": "gml_Object_obj_door_s_musfade_Alarm_2.gml",
+     "text": [
+      "instance_create(0, 0, obj_persistentfader)"
+     ]
+    },
+    "inherit": {
+     "file": "gml_Object_obj_door_s_musfade_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT",
+    "CREATE(['instance_create(0, 0, obj_persistentfader)'])"
+   ]
+  },
+  "obj_coredoor_anim": {
+   "no_rule_edges": 1,
+   "rooms": [
+    189
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_coredoor_anim_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_door_t": {
+   "no_rule_edges": 1,
+   "rooms": [
+    297
+   ],
+   "files": 4,
+   "pattern_hits": {
+    "room_goto_txt": 26,
+    "inst_create": 3,
+    "inherit": 1
+   },
+   "samples": {
+    "room_goto_txt": {
+     "file": "gml_Object_obj_door_t_Alarm_2.gml",
+     "text": [
+      "room_goto(room_tundra_inn)",
+      "room_goto(room_tundra_town)",
+      "room_goto(room_water_bird)"
+     ]
+    },
+    "inst_create": {
+     "file": "gml_Object_obj_door_t_Alarm_2.gml",
+     "text": [
+      "instance_create(0, 0, obj_persistentfader)"
+     ]
+    },
+    "inherit": {
+     "file": "gml_Object_obj_door_t_PreCreate_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT",
+    "CREATE(['instance_create(0, 0, obj_persistentfader)'])"
+   ]
+  }
+ },
+ "uty": {
+  "obj_locked_door": {
+   "no_rule_edges": 5,
+   "rooms": [
+    139,
+    171,
+    196,
+    247,
+    260
+   ],
+   "files": 1,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_locked_door_Step_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_dalvDoor": {
+   "no_rule_edges": 3,
+   "rooms": [
+    40,
+    41,
+    42
+   ],
+   "files": 1,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_complex_1c_doors": {
+   "no_rule_edges": 3,
+   "rooms": [
+    213,
+    218,
+    219
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "with_block": 2
+   },
+   "samples": {
+    "with_block": {
+     "file": "gml_Object_obj_complex_1c_doors_Step_0.gml",
+     "text": [
+      "with (",
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_knockable_door_dunes_30": {
+   "no_rule_edges": 2,
+   "rooms": [
+    115,
+    276
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "with_block": 1
+   },
+   "samples": {
+    "with_block": {
+     "file": "gml_Object_obj_knockable_door_dunes_30_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    9
+   ],
+   "files": 1,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_fakedoorway": {
+   "no_rule_edges": 1,
+   "rooms": [
+    10
+   ],
+   "files": 2,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_hiddenentrance": {
+   "no_rule_edges": 1,
+   "rooms": [
+    27
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "nextroom_int": 1,
+    "nextroom_var": 1,
+    "inst_create": 1,
+    "with_block": 1
+   },
+   "samples": {
+    "nextroom_int": {
+     "file": "gml_Object_obj_hiddenentrance_Step_0.gml",
+     "text": [
+      "nextroom = 28"
+     ]
+    },
+    "nextroom_var": {
+     "file": "gml_Object_obj_hiddenentrance_Step_0.gml",
+     "text": [
+      "nextroom = 28"
+     ]
+    },
+    "inst_create": {
+     "file": "gml_Object_obj_hiddenentrance_Step_0.gml",
+     "text": [
+      "instance_create(260, 120, obj_doorway)"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_hiddenentrance_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "RT-CC(['nextroom = 28'])",
+    "CREATE(['instance_create(260, 120, obj_doorway)'])"
+   ]
+  },
+  "obj_darkruins_doorExit": {
+   "no_rule_edges": 1,
+   "rooms": [
+    35
+   ],
+   "files": 0,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_darkruins_doorLight": {
+   "no_rule_edges": 1,
+   "rooms": [
+    35
+   ],
+   "files": 0,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_doorway_blocker_dalvshouse": {
+   "no_rule_edges": 1,
+   "rooms": [
+    37
+   ],
+   "files": 3,
+   "pattern_hits": {
+    "inst_create": 2,
+    "with_block": 5
+   },
+   "samples": {
+    "inst_create": {
+     "file": "gml_Object_obj_doorway_blocker_dalvshouse_Other_10.gml",
+     "text": [
+      "instance_create(0, 0, obj_dialoguebox_dummy)",
+      "instance_create(x, y, obj_transition)"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_doorway_blocker_dalvshouse_Other_10.gml",
+     "text": [
+      "with (",
+      "with (",
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "CREATE(['instance_create(0, 0, obj_dialoguebox_dummy)', 'instance_create(x, y, obj_transition)'])"
+   ]
+  },
+  "obj_honeydew_entrance": {
+   "no_rule_edges": 1,
+   "rooms": [
+    58
+   ],
+   "files": 1,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_dunes_2_gerson_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    78
+   ],
+   "files": 1,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_dunes_06_cave_entrance": {
+   "no_rule_edges": 1,
+   "rooms": [
+    82
+   ],
+   "files": 1,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_dunes_08b_fence_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    86
+   ],
+   "files": 3,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_sorter_exit": {
+   "no_rule_edges": 1,
+   "rooms": [
+    88
+   ],
+   "files": 1,
+   "pattern_hits": {
+    "inst_create": 1
+   },
+   "samples": {
+    "inst_create": {
+     "file": "gml_Object_obj_sorter_exit_Create_0.gml",
+     "text": [
+      "instance_create(x, y, obj_sorter_exit_overlay)"
+     ]
+    }
+   },
+   "verdict": [
+    "CREATE(['instance_create(x, y, obj_sorter_exit_overlay)'])"
+   ]
+  },
+  "obj_market_exit": {
+   "no_rule_edges": 1,
+   "rooms": [
+    121
+   ],
+   "files": 0,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_dunes_37_barn_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    130
+   ],
+   "files": 1,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_dunes_37_barn_door_Create_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_wild_east_exit_gate": {
+   "no_rule_edges": 1,
+   "rooms": [
+    133
+   ],
+   "files": 3,
+   "pattern_hits": {
+    "with_block": 1
+   },
+   "samples": {
+    "with_block": {
+     "file": "gml_Object_obj_wild_east_exit_gate_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_dunes_42_cellar_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    137
+   ],
+   "files": 1,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_dunes_42_cellar_door_Create_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_dunes_42_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    139
+   ],
+   "files": 3,
+   "pattern_hits": {
+    "inherit": 2
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_dunes_42_door_Create_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_steamworks_03_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    143
+   ],
+   "files": 0,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_steamworks_04_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    144
+   ],
+   "files": 1,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_steamworks_05c_locker_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    151
+   ],
+   "files": 0,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_steamworks_13_axis_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    160
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "with_block": 7
+   },
+   "samples": {
+    "with_block": {
+     "file": "gml_Object_obj_steamworks_13_axis_door_Step_0.gml",
+     "text": [
+      "with (",
+      "with (",
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_steamworks_31_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    188
+   ],
+   "files": 3,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_steamworks_31_door_left": {
+   "no_rule_edges": 1,
+   "rooms": [
+    188
+   ],
+   "files": 3,
+   "pattern_hits": {
+    "nextroom_int": 1,
+    "nextroom_var": 1,
+    "with_block": 1
+   },
+   "samples": {
+    "nextroom_int": {
+     "file": "gml_Object_obj_steamworks_31_door_left_Create_0.gml",
+     "text": [
+      "nextroom = 192"
+     ]
+    },
+    "nextroom_var": {
+     "file": "gml_Object_obj_steamworks_31_door_left_Create_0.gml",
+     "text": [
+      "nextroom = 192"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_steamworks_31_door_left_Create_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "RT-CC(['nextroom = 192'])"
+   ]
+  },
+  "obj_steamworks_chem_07_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    200
+   ],
+   "files": 2,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_chem_05_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    201
+   ],
+   "files": 7,
+   "pattern_hits": {
+    "with_block": 13,
+    "inst_create": 3,
+    "nextroom_int": 1,
+    "nextroom_var": 1
+   },
+   "samples": {
+    "with_block": {
+     "file": "gml_Object_obj_chem_05_door_Alarm_2.gml",
+     "text": [
+      "with ("
+     ]
+    },
+    "inst_create": {
+     "file": "gml_Object_obj_chem_05_door_Create_0.gml",
+     "text": [
+      "instance_create(304, 170, obj_chem_05_floor_melt)"
+     ]
+    },
+    "nextroom_int": {
+     "file": "gml_Object_obj_chem_05_door_Other_10.gml",
+     "text": [
+      "nextroom = 199"
+     ]
+    },
+    "nextroom_var": {
+     "file": "gml_Object_obj_chem_05_door_Other_10.gml",
+     "text": [
+      "nextroom = 199"
+     ]
+    }
+   },
+   "verdict": [
+    "RT-CC(['nextroom = 199'])",
+    "CREATE(['instance_create(304, 170, obj_chem_05_floor_melt)'])"
+   ]
+  },
+  "obj_steamworks_factory_02_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    237
+   ],
+   "files": 2,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_room_controller_mansion_entrance": {
+   "no_rule_edges": 1,
+   "rooms": [
+    241
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "inst_create": 2,
+    "with_block": 2
+   },
+   "samples": {
+    "inst_create": {
+     "file": "gml_Object_obj_room_controller_mansion_entrance_Step_0.gml",
+     "text": [
+      "instance_create(obj_pl.x, obj_pl.y, obj_player_npc)",
+      "instance_create(obj_pl.x, obj_pl.y, obj_player_npc)"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_room_controller_mansion_entrance_Step_0.gml",
+     "text": [
+      "with (",
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "CREATE(['instance_create(obj_pl.x, obj_pl.y, obj_player_npc)', 'instance_create(obj_pl.x, obj_pl.y, obj_player_npc)'])"
+   ]
+  },
+  "obj_mansion_entrance_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    241
+   ],
+   "files": 1,
+   "pattern_hits": {
+    "inherit": 1,
+    "with_block": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_mansion_entrance_door_Step_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_mansion_entrance_door_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_mansion_entrance_doors": {
+   "no_rule_edges": 1,
+   "rooms": [
+    241
+   ],
+   "files": 5,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_mansion_hall_bedroom_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    245
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_mansion_hall_bedroom_door_Step_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_mansion_hall_study_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    247
+   ],
+   "files": 2,
+   "pattern_hits": {
+    "inherit": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_mansion_hall_study_door_Step_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_newhome_locked_doors": {
+   "no_rule_edges": 1,
+   "rooms": [
+    254
+   ],
+   "files": 3,
+   "pattern_hits": {
+    "inherit": 2,
+    "with_block": 1
+   },
+   "samples": {
+    "inherit": {
+     "file": "gml_Object_obj_newhome_locked_doors_Create_0.gml",
+     "text": [
+      "event_inherited()"
+     ]
+    },
+    "with_block": {
+     "file": "gml_Object_obj_newhome_locked_doors_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "INHERIT"
+   ]
+  },
+  "obj_exit": {
+   "no_rule_edges": 1,
+   "rooms": [
+    256
+   ],
+   "files": 3,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_truelab_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    262
+   ],
+   "files": 0,
+   "pattern_hits": {},
+   "samples": {},
+   "verdict": [
+    "--visual/none--"
+   ]
+  },
+  "obj_macro_froggit_room_door": {
+   "no_rule_edges": 1,
+   "rooms": [
+    275
+   ],
+   "files": 3,
+   "pattern_hits": {
+    "with_block": 1
+   },
+   "samples": {
+    "with_block": {
+     "file": "gml_Object_obj_macro_froggit_room_door_Step_0.gml",
+     "text": [
+      "with ("
+     ]
+    }
+   },
+   "verdict": [
+    "--visual/none--"
+   ]
+  }
+ }
+}

@@ -1193,7 +1193,7 @@ SUITES = [
                                'check57.py'),
         'offscreen': False,
         'desc': '第五十七轮：7B 模型运转 / 并发上限 —— '
-                'A 配置锚点（app 用的句柄 = ralsei:v4 / 注册表 35 条 model 全 null '
+                'A 配置锚点（app 用的句柄 = ralsei:v4 / 注册表**每条** model 全 null '
                 '（跟随配置，不各自常驻）/ model_policy 的两条理由 / '
                 '人设量级 2000~12000 字（★第64轮：13 份 → 50 份，'
                 '最长 ut_flowey=10920 ⇒ 上限已随事实放宽））/ '
