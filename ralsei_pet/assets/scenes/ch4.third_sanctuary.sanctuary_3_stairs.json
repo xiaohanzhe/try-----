@@ -17,6 +17,12 @@
   },
   "objects": [
     {
+      "pos": [-40, 0],
+      "sprite": "objs/spr_eventsmall_0.png",
+      "src": "obj_dw_churchc_savepoint",
+      "depth": 0
+    },
+    {
       "pos": [240, 1080],
       "sprite": "objs/spr_savepoint_0.png",
       "src": "obj_savepoint",
@@ -28,6 +34,12 @@
         "frame_ms": 33.3,
         "src": "original"
       }
+    },
+    {
+      "pos": [540, 1040],
+      "sprite": "objs/spr_bell_small_0.png",
+      "src": "obj_dw_churchc_savepoint_judgmentbell",
+      "depth": 1000400
     }
   ],
   "anchors": {},

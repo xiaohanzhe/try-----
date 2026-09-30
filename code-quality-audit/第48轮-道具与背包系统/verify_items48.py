@@ -569,6 +569,42 @@ def seg_d():
 #  E 可交互物（分类如实 + 锁必须能释放）
 # ===========================================================================
 
+def _product_src_hist():
+    """遍历场景**产物**，数每个 `src` 出现次数 —— E3 的事实源。
+
+    ★ 为什么拿产物当事实源：`PROP_CLASSES` 里的 `in_data` 是**声明**，
+      产物才是**事实**。两侧对账才能同时堵住"没做却说做了"与"做了却说没做"。
+    """
+    hist = {}
+    sd = SS.scenes_dir()
+    if not os.path.isdir(sd):
+        return hist
+    for f in sorted(os.listdir(sd)):
+        if not f.endswith('.json'):
+            continue
+        try:
+            with io.open(os.path.join(sd, f), 'r', encoding='utf-8') as fh:
+                d = json.load(fh)
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        tables = []
+        if isinstance(d.get('scenes'), dict):
+            tables.append(d['scenes'])
+        if isinstance(d.get('objects'), list):
+            tables.append({'_self': d})
+        for t in tables:
+            for _sid, raw in t.items():
+                if not isinstance(raw, dict):
+                    continue
+                for o in (raw.get('objects') or []):
+                    s = (o or {}).get('src')
+                    if s:
+                        hist[s] = hist.get(s, 0) + 1
+    return hist
+
+
 def seg_e():
     # ---- E1 分类正/负成对（认不出来 ⇒ None，不猜）----
     got = {n: (II.classify(n) or {}).get('kind') for n in
@@ -585,25 +621,47 @@ def seg_e():
           and d.get('handled_by') == 'scene_routing' and 'gap' not in d,
           'E2 ★门是"已实现但归路由层"（handled_by=%r），不标数据缺口' % (d.get('handled_by'),))
 
-    # ---- E3 ★ 数据缺口如实登记（至少 readable / chest / pickup / sign 四类）----
+    # ---- E3 ★★ 缺口清单与**产物实测**对账（正/负成对；第68轮升级口径）----
+    #   旧口径 = "至少登记 readable/chest/pickup/sign/interactable/furniture 六类缺口"。
+    #   第68轮把可交互类实例**补采进产物**了 ⇒ 再要求"这六类必须仍是缺口"，
+    #   等于**要求缺口不许被修**（判据站到了事实的对立面）。
+    #   新口径更硬：拿**产物**当事实源，两侧对账 ——
+    #     · 登记 `in_data=True` 的类：产物里必须真有条数（正控制）
+    #     · 登记 `in_data=False` 的类：产物里必须一条都没有（负控制）
+    #   ⇒ 既堵"没做却说做了"，也堵"做了却说没做"。
+    prod = _product_src_hist()
     gaps = II.data_gaps()
-    check('E3', {'readable', 'chest', 'pickup', 'sign', 'interactable', 'furniture'} <= set(gaps)
-          and all(v for v in gaps.values()),
-          'E3 ★数据缺口如实登记 %d 类：%s（不假装已实现）'
-          % (len(gaps), ','.join(sorted(gaps))))
+    true_but_empty = sorted(n for n, r in II.PROP_CLASSES.items()
+                            if r.get('in_data') is True and prod.get(n, 0) == 0)
+    gap_but_present = sorted(n for names in gaps.values() for n in names
+                             if prod.get(n, 0) > 0)
+    check('E3', not true_but_empty and not gap_but_present and len(gaps) > 0,
+          'E3 ★★缺口与产物对账：缺口 %d 类（%s）/ 声明 True 却 0 条 %d 个 / '
+          '缺口却有实例 %d 个（两侧都须为 0）'
+          % (len(gaps), ','.join(sorted(gaps)), len(true_but_empty), len(gap_but_present)))
+    for _n in (true_but_empty + gap_but_present)[:5]:
+        print('      [SUSPECT] %s' % _n)
 
-    # ---- E4 ★★ 真实场景：ch1 城堡镇 7 个 objects ⇒ 建出 1 个存档点，且交互真发生 ----
+    # ---- E4 ★★ 真实场景：ch1 城堡镇 ⇒ 存档点 + 可读物**都**建出可交互物 ----
+    #   ★ 第68轮：objects 由 7 → 11（补采落地了 `obj_readable_room1`）⇒ 不能再断言 `== 7`
+    #     —— 那是"锁死形态"，而本轮恰恰要改形态。改断言 **≥ 8**
+    #     （6 个门/标记 + 1 存档点 + 1 可读物）：守"不为空/不退化"，不锁死会增长的数字；
+    #     精确对账交给第68轮的新套件。
+    #   ★ 也不能再用 `props[0]`：同类物件现在有多个，位置一变就抓错对象
+    #     ⇒ 改成**按 kind 找**（"取第几个"不再依赖顺序）。
     sid = 'ch1.castle_town.castle_town'
     entry = (INDEX.get('scenes') or {}).get(sid)
     st = SS.load_scene(sid, entry=entry)
     n_save = sum(1 for o in (st.objects or []) if (o or {}).get('src') == 'obj_savepoint')
     seen = []
     props = II.build_props(st, 'ch1', 'dark', present=lambda t, a=None: seen.append(t) or t)
-    ok_i = bool(props) and props[0].interact()
-    check('E4', st is not None and len(st.objects or []) == 7 and n_save == 1
-          and len(props) == 1 and ok_i and seen and '存档点' in seen[0],
-          'E4 ★★真实场景（城堡镇 7 objects / 1 存档点）⇒ 建 1 个可交互物并真交互（台词 %r）'
-          % (seen[0][:18] if seen else None,))
+    sp = [p for p in props if p.kind == 'savepoint']
+    rd = [p for p in props if p.kind == 'readable']
+    ok_i = bool(sp) and sp[0].interact()
+    check('E4', st is not None and len(st.objects or []) >= 8 and n_save == 1
+          and len(sp) == 1 and len(rd) >= 1 and ok_i and seen and '存档点' in seen[0],
+          'E4 ★★真实场景（城堡镇 objects≥8 / 1 存档点 + %d 可读物）⇒ 存档点真交互（台词 %r）'
+          % (len(rd), seen[0][:18] if seen else None))
 
     # ---- E4b 全章普查也走真实数据（ch1 暗世界有 17 个存档点 / 1 个暗之泉）----
     hit = II.survey(SS.scenes_dir(), 'ch1', 'dark')

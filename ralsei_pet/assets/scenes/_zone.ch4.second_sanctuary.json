@@ -30,7 +30,21 @@
    "original_room_id": 249,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [266, 256],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_libraryconnector": {
    "name": "第二圣域·churchb_libraryconnector",
@@ -39,7 +53,21 @@
    "original_room_id": 250,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [440, 920],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_rotatingtower": {
    "name": "第二圣域·churchb_rotatingtower",
@@ -66,7 +94,14 @@
    "original_room_id": 254,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [3520, 1840],
+     "sprite": "objs/spr_eventsmall_0.png",
+     "src": "obj_dw_churchb_escherstaircase",
+     "depth": 0
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_prophecymaze": {
    "name": "第二圣域·churchb_prophecymaze",
@@ -75,7 +110,21 @@
    "original_room_id": 255,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [698, 557],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_rotatingtower2": {
    "name": "第二圣域·churchb_rotatingtower2",
@@ -129,7 +178,21 @@
    "original_room_id": 268,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1840, 760],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_moneyfountain": {
    "name": "第二圣域·churchb_moneyfountain",
@@ -138,7 +201,20 @@
    "original_room_id": 269,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1480, 680],
+     "sprite": "objs/spr_eventsmall_0.png",
+     "src": "obj_dw_churchb_moneyfountain",
+     "depth": 100
+    },
+    {
+     "pos": [1640, 840],
+     "sprite": "objs/spr_dw_church_moneyfountain_basin_0.png",
+     "src": "obj_dw_church_moneyfountainsprite",
+     "depth": 100
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_fountain": {
    "name": "第二圣域·churchb_fountain",
@@ -147,7 +223,14 @@
    "original_room_id": 282,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 40],
+     "sprite": "objs/spr_eventsmall_0.png",
+     "src": "obj_dw_churchb_fountain",
+     "depth": 0
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_prophecymaze_old": {
    "name": "第二圣域·churchb_prophecymaze_old",
@@ -219,7 +302,21 @@
    "original_room_id": 302,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1598, 954],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_rotatingtower_old": {
    "name": "第二圣域·churchb_rotatingtower_old",
@@ -228,7 +325,21 @@
    "original_room_id": 303,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [640, 760],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.second_sanctuary.dw_churchb_darkclimb_scene": {
    "name": "第二圣域·churchb_darkclimb_scene",

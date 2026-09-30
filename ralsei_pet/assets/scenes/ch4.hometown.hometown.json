@@ -17,6 +17,18 @@
   },
   "objects": [
     {
+      "pos": [276, 96],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
+      "depth": 0
+    },
+    {
+      "pos": [376, 92],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
+      "depth": 0
+    },
+    {
       "pos": [772, 232],
       "sprite": "objs/spr_doorC_0.png",
       "src": "obj_doorC",
@@ -54,7 +66,7 @@
     },
     {
       "pos": [1740, -10],
-      "sprite": "objs/spr_doorX_0.png",
+      "sprite": "objs/spr_doorW_0.png",
       "src": "obj_doorW",
       "depth": 0
     },
@@ -65,15 +77,27 @@
       "depth": 0
     },
     {
-      "pos": [1096, 91],
-      "sprite": "objs/spr_markerX_0.png",
-      "src": "obj_markerv",
+      "pos": [1274, 85],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
       "depth": 0
     },
     {
-      "pos": [321, 99],
-      "sprite": "objs/spr_markerX_0.png",
-      "src": "obj_markert",
+      "pos": [1518, 90],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
+      "depth": 0
+    },
+    {
+      "pos": [1658, 90],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
+      "depth": 0
+    },
+    {
+      "pos": [1878, 90],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
       "depth": 0
     },
     {
@@ -91,7 +115,7 @@
     },
     {
       "pos": [301, 94],
-      "sprite": "objs/spr_doorX_0.png",
+      "sprite": "objs/spr_doorW_0.png",
       "src": "obj_doorW",
       "depth": 50000
     },

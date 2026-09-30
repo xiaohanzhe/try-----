@@ -1,0 +1,37 @@
+=== §0 校准：对照组（仓库内 3 个已知真值）===
+  spr_savepoint    src=objs       {'w': 20, 'h': 19, 'ratio': 0.3131578947368421, 'ncolors': 2}
+  spr_markerX      src=objs       {'w': 20, 'h': 20, 'ratio': 0.325, 'ncolors': 3}
+  spr_eventsmall   src=objs       {'w': 9, 'h': 9, 'ratio': 1.0, 'ncolors': 3}
+[PASS] C1 spr_savepoint 可见 非透明=31.3%
+[PASS] C2 spr_markerX 有内容 非透明=32.5%
+[PASS] C3 spr_eventsmall 实心 非透明=100.0%
+
+=== §1 ch2~ch5 被过滤的 marker 系（判定：实心色块 ⇒ 不画才对）===
+  spr_markerS                [src:ch2]  38x74  非透明= 76.7%  色数=4   
+  spr_markerU                [src:ch2]  38x74  非透明= 76.7%  色数=4   
+  spr_markerV                [src:ch2]  38x74  非透明= 76.7%  色数=4   
+  spr_markerT                [src:ch2]  38x74  非透明= 76.7%  色数=4   
+  spr_markerR                [src:ch2]  38x74  非透明= 76.7%  色数=4   
+  spr_markerAny              [src:ch2]  38x74  非透明= 90.4%  色数=345 
+  spr_doorAny                [src:ch2]  40x40  非透明=100.0%  色数=2   
+  spr_solid_charmarker       [src:ch2]  40x40  非透明= 51.0%  色数=1   
+  spr_climbmarker            [src:ch4]  20x20  非透明=100.0%  色数=2   
+  spr_debug_40x40            [src:ch4]  40x40  非透明= 99.9%  色数=1   
+  spr_pxwhite                [src:ch2]   1x1   非透明=100.0%  色数=1   
+  spr_whitepixel             [src:ch2]   1x1   非透明=100.0%  色数=1   
+
+=== §2 同批暴露的"真可见装饰"（判定：有内容、非纯色 ⇒ 应补采）===
+  spr_dw_mansion_door_closed     [src:ch2]  80x120 非透明=100.0%  色数=9   
+  spr_mansion_doorframe_left_side [src:ch2]  40x40  非透明= 20.0%  色数=3   
+  spr_bg_city_trashcan           [src:ch2]  28x38  非透明= 60.0%  色数=4   
+  spr_bg_city_trash_bag          [src:ch2]  27x27  非透明= 70.1%  色数=2   
+  spr_dw_ch3_b3bs_trashcan       [src:ch3]  28x43  非透明= 52.2%  色数=5   
+  spr_castle_shop_new            [src:ch2] 208x228 非透明= 66.2%  色数=13  
+  spr_fusuma_back_small          [src:ch5]  60x60  非透明= 17.5%  色数=3   
+  spr_kris_plat_idle             [src:ch5]  34x36  非透明= 50.0%  色数=9   
+  spr_shadowplatform_table       [src:ch5]  40x50  非透明= 92.0%  色数=12  
+  spr_manhole                    [src:ch2]  45x22  非透明= 40.8%  色数=3   
+  spr_dw_puzzlecloset_door_open  [src:ch3]  40x110 非透明= 67.2%  色数=3   
+  spr_dw_church_stairs           [src:ch4] 320x280 非透明=100.0%  色数=54  
+  spr_dtrans_lightpillar         [src:ch2] 100x240 非透明= 11.8%  色数=1   
+  spr_dw_castle_tv_door_mike     [src:ch4]  68x55  非透明= 39.5%  色数=2   

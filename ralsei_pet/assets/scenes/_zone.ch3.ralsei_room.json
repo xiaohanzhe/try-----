@@ -34,7 +34,7 @@
     },
     {
      "pos": [462, 249],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 50000
     }
@@ -68,13 +68,13 @@
     },
     {
      "pos": [857, 241],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [551, 459],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -82,6 +82,24 @@
      "pos": [260, 238],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
+     "depth": 100
+    },
+    {
+     "pos": [582, 126],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    },
+    {
+     "pos": [370, 206],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    },
+    {
+     "pos": [968, 205],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 100
     }
    ]
@@ -94,12 +112,6 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
-    {
-     "pos": [279, 226],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 0
-    },
     {
      "pos": [551, 226],
      "sprite": "objs/spr_markerW_0.png",
@@ -119,20 +131,26 @@
      "depth": 0
     },
     {
+     "pos": [1052, 206],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [255, 235],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [530, 234],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [808, 229],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },

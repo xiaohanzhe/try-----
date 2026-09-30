@@ -15,27 +15,32 @@
 **禁 import Qt、禁 import 其它项目内模块** —— 与 companion / item_system 同源理由
 （`main.py` import 期建控制器，回头 import 会接上初始化环）。
 
-★ 数据现状（第48轮实测，**必须先看这段再用**）
------------------------------------------------
-我们场景 JSON 里的 `objects` 来自第44轮生成器，它有一条硬规则：
-**「没 sprite 的纯逻辑锚点不写进 objects」**（见 `gen_objects44.py` 的 `object()`）。
-再加上第42轮的实例普查本身只覆盖了 **146 个对象类**（门 / 标记 / 存档点 / 泉 / 少量事件），
-于是这些**原作里真实存在**的可交互类**一件都没进数据**：
+★ 数据现状（**第68轮已补采；先看这段再动手**）
+------------------------------------------------
+第48轮这里登记过一个缺口：`obj_readable` / 宝箱 / 拾取 / 招牌 / 可调查家具
+**一件实例都没有**。第68轮补上了，根因有**三个 —— 只修一个都不够**：
 
-    obj_readable / obj_readable_room1 / obj_npc_sign / obj_interactable /
-    obj_treasure_room / obj_bug_treasure_chest / obj_board_pickup / …
+  1. **普查没采**：第42轮 `inst42.csx` 的关键词表里没有
+     `readable / sign / chest / treasure / pickup / interactable / desk …`
+     ⇒ 这些类的实例**从未被导出**（不是"采了没收"，是"根本没采"）。
+     第68轮 `inst68.csx` 把关键词扩到 14+13 个，五章实例 5,523 → **6,889**。
+  2. **对象表只有 ch1 的**：第44轮生成器拿 **ch1 的 353 个对象**去匹配**全五章**的实例，
+     ch2~5 独有的对象名查不到 sprite 一律丢弃。实证：`obj_board_pickup` 只在
+     `chapter3_objmap43.txt` 里 ⇒ 它虽被采到、素材也搬了，却**永远进不了 objects**。
+     第68轮改为**按章取表**（ch1 仍用 `objmap43.txt`，故 ch1 不漂移）。
+  3. **sprite 不在仓库**：`object()` 有一条"无素材跳过"⇒ sprite 没进
+     `assets/scenes/objs/` 就等于不存在。第68轮一并搬了该类用到的 12 个 sprite。
 
-⇒ 本模块把这些类**照样登记在分类表里**，但标 `in_data=False` 并写明缺什么。
-这样"缺口"是**可见的**（报告里能点出来），而不是假装没有。
-数据补齐后**不用改代码**，`build_props()` 自动就会为它们建出可交互物。
-
-★ 有数据、本轮真正能互动的
----------------------------
-| 原件名 | 实例数 | 分类 | 原作行为出处 |
-|---|---|---|---|
-| `obj_savepoint` 系列 | 55+ | savepoint | `obj_savepoint_Other_10`：按 `room` 给不同台词 + **全队回满 HP** |
-| `obj_darkfountain` / `obj_fountainkris` 系列 | 5+2 | fountain | 暗之泉（产品第一站 = `ch1.room_town_north`，见 §43.6） |
-| `obj_shortcut_door` / `obj_darkdoor` | 27+4 | door | 交回路由层（不在这里处理） |
+★ 现在真正能互动的（分类 → 实现）
+-----------------------------------
+| 分类 | 实现类 | 行为出处 |
+|---|---|---|
+| `savepoint` | `SavePointProp` | `obj_savepoint_Other_10`：按 `room` 给台词 + **全队回满 HP** |
+| `fountain` | `FountainProp` | 暗之泉（产品第一站 = `ch1.room_town_north`，见 §43.6） |
+| `pickup` | `PickupProp` | 落点表驱动（`assets/items/pickups.json`）；**没有表就如实不建物** |
+| `readable` / `sign` | `ReadableProp` | 产品口径文本（原文本在外部语言包，拿不到） |
+| `chest` / `interactable` / `furniture` | `InspectProp` | 同上；第68轮新增（此前落进 `else` 被静默丢弃） |
+| `door` | —— | 交回**路由层**（`classify` 标 `handled_by='scene_routing'`） |
 """
 import collections
 import json
@@ -76,10 +81,8 @@ PROP_CLASSES = {
     'obj_dw_churchc_savepoint_judgmentbell': {'kind': 'savepoint', 'in_data': True},
 
     'obj_darkfountain': {'kind': 'fountain', 'in_data': True},
-    'obj_darkfountain_event': {'kind': 'fountain', 'in_data': True},
     'obj_fountainkris': {'kind': 'fountain', 'in_data': True},
     'obj_fountainkris_ch2_sideb': {'kind': 'fountain', 'in_data': True},
-    'obj_ch2_scene25_fountain': {'kind': 'fountain', 'in_data': True},
     'obj_ch4_DCA12_darkfountain': {'kind': 'fountain', 'in_data': True},
     'obj_ch5_DW45_fountain': {'kind': 'fountain', 'in_data': True},
     'obj_dw_churchb_fountain': {'kind': 'fountain', 'in_data': True},
@@ -89,24 +92,38 @@ PROP_CLASSES = {
     'obj_darkdoor': {'kind': 'door', 'in_data': True},
     'obj_darkdoorevent': {'kind': 'door', 'in_data': True},
 
-    # ---- 无数据：机制与分类已就位，等实例普查补上 ---------------------------
+    # ---- 第68轮实例补采后**已有实例**的类（判据 = 产物里真有条数，见 verify_items68）----
+    #   不再标 `gap`：缺口已经补上，留着旧说明就是"假话"（比没有注释更糟）。
+    'obj_readable_room1': {'kind': 'readable', 'in_data': True},
+    'obj_npc_sign': {'kind': 'sign', 'in_data': True},
+    'obj_treasure_room': {'kind': 'chest', 'in_data': True},
+    'obj_schooldesk': {'kind': 'furniture', 'in_data': True},
+    'obj_alphysdesk': {'kind': 'furniture', 'in_data': True},
+    'obj_board_pickup': {'kind': 'pickup', 'in_data': True},
+    'obj_bug_treasure_chest': {'kind': 'chest', 'in_data': True},
+
+    # ---- 仍是缺口：登记在册，但第68轮全量普查 + 产物里 **0 条实例** ----
+    #   措辞写清"缺的是什么"：不是"没采"，而是"数据里这个名字就没有房间在用"。
     'obj_readable': {'kind': 'readable', 'in_data': False,
-                     'gap': '第42轮实例普查未收录该类；且 spr_interactable 未搬进 assets/scenes/objs/'},
-    'obj_readable_room1': {'kind': 'readable', 'in_data': False, 'gap': '同上'},
-    'obj_board_readable': {'kind': 'readable', 'in_data': False, 'gap': '同上（ch3 棋盘章）'},
-    'obj_npc_sign': {'kind': 'sign', 'in_data': False,
-                     'gap': '实例普查未收录（objmap43 有 spr=spr_npc_sign, vis=True）'},
+                     'gap': '第68轮普查已覆盖 readable 键，但 ch1~5 实例里 0 条'
+                            '（spr_interactable 已进 objs/，有房间用它即可用）'},
+    'obj_board_readable': {'kind': 'readable', 'in_data': False,
+                           'gap': 'ch3 棋盘章专用，普查里 0 条实例'},
     'obj_interactable': {'kind': 'interactable', 'in_data': False,
-                         'gap': '实例普查未收录；objmap43 里该对象 `spr=` 为空（运行时才给图）'},
-    'obj_interactablesolid': {'kind': 'interactable', 'in_data': False, 'gap': '同上'},
-    'obj_board_interactable': {'kind': 'interactable', 'in_data': False, 'gap': '同上'},
-    'obj_treasure_room': {'kind': 'chest', 'in_data': False,
-                          'gap': '实例普查未收录（objmap43 有 spr=spr_treasurebox, vis=True）'},
-    'obj_bug_treasure_chest': {'kind': 'chest', 'in_data': False, 'gap': '同上'},
-    'obj_board_pickup': {'kind': 'pickup', 'in_data': False, 'gap': '同上'},
-    'obj_board_heal_pickup': {'kind': 'pickup', 'in_data': False, 'gap': '同上'},
-    'obj_alphysdesk': {'kind': 'furniture', 'in_data': False, 'gap': '实例普查未收录'},
-    'obj_schooldesk': {'kind': 'furniture', 'in_data': False, 'gap': '实例普查未收录'},
+                         'gap': 'objmap43 里该对象 `spr=` 为空（运行时才给图）⇒ 不可绘制、进不了 objects'},
+    'obj_interactablesolid': {'kind': 'interactable', 'in_data': False,
+                              'gap': '同上；且普查里 0 条实例'},
+    'obj_board_interactable': {'kind': 'interactable', 'in_data': False,
+                               'gap': 'ch3 棋盘章，0 条实例'},
+    'obj_board_heal_pickup': {'kind': 'pickup', 'in_data': False,
+                              'gap': 'ch3 棋盘章，0 条实例'},
+    # ★ 下面两条是第68轮**对账判据抓出来的**：第48轮把它们标成 `in_data=True`
+    #   （依据是"第42轮普查收录了该类"），但产物里 0 条 —— 因为"普查收录"≠"能进产物"。
+    'obj_darkfountain_event': {'kind': 'fountain', 'in_data': False,
+                               'gap': '第68轮全量普查里 0 条实例（对象存在，但没有房间在用）'},
+    'obj_ch2_scene25_fountain': {'kind': 'fountain', 'in_data': False,
+                                 'gap': '对象表里该对象的 `spr=` 为空（运行时才给图）'
+                                        '⇒ 不可绘制、进不了 objects'},
 }
 
 #: 前缀兜底：按名字前缀归类（用于登记表没写、但语义显然的名字）。
@@ -144,7 +161,11 @@ def classify(src):
         return {'kind': 'door', 'in_data': True, 'handled_by': 'scene_routing'}
     for _, keys, kind in _PREFIX_RULES:
         if any(k in low for k in keys):
-            return {'kind': kind, 'in_data': False, 'gap': '按名字前缀归类，未逐类登记'}
+            # ★ `in_data=None` **不等于**"缺数据"：它的意思是"这类名我们**没逐个登记**，
+            #   只是按名字前缀归了类"。产物里可能真有条数（如 `obj_cybercity_bg_sign`）。
+            #   标 `False` 会让 `data_gaps()` 把**已经落地的物件**误报成缺口
+            #   —— 那与"如实"这条原则一样有害（是反向的不如实）。
+            return {'kind': kind, 'in_data': None, 'unregistered': True}
     return None
 
 
@@ -155,10 +176,16 @@ def is_interactive(src):
 
 
 def data_gaps():
-    """列出"机制就位但数据缺席"的分类（报告用）。"""
+    """列出"机制就位但数据缺席"的分类（报告用）。
+
+    ★ 只统计 `PROP_CLASSES` 里**显式 `in_data=False`** 的登记项 ——
+      那才是"我们点名要的类，普查里一条都没有"。
+      按名字前缀兜底归类（`in_data=None`）**不算缺口**：那些类没逐个登记，
+      但产物里很可能真有条数（如招牌类），把它们列成缺口＝另一种不如实。
+    """
     seen = {}
     for name, rec in sorted(PROP_CLASSES.items()):
-        if not rec.get('in_data', False):
+        if rec.get('in_data') is False:
             seen.setdefault(rec['kind'], []).append(name)
     return seen
 
@@ -295,15 +322,59 @@ class PickupProp(PropInteractable):
 
 
 class ReadableProp(PropInteractable):
-    """可读物 / 招牌 —— 机制就位；当前数据里还没有实例（见 `PROP_CLASSES` 的 `gap`）。"""
+    """可读物 / 招牌 —— 第68轮补采后**已有实例**（`obj_readable_room1` 856 条 /
+    `obj_npc_sign` 81 条等）。
 
-    def __init__(self, key, text, src='obj_readable', present=None, bus=None):
-        PropInteractable.__init__(self, key, src, 'readable', bus=bus)
+    文本走 `READABLE_TEXT`（产品口径：原文本在 `lang_zh_names.json`，拿不到）。
+    """
+
+    def __init__(self, key, text, src='obj_readable', kind='readable', present=None, bus=None):
+        # ★ `kind` 默认 `'readable'` ⇒ **不传该参的既有调用行为完全不变**（纯增量）。
+        #   第68轮起 `build_props` 把真实 kind（`readable` / `sign`）传进来 ——
+        #   否则招牌类物件的 `describe()` 会自称"可读物"（张冠李戴）。
+        PropInteractable.__init__(self, key, src, kind, bus=bus)
         self.text = text
         self.present = present
 
     def on_interact(self, actor=None):
         if self.present is None:
+            return False
+        self.dialog = self.present(self.text, actor)
+        return bool(self.dialog)
+
+
+#: 「调查类」kind —— 宝箱 / 通用可交互物 / 可调查家具。这三类在原件里的差别
+#: **只在实例自带的事件脚本**里（开箱逻辑、家具的台词都存在实例变量），
+#: 而实例级脚本**不进我们的数据**（第44轮 objects 只蒸馏了 pos/sprite/src）
+#: ⇒ 统一为"调查后给一句描述"，台词按 kind 分流，**不假装**给出了原作文本。
+INSPECT_KINDS = frozenset({'chest', 'interactable', 'furniture'})
+
+#: ★ 产品口径台词（原文在外部语言包，拿不到；同 §49.2 的取证）。
+INSPECT_TEXT = {
+    'chest': '* 一个箱子。盖子扣得很紧——里面像是空的。',
+    'interactable': '* 这里似乎有什么东西，但看不出门道。',
+    'furniture': '* 一件家具。看起来没什么特别的。',
+}
+
+
+class InspectProp(PropInteractable):
+    """「调查类」物件（宝箱 / 可交互物 / 家具）—— 说清"这里有什么"，而不是干瘪的"什么都没有"。
+
+    `present(text, actor)` 由接线层注入；**没注入 ⇒ 如实返回 False**（同其它 Prop 的纪律：
+    宁可"看上去不能点"，也不要"点了没反应"）。
+    """
+
+    def __init__(self, key, kind, src=None, text=None, present=None, bus=None):
+        PropInteractable.__init__(self, key, src or ('obj_%s' % kind), kind, bus=bus)
+        if text is not None:
+            self.text = text
+        else:
+            self.text = INSPECT_TEXT.get(kind, INSPECT_TEXT['interactable'])
+        self.present = present
+
+    def on_interact(self, actor=None):
+        if self.present is None:
+            _log.warning('调查物 %s 没接 present ⇒ 如实返回"没发生"', self.key)
             return False
         self.dialog = self.present(self.text, actor)
         return bool(self.dialog)
@@ -368,10 +439,16 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
                                       inventory=inventory, present=present, bus=bus))
         elif kind in ('readable', 'sign'):
             out.append(ReadableProp(key, READABLE_TEXT.get(src, READABLE_TEXT['_default']),
-                                    src=src, present=present, bus=bus))
+                                    src=src, kind=kind, present=present, bus=bus))
+        elif kind in INSPECT_KINDS:
+            # ★ 第68轮：宝箱 / 通用可交互物 / 可调查家具 —— 普查与产物里**已有实例**，
+            #   不能再落进 else 被静默丢弃（否则就是"补采了数据、却没实现交互"）。
+            out.append(InspectProp(key, kind, src=src, present=present, bus=bus))
         else:
-            # chest / interactable / furniture / cutscene / door：**不在这里实现**。
-            # 门交路由层；其余等数据补齐。不造假可交互物。
+            # 仍不在这里实现的：
+            #   `door`    —— 交路由层（见 classify 的 handled_by）
+            #   `cutscene`—— 演出触发器，不是玩家点的物件
+            #   `pickup`  —— 有自己的分支；**没有落点表就如实不建物**（见 PickupProp docstring）
             continue
     return out
 

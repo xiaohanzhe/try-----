@@ -15,20 +15,8 @@
    "bg_asset": "spr_dw_mansion_room_kris_bg",
    "objects": [
     {
-     "pos": [300, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 0
-    },
-    {
-     "pos": [300, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markers",
-     "depth": 0
-    },
-    {
      "pos": [280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -44,20 +32,8 @@
    "bg_asset": "spr_dw_mansion_room_susie_bg",
    "objects": [
     {
-     "pos": [300, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 0
-    },
-    {
-     "pos": [300, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
-     "depth": 0
-    },
-    {
      "pos": [280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -72,27 +48,21 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [96, 142],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [0, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [620, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [576, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
-     "depth": 100
-    },
-    {
-     "pos": [26, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
      "depth": 100
     }
    ]
@@ -106,27 +76,21 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [96, 142],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [0, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [620, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [576, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markers",
-     "depth": 100
-    },
-    {
-     "pos": [26, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
      "depth": 100
     }
    ]
@@ -140,27 +104,21 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [96, 142],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [0, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [620, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [26, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markers",
-     "depth": 100
-    },
-    {
-     "pos": [576, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
      "depth": 100
     }
    ]
@@ -175,14 +133,8 @@
    "objects": [
     {
      "pos": [0, 280],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [26, 262],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
      "depth": 100
     },
     {
@@ -344,6 +296,58 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [40, 1220],
+     "sprite": "objs/spr_ch2_cityad_dog_0.png",
+     "src": "obj_cybercity_bg_sign",
+     "depth": 0,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_ch2_cityad_dog",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [360, 1217],
+     "sprite": "objs/spr_ch2_cityad_dog_0.png",
+     "src": "obj_cybercity_bg_sign",
+     "depth": 0,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_ch2_cityad_dog",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [480, 800],
+     "sprite": "objs/spr_ch2_cityad_dog_0.png",
+     "src": "obj_cybercity_bg_sign",
+     "depth": 0,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_ch2_cityad_dog",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1103, 483],
+     "sprite": "objs/spr_ch2_cityad_dog_0.png",
+     "src": "obj_cybercity_bg_sign",
+     "depth": 0,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_ch2_cityad_dog",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
      "pos": [0, 1400],
      "sprite": "objs/spr_doorB_0.png",
      "src": "obj_doorB",
@@ -369,8 +373,20 @@
     },
     {
      "pos": [198, 1256],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
+     "depth": 100
+    },
+    {
+     "pos": [640, 1320],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    },
+    {
+     "pos": [1240, 1320],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 100
     }
    ]
@@ -383,6 +399,25 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
+    {
+     "pos": [1400, 143],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [760, 240],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
     {
      "pos": [0, 240],
      "sprite": "objs/spr_doorB_0.png",
@@ -418,6 +453,12 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [113, 162],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [230, 190],
      "sprite": "objs/spr_doorB_0.png",
      "src": "obj_doorB",
@@ -427,12 +468,6 @@
      "pos": [970, 190],
      "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorw_musfade",
-     "depth": 100
-    },
-    {
-     "pos": [26, 302],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
      "depth": 100
     }
    ]
@@ -447,7 +482,7 @@
    "objects": [
     {
      "pos": [280, 4780],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -459,7 +494,7 @@
     },
     {
      "pos": [280, 1516],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -512,13 +547,13 @@
    "objects": [
     {
      "pos": [280, 1356],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [280, 4780],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -542,12 +577,6 @@
      "pos": [981, 462],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
-     "depth": 100
-    },
-    {
-     "pos": [227, 369],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
      "depth": 100
     },
     {
@@ -608,19 +637,19 @@
    "objects": [
     {
      "pos": [235, 255],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [863, 255],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [1429, 254],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -647,15 +676,22 @@
    "bg_source": "none",
    "objects": [
     {
-     "pos": [320, 460],
-     "sprite": "objs/spr_doorX_0.png",
-     "src": "obj_doorW",
-     "depth": 100
+     "pos": [320, 280],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_bug_treasure_chest",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
     },
     {
-     "pos": [320, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
+     "pos": [320, 460],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorW",
      "depth": 100
     }
    ]
@@ -669,8 +705,34 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [360, 280],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [280, 240],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_bug_treasure_chest",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
      "pos": [320, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -691,6 +753,12 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [312, 2273],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [2280, 380],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
@@ -698,7 +766,7 @@
     },
     {
      "pos": [2280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -715,7 +783,7 @@
    "objects": [
     {
      "pos": [0, 800],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 200
     },
@@ -727,13 +795,13 @@
     },
     {
      "pos": [1120, 156],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 200
     },
     {
      "pos": [120, 156],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 200
     }
@@ -749,14 +817,8 @@
    "objects": [
     {
      "pos": [280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [300, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
      "depth": 100
     }
    ]
@@ -770,8 +832,80 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [1474, 152],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [149, 131],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [268, 131],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [393, 131],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [512, 131],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [630, 133],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [749, 134],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [870, 135],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [991, 133],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1107, 136],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1232, 136],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1354, 136],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -792,8 +926,21 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [360, 840],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
      "pos": [0, 800],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -805,7 +952,7 @@
     },
     {
      "pos": [280, 156],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -827,7 +974,7 @@
     },
     {
      "pos": [1720, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -848,14 +995,32 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [1000, 80],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_lockedDoor_mansion_east_2f_transformed_new",
+     "depth": 0
+    },
+    {
+     "pos": [98, 469],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1000, 80],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
      "pos": [642, 154],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [1000, 156],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -904,12 +1069,6 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 100
-    },
-    {
-     "pos": [240, 116],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
-     "depth": 100
     }
    ]
   },
@@ -923,14 +1082,8 @@
    "objects": [
     {
      "pos": [960, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [982, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
      "depth": 100
     }
    ]
@@ -945,38 +1098,26 @@
    "objects": [
     {
      "pos": [2540, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [1560, 156],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [360, 156],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [0, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [26, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
-     "depth": 100
-    },
-    {
-     "pos": [2497, 246],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
      "depth": 100
     }
    ]
@@ -991,14 +1132,8 @@
    "objects": [
     {
      "pos": [280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [1580, 380],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
      "depth": 100
     },
     {
@@ -1009,7 +1144,7 @@
     },
     {
      "pos": [1560, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -1025,14 +1160,8 @@
    "objects": [
     {
      "pos": [1780, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [1736, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
      "depth": 100
     },
     {
@@ -1053,14 +1182,8 @@
    "objects": [
     {
      "pos": [620, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [576, 222],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
      "depth": 100
     }
    ]
@@ -1075,7 +1198,7 @@
    "objects": [
     {
      "pos": [280, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1097,7 +1220,7 @@
    "objects": [
     {
      "pos": [0, 240],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1130,8 +1253,14 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [0, 40],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_ch2_scene21_puzzle_entrance",
+     "depth": 0
+    },
+    {
      "pos": [280, 100],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1345,6 +1474,36 @@
    "bg_asset": "bg_dw_noelle_ferris_wheel",
    "objects": [
     {
+     "pos": [235, 209],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [576, 204],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [446, 167],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [824, 199],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [305, 209],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [252, 380],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
@@ -1352,7 +1511,7 @@
     },
     {
      "pos": [230, 460],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -1368,19 +1527,19 @@
    "objects": [
     {
      "pos": [280, 600],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 0
     },
     {
-     "pos": [299, 606],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
+     "pos": [1100, 280],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     },
     {
      "pos": [1620, 720],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1392,13 +1551,13 @@
     },
     {
      "pos": [560, 1380],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [1440, 0],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1406,12 +1565,6 @@
      "pos": [1576, 675],
      "sprite": "objs/spr_markerW_0.png",
      "src": "obj_markerw",
-     "depth": 100
-    },
-    {
-     "pos": [1440, 6],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
      "depth": 100
     }
    ]
@@ -1426,7 +1579,7 @@
    "objects": [
     {
      "pos": [0, 320],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 0
     },
@@ -1438,7 +1591,7 @@
     },
     {
      "pos": [0, 320],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -1453,8 +1606,40 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [1120, 160],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_dw_mansion_mouseLottery_Chest",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1120, 80],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_dw_mansion_mouseLottery_Chest",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [452, 320],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
      "pos": [320, 700],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 200
     },
@@ -1487,8 +1672,14 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [310, 288],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
      "pos": [292, 832],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 0
     },
@@ -1521,20 +1712,20 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [560, 80],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    },
+    {
      "pos": [680, -80],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 200
     },
     {
-     "pos": [620, 166],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
-     "depth": 200
-    },
-    {
      "pos": [600, 1420],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 200
     },
@@ -1568,26 +1759,20 @@
     },
     {
      "pos": [0, 200],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [620, 200],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [280, 3180],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [301, 3080],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
      "depth": 100
     }
    ]
@@ -1602,7 +1787,7 @@
    "objects": [
     {
      "pos": [0, 200],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1610,6 +1795,12 @@
      "pos": [25, 222],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
+     "depth": 100
+    },
+    {
+     "pos": [206, 198],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 100
     }
    ]
@@ -1646,7 +1837,7 @@
    "objects": [
     {
      "pos": [661, -10],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1701,6 +1892,12 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [410, 152],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [1426, 633],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
@@ -1734,12 +1931,6 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
-    {
-     "pos": [480, 40],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 0
-    },
     {
      "pos": [276, 456],
      "sprite": "objs/spr_doorB_0.png",
@@ -1835,14 +2026,8 @@
     },
     {
      "pos": [350, 459],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 100
-    },
-    {
-     "pos": [377, 361],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markers",
      "depth": 100
     }
    ]
@@ -1856,26 +2041,26 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [400, 160],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_lockedDoor_mansion_east_2f_transformed_new",
+     "depth": 0
+    },
+    {
+     "pos": [99, 1600],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [155, 223],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
-     "pos": [179, 285],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 100
-    },
-    {
-     "pos": [412, 267],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markeru",
-     "depth": 100
-    },
-    {
      "pos": [395, 222],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -1949,7 +2134,7 @@
    "objects": [
     {
      "pos": [244, 147],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2016,8 +2201,14 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [200, 160],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [-16, 280],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2074,7 +2265,7 @@
    "objects": [
     {
      "pos": [262, 466],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2129,8 +2320,14 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [201, 200],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
      "pos": [0, 200],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2152,19 +2349,13 @@
    "objects": [
     {
      "pos": [1261, 265],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
-     "pos": [1210, 258],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
-     "depth": 100
-    },
-    {
      "pos": [193, -17],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2186,7 +2377,7 @@
    "objects": [
     {
      "pos": [780, 560],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2198,13 +2389,13 @@
     },
     {
      "pos": [40, 940],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
     {
      "pos": [640, 0],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -2212,12 +2403,6 @@
      "pos": [736, 515],
      "sprite": "objs/spr_markerW_0.png",
      "src": "obj_markerw",
-     "depth": 100
-    },
-    {
-     "pos": [640, 24],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
      "depth": 100
     }
    ]

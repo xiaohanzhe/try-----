@@ -39,7 +39,26 @@
    "original_room_id": 123,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [424, 250],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    },
+    {
+     "pos": [543, 250],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    },
+    {
+     "pos": [666, 250],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 100
+    }
+   ]
   },
   "ch5.garden.dw_garden_fishingspot": {
    "name": "希望之园·fishingspot",
@@ -57,7 +76,21 @@
    "original_room_id": 125,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [580, 2080],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.garden.dw_garden_hopschef": {
    "name": "希望之园·hopschef",
@@ -98,7 +131,27 @@
    "original_room_id": 128,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-200, 920],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_dw_garden_riverchest",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.garden.dw_garden_pedestal": {
    "name": "希望之园·pedestal",
@@ -116,7 +169,21 @@
    "original_room_id": 131,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1440, 720],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room_altsolid",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.garden.dw_garden_flowerygardening": {
    "name": "希望之园·flowerygardening",
@@ -179,7 +246,21 @@
    "original_room_id": 139,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2440, 560],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.garden.dw_garden_aquadarkness": {
    "name": "希望之园·aquadarkness",
@@ -224,7 +305,21 @@
    "original_room_id": 146,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1560, 640],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.garden.dw_garden_shearyguide": {
    "name": "希望之园·shearyguide",
@@ -274,7 +369,21 @@
    "original_room_id": 152,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 120],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_leaf_treasure_chest",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.garden.dw_garden_aquadash_plat": {
    "name": "希望之园·aquadash_plat",

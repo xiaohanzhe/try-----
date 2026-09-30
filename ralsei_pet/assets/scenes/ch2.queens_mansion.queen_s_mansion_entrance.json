@@ -30,6 +30,12 @@
       }
     },
     {
+      "pos": [0, 80],
+      "sprite": "objs/spr_event_0.png",
+      "src": "obj_ch2_room_mansion_entrance",
+      "depth": 0
+    },
+    {
       "pos": [102, 627],
       "sprite": "objs/spr_shortcut_door_0.png",
       "src": "obj_shortcut_door",
@@ -41,6 +47,12 @@
         "frame_ms": 33.3,
         "src": "original"
       }
+    },
+    {
+      "pos": [172, 416],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
     },
     {
       "pos": [0, 240],
@@ -58,12 +70,6 @@
       "pos": [856, 222],
       "sprite": "objs/spr_markerB_0.png",
       "src": "obj_markerB",
-      "depth": 100
-    },
-    {
-      "pos": [856, 702],
-      "sprite": "objs/spr_markerX_0.png",
-      "src": "obj_markeru",
       "depth": 100
     },
     {

@@ -102,7 +102,14 @@
    "original_room_id": 158,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [764, 198],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_lancerget": {
    "name": "电视世界·lancerget",
@@ -120,7 +127,21 @@
    "original_room_id": 160,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1116, 178],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_zapper_c": {
    "name": "电视世界·zapper_c",
@@ -129,7 +150,21 @@
    "original_room_id": 161,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [480, 240],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_rabbick_b": {
    "name": "电视世界·rabbick_b",
@@ -147,7 +182,73 @@
    "original_room_id": 163,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [260, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [350, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [446, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [542, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [634, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_zapper_b": {
    "name": "电视世界·zapper_b",
@@ -188,7 +289,14 @@
    "original_room_id": 178,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [40, 0],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_room_backstage_shop",
+     "depth": 0
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_mysterypuzzle": {
    "name": "电视世界·mysterypuzzle",
@@ -197,7 +305,21 @@
    "original_room_id": 179,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [60, 320],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_watercooler": {
    "name": "电视世界·watercooler",
@@ -260,7 +382,21 @@
    "original_room_id": 196,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [320, 1090],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_large_02": {
    "name": "电视世界·teevie_large_02",
@@ -332,7 +468,203 @@
    "original_room_id": 204,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [548, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [626, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [704, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [782, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [860, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [938, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1016, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1094, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1172, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1558, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1484, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1406, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1328, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1250, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [474, 100],
+     "sprite": "objs/spr_dw_ch3_b3bs_officesign_strip2_0.png",
+     "src": "obj_dw_ch3_b3bs_officesign",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_dw_ch3_b3bs_officesign_strip2",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_stealth_c": {
    "name": "电视世界·teevie_stealth_c",
@@ -467,7 +799,21 @@
    "original_room_id": 223,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [170, 270],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": -100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_maze_quiz": {
    "name": "电视世界·teevie_maze_quiz",
@@ -503,7 +849,21 @@
    "original_room_id": 233,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [40, 392],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_shuttahmaze": {
    "name": "电视世界·teevie_shuttahmaze",

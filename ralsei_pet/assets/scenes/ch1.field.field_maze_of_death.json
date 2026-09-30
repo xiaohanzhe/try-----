@@ -52,6 +52,49 @@
       "sprite": "objs/spr_markerA_0.png",
       "src": "obj_markerA",
       "depth": 0
+    },
+    {
+      "pos": [280, 480],
+      "sprite": "objs/spr_treasurebox_0.png",
+      "src": "obj_treasure_room",
+      "depth": 0,
+      "sprite_frames": 2,
+      "anim": {
+        "base": "objs/spr_treasurebox",
+        "frames": 2,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      }
+    },
+    {
+      "pos": [360, 120],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [860, 240],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [560, 680],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [560, 1120],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [1080, 1120],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
     }
   ],
   "anchors": {},

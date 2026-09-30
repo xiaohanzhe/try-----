@@ -21,8 +21,74 @@
      "depth": 0
     },
     {
+     "pos": [50, 45],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [158, 121],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [236, 46],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [78, 93],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [89, 117],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [90, 147],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [230, 132],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [230, 106],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [130, 32],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [37, 181],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [246, 185],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [130, 230],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -38,14 +104,20 @@
    "bg_asset": "bg_lw_library_upstairs",
    "objects": [
     {
-     "pos": [231, 188],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
+     "pos": [204, 144],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [244, 144],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     },
     {
      "pos": [213, 231],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     }
@@ -61,9 +133,21 @@
    "bg_asset": "bg_lw_police_house_base",
    "objects": [
     {
-     "pos": [148, 187],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
+     "pos": [120, 74],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [63, 175],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [82, 143],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     }
    ]
@@ -78,10 +162,82 @@
    "bg_asset": "bg_lw_sans_conbini",
    "objects": [
     {
-     "pos": [369, 183],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 100
+     "pos": [122, 82],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [206, 79],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [141, 156],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [176, 156],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [208, 156],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [249, 156],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [415, 71],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [245, 86],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [295, 86],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [439, 79],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [409, 164],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [441, 160],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [273, 84],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     },
     {
      "pos": [348, 230],
@@ -101,15 +257,27 @@
    "bg_asset": "bg_lw_ice_e_pizza",
    "objects": [
     {
-     "pos": [124, 231],
-     "sprite": "objs/spr_doorX_0.png",
-     "src": "obj_doorW",
-     "depth": 100
+     "pos": [43, 85],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     },
     {
-     "pos": [141, 177],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
+     "pos": [224, 63],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [58, 121],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [124, 231],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorW",
      "depth": 100
     }
    ]

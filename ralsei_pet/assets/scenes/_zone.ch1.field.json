@@ -60,6 +60,18 @@
      "depth": 0
     },
     {
+     "pos": [170, 280],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [1570, 280],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
      "pos": [1680, 670],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
@@ -81,6 +93,12 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
+    {
+     "pos": [610, 200],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
     {
      "pos": [240, -10],
      "sprite": "objs/spr_doorB_0.png",
@@ -138,6 +156,12 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [320, 200],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
     }
    ]
   },
@@ -183,6 +207,12 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
+    {
+     "pos": [1040, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
     {
      "pos": [-10, 280],
      "sprite": "objs/spr_doorB_0.png",
@@ -290,6 +320,18 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [200, 120],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [290, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -377,6 +419,12 @@
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
      "depth": 0
+    },
+    {
+     "pos": [120, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -445,6 +493,25 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [870, 200],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [1480, 260],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
     }
    ]
   },
@@ -466,6 +533,12 @@
      "pos": [1980, 240],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [160, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     },
     {

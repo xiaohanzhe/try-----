@@ -36,6 +36,12 @@
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
      "depth": 0
+    },
+    {
+     "pos": [230, 120],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
     }
    ]
   },
@@ -69,6 +75,42 @@
      "depth": 0
     },
     {
+     "pos": [676, 44],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [600, 72],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [526, 76],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [832, 70],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1102, 86],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1453, 44],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
      "pos": [1258, 98],
      "sprite": "objs/spr_doorX_0.png",
      "src": "obj_doorX",
@@ -93,6 +135,30 @@
      "depth": 0
     },
     {
+     "pos": [192, 90],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [190, 152],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [200, 130],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [208, 110],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [378, -12],
      "sprite": "objs/spr_doorD_0.png",
      "src": "obj_doorD",
@@ -102,6 +168,12 @@
      "pos": [418, 4],
      "sprite": "objs/spr_markerC_0.png",
      "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [1427, 38],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     }
    ]
@@ -125,6 +197,18 @@
      "pos": [10, 100],
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
+     "depth": 0
+    },
+    {
+     "pos": [80, 150],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [160, 150],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
      "depth": 0
     }
    ]
@@ -159,8 +243,38 @@
      "depth": 0
     },
     {
+     "pos": [23, 109],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [37, 107],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [49, 97],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [43, 117],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [40, 137],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [600, 80],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 0
     },
@@ -207,14 +321,8 @@
      "depth": 0
     },
     {
-     "pos": [247, 88],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
-     "depth": 0
-    },
-    {
      "pos": [240, 79],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 50000
     }
@@ -315,6 +423,30 @@
      "depth": 0
     },
     {
+     "pos": [108, 66],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [166, 66],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [250, 66],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [310, 66],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [595, 115],
      "sprite": "objs/spr_doorB_0.png",
      "src": "obj_doorB",
@@ -347,6 +479,12 @@
      "sprite": "objs/spr_doorD_0.png",
      "src": "obj_doorD_musfade",
      "depth": 0
+    },
+    {
+     "pos": [119, 1145],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -361,7 +499,7 @@
    "objects": [
     {
      "pos": [140, 230],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 0
     },
@@ -375,6 +513,18 @@
      "pos": [76, 88],
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [96, 166],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [228, 70],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     },
     {
@@ -417,6 +567,12 @@
      "sprite": "objs/spr_doorC_0.png",
      "src": "obj_doorC",
      "depth": 0
+    },
+    {
+     "pos": [140, 78],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -446,6 +602,36 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [205, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [66, 153],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [60, 175],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [240, 145],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [99, 89],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -458,6 +644,36 @@
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_hospital_room2_ch4",
    "objects": [
+    {
+     "pos": [214, 110],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [164, 90],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [124, 98],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [120, 166],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [244, 166],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
     {
      "pos": [140, 237],
      "sprite": "objs/spr_doorD_0.png",
@@ -492,6 +708,12 @@
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
      "depth": 0
+    },
+    {
+     "pos": [80, 80],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -505,6 +727,18 @@
    "bg_asset": "bg_townhall",
    "objects": [
     {
+     "pos": [200, 60],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [260, 70],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [140, 230],
      "sprite": "objs/spr_doorX_0.png",
      "src": "obj_doorX",
@@ -514,6 +748,12 @@
      "pos": [150, 190],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [250, 174],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     }
    ]
@@ -562,6 +802,42 @@
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
      "depth": 0
+    },
+    {
+     "pos": [38, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [62, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [94, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [60, 60],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [182, 60],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [140, 60],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -597,6 +873,96 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [145, 105],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [115, 105],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [173, 105],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [95, 120],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [192, 120],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [95, 145],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [193, 145],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
+     "depth": 0
+    },
+    {
+     "pos": [25, 145],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [25, 85],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [77, 82],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [195, 65],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [225, 50],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [265, 65],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [250, 125],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [145, 40],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -628,6 +994,48 @@
      "depth": 0
     },
     {
+     "pos": [40, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [80, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [40, 60],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [80, 60],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [230, 130],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [116, 52],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [205, 130],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [142, 63],
      "sprite": "objs/spr_markerW_0.png",
      "src": "obj_markerw",
@@ -635,14 +1043,8 @@
     },
     {
      "pos": [218, 49],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
-     "depth": 50000
-    },
-    {
-     "pos": [226, 56],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markert",
      "depth": 50000
     }
    ]
@@ -658,7 +1060,7 @@
    "objects": [
     {
      "pos": [120, 235],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 0
     },
@@ -679,6 +1081,54 @@
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_torielclass_ch2",
    "objects": [
+    {
+     "pos": [262, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [135, 88],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [199, 87],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [230, 50],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [259, 50],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [204, 45],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [116, 48],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [178, 47],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
     {
      "pos": [57, 46],
      "sprite": "objs/spr_doorA_0.png",
@@ -720,6 +1170,12 @@
      "depth": 0
     },
     {
+     "pos": [298, 180],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [460, 360],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
@@ -742,6 +1198,78 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [160, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [180, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [200, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [220, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [240, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [555, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [605, 195],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [700, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [720, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [740, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [760, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [780, 200],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   },
@@ -754,6 +1282,90 @@
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_alphysclass",
    "objects": [
+    {
+     "pos": [68, 115],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [138, 115],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [206, 115],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [68, 146],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [138, 146],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [206, 146],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [68, 178],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [138, 178],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [206, 178],
+     "sprite": "objs/spr_classdesk_0.png",
+     "src": "obj_schooldesk",
+     "depth": 0
+    },
+    {
+     "pos": [100, 63],
+     "sprite": "objs/spr_alphysdesk_0.png",
+     "src": "obj_alphysdesk",
+     "depth": 0
+    },
+    {
+     "pos": [45, 47],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [167, 92],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [103, 89],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [211, 52],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
     {
      "pos": [242, 52],
      "sprite": "objs/spr_markerA_0.png",
@@ -801,15 +1413,33 @@
      "depth": 0
     },
     {
+     "pos": [280, 100],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [500, 95],
      "sprite": "objs/spr_doorC_0.png",
      "src": "obj_doorC",
      "depth": 0
     },
     {
+     "pos": [85, 100],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [300, 110],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
+     "depth": 0
+    },
+    {
+     "pos": [4, 24],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_room_schooldoor",
      "depth": 0
     },
     {

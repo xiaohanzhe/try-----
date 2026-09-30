@@ -1,0 +1,28 @@
+[PASS] 复用第44轮纯函数（object/parse_objmap/build_frame_index/dump）—— 逻辑单一真源
+[PASS] A0[ch1] inst68 ⊇ inst42（565 条逐条命中）
+[PASS] A0[ch2] inst68 ⊇ inst42（1149 条逐条命中）
+[PASS] A0[ch3] inst68 ⊇ inst42（788 条逐条命中）
+[PASS] A0[ch4] inst68 ⊇ inst42（1665 条逐条命中）
+[PASS] A0[ch5] inst68 ⊇ inst42（1356 条逐条命中）
+[PASS] A0 ★★ 等价性成立：inst68 对 5523 条第42轮实例逐条包含（字段 obj/x/y/layer/depth）
+[PASS] 对象表（ch1）353 个；按章取表合计 6722 个
+[PASS] A0b ★ 五章对象表齐备（ch1 353 / ch2 1328 / ch3 1732 / ch4 1576 / ch5 1733）
+[PASS] objs/ 帧索引 40 个 sprite
+
+实例总条数 = 6889（第42轮为 5,523）；可绘制 = 3290；不可绘 = 3599
+[PASS] A1 输入条数 6889 > 5523（扩容生效）
+[PASS] A2 ★ 新增可交互类实例落地 1206 条（>0）
+
+分片写回 4 / 61
+覆盖场景（分片，有 original_room_id） = 926，其中带可绘制物件 = 537
+独立文件场景 = 87，其中带可绘制物件 = 78，写入 = 5
+
+=== 锚点自检（磁盘真值）===
+ch1.castle_town.castle_town objects=11 src=['obj_doorA', 'obj_doorB', 'obj_doorX', 'obj_markerA', 'obj_markerB', 'obj_markerX', 'obj_readable_room1', 'obj_savepoint']
+[PASS] A3 城堡镇包含 1 个 obj_savepoint（真交互锚点仍在）
+
+=== 全库 objects 对账 ===
+产物里 distinct src = 78
+[PASS] 落盘 gen68_stat.json
+
+RESULT: FAIL=0

@@ -1,0 +1,53 @@
+=== 被修改的场景 JSON（staged）= 85 ===
+objects 增长=359  减少=41  不变=497
+非 objects 字段有差异的条目 = 0
+scene id 集合有差异的 = 0
+
+=== 减少明细（41 条）===
+_zone.ch2.castle_town.json                                 ch2.castle_town.castle_tutorial            5 -> 4  丢: obj_markers
+_zone.ch2.cyber_city.json                                  ch2.cyber_city.dw_city_traffic_4           8 -> 7  丢: obj_markerv
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_battle_maze_1_original 6 -> 5  丢: obj_markeru
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_escalator_slide   4 -> 3  丢: obj_markert
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_maze_fireworks    2 -> 1  丢: obj_markeru
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_maze_rhythm       4 -> 3  丢: obj_markert
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_maze_virokun      10 -> 9  丢: obj_markert,obj_markeru
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_maze_virokun_backuo 8 -> 6  丢: obj_markert,obj_markeru
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_music_final       4 -> 3  丢: obj_markert
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_musical_door      8 -> 7  丢: obj_markert
+_zone.ch2.cyber_field.json                                 ch2.cyber_field.dw_cyber_teacup_1          6 -> 5  丢: obj_markeru
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_b_east_a     2 -> 1  丢: obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_b_entrance   4 -> 3  丢: obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_bridges      8 -> 7  丢: obj_markert,obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_bridgesold   6 -> 5  丢: obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_darkbulb_1   4 -> 3  丢: obj_markert,obj_markeru
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_darkbulb_2   4 -> 3  丢: obj_markers,obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_darkbulb_3   4 -> 3  丢: obj_markers,obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_dining_a     4 -> 3  丢: obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_dininghall   6 -> 5  丢: obj_markeru
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_2f_c    6 -> 4  丢: obj_markert,obj_markeru
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_2f_c_a  4 -> 3  丢: obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_2f_d    3 -> 2  丢: obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_2f_d_backup 4 -> 3  丢: obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_2f_shortcut 3 -> 2  丢: obj_markert
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_2f_teacup 3 -> 2  丢: obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_3f_projection 2 -> 1  丢: obj_markeru
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_east_4f_a    7 -> 6  丢: obj_markers
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_kitchen      2 -> 1  丢: obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_krisroom     3 -> 1  丢: obj_markers,obj_markerv
+_zone.ch2.queens_mansion.json                              ch2.queens_mansion.dw_mansion_susieroom    3 -> 1  丢: obj_markert,obj_markerv
+_zone.ch3.castle_town.json                                 ch3.castle_town.castle_tutorial            5 -> 4  丢: obj_markers
+_zone.ch3.my_castle_town.json                              ch3.my_castle_town.dw_castle_town          17 -> 13  丢: obj_markerr,obj_markers,obj_markert,obj_markeru,obj_markerv
+_zone.ch5.my_castle_town.json                              ch5.my_castle_town.dw_castle_rooms_kris    2 -> 1  丢: obj_markerv
+_zone.ch5.ralsei_room.json                                 ch5.ralsei_room.dw_ralsei_castle_2f        6 -> 5  丢: obj_markerv
+ch2.cyber_city.cyber_city_alleyway_2.json                  <独立文件>                                     5 -> 4  丢: obj_markerv
+ch2.cyber_field.cyber_field_music_shop.json                <独立文件>                                     6 -> 5  丢: obj_markert,obj_markeru
+ch2.my_castle_town.my_castle_town.json                     <独立文件>                                     17 -> 13  丢: obj_markerr,obj_markers,obj_markert,obj_markeru,obj_markerv
+ch2.queens_mansion.queen_s_mansion_3f.json                 <独立文件>                                     7 -> 5  丢: obj_markeru,obj_markerv
+ch4.my_castle_town.my_castle_town.json                     <独立文件>                                     10 -> 9  丢: obj_markerr
+ch5.my_castle_town.my_castle_town.json                     <独立文件>                                     9 -> 8  丢: obj_markerr
+
+=== 丢失 obj 名归类（共 5 种）===
+  [marker] 5 种：obj_markert×20, obj_markerv×15, obj_markeru×13, obj_markers×8, obj_markerr×4
+  [doorAny] 0 种：
+  [debug] 0 种：
+  [other] 0 种：

@@ -17,6 +17,37 @@
   },
   "objects": [
     {
+      "pos": [40, 130],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [40, 250],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [80, 280],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
+      "pos": [171, 1],
+      "sprite": "objs/spr_city_mice_sign_01_0.png",
+      "src": "obj_cybercity_mousesign",
+      "depth": 0,
+      "sprite_frames": 2,
+      "anim": {
+        "base": "objs/spr_city_mice_sign_01",
+        "frames": 2,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      }
+    },
+    {
       "pos": [60, 6],
       "sprite": "objs/spr_markerA_0.png",
       "src": "obj_markerA",

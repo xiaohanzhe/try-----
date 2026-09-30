@@ -54,6 +54,12 @@
      "depth": 0
     },
     {
+     "pos": [1120, 760],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [1390, 760],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
@@ -138,6 +144,19 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [300, 140],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
     }
    ]
   },
@@ -159,6 +178,12 @@
      "pos": [20, 240],
      "sprite": "objs/spr_markerC_0.png",
      "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [80, 200],
+     "sprite": "objs/spr_npc_sign_0.png",
+     "src": "obj_npc_sign",
      "depth": 0
     },
     {
@@ -230,6 +255,19 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [340, 190],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
      "pos": [320, 460],
      "sprite": "objs/spr_doorB_0.png",
      "src": "obj_doorB",
@@ -251,6 +289,30 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
+    {
+     "pos": [360, 320],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [200, 610],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [920, 610],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1130, 410],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
     {
      "pos": [540, 20],
      "sprite": "objs/spr_markerB_0.png",
@@ -336,6 +398,19 @@
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
      "depth": 0
+    },
+    {
+     "pos": [1140, 200],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
     }
    ]
   },
@@ -358,6 +433,19 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [1400, 1000],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
     },
     {
      "pos": [1620, 640],
@@ -394,6 +482,19 @@
      "sprite": "objs/spr_doorX_0.png",
      "src": "obj_doorX",
      "depth": 0
+    },
+    {
+     "pos": [100, 980],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
     }
    ]
   },
@@ -449,6 +550,12 @@
      "pos": [600, 200],
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [400, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     },
     {
@@ -514,6 +621,12 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [780, 160],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [0, 520],
      "sprite": "objs/spr_doorX_0.png",
      "src": "obj_doorX_musfade",
@@ -535,6 +648,12 @@
      "pos": [1620, 520],
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 480],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
      "depth": 0
     }
    ]

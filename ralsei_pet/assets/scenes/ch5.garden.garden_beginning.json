@@ -28,6 +28,19 @@
         "frame_ms": 33.3,
         "src": "original"
       }
+    },
+    {
+      "pos": [3260, 1520],
+      "sprite": "objs/spr_treasurebox_0.png",
+      "src": "obj_dw_garden_ribbonchest",
+      "depth": 0,
+      "sprite_frames": 2,
+      "anim": {
+        "base": "objs/spr_treasurebox",
+        "frames": 2,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      }
     }
   ],
   "anchors": {},

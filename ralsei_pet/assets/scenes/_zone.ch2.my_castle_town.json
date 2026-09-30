@@ -36,8 +36,14 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [350, 260],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [-10, 320],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 50000
     },
@@ -58,6 +64,19 @@
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_darkwest_fixed",
    "objects": [
+    {
+     "pos": [120, 320],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
     {
      "pos": [567, 260],
      "sprite": "objs/spr_markerX_0.png",
@@ -139,6 +158,12 @@
    "bg_asset": "bg_dw_castle_cafe_in",
    "objects": [
     {
+     "pos": [50, 120],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [440, 320],
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
@@ -160,6 +185,12 @@
    "bg": null,
    "bg_source": "none",
    "objects": [
+    {
+     "pos": [79, 278],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
     {
      "pos": [300, 379],
      "sprite": "objs/spr_markerX_0.png",
@@ -184,7 +215,7 @@
    "objects": [
     {
      "pos": [110, 470],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },
@@ -215,15 +246,33 @@
    "bg_asset": "bg_dw_kris_room",
    "objects": [
     {
-     "pos": [280, 450],
-     "sprite": "objs/spr_doorX_0.png",
-     "src": "obj_doorW",
-     "depth": 100
+     "pos": [410, 169],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     },
     {
-     "pos": [320, 360],
-     "sprite": "objs/spr_markerX_0.png",
-     "src": "obj_markerv",
+     "pos": [318, 161],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [217, 159],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [151, 160],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [280, 450],
+     "sprite": "objs/spr_doorW_0.png",
+     "src": "obj_doorW",
      "depth": 100
     }
    ]
@@ -238,8 +287,32 @@
    "bg_asset": "bg_dw_susie_room_1",
    "objects": [
     {
+     "pos": [151, 167],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [255, 164],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [363, 157],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [439, 157],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
      "pos": [257, 465],
-     "sprite": "objs/spr_doorX_0.png",
+     "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorW",
      "depth": 100
     },

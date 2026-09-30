@@ -17,6 +17,31 @@
   },
   "objects": [
     {
+      "pos": [408, 2220],
+      "sprite": "objs/spr_interactable_0.png",
+      "src": "obj_readable_room1",
+      "depth": 0
+    },
+    {
+      "pos": [200, 320],
+      "sprite": "objs/spr_treasurebox_0.png",
+      "src": "obj_bug_treasure_chest",
+      "depth": 0,
+      "sprite_frames": 2,
+      "anim": {
+        "base": "objs/spr_treasurebox",
+        "frames": 2,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      }
+    },
+    {
+      "pos": [440, 280],
+      "sprite": "objs/spr_npc_sign_0.png",
+      "src": "obj_npc_sign",
+      "depth": 0
+    },
+    {
       "pos": [140, 2201],
       "sprite": "objs/spr_savepoint_0.png",
       "src": "obj_savepoint",

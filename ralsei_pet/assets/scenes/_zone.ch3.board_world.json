@@ -12,7 +12,21 @@
    "original_room_id": 112,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1536, 896],
+     "sprite": "objs/spr_board_key_0.png",
+     "src": "obj_board_pickup",
+     "depth": 900000,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_board_key",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.board_world.board_dungeon_2": {
    "name": "冒险棋盘·dungeon_2",
@@ -57,7 +71,21 @@
    "original_room_id": 120,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [176, 128],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.board_world.board_intro": {
    "name": "冒险棋盘·intro",
@@ -84,7 +112,21 @@
    "original_room_id": 136,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2224, 176],
+     "sprite": "objs/spr_board_key_0.png",
+     "src": "obj_board_pickup",
+     "depth": 900000,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_board_key",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.board_world.board_sword_intro": {
    "name": "冒险棋盘·sword_intro",
@@ -111,7 +153,21 @@
    "original_room_id": 141,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [4144, 160],
+     "sprite": "objs/spr_board_key_0.png",
+     "src": "obj_board_pickup",
+     "depth": 900000,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_board_key",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.board_world.board_3": {
    "name": "冒险棋盘·3",
@@ -129,7 +185,21 @@
    "original_room_id": 148,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [4144, 400],
+     "sprite": "objs/spr_board_key_0.png",
+     "src": "obj_board_pickup",
+     "depth": 900100,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_board_key",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.board_world.board_empty": {
    "name": "冒险棋盘·empty",
@@ -156,7 +226,21 @@
    "original_room_id": 186,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2608, 400],
+     "sprite": "objs/spr_board_key_0.png",
+     "src": "obj_board_pickup",
+     "depth": 900000,
+     "sprite_frames": 7,
+     "anim": {
+      "base": "objs/spr_board_key",
+      "frames": 7,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch3.board_world.board_gsa02_b0": {
    "name": "冒险棋盘·gsa02_b0",

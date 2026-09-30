@@ -15,7 +15,14 @@
     "weather": null,
     "particles": null
   },
-  "objects": [],
+  "objects": [
+    {
+      "pos": [-40, 160],
+      "sprite": "objs/spr_eventsmall_0.png",
+      "src": "obj_dw_fcastle_left_twodoors",
+      "depth": 0
+    }
+  ],
   "anchors": {},
   "transition": null,
   "_comment": {

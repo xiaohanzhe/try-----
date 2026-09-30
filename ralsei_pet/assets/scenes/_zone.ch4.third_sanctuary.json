@@ -174,7 +174,21 @@
    "original_room_id": 311,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2860, 296],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": -100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.third_sanctuary.dw_churchc_angelprophecy": {
    "name": "第三圣域·churchc_angelprophecy",
@@ -192,7 +206,21 @@
    "original_room_id": 314,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2860, 296],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": -100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.third_sanctuary.dw_churchc_treasurechest": {
    "name": "第三圣域·churchc_treasurechest",
@@ -201,7 +229,27 @@
    "original_room_id": 315,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 0],
+     "sprite": "objs/spr_eventsmall_1_0.png",
+     "src": "obj_dw_churchc_treasurechest",
+     "depth": 0
+    },
+    {
+     "pos": [500, 136],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.third_sanctuary.dw_churchc_titanclimb2_old2": {
    "name": "第三圣域·churchc_titanclimb2_old2",

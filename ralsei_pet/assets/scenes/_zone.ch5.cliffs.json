@@ -105,6 +105,110 @@
    "bg_source": "none",
    "objects": [
     {
+     "pos": [2160, 1280],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1960, 1440],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [2320, 1360],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [2120, 1400],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [1800, 1320],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [2240, 1520],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [960, 1520],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
+     "pos": [2480, 1180],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_fox",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    },
+    {
      "pos": [746, 1786],
      "sprite": "objs/spr_shortcut_door_0.png",
      "src": "obj_shortcut_door",
@@ -135,7 +239,21 @@
    "original_room_id": 164,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [420, 240],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_shicave": {
    "name": "崖边·cliff_shicave",

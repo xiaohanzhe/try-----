@@ -1,0 +1,190 @@
+== 第68轮 重要核心文件复检 ==
+ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+
+== ① 可解析（AST）/ JSON 可加载 ==
+[PASS] R1a run_all 语法可解析
+[PASS] R1a verify_objects44 语法可解析
+[PASS] R1a check67 语法可解析
+[PASS] R1a verify_items48 语法可解析
+[PASS] R1a verify_items68 语法可解析
+[PASS] R1a disc68 语法可解析
+[PASS] R1a item_interact 语法可解析
+[PASS] R1b baseline JSON 可加载
+[PASS] R1c 负控制：坏语法确实被 ast.parse 拒绝
+
+== ② 结构自检 ==
+[PASS] R2a run_all.py SUITES 条目数 = 58（期望 58）
+[PASS] R2b items_round68 条目在位
+[PASS] R2c items_round68 是 offscreen=False
+[PASS] R2d items_round68 **不**在 HERMETIC_IDS（与 items_round48 同款）
+[PASS] R2e 每个套件条目都有 'id'（60 >= 58）
+[PASS] R2e 每个套件条目都有 'script'（58 >= 58）
+[PASS] R2e 每个套件条目都有 'offscreen'（58 >= 58）
+[PASS] R2e 每个套件条目都有 'desc'（58 >= 58）
+[PASS] R2f verify_objects44 章节在位：A 结构不变量
+[PASS] R2f verify_objects44 章节在位：B 真值锚点
+[PASS] R2f verify_objects44 章节在位：C 覆盖与守恒
+[PASS] R2f verify_objects44 章节在位：D 负控制
+[PASS] R2g verify_items68 段在位：def seg_a
+[PASS] R2g verify_items68 段在位：def seg_b
+[PASS] R2g verify_items68 段在位：def seg_c
+[PASS] R2g verify_items68 段在位：def seg_d
+[PASS] R2g verify_items68 段在位：def seg_e
+[PASS] R2g verify_items68 段在位：def seg_f
+[PASS] R2h check67 关就寝在 update_movement 之前（35221 < 35373）
+
+== ③ 编码（无 BOM / 无 U+FFFD）==
+[PASS] R3 run_all 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 verify_objects44 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 check67 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 verify_items48 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 verify_items68 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 disc68 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 item_interact 无 BOM(False) 无 U+FFFD(False)
+[PASS] R3 baseline 无 BOM(False) 无 U+FFFD(False)
+
+== ④ 恒真判据复查（AST：常量 True 必须有同名守卫分支）==
+[PASS] R4-neg 负控制：伪恒真行不被判成探针（豁免不是一刀切）
+[PASS] R4 verify_objects44 无恒真判据（可疑=无）
+[PASS] R4 verify_items68 无恒真判据（可疑=无）
+[PASS] R4 verify_items48 无恒真判据（可疑=无）
+[PASS] R4 check67 无恒真判据（可疑=无）
+
+== ⑤ 逐令牌回验（本轮改/加的可检索令牌）==
+[PASS] R5 逐令牌回验：全部命中（丢=无）
+
+== ⑥ 工作区（git status --porcelain -z，quotepath=false）==
+[PASS] R6a 解析结果里无 \3xx 八进制残留（0 个）
+[PASS] R6b 变更全部落在仓库内的预期目录（意外=无）
+[PASS] R6c 无体检残留（.off/.bak/*ZZ*）：无
+     变更文件 122 个
+       code-quality-audit/regress/baseline.json
+       code-quality-audit/regress/run_all.py
+       code-quality-audit/第44轮-原作对话框复刻/verify_objects44.py
+       code-quality-audit/第48轮-道具与背包系统/verify_items48.py
+       code-quality-audit/第67轮-幽灵线接线/_tools/check67.py
+       ralsei_pet/assets/scenes/_zone.ch1.card_castle.json
+       ralsei_pet/assets/scenes/_zone.ch1.castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch1.dark_world.json
+       ralsei_pet/assets/scenes/_zone.ch1.field.json
+       ralsei_pet/assets/scenes/_zone.ch1.forest.json
+       ralsei_pet/assets/scenes/_zone.ch1.home.json
+       ralsei_pet/assets/scenes/_zone.ch1.hometown.json
+       ralsei_pet/assets/scenes/_zone.ch2.card_castle.json
+       ralsei_pet/assets/scenes/_zone.ch2.castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch2.cyber_city.json
+       ralsei_pet/assets/scenes/_zone.ch2.cyber_field.json
+       ralsei_pet/assets/scenes/_zone.ch2.home.json
+       ralsei_pet/assets/scenes/_zone.ch2.hometown.json
+       ralsei_pet/assets/scenes/_zone.ch2.light_world.json
+       ralsei_pet/assets/scenes/_zone.ch2.my_castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch2.queens_mansion.json
+       ralsei_pet/assets/scenes/_zone.ch2.ralsei_room.json
+       ralsei_pet/assets/scenes/_zone.ch3.board_world.json
+       ralsei_pet/assets/scenes/_zone.ch3.card_castle.json
+       ralsei_pet/assets/scenes/_zone.ch3.castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch3.cold_place.json
+       ralsei_pet/assets/scenes/_zone.ch3.home.json
+       ralsei_pet/assets/scenes/_zone.ch3.hometown.json
+       ralsei_pet/assets/scenes/_zone.ch3.kris_room.json
+       ralsei_pet/assets/scenes/_zone.ch3.light_world.json
+       ralsei_pet/assets/scenes/_zone.ch3.my_castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch3.puzzle_closet.json
+       ralsei_pet/assets/scenes/_zone.ch3.ralsei_room.json
+       ralsei_pet/assets/scenes/_zone.ch3.tv_world.json
+       ralsei_pet/assets/scenes/_zone.ch4.card_castle.json
+       ralsei_pet/assets/scenes/_zone.ch4.castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch4.dark_sanctuary.json
+       ralsei_pet/assets/scenes/_zone.ch4.home.json
+       ralsei_pet/assets/scenes/_zone.ch4.hometown.json
+       ralsei_pet/assets/scenes/_zone.ch4.light_world.json
+       ralsei_pet/assets/scenes/_zone.ch4.my_castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch4.noelles_house.json
+       ralsei_pet/assets/scenes/_zone.ch4.ralsei_room.json
+       ralsei_pet/assets/scenes/_zone.ch4.second_sanctuary.json
+       ralsei_pet/assets/scenes/_zone.ch4.third_sanctuary.json
+       ralsei_pet/assets/scenes/_zone.ch5.card_castle.json
+       ralsei_pet/assets/scenes/_zone.ch5.castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch5.cliffs.json
+       ralsei_pet/assets/scenes/_zone.ch5.flower_castle.json
+       ralsei_pet/assets/scenes/_zone.ch5.garden.json
+       ralsei_pet/assets/scenes/_zone.ch5.home.json
+       ralsei_pet/assets/scenes/_zone.ch5.hometown.json
+       ralsei_pet/assets/scenes/_zone.ch5.light_world.json
+       ralsei_pet/assets/scenes/_zone.ch5.my_castle_town.json
+       ralsei_pet/assets/scenes/_zone.ch5.ralsei_room.json
+       ralsei_pet/assets/scenes/ch1.card_castle.card_castle_1f.json
+       ralsei_pet/assets/scenes/ch1.card_castle.card_castle_throne.json
+       ralsei_pet/assets/scenes/ch1.card_castle.card_castle_unknown.json
+       ralsei_pet/assets/scenes/ch1.castle_town.castle_town.json
+       ralsei_pet/assets/scenes/ch1.eye_puzzle.eye_puzzle.json
+       ralsei_pet/assets/scenes/ch1.field.field_maze_of_death.json
+       ralsei_pet/assets/scenes/ch1.kris_room.kris_s_room.json
+       ralsei_pet/assets/scenes/ch2.castle_town.castle_town.json
+       ralsei_pet/assets/scenes/ch2.castle_town.castle_town_2.json
+       ralsei_pet/assets/scenes/ch2.cyber_city.cyber_city_alleyway_2.json
+       ralsei_pet/assets/scenes/ch2.cyber_city.cyber_city_heights.json
+       ralsei_pet/assets/scenes/ch2.cyber_city.cyber_city_mouse_alley.json
+       ralsei_pet/assets/scenes/ch2.cyber_city.cyber_city_music_shop.json
+       ralsei_pet/assets/scenes/ch2.cyber_field.cyber_field_music_shop.json
+       ralsei_pet/assets/scenes/ch2.kris_room.kris_s_room.json
+       ralsei_pet/assets/scenes/ch2.my_castle_town.my_castle_town.json
+       ralsei_pet/assets/scenes/ch2.queens_mansion.queen_s_mansion_3f.json
+       ralsei_pet/assets/scenes/ch2.queens_mansion.queen_s_mansion_basement.json
+       ralsei_pet/assets/scenes/ch2.queens_mansion.queen_s_mansion_entrance.json
+       ralsei_pet/assets/scenes/ch2.queens_mansion.queen_s_mansion_guest_hall.json
+       ralsei_pet/assets/scenes/ch2.queens_mansion.queen_s_mansion_rooftop.json
+       ralsei_pet/assets/scenes/ch2.queens_mansion.queen_s_mansion_rooftop_2.json
+       ralsei_pet/assets/scenes/ch4.dark_sanctuary.dark_sanctuary_1_lower_left.json
+       ralsei_pet/assets/scenes/ch4.hometown.hometown.json
+       ralsei_pet/assets/scenes/ch4.kris_room.kris_s_room.json
+       ralsei_pet/assets/scenes/ch4.my_castle_town.my_castle_town.json
+       ralsei_pet/assets/scenes/ch4.noelles_house.noelle_s_house.json
+       ralsei_pet/assets/scenes/ch4.second_sanctuary.sanctuary_2_atrium.json
+       ralsei_pet/assets/scenes/ch4.second_sanctuary.sanctuary_2_floor.json
+       ralsei_pet/assets/scenes/ch4.third_sanctuary.sanctuary_3_stairs.json
+       ralsei_pet/assets/scenes/ch5.cliffs.cliffs_shop.json
+       ralsei_pet/assets/scenes/ch5.flower_castle.flower_castle_left_doors.json
+       ralsei_pet/assets/scenes/ch5.garden.garden_beginning.json
+       ralsei_pet/assets/scenes/ch5.hometown.hometown.json
+       ralsei_pet/assets/scenes/ch5.my_castle_town.my_castle_town.json
+       ralsei_pet/modules/item_interact.py
+       code-quality-audit/第68轮-可交互道具实例补采/
+       ralsei_pet/assets/scenes/objs/spr_alphysdesk_0.png
+       ralsei_pet/assets/scenes/objs/spr_bell_small_0.png
+       ralsei_pet/assets/scenes/objs/spr_board_investigatable_0.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_0.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_1.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_2.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_3.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_4.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_5.png
+       ralsei_pet/assets/scenes/objs/spr_board_key_6.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_0.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_1.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_2.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_3.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_4.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_5.png
+       ralsei_pet/assets/scenes/objs/spr_ch2_cityad_dog_6.png
+       ralsei_pet/assets/scenes/objs/spr_city_mice_sign_01_0.png
+       ralsei_pet/assets/scenes/objs/spr_city_mice_sign_01_1.png
+       ralsei_pet/assets/scenes/objs/spr_classdesk_0.png
+       ralsei_pet/assets/scenes/objs/spr_dw_ch3_b3bs_officesign_strip2_0.png
+       ralsei_pet/assets/scenes/objs/spr_dw_ch3_b3bs_officesign_strip2_1.png
+       ralsei_pet/assets/scenes/objs/spr_dw_church_moneyfountain_basin_0.png
+       ralsei_pet/assets/scenes/objs/spr_eventsmall_0.png
+       ralsei_pet/assets/scenes/objs/spr_eventsmall_1_0.png
+       ralsei_pet/assets/scenes/objs/spr_fountainedge_narrow_0.png
+       ralsei_pet/assets/scenes/objs/spr_interactable_0.png
+       ralsei_pet/assets/scenes/objs/spr_npc_sign_0.png
+       ralsei_pet/assets/scenes/objs/spr_treasurebox_0.png
+       ralsei_pet/assets/scenes/objs/spr_treasurebox_1.png
+
+== ⑦ 改过的锁真跑一遍（与基线比对）==
+[PASS] R7 check67 与基线 IDENTICAL
+[PASS] R7 items_round68 与基线 IDENTICAL
+[PASS] R7 objects_round44 与基线 IDENTICAL
+[PASS] R7 items_round48 与基线 IDENTICAL
+
+================ 复检结果：PASS=49 FAIL=0 ================

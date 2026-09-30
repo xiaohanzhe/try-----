@@ -827,6 +827,14 @@ def group_e():
        '回读=%r 落盘前=%r' % (pet.ghost_contact.total, total_now))
 
     # ---- 真跑 update_movement（接线点不许抛）----
+    # ★ 第68轮修：真机跑 `update_movement()` 会**连带跑第52轮的就寝判定**，
+    #   而它在"当前墙钟已过 23:00±10 分钟窗口"时会多打一行
+    #   `[就寝] 今晚（YYYY-MM-DD）窗口 HH:MM~HH:MM 已过，不再补睡`
+    #   ⇒ 套件输出**随跑的时刻漂移**（第68轮实测：23:26 跑 ⇒ 基线里没有的那行出现，
+    #   判成假 DIFF）。本套件要守的是幽灵线，不是就寝 ⇒ 显式关掉这个开关，
+    #   让输出与墙钟无关。（`_bedtime_tick` 第一行就 `if not BEDTIME_ENABLED: return False`。）
+    pet.BEDTIME_ENABLED = False
+    print('[INFO] 已关闭就寝判定（避免 `update_movement` 真跑时的时间耦合）')
     pet.last_update_time = 0.0
     threw = None
     try:

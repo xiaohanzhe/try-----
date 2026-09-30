@@ -129,7 +129,21 @@
    "original_room_id": 120,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [266, 256],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_swingingbell": {
    "name": "暗之圣域·church_swingingbell",
@@ -228,7 +242,21 @@
    "original_room_id": 131,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [180, 202],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_stairs_topright": {
    "name": "暗之圣域·church_stairs_topright",
@@ -363,7 +391,21 @@
    "original_room_id": 146,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [500, 334],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_bookenemywest": {
    "name": "暗之圣域·church_bookenemywest",
@@ -453,7 +495,14 @@
    "original_room_id": 174,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 80],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_dw_church_staircase",
+     "depth": 0
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_bellhall_bookroom": {
    "name": "暗之圣域·church_bellhall_bookroom",
@@ -507,7 +556,21 @@
    "original_room_id": 181,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [3500, 1736],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 200,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_bellhall_curtain": {
    "name": "暗之圣域·church_bellhall_curtain",
@@ -534,7 +597,21 @@
    "original_room_id": 184,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [422, 160],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 900111,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_arena": {
    "name": "暗之圣域·church_arena",
@@ -561,7 +638,21 @@
    "original_room_id": 204,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1220, 587],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_fastwater": {
    "name": "暗之圣域·church_fastwater",
@@ -633,7 +724,21 @@
    "original_room_id": 213,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [540, 1480],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_northprophecies": {
    "name": "暗之圣域·church_northprophecies",
@@ -651,7 +756,21 @@
    "original_room_id": 215,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [100, 336],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_pianopiece_right": {
    "name": "暗之圣域·church_pianopiece_right",
@@ -660,7 +779,21 @@
    "original_room_id": 217,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [960, 798],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 400,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_rightconnect": {
    "name": "暗之圣域·church_rightconnect",
@@ -669,7 +802,21 @@
    "original_room_id": 220,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1060, 1700],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_stairspreview": {
    "name": "暗之圣域·church_stairspreview",
@@ -678,7 +825,14 @@
    "original_room_id": 221,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 0],
+     "sprite": "objs/spr_eventsmall_0.png",
+     "src": "obj_dw_church_stairspreview",
+     "depth": 0
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_trueclimbadventure": {
    "name": "暗之圣域·church_trueclimbadventure",
@@ -687,7 +841,21 @@
    "original_room_id": 222,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2512, 1790],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_organpuzzle": {
    "name": "暗之圣域·church_organpuzzle",
@@ -714,7 +882,21 @@
    "original_room_id": 225,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1300, 256],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_secretpiano": {
    "name": "暗之圣域·church_secretpiano",
@@ -741,7 +923,14 @@
    "original_room_id": 229,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [260, 0],
+     "sprite": "objs/spr_fountainedge_narrow_0.png",
+     "src": "obj_ch4_DCA12_darkfountain",
+     "depth": 1100000
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_b_intro": {
    "name": "暗之圣域·church_b_intro",
@@ -759,7 +948,21 @@
    "original_room_id": 232,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [924, 1920],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_biblioxencounter": {
    "name": "暗之圣域·church_biblioxencounter",
@@ -786,7 +989,20 @@
    "original_room_id": 236,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [440, 40],
+     "sprite": "objs/spr_eventsmall_0.png",
+     "src": "obj_dw_church_moneyfountain",
+     "depth": 0
+    },
+    {
+     "pos": [200, 240],
+     "sprite": "objs/spr_dw_church_moneyfountain_basin_0.png",
+     "src": "obj_dw_church_moneyfountainsprite",
+     "depth": 0
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_pianopiece_left_b": {
    "name": "暗之圣域·church_pianopiece_left_b",
@@ -876,7 +1092,21 @@
    "original_room_id": 283,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1020, 1854],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": -100,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   },
   "ch4.dark_sanctuary.dw_church_ripseq2": {
    "name": "暗之圣域·church_ripseq2",
@@ -894,7 +1124,21 @@
    "original_room_id": 313,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [80, 1160],
+     "sprite": "objs/spr_treasurebox_0.png",
+     "src": "obj_treasure_room",
+     "depth": 0,
+     "sprite_frames": 2,
+     "anim": {
+      "base": "objs/spr_treasurebox",
+      "frames": 2,
+      "frame_ms": 33.3,
+      "src": "default_30fps"
+     }
+    }
+   ]
   }
  }
 }
