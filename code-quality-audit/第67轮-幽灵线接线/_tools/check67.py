@@ -8,12 +8,23 @@ u"""第67轮 · 幽灵线接线回归锁（A~F 六组，**每组配负控制**�
 ----
   A 零依赖纪律（AST）      —— `ghost_system` 是 L1 纯逻辑（只有 `math`、零函数内 import）
   B 照抄锚点回原文（AST+正则）—— 每个数字都从 `_evidence/gml64/*.gml` **重新解析**出来再比，
-                              不是拿模块里的字面量跟自己比（那是恒真判据）
-  C 行为（真实量级）正·负·对照 —— 距离用真实像素、接触用真实秒数，不用 0.001 这种玩具量级
+                              不是拿模块里的字面量跟自己比（那是恒真判据）。
+                              ★ **第74轮 B5 追加**：`obj_ghostbuds.Draw_0`（停走式）的
+                              `0.5 / 0.3`（过场档）与 `0.9 / 0.6`（非过场档）**也回原文解析**
+                              —— 这两组数长得像、含义不同，抄错一处就是"看着在照抄、
+                              其实抄了另一只的数"。
+  C 行为（真实量级）正·负·对照 —— 距离用真实像素、接触用真实秒数，不用 0.001 这种玩具量级。
+                              ★ **第74轮 B5 追加** C32~C49：停走式纯函数（站住升 / 走动降 /
+                              下限 0 / **走动与档位无关** / 过场档对照）+ 两种模式**互不串味**
+                              + 跟飘位置 + **浮动偏移不被吃掉**（含坏写法负控制）
   D 素材对账             —— 帧数/原生尺寸/45 个 PNG 的 sha256 逐个对 `_source.json`
   E 接线（AST + 真机）     —— `GHOST_ENABLED` 真被读、`_ghost_tick` 真被调**且在早退分支之前**、
-                              真机起得来、**不置顶**、不吃鼠标事件
+                              真机起得来、**不置顶**、不吃鼠标事件。
+                              ★ **第74轮 B5 追加** E19a~E41：产品模式 == `GHOST_MODE`、
+                              "走没走"真透传、产品侧**不碰**过场档、跟飘时位置与浮动都真动
   F 判据自身体检          —— 负控制成对 + 正则未命中必须**报红**（不许静默 None 混过去）
+                              ★ F 是**元**判据，打印在最后一位：它的 F6 要总账
+                                "它之前打印的每一行各恰好一个标记"，所以不许往它后面再塞组
 
 纪律（第67轮特别强调，因为本轮已经栽过）
 ----------------------------------------
@@ -277,6 +288,62 @@ def _calls_in(fn_node, names):
     return sorted(out)
 
 
+def _call_kwarg_source(src, fn_node, call_attr, kw):
+    u"""在 `fn_node` 内部找 `….call_attr(..., kw=…)`，返回该实参的**源码片段**列表。
+
+    ★ 为什么返回"源码片段"而不是"有没有这个关键字"：这样"真把产品开关传下去"与
+      "传了个写死的常量"能分辨 —— 本项目要钉的正是前者（传了 `mode='follow'` 也是接线，
+      但 `GHOST_MODE` 就变成死常量了，那是另一个 bug）。
+    ★ 为什么不能自己去 `ast.walk` 就完事：`fn_node` 必须是**已经 parse 过的树**
+      （本套件里统一从 `ast.parse(src)` 取），不能拿源码片段重新 parse ——
+      `ast.get_source_segment` 给的是**带缩进**的原文，`ast.parse` 会 IndentationError。
+    """
+    out = []
+    if fn_node is None:
+        return out
+    for n in ast.walk(fn_node):
+        if isinstance(n, ast.Call):
+            f = n.func
+            nm = f.attr if isinstance(f, ast.Attribute) else (
+                f.id if isinstance(f, ast.Name) else None)
+            if nm == call_attr:
+                for k in n.keywords:
+                    if k.arg == kw:
+                        out.append(ast.get_source_segment(src, k.value) or '')
+    return out
+
+
+def _args_of(fn_node):
+    u"""函数的全部形参名（含 `*args`/`**kwargs`/仅关键字参数）。"""
+    if fn_node is None:
+        return []
+    a = fn_node.args
+    out = [x.arg for x in list(a.args) + list(a.kwonlyargs)]
+    if a.vararg:
+        out.append(a.vararg.arg)
+    if a.kwarg:
+        out.append(a.kwarg.arg)
+    return out
+
+
+def _kwarg_true_calls(src, kw):
+    u"""源码里 `….kw=True`（**字面量真值**）的调用 ⇒ 行号列表。
+
+    ★ 为什么要专门一个"字面量真值"探针：`cutscene=cutscene` 这种**透传**是合法的
+      （默认 `None` ⇒ 状态保持 `False`），而 `cutscene=True` 是"真的把过场档打开了"。
+      只看"有没有这个关键字"会把透传也判红（本条首版就这么误报的）；
+      只判"有没有真值"才对准事实。
+    """
+    out = []
+    for n in ast.walk(ast.parse(src)):
+        if isinstance(n, ast.Call):
+            for k in n.keywords:
+                if k.arg == kw and isinstance(k.value, ast.Constant) \
+                        and k.value.value is True:
+                    out.append(getattr(n, 'lineno', -1))
+    return out
+
+
 # ===========================================================================
 #  A  零依赖纪律（AST）
 # ===========================================================================
@@ -448,6 +515,81 @@ def group_b():
        'obj_mainchara.kill == 1' not in
        CC.replace('obj_mainchara.kill == 1', 'obj_mainchara.kill == 0'))
 
+    # ==================================================================
+    #  B5 追加：**停走式**（`obj_ghostbuds.Draw_0`）的锚点也**回原文重新解析**
+    #  ------------------------------------------------------------------
+    #  为什么单开一段：这一段的四个数（0.5 / 0.3 / 0.9 / 0.6）与 `obj_ghostint2`
+    #  那组**长得像但含义不同** —— 同一个词「过场」在两只对象里对应两组不同的数。
+    #  抄错一处就会变成"看着在照抄、其实抄了另一只的数"，所以必须回**buds 自己的原文**解析。
+    # ==================================================================
+    buds = os.path.join(GML64, 'gml_Object_obj_ghostbuds_Draw_0.gml')
+    ok('B19 停走式原文物证在（obj_ghostbuds.Draw_0）', os.path.isfile(buds), buds)
+    if not os.path.isfile(buds):
+        return
+    BU = _read(buds)
+    _ic = BU.find('instance_exists(obj_starker)')
+    _in = BU.find('else if (obj_mainchara.moving == 0)')
+    _im = BU.find('if (obj_mainchara.moving == 1)')
+    ok('B20 三个分支的锚点都定位到了（防"切片切错 ⇒ 后面全部静默变绿"）',
+       -1 < _ic < _in < _im,
+       'cut=%s non=%s mov=%s' % (_ic, _in, _im))
+    if not (-1 < _ic < _in < _im):
+        return
+    _cut, _non, _mov = BU[_ic:_in], BU[_in:_im], BU[_im:]
+
+    def _one(txt, pat, label):
+        u"""单值解析 —— **未命中返回 None**（调用处一律要求非 None，不许静默混过去）。"""
+        m = re.search(pat, txt)
+        return None if m is None else m.group(1)
+
+    _cut_br = _one(_cut, r'juandice\s*>\s*0\s*&&\s*clover_alpha\s*<\s*([\d.]+)', 'cutscene.bright')
+    _cut_dm = _one(_cut, r'juandice\s*==\s*-1\s*&&\s*clover_alpha\s*<\s*([\d.]+)', 'cutscene.dim')
+    _non_br = _one(_non, r'clover_alpha\s*<\s*([\d.]+)\s*&&\s*juandice\s*>\s*0', 'plain.bright')
+    _non_dm = _one(_non, r'clover_alpha\s*<\s*([\d.]+)\s*&&\s*juandice\s*==\s*-1', 'plain.dim')
+    _rise = _one(_non, r'clover_alpha\s*\+=\s*([\d.]+)', 'rise.step')
+    _fall = _one(_mov, r'clover_alpha\s*-=\s*([\d.]+)', 'walk.step')
+    _lv = _one(BU, r'scr_murderlv\(\)\s*<\s*(\d+)', 'murderlv.lt')
+    ok('B21 停走式四个上界 + 步长 + 暗档轴 全部解析成功（未命中 = 判据失效，必须报红）',
+       all(v is not None for v in (_cut_br, _cut_dm, _non_br, _non_dm, _rise, _fall, _lv)),
+       u'cut=(%s,%s) non=(%s,%s) rise=%s fall=%s lv=%s'
+       % (_cut_br, _cut_dm, _non_br, _non_dm, _rise, _fall, _lv))
+    if not all(v is not None for v in (_cut_br, _cut_dm, _non_br, _non_dm, _rise, _fall, _lv)):
+        return
+    print('    [info] 从 buds 原文解析出的量: 过场=%s/%s 非过场=%s/%s 步长=%s/%s 暗档轴=murderlv<%s'
+          % (_cut_br, _cut_dm, _non_br, _non_dm, _rise, _fall, _lv))
+
+    ok('B22 停走式**过场**档 == 原文 `%s` / `%s`（亮 / 暗）'
+       % (_cut_br, _cut_dm),
+       abs(GS.GHOST_BUDS_CUTSCENE_BRIGHT_ALPHA - float(_cut_br)) < 1e-9
+       and abs(GS.GHOST_BUDS_CUTSCENE_DIM_ALPHA - float(_cut_dm)) < 1e-9,
+       '模块=%r/%r' % (GS.GHOST_BUDS_CUTSCENE_BRIGHT_ALPHA,
+                      GS.GHOST_BUDS_CUTSCENE_DIM_ALPHA))
+    ok('B23 停走式**非过场**档 == 原文 `%s` / `%s`，且**复用的就是** `GHOST_BRIGHT_ALPHA`/'
+       '`GHOST_DIM_ALPHA`（不另立一份 = 不造第二份真相）' % (_non_br, _non_dm),
+       abs(GS.GHOST_BRIGHT_ALPHA - float(_non_br)) < 1e-9
+       and abs(GS.GHOST_DIM_ALPHA - float(_non_dm)) < 1e-9,
+       '模块=%r/%r 原文=%s/%s' % (GS.GHOST_BRIGHT_ALPHA, GS.GHOST_DIM_ALPHA,
+                                _non_br, _non_dm))
+    ok('B24 ★ 两组数**确实不同**（若有人把四者合并成一组常量，这里报红 —— '
+       '这正是"同一个词两处含义"的守门判据）',
+       float(_cut_br) != float(_non_br) and float(_cut_dm) != float(_non_dm)
+       and GS.GHOST_BUDS_CUTSCENE_BRIGHT_ALPHA != GS.GHOST_BRIGHT_ALPHA
+       and GS.GHOST_BUDS_CUTSCENE_DIM_ALPHA != GS.GHOST_DIM_ALPHA)
+    ok('B25 停走式步长 == 原文 `+= %s` / `-= %s`，且与 `GHOST_FADE_STEP` 同值'
+       % (_rise, _fall),
+       abs(float(_rise) - float(_fall)) < 1e-9
+       and abs(GS.GHOST_FADE_STEP - float(_rise)) < 1e-9,
+       '模块=%r 原文=%s/%s' % (GS.GHOST_FADE_STEP, _rise, _fall))
+    ok('B26 「暗档」这条轴的原作出处 == `scr_murderlv() < %s` ⇒ `juandice = -1`'
+       '（证明 0.5/0.3 是**低杀戮 = 暗档**，不是我们另立的机制）' % _lv,
+       ('juandice = -1' in BU) and (('scr_murderlv() < %s' % _lv) in BU),
+       '原文里没找到这条轴')
+    ok('B27 负控制 · 把 buds 原文的过场亮档 %s 改成 %s 后解析值随之变（判据有鉴别力）'
+       % (_cut_br, _non_br),
+       _one(_cut.replace('clover_alpha < %s' % _cut_br,
+                         'clover_alpha < %s' % _non_br),
+            r'juandice\s*>\s*0\s*&&\s*clover_alpha\s*<\s*([\d.]+)', 'x') == _non_br)
+
 
 # ===========================================================================
 #  C  行为（真实量级）正 · 负 · 对照
@@ -590,6 +732,132 @@ def group_c():
     nf.step(1.0 / 30.0, px=None, py=None)
     ok('C31 坐标缺失 ⇒ 视为"无穷远"（alpha 只减不增，且不抛）',
        abs(nf.alpha - 0.85) < 1e-9, nf.alpha)
+
+    # ==================================================================
+    #  B5 追加：**停走式**（`MODE_FOLLOW`）的行为 —— 正 / 负 / 对照成对
+    # ==================================================================
+    # ---- 纯函数：`step_stopgo` ----
+    ok('C32 站住 ⇒ 每帧 +0.05 且封顶（cap=0.6：0.55→0.6 不越顶；已在顶 ⇒ 不动）',
+       abs(GS.step_stopgo(0.0, False, 0.6) - 0.05) < 1e-9
+       and abs(GS.step_stopgo(0.55, False, 0.6) - 0.6) < 1e-9
+       and abs(GS.step_stopgo(0.6, False, 0.6) - 0.6) < 1e-9)
+    ok('C33 走动 ⇒ 每帧 -0.05（真实帧率量级）',
+       abs(GS.step_stopgo(0.6, True, 0.6) - 0.55) < 1e-9,
+       GS.step_stopgo(0.6, True, 0.6))
+    ok('C34 走动 · 下限钳在 0（★ 这是与原文**故意不同**的一处：原文到 0 就 '
+       '`instance_destroy()`，桌面版没有那套重生器 ⇒ 只归零不销毁）',
+       GS.step_stopgo(0.02, True, 0.6) == 0.0 and GS.step_stopgo(0.0, True, 0.6) == 0.0)
+    ok('C35 ★ 走动**与档位无关**（原文那句话是独立的 `if`，不在过场/非过场分支里）'
+       '：同 alpha 下 cap=0.9 与 cap=0.0 走一帧结果**相同**',
+       abs(GS.step_stopgo(0.6, True, 0.9) - GS.step_stopgo(0.6, True, 0.0)) < 1e-9
+       and abs(GS.step_stopgo(0.6, True, 0.9) - 0.55) < 1e-9,
+       'cap0.9=%r cap0.0=%r' % (GS.step_stopgo(0.6, True, 0.9),
+                                GS.step_stopgo(0.6, True, 0.0)))
+    ok('C36 站住但**高于**档位封顶 ⇒ 每帧 -0.05 收回到 cap（原文暗档那一支那条回落）',
+       abs(GS.step_stopgo(0.9, False, 0.6) - 0.85) < 1e-9,
+       GS.step_stopgo(0.9, False, 0.6))
+    ok('C37 对照控制 · 同输入只翻 `moving` ⇒ 输出**方向相反**（停=升 / 走=降）',
+       GS.step_stopgo(0.6, False, 0.9) > 0.6 and GS.step_stopgo(0.6, True, 0.9) < 0.6,
+       '停=%r 走=%r' % (GS.step_stopgo(0.6, False, 0.9),
+                        GS.step_stopgo(0.6, True, 0.9)))
+    ok('C38 对照控制 · 同输入只翻"过场" ⇒ 封顶必须不同（0.9/0.6 vs 0.5/0.3），'
+       '而 hidden 两档都 0（`hidden` 优先于过场）',
+       GS.alpha_cap('bright') == 0.9 and GS.alpha_cap('bright', cutscene=True) == 0.5
+       and GS.alpha_cap('dim') == 0.6 and GS.alpha_cap('dim', cutscene=True) == 0.3
+       and GS.alpha_cap('hidden', cutscene=True) == 0.0)
+    _conv = 0.0
+    for _ in range(12):
+        _conv = GS.step_stopgo(_conv, False, 0.6)
+    _conv13 = GS.step_stopgo(_conv, False, 0.6)
+    ok('C39 收敛性 · 从 0 一直站住 ⇒ 第 12 帧**恰好**到 cap=0.6，再走一帧仍是 0.6'
+       '（不是"接近 0.6"，也不振荡）',
+       abs(_conv - 0.6) < 1e-9 and abs(_conv13 - 0.6) < 1e-9,
+       '12帧=%r 13帧=%r' % (_conv, _conv13))
+    # ---- 不变量：走走停停 400 帧，alpha 永不为负、永不越顶 ----
+    _a, _mv = 0.3, False
+    _mn, _mx = 1.0, 0.0
+    for _i in range(400):
+        _mv = (_i % 7) < 3                      # 真实的"走走停停"节律
+        _a = GS.step_stopgo(_a, _mv, 0.6)
+        _mn, _mx = min(_mn, _a), max(_mx, _a)
+    ok('C40 不变量 · 走走停停 400 帧后 alpha ∈ [0, cap]（不出现负数、不越顶）',
+       _mn >= 0.0 and _mx <= 0.6 + 1e-9,
+       u'实测区间=[%.6f, %.6f]' % (_mn, _mx))
+
+    # ---- GhostState：两种模式互不串味 ----
+    _fx = GS.GhostState(home_x=0.0, home_y=0.0, contact_seconds=3 * 3600.0,
+                        mode=GS.MODE_FIXED)
+    _fl = GS.GhostState(home_x=0.0, home_y=0.0, contact_seconds=3 * 3600.0,
+                        mode=GS.MODE_FOLLOW)
+    ok('C41 默认模式 == MODE_FIXED（模块默认不改，回归锁 B/C 段守着的通路一字不动）',
+       GS.GhostState().mode == GS.MODE_FIXED and GS.MODE_FIXED == 'fixed'
+       and GS.MODE_FOLLOW == 'follow', GS.GhostState().mode)
+    ok('C42 负控制 · 非法模式值 ⇒ 退回 MODE_FIXED（不留半懂状态）',
+       GS.GhostState(mode='walky').mode == GS.MODE_FIXED
+       and GS.GhostState(mode=None).mode == GS.MODE_FIXED)
+    for _ in range(6):
+        _fx.step(1.0 / 30.0, px=0.0, py=0.0, moving=True)     # 定点：贴脸 + "在走"
+        _fl.step(1.0 / 30.0, px=0.0, py=0.0, moving=True)     # 跟飘：贴脸 + "在走"
+    ok('C43 ★ 两种模式**互不串味**：同样"贴脸 + 在走" ⇒ 定点那只照样顶到 0.9、'
+       '跟飘那只一路淡到 0（定点那只的 alpha **只认距离**，`moving` 传进去也不该有影响）',
+       abs(_fx.alpha - 0.9) < 1e-9 and _fl.alpha == 0.0,
+       '定点=%r 跟飘=%r' % (_fx.alpha, _fl.alpha))
+    _cs = GS.GhostState(home_x=0.0, home_y=0.0, contact_seconds=3 * 3600.0,
+                        mode=GS.MODE_FOLLOW)
+    _cs2 = GS.GhostState(home_x=0.0, home_y=0.0, contact_seconds=3 * 3600.0,
+                         mode=GS.MODE_FOLLOW)
+    for _ in range(20):
+        _cs.step(1.0 / 30.0, px=0.0, py=0.0, moving=False)
+        _cs2.step(1.0 / 30.0, px=0.0, py=0.0, moving=False, cutscene=True)
+    ok('C44 对照控制 · 同输入只翻"过场" ⇒ 跟飘那只顶到 0.9 vs 0.5'
+       '（过场档真的**接到了** alpha 上，不是常量摆着没人用）',
+       abs(_cs.alpha - 0.9) < 1e-9 and abs(_cs2.alpha - 0.5) < 1e-9,
+       '非过场=%r 过场=%r' % (_cs.alpha, _cs2.alpha))
+
+    # ---- 跟飘：位置 + ★ 浮动偏移不被吃掉 ----
+    _fw = GS.GhostState(home_x=999.0, home_y=999.0, contact_seconds=0.0,
+                        ralsei_special=True, mode=GS.MODE_FOLLOW)
+    for _ in range(3):
+        _fw.step(1.0 / 30.0, px=400.0, py=300.0, moving=False)
+    ok('C45 跟飘 ⇒ 锚点 x == 宠物中心 x + GHOST_FOLLOW_OFFSET_X（不是停在出生的 999）',
+       abs(_fw.x - (400.0 + GS.GHOST_FOLLOW_OFFSET_X)) < 1e-9
+       and abs(_fw.starty - (300.0 + GS.GHOST_FOLLOW_OFFSET_Y)) < 1e-9,
+       'x=%r starty=%r' % (_fw.x, _fw.starty))
+    # ⚠️ 要看全三角波的一个来回：39 帧下 + 39 帧上 ⇒ **至少 130 帧**。
+    #    首版只跑 40 帧，实测区间是 [-2.0, +0.2]，判据却按 [-2.0, +1.9] 比 ⇒ **判据侧失手**
+    #    （记忆 §4：报红先怀疑判据；这里是"会误报"的那一类）。
+    _offs = []
+    for _ in range(130):
+        _fw.step(1.0 / 30.0, px=400.0, py=300.0, moving=False)
+        _offs.append(_fw.y - _fw.starty)
+    _omn, _omx = min(_offs), max(_offs)
+    ok('C46 ★★ 跟飘时**浮动偏移仍然在动**（130 帧内看全一个来回 ⇒ 区间恰好 [-2.0, 1.9]）'
+       '—— 这条就是 `_follow_to` "先量偏移、再搬基准、再把偏移还回去"存在的全部理由',
+       abs(_omn + 2.0) < 1e-6 and abs(_omx - 1.9) < 1e-6,
+       u'实测偏移区间=[%.6f, %.6f]' % (_omn, _omx))
+    # 负控制：把 `_follow_to` 写成"每帧 y = 目标值"（最像的抄法），偏移会退化成常数
+    _by, _bs, _bup, _bsc = 0.0, 0.0, 0, 1
+    _boffs = []
+    for _ in range(130):
+        _by = _bs                                  # ← 坏实现的那一行
+        _by, _bup, _bsc = GS.step_levitate(_by, _bs, _bup, _bsc)
+        _boffs.append(_by - _bs)
+    ok('C47 负控制 · "每帧 y = 目标值"的坏写法 ⇒ 偏移退化成常数（C46 真的有鉴别力）',
+       (max(_boffs) - min(_boffs)) < 0.05 and (max(_offs) - min(_offs)) > 1.0,
+       u'坏实现振幅=%.6f 好实现振幅=%.6f'
+       % (max(_boffs) - min(_boffs), max(_offs) - min(_offs)))
+    _bx, _bsy = _fw.x, _fw.starty
+    _fw.step(1.0 / 30.0, px=None, py=None, moving=False)
+    ok('C48 负控制 · 跟飘模式下 `px=None` ⇒ **不挪窝**（位置与基准都不动、且不抛）',
+       (_fw.x, _fw.starty) == (_bx, _bsy),
+       '前=(%r,%r) 后=(%r,%r)' % (_bx, _bsy, _fw.x, _fw.starty))
+    _hid2 = GS.GhostState(home_x=0.0, home_y=0.0, contact_seconds=0.0,
+                          ralsei_special=False, mode=GS.MODE_FOLLOW)
+    for _ in range(30):
+        _hid2.step(1.0 / 30.0, px=0.0, py=0.0, moving=False)
+    ok('C49 hidden 档 + 跟飘 ⇒ 站住 30 帧 alpha 仍恒 0（"看不见"是真的看不见，'
+       '不是"停走式把它点亮了"）',
+       _hid2.alpha == 0.0, _hid2.alpha)
 
 
 # ===========================================================================
@@ -768,27 +1036,68 @@ def group_e():
        gh.state.frame == 0)
 
     ok('E18 真机：开局 alpha==0（不闪一下满亮度）', abs(st.alpha) < 1e-9, st.alpha)
-    # ⚠️ 距离要在 tick **之前**量：`step()` 里的 `dist` 用的是**当帧**的 x/y，
-    #    而 tick 顺带会把 y 浮动 ±0.1 ⇒ 事后量距离会差一点点（首版就这么误报了 7e-6）。
+    # ---- B5：产品默认走"跟飘停走式" ⇒ 下面几条（E19/E21/E22）从"距离式"改成"停走式" ----
+    # ★ 定点"距离式"在**真机层**的判据没有消失，只是换了层级：C4~C9 / C26~C31（纯函数与
+    #   `GhostState`）逐条守着它；`GHOST_MODE='fixed'` 一改，产品立刻回到那条通路。
+    import ghost_system as GS
+    ok('E19a 真机：幽灵模式 == `GHOST_MODE`（B5 接线真的生效，不是"接口摆着"）',
+       st.mode == M.RalseiPet.GHOST_MODE and st.mode == GS.MODE_FOLLOW,
+       'state.mode=%r GHOST_MODE=%r' % (st.mode, M.RalseiPet.GHOST_MODE))
+    # ⚠️ 「走没走」必须**显式摆好**。靠 pet 构造路径里 `is_moving` 的现值 = 隐式耦合：
+    #    将来把 `is_moving` 挪进 `__init__`（或反过来加个默认），判据会**换个结论而不报红**。
+    pet.is_moving = False
+    # ⚠️ 距离要在 tick **之前**量（`step()` 里的坐标用的是当帧的 x/y，而 tick 顺带把 y
+    #    浮动 ±0.1）。这里它的用途变了：当**对照值** —— 证明"停走式在算、距离式没在算"。
     _d = st.distance_to(cx, cy)
     pet._ghost_tick(1.0 / 30.0)
-    ok('E19 真机：一帧后 alpha == min(10/(dist+1), 0.6)（距离式真的在算）',
-       abs(st.alpha - min(10.0 / (_d + 1.0), 0.6)) < 1e-6,
-       '实测=%.6f 期望=%.6f' % (st.alpha, min(10.0 / (_d + 1.0), 0.6)))
+    _dist_formula = min(10.0 / (_d + 1.0), 0.6)
+    ok('E19b 真机：站住一帧 ⇒ alpha 由 0 升到 0.05，**且不等于距离式的值**'
+       '（A≠B：证明模式切换真生效，不是两套一起算）',
+       abs(st.alpha - 0.05) < 1e-9 and abs(st.alpha - _dist_formula) > 1e-3,
+       '实测=%.6f 距离式会算出=%.6f' % (st.alpha, _dist_formula))
     ok('E20 真机：alpha>0 ⇒ 窗口**真的显示**（`wants_show` 与窗口同步）',
        gh.wants_show() and gh.isVisible(),
        'wants=%s vis=%s' % (gh.wants_show(), gh.isVisible()))
 
-    st.respawn(cx, cy)
-    for _ in range(5):
+    # ---- 跟飘：位置真的跟着宠物（"跟飘"这半件事的真机实证）----
+    for _ in range(6):
         pet._ghost_tick(1.0 / 30.0)
-    ok('E21 真机：贴脸 ⇒ 顶到**暗档封顶 0.6**（不是 0.9 —— 决心没满）',
+    _fcx = pet.x() + pet.width() / 2.0
+    _fcy = pet.y() + pet.height() / 2.0
+    ok('E21a 真机：跟飘 ⇒ 锚点 == 宠物中心 + GHOST_FOLLOW_OFFSET'
+       '（x 精确；y 在 ±2 浮动区间内 —— 所以只判"贴着"不判"相等"）',
+       abs(st.x - (_fcx + GS.GHOST_FOLLOW_OFFSET_X)) < 1e-6
+       and abs(st.y - (_fcy + GS.GHOST_FOLLOW_OFFSET_Y)) <= 2.0 + 1e-6,
+       '锚=(%.3f,%.3f) 期望x=%.3f 基准y=%.3f' % (st.x, st.y,
+                                                _fcx + GS.GHOST_FOLLOW_OFFSET_X,
+                                                _fcy + GS.GHOST_FOLLOW_OFFSET_Y))
+    # ---- ★ 真机层再钉一次"浮动没被跟飘吃掉"（与 C46 分层：C46 是纯逻辑、这里过真机）----
+    _yo = []
+    for _ in range(130):
+        pet._ghost_tick(1.0 / 30.0)
+        _yo.append(st.y - st.starty)
+    ok('E21b ★★ 真机：跟飘 130 帧里浮动偏移**仍在动**（区间恰好 [-2.0, 1.9]）'
+       ' —— 若有人把 `_follow_to` 写成"每帧 y = 目标值"，这里会退化成常数',
+       abs(min(_yo) + 2.0) < 1e-6 and abs(max(_yo) - 1.9) < 1e-6,
+       u'实测=[%.6f, %.6f]' % (min(_yo), max(_yo)))
+
+    pet.is_moving = False
+    for _ in range(14):
+        pet._ghost_tick(1.0 / 30.0)
+    ok('E21 真机：一直站住 ⇒ 顶到**暗档封顶 0.6**（不是 0.9 —— 决心没满）',
        abs(st.alpha - 0.6) < 1e-9, st.alpha)
-    st.respawn(cx - 4000.0, cy - 4000.0)
-    for _ in range(60):
+    pet.is_moving = True
+    for _ in range(14):
         pet._ghost_tick(1.0 / 30.0)
-    ok('E22 真机：拖远 ⇒ alpha 归 0，且窗口**自动收掉**（不留隐形空窗口）',
+    ok('E22 真机：一直走动 ⇒ alpha 归 0，且窗口**自动收掉**（不留隐形空窗口）',
        st.alpha == 0.0 and (not gh.isVisible()),
+       'alpha=%r vis=%s' % (st.alpha, gh.isVisible()))
+    pet.is_moving = False
+    for _ in range(3):
+        pet._ghost_tick(1.0 / 30.0)
+    ok('E22b 真机：走动归零后**再站住 ⇒ alpha 重新升起**（★ 与原文"到 0 就 '
+       'instance_destroy"故意不同的一处：桌面版没有重生器，只归零不销毁）',
+       abs(st.alpha - 0.15) < 1e-9 and gh.isVisible(),
        'alpha=%r vis=%s' % (st.alpha, gh.isVisible()))
 
     # ---- 接触计时真的从 npc_bodies 读 ----
@@ -932,6 +1241,78 @@ def group_e():
        '挂了 ⇒ 成功（E33 那条顺序**确实承重**，不是摆设）',
        _neg.startswith('FAIL') and _pos.startswith('OK'),
        'neg=%r pos=%r' % (_neg, _pos))
+
+    # ==================================================================
+    #  B5 接线（AST）：产品真的在跑"跟飘停走式"
+    #  ★ 全部走 AST，不看文本 —— 注释里提一句 `moving=` 不算接线。
+    # ==================================================================
+    import ghost_system as GS
+
+    _ig = _find_func(main_src, 'init_ghost', cls)
+    _ig_mode = _call_kwarg_source(main_src, _ig, 'GhostState', 'mode')
+    ok('E35 ★ 产品真的用"跟飘停走式"：`GHOST_MODE` 是类属性且 == MODE_FOLLOW，'
+       '且 `init_ghost` 把它**显式**传给了 `GhostState`'
+       '（传的是产品开关本身，不是写死的字符串 —— 后者会让这个常量变成死的）',
+       bool(re.search(r'^    GHOST_MODE = ghost_system_mod\.MODE_FOLLOW$',
+                      main_src, re.M))
+       and _ig_mode == ['RalseiPet.GHOST_MODE'],
+       'GHOST_MODE_FA=%s GhostState.mode 实参=%s'
+       % (bool(re.search(r'^    GHOST_MODE = ', main_src, re.M)), _ig_mode))
+    ok('E36 对照控制 · `ghost_system` 的**默认**仍是 MODE_FIXED（"靠默认"会露馅：'
+       '两者不同这件事本身，就是 E35 那条判据不是摆设的证明）',
+       GS.GhostState().mode == GS.MODE_FIXED
+       and GS.GhostState().mode != M.RalseiPet.GHOST_MODE,
+       '默认=%r 产品=%r' % (GS.GhostState().mode, M.RalseiPet.GHOST_MODE))
+
+    _gt = _find_func(main_src, '_ghost_tick', cls)
+    _gt_calls = _calls_in(_gt, {'tick', '_ghost_moving_now'}) if _gt else []
+    _gt_moving = _call_kwarg_source(main_src, _gt, 'tick', 'moving')
+    ok('E37 ★ `_ghost_tick` 真把"走没走"透传下去（AST 看 `gh.tick(..., moving=…)` '
+       '的**关键字实参**，不看注释）',
+       _gt_moving == ['moving']
+       and any(n == '_ghost_moving_now' for _, n in _gt_calls),
+       'tick.moving 实参=%s 调用=%s' % (_gt_moving, [n for _, n in _gt_calls]))
+    _gm_fn = _find_func(main_src, '_ghost_moving_now', cls)
+    _gm_seg = ast.get_source_segment(main_src, _gm_fn) if _gm_fn is not None else ''
+    import textwrap as _tw
+    _gm_src = _tw.dedent(_gm_seg) if _gm_seg else ''
+    # ★ `is_moving` 在源码里是**字符串字面量**（`getattr(self, 'is_moving', False)`），
+    #   不是 `Name`/`Attribute` ⇒ 只看 `_attrs_of` 会**漏掉它**（本条首版就这么误报了，
+    #   实测取到的名 = ['Exception','bool','getattr','self']）。
+    #   记忆 §4 已经写过这条：「扫属性要同时扫 `ast.Constant`」—— 又踩了一次。
+    _gm_strs = {n.value for n in ast.walk(ast.parse(_gm_src))
+                if isinstance(n, ast.Constant) and isinstance(n.value, str)} \
+        if _gm_src else set()
+    ok('E38 ★ "走没走"的来源是宠物的 `is_moving`（**字符串字面量**，故用 AST 扫 Constant），'
+       '且走 `getattr(..., False)` 兜底'
+       '（`is_moving` **不是** `__init__` 预声明字段 ⇒ 直接 `self.is_moving` 会在早期炸）',
+       'is_moving' in _gm_strs and 'getattr' in _attrs_of(_gm_src),
+       '字符串=%s 属性=%s' % (sorted(_gm_strs)[:6], sorted(_attrs_of(_gm_src))[:6]))
+    _go_src2 = _read(os.path.join(MODS, 'ghost_overlay.py'))
+    # ⚠️ 判据口径更正（本条首版也误报了）：`ghost_overlay.tick` 里**允许**出现
+    #   `cutscene=cutscene` —— 那是**透传**（默认 `None` ⇒ 状态保持 `False`），
+    #   不是"用了过场档"。真正该守的是**没有任何地方把它写成字面量 `True`**。
+    #   ⇒ 判据从"不许出现关键字"改成"不许出现**真值**"（更准，也更严：写死 False 也过、
+    #     写死 True 必报红）。
+    ok('E39 接线 · 产品侧**不碰**过场档：没有任何调用把 `cutscene` 写成字面量 `True`，'
+       '且 `main.py` 里根本不出现这个关键字（桌面没有 `obj_starker` / '
+       '`obj_backgrounder_*` 那套死亡演出对象 ⇒ 过场档只该由回归锁当对照控制用）',
+       not _kwarg_true_calls(main_src, 'cutscene')
+       and not _kwarg_true_calls(_go_src2, 'cutscene')
+       and not _call_kwarg_source(main_src, ast.parse(main_src), 'tick', 'cutscene'),
+       'main 写死 True 的行=%s overlay 写死 True 的行=%s'
+       % (_kwarg_true_calls(main_src, 'cutscene'),
+          _kwarg_true_calls(_go_src2, 'cutscene')))
+    ok('E40 负控制 · 上面两个 AST 探针能抓到"真写了"的版本'
+       '（`f(moving=1)` / `f(cutscene=True)` 都必须被检出，否则 E37/E39 是空的）',
+       _call_kwarg_source('f(moving=1)\n', ast.parse('f(moving=1)\n'), 'f', 'moving')
+       == ['1']
+       and _kwarg_true_calls('f(cutscene=True)\n', 'cutscene') == [1],
+       '鉴别力不足')
+    ok('E41 `ghost_overlay.tick` 的签名真的收 `moving` / `cutscene`'
+       '（AST 看形参表，不是只有调用方在传）',
+       {'moving', 'cutscene'} <= set(_args_of(_find_func(_go_src2, 'tick'))),
+       '形参表=%s' % _args_of(_find_func(_go_src2, 'tick')))
 
 
 # ===========================================================================

@@ -3,9 +3,13 @@ u"""幽灵窗口 —— 把 `ghost_system.GhostState` 画到桌面上的那只�
 
 为什么是**独立顶层窗口**（与灵魂同一决策）
 --------------------------------------------------
-幽灵是**定点**的（用户 N2 选的就是"定点距离式"）：它站在桌面某个位置不动，
-宠物走近了才清晰。子控件会被宠物窗口裁剪（宠物窗口只有 ~42×82 屏幕像素），
-"站在桌面上某处"这件事根本无从表达 ⇒ 必须独立窗口。
+幽灵**站在桌面上**：定点那只站在某个位置不动、宠物走近了才清晰（用户 N2 选的
+"定点距离式"）；跟飘那只（B5 的"停走式"）**贴着宠物飘**。
+两种模式下它都**不属于宠物窗口** —— 子控件会被宠物窗口裁剪（宠物窗口只有 ~42×82
+屏幕像素），"站在桌面上某处 / 飘在宠物旁边"这两件事都无从表达 ⇒ 必须独立窗口。
+
+窗口本身与模式**无关**（尺寸、透明、不吃事件、不置顶全都一样），模式只改
+`state` 怎么走（见 `ghost_system.GhostState` 的类 docstring）。
 
 三条硬约束（**逐条**来自 `soul_overlay` 踩过的坑）
 --------------------------------------------------
@@ -192,10 +196,18 @@ class GhostOverlay(QWidget):
         return virtual_screen_rect(self)
 
     # ---------------------------------------------------------------- 推进
-    def tick(self, dt, pet_x=None, pet_y=None, contact=None):
-        u"""推进一帧。返回 True 表示"这一帧有变化"（alpha 或位置）。"""
+    def tick(self, dt, pet_x=None, pet_y=None, contact=None,
+             moving=None, cutscene=None):
+        u"""推进一帧。返回 True 表示"这一帧有变化"（alpha 或位置）。
+
+        :param moving: 宠物这一帧走没走 —— **停走式（`MODE_FOLLOW`）的唯一输入**。
+            `MODE_FIXED` 下传了也没用（定点那只的 alpha 只认距离），**照样透传**
+            是为了让宿主不必知道当前是哪个模式（少一层"宿主和模块各记一份模式"的隐患）。
+        :param cutscene: 过场档（桌面版恒 `False`，见 `ghost_system.alpha_cap`）。
+        """
         try:
-            changed = self.state.step(dt, px=pet_x, py=pet_y, contact=contact)
+            changed = self.state.step(dt, px=pet_x, py=pet_y, contact=contact,
+                                      moving=moving, cutscene=cutscene)
             self.apply_state_pos()
             idx = int(self.state.frame)
             a = round(float(self.state.alpha), 3)

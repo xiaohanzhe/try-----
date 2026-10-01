@@ -1613,8 +1613,23 @@ class RalseiPet(QMainWindow):
     #: ★ 为什么是 96 而不是 0：`dist < 100` 才会显形（照抄 `Step_1`），取 96 正好落在
     #:   "刚好看得见的边缘" —— 用户第一眼看到的就是那只**几乎透明的**幽灵，把宠物
     #:   拖近它会变亮、拖远会淡出，机制**一眼可见**（贴脸出生反而看不出"距离式"）。
-    #: ⚠️ 只决定**出生**位置：之后它**定点不动**（"定点"的定义，见 `ghost_system`）。
+    #: ⚠️ 只决定**出生**位置：定点模式下之后它**定点不动**（"定点"的定义见
+    #:   `ghost_system`）；跟飘模式下只决定**第一帧之前**它待在哪。
     GHOST_SPAWN_OFFSET = (96.0, -6.0)
+
+    #: ★★ 第74轮 B5：产品用**哪只幽灵**（取自原作的两只，机制不同）。
+    #:   用户裁定原话（逐字）：「**B5 幽灵停走式 alpha | 接，按原作 | 照抄：
+    #:   站住显形 / 走动淡出**」。
+    #:   * `MODE_FIXED`  —— `obj_ghostint2`：**定点**，alpha 只认"到固定点的距离"；
+    #:   * `MODE_FOLLOW` —— `obj_ghostbuds`：**跟飘**，贴着主角走，alpha 认"走没走"
+    #:     （站住升到封顶、走动每帧 -0.05）。
+    #:   ★ 为什么倾向 `MODE_FOLLOW`：桌宠是**会满地跑**的实体，而"定点幽灵"要用户
+    #:     把宠物**拖到那个固定点旁边**才看得见 —— 机制在，但**看不见**。跟飘那只
+    #:     贴在宠物身上，"站住显形 / 走动淡出"是**一眼可见**的行为，也更像原作的
+    #:     城堡镇（Ralsei 走到哪，他们跟到哪）。
+    #:   ⚠️ **定点通路一行未删**：`MODE_FIXED` 仍在 `ghost_system` 里被回归锁 B/C 段
+    #:     整段守着（C41 还额外钉住"模块默认仍是 FIXED"）—— 想换回去只改这一行。
+    GHOST_MODE = ghost_system_mod.MODE_FOLLOW
 
     #: 接触时长多久落一次盘（秒）。★ 别每帧写：那是 30 次/秒的小文件 IO。
     #: 另有退出兜底（`cleanup_on_exit`），所以 30s 丢不了多少。
@@ -1646,7 +1661,12 @@ class RalseiPet(QMainWindow):
                 #   ⇒ 走"不靠决心也至少看得见暗档"那条通路。
                 #   ⚠️ `ralsei_special=False` 那条路不是摆设：回归锁用它做**对照控制**
                 #      （同输入、只翻这一个开关 ⇒ 输出必须不同），否则"特例"无法被测到。
-                ralsei_special=ghost_system_mod.RALSEI_SPECIAL)
+                ralsei_special=ghost_system_mod.RALSEI_SPECIAL,
+                # ★ B5：产品用哪只幽灵（定点距离式 / 跟飘停走式）由 `GHOST_MODE` 定。
+                #   ⚠️ 这里**必须显式传**，不能靠模块默认 —— `ghost_system` 的默认是
+                #      `MODE_FIXED`（为了不改动回归锁守着的定点通路），靠默认就等于
+                #      "`GHOST_MODE` 这个常量是死的"（本项目最贵的坑）。
+                mode=RalseiPet.GHOST_MODE)
             # ★ parent=None：与灵魂同一个决策 —— 幽灵站在**桌面**上，而宠物窗口只有
             #   ~42×82 屏幕像素，子控件会被裁剪，"定点站在桌面某处"根本无从表达。
             self.ghost = ghost_overlay_mod.GhostOverlay(
@@ -1830,6 +1850,24 @@ class RalseiPet(QMainWindow):
         except Exception:
             return False
 
+    def _ghost_moving_now(self):
+        """★ B5：宠物这一帧**走没走** —— 跟飘幽灵（`obj_ghostbuds`）的唯一输入。
+
+        ★ 为什么用 `getattr` 而不是 `self.is_moving`：这个属性**不在 `__init__`
+          里预声明**（首次赋值散落在若干分支上，见 `randomize_movement_pattern`
+          等）。极早期调用时直接取会 `AttributeError`，而它又在 `_ghost_tick`
+          的 `try` 里 —— 一旦抛出，整帧幽灵推进都会被跳过、还只留一条 DEBUG。
+          ⇒ 拿不到就按 `False`（**站住**）算：保守方向是"宁可让它显形"，
+            因为"该亮的时候不亮"用户会以为功能坏了，"该淡的时候亮着"只是多看一眼。
+        ★ 为什么不用"实际位移 > 阈值"来判：那会引入第二份真相 —— 项目里
+          `is_moving` 已经是"宠物走没走"的既有答案（走 / 停 / 休息都由它表达），
+          这里再自己算一次位移，两处早晚会不一致（本项目最贵的坑）。
+        """
+        try:
+            return bool(getattr(self, 'is_moving', False))
+        except Exception:
+            return False
+
     def _ghost_tick(self, dt):
         """每帧推进幽灵（挂在 30ms 的 `update_movement` 上）。
 
@@ -1839,7 +1877,7 @@ class RalseiPet(QMainWindow):
           "两个节拍器互不同步"的隐患。
         ★ 调用点必须在 `update_movement` 的**所有早退分支之前**（睡眠 / 施法 /
           躲猫猫 / 拖拽保护 / 特殊动画都会 return）：幽灵是独立实体，
-          宠物睡着 / 被拖走时它照样该按距离显淡。
+          宠物睡着 / 被拖走时它照样该按距离（定点）或按停走（跟飘）显淡。
         """
         gh = getattr(self, 'ghost', None)
         st = getattr(self, 'ghost_state', None)
@@ -1847,26 +1885,39 @@ class RalseiPet(QMainWindow):
             return False
         try:
             contact = self._ghost_contact_now()
-            # 宠物**中心**坐标 —— 距离式 alpha 是"中心到中心"，与锚点同一个点。
+            # ★ B5：「宠物走没走」= 跟飘模式（`obj_ghostbuds`）的**唯一输入**。
+            #   ⚠️ 必须走 `getattr` 兜底：`is_moving` **不在 `__init__` 里预声明**
+            #      （首次赋值出现在别处的分支上），直接 `self.is_moving` 在极早期
+            #      调用时会 `AttributeError`。拿不到就按"站住"算（保守：宁可让它显形）。
+            moving = self._ghost_moving_now()
+            # 宠物**中心**坐标 —— 定点模式下距离式 alpha 是"中心到中心"、与锚点同一个点；
+            # 跟飘模式下这就是"要贴到谁身上"。两处用的是**同一个点**（少一层心智负担）。
             try:
                 px = float(self.x()) + self.width() / 2.0
                 py = float(self.y()) + self.height() / 2.0
             except Exception:
                 px = py = None
-            gh.tick(dt, pet_x=px, pet_y=py, contact=contact)
-            # ★ 窗口开 / 停由**距离**决定（`wants_show`）：alpha 掉到 0 就该收掉，
+            gh.tick(dt, pet_x=px, pet_y=py, contact=contact, moving=moving)
+            # ★ 窗口开 / 停由 `wants_show`（alpha 非零）决定：alpha 掉到 0 就该收掉，
             #   否则会在屏幕上留一个"看不见但吃焦点"的空窗口（幽灵不吃鼠标事件，
             #   所以危害小于灵魂，但白白多一个顶层窗口仍然是错的）。
+            #   ⚠️ 两种模式下"alpha 掉到 0"的**原因不同**：定点 = 走远了，
+            #   跟飘 = 一直在走。判据本身**不依赖原因**（这正是 `wants_show` 的价值）。
             want = bool(gh.wants_show())
             if want and not gh.isVisible():
                 gh.show_ghost()
             elif not want and gh.isVisible():
                 gh.hide_ghost()
             # 诊断（DEBUG 级，平时不输出）：把"这一帧凭什么显示/不显示"打出来。
+            # ★ B5：带上 `模式=` 与 `走=` —— 跟飘那只是"站住显形 / 走动淡出"，
+            #   光看 alpha 分不清"没显形"是因为走远了还是因为在走，有这两个字段才判得出。
             try:
-                _log.debug('幽灵帧：alpha=%.4f 距离=%.2f want=%s vis=%s geo=%s 锚=(%.1f,%.1f)',
-                           float(st.alpha), st.distance_to(px, py) if px is not None else -1.0,
-                           want, gh.isVisible(), gh.geometry().getRect(), st.x, st.y)
+                _log.debug('幽灵帧：模式=%s alpha=%.4f 距离=%.2f 走=%s want=%s vis=%s '
+                           'geo=%s 锚=(%.1f,%.1f)',
+                           st.mode, float(st.alpha),
+                           st.distance_to(px, py) if px is not None else -1.0,
+                           'Y' if moving else 'N', want, gh.isVisible(),
+                           gh.geometry().getRect(), st.x, st.y)
             except Exception:
                 pass
             self._ghost_save()

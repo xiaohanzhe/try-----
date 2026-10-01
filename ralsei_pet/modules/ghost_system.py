@@ -92,6 +92,50 @@ GHOST_FRAME_DEFAULT = 0
 #: dt 上限（与 `soul_entity.MAX_DT` 同口径：本模块被别处调用时也不会被大 dt 放大）。
 MAX_DT = 0.1
 
+# ---------------------------------------------- 常量：停走式（B5；照抄 `obj_ghostbuds`）
+#: 「停走式」的**过场档**目标 alpha —— 照抄 `obj_ghostbuds.Draw_0` 里
+#: `instance_exists(obj_starker) || obj_backgrounder_pillar || obj_backgrounder_castle`
+#: 那个分支的 `0.5`（亮）/ `0.3`（暗）。
+#: ⚠️ **非过场**档用的是 `0.9` / `0.6` —— 与本文件已有的
+#: `GHOST_BRIGHT_ALPHA` / `GHOST_DIM_ALPHA` 是**同一个字面量** ⇒ 直接复用那两个常量，
+#: 不另立一份（抄两份 = 两个真相）。这两条只给"过场"用。
+GHOST_BUDS_CUTSCENE_BRIGHT_ALPHA = 0.5
+GHOST_BUDS_CUTSCENE_DIM_ALPHA = 0.3
+
+#: 命名陷阱（首版踩过，写在这里免得下一个人重踩）
+#: --------------------------------------------------
+#: 上面这组「过场」与 `GHOST_BRIGHT_ALPHA` 注释里的「cutscene 分支」**不是同一处**，
+#: 两组数字也不一样：
+#:
+#: | 对象 | 过场时 | 非过场时 |
+#: |---|---|---|
+#: | `obj_ghostint2.Step_1`（定点；判据 `obj_mainchara.cutscene == 1`） | **0.9 / 0.6** | 距离式 `min(10/(dist+1), 0.9)` |
+#: | `obj_ghostbuds.Draw_0`（停走；判据 `instance_exists(obj_starker/...)`） | **0.5 / 0.3** | 停走式 `0.9 / 0.6` |
+#:
+#: 同一个词「过场」在两只对象里对应**两组不同的数**。首版把它们都叫 `GHOST_CUTSCENE_*`
+#: ⇒ `GHOST_CUTSCENE_BRIGHT_ALPHA` 与 `GHOST_BRIGHT_ALPHA`（0.9）**撞名不同值**，
+#: 正是本项目最贵的坑「同一件事两份真相」的种子 ⇒ 统一冠上对象名 `BUDS_`。
+
+#: 幽灵行为模式：**定点距离式**（`obj_ghostint2`）/ **跟飘停走式**（`obj_ghostbuds`）。
+#: ⚠️ 这两只在**原作里是两个对象**，不是一个对象的两种参数。本项目只做**一只**幽灵，
+#:    所以用模式二选一 —— 原作自己也避开了"同时出现两个 Chara"：`obj_ghostbuds.Draw_0`
+#:    里那句 `if (car != 0 && !instance_exists(obj_ghostint2))` 就是
+#:    "定点那只在场时，不画跟飘的那只 Chara"。
+#: ★ **本模块默认仍是 `MODE_FIXED`** —— 让"定点"这条被回归锁 B/C 段逐条守住的通路
+#:   **一字不改**；产品用哪只由 `main.RalseiPet.GHOST_MODE` 定（B5 接线点）。
+MODE_FIXED = 'fixed'
+MODE_FOLLOW = 'follow'
+_MODES = (MODE_FIXED, MODE_FOLLOW)
+
+#: ★ **自创**：跟飘幽灵相对"宠物中心"的偏移（屏幕像素）。
+#: 原作是 `obj_mainchara.x ± 20, obj_mainchara.y - 20`（**原作像素**）—— 搬到桌面上直接
+#: 用 20 会和宠物（约 42×82 屏幕像素）**重叠**，所以取 `-46`（≈宠物半宽 21 + 幽灵半宽 22），
+#: 让它贴在宠物**左侧**、刚好不压上去。y 沿用定点那套的 `-6`（与 `GHOST_SPAWN_OFFSET` 同口径）。
+#: ★★ 这是本项目**第 3 处自创数值**（前两处 = `companion` 的 `FOLLOW_FAR_THRESHOLD` /
+#:    `RALLY_LAG_DIVISOR`），必须登记在案。
+GHOST_FOLLOW_OFFSET_X = -46.0
+GHOST_FOLLOW_OFFSET_Y = -6.0
+
 # ---------------------------------------------------------------- 常量：本项目扩展（N1）
 #: 「决心」满值所需接触秒数 —— ★ **自创**。取 3 小时：幽灵该是**长期相处的产物**，
 #: 不是装上就能看见的背景物；同时它是"亮档"的门槛（见 `gate`）。
@@ -162,6 +206,68 @@ def step_alpha(alpha, dist, cap=GHOST_DIST_ALPHA_MAX, step=GHOST_FADE_STEP):
     if a > 0.0:
         return max(0.0, min(c, a - st))           # 原文：每帧 -0.05
     return 0.0                                    # 原文：else image_alpha = 0
+
+
+# ---------------------------------------------------------------- 1b. 停走式 alpha（照抄）
+def step_stopgo(alpha, moving, cap, step=GHOST_FADE_STEP):
+    u"""推进一帧**停走式** alpha，**逐字照抄** `obj_ghostbuds.Draw_0`：
+
+    ```gml
+    // 过场档（instance_exists(obj_starker || obj_backgrounder_pillar || obj_backgrounder_castle)）
+    if (obj_mainchara.moving == 0)
+    {
+        if ((juandice > 0 && clover_alpha < 0.5) || (juandice == -1 && clover_alpha < 0.3)) clover_alpha += 0.05;
+        ...
+        if (juandice == -1 && clover_alpha > 0.3) clover_alpha -= 0.05;
+    }
+    else if (obj_mainchara.moving == 0)           // ← 非过场档
+    {
+        if ((clover_alpha < 0.9 && juandice > 0) || (clover_alpha < 0.6 && juandice == -1)) clover_alpha += 0.05;
+        if (juandice == -1 && clover_alpha > 0.6) clover_alpha -= 0.05;
+    }
+    if (obj_mainchara.moving == 1) { clover_alpha -= 0.05; chara_alpha -= 0.05; }
+    ```
+
+    语义（两句）
+    ----------
+    * **站住**（`moving == 0`）⇒ 向 `cap` 以每帧 `0.05` **回升**并封顶；
+    * **走动**（`moving == 1`）⇒ 每帧 `-0.05`，**无条件**、与档位无关（原文就是这么写的：
+      走动那条 `if` 独立于上面两个分支）。
+
+    照抄时做的**两处显式化**（都是把同一个常量接到本项目已有的轴上，不是自造机制）
+    --------------------------------------------------------------------------
+    1. `cap` 由**档位**给（`0.9` 亮 / `0.6` 暗 / `0.0` 看不见，过场档 `0.5` / `0.3` / 0）
+       —— 原文那两组数（`0.9/0.6` 与 `0.5/0.3`）本来就是"亮档 / 暗档"两个常量
+       （同一个 `juandice ∈ {+1, -1}` 轴；`Draw_0` 第 71~74 行 `if (scr_murderlv() < 12)
+       juandice = -1;` 就是这条轴），所以这里只是把**同一个常量**接到了决心轴上。
+       ⇒ 本函数**不需要** `cutscene` 参数：过场与否只影响 `cap` 的取值，
+         由调用方用 `alpha_cap(gate, cutscene=...)` 算好再传进来（少一个分支 = 少一处走歪的机会）。
+    2. 「向 cap 收敛」写成**双向**：`a < cap` 抬、`a > cap` 落。
+       原文只在**暗档**那一支写了回落（`juandice == -1 && alpha > 0.6`），亮档没写 ——
+       但亮档的 cap 是 0.9 且 `alpha` 从任何可达状态都到不了 0.9 以上 ⇒
+       补上这条**不改变任一条可达路径的结果**（等价，不是"顺手修"）。
+       它的真实用途：决心涨上去（dim→bright）时 cap 变大，回落那一支不会误伤；
+       而档位**降**下来时（bright→dim，比如清档重来）alpha 会自动收回到新 cap。
+
+    ★★ 与原文**故意不同**的一处（不销毁）
+    ----------------------------------
+    原文末尾 `if (clover_alpha <= 0 && chara_alpha <= 0) { obj_mainchara.ghosttimer = 0;
+    instance_destroy(); }` —— 走到 alpha 归零就把对象**销毁**，靠 `ghosttimer` 那套重生器再放出来。
+    桌面版**没有**那套重生器 ⇒ 本函数**只归零、不销毁**（下限钳在 0），停下时就地再升起。
+    这是本项目**故意**的简化，不是漏抄 —— 否则"走动一次就永远没有幽灵了"。
+    """
+    a = _safe_float(alpha, 0.0)
+    c = _safe_float(cap, GHOST_DIST_ALPHA_MAX)
+    st = abs(_safe_float(step, GHOST_FADE_STEP))
+    if c < 0.0:
+        c = 0.0
+    if moving:
+        return max(0.0, a - st)          # 原文：走动 ⇒ 无条件 -0.05（下限 0 = 我们的"不销毁"口径）
+    if a < c:
+        return min(c, a + st)            # 原文：站住 ⇒ +0.05，封顶
+    if a > c:
+        return max(c, a - st)            # 原文（暗档那一支）：超过封顶 ⇒ 每帧 -0.05
+    return a
 
 
 # ---------------------------------------------------------------- 2. 上下浮动（照抄）
@@ -243,12 +349,20 @@ def gate(contact_seconds, ralsei_special=RALSEI_SPECIAL):
     return 'hidden'
 
 
-def alpha_cap(gate_key):
-    u"""档位 → alpha 封顶。`hidden` 返 `0.0`（= 彻底看不见）。未知档位按 `hidden`。"""
+def alpha_cap(gate_key, cutscene=False):
+    u"""档位 → alpha 封顶。`hidden` 返 `0.0`（= 彻底看不见）。未知档位按 `hidden`。
+
+    `cutscene=True` ⇒ 用「跟飘幽灵的过场档」那组 `0.5` / `0.3`
+    （照抄 `obj_ghostbuds.Draw_0`；⚠️ 与定点那只的过场档 0.9/0.6 不是一回事，
+    见文件顶部「命名陷阱」）。**桌面版没有过场**（`obj_starker` /
+    `obj_backgrounder_*` 这套死亡演出对象在本项目不存在）⇒ 产品侧恒 `False`，
+    这条通路只被回归锁当**对照控制**用（同输入只翻这一个开关 ⇒ 输出必须不同），
+    否则"过场档照抄对了没有"这件事**无法被测到**。
+    """
     if gate_key == 'bright':
-        return GHOST_BRIGHT_ALPHA
+        return GHOST_BUDS_CUTSCENE_BRIGHT_ALPHA if cutscene else GHOST_BRIGHT_ALPHA
     if gate_key == 'dim':
-        return GHOST_DIM_ALPHA
+        return GHOST_BUDS_CUTSCENE_DIM_ALPHA if cutscene else GHOST_DIM_ALPHA
     return 0.0
 
 
@@ -367,15 +481,20 @@ class ContactClock(object):
 
 
 class GhostState(object):
-    u"""一只**定点**幽灵的全部状态（对应原作 `obj_ghostint2`）。
+    u"""一只幽灵的全部状态。**一个类、两种模式**（B5 起）：
 
-    它的位置是**固定的**（`home_x/home_y`），只有 `y` 在 `starty ± 2` 里漂——
-    这正是"定点"的含义：**不是跟着宠物跑**，而是宠物走近了它才清晰
-    （用户 N2 选的就是这条）。
+    | 模式 | 对应原作 | 位置 | alpha 怎么算 |
+    |---|---|---|---|
+    | `MODE_FIXED`（默认） | `obj_ghostint2` | **固定**在 `home_x/home_y`；只有 `y` 在 `starty ± 2` 里漂 | **距离式**（宠物走近了才清晰，用户 N2 选的就是这条） |
+    | `MODE_FOLLOW` | `obj_ghostbuds`（跟飘 / 停走式） | **跟着宠物**（`宠物中心 + GHOST_FOLLOW_OFFSET`）；`y` 仍漂 ±2 | **停走式**（站住显形 / 走动淡出，B5 照抄） |
+
+    ⚠️ 两种模式**不是同一个机制的两套参数**：定点那只的 alpha **只认距离**、
+    跟飘那只的 alpha **只认走没走**（`obj_ghostbuds.Draw_0` 里根本没有距离项）。
+    硬要"两套叠加"就是自造第三个原作里不存在的机制。
     """
 
     def __init__(self, home_x=0.0, home_y=0.0, contact_seconds=0.0,
-                 ralsei_special=RALSEI_SPECIAL):
+                 ralsei_special=RALSEI_SPECIAL, mode=MODE_FIXED):
         self.home_x = _safe_float(home_x, 0.0)
         self.home_y = _safe_float(home_y, 0.0)
         self.x = self.home_x
@@ -390,6 +509,18 @@ class GhostState(object):
         self.alpha = 0.0
         self.contact = ContactClock(contact_seconds)
         self.ralsei_special = bool(ralsei_special)
+        #: 行为模式（未知值一律退回 `MODE_FIXED` —— 与 `alpha_cap` 的"未知档位按最保守"
+        #: 同一口径：**宁可退回被回归锁守住的那条**，也不要留一个半懂的状态）。
+        self.mode = mode if mode in _MODES else MODE_FIXED
+        #: 宠物这一帧**走没走** —— 停走式的唯一输入（`obj_mainchara.moving` 的对应物）。
+        #: 默认 `False` = **站住**（原文 `moving` 由键盘给，桌面上"没在走"就是站住）。
+        self.moving = False
+        #: 是否处于"过场"（原作 `instance_exists(obj_starker/...)`）。
+        #: 桌面版没有那套死亡演出对象 ⇒ 产品侧**恒 False**；留它是给回归锁做对照控制。
+        self.cutscene = False
+        #: 停走式**在跟飘模式下**用到的"上一帧到宠物的距离"（**仅供诊断**，
+        #: 不参与 alpha —— 跟飘那只的 alpha 与距离无关，见类 docstring 的⚠️）。
+        self.last_dist = None
 
     # -------- 读口 --------
     @property
@@ -398,7 +529,7 @@ class GhostState(object):
 
     @property
     def cap(self):
-        return alpha_cap(self.gate)
+        return alpha_cap(self.gate, cutscene=self.cutscene)
 
     @property
     def visible(self):
@@ -406,46 +537,100 @@ class GhostState(object):
 
     @property
     def frame(self):
-        u"""定点幽灵**不播动画** ⇒ 恒为 `GHOST_FRAME_DEFAULT`（照抄兜底分支）。"""
+        u"""两只幽灵都**不播动画** ⇒ 恒为 `GHOST_FRAME_DEFAULT`（照抄兜底分支）。
+
+        `obj_ghostint2.Create_0` 有 `image_speed = 0`；`obj_ghostbuds` 走的是
+        `draw_sprite_ext(..., charaface, ...)`（`Draw_0` 里 `image_index` 由
+        `obj_face_chara` 映射），同样**不是**自动播放 —— 本项目没有表情系统，
+        所以两只都用原文那条"其余 → 0"的兜底。
+        """
         return GHOST_FRAME_DEFAULT
 
     def distance_to(self, px, py):
         return math.hypot(_safe_float(px) - self.x, _safe_float(py) - self.y)
 
     def describe(self):
-        return u'x=%.1f y=%.1f alpha=%.3f 档=%s | %s' % (
-            self.x, self.y, self.alpha, self.gate, self.contact.describe())
+        return u'模式=%s x=%.1f y=%.1f alpha=%.3f 档=%s 走=%s | %s' % (
+            self.mode, self.x, self.y, self.alpha, self.gate,
+            'Y' if self.moving else 'N', self.contact.describe())
 
     # -------- 写口 --------
-    def step(self, dt, px=None, py=None, contact=None):
-        u"""推进一帧：先接触计时（可选），再 alpha，再浮动。
+    def step(self, dt, px=None, py=None, contact=None, moving=None, cutscene=None):
+        u"""推进一帧：先接触计时（可选），再按**模式**算 alpha，最后浮动。
 
         :param dt: 帧时长（秒），内部钳到 `MAX_DT`
-        :param px,py: 宠物**中心**坐标；给 `None` ⇒ 视为"无穷远"（alpha 只减不增）
+        :param px,py: 宠物**中心**坐标。
+                      `MODE_FIXED`：给 `None` ⇒ 视为"无穷远"（alpha 只减不增）；
+                      `MODE_FOLLOW`：给 `None` ⇒ **不跟**（位置停住，alpha 照常按"没在走"推进）。
         :param contact: `None` ⇒ 保留调用方在别处 tick 过的状态（不重复计）
-        :return: `(alpha, y)` 是否发生变化
+        :param moving: 宠物走没走（`MODE_FOLLOW` 的唯一输入）。`None` ⇒ 保留上帧的值
+        :param cutscene: `None` ⇒ 保留现值（产品侧恒 `False`）
+        :return: 这一帧 alpha 或 y 是否发生变化
         """
         d = _safe_float(dt, 0.0)
         if d > MAX_DT:
             d = MAX_DT
         if contact is not None:
             self.contact.tick(d, contact=bool(contact))
-
-        if px is None or py is None:
-            dist = float('inf')
-        else:
-            dist = self.distance_to(px, py)
+        if moving is not None:
+            self.moving = bool(moving)
+        if cutscene is not None:
+            self.cutscene = bool(cutscene)
 
         old_a = self.alpha
-        self.alpha = step_alpha(self.alpha, dist, cap=self.cap)
-
         old_y = self.y
+
+        if self.mode == MODE_FOLLOW:
+            self._follow_to(px, py)
+            # ★ 停走式**不乘 dt** —— 原文是 `clover_alpha += 0.05`（**每帧**一个固定量），
+            #   而不是"每秒 1.5"。本项目的节拍是固定的 30ms 定时器（`GMS2FPS = 30`），
+            #   所以"每帧 0.05"就是"每帧 0.05"，忠实于原文。
+            #   ⚠️ 反过来说：帧率掉一半，淡入淡出就慢一半 —— 这是**原文的性质**，不改。
+            self.alpha = step_stopgo(self.alpha, self.moving, self.cap)
+        else:
+            if px is None or py is None:
+                dist = float('inf')
+            else:
+                dist = self.distance_to(px, py)
+            self.alpha = step_alpha(self.alpha, dist, cap=self.cap)
+
         self.y, self.goup, self.simplecheck = step_levitate(
             self.y, self.starty, self.goup, self.simplecheck)
         return (abs(self.alpha - old_a) > 1e-9) or (abs(self.y - old_y) > 1e-9)
 
+    def _follow_to(self, px, py):
+        u"""`MODE_FOLLOW`：把幽灵挪到"宠物中心 + 偏移"。
+
+        ★ 关键在于**保住浮动偏移**：`y` 上挂着 ±2 的三角波（`step_levitate`），
+        如果每帧都 `self.y = 目标 y` 再走浮动，浮动累加器会被**每帧清零** ⇒
+        幽灵会僵在 `目标 + 0.1`（探针实测的形状），看起来"不飘了"而没人知道为什么。
+        所以这里先量出**当前偏移**（`self.y - self.starty`），把基准点搬到新位置，
+        再把偏移还回去 —— 位置跟人走、浮动照旧。
+        """
+        if px is None or py is None:
+            return False
+        try:
+            off = self.y - self.starty
+            self.starty = _safe_float(py) + GHOST_FOLLOW_OFFSET_Y
+            self.x = _safe_float(px) + GHOST_FOLLOW_OFFSET_X
+            self.y = self.starty + off
+            # 「定点」在跟飘模式下 = 跟随基准（`home_*` 仍要更新，否则
+            # `describe()` / 诊断日志里的 home 会撒谎说"它一直没动过"）。
+            self.home_x = self.x
+            self.home_y = self.starty
+            self.last_dist = math.hypot(_safe_float(px) - self.x,
+                                        _safe_float(py) - self.y)
+            return True
+        except Exception:
+            return False
+
     def respawn(self, home_x, home_y):
-        u"""重新定点（换屏 / 重新摆放）。**同时重置 `starty`**（照抄 `Create_0`）。"""
+        u"""重新定点（换屏 / 重新摆放）。**同时重置 `starty`**（照抄 `Create_0`）。
+
+        ⚠️ `MODE_FOLLOW` 下这一帧会被 `_follow_to()` 覆盖掉 —— 跟飘那只本来就该待在
+        宠物边上。**保留这个方法**是因为：① `MODE_FIXED` 真的要用它；② 切模式
+        （fixed→follow）时要有个"摆到哪"的起点，`main._ghost_respawn()` 就是那个调用方。
+        """
         self.home_x = _safe_float(home_x, 0.0)
         self.home_y = _safe_float(home_y, 0.0)
         self.x = self.home_x

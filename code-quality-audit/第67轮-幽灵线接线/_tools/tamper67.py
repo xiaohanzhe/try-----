@@ -56,6 +56,19 @@ CASES = [
      b'def determination(contact_seconds):\n    import os', ['A5']),
     ('6 改浮动步长 0.1→0.2',    'gs', b'GHOST_LEVITATE_STEP = 0.1', b'GHOST_LEVITATE_STEP = 0.2',
      ['B8', 'C10']),
+    # ---- B5（第74轮追加）：停走式的四类破坏 ----
+    # 7 把产品模式偷偷切回"定点距离式"（= B5 整条被静默回退，最像"改一行没事"的那种）
+    ('7 产品模式切回定点',      'main', b'GHOST_MODE = ghost_system_mod.MODE_FOLLOW',
+     b'GHOST_MODE = ghost_system_mod.MODE_FIXED', ['E19a', 'E21a', 'E35']),
+    # 8 停走式步长 0.05→0.5（淡入淡出快 10 倍 —— 只在真机跑一眼才看得出的那种）
+    ('8 停走式步长 0.05→0.5',   'gs', b'GHOST_FADE_STEP = 0.05', b'GHOST_FADE_STEP = 0.5',
+     ['B5', 'B25', 'C32']),
+    # 9 ★ 把"走动"那条**独立**的 if 改成受档位约束（最容易抄错的一处：原文它与档位无关）
+    ('9 走动那条被档位约束',    'gs', b'    if moving:\n        return max(0.0, a - st)',
+     b'    if moving:\n        return max(0.0, min(c, a - st))', ['C35']),
+    # 10 `_follow_to` 写成"每帧 y = 目标值"（浮动被吃掉的坏写法）
+    ('10 跟飘吃掉浮动',         'gs', b'            self.y = self.starty + off',
+     b'            self.y = self.starty', ['C46', 'E21b']),
 ]
 
 
