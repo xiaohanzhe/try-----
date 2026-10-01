@@ -102,6 +102,15 @@ HERMETIC_IDS = frozenset({
     #   所以这里给它 hermetic 环境是**双保险**：run_all 给的是"每轮全新 mkdtemp"，
     #   基线才封闭（否则会随"上次跑留下的 ghost_state.json"漂移）。
     'check67',
+    # 第73轮：真机 `RalseiPet()` —— **第74轮 B11 实补**。
+    #   ★ 它原来的注释写着"隔离内存记忆，绝不碰用户 E:\RalseiMemory 保管库"，
+    #     但**这句是假的**：`check73.py` 里 `_pet = M.RalseiPet()` 在**构造期**就把
+    #     真实保管库定下来了（夹具到第585行才换 `_pet.npc_memory`，为时已晚），
+    #     而且构造期那行日志把**真实路径**打进了输出 —— 实证：
+    #       `记忆落盘=E:\RalseiMemory\npc_memory`（归一化后**仍在**，见
+    #       `_tools/audit_env_leak74.py`）。两个后果：① 基线不封闭（E 盘掉线即假 DIFF）；
+    #     ② 跑一次就往用户真实保管库写东西。这里补进名单，让 `find_device_dir` 直接 return。
+    'check73',
 })
 
 
@@ -1380,8 +1389,11 @@ SUITES = [
     },
     # 第73轮 · NPC「自由生活」（场景反应 / 熟络度 / 传话 / 纯 NPC 自主开口）。
     # ★ 本轮的真源 = `assets/npc/_crossworld.json`（数据面契约）+ 新模块 `npc_life.py`。
-    # ★ 纯数据 + 真 import 真跑 `npc_life` + 真机 `RalseiPet()`（隔离内存记忆，
-    #   **绝不碰用户 E:\RalseiMemory 保管库**）⇒ `offscreen=False`，但**零网络、零外部盘**。
+    # ★ 纯数据 + 真 import 真跑 `npc_life` + 真机 `RalseiPet()`。
+    # ⚠️ **第74轮 B11 更正一句假话**：这里原来写"隔离内存记忆，绝不碰用户
+    #   E:\RalseiMemory 保管库" —— 实测是**假的**（构造期就已解析到真实保管库，
+    #   夹具换 `npc_memory` 为时已晚）。现已把 `check73` 补进 `HERMETIC_IDS`
+    #   （那才是真正管用的隔离层），见该名单里的注释。
     # ★★ 最值钱的两段：**C 段**（对现网**全部**场景 id 真跑特质推断）与
     #   **E 段**（真机验证 `_npc_life_tick` 真开口 + 真传话）—— 静态检查证明不了
     #   "产品用上了"，只有真跑能。

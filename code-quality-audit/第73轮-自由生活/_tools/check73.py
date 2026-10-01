@@ -17,7 +17,12 @@
 
 设计纪律（沿用 check71 / check72）
 ----------------------------------
-① **零 Qt、零网络、零存储、零外部盘** ⇒ 可进 G2（真机段用的是隔离内存记忆）。
+① **零网络、零真实存储** ⇒ 可进 G2。
+   ⚠️ **第74轮 B11 更正**：这里原来写"真机段用的是隔离内存记忆"，**那句话不成立** ——
+   `_pet = M.RalseiPet()` 在**构造期**就把真实保管库定下来了（下面换 `npc_memory`
+   是构造**之后**的事），构造期那行日志还会把 `E:\RalseiMemory\npc_memory` 打进输出。
+   真正管用的隔离层是 `run_all.HERMETIC_IDS` 里的 `check73`（注入 `RALSEI_MEMORY_DIR`
+   ⇒ `find_device_dir` 直接 return）。本文件里的夹具只算**第二层**，不要拿它当隔离依据。
 ② **正/负控制成对**：每条"放行"都配一条"拒"，每条内核都配一个"改坏了必须报红"。
 ③ **不自比**：A 段的真源是 `_crossworld.json`（数据面契约），不是本文件自己写死的表。
 ④ **判据名里不许自带 `[PASS]`/`[FAIL]`/`[OK]` 字样**（会污染 run_all 的计数）。
@@ -579,7 +584,11 @@ for _a in ('animation_timer', 'ai_timer', 'stats_timer', 'dialogue_init_timer',
             _t.stop()
     except Exception:
         pass
-# 夹具：本地模型不可用 + **隔离记忆**（绝不碰用户的 E:\RalseiMemory 保管库）
+# 夹具：本地模型不可用 + 换掉这个实例的记忆后端。
+# ⚠️ **第74轮 B11 更正**：这里原来写"绝不碰用户的 E:\RalseiMemory 保管库" —— 是**假的**。
+#   上面 `RalseiPet()` 构造时已经解析并建过真实保管库（日志里那行
+#   `记忆落盘=E:\RalseiMemory\npc_memory` 就是它），这一行只是**构造之后**的补救。
+#   真隔离 = `run_all.HERMETIC_IDS` 注入的 `RALSEI_MEMORY_DIR`。
 _pet.api_enabled = False
 _pet._npc_invited = []
 _pet.npc_memory = NP.MiniMemory(root=None)
