@@ -60,6 +60,10 @@
     "auto_launch_comment": "是否随系统启动。开启方式见「设置 → 启动」，写入的是当前用户的 HKCU Run 项，不改系统级配置；随时可关。",
     "prewarm": false,
     "prewarm_comment": "启动后是否先发一次预热请求，把 Ollama 的 KV 前缀缓存喂热。冷启动首字可达 96~120s，预热后回到 1s 内。仅在本地 Ollama 下有意义。",
+    "prewarm_npc": false,
+    "prewarm_npc_comment": "★ 第74轮：开场是否连 **NPC** 一起预热（不只是 Ralsei）。顺序 = **主角团（kris/susie/ralsei）→ 当前场景在场的 → 其余全部**（用户口径「先预热主角团」「尽量全预热」）。你一开口就**让路**（正在发的那一个无法中止，最多多等一次 prefill）。★ 物理上限：纯 CPU 单实例，每位 NPC 首次 58~107s，96 位全跑 ≈ 1.5~2.5h 且会互相挤掉 ⇒ 想要「尽量全」就把这项打开，但要接受它很慢。",
+    "prewarm_scope": "all",
+    "prewarm_scope_comment": "all = 预热全部已装人设的 NPC（配合「尽量全预热」的口径）；same_scene = 只预热当前场景在场的（省 CPU）。",
     "prewarm_timeout": 180,
     "prewarm_timeout_comment": "预热请求的超时（秒）。冷启动需算完整 persona，7B 在纯 CPU 上约 100~120s。"
   }

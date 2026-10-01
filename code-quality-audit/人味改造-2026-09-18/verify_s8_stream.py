@@ -273,10 +273,11 @@ ok('B2 新增跨线程分片信号 _api_delta（object, object）',
 # RalseiPet 的（还有别的类）→ 会取到别的类而误判。改在整文件规范化源码里找，
 # 下面两条 needle 都是唯一的，不会误命中。
 _MAIN_CO = code_only_src(MAIN_TEXT)
-ok('B3 __init__ 连接 _on_api_delta 并初始化世代号/接收方',
+ok('B3 __init__ 连接 _on_api_delta 并初始化世代号/接收方/槽世代',
    'self._api_delta.connect(self._on_api_delta)' in _MAIN_CO
    and 'self._ai_delta_gen=0' in _MAIN_CO
-   and 'self._ai_delta_sink=None' in _MAIN_CO)
+   and 'self._ai_delta_sink=None' in _MAIN_CO
+   and 'self._ai_delta_sink_gen=0' in _MAIN_CO)
 ok('B4 worker 优先走 chat_stream（不再无条件 cli.chat）',
    'chat_stream' in CHAT_SRC and "_sfn=getattr(cli,'chat_stream',None)" in CHAT_NC)
 ok('B5 流式回调经 _emit_delta 投递（工作线程不直接碰 UI）',
@@ -295,9 +296,9 @@ _delta_nc = code_no_comment(func_src(MAIN_TEXT, '_on_api_delta'))
 _delta_co = code_only_src(func_src(MAIN_TEXT, '_on_api_delta'))
 # B8 的 needle 里含字符串字面量 `'_ai_delta_gen'` → 必须用 code_no_comment
 # （code_only_src 会把它丢掉，变成 getattr(self,,0)，断言恒假 —— 老坑）
-ok('B8 _on_api_delta 做世代号校验（丢弃过期请求的迟到分片）',
-   "ifgeneration!=getattr(self,'_ai_delta_gen',0):return" in _delta_nc,
-   _delta_nc[:160])
+ok('B8 _on_api_delta 做**槽世代**校验（丢弃过期请求的迟到分片）',
+   "ifgeneration!=getattr(self,'_ai_delta_sink_gen',0):return" in _delta_nc,
+   _delta_nc[:180])
 # B9 反过来要用 code_only_src：docstring 里**提到**了 `_ai_delta_sink`
 # （解释为什么故意不清理），只有剥掉字符串才能确认"代码里真的没有这次赋值"
 ok('B9 _on_api_delta **故意不清理** sink（清理会误杀新请求的接收方）',
@@ -309,6 +310,7 @@ def mstub(**extra):
     s = types.SimpleNamespace()
     s._ai_delta_gen = 0
     s._ai_delta_sink = None
+    s._ai_delta_sink_gen = 0     # ★ 第74轮：槽世代（只有带接收方的请求推进它）
     for name in ('_ai_stream_enabled', '_on_api_delta'):
         setattr(s, name, types.MethodType(getattr(R, name), s))
     for k, v in extra.items():
@@ -326,7 +328,7 @@ ok('B12 配置异常（非 dict）不崩，回落开启',
 s = mstub()
 collected = []
 s._ai_delta_sink = collected.append
-s._ai_delta_gen = 7
+s._ai_delta_sink_gen = 7      # ★ 第74轮：校验的是"槽世代"（只有带接收方的请求推进它）
 s._on_api_delta(7, '甲')
 s._on_api_delta(6, '旧')      # 过期世代 → 必须丢弃
 s._on_api_delta(7, None)      # reset 标记必须原样转发
@@ -335,6 +337,17 @@ ok('B13 世代号校验生效：过期分片丢弃、当前分片与 reset 都�
 s._ai_delta_sink = None
 s._on_api_delta(7, '甲')
 ok('B14 没有接收方时分片静默丢弃（不抛异常）', collected == ['甲', None])
+
+# ★ 第74轮（B9）：源码级钉住"槽世代只被**带接收方**的请求推进"。
+# 缺陷原型：`self._ai_delta_sink = on_delta if _stream_on else None` —— 后台请求
+# （事件台词 / 跟随决策 / 自主发言）不带 on_delta，却把槽覆盖成 None 并把世代号 +1，
+# 于是前台正在流式的分片全被判过期（第58轮 42 次里 17 次"零分片"）。
+ok('B15 ★ 只有"带接收方"的请求才占槽并推进槽世代（后台请求不再顶掉前台流式）',
+   'if_stream_on:' in CHAT_CO
+   and 'self._ai_delta_sink=on_delta' in CHAT_CO
+   and 'self._ai_delta_sink_gen=_gen' in CHAT_CO
+   and 'self._ai_delta_sink=on_deltaif_stream_onelseNone' not in CHAT_CO,
+   CHAT_CO[CHAT_CO.find('_stream_on'):CHAT_CO.find('_stream_on') + 170])
 
 # ---------------------------------------------------------------- C
 section('C. 流式清洗的前缀安全性')
@@ -645,7 +658,7 @@ try:
     def _mk_harness():
         """只保留"信号 + 槽 + 两个状态字段"的最小宿主。
 
-        `_on_api_delta` 直接绑 RalseiPet 的真身（它只依赖 `_ai_delta_gen`
+        `_on_api_delta` 直接绑 RalseiPet 的真身（它只依赖 `_ai_delta_sink_gen`
         与 `_ai_delta_sink` 两个属性），所以测的就是生产代码那个槽。
         """
         class _H(QObject):
@@ -655,6 +668,7 @@ try:
                 super().__init__()
                 self._ai_delta_gen = 0
                 self._ai_delta_sink = None
+                self._ai_delta_sink_gen = 0   # ★ 第74轮：校验的是"槽世代"
                 self._api_delta.connect(R._on_api_delta.__get__(self, _H))
 
         return _H()
@@ -667,7 +681,7 @@ try:
     h = _mk_harness()
     received = []
     h._ai_delta_sink = received.append
-    h._ai_delta_gen = 5
+    h._ai_delta_sink_gen = 5
 
     import threading
 
@@ -685,7 +699,7 @@ try:
     h2 = _mk_harness()
     seq = []
     h2._ai_delta_sink = seq.append
-    h2._ai_delta_gen = 9
+    h2._ai_delta_sink_gen = 9
 
     def _emit_retry():
         # 复刻"判退 → reset → 重采样"的发射顺序

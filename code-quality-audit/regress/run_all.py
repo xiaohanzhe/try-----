@@ -1411,6 +1411,35 @@ SUITES = [
                 '★`scene_traits` 必须**写明** ruined/cosmic 零命中） / '
                 'G 判据自身体检',
     },
+    # 第74轮 · NPC 启动预热（**主角团优先**）。
+    # ★ 为什么值得常驻：这是本项目**第一个会真的发 HTTP 请求**的后台队列，
+    #   三件事都可能被无声改坏 —— **顺序**（用户亲口要的"先预热主角团"）、
+    #   **让路**（拿 `_ai_delta_sink` 当门会永久为真，第 D22 条钉过的坑）、
+    #   **接点**（`_prewarm_npc_caches` 是否真被调用 —— "函数写对了 != 产品用上了"）。
+    # ★ 零网络 / 零模型 / 零外部盘：C 段喂假 client，**不碰 Ollama、不碰 E 盘保管库**。
+    # ★ A8 的真源是 `assets/npc/_placement.json` 的 party 组（数据面），
+    #   不是套件里自己抄的名单 ⇒ 换队伍名单时，数据面与代码必须一起对得上。
+    {
+        'id': 'warm74',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第74轮-预热与回归治理',
+                               '_tools', 'verify_warm74.py'),
+        'offscreen': True,
+        'desc': '第七十四轮：NPC 启动预热（主角团优先）不许静默漂移 —— '
+                'A 纯函数 `prewarm_order` 三档排序（★主角团最先且按队伍序 / '
+                '负控制：名单空则不再优先 / 同场优先于其余 / 主角团 > 同场 / '
+                '「尽量全」不丢一个 / 与输入顺序无关 / 坏输入不抛 · '
+                '★A8 数据面锚点：真源 = `_placement.json` 的 party 组，不自说自话） / '
+                'B 接点（AST：`prewarm_order` 是**模块级**函数 · '
+                '★`_prewarm_ai_cache` 真调用 `_prewarm_npc_caches` · '
+                '`_prewarm_npc_caches` 真调用 `prewarm_order` · '
+                '★★让路判据**不含** `_ai_delta_sink`（负控制：它收尾刻意不清空 ⇒ 当门永久为真） · '
+                '配置默认关 `startup.prewarm_npc=false`/`prewarm_scope=all` · 只取 1 token） / '
+                'C 行为级（喂假 client 真调：每个已装人设各发恰一次且 system 走唯一出口 · '
+                '★串行（并发峰值 1，纯 CPU 单实例并发只是排队） · '
+                '★让路（用户一开口就不再发新的，且确实发过） · '
+                '没装人设的不预热 · `scope=same_scene` 正负成对 · '
+                '★主角团在**真桩**上排最前且按队伍序）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
@@ -1443,6 +1472,19 @@ _QT_NOISE = re.compile(
 #     ⇒ 是沙箱策略，不是 ACL、不是产品缺陷。
 # 所以按"环境噪声"排除，而不是去改基线（改基线 = 把环境问题固化成预期值）。
 _ENV_NOISE = re.compile(r'^\[日志\]\s*文件日志初始化失败')
+# jieba 的**缓存重建**噪声：缓存有效时一行不打；缓存失效（首次运行 / 字典 mtime 变化 /
+# **时钟被平移导致 cache 看起来过期**）时打印这 4 行。
+#   · 它不是被测行为（产品只是"调用了 jieba"），出现与否取决于磁盘缓存状态；
+#   · 第74轮 B11 实测：同一份代码在 `CLOCK_SHIFT_SEC=±115200` 下比基线**多**这 4 行
+#     ⇒ 假 DIFF（round12_store 的 A 段）。
+# 按环境噪声排除。注意 `Loading model cost` 已被 `_JIEBA_COST` 归一化成固定文本，
+# 这里匹配的是**归一化后**的形态（含 `<COST>` / `<TMP>` 占位符）。
+_JIEBA_NOISE = re.compile(
+    r'^(?:Building prefix dict from the default dictionary \.\.\.'
+    r'|Dumping model to file cache .*'
+    r'|Loading model cost <COST> seconds\.'
+    r'|Prefix dict has been built successfully\.)$'
+)
 
 
 def normalize(text):
@@ -1465,6 +1507,8 @@ def normalize(text):
         if _QT_NOISE.match(ln):      # Qt 插件噪声：不是被测行为的一部分
             continue
         if _ENV_NOISE.match(ln):     # 沙箱环境噪声：见常量注释
+            continue
+        if _JIEBA_NOISE.match(ln):   # jieba 缓存重建噪声：见常量注释
             continue
         if not ln:
             if blank:

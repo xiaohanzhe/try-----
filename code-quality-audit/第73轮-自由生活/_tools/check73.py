@@ -635,7 +635,10 @@ check('E4c ★★ 真机：生活块里**不含**任何作品归属 / 版本 / �
 
 _sp = _pet.npc_system_prompt(TARGET)
 check('E5 ★ 真机：`npc_system_prompt` 里真带上了生活块（端到端）',
-      bool(_sp) and '【你认识谁】' in _sp, 'len=%d' % len(_sp or ''))
+      bool(_sp) and '【你认识谁】' in _sp,
+      # ★ 第74轮（B11）：**不打印长度** —— 同一份 prompt 的长度会被"真实天气"
+      #   （`_build_npc_context` 拼进 system）和时段带着走，长度不是判据本体。
+      '有生活块=%s' % ('【你认识谁】' in (_sp or '')))
 
 _pet._npc_talking = None
 _g1 = _pet._npc_life_gate()

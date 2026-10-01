@@ -804,8 +804,10 @@ _sys = _fake.calls[-1]['system'] or ''
 #    那一份里才该两句都有。
 check('W33f ★★ 本次发出去的 system 带上了"对方刚说的那句"（记忆真接进提示词了）',
       '你最近好吗' in _sys and '【你记得的事' in _sys,
-      'len=%d 有对方那句=%s 有记忆块=%s'
-      % (len(_sys), '你最近好吗' in _sys, '【你记得的事' in _sys))
+      # ★ 第74轮（B11）：**不打印长度**。`_build_npc_context` 会把**真实天气**写进 system
+      #   （天气走"Windows 缓存 + 本地推断"），一个阴转晴就能让长度 ±1 ⇒ 假 DIFF。
+      #   判据本体是"含不含那两块"，长度不是判据。
+      '有对方那句=%s 有记忆块=%s' % ('你最近好吗' in _sys, '【你记得的事' in _sys))
 _sys_next = pet.npc_system_prompt('susie')
 check('W33f2 ★★ 回复落进记忆后**再构建一次**：那一份里两句都在（记忆真的在累积）',
       '你最近好吗' in _sys_next and _fake.reply in _sys_next,

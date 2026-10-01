@@ -261,7 +261,12 @@ ok('B12 空目录被清掉（但绝不递归硬删）', not os.path.isdir(os.pat
 # 目标更新 → 留新的，落选者挪 .old
 os.makedirs(_stg, exist_ok=True)
 _w(os.path.join(_stg, 'config.json'), 'staging-newer')
-os.utime(os.path.join(_vlt, 'config.json'), (time.time() - 3600, time.time() - 3600))
+# ★ 第74轮（B11）：不要用 `time.time() - 3600`。那是在"Python 视角的时钟"上回退，
+#   而 `_w()` 刚写的文件 mtime 由 **OS 的真实时钟**赋予；两者一旦被时钟平移注入拉开，
+#   "谁更新"就翻了，判据随机失败（第58轮 +32h 实测正是这 2 条 FAIL）。
+#   改用**该文件自己的 mtime** 作基准回退 —— 与所在时间轴无关，永远自洽。
+_vlt_t = os.path.getmtime(os.path.join(_vlt, 'config.json'))
+os.utime(os.path.join(_vlt, 'config.json'), (_vlt_t - 3600, _vlt_t - 3600))
 rep2 = data_store.migrate_from_staging()
 with io.open(os.path.join(_vlt, 'config.json'), 'r', encoding='utf-8') as f:
     kept = f.read()
@@ -275,8 +280,9 @@ ok('B14 落选者挪成 .old 留档（不丢数据）',
 os.makedirs(_stg, exist_ok=True)
 _w(os.path.join(_stg, 'only-old.txt'), 'from-staging-old')
 _w(os.path.join(_vlt, 'only-old.txt'), 'vault-newer')
-_old_t = time.time() - 7200
-os.utime(os.path.join(_stg, 'only-old.txt'), (_old_t, _old_t))
+# ★ 第74轮（B11）：同上 —— 以 vault 那份的**真实 mtime** 为基准回退 2 小时
+_new_t = os.path.getmtime(os.path.join(_vlt, 'only-old.txt'))
+os.utime(os.path.join(_stg, 'only-old.txt'), (_new_t - 7200, _new_t - 7200))
 rep2b = data_store.migrate_from_staging()
 
 

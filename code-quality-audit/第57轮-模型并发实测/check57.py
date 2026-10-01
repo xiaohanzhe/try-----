@@ -213,7 +213,9 @@ for node in ast.walk(_mtree):
         if isinstance(f, ast.Attribute) and f.attr == 'chat_with_ai':
             _call_sites.append(getattr(node, 'lineno', -1))
 check('B6  chat_with_ai 的调用点 >= 4 处（NPC说话 / 跟随决策 / 自主开口 / 事件台词 等）',
-      len(_call_sites) >= 4, '行号=%s' % sorted(_call_sites))
+      # ★ 第74轮（B11）：只打**条数**，不打行号 —— 行号随任何一次代码改动整体偏移
+      #   （改一次 main.py 就要重建一次基线，等于没有基线）。条数才是判据本体。
+      len(_call_sites) >= 4, '%d 处' % len(_call_sites))
 
 # ai_driver 的自保：_busy（防自己重入）+ 让路给对话框（_ai_inflight）
 _ad = read_text(os.path.join(MODULES, 'ai_driver.py'))

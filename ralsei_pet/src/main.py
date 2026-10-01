@@ -493,6 +493,39 @@ def _make_relationship():
         return None
 
 
+# ---------------------------------------------------------------- 预热（B8）
+def prewarm_order(ids, team=(), here=()):
+    """★ 第74轮（B8）：NPC 预热顺序 —— **主角团 → 当前场景在场的 → 其余全部**。
+
+    用户口径原话：「开场先检测周围有哪些 NPC，优先给他们预热，或是在启动程序的
+    时候就预热，没有什么常聊这类的，尽量全预热」＋「**先预热主角团**」。
+    ⇒ 刻意**不挑**"常聊的 2~3 人"（那是我的旧建议，用户否了）：就按这三档排队，
+      用户一开口就让路（见 `RalseiPet._prewarm_should_yield`）。
+
+    纯函数（只排序、不碰 App、不碰网络）⇒ 可单独断言，不受真机/模型影响。
+
+    :param ids:  候选 id（进来什么顺序都不影响结果）
+    :param team: 主角团 id。真源 = `_placement.json` 的 `groups[id=party].members`；
+                 团内按**给定顺序**（= 队伍顺序 kris → susie → ralsei）
+    :param here: 当前场景在场的 id。真源 = `npc_bodies`（见 `_npc_life_ids`）
+    """
+    team_index = {}
+    for i, n in enumerate(team or ()):
+        if isinstance(n, str) and n and n not in team_index:
+            team_index[n] = i
+    here_set = set(h for h in (here or ()) if isinstance(h, str) and h)
+
+    def _key(n):
+        i = team_index.get(n)
+        if i is not None:
+            return (0, i, n)        # ① 主角团（最先）
+        if n in here_set:
+            return (1, 0, n)        # ② 当前场景在场的
+        return (2, 0, n)            # ③ 其余全部（"尽量全预热"）
+
+    return sorted((n for n in (ids or ()) if isinstance(n, str) and n), key=_key)
+
+
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
@@ -532,7 +565,12 @@ class RalseiPet(QMainWindow):
         # 流式分片信号（S8）：工作线程 → 主线程 → 对话框打字机
         self._api_delta.connect(self._on_api_delta)
         self._ai_delta_sink = None    # 当前请求的流式接收方（只在主线程读写）
-        self._ai_delta_gen = 0        # 世代号：每次发起新请求 +1
+        self._ai_delta_gen = 0        # 请求世代号：每次发起新请求 +1（分片身份）
+        # ★ 第74轮（B9）：**槽世代** —— 只有"带流式接收方"的请求才会推进它。
+        #   后台请求（事件台词 / 跟随决策 / 自主发言）不带 on_delta，以前会把自己
+        #   （None）覆盖进 sink 槽、并顺带把世代号 +1，导致前台正在流式的那条请求
+        #   后续分片全被判过期丢弃（第58轮实测 42 次里 17 次"零分片"）。
+        self._ai_delta_sink_gen = 0
         # 事件台词（S7）：罐头去重器 / 事件世代号 / 上次走 AI 的时刻（频率闸）/
         # "上一个事件还在等 AI" 标记（防叠加请求）
         self._event_line_picker = RecentLinePicker()
@@ -9891,7 +9929,11 @@ class RalseiPet(QMainWindow):
         _stream_on = bool(callable(on_delta)) and self._ai_stream_enabled()
         self._ai_delta_gen = getattr(self, '_ai_delta_gen', 0) + 1
         _gen = self._ai_delta_gen
-        self._ai_delta_sink = on_delta if _stream_on else None
+        # ★ 第74轮（B9）：**只有带接收方的请求才占槽**（连"槽世代"一起推进）。
+        #   无 on_delta 的后台请求以前会把槽覆盖成 None —— 前台的分片就再也写不出来。
+        if _stream_on:
+            self._ai_delta_sink = on_delta
+            self._ai_delta_sink_gen = _gen
 
         # —— 主线程先准备好上下文与历史（避免工作线程跨线程读 UI/子系统状态）——
         # 第十八轮：用户消息保持**纯原话**。【此刻】/话题锚/记忆召回一律挂到 system 尾部。
@@ -10441,8 +10483,112 @@ class RalseiPet(QMainWindow):
                           time.time() - t0)
             except Exception as e:
                 _log.info('启动预热失败（忽略，不影响使用）: %s', e)
+            # ★ 第74轮（B8）：Ralsei 之后接着预热 NPC（**主角团 → 同场 → 其余**）。
+            #   开关与范围各自独立：`startup.prewarm_npc` / `startup.prewarm_scope`。
+            try:
+                if bool(self.config_manager.get('startup.prewarm_npc', False)):
+                    _scope = self.config_manager.get('startup.prewarm_scope', 'all') or 'all'
+                    self._prewarm_npc_caches(cli, timeout, _scope)
+            except Exception as e:
+                _log.debug('NPC 预热异常（忽略）: %s', e)
 
         threading.Thread(target=_worker, name='AiPrewarm', daemon=True).start()
+
+    # ---- ★ 第74轮（B8）：NPC 预热（主角团优先，尽量全）----
+    def _prewarm_team_ids(self):
+        """主角团 id。真源 = `_placement.json` 的 `groups[id=party].members`。
+
+        ★ 不在这里另抄一份名单 —— 抄了就是**两个真相**（改一处漏一处）。
+        取不到（数据缺/桩环境）⇒ 返回空表，预热退化成"同场优先"，不编造。
+        """
+        try:
+            book = getattr(self, 'npc_placement', None)
+            rig = book.rig('party') if book is not None else None
+            members = [m for m in (getattr(rig, 'members', None) or ())
+                       if isinstance(m, str) and m]
+            if members:
+                return members
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return []
+
+    def _prewarm_should_yield(self):
+        """预热要不要让路（= 用户此刻正在说话 / 等在回复 / 有事件台词在说）。
+
+        ★ 判据只用**对话状态位**，**绝不**用 `_ai_delta_sink`：它收尾刻意不清空
+          （见 `_on_api_delta` 的说明），拿它当门会**永久为真** —— 这正是 D22 钉的那类坑。
+        """
+        try:
+            dui = getattr(self, 'dialogue_ui', None)
+            if dui is not None:
+                if getattr(dui, '_ai_inflight', False):
+                    return True
+                if getattr(dui, '_streaming', False):
+                    return True
+            if getattr(self, '_event_speaking', False):
+                return True
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return False
+
+    def _prewarm_npc_caches(self, cli, timeout, scope='all'):
+        """★ 第74轮（B8）：一次一个 NPC 地预热（**串行 + 让路**），返回预热成功数。
+
+        为什么"一次一个"而不是并发：Ollama 纯 CPU + `NUM_PARALLEL=1` ⇒ 并发只是
+        **排队**（第57轮实测 `wall ≈ Σ(prefill+decode)`）；而且并发会让"让路"彻底失效 ——
+        一次只发一个，用户开口时最多多付**当前这一个**的 prefill。
+
+        ★ 如实标注物理上限：已经发出去的那个 HTTP 请求**无法中止**（`cli.chat` 是阻塞的）
+          ⇒ "让路"的粒度 = 单个 NPC，而不是"立刻停"。这不是没做，是做不到。
+        """
+        try:
+            ids = [n for n in (self.npc_personas or {}) if self.npc_persona_of(n)]
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return 0
+        try:
+            here = self._npc_life_ids()
+        except Exception:
+            here = []
+        if scope == 'same_scene':
+            _here = set(here)
+            ids = [n for n in ids if n in _here]
+        order = prewarm_order(ids, team=self._prewarm_team_ids(), here=here)
+        if not order:
+            _log.info('NPC 预热：没有可预热的对象（人设/场景为空）')
+            return 0
+        try:
+            opts = self._ai_chat_options()
+        except Exception:
+            opts = {}
+        t0 = time.time()
+        done = skipped = 0
+        for nid in order:
+            if self._prewarm_should_yield():
+                _log.info('NPC 预热让路：你开始说话了，剩余 %d 个不再预热',
+                          len(order) - done - skipped)
+                break
+            try:
+                system = self.npc_system_prompt(nid)
+            except Exception as e:
+                _log.debug('NPC %s 预热取 prompt 失败（跳过）: %s', nid, e)
+                skipped += 1
+                continue
+            if not system:
+                skipped += 1          # 没装人设 ⇒ 不预热（不许借别人的设定开口）
+                continue
+            try:
+                # 与真实对话是**同一段 system**（`npc_system_prompt` 是唯一出口）⇒
+                # 预热命中的前缀就是用户开口时要用的那一段。只要 1 个 token：目的是 prefill。
+                cli.chat('嗯。', system_prompt=system,
+                         temperature=opts.get('temperature', 0.7),
+                         max_tokens=1, timeout=timeout)
+                done += 1
+            except Exception as e:
+                _log.info('NPC %s 预热失败（忽略，不影响使用）: %s', nid, e)
+        _log.info('NPC 预热结束：%d/%d 个（跳过无设定 %d），用时 %.1fs',
+                  done, len(order), skipped, time.time() - t0)
+        return done
 
     # 模型输出里出现这些"对话标记"，说明它在自问自答续写，从这里截断
     _AI_ROLE_MARKER = None      # 惰性编译（见 _role_marker_re）
@@ -10715,17 +10861,21 @@ class RalseiPet(QMainWindow):
     def _on_api_delta(self, generation, piece):
         """主线程槽：把工作线程发来的流式分片转发给当前请求的接收方（S8）。
 
-        **世代号校验**：用户已经问了新问题时（`_ai_delta_gen` 已 +1），
-        旧请求的尾巴不该继续往对话框里写字 —— 否则会出现"新问题的回复里
-        混着旧问题的半句话"。
+        **世代号校验（第74轮 B9 收窄）**：比对的是 `_ai_delta_sink_gen`（"槽世代"），
+        只有**带流式接收方**的请求才会推进它。这样：
+        * 用户问了新问题（新请求带 sink）→ 槽世代 +1 → 旧请求的尾巴被丢弃，
+          不会出现"新问题的回复里混着旧问题的半句话"（原设计意图不变）；
+        * 后台请求（事件台词 / 跟随决策 / 自主发言，**不带** sink）→ 不推进槽世代
+          → 前台正在流式的分片继续照写。这正是第58轮"17/42 次零分片"的修复点：
+          以前比对的是"最后一次请求的世代"，后台请求一发就把前台的分片全判过期。
 
         注意：这里**故意不清理 `_ai_delta_sink`**。收尾时清理看着更"干净"，
         但 `_on_api_result` 拿不到世代号：一旦"旧请求的结果"和"新请求的登记"
         在主线程队列里交错，清理会误杀掉**新**请求的接收方。
-        sink 由每个新请求覆盖写，过期分片靠世代号挡 —— 足够且无竞态。
+        sink 由每个带接收方的新请求覆盖写，过期分片靠槽世代挡 —— 足够且无竞态。
         """
         try:
-            if generation != getattr(self, '_ai_delta_gen', 0):
+            if generation != getattr(self, '_ai_delta_sink_gen', 0):
                 return
             sink = getattr(self, '_ai_delta_sink', None)
             if sink is not None:

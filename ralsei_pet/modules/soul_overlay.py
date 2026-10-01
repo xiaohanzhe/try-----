@@ -360,6 +360,14 @@ class SoulOverlay(QWidget):
             self.release_all()
             self.hide()
             return True
+        except RuntimeError as e:
+            # ★ 第74轮（B10）：窗口对象已被 Qt 销毁后再调 `hide()` →
+            #   `RuntimeError: wrapped C/C++ object of type SoulOverlay has been deleted`。
+            #   产品链上 `main.cleanup` 已用"收完置 None"挡住了第二次调用（第67轮补丁），
+            #   这里是**底层双保险**：谁再调一次都只留一行 debug，不再刷 ERROR 堆栈
+            #   （真机验证的输出判读最怕这种退出期噪音）。
+            _log.debug('隐藏灵魂时窗口已销毁（忽略）: %s', e)
+            return False
         except Exception:
             _log.exception('隐藏灵魂失败')
             return False
