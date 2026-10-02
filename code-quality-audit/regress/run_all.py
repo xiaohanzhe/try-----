@@ -1596,6 +1596,42 @@ SUITES = [
                 'RESPONSE_SPEC 真被执行层读） / '
                 'F 判据自身体检（判据名无计数标记字样 · print 字面量 · 被测文件在盘）',
     },
+    # ---------------------------------------------------------------- check_r0_76
+    # 第七十六轮 R0：一句话入口（能走能切）+ 门可交互。
+    # 用户口径（逐字）：「先做能走能切」。
+    # ★ 零网络 / 零模型 / 零外部盘 / 不需要显示器（纯 AST + 纯函数 + 数据面）。
+    {
+        'id': 'check_r0_76',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第76轮-灵魂附身与视角跟随',
+                               '_tools', 'check_r0_76.py'),
+        'offscreen': True,
+        'desc': '第七十六轮 R0：一句话入口「能走能切」+ 门可交互不许静默漂移 —— '
+                'A 门字母解析（`obj_doorA`→A 正负成对 / 编造名不猜 / 小写与后缀 `_musfade` '
+                '照收 / `Any`·`W`·`X` 不误判）+ B 路由查表（同场景多出口按 priority 取最小 / '
+                '`when_door` 不符则跳过 / 无表/坏表不抛 / 不就地重算位移）+ '
+                'C build_props 建门（★真场景 ch1.card_castle.cc_prison_cells：不给 routes ⇒ '
+                '0 扇门（零行为变化）／给 ⇒ obj_doorA → cc_prisonlancer + 行为正负成对：'
+                'on_enter 返 True/False/无 ⇒ interact True/False/False）+ '
+                'D 接线（`travel_to` 真调 `switch` 不绕门禁 / `reachable_destinations` 在位 / '
+                '菜单「去…」入口在 / `_rebuild_item_props` 真传 routes）',
+    },
+    # ---------------------------------------------------------------- check_r4_76
+    # 第七十六轮 R4：视角跟随锚点 = 灵魂。
+    # 用户口径（逐字）：「视角永远跟着灵魂所在地走」「灵魂所在场景就是我屏幕显示的」。
+    # ★ 零网络 / 零模型 / 零外部盘 / 不需要显示器（纯 AST + exec 真跑抽出的方法）。
+    {
+        'id': 'check_r4_76',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第76轮-灵魂附身与视角跟随',
+                               '_tools', 'check_r4_76.py'),
+        'offscreen': True,
+        'desc': '第七十六轮 R4：视角跟随锚点 = 灵魂不许静默漂移 —— '
+                'A 结构（`camera_follow` 恰 1 处且锚点 = `_camera_target_rect` · '
+                '两条路径都真调 `_screen_point_to_room_rect`（单一真源）· '
+                '★负控制：`_pet_target_rect` 里不再有自己那份归一化 · 灵魂判定在退回之前） / '
+                'B ★★等价性（真 exec 抽出的方法：同一屏幕点喂宠物/灵魂锚点必须逐值相等 —— '
+                '否则"换锚点就量级错"· 负控制灵魂移远 A≠B） / '
+                'C 行为（灵魂不可见 ⇒ 退回宠物锚点 · `room_rect=None` 不抛）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

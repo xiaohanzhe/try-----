@@ -4360,27 +4360,9 @@ class RalseiPet(QMainWindow):
             h = max(1, self.height())
             cx = win.x() + w / 2.0         # 窗口中心（屏幕坐标）
             cy = win.y() + h / 2.0
-            if not room_rect or len(room_rect) != 4:
-                # 房间未知 → 旧口径（屏幕坐标当世界坐标）。
-                # 只在"退化房间"（= 相机视口大小）时走这里，仍是安全的：
-                # 退化房间的尺寸就是相机尺寸，量级基本吻合。
-                return (cx - w / 2.0, cy - h / 2.0, cx + w / 2.0, cy + h / 2.0)
-            rl, rt, rr, rb = (float(room_rect[0]), float(room_rect[1]),
-                              float(room_rect[2]), float(room_rect[3]))
-            rw = max(1.0, rr - rl)
-            rh = max(1.0, rb - rt)
-            # 屏幕可用区域（虚拟屏，含副屏；用不到时退回主屏）
-            sw, sh = self._virtual_screen_size()
-            fx = min(1.0, max(0.0, cx / float(sw))) if sw > 0 else 0.5
-            fy = min(1.0, max(0.0, cy / float(sh))) if sh > 0 else 0.5
-            # 归一化比例 → 房间世界坐标；目标矩形 = 房间内一小块（= 宠物大小映射）
-            kx = rw / float(sw) if sw > 0 else 1.0
-            ky = rh / float(sh) if sh > 0 else 1.0
-            tw = max(1.0, w * kx)
-            th = max(1.0, h * ky)
-            tcx = rl + rw * fx
-            tcy = rt + rh * fy
-            return (tcx - tw / 2.0, tcy - th / 2.0, tcx + tw / 2.0, tcy + th / 2.0)
+            # ★ 第76轮：公式抽到 `_screen_point_to_room_rect`，与灵魂锚点
+            #   （`_camera_target_rect`）**共用同一真源** —— 两处各写一遍迟早分叉。
+            return self._screen_point_to_room_rect(cx, cy, room_rect, (w, h))
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
             return None
@@ -4403,7 +4385,89 @@ class RalseiPet(QMainWindow):
             return (max(1, g.width()), max(1, g.height()))
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
-            return (1920, 1080)
+        return (1920, 1080)
+
+    # ------------------------------------------------------------------
+    #  ★★ 第76轮 R4 · 视角跟随的锚点 = 灵魂（用户口径）
+    # ------------------------------------------------------------------
+    #  用户原话（逐字）：
+    #    「视角永远跟着灵魂所在地走，也就是灵魂在桌面，就显示桌面场景，在哪就显示哪」
+    #    「那个跟随视角指的是**灵魂所在场景就是我屏幕显示的**哦」
+    #
+    #  ⇒ 锚点从「宠物」改成「灵魂」。此前 `camera_follow` 吃的是
+    #    `_pet_target_rect()`（宠物窗口中心）—— 那是第44轮的默认（当时还没有
+    #    可操控的灵魂实体，第55轮才建出来），与用户口径**不符**。
+    #
+    #  ★★ 这里要同时管两件事，缺一不可：
+    #    (a) **坐标**：相机跟谁走（本方法提供矩形）；
+    #    (b) **场景**：屏幕显示哪个场景 —— 灵魂所在的场景就是屏幕显示的场景。
+    #        (b) 由 `_soul_scene_id` 承载：灵魂换场景时 `switch()` 会被调
+    #        （第55轮的场景钩子 + 本轮 R0 的 travel_to / 推门都会走到那儿）。
+    #
+    #  ★ 为什么不直接把 `_pet_target_rect` 改掉：它还被 `_active_bubbles`
+    #    （球容器位置）用着 —— 球的语义是「罩住**角色**」，与"视角跟谁"是两件事。
+    #    两处分头演化正是本项目反复踩的坑 ⇒ 新加一个方法，让**调用方各取所需**。
+
+    def _camera_target_rect(self, room_rect=None):
+        """相机的跟随目标矩形（房间世界坐标）。
+
+        ★ 优先**灵魂**（用户口径「视角永远跟着灵魂所在地走」）；
+          灵魂不可用（未显示 / 未建 / 算不出）⇒ 退回 `_pet_target_rect()`（宠物）。
+
+        ★ 退回是**静默降级但不静默失败**：日志记 debug（低频、可查），
+          因为"灵魂没开"是合法状态（`SOUL_ENABLED=False` 或用户点了收起），
+          不是错误 —— 报 warning 会把正常状态刷成噪声。
+
+        坐标口径与 `_pet_target_rect` **完全一致**（屏幕 → 房间的归一化映射），
+        所以两者可直接互换，不会出现"换个锚点量级就错"的问题。
+        """
+        try:
+            if self._soul_visible():
+                soul = getattr(self, 'soul', None)
+                cx, cy = soul.state.center()
+                # ★★ 注意 `state.size` 是 **property**（元组），不是方法 ——
+                #   写成 `size()` 会抛 TypeError，而本方法整体在 try 里 ⇒
+                #   会被静默吞掉、退回宠物锚点 ⇒ R4 **看起来绿但根本没生效**。
+                #   这是第76轮真机验证亲手抓到的一处（离线套件当时是假绿，
+                #   因为 check_r4_76 的 B 段桩把 size 造成了方法）。
+                return self._screen_point_to_room_rect(cx, cy, room_rect,
+                                                       soul.state.size)
+        except Exception as e:
+            _log.debug('视角锚点取灵魂失败（退回宠物）: %s', e)
+        return self._pet_target_rect(room_rect)
+
+    def _screen_point_to_room_rect(self, cx, cy, room_rect, size_px):
+        """屏幕点 `(cx, cy)` + 像素尺寸 → 房间世界矩形。与 `_pet_target_rect` 同口径。
+
+        ★ 抽出来是为了**单一真源**：`_pet_target_rect` 与灵魂锚点必须用同一套
+          归一化（屏幕可用区域按比例压进房间世界矩形）。两处各写一遍 =
+          迟早分叉（本项目最贵的坑），所以这里把公式抽成一个函数，两处都调它。
+        """
+        w = max(1.0, float(size_px[0]))
+        h = max(1.0, float(size_px[1]))
+        if not room_rect or len(room_rect) != 4:
+            return (cx - w / 2.0, cy - h / 2.0, cx + w / 2.0, cy + h / 2.0)
+        rl, rt, rr, rb = (float(room_rect[0]), float(room_rect[1]),
+                          float(room_rect[2]), float(room_rect[3]))
+        rw = max(1.0, rr - rl)
+        rh = max(1.0, rb - rt)
+        sw, sh = self._virtual_screen_size()
+        fx = min(1.0, max(0.0, cx / float(sw))) if sw > 0 else 0.5
+        fy = min(1.0, max(0.0, cy / float(sh))) if sh > 0 else 0.5
+        kx = rw / float(sw) if sw > 0 else 1.0
+        ky = rh / float(sh) if sh > 0 else 1.0
+        # ★ 目标矩形的**外观尺寸**沿用宠物尺寸口径再按比例换算 ——
+        #   相机只关心"目标在哪、多大"，灵魂比宠物小不影响跟随观感。
+        try:
+            base_w = max(1.0, float(self.width()))
+            base_h = max(1.0, float(self.height()))
+        except Exception:
+            base_w, base_h = w, h
+        tw = max(1.0, base_w * kx)
+        th = max(1.0, base_h * ky)
+        tcx = rl + rw * fx
+        tcy = rt + rh * fy
+        return (tcx - tw / 2.0, tcy - th / 2.0, tcx + tw / 2.0, tcy + th / 2.0)
 
     def _update_scene_layer(self):
         """每帧推进渲染层：相机跟随 → 出绘制指令 → 交给画布。
@@ -4443,7 +4507,7 @@ class RalseiPet(QMainWindow):
                 # 房间未知 → 退化为"一屏一房间"（相机不动，画面照常出）
                 sz = cam.scoped_size()
                 room_rect = (0.0, 0.0, float(sz[0]), float(sz[1]))
-            scene.camera_follow(room_rect, self._pet_target_rect(room_rect))
+            scene.camera_follow(room_rect, self._camera_target_rect(room_rect))
 
             # 2) 出指令（sprite_size 让剔除用真实素材尺寸 —— 见 SceneAssetCache）
             #    ★ 动效（第44轮续）：tick 传**毫秒时间戳**，渲染层据此按原作速度
