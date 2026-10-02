@@ -48,7 +48,7 @@ class LazyLogger(object):
                 from logger_utils import get_logger
                 impl = get_logger(self._name)
             except Exception:
-                impl = logging.getLogger(self._name)
+                impl = logging.getLogger(_pet_logger_name(self._name))
             else:
                 # 只有真拿到 logger_utils 的 logger 才记住；退化值下次再试
                 object.__setattr__(self, '_impl', impl)

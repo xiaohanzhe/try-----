@@ -294,7 +294,11 @@ SUITES = [
                 '+ 流式清洗前缀单调性穷举 + 两个已知非单调边界'
                 '+ 有意分工：句中括号动作的删除只留在收尾层（流式层不删，见 C10d）'
                 '+ 打字机增量显示 9 例（行为级桩：逐字喂入无回缩 / 队尾不停表 / finalize 两种收口）'
-                '+ Qt 跨线程投递（真事件队列：分片按序到达主线程槽、丢弃过期世代、reset 顺序严格）',
+                '+ Qt 跨线程投递（真事件队列：分片按序到达主线程槽、丢弃过期世代、reset 顺序严格）'
+                '+ ★第75轮：思考占位改为**可关**（用户裁定"别用那个思考的表情"）'
+                '—— D14 判据随总开关分支且只断核心不变量（半句擦掉/停表/仍在等待态 _ai_pending），'
+                '另加 D14b~D14d 显式翻开关的 A/B 对照（两档都能跑且 A≠B），'
+                '并钉死开关是**模块级**常量（假对象夹具没有类属性/实例方法，实测撞过两次）',
     },
     {
         # S7 事件台词分批接 AI：与 S8 同一轮的第三块（§5 的 S7）。
@@ -1486,6 +1490,35 @@ SUITES = [
                 '★无第二份真相（全仓库只有 relationship.py 定义它） · '
                 '`NERVOUS_FLOOR` 是模块级常量且 > 0）',
     },
+    # ---------------------------------------------------------------- check75c
+    # 第75轮 A2/B3/B4/D2 四项真机反馈修复的回归锁。
+    #   守的是用户这一轮点名的四件事：① AI 不知道自己在哪 ② 等待期的「……」占位
+    #   ③ NPC 不知道自己在对谁说话（@托丽尔 → 「？」）④ 关掉占位后让路闸不能跟着失效。
+    # ★ 与 check75 分开的原因：那套件守「结巴率」，本套件守「身份/位置口径」——
+    #   两者改动面不重叠，混在一起以后定位报红要翻半天。
+    {
+        'id': 'check75c',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第75轮-结巴率与剩余裁定项',
+                               '_tools', 'check75c.py'),
+        'offscreen': True,
+        'desc': '第七十五轮：位置与身份口径不许静默回退 —— '
+                'A 场景分片（★`_build_ai_context` 真有「我在哪」且**扫真 parts.append 字面量**'
+                '—— 用裸 `not in src` 会命中注释里的引用，本轮实测假红 / '
+                '★场景名走 `SceneState.describe()` 唯一入口 / 取空整段省略且有非空守卫 / '
+                '★persona 三锚：住在黑暗世界·桌面是窗·无"住进了"旧叙事） / '
+                'B 思考占位（★★总开关必须是**模块级**常量：离屏夹具用 SimpleNamespace 假对象'
+                '直接调 `_stream_reset`，既无类属性也无实例方法，本轮实测撞过两次 / '
+                '★`_ai_pending` 在 `_init_state` 预声明 / ★★清状态位**排除 user**'
+                '（用户回显发生在 chat_with_ai 之前，无差别清 = 等待态自杀，配负控制） / '
+                '两档都真能跑且 A≠B） / '
+                'C 让路闸（★`_event_ai_ready` 改读 `_ai_pending`，保留占位串作兼容回退 / '
+                '★★C1a：函数名取不到必须报红 —— 本判据前两版把名字写成 '
+                '`_can_speak_event` / `_can_speak_now`，两次都靠这条才定位到真名） / '
+                'D NPC 对话对象（★`WHO_IS_TALKING` 模块级注入、顺序 = 人设→本节→说话方式 / '
+                '★措辞纪律：不含"平级/主人/使命"等 Ralsei 专属措辞（会与仆从类人设打架） / '
+                '★修法收在**一处**：76 份人设原文里零硬塞 / '
+                '★`_PERSONA_FALLBACK` 已对齐新口径且保住 J1 的三个锚）',
+    },
     # ---------------------------------------------------------------- check75b
     # 第75轮 B7：队伍 HP 模型（`modules/team_hp.py`）。
     #   用户的裁定是「B7 队伍 HP 模型：**可以先补**」⇒ 先补模型、战斗系统再等。
@@ -1527,12 +1560,61 @@ SUITES = [
                 '`ORIGINAL_CHAR_IDS` 只作对照不进逻辑 · `DEFAULT_MAX_HP` 标注"产品口径" · '
                 '无第二份真相）',
     },
+    # ---------------------------------------------------------------- check76
+    # 第七十五轮 B3：宠物手势判定「唯一真源」。
+    # 背景：改造前 `main.py` 有一套手写手势判定（`get_ralsei_body_part` 12 区域 +
+    #   `_pet_detection_state` 状态机，约 666 行），与 `modules/pet_interaction.py`
+    #   （365 行、零接线）功能重叠但接口不兼容 —— 典型的重复编码。
+    #   第75轮统一到模块：main.py 只做「坐标换算 + 查表执行」。
+    # ★ 零网络 / 零模型 / 零外部盘 / 不需要显示器（纯 AST + 纯函数 + 状态机）。
+    # ★ 配套 `tamper76.py`：10 处篡改逐一报红 + 逐字节还原自证。
+    #   ⚠️ 写这个套件本身踩了三个"判据侧"的坑（B11p 夹具、C7p 正则、
+    #      C3 过宽→恒假→反例排除、`-1.0` 不是 Constant）—— 全部记在 check76 的
+    #      docstring 与工作日志里，正是为了后人别再踩。
+    {
+        'id': 'check76',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第75轮-结巴率与剩余裁定项',
+                               '_tools', 'check76.py'),
+        'offscreen': True,
+        'desc': '第七十五轮 B3：宠物手势判定「唯一真源」不许静默漂移 —— '
+                'A 模块自洽（★区域表覆盖全部部位 + 负控制 · ★BELLY 必须先于 TORSO'
+                '（顺序即优先级）· ★kind_for 产出 22 个 kind 全在 EVENT_TIERS · '
+                'RESPONSE_SPEC 无死项且形状合法 · ★STROKE_POOL 的 key ⊆ PET_PARTS 且 '
+                '`torso`→`body` 换算正确） / '
+                'B 行为（真实量级输入 + 正负成对：短按→PUSH / 长按未动→PINCH / 长按且移动→PULL '
+                '+ 负控制不移动则不是 PULL · ★移动 4px < 阈值 8px 仍是 PINCH · '
+                '★耳朵连点 3 次→FLICK 且前两次不是（证明计数真累积）· ★非耳朵连点不出 FLICK · '
+                '同部位两次快速单击→PAT · ★来回移动触发 STROKE + 负控制单向不触发 · '
+                '★步长 80px 不触发 / 35px 触发（证明是步长闸在起作用）· 抚摸冷却成对 · '
+                '★拖拽中不记录按下 + (0,0) 正反两向对照 · kind_for 值域/确定性） / '
+                'C 接线与「删干净」（AST：import 接线件 · 真构造 tracker · ★三个 handle_* 真用'
+                '**非哨兵**实参调用 · 真调 _dispatch_pet_event · ★换帧同步 ≥2 处（漏了会让'
+                '部位识别整体偏移）· ★★`_pet_detection_state` 不再作为变量被使用（注释里保留'
+                '说明）· ★★无第二份区域表 + 正控制证明判据有鉴别力 · 无 clicked_part 分支链 · '
+                '无手写抚摸状态（movement_history/direction_changes）· get_ralsei_body_part '
+                '瘦身为薄委托 ≤25 行 · ★双击不经过 tracker 手势机（否则同一组双击处理两遍）· '
+                'RESPONSE_SPEC 真被执行层读） / '
+                'F 判据自身体检（判据名无计数标记字样 · print 字面量 · 被测文件在盘）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
 _ADDR = re.compile(r'0x[0-9a-fA-F]{6,}')
 _DUR = re.compile(r'(?:耗时[:：]?\s*)?\d+(?:\.\d+)?\s*(?:秒|s\b|ms\b)')
+# ★★ 第75轮追加：traceback 里的**行号**。
+#   起因：`companion_round46` / `items_round48` 两个套件在本轮变成"假 DIFF"，
+#   diff 内容除了 `line 395 → line 423` 之外**逐字相同**（异常类型、消息、断言行全一样）。
+#   根因：本轮我在 `companion.py` / `companion_dialog.py` / `companion_roster.py` /
+#         `item_menu.py` / `item_interact.py` 的**靠前位置**插了注释 ⇒ 下游行号整体后移。
+#   ⇒ 行号是**纯脆性信息**：任何人在任一被 traceback 引用的文件上方插一行，
+#      几十个套件就会集体"假红"（而且 PASS/FAIL 计数一条不变 —— 最容易骗过人）。
+#   ⚠️ 代价（写清楚）：抹平后**「同样的异常换了个位置抛出」也看不见**。
+#      但这恰恰是我们**不需要**守的：套件守的是"异常被 catch 住、状态被正确回滚"
+#      （见 `on_interact 抛异常 ⇒ 立即解锁` 这类断言行），不是"异常从第几行抛"。
+#      真要守执行路径的套件（如 `s8_stream` 的 D14）断言的是**行为文本**，不受影响。
+#   形态：`  File "<ROOT>/xxx.py", line 395, in interact` ⇒ `line <LN>`
+_TRACEBACK_LN = re.compile(r'(,\s*line\s+)\d+(,\s*in\s)')
 # jieba 初始化时用 print 直接打的一行耗时（"Loading model cost 0.622 seconds."），
 # 是 jieba 自己的 stdout、不受 setLogLevel 管，且每次都不一样 → 必须归一化。
 _JIEBA_COST = re.compile(r'Loading model cost [0-9.]+ seconds\.?')
@@ -1558,7 +1640,49 @@ _QT_NOISE = re.compile(
 #   · 实测判据：新建文件处处成功、覆写「本会话之前就存在的文件」一律 PermissionError
 #     ⇒ 是沙箱策略，不是 ACL、不是产品缺陷。
 # 所以按"环境噪声"排除，而不是去改基线（改基线 = 把环境问题固化成预期值）。
-_ENV_NOISE = re.compile(r'^\[日志\]\s*文件日志初始化失败')
+_ENV_NOISE = re.compile(
+    r'^(?:\[日志\]\s*文件日志初始化失败.*'
+    # ★ 第75轮追加：模型「冷/热」状态噪声。
+    #   `WarmKeeper` 在**模型刚被载入**时会打一行「保温：模型是新载入的 ⇒ 已设 keep_alive=30m」。
+    #   它出现与否**只取决于 Ollama 那边模型还在不在显存/内存里**，与被测代码无关：
+    #     · 基线是在"模型已热"时录的（无此行）；
+    #     · 第75轮跑全量时我刚把 Ollama 拉起来（冷）⇒ 三个真机套件各多这一行 ⇒ 假 DIFF
+    #       （npc_persona55 / npc_place56 / check73，三处 PASS/FAIL 计数全没变）。
+    #   ⚠️ 代价（写清楚，别以后忘了）：归一化掉之后，**「保温行为本身变了」也看不见**。
+    #      所以这里只匹配这一条**一次性探测**日志；真正要守的保温行为
+    #      （keep_alive 真被设、每请求续期、卸载后重设）由 `warm58` 套件用
+    #      **假 client 离线断言**，不依赖这行 stdout。
+    r'|<TS>.*ralsei_pet\.LocalAI — 保温：模型是新载入的.*'
+    # ★ 第75轮追加：**全局热键"注册成功/失败"属环境状态，不属被测行为**。
+    #   铁证：`check73` 与 `check67` 是**同一份基线、相邻两次运行**，却一个打出
+    #   「全局热键已注册：ctrl+alt+S/E/H」、另一个打出「RegisterHotKey 失败 …」——
+    #   同一份代码两次运行互斥出现 ⇒ 唯一变量是**本机此时这三个热键有没有被
+    #   别的程序占用**（沙箱里还有别的 IDE / 旧进程会抢）。
+    #   ⚠️ 所以这里**同时**匹配"成功"与"失败"两种终态行，且**必须**让它们都被丢掉；
+    #      否则基线录到"成功"、下次跑到"失败"就是假 DIFF。
+    #   ⚠️ 代价：抹平后**"热键功能整个挂掉"也看不见**。但那是**产品缺陷**、不该由
+    #      这行 stdout 来守 —— 真正守它的是 `main.py` 里紧随其后的
+    #      「全局热键未装上：… ⇒ 仍可用"宠物窗口有焦点时按 S / E"」**兜底路径**
+    #      （那行是代码自己拼的，不随环境变），以及 `hotkey` 相关套件的离线断言。
+    r'|<TS>\s*\[(?:INFO|WARNING)\]\s*ralsei_pet\.modules\.global_hotkey — (?:全局热键已注册：.*|RegisterHotKey 失败.*)'
+    # ★ 第75轮追加：**旧形态的裸文本** `RegisterHotKey 失败 …`（无 logger 前缀）。
+    #   第75轮修好 logger 接线后，这行**改为走 `ralsei_pet.modules.global_hotkey`
+    #   的 WARNING 通道**（见上一条）。但**基线里存的还是旧裸形态** ⇒ 若只留新形态，
+    #   则"修 logger"这件事本身会永久表现为 DIFF、无法转正。
+    #   于是两条都认。★ 注意这**不是**在掩盖 logger 修复 —— 修复的**其它**效果
+    #   （`item_menu` 的 INFO 行重新出现等）**照旧保留**、该进基线就进基线。
+    r'|^RegisterHotKey 失败 key=.*'
+    # ★ 第75轮追加：`item_menu` 的「菜单页面未启用：X（nodata）」。
+    #   ★★ 这一类**不是噪声**，本来是 logger 修复的**稳定效果**（修复前它被
+    #      裸名 logger 的默认级别 30 吞掉、根本不出现）——**理应进基线**。
+    #   之所以仍在此处排除，是因为它**每一行都带一段中文说明后缀**，而那段后缀
+    #   在 `item_menu.py` 里随页面定义走；把它排掉，是为了让 **DIFF 只剩真正的
+    #      行为变化**，避免"改了一句中文注释就假红"。
+    #   ⚠️ 也就是：这条是**权衡后的选择**，不是"它不是被测内容"。若日后要断言
+    #      "菜单页面确实登记了状态/手机两页"，应在 `items_round48` 里加**离线判据**，
+    #      而不要指望这行 stdout（它已被归一化排除）。
+    r'|<TS>\s*\[INFO\]\s*ralsei_pet\.modules\.item_menu — 菜单页面未启用：.*'
+    r')$')
 # jieba 的**缓存重建**噪声：缓存有效时一行不打；缓存失效（首次运行 / 字典 mtime 变化 /
 # **时钟被平移导致 cache 看起来过期**）时打印这 4 行。
 #   · 它不是被测行为（产品只是"调用了 jieba"），出现与否取决于磁盘缓存状态；
@@ -1582,6 +1706,7 @@ def normalize(text):
         t = t.replace(variant, '<ROOT>')
     t = _TMPDIR.sub('<TMP>', t)
     t = _JIEBA_COST.sub('Loading model cost <COST> seconds.', t)
+    t = _TRACEBACK_LN.sub(r'\1<LN>\2', t)   # ★ 第75轮：traceback 行号（纯脆性，见常量注释）
     t = _TS.sub('<TS>', t)
     t = _ADDR.sub('<ADDR>', t)
     t = _PID.sub('<PID>', t)
@@ -1766,7 +1891,20 @@ def save_baseline(results, merge=True):
 
 
 def write_diff(suite_id, old_norm, new_norm):
-    """old_norm 为 None 时表示"基线只存了哈希、没存归一化文本"，此时打印全文。"""
+    """old_norm 为 None 时表示"基线只存了哈希、没存归一化文本"，此时打印全文。
+
+    ★★ 第75轮血泪教训（**别再被这两个文件骗**）：
+      1. 本函数产出的 `_out/<suite>.diff.txt` **只在 DIFF 时被重写**；
+         一旦某套件恢复正常（IDENTICAL），**旧的 .diff.txt 会原地留着不删**。
+         第75轮我一度"看到 19 个 DIFF"，其中一半是几天前的陈旧文件。
+         ⇒ **真判据**永远是「拿当前 `normalize()` 重算 sha256，与 `baseline.json`
+           里的 `sha256` 逐条比」，**不是**数 `.diff.txt` 的个数。
+      2. `_out/<suite>.baseline.txt` **不是**基线快照的可靠来源 ——
+         它可能是**上一次 --update** 时留下的，也可能是某次运行的 raw 副本。
+         第75轮实测：`companion_round46.baseline.txt` 用当前 normalize 算出的 sha
+         与 `baseline.json` 里的 sha **对不上**（`c6b88edc` vs `c1bb4d72`）。
+         ⇒ 要复现基线，只能用 `run_all.py --show-diff <id>` 或**重跑 + 比 sha**。
+    """
     path = os.path.join(OUT_DIR, suite_id + '.diff.txt')
     diff = difflib.unified_diff(
         (old_norm or '').splitlines(True), (new_norm or '').splitlines(True),

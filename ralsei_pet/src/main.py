@@ -38,10 +38,26 @@ from PyQt5.QtCore import Qt, QTimer, QPoint, QRect, pyqtSignal
 try:
     from logger_utils import get_logger
 except ImportError:  # 允许被包外单独导入
-    import logging
+    # ★★ 第75轮：**降级路径也必须挂到 ralsei_pet 树下**。
+    #   原来这里直接 `logging.getLogger(name)` ⇒ 拿到裸名（`modules.xxx`），
+    #   而包内导入（main.py 走 `from modules.x import ...`）恰好会让上面的
+    #   `from logger_utils import ...` 失败、必然走本分支 ⇒
+    #   这些模块的日志既没有文件 handler（不在 ralsei_pet 树下），
+    #   有效级别也退回 WARNING ⇒ **INFO 级日志全部丢失**（实测 25 个模块）。
+    #   这正是"程序坏了但日志里查不到"的根因。
+    try:
+        from modules.logger_utils import adopt_module_logger as _adopt
+    except ImportError:
+        try:
+            from logger_utils import adopt_module_logger as _adopt
+        except ImportError:
+            import logging as _logging
 
-    def get_logger(name):
-        return logging.getLogger(name)
+            def _adopt(_g):
+                return _logging.getLogger('ralsei_pet.' + str(_g.get('__name__', '')))
+
+    def get_logger(name=None):
+        return _adopt(globals())
 
 _log = get_logger(__name__)
 
@@ -452,6 +468,18 @@ from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
                                   first_sentence, strip_action_parentheticals,
                                   looks_out_of_character, looks_like_assistant_speak)
+# ★★ 宠物手势判定（第75轮 B3）：**唯一真源**。
+# 改造前 `mousePressEvent` / `mouseMoveEvent` / `mouseReleaseEvent` /
+# `mouseDoubleClickEvent` 各写了一份"部位识别 + 手势识别"（含 `get_ralsei_body_part`
+# 与 `_pet_detection_state` 状态机，约 666 行），与 `modules/pet_interaction.py`
+# 功能重叠。第75轮统一到模块：主窗口只负责
+#   ① 把 `event.pos()` 转成"相对精灵的像素" 交给 tracker；
+#   ② 拿回 `PetEvent` 后按 `(body_part, gesture)` 查表执行（情绪/动画/台词）。
+# 那一份手写判定**已删除** —— 不要再写第三份。
+from modules.pet_interaction import (PetInteractionTracker, PetEvent, BodyPart,
+                                     Gesture, kind_for, RESPONSE_SPEC,
+                                     STROKE_EMOTIONS, STROKE_POOL,
+                                     STROKE_POOL_OTHER)
 # 联网搜索摘要：依赖 beautifulsoup4。改为"可选导入"而不是整段注释掉——
 # 原写法让整个模块变成永远不可达的死代码（需求"能上网"缺一环），
 # 且一旦有人取消注释而环境没有 bs4，程序会在 import 期直接崩溃。
@@ -881,7 +909,13 @@ class RalseiPet(QMainWindow):
         # 启用鼠标追踪，以便Ralsei能够响应鼠标事件
         self.setMouseTracking(True)
         self.sprite_label.setMouseTracking(True)
-        
+
+        # ★★ 宠物手势判定器（第75轮 B3）：模块 = 唯一真源。
+        # tracker 接收"相对精灵左上角的像素坐标"，返回 PetEvent。
+        # 精灵图像每次换帧都会变（大小可能不同），故在 `_sync_pet_tracker_sprite`
+        # 里跟着 `sprite_label` 的当前 pixmap 更新。
+        self._pet_tracker = PetInteractionTracker()
+
         # 拖动鼠标相关变量
         self.is_dragging_mouse = False
         self.drag_start_pos = None
@@ -8043,8 +8077,17 @@ class RalseiPet(QMainWindow):
             # 屏幕上正有东西在流式打（对话的或上一个事件的）→ 别插进去
             if getattr(dui, '_streaming', False):
                 return False
-            # 等着回复（前台是「……」占位）：事件台词会把它顶掉
-            if getattr(dui, 'typing_text', '') == getattr(dui, 'AI_THINKING_PLACEHOLDER', None):
+            # 等着回复（还在等首字）：事件台词会把它顶掉。
+            # ★★ 第75轮改判据：原来靠"前台是「……」占位串"来判断，
+            #    但用户裁定关掉思考占位 ⇒ 占位串不再出现 ⇒ 该判据**会恒假**
+            #    （等回复时事件台词就能插进来，把对话框顶掉）。
+            #    正解 = `dialogue_ui._ai_pending`（显式状态位，与显示内容解耦）。
+            #    兼容：老版本没有这个属性时，退回原来的占位串判据。
+            if getattr(dui, '_ai_pending', None) is None:
+                if getattr(dui, 'typing_text', '') == getattr(
+                        dui, 'AI_THINKING_PLACEHOLDER', None):
+                    return False
+            elif dui._ai_pending:
                 return False
             # 上一个事件还在等 AI（没到兜底时限）→ 不叠加第二个请求
             if getattr(self, '_event_speaking', False):
@@ -8236,64 +8279,112 @@ class RalseiPet(QMainWindow):
         finally:
             painter.end()
         
+    # ========================================================================
+    # ★★ 宠物手势接线（第75轮 B3）—— 三件套：同步精灵 / 坐标换算 / 事件分派
+    # ========================================================================
+    #
+    # 为什么需要"坐标换算"这一层：
+    #   `pet_interaction` 收到的是**相对精灵左上角的像素**（它会用它去除以
+    #   精灵宽高得到百分比，也会去查 alpha 遮罩）。而 Qt 给到事件回调的
+    #   `event.pos()` 是**相对窗口**的。`sprite_label` 的 geometry 是
+    #   `(0, 0, 100, 100)`，但 pixmap 是按角色 alpha 包围盒**居中锚定**的
+    #   （见 `_compose_anchored_sprite`），所以不能简单用 `event.pos()`。
+    #
+    # 真源的一致性：
+    #   改造前 `get_ralsei_body_part` 用的是
+    #     `rel = pos / sprite_label.size() * 100`
+    #   即"相对 label 的百分比"。本层同样换算到相对 label 的像素 ——
+    #   与模块内 `classify()` 的 `x / self._width * 100` 复合后**完全等价**。
+
+    def _sync_pet_tracker_sprite(self):
+        """把当前精灵帧交给 tracker（重建 alpha 遮罩 + 尺寸）。
+
+        ★ 调用时机：每次 `sprite_label.setPixmap(...)` 之后。
+          不刷新的话，换动画后 tracker 仍按**上一帧的尺寸**算百分比，
+          部位识别会在动画切换后整体偏移（改造前用 `sprite_label.size()`
+          每次现算，所以没这个问题 —— 这是接线时**唯一必须补**的一环）。
+        """
+        try:
+            pm = self.sprite_label.pixmap()
+            if pm is None or pm.isNull():
+                self._pet_tracker.set_sprite(None)
+            else:
+                self._pet_tracker.set_sprite(pm)
+        except Exception as e:
+            _log.debug("同步手势精灵失败（已忽略）: %s", e)
+
+    def _pet_rel_pos(self, pos):
+        """窗口坐标 → 相对精灵的像素坐标；不在精灵矩形内返回 None。"""
+        try:
+            geo = self.sprite_label.geometry()
+            if not geo.contains(pos):
+                return None
+            return (float(pos.x() - geo.x()), float(pos.y() - geo.y()))
+        except Exception:
+            return None
+
+    def _apply_pet_response(self, kind):
+        """按 `kind` 查 `RESPONSE_SPEC` 执行情绪 / 动画 / 台词（第75轮 B3）。"""
+        spec = RESPONSE_SPEC.get(kind)
+        if spec is None:
+            return
+        emotions, anim, face, pool = spec
+        try:
+            for name, val in emotions:
+                self.emotion_system.add_emotion(name, val)
+            if anim:
+                self.play_animation_once(anim)
+            self.speak_event(kind, pool, face)
+        except Exception as e:
+            _log.debug("宠物回应执行失败（已忽略）: %s", e)
+
+    def _dispatch_pet_event(self, ev):
+        """`PetEvent` → 执行层。返回 True 表示"这个事件已被处理"。"""
+        if ev is None:
+            return False
+        if ev.gesture == Gesture.STROKE:
+            # 抚摸：情绪是**所有部位共用**的，台词按部位取
+            try:
+                for name, val in STROKE_EMOTIONS:
+                    self.emotion_system.add_emotion(name, val)
+            except Exception as e:
+                _log.debug("抚摸情绪失败（已忽略）: %s", e)
+            kind = kind_for(ev.body_part, ev.gesture)
+            pet_name = kind[4:] if (kind or "").startswith("pet_") else "other"
+            pool = STROKE_POOL.get(pet_name, STROKE_POOL_OTHER)
+            self.speak_event(kind or "pet_other", pool, "happy")
+            return True
+        kind = kind_for(ev.body_part, ev.gesture)
+        if kind is None:
+            return False
+        self._apply_pet_response(kind)
+        return True
+
     def get_ralsei_body_part(self, pos):
-        # 根据鼠标位置确定点击的Ralsei身体部位
-        # 使用相对位置百分比来适配不同大小的图像
-        
-        # 获取当前精灵图像的尺寸
-        sprite_width = self.sprite_label.width()
-        sprite_height = self.sprite_label.height()
+        """窗口坐标处的身体部位名（字符串）。**已委托给 tracker**（第75轮 B3）。
 
-        # 防御：精灵 label 尚未布局/无 pixmap 时宽高为 0，直接除零会崩溃
-        if sprite_width <= 0 or sprite_height <= 0:
-            return "whole_body"
+        ★ 改造前这里有 12 条区域的手写表 + 百分比换算（约 58 行），与
+          `pet_interaction._REGIONS_PERCENT` 是**同一条规则的第三份拷贝**
+          （第一份在模块、第二份在本文件）——两份区域表一旦不同步
+          （改造前就有：本文件是 `belly`/`body`/`legs`，模块是 `torso`/`leg`，
+          且阈值 25/10/75/50 vs 22/5/78/42 不同），"点击哪里"取决于走哪条路径。
+          现统一走 `BodyRegionMapper.classify()`。
 
-        # 将像素位置转换为相对百分比 (0-100)
-        rel_x = (pos.x() / sprite_width) * 100
-        rel_y = (pos.y() / sprite_height) * 100
-        
-        # 定义Ralsei身体部位的相对区域（基于典型的Ralsei图像比例）
-        # 格式：(部位名称, 最小x%, 最小y%, 最大x%, 最大y%)
-        body_parts = [
-            # 耳朵区域
-            ("ear", 0, 0, 30, 40),  # 左耳
-            ("ear", 70, 0, 100, 40),  # 右耳
-            
-            # 头发区域
-            ("hair", 25, 10, 75, 50),
-            
-            # 面部区域
-            ("face", 30, 30, 70, 60),
-            
-            # 肚子区域
-            ("belly", 35, 60, 65, 80),
-            
-            # 躯干区域
-            ("body", 20, 50, 80, 80),
-            
-            # 腿部区域
-            ("legs", 30, 80, 70, 100),
-            
-            # 手臂区域
-            ("arm", 0, 40, 30, 70),  # 左臂
-            ("arm", 70, 40, 100, 70),  # 右臂
-            
-            # 肩膀区域
-            ("shoulder", 15, 45, 35, 60),  # 左肩
-            ("shoulder", 65, 45, 85, 60),  # 右肩
-            
-            # 全身区域
-            ("whole_body", 0, 0, 100, 100)
-        ]
-        
-        # 检查是否在某个部位区域内
-        for part_name, min_x, min_y, max_x, max_y in body_parts:
-            if min_x <= rel_x <= max_x and min_y <= rel_y <= max_y:
-                return part_name
-        
-        # 默认返回全身
-        return "whole_body"
-    
+        ★ 本函数**保留为薄委托**而不是删除：它被 `mousePressEvent` 等处当
+          "局部名"用过，且改造前返回的是**字符串**（`"ear"`），而模块返回
+          `BodyPart` 枚举 ⇒ 这里做一次 `.value` 转换，保持调用方无需改动。
+
+        ⚠️ 语义差异（**已登记，不是 bug**）：改造前本函数**不看 alpha 遮罩**
+          （只要落在矩形里就算命中）；现在模块会先查 alpha —— 点在角色图
+          **透明像素**上（如两耳之间的空隙）不再算"点在身上"。这正是
+          `pet_interaction` 存在的价值（"只将鼠标落在非透明区域的事件视为
+          在宠物身上"），但会让"点在空白处"从 `whole_body` 变成"未命中"。
+        """
+        rel = self._pet_rel_pos(pos)
+        if rel is None:
+            return BodyPart.WHOLE_BODY.value
+        return self._pet_tracker.region.classify(rel[0], rel[1]).value
+
     def mousePressEvent(self, event):
         # 鼠标按下事件
         if event.button() == Qt.LeftButton:
@@ -8336,82 +8427,18 @@ class RalseiPet(QMainWindow):
                     return
                 # 点击了Ralsei
                 self.pet_ai.react_to_event("user_clicked", None)
-                
+
                 # 更新互动时间
                 self.last_interaction_time = time.time()
-                
-                # 检测点击的身体部位
-                clicked_part = self.get_ralsei_body_part(event.pos())
-                current_time = time.time()
-                
-                # 初始化检测状态
-                if not hasattr(self, '_pet_detection_state'):
-                    self._pet_detection_state = {
-                        'on_ralsei': True,
-                        'last_pos': event.pos(),
-                        'movement_history': [],
-                        'last_pet_time': 0,
-                        'pet_count': 0,
-                        'current_part': clicked_part,
-                        'pet_attempts': 0,
-                        'pet_success': False,
-                        'click_count': 0,
-                        'last_click_time': current_time,
-                        'click_part': clicked_part,
-                        'press_start_time': current_time,
-                        'press_start_pos': event.pos(),
-                        'is_pressing': True
-                    }
-                else:
-                    # 更新长按状态
-                    self._pet_detection_state['press_start_time'] = current_time
-                    self._pet_detection_state['press_start_pos'] = event.pos()
-                    self._pet_detection_state['is_pressing'] = True
-                    self._pet_detection_state['click_part'] = clicked_part
-                
-                # 点击计数（用于不楞耳朵）
-                if clicked_part == "ear":
-                    # 检查是否是连续点击
-                    if current_time - self._pet_detection_state['last_click_time'] < 0.5:
-                        self._pet_detection_state['click_count'] += 1
-                        _log.debug(f"连续点击耳朵: {self._pet_detection_state['click_count']}次")
-                        
-                        # 连续点击3次触发不楞耳朵
-                        if self._pet_detection_state['click_count'] >= 3:
-                            _log.debug("不楞不楞耳朵！")
-                            self.emotion_system.add_emotion("happy", 40)
-                            self.emotion_system.add_emotion("excited", 20)
-                            self.play_animation_once("laugh")
-                            self.speak_event("ear_ruffle", ["哎呀！别不楞我的耳朵啦！"], "surprised", instant=True)
-                            # 重置点击计数
-                            self._pet_detection_state['click_count'] = 0
-                    else:
-                        # 重置点击计数
-                        self._pet_detection_state['click_count'] = 1
-                        
-                    # 更新最后点击时间
-                    self._pet_detection_state['last_click_time'] = current_time
-                
-                # 根据不同部位触发不同效果
-                if clicked_part == "body":
-                    # 轻点躯干：好奇地歪头看看，而不是质问"你推我干嘛"
-                    _log.debug("轻点了Ralsei的躯干！")
-                    self.emotion_system.add_emotion("happy", 15)
-                    self.emotion_system.add_emotion("curious", 10)
-                    self.play_animation_once("look_up")
-                    body_responses = ["嗯？怎么啦？", "诶？有什么事吗？", "嘿嘿~ 你戳我啦"]
-                    self.speak_event("poke_body", body_responses, "curious")
-                elif clicked_part == "shoulder":
-                    # 轻推肩膀
-                    _log.debug("轻推了Ralsei的肩膀！")
-                    self.emotion_system.add_emotion("happy", 20)
-                    self.emotion_system.add_emotion("curious", 10)
-                    self.play_animation_once("look_up")
-                    self.speak_event("poke_shoulder", ["嗯？有什么事吗？"], "curious")
-                else:
-                    # 显示点击回应
-                    short_responses = ["嘿嘿！", "你好呀！", "很高兴见到你！", "要一起玩吗？"]
-                    self.speak_event("poke_default", short_responses, "happy")
+
+                # ★★ 手势判定交给 tracker（第75轮 B3）。
+                # 注意 `handle_press` 只记录"按下了哪里"、**不产生事件** ——
+                # 事件（PUSH / PINCH / PULL）在 `mouseReleaseEvent` 里由时长与
+                # 位移区分后一次性返回。这样"点一下"不会在按下瞬间就说话，
+                # 也给"按住拖着走"留出了不误触的余地。
+                rel = self._pet_rel_pos(event.pos())
+                if rel is not None:
+                    self._pet_tracker.handle_press(rel)
                 # 即使点击了Ralsei，也允许拖拽
                 event.accept()
         elif event.button() == Qt.RightButton:
@@ -8538,105 +8565,19 @@ class RalseiPet(QMainWindow):
                 # 鼠标在Ralsei身上，改变鼠标样式
                 if current_cursor.shape() != Qt.PointingHandCursor:
                     self.setCursor(Qt.PointingHandCursor)
-                
-                # 初始化抚摸检测相关变量（仅首次）
-                if not hasattr(self, '_pet_detection_state'):
-                    self._pet_detection_state = {
-                        'on_ralsei': True,
-                        'last_pos': event.pos(),
-                        'movement_history': [],
-                        'last_pet_time': 0,
-                        'pet_count': 0,
-                        'current_part': None,
-                        'pet_attempts': 0,
-                        'pet_success': False,
-                        'click_count': 0,
-                        'last_click_time': 0,
-                        'click_part': None,
-                        'press_start_time': 0,
-                        'press_start_pos': None,
-                        'is_pressing': False
-                    }
-                
-                # 更新状态（每次移动都执行；修复：此前该块误缩进在
-                # "if not hasattr" 内，导致抚摸检测只在首次悬停执行一次、之后被 else 清空）
-                self._pet_detection_state['on_ralsei'] = True
-                
-                # 计算鼠标移动距离和方向
-                dx = event.pos().x() - self._pet_detection_state['last_pos'].x()
-                dy = event.pos().y() - self._pet_detection_state['last_pos'].y()
-                distance = (dx ** 2 + dy ** 2) ** 0.5
-                
-                # 只有移动距离适中时才记录
-                if 3 < distance < 50:
-                    # 添加到移动历史
-                    self._pet_detection_state['movement_history'].append((dx, dy, distance))
-                    # 只保留最近15次移动记录，增加检测的准确性
-                    if len(self._pet_detection_state['movement_history']) > 15:
-                        self._pet_detection_state['movement_history'].pop(0)
-                    
-                    # 检查是否符合抚摸模式：来回移动（方向交替变化）
-                    if len(self._pet_detection_state['movement_history']) >= 5:
-                        # 计算方向变化次数
-                        direction_changes = 0
-                        prev_dx = None
-                        prev_dy = None
-                        
-                        for (move_dx, move_dy, _) in self._pet_detection_state['movement_history']:
-                            # 计算移动方向（主要方向）
-                            current_dir = 'horizontal' if abs(move_dx) > abs(move_dy) else 'vertical'
-                            
-                            if prev_dx is not None:
-                                prev_dir = 'horizontal' if abs(prev_dx) > abs(prev_dy) else 'vertical'
-                                # 如果方向相同，检查方向是否反转
-                                if current_dir == prev_dir:
-                                    # 对于水平方向，检查左右反转
-                                    if current_dir == 'horizontal':
-                                        if (move_dx > 0 and prev_dx < 0) or (move_dx < 0 and prev_dx > 0):
-                                            direction_changes += 1
-                                    # 对于垂直方向，检查上下反转
-                                    else:
-                                        if (move_dy > 0 and prev_dy < 0) or (move_dy < 0 and prev_dy > 0):
-                                            direction_changes += 1
-                            
-                            prev_dx = move_dx
-                            prev_dy = move_dy
-                        
-                        # 如果方向变化次数足够（至少2次），判定为抚摸
-                        current_time = time.time()
-                        if direction_changes >= 2 and current_time - self._pet_detection_state['last_pet_time'] > 1.5:
-                            # 检测抚摸的身体部位
-                            pet_part = self.get_ralsei_body_part(event.pos())
-                            _log.debug(f"抚摸了Ralsei的: {pet_part}")
-                            
-                            # 根据不同部位触发不同的抚摸效果
-                            self.emotion_system.add_emotion("happy", 30)
-                            self.emotion_system.add_emotion("shy", 15)
-                            
-                            # 不同部位的回应
-                            responses = {
-                                "hair": ["嘿嘿~ 摸我的头发好舒服呀！", "谢谢你的抚摸！", "真的好舒服呀~", "我的头发很软吧？"],
-                                "ear": ["哎呀~ 别摸我的耳朵！好痒呀！", "嘿嘿~ 耳朵好敏感呀！", "别摸啦！耳朵会变红的！"],
-                                "face": ["哎呀~ 别摸我的脸！", "脸好烫呀~", "嘿嘿~ 摸脸的感觉好特别！"],
-                                "body": ["嘿嘿~ 好舒服呀！", "谢谢你的抚摸！", "真的好舒服呀~", "你的手好温暖！"],
-                                "arm": ["哎呀~ 别摸我的手臂！", "嘿嘿~ 手臂也会痒的！", "你的抚摸让我好开心！"],
-                                "shoulder": ["谢谢你抚摸我的肩膀！", "嘿嘿~ 肩膀也很舒服！", "你的手好温柔！"]
-                            }
-                            
-                            # 选择对应的回应
-                            response_list = responses.get(pet_part, ["嘿嘿~ 好舒服呀！", "谢谢你的抚摸！", "真的好舒服呀~"])
-                            self.speak_event(pet_kind(pet_part), response_list, "happy")
-                            
-                            # 更新抚摸时间
-                            self._pet_detection_state['last_pet_time'] = current_time
-                            # 重置移动历史，避免重复触发
-                            self._pet_detection_state['movement_history'] = []
-                            # 增加抚摸计数
-                            self._pet_detection_state['pet_count'] += 1
-                
-                # 更新最后位置
-                self._pet_detection_state['last_pos'] = event.pos()
-                
+
+                # ★★ 抚摸 / 拖拽中的按下移动，一律交给 tracker（第75轮 B3）。
+                # 改造前这里有一整套手写的"移动历史 + 方向反转计数 + 冷却"抚摸
+                # 检测（约 100 行，含 15 条 history、changes>=2、1.5s 冷却），
+                # 与 `pet_interaction._StrokeDetector`（30 条 history、
+                # changes>=3、1.5s 冷却）是**同一条规则的第三份拷贝**。
+                # 现统一走模块，并让 `_dispatch_pet_event` 执行。
+                rel = self._pet_rel_pos(event.pos())
+                if rel is not None:
+                    ev = self._pet_tracker.handle_move(rel)
+                    if ev is not None:
+                        self._dispatch_pet_event(ev)
+
                 # 优化：降低鼠标悬停事件的触发频率
                 if not hasattr(self, '_last_hover_time') or time.time() - self._last_hover_time > 0.5:
                     self.on_mouse_hover()
@@ -8645,16 +8586,16 @@ class RalseiPet(QMainWindow):
                 # 鼠标离开Ralsei，恢复默认鼠标样式
                 if current_cursor.shape() != Qt.ArrowCursor:
                     self.setCursor(Qt.ArrowCursor)
-                
-                # 更新抚摸检测状态
-                if hasattr(self, '_pet_detection_state'):
-                    self._pet_detection_state['on_ralsei'] = False
-                    # 鼠标离开时重置移动历史
-                    self._pet_detection_state['movement_history'] = []
-                
+
+                # ★ 离开精灵 ⇒ 也要告诉 tracker（它会复位抚摸检测器）。
+                # 改造前是靠 `_pet_detection_state['on_ralsei']=False` + 清空
+                # movement_history 达到同样效果。这里传"精灵外的坐标"即可让
+                # `handle_move` 走 `is_on_pet=False` 分支并复位。
+                self._pet_tracker.handle_move((-1.0, -1.0))
+
             # 记录当前鼠标位置（用于其他逻辑）
             self._last_mouse_pos = event.pos()
-    
+
     def mouseReleaseEvent(self, event):
         # 鼠标释放事件
         if event.button() == Qt.LeftButton:
@@ -8796,63 +8737,26 @@ class RalseiPet(QMainWindow):
                     delattr(self, '_drag_surprised')
                 if hasattr(self, '_last_drag_pos'):
                     delattr(self, '_last_drag_pos')
-            # 检查是否在Ralsei身上释放
-            if hasattr(self, '_pet_detection_state') and self._pet_detection_state['is_pressing'] and not getattr(self, 'is_falling', False):
-                current_time = time.time()
-                press_duration = current_time - self._pet_detection_state['press_start_time']
-                
-                # 检测长按操作（至少0.5秒）
-                if press_duration >= 0.5:
-                    clicked_part = self._pet_detection_state['click_part']
-                    _log.debug(f"长按了Ralsei的: {clicked_part}，时长: {press_duration:.2f}秒")
-                    
-                    # 根据不同部位触发不同效果
-                    if clicked_part == "ear":
-                        # 轻轻捏耳朵
-                        _log.debug("轻轻捏了Ralsei的耳朵！")
-                        self.emotion_system.add_emotion("happy", 35)
-                        self.emotion_system.add_emotion("shy", 25)
-                        self.play_animation_once("surprised")
-                        self.speak_event("pinch_ear", ["哎呀！别捏我的耳朵！好痒呀！"], "surprised")
-                    elif clicked_part == "arm":
-                        # 拉住手臂
-                        _log.debug("拉住了Ralsei的手臂！")
-                        self.emotion_system.add_emotion("happy", 30)
-                        self.play_animation_once("wave")
-                        self.speak_event("pull_arm", ["嘿嘿~ 别拉我的手臂啦！"], "happy")
-                    elif clicked_part == "body":
-                        # 按住躯干
-                        _log.debug("按住了Ralsei的躯干！")
-                        self.emotion_system.add_emotion("happy", 25)
-                        self.emotion_system.add_emotion("shy", 20)
-                        self.play_animation_once("happy")
-                        self.speak_event("press_body", ["嗯~ 好舒服！"], "happy")
-                    elif clicked_part == "belly":
-                        # 拍肚子
-                        _log.debug("拍了Ralsei的肚子！")
-                        self.emotion_system.add_emotion("happy", 40)
-                        self.emotion_system.add_emotion("excited", 20)
-                        self.play_animation_once("laugh")
-                        self.speak_event("pat_belly", ["嘿嘿~ 我的肚子很软哦！"], "happy")
-                    elif clicked_part == "face":
-                        # 轻轻捏脸
-                        _log.debug("轻轻捏了Ralsei的脸！")
-                        self.emotion_system.add_emotion("happy", 30)
-                        self.emotion_system.add_emotion("shy", 30)
-                        self.play_animation_once("surprised")
-                        self.speak_event("pinch_face", ["哎呀~ 别捏我的脸！"], "shy")
-                    elif clicked_part == "shoulder":
-                        # 拉住肩膀
-                        _log.debug("拉住了Ralsei的肩膀！")
-                        self.emotion_system.add_emotion("happy", 25)
-                        self.emotion_system.add_emotion("shy", 15)
-                        self.play_animation_once("pose")
-                        self.speak_event("pull_shoulder", ["谢谢你拉我的肩膀！"], "happy")
-                
-                # 重置长按状态
-                self._pet_detection_state['is_pressing'] = False
-                self._pet_detection_state['press_start_time'] = 0
-                self._pet_detection_state['press_start_pos'] = None
+            # ★★ 手势结算交给 tracker（第75轮 B3）。
+            # `handle_release` 会按"按下时长 + 期间是否移动"返回：
+            #   时长 ≥ 0.5s 且移动过 → PULL；时长 ≥ 0.5s 未移动 → PINCH；
+            #   未达时长 → PUSH / PAT / FLICK（连击）之一。
+            # 改造前这里是一段 60 行的 `if press_duration >= 0.5:` + 6 个部位分支，
+            # 与 `mousePressEvent` 里的单击分支、`pet_interaction.GestureTracker`
+            # 三处各写一遍同一件事。现由模块统一判定，本函数只负责"执行"。
+            #
+            # ⚠️ 坠落 / 甩飞中不结算手势（改造前的同一保护：`not is_falling`）——
+            #    否则"空中接住后再松手"会被当成一次点击。
+            if not getattr(self, 'is_falling', False):
+                rel = self._pet_rel_pos(event.pos())
+                if rel is not None:
+                    ev = self._pet_tracker.handle_release(rel)
+                    self._dispatch_pet_event(ev)
+                else:
+                    # 在精灵外松手：仍然要清掉按下态（否则下一次按下会被
+                    # 当成"同一次长按的延续"，改造前靠 `_pet_detection_state`
+                    # 的 is_pressing 复位做到，这里等价处理）。
+                    self._pet_tracker.gesture.is_pressing = False
     
         # 松手后立刻按"一层压一层"归位一次。
         # 必要性：用户拖动宠物时窗口会被激活 → Windows 把宠物提到同组最前，
@@ -8868,48 +8772,25 @@ class RalseiPet(QMainWindow):
         # 鼠标双击事件
         # 检查是否双击了Ralsei
         if self.sprite_label.geometry().contains(event.pos()):
-            # 检测双击的身体部位
-            clicked_part = self.get_ralsei_body_part(event.pos())
-            _log.debug(f"双击了Ralsei的: {clicked_part}")
-            
-            # 根据不同部位触发不同效果
-            if clicked_part == "hair":
-                # 摸头杀
-                _log.debug("摸头杀！")
-                self.emotion_system.add_emotion("happy", 50)
-                self.emotion_system.add_emotion("shy", 35)
-                self.play_animation_once("pose")
-                self.speak_event("double_hair", ["嘿嘿~ 摸头杀好舒服！"], "happy")
-            elif clicked_part == "belly":
-                # 拍肚子（双击）
-                _log.debug("用力拍了Ralsei的肚子！")
-                self.emotion_system.add_emotion("happy", 45)
-                self.emotion_system.add_emotion("excited", 25)
-                self.play_animation_once("laugh")
-                self.speak_event("double_belly", ["哈哈！别用力拍我的肚子啦！"], "laughing")
-            elif clicked_part == "face":
-                # 捏脸
-                _log.debug("捏了Ralsei的脸！")
-                self.emotion_system.add_emotion("happy", 40)
-                self.emotion_system.add_emotion("shy", 40)
-                self.play_animation_once("surprised")
-                self.speak_event("double_face", ["哎呀！别捏我的脸！"], "surprised")
-            elif clicked_part == "shoulder":
-                # 拍拍肩膀
-                _log.debug("拍拍Ralsei的肩膀！")
-                self.emotion_system.add_emotion("happy", 35)
-                self.emotion_system.add_emotion("caring", 20)
-                self.play_animation_once("wave")
-                self.speak_event("double_shoulder", ["谢谢你拍拍我的肩膀！"], "happy")
-            else:
-                # 修复：双击耳朵/手臂/腿/躯干等未单独列出的部位时，
-                # 原来会落到外层 else 触发"显示/隐藏对话框"（窗口级行为），
-                # 在 sprite 内点击却切对话框，交互错乱。改为统一的友好反应。
-                _log.debug(f"双击了Ralsei的: {clicked_part}")
-                self.emotion_system.add_emotion("happy", 20)
-                self.emotion_system.add_emotion("shy", 10)
-                self.play_animation_once("happy")
-                self.speak_event("double_other", ["嘿嘿~ 你对我真好！"], "happy")
+            # ★★ 双击（PAT）交给 tracker（第75轮 B3）。
+            # 改造前这里是一段 40 行的 `if clicked_part == "hair" … else
+            # double_other`，与 `RESPONSE_SPEC` 里的 `double_*` 四项逐字重复。
+            #
+            # ⚠️ 双击的**判定**仍由 Qt 自己给（`mouseDoubleClickEvent`），
+            #    不必让 `GestureTracker` 去猜 —— 但 tracker 的"连击计数"
+            #    也会在两次单击后返回 FLICK/PAT。为避免**同一组双击被处理两遍**
+            #    （一次来自这里、一次来自 release 的连击计数），这里只做
+            #    "按部位取 `double_*` kind 并执行"，**不**走 tracker 的手势机。
+            #    ⇒ 双击语义的**唯一入口 = 本函数**，单击/长按/抚摸的唯一入口
+            #      = release/move。两者互不重叠。
+            rel = self._pet_rel_pos(event.pos())
+            part = BodyPart.WHOLE_BODY
+            if rel is not None:
+                part = self._pet_tracker.region.classify(rel[0], rel[1])
+            kind = kind_for(part, Gesture.PAT)
+            _log.debug("双击了Ralsei的: %s", part.value)
+            if kind:
+                self._apply_pet_response(kind)
         else:
             # 双击其他区域，显示/隐藏对话框
             if self.dialogue_ui.isVisible():
@@ -10322,6 +10203,29 @@ class RalseiPet(QMainWindow):
                 parts.append("你站在桌面上")
         except Exception as e:
             _log.debug("AI 上下文：载体状态分片获取失败（已忽略）: %s", e)
+        # ★★ 场景分片（第75轮补）：**"我现在在哪"**。
+        #
+        # 为什么必须补：产品的核心口径是"把原作的世界搬到桌面上，桌面也是一个场景"
+        # （第 42~50 轮已把 1,014 个原作场景接进来）。可 `_build_ai_context()`
+        # 里**从来没有"我在哪"** —— AI 只知道"站在桌面上"，不知道桌面上开着的是
+        # 城堡镇还是黑暗世界。于是用户说"咱要不去城堡镇吧"，AI 只能当成抽象愿望，
+        # 回一句"不要放弃，继续努力"这种通用鼓励。
+        #
+        # ★ `SceneState.describe()` 是第 36 轮就写好的**唯一入口**（注释原文：
+        #   "给 AI 上下文注入用的唯一入口"），但一直没有消费者 —— 这里把它接上，
+        #   **不自己拼场景名**（规则只留一份真源）。
+        # ★ 取空串/取不到 ⇒ **整段省略**（`describe()` 的契约），不注入
+        #   "我在某个地方"这种废话。
+        try:
+            _scene = self.__dict__.get('_scene_state')
+            _where = _scene.describe() if _scene is not None else ''
+            if _where:
+                if _where == '桌面':
+                    parts.append("你在桌面上")
+                else:
+                    parts.append(f"你此刻在{_where}")
+        except Exception as e:
+            _log.debug("AI 上下文：场景分片获取失败（已忽略）: %s", e)
         # 被冷落多久：只有真的久（>30 分钟）才提 —— 每句都提就变成"每句都在撒娇"，
         # 那正是用户说的"不像 Ralsei"。两条互斥（elif），不会同时出现。
         try:
@@ -10383,14 +10287,23 @@ class RalseiPet(QMainWindow):
     PERSONA_REL_PATH = os.path.join('assets', 'ralsei_persona.md')
 
     # 兜底人设：persona 文件缺失/读失败时使用，保证对话链路不因人设丢失而失常
-    # ⚠️ 这份兜底**必须和 assets/ralsei_persona.md 的关系口径保持一致**（平级、无使命），
+    # ⚠️ 这份兜底**必须和 assets/ralsei_persona.md 的关系口径保持一致**（在哪 / 平级 / 无使命），
     # 否则 persona 一旦读取失败，模型会立刻退回"主人/陪伴任务"那套旧叙事 ——
     # 而这条退化路径在正常运行时**看不见**（A 组锁测的是真源文件，不是这份字符串）。
+    #
+    # ★★ 第75轮同步：真源「我现在在哪」节已按用户裁定重写为
+    #    「我住在黑暗世界，桌面是那扇窗」。兜底若还留着"你现在在这台电脑的桌面上"，
+    #    就正好落在用户抱怨的那句「咱要不去城堡镇吧 → 不要放弃继续努力」的病根上
+    #    （AI 不知道自己住在哪 ⇒ 把地名当抽象愿望）。**这份兜底也一起对齐。**
+    # ⚠️ 注意：J1 判据（verify_persona_chat.py）钉的就是这份字符串，改的时候
+    #    「不用叫他」/「仅此而已」/「平级」三个锚必须仍在，否则 J1 会连带报红。
     _PERSONA_FALLBACK = (
         "你是《Deltarune》中的 Ralsei：温柔、善良、害羞、体贴的和平主义者。"
-        "你现在在这台电脑的桌面上，谁也没有非让你来不可的理由 —— 你就是来了，仅此而已。"
-        "在屏幕另一头跟你说话的人和你是平级的，不用叫他\"主人\"，也不用替他操心什么；"
-        "他有名字就叫名字，没名字就说\"你\"。"
+        "你住在黑暗世界里（城堡、喷泉、那片没有星星的夜空），"
+        "你现在待的地方是屏幕这一头的\"窗\"（对方的桌面）—— 你随时可以带他看看你那边。"
+        "谁也没有非让你来不可的理由 —— 你就是来了，仅此而已。"
+        "在屏幕另一头跟你说话的人是真实世界的人、不是 Kris，和你平级的，"
+        "不用叫他\"主人\"，也不用替他操心什么；他有名字就叫名字，没名字就说\"你\"。"
         "\n\n【说话方式】一次只说 1~3 句，像真人在聊天框里随手打字，"
         "不要分点、不要小标题、不要总结；先接住你这句话里的情绪和具体那件事，"
         "再补一句自己的感受；不要每句都问“你还好吗”；不要说自己是在扮演 AI。"
@@ -11499,6 +11412,8 @@ class RalseiPet(QMainWindow):
                     
                     # 设置精灵图像
                     self.sprite_label.setPixmap(cached_sprite)
+                    # ★ 第75轮 B3：换帧后同步手势判定器的精灵尺寸 / alpha 遮罩
+                    self._sync_pet_tracker_sprite()
                 
                 # 更新帧计数器
                 self.current_frame += 1
@@ -11608,6 +11523,8 @@ class RalseiPet(QMainWindow):
                     
                     # 设置精灵图像
                     self.sprite_label.setPixmap(cached_sprite)
+                    # ★ 第75轮 B3：换帧后同步手势判定器的精灵尺寸 / alpha 遮罩
+                    self._sync_pet_tracker_sprite()
         
         # 更新状态计时器
         if self.is_surprised:

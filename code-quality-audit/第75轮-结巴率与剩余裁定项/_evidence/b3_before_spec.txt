@@ -1,0 +1,111 @@
+======================================================================
+[PUSH] main.py 8396~8414
+======================================================================
+ 8396|                     try:
+ 8397|                         self.sound_manager.play_splat()
+ 8398|                     except Exception as e:  # 修复：原先静默吞噬
+ 8399|                         _log.debug("main 防御性异常（已忽略）: %s", e)
+ 8400|                     self.speak_event("splat_poked", ["别戳我啦...我都扁了..."], "sad", instant=True)
+ 8401|                     event.accept()
+ 8402|                     return
+ 8403|                 # 点击了Ralsei
+ 8404|                 self.pet_ai.react_to_event("user_clicked", None)
+ 8406|                 # 更新互动时间
+ 8407|                 self.last_interaction_time = time.time()
+ 8409|                 # ★★ 手势判定交给 tracker（第75轮 B3）。
+ 8410|                 # 注意 `handle_press` 只记录"按下了哪里"、**不产生事件** ——
+ 8411|                 # 事件（PUSH / PINCH / PULL）在 `mouseReleaseEvent` 里由时长与
+ 8412|                 # 位移区分后一次性返回。这样"点一下"不会在按下瞬间就说话，
+ 8413|                 # 也给"按住拖着走"留出了不误触的余地。
+ 8414|                 rel = self._pet_rel_pos(event.pos())
+======================================================================
+[PINCH/PULL] main.py 8805~8851
+======================================================================
+ 8805|         feed_action = QAction("喂食", self)
+ 8806|         feed_action.triggered.connect(self.feed_ralsei)
+ 8807|         menu.addAction(feed_action)
+ 8809|         pet_action = QAction("抚摸", self)
+ 8810|         pet_action.triggered.connect(self.pet_ralsei)
+ 8811|         menu.addAction(pet_action)
+ 8813|         climb_action = QAction("爬上来", self)
+ 8814|         climb_action.triggered.connect(self.climb_to_top_window)
+ 8815|         menu.addAction(climb_action)
+ 8817|         change_animation_action = QAction("切换动画", self)
+ 8818|         change_animation_action.triggered.connect(self.change_animation_randomly)
+ 8819|         menu.addAction(change_animation_action)
+ 8821|         # 添加配置选项
+ 8822|         config_action = QAction("配置", self)
+ 8823|         config_action.triggered.connect(self.show_config_dialog)
+ 8824|         menu.addAction(config_action)
+ 8826|         hide_action = QAction("隐藏", self)
+ 8827|         hide_action.triggered.connect(self._hide_ralsei)
+ 8828|         menu.addAction(hide_action)
+ 8830|         # 显示菜单
+ 8831|         menu.exec_(pos)
+ 8833|     def show_config_dialog(self):
+ 8834|         # 显示配置对话框
+ 8835|         from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QCheckBox, QGroupBox, QComboBox, QSpinBox, QDoubleSpinBox
+ 8836|         from PyQt5.QtCore import Qt
+ 8838|         # 创建对话框
+ 8839|         dialog = QDialog(self)
+ 8840|         dialog.setWindowTitle("Ralsei Pet 配置")
+ 8841|         dialog.setFixedSize(400, 500)
+ 8842|         dialog.setWindowFlags(Qt.WindowSystemMenuHint | Qt.WindowTitleHint)
+ 8844|         # 创建主布局
+ 8845|         main_layout = QVBoxLayout(dialog)
+ 8847|         # API配置组（本地 Ralsei 模型 / OpenAI 兼容，如 Ollama http://localhost:11434）
+ 8848|         api_group = QGroupBox("Ralsei AI 配置（本地模型）")
+ 8849|         api_layout = QVBoxLayout(api_group)
+ 8851|         # API启用复选框
+======================================================================
+[PAT] main.py 8876~8912
+======================================================================
+ 8876|         model_layout = QHBoxLayout()
+ 8877|         model_layout.addWidget(QLabel("模型名称:"))
+ 8878|         self.model_input = QLineEdit()
+ 8879|         self.model_input.setText(self.api_config.get('model', 'ralsei'))
+ 8880|         model_layout.addWidget(self.model_input)
+ 8881|         api_layout.addLayout(model_layout)
+ 8883|         # 提示文字：给出最快上手路径
+ 8884|         _hint = QLabel("提示：Ollama 填基础URL http://localhost:11434、模型 ralsei，"
+ 8885|                        "勾选启用后保存即生效；连不上会自动回退内置对话。")
+ 8886|         _hint.setWordWrap(True)
+ 8887|         _hint.setStyleSheet("color:#888888;font-size:9pt;")
+ 8888|         api_layout.addWidget(_hint)
+ 8890|         # 代理ID
+ 8891|         agent_id_layout = QHBoxLayout()
+ 8892|         agent_id_layout.addWidget(QLabel("代理ID:"))
+ 8893|         self.agent_id_input = QLineEdit()
+ 8894|         self.agent_id_input.setText(self.api_config.get('agent_id', ''))
+ 8895|         agent_id_layout.addWidget(self.agent_id_input)
+ 8896|         api_layout.addLayout(agent_id_layout)
+ 8898|         # API版本
+ 8899|         api_version_layout = QHBoxLayout()
+ 8900|         api_version_layout.addWidget(QLabel("API版本:"))
+ 8901|         self.api_version_input = QComboBox()
+ 8902|         self.api_version_input.addItem("v1")
+ 8903|         self.api_version_input.addItem("v2")
+ 8904|         current_api_version = self.api_config.get('api_version', 'v1')
+ 8905|         self.api_version_input.setCurrentText(current_api_version)
+ 8906|         api_version_layout.addWidget(self.api_version_input)
+ 8907|         api_layout.addLayout(api_version_layout)
+ 8909|         main_layout.addWidget(api_group)
+ 8911|         # 动画配置组
+ 8912|         animation_group = QGroupBox("动画配置")
+======================================================================
+[STROKE] main.py 8613~8628
+======================================================================
+ 8613|                         release_speed = (rel_vx ** 2 + rel_vy ** 2) ** 0.5
+ 8614|                     else:
+ 8615|                         # 拖完停住再松手 = 轻放，绝不甩飞
+ 8616|                         release_speed = 0.0
+ 8617|                         rel_vx = rel_vy = 0.0
+ 8618|                         dx = dy = 0.0
+ 8620|                 # 甩飞门槛：900 px/s（约"猛地一甩"的力度）。低于此值只是普通放下。
+ 8621|                 _FLING_SPEED = 900.0
+ 8622|                 # 弹跳门槛：250 px/s（轻甩一下的小跳，不会摔）
+ 8623|                 _BOUNCE_SPEED = 250.0
+ 8625|                 if release_speed > _FLING_SPEED:
+ 8626|                     # 极快释放，触发甩飞效果
+ 8627|                     # 分阶段：飞行(抛物线) → 摔扁splat → 晕乎揉头 → 爬起恢复
+ 8628|                     self.is_falling = True

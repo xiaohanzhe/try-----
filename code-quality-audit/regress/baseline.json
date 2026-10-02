@@ -41,7 +41,7 @@
       "exit": 0,
       "fail": 0,
       "pass": 152,
-      "sha256": "14f6a0f3fb9f2638acd328d0f58eddf38216b59fe05f751265e381bf4c88429c"
+      "sha256": "240889f9ec239b8c64ba3b0c3cc0f09c0cbe53a96fab30bef998ebef037ba3d0"
     },
     "check71": {
       "exit": 0,
@@ -70,14 +70,26 @@
     "check75b": {
       "exit": 0,
       "fail": 0,
-      "pass": 58,
-      "sha256": "f1ada8be3052dde0b218192b3b7fcf204a76249885be8fc7ee040375514889fa"
+      "pass": 59,
+      "sha256": "54ec1ce482ecbff6e743626891c97d73d8024c3574a8397030b9364f9c0db76c"
+    },
+    "check75c": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 37,
+      "sha256": "e9774af93a97858a09da576c1fc109947d1c0332584d43945cf8b50187e30882"
+    },
+    "check76": {
+      "exit": 0,
+      "fail": 0,
+      "pass": 64,
+      "sha256": "75c753b3a3d3094cd50b393ca5439acebb4fdba66baf8013df4b4c6d16663980"
     },
     "companion_round46": {
       "exit": 0,
       "fail": 0,
       "pass": 216,
-      "sha256": "c1bb4d7245a21f5d15a9cc70efabed6d9747ad9c62d8422b2b1543a8ac734530"
+      "sha256": "c6b88edc7cf4f8a8bcef6cf35f05236938c0d8e59e0df5830f9ab728439f5f55"
     },
     "dialog_clean52": {
       "exit": 0,
@@ -95,13 +107,13 @@
       "exit": 0,
       "fail": 0,
       "pass": 25,
-      "sha256": "cb18a62824d41a78cffd2f319d132b0f902435d5535b86c4f595f7db64604fca"
+      "sha256": "09b1010c6fa39fcd824a151f0a67207b341c9fc61ff8293acdaeb56300b7fa62"
     },
     "items_round48": {
       "exit": 0,
       "fail": 0,
       "pass": 53,
-      "sha256": "6e9431215881993b81089d7953a2c621ee3ab402d5a3f83b64a71e9d74b5652c"
+      "sha256": "9f720a2f010d5053f61150df07a1f078331d119da1e8bf68cf903bad0ae2eaed"
     },
     "items_round68": {
       "exit": 0,
@@ -119,13 +131,13 @@
       "exit": 0,
       "fail": 0,
       "pass": 151,
-      "sha256": "03a2d376f0499bfc3b1f796337208f7d4c2e25155a931461d0c0524bad751f26"
+      "sha256": "e7d102793ba5f4304ba04c7c728a0ada7d8dbc91886eb639ff957705a83504cd"
     },
     "npc_place56": {
       "exit": 0,
       "fail": 0,
       "pass": 138,
-      "sha256": "e94f44595329600acec41f051bb3cfb53fd9a5de7c039ea8ffc54ef2d126b3b9"
+      "sha256": "1f83aea025a0a8e549649a99d232e7a13c08b33d979e228f5d20ae24e35aa10b"
     },
     "npc_round49": {
       "exit": 0,
@@ -149,7 +161,7 @@
       "exit": 0,
       "fail": 0,
       "pass": 156,
-      "sha256": "fe7203db1d92424ae9b0d15acf2a8dc42d3ed9796f156474f0f1f7f0438e09ce"
+      "sha256": "01b45f1f5a903565c35345dbb0b345ebb7effb493fe5574744aab9c55b21539b"
     },
     "render_round44": {
       "exit": 0,
@@ -256,8 +268,8 @@
     "round6_verify": {
       "exit": 0,
       "fail": 0,
-      "pass": 39,
-      "sha256": "8766083aaa187018147e74acabbe19a82cf29209697e63be712f32e67f3d97da"
+      "pass": 40,
+      "sha256": "a335426b30accb7d7caf4a2101b571879cd648d744b15768c24bf1f742b4b2f0"
     },
     "round7_launch": {
       "exit": 0,
@@ -269,7 +281,7 @@
       "exit": 0,
       "fail": 0,
       "pass": 28,
-      "sha256": "1a4ff0293719055179719cfb83466d725318c3a7625c354564c8e621d52df07e"
+      "sha256": "e19d2067e9aa1a273328f6178c7d4930b920ebd8d55e12c321793ea92a52760a"
     },
     "round8_dialogue": {
       "exit": 0,
@@ -328,14 +340,14 @@
     "s7_event_speech": {
       "exit": 0,
       "fail": 0,
-      "pass": 138,
-      "sha256": "2adb13aff8583cd1e4a128ff2e764420176d4210792d064be3c5cb0638a71993"
+      "pass": 139,
+      "sha256": "8ee5d57e0d35c992c97036073e0ecd3c68bba336ab95cd67d3ec0400a39fab6b"
     },
     "s8_stream": {
       "exit": 0,
       "fail": 0,
-      "pass": 70,
-      "sha256": "3f5ca23cae245cd9fbc15cdb4c44d0bc9b94ee67713d9e0ee6278450b1a73d95"
+      "pass": 73,
+      "sha256": "a0f987d8db652d07a17fe675c36b8b3301aab28492eb67ed900240b3d4943787"
     },
     "scene_p0": {
       "exit": 0,
@@ -359,13 +371,13 @@
       "exit": 0,
       "fail": 0,
       "pass": 53,
-      "sha256": "1294e0446d9a68271202b3ed9f99702a544397188ebaedd76463cf6771cdf282"
+      "sha256": "1996ec35b720600f21b78aa09a65395104930322c3fc3b15c7870567f66733b5"
     },
     "soul_round55": {
       "exit": 0,
       "fail": 0,
       "pass": 44,
-      "sha256": "51847fae43fedb7e5a3de4d51a7120dfacf3f3f0beba61368fb8080a3f57bacd"
+      "sha256": "3b4979060a55c1bb4d2c49383586a8f2c6120c7a723cd938ee918243ec353213"
     },
     "walk_round47": {
       "exit": 0,

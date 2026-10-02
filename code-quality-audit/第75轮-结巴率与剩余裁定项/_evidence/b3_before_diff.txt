@@ -1,0 +1,53 @@
+★★ 说明：本文件记录的是 **改造前** main.py 的状态。
+   `_probe_b3_diff.py` 现在跑会 assert 失败（区域表已被删）—— 这正是 B3 的成果。
+   下面的数字是 2026-10-02 改造**当时**实测输出，逐字存档。
+
+======================================================================
+[A] 部位名集合对比
+======================================================================
+main.py get_ralsei_body_part 区域名（去重）:
+    ['arm', 'belly', 'body', 'ear', 'face', 'hair', 'legs', 'shoulder', 'whole_body']
+    条目数 = 12 （含重复区间）
+pet_interaction.py BodyPart 枚举值:
+    ['arm', 'ear', 'face', 'hair', 'leg', 'shoulder', 'torso', 'whole_body']  共 8 个
+  ⇒ 只有 main 有 : ['belly', 'body', 'legs']
+  ⇒ 只有 pi  有 : ['leg', 'torso']
+  ⇒ 两边都有     : ['arm', 'ear', 'face', 'hair', 'shoulder', 'whole_body']
+
+======================================================================
+[B] 手势集合对比
+======================================================================
+pet_interaction.py Gesture 枚举值: ['flick', 'pat', 'pinch', 'pull', 'push', 'stroke']
+main.py speak_event 用到的 kind（全量，含非手势）:
+    ['double_belly', 'double_face', 'double_hair', 'double_other', 'double_shoulder',
+     'ear_ruffle', 'feed', 'fling', 'pat_belly', 'pet_menu', 'pinch_ear', 'pinch_face',
+     'poke_body', 'poke_default', 'poke_shoulder', 'press_body', 'pull_arm',
+     'pull_shoulder', 'sleep_enter', 'sleep_stir', 'splat_poked', 'wake_up']
+
+======================================================================
+[C] 代码体量（行数）
+======================================================================
+pet_interaction.py 总行数 = 365
+main.py 总行数           = 12716
+  get_ralsei_body_part     ~  58 行
+  mousePressEvent          ~ 136 行
+  mouseMoveEvent           ~ 204 行
+  mouseReleaseEvent        ~ 209 行
+  mouseDoubleClickEvent    ~  59 行
+  ⇒ 合计约 666 行（mouseDoubleClickEvent 边界为近似值）
+
+======================================================================
+[D] 接线状态（硬事实）
+======================================================================
+main.py 里出现 "pet_interaction" 次数 = 0
+main.py 里出现 "PetInteractionTracker" 次数 = 0
+全仓库（除模块本身）真正 import pet_interaction 的文件（AST 级）:
+   ★ 真 import : （无 —— 零接线，确认）
+   ○ 仅字符串出现: ['ralsei_pet\\modules\\emotion_system.py',
+                    'ralsei_pet\\modules\\pet_ai.py',
+                    'ralsei_pet\\modules\\social_growth_system.py']
+
+======================================================================
+[E] event_speech.py 的 PET_PARTS
+======================================================================
+"hair", "ear", "face", "body", "arm", "shoulder"

@@ -76,7 +76,17 @@ class StubParent(QWidget):
     def handle_game_input(self, t):
         return False
 
-    def chat_with_ai(self, text, cb):
+    def chat_with_ai(self, text, cb, on_delta=None, lean=False,
+                     speaker=None, system_override=None, remember=True,
+                     model=None, **kw):
+        """★★ 签名必须跟**产品真实调用**对齐（第75轮修）。
+
+        老桩只有 `(self, text, cb)` —— 产品那边早已演进成
+        `chat_with_ai(text, on_reply, on_delta, lean=…, speaker=…)`，
+        多出来的 kwargs 会 **TypeError**。异常被上层 `try` 吞掉 ⇒
+        静默退化成"规则回复" ⇒ C/D/E 三项长期假红（**本轮动手前就红了**，
+        已用 `git stash` 对照实证，不是本轮引入）。
+        """
         if not self.reply_schedule:
             QTimer.singleShot(0, lambda: cb(None))
             return
@@ -120,11 +130,18 @@ ui = new_ui(pc)
 ui.input_field.setPlainText("q_ai_normal_hello")
 ui.send_message()
 pump(10)
-check("C_思考占位显示", ui.typing_text == ui.AI_THINKING_PLACEHOLDER)
+# ★ 第75轮：思考占位改成**可关**（用户裁定「别用那个思考的表情」）。
+#   断言跟着开关走 —— 两种档位下都有意义，且都必须**处在等待态**。
+check("C_等待态_ai_pending 为真", ui._ai_pending is True)
+if ui.AI_THINKING_PLACEHOLDER_ENABLED:
+    check("C_思考占位显示（开关开时）", ui.typing_text == ui.AI_THINKING_PLACEHOLDER)
+else:
+    check("C_无思考占位（开关关时）", ui.typing_text == "")
 check("C_占位不入历史", "……" not in ui._history_html
       and "正在想" not in ui._history_html)
 pump(400)
 check("C_AI回复显示", ui.typing_text == "这是来自本地Ralsei的回复")
+check("C_出字后不再是等待态", ui._ai_pending is False)
 check("C_最终历史无占位", "正在想" not in ui._history_html)
 
 # D：并发乱序（q1 慢 400ms、q2 快 100ms）→ 只显示最新

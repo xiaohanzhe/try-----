@@ -1,0 +1,29 @@
+=== check76 判据加强 + tamper76 自证（真跑） ===
+时间: 2026-10-02 14:09:02
+
+--- check76.py（尾部） ---
+[PASS] F3 被测模块真在盘上
+[PASS] F3b 被测文件真在盘上
+
+合计：PASS=64 FAIL=0
+
+--- check76 C5 系列 ---
+[PASS] C5 _sync_pet_tracker_sprite 真被调用（2 处，换帧都要同步）
+[PASS] C5a 每个 setPixmap 之后都有同步（2 处 setPixmap / 2 处同步；未配对=无）
+[PASS] C5b 正控制：合成的"3 换帧 2 同步"必须被判缺（坏点=[9]）
+[PASS] C5c 负控制：全配对的合成源码不许被判缺（坏点=无）
+
+--- tamper76.py ---
+[OK  ] ① main.py 去掉 tracker 构造 ⇒ C2 报红  (FAIL=1, 命中期望=True)
+[OK  ] ② main.py 去掉 handle_move 的真实调用（改成哨兵值）⇒ C3 报红  (FAIL=1, 命中期望=True)
+[OK  ] ③ main.py 去掉换帧同步（只留 1 处）⇒ C5 报红  (FAIL=2, 命中期望=True)
+[OK  ] ④ main.py 复活手写状态机（重新读写 _pet_detection_state）⇒ C6 报红  (FAIL=1, 命中期望=True)
+[OK  ] ⑤ main.py 重新塞进第二份区域表 ⇒ C7 报红  (FAIL=1, 命中期望=True)
+[OK  ] ⑥ main.py 复活 clicked_part 比较分支链 ⇒ C8 报红  (FAIL=1, 命中期望=True)
+[OK  ] ⑦ main.py 复活手写抚摸状态 ⇒ C9 报红  (FAIL=2, 命中期望=True)
+[OK  ] ⑧ main.py 双击改走 tracker 手势机 ⇒ C12b 报红  (FAIL=1, 命中期望=True)
+[OK  ] ⑨ 模块把 BELLY 挪到 TORSO 之后 ⇒ A2 报红  (FAIL=2, 命中期望=True)
+[OK  ] ⑩ 模块新增一个未登记的事件名 ⇒ A3/A4 报红  (FAIL=1, 命中期望=True)
+
+篡改自证：命中 10 / 未命中 0 / 跳过 0（共 10）
+还原后复核：PASS=64 FAIL=0 （全绿）

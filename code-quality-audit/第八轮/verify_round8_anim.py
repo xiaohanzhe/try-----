@@ -591,6 +591,16 @@ _ALLOWED_PLAY_ONCE_OWNERS = {
     '_hide_move_to_point', '_hide_end_game', '_hide_destroy_obstacles',
     '_hide_report_clicked_folder', '_hide_jump_back_to_desktop',
     '_notify_arrived_if_needed',
+    # —— 宠物手势回应（第75轮 B3 新增）：**用户显式交互**的执行层。
+    #   第75轮把"部位+手势 → 台词/情绪/动画"的三处重复判定统一到
+    #   `modules/pet_interaction.py`，主窗口这边只留一个查表执行函数
+    #   `_apply_pet_response(kind)`，由 `mousePressEvent` / `mouseReleaseEvent` /
+    #   `mouseMoveEvent` / `mouseDoubleClickEvent` 通过 `_dispatch_pet_event` 调用。
+    #   ⇒ 它属于本白名单的第一类（用户显式交互），与 `mousePressEvent` 等**同性质**，
+    #     只是多了一层间接；**不是**"环境事件驱动的表演"（本闸要拦的东西）。
+    #   ⚠️ 加白名单的前提是"调用链确实源自用户鼠标事件"—— 已由 `check76` 的
+    #      C3/C4（三个 handle_* 真用非哨兵实参 + 真调 `_dispatch_pet_event`）锁住。
+    '_apply_pet_response',
 }
 
 

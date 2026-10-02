@@ -581,10 +581,53 @@ ok('D13 队尾 + 流式未完 → 不停表、不排自动隐藏（等下一块�
 s3 = dui_stub()
 s3.stream_delta('我先陪着你')
 s3.stream_delta(None)
-ok('D14 reset 把已显示的半句擦掉并回到"……"等待态',
-   s3.typing_text == s3.AI_THINKING_PLACEHOLDER and s3._streaming is False
-   and not s3.typing_timer.active and s3.faces == ['thinking'],
-   'text=%r streaming=%s faces=%r' % (s3.typing_text, s3._streaming, s3.faces))
+# ★ 第75轮：思考占位改成**可关**（用户裁定「别用那个思考的表情」）。
+#   判据跟着总开关 **`D.AI_THINKING_PLACEHOLDER_ENABLED`**（模块级真源）走：
+#   两种档位下，**核心不变量都必须成立** ——
+#     ① 已显示的半句被擦掉（`typing_text` 不再是那半句）
+#     ② 打字机停表
+#     ③ 仍在等待态（`_ai_pending is True`，第75轮新增，与显示内容解耦）
+#   只有"显示什么"是按档位分支的（开=「……」+thinking脸 / 关=干净留白）。
+#   ⚠️ 不要只断"== 占位串" —— 开关一关该判据就恒假（那正是本轮 DIFF 的来源）。
+_ph_on_D14 = bool(D.AI_THINKING_PLACEHOLDER_ENABLED)
+ok('D14 reset 把已显示的半句擦掉并回到等待态（显示随总开关分支）',
+   s3.typing_text != '我先陪着你'
+   and not s3.typing_timer.active
+   and getattr(s3, '_ai_pending', None) is True
+   and ((s3.typing_text == s3.AI_THINKING_PLACEHOLDER and s3.faces == ['thinking'])
+        if _ph_on_D14 else (s3.typing_text == '' and s3.faces == [])),
+   'ph_on=%s text=%r streaming=%s faces=%r pending=%r'
+   % (_ph_on_D14, s3.typing_text, s3._streaming, s3.faces,
+      getattr(s3, '_ai_pending', None)))
+
+# ---- D14b ★ A/B 对照：**两个档位都真的能跑**，且产出确实不同 ----
+# 只断当前档位 = 把锁写成"只认这一种显示"，日后翻开关必假红（或反过来该红不红）。
+# 这里显式把模块级开关翻两次，断言 **A ≠ B**，并断言核心不变量两档都在。
+_ab = {}
+_orig_ph = D.AI_THINKING_PLACEHOLDER_ENABLED
+try:
+    for _flag in (True, False):
+        D.AI_THINKING_PLACEHOLDER_ENABLED = _flag
+        _s = dui_stub()
+        _s.stream_delta('我先陪着你')
+        _s.stream_delta(None)
+        _ab[_flag] = (_s.typing_text, tuple(_s.faces),
+                      not _s.typing_timer.active,
+                      getattr(_s, '_ai_pending', None))
+finally:
+    D.AI_THINKING_PLACEHOLDER_ENABLED = _orig_ph
+ok('D14b 对照：占位开=「……」+thinking脸 / 关=干净留白（A≠B）',
+   _ab[True][0] == D.DialogueUI.AI_THINKING_PLACEHOLDER
+   and _ab[True][1] == ('thinking',)
+   and _ab[False][0] == '' and _ab[False][1] == ()
+   and _ab[True] != _ab[False],
+   'on=%r  off=%r' % (_ab[True], _ab[False]))
+ok('D14c 对照：两档下"停表 + 仍在等待态"都成立（核心不变量与显示解耦）',
+   all(v[2] is True and v[3] is True for v in _ab.values()),
+   'on=(stop,pending)=%r  off=%r' % (_ab[True][2:], _ab[False][2:]))
+ok('D14d 反向控制：开关复位成功（不留脏状态给后续用例）',
+   D.AI_THINKING_PLACEHOLDER_ENABLED is _orig_ph,
+   'restored=%r' % (D.AI_THINKING_PLACEHOLDER_ENABLED,))
 
 # finalize：与已显示内容一致 → 不打断打字机
 s4 = dui_stub()

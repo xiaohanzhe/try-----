@@ -29,6 +29,7 @@
 ★ 放在 `code-quality-audit/第75轮.../_tools/` ⇒ 仓库根 = HERE 上**三级**。
 """
 
+import ast
 import io
 import os
 import re
@@ -46,6 +47,8 @@ sys.path.insert(0, PET)
 from modules import team_hp as T          # noqa: E402
 
 _TEAM = os.path.join(PET, 'modules', 'team_hp.py')
+#: AST 级数据源（C1 用）——**只解析、不执行**（不产 `.pyc`，不改被测状态）。
+_TEAM_TREE = ast.parse(io.open(_TEAM, encoding='utf-8').read())
 
 _P = 0
 _F = 0
@@ -303,18 +306,42 @@ def _b9_determinism():
 # ==================================================== C. 纪律
 
 def _c1_no_qt_no_project_import():
-    """C1 ★ 零依赖：只准标准库（禁 Qt、禁任何项目内模块）。"""
-    src = _read(_TEAM)
+    """C1 ★ 零依赖：只准标准库（禁 Qt、禁任何项目内模块）。
+
+    ★★ 第75轮修：本判据初版拿 `_read(_TEAM)`（**含注释的原文**）做子串匹配，
+       结果被 `team_hp.py` 自己 docstring 里的**说明文字**误伤 ——
+       第 120/131 行正好在讲这条纪律（"当 main.py 以**包形式**加载时…"、
+       "`team_hp` 禁 `from modules`…那几条闸"）⇒ `from modules` 命中 ⇒ 假红。
+       **"判据读到了注释"在本项目已出现三次**（`check75c` A1、`s7` C1、
+       `check76` A4b），所以这里改成 **AST 级**：只看真的 `Import` / `ImportFrom`
+       节点，注释与字符串一律不参与。
+    """
     bad = []
-    for pat in ('import PyQt', 'from PyQt', 'import PySide', 'from modules',
-                'from src', 'import modules', 'from .'):
-        if pat in src:
-            bad.append(pat)
-    check('C1 零依赖：无 Qt / 无项目内 import（命中=%s）' % (bad or '无'), not bad)
+    for node in ast.walk(_TEAM_TREE):
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                nm = a.name or ''
+                if nm.startswith(('PyQt', 'PySide', 'modules', 'src')):
+                    bad.append('import %s (line %d)' % (nm, node.lineno))
+        elif isinstance(node, ast.ImportFrom):
+            mod = node.module or ''
+            if node.level:                       # 相对导入 `from .x import y`
+                bad.append('from %s%s (line %d)' % ('.' * node.level, mod, node.lineno))
+            elif mod.startswith(('PyQt', 'PySide', 'modules', 'src')):
+                bad.append('from %s (line %d)' % (mod, node.lineno))
+    check('C1 零依赖：无 Qt / 无项目内 import（AST 级，不吃注释）（命中=%s）'
+          % (bad or '无'), not bad)
     # 复核：确认这些**否判据**确实会命中（否则是恒真）
     check('C1n 负控制：判据串本身能被"含 import PyQt5"的假源码触发',
           any(p in 'import PyQt5' for p in
               ('import PyQt', 'from PyQt', 'import PySide')))
+    # ★ C1p 正控制：证明 AST 级扫描**真的能看到** `import logging`
+    #   （否则"没命中项目内 import"可能只是因为整棵树是空的）
+    _plain_imports = [a.name for n in ast.walk(_TEAM_TREE)
+                      if isinstance(n, ast.Import) for a in n.names]
+    check('C1p 正控制：AST 真解析出标准库 import（证明不是空树）（imports=%s）'
+          % sorted(_plain_imports),
+          'logging' in _plain_imports)
 
 
 def _c2_no_logging_side_effect():

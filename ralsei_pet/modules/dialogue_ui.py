@@ -9,6 +9,33 @@
     handle_chat_commands(user_input) -> str|None
     handle_file_commands(user_input) -> str|None
 """
+import logging
+def _pet_logger_name(_name):
+    """把模块 `__name__` 映射到 `ralsei_pet.` 命名空间下的名字。
+
+    ★ 为什么需要它（第75轮实测）：一批模块历史上用**扁平导入**取日志器
+      （`try: from logger_utils import get_logger / except ImportError: 降级`）。
+      当 main.py 以**包形式**加载（`from modules.x import ...`）时，
+      模块内 `from logger_utils import ...` 必然 ImportError ⇒ 静默走降级
+      ⇒ 拿到**裸 logger**（`modules.xxx`）⇒ 两个后果：
+        ① 不在 `ralsei_pet` 树下 ⇒ 挂在根上的**文件 handler 收不到**；
+        ② 没有祖先 `setLevel(INFO)` ⇒ 有效级别退回 **30 (WARNING)** ⇒ INFO 全丢。
+      表现就是"故障查不到"、"日志里零故障记录"。
+
+    ★ 为什么用标准库字符串运算而不是 import `logger_utils`：
+      `logging` 是**进程级全局注册表** —— 只要名字拼对，拿到的就是同一个对象。
+      所以本函数**一行项目 import 都不需要**，从而不违反纯数据层的
+      「零依赖 / 白名单」契约（`scene_render` 顶层 import ⊆ logging、
+      `team_hp` 禁 `from modules`、`soul_overlay` 不拖业务模块 … 那几条闸）。
+    """
+    if not _name or _name == '__main__':
+        return 'ralsei_pet.main'
+    if _name.startswith('ralsei_pet.'):
+        return _name
+    if _name.startswith('modules.'):
+        return 'ralsei_pet.' + _name
+    return 'ralsei_pet.' + _name
+
 import os
 
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
@@ -23,7 +50,7 @@ except ImportError:  # 允许被包外单独导入
     import logging
 
     def get_logger(name):
-        return logging.getLogger(name)
+        return logging.getLogger(_pet_logger_name(name))
 
 try:
     from conversation_focus import ConversationFocus
@@ -44,7 +71,7 @@ except ImportError:  # 允许被包外单独导入（如单测直接跑本文件
     _sys2.path.append(_os2.path.dirname(_os2.path.abspath(__file__)))
     import dr_textbox as _drbox
 
-_log = get_logger(__name__)
+_log = logging.getLogger(_pet_logger_name(__name__))
 
 
 # ---------------------------------------------------------------------------
@@ -191,10 +218,34 @@ def _resolve_face_name(face_type):
     return "face_" + face_type
 
 
+# ★★ 第75轮·思考占位总开关（模块级，**刻意不放在类上**）。
+#
+# 用户裁定：「别回复的时候用那个思考的表情，就加载出来了再回复就好，
+#           我不缺那一点耐心」。`False` = 等待期不写"……"、不切 thinking 脸。
+#
+# ⚠️ 为什么是**模块级常量**而不是类属性：
+#   本模块有一批离屏夹具用 `types.SimpleNamespace` 假对象**直接调**
+#   `stream_delta` / `_stream_reset`（典型 = `s8_stream` 套件的 D14）。
+#   那种假对象既没有类属性、也没有实例方法 —— 只要代码里出现
+#   `self.<任何东西>` 就是 AttributeError（实测两轮：先撞类属性、再撞实例方法）。
+#   模块级常量对"真对象 / 假对象"一视同仁 ⇒ 夹具永远不必跟进这个开关。
+AI_THINKING_PLACEHOLDER_ENABLED = False
+
+
 class DialogueUI(QWidget):
     # 本地 AI 思考占位文本（Ralsei 式的省略号 + 思考表情，不暴露"在调模型"，
     # 让等待回复显得像普通的停顿组织语言；识别它以避免被当作正式回复写进历史）
     AI_THINKING_PLACEHOLDER = "……"
+
+    # ★★ 第75轮·用户裁定：「别回复的时候用那个思考的表情，就加载出来了再回复就好，
+    #    我不缺那一点耐心」。
+    #    关掉后：等待期**不写占位文字、不切 thinking 表情** —— 对话框保持用户
+    #    上一条消息的样子，直到真正出字才变。
+    #    ⚠️「正在等回复」这件事**不能**只靠占位串来判断（关掉后它就是空串）——
+    #      改由显式状态位 `_ai_pending` 承担，见 `_ai_thinking_on/off`。
+    #    ⚠️ 真源是**模块级** `AI_THINKING_PLACEHOLDER_ENABLED`（见上，含原因）；
+    #      下面这份只是同值镜像，**不许**被代码读（回归锁 check75c B1d 会守）。
+    AI_THINKING_PLACEHOLDER_ENABLED = False
 
     # 自动隐藏：每次对话活动后等这么久没有任何新动静，就把对话框淡出收起。
     # 用户要求（第九轮）："对话框在 20s 内不输入会自动消失哦，但一旦鼠标点
@@ -469,6 +520,12 @@ class DialogueUI(QWidget):
 
         # 本地 AI 对话状态：显式初始化（此前仅靠 getattr 默认值兜底，字段语义不清晰）
         self._ai_inflight = False   # 上一个本地 AI 请求是否仍在等待回复
+        # ★★ 第75轮：「正在等 AI 回复」的**显式**状态位。
+        #    为什么需要它：关掉思考占位后 `typing_text` 不会再变「……」，
+        #    于是"前台有没有东西"不再能区分"占位 vs 真回复"。
+        #    凡是要判「现在是不是空等」的地方（最典型 = main.py 的
+        #    `_event_ai_ready`：等回复时别插事件台词），一律用这个位。
+        self._ai_pending = False
         self._ai_seq = 0            # 请求序号：新消息递增，作废迟到的旧回复
         # 最近几轮对话历史（供本地 AI 做上下文），只保留真正的对话轮次
         self._ai_history = []
@@ -577,6 +634,12 @@ class DialogueUI(QWidget):
             self.typing_text = ""
             self.typing_index = 0
             self.is_typing = False
+        # ★★ 第75轮：结束了"空等"就清掉等待位。
+        #    ⚠️ **必须排除 `user`**：用户回显（`add_dialogue("user", …)`）发生在
+        #      `chat_with_ai()` 之前 —— 无差别地清，就等于在请求发出的那一刻
+        #      把等待态自己抹掉（那条让路闸会立刻失效）。判据 check75c B2b 守这一条。
+        if speaker != 'user':
+            self._ai_pending = False
         # ★ 第55轮：NPC 的话**不进** Ralsei 的对话历史 / 话题锚 / 拟人记忆 ——
         #   那三样都是 Ralsei 自己的。混进去，下一秒 Ralsei 就会把别人说的话
         #   当成自己或主人说过的（用户说的"葫芦娃千里眼顺风耳"就是这个）。
@@ -1187,11 +1250,13 @@ class DialogueUI(QWidget):
         return raw
 
     def _stream_begin(self):
-        """首块到达：从"思考占位"切进"正在流式打字"。"""
+        """首块到达：从"等待出字"切进"正在流式打字"。"""
         try:
             self._auto_hide_timer.stop()
         except Exception as e:
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        # ★ 第75轮：首字到了 ⇒ 不再是"空等"（事件台词可以插了，见 main 的 `_event_ai_ready`）
+        self._ai_pending = False
         # 思考占位只是"等待"提示，绝不能并进历史（与 add_dialogue 同款处理）
         if self.typing_text == self.AI_THINKING_PLACEHOLDER:
             self.typing_text = ""
@@ -1208,7 +1273,7 @@ class DialogueUI(QWidget):
         self._refresh_display()
 
     def _stream_reset(self):
-        """把流式期间已经显示出去的内容擦掉，回到"……"等待态。
+        """把流式期间已经显示出去的内容擦掉，回到"等待出字"态。
 
         护栏判退（车轱辘话）时要重采样一次，判退的那半句必须先消失 ——
         否则新句会接在旧句后面，看起来像两句话黏在一起。
@@ -1220,11 +1285,26 @@ class DialogueUI(QWidget):
         except Exception as e:
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         self.is_typing = False
-        # 重采样还要再花 1~2 秒，恢复"思考中"的观感比留一片空白自然
-        self.typing_text = self.AI_THINKING_PLACEHOLDER
+        # 重采样还要再花 1~2 秒。恢复"等待"观感比留一片空白自然 ——
+        # 但用户已裁定不要思考占位（第75轮）⇒ 关掉时就干净地留白。
+        # ★ 无论显示什么，`_ai_pending` 都要保持 True（仍在等这次重采样）。
+        self._ai_pending = True
+        # ★★ 第75轮修：两档都必须**真的把半句擦掉**。
+        #    初版把"擦掉"写进了 `if AI_THINKING_PLACEHOLDER_ENABLED:` 里面：
+        #        if AI_THINKING_PLACEHOLDER_ENABLED:
+        #            self.typing_text = self.AI_THINKING_PLACEHOLDER
+        #    ⇒ 开关关掉时整段跳过，`typing_text` **原样保留那半句** ——
+        #    判退重采样时屏幕上会变成"旧半句 + 新句"黏在一起，
+        #    正是本函数 docstring 第一句要防的那件事（"看起来像两句话黏在一起"）。
+        #    实测由 `s8_stream` 的 D14（`s3.stream_delta('我先陪着你')` →
+        #    `stream_delta(None)`）抓到：`text='我先陪着你'` 未清 ——
+        #    **这条不变量与"显示什么"无关，必须放在分支外面。**
+        self.typing_text = (self.AI_THINKING_PLACEHOLDER
+                            if AI_THINKING_PLACEHOLDER_ENABLED else "")
         self.typing_index = len(self.typing_text)
         try:
-            self.set_face("thinking")
+            if AI_THINKING_PLACEHOLDER_ENABLED:
+                self.set_face("thinking")
         except Exception as e:
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         self._refresh_display()
@@ -1666,6 +1746,14 @@ class DialogueUI(QWidget):
                             self._stream_reset()
                         except Exception as e:  # 修复：原先静默吞噬
                             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+                    # ★★ 第75轮：这条回退**必须在 INFO 级留痕**。
+                    #   用户反馈「他还是有一堆内置对话」—— 逐环取证后的真相是：
+                    #   内置池只在"模型这一句没答出来"时才跑，而**每一次回落都无声无息**，
+                    #   于是"模型老在失败"这件事在日志里完全看不见（09-27/09-28 日志实测
+                    #   零条相关记录），用户只能看到罐头话、查不出为什么。
+                    #   这条日志是诊断这种故障的**唯一入口**，不许降级成 debug。
+                    _log.warning('本地模型这一句没有可用回复 ⇒ 回落内置规则池'
+                                 '（用户会看到罐头台词；连续出现请查模型/Ollama）')
                     _rule_reply()
 
             # 流式（S8）：把分片交给打字机。这个回调在**主线程**被调用
@@ -1681,12 +1769,20 @@ class DialogueUI(QWidget):
                 self.parent.chat_with_ai(user_input, _on_ai_reply, _on_ai_delta)
                 return
             except Exception as e:
-                _log.debug(f"[本地AI] 调用失败，回退规则对话: {e}")
+                # ★★ 第75轮：同上 —— 这条是"为什么退回内置池"的第二个入口，
+                #   必须 INFO 以上留痕（原来只有 debug，等于把故障埋在噪音底下）。
+                _log.warning('本地AI 调用失败 ⇒ 回落内置规则池: %s', e)
                 self._ai_inflight = False
                 try:
                     self._ai_thinking_off()
                 except Exception as e:  # 修复：原先静默吞噬
                     _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            return
+        # ★★ 第75轮：第三个回退入口（走到这里 ⇒ `use_ai` 为假：api_enabled 关着
+        #   或主对象根本没有 `chat_with_ai`）—— 整条 AI 链路没跑。
+        #   同前，留痕到 INFO 以上，否则"开关没开 / 客户端没建起来"这种
+        #   全链路失效的情形在日志里完全不可见。
+        _log.warning('未走本地 AI 链路（api_enabled 关 / 无 chat_with_ai）⇒ 回落内置规则池')
         _rule_reply()
 
     def _learn_from_user_input(self, user_input):
@@ -1757,18 +1853,30 @@ class DialogueUI(QWidget):
         # 显示 Ralsei 式省略号 + 思考表情（不写"正在想怎么回答你"这类暴露文字）
         self._streaming = False      # 新一轮请求开始：清掉上一轮的流式状态
         self._stream_raw = ""
-        self.typing_text = self.AI_THINKING_PLACEHOLDER
-        self.typing_index = len(self.typing_text)
+        # ★ 第75轮：显式标记"正在等回复"（与占位串解耦，见 __init__ 里的说明）
+        self._ai_pending = True
+        _ph_on = AI_THINKING_PLACEHOLDER_ENABLED
+        if _ph_on:
+            self.typing_text = self.AI_THINKING_PLACEHOLDER
+            self.typing_index = len(self.typing_text)
+        else:
+            # 用户裁定：不要思考占位、不要 thinking 脸 —— 保持现状等出字就好。
+            # 清空前台（而不是留着上一条），这样"新一轮开始"在显示上是干净的；
+            # 自动隐藏仍然被停住（上面 `_auto_hide_timer.stop()`），框子不会自己消失。
+            self.typing_text = ""
+            self.typing_index = 0
         self.is_typing = False
-        try:
-            self.set_face("thinking")
-        except Exception as e:  # 修复：原先静默吞噬
-            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        if _ph_on:
+            try:
+                self.set_face("thinking")
+            except Exception as e:  # 修复：原先静默吞噬
+                _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         self._refresh_display()
 
     def _ai_thinking_off(self):
         self._streaming = False
         self._stream_raw = ""
+        self._ai_pending = False     # ★ 第75轮：等待结束
         self.typing_text = ""
         self.typing_index = 0
         self.is_typing = False

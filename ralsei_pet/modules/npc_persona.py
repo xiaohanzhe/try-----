@@ -42,13 +42,41 @@
 import collections
 import json
 import logging
+
+
+def _pet_logger_name(_name):
+    """把模块 `__name__` 映射到 `ralsei_pet.` 命名空间下的名字。
+
+    ★ 为什么需要它（第75轮实测）：一批模块历史上用**扁平导入**取日志器
+      （`try: from logger_utils import get_logger / except ImportError: 降级`）。
+      当 main.py 以**包形式**加载（`from modules.x import ...`）时，
+      模块内 `from logger_utils import ...` 必然 ImportError ⇒ 静默走降级
+      ⇒ 拿到**裸 logger**（`modules.xxx`）⇒ 两个后果：
+        ① 不在 `ralsei_pet` 树下 ⇒ 挂在根上的**文件 handler 收不到**；
+        ② 没有祖先 `setLevel(INFO)` ⇒ 有效级别退回 **30 (WARNING)** ⇒ INFO 全丢。
+      表现就是"故障查不到"、"日志里零故障记录"。
+
+    ★ 为什么用标准库字符串运算而不是 import `logger_utils`：
+      `logging` 是**进程级全局注册表** —— 只要名字拼对，拿到的就是同一个对象。
+      所以本函数**一行项目 import 都不需要**，从而不违反纯数据层的
+      「零依赖 / 白名单」契约（`scene_render` 顶层 import ⊆ logging、
+      `team_hp` 禁 `from modules`、`soul_overlay` 不拖业务模块 … 那几条闸）。
+    """
+    if not _name or _name == '__main__':
+        return 'ralsei_pet.main'
+    if _name.startswith('ralsei_pet.'):
+        return _name
+    if _name.startswith('modules.'):
+        return 'ralsei_pet.' + _name
+    return 'ralsei_pet.' + _name
+
 import os
 
 try:  # 项目内统一 logger；模块外独立导入时降级
     from logger_utils import get_logger
-    _log = get_logger(__name__)
+    _log = logging.getLogger(_pet_logger_name(__name__))
 except ImportError:
-    _log = logging.getLogger(__name__)
+    _log = logging.getLogger(_pet_logger_name(__name__))
 
 SCHEMA_VERSION = 1
 
@@ -590,6 +618,23 @@ SPEAK_RULES = (
     "不要复述对方的话，不要替别的角色说话。"
 )
 
+#: ★ 第75轮：「现在跟你说话的是谁」—— 与 `SPEAK_RULES` **同级**的一段独立硬约束。
+#: 为什么必须单独加这一段（用户真机反馈的根因）：
+#:   用户对某个 NPC 说「你好啊」，得到的回复是一个 `？`。
+#:   查因 = 76 份人设全都是**角色扮演设定**（"你是谁、你什么性格"），
+#:   但**没有一份**说明"隔着屏幕说话的是谁"。模型于是把用户当成了
+#:   **原作剧情里的某个角色**（或干脆不知道在跟谁说话），才出现那种反应。
+#: 口径与 Ralsei 本人那条**同源**（`assets/ralsei_persona.md` 里"不是 Kris"那段），
+#: 但措辞不同 —— 这里要说的是**本体论事实**，不能写"平级 / 不叫主人 / 没有使命"
+#:   那种**只对 Ralsei 成立**的话（会与仆从类人设打架，见 SPEAK_RULES 上方注释）。
+WHO_IS_TALKING = (
+    "【现在跟你说话的人】隔着屏幕跟你说话的，是一个真实世界里的玩家本人 —— "
+    "不是原作剧情里的任何一个角色（就算他提了原作角色的名字，那也是他在说，不是那个人来了）。"
+    "你面前只有他一个人。他把你从你的世界里叫出来聊天，"
+    "所以按你的性格正常回应他就好；他若告诉你他叫什么，就按你的习惯称呼他。"
+    "你不知道的事（你没经历过的、你世界里没有的）就老实说不知道，不要替他编。"
+)
+
 
 def history_block(entries, npc_id=None, max_lines=12):
     """把**某一个 NPC 自己**的记忆折成提示词段落。没有任何记忆 ⇒ `''`。
@@ -623,10 +668,11 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
 
     结构（顺序即含义）：
       ① 人设正文（用户给的原文，**不再改写**）；
-      ② `SPEAK_RULES`（说话方式硬约束）；
-      ③ 他自己的记忆（`history_block`）；
-      ④ 此刻状态（`context`，由宿主提供）；
-      ⑤ **自由生活块**（`life`，第73轮：场景特质 + 他认识谁）。
+      ② `WHO_IS_TALKING`（★ 第75轮：现在跟你说话的是谁 —— 本体论事实）； 
+      ③ `SPEAK_RULES`（说话方式硬约束）；
+      ④ 他自己的记忆（`history_block`）；
+      ⑤ 此刻状态（`context`，由宿主提供）；
+      ⑥ **自由生活块**（`life`，第73轮：场景特质 + 他认识谁）。
 
     `persona` 为空 ⇒ 返回 `''`（调用方据此**拒绝**这次对话，而不是发一份空人设
     过去让模型自由发挥 —— 那正是"人设没装上但看起来在工作"的假象）。
@@ -638,7 +684,7 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
     """
     if not isinstance(persona, str) or not persona.strip():
         return ''
-    parts = [persona.rstrip(), SPEAK_RULES]
+    parts = [persona.rstrip(), WHO_IS_TALKING, SPEAK_RULES]
     hb = history_block(entries, npc_id=npc_id)
     if hb:
         parts.append(hb)

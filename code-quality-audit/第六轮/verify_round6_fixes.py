@@ -248,6 +248,33 @@ def make_drag_stub():
         return text
 
     o.speak_event = _speak_event
+
+    # ★★ 第75轮 B3 起，`mouseReleaseEvent` 在"甩飞判定"之后**多了一段手势结算**：
+    #      `rel = self._pet_rel_pos(event.pos())`
+    #        → `rel is not None` 时走 tracker → `_dispatch_pet_event(ev)`
+    #        → 否则 `self._pet_tracker.gesture.is_pressing = False`
+    #    本组断言（C1~C5）只关心**物理量**（is_falling / _fall_vx / _fall_vy），
+    #    与手势完全无关 ⇒ 桩宿主必须跟着"主程序内部调用面"升级，否则
+    #    SimpleNamespace 上没这个方法就是 AttributeError（本轮 G2 就是这么炸的）。
+    #
+    #    ⚠️ 这里**不是**把产品绕过：`FakeEvent.pos()` 在甩飞判定段末尾就已经
+    #       抛 `_Sentinel`（见 FakeEvent 的 docstring），所以 `_pet_rel_pos`
+    #       其实**根本走不到**。补桩的意义是"万一以后有人把 Sentinel 的抛点
+    #       往后挪，这里也不会突然炸"，同时把"手势与甩飞解耦"这件事写明白。
+    o._pet_rel_pos = lambda pos: None
+
+    class _FakeGesture:
+        is_pressing = False
+
+    class _FakeTracker:
+        def __init__(self):
+            self.gesture = _FakeGesture()
+
+        def handle_release(self, rel):
+            return None
+
+    o._pet_tracker = _FakeTracker()
+    o._dispatch_pet_event = lambda ev: None
     return o
 
 
@@ -301,8 +328,30 @@ check("C6 松手判定已搬进 mouseReleaseEvent，mouseMoveEvent 里不再有�
       "_FLING_SPEED" in _rel_src and "_FLING_SPEED" not in _mv_src,
       "rel=%s mv=%s" % ("_FLING_SPEED" in _rel_src, "_FLING_SPEED" in _mv_src))
 
-check("C7 长按部位反应加了 not is_falling 守卫（被甩飞时不顺带捏脸/拉手）",
-      "['is_pressing'] and not getattr(self, 'is_falling', False)" in MAIN_SRC)
+# ★★ C7 判据的数据源随结构演进（第75轮 B3）。
+#    改造前：`mouseReleaseEvent` 里的长按分支写的是
+#        `if self._pet_detection_state['is_pressing'] and not getattr(self, 'is_falling', False):`
+#    第75轮 B3 把"长按/捏/拉"的**判定**整体搬进 `pet_interaction.PetInteractionTracker`
+#    ⇒ 同一道守卫跟着搬到了 `mouseReleaseEvent` 的 tracker 结算段：
+#        `if not getattr(self, 'is_falling', False):`  ← 甩飞中**整段手势结算跳过**
+#    这条守卫的**语义没变**（被甩飞时不顺带捏脸/拉手），只是不再带 `is_pressing` 这个词。
+#    ⇒ 判据改成"结算段确实被 `not is_falling` 包住"，并配**反向控制**：源码里必须
+#       **同时**存在 tracker 调用与 `is_falling` 守卫，否则"包住"无从谈起。
+_rel_flat = " ".join(_rel_src.split())          # 归一空白，避免行折叠影响匹配
+_guarded = ("if not getattr(self, 'is_falling', False):" in _rel_flat
+            and "_pet_tracker.handle_release(" in _rel_flat)
+check("C7 长按部位反应仍被 not is_falling 守卫（甩飞时不顺带捏脸/拉手）"
+      " [第75轮 B3：判定已迁至 pet_interaction，守卫语义不变]",
+      _guarded,
+      "guarded=%s tracker_call=%s"
+      % ("not getattr(self, 'is_falling', False):" in _rel_flat,
+         "_pet_tracker.handle_release(" in _rel_flat))
+
+# --- 反向控制：把守卫抽掉，判据必须变红（证明它真的有鉴别力）---
+_without_guard = _rel_flat.replace("if not getattr(self, 'is_falling', False):", "", 1)
+check("C7p 反向控制：抽掉 `not is_falling` 守卫后 C7 判据转红",
+      not ("if not getattr(self, 'is_falling', False):" in _without_guard
+           and "_pet_tracker.handle_release(" in _without_guard))
 
 # ============================================================
 print("=== D. 抛物路径（俯视 2D 风格）===")

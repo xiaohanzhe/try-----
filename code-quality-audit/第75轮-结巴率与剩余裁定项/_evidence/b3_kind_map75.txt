@@ -1,0 +1,53 @@
+==========================================================================
+A. 符号存在性
+==========================================================================
+[PASS] A kind_for 存在
+[PASS] A RESPONSE_SPEC 存在
+[PASS] A STROKE_EMOTIONS 存在
+[PASS] A STROKE_POOL 存在
+[PASS] A STROKE_POOL_OTHER 存在
+
+==========================================================================
+B. `kind_for` 产出的 kind 全部在 EVENT_TIERS 里登记（★ 最重要）
+==========================================================================
+  产出 kind 共 20 个：['double_belly', 'double_face', 'double_hair', 'double_other', 'double_shoulder', 'ear_ruffle', 'pet_arm', 'pet_body', 'pet_ear', 'pet_face', 'pet_hair', 'pet_other', 'pet_shoulder', 'pinch_ear', 'pinch_face', 'poke_body', 'poke_default', 'poke_shoulder', 'pull_arm', 'pull_shoulder']
+[PASS] B1 无未登记的 kind  <- 全部命中
+
+  逐 (部位, 手势) 矩阵：
+    hair        stroke=pet_hair  push=poke_default  pat=double_hair  pinch=-  pull=-  flick=-
+    ear         stroke=pet_ear  push=poke_default  pat=double_other  pinch=pinch_ear  pull=-  flick=ear_ruffle
+    face        stroke=pet_face  push=poke_default  pat=double_face  pinch=pinch_face  pull=-  flick=-
+    shoulder    stroke=pet_shoulder  push=poke_shoulder  pat=double_shoulder  pinch=-  pull=pull_shoulder  flick=-
+    arm         stroke=pet_arm  push=poke_default  pat=double_other  pinch=-  pull=pull_arm  flick=-
+    torso       stroke=pet_body  push=poke_body  pat=double_belly  pinch=-  pull=-  flick=-
+    leg         stroke=pet_other  push=poke_default  pat=double_other  pinch=-  pull=-  flick=-
+    whole_body  stroke=pet_other  push=poke_default  pat=double_other  pinch=-  pull=-  flick=-
+
+==========================================================================
+C. `RESPONSE_SPEC` 自证
+==========================================================================
+[PASS] C1 RESPONSE_SPEC 的 key 全部已登记  <- 13 项全部命中
+[PASS] C2 每项结构 = (emotions, anim, face, pool)
+
+==========================================================================
+D. STROKE 表自证
+==========================================================================
+[PASS] D1 STROKE_EMOTIONS 非空且为 (name, val) 对  <- (('happy', 30), ('shy', 15))
+[PASS] D2 STROKE_POOL 每池非空
+[PASS] D3 STROKE_POOL_OTHER 非空
+[PASS] D4 每个 pet_<部位> 都有专属台词池（或归 other）
+
+==========================================================================
+E. 负控制（判据本身不许恒真）
+==========================================================================
+[PASS] E1 未知手势 → None
+[PASS] E2 FLICK 非耳朵 → None（HEAD 只有耳朵机关）
+[PASS] E3 FLICK 耳朵 → ear_ruffle
+[PASS] E4 TORSO 映射到 body 而非 torso（PET_PARTS 用 body）  <- 实得=pet_body
+[PASS] E5 LEG 不在 PET_PARTS ⇒ pet_other  <- 实得=pet_other
+[PASS] E6 判据鉴别力：不存在 `pet_torso` 这个 kind（否则 E4 是空的）
+
+==========================================================================
+结果
+==========================================================================
+  ✅ 全部 PASS

@@ -1,3 +1,30 @@
+import logging
+def _pet_logger_name(_name):
+    """把模块 `__name__` 映射到 `ralsei_pet.` 命名空间下的名字。
+
+    ★ 为什么需要它（第75轮实测）：一批模块历史上用**扁平导入**取日志器
+      （`try: from logger_utils import get_logger / except ImportError: 降级`）。
+      当 main.py 以**包形式**加载（`from modules.x import ...`）时，
+      模块内 `from logger_utils import ...` 必然 ImportError ⇒ 静默走降级
+      ⇒ 拿到**裸 logger**（`modules.xxx`）⇒ 两个后果：
+        ① 不在 `ralsei_pet` 树下 ⇒ 挂在根上的**文件 handler 收不到**；
+        ② 没有祖先 `setLevel(INFO)` ⇒ 有效级别退回 **30 (WARNING)** ⇒ INFO 全丢。
+      表现就是"故障查不到"、"日志里零故障记录"。
+
+    ★ 为什么用标准库字符串运算而不是 import `logger_utils`：
+      `logging` 是**进程级全局注册表** —— 只要名字拼对，拿到的就是同一个对象。
+      所以本函数**一行项目 import 都不需要**，从而不违反纯数据层的
+      「零依赖 / 白名单」契约（`scene_render` 顶层 import ⊆ logging、
+      `team_hp` 禁 `from modules`、`soul_overlay` 不拖业务模块 … 那几条闸）。
+    """
+    if not _name or _name == '__main__':
+        return 'ralsei_pet.main'
+    if _name.startswith('ralsei_pet.'):
+        return _name
+    if _name.startswith('modules.'):
+        return 'ralsei_pet.' + _name
+    return 'ralsei_pet.' + _name
+
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -9,9 +36,9 @@ except ImportError:  # 允许被包外单独导入
     import logging
 
     def get_logger(name):
-        return logging.getLogger(name)
+        return logging.getLogger(_pet_logger_name(name))
 
-_log = get_logger(__name__)
+_log = logging.getLogger(_pet_logger_name(__name__))
 
 # 搜索结果数量上下限（过大拖慢请求且易被搜索引擎限流，过小无意义）
 MIN_RESULTS = 1

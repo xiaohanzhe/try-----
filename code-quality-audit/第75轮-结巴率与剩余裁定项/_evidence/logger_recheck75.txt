@@ -1,0 +1,38 @@
+==========================================================================
+1. AST 语法检查（全部 .py，不产 .pyc）
+==========================================================================
+  扫描 99 个 .py；语法错误 0 个
+
+==========================================================================
+2. 全仓库再无「裸 logger 名」形态
+==========================================================================
+  仍含裸名的文件 3 个：
+    modules\logger_utils.py                        DIRECT  ← 合法豁免
+    modules\video_controller.py                    DIRECT  ← 合法豁免
+    src\main.py                                    DIRECT  ← 合法豁免
+
+  负控制：video_controller 应**仍在**名单里（刻意保留）
+    video_controller 命中 = True （期望 True）
+
+==========================================================================
+3. 行为级：真 import 一批模块，检查 _log.name 与有效级别
+==========================================================================
+模块                     _log.name                                  级别       前缀OK
+------------------------------------------------------------------------------------
+global_hotkey          ralsei_pet.global_hotkey                   20       Y
+item_system            ralsei_pet.item_system                     20       Y
+scene_system           ralsei_pet.scene_system                    20       Y
+scene_camera           ralsei_pet.scene_camera                    20       Y
+team_hp                ralsei_pet.team_hp                         20       Y
+npc_persona            ralsei_pet.npc_persona                     20       Y
+dialogue_ui            ralsei_pet.dialogue_ui                     20       Y
+data_store             ralsei_pet.data_store                      20       Y
+memory_store           ralsei_pet.memory_store                    20       Y
+scene_render           ralsei_pet.scene_render                    20       Y
+companion              ralsei_pet.companion                       20       Y
+soul_entity            ralsei_pet.soul_entity                     20       Y
+
+==========================================================================
+复检结果
+==========================================================================
+  ✅ 全部 PASS

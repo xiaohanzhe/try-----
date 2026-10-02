@@ -478,14 +478,105 @@ _calls = re.findall(r'speak_event\(\s*"([a-z_]+)"', code_no_comment(MAIN_TEXT))
 #   ⚠️ 这条计数锁的用途是**迁移面清单**（少了、名字抄错了都得报红），
 #   所以"随迁移同步改数字"是正确处置；**不许**为省事放宽成 `>= 20`
 #   —— 那样删掉一半迁移点也不会报红，锁就废了。
-ok('C1 迁移点计数 = 23（字面量 %d + pet_kind 动态 1）' % len(_calls),
-   code_no_comment(MAIN_TEXT).count('self.speak_event(') == 23 and len(_calls) == 22,
-   '字面量 %d 处：%s' % (len(_calls), sorted(_calls)))
+#
+# ★★ 第75轮 B3：迁移面**跨文件了**，本判据的数据源必须跟着扩，不能只数 main.py。
+#   背景：`main.py` 的手势判定（含 20 处手势台词调用）统一搬进
+#   `pet_interaction.RESPONSE_SPEC`（14 条 kind → 参数）+ `STROKE_POOL`（6 部位），
+#   由 `_apply_pet_response` / `_dispatch_pet_event` **统一发出**。
+#   ⇒ main.py 的 `self.speak_event(` 从 23 降到 9（7 字面量 + 2 动态），
+#     而**迁移面一个没少**（手势那 22 个 kind 全部仍走事件通道，见 check76 A6）。
+#   ⇒ 本判据改为"**两文件合计**"，并保留"恰好相等"的强度：
+#        入口调用点 = main 的 9 处（7 字面量 + 2 动态）
+#        kind 覆盖   = main 的 7 字面量 + SPEC 的 14 条 + STROKE 的 7 个 pet_* 之一
+#      —— 少任何一处都会报红。
+_S7_MAIN_SPEAK_CALLS = 9          # main.py 的 self.speak_event( 调用点
+_S7_MAIN_LITERAL_KINDS = 7        # 其中字面量 kind
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))))
+_SPEC_TEXT = io.open(os.path.join(_REPO_ROOT, 'ralsei_pet', 'modules',
+                                 'pet_interaction.py'), encoding='utf-8').read()
+# ⚠️ 这里**不能用** `code_no_comment()`：它的实现是"逐行剥 # + 跳三引号块"的近似法，
+#    而 `RESPONSE_SPEC` 表上方有大段 `#` 注释块（模块自述 + 每类手势的分组说明），
+#    近似法会把整张表当成"还在注释里"剥掉 ⇒ 实测命中 **0 条**（假 FAIL）。
+#    ⇒ 直接用原文匹配 key 形状 —— 这个形状在注释里不会出现，
+#      不会误报（`check76` 的 A4 另有"SPEC 无死项"判据兜底）。
+#
+# ★★ 第75轮第三次修这条判据（前两次假 FAIL 都记在案，别再犯第四遍）：
+#    初版：漏掉"表上方有大段注释" → `code_no_comment()` 把整表剥空 ⇒ 0 条。
+#    二版：漏掉"单引号 key" → 只写 `"..."` ⇒ 0 条。
+#    三版：**栽在 `": ("` 上** —— 判据假设"冒号后面紧跟左括号（直接写元组字面量）"，
+#          而模块里用了 `_spec(...)` 包装函数 ⇒ 冒号后面是 ` _spec(` ⇒ 还是 0 条。
+#    ⇒ 现在只钉"**行首缩进 + key + 冒号**"这一段（`\s*:\s*`），
+#      对"右值怎么写"（字面量 / `_spec()` / 将来别的工厂）完全中立。
+#      ★ 这正是本项目第 69 轮的教训复现：**正则"只认一种写法"会把整条事实丢掉**
+#        （当时是"只认单作品" ⇒ 75≠76）。判据要钉**语义**，不钉**排版**。
+#    ⚠️ 放宽右值写法**不降低强度**：下面仍然要求"恰好等于 14 个已知 kind"，
+#       多一个、少一个、名字抄错都会报红。
+#    ⚠️ 但要注意"只扫 `RESPONSE_SPEC = {` 之后的正文"，否则 `STROKE_POOL` 的
+#       `'hair': [...]` 也会被同一正则捞进来（宽松后更容易误捞）。
+_spec_body_start = _SPEC_TEXT.find('RESPONSE_SPEC = {')
+_spec_body = _SPEC_TEXT[_spec_body_start:] if _spec_body_start >= 0 else ''
+_spec_kinds = re.findall(r'^    ["\']([a-z_]+)["\']\s*:', _spec_body, re.M)
+# 负控制：把两种引号都试一遍，确认正则**不是**只在一种引号下才工作
+_spec_kinds_dq = re.findall(r'^    "([a-z_]+)":', _spec_body, re.M)
+_spec_kinds_sq = re.findall(r"^    '([a-z_]+)':", _spec_body, re.M)
+# RESPONSE_SPEC 里的手势 kind（不含抚摸：抚摸走 STROKE_POOL 动态取）
+#
+# ★★ 第75轮 B3 复核：这张期望集**必须包含 `ear_ruffle`**。
+#    初版把它排除在外，理由是"它 instant=True 走罐头档" —— 但那是**档位**问题，
+#    不是**迁移面**问题。`ear_ruffle` 在 HEAD 里同样是一句走事件通道的台词
+#    （`speak_event("ear_ruffle", [...], "surprised", instant=True)`），
+#    第75轮 B3 后它由 `kind_for(EAR, FLICK)` 产出、经 `RESPONSE_SPEC` 执行 ⇒
+#    **它就在迁移面上**。漏登记它会让"连点耳朵"变成唯一一个不进统一表的散兵。
+#    实测：排除它 ⇒ 本判据报红（差集=['ear_ruffle']），正是这么发现的。
+_SPEC_EXPECT = {
+    'poke_body', 'poke_shoulder', 'poke_default',
+    'pinch_ear', 'pinch_face', 'press_body', 'pat_belly',
+    'pull_arm', 'pull_shoulder',
+    'double_hair', 'double_belly', 'double_face', 'double_shoulder',
+    'double_other',
+    'ear_ruffle',
+}
+ok('C1 迁移面（跨两文件）：main.py 入口 %d 处（字面量 %d + 动态 %d），'
+   'pet_interaction.RESPONSE_SPEC %d 条 —— 合计覆盖手势 kind 不丢'
+   % (code_no_comment(MAIN_TEXT).count('self.speak_event('),
+      len(_calls),
+      code_no_comment(MAIN_TEXT).count('self.speak_event(') - len(_calls),
+      len(_spec_kinds)),
+   code_no_comment(MAIN_TEXT).count('self.speak_event(') == _S7_MAIN_SPEAK_CALLS
+   and len(_calls) == _S7_MAIN_LITERAL_KINDS
+   and set(_spec_kinds) == _SPEC_EXPECT,
+   '字面量 %s；SPEC %s；差集=%s' % (
+       sorted(_calls), sorted(_spec_kinds),
+       sorted(set(_spec_kinds) ^ _SPEC_EXPECT)))
+# ★ 负控制（第75轮补）：证明上面那条正则**不是**只在一种引号下才工作。
+#   若哪天有人把 `["\']` 改回 `"`，这条会立刻报红，而不是等到某次
+#   "恰好全用单引号"时又变成静默的 0 条。
+ok('C1n 负控制：两种引号的命中数之和 == 并集命中数（证明引号类真的都认）',
+   len(_spec_kinds) == len(_spec_kinds_dq) + len(_spec_kinds_sq)
+   and len(_spec_kinds) > 0,
+   'dq=%d sq=%d union=%d' % (len(_spec_kinds_dq), len(_spec_kinds_sq),
+                             len(_spec_kinds)))
 _unknown = sorted(set(k for k in _calls if k not in E.EVENT_TIERS))
 ok('C2 每个迁移点的事件名都在 EVENT_TIERS 里登记（防手抄错名字 → 静默退回罐头）',
    not _unknown, '未登记: %s' % _unknown)
-ok('C3 抚摸用 pet_kind(部位) 动态取事件名（6 个部位 + 兜底都在表里）',
-   code_no_comment(MAIN_TEXT).count('speak_event(pet_kind(pet_part)') == 1)
+ok('C3 抚摸用 `kind_for(部位)` 动态取事件名（6 个部位 + 兜底都在表里）'
+   '—— 第75轮 B3 由 `pet_kind(pet_part)` 演进为 `pet_interaction.kind_for`，'
+   '两处等价（`_STROKE_PETTABLE` 把 torso→body，与 PET_PARTS 对齐）',
+   # ★★ 踩坑记录（第75轮 B3）：`code_no_comment()` 的实现是
+   #     `' '.join(tok.string for tok in ...)` 之后再 **re.sub(r'\s+','')** ——
+   #     也就是说**所有空白都被抹掉**。任何"带空格的 needle"在它上面**恒为 False**。
+   #     改造前这条 needle 是 `speak_event(pet_kind(pet_part)`（恰好无空格）所以能过；
+   #     我在 B3 里改成 `speak_event(kind or "pet_other"`（**有空格**）⇒ 直接恒假。
+   #     正解：**用去空白后的形态做 needle**（`speak_event(kindor"pet_other"`），
+   #     或者干脆用原文匹配（原文里这句必然存在，注释里不会出现）。
+   #     ⚠️ 这类"判据自己踩近似实现的坑"已第二次出现（另见 `_SPEC_TEXT` 被剥成 0 条）。
+   'speak_event(kind or "pet_other"' in MAIN_TEXT
+   and 'STROKE_POOL' in code_no_comment(MAIN_TEXT)
+   and 'def kind_for' in _SPEC_TEXT,
+   'main 动态取=%s / SPEC kind_for=%s' % (
+       'speak_event(kind or "pet_other"' in MAIN_TEXT,
+       'def kind_for' in _SPEC_TEXT))
 
 _mouse_rel = code_only_src(func_src(MAIN_TEXT, 'mouseReleaseEvent'))
 ok('C4 mouseReleaseEvent 里不再有裸事件台词（长按 6 处 + 甩飞 1 处全迁走）',

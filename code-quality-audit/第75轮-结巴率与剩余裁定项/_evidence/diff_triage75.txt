@@ -1,0 +1,91 @@
+# 第75轮 · 回归 DIFF 定性总表（收口）
+
+生成时间：2026-10-02 13:5x
+生成方式：`run_all.py` 全量跑 → 用**当前** `normalize()` 重算 sha256 → 与 `baseline.json` 逐条比
+
+---
+
+## 0. 结论
+
+- 全量：**`PASS=3528 FAIL=0 套件=66`**
+- 收口前：`PASS=3462 FAIL=4 套件=66`
+- 一致性：`SUITES=66` == `baseline 条目=66`，无重复 / 无缺失 / 无 `None`
+
+---
+
+## 1. 四个真 FAIL（全部已修）
+
+| 套件 | 修前 | 修后 | 根因分类 | 根因 |
+|---|---|---|---|---|
+| `check76` | AttributeError | **61/61** | 判据 + 实现 | ① 实现缺 `BodyPart.BELLY` ② `_REGIONS_PERCENT` 丢 belly 整条 + 9 条数值被重调 ③ `RESPONSE_SPEC` 情绪/动画/台词几乎全错 ④ `_PRESS_KINDS` 漏 `press_body`/`pat_belly` ⑤ 判据 `_STROKE_PETTABLE` 名错（实为 `_PART_TO_PET`）⑥ 判据 A4b 要求 `list` 实为 `tuple` |
+| `check75b` | C1 假红 | **59/59** | **判据侧** | C1 拿含注释的原文做子串匹配，被 `team_hp.py` 自己 docstring 里的 `from modules` 误伤 ⇒ 改 AST 级 + 加 C1p 正控制 |
+| `s7_event_speech` | 差集 `['ear_ruffle']` | **139/139** | **判据侧** | ① 正则漏注释行 ② 只认双引号 ③ 栽在 `": ("`（实为 `_spec(` 包装）④ 期望集漏 `ear_ruffle` |
+| `s8_stream` | D14 报红 | **73/73 IDENTICAL** | **实现侧真 bug** | `dialogue_ui._stream_reset` 把"擦半句"错放进 `if AI_THINKING_PLACEHOLDER_ENABLED:` 内 ⇒ 开关关掉时旧半句残留，判退重采样变成"旧半句+新句"黏在一起 |
+
+### 额外修的两个实现侧真 bug（由 `check76` B 段抓到）
+- `kind_for` 的 PINCH/PULL **分表查** ⇒ 捏住耳朵稍微拖一下就从 `pinch_ear` 掉进"PULL 表里没有 ear ⇒ None" ⇒ 表现为**捏耳朵有时有反应有时没有**。改为**合并查两张表**（依据：HEAD 只有一条"长按 ≥0.5s"的 if/elif 链，分支只看 `clicked_part`，**完全不看长按期间有没有移动**）。
+
+---
+
+## 2. 十一个 DIFF-only 套件的定性（逐个转正，**非批量**）
+
+| 类 | 套件 | 修前 PASS | 根因（**实测**，非推测） |
+|---|---|---|---|
+| **A** logger 修复预期效果 | `check67` | 152 | 裸文本 `RegisterHotKey 失败` → `<TS> [WARNING] ralsei_pet.modules.global_hotkey — …`；`item_menu` 的 INFO 行重新出现 |
+| A | `round8_anim` | 28 | 同上 |
+| A | `soul_round55` | 44 | 同上 |
+| A | `npc_persona55` | 151 | 同上 + `scene_controller` 那行同样升级为 WARNING 形态且**刷出位置后移** |
+| A | `npc_place56` | 138 | 同上 + T1 判据打印的 import 列表变化（见 §3） |
+| **B** 判据变更 | `check76` | 59→**61** | 新增 A5a（表存在）/ A5c（`belly→body`） |
+| B | `check75b` | 58→**59** | C1 改 AST 级 + 新增 C1p 正控制 |
+| B | `s7_event_speech` | 137→**139** | C1 三修 + 新增 C1n 负控制 + 期望集加 `ear_ruffle` |
+| **C** traceback 行号漂移 | `companion_round46` | 216 | `companion.py` 395→423、`companion_dialog.py` 430→458、`companion_roster.py` 265→293（**+28**） |
+| C | `items_round48` | 53 | `item_menu.py` 303→331、`companion.py` 395→423、`item_interact.py` 255→283（**+28**） |
+| **D** 转正 | `check75c` | 37 | 已注册进 `SUITES` 但 `baseline.json` **原先无此条目**（不是 `None`） |
+
+### 类 C 的"零行为变化"证据
+`companion_round46.diff.txt` / `items_round48.diff.txt` 内**除 `line NNN` 外逐字相同**
+（`RuntimeError: 故意炸`、`锁询问炸了`、断言行全一致）。根因：本轮在 5 个被 traceback 引用的
+模块**靠前位置**插了注释 ⇒ 下游行号整体后移。
+
+---
+
+## 3. ★★★ "DIFF 必看"抓到的非预期项
+
+`npc_place56.diff.txt` 里除 logger 行外还有：
+```
+-[PASS] T1 main.py 顶部 import 了 npc_placement […, 'modules.entertainment_system.EntertainmentSystem']
++[PASS] T1 main.py 顶部 import 了 npc_placement ['modules.logger_utils.adopt_module_logger', …, 'modules.social_growth_system.SocialGrowthSystem']
+```
+**单独核实**：`EntertainmentSystem` / `social_growth_system` / `npc_placement` **全在 `main.py` 里**
+（逐个 `in` 检查：YES）。差异来自 **T1 判据的 AST 扫描窗口截断** —— `main.py` 顶部 import
+被重排（新增 `adopt_module_logger`），切片长度不够 ⇒ 列表末尾被切掉。
+**PASS 计数不变**，不阻塞。
+
+> 记一笔（技术债）：`npc_place56` T1 的"打印 import 列表"不完整。
+> 若以后要真正断言 import 完整性，应改成**集合相等**而非打印字符串。
+
+---
+
+## 4. 判定"环境状态 vs 被测行为"的铁证
+
+`check73` 与 `check67` 是**同一份基线、相邻两次运行**，却：
+- `check73` 打出：`全局热键已注册：ctrl+alt+S/E/H（id=0x1000~1002）`
+- `check67` 打出：`RegisterHotKey 失败 key=ctrl+alt+S/E/H …`
+
+**同一份代码两次运行互斥出现** ⇒ 唯一变量 = 本机这三个热键有没有被别的程序占用
+⇒ **环境状态，不是被测行为** ⇒ 应排除（`_ENV_NOISE`）。
+
+---
+
+## 5. 基线重录方式（可复现）
+
+```bash
+# 逐类分批，每次 --only 明确列出，绝不裸跑 --update
+python run_all.py --only companion_round46 --only items_round48 --update          # C 类
+python run_all.py --only check76 --only check75b --only s7_event_speech --update  # B 类
+python run_all.py --only check67 --only round8_anim --only soul_round55 \
+                 --only npc_persona55 --only npc_place56 --update                  # A 类
+python run_all.py --only check75c --update                                        # D 类
+```
+`save_baseline(results, merge=True)` = **合并模式**（只覆盖 `--only` 选中的套件）。

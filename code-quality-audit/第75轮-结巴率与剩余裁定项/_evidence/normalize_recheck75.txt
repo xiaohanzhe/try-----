@@ -1,0 +1,65 @@
+=== normalize() 改动六类复检（真跑） ===
+时间: 2026-10-02 13:57:15
+
+[PASS] ① ast.parse 通过 AST 节点=3720
+[PASS] ② _TRACEBACK_LN 已定义 
+[PASS] ② _TRACEBACK_LN 被 normalize() 使用 
+[PASS] ② _ENV_NOISE 含 global_hotkey 成功/失败两支 
+[PASS] ② 裸 RegisterHotKey 兜底分支在 
+[PASS] ② item_menu nodata 分支在 
+[PASS] ③ 无 BOM head=b'# -'
+[PASS] ③ 无 U+FFFD 
+[PASS] ④ ENV 新三支全部可命中（非死判据） 命中=4/4
+[PASS] ④ 负控制：3 行兜底路径未被吞 误吞=0/2
+[PASS] ④ TB 抹平后 395/423 归一（A==B 先决）   File "x.py", line <LN>, in f
+[PASS] ④ TB 负控制：非数字行号不动 
+[PASS] ⑤ normalize 仍有 3 处噪声过滤调用 
+[PASS] ⑤ save_baseline 仍为合并模式 
+
+=== 统计: 14/14 PASS, FAIL=0 ===
+
+=== 逐令牌回验（真跑） ===
+PASS _TRACEBACK_LN = re.compile                           IN
+PASS r'(,\s*line\s+)\d+(,\s*in\s)'                        IN
+PASS t = _TRACEBACK_LN.sub                                IN
+PASS ralsei_pet\.modules\.global_hotkey                   IN
+PASS 全局热键已注册                                              IN
+PASS |^RegisterHotKey 失败 key=.*                           IN
+PASS ralsei_pet\.modules\.item_menu — 菜单页面未启用             IN
+PASS 第75轮血泪教训                                             IN
+PASS _out/<suite>.diff.txt                                IN
+PASS _JIEBA_NOISE.match(ln)                               IN
+PASS _QT_NOISE.match(ln)                                  IN
+PASS def save_baseline(results, merge=True):              IN
+PASS _QT_NOISE = re.compile                               IN
+PASS Loading model cost <COST> seconds.                   IN
+PASS BELLY = "belly"                                      IN
+PASS (BodyPart.BELLY,   35.0, 60.0,  65.0, 80.0)          IN
+PASS (BodyPart.WHOLE_BODY, 0.0, 0.0, 100.0, 100.0)        IN
+PASS BodyPart.BELLY: 'body'                               IN
+PASS BodyPart.TORSO: 'press_body'                         IN
+PASS BodyPart.BELLY: 'pat_belly'                          IN
+PASS 'double_belly'                                       IN
+PASS for _t in _PRESS_KINDS.values():                     IN
+PASS _PART_TO_PET = {                                     IN
+PASS 'double_other'                                       IN
+PASS self.typing_text = (self.AI_THINKING_PLACEHOLDER     IN
+PASS AI_THINKING_PLACEHOLDER_ENABLED else ""              IN
+PASS adopt_module_logger                                  IN
+PASS from modules.pet_interaction import                  IN
+PASS _pet_tracker = PetInteractionTracker()               IN
+PASS EntertainmentSystem                                  IN
+
+=== 逐令牌回验: 30/30 PASS, FAIL=0 ===
+  [参考] main.py 中 clicked_part ==      出现 1 次（注释里允许提）
+  [参考] main.py 中 movement_history     出现 1 次（注释里允许提）
+  [参考] main.py 中 direction_changes    出现 0 次（注释里允许提）
+
+=== 三方一致性（真跑） ===
+SUITES 数量 = 66
+重复 id = 无
+baseline 条目 = 66
+SUITES 有 / baseline 缺 = 无
+baseline 有 / SUITES 无 = 无
+值为 None = 无
+基线合计 PASS=3528 FAIL=0
