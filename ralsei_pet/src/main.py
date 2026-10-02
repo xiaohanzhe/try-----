@@ -463,6 +463,18 @@ from modules import npc_placement as npc_placement_mod
 #   把自己知道的说给别人"。再糊回 `npc_system` 会让 49 轮那道零依赖 AST 闸面对一个
 #   体积翻倍的模块（与 `npc_placement` 分出去的同一个理由）。
 from modules import npc_life as npc_life_mod
+# ★★★ 第78轮：NPC 自主生活 · **层1 意图层**（零依赖纯函数：去哪 / 找谁 / 干什么 /
+#   生活规划 / 睡哪）。用户口径（逐字）：「他们生活是生活，我和他们只是朋友，而不是
+#   主导人…不会因为缺少一个人哪怕是我他们就不生活了」「去哪？找谁？干什么？生活规划
+#   这类的事也是由各自的 AI 决定」「不是一到晚上就必须回自己家，也可以选择在朋友那
+#   睡觉」「人味，人味，还 tm 是人味」。
+#   ★ `decide()` 的签名里**没有** pet/user/player —— 这是 L2 的**结构保证**（见 `check78`）。
+from modules import npc_intent as npc_intent_mod
+# ★★★ 第79轮：NPC 自主生活 · **层2 驻留层**（零依赖：把「静态归属」升级成
+#   「静态归属 + 动态驻留覆盖」）。要解决的头号障碍：`_npc_seed_bodies()` 只在启动与
+#   切场景时被调 ⇒「NPC = 当前场景的装饰」⇒ **用户不动，世界就冻住**（与 L2 正相反）。
+#   ★ `enabled=False` 时 `step()` 零副作用 ⇒ 产品默认关时行为与第78轮逐字相同。
+from modules import npc_roam as npc_roam_mod
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -2003,6 +2015,25 @@ class RalseiPet(QMainWindow):
     #: 取 1 = "换一次场景问最近说过话的那一个"，观感上够用且不会成倍放大延迟。
     NPC_FOLLOW_ASK_PER_SWITCH = 1
 
+    #: ⭐⭐ 第79轮：NPC **自主移动**（层2）—— 与 `NPC_LIFE_ENABLED` **再分一个**。
+    #:   前者管「他们会不会自己开口」，这个管「他们会不会**自己挪窝**」（离开当前场景，
+    #:   去朋友家 / 去喜欢的地方 / 去没去过的地方）。
+    #:
+    #:   ★★★ 默认 **False** —— 这不是「保守」，是**零回归承诺**：
+    #:     `npc_roam.step()` 在 `enabled=False` 时**一个字节都不改**（结构保证，见
+    #:     `check79` B 段），⇒ 关掉时行为与第78轮**逐字相同**。
+    #:     打开后 NPC 才会有自己的「驻留位置」，不再只是「当前场景的装饰」。
+    #:
+    #:   用户口径（逐字，第77轮）：
+    #:     「**不会因为缺少一个人哪怕是我他们就不生活了**」
+    #:     「去哪？找谁？干什么？生活规划这类的事也是由**各自的 AI 决定**」
+    #:   ⇒ 打开它，才是真正兑现这两句。
+    NPC_AUTONOMOUS_MOVE = False
+
+    #: 自主移动的**推进节拍**（秒）—— 生活决策不需要每帧算。
+    #: ★ 30s 一次：既不会「一帧换一次房」，也不会「半天不动」（驻留期本身是分钟级）。
+    NPC_AUTONOMOUS_TICK = 30.0
+
     def init_npc_systems(self):
         """建 NPC 服务层：注册表 + 人设 + 一角色一份记忆 + 跟随板 + 别名表。
 
@@ -2041,6 +2072,13 @@ class RalseiPet(QMainWindow):
         self.npc_crossworld = {}
         #: 「同一角色的不同 AU 版本」配对集合（`set[frozenset]`，只含 `au_family_members`）。
         self._npc_au_pairs = set()
+        # ---- 第79轮：自主移动（层1 意图 + 层2 驻留）----
+        #: `npc_roam.RoamState` —— **驻留覆盖表**（只存"偏离了静态归属"的人）。
+        #: ★ 关掉开关时恒为空表 ⇒ `_npc_scene_roster` 全走 `_placement.json`
+        #:   ⇒ 行为与第78轮**逐字相同**（零回归的结构保证）。
+        self.npc_roam = None
+        #: 上一次自主移动推进的时刻（秒）—— 节拍用 `NPC_AUTONOMOUS_TICK`，不必每帧算。
+        self._npc_roam_last_tick = 0.0
         #: `npc_life.LifeLoop` —— 自主开口的节拍（不并发 / 不自我对话 / 失败必解锁 / 反活锁）。
         self.npc_life = None
         #: `{npc_id: set[int]}` —— 该 NPC 的内置对话池已经说过哪几句（纯 NPC 用）。
@@ -2150,6 +2188,21 @@ class RalseiPet(QMainWindow):
             _log.exception('自由生活：节拍器建立失败（NPC 不自主开口）')
             self.npc_life = None
         self._npc_line_used = {}
+
+        # ---- ★★★ 第79轮：自主移动 · 层2 驻留表 ----
+        # ★ 关掉开关时 `RoamState(enabled=False)` 恒为空表，`step()` 零副作用
+        #   ⇒ 后续 `_npc_scene_roster` 读它只会拿到 `None` ⇒ 全走站位表
+        #   ⇒ 行为与第78轮**逐字相同**（零回归，见 `check79` B 段）。
+        try:
+            self.npc_roam = npc_roam_mod.RoamState(
+                enabled=bool(RalseiPet.NPC_AUTONOMOUS_MOVE))
+            if self.npc_roam.enabled:
+                _log.info('NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）')
+            else:
+                _log.info('NPC 自主移动：关（默认；NPC 仍只在站位表里"原地生活"）')
+        except Exception:
+            _log.exception('自主移动：驻留表建立失败（退化为"全体回站位表"）')
+            self.npc_roam = None
 
         # ---- 别名表：id / 英文名 / 中文名 三个都收（点名两层都认）----
         try:
@@ -2590,15 +2643,30 @@ class RalseiPet(QMainWindow):
             （否则会出现一个说话走 `npc_system_prompt` 却查不到人设的幽灵）。
           · **世界门控** —— 让"他站在这一间"和"他能不能进这一间"给出**同一个答案**
             （同一条判据两处算两份，正是本项目最贵的坑）。
+
+        ★★★ 第79轮（层2）：**驻留表优先**。
+          "他在哪"由两处共同决定，**优先级明确**：
+            ① `npc_roam.resident_of(nid)` —— 有值 ⇒ 他自主挪到了这儿（覆盖）；
+            ② 没有 ⇒ 回落到 `book.scene_of(nid)`（**静态归属**，真源仍是 `_placement.json`）。
+          ★ 为什么是"覆盖"而不是"复制一份默认值"：见 `npc_roam` 抬头 ——
+            默认值的真源只有一个，本层只回答"有谁**不在**他该在的地方"。
+          ★ 关掉开关（默认）⇒ `resident_of()` 恒 `None` ⇒ 与第78轮**逐字相同**。
         """
         book = getattr(self, 'npc_placement', None)
         if book is None or self.npc_registry is None:
             return []
         world = self._current_world()
         carried = self._npc_carried_ids()
+        roam = getattr(self, 'npc_roam', None)
         out = []
         for nid in book.ids():
-            if book.scene_of(nid) != scene_id:
+            # ---- ① 驻留覆盖（层2）：有值就用它，否则回落静态归属 ----
+            here = None
+            if roam is not None:
+                here = roam.resident_of(nid)
+            if here is None:
+                here = book.scene_of(nid)
+            if here != scene_id:
                 continue
             npc = self.npc_registry.get(nid)
             if npc is None:
@@ -3007,6 +3075,190 @@ class RalseiPet(QMainWindow):
         self._npc_say_line(speaker, text)
         loop.finish(now, speaker)
         return [speaker]
+
+    # ==================================================================
+    #  NPC 自主移动（★ 第79轮 · 层2 驻留层接线）
+    #  ------------------------------------------------------------------
+    #  用户口径（逐字，第77轮）：
+    #    「他们生活是生活，我和他们只是朋友，而不是主导人，也就是**不会因为缺少
+    #      一个人哪怕是我他们就不生活了**」「**去哪？找谁？干什么？生活规划**这类
+    #      的事也是由**各自的 AI 决定**」
+    #
+    #  ★★★ 为什么必须独立于"场景切换"：
+    #    此前 `_npc_seed_bodies()` **只在启动（`:2182`）与切场景（`:2513`）时**被调
+    #    ⇒ NPC 是"当前场景的装饰"，**用户不动，世界就冻住** —— 与用户口径正相反。
+    #    本函数挂在 30s 节拍上（`NPC_AUTONOMOUS_TICK`），**与宠物位置、场景切换都无关**。
+    #
+    #  ★ 两个开关各管一半（别混）：
+    #    · `NPC_LIFE_ENABLED`   —— 管"他们会不会自己**开口**"（第73轮）；
+    #    · `NPC_AUTONOMOUS_MOVE` —— 管"他们会不会自己**挪窝**"（第79轮，默认关）。
+    # ==================================================================
+
+    def _npc_roam_tick(self, now=None):
+        """推进"自主移动"一节拍（默认 30s）。→ `{'decided', 'expired', 'moved'}`。
+
+        ★★ 三件必须同时成立，缺一不可：
+          ① `NPC_AUTONOMOUS_MOVE` 开（默认关 ⇒ 本函数**立刻返回**，零副作用）；
+          ② `npc_roam` 就位（建失败 ⇒ 退化为"全体回站位表"，只记 debug）；
+          ③ 距上次推进 ≥ `NPC_AUTONOMOUS_TICK`（生活决策不需要每帧算）。
+
+        ★ 决策**由各自的 AI 定**（L3）：`decide_fn` 把 `npc_intent.decide()` 包一层 ——
+          本模块（`npc_roam`）**不 import** `npc_intent`（零依赖纪律），决策是**注入**的。
+        """
+        if not RalseiPet.NPC_AUTONOMOUS_MOVE:
+            return {'decided': [], 'expired': [], 'moved': []}
+        roam = getattr(self, 'npc_roam', None)
+        if roam is None or not roam.enabled:
+            return {'decided': [], 'expired': [], 'moved': []}
+        if now is None:
+            now = time.time()
+        try:
+            now = float(now)
+        except (TypeError, ValueError):
+            return {'decided': [], 'expired': [], 'moved': []}
+        # ---- 节拍：不到点不推（30s 一次）----
+        last = getattr(self, '_npc_roam_last_tick', 0.0) or 0.0
+        try:
+            if now - float(last) < RalseiPet.NPC_AUTONOMOUS_TICK:
+                return {'decided': [], 'expired': [], 'moved': []}
+        except (TypeError, ValueError):
+            pass
+        self._npc_roam_last_tick = now
+
+        book = getattr(self, 'npc_placement', None)
+        if book is None:
+            return {'decided': [], 'expired': [], 'moved': []}
+        try:
+            reach = self._npc_roam_reachable()
+            out = npc_roam_mod.step(
+                roam, now,
+                roster=book.ids(),
+                decide_fn=self._npc_roam_decide,
+                traits_of=self._npc_roam_traits,
+                familiar_of=self._npc_roam_familiar,
+                home_of=lambda nid: book.scene_of(nid),
+                reachable_of=lambda nid: reach,
+                friends_of=self._npc_roam_friends,
+            )
+        except Exception as e:
+            _log.debug('NPC 自主移动推进异常（本节拍跳过）: %s', e)
+            return {'decided': [], 'expired': [], 'moved': []}
+        # ---- 有人换了地方 ⇒ **必须重建身体**（否则"人到了、画还在旧场景"）----
+        moved = out.get('moved') or []
+        expired = out.get('expired') or []
+        if moved or expired:
+            try:
+                # ★ 重建的是**当前场景**的身体：驻留变化会改变"当前场景该有谁"。
+                self._npc_seed_bodies(self._npc_scene_id())
+            except Exception as e:
+                _log.debug('自主移动后重建站位异常（已忽略）: %s', e)
+            for nid, dest in moved:
+                _log.info('NPC %s 自己挪到了 %s', nid, dest)
+        return out
+
+    def _npc_roam_reachable(self):
+        """他"能去哪"—— **单一真源** = `scene_controller.reachable_destinations()`。
+
+        ★ 为什么不当场重算一份：可达性本来就由门/寻路决定，那边已有唯一实现
+          （第76轮 R0 建的）；这里再算一份就是"同一份规则两处算"。
+        """
+        sc = getattr(self, 'scene', None)
+        if sc is None or not hasattr(sc, 'reachable_destinations'):
+            return []
+        try:
+            return [d.get('scene_id') for d in sc.reachable_destinations(limit=64)
+                    if isinstance(d, dict) and d.get('scene_id')]
+        except Exception:
+            return []
+
+    def _npc_roam_traits(self, npc_id):
+        """该 NPC 所在场景的**特质**（喂 `npc_intent.decide` 的 `traits`）。
+
+        ★ 单一真源 = `npc_life.scene_traits`（第73轮建的）；取不到 ⇒ `None`（**不猜**）。
+        """
+        try:
+            sid = self._npc_roam_scene_of(npc_id)
+            if not sid:
+                return None
+            f = getattr(npc_life_mod, 'scene_traits', None)
+            if f is None:
+                return None
+            return list(f(sid) or ())
+        except Exception:
+            return None
+
+    def _npc_roam_familiar(self, npc_id):
+        """他与"我"（当前主控角色）的熟络度？—— 这里给 **0.0**（不编）。
+
+        ★ 为什么不用 `npc_bonds`：`Bonds` 是 **NPC↔NPC 两两**的熟络度，
+          没有"NPC↔用户/主角"这一维（第73轮口径：那是"他自己的记忆"，不是数值）。
+          ⇒ 如实给 0.0（让 `decide` 的"熟人加成"不生效），**不编造**一个数。
+        """
+        return 0.0
+
+    def _npc_roam_friends(self, npc_id):
+        """他"认识谁、那些人住哪" → `[(id, familiar, scene_id), ...]`。
+
+        ★ 与 `decide()` 的 `friends`（`[(id, familiar)]`）**多一个元素**：睡觉需要**地点**
+          （`npc_intent.choose_sleep_scene` 的口径）。
+        ★ 熟人越熟越可能被找上门；"他住哪"取**静态归属**（`_placement.json`）——
+          不取驻留表（不然会追着一个"刚好出门了"的人满地图跑）。
+        """
+        out = []
+        try:
+            bonds = getattr(self, 'npc_bonds', None)
+            book = getattr(self, 'npc_placement', None)
+            reg = self.npc_registry
+            if reg is None:
+                return []
+            for other in reg.all():
+                oid = getattr(other, 'id', None)
+                if not oid or oid == npc_id:
+                    continue
+                fam = 0.0
+                if bonds is not None:
+                    try:
+                        fam = float(bonds.familiarity(npc_id, oid) or 0.0)
+                    except Exception:
+                        fam = 0.0
+                if fam <= 0.0:
+                    continue
+                scene = book.scene_of(oid) if book is not None else None
+                if not scene:
+                    continue
+                out.append((oid, fam, scene))
+        except Exception:
+            return []
+        return out
+
+    def _npc_roam_scene_of(self, npc_id):
+        """他现在在哪（**驻留优先，回落静态归属** —— 与 `_npc_scene_roster` 同一口径）。"""
+        roam = getattr(self, 'npc_roam', None)
+        here = roam.resident_of(npc_id) if roam is not None else None
+        if here:
+            return here
+        book = getattr(self, 'npc_placement', None)
+        return book.scene_of(npc_id) if book is not None else None
+
+    def _npc_roam_decide(self, npc_id, now, *, traits=None, familiar=0.0,
+                         home=None, reachable=None, friends=None):
+        """**询问他自己的 AI**：这一拍去哪（← 用户口径 L3）。
+
+        ★ 决策真源 = `npc_intent.decide()`（层1）；这里只负责**把宿主的事实喂进去**：
+          - `home`      = 他的静态归属（`_placement.json`）；
+          - `reachable` = `scene_controller.reachable_destinations()`；
+          - `friends`   = `npc_bonds` 里熟络度 > 0 的人 + 他们住哪。
+
+        ★★ 注意签名里**没有** pet/user/player —— 与 `npc_roam.step` 的纪律一致（L2）。
+        """
+        return npc_intent_mod.decide(
+            npc_id, now,
+            traits=traits, familiar=familiar, home=home,
+            reachable=reachable,
+            friends=[(i, f) for i, f, _s in (friends or ())],
+            favorites=None,
+            last=None,
+        )
 
     def _npc_menu_message(self, text):
         """往用户能看见的地方说一句（复用道具菜单那条通道；没有就只记日志）。
@@ -4764,6 +5016,15 @@ class RalseiPet(QMainWindow):
         # ★ 本函数内部**自己**再判一次 `NPC_LIFE_ENABLED` 与"在场 ≥2 人"，
         #   所以这里不重复判（同一份规则不许两处算）。
         self._npc_life_tick(elapsed_time)
+
+        # ---- ★★★ NPC「自主移动」（第79轮 · 层2）：**按自己的节拍**推进 ----
+        # ★ 为什么**不**复用上面的 `elapsed_time`：那不是"过了多久"，是"这一帧的位移量"
+        #   （已钳 0.1s）。生活决策的节拍是**墙钟**（`NPC_AUTONOMOUS_TICK = 30s`），
+        #   与帧率/阻塞无关 —— 用 dt 累加会让"被阻塞时世界反而走得更慢"（第51轮踩过）。
+        # ★ 为什么挂在这里而不是动画定时器：与灵魂/站位/幽灵/自由生活同一处
+        #   （`update_movement` 的**所有早退分支之前**）—— 他们过日子不该看宠物睡没睡。
+        # ★ 关掉开关（默认）时本函数**立刻返回**，零副作用（零回归）。
+        self._npc_roam_tick(current_time)
 
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:
