@@ -10105,6 +10105,7 @@ class RalseiPet(QMainWindow):
         # 而且它每轮都要重算 —— 那正是 S7 首字兜底要避开的东西。
         # 记账也放在这里：**只有真发起了一轮对话才算一次相处**（见下）。
         _rel_brief = ""
+        _nerv_brief = ""
         try:
             _rel = getattr(self, 'relationship', None)
             if _rel is not None and not lean and not _sys_fixed:
@@ -10115,10 +10116,24 @@ class RalseiPet(QMainWindow):
                 from modules import relationship as _relmod
                 _ev = _relmod.classify(text)
                 _old_st, _new_st, _delta = _rel.note(_ev)
+                # ★ B4（第75轮）：关系段之后追加**当下状态段**（紧张度）。
+                #   用户口径「结巴…这有点不好」⇒ 减少但不许到 0；人设原文
+                #   「越紧张越明显，平常聊天基本不结巴」⇒ 结巴由**紧张度**驱动。
+                #   ⚠️ 两段**分开追加**而不是并进 `brief()`：它们变化节奏不同 ——
+                #     关系档位很慢、紧张度逐轮跳动。KV 前缀复用只认"从头逐字相同"，
+                #     把易变段并进稳定段会把整段关系前缀一起作废（第30轮的教训）。
+                #   ⚠️ `_ev` 必须传进去：紧张度 = 档位基线 + 本轮事件瞬时影响，
+                #      "被凶了会慌"这条正是由此落地（见 `_EVENT_NERVOUSNESS`）。
                 _rel_brief = _rel.brief()
+                _nerv_brief = _rel.nervous_brief(_ev)
                 if _old_st != _new_st:
                     _log.info("[关系] 档位变化 %s → %s（%s）",
                               _old_st, _new_st, _rel.describe())
+                try:
+                    _log.debug("[关系] 紧张度=%.3f（事件=%s）",
+                               _rel.nervousness(_ev), _ev)
+                except Exception:
+                    pass
                 try:
                     _rel.save()
                 except Exception as e:
@@ -10126,8 +10141,12 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
             _rel_brief = ""
+            _nerv_brief = ""
         if _rel_brief:
             system = system + "\n\n" + _rel_brief
+        # ★ B4：当下状态段紧跟在关系段之后（同一处追加点，少一层心智负担）。
+        if _nerv_brief:
+            system = system + "\n\n" + _nerv_brief
 
         # ★★★ 第三十轮：把「每轮必变」的部分整体挪到 system **最末尾**，
         # 并且把对话历史也**折进 system**（不再作为独立 messages 送）。
