@@ -761,3 +761,117 @@ class SceneController(object):
     def route_reason(self):
         """最近一次路由命中给出的理由（`''` = 没有）。"""
         return self.p.__dict__.get('_scene_route_reason') or ''
+
+    # -----------------------------------------------------------------
+    #  第76轮 · R0-1「一句话入口」：真的走起来
+    #
+    #  ★ 与上一段的区别（这是本项目最贵坑的收口）：
+    #    第45轮把 ①②③ 写好了但**一个调用方都没有**（`follow_route` 0 次调用），
+    #    于是"能看懂世界、不能走动"。本段给它接上**用户可见的入口**。
+    #
+    #  ★ 三条纪律（照抄既有口径，不新造）
+    #    1. **不绕门禁**：一切换场景都走 `switch()`（它会校验场景登记在案）；
+    #    2. **不伪造成功**：走不到就 `ok=False` + `error`（绝不"就近凑一个"）；
+    #    3. **不猜目标**：`resolve_target` 多解时**不替用户选**，返回候选让调用方定。
+    # -----------------------------------------------------------------
+
+    def travel_to(self, target):
+        """★ R0-1 主入口：把用户说的目的地**真的走过去**。
+
+        :param target: 目的地词（中文如『城堡镇』『教堂』，或 scene_id）。
+        :return: `{'ok','scene_id','hops','path','steps','error','ambiguous','candidates'}`
+
+        行为分三层，**逐层降级但每层都如实报告**：
+          ① 先 `plan_route_to(target)` 算多跳路径（章内、走原作门）；
+          ② 路径不可用（跨章 / 房间未登记 / 无房间图）→ 退化为**直达**
+             （`resolve_destination` 定位 + `switch`）—— 可达但不含逐门行走；
+          ③ 连目标都定位不到 → `ok=False` + `error`（**不 switch**）。
+
+        ★ 为什么允许"②直达"这个降级：多跳路径依赖 `_room_geometry` 与房间图，
+          二者任一缺失时**整条寻路会算不出来**；而用户此刻的真实意图是
+          "我要到那儿去" —— 直达能满足它。但**必须把 `route='direct'` 标出来**，
+          免得调用方以为"走了门"（那会让后续的转场动画/理由文案说谎）。
+        """
+        result = {'ok': False, 'scene_id': None, 'hops': 0, 'path': [],
+                  'steps': [], 'error': None, 'ambiguous': False,
+                  'candidates': [], 'route': None}
+        pet = self.p
+
+        # ---- ① 多跳路径 ----
+        try:
+            plan = self.plan_route_to(target)
+        except Exception as e:
+            _log.warning('travel_to 规划失败（改试直达）: %s', e)
+            plan = {'ok': False, 'error': str(e), 'candidates': []}
+        result['ambiguous'] = bool(plan.get('ambiguous'))
+        result['candidates'] = plan.get('candidates') or []
+        if plan.get('ok'):
+            sid = plan.get('scene_id')
+            result.update({'ok': True, 'scene_id': sid,
+                           'hops': plan.get('hops') or 0,
+                           'path': plan.get('path') or [],
+                           'steps': plan.get('steps') or [],
+                           'route': 'path'})
+            if sid == pet.__dict__.get('current_scene'):
+                # 已经站在那儿了 —— **不重复 switch**（否则转场原地重播）。
+                result['error'] = None
+                _log.info('travel_to：已经在 %s 了，不动', sid)
+                return result
+            if not self.switch(sid):
+                result['ok'] = False
+                result['error'] = '路径算出来了但切换失败: %r' % (sid,)
+            return result
+
+        # ---- ② 直达降级 ----
+        rv = self.resolve_destination(target)
+        result['ambiguous'] = bool(rv.get('ambiguous'))
+        result['candidates'] = rv.get('candidates') or []
+        if not rv.get('ok'):
+            result['error'] = rv.get('error') or plan.get('error') or '定位不到目的地'
+            return result
+        if rv.get('ambiguous'):
+            result['error'] = '目标有 %d 个候选，需要指定' % len(result['candidates'])
+            return result
+        sid = rv.get('scene_id')
+        if sid == pet.__dict__.get('current_scene'):
+            result.update({'ok': True, 'scene_id': sid, 'route': 'direct'})
+            return result
+        if self.switch(sid):
+            result.update({'ok': True, 'scene_id': sid, 'hops': 1,
+                           'path': [pet.__dict__.get('current_scene'), sid],
+                           'route': 'direct'})
+            # 如实说明"这是直达，不是走门"（差异对用户可见，不藏）。
+            result['error'] = None
+            _log.info('travel_to：多跳寻路不可用（%s）⇒ 直达 %s',
+                      plan.get('error'), sid)
+        else:
+            result['error'] = '直达切换失败: %r' % (sid,)
+        return result
+
+    def reachable_destinations(self, limit=24):
+        """★ R0-1 菜单用：当前**章内**可达的目的地清单（`[{label, scene_id}]`）。
+
+        为什么限定**章内**：原作门位移本就在章内（跨章要走暗之泉，是另一套）；
+        把别的章的 166 个 `church_*` 全列出来对用户毫无意义（第45轮实测的教训）。
+
+        ★ 不返回"命令"而是返回**数据**：菜单层只负责显示与回调，
+          目的地解析永远只走 `resolve_destination`（单一真源）。
+        """
+        out = []
+        try:
+            pool = scene_pathfind._scene_pool(self.p.__dict__.get('_scene_index'))
+            cur_ch = self.p.__dict__.get('_scene_chapter_id')
+            cur_sid = self.p.__dict__.get('current_scene')
+            for rec in pool:
+                if cur_ch and rec.get('chapter_id') != cur_ch:
+                    continue
+                if rec.get('scene_id') == cur_sid:
+                    continue
+                nm = rec.get('name') or rec.get('scene_id')
+                out.append({'label': nm, 'scene_id': rec.get('scene_id'),
+                            'chapter_id': rec.get('chapter_id')})
+        except Exception as e:
+            _log.warning('可达目的地枚举失败: %s', e)
+            return []
+        out.sort(key=lambda r: (r['chapter_id'] or '', r['label'] or ''))
+        return out[:limit]

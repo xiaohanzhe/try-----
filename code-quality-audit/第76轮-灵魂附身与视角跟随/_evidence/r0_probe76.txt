@@ -1,0 +1,186 @@
+=== 第76轮 R0 现场取证 ===
+main.py 行数 = 12633
+
+## 1. 灵魂（SOUL）接线现状
+  _soul_visible            定义=1 全文出现=4 真实调用≈3
+  _soul_press              定义=1 全文出现=3 真实调用≈2
+  _soul_release            定义=1 全文出现=2 真实调用≈1
+  _soul_pick_prop          定义=1 全文出现=2 真实调用≈1
+  _soul_tick               定义=1 全文出现=2 真实调用≈1
+  _on_scene_switched_soul  定义=1 全文出现=4 真实调用≈3
+  toggle_soul              定义=1 全文出现=2 真实调用≈1
+  show_soul                定义=1 全文出现=4 真实调用≈3
+  hide_soul                定义=1 全文出现=5 真实调用≈4
+  init_soul                定义=1 全文出现=3 真实调用≈2
+  _soul_respawn            定义=1 全文出现=4 真实调用≈3
+
+## 2. 按键接线
+  S键(菜单)           2 处
+      :3338  if key == _Qt.Key_S:
+      :3344  if key == _Qt.Key_S:
+  E键(交互)           1 处
+      :3348  if key == _Qt.Key_E:
+  ★Z键(附身)          0 处
+  方向键识别            3 处
+      :402  #    第55轮要同时用到 `load_soul_sprites` 与 `direction_of_qt_key`，
+      :3324  d = soul_overlay_mod.direction_of_qt_key(key)
+      :3366  d = soul_overlay_mod.direction_of_qt_key(event.key())
+
+## 3. ★ 视角跟随（R4）锚点
+  camera_follow        1 处
+      :4376  scene.camera_follow(room_rect, self._pet_target_rect(room_rect))
+  _pet_target_rect     6 处
+      :1545  （= `_pet_target_rect` 的逆映射；`room_rect` 来自 `_scene_geometry`）；
+      :3271  而"屏幕 → 房间世界坐标"的映射早就存在（`_pet_target_rect` 的逆 =
+      :4256  def _pet_target_rect(self, room_rect=None):
+      :4376  scene.camera_follow(room_rect, self._pet_target_rect(room_rect))
+      :4474  ★ 坐标口径（与 `_pet_target_rect` 同一套"屏幕 → 房间世界"归一化）：
+      :4482  rect = self._pet_target_rect(room_rect)
+  screen_to_room       3 处
+      :1544  · 灵魂 → 房间：`soul_entity.screen_to_room(灵魂中心, room_rect, 虚拟屏尺寸)`
+      :1582  pt = soul_entity_mod.screen_to_room(
+      :3272  `soul_entity.screen_to_room`），物件坐标也一直在数据里（`objects[].pos`，
+
+## 4. ★ R0-1 一句话入口接线
+  follow_route           总=2 定义=1 注释=1 ★真实调用=0
+  plan_route_to          总=2 定义=1 注释=0 ★真实调用=1
+      ralsei_pet\modules\scene_controller.py:756  return scene_pathfind.describe_plan(self.plan_route_to(target))
+  resolve_destination    总=1 定义=1 注释=0 ★真实调用=0
+  plan_route_text        总=1 定义=1 注释=0 ★真实调用=0
+  destinations_text      总=1 定义=1 注释=0 ★真实调用=0
+  pick_route             总=3 定义=1 注释=0 ★真实调用=2
+      ralsei_pet\modules\scene_controller.py:641  route = self.pick_route(extra, scene_dir_path)
+      ralsei_pet\src\main.py:1178  self.scene.load_routes()   # 路由表（443 条原作连接 + 兜底）；P1 才有人自动调 pick_route
+
+## 5. ★ R0-2 门可交互
+  item_interact:43  | `door` | —— | 交回**路由层**（`classify` 标 `handled_by='scene_routing'`） |
+  item_interact:119  'obj_shortcut_door': {'kind': 'door', 'in_data': True},
+  item_interact:120  'obj_darkdoor': {'kind': 'door', 'in_data': True},
+  item_interact:121  'obj_darkdoorevent': {'kind': 'door', 'in_data': True},
+  item_interact:189  return {'kind': 'door', 'in_data': True, 'handled_by': 'scene_routing'}
+  item_interact:477  #   `door`    —— 交路由层（见 classify 的 handled_by）
+
+  --- build_props 全文（415 行起）---
+  415| def build_props(scene, chapter, world, present=None, heal_all=None,
+  416|                 on_enter=None, inventory=None, bus=None, pickups=None):
+  417|     """把一个场景的 `objects` 变成可交互物列表。
+  418| 
+  419|     参数
+  420|     ----
+  421|     scene : dict | object
+  422|         场景数据（`{'objects': [...]}` 或带 `.objects` 的对象）。
+  423|     chapter, world : str
+  424|     present(text, actor) -> handle
+  425|         UI 注入：弹一句话，返回"对话句柄"。**没注入 ⇒ 可交互物会如实拒绝交互**
+  426|         （这是刻意的：宁可"看上去不能点"，也不要"点了没反应"）。
+  427|     heal_all : callable
+  428|         存档点用：全队回满 HP。
+  429|     on_enter : callable(scene_id) -> bool
+  430|         暗之泉用：切到目标场景。
+  431|     inventory : item_system.Inventory
+  432|         拾取物用。
+  433|     pickups : dict
+  434|         `{scene_id: [item_id, ...]}` —— 产品口径的落点表。
+  435| 
+  436|     ★ `key` 的构造规则：`<scene_id>#<objects下标>`。
+  437|       为什么不用 `src`：同一个房间里可能有 **多个** 同名对象（例如两个 `obj_savepoint`），
+  438|       用 `src` 会撞 key（`InteractBus` 是进程级单例，撞 key 会导致两个物件变成同一个）。
+  439|     """
+  440|     objs = scene.get('objects') if isinstance(scene, dict) else getattr(scene, 'objects', None)
+  441|     sid = scene.get('scene_id') if isinstance(scene, dict) else getattr(scene, 'scene_id', None)
+  442|     room_id = scene.get('original_room_id') if isinstance(scene, dict) \
+  443|         else getattr(scene, 'original_room_id', None)
+  444|     objs = objs or []
+  445| 
+  446|     out = []
+  447| 
+  448|     for i, o in enumerate(objs):
+  449|         if not isinstance(o, dict):
+  450|             continue
+  451|         src = o.get('src')
+  452|         rec = classify(src)
+  453|         if rec is None or rec['kind'] in NON_INTERACTIVE_KINDS:
+  454|             continue
+  455|         key = '%s#%d' % (sid or 'scene', i)
+  456|         kind = rec['kind']
+  457|         if kind == 'savepoint':
+  458|             out.append(SavePointProp(key, src=src, chapter=chapter,
+  459|                                      original_room_id=room_id,
+  460|                                      present=present, heal_all=heal_all, bus=bus))
+  461|         elif kind == 'fountain':
+  462|             out.append(FountainProp(key, src=src, target_scene=FOUNTAIN_TARGET,
+  463|                                     on_enter=on_enter, present=present, bus=bus))
+  464|         elif kind == 'pickup':
+  465|             for item_id in (pickups or {}).get(sid, ()):
+  466|                 out.append(PickupProp('%s@%s' % (key, item_id), item_id, world,
+  467|                                       inventory=inventory, present=present, bus=bus))
+  468|         elif kind in ('readable', 'sign'):
+  469|             out.append(ReadableProp(key, READABLE_TEXT.get(src, READABLE_TEXT['_default']),
+  470|                                     src=src, kind=kind, present=present, bus=bus))
+  471|         elif kind in INSPECT_KINDS:
+  472|             # ★ 第68轮：宝箱 / 通用可交互物 / 可调查家具 —— 普查与产物里**已有实例**，
+  473|             #   不能再落进 else 被静默丢弃（否则就是"补采了数据、却没实现交互"）。
+  474|             out.append(InspectProp(key, kind, src=src, present=present, bus=bus))
+  475|         else:
+  476|             # 仍不在这里实现的：
+  477|             #   `door`    —— 交路由层（见 classify 的 handled_by）
+  478|             #   `cutscene`—— 演出触发器，不是玩家点的物件
+  479|             #   `pickup`  —— 有自己的分支；**没有落点表就如实不建物**（见 PickupProp docstring）
+  480|             continue
+  481|     return out
+  482| 
+  483| 
+  484| #: ★ 暗之泉通向哪 —— 照抄 §43.6 的产品口径（桌面 = 独立前置章，放暗之泉，
+  485| #: 切到 `ch1.room_town_north`）。scene_id 由场景索引的真实键填。
+  486| FOUNTAIN_TARGET = 'ch1.castle_town.castle_town'
+  487| 
+  488| #: 可读物台词（**产品口径**：原文在语言包里，拿不到）。
+  489| READABLE_TEXT = {'_default': '* 上面写着些什么，但字迹已经模糊了。'}
+  490| 
+  491| 
+  492| def load_pickups(path):
+  493|     """读产品口径的拾取落点表。文件不在 ⇒ 返回空表（**不抛**，也不假装有）。"""
+  494|     if not path or not os.path.isfile(path):
+  495|         return {}
+  496|     try:
+  497|         with open(path, 'r', encoding='utf-8') as fh:
+  498|             d = json.load(fh)
+  499|     except Exception:
+  500|         _log.exception('拾取落点表读取失败 %s', path)
+  501|         return {}
+  502|     out = {}
+  503|     for sid, rec in (d.get('scenes') or {}).items():
+  504|         out[sid] = [e['item_id'] for e in (rec.get('items') or []) if 'item_id' in e]
+  505|     return out
+  506| 
+  507| 
+  508| def survey(scenes_dir, chapter, world):
+  509|     """统计一个章节里**实际出现**的可交互原件（报告用；只读，不写盘）。
+  510| 
+  511|     ⚠️ `collections` 必须留在**模块顶部** —— 本文件顶部 import 里原来混进过一次
+  512|     函数内 `import collections`，与 companion / scene_pathfind 的"零函数内 import"
+  513|     纪律（初始化环）不一致。已提到顶部；回归套件 A 段会锁住这一点。
+  514|     """
+  515|     hit = collections.Counter()
+  516|     idx_path = os.path.join(scenes_dir, '_index.json')
+  517|     if not os.path.isfile(idx_path):
+  518|         return hit
+  519|     with open(idx_path, 'r', encoding='utf-8') as fh:
+  520|         idx = json.load(fh)
+  521|     crec = (idx.get('chapters') or {}).get(chapter) or {}
+  522|     for ak, av in (crec.get('areas') or {}).items():
+  523|         zpath = os.path.join(scenes_dir, '_zone.%s.%s.json' % (chapter, ak))
+  524|         zz = None
+
+## 6. R0-3 世界门控
+  soul_can_enter     [('ralsei_pet\\modules\\soul_entity.py', 2)]
+  world_gate         [('ralsei_pet\\modules\\bubble_system.py', 1), ('ralsei_pet\\modules\\npc_system.py', 5), ('ralsei_pet\\modules\\soul_entity.py', 1), ('ralsei_pet\\src\\main.py', 5)]
+  _worlds.json       [('ralsei_pet\\modules\\npc_system.py', 2), ('ralsei_pet\\modules\\scene_system.py', 3), ('ralsei_pet\\src\\main.py', 2)]
+
+## 7. 数据文件
+  ralsei_pet/assets/scenes/_aliases.json         3392 B
+  ralsei_pet/assets/scenes/_routes.json          232004 B
+  ralsei_pet/assets/scenes/_worlds.json          22566 B
+  ralsei_pet/assets/scenes/_index.json           269562 B
+  ralsei_pet/assets/scenes/_geometry.json        ❌ 不存在
+  scenes 目录下非场景文件: ['_aliases.json', '_anchors.json', '_index.json', '_obstacles.ch1.json', '_obstacles.ch2.json', '_obstacles.ch3.json', '_obstacles.ch4.json', '_obstacles.ch5.json', '_original_rooms.json', '_room_geometry.json', '_routes.json', '_sprite_anim.json', '_worlds.json', '_zone.ch1.card_castle.json', '_zone.ch1.castle_town.json', '_zone.ch1.dark_world.json', '_zone.ch1.field.json', '_zone.ch1.forest.json', '_zone.ch1.home.json', '_zone.ch1.hometown.json']

@@ -413,7 +413,8 @@ class InspectProp(PropInteractable):
 # ===========================================================================
 
 def build_props(scene, chapter, world, present=None, heal_all=None,
-                on_enter=None, inventory=None, bus=None, pickups=None):
+                on_enter=None, inventory=None, bus=None, pickups=None,
+                routes=None):
     """把一个场景的 `objects` 变成可交互物列表。
 
     参数
@@ -427,11 +428,15 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
     heal_all : callable
         存档点用：全队回满 HP。
     on_enter : callable(scene_id) -> bool
-        暗之泉用：切到目标场景。
+        暗之泉 / **门**用：切到目标场景。
     inventory : item_system.Inventory
         拾取物用。
     pickups : dict
         `{scene_id: [item_id, ...]}` —— 产品口径的落点表。
+    routes : dict | list
+        ★ 第76轮：路由表（`scene_routing.load_routes()` 的结果）。给了它
+        才会构建**门**（`obj_doorA~F`）—— 因为门的目标只能从路由表查。
+        不给 / 为空 ⇒ 门仍不进列表（保持既有行为，**零行为变化**）。
 
     ★ `key` 的构造规则：`<scene_id>#<objects下标>`。
       为什么不用 `src`：同一个房间里可能有 **多个** 同名对象（例如两个 `obj_savepoint`），
@@ -472,17 +477,135 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
             # ★ 第68轮：宝箱 / 通用可交互物 / 可调查家具 —— 普查与产物里**已有实例**，
             #   不能再落进 else 被静默丢弃（否则就是"补采了数据、却没实现交互"）。
             out.append(InspectProp(key, kind, src=src, present=present, bus=bus))
+        elif kind == 'door':
+            # ★★ 第76轮 R0-2：门**终于进列表了**。
+            #   此前这里落进 else 被 `continue` 丢弃 —— 分类器明明标了
+            #   `handled_by='scene_routing'`，但没有任何人把它交出去，
+            #   于是"站在门前按 E 没反应"。这就是 A1 差的那一层。
+            #   ★ 三个前置条件缺一不可，缺了就不建门（**不建假的**）：
+            #     · 门名带字母（`obj_doorA~F`）—— 特殊门（`obj_darkdoor`）走事件脚本；
+            #     · 路由表可用 —— 门的目标只能从表里查，没表就无从知道"通向哪"；
+            #     · 查得到目标 —— 查不到 ⇒ 不建（而不是建一扇推不开的门）。
+            letter = door_letter_of(src)
+            tgt = route_for_door(routes, sid, letter) if letter else None
+            if letter and tgt:
+                out.append(DoorProp(key, src=src, door_letter=letter,
+                                    target_scene=tgt, on_enter=on_enter,
+                                    present=present, bus=bus))
+            elif letter:
+                _log.info('门 %s（字母 %s）在场景 %s 查不到路由 ⇒ 不建（不造假门）',
+                          src, letter, sid)
         else:
             # 仍不在这里实现的：
-            #   `door`    —— 交路由层（见 classify 的 handled_by）
             #   `cutscene`—— 演出触发器，不是玩家点的物件
             #   `pickup`  —— 有自己的分支；**没有落点表就如实不建物**（见 PickupProp docstring）
             continue
     return out
 
 
-#: ★ 暗之泉通向哪 —— 照抄 §43.6 的产品口径（桌面 = 独立前置章，放暗之泉，
-#: 切到 `ch1.room_town_north`）。scene_id 由场景索引的真实键填。
+class DoorProp(PropInteractable):
+    """★ 第76轮 R0-2：**门 —— 按 `E` 推门就走**。
+
+    原作机制（第44轮反编译实证，见 `_evidence/gml*`）：
+      · 对象名 `obj_doorA~F` 里的**字母**就是出口标识；
+      · 控制器按「当前房间 + 门字母」去 `Data.Rooms` 里算**下标位移**
+        （A+1 / B−1 / C+2 …，见 §43 房间拓扑）；
+      · 落到目标房间的**同字母 `obj_marker`** 上。
+
+    我们的实现**不重算位移**：`_routes.json` 已经把 443 条原作连接预先解算成
+    `{when_scene, when_door, to}`（由 `gen_routes44.py` 从原作数据生成）。
+    本类只做一件事：**（当前场景, 本门字母）→ `to`**，然后交给宿主 `switch()`。
+
+    ★ 为什么查表而不是现算位移：位移机制有 A+1/B−1/C+2 三套，且要求
+      "同字母 obj_marker 校验"（§43 铁律）。现算等于把 §43 的结论再实现一遍，
+      两处一旦分叉就是"走错房间"。查表 = **单一真源**。
+
+    ★ 不伪造：查不到路由 ⇒ `on_interact` 返回 False 并记日志
+      （**不**在门前默默无反应，也**不**随便挑一个目标）。
+    """
+
+    def __init__(self, key, src, door_letter=None, target_scene=None,
+                 routes=None, on_enter=None, present=None, bus=None):
+        PropInteractable.__init__(self, key, src, 'door', bus=bus)
+        self.door_letter = door_letter
+        self.target_scene = target_scene      #: 由 build_props 查表填好
+        self.routes = routes                  #: 备用（未查到时现查）
+        self.on_enter = on_enter              #: 与暗之泉共用 `_item_enter_scene`
+        self.present = present
+
+    def on_interact(self, actor=None):
+        target = self.target_scene
+        if not target:
+            _log.info('门 %s 没有通向任何已登记场景（原地不动，如实返回 False）',
+                      self.src)
+            return False
+        if self.on_enter is None:
+            _log.warning('门 %s 没接 on_enter ⇒ 如实返回"没发生"', self.key)
+            return False
+        ok = bool(self.on_enter(target))
+        if not ok:
+            _log.info('门 %s 通向 %s 但切换失败（保持当前场景）', self.src, target)
+            return False
+        return True
+
+
+#: ★ 门字母表（照抄原作 `obj_doorA~F` 的命名集合）。
+#: ⚠️ 只认**单字母**：`obj_darkdoor` / `obj_shortcut_door` / `obj_darkdoorevent`
+#:    这些**不带字母**，是"特殊门"，其目标由各自的事件脚本决定，
+#:    不在 `_routes.json` 的位移体系里 ⇒ 本表不收录它们（**不猜**）。
+DOOR_LETTERS = ('A', 'B', 'C', 'D', 'E', 'F')
+
+
+def door_letter_of(src):
+    """`obj_doorA` → `'A'`；认不出 → `None`（**不猜**）。
+
+    ★ 必须**精确**匹配 `obj_door` + 单字母（可带 `_0` 这类实例后缀），
+      不能用"名字里含 A"这种模糊匹配 —— `obj_doorAA`（不存在）或
+      `obj_doorevent`（含 e）都会被误判成字母门。
+    """
+    if not isinstance(src, str):
+        return None
+    s = src.strip()
+    if not s.lower().startswith('obj_door'):
+        return None
+    rest = s[len('obj_door'):]
+    # 允许 `A` / `A_0` / `A_1` 形态
+    head = rest.split('_', 1)[0]
+    if len(head) == 1 and head.upper() in DOOR_LETTERS:
+        return head.upper()
+    return None
+
+
+def route_for_door(routes, scene_id, letter):
+    """在路由表里找「从 `scene_id` 的 `letter` 门出去」→ 目标 scene_id；没有 → `None`。
+
+    :param routes: `scene_routing.load_routes()` 的结果（`{'routes': [...]}`）或路线列表。
+    ★ 同一场景同一门字母**理论上唯一**；若真出现多条，取 `priority` 最小的
+      （与 `scene_routing.match` 的裁决口径一致，**不新造**一套优先级）。
+    """
+    if isinstance(routes, dict):
+        items = routes.get('routes') or []
+    else:
+        items = routes or []
+    best = None
+    for r in items:
+        if not isinstance(r, dict):
+            continue
+        if r.get('when_scene') != scene_id:
+            continue
+        wd = r.get('when_door')
+        if wd and wd != letter:
+            continue
+        p = r.get('priority')
+        p = p if isinstance(p, int) else 10 ** 6
+        if best is None or p < best[0]:
+            best = (p, r.get('to'))
+    if best is None:
+        return None
+    return best[1]
+
+
+#: ★ 门 / 暗之泉通向哪（保留旧名，避免破坏既有引用）。
 FOUNTAIN_TARGET = 'ch1.castle_town.castle_town'
 
 #: 可读物台词（**产品口径**：原文在语言包里，拿不到）。

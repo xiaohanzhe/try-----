@@ -3160,6 +3160,16 @@ class RalseiPet(QMainWindow):
         if scene is None:
             return
         try:
+            # ★ 第76轮 R0-2：把路由表交给 build_props —— 门（`obj_doorA~F`）
+            #   靠它查出"通向哪"才会被建成可交互物。表不可用 ⇒ 门不建
+            #   （其余可交互物**零行为变化**）。
+            routes = None
+            try:
+                if self.scene is not None:
+                    self.scene.load_routes()
+                    routes = self.__dict__.get('_scene_routes')
+            except Exception:
+                _log.exception('路由表加载失败（门不可推，其余照常）')
             self.item_props = item_interact_mod.build_props(
                 scene,
                 self.inventory.chapter,
@@ -3169,6 +3179,7 @@ class RalseiPet(QMainWindow):
                 on_enter=self._item_enter_scene,
                 inventory=self.inventory,
                 bus=self.interact_bus,
+                routes=routes,
             )
         except Exception:
             _log.exception('可交互物构建失败（本场景没有可交互物，不影响其它功能）')
@@ -3291,6 +3302,65 @@ class RalseiPet(QMainWindow):
                   target.describe(), len(props), why,
                   '发生了' if ok else '什么也没发生')
         return ok
+
+    # ---------------------------------------------------------------- 场景走动（R0-1）
+    def travel_to_scene(self, target):
+        """★ 第76轮 R0-1：「走到某个场景去」的**用户可见入口**（右键菜单 / 聊天）。
+
+        这是本项目的"最贵坑"收口 —— 第45轮把 ①②③（意图→定位→寻路）写好了，
+        但 `follow_route` **零调用**，于是"能看懂世界、不能走动"。本方法就是
+        那个缺失的调用方。
+
+        ★ 三条纪律（与 `scene_controller.travel_to` 同源，此处只做**宿主侧**的事）：
+          1. 一切换都走 `scene.switch()`（内部校验场景登记在案）—— **不绕门禁**；
+          2. 失败**如实说**，用 AI 回复通道告诉用户"去不了、为什么"，
+             绝不静默、也绝不伪造"到了"；
+          3. 成功只报事实（到了哪个场景、走了几跳），不编造沿途细节。
+
+        :return: 是否真的换了场景。
+        """
+        try:
+            if getattr(self, 'scene', None) is None:
+                _log.info('走动请求被忽略：场景系统未就绪')
+                return False
+            before = self.__dict__.get('current_scene')
+            rv = self.scene.travel_to(target)
+            sid = (rv or {}).get('scene_id')
+            if (rv or {}).get('ok') and sid and sid != before:
+                _log.info('走动 ⇒ %s（route=%s，%d 跳）',
+                          sid, rv.get('route'), rv.get('hops') or 0)
+                return True
+            if (rv or {}).get('ok'):
+                # 已经在目标场景 / 目标就是当前场景 ⇒ 不算失败，但不是"换了"。
+                _log.info('走动：目标 %s 已是当前场景（未搬动）', sid)
+                return False
+            why = (rv or {}).get('error') or '原因不明'
+            _log.info('走动失败：%s ⇒ %s', target, why)
+            self._travel_feedback_fail(target, rv or {})
+            return False
+        except Exception:
+            _log.exception('走动处理异常（已忽略，宠物照常运行）')
+            return False
+
+    def _travel_feedback_fail(self, target, rv):
+        """走动失败时**明确告诉用户**（不静默）。
+
+        ★ 为什么走对话气泡而不是状态栏：本项目的"说话"只有一条出口
+          （`dialogue_ui.add_dialogue`），另开一条迟早分叉（同 `_item_menu_message`）。
+        ★ 为什么带上候选：多解时用户需要知道"你说的是哪一个" ——
+          这正是 `resolve_target` 不肯替人决定的理由。
+        """
+        try:
+            if rv.get('ambiguous'):
+                cands = rv.get('candidates') or []
+                names = '、'.join((c.get('name') or c.get('scene_id') or '?')
+                                  for c in cands[:5])
+                text = '* 有好几个地方都叫「%s」：%s……你想去哪一个？' % (target, names)
+            else:
+                text = '* 我不知道怎么去「%s」。（%s）' % (target, rv.get('error') or '')
+            self._item_menu_message(text)
+        except Exception:
+            _log.exception('走动失败提示弹出失败（已忽略）')
 
     # ---------------------------------------------------------------- 键盘
     def keyPressEvent(self, event):                       # noqa: N802 (Qt 命名)
@@ -8822,6 +8892,24 @@ class RalseiPet(QMainWindow):
         talk_action = QAction("聊天", self)
         talk_action.triggered.connect(self.initiate_chat)
         menu.addAction(talk_action)
+
+        # ★ 第76轮 R0-1：去别的场景（用户口径「一句话入口 + 能走能切」）。
+        #   菜单里给的是**当前章内可达目的地**（数据来自 scene_controller，
+        #   解析口径与"一句话入口"共用同一条 `resolve_destination`，不新造一套）。
+        try:
+            dests = self.scene.reachable_destinations(limit=20)
+        except Exception:
+            dests = []
+        if dests:
+            go_menu = menu.addMenu("去…")
+            for rec in dests:
+                act = QAction(rec.get('label') or rec.get('scene_id'), self)
+                act.triggered.connect(
+                    lambda _checked=False, sid=rec.get('scene_id'): self.travel_to_scene(sid))
+                go_menu.addAction(act)
+            back_action = QAction("回桌面", self)
+            back_action.triggered.connect(lambda: self.travel_to_scene('desktop'))
+            go_menu.addAction(back_action)
         
         play_action = QAction("玩游戏", self)
         play_action.triggered.connect(self.play_game)
