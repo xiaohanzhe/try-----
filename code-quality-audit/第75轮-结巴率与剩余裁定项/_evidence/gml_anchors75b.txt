@@ -1,0 +1,52 @@
+第75轮 B7 team_hp 原作锚点核对证据
+======================================================================
+★ 全部逐行取自 code-quality-audit/第48轮-道具与背包系统/_evidence/gml/
+
+--- 1. 复活量 = ceil(maxhp/2) —— ch1.scr_itemuse.gml:43~46 ---
+  43|             break;
+  44|         case 2:
+  45|             reviveamt = ceil(global.maxhp[global.char[global.charselect]] / 2);
+  46|             scr_healitem(global.charselect, reviveamt);
+
+--- 2. 满血信号 specialmessage=3 —— gml_GlobalScript_scr_healitemspell.gml:13~21 ---
+  13|             damage = arg0;
+  14|         }
+  15|         if (global.hp[global.char[myself]] >= global.maxhp[global.char[myself]])
+  16|         {
+  17|             with (dmgwr)
+  18|             {
+  19|                 specialmessage = 3;
+  20|             }
+  21|         }
+
+--- 3. 同上（全队版）—— gml_GlobalScript_scr_healallitemspell.gml:14~23 ---
+  14|                 type = 3;
+  15|                 damage = arg0;
+  16|             }
+  17|             if (global.hp[global.char[myself]] >= global.maxhp[global.char[myself]])
+  18|             {
+  19|                 with (dmgwr)
+  20|                 {
+  21|                     specialmessage = 3;
+  22|                 }
+  23|             }
+
+--- 4. 存档点只回没满的 —— gml_Object_obj_savepoint_Other_10.gml:111~119 ---
+ 111| talked += 1;
+ 112| snd_play(snd_power);
+ 113| for (i = 0; i < 4; i += 1)
+ 114| {
+ 115|     if (global.hp[i] < global.maxhp[i])
+ 116|     {
+ 117|         global.hp[i] = global.maxhp[i];
+ 118|     }
+ 119| }
+
+--- 5. ★循环上界三处不一致（原作既有状态，不是 bug）---
+    healitem_all         -> i < chartotal
+    healallitemspell     -> i < 3
+    savepoint            -> i < 4
+
+--- 6. ★同名两代：gml_Script_* 是空壳（DECOMPILE FAILED）---
+    gml_Script_scr_healitem_all.gml            // DECOMPILE FAILED: DecompilerException: Unexpected exception thrown in decompiler during control flow analysis: Expect
+    gml_Script_scr_healitemspell.gml           // DECOMPILE FAILED: DecompilerException: Unexpected exception thrown in decompiler during control flow analysis: Expect
