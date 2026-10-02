@@ -102,7 +102,11 @@ def main():
 
     zone_files = sorted(f for f in os.listdir(SCENES)
                         if f.startswith('_zone.') and f.endswith('.json'))
-    ok(len(zone_files) == 61, 'A2 分片文件 %d 个' % len(zone_files))
+    # ★ 第77轮改：原来是 `== 61`（Deltarune 分片数）。UT/黄魂 第77轮迁入后
+    #   多了 `_zone.ut.rooms.json` / `_zone.uty.rooms.json` ⇒ 63。
+    #   判据**本意**是"分片载体真在盘上"，故改成下界（加作品不误报，
+    #   而"分片被误删"照样报红）。
+    ok(len(zone_files) >= 61, 'A2 分片文件 %d 个' % len(zone_files))
 
     # 收集全部场景 objects
     all_objs = []          # [(sprite, pos, src, 来源标签)]

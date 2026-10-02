@@ -109,10 +109,12 @@ print('=' * 74)
 print('A 契约与镜像（真源 = _crossworld.json，不是本文件写死的表）')
 print('=' * 74)
 
-check('A1 跨世界契约七段齐且已推进到第73轮',
+# ★ 第77轮改：写死 `== 73` 会让"契约随轮次推进"必然报红（本轮已推进到 77）。
+#   判据本意是"七段齐 + 已推进到 73 或之后"，故改成下界。
+check('A1 跨世界契约七段齐且已推进到第73轮或之后',
       all(k in CROSSJ for k in ('roam', 'twin_groups', 'identity_blind',
                                 'familiarity_seed', 'scene_traits', 'visitor', 'wiring'))
-      and CROSSJ.get('round') == 73,
+      and (CROSSJ.get('round') or 0) >= 73,
       'round=%s' % CROSSJ.get('round'))
 
 _traits_id = [t.get('id') for t in (CROSSJ['scene_traits'].get('traits') or [])]
@@ -356,10 +358,33 @@ check('C2 有场景真命中（不是"全空集"）', _has > 0,
       '松口径 命中=%d/%d；★真场景口径 无特质=%d/%d 分布=%s'
       % (_has, len(_IDS), _none_p, len(_SCENES), dict(_ta_p)))
 
-for _t in ('ruined', 'cosmic', 'bright'):
-    check('C2b ★ 如实：`%s` 在现网**零命中**（跨作品场景面未接入 ⇒ 不假装覆盖）' % _t,
+# ★★★ 第77轮改：原判据把 `ruined` 也列进"必须零命中" —— 那条在**第73轮**是对的
+#   （当时 `_index.json` 只有 Deltarune，一个 `ruin` 都命不中）。
+#   第77轮把 UT / 黄魂 迁入后，UT 的「废墟」区域（`room_ruins1`…）**真的命中 35 处**
+#   ⇒ 契约已把 `ruined` 从 `TRAIT_TOKENS_RESERVED` **转正**进 `TRAIT_TOKENS`。
+#   ⇒ 判据同步改：`ruined` 改为**必须 > 0**（能力真到位），
+#     并新增"预留表里不许再留着 ruined"（防两处都有 = 两个真相）。
+for _t in ('cosmic', 'bright'):
+    check('C2b ★ 如实：`%s` 在现网**零命中**（OneShot/Outertale 未接入 ⇒ 不假装覆盖）' % _t,
           _ta_p.get(_t, 0) == 0,
           '%d' % _ta_p.get(_t, 0))
+check('C2c ★★ 第77轮转正：`ruined` 现网 **必须 > 0 命中**（UT 废墟区域已迁入）',
+      _ta_p.get('ruined', 0) > 0,
+      'ruined 命中 %d（第73轮时为 0）' % _ta_p.get('ruined', 0))
+# ★★ 判据本身也复检：第一版写的是"`ruined` 键名不许同现两表" ⇒ **过严**
+#   （正确形状恰恰是：本位表放实测命中的 `ruin`/`ruined`，预留表放同义但零命中的
+#    `broken`/`wreck`/… ⇒ **键名相同、令牌不重叠**）。真正该守的是**令牌集不相交**。
+_overlap = {t: sorted(set(L.TRAIT_TOKENS.get(t, ()))
+                      & set(L.TRAIT_TOKENS_RESERVED.get(t, ())))
+            for t in set(L.TRAIT_TOKENS) | set(L.TRAIT_TOKENS_RESERVED)}
+_overlap = {t: v for t, v in _overlap.items() if v}
+check('C2d ★ 无第二份真相：同位表与预留表的**令牌集不许相交**',
+      not _overlap
+      and bool(L.TRAIT_TOKENS.get('ruined'))
+      and bool(L.TRAIT_TOKENS_RESERVED.get('ruined')),
+      '重叠=%r live_ruined=%r res_ruined=%r'
+      % (_overlap, L.TRAIT_TOKENS.get('ruined'),
+         L.TRAIT_TOKENS_RESERVED.get('ruined')))
 
 # 边界规则：正/负控制成对
 for _tok, _txt, _want in (

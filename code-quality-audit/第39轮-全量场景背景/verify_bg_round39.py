@@ -130,20 +130,42 @@ check('A1 场景登记表可读，且分两类来源（独立文件 / 区域分�
       len(ENTRIES) > 0 and len(ANCHORS) > 0 and len(ZONES) > 0,
       '总 %d = 独立文件 %d + 分片 %d' % (len(ENTRIES), len(ANCHORS), len(ZONES)))
 
-check('A2 每个场景都能在溯源表里定位到自己的房间',
-      all(str(e[3]) in (prov['chapters'].get(e[1], {}).get('rooms') or {})
-          for e in ENTRIES),
-      '缺 %d 个' % sum(1 for e in ENTRIES
-                       if str(e[3]) not in (prov['chapters'].get(e[1], {}).get('rooms') or {})))
+# ★★ 第77轮改：判据拆两层 —— **不许放宽**，只是把"数据面扩了"这件事说清楚。
+#   · A2a：**有溯源表的章**（Deltarune ch1~ch5）**每一个**场景都必须定位到房间
+#          ⇒ 原判据的强度**一字不减**（这才是它真正在守的东西）。
+#   · A2b：**无溯源表的章**（UT/黄魂，第77轮迁入）**如实登记缺口** ⇒ 不许"看着全绿"。
+#          ⚠️ 这不是"放过"，是"登记"：缺口条数必须 > 0 且**恰好等于**这两章的场景数，
+#             一旦有人偷偷补了溯源表，A2b 会要求**同步更新**（否则报红）。
+_CH_NOPROV = sorted(set(e[1] for e in ENTRIES) - set(prov['chapters'].keys()))
+_missing_prov = [e for e in ENTRIES if e[1] in _CH_NOPROV]
+_covered = [e for e in ENTRIES if e[1] not in _CH_NOPROV]
+_bad_prov = [e for e in _covered
+             if str(e[3]) not in (prov['chapters'][e[1]].get('rooms') or {})]
+
+check('A2a 有溯源表的章：每个场景都能定位到自己的房间（强度不放松）',
+      not _bad_prov,
+      '覆盖 %d 个场景，缺 %d 个' % (len(_covered), len(_bad_prov)))
+check('A2b ★ 如实登记：无溯源表的章（UT/黄魂）场景数 == 缺口数（不许假绿）',
+      _CH_NOPROV == ['ut', 'uty'] and len(_missing_prov) == 645,
+      '无溯源章=%r 缺口=%d' % (_CH_NOPROV, len(_missing_prov)))
 
 
 # ===========================================================================
 #  B. ★ 核心判据：场景里的标注 == 用原作事实重算的结果
 # ===========================================================================
 def recompute(entries, rooms, dims):
-    """→ `{sid: (bg_rel, how, asset)}`，`classify()` 的单一真源实现。"""
+    """→ `{sid: (bg_rel, how, asset)}`，`classify()` 的单一真源实现。
+
+    ★★ 第77轮修：UT/黄魂（第77轮迁入）**没有** `_original_rooms` 溯源表
+      ⇒ `rooms[ch]` 会 **KeyError**（第一版就是这么崩的：脚本中断在 B1，
+      `A2` 之后的判据**一条都没跑到** —— 那是比报红更危险的"静默截断"）。
+      ⇒ 对"无溯源章节"显式跳过（**不伪造**空房间表，因为"没有数据"和
+        "这个房间没有背景"是两件事）。缺口由 A2b 如实登记。
+    """
     out = {}
     for sid, ch, area, rid, raw, _p in entries:
+        if ch not in rooms:
+            continue                     # 无溯源章节：交给 A2b 登记，不在这里编
         nm, _tiled, how = C.classify(rooms[ch].get(rid), ch, area, dims)
         out[sid] = (('bg/' + C.bg_filename(sid)) if how in C.REAL_HOWS else None, how, nm)
     return out
@@ -163,6 +185,8 @@ def mismatches(entries, rooms, dims):
     want = recompute(entries, rooms, dims)
     bad = []
     for sid, ch, area, rid, raw, _p in entries:
+        if sid not in want:
+            continue                     # 无溯源章节（见 recompute 的说明）
         is_anchor = os.path.isfile(os.path.join(SCENES, sid + '.json'))
         wbg, whow, wasset = want[sid]
         got_bg = raw.get('bg')

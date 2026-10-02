@@ -721,9 +721,17 @@ def seg_f():
 
     # ---- F2 ★★ 覆盖率：**独立重算**（不信生成器自报）----
     cover, miss = _recount_cover()
-    check('F2', cover == {'light': 202, 'dark': 809, 'unknown': 3} and not miss,
-          'F2 ★★场景世界覆盖独立重算：1014 场景 → light 202 / dark 809 / unknown 3 / 未覆盖 0（%r，miss=%d）'
-          % (dict(cover), len(miss)))
+    # ★★ 第77轮改：UT/黄魂 第77轮迁入产品索引，其世界**如实标 unknown**
+    #   （无 darkzone 取证，不许猜 —— 猜错会把玩家道具变垃圾）。
+    #   ⇒ 原判据"light 202 / dark 809 / unknown 3"的**Deltarune 部分一字不动**
+    #     （那才是它守的东西），unknown 改成"== 3 + 迁入场景数"，并**打印实得**。
+    _n_import = sum(len(m) for ch, m in (WORLDS.get('rooms') or {}).items()
+                    if ch in ('ut', 'uty'))
+    check('F2', cover.get('light') == 202 and cover.get('dark') == 809
+          and cover.get('unknown') == 3 + _n_import and not miss,
+          'F2 ★★场景世界覆盖独立重算：light 202 / dark 809 / unknown %d(=3+迁入 %d) '
+          '/ 未覆盖 0（%r，miss=%d）'
+          % (3 + _n_import, _n_import, dict(cover), len(miss)))
 
     # ---- F3 ★★ 邻域反例两侧为空（判据既不许过窄、也不许过宽）----
     bad_a, bad_b = _counterexamples()
@@ -733,14 +741,19 @@ def seg_f():
     for r in (bad_a + bad_b)[:5]:
         print('      [SUSPECT] %r' % (r,))
 
-    # ---- F4 ★ 未判定 4 间，逐条 == meta.unknown_rooms（如实登记，不硬判）----
+    # ---- F4 ★ 未判定逐条 == meta.unknown_rooms（如实登记，不硬判）----
+    # ★★ 第77轮改：Deltarune 的 4 间**逐条一字不动**（原判据强度保留）；
+    #   UT/黄魂 迁入的 645 间也要逐条登记（它们**只能**是 unknown —— 没取证）。
     unknown = sorted((ch, int(rid)) for ch, m in (WORLDS.get('rooms') or {}).items()
                      for rid, v in m.items() if v not in ('light', 'dark'))
     metarec = sorted((r['chapter'], int(r['room_id']))
                      for r in ((WORLDS.get('meta') or {}).get('unknown_rooms') or []))
-    check('F4', len(unknown) == 4 and unknown == metarec
-          and unknown == [('ch1', 136), ('ch3', 110), ('ch4', 159), ('ch4', 166)],
-          'F4 ★未判定 4 间逐条一致（%r）' % (unknown,))
+    _dr = [u for u in unknown if u[0] in ('ch1', 'ch2', 'ch3', 'ch4', 'ch5')]
+    _imported = [u for u in unknown if u[0] in ('ut', 'uty')]
+    check('F4', _dr == [('ch1', 136), ('ch3', 110), ('ch4', 159), ('ch4', 166)]
+          and unknown == metarec and len(_imported) == 645,
+          'F4 ★未判定：Deltarune 4 间逐条一致（%r）+ UT/黄魂 %d 间逐条登记 == meta（合计 %d）'
+          % (_dr, len(_imported), len(unknown)))
 
     # ---- F5 ★★ 暗前缀优先（防 room_dw_mansion_krisroom 被光区域表误判成光）----
     w1 = GW.classify_room('room_dw_mansion_krisroom', 'kris_room')      # 光区域 + 暗房名
@@ -924,8 +937,11 @@ def seg_h():
             for n in ('scr_itemnamelist', 'scr_itemuse', 'scr_litemname', 'scr_litemuseb')]
     missing = [n for n in need if not os.path.isfile(os.path.join(GML, n))]
     n_rooms = sum(len(m) for m in (WORLDS.get('rooms') or {}).values())
-    check('H1', n_gml == 223 and not missing and n_rooms == 1050
-          and len(INDEX.get('scenes') or {}) == 1014,
+    # ★ 第77轮改：`rooms == 1050` / `场景 == 1014` 是"只有 Deltarune"时的快照。
+    #   UT/黄魂 迁入后两份都会变大。判据本意是"真数据读到了"（防"空表全相等"），
+    #   故改成**下界 + GML 等值照旧**（GML 那条才是它真正的强断言）。
+    check('H1', n_gml == 223 and not missing and n_rooms >= 1050
+          and len(INDEX.get('scenes') or {}) >= 1014,
           'H1 ★★真实数据在位：GML %d 个（缺 %d）/ rooms %d 间 / 场景 %d 个'
           % (n_gml, len(missing), n_rooms, len(INDEX.get('scenes') or {})))
 

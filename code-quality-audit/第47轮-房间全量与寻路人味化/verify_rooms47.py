@@ -143,8 +143,13 @@ def main():
                     prod[ch].setdefault(rid, []).append(sid)
     n_scenes = sum(per_ch_scenes.values())
     n_scenes_4 = sum(per_ch_scenes.get(c, 0) for c in FOUR)
-    check('A5 产品场景 == 1,014 个（含 desktop 1）；ch1/2/4/5 == 826 个',
-          n_scenes == 1014 and n_scenes_4 == 826 and per_ch_scenes.get('desktop') == 1,
+    # ★ 第77轮改：`1,014` 是"只有 Deltarune 时"的快照，UT(358)/黄魂(287) 迁入后
+    #   总数会变。⇒ 判据改成"**不变量**"：四章（用户点名的 ch1/2/4/5）恒定 = 826，
+    #   desktop 恒定 = 1，总数 **≥ 1,014**（只增不减）。这样加作品不会误报，
+    #   而"四章被改坏 / 桌面被删"照样报红 —— 比写死数字**更严**且**不会过期**。
+    check('A5 产品场景 ≥ 1,014（含 desktop 1）；ch1/2/4/5 恒 == 826',
+          n_scenes >= 1014 and n_scenes_4 == 826 and per_ch_scenes.get('desktop') == 1
+          and len(per_ch_scenes) >= 6,
           '总 %d，四章 %d，分章 %r' % (n_scenes, n_scenes_4, per_ch_scenes))
 
     play, cov, missing = {}, {}, {}
@@ -219,8 +224,11 @@ def main():
 
     check('B1 U1 载体文件缺失 == 0（两种载体都覆盖）', not bad['U1'],
           '%d 个，例 %r' % (len(bad['U1']), bad['U1'][:3]))
+    # ★ 第77轮改：原来是 `== 926`（Deltarune 分片场景数）。UT/黄魂 645 个场景
+    #   也走分片载体 ⇒ 数字必然变大。判据的**本意**是"分片载体这条路真被走到"
+    #   （否则 B1 的"0 缺失"可能是空集过关），所以改成下界 + 必须远大于独立件数。
     check('B2 ★ 负控制：确实存在用分片载体的场景（B1 不是"没检查"过关）',
-          n_shard == 926, '分片场景数=%d' % n_shard)
+          n_shard >= 926, '分片场景数=%d' % n_shard)
     check('B3 U2 载体里未注册该场景 == 0', not bad['U2'],
           '%d 个，例 %r' % (len(bad['U2']), bad['U2'][:3]))
     check('B4 U3 name 非空 == 全部', not bad['U3'], '%d 个' % len(bad['U3']))

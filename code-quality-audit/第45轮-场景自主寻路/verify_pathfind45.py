@@ -96,8 +96,8 @@ def seg_a():
         if not rv.get('ok'):
             dead.append(zh)
     check('A2', not dead,
-          'A2 别名表零命中词条 = 0（共 %d 条，真实索引 1,014 场景）'
-          % len(al.get('entries') or {}))
+          'A2 别名表零命中词条 = 0（共 %d 条，真实索引 %d 场景）'
+          % (len(al.get('entries') or {}), len(idx.get('scenes') or {})))
     for d in dead[:5]:
         print('      [DEAD] %s' % d)
 
@@ -123,8 +123,14 @@ def seg_a():
           'A4 邻接表边数与房间图一致（%d）且五章齐全' % n_adj)
 
     # ---- A5 索引可用（② 的地基）----
-    check('A5', idx.get('ok') and len(idx.get('scenes') or {}) == 1014,
-          'A5 场景索引可用（1,014 场景）')
+    # ★★ 第77轮改：原来是 `== 1014`（只有 Deltarune 时的快照）。
+    #   判据**本意**是"索引真载得进来、场景数真实可数"，不是"恒为 1014"。
+    #   ⇒ 改成下界 + **打印实得**（第一版连实得都不打印，报红时无法诊断 ——
+    #     这正是"判据名与事实脱节"的老毛病）。同时要求 ≥2 章真存在。
+    check('A5', idx.get('ok') and len(idx.get('scenes') or {}) >= 1014
+          and len(idx.get('chapters') or {}) >= 6,
+          'A5 场景索引可用（实得 %d 场景 / %d 章）'
+          % (len(idx.get('scenes') or {}), len(idx.get('chapters') or {})))
     return {'idx': idx, 'aliases': al['entries'], 'graph': rg,
             'adj': adj, 'entries': al['entries']}
 

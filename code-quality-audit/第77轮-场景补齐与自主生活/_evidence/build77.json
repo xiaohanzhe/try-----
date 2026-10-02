@@ -1,0 +1,39 @@
+{
+ "round": 77,
+ "verify": {
+  "ut": {
+   "source_rooms": 338,
+   "matched": 338,
+   "mismatch": 0
+  },
+  "uty": {
+   "source_rooms": 287,
+   "matched": 287,
+   "mismatch": 0
+  }
+ },
+ "chapters": {
+  "ut": {
+   "id": "ut",
+   "name": "Undertale · 原版",
+   "order": 100,
+   "alias": "Undertale",
+   "tint": "#1c1c1c",
+   "areas": [
+    "rooms"
+   ],
+   "scene_count": 358
+  },
+  "uty": {
+   "id": "uty",
+   "name": "黄魂 · Undertale Yellow",
+   "order": 101,
+   "alias": "Undertale Yellow",
+   "tint": "#4a3b1a",
+   "areas": [
+    "rooms"
+   ],
+   "scene_count": 287
+  }
+ }
+}

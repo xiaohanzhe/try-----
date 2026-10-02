@@ -1,0 +1,2592 @@
+{
+ "schema_version": 1,
+ "chapter_id": "uty",
+ "area_id": "rooms",
+ "area_name": "全部房间",
+ "note": "第77轮：从跨作品大图 bigmap66.json 迁入。name 为原作 room 名原样；w/h 与大图逐条核验全等。★ 区域层级待补（UT 无中文区域名表）。",
+ "scenes": {
+  "uty.rooms.rm_intro": {
+   "name": "rm_intro",
+   "name_raw": "rm_intro",
+   "name_derived": false,
+   "original_room_id": 0,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_logos": {
+   "name": "rm_logos",
+   "name_raw": "rm_logos",
+   "name_derived": false,
+   "original_room_id": 1,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mmfirst": {
+   "name": "rm_mmfirst",
+   "name_raw": "rm_mmfirst",
+   "name_derived": false,
+   "original_room_id": 2,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mainmenu": {
+   "name": "rm_mainmenu",
+   "name_raw": "rm_mainmenu",
+   "name_derived": false,
+   "original_room_id": 3,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mainmenu_debug": {
+   "name": "rm_mainmenu_debug",
+   "name_raw": "rm_mainmenu_debug",
+   "name_derived": false,
+   "original_room_id": 4,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_live_buffer": {
+   "name": "rm_live_buffer",
+   "name_raw": "rm_live_buffer",
+   "name_derived": false,
+   "original_room_id": 5,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_ruins00": {
+   "name": "rm_ruins00",
+   "name_raw": "rm_ruins00",
+   "name_derived": false,
+   "original_room_id": 6,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_ruins01": {
+   "name": "rm_ruins01",
+   "name_raw": "rm_ruins01",
+   "name_derived": false,
+   "original_room_id": 7,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_ruins02": {
+   "name": "rm_ruins02",
+   "name_raw": "rm_ruins02",
+   "name_derived": false,
+   "original_room_id": 8,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_ruins03": {
+   "name": "rm_ruins03",
+   "name_raw": "rm_ruins03",
+   "name_derived": false,
+   "original_room_id": 9,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_ruins04": {
+   "name": "rm_ruins04",
+   "name_raw": "rm_ruins04",
+   "name_derived": false,
+   "original_room_id": 10,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.ruins_outro": {
+   "name": "ruins_outro",
+   "name_raw": "ruins_outro",
+   "name_derived": false,
+   "original_room_id": 11,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruinsintro": {
+   "name": "rm_darkruinsintro",
+   "name_raw": "rm_darkruinsintro",
+   "name_derived": false,
+   "original_room_id": 12,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_01": {
+   "name": "rm_darkruins_01",
+   "name_raw": "rm_darkruins_01",
+   "name_derived": false,
+   "original_room_id": 13,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_02": {
+   "name": "rm_darkruins_02",
+   "name_raw": "rm_darkruins_02",
+   "name_derived": false,
+   "original_room_id": 14,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_03": {
+   "name": "rm_darkruins_03",
+   "name_raw": "rm_darkruins_03",
+   "name_derived": false,
+   "original_room_id": 15,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_04": {
+   "name": "rm_darkruins_04",
+   "name_raw": "rm_darkruins_04",
+   "name_derived": false,
+   "original_room_id": 16,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_05": {
+   "name": "rm_darkruins_05",
+   "name_raw": "rm_darkruins_05",
+   "name_derived": false,
+   "original_room_id": 17,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_06": {
+   "name": "rm_darkruins_06",
+   "name_raw": "rm_darkruins_06",
+   "name_derived": false,
+   "original_room_id": 18,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_07": {
+   "name": "rm_darkruins_07",
+   "name_raw": "rm_darkruins_07",
+   "name_derived": false,
+   "original_room_id": 19,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_08": {
+   "name": "rm_darkruins_08",
+   "name_raw": "rm_darkruins_08",
+   "name_derived": false,
+   "original_room_id": 20,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_08b": {
+   "name": "rm_darkruins_08b",
+   "name_raw": "rm_darkruins_08b",
+   "name_derived": false,
+   "original_room_id": 21,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_09": {
+   "name": "rm_darkruins_09",
+   "name_raw": "rm_darkruins_09",
+   "name_derived": false,
+   "original_room_id": 22,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_09b": {
+   "name": "rm_darkruins_09b",
+   "name_raw": "rm_darkruins_09b",
+   "name_derived": false,
+   "original_room_id": 23,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_10": {
+   "name": "rm_darkruins_10",
+   "name_raw": "rm_darkruins_10",
+   "name_derived": false,
+   "original_room_id": 24,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_11": {
+   "name": "rm_darkruins_11",
+   "name_raw": "rm_darkruins_11",
+   "name_derived": false,
+   "original_room_id": 25,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_12": {
+   "name": "rm_darkruins_12",
+   "name_raw": "rm_darkruins_12",
+   "name_derived": false,
+   "original_room_id": 26,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_13": {
+   "name": "rm_darkruins_13",
+   "name_raw": "rm_darkruins_13",
+   "name_derived": false,
+   "original_room_id": 27,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_14": {
+   "name": "rm_darkruins_14",
+   "name_raw": "rm_darkruins_14",
+   "name_derived": false,
+   "original_room_id": 28,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_14b": {
+   "name": "rm_darkruins_14b",
+   "name_raw": "rm_darkruins_14b",
+   "name_derived": false,
+   "original_room_id": 29,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_15": {
+   "name": "rm_darkruins_15",
+   "name_raw": "rm_darkruins_15",
+   "name_derived": false,
+   "original_room_id": 30,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_16": {
+   "name": "rm_darkruins_16",
+   "name_raw": "rm_darkruins_16",
+   "name_derived": false,
+   "original_room_id": 31,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_16b": {
+   "name": "rm_darkruins_16b",
+   "name_raw": "rm_darkruins_16b",
+   "name_derived": false,
+   "original_room_id": 32,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_17": {
+   "name": "rm_darkruins_17",
+   "name_raw": "rm_darkruins_17",
+   "name_derived": false,
+   "original_room_id": 33,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_18": {
+   "name": "rm_darkruins_18",
+   "name_raw": "rm_darkruins_18",
+   "name_derived": false,
+   "original_room_id": 34,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_darkruins_19": {
+   "name": "rm_darkruins_19",
+   "name_raw": "rm_darkruins_19",
+   "name_derived": false,
+   "original_room_id": 35,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvhallway": {
+   "name": "rm_dalvhallway",
+   "name_raw": "rm_dalvhallway",
+   "name_derived": false,
+   "original_room_id": 36,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvshouse": {
+   "name": "rm_dalvshouse",
+   "name_raw": "rm_dalvshouse",
+   "name_derived": false,
+   "original_room_id": 37,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvsroom": {
+   "name": "rm_dalvsroom",
+   "name_raw": "rm_dalvsroom",
+   "name_derived": false,
+   "original_room_id": 38,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvroomhall": {
+   "name": "rm_dalvroomhall",
+   "name_raw": "rm_dalvroomhall",
+   "name_derived": false,
+   "original_room_id": 39,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvExit": {
+   "name": "rm_dalvExit",
+   "name_raw": "rm_dalvExit",
+   "name_derived": false,
+   "original_room_id": 40,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvExit_pacifist": {
+   "name": "rm_dalvExit_pacifist",
+   "name_raw": "rm_dalvExit_pacifist",
+   "name_derived": false,
+   "original_room_id": 41,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dalvExit_genocide": {
+   "name": "rm_dalvExit_genocide",
+   "name_raw": "rm_dalvExit_genocide",
+   "name_derived": false,
+   "original_room_id": 42,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_01_yellow": {
+   "name": "rm_snowdin_01_yellow",
+   "name_raw": "rm_snowdin_01_yellow",
+   "name_derived": false,
+   "original_room_id": 43,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_02_yellow": {
+   "name": "rm_snowdin_02_yellow",
+   "name_raw": "rm_snowdin_02_yellow",
+   "name_derived": false,
+   "original_room_id": 44,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_03_yellow": {
+   "name": "rm_snowdin_03_yellow",
+   "name_raw": "rm_snowdin_03_yellow",
+   "name_derived": false,
+   "original_room_id": 45,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_03b_yellow": {
+   "name": "rm_snowdin_03b_yellow",
+   "name_raw": "rm_snowdin_03b_yellow",
+   "name_derived": false,
+   "original_room_id": 46,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_04_yellow": {
+   "name": "rm_snowdin_04_yellow",
+   "name_raw": "rm_snowdin_04_yellow",
+   "name_derived": false,
+   "original_room_id": 47,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_05_yellow": {
+   "name": "rm_snowdin_05_yellow",
+   "name_raw": "rm_snowdin_05_yellow",
+   "name_derived": false,
+   "original_room_id": 48,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_06_yellow": {
+   "name": "rm_snowdin_06_yellow",
+   "name_raw": "rm_snowdin_06_yellow",
+   "name_derived": false,
+   "original_room_id": 49,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_07_yellow": {
+   "name": "rm_snowdin_07_yellow",
+   "name_raw": "rm_snowdin_07_yellow",
+   "name_derived": false,
+   "original_room_id": 50,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_08_yellow": {
+   "name": "rm_snowdin_08_yellow",
+   "name_raw": "rm_snowdin_08_yellow",
+   "name_derived": false,
+   "original_room_id": 51,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_08b_yellow": {
+   "name": "rm_snowdin_08b_yellow",
+   "name_raw": "rm_snowdin_08b_yellow",
+   "name_derived": false,
+   "original_room_id": 52,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_09_yellow": {
+   "name": "rm_snowdin_09_yellow",
+   "name_raw": "rm_snowdin_09_yellow",
+   "name_derived": false,
+   "original_room_id": 53,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_10_yellow": {
+   "name": "rm_snowdin_10_yellow",
+   "name_raw": "rm_snowdin_10_yellow",
+   "name_derived": false,
+   "original_room_id": 54,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_10b_yellow": {
+   "name": "rm_snowdin_10b_yellow",
+   "name_raw": "rm_snowdin_10b_yellow",
+   "name_derived": false,
+   "original_room_id": 55,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_11_yellow": {
+   "name": "rm_snowdin_11_yellow",
+   "name_raw": "rm_snowdin_11_yellow",
+   "name_derived": false,
+   "original_room_id": 56,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_12_yellow": {
+   "name": "rm_snowdin_12_yellow",
+   "name_raw": "rm_snowdin_12_yellow",
+   "name_derived": false,
+   "original_room_id": 57,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_13_yellow": {
+   "name": "rm_snowdin_13_yellow",
+   "name_raw": "rm_snowdin_13_yellow",
+   "name_derived": false,
+   "original_room_id": 58,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_14_yellow": {
+   "name": "rm_snowdin_14_yellow",
+   "name_raw": "rm_snowdin_14_yellow",
+   "name_derived": false,
+   "original_room_id": 59,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_14b_yellow": {
+   "name": "rm_snowdin_14b_yellow",
+   "name_raw": "rm_snowdin_14b_yellow",
+   "name_derived": false,
+   "original_room_id": 60,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_14c_yellow": {
+   "name": "rm_snowdin_14c_yellow",
+   "name_raw": "rm_snowdin_14c_yellow",
+   "name_derived": false,
+   "original_room_id": 61,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_14d_yellow": {
+   "name": "rm_snowdin_14d_yellow",
+   "name_raw": "rm_snowdin_14d_yellow",
+   "name_derived": false,
+   "original_room_id": 62,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_14e_yellow": {
+   "name": "rm_snowdin_14e_yellow",
+   "name_raw": "rm_snowdin_14e_yellow",
+   "name_derived": false,
+   "original_room_id": 63,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_15_yellow": {
+   "name": "rm_snowdin_15_yellow",
+   "name_raw": "rm_snowdin_15_yellow",
+   "name_derived": false,
+   "original_room_id": 64,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_16_yellow": {
+   "name": "rm_snowdin_16_yellow",
+   "name_raw": "rm_snowdin_16_yellow",
+   "name_derived": false,
+   "original_room_id": 65,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_16b_yellow": {
+   "name": "rm_snowdin_16b_yellow",
+   "name_raw": "rm_snowdin_16b_yellow",
+   "name_derived": false,
+   "original_room_id": 66,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_17_yellow": {
+   "name": "rm_snowdin_17_yellow",
+   "name_raw": "rm_snowdin_17_yellow",
+   "name_derived": false,
+   "original_room_id": 67,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_18_yellow": {
+   "name": "rm_snowdin_18_yellow",
+   "name_raw": "rm_snowdin_18_yellow",
+   "name_derived": false,
+   "original_room_id": 68,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_19_yellow": {
+   "name": "rm_snowdin_19_yellow",
+   "name_raw": "rm_snowdin_19_yellow",
+   "name_derived": false,
+   "original_room_id": 69,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_20_yellow": {
+   "name": "rm_snowdin_20_yellow",
+   "name_raw": "rm_snowdin_20_yellow",
+   "name_derived": false,
+   "original_room_id": 70,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_21_yellow": {
+   "name": "rm_snowdin_21_yellow",
+   "name_raw": "rm_snowdin_21_yellow",
+   "name_derived": false,
+   "original_room_id": 71,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_22_yellow": {
+   "name": "rm_snowdin_22_yellow",
+   "name_raw": "rm_snowdin_22_yellow",
+   "name_derived": false,
+   "original_room_id": 72,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_waterfall_og": {
+   "name": "rm_waterfall_og",
+   "name_raw": "rm_waterfall_og",
+   "name_derived": false,
+   "original_room_id": 73,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland": {
+   "name": "rm_hotland",
+   "name_raw": "rm_hotland",
+   "name_derived": false,
+   "original_room_id": 74,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_lava_tubes": {
+   "name": "rm_lava_tubes",
+   "name_raw": "rm_lava_tubes",
+   "name_derived": false,
+   "original_room_id": 75,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_wildeast_cave": {
+   "name": "rm_wildeast_cave",
+   "name_raw": "rm_wildeast_cave",
+   "name_derived": false,
+   "original_room_id": 76,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_01": {
+   "name": "rm_dunes_01",
+   "name_raw": "rm_dunes_01",
+   "name_derived": false,
+   "original_room_id": 77,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_02": {
+   "name": "rm_dunes_02",
+   "name_raw": "rm_dunes_02",
+   "name_derived": false,
+   "original_room_id": 78,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_03": {
+   "name": "rm_dunes_03",
+   "name_raw": "rm_dunes_03",
+   "name_derived": false,
+   "original_room_id": 79,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_04": {
+   "name": "rm_dunes_04",
+   "name_raw": "rm_dunes_04",
+   "name_derived": false,
+   "original_room_id": 80,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_05": {
+   "name": "rm_dunes_05",
+   "name_raw": "rm_dunes_05",
+   "name_derived": false,
+   "original_room_id": 81,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_06": {
+   "name": "rm_dunes_06",
+   "name_raw": "rm_dunes_06",
+   "name_derived": false,
+   "original_room_id": 82,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_06b": {
+   "name": "rm_dunes_06b",
+   "name_raw": "rm_dunes_06b",
+   "name_derived": false,
+   "original_room_id": 83,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_07": {
+   "name": "rm_dunes_07",
+   "name_raw": "rm_dunes_07",
+   "name_derived": false,
+   "original_room_id": 84,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_08": {
+   "name": "rm_dunes_08",
+   "name_raw": "rm_dunes_08",
+   "name_derived": false,
+   "original_room_id": 85,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_08b": {
+   "name": "rm_dunes_08b",
+   "name_raw": "rm_dunes_08b",
+   "name_derived": false,
+   "original_room_id": 86,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_09": {
+   "name": "rm_dunes_09",
+   "name_raw": "rm_dunes_09",
+   "name_derived": false,
+   "original_room_id": 87,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_10": {
+   "name": "rm_dunes_10",
+   "name_raw": "rm_dunes_10",
+   "name_derived": false,
+   "original_room_id": 88,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_11": {
+   "name": "rm_dunes_11",
+   "name_raw": "rm_dunes_11",
+   "name_derived": false,
+   "original_room_id": 89,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_12": {
+   "name": "rm_dunes_12",
+   "name_raw": "rm_dunes_12",
+   "name_derived": false,
+   "original_room_id": 90,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_12b": {
+   "name": "rm_dunes_12b",
+   "name_raw": "rm_dunes_12b",
+   "name_derived": false,
+   "original_room_id": 91,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_13": {
+   "name": "rm_dunes_13",
+   "name_raw": "rm_dunes_13",
+   "name_derived": false,
+   "original_room_id": 92,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_elevator": {
+   "name": "rm_dunes_elevator",
+   "name_raw": "rm_dunes_elevator",
+   "name_derived": false,
+   "original_room_id": 93,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_14": {
+   "name": "rm_dunes_14",
+   "name_raw": "rm_dunes_14",
+   "name_derived": false,
+   "original_room_id": 94,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_15": {
+   "name": "rm_dunes_15",
+   "name_raw": "rm_dunes_15",
+   "name_derived": false,
+   "original_room_id": 95,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_16": {
+   "name": "rm_dunes_16",
+   "name_raw": "rm_dunes_16",
+   "name_derived": false,
+   "original_room_id": 96,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_17": {
+   "name": "rm_dunes_17",
+   "name_raw": "rm_dunes_17",
+   "name_derived": false,
+   "original_room_id": 97,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_18": {
+   "name": "rm_dunes_18",
+   "name_raw": "rm_dunes_18",
+   "name_derived": false,
+   "original_room_id": 98,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_19": {
+   "name": "rm_dunes_19",
+   "name_raw": "rm_dunes_19",
+   "name_derived": false,
+   "original_room_id": 99,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_19B": {
+   "name": "rm_dunes_19B",
+   "name_raw": "rm_dunes_19B",
+   "name_derived": false,
+   "original_room_id": 100,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_20": {
+   "name": "rm_dunes_20",
+   "name_raw": "rm_dunes_20",
+   "name_derived": false,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_21": {
+   "name": "rm_dunes_21",
+   "name_raw": "rm_dunes_21",
+   "name_derived": false,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_22": {
+   "name": "rm_dunes_22",
+   "name_raw": "rm_dunes_22",
+   "name_derived": false,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_23": {
+   "name": "rm_dunes_23",
+   "name_raw": "rm_dunes_23",
+   "name_derived": false,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_24": {
+   "name": "rm_dunes_24",
+   "name_raw": "rm_dunes_24",
+   "name_derived": false,
+   "original_room_id": 105,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_25": {
+   "name": "rm_dunes_25",
+   "name_raw": "rm_dunes_25",
+   "name_derived": false,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_25b": {
+   "name": "rm_dunes_25b",
+   "name_raw": "rm_dunes_25b",
+   "name_derived": false,
+   "original_room_id": 107,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_26": {
+   "name": "rm_dunes_26",
+   "name_raw": "rm_dunes_26",
+   "name_derived": false,
+   "original_room_id": 108,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_27": {
+   "name": "rm_dunes_27",
+   "name_raw": "rm_dunes_27",
+   "name_derived": false,
+   "original_room_id": 109,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_28": {
+   "name": "rm_dunes_28",
+   "name_raw": "rm_dunes_28",
+   "name_derived": false,
+   "original_room_id": 110,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_28b": {
+   "name": "rm_dunes_28b",
+   "name_raw": "rm_dunes_28b",
+   "name_derived": false,
+   "original_room_id": 111,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_28c": {
+   "name": "rm_dunes_28c",
+   "name_raw": "rm_dunes_28c",
+   "name_derived": false,
+   "original_room_id": 112,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_29": {
+   "name": "rm_dunes_29",
+   "name_raw": "rm_dunes_29",
+   "name_derived": false,
+   "original_room_id": 113,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_29b": {
+   "name": "rm_dunes_29b",
+   "name_raw": "rm_dunes_29b",
+   "name_derived": false,
+   "original_room_id": 114,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30_old": {
+   "name": "rm_dunes_30_old",
+   "name_raw": "rm_dunes_30_old",
+   "name_derived": false,
+   "original_room_id": 115,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30b": {
+   "name": "rm_dunes_30b",
+   "name_raw": "rm_dunes_30b",
+   "name_derived": false,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30_house_1": {
+   "name": "rm_dunes_30_house_1",
+   "name_raw": "rm_dunes_30_house_1",
+   "name_derived": false,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30_house_2": {
+   "name": "rm_dunes_30_house_2",
+   "name_raw": "rm_dunes_30_house_2",
+   "name_derived": false,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30_house_3": {
+   "name": "rm_dunes_30_house_3",
+   "name_raw": "rm_dunes_30_house_3",
+   "name_derived": false,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_31": {
+   "name": "rm_dunes_31",
+   "name_raw": "rm_dunes_31",
+   "name_derived": false,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_32": {
+   "name": "rm_dunes_32",
+   "name_raw": "rm_dunes_32",
+   "name_derived": false,
+   "original_room_id": 121,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_33": {
+   "name": "rm_dunes_33",
+   "name_raw": "rm_dunes_33",
+   "name_derived": false,
+   "original_room_id": 122,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_34": {
+   "name": "rm_dunes_34",
+   "name_raw": "rm_dunes_34",
+   "name_derived": false,
+   "original_room_id": 123,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_35": {
+   "name": "rm_dunes_35",
+   "name_raw": "rm_dunes_35",
+   "name_derived": false,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_35b": {
+   "name": "rm_dunes_35b",
+   "name_raw": "rm_dunes_35b",
+   "name_derived": false,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_36": {
+   "name": "rm_dunes_36",
+   "name_raw": "rm_dunes_36",
+   "name_derived": false,
+   "original_room_id": 126,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_37": {
+   "name": "rm_dunes_37",
+   "name_raw": "rm_dunes_37",
+   "name_derived": false,
+   "original_room_id": 127,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_37_saloon": {
+   "name": "rm_dunes_37_saloon",
+   "name_raw": "rm_dunes_37_saloon",
+   "name_derived": false,
+   "original_room_id": 128,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_37_feistyhouse": {
+   "name": "rm_dunes_37_feistyhouse",
+   "name_raw": "rm_dunes_37_feistyhouse",
+   "name_derived": false,
+   "original_room_id": 129,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_37_barn": {
+   "name": "rm_dunes_37_barn",
+   "name_raw": "rm_dunes_37_barn",
+   "name_derived": false,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_37_jail": {
+   "name": "rm_dunes_37_jail",
+   "name_raw": "rm_dunes_37_jail",
+   "name_derived": false,
+   "original_room_id": 131,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_37_hospital": {
+   "name": "rm_dunes_37_hospital",
+   "name_raw": "rm_dunes_37_hospital",
+   "name_derived": false,
+   "original_room_id": 132,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_38": {
+   "name": "rm_dunes_38",
+   "name_raw": "rm_dunes_38",
+   "name_derived": false,
+   "original_room_id": 133,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_39": {
+   "name": "rm_dunes_39",
+   "name_raw": "rm_dunes_39",
+   "name_derived": false,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_40": {
+   "name": "rm_dunes_40",
+   "name_raw": "rm_dunes_40",
+   "name_derived": false,
+   "original_room_id": 135,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_41": {
+   "name": "rm_dunes_41",
+   "name_raw": "rm_dunes_41",
+   "name_derived": false,
+   "original_room_id": 136,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_42": {
+   "name": "rm_dunes_42",
+   "name_raw": "rm_dunes_42",
+   "name_derived": false,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_42_b": {
+   "name": "rm_dunes_42_b",
+   "name_raw": "rm_dunes_42_b",
+   "name_derived": false,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_42_c": {
+   "name": "rm_dunes_42_c",
+   "name_raw": "rm_dunes_42_c",
+   "name_derived": false,
+   "original_room_id": 139,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_43": {
+   "name": "rm_dunes_43",
+   "name_raw": "rm_dunes_43",
+   "name_derived": false,
+   "original_room_id": 140,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_01": {
+   "name": "rm_steamworks_01",
+   "name_raw": "rm_steamworks_01",
+   "name_derived": false,
+   "original_room_id": 141,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_02": {
+   "name": "rm_steamworks_02",
+   "name_raw": "rm_steamworks_02",
+   "name_derived": false,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_03": {
+   "name": "rm_steamworks_03",
+   "name_raw": "rm_steamworks_03",
+   "name_derived": false,
+   "original_room_id": 143,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Steams": {
+   "name": "Steams",
+   "name_raw": "Steams",
+   "name_derived": false,
+   "original_room_id": 144,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_04_transition_b": {
+   "name": "rm_steamworks_04_transition_b",
+   "name_raw": "rm_steamworks_04_transition_b",
+   "name_derived": false,
+   "original_room_id": 145,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.footsteps": {
+   "name": "footsteps",
+   "name_raw": "footsteps",
+   "name_derived": false,
+   "original_room_id": 146,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_04_transition_c": {
+   "name": "rm_steamworks_04_transition_c",
+   "name_raw": "rm_steamworks_04_transition_c",
+   "name_derived": false,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_04c": {
+   "name": "rm_steamworks_04c",
+   "name_raw": "rm_steamworks_04c",
+   "name_derived": false,
+   "original_room_id": 148,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_05": {
+   "name": "rm_steamworks_05",
+   "name_raw": "rm_steamworks_05",
+   "name_derived": false,
+   "original_room_id": 149,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_05b": {
+   "name": "rm_steamworks_05b",
+   "name_raw": "rm_steamworks_05b",
+   "name_derived": false,
+   "original_room_id": 150,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_05c": {
+   "name": "rm_steamworks_05c",
+   "name_raw": "rm_steamworks_05c",
+   "name_derived": false,
+   "original_room_id": 151,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_05d": {
+   "name": "rm_steamworks_05d",
+   "name_raw": "rm_steamworks_05d",
+   "name_derived": false,
+   "original_room_id": 152,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_06": {
+   "name": "rm_steamworks_06",
+   "name_raw": "rm_steamworks_06",
+   "name_derived": false,
+   "original_room_id": 153,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_07": {
+   "name": "rm_steamworks_07",
+   "name_raw": "rm_steamworks_07",
+   "name_derived": false,
+   "original_room_id": 154,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_08": {
+   "name": "rm_steamworks_08",
+   "name_raw": "rm_steamworks_08",
+   "name_derived": false,
+   "original_room_id": 155,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_09": {
+   "name": "rm_steamworks_09",
+   "name_raw": "rm_steamworks_09",
+   "name_derived": false,
+   "original_room_id": 156,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_10": {
+   "name": "rm_steamworks_10",
+   "name_raw": "rm_steamworks_10",
+   "name_derived": false,
+   "original_room_id": 157,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_11": {
+   "name": "rm_steamworks_11",
+   "name_raw": "rm_steamworks_11",
+   "name_derived": false,
+   "original_room_id": 158,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.randomflower": {
+   "name": "randomflower",
+   "name_raw": "randomflower",
+   "name_derived": false,
+   "original_room_id": 159,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_13": {
+   "name": "rm_steamworks_13",
+   "name_raw": "rm_steamworks_13",
+   "name_derived": false,
+   "original_room_id": 160,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_13b": {
+   "name": "rm_steamworks_13b",
+   "name_raw": "rm_steamworks_13b",
+   "name_derived": false,
+   "original_room_id": 161,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.steamworks": {
+   "name": "steamworks",
+   "name_raw": "steamworks",
+   "name_derived": false,
+   "original_room_id": 162,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_15": {
+   "name": "rm_steamworks_15",
+   "name_raw": "rm_steamworks_15",
+   "name_derived": false,
+   "original_room_id": 163,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_16": {
+   "name": "rm_steamworks_16",
+   "name_raw": "rm_steamworks_16",
+   "name_derived": false,
+   "original_room_id": 164,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_17": {
+   "name": "rm_steamworks_17",
+   "name_raw": "rm_steamworks_17",
+   "name_derived": false,
+   "original_room_id": 165,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.chait": {
+   "name": "chait",
+   "name_raw": "chait",
+   "name_derived": false,
+   "original_room_id": 166,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.npc": {
+   "name": "npc",
+   "name_raw": "npc",
+   "name_derived": false,
+   "original_room_id": 167,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_18b": {
+   "name": "rm_steamworks_18b",
+   "name_raw": "rm_steamworks_18b",
+   "name_derived": false,
+   "original_room_id": 168,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_19": {
+   "name": "rm_steamworks_19",
+   "name_raw": "rm_steamworks_19",
+   "name_derived": false,
+   "original_room_id": 169,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_20": {
+   "name": "rm_steamworks_20",
+   "name_raw": "rm_steamworks_20",
+   "name_derived": false,
+   "original_room_id": 170,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_21": {
+   "name": "rm_steamworks_21",
+   "name_raw": "rm_steamworks_21",
+   "name_derived": false,
+   "original_room_id": 171,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.interactable": {
+   "name": "interactable",
+   "name_raw": "interactable",
+   "name_derived": false,
+   "original_room_id": 172,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_22": {
+   "name": "rm_steamworks_22",
+   "name_raw": "rm_steamworks_22",
+   "name_derived": false,
+   "original_room_id": 173,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_23": {
+   "name": "rm_steamworks_23",
+   "name_raw": "rm_steamworks_23",
+   "name_derived": false,
+   "original_room_id": 174,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_24": {
+   "name": "rm_steamworks_24",
+   "name_raw": "rm_steamworks_24",
+   "name_derived": false,
+   "original_room_id": 175,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_25": {
+   "name": "rm_steamworks_25",
+   "name_raw": "rm_steamworks_25",
+   "name_derived": false,
+   "original_room_id": 176,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_26": {
+   "name": "rm_steamworks_26",
+   "name_raw": "rm_steamworks_26",
+   "name_derived": false,
+   "original_room_id": 177,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_score_room": {
+   "name": "rm_score_room",
+   "name_raw": "rm_score_room",
+   "name_derived": false,
+   "original_room_id": 178,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mew_mew": {
+   "name": "rm_mew_mew",
+   "name_raw": "rm_mew_mew",
+   "name_derived": false,
+   "original_room_id": 179,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle": {
+   "name": "rm_battle",
+   "name_raw": "rm_battle",
+   "name_derived": false,
+   "original_room_id": 180,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_config": {
+   "name": "rm_config",
+   "name_raw": "rm_config",
+   "name_derived": false,
+   "original_room_id": 181,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_death_screen": {
+   "name": "rm_death_screen",
+   "name_raw": "rm_death_screen",
+   "name_derived": false,
+   "original_room_id": 182,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_debug": {
+   "name": "rm_debug",
+   "name_raw": "rm_debug",
+   "name_derived": false,
+   "original_room_id": 183,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_credits": {
+   "name": "rm_credits",
+   "name_raw": "rm_credits",
+   "name_derived": false,
+   "original_room_id": 184,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_shop": {
+   "name": "rm_shop",
+   "name_raw": "rm_shop",
+   "name_derived": false,
+   "original_room_id": 185,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_build_ending": {
+   "name": "rm_build_ending",
+   "name_raw": "rm_build_ending",
+   "name_derived": false,
+   "original_room_id": 186,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_27": {
+   "name": "rm_steamworks_27",
+   "name_raw": "rm_steamworks_27",
+   "name_derived": false,
+   "original_room_id": 187,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_31": {
+   "name": "rm_steamworks_31",
+   "name_raw": "rm_steamworks_31",
+   "name_derived": false,
+   "original_room_id": 188,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.colliders": {
+   "name": "colliders",
+   "name_raw": "colliders",
+   "name_derived": false,
+   "original_room_id": 189,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_30": {
+   "name": "rm_steamworks_30",
+   "name_raw": "rm_steamworks_30",
+   "name_derived": false,
+   "original_room_id": 190,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_29": {
+   "name": "rm_steamworks_29",
+   "name_raw": "rm_steamworks_29",
+   "name_derived": false,
+   "original_room_id": 191,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_factory_01": {
+   "name": "rm_steamworks_factory_01",
+   "name_raw": "rm_steamworks_factory_01",
+   "name_derived": false,
+   "original_room_id": 192,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_01": {
+   "name": "rm_steamworks_chem_01",
+   "name_raw": "rm_steamworks_chem_01",
+   "name_derived": false,
+   "original_room_id": 193,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Instances": {
+   "name": "Instances",
+   "name_raw": "Instances",
+   "name_derived": false,
+   "original_room_id": 194,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_02": {
+   "name": "rm_steamworks_chem_02",
+   "name_raw": "rm_steamworks_chem_02",
+   "name_derived": false,
+   "original_room_id": 195,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_03": {
+   "name": "rm_steamworks_chem_03",
+   "name_raw": "rm_steamworks_chem_03",
+   "name_derived": false,
+   "original_room_id": 196,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_hermit": {
+   "name": "rm_steamworks_chem_hermit",
+   "name_raw": "rm_steamworks_chem_hermit",
+   "name_derived": false,
+   "original_room_id": 197,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_04": {
+   "name": "rm_steamworks_chem_04",
+   "name_raw": "rm_steamworks_chem_04",
+   "name_derived": false,
+   "original_room_id": 198,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_06": {
+   "name": "rm_steamworks_chem_06",
+   "name_raw": "rm_steamworks_chem_06",
+   "name_derived": false,
+   "original_room_id": 199,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_07": {
+   "name": "rm_steamworks_chem_07",
+   "name_raw": "rm_steamworks_chem_07",
+   "name_derived": false,
+   "original_room_id": 200,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_chem_05": {
+   "name": "rm_steamworks_chem_05",
+   "name_raw": "rm_steamworks_chem_05",
+   "name_derived": false,
+   "original_room_id": 201,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_32": {
+   "name": "rm_steamworks_32",
+   "name_raw": "rm_steamworks_32",
+   "name_derived": false,
+   "original_room_id": 202,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_34": {
+   "name": "rm_steamworks_34",
+   "name_raw": "rm_steamworks_34",
+   "name_derived": false,
+   "original_room_id": 203,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_35": {
+   "name": "rm_steamworks_35",
+   "name_raw": "rm_steamworks_35",
+   "name_derived": false,
+   "original_room_id": 204,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_33": {
+   "name": "rm_steamworks_33",
+   "name_raw": "rm_steamworks_33",
+   "name_derived": false,
+   "original_room_id": 205,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_36": {
+   "name": "rm_steamworks_36",
+   "name_raw": "rm_steamworks_36",
+   "name_derived": false,
+   "original_room_id": 206,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Decorations": {
+   "name": "Decorations",
+   "name_raw": "Decorations",
+   "name_derived": false,
+   "original_room_id": 207,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.FF3D3636": {
+   "name": "#FF3D3636",
+   "name_raw": "#FF3D3636",
+   "name_derived": false,
+   "original_room_id": 208,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_factory_elevator": {
+   "name": "rm_steamworks_factory_elevator",
+   "name_raw": "rm_steamworks_factory_elevator",
+   "name_derived": false,
+   "original_room_id": 209,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_01": {
+   "name": "rm_hotland_01",
+   "name_raw": "rm_hotland_01",
+   "name_derived": false,
+   "original_room_id": 210,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Interactables": {
+   "name": "Interactables",
+   "name_raw": "Interactables",
+   "name_derived": false,
+   "original_room_id": 211,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_03": {
+   "name": "rm_hotland_03",
+   "name_raw": "rm_hotland_03",
+   "name_derived": false,
+   "original_room_id": 212,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_03b": {
+   "name": "rm_hotland_03b",
+   "name_raw": "rm_hotland_03b",
+   "name_derived": false,
+   "original_room_id": 213,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Doorways": {
+   "name": "Doorways",
+   "name_raw": "Doorways",
+   "name_derived": false,
+   "original_room_id": 214,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.building": {
+   "name": "building",
+   "name_raw": "building",
+   "name_derived": false,
+   "original_room_id": 215,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.SpooderWall": {
+   "name": "SpooderWall",
+   "name_raw": "SpooderWall",
+   "name_derived": false,
+   "original_room_id": 216,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_complex_1": {
+   "name": "rm_hotland_complex_1",
+   "name_raw": "rm_hotland_complex_1",
+   "name_derived": false,
+   "original_room_id": 217,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Objects": {
+   "name": "Objects",
+   "name_raw": "Objects",
+   "name_derived": false,
+   "original_room_id": 218,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_complex_1c": {
+   "name": "rm_hotland_complex_1c",
+   "name_raw": "rm_hotland_complex_1c",
+   "name_derived": false,
+   "original_room_id": 219,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Clockman": {
+   "name": "Clockman",
+   "name_raw": "Clockman",
+   "name_derived": false,
+   "original_room_id": 220,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_roof": {
+   "name": "rm_hotland_roof",
+   "name_raw": "rm_hotland_roof",
+   "name_derived": false,
+   "original_room_id": 221,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_flashback_01": {
+   "name": "rm_flashback_01",
+   "name_raw": "rm_flashback_01",
+   "name_derived": false,
+   "original_room_id": 222,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.stalagmites": {
+   "name": "stalagmites",
+   "name_raw": "stalagmites",
+   "name_derived": false,
+   "original_room_id": 223,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_flashback_03": {
+   "name": "rm_flashback_03",
+   "name_raw": "rm_flashback_03",
+   "name_derived": false,
+   "original_room_id": 224,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flowey": {
+   "name": "rm_battle_flowey",
+   "name_raw": "rm_battle_flowey",
+   "name_derived": false,
+   "original_room_id": 225,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flashback_01": {
+   "name": "rm_battle_flashback_01",
+   "name_raw": "rm_battle_flashback_01",
+   "name_derived": false,
+   "original_room_id": 226,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flashback_02": {
+   "name": "rm_battle_flashback_02",
+   "name_raw": "rm_battle_flashback_02",
+   "name_derived": false,
+   "original_room_id": 227,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Water": {
+   "name": "Water",
+   "name_raw": "Water",
+   "name_derived": false,
+   "original_room_id": 228,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flashback_04": {
+   "name": "rm_battle_flashback_04",
+   "name_raw": "rm_battle_flashback_04",
+   "name_derived": false,
+   "original_room_id": 229,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Bridge": {
+   "name": "Bridge",
+   "name_raw": "Bridge",
+   "name_derived": false,
+   "original_room_id": 230,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flashback_06": {
+   "name": "rm_battle_flashback_06",
+   "name_raw": "rm_battle_flashback_06",
+   "name_derived": false,
+   "original_room_id": 231,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flashback_final": {
+   "name": "rm_battle_flashback_final",
+   "name_raw": "rm_battle_flashback_final",
+   "name_derived": false,
+   "original_room_id": 232,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.WallsInst": {
+   "name": "WallsInst",
+   "name_raw": "WallsInst",
+   "name_derived": false,
+   "original_room_id": 233,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flashback_final_2": {
+   "name": "rm_battle_flashback_final_2",
+   "name_raw": "rm_battle_flashback_final_2",
+   "name_derived": false,
+   "original_room_id": 234,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_battle_flowey_phase_2": {
+   "name": "rm_battle_flowey_phase_2",
+   "name_raw": "rm_battle_flowey_phase_2",
+   "name_derived": false,
+   "original_room_id": 235,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_summary": {
+   "name": "rm_summary",
+   "name_raw": "rm_summary",
+   "name_derived": false,
+   "original_room_id": 236,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.MachineFront2F": {
+   "name": "MachineFront2F",
+   "name_raw": "MachineFront2F",
+   "name_derived": false,
+   "original_room_id": 237,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.电_梯": {
+   "name": "电 梯",
+   "name_raw": "电 梯",
+   "name_derived": false,
+   "original_room_id": 238,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.iwalsl": {
+   "name": "iwalsl",
+   "name_raw": "iwalsl",
+   "name_derived": false,
+   "original_room_id": 239,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_factory_04": {
+   "name": "rm_steamworks_factory_04",
+   "name_raw": "rm_steamworks_factory_04",
+   "name_derived": false,
+   "original_room_id": 240,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_entrance": {
+   "name": "rm_mansion_entrance",
+   "name_raw": "rm_mansion_entrance",
+   "name_derived": false,
+   "original_room_id": 241,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Kotatsu": {
+   "name": "Kotatsu",
+   "name_raw": "Kotatsu",
+   "name_derived": false,
+   "original_room_id": 242,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_hallway_west": {
+   "name": "rm_mansion_hallway_west",
+   "name_raw": "rm_mansion_hallway_west",
+   "name_derived": false,
+   "original_room_id": 243,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_hallway_east": {
+   "name": "rm_mansion_hallway_east",
+   "name_raw": "rm_mansion_hallway_east",
+   "name_derived": false,
+   "original_room_id": 244,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_hallway_east_2": {
+   "name": "rm_mansion_hallway_east_2",
+   "name_raw": "rm_mansion_hallway_east_2",
+   "name_derived": false,
+   "original_room_id": 245,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.0_4": {
+   "name": "0.4",
+   "name_raw": "0.4",
+   "name_derived": false,
+   "original_room_id": 246,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_hallway_west_2": {
+   "name": "rm_mansion_hallway_west_2",
+   "name_raw": "rm_mansion_hallway_west_2",
+   "name_derived": false,
+   "original_room_id": 247,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_office": {
+   "name": "rm_mansion_office",
+   "name_raw": "rm_mansion_office",
+   "name_derived": false,
+   "original_room_id": 248,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_kanakos_room": {
+   "name": "rm_mansion_kanakos_room",
+   "name_raw": "rm_mansion_kanakos_room",
+   "name_derived": false,
+   "original_room_id": 249,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_mansion_study": {
+   "name": "rm_mansion_study",
+   "name_raw": "rm_mansion_study",
+   "name_derived": false,
+   "original_room_id": 250,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.path": {
+   "name": "path",
+   "name_raw": "path",
+   "name_derived": false,
+   "original_room_id": 251,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.fg": {
+   "name": "fg",
+   "name_raw": "fg",
+   "name_derived": false,
+   "original_room_id": 252,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_newhome_01": {
+   "name": "rm_newhome_01",
+   "name_raw": "rm_newhome_01",
+   "name_derived": false,
+   "original_room_id": 253,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_newhome_02": {
+   "name": "rm_newhome_02",
+   "name_raw": "rm_newhome_02",
+   "name_derived": false,
+   "original_room_id": 254,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_newhome_03": {
+   "name": "rm_newhome_03",
+   "name_raw": "rm_newhome_03",
+   "name_derived": false,
+   "original_room_id": 255,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.buildings": {
+   "name": "buildings",
+   "name_raw": "buildings",
+   "name_derived": false,
+   "original_room_id": 256,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_newhome_02b": {
+   "name": "rm_newhome_02b",
+   "name_raw": "rm_newhome_02b",
+   "name_derived": false,
+   "original_room_id": 257,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30d": {
+   "name": "rm_dunes_30d",
+   "name_raw": "rm_dunes_30d",
+   "name_derived": false,
+   "original_room_id": 258,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_elevator": {
+   "name": "rm_hotland_elevator",
+   "name_raw": "rm_hotland_elevator",
+   "name_derived": false,
+   "original_room_id": 259,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.forestfront": {
+   "name": "forestfront",
+   "name_raw": "forestfront",
+   "name_derived": false,
+   "original_room_id": 260,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_hotland_lab_entrance": {
+   "name": "rm_hotland_lab_entrance",
+   "name_raw": "rm_hotland_lab_entrance",
+   "name_derived": false,
+   "original_room_id": 261,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.doorframe": {
+   "name": "doorframe",
+   "name_raw": "doorframe",
+   "name_derived": false,
+   "original_room_id": 262,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_01": {
+   "name": "rm_castle_01",
+   "name_raw": "rm_castle_01",
+   "name_derived": false,
+   "original_room_id": 263,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_02": {
+   "name": "rm_castle_02",
+   "name_raw": "rm_castle_02",
+   "name_derived": false,
+   "original_room_id": 264,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.floorandwalls": {
+   "name": "floorandwalls",
+   "name_raw": "floorandwalls",
+   "name_derived": false,
+   "original_room_id": 265,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_04": {
+   "name": "rm_castle_04",
+   "name_raw": "rm_castle_04",
+   "name_derived": false,
+   "original_room_id": 266,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_05": {
+   "name": "rm_castle_05",
+   "name_raw": "rm_castle_05",
+   "name_derived": false,
+   "original_room_id": 267,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_throne_room": {
+   "name": "rm_castle_throne_room",
+   "name_raw": "rm_castle_throne_room",
+   "name_derived": false,
+   "original_room_id": 268,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_barrier": {
+   "name": "rm_castle_barrier",
+   "name_raw": "rm_castle_barrier",
+   "name_derived": false,
+   "original_room_id": 269,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_credits_geno": {
+   "name": "rm_credits_geno",
+   "name_raw": "rm_credits_geno",
+   "name_derived": false,
+   "original_room_id": 270,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_credits_paci": {
+   "name": "rm_credits_paci",
+   "name_raw": "rm_credits_paci",
+   "name_derived": false,
+   "original_room_id": 271,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_credits_paci_intermission": {
+   "name": "rm_credits_paci_intermission",
+   "name_raw": "rm_credits_paci_intermission",
+   "name_derived": false,
+   "original_room_id": 272,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_castle_pre_barrier": {
+   "name": "rm_castle_pre_barrier",
+   "name_raw": "rm_castle_pre_barrier",
+   "name_derived": false,
+   "original_room_id": 273,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_menu_flowey": {
+   "name": "rm_menu_flowey",
+   "name_raw": "rm_menu_flowey",
+   "name_derived": false,
+   "original_room_id": 274,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_macro_froggit_room": {
+   "name": "rm_steamworks_macro_froggit_room",
+   "name_raw": "rm_steamworks_macro_froggit_room",
+   "name_derived": false,
+   "original_room_id": 275,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_30": {
+   "name": "rm_dunes_30",
+   "name_raw": "rm_dunes_30",
+   "name_derived": false,
+   "original_room_id": 276,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_06_b": {
+   "name": "rm_steamworks_06_b",
+   "name_raw": "rm_steamworks_06_b",
+   "name_derived": false,
+   "original_room_id": 277,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Vents": {
+   "name": "Vents",
+   "name_raw": "Vents",
+   "name_derived": false,
+   "original_room_id": 278,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.Assets": {
+   "name": "Assets",
+   "name_raw": "Assets",
+   "name_derived": false,
+   "original_room_id": 279,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_25_b": {
+   "name": "rm_steamworks_25_b",
+   "name_raw": "rm_steamworks_25_b",
+   "name_derived": false,
+   "original_room_id": 280,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_steamworks_30_b": {
+   "name": "rm_steamworks_30_b",
+   "name_raw": "rm_steamworks_30_b",
+   "name_derived": false,
+   "original_room_id": 281,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.FFFFFFFF": {
+   "name": "#FFFFFFFF",
+   "name_raw": "#FFFFFFFF",
+   "name_derived": false,
+   "original_room_id": 282,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_42_d": {
+   "name": "rm_dunes_42_d",
+   "name_raw": "rm_dunes_42_d",
+   "name_derived": false,
+   "original_room_id": 283,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_snowdin_secret_to_everybody": {
+   "name": "rm_snowdin_secret_to_everybody",
+   "name_raw": "rm_snowdin_secret_to_everybody",
+   "name_derived": false,
+   "original_room_id": 284,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.rm_dunes_secret": {
+   "name": "rm_dunes_secret",
+   "name_raw": "rm_dunes_secret",
+   "name_derived": false,
+   "original_room_id": 285,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "uty.rooms.fallbacktexture_png": {
+   "name": "fallbacktexture.png",
+   "name_raw": "fallbacktexture.png",
+   "name_derived": false,
+   "original_room_id": 286,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

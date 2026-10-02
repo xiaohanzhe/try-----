@@ -58,30 +58,41 @@ TRAIT_WORDS_CN = {
 #: 特质 → **英文 id 令牌**（真正用来匹配的）。
 #: ★ 为什么另开一张表而不是复用中文词：场景 id 是英文（`ch3_dark_cave` / `castle_town`），
 #:   中文词匹配不上。两张表各司其职（中文=展示，英文=匹配），互不替代。
-#: ★★ 令牌**必须真的能在现网场景 id 里命中**（`check73` D2 逐条验）：
+#: ★★ 令牌**必须真的能在现网场景 id 里命中**（`check73` D1 逐条验）：
 #:   "从来不会命中"的令牌是在**虚假宣传一项不存在的能力**。
+#:
+#: ★★★ **第77轮：`ruined` 从预留转正**。
+#:   第73轮时它与 `bright`/`cosmic` 一样是**零命中**（当时 `_index.json` 只有 Deltarune，
+#:   而 Deltarune 的房间名里一个 `ruin` 都没有）。
+#:   第77轮把 UT / 黄魂 迁入产品索引后，**实测命中 35 处**
+#:   （`ut.rooms.room_ruins1` … `room_ruins7A` 等，UT 的「废墟」区域）⇒ 能力**真的有了**。
+#:   ⇒ 用户点名的「**破败**这类的词也需要有能力识别」**现在兑现了一部分**（UT 侧）。
+#:   ⚠️ **只把实测命中的 `ruin`/`ruined` 转正**；`broken`/`wreck`/`abandon`/`desolate`
+#:     实测仍是 0 命中（Deltarune 与 UT/黄魂 都没有这种命名）⇒ **留在预留表**
+#:     —— 这正是 D1「本位令牌逐条 ≥1 命中」那条判据在把守的：
+#:     **第一版把它们一起转正了，D1 立刻报红**（`[('ruined','broken'), …]`）。
 TRAIT_TOKENS = {
     'dark': ('dark', 'cave', 'basement'),
-    'ruined': (),
+    'ruined': ('ruin', 'ruined'),
     'bright': (),
     'crowded': ('town', 'city', 'shop'),
     'quiet': ('home', 'house', 'forest', 'grave', 'church', 'library'),
     'cosmic': (),
 }
 
-#: ★ **跨作品预留**令牌：现网 **0 命中**（`check73` D3 反过来验"确实 0 命中"，
+#: ★ **跨作品预留**令牌：现网 **0 命中**（`check73` D2 反过来验"确实 0 命中"，
 #: 防有人拿它们混进本位表凑数字）。等 `hub:ot` / `hub:os` 的场景进大图后启用。
 #:
-#: ★★ 这张表本身就是一条**实证结论**，必须留着 —— 用户点名的两件事
-#:   「**这地方真黑**」以外还有「**破败**这类的词也需要有能力识别」，
-#:   而实测：**现网 1,013 个场景 id 里 `ruined` 一个都命不中**，
-#:   `cosmic`（宇宙 / 太空）同样 0 命中。
-#:   原因不是"没做"，是 **OneShot / Outertale 的场景还没进 `_index.json`**
-#:   （跨作品场景面 = 70/71 轮登记的 `not_yet`）。
-#:   ⇒ **如实登记缺口**，而不是把 `ruin` 硬塞进本位表让判据看起来"覆盖了破败"。
+#: ★★ 这张表本身就是一条**实证结论**，必须留着 —— 用户除了「这地方真黑」还点名
+#:   「**破败**这类的词也需要有能力识别」。第77轮后实测：
+#:   **`bright`（明亮）/ `cosmic`（宇宙）仍是 0 命中**，
+#:   而 `ruined` 的另外四个同义令牌（`broken`/`wreck`/`abandon`/`desolate`）
+#:   **也仍是 0 命中** —— 只有 `ruin`/`ruined` 因 UT 废墟区域转正。
+#:   原因不是"没做"，是 **OneShot / Outertale 的场景还没进 `_index.json`**。
+#:   ⇒ **如实登记缺口**，而不是把 `sun` 硬塞进本位表让判据看起来"覆盖了明亮"。
 TRAIT_TOKENS_RESERVED = {
     'dark': ('cellar', 'underground'),
-    'ruined': ('ruin', 'ruined', 'broken', 'wreck', 'abandon', 'desolate'),
+    'ruined': ('broken', 'wreck', 'abandon', 'desolate'),
     'bright': ('sun', 'sunny', 'bright', 'daylight'),
     'crowded': ('market', 'square', 'plaza', 'street'),
     'cosmic': ('space', 'orbit', 'moon', 'cosmic', 'galaxy', 'void', 'sky'),
