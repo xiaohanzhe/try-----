@@ -1,0 +1,28 @@
+[PASS] ① AST 可编译 escort.py 
+[PASS] ① AST 可编译 main.py 
+[PASS] ① AST 可编译 run_all.py 
+[PASS] ① AST 可编译 check83.py 
+[PASS] ① AST 可编译 _probe_escort83.py 
+[PASS] ① AST 可编译 clear_obstructions.py 
+[PASS] ② 结构 MEMORY.md：二级标题 12 个、无粘连 
+[PASS] ② 结构 参考-契约与历轮（详版）.md：二级标题 82 个、无粘连 
+[PASS] ② 结构 2026-10-03.md：二级标题 6 个、无粘连 
+[PASS] ② 结构 第83轮报告-带灵魂走R6.md：二级标题 8 个、无粘连 
+[PASS] ② 速查本 §0~§11 十一个章节全在 
+[PASS] ③ 编码 MEMORY.md：无 BOM 无 U+FFFD 
+[PASS] ③ 编码 参考-契约与历轮（详版）.md：无 BOM 无 U+FFFD 
+[PASS] ③ 编码 2026-10-03.md：无 BOM 无 U+FFFD 
+[PASS] ③ 编码 第83轮报告-带灵魂走R6.md：无 BOM 无 U+FFFD 
+[PASS] ③ 编码 escort.py：无 BOM 无 U+FFFD 
+[PASS] ④ 恒真判据复查：零 check(..., True) 形态 []
+[PASS] ⑤ 逐令牌回验：详版/日志/报告承接 []
+[PASS] ⑤ 速查本关键令牌在位 []
+[PASS] ⑤ 速查本 js_len ≤ 10000（实测 9906） 
+[PASS] ⑥ 当日日志 append-only：历史全文仍完整包含 
+[PASS] ⑥ 当日日志行数 ≥ 253（实测 301） 
+[PASS] ⑦ escort.py 顶层 import ⊆ {logging, math} {'math', 'logging'}
+[PASS] ⑦ main.py G 键分支 + Z 键各恰 1 
+[PASS] ⑦ 成对互斥两处都在 
+[PASS] ⑦ 逆映射在位 + 旧错 API 不在 
+------------------------------------------------------------
+复检：PASS=26 FAIL=0 共 26 项

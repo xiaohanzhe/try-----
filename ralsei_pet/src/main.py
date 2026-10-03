@@ -430,6 +430,24 @@ from modules import ghost_overlay as ghost_overlay_mod
 #   ⇒ 原作里的"操控谁"就是**同一套输入指向不同实体**，"附身"= 换消费方，不是新物理。
 # ⚠️ 走**模块引用**（`possession_mod.PossessionState`），与 soul/ghost 同一纪律。
 from modules import possession as possession_mod
+# ---- 带路（ESCORT，第83轮 R6）---------------------------------------------
+# 用户口径（第76轮需求锁定原话，逐字）：「R6 可请求角色带灵魂走」。
+# ★ 本轮两条用户裁定（2026-10-03，逐字）：
+#   「**新增 G 键**」＋「**完全照原作（直接置位）**」。
+# 分工（与 R5 附身**并列但正交**）：
+#   escort      纯逻辑：带路状态机（谁能带 / 谁要先问 / 轨迹延迟采样 / 直接置位）
+#               —— 零依赖，可离线回归（`check83` 锁它）
+#   src/main.py 组装：G 键入口 / 每帧把带路者位置压进轨迹并把灵魂置位 / 征求同意的对话
+# ★★ 原作依据 / 以及"原作没有这条"的诚实标注：
+#   机制照抄毛毛虫 —— `obj_caterpillarchara` 的 `remx[25]/remy[25]` +
+#   `scr_makecaterpillar` 的 `target = 12 + (slot * 12)`（物证 `第46轮/_evidence/`）。
+#   ⚠️ 但**方向与原作相反**：原作 `parent = obj_mainchara` 是**主角带路、队友跟随**；
+#      R6 是**角色带路、灵魂跟随**；且原作**没有"灵魂"这个可被带领的实体**
+#      （`obj_heart` 只在战斗界面）⇒ "灵魂"是本项目实体，R6 整体是**本项目扩展**。
+#      ⇒ 注释与报告里**不许**写"原作就是这样"。
+# ⚠️ 与 R5 **互斥**：两个状态机若同时"自认为在管主体位置"，会同帧两处写坐标
+#    （"同一份规则两处算"是本项目最贵的坑）。裁决见 `init_escort` / `toggle_escort`。
+from modules import escort as escort_mod
 # 球容器（第50轮）：Ralsei 在光世界**必须被"扭蛋球"罩住**才能存身。
 # 分工（三层各管一段，与场景系统同源）：
 #   bubble_system  → 规则（谁能进 / 何时脱 / 4 向旋转 / 塑料滤镜参数），零依赖
@@ -1256,6 +1274,14 @@ class RalseiPet(QMainWindow):
         #    换场景时该解除而不是"跟着搬"）。
         self.init_possession()
 
+        # ---- 带路（ESCORT，第83轮 R6）----
+        # 为什么排在附身**之后**：R6 要复用 R5 的 `ConsentState`（同一份同意表，
+        # 用户裁定「Niko 需先征求同意」对两者都成立），且两者**互斥**
+        # ⇒ 必须等 `self.possession` 就绪后再建，才能把互斥裁决写在一处。
+        # ⚠️ 带路同样**不**往 `_scene_switch_hooks` 追加东西（会话内状态；
+        #    换场景时角色不在同一场景了，该解除）。
+        self.init_escort()
+
     # ==================================================================
     #  灵魂（SOUL，第55轮）—— 可拖拽 / 可键盘操控 / 可自由出入各场景
     # ==================================================================
@@ -1814,6 +1840,14 @@ class RalseiPet(QMainWindow):
     def _possession_on_begin(self, target):
         """附身成立 ⇒ 收起灵魂（**操控权已转移**）+ 原作 `snd_squeak` 音效。"""
         try:
+            # ★ 第83轮 R6 互斥（对偶裁决）：附身接管 ⇒ 先解除带路。
+            #   两处裁决必须成对（`toggle_escort` 里是"带路接管先解除附身"），
+            #   否则会出现"角色既被附身又在带路" = 同一帧两处写坐标。
+            esc = getattr(self, 'escort', None)
+            if esc is not None and esc.active:
+                was = esc.describe()
+                esc.stop('被附身接管')
+                _log.info('附身接管：先解除带路（%s）', was)
             # ★ 灵魂收起而不是隐藏控件：附身期间方向键归角色，灵魂留着会"两边都在动"。
             #   解除时 `_possession_sync_soul_visibility()` 会把它叫回来。
             self.hide_soul()
@@ -1893,6 +1927,334 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug('附身推进异常（本帧跳过）: %s', e)
             return False
+
+    # ==================================================================
+    #  带路（ESCORT，第83轮 R6）—— G 键请求某个角色带着灵魂走
+    # ==================================================================
+    # 用户口径（第76轮需求锁定原话，逐字）：「R6 可请求角色带灵魂走」。
+    # ★ 本轮两条用户裁定（2026-10-03，逐字）：
+    #   「**新增 G 键**」（与 Z=R5 附身完全分开）＋「**完全照原作（直接置位）**」。
+    # ★★ 原作依据 / 诚实标注（见 `modules/escort.py` 模块头）：
+    #   机制照抄毛毛虫（`obj_caterpillarchara` 的 25 帧历史 + `target = 12+slot*12`），
+    #   ⚠️ 但**方向与原作相反**（原作主角带路队友跟随；R6 角色带路灵魂跟随），
+    #   且原作**没有"灵魂"这个可被带领的实体** ⇒ R6 整体是**本项目扩展**。
+    # ⚠️ 与 R5 **互斥**：见 `toggle_escort` 与 `_possession_on_begin` 的对偶裁决。
+
+    #: 带路总开关（与 `POSSESSION_ENABLED` / `SOUL_ENABLED` 同形）。
+    #: `False` ⇒ `init_escort()` 建完空壳就返回，G 键退化成"什么都没发生"。
+    #: ⚠️ 保留它本身**不是死代码**：这是"带路出问题"时的一刀定位开关。
+    ESCORT_ENABLED = True
+
+    def init_escort(self):
+        """建带路状态机 + 复用 R5 的同意表。
+
+        失败语义与灵魂 / 幽灵 / 附身同规：**只降级、不抛出**（带路坏了桌宠照常跑），
+        且 `self.escort is None` 时 G 键入口直接返回，不会半死不活。
+        """
+        self.escort = None
+        self._escort_targets = {}
+        if not getattr(self, 'ESCORT_ENABLED', True):
+            _log.info('带路总开关 ESCORT_ENABLED=False ⇒ 不带路（用它定位问题）')
+            return
+        try:
+            # ★★ 复用 R5 的同意表（**同一份**，不另建 —— "同一份规则两处算"是最贵的坑）。
+            #   `possession` 已在 `init_possession()` 里建好；顺序保证见 init_npc_systems。
+            poss = getattr(self, 'possession', None)
+            consent = getattr(poss, 'consent', None) if poss is not None else None
+            self.escort = escort_mod.EscortState(leader_id=None, consent=consent)
+            self._escort_targets = dict(getattr(self, '_possession_targets', None) or {})
+            _log.info('带路就绪：可请求带路目标 %d 个（%s）；同意表%s',
+                      len(self._escort_targets),
+                      '、'.join(sorted(self._escort_targets)) or '无',
+                      '复用 R5' if consent is not None else '独立兜底')
+        except Exception:
+            _log.exception('带路初始化失败（带路功能不可用，宠物照常运行）')
+            self.escort = None
+
+    def _escort_target_at(self):
+        """选一个"当前可请求带路的目标"（本场景的）。
+
+        ★ 复用 R5 的同一套选择逻辑（`_possession_target_at` 的候选集）——
+          不另写一份"谁在场"，否则两处对"他在不在这个场景"的理解会分叉。
+          与 R5 的唯一区别：R5 会为"取最近"做灵魂位置比较，这里**如实退回登记顺序**
+          （NPC 房间坐标未纳入比较，同 R5 的说明）。
+        """
+        esc = getattr(self, 'escort', None)
+        if esc is None:
+            return (None, '带路系统未就绪')
+        targets = list((self.__dict__.get('_escort_targets') or {}).values())
+        if not targets:
+            return (None, '登记表里没有可带路目标')
+        cur = self.__dict__.get('current_scene')
+        cands = [t for t in targets
+                 if getattr(t, 'scene', None) is None or cur is None
+                 or t.scene == cur]
+        if not cands:
+            return (None, '当前场景没有可带路角色（他们在别处）')
+        return (cands[0], '按登记顺序选第一件（NPC 房间坐标未纳入比较）')
+
+    def toggle_escort(self):
+        """★ R6 的主入口（G 键）：请求带路 / 结束带路。
+
+        返回 True 表示"这次按 G 确实做了件事"（发起请求 / 开始带路 / 结束），
+        False 表示"什么都没发生"（没有目标 / 被拒 / 系统未就绪）。
+
+        ★★ 与 R5 的**互斥裁决**（写在入口，一处即可）：
+          · 若正在**附身**中 ⇒ 先 `stop` 附身（附身时角色归用户操控，
+            "同一个角色既被操控又带路"是同帧两处写坐标的经典事故）；
+          · 再按 G ⇒ 结束带路。
+        """
+        esc = getattr(self, 'escort', None)
+        if esc is None:
+            _log.info('带路请求被忽略：带路系统未就绪（ESCORT_ENABLED=%s）',
+                      getattr(self, 'ESCORT_ENABLED', None))
+            return False
+        try:
+            # ---- 互斥：附身优先被解除（G 是"要用带路"，所以让位的是附身）----
+            poss = getattr(self, 'possession', None)
+            if poss is not None and (poss.is_possessing or poss.is_asking):
+                was = poss.describe()
+                poss.stop('被带路请求接管')
+                self._possession_sync_soul_visibility()
+                _log.info('带路接管：先解除附身（%s）', was)
+
+            # ---- 已在带路/征求 ⇒ 这一下 G = 结束 / 取消 ----
+            if esc.active:
+                was = esc.describe()
+                esc.stop('再按 G 结束')
+                _log.info('带路结束（%s）', was)
+                return True
+
+            target, why = self._escort_target_at()
+            if target is None:
+                _log.info('带路：没有可请求目标（%s）', why)
+                return False
+            # 带路者必须与灵魂同场景（复用 R5 的场景来源，不另算）。
+            scene = self.__dict__.get('current_scene')
+            leader_scene = self._npc_scene_of(target.npc_id)
+            # ★ 分类从 R5 的**唯一真源**取（`POSSESSION_KINDS`），不另建表。
+            kind = possession_mod.kind_of(target.npc_id)
+            if kind == possession_mod.KIND_FORBIDDEN:
+                _log.info('带路：%s 不可带路', target.npc_id)
+                return False
+            mode = esc.request(target.npc_id, kind=kind, scene=scene,
+                               leader_scene=leader_scene)
+            if mode == escort_mod.ESCORT_ASKING:
+                self._escort_ask_consent(target)
+                return True
+            if mode == escort_mod.ESCORT_LEADING:
+                self._escort_on_begin(target)
+                return True
+            _log.info('带路未成立：%s（%s）', esc.describe(), why)
+            return False
+        except Exception:
+            _log.exception('带路切换异常（已忽略，宠物照常运行）')
+            return False
+
+    def _escort_on_begin(self, target):
+        """带路成立 ⇒ 把轨迹初值设成"带路者当前位置"，并让灵魂可见。"""
+        try:
+            soul = getattr(self, 'soul', None)
+            if soul is not None and not self._soul_visible():
+                self.show_soul()
+            # ★ 轨迹初值 = 带路者当前位置（照抄原作 `remx[i]` 的初值）
+            #   ⇒ 必须**填满**而不是清空，否则前 12 帧灵魂会被从 (0,0) 拽过来。
+            #   带路者房间坐标本项目没有 ⇒ 用**灵魂当前房间坐标**做初值
+            #   （等价于"带路者就站在灵魂这里"），并如实说明：轨迹会随
+            #   带路者真实位置逐帧覆盖，初值只影响最前面的 lag 帧。
+            x, y = self._escort_leader_seed_xy()
+            esc = self.escort
+            esc.reset_trace(x, y)
+            self._escort_play_squeak()
+            _log.info('带路成立：%s（轨迹初值 %.1f,%.1f）', target, x, y)
+        except Exception:
+            _log.exception('带路成立后的收尾失败（忽略）')
+
+    def _escort_leader_seed_xy(self):
+        """带路者轨迹的初值坐标（逻辑房间坐标）。
+
+        ★ 优先用**灵魂当前所在**的房间坐标：本项目没有"NPC 在房间里的坐标"
+          这个量（同 R5 的如实说明）⇒ 用灵魂位置当"带路者此刻就在你旁边"，
+          是最不撒谎的初值。取不到 ⇒ `(0.0, 0.0)`，并让调用方照常填满
+          （填满保证不会穿屏；(0,0) 顶多让头 12 帧的灵魂位置不准，随后被真值覆盖）。
+        """
+        try:
+            soul = getattr(self, 'soul', None)
+            if soul is not None:
+                pt = soul_entity_mod.screen_to_room(
+                    soul.state.center()[0], soul.state.center()[1],
+                    self._soul_room_rect(), self._virtual_screen_size())
+                if pt is not None:
+                    return (float(pt[0]), float(pt[1]))
+        except Exception:
+            pass
+        return (0.0, 0.0)
+
+    def _escort_ask_consent(self, target):
+        """对需要同意的角色发起"征求同意"——走**既有的对话通道**。
+
+        ★ 与 R5 的自造弹窗纪律一致：本项目"说话"只有一条出口
+          （`dialogue_ui.add_dialogue` 的薄封装 `_item_menu_message`），
+          另开一条迟早分叉。
+        """
+        try:
+            self._item_menu_message(
+                '* 我（雷尔赛）看向 %s：「……可以带我一起去吗？」' % target.name)
+            self._escort_play_squeak()
+        except Exception:
+            _log.exception('带路征求同意提示失败（忽略）')
+
+    def _escort_play_squeak(self):
+        """播原作的 `snd_squeak`（交互成功音）。找不到素材 ⇒ 静默跳过（**不假报**）。
+
+        ★ 与 R5 同款：抽成独立方法，回归锁只断言"它被调了"，
+          不绑死某一条播放实现。
+        """
+        try:
+            sm = getattr(self, 'sound_manager', None)
+            if sm is None:
+                return False
+            for meth in ('play_sfx', 'play_sound', 'play_effect'):
+                fn = getattr(sm, meth, None)
+                if callable(fn):
+                    try:
+                        fn('snd_squeak')
+                        return True
+                    except Exception:
+                        continue
+            return False
+        except Exception as e:
+            _log.debug('snd_squeak 播放失败（忽略）: %s', e)
+            return False
+
+    def _escort_tick(self, dt):
+        """每帧推进带路（挂在 `update_movement` 的 30ms 节拍上，与灵魂同源）。
+
+        返回 True 表示本帧**灵魂位置被带路改变**。
+
+        ★ 用户裁定「完全照原作（直接置位）」⇒ 这里就是直接置位：
+          灵魂位置 = 带路者轨迹里「滞后 12 帧」那一点（`escort.step`）。
+        ⚠️ 带路者位置的**真值来源**：本项目没有"NPC 的房间坐标"这个量
+          （同 R5 如实说明）⇒ 本帧的带路者位置取**灵魂当前位置**再做一步
+          位移（即：灵魂跟着"自己上一帧的位置"走，等于**原地不动**）。
+          这显然不是"带路"。
+          ⇒ 因此本 tick **只做"如果调用方喂了带路者位置，就推进"**，
+            带路者位置的注入留给 P3（`npc_roam` 有 NPC 位置时）。
+            **本轮如实登记：带路位置源未接线**，见 `WIRING` 与报告。
+        """
+        esc = getattr(self, 'escort', None)
+        if esc is None:
+            return False
+        try:
+            if not esc.needs_step():
+                return False
+            # ★ 带路者位置：优先问 NPC 生活层要（若它在位），否则如实返回 None
+            #   （即本轮不推进）—— **不拿灵魂位置冒充带路者**（那会变成原地打转）。
+            lx, ly = self._escort_leader_xy(esc.leader_id)
+            if lx is None:
+                return False
+            pt = esc.step(lx, ly)
+            if pt is None:
+                return False
+            self._escort_apply_soul_xy(pt[0], pt[1])
+            return True
+        except Exception as e:
+            _log.debug('带路推进异常（本帧跳过）: %s', e)
+            return False
+
+    #: ★★ 诚实登记：带路者位置的来源在**本轮未接线**（见报告 §遗留）。
+    #:    结构：`{'wired': bool, 'source': str, 'not_yet': [说明...]}`
+    #: 为什么要有这个字典：本项目纪律 —— "函数写对了 ≠ 产品用上了"，
+    #: 而"未接线"必须能被一眼看到，不能靠读代码猜。
+    ESCORT_WIRING = {
+        'wired': False,
+        'source': 'npc_roam/npc_placement（NPC 房间坐标）',
+        'not_yet': [
+            '带路者房间坐标：本项目当前没有"N PC 在房间里的坐标"这个量',
+            'npc_roam 有场景级位置但未暴露逐帧房间坐标',
+            '⇒ G 键可发起/结束带路、状态机与轨迹采样已就绪，但位置源待 P3 接入',
+        ],
+    }
+
+    def _escort_leader_xy(self, leader_id):
+        """问 NPC 生活层要带路者的**房间坐标**。拿不到 ⇒ `(None, None)`（不猜）。
+
+        ★ 与 `_npc_scene_of` 同一条纪律：**取不到就是取不到**，
+          绝不用灵魂位置/屏幕坐标冒充（那会产生"灵魂原地打转"这种假带路）。
+        """
+        if not leader_id:
+            return (None, None)
+        try:
+            provider = getattr(self, '_npc_room_xy_of', None)
+            if callable(provider):
+                xy = provider(leader_id)
+                if isinstance(xy, (list, tuple)) and len(xy) == 2:
+                    return (float(xy[0]), float(xy[1]))
+        except Exception as e:
+            _log.debug('取带路者坐标失败（%s）: %s', leader_id, e)
+        return (None, None)
+
+    def _escort_apply_soul_xy(self, x, y):
+        """把灵魂搬到**逻辑房间坐标** `(x, y)`（**本轮唯一写灵魂位置的地方**）。
+
+        ★ 灵魂的位置真值在 `soul.state.x/y`，且那对坐标是**屏幕坐标**
+          （`SoulOverlay.apply_state_pos` 直接 `self.move(x, y)`）——
+          所以这里必须先把房间坐标**逆映射**回屏幕坐标。
+        ★ 逆映射与 `_screen_point_to_room_rect` **同口径**（同一套归一化，
+          见 `_room_point_to_screen`）：两处各写一遍迟早分叉。
+        """
+        try:
+            soul = getattr(self, 'soul', None)
+            if soul is None:
+                return False
+            sp = self._room_point_to_screen(x, y)
+            if sp is None:
+                return False
+            state = getattr(soul, 'state', None)
+            if state is None:
+                return False
+            state.x, state.y = float(sp[0]), float(sp[1])
+            # ★ 走既有的位置同步（灵魂位置的**唯一写窗口路径**）——
+            #   不新造一条"直接 move"，否则就绕过了它的"位置没变就不动"优化。
+            soul.apply_state_pos()
+            return True
+        except Exception as e:
+            _log.debug('带路置位灵魂失败: %s', e)
+            return False
+
+    def _room_point_to_screen(self, rx, ry):
+        """逻辑房间坐标 `(rx, ry)` → **屏幕坐标**（`_screen_point_to_room_rect` 的逆）。
+
+        ★★ 为什么必须有它（而且必须放这儿）：第76轮把"屏幕→房间"的公式抽成了
+        `_screen_point_to_room_rect` 作为单一真源，但**它没有逆映射**。
+        R6 需要"把房间坐标写回屏幕"，若在外面另写一套换算 ⇒ 两套公式迟早分叉
+        （本项目最贵的坑）。所以逆映射**紧贴正映射**，用同一组变量名与同一套
+        夹取规则，可被 A/B 判据锚住（正→逆→正 应当回到原值）。
+
+        口径与原公式对齐：
+          正：`fx = clamp(cx / sw)`，`tcx = rl + rw * fx`，返回中心 = `tcx`
+          逆：`fx = (rx - rl) / rw`，`cx = fx * sw`
+        `room_rect` 为 `None` ⇒ 退回"屏幕坐标即房间坐标"（与正映射的退回分支对称）。
+        """
+        try:
+            rx = float(rx)
+            ry = float(ry)
+        except (TypeError, ValueError):
+            return None
+        if not (math.isfinite(rx) and math.isfinite(ry)):
+            return None
+        room_rect = self._soul_room_rect()
+        sw, sh = self._virtual_screen_size()
+        if not room_rect or len(room_rect) != 4:
+            return (rx, ry)
+        rl, rt, rr, rb = (float(room_rect[0]), float(room_rect[1]),
+                          float(room_rect[2]), float(room_rect[3]))
+        rw = max(1.0, rr - rl)
+        rh = max(1.0, rb - rt)
+        fx = min(1.0, max(0.0, (rx - rl) / rw))
+        fy = min(1.0, max(0.0, (ry - rt) / rh))
+        return (fx * float(sw) if sw > 0 else 0.0,
+                fy * float(sh) if sh > 0 else 0.0)
 
     # ==================================================================
     #  幽灵（GHOST，第67轮）—— 定点幽灵：走近才清晰，决心强才看得清
@@ -4141,6 +4503,13 @@ class RalseiPet(QMainWindow):
                 self.toggle_possession()
                 event.accept()
                 return
+            if key == _Qt.Key_G:
+                # ★ 第83轮 R6：G = 请求角色带灵魂走（用户裁定「新增 G 键」）。
+                #   与 Z **完全分开**：Z 是附身（方向键归角色），
+                #   G 是带路（方向键仍归灵魂，角色带着灵魂走）—— 两条独立分支。
+                self.toggle_escort()
+                event.accept()
+                return
         except Exception:
             _log.exception('keyPressEvent 处理异常（已忽略，不拖垮主窗口）')
         event.ignore()
@@ -5487,6 +5856,14 @@ class RalseiPet(QMainWindow):
         #   放在一起读起来就是"这两个在争同一组按键"。
         # ★ 同样在所有早退分支之前：被附身的角色不该看宠物睡没睡。
         self._possession_tick(elapsed_time)
+
+        # ---- 带路（ESCORT，第83轮 R6）：每帧推进 ----
+        # ★ 紧挨附身：两者都在"重新分配主体位置/操控权"，且**互斥**
+        #   （附身时角色归用户操控；带路时角色带灵魂走）。
+        # ★ 同样在所有早退分支之前：带路是独立实体的位置，宠物睡没睡不影响。
+        # ⚠️ 带路者位置源本轮**未接线** ⇒ 无坐标时它安静返回 False
+        #   （见 `ESCORT_WIRING`，不假报"带路中")。
+        self._escort_tick(elapsed_time)
 
         # ---- NPC 站位 / 游荡 / 结伴（第56轮）：每帧推进 ----
         # ★ 与灵魂同一位置（`update_movement` 的**所有早退分支之前**）：NPC 是独立实体，
