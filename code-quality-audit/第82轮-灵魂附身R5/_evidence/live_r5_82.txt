@@ -1,0 +1,48 @@
+=== 第82轮 R5 真机取证：Z 键附身 ===
+时间 = 2026-10-03 13:52:25
+ROOT = C:\Users\23002\Desktop\项目文件夹\try - 副本
+
+main.py 已导入：C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\src\main.py
+RalseiPet() 构造成功
+  POSSESSION_ENABLED = True
+
+## ① 可附身目标收集
+  possession = 'PossessionState'
+  [PASS] 附身系统已建起来
+  _possession_targets = ['kris', 'os_niko', 'ut_frisk']
+  [PASS] ★ 目标含 kris / os_niko / ut_frisk（实得 ['kris', 'os_niko', 'ut_frisk']）
+  kris.kind = 'direct'  name = '克里斯'
+  [PASS] kris 是 DIRECT 且名字来自登记表（'克里斯'）
+
+## ② 控制权转移（A/B 锚点）
+  [PASS] 灵魂实体在
+  附身前 poss.mode='free' x=0.00 y=0.00
+  未附身按左10帧：灵魂Δx=-120.00  poss.x=0.00
+  [PASS] ① 未附身：灵魂真的动了（Δx≠0，实得 -120.00）
+  [PASS] ① 未附身：角色坐标**没动**（控制权不在角色，poss.x=0.00）
+
+## ③ 按 Z 附身 kris
+  附身后 mode='possessed' 目标='kris'
+  [PASS] ★ 附身成立（mode=possessed，目标 kris）
+  灵魂可见 = False（期望 False：操控权已转移）
+  [PASS] ★ 附身后灵魂收起（_soul_visible()=False）
+  附身后按左10帧：角色Δx=-30.00  灵魂Δx=0.00
+  [PASS] ★ 附身：角色坐标真的动了（Δx≠0，实得 -30.00）
+  [PASS] ★ 附身：每帧约 3px（10帧≈-30，实得 -30.00）
+  [PASS] ② 附身：灵魂坐标不动（Δx=0.00）
+
+## ④ 再按 Z 解除
+  解除后 mode='free'
+  [PASS] ★ 解除成立（mode=free）
+  [PASS] ★ 解除后灵魂回来（_soul_visible()=True）
+  [PASS] ★ 解除后角色不再被驱动（Δx=0.00 ≈ 0）
+
+## ⑤ os_niko 必须征求意见（不能直接附身）
+  按 Z 后 mode='asking'  target='os_niko'
+  [PASS] ★ os_niko 按 Z ⇒ 进 ASKING（不直接附身）
+  grant 后 mode='possessed'
+  [PASS] ★ 同意后 ⇒ possessed
+
+=== 结论 ===
+  失败项 = []
+  R5 真机判定 = PASS

@@ -1,0 +1,73 @@
+=== 第82轮核心文件复检 ===
+
+[PASS] ① 可编译 main
+[PASS] ① 可编译 poss
+[PASS] ① 可编译 runall
+[PASS] ② possession 常量 CONFIRM_KEY
+[PASS] ② possession 常量 HERO_SPEED_PX
+[PASS] ② possession 常量 TURN_BACK_STEP
+[PASS] ② possession 常量 MODE_FREE
+[PASS] ② possession 常量 MODE_ASKING
+[PASS] ② possession 常量 MODE_POSSESSED
+[PASS] ② possession 常量 MODE_REFUSED
+[PASS] ② possession 常量 KIND_DIRECT
+[PASS] ② possession 常量 KIND_CONSENT
+[PASS] ② possession 常量 KIND_FORBIDDEN
+[PASS] ② possession 常量 POSSESSION_KINDS
+[PASS] ② possession 函数 def kind_of
+[PASS] ② possession 函数 def is_possessable
+[PASS] ② possession 函数 def needs_consent
+[PASS] ② possession 函数 def target_from_registry
+[PASS] ② possession 函数 def build_targets
+[PASS] ② possession 函数 def describe_mode
+[PASS] ② possession 函数 def _entry_get
+[PASS] ② PossessionState 方法 def request
+[PASS] ② PossessionState 方法 def grant
+[PASS] ② PossessionState 方法 def refuse
+[PASS] ② PossessionState 方法 def stop
+[PASS] ② PossessionState 方法 def release_key
+[PASS] ② PossessionState 方法 def release_all
+[PASS] ② PossessionState 方法 def clear_keys
+[PASS] ② PossessionState 方法 def press
+[PASS] ② PossessionState 方法 def drive
+[PASS] ② PossessionState 方法 def clamp_to
+[PASS] ② PossessionState 方法 def describe
+[PASS] ③ main 无 BOM
+[PASS] ③ main 无 U+FFFD
+[PASS] ③ poss 无 BOM
+[PASS] ③ poss 无 U+FFFD
+[PASS] ③ runall 无 BOM
+[PASS] ③ runall 无 U+FFFD
+[PASS] ③ baseline 无 BOM
+[PASS] ③ baseline 无 U+FFFD
+[PASS] ④ possession 无 `if True:` 恒真分支（[]）
+[PASS] ④ main R5 段无 `if True:`
+[PASS] ⑤ 令牌回验 main ⇐ 'POSSESSION_ENABLED'
+[PASS] ⑤ 令牌回验 main ⇐ 'init_possession'
+[PASS] ⑤ 令牌回验 main ⇐ 'toggle_possession'
+[PASS] ⑤ 令牌回验 main ⇐ 'focusOutEvent'
+[PASS] ⑤ 令牌回验 main ⇐ '_possession_tick'
+[PASS] ⑤ 令牌回验 main ⇐ '_possession_play_squeak'
+[PASS] ⑤ 令牌回验 main ⇐ 'snd_squeak'
+[PASS] ⑤ 令牌回验 main ⇐ 'from modules import possession as possession_mod'
+[PASS] ⑤ 令牌回验 poss ⇐ 'HERO_SPEED_PX = 3.0'
+[PASS] ⑤ 令牌回验 poss ⇐ 'TURN_BACK_STEP = 2.0'
+[PASS] ⑤ 令牌回验 poss ⇐ 'FRAME_HZ = 30'
+[PASS] ⑤ 令牌回验 poss ⇐ 'MAX_DT = 0.1'
+[PASS] ⑤ 令牌回验 poss ⇐ "CONFIRM_KEY = 'z'"
+[PASS] ⑤ 令牌回验 poss ⇐ "'os_niko': KIND_CONSENT"
+[PASS] ⑤ 令牌回验 poss ⇐ "'kris': KIND_DIRECT"
+[PASS] ⑤ 令牌回验 poss ⇐ "'ut_frisk': KIND_DIRECT"
+[PASS] ⑤ 令牌回验 runall ⇐ 'PENDING_UPDATE'
+[PASS] ⑤ 令牌回验 runall ⇐ '预登记新套件进基线键集'
+[PASS] ⑥ baseline 套件数 == 74（实得 74）
+[PASS] ⑥ baseline 含 check82
+[PASS] ⑥ baseline 无残留 PENDING_UPDATE 哨兵（[]）
+[PASS] 额外 _evidence 目录存在且非空（26 个）
+[PASS] 额外 _tools 目录存在且非空（11 个）
+[PASS] 额外 check82.py 在盘
+[PASS] 额外 live_r5_82.py 在盘
+
+============================================================
+结果：PASS=67 FAIL=0
+============================================================

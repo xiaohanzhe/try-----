@@ -1771,6 +1771,33 @@ SUITES = [
                 'G 判据自身体检（标记打印点 == 2 + 负控制 · 记账守恒 + 漏记负控制 · '
                 '不对 modules 目录做枚举式计数）',
     },
+    # ---------------------------------------------------------------- check82
+    # 第八十二轮 R5：**Z 键附身**（原作功能 + 特效）。
+    # 用户口径（逐字）：「交互键用Z（对 kris 和 firsk，niko 用可以在征求他们同意的情况下
+    #   附身（特效用原作的），也就是达到原作操控的功能）」。
+    # ★★ 原作依据（第82轮 UTMT 反取证）：Z ⇄ `control_check_pressed(0)` → `event_user(0)`；
+    #   主角移动 = `obj_time.*` × **3 px/帧**；灵魂移动 = **同一组** `obj_time.*` × `global.sp`
+    #   ⇒ "附身" = **换方向键的消费方**，不是新物理。证据在
+    #   `code-quality-audit/第82轮-灵魂附身R5/_evidence/`（19 段真 GML）。
+    # ★ 零网络 / 零 UI / 零外部盘（E 段读仓库内证据文件，缺了才假红）；不需要显示器。
+    {
+        'id': 'check82',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第82轮-灵魂附身R5', '_tools', 'check82.py'),
+        'offscreen': True,
+        'desc': '第八十二轮：Z 键附身（原作功能 + 特效）—— '
+                'A ★★ 零依赖纪律（`possession.py` 顶层 import ⊆ {logging, math} · '
+                '零函数内 import · 不 import 项目内模块） / '
+                'B ★★★ 附身类别表 = 单一真源（kris/ut_frisk 可直接 · os_niko 需同意 · '
+                '其余一律不可 · ★与 `_registry.json` 对账 · build_targets 恰 3 个） / '
+                'C ★★★ 行为真跑（直接附身 · 征求同意三态 · 拒绝不静默放行 · '
+                '★方向键一帧 **3 px** · ★回头 **2 px** · 未附身不驱动 · 跨场景拒 · dt 钳制） / '
+                'D ★★ 产品接线（Z 键分支 · 方向键**附身优先** · release 对称 · 失焦放开 · '
+                '★启动顺序 init_npc_systems→init_possession · `_possession_tick` 在早退分支前） / '
+                'E ★★★ 原作对照（读 `_evidence/*.gml` 真文件 · ★3 px / 2 px 原文钉住 · '
+                '`control_check_pressed(0)` / `snd_squeak` / `control_clear(2)` 在场） / '
+                'F 判据自身体检（★ 标记打印点 · 记账鉴别力探针 · 被测文件在盘）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化
@@ -2108,6 +2135,33 @@ def main():
         return 0
 
     baseline = load_baseline()
+
+    # ★★ 第82轮修：`--update` 时**先把键集补齐**再跑，否则"自指的基线条数判据"
+    #    （`check81` G5：基线套件集合 == SUITES 集合）会**每一轮 --update 都假红一次** ——
+    #    因为它读的是**磁盘上的旧基线**（本次 update 要到全部跑完才落盘）。
+    #    时序真相：run_all 在开头 load 快照 → 各套件跑 → 结束后 save_baseline。
+    #    ⇒ 新入列的套件在 `check81` 眼里"还没固化"，于是它诚实地报红 —— 报的是**真事实**，
+    #      但这是**执行顺序**造成的假警报（下一轮跑就绿了），会污染"全 IDENTICAL"的验收。
+    #    修法：update 前先把 picked 的 id 写进基线（值留哨兵，跑完全部再被真值覆盖）。
+    #    ⚠️ 只补"缺失的 id"，不动既有条目的真值 ⇒ 不改变任何既有比对语义。
+    if args.update:
+        _pre = load_baseline() or {'version': 1, 'suites': {}}
+        _pre.setdefault('suites', {})
+        _added = []
+        for _s in picked:
+            if _s['id'] not in _pre['suites']:
+                _pre['suites'][_s['id']] = {
+                    'exit': 0, 'pass': 0, 'fail': 0,
+                    'sha256': 'PENDING_UPDATE',   # 哨兵：跑完必被真值覆盖
+                }
+                _added.append(_s['id'])
+        if _added:
+            _pre['suites'] = dict(sorted(_pre['suites'].items()))
+            with open(BASELINE, 'w', encoding='utf-8', newline='\n') as _fh:
+                json.dump(_pre, _fh, ensure_ascii=False, indent=2, sort_keys=True)
+                _fh.write('\n')
+            say('[update] 预登记新套件进基线键集（避开自指判据的假红）：%s' % _added)
+            baseline = load_baseline()
 
     global PYTHON
     PYTHON, _tried = pick_python()

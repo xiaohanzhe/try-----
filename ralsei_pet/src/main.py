@@ -417,6 +417,19 @@ from modules.soul_overlay import load_soul_sprites
 #    契约①：禁用 `availableGeometry()`）；这里只做组装，不重复那 20 行。
 from modules import ghost_system as ghost_system_mod
 from modules import ghost_overlay as ghost_overlay_mod
+# ---- 附身（POSSESSION，第82轮 R5）------------------------------------------
+# 用户口径（第76轮需求锁定原话，逐字）：「交互键用Z（对 kris 和 firsk，niko 用
+#   可以在征求他们同意的情况下附身（特效用原作的），也就是达到原作操控的功能）」。
+# 分工（与灵魂同构，**判定与显示分开**）：
+#   possession  纯逻辑：附身状态机（谁能直接附 / 谁要先问 / 方向键归谁 / 3px 步进）
+#               —— 零依赖，可离线回归（`check82` 锁它）
+#   src/main.py 组装：Z 键入口 / 每帧把方向键转给"当前操控对象" / 征求同意的对话
+# ★★ 原作依据（第82轮 UTMT 反取证，物证 `第82轮-灵魂附身R5/_evidence/`）：
+#   Z ⇄ `control_check_pressed(0)` → `event_user(0)`（`obj_mainchara_Step_0`）；
+#   主角移动 = `obj_time.left/up/right/down` × 3 px/帧；灵魂移动 = 同一组布尔 × `global.sp`。
+#   ⇒ 原作里的"操控谁"就是**同一套输入指向不同实体**，"附身"= 换消费方，不是新物理。
+# ⚠️ 走**模块引用**（`possession_mod.PossessionState`），与 soul/ghost 同一纪律。
+from modules import possession as possession_mod
 # 球容器（第50轮）：Ralsei 在光世界**必须被"扭蛋球"罩住**才能存身。
 # 分工（三层各管一段，与场景系统同源）：
 #   bubble_system  → 规则（谁能进 / 何时脱 / 4 向旋转 / 塑料滤镜参数），零依赖
@@ -1235,6 +1248,14 @@ class RalseiPet(QMainWindow):
         #    "换场景就换位置"恰好是它不该有的行为）⇒ 没有那条例外的顺序依赖。
         self.init_ghost()
 
+        # ---- 附身（POSSESSION，第82轮 R5）----
+        # 为什么排在**最后**：附身要从 `npc_system` 的登记表收集"谁可附身"，
+        # 而那份表是 `init_npc_systems()` 里建起来的 ⇒ 提前建会拿到空表
+        # （若拿到空表，Z 键会永远报"登记表里没有可附身目标"—— 本项目最贵的坑形态）。
+        # ⚠️ 附身**不**往 `_scene_switch_hooks` 里追加东西（附身是**会话内**状态，
+        #    换场景时该解除而不是"跟着搬"）。
+        self.init_possession()
+
     # ==================================================================
     #  灵魂（SOUL，第55轮）—— 可拖拽 / 可键盘操控 / 可自由出入各场景
     # ==================================================================
@@ -1622,6 +1643,256 @@ class RalseiPet(QMainWindow):
             if getattr(p, 'key', None) == key:
                 return (p, '按灵魂位置选最近那件（距离 %.0f 逻辑单位）' % dist)
         return (None, '最近的那件对不上可交互物（key 失配）')
+
+    # ==================================================================
+    #  附身（POSSESSION，第82轮 R5）—— Z 键把操控权从灵魂切到某个角色
+    # ==================================================================
+    # 用户口径（第76轮需求锁定原话，逐字）
+    #   「交互键用Z（对 kris 和 firsk，niko 用可以在征求他们同意的情况下附身
+    #     （特效用原作的），也就是达到原作操控的功能）」
+    #
+    # ★★★ 原作依据（第82轮 UTMT 反编译取证，物证 `第82轮-灵魂附身R5/_evidence/`）
+    # ------------------------------------------------------------------
+    # | 事实 | 出处（逐字） |
+    # |---|---|
+    # | 确认键 Z ⇄ `control_check_pressed(0)` | `obj_mainchara_Step_0` |
+    # | 交互出口 = `event_user(0)` | 同上（= `obj_mainchara_Other_12`） |
+    # | 交互做的事 | `obj_mainchara_Other_12`：`if (global.interact==0 && global.flag[17]==0)
+    #   { snd_play(snd_squeak); global.interact=5; global.menuno=0; control_clear(2); }` |
+    # | 主角移动 = `obj_time.*` 布尔 × **3 px/帧** | `obj_mainchara_Step_0` |
+    # | 灵魂移动 = **同一组** `obj_time.*` 布尔 × `global.sp` | `obj_heart_Step_0` |
+    # ⇒ **原作里"操控谁"是同一套输入（`obj_time` 四个布尔）指向不同实体**，
+    #   区别只在速度。所以"附身"在本项目里的正确形状 = **换方向键的消费方**，
+    #   **不是新造一套附身物理**（没有加速度、没有跟随、没有光效）。
+    #
+    # ★ 与原作**不同的两处**（必须记住，不许冒充原作）
+    # ------------------------------------------------
+    # 1. **"征求同意"是本项目扩展**：原作只有 Kris 一人可操控，不存在"问对方能不能附身"。
+    #    用户口径把它加进来 ⇒ `possession.ConsentState` 显式建模（三态：未决/同意/拒绝）。
+    # 2. **特效只用原作已有的**：用户说"特效用原作的" ⇒ 只有 `snd_squeak` 音效
+    #    + 灵魂收起/角色接管这两个**原作里真实发生过的**表现，
+    #    **不新造**原作没有的粒子/闪光/拖影。
+    # ==================================================================
+
+    #: 附身总开关（与 `SOUL_ENABLED` / `GHOST_ENABLED` 同形）。
+    #: `False` ⇒ `init_possession()` 建完空壳就返回，Z 键退化成"什么都没发生"。
+    #: ⚠️ 保留它本身**不是死代码**：这是"附身出问题"时的一刀定位开关。
+    POSSESSION_ENABLED = True
+
+    def init_possession(self):
+        """建附身状态机 + 收集可附身目标。
+
+        失败语义与灵魂 / 幽灵同规：**只降级、不抛出**（附身坏了桌宠照常跑），
+        且 `self.possession is None` 时 Z 键入口直接返回，不会半死不活。
+        """
+        # 先全部预声明成 None/空 —— 中途任何一步失败，宿主也不缺属性
+        # （本项目踩过"状态只在成功路径上创建"的坑：失败后别处 getattr 就炸）。
+        self.possession = None
+        self._possession_targets = {}
+
+        if not getattr(self, 'POSSESSION_ENABLED', True):
+            _log.info('附身总开关 POSSESSION_ENABLED=False ⇒ 不建附身（用它定位问题）')
+            return
+
+        try:
+            self.possession = possession_mod.PossessionState()
+            # 从 NPC 登记表收集可附身目标（谁能附身只有 `POSSESSION_KINDS` 一处定义）。
+            # ★ 登记表在真机里是 `npc_system.NpcRegistry` **对象**（不是 dict/list）——
+            #   `build_targets` 已按 duck typing 吃 `.all()`，这里只负责拿到它。
+            #   取不到 ⇒ 传 None ⇒ 空表（Z 键会如实报"没有可附身目标"，不会假成功）。
+            reg = getattr(self, 'npc_registry', None)
+            targets = possession_mod.build_targets(reg, scene_of=self._npc_scene_of)
+            self._possession_targets = {t.npc_id: t for t in targets}
+            _log.info('附身就绪：可附身目标 %d 个（%s）；%s',
+                      len(self._possession_targets),
+                      '、'.join(sorted(self._possession_targets)) or '无',
+                      self.possession.describe())
+        except Exception:
+            _log.exception('附身初始化失败（附身功能不可用，宠物照常运行）')
+            self.possession = None
+            return
+
+    def _npc_scene_of(self, npc_id):
+        """某个 NPC 当前在哪（供"附身要求同场景"校验）。
+
+        ★ 复用既有的 `_npc_scene_roster` 逻辑（层2 驻留覆盖优先、回落 `book.scene_of`）——
+          不另写一套"当前在哪"，否则两处对"他在不在这个场景"的理解会分叉
+          （本项目"同一份规则两处算"是最贵的坑）。
+        取不到 ⇒ 返回 `None`（= 不校验，**不拿未知当"不同"**）。
+        """
+        try:
+            roster = self._npc_scene_roster()
+            if isinstance(roster, dict):
+                for sid, ids in roster.items():
+                    if npc_id in (ids or ()):
+                        return sid
+            return None
+        except Exception:
+            return None
+
+    def _possession_target_at(self):
+        """选一个"当前可附身的目标"（本场景的、离灵魂最近的）。
+
+        判定序（**顺序即优先级**）：
+          1. 没有附身系统 / 没有目标 ⇒ `(None, 原因)`；
+          2. **只取与当前场景一致**的目标（scene 为 None 的也纳入，见 `request` 注释）；
+          3. 多个 ⇒ 按灵魂位置取最近（复用 `soul_entity.pick_nearest`，与 E 键同一套）。
+        """
+        poss = getattr(self, 'possession', None)
+        if poss is None:
+            return (None, '附身系统未就绪')
+        targets = list((self.__dict__.get('_possession_targets') or {}).values())
+        if not targets:
+            return (None, '登记表里没有可附身目标')
+        cur = self.__dict__.get('current_scene')
+        cands = [t for t in targets
+                 if t.scene is None or cur is None or t.scene == cur]
+        if not cands:
+            return (None, '当前场景没有可附身角色（他们在别处）')
+        # 按灵魂位置取最近（灵魂不可见 / 无坐标 ⇒ 退回第一个，并如实说明）。
+        soul = getattr(self, 'soul', None)
+        if soul is not None and self._soul_visible():
+            try:
+                pt = soul_entity_mod.screen_to_room(
+                    soul.state.center()[0], soul.state.center()[1],
+                    self._soul_room_rect(), self._virtual_screen_size())
+            except Exception:
+                pt = None
+            if pt is not None:
+                # 用目标所在场景的 marker 位置不好拿 ⇒ 退回"按 npc_id 顺序"，
+                # ★ 因为本地图没有"NPC 在房间里的坐标"这个量（真有的话该走
+                #   `npc_placement`），这里**如实退回**并说明，不伪造距离。
+                key, dist = soul_entity_mod.pick_nearest(
+                    pt, [(t.npc_id, 0.0, 0.0) for t in cands])
+                if key is not None:
+                    for t in cands:
+                        if t.npc_id == key:
+                            return (t, '按登记顺序选第一件（NPC 房间坐标未纳入比较）')
+        return (cands[0], '按登记顺序选第一件')
+
+    def toggle_possession(self):
+        """★ R5 的主入口（Z 键）：附身 / 解除。
+
+        返回 True 表示"这次按 Z 确实做了件事"（附身成功 / 发起征求 / 解除），
+        False 表示"什么都没发生"（没有目标 / 被拒 / 系统未就绪）。
+
+        ★ 为什么"再按一次 Z 解除"而不是"另一个键解除"：用户口径是"交互键用 Z"，
+          而解除附身就是同一个交互的逆操作 —— 原作用 `control_check_pressed(0)`
+          既做交互也做取消（`global.interact` 那一套），所以一个键两态是**原作形状**。
+        """
+        poss = getattr(self, 'possession', None)
+        if poss is None:
+            _log.info('附身请求被忽略：附身系统未就绪（POSSESSION_ENABLED=%s）',
+                      getattr(self, 'POSSESSION_ENABLED', None))
+            return False
+        try:
+            # 已在附身 / 正在征求 ⇒ 这一下 Z = 解除 / 取消。
+            if poss.is_possessing or poss.is_asking:
+                was = poss.describe()
+                poss.stop('再按 Z 解除')
+                self._possession_sync_soul_visibility()
+                _log.info('附身解除（%s）', was)
+                return True
+            target, why = self._possession_target_at()
+            if target is None:
+                _log.info('附身：没有可附身目标（%s）', why)
+                return False
+            scene = self.__dict__.get('current_scene')
+            mode = poss.request(target, scene=scene)
+            if mode == possession_mod.MODE_ASKING:
+                self._possession_ask_consent(target)
+                return True
+            if mode == possession_mod.MODE_POSSESSED:
+                self._possession_on_begin(target)
+                return True
+            _log.info('附身未成立：%s（%s）', poss.describe(), why)
+            return False
+        except Exception:
+            _log.exception('附身切换异常（已忽略，宠物照常运行）')
+            return False
+
+    def _possession_on_begin(self, target):
+        """附身成立 ⇒ 收起灵魂（**操控权已转移**）+ 原作 `snd_squeak` 音效。"""
+        try:
+            # ★ 灵魂收起而不是隐藏控件：附身期间方向键归角色，灵魂留着会"两边都在动"。
+            #   解除时 `_possession_sync_soul_visibility()` 会把它叫回来。
+            self.hide_soul()
+            # ★ 特效只用原作已有的：`obj_mainchara_Other_12` 里交互成功播 `snd_squeak`。
+            self._possession_play_squeak()
+            _log.info('附身成立：%s', target)
+        except Exception:
+            _log.exception('附身成立后的收尾失败（忽略）')
+
+    def _possession_ask_consent(self, target):
+        """对需要同意的角色（Niko）发起"征求同意"——走**既有的对话通道**。
+
+        ★ 为什么走对话气泡而不自造一个弹窗：本项目"说话"只有一条出口
+          （`dialogue_ui.add_dialogue`），另开一条迟早分叉（同 `_item_menu_message`）。
+        ★ 为什么这也算"特效照原作"：原作里交互的**唯一可见反馈**就是
+          `snd_squeak` + 文字/对话，这里照此办理。
+        """
+        try:
+            name = target.name
+            self._item_menu_message(
+                '* 我（雷尔赛）看向 %s：「……可以让我来一下吗？」' % name)
+            self._possession_play_squeak()
+        except Exception:
+            _log.exception('征求同意提示失败（忽略）')
+
+    def _possession_play_squeak(self):
+        """播原作的 `snd_squeak`（交互成功音）。找不到素材 ⇒ 静默跳过（**不假报**）。
+
+        ★ 为什么单独抽一个方法：音效系统（`sound_manager`）的播放接口在本项目里
+          有多条路径，抽出来便于回归锁只断言"它被调了"，不绑死某一条播放实现。
+        """
+        try:
+            sm = getattr(self, 'sound_manager', None)
+            if sm is None:
+                return False
+            for meth in ('play_sfx', 'play_sound', 'play_effect'):
+                fn = getattr(sm, meth, None)
+                if callable(fn):
+                    try:
+                        fn('snd_squeak')
+                        return True
+                    except Exception:
+                        continue
+            return False
+        except Exception as e:
+            _log.debug('snd_squeak 播放失败（忽略）: %s', e)
+            return False
+
+    def _possession_sync_soul_visibility(self):
+        """按附身状态同步灵魂可见性（解除附身 ⇒ 把灵魂叫回来）。"""
+        try:
+            poss = getattr(self, 'possession', None)
+            if poss is None:
+                return
+            if not poss.is_possessing and not poss.is_asking:
+                # 解除后把灵魂放回当前场景位置（若之前是显示的）。
+                soul = getattr(self, 'soul', None)
+                if soul is not None and not soul.isVisible():
+                    self.show_soul()
+        except Exception:
+            _log.exception('灵魂可见性同步失败（忽略）')
+
+    def _possession_tick(self, dt):
+        """每帧推进附身（挂在 `update_movement` 的 30ms 节拍上，与灵魂同源）。"""
+        poss = getattr(self, 'possession', None)
+        if poss is None:
+            return False
+        try:
+            if not poss.is_possessing:
+                return False
+            moved = poss.drive(dt)
+            # 钳进当前房间（没有房间几何 ⇒ 不钳，**不猜边界**）。
+            rect = self._soul_room_rect()
+            if rect is not None:
+                poss.clamp_to(rect)
+            return moved != (0.0, 0.0)
+        except Exception as e:
+            _log.debug('附身推进异常（本帧跳过）: %s', e)
+            return False
 
     # ==================================================================
     #  幽灵（GHOST，第67轮）—— 定点幽灵：走近才清晰，决心强才看得清
@@ -3809,20 +4080,34 @@ class RalseiPet(QMainWindow):
           `RegisterHotKey` 不带修饰键 = 系统级抢占，全局"按住方向键移动"
           需要 low-level keyboard hook，本轮**不做**，如实写进报告。
 
-        ⚠️ 改动面仍守最小：`S` / `E` / 方向键 / 菜单开着，四种情况才 accept，
+        ⚠️ 改动面仍守最小：`S` / `E` / `Z` / 方向键 / 菜单开着，才 accept，
         其余一律 `event.ignore()` 交回默认处理（等于原行为）。
+
+        ★★ 第82轮 R5 追加：**`Z` = 交互 / 附身**（用户口径「交互键用Z」），
+          以及**方向键的归属改为"看当前操控对象"**：
+            · 未附身 ⇒ 方向键归**灵魂**（第55轮既有行为，零回归）；
+            · 已附身 ⇒ 方向键归**被附身角色**（`possession.press`）。
+          这正是原作形状：原作主角与灵魂读的是**同一组** `obj_time.*` 布尔
+          （`obj_mainchara_Step_0` / `obj_heart_Step_0`），"操控谁"只切换消费方。
         """
         try:
             from PyQt5.QtCore import Qt as _Qt
             key = event.key()
             ui = getattr(self, 'item_menu_ui', None)
             menu_open = bool(ui is not None and ui.is_open())
-            # ★ 方向键归灵魂 —— 但**菜单开着时归菜单**（菜单要上下选条目）。
-            #   两者互斥：菜单是"模态浮层"，此刻用户的意图明确是在菜单里。
+            # ★ 方向键的归属：**附身优先**（已附身 ⇒ 归角色），否则归灵魂。
+            #   两者互斥（附身时灵魂已收起），所以不会"两边都在动"。
+            #   菜单开着时归菜单（菜单是"模态浮层"，此刻用户意图明确在菜单里）。
             if not menu_open:
                 d = soul_overlay_mod.direction_of_qt_key(key)
-                if d is not None and self._soul_visible():
-                    self._soul_press(d)
+                if d is not None:
+                    poss = getattr(self, 'possession', None)
+                    if poss is not None and poss.is_possessing:
+                        poss.press(d)
+                        event.accept()
+                        return
+                    if self._soul_visible():
+                        self._soul_press(d)
                     # ⚠️ accept **不看** `_soul_press` 的返回值：自动重复的按下
                     #    返回 False（`state.press` 对同一键幂等），但事件照样要吃掉，
                     #    否则方向键会漏回主窗口的默认处理。
@@ -3849,24 +4134,40 @@ class RalseiPet(QMainWindow):
                 self.interact_scene_prop()
                 event.accept()
                 return
+            if key == _Qt.Key_Z:
+                # ★ 第82轮 R5：Z = 交互 / 附身（用户口径「交互键用Z」）。
+                #   原作出处：`obj_mainchara_Step_0` 的 `control_check_pressed(0)`
+                #   → `event_user(0)`（= `obj_mainchara_Other_12` 那段交互出口）。
+                self.toggle_possession()
+                event.accept()
+                return
         except Exception:
             _log.exception('keyPressEvent 处理异常（已忽略，不拖垮主窗口）')
         event.ignore()
 
     def keyReleaseEvent(self, event):                     # noqa: N802 (Qt 命名)
-        """方向键松开 ⇒ 放开灵魂的那个方向。
+        """方向键松开 ⇒ 放开**当前操控对象**的那个方向（灵魂 or 被附身角色）。
 
         ⚠️ 为什么必须实现它（第55轮）：灵魂是"按键即满速、松键即停"
         —— 照抄原作 `obj_heart` Step 里 `px/py` 每帧从 0 重新赋值，
         没有任何残速。一旦收不到 release，那个方向就**永不停止**。
         （第二道防线在 `SoulOverlay.focusOutEvent`：灵魂窗口失焦时放开所有键。）
+
+        ★ 第82轮 R5：同样要放开**被附身角色**的键 —— 与 `keyPressEvent` 对称，
+          否则附身时松手角色会一直朝那个方向走（同一类 bug，换了个实体）。
         """
         try:
             d = soul_overlay_mod.direction_of_qt_key(event.key())
-            if d is not None and self._soul_visible():
-                self._soul_release(d)
-                event.accept()
-                return
+            if d is not None:
+                poss = getattr(self, 'possession', None)
+                if poss is not None and poss.is_possessing:
+                    poss.release_key(d)
+                    event.accept()
+                    return
+                if self._soul_visible():
+                    self._soul_release(d)
+                    event.accept()
+                    return
         except Exception:
             _log.exception('keyReleaseEvent 处理异常（已忽略）')
         event.ignore()
@@ -3887,6 +4188,15 @@ class RalseiPet(QMainWindow):
                 soul.release_all()
         except Exception:
             _log.exception('focusOutEvent 处理异常（已忽略）')
+        # ★ 第82轮 R5：失焦时同样要放开**被附身角色**按住的键（同一类"永不停止"bug）。
+        try:
+            poss = getattr(self, 'possession', None)
+            if poss is not None and poss.is_possessing and poss.pressed():
+                _log.info('宠物窗口失焦 ⇒ 放开被附身角色按住的键 %s',
+                          ','.join(poss.pressed()))
+                poss.release_all()
+        except Exception:
+            _log.exception('focusOutEvent（附身）处理异常（已忽略）')
         try:
             super(RalseiPet, self).focusOutEvent(event)
         except Exception as e:
@@ -5171,6 +5481,12 @@ class RalseiPet(QMainWindow):
         # dt 复用上面的 `elapsed_time`（已钳 0.1s，与 `soul_entity.MAX_DT` 同口径，
         # 双重保险 —— 那边的钳制是给"别处调用本模块"用的）。
         self._soul_tick(elapsed_time)
+
+        # ---- 附身（POSSESSION，第82轮 R5）：每帧推进 ----
+        # ★ 紧挨灵魂：附身是"方向键消费方的切换"，与灵魂**互斥**（附身时灵魂已收起），
+        #   放在一起读起来就是"这两个在争同一组按键"。
+        # ★ 同样在所有早退分支之前：被附身的角色不该看宠物睡没睡。
+        self._possession_tick(elapsed_time)
 
         # ---- NPC 站位 / 游荡 / 结伴（第56轮）：每帧推进 ----
         # ★ 与灵魂同一位置（`update_movement` 的**所有早退分支之前**）：NPC 是独立实体，
