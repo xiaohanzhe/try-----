@@ -1833,6 +1833,41 @@ SUITES = [
                 'G ★ 既有按键零回归（Key_G 唯一 · S/E/Z 全在 · 全局热键无裸 G） / '
                 'H 判据自身体检（★ 标记打印点 · 记账守恒 + 漏记负控制 · 被测文件在盘）',
     },
+
+    # ---------------------------------------------------------------- check84
+    # 第八十四轮：① **所有人附身都要经过同意**（推翻第76轮"kris/frisk 直接附"）
+    #             ② 附身效果照原作（补 `control_clear(2)`）
+    #             ③ **原作该有的互动技能**取证（Deltarune ch1 反编译）
+    # ★★ 原作依据（**本轮新取证**）：UTMT 反编译 `chapter1_windows/data.win`
+    #   （14,658,588 B）⇒ 97 objects / 274 codes / 131 scripts，`gml_ok=True`。
+    #   交互入口 = `scr_interact()`：`myinteract = 1; event_user(0);`；
+    #   被交互者 = `obj_interactablesolid`（三态 `myinteract` + `global.interact` 闸）；
+    #   附身清键 = `obj_mainchara_Other_12` 的 `control_clear(2)`；
+    #   跟随队伍（R6 原作出处）= `obj_caterpillarchara` 25 格轨迹 +
+    #   `scr_makecaterpillar` 的 `target = 12 + (arg3 * 12)`。
+    # ★ 零网络 / 零 UI / **零外部盘**（产物已蒸馏进仓库 `_evidence/`，含三份原始 json）；
+    #   不需要显示器。
+    {
+        'id': 'check84',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第84轮-原作互动技能取证', '_tools', 'check84.py'),
+        'offscreen': True,
+        'desc': '第八十四轮：附身全体先征同意 + 原作互动技能取证 —— '
+                'A ★★ 取证产物在盘且真非空（三份原始 json 已进仓库 + 五份 evidence · '
+                '★`gml_ok` 锚点：含 `if (`/`global.` ⇒ 真 GML 非字节码 · 负控制无 `pushi.e`） / '
+                'B ★★★ 第1条口径：`POSSESSION_KINDS` **无 KIND_DIRECT 成员**（全体先问）· '
+                '表非空 · 与 `_registry.json` 对账 · 真表行为 ⇒ ASKING · '
+                '★负控制（假表必须能报红 + 显式 DIRECT 直接 POSSESSED 证明非恒 ASKING） / '
+                'C ★★★ 第2条口径：附身效果照原作（`snd_squeak` + 灵魂收起 + '
+                '★`control_clear(2)` **AST 真调用**，不吃注释） / '
+                'D ★★★ 第3条口径：互动机制照抄锚点（回证词原文逐字：`myinteract` 三态 · '
+                '`event_user(0)` · 四段射线 · `event_user(9)` 门 · 三态回收 + 5 帧缓冲 · '
+                '★毛毛虫 25 格 / `12 + arg3*12`） / '
+                'E ★★ 原作速度表（光 3 / 暗 4 / 跑三段加速）从真 GML 抽出并与本项目常量对账 · '
+                '★如实登记"暗世界 4 / 跑动尚未实现" / '
+                'F ★★ 诚实登记本轮未做的 I1~I10 互动技能 / '
+                'G 判据自身体检（★标记打印点 · ★记账负控制用"手工模拟+撤回"而非造假 FAIL）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

@@ -1838,7 +1838,7 @@ class RalseiPet(QMainWindow):
             return False
 
     def _possession_on_begin(self, target):
-        """附身成立 ⇒ 收起灵魂（**操控权已转移**）+ 原作 `snd_squeak` 音效。"""
+        """附身成立 ⇒ 收起灵魂（**操控权已转移**）+ 原作 `snd_squeak` 音效 + `control_clear(2)`。"""
         try:
             # ★ 第83轮 R6 互斥（对偶裁决）：附身接管 ⇒ 先解除带路。
             #   两处裁决必须成对（`toggle_escort` 里是"带路接管先解除附身"），
@@ -1848,6 +1848,26 @@ class RalseiPet(QMainWindow):
                 was = esc.describe()
                 esc.stop('被附身接管')
                 _log.info('附身接管：先解除带路（%s）', was)
+            # ★★ 原作 `control_clear(2)`（第84轮取证补齐）：
+            #   `obj_mainchara_Other_12`：`snd_play(snd_squeak); global.interact=5;
+            #                              global.menuno=0; control_clear(2);`
+            #   —— 附身那一下要**清掉所有已按下的旧键**，否则"按住方向键时按 Z"
+            #      会把灵魂残留的按键直接喂给刚接管的角色 ⇒ 角色自己跑起来。
+            #   ★ 与 `PossessionState._begin()` 里的 `self._pressed.clear()` **不是同一件事**：
+            #     那边清的是"归属新主人的那份账"，这边清的是**旧主人（灵魂）**的账。
+            #     两处都必要（少一处就漏一边），但**不许把两处合并**（合并后一侧恒空）。
+            # ⚠️ API 事实（第84轮实测钉死，别再凭印象写）：
+            #   `self.soul` 的类型是 **`SoulOverlay`**，它的方法表里
+            #   **没有 `clear_keys`**，只有 **`release_all()`**（内部转调 `self.state.clear_keys()`）。
+            #   ⇒ 这里**必须**用 `soul.release_all()`；写成 `soul.clear_keys()` 会
+            #     AttributeError 被下面的 except 吞掉 ⇒ 「补了 control_clear(2)」**其实没补**。
+            #   （初版正是这么写错的，已由 check84 D 段 AST 判据钉住。）
+            soul = getattr(self, 'soul', None)
+            if soul is not None:
+                try:
+                    soul.release_all()
+                except Exception:
+                    _log.debug('附身时清灵魂按键失败（忽略）')
             # ★ 灵魂收起而不是隐藏控件：附身期间方向键归角色，灵魂留着会"两边都在动"。
             #   解除时 `_possession_sync_soul_visibility()` 会把它叫回来。
             self.hide_soul()
@@ -1858,7 +1878,10 @@ class RalseiPet(QMainWindow):
             _log.exception('附身成立后的收尾失败（忽略）')
 
     def _possession_ask_consent(self, target):
-        """对需要同意的角色（Niko）发起"征求同意"——走**既有的对话通道**。
+        """对需要同意的角色发起"征求同意"——走**既有的对话通道**。
+
+        ★ 第84轮口径「所有人附身都要经过同意」⇒ **本方法现在是附身的常规路径**
+          （不再是 Niko 专用分支）；台词取 `target.name`，不写死名字。
 
         ★ 为什么走对话气泡而不自造一个弹窗：本项目"说话"只有一条出口
           （`dialogue_ui.add_dialogue`），另开一条迟早分叉（同 `_item_menu_message`）。
@@ -4554,7 +4577,15 @@ class RalseiPet(QMainWindow):
             if soul is not None and soul.state.pressed():
                 _log.info('宠物窗口失焦 ⇒ 放开灵魂按住的键 %s',
                           ','.join(soul.state.pressed()))
-                soul.release_all()
+                # ★ API 事实（第84轮实测钉死，勿凭印象改）：
+                #   `self.soul` 是 **`SoulOverlay`**，它**确实有** `release_all()`
+                #   （内部转调 `self.state.clear_keys()`，但**外面套了 `except: return 0`**
+                #     —— 静默吞异常）。所以原写法 `soul.release_all()` **能跑、不是 bug**。
+                #   这里改走 `soul.state.clear_keys()` 的理由只有两条：
+                #     ① 语义直指"清 `SoulState` 里按住的键"，少一层转调；
+                #     ② 不经过那个静默 `except`，真出问题会冒到下面的 `_log.exception`。
+                #   ⇒ 这是**等价改写**，不是修 bug（初版误判为 AttributeError，已纠正）。
+                soul.state.clear_keys()
         except Exception:
             _log.exception('focusOutEvent 处理异常（已忽略）')
         # ★ 第82轮 R5：失焦时同样要放开**被附身角色**按住的键（同一类"永不停止"bug）。

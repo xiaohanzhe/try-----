@@ -1,0 +1,100 @@
+# Deltarune ch1 · 交互相关对象全量（name	i	sprite	parent	n_events）
+# 源：chapter1_windows/data.win (14,658,588 B)，UTMT CLI v0.9.2.0
+
+obj_darkdoor	13	spr_darkdoor		15
+obj_interactablesolid	18	spr_interactable	obj_solidblock	15
+obj_mainchara	30	spr_krisd		15
+obj_krisroom	34	spr_bedsheet		15
+obj_lancerbakesale_event	39	spr_bakesale_lancer		15
+obj_lancerbattle2_event	42	spr_lancer_battle		15
+obj_lancerchase2	43	spr_event		15
+obj_susieandlancer_event	45	spr_event		15
+obj_susiebadguy_event	50	spr_lancer_rt		15
+obj_lancerscare2	55	spr_lancer_rt		15
+obj_scarelancerevent	56	spr_lancer_rt		15
+obj_getsusieevent	57	spr_susieu_dark		15
+obj_darkdoorevent	60	spr_giantdarkdoor		15
+obj_ralsei_runevent	62	spr_castle_fountain		15
+obj_interactable	63			15
+obj_lancerguide	64	spr_lancer_lt	obj_interactable	15
+obj_npc_hammerguy	70	spr_hammerguy	obj_interactablesolid	15
+obj_shortcut_door	71	spr_shortcut_door	obj_interactablesolid	15
+obj_npc_puzzlemaster1	72	spr_npc_puzzlepiece	obj_interactablesolid	15
+obj_npc_puzzlemaster2	73	spr_npc_puzzlepiece	obj_interactablesolid	15
+obj_npc_susiedark	75	spr_susieu_dark	obj_interactablesolid	15
+obj_lancerslideevent	79			15
+obj_lancerchaseevent	80	spr_event		15
+obj_marker	86			15
+obj_marker2	87			15
+obj_npc_toriel	89	spr_toriel_dt	obj_interactablesolid	15
+obj_npc_facing	90	spr_placeholder	obj_interactablesolid	15
+obj_npc_room	91	spr_npc_puzzlepiece	obj_interactablesolid	15
+obj_npc_room_animated	92	spr_npc_icemascot_fake	obj_interactablesolid	15
+obj_npc_sign	94	spr_npc_sign	obj_interactablesolid	15
+obj_doorparent	96			15
+obj_doorA	97	spr_doorA	obj_doorparent	15
+obj_doorA_musfade	98	spr_doorA	obj_doorparent	15
+obj_doorB_musfade	99	spr_doorB	obj_doorparent	15
+obj_doorB	100	spr_doorB	obj_doorparent	15
+obj_doorC	101	spr_doorC	obj_doorparent	15
+obj_doorC_musfade	102	spr_doorC	obj_doorparent	15
+obj_doorD	103	spr_doorD	obj_doorparent	15
+obj_doorD_musfade	104	spr_doorD	obj_doorparent	15
+obj_doorE	105	spr_doorE	obj_doorparent	15
+obj_doorF	106	spr_doorF	obj_doorparent	15
+obj_doorX	107	spr_doorX	obj_doorparent	15
+obj_doorX_musfade	108	spr_doorX	obj_doorparent	15
+obj_doorw_musfade	109	spr_doorW	obj_doorparent	15
+obj_markerA	110	spr_markerA		15
+obj_markerB	111	spr_markerB		15
+obj_markerC	112	spr_markerC		15
+obj_markerD	113	spr_markerD		15
+obj_markerE	114	spr_markerE		15
+obj_markerF	115	spr_markerF		15
+obj_markerr	116	spr_markerX		15
+obj_markers	117	spr_markerX		15
+obj_markert	118	spr_markerX		15
+obj_markeru	119	spr_markerX		15
+obj_markerv	120	spr_markerX		15
+obj_markerw	121	spr_markerW		15
+obj_markerX	122	spr_markerX		15
+obj_doorW	123	spr_doorX	obj_doorparent	15
+obj_ralseibook	136	spr_rbook		15
+obj_darklancer	155	spr_darklancer		15
+obj_dustpile_susie	159	spr_dustpile	obj_dustpile	15
+obj_fountainkris	167	spr_krisu_bright		15
+obj_testoverworldenemy	170	spr_diamondm_idle		15
+obj_caterpillarchara	172	spr_susied_party		15
+obj_starwalker_overworld	178	spr_starwalker_body		15
+obj_overworldheart	180	spr_heart_outline2		15
+obj_overworldbulletparent	187			15
+obj_overworld_spade_homing	189	spr_spadebullet	obj_overworldbulletparent	15
+obj_overworld_spade	190	spr_spadebullet	obj_overworldbulletparent	15
+obj_overworld_spademaker	191	spr_spadebullet		15
+obj_heartburst	209	spr_heartoutline		15
+obj_heartmarker	210	spr_diamondbullet_form		15
+obj_lancerbike	211	spr_lancerbike	obj_regularbullet	15
+obj_herokris	213	spr_krisplace	obj_heroparent	15
+obj_herosusie	214	spr_krisplace	obj_heroparent	15
+obj_heroralsei	215	spr_krisplace	obj_heroparent	15
+obj_krisplace	217	spr_krisplace		15
+obj_moveheart	219	spr_dodgeheart		15
+obj_returnheart	220	spr_dodgeheart		15
+obj_heartblcon	234	spr_heartblcon_0		15
+obj_heartshaper	239	spr_heartbullet	obj_bulletparent	15
+obj_spinheart	240	spr_spinheart	obj_regularbullet_permanent	15
+obj_ralseibullet	243	spr_smallbullet	obj_collidebullet	15
+obj_ralseienemy	245	spr_ralseib_idle_enemy	obj_monsterparent	15
+obj_ralseithrown	264	spr_ralsei_thrown		15
+obj_throwralsei	265	spr_susieb_throwralseiready		15
+obj_heartbomb_blast	269	spr_bomb_heart	obj_bulletparent	15
+obj_lancerbike_neo	284	spr_lancerbike	obj_regularbullet	15
+obj_lancerboss	286	spr_lancerbike	obj_monsterparent	15
+obj_lancerboss2	287	spr_lancer_battle	obj_monsterparent	15
+obj_susieenemy	289	spr_susie_enemy	obj_monsterparent	15
+obj_lancerboss3	290	spr_lancerbike	obj_monsterparent	15
+obj_heartenemy	295	spr_heartenemy_idle	obj_monsterparent	15
+obj_heart	313	spr_dodgeheart		15
+obj_dkris_event	326	spr_dkris_dl		15
+obj_time	328	spr_darkconfigbt		15
+obj_overworldc	334			15

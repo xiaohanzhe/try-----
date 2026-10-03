@@ -1,0 +1,83 @@
+# 第84轮 · 核心文件复检  (recheck84.txt)
+# 改动文件：possession.py / main.py / check82.py / check84.py / run_all.py
+
+## 1. 可编译 / 可解析
+[PASS] 1 可解析：ralsei_pet\modules\possession.py
+[PASS] 1 可解析：ralsei_pet\src\main.py
+[PASS] 1 可解析：code-quality-audit\第82轮-灵魂附身R5\_tools\check82.py
+[PASS] 1 可解析：code-quality-audit\第84轮-原作互动技能取证\_tools\check84.py
+[PASS] 1 可解析：code-quality-audit\regress\run_all.py
+[PASS] 1 baseline.json 可解析（76 个套件）
+
+## 2. 结构
+[PASS] 2 possession.py 含 'KIND_DIRECT = '
+[PASS] 2 possession.py 含 'KIND_CONSENT = '
+[PASS] 2 possession.py 含 'POSSESSION_KINDS = {'
+[PASS] 2 possession.py 含 "'kris': KIND_CONSENT"
+[PASS] 2 possession.py 含 "'ut_frisk': KIND_CONSENT"
+[PASS] 2 possession.py 含 "'os_niko': KIND_CONSENT"
+[PASS] 2 ★ 表里无 KIND_DIRECT 成员
+[PASS] 2 main.py 含 'soul.clear_keys()'
+[PASS] 2 对账文档含 'I1'
+[PASS] 2 对账文档含 'I10'
+[PASS] 2 对账文档含 'obj_caterpillarchara'
+[PASS] 2 对账文档章节标题全在（缺 []）
+[PASS] 2 对账文档代码围栏成对
+
+## 3. 编码
+[PASS] 3 无 BOM：possession.py
+[PASS] 3 无 BOM：main.py
+[PASS] 3 无 BOM：check82.py
+[PASS] 3 无 BOM：check84.py
+[PASS] 3 无 BOM：run_all.py
+[PASS] 3 无 BOM：原作互动技能清单与对账.md
+[PASS] 3 无 U+FFFD：possession.py
+[PASS] 3 无 U+FFFD：main.py
+[PASS] 3 无 U+FFFD：check82.py
+[PASS] 3 无 U+FFFD：check84.py
+[PASS] 3 无 U+FFFD：run_all.py
+[PASS] 3 无 U+FFFD：原作互动技能清单与对账.md
+[PASS] 3 main.py EOL 仍是 LF（无 CRLF）
+[PASS] 3 possession.py EOL 仍是 LF
+
+## 4. 恒真判据复查（AST + 独立文本 oracle）
+[PASS] 4 无未被守卫的恒真判据：check82.py（可疑 []）
+[PASS] 4 无未被守卫的恒真判据：check84.py（可疑 []）
+
+## 5. 逐令牌回验（本轮改/删过的令牌）
+[PASS] 5 possession.py 含 'KIND_CONSENT'
+[PASS] 5 possession.py 含 'os_niko'
+[PASS] 5 possession.py 含 'ut_frisk'
+[PASS] 5 possession.py 含 'kris'
+[PASS] 5 possession.py 标注"当前无成员"（KIND_DIRECT）
+[PASS] 5 main.py 含 'soul.state.clear_keys()'
+[PASS] 5 main.py 含 'soul.release_all()'
+[PASS] 5 main.py 含 'control_clear(2)'
+[PASS] 5 main.py 含 'target.name'
+[PASS] 5 main.py 含 '_possession_play_squeak'
+[PASS] 5 main.py 含 'hide_soul'
+[PASS] 5 main.py 有 `soul.release_all()` 真调用（AST 级，附身入口；实得 [1868]）
+[PASS] 5 main.py 无 `soul.clear_keys()` 真调用（SoulOverlay 无此方法；实得 []）
+[PASS] 5 正控制：main.py 有 `soul.state.clear_keys()` 真调用（[4588]）
+[PASS] 5 产物含 'wspeed = 3'
+[PASS] 5 产物含 'bwspeed = 4'
+[PASS] 5 产物含 '12 + (arg3 * 12)'
+[PASS] 5 产物含 'parent = obj_mainchara'
+[PASS] 5 产物含 'event_user(0)'
+[PASS] 5 产物含 'myinteract = 1'
+[PASS] 5 产物含 'onebuffer = 5'
+[PASS] 5 产物含 `event_user(9)`（门）
+[PASS] 5 产物**不含**字节码 `pushi`
+[PASS] 5 _evidence 有 dr_objects.json
+[PASS] 5 _evidence 有 dr_code.json
+[PASS] 5 _evidence 有 dr_scripts.json
+[PASS] 5 _evidence 有 dr84_code_dump.txt
+[PASS] 5 _evidence 有 dr84_objects_all.tsv
+
+## 6. 工作区与基线一致性
+[PASS] 6 工作区无残留八进制转义
+    git status 段数 = 6（本轮有预期改动 ⇒ 非空正常）
+[PASS] 6 ★★ 基线键集 == SUITES id 集（缺 []）   SUITES=76 基线=76
+[PASS] 6 负控制：摘掉一个 id ⇒ 缺集非空（判据有鉴别力）
+
+=== PASS=66 FAIL=0 ===

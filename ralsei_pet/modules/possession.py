@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """附身（POSSESSION）—— Z 键把"操控权"从灵魂切到某个角色身上（第82轮 R5）。
 
-用户口径（第76轮需求锁定，逐字）
+用户口径（第84轮**现行**，逐字）
 --------------------------------
-「**交互键用Z**（对 kris 和 firsk，niko 用可以在征求他们同意的情况下附身
-（**特效用原作的**），也就是达到**原作操控的功能**）」
+（第76轮旧口径）「交互键用Z（对 kris 和 firsk，niko 用可以在征求他们同意的情况下附身
+（特效用原作的），也就是达到原作操控的功能）」
+（**第84轮新口径，推翻上一条**）「**所有人附身都要经过同意哦**，
+附身后要和原作的效果一样就是了，对了，**原作该有的互动技能这类的都得有哦**」
+
+⇒ **现行实现**：`POSSESSION_KINDS` 里 kris / ut_frisk / os_niko **全部 = `KIND_CONSENT`**
+（即：谁都先问；问过同意了才附身）。`KIND_DIRECT` 保留但**当前无成员**（供将来扩展）。
 
 ★★★ 原作依据（第82轮 UTMT 反编译取证，物证全文见
      `code-quality-audit/第82轮-灵魂附身R5/_evidence/`）
@@ -40,8 +45,28 @@
 --------------------------------------------------------------
 * **"征求同意"**：原作里只有主角一人可操控（`obj_herokris`），**没有"问对方能不能附身"**
   这回事。这是用户口径带来的**本项目扩展**，本模块用 `ConsentState` 显式建模。
+  ★ **第84轮起该扩展适用于全体**（原来只有 Niko 走这条路，现在 kris / frisk 也走）。
 * **特效**：用户说"特效用原作的" ⇒ 只用**原作已有的表现**（`snd_squeak` 音效 +
   灵魂消失/角色接管），**不新造光效/粒子**（原作里没有"附身光效"这个东西）。
+
+★★★ 原作依据（第84轮 UTMT 反编译取证 Deltarune ch1，物证见
+     `code-quality-audit/第84轮-原作互动技能取证/`）
+--------------------------------------------------------------
+源：`chapter1_windows/data.win`（14,658,588 B），97 objects / 274 codes，
+    **`gml_ok=True`**（产物含 `if (`/`global.` ⇒ 真 GML，非空壳）。
+
+| 事实 | 出处（逐字） |
+|---|---|
+| **交互 = 置标记 + 转交对方** | `scr_interact()`：`myinteract = 1; event_user(0);` |
+| **被交互者被转向主角** | `obj_mainchara_Step_0`：`with (interactedobject) { facing = 3; }` |
+| **交互射线按朝向四段矩形** | 同上：四个 `collision_rectangle(..., obj_interactable/obj_interactablesolid, ...)`，`d = global.darkzone + 1` |
+| **★ 走路速度：光 3 / 暗 4** | `obj_mainchara_Create_0`：`wspeed = 3; bwspeed = 3; if (darkmode == 1) { bwspeed = 4; }` |
+| **★ 跑动三段加速** | `obj_mainchara_Step_0`：`if (run == 1) { ... bwspeed + 1 ... +2 ... +3 ... }`（暗世界 +2/+4/+5） |
+| **跑 = 按住 button2** | 同上：`if (button2_h() && twobuffer < 0) { run = 1; }` |
+| **朝向枚举 0=下/1=右/2=上/3=左** | `Create_0`：`if (global.facing == 0) sprite_index = dsprite;` |
+| **对话锁定全局闸** | `obj_interactablesolid_Other_10`：`myinteract = 3; global.interact = 1;` |
+| **对话结束 + 5 帧缓冲** | `obj_interactablesolid_Step_0`：`global.interact = 0; ... onebuffer = 5;` |
+| **★ 跟随队伍（R6 的原作出处）** | `obj_caterpillarchara_Create_0`：`parent = obj_mainchara;` + 25 格 `remx/remy` 轨迹；`scr_makecaterpillar`：`target = 12 + (arg3 * 12)` |
 """
 import logging
 
@@ -116,8 +141,8 @@ MODE_POSSESSED = 'possessed'
 MODE_REFUSED = 'refused'
 
 #: 目标分类
-KIND_DIRECT = 'direct'      #: 可直接附身（Kris / Frisk）
-KIND_CONSENT = 'consent'    #: 需先征求同意（Niko）
+KIND_DIRECT = 'direct'      #: 可直接附身（★ 第84轮后**本项目已无此类**，保留供扩展）
+KIND_CONSENT = 'consent'    #: 需先征求同意（★ 第84轮起为**全部可附身者**）
 KIND_FORBIDDEN = 'forbidden'  #: 不可附身
 
 
@@ -145,14 +170,20 @@ class PossessionTarget(object):
 
 _ALL_KINDS = (KIND_DIRECT, KIND_CONSENT, KIND_FORBIDDEN)
 
-#: ★★★ 用户口径"对 kris 和 firsk 直接操控；niko 需先征求同意"的**唯一真源**。
-#:   其它一律不可附身（原作里也没有第二个人可以被操控 —— 主角就只有 Kris。
-#:   `ut_frisk` 是 Undertale 侧的主角身份，用户把它与 Kris 并列 ⇒ 同属 DIRECT）。
-#:   ⚠️ 这张表是**数据**，`check82` 会拿它跟 `_registry.json` 对账
-#:      （证明这些 id 真存在于登记表里，而不是凭空写的）。
+#: ★★★ 用户口径的**唯一真源**。
+#:
+#: 口径演进（两代，别混）：
+#:   * 第76轮：「交互键用Z（**对 kris 和 firsk**，**niko 用**可以在征求他们同意的情况下附身
+#:     （特效用原作的），也就是达到原作操控的功能）」⇒ 当时 kris/frisk = DIRECT、niko = CONSENT。
+#:   * **第84轮（现行）**：「**所有人附身都要经过同意哦**」⇒ **全部改 CONSENT**。
+#:     ★ 这是**用户明确推翻**前一条的措辞，两个名字（kris / ut_frisk）从 DIRECT 迁到 CONSENT。
+#:
+#: 其它一律不可附身（原作里也只有主角一人可操控 —— `obj_herokris`）。
+#: ⚠️ 这张表是**数据**，`check82` / `check84` 会拿它跟 `_registry.json` 对账
+#:    （证明这些 id 真存在于登记表里，而不是凭空写的）。
 POSSESSION_KINDS = {
-    'kris': KIND_DIRECT,
-    'ut_frisk': KIND_DIRECT,
+    'kris': KIND_CONSENT,
+    'ut_frisk': KIND_CONSENT,
     'os_niko': KIND_CONSENT,
 }
 
@@ -298,9 +329,11 @@ class PossessionState(object):
           1. `target` 非法 / 不可附身（`KIND_FORBIDDEN`）⇒ 原状态不变，返回 `MODE_REFUSED`；
           2. 已在附身中 ⇒ 先 `_end()` 解除，再走新一轮（避免"叠着附身"）；
           3. `scene` 与目标 `scene` 不一致（都非 None）⇒ 拒绝（**附身要求同场景**）；
-          4. `KIND_DIRECT` ⇒ 直接进 `MODE_POSSESSED`；
+          4. `KIND_DIRECT` ⇒ 直接进 `MODE_POSSESSED`（★ 第84轮后**本表已无此类成员**，
+             但仍保留这条分支：一旦将来有角色要"免问"，只需改数据不动逻辑）；
           5. `KIND_CONSENT` ⇒ 同意过（`True`）才进 `MODE_POSSESSED`，
              否则进 `MODE_ASKING`（等 `grant` / `refuse`）。
+             ★ **第84轮现行口径**：kris / ut_frisk / os_niko **全走这一条**。
         """
         if not isinstance(target, PossessionTarget):
             self.reason = '非法目标（%r）' % (target,)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """第82轮 R5 回归锁：Z 键附身（原作功能 + 特效）。
 
-用户口径（逐字）：「交互键用Z（对 kris 和 firsk，niko 用可以在征求他们同意的情况下
-附身（特效用原作的），也就是达到原作操控的功能）」
+用户口径（**第84轮现行**）：「**所有人附身都要经过同意哦**，
+附身后要和原作的效果一样就是了」（推翻第76轮"对 kris 和 firsk 直接操控、niko 需同意"）
 
 ★★★ 原作依据（物证 `第82轮-灵魂附身R5/_evidence/`，本套件 E 段逐条回原文验）
   · Z ⇄ `control_check_pressed(0)` → `event_user(0)`（`obj_mainchara_Step_0`）
@@ -15,7 +15,7 @@
   A ★★ 零依赖纪律（`possession.py` 顶层 import ⊆ {logging, math} + 零函数内 import
       + 不 import 任何项目内模块）
   B ★★★ 附身类别表 = **单一真源**（`POSSESSION_KINDS` 与 `_registry.json` 对账：
-      kris/ut_frisk 可直接附 · os_niko 需同意 · 其余一律不可）
+      第84轮口径 ⇒ **kris/ut_frisk/os_niko 全需同意**（表里不许有 KIND_DIRECT 成员）· 其余一律不可）
   C ★★★ 行为（真跑 `PossessionState`）：直接附身 / 征求同意三态 / 拒绝 / 解除 /
       **方向键步进 3 px** / **回头 2 px** / 未附身不驱动
   D ★★ 产品接线（AST + 真源码）：`main.py` 有 Z 键分支 · 方向键**附身优先** ·
@@ -146,16 +146,30 @@ else:
 # =============================================================== B. 类别表 = 单一真源
 import possession as P   # noqa: E402
 
-check('B ★ kris 可直接附身', P.kind_of('kris') == P.KIND_DIRECT, star=True)
-check('B ★ ut_frisk 可直接附身', P.kind_of('ut_frisk') == P.KIND_DIRECT, star=True)
+check('B ★ kris 需征求同意（第84轮口径）',
+      P.kind_of('kris') == P.KIND_CONSENT, star=True)
+check('B ★ ut_frisk 需征求同意（第84轮口径）',
+      P.kind_of('ut_frisk') == P.KIND_CONSENT, star=True)
 check('B ★ os_niko 需征求同意', P.kind_of('os_niko') == P.KIND_CONSENT, star=True)
+# ★★★ 第84轮口径「所有人附身都要经过同意」的**结构判据**（不是逐个数 id）：
+#   表里**不许再有 KIND_DIRECT 成员** —— 这样将来新增角色若被写成 DIRECT 会被立刻抓到。
+_DIRECT_MEMBERS = sorted(k for k, v in P.POSSESSION_KINDS.items()
+                         if v == P.KIND_DIRECT)
+check('B ★★ 表里无 KIND_DIRECT 成员（"所有人先问"；实得 %r）' % _DIRECT_MEMBERS,
+      _DIRECT_MEMBERS == [], star=True)
+# 负控制：证明这条判据有鉴别力（喂一个假表必须能让它报红）
+_FAKE = {'__x__': P.KIND_DIRECT}
+check('B 负控制：假表含 DIRECT ⇒ 该判据会报红（有鉴别力）',
+      sorted(k for k, v in _FAKE.items() if v == P.KIND_DIRECT) != [])
 # 负控制：别的角色一律不可附身
 check('B 负控制：susie 不可附身', P.kind_of('susie') == P.KIND_FORBIDDEN)
 check('B 负控制：toriel 不可附身', P.kind_of('toriel') == P.KIND_FORBIDDEN)
 check('B 负控制：乱写的 id 不可附身', P.kind_of('__nope__') == P.KIND_FORBIDDEN)
 check('B 负控制：非字符串不可附身', P.kind_of(None) == P.KIND_FORBIDDEN)
 check('B needs_consent(os_niko) 为真', P.needs_consent('os_niko'))
-check('B needs_consent(kris) 为假', not P.needs_consent('kris'))
+check('B ★ needs_consent(kris) 为真（第84轮口径）', P.needs_consent('kris'), star=True)
+check('B ★ needs_consent(ut_frisk) 为真（第84轮口径）',
+      P.needs_consent('ut_frisk'), star=True)
 
 # ★★★ 与 `_registry.json` 对账：类别表里的 id 必须真存在于登记表
 _REG = os.path.join(PET, 'assets', 'npc', '_registry.json')
@@ -220,11 +234,13 @@ def _mk(nid, kind, name=None, scene=None):
     return P.PossessionTarget(nid, name=name or nid, kind=kind, scene=scene)
 
 
-# --- C1 直接附身 ---------------------------------------------------------
+# --- C1 直接附身（★ 第84轮后本表已无 DIRECT 成员，这段改为**分支覆盖**：
+#         证明"若将来有角色要走免问通路，逻辑仍然正确"。口径判据在 B 段。）---------
 st = P.PossessionState()
 t_kris = _mk('kris', P.KIND_DIRECT, '克里斯', scene='scene_a')
 m = st.request(t_kris, scene='scene_a')
-check('C ★ kris 直接附身 ⇒ MODE_POSSESSED', m == P.MODE_POSSESSED, star=True)
+check('C ★ 显式 DIRECT 目标 ⇒ MODE_POSSESSED（分支仍工作）',
+      m == P.MODE_POSSESSED, star=True)
 check('C possessed_id == kris', st.possessed_id == 'kris')
 check('C is_possessing 为真', st.is_possessing)
 
@@ -306,6 +322,21 @@ check('C scene=None 一侧 ⇒ 不因场景被拒',
       P.PossessionState().request(
           _mk('kris', P.KIND_DIRECT, scene=None), scene='scene_a') == P.MODE_POSSESSED)
 
+# --- C4b ★★★ 第84轮口径：**用真表**（不是显式 kind）验证"所有人都要先问" --------------
+# 这条是"产品口径"的行为判据：拿 `build_targets` 造出的真目标（kind 来自表），
+# 请求之 ⇒ 必须是 ASKING，不许直接 POSSESSED。负控制：显式 DIRECT 的会直接进。
+for _nid in ('kris', 'ut_frisk', 'os_niko'):
+    _st = P.PossessionState()
+    _t = P.target_from_registry(_nid, {'id': _nid, 'name_cn': 'X'}, scene='scene_a')
+    _mm = _st.request(_t, scene='scene_a')
+    check('C ★★ 真表口径：%s 请求 ⇒ MODE_ASKING（先问）' % _nid,
+          _mm == P.MODE_ASKING, star=True)
+# 负控制：显式 DIRECT ⇒ 直接进（证明上面三条不是"恒为 ASKING"）
+_st_neg = P.PossessionState()
+check('C 负控制：显式 DIRECT ⇒ 直接 POSSESSED（非恒 ASKING）',
+      _st_neg.request(_mk('kris', P.KIND_DIRECT, scene='scene_a'),
+                      scene='scene_a') == P.MODE_POSSESSED)
+
 # --- C5 dt 防御 ----------------------------------------------------------
 st7 = P.PossessionState()
 st7.request(t_kris, scene='scene_a')
@@ -356,6 +387,58 @@ check('D ★ keyReleaseEvent 放开被附身角色的键（release_key）',
 _fo = _func_src(_mtree, _msrc, 'focusOutEvent') or ''
 check('D focusOutEvent 放开被附身角色的键', 'is_possessing' in _fo
       and 'release_all' in _fo)
+
+# D4b ★★★ 原作 `control_clear(2)`：附身那一下要清掉**旧主人（灵魂）**残留的按键
+#   出处（第84轮取证）：`obj_mainchara_Other_12`：
+#     `snd_play(snd_squeak); global.interact=5; global.menuno=0; control_clear(2);`
+#   ★ 必须落在 `_possession_on_begin` 里（不是随便哪个函数）。
+#   ★★ 判据必须上 AST（第84轮体检抓到的坑）：`'clear_keys' in _onb` 会命中
+#      **注释里那句 API 说明** ⇒ 删掉真调用照样 PASS（恒真判据）。
+#      ⇒ 只认"真有一个 `X.clear_keys()` 调用节点"。
+def _method_calls_in(tree, src, func_name, attr):
+    """在 `func_name` 的函数体里，找出所有 `something.<attr>(...)` 调用。"""
+    hits = []
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.FunctionDef) and node.name == func_name):
+            continue
+        for sub in ast.walk(node):
+            if not isinstance(sub, ast.Call):
+                continue
+            f = sub.func
+            if isinstance(f, ast.Attribute) and f.attr == attr:
+                hits.append(ast.get_source_segment(src, sub) or attr)
+    return hits
+
+
+_onb = _func_src(_mtree, _msrc, '_possession_on_begin') or ''
+_ck = _method_calls_in(_mtree, _msrc, '_possession_on_begin', 'release_all')
+check('D ★★ 附身开始时清灵魂残留键（原作 control_clear(2)，AST 真调用 %r）' % _ck,
+      len(_ck) > 0, star=True)
+# 负控制 2：**不许**对 `self.soul`（= `SoulOverlay`）调 `clear_keys` —— 它没这个方法，
+#   会静默 AttributeError 被 except 吞掉（第84轮初版就踩了这个坑，后由 AST 判据抓到）。
+_ck_bad = _method_calls_in(_mtree, _msrc, '_possession_on_begin', 'clear_keys')
+check('D ★ 负控制：不误用不存在的 soul.clear_keys（SoulOverlay 只有 release_all，实得 %r）' % _ck_bad,
+      len(_ck_bad) == 0, star=True)
+# 负控制 3：调用对象必须是 **soul**（不是 poss/self/别的）
+check('D 清键调在魂身上（soul.release_all() 形态）',
+      any(h.startswith('soul.') for h in _ck))
+# ★ 正控制：`SoulState` 真有 clear_keys 且确无 release_all；`SoulOverlay` 相反
+#   （证明"名字合法"与"挂对对象"是两件事 —— 这正是初版混淆的点）
+_SE = os.path.join(PET, 'modules', 'soul_entity.py')
+if os.path.exists(_SE):
+    _sesrc = _read(_SE)
+    _setree = ast.parse(_sesrc)
+    _se_names = {n.name for n in ast.walk(_setree) if isinstance(n, ast.FunctionDef)}
+    check('D ★ 正控制：SoulState 真定义 clear_keys（`clear_keys` 这个名字本身合法）',
+          'clear_keys' in _se_names, star=True)
+    check('D ★ 正控制：SoulState 确无 release_all',
+          'release_all' not in _se_names, star=True)
+_SO = os.path.join(PET, 'modules', 'soul_overlay.py')
+if os.path.exists(_SO):
+    _so_names = {n.name for n in ast.walk(ast.parse(_read(_SO)))
+                 if isinstance(n, ast.FunctionDef)}
+    check('D ★ 正控制：SoulOverlay 有 release_all、无 clear_keys（⇒ self.soul 只能用 release_all）',
+          'release_all' in _so_names and 'clear_keys' not in _so_names, star=True)
 
 # D5：init_possession 在 init_npc_systems 之后（要拿到登记表）
 _init_m = _func_src(_mtree, _msrc, 'init_possession')
