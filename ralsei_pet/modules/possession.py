@@ -110,14 +110,179 @@ SCHEMA_VERSION = 1
 #: ★ 用户裁定"交互键用 Z" ⇒ 本项目把 Z 映射到 control 0（原作里 0 号键就是确认键）。
 CONFIRM_KEY = 'z'
 
-#: 原作主角速度 = **3 像素/帧**（`obj_mainchara_Step_0`：`x -= 3;` / `y -= 3;`）。
+#: 原作主角**走路**速度（光世界）= **3 像素/帧**
+#: （`obj_mainchara_Create_0`：`wspeed = 3; bwspeed = 3;`）。
 #: 与灵魂的 `global.sp`（本项目 `SPEED_PX = 4.0`）**不同** —— 这是原作的既有差异，
 #: 不是我们改的（主角比灵魂略慢，因为主角要踩格子/触发碰撞）。
+#: ★ 第85轮：它现在只是 `BASE_SPEED_LIGHT` 的**兼容别名**（历史调用点 + 回归锁仍认它），
+#:   真正的取值走 `speed_for()` 那张表（见下）。
 HERO_SPEED_PX = 3.0
+
+#: 原作主角**走路**速度（暗世界）= **4**（`Create_0`：`if (darkmode == 1) { bwspeed = 4; }`）。
+BASE_SPEED_LIGHT = 3.0
+BASE_SPEED_DARK = 4.0
+
+#: ★★★ 跑动三段的**增量表**（第85轮 UTMT 反编译 Deltarune ch1 逐字取证）。
+#:
+#: 出处：`gml_Object_obj_mainchara_Step_0`，
+#:       `if (run == 1) { if (darkmode == 0) { wspeed = bwspeed + 1; if (runtimer > 10) {...+2} if (runtimer > 60) {...+3} } if (darkmode == 1) { wspeed = bwspeed + 2; if (runtimer > 10) {...+4} if (runtimer > 60) {...+5} } }`
+#: 物证：`code-quality-audit/第85轮-原作用键与移速表取证/_evidence/dr85_code.json`
+#:       （`dr85_anchors.md` §A / 回验 17/17 通过）。
+#:
+#: ★★ **合并出来的表**（数值口径的唯一真源）：
+#:
+#:   | 世界 | 走 | 跑段1（timer≤10） | 跑段2（10<timer≤60） | 跑段3（timer>60） |
+#:   |------|----|------------------|---------------------|-------------------|
+#:   | 光   | 3  | 4                | 5                   | 6                 |
+#:   | 暗   | 4  | 6                | 8                   | 9                 |
+#:
+#: ★★★ **两处刻意的不等差，不许"顺手规范化"**：
+#:   · 暗世界跑段1 是 `+2`（不是 `+1`）⇒ 4+2 = **6**；
+#:   · 暗世界跑段3 是 `+5`（不是 `+4`）⇒ 4+5 = **9**。
+#:   原作在暗世界把加速做得更陡，这是**设计**，改了就与原作不符
+#:   （故此处把三段**写成显式三条**，而不是"基准 + 等差"的公式 —— 公式会抹掉 `+2/+5`）。
+#:
+#: 结构：`RUN_SPEED_TABLE[world][0..2]`，下标即段号（0=段1 / 1=段2 / 2=段3）。
+RUN_SPEED_TABLE = {
+    'light': (BASE_SPEED_LIGHT + 1.0, BASE_SPEED_LIGHT + 2.0, BASE_SPEED_LIGHT + 3.0),
+    'dark': (BASE_SPEED_DARK + 2.0, BASE_SPEED_DARK + 4.0, BASE_SPEED_DARK + 5.0),
+}
+
+#: 跑表进段的两个阈值（原作 `runtimer > 10` / `runtimer > 60`）—— **单位是帧**。
+#: 30fps 下：0.33s 进段2、2.0s 进段3。
+RUN_SEG2_AFTER = 10
+RUN_SEG3_AFTER = 60
+
+#: 世界取值的**唯一真源**（与 `scene_system.WORLD_LIGHT/WORLD_DARK` 同字面量；
+#: 本模块零依赖，不 import 它 —— 靠 `check85` 对账两处字面量一致）。
+WORLD_LIGHT = 'light'
+WORLD_DARK = 'dark'
+
+# ---------------------------------------------------------------- 全局闸 / 输入缓冲
+#
+# ★★ 第85轮 I4：`global.interact` 全局闸。
+#
+# 原作（`obj_mainchara_Step_0`）：**整段移动代码**裹在
+#   `if (global.interact == 0) { ... }` 里 ⇒ 只要闸不为 0，主角**整帧不动、
+#   也不响应任何键**。本产物里可核到的取值：
+#
+#   | 值 | 出处 | 含义 |
+#   |----|------|------|
+#   | 0 | 常态 | 可自由走动 / 可交互 |
+#   | 1 | `obj_interactablesolid_Other_10`：`myinteract = 3; global.interact = 1;` | 对话中 |
+#   | 5 | 菜单键分支：`global.interact = 5;` | 菜单打开 |
+#
+# ⚠️ **诚实标注**：其余取值（本产物里未出现）**不编**。这里只建模"0 = 开 / 非 0 = 关"。
+INTERACT_FREE = 0
+INTERACT_DIALOG = 1
+INTERACT_MENU = 5
+
+#: ★★ 第85轮 I5：**输入缓冲的帧数**（原作 `onebuffer = 5`）。
+#:
+#: 出处：`obj_interactablesolid_Step_0` —— 对话结束那一帧：
+#:   `global.interact = 0; myinteract = 0; with (obj_mainchara) { onebuffer = 5; }`
+#: 意义：接下来 **5 帧**主角的确认键**不生效**（防止"对话还没读完就误触下一段"）。
+#: 本项目没有 `onebuffer` 这套缓冲 ⇒ 这里新建一个等价物（**照抄帧数 5**）。
+INPUT_BUFFER_FRAMES = 5
+
+
+def normalize_world(world):
+    """世界取值 → `'light'` / `'dark'`；**认不出就 `None`（不猜）**。
+
+    ★ 为什么不默认成 `'light'`：默认会让"场景系统还没就绪"时静默按光世界算
+      —— 与 `scene_system.world_of_scene` 那条"判不出来就 None，不猜"同一条纪律。
+    """
+    if not isinstance(world, str):
+        return None
+    w = world.strip().lower()
+    if w in ('light', 'dark'):
+        return w
+    return None
+
+
+def run_segment(run_timer):
+    """按跑表 `run_timer`（**帧计数**）返回段号：`0`（段1）/ `1`（段2）/ `2`（段3）。
+
+    照抄原作 `if (runtimer > 10)` / `if (runtimer > 60)` —— **严格大于**，
+    所以 `run_timer == 10` 仍在段1、`== 60` 仍在段2（差一就与原作不符）。
+    """
+    try:
+        t = float(run_timer)
+    except (TypeError, ValueError):
+        return 0
+    if not math.isfinite(t) or t <= RUN_SEG2_AFTER:
+        return 0
+    if t <= RUN_SEG3_AFTER:
+        return 1
+    return 2
+
+
+def speed_for(world, running=False, run_timer=0):
+    """★ 第85轮 I1/I2 的**唯一取值口**：`(世界, 是否在跑, 跑表)` → 每帧像素速度。
+
+    返回 `None` 表示"世界判不出来" ⇒ 调用方**保持原行为**（用 `HERO_SPEED_PX`），
+    而不是替它选一个世界（"同一份规则两处算"是本项目最贵的坑）。
+
+    逐字对照（原作 `obj_mainchara_Create_0` + `Step_0`）::
+
+        world='light', running=False          → 3
+        world='light', running=True,  t<=10   → 4
+        world='light', running=True,  t>10    → 5
+        world='light', running=True,  t>60    → 6
+        world='dark',  running=False          → 4
+        world='dark',  running=True,  t<=10   → 6     ← +2（不是 +1）
+        world='dark',  running=True,  t>10    → 8     ← +4
+        world='dark',  running=True,  t>60    → 9     ← +5（不是 +4）
+    """
+    w = normalize_world(world)
+    if w is None:
+        return None
+    if not running:
+        return BASE_SPEED_LIGHT if w == WORLD_LIGHT else BASE_SPEED_DARK
+    return RUN_SPEED_TABLE[w][run_segment(run_timer)]
+
+
+def advance_run_timer(run_timer, running, moved):
+    """★ 跑表 `runtimer` 的推进（原作 `obj_mainchara_Step_0` 起始行 350，逐字）。
+
+    原作原文::
+
+        runmove = 0;
+        if (run == 1 && xmeet == 0 && ymeet == 0 && xymeet == 0)
+        {
+            if (abs(px) > 0 || abs(py) > 0) { runmove = 1; runtimer += 1; }
+            else { runtimer = 0; }
+        }
+        else { runtimer = 0; }
+
+    ⇒ 三条**必须同时满足**才 `+1`：按住跑键、这一帧真的动了、**且没撞墙**。
+      任一条不满足 ⇒ 归零（不只是"不加"）。
+
+    :param run_timer: 当前帧计数（非数 ⇒ 当 0 处理）
+    :param running: 是否按住跑键
+    :param moved: 这一帧是否真的产生了位移（`abs(px)>0 or abs(py)>0` 的等价物）
+    :return: 新的帧计数（`int`，永不抛）
+    """
+    try:
+        t = int(run_timer)
+    except (TypeError, ValueError):
+        t = 0
+    if t < 0:
+        t = 0
+    if not running or not moved:
+        return 0
+    return t + 1
 
 #: 原作用 `xprevious == (x + 3)` / `xprevious == (x - 3)` 做**回头判定**
 #: （上一帧朝反方向走了整整一格 ⇒ 这一帧只补 2 px，避免"贴脸抖动"）。
 #: 本项目保留这条形状（见 `PossessionState.drive`）。
+#:
+#: ★ 物证（**第85轮补注**）：`obj_mainchara_Step_0` 原文里确有这两行 ——
+#:   `第82轮-灵魂附身R5/_evidence/obj_mainchara_Step_0.gml` 第 54 行
+#:   `if (xprevious == (x + 3))` 与第 129 行 `if (xprevious == (x - 3))`。
+#:   （⚠️ 第85轮那份 70 codes 的 dump 里**没有** `xprevious` —— 那是因为它
+#:    抽的不是同一个对象集，**不代表这句引用无出处**。取证范围不同 ≠ 事实不存在，
+#:    第85轮一度据此误判，已在此更正。）
 TURN_BACK_STEP = 2.0
 
 #: 原作帧率（第43轮实证 `GMS2FPS = 30`）。
@@ -288,9 +453,10 @@ class PossessionState(object):
 
     __slots__ = ('mode', 'target', 'consent',
                  '_pressed', '_last_drive', 'x', 'y', '_target_x', '_target_y',
-                 'reason')
+                 'world', '_running', '_run_timer', '_last_speed',
+                 '_interact', '_confirm_buffer', 'reason')
 
-    def __init__(self, consent=None, x=0.0, y=0.0):
+    def __init__(self, consent=None, x=0.0, y=0.0, world=None):
         self.mode = MODE_FREE
         self.target = None            #: 当前/待附身的 `PossessionTarget`
         self.consent = consent if consent is not None else ConsentState()
@@ -300,6 +466,17 @@ class PossessionState(object):
         self.y = float(y)
         self._target_x = float(x)     #: 附身前记录的原位（解除时回去）
         self._target_y = float(y)
+        # ★ 第85轮 I1/I2：世界 / 跑键 / 跑表（**速度表**的三个输入）。
+        #   `world=None` ⇒ 判不出来 ⇒ `drive` 回落到 `HERO_SPEED_PX`（保持原行为，不猜）。
+        self.world = normalize_world(world)   #: `'light'` / `'dark'` / `None`
+        self._running = False         #: 是否按住跑键（Shift）
+        self._run_timer = 0           #: 跑表（**帧**计数，原作 `runtimer`）
+        self._last_speed = None       #: 上一帧实际用的速度（日志/断言用；None=未算过）
+        # ★ 第85轮 I4/I5：全局闸 + 确认键输入的剩余缓冲帧。
+        #   `_interact` 照 `global.interact`（0=开 / 非0=关）；`_confirm_buffer` 照
+        #   `onebuffer`（对话结束置 5，每帧减 1，>0 时确认键不生效）。
+        self._interact = INTERACT_FREE
+        self._confirm_buffer = 0
         self.reason = ''              #: 最近一次状态变化的说明（日志用）
 
     # ------------------------------------------------------------ 只读
@@ -389,6 +566,11 @@ class PossessionState(object):
         self.reason = why
         self._pressed.clear()
         self._last_drive = (0, 0)
+        # ★ 第85轮：跑键与跑表也清零 —— 附身是"换了个操控对象"，
+        #   不该继承上一轮的跑动状态（原作每次进房间 `runtimer = 0`）。
+        self._running = False
+        self._run_timer = 0
+        self._last_speed = None
         _log.info('附身开始：%s（%s）', self.target.name, why)
         return MODE_POSSESSED
 
@@ -398,6 +580,9 @@ class PossessionState(object):
         self.mode = MODE_FREE
         self._pressed.clear()
         self._last_drive = (0, 0)
+        self._running = False
+        self._run_timer = 0
+        self._last_speed = None
         self.reason = why
         self.target = None
         return MODE_FREE
@@ -445,6 +630,175 @@ class PossessionState(object):
         self._pressed.clear()
         return n
 
+    # ------------------------------------------------------------ 跑键（第85轮 I1）
+    def set_running(self, running):
+        """★ 第85轮 I1：按住 / 松开**跑键**（原作 `button2_h()` ⇒ `run = 1/0`）。
+
+        照抄原作的**松手即回落**：`run == 0` ⇒ `wspeed = bwspeed`（立即回到走速），
+        ⇒ 本方法在置 `False` 时**同时把跑表清零**（否则再按住时会"接着上次的段"，
+        而原作 `else { runtimer = 0; }` 明确是归零）。
+
+        :return: 跑键状态是否**发生了变化**（自动重复返回 `False`）。
+        """
+        want = bool(running)
+        if want == self._running:
+            return False
+        self._running = want
+        if not want:
+            self._run_timer = 0
+        return True
+
+    @property
+    def is_running(self):
+        return self._running
+
+    def run_timer(self):
+        return self._run_timer
+
+    def current_speed(self):
+        """当前该用的速度（像素/帧）；世界判不出来 ⇒ `None`（调用方保持原行为）。
+
+        ★ 把"算速度"只放在这一处：`drive()` 与本方法走**同一个** `speed_for`，
+        不出现"同一份规则两处算"。
+        """
+        return speed_for(self.world, self._running, self._run_timer)
+
+    def set_world(self, world):
+        """更新当前世界（换场景时由宿主调用）。返回归一化后的值（可能是 `None`）。"""
+        self.world = normalize_world(world)
+        return self.world
+
+    # ------------------------------------------------------------ 全局闸（第85轮 I4）
+    def set_interact(self, value):
+        """设置 `global.interact` 等价物。返回归一化后的整数（非法 ⇒ 0，**不抛**）。
+
+        ★ 语义只有"0 = 开 / 非 0 = 关"两态（原作取值见模块头表格）。
+          非 0 时 `drive()` 不产生位移、`accept_confirm()` 一律 False。
+        """
+        try:
+            v = int(value)
+        except (TypeError, ValueError):
+            v = INTERACT_FREE
+        self._interact = v
+        return self._interact
+
+    @property
+    def interact(self):
+        return self._interact
+
+    @property
+    def is_gated(self):
+        """闸是否关着（非 0）—— 关着 ⇒ 不驱动、不吃确认键。"""
+        return self._interact != INTERACT_FREE
+
+    # ------------------------------------------------------------ 输入缓冲（第85轮 I5）
+    def arm_confirm_buffer(self, frames=None):
+        """★ 照抄 `with (obj_mainchara) { onebuffer = 5; }`（对话结束那一刻）。
+
+        :return: 本次设置的帧数。
+        """
+        n = INPUT_BUFFER_FRAMES if frames is None else frames
+        try:
+            n = int(n)
+        except (TypeError, ValueError):
+            n = INPUT_BUFFER_FRAMES
+        if n < 0:
+            n = 0
+        self._confirm_buffer = n
+        return n
+
+    def accept_confirm(self):
+        """★ 确认键（Z）此刻**是否生效** —— 区分"按键被吃掉"与"按键没被按"。
+
+        返回 `False` 的两种情形（**成因不同，别混**）：
+          · 闸关着（`global.interact != 0`：对话中 / 菜单里）⇒ 用户按键本身就不该生效；
+          · 缓冲还没走完（对话刚结束的 5 帧内）⇒ **吞掉**这次按键，防误触。
+        """
+        if self.is_gated:
+            return False
+        if self._confirm_buffer > 0:
+            return False
+        return True
+
+    def tick_buffer(self):
+        """每帧把缓冲减 1（下限 0）。返回剩余帧数。"""
+        if self._confirm_buffer > 0:
+            self._confirm_buffer -= 1
+        return self._confirm_buffer
+
+    def confirm_buffer(self):
+        return self._confirm_buffer
+
+    # ------------------------------------------------------------ 推进
+    def drive(self, dt):
+        """按 `dt` 秒推进被附身角色。返回本次位移 `(dx, dy)`（**逻辑**房间像素）。
+
+        照抄 `obj_mainchara_Step_0` 的五条：
+        1. **按键即满速**（无加速度）；2. **松键即停**（无残速）；
+        3. **分轴独立**；4. **回头补一步只走 2 px**（`xprevious == x ∓ 3` 那条）；
+        5. ★ **第85轮 I1/I2**：速度是**世界 × 跑键 × 跑表**的函数（走 3/4，
+           跑 4-5-6 / 6-8-9；仍无加速度 —— 三段是"跑表攒出来的"，不是平滑上坡）。
+
+        ★ 未附身 ⇒ 不驱动，返回 `(0, 0)`（**行为判据**：这条是 `check82` C 段的核心）。
+        ★★ **第85轮 I4**：`global.interact != 0` ⇒ 整帧不动（原作把整段移动代码
+           裹在 `if (global.interact == 0)` 里）。
+        """
+        # ★ 每帧先走缓冲（放在**所有早退之前**：闸关着时缓冲照样该走完，
+        #   否则"对话中按满 5 帧"会把缓冲无限拖延）。
+        self.tick_buffer()
+        if not self.is_possessing:
+            self._last_drive = (0, 0)
+            return (0.0, 0.0)
+        # ★★ I4：闸关着 ⇒ 不产生位移，**并把跑表与残留按键视为停止**
+        #   （原作整段跳过 ⇒ 按键不会被采、`runtimer` 保持但在松开/恢复后由自身逻辑清零）。
+        if self.is_gated:
+            self._last_drive = (0, 0)
+            self._last_speed = None
+            return (0.0, 0.0)
+        dx, dy = self.direction()
+        try:
+            d = float(dt)
+        except (TypeError, ValueError):
+            d = 0.0
+        if not math.isfinite(d) or d <= 0.0:
+            d = 0.0
+        d = min(d, MAX_DT)
+        if dx == 0 and dy == 0:
+            self._last_drive = (0, 0)
+            # ★ 原作：没动 ⇒ `runtimer = 0`（"按住跑键原地不动"不该攒跑表）。
+            self._run_timer = advance_run_timer(self._run_timer, self._running, False)
+            self._last_speed = None
+            return (0.0, 0.0)
+        # ---- 速度：世界 × 跑键 × 跑表（第85轮 I1/I2）----
+        #   `speed_for` 返回 None（世界判不出）⇒ 回落到 HERO_SPEED_PX = 3.0
+        #   —— 保持第82轮既有行为，**不猜世界**。
+        px_speed = self.current_speed()
+        if px_speed is None:
+            px_speed = HERO_SPEED_PX
+        self._last_speed = px_speed
+        # 单帧满速位移（像素）—— 原作是"每帧固定 N px"，按 dt 摊到秒。
+        step = px_speed * FRAME_HZ * d
+        # ★ 回头判定（照抄 `obj_mainchara_Step_0`）：
+        #   原作 `xprevious == (x + 3)` 表示"上一帧朝右整整走了 3 px"，
+        #   现在改成朝左走 ⇒ 本帧只走 **2 px**（TURN_BACK_STEP），不是 3。
+        #   ⇒ 本帧步长按 `TURN_BACK_STEP / px_speed` 缩放（改前写死 HERO_SPEED_PX，
+        #     跑起来后基准变大 ⇒ 用常量会把"回头补一步"也一起放大，与原作不符）。
+        ldx, ldy = self._last_drive
+        if dx != 0 and ldx == -dx:
+            step *= TURN_BACK_STEP / px_speed
+        mx = dx * step
+        my = dy * step
+        self.x += mx
+        self.y += my
+        self._last_drive = (dx, dy)
+        # ★ 为什么**不**在结算时补：本项目目前**没有**格级碰撞（`clamp_to` 只钳房间矩形，
+        #   不是"撞墙"），所以 `moved` 恒等于"确实产生了位移"。
+        #   ⚠️ 诚实标注：原作那条 `xmeet/ymeet/xymeet` 撞墙清零（= "顶着墙跑不加速"）
+        #     在本项目**尚无对应物** ⇒ 本处只实现了"按住跑键且真的动了"这一半。
+        #     等格级碰撞接上，把"撞墙那一帧"传 `moved=False` 即可对齐原作。
+        self._run_timer = advance_run_timer(self._run_timer, self._running, True)
+        return (mx, my)
+
     def pressed(self):
         return tuple(sorted(self._pressed))
 
@@ -461,45 +815,6 @@ class PossessionState(object):
         elif 'down' in self._pressed and 'up' not in self._pressed:
             dy = 1
         return (dx, dy)
-
-    # ------------------------------------------------------------ 推进
-    def drive(self, dt):
-        """按 `dt` 秒推进被附身角色。返回本次位移 `(dx, dy)`（**逻辑**房间像素）。
-
-        照抄 `obj_mainchara_Step_0` 的四条：
-        1. **按键即满速**（无加速度）；2. **松键即停**（无残速）；
-        3. **分轴独立**；4. **回头补一步只走 2 px**（`xprevious == x ∓ 3` 那条）。
-        ★ 未附身 ⇒ 不驱动，返回 `(0, 0)`（**行为判据**：这条是 `check82` C 段的核心）。
-        """
-        if not self.is_possessing:
-            self._last_drive = (0, 0)
-            return (0.0, 0.0)
-        dx, dy = self.direction()
-        try:
-            d = float(dt)
-        except (TypeError, ValueError):
-            d = 0.0
-        if not math.isfinite(d) or d <= 0.0:
-            d = 0.0
-        d = min(d, MAX_DT)
-        if dx == 0 and dy == 0:
-            self._last_drive = (0, 0)
-            return (0.0, 0.0)
-        # 单帧满速位移（像素）—— 原作是"每帧固定 3 px"，按 dt 摊到秒。
-        step = HERO_SPEED_PX * FRAME_HZ * d
-        # ★ 回头判定（照抄 `obj_mainchara_Step_0`）：
-        #   原作 `xprevious == (x + 3)` 表示"上一帧朝右整整走了 3 px"，
-        #   现在改成朝左走 ⇒ 本帧只走 **2 px**（TURN_BACK_STEP），不是 3。
-        #   ⇒ 本帧步长按 `TURN_BACK_STEP / HERO_SPEED_PX` 缩放。
-        ldx, ldy = self._last_drive
-        if dx != 0 and ldx == -dx:
-            step *= TURN_BACK_STEP / HERO_SPEED_PX
-        mx = dx * step
-        my = dy * step
-        self.x += mx
-        self.y += my
-        self._last_drive = (dx, dy)
-        return (mx, my)
 
     def clamp_to(self, bounds):
         """把被附身角色钳进 `bounds = (l, t, r, b)`（逻辑坐标）。

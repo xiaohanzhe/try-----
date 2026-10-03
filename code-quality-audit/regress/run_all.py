@@ -1868,6 +1868,38 @@ SUITES = [
                 'F ★★ 诚实登记本轮未做的 I1~I10 互动技能 / '
                 'G 判据自身体检（★标记打印点 · ★记账负控制用"手工模拟+撤回"而非造假 FAIL）',
     },
+    # ---------------------------------------------------------------- check85
+    # 第八十五轮：① **I1 Shift 跑**（三段加速）② **I2 暗世界基准移速 4**
+    #             ③ **I4 `global.interact` 全局闸** ④ **I5 `onebuffer` 输入缓冲 5 帧**
+    #             ⑤ **I10 剧情标记"只记录不销毁"**（★用户口径「别毁」）
+    # ★★★ 原作依据（**本轮新取证**）：UTMT 反编译 Deltarune ch1
+    #   `chapter1_windows/data.win`（14,658,588 B）⇒ 70 codes / 258 globals；
+    #   `obj_mainchara_Create_0`：`bwspeed = 3; if (darkmode == 1) { bwspeed = 4; }`；
+    #   `obj_mainchara_Step_0`：`if (run == 1)` 三段（光 +1/+2/+3 暗 +2/+4/+5
+    #     ⇒ 4/5/6 与 6/8/9，★两处刻意的不等差 +2/+5 **不许规范化**）；
+    #   `obj_mainchara_Step_0`：`if (global.interact == 0) { …整段移动… }`；
+    #   `obj_interactablesolid_Step_0`：`… onebuffer = 5;`（投给主角）；
+    #   `obj_npc_susiedark_Create_0`：`if (global.plot >= 30) { instance_destroy(); }`
+    #     ⇒ 那是**出场门控**（不是删存档）⇒ 本项目**只打标记、零销毁**。
+    # ★ 零网络 / 零 UI / **零外部盘**（产物已蒸馏进仓库 `_evidence/`）；不需要显示器。
+    {
+        'id': 'check85',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第85轮-原作用键与移速表取证', '_tools', 'check85.py'),
+        'offscreen': True,
+        'desc': '第八十五轮：Shift 跑 + 暗世界移速 + 互动闸/缓冲 + 剧情标记 —— '
+                'A ★★ 取证产物在盘且真非空（三份 json + anchors.md · '
+                '★`gml_ok` 锚点：含 `if (`/`global.` ⇒ 真 GML · 负控制无 `pushi.e`） / '
+                'B ★★★ I1/I2 八格速度表逐格验（用真量级帧数 0/10/11/60/61，'
+                '★含两处刻意的不等差 +2/+5） / '
+                'C ★★★ 跑表 `advance_run_timer` 三条归零条件 + 行为级（跑 90 帧 > 走 90 帧） / '
+                'D ★★★ I4 闸非 0 ⇒ `drive()` 整帧零位移（行为判据） / '
+                'E ★★★ I5 `onebuffer=5` ⇒ 缓冲期内 `accept_confirm()` False、5 帧后 True / '
+                'F ★★★ I10 `plot_mark` 只记录不销毁（AST 调用名 + AST 剥字符串后的代码层双查，'
+                '★含"危险串只在 docstring 里"的负控制 —— 判据不许误报如实标注） / '
+                'G ★★ 接线：`main.py` 的 Shift 跑键 / I4 闸 / I5 缓冲 / I10 标记**都真接了** / '
+                'H 判据自身体检（★标记打印点 · 记账守恒 + 漏记负控制 · 被测文件在盘）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

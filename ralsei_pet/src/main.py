@@ -448,6 +448,17 @@ from modules import possession as possession_mod
 # ⚠️ 与 R5 **互斥**：两个状态机若同时"自认为在管主体位置"，会同帧两处写坐标
 #    （"同一份规则两处算"是本项目最贵的坑）。裁决见 `init_escort` / `toggle_escort`。
 from modules import escort as escort_mod
+# ---- 剧情进度标记（PLOT MARK，第85轮 I10）----------------------------------
+# 用户口径（第85轮，逐字）：「**别毁，就是已经过完剧情了就好**」。
+# ★★ 原作真身（第85轮 UTMT 反编译 Deltarune ch1 逐字）：
+#   `obj_npc_susiedark_Create_0`：`if (global.plot >= 30) { instance_destroy(); }`
+#   —— 那是**出场门控**（剧情过了某点 ⇒ 该 NPC 不再生成），**不是删存档**。
+# ⇒ 本项目**照用户口径收窄**：只记一个"已过完剧情"的标记，
+#   **不做** `instance_destroy` 等价物、不删 NPC / 道具 / 存档、**不门控**。
+# 分工：
+#   plot_mark   纯逻辑：标记表（key 归一 / 幂等写入 / 快照）—— 零依赖，可离线回归
+#   src/main.py 组装：初始化 / 落盘（走 data_store 唯一入口）
+from modules import plot_mark as plot_mark_mod
 # 球容器（第50轮）：Ralsei 在光世界**必须被"扭蛋球"罩住**才能存身。
 # 分工（三层各管一段，与场景系统同源）：
 #   bubble_system  → 规则（谁能进 / 何时脱 / 4 向旋转 / 塑料滤镜参数），零依赖
@@ -1282,6 +1293,12 @@ class RalseiPet(QMainWindow):
         #    换场景时角色不在同一场景了，该解除）。
         self.init_escort()
 
+        # ---- 剧情进度标记（PLOT MARK，第85轮 I10）----
+        # 为什么排在**最后**：它要读 `data_store`（持久化入口，在更早就绪），
+        # 且与附身/带路无依赖 —— 放最后只是"越晚建越不会拖累前面的初始化"。
+        # ★★★ 它**只记一个 True，不做任何销毁**（用户口径「别毁」）。
+        self.init_plot_mark()
+
     # ==================================================================
     #  灵魂（SOUL，第55轮）—— 可拖拽 / 可键盘操控 / 可自由出入各场景
     # ==================================================================
@@ -1722,6 +1739,9 @@ class RalseiPet(QMainWindow):
 
         try:
             self.possession = possession_mod.PossessionState()
+            # ★ 第85轮 I2：把**当前场景的明暗世界**喂给附身状态机（决定基准速度 3 / 4）。
+            #   判不出来 ⇒ None ⇒ `drive` 回落到 `HERO_SPEED_PX`（第82轮行为，不猜）。
+            self._possession_sync_world()
             # 从 NPC 登记表收集可附身目标（谁能附身只有 `POSSESSION_KINDS` 一处定义）。
             # ★ 登记表在真机里是 `npc_system.NpcRegistry` **对象**（不是 dict/list）——
             #   `build_targets` 已按 duck typing 吃 `.all()`，这里只负责拿到它。
@@ -1737,6 +1757,27 @@ class RalseiPet(QMainWindow):
             _log.exception('附身初始化失败（附身功能不可用，宠物照常运行）')
             self.possession = None
             return
+
+    def _possession_sync_world(self):
+        """★ 第85轮 I2：把当前场景的明/暗世界同步给附身状态机。
+
+        速度表要的那个"世界"从**唯一一处**取：`scene_system.world_of_scene()`
+        （与道具系统 `main.py` 4154 行、场景渲染同一来源）。**不在这里另算一份**
+        —— "同一份规则两处算"是本项目最贵的坑。
+
+        取不到（场景系统未就绪 / 该场景世界未判定）⇒ 传 `None` ⇒ 状态机把速度
+        回落到 `HERO_SPEED_PX`（第82轮既有行为）。**不猜成光世界**。
+        """
+        poss = getattr(self, 'possession', None)
+        if poss is None:
+            return None
+        try:
+            scene = self.__dict__.get('current_scene')
+            world = scene_system_mod.world_of_scene(scene) if scene else None
+            return poss.set_world(world)
+        except Exception as e:
+            _log.debug('附身世界同步失败（速度回落常量）: %s', e)
+            return None
 
     def _npc_scene_of(self, npc_id):
         """某个 NPC 当前在哪（供"附身要求同场景"校验）。
@@ -1812,6 +1853,14 @@ class RalseiPet(QMainWindow):
                       getattr(self, 'POSSESSION_ENABLED', None))
             return False
         try:
+            # ★★ 第85轮 I5：确认键输入的**缓冲窗口**（原作 `onebuffer = 5`）。
+            #   对话刚结束的 5 帧内，确认键**不生效**（防"阅读没完就误触下一段"）。
+            #   ⚠️ 只在**发起**时判；**解除附身不吃缓冲**（解除是"安全方向"的动作，
+            #     原作的缓冲是防误触**新交互**，不是防脱离）。
+            if not poss.is_possessing and not poss.is_asking:
+                if not poss.accept_confirm():
+                    _log.info('交互键被输入缓冲吞掉（剩余 %d 帧）', poss.confirm_buffer())
+                    return False
             # 已在附身 / 正在征求 ⇒ 这一下 Z = 解除 / 取消。
             if poss.is_possessing or poss.is_asking:
                 was = poss.describe()
@@ -1941,6 +1990,14 @@ class RalseiPet(QMainWindow):
         try:
             if not poss.is_possessing:
                 return False
+            # ★★ 第85轮 I4：**派发全局闸**（原作 `global.interact`）。
+            #   整段移动代码在原作里裹在 `if (global.interact == 0)` 里 ⇒ 闸非 0 时
+            #   被附身角色**整帧不动**。这里每帧刷新一次（闸是"当前状态"不是"事件"）。
+            #   ⚠️ 取值只映射本项目**真实存在**的两种"锁输入"情形，不编档位：
+            #      · 菜单打开 ⇒ `INTERACT_MENU`（原作菜单键分支就是 `global.interact = 5`）；
+            #      · 否则     ⇒ `INTERACT_FREE`（对话中走 `onebuffer` 那条 I5 路径，
+            #                    本项目没有"对话锁定主角"这一步 —— 它只在 Z 交互那一刻）。
+            poss.set_interact(self._interact_level())
             moved = poss.drive(dt)
             # 钳进当前房间（没有房间几何 ⇒ 不钳，**不猜边界**）。
             rect = self._soul_room_rect()
@@ -1950,6 +2007,107 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug('附身推进异常（本帧跳过）: %s', e)
             return False
+
+    def _interact_level(self):
+        """★ 第85轮 I4：当前 `global.interact` 等价档位（**唯一一处算**）。
+
+        只映射本项目**真实存在**的两种"锁输入"情形：
+
+        | 情形 | 返回值 | 原作出处 |
+        |---|---|---|
+        | `S` 菜单打开 | `INTERACT_MENU`(5) | `obj_mainchara_Step_0` 菜单键分支 `global.interact = 5;` |
+        | 常态 | `INTERACT_FREE`(0) | 同上，`if (global.interact == 0)` 的"开"档 |
+
+        ⚠️ **诚实标注**：原作还有一个 `1`（对话中，`obj_interactablesolid_Other_10`），
+          但本项目**没有"对话期间锁住主角整段移动"这一步**（对话是气泡，不接管方向键），
+          所以**不编这一档** —— 编了就是"看着做了，其实没对应物"。
+          "对话刚结束的 5 帧不吃确认键"那条另有实现（I5，`onebuffer`）。
+        """
+        try:
+            ui = getattr(self, 'item_menu_ui', None)
+            if ui is not None and ui.is_open():
+                return possession_mod.INTERACT_MENU
+        except Exception:
+            pass
+        return possession_mod.INTERACT_FREE
+
+    # ==================================================================
+    #  剧情进度标记（PLOT MARK，第85轮 I10）—— **只记录，不销毁**
+    # ==================================================================
+    # ★★★ 用户口径（第85轮，逐字）：「**别毁，就是已经过完剧情了就好**」
+    #
+    # 原作依据（第85轮 UTMT 反编译 Deltarune ch1，逐字）：
+    #   `obj_npc_susiedark_Create_0`：`if (global.plot >= 30) { instance_destroy(); }`
+    #   —— 那是**出场门控**（剧情过了某点 ⇒ 该 NPC 不再生成），**不是删存档**。
+    # ⇒ 本项目**照用户口径收窄**：只落一个"已过完剧情"的标记，
+    #   **不做**任何 `instance_destroy` 等价物、不删 NPC / 道具 / 存档、**不门控**。
+    #   标记先只落盘，能不能读、要不要用，等用户看过再裁（见报告"待裁定"）。
+
+    #: 剧情标记总开关（与 `POSSESSION_ENABLED` / `ESCORT_ENABLED` 同形）。
+    PLOT_MARK_ENABLED = True
+
+    def init_plot_mark(self):
+        """建剧情标记表（**只读 + 只写一个 True**，永不销毁任何东西）。
+
+        失败语义与其它子系统同规：**只降级、不抛出**（标记坏了桌宠照常跑）。
+        """
+        self._plot_marks = {}
+        if not getattr(self, 'PLOT_MARK_ENABLED', True):
+            _log.info('剧情标记总开关 PLOT_MARK_ENABLED=False ⇒ 不记标记')
+            return
+        try:
+            # ★ 复用 `data_store`（第35轮起"数据只走一个入口"的硬规矩）读持久化的标记。
+            store = getattr(self, 'data_store', None)
+            if store is not None and hasattr(store, 'get'):
+                self._plot_marks = plot_mark_mod.load_dict(
+                    store.get('plot_marks'))[0]
+            _log.info('剧情标记就绪：已记录 %d 条（%s）',
+                      len(self._plot_marks),
+                      '、'.join(plot_mark_mod.done_keys(self._plot_marks)) or '无')
+        except Exception:
+            _log.exception('剧情标记初始化失败（标记功能不可用，宠物照常运行）')
+            self._plot_marks = {}
+
+    def mark_plot_done(self, what, note=None):
+        """★ **只记录**"`what` 已过完"（用户口径「别毁，就是已经过完剧情了就好」）。
+
+        本方法**只做两件事**：① 在内存表里写一个 `True`；② 尝试落盘。
+        **没有任何"销毁"分支** —— 这是刻意的（原作那句 `instance_destroy()` 在本项目
+        **被用户口径明确否决**，见模块头）。
+
+        :return: 是否**新增**了一条（重复标记返回 False，但表状态不变）。
+        """
+        try:
+            before = len(self._plot_marks or {})
+            self._plot_marks = plot_mark_mod.mark_done(
+                self._plot_marks or {}, what, note=note)
+            added = len(self._plot_marks) > before
+            if added:
+                self._plot_marks_save()
+                _log.info('剧情标记：已过完「%s」%s', what,
+                          '（%s）' % note if note else '')
+            return added
+        except Exception:
+            _log.exception('剧情标记写入失败（忽略，不影响其它功能）')
+            return False
+
+    def is_plot_done(self, what):
+        """`what` 是否已过完（**只读**）。"""
+        try:
+            return plot_mark_mod.is_done(self._plot_marks or {}, what)
+        except Exception:
+            return False
+
+    def _plot_marks_save(self):
+        """把标记表落盘（走 `data_store` 唯一入口；失败**只记日志**，不抛出）。"""
+        try:
+            store = getattr(self, 'data_store', None)
+            if store is not None and hasattr(store, 'set'):
+                store.set('plot_marks', plot_mark_mod.as_dict(self._plot_marks))
+            else:
+                _log.debug('剧情标记：无 data_store ⇒ 仅存内存')
+        except Exception:
+            _log.exception('剧情标记落盘失败（保留内存态）')
 
     # ==================================================================
     #  带路（ESCORT，第83轮 R6）—— G 键请求某个角色带着灵魂走
@@ -4414,6 +4572,10 @@ class RalseiPet(QMainWindow):
             if (rv or {}).get('ok') and sid and sid != before:
                 _log.info('走动 ⇒ %s（route=%s，%d 跳）',
                           sid, rv.get('route'), rv.get('hops') or 0)
+                # ★ 第85轮 I2：换了场景 ⇒ 重算明/暗世界（速度基准 3 / 4）。
+                #   挂在**用户可见的换场景入口**上，与 `_update_scene_layer` 读的是
+                #   同一处 `current_scene`（不一致会"人在暗世界、速度还是光世界"）。
+                self._possession_sync_world()
                 return True
             if (rv or {}).get('ok'):
                 # 已经在目标场景 / 目标就是当前场景 ⇒ 不算失败，但不是"换了"。
@@ -4484,6 +4646,20 @@ class RalseiPet(QMainWindow):
             #   两者互斥（附身时灵魂已收起），所以不会"两边都在动"。
             #   菜单开着时归菜单（菜单是"模态浮层"，此刻用户意图明确在菜单里）。
             if not menu_open:
+                # ★★ 第85轮 I1：**Shift = 跑**（原作 `button2_h()` = `run`）。
+                #   只发给附身状态机 —— 原作跑键是**主角**的属性（`runtimer`/`wspeed`
+                #   都长在 `obj_mainchara` 上），灵魂没有跑动这回事
+                #   （`obj_heart` 只有 `global.sp`）。所以未附身时 Shift **不接管**
+                #   （`event.ignore()` 交回默认处理，等于原行为，零回归）。
+                # ★ 键值：`Key_Shift`(0x01000020) 是**左** Shift，右 Shift 是
+                #   0x01000021（Qt 无具名常量）。两个都认，否则"按右 Shift 不跑"。
+                _SHIFT_KEYS = (_Qt.Key_Shift, 0x01000021)
+                if key in _SHIFT_KEYS:
+                    poss_r = getattr(self, 'possession', None)
+                    if poss_r is not None and poss_r.is_possessing:
+                        poss_r.set_running(True)
+                        event.accept()
+                        return
                 d = soul_overlay_mod.direction_of_qt_key(key)
                 if d is not None:
                     poss = getattr(self, 'possession', None)
@@ -4549,6 +4725,17 @@ class RalseiPet(QMainWindow):
           否则附身时松手角色会一直朝那个方向走（同一类 bug，换了个实体）。
         """
         try:
+            # ★ 第85轮 I1：**松开 Shift ⇒ 停止跑动**（原作的 `else { run = 0; }`）。
+            #   与 `keyPressEvent` 对称 —— 漏了这条，"按住 Shift 跑"就会永不减速
+            #   （同一类"永不停止"bug，`keyReleaseEvent` 的 docstring 里已写过两次）。
+            from PyQt5.QtCore import Qt as _QtR
+            _SHIFT_KEYS_R = (_QtR.Key_Shift, 0x01000021)   # 左 / 右 Shift
+            if event.key() in _SHIFT_KEYS_R:
+                poss_r = getattr(self, 'possession', None)
+                if poss_r is not None and poss_r.is_possessing:
+                    poss_r.set_running(False)
+                    event.accept()
+                    return
             d = soul_overlay_mod.direction_of_qt_key(event.key())
             if d is not None:
                 poss = getattr(self, 'possession', None)
