@@ -1,0 +1,60 @@
+=== 第82轮 R5：用户视角验证（透明窗口 + 屏幕工具观测）===
+时间 = 2026-10-03 14:27:58
+DPI 感知已声明 = SetProcessDpiAwareness(2)
+
+RalseiPet() 构造成功 · 本进程 PID=48676
+
+  [PASS] 灵魂实体已建起
+## Q1 附身前（用户应看得到灵魂）
+  内省 _soul_visible() = True
+  真实窗口 6 个：
+    hwnd=12848430  vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(970, 1360, 1590, 1596)
+    hwnd=8654316   vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(2394, 1395, 2438, 1453)
+    hwnd=33883060  vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(2491, 1549, 2539, 1597)
+    hwnd=722698    vis=False cls=Qt5152TrayIconMessageWindo   title=QTrayIconMes   geo=(38, 38, 1958, 1155)
+    hwnd=4328320   vis=False cls=Qt5152QWindowToolSaveBits    title=Ralsei Pet     geo=(2410, 1378, 2510, 1478)
+    hwnd=29886070  vis=False cls=IME                          title=Default IME    geo=(0, 0, 0, 0)
+  [PASS] Q1 内省：灵魂可见（用户看得到）
+  ⇒ 屏上可见窗口数 = 3
+  [PASS] Q1 真实窗口：灵魂控件窗口 visible=True
+
+## Q2 按 Z 附身 kris（真产品入口 toggle_possession）
+  toggle_possession() 返回 True
+## Q2 附身后（灵魂应已收起）
+  内省 _soul_visible() = False
+  真实窗口 6 个：
+    hwnd=12848430  vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(970, 1360, 1590, 1596)
+    hwnd=8654316   vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(2394, 1395, 2438, 1453)
+    hwnd=33883060  vis=False cls=Qt5152QWindowToolSaveBits    title=python         geo=(2491, 1549, 2539, 1597)
+    hwnd=722698    vis=False cls=Qt5152TrayIconMessageWindo   title=QTrayIconMes   geo=(38, 38, 1958, 1155)
+    hwnd=4328320   vis=False cls=Qt5152QWindowToolSaveBits    title=Ralsei Pet     geo=(2410, 1378, 2510, 1478)
+    hwnd=29886070  vis=False cls=IME                          title=Default IME    geo=(0, 0, 0, 0)
+  附身状态：mode='possessed' 目标='kris'
+  [PASS] Q2 附身成立
+  [PASS] Q2 内省：灵魂已收起（_soul_visible()=False）
+  ⇒ 屏上可见窗口数 = 2（附身前 3）
+  [PASS] ★ Q2 真实窗口：可见窗口数**减少**（灵魂从屏幕上消失）
+
+## Q3 再按 Z 解除（灵魂应回来）
+## Q3 解除后
+  内省 _soul_visible() = True
+  真实窗口 6 个：
+    hwnd=12848430  vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(970, 1360, 1590, 1596)
+    hwnd=33883060  vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(2491, 1549, 2539, 1597)
+    hwnd=8654316   vis=True  cls=Qt5152QWindowToolSaveBits    title=python         geo=(2394, 1395, 2438, 1453)
+    hwnd=722698    vis=False cls=Qt5152TrayIconMessageWindo   title=QTrayIconMes   geo=(38, 38, 1958, 1155)
+    hwnd=4328320   vis=False cls=Qt5152QWindowToolSaveBits    title=Ralsei Pet     geo=(2410, 1378, 2510, 1478)
+    hwnd=29886070  vis=False cls=IME                          title=Default IME    geo=(0, 0, 0, 0)
+  [PASS] Q3 内省：灵魂回来（_soul_visible()=True）
+  ⇒ 屏上可见窗口数 = 3
+  [PASS] ★ Q3 真实窗口：可见窗口数**恢复**
+
+## Q4 双向对账（内省 vs 真实窗口，必须一致）
+  附身前：内省可见=True / 屏上可见窗口=3
+  附身后：内省可见=False / 屏上可见窗口=2
+  解除后：内省可见=True / 屏上可见窗口=3
+  [PASS] Q4 附身态与窗口可见性方向一致（附身⇒更少、解除⇒恢复）
+
+=== 结论 ===
+  PASS=9 FAIL=0
+  用户视角判定 = PASS
