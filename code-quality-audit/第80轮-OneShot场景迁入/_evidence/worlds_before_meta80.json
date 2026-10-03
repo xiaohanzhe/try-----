@@ -1,0 +1,6641 @@
+{
+ "areas": {
+  "ch1": {
+   "card_castle": "dark",
+   "castle_town": "dark",
+   "dark_world": "dark",
+   "eye_puzzle": "dark",
+   "field": "dark",
+   "forest": "dark",
+   "home": "light",
+   "hometown": "light",
+   "kris_room": "light",
+   "system": "dark",
+   "unknown": "dark"
+  },
+  "ch2": {
+   "card_castle": "dark",
+   "castle_town": "dark",
+   "cyber_city": "dark",
+   "cyber_field": "dark",
+   "home": "light",
+   "hometown": "light",
+   "kris_room": "light",
+   "light_world": "light",
+   "my_castle_town": "dark",
+   "queens_mansion": "dark",
+   "ralsei_room": "dark",
+   "system": "dark"
+  },
+  "ch3": {
+   "board_world": "dark",
+   "card_castle": "dark",
+   "castle_town": "dark",
+   "cold_place": "dark",
+   "dark_world": "dark",
+   "green_room": "dark",
+   "home": "light",
+   "hometown": "light",
+   "kris_room": "light",
+   "light_world": "light",
+   "my_castle_town": "dark",
+   "puzzle_closet": "dark",
+   "ralsei_room": "dark",
+   "ranking_world": "dark",
+   "system": "dark",
+   "tv_backstage": "dark",
+   "tv_world": "dark"
+  },
+  "ch4": {
+   "card_castle": "dark",
+   "castle_town": "dark",
+   "dark_sanctuary": "dark",
+   "home": "light",
+   "hometown": "light",
+   "kris_room": "light",
+   "light_world": "light",
+   "mike_zone": "dark",
+   "my_castle_town": "dark",
+   "noelles_house": "light",
+   "ralsei_room": "dark",
+   "second_sanctuary": "dark",
+   "system": "dark",
+   "third_sanctuary": "dark",
+   "tv_backstage": "dark"
+  },
+  "ch5": {
+   "card_castle": "dark",
+   "castle_town": "dark",
+   "cliffs": "dark",
+   "dark_world": "dark",
+   "flower_castle": "dark",
+   "garden": "dark",
+   "home": "light",
+   "hometown": "light",
+   "kris_room": "light",
+   "light_world": "light",
+   "my_castle_town": "dark",
+   "noelles_house": "light",
+   "ralsei_room": "dark",
+   "system": "dark",
+   "tv_backstage": "dark"
+  },
+  "ut": {
+   "rooms": "unknown"
+  },
+  "uty": {
+   "rooms": "unknown"
+  },
+  "oneshot": {
+   "rooms": "unknown"
+  }
+ },
+ "meta": {
+  "generator": "code-quality-audit/第48轮-道具与背包系统/_tools/gen_worlds48.py",
+  "light_areas": [
+   "kris_room",
+   "home",
+   "hometown",
+   "light_world",
+   "noelles_house"
+  ],
+  "original_judgement": "global.darkzone：0=光明世界 / 1=暗世界（第46轮实证）",
+  "overrides_why": "desktop 是我们自建场景，不对应原作房间；口径见产品记忆 §43.6。",
+  "rule": "房间名暗前缀优先（防 room_dw_mansion_krisroom 误判）→ 光前缀 → 光区域表 → 否则暗前缀→暗",
+  "source": "code-quality-audit/第38轮-场景系统审查/_evidence/房间表_全量.json（五章全量房间表）",
+  "unknown_rooms": [
+   {
+    "area": null,
+    "chapter": "ch1",
+    "resource": "room_myroom_dark",
+    "room_id": 136,
+    "why": "无区域、无可辨房间名"
+   },
+   {
+    "area": "hometown",
+    "chapter": "ch3",
+    "resource": "room_town_krisyard_dark",
+    "room_id": 110,
+    "why": "光世界前缀 room_town_ 但名字含 dark（疑为夜间变体），需 darkzone 实证"
+   },
+   {
+    "area": "home",
+    "chapter": "ch4",
+    "resource": "room_krisroom_dark",
+    "room_id": 159,
+    "why": "光世界前缀 room_krisroom 但名字含 dark（疑为夜间变体），需 darkzone 实证"
+   },
+   {
+    "area": "hometown",
+    "chapter": "ch4",
+    "resource": "room_town_krisyard_dark",
+    "room_id": 166,
+    "why": "光世界前缀 room_town_ 但名字含 dark（疑为夜间变体），需 darkzone 实证"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_start",
+    "room_id": 0,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_introstory",
+    "room_id": 1,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_introimage",
+    "room_id": 2,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_intromenu",
+    "room_id": 3,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_area1",
+    "room_id": 4,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_area1_2",
+    "room_id": 5,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins1",
+    "room_id": 6,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins2",
+    "room_id": 7,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins3",
+    "room_id": 8,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins4",
+    "room_id": 9,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins5",
+    "room_id": 10,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins6",
+    "room_id": 11,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins7",
+    "room_id": 12,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins7A",
+    "room_id": 13,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins8",
+    "room_id": 14,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins9",
+    "room_id": 15,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins10",
+    "room_id": 16,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins11",
+    "room_id": 17,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins12A",
+    "room_id": 18,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins12",
+    "room_id": 19,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins12B",
+    "room_id": 20,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins13",
+    "room_id": 21,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins14",
+    "room_id": 22,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins15A",
+    "room_id": 23,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins15B",
+    "room_id": 24,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins15C",
+    "room_id": 25,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins15D",
+    "room_id": 26,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins15E",
+    "room_id": 27,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins16",
+    "room_id": 28,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins17",
+    "room_id": 29,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins18OLD",
+    "room_id": 30,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins19",
+    "room_id": 31,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_torhouse1",
+    "room_id": 32,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_torhouse2",
+    "room_id": 33,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_torhouse3",
+    "room_id": 34,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_torielroom",
+    "room_id": 35,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asrielroom",
+    "room_id": 36,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_kitchen",
+    "room_id": 37,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement1",
+    "room_id": 38,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement2",
+    "room_id": 39,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement3",
+    "room_id": 40,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement4",
+    "room_id": 41,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement5",
+    "room_id": 42,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruinsexit",
+    "room_id": 43,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra1",
+    "room_id": 44,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra2",
+    "room_id": 45,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra3",
+    "room_id": 46,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra3A",
+    "room_id": 47,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra4",
+    "room_id": 48,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra5",
+    "room_id": 49,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra6",
+    "room_id": 50,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra6A",
+    "room_id": 51,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra7",
+    "room_id": 52,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra8",
+    "room_id": 53,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra8A",
+    "room_id": 54,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra9",
+    "room_id": 55,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_spaghetti",
+    "room_id": 56,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_snowpuzz",
+    "room_id": 57,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_xoxosmall",
+    "room_id": 58,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_xoxopuzz",
+    "room_id": 59,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_randoblock",
+    "room_id": 60,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_lesserdog",
+    "room_id": 61,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_icehole",
+    "room_id": 62,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_iceentrance",
+    "room_id": 63,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_iceexit_new",
+    "room_id": 64,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_iceexit",
+    "room_id": 65,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_poffzone",
+    "room_id": 66,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_dangerbridge",
+    "room_id": 67,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_town",
+    "room_id": 68,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_town2",
+    "room_id": 69,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_dock",
+    "room_id": 70,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_inn",
+    "room_id": 71,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_inn_2f",
+    "room_id": 72,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_grillby",
+    "room_id": 73,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_library",
+    "room_id": 74,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_garage",
+    "room_id": 75,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_sanshouse",
+    "room_id": 76,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_paproom",
+    "room_id": 77,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_sansroom",
+    "room_id": 78,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_sansroom_dark",
+    "room_id": 79,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_sansbasement",
+    "room_id": 80,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fogroom",
+    "room_id": 81,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water1",
+    "room_id": 82,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water2",
+    "room_id": 83,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water3",
+    "room_id": 84,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water3A",
+    "room_id": 85,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water4",
+    "room_id": 86,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_bridgepuzz1",
+    "room_id": 87,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water5",
+    "room_id": 88,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water5A",
+    "room_id": 89,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water6",
+    "room_id": 90,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water7",
+    "room_id": 91,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water8",
+    "room_id": 92,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water9",
+    "room_id": 93,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_savepoint1",
+    "room_id": 94,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water11",
+    "room_id": 95,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_nicecream",
+    "room_id": 96,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water12",
+    "room_id": 97,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_shoe",
+    "room_id": 98,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_bird",
+    "room_id": 99,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_onionsan",
+    "room_id": 100,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water14",
+    "room_id": 101,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_piano",
+    "room_id": 102,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_dogroom",
+    "room_id": 103,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_statue",
+    "room_id": 104,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_prewaterfall",
+    "room_id": 105,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_waterfall",
+    "room_id": 106,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_waterfall2",
+    "room_id": 107,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_waterfall3",
+    "room_id": 108,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_waterfall4",
+    "room_id": 109,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_preundyne",
+    "room_id": 110,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undynebridge",
+    "room_id": 111,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undynebridgeend",
+    "room_id": 112,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_trashzone1",
+    "room_id": 113,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_trashsavepoint",
+    "room_id": 114,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_trashzone2",
+    "room_id": 115,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_friendlyhub",
+    "room_id": 116,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undyneyard",
+    "room_id": 117,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undynehouse",
+    "room_id": 118,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_blookyard",
+    "room_id": 119,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_blookhouse",
+    "room_id": 120,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_hapstablook",
+    "room_id": 121,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_farm",
+    "room_id": 122,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_prebird",
+    "room_id": 123,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_shop",
+    "room_id": 124,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_dock",
+    "room_id": 125,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water15",
+    "room_id": 126,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water16",
+    "room_id": 127,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_temvillage",
+    "room_id": 128,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water17",
+    "room_id": 129,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water18",
+    "room_id": 130,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water19",
+    "room_id": 131,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water20",
+    "room_id": 132,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water21",
+    "room_id": 133,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undynefinal",
+    "room_id": 134,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undynefinal2",
+    "room_id": 135,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_undynefinal3",
+    "room_id": 136,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire1",
+    "room_id": 137,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire2",
+    "room_id": 138,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_prelab",
+    "room_id": 139,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_dock",
+    "room_id": 140,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_lab1",
+    "room_id": 141,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_lab2",
+    "room_id": 142,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire3",
+    "room_id": 143,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire5",
+    "room_id": 144,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire6",
+    "room_id": 145,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire6A",
+    "room_id": 146,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_lasers1",
+    "room_id": 147,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire7",
+    "room_id": 148,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire8",
+    "room_id": 149,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_shootguy_2",
+    "room_id": 150,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire9",
+    "room_id": 151,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_shootguy_1",
+    "room_id": 152,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_turn",
+    "room_id": 153,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_cookingshow",
+    "room_id": 154,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_savepoint1",
+    "room_id": 155,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_r1",
+    "room_id": 156,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_r2",
+    "room_id": 157,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_hotdog",
+    "room_id": 158,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_walkandbranch",
+    "room_id": 159,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_sorry",
+    "room_id": 160,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_apron",
+    "room_id": 161,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire10",
+    "room_id": 162,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_rpuzzle",
+    "room_id": 163,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_mewmew2",
+    "room_id": 164,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_boysnightout",
+    "room_id": 165,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_newsreport",
+    "room_id": 166,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_coreview2",
+    "room_id": 167,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_l2",
+    "room_id": 168,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_l3",
+    "room_id": 169,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_spidershop",
+    "room_id": 170,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_walkandbranch2",
+    "room_id": 171,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_conveyorlaser",
+    "room_id": 172,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_shootguy_3",
+    "room_id": 173,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_preshootguy4",
+    "room_id": 174,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_shootguy_4",
+    "room_id": 175,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_savepoint2",
+    "room_id": 176,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_spider",
+    "room_id": 177,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_pacing",
+    "room_id": 178,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_operatest",
+    "room_id": 179,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_multitile",
+    "room_id": 180,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_hotelfront_1",
+    "room_id": 181,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_hotelfront_2",
+    "room_id": 182,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_hotellobby",
+    "room_id": 183,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_restaurant",
+    "room_id": 184,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_hoteldoors",
+    "room_id": 185,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_hotelbed",
+    "room_id": 186,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_r3",
+    "room_id": 187,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_precore",
+    "room_id": 188,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core1",
+    "room_id": 189,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core2",
+    "room_id": 190,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core3",
+    "room_id": 191,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core4",
+    "room_id": 192,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core5",
+    "room_id": 193,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_freebattle",
+    "room_id": 194,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_laserfun",
+    "room_id": 195,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_branch",
+    "room_id": 196,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_bottomleft",
+    "room_id": 197,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_left",
+    "room_id": 198,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_topleft",
+    "room_id": 199,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_top",
+    "room_id": 200,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_topright",
+    "room_id": 201,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_right",
+    "room_id": 202,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_bottomright",
+    "room_id": 203,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_center",
+    "room_id": 204,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_shootguy_5",
+    "room_id": 205,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_treasureleft",
+    "room_id": 206,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_treasureright",
+    "room_id": 207,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_warrior",
+    "room_id": 208,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_bridge",
+    "room_id": 209,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_premett",
+    "room_id": 210,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_metttest",
+    "room_id": 211,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_core_final",
+    "room_id": 212,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator",
+    "room_id": 213,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_l1",
+    "room_id": 214,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_finalelevator",
+    "room_id": 215,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_elevatorout",
+    "room_id": 216,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_precastle",
+    "room_id": 217,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_hook",
+    "room_id": 218,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_front",
+    "room_id": 219,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asghouse1",
+    "room_id": 220,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asghouse2",
+    "room_id": 221,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asghouse3",
+    "room_id": 222,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asgoreroom",
+    "room_id": 223,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asrielroom_final",
+    "room_id": 224,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_kitchen_final",
+    "room_id": 225,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement1_final",
+    "room_id": 226,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement2_final",
+    "room_id": 227,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement3_final",
+    "room_id": 228,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_basement4_final",
+    "room_id": 229,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_lastruins_corridor",
+    "room_id": 230,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_sanscorridor",
+    "room_id": 231,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_finalshoehorn",
+    "room_id": 232,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_coffins1",
+    "room_id": 233,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_coffins2",
+    "room_id": 234,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_throneroom",
+    "room_id": 235,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_prebarrier",
+    "room_id": 236,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_barrier",
+    "room_id": 237,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_exit",
+    "room_id": 238,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_undertale_end",
+    "room_id": 239,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_castle_trueexit",
+    "room_id": 240,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_outsideworld",
+    "room_id": 241,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_labelevator",
+    "room_id": 242,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_elevatorinside",
+    "room_id": 243,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_elevator",
+    "room_id": 244,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_hall1",
+    "room_id": 245,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_hub",
+    "room_id": 246,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_hall2",
+    "room_id": 247,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_operatingroom",
+    "room_id": 248,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_redlever",
+    "room_id": 249,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_prebed",
+    "room_id": 250,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_bedroom",
+    "room_id": 251,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_mirror",
+    "room_id": 252,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_bluelever",
+    "room_id": 253,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_hall3",
+    "room_id": 254,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_shower",
+    "room_id": 255,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_determination",
+    "room_id": 256,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_tv",
+    "room_id": 257,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_cooler",
+    "room_id": 258,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_greenlever",
+    "room_id": 259,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_fan",
+    "room_id": 260,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_castle_elevator",
+    "room_id": 261,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_prepower",
+    "room_id": 262,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_truelab_power",
+    "room_id": 263,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_gaster",
+    "room_id": 264,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_icecave1",
+    "room_id": 265,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ice_dog",
+    "room_id": 266,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room2",
+    "room_id": 267,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_fakehallway",
+    "room_id": 268,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_mysteryman",
+    "room_id": 269,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_soundtest",
+    "room_id": 270,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "TESTROOM",
+    "room_id": 271,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_redacted",
+    "room_id": 272,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water13",
+    "room_id": 273,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_overworld",
+    "room_id": 274,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_overworld3",
+    "room_id": 275,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "bullettest",
+    "room_id": 276,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water16A",
+    "room_id": 277,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_castroll",
+    "room_id": 278,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_highway",
+    "room_id": 279,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_beach",
+    "room_id": 280,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_metta",
+    "room_id": 281,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_school",
+    "room_id": 282,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_mtebott",
+    "room_id": 283,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_creditsdodger",
+    "room_id": 284,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_myroom",
+    "room_id": 285,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_end_theend",
+    "room_id": 286,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_spritecheck",
+    "room_id": 287,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_settings",
+    "room_id": 288,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_controltest",
+    "room_id": 289,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_f_start",
+    "room_id": 290,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_f_intro",
+    "room_id": 291,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_f_menu",
+    "room_id": 292,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_f_room",
+    "room_id": 293,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_floweyx",
+    "room_id": 294,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_f_phrase",
+    "room_id": 295,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire4",
+    "room_id": 296,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire10_old",
+    "room_id": 297,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire10A_old",
+    "room_id": 298,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_placeholder",
+    "room_id": 299,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_ruins12B_old",
+    "room_id": 300,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_tundra_rollsnow",
+    "room_id": 301,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water7_older",
+    "room_id": 302,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_meetundyne_old",
+    "room_id": 303,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_mushroom",
+    "room_id": 304,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_monsteralign_test",
+    "room_id": 305,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_battle",
+    "room_id": 306,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_floweybattle",
+    "room_id": 307,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fastbattle",
+    "room_id": 308,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_storybattle",
+    "room_id": 309,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_gameover",
+    "room_id": 310,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_shop1",
+    "room_id": 311,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_shop2",
+    "room_id": 312,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_shop3",
+    "room_id": 313,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_shop4",
+    "room_id": 314,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_shop5",
+    "room_id": 315,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_riverman_transition",
+    "room_id": 316,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_papdate",
+    "room_id": 317,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_adate",
+    "room_id": 318,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_flowey_endchoice",
+    "room_id": 319,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_flowey_regret",
+    "room_id": 320,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_empty",
+    "room_id": 321,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_emptywhite",
+    "room_id": 322,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_emptyblack",
+    "room_id": 323,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_nothingness",
+    "room_id": 324,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_undertale",
+    "room_id": 325,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_of_dog",
+    "room_id": 326,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_quizholder",
+    "room_id": 327,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_friendtest",
+    "room_id": 328,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_bringitinguys",
+    "room_id": 329,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asrielappears",
+    "room_id": 330,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_goodbyeasriel",
+    "room_id": 331,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asrielmemory",
+    "room_id": 332,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_asrieltest",
+    "room_id": 333,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_afinaltest",
+    "room_id": 334,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_dogshrine",
+    "room_id": 335,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_dogshrine_ruined",
+    "room_id": 336,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_dogshrine_mewmew",
+    "room_id": 337,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_of_bog",
+    "room_id": 338,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_elevator_s",
+    "room_id": 339,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_steamworks_36",
+    "room_id": 340,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_steamworks_35",
+    "room_id": 341,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_steamworks_34",
+    "room_id": 342,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_steamworks_33",
+    "room_id": 343,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_steamworks_32",
+    "room_id": 344,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_steamworks_factory_elevator",
+    "room_id": 345,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_newhome_01",
+    "room_id": 346,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_newhome_elevator",
+    "room_id": 347,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_newhome_02",
+    "room_id": 348,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_newhome_03",
+    "room_id": 349,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_newhome_04",
+    "room_id": 350,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_modcredits",
+    "room_id": 351,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_smile",
+    "room_id": 352,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_god",
+    "room_id": 353,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_water_yellow",
+    "room_id": 354,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "coming_soon",
+    "room_id": 355,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_alley",
+    "room_id": 356,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "ut",
+    "resource": "room_fire_rooftop",
+    "room_id": 357,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_intro",
+    "room_id": 0,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_logos",
+    "room_id": 1,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mmfirst",
+    "room_id": 2,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mainmenu",
+    "room_id": 3,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mainmenu_debug",
+    "room_id": 4,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_live_buffer",
+    "room_id": 5,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_ruins00",
+    "room_id": 6,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_ruins01",
+    "room_id": 7,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_ruins02",
+    "room_id": 8,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_ruins03",
+    "room_id": 9,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_ruins04",
+    "room_id": 10,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "ruins_outro",
+    "room_id": 11,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruinsintro",
+    "room_id": 12,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_01",
+    "room_id": 13,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_02",
+    "room_id": 14,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_03",
+    "room_id": 15,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_04",
+    "room_id": 16,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_05",
+    "room_id": 17,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_06",
+    "room_id": 18,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_07",
+    "room_id": 19,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_08",
+    "room_id": 20,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_08b",
+    "room_id": 21,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_09",
+    "room_id": 22,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_09b",
+    "room_id": 23,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_10",
+    "room_id": 24,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_11",
+    "room_id": 25,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_12",
+    "room_id": 26,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_13",
+    "room_id": 27,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_14",
+    "room_id": 28,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_14b",
+    "room_id": 29,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_15",
+    "room_id": 30,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_16",
+    "room_id": 31,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_16b",
+    "room_id": 32,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_17",
+    "room_id": 33,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_18",
+    "room_id": 34,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_darkruins_19",
+    "room_id": 35,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvhallway",
+    "room_id": 36,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvshouse",
+    "room_id": 37,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvsroom",
+    "room_id": 38,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvroomhall",
+    "room_id": 39,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvExit",
+    "room_id": 40,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvExit_pacifist",
+    "room_id": 41,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dalvExit_genocide",
+    "room_id": 42,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_01_yellow",
+    "room_id": 43,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_02_yellow",
+    "room_id": 44,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_03_yellow",
+    "room_id": 45,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_03b_yellow",
+    "room_id": 46,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_04_yellow",
+    "room_id": 47,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_05_yellow",
+    "room_id": 48,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_06_yellow",
+    "room_id": 49,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_07_yellow",
+    "room_id": 50,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_08_yellow",
+    "room_id": 51,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_08b_yellow",
+    "room_id": 52,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_09_yellow",
+    "room_id": 53,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_10_yellow",
+    "room_id": 54,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_10b_yellow",
+    "room_id": 55,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_11_yellow",
+    "room_id": 56,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_12_yellow",
+    "room_id": 57,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_13_yellow",
+    "room_id": 58,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_14_yellow",
+    "room_id": 59,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_14b_yellow",
+    "room_id": 60,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_14c_yellow",
+    "room_id": 61,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_14d_yellow",
+    "room_id": 62,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_14e_yellow",
+    "room_id": 63,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_15_yellow",
+    "room_id": 64,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_16_yellow",
+    "room_id": 65,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_16b_yellow",
+    "room_id": 66,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_17_yellow",
+    "room_id": 67,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_18_yellow",
+    "room_id": 68,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_19_yellow",
+    "room_id": 69,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_20_yellow",
+    "room_id": 70,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_21_yellow",
+    "room_id": 71,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_22_yellow",
+    "room_id": 72,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_waterfall_og",
+    "room_id": 73,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland",
+    "room_id": 74,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_lava_tubes",
+    "room_id": 75,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_wildeast_cave",
+    "room_id": 76,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_01",
+    "room_id": 77,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_02",
+    "room_id": 78,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_03",
+    "room_id": 79,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_04",
+    "room_id": 80,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_05",
+    "room_id": 81,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_06",
+    "room_id": 82,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_06b",
+    "room_id": 83,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_07",
+    "room_id": 84,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_08",
+    "room_id": 85,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_08b",
+    "room_id": 86,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_09",
+    "room_id": 87,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_10",
+    "room_id": 88,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_11",
+    "room_id": 89,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_12",
+    "room_id": 90,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_12b",
+    "room_id": 91,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_13",
+    "room_id": 92,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_elevator",
+    "room_id": 93,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_14",
+    "room_id": 94,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_15",
+    "room_id": 95,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_16",
+    "room_id": 96,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_17",
+    "room_id": 97,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_18",
+    "room_id": 98,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_19",
+    "room_id": 99,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_19B",
+    "room_id": 100,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_20",
+    "room_id": 101,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_21",
+    "room_id": 102,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_22",
+    "room_id": 103,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_23",
+    "room_id": 104,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_24",
+    "room_id": 105,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_25",
+    "room_id": 106,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_25b",
+    "room_id": 107,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_26",
+    "room_id": 108,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_27",
+    "room_id": 109,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_28",
+    "room_id": 110,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_28b",
+    "room_id": 111,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_28c",
+    "room_id": 112,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_29",
+    "room_id": 113,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_29b",
+    "room_id": 114,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30_old",
+    "room_id": 115,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30b",
+    "room_id": 116,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30_house_1",
+    "room_id": 117,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30_house_2",
+    "room_id": 118,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30_house_3",
+    "room_id": 119,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_31",
+    "room_id": 120,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_32",
+    "room_id": 121,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_33",
+    "room_id": 122,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_34",
+    "room_id": 123,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_35",
+    "room_id": 124,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_35b",
+    "room_id": 125,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_36",
+    "room_id": 126,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_37",
+    "room_id": 127,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_37_saloon",
+    "room_id": 128,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_37_feistyhouse",
+    "room_id": 129,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_37_barn",
+    "room_id": 130,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_37_jail",
+    "room_id": 131,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_37_hospital",
+    "room_id": 132,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_38",
+    "room_id": 133,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_39",
+    "room_id": 134,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_40",
+    "room_id": 135,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_41",
+    "room_id": 136,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_42",
+    "room_id": 137,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_42_b",
+    "room_id": 138,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_42_c",
+    "room_id": 139,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_43",
+    "room_id": 140,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_01",
+    "room_id": 141,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_02",
+    "room_id": 142,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_03",
+    "room_id": 143,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Steams",
+    "room_id": 144,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_04_transition_b",
+    "room_id": 145,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "footsteps",
+    "room_id": 146,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_04_transition_c",
+    "room_id": 147,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_04c",
+    "room_id": 148,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_05",
+    "room_id": 149,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_05b",
+    "room_id": 150,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_05c",
+    "room_id": 151,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_05d",
+    "room_id": 152,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_06",
+    "room_id": 153,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_07",
+    "room_id": 154,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_08",
+    "room_id": 155,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_09",
+    "room_id": 156,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_10",
+    "room_id": 157,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_11",
+    "room_id": 158,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "randomflower",
+    "room_id": 159,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_13",
+    "room_id": 160,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_13b",
+    "room_id": 161,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "steamworks",
+    "room_id": 162,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_15",
+    "room_id": 163,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_16",
+    "room_id": 164,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_17",
+    "room_id": 165,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "chait",
+    "room_id": 166,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "npc",
+    "room_id": 167,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_18b",
+    "room_id": 168,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_19",
+    "room_id": 169,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_20",
+    "room_id": 170,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_21",
+    "room_id": 171,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "interactable",
+    "room_id": 172,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_22",
+    "room_id": 173,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_23",
+    "room_id": 174,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_24",
+    "room_id": 175,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_25",
+    "room_id": 176,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_26",
+    "room_id": 177,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_score_room",
+    "room_id": 178,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mew_mew",
+    "room_id": 179,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle",
+    "room_id": 180,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_config",
+    "room_id": 181,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_death_screen",
+    "room_id": 182,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_debug",
+    "room_id": 183,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_credits",
+    "room_id": 184,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_shop",
+    "room_id": 185,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_build_ending",
+    "room_id": 186,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_27",
+    "room_id": 187,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_31",
+    "room_id": 188,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "colliders",
+    "room_id": 189,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_30",
+    "room_id": 190,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_29",
+    "room_id": 191,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_factory_01",
+    "room_id": 192,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_01",
+    "room_id": 193,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Instances",
+    "room_id": 194,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_02",
+    "room_id": 195,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_03",
+    "room_id": 196,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_hermit",
+    "room_id": 197,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_04",
+    "room_id": 198,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_06",
+    "room_id": 199,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_07",
+    "room_id": 200,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_chem_05",
+    "room_id": 201,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_32",
+    "room_id": 202,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_34",
+    "room_id": 203,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_35",
+    "room_id": 204,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_33",
+    "room_id": 205,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_36",
+    "room_id": 206,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Decorations",
+    "room_id": 207,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "#FF3D3636",
+    "room_id": 208,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_factory_elevator",
+    "room_id": 209,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_01",
+    "room_id": 210,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Interactables",
+    "room_id": 211,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_03",
+    "room_id": 212,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_03b",
+    "room_id": 213,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Doorways",
+    "room_id": 214,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "building",
+    "room_id": 215,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "SpooderWall",
+    "room_id": 216,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_complex_1",
+    "room_id": 217,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Objects",
+    "room_id": 218,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_complex_1c",
+    "room_id": 219,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Clockman",
+    "room_id": 220,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_roof",
+    "room_id": 221,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_flashback_01",
+    "room_id": 222,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "stalagmites",
+    "room_id": 223,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_flashback_03",
+    "room_id": 224,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flowey",
+    "room_id": 225,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flashback_01",
+    "room_id": 226,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flashback_02",
+    "room_id": 227,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Water",
+    "room_id": 228,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flashback_04",
+    "room_id": 229,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Bridge",
+    "room_id": 230,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flashback_06",
+    "room_id": 231,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flashback_final",
+    "room_id": 232,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "WallsInst",
+    "room_id": 233,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flashback_final_2",
+    "room_id": 234,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_battle_flowey_phase_2",
+    "room_id": 235,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_summary",
+    "room_id": 236,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "MachineFront2F",
+    "room_id": 237,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "电 梯",
+    "room_id": 238,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "iwalsl",
+    "room_id": 239,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_factory_04",
+    "room_id": 240,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_entrance",
+    "room_id": 241,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Kotatsu",
+    "room_id": 242,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_hallway_west",
+    "room_id": 243,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_hallway_east",
+    "room_id": 244,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_hallway_east_2",
+    "room_id": 245,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "0.4",
+    "room_id": 246,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_hallway_west_2",
+    "room_id": 247,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_office",
+    "room_id": 248,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_kanakos_room",
+    "room_id": 249,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_mansion_study",
+    "room_id": 250,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "path",
+    "room_id": 251,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "fg",
+    "room_id": 252,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_newhome_01",
+    "room_id": 253,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_newhome_02",
+    "room_id": 254,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_newhome_03",
+    "room_id": 255,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "buildings",
+    "room_id": 256,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_newhome_02b",
+    "room_id": 257,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30d",
+    "room_id": 258,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_elevator",
+    "room_id": 259,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "forestfront",
+    "room_id": 260,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_hotland_lab_entrance",
+    "room_id": 261,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "doorframe",
+    "room_id": 262,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_01",
+    "room_id": 263,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_02",
+    "room_id": 264,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "floorandwalls",
+    "room_id": 265,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_04",
+    "room_id": 266,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_05",
+    "room_id": 267,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_throne_room",
+    "room_id": 268,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_barrier",
+    "room_id": 269,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_credits_geno",
+    "room_id": 270,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_credits_paci",
+    "room_id": 271,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_credits_paci_intermission",
+    "room_id": 272,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_castle_pre_barrier",
+    "room_id": 273,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_menu_flowey",
+    "room_id": 274,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_macro_froggit_room",
+    "room_id": 275,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_30",
+    "room_id": 276,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_06_b",
+    "room_id": 277,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Vents",
+    "room_id": 278,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "Assets",
+    "room_id": 279,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_25_b",
+    "room_id": 280,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_steamworks_30_b",
+    "room_id": 281,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "#FFFFFFFF",
+    "room_id": 282,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_42_d",
+    "room_id": 283,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_snowdin_secret_to_everybody",
+    "room_id": 284,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "rm_dunes_secret",
+    "room_id": 285,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   },
+   {
+    "area": "rooms",
+    "chapter": "uty",
+    "resource": "fallbacktexture.png",
+    "room_id": 286,
+    "why": "第77轮迁入：UT/黄魂 无 darkzone 取证，不猜世界"
+   }
+  ],
+  "why": "场景 → 明/暗世界。用户口径「回到光世界时暗世界道具变垃圾团」需要它。",
+  "why_not_darkzone": "global.darkzone 写在每间房的创建代码里，属第42轮 dump_rooms 的取证缺口；本轮改用「原作房间 resource 名」这条可审计替代判据，不猜。",
+  "work_chapters": {
+   "why": "第77轮：跨作品大图 bigmap66.json 的房间已迁入 _index.json，此处为其世界登记（全部 unknown）。",
+   "works": [
+    "ut",
+    "uty"
+   ]
+  }
+ },
+ "overrides": {
+  "desktop": "light"
+ },
+ "rooms": {
+  "ch1": {
+   "10": "light",
+   "100": "dark",
+   "101": "dark",
+   "102": "dark",
+   "103": "dark",
+   "104": "dark",
+   "105": "dark",
+   "106": "dark",
+   "107": "dark",
+   "108": "dark",
+   "109": "dark",
+   "11": "light",
+   "110": "dark",
+   "111": "dark",
+   "112": "dark",
+   "113": "dark",
+   "114": "dark",
+   "115": "dark",
+   "116": "dark",
+   "117": "dark",
+   "118": "dark",
+   "119": "dark",
+   "12": "light",
+   "120": "dark",
+   "121": "dark",
+   "122": "dark",
+   "123": "dark",
+   "124": "dark",
+   "125": "dark",
+   "126": "dark",
+   "127": "dark",
+   "128": "dark",
+   "129": "dark",
+   "13": "light",
+   "130": "dark",
+   "132": "dark",
+   "133": "dark",
+   "134": "dark",
+   "136": "unknown",
+   "14": "light",
+   "146": "dark",
+   "15": "light",
+   "16": "light",
+   "17": "light",
+   "18": "light",
+   "19": "light",
+   "2": "light",
+   "20": "light",
+   "21": "light",
+   "22": "light",
+   "23": "light",
+   "24": "light",
+   "25": "light",
+   "26": "light",
+   "27": "light",
+   "28": "light",
+   "29": "light",
+   "3": "light",
+   "30": "light",
+   "31": "light",
+   "32": "light",
+   "33": "light",
+   "34": "dark",
+   "35": "dark",
+   "36": "dark",
+   "37": "dark",
+   "38": "dark",
+   "39": "dark",
+   "4": "light",
+   "40": "dark",
+   "41": "dark",
+   "42": "dark",
+   "43": "dark",
+   "44": "dark",
+   "45": "dark",
+   "46": "dark",
+   "47": "dark",
+   "48": "dark",
+   "49": "dark",
+   "5": "light",
+   "50": "dark",
+   "51": "dark",
+   "52": "dark",
+   "53": "dark",
+   "54": "dark",
+   "55": "dark",
+   "56": "dark",
+   "57": "dark",
+   "58": "dark",
+   "59": "dark",
+   "6": "light",
+   "60": "dark",
+   "61": "dark",
+   "62": "dark",
+   "63": "dark",
+   "64": "dark",
+   "65": "dark",
+   "66": "dark",
+   "67": "dark",
+   "68": "dark",
+   "69": "dark",
+   "7": "light",
+   "70": "dark",
+   "71": "dark",
+   "72": "dark",
+   "73": "dark",
+   "74": "dark",
+   "75": "dark",
+   "76": "dark",
+   "77": "dark",
+   "78": "dark",
+   "79": "dark",
+   "8": "light",
+   "80": "dark",
+   "81": "dark",
+   "82": "dark",
+   "83": "dark",
+   "84": "dark",
+   "85": "dark",
+   "86": "dark",
+   "87": "dark",
+   "88": "dark",
+   "89": "dark",
+   "9": "light",
+   "90": "dark",
+   "91": "dark",
+   "92": "dark",
+   "93": "dark",
+   "94": "dark",
+   "95": "dark",
+   "96": "dark",
+   "97": "dark",
+   "98": "dark",
+   "99": "dark"
+  },
+  "ch2": {
+   "10": "dark",
+   "100": "dark",
+   "101": "dark",
+   "102": "dark",
+   "103": "dark",
+   "104": "dark",
+   "105": "dark",
+   "106": "dark",
+   "107": "dark",
+   "108": "dark",
+   "109": "dark",
+   "11": "dark",
+   "110": "dark",
+   "111": "dark",
+   "112": "dark",
+   "113": "dark",
+   "114": "dark",
+   "115": "dark",
+   "116": "dark",
+   "117": "dark",
+   "118": "dark",
+   "119": "dark",
+   "120": "dark",
+   "121": "dark",
+   "122": "dark",
+   "123": "dark",
+   "124": "dark",
+   "125": "dark",
+   "126": "dark",
+   "127": "dark",
+   "128": "dark",
+   "129": "dark",
+   "130": "dark",
+   "131": "dark",
+   "132": "dark",
+   "133": "dark",
+   "134": "dark",
+   "135": "dark",
+   "136": "dark",
+   "137": "dark",
+   "138": "dark",
+   "139": "dark",
+   "140": "dark",
+   "141": "dark",
+   "142": "dark",
+   "143": "dark",
+   "144": "dark",
+   "145": "dark",
+   "146": "dark",
+   "147": "dark",
+   "148": "dark",
+   "149": "dark",
+   "150": "dark",
+   "151": "dark",
+   "152": "dark",
+   "153": "dark",
+   "154": "dark",
+   "155": "dark",
+   "156": "dark",
+   "157": "dark",
+   "158": "dark",
+   "159": "dark",
+   "160": "dark",
+   "161": "dark",
+   "162": "dark",
+   "163": "dark",
+   "164": "dark",
+   "165": "dark",
+   "166": "dark",
+   "167": "dark",
+   "168": "dark",
+   "169": "dark",
+   "170": "dark",
+   "171": "dark",
+   "172": "dark",
+   "173": "dark",
+   "174": "dark",
+   "175": "dark",
+   "176": "dark",
+   "177": "dark",
+   "178": "dark",
+   "179": "dark",
+   "18": "light",
+   "180": "dark",
+   "181": "dark",
+   "182": "dark",
+   "183": "dark",
+   "184": "dark",
+   "185": "dark",
+   "186": "dark",
+   "187": "dark",
+   "188": "dark",
+   "189": "dark",
+   "19": "light",
+   "190": "dark",
+   "191": "dark",
+   "192": "dark",
+   "193": "dark",
+   "194": "dark",
+   "195": "dark",
+   "196": "dark",
+   "197": "dark",
+   "198": "dark",
+   "199": "dark",
+   "20": "light",
+   "200": "dark",
+   "201": "dark",
+   "202": "dark",
+   "203": "dark",
+   "204": "dark",
+   "205": "dark",
+   "206": "dark",
+   "207": "dark",
+   "208": "dark",
+   "209": "dark",
+   "21": "light",
+   "210": "dark",
+   "211": "dark",
+   "212": "dark",
+   "213": "dark",
+   "214": "dark",
+   "215": "dark",
+   "216": "dark",
+   "217": "dark",
+   "218": "dark",
+   "219": "dark",
+   "22": "light",
+   "220": "dark",
+   "221": "dark",
+   "222": "dark",
+   "223": "dark",
+   "224": "dark",
+   "225": "dark",
+   "227": "dark",
+   "228": "dark",
+   "229": "dark",
+   "23": "light",
+   "230": "dark",
+   "231": "dark",
+   "232": "dark",
+   "24": "light",
+   "242": "dark",
+   "243": "dark",
+   "244": "dark",
+   "245": "dark",
+   "246": "dark",
+   "247": "dark",
+   "248": "dark",
+   "249": "dark",
+   "25": "light",
+   "250": "dark",
+   "251": "dark",
+   "252": "dark",
+   "253": "dark",
+   "254": "dark",
+   "255": "dark",
+   "256": "dark",
+   "257": "dark",
+   "258": "dark",
+   "259": "dark",
+   "26": "light",
+   "260": "dark",
+   "261": "dark",
+   "262": "dark",
+   "263": "dark",
+   "264": "dark",
+   "265": "dark",
+   "266": "dark",
+   "267": "dark",
+   "268": "dark",
+   "269": "dark",
+   "27": "light",
+   "277": "dark",
+   "28": "light",
+   "29": "light",
+   "30": "light",
+   "31": "light",
+   "32": "light",
+   "33": "light",
+   "34": "light",
+   "35": "light",
+   "36": "light",
+   "37": "light",
+   "38": "light",
+   "39": "light",
+   "40": "light",
+   "41": "light",
+   "42": "light",
+   "43": "light",
+   "44": "light",
+   "45": "light",
+   "46": "light",
+   "47": "light",
+   "48": "light",
+   "49": "light",
+   "50": "light",
+   "51": "light",
+   "52": "light",
+   "53": "light",
+   "54": "light",
+   "55": "dark",
+   "56": "dark",
+   "57": "dark",
+   "58": "dark",
+   "59": "dark",
+   "60": "dark",
+   "61": "dark",
+   "62": "dark",
+   "63": "dark",
+   "64": "dark",
+   "65": "dark",
+   "66": "dark",
+   "67": "dark",
+   "68": "dark",
+   "69": "dark",
+   "70": "dark",
+   "71": "dark",
+   "72": "dark",
+   "73": "dark",
+   "74": "dark",
+   "75": "dark",
+   "76": "dark",
+   "77": "dark",
+   "78": "dark",
+   "79": "dark",
+   "80": "dark",
+   "81": "dark",
+   "82": "dark",
+   "83": "dark",
+   "84": "dark",
+   "85": "dark",
+   "86": "dark",
+   "87": "dark",
+   "88": "dark",
+   "89": "dark",
+   "9": "dark",
+   "90": "dark",
+   "91": "dark",
+   "92": "dark",
+   "93": "dark",
+   "94": "dark",
+   "95": "dark",
+   "96": "dark",
+   "97": "dark",
+   "98": "dark",
+   "99": "dark"
+  },
+  "ch3": {
+   "100": "dark",
+   "101": "dark",
+   "102": "dark",
+   "103": "dark",
+   "104": "dark",
+   "105": "dark",
+   "106": "dark",
+   "107": "dark",
+   "108": "dark",
+   "109": "dark",
+   "110": "unknown",
+   "112": "dark",
+   "114": "dark",
+   "115": "dark",
+   "116": "dark",
+   "117": "dark",
+   "118": "dark",
+   "119": "dark",
+   "120": "dark",
+   "121": "dark",
+   "124": "dark",
+   "125": "dark",
+   "126": "dark",
+   "127": "light",
+   "128": "dark",
+   "131": "dark",
+   "132": "dark",
+   "134": "dark",
+   "135": "dark",
+   "136": "dark",
+   "137": "dark",
+   "138": "dark",
+   "139": "dark",
+   "140": "dark",
+   "141": "dark",
+   "142": "dark",
+   "144": "dark",
+   "147": "dark",
+   "148": "dark",
+   "15": "light",
+   "150": "dark",
+   "151": "dark",
+   "152": "dark",
+   "153": "dark",
+   "154": "dark",
+   "155": "dark",
+   "156": "dark",
+   "157": "dark",
+   "158": "dark",
+   "159": "dark",
+   "16": "light",
+   "160": "dark",
+   "161": "dark",
+   "162": "dark",
+   "163": "dark",
+   "164": "dark",
+   "166": "dark",
+   "167": "dark",
+   "168": "dark",
+   "169": "dark",
+   "17": "light",
+   "170": "dark",
+   "171": "dark",
+   "172": "dark",
+   "173": "dark",
+   "174": "dark",
+   "175": "dark",
+   "176": "dark",
+   "177": "dark",
+   "178": "dark",
+   "179": "dark",
+   "18": "light",
+   "180": "dark",
+   "181": "dark",
+   "182": "dark",
+   "183": "dark",
+   "184": "dark",
+   "186": "dark",
+   "187": "dark",
+   "188": "dark",
+   "189": "dark",
+   "19": "light",
+   "190": "dark",
+   "191": "dark",
+   "192": "dark",
+   "193": "dark",
+   "194": "dark",
+   "195": "dark",
+   "196": "dark",
+   "197": "dark",
+   "198": "dark",
+   "199": "dark",
+   "20": "light",
+   "200": "dark",
+   "201": "dark",
+   "202": "dark",
+   "203": "dark",
+   "204": "dark",
+   "205": "dark",
+   "206": "dark",
+   "207": "dark",
+   "208": "dark",
+   "209": "dark",
+   "21": "light",
+   "210": "dark",
+   "211": "dark",
+   "212": "dark",
+   "213": "dark",
+   "214": "dark",
+   "215": "dark",
+   "216": "dark",
+   "217": "dark",
+   "218": "dark",
+   "219": "dark",
+   "22": "light",
+   "220": "dark",
+   "221": "dark",
+   "223": "dark",
+   "224": "dark",
+   "225": "dark",
+   "226": "dark",
+   "227": "dark",
+   "228": "dark",
+   "229": "dark",
+   "23": "light",
+   "230": "dark",
+   "231": "dark",
+   "232": "dark",
+   "233": "dark",
+   "234": "dark",
+   "235": "dark",
+   "236": "dark",
+   "237": "dark",
+   "238": "dark",
+   "239": "dark",
+   "24": "light",
+   "240": "dark",
+   "241": "dark",
+   "242": "dark",
+   "243": "dark",
+   "244": "dark",
+   "245": "dark",
+   "25": "light",
+   "26": "light",
+   "27": "light",
+   "28": "light",
+   "29": "light",
+   "30": "light",
+   "31": "light",
+   "32": "light",
+   "33": "light",
+   "34": "light",
+   "35": "light",
+   "36": "light",
+   "37": "light",
+   "38": "light",
+   "39": "light",
+   "40": "light",
+   "41": "light",
+   "42": "light",
+   "43": "light",
+   "44": "light",
+   "45": "light",
+   "46": "light",
+   "47": "light",
+   "48": "light",
+   "49": "light",
+   "50": "light",
+   "51": "light",
+   "52": "dark",
+   "53": "dark",
+   "54": "dark",
+   "55": "dark",
+   "56": "dark",
+   "57": "dark",
+   "58": "dark",
+   "59": "dark",
+   "60": "dark",
+   "61": "dark",
+   "62": "dark",
+   "63": "dark",
+   "64": "dark",
+   "65": "dark",
+   "67": "dark",
+   "68": "dark",
+   "69": "dark",
+   "70": "dark",
+   "80": "dark",
+   "81": "dark",
+   "82": "dark",
+   "95": "dark",
+   "96": "dark",
+   "98": "dark",
+   "99": "dark"
+  },
+  "ch4": {
+   "101": "dark",
+   "102": "dark",
+   "103": "dark",
+   "104": "dark",
+   "105": "dark",
+   "106": "dark",
+   "107": "light",
+   "108": "dark",
+   "109": "dark",
+   "110": "dark",
+   "111": "dark",
+   "112": "dark",
+   "113": "dark",
+   "114": "dark",
+   "115": "dark",
+   "116": "dark",
+   "117": "dark",
+   "118": "dark",
+   "119": "dark",
+   "120": "dark",
+   "121": "dark",
+   "122": "dark",
+   "123": "dark",
+   "124": "dark",
+   "125": "dark",
+   "126": "dark",
+   "127": "dark",
+   "128": "dark",
+   "129": "dark",
+   "130": "dark",
+   "131": "dark",
+   "132": "dark",
+   "133": "dark",
+   "134": "dark",
+   "135": "dark",
+   "136": "dark",
+   "137": "dark",
+   "138": "dark",
+   "139": "dark",
+   "140": "dark",
+   "141": "dark",
+   "142": "dark",
+   "143": "dark",
+   "144": "dark",
+   "145": "dark",
+   "146": "dark",
+   "147": "dark",
+   "148": "dark",
+   "149": "light",
+   "15": "light",
+   "150": "dark",
+   "151": "dark",
+   "152": "dark",
+   "153": "dark",
+   "154": "dark",
+   "155": "dark",
+   "156": "dark",
+   "159": "unknown",
+   "16": "light",
+   "160": "dark",
+   "161": "dark",
+   "162": "light",
+   "164": "dark",
+   "165": "dark",
+   "166": "unknown",
+   "167": "dark",
+   "168": "dark",
+   "17": "light",
+   "171": "dark",
+   "173": "dark",
+   "174": "dark",
+   "175": "dark",
+   "176": "dark",
+   "177": "dark",
+   "178": "dark",
+   "179": "dark",
+   "18": "light",
+   "180": "dark",
+   "181": "dark",
+   "182": "dark",
+   "183": "dark",
+   "184": "dark",
+   "185": "dark",
+   "189": "dark",
+   "19": "light",
+   "192": "dark",
+   "193": "light",
+   "194": "light",
+   "195": "light",
+   "20": "light",
+   "204": "dark",
+   "205": "dark",
+   "206": "dark",
+   "207": "dark",
+   "208": "light",
+   "209": "dark",
+   "21": "light",
+   "210": "dark",
+   "211": "dark",
+   "212": "dark",
+   "213": "dark",
+   "214": "dark",
+   "215": "dark",
+   "217": "dark",
+   "218": "dark",
+   "219": "dark",
+   "22": "light",
+   "220": "dark",
+   "221": "dark",
+   "222": "dark",
+   "223": "dark",
+   "224": "dark",
+   "225": "dark",
+   "226": "dark",
+   "227": "dark",
+   "228": "dark",
+   "229": "dark",
+   "23": "light",
+   "230": "dark",
+   "231": "dark",
+   "232": "dark",
+   "233": "light",
+   "234": "dark",
+   "235": "dark",
+   "236": "dark",
+   "238": "dark",
+   "239": "dark",
+   "24": "light",
+   "240": "dark",
+   "241": "dark",
+   "242": "dark",
+   "243": "dark",
+   "244": "dark",
+   "245": "dark",
+   "246": "dark",
+   "247": "dark",
+   "248": "dark",
+   "249": "dark",
+   "25": "light",
+   "250": "dark",
+   "251": "dark",
+   "252": "dark",
+   "253": "dark",
+   "254": "dark",
+   "255": "dark",
+   "256": "dark",
+   "257": "dark",
+   "258": "dark",
+   "259": "dark",
+   "26": "light",
+   "260": "dark",
+   "261": "dark",
+   "262": "dark",
+   "263": "dark",
+   "264": "dark",
+   "265": "dark",
+   "266": "dark",
+   "267": "dark",
+   "268": "dark",
+   "269": "dark",
+   "27": "light",
+   "270": "dark",
+   "271": "dark",
+   "272": "dark",
+   "273": "dark",
+   "274": "dark",
+   "275": "dark",
+   "276": "dark",
+   "277": "dark",
+   "278": "dark",
+   "279": "dark",
+   "28": "light",
+   "280": "dark",
+   "281": "dark",
+   "282": "dark",
+   "283": "dark",
+   "284": "dark",
+   "285": "dark",
+   "286": "dark",
+   "287": "dark",
+   "288": "dark",
+   "289": "light",
+   "29": "light",
+   "290": "light",
+   "293": "dark",
+   "294": "dark",
+   "295": "dark",
+   "296": "dark",
+   "297": "dark",
+   "298": "dark",
+   "299": "dark",
+   "30": "light",
+   "300": "dark",
+   "301": "dark",
+   "302": "dark",
+   "303": "dark",
+   "304": "dark",
+   "305": "dark",
+   "306": "dark",
+   "307": "dark",
+   "308": "dark",
+   "309": "dark",
+   "31": "light",
+   "311": "dark",
+   "312": "dark",
+   "313": "dark",
+   "314": "dark",
+   "315": "dark",
+   "316": "dark",
+   "317": "dark",
+   "318": "dark",
+   "319": "dark",
+   "32": "light",
+   "321": "dark",
+   "322": "dark",
+   "323": "dark",
+   "324": "dark",
+   "325": "dark",
+   "327": "dark",
+   "33": "light",
+   "34": "light",
+   "35": "light",
+   "36": "light",
+   "37": "light",
+   "38": "light",
+   "39": "light",
+   "40": "light",
+   "41": "light",
+   "42": "light",
+   "43": "light",
+   "44": "light",
+   "45": "light",
+   "46": "light",
+   "47": "light",
+   "48": "light",
+   "49": "light",
+   "50": "light",
+   "51": "light",
+   "52": "light",
+   "53": "light",
+   "54": "light",
+   "55": "light",
+   "56": "light",
+   "57": "light",
+   "58": "light",
+   "59": "light",
+   "60": "light",
+   "61": "dark",
+   "62": "dark",
+   "63": "dark",
+   "64": "dark",
+   "65": "dark",
+   "66": "dark",
+   "67": "dark",
+   "68": "dark",
+   "69": "dark",
+   "70": "dark",
+   "71": "dark",
+   "72": "dark",
+   "73": "dark",
+   "74": "dark",
+   "76": "dark",
+   "77": "dark",
+   "78": "dark",
+   "79": "dark",
+   "89": "dark",
+   "90": "dark",
+   "91": "dark"
+  },
+  "ch5": {
+   "101": "dark",
+   "102": "light",
+   "103": "light",
+   "104": "light",
+   "105": "light",
+   "106": "light",
+   "107": "light",
+   "108": "dark",
+   "109": "dark",
+   "110": "dark",
+   "111": "dark",
+   "112": "dark",
+   "113": "dark",
+   "114": "dark",
+   "115": "dark",
+   "116": "dark",
+   "117": "dark",
+   "118": "dark",
+   "119": "dark",
+   "120": "dark",
+   "121": "dark",
+   "122": "dark",
+   "123": "dark",
+   "124": "dark",
+   "125": "dark",
+   "126": "dark",
+   "127": "dark",
+   "128": "dark",
+   "129": "dark",
+   "13": "light",
+   "130": "dark",
+   "131": "dark",
+   "132": "dark",
+   "133": "dark",
+   "134": "dark",
+   "135": "dark",
+   "136": "dark",
+   "137": "dark",
+   "138": "dark",
+   "139": "dark",
+   "14": "light",
+   "140": "dark",
+   "141": "dark",
+   "142": "dark",
+   "143": "dark",
+   "144": "dark",
+   "145": "dark",
+   "146": "dark",
+   "147": "dark",
+   "148": "dark",
+   "149": "dark",
+   "15": "light",
+   "150": "dark",
+   "151": "dark",
+   "152": "dark",
+   "153": "dark",
+   "154": "dark",
+   "155": "dark",
+   "156": "dark",
+   "157": "dark",
+   "158": "dark",
+   "159": "dark",
+   "16": "light",
+   "160": "dark",
+   "161": "dark",
+   "162": "dark",
+   "163": "dark",
+   "164": "dark",
+   "165": "dark",
+   "166": "dark",
+   "167": "dark",
+   "168": "dark",
+   "169": "dark",
+   "17": "light",
+   "170": "dark",
+   "171": "dark",
+   "172": "dark",
+   "173": "dark",
+   "174": "dark",
+   "175": "dark",
+   "176": "dark",
+   "177": "dark",
+   "178": "dark",
+   "179": "dark",
+   "18": "light",
+   "180": "dark",
+   "181": "dark",
+   "182": "dark",
+   "183": "dark",
+   "184": "dark",
+   "185": "dark",
+   "186": "dark",
+   "187": "dark",
+   "188": "dark",
+   "189": "dark",
+   "19": "light",
+   "190": "dark",
+   "191": "dark",
+   "192": "dark",
+   "193": "dark",
+   "194": "dark",
+   "195": "dark",
+   "196": "dark",
+   "197": "dark",
+   "198": "dark",
+   "199": "dark",
+   "20": "light",
+   "200": "dark",
+   "201": "dark",
+   "202": "dark",
+   "203": "dark",
+   "204": "dark",
+   "205": "dark",
+   "206": "dark",
+   "207": "dark",
+   "208": "dark",
+   "209": "dark",
+   "21": "light",
+   "211": "dark",
+   "212": "dark",
+   "213": "dark",
+   "214": "dark",
+   "215": "dark",
+   "216": "dark",
+   "217": "dark",
+   "218": "dark",
+   "219": "dark",
+   "22": "light",
+   "220": "dark",
+   "221": "dark",
+   "222": "dark",
+   "223": "dark",
+   "224": "dark",
+   "225": "dark",
+   "226": "dark",
+   "227": "dark",
+   "228": "dark",
+   "229": "dark",
+   "23": "light",
+   "230": "dark",
+   "231": "dark",
+   "232": "dark",
+   "233": "dark",
+   "234": "dark",
+   "235": "dark",
+   "236": "dark",
+   "237": "dark",
+   "238": "dark",
+   "239": "dark",
+   "24": "light",
+   "240": "dark",
+   "241": "dark",
+   "242": "dark",
+   "243": "dark",
+   "244": "dark",
+   "245": "dark",
+   "247": "dark",
+   "248": "dark",
+   "249": "dark",
+   "25": "light",
+   "26": "light",
+   "27": "light",
+   "28": "light",
+   "29": "light",
+   "30": "light",
+   "31": "light",
+   "32": "light",
+   "33": "light",
+   "34": "light",
+   "35": "light",
+   "36": "light",
+   "37": "light",
+   "38": "light",
+   "39": "light",
+   "40": "light",
+   "41": "light",
+   "42": "light",
+   "43": "light",
+   "44": "light",
+   "45": "light",
+   "46": "light",
+   "47": "light",
+   "48": "light",
+   "49": "light",
+   "50": "dark",
+   "51": "dark",
+   "52": "dark",
+   "53": "dark",
+   "54": "dark",
+   "55": "dark",
+   "56": "dark",
+   "57": "dark",
+   "58": "dark",
+   "59": "dark",
+   "60": "dark",
+   "61": "dark",
+   "62": "dark",
+   "63": "dark",
+   "64": "dark",
+   "65": "dark",
+   "67": "dark",
+   "68": "dark",
+   "69": "dark",
+   "70": "dark",
+   "80": "dark",
+   "81": "dark",
+   "82": "dark",
+   "95": "dark"
+  },
+  "ut": {
+   "0": "unknown",
+   "1": "unknown",
+   "2": "unknown",
+   "3": "unknown",
+   "4": "unknown",
+   "5": "unknown",
+   "6": "unknown",
+   "7": "unknown",
+   "8": "unknown",
+   "9": "unknown",
+   "10": "unknown",
+   "11": "unknown",
+   "12": "unknown",
+   "13": "unknown",
+   "14": "unknown",
+   "15": "unknown",
+   "16": "unknown",
+   "17": "unknown",
+   "18": "unknown",
+   "19": "unknown",
+   "20": "unknown",
+   "21": "unknown",
+   "22": "unknown",
+   "23": "unknown",
+   "24": "unknown",
+   "25": "unknown",
+   "26": "unknown",
+   "27": "unknown",
+   "28": "unknown",
+   "29": "unknown",
+   "30": "unknown",
+   "31": "unknown",
+   "32": "unknown",
+   "33": "unknown",
+   "34": "unknown",
+   "35": "unknown",
+   "36": "unknown",
+   "37": "unknown",
+   "38": "unknown",
+   "39": "unknown",
+   "40": "unknown",
+   "41": "unknown",
+   "42": "unknown",
+   "43": "unknown",
+   "44": "unknown",
+   "45": "unknown",
+   "46": "unknown",
+   "47": "unknown",
+   "48": "unknown",
+   "49": "unknown",
+   "50": "unknown",
+   "51": "unknown",
+   "52": "unknown",
+   "53": "unknown",
+   "54": "unknown",
+   "55": "unknown",
+   "56": "unknown",
+   "57": "unknown",
+   "58": "unknown",
+   "59": "unknown",
+   "60": "unknown",
+   "61": "unknown",
+   "62": "unknown",
+   "63": "unknown",
+   "64": "unknown",
+   "65": "unknown",
+   "66": "unknown",
+   "67": "unknown",
+   "68": "unknown",
+   "69": "unknown",
+   "70": "unknown",
+   "71": "unknown",
+   "72": "unknown",
+   "73": "unknown",
+   "74": "unknown",
+   "75": "unknown",
+   "76": "unknown",
+   "77": "unknown",
+   "78": "unknown",
+   "79": "unknown",
+   "80": "unknown",
+   "81": "unknown",
+   "82": "unknown",
+   "83": "unknown",
+   "84": "unknown",
+   "85": "unknown",
+   "86": "unknown",
+   "87": "unknown",
+   "88": "unknown",
+   "89": "unknown",
+   "90": "unknown",
+   "91": "unknown",
+   "92": "unknown",
+   "93": "unknown",
+   "94": "unknown",
+   "95": "unknown",
+   "96": "unknown",
+   "97": "unknown",
+   "98": "unknown",
+   "99": "unknown",
+   "100": "unknown",
+   "101": "unknown",
+   "102": "unknown",
+   "103": "unknown",
+   "104": "unknown",
+   "105": "unknown",
+   "106": "unknown",
+   "107": "unknown",
+   "108": "unknown",
+   "109": "unknown",
+   "110": "unknown",
+   "111": "unknown",
+   "112": "unknown",
+   "113": "unknown",
+   "114": "unknown",
+   "115": "unknown",
+   "116": "unknown",
+   "117": "unknown",
+   "118": "unknown",
+   "119": "unknown",
+   "120": "unknown",
+   "121": "unknown",
+   "122": "unknown",
+   "123": "unknown",
+   "124": "unknown",
+   "125": "unknown",
+   "126": "unknown",
+   "127": "unknown",
+   "128": "unknown",
+   "129": "unknown",
+   "130": "unknown",
+   "131": "unknown",
+   "132": "unknown",
+   "133": "unknown",
+   "134": "unknown",
+   "135": "unknown",
+   "136": "unknown",
+   "137": "unknown",
+   "138": "unknown",
+   "139": "unknown",
+   "140": "unknown",
+   "141": "unknown",
+   "142": "unknown",
+   "143": "unknown",
+   "144": "unknown",
+   "145": "unknown",
+   "146": "unknown",
+   "147": "unknown",
+   "148": "unknown",
+   "149": "unknown",
+   "150": "unknown",
+   "151": "unknown",
+   "152": "unknown",
+   "153": "unknown",
+   "154": "unknown",
+   "155": "unknown",
+   "156": "unknown",
+   "157": "unknown",
+   "158": "unknown",
+   "159": "unknown",
+   "160": "unknown",
+   "161": "unknown",
+   "162": "unknown",
+   "163": "unknown",
+   "164": "unknown",
+   "165": "unknown",
+   "166": "unknown",
+   "167": "unknown",
+   "168": "unknown",
+   "169": "unknown",
+   "170": "unknown",
+   "171": "unknown",
+   "172": "unknown",
+   "173": "unknown",
+   "174": "unknown",
+   "175": "unknown",
+   "176": "unknown",
+   "177": "unknown",
+   "178": "unknown",
+   "179": "unknown",
+   "180": "unknown",
+   "181": "unknown",
+   "182": "unknown",
+   "183": "unknown",
+   "184": "unknown",
+   "185": "unknown",
+   "186": "unknown",
+   "187": "unknown",
+   "188": "unknown",
+   "189": "unknown",
+   "190": "unknown",
+   "191": "unknown",
+   "192": "unknown",
+   "193": "unknown",
+   "194": "unknown",
+   "195": "unknown",
+   "196": "unknown",
+   "197": "unknown",
+   "198": "unknown",
+   "199": "unknown",
+   "200": "unknown",
+   "201": "unknown",
+   "202": "unknown",
+   "203": "unknown",
+   "204": "unknown",
+   "205": "unknown",
+   "206": "unknown",
+   "207": "unknown",
+   "208": "unknown",
+   "209": "unknown",
+   "210": "unknown",
+   "211": "unknown",
+   "212": "unknown",
+   "213": "unknown",
+   "214": "unknown",
+   "215": "unknown",
+   "216": "unknown",
+   "217": "unknown",
+   "218": "unknown",
+   "219": "unknown",
+   "220": "unknown",
+   "221": "unknown",
+   "222": "unknown",
+   "223": "unknown",
+   "224": "unknown",
+   "225": "unknown",
+   "226": "unknown",
+   "227": "unknown",
+   "228": "unknown",
+   "229": "unknown",
+   "230": "unknown",
+   "231": "unknown",
+   "232": "unknown",
+   "233": "unknown",
+   "234": "unknown",
+   "235": "unknown",
+   "236": "unknown",
+   "237": "unknown",
+   "238": "unknown",
+   "239": "unknown",
+   "240": "unknown",
+   "241": "unknown",
+   "242": "unknown",
+   "243": "unknown",
+   "244": "unknown",
+   "245": "unknown",
+   "246": "unknown",
+   "247": "unknown",
+   "248": "unknown",
+   "249": "unknown",
+   "250": "unknown",
+   "251": "unknown",
+   "252": "unknown",
+   "253": "unknown",
+   "254": "unknown",
+   "255": "unknown",
+   "256": "unknown",
+   "257": "unknown",
+   "258": "unknown",
+   "259": "unknown",
+   "260": "unknown",
+   "261": "unknown",
+   "262": "unknown",
+   "263": "unknown",
+   "264": "unknown",
+   "265": "unknown",
+   "266": "unknown",
+   "267": "unknown",
+   "268": "unknown",
+   "269": "unknown",
+   "270": "unknown",
+   "271": "unknown",
+   "272": "unknown",
+   "273": "unknown",
+   "274": "unknown",
+   "275": "unknown",
+   "276": "unknown",
+   "277": "unknown",
+   "278": "unknown",
+   "279": "unknown",
+   "280": "unknown",
+   "281": "unknown",
+   "282": "unknown",
+   "283": "unknown",
+   "284": "unknown",
+   "285": "unknown",
+   "286": "unknown",
+   "287": "unknown",
+   "288": "unknown",
+   "289": "unknown",
+   "290": "unknown",
+   "291": "unknown",
+   "292": "unknown",
+   "293": "unknown",
+   "294": "unknown",
+   "295": "unknown",
+   "296": "unknown",
+   "297": "unknown",
+   "298": "unknown",
+   "299": "unknown",
+   "300": "unknown",
+   "301": "unknown",
+   "302": "unknown",
+   "303": "unknown",
+   "304": "unknown",
+   "305": "unknown",
+   "306": "unknown",
+   "307": "unknown",
+   "308": "unknown",
+   "309": "unknown",
+   "310": "unknown",
+   "311": "unknown",
+   "312": "unknown",
+   "313": "unknown",
+   "314": "unknown",
+   "315": "unknown",
+   "316": "unknown",
+   "317": "unknown",
+   "318": "unknown",
+   "319": "unknown",
+   "320": "unknown",
+   "321": "unknown",
+   "322": "unknown",
+   "323": "unknown",
+   "324": "unknown",
+   "325": "unknown",
+   "326": "unknown",
+   "327": "unknown",
+   "328": "unknown",
+   "329": "unknown",
+   "330": "unknown",
+   "331": "unknown",
+   "332": "unknown",
+   "333": "unknown",
+   "334": "unknown",
+   "335": "unknown",
+   "336": "unknown",
+   "337": "unknown",
+   "338": "unknown",
+   "339": "unknown",
+   "340": "unknown",
+   "341": "unknown",
+   "342": "unknown",
+   "343": "unknown",
+   "344": "unknown",
+   "345": "unknown",
+   "346": "unknown",
+   "347": "unknown",
+   "348": "unknown",
+   "349": "unknown",
+   "350": "unknown",
+   "351": "unknown",
+   "352": "unknown",
+   "353": "unknown",
+   "354": "unknown",
+   "355": "unknown",
+   "356": "unknown",
+   "357": "unknown"
+  },
+  "uty": {
+   "0": "unknown",
+   "1": "unknown",
+   "2": "unknown",
+   "3": "unknown",
+   "4": "unknown",
+   "5": "unknown",
+   "6": "unknown",
+   "7": "unknown",
+   "8": "unknown",
+   "9": "unknown",
+   "10": "unknown",
+   "11": "unknown",
+   "12": "unknown",
+   "13": "unknown",
+   "14": "unknown",
+   "15": "unknown",
+   "16": "unknown",
+   "17": "unknown",
+   "18": "unknown",
+   "19": "unknown",
+   "20": "unknown",
+   "21": "unknown",
+   "22": "unknown",
+   "23": "unknown",
+   "24": "unknown",
+   "25": "unknown",
+   "26": "unknown",
+   "27": "unknown",
+   "28": "unknown",
+   "29": "unknown",
+   "30": "unknown",
+   "31": "unknown",
+   "32": "unknown",
+   "33": "unknown",
+   "34": "unknown",
+   "35": "unknown",
+   "36": "unknown",
+   "37": "unknown",
+   "38": "unknown",
+   "39": "unknown",
+   "40": "unknown",
+   "41": "unknown",
+   "42": "unknown",
+   "43": "unknown",
+   "44": "unknown",
+   "45": "unknown",
+   "46": "unknown",
+   "47": "unknown",
+   "48": "unknown",
+   "49": "unknown",
+   "50": "unknown",
+   "51": "unknown",
+   "52": "unknown",
+   "53": "unknown",
+   "54": "unknown",
+   "55": "unknown",
+   "56": "unknown",
+   "57": "unknown",
+   "58": "unknown",
+   "59": "unknown",
+   "60": "unknown",
+   "61": "unknown",
+   "62": "unknown",
+   "63": "unknown",
+   "64": "unknown",
+   "65": "unknown",
+   "66": "unknown",
+   "67": "unknown",
+   "68": "unknown",
+   "69": "unknown",
+   "70": "unknown",
+   "71": "unknown",
+   "72": "unknown",
+   "73": "unknown",
+   "74": "unknown",
+   "75": "unknown",
+   "76": "unknown",
+   "77": "unknown",
+   "78": "unknown",
+   "79": "unknown",
+   "80": "unknown",
+   "81": "unknown",
+   "82": "unknown",
+   "83": "unknown",
+   "84": "unknown",
+   "85": "unknown",
+   "86": "unknown",
+   "87": "unknown",
+   "88": "unknown",
+   "89": "unknown",
+   "90": "unknown",
+   "91": "unknown",
+   "92": "unknown",
+   "93": "unknown",
+   "94": "unknown",
+   "95": "unknown",
+   "96": "unknown",
+   "97": "unknown",
+   "98": "unknown",
+   "99": "unknown",
+   "100": "unknown",
+   "101": "unknown",
+   "102": "unknown",
+   "103": "unknown",
+   "104": "unknown",
+   "105": "unknown",
+   "106": "unknown",
+   "107": "unknown",
+   "108": "unknown",
+   "109": "unknown",
+   "110": "unknown",
+   "111": "unknown",
+   "112": "unknown",
+   "113": "unknown",
+   "114": "unknown",
+   "115": "unknown",
+   "116": "unknown",
+   "117": "unknown",
+   "118": "unknown",
+   "119": "unknown",
+   "120": "unknown",
+   "121": "unknown",
+   "122": "unknown",
+   "123": "unknown",
+   "124": "unknown",
+   "125": "unknown",
+   "126": "unknown",
+   "127": "unknown",
+   "128": "unknown",
+   "129": "unknown",
+   "130": "unknown",
+   "131": "unknown",
+   "132": "unknown",
+   "133": "unknown",
+   "134": "unknown",
+   "135": "unknown",
+   "136": "unknown",
+   "137": "unknown",
+   "138": "unknown",
+   "139": "unknown",
+   "140": "unknown",
+   "141": "unknown",
+   "142": "unknown",
+   "143": "unknown",
+   "144": "unknown",
+   "145": "unknown",
+   "146": "unknown",
+   "147": "unknown",
+   "148": "unknown",
+   "149": "unknown",
+   "150": "unknown",
+   "151": "unknown",
+   "152": "unknown",
+   "153": "unknown",
+   "154": "unknown",
+   "155": "unknown",
+   "156": "unknown",
+   "157": "unknown",
+   "158": "unknown",
+   "159": "unknown",
+   "160": "unknown",
+   "161": "unknown",
+   "162": "unknown",
+   "163": "unknown",
+   "164": "unknown",
+   "165": "unknown",
+   "166": "unknown",
+   "167": "unknown",
+   "168": "unknown",
+   "169": "unknown",
+   "170": "unknown",
+   "171": "unknown",
+   "172": "unknown",
+   "173": "unknown",
+   "174": "unknown",
+   "175": "unknown",
+   "176": "unknown",
+   "177": "unknown",
+   "178": "unknown",
+   "179": "unknown",
+   "180": "unknown",
+   "181": "unknown",
+   "182": "unknown",
+   "183": "unknown",
+   "184": "unknown",
+   "185": "unknown",
+   "186": "unknown",
+   "187": "unknown",
+   "188": "unknown",
+   "189": "unknown",
+   "190": "unknown",
+   "191": "unknown",
+   "192": "unknown",
+   "193": "unknown",
+   "194": "unknown",
+   "195": "unknown",
+   "196": "unknown",
+   "197": "unknown",
+   "198": "unknown",
+   "199": "unknown",
+   "200": "unknown",
+   "201": "unknown",
+   "202": "unknown",
+   "203": "unknown",
+   "204": "unknown",
+   "205": "unknown",
+   "206": "unknown",
+   "207": "unknown",
+   "208": "unknown",
+   "209": "unknown",
+   "210": "unknown",
+   "211": "unknown",
+   "212": "unknown",
+   "213": "unknown",
+   "214": "unknown",
+   "215": "unknown",
+   "216": "unknown",
+   "217": "unknown",
+   "218": "unknown",
+   "219": "unknown",
+   "220": "unknown",
+   "221": "unknown",
+   "222": "unknown",
+   "223": "unknown",
+   "224": "unknown",
+   "225": "unknown",
+   "226": "unknown",
+   "227": "unknown",
+   "228": "unknown",
+   "229": "unknown",
+   "230": "unknown",
+   "231": "unknown",
+   "232": "unknown",
+   "233": "unknown",
+   "234": "unknown",
+   "235": "unknown",
+   "236": "unknown",
+   "237": "unknown",
+   "238": "unknown",
+   "239": "unknown",
+   "240": "unknown",
+   "241": "unknown",
+   "242": "unknown",
+   "243": "unknown",
+   "244": "unknown",
+   "245": "unknown",
+   "246": "unknown",
+   "247": "unknown",
+   "248": "unknown",
+   "249": "unknown",
+   "250": "unknown",
+   "251": "unknown",
+   "252": "unknown",
+   "253": "unknown",
+   "254": "unknown",
+   "255": "unknown",
+   "256": "unknown",
+   "257": "unknown",
+   "258": "unknown",
+   "259": "unknown",
+   "260": "unknown",
+   "261": "unknown",
+   "262": "unknown",
+   "263": "unknown",
+   "264": "unknown",
+   "265": "unknown",
+   "266": "unknown",
+   "267": "unknown",
+   "268": "unknown",
+   "269": "unknown",
+   "270": "unknown",
+   "271": "unknown",
+   "272": "unknown",
+   "273": "unknown",
+   "274": "unknown",
+   "275": "unknown",
+   "276": "unknown",
+   "277": "unknown",
+   "278": "unknown",
+   "279": "unknown",
+   "280": "unknown",
+   "281": "unknown",
+   "282": "unknown",
+   "283": "unknown",
+   "284": "unknown",
+   "285": "unknown",
+   "286": "unknown"
+  },
+  "oneshot": {
+   "1": "unknown",
+   "2": "unknown",
+   "3": "unknown",
+   "4": "unknown",
+   "5": "unknown",
+   "6": "unknown",
+   "7": "unknown",
+   "8": "unknown",
+   "9": "unknown",
+   "10": "unknown",
+   "11": "unknown",
+   "12": "unknown",
+   "13": "unknown",
+   "14": "unknown",
+   "15": "unknown",
+   "16": "unknown",
+   "17": "unknown",
+   "18": "unknown",
+   "19": "unknown",
+   "20": "unknown",
+   "21": "unknown",
+   "22": "unknown",
+   "23": "unknown",
+   "24": "unknown",
+   "25": "unknown",
+   "26": "unknown",
+   "27": "unknown",
+   "28": "unknown",
+   "29": "unknown",
+   "30": "unknown",
+   "31": "unknown",
+   "32": "unknown",
+   "33": "unknown",
+   "34": "unknown",
+   "35": "unknown",
+   "36": "unknown",
+   "37": "unknown",
+   "38": "unknown",
+   "39": "unknown",
+   "40": "unknown",
+   "41": "unknown",
+   "42": "unknown",
+   "43": "unknown",
+   "44": "unknown",
+   "45": "unknown",
+   "46": "unknown",
+   "47": "unknown",
+   "48": "unknown",
+   "49": "unknown",
+   "50": "unknown",
+   "51": "unknown",
+   "52": "unknown",
+   "53": "unknown",
+   "54": "unknown",
+   "55": "unknown",
+   "56": "unknown",
+   "57": "unknown",
+   "58": "unknown",
+   "59": "unknown",
+   "60": "unknown",
+   "61": "unknown",
+   "62": "unknown",
+   "63": "unknown",
+   "64": "unknown",
+   "65": "unknown",
+   "66": "unknown",
+   "67": "unknown",
+   "68": "unknown",
+   "69": "unknown",
+   "70": "unknown",
+   "71": "unknown",
+   "72": "unknown",
+   "73": "unknown",
+   "74": "unknown",
+   "75": "unknown",
+   "76": "unknown",
+   "77": "unknown",
+   "78": "unknown",
+   "79": "unknown",
+   "80": "unknown",
+   "81": "unknown",
+   "82": "unknown",
+   "83": "unknown",
+   "84": "unknown",
+   "85": "unknown",
+   "86": "unknown",
+   "87": "unknown",
+   "88": "unknown",
+   "89": "unknown",
+   "90": "unknown",
+   "91": "unknown",
+   "92": "unknown",
+   "93": "unknown",
+   "94": "unknown",
+   "95": "unknown",
+   "96": "unknown",
+   "97": "unknown",
+   "98": "unknown",
+   "99": "unknown",
+   "100": "unknown",
+   "101": "unknown",
+   "102": "unknown",
+   "103": "unknown",
+   "104": "unknown",
+   "105": "unknown",
+   "106": "unknown",
+   "107": "unknown",
+   "108": "unknown",
+   "109": "unknown",
+   "110": "unknown",
+   "111": "unknown",
+   "112": "unknown",
+   "113": "unknown",
+   "114": "unknown",
+   "115": "unknown",
+   "116": "unknown",
+   "117": "unknown",
+   "118": "unknown",
+   "119": "unknown",
+   "120": "unknown",
+   "121": "unknown",
+   "122": "unknown",
+   "123": "unknown",
+   "124": "unknown",
+   "125": "unknown",
+   "126": "unknown",
+   "127": "unknown",
+   "128": "unknown",
+   "129": "unknown",
+   "130": "unknown",
+   "131": "unknown",
+   "132": "unknown",
+   "133": "unknown",
+   "134": "unknown",
+   "135": "unknown",
+   "136": "unknown",
+   "137": "unknown",
+   "138": "unknown",
+   "139": "unknown",
+   "140": "unknown",
+   "141": "unknown",
+   "142": "unknown",
+   "143": "unknown",
+   "144": "unknown",
+   "145": "unknown",
+   "146": "unknown",
+   "147": "unknown",
+   "148": "unknown",
+   "149": "unknown",
+   "150": "unknown",
+   "151": "unknown",
+   "152": "unknown",
+   "153": "unknown",
+   "154": "unknown",
+   "155": "unknown",
+   "156": "unknown",
+   "157": "unknown",
+   "158": "unknown",
+   "159": "unknown",
+   "160": "unknown",
+   "161": "unknown",
+   "162": "unknown",
+   "163": "unknown",
+   "164": "unknown",
+   "165": "unknown",
+   "166": "unknown",
+   "167": "unknown",
+   "168": "unknown",
+   "169": "unknown",
+   "170": "unknown",
+   "171": "unknown",
+   "172": "unknown",
+   "173": "unknown",
+   "174": "unknown",
+   "175": "unknown",
+   "176": "unknown",
+   "177": "unknown",
+   "178": "unknown",
+   "179": "unknown",
+   "180": "unknown",
+   "181": "unknown",
+   "182": "unknown",
+   "183": "unknown",
+   "184": "unknown",
+   "185": "unknown",
+   "186": "unknown",
+   "187": "unknown",
+   "188": "unknown",
+   "189": "unknown",
+   "190": "unknown",
+   "191": "unknown",
+   "192": "unknown",
+   "193": "unknown",
+   "194": "unknown",
+   "195": "unknown",
+   "196": "unknown",
+   "197": "unknown",
+   "198": "unknown",
+   "199": "unknown",
+   "200": "unknown",
+   "201": "unknown",
+   "202": "unknown",
+   "203": "unknown",
+   "204": "unknown",
+   "205": "unknown",
+   "206": "unknown",
+   "207": "unknown",
+   "208": "unknown",
+   "209": "unknown",
+   "210": "unknown",
+   "211": "unknown",
+   "212": "unknown",
+   "213": "unknown",
+   "214": "unknown",
+   "215": "unknown",
+   "216": "unknown",
+   "217": "unknown",
+   "218": "unknown",
+   "219": "unknown",
+   "220": "unknown",
+   "221": "unknown",
+   "222": "unknown",
+   "223": "unknown",
+   "224": "unknown",
+   "225": "unknown",
+   "226": "unknown",
+   "227": "unknown",
+   "228": "unknown",
+   "229": "unknown",
+   "230": "unknown",
+   "231": "unknown",
+   "232": "unknown",
+   "233": "unknown",
+   "234": "unknown",
+   "235": "unknown",
+   "236": "unknown",
+   "237": "unknown",
+   "238": "unknown",
+   "239": "unknown",
+   "240": "unknown",
+   "241": "unknown",
+   "242": "unknown",
+   "243": "unknown",
+   "244": "unknown",
+   "245": "unknown",
+   "246": "unknown",
+   "247": "unknown",
+   "248": "unknown",
+   "249": "unknown",
+   "250": "unknown",
+   "251": "unknown",
+   "252": "unknown",
+   "253": "unknown",
+   "254": "unknown",
+   "255": "unknown",
+   "256": "unknown",
+   "257": "unknown",
+   "258": "unknown",
+   "259": "unknown",
+   "260": "unknown",
+   "261": "unknown",
+   "262": "unknown",
+   "263": "unknown"
+  }
+ },
+ "schema_version": 1
+}

@@ -217,24 +217,35 @@ check('D2 ★★ 无第二份真相：本位表与预留表的**令牌集不相�
       not ({t: sorted(set(L.TRAIT_TOKENS.get(t, ()))
                       & set(L.TRAIT_TOKENS_RESERVED.get(t, ())))
             for t in set(L.TRAIT_TOKENS) | set(L.TRAIT_TOKENS_RESERVED)
-            if set(L.TRAIT_TOKENS.get(t, ())) & set(L.TRAIT_TOKENS_RESERVED.get(t, ()))})
-      or True,
+            if set(L.TRAIT_TOKENS.get(t, ())) & set(L.TRAIT_TOKENS_RESERVED.get(t, ()))}),
       'ruined live=%r res=%r' % (L.TRAIT_TOKENS.get('ruined'),
                                  L.TRAIT_TOKENS_RESERVED.get('ruined')))
 _zero = [(t, tok) for t, toks in L.TRAIT_TOKENS.items() for tok in toks
          if not any(L._token_hits(tok, s) for s in _ids)]
 check('D3 ★ 本位令牌**逐条**现网 ≥1 命中（零命中 = 虚假宣传）',
       not _zero, str(_zero[:3] or '(全命中)'))
+# ★ 第80轮：OneShot 263 场景迁入 ⇒ `sun`(bright) / `sky`(cosmic) 语义正确、已**转正**；
+#   `square` / `street` 语义错位（几何方形 / 街名）⇒ 移入 `BANNED_TOKENS('OMITTED')`。
+#   ⇒ 判据改为**随事实**：预留表逐条仍必须 0 命中（这个不变、更严），
+#     但**把已被扬弃的禁词从预留表里排除**后逐条验（禁词本就不许在任何表里出现）。
+_banned_om = set(L.banned_tokens('OMITTED'))
 _nz = [(t, tok) for t, toks in L.TRAIT_TOKENS_RESERVED.items() for tok in toks
-       if any(L._token_hits(tok, s) for s in _ids)]
-check('D4 ★ 预留令牌**逐条**仍 0 命中（OneShot/Outertale 未接入 ⇒ 不许混进本位凑数）',
+       if tok not in _banned_om and any(L._token_hits(tok, s) for s in _ids)]
+check('D4 ★ 预留令牌**逐条**仍 0 命中（Outertale 未接入 ⇒ 不许混进本位凑数；'
+      '第80轮起禁词已排除）',
       not _nz, str(_nz[:3] or '(全 0 命中)'))
-check('D5 ★ 如实：`bright` / `cosmic` 仍零命中（不许假装覆盖了明亮与宇宙）',
-      not any(L._token_hits(k, s) for t in ('bright', 'cosmic')
-              for k in L.TRAIT_TOKENS.get(t, ()) for s in _ids)
-      or not L.TRAIT_TOKENS.get('bright') and not L.TRAIT_TOKENS.get('cosmic'),
-      'bright=%r cosmic=%r' % (L.TRAIT_TOKENS.get('bright'),
-                               L.TRAIT_TOKENS.get('cosmic')))
+# ★ 第80轮改口径：`bright`/`cosmic` 由 OneShot 的 `sun`/`sky` **部分兑现** ⇒
+#   旧断言"仍零命中"已过时。新断言**更严**：把两条**转正令牌**排除后，
+#   `bright`/`cosmic` 的**其余令牌**（预留槽）仍必须 0 命中 —— 即"没有偷偷扩大覆盖"。
+_live_bc = set(L.TRAIT_TOKENS.get('bright', ())) | set(L.TRAIT_TOKENS.get('cosmic', ()))
+_res_leak = [tok for t in ('bright', 'cosmic')
+             for tok in L.TRAIT_TOKENS_RESERVED.get(t, ())
+             if tok not in _banned_om and any(L._token_hits(tok, s) for s in _ids)]
+check('D5 ★ 如实：`bright`/`cosmic` 的能力**只由转正令牌兑现**，'
+      '预留槽不许偷偷命中（不许假装覆盖了全部明亮与宇宙）',
+      not _res_leak and _live_bc <= {'sun', 'sky'},
+      'live_bright=%r live_cosmic=%r res_leak=%r' % (
+          L.TRAIT_TOKENS.get('bright'), L.TRAIT_TOKENS.get('cosmic'), _res_leak))
 
 print()
 print('=' * 74)

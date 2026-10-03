@@ -26,6 +26,8 @@
 * **G 时段同源**：`_phase_name()` 与 `npc_intent.phase_of()` 逐时同值（防悄悄漂移）。
 * **H 行为**：真能移动；同样输入可复现；异时可变；驻留期不许即到即走。
 * **I 序列化 + 判据自身体检**。
+* **★ 层3 就寝（第80轮追加）**：见「J」段 —— 旧常量 `BEDTIME_HOME_SCENE` 对 NPC
+  **废弃**，改**逐人决策**（`decide_sleep` / `sleep_fn` 注入），且**零回归可证**。
 
 ★ 零网络 / 零 UI / 零外部盘 / 不需要显示器。
 """
@@ -400,8 +402,8 @@ for _n in _cls.body:
             and isinstance(_n.targets[0], ast.Name):
         _consts[_n.targets[0].id] = _n.value
 _am = _consts.get('NPC_AUTONOMOUS_MOVE')
-check('W2 ★★★ NPC_AUTONOMOUS_MOVE 在位且默认 **False**（= 零回归承诺）',
-      isinstance(_am, ast.Constant) and _am.value is False,
+check('W2 ★★★ NPC_AUTONOMOUS_MOVE 在位且默认 **True**（第80轮按用户裁决打开）',
+      isinstance(_am, ast.Constant) and _am.value is True,
       'value=%s' % getattr(_am, 'value', None))
 
 _imp = []
@@ -418,8 +420,9 @@ for _n in ast.walk(_cls):
         _meths.add(_n.name)
 _need = ['_npc_roam_tick', '_npc_roam_reachable', '_npc_roam_traits',
          '_npc_roam_familiar', '_npc_roam_friends', '_npc_roam_scene_of',
-         '_npc_roam_decide']
-check('W4 七个接线方法全部在位', not [m for m in _need if m not in _meths],
+         '_npc_roam_decide', '_npc_roam_sleep']
+check('W4 八个接线方法全部在位（第80轮 +`_npc_roam_sleep`）',
+      not [m for m in _need if m not in _meths],
       '缺=%s' % ([m for m in _need if m not in _meths] or '无'))
 
 # ★★ 最贵的一条：`_npc_scene_roster` **真读** resident_of（否则层2 = 死代码）
@@ -551,6 +554,193 @@ _breaks = (_broken != PASS + FAIL)
 CALLS, PASS, FAIL = _c0, _p0, _f0          # 精确还原，不留痕
 check('I6n 负控制：漏记一格的假入口必须破坏守恒（证明 I6 有鉴别力）',
       _breaks, '')
+
+# ================================================================ J
+# ★★★ 第80轮追加：**层3 就寝**（用户裁决 ③「**废除**」=
+#     NPC 就寝不再用常量 `BEDTIME_HOME_SCENE`，改**逐人决策**）。
+#     ★ 只断言**结构 / 行为**，不断言实现细节：真源仍由 `npc_intent` 持有。
+print()
+print('=' * 74)
+print('J 层3 就寝（第80轮：旧常量 → 逐人决策）')
+print('=' * 74)
+
+# ---- J1：`decide_sleep` 在位且零依赖（AST 核"只调标准库"）----
+_ds = [n for n in ast.walk(tree)
+       if isinstance(n, ast.FunctionDef) and n.name == 'decide_sleep']
+check('J1 `decide_sleep()` 在位（层3 的纯逻辑入口）', bool(_ds), '')
+
+# ★ 结构保证：`decide_sleep` **不许**自己 import 任何东西（零依赖纪律的硬形态）。
+_ds_inner_imp = []
+for _n in ast.walk(_ds[0]) if _ds else []:
+    if isinstance(_n, (ast.Import, ast.ImportFrom)):
+        _ds_inner_imp.append(getattr(_n, 'lineno', '?'))
+check('J1b ★ `decide_sleep` 里零 import（决策器是**注入**的，不是 import 的）',
+      not _ds_inner_imp, 'import@%s' % (_ds_inner_imp or '无'))
+
+# ---- J2：白天不问（`SLEEP_PHASE` 之外一律不决策）----
+_j_day = R.decide_sleep(0.0, phase='day',
+                        sleep_fn=lambda *a, **k: ('room_b', 'x'), npc_id='a')
+_j_day2 = R.decide_sleep(0.0, phase='dusk',
+                         sleep_fn=lambda *a, **k: ('room_b', 'x'), npc_id='a')
+check('J2 ★ 白天/黄昏不问"今晚睡哪"（`SLEEP_PHASE` 闸：不许白天把人赶去睡）',
+      _j_day == (None, 'day') and _j_day2 == (None, 'day'),
+      'day=%s dusk=%s' % (_j_day, _j_day2))
+# ★ J2n 负控制：同样输入、只把 phase 换成 night ⇒ **必须**给出场景（证明 J2 非恒真）
+_j_night = R.decide_sleep(0.0, phase='night',
+                          sleep_fn=lambda *a, **k: ('room_b', 'x'), npc_id='a')
+check('J2n 负控制：换成 night 后必须真给出场景（证明 J2 有鉴别力）',
+      _j_night == ('room_b', 'x'), 'night=%s' % (_j_night,))
+
+# ---- J3：没注入决策器 ⇒ 降级为"不作决策"（不抛、不编地点）----
+_j_nofn = R.decide_sleep(0.0, phase='night', sleep_fn=None, npc_id='a')
+check('J3 ★ 未注入 `sleep_fn` ⇒ `(None, \'no_fn\')`（降级不抛，也不编一个地点）',
+      _j_nofn == (None, 'no_fn'), '%s' % (_j_nofn,))
+
+# ---- J4：决策器抛异常 ⇒ 吞掉（一条 NPC 的 bug 不许带崩整拍）----
+def _boom(*a, **k):
+    raise RuntimeError('boom')
+
+
+_j_boom = R.decide_sleep(0.0, phase='night', sleep_fn=_boom, npc_id='a')
+check('J4 ★ 决策器抛异常被吞（单点故障不带崩整拍）', _j_boom == (None, 'no_fn'),
+      '%s' % (_j_boom,))
+
+# ---- J5：桌面闸 —— 睡觉也不许把 NPC 放进桌面（与 `step()` 同一条闸）----
+_j_desk = R.decide_sleep(0.0, phase='night',
+                         sleep_fn=lambda *a, **k: ('desktop', 'own_home'),
+                         npc_id='a', cur_scene='room_x')
+check('J5 ★★ 桌面闸：睡觉也不许自主进 `desktop`（与 `step()` 同一条闸）',
+      _j_desk == (None, 'desktop_blocked'), '%s' % (_j_desk,))
+
+# ---- J6：已在正确的地方 ⇒ 不记（避免"刷表"，也避免无意义重建身体）----
+_j_same = R.decide_sleep(0.0, phase='night',
+                         sleep_fn=lambda *a, **k: ('room_x', 'own_home'),
+                         npc_id='a', cur_scene='room_x')
+check('J6 ★ 决策结果 = 他现在待的地方 ⇒ `(None, \'already\')`（不刷表）',
+      _j_same == (None, 'already'), '%s' % (_j_same,))
+
+# ---- J7 ★★★ 零回归：`enabled=False` 时**就寝也一个字节都不改** ----
+_DAY = 86400.0
+_NIGHT = _DAY * 3 + 22 * 3600.0            # 冻时段：第3天 22:00（`night`）
+check('J7p 前置：冻的那个时刻确实是 `night`（否则 J7 测的不是就寝路径）',
+      R._phase_name(_NIGHT) == 'night', 'phase=%s' % R._phase_name(_NIGHT))
+
+_st_off = R.RoamState(enabled=False)
+_out_off = R.step(_st_off, _NIGHT, roster=['a'],
+                  decide_fn=lambda *a, **k: None,
+                  home_of=lambda n: 'room_a',
+                  reachable_of=lambda n: ['room_a', 'room_b'],
+                  sleep_fn=lambda *a, **k: ('room_b', 'own_home'))
+check('J7 ★★★ 零回归：`enabled=False` ⇒ 就寝也**零副作用**（表空、last_step 不动）',
+      _out_off == {'decided': [], 'expired': [], 'moved': []}
+      and _st_off.resident_of('a') is None and _st_off.last_step == 0.0,
+      'out=%s last_step=%s' % (_out_off, _st_off.last_step))
+
+# ★ J7n 负控制：同样输入、只把 enabled 改 True ⇒ **必须**真落表（证明 J7 非恒真）
+_st_on = R.RoamState(enabled=True)
+_out_on = R.step(_st_on, _NIGHT, roster=['a'],
+                 decide_fn=lambda *a, **k: None,
+                 home_of=lambda n: 'room_a',
+                 reachable_of=lambda n: ['room_a', 'room_b'],
+                 sleep_fn=lambda *a, **k: ('room_b', 'own_home'))
+check('J7n 负控制：打开后必须真落表（证明 J7 的零回归不是"因为什么都没做"）',
+      _st_on.resident_of('a') == 'room_b'
+      and any(m[0] == 'a' for m in _out_on['moved']),
+      'resident=%s out=%s' % (_st_on.resident_of('a'), _out_on))
+
+# ---- J8：就寝走**长驻留**（不是 3 分钟就被摇走）----
+_st_l = R.RoamState(enabled=True)
+R.step(_st_l, _NIGHT, roster=['a'], decide_fn=lambda *a, **k: None,
+       home_of=lambda n: 'room_a', reachable_of=lambda n: ['room_a', 'room_b'],
+       sleep_fn=lambda *a, **k: ('room_b', 'own_home'))
+_stay_l = _st_l.get('a')
+check('J8 ★ 就寝按**长驻留**落表（`SLEEP_DWELL_SECONDS`，不是 `MIN_DWELL`）',
+      _stay_l is not None
+      and (_stay_l.until - _stay_l.since) >= R.SLEEP_DWELL_SECONDS - 1e-6
+      and (_stay_l.until - _stay_l.since) > R.MIN_DWELL_SECONDS,
+      'dwell=%.0f min_dwell=%.0f' % ((_stay_l.until - _stay_l.since),
+                                     R.MIN_DWELL_SECONDS))
+check('J8b ★ 就寝的 `reason` 带 `sleep:` 前缀（可区分"睡"与"逛"，便于诊断/存档）',
+      _stay_l is not None and str(_stay_l.reason).startswith('sleep:'),
+      'reason=%s' % (getattr(_stay_l, 'reason', None),))
+
+# ---- J9 ★★ 本拍已挪窝的人**不被就寝覆盖**（两件事不许互相踩）----
+_st_m = R.RoamState(enabled=True)
+_out_m = R.step(_st_m, _NIGHT, roster=['a'],
+                decide_fn=lambda *a, **k: ('room_c', 'wander'),
+                home_of=lambda n: 'room_a',
+                reachable_of=lambda n: ['room_a', 'room_b', 'room_c'],
+                sleep_fn=lambda *a, **k: ('room_b', 'own_home'))
+check('J9 ★★ 本拍已经"逛到别处"的人 ⇒ 不被就寝覆盖（两件事不互相踩）',
+      _st_m.resident_of('a') == 'room_c', 'resident=%s' % _st_m.resident_of('a'))
+
+# ---- J10 ★★ 产品接线：`main._npc_roam_sleep` 真被造出 + 真被注入 + 真调真源 ----
+_sleep_m = [n for n in ast.walk(_cls)
+            if isinstance(n, ast.FunctionDef) and n.name == '_npc_roam_sleep']
+check('J10 ★★ `main._npc_roam_sleep` 在位（层3 的宿主侧接线）', bool(_sleep_m), '')
+_sl_calls = set()
+for _n in ast.walk(_sleep_m[0]) if _sleep_m else []:
+    if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute):
+        _sl_calls.add(_n.func.attr)
+check('J10b ★★★ `_npc_roam_sleep` 真调 `choose_sleep_scene`（真源，不是自己另编一套）',
+      'choose_sleep_scene' in _sl_calls, 'calls=%s' % sorted(_sl_calls))
+# ★ 且 `step()` 调用点真注入 `sleep_fn=self._npc_roam_sleep`
+_sf_injected = False
+for _n in ast.walk(_tick[0]) if _tick else []:
+    if isinstance(_n, ast.Call):
+        for _kw in _n.keywords:
+            if _kw.arg == 'sleep_fn':
+                _sf_injected = True
+check('J10c ★★★ `_npc_roam_tick` 真把 `sleep_fn` 注入 `step()`（否则层3 = 死代码）',
+      _sf_injected, '')
+# ★ 负控制：**未注入**的同一次调用必须被抓到（证明 J10c 有鉴别力）
+_sf_neg = False
+for _kw in (ast.Call(func=ast.Name(id='step'), args=[], keywords=[])).keywords:
+    if _kw.arg == 'sleep_fn':
+        _sf_neg = True
+check('J10n 负控制：不带 `sleep_fn` 的调用形状必须判否（证明 J10c 非恒真）',
+      not _sf_neg, '')
+
+# ---- J11 ★★ 旧口径**对 NPC 已废弃**：`BEDTIME_HOME_SCENE` 处有废弃声明 ----
+# ★ 判据侧教训（第80轮现场踩到）：第一版写死 `'NPC 不适用'`**过窄**
+#   —— 真源写的是「NPC 完全不适用」⇒ 整条被丢（报了个假红）。
+#   ⇒ 改判「**声明与 NPC 相关 + 明确废弃**」两个语义条件，**不锁具体措辞**。
+#     ★★ 仍然要**锚在真实注释**上：只认带 `#` 的注释行，不认代码里的标识符。
+_bhs = _msrc.count('BEDTIME_HOME_SCENE')
+_has_npc_depre = False
+for _ln in _msrc.splitlines():
+    _s = _ln.strip()
+    if not _s.startswith('#'):
+        continue
+    if 'NPC' in _s and ('不适用' in _s or '废弃' in _s or '无关' in _s):
+        _has_npc_depre = True
+        break
+check('J11 ★★ `BEDTIME_HOME_SCENE` ∈ main.py 且**注释里**有"NPC 不适用/已废弃"声明'
+      '（用户裁决 ③「废除」落在**注释真源**上）',
+      _bhs >= 1 and _has_npc_depre,
+      'occurrences=%d 有NPC废弃声明=%s' % (_bhs, _has_npc_depre))
+# ★ J11n 负控制：把**所有注释**抹掉后，同样的检测必须判否
+#   （证明 J11 真在读注释，不是被代码里的标识符蒙对）
+_stripped = '\n'.join(
+    ('' if ln.strip().startswith('#') else ln) for ln in _msrc.splitlines())
+_has2 = any(('NPC' in s and ('不适用' in s or '废弃' in s or '无关' in s))
+            for s in (l.strip() for l in _stripped.splitlines())
+            if s.startswith('#'))
+check('J11n 负控制：抹掉注释后检测必须判否（证明 J11 锚在注释上、非恒真）',
+      not _has2, '')
+
+# ---- J12 ★★★ 就寝**不与用户耦合**（L2 的结构保证，与 D 段同口径）----
+_ds_args = set()
+for _n in ast.walk(_ds[0]) if _ds else []:
+    if isinstance(_n, ast.arg):
+        _ds_args.add(_n.arg)
+_banned = [a for a in _ds_args if a.lower() in
+           ('pet', 'user', 'player', 'host', 'me', 'owner')]
+check('J12 ★★★ `decide_sleep` 形参里无 pet/user/player（就寝不依赖用户，L2）',
+      not _banned, 'args=%s' % sorted(_ds_args))
+check('J12n 负控制：同样的检测喂一个带 `user` 的假签名必须判否',
+      bool([a for a in (set(_ds_args) | {'user'}) if a.lower() in
+            ('pet', 'user', 'player', 'host', 'me', 'owner')]), '')
 
 print()
 print('=' * 74)

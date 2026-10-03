@@ -316,6 +316,9 @@ def _index_keys():
 
 _SCENES, _CH_KEYS, _AREA_KEYS, _LOOSE = _index_keys()
 _IDS = sorted(_LOOSE)          # ★ 用松口径跑（更严）；真场景数另算，供 C1b/C2 说清
+# ★ 第80轮：`OMITTED` 类禁词（`room`/`light`/`square`/`street` …）供 C/D 两段共用，
+#   提前到此处定义（原本只在 D 段才建，C2b2 会用到）。
+_om_b = set(L.banned_tokens('OMITTED'))
 _bad = []
 _has = 0
 _ta = collections.Counter()
@@ -364,10 +367,27 @@ check('C2 有场景真命中（不是"全空集"）', _has > 0,
 #   ⇒ 契约已把 `ruined` 从 `TRAIT_TOKENS_RESERVED` **转正**进 `TRAIT_TOKENS`。
 #   ⇒ 判据同步改：`ruined` 改为**必须 > 0**（能力真到位），
 #     并新增"预留表里不许再留着 ruined"（防两处都有 = 两个真相）。
-for _t in ('cosmic', 'bright'):
-    check('C2b ★ 如实：`%s` 在现网**零命中**（OneShot/Outertale 未接入 ⇒ 不假装覆盖）' % _t,
-          _ta_p.get(_t, 0) == 0,
-          '%d' % _ta_p.get(_t, 0))
+#
+# ★★★ 第80轮再改（同机制）：OneShot 263 场景迁入 ⇒ `bright`/`cosmic` **不再是零命中**：
+#   · `bright` 由 `sun`（`Sunroom` / `basement_after_sun`）兑现 3 处；
+#   · `cosmic` 由 `sky`（`Red_sky` / `POSTGAME_RED_SKY`）兑现 2 处。
+#   旧断言"`cosmic`/`bright` 仍零命中"**已过时** ⇒ 改为**随事实**：
+#   **必须 > 0**（能力真到位，但只由**转正令牌**兑现；预留槽仍不许命中，
+#   该点由 C2b2 单独把守 —— 防"假装覆盖了全部明亮与宇宙"）。
+check('C2b ★★ 第80轮转正：`bright` / `cosmic` 现网 **必须 > 0 命中**'
+      '（OneShot 的 `sun` / `sky` 已迁入）',
+      all(_ta_p.get(_t, 0) > 0 for _t in ('bright', 'cosmic')),
+      'bright=%d cosmic=%d（第73/77轮时均为 0）'
+      % (_ta_p.get('bright', 0), _ta_p.get('cosmic', 0)))
+# ★ 正/负控制成对：能力**只**由转正令牌兑现，预留槽**仍 0 命中**（没偷偷扩大覆盖）。
+_res_leak80 = [tok for _t in ('bright', 'cosmic')
+               for tok in L.TRAIT_TOKENS_RESERVED.get(_t, ())
+               if tok not in _om_b and any(L._token_hits(tok, s) for s in _IDS)]
+_live_bc80 = set(L.TRAIT_TOKENS.get('bright', ())) | set(L.TRAIT_TOKENS.get('cosmic', ()))
+check('C2b2 ★ 如实：`bright`/`cosmic` 只由转正令牌 `sun`/`sky` 兑现，'
+      '预留槽不许偷偷命中（不许假装覆盖了全部明亮与宇宙）',
+      not _res_leak80 and _live_bc80 <= {'sun', 'sky'},
+      'live=%r res_leak=%r' % (sorted(_live_bc80), _res_leak80))
 check('C2c ★★ 第77轮转正：`ruined` 现网 **必须 > 0 命中**（UT 废墟区域已迁入）',
       _ta_p.get('ruined', 0) > 0,
       'ruined 命中 %d（第73轮时为 0）' % _ta_p.get('ruined', 0))
@@ -556,19 +576,34 @@ _zero_pos = [(t, tok) for t, toks in L.TRAIT_TOKENS.items() for tok in toks
 check('D1 ★ 本位令牌**逐条**在现网 ≥1 命中（零命中的令牌 = 虚假宣传一项不存在的能力）',
       not _zero_pos, str(_zero_pos[:3] or '(全命中)'))
 
+# ★ 第80轮：OneShot 263 场景迁入 ⇒ `sun`/`sky` 实测命中且**语义正确** ⇒ 转正；
+#   `square`/`street` 实测命中但**语义错位**（几何方形 / 街名）⇒ 移入 BANNED('OMITTED')。
+#   ⇒ 预留表判据改为**随事实**：逐条仍必须 0 命中，但先把已扬弃的禁词排除
+#     （禁词不许出现在任何表 → 自然也不该被当作"预留"来数）。
 _nz_res = [(t, tok, sum(1 for s in _IDS if L._token_hits(tok, s)))
            for t, toks in L.TRAIT_TOKENS_RESERVED.items() for tok in toks
-           if any(L._token_hits(tok, s) for s in _IDS)]
-check('D2 预留令牌**逐条**现网 == 0 命中（不许拿它们混进本位凑数字）',
+           if tok not in _om_b and any(L._token_hits(tok, s) for s in _IDS)]
+check('D2 预留令牌**逐条**现网 == 0 命中（不许拿它们混进本位凑数字；第80轮起禁词已排除）',
       not _nz_res, str(_nz_res[:3] or '(全 0)'))
 
 _all_tok = set()
-for _mapi in (L.TRAIT_TOKENS, L.TRAIT_TOKENS_RESERVED):
+for _mapi in (L.TRAIT_TOKENS, L.TRAIT_TOKENS_RESERVED, L.TRAIT_WORDS_CN):
     for _v in _mapi.values():
         _all_tok |= set(_v)
 _omitted_in = [t for t in L.banned_tokens('OMITTED') if t in _all_tok]
-check('D3 `OMITTED` 类禁词（room / light）**不在任何令牌表里**'
-      '（这类靠"没人往表里写"挡，匹配规则挡不住）', not _omitted_in, str(_omitted_in))
+check('D3 `OMITTED` 类禁词（room / light / square / street）**不在任何令牌表里**'
+      '（这类靠"没人往表里写"挡 + 第80轮起运行期也硬过滤，匹配规则挡不住）',
+      not _omitted_in, str(_omitted_in))
+check('D3b `SUBSTRING` 类禁词（ash / night）被匹配规则挡住（负控制）',
+      all(L._token_hits(t, 'x_afterthrash2 knightclimb') is False
+          for t in L.banned_tokens('SUBSTRING')))
+check('D3c ★ 第80轮负控制：`OMITTED` 禁词即使被硬塞进令牌表，`_match_terms`/`trait_hits`'
+      '也**进不了匹配**（运行期过滤，不依赖人自觉）',
+      all(w not in L._match_terms('crowded') for w in ('square', 'street'))
+      and all(w not in L._match_terms('crowded', use_reserved=True)
+              for w in L.banned_tokens('OMITTED'))
+      and not L.trait_hits('x_vendor_street x_house_squares',
+                           use_reserved=True).get('crowded'))
 check('D3b `SUBSTRING` 类禁词（ash / night）被匹配规则挡住（负控制）',
       all(L._token_hits(t, 'x_afterthrash2 knightclimb') is False
           for t in L.banned_tokens('SUBSTRING')))
@@ -748,8 +783,8 @@ check('F1b 每一项 wired 都带 `used_by`（谁在用）+ `wired_how`（接到
 check('F2 `not_yet` 里明确列了「主线 NPC 自主开口」没做',
       any('主线 NPC' in x and ('自主' in x or '自发' in x) for x in (_w.get('not_yet') or [])),
       '%d 条' % len(_w.get('not_yet') or []))
-check('F3 ★ `scene_traits.wired_how` 必须**写明** ruined/cosmic 零命中'
-      '（不许含糊地宣称"覆盖了破败"）',
+check('F3 ★ `scene_traits.wired_how` 必须**写明** ruined/cosmic 的覆盖实况'
+      '（第77轮记 ruined 转正、第80轮记 bright/cosmic 转正 —— 不许含糊地宣称"全覆盖"）',
       all(k in (CROSSJ['scene_traits'].get('wired_how') or '')
           for k in ('ruined', 'cosmic')),
       'len=%d' % len(CROSSJ['scene_traits'].get('wired_how') or ''))

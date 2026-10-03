@@ -35,6 +35,16 @@
 `step()` **立即返回、一个字节都不改** ⇒ 覆盖表恒空 ⇒ 全场景回落站位表
 ⇒ 行为与现在**逐字相同**。这不是"大概一样"，是**结构保证**。
 
+层3：就寝（★ 本层把旧常量换成决策）
+------------------------------------
+旧口径 `BEDTIME_HOME_SCENE = 'desktop'` 是**常量**，且**只服务桌宠本人**
+（`go_to_bed()` 里读它；NPC 那侧 grep `npc.*bed` = **0 命中**）。
+⇒ 本层给 NPC 补上**逐人**的「今晚睡哪」：
+     · 到 `night` 段（`SLEEP_PHASE`）且本拍没打算挪窝时，问一次注入的 `sleep_fn`
+       （= `npc_intent.choose_sleep_scene`，L4：**不硬性回家、可睡朋友家**）；
+     · 有答案 ⇒ 按**长驻留**落表；没答案 ⇒ 不记（回落静态归属）。
+★ 本模块**不 import** `npc_intent` —— 决策器一律**注入**（`decide_fn` / `sleep_fn`）。
+
 零依赖纪律（对齐 `companion*` / `npc_placement` / `npc_intent`）
 ------------------------------------------------------------------
 * 顶层只 `import` 标准库；
@@ -70,6 +80,14 @@ LEAVE_P_MAX = 0.85
 #: 桌面是**特殊场景**：不能由自主移动进入（必须走跟随/邀请那条路）。
 #: ★ 这是与 `npc_system.DESKTOP_ALLOWED_IDS` **并列**的一道闸，不是替代它。
 DESKTOP_SCENE = 'desktop'
+
+#: 进入"该睡了"的时段名（`_phase_name` 的口径）—— 夜里才问"今晚睡哪"（L4）。
+#: ★ 只认 `night`（21:00 起）：别在白天把 NPC 赶去睡觉。
+SLEEP_PHASE = 'night'
+
+#: 睡一次的最短驻留（秒）—— 睡觉是"长驻留"，不该 3 分钟就被 `leave_probability` 摇走。
+#: ★ 用 `MAX_DWELL_SECONDS` 当上界（`put()` 已经钳过），这里只抬高下限。
+SLEEP_DWELL_SECONDS = 3600.0 * 6.0
 
 DEFAULT_ROAM_ENABLED = False
 
@@ -243,9 +261,53 @@ def leave_probability(stay, now, *, phase='day', familiar=0.0):
     return max(LEAVE_P_MIN, min(LEAVE_P_MAX, p))
 
 
+def decide_sleep(now, *, phase=None, sleep_fn=None, npc_id=None,
+                 home=None, friends=None, reachable=None, last_sleep=None,
+                 cur_scene=None):
+    """**今晚睡哪**（层3：把旧常量 `BEDTIME_HOME_SCENE` 换成决策）。
+
+    ★★ 为什么在**本模块**也要有这一层（而不是直接调 `npc_intent`）：
+      零依赖纪律 —— 本模块**不 import** `npc_intent`（连它都不 import）。
+      真决策由宿主**注入**（`sleep_fn`，默认 `None`）；本函数只负责
+      「**该不该问 / 问完怎么解读**」这两步纯逻辑。
+
+    返回 `(scene_id | None, why)`：
+      · `(None, 'day')`      —— 白天不问（`SLEEP_PHASE` 之外）；
+      · `(None, 'no_fn')`    —— 宿主没注入决策器（降级，不抛）；
+      · `(None, 'nowhere')`  —— 他哪儿也去不了（如实说，不编一个地点）；
+      · `(None, 'already')`  —— 决策结果**就是他现在待的地方**（不用挪窝）；
+      · `(scene, why)`       —— 该去 `scene` 睡（`why` = `own_home` / `friend_of:X`…）。
+
+    ★ `phase is None` ⇒ 由 `_phase_name(now)` 自查；显式给 `phase` 则以给的为准
+      （便于判据**冻结时段**做确定性验证，不依赖跑测试的钟点）。
+    """
+    ph = _phase_name(now) if phase is None else str(phase)
+    if ph != SLEEP_PHASE:
+        return None, 'day'
+    if sleep_fn is None:
+        return None, 'no_fn'
+    try:
+        r = sleep_fn(npc_id, now, home=home, friends=friends, reachable=reachable,
+                     last_sleep=last_sleep)
+    except Exception:
+        return None, 'no_fn'
+    scene, why = (r, '') if isinstance(r, str) else (
+        (r[0], (r[1] if len(r) > 1 else '')) if isinstance(r, (tuple, list)) and r
+        else (None, ''))
+    if not (isinstance(scene, str) and scene):
+        return None, (why or 'nowhere')
+    if scene == DESKTOP_SCENE:
+        # ★ 与 `step()` 同一条桌面闸：睡觉也不许把 NPC 放进桌面。
+        return None, 'desktop_blocked'
+    if cur_scene is not None and scene == cur_scene:
+        return None, 'already'
+    return scene, why
+
+
 def step(state, now, *, decide_fn=None, roster=None, traits_of=None,
          familiar_of=None, home_of=None, reachable_of=None,
-         friends_of=None, enabled=None, salt=''):
+         friends_of=None, enabled=None, salt='',
+         sleep_fn=None, sleep_enabled=None):
     """推进一拍。**纯函数式**：只改 `state`（调用方给的），不改任何全局。
 
     参数
@@ -260,12 +322,17 @@ def step(state, now, *, decide_fn=None, roster=None, traits_of=None,
     reachable_of: `npc_id -> [可达场景 id]`
     friends_of  : `npc_id -> [(id, familiar, scene_id)]`
     enabled     : 覆盖 `state.enabled`（`None` ⇒ 用 state 自己的）
-
-    ★★ `decide_fn` 签名 = `(npc_id, now, **kw) -> Intent | (scene, reason) | None`
-       这是本模块**唯一**与决策层耦合的地方 —— 且是**注入**的（默认 `None`）。
-       ⇒ 零依赖纪律得以保持：本模块**不 import** `npc_intent`。
+    sleep_fn    : **就寝决策器**（宿主注入，层3）—— 见 ★★ 下
+    sleep_enabled: 就寝接线开关（`None` ⇒ **跟随** `enabled`；关 ⇒ 本拍不碰睡觉）
 
     返回 `{'decided': [...], 'expired': [...], 'moved': [...]}`（如实登记）。
+
+    ★★ 就寝（层3）：**到 `night` 段**且本拍"本没打算挪窝"时，问一次
+       `sleep_fn`（= `npc_intent.choose_sleep_scene`）「今晚睡哪」。
+       · 有答案 ⇒ 按**长驻留**（`SLEEP_DWELL_SECONDS`）落表、`reason='sleep:<why>'`；
+       · 没答案（白天 / 去哪都不行 / 就是现在这儿）⇒ **不记**（回落静态归属）。
+       ★ 旧口径 `BEDTIME_HOME_SCENE='desktop'` 是**常量**（只服务桌宠本人）；
+         本函数把它换成**逐人决策**，且**不 import** 决定层（`sleep_fn` 注入）。
     """
     out = {'decided': [], 'expired': [], 'moved': []}
     on = state.enabled if enabled is None else bool(enabled)
@@ -276,6 +343,8 @@ def step(state, now, *, decide_fn=None, roster=None, traits_of=None,
         now = float(now)
     except (TypeError, ValueError):
         return out
+    do_sleep = on if sleep_enabled is None else bool(sleep_enabled)
+    ph = _phase_name(now)
 
     # ---- ① 到期：**撤掉覆盖**（回落站位表）----
     for nid in state.expired(now):
@@ -288,9 +357,9 @@ def step(state, now, *, decide_fn=None, roster=None, traits_of=None,
         if not (isinstance(nid, str) and nid):
             continue
         cur = state.get(nid)
+        moved_now = False
         if cur is not None and not cur.is_expired(now):
             # 还在"驻留期"内 —— 只有概率性地提前走（不是必然）
-            ph = _phase_name(now)
             fam = _call(familiar_of, nid, 0.0)
             p = leave_probability(cur, now, phase=ph, familiar=fam)
             if not _roll(nid, now, salt, p):
@@ -302,16 +371,34 @@ def step(state, now, *, decide_fn=None, roster=None, traits_of=None,
                             home=_call(home_of, nid, None),
                             reachable=_call(reachable_of, nid, None),
                             friends=_call(friends_of, nid, None))
-        if dest is None:
-            continue
-        if dest == DESKTOP_SCENE:
-            # ★ 桌面不许**自主**进入（要走跟随/邀请那条路）
-            continue
+        if dest is not None and dest == DESKTOP_SCENE:
+            dest = None                 # ★ 桌面不许**自主**进入（要走跟随/邀请那条路）
         if cur is not None and dest == cur.scene:
-            continue                    # 没挪窝 ⇒ 不记（避免刷表）
-        state.put(nid, dest, now, reason=reason)
+            dest = None                 # 没挪窝 ⇒ 不记（避免刷表）
+        if dest is not None:
+            state.put(nid, dest, now, reason=reason)
+            out['decided'].append(nid)
+            out['moved'].append((nid, dest))
+            moved_now = True
+        # ---- ③ 就寝（层3）：夜里、且本拍**本没打算挪窝** ⇒ 问"今晚睡哪" ----
+        if moved_now or not do_sleep or ph != SLEEP_PHASE:
+            continue
+        cur2 = state.get(nid)
+        cur_scene = cur2.scene if cur2 is not None else None
+        if cur_scene is None:
+            cur_scene = _call(home_of, nid, None)
+        sdest, swhy = decide_sleep(
+            now, phase=ph, sleep_fn=sleep_fn, npc_id=nid,
+            home=_call(home_of, nid, None),
+            friends=_call(friends_of, nid, None),
+            reachable=_call(reachable_of, nid, None),
+            last_sleep=None, cur_scene=cur_scene)
+        if sdest is None:
+            continue                # 白天 / 无解 / 已经在正确的地方 ⇒ 不记
+        state.put(nid, sdest, now, dwell=SLEEP_DWELL_SECONDS,
+                  reason='sleep:%s' % (swhy or ''))
         out['decided'].append(nid)
-        out['moved'].append((nid, dest))
+        out['moved'].append((nid, sdest))
     state.last_step = now
     return out
 
@@ -407,14 +494,17 @@ WIRING = collections.OrderedDict((
     ('wired', True),
     ('used_by', ['main._npc_scene_roster（读 resident_of，覆盖模式）',
                  'main._npc_roam_tick（按 30s 节拍调 step）',
-                 'main.init_npc_systems（建 RoamState）']),
-    ('wired_how', '开关 `NPC_AUTONOMOUS_MOVE`（默认 **False**）；'
+                 'main.init_npc_systems（建 RoamState）',
+                 'main._npc_roam_sleep（层3 就寝决策器，注入 step(sleep_fn=...)）']),
+    ('wired_how', '开关 `NPC_AUTONOMOUS_MOVE`（第79轮收尾**按用户裁决默认 True**）；'
                   '开 ⇒ NPC 有自己的位置状态（用户不动世界也转）；'
                   '关 ⇒ `step()` 零副作用 + `resident_of()` 恒 None'
                   ' ⇒ 全走 `_placement.json`，行为与第78轮逐字相同（零回归）。'),
     ('why', '层2 = 把「静态归属」升级成「静态归属 + 动态驻留覆盖」。'
             '要解决的头号障碍：`_npc_seed_bodies()` 只在启动与切场景时被调'
-            ' ⇒「NPC = 当前场景的装饰」⇒ 用户不动、世界就冻住（与 L2 正相反）。'),
+            ' ⇒「NPC = 当前场景的装饰」⇒ 用户不动、世界就冻住（与 L2 正相反）。'
+            '层3 = 把旧常量 `BEDTIME_HOME_SCENE`（只服务桌宠本人）换成'
+            ' **逐人**的「今晚睡哪」决策（L4：可睡朋友家）。'),
     ('not_yet', ['驻留表落 data_store（存档，层4）',
-                 '层3 睡觉接线（`BEDTIME_HOME_SCENE` → `choose_sleep_scene`，挡在 Q3）']),
+                 '连睡同一朋友家的降权需要 `last_sleep` 记忆（层4 才有处存）']),
 ))

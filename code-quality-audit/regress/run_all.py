@@ -1422,7 +1422,8 @@ SUITES = [
                 '`build_system_prompt` 的 life 真进 parts · `npc_speak` 真调 transmit） / '
                 'C 行为面（★对现网**全部** id 键真跑特质：不抛/形状合法/档位在枚举内 · '
                 '★口径诚实：松口径 ⊇ 真场景且差集只含章/区域名，结论一律以**真场景**为准 · '
-                '★如实登记 ruined·cosmic·bright **零命中** · 复合词边界规则正负成对'
+                '★如实登记零命中（第73轮时 ruined·cosmic·bright；第80轮 OneShot 迁入后'
+                'ruined·bright·cosmic 均转正，改为「能力只由转正令牌兑现」）· 复合词边界规则正负成对'
                 '（ash 不中 afterthrash2 / night 不中 knightclimb / cave 中 shicave） · '
                 '无命中⇒不猜 · 熟络度**对称**+封顶+seed 不覆盖 · 传话**不共享容器**且带署名 · '
                 '节拍四不变量（不并发/不重复 speaker/失败必解锁/反活锁）+ 让路闸） / '
@@ -1432,7 +1433,7 @@ SUITES = [
                 '真产出且**不含**任何归属泄露词 · 让路闸正负成对 · ★★`_npc_life_tick` **真开口**'
                 '并落记忆+传话 · 单人时不开口的负控制 · `npc_speak` 转话接线） / '
                 'F 诚实判据（五块 wired 各有 used_by/wired_how · not_yet 列明主线 NPC 自主开口未做 · '
-                '★`scene_traits` 必须**写明** ruined/cosmic 零命中） / '
+                '★`scene_traits` 必须**写明** ruined/cosmic 覆盖实况） / '
                 'G 判据自身体检',
     },
     # 第74轮 · NPC 启动预热（**主角团优先**）。
@@ -1650,7 +1651,8 @@ SUITES = [
                 'C 既有契约零破坏（Deltarune 六章逐值不变 · 4 间 unknown 不变 · '
                 'ut/uty 645 间全 unknown · ★负控制：一个 light/dark 都不许猜） / '
                 'D 副产品（`ruin` 转正且逐条 ≥1 命中 · 预留令牌逐条仍 0 命中 · '
-                '★令牌集不相交 · `bright`/`cosmic` 如实零命中） / '
+                '★令牌集不相交 · 第80轮起 `bright`/`cosmic` 由 `sun`/`sky` 转正、'
+                '预留槽仍零命中） / '
                 'E 契约与工具在位 / F 判据自身体检（字段集同构 · bg 键齐 · 记账口非 no-op）',
     },
     # ---------------------------------------------------------------- check78
@@ -1709,6 +1711,35 @@ SUITES = [
                 '到期撤回 · 非法 now 不抛 · 坏 decide 返回不记 · 无 decide_fn 安静不动） / '
                 'I 序列化 + 判据自身体检（★标记打印点 == 1 + 负控制喂"两处标记"必须数出 2 · '
                 '记账口非 no-op + no-op 负控制 · ★独立计数器 CALLS == PASS+FAIL + 漏记负控制）',
+    },
+    # ---------------------------------------------------------------- check80
+    # 第八十轮：**OneShot 263 场景迁入** + **层3 就寝**（旧常量 → 逐人决策）。
+    # 用户裁决（逐字）：「废除，默认打开，我现在不方便，先跳过，要」
+    #   →「废除」= 层3：NPC 就寝不再用常量 BEDTIME_HOME_SCENE；
+    #   →「默认打开」= NPC_AUTONOMOUS_MOVE 默认 True（由 check79 W2 守）；
+    #   →「要」= Q1：接 OneShot 263。
+    # ★ 零网络 / 零 UI；源盘只用一格（缺了 SKIP 不假红）。
+    {
+        'id': 'check80',
+        'script': os.path.join(ROOT, 'code-quality-audit', '第80轮-OneShot场景迁入',
+                               '_tools', 'check80.py'),
+        'offscreen': True,
+        'desc': '第八十轮：OneShot 263 场景迁入 + 层3 就寝接线不许静默漂移 —— '
+                'A OneShot 迁入完整性（勘查 263 间 / 索引 263 间 / ★逐间一一对上零缺失） / '
+                'B ★★ 锚点优先（`original_room_id`+`name` 逐条全等；源盘在位则原地复核 .tmx==263，'
+                '缺则 SKIP 不假红） / '
+                'C ★★★ 既有契约零破坏（迁入前 8 章**逐值不变** · 增量**恰好** +oneshot · '
+                '总数 == 迁入前 + 263 · 桌面仍一等场景） / '
+                'D ★★ 真装载（走产品**唯一入口** `load_index()` + `load_scene(sid, entry=)` '
+                '逐个过 263 个 —— "数据写对了 ≠ 产品读得到"；★ 名是真名非回落 id；'
+                '★ `original_room_id` 真带上；负控制编造 id 必须装载不到） / '
+                'E `_worlds.json` 同步（areas+rooms 两处都加 · ★263 间**全 unknown**'
+                '—— 照抄 UT/黄魂，一个 light/dark 都不许猜 · 两处 id 集相等 · UT/黄魂未被改坏） / '
+                'F ★★★ 层3 就寝（`decide_sleep` 在位 · `step()` 真带 `sleep_fn` 形参 · '
+                '`step()` 真调 `decide_sleep`（非死代码）· `main._npc_roam_sleep` 真调 '
+                '`choose_sleep_scene` · `_npc_roam_tick` 真注入 `sleep_fn` · '
+                '★ 旧常量处有「NPC 不适用/已废弃」注释声明） / '
+                'G 判据自身体检（★标记打印点 == 2 + 负控制 · 记账守恒 + 漏记负控制 · 被测文件在盘）',
     },
 ]
 

@@ -71,31 +71,49 @@ TRAIT_WORDS_CN = {
 #:     实测仍是 0 命中（Deltarune 与 UT/黄魂 都没有这种命名）⇒ **留在预留表**
 #:     —— 这正是 D1「本位令牌逐条 ≥1 命中」那条判据在把守的：
 #:     **第一版把它们一起转正了，D1 立刻报红**（`[('ruined','broken'), …]`）。
+#:
+#: ★★★ **第80轮：OneShot 263 场景迁入，又触发一次「预留→转正」**（同第77轮机制）。
+#:   实测新增命中的预留令牌 **4 条**，但**只有 2 条语义正确、可转正**：
+#:     · `sun`  → `bright`  —— `oneshot.rooms.Sunroom`（阳光房）/ `basement_after_sun`
+#:               确实"有阳光 ⇒ 明亮"，语义**对** ⇒ **转正**。
+#:     · `sky`  → `cosmic`  —— `oneshot.rooms.Red_sky` / `POSTGAME_RED_SKY`
+#:               是"天空"，有"空旷/宇宙感"，语义**可接受** ⇒ **转正**。
+#:   ⚠️ 另 2 条**语义错位，拒绝转正，反而移入 `BANNED_TOKENS`（`OMITTED` 类）**：
+#:     · `square` → `crowded` —— 命中的是 `House 4 - squares`（**方块房**）、
+#:                  `SQUARES BE GONE`（一个**谜题名**）⇒ 那是**几何形状**，不是"广场"。
+#:     · `street` → `crowded` —— 命中的是 `Elevator Street` / `Vendor Street`（**街名**）
+#:                  ⇒ 是**路名**，不代表"人多热闹"。
+#:   ★ 这两条判法**和第73轮 `room` / `light` 一模一样**（"词本身能命中，但含义不是我们要的"
+#:     ⇒ `OMITTED`，靠"不在任何令牌表里"挡，匹配规则挡不住）——
+#:     **不许为了让判据变绿就把它们硬塞进本位表**（那才是真的"虚假宣传"）。
+#:   ★ `sunny`/`bright`/`daylight`/`market`/`plaza`/`space`/`moon`/`void`/`galaxy`/`orbit`/`cosmic`
+#:     实测**仍是 0 命中** ⇒ **继续留在预留表**（如实登记缺口）。
 TRAIT_TOKENS = {
     'dark': ('dark', 'cave', 'basement'),
     'ruined': ('ruin', 'ruined'),
-    'bright': (),
+    'bright': ('sun',),
     'crowded': ('town', 'city', 'shop'),
     'quiet': ('home', 'house', 'forest', 'grave', 'church', 'library'),
-    'cosmic': (),
+    'cosmic': ('sky',),
 }
 
 #: ★ **跨作品预留**令牌：现网 **0 命中**（`check73` D2 反过来验"确实 0 命中"，
 #: 防有人拿它们混进本位表凑数字）。等 `hub:ot` / `hub:os` 的场景进大图后启用。
 #:
 #: ★★ 这张表本身就是一条**实证结论**，必须留着 —— 用户除了「这地方真黑」还点名
-#:   「**破败**这类的词也需要有能力识别」。第77轮后实测：
-#:   **`bright`（明亮）/ `cosmic`（宇宙）仍是 0 命中**，
-#:   而 `ruined` 的另外四个同义令牌（`broken`/`wreck`/`abandon`/`desolate`）
-#:   **也仍是 0 命中** —— 只有 `ruin`/`ruined` 因 UT 废墟区域转正。
-#:   原因不是"没做"，是 **OneShot / Outertale 的场景还没进 `_index.json`**。
+#:   「**破败**这类的词也需要有能力识别」。第80轮（OneShot 迁入）后实测：
+#:   **`bright` 的 `sunny`/`bright`/`daylight`、`cosmic` 的 `space`/`moon`/`void`/`galaxy`/`orbit`/`cosmic`
+#:   仍是 0 命中**；`crowded` 的 `market`/`plaza` 也仍 0 命中。
+#:   原因不是"没做"，是 **Outertale 的场景还没进 `_index.json`**（OneShot 已进但只带来
+#:   `sun`/`sky` 两条可转正 + `square`/`street` 两条语义错位）。
 #:   ⇒ **如实登记缺口**，而不是把 `sun` 硬塞进本位表让判据看起来"覆盖了明亮"。
+#:   （注：`sun`/`sky` **第80轮确已转正**，因为语义正确且实测有命中 —— 见上表注释。）
 TRAIT_TOKENS_RESERVED = {
     'dark': ('cellar', 'underground'),
     'ruined': ('broken', 'wreck', 'abandon', 'desolate'),
-    'bright': ('sun', 'sunny', 'bright', 'daylight'),
-    'crowded': ('market', 'square', 'plaza', 'street'),
-    'cosmic': ('space', 'orbit', 'moon', 'cosmic', 'galaxy', 'void', 'sky'),
+    'bright': ('sunny', 'bright', 'daylight'),
+    'crowded': ('market', 'plaza'),
+    'cosmic': ('space', 'orbit', 'moon', 'cosmic', 'galaxy', 'void'),
 }
 
 #: ⚠️ **永久禁用表**：令牌 → 禁用理由。★ 两种禁法的**挡法不同**，判据也分开验：
@@ -111,6 +129,10 @@ BANNED_TOKENS = {
     'night': 'SUBSTRING',   # 会命中 `church_knightclimb`（`knight` 里的 `night`）
     'room': 'OMITTED',      # Deltarune 的**命名前缀**：所有 `room_*` 都是房间，当"安静"用会全表误判
     'light': 'OMITTED',     # `lightworld*` 是**光世界**（一个世界名），不是"光线充足"
+    'square': 'OMITTED',    # ★ 第80轮：OneShot 里 `squares` 是**几何方形**（`House 4 - squares`
+                            #   / 谜题 `SQUARES BE GONE`），不是"广场" ⇒ 不能当 `crowded` 用
+    'street': 'OMITTED',    # ★ 第80轮：OneShot 里 `Elevator Street`/`Vendor Street` 是**街名**，
+                            #   不代表"人多热闹" ⇒ 不能当 `crowded` 用
 }
 
 
@@ -190,11 +212,16 @@ def _match_terms(trait, use_reserved=False):
     ★ 中文词（`TRAIT_WORDS_CN`）也参与匹配：场景 id 是英文，但**场景显示名 / 内部名
       可能是中文**，宿主通过 `extra_text` 传进来时应该能命中。
       它们**不**参与"本位令牌必须命中"的那条判据（那是英文令牌的责任）。
+    ★★ 第80轮起：**`OMITTED` 类禁词（`BANNED_TOKENS`）在此处被硬过滤掉** ——
+      它们是"能命中但语义错位"的词（`room`/`light`/`square`/`street` …），
+      之前只靠"没人往表里写"挡；现在加一道**运行期闸**，即使有人误写进表也进不了匹配。
+      （`check73` D5 仍验"没被偷偷加回表里"；本条只是多一层不依赖人自觉的保护。）
     """
-    terms = list(TRAIT_TOKENS.get(trait, ()))
+    banned = set(banned_tokens('OMITTED'))
+    terms = [w for w in TRAIT_TOKENS.get(trait, ()) if w not in banned]
     if use_reserved:
-        terms += list(TRAIT_TOKENS_RESERVED.get(trait, ()))
-    terms += list(TRAIT_WORDS_CN.get(trait, ()))
+        terms += [w for w in TRAIT_TOKENS_RESERVED.get(trait, ()) if w not in banned]
+    terms += [w for w in TRAIT_WORDS_CN.get(trait, ()) if w not in banned]
     return terms
 
 

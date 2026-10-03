@@ -721,17 +721,22 @@ def seg_f():
 
     # ---- F2 ★★ 覆盖率：**独立重算**（不信生成器自报）----
     cover, miss = _recount_cover()
-    # ★★ 第77轮改：UT/黄魂 第77轮迁入产品索引，其世界**如实标 unknown**
+    # ★★ 第77轮改：UT/黄魂 迁入产品索引，其世界**如实标 unknown**
     #   （无 darkzone 取证，不许猜 —— 猜错会把玩家道具变垃圾）。
     #   ⇒ 原判据"light 202 / dark 809 / unknown 3"的**Deltarune 部分一字不动**
     #     （那才是它守的东西），unknown 改成"== 3 + 迁入场景数"，并**打印实得**。
+    # ★★ 第80轮改：OneShot 263 迁入 ⇒ 同上，也进 unknown。
+    #   ★ 不许再写死章节名单：改为"**不在 Deltarune 五章里的章**"一律算迁入
+    #     （真判据 = unknown 必须 == 3 + 全部非 Deltarune 章的登记数）。
+    _DR_CH = ('ch1', 'ch2', 'ch3', 'ch4', 'ch5')
     _n_import = sum(len(m) for ch, m in (WORLDS.get('rooms') or {}).items()
-                    if ch in ('ut', 'uty'))
+                    if ch not in _DR_CH)
+    _imp_ch = sorted(ch for ch in (WORLDS.get('rooms') or {}) if ch not in _DR_CH)
     check('F2', cover.get('light') == 202 and cover.get('dark') == 809
           and cover.get('unknown') == 3 + _n_import and not miss,
-          'F2 ★★场景世界覆盖独立重算：light 202 / dark 809 / unknown %d(=3+迁入 %d) '
+          'F2 ★★场景世界覆盖独立重算：light 202 / dark 809 / unknown %d(=3+迁入 %d %r) '
           '/ 未覆盖 0（%r，miss=%d）'
-          % (3 + _n_import, _n_import, dict(cover), len(miss)))
+          % (3 + _n_import, _n_import, _imp_ch, dict(cover), len(miss)))
 
     # ---- F3 ★★ 邻域反例两侧为空（判据既不许过窄、也不许过宽）----
     bad_a, bad_b = _counterexamples()
@@ -743,17 +748,19 @@ def seg_f():
 
     # ---- F4 ★ 未判定逐条 == meta.unknown_rooms（如实登记，不硬判）----
     # ★★ 第77轮改：Deltarune 的 4 间**逐条一字不动**（原判据强度保留）；
-    #   UT/黄魂 迁入的 645 间也要逐条登记（它们**只能**是 unknown —— 没取证）。
+    #   迁入的章（第77轮 UT/黄魂，第80轮 OneShot）也要逐条登记（它们**只能**是
+    #   unknown —— 没取证）。
+    # ★ 第80轮改：迁入章名单**不写死**（= 非 Deltarune 五章），逐条对齐 meta。
     unknown = sorted((ch, int(rid)) for ch, m in (WORLDS.get('rooms') or {}).items()
                      for rid, v in m.items() if v not in ('light', 'dark'))
     metarec = sorted((r['chapter'], int(r['room_id']))
                      for r in ((WORLDS.get('meta') or {}).get('unknown_rooms') or []))
-    _dr = [u for u in unknown if u[0] in ('ch1', 'ch2', 'ch3', 'ch4', 'ch5')]
-    _imported = [u for u in unknown if u[0] in ('ut', 'uty')]
+    _dr = [u for u in unknown if u[0] in _DR_CH]
+    _imported = [u for u in unknown if u[0] not in _DR_CH]
     check('F4', _dr == [('ch1', 136), ('ch3', 110), ('ch4', 159), ('ch4', 166)]
-          and unknown == metarec and len(_imported) == 645,
-          'F4 ★未判定：Deltarune 4 间逐条一致（%r）+ UT/黄魂 %d 间逐条登记 == meta（合计 %d）'
-          % (_dr, len(_imported), len(unknown)))
+          and unknown == metarec and len(_imported) == _n_import,
+          'F4 ★未判定：Deltarune 4 间逐条一致（%r）+ 迁入 %r %d 间逐条登记 == meta（合计 %d）'
+          % (_dr, _imp_ch, len(_imported), len(unknown)))
 
     # ---- F5 ★★ 暗前缀优先（防 room_dw_mansion_krisroom 被光区域表误判成光）----
     w1 = GW.classify_room('room_dw_mansion_krisroom', 'kris_room')      # 光区域 + 暗房名

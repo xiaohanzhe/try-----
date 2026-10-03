@@ -1,0 +1,103 @@
+{
+  "round": 80,
+  "scene_total": 1922,
+  "promote": {
+    "sun": {
+      "trait": "bright",
+      "n": 3,
+      "examples": [
+        "oneshot.rooms.basement_after_sun",
+        "oneshot.rooms.Sunroom",
+        "oneshot.rooms.basement_after_sun_2"
+      ],
+      "names": [
+        "basement after sun",
+        "Sunroom",
+        "basement after sun"
+      ]
+    },
+    "sky": {
+      "trait": "cosmic",
+      "n": 2,
+      "examples": [
+        "oneshot.rooms.Red_sky",
+        "oneshot.rooms.POSTGAME_RED_SKY"
+      ],
+      "names": [
+        "Red sky",
+        "POSTGAME RED SKY"
+      ]
+    }
+  },
+  "ban": {
+    "square": {
+      "trait": "crowded",
+      "n": 2,
+      "examples": [
+        "oneshot.rooms.House_4___squares",
+        "oneshot.rooms.SQUARES_BE_GONE"
+      ],
+      "names": [
+        "House 4 - squares",
+        "SQUARES BE GONE"
+      ],
+      "why": "语义错位 ⇒ OMITTED"
+    },
+    "street": {
+      "trait": "crowded",
+      "n": 5,
+      "examples": [
+        "oneshot.rooms.Elevator_Street",
+        "oneshot.rooms.Vendor_Street",
+        "oneshot.rooms.Vendor_Street_2",
+        "oneshot.rooms.Elevator_Street_2",
+        "oneshot.rooms.Vendor_Street_3"
+      ],
+      "names": [
+        "Elevator Street",
+        "Vendor Street",
+        "Vendor Street",
+        "Elevator Street",
+        "Vendor Street"
+      ],
+      "why": "语义错位 ⇒ OMITTED"
+    }
+  },
+  "still_reserved_zero": [
+    "sunny",
+    "bright",
+    "daylight",
+    "space",
+    "orbit",
+    "moon",
+    "cosmic",
+    "galaxy",
+    "void",
+    "market",
+    "plaza",
+    "cellar",
+    "underground",
+    "broken",
+    "wreck",
+    "abandon",
+    "desolate"
+  ],
+  "live_tokens": {
+    "bright.sun": 3,
+    "cosmic.sky": 2,
+    "crowded.town": 206,
+    "crowded.city": 54,
+    "crowded.shop": 27,
+    "dark.dark": 162,
+    "dark.cave": 3,
+    "dark.basement": 17,
+    "quiet.home": 166,
+    "quiet.house": 44,
+    "quiet.forest": 37,
+    "quiet.grave": 5,
+    "quiet.church": 166,
+    "quiet.library": 18,
+    "ruined.ruin": 39,
+    "ruined.ruined": 1
+  }
+}

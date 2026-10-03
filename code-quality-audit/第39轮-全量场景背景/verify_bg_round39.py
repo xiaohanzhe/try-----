@@ -24,6 +24,7 @@
 
 **不联网、不需要显示器、不实例化 App**（纯数据 + 纯函数）。
 """
+import collections
 import io
 import json
 import os
@@ -133,9 +134,11 @@ check('A1 场景登记表可读，且分两类来源（独立文件 / 区域分�
 # ★★ 第77轮改：判据拆两层 —— **不许放宽**，只是把"数据面扩了"这件事说清楚。
 #   · A2a：**有溯源表的章**（Deltarune ch1~ch5）**每一个**场景都必须定位到房间
 #          ⇒ 原判据的强度**一字不减**（这才是它真正在守的东西）。
-#   · A2b：**无溯源表的章**（UT/黄魂，第77轮迁入）**如实登记缺口** ⇒ 不许"看着全绿"。
-#          ⚠️ 这不是"放过"，是"登记"：缺口条数必须 > 0 且**恰好等于**这两章的场景数，
-#             一旦有人偷偷补了溯源表，A2b 会要求**同步更新**（否则报红）。
+#   · A2b：**无溯源表的章**（UT/黄魂；第80轮又加了 OneShot）**如实登记缺口**
+#          ⇒ 不许"看着全绿"：缺口条数必须 > 0 且**恰好等于**这些章的场景数。
+#          ★★ 第80轮改：**不再把章名/645 写死**（OneShot 迁入后变成 3 章 908）。
+#             改成**随事实**：预期"无溯源章集" = 场景索引里出现、但溯源表没有的章，
+#             且**每个**这类章的每个场景都真在缺口里（逐章对齐，不是只对总数）。
 _CH_NOPROV = sorted(set(e[1] for e in ENTRIES) - set(prov['chapters'].keys()))
 _missing_prov = [e for e in ENTRIES if e[1] in _CH_NOPROV]
 _covered = [e for e in ENTRIES if e[1] not in _CH_NOPROV]
@@ -145,9 +148,15 @@ _bad_prov = [e for e in _covered
 check('A2a 有溯源表的章：每个场景都能定位到自己的房间（强度不放松）',
       not _bad_prov,
       '覆盖 %d 个场景，缺 %d 个' % (len(_covered), len(_bad_prov)))
-check('A2b ★ 如实登记：无溯源表的章（UT/黄魂）场景数 == 缺口数（不许假绿）',
-      _CH_NOPROV == ['ut', 'uty'] and len(_missing_prov) == 645,
-      '无溯源章=%r 缺口=%d' % (_CH_NOPROV, len(_missing_prov)))
+# 逐章计数（真事实）：缺口必须**逐章**等于该章场景数 ⇒ 没有"混进来的有溯源场景"
+_miss_by_ch = collections.Counter(e[1] for e in _missing_prov)
+_ent_by_ch = collections.Counter(e[1] for e in ENTRIES)
+_a2b_ok = (bool(_CH_NOPROV)
+           and all(_miss_by_ch[c] == _ent_by_ch[c] for c in _CH_NOPROV))
+check('A2b ★ 如实登记：无溯源表的章场景数 == 缺口数（逐章对齐，不许假绿）',
+      _a2b_ok,
+      '无溯源章=%r 缺口=%d 逐章=%s'
+      % (_CH_NOPROV, len(_missing_prov), dict(sorted(_miss_by_ch.items()))))
 
 
 # ===========================================================================

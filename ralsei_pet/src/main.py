@@ -2019,16 +2019,22 @@ class RalseiPet(QMainWindow):
     #:   前者管「他们会不会自己开口」，这个管「他们会不会**自己挪窝**」（离开当前场景，
     #:   去朋友家 / 去喜欢的地方 / 去没去过的地方）。
     #:
-    #:   ★★★ 默认 **False** —— 这不是「保守」，是**零回归承诺**：
-    #:     `npc_roam.step()` 在 `enabled=False` 时**一个字节都不改**（结构保证，见
-    #:     `check79` B 段），⇒ 关掉时行为与第78轮**逐字相同**。
-    #:     打开后 NPC 才会有自己的「驻留位置」，不再只是「当前场景的装饰」。
+    #:   ★★★ **默认 True（第79轮收尾按用户裁决打开）**。
+    #:     用户原话（逐字）：「废除，**默认打开**」——即：旧口径（NPC 只是当前场景的装饰、
+    #:     用户不动世界就冻住）**废除**，改为「他们有自己的位置、自己过日子」。
+    #:
+    #:   ⚠️ 打开后会发生的事（如实告知，免得"怎么突然变了"）：
+    #:     · NPC 会**自己离开当前场景**（去朋友家/喜欢的地方/没去过的地方）；
+    #:     · 他们的位置**独立于你的位置、独立于切场景**（30 秒一拍）；
+    #:     · 你不动，他们照样在过日子（这正是用户口径要的）。
     #:
     #:   用户口径（逐字，第77轮）：
     #:     「**不会因为缺少一个人哪怕是我他们就不生活了**」
     #:     「去哪？找谁？干什么？生活规划这类的事也是由**各自的 AI 决定**」
-    #:   ⇒ 打开它，才是真正兑现这两句。
-    NPC_AUTONOMOUS_MOVE = False
+    #:
+    #:   ★ 关掉它（改成 False）⇒ `npc_roam.step()` 零副作用 ⇒ 行为回到第78轮（零回归开关）。
+    #:   ★★★ 第80轮**按用户裁决改成默认 True**（用户原话逐字：「**废除，默认打开**」）。
+    NPC_AUTONOMOUS_MOVE = True
 
     #: 自主移动的**推进节拍**（秒）—— 生活决策不需要每帧算。
     #: ★ 30s 一次：既不会「一帧换一次房」，也不会「半天不动」（驻留期本身是分钟级）。
@@ -3091,19 +3097,22 @@ class RalseiPet(QMainWindow):
     #
     #  ★ 两个开关各管一半（别混）：
     #    · `NPC_LIFE_ENABLED`   —— 管"他们会不会自己**开口**"（第73轮）；
-    #    · `NPC_AUTONOMOUS_MOVE` —— 管"他们会不会自己**挪窝**"（第79轮，默认关）。
+    #    · `NPC_AUTONOMOUS_MOVE` —— 管"他们会不会自己**挪窝**"（第79轮建；
+    #      第80轮**按用户裁决默认 True**）。
     # ==================================================================
 
     def _npc_roam_tick(self, now=None):
         """推进"自主移动"一节拍（默认 30s）。→ `{'decided', 'expired', 'moved'}`。
 
         ★★ 三件必须同时成立，缺一不可：
-          ① `NPC_AUTONOMOUS_MOVE` 开（默认关 ⇒ 本函数**立刻返回**，零副作用）；
+          ① `NPC_AUTONOMOUS_MOVE` 开（第80轮起**默认开**；关 ⇒ 本函数立刻返回，零副作用）；
           ② `npc_roam` 就位（建失败 ⇒ 退化为"全体回站位表"，只记 debug）；
           ③ 距上次推进 ≥ `NPC_AUTONOMOUS_TICK`（生活决策不需要每帧算）。
 
         ★ 决策**由各自的 AI 定**（L3）：`decide_fn` 把 `npc_intent.decide()` 包一层 ——
           本模块（`npc_roam`）**不 import** `npc_intent`（零依赖纪律），决策是**注入**的。
+        ★ 就寝（层3）同理注入 `sleep_fn=self._npc_roam_sleep`（真源
+          `npc_intent.choose_sleep_scene`，**取代**旧常量 `BEDTIME_HOME_SCENE`）。
         """
         if not RalseiPet.NPC_AUTONOMOUS_MOVE:
             return {'decided': [], 'expired': [], 'moved': []}
@@ -3139,6 +3148,7 @@ class RalseiPet(QMainWindow):
                 home_of=lambda nid: book.scene_of(nid),
                 reachable_of=lambda nid: reach,
                 friends_of=self._npc_roam_friends,
+                sleep_fn=self._npc_roam_sleep,
             )
         except Exception as e:
             _log.debug('NPC 自主移动推进异常（本节拍跳过）: %s', e)
@@ -3259,6 +3269,27 @@ class RalseiPet(QMainWindow):
             favorites=None,
             last=None,
         )
+
+    def _npc_roam_sleep(self, npc_id, now, *, home=None, friends=None,
+                        reachable=None, last_sleep=None):
+        """**今晚睡哪**（层3 就寝决策器，注入给 `npc_roam.step(sleep_fn=...)`）。
+
+        ★★ 与旧口径的分工（**用户裁决 ③「废除」**）：
+          - `BEDTIME_HOME_SCENE = 'desktop'`（常量） —— 服务的是**桌宠本人**
+            （`go_to_bed()` 读它；他住在桌面）。**NPC 完全不适用**，旧口径已废弃。
+          - **本函数** —— 逐 NPC 算「今晚睡哪」，真源 = `npc_intent.choose_sleep_scene`
+            （L4：**不硬性回家**，熟人够熟就可能**睡朋友家**）。
+
+        ★ `friends` 这里已经在 `_npc_roam_friends` 里带了**第三个元素（他住哪）**，
+          正是 `choose_sleep_scene` 需要的形状 —— 不再转换（避免两处算同一份规则）。
+        """
+        try:
+            return npc_intent_mod.choose_sleep_scene(
+                npc_id, now, home=home, friends=friends,
+                reachable=reachable, last_sleep=last_sleep)
+        except Exception as e:
+            _log.debug('NPC 就寝决策异常（本拍不作决策）: %s', e)
+            return None, 'error'
 
     def _npc_menu_message(self, text):
         """往用户能看见的地方说一句（复用道具菜单那条通道；没有就只记日志）。
@@ -7789,6 +7820,9 @@ class RalseiPet(QMainWindow):
     def go_to_bed(self):
         """回房间 + 就寝。返回 True 表示这一晚的就寝动作已执行。
 
+        ★ 本函数服务**桌宠本人**（他住 `BEDTIME_HOME_SCENE` = 桌面）。
+          NPC 的就寝是另一条路（`_npc_roam_sleep`，逐人决策）—— 见常量处声明。
+
         · 场景切换复用既有 `self.scene.switch()`（不新开通道、不绕过世界门控）；
         · 落点复用待机窝点（屏幕底部 · 快捷栏上沿）——"回房间"在视觉上就是
           走到屏幕下方他的位置躺下；
@@ -8207,6 +8241,9 @@ class RalseiPet(QMainWindow):
     #       ★ 本项目的桌宠"家"就是**桌面**（`_index.json` 的 `default_scene`）。
     #         要改成某个城堡房间（如 `ch2.ralsei_room.dw_ralsei_castle_2f`）只改这一个
     #         常量——但**未经用户确认不擅自选**（已在第52轮报告里列为待裁定）。
+    #       ★★★ 第80轮：**这一段只管桌宠本人**。NPC 的就寝走**逐人决策**
+    #         （`npc_intent.choose_sleep_scene` → `main._npc_roam_sleep`），
+    #         与本常量**无关** —— 旧的「NPC 也回 `BEDTIME_HOME_SCENE`」口径已废弃。
     #     · 早上 `BEDTIME_WAKE_HOUR` 自动醒；**只对"就寝睡"生效**，
     #       白天的 5 分钟小憩不自动醒（那样会变成"刚躺下就起来"）。
     # ==============================================================
@@ -8215,6 +8252,13 @@ class RalseiPet(QMainWindow):
     BEDTIME_JITTER_MINUTES = 10          # 23:00 ± 10 分钟
     BEDTIME_WAKE_HOUR = 7
     BEDTIME_HOME_SCENE = 'desktop'       # "他的房间"（本项目的家＝桌面）
+    #: ★★★ 旧口径废弃声明（第80轮，用户裁决 ③「**废除**」）：
+    #:   本常量**只服务桌宠本人**（`go_to_bed()` 读它；他住在桌面 = `_index.json`
+    #:   的 `default_scene`）。
+    #:   **NPC 完全不适用** —— NPC 的「今晚睡哪」是**逐人决策**，真源 =
+    #:   `npc_intent.choose_sleep_scene()`（L4：不硬性回家，熟人够熟可睡朋友家），
+    #:   经 `main._npc_roam_sleep` 注入 `npc_roam.step(sleep_fn=...)`。
+    #:   ⇒ 别再往这里加 NPC 相关分支；改 NPC 就寝请改 `choose_sleep_scene`。
     BEDTIME_CHECK_INTERVAL = 5.0         # 判定节拍（秒）；窗口 ±10 分钟，5s 精度绰绰有余
 
     def _can_speak_now(self):
