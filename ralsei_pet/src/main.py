@@ -475,6 +475,13 @@ from modules import npc_intent as npc_intent_mod
 #   切场景时被调 ⇒「NPC = 当前场景的装饰」⇒ **用户不动，世界就冻住**（与 L2 正相反）。
 #   ★ `enabled=False` 时 `step()` 零副作用 ⇒ 产品默认关时行为与第78轮逐字相同。
 from modules import npc_roam as npc_roam_mod
+# ★★★ 第81轮：NPC 自主生活 · **层4 存档**（零依赖：只 import 标准库，路径由调用方注入）。
+#   要解决的问题：层1/2/3 的状态**只在内存** —— 桌宠一重启，`RoamState` 清空、
+#   `Plan` 丢失 ⇒ NPC「昨天睡在朋友家」这件事第二天就不记得了，
+#   `choose_sleep_scene(last_sleep=...)` 的降权永远拿不到值（形同虚设）。
+#   ★ 本模块**不 import `data_store`**（初始化环，本项目栽过 4 次）——
+#     路径由 `_npc_plan_file()` 这个调用方注入（与 `_ghost_state_path()` 同规）。
+from modules import npc_plan_store as npc_plan_store_mod
 # 事件台词（S7）：档位登记 / 提示词构造 / 首句截断 / 罐头去重，都是纯逻辑（无 Qt）
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
@@ -2040,6 +2047,13 @@ class RalseiPet(QMainWindow):
     #: ★ 30s 一次：既不会「一帧换一次房」，也不会「半天不动」（驻留期本身是分钟级）。
     NPC_AUTONOMOUS_TICK = 30.0
 
+    #: ★★★ 第81轮（层4 存档）：生活档案的**落盘节流**（秒）。
+    #: ★ 120s：驻留期本身是分钟级（`MIN_DWELL_SECONDS` 也是分钟级），120s 足够
+    #:   把"世界变了"及时写下去；同时避免每拍都写盘（E 盘 exFAT，无谓写会磨损）。
+    #: ★ 只在 `_npc_roam_tick` **真发生变化**（有人挪窝 / 驻留到期）时才考虑写盘。
+    #: ★ 退出时另有一次 `force=True` 的兜底落盘（见 `_npc_plan_save(force=True)`）。
+    NPC_PLAN_SAVE_EVERY = 120.0
+
     def init_npc_systems(self):
         """建 NPC 服务层：注册表 + 人设 + 一角色一份记忆 + 跟随板 + 别名表。
 
@@ -2085,6 +2099,17 @@ class RalseiPet(QMainWindow):
         self.npc_roam = None
         #: 上一次自主移动推进的时刻（秒）—— 节拍用 `NPC_AUTONOMOUS_TICK`，不必每帧算。
         self._npc_roam_last_tick = 0.0
+        # ---- ★★★ 第81轮：层4 存档（生活档案落盘）----
+        #: `npc_plan_store.Book` —— **驻留表 + 每人的规划**（层1/2/3 的状态收进一本书）。
+        #: ★ 先预声明成**空书**（而不是 `None`）：`plan_of()` 会"没有就建一个"，
+        #:   所以即便下面落盘路径取不到、即便 `npc_roam` 建失败，本字段仍可用
+        #:   ⇒ 调用方（`_npc_roam_decide` / `_npc_roam_sleep`）不必到处写 `if None`。
+        #:   ★★ 这是"状态只在成功路径上创建"那个坑的**正面写法**（见本函数抬头）。
+        self.npc_plan_book = npc_plan_store_mod.Book()
+        #: 生活档案的绝对落盘路径（`data_store` 算出来的；取不到 ⇒ `None` = 退内存态）。
+        self._npc_plan_path = None
+        #: 上次落盘时刻（秒）—— 落盘按 `NPC_PLAN_SAVE_EVERY` 节流，不是每拍都写盘。
+        self._npc_plan_last_save = 0.0
         #: `npc_life.LifeLoop` —— 自主开口的节拍（不并发 / 不自我对话 / 失败必解锁 / 反活锁）。
         self.npc_life = None
         #: `{npc_id: set[int]}` —— 该 NPC 的内置对话池已经说过哪几句（纯 NPC 用）。
@@ -2209,6 +2234,34 @@ class RalseiPet(QMainWindow):
         except Exception:
             _log.exception('自主移动：驻留表建立失败（退化为"全体回站位表"）')
             self.npc_roam = None
+
+        # ---- ★★★ 第81轮：层4 存档 —— 把层1/2/3 的状态读回内存 ----
+        # ★ 顺序很重要：**先有 `self.npc_roam`（上一段建的）**，再把书里那份驻留表
+        #   灌回去 —— 反过来会让"读回来的驻留表"被随后新建的空表覆盖（静默丢档）。
+        # ★ 全部失败都只降级：文件不存在 / 读坏了 ⇒ 空书（`load()` 绝不抛）；
+        #   路径取不到（`data_store` 不可用）⇒ 退内存态（本拍照常过日子，只是不落盘）。
+        self._npc_plan_path = self._npc_plan_file()
+        try:
+            self.npc_plan_book = npc_plan_store_mod.load(self._npc_plan_path)
+        except Exception as e:
+            _log.debug('生活档案读取异常（退空书）: %s', e)
+            self.npc_plan_book = npc_plan_store_mod.Book()
+        # ★★ 驻留表灌回：书里那份才是"重启前的世界"。**只在两边都在时必须做**；
+        #   `RoamState.from_dict` 的 `enabled` 由 `Book` 保留 ⇒ 不会把"开关关了"
+        #   的人偷偷打开（书里那份的 `enabled` 忠实于写盘时）。
+        _roam_from_book = getattr(self.npc_plan_book, 'roam', None)
+        if _roam_from_book is not None:
+            self.npc_roam = _roam_from_book
+        elif self.npc_roam is not None:
+            # 书里没有驻留表（首次运行 / 版本不符）⇒ 把**新建的**空表放进书，
+            # 这样本拍结束时落盘会把它一起写下去（口径一致：书里永远有当前 roam）。
+            self.npc_plan_book.roam = self.npc_roam
+        _n_plans = len(getattr(self.npc_plan_book, 'plans', {}) or {})
+        # ★ 驻留人数走 `len(RoamState)`（`__len__` = 覆盖表条数）—— **不另查一次**；
+        #   `RoamState` 是唯一真源（它的 `snapshot()` 也要遍历 `_by_id`，这里只要个数）。
+        _n_res = len(self.npc_roam) if self.npc_roam is not None else 0
+        _log.info('NPC 生活档案：%s（规划 %d 人 / 驻留 %d 人）',
+                  self._npc_plan_path or '内存态-不落盘', _n_plans, _n_res)
 
         # ---- 别名表：id / 英文名 / 中文名 三个都收（点名两层都认）----
         try:
@@ -3164,7 +3217,58 @@ class RalseiPet(QMainWindow):
                 _log.debug('自主移动后重建站位异常（已忽略）: %s', e)
             for nid, dest in moved:
                 _log.info('NPC %s 自己挪到了 %s', nid, dest)
+        # ---- ★★★ 第81轮（层4 存档）：本拍若真发生变化 ⇒ 把生活档案落盘 ----
+        # ★ 只在 `moved`/`expired` **非空**时写：世界没动就没必要写盘
+        #   （E 盘是 exFAT，无谓写会磨损；写盘本身还有节流）。
+        # ★ 落盘失败**只记 debug**，绝不影响桌宠运行（与 `_ghost_save` 同规）。
+        if moved or expired:
+            self._npc_plan_save()
         return out
+
+    # ---------------------------------------------------------------- 层4 存档
+    def _npc_plan_file(self):
+        """生活档案的落盘路径（`data_store` 唯一入口；取不到 ⇒ `None` = 退内存态）。
+
+        ⚠️ 与 `_make_relationship()` / `_ghost_state_path()` 同一条纪律：
+          **不在底层模块里 import data_store**（初始化环，本项目栽过 4 次），
+          路径一律由**调用方注入**，这里只当那个调用方。
+        """
+        try:
+            import data_store
+            return data_store.app_file(npc_plan_store_mod.FILENAME)
+        except Exception as e:
+            _log.debug('生活档案落盘路径不可用（退内存态）: %s', e)
+            return None
+
+    def _npc_plan_save(self, force=False):
+        """把生活档案（驻留表 + 每人规划）写回盘。→ `bool`。**绝不抛**。
+
+        ★ 节流：默认 `NPC_PLAN_SAVE_EVERY` 秒内最多写一次（`force=True` 绕过）
+          —— 与 `_ghost_save` 同一形状，避免"每拍都写盘"。
+        ★ `Book.to_dict()` 已对 `history` 做二次兜底（`MAX_HISTORY`），
+          不会因为外部塞进来一本超大的书把 E 盘写爆。
+        """
+        book = getattr(self, 'npc_plan_book', None)
+        path = getattr(self, '_npc_plan_path', None)
+        if book is None or not path:
+            return False
+        now = time.time()
+        last = getattr(self, '_npc_plan_last_save', 0.0) or 0.0
+        if not force and (now - last) < RalseiPet.NPC_PLAN_SAVE_EVERY:
+            return False
+        # ★ 落盘前**把当前 `roam` 同步进书**：`_npc_roam_tick` 推的是 `self.npc_roam`，
+        #   书里那份可能还是启动时灌进去的 ⇒ 不同步就会"改了世界却存了旧的"。
+        roam = getattr(self, 'npc_roam', None)
+        if roam is not None:
+            book.roam = roam
+        try:
+            ok = bool(npc_plan_store_mod.save(path, book))
+        except Exception as e:
+            _log.debug('生活档案落盘失败（已忽略）: %s', e)
+            ok = False
+        if ok:
+            self._npc_plan_last_save = now
+        return ok
 
     def _npc_roam_reachable(self):
         """他"能去哪"—— **单一真源** = `scene_controller.reachable_destinations()`。
@@ -3259,16 +3363,39 @@ class RalseiPet(QMainWindow):
           - `reachable` = `scene_controller.reachable_destinations()`；
           - `friends`   = `npc_bonds` 里熟络度 > 0 的人 + 他们住哪。
 
+        ★★ 第81轮（层4）：`last` 不再硬编码 `None` —— 改从**生活档案**里取他上一次的
+          意图（`Plan.intent`），并把本次结果 `note()` 回书里。这是 L5「人味」的核心
+          一环：**"上次去了哪"会影响这次去哪**（`decide` 的 `last` 入参）。
+          在层4 之前这个值永远是 `None` ⇒ 决策是**无记忆**的。
+
         ★★ 注意签名里**没有** pet/user/player —— 与 `npc_roam.step` 的纪律一致（L2）。
         """
-        return npc_intent_mod.decide(
+        book = getattr(self, 'npc_plan_book', None)
+        plan = None
+        last_intent = None
+        if book is not None:
+            try:
+                plan = book.plan_of(npc_id)
+                last_intent = getattr(plan, 'intent', None)
+            except Exception as e:
+                _log.debug('生活档案取规划异常（本拍按无记忆决策）: %s', e)
+                plan = None
+                last_intent = None
+        it = npc_intent_mod.decide(
             npc_id, now,
             traits=traits, familiar=familiar, home=home,
             reachable=reachable,
             friends=[(i, f) for i, f, _s in (friends or ())],
             favorites=None,
-            last=None,
+            last=last_intent,
         )
+        # ★ 记回档案：`note()` 自带 history 有界（keep=12），不会无限长。
+        if plan is not None:
+            try:
+                plan.note(it)
+            except Exception as e:
+                _log.debug('生活档案记规划异常（已忽略）: %s', e)
+        return it
 
     def _npc_roam_sleep(self, npc_id, now, *, home=None, friends=None,
                         reachable=None, last_sleep=None):
@@ -3282,14 +3409,33 @@ class RalseiPet(QMainWindow):
 
         ★ `friends` 这里已经在 `_npc_roam_friends` 里带了**第三个元素（他住哪）**，
           正是 `choose_sleep_scene` 需要的形状 —— 不再转换（避免两处算同一份规则）。
+
+        ★★ 第81轮（层4）：`last_sleep` 若调用方没给（**现状：`npc_roam.step` 不给**），
+          就从**生活档案**里取他昨晚睡哪 —— 这才让"连睡同一处 ×0.6 降权"真正拿到值。
+          决策出了结果 ⇒ 立刻 `note_sleep()` 记回档案（本拍落盘时一并写下去）。
         """
+        book = getattr(self, 'npc_plan_book', None)
+        if last_sleep is None and book is not None:
+            try:
+                last_sleep = book.last_sleep_of(npc_id)
+            except Exception as e:
+                _log.debug('生活档案取 last_sleep 异常（本拍按无记忆）: %s', e)
+                last_sleep = None
         try:
-            return npc_intent_mod.choose_sleep_scene(
+            scene, why = npc_intent_mod.choose_sleep_scene(
                 npc_id, now, home=home, friends=friends,
                 reachable=reachable, last_sleep=last_sleep)
         except Exception as e:
             _log.debug('NPC 就寝决策异常（本拍不作决策）: %s', e)
             return None, 'error'
+        # ★ 记住"今晚睡哪"（供**下一次**决策降权）。只在真出了地点时记 —— `None` 是
+        #   "哪儿也去不了"，不是"睡在空处"，记进去会污染降权（那是另一个事实）。
+        if scene and book is not None and why not in ('nowhere', 'error'):
+            try:
+                book.note_sleep(npc_id, scene)
+            except Exception as e:
+                _log.debug('生活档案记就寝异常（已忽略）: %s', e)
+        return scene, why
 
     def _npc_menu_message(self, text):
         """往用户能看见的地方说一句（复用道具菜单那条通道；没有就只记日志）。
@@ -10740,6 +10886,19 @@ class RalseiPet(QMainWindow):
     # ==================================================================
     RELATIONSHIP_FILE = 'relationship.json'
 
+    #: ★★★ 第81轮（层4 存档）：NPC「生活档案」落盘文件（走 `data_store` 唯一存储入口，
+    #:   与 `RELATIONSHIP_FILE` / `GHOST_FILE` 同规）。
+    #:   装的东西 = 三份**此前只在内存**的状态：
+    #:     · `npc_roam.RoamState` 的驻留覆盖表（"他此刻偏离了自己家"）；
+    #:     · 每人的 `npc_intent.Plan`（今日意图 / 最近 12 条历史 / **昨晚睡哪**）。
+    #:   ★★ 为什么必须有它：`choose_sleep_scene(last_sleep=...)` 的"连睡同一处 ×0.6
+    #:      降权"在层4 之前**永远拿不到值**（`last_sleep` 恒 `None`）⇒ 降权形同虚设；
+    #:      NPC 一重启就把"昨天睡在朋友家"忘干净。
+    #:   ★ 真源文件名在 `npc_plan_store.FILENAME`（这里**不**复制一份，避免两处算）。
+    #:     本常量只是给 host 侧一个"这套存档叫什么"的锚点（与 `GHOST_FILE` 同形），
+    #:     `npc_plan_store.FILENAME` 与它**必须一致**（`check81` 会断言）。
+    NPC_LIFE_FILE = 'npc_life.json'
+
     # 角色设定相对路径（相对 src/ 的上一级，即仓库内 ralsei_pet/assets/）
     PERSONA_REL_PATH = os.path.join('assets', 'ralsei_persona.md')
 
@@ -12787,6 +12946,15 @@ class RalseiPet(QMainWindow):
                 gh.hide_ghost()
                 gh.close()
             self.ghost = None          # 同上：二次收尾直接跳过（见 2.53 的说明）
+        except Exception as e:  # 观测代码绝不能影响退出流程
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # 2.56 ★★★ 第81轮（层4 存档）：把 NPC 生活档案（驻留表 + 每人规划）**强制**
+        #      写一次盘 —— 平时是按 `NPC_PLAN_SAVE_EVERY`（120s）节流的，退出时那一次
+        #      可能还没到点；`force=True` 保证"关掉桌宠前发生的最后一件事"不丢。
+        #      失败只记日志（绝不让"存不上档"拖住退出）。
+        try:
+            self._npc_plan_save(force=True)
         except Exception as e:  # 观测代码绝不能影响退出流程
             _log.debug("main 防御性异常（已忽略）: %s", e)
 

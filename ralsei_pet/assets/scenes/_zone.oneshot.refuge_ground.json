@@ -1,0 +1,90 @@
+{
+ "schema_version": 1,
+ "chapter_id": "oneshot",
+ "area_id": "refuge_ground",
+ "area_name": "城市（地表区）",
+ "note": "第81轮：区域层级由**原作明文**派生（oneshot_map_colors / map_zone_names / minimap_nodes / loc 中文名，三源互证；见 _evidence/oneshot_zones81.json）。★ OneShot 房数据**没有** light/dark 维度 ⇒ 明暗维持 unknown（与 UT/黄魂同规）。",
+ "scenes": {
+  "oneshot.refuge_ground.Elevator_Street": {
+   "name": "Elevator Street",
+   "name_raw": "Elevator Street",
+   "name_derived": false,
+   "original_room_id": 84,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Vendor_Street": {
+   "name": "Vendor Street",
+   "name_raw": "Vendor Street",
+   "name_derived": false,
+   "original_room_id": 85,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Library": {
+   "name": "Library",
+   "name_raw": "Library",
+   "name_derived": false,
+   "original_room_id": 87,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Factory": {
+   "name": "Factory",
+   "name_raw": "Factory",
+   "name_derived": false,
+   "original_room_id": 90,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Back_Alley": {
+   "name": "Back Alley",
+   "name_raw": "Back Alley",
+   "name_derived": false,
+   "original_room_id": 91,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Vendor_Street_2": {
+   "name": "Vendor Street",
+   "name_raw": "Vendor Street",
+   "name_derived": false,
+   "original_room_id": 230,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Elevator_Street_2": {
+   "name": "Elevator Street",
+   "name_raw": "Elevator Street",
+   "name_derived": false,
+   "original_room_id": 231,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Back_Alley_2": {
+   "name": "Back Alley",
+   "name_raw": "Back Alley",
+   "name_derived": false,
+   "original_room_id": 232,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge_ground.Library_2": {
+   "name": "Library",
+   "name_raw": "Library",
+   "name_derived": false,
+   "original_room_id": 233,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

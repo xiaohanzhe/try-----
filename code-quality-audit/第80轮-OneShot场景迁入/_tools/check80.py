@@ -93,8 +93,24 @@ ch = (idx.get('chapters') or {}).get('oneshot')
 check('A2 产品索引里有 `oneshot` 章', ch is not None,
       'chapters=%s' % list(idx.get('chapters') or {}))
 
-idx_scenes = ((ch or {}).get('areas') or {}).get('rooms', {}).get('scenes', {})
-check('A3 迁入场景数 == 263', len(idx_scenes) == 263, 'n=%d' % len(idx_scenes))
+# ★★ 第81轮：区域由 1 个（rooms）变 6 个 ⇒ 取值改成**区域无关**（遍历全部 areas）。
+#   比原来更严：不再依赖"恰好有个叫 rooms 的区域"。
+def _all_scenes_of(chapter):
+    """→ `{scene_id: entry}`（展平该章全部区域的场景）。非法输入 ⇒ `{}`。"""
+    out = {}
+    for _aid, _a in ((chapter or {}).get('areas') or {}).items():
+        for sid, ent in ((_a or {}).get('scenes') or {}).items():
+            out[sid] = ent
+    return out
+
+
+def _area_ids_of(chapter):
+    return sorted(((chapter or {}).get('areas') or {}).keys())
+
+
+idx_scenes = _all_scenes_of(ch)
+check('A3 迁入场景数 == 263（跨全部区域求和）', len(idx_scenes) == 263,
+      'n=%d areas=%s' % (len(idx_scenes), _area_ids_of(ch)))
 
 check('A4 勘查节点数 == 263', len(nodes) == 263, 'n=%d' % len(nodes))
 
@@ -188,7 +204,7 @@ check('D1 产品索引加载器 `load_index()` ok=True',
       idx_loaded.get('ok') is True, 'err=%s' % idx_loaded.get('error'))
 
 flat = idx_loaded.get('scenes') or {}
-flat_oneshot = {k: v for k, v in flat.items() if k.startswith('oneshot.rooms.')}
+flat_oneshot = {k: v for k, v in flat.items() if k.startswith('oneshot.')}
 check('D2 ★ `load_index()` 展平表里恰有 263 个 oneshot 场景',
       len(flat_oneshot) == 263, 'n=%d' % len(flat_oneshot))
 
@@ -205,16 +221,24 @@ check('D3 ★★★ 263 个 scene_id 逐个喂 `load_scene(entry=)`，全部真�
       n_ok == 263 and not errs, 'ok=%d 抛=%d %s' % (n_ok, len(errs), errs[:2]))
 
 # ★ 真名（不是回落 id）+ room_id 真带上
-one = SS.load_scene('oneshot.rooms.Start', entry=flat.get('oneshot.rooms.Start'))
+#   第81轮：不再硬编码 `oneshot.rooms.Start`（区域已变），改从**数据里挑一条真 scene_id**。
+_sample_sid = None
+for _sid, _ent in sorted(idx_scenes.items()):
+    if (_ent or {}).get('name') == 'Start':
+        _sample_sid = _sid
+        break
+if _sample_sid is None:
+    _sample_sid = sorted(idx_scenes)[0] if idx_scenes else ''
+one = SS.load_scene(_sample_sid, entry=flat.get(_sample_sid))
 check('D4 ★ name 是真名（Start），不是回落 id',
       bool(one) and getattr(one, 'name', None) == 'Start',
-      'name=%s' % getattr(one, 'name', None))
+      'sid=%s name=%s' % (_sample_sid, getattr(one, 'name', None)))
 check('D5 ★★ 装载结果带 original_room_id（渲染层查几何要用）',
       bool(one) and isinstance(getattr(one, 'original_room_id', None), int),
       'rid=%s' % getattr(one, 'original_room_id', None))
 
 # ★ 负控制：编造 scene_id 必须装载不到
-fake = SS.load_scene('oneshot.rooms.__nope__', entry=None)
+fake = SS.load_scene('oneshot.__nope__.__nope__', entry=None)
 check('D5n ★ 负控制：编造 scene_id 装载不到（证明 D3/D4 非恒真）', fake is None, '')
 
 # ================================================================ E 明暗表同步
@@ -223,9 +247,16 @@ print('=' * 74)
 print('E `_worlds.json` 同步（照抄 UT/黄魂，不猜）')
 print('=' * 74)
 
-check('E1 `_worlds.json` 有 areas.oneshot == {rooms: unknown}',
-      (worlds.get('areas') or {}).get('oneshot') == {'rooms': 'unknown'},
-      '%s' % (worlds.get('areas') or {}).get('oneshot'))
+# ★★ 第81轮：区域由 1 个变 6 个 ⇒ E1 改成**集合相等**（比原来更严：
+#    不写死 "rooms"，而是要求 `_worlds.areas.oneshot` 的键集
+#    **恰等于** `_index.json` 里 oneshot 章的 areas 键集，且值全 `unknown`。
+_w_os_areas = (worlds.get('areas') or {}).get('oneshot') or {}
+_idx_os_areas = set(_area_ids_of(ch))
+check('E1 ★ `_worlds.areas.oneshot` 键集 == 索引 areas 键集，且全 unknown',
+      set(_w_os_areas) == _idx_os_areas
+      and all(v == 'unknown' for v in _w_os_areas.values())
+      and len(_w_os_areas) > 0,
+      'worlds=%s idx=%s' % (sorted(_w_os_areas), sorted(_idx_os_areas)))
 
 w_rooms = (worlds.get('rooms') or {}).get('oneshot') or {}
 check('E2 `rooms.oneshot` == 263 间', len(w_rooms) == 263, 'n=%d' % len(w_rooms))

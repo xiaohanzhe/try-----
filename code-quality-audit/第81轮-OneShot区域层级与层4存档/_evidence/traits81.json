@@ -1,0 +1,39 @@
+{
+ "round": 81,
+ "what": "改区前后 trait_hits 差异（零差异才允许改 scene_id 前缀）",
+ "traits": [
+  "dark",
+  "ruined",
+  "bright",
+  "crowded",
+  "quiet",
+  "cosmic"
+ ],
+ "old_counts": {
+  "dark": 5,
+  "cosmic": 2,
+  "bright": 3,
+  "quiet": 18,
+  "ruined": 4,
+  "crowded": 2
+ },
+ "new_counts": {
+  "dark": 5,
+  "cosmic": 2,
+  "bright": 3,
+  "quiet": 18,
+  "ruined": 4,
+  "crowded": 2
+ },
+ "diff_rows": [],
+ "diff_count": 0,
+ "slug_hits": {
+  "oneshot.barrens.x": [],
+  "oneshot.glen.x": [],
+  "oneshot.refuge.x": [],
+  "oneshot.refuge_ground.x": [],
+  "oneshot.mainline.x": [],
+  "oneshot.unzoned.x": []
+ },
+ "conclusion": "逐键零差异（diff_count=0），且 6 个 area slug 自身零命中"
+}

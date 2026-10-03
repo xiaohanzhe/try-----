@@ -1,0 +1,324 @@
+{
+ "schema_version": 1,
+ "chapter_id": "oneshot",
+ "area_id": "barrens",
+ "area_name": "荒野",
+ "note": "第81轮：区域层级由**原作明文**派生（oneshot_map_colors / map_zone_names / minimap_nodes / loc 中文名，三源互证；见 _evidence/oneshot_zones81.json）。★ OneShot 房数据**没有** light/dark 维度 ⇒ 明暗维持 unknown（与 UT/黄魂同规）。",
+ "scenes": {
+  "oneshot.barrens.Blue": {
+   "name": "Blue",
+   "name_raw": "Blue",
+   "name_derived": false,
+   "original_room_id": 7,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Entrance": {
+   "name": "Entrance",
+   "name_raw": "Entrance",
+   "name_derived": false,
+   "original_room_id": 12,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.terminal_room": {
+   "name": "terminal room",
+   "name_raw": "terminal room",
+   "name_derived": false,
+   "original_room_id": 13,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Outpost": {
+   "name": "Outpost",
+   "name_raw": "Outpost",
+   "name_derived": false,
+   "original_room_id": 14,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Outpost_interior": {
+   "name": "Outpost interior",
+   "name_raw": "Outpost interior",
+   "name_derived": false,
+   "original_room_id": 15,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Backroom": {
+   "name": "Backroom",
+   "name_raw": "Backroom",
+   "name_derived": false,
+   "original_room_id": 16,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Mineshaft_entrance": {
+   "name": "Mineshaft entrance",
+   "name_raw": "Mineshaft entrance",
+   "name_derived": false,
+   "original_room_id": 17,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Cliffs": {
+   "name": "Cliffs",
+   "name_raw": "Cliffs",
+   "name_derived": false,
+   "original_room_id": 18,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Docks": {
+   "name": "Docks",
+   "name_raw": "Docks",
+   "name_derived": false,
+   "original_room_id": 19,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Bed_room": {
+   "name": "Bed room",
+   "name_raw": "Bed room",
+   "name_derived": false,
+   "original_room_id": 21,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Lookout_point": {
+   "name": "Lookout point",
+   "name_raw": "Lookout point",
+   "name_derived": false,
+   "original_room_id": 23,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Cabin": {
+   "name": "Cabin",
+   "name_raw": "Cabin",
+   "name_derived": false,
+   "original_room_id": 24,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Factory_interior": {
+   "name": "Factory interior",
+   "name_raw": "Factory interior",
+   "name_derived": false,
+   "original_room_id": 69,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Old_Factory": {
+   "name": "Old Factory",
+   "name_raw": "Old Factory",
+   "name_derived": false,
+   "original_room_id": 70,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Dormitories": {
+   "name": "Dormitories",
+   "name_raw": "Dormitories",
+   "name_derived": false,
+   "original_room_id": 71,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Swamp": {
+   "name": "Swamp",
+   "name_raw": "Swamp",
+   "name_derived": false,
+   "original_room_id": 73,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.server_room": {
+   "name": "server room",
+   "name_raw": "server room",
+   "name_derived": false,
+   "original_room_id": 75,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.110___mechanical_drawing": {
+   "name": "110 - mechanical drawing",
+   "name_raw": "110 - mechanical drawing",
+   "name_derived": false,
+   "original_room_id": 76,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.117___mom": {
+   "name": "117 - mom",
+   "name_raw": "117 - mom",
+   "name_derived": false,
+   "original_room_id": 78,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.112___infirmary": {
+   "name": "112 - infirmary",
+   "name_raw": "112 - infirmary",
+   "name_derived": false,
+   "original_room_id": 79,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.118___robot_voice": {
+   "name": "118 - robot voice",
+   "name_raw": "118 - robot voice",
+   "name_derived": false,
+   "original_room_id": 80,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.113___ocean": {
+   "name": "113 - ocean",
+   "name_raw": "113 - ocean",
+   "name_derived": false,
+   "original_room_id": 81,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.119___cell": {
+   "name": "119 - cell",
+   "name_raw": "119 - cell",
+   "name_derived": false,
+   "original_room_id": 82,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Factory_upstairs": {
+   "name": "Factory upstairs",
+   "name_raw": "Factory upstairs",
+   "name_derived": false,
+   "original_room_id": 92,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Factory_interior2": {
+   "name": "Factory interior2",
+   "name_raw": "Factory interior2",
+   "name_derived": false,
+   "original_room_id": 93,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.upstairs": {
+   "name": "upstairs",
+   "name_raw": "upstairs",
+   "name_derived": false,
+   "original_room_id": 94,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.mineshaft": {
+   "name": "mineshaft",
+   "name_raw": "mineshaft",
+   "name_derived": false,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.server_room_2": {
+   "name": "server room",
+   "name_raw": "server room",
+   "name_derived": false,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.backroom": {
+   "name": "backroom",
+   "name_raw": "backroom",
+   "name_derived": false,
+   "original_room_id": 194,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.extra_hallway": {
+   "name": "extra hallway",
+   "name_raw": "extra hallway",
+   "name_derived": false,
+   "original_room_id": 195,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.backhall": {
+   "name": "backhall",
+   "name_raw": "backhall",
+   "name_derived": false,
+   "original_room_id": 196,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.collapse": {
+   "name": "collapse",
+   "name_raw": "collapse",
+   "name_derived": false,
+   "original_room_id": 197,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.protowalk": {
+   "name": "protowalk",
+   "name_raw": "protowalk",
+   "name_derived": false,
+   "original_room_id": 210,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.server_room_3": {
+   "name": "server room",
+   "name_raw": "server room",
+   "name_derived": false,
+   "original_room_id": 248,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.barrens.Docks_2": {
+   "name": "Docks",
+   "name_raw": "Docks",
+   "name_derived": false,
+   "original_room_id": 256,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

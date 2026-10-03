@@ -1,0 +1,38 @@
+== A 结构面（AST 断言）==
+[PASS] A1 `npc_plan_store` 真被 import（别名 npc_plan_store_mod）
+[PASS] A2 `_npc_roam_decide` 恰好定义 1 次（实际 1）
+[PASS] A3 `_npc_roam_decide` 真调 `plan_of()`（档案真被用）
+[PASS] A4 `_npc_roam_decide` 真调 `plan.note()`（结果真记回）
+[PASS] A5 `decide()` 调用带 `last=` 关键字
+[PASS] A6 ★★ `last=` **不再恒为 None**（层4 之前是硬编码 None）
+[PASS] A7 仍真调 `npc_intent_mod.decide()`
+[PASS] A8 `_npc_roam_sleep` 恰好定义 1 次
+[PASS] A9 `_npc_roam_sleep` 真调 `book.last_sleep_of()`
+[PASS] A10 `_npc_roam_sleep` 真调 `book.note_sleep()`
+[PASS] A11 仍真调 `npc_intent_mod.choose_sleep_scene()`
+[PASS] A12 `last_sleep` 仍作为入参被透传
+[PASS] A13 `_npc_plan_file` 恰好定义 1 次（路径注入点）
+[PASS] A14 `_npc_plan_file` 真走 `data_store.app_file()`（唯一入口）
+[PASS] A15 `_npc_plan_save` 恰好定义 1 次
+[PASS] A16 `_npc_plan_save` 真调 `npc_plan_store_mod.save()`
+[PASS] A17 `_npc_plan_save` 有 `force` 形参（退出兜底要用） 实有=['self', 'force']
+[PASS] A18 `_npc_roam_tick` 恰好定义 1 次
+[PASS] A19 ★★ `_npc_roam_tick` 真调 `_npc_plan_save()`（世界变了就落盘）
+[PASS] A20 退出收尾有 `_npc_plan_save(force=True)` 兜底
+[PASS] A21 `init_npc_systems` 恰好定义 1 次
+[PASS] A22 ★ `init_npc_systems` 真调 `npc_plan_store_mod.load()`（读回存档）
+[PASS] A23 ★ 属性预声明成 `Book()`（不是 None —— plan_of 才能随手用）
+[PASS] A24 路径由 `_npc_plan_file()` 注入
+[PASS] A25 ★★ 书里的 roam 真被灌回 `self.npc_roam`（否则存档白读）
+
+== B 行为面（真 exec 抽出的真函数体，跑在假宿主上）==
+[PASS] B1 ★★ `decide` 真收到档案里的上一次意图（实收 ['PREV_INTENT']）
+[PASS] B2 ★★ 本次结果真被 `note()` 记回档案
+[PASS] B3 ★★ `choose_sleep_scene` 真收到档案里的 last_sleep（实收 ['PREV_SLEEP']）
+[PASS] B4 ★★ 睡哪真被 `note_sleep()` 记回档案
+[PASS] B5 ★ 负控制：调用方显式给的 last_sleep **优先于**档案（实收 ['EXPLICIT']）
+[PASS] B6 ★ 负控制：`nowhere`（哪儿也去不了）**不许**记进档案
+[PASS] B7 ★ 档案缺失（None）时两处都不抛（退化为无记忆决策）
+[PASS] B8 判据自身体检：假桩真被调用（记账口非 no-op）
+
+PASS=33 FAIL=0

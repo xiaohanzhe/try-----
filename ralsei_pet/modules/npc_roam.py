@@ -495,16 +495,18 @@ WIRING = collections.OrderedDict((
     ('used_by', ['main._npc_scene_roster（读 resident_of，覆盖模式）',
                  'main._npc_roam_tick（按 30s 节拍调 step）',
                  'main.init_npc_systems（建 RoamState）',
-                 'main._npc_roam_sleep（层3 就寝决策器，注入 step(sleep_fn=...)）']),
+                 'main._npc_roam_sleep（层3 就寝决策器，注入 step(sleep_fn=...)）',
+                 'npc_plan_store.Book（层4：to_dict/from_dict 落盘容器）']),
     ('wired_how', '开关 `NPC_AUTONOMOUS_MOVE`（第79轮收尾**按用户裁决默认 True**）；'
                   '开 ⇒ NPC 有自己的位置状态（用户不动世界也转）；'
                   '关 ⇒ `step()` 零副作用 + `resident_of()` 恒 None'
-                  ' ⇒ 全走 `_placement.json`，行为与第78轮逐字相同（零回归）。'),
+                  ' ⇒ 全走 `_placement.json`，行为与第78轮逐字相同（零回归）。'
+                  '★ 第81轮（层4）：`RoamState` 经 `npc_plan_store.Book` 落盘'
+                  '（`main._npc_plan_save` 节流 120s + 退出强制），重启后灌回。'),
     ('why', '层2 = 把「静态归属」升级成「静态归属 + 动态驻留覆盖」。'
             '要解决的头号障碍：`_npc_seed_bodies()` 只在启动与切场景时被调'
             ' ⇒「NPC = 当前场景的装饰」⇒ 用户不动、世界就冻住（与 L2 正相反）。'
             '层3 = 把旧常量 `BEDTIME_HOME_SCENE`（只服务桌宠本人）换成'
             ' **逐人**的「今晚睡哪」决策（L4：可睡朋友家）。'),
-    ('not_yet', ['驻留表落 data_store（存档，层4）',
-                 '连睡同一朋友家的降权需要 `last_sleep` 记忆（层4 才有处存）']),
+    ('not_yet', []),
 ))

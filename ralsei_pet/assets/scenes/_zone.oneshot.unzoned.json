@@ -1,0 +1,207 @@
+{
+ "schema_version": 1,
+ "chapter_id": "oneshot",
+ "area_id": "unzoned",
+ "area_name": "未分区（废弃/调试/演示）",
+ "note": "第81轮：区域层级由**原作明文**派生（oneshot_map_colors / map_zone_names / minimap_nodes / loc 中文名，三源互证；见 _evidence/oneshot_zones81.json）。★ OneShot 房数据**没有** light/dark 维度 ⇒ 明暗维持 unknown（与 UT/黄魂同规）。",
+ "scenes": {
+  "oneshot.unzoned.IGNORE": {
+   "name": "IGNORE",
+   "name_raw": "IGNORE",
+   "name_derived": false,
+   "original_room_id": 6,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.Small_Room": {
+   "name": "Small Room",
+   "name_raw": "Small Room",
+   "name_derived": false,
+   "original_room_id": 42,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.Bedroom": {
+   "name": "Bedroom",
+   "name_raw": "Bedroom",
+   "name_derived": false,
+   "original_room_id": 58,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.Livingroom": {
+   "name": "Livingroom",
+   "name_raw": "Livingroom",
+   "name_derived": false,
+   "original_room_id": 64,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.IGNORE_2": {
+   "name": "IGNORE",
+   "name_raw": "IGNORE",
+   "name_derived": false,
+   "original_room_id": 68,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.IGNORE_ToFactory": {
+   "name": "IGNORE ToFactory",
+   "name_raw": "IGNORE ToFactory",
+   "name_derived": false,
+   "original_room_id": 88,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.IGNORE_ToLibrary": {
+   "name": "IGNORE ToLibrary",
+   "name_raw": "IGNORE ToLibrary",
+   "name_derived": false,
+   "original_room_id": 89,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.Lobby_OLD_VER": {
+   "name": "Lobby-OLD VER",
+   "name_raw": "Lobby-OLD VER",
+   "name_derived": false,
+   "original_room_id": 96,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.ignore": {
+   "name": "ignore",
+   "name_raw": "ignore",
+   "name_derived": false,
+   "original_room_id": 100,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.Unused": {
+   "name": "Unused",
+   "name_raw": "Unused",
+   "name_derived": false,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.big_office": {
+   "name": "big office",
+   "name_raw": "big office",
+   "name_derived": false,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.stairwell_demo": {
+   "name": "stairwell-demo",
+   "name_raw": "stairwell-demo",
+   "name_derived": false,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C1": {
+   "name": "C1",
+   "name_raw": "C1",
+   "name_derived": false,
+   "original_room_id": 157,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C2": {
+   "name": "C2",
+   "name_raw": "C2",
+   "name_derived": false,
+   "original_room_id": 158,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C3": {
+   "name": "C3",
+   "name_raw": "C3",
+   "name_derived": false,
+   "original_room_id": 159,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C5": {
+   "name": "C5",
+   "name_raw": "C5",
+   "name_derived": false,
+   "original_room_id": 160,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C4": {
+   "name": "C4",
+   "name_raw": "C4",
+   "name_derived": false,
+   "original_room_id": 161,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C6": {
+   "name": "C6",
+   "name_raw": "C6",
+   "name_derived": false,
+   "original_room_id": 162,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.C7": {
+   "name": "C7",
+   "name_raw": "C7",
+   "name_derived": false,
+   "original_room_id": 163,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.UNUSED": {
+   "name": "UNUSED",
+   "name_raw": "UNUSED",
+   "name_derived": false,
+   "original_room_id": 165,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.pshot": {
+   "name": "pshot",
+   "name_raw": "pshot",
+   "name_derived": false,
+   "original_room_id": 261,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.unzoned.pshot_2": {
+   "name": "pshot",
+   "name_raw": "pshot",
+   "name_derived": false,
+   "original_room_id": 263,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

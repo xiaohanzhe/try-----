@@ -534,12 +534,15 @@ def choose_sleep_scene(npc_id, now, *, home=None, friends=None, reachable=None,
 # ---------------------------------------------------------------- 声明
 
 WIRING = collections.OrderedDict((
-    ('wired', False),
-    ('used_by', []),
-    ('why', '层1 只做"决策"（纯函数，零依赖、可离线验）。'
-            '层2（移动）由 main → scene_controller.travel_to 接线，'
-            '开关 NPC_AUTONOMOUS_MOVE 默认 false；'
-            '层3（睡觉）替换 BEDTIME_HOME_SCENE；层4（存档）走 data_store。'),
-    ('not_yet', ['main 接线（层2）', 'BEDTIME_HOME_SCENE 替换（层3）',
-                 '规划持久化（层4）']),
+    ('wired', True),
+    ('used_by', ['main._npc_roam_decide（喂 traits/familiar/home/reachable/friends + last）',
+                 'main._npc_roam_sleep（choose_sleep_scene，注入 step(sleep_fn=...)）',
+                 'npc_plan_store.Book（层4：Plan.to_dict/from_dict + last_sleep 记忆）']),
+    ('wired_how', '层2 = `main._npc_roam_tick` 按 30s 节拍调 `npc_roam.step(decide_fn='
+                  'main._npc_roam_decide)`；层3 = `step(sleep_fn=main._npc_roam_sleep)`'
+                  ' 取代旧常量 `BEDTIME_HOME_SCENE`；层4 = `Plan` 经 `npc_plan_store`'
+                  ' 落盘（`main._npc_plan_save` 节流 + 退出强制），重启后灌回'
+                  ' ⇒ `decide(last=...)` 与 `choose_sleep_scene(last_sleep=...)`'
+                  ' **不再恒为 None**（层4 之前两处都是无记忆决策）。'),
+    ('not_yet', []),
 ))

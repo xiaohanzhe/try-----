@@ -1,0 +1,630 @@
+{
+ "schema_version": 1,
+ "chapter_id": "oneshot",
+ "area_id": "mainline",
+ "area_name": "主线 · 家/塔/终局",
+ "note": "第81轮：区域层级由**原作明文**派生（oneshot_map_colors / map_zone_names / minimap_nodes / loc 中文名，三源互证；见 _evidence/oneshot_zones81.json）。★ OneShot 房数据**没有** light/dark 维度 ⇒ 明暗维持 unknown（与 UT/黄魂同规）。",
+ "scenes": {
+  "oneshot.mainline.INIT": {
+   "name": "INIT",
+   "name_raw": "INIT",
+   "name_derived": false,
+   "original_room_id": 1,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Start": {
+   "name": "Start",
+   "name_raw": "Start",
+   "name_derived": false,
+   "original_room_id": 2,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Bathroom": {
+   "name": "Bathroom",
+   "name_raw": "Bathroom",
+   "name_derived": false,
+   "original_room_id": 3,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Livingroom": {
+   "name": "Livingroom",
+   "name_raw": "Livingroom",
+   "name_derived": false,
+   "original_room_id": 4,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Basement_Stairs": {
+   "name": "Basement Stairs",
+   "name_raw": "Basement Stairs",
+   "name_derived": false,
+   "original_room_id": 5,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Tower": {
+   "name": "Tower",
+   "name_raw": "Tower",
+   "name_derived": false,
+   "original_room_id": 10,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.DEBUG": {
+   "name": "DEBUG",
+   "name_raw": "DEBUG",
+   "name_derived": false,
+   "original_room_id": 11,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.basement": {
+   "name": "basement",
+   "name_raw": "basement",
+   "name_derived": false,
+   "original_room_id": 20,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.basement_after_sun": {
+   "name": "basement after sun",
+   "name_raw": "basement after sun",
+   "name_derived": false,
+   "original_room_id": 26,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Crossroads": {
+   "name": "Crossroads",
+   "name_raw": "Crossroads",
+   "name_derived": false,
+   "original_room_id": 55,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Teleport": {
+   "name": "Teleport",
+   "name_raw": "Teleport",
+   "name_derived": false,
+   "original_room_id": 56,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Summit": {
+   "name": "Summit",
+   "name_raw": "Summit",
+   "name_derived": false,
+   "original_room_id": 60,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Shatter": {
+   "name": "Shatter",
+   "name_raw": "Shatter",
+   "name_derived": false,
+   "original_room_id": 61,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Elevator": {
+   "name": "Elevator",
+   "name_raw": "Elevator",
+   "name_derived": false,
+   "original_room_id": 62,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Water": {
+   "name": "Water",
+   "name_raw": "Water",
+   "name_derived": false,
+   "original_room_id": 63,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.debug2": {
+   "name": "debug2",
+   "name_raw": "debug2",
+   "name_derived": false,
+   "original_room_id": 77,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Encounter_PENG": {
+   "name": "Encounter PENG",
+   "name_raw": "Encounter PENG",
+   "name_derived": false,
+   "original_room_id": 131,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T1": {
+   "name": "T1",
+   "name_raw": "T1",
+   "name_derived": false,
+   "original_room_id": 139,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T2": {
+   "name": "T2",
+   "name_raw": "T2",
+   "name_derived": false,
+   "original_room_id": 140,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T3": {
+   "name": "T3",
+   "name_raw": "T3",
+   "name_derived": false,
+   "original_room_id": 141,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T4": {
+   "name": "T4",
+   "name_raw": "T4",
+   "name_derived": false,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T5": {
+   "name": "T5",
+   "name_raw": "T5",
+   "name_derived": false,
+   "original_room_id": 143,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T6": {
+   "name": "T6",
+   "name_raw": "T6",
+   "name_derived": false,
+   "original_room_id": 144,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T7": {
+   "name": "T7",
+   "name_raw": "T7",
+   "name_derived": false,
+   "original_room_id": 145,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T8": {
+   "name": "T8",
+   "name_raw": "T8",
+   "name_derived": false,
+   "original_room_id": 146,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T9": {
+   "name": "T9",
+   "name_raw": "T9",
+   "name_derived": false,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T10": {
+   "name": "T10",
+   "name_raw": "T10",
+   "name_derived": false,
+   "original_room_id": 148,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T11": {
+   "name": "T11",
+   "name_raw": "T11",
+   "name_derived": false,
+   "original_room_id": 149,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T12": {
+   "name": "T12",
+   "name_raw": "T12",
+   "name_derived": false,
+   "original_room_id": 150,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T13": {
+   "name": "T13",
+   "name_raw": "T13",
+   "name_derived": false,
+   "original_room_id": 151,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T14": {
+   "name": "T14",
+   "name_raw": "T14",
+   "name_derived": false,
+   "original_room_id": 152,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T15": {
+   "name": "T15",
+   "name_raw": "T15",
+   "name_derived": false,
+   "original_room_id": 153,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.T16": {
+   "name": "T16",
+   "name_raw": "T16",
+   "name_derived": false,
+   "original_room_id": 154,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Step": {
+   "name": "Step",
+   "name_raw": "Step",
+   "name_derived": false,
+   "original_room_id": 155,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Sunroom": {
+   "name": "Sunroom",
+   "name_raw": "Sunroom",
+   "name_derived": false,
+   "original_room_id": 156,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C1": {
+   "name": "C1",
+   "name_raw": "C1",
+   "name_derived": false,
+   "original_room_id": 164,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C2": {
+   "name": "C2",
+   "name_raw": "C2",
+   "name_derived": false,
+   "original_room_id": 166,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.S1": {
+   "name": "S1",
+   "name_raw": "S1",
+   "name_derived": false,
+   "original_room_id": 167,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C3": {
+   "name": "C3",
+   "name_raw": "C3",
+   "name_derived": false,
+   "original_room_id": 168,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C4": {
+   "name": "C4",
+   "name_raw": "C4",
+   "name_derived": false,
+   "original_room_id": 169,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C5": {
+   "name": "C5",
+   "name_raw": "C5",
+   "name_derived": false,
+   "original_room_id": 170,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C6": {
+   "name": "C6",
+   "name_raw": "C6",
+   "name_derived": false,
+   "original_room_id": 171,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.C7": {
+   "name": "C7",
+   "name_raw": "C7",
+   "name_derived": false,
+   "original_room_id": 172,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.S4": {
+   "name": "S4",
+   "name_raw": "S4",
+   "name_derived": false,
+   "original_room_id": 173,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.S2": {
+   "name": "S2",
+   "name_raw": "S2",
+   "name_derived": false,
+   "original_room_id": 174,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.S3": {
+   "name": "S3",
+   "name_raw": "S3",
+   "name_derived": false,
+   "original_room_id": 175,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Water2": {
+   "name": "Water2",
+   "name_raw": "Water2",
+   "name_derived": false,
+   "original_room_id": 179,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Start_2": {
+   "name": "Start",
+   "name_raw": "Start",
+   "name_derived": false,
+   "original_room_id": 180,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Bathroom_2": {
+   "name": "Bathroom",
+   "name_raw": "Bathroom",
+   "name_derived": false,
+   "original_room_id": 181,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Livingroom_2": {
+   "name": "Livingroom",
+   "name_raw": "Livingroom",
+   "name_derived": false,
+   "original_room_id": 182,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Basement_Stairs_2": {
+   "name": "Basement Stairs",
+   "name_raw": "Basement Stairs",
+   "name_derived": false,
+   "original_room_id": 183,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Hallway": {
+   "name": "Hallway",
+   "name_raw": "Hallway",
+   "name_derived": false,
+   "original_room_id": 184,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.basement_after_sun_2": {
+   "name": "basement after sun",
+   "name_raw": "basement after sun",
+   "name_derived": false,
+   "original_room_id": 185,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Start_purple": {
+   "name": "Start purple",
+   "name_raw": "Start purple",
+   "name_derived": false,
+   "original_room_id": 188,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Start_3": {
+   "name": "Start",
+   "name_raw": "Start",
+   "name_derived": false,
+   "original_room_id": 189,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Hallway_purp": {
+   "name": "Hallway purp",
+   "name_raw": "Hallway purp",
+   "name_derived": false,
+   "original_room_id": 190,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.FINALE": {
+   "name": "FINALE",
+   "name_raw": "FINALE",
+   "name_derived": false,
+   "original_room_id": 224,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Summit_2": {
+   "name": "Summit",
+   "name_raw": "Summit",
+   "name_derived": false,
+   "original_room_id": 226,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Tv_room": {
+   "name": "Tv room",
+   "name_raw": "Tv room",
+   "name_derived": false,
+   "original_room_id": 241,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Encounter": {
+   "name": "Encounter",
+   "name_raw": "Encounter",
+   "name_derived": false,
+   "original_room_id": 242,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Credits": {
+   "name": "Credits",
+   "name_raw": "Credits",
+   "name_derived": false,
+   "original_room_id": 243,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.X_room": {
+   "name": "X room",
+   "name_raw": "X room",
+   "name_derived": false,
+   "original_room_id": 245,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.squrz": {
+   "name": "squrz",
+   "name_raw": "squrz",
+   "name_derived": false,
+   "original_room_id": 246,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.SQUARES_BE_GONE": {
+   "name": "SQUARES BE GONE",
+   "name_raw": "SQUARES BE GONE",
+   "name_derived": false,
+   "original_room_id": 247,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.study": {
+   "name": "study",
+   "name_raw": "study",
+   "name_derived": false,
+   "original_room_id": 249,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Last_room": {
+   "name": "Last room",
+   "name_raw": "Last room",
+   "name_derived": false,
+   "original_room_id": 255,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Memory": {
+   "name": "Memory",
+   "name_raw": "Memory",
+   "name_derived": false,
+   "original_room_id": 258,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.Post_Encounter": {
+   "name": "Post Encounter",
+   "name_raw": "Post Encounter",
+   "name_derived": false,
+   "original_room_id": 259,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.mainline.language_debug": {
+   "name": "language debug",
+   "name_raw": "language debug",
+   "name_derived": false,
+   "original_room_id": 262,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

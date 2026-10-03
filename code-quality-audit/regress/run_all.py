@@ -1741,6 +1741,36 @@ SUITES = [
                 '★ 旧常量处有「NPC 不适用/已废弃」注释声明） / '
                 'G 判据自身体检（★标记打印点 == 2 + 负控制 · 记账守恒 + 漏记负控制 · 被测文件在盘）',
     },
+    # ---------------------------------------------------------------- check81
+    # 第八十一轮：**OneShot 区域层级（6 区）** + **层4 存档**。
+    # 用户裁决（逐字）：「按照我之前的决策和你的建议来就好」
+    #   →「5 区」= OneShot 按官方三源（map_colors / zone_names / minimap_nodes）
+    #     切 6 个 slug（荒野/幽谷/城市/城市地表/主线/未分区）；
+    #   →「全量：计划+驻留+last_sleep」= 层4 把 Plan/Intent/RoamState 落 `data_store`。
+    # ★ 零网络 / 零 UI / 零外部盘（官方源盘只在 B 段，缺了 SKIP 不假红）；不需要显示器。
+    {
+        'id': 'check81',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第81轮-OneShot区域层级与层4存档',
+                               '_tools', 'check81.py'),
+        'offscreen': True,
+        'desc': '第八十一轮：OneShot 区域层级（6 区）+ 层4 存档不许静默漂移 —— '
+                'A ★★★ 6 区完整性（263 全覆盖 / ★两两零交集 / ★逐区计数 == 官方三源互证'
+                '（Blue35·Green55·Red73·RedGround9·Purple69）/ 索引逐区计数 == 官方 / '
+                '★scene_id 前缀 == 所在区域 / 未分区 22 间名字自带证据） / '
+                'B ★★ 分片真在位（6 个 `_zone.oneshot.<area>.json` 全在盘 · 旧单区域分片已退场'
+                '· 旧分片已备份可回溯） / '
+                'C ★★ 真装载（走产品唯一入口 `load_index()` + `load_scene(entry=)` 逐个过 263；'
+                '★6 个区域**各**挑一条 —— 防"某区整块丢"；负控制编造 id 装载不到） / '
+                'D ★★★ 层4 存档（`npc_plan_store` 零依赖·零函数内 import·不静态 import 项目内模块 / '
+                '★`Book` 往返：驻留表+规划+**last_sleep** 全还原 / main 四处接线 AST：'
+                '建书读回 · `plan_of`+`note` · `last_sleep_of`+`note_sleep` · '
+                '`_npc_plan_save` 落盘 + 退出 `force=True` · ★`last=` **不再恒为 None**） / '
+                'E ★★★ 闭环（`last_sleep` 降权**真生效**且方向对 + 负控制只有一个地点时无可比较） / '
+                'F 三处 WIRING 诚实（wired=True 且 not_yet 清空 · used_by 非空） / '
+                'G 判据自身体检（标记打印点 == 2 + 负控制 · 记账守恒 + 漏记负控制 · '
+                '不对 modules 目录做枚举式计数）',
+    },
 ]
 
 # ---------------------------------------------------------------- 归一化

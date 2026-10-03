@@ -1,0 +1,666 @@
+{
+ "schema_version": 1,
+ "chapter_id": "oneshot",
+ "area_id": "refuge",
+ "area_name": "城市",
+ "note": "第81轮：区域层级由**原作明文**派生（oneshot_map_colors / map_zone_names / minimap_nodes / loc 中文名，三源互证；见 _evidence/oneshot_zones81.json）。★ OneShot 房数据**没有** light/dark 维度 ⇒ 明暗维持 unknown（与 UT/黄魂同规）。",
+ "scenes": {
+  "oneshot.refuge.Red_sky": {
+   "name": "Red sky",
+   "name_raw": "Red sky",
+   "name_derived": false,
+   "original_room_id": 9,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Elevator_inside": {
+   "name": "Elevator inside",
+   "name_raw": "Elevator inside",
+   "name_derived": false,
+   "original_room_id": 22,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.store_pan": {
+   "name": "store pan",
+   "name_raw": "store pan",
+   "name_derived": false,
+   "original_room_id": 25,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.City_Gate": {
+   "name": "City Gate",
+   "name_raw": "City Gate",
+   "name_derived": false,
+   "original_room_id": 47,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Elevator_Deck": {
+   "name": "Elevator Deck",
+   "name_raw": "Elevator Deck",
+   "name_derived": false,
+   "original_room_id": 48,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Apartments": {
+   "name": "Apartments",
+   "name_raw": "Apartments",
+   "name_derived": false,
+   "original_room_id": 49,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.stairwell": {
+   "name": "stairwell",
+   "name_raw": "stairwell",
+   "name_derived": false,
+   "original_room_id": 50,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.GeorgeRoom": {
+   "name": "GeorgeRoom",
+   "name_raw": "GeorgeRoom",
+   "name_derived": false,
+   "original_room_id": 51,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Cafe": {
+   "name": "Cafe",
+   "name_raw": "Cafe",
+   "name_derived": false,
+   "original_room_id": 52,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Cafe_inside": {
+   "name": "Cafe inside",
+   "name_raw": "Cafe inside",
+   "name_derived": false,
+   "original_room_id": 53,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Garden": {
+   "name": "Garden",
+   "name_raw": "Garden",
+   "name_derived": false,
+   "original_room_id": 54,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Lobby": {
+   "name": "Lobby",
+   "name_raw": "Lobby",
+   "name_derived": false,
+   "original_room_id": 72,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Top_floor": {
+   "name": "Top floor",
+   "name_raw": "Top floor",
+   "name_derived": false,
+   "original_room_id": 74,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Red_ground": {
+   "name": "Red ground",
+   "name_raw": "Red ground",
+   "name_derived": false,
+   "original_room_id": 83,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.To_Tower": {
+   "name": "To Tower",
+   "name_raw": "To Tower",
+   "name_derived": false,
+   "original_room_id": 86,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Hall1": {
+   "name": "Hall1",
+   "name_raw": "Hall1",
+   "name_derived": false,
+   "original_room_id": 95,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.X_room": {
+   "name": "X room",
+   "name_raw": "X room",
+   "name_derived": false,
+   "original_room_id": 97,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.1st_room": {
+   "name": "1st room",
+   "name_raw": "1st room",
+   "name_derived": false,
+   "original_room_id": 98,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.lamplighter_house": {
+   "name": "lamplighter house",
+   "name_raw": "lamplighter house",
+   "name_derived": false,
+   "original_room_id": 99,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.courtyard": {
+   "name": "courtyard",
+   "name_raw": "courtyard",
+   "name_derived": false,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.left__pools": {
+   "name": "left- pools",
+   "name_raw": "left- pools",
+   "name_derived": false,
+   "original_room_id": 105,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.right_3d_printers": {
+   "name": "right-3d printers",
+   "name_raw": "right-3d printers",
+   "name_derived": false,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Power_room": {
+   "name": "Power room",
+   "name_raw": "Power room",
+   "name_derived": false,
+   "original_room_id": 108,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Room1___bot": {
+   "name": "Room1 - bot",
+   "name_raw": "Room1 - bot",
+   "name_derived": false,
+   "original_room_id": 109,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Tower_deck": {
+   "name": "Tower deck",
+   "name_raw": "Tower deck",
+   "name_derived": false,
+   "original_room_id": 110,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Hall2": {
+   "name": "Hall2",
+   "name_raw": "Hall2",
+   "name_derived": false,
+   "original_room_id": 111,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.2nd_room": {
+   "name": "2nd room",
+   "name_raw": "2nd room",
+   "name_derived": false,
+   "original_room_id": 112,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Kip": {
+   "name": "Kip",
+   "name_raw": "Kip",
+   "name_derived": false,
+   "original_room_id": 113,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.left_terminals": {
+   "name": "left-terminals",
+   "name_raw": "left-terminals",
+   "name_derived": false,
+   "original_room_id": 114,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.right_robots": {
+   "name": "right-robots",
+   "name_raw": "right-robots",
+   "name_derived": false,
+   "original_room_id": 115,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Office": {
+   "name": "Office",
+   "name_raw": "Office",
+   "name_derived": false,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.entry_room": {
+   "name": "entry room",
+   "name_raw": "entry room",
+   "name_derived": false,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.stairwell_2": {
+   "name": "stairwell",
+   "name_raw": "stairwell",
+   "name_derived": false,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Observation_Deck": {
+   "name": "Observation Deck",
+   "name_raw": "Observation Deck",
+   "name_derived": false,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Communal_area": {
+   "name": "Communal area",
+   "name_raw": "Communal area",
+   "name_derived": false,
+   "original_room_id": 121,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.bathroom": {
+   "name": "bathroom",
+   "name_raw": "bathroom",
+   "name_derived": false,
+   "original_room_id": 122,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.landing": {
+   "name": "landing",
+   "name_raw": "landing",
+   "name_derived": false,
+   "original_room_id": 123,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Room2___peng": {
+   "name": "Room2 - peng",
+   "name_raw": "Room2 - peng",
+   "name_derived": false,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Room3___bot_friend": {
+   "name": "Room3 - bot friend",
+   "name_raw": "Room3 - bot friend",
+   "name_derived": false,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Room4___bird": {
+   "name": "Room4 - bird",
+   "name_raw": "Room4 - bird",
+   "name_derived": false,
+   "original_room_id": 129,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Room5___roomba": {
+   "name": "Room5 - roomba",
+   "name_raw": "Room5 - roomba",
+   "name_derived": false,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Room6___plant": {
+   "name": "Room6 - plant",
+   "name_raw": "Room6 - plant",
+   "name_derived": false,
+   "original_room_id": 132,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Photo_center": {
+   "name": "Photo center",
+   "name_raw": "Photo center",
+   "name_derived": false,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.SECRET_RAM_CLUB": {
+   "name": "SECRET RAM CLUB",
+   "name_raw": "SECRET RAM CLUB",
+   "name_derived": false,
+   "original_room_id": 135,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.rue": {
+   "name": "rue",
+   "name_raw": "rue",
+   "name_derived": false,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.guest_room": {
+   "name": "guest room",
+   "name_raw": "guest room",
+   "name_derived": false,
+   "original_room_id": 176,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.sleepville": {
+   "name": "sleepville",
+   "name_raw": "sleepville",
+   "name_derived": false,
+   "original_room_id": 186,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.fish_house": {
+   "name": "fish house",
+   "name_raw": "fish house",
+   "name_derived": false,
+   "original_room_id": 187,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.rue_2": {
+   "name": "rue",
+   "name_raw": "rue",
+   "name_derived": false,
+   "original_room_id": 201,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.POSTGAME_RED_SKY": {
+   "name": "POSTGAME RED SKY",
+   "name_raw": "POSTGAME RED SKY",
+   "name_derived": false,
+   "original_room_id": 207,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Landing": {
+   "name": "Landing",
+   "name_raw": "Landing",
+   "name_derived": false,
+   "original_room_id": 213,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.City_Gate_2": {
+   "name": "City Gate",
+   "name_raw": "City Gate",
+   "name_derived": false,
+   "original_room_id": 214,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Elevator_Deck_2": {
+   "name": "Elevator Deck",
+   "name_raw": "Elevator Deck",
+   "name_derived": false,
+   "original_room_id": 215,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Office_2": {
+   "name": "Office",
+   "name_raw": "Office",
+   "name_derived": false,
+   "original_room_id": 216,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.entry_room_2": {
+   "name": "entry room",
+   "name_raw": "entry room",
+   "name_derived": false,
+   "original_room_id": 217,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Power_room_2": {
+   "name": "Power room",
+   "name_raw": "Power room",
+   "name_derived": false,
+   "original_room_id": 218,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Cafe_2": {
+   "name": "Cafe",
+   "name_raw": "Cafe",
+   "name_derived": false,
+   "original_room_id": 219,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Cafe_inside_2": {
+   "name": "Cafe inside",
+   "name_raw": "Cafe inside",
+   "name_derived": false,
+   "original_room_id": 220,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.stairwell_3": {
+   "name": "stairwell",
+   "name_raw": "stairwell",
+   "name_derived": false,
+   "original_room_id": 221,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.locked_room": {
+   "name": "locked room",
+   "name_raw": "locked room",
+   "name_derived": false,
+   "original_room_id": 222,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.store_pan_2": {
+   "name": "store pan",
+   "name_raw": "store pan",
+   "name_derived": false,
+   "original_room_id": 223,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Observation_Deck_2": {
+   "name": "Observation Deck",
+   "name_raw": "Observation Deck",
+   "name_derived": false,
+   "original_room_id": 225,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.POSTGAME_RED_GROUND": {
+   "name": "POSTGAME RED GROUND",
+   "name_raw": "POSTGAME RED GROUND",
+   "name_derived": false,
+   "original_room_id": 227,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.To_Tower_2": {
+   "name": "To Tower",
+   "name_raw": "To Tower",
+   "name_derived": false,
+   "original_room_id": 228,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.X_room_2": {
+   "name": "X room",
+   "name_raw": "X room",
+   "name_derived": false,
+   "original_room_id": 229,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.fish_house_2": {
+   "name": "fish house",
+   "name_raw": "fish house",
+   "name_derived": false,
+   "original_room_id": 234,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Photo_center_2": {
+   "name": "Photo center",
+   "name_raw": "Photo center",
+   "name_derived": false,
+   "original_room_id": 235,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.stairwell_4": {
+   "name": "stairwell",
+   "name_raw": "stairwell",
+   "name_derived": false,
+   "original_room_id": 236,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Lobby_2": {
+   "name": "Lobby",
+   "name_raw": "Lobby",
+   "name_derived": false,
+   "original_room_id": 237,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Elevator_Deck_3": {
+   "name": "Elevator Deck",
+   "name_raw": "Elevator Deck",
+   "name_derived": false,
+   "original_room_id": 252,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.sleepville_2": {
+   "name": "sleepville",
+   "name_raw": "sleepville",
+   "name_derived": false,
+   "original_room_id": 254,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.Vendor_Street": {
+   "name": "Vendor Street",
+   "name_raw": "Vendor Street",
+   "name_derived": false,
+   "original_room_id": 257,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "oneshot.refuge.locked_room_2": {
+   "name": "locked room",
+   "name_raw": "locked room",
+   "name_derived": false,
+   "original_room_id": 260,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

@@ -489,13 +489,25 @@ check('I1 序列化往返（resident_of + enabled 都保住）',
 check('I2 坏数据 from_dict 不抛',
       R.RoamState.from_dict({'stays': [None, 123, {'npc_id': 'x'}]}) is not None, '')
 
-check('I3 ★ 接线台账诚实（第79轮已接线 ⇒ wired=True 且 used_by 非空、'
-      'not_yet 如实列层3/层4）',
-      R.WIRING.get('wired') is True and bool(R.WIRING.get('used_by'))
-      and bool(R.WIRING.get('not_yet')),
-      'wired=%s used_by=%d not_yet=%d' % (R.WIRING.get('wired'),
-                                          len(R.WIRING.get('used_by') or []),
-                                          len(R.WIRING.get('not_yet') or [])))
+# ★★★ I3 接线台账诚实 —— **第81轮改**（判据随事实改，不弱化鉴别力）
+#   第79轮口径：`not_yet` 必须**非空**（那时层3/层4 确实还没做）。
+#   第81轮层4 存档**已完成** ⇒ `not_yet` 真的空了 ⇒ 旧判据变成"过窄"（会误报）。
+#   ★ 但**不许**简单删掉 `not_yet` 那一半（那会留下"偷偷清空 `not_yet` 却没接线"
+#     的漏洞）。改法是换成**有鉴别力的**：`wired=True` ⇒ ① `used_by` 非空（谁在用
+#     要说清）；② 若 `not_yet` 为空，则 `wired_how` 必须**写明层4 的落盘接线**
+#     （`npc_plan_store` = 本模块唯一的层4 兑现证据）——既证"真做完了"，
+#     又挡住"没做却把 `not_yet` 清空"。
+#   （同规先例：第70轮 `check57` A9 上限随事实改 / §60.3「判据过窄 = 会误报」。）
+_w = R.WIRING
+_w_how = _w.get('wired_how') or ''
+_w_done4 = '层4' in _w_how and 'npc_plan_store' in _w_how
+check('I3 ★ 接线台账诚实（wired=True ⇒ used_by 非空；not_yet 空时须 wired_how '
+      '写明层4 落盘接线 —— 防"没做却清空 not_yet"）',
+      _w.get('wired') is True and bool(_w.get('used_by'))
+      and (bool(_w.get('not_yet')) or _w_done4),
+      'wired=%s used_by=%d not_yet=%d 层4证据=%s' % (
+          _w.get('wired'), len(_w.get('used_by') or []),
+          len(_w.get('not_yet') or []), _w_done4))
 
 _self_tree = ast.parse(_SELF)
 # ★★ I4 的打印点数：只该有 `check()` 本体那 1 处。

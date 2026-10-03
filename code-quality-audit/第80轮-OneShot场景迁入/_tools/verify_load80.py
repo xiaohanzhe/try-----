@@ -59,8 +59,12 @@ idx = json.loads(read(os.path.join(SCENES, '_index.json')))
 ch = idx['chapters'].get('oneshot')
 check('S2 索引里有 oneshot 章', ch is not None,
       'chapters=%s' % list(idx['chapters'].keys()))
-scenes = (ch or {}).get('areas', {}).get('rooms', {}).get('scenes', {})
-check('S3 oneshot 场景数 == 263', len(scenes) == 263, 'n=%d' % len(scenes))
+scenes = {}
+for _aid, _a in ((ch or {}).get('areas') or {}).items():
+    for _sid, _ent in ((_a or {}).get('scenes') or {}).items():
+        scenes[_sid] = _ent
+check('S3 oneshot 场景数 == 263（跨全部区域求和）', len(scenes) == 263,
+      'n=%d areas=%s' % (len(scenes), sorted(((ch or {}).get('areas') or {}).keys())))
 
 # ---- 3. 逐条字段自洽（与 Deltarune 分片场景同构）----
 bad_key = []
@@ -75,8 +79,8 @@ check('S4 每个场景都有 name/bg/bg_source/objects（字段集同构）',
       not bad_key, '缺字段=%d' % len(bad_key))
 check('S5 每个场景 original_room_id 都是 int', not bad_rid,
       '缺=%d' % len(bad_rid))
-check('S6 scene_id 前缀 == oneshot.rooms.',
-      all(s.startswith('oneshot.rooms.') for s in scenes),
+check('S6 scene_id 前缀 == oneshot.（第81轮起区域段可变）',
+      all(s.startswith('oneshot.') and s.count('.') >= 2 for s in scenes),
       '样例=%s' % sorted(scenes)[:2])
 
 # ---- 4. ★★★ 真装载：走产品**唯一入口** `load_index()` + `load_scene(sid, entry=)` ----
@@ -112,14 +116,19 @@ if callable(load_scene):
           'ok=%d 空=%d 抛=%d %s' % (n_ok, len(missing), len(errs),
                                     (errs[:2] or missing[:2])))
     # ★ 且装出来的 name 是**真名**（`Start`），不是回落成 id
+    #   第81轮：不硬编码 scene_id（区域已变），从数据里挑名字为 `Start` 的那条。
+    _sid = ''
+    for _s, _e in sorted(scenes.items()):
+        if (_e or {}).get('name') == 'Start':
+            _sid = _s
+            break
     try:
-        one = load_scene('oneshot.rooms.Start',
-                         entry=flat.get('oneshot.rooms.Start'))
+        one = load_scene(_sid, entry=flat.get(_sid)) if _sid else None
     except Exception:
         one = None
     check('S8b ★ 装出来的 name 是真名（`Start`），不是回落成 id',
           bool(one) and getattr(one, 'name', None) == 'Start',
-          'name=%s' % getattr(one, 'name', None))
+          'sid=%s name=%s' % (_sid, getattr(one, 'name', None)))
     # ★★ 且 room_id 真带上（渲染层要拿它查房间几何，丢了会"房间未知"）
     check('S8c ★★ 装载结果带 original_room_id（渲染层查几何要用，不许丢）',
           bool(one) and isinstance(getattr(one, 'original_room_id', None), int),
@@ -128,7 +137,7 @@ if callable(load_scene):
 # ---- 6. ★ 负控制：编造一个 scene_id 必须装载不到 ----
 if callable(load_scene):
     try:
-        fake = load_scene('oneshot.rooms.__no_such_scene__', entry=None)
+        fake = load_scene('oneshot.__none__.__no_such_scene__', entry=None)
     except Exception:
         fake = None
     check('S8n ★ 负控制：编造的 scene_id 必须装载不到（证明 S8 非恒真）',
@@ -136,17 +145,27 @@ if callable(load_scene):
 
 # ---- 7. _worlds.json 同步 ----
 w = json.loads(read(os.path.join(SCENES, '_worlds.json')))
-check('S9 _worlds.json 有 oneshot.rooms == unknown',
-      (w['areas'].get('oneshot') or {}).get('rooms') == 'unknown',
-      '%s' % (w['areas'].get('oneshot'),))
+_os_areas = w['areas'].get('oneshot') or {}
+_idx_os_areas = set(((ch or {}).get('areas') or {}).keys())
+check('S9 ★ `_worlds.areas.oneshot` 键集 == 索引 areas 键集，且全 unknown',
+      set(_os_areas) == _idx_os_areas
+      and all(v == 'unknown' for v in _os_areas.values())
+      and len(_os_areas) > 0,
+      'worlds=%s idx=%s' % (sorted(_os_areas), sorted(_idx_os_areas)))
 check('S10 _worlds.json rooms.oneshot == 263 间且全 unknown',
       len(w['rooms'].get('oneshot') or {}) == 263
       and all(v == 'unknown' for v in (w['rooms'].get('oneshot') or {}).values()),
       'n=%d' % len(w['rooms'].get('oneshot') or {}))
 
-# ---- 8. 分片文件在位 ----
-zp = os.path.join(SCENES, '_zone.oneshot.rooms.json')
-check('S11 分片文件 _zone.oneshot.rooms.json 在位', os.path.exists(zp), zp)
+# ---- 8. 分片文件在位（第81轮：6 个区域分片，旧单区域分片必须已退场）----
+_area_ids = sorted(_idx_os_areas)
+_missing_z = [_a for _a in _area_ids
+              if not os.path.exists(os.path.join(SCENES, '_zone.oneshot.%s.json' % _a))]
+check('S11 ★ 6 个区域分片全部在位', not _missing_z and len(_area_ids) == 6,
+      'areas=%s 缺=%s' % (_area_ids, _missing_z))
+check('S11b ★ 旧的单区域分片已退场（不留死数据）',
+      not os.path.exists(os.path.join(SCENES, '_zone.oneshot.rooms.json')),
+      '_zone.oneshot.rooms.json')
 
 # ---- 9. 既有章节零破坏（★ 与写入前的备份逐值比对，不靠"我觉得没动"）----
 BAK = os.path.join('E:\\', 'Download', '_tmp', '_index.before80.json')

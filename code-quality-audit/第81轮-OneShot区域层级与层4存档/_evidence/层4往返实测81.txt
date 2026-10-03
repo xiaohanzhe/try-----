@@ -1,0 +1,28 @@
+[PASS] 1 save() 返回 True
+[PASS] 1 文件真在盘上：C:\Users\23002\AppData\Local\Temp\ralsei_l4_tsca729r\npc_life.json
+[PASS] 2 load() 不返回 None
+[PASS] 2 ★★ 驻留表被还原（不是 None）
+[PASS] 2 ★ 驻留真还原：susie @ 'ch1.town.town_church'
+[PASS] 2 ★ 驻留真还原：lancer
+[PASS] 2 ★ 两人规划都在：['lancer', 'susie']
+[PASS] 2 ★★★ **昨晚睡哪**真还原（层4 的核心）：'ch1.kris_room.kris_room'
+[PASS] 2 day 真还原：42
+[PASS] 2 history 真还原：2 条
+[PASS] 2 ★★ **上一次意图**真还原（`decide(last=...)` 吃的就是这个）：'visit_friend'
+[PASS] 3 ★★★ 连睡降权**真生效**：无记忆时 400 天选**自己家** 76 次，昨睡朋友家后升到 104 次（朋友家被 ×0.6 削 ⇒ 自己家相对更常被选）
+[PASS] 4 坏 JSON ⇒ 空书（不抛）
+[PASS] 4 不存在的路径 ⇒ 空书（不抛）
+[PASS] 4 path=None ⇒ 空书（不抛）
+[PASS] 4 save(None) ⇒ False（不抛）
+[PASS] 5 schema_version 不符 ⇒ 空书（不把陌生结构当真）
+[PASS] 6 原子写不留 .tmp 残骸
+[PASS] 7 ★ npc_plan_store.WIRING wired=True
+[PASS] 7 ★★ not_yet 已清空（不留谎）
+[PASS] 7 used_by 逐条登记（4 条）
+[PASS] 7 ★ npc_intent.WIRING wired 翻正 =True
+[PASS] 7 ★★ npc_intent not_yet 已清空
+[PASS] 7 ★★ npc_roam not_yet 已清空
+[PASS] 7 ★ npc_roam.used_by 登记了 npc_plan_store
+[PASS] 8 FILENAME == 'npc_life.json'
+
+PASS=26 FAIL=0

@@ -1,0 +1,87 @@
+==========================================================================
+第81轮：OneShot 区域层级（6 区） + 层4 存档
+==========================================================================
+
+==========================================================================
+A OneShot 6 区完整性（官方三源互证的勘查产物为准）
+==========================================================================
+[PASS] A1 勘查产物在位（oneshot_zones81.json）    C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第81轮-OneShot区域层级与层4存档\_evidence\oneshot_zones81.json
+[PASS] A2 勘查产物覆盖 263/263（covered_total == expected_total）    covered=263 expected=263
+[PASS] A3 ★★ 勘查产物零交集（overlaps 为空）    overlaps=[]
+[PASS] A4 ★★★ 逐区计数 == 官方事实源（Blue35/Green55/Red73/RedGround9/Purple69）    不符=无
+[PASS] A5 ★★ 产品索引 oneshot 章恰有 6 个区域    areas=['barrens', 'glen', 'mainline', 'refuge', 'refuge_ground', 'unzoned']
+[PASS] A6 产品索引 oneshot 场景数 == 263（跨 6 区求和）    n=263
+[PASS] A7 ★★★ 索引逐区计数 == 官方事实源（两处派生自同一事实）    不符=无；索引实得={'barrens': 35, 'glen': 55, 'mainline': 69, 'refuge': 73, 'refuge_ground': 9, 'unzoned': 22}
+[PASS] A8 ★ 6 区计数之和 == 263（无漏无重）    sum=263 {'barrens': 35, 'glen': 55, 'mainline': 69, 'refuge': 73, 'refuge_ground': 9, 'unzoned': 22}
+[PASS] A9 ★★ 每条 scene_id 前缀 == 它所在区域（`oneshot.<area>.`）    不符=无
+[PASS] A10 ★ 未分区 22 间的名字自带证据（IGNORE/UNUSED/demo/Cn…）    unzoned=22 证据样本=['C1', 'C2', 'C3', 'C4', 'C5', 'C6']
+
+==========================================================================
+B 分片真在位（6 新分片在 · 旧单区域分片已退场）
+==========================================================================
+[PASS] B1 ★★ 6 个区域分片全在盘（文件逐个点名）    实得=['_zone.oneshot.barrens.json', '_zone.oneshot.glen.json', '_zone.oneshot.mainline.json', '_zone.oneshot.refuge.json', '_zone.oneshot.refuge_ground.json', '_zone.oneshot.unzoned.json']
+[PASS] B2 ★★ 旧的单区域分片 `_zone.oneshot.rooms.json` 已退场（不共存）    
+[PASS] B3 旧分片**已备份**（迁移可回溯）    C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第81轮-OneShot区域层级与层4存档\_evidence\_zone.oneshot.rooms.before81.json
+
+==========================================================================
+C 真装载（走产品唯一入口，不是自己读 JSON）
+==========================================================================
+[PASS] C1 产品索引加载器 `load_index()` ok=True    err=None
+[PASS] C2 ★ `load_index()` 展平表里恰有 263 个 oneshot 场景    n=263
+[PASS] C3 ★★★ 263 个 scene_id 逐个喂 `load_scene(entry=)`，全部真装载    ok=263 抛=0 []
+[PASS] C4 ★★ 6 个区域**各**挑一条真装载（防"某区整块丢"）    坏=无
+[PASS] C5 ★ 负控制：编造 scene_id 装载不到（证明 C3/C4 非恒真）    
+
+==========================================================================
+D 层4 存档（Plan/Intent/RoamState 落 data_store）
+==========================================================================
+[PASS] D1 ★★ `npc_plan_store` 顶层只 import 标准库白名单    越界=[] 实得=['collections', 'importlib', 'json', 'os']
+[PASS] D2 ★★★ 零函数内 import（`check56` A3 同规）    函数内 import=无
+[PASS] D3 ★ `npc_plan_store` 不静态 import 任何项目内模块（软依赖走 importlib）    
+[PASS] D4 ★★ `Book` 往返：schema_version 保留    v=1
+[PASS] D5 ★★★ `Book` 往返：驻留表被还原（roam 不是 None）    roam='ch1.town.town_church'
+[PASS] D6 ★★★ `Book` 往返：**昨晚睡哪** 被还原（层4 的核心）    last_sleep='ch1.kris_room.kris_room'
+[PASS] D7 ★★ `Book` 往返：上一次意图被还原（`decide(last=...)` 吃的）    what='go_scene'
+[PASS] D8 ★ 容错：版本不符 / 坏结构 ⇒ 空书（不抛）    
+[PASS] D9 ★ main `init_npc_systems` 真建书并读回（`load()` + 预声明 `Book()`）    
+[PASS] D10 ★★★ main `_npc_roam_decide` 真用 `plan_of()` + `note()`（层4 读+写）    calls=['note', 'plan_of']
+[PASS] D11 ★★★ `_npc_roam_decide` 的 `last=` **不再恒为 None**（层4 之前是硬编码）    
+[PASS] D12 ★★★ main `_npc_roam_sleep` 真用 `last_sleep_of()` + `note_sleep()`    calls=['last_sleep_of', 'note_sleep']
+[PASS] D13 ★★ main `_npc_plan_save` 在位且真调 `npc_plan_store_mod.save()`    
+[PASS] D14 ★★ main `_npc_plan_file` 真走 `data_store.app_file()`（唯一入口）    
+[PASS] D15 ★★★ main `_npc_roam_tick` 真调 `_npc_plan_save()`（世界变了就落盘）    
+[PASS] D16 ★ 退出收尾有 `_npc_plan_save(force=True)` 兜底    
+[PASS] D17 ★ `main.NPC_LIFE_FILE` == `npc_plan_store.FILENAME`（两处一词，不许打错）    FILENAME=npc_life.json
+
+==========================================================================
+E 层4 闭环：`last_sleep` 降权真生效（方向对）
+==========================================================================
+[PASS] E1 ★★★ 连睡降权**真生效**（昨睡朋友家 ⇒ 自己家更常被选）    无记忆选自己家 76 次 / 昨睡朋友家后 104 次
+[PASS] E2 ★ 负控制：只有一个地点时降权无可比较（两次皆 400/400）    实得=[400, 400]
+
+==========================================================================
+F 三处 WIRING 诚实（不许留谎）
+==========================================================================
+[PASS] F1 ★ `npc_plan_store.WIRING` wired=True    
+[PASS] F2 ★★ `npc_plan_store.WIRING.not_yet` 已清空    not_yet=[]
+[PASS] F3 ★★ `npc_intent.WIRING` wired 翻正 =True    
+[PASS] F4 ★★ `npc_intent.WIRING.not_yet` 已清空    not_yet=[]
+[PASS] F5 ★★ `npc_roam.WIRING.not_yet` 已清空（两条层4 待办已兑现）    not_yet=[]
+[PASS] F6 ★ `npc_roam.WIRING.used_by` 登记了 `npc_plan_store`    
+[PASS] F7 ★★ 三处 wired=True 的 used_by 都非空    
+
+==========================================================================
+G 判据自身体检
+==========================================================================
+[PASS] G1 ★ 全文计数标记打印点恰 2（= check() 本体的 PASS+FAIL）    打印点=2
+[PASS] G1n 负控制：额外打标记的源码必须数出 > 1（证明 G1 非恒真）    
+[PASS] G2 ★ 记账守恒（独立计数器 CALLS == PASS+FAIL）    CALLS=46 PASS+FAIL=46
+[PASS] G2n 负控制：漏记一格的假入口必须破坏守恒（证明 G2 有鉴别力）    
+[PASS] G3 被测文件都在盘上    
+[PASS] G4 ★ 本套件不对 modules 目录做枚举式计数（避开"加模块就假红"）    
+[PASS] G5 ★★ 新套件必须已固化进基线（防"入列 SUITES 却漏 --update ⇒ 永远 BASELINE ⇒ 静默不比对"）    suite=73 baseline=73 缺=无
+[PASS] G5n 负控制：摘掉一个真 id 后缺集必须非空（证明 G5 非恒真）    摘=anim_round44
+
+==========================================================================
+结果：PASS=52 FAIL=0
+==========================================================================
