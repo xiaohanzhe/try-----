@@ -401,6 +401,66 @@ check('F ★★ `plot_threshold_reached` 纯比较（30>=30 真 / 29>=30 假）'
       M.plot_threshold_reached(30, 30) and not M.plot_threshold_reached(29, 30),
       star=True)
 
+# ---------------------------------------------------------------------------
+# ★★★ F2. 用户第85轮裁定（逐字）「只要不是在剧情里死了的npc就可以出现」
+#     ⇒ 判据两条，**都不是"看起来在守"**：
+#       ① `plot_mark` 的标记**不许**被当成"谁不出场"的依据（判据侧禁用）；
+#       ② 出场门控若存在，其判据**不许**读 `plot` 阈值（语义分离，防"两处算"）。
+# ---------------------------------------------------------------------------
+_M_code = _code_only_ast(_MSRC)
+check('F2 ★★★ 裁定落文档：模块头写明"剧情过完 ≠ NPC 消失"',
+      '剧情过完' in _MSRC and '不等于' in _MSRC, star=True)
+check('F2 ★★★ 裁定落文档：模块头写明出场只被"剧情里已死亡"挡',
+      '剧情里已死亡' in _MSRC, star=True)
+check('F2 ★★ 裁定落文档：模块头明确"不做 UI 显示"',
+      '不做' in _MSRC and 'UI 显示' in _MSRC, star=True)
+check('F2 ★★★ 代码层：`plot_mark` **不实现**原作出场门控（`instance_destroy` 零出现）',
+      'instance_destroy' not in _M_code, star=True)
+# ★★ 语义分离：本模块**不许**提供任何"根据标记决定出不出场"的接口
+_GATE_NAMES = ('should_spawn', 'can_appear', 'should_destroy', 'is_culled',
+               'gate_spawn', 'should_show', 'hidden_by_plot')
+_exposed = []
+for _n in ast.walk(ast.parse(_MSRC)):
+    if isinstance(_n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+        if _n.name in _GATE_NAMES:
+            _exposed.append(_n.name)
+    if isinstance(_n, ast.Assign):
+        for _t in _n.targets:
+            if isinstance(_t, ast.Name) and _t.id in _GATE_NAMES:
+                _exposed.append(_t.id)
+check('F2 ★★★ `plot_mark` 不暴露任何"按标记挡出场"的接口（实得 %r）' % (_exposed,),
+      _exposed == [], star=True)
+# ★★ 负控制：证明上面那条**有鉴别力** —— 真加一个门控函数必须被点名
+_FAKE_GATE = ('def should_spawn(marks, who):\n'
+              '    return not is_done(marks, who)\n')
+_gate_hits = [n.name for n in ast.walk(ast.parse(_FAKE_GATE))
+              if isinstance(n, ast.FunctionDef) and n.name in _GATE_NAMES]
+check('F2 ★★ 负控制：真加了 `should_spawn` 门控 ⇒ 判据必须点名（实得 %r）' % (_gate_hits,),
+      _gate_hits == ['should_spawn'], star=True)
+# ★★★ 全仓结构判据：**没有任何模块**拿 `plot_threshold_reached` 去挡出场
+#    （这条是真判据 —— 它不仅查 plot_mark 自己，还扫所有 modules）
+_plot_gate_users = []
+for _f in sorted(os.listdir(MODS)):
+    if not _f.endswith('.py'):
+        continue
+    try:
+        _t = ast.parse(_read(os.path.join(MODS, _f)))
+    except SyntaxError:
+        continue
+    for _n in ast.walk(_t):
+        if (isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute)
+                and _n.func.attr == 'plot_threshold_reached'):
+            _plot_gate_users.append((_f, _n.lineno))
+check('F2 ★★★ 全仓：**无人**调用 `plot_threshold_reached`（实得 %r）'
+      % (_plot_gate_users,), _plot_gate_users == [], star=True)
+# ★★ 负控制：证明"扫全仓"这条不是空转 —— 拿一份**真去调用**的假模块必须被抓
+_FAKE_MOD = 'x = plot_mark.plot_threshold_reached(30)\n'
+_hits = [n.func.attr for n in ast.walk(ast.parse(_FAKE_MOD))
+         if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+         and n.func.attr == 'plot_threshold_reached']
+check('F2 ★★ 负控制：假模块真调用 `plot_threshold_reached` ⇒ 全仓判据必须抓到（实得 %r）'
+      % (_hits,), _hits == ['plot_threshold_reached'], star=True)
+
 
 # =============================================================== G. 接线核查
 print('# ===== G. 接线核查（"函数写对了 ≠ 产品用上了"） =====')

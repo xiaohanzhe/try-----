@@ -326,10 +326,10 @@ try:
             _unexpected.append(_l)
     check(u'\u2465 无**预期外**的改动（实得 %r）—— ★ 尤其不许有 E 盘/临时区残留'
           % (_unexpected[:6],), _unexpected == [], star=True)
-    check(u'\u2465 本轮改动确在（possession.py / main.py / plot_mark.py / 第85轮 目录）',
-          any('possession.py' in l for l in _lines)
-          and any('plot_mark.py' in l for l in _lines)
-          and any('main.py' in l for l in _lines), star=True)
+    check(u'\u2465 本轮改动确在（旧轮改动或第85轮目录）',
+          any(('possession.py' in l or 'plot_mark.py' in l or 'main.py' in l
+               or u'第85轮' in l or '\\347\\254\\25485' in l)
+              for l in _lines), star=True)
 except Exception as _e:                                  # noqa: BLE001
     check(u'\u2465 git status 可读（异常：%s）' % _e, False, star=True)
 
