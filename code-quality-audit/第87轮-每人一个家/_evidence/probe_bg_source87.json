@@ -1,0 +1,46 @@
+{
+  "round": 87,
+  "probe": "UT/黄魂 场景背景来源定位",
+  "question": "跨作品场景要\"迁入\"，背景从哪来？",
+  "findings": [
+    {
+      "item": "UT room.Layers[Background].BackgroundData.Sprite",
+      "result": "全 null（UT 为 GMS1 老格式，兼容层是空占位）"
+    },
+    {
+      "item": "UT room.Backgrounds（旧式背景列表）",
+      "result": "n=0（6 个抽样房间全部为空）"
+    },
+    {
+      "item": "UT room.Tiles",
+      "result": "withTiles=0 / 338 —— UT 房间完全不用 tile"
+    },
+    {
+      "item": "UT room.GameObjects",
+      "result": "withGO=338 / 338 —— 全部房间都有实例"
+    },
+    {
+      "item": "UT 家房间实例构成",
+      "result": "只有 solid/door/marker/npc/readable/音乐 对象，无 obj_bg_* / obj_back* 之类背景对象"
+    },
+    {
+      "item": "UT room 尺寸",
+      "result": "320x240（room_torielroom/torhouse1/sanshouse/paproom/undynehouse/blookhouse 全部 320x240）；room_ruins1=320x480"
+    },
+    {
+      "item": "UT room CreationCodeId",
+      "result": "null（creation_codes=0，与 u65_log.txt 一致）"
+    },
+    {
+      "item": "obj_overworldcontroller 代码",
+      "result": "已成功反汇编（3 段，Draw 里画的是菜单/UI，不是背景）"
+    },
+    {
+      "item": "u65/gml65ut 覆盖",
+      "result": "仅 106 个对象 / 118 个 code（UT 全量 code=8120）⇒ 只导了门相关代码"
+    }
+  ],
+  "conclusion": "UT 房间背景不在房间数据里，而在**对象实例的 Draw 事件**（逐房间硬编码）。要正确复现需全量反编译 8120 个 code 并逐房间解析，属独立轮次工程量。",
+  "impact": "第87轮 R1「每人一个家」的\"先迁入跨作品场景\"存在前置阻塞：跨作品场景的背景无法在本轮低成本获得。",
+  "note": "黄魂（UTY）同理，未单独验证；其 room 结构同源（GMS 系）。"
+}

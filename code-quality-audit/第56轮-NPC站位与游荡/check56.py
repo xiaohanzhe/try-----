@@ -148,17 +148,34 @@ check('D2 顶层键齐全', all(k in RAW for k in (
     'note', 'source', 'how_original_works', 'rules', 'hubs', 'groups', 'bonds',
     'placement', 'unplaced', 'desktop', 'counts')))
 _cnt = RAW.get('counts') or {}
+# ⚠️ 判据修正记录（第87轮）：D3 原先写死 `... == 34`，D4 写死 `{17,8,9}`。
+#    第87轮给 `_placement.json` 加了 **50 条"只登记家、没有站位"的条目**
+#    （跨作品 NPC，`scene` 为 `None`；`source` 恒 `authored`，那只是"这条不是
+#    站位"的标记）⇒ ① `len(RAW['placement'])` 34 → 84；② `BOOK.by_source()`
+#    曾把 84 条一起数 ⇒ `authored` 冲成 59。**意图一个字没动**：
+#    本套件讲的始终是「**站位**」。
+#    ⇒ 改成**站位口径**：`counts.placed` 对齐"有站位的条数"，`by_source` 用
+#    `station_ids()` 过滤。★ 与产品侧同源（`PlacementBook.by_source()` 第87轮
+#    已同步改为只数 `scene` 非空者；`counts.by_source` 本就是站位口径）⇒
+#    **同一份规则不两处算**，且比原来更严（条数不再写死）。
+_st_ids = [x['id'] for x in RAW['placement'] if x.get('scene')]
 check('D3 counts 与实际条数一致',
-      _cnt.get('placed') == len(RAW['placement']) == 34
+      _cnt.get('placed') == len(_st_ids) == len(RAW['placement']) - len(
+          [x for x in RAW['placement'] if not x.get('scene')])
       and _cnt.get('groups') == len(RAW['groups'])
       and _cnt.get('bonds') == len(RAW['bonds'])
       and _cnt.get('unplaced') == len(RAW['unplaced']),
-      'counts=%s 实测 placed=%d groups=%d bonds=%d unplaced=%d'
-      % (_cnt, len(RAW['placement']), len(RAW['groups']), len(RAW['bonds']),
-         len(RAW['unplaced'])))
+      'counts=%s 实测 有站位=%d 总条目=%d groups=%d bonds=%d unplaced=%d'
+      % (_cnt, len(_st_ids), len(RAW['placement']), len(RAW['groups']),
+         len(RAW['bonds']), len(RAW['unplaced'])))
 _bs = BOOK.by_source()
-check('D4 溯源分布 original 17 / derived 8 / authored 9（★ 如实登记，不许含糊）',
-      _bs == {'original': 17, 'derived': 8, 'authored': 9}, str(_bs))
+# 用户口径「一切根据原作」⇒ 站位来源分布**必须**列出这三档（不写死数值，
+# 由 `counts.by_source` 自证 —— 两边算出来不一致立刻报红）。
+_cbs = _cnt.get('by_source') or {}
+check('D4 站位溯源分布与 `counts.by_source` 逐值相等'
+      '（★ 如实登记，不许含糊）',
+      _bs == _cbs and set(_bs) == {'original', 'derived', 'authored'},
+      'by_source()=%s vs counts.by_source=%s' % (_bs, _cbs))
 check('D5 站位 id 不重复', len(set(x['id'] for x in RAW['placement'])) == len(RAW['placement']))
 
 # 注册表 / 站位表 / 几何三表对齐
@@ -197,8 +214,21 @@ check('D7b 跨作品 NPC（os_/ut_/hy_/ot_）**全部**如实挂在 unplaced，�
       % (len(_XW_IN_REG), len(_XW_IN_UNPL), len(_unpl_ids)))
 
 # 逐条：room_raw 与几何表真实内部名**逐字**一致 + 坐标与巡逻端点落在房间盒内
+# ⚠️ 判据修正记录（第87轮）：本循环原先 `for it in RAW['placement']` 且假设
+#    `it['scene']` 是字符串。第87轮起了 50 条"家条目"（`scene` 为 `None`）⇒
+#    `it['scene'].split('.')` 直接 `AttributeError` **整个套件崩掉**。
+#    **意图一个字没动**：本节讲的是"**站位**的 room_raw / 坐标 / 端点"⇒ 只遍历
+#    有站位的条目；★ 并补一条负控制证明"过滤不是把整节变成空跑"。
+_owner = [x for x in RAW['placement'] if x.get('scene') and not x.get('home')]
+_multi = [x for x in RAW['placement'] if x.get('scene') and x.get('home')]
+check('D7c ★ 逐条几何只遍历**有站位**的条目（过滤后非空，且两类条目都存在）',
+      len(_st_ids) > 0 and len(_owner) > 0,
+      '有站位=%d（其中"既有站位又登记家"=%d；纯站位=%d）'
+      % (len(_st_ids), len(_multi), len(_owner)))
 _bad_raw, _bad_box, _bad_end = [], [], []
 for it in RAW['placement']:
+    if not it.get('scene'):        # ★ 第87轮：家条目没有站位，跳过几何核对
+        continue
     nid = it['id']
     cid, rid = it['scene'].split('.')[0], it['room_id']
     g = GEO.get('%s:%s' % (cid, rid))
@@ -217,9 +247,11 @@ for it in RAW['placement']:
     if pc and pc.get('end', x) > g['w']:
         _bad_end.append('%s: pace end %d > 宽 %d' % (nid, pc['end'], g['w']))
 check('D8 ★ room_raw 与 `_room_geometry.json` 的真实内部名**逐字**一致',
-      not _bad_raw, '; '.join(_bad_raw[:4]) or '34 条全对')
-check('D9 ★ 34 条坐标全部落在自己房间的盒内', not _bad_box, '; '.join(_bad_box[:4]) or '全在盒内')
-check('D10 ★ 巡逻端点 / 踱步 end 不越出房间宽', not _bad_end, '; '.join(_bad_end[:4]) or '全在宽度内')
+      not _bad_raw, '; '.join(_bad_raw[:4]) or '%d 条站位全对' % len(_st_ids))
+check('D9 ★ 站位坐标全部落在自己房间的盒内', not _bad_box,
+      '; '.join(_bad_box[:4]) or '全在盒内')
+check('D10 ★ 巡逻端点 / 踱步 end 不越出房间宽', not _bad_end,
+      '; '.join(_bad_end[:4]) or '全在宽度内')
 
 # ★ 硬证据：标 original 的坐标必须能在第49轮 GML 里逐字找到
 _LAN = os.path.join(EVID, 'ch4.obj_room_castle_lancer_Create_0.gml')
@@ -627,8 +659,13 @@ _saved_api = getattr(pet, 'api_enabled', None)
 pet.api_enabled = False          # 夹具：本地模型不可用 ⇒ 跟随决策走分层策略，不联网
 pet._npc_invited = []            # 不触发"换场景问一个 NPC 跟不跟"
 
-check('T11 ★ 真机：站位表建起来了（34 条 / 9 结对 / 1 编队）',
-      pet.npc_placement is not None and len(pet.npc_placement) == 34
+# ⚠️ 判据修正（第87轮）：原写死 `len(pet.npc_placement) == 34`。第87轮加了
+#    50 条"家条目"⇒ 总条目 84。**意图一个字没动**（讲的是"站位表建起来了"）
+#    ⇒ 改成**站位口径** `len(station_ids())`，与数据侧 `counts.placed` 同源。
+check('T11 ★ 真机：站位表建起来了（%d 条站位 / 9 结对 / 1 编队）'
+      % len(pet.npc_placement.station_ids() if pet.npc_placement else []),
+      pet.npc_placement is not None
+      and len(pet.npc_placement.station_ids()) == 34
       and len(pet.npc_placement.bonds) == 9 and len(pet.npc_placement.groups) == 1,
       pet.npc_placement.describe() if pet.npc_placement else 'None')
 check('T12 ★ 真机：编队建起来了且 leader = kris',

@@ -4192,12 +4192,15 @@ class RalseiPet(QMainWindow):
             reach = self._npc_roam_reachable()
             out = npc_roam_mod.step(
                 roam, now,
-                roster=book.ids(),
+                roster=self._npc_roam_roster(),
                 decide_fn=self._npc_roam_decide,
                 traits_of=self._npc_roam_traits,
                 familiar_of=self._npc_roam_familiar,
-                home_of=lambda nid: book.scene_of(nid),
-                reachable_of=lambda nid: reach,
+                # ★★ 第87轮：这两个 lambda **必须吃两个位置参数** ——
+                #    `npc_roam._call()` 的约定是 `fn(npc_id, 默认值)`；
+                #    单参 lambda 会 `TypeError` 被静默吞掉 ⇒ 取值恒为 `None`。
+                home_of=lambda nid, _d=None: book.home_of(nid),
+                reachable_of=lambda nid, _d=None: reach,
                 friends_of=self._npc_roam_friends,
                 sleep_fn=self._npc_roam_sleep,
             )
@@ -4268,6 +4271,41 @@ class RalseiPet(QMainWindow):
             self._npc_plan_last_save = now
         return ok
 
+    def _npc_roam_roster(self):
+        """**自主移动**的候选池 —— 只有"在某个场景里有站位"的人。
+
+        ★★★ 第87轮：为什么需要这一层过滤（否则会出真 bug）
+        ---------------------------------------------------
+        第87轮给 50 个跨作品 NPC（`ut_*` / `hy_*` / `os_*`）在 `_placement.json`
+        里补了 `home`。他们的 `scene` 是 `None` —— **他们不在 Deltarune 的任何房间里、
+        也不在桌面露面**，登记条目只为携带"家"这一列。
+
+        但 `npc_roam.step(roster=...)` 的语义是"**这些人都参与逐人决策**"：
+        它会挨个问 `decide()`「现在出不出门、去哪」。而 `_npc_roam_reachable()`
+        返回的是**当前场景**的可达目的地（与具体是谁无关）—— 只要 `reach` 非空
+        （桌面有门、房间里也有门），这 50 人就会被派去 `wander` 到某个
+        Deltarune 场景 ⇒ **一群"根本不在这个世界"的人开始在世界里游荡**。
+
+        ⚠️ 而且这个 bug **不会报错**：`state.put()` 只是往驻留表里写一行，
+        唯一可见的后果是"某天你打开某个房间，那里站着一个原作出处不明的 NPC"。
+
+        ★ 判据为什么取"`scene` 非空"而不是"`home` 空"：
+          `scene` 正是 `_npc_scene_roster()`（房间站位）用的那**同一个字段**
+          （`book.scene_of(nid)`）⇒ 两处**同一条规则**（"没人站的地方就没有这个人"），
+          不引入第二套判据。用 `home` 判就成了"同一份规则两处算"。
+        ★ 用 `home_of()` 而不是 `scene_of()` 会让 `go_home` 的目标**和候选池**脱钩：
+          `home_of` 对旧 34 条是回落到 `scene`（等价），对跨作品串则给出非空值
+          ⇒ 会把不该进池的人放进池（就是上面那个 bug）。
+        """
+        book = getattr(self, 'npc_placement', None)
+        if book is None:
+            return []
+        out = []
+        for nid in book.ids():
+            if book.scene_of(nid):
+                out.append(nid)
+        return out
+
     def _npc_roam_reachable(self):
         """他"能去哪"—— **单一真源** = `scene_controller.reachable_destinations()`。
 
@@ -4283,10 +4321,17 @@ class RalseiPet(QMainWindow):
         except Exception:
             return []
 
-    def _npc_roam_traits(self, npc_id):
+    def _npc_roam_traits(self, npc_id, _default=None):
         """该 NPC 所在场景的**特质**（喂 `npc_intent.decide` 的 `traits`）。
 
         ★ 单一真源 = `npc_life.scene_traits`（第73轮建的）；取不到 ⇒ `None`（**不猜**）。
+
+        ★★ 第87轮：第二个参数 `_default` 是**必须**的 —— `npc_roam._call()` 的调用
+          约定是 `fn(npc_id, 默认值)`（**两个位置参数**）。此前本方法只收一个参数
+          ⇒ `_call` 里 `fn(*a)` 抛 `TypeError` ⇒ 被它自己的 `except` **静默吞掉**
+          ⇒ 返回 `None` ⇒ **这条取值器从第79轮起就没生效过**（`home_of` 同病：
+          "回家"一直退化成"随便走走"）。第87轮实测抓到，全部补齐。
+          防回归判据见 `check87`（断言宿主注入的取值器**都吃两个位置参数**）。
         """
         try:
             sid = self._npc_roam_scene_of(npc_id)
@@ -4299,17 +4344,20 @@ class RalseiPet(QMainWindow):
         except Exception:
             return None
 
-    def _npc_roam_familiar(self, npc_id):
+    def _npc_roam_familiar(self, npc_id, _default=0.0):
         """他与"我"（当前主控角色）的熟络度？—— 这里给 **0.0**（不编）。
 
         ★ 为什么不用 `npc_bonds`：`Bonds` 是 **NPC↔NPC 两两**的熟络度，
           没有"NPC↔用户/主角"这一维（第73轮口径：那是"他自己的记忆"，不是数值）。
           ⇒ 如实给 0.0（让 `decide` 的"熟人加成"不生效），**不编造**一个数。
+        ★★ 第二参 `_default` 的理由同 `_npc_roam_traits`（`_call` 的两参约定）。
         """
         return 0.0
 
-    def _npc_roam_friends(self, npc_id):
+    def _npc_roam_friends(self, npc_id, _default=None):
         """他"认识谁、那些人住哪" → `[(id, familiar, scene_id), ...]`。
+
+        ★★ 第二参 `_default` 的理由同 `_npc_roam_traits`（`_call` 的两参约定）。
 
         ★ 与 `decide()` 的 `friends`（`[(id, familiar)]`）**多一个元素**：睡觉需要**地点**
           （`npc_intent.choose_sleep_scene` 的口径）。

@@ -119,6 +119,22 @@ ORIGINAL_TRAIL_LENGTH = 25
 #: 原作 `GMS2FPS`。原作脚本里的速度是"**每帧**多少像素" ⇒ 换 px/s 要乘它。
 GAME_FPS = 30.0
 
+# ---------------------------------------------------------------- 家（home，第87轮）
+#: ★★ `home` 与 `scene` 的**语义区别**（务必分清，否则会"同一份规则两处算"）：
+#:   * `scene` = **当前站位场景** —— 他此刻**在哪**。可以随剧情 / 驻留而变（编队会把
+#:     主角团带着走），是 `npc_roam.decide` / `cur_scene` 的输入；
+#:   * `home`  = **静态归属地** —— 他**属于哪**。给"回家 / 就寝"用，是
+#:     `npc_roam.step(home_of=...)` 那条注释「★ 静态归属」的真源。
+#: 把家写进 `scene` 会污染站位语义（`scene_of()` 被 `same_scene` / 几何 / 编队共用），
+#: ⇒ 单独一列，`PlacementBook.home_of()` 优先读它、**读不到才回落到 `scene`**。
+#: ★ 回落的理由：对既有 34 条 Deltarune 站位，`scene` 本来就是"他家"（客房 / 店 / 教室
+#:   ⇒ `why` 里写着"落脚点"）⇒ 回落**不改变**第 56 轮已裁定的行为，只是让没登记
+#:   `home` 的旧数据继续工作（不硬塞一遍 = 免得两处各写一份）。
+HOME_KEY = 'home'
+#: 家的来源标签：直接复用站位那三级（`original` / `derived` / `authored`），
+#: 因为判据完全一样（有没有原作硬证据）。**不新造第四级**（免得两套标签体系）。
+HOME_SOURCE_KINDS = SOURCE_KINDS
+
 # ---------------------------------------------------------------- 本项目参数
 #: 单帧 dt 上限（与 `soul_entity.MAX_DT` 同口径：卡顿一次不许把 NPC 甩出房间）。
 MAX_DT = 0.1
@@ -219,11 +235,13 @@ class Placement(object):
     """一个 NPC 的站位定义（静态，不含运行时状态）。"""
 
     __slots__ = ('npc_id', 'scene', 'x', 'y', 'facing', 'mode', 'patrol', 'pace',
-                 'room_id', 'room_raw', 'source', 'evidence', 'why', 'extra')
+                 'room_id', 'room_raw', 'source', 'evidence', 'why', 'extra',
+                 'home', 'home_source', 'home_evidence', 'home_why')
 
     def __init__(self, npc_id, scene, x=0.0, y=0.0, facing=FACE_DOWN, mode=MODE_STAND,
                  patrol=None, pace=None, room_id=None, room_raw=None,
-                 source=SRC_AUTHORED, evidence='', why='', extra=None):
+                 source=SRC_AUTHORED, evidence='', why='', extra=None,
+                 home=None, home_source=None, home_evidence='', home_why=''):
         self.npc_id = npc_id
         self.scene = scene
         self.x = float(x or 0.0)
@@ -238,15 +256,28 @@ class Placement(object):
         self.evidence = evidence or ''
         self.why = why or ''
         self.extra = dict(extra) if isinstance(extra, dict) else {}
+        # -- 家（第87轮）：静态归属地，与 `scene`（当前站位）分开存
+        self.home = home or None
+        #: 家的来源三级；**没登记 home 时为 None**（不假装成 authored）。
+        self.home_source = home_source if home_source in HOME_SOURCE_KINDS else None
+        self.home_evidence = home_evidence or ''
+        self.home_why = home_why or ''
 
     def to_dict(self):
-        return collections.OrderedDict((
+        d = collections.OrderedDict((
             ('id', self.npc_id), ('scene', self.scene), ('pos', [self.x, self.y]),
             ('facing', self.facing), ('mode', self.mode),
             ('patrol', self.patrol), ('pace', self.pace),
             ('room_id', self.room_id), ('room_raw', self.room_raw),
             ('source', self.source), ('evidence', self.evidence), ('why', self.why),
         ))
+        if self.home:
+            # ★ 只有真登记了家才写这四列 —— 免得给 34 条旧站位刷上 `home: null` 的噪声
+            d['home'] = self.home
+            d['home_source'] = self.home_source
+            d['home_evidence'] = self.home_evidence
+            d['home_why'] = self.home_why
+        return d
 
     def __repr__(self):
         return '<Placement %s %s %s %s>' % (self.npc_id, self.scene, self.mode, self.source)
@@ -265,7 +296,14 @@ def placement_from_dict(d):
         room_id=d.get('room_id'), room_raw=d.get('room_raw'),
         source=d.get('source', SRC_AUTHORED),
         evidence=d.get('evidence', ''), why=d.get('why', ''),
+        home=d.get(dict_key_home()), home_source=d.get('home_source'),
+        home_evidence=d.get('home_evidence', ''), home_why=d.get('home_why', ''),
     )
+
+
+def dict_key_home():
+    """`Placement` 的家字段在 JSON 里的键名（**单一真源**，别各处写字符串）。"""
+    return HOME_KEY
 
 
 # ================================================================ 房间盒
@@ -810,6 +848,41 @@ class PlacementBook(object):
         p = self.get(npc_id)
         return p.scene if p is not None else None
 
+    def home_of(self, npc_id):
+        """`npc_id -> 他的**家**场景 id`（★ 静态归属地，第87轮）。
+
+        优先级：**登记的 `home`** > 回落 `scene` > `None`。
+
+        ★★ 为什么回落到 `scene`：既有 34 条 Deltarune 站位里，`scene` 本来就是
+          "他家"（客房 / 自己的店 / 他的教室 —— `why` 里写着"落脚点"）。回落让
+          **旧数据零改动**继续工作，不必为了统一而把它们各抄一遍 `home`
+          （抄两遍 = 以后改一处忘一处 = "同一份规则两处算"）。
+        ★ 跨作品 NPC（UT / 黄魂 / OneShot）走的是**新增的 50 条家条目**，
+          它们的 `scene` 是 `None`（不是站位、不在桌面生活），`home` 才有值 ⇒
+          这两类**天然不会互相干扰**。
+        """
+        p = self.get(npc_id)
+        if p is None:
+            return None
+        return p.home or p.scene
+
+    def home_declared(self, npc_id):
+        """**只**返登记的 `home`（不看回落）。给"这一条是否显式登记过家"用。"""
+        p = self.get(npc_id)
+        return p.home if p is not None else None
+
+    def homes(self):
+        """`{npc_id: home_scene_id}`（**只含显式登记了 `home` 的**）。"""
+        out = collections.OrderedDict()
+        for nid, p in self._by_id.items():
+            if p.home:
+                out[nid] = p.home
+        return out
+
+    def home_source_of(self, npc_id):
+        p = self.get(npc_id)
+        return p.home_source if p is not None else None
+
     def hub_of(self, chapter):
         return self.hubs.get(chapter)
 
@@ -885,14 +958,34 @@ class PlacementBook(object):
         return None
 
     # -- 展示
+    def station_ids(self):
+        """**有站位**的人（`scene` 非空）—— 与"只登记了家"的条目区分开。
+
+        ★ 第87轮：`_placement.json` 里现在混着两类条目：
+          · **站位条目**（`scene` 有值）：他此刻在某场景有个位置；
+          · **家条目**（`scene` 为 `None`）：只登记"他属于哪"，**没有站位**
+            （跨作品 50 人走这条）。
+        `by_source()` / `describe()` 讲的是**站位**的来源分布，所以必须按这个
+        口径过滤 —— 否则跨作品那 50 条（`source` 恒 `authored`，那只是
+        "这条不是站位"的标记）会把统计冲歪（实测 `authored` 17+8+9 里混进 50）。
+        """
+        return [nid for nid, p in self._by_id.items() if p.scene]
+
     def by_source(self):
-        c = collections.Counter(p.source for p in self._by_id.values())
+        """**站位**的来源分布（`source`），只数 `scene` 非空的条目。"""
+        c = collections.Counter(p.source for p in self._by_id.values() if p.scene)
+        return dict(c)
+
+    def homes_by_source(self):
+        """家的三级来源计数（**只数显式登记了 `home` 的**）。"""
+        c = collections.Counter(p.home_source for p in self._by_id.values() if p.home)
         return dict(c)
 
     def describe(self):
-        return ('PlacementBook %d 人（%s）；未安置 %d；编队 %d；结对 %d；桌面白名单 %s'
-                % (len(self._by_id), self.by_source(), len(self.unplaced),
-                   len(self.groups), len(self.bonds),
+        return ('PlacementBook %d 人（站位 %d：%s｜家 %d：%s）；未安置 %d；编队 %d；结对 %d；桌面白名单 %s'
+                % (len(self._by_id), len(self.station_ids()), self.by_source(),
+                   len(self.homes()), self.homes_by_source(),
+                   len(self.unplaced), len(self.groups), len(self.bonds),
                    '/'.join(self.desktop_allowed_ids) or '（无）'))
 
 
