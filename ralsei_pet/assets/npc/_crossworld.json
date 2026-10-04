@@ -415,14 +415,15 @@
       "scene_traits -> 【你周围】",
       "familiarity_seed -> Bonds + 【你认识谁】",
       "transmit -> 说完一句就告诉同场另一位（带署名）",
-      "LifeLoop -> 纯 NPC 零模型自发台词（内置对话池）"
+      "LifeLoop -> 纯 NPC 零模型自发台词（内置对话池）",
+      "LifeLoop -> 主线 NPC 自主开口（第86轮接入：走同一条 npc_speak；在场者感知 presence_hint；失败必 abort；让路闸注入同一 loop）"
     ],
     "not_yet": [
-      "主线 NPC 自主开口（需 7B，排队让路未接）",
       "相认台词",
       "跨作品场景特质（ruined/cosmic 零命中）"
     ],
-    "identity_blind_enforced": "`_npc_life_blocks()` 只注入显示名与熟络度，作品归属/版本/id/人设**一处未进 prompt**"
+    "identity_blind_enforced": "`_npc_life_blocks()` 只注入显示名与熟络度，作品归属/版本/id/人设**一处未进 prompt**（第86轮在场者感知 `presence_hint()` 同样只给显示名 + 粗方位）",
+    "round": 86
   },
   "round77": {
     "scene_import": {

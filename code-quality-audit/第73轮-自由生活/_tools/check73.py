@@ -780,9 +780,15 @@ check('F1 台账：五块已接线（roam + 第73轮四块），`visitor` 仍 sp
 check('F1b 每一项 wired 都带 `used_by`（谁在用）+ `wired_how`（接到什么程度）',
       all(CROSSJ.get(k, {}).get('used_by') and CROSSJ.get(k, {}).get('wired_how')
           for k in _wired))
-check('F2 `not_yet` 里明确列了「主线 NPC 自主开口」没做',
-      any('主线 NPC' in x and ('自主' in x or '自发' in x) for x in (_w.get('not_yet') or [])),
-      '%d 条' % len(_w.get('not_yet') or []))
+check('F2 ★★★ 台账随事实推进：「主线 NPC 自主开口」**已从 not_yet 移进 wired**'
+      '（第86轮接入）—— 判据**加强**：不仅要求它现在在 wired，还要求 not_yet 里**不再有**它'
+      '（防"接完了台账却忘了搬"，那种"写得漂亮但和事实脱节"的台账）',
+      any('主线 NPC' in x and ('自主' in x or '自发' in x)
+          for x in (CROSSJ['round73'].get('wired') or []))
+      and not any('主线 NPC' in x and ('自主' in x or '自发' in x)
+                  for x in (CROSSJ['round73'].get('not_yet') or [])),
+      'wired=%d not_yet=%d' % (len(CROSSJ['round73'].get('wired') or []),
+                               len(CROSSJ['round73'].get('not_yet') or [])))
 check('F3 ★ `scene_traits.wired_how` 必须**写明** ruined/cosmic 的覆盖实况'
       '（第77轮记 ruined 转正、第80轮记 bright/cosmic 转正 —— 不许含糊地宣称"全覆盖"）',
       all(k in (CROSSJ['scene_traits'].get('wired_how') or '')

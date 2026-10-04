@@ -16,6 +16,8 @@
 3. `transmit()` —— **信息传播**：把 A 记忆里的某条，**以 A 的署名**记进 B 的记忆。
 4. `LifeLoop` —— 自主开口的节拍（该谁开口 / 现在该不该开口）。
 5. `pick_line()` —— 纯 NPC 的**零模型**自发台词挑选（从 `_dialogue.json` 的池子里取，不重复）。
+6. `presence_hint()` / `where_of()` —— **在场者感知**（第86轮）：此刻这里还有谁 + 粗方位。
+   ★★ 只给"叫什么、大概在哪个方位" —— **绝不**注入作品归属 / 版本 / id / 人设。
 
 ---------------------------------------------------------------- 三条设计纪律
 
@@ -271,6 +273,97 @@ def trait_hint(traits):
         return ''
     return ('【你周围】这里' + '，'.join(descs)
             + '。（这是环境事实，不是台词 —— 按你自己的性子决定要不要理它，别逐条念。）')
+
+
+# ---------------------------------------------------------------- 在场者感知（第86轮）
+
+#: 相对方位词（按"你看的方向"分档）—— **粗档**，不给精确坐标。
+_WHERE_CN = {
+    'left': '左边', 'right': '右边', 'near': '近处', 'far': '远处',
+    'same': '就在旁边',
+}
+
+#: 判"横向够不够格说左右"的比例：`|dx| < |dy| * HORIZ_RATIO` ⇒ 视为**纯竖直**，
+#:  返回 `None`（不编左右）。★ 一处算 —— `where_of` 里只读这一个名字。
+HORIZ_RATIO = 0.5
+
+
+def where_of(dx, dy=0.0, near_px=120.0):
+    """把位移归一成**一个粗方位词**。`None` = 算不出来（不猜）。
+
+    ★ 为什么不给"左 37 像素"这种精确值：模型不需要像素，给了反而会
+      开始念坐标（"你在我左手边三十七像素处"）—— 那是把人话说成日志。
+      ⇒ 只给**够做社交判断**的粗档。判"够不够近"用 `near_px`（默认 120）；
+      判"横向够不够格说左右"用 `HORIZ_RATIO`（纯竖直位移**不编左右**）。
+    """
+    try:
+        dx = float(dx)
+        dy = float(dy)
+        near = float(near_px)
+    except (TypeError, ValueError):
+        return None
+    if near <= 0:
+        near = 120.0
+    ax, ay = abs(dx), abs(dy)
+    if ax < 1e-6 and ay < 1e-6:
+        return 'same'
+    if max(ax, ay) <= near:
+        return 'near'
+    # ★ 纯竖直位移（横向几乎没差）⇒ **不编左右**（`None`）。
+    #   踩过的坑：早先 `dx < 0 else right` 会把"正上方 500 像素"说成"右边"
+    #   —— 那不是粗档，那是**错档**。宁可不说，也不说反。
+    if ax < (ay * HORIZ_RATIO):
+        return None
+    return 'left' if dx < 0 else 'right'
+
+
+def presence_hint(speaker_id, others, positions=None, near_px=120.0,
+                  label_of=None):
+    """【此刻这里还有谁】—— **只给"有谁 + 粗方位"，不给作品归属/版本/id**。
+
+    :param speaker_id: 说话的这个人（会从 `others` 里剔除）
+    :param others: 在场其他人的 id 序列
+    :param positions: 可选 `{id: (dx, dy)}` —— **相对说话人**的偏移（宿主算）
+    :param label_of: 可选 `(id) -> 显示名`；不给 ⇒ 用 id 本身（退化但**不崩**）
+    :return: 一行提示；没有别人 / 非法输入 ⇒ `''`（**不产空块**）
+
+    ★★★ 与 `_crossworld.json#identity_blind.not_injected` 严格一致：
+      **绝不**注入对方的作品 / 版本 / npc id / 人设 —— 只给"他叫什么、在哪个方位"。
+      怎么判断来人是谁，是 NPC 自己的事（用户口径：怪物之间没有身份标识）。
+    ★ 顺序：说话人自己永远不出现；重复 id 去重；无位置信息时**不编方位**
+      （只说"这里还有 X"，不硬塞"在你左边"）。
+    """
+    if not isinstance(speaker_id, str) or not speaker_id.strip():
+        return ''
+    sid = speaker_id.strip()
+    seen = []
+    for o in (others or ()):
+        if not isinstance(o, str):
+            continue
+        o = o.strip()
+        if not o or o == sid or o in seen:
+            continue
+        seen.append(o)
+    if not seen:
+        return ''
+    pos = positions if isinstance(positions, dict) else {}
+    rows = []
+    for oid in seen[:6]:
+        nm = oid
+        if callable(label_of):
+            try:
+                nm = label_of(oid) or oid
+            except Exception:
+                nm = oid
+        w = None
+        if oid in pos:
+            p = pos.get(oid)
+            if isinstance(p, (tuple, list)) and len(p) >= 2:
+                w = where_of(p[0], p[1], near_px=near_px)
+        rows.append(nm + ('（在%s）' % _WHERE_CN[w]) if w in _WHERE_CN else nm)
+    return ('【此刻这里还有谁】' + '、'.join(rows)
+            + '。（只知道他叫什么、大概在哪个方位 —— 他是哪里来的、是哪个版本，'
+              '你并不知道，也别去猜。）')
 
 
 # ---------------------------------------------------------------- 熟络度
