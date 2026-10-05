@@ -542,6 +542,13 @@ def _bed_host(**fields):
     h.calls = []
     h.go_to_bed = lambda: (h.calls.append('bed') or True)
     h.wake_up = lambda: h.calls.append('wake')
+    # ★★★ 第91轮：`_bedtime_tick` ① 段新增了**跨天闸**（真机日志实锤：22:58 入睡时
+    #   `hour(22) >= BEDTIME_WAKE_HOUR(7)` 本就成立 ⇒ 睡 5 秒就醒），闸门输入是
+    #   "入睡那天" `_bedtime_sleep_date`。本套件模拟的"早上"取 `_at(day_offset=1)`，
+    #   因此**就寝日 = base_day（day 0）**。调用方给了显式值就尊重调用方
+    #   （下方 C8c 的负控制正是靠这个覆盖成"当天"）。
+    if '_bedtime_sleep_date' not in fields and getattr(h, '_bedtime_sleep', False):
+        h._bedtime_sleep_date = base_day.date()
     return h
 
 
@@ -606,6 +613,21 @@ ts_morning, d2 = _at(day_offset=1, hh=7, mm=5)
 r = _RP._bedtime_tick(h, ts_morning)
 check("C8 ★ 早上 7 点后、且是「就寝睡」⇒ 自动醒来（wake_up 被调）",
       ('wake' in h.calls), "calls=%r ret=%r" % (h.calls, r))
+
+# ---- C8c ★★ 第91轮新增：跨天闸的负控制 ----
+#   语义变更说明（不是"改断言迁就代码"，是**真 bug 修复**后断言随之更新）：
+#     旧判据只有 `hour >= BEDTIME_WAKE_HOUR`。就寝窗口是 23:00±10 分，
+#     而 22:58 的 hour=22 **本来就 >= 7** ⇒ 入睡后第一次判定就把自己叫醒。
+#     真机日志逐字：`22:58:00 [就寝] 到点…` → `22:58:05 [就寝] 早上 22 点，自动醒来`。
+#   新判据多一道日期闸：只有 `_bedtime_sleep_date` **早于今天**才算"第二天早上"。
+#   C8c 就是这条闸门本身的判据：入睡日 == "当天"时，即便已过 7 点也**不许**醒。
+h = _bed_host(_bedtime_sleep=True, is_sleeping=True)
+h._bedtime_sleep_date = base_day.date() + _dt.timedelta(days=1)   # 入睡日＝"今天"
+h._last_bedtime_check = 0.0
+r = _RP._bedtime_tick(h, ts_morning)
+check("C8c ★★ 第91轮负控制：入睡日就是「当天」⇒ 已过 7 点也**不许**醒"
+      "（否则 22:58 入睡会 5 秒后就醒）",
+      ('wake' not in h.calls), "calls=%r ret=%r" % (h.calls, r))
 h = _bed_host(_bedtime_sleep=False, is_sleeping=True)
 h._last_bedtime_check = 0.0
 r = _RP._bedtime_tick(h, ts_morning)

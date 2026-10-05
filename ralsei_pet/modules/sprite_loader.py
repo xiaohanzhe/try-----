@@ -174,7 +174,15 @@ class SpriteLoader:
             "defeat": ["spr_ralsei_defeat.png"],
             
             # 特殊状态动画
-            "sleep": ["spr_ralsei_walk_down_sleep_0.png"],
+            # ★★ 第91轮：原来只登记第 0 帧（磁盘上还有 _1），睡眠只有 1 帧 ⇒ 看不出
+            #   在"呼吸"，像一张卡住的静帧。补第 2 帧与 animations.json 保持一致。
+            "sleep": ["spr_ralsei_walk_down_sleep_0.png", "spr_ralsei_walk_down_sleep_1.png"],
+            # ★★★ 第91轮新增：**小憩走路**（`update_animation` 在 `is_sleeping_walk`
+            #   时拼出 `walk_{direction}_sleep`）。真机日志（第89轮 launch_after_rollback.log）
+            #   实测该名**未命中 15515 次**、全部静默回退 `walk_down` ⇒
+            #   "走路时睡觉的动画"这条从上线起就没生效过（`sprite_loader` 里只有 `sleep`，
+            #   名字对不上）。按同素材登记正确的组名。
+            "walk_down_sleep": ["spr_ralsei_walk_down_sleep_0.png", "spr_ralsei_walk_down_sleep_1.png"],
             "tea": ["spr_ralsei_tea_0.png", "spr_ralsei_tea_1.png", "spr_ralsei_tea_2.png"],
             "teacup_land": ["spr_teacup_ralsei_land_0.png"],
             "hatless_throw": ["spr_ralsei_hatless_throw.png"],

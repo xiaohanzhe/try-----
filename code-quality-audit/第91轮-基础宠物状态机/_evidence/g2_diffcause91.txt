@@ -1,0 +1,45 @@
+==============================================================================
+G2 字段级归因  （共 81 个套件；磁盘无输出 0 个）
+==============================================================================
+suite            base   now    fail  verdict            sha_old       sha_new
+------------------------------------------------------------------------------
+s1_anim_miss     17     17     0     DIFF:sha           c7bbd5a99d3a  84e6b29eea85
+s2_anim_json     40     40     0     DIFF:sha           b20cf8b5b95b  f75b87cbcc4d
+s3_alias_legacy  19     18     1     DIFF:sha+pass+fail 79ada05ee45e  7cd8a7613f32
+round8_anim      28     28     0     DIFF:sha           a9cb6c966915  05619e73085d
+dialog_lounge52  82     81     1     DIFF:sha+pass+fail 1eff847fc9c1  c9cdfd10c7ac
+sit_round54      53     53     0     DIFF:sha           1996ec35b720  5d7d590796a3
+soul_round55     44     44     0     DIFF:sha           5f5ecb409091  f2facb5dc43f
+npc_persona55    151    151    0     DIFF:sha           fc70dab47027  82303135d3d9
+npc_place56      139    139    0     DIFF:sha           92e8d090b059  5a67bcd2e7fe
+check67          152    152    0     DIFF:sha           c73f59ef793f  28af4c8933ae
+check73          88     88     0     DIFF:sha           3f01004c111e  edfb0c434916
+check77          31     29     2     DIFF:sha+pass+fail 1868005105a9  abc759183f6c
+check81          52     52     0     DIFF:sha           e5bd72bbf578  71055da5d4ef
+check91          26     29     0     DIFF:sha+pass      2d62c1ff74eb  42a7b773a448
+------------------------------------------------------------------------------
+IDENTICAL : 67
+DIFF 总数 : 14
+  ├ 只 sha 变（文本真变了）           : 10  ['s1_anim_miss', 's2_anim_json', 'round8_anim', 'sit_round54', 'soul_round55', 'npc_persona55', 'npc_place56', 'check67', 'check73', 'check81']
+  ├ 只 pass 变（记账与文本自相矛盾）  : 0  []
+  └ sha+pass 都变                     : 4  ['s3_alias_legacy', 'dialog_lounge52', 'check77', 'check91']
+
+==============================================================================
+逐个 DIFF 套件：直接拿 baseline.json 对应的旧文本行做对比
+  ※ 旧文本只有 `_out/<id>.baseline.txt` 这一份副本；
+    它若与 baseline.json 的 sha 对不上，说明**这份副本是陈旧的**。
+==============================================================================
+s1_anim_miss     baseline.txt 与 baseline.json 一致
+s2_anim_json     baseline.txt 与 baseline.json 一致
+round8_anim      baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+sit_round54      baseline.txt 与 baseline.json 一致
+soul_round55     baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+npc_persona55    baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+npc_place56      baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+check67          baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+check73          baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+check81          baseline.txt 与 baseline.json 一致
+s3_alias_legacy  baseline.txt 与 baseline.json 一致
+dialog_lounge52  baseline.txt 与 baseline.json 一致
+check77          baseline.txt 与 baseline.json ★ 不一致（副本陈旧）
+check91          baseline.txt 与 baseline.json 一致

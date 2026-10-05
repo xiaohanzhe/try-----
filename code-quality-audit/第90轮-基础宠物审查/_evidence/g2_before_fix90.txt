@@ -1,0 +1,25 @@
+第90轮 · 改 handle_jump 之前的 G2 全量回归快照
+命令：cd <仓库根> && C:\Python311\python.exe code-quality-audit/regress/run_all.py
+时间：2026-10-05 21:40
+代码基线：996e7a1（= c251a54 第87轮 + 第90轮审查报告提交）
+
+合计：PASS=4307  FAIL=2  套件=79
+（比第88轮基线少 1 个套件 —— `check88` 随回退消失，符合预期）
+
+【DIFF / FAIL 集合（= 回退后的既有状态，作为改前的比较基准）】
+  round8_anim       DIFF   原因：日志行「可交互物 8→0」+「记忆已从桌面搬入设备目录」INFO
+  soul_round55      DIFF   同上 + 多一行 item_interact 日志
+  npc_persona55     DIFF   同上 + W1 import 列表少了 modules.npc_interact（回退移除）
+  check67           DIFF   同上
+  check73           DIFF   同上（记忆继承 INFO 行）
+  check77           DIFF + 套件自身 FAIL=2
+                   失败项：B0 ut/uty 原作转储在位
+                   ★ 成因 = 环境假红：E:/Download/_extract61/_data/... 目录在位但文件不在
+                     ⇒ 判据从 SKIP 分支落到 FAIL 分支（基线里是 SKIP）
+
+【判读】
+上述 6 个套件的差异**全部由「回退到第87轮」+「本机环境（E盘/记忆迁移）」造成**，
+与本轮的 handle_jump 改动无关。
+⇒ 因此本轮**不重固基线**（重固会把环境噪声一起固化，反而可能盖住真回归），
+  改用「改前 DIFF 集合 == 改后 DIFF 集合」作为无回归判据；
+  只要改后**没有新增** FAIL/DIFF，即证明 handle_jump 的改动没有碰坏任何既有套件。

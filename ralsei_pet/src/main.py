@@ -7704,12 +7704,23 @@ class RalseiPet(QMainWindow):
         # 计算初始垂直速度：确保能跳过窗口边缘
         g = self.gravity
         
-        # 计算初始垂直速度：使用抛物线公式 dy = vy0 * t - 0.5 * g * t²
-        vy0 = (delta_y + 0.5 * g * self.jump_duration * self.jump_duration + 50) / self.jump_duration  # 增加50像素的额外高度
+        # ★★ 第90轮修复（P0）：**竖直方向的坐标系**。
+        #   `self.jump_start_pos` 是 Qt 屏幕坐标 —— **Y 向下增大**。
+        #   旧写法 `y = y0 + vy0*t - 0.5*g*t²`（配 `vy0 = (Δy + 0.5gT² + 50)/T`）
+        #   是标准 **Y-up** 弹道公式 ⇒ 竖直加速度 `-0.5g t²` 恒朝**屏幕上方**
+        #   （等于反重力），数学上**永远产生不了“先上后下”的抛物线**：
+        #     · Δy > -0.5gT² ⇒ vy0 > 0，宠物先朝屏幕**下方**沉（同高跳先沉 90px）；
+        #     · Δy ≤ -0.5gT² ⇒ vy0 ≤ 0，全程单调加速上升，顶点压根不存在；
+        #     · `+50` 让公式落点**恒定**比目标低 50px，再靠末帧硬吸附补 ⇒ 落地跳变 50px。
+        #   （数值仿真：code-quality-audit/第90轮-基础宠物审查/_evidence/sim_jump90.py）
+        #   改为屏幕坐标下的正确形式，`vy0` **负 = 初速朝上**（与 `handle_fall` 的
+        #   `_vy0` 同一约定）：此时 y(T) == y0 + Δy **恰好成立**，不再需要魔数，
+        #   也不再需要末帧吸附来“补”落点。
+        vy0 = (delta_y - 0.5 * g * self.jump_duration * self.jump_duration) / self.jump_duration
         
         # 计算当前时间的位置
         x = self.jump_start_pos.x() + vx * elapsed
-        y = self.jump_start_pos.y() + vy0 * elapsed - 0.5 * g * elapsed * elapsed
+        y = self.jump_start_pos.y() + vy0 * elapsed + 0.5 * g * elapsed * elapsed
         
         # 检查跳跃过程中是否会穿透楼层
         current_pos = QPoint(int(x), int(y))
@@ -9136,6 +9147,9 @@ class RalseiPet(QMainWindow):
         if getattr(self, 'is_sleeping', False):
             # 已经是小憩睡 ⇒ 只升级标记，不重放入睡台词
             self._bedtime_sleep = True
+            # ★ 第91轮：升级路径也要补"入睡日期"，否则跨天闸拿到 None ⇒ 永不自动醒。
+            import datetime as _dt
+            self._bedtime_sleep_date = _dt.datetime.now().date()
             _log.info("[就寝] 由小憩升级为就寝睡")
         else:
             self.enter_sleep_mode(bedtime=True)
@@ -9157,9 +9171,23 @@ class RalseiPet(QMainWindow):
             dt_now = _dt.datetime.fromtimestamp(now_ts)
 
             # ---- ① 早上自动醒（**只**对"就寝睡"生效；小憩不自动醒）----
+            # ★★★ 第91轮修复（真机日志实锤）：**必须再加一道"跨过一天"的日期闸**。
+            #   就寝时刻是 23:00±10 分（BEDTIME_HOUR=23 / JITTER=10），而醒来的判据只有
+            #   `hour >= BEDTIME_WAKE_HOUR(7)` —— 22:58 入睡时 hour=22 本来就 >= 7
+            #   ⇒ 入睡后**第一次** `_bedtime_tick`（5 秒后）就把自己叫醒。
+            #   真机日志（第89轮 launch_after_rollback.log）逐字：
+            #     22:58:00 [就寝] 到点（目标 22:58），回房间睡觉
+            #     22:58:00 [就寝] 由小憩升级为就寝睡
+            #     22:58:05 [就寝] 早上 22 点，自动醒来      ← 同一分钟
+            #   ⇒ "就寝睡"永远只持续 5 秒，夜间作息形同虚设。
+            #   闸门口径：只有 `_bedtime_sleep_date`（入睡那天）**严格早于今天**才算
+            #   "第二天早上"。跨零点也正确：23:05 入睡 → 次日 00:30 日期变了但
+            #   hour=0 < 7 ⇒ 继续睡；次日 07:00 ⇒ 醒。同一天无论几点都不醒。
+            _slept_on = getattr(self, '_bedtime_sleep_date', None)
+            _next_morning = (_slept_on is not None) and (dt_now.date() > _slept_on)
             if getattr(self, '_bedtime_sleep', False) and getattr(self, 'is_sleeping', False) \
-                    and dt_now.hour >= int(self.BEDTIME_WAKE_HOUR):
-                _log.info("[就寝] 早上 %02d 点，自动醒来", dt_now.hour)
+                    and _next_morning and dt_now.hour >= int(self.BEDTIME_WAKE_HOUR):
+                _log.info("[就寝] 次日 %02d 点，自动醒来", dt_now.hour)
                 self.wake_up()
                 return False
 
@@ -9198,11 +9226,25 @@ class RalseiPet(QMainWindow):
         # ★ 第52轮：区分"就寝睡"与"小憩睡" —— 只有就寝睡才会在早上
         #   `BEDTIME_WAKE_HOUR` 自动醒（见 `_bedtime_tick`）。
         self._bedtime_sleep = bool(bedtime)
+        # ★★★ 第91轮：记下**入睡那天**，供 `_bedtime_tick` ① 的"跨天闸"使用。
+        #   没有它的话 `hour >= BEDTIME_WAKE_HOUR(7)` 在 22:58 入睡时**立刻**成立
+        #   ⇒ 睡 5 秒就醒（真机日志实锤，详见 `_bedtime_tick` 注释）。
+        if bedtime:
+            import datetime as _dt
+            self._bedtime_sleep_date = _dt.datetime.now().date()
         # 清理睡眠迷糊状态
         for attr in ('_sleep_stir_time', '_sleep_stir_count'):
             if hasattr(self, attr):
                 delattr(self, attr)
-        self.change_animation("idle", force=True)  # force=True 确保即使冷却期内也切换
+        # ★★ 第91轮修复（用户口径）：「**我记得他睡觉的这个动画不是这个吧，用另一个**」。
+        #   原来这里播的是 `"idle"`（睁眼站着待机）—— 所以用户看到的是**站着不动**，
+        #   也就是他说的"站桩"。而 `sprite_loader` 里**早就登记了 `"sleep"` 组**
+        #   （`spr_ralsei_walk_down_sleep_*`，闭眼 + 头顶 zzz）却从未被调用 —— 是死数据。
+        #   `force=True`：睡眠是状态切换，必须无视冷却期直接切过去。
+        #   ⚠️ 只改这里**不够**：`update_animation`（另一个 167ms 定时器）没有 is_sleeping
+        #   分支，会落进"静止分支"算出 idle 并以 `force=True` 覆盖回来。
+        #   那一处已在第91轮一并补上 `elif self.is_sleeping: new_animation = "sleep"`。
+        self.change_animation("sleep", force=True)  # force=True 确保即使冷却期内也切换
         # ★★ 第52轮：`zzz... 晚安，做个好梦！` 三句内置台词**已迁到事件通道**。
         #   用户口径逐字：「还有把他内置的对话去掉！！！！」／
         #   「记住，聊天系统全权由7B接管，别放内置对话了，太木讷了」。
@@ -12798,6 +12840,16 @@ class RalseiPet(QMainWindow):
             new_animation = "item"
         elif self.is_spellcasting:
             new_animation = "spell"
+        # ★★★ 第91轮新增：**睡眠**必须在这里钉住 `sleep`。
+        #   为什么必须加（不改这里＝改了等于没改）：本函数是**独立的 167ms 定时器**，
+        #   与 `update_movement` 无关。宠物睡着时 `update_movement` 在睡眠分支 `return`，
+        #   但本函数照跑，且下方"静止分支"会算出 `new_animation = "idle"` 再以
+        #   `force=True`（见 13030 行 `_use_force = ... or new_animation == 'idle'`）
+        #   调 `change_animation` —— `sleep` 与 `idle` 优先级同为 1，挡不住 ⇒
+        #   `enter_sleep_mode` 刚播上的睡眠帧会在 ~1 秒内被覆盖回站立 idle。
+        #   （症状即用户看到的"睡着＝站着不动"。）
+        elif self.is_sleeping:
+            new_animation = "sleep"
         # ===== 表演/情绪动画不再由 update_animation 自动选择 =====
         # laugh/roll/slide/tea/victory/dance/sing/pose/wave 等一律由用户交互或 AI
         # 通过 play_animation_once 触发，避免"走着走着突然坐到地上跳舞"。
