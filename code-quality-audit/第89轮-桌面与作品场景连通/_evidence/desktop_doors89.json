@@ -1,0 +1,88 @@
+{
+  "scene_id": "desktop",
+  "original_room_id": -1,
+  "n_doors": 8,
+  "doors": [
+    {
+      "id": "desk_door_ch1",
+      "src": "obj_doorA",
+      "sprite": "objs/spr_doorA_0.png",
+      "pos": [
+        56,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_ch2",
+      "src": "obj_doorB",
+      "sprite": "objs/spr_doorB_0.png",
+      "pos": [
+        86,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_ch3",
+      "src": "obj_doorC",
+      "sprite": "objs/spr_doorC_0.png",
+      "pos": [
+        116,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_ch4",
+      "src": "obj_doorD",
+      "sprite": "objs/spr_doorD_0.png",
+      "pos": [
+        146,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_ch5",
+      "src": "obj_doorE",
+      "sprite": "objs/spr_doorE_0.png",
+      "pos": [
+        176,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_ut",
+      "src": "obj_doorF",
+      "sprite": "objs/spr_doorF_0.png",
+      "pos": [
+        206,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_uty",
+      "src": "obj_doorW",
+      "sprite": "objs/spr_doorW_0.png",
+      "pos": [
+        236,
+        96
+      ],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_oneshot",
+      "src": "obj_doorX",
+      "sprite": "objs/spr_doorX_0.png",
+      "pos": [
+        266,
+        96
+      ],
+      "depth": 0
+    }
+  ],
+  "note": "门的 pos 是**世界坐标左上角**（渲染时 × scale 后作为 drawPixmap 的 rect 左上角）。"
+}

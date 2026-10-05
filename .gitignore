@@ -43,6 +43,12 @@ code-quality-audit/regress/_out/
 
 # 各轮次的临时侦察/调试日志（只留可复算的脚本 + 报告，不留散落日志）
 code-quality-audit/*/_recon/
+# 第90轮加：真机抓屏 / 监控循环产出的**原始截图**不入库。
+# 理由（2026-10-05）：本仓库是**公开仓库**，而抓屏帧往往含整个桌面（文件名、图标、壁纸、
+# 浏览器状态）—— 属于用户隐私，不适合推到公开远端；且这些图都能由同目录下的脚本复跑再生。
+# ⇒ 只入库「可复算的脚本 + 文本证据 + 报告」，截图本地保留。
+code-quality-audit/*/_evidence/shots/
+code-quality-audit/*/_scratch/
 # 自检脚本的临时沙箱（临时记忆文件等，绝不该入库）
 code-quality-audit/*/_evidence/tmp*/
 code-quality-audit/*/_evidence/_tmp*/

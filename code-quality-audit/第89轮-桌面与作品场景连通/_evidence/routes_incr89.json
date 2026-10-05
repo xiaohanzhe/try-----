@@ -1,0 +1,118 @@
+{
+  "total_routes": 451,
+  "n_desktop": 8,
+  "routes": [
+    {
+      "to": "ch1.kris_room.kris_s_room",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 A 号门进入「第一章 · 黑暗世界」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "A",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "A",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 443
+    },
+    {
+      "to": "ch2.kris_room.kris_s_room",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 B 号门进入「第二章 · 赛博世界」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "B",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "B",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 444
+    },
+    {
+      "to": "ch3.dark_world.dark_world",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 C 号门进入「第三章 · 深夜电视」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "C",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "C",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 445
+    },
+    {
+      "to": "ch4.kris_room.kris_s_room",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 D 号门进入「第四章 · 预言」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "D",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "D",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 446
+    },
+    {
+      "to": "ch5.kris_room.kris_s_room",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 E 号门进入「第五章 · 希望与梦想之园」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "E",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "E",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 447
+    },
+    {
+      "to": "ut.rooms.room_start",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 F 号门进入「Undertale」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "F",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "F",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 448
+    },
+    {
+      "to": "uty.rooms.rm_intro",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 W 号门进入「Undertale Yellow（黄魂）」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "W",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "W",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 449
+    },
+    {
+      "to": "oneshot.barrens.Blue",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 X 号门进入「OneShot」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "X",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "X",
+        "kind": "desktop_portal",
+        "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
+      },
+      "_order": 450
+    }
+  ]
+}
