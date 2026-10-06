@@ -462,12 +462,17 @@ for _n in ast.walk(_um[0]) if _um else []:
         _um_calls_ln.append(_n.lineno)
     if isinstance(_n, ast.Return):
         _um_rets.append(_n.lineno)
+# ⚠️ 第92轮：输出**不再打印行号** —— 行号会随任何一次"上面插了几行注释"而漂移，
+#    于是本判据每轮都报假 DIFF（第92轮实测：基线记 6699、实际 6347，差 352 行）。
+#    判据本身（"有调用点" / "调用点早于第一个 return"）**逐字未改**，只把**证据形态**
+#    从"行号"换成"计数 + 布尔"（同样可判、且不漂）。
 check('W7 ★★ `update_movement` 真调 `_npc_roam_tick`（挂在主循环上）',
-      bool(_um_calls_ln), '调用点=%s' % _um_calls_ln)
+      bool(_um_calls_ln), '调用点数=%d' % len(_um_calls_ln))
 check('W7b ★★ 且排在**所有 `return`（早退分支）之前** —— 宠物睡着时世界照样转',
       bool(_um_calls_ln) and bool(_um_rets) and min(_um_calls_ln) < min(_um_rets),
-      'call@%s first_return@%s' % (_um_calls_ln or None,
-                                   min(_um_rets) if _um_rets else None))
+      'call_before_first_return=%s (calls=%d returns=%d)'
+      % (bool(_um_calls_ln and _um_rets and min(_um_calls_ln) < min(_um_rets)),
+         len(_um_calls_ln), len(_um_rets)))
 
 # ★ 开关判据：`_npc_roam_tick` 必须**读** NPC_AUTONOMOUS_MOVE（否则开关是摆设）
 _tick_src = ast.get_source_segment(_msrc, _tick[0]) if _tick else ''

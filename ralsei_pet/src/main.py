@@ -5285,6 +5285,16 @@ class RalseiPet(QMainWindow):
         self.current_speed_y = 0
         self.acceleration_x = 0
         self.acceleration_y = 0
+
+        # ★★ 第92轮：**位移小数余量**（subpixel carry）—— 声明在这里而不是靠 getattr
+        #    兜底，与"_lounge_* 字段集中声明"同一纪律：属性缺失要一眼可见。
+        #    语义 = 上一帧被 `int(round())` 丢掉的那点位移，结转给下一帧。
+        #    为什么必须有它（真机取证）：`speed` 的语义是 **px/帧**，而移动定时器是
+        #    30ms/帧、每帧位移常低于 1px；取整直接丢弃**且不结转** ⇒ 位移恒为 0，
+        #    但 `is_moving` 仍为 True、walk_* 动画照播。实测 178s / 5047 次 `move()`
+        #    里 **91.9% 是零位移**、平均位移 **3.9px/s** —— 就是用户报的"站桩"。
+        self._subpixel_x = 0.0
+        self._subpixel_y = 0.0
         
         # 添加运动相关的状态变量
         self.is_moving = True
@@ -5746,21 +5756,30 @@ class RalseiPet(QMainWindow):
         
         # 调整移动速度，使动作更轻柔，符合Ralsei的性格
         # 根据情绪调整速度范围
-        if dominant_emotion == 'excited' or dominant_emotion == 'energetic':
-            # 兴奋或精力充沛时移动稍快
-            self.speed = random.uniform(self.min_speed * 0.7, self.max_speed * 0.9)
-        elif dominant_emotion == 'shy' or dominant_emotion == 'peaceful':
-            # 害羞或平静时移动更慢
-            self.speed = random.uniform(self.min_speed * 0.3, self.max_speed * 0.5)
-        elif dominant_emotion == 'curious':
-            # 好奇时移动速度适中，探索欲更强
-            self.speed = random.uniform(self.min_speed * 0.5, self.max_speed * 0.7)
-        elif dominant_emotion == 'sad' or dominant_emotion == 'tired':
-            # 悲伤或疲惫时移动很慢
-            self.speed = random.uniform(self.min_speed * 0.2, self.max_speed * 0.4)
-        else:
-            # 其他情绪时的默认速度
-            self.speed = random.uniform(self.min_speed * 0.4, self.max_speed * 0.6)
+        # ★★ 第92轮修复（"走不动"的第二层）：速度**改为在配置区间 [min_speed, max_speed]
+        #    内按情绪取位**，而不是拿 (min, max) 去乘 0.2~0.9 的系数。
+        #    原系数下沿低到 0.2 ⇒ 配置 min_speed=3.0 时实际抽到 **0.91px/帧（=30px/s）**，
+        #    叠加取整丢失后真机平均位移只有 **3.9px/s** —— 用户："他在这里站桩呢？？？"
+        #    为什么是"取位"而不是"整体上调系数"：`speed` 的单位是 **px/帧**（GMS2FPS=30），
+        #    配置区间（3~8）换算即 **100~264px/s**，正好是原作"有明确目的地走过去"的量级；
+        #    乘系数会把速度压到区间**之外**，等于配置声明的量纲根本没生效。
+        #    `p` 的含义：0 = 贴 min_speed，1 = 贴 max_speed（保留"兴奋最快 / 疲惫最慢"排序）。
+        _speed_pos = {
+            'excited':   (0.50, 0.90),
+            'energetic': (0.50, 0.90),
+            'curious':   (0.35, 0.75),
+            'happy':     (0.30, 0.70),
+            'peaceful':  (0.22, 0.60),
+            'shy':       (0.18, 0.55),
+            'sad':       (0.08, 0.40),
+            'tired':     (0.05, 0.35),
+        }
+        _pos_lo, _pos_hi = _speed_pos.get(dominant_emotion, (0.25, 0.65))
+        _speed_span = float(self.max_speed) - float(self.min_speed)
+        self.speed = random.uniform(
+            float(self.min_speed) + _speed_span * _pos_lo,
+            float(self.min_speed) + _speed_span * _pos_hi,
+        )
         
         # 获取屏幕几何信息（瞬移防治：用多显示器虚拟桌面矩形，而不是只认主屏的
         # availableGeometry()——副屏上会被夹到主屏坐标系里，表现为"突然被拽走一大段"）
@@ -5870,6 +5889,10 @@ class RalseiPet(QMainWindow):
         # 开始移动
         self.is_moving = True
         self.moving_duration = 0
+        # ★ 第92轮：换目标时清掉位移余量 —— 上一段剩下的零点几像素不该带到新方向上
+        #   （量级虽小，但"状态机换段"必须显式归零，否则行为不可复现）。
+        self._subpixel_x = 0.0
+        self._subpixel_y = 0.0
         
     # ------------------------------------------------------------------
     #  场景渲染层（第44轮 P1）—— 相机跟随 + 绘制指令消费
@@ -6636,8 +6659,17 @@ class RalseiPet(QMainWindow):
                 # 根据距离动态调整速度，使用更高效的分段函数
                 if distance_sq > 10000:  # 100^2
                     target_move_speed = self.speed * 1.0
-                elif distance_sq < 2500:  # 50^2
-                    target_move_speed = self.speed * (distance / 50)
+                elif distance_sq < 2500:  # 50^2 —— 近距离减速（"轻轻走到"）
+                    # ★★ 第92轮修复（"走不动"的第三层）：**减速必须设下限**。
+                    #   原式 `speed * (distance/50)` 在 distance < 25px 时把目标速度压到
+                    #   0.5px/帧**以下** ⇒ `int(round())` 每帧取整为 0 ⇒ 位移恒 0；
+                    #   而"到达"阈值只有 max(speed*3, 30)=30px ⇒ **永远差最后几步**：
+                    #   真机实测有一段 **165s 只挪了 179px**，全程 `is_moving=True` 播走路动画
+                    #   （91轮屏幕监控看到的"2.8 秒换一次 walk 动画、位置只动 4px"就是这个
+                    #   停滞态）。下限 1px/帧（≈33px/s）保证最后 50px 一定走完并触发到达。
+                    #   注：`move_distance` 之后仍被 `self.speed` 夹住，所以下限**不会**
+                    #   让"本来就慢"的疲惫态反而变快（speed<1 时下限不生效，靠小数结转发力）。
+                    target_move_speed = max(self.speed * (distance / 50.0), 1.0)
                 else:
                     target_move_speed = self.speed * 0.8
                 
@@ -6674,7 +6706,14 @@ class RalseiPet(QMainWindow):
                         self._cached_mood_factor = 1.0
                     self._last_mood_check = current_time
                 
-                target_final_speed = target_move_speed * self._cached_mood_factor
+                # ★★ 第92轮修复（"走不动"的第三层，补第二道下限）：
+                #   情绪因子最小 0.4（tired）—— 它是在**上面那道下限之后**再乘的，
+                #   于是 `max(比例, 1.0) * 0.4 = 0.4px/帧` 又会掉到 0.5 以下，
+                #   配上 `int(round())` 依旧每帧位移 0（真机实测就是这一步把宠物钉住）。
+                #   口径统一为："**只要在走，每帧至少 1px（≈33px/s）**"，与"温柔/疲惫"
+                #   不冲突 —— 疲惫只体现在"取位靠 min_speed"（见 `_speed_pos`），
+                #   不是慢到肉眼看不见。配合 A 段的"小数结转"，位移单调、必定到达。
+                target_final_speed = max(target_move_speed * self._cached_mood_factor, 1.0)
                 
                 # 移除速度波动，避免抽搐
                 if not hasattr(self, '_speed_variation'):
@@ -6693,11 +6732,23 @@ class RalseiPet(QMainWindow):
                 move_distance = min(distance, base_move_distance, max_move_distance)
                 
                 # 计算新位置，使用浮点数计算以提高精度
-                new_x = current_pos.x() + direction_x * move_distance
-                new_y = current_pos.y() + direction_y * move_distance
-                # 四舍五入到整数，避免坐标跳动
-                new_x = int(round(new_x))
-                new_y = int(round(new_y))
+                # ★★ 第92轮修复（"走不动/站桩"的**直接元凶**）：位移必须**结转小数余量**。
+                #   原实现 `int(round(pos + 位移))` 把每帧不足 0.5px 的位移整个丢掉，
+                #   且丢掉的量**不结转**（下一帧仍从 `current_pos` 重算同一个值）
+                #   ⇒ 当速度落到 0.5px/帧以下时**每帧位移恒为 0**，而 `is_moving` 仍为 True、
+                #   walk_* 照播 —— 这就是"他在这里站桩呢？？？"。
+                #   修法 = 标准 subpixel 累积：把取整丢掉的分数部分留给下一帧，于是
+                #   `speed` 的 px/帧 语义真实生效（0.9px/帧 就是 0.9px/帧，不再被抹成 0）。
+                _raw_x = current_pos.x() + direction_x * move_distance + self._subpixel_x
+                _raw_y = current_pos.y() + direction_y * move_distance + self._subpixel_y
+                new_x = int(round(_raw_x))
+                new_y = int(round(_raw_y))
+                # 结转（`round` 的误差恒在 ±0.5 内；一旦越界说明窗口被屏幕夹紧/坐标异常，
+                # 直接清零，免得余量越攒越大反向把宠物拽回去）
+                _carry_x = _raw_x - new_x
+                _carry_y = _raw_y - new_y
+                self._subpixel_x = _carry_x if -1.0 < _carry_x < 1.0 else 0.0
+                self._subpixel_y = _carry_y if -1.0 < _carry_y < 1.0 else 0.0
                 
                 # 优化：缓存屏幕几何信息
                 # 修复（参考小鲸鱼 widget 的"始终夹在可视区"）：用多屏虚拟矩形而非主屏，
@@ -6769,6 +6820,9 @@ class RalseiPet(QMainWindow):
                 # 重置速度
                 self.current_speed_x = 0
                 self.current_speed_y = 0
+                # ★ 第92轮：到达即清位移余量（下一段从干净状态起步）
+                self._subpixel_x = 0.0
+                self._subpixel_y = 0.0
                 # ===== 只有【非躲猫猫/施法关键移动】时才切 idle =====
                 _critical_move = False
                 if getattr(self, '_spell_stage', None) in ('walking',):

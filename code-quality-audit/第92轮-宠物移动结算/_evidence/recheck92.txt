@@ -1,0 +1,84 @@
+==========================================================================
+第92轮复检：位移结算修复（"走不动/站桩"）
+==========================================================================
+[PASS] ① 语法：`main.py` 可被 AST 解析（用 ast.parse，不写 .pyc）
+[PASS] ① 语法：`run_all.py` 可被 AST 解析
+[PASS] ① 语法：`check92.py` 可被 AST 解析
+[PASS] ① 语法：`mutate92.py` 可被 AST 解析
+[PASS] ① 语法：`probe92.py` 可被 AST 解析
+[PASS] ② 结构：`main.py` 里 `update_movement` 仍在
+[PASS] ② 结构：`main.py` 里 `generate_new_move_target` 仍在
+[PASS] ② 结构：`main.py` 里 `init_movement` 仍在
+[PASS] ② 结构：`main.py` 里 `handle_jump` 仍在
+[PASS] ② 结构：`main.py` 里 `_virtual_screen_rect` 仍在
+[PASS] ② 结构：文件行数 = 14507（未出现"粘连成一行"）
+[PASS] ② 结构：`main.py` 顶层 `class` 数量 = 2（≥1）
+[PASS] ② 结构：`run_all.py` 里 `check92` 已登记进 SUITES
+[PASS] ② 结构：SUITES 条目数 = 82（应为 82 = 81 + check92）    n=82
+[PASS] ③ 编码：`main.py` 无 BOM / 无 U+FFFD（bytes=827281）    BOM=False FFFD=0
+[PASS] ③ 编码：`run_all.py` 无 BOM / 无 U+FFFD（bytes=196676）    BOM=False FFFD=0
+[PASS] ③ 编码：`check92.py` 无 BOM / 无 U+FFFD（bytes=28479）    BOM=False FFFD=0
+[PASS] ③ 编码：`mutate92.py` 无 BOM / 无 U+FFFD（bytes=6246）    BOM=False FFFD=0
+[PASS] ③ 编码：`probe92.py` 无 BOM / 无 U+FFFD（bytes=5435）    BOM=False FFFD=0
+[PASS] ③ 编码：`baseline.json` 无 BOM / 无 U+FFFD（bytes=13584）    BOM=False FFFD=0
+[PASS] ③ 编码：`analyze92.py` 无 BOM / 无 U+FFFD（bytes=4568）    BOM=False FFFD=0
+[PASS] ④ 恒真判据复查：`check92.py` 里没有 `check(..., <常量>)` 形态的裸判据    found=[]
+[PASS] ④ 恒真判据复查：变异清单里除负控制 M0 外没有"不指定期望判据"的条目    mutations=11 issues=[]
+[PASS] ④ 恒真判据复查：变异数 = 11（≥10）
+[PASS] ⑤ 逐令牌回验：`self._subpixel_x = 0.0` 在 `main.py` 里出现 3 次（≥3）    count=3
+[PASS] ⑤ 逐令牌回验：`self._subpixel_y = 0.0` 在 `main.py` 里出现 3 次（≥3）    count=3
+[PASS] ⑤ 逐令牌回验：`_raw_x` 在 `main.py` 里出现 3 次（≥1）    count=3
+[PASS] ⑤ 逐令牌回验：`_raw_y` 在 `main.py` 里出现 3 次（≥1）    count=3
+[PASS] ⑤ 逐令牌回验：`_carry_x` 在 `main.py` 里出现 3 次（≥1）    count=3
+[PASS] ⑤ 逐令牌回验：`_carry_y` 在 `main.py` 里出现 3 次（≥1）    count=3
+[PASS] ⑤ 逐令牌回验：`_speed_pos` 在 `main.py` 里出现 3 次（≥1）    count=3
+[PASS] ⑤ 逐令牌回验：`+ self._subpixel_x` 在 `main.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`new_x = int(round(_raw_x))` 在 `main.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`new_y = int(round(_raw_y))` 在 `main.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`self._subpixel_x = _carry_x if -1.0 < _carry_x < 1.0` 在 `main.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`target_move_speed = max(self.speed * (distance / 50.` 在 `main.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`target_final_speed = max(target_move_speed * self._c` 在 `main.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`CHECK92_MUTATION_HARNESS` 在 `check92.py` 里出现 2 次（≥1）    count=2
+[PASS] ⑤ 逐令牌回验：`'id': 'check92'` 在 `run_all.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`def _resolve(` 在 `check92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`def _replay(` 在 `check92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`_SPEED_MEASURED = 0.91` 在 `check92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`_MOOD_MEASURED = 0.4` 在 `check92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`A4b` 在 `check92.py` 里出现 2 次（≥1）    count=2
+[PASS] ⑤ 逐令牌回验：`def _old_ramp_step(` 在 `check92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`def _new_ramp_step(` 在 `check92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验：`PROBE_MODE` 在 `probe92.py` 里出现 4 次（≥1）    count=4
+[PASS] ⑤ 逐令牌回验：`_spy_move` 在 `probe92.py` 里出现 2 次（≥1）    count=2
+[PASS] ⑤ 逐令牌回验：`A/B 对照` 在 `probe92.py` 里出现 1 次（≥1）    count=1
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.min_speed * 0.7` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.min_speed * 0.3` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.min_speed * 0.5` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.min_speed * 0.2` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.min_speed * 0.4` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.max_speed * 0.9` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.max_speed * 0.5` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.max_speed * 0.7` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.max_speed * 0.4` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `self.max_speed * 0.6` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `new_x = current_pos.x() + direction_x * move_distanc` 已归零    count=0
+[PASS] ⑤ 逐令牌回验（删除项）：旧写法 `new_y = current_pos.y() + direction_y * move_distanc` 已归零    count=0
+[PASS] ⑤ 逐令牌回验：取位对 `(0.50, 0.90)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.35, 0.75)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.30, 0.70)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.22, 0.60)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.18, 0.55)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.08, 0.40)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.05, 0.35)` 在盘
+[PASS] ⑤ 逐令牌回验：取位对 `(0.25, 0.65)` 在盘
+[PASS] ⑥ 登记：`check92` 同时在 SUITES 与 baseline 里    decl=True base=True
+[PASS] ⑥ 登记：SUITES 与 baseline 双向零差异（decl=82 base=82）    only_decl=[] only_base=[]
+  ⑥ 工作区（`git status --porcelain`）变更条目 = 5
+      M code-quality-audit/regress/baseline.json
+      M code-quality-audit/regress/run_all.py
+      M code-quality-audit/第79轮-自主生活驻留层/_tools/check79.py
+      M ralsei_pet/src/main.py
+     ?? code-quality-audit/第92轮-宠物移动结算/
+[PASS] ⑥ 工作区：只改了本轮预期文件（无临时/备份混入）    n=5 allow=['第92轮-宠物移动结算', 'ralsei_pet/src/main.py', 'regress/run_all.py', 'regress/baseline.json', '第79轮-自主生活驻留层/_tools/check79.py']
+==========================================================================
+第92轮复检：PASS=72 FAIL=0
+==========================================================================

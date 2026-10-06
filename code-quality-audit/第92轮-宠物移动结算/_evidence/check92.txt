@@ -1,0 +1,48 @@
+---- [判据点 1] A 位移必须结转小数余量（"走不动"的直接元凶） ----
+[PASS] A0 被测函数都在盘上（update_movement / generate_new_move_target / init_movement / handle_jump）
+[PASS] A1 `init_movement` 显式预声明 `_subpixel_x/_subpixel_y = 0.0`（不走 getattr 兜底）    x=True y=True
+[PASS] A2 `new_x` 的取整参数里含 `self._subpixel_x`（位移在取整前把余量加回去）    attrs=['_subpixel_x', 'x']
+[PASS] A3 `new_y` 的取整参数里含 `self._subpixel_y`    attrs=['_subpixel_y', 'y']
+[PASS] A4 `update_movement` 里有 `self._subpixel_x = <带界表达式>` 的结转赋值    n=1
+[PASS] A5 结转表达式是**双边有界**的 `IfExp(Compare)`（防余量累积失控）    kind=IfExp
+[PASS] A4b ★ 结转值真的是"取整残差"（`_raw - new_x` 形态），不是常量 0    carry_names=['_carry_x']
+[PASS] A5b 边界真的生效（源码表达式执行：0.3 → 0.3，5.8 → 0.0）
+[PASS] A6 ★鉴别力：**旧公式**（不结转）在实测参数下 300 帧位移恒为 0    old=0px
+[PASS] A7 ★鉴别力：**新公式**（结转）同参数下必须走出可见位移（≥100px）    new=109px
+[PASS] A8 A6/A7 成对可分（两者结果不同，判据不是恒真）
+---- [判据点 2] B 近距减速必须有下限（否则永远差最后几步） ----
+[PASS] B1 近距减速分支改成了 `max(<比例式>, <下限>)` 形态    args=2
+[PASS] B2 下限是**数值常量且 ≥ 1.0 px/帧**（≈33px/s，保证最后一段一定走完）    floor=1.0
+[PASS] B3 比例关系没被丢掉（max 第一参数仍含 `self.speed` 与 `distance`）
+[PASS] B4 ★鉴别力：旧式在 20px 处（实测参数）每帧位移取整后为 0（=永远到不了）    old_step@20px=0
+[PASS] B5 ★鉴别力：旧式在 40px 处（实测参数）**同样**为 0 —— 影响面不止 20px    old_step@40px=0
+[PASS] B6 正控制：新式在 40px 处（含情绪因子）每帧位移绝对值 ≥1px —— 下限不被情绪因子吃掉    new_step@40px=-1
+[PASS] B6b ★鉴别力：**拆掉第二道下限**（只有第一道）时同场景仍为 0 ⇒ 第二个修复不可省    no2nd@40px=0
+[PASS] B7 ★★ `target_final_speed` 在**情绪因子之后**再夹一道 ≥1.0 的下限    floor=1.0
+[PASS] B8 情绪因子真的参与运算（免得 B7 守的是一个恒等于常量的表达式）
+---- [判据点 3] C 速度必须落在配置区间内（取位，不再乘系数） ----
+[PASS] C1 `generate_new_move_target` 里不再出现 `min_speed/max_speed × 系数` 的速度赋值    found=[]
+[PASS] C2 情绪→取位表存在且每项是 `(lo, hi)` 且 `0 ≤ lo < hi ≤ 1`    keys=8
+[PASS] C3 取位表覆盖 8 种情绪（含最慢的 tired 与最快的 excited）    missing=[]
+[PASS] C4 ★★★ 行为级：8 情绪 × 30 次真调 `generate_new_move_target`，`speed` 必须恒在配置区间 [3.0, 8.0] 内    out_of_range=[]
+[PASS] C5 情绪排序保住：excited 均值 > tired 均值（"兴奋快 / 疲惫慢"不许被抹平）    excited=6.38 tired=3.96
+[PASS] C6 每个情绪都真的在动（均值 ≥ 2.5px/帧 ≈ 83px/s，肉眼可辨）    min_mean=3.96
+[PASS] C7 ★鉴别力：旧系数独立重算**必然**违反区间不变量（证明 C4 不是恒真）    old_violating_emotions=['excited', 'energetic', 'curious', 'happy', 'peaceful', 'shy', 'sad', 'tired']
+---- [判据点 4] D 归零时机 / 无第二份真相 / 不污染跳跃物理 ----
+[PASS] D1 到达（重置速度）处同时清了 `_subpixel_x`（下一段从干净状态起步）    reset=8 zero=1 adjacent=True
+[PASS] D2 换目标（`is_moving = True`）处同时清了 `_subpixel_x`    zero_pts=1 moving_pts=1 adjacent=True
+[PASS] D3 全文件不存在第二份"取整不结转"的位移写法（避免只修一处）    round_sites=2 legacy_count=0
+[PASS] D3b 取整位移点真的存在（≥1 处），否则 D3 会因"一个都没扫到"而假绿    round_sites=2
+[PASS] D4 `self.speed` 仍**不**参与跳跃物理（`handle_jump` 内无 `self.speed`）
+---- [判据点 5] E 判据自身体检 ----
+[PASS] E1 被测文件在盘（main.py / config.json）
+[PASS] E2 判据点全部执行到位（标记打印点 == 5）    marks=5
+[PASS] E3 ★恒真防护：A6/A7 的重放桩**能**区分结转与否（同参数同帧数，结果必须不同）    old=0 new=109
+[PASS] E4 ★恒真防护：C4 的桩**真**走到了产品函数（`speed` 被写过、且区间内）    n_emotions=8
+---- [判据点 6] E5 空判据探针 ----
+[PASS] E5 记账口不是 no-op（打了标记点但没走 check ⇒ 独立计数器不涨）    calls=36(+0) marks=6(+1)
+[PASS] E6 记账守恒（独立计数器 CALLS == PASS + FAIL）    calls=37 pass=37 fail=0
+[PASS] E7 守恒判据有鉴别力（把漏记那一步计进总数 ⇒ 等式不再成立）    calls+1=39 vs pass+fail=38
+======================================================================
+第92轮：PASS=39 FAIL=0
+======================================================================

@@ -1,0 +1,17 @@
+======================================================================
+第92轮变异测试：11 个变异
+======================================================================
+[OK]   M0 负控制：只改注释（无语义变化）⇒ 必须 FAIL=0    FAIL=0 rc=0
+[OK]   M1 取整前不再加回余量    expect=A2 hit=[FAIL] A2 `new_x` 的取整参数里含 `self._subpixel_x`（位移在取整前把余量加回去）    attrs=['x'] FAIL=2
+[OK]   M2 结转赋值改成恒 0（等于不结转）    expect=A4 hit=[FAIL] A4b ★ 结转值真的是"取整残差"（`_raw - new_x` 形态），不是常量 0    carry_names=['_carry_x'] FAIL=1
+[OK]   M3 近距减速去掉下限    expect=B1 hit=[FAIL] B1 近距减速分支改成了 `max(<比例式>, <下限>)` 形态    args=-1 FAIL=3
+[OK]   M4 情绪因子之后去掉第二道下限    expect=B7 hit=[FAIL] B7 ★★ `target_final_speed` 在**情绪因子之后**再夹一道 ≥1.0 的下限    floor=None FAIL=1
+[OK]   M5 速度恢复成旧的系数形态（被压出配置区间）    expect=C1 hit=[FAIL] C1 `generate_new_move_target` 里不再出现 `min_speed/max_speed × 系数` 的速度赋值    f FAIL=1
+[OK]   M6 `init_movement` 不再预声明余量字段    expect=A1 hit=[FAIL] A1 `init_movement` 显式预声明 `_subpixel_x/_subpixel_y = 0.0`（不走 getattr 兜底）   FAIL=1
+[OK]   M7 第二道下限被换成 min（形状变了）    expect=B7 hit=[FAIL] B7 ★★ `target_final_speed` 在**情绪因子之后**再夹一道 ≥1.0 的下限    floor=None FAIL=1
+[OK]   M8 把 round 去掉（回到 int 截断）    expect=A2 hit=[FAIL] A2 `new_x` 的取整参数里含 `self._subpixel_x`（位移在取整前把余量加回去）    attrs=[] FAIL=1
+[OK]   M9 到达处不再清零余量    expect=D1 hit=[FAIL] D1 到达（重置速度）处同时清了 `_subpixel_x`（下一段从干净状态起步）    reset=8 zero=0 adjacent=Fal FAIL=1
+[OK]   M10 另起一处"取整不结转"的旧写法    expect=D3 hit=[FAIL] D3 全文件不存在第二份"取整不结转"的位移写法（避免只修一处）    round_sites=3 legacy_count=1 FAIL=1
+======================================================================
+变异测试：OK=11 MISS=0
+======================================================================

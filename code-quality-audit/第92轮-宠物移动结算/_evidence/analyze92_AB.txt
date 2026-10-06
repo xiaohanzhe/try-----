@@ -1,0 +1,27 @@
+========================================================================
+文件: C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第92轮-宠物移动结算\_evidence\probe92_A_legacy.tsv
+samples=4318 span=149.9s
+  move_calls=1285  zero_delta_ticks=188  nonzero_ticks=4130  zero_ratio=4.4%
+  walk_segments=13
+  seg_duration  med=1.975s min=0.744 max=11.694
+  seg_walked_px med=337.0 min=101 max=1706
+  seg_target_px med=336.3 min=104 max=1394
+  speed(px/frame) med=5.96 min=5.04 max=6.04
+  speed(px/s @30ms tick) med=199 min=168 max=201
+  total_manhattan_px=13405  avg_px_per_s=89.4
+  duty(moving)=27.4%  locked_ticks=37
+  spot_pos_unique=1295  first=(2410,1380) last=(210,124)
+========================================================================
+文件: C:\Users\23002\Desktop\项目文件夹\try - 副本\code-quality-audit\第92轮-宠物移动结算\_evidence\probe92_B_fix.tsv
+samples=4392 span=149.9s
+  move_calls=1871  zero_delta_ticks=5  nonzero_ticks=4387  zero_ratio=0.1%
+  walk_segments=18
+  seg_duration  med=1.021s min=0.000 max=41.145
+  seg_walked_px med=150.5 min=0 max=3526
+  seg_target_px med=143.3 min=27 max=2607
+  speed(px/frame) med=5.31 min=4.83 max=7.87
+  speed(px/s @30ms tick) med=177 min=161 max=262
+  total_manhattan_px=15333  avg_px_per_s=102.3
+  duty(moving)=43.2%  locked_ticks=83
+  spot_pos_unique=1890  first=(2411,1379) last=(16,64)
+========================================================================
