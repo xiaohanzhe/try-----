@@ -24,7 +24,9 @@
 
 ★ 本脚本自己的 A/B（判据不是恒真）：
   修 MEMORY.md 的悬空指针**之前**跑，B1 必须报红（实测 `['87.10b','87.10c']`）；
-  修完之后跑，B1 必须转绿。D1 的负控制令牌两侧都找不到，证明宽松规则仍有鉴别力。
+  修完之后跑，B1 必须转绿。
+  D 段的负控制令牌**运行时随机生成**（不写死字面量）—— 写死过一次，结果被
+  "把令牌抄进详版做说明"这个动作污染、D1 立刻报红；生成式则永久免疫。
 
 跑法
 ----
@@ -33,9 +35,11 @@
 """
 import io
 import os
+import random
 import re
 import subprocess
 import sys
+import uuid
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(_HERE, '..', '..', '..')            # 仓库根
@@ -70,11 +74,18 @@ def js_len(s):
 
 
 def old_text():
-    """HEAD 里的速查本（压缩前基线）。取不到就返回 None（该项标 SKIP）。"""
+    """基线里的速查本（压缩前）。取不到就返回 None（该项标 SKIP）。
+
+    ★ 基线 ref 可用 `RECHECK92MEM_BASE` 指定（默认 `HEAD`）。
+      为什么需要：做 A/B 时 `RECHECK92MEM_CUR` 指向"修复前"副本，若基线仍取 `HEAD`
+      （= 已修复的提交），C2/E1 会变成"拿修复前跟修复后比" ⇒ 报出**与 A/B 无关的假红**。
+      把 BASE 钉到修复前那个提交，两次都拿同一份内容做基线，A/B 才只暴露 B3。
+    """
+    ref = os.environ.get('RECHECK92MEM_BASE', 'HEAD')
     try:
         b = subprocess.run(
             ['git', '-c', 'core.quotepath=false', 'show',
-             'HEAD:.workbuddy/memory/MEMORY.md'],
+             ref + ':.workbuddy/memory/MEMORY.md'],
             cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if b.returncode != 0:
             return None
@@ -172,8 +183,8 @@ HAND = [
     '_subpixel_x', '_subpixel_y', '_speed_pos', '3.9', '102.3', '91.9%',
 ]
 
-# 负控制：这两个**故意不存在**，判据必须报 MISS，否则说明判据恒真。
-NEG = ['ZZZ_not_a_real_token_92', '§999.999']
+# 负控制：**运行时生成**（见 D 段）。★ 不写死字面量 —— 写死了就会被
+# "把它抄进说明文档"这一动作污染（本轮实测：抄进详版 §92.7 后 D1 立刻报红）。
 
 
 def main():
@@ -266,12 +277,25 @@ def main():
     print('=' * 78)
     print('D. 负控制（证明判据不是恒真）')
     print('=' * 78)
-    neg_hit = [t for t in NEG if (t in mem) or in_det(t, det, heads)]
-    check('D1 故意编造的令牌在两侧都找不到 ⇒ 判据有鉴别力',
-          not neg_hit, '负控制=%s  误命中=%s' % (NEG, neg_hit or '无'))
+    # ★★ 负控制令牌**运行时生成**，不写死字面量。
+    #    原因（本轮实测踩到）：负控制写了字面量 ⇒ 后来把它写进详版做说明
+    #    ⇒ D1 立刻"误命中"报红 —— **文档自污染了控制组**。
+    #    生成式令牌不可能出现在文档里 ⇒ 判据永久免疫这类污染。
+    neg_s = 'zz' + uuid.uuid4().hex[:14] + '92'
+    neg_p = '§9%04d.9' % random.randint(0, 9999)
+    neg_hit = [t for t in (neg_s, neg_p)
+               if (t in mem) or in_det(t, det, heads)]
+    check('D1 生成式编造令牌在两侧都找不到 ⇒ 判据有鉴别力',
+          not neg_hit, '负控制=%s  误命中=%s' % ((neg_s, neg_p), neg_hit or '无'))
     check('D2 正控制：已确证存在的令牌必须命中',
           ('_subpixel_x' in mem or '_subpixel_x' in det)
           and ('check92' in mem or 'check92' in det))
+    # D3 直接对**判据函数**下断言（不经过报告层）：编造输入必须返 False。
+    check('D3 判据函数本身可判否（`in_det` 对编造输入返 False）',
+          in_det(neg_s, det, heads) is False
+          and in_det(neg_p, det, heads) is False
+          and resolve_ptr('9999.9', heads, det) == 'none',
+          'in_det 直接调用返回 False ×2 · resolve_ptr=none')
 
     print()
     print('=' * 78)
