@@ -1,0 +1,79 @@
+2026-10-06 20:13:11 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-06 20:13:14 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-06 20:13:14 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-06 20:13:14 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-06 20:13:14 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-06 20:13:14 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 34 人）
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-06 20:13:14 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC kris 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 ut.rooms.room_start
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 ut.rooms.room_start
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC sign 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 ut.rooms.room_start
+2026-10-06 20:13:16 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 ch4.kris_room.kris_s_room
+=== 第94轮 S5 定点探针（拖拽逐步对账）===
+时间 = 2026-10-06 20:13:17
+起点 = (1210,716) size=138x94 anim='idle'
+press: anim='idle' size=138x94
+
+  i | 期望(dx,dy) | 实际(dx,dy) | size    | 容器/2  | 窗口中心相对起点      | anim
+   1 |   (  8,  4)   |   (  8,  4)   | 138x94  |  69,47  | (   77,   51) | cower
+   2 |   ( 16,  8)   |   ( 16,  8)   | 138x94  |  69,47  | (   85,   55) | cower
+   3 |   ( 24, 12)   |   ( 24, 12)   | 138x94  |  69,47  | (   93,   59) | cower
+   4 |   ( 32, 16)   |   ( 32, 16)   | 138x94  |  69,47  | (  101,   63) | cower
+   5 |   ( 40, 20)   |   ( 84, 38)   |  50x58  |  25,29  | (  109,   67) | cower
+   6 |   ( 48, 24)   |   ( 92, 42)   |  50x58  |  25,29  | (  117,   71) | run_right
+   7 |   ( 56, 28)   |   (100, 46)   |  50x58  |  25,29  | (  125,   75) | cower
+   8 |   ( 64, 32)   |   (108, 50)   |  50x58  |  25,29  | (  133,   79) | cower
+   9 |   ( 72, 36)   |   (116, 54)   |  50x58  |  25,29  | (  141,   83) | cower
+  10 |   ( 80, 40)   |   (124, 58)   |  50x58  |  25,29  | (  149,   87) | cower
+  11 |   ( 88, 44)   |   (132, 62)   |  50x58  |  25,29  | (  157,   91) | cower
+  12 |   ( 96, 48)   |   (140, 66)   |  50x58  |  25,29  | (  165,   95) | cower
+  13 |   (104, 52)   |   (148, 70)   |  50x58  |  25,29  | (  173,   99) | cower
+  14 |   (112, 56)   |   (156, 74)   |  50x58  |  25,29  | (  181,  103) | cower
+  15 |   (120, 60)   |   (164, 78)   |  50x58  |  25,29  | (  189,  107) | cower
+  16 |   (128, 64)   |   (172, 82)   |  50x58  |  25,29  | (  197,  111) | cower
+  17 |   (136, 68)   |   (180, 86)   |  50x58  |  25,29  | (  205,  115) | cower
+  18 |   (144, 72)   |   (188, 90)   |  50x58  |  25,29  | (  213,  119) | cower
+  19 |   (152, 76)   |   (196, 94)   |  50x58  |  25,29  | (  221,  123) | cower
+  20 |   (160, 80)   |   (204, 98)   |  50x58  |  25,29  | (  229,  127) | cower
+
+--- 逐步差分（相对上一步）---
+  i= 1  Δ中心=( 77, 51)  期望=( 8, 4)  偏差=( 69, 47)  Δ尺寸=(  88,  36)  anim=cower
+  i= 2  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i= 3  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i= 4  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i= 5  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=( -88, -36)  anim=cower
+  i= 6  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=run_right
+  i= 7  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i= 8  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i= 9  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=10  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=11  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=12  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=13  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=14  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=15  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=16  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=17  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=18  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=19  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+  i=20  Δ中心=(  8,  4)  期望=( 8, 4)  偏差=(  0,  0)  Δ尺寸=(   0,   0)  anim=cower
+
+--- 终点（最后一步）左上角是否精确跟随 ---
+  末步 实际(dx,dy)=(204,98)  期望=(160,80)
+  松手后 0.3s: pos=(204,98) size=50x58 anim='cower'  中心相对起点=(229,127)

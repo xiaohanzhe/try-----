@@ -13600,7 +13600,14 @@ class RalseiPet(QMainWindow):
             # 表演动画(sing/dance/laugh/pose/hug等)优先级=3，idle优先级=1，
             # 不带 force 会被 change_animation 的优先级拦截(new_pri<cur_pri)拒绝，
             # 导致宠物永远卡在表演动画里（"唱完歌后定住不动"）。
-            _use_force = is_same_category or (new_animation == 'idle')
+            # ★ 第94轮修复：`sleep` 也必须 force。
+            #   为什么：睡眠是“状态恢复”，不是“新动作”——`enter_sleep_mode()` 用
+            #   `force=True` 播上 `sleep`，但只要期间被任何东西顶掉一次（实测是
+            #   `pet_ai.trigger_action('idle')`），这里用 `force=False` 就再也切不回去：
+            #   `sleep` 与 `idle` 不同组 ⇒ 需要 `animation_change_cooldown * 2` 的冷却，
+            #   于是“睡着却站着”要持续到冷却结束（并随 pet_ai 冷却反复复发）。
+            #   与上面 `idle` 同一条理由（`idle` 是状态恢复所以 force=True）。
+            _use_force = is_same_category or (new_animation in ('idle', 'sleep'))
             self.change_animation(new_animation, force=_use_force)
         
         # 优化：参考niko_desktop_pet，只在移动时更新动画帧
@@ -13675,6 +13682,25 @@ class RalseiPet(QMainWindow):
                         new_x = old_center_x - target_width // 2
                         new_y = old_center_y - target_height // 2
                         
+                        # ★★ 第94轮修复（拖拽“先窜后弹”）：拖拽期间唯一的不变量是
+                        #   “窗口左上角 = 鼠标 − drag_position”（1:1 跟随），而上面这条
+                        #   “保中心”会打破它 —— 下一个 mouseMoveEvent 会按**旧**
+                        #   `drag_position` 把左上角拽回来，表现为宠物先朝鼠标方向窜出
+                        #   (Δw/2, Δh/2)、下一步再弹回（实测 idle 138x94 → cower 50x58
+                        #   约 44/18px，见 `_evidence/probe94_drag2.txt` 逐步对账）。
+                        #   角色中心 = 窗口中心（`_compose_anchored_sprite` 把 alpha 包围盒中心
+                        #   钉在画布中心 + `sprite_label` AlignCenter），所以把 `drag_position`
+                        #   **同步平移同一个量**即可让后续鼠标事件不再回拽
+                        #   ⇒ 角色在屏幕上真正连续、无抖动。
+                        #   只在拖拽中生效：非拖拽时“保中心”正是防逐帧抽携的正确行为。
+                        if (getattr(self, '_is_being_dragged', False)
+                                and getattr(self, 'drag_position', None) is not None):
+                            self.drag_position = QPoint(
+                                self.drag_position.x()
+                                + target_width // 2 - self.width() // 2,
+                                self.drag_position.y()
+                                + target_height // 2 - self.height() // 2)
+
                         # 批量更新大小和位置，减少重绘
                         self.setGeometry(new_x, new_y, target_width, target_height)
                         self.sprite_label.setGeometry(0, 0, target_width, target_height)
@@ -13837,6 +13863,25 @@ class RalseiPet(QMainWindow):
                         new_x = old_center_x - target_width // 2
                         new_y = old_center_y - target_height // 2
                         
+                        # ★★ 第94轮修复（拖拽“先窜后弹”）：拖拽期间唯一的不变量是
+                        #   “窗口左上角 = 鼠标 − drag_position”（1:1 跟随），而上面这条
+                        #   “保中心”会打破它 —— 下一个 mouseMoveEvent 会按**旧**
+                        #   `drag_position` 把左上角拽回来，表现为宠物先朝鼠标方向窜出
+                        #   (Δw/2, Δh/2)、下一步再弹回（实测 idle 138x94 → cower 50x58
+                        #   约 44/18px，见 `_evidence/probe94_drag2.txt` 逐步对账）。
+                        #   角色中心 = 窗口中心（`_compose_anchored_sprite` 把 alpha 包围盒中心
+                        #   钉在画布中心 + `sprite_label` AlignCenter），所以把 `drag_position`
+                        #   **同步平移同一个量**即可让后续鼠标事件不再回拽
+                        #   ⇒ 角色在屏幕上真正连续、无抖动。
+                        #   只在拖拽中生效：非拖拽时“保中心”正是防逐帧抽携的正确行为。
+                        if (getattr(self, '_is_being_dragged', False)
+                                and getattr(self, 'drag_position', None) is not None):
+                            self.drag_position = QPoint(
+                                self.drag_position.x()
+                                + target_width // 2 - self.width() // 2,
+                                self.drag_position.y()
+                                + target_height // 2 - self.height() // 2)
+
                         # 批量更新大小和位置，减少重绘
                         self.setGeometry(new_x, new_y, target_width, target_height)
                         self.sprite_label.setGeometry(0, 0, target_width, target_height)

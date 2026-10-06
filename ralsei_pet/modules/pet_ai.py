@@ -221,6 +221,12 @@ class PetAI:
             return True
         if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
             return True
+        # ★ 第94轮修复：**睡眠**也必须算“关键过程”。
+        #   漏了它的真机症状（probe94_sleep 实测，t=+6.2s）：pet_ai 每 3 秒照常挑动作，
+        #   `trigger_action('idle')` 把 `sleep` 顶成 `idle` —— 宠物一边 `is_sleeping=True`
+        #   一边站着不动（用户口径里的“睡着＝站着”）。
+        if getattr(self.parent, 'is_sleeping', False):
+            return True
         return False
 
     def update_state(self):
@@ -537,6 +543,9 @@ class PetAI:
         if getattr(self.parent, '_is_being_dragged', False):
             return
         if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
+            return
+        # ★ 第94轮修复：睡眠期间不允许 AI 动作改写动画（同 `_skip_if_critical`）。
+        if getattr(self.parent, 'is_sleeping', False):
             return
         # ===== 表演/情绪动画一律交给 ai_driver（大模型AI）决策，pet_ai 不再自动触发 =====
         # 修复：此前 pet_ai.check_action_triggers 每3秒随机选 dance/sing/laugh/tea/pose 等

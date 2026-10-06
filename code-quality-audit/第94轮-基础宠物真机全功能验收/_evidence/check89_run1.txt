@@ -1,0 +1,141 @@
+[PASS] ★ A1 ★★★ 桌面 8 扇门（`desktop.json` 的 `objects`）
+[PASS] ★ A1b ★★ 8 扇门**逐项字段完整**（`id`/`kind`/`sprite` 都非空 —— 防"只数长度"盲区）
+[PASS] ★ A2 ★★★ 8 扇门用**不重不漏**的 8 个不同字母（A~F + W + X）
+[PASS] ★ A3 ★★★ 桌面虚拟房间 `desktop:-1` 存在且 = **320×240**（= 相机 scoped_size ⇒ 相机固定，门位置稳定）
+        desktop:-1 = {'w': 320, 'h': 240, 'name': '桌面'}
+[PASS] ★ A4 ★★★ 8 扇门的 `pos` + 贴图尺寸**全部落在房间 320×240 内**（不越界）
+[PASS] ★ A5 负控制：A4 有鉴别力（pos 推到房间外必须判越界）
+[PASS] ★ A6 ★★ 8 张门贴图真在盘且尺寸一致（`spr_door*_0.png` = 20×20）
+[PASS] ★ B0 ★★ `load_index()` 真加载出索引（`ok=True` 且场景数 > 1000）
+[PASS] ★ B1 ★★★ 路由表有 **8 条** `when_scene == "desktop"` 的规则（第89轮新增；本条不断言总数，只断桌面部份）
+[PASS] ★ B2 ★★★ 8 条桌面路由的 `when_door` = A~F/W/X（与门一一对应）
+[PASS] ★ B3 ★★★ 8 条桌面路由的 `to` **逐条能在 `load_index()` 里查到**（不是写了不存在的目标）
+[PASS] ★ B4 ★★★ 桌面门覆盖**三个跨作品**（Undertale / 黄魂 / OneShot 各有入口）
+[PASS] ★ B5 负控制：B3 有鉴别力（不存在的 scene_id 必须判失败）
+[PASS] ★ C0b ★★ 场景池真摊平出条目（`_scene_pool` 非空 ⇒ C 段其余判据的前提）
+[PASS] ★ C1 ★★★ `scene_pathfind._TIER_NONE` 存在且 = 3（命名常量，不写魔数 3）
+[PASS] ★ C2 ★★★ 完整 `scene_id` ⇒ `_match_tier` 给 **-1 档**（`-1` 是"精确相等"专用档，比 tier 0 更优先）
+[PASS] ★ C2b ★★★ 端到端 `resolve_target(完整 scene_id)` ⇒ `ok=True` 且返回同 id（★ 这是菜单"点得动却走不到"的直接反证）
+[PASS] ★ C3 ★★★ `resolve_target` 的入选条件走 **`_TIER_NONE` 常量**（AST 取比较节点，★ 不吃注释/文档串 —— 首版就是被 docstring 里的旧写法误报）
+[PASS] ★ C3b ★★ AST：`resolve_target` 里 **没有** `t >= 0`（`GtE`）、**有** `t < _TIER_NONE`（`Lt`）—— ★ 不吃 docstring（首版文本判据被防回退注释误报）
+        ops on `t` in resolve_target = [('Lt',), ('Eq',)]
+[PASS] ★ C4 ★★ `_match_tier` 内有 `return -1`（精确档真存在）
+[PASS] ★ C5 负控制：C3b 的 AST 判据有鉴别力（`t >= 0` 的假源码必须命 `GtE`）
+[PASS] ★ C6 ★★ 场景**名**（非 id）仍能命中（`-1` 档没把别的档挤掉）
+[PASS] ★ D1 ★★★ `_entry_scenes` 模块级函数存在（跨章入口表）
+[PASS] ★ D2 ★★★ `_ENTRY_CHAPTER_ORDER` = (desktop, ch1~ch5, ut, uty, oneshot)（AST 取元组字面量，不吃引号风格 —— 首版被单/双引号差异误报）
+[PASS] ★ D3 ★★★ `reachable_destinations` 把跨章入口**插头部**（`cross + out`）—— 否则 `[:limit]` 会截掉「回桌面」
+[PASS] ★ D4 负控制：D3 有鉴别力（`out + cross` 的假源码必须判失败）
+2026-10-06 20:24:30 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\config.json -> C:\Users\23002\AppData\Local\Temp\ralsei_g2_iso_bcj5ttsk\RalseiMemory\config.json
+2026-10-06 20:24:30 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-06 20:24:32 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\customization_config.json -> C:\Users\23002\AppData\Local\Temp\ralsei_g2_iso_bcj5ttsk\RalseiMemory\customization_config.json
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-06 20:24:32 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-06 20:24:32 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-06 20:24:32 [WARNING] ralsei_pet.modules.global_hotkey — RegisterHotKey 失败 key=ctrl+alt+S vk=0x53 err=0（可能已被别的程序占用）
+2026-10-06 20:24:32 [WARNING] ralsei_pet.modules.global_hotkey — RegisterHotKey 失败 key=ctrl+alt+E vk=0x45 err=0（可能已被别的程序占用）
+2026-10-06 20:24:32 [WARNING] ralsei_pet.modules.global_hotkey — RegisterHotKey 失败 key=ctrl+alt+H vk=0x48 err=0（可能已被别的程序占用）
+2026-10-06 20:24:32 [WARNING] ralsei_pet.main — 全局热键未装上：['ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H'] ⇒ 仍可用"宠物窗口有焦点时按 S / E"
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=()
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (730, 551) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC 生活档案：C:\Users\23002\AppData\Local\Temp\ralsei_g2_iso_bcj5ttsk\RalseiMemory\npc_life.json（规划 0 人 / 驻留 0 人）
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=C:\Users\23002\AppData\Local\Temp\ralsei_g2_iso_bcj5ttsk\RalseiMemory\npc_memory
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=796.0 y=494.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=796.0 y=494.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC susie 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC king 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC queen 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ut.rooms.room_start
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC mike 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC flowery 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 ut.rooms.room_start
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC sign 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ut.rooms.room_start
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC police 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC catti 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ut.rooms.room_start
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:24:32 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:24:35 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.kris_room.kris_s_room ⇒ 按"宠物 + 原作偏移"出生
+2026-10-06 20:24:35 [INFO] ralsei_pet.modules.scene_controller — travel_to：多跳寻路不可用（跨章寻路未支持（当前 desktop，目标 ch1））⇒ 直达 ch1.kris_room.kris_s_room
+2026-10-06 20:24:35 [INFO] ralsei_pet.main — 灵魂回到场景 desktop 的原位置 (730, 551)
+2026-10-06 20:24:35 [WARNING] ralsei_pet.main — 场景 uty.rooms.rm_intro 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-06 20:24:35 [INFO] ralsei_pet.main — 灵魂第一次到场景 uty.rooms.rm_intro ⇒ 按"宠物 + 原作偏移"出生
+2026-10-06 20:24:35 [INFO] ralsei_pet.modules.scene_controller — travel_to：多跳寻路不可用（跨章寻路未支持（当前 desktop，目标 uty））⇒ 直达 uty.rooms.rm_intro
+2026-10-06 20:24:35 [INFO] ralsei_pet.main — 灵魂回到场景 desktop 的原位置 (730, 551)
+        [probe] {"scene_id": "desktop", "cam_rect": [0.0, 0.0, 320.0, 240.0], "viewport": [640, 480], "plan_n": 8, "objs": [["objs/spr_doorA_0.png", [112, 192, 40, 40]], ["objs/spr_doorB_0.png", [172, 192, 40, 40]], ["objs/spr_doorC_0.png", [232, 192, 40, 40]], ["objs/spr_doorD_0.png", [292, 192, 40, 40]], ["objs/spr_doorE_0.png", [352, 192, 40, 40]], ["objs/spr_doorF_0.png", [412, 192, 40, 40]], ["objs/spr_doorW_0.png", [472, 192, 40, 40]], ["objs/spr_doorX_0.png", [532, 192, 40, 40]]], "canvas_visible": true, "dests": [{"label": "第一章 · 黑暗世界 · 克里斯的房间", "scene_id": "ch1.kris_room.kris_s_room", "chapter_id": "ch1"}, {"label": "第二章 · 赛博世界 · 克里斯的房间", "scene_id": "ch2.kris_room.kris_s_room", "chapter_id": "ch2"}, {"label": "第三章 · 深夜电视 · 黑暗世界", "scene_id": "ch3.dark_world.dark_world", "chapter_id": "ch3"}, {"label": "第四章 · 预言 · 克里斯的房间", "scene_id": "ch4.kris_room.kris_s_room", "chapter_id": "ch4"}, {"label": "第五章 · 希望与梦想之园 · 克里斯的房间", "scene_id": "ch5.kris_room.kris_s_room", "chapter_id": "ch5"}, {"label": "Undertale · 原版 · room_start", "scene_id": "ut.rooms.room_start", "chapter_id": "ut"}, {"label": "黄魂 · Undertale Yellow · rm_intro", "scene_id": "uty.rooms.rm_intro", "chapter_id": "uty"}, {"label": "OneShot · 世界机器版 · Blue", "scene_id": "oneshot.barrens.Blue", "chapter_id": "oneshot"}], "props_n": 8, "prop_targets": ["ch1.kris_room.kris_s_room", "ch2.kris_room.kris_s_room", "ch3.dark_world.dark_world", "ch4.kris_room.kris_s_room", "ch5.kris_room.kris_s_room", "ut.rooms.room_start", "uty.rooms.rm_intro", "oneshot.barrens.Blue"], "push0_before": "desktop", "push0_ok": {"ok": true, "scene_id": "ch1.kris_room.kris_s_room", "hops": 1, "path": ["ch1.kris_room.kris_s_room", "ch1.kris_room.kris_s_room"], "steps": [], "error": null, "ambiguous": false, "candidates": [{"scene_id": "ch1.kris_room.kri
+[PASS] ★ D5 ★★★ 真机：桌面「去…」菜单**不为空**且 ≥ 8 条（用户「我到现在都没看到能切场景的门」的直接反证）
+[PASS] ★ D6 ★★★ 真机：菜单**第一条**是跨章/跨作品入口（`坐头部`生效的反证）
+        dests[:6] = ['ch1.kris_room.kris_s_room', 'ch2.kris_room.kris_s_room', 'ch3.dark_world.dark_world', 'ch4.kris_room.kris_s_room', 'ch5.kris_room.kris_s_room', 'ut.rooms.room_start']
+[PASS] ★ D7 ★★ 真机菜单含三个跨作品入口（ut / uty / oneshot）
+[PASS] ★ E1 ★★★ 真机：相机已 follow 且**固定**在 (0,0,320,240)（房间=相机 ⇒ 不跟随，门位置稳定）
+[PASS] ★ E2 ★★★ 真机：`plan_frame` 产出 **8 条 obj**（8 扇门真的进绘制计划）
+[PASS] ★ E3 ★★★ 真机：8 扇门的 rect 尺寸 = **40×40**（贴图 20 × scale 2.0）—— 即 `sprite_size` 真被传进产品真路径
+[PASS] ★ E4 ★★ 真机：8 扇门 rect **全在视口内**（不会被裁掉）
+        rects=[(112, 192, 40, 40), (172, 192, 40, 40), (232, 192, 40, 40), (292, 192, 40, 40), (352, 192, 40, 40), (412, 192, 40, 40), (472, 192, 40, 40), (532, 192, 40, 40)]
+[PASS] ★ E5 ★★ 真机：场景画布 `visible=True`（门真的会显示出来）
+[PASS] ★ E6 负控制：E2 有鉴别力（viewport 为 (0,0) 时 `plan_viewport` 早退 ⇒ 零 obj）
+[PASS] ★ F1 ★★★ 真机：`item_interact.build_props` 在建 8 个 DoorProp（桌面的 8 扇门全可交互）
+[PASS] ★ F2 ★★★ 真机：推 **A 门** ⇒ `scene_id` 真变成 A 门声明的目标（期望值从 `_routes.json` 推，不写死）
+        push[0]: 'desktop' -> 'ch1.kris_room.kris_s_room' (期望 'ch1.kris_room.kris_s_room', ok={'ok': True, 'scene_id': 'ch1.kris_room.kris_s_room', 'hops': 1, 'path': ['ch1.kris_room.kris_s_room', 'ch1.kris_room.kris_s_room'], 'steps': [], 'error': None, 'ambiguous': False, 'candidates': [{'scene_id': 'ch1.kris_room.kris_s_room', 'name': '克里斯的房间', 'chapter_id': 'ch1', 'chapter_name': '第一章 · 黑暗世界', 'area_key': 'kris_room', 'area_name': '克里斯的房间', 'original_room_id': 2}], 'route': 'direct'})
+[PASS] ★ F3 ★★ 真机：A 门 `travel_to` 返回 `ok=True` 且 `hops==1`（直达）
+[PASS] ★ F4 ★★ 真机：推 **W 门**（黄魂）⇒ 真切到 W 门声明的目标，且目标以 `uty.` 开头
+        push[6]: 'desktop' -> 'uty.rooms.rm_intro' (期望 'uty.rooms.rm_intro')
+[PASS] ★ G1 ★★★ 负控制：5 个必然不存在的 want 在**整个场景池**上零命中 -1 档（`-1` 是"逐字相等"，不是通配）
+[PASS] ★ G2 ★★★ 正控制：真实 `scene_id` 在场景池上前 200 条**全部命中 -1 档**（与 G1 成对 —— `-1` 既不恒真也不恒假）
+[PASS] ★ G3 ★★ `desktop.json` 的 `original_room_id == -1`（与 `_room_geometry.json` 的 `desktop:-1` 配对）
+[PASS] ★ G4 ★★ `scene_pathfind` 顶层 **零 Qt / 零业务重模块**（`scene_system` 是同包纯数据模块，允许）
+        top_imports=['heapq', 'itertools', 'logging', 'os', 'scene_system']
+[PASS] ★ G5 负控制：G4 有鉴别力（`from PyQt5...` 必须被判命中禁用名单）
+[PASS] ★ I1 ★★ `SceneCanvas` 支持 **独立顶层窗口**模式（`as_window` 形参）
+[PASS] ★ I2 ★★独立窗口模式设的是 `FramelessWindowHint | Tool`，**不含** `WindowStaysOnTopHint`（记忆契约②：禁置顶）—— 判据走 AST 扫 `setWindowFlags` 实参（注释里出现该词不算）
+        setWindowFlags attrs=['setWindowFlags', 'FramelessWindowHint', 'Tool', 'setWindowFlags', 'FramelessWindowHint', 'Tool']
+[PASS] ★ I3 ★★★ `main` 建画布时**传 `as_window=True`**（不是子控件 —— 否则 640×480 会被 38×80 的父窗口裁掉）
+[PASS] ★ I4 ★★★ `_show_scene_layer` 的 `lower()` **必须与 `as_window` 判据绑定**（独立窗口无条件 lower() ⇒ 沉到桌面之下 ⇒ 整块画布不上屏）—— 判据走 AST 定位函数体，且**同时认属性与字符串常量**两种写法
+        lower() 调用行=[6597]  有 as_window 守卫=True
+[PASS] ★ I5 ★★ `_place_scene_layer()` 存在，且**只 move 不 resize**（尺寸归 `set_plan` 的 view_size，否则小房间会被撑回相机尺寸）—— 判据走 AST（原字符串切片切歪 ⇒ 误报）
+        place move 行=[6556]  resize 行=[]
+[PASS] ★ I6 ★★ `_place_scene_layer` **不得**对 `_virtual_screen_rect()` 的返回值下标取址（QRect 不可下标，抛 TypeError 会被 try 静默吞掉 ⇒ "看起来没报错但其实没生效"）—— 判据走 AST 扫 Subscript 节点
+        place 下标取址行=[]
+[PASS] ★ I7 ★★ `_place_scene_layer` 有**四向钳制**（`max(s_l, min(x, ...))`），与 `scene_camera.camera_rect` 的"跟随+四向钳制"**同构**（不钳制 ⇒ 画布溢出屏幕 / 压任务栏 ⇒ 门被盖住）—— 判据走 AST 数 max/min 调用
+        place max 调用=4  min 调用=2
+[PASS] ★ I8 ★★ 摆位后**显式重绘**（`canvas.repaint()`）—— 透明顶层窗口 move 后不自动重绘，上屏的会是空内容
+[PASS] ★ I9 ★★ 桌面场景 `bg == "__transparent__"`（显式声明透明 ⇒ 不画背景/占位，透出用户壁纸；`null` 会画灰格纹占位把壁纸盖住）
+[PASS] ★ I10 ★★ `scene_render` 把 `TRANSPARENT_BG` **在取 `bg_name` 后立刻归一到 None**（真值字符串会走"有背景"分支 ⇒ 拼假图名 ⇒ 画出假背景）
+[PASS] ★ I11 负控制：`TRANSPARENT_BG` 是**非空真值字符串**（正因如此才必须显式归一 —— 空串/None 不会有这个坑）
+[PASS] ★ J1 ★★★ 全项目代码层**零** B站 URL 字面量（"别让他打开 bilbil"的最强形态：不查某个函数，查整个仓库）
+[PASS] ★ J2 ★★ `suggest_watching_video` 真路径里**没有**代开三件套（open_browser / move_and_resize_bilibili_window / _start_video_watching_loop）
+[PASS] ★ J3 ★★ 负控制：J2 同款提取器在"真有 open_browser"的样本上必须命中（证明 J2 不是恒真判据）
+[PASS] ★ J4 ★ 陪看能力未被误伤（`identify_video_apps` 在位 · `check_video_apps` 仍真调 `start_watching_video`）
+[PASS] ★ J5 ★★ 用户明确指令「打开浏览器」仍可用（`open_browser_for_ralsei` 在位 · 真调 `open_browser` 且目标是百度不是 B站）
+[PASS] ★ H1 ★★ 被测文件全在盘（desktop.json / _room_geometry.json / _routes.json / scene_controller.py / scene_pathfind.py / main.py）
+[PASS] ★ H2 ★★ 记账守恒（每个 check 都记了账，且总数 ≥ 40）
+[PASS] ★ H3 ★★ 负控制：记账器有鉴别力（模拟 FAIL ⇒ 计数真 +1，已撤回）
+======================================================================
+第89轮：FAIL 0 项 
+======================================================================
+2026-10-06 20:24:36 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）

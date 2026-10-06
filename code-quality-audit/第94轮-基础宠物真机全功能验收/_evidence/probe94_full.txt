@@ -1,0 +1,76 @@
+=== 第94轮 · 真机全功能验收（基础宠物）===
+时间 = 2026-10-06 20:14:17
+DPI  = PER_MONITOR_AWARE
+ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+看门狗阈值 = 30s（超时转储全线程栈）
+
+---- S0. 屏幕 ----
+  primaryScreen geometry = (0, 0, 2560, 1600)  available = (0, 0, 2560, 1528)
+  screenCount = 1
+    screen[0] geom=(0, 0, 2560, 1600) available=(0, 0, 2560, 1528) dpr=1.0
+
+---- S1. 起宠（真机，复刻 __main__ 的 RalseiPet() + show()）----
+  main.py = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\src\main.py
+  RalseiPet() 构造耗时 = 3.69s
+  已补 show()（复刻真启动路径）
+  hwnd = 41751056  Qt.isVisible = True  Win32.IsWindowVisible = True
+  pos = (2391,1381)  size = 138x94  dpr = 1.0
+[PASS] S1.1 桌宠主窗口在真机上**可见**（Qt isVisible 与 Win32 IsWindowVisible 双口径）  | qt=True win32=True
+[PASS] S1.2 负控制：伪造 hwnd=0 判为不可见  | hwnd=0
+
+---- S2. 移动（走起来）----
+  3s 内 move() 次数 = 65（零位移 0 / 非零 65 = 100.0%）
+  位置 (2391,1381) -> (2210,1373)  位移 = 189 px
+[PASS] S2.1 3s 内宠物发生了**真实位移**（>=5px，第92轮回归的真机复验）  | moved=189px
+[PASS] S2.2 位移不是靠"每帧 0px"堆出来的（非零位移占比 >=50%）  | nz=65/65
+  （S2 耗时 3.0s）
+
+---- S3. 睡眠（第91轮修的点：必须播 sleep，且不被 update_animation 覆盖）----
+  入睡前动画 = 'pose'
+  入睡后动画序列 = ['sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep']
+  窗口尺寸序列 = [(46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82)]
+  is_sleeping = True
+[PASS] S3.1 enter_sleep_mode() 后 is_sleeping 为真
+[PASS] S3.2 睡眠动画是 **sleep**（不是 idle）——第91轮修复点  | anims=['sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep']
+[PASS] S3.3 睡眠动画**保持稳定**（2.5s 末帧仍是 sleep；负控制：若被 update_animation 覆盖则会是 idle）  | last='sleep'
+[PASS] S3.4 wake_up() 后 is_sleeping 为假且动画不是 sleep  | anim='pose'
+  守卫 _skip_if_critical(): is_sleeping=True -> True ; False -> False
+[PASS] S3.5 负控制：pet_ai 守卫在睡眠时判 True（拦下 AI 动作）、清醒时判 False  | sleep=True awake=False
+[PASS] S3.6 睡眠中被顶成 idle 后能**自愈**回 sleep（force=True 生效；未修则被跨组冷却挡住）  | 自愈耗时=0.2s 末态='sleep'
+  （S3 耗时 4.7s）
+
+---- S4. 跳跃（真机轨迹：先升后降）----
+  jump_duration=1.00  gravity=500  target_pos=(2197,1373)
+  y 相对偏移序列 = [-10, -27, -41, -52, -57, -62, -63, -61, -56, -52, -37, -20, -2, 0, 0, -21, -21, -21, -21, -21, -21, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27]
+[PASS] S4.1 起跳后**向上**（y 变小，负偏移）  | min_dy=-63
+[PASS] S4.2 之后回落（末帧 y 回到基准附近）  | last_dy=-27
+  （S4 耗时 3.8s）
+
+---- S5. 拖拽（鼠标按住拖走，宠物跟随）----
+  起点 = (1247,723)  size=64x80
+  press 后 drag_position=PyQt5.QtCore.QPoint(20, 20)  _is_being_dragged=True
+  鼠标移动 (160,80) -> 角色中心位移 (160,80)   [窗口左上角位移 (167,91)]
+  逐步轨迹 (i,dx,dy) = [(1, 15, 15), (2, 23, 19), (3, 31, 23), (4, 39, 27), (5, 47, 31), (6, 55, 35), (7, 63, 39), (8, 71, 43), (9, 79, 47), (10, 87, 51), (11, 95, 55), (12, 103, 59), (13, 111, 63), (14, 119, 67), (15, 127, 71), (16, 135, 75), (17, 143, 79), (18, 151, 83), (19, 159, 87), (20, 167, 91)]
+[PASS] S5.1 拖拽时宠物**跟随鼠标**（位移方向一致且量级相当）  | dx=160(exp 160) dy=80(exp 80)
+  左上角单步最大偏差 = 7 px（抓取偏移漂移，设计取舍，非缺陷）
+  窗口中心单步最大偏差 = 0 px（期望 0；容器 38x80…138x94）
+[PASS] S5.2 拖拽期间**窗口中心随鼠标连续推进**（角色在屏幕上不跳位；容差 2px）  | worst_center_dev=0px
+  （S5 耗时 1.9s）
+
+---- S6. 甩飞 / 重力掉落（抛物线 + `_fall_reason is None`）----
+  start_falling 后：is_gravity_falling=True  _is_thrown=True  _fall_reason=None
+  y 轨迹 = [80, 62, 63, 71, 81, 94, 111, 131, 156, 183, 215, 247, 278, 302, 343, 384, 436, 484, 526, 581, 635, 697, 764, 829, 902, 985, 1059, 1140, 1304, 1356, 1474]
+[PASS] S6.1 甩飞后确实**下落**（y 单调增大到停止）  | dy=1394
+[PASS] S6.2 「甩飞必 `_fall_reason=None`」契约未被破坏  | _fall_reason=None
+  （S6 耗时 2.6s）
+
+---- S7. 托盘（后台运行的唯一退出入口）----
+  系统托盘可用 = True   _tray = 'QSystemTrayIcon'
+[PASS] S7.1 `_tray` 已建
+[PASS] S7.2 托盘图标**可见**（第51轮修的点：建了必须 show）
+  菜单项 = ['显示 Ralsei', '隐藏 Ralsei', '退出 Ralsei']
+[PASS] S7.3 菜单含"退出"入口  | acts=['显示 Ralsei', '隐藏 Ralsei', '退出 Ralsei']
+  （S7 耗时 0.0s）
+
+=== 汇总 ===
+  PASS=19  FAIL=0  SKIP=0

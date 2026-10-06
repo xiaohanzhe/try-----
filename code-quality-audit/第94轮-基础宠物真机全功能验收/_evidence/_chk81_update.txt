@@ -1,0 +1,13 @@
+========================================================================
+回归基线（G2）  ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+解释器 = C:\Python311\python.exe
+========================================================================
+
+suite            exit   PASS   FAIL   比对       说明
+------------------------------------------------------------------------
+check81          0      52     0      BASELINE 第八十一轮：OneShot 区域层级（6 区）+ 层4 存档不许静默漂移 —— A ★★★ 6 区完整性（263 全覆盖 / ★两两零交集 / ★逐区计数 == 官方三源互证（Blue35·Green55·Red73·RedGround9·Purple69）/ 索引逐区计数 == 官方 / ★scene_id 前缀 == 所在区域 / 未分区 22 间名字自带证据） / B ★★ 分片真在位（6 个 `_zone.oneshot.<area>.json` 全在盘 · 旧单区域分片已退场· 旧分片已备份可回溯） / C ★★ 真装载（走产品唯一入口 `load_index()` + `load_scene(entry=)` 逐个过 263；★6 个区域**各**挑一条 —— 防"某区整块丢"；负控制编造 id 装载不到） / D ★★★ 层4 存档（`npc_plan_store` 零依赖·零函数内 import·不静态 import 项目内模块 / ★`Book` 往返：驻留表+规划+**last_sleep** 全还原 / main 四处接线 AST：建书读回 · `plan_of`+`note` · `last_sleep_of`+`note_sleep` · `_npc_plan_save` 落盘 + 退出 `force=True` · ★`last=` **不再恒为 None**） / E ★★★ 闭环（`last_sleep` 降权**真生效**且方向对 + 负控制只有一个地点时无可比较） / F 三处 WIRING 诚实（wired=True 且 not_yet 清空 · used_by 非空） / G 判据自身体检（标记打印点 == 2 + 负控制 · 记账守恒 + 漏记负控制 · 不对 modules 目录做枚举式计数）
+
+基线已更新（合并模式）：C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\regress\baseline.json
+  注意：本次只重建了 1 个被 --only 选中的套件，其余套件的基线保持不动。
+
+合计：PASS=52 FAIL=0  套件=1

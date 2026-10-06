@@ -1,0 +1,42 @@
+
+---- A. `pet_ai` 睡眠守卫（第94轮修复 A）----
+[PASS] A1 `_skip_if_critical()` 有 `is_sleeping` **提前返回**守卫（原来只守 施法/游戏/拖拽/跳跃/掉落）
+[PASS] A2 `trigger_action()` 也有同一守卫（它可被直接调用，不能只靠上层拦）
+     行为级：is_sleeping=True -> True ; False -> False
+[PASS] A3 **行为级**（真源码解剖执行）：睡眠时 `_skip_if_critical()` 判 True、清醒时判 False（正/负成对）
+     行为级：睡眠时 change_animation 调用 0 次；清醒时共 1 次 ['idle']
+[PASS] A4 **行为级**：睡眠时 `trigger_action('idle')` **不**改动画；清醒时才改
+[PASS] A5 负控制·夹具保真：抠掉守卫后源码确实变了
+     变异后：_skip_if_critical()=False ; trigger_action 改动画 1 次
+[PASS] A6 负控制：抠掉守卫后 A3/A4 两条行为级判据**必须翻面**（证明它们不是恒真）
+
+---- B. 睡眠自愈：`sleep` 也必须 `force=True`（第94轮修复 B）----
+     抽出表达式（main.py:13610）= "is_same_category or (new_animation in ('idle', 'sleep'))"
+[PASS] B1b `_use_force` 在 `update_animation` 内**唯一赋值**、且真被 `change_animation(..., force=_use_force)` 消费（防"抽到一个没人用的死变量"）
+[PASS] B1 能抽出 `_use_force` 的真实表达式（AST，不是手抄）
+     求值 (is_same_category, new_animation) → force：(False,sleep)=True (False,idle)=True (False,walk_down)=False (True,walk_down)=True
+[PASS] B2 求值：`sleep` 与 `idle` 都必须 force=True；`walk_down` 必须**不** force（负控制：判据有鉴别力）
+[PASS] B3 负控制·夹具保真：把表达式里的 `'sleep'` 换掉后确实变了
+[PASS] B4 负控制：换掉 `'sleep'` 后 `(False,"sleep")` 必须翻成 False
+[PASS] B5 第91轮那条 `elif self.is_sleeping: new_animation = "sleep"` 未被回退（否则睡眠动画根本不会被选中，B 无从谈起）
+
+---- C. 拖拽期间同步 `drag_position`（第94轮修复 C）----
+     setGeometry(…target_width…) = 2 处；被"拖拽中"守卫包住的 `drag_position` 同步 = 2 处
+[PASS] C1 两个**同构渲染分支**都要有同步（计数都必须是 2 —— 只修一处 = 改一处漏一处）
+[PASS] C2 同步语句必须落在其守卫 `If` 的**行范围内**（不能在守卫块外面）
+     行号：sync=[13698, 13879]  setGeometry=[13705, 13886]
+[PASS] C3 顺序：同步必须在 `setGeometry` **之前**（放后面就等于没修）
+[PASS] C4 负控制·夹具保真：对调后源码确实变了
+     对调后：sync=[13701, 13879]  setGeometry=[13696, 13886]
+[PASS] C5 负控制：把两段对调后 C3 的**顺序判据必须翻面**（证明它不是恒真）
+[PASS] C6 同步用到 `QPoint` ⇒ 必须已导入（否则运行时 NameError，只在拖拽时爆）
+     抠掉守卫后：sync=0 处（原 2 处）
+[PASS] C7 负控制：抠掉守卫里的 `_is_being_dragged` 后，同步计数必须从 2 掉到 0（夹具保真 + 判据翻面）
+
+---- D. 判据自身体检 ----
+[PASS] D1 恒真防护：本文件没有 `check(..., <常量>)` 的死判据
+[PASS] D2 记账守恒：PASS + FAIL == 判据总数
+
+==============================================================================
+合计 21 条判据：PASS=21  FAIL=0
+==============================================================================

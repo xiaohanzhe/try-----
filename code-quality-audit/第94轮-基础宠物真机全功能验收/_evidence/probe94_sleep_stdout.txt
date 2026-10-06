@@ -1,0 +1,238 @@
+2026-10-06 20:05:59 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-06 20:06:02 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-06 20:06:02 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-06 20:06:02 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-06 20:06:02 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-06 20:06:02 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 34 人）
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-06 20:06:02 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC susie 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC king 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ut.rooms.room_start
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC npc_room 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC police 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC catti 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ut.rooms.room_start
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:06:04 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 oneshot.barrens.Blue
+=== 第94轮 睡眠定点探针 ===
+时间 = 2026-10-06 20:06:04
+
+---- ① 动画容器尺寸（宽 x 高，按宽度排序；只列 >=100 宽的）----
+  spr_gameshow_ralseiplush_stoole 396x263
+  spr_dw_tv_prize_ralsei       156x169
+  spr_cutscene_27_queen_hand_surprise_ralsei 110x110
+  spr_cutscene_27_ralsei_huh   110x110
+  spr_cutscene_27_ralsei_look  110x110
+  spr_cutscene_27_ralsei_mu    110x110
+  spr_cutscene_27_ralsei_scared 110x110
+  spr_cutscene_27_ralsei_smile 110x110
+  spr_cutscene_27_ralsei_stern 110x110
+  susie_throw_ready            103x71
+  spr_susieb_throwralseiready  103x71
+  spr_susieb_throwralseiready_setup 103x71
+  spr_susiezilla_ralsei_tower  87x130
+  spell                        78x47
+  spr_ralsei_spell             78x47
+  spr_ralsei_spellready        78x47
+  defeat                       77x47
+  spr_ralsei_attackready       77x47
+  spr_ralsei_defeat            77x47
+  spr_ralsei_hurt              77x47
+  spr_ralsei_hurt_fixed        77x47
+  spr_ralsei_hurt_overworld    77x47
+  item                         74x55
+  spr_ralsei_item              74x55
+  spr_ralsei_itemready         74x55
+
+  sleep = (23, 41)   idle = (69, 47)   pose = (32, 40)   walk_right = (19, 40)   run_right = (29, 35)
+
+---- ② 入睡后每 0.1s 状态快照 ----
+  enter_sleep_mode() 后立即：is_sleeping=True anim='sleep'
+  t= 0.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=64x80
+  t= 0.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=64x80
+  t= 0.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 0.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+2026-10-06 20:06:07 [INFO] ralsei_pet.LocalAI — 本地 AI 流式请求失败（忽略）: HTTPConnectionPool(host='127.0.0.1', port=56070): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+  t= 1.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 1.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 2.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+2026-10-06 20:06:09 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+  t= 3.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 3.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 4.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 5.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 6.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 7.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 8.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t= 9.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=10.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=11.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=12.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=13.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.0s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.1s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.2s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.3s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.4s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.5s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.6s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.7s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.8s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+  t=14.9s  anim='sleep'         is_sleeping=True   is_recovering=False  _play_once=False  is_splat=None   is_spellcasting=False  size=46x82
+
+  首次动画变化发生在 t=-1.0s
+
+---- ③ 入睡后所有 change_animation 调用（相对 enter_sleep_mode 的秒数）----

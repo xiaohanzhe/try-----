@@ -1,0 +1,25 @@
+=== 第94轮 最小拖拽探针 ===
+时间 = 2026-10-06 19:57:55
+QApplication ok
+main.py = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\src\main.py
+RalseiPet ok  pos=(2439,1388) size=42x82
+  _is_being_dragged='NA'  is_moving=True
+移到中央 -> (1260,724)
+--- 构造 press 事件 ---
+press 事件构造 ok  globalPos=PyQt5.QtCore.QPoint(1280, 744)  button=1
+--- 调 mousePressEvent ---
+mousePressEvent 返回 ok  drag_position=PyQt5.QtCore.QPoint(20, 20)  _is_being_dragged=True
+  move#1 构造 ok globalPos=PyQt5.QtCore.QPoint(1290, 749) buttons=<PyQt5.QtCore.Qt.MouseButtons object at 0x0000013C807CE810>
+  move#1 返回 ok  宠物=(1270,729)  期望=(1270,729)
+  move#2 构造 ok globalPos=PyQt5.QtCore.QPoint(1300, 754) buttons=<PyQt5.QtCore.Qt.MouseButtons object at 0x0000013C807CED50>
+  move#2 返回 ok  宠物=(1232,728)  期望=(1280,734)
+  move#3 构造 ok globalPos=PyQt5.QtCore.QPoint(1310, 759) buttons=<PyQt5.QtCore.Qt.MouseButtons object at 0x0000013C807CEB90>
+  move#3 返回 ok  宠物=(1290,739)  期望=(1290,739)
+  move#4 构造 ok globalPos=PyQt5.QtCore.QPoint(1320, 764) buttons=<PyQt5.QtCore.Qt.MouseButtons object at 0x0000013C807CED50>
+  move#4 返回 ok  宠物=(1300,744)  期望=(1300,744)
+  move#5 构造 ok globalPos=PyQt5.QtCore.QPoint(1330, 769) buttons=<PyQt5.QtCore.Qt.MouseButtons object at 0x0000013C807CEB90>
+  move#5 返回 ok  宠物=(1310,749)  期望=(1310,749)
+--- release ---
+mouseReleaseEvent 返回 ok  宠物=(1321,755)
+=== 拖拽探针走完（未崩）===
+PASS 过：press/move×5/release 全部返回

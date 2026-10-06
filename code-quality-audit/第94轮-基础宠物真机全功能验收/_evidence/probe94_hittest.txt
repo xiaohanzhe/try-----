@@ -1,0 +1,34 @@
+=== 第94轮 透明留白命中测试 ===
+时间 = 2026-10-06 20:12:39
+
+---- anim='idle'  hwnd=12322632  size=138x94  pos=(1210,716) ----
+  WS_EX = 0x00080088 [LAYERED+TOOLWINDOW]
+  QWidget.mask(): isEmpty=True  boundingRect=(0, 0, 0, 0)  rectCount=0
+
+  采样点                屏幕坐标           WindowFromPoint =宠物?     mask含?   alpha
+  角色中心               ( 1279,  763)   宠物             是        否        255
+  窗口内左边缘+4           ( 1214,  763)   65906          否        否        0
+  窗口内右边缘-5           ( 1343,  763)   65906          否        否        0
+  窗口内顶部+3            ( 1279,  719)   65906          否        否        0
+  窗口内底部-4            ( 1279,  806)   65906          否        否        0
+  窗口外左侧 20           ( 1190,  763)   24773836       否        否        n/a
+
+  anim='idle'：窗口内**纯透明**采样点被宠物窗口吃掉 = 0 个
+
+---- anim='idle'  hwnd=12322632  size=138x94  pos=(1210,716) ----
+  WS_EX = 0x00080088 [LAYERED+TOOLWINDOW]
+  QWidget.mask(): isEmpty=True  boundingRect=(0, 0, 0, 0)  rectCount=0
+
+  采样点                屏幕坐标           WindowFromPoint =宠物?     mask含?   alpha
+  角色中心               ( 1279,  763)   宠物             是        否        255
+  窗口内左边缘+4           ( 1214,  763)   65906          否        否        0
+  窗口内右边缘-5           ( 1343,  763)   65906          否        否        0
+  窗口内顶部+3            ( 1279,  719)   65906          否        否        0
+  窗口内底部-4            ( 1279,  806)   65906          否        否        0
+  窗口外左侧 20           ( 1190,  763)   24773836       否        否        n/a
+
+  anim='idle'：窗口内**纯透明**采样点被宠物窗口吃掉 = 0 个
+
+=== 汇总裁决 ===
+  pose   size=138x94 WS_EX=0x00080088 吞透明点击=0 mask.rectCount=0
+  idle   size=138x94 WS_EX=0x00080088 吞透明点击=0 mask.rectCount=0

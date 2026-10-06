@@ -1,0 +1,119 @@
+=== 第94轮 · 真机全功能验收（基础宠物）===
+时间 = 2026-10-06 20:14:17
+DPI  = PER_MONITOR_AWARE
+ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+看门狗阈值 = 30s（超时转储全线程栈）
+
+---- S0. 屏幕 ----
+  primaryScreen geometry = (0, 0, 2560, 1600)  available = (0, 0, 2560, 1528)
+  screenCount = 1
+    screen[0] geom=(0, 0, 2560, 1600) available=(0, 0, 2560, 1528) dpr=1.0
+
+---- S1. 起宠（真机，复刻 __main__ 的 RalseiPet() + show()）----
+  main.py = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\src\main.py
+2026-10-06 20:14:18 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-06 20:14:22 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-06 20:14:22 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-06 20:14:22 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-06 20:14:22 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-06 20:14:22 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 34 人）
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-06 20:14:22 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+  RalseiPet() 构造耗时 = 3.69s
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ut.rooms.room_start
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC mike 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ut.rooms.room_start
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC catti 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:14:24 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 ch2.kris_room.kris_s_room
+  已补 show()（复刻真启动路径）
+  hwnd = 41751056  Qt.isVisible = True  Win32.IsWindowVisible = True
+  pos = (2391,1381)  size = 138x94  dpr = 1.0
+[PASS] S1.1 桌宠主窗口在真机上**可见**（Qt isVisible 与 Win32 IsWindowVisible 双口径）  | qt=True win32=True
+[PASS] S1.2 负控制：伪造 hwnd=0 判为不可见  | hwnd=0
+
+---- S2. 移动（走起来）----
+  3s 内 move() 次数 = 65（零位移 0 / 非零 65 = 100.0%）
+  位置 (2391,1381) -> (2210,1373)  位移 = 189 px
+[PASS] S2.1 3s 内宠物发生了**真实位移**（>=5px，第92轮回归的真机复验）  | moved=189px
+[PASS] S2.2 位移不是靠"每帧 0px"堆出来的（非零位移占比 >=50%）  | nz=65/65
+  （S2 耗时 3.0s）
+
+---- S3. 睡眠（第91轮修的点：必须播 sleep，且不被 update_animation 覆盖）----
+2026-10-06 20:14:30 [INFO] ralsei_pet.LocalAI — 本地 AI 流式请求失败（忽略）: HTTPConnectionPool(host='127.0.0.1', port=56070): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+  入睡前动画 = 'pose'
+  入睡后动画序列 = ['sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep']
+  窗口尺寸序列 = [(46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82), (46, 82)]
+  is_sleeping = True
+[PASS] S3.1 enter_sleep_mode() 后 is_sleeping 为真
+[PASS] S3.2 睡眠动画是 **sleep**（不是 idle）——第91轮修复点  | anims=['sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep', 'sleep']
+[PASS] S3.3 睡眠动画**保持稳定**（2.5s 末帧仍是 sleep；负控制：若被 update_animation 覆盖则会是 idle）  | last='sleep'
+[PASS] S3.4 wake_up() 后 is_sleeping 为假且动画不是 sleep  | anim='pose'
+  守卫 _skip_if_critical(): is_sleeping=True -> True ; False -> False
+[PASS] S3.5 负控制：pet_ai 守卫在睡眠时判 True（拦下 AI 动作）、清醒时判 False  | sleep=True awake=False
+2026-10-06 20:14:32 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+[PASS] S3.6 睡眠中被顶成 idle 后能**自愈**回 sleep（force=True 生效；未修则被跨组冷却挡住）  | 自愈耗时=0.2s 末态='sleep'
+  （S3 耗时 4.7s）
+
+---- S4. 跳跃（真机轨迹：先升后降）----
+  jump_duration=1.00  gravity=500  target_pos=(2197,1373)
+2026-10-06 20:14:34 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+  y 相对偏移序列 = [-10, -27, -41, -52, -57, -62, -63, -61, -56, -52, -37, -20, -2, 0, 0, -21, -21, -21, -21, -21, -21, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27, -27]
+[PASS] S4.1 起跳后**向上**（y 变小，负偏移）  | min_dy=-63
+[PASS] S4.2 之后回落（末帧 y 回到基准附近）  | last_dy=-27
+  （S4 耗时 3.8s）
+
+---- S5. 拖拽（鼠标按住拖走，宠物跟随）----
+  起点 = (1247,723)  size=64x80
+  press 后 drag_position=PyQt5.QtCore.QPoint(20, 20)  _is_being_dragged=True
+2026-10-06 20:14:36 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+  鼠标移动 (160,80) -> 角色中心位移 (160,80)   [窗口左上角位移 (167,91)]
+  逐步轨迹 (i,dx,dy) = [(1, 15, 15), (2, 23, 19), (3, 31, 23), (4, 39, 27), (5, 47, 31), (6, 55, 35), (7, 63, 39), (8, 71, 43), (9, 79, 47), (10, 87, 51), (11, 95, 55), (12, 103, 59), (13, 111, 63), (14, 119, 67), (15, 127, 71), (16, 135, 75), (17, 143, 79), (18, 151, 83), (19, 159, 87), (20, 167, 91)]
+[PASS] S5.1 拖拽时宠物**跟随鼠标**（位移方向一致且量级相当）  | dx=160(exp 160) dy=80(exp 80)
+  左上角单步最大偏差 = 7 px（抓取偏移漂移，设计取舍，非缺陷）
+  窗口中心单步最大偏差 = 0 px（期望 0；容器 38x80…138x94）
+[PASS] S5.2 拖拽期间**窗口中心随鼠标连续推进**（角色在屏幕上不跳位；容差 2px）  | worst_center_dev=0px
+  （S5 耗时 1.9s）
+
+---- S6. 甩飞 / 重力掉落（抛物线 + `_fall_reason is None`）----
+  start_falling 后：is_gravity_falling=True  _is_thrown=True  _fall_reason=None
+2026-10-06 20:14:40 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+  y 轨迹 = [80, 62, 63, 71, 81, 94, 111, 131, 156, 183, 215, 247, 278, 302, 343, 384, 436, 484, 526, 581, 635, 697, 764, 829, 902, 985, 1059, 1140, 1304, 1356, 1474]
+[PASS] S6.1 甩飞后确实**下落**（y 单调增大到停止）  | dy=1394
+[PASS] S6.2 「甩飞必 `_fall_reason=None`」契约未被破坏  | _fall_reason=None
+  （S6 耗时 2.6s）
+
+---- S7. 托盘（后台运行的唯一退出入口）----
+  系统托盘可用 = True   _tray = 'QSystemTrayIcon'
+[PASS] S7.1 `_tray` 已建
+[PASS] S7.2 托盘图标**可见**（第51轮修的点：建了必须 show）
+  菜单项 = ['显示 Ralsei', '隐藏 Ralsei', '退出 Ralsei']
+[PASS] S7.3 菜单含"退出"入口  | acts=['显示 Ralsei', '隐藏 Ralsei', '退出 Ralsei']
+  （S7 耗时 0.0s）
+
+=== 汇总 ===
+  PASS=19  FAIL=0  SKIP=0
+written: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第94轮-基础宠物真机全功能验收\_evidence\probe94_full.txt

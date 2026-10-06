@@ -1,0 +1,117 @@
+2026-10-06 20:09:50 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-06 20:09:53 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-06 20:09:53 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-06 20:09:53 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-06 20:09:53 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-06 20:09:53 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 34 人）
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-06 20:09:53 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC susie 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC flowery 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC npc_room 自己挪到了 ch3.dark_world.dark_world
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 oneshot.barrens.Blue
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC police 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 uty.rooms.rm_intro
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-06 20:09:55 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 uty.rooms.rm_intro
+=== 第94轮 精灵容器体检 ===
+时间 = 2026-10-06 20:09:55
+scale_factor = None
+
+动画组总数 = 497
+
+idle           帧数=5   容器=69x47 -> 窗口(×1)=69x47
+    逐帧 = ['69x47', '69x47', '69x47', '69x47', '69x47']
+sleep          帧数=2   容器=23x41 -> 窗口(×1)=23x41
+    逐帧 = ['23x41', '23x41']
+pose           帧数=1   容器=32x40 -> 窗口(×1)=32x40
+    逐帧 = ['32x40']
+cower          帧数=1   容器=25x29 -> 窗口(×1)=25x29
+    逐帧 = ['25x29']
+walk_right     帧数=4   容器=19x40 -> 窗口(×1)=19x40
+    逐帧 = ['19x40', '19x40', '19x40', '19x40']
+walk_down      帧数=4   容器=21x41 -> 窗口(×1)=21x41
+    逐帧 = ['21x41', '21x41', '21x41', '21x41']
+walk_left      帧数=4   容器=19x40 -> 窗口(×1)=19x40
+    逐帧 = ['19x40', '19x40', '19x40', '19x40']
+walk_up        帧数=4   容器=21x41 -> 窗口(×1)=21x41
+    逐帧 = ['21x41', '21x41', '21x41', '21x41']
+run_right      帧数=6   容器=29x35 -> 窗口(×1)=29x35
+    逐帧 = ['29x35', '29x34', '29x33', '29x33', '28x33', '28x35']
+jump_ball      帧数=4   容器=20x20 -> 窗口(×1)=20x20
+    逐帧 = ['20x20', '20x20', '20x20', '20x20']
+fall           帧数=1   容器=19x40 -> 窗口(×1)=19x40
+    逐帧 = ['19x40']
+splat          帧数=1   容器=47x30 -> 窗口(×1)=47x30
+    逐帧 = ['47x30']
+land           帧数=3   容器=25x41 -> 窗口(×1)=25x41
+    逐帧 = ['25x41', '25x41', '25x41']
+
+--- 容器离群筛查（宽度 >= 60 或 高度 >= 60 的组）---
+  attack                                     容器= 65x42  帧数=7
+  defeat                                     容器= 77x47  帧数=1
+  defend                                     容器= 69x47  帧数=8
+  idle                                       容器= 69x47  帧数=5
+  item                                       容器= 74x55  帧数=7
+  neutral                                    容器= 69x47  帧数=5
+  spell                                      容器= 78x47  帧数=11
+  spr_cutscene_12_susie_ralsei_drag          容器= 60x52  帧数=4
+  spr_cutscene_27_queen_hand_surprise_ralsei 容器=110x110 帧数=1
+  spr_cutscene_27_ralsei_huh                 容器=110x110 帧数=1
+  spr_cutscene_27_ralsei_look                容器=110x110 帧数=1
+  spr_cutscene_27_ralsei_mu                  容器=110x110 帧数=1
+  spr_cutscene_27_ralsei_scared              容器=110x110 帧数=1
+  spr_cutscene_27_ralsei_smile               容器=110x110 帧数=1
+  spr_cutscene_27_ralsei_stern               容器=110x110 帧数=1
+  spr_dw_tv_prize_ralsei                     容器=156x169 帧数=1
+  spr_dw_tv_prizes                           容器= 73x82  帧数=1
+  spr_gameshow_drowningRalsei_ralsei         容器= 71x77  帧数=1
+  spr_gameshow_drowningRalsei_ralsei_origin_edit 容器= 71x77  帧数=1
+  spr_gameshow_ralseiplush_stoole            容器=396x263 帧数=1
+  spr_ja_quiz_ralsei_plush                   容器= 71x53  帧数=1
+  spr_quiz_ralsei_plush                      容器= 60x53  帧数=1
+  spr_ralsei_attack                          容器= 65x42  帧数=7
+  spr_ralsei_attackready                     容器= 77x47  帧数=1
+  spr_ralsei_coaster                         容器= 70x56  帧数=1
+  spr_ralsei_defeat                          容器= 77x47  帧数=1
+  spr_ralsei_defend                          容器= 69x47  帧数=8
+  spr_ralsei_defend_peek                     容器= 69x47  帧数=1
+  spr_ralsei_horse_despondent                容器= 64x45  帧数=1
+  spr_ralsei_horse_jump                      容器= 64x56  帧数=2
+  spr_ralsei_horse_run                       容器= 65x51  帧数=8
+  spr_ralsei_horse_walk                      容器= 64x51  帧数=5
+  spr_ralsei_horse_walk_overworld            容器= 64x48  帧数=4
+  spr_ralsei_horse_walk_overworld_left       容器= 64x48  帧数=4
+  spr_ralsei_hurt                            容器= 77x47  帧数=1
+  spr_ralsei_hurt_fixed                      容器= 77x47  帧数=1
+  spr_ralsei_hurt_overworld                  容器= 77x47  帧数=1
+  spr_ralsei_idle                            容器= 69x47  帧数=5
+  spr_ralsei_item                            容器= 74x55  帧数=7
+  spr_ralsei_itemready                       容器= 74x55  帧数=1
+  spr_ralsei_redefend                        容器= 69x47  帧数=5
+  spr_ralsei_spell                           容器= 78x47  帧数=11
+  spr_ralsei_spellready                      容器= 78x47  帧数=4
+  spr_ralsei_victory                         容器= 69x47  帧数=21
+  spr_susie_ralsei_drag_run                  容器= 60x51  帧数=4
+  spr_susieb_throwralseiready                容器=103x71  帧数=1
+  spr_susieb_throwralseiready_setup          容器=103x71  帧数=1
+  spr_susiezilla_ralsei_tower                容器= 87x130 帧数=1
+  susie_throw_ready                          容器=103x71  帧数=1
+  victory                                    容器= 69x47  帧数=21

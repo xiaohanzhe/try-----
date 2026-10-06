@@ -1,0 +1,16 @@
+==========================================================================
+第94轮变异测试：10 个变异（负控制 1 个）
+==========================================================================
+[OK]   M0 负控制：只改注释（无语义变化）⇒ 必须 FAIL=0    FAIL=0 rc=0
+[OK]   M1 A：`_skip_if_critical` 摘掉睡眠守卫（回到"漏 sleep"的原样）    expect='A1 ' hit=[FAIL] A1 `_skip_if_critical()` 有 `is_sleeping` **提前返回**守卫（原来只守 施法/游戏/拖拽/跳 FAIL=3
+[OK]   M2 A：`trigger_action` 摘掉睡眠守卫（只守上层是不够的）    expect='A2 ' hit=[FAIL] A2 `trigger_action()` 也有同一守卫（它可被直接调用，不能只靠上层拦）    段落 1243 字符 FAIL=3
+[OK]   M3 B：`_use_force` 打回"只把 idle 当状态恢复"（sleep 再也回不来）    expect='B2 ' hit=[FAIL] B2 求值：`sleep` 与 `idle` 都必须 force=True；`walk_down` 必须**不** force（负控制 FAIL=2
+[OK]   M4 B1b：`_use_force` 算了但**不再被消费**（抽到的是个死变量）    expect='B1b' hit=[FAIL] B1b `_use_force` 在 `update_animation` 内**唯一赋值**、且真被 `change_animati FAIL=1
+[OK]   M5 B5：删掉第91轮那条 `elif self.is_sleeping: new_animation = "sleep"`    expect='B5 ' hit=[FAIL] B5 第91轮那条 `elif self.is_sleeping: new_animation = "sleep"` 未被回退（否则睡 FAIL=1
+[OK]   M6 C：把两个渲染分支的同步块**整段删掉**（= 回到"先窜后弹"）    expect='C1 ' hit=[FAIL] C1 两个**同构渲染分支**都要有同步（计数都必须是 2 —— 只修一处 = 改一处漏一处）    setGeometry=2 sy FAIL=6
+[OK]   M7 C：只把**第一处**同步挪到 `setGeometry` 之后（顺序被破坏）    expect='C3 ' hit=[FAIL] C3 顺序：同步必须在 `setGeometry` **之前**（放后面就等于没修） FAIL=2
+[OK]   M8 C：把守卫里的 `drag_position is not None` 那半句拿掉（只留拖拽条件）    expect='C1 ' hit=[FAIL] C1 两个**同构渲染分支**都要有同步（计数都必须是 2 —— 只修一处 = 改一处漏一处）    setGeometry=2 sy FAIL=6
+[OK]   M9 C6：把 `QPoint` 从 import 里拿掉（只在拖拽时 NameError）    expect='C6 ' hit=[FAIL] C6 同步用到 `QPoint` ⇒ 必须已导入（否则运行时 NameError，只在拖拽时爆） FAIL=1
+==========================================================================
+变异测试：OK=10 MISS=0
+==========================================================================

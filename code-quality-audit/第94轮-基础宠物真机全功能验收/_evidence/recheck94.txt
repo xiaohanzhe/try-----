@@ -1,0 +1,82 @@
+==============================================================================
+第94轮复检 —— 改过重要核心文件后的逐项自证
+ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+==============================================================================
+
+---- A. 语法/可编译（ast.parse，不产 .pyc）----
+[PASS] A 语法 OK：pet_ai.py    38426 B
+[PASS] A 语法 OK：main.py    860110 B
+[PASS] A 语法 OK：run_all.py    210335 B
+[PASS] A 语法 OK：baseline.json    14220 B
+[PASS] A 语法 OK：check94.py    22934 B
+[PASS] A 语法 OK：mutate94.py    8048 B
+
+---- B. 结构自检 ----
+[PASS] B1 check94 判据条数 == 21（与文档头、与真机输出三方一致）    AST 实得 21
+[PASS] B2 四段判据齐全（A pet_ai 守卫 / B 自愈 / C 拖拽锚点 / D 自检）    段字母=['A', 'B', 'C', 'D']
+[PASS] B3 每条判据标题以「段字母+编号」开头（防标题粘连/漏编号）    异常=[]
+[PASS] B4 没有空标题判据    取到标题 21 / 判据 21
+[PASS] B5 mutate94 变异条数 == 10（含 1 个 M0 负控制）    实得 10
+
+---- C. 编码与行尾纯度 ----
+[PASS] C 无 BOM 且无 U+FFFD：pet_ai.py    BOM=False FFFD=False
+[PASS] C 无 BOM 且无 U+FFFD：main.py    BOM=False FFFD=False
+[PASS] C 无 BOM 且无 U+FFFD：run_all.py    BOM=False FFFD=False
+[PASS] C 无 BOM 且无 U+FFFD：baseline.json    BOM=False FFFD=False
+[PASS] C 无 BOM 且无 U+FFFD：check94.py    BOM=False FFFD=False
+[PASS] C 无 BOM 且无 U+FFFD：mutate94.py    BOM=False FFFD=False
+[PASS] C 行尾纯度：main.py（必须 CRLF：本树检出形态）    CRLF=15029 裸LF=0 裸CR=0
+[PASS] C 行尾纯度：run_all.py（必须 CRLF）    CRLF=2663 裸LF=0 裸CR=0
+[PASS] C 行尾纯度：baseline.json（必须 LF：run_all 用 newline='\n' 写）    CRLF=0 裸LF=522 裸CR=0
+[PASS] C 行尾纯度：pet_ai.py（必须 LF）    CRLF=0 裸LF=802 裸CR=0
+[PASS] C 行尾纯度：check94.py（新文件，必须 LF）    CRLF=0 裸LF=472 裸CR=0
+[PASS] C 行尾纯度：mutate94.py（新文件，必须 LF）    CRLF=0 裸LF=176 裸CR=0
+
+---- D. 恒真判据复查 ----
+[PASS] D1 check94 里没有 `check(..., <常量>)` 的死判据（看着在守其实没守）    常量判据=[]
+[PASS] D2 `_use_force` 在 `update_animation` 内**恰一处**赋值（没有"改了两份只改一份"）    行号=[13610]
+[PASS] D3 逐证据互证：`_evidence/check94.txt` 里记的 `_use_force` 行号 == 现算行号    证据=13610 现算=[13610]
+[PASS] D4 ★ check81 G5 的口径成立：SUITES 集 == 基线套件集（26 轮铁律：新套件必 --update）    SUITES=86 baseline=86 差集=[]
+[PASS] D5 baseline 里 check94 是**真值**而非 `PENDING_UPDATE` 哨兵    sha=fb9af00e34070f41…
+[PASS] D6 baseline 里 check94 记的 pass == 21（与判据条数一致）    pass=21
+
+---- E. 逐令牌回验（报告/锁里点名的每一串，回原文件 in 一次）----
+[PASS] E pet_ai.py ×2：两处守卫（_skip_if_critical 返 True / trigger_action 返 None）    实得 2 次
+[PASS] E pet_ai.py ×2：两处修复注释    实得 2 次
+[PASS] E main.py ×1：修复 B 的表达式原文    实得 1 次
+[PASS] E main.py ×1：force 真被消费    实得 1 次
+[PASS] E main.py ×2：第91轮那条睡眠分支（★ 原文 2 次：1 处真代码 + 1 处在 L9775 **注释**里 —— 见下面 E-AST 两条）    实得 2 次
+[PASS] E main.py ×2：睡眠分支赋值（★ 原文 2 次：1 处真代码 + 1 处在 L9775 **注释**里 —— 见下面 E-AST 两条）    实得 2 次
+[PASS] E main.py ×2：修复 C 的两处守卫后半句    实得 2 次
+[PASS] E main.py ×1：QPoint 真已导入    实得 1 次
+[PASS] E run_all.py ×1：SUITES 里真有 check94    实得 1 次
+[PASS] E baseline.json ×1：基线里真有 check94    实得 1 次
+[PASS] E-AST 在 `update_animation` 内 `elif self.is_sleeping:` 恰 1 处（与 check94 B5 同口径；注释天然不进 AST）    函数内=[13383]；全文件 3 处 [6878, 10127, 13383]（另两处为既有的正确睡眠感知点 L6878/L10127）
+[PASS] E-AST 在 `update_animation` 内 `new_animation = "sleep"` 恰 1 处（同上）    函数内=[13384]（原文计数=2）
+[PASS] E 两处渲染分支的 `setGeometry(…target_width…)` 都在（2 处）    行号=[13705, 13886]
+[PASS] E check94 归一化 sha == 基线 sha（用 run_all 自己的 normalize 复算）    now=fb9af00e34070f41… base=fb9af00e34070f41…
+
+---- F. 工作区 ----
+    porcelain 共 15 条；未预期 0 条
+[PASS] F1 `git status --porcelain` 无未预期文件（本轮只该动 A 段白名单内的东西）    未预期=[]
+[PASS] F2 工作区无删除（防"临时/备份放进工作区被记成删除"）    删除=[]
+    本轮预期改动清单：
+       M code-quality-audit/regress/baseline.json
+       M code-quality-audit/regress/run_all.py
+      M  code-quality-audit/第93轮-基础宠物功能收口/_evidence/g2_after_revert_normalize.txt
+      AM code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/probe94_full.py
+       M ralsei_pet/modules/pet_ai.py
+       M ralsei_pet/src/main.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_evidence/
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/check94.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/mutate94.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/probe94_drag.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/probe94_drag2.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/probe94_hittest.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/probe94_sleep.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/probe94_sprites.py
+      ?? code-quality-audit/第94轮-基础宠物真机全功能验收/_tools/recheck94.py
+
+==============================================================================
+复检合计 45 项：PASS=45  FAIL=0
+==============================================================================
