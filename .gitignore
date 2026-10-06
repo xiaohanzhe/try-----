@@ -53,6 +53,14 @@ code-quality-audit/*/_scratch/
 code-quality-audit/*/_evidence/tmp*/
 code-quality-audit/*/_evidence/_tmp*/
 
+# 第96轮加：**10 分钟原始录屏**不入库。
+# 理由（2026-10-07）：① 同上——公开仓库，录屏含整个桌面（隐私）；
+# ② 体积：单文件 68.5 MB，纯二进制史；③ 可复算：`_tools/rec96.py` 可重跑再生。
+# ⇒ 入库的是「脚本 + 逐帧 CSV（rec96_frames.csv）+ 元信息 + 拼图 + 报告」，
+#    录屏本体留在本地 `_evidence/`（已在 .gitignore 里，工作区不受影响）。
+code-quality-audit/*/_evidence/*.avi
+code-quality-audit/*/_evidence/*.mp4
+
 # 编码校验工具自己的输出报告（每次运行的产物；且含乱码样本预览，入库会污染后续扫描）
 code-quality-audit/tools/_out_*
 
