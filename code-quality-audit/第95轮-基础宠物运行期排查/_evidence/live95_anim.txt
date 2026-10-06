@@ -1,0 +1,9 @@
+t=0.138 REJECT 'walk_down' (cur='idle') args=() kw={'force': False}
+t=17.988 REJECT 'idle' (cur='walk_left') args=() kw={}
+t=29.988 REJECT 'walk_right' (cur='walk_left') args=() kw={}
+t=35.986 REJECT 'walk_up' (cur='idle') args=() kw={}
+t=108.755 REJECT 'walk_right' (cur='idle') args=() kw={'force': False}
+t=108.938 REJECT 'walk_right' (cur='idle') args=() kw={'force': False}
+t=109.123 REJECT 'walk_right' (cur='idle') args=() kw={'force': False}
+t=109.316 REJECT 'walk_right' (cur='idle') args=() kw={'force': False}
+t=109.502 REJECT 'walk_right' (cur='idle') args=() kw={'force': False}

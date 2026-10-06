@@ -282,8 +282,14 @@ _today = _dt.date.today()
 check('B4 ★行为级：`bedtime=True` 时**同时**置上 `_bedtime_sleep` 与 `_bedtime_sleep_date`'
       '（后者是 D 段跨天闸的输入 ⇒ 缺了它就永远醒不过来）',
       _o2._bedtime_sleep is True and _o2._bedtime_sleep_date == _today,
-      '_bedtime_sleep=%s date=%s today=%s'
-      % (_o2._bedtime_sleep, getattr(_o2, '_bedtime_sleep_date', None), _today))
+      # ★ 第95轮：**不回显绝对日期** —— 原来打 `date=2026-10-06 today=2026-10-06`，
+      #   过零点后基线必然 DIFF（第95轮实测：10-07 全量回归 check91 报 DIFF，
+      #   而它自身 29/29 全绿）。改成回显**日期差**：信息等价（相等 ⇔ 差 0 天），
+      #   输出跨日稳定。断言条件本身**未改**。
+      '_bedtime_sleep=%s  date-today=%+d 天（0 ⇔ 相等；不回显绝对值 ⇒ 输出跨日稳定）'
+      % (_o2._bedtime_sleep,
+         (getattr(_o2, '_bedtime_sleep_date', None) - _today).days
+         if getattr(_o2, '_bedtime_sleep_date', None) is not None else 9999))
 
 _o3 = make_sleep_stub()
 RalseiPet.enter_sleep_mode(_o3)          # 小憩（bedtime 默认 False）

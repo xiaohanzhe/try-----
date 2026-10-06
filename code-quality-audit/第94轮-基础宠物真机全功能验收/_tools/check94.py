@@ -304,15 +304,19 @@ if _u_node is not None:
     _b_assigns.sort(key=lambda x: x.lineno)
     if _b_assigns:
         _b_expr = ast.get_source_segment(MAIN_TEXT, _b_assigns[0].value)
-        _b_line = _b_assigns[0].lineno
-P(u'     抽出表达式（main.py:%s）= %r' % (_b_line, _b_expr))
+        # ★★ 第95轮：**不回显绝对行号**。原写法打 `main.py:13610`，只要在它上方
+        #   插入/删除任何行（第95轮正是在 `update_animation` 里加了守卫+注释 9 行），
+        #   基线就必然 DIFF（第95轮全量回归实测：check94 只因行号变化报 DIFF）。
+        #   回显"表达式本身"信息等价（表达式才是身份），且对无关编辑稳定。
+        #   断言条件**一字未改**。
+P(u'     抽出表达式 = %r' % (_b_expr,))
 
 _b_use = bool(re.search(r'change_animation\(\s*new_animation\s*,\s*force=_use_force\s*\)',
                         MAIN_TEXT))
 check(u'B1b `_use_force` 在 `update_animation` 内**唯一赋值**、且真被 '
       u'`change_animation(..., force=_use_force)` 消费（防"抽到一个没人用的死变量"）',
       len(_b_assigns) == 1 and _b_use,
-      u'赋值行=%r 被消费=%r' % ([a.lineno for a in _b_assigns], _b_use))
+      u'赋值处数=%d 被消费=%r' % (len(_b_assigns), _b_use))   # ★ 第95轮：不回显行号
 
 
 def _ev(expr, is_same_category, new_animation):
@@ -408,8 +412,8 @@ check(u'C2 同步语句必须落在其守卫 `If` 的**行范围内**（不能�
                                 for n, st in _C_SYNC))
 _ok_order = (len(_C_SG) == len(_C_SYNC) == 2 and
              all(s[1].lineno < g.lineno for s, g in zip(_C_SYNC, _C_SG)))
-P(u'     行号：sync=%r  setGeometry=%r'
-  % ([s[1].lineno for s in _C_SYNC], [g.lineno for g in _C_SG]))
+P(u'     偏移：sync-setGeometry = %r（负数 = 同步在前，即 C3 期望）'
+  % ([s[1].lineno - g.lineno for s, g in zip(_C_SYNC, _C_SG)],))
 check(u'C3 顺序：同步必须在 `setGeometry` **之前**（放后面就等于没修）', _ok_order)
 
 # ---- C4/C5 负控制：把两段对调 ⇒ C3 必须翻面 ----
@@ -429,8 +433,8 @@ if _swapped is not None:
         _sg2, _sy2 = _c_facts(_swapped)
         _sw_ok = (len(_sg2) == 2 and len(_sy2) == 2 and
                   not all(s[1].lineno < g.lineno for s, g in zip(_sy2, _sg2)))
-        P('     对调后：sync=%r  setGeometry=%r'
-          % ([s[1].lineno for s in _sy2], [g.lineno for g in _sg2]))
+        P('     对调后：sync-setGeometry = %r（正数 = 顺序已翻面）'
+          % ([s[1].lineno - g.lineno for s, g in zip(_sy2, _sg2)],))
     except Exception as e:  # pragma: no cover
         P('     对调后解析异常：%r' % (e,))
 check(u'C5 负控制：把两段对调后 C3 的**顺序判据必须翻面**（证明它不是恒真）', _sw_ok)

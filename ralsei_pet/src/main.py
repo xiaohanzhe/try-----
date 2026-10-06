@@ -7244,13 +7244,24 @@ class RalseiPet(QMainWindow):
                     angle = math.atan2(self.current_speed_y, self.current_speed_x) * 180 / math.pi
                     
                     # 根据角度范围确定方向，增加角度范围以减少方向频繁变化
-                    if -30 <= angle < 30:
+                    # ★★★ 第95轮修复：角度分档原来有**缝隙**，`[30,60)` 落进 `else`
+                    #   ⇒ 判成 "left"。而屏幕坐标（+y 向下）里 `[30,60)` 正是"右下"
+                    #   ⇒ **朝右下走却播朝左的精灵**。
+                    #   真机 recon 实锤（`_recon/move_log.txt`）：目标 (1877,1196)、
+                    #   起点 x=594 一路 +x 走出 907px、`atan2(1113,1283)=40.9°` ⇒
+                    #   dir='left'，**连续 10.48s / 297 个采样**方向反着；另有 6 例单帧
+                    #   边界采样。
+                    #   改回与本文件其余四处**同款**的对称分档（-45/45/135，与
+                    #   `abs(dx) > abs(dy)` 判定**完全等价**）：L7057 拖文件跟随 /
+                    #   L7383 / L9373 面向桌面图标 / L10832 拖拽 —— 本次是"消除同文件内
+                    #   的口径不一致"，不是新规则。
+                    if -45 <= angle < 45:
                         new_dir = "right"
-                    elif 60 <= angle < 120:
+                    elif 45 <= angle < 135:
                         new_dir = "down"
-                    elif -120 <= angle < -60:
+                    elif -135 <= angle < -45:
                         new_dir = "up"
-                    else:  # 120 <= angle < 180 或 -180 <= angle < -120
+                    else:  # 135 <= angle < 180 或 -180 <= angle < -135
                         new_dir = "left"
                     
                     # 只有当方向确实改变时才切换动画，增加方向变化的稳定性
@@ -13412,8 +13423,17 @@ class RalseiPet(QMainWindow):
             elif self.is_unhappy:
                 # 不开心时的动画
                 animation_suffix = "_unhappy"
-            elif self.is_sleeping_walk:
+            elif self.is_sleeping_walk and self.current_direction == "down":
                 # 走路时睡觉的动画
+                # ★★★ 第95轮：必须限定 `down` —— 素材里**只画了**
+                #   `spr_ralsei_walk_down_sleep_*`，`walk_left/right/up_sleep` 根本不存在
+                #   （`animations.json` 的 115 组里只有 `sleep` 与 `walk_down_sleep`）。
+                #   而 `is_sleeping_walk` 的置真/置假在本函数**下游**（下方"小憩走路状态"块），
+                #   晚于这里的后缀选择 ⇒ 方向刚由 down 变开的那一拍仍读到旧的 True，会拼出
+                #   `walk_right_sleep` 这类不存在的名字 ⇒ 静默回退 `walk_right` + 一条
+                #   `[anim-miss]` 告警（真机实证：第95轮 recon 20:50:06 / 20:51:47 各一次）。
+                #   行为由 `check95` B 段锁死。⚠️ 日后若补齐 left/right/up 的小憩走路素材，
+                #   应改为"按素材可用性判定"，而不是沿用本守卫。
                 animation_suffix = "_sleep"
             else:
                 animation_suffix = ""
