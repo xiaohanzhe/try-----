@@ -370,6 +370,23 @@ def pet():
         #    注：就寝自身"会不会绕过动画来源闸门"的风险不在本套件职责内，
         #        已作为第60轮发现登记，不在此处静默兜住。
         _PET.BEDTIME_ENABLED = False
+        # ★★ 第89轮：冻结 NPC 自主挪窝 —— 它同样是与动画无关的子系统，
+        #    且输出**逐次都不同**（不是"白天绿深夜红"那种时段炸弹，是**纯随机漂移**）。
+        #    根因：`update_movement()` 里有一句 `self._npc_roam_tick(current_time)`，
+        #    而 `_npc_roam_tick` 内部经 `npc_intent.jitter()` 使用**连续墙钟**
+        #    `time.time()`（精确到微秒）参与哈希 ⇒ 每次跑 NPC 落点都不一样，
+        #    打印 `<TS> ... NPC xxx 自己挪到了 <场景>` 一二十行 ⇒ 本套件必然 DIFF。
+        #    实测：`ralsei` 一次去 `uty.rooms.rm_intro`、另一次去 `ch4.kris_room.kris_s_room`。
+        #    ⚠️ 这是**测试夹具的时间耦合**，不是产品缺陷 —— NPC 生活本就该"每天不同"
+        #      （L6「同人同刻不必同行为」），第78/79 轮已用**纯函数级**判据单独锁住它。
+        #    ⇒ 处置：把该子系统关掉（`NPC_AUTONOMOUS_TICK = 0` 会让节拍闸始终放行，
+        #      所以直接摘掉 `npc_placement`；`_npc_roam_tick` 见 book 为 None 即早退、零日志）。
+        #    ⚠️ 代价：本套件从此**看不见**"NPC 挪窝会不会绕过动画来源闸门"。
+        #      该风险不在本套件职责内（本套件只测动画治理），已在第89轮登记。
+        try:
+            _PET._npc_roam_last_tick = float('inf')   # 节拍闸：now - inf < 30 ⇒ 永远早退
+        except Exception:
+            pass
     return _PET
 
 

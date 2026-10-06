@@ -228,18 +228,59 @@ check('B4 desktop.json 可加载且 schema 版本与作品内场景一致',
       and (_desktop_scene.raw or {}).get('schema_version')
       == ss.SCENE_SCHEMA_VERSION)
 
-# 控制器源码级：不许有 desktop 特判
+# 控制器源码级：不许有 desktop **特判分支**
 _ctrl_src = io.open(os.path.join(_MODULES, 'scene_controller.py'),
                     'r', encoding='utf-8').read()
-check("B5 控制器源码不含 'desktop' 字面量（无特判后门）",
-      'desktop' not in _ctrl_src,
-      '（若此处失败，说明给桌面开了后门）')
+# ★★ 第89轮修正（判据过窄 ⇒ 误报，记忆 §4 铁律）：原判据是**子串**判断
+#   `'desktop' not in src` —— 但第89轮起 `scene_controller` 需要把 desktop 作为
+#   **章节枚举的一项**（`_ENTRY_CHAPTER_ORDER` / `_entry_scenes`）来生成"跨作品
+#   入口"菜单。那是**数据**，不是**特判后门**：它不改变任何路由判定逻辑。
+#   子串判据把"提到 desktop"和"对 desktop 开后门"混为一谈 ⇒ 会误报。
+#   ⇒ 改成 **AST**：只有当 `desktop` 出现在 **if/while/三元** 的**判定条件**里、
+#     或用于 `==`/`!=` 比较时才报红（那才是后门）。纯数据枚举不算。
+import ast as _ast
+_ctrl_tree = _ast.parse(_ctrl_src)
 
-# --- 负控制：合成一段含 desktop 的源码，同样的判据必须判 False ---
+
+def _desktop_in_condition(tree):
+    """返回 `desktop` 被用作**判定条件**的位置列表（空 = 无后门）。"""
+    hits = []
+    for node in _ast.walk(tree):
+        if isinstance(node, _ast.If):
+            cond = node.test
+        elif isinstance(node, _ast.While):
+            cond = node.test
+        elif isinstance(node, _ast.IfExp):
+            cond = node.test
+        else:
+            continue
+        for sub in _ast.walk(cond):
+            # 形态一：'desktop' == x / x == 'desktop'
+            if isinstance(sub, _ast.Compare):
+                for c in [sub.left] + list(sub.comparators):
+                    if (isinstance(c, _ast.Constant)
+                            and c.value == 'desktop'):
+                        hits.append(getattr(node, 'lineno', '?'))
+            # 形态二：'desktop' in x（字母集判断）
+            if (isinstance(sub, _ast.Constant) and sub.value == 'desktop'):
+                hits.append(getattr(node, 'lineno', '?'))
+    return hits
+
+
+_desk_branch = _desktop_in_condition(_ctrl_tree)
+check("B5 控制器源码里 desktop **不参与任何 if/while/三元 判定**（无特判后门）",
+      not _desk_branch,
+      '命中行号=%s（若此处失败，说明给桌面开了后门）' % (_desk_branch or '无'))
+
+# --- 负控制：合成一段含 desktop 特判的源码，同样的判据必须判出 ---
 _synth = "if scene_id == 'desktop':\n    pass\n"
-check('B6 负控制：含 desktop 特判的合成源码会被判出'
-      "（'desktop' in src 为 True）",
-      ('desktop' in _synth) is True)
+check('B6 负控制：含 desktop 特判的合成源码会被 AST 判据判出',
+      bool(_desktop_in_condition(_ast.parse(_synth))))
+# ★ B6b 负控制（第89轮）：纯**数据枚举**里的 desktop（章节序元组）**不许**被判出
+#    —— 否则上面把 B5 换成 AST 就是"换了个更松的判据"（鉴别力没保住）。
+_synth2 = "_ORDER = ('desktop', 'ch1')\nfor c in _ORDER:\n    x = c\n"
+check('B6b 负控制：纯数据枚举（元组里的 desktop）不判为后门',
+      not _desktop_in_condition(_ast.parse(_synth2)))
 
 # ===========================================================================
 #  C. 路由按原作连接推进
@@ -266,9 +307,18 @@ check('C2 路由条数 > 100（由原作连接生成，不再是 26 条手工链
 
 # --- C3：机制级断言 —— 每条规则的 _original 必须自洽于门的下标位移表 ---
 #     （这是 v2 的核心不变量：规则不是"编"的，是"推"出来的。）
+# ★★ 第89轮：desktop 的 8 扇**世界门**（A..F/W/X → ch1..ch5/ut/uty/oneshot）
+#   是**跨作品**入口，不是"原作房间下标位移"—— 桌面不属于任何原作房间，
+#   自然没有 `room_delta`。本判据的意图是"凡由**原作门表**推出的边，其
+#   _original 必须与下标位移表自洽"，故按 `when_scene != 'desktop'` 圈定范围。
+#   desktop 门另有专门锁（verify_routes_order44 B7：恰 8 扇 / 同 priority /
+#   目标场景存在），不是"排除即不管"。
 _DOOR_DELTA = {'A': 1, 'B': -1, 'C': 2}
+_ORIGIN = ('desktop',)
 _struct_bad = []
 for _r in (routes.get('routes') or []):
+    if _r.get('when_scene') in _ORIGIN:
+        continue
     _o = _r.get('_original')
     if not isinstance(_o, dict):
         _struct_bad.append('%s(无_original)' % _r.get('to'))
@@ -280,15 +330,26 @@ for _r in (routes.get('routes') or []):
     if _o.get('room_delta') != _DOOR_DELTA[_L]:
         _struct_bad.append('%s(位移=%r≠%d)' % (_r.get('to'), _o.get('room_delta'),
                                               _DOOR_DELTA[_L]))
-check('C3 每条规则的 _original 自洽于门的下标位移表（A+1 / B-1 / C+2）',
+check('C3 每条规则的 _original 自洽于门的下标位移表（A+1 / B-1 / C+2；排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
 
 # C3b 规则只用了「已实证」的三种字母门 —— 不许悄悄混进 D/E/F/W/X
+#   ★ 第89轮：同理排除 desktop（它的 D/E/F/W/X 是**世界门**，属第89轮新契约，
+#     不是"混进原作边的杂字母"）。
 _LETTERS = sorted(set((r.get('_original') or {}).get('door_letter')
-                      for r in (routes.get('routes') or [])))
-check('C3b 只用 A/B/C 三种已实证字母门（D/E/F/W/X 一律不编边）',
+                      for r in (routes.get('routes') or [])
+                      if r.get('when_scene') not in _ORIGIN))
+check('C3b 原作段只用 A/B/C 三种已实证字母门（D/E/F/W/X 一律不编原作边）',
       set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
+# ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A..F/W/X（正控制），
+#    证明 C3/C3b 的"排除"没有把 desktop 整段漏掉。
+_desk_letters = sorted(set(
+    (r.get('_original') or {}).get('door_letter')
+    for r in (routes.get('routes') or []) if r.get('when_scene') == 'desktop'))
+check('C3c ★ desktop 世界门字母 == A..F + W/X（8 扇）',
+      _desk_letters == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X'],
+      '实际=%s' % _desk_letters)
 
 # --- C4：锚点 —— krisroom 的 doorA 必须落到 krishallway（第44轮实证的真值）---
 #     这是「解析器输出必须先过已知真值锚点」在产品侧的固化。

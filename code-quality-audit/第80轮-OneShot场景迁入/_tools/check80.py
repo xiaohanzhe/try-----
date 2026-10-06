@@ -169,8 +169,17 @@ print('=' * 74)
 if os.path.exists(BAK_IDX):
     old = load(BAK_IDX)
     old_ch = old.get('chapters') or {}
-    diffs = [k for k, v in old_ch.items() if idx.get('chapters', {}).get(k) != v]
-    check('C1 ★★★ 迁入前 8 章逐值不变', not diffs, '变了=%s' % (diffs or '无'))
+    # ★★ 第89轮修正（判据过窄 ⇒ 误报，记忆 §4 铁律）：本条的**意图**是
+    #   "第80轮迁入 OneShot 时不许碰到**别的作品**"，不是"desktop 从此永不改动"。
+    #   第89轮给 desktop 房间挂了 8 扇世界门（`obj_doorA~F/W/X`）—— 那是**该轮
+    #   的设计目标**（用户口径："先能让我看到场景可以切换"），改的正是 desktop
+    #   自己那一条。把它算进"变了的作品"是把两件事混为一谈。
+    #   ⇒ 排除 desktop（它本就不属于任何原作房间，`original_room_id=-1`），
+    #     并**保留**对它的正向断言（下方 "desktop 仍是一等场景"）。
+    diffs = [k for k, v in old_ch.items()
+             if k != 'desktop' and idx.get('chapters', {}).get(k) != v]
+    check('C1 ★★★ 迁入前 8 章（除 desktop 自身）逐值不变', not diffs,
+          '变了=%s' % (diffs or '无'))
     added = set(idx.get('chapters') or {}) - set(old_ch)
     removed = set(old_ch) - set(idx.get('chapters') or {})
     check('C2 ★ 增量恰好 +oneshot（不多不少）',

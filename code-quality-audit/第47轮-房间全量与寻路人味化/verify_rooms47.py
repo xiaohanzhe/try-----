@@ -190,6 +190,7 @@ def main():
     bad = {'U1': [], 'U2': [], 'U3': [], 'U4': [], 'U5': []}
     n_bg = 0
     n_shard = 0           # ★ 用分片载体的场景数（负控制要用）
+    neg_rid = []          # ★ 第89轮：original_room_id < 0 的哨兵场景（应只有 desktop）
     for ch, crec in (idx.get('chapters') or {}).items():
         for ak, arec in (crec.get('areas') or {}).items():
             for sid, srec in ((arec or {}).get('scenes') or {}).items():
@@ -217,9 +218,17 @@ def main():
                 rid = rec.get('original_room_id')
                 if not isinstance(rid, int):
                     bad['U4'].append(sid)
+                elif rid < 0:
+                    neg_rid.append(sid)          # ★ 第89轮：哨兵 -1（desktop）
                 elif ('%s:%d' % (ch, rid)) not in rooms:
                     bad['U5'].append((sid, ch, rid))
-                if body.get('bg'):
+                # ★ 第89轮：`bg` 的"有"必须是**真有背景图**。第89轮起 desktop 的
+                #   bg 写成 `__transparent__`（声明式透明，透出壁纸）—— 那是
+                #   **背景的缺失**，不是覆盖。若按 `if body.get('bg')` 计，会把
+                #   "透明"错记成"已覆盖背景"，让覆盖率虚高 1（判据拿字面量代替
+                #   产物语义，记忆 §4 铁律）。故显式排除透明哨兵。
+                _bgv = body.get('bg')
+                if _bgv and _bgv != '__transparent__':
                     n_bg += 1
 
     check('B1 U1 载体文件缺失 == 0（两种载体都覆盖）', not bad['U1'],
@@ -232,8 +241,18 @@ def main():
     check('B3 U2 载体里未注册该场景 == 0', not bad['U2'],
           '%d 个，例 %r' % (len(bad['U2']), bad['U2'][:3]))
     check('B4 U3 name 非空 == 全部', not bad['U3'], '%d 个' % len(bad['U3']))
-    check('B5 U4 original_room_id 非 int 的只有 desktop（它本就不属于任何原作房间）',
-          sorted(bad['U4']) == ['desktop'], '异常=%r' % bad['U4'])
+    # ★★ 第89轮修正（判据随事实加强，记忆 §4 铁律）：原判据是"**非 int 的只有
+    #   desktop**"—— 前提是 desktop 的 original_room_id 为 None。第89轮起改为
+    #   哨兵整数 **-1**（"不属于任何原作房间"的类型化表达，比 None 更强：仍可做
+    #   数值比较/排序，不会在 `if rid:` 之类地方被当成 0 悄悄放行）。
+    #   于是"非 int 的只有 desktop"变成**空集** —— 判据反而更该加强：
+    #     ① 全体 original_room_id **都是 int**（类型不变量，比"只有一个是 None"更严）
+    #     ② 只有 desktop 是哨兵 -1（其余都 >= 0，是真实房间下标）
+    check('B5 U4 original_room_id 全体为 int（无 None/字符串）',
+          not bad['U4'], '异常=%r' % bad['U4'])
+    check('B5b ★ 只有 desktop 用哨兵 -1（其余均为 >=0 的真实原作房间下标）',
+          sorted(neg_rid) == ['desktop'],
+          '哨兵场景=%r' % (neg_rid,))
     check('B6 ★ 负控制：desktop 确实在索引里（B5 不是"恰好没记录"的恒真）',
           any(sid == 'desktop'
               for crec in (idx.get('chapters') or {}).values()

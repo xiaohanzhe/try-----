@@ -61,12 +61,17 @@ LETTER_CASES = [
     ('obj_doorA', 'A', True),
     ('obj_doorB', 'B', True),
     ('obj_doorF', 'F', True),
+    # ★ 第89轮：W / X 转正 —— desktop.json 用 `obj_doorW`→黄魂、`obj_doorX`→OneShot
+    #   两扇世界门（8 扇桌面门的既有事实）。原判据把 W/X 当"非法字母"的负控制，
+    #   是"判据过窄 ⇒ 会误报"（记忆 §4 铁律）：字母解析器本来就照收任意单字母，
+    #   产品**是否**用它才是路由层的事 —— 用"字母合法性"去卡解析器是**判据放错了层**。
+    ('obj_doorW', 'W', True),
+    ('obj_doorX', 'X', True),
     ('obj_doorA_0', 'A', True),
     ('obj_doora', 'A', True),
     ('obj_darkdoor', None, False),
     ('obj_doorevent', None, False),
-    ('obj_doorW', None, False),
-    ('obj_doorX', None, False),
+    # 排除了 W/X 之后，仍在"解析器不该猜"的负控制：双字母、非 door 前缀
     ('obj_doorAA', None, False),
     ('obj_savepoint', None, False),
     ('', None, False),

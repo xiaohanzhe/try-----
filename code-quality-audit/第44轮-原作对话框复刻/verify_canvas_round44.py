@@ -378,8 +378,24 @@ def sec_e():
     # E1 main.py 真的 import 并创建画布
     ok('from modules.scene_canvas import SceneCanvas' in main,
        'E1a main.py import SceneCanvas')
-    ok('self.scene_canvas = SceneCanvas(self)' in main,
-       'E1b main.py 创建画布实例')
+    # ★★ 第93轮 P0-1：画布构造从**子控件** `SceneCanvas(self)` 改为**独立顶层窗口**
+    #   `SceneCanvas(None)` —— 子控件会被 38×80~42×82 的角色小窗裁掉，640×480 的
+    #   房间根本画不出来（用户「**我还是没看到门**」的直接成因；第89轮已真机验证
+    #   独立窗口能把 8 扇门画上屏）。
+    #   ★ 判据把**真实实参**打印出来（不是静态文案）——第89轮基线就是这么做的：
+    #     `args='None, as_window=True'`。当前机制用 `parent is None` 表达独立性
+    #     （`SceneCanvas.__init__` 无 `as_window` 形参），故实参应为 `None`。
+    #   ★ 配一条**负控制**钉住"不许退回子控件"，否则这条判据抓不住回退。
+    import re as _re
+    _m = _re.search(r'self\.scene_canvas\s*=\s*SceneCanvas\(([^)]*)\)', main)
+    _args = _m.group(1).strip() if _m else '<未找到>'
+    ok(_m is not None, 'E1b main.py 创建画布实例（args=%r）' % (_args,))
+    # ★ 契约与 `check89` I3 同源：必须**显式** `as_window=True`
+    #   （89 轮已验证的写法；`parent is None` 只是兼容推断，不足以表达意图）。
+    ok(_m is not None and 'as_window=True' in _args.replace(' ', ''),
+       'E1b2 main.py 画布是独立顶层窗口（args=%r）' % (_args,))
+    ok(not _re.search(r'self\.scene_canvas\s*=\s*SceneCanvas\(self\)', main),
+       'E1b3 负控制：画布**不得**再作为 self 的子控件（会被 38×80 裁掉）')
 
     # E2 ★ main.py 真的驱动相机 + 消费计划（"函数写对了但产品没用上"的反面）
     ok('def _update_scene_layer(' in main, 'E2a main.py 定义 _update_scene_layer')

@@ -70,9 +70,17 @@ OBMAP = {'ch1': 'objmap43.txt', 'ch2': 'chapter2_objmap43.txt',
 #     判据跟着"已登记"这个口径才正确（见 `_registered_scene_rooms`）。
 #   ★ 第68轮补采（五章 + 可交互类）后，由 2,043 → **3,197**；两条锚点房间各加了
 #     若干 `obj_readable_room1` —— 均为**原作事实**（等价性见 verify_items68 A1）。
-EXPECT_TOTAL = 3197
+EXPECT_TOTAL = 3205
 EXPECT_ZONE_WITH_OBJ = 537
-EXPECT_FILE_WITH_OBJ = 78
+EXPECT_FILE_WITH_OBJ = 79
+#: ★★ 第89轮增量（**显式记账**，不写裸魔数）：desktop.json 挂了 8 扇世界门
+#    （`obj_doorA~F/W/X` → ch1..ch5 / ut / uty / oneshot），这是用户口径
+#    「先能让我看到场景可以切换」的直接落地。
+#      · 场景数 615 → **616**（desktop 从"零 objects"变成"有 objects"）
+#      · 条数   3197 → **3205**（+8）
+#    ⇒ 独立重算 `_recount_expected` 也同步 +8，两边**对得上**才说明是同一件事
+#      （若只改一边 ⇒ C3 立刻报红，这正是判据该有的鉴别力）。
+DESKTOP_DOORS = 8
 
 RE_ZONE = re.compile(r'^_zone\.(ch\d+)\.')
 
@@ -239,10 +247,13 @@ def main():
 
     # C3 独立重算：从**第68轮普查 + 按章对象表 + objs/** 三个真源重算期望值，
     #    必须与场景里的一致。这是"判据不依赖生成器自报"的关键 —— 判据自己算一遍。
-    expect = _recount_expected(obj_files)
+    #    ★ 第89轮：重算只覆盖**原作房间**；desktop 的 8 扇门是产品侧新增
+    #      （桌面不属于任何原作房间，`original_room_id=-1`）⇒ 期望 = 重算 + 8。
+    #      两边都要动才自洽：只改常量不改重算会让 C3 报红（鉴别力正确）。
+    expect = _recount_expected(obj_files) + DESKTOP_DOORS
     ok(expect > 0 and expect == len(all_objs),
-       'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源）== 实得 独立算=%d 实得=%d'
-       % (expect, len(all_objs)))
+       'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源 + desktop %d 扇门）== 实得 独立算=%d 实得=%d'
+       % (DESKTOP_DOORS, expect, len(all_objs)))
 
     print('')
     print('== D 负控制（证明判据有鉴别力）==')

@@ -66,9 +66,36 @@ def _make_hermetic_env():
 
     `tempfile.mkdtemp` 保证"新位置一定为空"→ "从旧版继承"必然发生 → 输出可复现；
     路径经 normalize() 归一成 <TMP>，所以每轮不同的随机目录名不会造成漂移。
+
+    ★★ 第89轮补第二根因（真实症状：5 个套件持续"输出与基线不一致"，PASS/FAIL 全 0）：
+      上面那句"从旧版继承必然发生"**只在仓库里真的存在可继承的 `ralsei_pet/memory.json`
+      时成立**。而那个文件是**上游提交进来的**（`git ls-files` 有它、无 .gitignore 覆盖、
+      最后一次改动在 `d6df565`）。于是同一份代码的这行日志**随一个 git 跟踪文件的有无而变**：
+        · 文件在 → `load_memory()` 走"从旧版继承"分支；
+        · 文件没了（被清理 / 在干净 clone 里还没生成）→ 两行都不打。
+      ⇒ 基线仍不封闭，只是把变量从"E 盘在不在线"换成了"仓库里那份 legacy 文件在不在"。
+      修法：**显式架空 legacy 文件指针**（`RALSEI_LEGACY_MEMORY` 指向隔离目录里一个
+      不存在的路径），让"新位置无记忆 ⇒ 也无旧版可继承"成为**唯一确定**的终态，
+      与仓库里有没有那个文件、E 盘在不在线都无关。
+      ⚠️ 代价（写清楚）：归一化后**"legacy 继承功能整个坏掉"也看不见**了。
+         真正守它的是 `s3_alias_legacy` 那条**离线**断言链（它自己构造 legacy 文件再断言
+         读得到），不依赖这行 stdout。
     """
     base = tempfile.mkdtemp(prefix='ralsei_g2_iso_')
-    return {'RALSEI_MEMORY_DIR': os.path.join(base, 'RalseiMemory')}, base
+    return {
+        'RALSEI_MEMORY_DIR': os.path.join(base, 'RalseiMemory'),
+        # 指向隔离目录内一个**不存在**的文件：legacy 继承分支必不触发 ⇒ 输出确定。
+        'RALSEI_LEGACY_MEMORY': os.path.join(base, 'no_such_legacy_memory.json'),
+        # ★★ 第89轮补第三根因：`RALSEI_MEMORY_DIR` 只钉住了"设备目录"，但
+        #   `migrate_from_fallback()` 读的是**桌面兜底目录** `<桌面>\memory` ——
+        #   那是个**宿主真实目录**（`C:\Users\<u>\Desktop\memory`），本机曾经
+        #   真跑过产品 ⇒ 里面残留过 `memory.json` ⇒ 隔离区首启会打印
+        #     「记忆已从桌面搬入设备目录: {'moved': True, ...}」
+        #   而干净机器上这行**根本不出现** ⇒ 该行是环境噪声、不是被测行为。
+        #   （实测：本机 `Desktop\memory\` 里有上次跑留下的 `_wtest.txt`。）
+        #   修法：连兜底目录一起指进隔离区 ⇒ "桌面无记忆"成为确定终态。
+        'RALSEI_DESKTOP': base,
+    }, base
 
 
 # 需要"隔离真实存储"的套件：凡是会 `RalseiPet()` / 触碰 memory · data_store
@@ -93,6 +120,12 @@ HERMETIC_IDS = frozenset({
     'rooms_round47', 'walk_round47', 'npc_round49', 'bubble_round50',
     'dialog_turn52', 'dialog_clean52', 'dialog_lounge52',
     'sit_round54',
+    # ★ 第89轮补（基线不封闭的实证）：`round8_anim` 也会 `RalseiPet()`，
+    #   于是 `memory_system` 真去解析存储位置 ⇒ 输出随"E 盘在不在线 / 有没有
+    #   可继承的 memory.json"漂移。本注释上方第 56 行**早就写了它会 RalseiPet()**，
+    #   但名单里一直漏了它 —— 症状是 `round8_anim` 长期以"假 DIFF"混在问题清单里
+    #   （这行"新位置无记忆，已从旧版继承"在有/无可继承文件时打印与否不同）。
+    'round8_anim',
     # 第55轮：两者都真机 `RalseiPet()`（灵魂窗口 + NPC 服务建在真 App 上）
     'soul_round55', 'npc_persona55',
     # 第56轮：真机 `RalseiPet()`（站位 / 游荡 / 编队 / 桌面闸都建在真 App 上）
@@ -111,6 +144,15 @@ HERMETIC_IDS = frozenset({
     #       `_tools/audit_env_leak74.py`）。两个后果：① 基线不封闭（E 盘掉线即假 DIFF）；
     #     ② 跑一次就往用户真实保管库写东西。这里补进名单，让 `find_device_dir` 直接 return。
     'check73',
+    # ★★ 第93轮补（**由被测脚本自证**，不是我的推断）：`check89.py` 的 docstring
+    #   第 48 行自己就写着「需要真机 `RalseiPet()`（相机要 `follow` 过才出计划）
+    #   ⇒ 进 `HERMETIC_IDS`」—— 第89轮只把它注册进 SUITES，**漏了这条**。
+    #   实证后果（第93轮全量 G2 抓到）：`check89` 的基线**永不收敛** ——
+    #   它读的是**真实** `E:\RalseiMemory\npc_life.json`，而 NPC 自主移动会往里写，
+    #   于是每次跑「驻留 N 人」与「谁自己挪到了哪个房间」都不同（`30→34` 人、
+    #   换了一批 NPC）。这正是本名单要消灭的"基线不封闭"。
+    #   ★ 注意 `check88` **不需要**：它零依赖、不起真机（无 `RalseiPet()`）。
+    'check89',
 })
 
 
@@ -1973,6 +2015,47 @@ SUITES = [
                 'E ★★ Outertale 11 人未被硬安家（`_index.json` 无 `outertale` 章 ⇒ 如实挂起） / '
                 'F ★★ 数据面自洽（索引登记 · 原作几何可查 · `load_scene` 真加载带房间号 + 负控制） / '
                 'G 判据自身体检（被测文件在盘 · 计数守恒）',
+    },
+    {
+        'id': 'check88',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第88轮-NPC交互链', '_tools', 'check88.py'),
+        'offscreen': True,
+        'desc': '第八十八轮：NPC 交互链（原作「Z → 射线检测 → 触发交互」的等价物）—— '
+                'A ★★★ 射线几何**逐值等于**原作 `obj_mainchara_Step_0` 四段式子'
+                '（A/B 锚点法：把原作式子独立重算 + 明暗两世界 8 组） / '
+                'B ★★ 四段形状差异真在（互不相同 · 上下段"横向窄纵向延伸" · 方形射线负控制） / '
+                'C ★★★ 命中按**朝向**选（背对不命中 · 最近优先 · 平手确定性 · '
+                '空候选不硬选 · 非法输入分因 · `_box_of` 形状约定 · 逆序矩形归一化） / '
+                'D ★★ 转向 I3（`face_actor` 看向主角 + 与 `npc_placement._facing_between` '
+                '**逐例等价**（含退化阈值 `(1e-12,0)`）+ 成对负控制） / '
+                'E ★★★ 接线断言（8 方法全定义 · `interact_scene_prop` 真调射线 · '
+                '★AST 断言 Z 键真分流（if 体交回/else 体交互）+ 正负控制 · '
+                '说话复用 `npc_speak` · 展示走 `_npc_say_line` · 转向真写 `body.facing` · '
+                '明暗世界与速度表同源） / '
+                'F ★★ 旧行为不回归（桌面场景不射线 · 旧降级链保留 · 零依赖 + 函数内零 import） / '
+                'G 判据自身体检（射线几何差异真在 · 记账守恒 · 记账器鉴别力）',
+    },
+    {
+        'id': 'check89',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第89轮-桌面与作品场景连通', '_tools', 'check89.py'),
+        'offscreen': True,
+        'desc': '第八十九轮：**桌面 ↔ 作品场景连通**（用户硬门槛「先能让我看到场景可以切换」）'
+                '+ 基础桌宠三处修复 + 「别让他打开 bilbil」—— '
+                'A 桌面门数据面（8 扇 · 字母 A~F/W/X · pos 在房间内 · 贴图在盘尺寸一致） / '
+                'B 路由表（8 条 when_scene=desktop · 目标逐条可解析） / '
+                'C `_match_tier` 的 **-1 档**（完整 id 命中最强档 · 别名仍工作） / '
+                'D 菜单不空（跨章入口**排在头部** · 桌面 ≥8 条） / '
+                'E 渲染计划（真机 `plan objs=8` · rect = 贴图×scale · 全在视口内） / '
+                'F 推门真切场景（`build_props` 建 8 个 DoorProp · `travel_to` 真改 `scene_id`） / '
+                'G 旧行为不回归 · '
+                'I ★★★ 可见性（`as_window=True` / `lower()` 与 as_window 绑定 / '
+                '`_place_scene_layer` 只 move 不 resize + 四向钳制 —— 判据全走 AST） / '
+                'J ★★★ 不许自作主张开 B站（**全项目代码层零 B站 URL 字面量** · '
+                '`suggest_watching_video` 无代开三件套 + 负控制 · 陪看能力未误伤 · '
+                '用户明确指令「打开浏览器」仍可用）/ '
+                'H 判据自身体检（记账守恒 · 记账器鉴别力）',
     },
     # 第90轮 · `handle_jump` 的**竖直方向坐标系**（屏幕 Y 向下）。
     # ★ 用户口径：「跳跃的抛物线也不对」「跳上去窗口也只有跳没有上去」。

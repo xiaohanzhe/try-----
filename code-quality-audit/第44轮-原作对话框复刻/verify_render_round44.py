@@ -237,13 +237,35 @@ def sec_d():
     # D3 未登记房间 → placeholder（不静默空画）
     sc_d = SS.load_scene('desktop', entry=scenes.get('desktop'))
     ok(sc_d is not None, 'D3a desktop 场景加载成功')
+    # D3 desktop：第89轮起 bg=`__transparent__` —— **声明式透明**，语义与
+    #     `bg=None`（缺素材 ⇒ 画斜纹占位）**不同**。这里断两条：
+    #       D3b 透明 ⇒ **不**产 placeholder（透出壁纸，不是"这里缺东西"）
+    #       D3c 透明 ⇒ 但 8 扇门仍在（"透明"不等于"整间空"）
+    #     ★ 为什么必须区分（记忆 §4：判据别拿源码字面量代替产物输出）：
+    #       若把透明与缺素材混为一谈，将来真把 bg 写丢时判据不会报红。
     cam3 = SC.Camera((640, 480), 0, 2.0)
     cam3.follow((0.0, 0.0, 640.0, 480.0), None)
     plan3 = SR.plan_frame(sc_d, cam3, geo)
     ph = [i for i in plan3 if i['kind'] == SR.K_PLACEHOLDER]
-    ok(len(ph) == 1, 'D3b 无 bg 场景产出 1 条 placeholder 实际=%d' % len(ph))
-    ok(ph and ph[0]['room_known'] is False, 'D3c placeholder 标 room_known=False')
-    ok(ph and ph[0]['reason'], 'D3d placeholder 带原因（不静默）')
+    ok(len(ph) == 0,
+       'D3b desktop 声明式透明（bg=%s）⇒ 不产 placeholder 实际=%d'
+       % (SCENES and getattr(sc_d, 'bg', '?'), len(ph)))
+    _objs3 = [i for i in plan3 if i['kind'] == SR.K_OBJ]
+    ok(len(_objs3) == 8,
+       'D3c desktop 透明但仍渲染 8 扇门（透明≠整间空）实际=%d' % len(_objs3))
+    # D3d 负控制：真正的"缺素材"（bg=None）**必须**产 placeholder —— 证明
+    #     D3b 的"0 条"不是因为渲染层坏了，而是因为 bg 声明了透明。
+    class _FakeScene:
+        bg = None
+        bgm = None
+        objects = []
+        scene_id = 'unit_no_bg'
+        chapter = area = 'unit'
+    plan_nb = SR.plan_frame(_FakeScene(), cam3, geo)
+    ph_nb = [i for i in plan_nb if i['kind'] == SR.K_PLACEHOLDER]
+    ok(len(ph_nb) == 1 and ph_nb[0].get('room_known') is False and ph_nb[0].get('reason'),
+       'D3d 负控制：bg=None（真缺素材）必产 1 条带原因的 placeholder 实际=%d'
+       % len(ph_nb))
 
     # D4 大房间：房间边框
     sid4 = 'ch1.castle_town.castle_town'

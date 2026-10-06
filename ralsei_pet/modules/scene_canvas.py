@@ -428,20 +428,72 @@ class SceneCanvas(QWidget):
     —— 这样"不切场景时零行为变化"（P0 判据）不会因为多了个子控件而破。
 
     本控件**不认识相机与场景**，一切都从 `set_plan(plan, view_size)` 进来。
+
+    ★★ 第89/93轮**必须**是独立顶层窗口（`as_window=True`）—— 血泪教训
+    --------------------------------------------------------------
+    原实现把它当 `self`（桌宠主窗口）的**子控件**。主窗口尺寸 = **精灵尺寸**
+    （`38×80` 实测）。子控件一旦 `resize(640, 480)`，**超出父窗口的部分被 Qt
+    直接裁掉** ⇒ 用户屏幕上只看到画布左上角 ~38×80 的一小块，8 扇门全不可见。
+    而**所有离线/离屏判据都是绿的**（画布 `size()` 确实是 640×480，`_plan` 里
+    8 扇门 rect 也确实对）—— 这是"判据绿但用户看不见"的典型（记忆铁律：
+    产物侧看不见 ≠ 调用侧没发生）。
+    ⇒ 世界画布与角色小窗是**两个不同层级的窗口**，不能有父子关系。
     """
 
-    def __init__(self, parent=None, assets=None):
+    def __init__(self, parent=None, assets=None, as_window=False):
+        """`:param as_window:` `True` ⇒ 建为**独立顶层工具窗口**（无边框 / 透明 /
+        鼠标穿透 / 不进任务栏），由宿主每帧摆位置 —— 世界画布必须走这条。
+        `False` ⇒ 老行为（子控件），保留给回归桩与将来的嵌套用途。
+        """
         super().__init__(parent)
         self.setObjectName("sceneCanvas")
+        # ★★★ **flags 先行**（第89轮真机血泪）：`setWindowFlags()` 必须在任何会
+        #   创建平台窗口的调用（`setAttribute(WA_TranslucentBackground)` 等）**之前**
+        #   —— 否则 Qt 已按"默认普通窗口"建了原生窗口，`setWindowFlags` 只改属性
+        #   不改窗口类 ⇒ 真机得到 `Qt5152QWindowIcon`（带标题栏 + 黑底）而不是
+        #   `Qt5152QWindowToolSaveBits`（无边框 + 分层透明）。
+        #   ★ 兼容：`parent is None` 也视为独立窗口（无 parent 的 QWidget 本就是顶层控件）。
+        as_window = bool(as_window) or (parent is None)
+        if as_window:
+            # 与桌宠主窗口同一套窗口位。**不加** `WindowStaysOnTopHint`
+            # （记忆契约②：禁置顶）；**不加** `WindowDoesNotAcceptFocus`
+            # （会让 Qt 放弃 Tool 语义）。
+            self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         # 场景是像素风原素材：**禁平滑缩放**（平滑会让 2× 放大后的像素糊掉，
         # 与 dr_textbox 同一条口径）。
         self.setAttribute(Qt.WA_OpaquePaintEvent, False)
+        if as_window:
+            # ★ 第89轮保留：**显示但不激活**（不抢当前前台窗口的焦点）。
+            self.setAttribute(Qt.WA_ShowWithoutActivating, True)
+            # 鼠标穿透 —— 背景层绝不吞桌面/宠物的点击。
+            self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        #: ★ `as_window` 判据的**唯一真源**：`_show_scene_layer` 用它决定
+        #:   "要不要 lower()"（独立窗口 lower() 会沉到桌面之下 ⇒ 整块不上屏）。
+        self.as_window = bool(as_window)
         self.assets = assets or SceneAssetCache()
         self._plan = []
         self._view_size = (0, 0)
+        self._scale_x = 1.0
+        self._scale_y = 1.0
         self.last_drawn = 0
         self.hide()
+
+    def set_output_scale(self, sx, sy):
+        """整桌平铺：把**房间坐标**的绘制指令按 `(sx, sy)` 缩到**桌面像素**。
+
+        `sx = 桌面宽 / 房间宽`、`sy = 桌面高 / 房间高`——两者可不等（= 按比例映射到
+        桌面）。非法值（非数 / <=0）→ **不动**（保持现状，不静默改成别的值）。
+        """
+        try:
+            sx = float(sx)
+            sy = float(sy)
+        except (TypeError, ValueError):
+            return
+        if sx <= 0 or sy <= 0:
+            return
+        self._scale_x = sx
+        self._scale_y = sy
 
     # -- 数据入口 --------------------------------------------------------
     def set_plan(self, plan, view_size=None):
@@ -476,6 +528,9 @@ class SceneCanvas(QWidget):
         try:
             p = QPainter(self)
             p.setRenderHint(QPainter.SmoothPixmapTransform, False)
+            # 整桌平铺：房间坐标 → 桌面像素（sx/sy 不等 = 按比例映射，允许非等比）。
+            if self._scale_x != 1.0 or self._scale_y != 1.0:
+                p.scale(self._scale_x, self._scale_y)
             self.last_drawn = paint_on(p, self._plan, self.assets, self._view_size)
             p.end()
         except Exception as e:
@@ -505,11 +560,28 @@ class BubbleOverlay(QWidget):
         self.setObjectName("bubbleOverlay")
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        # ★ 第93轮 P0-1：顶层窗口（parent is None）去边框 + 工具窗口（不抢任务栏）。
+        if parent is None:
+            self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
         self.assets = assets or SceneAssetCache()
         self._plan = []
         self._view_size = (0, 0)
+        self._scale_x = 1.0
+        self._scale_y = 1.0
         self.last_drawn = 0
         self.hide()
+
+    def set_output_scale(self, sx, sy):
+        """整桌平铺缩放（语义同 `SceneCanvas.set_output_scale`）。"""
+        try:
+            sx = float(sx)
+            sy = float(sy)
+        except (TypeError, ValueError):
+            return
+        if sx <= 0 or sy <= 0:
+            return
+        self._scale_x = sx
+        self._scale_y = sy
 
     def set_plan(self, plan, view_size=None):
         """提交球前层的绘制指令（语义同 `SceneCanvas.set_plan`）。"""
@@ -534,6 +606,8 @@ class BubbleOverlay(QWidget):
         try:
             p = QPainter(self)
             p.setRenderHint(QPainter.SmoothPixmapTransform, False)
+            if self._scale_x != 1.0 or self._scale_y != 1.0:
+                p.scale(self._scale_x, self._scale_y)
             self.last_drawn = paint_on(p, self._plan, self.assets, self._view_size)
             p.end()
         except Exception as e:

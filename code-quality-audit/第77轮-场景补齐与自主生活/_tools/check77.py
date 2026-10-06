@@ -127,7 +127,12 @@ for work, ch in (('ut', 'ut'), ('uty', 'uty')):
     sub = 'undertale' if work == 'ut' else 'undertale_yellow'
     src = os.path.join(SRC_DIR, sub, 'ut_rooms.json')
     if not os.path.isfile(src):
-        check('B0 %s 原作转储在位' % work, False, src)
+        # ★★ 第89轮修正（记忆 §4 铁律「外部盘缺失则 SKIP 不假红」）：
+        #   原判据把"源盘不在"当成 FAIL —— 但 E 盘是可掉线的外挂盘（本会话实测
+        #   多次 `E:/` 不存在）。**环境缺失 ≠ 产品错**，报红会污染整轮回归读数
+        #   （且按 §3⑤ 合并模式 --update 会把假红固化成基线，后患更大）。
+        #   正解：源盘不在 ⇒ SKIP（不打 FAIL），源盘在 ⇒ 照旧逐条核对锚点。
+        print('[SKIP] %s 原作转储不在（%s）⇒ B0..B2 跳过，不假红' % (work, src))
         continue
     raw = jload(src)['rooms']
     bn = big_by_work[work]

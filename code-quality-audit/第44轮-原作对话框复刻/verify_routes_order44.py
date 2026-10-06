@@ -155,13 +155,22 @@ ok(len(old_bad) >= 1,
    % len(old_bad))
 
 # B3 无回绕：全局 priority 声明序单调不减（新写法保证）
-prios = [r.get('priority') for r in RL]
+# ★★ 第89轮修正（判据过窄 ⇒ 会误报，记忆 §4 铁律）：desktop 的 8 扇世界门是
+#   **手写表**，走自己的 priority 区间（200），被追加在原作生成边（priority 最高
+#   2478）之后 ⇒ 整表末段必然"下降一次"。但那**不是回绕缺陷** —— 回绕指的是
+#   **生成器**在同一遍扫描里让 priority 忽大忽小（会让出边顺序错乱）。手写段
+#   另起一段是设计，不是 bug。
+#   ⇒ 本判据只管**原作生成段**（排除 desktop 起源），手写段另有值域断言（B4）。
+_ORIGIN_WORKS_B3 = ('desktop',)
+_generated = [r for r in RL if r.get('when_scene') not in _ORIGIN_WORKS_B3]
+prios = [r.get('priority') for r in _generated]
 drops = [i for i in range(1, len(prios)) if prios[i] < prios[i - 1]]
-ok(not drops, 'B3 priority 声明序无回绕（下降次数 = %d）' % len(drops))
+ok(not drops, 'B3 priority 声明序无回绕（原作生成段 %d 条，下降次数 = %d）'
+   % (len(prios), len(drops)))
 
 # B4 值域安全：全部 >= 100 且不与未来手写低区间冲突（>=110）
 ok(all(isinstance(p, int) and p >= 110 for p in prios),
-   'B4 priority 全为 int 且 >= 110（实测值域 [%d, %d]）'
+   'B4 priority 全为 int 且 >= 110（原作生成段实测值域 [%d, %d]）'
    % (min(prios), max(prios)))
 
 # B5 每条规则都显式带 priority（不依赖 _DEFAULT_PRIORITY）
@@ -172,6 +181,29 @@ ok(all('priority' in r for r in RL),
 ok(all(isinstance(r.get('when_door'), str) and r.get('when_door')
        for r in RL),
    'B6 全部规则带 when_door（解决共同卡口）')
+
+# ★★ B7 第89轮新增：desktop 手写门自证（B3/C1 把它排除出去了，必须在这里锁住，
+#    否则"排除"就变成"没人管"）。契约 = 桌面恰好 8 扇门、字母 = A..F + W/X、
+#    每扇都指向一个**存在的场景**、且整段 priority 在**同一个值**（并列 ⇒ 由
+#    when_door 决定选哪扇，符合"一句话入口"口径）。
+_desk_routes = [r for r in RL if r.get('when_scene') == 'desktop']
+_desk_letters = sorted(str(r.get('when_door')) for r in _desk_routes)
+ok(_desk_letters == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X'],
+   'B7a desktop 恰 8 扇世界门且字母 = A..F + W/X 实际=%s' % (_desk_letters,))
+_desk_prios = set(r.get('priority') for r in _desk_routes)
+ok(len(_desk_prios) == 1 and next(iter(_desk_prios)) == 200,
+   'B7b desktop 8 扇门同 priority=200（并列，由 when_door 分流）实际=%s'
+   % (sorted(_desk_prios),))
+_desk_scenes = set(r.get('to') for r in _desk_routes)
+_idx2 = jload(os.path.join(SC, '_index.json'))
+_all_ids = set((_idx2.get('scenes') or {}))
+if not _all_ids:  # 兼容三层结构
+    for c in (_idx2.get('chapters') or {}).values():
+        for a in (c.get('areas') or {}).values():
+            _all_ids |= set((a.get('scenes') or {}))
+_missing = sorted(_desk_scenes - _all_ids)
+ok(not _missing,
+   'B7c desktop 8 扇门的目标场景全部真实存在（缺=%s）' % (_missing or '无'))
 
 # ===========================================================================
 # C 锚点：产品边可由原作门表独立重算
@@ -264,9 +296,16 @@ if have_rooms:
             if sb:
                 orig_edges.add((sa, sb))
 
-    prod_edges = set((r.get('when_scene'), r.get('to')) for r in RL)
+    # ★★ 第89轮：desktop 的 8 扇世界门**不是原作门表推出来的**（桌面不属于原作
+    #   任何房间）⇒ 它不该参与"产品边 == 原作重算边"这条**原作保真度**判据。
+    #   本判据的意图是"凡**原作房间**之间的边都必须可由门表独立重算"，故把
+    #   非原作来源的边（起源场景是 desktop）排除；desktop 门另有专门锁
+    #   （verify_scene_p0 B6：恰 8 扇；scene_route 的桌面连通段）。
+    _ORIGIN_WORKS = ('desktop',)
+    prod_edges = set((r.get('when_scene'), r.get('to')) for r in RL
+                     if r.get('when_scene') not in _ORIGIN_WORKS)
     ok(prod_edges == orig_edges,
-       'C1 ★产品边集合 == 原作门表独立重算集合（各 %d 条，差值 %d）'
+       'C1 ★产品边集合 == 原作门表独立重算集合（各 %d 条，差值 %d；已排除 desktop 起源）'
        % (len(prod_edges), len(prod_edges ^ orig_edges)))
 
     # C2 断链归因：'to 无出边的场景' 里，凡原作**能编出边**的都算真缺口。

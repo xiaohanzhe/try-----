@@ -1144,6 +1144,21 @@ def group_e():
     #   让输出与墙钟无关。（`_bedtime_tick` 第一行就 `if not BEDTIME_ENABLED: return False`。）
     pet.BEDTIME_ENABLED = False
     print('[INFO] 已关闭就寝判定（避免 `update_movement` 真跑时的时间耦合）')
+    # ★★ 第89轮修：**第二枚时间炸弹，比就寝更凶** —— NPC 自主挪窝。
+    #   `update_movement()` 里还有一句 `self._npc_roam_tick(current_time)`（第79轮层2），
+    #   它经 `npc_intent.jitter()` 用**连续墙钟**（`time.time()`，精确到微秒）参与哈希
+    #   ⇒ **每一次跑** NPC 落点都不同，打印一二十行
+    #       `<TS> ... NPC xxx 自己挪到了 <场景>`
+    #   实测：同一份代码、相邻两次运行，`ralsei` 一次去 `uty.rooms.rm_intro`、
+    #   另一次去 `ch4.kris_room.kris_s_room` —— 本套件因它长期 DIFF（56 行差异），
+    #   而 PASS/FAIL 计数一条没变（假红，真回归会被这堆噪声淹没）。
+    #   ⚠️ 这是**夹具的时间耦合**，不是产品缺陷：NPC 生活本就该"每天不同"
+    #     （L6「同人同刻不必同行为」），已由第78/79 轮**纯函数级**判据单独锁住。
+    #   ⇒ 处置：把节拍闸顶到无穷大（`now - inf < 30` 恒真 ⇒ `_npc_roam_tick` 第一段就早退、
+    #     零日志、零副作用）。本套件要守的是幽灵线，不是 NPC 搬家。
+    #   ⚠️ 代价：本套件从此看不见"NPC 挪窝会不会绕过幽灵/接触时钟的接线点"。
+    #     该风险不在本套件职责内，已在第89轮登记（check79/check80 覆盖挪窝本身）。
+    pet._npc_roam_last_tick = float('inf')
     pet.last_update_time = 0.0
     threw = None
     try:

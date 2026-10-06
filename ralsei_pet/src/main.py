@@ -551,6 +551,11 @@ from modules import scene_system as scene_system_mod
 # `Interactable`（= 原作 `myinteract` 三态）。道具/场景可交互物都挂在这套协议上，
 # 不另起一套 —— 那会让"对话时能不能点东西"出现两套互相不知道的锁。
 from modules import companion as companion_mod
+# NPC 交互链（第88轮）：原作「Z → 射线检测 → 触发交互」的等价物
+# （`npc_interact`，零依赖纯几何）。★ 补的是第84轮清单里的 I3（被交互者转向主角）/
+# I6（射线四段矩形）/ I9 的一半（朝向回落）—— 旧实现是"点对点最近距离"，
+# 背对着人按交互键也会选中他，与原作手感不同。
+from modules import npc_interact as npc_interact_mod
 # NPC 分层 / 跟随策略 / 世界门控（第49~50轮，P0~P2 零接线骨架；★ 第55轮**接线**）
 # 与 NPC 人设 / 独立记忆 / 跟随决策（★ 第55轮新增，零依赖纯逻辑）。
 #
@@ -1039,16 +1044,21 @@ class RalseiPet(QMainWindow):
         self.setGeometry(init_x, init_y, 100, 100)  # 初始大小
         self.setWindowTitle("Ralsei Pet")
         
-        # ---- 场景画布（第44轮 P1：把 scene_render 的绘制指令真正画出来）----
-        # 为什么是**子控件而不是主窗口自绘**：主窗口的 `paintEvent` 已经承担
-        # "填透明"这一条职责（见其 docstring），而场景层要画背景 + 物件 + 边框，
-        # 生命周期与尺寸都跟着"当前房间"变 —— 独立控件能自己 resize/update，
-        # 不必让主窗口的绘制路径长出分支（那会让 P0「不切场景时零行为变化」
-        # 的判据失去意义）。
+        # ---- 场景画布（第44轮 P1；第89/93轮改为**独立顶层窗口**）----
+        # ★★★ 必须 `as_window=True`（**独立顶层窗口**，不是子控件）。
+        #   为什么（第89轮真机 + 2026-10-05 日志「必须重做窗口层级」）：
+        #   `SceneCanvas(self)` 是**子控件**，会被桌宠主窗口（38×80 / 42×82）
+        #   直接裁掉，640×480 的房间根本画不出来 ⇒ 这正是用户
+        #   「**我还是没看到门**」的直接成因。
+        #   ★ 独立性由 **`as_window=True` 显式表达**（89 轮已验证的契约，
+        #     `check89` I1/I3/I4 就是守它的）；摆位见 `_place_scene_layer`。
+        #   ⚠️ 独立窗口**绝不能无条件调 `lower()`**：那会把整窗沉到桌面之下 ⇒
+        #      完全不上屏，而 `grab()`（离屏渲染）却看得见 8 扇门 —— 判据与事实
+        #      脱节的经典陷阱。守卫见 `_show_scene_layer`。
         # ⚠️ `SceneCanvas.__init__` 末尾 **显式 hide()**：默认不显示。
         #    宿主确认要显示场景（见 `_update_scene_layer`）后才 show —— 这样
         #    桌面场景（无 bg / 无物件）跑起来时画面上**零变化**。
-        self.scene_canvas = SceneCanvas(self)
+        self.scene_canvas = SceneCanvas(None, as_window=True)
         self.scene_canvas.move(0, 0)
         self._scene_layer_visible = False
 
@@ -3004,6 +3014,10 @@ class RalseiPet(QMainWindow):
         self._npc_bodies_scene = None
         #: 上一帧各 body 的位置快照，用于"是否真的动了"（给将来渲染层省重绘）。
         self._npc_bodies_moved = []
+        #: ★ 第88轮：发起交互者的**最近一次朝向**（原作 `global.facing` 的持久语义）。
+        #:   由 `keyPressEvent` 在方向键按下时更新；`_npc_interact_facing` 读它。
+        #:   灵魂本身没有持久朝向（`SoulState` 只有按键集合，松开即清）⇒ 存在宿主侧。
+        self._interact_facing = npc_interact_mod.FACE_DOWN
         # ---- 第73轮：自由生活（场景反应 / 熟络度 / 传话 / 自主节拍）----
         #: `npc_life.Bonds` —— NPC 两两之间的熟络度（per-pair、对称、渐增）。
         #: 用 `seed_lookup` 从**注册表 + 同名组**推初值（同 AU 0.55 / 同作品 0.30 / 陌生 0）。
@@ -4842,7 +4856,7 @@ class RalseiPet(QMainWindow):
             return False
 
     def interact_scene_prop(self):
-        """与当前场景的可交互物交互（对应原作的 `scr_interact()`）。
+        """交互请求的唯一入口（对应原作的 `scr_interact()`）。
 
         ★ 第55轮改动：**按灵魂的位置选目标**（用户口径「灵魂…相当于这也是一个
         有互动的实体」）。
@@ -4853,25 +4867,254 @@ class RalseiPet(QMainWindow):
         `soul_entity.screen_to_room`），物件坐标也一直在数据里（`objects[].pos`，
         与 `room_rect` 同一套逻辑坐标，已实证）。
 
-        选不出时**退回"登记顺序第一个"并记日志**（不是静默退回）——
-        宁可"位置算不出时按老规矩来"，也不要"算不出就当没有可交互物"。
+        ★★★ 第88轮：**换成原作的"射线检测"**（`npc_interact` 模块 + 缺口 I6/I3）。
+        --------------------------------------------------------------
+        原作 `obj_mainchara_Step_0` 的交互**不是**"谁近就交互谁"，而是：
+        **看主角当前朝向 → 在那一边开一条矩形 → 命中矩形里的可交互物**。
+        旧实现（第55轮）是"点对点最近距离" ⇒ **背对着人按 E 也会交互到他**，
+        与原作手感不符。
 
-        范围内没有可交互物 ⇒ 返回 False（**不静默**：日志会说是哪一步没成）。
+        本轮的顺序（**先近后远、先人后物**）：
+          ① **NPC**（`npc_bodies` 在场者）—— 用射线矩形选；命中 ⇒ 让他转向主角
+             + 走既有 `npc_speak('')` 通道说话（I3）；
+          ② 没有 NPC 命中 ⇒ 退回**场景物件**（`item_props`）——
+             ★ 也改用**射线**（与 NPC 同一套几何），不再用"点对点最近"；
+          ③ 连物件也没命中 / 拿不到坐标 ⇒ 退回旧的"按灵魂位置选最近"，
+             再不行才是"登记顺序第一个"（逐级降级但**每一级都记日志**）。
+
+        为什么 NPC 优先于物件：原作里 NPC 是 `obj_interactablesolid`
+        （**实心**可交互物，`thisinteract = 2` 优先级更高），场景摆件是
+        `obj_interactable`（普通，`= 1`）。所以"两者都在射线里"时该先交互 NPC。
         """
+        # ---- ① NPC 优先（第88轮 I3/I6）----
+        try:
+            hit = self._npc_interact_pick()
+        except Exception as e:
+            _log.debug('NPC 射线交互探测异常（退回物件）: %s', e)
+            hit = None
+        if hit is not None:
+            npc_id, face, why = hit
+            self._npc_face_actor(npc_id, face)
+            ok = self._npc_interact_speak(npc_id)
+            _log.info('交互 ⇒ NPC %s（%s；转向=%s）：%s',
+                      npc_id, why, face,
+                      '搭话了' if ok else '什么也没发生')
+            return ok
+
+        # ---- ② 场景物件（射线；命中不了才降级）----
         props = getattr(self, 'item_props', None) or []
         if not props:
             _log.info('交互请求：当前场景 %s 没有可交互物',
                       getattr(self, 'current_scene', None))
             return False
-        target, why = self._soul_pick_prop(props)
-        if target is None:
-            target = props[0]
-            why = '%s ⇒ 退回登记顺序第一个' % why
-        ok = bool(target.interact())
+        prop = None
+        why = ''
+        try:
+            pick = self._npc_interact_pick_prop(props)
+        except Exception as e:
+            _log.debug('物件射线探测异常（退回最近距离）: %s', e)
+            pick = None
+        if pick is not None:
+            prop, why = pick
+        if prop is None:
+            # ---- ③ 逐级降级：旧的"按灵魂位置选最近"→"登记顺序第一个" ----
+            prop, why = self._soul_pick_prop(props)
+            if prop is None:
+                prop = props[0]
+                why = '%s ⇒ 退回登记顺序第一个' % why
+        ok = bool(prop.interact())
         _log.info('交互 ⇒ %s（本场景共 %d 件可交互物；%s）：%s',
-                  target.describe(), len(props), why,
+                  prop.describe(), len(props), why,
                   '发生了' if ok else '什么也没发生')
         return ok
+
+    # ---------------------------------------------------------------- 射线交互（第88轮）
+    def _npc_interact_actor_room_xy(self):
+        """**发起交互的那个实体**的房间坐标 `(x, y)`；拿不到 ⇒ `None`（不猜）。
+
+        ★ 优先灵魂（用户口径「灵魂…相当于这也是一个有互动的实体」），
+          灵魂不可见时用桌宠本身。
+        ★ 坐标口径与 `_soul_pick_prop` **完全一致**（同一套 `screen_to_room` +
+          同一个 `room_rect`）—— 两处各写一遍迟早分叉（本项目最贵的坑）。
+        """
+        try:
+            soul = getattr(self, 'soul', None)
+            if soul is not None and self._soul_visible():
+                c = soul.state.center()
+                pt = soul_entity_mod.screen_to_room(
+                    c[0], c[1], self._soul_room_rect(), self._virtual_screen_size())
+                if pt is not None:
+                    return (float(pt[0]), float(pt[1]))
+        except Exception as e:
+            _log.debug('取交互发起者房间坐标失败: %s', e)
+        return None
+
+    def _npc_interact_facing(self):
+        """发起交互者的当前朝向（原作 `global.facing`）。
+
+        ★★ 第88轮口径（**如实标注：这是本项目的临时实现，不是原作的精确等价**）：
+        ----------------------------------------------------------------------
+        原作 `global.facing` 是**独立的持久状态**（`0/1/2/3`），由 `press_*`
+          在 `obj_mainchara_Step_0` 里单独维护 —— **按一下方向键就记住**，
+          松开后仍保持。
+        本项目**没有**这个状态（灵魂 `SoulState` 只有按键集合 `_pressed`，
+          松开即清）。所以这里用两级来源：
+            ① **正在按着方向键** ⇒ 用那个方向（`SoulState.direction()`）；
+            ② 否则 ⇒ `self._interact_facing`（宿主在按键时记下的**最近一次**方向）。
+        ② 那个字段由 `keyPressEvent` 维护（见那里）；它**等价于**原作的持久
+          `global.facing`（"按过一次就记住"）。
+        ★ 初始无值 ⇒ `down`（原作 `obj_mainchara` 的初始朝向也是 down）。
+        """
+        try:
+            soul = getattr(self, 'soul', None)
+            st = getattr(soul, 'state', None) if soul is not None else None
+            if st is not None:
+                dx, dy = st.direction()
+                if dx or dy:
+                    f = npc_interact_mod.facing_toward(0.0, 0.0, dx, dy)
+                    if f in npc_interact_mod.FACINGS:
+                        return f
+        except Exception:
+            pass
+        f = getattr(self, '_interact_facing', None)
+        if f in npc_interact_mod.FACINGS:
+            return f
+        return npc_interact_mod.FACE_DOWN
+
+    def _npc_interact_darkzone(self):
+        """当前是明世界还是暗世界（原作 `global.darkzone`）。
+
+        ★ 真源 = `scene_system.world_of_scene`（与第85轮 I2 速度表**同一处**）——
+          不另判一遍，否则"暗世界里射线没加长、速度却按暗世界算"。
+        """
+        try:
+            w = scene_system_mod.world_of_scene(getattr(self, 'current_scene', None))
+            if w == 'dark':
+                return npc_interact_mod.DARKZONE_DARK
+        except Exception as e:
+            _log.debug('判明暗世界失败（按光世界处理）: %s', e)
+        return npc_interact_mod.DARKZONE_LIGHT
+
+    def _npc_interact_candidates(self):
+        """射线可命中的**在场 NPC** `{id: {'x','y','hw','hh'}}`。
+
+        ★ 只取 `npc_bodies`（= 当前场景、已过世界门控的在场者）——
+          与 `_npc_life_ids` 同一真源，不另立一份"谁能被交互"的名单。
+        ★ 坐标 = 房间逻辑坐标（`Body.x/y`），与发起者同一空间。
+        ★ 半宽半高用 `npc_interact` 的统一口径（本项目尚无逐角色精灵尺寸表）。
+        """
+        out = {}
+        bodies = getattr(self, 'npc_bodies', None) or {}
+        for nid, b in bodies.items():
+            try:
+                out[nid] = {'x': float(b.x), 'y': float(b.y),
+                            'hw': npc_interact_mod.ACTOR_HALF_W,
+                            'hh': npc_interact_mod.ACTOR_HALF_H}
+            except (TypeError, ValueError, AttributeError):
+                continue
+        return out
+
+    def _npc_interact_pick(self):
+        """射线选一个 NPC。返回 `(npc_id, 他该转的朝向, 说明)`；没命中 ⇒ `None`。
+
+        ★ 桌宠失焦 / 不在房间场景（如桌面）⇒ 直接 `None`（桌面没有射线交互）。
+        """
+        if getattr(self, 'current_scene', None) in (None, npc_system_mod.DESKTOP_SCENE):
+            return None
+        actor = self._npc_interact_actor_room_xy()
+        if actor is None:
+            return None
+        cands = self._npc_interact_candidates()
+        if not cands:
+            return None
+        res = npc_interact_mod.resolve(
+            actor, self._npc_interact_facing(), cands,
+            darkzone=self._npc_interact_darkzone())
+        if res.get('target') is None:
+            return None
+        why = '射线命中（%s）' % npc_interact_mod.describe(res.get('rect'))
+        return (res['target'], res.get('face'), why)
+
+    def _npc_interact_pick_prop(self, props):
+        """射线选一件场景物件。返回 `(prop, 说明)`；没命中 ⇒ `None`。
+
+        ★ 复用 `_soul_pick_prop` 的**坐标取法**（objects 下标 + `pos`），
+          只是把"选最近的"换成"命中的"。**绝不**另建一套坐标来源。
+        """
+        actor = self._npc_interact_actor_room_xy()
+        if actor is None:
+            return None
+        state = self.__dict__.get('_scene_state')
+        objs = getattr(state, 'objects', None)
+        if not isinstance(objs, (list, tuple)) or not objs:
+            return None
+        cands = {}
+        by_key = {}
+        for p in props:
+            key = getattr(p, 'key', None)
+            i = self._soul_prop_index(key)
+            if i is None or i >= len(objs):
+                continue
+            o = objs[i]
+            pos = o.get('pos') if isinstance(o, dict) else None
+            if not (isinstance(pos, (list, tuple)) and len(pos) == 2):
+                continue
+            cands[key] = (float(pos[0]), float(pos[1]))
+            by_key[key] = p
+        if not cands:
+            return None
+        rect = npc_interact_mod.ray_rect(
+            actor[0], actor[1], self._npc_interact_facing(),
+            darkzone=self._npc_interact_darkzone())
+        key, _box = npc_interact_mod.pick_nearest(cands, rect, actor[0], actor[1])
+        if key is None:
+            return None
+        return (by_key.get(key), '射线命中（%s）' % npc_interact_mod.describe(rect))
+
+    def _npc_face_actor(self, npc_id, face):
+        """让被交互的 NPC **转向主角**（第88轮 I3；原作 `with (obj) { facing = 3; }`）。
+
+        ★ 只改运行时 `Body.facing`，**不写回** `_placement.json`（朝向是**瞬时**的，
+          下次换场景本来就重置 —— 原作也是每帧按 `dfacing`/交互态重设）。
+        ★ 拿不到 `face`（两人重合）⇒ 保持原朝向（不编一个）。
+        """
+        if not face:
+            return False
+        body = (getattr(self, 'npc_bodies', None) or {}).get(npc_id)
+        if body is None:
+            return False
+        try:
+            body.facing = face
+            return True
+        except Exception as e:
+            _log.debug('NPC %s 转向失败: %s', npc_id, e)
+            return False
+
+    def _npc_interact_speak(self, npc_id):
+        """被交互的 NPC 搭话（第88轮；**复用** `npc_speak` 这条唯一生成路径）。
+
+        ★ 传空串 = "被搭话"，与原作 User Event 0 里 `global.msg[0] = ...` 的
+          语义等价（原作的台词是**写死的固定句**，本项目让 7B 现场生成 ——
+          用户口径「用 7B 目的就是让他贴合人物」）。
+        ★ **不另起一条生成路径**（第86轮 B6 的同一条纪律）：走 `npc_speak`。
+        """
+        def _on_reply(reply):
+            try:
+                # 走既有的 NPC 气泡/对话通道（`_npc_say_line` 是全项目唯一出口，
+                # 说话人 = npc_id，不会串成"雷尔赛替他说"）。
+                cb = getattr(self, '_npc_say_line', None)
+                if callable(cb):
+                    cb(npc_id, reply)
+                elif reply:
+                    _log.info('NPC %s 被交互后回话：%s', npc_id, reply)
+            except Exception as e:
+                _log.debug('NPC 被交互回话展示失败: %s', e)
+        try:
+            return bool(self.npc_speak(npc_id, '', _on_reply))
+        except Exception:
+            _log.exception('NPC %s 交互搭话发起异常', npc_id)
+            return False
+
 
     # ---------------------------------------------------------------- 场景走动（R0-1）
     def travel_to_scene(self, target):
@@ -4989,6 +5232,12 @@ class RalseiPet(QMainWindow):
                         return
                 d = soul_overlay_mod.direction_of_qt_key(key)
                 if d is not None:
+                    # ★ 第88轮：记下**最近一次朝向**（原作 `global.facing` 的持久语义）。
+                    #   射线交互 (`_npc_interact_facing`) 读它 ⇒ "先朝哪边、再按交互键"。
+                    #   放在归属分流**之前**：无论方向键最后归谁（灵魂/角色），
+                    #   "我朝哪边"都是同一个事实。
+                    if d in npc_interact_mod.FACINGS:
+                        self._interact_facing = d
                     poss = getattr(self, 'possession', None)
                     if poss is not None and poss.is_possessing:
                         poss.press(d)
@@ -5026,7 +5275,18 @@ class RalseiPet(QMainWindow):
                 # ★ 第82轮 R5：Z = 交互 / 附身（用户口径「交互键用Z」）。
                 #   原作出处：`obj_mainchara_Step_0` 的 `control_check_pressed(0)`
                 #   → `event_user(0)`（= `obj_mainchara_Other_12` 那段交互出口）。
-                self.toggle_possession()
+                #
+                # ★★ 第88轮拆分（**同一个 Z，按"当前操控谁"分流**）：
+                #   · **已附身**（方向键归某个角色）⇒ `toggle_possession()` 交回灵魂，
+                #     保持 R5 契约不变（再按一次 Z = 解除附身）。
+                #   · **未附身**（方向键归灵魂）⇒ 走**场景交互**（第88轮 I6 射线）。
+                #   原作也是这个形状：`button1_p()` 先看 `global.interact == 0`
+                #   才去开射线 —— "能不能交互"和"操控谁"是同一个按键状态机。
+                poss_z = getattr(self, 'possession', None)
+                if poss_z is not None and poss_z.is_possessing:
+                    self.toggle_possession()
+                else:
+                    self.interact_scene_prop()
                 event.accept()
                 return
             if key == _Qt.Key_G:
@@ -6170,6 +6430,21 @@ class RalseiPet(QMainWindow):
                 return
             cam = self.__dict__.get('_scene_camera')
             state = self.__dict__.get('_scene_state')
+            # ★★★ 第89轮真机血泪（"看不到场景"的**第一根因**）：
+            #   `_scene_camera` 在 `__init__` 里被设为 `None`，而**全项目再无第二处
+            #   赋值点** —— 相机的**唯一**建法 `scene.camera_follow_or_create()`
+            #   零调用（`grep` 实证）。于是本函数每帧都在下面 `cam is None` 处
+            #   直接 `_hide_scene_layer()` 返回 ⇒ **画布永远不显示**，
+            #   而 `_show_scene_layer` / `plan_frame` / 8 扇门 / 路由表 全都没问题。
+            #   症状极具迷惑性：offscreen 下 `travel_to` 状态正确切换、
+            #   `plan_frame` 手算也出指令，只有**真机屏幕上什么都没有**。
+            #   ⇒ 这正是记忆里那条「**函数写对了 ≠ 产品用上了**」（最贵坑）的复演。
+            #   处置：这里**惰性补建**（幂等，重复调无副作用）。
+            #   ⚠️ 为什么不放到 `__init__`：`scene_camera.DEFAULT_CAMERA_SIZE`
+            #     只在真渲染时才有意义；且本函数已有 `SCENE_LAYER_ENABLED` 总闸，
+            #     放在闸内才能保持"关掉总闸 ⇒ 零行为变化"。
+            if cam is None and state is not None:
+                cam = scene.camera_follow_or_create()
             if cam is None or state is None:
                 self._hide_scene_layer()
                 return
@@ -6219,6 +6494,10 @@ class RalseiPet(QMainWindow):
             #   overlay 控件；后层留在画布（在角色之下）。合起来即原作 Draw_0 的序。
             behind, front = scene_render_mod.split_bubble_layers(plan)
             canvas.set_plan(behind, view)
+            # ★★ 第89轮：独立窗口每帧都要**跟位** —— 桌宠在动（走/被拖），
+            #   画布中心必须跟着走，否则"桌面即场景"变成"场景钉死在某一处"。
+            #   放在 set_plan 之后：此时 view 已 resize 生效，width/height 是当帧真值。
+            self._place_scene_layer()
             self._update_bubble_overlay(front, view)
 
             # 4) 有 bg / 物件 才显示画布；纯占位/空 → 隐藏（保持桌面原样）
@@ -6229,14 +6508,93 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("场景渲染层更新失败（本帧跳过）: %s", e)
 
-    def _show_scene_layer(self):
-        """显示场景画布（并把它压到精灵之下 —— 场景是背景层）。"""
+    def _place_scene_layer(self):
+        """把场景画布摆到**以桌宠为中心、但被钳制在屏幕可用区内**的位置。
+
+        ★★★ 为什么是"居中 + 四向钳制"（第89轮真机两版修正的结论，第93轮沿用）
+        --------------------------------------------------------------
+        第一版：画布中心 == 桌宠窗口中心。真机露馅：桌宠默认在屏幕**右下角**，
+          画布 640×480 居中上去 ⇒ 右边 220px、下边 68px 跑到屏幕外，且正好压在
+          任务栏上 —— 8 扇门（`y=192` ⇒ 屏幕 y≈1380）全被任务栏盖住。
+        第二版（试过又被否）：画布钉在屏幕可用区左上角 `(0,0)`。不溢出，但当桌宠
+          在右下角时画布在左上角，二者脱节 ⇒ 看不出"我的桌宠在这个场景里"。
+        ★ 正确口径 = **居中 + 四向钳制**，与 `scene_camera.camera_rect()` 的
+          「房间比相机小 ⇒ 该轴居中；房间比相机大 ⇒ 跟随目标 + 四向钳制」
+          **完全同构**（两轴独立）。这不是巧合 —— 相机在房间里的钳制、画布在屏幕里的
+          钳制，是同一个问题的两种尺度；用同一套规则就不会分叉。
+
+        ★ 只摆 `pos`，**不 resize** —— 尺寸归 `set_plan` 的 `view_size`
+          （= `plan_viewport()` 的收缩结果，小房间会收缩）。
+        """
         try:
             canvas = self.scene_canvas
+            if not getattr(canvas, 'as_window', False):
+                return                      # 子控件模式：坐标相对父窗口，不摆
+            sw_rect = self._virtual_screen_rect()
+            # ★ `_virtual_screen_rect()` 返回 **QRect**（不是 4 元组）——
+            #   写成 `rect[0]` 会抛 TypeError，而本方法整体在 try 里 ⇒
+            #   被静默吞掉、画布钉在 (0,0)（"看起来没报错但其实没生效"）。
+            if sw_rect is None:
+                return
+            s_l, s_t = int(sw_rect.x()), int(sw_rect.y())
+            s_r = s_l + int(sw_rect.width())
+            s_b = s_t + int(sw_rect.height())
+            cw = max(1, canvas.width())
+            chh = max(1, canvas.height())
+            cx = self.pos().x() + self.width() // 2      # 桌宠中心（屏幕坐标）
+            cy = self.pos().y() + self.height() // 2
+            x = cx - cw // 2
+            y = cy - chh // 2
+            if cw <= (s_r - s_l):
+                x = max(s_l, min(x, s_r - cw))
+            else:
+                x = s_l                      # 画布比屏幕还宽 ⇒ 贴左（不居中）
+            if chh <= (s_b - s_t):
+                y = max(s_t, min(y, s_b - chh))
+            else:
+                y = s_t
+            canvas.move(x, y)
+            # ★★ 第89轮真机关键：独立透明窗口 **move/resize 之后必须显式重绘**。
+            #   实测（`cv.grab()` 画得出 8 扇门、屏幕截图上却一个都没有）：
+            #   Windows 对 `WA_TranslucentBackground` 顶层窗口的合成依赖 backing
+            #   store，`move()` 不会自动触发一次全窗重绘 ⇒ 上屏的还是"上一帧/空"
+            #   的内容。`grab()` 会强制离屏渲染，所以**只有 grab 能看见、屏幕看不见**
+            #   —— 判据与事实脱节的又一例。⇒ 摆位后显式 `repaint()`（同步）。
+            canvas.repaint()
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def _show_scene_layer(self):
+        """显示场景画布（独立窗口模式下摆到桌宠中心）。
+
+        ★★★ 第89轮真机血泪：**独立窗口绝不能调 `lower()`**（第93轮转为铁律）
+        ----------------------------------------------------------------
+        `lower()` 在**子控件模式**下是把画布压到 `sprite_label` 之下，语义正确。
+        但画布改成**独立顶层窗口**后，`lower()` 的语义变成"沉到**所有窗口**之下"
+        —— 在 Windows 上会连同桌面壳一起被压下去，结果整块画布**不上屏**。
+        症状极具迷惑性：
+          · `cv.grab()`（离屏渲染）**8 扇门清清楚楚**；
+          · 屏幕截图 **blue=3 / green=0，一个门都没有**；
+          · 而 `pixel diff` 有微小差异 ⇒ 看起来"上屏了但内容不对"。
+        真相是**窗口压根被沉到桌面下面**。
+        ⇒ 独立窗口模式**跳过 lower()**，改为 `raise_()` 保持在桌宠之上。
+        """
+        try:
+            canvas = self.scene_canvas
+            # ★ 先摆位再 show：否则会先在 (0,0) 闪一帧
+            self._place_scene_layer()
             if not canvas.isVisible():
                 canvas.show()
                 self._scene_layer_visible = True
-            canvas.lower()   # 背景层：永远在 sprite_label 之下
+                self._place_scene_layer()   # show 后尺寸才定，二次校正
+            # ★★ `lower()` **必须**挂 `as_window` 守卫（check89 I4 守这条）：
+            #   独立顶层窗口下 `lower()` 的语义是"沉到**所有窗口**之下"，
+            #   会连同桌面壳一起被压下去 ⇒ 整块画布不上屏。
+            if getattr(canvas, 'as_window', False):
+                # 独立顶层窗口：**不 lower**，反要 raise_（见 docstring 的血泪）
+                canvas.raise_()
+            else:
+                canvas.lower()   # 子控件模式：压到 sprite_label 之下
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
@@ -7856,7 +8214,7 @@ class RalseiPet(QMainWindow):
         # 计算水平速度：匀速运动
         vx = delta_x / self.jump_duration
         
-        # 计算初始垂直速度：确保能跳过窗口边缘
+        # 计算初始垂直速度：保证**精确落在** jump_target_pos
         g = self.gravity
         
         # ★★ 第90轮修复（P0）：**竖直方向的坐标系**。
@@ -10443,7 +10801,10 @@ class RalseiPet(QMainWindow):
             # （elastic_factor=0.2），被拖起来的东西却"粘不住手、还往回弹"——
             # 人拎起东西时东西是跟着手走的。现在直接跟随。
             self._drag_elastic_pos = target_pos
-            self.move(target_pos)
+            # 拖拽位置也夹回虚拟桌面内：否则把桌宠拖出屏幕边缘后，
+            # 鼠标无法再点中屏幕外的窗口，桌宠就"丢"了找不回来。
+            clamped = self._clamp_pos_to_desktop(target_pos.x(), target_pos.y())
+            self.move(clamped[0], clamped[1])
 
             # ===== 拖拽速度与方向：一律换算成 px/秒 =====
             # 旧实现把"相邻两次事件的像素差"当速度用，速度随鼠标事件频率变化，

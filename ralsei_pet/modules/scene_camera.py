@@ -311,6 +311,46 @@ class Camera(object):
                                 self._border, prev_cam=self._cam)
         return self._cam
 
+    def snap_to_room(self, room_rect):
+        """静态相机（★ 第93轮 P0-1「整桌铺满·对齐桌面」）—— 桌面 = 镜头，房间铺满。
+
+        与 `follow` 的对立：`follow` 是第44/76轮的"跟随式"相机
+        （`_camera_target_rect` 优先灵魂，宠物恒居视口正中）。而「把原作搬到桌面」
+        的口径（第38轮设计文档 §0.3）是「桌面才是画布」「摄像机静止」「不抄
+        640×480 锁定画布」—— 桌面上宠物在哪，房间就该按同一比例铺到哪。
+        于是相机窗口必须 >= 房间，`viewport_size()` 才会回**整间房**（不再收进
+        640×480），画布再把整间房按 (桌面/房间) 比例缩到整张虚拟桌面。
+
+        ★★★ 为什么这里要**同时把 `_scale` 归一成 1.0**（第93轮实测，两个坑）
+        ----------------------------------------------------------------
+        1. 「双重缩放错位」：若保留 `_scale=2.0`，`scene_render.to_output()` 会把
+           绘制指令×2（背景 320×240 → 640×480），而 `viewport_size()` 却因
+           "房间==相机窗口" 只回 320×240 —— 背景被裁成左上角四分之一。
+           所以「桌面平铺」的放大必须**只在** `set_output_scale(桌面/房间)` 一处发生，
+           相机自身的"原作 2× 输出倍率"在平铺模式下必须退出舞台（`_scale=1.0`）。
+        2. 「follow-after-snap 漂移」：`scoped_size() == size / scale`。若 scale=2.0，
+           `scoped_size()==房间的一半`，随后有人误调 `follow()` 就会把相机推去
+           居中目标（漂移 `(25,45)`，而非我此前以为的"抵死 (0,0)"）。令 `_scale=1.0`
+           后 `scoped_size()==房间`，`_axis` 里"房间长度<=相机窗口 ⇒ 居中到房间原点"
+           这条分支**天然成立** ⇒ `follow` 变成幂等的"贴回房间"，真正无漂移。
+
+        :return: 新的相机矩形 `(l, t, w, h)`；`room_rect` 非法（尺寸<=0）→ `None`
+                 （**不伪装成 (0,0)**，让调用方走否退路）。
+        """
+        if not room_rect or len(room_rect) != 4:
+            return None
+        try:
+            rl, rt, rr, rb = [float(v) for v in room_rect]
+        except (TypeError, ValueError):
+            return None
+        if rr <= rl or rb <= rt:
+            return None
+        w, h = rr - rl, rb - rt
+        self._size = (int(round(w)), int(round(h)))
+        self._scale = 1.0          # 平铺模式：放大只交给 set_output_scale(桌面/房间)
+        self._cam = (rl, rt, w, h)
+        return self._cam
+
     def to_view(self, point):
         """逻辑坐标 → **视口逻辑坐标**（相对相机左上角）。相机未 follow → `None`。
 
