@@ -255,6 +255,68 @@ def _should_splat_on_landing(pet, landed_floor):
         return False
     return _landing_drop_height(pet, landed_floor) >= FALL_SPLAT_MIN_DROP
 
+
+def pick_corner_screen_work_area(virtual_rect, screens):
+    """从「虚拟桌面矩形 + 各显示器(几何, 工作区)」里挑出**右下角那块屏的工作区**。
+
+    第93轮 P1-4。为什么单独抽成一个**纯函数**：
+
+      ① `init_ui` 只该拿结果，不该把"多屏判据"塞进窗口初始化里；
+      ② 它吃 `(x, y, w, h)` 元组、吐 `(x, y, w, h)` 元组 ⇒ **零 Qt 依赖** ⇒
+         "副屏在主屏左侧/上方（负坐标）""阶梯式多屏"这些**单屏机器上根本复现不了**
+         的布局，可以直接喂进回归锁里验；否则这条修复永远只能靠肉眼在双屏机上碰运气。
+      ③ 它同时是"不许用**无参** `availableGeometry()`"这条契约（记忆 §3 契约①）的
+         落点：无参形态只知道**主屏**，而这里显式地在**每一块屏**上取工作区。
+
+    参数
+    ----
+    virtual_rect : (x, y, w, h)
+        win32 虚拟桌面矩形（`SM_*VIRTUALSCREEN`；副屏在主屏左侧时 x 为**负**）。
+    screens : [(screen_geometry, work_area), ...]
+        每块屏的**几何**（物理区域）与**工作区**（几何 − 任务栏/快捷栏），
+        都是 `(x, y, w, h)`。几何用来判"角点落在哪块屏"，工作区用来定位
+        —— ⚠️ 必须用工作区：整屏含任务栏，窗口"贴屏幕底边"会沉到快捷栏下面
+        （第52轮实测症状）。
+
+    返回
+    ----
+    选中的**工作区** `(x, y, w, h)`；`screens` 为空/全不可用时回退 `virtual_rect`。
+
+    选择规则
+    --------
+    ① 虚拟桌面的**右下角那一点**落在哪块屏上，就用那块屏 —— 常规（等高横向多屏）
+       必然命中，且取的是**第一块**命中的（确定性）；
+    ② 都没命中（阶梯式布局时"外接矩形"的右下角可能落在**空白**上）⇒ 取**离角点
+       最近**的那块屏。这样"第二块屏更矮"时也不会莫名其妙退回主屏。
+    """
+    try:
+        vx, vy, vw, vh = (int(v) for v in virtual_rect)
+    except Exception:
+        return tuple(virtual_rect)
+    cx, cy = vx + vw - 1, vy + vh - 1
+    best = None
+    best_d = None
+    for item in (screens or []):
+        try:
+            gx, gy, gw, gh = (int(v) for v in item[0])
+            wx, wy, ww, wh = (int(v) for v in item[1])
+        except Exception:
+            continue
+        if ww <= 0 or wh <= 0:
+            continue
+        # 点到屏几何的切比雪夫距离（在屏内 = 0）
+        dx = max(gx - cx, 0, cx - (gx + gw - 1))
+        dy = max(gy - cy, 0, cy - (gy + gh - 1))
+        d = dx * dx + dy * dy
+        if best_d is None or d < best_d:
+            best_d, best = d, (wx, wy, ww, wh)
+            if d == 0:
+                break
+    if best is None:
+        return (vx, vy, vw, vh)
+    return best
+
+
 # "特殊动画"的定义（第八轮）。用户要求：
 #   "除了走路，跑步，待机这几个动画，其余的都只交给 AI 判断是否播放，别和抽风似的突然一下"；
 #   "如果要是播放，那就播完，不要打断，也不要出现边播放边移动这种情况（只针对特殊动画）"。
@@ -933,13 +995,46 @@ class RalseiPet(QMainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
         
         # 获取屏幕大小，将Ralsei初始位置设置在右下角，而不是中央
-        screen_geometry = QApplication.desktop().availableGeometry()
-        screen_width = screen_geometry.width()
-        screen_height = screen_geometry.height()
+        # ★ 第93轮修复（P1-4）：原来用**无参** `availableGeometry()` —— 它只返**主屏**。
+        #   两个后果：① 副屏在主屏右侧/下方时，宠物被摆到"**主屏**右下角"而不是
+        #   "**桌面**右下角"（多屏下肉眼可见地跑偏）；② 副屏在主屏左侧/上方时，
+        #   虚拟桌面原点为**负**，沿用"宽 − 150"会差出整整一块屏。
+        #   改法（契约①）：先用 `_virtual_screen_rect()`（win32 虚拟桌面矩形）拿到
+        #   **整个桌面**的范围，再用 `pick_corner_screen_work_area()` 判"桌面右下角
+        #   落在**哪一块屏**上"，并取**那块屏的工作区**。
+        #   ⚠️ 必须是**工作区**而不是整屏：整屏含任务栏，窗口"贴屏幕底边"会让宠物
+        #      首帧就"沉到快捷栏下面"（第52轮实测症状）。
+        #   ⚠️ 每块屏都走**带下标**的 `availableGeometry(i)`，不再出现无参形态。
+        #   ★ 单屏恒等：单屏时角点必落在唯一那块屏上 ⇒ 仍是"主屏工作区" ⇒ 与旧行为
+        #     **逐像素一致**（满足「不切场景时零行为变化」这条 P0 判据）；
+        #     Qt 不可用时回退同一矩形，绝不抛异常。
+        screen_geometry = self._virtual_screen_rect()
+        work_rect = None
+        try:
+            _desk = QApplication.desktop()
+            _screens = []
+            # ⚠️ 计数方法名是 **`screenCount()`**：Qt C++ 里那个 `numScreens()` 在
+            #    PyQt5 的 `QDesktopWidget` 上**不存在**（第93轮实测：写成 `numScreens()`
+            #    会抛 AttributeError，被这里的 `except` 吞掉 ⇒ 静默退化成"整屏"，
+            #    单屏下表现为首帧位置比预期低 72px 且压在任务栏上）。
+            for _i in range(_desk.screenCount()):
+                _g = _desk.screenGeometry(_i)
+                _w = _desk.availableGeometry(_i)
+                _screens.append(((_g.x(), _g.y(), _g.width(), _g.height()),
+                                 (_w.x(), _w.y(), _w.width(), _w.height())))
+            _pick = pick_corner_screen_work_area(
+                (screen_geometry.x(), screen_geometry.y(),
+                 screen_geometry.width(), screen_geometry.height()), _screens)
+            work_rect = QRect(_pick[0], _pick[1], _pick[2], _pick[3])
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        if work_rect is None or work_rect.width() <= 0 or work_rect.height() <= 0:
+            work_rect = screen_geometry
         
         # 初始位置：右下角，距离边缘50像素
-        init_x = screen_width - 150  # 距离右边缘50像素
-        init_y = screen_height - 150  # 距离下边缘50像素
+        # ★ 第93轮：必须**加上工作区原点**（副屏为负坐标），否则多屏下仍会跑偏。
+        init_x = work_rect.x() + work_rect.width() - 150    # 距离右边缘50像素
+        init_y = work_rect.y() + work_rect.height() - 150   # 距离下边缘50像素
         
         self.setGeometry(init_x, init_y, 100, 100)  # 初始大小
         self.setWindowTitle("Ralsei Pet")
@@ -5386,6 +5481,12 @@ class RalseiPet(QMainWindow):
         self.recovery_max_duration = 5.0
         
         # 物品持有状态
+        # ⚠️ `has_ball` 是**历史遗留的死字段**：全项目再无一处读取（原读取点
+        #    `if self.has_ball: jump_ball / else: jump` 已在改动中删除，只留了注释）。
+        #    ★ 第93轮裁定：**保留不删** —— 删除它是"对外可见状态面"的变化
+        #      （原本读它得到 False，删掉后变成 AttributeError），收益为零、
+        #      风险非零；且它对本轮要修的功能（首帧位置 / 落地帧 / 跳跃物理）
+        #      **零影响**。改动最小优先。
         self.has_ball = False
         self.is_holding_cotton_candy = False
         self.is_wearing_suit = False
@@ -7806,6 +7907,12 @@ class RalseiPet(QMainWindow):
             # 跳跃完成，确保正确落到目标位置
             x = self.jump_target_pos.x()
             y = self.jump_target_pos.y()
+            # ★ 第93轮修复（P1-6）：落地位置**在这里一次夹紧**。
+            #   原来此处不夹，夹取被留到函数末尾（`_clamp_pos_to_desktop()` + 第二次
+            #   `move()`）⇒ 落地帧位置被**写两遍**：夹紧一旦生效就把宠物从落点挪开，
+            #   而此时 `spatial_pos["z"]` / `_apply_pet_z_order()` 已按"落点"结算过，
+            #   层级与坐标自相矛盾（典型"改一处漏一处"隐患）。夹在此处 = 只有一份真值。
+            x, y = self._clamp_pos_to_desktop(x, y)
 
             # ===== 落地收口（第十四轮）："落到某一层楼"必须当场结算 =====
             # 原来这里只更新了 `current_window`（历史遗留的裸缓存），**没更新
@@ -7838,6 +7945,16 @@ class RalseiPet(QMainWindow):
             self.is_jumping = False
             # 清掉"跨度大用攀爬素材"的覆盖标记，避免残留到下一次跳跃
             self._jump_anim_override = None
+            # ★ 第93轮修复（P1-6）：落地分支在此**收口返回**。
+            #   不返回就会**继续往下走**：函数末尾那段是"飞行中的每一帧"的兜底 ——
+            #   它会按**弹道式**（用 `elapsed` 重算 x/y）再 `move()` 一次，于是刚落定的
+            #   "目标落点"被**二次改写**成一个过冲值（`elapsed` 比 `T` 多出的那一截，
+            #   实测量级 1~2px）；夹紧也同理 —— 上面夹的是**目标**，下面夹的是**弹道值**，
+            #   两处判据不同源。这就是"改一处漏一处"的那类隐患。
+            #   它下面两段在落地帧本来就短路（`is_jumping` 刚被置 False ⇒ 动画块跳过；
+            #   `jump_progress < 1.0` 为假 ⇒ Z 块跳过），所以这次 `return` 去掉的
+            #   **只有**那次多余的位置写入，不改变其它任何副作用。
+            return
         
         # 边界检查：确保Ralsei不会跳到屏幕外
         # 瞬移防治：原用 availableGeometry()（只认主屏）且把原点钉在 (0,0)，
