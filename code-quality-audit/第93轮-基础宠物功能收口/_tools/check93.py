@@ -479,14 +479,59 @@ if os.path.isdir(os.path.join(PKG, 'modules')):
     pys += [os.path.join(PKG, 'modules', f)
             for f in sorted(os.listdir(os.path.join(PKG, 'modules')))
             if f.endswith('.py')]
+# ★★★ 第95轮修（**判据太脆 ⇒ 注释里的字面量会误报**，本项目第 6 个"判据也是被测物"实例）：
+#   原实现是纯文本扫描 —— `if api in t`。于是**任何注释/文档串里提到这些 API 名**
+#   都会被判成"真有显式 DPI 声明"。实证：第95轮我在 `desktop_interaction.py` 的
+#   注释里写「为什么不在这里显式 `SetProcessDpiAwareness`」⇒ D1 直接报红
+#   （命中 `{'desktop_interaction.py': ['SetProcessDpiAwareness', ...]}`），
+#   而**产品行为一个字节都没改**。
+#   ⇒ 改为**AST 扫描 + 剥注释**：只看"真的被调用/被当标识符引用"的地方。
+#     形态：① `ast.Attribute`（`ctypes.windll.shcore.SetProcessDpiAwareness`）；
+#           ② `ast.Name`（`from ... import SetProcessDPIAware` 后的裸名）；
+#           ③ `ast.Constant` 字符串（`getattr(u, 'SetProcessDpiAwareness')` 这种反射调用）。
+#     —— 注释、docstring、字符串字面量里"提及"不再算命中（除非是 ③ 的反射实参）。
+_ident_hits = {}
 for p in pys:
-    t = io.open(p, encoding='utf-8').read()
+    try:
+        _tree = ast.parse(io.open(p, encoding='utf-8').read())
+    except SyntaxError:
+        continue
+    _found = []
+    # ★ 变量名**绝不能**叫 `_n` —— 它是 `check()` 的全局计数器，
+    #   在 `ast.walk` 里复用会把它覆盖成 `ast.Name` 对象 ⇒
+    #   `check()` 里 `_n += 1` 抛 `TypeError: unsupported operand type(s) for +=: 'Load' and 'int'`
+    #   （第95轮踩到，与本项目 `check95` 同款坑）。
+    for _node in ast.walk(_tree):
+        if isinstance(_node, (ast.Attribute, ast.Name)):
+            _nm = _node.attr if isinstance(_node, ast.Attribute) else _node.id
+            if _nm in DPI_APIS:
+                _found.append(_nm)
+        elif isinstance(_node, ast.Constant) and isinstance(_node.value, str):
+            # 反射调用形如 getattr(user32, 'SetProcessDPIAware')
+            if _node.value in DPI_APIS:
+                _found.append('%s(reflect)' % _node.value)
+    if _found:
+        _ident_hits[os.path.relpath(p, ROOT)] = sorted(set(_found))
+# ── 负控制：证明"AST 扫描"与"文本扫描"确实不同（否则这条修法与原来等价）
+_txt_hits = {}
+for p in pys:
+    _t = io.open(p, encoding='utf-8').read()
     for api in DPI_APIS:
-        if api in t:
-            hits.setdefault(os.path.relpath(p, ROOT), []).append(api)
-P('     显式 DPI 声明命中 = %s' % (hits or '（无）'))
-check('D1 包内**无**显式 DPI 声明（实测 Qt5 已在 `QApplication` 构造时设 PER_MONITOR_AWARE，'
-      '手动再声明会改变现有几何契约）', not hits, '命中=%s' % (hits or '无'))
+        if api in _t:
+            _txt_hits.setdefault(os.path.relpath(p, ROOT), []).append(api)
+P('     显式 DPI 声明命中（AST，剥注释）= %s' % (_ident_hits or '（无）'))
+P('     [对照] 纯文本命中（含注释提及）    = %s' % (_txt_hits or '（无）'))
+check('D1 包内**无**显式 DPI 声明（AST 扫描，**剥注释/文档串** —— '
+      '实测 Qt5 已在 `QApplication` 构造时设 PER_MONITOR_AWARE，'
+      '手动再声明会改变现有几何契约）',
+      not _ident_hits, '命中=%s' % (_ident_hits or '无'))
+check('D1b ★ 负控制：本条判据走 AST 而**不是**文本扫描 —— 二者在本仓库当前状态下'
+      '必须给出**不同**结论（文本命中非空：注释里提及了 API 名；AST 命中为空：'
+      '没有任何真调用）',
+      bool(_txt_hits) != bool(_ident_hits),
+      'AST=%s 文本=%s' % (_ident_hits or '无', _txt_hits or '无'))
+#   ★ 注：文本命中非空**不算 FAIL** —— 它正是本轮要容忍的"注释提及"。
+#     本判据只要求 AST 侧干净；"两法结论不同"本身作为"判据已从文本升级到 AST"的活证据。
 _gy = _find_func(_base, '_virtual_screen_rect')
 check('D2 `_virtual_screen_rect()` 仍在（多屏契约①的唯一真源）', _gy is not None)
 if _gy is not None:

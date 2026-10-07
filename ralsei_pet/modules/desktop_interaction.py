@@ -57,6 +57,13 @@ LVM_FIRST = 0x1000
 LVM_GETITEMCOUNT = LVM_FIRST + 4
 LVM_GETITEMRECT = LVM_FIRST + 14
 LVM_SUBITEMHITTEST = LVM_FIRST + 17
+# ★★ 第95轮：`LVM_GETITEMRECT` 的 `lParam` 是**传入传出**参数 —— 调用方必须先在
+#   那块内存里预置要哪种矩形，控件再按它写回结果：
+#     LVIR_BOUNDS(0)       图标包围盒（本处要的：位置 + 尺寸）
+#     LVIR_ICON(1)         仅图标
+#     LVIR_LABEL(2)        仅文字标签
+#   缺了这次预写，控件读到残留值 ⇒ **63 个图标只量出 10 个不同位置**（见调用处的长注释）。
+LVIR_BOUNDS = 0
 LVIR_SELECTBOUNDS = 1
 
 PROCESS_VM_OPERATION = 0x0008
@@ -805,10 +812,16 @@ class DesktopInteraction:
             return None
 
         try:
-            # 在远程进程中分配 RECT 缓冲区
+            # 在远程进程中分配两个 RECT 缓冲区：
+            #   remote_rect —— 收 `LVM_GETITEMRECT` 的结果（同时也是**入参**，见下）
+            #   remote_seed —— 每次调用前把 `LVIR_BOUNDS(0)` 写进去当"入参模板"
             rect_size = ctypes.sizeof(RECT)
             remote_rect = kernel32.VirtualAllocEx(h_process, None, rect_size, MEM_COMMIT, PAGE_READWRITE)
             if not remote_rect:
+                return None
+            remote_seed = kernel32.VirtualAllocEx(h_process, None, rect_size, MEM_COMMIT, PAGE_READWRITE)
+            if not remote_seed:
+                kernel32.VirtualFreeEx(h_process, remote_rect, 0, MEM_RELEASE)
                 return None
 
             try:
@@ -822,9 +835,40 @@ class DesktopInteraction:
                 lv_left = lv_rect[0]
                 lv_top = lv_rect[1]
 
+                # ★★★ 第95轮修复（**桌面图标探测 54/63 个回报同一坐标**，用户口径
+                #    「他总在左上角那一小块转圈」的真凶）：
+                #   `LVM_GETITEMRECT` 的 `lParam` 是**传入传出**参数 —— 调用方必须先在
+                #   该缓冲区里预置 `LVIR_*`（这里要包围盒 = `LVIR_BOUNDS` = 0），
+                #   控件按这个模式把矩形**写回同一块内存**。
+                #   原实现分配完远程内存**从不预写**，那块内存初值既非 0 也从不更新 ⇒
+                #   控件读到的是残留值，从第 10 个图标起全部按同一个残留模式返回
+                #   ⇒ **63 个图标只量出 10 个不同位置**（x 只覆盖 0..115 两列）。
+                #   实测对照（同一秒、同一进程，仅此一处变量）：
+                #     不预写：唯一坐标 10/63，x∈[0,115]
+                #     预写 0：唯一坐标 63/63，x∈[0,690]（真实桌面是 6 列 × 9 行）
+                #   后果链：`AutonomousAgent._pick_target` 只取 `elements[:30]` 且**就近选**，
+                #   30 个"图标"全落在左上两列 ⇒ 宠物被吸引进那个小方块并**再也出不来**
+                #   （真机 120s 录制：目标 x 只在 17..1263、y 只在 2..130）。
+                seed = RECT()
+                seed.left = LVIR_BOUNDS          # 0；top/right/bottom 保持 0
+                written = ctypes.c_size_t(0)
+
                 icon_rects = []
                 local_rect = RECT()
                 for i in range(count):
+                    # 每次调用前重填入参（控件可能回写，不能只写一次）
+                    if not kernel32.WriteProcessMemory(
+                            h_process, remote_seed, ctypes.byref(seed), rect_size,
+                            ctypes.byref(written)):
+                        continue
+                    if not kernel32.ReadProcessMemory(
+                            h_process, remote_seed, ctypes.byref(local_rect), rect_size, None):
+                        continue
+                    # 把入参模板原样投给控件（等价于"用带 LVIR_BOUNDS 的本地 RECT 调用"）
+                    if not kernel32.WriteProcessMemory(
+                            h_process, remote_rect, ctypes.byref(local_rect), rect_size,
+                            ctypes.byref(written)):
+                        continue
                     user32.SendMessageW(list_view_hwnd, LVM_GETITEMRECT, i, remote_rect)
                     if not kernel32.ReadProcessMemory(h_process, remote_rect, ctypes.byref(local_rect), rect_size, None):
                         continue
@@ -847,6 +891,7 @@ class DesktopInteraction:
                 icon_rects.sort(key=lambda r: (r['screen_y'] // 10, r['screen_x']))
                 return icon_rects
             finally:
+                kernel32.VirtualFreeEx(h_process, remote_seed, 0, MEM_RELEASE)
                 kernel32.VirtualFreeEx(h_process, remote_rect, 0, MEM_RELEASE)
         finally:
             kernel32.CloseHandle(h_process)
@@ -1144,6 +1189,22 @@ class DesktopInteraction:
         # 原先下面用 rect[2] < 0 / rect[3] < 0 判"出屏"，会把位于主屏左/上方
         # 副屏（坐标为负）的窗口整窗丢弃——宠物无法在那些窗口边框上"建楼"。
         # 这里补上虚拟屏原点，改用「窗口矩形与虚拟屏矩形是否相交」判定。
+        # ★★★ 第95轮：**DPI 感知是调用契约，不是本模块能自己保证的事**（实测口径）。
+        #   事实链（第95轮在真机 2560×1600 @150% 实测，非推断）：
+        #     · 裸进程（未建 `QApplication`）：`GetSystemMetrics(78/79)` 返回
+        #       **1707×1067** —— 这是 2560/1.5 的"逻辑像素"，窗口坐标同样会被缩 1.5 倍；
+        #     · 建过 `QApplication()` 之后：同一调用返回 **2560×1600**（正确）。
+        #   原因是 Qt5 在 `QApplication` 构造时把进程 DPI 感知设为 PER_MONITOR_AWARE，
+        #   Win32 度量随之切到物理像素。
+        #   ⇒ **产品路径天然满足**：`main.py` 在 `RalseiPet` 构造前已有
+        #      `app = QApplication(sys.argv)`，而 `DesktopInteraction` 是 `RalseiPet`
+        #      的成员 ⇒ 走到这里时感知已生效。
+        #   ⚠️ **裸脚本**（回归夹具 / 临时诊断脚本）若直接 `import` 本模块拿窗口坐标，
+        #      量到的是缩 1.5 倍的值 ⇒ 会得出"建楼位置全错"的**假结论**。
+        #      规矩：**先建 `QApplication`，再量屏幕/窗口**（与本项目 §3-③ 同一条纪律）。
+        #   为什么不在这里显式 `SetProcessDpiAwareness`：见第93轮裁定
+        #   （`QApplication` 已设；重复设置会在部分 Qt 版本上触发
+        #   "SetProcessDpiAwarenessContext failed" 噪声，且与 Qt 自身感知冲突）。
         virtual_left = win32api.GetSystemMetrics(76)   # SM_XVIRTUALSCREEN
         virtual_top = win32api.GetSystemMetrics(77)    # SM_YVIRTUALSCREEN
         virtual_right = virtual_left + screen_width

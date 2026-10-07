@@ -50,6 +50,15 @@ u"""第95轮回归锁：`is_sleeping_walk` 的动画后缀只允许拼在 `down`
     E3 角度带边界就位（±44/46 · 134/136）
     E4/E5 负控制：换回修复前的 `-30/60/120` 缝隙档 ⇒ E1/E2 必须翻面
   D 判据自身体检（变异保真 · 桩保真 · 恒真防护）
+  F 桌面图标矩形（**真缺陷**：`LVM_GETITEMRECT` 的 `lParam` 是**传入传出**参数）
+    F0/F1 方法可抽出 · `LVIR_BOUNDS` 常量 == 0（Windows SDK 值）
+    F2/F3 预写 `LVIR_BOUNDS` 存在，且先于 `SendMessageW`（顺序即正确性）
+    F4/F4b 循环体内**每次**把预置值重投给 `remote_rect`，且先于该次 Send
+    F5 `remote_seed` 缓冲区也释放（不泄漏）
+    F6/F7 两条负控制（改 `0` / 抹掉全部 `LVIR_BOUNDS`）
+    ★ 真缺陷背景：不预写 ⇒ 63 个图标只量出 **10 个不同位置**（x 只覆盖两列）
+      ⇒ `_pick_target` 就近选 30 个 ⇒ 宠物被吸进左上角小方块**再也出不来**
+      （真机 120s 录制：目标 x 只在 17..1263、y 只在 2..130）。
 
 ★ 本套件**零 UI / 不需要显示器 / 零网络 / 零外部盘**：只读源码 + 解剖执行纯逻辑。
 """
@@ -256,8 +265,102 @@ _LOG_STUB = type('_L', (), {'debug': lambda *a, **k: None,
                             'warning': lambda *a, **k: None})()
 
 
-def run_case(direction, sleeping_walk, timer, main_text=None):
+def _lf(text):
+    """统一到 LF。
+
+    ★★ 踩过的坑：本仓 `main.py` 是 **CRLF**，而锚点常量若用 `\\n` 写就**永不匹配**
+      ⇒ 变异体等于原文 ⇒ "变异保真"判据报红。
+      所有文本锚点一律走本函数**统一换行**后再比对，杜绝这一族失配。
+    """
+    return text.replace('\r\n', '\n')
+
+
+class _T(object):
+    """替 `time` 模块：只喂 `time()`（真源码读的"当前时间"）。
+
+    ★ 为什么必须是真数值：`update_animation` 用
+      `self.idle_walk_timer += (time.time() - self._last_animation_time)`
+      推进"连续下走"计时器。给桩/0 都会让增量恒为 0（见 `run_case` 的注释），
+      于是"小憩走路"永远触发不了 —— 那是**夹具不保真**，会让负控制假红。
+
+    ★★ 第95轮补（同一个实例同时当 `time` 模块与 `self.time`，**只留一个时钟**）：
+      真源码里"取当前时间"走**两条路** ——
+        · 方法开头的 `current_time = time.time()`（模块名 `time`）
+        · 中间若干处 `self.time.time()`（实例属性 `self.time`）
+      先前只注 `_T` 不注 `time` ⇒ B 段直接 `NameError`。
+      两处必须是**同一个实例**，否则两个时钟各走各的，增量算出来是假的。
+    """
+
+    def __init__(self, now):
+        self._now = float(now)
+
+    def time(self):
+        return self._now
+
+
+def _rollback_src():
+    """真源：`main.py` 里 `change_animation` 的**回退链**（那 6 行），拿去做交叉校验。
+
+    ★★ 注意：这条**不是本套件的主观察量**。`update_animation` 自己还有**第二条**
+      回退链（13598~13608，取"前两段"），`walk_right_sleep` 在调用
+      `change_animation` 之前就被它折成 `walk_right` 了 ⇒ 主观察量改用
+      `reg.misses` 里 `where == 'update_animation'` 的记账（见 `run_case`）。
+      本函数留着做 B0c 的**交叉校验**：两条回退链对 `walk_right_sleep` 的结论
+      必须一致（都折回 `walk_right`），否则说明我对代码的理解出了偏差。
+    """
+    text = MAIN_TEXT
+    if '    def change_animation(self, new_animation, force=False):' not in text:
+        return None
+    # ★ 坑：本仓 `main.py` 是 **CRLF**，`split('\n')` 后每行尾巴还挂着一个 `\r`。
+    #   统一先转 LF 再切，杜绝这一族失误。
+    lines = _lf(text).split('\n')
+    try:
+        i = next(k for k, l in enumerate(lines)
+                 if l.strip().startswith('if new_animation not in self.sprite_loader.sprites:'))
+        j = next(k for k in range(i + 1, min(i + 60, len(lines)))
+                 if 'new_animation = found' in lines[k])
+    except StopIteration:
+        return None
+    kept = [l for l in lines[i:j + 1] if 'note_animation_miss' not in l]
+    return '\n'.join(kept)
+
+
+def _rollback_fn():
+    """把回退链编译成 `f(registry_names, requested) -> 最终名 or None`。
+
+    `None` = 真产品代码走到"找不到任何可回退项 ⇒ 直接拒绝切换"（= 素材缺得离谱）。
+    注意 `'idle' in sprites` 那步：真实注册表里 `idle` 一定在，所以只要名字**起头**
+    能对上任何已登记项就不会返 None；返 None 才说明拼出来的名字彻底不存在。
+    """
+    src = _rollback_src()
+    if not src:
+        return None
+    lines = src.split('\n')
+    base = min((len(l) - len(l.lstrip()) for l in lines if l.strip()), default=0)
+    flat = [(l[base:] if l.strip() else '') for l in lines]
+    body = '\n'.join(('    ' + l) if l.strip() else '' for l in flat)
+    # ★ 真源码里引用了 `self.sprite_loader.sprites` ⇒ 必须给它一个 `self`。
+    #   于是签名是 `f(sprites, new_animation)`：内部把 `self` 造成一个只有
+    #   `sprite_loader.sprites` 的薄壳，其余一律不提供（免得判据偷偷依赖别的属性）。
+    code = ('def _f(sprites, new_animation):\n'
+            '    self = type("_Sl", (), {"sprite_loader":\n'
+            '        type("_S", (), {"sprites": sprites})()})()\n'
+            + body + '\n    return new_animation\n')
+    ns = {}
+    try:
+        exec(compile(code, '<roll95>', 'exec'), ns)
+    except Exception as e:  # pragma: no cover
+        print('     [回退链解剖失败] %r' % (e,))
+        return None
+    return ns.get('_f')
+
+
+def run_case(direction, sleeping_walk, timer, main_text=None, dt=0.0):
     """跑一次真 `update_animation`，返回 `(请求名, 未命中列表)`。
+
+    `dt` = 本帧时间增量（喂给解剖体的 `time.time()` 与 `_last_animation_time` 之差）。
+    默认 0 ⇒ `idle_walk_timer` 不推进，于是"小憩走路"不会由计时器自行置真，
+    判据喂进来的 `sleeping_walk` 完全由被测源码的状态机决定命运（夹具可控）。
 
     桩只喂"本判据观察得到"的东西：`sprite_loader`（名字存在性 + 未命中记账）、
     `current_animation`（真值必须是已登记的字符串，否则 `startswith/split` 语义不同）、
@@ -265,8 +368,17 @@ def run_case(direction, sleeping_walk, timer, main_text=None):
     """
     text = MAIN_TEXT if main_text is None else main_text
     seg, _ = _method_src(text, 'RalseiPet', 'update_animation')
+    # ★★ 第95轮补（夹具保真，踩过两次的坑）：注入名必须**同时**含 `time`
+    #   与 `_T`。真源码里两处都在用：
+    #     · 方法开头 `current_time = time.time()` —— 走模块名 `time`
+    #     · `self.idle_walk_timer` 的增量基准 `self._last_animation_time`
+    #   只注 `_T` ⇒ `NameError: name 'time' is not defined`（本轮实测崩在 B 段）。
+    #   `_T` 自带 `time()`，因此**同一个实例**同时充当 `time` 模块与 `_T`，
+    #   保证"取当前时间"这条路径只有一份真值（不出现两个时钟）。
+    _clock = _T(float(dt))
     S = _exec_method(seg, {'_log': _LOG_STUB, 'math': __import__('math'),
-                           'random': __import__('random'), 'time': __import__('time')})
+                           'random': __import__('random'),
+                           'time': _clock, '_T': _clock})
     if S is None:
         return None, None
     reg = _Reg(REG_NAMES)
@@ -287,10 +399,56 @@ def run_case(direction, sleeping_walk, timer, main_text=None):
     o.is_shy = False
     o.is_unhappy = False
     o._last_perf_anim_time = 0.0
+    # ★★ 第95轮补（**夹具保真**，本段记录一个踩过的坑）：
+    #   ① `_last_animation_time` 与 `time.time()` 都必须给**真数值**，否则
+    #      `idle_walk_timer += (当前时间 - 上次时间)` 的增量为 0 —— 桩不设
+    #      `_last_animation_time` 时回落到 `_Zero`，`0 - _Zero = 0`。
+    #   ② 但"让自增真正发生"**并不总是对**：见 `_strip_order` 的注释 ——
+    #      B6 的变异体（把顺序倒回修复前）在**正增量**下会被"清假分支"当场抹平，
+    #      于是负控制假红。⇒ 这里把增量**暴露成参数**，由调用方按变异种类选：
+    #        · 测"守卫" 的变异 → `dt=0`（自增无害，让守卫成为唯一拦路者）
+    #        · 测"顺序" 的变异 → `dt=9.0`（让"倒回旧顺序"真的能读到陈旧 True）
+    o._last_animation_time = 0.0
+    o.time = _clock
+    # ★★★ 观察量接线（第 4 版，终于对了 —— 前 3 版都测错了对象，务必读完）：
+    #
+    #   `change_animation` 收到的名字**不是**上游拼出来的名字！`update_animation`
+    #   在拼接点（13464）之后还有**第二条回退链**（13598~13608）：
+    #       if new_animation not in self.sprite_loader.sprites:
+    #           base_anim = 前两段（walk_right_sleep → walk_right）
+    #           self.sprite_loader.note_animation_miss(new_animation, base_anim, 'update_animation')
+    #           new_animation = base_anim
+    #   ⇒ `walk_right_sleep` 在**调用 `change_animation` 之前**就被折成 `walk_right` 了。
+    #   这解释了真机日志里那个 `(来源: update_animation)` 从哪来 —— 就是 13607 这行。
+    #
+    #   ⇒ 正确的观察量 = **这条回退链有没有被触发**（它一旦触发，就说明上游真的
+    #     拼出了一个不存在的名字）。它由**产品源码**决定是否触发、并传入**真参数**；
+    #     我的桩只提供 `note_animation_miss` 这个接口来收下这三个真值。
+    #     （前一版把"名字在不在"交给我的名单判 ⇒ 测的是夹具；这一版交给产品代码判。）
+    #
+    #   ⚠️ 另注意 13592 `if ... and self.current_animation != new_animation:` ——
+    #      只有"新名字 ≠ 当前名字"才进回退链。夹具设 `current_animation='walk_down'`，
+    #      而本段观察的都是 `walk_{right,left,up}_sleep` 或 `walk_down_sleep`，
+    #      都不等于它 ⇒ 回退链一定进得去（不需要额外调夹具）。
     req = []
     o.change_animation = lambda name, *a, **k: (req.append(name), True)[1]
     o.update_animation()
-    return (req[0] if req else None), reg.misses
+    # 只认 `来源 == update_animation` 的记账（排掉别处可能产生的同源噪声）。
+    _miss_fn = [m for m in reg.misses if m[2] == 'update_animation']
+    if _miss_fn:
+        # 回退链触发过 ⇒ 上游确实拼出了不存在的名字（真值就在记账里）。
+        raw = _miss_fn[0][0]
+        final = _miss_fn[0][1]
+    elif req:
+        raw = final = req[0]
+    else:
+        # 本帧被 `drag_delay` 挡掉（提前 return）或走到别的分支 ⇒ 无观察值。
+        return None, None, reg.misses
+    return raw, final, reg.misses
+
+
+# 真回退链（解剖自产品源码）——留作交叉校验，不必参与主观察量。
+_RB = _rollback_fn()
 
 
 NO_GUARD = ' and self.current_direction == "down"'
@@ -298,9 +456,40 @@ NO_GUARD = ' and self.current_direction == "down"'
 
 def _strip_guard(text):
     """**生成式**负控制：把本轮加的那半截条件从源码里抠掉（不落盘、不动产品文件）。"""
-    return text.replace(
+    return _lf(text).replace(
         'elif self.is_sleeping_walk and self.current_direction == "down":',
         'elif self.is_sleeping_walk:')
+
+
+_ORDER_BLOCK_LF = (
+    '            # 小憩走路状态：连续"向下走"10 秒进入。\n'
+    '            # 修复（本就有的那条）：原逻辑只置真不清假——一旦进入就永久播"梦游走路帧"。\n'
+    '            # 只要不是"向下 walk"（方向变了/跑起来/动作被覆盖）就退出小憩。\n'
+    '            if base_animation == "walk" and self.current_direction == "down" and self.idle_walk_timer >= 10.0:\n'
+    '                self.is_sleeping_walk = True\n'
+    '            elif self.is_sleeping_walk:\n'
+    '                self.is_sleeping_walk = False\n'
+    '                self.idle_walk_timer = 0\n'
+)
+_INC_LF = ('            self.idle_walk_timer += '
+           '(current_time - self._last_animation_time)\n\n')
+_ANCHOR_LF = '            # 检查是否触发惊讶事件\n'
+
+
+def _strip_order(text):
+    """**生成式**负控制：把计时器自增 + `is_sleeping_walk` 置位块**移回拼接点之后**。
+
+    这正是修复前的顺序。为什么必须用"移动"而不是"删除"：判据要测的是
+    **顺序**（先算再读 vs 先读再算），删掉它就变成"功能被关了"，测错了对象。
+    ★ 若将来重排了这段代码（缩进/注释变化），本函数会**静默失配** ⇒
+      另有 B5 断言 `_mut_o != MAIN_TEXT` 兜住（失配即报红，不会假装通过）。
+    """
+    t = _lf(text)
+    if _ORDER_BLOCK_LF not in t or _INC_LF not in t or _ANCHOR_LF not in t:
+        return text                       # 失配 ⇒ 交给 B5 的"变异保真"报红
+    t = t.replace(_INC_LF, '', 1).replace(_ORDER_BLOCK_LF, '', 1)
+    t = t.replace(_ANCHOR_LF, _INC_LF + _ORDER_BLOCK_LF + '\n' + _ANCHOR_LF, 1)
+    return t
 
 
 # ============================================================ A. 体积口径
@@ -337,6 +526,14 @@ P('=' * 78)
 _seg, _node = _method_src(MAIN_TEXT, 'RalseiPet', 'update_animation')
 check('B0 `update_animation` 可从真源码抽出', bool(_seg),
       '法名/类名变了？')
+check('B0b `update_animation` 内的**第二条回退链**可从真源码抽出（B 段观察量的真源）',
+      _RB is not None, '解剖失败 —— B 段整段失去鉴别力，必须修')
+check('B0c 夹具保真：真回退链能识别"不存在的名字"（`walk_right_sleep` ⇒ `walk_right`）',
+      _RB is not None and _RB(REG_NAMES, 'walk_right_sleep') == 'walk_right'
+      and _RB(REG_NAMES, 'walk_right') == 'walk_right',
+      'sleep 名 ⇒ %r ；真名 ⇒ %r'
+      % (_RB(REG_NAMES, 'walk_right_sleep') if _RB else None,
+         _RB(REG_NAMES, 'walk_right') if _RB else None))
 
 CASES = [
     ('right', 'walk_right'),
@@ -346,37 +543,80 @@ CASES = [
 ]
 for _d, _want in CASES:
     _timer = 999.0 if _d == 'down' else 0.0
-    _req, _miss = run_case(_d, True, _timer)
+    _raw, _fin, _miss = run_case(_d, True, _timer)
     if _d == 'down':
-        check('B1 `down` + 连续下走（timer>=10）⇒ 请求 `%s`（功能未被关掉）' % _want,
-              _req == _want, '实际请求 = %r' % (_req,))
-        check('B2 `down` 场景零未命中', _miss == [], '未命中 = %r' % (_miss,))
-    else:
-        check('B3 `%s` + is_sleeping_walk ⇒ 请求 `%s`（不回落到不存在的 *_sleep）'
-              % (_d, _want), _req == _want, '实际请求 = %r' % (_req,))
-        check('B4 `%s` 场景零未命中（不再产生 [anim-miss] 噪声）' % _d,
+        # ★ 正控：down + 计时器过 10s ⇒ 必须真的拼出（且回退链认可）`walk_down_sleep`。
+        #   否则就是"修复把功能一起关掉了"，而这在 B3/B4 里**看不出来**。
+        check('B1 `down` + 连续下走（timer>=10）⇒ 上游拼出 `%s`，且回退链**不动**它'
+              % _want, _raw == _want and _fin == _want,
+              '上游=%r 落地=%r' % (_raw, _fin))
+        check('B2 `down` 场景零未命中（`is_sleeping_walk` 不留假账）',
               _miss == [], '未命中 = %r' % (_miss,))
+    else:
+        check('B3 `%s` + is_sleeping_walk ⇒ **上游就不该拼出** `%s_sleep`'
+              % (_d, _d), _raw == _want, '上游实际拼出 = %r' % (_raw,))
+        check('B4 `%s` 场景：回退链无须干预 + 零未命中（不再产生 [anim-miss] 噪声）'
+              % _d, _fin == _want and _miss == [],
+              '落地=%r 未命中=%r' % (_fin, _miss))
 
-# ---- 负控制：生成式变异（抠掉守卫）⇒ 必须报出未命中 ----
-_mut = _strip_guard(MAIN_TEXT)
-check('B5 变异保真：抠掉 ` and self.current_direction == "down"` 后源码确实变了',
-      _mut != MAIN_TEXT and _mut.count('elif self.is_sleeping_walk:') >= 1)
-_req_m, _miss_m = run_case('right', True, 0.0, main_text=_mut)
-check('B6 负控制：抠掉守卫后 right 场景**必须**报出 `walk_right_sleep` 未命中',
-      ('walk_right_sleep', 'walk_right', 'update_animation') in _miss_m
-      and _req_m == 'walk_right',
-      '未命中 = %r  请求 = %r' % (_miss_m, _req_m))
-_req_ok, _ = run_case('right', True, 0.0)
-check('B7 恒真防护：正/负两侧的"未命中"必须不同（否则判据无鉴别力）',
-      (_miss_m != []) and (_req_ok == 'walk_right'),
-      '负侧未命中=%d  正侧请求=%r' % (len(_miss_m), _req_ok))
+# ---- 负控制（★★★ 本套件最难写对的一段，记下三代失败与最终口径）----
+#
+# ★★★ 核心洞察（用两代失败的负控制换来，务必读懂再动）：
+#   第95轮对 `is_sleeping_walk` 其实上了**两道防线**：
+#     防线①「顺序」：计时器自增 + 置位/清假发生在**后缀选择之前** ⇒ 方向变开的那拍
+#        `elif self.is_sleeping_walk:` 当场清假，后续拼接读到的是 False；
+#     防线②「`down` 守卫」：`elif self.is_sleeping_walk and self.current_direction == "down":`
+#        ⇒ 即便标志残留 True，非 down 也拼不出 `_sleep`。
+#   ⇒ **任一单拆都不会漏**：
+#     · 只拆①（倒回旧顺序，守卫留着）⇒ 读到陈旧 True 但被守卫拦住 ⇒ 仍是 `walk_right`；
+#     · 只拆②（抠守卫，顺序留着）⇒ 清假在拼接之前 ⇒ 仍是 `walk_right`；
+#     · **两道同拆** ⇒ 才复现"拼出 `walk_right_sleep`"的原始缺陷。
+#   前三代负控制都只拆了一道 ⇒ 天然看不到差异 ⇒ 假绿/假红。
+#   本段因此用"**两道同拆**"的变异体，并额外各留一条"单拆不对"的**边界**判据，
+#   把"两道防线各管一段"这件事本身也钉住（防止将来有人删掉其中一道还以为没差）。
+_mut_g = _strip_guard(MAIN_TEXT)                      # 只拆②（守卫）
+_mut_o = _strip_order(MAIN_TEXT)                      # 只拆①（顺序）
+_mut_go = _strip_guard(_mut_o)                        # ① ② 同拆
+check('B5 变异保真：三种变异体都确实改了源码，且互不相同',
+      _mut_g != MAIN_TEXT and _mut_o != MAIN_TEXT and _mut_go != MAIN_TEXT
+      and len({_mut_g, _mut_o, _mut_go}) == 3,
+      'g=%s o=%s go=%s' % (_mut_g != MAIN_TEXT, _mut_o != MAIN_TEXT,
+                           _mut_go != MAIN_TEXT))
+
+# 工况：`right` 方向 + 陈旧 `is_sleeping_walk=True` + dt=9
+#   （dt=9 让 `idle_walk_timer` 跨过 10s 门槛附近，且让"清假"这一拍真的发生；
+#    计时器门槛本身不影响本组观察量 —— 拼接只看标志与方向。）
+# ★★ 变量命名避坑：全局判据计数器叫 `_n`，本段**绝不能**再用 `_n` 当局部名，
+#   否则 `check()` 里的 `global _n; _n += 1` 会撞上被覆盖成 tuple 的同名变量
+#   ⇒ `TypeError: can only concatenate tuple (not "int") to tuple`（本轮实测踩到）。
+_r_go = run_case('right', True, 0.0, main_text=_mut_go, dt=9.0)   # 两道同拆
+_r_g = run_case('right', True, 0.0, main_text=_mut_g, dt=9.0)     # 只拆守卫
+_r_o = run_case('right', True, 0.0, main_text=_mut_o, dt=9.0)     # 只拆顺序
+_r_n = run_case('right', True, 0.0, dt=9.0)                       # 正体（两道都在）
+
+check('B6 ★★★ 负控制·核心：两道防线**同拆** ⇒ 上游必须拼出 `walk_right_sleep`'
+      '（不复现 ⇒ 说明正体那两道防线里有一道本来就是多余的，本判据失去意义）',
+      _r_go[0] == 'walk_right_sleep', '两道同拆后上游 = %r' % (_r_go[0],))
+check('B6b 负控制·闭合：同拆变异体的 `walk_right_sleep` 必须被真回退链折回 `walk_right`'
+      '（这条接上真机 recon 里那条 `[anim-miss]` 日志的同一路径）',
+      _r_go[1] == 'walk_right', '同拆后落地 = %r' % (_r_go[1],))
+check('B7 ★★ 边界：**只拆守卫**（顺序留着）⇒ 上游仍必须是 `walk_right`'
+      '（证明"顺序"这道防线独立成立，不是靠守卫兜底）',
+      _r_g[0] == 'walk_right', '只拆守卫后上游 = %r' % (_r_g[0],))
+check('B8 ★★ 边界：**只拆顺序**（守卫留着）⇒ 上游仍必须是 `walk_right`'
+      '（证明"守卫"这道防线独立成立，不是靠顺序兜底）',
+      _r_o[0] == 'walk_right', '只拆顺序后上游 = %r' % (_r_o[0],))
+check('B9 恒真防护：正体与"两道同拆"必须**不同**，且正体必须干净',
+      _r_n[0] == 'walk_right' and _r_go[0] != _r_n[0]
+      and _r_go[1] == _r_n[1] == 'walk_right',
+      '正体上游=%r 正体落地=%r 同拆上游=%r 同拆落地=%r'
+      % (_r_n[0], _r_n[1], _r_go[0], _r_go[1]))
 
 # ============================================================ C. 注册表/素材
 P('')
 P('=' * 78)
 P('C. 注册表 / 素材一致性（静态）')
 P('=' * 78)
-
 check('C1 `animations.json` 登记了 `walk_down_sleep`', 'walk_down_sleep' in _anim_group_names())
 _missing_dirs = [d for d in ('walk_left_sleep', 'walk_right_sleep', 'walk_up_sleep')
                  if d in REG_NAMES]
@@ -552,11 +792,130 @@ check('D1 桩保真：注册表里 `walk_right` 在、`walk_right_sleep` 不在'
 check('D2 桩保真：注册表规模与 `animations.json` 组数同量级',
       len(REG_NAMES) >= len(_anim_group_names()) >= 100,
       'REG=%d  groups=%d' % (len(REG_NAMES), len(_anim_group_names())))
-check('D3 no-op 显式打印：B 段四方向场景的请求名（人可复核）',
-      True)
-P('     right=%r left=%r up=%r down=%r'
-  % (run_case('right', True, 0.0)[0], run_case('left', True, 0.0)[0],
-     run_case('up', True, 0.0)[0], run_case('down', True, 999.0)[0]))
+# ★★ 第95轮修（**恒真判据**）：D3 原来写 `check(..., True)` —— 本意是"no-op 显式打印"，
+#   但它**没有任何鉴别力**，且会被本仓库的"恒真防护"（`check93` E1 那种自检）报红。
+#   改成**真判据**：四方向的「上游名 → 落地名」必须满足**成对关系** ——
+#     · `right/left/up`：上游 == 落地（守卫 + 顺序两道防线生效 ⇒ 压根不拼 `_sleep`）；
+#     · `down`        ：上游 == `walk_down_sleep` == 落地（功能没被顺手关掉）。
+#   这样"打印"与"断言"合一：既留了人可复核的实况，又真的在守行为。
+_r_right = run_case('right', True, 0.0)
+_r_left = run_case('left', True, 0.0)
+_r_up = run_case('up', True, 0.0)
+_r_down = run_case('down', True, 999.0)
+check('D3 ★★ 四方向「上游名 → 落地名」成对关系正确（非 no-op：'
+      'right/left/up 上游==落地且**不含** `_sleep`；down 保留 `walk_down_sleep`）',
+      _r_right[0] == _r_right[1] == 'walk_right'
+      and _r_left[0] == _r_left[1] == 'walk_left'
+      and _r_up[0] == _r_up[1] == 'walk_up'
+      and _r_down[0] == _r_down[1] == 'walk_down_sleep')
+P('     right=%r→%r  left=%r→%r  up=%r→%r  down=%r→%r'
+  % (_r_right[0], _r_right[1], _r_left[0], _r_left[1],
+     _r_up[0], _r_up[1], _r_down[0], _r_down[1]))
+
+# ============================================================ F. 桌面图标矩形
+# ★★★ 第95轮真缺陷：`LVM_GETITEMRECT` 的 `lParam` 是**传入传出**参数 ——
+#   调用方必须先在远程缓冲区里预置 `LVIR_*`（这里要包围盒 = `LVIR_BOUNDS` = 0），
+#   控件再按该模式把矩形**写回同一块内存**。原实现分配完远程内存**从不预写**，
+#   控件读到残留值 ⇒ **63 个图标只量出 10 个不同位置**（x 只覆盖两列）
+#   ⇒ `AutonomousAgent._pick_target` 就近选 30 个 ⇒ 宠物被吸进左上角小方块出不来的真凶。
+#   真机实测对照（同一秒、同一进程，仅此一处变量）：
+#     不预写：唯一坐标 10/63，x∈[0,115]
+#     预写 0：唯一坐标 63/63，x∈[0,690]，且与 `LVM_GETITEMPOSITION` 逐项一致
+P('')
+P('=' * 78)
+P('F. 桌面图标矩形（`LVM_GETITEMRECT` 的 `LVIR_BOUNDS` 预写）')
+P('=' * 78)
+
+DESKTOP_PY = os.path.join(ROOT, 'ralsei_pet', 'modules', 'desktop_interaction.py')
+with io.open(DESKTOP_PY, encoding='utf-8', newline='') as _fh:
+    DESK_TEXT = _fh.read()
+
+
+def _desktop_method_src(name):
+    """从 `desktop_interaction.py` 里抽出某个顶层类方法（含所有嵌套块）。"""
+    try:
+        tree = ast.parse(DESK_TEXT)
+    except SyntaxError:
+        return None
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef) and node.name == name:
+            return ast.get_source_segment(DESK_TEXT, node)
+    return None
+
+
+_F_SRC = _desktop_method_src('get_desktop_icon_rects')
+if _F_SRC is None:
+    # 方法名可能不同 ⇒ 退化为"任一含 LVM_GETITEMRECT 的方法"
+    for node in ast.walk(ast.parse(DESK_TEXT)):
+        if isinstance(node, ast.FunctionDef):
+            seg = ast.get_source_segment(DESK_TEXT, node) or ''
+            if 'LVM_GETITEMRECT' in seg:
+                _F_SRC = seg
+                break
+
+check('F0 能从 `desktop_interaction.py` 抽出使用 `LVM_GETITEMRECT` 的方法',
+      bool(_F_SRC and 'LVM_GETITEMRECT' in _F_SRC))
+
+# ---- F1 常量就位：`LVIR_BOUNDS` 必须存在且 == 0（Win32 官方值，不是随手编的）
+check('F1 `LVIR_BOUNDS` 常量存在且 == 0（Windows SDK 值）',
+      re.search(r'^LVIR_BOUNDS\s*=\s*0\s*$', DESK_TEXT, re.M) is not None,
+      '命中 %d 次' % len(re.findall(r'^LVIR_BOUNDS\s*=\s*0\s*$', DESK_TEXT, re.M)))
+
+if _F_SRC:
+    _F_LF = _lf(_F_SRC)
+    # ---- F2 ★★★ 核心：调用 `SendMessageW(..., LVM_GETITEMRECT, ...)` 之前，
+    #      必须先有把 `LVIR_BOUNDS` 写进远程缓冲的动作（`seed.left = LVIR_BOUNDS`
+    #      + `WriteProcessMemory(..., remote_rect, ...)`）。
+    #      判据形态：AST 找 `SendMessageW` 调用行号，找"预写 LVIR_BOUNDS"的
+    #      `WriteProcessMemory` 调用行号，要求前者**晚于**后者。
+    _seed_assign = re.search(r'\.left\s*=\s*LVIR_BOUNDS', _F_LF)
+    _writes = list(re.finditer(r'WriteProcessMemory', _F_LF))
+    _send = list(re.finditer(r'SendMessageW\s*\(\s*\S+\s*,\s*LVM_GETITEMRECT', _F_LF))
+    check('F2 ★★★ 预写 `LVIR_BOUNDS` 的动作存在（`seed.left = LVIR_BOUNDS`）',
+          _seed_assign is not None)
+    check('F3 ★★★ 预写发生在 `SendMessageW(LVM_GETITEMRECT)` **之前**（顺序即正确性）',
+          bool(_seed_assign and _writes and _send
+               and min(m.start() for m in _writes) < _send[0].start()),
+          '预写@%s Send@%s'
+          % (min([m.start() for m in _writes]) if _writes else None,
+             _send[0].start() if _send else None))
+    # ---- F4 ★★ 循环体内每次都要把预置值**重投**给 `remote_rect`
+    #      （控件会回写 `remote_rect` ⇒ 只写一次会从第二个图标起失效）。
+    #      ★ 判据修正（首版写错、实测抓出）：预写模板 `seed.left = LVIR_BOUNDS`
+    #        在循环**外**造（这没问题），真正要在循环**体内**的是
+    #        `WriteProcessMemory(..., remote_rect, ..., byref(local_rect), ...)`。
+    _loop = re.search(r'for\s+i\s+in\s+range\(\s*count\s*\)\s*:', _F_LF)
+    _body = _F_LF[_loop.start():] if _loop else ''
+    _reinject = re.search(r'WriteProcessMemory\(\s*\n?[^\n]*remote_rect[^\n]*\n?[^\n]*local_rect',
+                          _body)
+    check('F4 ★★ 循环体内每次把预置值重投给 `remote_rect`（`WriteProcessMemory(…remote_rect…local_rect…)`）',
+          bool(_loop and _reinject),
+          '循环内命中=%s' % bool(_reinject))
+    # ---- F4b ★★ 投给 `remote_rect` 的动作必须在 `SendMessageW` **之前**
+    _send_in_body = re.search(r'SendMessageW', _body)
+    check('F4b ★★ 重投发生在该次 `SendMessageW` 之前（顺序即正确性）',
+          bool(_reinject and _send_in_body
+               and _reinject.start() < _send_in_body.start()),
+          '重投@%s Send@%s'
+          % (_reinject.start() if _reinject else None,
+             _send_in_body.start() if _send_in_body else None))
+    # ---- F5 ★★ 缓冲区释放成对（`remote_seed` 也要 `VirtualFreeEx`，否则句柄泄漏）
+    check('F5 ★★ `remote_seed` 缓冲区也走 `VirtualFreeEx`（不泄漏）',
+          ('remote_seed' in _F_LF
+           and re.search(r'VirtualFreeEx\([^)]*remote_seed', _F_LF) is not None))
+    # ---- F6 ★★ 负控制（生成式变异）：把 `seed.left = LVIR_BOUNDS` 改成 `0`
+    #      ⇒ 常量判据必须翻面（证明 F2 真有鉴别力，不是恒真）
+    _mut = _F_LF.replace('seed.left = LVIR_BOUNDS', 'seed.left = 0', 1)
+    check('F6 负控制：把 `seed.left = LVIR_BOUNDS` 改成 `0` ⇒ 预写判据必须翻面',
+          re.search(r'\.left\s*=\s*LVIR_BOUNDS', _mut) is None,
+          '变异体长度 %d（原文 %d）' % (len(_mut), len(_F_LF)))
+    # ---- F7 ★★★ 负控制（语义级）：把方法段里**全部** `LVIR_BOUNDS` 抹掉
+    #      ⇒ "预写 LVIR_BOUNDS"这条路彻底消失（原文必须含、抹后必须不含）。
+    #      ★ 判据修正（首版只删 1 处 ⇒ 常量定义仍在 ⇒ 抠后仍含 ⇒ 假红）。
+    _stripped = _F_LF.replace('LVIR_BOUNDS', 'X_LVIR_REMOVED')
+    check('F7 ★★★ 抹掉全部 `LVIR_BOUNDS` 后源码确实不再含它（证明 F2/F3 指向的就是这条路径）',
+          ('LVIR_BOUNDS' not in _stripped) and ('LVIR_BOUNDS' in _F_LF),
+          '原含=%s 抹后含=%s' % ('LVIR_BOUNDS' in _F_LF, 'LVIR_BOUNDS' in _stripped))
 
 P('')
 P('=' * 78)

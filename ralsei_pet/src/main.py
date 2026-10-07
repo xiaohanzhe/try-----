@@ -13407,8 +13407,29 @@ class RalseiPet(QMainWindow):
                 base_animation = "run"
             else:
                 base_animation = "walk"
+
+            # ★★★ 第95轮修复：状态计时器与 `is_sleeping_walk` 必须**先算再读**。
+            #   原顺序是「读 `is_sleeping_walk` 拼名字（下方 13415 一带）→ 再更新
+            #   `idle_walk_timer` / 置位 `is_sleeping_walk`」，于是本帧拼名字时用的是
+            #   **上一帧**的状态。后果（真机 recon 实证）：方向刚由 `down` 变成
+            #   `left/right/up` 的那一拍，读到的仍是 True ⇒ 拼出
+            #   `walk_left_sleep` / `walk_right_sleep` / `walk_up_sleep` ——
+            #   而素材里**只有** `walk_down_sleep`（见 `animations.json`）⇒
+            #   `[anim-miss]` 静默回退成普通走路帧，观感是"梦游步态只在下走时成立，
+            #   一拐弯就闪回清醒步态"。
+            #   实测：全部 56 个 `{walk,run}×{down,up,left,right}×后缀` 组合里，
+            #   `_sleep` 只在 `walk_down` 存在（34 个组合不存在，含全部 `run_*`）。
+            self.idle_walk_timer += (current_time - self._last_animation_time)
+
+            # 小憩走路状态：连续"向下走"10 秒进入。
+            # 修复（本就有的那条）：原逻辑只置真不清假——一旦进入就永久播"梦游走路帧"。
+            # 只要不是"向下 walk"（方向变了/跑起来/动作被覆盖）就退出小憩。
+            if base_animation == "walk" and self.current_direction == "down" and self.idle_walk_timer >= 10.0:
+                self.is_sleeping_walk = True
+            elif self.is_sleeping_walk:
+                self.is_sleeping_walk = False
+                self.idle_walk_timer = 0
             
-            # 根据情绪和状态决定动画变化
             if self.is_wearing_suit:
                 # 穿西装时的动画
                 animation_suffix = f"_butler"
@@ -13425,33 +13446,22 @@ class RalseiPet(QMainWindow):
                 animation_suffix = "_unhappy"
             elif self.is_sleeping_walk and self.current_direction == "down":
                 # 走路时睡觉的动画
-                # ★★★ 第95轮：必须限定 `down` —— 素材里**只画了**
-                #   `spr_ralsei_walk_down_sleep_*`，`walk_left/right/up_sleep` 根本不存在
-                #   （`animations.json` 的 115 组里只有 `sleep` 与 `walk_down_sleep`）。
-                #   而 `is_sleeping_walk` 的置真/置假在本函数**下游**（下方"小憩走路状态"块），
-                #   晚于这里的后缀选择 ⇒ 方向刚由 down 变开的那一拍仍读到旧的 True，会拼出
-                #   `walk_right_sleep` 这类不存在的名字 ⇒ 静默回退 `walk_right` + 一条
-                #   `[anim-miss]` 告警（真机实证：第95轮 recon 20:50:06 / 20:51:47 各一次）。
-                #   行为由 `check95` B 段锁死。⚠️ 日后若补齐 left/right/up 的小憩走路素材，
-                #   应改为"按素材可用性判定"，而不是沿用本守卫。
+                # ★★★ 第95轮：除"先算再读"（见上方 13411 起的注释）外，这里还要**限定 `down`**：
+                #   素材里只画了 `spr_ralsei_walk_down_sleep_*`，`walk_left/right/up_sleep`
+                #   根本不存在（`animations.json` 的 115 组里只有 `sleep` 与 `walk_down_sleep`）。
+                #   两道防线缺一不可：
+                #     · 顺序修好 ⇒ 方向变开的那一拍不再读到陈旧的 True；
+                #     · 本守卫 ⇒ 即便 `is_sleeping_walk` 因别处（如构造期/恢复期）残留为 True，
+                #       也拼不出不存在的名字（静默回退 + `[anim-miss]` 告警都消除）。
+                #   行为由 `check95` B 段锁死（B3/B4 三方向 + B1 down 正控 + B6 生成式负控制）。
+                #   ⚠️ 日后若补齐 left/right/up 的小憩走路素材，应改为"按素材可用性判定"，
+                #      而不是沿用本守卫。
                 animation_suffix = "_sleep"
             else:
                 animation_suffix = ""
             
             # 构建完整动画名称
             new_animation = f"{base_animation}_{self.current_direction}{animation_suffix}"
-            
-            # 更新状态计时器
-            self.idle_walk_timer += (current_time - self._last_animation_time)
-            
-            # 小憩走路状态：连续"向下走"10 秒进入。
-            # 修复：原逻辑只置真不清假——一旦进入就永久播"梦游走路帧"。
-            # 只要不是"向下 walk"（方向变了/跑起来/动作被覆盖）就退出小憩。
-            if base_animation == "walk" and self.current_direction == "down" and self.idle_walk_timer >= 10.0:
-                self.is_sleeping_walk = True
-            elif self.is_sleeping_walk:
-                self.is_sleeping_walk = False
-                self.idle_walk_timer = 0
             
             # 检查是否触发惊讶事件
             # ===== 游戏阶段保护：跳过 is_surprised 等干扰状态，保持 walk =====
