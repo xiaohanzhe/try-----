@@ -8263,6 +8263,23 @@ class RalseiPet(QMainWindow):
         for floor in all_floors:
             if self._floor_identity_key(floor) in (cur_fid, tgt_fid):
                 continue
+            # ★★★ 第97轮修复（用户真机原话："那个坠落的触发逻辑不对吧"）：
+            # **桌面层不是"挡在路上的楼板"** —— 它是最底层的地板，宠物永远在它
+            # **上方**跳跃，不可能"穿过"它。而 `desktop_floor['rect']` 恒等于
+            # **整个虚拟屏幕**（`floor_manager.update_floors`，SM_*VIRTUALSCREEN），
+            # 于是只要它留在循环里，`intersects(current_rect)` 就**恒为真**
+            # （宠物矩形被 `_clamp_pos_to_desktop` 钉在屏幕内）。
+            #
+            # 旧写法只排除"起点/终点"两个 fid ⇒ **起点与终点都是窗口**时
+            # （站在窗口 A 上跳到更高的窗口 B —— 这正是 `get_jump_destinations`
+            # 给出的真实候选）桌面层留在名单里 ⇒ 起跳**第一帧**就被判"穿透"并
+            # `start_falling()` 强制摔下来。用户视角 = "跳一半自己掉下来"。
+            #
+            # 复现取证：`code-quality-audit/第97轮-基础宠物排查/_tools/probe97b_pierce.py`
+            # 回归锁：同目录 `check97.py` A 段。
+            # 不变量：桌面层永远不参与"穿透"判定（它只可能是**落点**，不是障碍）。
+            if floor.get('type') == 'desktop':
+                continue
             if floor['rect'].intersects(current_rect):
                 # 检测到穿透，取消跳跃，启动重力掉落
                 _log.debug("跳跃过程中检测到楼层穿透，取消跳跃并启动重力掉落")
@@ -9106,9 +9123,17 @@ class RalseiPet(QMainWindow):
                 self._fall_phase = "dazed"
                 self._fall_phase_start = self.fall_duration
                 self.is_splat = False
-                if "fall_back_rub" in self.sprite_loader.sprites:
-                    self.change_animation("fall_back_rub", force=True)
-                elif "fall_back" in self.sprite_loader.sprites:
+                # ★★★ 第97轮（用户口径："他站起来不需要揉眼睛"）：
+                # 晕乎阶段**不再播 `fall_back_rub`**。该素材的原始语义是
+                # 「**坐在地上啜泣**」（仓库根 `要求:80`：使用条件为"触发轻微悲伤
+                # 事件、角色处于坐在地上状态、非战斗"），拿来当"摔后恢复"会把
+                # 呻吟演成啜泣揉眼。
+                # 改用同样"躺在地上"的 `fall_back`（animations.json:545-547，
+                # 注释即"地上状态动画"，5 帧）。
+                # 两者都缺时**不切动画**（保持 landed 的 splat 躺姿），
+                # 绝不回落到揉眼素材。
+                # 回归锁：`code-quality-audit/第97轮-基础宠物排查/_tools/check97.py` B 段。
+                if "fall_back" in self.sprite_loader.sprites:
                     self.change_animation("fall_back", force=True)
                 dazed_msgs = ["呜...头好晕...", "诶...我在哪...", "浑身好痛..."]
                 self.dialogue_ui.add_dialogue("ralsei", random.choice(dazed_msgs), "sad")

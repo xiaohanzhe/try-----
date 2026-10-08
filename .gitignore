@@ -58,8 +58,13 @@ code-quality-audit/*/_evidence/_tmp*/
 # ② 体积：单文件 68.5 MB，纯二进制史；③ 可复算：`_tools/rec96.py` 可重跑再生。
 # ⇒ 入库的是「脚本 + 逐帧 CSV（rec96_frames.csv）+ 元信息 + 拼图 + 报告」，
 #    录屏本体留在本地 `_evidence/`（已在 .gitignore 里，工作区不受影响）。
-code-quality-audit/*/_evidence/*.avi
-code-quality-audit/*/_evidence/*.mp4
+# ★ 第97轮修正（2026-10-08）：原模式 `*_evidence/*.avi` **只匹配一层**，而本轮把
+#   run1 的自然录制放在 `_evidence/run1_natural/` 子目录 ⇒ 136 MB 的 avi **漏网**
+#   （`git status` 里显示为待提交）。⇒ 改用 `**` 递归匹配，并连带忽略逐帧抓屏 PNG
+#   （与 §90 的 `shots/` 同理：含整个桌面 + 体积 ~11 MB，且可由 rec97.py 复跑再生）。
+code-quality-audit/*/_evidence/**/*.avi
+code-quality-audit/*/_evidence/**/*.mp4
+code-quality-audit/*/_evidence/**/frames/
 
 # 编码校验工具自己的输出报告（每次运行的产物；且含乱码样本预览，入库会污染后续扫描）
 code-quality-audit/tools/_out_*

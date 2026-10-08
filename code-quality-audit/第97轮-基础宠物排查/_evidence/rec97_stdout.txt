@@ -1,0 +1,139 @@
+Building prefix dict from the default dictionary ...
+2026-10-08 19:40:28 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+Loading model from cache E:\RalseiMemory\cache\jieba.cache
+2026-10-08 19:40:28 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+Loading model cost 0.726 seconds.
+Prefix dict has been built successfully.
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-08 19:40:30 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-08 19:40:30 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-08 19:40:30 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-08 19:40:30 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-08 19:40:30 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 34 人）
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=0s 决心=0.000 档位=dim
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-08 19:40:30 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+[rec97] shown pid=14272 title='Ralsei Pet'
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 ch3.dark_world.dark_world
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC kris 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC susie 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC king 自己挪到了 uty.rooms.rm_intro
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 uty.rooms.rm_intro
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC mike 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC flowery 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC sign 自己挪到了 ch3.dark_world.dark_world
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC npc_room 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC police 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC catti 自己挪到了 uty.rooms.rm_intro
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 oneshot.barrens.Blue
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 ut.rooms.room_start
+2026-10-08 19:40:32 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 ch5.kris_room.kris_s_room
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(2439,1389)
+[rec97][INJECT] #1 start_falling(180,thrown) at (2185,1250)
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(2185,1250)
+[WARNING] Ignore caches that are heterogeneous
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(2175,1285)
+[rec97][INJECT] #2 start_fall('window_move') at (2003,1295)
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(1955,1299)
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(1894,1282)
+[rec97][INJECT] #3 start_falling(180,thrown) at (1651,1098)
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(1651,1098)
+2026-10-08 19:41:02 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 ut.rooms.room_start
+2026-10-08 19:41:02 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 uty.rooms.rm_intro
+2026-10-08 19:41:02 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 ch3.dark_world.dark_world
+2026-10-08 19:41:02 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:41:06 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 1/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(1968,1371)
+2026-10-08 19:41:09 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 2/4）: HTTPConnectionPool(host='127.0.0.1', port=64650): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+2026-10-08 19:41:12 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 3/4）: HTTPConnectionPool(host='127.0.0.1', port=64650): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(1420,1352)
+2026-10-08 19:41:15 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 4/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+[rec97][INJECT] #4 start_fall('window_move') at (1594,1133)
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(1572,1111)
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(1550,1083)
+[rec97][INJECT] #5 start_falling(180,thrown) at (2106,1232)
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(2106,1232)
+2026-10-08 19:41:32 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 uty.rooms.rm_intro
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(1681,1469)
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(1932,947)
+[rec97][INJECT] #6 start_fall('window_move') at (1674,835)
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(1625,812)
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(1597,801)
+[rec97][INJECT] #7 start_falling(180,thrown) at (1097,1034)
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(1097,1034)
+2026-10-08 19:42:02 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-08 19:42:02 [INFO] ralsei_pet.main — NPC sign 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:42:02 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ch3.dark_world.dark_world
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(1323,1250)
+2026-10-08 19:42:09 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 1/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+2026-10-08 19:42:12 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 2/4）: HTTPConnectionPool(host='127.0.0.1', port=64650): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(911,856)
+2026-10-08 19:42:15 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 3/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+[rec97][INJECT] #8 start_fall('window_move') at (1181,940)
+2026-10-08 19:42:18 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 4/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(1159,944)
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(1207,948)
+[rec97][INJECT] #9 start_falling(180,thrown) at (1443,806)
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(1443,806)
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC susie 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 uty.rooms.rm_intro
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC catti 自己挪到了 ch3.dark_world.dark_world
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-08 19:42:32 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ch4.kris_room.kris_s_room
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(1330,1380)
+2026-10-08 19:42:37 [INFO] ralsei_pet.LocalAI — 保温看门狗：连续 6 次探测不到 /api/ps ⇒ 停用（非 Ollama 后端或服务未启动，属正常退让）
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(1610,1344)
+[rec97][INJECT] #10 start_fall('window_move') at (1466,1341)
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(1420,1345)
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(1316,1333)
+[rec97][INJECT] #11 start_falling(180,thrown) at (830,818)
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(830,818)
+2026-10-08 19:43:02 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-08 19:43:02 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 ch3.dark_world.dark_world
+2026-10-08 19:43:02 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ch3.dark_world.dark_world
+2026-10-08 19:43:02 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-08 19:43:02 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-08 19:43:02 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 ch4.kris_room.kris_s_room
+[rec97][DRIVE] #2 左下(-141°附近) => target=(400,1317) from=(1106,1463)
+[rec97][DRIVE] #3 右上(+39°附近) => target=(2230,332) from=(689,1377)
+[rec97][INJECT] #12 start_fall('window_move') at (879,1247)
+[rec97][DRIVE] #0 左上(-135°附近) => target=(400,281) from=(857,1225)
+[rec97][DRIVE] #1 右下(+39°附近) => target=(2230,1265) from=(861,1194)
+[rec97] life=180s reached, quitting
+[rec97] exit rc=0 frames=356 keypng=121
+2026-10-08 19:43:33 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
