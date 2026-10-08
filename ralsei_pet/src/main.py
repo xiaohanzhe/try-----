@@ -6963,10 +6963,36 @@ class RalseiPet(QMainWindow):
                     except Exception as e:
                         _log.debug("main 防御性异常（已忽略）: %s", e)
                 elif (current_time - self._sleep_stir_time < 5.0
-                      and getattr(self, '_sleep_stir_count', 0) == 1):
-                    # 5秒内第二次被吵：才真正醒来
+                      and getattr(self, '_sleep_stir_count', 0) == 1
+                      and self.last_interaction_time > self._sleep_stir_time):
+                    # ★★★ 第99轮真机录像抓到的**真缺陷**（第52轮的"两拍"设计**从未生效**）：
+                    #   本条 elif 原来**只**判"5 秒内"与"已经迷糊过一次"，
+                    #   **没有判"又发生了一次互动"**；而它整个嵌在
+                    #   `if current_time - self.last_interaction_time < 1.0:` 里
+                    #   ⇒ **同一次**互动之后的整整 1 秒里，每个 tick 都满足外层条件
+                    #   ⇒ 第一拍（tick#1 置 `_sleep_stir_count = 1`）之后，
+                    #   **下一个 tick（≈50~100ms 后）立刻满足本 elif** ⇒ "两拍"塌成
+                    #   "一拍"：碰一下就直接惊醒，"第一次只翻身哼哼"这条设计没生效过。
+                    #   取证：真机录像 f35(t=11.02s, 仍 `sleep`) → f36(t=11.27s,
+                    #   已 `sleeping=False` 且 `spr=True`)，中间只隔 0.25s；
+                    #   决定性仿真 `probe99i.py`：tick#1 第一拍 / tick#2 第二拍。
+                    #   ⇒ 补上"**必须是一次新的互动**"：第一拍时 `last_interaction_time`
+                    #     必然 <= `_sleep_stir_time`（人是**先被点、后到 tick**），
+                    #     所以没有新互动时本支不成立 ⇒ 宠物继续睡（与下方
+                    #     "超过 5 秒没再互动就翻身继续睡"那条配对）。
                     self._sleep_stir_count = 2
+                    # ★★★ 第99轮：**惊醒**（用户口径「先从睡觉后惊醒做」）。
+                    #   原实现只 `wake_up()` —— 它播 `pose`（平静起身）并派 `wake_up`
+                    #   事件，观感是"被温柔叫醒"，没有"惊"。
+                    #   现在追加 `trigger_surprise()`：睁眼 + 惊吓脸（`surprised_down`，
+                    #   素材 `spr_ralsei_down_surprised2.png`）+ 向上跳一下
+                    #   （`jump_height=20`，由 `update_animation` 的 `is_surprised`
+                    #   分支落地，带还原点）；台词仍走 `wake_up` 事件（AI 接管，不写死）。
+                    #   ★ 顺序不能倒：`wake_up()` 先把 `is_sleeping` 置 False，
+                    #     `update_animation` 的 `is_surprised` 分支才有机会被执行
+                    #     （`is_sleeping` 分支在它**之前**就 `return` 了）。
                     self.wake_up()
+                    self.trigger_surprise()
             elif hasattr(self, '_sleep_stir_time') and current_time - self._sleep_stir_time > 5.0:
                 # 超过5秒没再被吵，翻个身继续睡
                 if hasattr(self, '_sleep_stir_time'):
@@ -9436,6 +9462,67 @@ class RalseiPet(QMainWindow):
         self.is_surprised = True
         self.surprised_timer = 0
         self.emotion_system.add_emotion("curious", 40)
+        # ★★★ 第99轮：**立刻**把"惊讶"落到画面 —— 只置标志是不够的。
+        #   理由与 `_use_force` 收纳 `idle`/`sleep` 同源（第98轮 A 段）：惊讶是**状态**，
+        #   必须马上反映到画面上。原实现只置 `is_surprised`，等 `update_animation`
+        #   的下一个 167ms tick 去算 —— 而 `pose → surprised_*` 属**跨组**切换
+        #   （`is_same_category=False`，且 `surprised_*` 不在 `_use_force` 集合里）
+        #   ⇒ 被 `change_animation` 的跨组冷却（0.8×2 = **1.6s**）拦下；
+        #   而惊讶总共只持续 **2.0s**（`surprised_timer >= 2.0` 就清除）
+        #   ⇒ 用户几乎看不到那张惊吓脸。所以本函数必须**自己**把画面切过去
+        #   （不能指望 `update_animation`：第54轮契约写明"表演/情绪动画不在静止分支自动驱动"）。
+        #   切法两条（见下方 `_target` 分支）：没有一次性动画在播 ⇒ 直接 `force=True` 切；
+        #   有 ⇒ 不打断（第8轮契约），只把一次性的"回归目标"改成惊吓脸。
+        #   ★ 方向照抄 `update_animation` 的同一分支：只有 down/up 有惊喜素材
+        #     （`surprised_down` / `surprised_behind`），left/right 维持原动画（不猜）。
+        _dir = getattr(self, 'current_direction', 'down')
+        _target = {'down': 'surprised_down', 'up': 'surprised_behind'}.get(_dir)
+        if _target and _target in self.sprite_loader.sprites:
+            # ★★★ 第99轮（第二处）：**不许硬拆第8轮"特殊动画播完为止"契约**。
+            #   真机链路（`check99` C 段实测）：睡着被点第一下时，第一拍调的是
+            #   `play_animation_once("look_up")` —— 它把 `_play_once_active` 置 True，
+            #   于是 `change_animation` 里那条"特殊 → 特殊不许打断"的守卫
+            #   （第8轮用户契约，见 `change_animation` 的"关键 1.6"）会把
+            #   `wake_up()` 里的 `pose` 与本函数的 `surprised_down` **一起**
+            #   `return False` ⇒ 标志置上了、画面却还是 `look_up`（用户的"惊"看不见）。
+            #   ⇒ 这里**不打断**，只把"一次性的回归目标"换成惊吓脸：复用
+            #     `play_animation_once` 已有的 `next_animation` 机制 —— 帧走完时它以
+            #     `change_animation(_restore, force=True)` 落地，而那一刻
+            #     `_play_once_active` 已被清 ⇒ 守卫不再拦。
+            #     `look_up` 只有几帧（<1s），而惊讶窗口有 2.0s ⇒ 脸一定来得及露。
+            #   没有一次性动画在播时（站着被吓、AI 触发等）直接切 —— 那才是原意。
+            if (getattr(self, '_play_once_active', False)
+                    and self._is_special_anim(self.current_animation)):
+                self.next_animation = _target
+            else:
+                try:
+                    self.change_animation(_target, force=True)
+                except Exception as e:
+                    _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def _restore_surprised_jump(self):
+        """★ 第99轮：还原"惊讶跳"临时改掉的跳跃参数，并复位一次性标志。
+
+        两个必须做的收尾（否则都是**静默的永久副作用**）：
+          ① **还原点**：`update_animation` 的 `is_surprised` 分支把
+             `jump_height` / `jump_duration` 写死成 `20` / `0.5` 且**永不还原**
+             ⇒ 只要惊讶过一次，之后**所有**跳跃都变成"矮而快"
+             （第96b轮已登记为"接线前置①：接线前必须先加还原点"）。
+          ② **复位 `surprised_jump`**：原实现是 `if not hasattr(self, 'surprised_jump')`
+             ⇒ 一旦设上就**永不删除**（`reset_special_states` 也没清它）
+             ⇒ **惊讶只会跳一次**，第二次只剩表情、不再跳。这是真缺陷。
+
+        ★ 幂等：没有还原点、也没设过标志时是 no-op（可安全重复调用）。
+        """
+        _saved = getattr(self, '_surprised_saved_jump', None)
+        if _saved is not None:
+            if _saved[0] is not None:
+                self.jump_height = _saved[0]
+            if _saved[1] is not None:
+                self.jump_duration = _saved[1]
+            del self._surprised_saved_jump
+        if hasattr(self, 'surprised_jump'):
+            del self.surprised_jump
         
     def trigger_shy(self):
         # 触发害羞状态
@@ -9473,6 +9560,9 @@ class RalseiPet(QMainWindow):
         self.is_rolling = False
         self.is_sliding = False
         self.idle_walk_timer = 0
+        # ★ 第99轮：惊讶的附产物一并复位（它上面已清 `is_surprised`，
+        #   但临时改过的跳跃参数与一次性标志如果不还原，会**跨过这次 reset 留下来**）。
+        self._restore_surprised_jump()
         
         # 开始移动
         self.randomize_movement_pattern()
@@ -13789,6 +13879,15 @@ class RalseiPet(QMainWindow):
                     # 添加向上跳一小下的效果
                     if not hasattr(self, 'surprised_jump'):
                         self.surprised_jump = True
+                        # ★★ 第99轮：**还原点**（第96b轮"接线前置①"的落地）。
+                        #   下面两行把全局跳跃参数写死成 20 / 0.5，原实现在惊讶结束后
+                        #   **不还原** ⇒ 一次惊讶永久污染之后所有跳跃（变"矮而快"）。
+                        #   这里先存原值，由 `_restore_surprised_jump()` 在
+                        #   惊讶清除时（以及 `reset_special_states` 里）还原。
+                        if not hasattr(self, '_surprised_saved_jump'):
+                            self._surprised_saved_jump = (
+                                getattr(self, 'jump_height', None),
+                                getattr(self, 'jump_duration', None))
                         # 添加向上跳的物理效果
                         self.jump_count += 1
                         self.last_jump_time = current_time
@@ -14297,6 +14396,10 @@ class RalseiPet(QMainWindow):
                 self.is_surprised = False
                 self.surprised_timer = 0
                 self.surprised_start_time = None
+                # ★★ 第99轮：收尾两件事（还原跳跃参数 + 复位一次性标志）。
+                #   没有它 ⇒ 惊讶把 `jump_height`/`jump_duration` 永久改成 20/0.5，
+                #   且 `surprised_jump` 永不删除 ⇒ 第二次惊讶不会再跳。
+                self._restore_surprised_jump()
         
         if self.is_happy:
             self.happy_timer += (current_time - self._last_animation_time)

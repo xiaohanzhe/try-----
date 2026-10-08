@@ -153,6 +153,13 @@ HERMETIC_IDS = frozenset({
     #   换了一批 NPC）。这正是本名单要消灭的"基线不封闭"。
     #   ★ 注意 `check88` **不需要**：它零依赖、不起真机（无 `RalseiPet()`）。
     'check89',
+    # ★★ 第99轮：`check99.py` **真机 `RalseiPet()` ×3**（"惊讶三部曲"与"睡眠两拍"
+    #   都在**真 App** 上驱动）⇒ 与 `check89` 同款风险：构造期就把真实保管库定下来
+    #   ⇒ ① 基线不封闭（`E:\RalseiMemory\npc_life.json` 随 NPC 自主移动漂移、
+    #   E 盘掉线即假 DIFF）；② 每跑一次就往用户**真实**保管库写。
+    #   ★ 对照：`check97` / `check98` **不需要** —— 实测两者 `RalseiPet()` 出现 **0** 次
+    #     （全用桩对象），所以它们留在名单外是对的。
+    'check99',
 })
 
 
@@ -2371,6 +2378,51 @@ SUITES = [
                 'D 判据自身体检（D1 恒真防护 · D2 AST 数真实 print 调用 · D3 被测文件在盘 · '
                 'D4 剥注释链自证（**合成样本**，不依赖产品注释存续） · D5 成功标记字面量'
                 '只能是打印模板，防 G2 计数自匹配）',
+    },
+    {
+        'id': 'check99',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第99轮-睡觉惊醒与场景系统', '_tools', 'check99.py'),
+        'offscreen': True,
+        'desc': '第九十九轮：**睡觉后惊醒**不许静默回退（用户口径「先从睡觉后惊醒做」，'
+                '登记项原话是「睡着点醒播**惊吓动画**」）—— '
+                '起因是第96b轮登记的"接线前置"：`trigger_surprise()` 当时**零调用**，'
+                '而 `is_surprised` 分支把 `jump_height`/`jump_duration` 写死成 20/0.5 且'
+                '**永不还原**（先接线就会永久污染之后所有跳跃）＋一次性标志 `surprised_jump` '
+                '**永不删除**（惊讶只会跳一次）。本轮落 5 件事：'
+                '① 睡眠**第二拍**在 `wake_up()` 之后追加 `trigger_surprise()`（顺序不可倒 —— '
+                '`is_sleeping` 分支在 `update_animation` 的 if/elif 链里排在 `is_surprised` '
+                '**之前**，第91轮同一坑）；② `trigger_surprise()` **自己**把惊吓落到画面'
+                '（只置标志不够：跨组冷却 1.6s 而惊讶只 2.0s，且第54轮契约写明'
+                '"表演/情绪动画不由静止分支自动驱动"）；'
+                '③ ★★★ **不硬拆第8轮"特殊动画播完为止"契约** —— 第一拍 '
+                '`play_animation_once("look_up")` 把 `_play_once_active` 置 True，'
+                '那条"特殊→特殊不许打断"的守卫会把 `surprised_down` 一并拦下'
+                '（真机实测：两拍都做完了画面仍停在 `look_up`）⇒ 改为把一次性的'
+                '**回归目标** `next_animation` 换成惊吓脸，等它播完自然落地'
+                '（`look_up` 只有 4 帧）；④ 还原点 `_surprised_saved_jump`（存→还原）；'
+                '⑤ `_restore_surprised_jump()` 在"惊讶清除处"与 `reset_special_states` '
+                '两处都调用。'
+                '★ 判据（A 源码级 AST：A1 显式切 + A1b 排队 + A2 先存后写 + A3 三件事 + '
+                'A4/A5 两处调用 + A6/A6b **内层 If** 的语句序列与顺序 + A7a/b/c '
+                '恢复式变异负控制（抠掉 / 对调）；'
+                'B 行为级真机驱动（B0c **夹具基线必须可与写死值区分** + B1 立刻落画面 + '
+                'B2 存还原点 + B3 还原+删标志 + B4 第二次仍会跳 + B5 负控制）；'
+                'C 行为级睡着→点两下（C3a 醒了且受惊 + **C3b 惊吓脸真会播到**（驱动真实'
+                '一次性动画完成分支）+ C4/C5 两条负控制）；D 判据自身体检）。'
+                '★★★ **已知未实现项（A8/A9 两条绊线锁着，别读成"已实现"）**：'
+                '`is_surprised` 的"跳一下"块**嵌在 `elif self.is_moving:` 的子树里** '
+                '⇒ 站着/睡着的宠物被吓到**只会变脸、不会跳**；且该块**从不置 `is_jumping`** '
+                '⇒ 即便可达也只是记账（`jump_count += 1`），`handle_jump` 的抛物线不会跑'
+                '（`jump_height` 第96b轮已证是死变量）。'
+                '★★ 本轮判据自身栽了两次（都是 `ast.walk` 的锅）：'
+                '① `_restore_surprised_jump` 走 `ast.unparse` ⇒ 断言串不能带空格'
+                '（实际是 `del self.surprised_jump`，不是 `delattr(self, \'...\')`）；'
+                '② `ast.walk` 是 **BFS** ⇒ "第一个含该赋值的 If"是**最外层** '
+                '`if self.is_sleeping:`（body 里只有 `return`）⇒ 假红 `after=return`；'
+                '定位 `is_surprised` 的 If 时又先命中函数**顶层**的清除块而不是嵌在 '
+                '`is_moving` 里的写参块 ⇒ 必须在 `_moving_if` **子树内**找、并用 '
+                '`"surprised_down" in unparse(node)` 认准写参块。',
     },
 ]
 # ---------------------------------------------------------------- 归一化

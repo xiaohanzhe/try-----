@@ -1,0 +1,77 @@
+Building prefix dict from the default dictionary ...
+[rec99] 上一轮关键帧已整目录归档到 frames_prev_20261009_001734
+2026-10-09 00:17:43 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+Loading model from cache E:\RalseiMemory\cache\jieba.cache
+2026-10-09 00:17:43 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+Loading model cost 1.188 seconds.
+Prefix dict has been built successfully.
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-09 00:17:46 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-09 00:17:46 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-09 00:17:46 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-09 00:17:46 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-09 00:17:46 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 8 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 33 人）
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=0s 决心=0.000 档位=dim
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+[rec99] shown pid=27604 title='Ralsei Pet'
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC susie 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 uty.rooms.rm_intro
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC king 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 uty.rooms.rm_intro
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 uty.rooms.rm_intro
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC mike 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC flowery 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 uty.rooms.rm_intro
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC sign 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC npc_room 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC police 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 uty.rooms.rm_intro
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-09 00:17:46 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 ch5.kris_room.kris_s_room
+[rec99][INJECT] enter_sleep_mode()
+2026-10-09 00:17:53 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+2026-10-09 00:17:55 [WARNING] ralsei_pet.LocalAI — 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+[rec99][INJECT] poke#1 (last_interaction_time=now)
+[rec99][INJECT] poke#2 (last_interaction_time=now)
+[rec99][INJECT] settle
+2026-10-09 00:18:16 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-09 00:18:16 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-09 00:18:16 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch3.dark_world.dark_world
+2026-10-09 00:18:16 [INFO] ralsei_pet.main — NPC catti 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-09 00:18:16 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 ut.rooms.room_start
+2026-10-09 00:18:18 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 1/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+2026-10-09 00:18:22 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 2/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+2026-10-09 00:18:25 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 3/4）: HTTPConnectionPool(host='127.0.0.1', port=64650): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+[rec99] life=40s reached, quitting
+[rec99] exit rc=0 frames=144 keypng=11
+2026-10-09 00:18:27 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）

@@ -1,0 +1,9 @@
+=== rec99 变化帧时间线（列：frame/t/anim/dir/sleeping/spr/stir/p1o/pos/size）===
+f=0     t=1.824    anim=walk_down          dir=down   sleeping=False  spr=False  stir=      p1o=False  pos=(2439,1389) 42x82
+f=8     t=4.014    anim=idle               dir=down   sleeping=False  spr=False  stir=      p1o=False  pos=(2446,1472) 42x82
+f=12    t=5.019    anim=sleep              dir=down   sleeping=True   spr=False  stir=      p1o=False  pos=(2398,1466) 138x94
+f=36    t=11.262   anim=look_up            dir=down   sleeping=True   spr=False  stir=1     p1o=True   pos=(2447,1473) 40x80
+f=39    t=12.116   anim=sleep              dir=down   sleeping=True   spr=False  stir=1     p1o=False  pos=(2447,1473) 40x80
+f=43    t=13.263   anim=surprised_down     dir=down   sleeping=False  spr=True   stir=      p1o=False  pos=(2446,1472) 42x82
+f=49    t=14.763   anim=idle               dir=down   sleeping=False  spr=True   stir=      p1o=False  pos=(2398,1466) 138x94
+f=50    t=15.119   anim=idle               dir=down   sleeping=False  spr=False  stir=      p1o=False  pos=(2398,1466) 138x94

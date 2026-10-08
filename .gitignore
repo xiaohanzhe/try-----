@@ -65,6 +65,10 @@ code-quality-audit/*/_evidence/_tmp*/
 code-quality-audit/*/_evidence/**/*.avi
 code-quality-audit/*/_evidence/**/*.mp4
 code-quality-audit/*/_evidence/**/frames/
+# 第99轮加（2026-10-09）：录制端会把上一轮的 `frames/` 改名成 `frames_prev_<ts>/` 归档，
+#   而 `**/frames/` 是**精确目录名**匹配 ⇒ `frames_prev_*` 逃逸、12 张抓屏帧漏网待提交。
+#   理由同 §90/§96/§97/§98：抓屏帧含整个桌面（用户隐私）、纯二进制史、且可由 rec99.py 复跑再生。
+code-quality-audit/*/_evidence/**/frames_*/
 
 # 第98轮加（2026-10-08）：`_evidence/` **根目录**下的拼图 PNG（`shot98_*.png` 之类）。
 # 为什么补这一条：上面三条 `**` 只覆盖子目录，而抽帧拼图是直接落在 `_evidence/` 根下的
