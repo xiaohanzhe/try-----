@@ -1,0 +1,67 @@
+t=1.974 call='walk_down' force=True gfall=False ok=True cur='walk_down' | main.py:13760
+t=2.987 call='idle' force=None gfall=False ok=False cur='walk_down' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=3.402 call='idle' force=True gfall=False ok=True cur='idle' | main.py:397 < main.py:7309
+t=6.134 call='walk_down' force=True gfall=False ok=True cur='walk_down' | main.py:13760
+t=6.138 call='act' force=True gfall=False ok=True cur='act' | main.py:14134
+t=8.833 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=12.122 call='curtsy' force=True gfall=False ok=True cur='curtsy' | main.py:14134
+t=12.653 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=12.685 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:397 < main.py:7278
+t=13.859 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=13.896 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=13.922 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=17.980 call='idle' force=None gfall=False ok=False cur='walk_up' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=20.980 call='idle' force=None gfall=False ok=False cur='walk_up' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=24.122 call='bow' force=True gfall=False ok=True cur='bow' | main.py:14134
+t=24.299 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=24.307 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=24.331 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=24.496 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:397 < main.py:7278
+t=26.866 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=26.987 call='idle' force=None gfall=False ok=False cur='walk_up' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=27.243 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=27.304 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:397 < main.py:7278
+t=29.981 call='idle' force=None gfall=False ok=False cur='walk_right' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=33.033 call='idle' force=True gfall=False ok=True cur='idle' | pet_ai.py:251 < pet_ai.py:363 < pet_ai.py:597 < pet_ai.py:714
+t=33.204 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:13760
+t=36.114 call='bow' force=True gfall=False ok=True cur='bow' | main.py:14134
+t=36.299 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=36.317 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=36.408 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=36.502 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:397 < main.py:7278
+t=36.533 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=46.946 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=46.988 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=47.023 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=48.129 call='act' force=True gfall=False ok=True cur='act' | main.py:14134
+t=50.830 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=50.835 call='walk_up' force=True gfall=False ok=True cur='walk_up' | main.py:397 < main.py:7278
+t=50.866 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=60.208 call='curtsy' force=True gfall=False ok=True cur='curtsy' | main.py:14134
+t=60.867 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=60.880 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:397 < main.py:7278
+t=62.952 call='idle' force=True gfall=False ok=True cur='idle' | main.py:397 < main.py:7309
+t=65.451 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:13760
+t=65.982 call='idle' force=None gfall=False ok=False cur='walk_right' | pet_ai.py:251 < pet_ai.py:363 < pet_ai.py:599 < pet_ai.py:720
+t=65.983 call='idle' force=None gfall=False ok=False cur='walk_right' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=67.223 call='idle' force=True gfall=False ok=True cur='idle' | main.py:397 < main.py:7309
+t=71.131 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:13760
+t=71.982 call='idle' force=None gfall=False ok=False cur='walk_right' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=72.114 call='bow' force=True gfall=False ok=True cur='bow' | main.py:14134
+t=72.301 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=72.487 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:13760
+t=73.316 call='idle' force=True gfall=False ok=True cur='idle' | main.py:397 < main.py:7309
+t=80.853 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=80.996 call='idle' force=None gfall=False ok=False cur='walk_left' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=83.997 call='idle' force=None gfall=False ok=False cur='walk_left' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=84.215 call='bow' force=True gfall=False ok=True cur='bow' | main.py:14134
+t=84.393 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=84.412 call='walk_right' force=True gfall=False ok=True cur='walk_right' | main.py:397 < main.py:7278
+t=86.003 call='idle' force=True gfall=False ok=True cur='idle' | main.py:397 < main.py:7309
+t=86.004 call='look_up' force=True gfall=False ok=True cur='look_up' | main.py:397 < main.py:7311 < main.py:5993 < main.py:14134
+t=86.926 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=91.994 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:397 < main.py:7278
+t=92.997 call='idle' force=None gfall=False ok=False cur='walk_left' | pet_ai.py:251 < pet_ai.py:367 < pet_ai.py:534 < pet_ai.py:584
+t=96.127 call='act' force=True gfall=False ok=True cur='act' | main.py:14134
+t=98.844 call='idle' force=True gfall=False ok=True cur='idle' | main.py:13951
+t=99.212 call='walk_left' force=True gfall=False ok=True cur='walk_left' | main.py:13760

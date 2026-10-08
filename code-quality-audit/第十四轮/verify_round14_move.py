@@ -485,9 +485,17 @@ ok('G3b 跳跃落地时同步 current_window（派生缓存统一入口）',
    has(_hj, 'self._sync_window_cache_from_floor(landed_floor)'), None)
 
 # G4：重力落地不再手写裸 dict 构造 current_window（双真源已消除）
+# ★ 第98轮：落地分支的同步对象由 `drop_floor` 改为 `_settle`（偏俯视落点平面）。
+#   起因：本轮把"掉多远"与"落在哪块楼板"要求**同源** —— 第一帧把落点平面缓存成
+#   `_fall_land_floor`，落地时优先用它（`_settle` = `_fall_land_floor` → `landed_floor`
+#   → `desktop_floor` 三级）。若继续用"落地当帧重算"的 `drop_floor`，会出现
+#   "掉了 300px 却按一层楼的落差判不扁"这种语义撕裂。
+#   ⇒ 判据要守的语义**没变**（"同步只能走统一入口，不许手写裸 dict"），只是入参换了名字；
+#     故同步更新，并**加强**一条：同帧内必须真的做过 `_fall_land_floor` 兜底取值。
 _hgf = func_src('handle_gravity_fall')
 ok('G4 重力落地走统一同步器（不再手写裸 dict 构造 current_window）',
-   has(_hgf, 'self._sync_window_cache_from_floor(drop_floor)')
+   has(_hgf, 'self._sync_window_cache_from_floor(_settle)')
+   and has(_hgf, "getattr(self, '_fall_land_floor', None)")
    and "'hwnd': window['hwnd']," not in flat(_hgf), None)
 ok('G4b 落到**窗口楼层**的低速落地有落地动作（land 播一次），不是直接 idle',
    has(_hgf, 'self.play_animation_once("land", restore_to="idle")'), None)

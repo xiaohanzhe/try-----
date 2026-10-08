@@ -66,6 +66,14 @@ code-quality-audit/*/_evidence/**/*.avi
 code-quality-audit/*/_evidence/**/*.mp4
 code-quality-audit/*/_evidence/**/frames/
 
+# 第98轮加（2026-10-08）：`_evidence/` **根目录**下的拼图 PNG（`shot98_*.png` 之类）。
+# 为什么补这一条：上面三条 `**` 只覆盖子目录，而抽帧拼图是直接落在 `_evidence/` 根下的
+#   ⇒ 本轮 4 张 = 11.5 MB **漏网待提交**。理由同 §90 / §96：
+#   ① 本仓库是公开仓库，拼图虽裁到宠物附近，本质仍是**整个桌面的截图**（含图标、
+#      文件名、壁纸 —— 用户隐私）；② 单张全屏拼图 4.6~6.5 MB，纯二进制史；
+#   ③ 可由 `_tools/shot98.py` + 同目录录像复跑再生。
+code-quality-audit/*/_evidence/*.png
+
 # 编码校验工具自己的输出报告（每次运行的产物；且含乱码样本预览，入库会污染后续扫描）
 code-quality-audit/tools/_out_*
 

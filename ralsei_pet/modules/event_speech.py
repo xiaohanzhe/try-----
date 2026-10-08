@@ -106,6 +106,17 @@ EVENT_TIERS = {
     "sleep_stir": TIER_AI,      # 睡着时被碰了一下（还没醒，只是哼哼）
     "wake_up": TIER_AI,         # 被叫醒 / 早上自动醒
     # —— 有意保持罐头（TIER_INSTANT）：物理状态机 / 极短拟声 / 连点机关 ——
+    # ★ 第98轮补登记：`fall` —— 坠落 / 摔扁 / 摔醒 / 复原这一族台词（main.py 共 **9 处**）
+    #   原来在 `main.py` 里直写 `add_dialogue`，第97轮已把它们**收敛进 `speak_event`
+    #   唯一入口**（`start_fall` 4 处 / `trigger_splat` 1 处 / `handle_fall` 4 处，
+    #   全部 `instant=True`，并**逐字保留**原罐头台词当 pool）。
+    #   ⇒ 行为与改造前**完全一致**（INSTANT 档 = 直接说 pool，不经过 AI）。
+    #   补登记是为了满足「迁移点的事件名必须登记」这道闸（`verify_s7_event_speech` C2）：
+    #   事件名没登记时 `tier_of()` 会回落 INSTANT，看似无害 —— 但那样一来
+    #   **哪天有人把 `instant=True` 去掉，就会静默变成"问一次 AI"**，而闸门不会报红。
+    #   ⚠️ 它是**物理状态机输出、要求 0 延迟**（见本模块开头"短促反应保留罐头"），
+    #   故**不**改 AI 档 —— 这正是 C8 那条判据要锁的口径。
+    "fall": TIER_INSTANT,       # 坠落中 / 摔扁 / 摔醒 / 复原
     "fling": TIER_INSTANT,      # 被甩飞时的「哇啊——！」
     "splat_poked": TIER_INSTANT,  # 摔扁形态下被戳
     "ear_ruffle": TIER_INSTANT,   # 连点 3 下耳朵的机关台词
@@ -154,6 +165,11 @@ EVENT_DIRECTIVES = {
     "sleep_enter": "（你困了，正要睡过去。说一句睡前的迷糊话。）",
     "sleep_stir": "（你正睡着，主人碰了你一下把你吵到了。半梦半醒地哼一句。）",
     "wake_up": "（主人把你叫醒了；或者早上到了，你刚醒过来。）",
+    # 第98轮补（同上）：`fall` 当前是 INSTANT 档、`build_prompt` 用不到它，
+    # 但 `EVENT_TIERS` 的**每个键都必须有旁白**（`verify_s7_event_speech` 的
+    # `_undirected` 判据），故一并登记 —— 将来若把它改成 AI 档，直接就有旁白可用，
+    # 不会退化成"（主人和你互动了一下。）"这种通用兜底。
+    "fall": "（你从高处摔了下来，或者刚摔醒、正缓过神来。）",
     "fling": "（主人把你甩了出去。）",
     "splat_poked": "（你已经摔扁了，主人又戳了你一下。）",
     "ear_ruffle": "（主人连着弹了三次你的耳朵。）",

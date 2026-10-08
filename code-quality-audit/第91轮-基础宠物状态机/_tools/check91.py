@@ -36,6 +36,10 @@ u"""第91轮回归锁：**基础宠物**状态机的三条缺陷。
   D ★★★ 就寝跨天闸（**行为级**：真调 `RalseiPet._bedtime_tick`（轻量桩），
          同日 22:58 不许醒 / 次日 07:00 必须醒 / 次日 00:30 与 06:59 不许醒 /
          小憩睡不参与自动醒）
+  F ★★ 就寝窗口三态（**行为级**：注入时刻喂 `_bedtime_tick` ——
+         未到点不睡 / 窗口内真去睡 / ★窗口已过不补睡但标记当晚 /
+         窗口内「有事」不标记（负控制）/ 窗口末点那秒仍算窗口内（鉴别力自证）。
+         **第98轮补**：承担 `run_all.py` 里 `_SLEEP_WINDOW_NOISE` 归一化所抹掉的语义）
   E 判据自身体检（**恒真防护**：`_bedtime_tick` 吞异常返 False ⇒ 必须证明桩真能走到唤醒分支）
 
 ★ 判据纪律：`print('[PASS] %s')` 字面量；判据名不自带标记；正/负控制成对；
@@ -412,12 +416,83 @@ check('D7 负控制：`_bedtime_sleep_date` 缺失时**不**盲目唤醒（宁�
       _w_nodate is False, 'wake=%s' % _w_nodate)
 
 
+# ============================================================ F. 就寝窗口三态（行为级）
+# ★★ 第98轮补：`check89` 原先**依赖墙钟**（它真机跑 `RalseiPet()`，"就寝到点"那一步
+#    走哪条分支由运行时刻决定）⇒ 逐字节基线恒假红。现已由 `run_all.py` 的
+#    `_SLEEP_WINDOW_NOISE` 归一化剔除**整个就寝日志族** ⇒ 那条 stdout 上再也看不见
+#    就寝决策了。本段就是这个代价的承担者：用**注入时刻**把 ② 分支的三态全钉死
+#    （不碰墙钟、不碰网络）。
+mark('F 就寝窗口三态：未到点 / 窗口内 / 窗口已过')
+
+_D3 = _dt.date(2026, 10, 7)
+
+
+def make_window_stub():
+    """就寝 ② 分支的桩 —— 与 D 段的 `tick()` **刻意相反**。
+
+    D 段把 `_bedtime_fired_date` 置成当天好**关掉** ②（只为测 ① 醒来）；
+    这里必须让它保持 `None`，否则 ② 一开始就被"今晚已处理"挡在门外。
+
+    ⚠️ `bedtime_sleep=False` / `sleeping=False`：避免 ① 的唤醒分支抢在前面
+    （那会 `return False`，把 ② 的结论整个掩盖掉）。
+    """
+    o = make_bed_stub(None, bedtime_sleep=False, sleeping=False)
+    o._bedtime_fired_date = None
+    return o
+
+
+def window_tick(o, when_dt):
+    o._last_bedtime_check = 0.0        # 关掉节流（否则第二次调用直接 return False）
+    return RalseiPet._bedtime_tick(o, when_dt.timestamp())
+
+
+_o = make_window_stub()
+_TGT = _o._bedtime_target_time(_D3)    # ★ 用**产品真方法**（日期做种 ⇒ 同一天恒定，不是随机）
+_END = _TGT + _dt.timedelta(minutes=int(_o.BEDTIME_JITTER_MINUTES))
+_TODAY = _D3.strftime('%Y-%m-%d')
+print('    就寝窗口（日期做种 ⇒ 确定值）：%s ~ %s'
+      % (_TGT.strftime('%H:%M'), _END.strftime('%H:%M')))
+
+_ret_before = window_tick(_o, _TGT - _dt.timedelta(minutes=1))
+check('F1 未到点（目标前 1 分钟）⇒ 不睡，且**不**标记"今晚已处理"（好再试）',
+      _ret_before is False and _o._bedtime_fired_date is None,
+      'ret=%s fired=%s' % (_ret_before, _o._bedtime_fired_date))
+
+_o = make_window_stub()
+_ret_in = window_tick(_o, _TGT + _dt.timedelta(minutes=1))
+check('F2 窗口内（目标后 1 分钟）⇒ 真去睡（`go_to_bed` 真被调）且标记当晚',
+      _ret_in is True and _o._bedtime_fired_date == _TODAY and _o.woke == ['bed'],
+      'ret=%s fired=%s woke=%s' % (_ret_in, _o._bedtime_fired_date, _o.woke))
+
+_o = make_window_stub()
+_ret_over = window_tick(_o, _END + _dt.timedelta(minutes=1))
+check('F3 ★★ 窗口已过（窗口末 + 1 分钟）⇒ **不补睡**，但仍标记当晚'
+      ' —— 这正是 `check89` 归一化（`_SLEEP_WINDOW_NOISE`）抹掉的那条语义，由本判据独立承担',
+      _ret_over is False and _o._bedtime_fired_date == _TODAY and _o.woke == [],
+      'ret=%s fired=%s woke=%s' % (_ret_over, _o._bedtime_fired_date, _o.woke))
+
+_o = make_window_stub()
+_o._bedtime_busy = lambda: True
+_ret_busy = window_tick(_o, _TGT + _dt.timedelta(minutes=1))
+check('F4 负控制：窗口内「有事」⇒ False **但 fired 仍为 None**'
+      '（证明 F3 的标记不是"凡 False 都置" ⇒ F1/F3 有鉴别力）',
+      _ret_busy is False and _o._bedtime_fired_date is None and _o.woke == [],
+      'ret=%s fired=%s woke=%s' % (_ret_busy, _o._bedtime_fired_date, _o.woke))
+
+_o = make_window_stub()
+_ret_edge = window_tick(_o, _END)      # 恰好窗口末（`dt_now == window_end`）
+check('F5 鉴别力自证：窗口**末点那一秒**仍算窗口内（实现用 `>` 不是 `>=`）⇒ 真去睡'
+      '（若把 F3 的边界改成 `>=`，这一条必须翻面报红）',
+      _ret_edge is True and _o.woke == ['bed'],
+      'ret=%s fired=%s woke=%s' % (_ret_edge, _o._bedtime_fired_date, _o.woke))
+
+
 # ============================================================ E. 判据自身体检
 mark('E 判据自身体检')
 
 check('E1 被测文件在盘（main.py / sprite_loader.py / animations.json）',
       all(os.path.isfile(p) for p in (MAIN, LOADER, ANIM_JSON)))
-check('E2 判据点全部执行到位（标记打印点 == 5）', _marks == 5, 'marks=%d' % _marks)
+check('E2 判据点全部执行到位（标记打印点 == 6）', _marks == 6, 'marks=%d' % _marks)
 
 # E3 ★★ 恒真防护：`_bedtime_tick` 把异常全吞掉后 `return False`
 #    ⇒ 如果桩是坏的，D1/D4/D5/D6/D7 会因为"永远返回 False"而**全部假绿**。

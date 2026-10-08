@@ -36,7 +36,7 @@ from PyQt5.QtWidgets import QApplication  # noqa: E402
 
 _app = QApplication.instance() or QApplication([])
 
-from main import RalseiPet  # noqa: E402
+from main import RalseiPet, FALL_PROJ_MAX_PX  # noqa: E402
 
 RESULTS = []
 
@@ -332,8 +332,22 @@ def t7_covered_by_other_window_no_fall():
           "calls=%s now=%s" % (calls, pet.current_floor.get('window_hwnd')))
 
 
+def _w81_ok(y0, y, floor_y):
+    """W8.1 的判据本体。抽成函数是为了让**负控制**能把"旧口径的终值"直接喂进来。
+
+    第98轮口径（用户原话：「他下坠也不是直接下坠到屏幕底下啊……是那种偏俯视2D游戏似的
+    效果，不是侧视2D」→ 澄清「**是偏俯视不是俯视**」）：高度落差**部分**投影到屏幕竖直
+    方向 —— 必须有可见下坠（y > y0），但落点是"脚下那块平面"、**不许**沉到屏幕底
+    （y < floor_y），且落差由 `FALL_PROJ_MAX_PX` 封顶（再高也不许"又从屏幕顶掉到屏幕底"）。
+    """
+    return (y > y0                                # 确实在下坠（不是原地悬停）
+            and y < floor_y                       # 但没掉到屏幕最底边
+            and (y - y0) <= FALL_PROJ_MAX_PX)     # 且落差受偏俯视上界封顶
+
+
 def t8_gravity_fall_reaches_bottom_and_syncs_floor():
-    """核心：坠落到屏幕底边后必须把 current_floor 同步成桌面层，否则每秒反复假坠落。"""
+    """核心：坠落后（第98轮起为**偏俯视**落点，不再掉到屏幕底）必须把 current_floor
+    同步成落点那一层，否则每秒反复假坠落。"""
     a = win_floor(1009, 300, 200, 800, 600)
     fm = FakeFloorManager([a])
 
@@ -350,9 +364,17 @@ def t8_gravity_fall_reaches_bottom_and_syncs_floor():
         if not pet.is_gravity_falling:
             break
 
-    check("W8.1 坠落不再在当前位置'悬停落地'（确实一路往下掉）",
-          len(ys) > 5 and ys[-1] == pet._desktop_floor_y(),
-          "frames=%d final_y=%s floor_y=%s" % (len(ys), ys[-1], pet._desktop_floor_y()))
+    check("W8.1 坠落是**偏俯视**：确实往下掉，但只掉一个受控落差，不再一路掉到屏幕底",
+          _w81_ok(ys[0], ys[-1], pet._desktop_floor_y()),
+          "frames=%d y0=%s final_y=%s floor_y=%s proj_max=%s"
+          % (len(ys), ys[0], ys[-1], pet._desktop_floor_y(), FALL_PROJ_MAX_PX))
+    # ★ 负控制：把"旧口径"的终值（一路掉到屏幕底）喂进同一个判据函数，必须被拒绝
+    #   —— 证明这条判据**不是**恒真（旧行为同样满足"确实在掉"这一半）。
+    check("W8.1n 负控制：旧口径「一路掉到屏幕底」会被 W8.1 的判据拒绝",
+          not _w81_ok(ys[0], pet._desktop_floor_y(), pet._desktop_floor_y()),
+          "旧口径终值=%s（落差 %dpx > 上界 %dpx）"
+          % (pet._desktop_floor_y(), pet._desktop_floor_y() - ys[0],
+             FALL_PROJ_MAX_PX))
     check("W8.2 落到底边后 current_floor 同步为桌面层（消除每秒假坠落）",
           pet.current_floor.get('type') == 'desktop',
           "type=%s" % pet.current_floor.get('type'))

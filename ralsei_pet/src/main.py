@@ -32,7 +32,7 @@ import math
 import statistics
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QMessageBox
 from PyQt5.QtGui import (QPainter, QBrush, QColor, QCursor, QTransform,
-                         QPixmap, QBitmap, QRegion)
+                         QPixmap, QBitmap, QRegion, QImage)
 from PyQt5.QtCore import Qt, QTimer, QPoint, QRect, pyqtSignal
 
 try:
@@ -77,6 +77,10 @@ _FALL_VELOCITY_ATTRS = (
     'fall_slide_speed_x', 'fall_slide_speed_y',
     '_fall_vx', '_fall_vy', '_fall_launch_y', '_fall_landed',
     '_fall_flight_time', '_fall_vy0',
+    # ★ 第98轮：偏俯视的"本次坠落落点"（y 与"落在哪块平面"同为此处缓存，
+    #   第一帧算一次）。必须在**落地那一刻**清掉，否则下一次坠落会沿用上一次的落点
+    #   —— 正是本文件开头那段教训的同一类坑。
+    '_fall_land_y', '_fall_land_floor',
 )
 _FALL_STATE_ATTRS = ('_fall_phase', '_fall_phase_start') + _FALL_VELOCITY_ATTRS
 
@@ -254,6 +258,48 @@ def _should_splat_on_landing(pet, landed_floor):
     except Exception:
         return False
     return _landing_drop_height(pet, landed_floor) >= FALL_SPLAT_MIN_DROP
+
+
+# ---------------------------------------------------------------------------
+# 第98轮（用户口径）：**偏俯视**的坠落落点 —— "摔到脚下的平面"，不是"屏幕最底边"
+#
+# 用户原话：
+#   「他下坠也不是直接下坠到屏幕底下啊，而且不是关掉窗口一瞬间就摔扁，
+#     你总得摔到桌面上才能扁吧，是那种**偏俯视**2D游戏似的效果，不是侧视2D」
+#   （补充澄清：「是偏俯视不是俯视」）
+#
+# 三种口径的差别（这是本次改动唯一要回答的问题）：
+#   · **侧视**（改前）：高度 z 1:1 映射到屏幕 y ⇒ 一路掉到 `_desktop_floor_y()`，
+#     宠物贴在屏幕最底边、还沉到任务栏下面。真机实测 `wy+wh == 1600 == 屏高`
+#     （`_tools/analyze98_closewin_drop.py`）。
+#   · **纯俯视**：z 完全不投影到屏幕 y ⇒ 原地不动。**用户明确否掉了这一种**
+#     （"是偏俯视不是俯视"）。
+#   · **偏俯视**（本次）：z **部分**投影 —— 有可见的下坠位移，但幅度由**落差**决定、
+#     且落点是"脚下那块平面"，不是屏幕边缘。
+#
+# ⇒ 落点 y = 起点 y + `_fall_projection_px(...)`。
+#   `platform_height` 的量纲是"每层 +5"，所以层数 = 落差 / 5。
+FALL_PROJ_PX_PER_LEVEL = 32   # 每层楼在屏幕上往下投影的像素（俯视压缩比 ≈ 0.3）
+FALL_PROJ_MIN_PX = 32         # 落差为 0（在桌面上被甩出去）时的兜底：仍要有可见下坠
+FALL_PROJ_MAX_PX = 320        # 封顶：再高也不许"又从屏幕顶掉到屏幕底"
+
+
+def _fall_projection_px(pet, landed_floor):
+    u'''这次坠落该在屏幕上**往下走多少像素**（偏俯视投影，不是"一路到屏幕底"）。
+
+    落差 = 起点楼层 platform_height − 落点楼层 platform_height（`_landing_drop_height`，
+    落点给了桌面时它自然用 0）。落差为 0 时给 `FALL_PROJ_MIN_PX` 兜底 ——
+    用户要的是"看得见下坠"，不是"原地变扁"。
+
+    放**模块级**的理由与 `_splat_animation_name` / `_fall_splat_hold` 同一条：
+    历史回归套件用轻量桩驱动产品方法，桩不该为它补一个转发方法。
+    '''
+    try:
+        levels = _landing_drop_height(pet, landed_floor) / 5.0   # 每层 5 个单位
+        px = levels * FALL_PROJ_PX_PER_LEVEL
+    except Exception:
+        px = FALL_PROJ_MIN_PX
+    return int(max(FALL_PROJ_MIN_PX, min(FALL_PROJ_MAX_PX, px)))
 
 
 def pick_corner_screen_work_area(virtual_rect, screens):
@@ -1158,8 +1204,20 @@ class RalseiPet(QMainWindow):
         try:
             self.autonomous_agent = AutonomousAgent(
                 get_pos=lambda: self.pos(),
-                set_target_pos=lambda x, y: (setattr(self, 'target_pos', QPoint(int(x), int(y))),
-                                              setattr(self, 'is_moving', True)),
+                # ★★★ 第98轮修复（"原地踏步"根因之二，真机实测）：
+                #   `autonomous_agent._walk_to()` 的目标是"**桌面元素中心 ± 60~80px**"
+                #   （`autonomous_agent.py:534-537`），**从不夹紧**；元素贴边时就越界：
+                #   图标在右上角 ⇒ `tx+80` 越过 `right()`；左上角（回收站）⇒
+                #   `tx-80` 变成**负坐标**。真机证据 `_evidence/run_natural_postfix`
+                #   f165 实测 `target=(-23,243)`，正是回收站中心 (57,183) + 偏移 (-80,60)。
+                #   越界量一旦 > 到达阈值 30px ⇒ 走过去被屏幕夹住 ⇒ **永远到不了**
+                #   ⇒ 一直播 `walk_*` 原地踏步（agent 自己的 WALKING 超时要 **18s**
+                #   才兜底 ⇒ 用户看到的就是"贴着屏幕边踏步十几秒"）。
+                #   ⇒ 回调里补夹紧（`_clamp_pos_to_desktop` 按**当前窗口尺寸**夹，
+                #     与 `update_movement` 同口径）⇒ 目标必定可达。
+                set_target_pos=lambda x, y: (setattr(self, 'target_pos', QPoint(
+                    *self._clamp_pos_to_desktop(int(x), int(y)))),
+                    setattr(self, 'is_moving', True)),
                 change_animation=self.change_animation,
                 play_once=self.play_animation_once,
                 show_dialogue=lambda speaker, msg, face: (self.dialogue_ui.add_dialogue(speaker, msg, face),
@@ -6147,7 +6205,16 @@ class RalseiPet(QMainWindow):
         screen_geometry = self._virtual_screen_rect()
         _bound_left = screen_geometry.x() + 50
         _bound_top = screen_geometry.y() + 50
-        sprite_size = int(50 * 2.0)  # 缩放因子为2.0，原始大小约50px
+        # ★★★ 第98轮修复（"原地踏步"根因之一）：这份"安全区"必须与
+        #   `update_movement` 的夹紧口径**一致** —— 那边夹的是
+        #   `right() - self.width()` / `bottom() - self.height()`
+        #   （**当前窗口真实尺寸**），而这里原先是硬编码 `int(50 * 2.0) = 100`。
+        #   idle 容器是 138x94 ⇒ 右边界允许 `right() - 100`，比真实可行界
+        #   `right() - 138` **外扩 38px**；而"到达"阈值只有 `max(speed*3, 30) = 30px`
+        #   ⇒ **越界量恰好大于阈值 ⇒ 永远不满足到达 ⇒ 无限原地踏步**。
+        #   真机证据：`_evidence/run_natural_postfix` 实测目标 x=2460（正是 right-100）。
+        #   ⇒ 取"至少 100、且不小于当前窗口尺寸"，任何窗口尺寸下都够得着。
+        sprite_size = int(max(100, self.width(), self.height()))
         current_pos = self.pos()
         
         # 计算当前方向，保持方向一致性，减少突然转向
@@ -7224,6 +7291,21 @@ class RalseiPet(QMainWindow):
                 actual_dx = new_x - current_pos.x()
                 actual_dy = new_y - current_pos.y()
                 actual_distance = math.hypot(actual_dx, actual_dy) if actual_dx != 0 or actual_dy != 0 else 1.0
+                # ★★★ 第98轮新增（"原地踏步"兜底 · 第一步）：**本帧到底动了没有**。
+                #   ⚠️ 上面那个 `actual_distance` 带 `else 1.0` 的除零兜底
+                #   （位移为 0 时它等于 1.0）⇒ **不能用它判"没动"**，这里按真实位移判。
+                #   计数**绑在目标点**上：`target_pos` 一变就自动从 1 重新数，
+                #   于是不需要在五处 `target_pos = ...` 里各加一行清零。
+                if math.hypot(actual_dx, actual_dy) < 0.5:
+                    _tpk = (self.target_pos.x(), self.target_pos.y())
+                    if getattr(self, '_no_progress_target', None) != _tpk:
+                        self._no_progress_target = _tpk
+                        self._no_progress_frames = 1
+                    else:
+                        self._no_progress_frames = getattr(
+                            self, '_no_progress_frames', 0) + 1
+                else:
+                    self._no_progress_frames = 0
                 
                 # 更新速度向量，使其与实际移动方向一致
                 if actual_distance > 0:
@@ -7277,6 +7359,35 @@ class RalseiPet(QMainWindow):
                         # 强制切换动画，确保方向变化正确反映
                         self.change_animation(f"{anim_type}_{new_dir}", force=True)
             
+            # ★★★ 第98轮新增：**目标不可达兜底**（用户口径「他还有原地踏步的问题」）
+            #   为什么需要：本函数的屏幕夹紧用的是"**当前窗口尺寸**"，而"选目标"
+            #   用的是一套**别**的边界（`_pick_wander_target` 的 `sprite_size`，
+            #   原本硬编码 100）⇒ 目标可以落在"够不着"的区间里。一旦越界量大于
+            #   到达阈值（30px），`distance_sq` 永远 > 阈值 ⇒ **永远不满足"到达"**
+            #   ⇒ `is_moving` 一直 True、`walk_*` 一直播、位置一动不动。
+            #   真机实证（`_evidence/run_inj_bow` f45-66）：目标 (2635,1430) 越界
+            #   113px ⇒ 22 个采样帧全是 `walk_right` / `moving=True` / 位移 2px，
+            #   抽帧 `shot98_bow_45_66.png` 画面上就是"腿在迈、位置不动"。
+            #   为什么不会误伤：特殊动画锁 / 拖拽 / 追鼠标 / 物理三态都在**更上面
+            #   就 return** 了（进不到下面的计数分支）；而正常走路速度 ≥ 1px/帧，
+            #   连 60 帧（≈1.8s）位移都 <0.5px 只可能是被夹住了。
+            if getattr(self, '_no_progress_frames', 0) >= 60:
+                self._no_progress_frames = 0
+                self._no_progress_target = None
+                _log.debug("[移动] 目标不可达（连续 60 帧位移<0.5px）"
+                           "⇒ 放弃该目标 target=(%d,%d) pos=(%d,%d)",
+                           self.target_pos.x(), self.target_pos.y(),
+                           current_pos.x(), current_pos.y())
+                self.is_moving = False
+                self.idle_timer = 0
+                self.max_idle_duration = random.uniform(2.0, 5.0)
+                self.last_movement_end_time = time.time()
+                self.current_speed_x = 0
+                self.current_speed_y = 0
+                self._subpixel_x = 0.0
+                self._subpixel_y = 0.0
+                if getattr(self, '_spell_stage', None) != 'walking':
+                    self.change_animation('idle', force=True)
             # 优化：使用平方距离进行比较，避免开方运算
             # 到达阈值放大：speed*3 或至少30px（游戏/施法的移动容忍更大）
             _threshold_sq = max((self.speed * 3.0) ** 2, 30.0 ** 2)
@@ -8146,6 +8257,12 @@ class RalseiPet(QMainWindow):
         # 只有"用户把脚下的楼板抽走/关掉窗口"才算用户行为（reason='floor_removed'）；
         # 自己走到边缘掉下去、跳跃被判穿透，都算自己的问题，走常规动画。
         self._fall_reason = reason
+        # ★ 第98轮：清掉上一次坠落的"偏俯视落点"，本次由 handle_gravity_fall 重算。
+        #   （`_FALL_VELOCITY_ATTRS` 只在**正常落地**时清；被接住/异常路径不一定走到，
+        #    所以入口这里再兜一次，与 `start_falling` 里 `is_falling=False` 同一条纪律。）
+        for _a in ('_fall_land_y', '_fall_land_floor'):
+            if hasattr(self, _a):
+                delattr(self, _a)
         # 批次 B（第十八轮）：记下"从多高掉下来的"。落地时 `_should_splat_on_landing`
         # 用它算落差 —— 用户口径："摔扁只在**层数比较高**且掉下来而非主动下来时触发"。
         try:
@@ -8804,7 +8921,14 @@ class RalseiPet(QMainWindow):
                 self.change_animation("fall", force=True)
             self.max_fall_duration = 3.0
             # 修复：台词匹配生气动画——抱怨用户乱动窗口，而不是单纯惊讶
-            self.dialogue_ui.add_dialogue("ralsei", "喂！别乱动窗口呀！我站不稳了...", "surprised")
+            # ★★ 第98轮：改走**台词唯一入口** `speak_event`（`instant=True` 保持"立刻说"，
+            #   与甩飞 `main.py:11074` 同一口径），不再直写 `dialogue_ui`。
+            #   为什么必须收口：用户口径是"所有对话全权交给 AI / 看不出哪句是他自己说的"，
+            #   直写 `dialogue_ui` 会绕过 `_pick_event_line` 的去重与 AI 档位判定
+            #   （96轮b 已在 `react_to_desktop_element` 修过同型 1 处，本处是同类遗漏）。
+            #   台词与表情逐字不变 ⇒ 观感不变，只是回到唯一入口。
+            self.speak_event("fall", ["喂！别乱动窗口呀！我站不稳了..."], "surprised",
+                             instant=True)
         elif reason == "fall_from_window":
             # 从窗口掉落 —— 这是用户（关窗/移窗）造成的，按"建楼"要求用生气的那组动作
             if "fall_mad" in self.sprite_loader.sprites:
@@ -8814,7 +8938,7 @@ class RalseiPet(QMainWindow):
             # 确保掉落动画持续时间至少5秒，符合要求文件第36行的要求
             self.max_fall_duration = 5.0
             # 显示掉落消息
-            self.dialogue_ui.add_dialogue("ralsei", "啊！我从窗口掉下来了！", "surprised")
+            self.speak_event("fall", ["啊！我从窗口掉下来了！"], "surprised", instant=True)
         elif reason == "fall_off":
             # Ralsei自己从窗口边缘掉下去
             # 使用普通摔倒动画（spr_ralsei_splat_0.png），持续5秒
@@ -8822,7 +8946,7 @@ class RalseiPet(QMainWindow):
             # 设置较长的摔倒持续时间（5秒）
             self.max_fall_duration = 5.0
             # 显示摔倒消息
-            self.dialogue_ui.add_dialogue("ralsei", "哎呀！我掉下去了！", "sad")
+            self.speak_event("fall", ["哎呀！我掉下去了！"], "sad", instant=True)
             # 修复：与其他分支一致，摔倒时暂停行走
             self.idle_timer = 0
         else:
@@ -8831,10 +8955,12 @@ class RalseiPet(QMainWindow):
             # 确保摔倒动画持续时间至少3秒
             self.max_fall_duration = 3.0
             # 显示摔倒消息
-            self.dialogue_ui.add_dialogue("ralsei", "哎呀！我摔倒了！", "surprised")
+            self.speak_event("fall", ["哎呀！我摔倒了！"], "surprised", instant=True)
             self.idle_timer = 0
         
-        self.dialogue_ui.show_dialogue()
+        # ★ 第98轮：上面四个分支的台词已全部改走 `speak_event`，而 `speak_event`
+        #   →`_event_say` 内部就会 `add_dialogue + show_dialogue` ⇒ **这里不能再调一次**
+        #   （重复 show 本身幂等，但保留会让"唯一出口"重新分叉）。
         
         # 重置当前窗口信息，Ralsei掉回桌面
         self.current_window = None
@@ -8883,9 +9009,8 @@ class RalseiPet(QMainWindow):
         # 生气素材（fall_mad）**在落地那一瞬换掉** —— 于是"生气动画至少 5s"根本不可能
         # 成立。现在按起因选（判定收在模块级 `_splat_animation_name`，与 handle_fall 共用）。
         self.change_animation(_splat_animation_name(self), force=True)
-        # 显示惊讶对话
-        self.dialogue_ui.add_dialogue("ralsei", "啊！摔扁了...", "surprised")
-        self.dialogue_ui.show_dialogue()
+        # 显示惊讶对话（第98轮：改走台词唯一入口 `speak_event`，`instant=True` 立刻说）
+        self.speak_event("fall", ["啊！摔扁了..."], "surprised", instant=True)
 
     def handle_gravity_fall(self, elapsed_time, current_time):
         # 处理重力掉落逻辑 —— 俯视2D游戏风格：带水平惯性的抛物线坠落，不坠出屏幕
@@ -8913,20 +9038,45 @@ class RalseiPet(QMainWindow):
         # 瞬移防治：原用 availableGeometry()（只认主屏，原点钉在 0,0），
         # 副屏上会横向被拉回主屏 = 瞬移。改用虚拟桌面矩形。
         new_x, _clamped_y = self._clamp_pos_to_desktop(int(new_x), int(new_y))
-        max_y = self._desktop_floor_y()
+        new_y = _clamped_y
+        # ★★★ 第98轮（用户口径）：**偏俯视**落点。
+        #   改前 `max_y = self._desktop_floor_y()` = 屏幕最底边 ⇒ 把"高度 z 的下降"
+        #   1:1 映射到屏幕 y（**侧视**），宠物一路掉到屏幕底、还沉到任务栏下面。
+        #   现在 = 起点 y + 落差投影（`_fall_projection_px`）⇒ 落点是"脚下那块平面"。
+        #   ⚠️ 只在**本次坠落的第一帧**算一次：下落途中 x 会因惯性漂移，逐帧重算会让
+        #      "落到哪块平面"随位置抖动（同一次坠落的前后两帧给出不同落点）。
+        if not hasattr(self, '_fall_land_y'):
+            _y0 = int(current_pos.y())
+            if getattr(self, '_is_thrown', False):
+                # 甩飞：观感就是要"飞出去" ⇒ 保持改前的"一路落到接住它为止"。
+                self._fall_land_y = self._desktop_floor_y()
+            else:
+                _lf, _ = self.floor_manager.get_drop_destination(
+                    QPoint(int(current_pos.x()), _y0), self.current_floor)
+                if _lf is not None and (
+                        _lf.get('type') == 'desktop'
+                        or self._floor_identity_key(_lf)
+                        == self._floor_identity_key(self.current_floor)):
+                    _lf = None
+                if _lf is None:
+                    _lf = self.floor_manager.desktop_floor
+                # ★ 缓存"落在哪块平面"：下面算"掉多远"、落地时算"落差/是否摔扁"，
+                #   必须吃**同一份**判定，否则会出现"掉了 300px 却按一层楼判不扁"。
+                self._fall_land_floor = _lf
+                self._fall_land_y = _y0 + _fall_projection_px(self, _lf)
+        max_y = int(self._fall_land_y)
         if int(new_y) > max_y:
             new_y = max_y
-        else:
-            new_y = _clamped_y
         
         # 检查是否落到了某个楼层上
         ralsei_pos = QPoint(int(new_x), int(new_y))
-        drop_floor, drop_pos = self.floor_manager.get_drop_destination(ralsei_pos, self.current_floor)
+        drop_floor, _drop_pos = self.floor_manager.get_drop_destination(ralsei_pos, self.current_floor)
         
         # 落点判定：同样必须用"楼层稳定标识"比较，不能用 dict 内容（floors 每轮重建，
         # 内容必然不等 → 会把"还在自己脚下的那块楼板"误判成"落到了新楼层"）。
-        # 另外把"桌面"排除在"落地"之外：桌面是最底层，只有真的落到屏幕底边（max_y）
-        # 才算落地；否则从窗口上开始的坠落会立刻在当前位置"落地"、悬停在半空中。
+        # 另外把"桌面"排除在"落地"之外（`landed_floor` 只收**窗口楼板**）。
+        # ★ 第98轮更新：`max_y` 已不再是"屏幕底边"，而是偏俯视落点（起点 y + 落差投影）
+        #   ⇒ "落到桌面"不再等于"落到屏幕底边"，到达 `max_y` 即结算（见下一段）。
         landed_floor = None
         if (drop_floor is not None
                 and drop_floor.get('type') != 'desktop'
@@ -8934,10 +9084,17 @@ class RalseiPet(QMainWindow):
                 != self._floor_identity_key(self.current_floor)):
             landed_floor = drop_floor
 
-        if landed_floor is not None:
-            # 落到了新的楼层上（下面沿用 drop_floor 命名，二者此刻是同一块楼板）
-            drop_floor = landed_floor
-            new_y = drop_pos.y()
+        # ★ 第98轮：落地条件统一成"**到达**偏俯视落点 max_y"。
+        #   改前是 `landed_floor is not None` ⇒ **当帧立刻**落地，且 `new_y = drop_pos.y()`
+        #   就是"原地"（dy=0）⇒ 用户看到的正是"关掉窗口那一瞬间就摔扁，根本没往下掉"。
+        if int(new_y) >= max_y:
+            new_y = max_y
+            # 落点平面：普通坠落用**第一帧缓存**的那块（与 `_fall_land_y` 同源）；
+            # 甩飞路径没缓存 ⇒ 回落改前的"按当前判定"。
+            _settle = getattr(self, '_fall_land_floor', None)
+            if _settle is None:
+                _settle = (landed_floor if landed_floor is not None
+                           else self.floor_manager.desktop_floor)
             self.is_gravity_falling = False
             self.fall_velocity_x = 0  # 落地清除水平惯性
 
@@ -8946,13 +9103,13 @@ class RalseiPet(QMainWindow):
             # 能落到这一层，就说明脚下确实是一块看得见的地板。
             
             # 根据摔落速度决定落地表现
-            if _should_splat_on_landing(self, drop_floor):
+            if _should_splat_on_landing(self, _settle):
                 # 高速 + **层数比较高** → 触发 splat（批次 B：低层摔不扁）
                 self.trigger_splat()
                 # 添加摔倒惯性滑行效果
                 self.fall_slide_speed_x = random.uniform(-20, 20)
                 self.fall_slide_speed_y = random.uniform(-10, 10)
-            elif "land" in self.sprite_loader.sprites:
+            elif landed_floor is not None and "land" in self.sprite_loader.sprites:
                 # 低速落到**窗口楼层**（不是摔到桌面）：播一次落地动作再站稳。
                 # "落到某一层楼"要有落地的交代 —— 原来直接切 idle，看着像平移过去的。
                 # 一次性播放（与跳跃落地同一口径），循环重播会"卡带"。
@@ -8962,13 +9119,13 @@ class RalseiPet(QMainWindow):
                 self.change_animation("idle", force=True)
 
             # 更新当前楼层信息
-            self.current_floor = drop_floor
-            self.current_platform_z = drop_floor['platform_height']
-            self.spatial_pos["z"] = drop_floor['platform_height']
+            self.current_floor = _settle
+            self.current_platform_z = _settle['platform_height']
+            self.spatial_pos["z"] = _settle['platform_height']
             # current_window 是派生缓存，统一由楼层刷新（第十四轮：消除双真源。
             # 原来这里有一份手写的裸 dict 构造，和 _sync_window_cache_from_floor
             # 是同一件事的两份实现 —— 正是这个项目反复踩的坑。）
-            self._sync_window_cache_from_floor(drop_floor)
+            self._sync_window_cache_from_floor(_settle)
 
             self.show()
             # 落定后按"一层压一层"重排 z 序。
@@ -8978,42 +9135,15 @@ class RalseiPet(QMainWindow):
             # 在窗口上用 Qt.WindowStaysOnTopHint 强制置顶 → 宠物永远画在所有窗口之上，
             # 遮挡关系完全失效（用户："他直接走到我的窗口上面了，根本没遮挡关系"）。
             self._apply_pet_z_order()
+            # ★ 第98轮：落地清场（`_FALL_VELOCITY_ATTRS` 里已含 `_fall_land_y`）。
+            for _a in _FALL_VELOCITY_ATTRS:
+                if hasattr(self, _a):
+                    delattr(self, _a)
         else:
-            # 继续掉落
-            # 检查是否落到了桌面底部（多显示器：虚拟桌面底边）
-            if new_y >= max_y:
-                # 落到桌面底部（夹紧，绝不超出屏幕）
-                new_y = max_y
-                self.is_gravity_falling = False
-                self.fall_velocity_x = 0  # 落地清除水平惯性
-                
-                # 根据摔落速度决定是否触发摔倒动画
-                if _should_splat_on_landing(self, self.floor_manager.desktop_floor):
-                    # 高速 + **层数比较高** → 触发 splat（批次 B：掉到桌面也是一样判）
-                    self.trigger_splat()
-                    # 添加摔倒惯性滑行效果
-                    self.fall_slide_speed_x = random.uniform(-20, 20)
-                    self.fall_slide_speed_y = random.uniform(-10, 10)
-                else:
-                    # 低速摔落（或层数不够高）：先站稳(idle)
-                    self.change_animation("idle", force=True)
-                
-                # 修复（坠落循环）：这里原来没有把 current_floor 更新成桌面层，
-                # 于是宠物落到屏幕底边后 current_floor 仍是"那块已经离开的窗口楼板"，
-                # 下一秒 check_window_movement 又判定"窗口→桌面"= 楼层变化 →
-                # 再次 start_falling()，表现为每隔 1 秒凭空"抽一下"的假坠落。
-                self.current_floor = self.floor_manager.desktop_floor
-                # 派生缓存同步（同一入口，见 _sync_window_cache_from_floor）
-                self._sync_window_cache_from_floor(self.floor_manager.desktop_floor)
-                
-                # 更新空间坐标
-                self.spatial_pos["z"] = 0
-                self.current_platform_z = 0
-                
-                # 落回桌面（1楼）→ 按"一层压一层"重排 z 序（插到 WorkerW 之后）
-                self.show()
-                self._apply_pet_z_order()
-        
+            # ★ 第98轮：还没到偏俯视落点 ⇒ 继续下落（下一帧继续积分）。
+            #   落地结算已统一到上面那个分支（"到达 max_y"）。
+            pass
+
         # 移动Ralsei
         self.move(int(new_x), int(new_y))
     
@@ -9136,8 +9266,11 @@ class RalseiPet(QMainWindow):
                 if "fall_back" in self.sprite_loader.sprites:
                     self.change_animation("fall_back", force=True)
                 dazed_msgs = ["呜...头好晕...", "诶...我在哪...", "浑身好痛..."]
-                self.dialogue_ui.add_dialogue("ralsei", random.choice(dazed_msgs), "sad")
-                self.dialogue_ui.show_dialogue()
+                # ★ 第98轮：走台词唯一入口（`instant=True` 立刻说）。
+                #   传**整池**而不是 `random.choice(...)`：入口内部自己会
+                #   `_pick_event_line(pool)` 抽一条并记进去重窗口（`note`），
+                #   把"随机且不与刚说过的重复"交回给唯一入口负责。
+                self.speak_event("fall", dazed_msgs, "sad", instant=True)
             elif phase == "dazed" and _phase_t >= max(1.0, self.max_fall_duration - 2.0):
                 # 晕乎1.5秒后 → 慢慢爬起来，进入恢复期
                 # 注（第十六轮）：`max_fall_duration` 从这里起**只等于"晕乎时长 + 2.0"**
@@ -9157,8 +9290,8 @@ class RalseiPet(QMainWindow):
                     self.change_animation("idle", force=True)
                 self.emotion_system.react_to_event('recovery_started', {})
                 if random.random() < 0.7:
-                    self.dialogue_ui.add_dialogue("ralsei", "呼...我没事了...谢谢你的关心...", "shy")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("fall", ["呼...我没事了...谢谢你的关心..."], "shy",
+                                     instant=True)
             elif phase not in ("flying", "splat", "dazed") and self.fall_duration >= self.max_fall_duration:
                 # 兼容旧逻辑（没有_fall_phase时按原流程）
                 self.is_recovering = True
@@ -9174,8 +9307,8 @@ class RalseiPet(QMainWindow):
                         delattr(self, attr)
                 self.emotion_system.react_to_event('recovery_started', {})
                 if random.random() < 0.7:
-                    self.dialogue_ui.add_dialogue("ralsei", "呼...我没事了...谢谢你的关心...", "shy")
-                    self.dialogue_ui.show_dialogue()
+                    self.speak_event("fall", ["呼...我没事了...谢谢你的关心..."], "shy",
+                                     instant=True)
         else:
             # 处理恢复期逻辑
             self.recovery_duration += elapsed_time
@@ -9226,8 +9359,8 @@ class RalseiPet(QMainWindow):
                     
                     # 显示恢复完成消息，更加温柔和害羞
                     if random.random() < 0.5:  # 50%概率显示恢复完成消息
-                        self.dialogue_ui.add_dialogue("ralsei", "我已经完全恢复了...谢谢...", "happy")
-                        self.dialogue_ui.show_dialogue()
+                        self.speak_event("fall", ["我已经完全恢复了...谢谢..."], "happy",
+                                         instant=True)
                     
                     # 使用idle动画，让Ralsei先休息一下
                     self.change_animation("idle", force=True)
@@ -13270,23 +13403,38 @@ class RalseiPet(QMainWindow):
 
     # 帧动画播放相关代码 - 更新动画帧
     @monitor_performance
-    def _anim_anchor_offset(self, animation):
-        """该动画的"角色锚点"相对画布中心的偏移（源像素，正=偏右/偏下）。
+    def _anim_anchor_offset(self, animation, frame_index=None):
+        """该动画**第 frame_index 帧**的"角色本体锚点"相对**该帧画布中心**的偏移（源像素）。
 
-        素材是逐姿势紧裁的，各自画布尺寸不同，而且**并非每张画布都把角色居中**：
-        实测 `spr_ralsei_idle_*.png` 是 69x47 的画布，但角色 alpha 包围盒只有
-        (1,6,27,40) —— 右侧整整 41px 是透明空白；其余动作（walk/run/bow/act/
-        pose/curtsy…）的包围盒都等于整张画布，也就是天然居中。
-
-        渲染时窗口尺寸 = 当前动画容器 × scale，换动画会 resize 并**保持窗口中心**，
-        精灵又是 AlignCenter —— 于是"角色落在哪里"完全由画布中心决定。
-        idle 偏左 20 源像素 → scale=2 时角色比其它动作**偏左 40px**，
-        切到鞠躬等动作时角色整体右移 40px，观感就是用户报的
-        "像是镜头也在移动一样"。
-
-        这里返回补偿量，交给 `_compose_anchored_sprite` 把角色 alpha 包围盒的
-        **中心**钉到画布中心，从而跨动画零平移。按动画缓存（首次渲染该动画时算一次）。
+        ★★★ 第98轮重写（用户真机反馈：「**他在鞠躬那个动画的时候会自身位移**」）。
+        旧口径 = **整个动画取一个常量偏移**：把"**并集** alpha 包围盒中心"钉到画布中心。
+        它的隐含前提是"每一帧的 alpha 包围盒都等于/居中于自己的画布" —— 素材一旦出现
+        **身体之外的粒子**（`act` 第 3~6 帧的粉色爱心、`battleintro` 的星星…），并集就被
+        撑宽 ⇒ 常量偏移把**身体整体推走**。逐帧离线复算（`probe98_anchor_ab.py`；
+        "身体" = 最大 8-连通块）：
+            `act` 第 3~6 帧 本体中心 **左跳 20 屏幕px** / 下跳 5px（爱心在右侧撑宽并集）
+            `battleintro` 26px ｜ `defend` 19px ｜ `throw_ball` 14px ｜ `victory` 13px
+            `spell` 11px ｜ `land` 9px(纵向) ｜ `sit` 8px ｜ `item`/`hug`/`hug_stop`/`wave_down` 5px
+            连最常用的 `walk_up`/`walk_down`/`run_*` 都有 **2~6px** 抖动
+            ⇒ 全 115 组里 **26 组** 跳动 >1px。用户看到的就是 `act` 那 20px。
+        新口径 = **逐帧**只取"**最大 alpha 连通块**"（=角色本体，粒子被排除）的包围盒中心，
+        钉到该帧画布中心 ⇒ 本体中心恒等于画布中心（画布中心 == 窗口中心，窗口 resize 是
+        "保中心"，见 `update_animation` 里 `old_center_*` 那段）。同一份复算下，新口径全
+        115 组逐帧**最大残余偏移 = 0.0px**；且对"单连通块"动画（idle/walk/run/fall… 绝大
+        多数）新旧公式**逐值等价**（`idle` 那份 −20.0 源像素补偿不变）⇒ 爆炸半径恰好是
+        上面那 26 组。
+        按动画缓存（首次渲染该动画时算一次，存"与帧数等长的偏移表"）。`frame_index=None`
+        时退化为第 0 帧（兼容旧调用点）。
         """
+        offs = self._anim_anchor_offsets(animation)
+        if not offs:
+            return (0.0, 0.0)
+        i = 0 if frame_index is None else int(frame_index)
+        i = max(0, min(len(offs) - 1, i))
+        return offs[i]
+
+    def _anim_anchor_offsets(self, animation):
+        """按动画缓存的"**逐帧**锚点偏移表"（源像素）。口径见 `_anim_anchor_offset`。"""
         cache = getattr(self, '_anim_anchor_cache', None)
         if cache is None:
             cache = {}
@@ -13294,47 +13442,135 @@ class RalseiPet(QMainWindow):
         if animation in cache:
             return cache[animation]
 
-        off = (0.0, 0.0)
+        offs = []
         try:
             frames = self.sprite_loader.sprites.get(animation) or []
-            cw = ch = 0
             for f in frames:
-                if f is not None and not f.isNull():
-                    cw = max(cw, f.width())
-                    ch = max(ch, f.height())
-            if cw > 0 and ch > 0:
-                # 取"整个动画所有帧的包围盒并集"，保证同一动画内每帧用同一个锚点，
-                # 不会因为逐帧包围盒变化而引入新的抖动。
-                ux0 = uy0 = None
-                ux1 = uy1 = 0
-                for f in frames:
-                    if f is None or f.isNull():
-                        continue
-                    reg = QRegion(QBitmap.fromImage(f.toImage().createAlphaMask()))
-                    for r in reg.rects():
-                        x0, y0 = r.x(), r.y()
-                        x1, y1 = r.x() + r.width(), r.y() + r.height()
-                        ux0 = x0 if ux0 is None else min(ux0, x0)
-                        uy0 = y0 if uy0 is None else min(uy0, y0)
-                        ux1 = max(ux1, x1)
-                        uy1 = max(uy1, y1)
-                if ux0 is not None:
-                    off = ((ux0 + ux1) / 2.0 - cw / 2.0,
-                           (uy0 + uy1) / 2.0 - ch / 2.0)
+                if f is None or f.isNull():
+                    offs.append((0.0, 0.0))
+                    continue
+                rows = self._alpha_row_bits(f)
+                bb = self._main_component_bbox(rows, f.width())
+                if bb is None:
+                    offs.append((0.0, 0.0))
+                else:
+                    offs.append(((bb[0] + bb[2]) / 2.0 - f.width() / 2.0,
+                                 (bb[1] + bb[3]) / 2.0 - f.height() / 2.0))
         except Exception as e:
             _log.debug("计算动画锚点偏移失败（按画布居中处理）: %s", e)
-        cache[animation] = off
-        return off
+            offs = []
+        cache[animation] = offs
+        return offs
 
-    def _compose_anchored_sprite(self, sprite, container, animation, scale_factor):
+    @staticmethod
+    def _alpha_row_bits(pixmap):
+        """把一帧的不透明像素压成"每行一个整数位掩码"（bit x = 该像素 alpha>0）。
+
+        为什么不用 `QRegion`：它只给"不相交矩形列表"，**拿不到连通块**，而本轮口径恰恰
+        要"最大连通块"（把爱心/星星等粒子排除）。
+        为什么不用 numpy/cv2：产品**不依赖**它们（全包 `import numpy` 0 处），不为一个锚点
+        计算引入新依赖。逐行扫 bit 是纯 Python，且**按动画只算一次**后进缓存。
+        """
+        qimg = pixmap.toImage().convertToFormat(QImage.Format_ARGB32)
+        h, w = qimg.height(), qimg.width()
+        ptr = qimg.constBits()
+        ptr.setsize(qimg.byteCount())
+        raw = bytes(ptr)
+        bpl = qimg.bytesPerLine()
+        rows = []
+        for y in range(h):
+            line = raw[y * bpl: y * bpl + w * 4]
+            alpha = line[3::4]          # ARGB32 小端 ⇒ 每 4 字节的第 4 个是 alpha
+            bits = 0
+            for x, v in enumerate(alpha):
+                if v:
+                    bits |= (1 << x)
+            rows.append(bits)
+        return rows
+
+    @staticmethod
+    def _main_component_bbox(rows, w):
+        """最大 8-连通块的包围盒（半开 `(x0,y0,x1,y1)`）；无像素时返回 None。
+
+        逐行取"连续 1 段"（run），再与**上一行有重叠**的 run 合并（并查集）——
+        run 数量级远小于像素数，纯 Python 也够快（且按动画缓存一次）。
+        """
+        if not rows:
+            return None
+        parent = []
+
+        def _find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+
+        def _union(a, b):
+            ra, rb = _find(a), _find(b)
+            if ra != rb:
+                parent[rb] = ra
+
+        runs = []
+        prev = []
+        for y, bits in enumerate(rows):
+            cur = []
+            x = 0
+            while x < w:
+                if (bits >> x) & 1:
+                    x0 = x
+                    while x < w and (bits >> x) & 1:
+                        x += 1
+                    idx = len(parent)
+                    parent.append(idx)
+                    cur.append((y, x0, x, idx))
+                else:
+                    x += 1
+            for (_y, a0, a1, ai) in cur:
+                for (_y2, b0, b1, bi) in prev:
+                    # 8-邻域：两段只在对角相接（a0 == b1 或 b0 == a1）也必须合并。
+                    # 首版写成严格重叠（小于号）等价 4-邻域，run_down / throw_ball 的
+                    # 斜向像素被切成两块 ⇒ 锚点取错块 ⇒ 残 3px 位移（A/B 实测）。
+                    if a0 <= b1 and b0 <= a1:
+                        _union(ai, bi)
+            runs.extend(cur)
+            prev = cur
+        if not runs:
+            return None
+        acc = {}
+        for (y, x0, x1, idx) in runs:
+            r = _find(idx)
+            it = acc.get(r)
+            if it is None:
+                acc[r] = [x0, y, x1, y + 1, x1 - x0]
+            else:
+                if x0 < it[0]:
+                    it[0] = x0
+                if y < it[1]:
+                    it[1] = y
+                if x1 > it[2]:
+                    it[2] = x1
+                if y + 1 > it[3]:
+                    it[3] = y + 1
+                it[4] += x1 - x0
+        best = None
+        for it in acc.values():
+            if best is None or it[4] > best[4]:
+                best = it
+        return (best[0], best[1], best[2], best[3])
+
+    def _compose_anchored_sprite(self, sprite, container, animation, scale_factor,
+                                 frame_index=None):
         """把已缩放（可选已倾斜）的精灵放进 container×scale 的透明画布，
         并按"角色 alpha 包围盒中心 = 画布中心"落位。
 
         为什么不能直接 setPixmap + AlignCenter：那等于按**画布**居中，而各动作
         画布对"角色在哪里"的约定并不一致（见 `_anim_anchor_offset` 的说明）。
         统一钉到角色包围盒中心后，切换动画时角色在屏幕上不会平移。
+        ★ 第98轮：锚点改成**按帧**取（frame_index），且只取【角色本体】
+        （最大 alpha 连通块）—— 否则同一动画里【身体之外的粒子】（爱心/星星）
+        会把并集包围盒撑宽、把角色整体推走（act 实测 20 屏幕px）。
         """
-        off_x, off_y = self._anim_anchor_offset(animation)
+        off_x, off_y = self._anim_anchor_offset(animation, frame_index)
         if container:
             cw = int(container[0] * scale_factor)
             ch = int(container[1] * scale_factor)
@@ -13433,6 +13669,30 @@ class RalseiPet(QMainWindow):
                 new_animation = "fall_back"
             else:
                 new_animation = self.current_animation
+        # ★★★ 第98轮修复：**重力坠落（"建楼"）期间不许用 idle 覆盖坠落动画。**
+        #   为什么必须加（不加 ⇒ 这条路上"坠落动画"等于不存在）：
+        #   本函数的 if/elif 链原本覆盖了 is_jumping / is_falling / is_recovering /
+        #   is_using_item / is_spellcasting / is_sleeping / is_moving，**唯独没有
+        #   `is_gravity_falling`** ⇒ 坠落途中会一路落到链尾那个 `else` 算出 `idle`；
+        #   而 `idle` 在 `_use_force` 集合里 ⇒ `force=True` **绕过优先级闸**
+        #   （`change_animation` 的冷却/优先级检查整段在 `if not force:` 之内；
+        #   `fall` 优先级 4 > `idle` 1）⇒ `start_falling` 刚播上的 `fall`/`fall_mad`
+        #   在 ~167ms（本函数定时器周期）内被顶成站立 `idle`。
+        #   用户视角 = "**从窗口上掉下来时保持站姿往下滑**"。
+        #
+        #   真机实证（第98轮 `code-quality-audit/第98轮-基础宠物排查/_evidence/`）：
+        #     · `run_natural_postfix/rec97_frames.csv` f228-f234：
+        #       `is_gravity_falling=True` 而 `anim='idle'`（y 15→1506，跨 3.5s）；
+        #     · `_tools/montage98.py` 抽帧拼图确认为**站姿下坠**（背景图标一路掠过）。
+        #
+        #   修法 = **保持当前动画**（不在这里另选一个新的）：坠落动画的唯一维护者是
+        #   `start_falling` 那一次 `change_animation("fall"/"fall_mad", force=True)`，
+        #   `handle_gravity_fall` 只负责位移与落地结算、**不碰动画**。
+        #   ⚠️ 不会每帧空转：下方有 `self.current_animation != new_animation` 守卫
+        #   ⇒ 取"当前动画"时不会真的重复调 `change_animation`（也不会刷新冷却）。
+        #   回归锁：`code-quality-audit/第98轮-基础宠物排查/_tools/check98.py` C 段。
+        elif self.is_gravity_falling:
+            new_animation = self.current_animation
         elif self.is_recovering:
             # 恢复期状态：时长由 handle_fall 按 recovery_max_duration（5 秒）管理，
             # 恢复完成时的动画/情绪/移动恢复逻辑都在 handle_fall 里执行，这里不干预。
@@ -13695,7 +13955,33 @@ class RalseiPet(QMainWindow):
             #   `sleep` 与 `idle` 不同组 ⇒ 需要 `animation_change_cooldown * 2` 的冷却，
             #   于是“睡着却站着”要持续到冷却结束（并随 pet_ai 冷却反复复发）。
             #   与上面 `idle` 同一条理由（`idle` 是状态恢复所以 force=True）。
-            _use_force = is_same_category or (new_animation in ('idle', 'sleep'))
+            #
+            # ★★★ 第98轮修复（用户可见现象："**静止起身走路时，站着平移**"）：
+            #   `walk_*` / `run_*` 与 `idle` / `sleep` 属于同一类 —— 它们是**状态**
+            #   （"在不在移动"），不是"动作"。状态必须**立刻**反映到画面上。
+            #   原式只放行 `idle`/`sleep` ⇒ `idle → walk_*` 落进 `force=False` 分支
+            #   ⇒ 被 `change_animation` 的"跨组冷却 ×2"
+            #      （`animation_change_cooldown = 0.8` ⇒ **1.6s**）拦下
+            #   ⇒ 宠物**保持站立姿势原地平移**最多 1.6 秒。
+            #
+            #   真机实证（第98轮 `code-quality-audit/第98轮-基础宠物排查/_evidence/`）：
+            #     · `run_natural/rec97_frames.csv`：`is_moving=True` 且窗口**持续位移**，
+            #       而 `current_animation='idle'`（f116 约 1.0s、f542 约 1.4s）；
+            #       同期抽帧（`_evidence/*.png`）确认是**站立姿势在滑**。
+            #     · 产品自己的 reject 日志 `run_inj_fall/rec97_anim.txt`：
+            #       `REJECT 'walk_up' (cur='idle') kw={'force': False}` **连续 8 次**
+            #       （t=152.342~153.848 ≈ 1.5s），与 `2×冷却` 完全吻合；
+            #       另有 t=7.180 / 54.117 / 143.412 三处同型。
+            #
+            #   为什么不干脆删冷却：冷却对**动作**（laugh/dance/wave…）防"抽搐"是对的，
+            #   这里只把**移动状态**纳进 force 集合，与 `idle`/`sleep` 同一理由，改动最小。
+            #   ❗ 安全性：本行位于 `if not _play_once and not _perf_blocked ...` 之内
+            #     （见上方 13651），一次性动画（`play_animation_once`）播放期间根本不会
+            #     走到这里 ⇒ 不会打断"表演/倒地恢复"等一次性动画。
+            #   回归锁：`code-quality-audit/第98轮-基础宠物排查/_tools/check98.py` A 段。
+            _use_force = (is_same_category
+                          or new_animation in ('idle', 'sleep')
+                          or new_animation.startswith(('walk_', 'run_')))
             self.change_animation(new_animation, force=_use_force)
         
         # 优化：参考niko_desktop_pet，只在移动时更新动画帧
@@ -13855,7 +14141,8 @@ class RalseiPet(QMainWindow):
                         # 按"角色 alpha 包围盒中心"落位，而不是按画布中心 ——
                         # 修掉 idle 素材右侧 41px 透明留白导致的跨动画横移 40px。
                         cached_sprite = self._compose_anchored_sprite(
-                            _placed, _container, self.current_animation, scale_factor)
+                            _placed, _container, self.current_animation, scale_factor,
+                            self.current_frame)
                         
                         # 初始化缓存
                         if not hasattr(self, '_sprite_cache'):
@@ -13985,7 +14272,8 @@ class RalseiPet(QMainWindow):
                         _placed = sprite.scaled(target_w, target_h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                         # 按"角色 alpha 包围盒中心"落位（同 update_animation 的说明）
                         cached_sprite = self._compose_anchored_sprite(
-                            _placed, _container, self.current_animation, scale_factor)
+                            _placed, _container, self.current_animation, scale_factor,
+                            self.current_frame)
                         
                         # 初始化缓存
                         if not hasattr(self, '_sprite_cache'):

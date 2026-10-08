@@ -350,6 +350,18 @@ class SplatStub:
         self.emotion_system = types.SimpleNamespace(
             react_to_event=lambda e, d: self.events.append(e))
 
+    def speak_event(self, kind, pool=None, face="happy", instant=False):
+        """★ 第98轮补：`trigger_splat` / `handle_fall` 的台词从"直写 `dialogue_ui`"
+        改成走**台词唯一入口 `speak_event`**（`instant=True`）⇒ 桩必须提供它，
+        否则 `RalseiPet.trigger_splat(self)` 会在落地那一瞬抛 AttributeError
+        （第98轮 G2 实测：`'SplatStub' object has no attribute 'speak_event'`）。
+        桩只需复刻**可观测效果**（最终说出一句池中台词），与 `_event_say` 落点一致；
+        B 段判的是"生气动画停满多久"，不吃台词。
+        """
+        if pool:
+            self.msgs.append(pool[0])
+        return ""
+
     def change_animation(self, name, force=False):
         self.anims.append(name)
 

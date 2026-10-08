@@ -219,7 +219,21 @@ class PetAI:
             return True
         if getattr(self.parent, '_is_being_dragged', False):
             return True
-        if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
+        # ★★★ 第98轮修复：`is_gravity_falling`（"建楼"重力坠落）也必须算**关键过程**。
+        #   本方法 docstring 写的是"施法中/游戏中/拖拽中/跳跃中/**掉落中**"，但判据只列了
+        #   `is_jumping` / `is_falling`，**漏了重力坠落** —— 而重力坠落恰恰把
+        #   `is_falling` 置 False（两态互斥，见 `start_falling` 的"状态互斥"修复）。
+        #   ⇒ 坠落期间 pet_ai 照常轮询状态机，走到 `state == "rest"` 就 `rest()` →
+        #     `change_animation("idle", force=True)`；而 **force=True 会绕过优先级闸**
+        #     （`change_animation` 的冷却/优先级检查整段在 `if not force:` 之内；
+        #     `fall` 优先级 4 > `idle` 1）⇒ 坠落动画被顶成**站立 idle**。
+        #   与第94轮补 `is_sleeping`（见下）是同一条理由、同一个位置。
+        #   真机实证（`第98轮-基础宠物排查/_evidence/`）：`run_inj_gfall_after` 唯一残留段
+        #     f156-f161（`fall` 2 帧 → `idle` 4 帧，同注入下修复前是 44/53 帧异常）；
+        #     同期 `rec97_anim.txt` 有 `REJECT 'idle' (cur='fall') kw={}`（无 force 版被拒）。
+        if (getattr(self.parent, 'is_jumping', False)
+                or getattr(self.parent, 'is_falling', False)
+                or getattr(self.parent, 'is_gravity_falling', False)):
             return True
         # ★ 第94轮修复：**睡眠**也必须算“关键过程”。
         #   漏了它的真机症状（probe94_sleep 实测，t=+6.2s）：pet_ai 每 3 秒照常挑动作，
@@ -542,7 +556,13 @@ class PetAI:
         # 正在被拖拽 / 正在跳跃 / 正在掉落也跳过
         if getattr(self.parent, '_is_being_dragged', False):
             return
-        if getattr(self.parent, 'is_jumping', False) or getattr(self.parent, 'is_falling', False):
+        # ★★★ 第98轮修复：同 `_skip_if_critical` —— 重力坠落（`is_gravity_falling`）
+        #   也必须跳过，否则 `trigger_action('idle')` / `trigger_action('walk_*')` 会在
+        #   坠落途中改写动画（真机 `run_inj_gfall_before` 里坠落帧出现
+        #   `walk_up`×13 / `walk_left`×4 / `walk_right`×3 / `idle`×24）。
+        if (getattr(self.parent, 'is_jumping', False)
+                or getattr(self.parent, 'is_falling', False)
+                or getattr(self.parent, 'is_gravity_falling', False)):
             return
         # ★ 第94轮修复：睡眠期间不允许 AI 动作改写动画（同 `_skip_if_critical`）。
         if getattr(self.parent, 'is_sleeping', False):

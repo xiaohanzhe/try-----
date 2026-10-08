@@ -303,7 +303,14 @@ if _u_node is not None:
             _b_assigns.append(n)
     _b_assigns.sort(key=lambda x: x.lineno)
     if _b_assigns:
-        _b_expr = ast.get_source_segment(MAIN_TEXT, _b_assigns[0].value)
+        # ★★ 第98轮：**改用 `ast.unparse` 归一化**成单行表达式。
+        #   原因（本轮实测）：第98轮把 `_use_force` 从单行改成三行（修"站着平移"的
+        #   滑步），`ast.get_source_segment` 会把 CRLF + 续行缩进原样带出 ⇒ 下面的
+        #   `eval` 拿到的是"没有外层括号的隐式续行" ⇒ `SyntaxError` ⇒ `_ev` 静默
+        #   返回 `None`（实测四项全 None ⇒ B2/B4 **假红**）。
+        #   `ast.unparse` 一步得到**语义等价**的单行源码（同 check97 C4 的教训：
+        #   能上 AST 就上 AST，别拼文本；判据报红先怀疑判据）。
+        _b_expr = _unparse(_b_assigns[0].value)
         # ★★ 第95轮：**不回显绝对行号**。原写法打 `main.py:13610`，只要在它上方
         #   插入/删除任何行（第95轮正是在 `update_animation` 里加了守卫+注释 9 行），
         #   基线就必然 DIFF（第95轮全量回归实测：check94 只因行号变化报 DIFF）。
@@ -323,7 +330,12 @@ def _ev(expr, is_same_category, new_animation):
     if not expr:
         return None
     try:
-        return bool(eval(expr, {'__builtins__': {}},
+        # ★ 第98轮：**外层补一对括号**再解析 —— 多行表达式（隐式续行）在括号内合法。
+        #   只用 `eval(expr)` 时，任何换行都会 `SyntaxError`（该异常被下面吞掉
+        #   ⇒ 返回 None ⇒ 判据假红）。括号不改变求值语义。
+        _node = ast.parse('(' + expr + ')', mode='eval')
+        return bool(eval(compile(_node, '<_use_force>', 'eval'),
+                         {'__builtins__': {}},
                          {'is_same_category': is_same_category,
                           'new_animation': new_animation}))
     except Exception:
@@ -334,13 +346,23 @@ check(u'B1 能抽出 `_use_force` 的真实表达式（AST，不是手抄）', b
       'expr=%r' % (_b_expr,))
 _ok_b = False
 if _b_expr:
+    # ★★ 第98轮契约升级：`_use_force` 增加了 `or new_animation.startswith(('walk_','run_'))`
+    #   （修"站着平移"的滑步：`idle → walk_*` 属跨组、原来拿不到 force ⇒ 被跨组冷却
+    #   拦 1.6s ⇒ 保持站立姿势平移）。于是 `(False,'walk_down')` 由 False **变为 True**
+    #   —— 这是**有意的**（`walk_*`/`run_*` 是"状态"不是"动作"）。
+    #   为保证判据仍有鉴别力，负控制换成**表演类**（laugh/dance 必须不 force）。
     _r = (_ev(_b_expr, False, 'sleep'), _ev(_b_expr, False, 'idle'),
-          _ev(_b_expr, False, 'walk_down'), _ev(_b_expr, True, 'walk_down'))
-    _ok_b = (_r[0] is True and _r[1] is True and _r[2] is False and _r[3] is True)
+          _ev(_b_expr, False, 'walk_down'), _ev(_b_expr, True, 'walk_down'),
+          _ev(_b_expr, False, 'run_left'),
+          _ev(_b_expr, False, 'laugh'), _ev(_b_expr, False, 'dance'))
+    _ok_b = (_r[0] is True and _r[1] is True and _r[2] is True and _r[3] is True
+             and _r[4] is True and _r[5] is False and _r[6] is False)
     P(u'     求值 (is_same_category, new_animation) → force：'
-      u'(False,sleep)=%r (False,idle)=%r (False,walk_down)=%r (True,walk_down)=%r' % _r)
-check(u'B2 求值：`sleep` 与 `idle` 都必须 force=True；`walk_down` 必须**不** force'
-      u'（负控制：判据有鉴别力）', _ok_b)
+      u'(False,sleep)=%r (False,idle)=%r (False,walk_down)=%r (True,walk_down)=%r '
+      u'(False,run_left)=%r (False,laugh)=%r (False,dance)=%r' % _r)
+check(u'B2 求值：`sleep`/`idle` 必须 force=True（第94轮）；★ 第98轮追加 '
+      u'`walk_*`/`run_*` 也必须 force=True（否则"站着平移"）；'
+      u'表演类 `laugh`/`dance` 必须**不** force（负控制：判据有鉴别力）', _ok_b)
 
 _mut_expr = (_b_expr or '').replace(u"'sleep'", u"'sleep__x'")
 check(u'B3 负控制·夹具保真：把表达式里的 `\'sleep\'` 换掉后确实变了',

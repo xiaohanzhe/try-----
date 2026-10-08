@@ -463,6 +463,19 @@ class _Stub(object):
     def _virtual_screen_rect(self):
         return QRect(0, 0, 2560, 1600)
 
+    def width(self):
+        # ★ 第98轮补：`generate_new_move_target` 里的 `sprite_size` 由写死的 `50*2.0`
+        #   改成 `int(max(100, self.width(), self.height()))`（修"原地踏步"时定位到的
+        #   根因之一：写死的 100 会让目标点落在窗口外 ⇒ 走不过去 ⇒ 站桩）。
+        #   桩没有真窗口 ⇒ 返回 0 ⇒ `max(100, 0, 0) == 100`，与改造前**逐值一致**，
+        #   C4/C5/C6 测的 `speed` 分布完全不受影响。
+        #   ⚠️ 少这一个方法，本套件会在**导入期** `AttributeError` ⇒ 42 条判据全丢
+        #      （G2 里表现为 "exit=1 / fail=0" 的 traceback，而不是正常的 [FAIL] 行）。
+        return 0
+
+    def height(self):
+        return 0
+
 
 _EMOS = ['excited', 'energetic', 'curious', 'happy',
          'peaceful', 'shy', 'sad', 'tired']

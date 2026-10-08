@@ -2100,6 +2100,10 @@ SUITES = [
                 'C ★★★ `update_animation` 必须钉住 `sleep`（AST + 静止分支 idle 覆盖佐证 + 负控制） / '
                 'D ★★★ 就寝跨天闸（**行为级**：同日 22:58 不许醒 · 次日 07:00 必须醒 · '
                 '次日 00:30/06:59 不许醒 · 小憩睡与缺日期两个负控制 + 旧判据鉴别力自证） / '
+                'F ★★ 就寝窗口三态（**行为级**：注入时刻喂 `_bedtime_tick` —— 未到点不睡且不标记 · '
+                '窗口内真去睡 · ★窗口已过**不补睡但仍标记当晚** · 窗口内「有事」不标记（负控制）· '
+                '窗口末点那一秒仍算窗口内（鉴别力自证）。**第98轮补**：承接 `run_all.py` 的 '
+                '`_SLEEP_WINDOW_NOISE` 归一化（check89 原先依赖墙钟 ⇒ 逐字节基线恒假红）所抹掉的语义） / '
                 'E 判据自身体检（★ 恒真防护：坏桩必须与好桩可区分 · 记账守恒）',
     },
     # 第92轮 · **宠物"走不动/站桩"**（位移结算）。
@@ -2324,6 +2328,50 @@ SUITES = [
                 '⇒ `except` **静默返回原文** ⇒ B1 把**注释里**的名字当代码引用 ⇒ 假红，'
                 '**前后栽两次**；改用 `ast.unparse(函数节点)` 一步到位）',
     },
+    {
+        'id': 'check98',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第98轮-基础宠物排查', '_tools', 'check98.py'),
+        'offscreen': True,
+        'desc': '第九十八轮：三处「用户视角可感知」的修复不许静默回退 —— '
+                'A ★★★ **滑步**（"站着平移"）：`update_animation` 的 `_use_force` 原式 '
+                '`is_same_category or new_animation in (\'idle\', \'sleep\')` ⇒ '
+                '`idle → walk_right` 属"跨组"且新动画非 idle ⇒ `force=False` ⇒ 被 '
+                '`change_animation` 的**跨组冷却 ×2**（0.8×2 = 1.6s）拦下 ⇒ 宠物'
+                '**保持站立姿势原地平移**最多 1.6s；修 = 增 `or new_animation'
+                '.startswith((\'walk_\', \'run_\'))`（`walk_*`/`run_*` 是**状态**不是动作）；'
+                '真机 A/B：修复前 reject 日志 14 条 `REJECT \'walk_*\' (cur=\'idle\') '
+                'kw={\'force\': False}` + CSV 持续段 2 段（f116-f118 1.0s / f542-f545 '
+                '1.37s），修复后 **0 条 / 0 段**；★ 判据（A2 源码级 + A3 用**产品自己的'
+                '表达式**求值 walk→True/laugh→False + A4 真 `change_animation` 桩验证'
+                '冷却内 force=False 被拒 / force=True 通过 + A5 证明 `force=True` '
+                '**绕过优先级闸** + A6 恢复式变异负控制）—— ★★ 判据防坑：片段'
+                '**必须同容器尺寸**才算滑步，`walk_`(38x80)→`idle`(138x94) 的容器'
+                '重定心会让窗口左上角必然位移 `(-50,-7)`，**可见宠物并不动** / '
+                'B ★★★ **内置对话收口**：`start_fall`/`trigger_splat`/`handle_fall` '
+                '的台词不许再直写 `dialogue_ui.add_dialogue`（绕过台词唯一入口 '
+                '`speak_event`→`_event_say`），9 处改走 '
+                '`speak_event("fall", [...], face, instant=True)`；★ 判据（B1 源码级'
+                '**剥注释** + B2 真跑 `start_fall` 桩验证"台词走 speak_event、直写调用数 0" '
+                '+ B3 恢复式变异负控制）—— ★★ `start_fall` **原文**里有 2 处 '
+                '`dialogue_ui`（**全在注释里**）⇒ 纯文本扫描**假红**（同型坑第四次发作） / '
+                'C ★★★ **重力坠落不许被 `idle` 顶掉**：`update_animation` 的 if/elif 链'
+                '原本覆盖 is_jumping / is_falling / is_recovering / is_using_item / '
+                'is_spellcasting / is_sleeping / is_moving，**唯独漏 `is_gravity_falling`** '
+                '⇒ 落到链尾 `else` 算出 `idle`，而 `idle` 在 force 集合里 ⇒ `force=True` '
+                '**绕过优先级闸**（`fall`=4 > `idle`=1）⇒ `start_falling` 刚播上的 '
+                '`fall`/`fall_mad` 在 ~167ms 内被顶成站姿；用户视角 = "**从窗口上掉下来时'
+                '保持站姿往下滑**"（真机 `run_natural_postfix` f228-f234 '
+                '`is_gravity_falling=True` 而 `anim=\'idle\'`，y 15→1506 跨 3.5s，'
+                '抽帧拼图确认）；修 = 增 `elif self.is_gravity_falling:` 支'
+                '**保持当前动画**；★ 判据（C1 链可达 + C2 链上存在该支 + C3 恢复式变异'
+                '负控制）—— ★★ C3 锚点两次自我打脸：① 只按分支头替换会改到 '
+                '`update_movement` 里那处同名分支（**假绿**），锚点必须带**分支体**；'
+                '② 源码是 CRLF 读入，含 `\\n` 的锚点**匹配不到**） / '
+                'D 判据自身体检（D1 恒真防护 · D2 AST 数真实 print 调用 · D3 被测文件在盘 · '
+                'D4 剥注释链自证（**合成样本**，不依赖产品注释存续） · D5 成功标记字面量'
+                '只能是打印模板，防 G2 计数自匹配）',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
@@ -2456,6 +2504,62 @@ _NPC_ROAM_NOISE = re.compile(
     r'^(?:<TS>\s*)?(?:\[INFO\]\s*)?ralsei_pet\.main — NPC \S+ 自己挪到了 \S+$'
 )
 
+# ---------------------------------------------------------------------------
+# ★ 第98轮：**本地 AI（Ollama + 代理）连接失败**的日志行 —— 环境噪声，整行剔除。
+#
+#   起因（实测）：`check89` 会真机跑一次 `RalseiPet()`，其中"就寝到点"那一步会让 NPC/宠物
+#   开口 ⇒ 触发一次**真实的**本地 AI 流式请求。本机 Ollama 不在跑 / 代理状态不同 ⇒
+#   同一份代码、同一个沙箱、**连续两次运行**打出来的错误文本都不一样：
+#     基线：`… 本地 AI 流式请求失败（忽略）: HTTPConnectionPool(host='127.0.0.1',
+#            port=64650): Max retries exceeded … ProxyError('Unable to connect to proxy',
+#            ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', …))`
+#     复跑：`… 本地 AI 流式 HTTP 502: upstream connect failed: 由于目标计算机积极拒绝，
+#            无法连接。 (os error 10061)`
+#   ⇒ 逐字节基线对它**恒假红**（`--update` 也稳不住：刚 update 完复跑又变）。
+#
+#   ⚠️ 代价（写清楚）：抹平后**"本地 AI 整体坏掉"在这条 stdout 上看不见了**。
+#      真正守 AI 链路的是一批**不依赖网络**的套件（`s7_event_speech` 的"AI 不可用 ⇒
+#      退回罐头/沉默"、`dialog_*` 系列、`check98` 的 `speak_event` 唯一入口断言）。
+#      本行承载的只是"本机此刻连不上 Ollama"这一**与被测行为无关**的环境状态。
+#
+#   形态：`<TS> [INFO|WARNING|ERROR] ralsei_pet.LocalAI — 本地 AI 流式…`
+#        （时间戳已被 `_TS` 归一成 `<TS>`；只匹配"流式请求失败/HTTP 4xx-5xx/超时"，
+#          **不**匹配其它 LocalAI 日志 —— 免得把"AI 已就绪"这类有用信息也抹掉。）
+# ---------------------------------------------------------------------------
+_LOCAL_AI_NOISE = re.compile(
+    r'^(?:<TS>\s*)?(?:\[(?:INFO|WARNING|ERROR)\]\s*)?ralsei_pet\.LocalAI\s+—\s+本地 AI '
+    r'流式(?:请求)?(?:失败|HTTP \d+|超时)'
+)
+
+
+# ---------------------------------------------------------------------------
+# ★ 第98轮：**就寝决策**的日志行 —— 墙钟驱动，整行剔除。
+#
+#   起因（实测）：`check89` 会真机跑一次 `RalseiPet()`，而它的定时器每 5 秒调一次
+#   `RalseiPet._bedtime_tick`。这个函数走哪条分支**完全由运行时的墙上时钟决定**：
+#     基线（那次录制 ≈22:59，正落在就寝窗口内）：
+#       `… [就寝] 到点（目标 22:59），回房间睡觉`（+ 随后 [就寝] 回房间…/由小憩升级为就寝睡）
+#     复跑（此刻 23:12，窗口 22:59~23:09 已过）：
+#       `… [就寝] 今晚（2026-10-08）窗口 22:59~23:09 已过，不再补睡`
+#   ⇒ 同一份代码、同一个沙箱，**换个时刻跑**就输出不同行数/不同文本 ⇒ 逐字节基线对它
+#      **恒假红**（`--update` 也稳不住：换一个时刻再跑又变。第98轮连续三次全量都栽在它，
+#      前两次我误判成"代理/服务状态"，真凶是墙钟）。
+#   形态：`ralsei_pet.main — [就寝] …`（时间戳已被 `_TS` 归一；以下就寝日志同族）。
+#
+#   ⚠️ 代价（写清楚）：抹平后**整个就寝日志族**（到点 / 窗口已过 / 回房间 / 升级 /
+#      自动醒来）在这条 stdout 上都**看不见了**。真正守就寝语义的是**不依赖墙钟**
+#      的判据：
+#        · `check91` F 段（同轮补）：真调 `_bedtime_tick(now=<注入>)` 断言窗口三态 ——
+#          未到点不睡且不标记 / 窗口内真去睡 / ★窗口已过**不补睡但仍标记当晚** /
+#          窗口内「有事」返 False 却不标记（负控制）/ 窗口末点那一秒仍算窗口内（`>` 非 `>=`）；
+#        · `check91` D 段：跨天闸（入睡当日不醒 / 次日 07:00 醒 / 00:30 与 06:59 不醒）；
+#        · `check80` F 段：层3 就寝接线（`decide_sleep` / `sleep_fn` 真注入）。
+#      ❗ 仍未覆盖：`go_to_bed()` 内部"回房间失败 ⇒ 就地就寝"的降级路径（第98轮登记为遗留）。
+# ---------------------------------------------------------------------------
+_SLEEP_WINDOW_NOISE = re.compile(
+    r'^(?:<TS>\s*)?(?:\[(?:INFO|WARNING|ERROR)\]\s*)?ralsei_pet\.main\s+—\s+\[就寝\]'
+)
+
 
 def normalize(text):
     """把"每次运行都不一样"的东西抹平，只留下语义内容。"""
@@ -2482,6 +2586,8 @@ def normalize(text):
         if _JIEBA_NOISE.match(ln):   # jieba 缓存重建噪声：见常量注释
             continue
         if _NPC_ROAM_NOISE.match(ln):  # ★ 第95轮：NPC 自主移动（真时钟驱动，见常量注释）
+            continue
+        if _LOCAL_AI_NOISE.match(ln) or _SLEEP_WINDOW_NOISE.match(ln):  # ★ 第98轮：本地 AI 连接失败 + 就寝决策（见常量注释）
             continue
         if not ln:
             if blank:

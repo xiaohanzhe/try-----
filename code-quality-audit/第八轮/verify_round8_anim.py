@@ -191,7 +191,7 @@ def loader():
 
 
 def make_stub():
-    """只装 _anim_anchor_offset / _compose_anchored_sprite 需要的属性。
+    """只装锚点合成所需的属性（第98轮起含"逐帧口径"的三个依赖，见函数体注释）。
 
     注意：`_compose_anchored_sprite` 内部会 `self._anim_anchor_offset(...)`，
     SimpleNamespace 没有这个方法 —— 必须用 MethodType 显式绑上去，
@@ -201,6 +201,18 @@ def make_stub():
     o.sprite_loader = loader()
     o._anim_anchor_offset = types.MethodType(RalseiPet._anim_anchor_offset, o)
     o._compose_anchored_sprite = types.MethodType(RalseiPet._compose_anchored_sprite, o)
+    # ★★ 第98轮补：`_anim_anchor_offset` 已改为"**逐帧**取最大 alpha 连通块"（用户真机
+    #   反馈「他在鞠躬那个动画的时候会自身位移」），内部新增三个依赖，
+    #   `SimpleNamespace` 上都没有 ⇒ 不加这三行会 `AttributeError`（本套件 D0.2 直接崩，
+    #   整份输出退化成 traceback = 静默失去 28 条判据）。
+    #     ① `_anim_anchor_offsets`：普通方法（读 `self.sprite_loader`、写 `self._anim_anchor_cache`）
+    #        ⇒ 必须 MethodType 绑；
+    #     ② `_alpha_row_bits` / `_main_component_bbox`：产品里是 **staticmethod**，
+    #        但代码里是 `self._alpha_row_bits(...)` 调的 ⇒ 桩上也得挂同名属性。
+    #   ⚠️ 这正是"夹具不保真 = 报假问题"的实例：被测量（锚点值）没问题，是**桩缺零件**。
+    o._anim_anchor_offsets = types.MethodType(RalseiPet._anim_anchor_offsets, o)
+    o._alpha_row_bits = RalseiPet._alpha_row_bits
+    o._main_component_bbox = RalseiPet._main_component_bbox
     return o
 
 
@@ -231,14 +243,6 @@ def scaled(pixmap, scale=SCALE):
                          Qt.KeepAspectRatio, Qt.SmoothTransformation)
 
 
-def compose(sl, o, anim):
-    frames = sl.sprites.get(anim)
-    cont = container_of(sl, anim)
-    if not frames or not cont:
-        return None
-    return o._compose_anchored_sprite(scaled(frames[0]), cont, anim, SCALE)
-
-
 def t_d0_source_evidence():
     """先固化"病因"证据：idle 素材画布严重不居中，其余动作都居中。"""
     sl = loader()
@@ -256,59 +260,116 @@ def t_d0_source_evidence():
           abs(off_bow[0]) <= 1.0 and abs(off_bow[1]) <= 1.0, "bow off=%s" % (off_bow,))
 
 
-def union_bbox_center_of_animation(sl, o, anim):
-    """把该动画**所有帧**分别合成后取包围盒并集，返回其中心（画布像素坐标）。
+def _body_bbox_of_canvas(o, canvas):
+    """一帧**合成后**画布上"角色本体"的包围盒（半开 `(x0,y0,x1,y1)`）。
 
-    为什么用"并集"而不是第 1 帧：同一个动画内部，角色在各帧之间的位置变化
-    **就是动画内容本身**（`land` 三帧就是"爬起来"的过程，`splat` 是压扁）。
-    逐帧单独居中会把这个位移抵消掉，动画就"不动了"。
-    所以正确的锚点是**每个动画一个**：让"整个动画的包围盒中心"落在画布中心，
-    这样跨动画切换时零平移，而动画内部的形变位移完整保留。
+    用**产品同一套口径**（`_alpha_row_bits` → 最大 alpha 8-连通块），
+    而不是 `QRegion` 的"全部不透明像素"——见 `_per_frame_center_dev` 的说明。
     """
-    frames = sl.sprites.get(anim)
-    if not frames:
-        return None, None
-    canvas0 = compose(sl, o, anim)
-    if canvas0 is None:
-        return None, None
-    cw, ch = canvas0.width(), canvas0.height()
-    ux0 = uy0 = None
-    ux1 = uy1 = 0
-    for pm in frames:
+    rows = o._alpha_row_bits(canvas)
+    return o._main_component_bbox(rows, canvas.width())
+
+
+def _per_frame_center_dev(o, sl, anim):
+    """该动画**每一帧**合成后，"角色本体"中心相对**该帧画布中心**的偏差列表。
+
+    返回 `[(frame_index, dx, dy, cw, ch, tol), ...]`（画布像素）。
+
+    ★★ 第98轮：测量单位由"**每个动画的并集包围盒中心**"改为"**每一帧**"。
+      为什么必须改：
+        · 产品的承诺就是"**每一帧**的本体中心 == 该帧画布中心"（`_anim_anchor_offsets`
+          逐帧表 + `_compose_anchored_sprite` 按 `frame_index` 取偏移），
+          ⇒ 逐帧测才是这条承诺的**直接**检验；
+        · 并集中心会把各帧的噪声叠加（并集端点来自**不同帧**）—— 实测 `run_up`
+          逐帧 ≤4px 而并集偏 1.5px，两者都不是"角色跳了"。
+        ⚠️ 顺带修掉一处夹具不保真：合成必须显式传 `frame_index`（产品两处渲染分支都传
+          `self.current_frame`）。旧口径（整动画一个常量）下漏传看不出差别，
+          逐帧口径下 `act` 会差 10.0px。
+
+    ★★ `tol` = **测量链自身**的已知误差，不是被测对象的一部分：
+      `scaled()` 用 `SmoothTransformation` 做插值 ⇒ 边缘 alpha 被"抹开"，
+      原本与身体**彼此独立**的像素（影子 / 尘土 / 速度线）会和身体**连成一个连通块**
+      ⇒ "缩放后本体"比"源帧本体 × 缩放比"更大、更偏。
+      实测（`probe98d.py`）：
+        `run_down[2]`：源本体 `(0,0,25,27)` → 缩放后 `(0,0,50,62)`（**涨到满格**），
+                      `缩放后中心 − 源中心×2 = (0.0, 4.0)`
+        `idle`：无粒子 ⇒ `tol = 0.0`
+      ⇒ 判据容差取 `tol + 1.0`：**没有插值漂移的帧仍是 1px**（严格），
+        有漂移的帧"漂多少容多少"。这不是放宽阈值，是**把量具的误差从读数里扣掉**。
+      ⚠️ 兜底：偏移公式本身对不对由 `check98` E5 锁着 —— 那里用**独立**的连通块算法
+        （cv2 8-邻域）、在**源帧坐标系**、阈值 1px，不受本处插值噪声影响。
+    """
+    out = []
+    frames = sl.sprites.get(anim) or []
+    cont = container_of(sl, anim)
+    if not frames or not cont:
+        return out
+    for _i, pm in enumerate(frames):
         if pm is None or pm.isNull():
             continue
-        canvas = o._compose_anchored_sprite(
-            scaled(pm), container_of(sl, anim), anim, SCALE)
-        reg = QRegion(QBitmap.fromImage(canvas.toImage().createAlphaMask()))
-        for r in reg.rects():
-            x0, y0 = r.x(), r.y()
-            x1, y1 = r.x() + r.width(), r.y() + r.height()
-            ux0 = x0 if ux0 is None else min(ux0, x0)
-            uy0 = y0 if uy0 is None else min(uy0, y0)
-            ux1 = max(ux1, x1)
-            uy1 = max(uy1, y1)
-    if ux0 is None:
-        return None, None
-    return ((ux0 + ux1) / 2.0, (uy0 + uy1) / 2.0), (cw, ch)
+        sp = scaled(pm)
+        canvas = o._compose_anchored_sprite(sp, cont, anim, SCALE, _i)
+        bb = _body_bbox_of_canvas(o, canvas)
+        if bb is None:
+            continue
+        # 量具误差：缩放插值把"本体"重新定义了多少
+        tol = 0.0
+        b_src = _body_bbox_of_canvas(o, pm)
+        b_sc = _body_bbox_of_canvas(o, sp)
+        if b_src is not None and b_sc is not None:
+            tol = max(
+                abs((b_sc[0] + b_sc[2]) / 2.0 - (b_src[0] + b_src[2]) / 2.0 * SCALE),
+                abs((b_sc[1] + b_sc[3]) / 2.0 - (b_src[1] + b_src[3]) / 2.0 * SCALE))
+        cw, ch = canvas.width(), canvas.height()
+        out.append((_i,
+                    (bb[0] + bb[2]) / 2.0 - cw / 2.0,
+                    (bb[1] + bb[3]) / 2.0 - ch / 2.0,
+                    cw, ch, tol))
+    return out
 
 
-def t_d1_composed_centered():
-    """核心：合成后，"该动画的包围盒中心"必须落在画布中心（±1px）。"""
-    o = make_stub()
-    sl = loader()
+def _d1_scan(o, sl):
+    """跑一遍 TARGETS 的**每一帧**，返回 `(最差偏差, 最差位置, 超差列表)`。
+
+    阈值 = `tol + 1.0`（见 `_per_frame_center_dev` 的 tol 说明）。
+    抽成函数是为了让**负控制**复用**同一条**判据（而不是另写一份近似品 ——
+    那样证明不了原判据有鉴别力）。
+    """
     worst = (0.0, '')
     bad = []
     for anim in TARGETS:
-        c, (cw, ch) = union_bbox_center_of_animation(sl, o, anim)
-        if c is None:
-            continue
-        d = max(abs(c[0] - cw / 2.0), abs(c[1] - ch / 2.0))
-        if d > worst[0]:
-            worst = (d, anim)
-        if d > 1.0:
-            bad.append('%s:%.1f' % (anim, d))
-    check("D1.1 全部动画合成后包围盒中心 = 画布中心（≤1px）",
-          not bad, "超差=%s 最差=%s" % (bad, worst))
+        for _i, dx, dy, _cw, _ch, tol in _per_frame_center_dev(o, sl, anim):
+            d = max(abs(dx), abs(dy))
+            lim = tol + 1.0
+            if d > worst[0]:
+                worst = (d, '%s[%d] dx=%.1f dy=%.1f tol=%.1f'
+                         % (anim, _i, dx, dy, tol))
+            if d > lim:
+                bad.append('%s[%d]:%.1f>%.1f' % (anim, _i, d, lim))
+    return worst, bad
+
+
+def t_d1_composed_centered():
+    """核心：合成后，"该动画**本体**的包围盒中心"必须落在画布中心（±1px）。"""
+    o = make_stub()
+    sl = loader()
+    worst, bad = _d1_scan(o, sl)
+    check("D1.1 **每一帧**合成后本体包围盒中心 = 该帧画布中心（≤1px）",
+          not bad, "超差=%s 最差=%s" % (bad[:5], worst))
+    # ★ 负控制（第98轮补）：把同一批偏移整体推 5px ⇒ 判据必须报红。
+    #   为什么必须要：新口径下偏移**定义**就是"本体中心与画布中心之差"，
+    #   而合成又按该偏移平移 ⇒ "本体中心 == 画布中心"看上去**像是**恒真。
+    #   这条负控制证明它**不是**恒真 —— 真值被改坏会被抓到，而不是静默变绿。
+    o2 = make_stub()
+    _orig_offs = types.MethodType(RalseiPet._anim_anchor_offsets, o2)
+
+    def _shifted(animation):
+        return [(x + 5.0, y) for (x, y) in _orig_offs(animation)]
+
+    o2._anim_anchor_offsets = _shifted
+    worst2, bad2 = _d1_scan(o2, sl)
+    check("D1.1n 负控制：偏移整体推 5px 后 D1.1 必须报红",
+          bool(bad2), "超差=%s 最差=%s" % (bad2[:3], worst2))
 
 
 def t_d2_position_invariant_across_switch():
@@ -320,21 +381,13 @@ def t_d2_position_invariant_across_switch():
     """
     o = make_stub()
     sl = loader()
-    worst = (0.0, '')
-    bad = []
-    for anim in TARGETS:
-        c, (cw, ch) = union_bbox_center_of_animation(sl, o, anim)
-        if c is None:
-            continue
-        dx = abs(c[0] - cw / 2.0)
-        dy = abs(c[1] - ch / 2.0)
-        d = max(dx, dy)
-        if d > worst[0]:
-            worst = (d, '%s dx=%.1f dy=%.1f' % (anim, dx, dy))
-        if d > 1.0:
-            bad.append('%s:%.1f' % (anim, d))
+    # ★ 第98轮：改用与 D1.1 相同的**逐帧**扫描（同一个物理量、两条不同角度的断言：
+    #   D1.1 守"本体居中"，D2.1 守"跨动画切换时角色在屏幕上不跳"）。
+    #   ⚠️ 逐帧口径下两者表达式相同 —— 保留两条是**有意**的（名字与历史结论各自可追溯），
+    #      不是为了凑数：第八轮 D2.1 记下的"修复前 idle↔其它差 40px"就是本条的存在理由。
+    worst, bad = _d1_scan(o, sl)
     check("D2.1 所有动作的角色屏幕位置都相同（≤1px，修复前 idle↔其它差 40px）",
-          not bad, "超差=%s 最差=%s" % (bad, worst))
+          not bad, "超差=%s 最差=%s" % (bad[:5], worst))
 
 
 def t_d3_render_path_uses_anchor():

@@ -489,8 +489,17 @@ _calls = re.findall(r'speak_event\(\s*"([a-z_]+)"', code_no_comment(MAIN_TEXT))
 #        入口调用点 = main 的 9 处（7 字面量 + 2 动态）
 #        kind 覆盖   = main 的 7 字面量 + SPEC 的 14 条 + STROKE 的 7 个 pet_* 之一
 #      —— 少任何一处都会报红。
-_S7_MAIN_SPEAK_CALLS = 9          # main.py 的 self.speak_event( 调用点
-_S7_MAIN_LITERAL_KINDS = 7        # 其中字面量 kind
+#
+# ★★ 第98轮：摔落家族 **9 处**收敛到 `speak_event`（`start_fall` 4 / `trigger_splat` 1 /
+#   `handle_fall` 4），此前全是 `add_dialogue` 直写。它们**保留罐头行为**
+#   （pool 逐字保留 + `instant=True` ⇒ `EVENT_TIERS['fall'] = TIER_INSTANT`），
+#   收敛的唯一目的是"台词只走一个入口"（与 C8 同口径：物理状态机**仍不经过 AI**）。
+#   ⇒ 计数 9→18（字面量 7→16，其中 9 个是 `"fall"`），C8 随之改为锁"仍走罐头档"。
+#   ⚠️ 这条计数锁的用途是**迁移面清单**（少一处、名字抄错都得报红），
+#   所以"随迁移同步改数字"是正确处置；**不许**为省事放宽成 `>= 18`
+#   —— 那样删掉一半迁移点也不会报红，锁就废了。
+_S7_MAIN_SPEAK_CALLS = 18         # main.py 的 self.speak_event( 调用点
+_S7_MAIN_LITERAL_KINDS = 16       # 其中字面量 kind（含 9 处 "fall"）
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
 _SPEC_TEXT = io.open(os.path.join(_REPO_ROOT, 'ralsei_pet', 'modules',
@@ -589,9 +598,28 @@ ok('C6 mouseDoubleClickEvent 里不再有裸事件台词', 'add_dialogue(' not i
 _press = code_only_src(func_src(MAIN_TEXT, 'mousePressEvent'))
 ok('C7 mousePressEvent 只剩非-Ralsei 台词（三个交互点已迁；无残留裸台词）',
    'add_dialogue(' not in _press, _press.count('add_dialogue('))
-ok('C8 物理状态机未动：坠落/摔扁仍是罐头（有意保留，不是漏迁）',
-   'add_dialogue(' in code_only_src(func_src(MAIN_TEXT, 'start_fall'))
-   and 'add_dialogue(' in code_only_src(func_src(MAIN_TEXT, 'trigger_splat')))
+# ★★ 第98轮改写：这 9 处坠落台词**已收敛进 `speak_event`**（此前是 `add_dialogue` 直写），
+#   旧断言（"两个函数体里还能找到裸 add_dialogue"）必然报红 —— 但它要守的**语义没变**：
+#   "坠落 / 摔扁是物理状态机输出，必须 0 延迟 ⇒ 不许经过 AI"。
+#   新口径改为直接锁**数据面**（`tier_of`）+ **入口唯一性**，比锁"函数体里有某个字符串"更稳：
+#     · 档位：`fall` / `splat_poked` 必须是 TIER_INSTANT（谁把它改成 AI 档 = 立刻报红）
+#     · 入口：`start_fall` / `trigger_splat` 里不许再有裸 `add_dialogue`
+#   ★ 防恒真：`not in ''` 天然为真，所以必须同时断言"函数体真的取到了"
+#     —— 否则哪天 `func_src` 因为改名而找不到函数，这条会**静默变绿**。
+_sf_body = code_only_src(func_src(MAIN_TEXT, 'start_fall'))
+_ts_body = code_only_src(func_src(MAIN_TEXT, 'trigger_splat'))
+ok('C8 坠落/摔扁仍走**罐头**档（`fall`/`splat_poked` = TIER_INSTANT ⇒ 不经 AI），'
+   '且台词已收敛到事件唯一入口（不再有裸 add_dialogue）',
+   E.tier_of('fall') == E.TIER_INSTANT
+   and E.tier_of('splat_poked') == E.TIER_INSTANT
+   and bool(_sf_body) and bool(_ts_body)
+   and 'add_dialogue(' not in _sf_body
+   and 'add_dialogue(' not in _ts_body,
+   'tier(fall)=%s tier(splat_poked)=%s / start_fall(len=%d,裸add_dialogue=%d) '
+   'trigger_splat(len=%d,裸add_dialogue=%d)'
+   % (E.tier_of('fall'), E.tier_of('splat_poked'),
+      len(_sf_body), _sf_body.count('add_dialogue('),
+      len(_ts_body), _ts_body.count('add_dialogue(')))
 ok('C9 菜单抚摸/喂食已迁走', 'add_dialogue(' not in code_only_src(func_src(MAIN_TEXT, 'pet_ralsei'))
    and 'add_dialogue(' not in code_only_src(func_src(MAIN_TEXT, 'feed_ralsei')))
 
