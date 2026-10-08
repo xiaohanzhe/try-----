@@ -9404,6 +9404,15 @@ class RalseiPet(QMainWindow):
         # 提取反应文案中"！"之后的部分（用于拼接"小心！这个X..."），
         # 修复：原 split('！')[1] 在 dialogue 不含"！"时 IndexError；含"！"但后面为空时
         # 得到空串。统一安全提取。
+        #
+        # ★★ 第96轮b 状态说明：下面 `reaction['dialogue']` 的拼接（9413/9419/9425/9431
+        #   与 9437-9443）**自本轮起不再被任何地方显示**（原先唯一消费者是
+        #   "直写 dialogue_ui" 那两行，已按口径删除）。
+        #   此处**刻意保留**：① 改动最小（不动 dict 的既有形状，避免下游误伤）；
+        #   ② 它们是"观察素材"的现成语义参考，将来若要把这类旁白并入 AI 上报
+        #   （`_note_desktop_observation`）可直接取用。
+        #   ❗ 谁要再拿 `reaction['dialogue']` 去显示，必须先回到 `speak_event` 口径
+        #   （"全权交给 AI"，见该函数 docstring），别再直写 dialogue_ui。
         def _after_bang(text):
             return text.split('！', 1)[1] if '！' in text else text
             
@@ -9442,9 +9451,24 @@ class RalseiPet(QMainWindow):
         elif material == "paper":
             reaction['dialogue'] += " 纸做的东西要小心处理哦！"
             
-        # 显示对话
-        self.dialogue_ui.add_dialogue("ralsei", reaction['dialogue'], reaction['emotion'])
-        self.dialogue_ui.show_dialogue()
+        # ★★★ 第96轮b 修复（口径违规 · 真机实证）：**删掉"直接弹罐头台词"**。
+        #   原实现在这里 `dialogue_ui.add_dialogue("ralsei", reaction['dialogue'], …)`
+        #   + `show_dialogue()`，**绕过了台词唯一入口 `speak_event`** ⇒ 宠物自主漫游
+        #   靠近桌面图标时会冒出一句写死的话，例如实测抓到的
+        #   「这是文本文件呢！ 纸做的东西要小心处理哦！」。
+        #   这与用户 2026-09-19 定的口径**直接冲突**：
+        #     `speak_event(pool=None)` 的 docstring 逐字 —— "不给内置台词：说不了就
+        #     不说话，宁可安静也不甩一句写死的台词。这是'全权交给 AI'的口径"。
+        #   真机三对照（`_tools/probe96b_canned.py`，落 `_evidence/probe96b_canned.txt`）：
+        #     · A 正控制：本函数**确实**弹出台词，且 `speak_event` 增量 = 0（绕过实锤）
+        #     · B 负控制：`speak_event(pool=None)` 确实沉默（口径本身没坏）
+        #     · C 正控制：`speak_event(pool=[...])` 确实会说（入口可用）
+        #   ⇒ 按第八轮同款思路（"规则系统只当眼睛，不当演员"）—— 观察已经由下面的
+        #     `_note_desktop_observation` **完整上报**给 AI（质地/重量/温度/材质逐项对应），
+        #     要不要开口、说什么，完全交给 AI。规则系统不再自己张嘴。
+        #
+        #   ★ 保留 `reaction['emotion']` 的赋值（下面 `add_emotion` 真消费它），
+        #     只是**不再把它拼成台词显示出去**。
             
         # 播放相应动画
         # ===== 第八轮：特殊动画不再由规则引擎自行播放，只把观察上报给 AI =====
@@ -10790,7 +10814,16 @@ class RalseiPet(QMainWindow):
     
     def mouseMoveEvent(self, event):
         # 鼠标移动事件，用于拖动窗口
-        if event.buttons() == Qt.LeftButton:
+        # ★★ 第96轮b 修复：`event.buttons() == Qt.LeftButton` 是**等值**判断，
+        #   而 Qt 的 `buttons()` 返回的是**按位或**的组合值（`MouseButtons` 枚举）。
+        #   用户在按住左键拖拽期间若**又按下右键**（多键鼠标 / 触控板 / 触屏常发生），
+        #   `buttons()` 变成 `LeftButton | RightButton` ⇒ `== LeftButton` 为假 ⇒
+        #   直接掉进 `else` 分支：清掉 `_is_being_dragged`、删 `_drag_speed`、
+        #   并触发"悬停 + 抚摸检测"。用户视角 = **拖到一半突然松脱、跟着又乱动**。
+        #   改成**位检测**（`&`）：只要左键仍在按下就继续拖拽，语义才是"左键拖着"。
+        #   ⚠️ 这只是把"左键按下"的判定修正确，**不改变**单按左键的既有行为
+        #   （单按时 `buttons()` 恰等于 `LeftButton`，`&` 与 `==` 结果相同）。
+        if event.buttons() & Qt.LeftButton:
             # 标记为正在拖拽
             self._is_being_dragged = True
             

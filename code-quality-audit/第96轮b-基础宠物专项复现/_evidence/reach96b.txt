@@ -1,0 +1,106 @@
+==============================================================================
+# 候选可达性普查（读写点计数）
+==============================================================================
+
+trigger_surprise
+  定义: [('ralsei_pet\\src\\main.py', 9276)]
+  赋值: 0 处 []
+  读/调: 2 处 [('ralsei_pet\\modules\\pet_ai.py', 80), ('ralsei_pet\\modules\\pet_ai.py', 138)]
+
+trigger_shy
+  定义: [('ralsei_pet\\src\\main.py', 9282)]
+  赋值: 0 处 []
+  读/调: 0 处 []
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+trigger_unhappy
+  定义: [('ralsei_pet\\src\\main.py', 9288)]
+  赋值: 0 处 []
+  读/调: 0 处 []
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+trigger_victory
+  定义: [('ralsei_pet\\src\\main.py', 9294)]
+  赋值: 0 处 []
+  读/调: 0 处 []
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+trigger_laugh
+  定义: [('ralsei_pet\\modules\\pet_ai.py', 128), ('ralsei_pet\\src\\main.py', 9267)]
+  赋值: 0 处 []
+  读/调: 1 处 [('ralsei_pet\\modules\\pet_ai.py', 78)]
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+trigger_teasplash
+  定义: [('ralsei_pet\\src\\main.py', 9299)]
+  赋值: 0 处 []
+  读/调: 0 处 []
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+reset_special_states
+  定义: [('ralsei_pet\\src\\main.py', 9304)]
+  赋值: 0 处 []
+  读/调: 0 处 []
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+is_shy
+  定义: 无
+  赋值: 4 处 [('ralsei_pet\\src\\main.py', 5764), ('ralsei_pet\\src\\main.py', 9284), ('ralsei_pet\\src\\main.py', 9308), ('ralsei_pet\\src\\main.py', 13997)]
+  读/调: 3 处 [('ralsei_pet\\src\\main.py', 13474), ('ralsei_pet\\src\\main.py', 13576), ('ralsei_pet\\src\\main.py', 13994)]
+  ⚠️ 连定义都没有
+
+is_unhappy
+  定义: 无
+  赋值: 4 处 [('ralsei_pet\\src\\main.py', 5765), ('ralsei_pet\\src\\main.py', 9290), ('ralsei_pet\\src\\main.py', 9309), ('ralsei_pet\\src\\main.py', 14003)]
+  读/调: 3 处 [('ralsei_pet\\src\\main.py', 13469), ('ralsei_pet\\src\\main.py', 13477), ('ralsei_pet\\src\\main.py', 14000)]
+  ⚠️ 连定义都没有
+
+is_wearing_suit
+  定义: 无
+  赋值: 1 处 [('ralsei_pet\\src\\main.py', 5752)]
+  读/调: 1 处 [('ralsei_pet\\src\\main.py', 13466)]
+  ⚠️ 连定义都没有
+
+is_holding_cotton_candy
+  定义: 无
+  赋值: 1 处 [('ralsei_pet\\src\\main.py', 5751)]
+  读/调: 1 处 [('ralsei_pet\\src\\main.py', 13471)]
+  ⚠️ 连定义都没有
+
+speak_event
+  定义: [('ralsei_pet\\src\\main.py', 10438)]
+  赋值: 0 处 []
+  读/调: 28 处 [('ralsei_pet\\modules\\dialogue_ui.py', 1851), ('ralsei_pet\\modules\\energy_hunger.py', 130), ('ralsei_pet\\modules\\energy_hunger.py', 139), ('ralsei_pet\\modules\\energy_hunger.py', 202)]
+
+react_to_desktop_element
+  定义: [('ralsei_pet\\src\\main.py', 9337)]
+  赋值: 0 处 []
+  读/调: 2 处 [('ralsei_pet\\src\\main.py', 7420), ('ralsei_pet\\src\\main.py', 7430)]
+
+check_nearby_desktop_elements
+  定义: [('ralsei_pet\\src\\main.py', 7412)]
+  赋值: 0 处 []
+  读/调: 8 处 [('ralsei_pet\\src\\main.py', 6850), ('ralsei_pet\\src\\main.py', 6859), ('ralsei_pet\\src\\main.py', 6866), ('ralsei_pet\\src\\main.py', 6869)]
+
+update_bounce
+  定义: [('ralsei_pet\\src\\main.py', 14062)]
+  赋值: 0 处 []
+  读/调: 1 处 [('ralsei_pet\\src\\main.py', 11065)]
+  ⚠️⚠️ 除定义外几乎无引用 ⇒ 疑似零接线（用户不可达）
+
+_bounce_timer
+  定义: 无
+  赋值: 1 处 [('ralsei_pet\\src\\main.py', 11064)]
+  读/调: 5 处 [('ralsei_pet\\src\\main.py', 11063), ('ralsei_pet\\src\\main.py', 11065), ('ralsei_pet\\src\\main.py', 11066), ('ralsei_pet\\src\\main.py', 14097)]
+  ⚠️ 连定义都没有
+
+play_animation_once
+  定义: [('ralsei_pet\\src\\main.py', 14021), ('ralsei_pet\\tests\\test_ai_driver.py', 117)]
+  赋值: 0 处 []
+  读/调: 57 处 [('ralsei_pet\\modules\\ai_driver.py', 169), ('ralsei_pet\\modules\\ai_driver.py', 515), ('ralsei_pet\\modules\\autonomous_agent.py', 178), ('ralsei_pet\\modules\\games_controller.py', 15)]
+
+_play_once_active
+  定义: 无
+  赋值: 6 处 [('ralsei_pet\\src\\main.py', 5389), ('ralsei_pet\\src\\main.py', 13370), ('ralsei_pet\\src\\main.py', 13859), ('ralsei_pet\\src\\main.py', 14038)]
+  读/调: 10 处 [('ralsei_pet\\modules\\ai_driver.py', 431), ('ralsei_pet\\modules\\ai_driver.py', 506), ('ralsei_pet\\modules\\ai_driver.py', 642), ('ralsei_pet\\src\\main.py', 340)]
+  ⚠️ 连定义都没有

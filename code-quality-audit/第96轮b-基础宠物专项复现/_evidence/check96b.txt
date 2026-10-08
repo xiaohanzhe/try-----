@@ -1,0 +1,32 @@
+==============================================================================
+# 第96轮b 回归锁：基础宠物两处用户可见修复
+==============================================================================
+
+--- A 前置锚点 ---
+[PASS] A1 两个目标函数都能从真源码抽出（`react_to_desktop_element` / `mouseMoveEvent` / `speak_event`）
+[PASS] A2 `speak_event` 的"不给内置台词"口径仍在（口径本身不许被误删）
+
+--- B `react_to_desktop_element` 不许绕过 `speak_event` 直写对话 ---
+[PASS] B0 ★★ 找到受 `SHOW_FILE_HELP_HINTS` 保护的既有通道（默认 False ⇒ 永不执行），判据只在**开关外**生效
+[PASS] B0b ★★★ 该开关确实是 `= False`（若被改成 True，B0 的保护前提就不成立）
+[PASS] B1 ★★★ `react_to_desktop_element` **开关外零** `add_dialogue`（AST 调用名）
+[PASS] B2 ★★★ `react_to_desktop_element` **开关外零** `show_dialogue`（AST 调用名）
+[PASS] B3 负控制（恢复式变异）：在**开关外**加回 `add_dialogue`/`show_dialogue` ⇒ B1/B2 必须翻面（证明判据真有鉴别力）
+[PASS] B4 观察**仍在上报**：`_note_desktop_observation` 真被调用（没把功能一起关掉）
+[PASS] B5 `reaction['emotion']` 仍被 `add_emotion` 真消费（没顺手删错）
+
+--- C `mouseMoveEvent` 拖拽判定必须是位检测 ---
+[PASS] C1 ★★★ `mouseMoveEvent` 用位检测 `buttons() & Qt.LeftButton`（剥注释后）
+[PASS] C2 ★★★ `mouseMoveEvent` 不再有等值 `buttons() == Qt.LeftButton`（剥注释后）
+[PASS] C3 负控制（恢复式变异）：换回 `==` ⇒ C1/C2 必须翻面
+[PASS] C4 ★ 全文件**没有第二处** `buttons() == Qt.LeftButton`（剥注释后；同类清干净）
+
+--- D 判据自身体检 ---
+[PASS] D1 ★★★ 本套件**没有**恒真判据（形如「检查名, True」的写法；恒真比不写更危险）
+[PASS] D2 标记打印点 == 1（G2 靠这条字面量计数）
+[PASS] D3 被测文件在盘
+[PASS] D3b ★ 产品源码解析出的代码层确实**不含**等值拖拽判定（独立复核 C4 的观察面）
+
+==============================================================================
+合计 17 条判据  PASS=17  FAIL=0
+==============================================================================

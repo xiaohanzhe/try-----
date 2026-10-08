@@ -1,0 +1,63 @@
+==============================================================================
+# 第96轮b 核心文件复检
+==============================================================================
+
+--- ① 语法 / 可编译 ---
+[PASS] ① main.py 可编译（ast.parse）
+[PASS] ① run_all.py 可编译（ast.parse）
+[PASS] ① check96b.py 可编译（ast.parse）
+[PASS] ① probe96b_canned.py 可编译（ast.parse）
+[PASS] ① probe97_surprise_jump.py 可编译（ast.parse）
+[PASS] ① mutate96b.py 可编译（ast.parse）
+[PASS] ① reach96b.py 可编译（ast.parse）
+
+--- ② 结构自检（标题/关键锚点齐全） ---
+[PASS] ② main.py 含本轮修复说明锚（口径违规 · 真机实证）
+[PASS] ② main.py 含拖拽位检测修复锚（第96轮b 修复：`event.buttons() == ...`）
+[PASS] ② main.py 含 SHOW_FILE_HELP_HINTS 保护通道说明
+[PASS] ② main.py 的 `reaction['dialogue']` 停用说明在位
+[PASS] ② run_all.py 含 check96b 条目
+[PASS] ② run_all.py 的 check96b 指向本轮目录
+[PASS] ② REPORT.md 含章节 ## 0. 一句话结论
+[PASS] ② REPORT.md 含章节 ## 1. 候选1
+[PASS] ② REPORT.md 含章节 ## 2. 候选3
+[PASS] ② REPORT.md 含章节 ## 3. 候选5
+[PASS] ② REPORT.md 含章节 ## 5. 本轮新增回归锁
+[PASS] ② REPORT.md 含章节 ## 6. 机器验收
+
+--- ③ 编码（无 BOM / 无 U+FFFD） ---
+[PASS] ③ main.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ run_all.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ check96b.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ probe96b_canned.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ probe97_surprise_jump.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ mutate96b.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ reach96b.py 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ baseline.json 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ REPORT.md 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ cand1 FALSIFIED 无 BOM / 无 U+FFFD  —— BOM=False U+FFFD=False
+[PASS] ③ main.py EOL 仍为纯 CRLF（未被改坏）  —— CRLF=15092 LF=15092
+
+--- ④ 恒真判据复查 ---
+[PASS] ④ check96b.py 无「检查名, True」式恒真判据  —— 命中 0
+[PASS] ④ probe96b_canned.py 无「检查名, True」式恒真判据  —— 命中 0
+[PASS] ④ probe97_surprise_jump.py 无「检查名, True」式恒真判据  —— 命中 0
+[PASS] ④ run_all.py 的 check96b desc 非空且长度合理  —— 条目起点=120337 段长=4000
+
+--- ⑤ 逐令牌回验（改/删过的东西逐个回原文件 in 一次） ---
+[PASS] ⑤ main.py 令牌全在（9 个）
+[PASS] ⑤ run_all.py 令牌全在（4 个）
+[PASS] ⑤ check96b.py 令牌全在（5 个）
+[PASS] ⑤ REPORT.md 令牌全在（4 个）
+[PASS] ⑤ cand1 FALSIFIED 令牌全在（3 个）
+[PASS] ⑤ ★ main.py **代码层**不再存在 `add_dialogue("ralsei", reaction[`（已删的那两行；剥注释后）
+[PASS] ⑤ ★ main.py 代码层 `buttons() == Qt.LeftButton` 零处
+
+--- ⑥ 工作区与无删除 ---
+[PASS] ⑥ 无文件被删除（`D` 条目为 0）  —— 删除条数 0
+[PASS] ⑥ 暂存区为空（无意外 pre-staged 改动）  —— 暂存: ''
+    改动文件 7 个
+
+==============================================================================
+合计  PASS=43  FAIL=0
+==============================================================================
