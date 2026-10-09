@@ -171,13 +171,48 @@ check('B4 A1 的输入不是空集合（否则 all([]) 恒真）', len(XWORK) >=
 print('=' * 74)
 print('C 对账：manifest 声明 vs 磁盘实际')
 print('=' * 74)
+# ★★★ 第100轮修：原式是「manifest 声明数 == 磁盘数」= **纯数字相等**，
+#   而后续轮次会继续往 assets/sprites/<work>/ 合法落文件（第100轮给 os 补了 OneShot
+#   立绘/行走图，见 ralsei_pet/assets/sprites/os/_source100.json）⇒ 21 -> 81 报红。
+#   但不许"放行一个数字"把判据阉掉。C1 的真实意图是「**抽了但没记 / 记了但没抽**」⇒ 改成
+#   「磁盘上多出来的每个文件都必须能**指向某个后续轮次的登记清单**，否则算**孤儿**」。
+#   白名单**读清单得来**（`_source100.json` 的 `sprites` 键），不是写死的常量。
+LATER_REG = {
+    'os': (os.path.join(SPR, 'os', '_source100.json'), 'sprites', '第100轮 OneShot 补发'),
+}
+
+
+def later_added(w):
+    """磁盘上不属于第71轮 manifest、但已被**后续轮次清单**登记的 {文件名: 依据}。"""
+    out = {}
+    reg = LATER_REG.get(w)
+    if not reg:
+        return out
+    p, key, why = reg
+    if not os.path.isfile(p):
+        return out
+    j = read_json(p)
+    for nm in (j.get(key) or {}):
+        out[nm] = why
+    out[os.path.basename(p)] = why + '（清单自身）'
+    return out
+
+
 C_DIFF = []
 for w in WORKS:
     declared = MAN['landed'].get(w) or {}
     n_decl = sum(len(v) for v in declared.values())
-    if n_decl != len(ON_DISK[w]):
-        C_DIFF.append('%s 声明 %d / 磁盘 %d' % (w, n_decl, len(ON_DISK[w])))
-check('C1 四作「manifest 文件数 == 磁盘文件数」', not C_DIFF, str(C_DIFF or '(一致)'))
+    decl_files = set()
+    for v in declared.values():
+        decl_files.update(v)
+    extra = later_added(w)
+    orphan = sorted(set(ON_DISK[w]) - decl_files - set(extra))
+    if n_decl + len(extra) != len(ON_DISK[w]) or orphan:
+        C_DIFF.append('%s 第71轮 %d + 后续轮次 %d = %d / 磁盘 %d 孤儿=%s'
+                      % (w, n_decl, len(extra), n_decl + len(extra),
+                         len(ON_DISK[w]), orphan))
+check('C1 四作「文件数对账：第71轮 manifest + 后续轮次登记 == 磁盘（无孤儿）」',
+      not C_DIFF, str(C_DIFF or '(一致)'))
 
 _need_keys = set()
 for w in WORKS:

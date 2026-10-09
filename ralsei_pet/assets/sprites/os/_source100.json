@@ -1,0 +1,821 @@
+{
+ "round": 100,
+ "date": "2026-10-10",
+ "why": "用户补发 OneShot 缺失素材。原话：「oneshot 有部分音效和素材缺失，这些是补齐的，对了，里面可能有些素材名称被改了」。★ 因此本清单的 `rename_map` 是**结论性证据**，不是备注。",
+ "source_dir": "C:\\Users\\23002\\Desktop\\项目文件夹\\assets",
+ "identified_by": "code-quality-audit/第100轮-跨作品素材与背景/_tools/identify100.py",
+ "identify_evidence": "_evidence/identify100.json",
+ "excluded": [
+  "config.json",
+  "desktop.ini",
+  "save_key.py",
+  "1653f04433b09df48a87ef6e5725cd92.jpg"
+ ],
+ "excluded_reason": "源目录是用户的下载/工作目录，混有非素材文件。★ 其中 config.json 含**明文 API key**：已排除，且本清单**不记录其任何内容**。",
+ "skipped_duplicates": {
+  "niko.png": "与仓库现有 niko.png **逐像素相同**（PNG 编码不同：2235 vs 7009 字节，内容重复，跳过）"
+ },
+ "rename_map": {
+  "dialog_amazed.png": "facepics/en_pancakes.xnb",
+  "dialog_closed_mouth.png": "facepics/en4.xnb",
+  "dialog_crying.png": "facepics/en_cry.xnb",
+  "dialog_crying_eyes_closed.png": "facepics/en_less_sad.xnb",
+  "dialog_distressed.png": "facepics/en_distressed.xnb",
+  "dialog_distressed_crying.png": "facepics/en_distressed_meow.xnb",
+  "dialog_distressed_looking_right.png": "facepics/en_distressed2.xnb",
+  "dialog_distressed_talking.png": "facepics/en_distressed_talk.xnb",
+  "dialog_eyes_closed.png": "facepics/en_eyeclosed.xnb",
+  "dialog_eyes_closed_mouth_open.png": "facepics/en_eyeclosed2.xnb",
+  "dialog_happy.png": "facepics/en_83c.xnb",
+  "dialog_looking_left.png": "facepics/en6.xnb",
+  "dialog_looking_right.png": "facepics/en5.xnb",
+  "dialog_normal.png": "facepics/en.xnb",
+  "dialog_open_mouth.png": "facepics/en2.xnb",
+  "dialog_sad.png": "facepics/en_sad.xnb",
+  "dialog_shocked.png": "facepics/en_surprised.xnb",
+  "dialog_smiling.png": "facepics/en_smile.xnb",
+  "dialog_speaking.png": "facepics/en_speak.xnb",
+  "dialog_surprised.png": "facepics/en_shock.xnb",
+  "dialog_upset_looking_left.png": "facepics/en_upset.xnb",
+  "dialog_upset_looking_right.png": "facepics/en_upset2.xnb",
+  "dialog_upset_mouth_open.png": "facepics/en_upset_meow.xnb",
+  "dialog_very_wtf.png": "facepics/en_huh.xnb",
+  "dialog_very_wtf_looking_left.png": "facepics/en_wtf2.xnb",
+  "dialog_what.png": "facepics/en_what.xnb",
+  "dialog_what_looking_left.png": "facepics/en_what2.xnb",
+  "dialog_wtf.png": "facepics/en_wtf.xnb",
+  "dialog_yawning.png": "facepics/en_yawn.xnb",
+  "niko_bulb.png": "npc/niko_bulb.xnb",
+  "foodstep_grass.wav": "gamedata/sfx/step_grass.wav",
+  "foodstep_wood.wav": "gamedata/sfx/step_wood.wav",
+  "footstep_1.wav": "gamedata/sfx/step_tile01.wav",
+  "footstep_2.wav": "gamedata/sfx/step_tile02.wav",
+  "footstep_3.wav": "gamedata/sfx/step_tile_soft03.wav"
+ },
+ "sprites": {
+  "dialog_amazed.png": {
+   "bytes": 58530,
+   "sha256": "4dab1d6203cfc0dab137b1a49f57512ba2f4a9d68ccd1d21bc0d88833824ce12",
+   "w": 774,
+   "h": 765,
+   "counterpart": null,
+   "structural_match": "facepics/en_pancakes.xnb",
+   "match_r": 0.954,
+   "match_base": -0.2257
+  },
+  "dialog_closed_mouth.png": {
+   "bytes": 63657,
+   "sha256": "139d99ae566dfe3a7b8afabbb5c0c9397b7a64b810b7986abd62ca05ade9e3bb",
+   "w": 799,
+   "h": 791,
+   "counterpart": null,
+   "structural_match": "facepics/en4.xnb",
+   "match_r": 0.9428,
+   "match_base": -0.2194
+  },
+  "dialog_crying.png": {
+   "bytes": 5544,
+   "sha256": "f17c71286604d7f85b4e13a88a0de085f8d72063f55bf56548e2c79967a8b4b3",
+   "w": 100,
+   "h": 102,
+   "counterpart": null,
+   "structural_match": "facepics/en_cry.xnb",
+   "match_r": 0.9337,
+   "match_base": -0.2766
+  },
+  "dialog_crying_eyes_closed.png": {
+   "bytes": 45211,
+   "sha256": "68b22913d8bf18fe6e37ef1d871ce740aa95b016aa139734c828bd6a31af2935",
+   "w": 632,
+   "h": 633,
+   "counterpart": null,
+   "structural_match": "facepics/en_less_sad.xnb",
+   "match_r": 0.9512,
+   "match_base": -0.2877
+  },
+  "dialog_distressed.png": {
+   "bytes": 46933,
+   "sha256": "282bab1b9ad5e82be42ab35cf147ca31a0a0dd2c9c10bd514f3a8601bf593601",
+   "w": 664,
+   "h": 664,
+   "counterpart": null,
+   "structural_match": "facepics/en_distressed.xnb",
+   "match_r": 0.9469,
+   "match_base": -0.244
+  },
+  "dialog_distressed_crying.png": {
+   "bytes": 5819,
+   "sha256": "7202559c2d8f6f7dd78a965dfb3f9056ca24c682080608559425305472bbb238",
+   "w": 100,
+   "h": 99,
+   "counterpart": null,
+   "structural_match": "facepics/en_distressed_meow.xnb",
+   "match_r": 0.9481,
+   "match_base": -0.2423
+  },
+  "dialog_distressed_looking_right.png": {
+   "bytes": 46914,
+   "sha256": "13fc06b1c87f36258d9ae729d31711742f81a8b96d2fc72869650fd1f79d89c5",
+   "w": 653,
+   "h": 652,
+   "counterpart": null,
+   "structural_match": "facepics/en_distressed2.xnb",
+   "match_r": 0.9531,
+   "match_base": -0.2735
+  },
+  "dialog_distressed_talking.png": {
+   "bytes": 39754,
+   "sha256": "d68cdbfbc6a6c5c3abff91246b015c9a147eb28c9d1c190863bdd63d78eff850",
+   "w": 566,
+   "h": 563,
+   "counterpart": null,
+   "structural_match": "facepics/en_distressed_talk.xnb",
+   "match_r": 0.9656,
+   "match_base": -0.234
+  },
+  "dialog_eating_pancake.png": {
+   "bytes": 20771,
+   "sha256": "56d8aa30a7424dcf8b70da3b35a77ba2cbdf82fc3ac599913cfa5afdb1427c04",
+   "w": 293,
+   "h": 296,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.8043,
+   "match_base": -0.1568
+  },
+  "dialog_eyes_closed.png": {
+   "bytes": 47665,
+   "sha256": "8e177202b9253d862aad5d771728844af844fdb5b0ea46a3d83897bf33cb13fa",
+   "w": 707,
+   "h": 699,
+   "counterpart": null,
+   "structural_match": "facepics/en_eyeclosed.xnb",
+   "match_r": 0.9456,
+   "match_base": -0.2673
+  },
+  "dialog_eyes_closed_mouth_open.png": {
+   "bytes": 48289,
+   "sha256": "0a6a8742371429f36e4c4b31c687b8a045ee1a4ace28d1b47f567a7277309405",
+   "w": 707,
+   "h": 704,
+   "counterpart": null,
+   "structural_match": "facepics/en_eyeclosed2.xnb",
+   "match_r": 0.9396,
+   "match_base": -0.2522
+  },
+  "dialog_happy.png": {
+   "bytes": 70022,
+   "sha256": "32085be929c69359a3614dbaf4028ca0caaf10076c029094d989dc85c3ec1ace",
+   "w": 812,
+   "h": 810,
+   "counterpart": null,
+   "structural_match": "facepics/en_83c.xnb",
+   "match_r": 0.9346,
+   "match_base": -0.2102
+  },
+  "dialog_hungry.png": {
+   "bytes": 17129,
+   "sha256": "5443d3c2d4d4c44372f2811c36e38430fc7a738167cb72db9d7c9125f55e8a99",
+   "w": 159,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.3336,
+   "match_base": -0.17
+  },
+  "dialog_looking_left.png": {
+   "bytes": 5849,
+   "sha256": "9bb3c405a35c3f99866429973347556d35eec9abd8021e906d553469e93b2d93",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": "facepics/en6.xnb",
+   "match_r": 0.9337,
+   "match_base": -0.2101
+  },
+  "dialog_looking_right.png": {
+   "bytes": 60162,
+   "sha256": "9a2c6f8dd3908af62a0e91d8a45d8ea62c3bd8dbb21fb670908821a1db962422",
+   "w": 754,
+   "h": 755,
+   "counterpart": null,
+   "structural_match": "facepics/en5.xnb",
+   "match_r": 0.9551,
+   "match_base": -0.2282
+  },
+  "dialog_normal.png": {
+   "bytes": 73457,
+   "sha256": "88bdddb09efe1a708ac790b739238acc9c8187c9decd7977a2064242247faedb",
+   "w": 862,
+   "h": 862,
+   "counterpart": null,
+   "structural_match": "facepics/en.xnb",
+   "match_r": 0.9472,
+   "match_base": -0.2205
+  },
+  "dialog_open_mouth.png": {
+   "bytes": 57556,
+   "sha256": "741e2712f319088df58788d289b08237261c9d440facc8319550c2c5a9673211",
+   "w": 726,
+   "h": 723,
+   "counterpart": null,
+   "structural_match": "facepics/en2.xnb",
+   "match_r": 0.9554,
+   "match_base": -0.212
+  },
+  "dialog_sad.png": {
+   "bytes": 47952,
+   "sha256": "173ee823cecf4fa6edf9964f0b360bdea26e931cc78830adc4ef899dc14ec8d1",
+   "w": 653,
+   "h": 652,
+   "counterpart": null,
+   "structural_match": "facepics/en_sad.xnb",
+   "match_r": 0.9508,
+   "match_base": -0.2748
+  },
+  "dialog_shocked.png": {
+   "bytes": 64769,
+   "sha256": "5c05e2cb37dcea2f5eebf2287f976030fb53e0c68fdc662a6487c3a091a78fcf",
+   "w": 787,
+   "h": 792,
+   "counterpart": null,
+   "structural_match": "facepics/en_surprised.xnb",
+   "match_r": 0.9579,
+   "match_base": -0.2141
+  },
+  "dialog_smiling.png": {
+   "bytes": 18006,
+   "sha256": "86ff788eb7d58a76e0f906b23acd978fcdcb0bf2a32c79ddb6fd6f1bef39942f",
+   "w": 292,
+   "h": 293,
+   "counterpart": null,
+   "structural_match": "facepics/en_smile.xnb",
+   "match_r": 0.9669,
+   "match_base": -0.2156
+  },
+  "dialog_speaking.png": {
+   "bytes": 72032,
+   "sha256": "04e0fdd7bf32d49454f0305401a0aaba220ed0704e19a7d85a48de83d6371892",
+   "w": 878,
+   "h": 864,
+   "counterpart": null,
+   "structural_match": "facepics/en_speak.xnb",
+   "match_r": 0.923,
+   "match_base": -0.2169
+  },
+  "dialog_surprised.png": {
+   "bytes": 59538,
+   "sha256": "d11db880764b970b006439201e421df822b406d58211508a48f0346ab114301c",
+   "w": 749,
+   "h": 745,
+   "counterpart": null,
+   "structural_match": "facepics/en_shock.xnb",
+   "match_r": 0.9582,
+   "match_base": -0.2215
+  },
+  "dialog_upset_looking_left.png": {
+   "bytes": 47679,
+   "sha256": "c185453d8db8e6a46f589a17d0d8b458867fc3dd3ea755a7b7479fa12f21c680",
+   "w": 655,
+   "h": 657,
+   "counterpart": null,
+   "structural_match": "facepics/en_upset.xnb",
+   "match_r": 0.9496,
+   "match_base": -0.2818
+  },
+  "dialog_upset_looking_right.png": {
+   "bytes": 59905,
+   "sha256": "ce4a858904cb8c18264f0c354687c8278698e03bc3d144e18685a3e5ac91fdcd",
+   "w": 789,
+   "h": 787,
+   "counterpart": null,
+   "structural_match": "facepics/en_upset2.xnb",
+   "match_r": 0.9324,
+   "match_base": -0.2866
+  },
+  "dialog_upset_mouth_open.png": {
+   "bytes": 55214,
+   "sha256": "b6a4d5f3a07a3a6138d240ddd5bf21c5c9199de58548c827b29acf08eff21643",
+   "w": 725,
+   "h": 727,
+   "counterpart": null,
+   "structural_match": "facepics/en_upset_meow.xnb",
+   "match_r": 0.9414,
+   "match_base": -0.2688
+  },
+  "dialog_very_wtf.png": {
+   "bytes": 58798,
+   "sha256": "93889c15f09da05d010ad40475814ef9a6635f21ffd1dc43bb197c9a1b296fe3",
+   "w": 714,
+   "h": 711,
+   "counterpart": null,
+   "structural_match": "facepics/en_huh.xnb",
+   "match_r": 0.9596,
+   "match_base": -0.21
+  },
+  "dialog_very_wtf_looking_left.png": {
+   "bytes": 6084,
+   "sha256": "956ad95ec274047877ff8339fe2f70237a2ed6d9e7086b2ad60e33cf348ea939",
+   "w": 100,
+   "h": 99,
+   "counterpart": null,
+   "structural_match": "facepics/en_wtf2.xnb",
+   "match_r": 0.9516,
+   "match_base": -0.1999
+  },
+  "dialog_what.png": {
+   "bytes": 5979,
+   "sha256": "66c3dcab57bf057aae2c976491873cc8941246566409fffa972692632952ed48",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": "facepics/en_what.xnb",
+   "match_r": 0.955,
+   "match_base": -0.2156
+  },
+  "dialog_what_looking_left.png": {
+   "bytes": 50527,
+   "sha256": "18edfd6e83c2b8c2c04ddc9c5f08ad03ef00aac8b2b6c677ee0c172ba56e66ed",
+   "w": 646,
+   "h": 645,
+   "counterpart": null,
+   "structural_match": "facepics/en_what2.xnb",
+   "match_r": 0.962,
+   "match_base": -0.2197
+  },
+  "dialog_wtf.png": {
+   "bytes": 56724,
+   "sha256": "7e70837a111d749f938e0fe2ce20b07a879bd2cc1a0e298ef8b842172346c7d9",
+   "w": 713,
+   "h": 723,
+   "counterpart": null,
+   "structural_match": "facepics/en_wtf.xnb",
+   "match_r": 0.9499,
+   "match_base": -0.2148
+  },
+  "dialog_yawning.png": {
+   "bytes": 44741,
+   "sha256": "17be200af97fd8ac832042a4f3621c51889a43043a04feb4661a1609bccf2504",
+   "w": 638,
+   "h": 639,
+   "counterpart": null,
+   "structural_match": "facepics/en_yawn.xnb",
+   "match_r": 0.9398,
+   "match_base": -0.2592
+  },
+  "holding_down_0.png": {
+   "bytes": 16291,
+   "sha256": "093ba81b8f0ca41939ddeb3cf189b50674dc6686782dd0cfaaf7496771ce72de",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6082,
+   "match_base": -0.1268
+  },
+  "holding_down_1.png": {
+   "bytes": 14205,
+   "sha256": "1de71fcd770dd4da7ccd85912029f094461f67e15b4d0782cef90daaafb7273b",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.605,
+   "match_base": -0.1122
+  },
+  "holding_down_2.png": {
+   "bytes": 16312,
+   "sha256": "f226f105b920c6b065bfa5e13894dd8caa7e5d9d47d37babe16c9efbb274ac94",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6086,
+   "match_base": -0.1297
+  },
+  "holding_left_0.png": {
+   "bytes": 15537,
+   "sha256": "92b1179fb7ab39faef0933966e8794a49c1a5817d787b13e3d2d66d60190a38d",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6467,
+   "match_base": 0.3454
+  },
+  "holding_left_1.png": {
+   "bytes": 15494,
+   "sha256": "964455f72f59b88db956ad09f7d805d8934521a7f149c8182f25402147446d59",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6375,
+   "match_base": 0.354
+  },
+  "holding_left_2.png": {
+   "bytes": 15537,
+   "sha256": "92b1179fb7ab39faef0933966e8794a49c1a5817d787b13e3d2d66d60190a38d",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6467,
+   "match_base": 0.3454
+  },
+  "holding_right_0.png": {
+   "bytes": 16497,
+   "sha256": "de22ea6d8c6eb947b140210a8a53fb3ee0a7e0cc132d7aedd86ea3b1df1add21",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5671,
+   "match_base": 0.33
+  },
+  "holding_right_1.png": {
+   "bytes": 15484,
+   "sha256": "0def8ffdf9f76cc638cdff3788945452e5cec1b6b5216e5eb6728bd300cff1c9",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6144,
+   "match_base": 0.3525
+  },
+  "holding_right_2.png": {
+   "bytes": 16497,
+   "sha256": "de22ea6d8c6eb947b140210a8a53fb3ee0a7e0cc132d7aedd86ea3b1df1add21",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5671,
+   "match_base": 0.33
+  },
+  "holding_up_0.png": {
+   "bytes": 14801,
+   "sha256": "83884c211be9e0d2cd8b91e1a061a4244b9f49443b515a8dfc837e4370d78f57",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6708,
+   "match_base": 0.3925
+  },
+  "holding_up_1.png": {
+   "bytes": 14836,
+   "sha256": "185d311a51c04314a2ec0d831489bbe291fdf404ebdafe4b6fb3b6a75e43cb8b",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6134,
+   "match_base": 0.3459
+  },
+  "holding_up_2.png": {
+   "bytes": 14441,
+   "sha256": "ddd6cb07df9313a9b9416e2dc84232f7ea11c656f43e9ad5487a79096995f21b",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.7043,
+   "match_base": 0.4101
+  },
+  "item_lightbulb.png": {
+   "bytes": 89172,
+   "sha256": "ee0c1a2bc074fa9a04453ca68aabc4de208f77921d345f970d0a9133d7e425ed",
+   "w": 149,
+   "h": 149,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.4108,
+   "match_base": 0.145
+  },
+  "item_pancake.png": {
+   "bytes": 9749,
+   "sha256": "58aa5974aacc7abf3e57b58b70fcffb8e5879f2e96c9a73cfca0dd62f67e636f",
+   "w": 50,
+   "h": 48,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.7732,
+   "match_base": 0.4972
+  },
+  "niko_bulb.png": {
+   "bytes": 8193,
+   "sha256": "2f5ee5e068034d4eeed45b46ce15eb2775a0bcaa7da835691e762448c4b2ef53",
+   "w": 96,
+   "h": 128,
+   "counterpart": "npc/niko_bulb.xnb",
+   "structural_match": null,
+   "match_r": null,
+   "match_base": null
+  },
+  "normal_down_0.png": {
+   "bytes": 17180,
+   "sha256": "7676cc672bb966688e446d1d570294afb3c4ebd4ceb93dde8a4c894e236a558d",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5176,
+   "match_base": 0.3029
+  },
+  "normal_down_1.png": {
+   "bytes": 17324,
+   "sha256": "3789c902fb9732fe584a57c2a00ab9c2e55e6edece37ffe0984e9226507a1fe6",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.4627,
+   "match_base": 0.2608
+  },
+  "normal_down_2.png": {
+   "bytes": 16709,
+   "sha256": "9480f67c775e4f0f8af0a44c3f98929485415461e1f06a322aee9653ba9537a9",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5249,
+   "match_base": 0.3024
+  },
+  "normal_left_0.png": {
+   "bytes": 15253,
+   "sha256": "2df765a4d72498181ed89e59ca209b50a91e0280be505cfbe3ce5a8fea8787f0",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6043,
+   "match_base": 0.3225
+  },
+  "normal_left_1.png": {
+   "bytes": 14281,
+   "sha256": "1ab99a85ef06d380168f6406346efb5325ad612d7e85837ca6a89f0bc202ead0",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.612,
+   "match_base": 0.3425
+  },
+  "normal_left_2.png": {
+   "bytes": 15289,
+   "sha256": "ceef3824fa19f2017616fa2cb122c3c02094eaacc62cb27ba2a1cd1e20fb6d19",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5987,
+   "match_base": 0.3359
+  },
+  "normal_right_0.png": {
+   "bytes": 15344,
+   "sha256": "e309cf94a28cc3d5239bd8ec08cc3604c51af146679edc0b1b0517d972512a41",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5509,
+   "match_base": 0.3103
+  },
+  "normal_right_1.png": {
+   "bytes": 14165,
+   "sha256": "0511cc216a0dd7b19b1efc989e8b60d537e9f682a9abede672c265ce427b19cd",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6471,
+   "match_base": -0.0701
+  },
+  "normal_right_2.png": {
+   "bytes": 14822,
+   "sha256": "8370e6c6ba7f53a857ef5179e0e84dfd2549b8fd50de8d968ca2788f6b9e13e9",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.5852,
+   "match_base": 0.3338
+  },
+  "normal_up_0.png": {
+   "bytes": 15219,
+   "sha256": "73d8a5677dddb9347da89326f3246c204061acf7e705dffa43ccaf57c48450f8",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6798,
+   "match_base": 0.4178
+  },
+  "normal_up_1.png": {
+   "bytes": 15433,
+   "sha256": "d4c19ef9053e2b229b0ee5927dba60d8ce47209a281bf5db7bd8008901bb70f8",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6383,
+   "match_base": 0.3519
+  },
+  "normal_up_2.png": {
+   "bytes": 15704,
+   "sha256": "cec6d8543241516593f9c11189f82384ecc26427f33b589f3bb2fb741968f0af",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6552,
+   "match_base": 0.4004
+  },
+  "sleeping_0.png": {
+   "bytes": 16350,
+   "sha256": "cf5497ab1eacff609c80ba4945a488400c7eee8a284345a86f421d66226ee1c1",
+   "w": 100,
+   "h": 100,
+   "counterpart": null,
+   "structural_match": null,
+   "match_r": 0.6374,
+   "match_base": -0.1428
+  }
+ },
+ "sounds": {
+  "cat_1.wav": {
+   "bytes": 244320,
+   "sha256": "4f62105ac4989ffd1535141899b03253288b1730244f93eddf911ca5b4bcb437",
+   "fmt": [
+    2,
+    2,
+    44100,
+    61056
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "cat_2.wav": {
+   "bytes": 88382,
+   "sha256": "d3bca29f8b08a61faed11b6bcff9cbbaf5548f11b620003f936c6e77764ded4b",
+   "fmt": [
+    2,
+    2,
+    44100,
+    21866
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "cat_3.wav": {
+   "bytes": 120878,
+   "sha256": "be94942841192d2967c9c2ef8f9f237ff49d06b0339344fecafb637782a5062e",
+   "fmt": [
+    1,
+    2,
+    44100,
+    60417
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "door_open.wav": {
+   "bytes": 28762,
+   "sha256": "0d213fd1ad84c48f7d8307da5e0f9375dea7a19ac180fbfbea7f70d525a79f65",
+   "fmt": [
+    1,
+    2,
+    44100,
+    14359
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "foodstep_grass.wav": {
+   "bytes": 74584,
+   "sha256": "0ce53081e14fec44e4107012cf150d5b3abfd14f78285cbaa7614f99d59fe03e",
+   "fmt": [
+    2,
+    2,
+    44100,
+    18635
+   ],
+   "hit_tier": "bytes",
+   "counterpart": "gamedata/sfx/step_grass.wav"
+  },
+  "foodstep_wood.wav": {
+   "bytes": 16428,
+   "sha256": "f4838aad3e854e5c8c8a8da9f06208a2a44e06004ff49789f9b95039c8216231",
+   "fmt": [
+    1,
+    2,
+    44100,
+    8192
+   ],
+   "hit_tier": "bytes",
+   "counterpart": "gamedata/sfx/step_wood.wav"
+  },
+  "footstep_1.wav": {
+   "bytes": 20784,
+   "sha256": "fd82eb9c1af661de12a99c13a826ca10bab944acb987f860167355bb8adf7f90",
+   "fmt": [
+    1,
+    2,
+    44100,
+    10370
+   ],
+   "hit_tier": "bytes",
+   "counterpart": "gamedata/sfx/step_tile01.wav"
+  },
+  "footstep_2.wav": {
+   "bytes": 31286,
+   "sha256": "abc4302a90fe725663a9c219395930bea1716d75ee325fe1dd4caeceee69d613",
+   "fmt": [
+    1,
+    2,
+    44100,
+    15621
+   ],
+   "hit_tier": "bytes",
+   "counterpart": "gamedata/sfx/step_tile02.wav"
+  },
+  "footstep_3.wav": {
+   "bytes": 28998,
+   "sha256": "87aa16d2721c96dcab79103beee4bd5572a4d766e007694b5942bc948fa1e062",
+   "fmt": [
+    1,
+    2,
+    44100,
+    14477
+   ],
+   "hit_tier": "bytes",
+   "counterpart": "gamedata/sfx/step_tile_soft03.wav"
+  },
+  "hungry.wav": {
+   "bytes": 98126,
+   "sha256": "7fee33b05562b6ee775be873acb408579e01ed03e6cd4d59f0036d6e03b3b5c0",
+   "fmt": [
+    2,
+    2,
+    44100,
+    24512
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "interaction_1.wav": {
+   "bytes": 681806,
+   "sha256": "79e1f3844bca4c2b3b56bf57973eee57fa44e33d315a5df52980ce749617f2b6",
+   "fmt": [
+    2,
+    2,
+    44100,
+    170432
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "interaction_2.wav": {
+   "bytes": 263390,
+   "sha256": "b6c040e148f74d73483b643a6c1b32414bd6df3a646285a496d361381290535f",
+   "fmt": [
+    2,
+    2,
+    44100,
+    65828
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "light_off.wav": {
+   "bytes": 490318,
+   "sha256": "74f32434adc93ee5cc0d45da72aea0070ef9e6175457844eb51361d6268c90c2",
+   "fmt": [
+    2,
+    2,
+    44100,
+    122560
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  },
+  "light_on.wav": {
+   "bytes": 486734,
+   "sha256": "3aa7d1de1cb9e249624810ed26b6e4304e52f3a7602dc739650125e7d824c5bd",
+   "fmt": [
+    2,
+    2,
+    44100,
+    121664
+   ],
+   "hit_tier": null,
+   "counterpart": null
+  }
+ },
+ "naming": {
+  "sprites": "assets/sprites/os/<原名>.png（沿用 ut/hy/ot 的\"按作品分子目录 + 保留原名\"约定）",
+  "sounds": "assets/sounds/os/<原名>.wav（SoundManager._resolve_path 非递归，调用时传 \"os/xxx.wav\" 即可命中）"
+ }
+}
