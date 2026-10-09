@@ -109,8 +109,11 @@ _log = logging.getLogger(_pet_logger_name(__name__))
 #:   首站被改名 / 被移走，表还在，菜单就会给出一个**打不开的入口**。
 #:   ⇒ 一律**从索引现算**：取该章按 (`order`, 索引出现顺序) 排序后的
 #:   第一个**真实可加载**的场景。查不到就**跳过该章**（不造假入口）。
+#: ★★ 第99轮：补上第五个世界 `outertale`（用户口径「那几个世界（oneshot，ut，
+#:    dr，uty，outertale）的入口……你记得添上」）。它的 `order` = 103，
+#:    与其余章都不同 ⇒ 本元组只作**登记与并列时的次序**用（索引现算仍是主序）。
 _ENTRY_CHAPTER_ORDER = ('desktop', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5',
-                        'ut', 'uty', 'oneshot')
+                        'ut', 'uty', 'oneshot', 'outertale')
 
 
 def _entry_scenes(index):

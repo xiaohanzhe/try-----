@@ -1,0 +1,432 @@
+{
+ "schema_version": 1,
+ "chapter_id": "outertale",
+ "area_id": "foundry",
+ "area_name": "Foundry",
+ "note": "第99轮：从 Outertale 的 Vite bundle（`E:\\Download\\_extract61\\outertale\\www\\index-*.js`）迁入。六张房间表 `Sb/w3/I3/y3/Ub/Fb` 逐表抽取，锚点自证见 `_tools/extract_outertale99.py`（A1~A6 全 PASS）。★ `original_room_id` 是**本项目分配的稳定序号**（按六表字面顺序 0 起），**不是原作房间下标** —— Outertale 房间以字符串 id 寻址，本就没有整数下标；这是与 Deltarune/OneShot 的**已知差异**，如实登记。",
+ "scenes": {
+  "outertale.foundry.f_start": {
+   "name": "f_start",
+   "name_raw": "f_start",
+   "name_derived": false,
+   "original_room_id": 89,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_sans": {
+   "name": "f_sans",
+   "name_raw": "f_sans",
+   "name_derived": false,
+   "original_room_id": 90,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_corridor": {
+   "name": "f_corridor",
+   "name_raw": "f_corridor",
+   "name_derived": false,
+   "original_room_id": 91,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_doge": {
+   "name": "f_doge",
+   "name_raw": "f_doge",
+   "name_derived": false,
+   "original_room_id": 92,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_puzzle1": {
+   "name": "f_puzzle1",
+   "name_raw": "f_puzzle1",
+   "name_derived": false,
+   "original_room_id": 93,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_quiche": {
+   "name": "f_quiche",
+   "name_raw": "f_quiche",
+   "name_derived": false,
+   "original_room_id": 94,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_bird": {
+   "name": "f_bird",
+   "name_raw": "f_bird",
+   "name_derived": false,
+   "original_room_id": 95,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_puzzle2": {
+   "name": "f_puzzle2",
+   "name_raw": "f_puzzle2",
+   "name_derived": false,
+   "original_room_id": 96,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_story1": {
+   "name": "f_story1",
+   "name_raw": "f_story1",
+   "name_derived": false,
+   "original_room_id": 97,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_prechase": {
+   "name": "f_prechase",
+   "name_raw": "f_prechase",
+   "name_derived": false,
+   "original_room_id": 98,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_chase": {
+   "name": "f_chase",
+   "name_raw": "f_chase",
+   "name_derived": false,
+   "original_room_id": 99,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_entrance": {
+   "name": "f_entrance",
+   "name_raw": "f_entrance",
+   "name_derived": false,
+   "original_room_id": 100,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_lobby": {
+   "name": "f_lobby",
+   "name_raw": "f_lobby",
+   "name_derived": false,
+   "original_room_id": 101,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_error": {
+   "name": "f_error",
+   "name_raw": "f_error",
+   "name_derived": false,
+   "original_room_id": 102,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_telescope": {
+   "name": "f_telescope",
+   "name_raw": "f_telescope",
+   "name_derived": false,
+   "original_room_id": 103,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_stand": {
+   "name": "f_stand",
+   "name_raw": "f_stand",
+   "name_derived": false,
+   "original_room_id": 104,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_abyss": {
+   "name": "f_abyss",
+   "name_raw": "f_abyss",
+   "name_derived": false,
+   "original_room_id": 105,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_muffet": {
+   "name": "f_muffet",
+   "name_raw": "f_muffet",
+   "name_derived": false,
+   "original_room_id": 106,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_shyren": {
+   "name": "f_shyren",
+   "name_raw": "f_shyren",
+   "name_derived": false,
+   "original_room_id": 107,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_statue": {
+   "name": "f_statue",
+   "name_raw": "f_statue",
+   "name_derived": false,
+   "original_room_id": 108,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_piano": {
+   "name": "f_piano",
+   "name_raw": "f_piano",
+   "name_derived": false,
+   "original_room_id": 109,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_artifact": {
+   "name": "f_artifact",
+   "name_raw": "f_artifact",
+   "name_derived": false,
+   "original_room_id": 110,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_truth": {
+   "name": "f_truth",
+   "name_raw": "f_truth",
+   "name_derived": false,
+   "original_room_id": 111,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_path": {
+   "name": "f_path",
+   "name_raw": "f_path",
+   "name_derived": false,
+   "original_room_id": 112,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_view": {
+   "name": "f_view",
+   "name_raw": "f_view",
+   "name_derived": false,
+   "original_room_id": 113,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_prespear": {
+   "name": "f_prespear",
+   "name_raw": "f_prespear",
+   "name_derived": false,
+   "original_room_id": 114,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_spear": {
+   "name": "f_spear",
+   "name_raw": "f_spear",
+   "name_derived": false,
+   "original_room_id": 115,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_plank": {
+   "name": "f_plank",
+   "name_raw": "f_plank",
+   "name_derived": false,
+   "original_room_id": 116,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_tunnel": {
+   "name": "f_tunnel",
+   "name_raw": "f_tunnel",
+   "name_derived": false,
+   "original_room_id": 117,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_chute": {
+   "name": "f_chute",
+   "name_raw": "f_chute",
+   "name_derived": false,
+   "original_room_id": 118,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_dummy": {
+   "name": "f_dummy",
+   "name_raw": "f_dummy",
+   "name_derived": false,
+   "original_room_id": 119,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_village": {
+   "name": "f_village",
+   "name_raw": "f_village",
+   "name_derived": false,
+   "original_room_id": 120,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_hub": {
+   "name": "f_hub",
+   "name_raw": "f_hub",
+   "name_derived": false,
+   "original_room_id": 121,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_undyne": {
+   "name": "f_undyne",
+   "name_raw": "f_undyne",
+   "name_derived": false,
+   "original_room_id": 122,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_kitchen": {
+   "name": "f_kitchen",
+   "name_raw": "f_kitchen",
+   "name_derived": false,
+   "original_room_id": 123,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_blooky": {
+   "name": "f_blooky",
+   "name_raw": "f_blooky",
+   "name_derived": false,
+   "original_room_id": 124,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_snail": {
+   "name": "f_snail",
+   "name_raw": "f_snail",
+   "name_derived": false,
+   "original_room_id": 125,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_napstablook": {
+   "name": "f_napstablook",
+   "name_raw": "f_napstablook",
+   "name_derived": false,
+   "original_room_id": 126,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_hapstablook": {
+   "name": "f_hapstablook",
+   "name_raw": "f_hapstablook",
+   "name_derived": false,
+   "original_room_id": 127,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_prepuzzle": {
+   "name": "f_prepuzzle",
+   "name_raw": "f_prepuzzle",
+   "name_derived": false,
+   "original_room_id": 128,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_puzzle3": {
+   "name": "f_puzzle3",
+   "name_raw": "f_puzzle3",
+   "name_derived": false,
+   "original_room_id": 129,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_taxi": {
+   "name": "f_taxi",
+   "name_raw": "f_taxi",
+   "name_derived": false,
+   "original_room_id": 130,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_corner": {
+   "name": "f_corner",
+   "name_raw": "f_corner",
+   "name_derived": false,
+   "original_room_id": 131,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_story2": {
+   "name": "f_story2",
+   "name_raw": "f_story2",
+   "name_derived": false,
+   "original_room_id": 132,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_pacing": {
+   "name": "f_pacing",
+   "name_raw": "f_pacing",
+   "name_derived": false,
+   "original_room_id": 133,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_battle": {
+   "name": "f_battle",
+   "name_raw": "f_battle",
+   "name_derived": false,
+   "original_room_id": 134,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.foundry.f_exit": {
+   "name": "f_exit",
+   "name_raw": "f_exit",
+   "name_derived": false,
+   "original_room_id": 135,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

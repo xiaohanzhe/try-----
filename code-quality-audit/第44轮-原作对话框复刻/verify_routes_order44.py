@@ -155,7 +155,7 @@ ok(len(old_bad) >= 1,
    % len(old_bad))
 
 # B3 无回绕：全局 priority 声明序单调不减（新写法保证）
-# ★★ 第89轮修正（判据过窄 ⇒ 会误报，记忆 §4 铁律）：desktop 的 8 扇世界门是
+# ★★ 第89轮修正（判据过窄 ⇒ 会误报，记忆 §4 铁律）：desktop 的 9 扇世界门是
 #   **手写表**，走自己的 priority 区间（200），被追加在原作生成边（priority 最高
 #   2478）之后 ⇒ 整表末段必然"下降一次"。但那**不是回绕缺陷** —— 回绕指的是
 #   **生成器**在同一遍扫描里让 priority 忽大忽小（会让出边顺序错乱）。手写段
@@ -183,17 +183,22 @@ ok(all(isinstance(r.get('when_door'), str) and r.get('when_door')
    'B6 全部规则带 when_door（解决共同卡口）')
 
 # ★★ B7 第89轮新增：desktop 手写门自证（B3/C1 把它排除出去了，必须在这里锁住，
-#    否则"排除"就变成"没人管"）。契约 = 桌面恰好 8 扇门、字母 = A..F + W/X、
+#    否则"排除"就变成"没人管"）。契约 = 桌面恰好挂满世界门、字母 = A..F + W/X/Y、
 #    每扇都指向一个**存在的场景**、且整段 priority 在**同一个值**（并列 ⇒ 由
 #    when_door 决定选哪扇，符合"一句话入口"口径）。
+# ★★ 第99轮：字母表**只声明一次**（`_DESK_WANT`），数量由它派生 —— 第89轮这里是
+#    写死的 8，第99轮加 Outertale（用户点名要的第五个世界入口）时就成了
+#    "判据与事实脱节"的样本。
+_DESK_WANT = ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y']
 _desk_routes = [r for r in RL if r.get('when_scene') == 'desktop']
 _desk_letters = sorted(str(r.get('when_door')) for r in _desk_routes)
-ok(_desk_letters == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X'],
-   'B7a desktop 恰 8 扇世界门且字母 = A..F + W/X 实际=%s' % (_desk_letters,))
+ok(_desk_letters == _DESK_WANT,
+   'B7a desktop 恰 %d 扇世界门且字母 = A..F + W/X/Y 实际=%s'
+   % (len(_DESK_WANT), _desk_letters))
 _desk_prios = set(r.get('priority') for r in _desk_routes)
 ok(len(_desk_prios) == 1 and next(iter(_desk_prios)) == 200,
-   'B7b desktop 8 扇门同 priority=200（并列，由 when_door 分流）实际=%s'
-   % (sorted(_desk_prios),))
+   'B7b desktop %d 扇门同 priority=200（并列，由 when_door 分流）实际=%s'
+   % (len(_DESK_WANT), sorted(_desk_prios),))
 _desk_scenes = set(r.get('to') for r in _desk_routes)
 _idx2 = jload(os.path.join(SC, '_index.json'))
 _all_ids = set((_idx2.get('scenes') or {}))
@@ -203,7 +208,8 @@ if not _all_ids:  # 兼容三层结构
             _all_ids |= set((a.get('scenes') or {}))
 _missing = sorted(_desk_scenes - _all_ids)
 ok(not _missing,
-   'B7c desktop 8 扇门的目标场景全部真实存在（缺=%s）' % (_missing or '无'))
+   'B7c desktop %d 扇门的目标场景全部真实存在（缺=%s）'
+   % (len(_DESK_WANT), _missing or '无'))
 
 # ===========================================================================
 # C 锚点：产品边可由原作门表独立重算
@@ -296,7 +302,7 @@ if have_rooms:
             if sb:
                 orig_edges.add((sa, sb))
 
-    # ★★ 第89轮：desktop 的 8 扇世界门**不是原作门表推出来的**（桌面不属于原作
+    # ★★ 第89轮：desktop 的 9 扇世界门**不是原作门表推出来的**（桌面不属于原作
     #   任何房间）⇒ 它不该参与"产品边 == 原作重算边"这条**原作保真度**判据。
     #   本判据的意图是"凡**原作房间**之间的边都必须可由门表独立重算"，故把
     #   非原作来源的边（起源场景是 desktop）排除；desktop 门另有专门锁

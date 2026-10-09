@@ -226,17 +226,46 @@ def main():
               'B4 tick=0 确定性且恒第 0 帧（%s）' % n0a[:3])
 
     # ---- C1 负控制：单帧物件不随 tick 变 ----
+    # ★★ 第99轮修正（**这条判据差一点变成恒真**）：
+    #   原来直接用 target 场景里的"单帧物件"。第99轮加了"原作 visible=False 的
+    #   触发器不画"的过滤之后，target（`ch1.unknown.unknown`）里的单帧物件
+    #   （`spr_doorA` / `spr_markerA`）**全被滤掉** ⇒ 列表变 `[]` ⇒
+    #   `s0 == s1` 成了 `[] == []` 的**恒真判据**（比不写还危险：它在装样子）。
+    #   处置：① 优先在 target 里取**真会被画**的单帧物件；② 取不到就退回
+    #   一个**手搓场景**（`SceneState.from_dict`，不带隐形名单 —— 这正是
+    #   "零行为变化"路径）；③ 无论如何都**要求列表非空**，空了就报红。
+    _static = None
     if target is not None:
         sid, sc, cam, geo = target
         def _static_names(t):
             return [it.get('name') for it in SR.plan_frame(sc, cam, geo, tick=t)
                     if it.get('kind') == 'obj' and not it.get('anim_frames')]
         s0 = _static_names(0)
-        s1 = _static_names(int(1e6))
-        check('C1', s0 == s1,
-              'C1 负控制：单帧物件名不随 tick 变（%s）' % s0[:2])
-    else:
-        check('C1', False, 'C1 无比对场景')
+        if s0:
+            _static = (s0, _static_names(int(1e6)), '磁盘场景 %s' % sid)
+    if _static is None:
+        # 退回手搓场景：单帧物件必须被画出来（不带隐形名单 ⇒ 与第99轮前一致）
+        _geo0 = {'w': 320, 'h': 240}
+        _fake = SS.SceneState.from_dict({
+            'scene_id': 'anim44_static', 'bg': None,
+            'objects': [{'pos': [10, 10], 'sprite': 'objs/spr_doorA_0.png'},
+                        {'pos': [40, 10], 'sprite': 'objs/spr_markerA_0.png'}]})
+        _world0 = (0.0, 0.0, 320.0, 240.0)
+        _cam0 = SC.Camera((640, 480), 0, 1.0)
+        _cam0.follow(_world0, (0, 0, 32, 32))
+        a0 = [it.get('name') for it in SR.plan_frame(_fake, _cam0, _geo0, tick=0)
+              if it.get('kind') == 'obj']
+        a1 = [it.get('name') for it in SR.plan_frame(_fake, _cam0, _geo0,
+                                                    tick=int(1e6))
+              if it.get('kind') == 'obj']
+        _static = (a0, a1, '手搓场景（磁盘上无可用的单帧物件）')
+    s0, s1, _where = _static
+    check('C1', bool(s0) and s0 == s1,
+          'C1 负控制：单帧物件名不随 tick 变（%s，共 %d 个，来源=%s）'
+          % (s0[:2], len(s0), _where))
+    check('C1b', bool(s0),
+          'C1b ★ 负控制**必须有内容**（空列表会让 C1 退化成恒真）实际 %d 个'
+          % len(s0))
 
     # ---- C2 负控制：非法 anim 不抛、退单帧 ----
     ok2 = True

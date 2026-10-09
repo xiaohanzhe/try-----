@@ -145,6 +145,28 @@ _DEFAULT_ANCHOR = (0.5, 1.0)
 _ZONE_PREFIX = '_zone.'
 _ZONE_SUFFIX = '.json'
 
+#: ★★ 第99轮：原作 `visible` 属性表（**只落 `visible=False` 的名字**）。
+#: 「素材像素 ≠ 世界逻辑单位」是同轮的另一条；这条是**照搬原作**的另一半：
+#: 我们早先从原作房间 dump 物件时只抄了 `spr=`，漏了 `vis=` ⇒ 把
+#: `obj_doorA` / `obj_markerB` / `obj_readable_room1` 这些**不可见触发器**
+#: 当"要画的东西"画了出来（真机症状：一屋子品红/白描边框）。
+#: 数据由 `code-quality-audit/第99轮…/_tools/build_objvis99.py` 从第43轮的
+#: UTMT 转储生成，**产品运行期只读**这份 JSON（生产链零额外依赖）。
+_OBJ_VISIBLE_FILE = '_obj_visible.json'
+
+#: ★★ 第99轮：「**我们自造的物件**」的 `kind` 白名单 —— 隐形名单**只**管原作
+#: 房间转储来的物件，名单之外的自造物件一律照画。
+#: 依据（实测）：场景里 3206 个物件实例中 3197 个**没有 `kind`**（= 转储来的），
+#: 剩下 9 个 `kind == 'prop'` 正是 `desktop.json` 的 9 扇桌面门 —— 它们借用了
+#: 原作的 `src`（`obj_doorA/B/...`），不豁免就会整批被藏掉。
+#: ⚠️ 扩容要慎重：加进来的 kind 会**完全绕过**隐形名单。
+_AUTHORED_KINDS = ('prop',)
+
+#: `_obj_visible.json` 的进程内缓存（`{目录: frozenset}`）。
+#: 为什么缓存：本文件每帧都要读一次（`plan_frame` 每帧跑），而它 24 KB
+#: 且**在运行期不变**。按目录分键 ⇒ 多场景目录（测试夹具）互不污染。
+_OBJ_VISIBLE_CACHE = {}
+
 
 # ===========================================================================
 #  路径解析
@@ -429,6 +451,7 @@ def load_zone(chapter_id, area_id, scene_dir_path=None):
         merged.setdefault('area_name', raw.get('area_name'))
         scene = SceneState.from_dict(merged)
         scene.dir_path = base
+        scene.hidden_objects = load_obj_visible(base)
         out[scene_id] = scene
     return out
 
@@ -470,6 +493,8 @@ def load_scene(scene_id, scene_dir_path=None, entry=None):
             return None
         scene = SceneState.from_dict(raw)
         scene.dir_path = base
+        # ★ 第99轮：隐形触发器名单 —— 两条来源都挂（见 load_obj_visible）。
+        scene.hidden_objects = load_obj_visible(base)
         # ★ 独立文件场景（第 36 轮登记的 87 个）**不带** original_room_id ——
         #   它写在 `_index.json` 的登记行里。从 entry 补一次，让渲染层
         #   无论走哪条来源都能查房间几何（否则这 87 个场景会退化为"房间未知"）。
@@ -515,6 +540,105 @@ def load_anchors(scene_dir_path=None):
         if pair is not None:
             out[name] = pair
     return out
+
+
+def load_obj_visible(scene_dir_path=None):
+    """读 `_obj_visible.json` → **隐形对象名集合**（`frozenset[str]`）。
+
+    「隐形」= 原作对象编辑器里那个「可见」复选框**没勾**（`visible=False`）。
+    它们不是"没做好的对象"，而是**不可见触发器**：
+      · `obj_doorA` / `obj_doorB` / …（门：画面本来画在房间背景里）
+      · `obj_markerA` / `obj_markerB` / …（开发用标记）
+      · `obj_readable_room1`（"可读"热点，原作里靠按键触发文本）
+
+    ⇒ 我们照抄 `spr=` 把它们画出来 = 原作里根本不该出现在屏幕上的东西。
+      第99轮普查：场景里的 402 个带 `src` 的物件实例中 **305 个（76%）** 属此类。
+
+    **语义边界（很重要，别扩大）**：
+      · 只影响**绘制**。触发器仍然是可交互物 / 道具目标 —— 过滤只发生在
+        "这一帧画什么"这一步（`plan_frame` / `visible_objects`）。
+      · 名单**只落 False 的那批**，未知对象**一律照画**（保守侧：宁可用旧行为，
+        也不要因为名单缺一项把真的该画的房间装饰抹掉）。
+      · 读不到文件 → **空集合**（= 回到旧行为），不报错、不打日志。
+
+    :return: `frozenset`，可能为空。
+    """
+    base = scene_dir_path or scenes_dir()
+    cached = _OBJ_VISIBLE_CACHE.get(base)
+    if cached is not None:
+        return cached
+    raw = _read_json(os.path.join(base, _OBJ_VISIBLE_FILE))
+    hidden = ()
+    if isinstance(raw, dict):
+        names = raw.get('hidden')
+        if isinstance(names, (list, tuple)):
+            # 只留非空字符串：名单里混进 null/数字时不整体作废，跳过坏的。
+            hidden = tuple(sorted(set(n for n in names
+                                     if isinstance(n, str) and n)))
+    out = frozenset(hidden)
+    _OBJ_VISIBLE_CACHE[base] = out
+    return out
+
+
+def is_drawable_object(obj, hidden=None):
+    """这个物件**这一帧该不该画**？（`hidden` = `load_obj_visible()` 的结果）
+
+    规则一句话：物件的 `src`（原作对象名）落在 `hidden` 里 ⇒ **不画**，
+    **除非**它显式声明自己是"我们自造的物件"（见下面的逃生门）。
+
+    ★★ **语义边界（很重要，别扩大）**：本判据**只影响绘制**。触发器
+    （门/标记/可读热点）在**原作里**本来就是"看不见但能碰"的东西 ——
+    过滤只发生在"这一帧画什么"这一步，**不动** `scene.objects` 本身，
+    因此交互、寻路、道具、门控一概不受影响。要改交互语义必须另开一层，
+    不许在这里顺手加条件。
+
+    ★★★ 逃生门（第99轮 G2 实测逼出来的，**别删**）
+    -------------------------------------------------
+    隐形名单描述的是**原作房间转储来的物件**；我们自己摆的东西不在它的
+    管辖范围里。但桌面上那 **9 扇门**（`desktop.json`）恰恰**借用了原作的
+    `src`**（`obj_doorA/B/C/D/E/F/W/X` + 自造的 `obj_doorY`）来复用贴图与
+    路由 —— 不加区分就会把 8 扇门整批藏掉。实测后果（全量 G2）：
+      · `scene_p0` H11（desktop → 9 扇门）报红、`check89` E 段真机
+        `plan objs` 从 **9 掉到 1**、`render_round44` D3c（透明场景仍渲染
+        全部 9 个对象）报红。
+    两道标记，任一命中即**照画**：
+
+      1. `authored is True` —— 显式声明（数据里的自解释标记，推荐写它）；
+      2. `kind ∈ _AUTHORED_KINDS`（目前只有 `'prop'`）—— 兜底：转储来的
+         物件**从不写 `kind`**（实测 3206 个实例里 3197 个无 `kind`，剩下
+         9 个正是那 9 扇桌面门）。所以"写了 kind"本身就是自造声明。
+
+    三个刻意的设计点：
+
+      1. 判的是 `src`（**原作对象名**）而不是 `sprite`（素材名）。
+         一个素材可能被多个对象复用（`spr_interactable` 同时是
+         `obj_readable_room1` 和 `obj_interactablesolid` 的贴图），
+         而 `visible` 是**对象级**属性 —— 按素材名判会误伤。
+      2. 没有 `src` 的物件**一律照画**：它们不是从原作对象表搬来的，
+         没有 `visible` 这回事。（有 `src` 但属"我们自造"的，走上一条逃生门。）
+      3. `hidden` 为空 / 不是集合 → 全部照画（= 第99轮之前的行为），
+         这样"名单文件丢了"退化成旧行为而不是"桌面突然空了"。
+    """
+    if not isinstance(obj, dict):
+        return True
+    if not hidden:
+        return True
+    # 字符串做 `in` 是**子串匹配**（`'obj_doorA' in 'xxobj_doorAyy'` 为真）——
+    # 传错类型时必须显式拒掉，否则悄悄变成"名字像就藏"，比不判还糟。
+    if isinstance(hidden, (str, bytes)):
+        return True
+    # ★★★ 逃生门：自造物件不受隐形名单管辖（见 docstring 的长注释）。
+    if obj.get('authored') is True:
+        return True
+    if obj.get('kind') in _AUTHORED_KINDS:
+        return True
+    src = obj.get('src')
+    if not isinstance(src, str) or not src:
+        return True
+    try:
+        return src not in hidden
+    except TypeError:       # hidden 是个不可迭代/不可容器的怪东西
+        return True
 
 
 # ===========================================================================
@@ -642,8 +766,10 @@ def visible_objects(scene, screen_rect, anchors=None):
       2. `cond` 条件不满足 → 丢掉。目前支持 `{'scene_id'|'chapter_id'|'area_id': x}`
          这类**相等判定**；未知键**一律放行**（`cond` 是渐进增强，将来加条件时
          老场景包不该被误杀）。
-      3. 算不出屏幕位置（`resolve_anchor` 返回 None）→ 丢掉。
-      4. alpha 为 0 / 负 → 丢掉（完全透明的物件没有绘制意义，但保留 `0` 之外的
+      3. ★ 第99轮：`src` 落在原作的隐形名单里（`visible=False` 的触发器）→ 丢掉。
+         见 `is_drawable_object()` / `load_obj_visible()`。
+      4. 算不出屏幕位置（`resolve_anchor` 返回 None）→ 丢掉。
+      5. alpha 为 0 / 负 → 丢掉（完全透明的物件没有绘制意义，但保留 `0` 之外的
          小数值，半透明是合法的）。
 
     排序：`depth_of` 升序 = 先画远的、后画近的。
@@ -658,11 +784,17 @@ def visible_objects(scene, screen_rect, anchors=None):
     if not isinstance(objects, (list, tuple)):
         return []
 
+    # ★ 第99轮：本场景的隐形触发器名单（目录级元数据，由 load_scene/load_zone 注入）。
+    #   拿不到（手搓的 SceneState）→ 空集合 → 与旧行为逐字一致。
+    hidden = getattr(scene, 'hidden_objects', None)
+
     kept = []
     for order, obj in enumerate(objects):
         if not isinstance(obj, dict):
             continue
         if obj.get('enabled') is False:
+            continue
+        if not is_drawable_object(obj, hidden):
             continue
 
         cond = obj.get('cond')
@@ -760,7 +892,8 @@ class SceneState(object):
 
     __slots__ = ('scene_id', 'name', 'chapter_id', 'chapter_name', 'area_id',
                  'area_name', 'bg', 'bgm', 'ambient', 'objects', 'anchors',
-                 'transition', 'raw', 'dir_path', 'original_room_id')
+                 'transition', 'raw', 'dir_path', 'original_room_id',
+                 'hidden_objects')
 
     def __init__(self):
         self.scene_id = None
@@ -778,6 +911,12 @@ class SceneState(object):
         self.transition = None  # 转场声明（dict | None）
         self.raw = {}           # 原始 dict（调试/前向兼容用，别改它）
         self.dir_path = None    # 本场景 JSON 所在目录（_KIND_SCENE_DIR 的基准）
+        # ★★ 第99轮：原作 `visible=False` 的**不可见触发器**名单
+        #   （`load_obj_visible()` 的结果）。渲染层据此**不画**它们。
+        #   ⚠️ 它不是物件字段的一部分（不写进 JSON），而是**加载期注入**的
+        #      目录级元数据；`from_dict` 里保持空集合 ⇒ 直接手搓
+        #      `SceneState.from_dict(...)` 的旧测试**行为零变化**。
+        self.hidden_objects = frozenset()
 
     @classmethod
     def from_dict(cls, raw):

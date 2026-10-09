@@ -1,0 +1,47 @@
+
+================ BEFORE-TRAVEL t=0.00 ================
+scene='desktop'  default_scene={}
+canvas 窗口位读取失败 TypeError("'NoneType' object is not callable")
+canvas.geometry=(0, 0, 640, 480)  view_size=(0, 0)  last_drawn=0  scale=(1.0,1.0)
+z_canvas=None z_pet=99  画布类='Qt5152QWindowToolSaveBits'
+cam=(None, 2.0, (640, 480))
+--- A. 画布当前 plan（0 条）---
+--- A2. 现场 plan_frame = 0 条 ---
+    plan_viewport() = (0, 0)
+--- B. 素材缓存 ---
+   assets.base_dir='?'
+   缓存键=[]
+--- C. canvas.grab()（画布自己认为画了什么）---
+   grab 尺寸=(640, 480)
+    [saved canvas_grab_BEFORE-TRAVEL.png ok=True 1.3 KB]
+   grab 非透明采样点=0（每 4px 采一点，共 19481 点）
+--- D. 屏幕 grabWindow(0) 画布位裁剪 ---
+    [saved screen_crop_BEFORE-TRAVEL.png ok=True 499.0 KB]
+   屏幕裁剪非黑采样点=19183
+   屏幕裁剪正中像素=ff00002b
+>>> travel_to_scene('ch1.card_castle.card_castle_1f')
+    -> True
+
+================ AFTER-TRAVEL t=6.71 ================
+scene='ch1.card_castle.card_castle_1f'  default_scene={}
+canvas 窗口位读取失败 TypeError("'NoneType' object is not callable")
+canvas.geometry=(1877, 1120, 640, 480)  view_size=(640, 480)  last_drawn=1  scale=(1.0,1.0)
+z_canvas=100 z_pet=11  画布类='Qt5152QWindowToolSaveBits'
+cam=((1457.90625, 840.0, 320.0, 240.0), 2.0, (640, 480))
+--- A. 画布当前 plan（1 条）---
+   [0] kind='room_border' name=None rect=(-2916, -1680, 3680, 2160) alpha=None
+--- A2. 现场 plan_frame = 1 条 ---
+   <live 0> kind='room_border' name=None rect=(-2916, -1680, 3680, 2160)
+    plan_viewport() = (640, 480)
+--- B. 素材缓存 ---
+   assets.base_dir='?'
+   缓存键=['bg/ch1_card_castle_card_castle_1f.png', 'objs/spr_doorA_0.png', 'objs/spr_doorB_0.png', 'objs/spr_doorC_0.png', 'objs/spr_doorD_0.png', 'objs/spr_doorE_0.png', 'objs/spr_doorF_0.png', 'objs/spr_doorW_0.png', 'objs/spr_doorX_0.png', 'objs/spr_doorY_0.png', 'objs/spr_interactable_0.png', 'objs/spr_markerA_0.png', 'objs/spr_markerB_0.png', 'objs/spr_markerD_0.png', 'objs/spr_markerW_0.png', 'objs/spr_markerX_0.png', 'objs/spr_savepoint_0.png', 'objs/spr_savepoint_1.png', 'objs/spr_savepoint_2.png', 'objs/spr_savepoint_3.png']
+--- C. canvas.grab()（画布自己认为画了什么）---
+   grab 尺寸=(640, 480)
+    [saved canvas_grab_AFTER-TRAVEL.png ok=True 1.3 KB]
+   grab 非透明采样点=0（每 4px 采一点，共 19481 点）
+--- D. 屏幕 grabWindow(0) 画布位裁剪 ---
+    [saved screen_crop_AFTER-TRAVEL.png ok=True 197.4 KB]
+   屏幕裁剪非黑采样点=19163
+   屏幕裁剪正中像素=ffbe7078
+[recon99c] exit rc=0

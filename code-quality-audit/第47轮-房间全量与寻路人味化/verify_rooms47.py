@@ -258,8 +258,30 @@ def main():
               for crec in (idx.get('chapters') or {}).values()
               for arec in ((crec or {}).get('areas') or {}).values()
               for sid in ((arec or {}).get('scenes') or {})))
-    check('B7 U5 几何表未命中 == 0（每间都能算尺寸 ⇒ 房内行走可算）',
-          not bad['U5'], '%d 个，例 %r' % (len(bad['U5']), bad['U5'][:3]))
+    # ★★ 第99轮：U5 原判据是 `未命中 == 0`。第99轮 Outertale 244 场景迁入
+    #   （用户点名要的第五个世界入口），但**没有原作几何** —— 其 bundle 里房间
+    #   定义只有 `background`（层名字符串）+ `region`（出生点数组），**没有房间
+    #   像素尺寸**（见 `_room_geometry.json#gaps.outertale.why`，含原始 bundle 路径）
+    #   ⇒ 244 间必然未命中。
+    #   ⇒ 判据改为**对照显式缺口声明**：未命中数必须**恰好**等于 `gaps` 里登记的
+    #     房间数，且每一间未命中的章都必须**被声明过**。
+    #     这样"几何悄悄丢了却没人登记"仍会报红（原判据的鉴别力没丢），
+    #     而"确实采不到、已如实登记"不再被误报成缺陷。
+    _gaps = geo.get('gaps') or {}
+    _declared_rooms = 0
+    _declared_ch = set()
+    for _gch, _g in _gaps.items():
+        _gn = (_g or {}).get('rooms')
+        if isinstance(_gn, int):
+            _declared_rooms += _gn
+        _declared_ch.add(_gch)
+    _u5_ch = set(c for _sid, c, _rid in bad['U5'])
+    check('B7 U5 几何表未命中 == **显式登记的缺口**（%d 间 / 章 %s）—— '
+          '每一间未命中都必须被 `gaps` 声明过，否则判红'
+          % (_declared_rooms, sorted(_declared_ch)),
+          len(bad['U5']) == _declared_rooms and _u5_ch <= _declared_ch,
+          '实得 %d 个（章 %s），例 %r'
+          % (len(bad['U5']), sorted(_u5_ch), bad['U5'][:3]))
     # 背景覆盖率**不属于"能用"**，但必须如实钉住（缺口需要 UTMT 重新导出素材）
     # ★ 第80轮改：分母不再写死 1014（OneShot 263 迁入后 = 1,277）。
     #   判据本意是"**有背景的场景数**如实钉住 235（Deltarune 侧已采素材的）"，

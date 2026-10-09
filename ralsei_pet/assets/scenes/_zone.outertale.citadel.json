@@ -1,0 +1,450 @@
+{
+ "schema_version": 1,
+ "chapter_id": "outertale",
+ "area_id": "citadel",
+ "area_name": "Citadel",
+ "note": "第99轮：从 Outertale 的 Vite bundle（`E:\\Download\\_extract61\\outertale\\www\\index-*.js`）迁入。六张房间表 `Sb/w3/I3/y3/Ub/Fb` 逐表抽取，锚点自证见 `_tools/extract_outertale99.py`（A1~A6 全 PASS）。★ `original_room_id` 是**本项目分配的稳定序号**（按六表字面顺序 0 起），**不是原作房间下标** —— Outertale 房间以字符串 id 寻址，本就没有整数下标；这是与 Deltarune/OneShot 的**已知差异**，如实登记。",
+ "scenes": {
+  "outertale.citadel.c_start": {
+   "name": "c_start",
+   "name_raw": "c_start",
+   "name_derived": false,
+   "original_room_id": 195,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_road1": {
+   "name": "c_road1",
+   "name_raw": "c_road1",
+   "name_derived": false,
+   "original_room_id": 196,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_elevator1": {
+   "name": "c_elevator1",
+   "name_raw": "c_elevator1",
+   "name_derived": false,
+   "original_room_id": 197,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_pacing": {
+   "name": "c_pacing",
+   "name_raw": "c_pacing",
+   "name_derived": false,
+   "original_room_id": 198,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_courtyard": {
+   "name": "c_courtyard",
+   "name_raw": "c_courtyard",
+   "name_derived": false,
+   "original_room_id": 199,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_alley": {
+   "name": "c_alley",
+   "name_raw": "c_alley",
+   "name_derived": false,
+   "original_room_id": 200,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_story": {
+   "name": "c_story",
+   "name_raw": "c_story",
+   "name_derived": false,
+   "original_room_id": 201,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_elevator2": {
+   "name": "c_elevator2",
+   "name_raw": "c_elevator2",
+   "name_derived": false,
+   "original_room_id": 202,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_courtroom": {
+   "name": "c_courtroom",
+   "name_raw": "c_courtroom",
+   "name_derived": false,
+   "original_room_id": 203,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_road2": {
+   "name": "c_road2",
+   "name_raw": "c_road2",
+   "name_derived": false,
+   "original_room_id": 204,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_throneroom": {
+   "name": "c_throneroom",
+   "name_raw": "c_throneroom",
+   "name_derived": false,
+   "original_room_id": 205,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_bastion": {
+   "name": "c_bastion",
+   "name_raw": "c_bastion",
+   "name_derived": false,
+   "original_room_id": 206,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_road3": {
+   "name": "c_road3",
+   "name_raw": "c_road3",
+   "name_derived": false,
+   "original_room_id": 207,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_exit": {
+   "name": "c_exit",
+   "name_raw": "c_exit",
+   "name_derived": false,
+   "original_room_id": 208,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_asgore_front": {
+   "name": "c_asgore_front",
+   "name_raw": "c_asgore_front",
+   "name_derived": false,
+   "original_room_id": 209,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_asgore_living": {
+   "name": "c_asgore_living",
+   "name_raw": "c_asgore_living",
+   "name_derived": false,
+   "original_room_id": 210,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_asgore_kitchen": {
+   "name": "c_asgore_kitchen",
+   "name_raw": "c_asgore_kitchen",
+   "name_derived": false,
+   "original_room_id": 211,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_asgore_hallway": {
+   "name": "c_asgore_hallway",
+   "name_raw": "c_asgore_hallway",
+   "name_derived": false,
+   "original_room_id": 212,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_asgore_asriel": {
+   "name": "c_asgore_asriel",
+   "name_raw": "c_asgore_asriel",
+   "name_derived": false,
+   "original_room_id": 213,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_asgore_asgore": {
+   "name": "c_asgore_asgore",
+   "name_raw": "c_asgore_asgore",
+   "name_derived": false,
+   "original_room_id": 214,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_start": {
+   "name": "c_archive_start",
+   "name_raw": "c_archive_start",
+   "name_derived": false,
+   "original_room_id": 215,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_path1": {
+   "name": "c_archive_path1",
+   "name_raw": "c_archive_path1",
+   "name_derived": false,
+   "original_room_id": 216,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_wastelands1": {
+   "name": "c_archive_wastelands1",
+   "name_raw": "c_archive_wastelands1",
+   "name_derived": false,
+   "original_room_id": 217,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_wastelands2": {
+   "name": "c_archive_wastelands2",
+   "name_raw": "c_archive_wastelands2",
+   "name_derived": false,
+   "original_room_id": 218,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_wastelands3": {
+   "name": "c_archive_wastelands3",
+   "name_raw": "c_archive_wastelands3",
+   "name_derived": false,
+   "original_room_id": 219,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_wastelands4": {
+   "name": "c_archive_wastelands4",
+   "name_raw": "c_archive_wastelands4",
+   "name_derived": false,
+   "original_room_id": 220,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_path2": {
+   "name": "c_archive_path2",
+   "name_raw": "c_archive_path2",
+   "name_derived": false,
+   "original_room_id": 221,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_starton1": {
+   "name": "c_archive_starton1",
+   "name_raw": "c_archive_starton1",
+   "name_derived": false,
+   "original_room_id": 222,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_starton2": {
+   "name": "c_archive_starton2",
+   "name_raw": "c_archive_starton2",
+   "name_derived": false,
+   "original_room_id": 223,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_starton3": {
+   "name": "c_archive_starton3",
+   "name_raw": "c_archive_starton3",
+   "name_derived": false,
+   "original_room_id": 224,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_starton4": {
+   "name": "c_archive_starton4",
+   "name_raw": "c_archive_starton4",
+   "name_derived": false,
+   "original_room_id": 225,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_path3": {
+   "name": "c_archive_path3",
+   "name_raw": "c_archive_path3",
+   "name_derived": false,
+   "original_room_id": 226,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryA1": {
+   "name": "c_archive_foundryA1",
+   "name_raw": "c_archive_foundryA1",
+   "name_derived": false,
+   "original_room_id": 227,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryA2": {
+   "name": "c_archive_foundryA2",
+   "name_raw": "c_archive_foundryA2",
+   "name_derived": false,
+   "original_room_id": 228,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryA3": {
+   "name": "c_archive_foundryA3",
+   "name_raw": "c_archive_foundryA3",
+   "name_derived": false,
+   "original_room_id": 229,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryA4": {
+   "name": "c_archive_foundryA4",
+   "name_raw": "c_archive_foundryA4",
+   "name_derived": false,
+   "original_room_id": 230,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_path4": {
+   "name": "c_archive_path4",
+   "name_raw": "c_archive_path4",
+   "name_derived": false,
+   "original_room_id": 231,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryB1": {
+   "name": "c_archive_foundryB1",
+   "name_raw": "c_archive_foundryB1",
+   "name_derived": false,
+   "original_room_id": 232,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryB2": {
+   "name": "c_archive_foundryB2",
+   "name_raw": "c_archive_foundryB2",
+   "name_derived": false,
+   "original_room_id": 233,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryB3": {
+   "name": "c_archive_foundryB3",
+   "name_raw": "c_archive_foundryB3",
+   "name_derived": false,
+   "original_room_id": 234,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_foundryB4": {
+   "name": "c_archive_foundryB4",
+   "name_raw": "c_archive_foundryB4",
+   "name_derived": false,
+   "original_room_id": 235,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_path5": {
+   "name": "c_archive_path5",
+   "name_raw": "c_archive_path5",
+   "name_derived": false,
+   "original_room_id": 236,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_aerialis1": {
+   "name": "c_archive_aerialis1",
+   "name_raw": "c_archive_aerialis1",
+   "name_derived": false,
+   "original_room_id": 237,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_aerialis2": {
+   "name": "c_archive_aerialis2",
+   "name_raw": "c_archive_aerialis2",
+   "name_derived": false,
+   "original_room_id": 238,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_aerialis3": {
+   "name": "c_archive_aerialis3",
+   "name_raw": "c_archive_aerialis3",
+   "name_derived": false,
+   "original_room_id": 239,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_aerialis4": {
+   "name": "c_archive_aerialis4",
+   "name_raw": "c_archive_aerialis4",
+   "name_derived": false,
+   "original_room_id": 240,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_path6": {
+   "name": "c_archive_path6",
+   "name_raw": "c_archive_path6",
+   "name_derived": false,
+   "original_room_id": 241,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_surface": {
+   "name": "c_archive_surface",
+   "name_raw": "c_archive_surface",
+   "name_derived": false,
+   "original_room_id": 242,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.citadel.c_archive_exit": {
+   "name": "c_archive_exit",
+   "name_raw": "c_archive_exit",
+   "name_derived": false,
+   "original_room_id": 243,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

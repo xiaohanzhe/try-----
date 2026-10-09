@@ -583,15 +583,53 @@ check('D1 ★ 本位令牌**逐条**在现网 ≥1 命中（零命中的令牌 =
 _nz_res = [(t, tok, sum(1 for s in _IDS if L._token_hits(tok, s)))
            for t, toks in L.TRAIT_TOKENS_RESERVED.items() for tok in toks
            if tok not in _om_b and any(L._token_hits(tok, s) for s in _IDS)]
-check('D2 预留令牌**逐条**现网 == 0 命中（不许拿它们混进本位凑数字；第80轮起禁词已排除）',
+check('D2 预留令牌**逐条**现网 == 0 命中（不许拿它们混进本位凑数字；第80/99轮起禁词已排除）',
       not _nz_res, str(_nz_res[:3] or '(全 0)'))
+
+# ★ 第99轮：Outertale 244 场景迁入 ⇒ 第三次「预留→转正」，两条令牌**命运相反**：
+#   · `plaza` 语义**正确**（`outertale.core.a_plaza` = Aerialis 的商场广场：原作
+#     `preload` 含 `amShop`、`layers` 含 `iooABurgies`、`score={music:"mall"}`，
+#     Papyrus 台词逐字「THAT'S WHERE BURGIE'S SHOP IS.」）⇒ **转正进本位 `crowded`**。
+#   · `void` 语义**错位**（`outertale.special._void` 是一间带 bed/plushie/flowers/
+#     computer 与 `music:"rain"` 的**小卧室**）⇒ **拒绝转正、移入 BANNED('OMITTED')**
+#     （与第80轮 `square`/`street`、第73轮 `room`/`light` 同款判法）。
+check('D2b ★★ 第99轮裁决落地：`plaza` 已进本位 `crowded`、已离开预留表、且实测 ≥1 命中',
+      'plaza' in L.TRAIT_TOKENS.get('crowded', ())
+      and 'plaza' not in L.TRAIT_TOKENS_RESERVED.get('crowded', ())
+      and any(L._token_hits('plaza', s) for s in _IDS),
+      'crowded=%r res_crowded=%r' % (L.TRAIT_TOKENS.get('crowded'),
+                                     L.TRAIT_TOKENS_RESERVED.get('crowded')))
+check('D2c ★★ 第99轮裁决落地：`void` 已封禁（`OMITTED`），且已离开 `cosmic` 的两张表',
+      L.BANNED_TOKENS.get('void') == 'OMITTED'
+      and 'void' not in L.TRAIT_TOKENS.get('cosmic', ())
+      and 'void' not in L.TRAIT_TOKENS_RESERVED.get('cosmic', ()),
+      'banned=%r cosmic=%r res_cosmic=%r' % (
+          L.BANNED_TOKENS.get('void'), L.TRAIT_TOKENS.get('cosmic'),
+          L.TRAIT_TOKENS_RESERVED.get('cosmic')))
+
+# ★ 负控制（成对）：把 `void` **硬塞回** `cosmic` 预留表 ⇒ D3 那条"禁词不许出现在任何表"
+#   必须**报红**（证明 D2c / D3 不是恒真；且夹具保真 —— 塞回去后账目真的变了）。
+#   ⚠️ 不能拿 D2 做这条负控制：D2 的过滤条件本身就排除了禁词 ⇒ 恒绿，抓不到。
+_orig_cos99 = L.TRAIT_TOKENS_RESERVED['cosmic']
+try:
+    L.TRAIT_TOKENS_RESERVED['cosmic'] = tuple(_orig_cos99) + ('void',)
+    _all_tok_neg = set()
+    for _mapi in (L.TRAIT_TOKENS, L.TRAIT_TOKENS_RESERVED, L.TRAIT_WORDS_CN):
+        for _v in _mapi.values():
+            _all_tok_neg |= set(_v)
+    _om_in_neg = [t for t in L.banned_tokens('OMITTED') if t in _all_tok_neg]
+finally:
+    L.TRAIT_TOKENS_RESERVED['cosmic'] = _orig_cos99
+check('D2d ★ 负控制：把 `void` 塞回预留表 ⇒ "禁词不在任何表"必须报红'
+      '（证明 D2c/D3 有鉴别力；夹具保真：塞回后真的多出一个）',
+      _om_in_neg == ['void'], str(_om_in_neg))
 
 _all_tok = set()
 for _mapi in (L.TRAIT_TOKENS, L.TRAIT_TOKENS_RESERVED, L.TRAIT_WORDS_CN):
     for _v in _mapi.values():
         _all_tok |= set(_v)
 _omitted_in = [t for t in L.banned_tokens('OMITTED') if t in _all_tok]
-check('D3 `OMITTED` 类禁词（room / light / square / street）**不在任何令牌表里**'
+check('D3 `OMITTED` 类禁词（room / light / square / street / void）**不在任何令牌表里**'
       '（这类靠"没人往表里写"挡 + 第80轮起运行期也硬过滤，匹配规则挡不住）',
       not _omitted_in, str(_omitted_in))
 check('D3b `SUBSTRING` 类禁词（ash / night）被匹配规则挡住（负控制）',

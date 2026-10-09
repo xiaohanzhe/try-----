@@ -1,0 +1,324 @@
+{
+ "schema_version": 1,
+ "chapter_id": "outertale",
+ "area_id": "wastelands",
+ "area_name": "Wastelands",
+ "note": "第99轮：从 Outertale 的 Vite bundle（`E:\\Download\\_extract61\\outertale\\www\\index-*.js`）迁入。六张房间表 `Sb/w3/I3/y3/Ub/Fb` 逐表抽取，锚点自证见 `_tools/extract_outertale99.py`（A1~A6 全 PASS）。★ `original_room_id` 是**本项目分配的稳定序号**（按六表字面顺序 0 起），**不是原作房间下标** —— Outertale 房间以字符串 id 寻址，本就没有整数下标；这是与 Deltarune/OneShot 的**已知差异**，如实登记。",
+ "scenes": {
+  "outertale.wastelands.w_start": {
+   "name": "w_start",
+   "name_raw": "w_start",
+   "name_derived": false,
+   "original_room_id": 18,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_twinkly": {
+   "name": "w_twinkly",
+   "name_raw": "w_twinkly",
+   "name_derived": false,
+   "original_room_id": 19,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_entrance": {
+   "name": "w_entrance",
+   "name_raw": "w_entrance",
+   "name_derived": false,
+   "original_room_id": 20,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_lobby": {
+   "name": "w_lobby",
+   "name_raw": "w_lobby",
+   "name_derived": false,
+   "original_room_id": 21,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_tutorial": {
+   "name": "w_tutorial",
+   "name_raw": "w_tutorial",
+   "name_derived": false,
+   "original_room_id": 22,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_dummy": {
+   "name": "w_dummy",
+   "name_raw": "w_dummy",
+   "name_derived": false,
+   "original_room_id": 23,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_coffin": {
+   "name": "w_coffin",
+   "name_raw": "w_coffin",
+   "name_derived": false,
+   "original_room_id": 24,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_danger": {
+   "name": "w_danger",
+   "name_raw": "w_danger",
+   "name_derived": false,
+   "original_room_id": 25,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_zigzag": {
+   "name": "w_zigzag",
+   "name_raw": "w_zigzag",
+   "name_derived": false,
+   "original_room_id": 26,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_froggit": {
+   "name": "w_froggit",
+   "name_raw": "w_froggit",
+   "name_derived": false,
+   "original_room_id": 27,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_candy": {
+   "name": "w_candy",
+   "name_raw": "w_candy",
+   "name_derived": false,
+   "original_room_id": 28,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_puzzle1": {
+   "name": "w_puzzle1",
+   "name_raw": "w_puzzle1",
+   "name_derived": false,
+   "original_room_id": 29,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_puzzle2": {
+   "name": "w_puzzle2",
+   "name_raw": "w_puzzle2",
+   "name_derived": false,
+   "original_room_id": 30,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_puzzle3": {
+   "name": "w_puzzle3",
+   "name_raw": "w_puzzle3",
+   "name_derived": false,
+   "original_room_id": 31,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_puzzle4": {
+   "name": "w_puzzle4",
+   "name_raw": "w_puzzle4",
+   "name_derived": false,
+   "original_room_id": 32,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_mouse": {
+   "name": "w_mouse",
+   "name_raw": "w_mouse",
+   "name_derived": false,
+   "original_room_id": 33,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_blooky": {
+   "name": "w_blooky",
+   "name_raw": "w_blooky",
+   "name_derived": false,
+   "original_room_id": 34,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_party": {
+   "name": "w_party",
+   "name_raw": "w_party",
+   "name_derived": false,
+   "original_room_id": 35,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_pacing": {
+   "name": "w_pacing",
+   "name_raw": "w_pacing",
+   "name_derived": false,
+   "original_room_id": 36,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_junction": {
+   "name": "w_junction",
+   "name_raw": "w_junction",
+   "name_derived": false,
+   "original_room_id": 37,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_annex": {
+   "name": "w_annex",
+   "name_raw": "w_annex",
+   "name_derived": false,
+   "original_room_id": 38,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_wonder": {
+   "name": "w_wonder",
+   "name_raw": "w_wonder",
+   "name_derived": false,
+   "original_room_id": 39,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_courtyard": {
+   "name": "w_courtyard",
+   "name_raw": "w_courtyard",
+   "name_derived": false,
+   "original_room_id": 40,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_toriel_front": {
+   "name": "w_toriel_front",
+   "name_raw": "w_toriel_front",
+   "name_derived": false,
+   "original_room_id": 41,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_toriel_living": {
+   "name": "w_toriel_living",
+   "name_raw": "w_toriel_living",
+   "name_derived": false,
+   "original_room_id": 42,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_toriel_kitchen": {
+   "name": "w_toriel_kitchen",
+   "name_raw": "w_toriel_kitchen",
+   "name_derived": false,
+   "original_room_id": 43,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_toriel_hallway": {
+   "name": "w_toriel_hallway",
+   "name_raw": "w_toriel_hallway",
+   "name_derived": false,
+   "original_room_id": 44,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_toriel_asriel": {
+   "name": "w_toriel_asriel",
+   "name_raw": "w_toriel_asriel",
+   "name_derived": false,
+   "original_room_id": 45,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_toriel_toriel": {
+   "name": "w_toriel_toriel",
+   "name_raw": "w_toriel_toriel",
+   "name_derived": false,
+   "original_room_id": 46,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_alley1": {
+   "name": "w_alley1",
+   "name_raw": "w_alley1",
+   "name_derived": false,
+   "original_room_id": 47,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_alley2": {
+   "name": "w_alley2",
+   "name_raw": "w_alley2",
+   "name_derived": false,
+   "original_room_id": 48,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_alley3": {
+   "name": "w_alley3",
+   "name_raw": "w_alley3",
+   "name_derived": false,
+   "original_room_id": 49,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_alley4": {
+   "name": "w_alley4",
+   "name_raw": "w_alley4",
+   "name_derived": false,
+   "original_room_id": 50,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_bridge": {
+   "name": "w_bridge",
+   "name_raw": "w_bridge",
+   "name_derived": false,
+   "original_room_id": 51,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.wastelands.w_exit": {
+   "name": "w_exit",
+   "name_raw": "w_exit",
+   "name_derived": false,
+   "original_room_id": 52,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

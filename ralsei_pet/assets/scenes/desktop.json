@@ -20,65 +20,82 @@
     {
       "id": "desk_door_ch1",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorA",
       "sprite": "objs/spr_doorA_0.png",
-      "pos": [56, 96],
+      "pos": [40, 96],
       "depth": 0
     },
     {
       "id": "desk_door_ch2",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorB",
       "sprite": "objs/spr_doorB_0.png",
-      "pos": [86, 96],
+      "pos": [70, 96],
       "depth": 0
     },
     {
       "id": "desk_door_ch3",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorC",
       "sprite": "objs/spr_doorC_0.png",
-      "pos": [116, 96],
+      "pos": [100, 96],
       "depth": 0
     },
     {
       "id": "desk_door_ch4",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorD",
       "sprite": "objs/spr_doorD_0.png",
-      "pos": [146, 96],
+      "pos": [130, 96],
       "depth": 0
     },
     {
       "id": "desk_door_ch5",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorE",
       "sprite": "objs/spr_doorE_0.png",
-      "pos": [176, 96],
+      "pos": [160, 96],
       "depth": 0
     },
     {
       "id": "desk_door_ut",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorF",
       "sprite": "objs/spr_doorF_0.png",
-      "pos": [206, 96],
+      "pos": [190, 96],
       "depth": 0
     },
     {
       "id": "desk_door_uty",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorW",
       "sprite": "objs/spr_doorW_0.png",
-      "pos": [236, 96],
+      "pos": [220, 96],
       "depth": 0
     },
     {
       "id": "desk_door_oneshot",
       "kind": "prop",
+      "authored": true,
       "src": "obj_doorX",
       "sprite": "objs/spr_doorX_0.png",
-      "pos": [266, 96],
+      "pos": [250, 96],
+      "depth": 0
+    },
+    {
+      "id": "desk_door_outertale",
+      "kind": "prop",
+      "authored": true,
+      "src": "obj_doorY",
+      "sprite": "objs/spr_doorY_0.png",
+      "pos": [280, 96],
       "depth": 0
     }
   ],
@@ -91,9 +108,9 @@
     "round89_desktop_doors": {
       "why": "用户口径（第89轮）『我到现在都没看到能切换场景的门』。实测根因：桌面章只有 1 间场景，`reachable_destinations` 的『同章』过滤让菜单恒为空，且桌面无 original_room_id ⇒ 视口 0×0 ⇒ 什么都画不出来。",
       "original_room_id": "-1 = 桌面的**虚拟房间**（见 _room_geometry.json 的 `desktop:-1`）。★ 尺寸裁定 = **320×240**，不是 640×480：相机 `scoped_size()` = `size/scale` = 640/2 = 320×240，房间正好等于相机逻辑窗口时 `camera_rect` 走 `center_rect` 分支 ⇒ **相机固定、不跟随宠物**（`(0,0,320,240)`），门的位置才稳定可预测。若用 640×480，房间大于相机 ⇒ 相机去追宠物（宠物在世界坐标里被归一化到 ~(628,480)），静止时视野约 x∈[468,628] ⇒ 排在前面的门**全落在视野外**（第89轮实测：`plan objs=0`）—— 这也不是 bug，是尺寸选错。",
-      "doors": "8 扇 = 五章 + UT + 黄魂 + OneShot，各用一扇不同字母的门贴图（A~F/W/X）。`src` 必须是 `obj_door<字母>`（`classify()` / `door_letter_of()` 认它），但**桌面门的目标不走路由表** —— 见下。",
-      "pos_rule": "门贴图 `spr_doorA~F/W/X_0.png` 统一 **20×20**，渲染时居中锚定（`rect` 的 x 是**中心 x**）⇒ 8 扇横排 `x = 56 + 30*i`，中心范围 56~266、占宽 20 ⇒ 落在 `[46,276] ⊂ [0,320]`，两端各留 44/44 逻辑像素余量。y 统一 96（房间纵向中点附近），门高 20 ⇒ `[86,106] ⊂ [0,240]`。铺成 1280×480 输出像素后是一排齐整的门廊，居中偏上。",
-      "how_targets_resolve": "桌面的门不走 `scene_routing`（那是『原作门位移』，桌面不是原作房间）。它们的目标由第89轮的桌面门表给出（见 scene_controller 的 `_DESKTOP_DOORS`），`item_interact.build_props` 对 desktop 场景走该表。"
+      "doors": "9 扇 = 五章 + UT + 黄魂 + OneShot + **Outertale**，各用一扇不同字母的门贴图（A~F/W/X/**Y**）。`src` 必须是 `obj_door<字母>`（`classify()` / `door_letter_of()` 认它）。★ 第99轮补 Y（Outertale）：贴图 `spr_doorY_0.png` 的**方框逐像素抄自 `spr_doorA_0.png`**（81 px 蓝框 + 铰链凸块），**字母 Y 为本项目按同规格手绘**（因为 Outertale 原作没有 `obj_doorY`，不存在'照抄一张 Y 门'的可能）—— 生成脚本 `第99轮…/_tools/make_doorY99.py`，含自动对齐自证。",
+      "pos_rule": "门贴图 `spr_doorA~F/W/X/Y_0.png` 统一 **20×20**，渲染时居中锚定（`rect` 的 x 是**中心 x**）⇒ 9 扇横排 `x = 40 + 30*i`（i=0..8），中心范围 40~280、占宽 20 ⇒ 落在 `[30,290] ⊂ [0,320]`，两端各留 30/30 逻辑像素余量（**对称**）。y 统一 96（房间纵向中点附近），门高 20 ⇒ `[86,106] ⊂ [0,240]`。铺成 1280×480 输出像素后是一排齐整的门廊，居中偏上。★ 第99轮由 8 扇（`x = 56 + 30*i`）改为 9 扇：原间距 30 保持不变，整排**左移 16 并重新居中**，避免第 9 扇顶到右边界（若沿用旧起点，第 9 扇中心 296 ⇒ 右余量仅 14，左右不对称）。",
+      "how_targets_resolve": "桌面的门**走 `_routes.json`**（与所有别的场景同一条路）：`item_interact.build_props` 把 `obj_door<字母>` 建成 `DoorProp`（`door_letter_of()` 认字母），点击时 `route_for_door(routes, 'desktop', letter)` 在 `when_scene='desktop'` 的条目里按字母取目标（`priority=200`，高于原作边的 100~110）。★ **第99轮勘误**：原文写「目标由 `scene_controller` 的 `_DESKTOP_DOORS` 给出，`build_props` 对 desktop 走该表」—— 全仓库 **`_DESKTOP_DOORS` 零命中**，那个符号从来不存在；真实实现一直是路由表这条路。桌面 9 条路由见 `_routes.json` 的 `when_scene='desktop'` 分组。"
     },
     "how_to_fill_it_in_later": [
       "1. bg: 填字符串（相对本目录，如 \"bg/desktop_night.png\"）或 {'variants': [...]}（轮播，例如白天/夜晚）。P0 留 null。",

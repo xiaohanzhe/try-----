@@ -1,0 +1,261 @@
+{
+ "schema_version": 1,
+ "chapter_id": "outertale",
+ "area_id": "aerialis",
+ "area_name": "Aerialis",
+ "note": "第99轮：从 Outertale 的 Vite bundle（`E:\\Download\\_extract61\\outertale\\www\\index-*.js`）迁入。六张房间表 `Sb/w3/I3/y3/Ub/Fb` 逐表抽取，锚点自证见 `_tools/extract_outertale99.py`（A1~A6 全 PASS）。★ `original_room_id` 是**本项目分配的稳定序号**（按六表字面顺序 0 起），**不是原作房间下标** —— Outertale 房间以字符串 id 寻址，本就没有整数下标；这是与 Deltarune/OneShot 的**已知差异**，如实登记。",
+ "scenes": {
+  "outertale.aerialis.a_start": {
+   "name": "a_start",
+   "name_raw": "a_start",
+   "name_derived": false,
+   "original_room_id": 136,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_lab_entry": {
+   "name": "a_lab_entry",
+   "name_raw": "a_lab_entry",
+   "name_derived": false,
+   "original_room_id": 137,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_lab_main": {
+   "name": "a_lab_main",
+   "name_raw": "a_lab_main",
+   "name_derived": false,
+   "original_room_id": 138,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_lab_upstairs": {
+   "name": "a_lab_upstairs",
+   "name_raw": "a_lab_upstairs",
+   "name_derived": false,
+   "original_room_id": 139,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_lab_downstairs": {
+   "name": "a_lab_downstairs",
+   "name_raw": "a_lab_downstairs",
+   "name_derived": false,
+   "original_room_id": 140,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_lab_virt": {
+   "name": "a_lab_virt",
+   "name_raw": "a_lab_virt",
+   "name_derived": false,
+   "original_room_id": 141,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_path1": {
+   "name": "a_path1",
+   "name_raw": "a_path1",
+   "name_derived": false,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_path2": {
+   "name": "a_path2",
+   "name_raw": "a_path2",
+   "name_derived": false,
+   "original_room_id": 143,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_path3": {
+   "name": "a_path3",
+   "name_raw": "a_path3",
+   "name_derived": false,
+   "original_room_id": 144,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_rg1": {
+   "name": "a_rg1",
+   "name_raw": "a_rg1",
+   "name_derived": false,
+   "original_room_id": 145,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_path4": {
+   "name": "a_path4",
+   "name_raw": "a_path4",
+   "name_derived": false,
+   "original_room_id": 146,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_barricade1": {
+   "name": "a_barricade1",
+   "name_raw": "a_barricade1",
+   "name_derived": false,
+   "original_room_id": 147,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_puzzle1": {
+   "name": "a_puzzle1",
+   "name_raw": "a_puzzle1",
+   "name_derived": false,
+   "original_room_id": 148,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_mettaton1": {
+   "name": "a_mettaton1",
+   "name_raw": "a_mettaton1",
+   "name_derived": false,
+   "original_room_id": 149,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_elevator1": {
+   "name": "a_elevator1",
+   "name_raw": "a_elevator1",
+   "name_derived": false,
+   "original_room_id": 150,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_lift": {
+   "name": "a_lift",
+   "name_raw": "a_lift",
+   "name_derived": false,
+   "original_room_id": 151,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_elevator2": {
+   "name": "a_elevator2",
+   "name_raw": "a_elevator2",
+   "name_derived": false,
+   "original_room_id": 152,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_sans": {
+   "name": "a_sans",
+   "name_raw": "a_sans",
+   "name_derived": false,
+   "original_room_id": 153,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_pacing": {
+   "name": "a_pacing",
+   "name_raw": "a_pacing",
+   "name_derived": false,
+   "original_room_id": 154,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_prepuzzle": {
+   "name": "a_prepuzzle",
+   "name_raw": "a_prepuzzle",
+   "name_derived": false,
+   "original_room_id": 155,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_puzzle2": {
+   "name": "a_puzzle2",
+   "name_raw": "a_puzzle2",
+   "name_derived": false,
+   "original_room_id": 156,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_mettaton2": {
+   "name": "a_mettaton2",
+   "name_raw": "a_mettaton2",
+   "name_derived": false,
+   "original_room_id": 157,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_rg2": {
+   "name": "a_rg2",
+   "name_raw": "a_rg2",
+   "name_derived": false,
+   "original_room_id": 158,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_barricade2": {
+   "name": "a_barricade2",
+   "name_raw": "a_barricade2",
+   "name_derived": false,
+   "original_room_id": 159,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_split": {
+   "name": "a_split",
+   "name_raw": "a_split",
+   "name_derived": false,
+   "original_room_id": 160,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_offshoot1": {
+   "name": "a_offshoot1",
+   "name_raw": "a_offshoot1",
+   "name_derived": false,
+   "original_room_id": 161,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_offshoot2": {
+   "name": "a_offshoot2",
+   "name_raw": "a_offshoot2",
+   "name_derived": false,
+   "original_room_id": 162,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.aerialis.a_elevator3": {
+   "name": "a_elevator3",
+   "name_raw": "a_elevator3",
+   "name_derived": false,
+   "original_room_id": 163,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

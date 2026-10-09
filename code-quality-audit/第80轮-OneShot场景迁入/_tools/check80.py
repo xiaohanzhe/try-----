@@ -182,16 +182,25 @@ if os.path.exists(BAK_IDX):
           '变了=%s' % (diffs or '无'))
     added = set(idx.get('chapters') or {}) - set(old_ch)
     removed = set(old_ch) - set(idx.get('chapters') or {})
-    check('C2 ★ 增量恰好 +oneshot（不多不少）',
-          added == {'oneshot'} and not removed,
+    # ★★ 第99轮修正（同 C1 的第89轮修正：判据过窄 ⇒ 误报）：
+    #   本条**意图**是"第80轮迁入 OneShot 时，索引里**只**多出 oneshot 一章"。
+    #   第99轮把 **Outertale 244 场景**迁入（用户口径「那几个世界（oneshot，ut，dr，
+    #   uty，outertale）的入口……你记得添上」）—— 那是**该轮的设计目标**，
+    #   不是"第80轮被破坏"。⇒ 把**已声明的合法迁入**列进白名单，
+    #   而不是把断言删掉（删掉就等于从此没人守"不许凭空多出一章"）。
+    _LEGIT_ROUNDS = {'oneshot': (80, 263), 'outertale': (99, 244)}
+    check('C2 ★ 增量恰好 = 已声明的迁入章（第80轮 +oneshot / 第99轮 +outertale；不多不少）',
+          added == set(_LEGIT_ROUNDS) and not removed,
           '新增=%s 删除=%s' % (sorted(added), sorted(removed)))
     n_old = sum(len(a.get('scenes') or {})
                 for c in old_ch.values() for a in (c.get('areas') or {}).values())
     n_new = sum(len(a.get('scenes') or {})
                 for c in (idx.get('chapters') or {}).values()
                 for a in (c.get('areas') or {}).values())
-    check('C3 ★ 总数 == 迁入前 + 263', n_new == n_old + 263,
-          '%d -> %d (+%d)' % (n_old, n_new, n_new - n_old))
+    _delta = sum(n for _, n in _LEGIT_ROUNDS.values())
+    check('C3 ★ 总数 == 迁入前 + 逐章声明的增量（263 + 244）',
+          n_new == n_old + _delta,
+          '%d -> %d (+%d，应 +%d)' % (n_old, n_new, n_new - n_old, _delta))
 else:
     print('[SKIP] 备份不在 ⇒ C1/C2/C3 跳过')
 

@@ -6334,6 +6334,20 @@
         "note": "★ 第89轮新增。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。"
       },
       "_order": 450
+    },
+    {
+      "to": "outertale.wastelands.w_start",
+      "priority": 200,
+      "reason": "桌面传送门：从桌面的 Y 号门进入「Outertale」的第一间。",
+      "when_scene": "desktop",
+      "when_door": "Y",
+      "_original": {
+        "chapter": "desktop",
+        "door_letter": "Y",
+        "kind": "desktop_portal",
+        "note": "★ 第99轮新增（沿用第89轮形态）。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。★ Outertale 侧的目标是 `w_start`（原作 `w3` 表第一项，即游戏开局房间）。"
+      },
+      "_order": 451
     }
   ],
   "_fallback": {

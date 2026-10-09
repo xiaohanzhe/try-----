@@ -566,7 +566,19 @@ class DoorProp(PropInteractable):
 #:       UT 用 F、黄魂用 W、OneShot 用 X），`check_r0_76` 的
 #:       「`Any`·`W`·`X` 不误判」那条负控制断言的是**旧口径**，
 #:       第89轮已同步更新（见 check89 的对应项）。
-DOOR_LETTERS = ('A', 'B', 'C', 'D', 'E', 'F', 'W', 'X')
+#:
+#: ★ 第99轮扩展：`Y`（`obj_doorY`）—— Outertale 入口。
+#:   沿用第89轮的同款实证链，逐条都在盘上可查：
+#:     · **贴图在盘** —— `assets/scenes/objs/spr_doorY_0.png`，20×20，
+#:       与 A~F/W/X 同目录同规格（由 Outertale 原作素材
+#:       `arrowportal` 生成，见 `第99轮…/_tools/make_doorY99.py`）；
+#:     · **不撞车** —— 全仓库 `grep -rniE 'obj_doorY|doorY_'` **零命中**；
+#:       原作 443 条路由里 `when_door` 分布同上（A196/B195/C55/D1/E1/F1，
+#:       零 W/X/Y），`_routes.json` 里 `when_door='Y'` 只有本轮新增的那 1 条
+#:       （`when_scene='desktop'` 收窄）⇒ 扩表不会去抢谁的既有目标；
+#:     · **用途明确** —— 桌面第 9 扇传送门（A~E 五章 / F UT / W 黄魂 /
+#:       X OneShot / **Y Outertale**）。
+DOOR_LETTERS = ('A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y')
 
 
 def door_letter_of(src):

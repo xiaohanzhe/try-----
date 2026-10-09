@@ -259,25 +259,36 @@ ok('B5 desktop.json 能被 load_scene 加载（返回 SceneState 而非 None）'
 
 # ★★ 第89轮重写：B6 原本断言"desktop 零可渲染项（P0 期零行为变化）"。
 #   那条**前提已被用户口径推翻**：用户要求"先能让我看到场景可以切换"⇒ 桌面
-#   必须挂上 8 扇世界门（`obj_doorA~F/W/X` → ch1..ch5 / ut / uty / oneshot）。
+#   必须挂上世界门（`obj_doorA~F/W/X/Y`）。
 #   判据不能守着旧前提不放（那就是"判据与事实脱节"，记忆 §4 铁律）。
 #   新契约 = 「背景声明式透明（`__transparent__` ⇒ 透出壁纸，不画占位）
-#             ＋ 恰好 8 扇门 ＋ bgm 仍为空」。
+#             ＋ 恰好挂满世界门 ＋ bgm 仍为空」。
 #   注意：`bg='__transparent__'` 与 `bg=None`（缺素材）语义不同 —— 前者是
 #   "这里就该透"，后者会画斜纹占位。判据必须区分这两者，否则"透出壁纸"会被
 #   误读成"素材丢了"。
+# ★★ 第99轮：门数**不再写死在断言里**，改成"字母集恰好等于声明的世界表"。
+#   原始写死的 `8` 在第99轮加第 9 扇门（Outertale，用户点名要的第五个世界）
+#   时成了"判据与事实脱节"的样本；字母集是真源，数量由它派生。
+#   字母 ↔ 世界：A~E = Deltarune 第1~5章 · F = UT · W = 黄魂 · X = OneShot ·
+#                Y = Outertale。
 _TRANSPARENT = '__transparent__'
+_DESK_WORLD_LETTERS = ('A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y')
 _DESK_DOORS = sorted(
     (o.get('src'), tuple(o.get('pos') or ()))
     for o in (getattr(_DESK, 'objects', None) or [])
     if isinstance(o, dict) and str(o.get('src') or '').startswith('obj_door'))
-ok('B6 ★第89轮新契约：desktop 背景声明式透明 → 8 扇世界门（不画占位、bgm 仍空）',
+_DESK_LETTERS = sorted(
+    str(o.get('src') or '')[len('obj_door'):]
+    for o in (getattr(_DESK, 'objects', None) or [])
+    if isinstance(o, dict) and str(o.get('src') or '').startswith('obj_door'))
+ok('B6 ★第89轮新契约（第99轮随事实加强）：desktop 背景声明式透明 → '
+   '%d 扇世界门（不画占位、bgm 仍空）' % len(_DESK_WORLD_LETTERS),
    _DESK is not None and getattr(_DESK, 'bg', None) == _TRANSPARENT
    and getattr(_DESK, 'bgm', None) is None
-   and len(_DESK_DOORS) == 8,
-   'bg=%r bgm=%r doors=%d %s' % (
+   and _DESK_LETTERS == sorted(_DESK_WORLD_LETTERS),
+   'bg=%r bgm=%r letters=%r doors=%s' % (
        getattr(_DESK, 'bg', '?'), getattr(_DESK, 'bgm', '?'),
-       len(_DESK_DOORS), _DESK_DOORS))
+       _DESK_LETTERS, _DESK_DOORS))
 
 _ANCH = S.load_anchors()
 ok('B7 _anchors.json 能被 load_anchors 解析（锚点表非空）',
@@ -692,12 +703,16 @@ ok('H10b 负控制：漏护栏的合成源码必须被判为 False（判据有�
                         '        object.__setattr__(self, name, value)\n'),
    '合成样本被判为 True → 判据没有鉴别力')
 
-# ★ 第89轮：desktop 不再是"空场景"（挂了 8 扇门）。H11 的本意是"入口能调、
-#   返回**列表**、不因空/非空崩"—— 改成断言"返回 8 条门"（新事实），并保留
-#   "返回 list 类型"这条结构不变量。
+# ★ 第89轮：desktop 不再是"空场景"（挂了世界门）。H11 的本意是"入口能调、
+#   返回**列表**、不因空/非空崩"—— 改成断言"返回与门表等长的对象数"（新事实），
+#   并保留"返回 list 类型"这条结构不变量。
+# ★★ 第99轮：期望值从 B6 的 `_DESK_WORLD_LETTERS` 派生，不另写一个魔数
+#   （同一件事只声明一次；否则加一扇门就要改两处，漏一处就是"看着在守其实守不到"）。
+_H11_WANT = len(_DESK_WORLD_LETTERS)
 _desk_objs = _H.scene.resolve_objects((0, 0, 1920, 1080))
-ok('H11 resolve_objects() 是给 P1 渲染层的入口，现在就能调（desktop → 8 扇门）',
-   isinstance(_desk_objs, list) and len(_desk_objs) == 8,
+ok('H11 resolve_objects() 是给 P1 渲染层的入口，现在就能调（desktop → %d 扇门）'
+   % _H11_WANT,
+   isinstance(_desk_objs, list) and len(_desk_objs) == _H11_WANT,
    'got=%r' % (_desk_objs,))
 
 ok('H12 description() 与 SceneState.describe() 同源（AI 注入的唯一出口）',

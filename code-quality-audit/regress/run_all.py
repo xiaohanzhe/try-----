@@ -2424,6 +2424,38 @@ SUITES = [
                 '`is_moving` 里的写参块 ⇒ 必须在 `_moving_if` **子树内**找、并用 '
                 '`"surprised_down" in unparse(node)` 认准写参块。',
     },
+    {
+        'id': 'verify_scene_fit99',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第99轮-睡觉惊醒与场景系统', '_tools',
+                               'verify_scene_fit99.py'),
+        'offscreen': True,
+        'desc': '第九十九轮：**场景系统 = 把原作全屏化**（用户口径「那个场景系统就像是'
+                '把原作全屏化似的，但不是真的全屏，只是说像」＋第44轮原始设计「场景图与'
+                'ralsei 桌宠体积/原作体积**等比放大**，剩下的用**黑色填充**」）。'
+                '★ 本轮修掉**两条真缺陷**（都是真机录屏 + 数据普查双证）：'
+                '① 背景 PNG 是**屏幕像素分辨率**的截图（房间 320×240 ↔ 素材 640×480）'
+                '而旧代码把"素材像素"当"世界逻辑单位"铺在房间原点 ⇒ 素材比房间小时'
+                '相机跟到另一侧背景**整条出界**（`card_castle_1f` 真机：plan 只剩一条'
+                '**窗口外**的 room_border ⇒ `canvas.grab()` 非透明采样 0 ⇒ 壁纸透出）、'
+                '素材不小于房间时被**额外放大 2 倍**（`kris_s_room` 只看到左上 1/4，'
+                '原作里整间房恰好一屏）⇒ 新增 `fit_bg_world()`（**等比 cover**，'
+                '两轴同倍 ⇒ 仍然禁非等比拉伸）＋ `K_ROOM_FILL` 纯黑房间底色'
+                '（**最先画**，桌面场景 `TRANSPARENT_BG` 不产）；'
+                '② 我们照抄了原作对象表的 `spr=` 却漏了 `vis=` ⇒ 把 `obj_doorA`/'
+                '`obj_markerB`/`obj_readable_room1` 这些**不可见触发器**画了出来'
+                '（真机：一屋子品红/白描边框；普查 3206 个带 src 实例里 **2749（85.7%）**'
+                '属此类）⇒ 新增 `assets/scenes/_obj_visible.json`（由第43轮 UTMT 转储'
+                '生成，只落 hidden 901 条）＋ `is_drawable_object()`/`obj_is_hidden()`'
+                '（两份刻意重复的实现，靠 G26 全量对账）—— **只影响绘制**，'
+                '不动 `scene.objects`，交互/道具/门控一概不受影响。'
+                '★ 判据：A 口径在位（用户原话 + 旧口径的**代码签名**用 AST 验消失）；'
+                'B `fit_bg_world` 正负成对（含六组真实量级的"必然盖满"不变量）；'
+                'C `plan_frame`（黑底最前 / bg 盖满 / 桌面不透黑 / 缺素材退化）；'
+                'D 画布消费 `room_fill`；E ★ **235 个真背景场景全量普查**零例外；'
+                'G ★ 隐形触发器过滤（数据面 / 正负成对 / 真链路 9→0 与 ch4 存盘点照画 /'
+                '**46 名过滤面 golden** / 两份实现全量一致）；F 接线与纪律。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
@@ -2577,10 +2609,21 @@ _NPC_ROAM_NOISE = re.compile(
 #   形态：`<TS> [INFO|WARNING|ERROR] ralsei_pet.LocalAI — 本地 AI 流式…`
 #        （时间戳已被 `_TS` 归一成 `<TS>`；只匹配"流式请求失败/HTTP 4xx-5xx/超时"，
 #          **不**匹配其它 LocalAI 日志 —— 免得把"AI 已就绪"这类有用信息也抹掉。）
+#
+#   ★★ 第99轮实测修正（原正则**匹配不到**它自己要抹的那一行）：
+#     第98轮写的是 `流式(?:请求)?(?:失败|HTTP \d+|超时)`，而真机打出来的是
+#     「本地 AI 流式 **HTTP 502**: …」—— `流式` 与 `HTTP` 之间**有一个空格**，
+#     于是两组分支都落空 ⇒ 正则**恒不命中** ⇒ `check99`/`check89` 的基线里
+#     仍然留着这几行 502，运行时刻一变（AI 是否被触发、重试几次）就 DIFF。
+#     第99轮全量三跑实测：同一份代码，`check99` 的 502 警告行从 1 条变 2 条、
+#     位置也在漂 ⇒「注释说已归一，其实没归一」的**判据自欺**（本项目第 N 次）。
+#     ⇒ 修法：`流式(?:请求)?\s*(?:失败|HTTP \d+|超时)`，把那个空格吃掉。
+#     ⚠️ 关键是**实测**正则命中真行（`_LOCAL_AI_NOISE.match(<真行>) is True`），
+#        不是"看着像"—— 这个坑的正因就是没人拿真行试过。
 # ---------------------------------------------------------------------------
 _LOCAL_AI_NOISE = re.compile(
     r'^(?:<TS>\s*)?(?:\[(?:INFO|WARNING|ERROR)\]\s*)?ralsei_pet\.LocalAI\s+—\s+本地 AI '
-    r'流式(?:请求)?(?:失败|HTTP \d+|超时)'
+    r'流式(?:请求)?\s*(?:失败|HTTP \d+|超时)'
 )
 
 
@@ -2656,6 +2699,76 @@ def count_results(text):
     n_pass = len(re.findall(r'\[PASS\]|\[\s*OK\s*\]', text))
     n_fail = len(re.findall(r'\[FAIL\]', text))
     return n_pass, n_fail
+
+
+def normalize_noblank(text):
+    u"""`normalize()` 之后再**剔掉空行** —— 只给"第二道比对"用（第99轮）。
+
+    为什么不直接把 `normalize()` 改成剔空行：基线里存的是**旧规则**（折叠连续空行）的结果，
+    全局改规则会让 **92 个套件的基线一次性全变**（为一条噪声重刷全套 baseline，风险远大于收益）。
+    ⇒ 保留 `normalize()` 原样，另开一道**只在第一道不等时才跑**的比对：
+       两道都相等 ⇒ 判 `IDENTICAL*`（标注"仅空行噪声"），**不刷基线**。
+    """
+    return '\n'.join(ln for ln in normalize(text).split('\n') if ln) + '\n'
+
+
+def _verify_norm99():
+    u"""★ 第99轮新增规则（第二道**空行不敏感**比对）的**正 / 负控制成对**自检（离屏、零 GUI）。
+
+    判据自己也会说谎 ⇒ 改了比对层就必须证明：
+      · 正控制：只有**空行位置/数量**不同 ⇒ 第二道判**相等**（这正是要消掉的噪声）；
+      · 负控制 A：真删掉一行**断言** ⇒ 第二道仍**不等**（证明没把内容也抹掉）；
+      · 负控制 B：真删掉一行断言 ⇒ `count_results()` 的 PASS 条数**必须变**（第三道独立防线）。
+    跑法：`python code-quality-audit/regress/run_all.py --selftest-norm`
+    """
+    head = ('<TS> [INFO] ralsei_pet.main — 全局热键未装上\n'
+            '<TS> [INFO] ralsei_pet.main — 道具系统就绪\n')
+    body = ('[PASS] A1 第一条\n'
+            '[PASS] A2 第二条\n')
+    banner = ('====\n'
+              '第99轮：PASS=2 FAIL=0\n'
+              '====\n')
+    a = head + '\n' + body + banner                  # 空行在 head 与 body 之间
+    b = head + body + '\n' + banner                  # 空行改到 body 与 banner 之间（实测两种都出现过）
+    c = head + body + banner                         # 干脆没有空行
+    d = head + '[PASS] A1 第一条\n' + banner         # 真删掉一行**断言**（不是空行）
+
+    def eq(x, y):
+        return normalize_noblank(x) == normalize_noblank(y)
+
+    def normalize_no_raise_on_leading_blank():
+        u"""★ 第99轮补的**绊线**：`normalize()` 本体也曾被改坏而自检全绿。
+
+        真 bug：把 `out, blank = [], False` 误改成 `out = []` ⇒ `blank` 未初始化。
+        它**只在“首行即空行”时**触发 `UnboundLocalError`（其余情况会被 else 分支赋成
+        False，侥幸躲过）—— 而单套件跑法首行恰好非空，所以 `--only check95/check99`
+        全绿、**全量才崩**。这里直接把“首行是空行”喂进去当绊线。
+        """
+        try:
+            out = normalize('\n\n[PASS] A1 第一条\n\n[PASS] A2 第二条\n')
+        except Exception:
+            return False
+        return ('[PASS] A1 第一条' in out) and ('[PASS] A2 第二条' in out)
+
+    cases = [
+        ('正控制：仅空行位置不同 ⇒ 第二道判等', eq(a, b), True),
+        ('正控制：仅少一个空行 ⇒ 第二道判等', eq(a, c), True),
+        ('负控制 A：真删一行断言 ⇒ 第二道仍不等', eq(a, d), False),
+        ('负控制 B：真删一行断言 ⇒ PASS 条数必须变',
+         count_results(d)[0] != count_results(a)[0], True),
+        # ★ 正/负控制成对：上面 4 条只测 normalize_noblank()，这条测 **normalize() 本体**。
+        ('正控制：normalize() 遇“首行即空行”不抛异常（blank 未初始化类 bug 的绊线）',
+         normalize_no_raise_on_leading_blank(), True),
+    ]
+    bad = 0
+    for name, got, want in cases:
+        ok = (got == want)
+        bad += 0 if ok else 1
+        print('[PASS] NORM99 %s：%s（期望 %r，得到 %r）'
+              % ('OK' if ok else 'FAIL', name, want, got))
+    print('---')
+    print('normalize 空行规则自检：%d/%d' % (len(cases) - bad, len(cases)))
+    return 1 if bad else 0
 
 
 def sha256(text):
@@ -2842,7 +2955,12 @@ def main():
     ap.add_argument('--list', action='store_true', help='只列套件')
     ap.add_argument('--verbose', action='store_true', help='打印套件原始输出')
     ap.add_argument('--show-diff', metavar='ID', help='打印指定套件的归一化 diff')
+    ap.add_argument('--selftest-norm', action='store_true',
+                    help='★ 第99轮：只见证 normalize() 的空行规则（正/负控制成对，零 GUI）')
     args = ap.parse_args()
+
+    if args.selftest_norm:
+        return _verify_norm99()
 
     picked = [s for s in SUITES if not args.only or any(k in s['id'] for k in args.only)]
 
@@ -2911,24 +3029,47 @@ def main():
             say('%-16s %-6s %-6s %-6s %-8s %s' % (r['id'], '-', '-', '-', 'SKIP', r.get('reason', '')))
             continue
         old = (baseline or {}).get('suites', {}).get(r['id'])
+        old_raw_path = os.path.join(OUT_DIR, r['id'] + '.baseline.txt')
         if args.update or old is None:
             cmp_txt = 'BASELINE'
         elif old['sha256'] == r['sha256'] and old['exit'] == r['exit'] and old['pass'] == r['pass']:
             cmp_txt = 'IDENTICAL'
         else:
             cmp_txt = 'DIFF'
+            # ★★★ 第99轮：第二道比对 —— **空行不敏感**（正负控制见 `_verify_norm99`）。
+            #   真机套件的 stdout 由 log 线程与 `print` 交错写入 ⇒ **空行的位置/数量会抖**
+            #   （实证 `check99` 连跑三次：**非空行恒 111**，空行在 2 / 3 之间跳）
+            #   ⇒ 第一道（逐字节哈希）**恒假红**，而语义差为 **0**。
+            #   条件刻意收得很紧：**exit / PASS / FAIL 三项必须全同**，且剔空行后逐行全等，
+            #   才判 `IDENTICAL*` —— 它**不刷基线**，也**不算问题**，但会在摘要里显式报数。
+            if (old and old['exit'] == r['exit'] and old['pass'] == r['pass']
+                    and old['fail'] == r['fail'] and os.path.exists(old_raw_path)):
+                try:
+                    with open(old_raw_path, encoding='utf-8') as fh:
+                        if normalize_noblank(fh.read()) == normalize_noblank(r['norm']):
+                            cmp_txt = 'IDENTICAL*'
+                except OSError:
+                    pass
         verdicts[r['id']] = cmp_txt
         say('%-16s %-6s %-6s %-6s %-8s %s' % (
             r['id'], r['exit'], r['pass'], r['fail'], cmp_txt, s['desc']))
         if cmp_txt == 'DIFF':
             old_norm = None
-            if old:
-                old_raw = os.path.join(OUT_DIR, r['id'] + '.baseline.txt')
-                if os.path.exists(old_raw):
-                    with open(old_raw, encoding='utf-8') as fh:
-                        old_norm = normalize(fh.read())
+            if old and os.path.exists(old_raw_path):
+                with open(old_raw_path, encoding='utf-8') as fh:
+                    old_norm = normalize(fh.read())
             path = write_diff(r['id'], old_norm, r['norm'])
             problems.append('%s: 输出与基线不一致（%s），%s' % (r['id'], '计数/退出码变化' if old_norm else '无基线文本', path))
+        else:
+            # ★ 第99轮顺手堵掉 write_diff docstring 里记的那个坑（第75轮血泪）：
+            #   `_out/<id>.diff.txt` **只在 DIFF 时重写**，恢复绿了旧文件会原地留着
+            #   ⇒ 曾把陈旧 diff 当成"今天的 19 个 DIFF"。判非 DIFF 时主动清掉。
+            stale = os.path.join(OUT_DIR, r['id'] + '.diff.txt')
+            try:
+                if os.path.exists(stale):
+                    os.remove(stale)
+            except OSError:
+                pass
         if r['status'] == 'FAIL':
             problems.append('%s: 套件自身 FAIL（exit=%s, fail=%d）' % (r['id'], r['exit'], r['fail']))
 
@@ -2950,6 +3091,11 @@ def main():
     tot_fail = sum(r.get('fail') or 0 for r in results)
     say()
     say('合计：PASS=%d FAIL=%d  套件=%d' % (tot_pass, tot_fail, len(results)))
+    _nb = sorted(k for k, v in verdicts.items() if v == 'IDENTICAL*')
+    if _nb:
+        say('★ 其中 %d 个套件判 `IDENTICAL*` —— **仅空行噪声**（真机 log/print 交错；'
+            '剔空行后逐行全等且 exit/PASS/FAIL 全同，**未刷基线**）：%s'
+            % (len(_nb), ', '.join(_nb)))
     if problems:
         say()
         say('【问题】')

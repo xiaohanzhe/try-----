@@ -33,10 +33,11 @@
        —— 锚点的鉴别力落在集合上，不落在"恰好 N 条"这个会随扩容而变的形态上
 
   C 覆盖与守恒
-     · 带 objects 的场景数 == 537（分片）+ 78（独立文件）
-     · 全场景 objects 总条数 == 3,197（== 可绘制实例数）
+     · 带 objects 的场景数 == 537（分片）+ 79（独立文件）= 616
+     · 全场景 objects 总条数 == 3,197（原作可绘制实例数）+ 桌面世界门数
+       （★ 第99轮起桌面门数从 `desktop.json` 现读，不再写死：第89轮 +8、第99轮 +1）
      · ★ 全量守恒：**场景里的 objects 总条数** 必须 == **普查里能映射到 sprite 的实例数**
-       （这条是"没漏没多"的核心判据；判据自己从三源重算，不信生成器自报）
+       + 桌面世界门（这条是"没漏没多"的核心判据；判据自己从三源重算，不信生成器自报）
 
   D 负控制（证明判据有鉴别力）
      · 编一个不存在的 sprite 名，必须判为"文件不存在"
@@ -70,17 +71,36 @@ OBMAP = {'ch1': 'objmap43.txt', 'ch2': 'chapter2_objmap43.txt',
 #     判据跟着"已登记"这个口径才正确（见 `_registered_scene_rooms`）。
 #   ★ 第68轮补采（五章 + 可交互类）后，由 2,043 → **3,197**；两条锚点房间各加了
 #     若干 `obj_readable_room1` —— 均为**原作事实**（等价性见 verify_items68 A1）。
-EXPECT_TOTAL = 3205
+EXPECT_TOTAL_ORIGINAL = 3197
 EXPECT_ZONE_WITH_OBJ = 537
 EXPECT_FILE_WITH_OBJ = 79
-#: ★★ 第89轮增量（**显式记账**，不写裸魔数）：desktop.json 挂了 8 扇世界门
-#    （`obj_doorA~F/W/X` → ch1..ch5 / ut / uty / oneshot），这是用户口径
-#    「先能让我看到场景可以切换」的直接落地。
-#      · 场景数 615 → **616**（desktop 从"零 objects"变成"有 objects"）
-#      · 条数   3197 → **3205**（+8）
-#    ⇒ 独立重算 `_recount_expected` 也同步 +8，两边**对得上**才说明是同一件事
-#      （若只改一边 ⇒ C3 立刻报红，这正是判据该有的鉴别力）。
-DESKTOP_DOORS = 8
+
+
+def _desktop_doors():
+    """桌面世界门数 —— **从 `desktop.json` 现读**（★ 第99轮起不再写死）。
+
+    ★★ 第89轮增量（**显式记账**，不写裸魔数）：desktop.json 挂了世界门
+      （`obj_doorA~F/W/X/Y` → ch1..ch5 / ut / uty / oneshot / outertale），
+      这是用户口径「先能让我看到场景可以切换」＋「那几个世界的入口……你记得
+      添上」的直接落地。
+        · 场景数 615 → **616**（desktop 从"零 objects"变成"有 objects"）
+        · 条数   3197 → **3205**（第89轮 +8）/ **3206**（第99轮再 +1 = Outertale）
+    ★★ 第99轮：这里原先是写死的 `DESKTOP_DOORS = 8`。加第 9 扇门时它立刻成了
+      "判据与事实脱节"的样本（C2/C3 双双报红）。改成**现读**后语义更准：
+      `原作重算 + 桌面**实际声明**的门数 == 产品 objects 总数` ——
+      桌面端改了门数这里自动跟上；而"声明了却没进产品"仍会报红（鉴别力不丢）。
+      ★ 读不到就返 0 ⇒ 后面两条守恒必然报红（**故意不吞异常**）。
+    """
+    try:
+        with io.open(os.path.join(SCENES, 'desktop.json'), 'r',
+                     encoding='utf-8') as fh:
+            return len((json.load(fh).get('objects')) or [])
+    except Exception:
+        return 0
+
+
+DESKTOP_DOORS = _desktop_doors()
+EXPECT_TOTAL = EXPECT_TOTAL_ORIGINAL + DESKTOP_DOORS
 
 RE_ZONE = re.compile(r'^_zone\.(ch\d+)\.')
 
@@ -242,14 +262,16 @@ def main():
        % (EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ, EXPECT_ZONE_WITH_OBJ,
           EXPECT_FILE_WITH_OBJ, scenes_with_obj))
     ok(len(all_objs) == EXPECT_TOTAL,
-       'C2 ★守恒：objects 总条数 == 可绘制实例数 %d 实际=%d'
-       % (EXPECT_TOTAL, len(all_objs)))
+       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d = %d 实际=%d'
+       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, EXPECT_TOTAL, len(all_objs)))
 
     # C3 独立重算：从**第68轮普查 + 按章对象表 + objs/** 三个真源重算期望值，
     #    必须与场景里的一致。这是"判据不依赖生成器自报"的关键 —— 判据自己算一遍。
-    #    ★ 第89轮：重算只覆盖**原作房间**；desktop 的 8 扇门是产品侧新增
-    #      （桌面不属于任何原作房间，`original_room_id=-1`）⇒ 期望 = 重算 + 8。
+    #    ★ 第89轮：重算只覆盖**原作房间**；桌面世界门是产品侧新增
+    #      （桌面不属于任何原作房间，`original_room_id=-1`）⇒ 期望 = 重算 + 桌面门数。
     #      两边都要动才自洽：只改常量不改重算会让 C3 报红（鉴别力正确）。
+    #    ★★ 第99轮：`DESKTOP_DOORS` 改为从 `desktop.json` **现读** ⇒
+    #      语义 = 「原作重算 + 桌面实际声明 == 产品总数」，加门不用再改这里。
     expect = _recount_expected(obj_files) + DESKTOP_DOORS
     ok(expect > 0 and expect == len(all_objs),
        'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源 + desktop %d 扇门）== 实得 独立算=%d 实得=%d'

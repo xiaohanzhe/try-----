@@ -1,0 +1,2206 @@
+{
+ "source": "E:\\Download\\_extract61\\outertale\\www\\index-BIKawlPs.js",
+ "tables": [
+  "Sb",
+  "w3",
+  "I3",
+  "y3",
+  "Ub",
+  "Fb"
+ ],
+ "offsets": {
+  "Sb": 1495673,
+  "w3": 4460932,
+  "I3": 5211860,
+  "y3": 3851182,
+  "Ub": 2221696,
+  "Fb": 3011559
+ },
+ "region_vars": {
+  "Sb": [
+   "as"
+  ],
+  "w3": [
+   "Mn"
+  ],
+  "I3": [
+   "Dn"
+  ],
+  "y3": [
+   "rn"
+  ],
+  "Ub": [
+   "fo",
+   "jn"
+  ],
+  "Fb": [
+   "en"
+  ]
+ },
+ "rooms": [
+  {
+   "table": "Sb",
+   "id": "_",
+   "key": "_",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_void",
+   "key": "_void",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_taxi",
+   "key": "_taxi",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_cockpit",
+   "key": "_cockpit",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_hangar",
+   "key": "_hangar",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_credits1",
+   "key": "_credits1",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_credits2",
+   "key": "_credits2",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_credits3",
+   "key": "_credits3",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_credits4",
+   "key": "_credits4",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier1",
+   "key": "_frontier1",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier2",
+   "key": "_frontier2",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier3",
+   "key": "_frontier3",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier4",
+   "key": "_frontier4",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier5",
+   "key": "_frontier5",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier6",
+   "key": "_frontier6",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier7",
+   "key": "_frontier7",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier8",
+   "key": "_frontier8",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier9",
+   "key": "_frontier9",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "Sb",
+   "id": "_frontier10",
+   "key": "_frontier10",
+   "region_var": "as",
+   "region": "special"
+  },
+  {
+   "table": "w3",
+   "id": "w_start",
+   "key": "w_start",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_twinkly",
+   "key": "w_twinkly",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_entrance",
+   "key": "w_entrance",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_lobby",
+   "key": "w_lobby",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_tutorial",
+   "key": "w_tutorial",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_dummy",
+   "key": "w_dummy",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_coffin",
+   "key": "w_coffin",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_danger",
+   "key": "w_danger",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_zigzag",
+   "key": "w_zigzag",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_froggit",
+   "key": "w_froggit",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_candy",
+   "key": "w_candy",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_puzzle1",
+   "key": "w_puzzle1",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_puzzle2",
+   "key": "w_puzzle2",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_puzzle3",
+   "key": "w_puzzle3",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_puzzle4",
+   "key": "w_puzzle4",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_mouse",
+   "key": "w_mouse",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_blooky",
+   "key": "w_blooky",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_party",
+   "key": "w_party",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_pacing",
+   "key": "w_pacing",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_junction",
+   "key": "w_junction",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_annex",
+   "key": "w_annex",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_wonder",
+   "key": "w_wonder",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_courtyard",
+   "key": "w_courtyard",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_toriel_front",
+   "key": "w_toriel_front",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_toriel_living",
+   "key": "w_toriel_living",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_toriel_kitchen",
+   "key": "w_toriel_kitchen",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_toriel_hallway",
+   "key": "w_toriel_hallway",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_toriel_asriel",
+   "key": "w_toriel_asriel",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_toriel_toriel",
+   "key": "w_toriel_toriel",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_alley1",
+   "key": "w_alley1",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_alley2",
+   "key": "w_alley2",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_alley3",
+   "key": "w_alley3",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_alley4",
+   "key": "w_alley4",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_bridge",
+   "key": "w_bridge",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "w3",
+   "id": "w_exit",
+   "key": "w_exit",
+   "region_var": "Mn",
+   "region": "wastelands"
+  },
+  {
+   "table": "I3",
+   "id": "s_start",
+   "key": "s_start",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_sans",
+   "key": "s_sans",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_crossroads",
+   "key": "s_crossroads",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_human",
+   "key": "s_human",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_papyrus",
+   "key": "s_papyrus",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_doggo",
+   "key": "s_doggo",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_robot",
+   "key": "s_robot",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_maze",
+   "key": "s_maze",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_dogs",
+   "key": "s_dogs",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_lesser",
+   "key": "s_lesser",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_spaghetti",
+   "key": "s_spaghetti",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_bros",
+   "key": "s_bros",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_puzzle1",
+   "key": "s_puzzle1",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_puzzle2",
+   "key": "s_puzzle2",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_jenga",
+   "key": "s_jenga",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_pacing",
+   "key": "s_pacing",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_puzzle3",
+   "key": "s_puzzle3",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_greater",
+   "key": "s_greater",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_math",
+   "key": "s_math",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_secret",
+   "key": "s_secret",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_bridge",
+   "key": "s_bridge",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_town1",
+   "key": "s_town1",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_innterior",
+   "key": "s_innterior",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_beddinng",
+   "key": "s_beddinng",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_grillbys",
+   "key": "s_grillbys",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_backrooms",
+   "key": "s_backrooms",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_taxi",
+   "key": "s_taxi",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_town2",
+   "key": "s_town2",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_librarby",
+   "key": "s_librarby",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_bonehouse",
+   "key": "s_bonehouse",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_papyrusroom",
+   "key": "s_papyrusroom",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_sansroom",
+   "key": "s_sansroom",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_sanscloset",
+   "key": "s_sanscloset",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_capture",
+   "key": "s_capture",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_battle",
+   "key": "s_battle",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "I3",
+   "id": "s_exit",
+   "key": "s_exit",
+   "region_var": "Dn",
+   "region": "starton"
+  },
+  {
+   "table": "y3",
+   "id": "f_start",
+   "key": "f_start",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_sans",
+   "key": "f_sans",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_corridor",
+   "key": "f_corridor",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_doge",
+   "key": "f_doge",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_puzzle1",
+   "key": "f_puzzle1",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_quiche",
+   "key": "f_quiche",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_bird",
+   "key": "f_bird",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_puzzle2",
+   "key": "f_puzzle2",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_story1",
+   "key": "f_story1",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_prechase",
+   "key": "f_prechase",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_chase",
+   "key": "f_chase",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_entrance",
+   "key": "f_entrance",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_lobby",
+   "key": "f_lobby",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_error",
+   "key": "f_error",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_telescope",
+   "key": "f_telescope",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_stand",
+   "key": "f_stand",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_abyss",
+   "key": "f_abyss",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_muffet",
+   "key": "f_muffet",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_shyren",
+   "key": "f_shyren",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_statue",
+   "key": "f_statue",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_piano",
+   "key": "f_piano",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_artifact",
+   "key": "f_artifact",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_truth",
+   "key": "f_truth",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_path",
+   "key": "f_path",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_view",
+   "key": "f_view",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_prespear",
+   "key": "f_prespear",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_spear",
+   "key": "f_spear",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_plank",
+   "key": "f_plank",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_tunnel",
+   "key": "f_tunnel",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_chute",
+   "key": "f_chute",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_dummy",
+   "key": "f_dummy",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_village",
+   "key": "f_village",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_hub",
+   "key": "f_hub",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_undyne",
+   "key": "f_undyne",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_kitchen",
+   "key": "f_kitchen",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_blooky",
+   "key": "f_blooky",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_snail",
+   "key": "f_snail",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_napstablook",
+   "key": "f_napstablook",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_hapstablook",
+   "key": "f_hapstablook",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_prepuzzle",
+   "key": "f_prepuzzle",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_puzzle3",
+   "key": "f_puzzle3",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_taxi",
+   "key": "f_taxi",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_corner",
+   "key": "f_corner",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_story2",
+   "key": "f_story2",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_pacing",
+   "key": "f_pacing",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_battle",
+   "key": "f_battle",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "y3",
+   "id": "f_exit",
+   "key": "f_exit",
+   "region_var": "rn",
+   "region": "foundry"
+  },
+  {
+   "table": "Ub",
+   "id": "a_start",
+   "key": "a_start",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lab_entry",
+   "key": "a_lab_entry",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lab_main",
+   "key": "a_lab_main",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lab_upstairs",
+   "key": "a_lab_upstairs",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lab_downstairs",
+   "key": "a_lab_downstairs",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lab_virt",
+   "key": "a_lab_virt",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_path1",
+   "key": "a_path1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_path2",
+   "key": "a_path2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_path3",
+   "key": "a_path3",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_rg1",
+   "key": "a_rg1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_path4",
+   "key": "a_path4",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_barricade1",
+   "key": "a_barricade1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_puzzle1",
+   "key": "a_puzzle1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_mettaton1",
+   "key": "a_mettaton1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_elevator1",
+   "key": "a_elevator1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lift",
+   "key": "a_lift",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_elevator2",
+   "key": "a_elevator2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_sans",
+   "key": "a_sans",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_pacing",
+   "key": "a_pacing",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_prepuzzle",
+   "key": "a_prepuzzle",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_puzzle2",
+   "key": "a_puzzle2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_mettaton2",
+   "key": "a_mettaton2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_rg2",
+   "key": "a_rg2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_barricade2",
+   "key": "a_barricade2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_split",
+   "key": "a_split",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_offshoot1",
+   "key": "a_offshoot1",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_offshoot2",
+   "key": "a_offshoot2",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_elevator3",
+   "key": "a_elevator3",
+   "region_var": "fo",
+   "region": "aerialis"
+  },
+  {
+   "table": "Ub",
+   "id": "a_elevator4",
+   "key": "a_elevator4",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_auditorium",
+   "key": "a_auditorium",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_aftershow",
+   "key": "a_aftershow",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_hub1",
+   "key": "a_hub1",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_dining",
+   "key": "a_dining",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_hub2",
+   "key": "a_hub2",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_lookout",
+   "key": "a_lookout",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_hub3",
+   "key": "a_hub3",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_plaza",
+   "key": "a_plaza",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_elevator5",
+   "key": "a_elevator5",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_hub4",
+   "key": "a_hub4",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_sleeping1",
+   "key": "a_sleeping1",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_sleeping2",
+   "key": "a_sleeping2",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_sleeping3",
+   "key": "a_sleeping3",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_hub5",
+   "key": "a_hub5",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_citadelevator",
+   "key": "a_citadelevator",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_entry1",
+   "key": "a_core_entry1",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_entry2",
+   "key": "a_core_entry2",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_main",
+   "key": "a_core_main",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_left1",
+   "key": "a_core_left1",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_left2",
+   "key": "a_core_left2",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_left3",
+   "key": "a_core_left3",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_right1",
+   "key": "a_core_right1",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_right2",
+   "key": "a_core_right2",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_right3",
+   "key": "a_core_right3",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_bridge",
+   "key": "a_core_bridge",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_checkpoint",
+   "key": "a_core_checkpoint",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_suspense",
+   "key": "a_core_suspense",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_battle",
+   "key": "a_core_battle",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_exit1",
+   "key": "a_core_exit1",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Ub",
+   "id": "a_core_exit2",
+   "key": "a_core_exit2",
+   "region_var": "jn",
+   "region": "core"
+  },
+  {
+   "table": "Fb",
+   "id": "c_start",
+   "key": "c_start",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_road1",
+   "key": "c_road1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_elevator1",
+   "key": "c_elevator1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_pacing",
+   "key": "c_pacing",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_courtyard",
+   "key": "c_courtyard",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_alley",
+   "key": "c_alley",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_story",
+   "key": "c_story",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_elevator2",
+   "key": "c_elevator2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_courtroom",
+   "key": "c_courtroom",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_road2",
+   "key": "c_road2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_throneroom",
+   "key": "c_throneroom",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_bastion",
+   "key": "c_bastion",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_road3",
+   "key": "c_road3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_exit",
+   "key": "c_exit",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_asgore_front",
+   "key": "c_asgore_front",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_asgore_living",
+   "key": "c_asgore_living",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_asgore_kitchen",
+   "key": "c_asgore_kitchen",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_asgore_hallway",
+   "key": "c_asgore_hallway",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_asgore_asriel",
+   "key": "c_asgore_asriel",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_asgore_asgore",
+   "key": "c_asgore_asgore",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_start",
+   "key": "c_archive_start",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_path1",
+   "key": "c_archive_path1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_wastelands1",
+   "key": "c_archive_wastelands1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_wastelands2",
+   "key": "c_archive_wastelands2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_wastelands3",
+   "key": "c_archive_wastelands3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_wastelands4",
+   "key": "c_archive_wastelands4",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_path2",
+   "key": "c_archive_path2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_starton1",
+   "key": "c_archive_starton1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_starton2",
+   "key": "c_archive_starton2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_starton3",
+   "key": "c_archive_starton3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_starton4",
+   "key": "c_archive_starton4",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_path3",
+   "key": "c_archive_path3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryA1",
+   "key": "c_archive_foundryA1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryA2",
+   "key": "c_archive_foundryA2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryA3",
+   "key": "c_archive_foundryA3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryA4",
+   "key": "c_archive_foundryA4",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_path4",
+   "key": "c_archive_path4",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryB1",
+   "key": "c_archive_foundryB1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryB2",
+   "key": "c_archive_foundryB2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryB3",
+   "key": "c_archive_foundryB3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_foundryB4",
+   "key": "c_archive_foundryB4",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_path5",
+   "key": "c_archive_path5",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_aerialis1",
+   "key": "c_archive_aerialis1",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_aerialis2",
+   "key": "c_archive_aerialis2",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_aerialis3",
+   "key": "c_archive_aerialis3",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_aerialis4",
+   "key": "c_archive_aerialis4",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_path6",
+   "key": "c_archive_path6",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_surface",
+   "key": "c_archive_surface",
+   "region_var": "en",
+   "region": "citadel"
+  },
+  {
+   "table": "Fb",
+   "id": "c_archive_exit",
+   "key": "c_archive_exit",
+   "region_var": "en",
+   "region": "citadel"
+  }
+ ],
+ "by_region": {
+  "special": [
+   "_",
+   "_cockpit",
+   "_credits1",
+   "_credits2",
+   "_credits3",
+   "_credits4",
+   "_frontier1",
+   "_frontier10",
+   "_frontier2",
+   "_frontier3",
+   "_frontier4",
+   "_frontier5",
+   "_frontier6",
+   "_frontier7",
+   "_frontier8",
+   "_frontier9",
+   "_hangar",
+   "_taxi",
+   "_void"
+  ],
+  "wastelands": [
+   "w_alley1",
+   "w_alley2",
+   "w_alley3",
+   "w_alley4",
+   "w_annex",
+   "w_blooky",
+   "w_bridge",
+   "w_candy",
+   "w_coffin",
+   "w_courtyard",
+   "w_danger",
+   "w_dummy",
+   "w_entrance",
+   "w_exit",
+   "w_froggit",
+   "w_junction",
+   "w_lobby",
+   "w_mouse",
+   "w_pacing",
+   "w_party",
+   "w_puzzle1",
+   "w_puzzle2",
+   "w_puzzle3",
+   "w_puzzle4",
+   "w_start",
+   "w_toriel_asriel",
+   "w_toriel_front",
+   "w_toriel_hallway",
+   "w_toriel_kitchen",
+   "w_toriel_living",
+   "w_toriel_toriel",
+   "w_tutorial",
+   "w_twinkly",
+   "w_wonder",
+   "w_zigzag"
+  ],
+  "starton": [
+   "s_backrooms",
+   "s_battle",
+   "s_beddinng",
+   "s_bonehouse",
+   "s_bridge",
+   "s_bros",
+   "s_capture",
+   "s_crossroads",
+   "s_doggo",
+   "s_dogs",
+   "s_exit",
+   "s_greater",
+   "s_grillbys",
+   "s_human",
+   "s_innterior",
+   "s_jenga",
+   "s_lesser",
+   "s_librarby",
+   "s_math",
+   "s_maze",
+   "s_pacing",
+   "s_papyrus",
+   "s_papyrusroom",
+   "s_puzzle1",
+   "s_puzzle2",
+   "s_puzzle3",
+   "s_robot",
+   "s_sans",
+   "s_sanscloset",
+   "s_sansroom",
+   "s_secret",
+   "s_spaghetti",
+   "s_start",
+   "s_taxi",
+   "s_town1",
+   "s_town2"
+  ],
+  "foundry": [
+   "f_abyss",
+   "f_artifact",
+   "f_battle",
+   "f_bird",
+   "f_blooky",
+   "f_chase",
+   "f_chute",
+   "f_corner",
+   "f_corridor",
+   "f_doge",
+   "f_dummy",
+   "f_entrance",
+   "f_error",
+   "f_exit",
+   "f_hapstablook",
+   "f_hub",
+   "f_kitchen",
+   "f_lobby",
+   "f_muffet",
+   "f_napstablook",
+   "f_pacing",
+   "f_path",
+   "f_piano",
+   "f_plank",
+   "f_prechase",
+   "f_prepuzzle",
+   "f_prespear",
+   "f_puzzle1",
+   "f_puzzle2",
+   "f_puzzle3",
+   "f_quiche",
+   "f_sans",
+   "f_shyren",
+   "f_snail",
+   "f_spear",
+   "f_stand",
+   "f_start",
+   "f_statue",
+   "f_story1",
+   "f_story2",
+   "f_taxi",
+   "f_telescope",
+   "f_truth",
+   "f_tunnel",
+   "f_undyne",
+   "f_view",
+   "f_village"
+  ],
+  "aerialis": [
+   "a_barricade1",
+   "a_barricade2",
+   "a_elevator1",
+   "a_elevator2",
+   "a_elevator3",
+   "a_lab_downstairs",
+   "a_lab_entry",
+   "a_lab_main",
+   "a_lab_upstairs",
+   "a_lab_virt",
+   "a_lift",
+   "a_mettaton1",
+   "a_mettaton2",
+   "a_offshoot1",
+   "a_offshoot2",
+   "a_pacing",
+   "a_path1",
+   "a_path2",
+   "a_path3",
+   "a_path4",
+   "a_prepuzzle",
+   "a_puzzle1",
+   "a_puzzle2",
+   "a_rg1",
+   "a_rg2",
+   "a_sans",
+   "a_split",
+   "a_start"
+  ],
+  "core": [
+   "a_aftershow",
+   "a_auditorium",
+   "a_citadelevator",
+   "a_core_battle",
+   "a_core_bridge",
+   "a_core_checkpoint",
+   "a_core_entry1",
+   "a_core_entry2",
+   "a_core_exit1",
+   "a_core_exit2",
+   "a_core_left1",
+   "a_core_left2",
+   "a_core_left3",
+   "a_core_main",
+   "a_core_right1",
+   "a_core_right2",
+   "a_core_right3",
+   "a_core_suspense",
+   "a_dining",
+   "a_elevator4",
+   "a_elevator5",
+   "a_hub1",
+   "a_hub2",
+   "a_hub3",
+   "a_hub4",
+   "a_hub5",
+   "a_lookout",
+   "a_plaza",
+   "a_sleeping1",
+   "a_sleeping2",
+   "a_sleeping3"
+  ],
+  "citadel": [
+   "c_alley",
+   "c_archive_aerialis1",
+   "c_archive_aerialis2",
+   "c_archive_aerialis3",
+   "c_archive_aerialis4",
+   "c_archive_exit",
+   "c_archive_foundryA1",
+   "c_archive_foundryA2",
+   "c_archive_foundryA3",
+   "c_archive_foundryA4",
+   "c_archive_foundryB1",
+   "c_archive_foundryB2",
+   "c_archive_foundryB3",
+   "c_archive_foundryB4",
+   "c_archive_path1",
+   "c_archive_path2",
+   "c_archive_path3",
+   "c_archive_path4",
+   "c_archive_path5",
+   "c_archive_path6",
+   "c_archive_start",
+   "c_archive_starton1",
+   "c_archive_starton2",
+   "c_archive_starton3",
+   "c_archive_starton4",
+   "c_archive_surface",
+   "c_archive_wastelands1",
+   "c_archive_wastelands2",
+   "c_archive_wastelands3",
+   "c_archive_wastelands4",
+   "c_asgore_asgore",
+   "c_asgore_asriel",
+   "c_asgore_front",
+   "c_asgore_hallway",
+   "c_asgore_kitchen",
+   "c_asgore_living",
+   "c_bastion",
+   "c_courtroom",
+   "c_courtyard",
+   "c_elevator1",
+   "c_elevator2",
+   "c_exit",
+   "c_pacing",
+   "c_road1",
+   "c_road2",
+   "c_road3",
+   "c_start",
+   "c_story",
+   "c_throneroom"
+  ]
+ },
+ "prefix_conflicts": [
+  [
+   "a_elevator4",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_auditorium",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_aftershow",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_hub1",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_dining",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_hub2",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_lookout",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_hub3",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_plaza",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_elevator5",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_hub4",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_sleeping1",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_sleeping2",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_sleeping3",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_hub5",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_citadelevator",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_entry1",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_entry2",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_main",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_left1",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_left2",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_left3",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_right1",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_right2",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_right3",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_bridge",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_checkpoint",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_suspense",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_battle",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_exit1",
+   "a",
+   "aerialis",
+   "core"
+  ],
+  [
+   "a_core_exit2",
+   "a",
+   "aerialis",
+   "core"
+  ]
+ ]
+}

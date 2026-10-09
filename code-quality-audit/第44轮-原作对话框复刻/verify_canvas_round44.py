@@ -57,6 +57,10 @@ class FakePainter(object):
 
     def __init__(self, fail_on=None):
         self.calls = []
+        #: ★ 第99轮：`fillRect` 的**实参**单独记一份（`calls` 里仍只记名字，
+        #:  因为历史判据用的是 `('fillRect',) in p.calls` 的成员判断 ——
+        #:  改 `calls` 的元素形状会把那些判据变成"恒假"）。
+        self.fills = []
         self._fail_on = fail_on
         self._count = 0
 
@@ -69,6 +73,12 @@ class FakePainter(object):
     def fillRect(self, *a):
         self._maybe_fail('fillRect')
         self.calls.append(('fillRect',))
+        r = a[0] if a else None
+        if hasattr(r, 'x'):
+            self.fills.append(((r.x(), r.y(), r.width(), r.height()),
+                               a[1] if len(a) > 1 else None))
+        else:
+            self.fills.append((r, a[1] if len(a) > 1 else None))
 
     def drawPixmap(self, *a):
         self._maybe_fail('drawPixmap')
@@ -132,6 +142,8 @@ def sec_a():
     ok(C.K_OBJ == SR.K_OBJ, 'A1b K_OBJ 一致')
     ok(C.K_PLACEHOLDER == SR.K_PLACEHOLDER, 'A1c K_PLACEHOLDER 一致')
     ok(C.K_ROOM_BORDER == SR.K_ROOM_BORDER, 'A1d K_ROOM_BORDER 一致')
+    # ★ 第99轮新增 kind：房间底色（用户口径「剩下的用黑色填充」）
+    ok(C.K_ROOM_FILL == SR.K_ROOM_FILL, 'A1f K_ROOM_FILL 一致（%s）' % C.K_ROOM_FILL)
     # ★ A1e 画布**不该**自带间距常量 —— 间距是**指令携带的**（`item['stripe']`），
     #   画布只是消费者。重复定义会让"改 scene_render 忘了改画布"变成静默不一致。
     ok(not hasattr(C, 'PLACEHOLDER_STRIPE'),
@@ -294,6 +306,40 @@ def sec_c():
     ok(n == 0, 'C8a 缺 rect 的 bg → 不画（实际 %d）' % n)
     n = C.paint_on(p, [None, 'junk', 123], assets)
     ok(n == 0, 'C8b 非 dict 元素 → 不崩（实际 %d）' % n)
+
+    # C9 ★★★ 第99轮：房间底色（K_ROOM_FILL）—— 用户口径「剩下的用黑色填充」
+    p = FakePainter()
+    n = C.paint_on(p, [{'kind': 'room_fill', 'rect': (-100, -100, 2000, 2000),
+                        'color': (0, 0, 0, 255)}], assets)
+    ok(n == 1, 'C9a room_fill → 画出 1 条 实际=%d' % n)
+    ok(len(p.fills) == 1 and p.fills[0][0] == (-100, -100, 2000, 2000),
+       'C9b room_fill → fillRect 用**指令给的**矩形 实际=%s' % (p.fills,))
+    _col = p.fills[0][1].color().getRgb() if p.fills and p.fills[0][1] else None
+    ok(_col == (0, 0, 0, 255),
+       'C9c room_fill → 颜色取指令 color=(0,0,0,255)（不透明纯黑）实际=%s' % (_col,))
+    # 负控制 1：指令没带 color → 兜底仍是黑（不透明），不是"透明"
+    p = FakePainter()
+    C.paint_on(p, [{'kind': 'room_fill', 'rect': (0, 0, 10, 10)}], assets)
+    _col2 = p.fills[0][1].color().getRgb() if p.fills and p.fills[0][1] else None
+    ok(_col2 == (0, 0, 0, 255), 'C9d 无 color 字段 → 兜底黑 (0,0,0,255) 实际=%s' % (_col2,))
+    # 负控制 2：空 rect → 不落笔、不计入（与其它 kind 同纪律）
+    p = FakePainter()
+    n = C.paint_on(p, [{'kind': 'room_fill', 'rect': None, 'color': (0, 0, 0, 255)}],
+                   assets)
+    ok(n == 0 and p.fills == [], 'C9e 缺 rect 的 room_fill → 不画 实际=%d' % n)
+
+    # C10 room_fill 必须**先于** bg/obj 落笔（= 最底层，否则会盖住房间画面）
+    p = FakePainter()
+    n = C.paint_on(p, [
+        {'kind': 'room_fill', 'rect': (0, 0, 2000, 2000), 'color': (0, 0, 0, 255)},
+        {'kind': 'bg', 'name': 'bg/a.png', 'rect': (0, 0, 1320, 960)},
+        {'kind': 'obj', 'name': 'spr/x.png', 'rect': (0, 0, 42, 82)},
+    ], assets)
+    _fill_idx = [i for i, c in enumerate(p.calls) if c[0] == 'fillRect']
+    _pix_idx = [i for i, c in enumerate(p.calls) if c[0] == 'drawPixmap']
+    ok(n == 3, 'C10a 三条全画出（实际 %d）' % n)
+    ok(_fill_idx and _pix_idx and max(_fill_idx) < min(_pix_idx),
+       'C10b room_fill 先于 bg/obj（最底层）实际 fill=%s pix=%s' % (_fill_idx, _pix_idx))
 
 
 # ===========================================================================

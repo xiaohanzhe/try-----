@@ -31,12 +31,12 @@ u"""第89轮回归锁：**桌面 ↔ 作品场景连通**（用户硬门槛「�
 
 段一览
 ------
-  A ★★★ 桌面门的数据面（8 扇 · 字母 A~F/W/X · pos 全在房间内 · 贴图真在盘且尺寸一致）
-  B ★★★ 路由表（8 条 `when_scene=='desktop'` · 目标逐条可解析 · 原作边零 W/X 的如实说明）
+  A ★★★ 桌面门的数据面（9 扇 · 字母 A~F/W/X/Y · pos 全在房间内 · 贴图真在盘且尺寸一致）
+  B ★★★ 路由表（9 条 `when_scene=='desktop'` · 目标逐条可解析 · 原作边零 W/X/Y 的如实说明）
   C ★★★ `_match_tier` 的 **`-1` 档**（product 真调 · 完整 id 命中最强档 · 别名仍工作）
-  D ★★★ 菜单不空（`reachable_destinations` 跨章入口在**且排在头部** · 桌面 ≥8 条）
+  D ★★★ 菜单不空（`reachable_destinations` 跨章入口在**且排在头部** · 桌面 ≥9 条）
   E ★★★ 渲染计划（真机：`plan objs=8` · rect 尺寸 = 贴图×scale · 全在视口内）
-  F ★★★ 推门真切场景（`build_props` 建 8 个 DoorProp · `travel_to` 真改 `scene_id`）
+  F ★★★ 推门真切场景（`build_props` 建 9 个 DoorProp · `travel_to` 真改 `scene_id`）
   G ★★ 旧行为不回归（负控制：非桌面场景不加跨章入口 / 未知 id 仍不命中 / 空 room 仍返 0）
   H 判据自身体检（被测文件在盘 · 记账守恒 · 计数守恒鉴别力）
 
@@ -117,12 +117,20 @@ def _load(path):
 
 
 # ================================================================ A. 桌面门数据面
+# ★★ 第99轮：门数**只在这里声明一次**（`_LETTERS_WANT`），其余判据全部由它取数。
+#   第89轮时这里写死了 12 处 `8` ⇒ 第99轮加第 9 扇门（Outertale）时**同一件事改了 12 遍**，
+#   且漏改一处就会"看着在守其实守不到"。字母集是真源，数量是它的派生值。
+#   字母 ↔ 世界（第89轮起）：A~E = Deltarune 第 1~5 章 · F = Undertale ·
+#   W = 黄魂（Undertale Yellow） · X = OneShot · Y = **Outertale（第99轮新增）**。
+_LETTERS_WANT = set('ABCDEF') | {'W', 'X', 'Y'}
+_N_DOORS = len(_LETTERS_WANT)
 _d = _load(DESKTOP) or {}
 _doors = _d.get('objects') if isinstance(_d.get('objects'), list) else []
-check('A1 ★★★ 桌面 8 扇门（`desktop.json` 的 `objects`）', len(_doors) == 8, star=True)
+check('A1 ★★★ 桌面 %d 扇门（`desktop.json` 的 `objects`）' % _N_DOORS,
+      len(_doors) == _N_DOORS, star=True)
 
-# A1b ★★ 8 扇门**每一项都有非空 `id` / `kind` / `sprite`**（★ 防"只数长度"的盲区）
-#   ★ 鉴别力体检抓到的盲区（M1）：把某扇门的 `id` 改名 ⇒ `len()` 仍是 8 ⇒ A1/A2 全绿。
+# A1b ★★ 每扇门**每一项都有非空 `id` / `kind` / `sprite`**（★ 防"只数长度"的盲区）
+#   ★ 鉴别力体检抓到的盲区（M1）：把某扇门的 `id` 改名 ⇒ `len()` 仍是同一个数 ⇒ A1/A2 全绿。
 #     ⇒ 补一条**逐项字段完整性**判据。
 _field_bad = []
 for _i, _o in enumerate(_doors):
@@ -133,21 +141,22 @@ for _i, _o in enumerate(_doors):
         _v = _o.get(_k)
         if not (isinstance(_v, str) and _v):
             _field_bad.append('#%d %s=%r' % (_i, _k, _v))
-check('A1b ★★ 8 扇门**逐项字段完整**（`id`/`kind`/`sprite` 都非空 —— 防"只数长度"盲区）',
-      len(_doors) == 8 and not _field_bad, star=True)
+check('A1b ★★ %d 扇门**逐项字段完整**（`id`/`kind`/`sprite` 都非空 —— 防"只数长度"盲区）'
+      % _N_DOORS,
+      len(_doors) == _N_DOORS and not _field_bad, star=True)
 if _field_bad:
     for _b in _field_bad[:4]:
         print('        %s' % _b)
 
-# A2 门的 src 全是 `obj_door<字母>`，字母集合 = A..F + W + X（不重不漏）
-_LETTERS_WANT = set('ABCDEF') | {'W', 'X'}
+# A2 门的 src 全是 `obj_door<字母>`，字母集合 = A..F + W + X + Y（不重不漏）
 _letters = []
 for _o in _doors:
     _s = _o.get('src') if isinstance(_o, dict) else None
     if isinstance(_s, str) and _s.startswith('obj_door') and len(_s) == len('obj_door') + 1:
         _letters.append(_s[len('obj_door'):])
-check('A2 ★★★ 8 扇门用**不重不漏**的 8 个不同字母（A~F + W + X）',
-      len(_letters) == 8 and set(_letters) == _LETTERS_WANT, star=True)
+check('A2 ★★★ %d 扇门用**不重不漏**的 %d 个不同字母（A~F + W + X + Y）'
+      % (_N_DOORS, _N_DOORS),
+      len(_letters) == _N_DOORS and set(_letters) == _LETTERS_WANT, star=True)
 if set(_letters) != _LETTERS_WANT:
     print('        got=%r want=%r' % (sorted(_letters), sorted(_LETTERS_WANT)))
 
@@ -200,7 +209,8 @@ for _o in _doors:
     if not (0 <= _x and _x + _sz[0] <= _rw and 0 <= _y and _y + _sz[1] <= _rh):
         _pos_bad.append('%s: pos=%r size=%r 越界 (房间 %rx%r)'
                         % (_o.get('id'), _p, _sz, _rw, _rh))
-check('A4 ★★★ 8 扇门的 `pos` + 贴图尺寸**全部落在房间 320×240 内**（不越界）',
+check('A4 ★★★ %d 扇门的 `pos` + 贴图尺寸**全部落在房间 320×240 内**（不越界）'
+      % _N_DOORS,
       not _pos_bad, star=True)
 if _pos_bad:
     for _b in _pos_bad[:4]:
@@ -214,10 +224,10 @@ if _rw and _rh and _sizes.get('spr_doorA_0.png'):
     _bad_ok = not (0 <= _out and _out + _sz[0] <= _rw)
 check('A5 负控制：A4 有鉴别力（pos 推到房间外必须判越界）', _bad_ok, star=True)
 
-# A6 8 张门贴图**真在盘**且尺寸一致（20×20）
+# A6 全部门贴图**真在盘**且尺寸一致（20×20）
 _sz_set = set(_sizes.values())
-check('A6 ★★ 8 张门贴图真在盘且尺寸一致（`spr_door*_0.png` = 20×20）',
-      len(_sizes) == 8 and all(v == (20, 20) for v in _sizes.values()), star=True)
+check('A6 ★★ %d 张门贴图真在盘且尺寸一致（`spr_door*_0.png` = 20×20）' % _N_DOORS,
+      len(_sizes) == _N_DOORS and all(v == (20, 20) for v in _sizes.values()), star=True)
 if _sz_set != {(20, 20)}:
     print('        sizes=%r' % (_sizes,))
 
@@ -240,13 +250,13 @@ _r = _load(ROUTES) or {}
 _routes = _r.get('routes') if isinstance(_r.get('routes'), list) else []
 _desktop_routes = [x for x in _routes if isinstance(x, dict)
                    and x.get('when_scene') == 'desktop']
-check('B1 ★★★ 路由表有 **8 条** `when_scene == "desktop"` 的规则'
-      '（第89轮新增；本条不断言总数，只断桌面部份）',
-      len(_desktop_routes) == 8, star=True)
+check('B1 ★★★ 路由表有 **%d 条** `when_scene == "desktop"` 的规则'
+      '（第89轮新增；本条不断言总数，只断桌面部份）' % _N_DOORS,
+      len(_desktop_routes) == _N_DOORS, star=True)
 
-# B2 这 8 条覆盖 A..F/W/X 全部字母，且每条 `to` 非空
+# B2 这 N 条覆盖 A..F/W/X/Y 全部字母，且每条 `to` 非空
 _rt_letters = sorted([x.get('when_door') for x in _desktop_routes])
-check('B2 ★★★ 8 条桌面路由的 `when_door` = A~F/W/X（与门一一对应）',
+check('B2 ★★★ %d 条桌面路由的 `when_door` = A~F/W/X/Y（与门一一对应）' % _N_DOORS,
       set(_rt_letters) == _LETTERS_WANT, star=True)
 if set(_rt_letters) != _LETTERS_WANT:
     print('        got=%r' % (_rt_letters,))
@@ -260,20 +270,23 @@ for _x in _desktop_routes:
     _to = _x.get('to')
     if not (isinstance(_to, str) and _to in _all_scene_ids):
         _rt_bad.append('%s -> %r' % (_x.get('when_door'), _to))
-check('B3 ★★★ 8 条桌面路由的 `to` **逐条能在 `load_index()` 里查到**（不是写了不存在的目标）',
+check('B3 ★★★ %d 条桌面路由的 `to` **逐条能在 `load_index()` 里查到**（不是写了不存在的目标）'
+      % _N_DOORS,
       len(_all_scene_ids) > 1000 and not _rt_bad, star=True)
 if _rt_bad:
     for _b in _rt_bad[:4]:
         print('        %s' % _b)
 
-# B4 桌面路由**覆盖跨作品**（ut / uty / oneshot 各一条）—— 用户「该接入的作品全了吗」
+# B4 桌面路由**覆盖跨作品**（ut / uty / oneshot / outertale 各一条）—— 用户「该接入的作品全了吗」
+#   ★ 第99轮：用户点名「那几个世界（oneshot，ut，dr，uty，outertale）的入口……你记得添上」
+#     ⇒ 第四条（Outertale）也必须**从桌面真能推门进去**，不只是索引里挂了个名。
 _targets = [x.get('to') or '' for x in _desktop_routes]
-_cross = {'ut': False, 'uty': False, 'oneshot': False}
+_cross = {'ut': False, 'uty': False, 'oneshot': False, 'outertale': False}
 for _t in _targets:
     for _k in _cross:
         if _t.startswith(_k + '.'):
             _cross[_k] = True
-check('B4 ★★★ 桌面门覆盖**三个跨作品**（Undertale / 黄魂 / OneShot 各有入口）',
+check('B4 ★★★ 桌面门覆盖**四个跨作品**（Undertale / 黄魂 / OneShot / Outertale 各有入口）',
       all(_cross.values()), star=True)
 if not all(_cross.values()):
     print('        %r targets=%r' % (_cross, _targets))
@@ -433,9 +446,10 @@ check('D1 ★★★ `_entry_scenes` 模块级函数存在（跨章入口表）',
       'def _entry_scenes(' in _src_ctrl, star=True)
 
 
-# D2 ★★★ `_ENTRY_CHAPTER_ORDER` 常量存在且含 desktop + 五章 + 三个跨作品
+# D2 ★★★ `_ENTRY_CHAPTER_ORDER` 常量存在且含 desktop + 五章 + 四个跨作品
 #   ★ 首版判据查的是 `'"desktop"'`（双引号）⇒ 与源码里的**单引号元组**对不上 ⇒ 误报。
 #     现在改为：AST 取那个赋值节点的**元组字面量**，逐项比（不吃引号风格）。
+#   ★★ 第99轮：`outertale` 补齐（用户点名要的第五个世界入口）⇒ 期望元组同步。
 def _entry_tuple(tree):
     for _n in ast.walk(tree or ast.Module(body=[], type_ignores=[])):
         if isinstance(_n, ast.Assign) and any(
@@ -449,8 +463,9 @@ def _entry_tuple(tree):
 
 _ctrl_tree = _ast(CTRL)
 _entry = _entry_tuple(_ctrl_tree)
-_want_entry = ('desktop', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ut', 'uty', 'oneshot')
-check('D2 ★★★ `_ENTRY_CHAPTER_ORDER` = (desktop, ch1~ch5, ut, uty, oneshot)'
+_want_entry = ('desktop', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5',
+               'ut', 'uty', 'oneshot', 'outertale')
+check('D2 ★★★ `_ENTRY_CHAPTER_ORDER` = (desktop, ch1~ch5, ut, uty, oneshot, outertale)'
       '（AST 取元组字面量，不吃引号风格 —— 首版被单/双引号差异误报）',
       _entry is not None and tuple(_entry) == _want_entry, star=True)
 if _entry != _want_entry:
@@ -468,7 +483,7 @@ check('D4 负控制：D3 有鉴别力（`out + cross` 的假源码必须判失�
       ('cross + out' in _fake_d and 'out + cross' not in _fake_d) is False,
       star=True)
 
-# D5 ★★★ 真机：桌面菜单**不为空**且 ≥ 8 条，且第一条是跨章入口
+# D5 ★★★ 真机：桌面菜单**不为空**且 ≥ 9 条，且第一条是跨章入口
 _pet = None
 _res = {}
 try:
@@ -576,8 +591,9 @@ if _res.get('push_err'):
     print('        [probe-push-err] %s' % str(_res.get('push_err'))[:600])
 
 _dests = _res.get('dests') if isinstance(_res.get('dests'), list) else []
-check('D5 ★★★ 真机：桌面「去…」菜单**不为空**且 ≥ 8 条（用户「我到现在都没看到能切场景的门」的直接反证）',
-      len(_dests) >= 8, star=True)
+check('D5 ★★★ 真机：桌面「去…」菜单**不为空**且 ≥ %d 条'
+      '（用户「我到现在都没看到能切场景的门」的直接反证）' % _N_DOORS,
+      len(_dests) >= _N_DOORS, star=True)
 
 _dest_first = _dests[0] if _dests else None
 _dest_ids = [ (x.get('scene_id') if isinstance(x, dict) else x) for x in _dests ]
@@ -587,10 +603,11 @@ check('D6 ★★★ 真机：菜单**第一条**是跨章/跨作品入口（`坐
 if _dest_ids:
     print('        dests[:6] = %r' % (_dest_ids[:6],))
 
-# D7 ★★ 桌面菜单里**含「回桌面」以外的跨界目标**（ut / uty / oneshot 至少各一）
+# D7 ★★ 桌面菜单里**含「回桌面」以外的跨界目标**（ut / uty / oneshot / outertale 至少各一）
 _joined = ' | '.join([str(x) for x in _dest_ids])
-check('D7 ★★ 真机菜单含三个跨作品入口（ut / uty / oneshot）',
-      ('ut.' in _joined) and ('uty.' in _joined) and ('oneshot.' in _joined),
+check('D7 ★★ 真机菜单含四个跨作品入口（ut / uty / oneshot / outertale）',
+      ('ut.' in _joined) and ('uty.' in _joined)
+      and ('oneshot.' in _joined) and ('outertale.' in _joined),
       star=True)
 
 # ================================================================ E. 渲染计划（真机）
@@ -599,25 +616,26 @@ check('E1 ★★★ 真机：相机已 follow 且**固定**在 (0,0,320,240)'
       isinstance(_res.get('cam_rect'), (list, tuple))
       and tuple(_res['cam_rect']) == (0.0, 0.0, 320.0, 240.0), star=True)
 
-check('E2 ★★★ 真机：`plan_frame` 产出 **8 条 obj**（8 扇门真的进绘制计划）',
-      _res.get('objs') is not None and len(_res['objs']) == 8, star=True)
+check('E2 ★★★ 真机：`plan_frame` 产出 **%d 条 obj**（%d 扇门真的进绘制计划）'
+      % (_N_DOORS, _N_DOORS),
+      _res.get('objs') is not None and len(_res['objs']) == _N_DOORS, star=True)
 
 # E3 ★★★ rect 尺寸 = 贴图尺寸 × scale（20 × 2.0 = 40）——
 #   ★★ 这条是本轮最贵的探针教训：漏传 `sprite_size` ⇒ 尺寸退化成 (1,1)。
 _objs_rect = _res.get('objs') or []
 _sz_ok = all(r[2] == 40 and r[3] == 40 for _n, r in _objs_rect if len(r) == 4)
-check('E3 ★★★ 真机：8 扇门的 rect 尺寸 = **40×40**（贴图 20 × scale 2.0）'
-      '—— 即 `sprite_size` 真被传进产品真路径',
-      len(_objs_rect) == 8 and _sz_ok, star=True)
+check('E3 ★★★ 真机：%d 扇门的 rect 尺寸 = **40×40**（贴图 20 × scale 2.0）'
+      '—— 即 `sprite_size` 真被传进产品真路径' % _N_DOORS,
+      len(_objs_rect) == _N_DOORS and _sz_ok, star=True)
 if _objs_rect and not _sz_ok:
     print('        rects=%r' % (_objs_rect,))
 
-# E4 ★★ 8 扇门的 rect **全在视口内**（640×480）
+# E4 ★★ 全部门的 rect **全在视口内**（640×480）
 _vw, _vh = (_res.get('viewport') or (0, 0))[:2]
 _in_ok = all(0 <= r[0] and 0 <= r[1] and r[0] + r[2] <= _vw and r[1] + r[3] <= _vh
              for _n, r in _objs_rect if len(r) == 4)
-check('E4 ★★ 真机：8 扇门 rect **全在视口内**（不会被裁掉）',
-      len(_objs_rect) == 8 and _in_ok and _vw == 640 and _vh == 480, star=True)
+check('E4 ★★ 真机：%d 扇门 rect **全在视口内**（不会被裁掉）' % _N_DOORS,
+      len(_objs_rect) == _N_DOORS and _in_ok and _vw == 640 and _vh == 480, star=True)
 if _objs_rect:
     print('        rects=%r' % ([r for _n, r in _objs_rect],))
 
@@ -630,8 +648,9 @@ check('E6 负控制：E2 有鉴别力（viewport 为 (0,0) 时 `plan_viewport` �
       (0, 0) != tuple(_res.get('viewport') or (0, 0)), star=True)
 
 # ================================================================ F. 推门真切场景（真机）
-check('F1 ★★★ 真机：`item_interact.build_props` 在建 8 个 DoorProp（桌面的 8 扇门全可交互）',
-      _res.get('props_n') == 8, star=True)
+check('F1 ★★★ 真机：`item_interact.build_props` 在建 %d 个 DoorProp（桌面的 %d 扇门全可交互）'
+      % (_N_DOORS, _N_DOORS),
+      _res.get('props_n') == _N_DOORS, star=True)
 
 # F2 ★★★ 真机：推 A 门 ⇒ 真切到「A 门声明的目标」（期望值**从门表推**，不写死）
 #   ★ 不写死 `ch1.kris_room.kris_s_room`：那是"判据与事实脱节"的老坑

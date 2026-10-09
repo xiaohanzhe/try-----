@@ -12714,5 +12714,12 @@
   },
   "note_extra": {
     "round77": "第77轮：追加 ut / uty 两章（来自原作 Data.Rooms[i].Width/Height，经 bigmap66.json 逐条核验全等）。★ 与 ch1~ch5 同源同信度，不是\"未知房间退化\"填的 640x480。"
+  },
+  "gaps": {
+    "outertale": {
+      "rooms": 244,
+      "why": "Outertale 是 Vite 打包的 Web 游戏（Android 版 `outertale.apk` 解包产物）。房间定义对象是 `{$schema, background, preload, neighbors, layers, region}` —— **没有房间像素尺寸**；`background` 是**层名字符串**（`\"below\"`）而不是背景图，`region` 是**出生点数组**（如 `[{x:160,y:280},{x:460,y:280}]`），两者都不能闭合出房间宽高。⇒ 按第44/80轮口径**不伪造 640×480**，如实缺着；调用方按\"未知房间\"退化处理。",
+      "evidence": "code-quality-audit/第99轮-睡觉惊醒与场景系统/_evidence/outertale99_rooms.json"
+    }
   }
 }

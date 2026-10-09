@@ -323,7 +323,7 @@
     ],
     "how": "场景侧给 traits，NPC 侧据 traits + 自己的人设生成反应。★ traits 的**来源**本轮未定（候选：背景图亮度 / 房间资源名语义），不猜、不先写死一个会撒谎的推断器。",
     "used_by": "`npc_life.scene_traits()` → `_npc_life_blocks()` 的【你周围】块 → `npc_persona.build_system_prompt(..., life=...)`",
-    "wired_how": "已接线：traits 来源定为**场景 id / 内部名 / 资源名的文本语义**（零依赖、可复算、可解释 —— `trait_hits()` 会返回凭什么这么判）。\n\n★★★ **第77轮重大更新：UT / 黄魂 场景迁入 `_index.json` 后，`ruined`（破败）从零命中转为真命中**：实测命中 **35 处**（`ut.rooms.room_ruins1` ~ `room_ruinsA` 等 UT「废墟」区域为主），⇒ 用户点名的「破败这类的词也需要有能力识别」**现已兑现一部分**（UT 侧）。\n\n★ 现网覆盖（第77轮复算，全部键 1,739 = 真场景 1,659 + 章/区域名 80）：命中 **dark 181 / ruined 35 / crowded 287 / quiet 404** 四个特质，**1,081 个键零特质**（如实）。`bright`（明亮）/ `cosmic`（宇宙）**仍是零命中** —— 因为这两个特质的令牌只在 **OneShot / Outertale** 的场景名里，而那两部还没进 `_index.json`（第77轮只补了 UT / 黄魂）。（数字由 `_tools/probe73_traits.py` 与第77轮复算真跑产出，落 `_evidence/probe73_traits.json`。）\n\n★★★ **第80轮更新：OneShot 263 场景迁入 `_index.json`，`bright`/`cosmic` 也转正**（同第77轮 `ruined` 的机制）：\n  · `bright`（明亮）← 令牌 **`sun`** 命中 **3 处**（`oneshot.rooms.Sunroom` / `basement_after_sun` / `basement_after_sun_2`）⇒ 语义**正确**（真有阳光），**转正**。\n  · `cosmic`（宇宙）← 令牌 **`sky`** 命中 **2 处**（`oneshot.rooms.Red_sky` / `POSTGAME_RED_SKY`）⇒ 「天空」有「空旷/宇宙感」，语义**可接受**，**转正**。\n  ⚠️ 同一批还命中 2 条**语义错位**的预留令牌，**拒绝转正、反而封禁**（移入 `BANNED_TOKENS` 的 `OMITTED` 类，与 `room`/`light` 同款判法）：\n    · `square` —— 命中 `House 4 - squares`（**几何方形**）/ `SQUARES BE GONE`（**谜题名**），**不是**「广场」；\n    · `street` —— 命中 `Elevator Street` / `Vendor Street`（**街名**），**不代表**「人多热闹」。\n  ⇒ 判据同步加强：`check73` C2b（`bright`/`cosmic` 由「必须零命中」改为「必须 > 0，但**只由转正令牌兑现**、预留槽仍零命中」）+ D2/D3/D3c（`OMITTED` 禁词运行期硬过滤）；`check77` D4/D5 同款；`check80` F 段钉住。\n  ★ `Outertale` 尚未接入 ⇒ `sunny`/`bright`/`daylight`/`market`/`plaza`/`space`/`moon`/`void`/`galaxy`/`orbit`/`cosmic` 等预留令牌**仍 0 命中**（如实登记缺口）。",
+    "wired_how": "已接线：traits 来源定为**场景 id / 内部名 / 资源名的文本语义**（零依赖、可复算、可解释 —— `trait_hits()` 会返回凭什么这么判）。\n\n★★★ **第77轮重大更新：UT / 黄魂 场景迁入 `_index.json` 后，`ruined`（破败）从零命中转为真命中**：实测命中 **35 处**（`ut.rooms.room_ruins1` ~ `room_ruinsA` 等 UT「废墟」区域为主），⇒ 用户点名的「破败这类的词也需要有能力识别」**现已兑现一部分**（UT 侧）。\n\n★ 现网覆盖（第77轮复算，全部键 1,739 = 真场景 1,659 + 章/区域名 80）：命中 **dark 181 / ruined 35 / crowded 287 / quiet 404** 四个特质，**1,081 个键零特质**（如实）。`bright`（明亮）/ `cosmic`（宇宙）**仍是零命中** —— 因为这两个特质的令牌只在 **OneShot / Outertale** 的场景名里，而那两部还没进 `_index.json`（第77轮只补了 UT / 黄魂）。（数字由 `_tools/probe73_traits.py` 与第77轮复算真跑产出，落 `_evidence/probe73_traits.json`。）\n\n★★★ **第80轮更新：OneShot 263 场景迁入 `_index.json`，`bright`/`cosmic` 也转正**（同第77轮 `ruined` 的机制）：\n  · `bright`（明亮）← 令牌 **`sun`** 命中 **3 处**（`oneshot.rooms.Sunroom` / `basement_after_sun` / `basement_after_sun_2`）⇒ 语义**正确**（真有阳光），**转正**。\n  · `cosmic`（宇宙）← 令牌 **`sky`** 命中 **2 处**（`oneshot.rooms.Red_sky` / `POSTGAME_RED_SKY`）⇒ 「天空」有「空旷/宇宙感」，语义**可接受**，**转正**。\n  ⚠️ 同一批还命中 2 条**语义错位**的预留令牌，**拒绝转正、反而封禁**（移入 `BANNED_TOKENS` 的 `OMITTED` 类，与 `room`/`light` 同款判法）：\n    · `square` —— 命中 `House 4 - squares`（**几何方形**）/ `SQUARES BE GONE`（**谜题名**），**不是**「广场」；\n    · `street` —— 命中 `Elevator Street` / `Vendor Street`（**街名**），**不代表**「人多热闹」。\n  ⇒ 判据同步加强：`check73` C2b（`bright`/`cosmic` 由「必须零命中」改为「必须 > 0，但**只由转正令牌兑现**、预留槽仍零命中」）+ D2/D3/D3c（`OMITTED` 禁词运行期硬过滤）；`check77` D4/D5 同款；`check80` F 段钉住。\n  ★ `Outertale` 尚未接入 ⇒ `sunny`/`bright`/`daylight`/`market`/`plaza`/`space`/`moon`/`void`/`galaxy`/`orbit`/`cosmic` 等预留令牌**仍 0 命中**（如实登记缺口）。\n\n★★★ **第99轮更新：Outertale 244 场景迁入 `_index.json`（用户点名要的第五个世界入口），又触发一次「预留→转正」，两条令牌命运相反**：\n  · `plaza` → `crowded` —— 命中 `outertale.core.a_plaza`（Aerialis 的商场广场）：原作 `preload` 含 `amShop`、`layers` 含 `iooABurgies`（BURGIE 的店招牌）、`score={music:\"mall\"}`，Papyrus 台词逐字「THAT'S WHERE BURGIE'S SHOP IS.」⇒ 有店有人的公共广场，语义**正确** ⇒ **转正**。\n  ⚠️ · `void` → `cosmic` —— 命中 `outertale.special._void`，但**语义错位**：该房 `region` 只有一个出生点 (160,120)、`interacts` 是 `trivia` 的 **bed / plushie / flowers / computer**、`score={music:\"rain\"}`、叙述「This room belonged to someone who spent a long time doing one specific thing.」⇒ 是**私密小屋**，不是「很空旷的、宇宙一样的地方」⇒ **拒绝转正、反而封禁**（移入 `BANNED_TOKENS` 的 `OMITTED` 类，与 `room`/`light`/`square`/`street` 同款判法）。\n  ★ 迁入后仍**真零命中**的预留令牌（共 15 条）：`sunny`/`bright`/`daylight`/`market`/`space`/`moon`/`orbit`/`cosmic`/`galaxy`/`cellar`/`underground`/`broken`/`wreck`/`abandon`/`desolate` ⇒ **继续留在预留表**（如实登记缺口，不硬塞）。\n  ⇒ 判据同步加强：`check73` 新增 D2b/D2c（裁决落地）+ D2d（负控制：把 `void` 塞回表 ⇒ 「禁词不在任何表」必报红）；`check77` D4/D5 随事实改口径；`check80` C2/C3 把第99轮的合法迁入列进白名单。",
     "round77_update": {
       "why": "第77轮把 UT/黄魂 场景迁入产品索引，破了 ruined 的零命中",
       "ruined_now_hits": 35,
@@ -370,6 +370,29 @@
       },
       "evidence": "_evidence/probe80_tokens.json",
       "why": "OneShot 263 迁入 ⇒ 预留令牌实测命中；按第77轮同机制裁决：语义正确的转正、语义错位的封禁。"
+    },
+    "round99_update": {
+      "round": 99,
+      "scene": "第99轮报告-睡觉惊醒与场景系统.md",
+      "import": {
+        "outertale": 244
+      },
+      "promote": {
+        "plaza": "crowded"
+      },
+      "ban_omitted": [
+        "void"
+      ],
+      "hits": {
+        "plaza": 1
+      },
+      "evidence": "第99轮-睡觉惊醒与场景系统/_evidence/outertale99_rooms.json（原始 bundle：E:\\Download\\_extract61\\outertale\\www\\index-BIKawlPs.js，27.5 MB）",
+      "why": "Outertale 244 迁入 ⇒ 预留令牌再实测：`plaza`（Aerialis 商场广场，原作有 `amShop`/`iooABurgies`/`music:\"mall\"`/Papyrus 台词）语义正确 ⇒ 转正；`void`（`_void` 是一间带床/玩偶/花/电脑与雨声的小卧室）语义错位 ⇒ 封禁 OMITTED。",
+      "still_reserved_tokens": [
+        "sunny", "bright", "daylight", "market", "space", "moon", "orbit",
+        "cosmic", "galaxy", "cellar", "underground", "broken", "wreck",
+        "abandon", "desolate"
+      ]
     }
   },
   "visitor": {
@@ -383,7 +406,7 @@
       "贴图：四作 529 张已落地（第71轮）"
     ],
     "not_yet": [
-      "跨作品作品的**场景**还没进 `assets/scenes/_index.json`（目前只有 desktop + ch1~ch5）⇒ 他们眼下只能出现在 Deltarune 的场景里",
+      "跨作品作品的**场景**已进 `assets/scenes/_index.json`（ut / 黄魂 / OneShot / Outertale 四作，第77 / 80 / 99轮）⇒ 他们**已能出现在这些场景里**；本条原本写的是「还没进」，第99轮已如实改正",
       "没有站位 ⇒ 需要一个\"访客落点\"策略（跟随落点 / 场景入口落点）",
       "访客台词模板（\"我不太熟这里\"）尚未接入对话层"
     ]
@@ -402,7 +425,7 @@
     "not_yet": [
       "同名相认台词：`twin_groups` 的 `au_family_members` 已用于熟络度初值，但\"相遇时该怎么开口\"（认出对方是另一个版本的我）仍未接线",
       "主线 NPC **自主开口**：纯 NPC 已能零成本自发说内置台词；主线 NPC 要靠 7B，需把\"无用户发起的生成\"接进异步回调链并与用户请求排队（CPU-only 单并发）",
-      "场景特质的跨作品覆盖面：`ruined`/`bright`/`cosmic` 令牌已预留，但 OneShot / Outertale 场景未进 `_index.json` ⇒ 现网零命中",
+      "场景特质的跨作品覆盖面：`ruined`（第77轮 UT/黄魂 迁入）/ `bright`、`cosmic`（第80轮 OneShot 迁入）/ `crowded` 新增 `plaza`（第99轮 Outertale 迁入）**已逐轮兑现**；仍留缺口 = 预留表里 **15 条令牌**（`sunny`/`bright`/`daylight`/`market`/`space`/`moon`/`orbit`/`cosmic`/`galaxy`/`cellar`/`underground`/`broken`/`wreck`/`abandon`/`desolate`）现网**真 0 命中** —— 语义正确但题材里没有，**如实登记**，不硬塞",
       "访客兼容：跨作品场景未接入 + 访客落点策略未做",
       "自由生活（私下闲聊、**传播信息**、不以用户发起为起点）—— 第73轮已接线（纯 NPC 自发台词 + 说完传话给同场另一位）；**更多行为**（走动中的搭话、信息二次传播的衰减）待下一轮"
     ],

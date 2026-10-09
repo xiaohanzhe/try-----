@@ -1,0 +1,171 @@
+{
+ "schema_version": 1,
+ "chapter_id": "outertale",
+ "area_id": "special",
+ "area_name": "特殊",
+ "note": "第99轮：从 Outertale 的 Vite bundle（`E:\\Download\\_extract61\\outertale\\www\\index-*.js`）迁入。六张房间表 `Sb/w3/I3/y3/Ub/Fb` 逐表抽取，锚点自证见 `_tools/extract_outertale99.py`（A1~A6 全 PASS）。★ `original_room_id` 是**本项目分配的稳定序号**（按六表字面顺序 0 起），**不是原作房间下标** —— Outertale 房间以字符串 id 寻址，本就没有整数下标；这是与 Deltarune/OneShot 的**已知差异**，如实登记。",
+ "scenes": {
+  "outertale.special._void": {
+   "name": "_void",
+   "name_raw": "_void",
+   "name_derived": false,
+   "original_room_id": 0,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._taxi": {
+   "name": "_taxi",
+   "name_raw": "_taxi",
+   "name_derived": false,
+   "original_room_id": 1,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._cockpit": {
+   "name": "_cockpit",
+   "name_raw": "_cockpit",
+   "name_derived": false,
+   "original_room_id": 2,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._hangar": {
+   "name": "_hangar",
+   "name_raw": "_hangar",
+   "name_derived": false,
+   "original_room_id": 3,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._credits1": {
+   "name": "_credits1",
+   "name_raw": "_credits1",
+   "name_derived": false,
+   "original_room_id": 4,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._credits2": {
+   "name": "_credits2",
+   "name_raw": "_credits2",
+   "name_derived": false,
+   "original_room_id": 5,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._credits3": {
+   "name": "_credits3",
+   "name_raw": "_credits3",
+   "name_derived": false,
+   "original_room_id": 6,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._credits4": {
+   "name": "_credits4",
+   "name_raw": "_credits4",
+   "name_derived": false,
+   "original_room_id": 7,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier1": {
+   "name": "_frontier1",
+   "name_raw": "_frontier1",
+   "name_derived": false,
+   "original_room_id": 8,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier2": {
+   "name": "_frontier2",
+   "name_raw": "_frontier2",
+   "name_derived": false,
+   "original_room_id": 9,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier3": {
+   "name": "_frontier3",
+   "name_raw": "_frontier3",
+   "name_derived": false,
+   "original_room_id": 10,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier4": {
+   "name": "_frontier4",
+   "name_raw": "_frontier4",
+   "name_derived": false,
+   "original_room_id": 11,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier5": {
+   "name": "_frontier5",
+   "name_raw": "_frontier5",
+   "name_derived": false,
+   "original_room_id": 12,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier6": {
+   "name": "_frontier6",
+   "name_raw": "_frontier6",
+   "name_derived": false,
+   "original_room_id": 13,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier7": {
+   "name": "_frontier7",
+   "name_raw": "_frontier7",
+   "name_derived": false,
+   "original_room_id": 14,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier8": {
+   "name": "_frontier8",
+   "name_raw": "_frontier8",
+   "name_derived": false,
+   "original_room_id": 15,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier9": {
+   "name": "_frontier9",
+   "name_raw": "_frontier9",
+   "name_derived": false,
+   "original_room_id": 16,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  },
+  "outertale.special._frontier10": {
+   "name": "_frontier10",
+   "name_raw": "_frontier10",
+   "name_derived": false,
+   "original_room_id": 17,
+   "bg": null,
+   "bg_source": "none",
+   "objects": []
+  }
+ }
+}

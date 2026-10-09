@@ -34,7 +34,8 @@ u"""第87轮回归锁：**每人一个家**（跨作品 NPC 的静态归属地 +
   B ★★★ 自主移动隔离（候选池收窄；跨作品角色零决策 —— 含**成对负控制**）
   C ★★★ 就寝决策真消费 `home`（落回自己家；不可达时不硬落）
   D ★★★ **`_call` 两参约定的防回归锁**（宿主注入的取值器都必须吃两个位置参数）
-  E ★★ Outertale 未被硬安家（`_index.json` 无 `outertale` 章 ⇒ 如实挂起）
+  E ★★ Outertale 未被硬安家（第99轮起 `_index.json` **已有** `outertale` 章 ⇒
+     11 人仍挂 `outertale_pending`，且挂起状态在 `_placement.json` 里如实登记）
   F ★★ 数据面自洽（索引登记 / 几何可查 / 场景可 `load_scene`）
   G 判据自身体检（负控制成对 + 被测文件在盘）
 
@@ -356,8 +357,23 @@ check('E1 Outertale 的 %d 人未被硬安家' % len(_ot), not _ot_homed, star=T
 
 _idx = _load_json(os.path.join(SCENES, '_index.json')) or {}
 _has_outertale = 'outertale' in (_idx.get('chapters') or {})
-check('E2 如实反映：_index.json 里没有 outertale 章 ⇒ 挂起而非硬编',
-      (not _has_outertale) or bool(_ot_homed), star=True)
+# ★★ 第99轮：Outertale 的 **244 个场景**已迁入 `_index.json`（用户点名要的第五个
+#   世界入口）⇒ 旧判据"没有 outertale 章 ⇒ 无需安家"的**前提已不成立**。
+#   但结论**变了方向却仍是"未安家"**：本轮只做**场景数据面**，`ot_*` 这 11 人
+#   在 `_placement.json` 里仍挂在 `outertale_pending`（缺"家"的原作依据）。
+#   ⇒ 判据改为**双重、且都随事实**：
+#     ① outertale 章**必须真在**（否则这条测试又变成"对着不存在的东西放行"）；
+#     ② 11 人仍**未被硬安家**，且 `_placement.json` 里**如实登记**了 `outertale_pending`
+#        （挂起是被记录下来的，不是被忘掉的）。
+_plc = _load_json(os.path.join(PKG, 'assets', 'npc', '_placement.json')) or {}
+_plc_pending = sorted((_plc.get('homes') or {}).get('outertale_pending') or [])
+_plc_cnt = (_plc.get('counts') or {}).get('outertale_pending')
+check('E2 ★★ 如实反映：outertale 章**已在** `_index.json`（244 间）⇒ 这 %d 人'
+      '仍未被硬安家，且挂起状态在 `_placement.json` 里如实登记' % len(_ot),
+      _has_outertale and not _ot_homed and _plc_pending == sorted(_ot)
+      and _plc_cnt == len(_ot),
+      'has_chapter=%r homed=%r pending=%r counts=%r'
+      % (_has_outertale, _ot_homed, _plc_pending, _plc_cnt))
 
 # ================================================================ F. 数据面自洽
 _entries = {}

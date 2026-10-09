@@ -1,0 +1,9 @@
+=== gen_scene_canvas99 元信息（场景系统真机录屏检查）===
+屏幕        = 2560x1600
+观察序列    = [('desktop_before', None, 0.0), ('card_castle_1f', 'ch1.card_castle.card_castle_1f', 2.5), ('kris_s_room', 'ch1.kris_room.kris_s_room', 2.5), ('castle_front', 'ch1.castle_town.castle_front', 2.5), ('field_seams_shop', 'ch1.field.field_seams_shop', 2.5), ('back_desktop', 'desktop', 2.5)]
+采样数      = 5
+  desktop_before     kinds={'obj': 9}                               crop_distinct=10585 rgb_diff=None
+  card_castle_1f     kinds={'room_fill': 1, 'bg': 1, 'room_border': 1} crop_distinct=250 rgb_diff=None
+  kris_s_room        kinds={'room_fill': 1, 'bg': 1}                crop_distinct=422 rgb_diff=None
+  castle_front       kinds={'room_fill': 1, 'bg': 1, 'room_border': 1} crop_distinct=235 rgb_diff=None
+  field_seams_shop   kinds={'room_fill': 1, 'bg': 1, 'room_border': 1} crop_distinct=398 rgb_diff=None

@@ -89,12 +89,31 @@ TRAIT_WORDS_CN = {
 #:     ⇒ `OMITTED`，靠"不在任何令牌表里"挡，匹配规则挡不住）——
 #:     **不许为了让判据变绿就把它们硬塞进本位表**（那才是真的"虚假宣传"）。
 #:   ★ `sunny`/`bright`/`daylight`/`market`/`plaza`/`space`/`moon`/`void`/`galaxy`/`orbit`/`cosmic`
-#:     实测**仍是 0 命中** ⇒ **继续留在预留表**（如实登记缺口）。
+#:     当时实测**仍是 0 命中** ⇒ 继续留在预留表（第80轮口径）。
+#:
+#: ★★★ **第99轮：Outertale 244 场景迁入，第三次触发「预留→转正」**（同第77/80轮机制）。
+#:   实测新增命中的预留令牌 **2 条**，两条**命运相反**：
+#:     · `plaza` → `crowded` —— 命中 `outertale.core.a_plaza`（**Aerialis 的商场广场**）。
+#:              原作实证（`index-BIKawlPs.js`）：该房 `preload` 含 **`amShop`**、
+#:              `layers` 含 **`iooABurgies`**（BURGIE 的店招牌）、`score={music:"mall"}`，
+#:              Papyrus 台词逐字「**THAT'S WHERE BURGIE'S SHOP IS.**」
+#:              ⇒ 是"**有店有人的公共广场**"，与 `town` 同一档 ⇒ 语义**正确** ⇒ **转正**。
+#:   ⚠️ · `void` → `cosmic` —— 命中 `outertale.special._void`，但**语义错位**：
+#:              该房原作定义是**一间小卧室**（`region` 只有一个出生点 (160,120)、
+#:              `interacts` = `trivia` 的 **bed / plushie / flowers / computer**、
+#:              `score={music:"rain"}`、叙述「This room belonged to someone who spent a
+#:              long time doing one specific thing.」）⇒ 是"**私密小屋**"，
+#:              **不是**"很空旷的、宇宙一样的地方" ⇒ **拒绝转正，反而封禁**（`OMITTED`）。
+#:   ★ 判法与第80轮 `square`/`street`、第73轮 `room`/`light` **同款**。
+#:   ★ 复算产物：`code-quality-audit/第99轮-睡觉惊醒与场景系统/_evidence/`（原始 bundle 仍在盘）。
+#:   ★ 迁入后仍**真零命中**的预留令牌：`sunny`/`bright`/`daylight`/`market`/`space`/
+#:     `moon`/`orbit`/`cosmic`/`galaxy`/`cellar`/`underground`/`broken`/`wreck`/
+#:     `abandon`/`desolate` ⇒ **继续留在预留表**（如实登记缺口，不硬塞）。
 TRAIT_TOKENS = {
     'dark': ('dark', 'cave', 'basement'),
     'ruined': ('ruin', 'ruined'),
     'bright': ('sun',),
-    'crowded': ('town', 'city', 'shop'),
+    'crowded': ('town', 'city', 'shop', 'plaza'),
     'quiet': ('home', 'house', 'forest', 'grave', 'church', 'library'),
     'cosmic': ('sky',),
 }
@@ -104,18 +123,19 @@ TRAIT_TOKENS = {
 #:
 #: ★★ 这张表本身就是一条**实证结论**，必须留着 —— 用户除了「这地方真黑」还点名
 #:   「**破败**这类的词也需要有能力识别」。第80轮（OneShot 迁入）后实测：
-#:   **`bright` 的 `sunny`/`bright`/`daylight`、`cosmic` 的 `space`/`moon`/`void`/`galaxy`/`orbit`/`cosmic`
-#:   仍是 0 命中**；`crowded` 的 `market`/`plaza` 也仍 0 命中。
-#:   原因不是"没做"，是 **Outertale 的场景还没进 `_index.json`**（OneShot 已进但只带来
-#:   `sun`/`sky` 两条可转正 + `square`/`street` 两条语义错位）。
-#:   ⇒ **如实登记缺口**，而不是把 `sun` 硬塞进本位表让判据看起来"覆盖了明亮"。
-#:   （注：`sun`/`sky` **第80轮确已转正**，因为语义正确且实测有命中 —— 见上表注释。）
+#:   **`bright` 的 `sunny`/`bright`/`daylight`、`cosmic` 的 `space`/`moon`/`galaxy`/`orbit`/`cosmic`
+#:   仍是 0 命中**；`crowded` 的 `market` 也仍 0 命中。
+#:   ★ 第99轮（Outertale 迁入）后复算：上列令牌**依旧全 0 命中**（`plaza` 已转正、
+#:     `void` 已封禁，双双离开本表）⇒ **仍是如实登记缺口**，
+#:     而不是把某个词硬塞进本位表让判据看起来"覆盖了明亮 / 宇宙"。
+#:   （注：`ruin`/`ruined` 第77轮、`sun`/`sky` 第80轮、`plaza` 第99轮**确已转正**，
+#:     因为语义正确且实测有命中 —— 见上表注释。）
 TRAIT_TOKENS_RESERVED = {
     'dark': ('cellar', 'underground'),
     'ruined': ('broken', 'wreck', 'abandon', 'desolate'),
     'bright': ('sunny', 'bright', 'daylight'),
-    'crowded': ('market', 'plaza'),
-    'cosmic': ('space', 'orbit', 'moon', 'cosmic', 'galaxy', 'void'),
+    'crowded': ('market',),
+    'cosmic': ('space', 'orbit', 'moon', 'cosmic', 'galaxy'),
 }
 
 #: ⚠️ **永久禁用表**：令牌 → 禁用理由。★ 两种禁法的**挡法不同**，判据也分开验：
@@ -135,6 +155,11 @@ BANNED_TOKENS = {
                             #   / 谜题 `SQUARES BE GONE`），不是"广场" ⇒ 不能当 `crowded` 用
     'street': 'OMITTED',    # ★ 第80轮：OneShot 里 `Elevator Street`/`Vendor Street` 是**街名**，
                             #   不代表"人多热闹" ⇒ 不能当 `crowded` 用
+    'void': 'OMITTED',      # ★ 第99轮：Outertale 的 `_void` 是**一间小卧室**
+                            #   （床/玩偶/花/电脑 + `music:"rain"`），不是"空旷宇宙"
+                            #   ⇒ 不能当 `cosmic` 用。该词曾被列在 `cosmic` 预留表里
+                            #   （第73/80轮），第99轮实测 1 命中后**拒绝转正并封禁**
+                            #   —— 与 `square`/`street` 同款判法。
 }
 
 

@@ -240,9 +240,14 @@ def sec_d():
     # D3 desktop：第89轮起 bg=`__transparent__` —— **声明式透明**，语义与
     #     `bg=None`（缺素材 ⇒ 画斜纹占位）**不同**。这里断两条：
     #       D3b 透明 ⇒ **不**产 placeholder（透出壁纸，不是"这里缺东西"）
-    #       D3c 透明 ⇒ 但 8 扇门仍在（"透明"不等于"整间空"）
+    #       D3c 透明 ⇒ 但世界门仍在（"透明"不等于"整间空"）
     #     ★ 为什么必须区分（记忆 §4：判据别拿源码字面量代替产物输出）：
     #       若把透明与缺素材混为一谈，将来真把 bg 写丢时判据不会报红。
+    #     ★★ 第99轮：D3c 原本写死 `== 8`。加第 9 扇门（Outertale）时它成了
+    #       "判据与事实脱节"的样本。改成两条**不写死**的不变量：
+    #         ① 声明的对象**全部**进绘制计划（声明 N ⇒ 计划里就有 N 条）；
+    #         ② 下限 9 —— 桌面门数 = 五章(A~E) + UT(F) + 黄魂(W) + OneShot(X)
+    #            + Outertale(Y)，第99轮起。
     cam3 = SC.Camera((640, 480), 0, 2.0)
     cam3.follow((0.0, 0.0, 640.0, 480.0), None)
     plan3 = SR.plan_frame(sc_d, cam3, geo)
@@ -251,8 +256,10 @@ def sec_d():
        'D3b desktop 声明式透明（bg=%s）⇒ 不产 placeholder 实际=%d'
        % (SCENES and getattr(sc_d, 'bg', '?'), len(ph)))
     _objs3 = [i for i in plan3 if i['kind'] == SR.K_OBJ]
-    ok(len(_objs3) == 8,
-       'D3c desktop 透明但仍渲染 8 扇门（透明≠整间空）实际=%d' % len(_objs3))
+    _want_objs3 = len(getattr(sc_d, 'objects', None) or [])
+    ok(len(_objs3) == _want_objs3 and _want_objs3 >= 9,
+       'D3c desktop 透明但仍渲染**全部** %d 个对象（透明≠整间空；下限 9 = 五章 + 四跨作品）'
+       '实际=%d' % (_want_objs3, len(_objs3)))
     # D3d 负控制：真正的"缺素材"（bg=None）**必须**产 placeholder —— 证明
     #     D3b 的"0 条"不是因为渲染层坏了，而是因为 bg 声明了透明。
     class _FakeScene:
@@ -353,9 +360,24 @@ def sec_d():
     ok(len(bg7) == 1, 'D7b 背景产出 1 条 实际=%d' % len(bg7))
     if bg7:
         r7 = bg7[0]['rect']
-        ok(r7[2] == 660 * 2 and r7[3] == 480 * 2,
-           'D7c 背景按素材 660x480 @2 = 1320x960（**不是**房间 2000x2000）实际=%s'
-           % (r7,))
+        # ★★★ 第99轮修正：旧判据「按素材 660x480@2 = 1320x960」已被**推翻**。
+        #     背景 PNG 是**屏幕像素分辨率**的截图（房间 320x240 <-> 素材 640x480），
+        #     把素材像素当世界逻辑单位用会让背景被额外放大 2 倍、只看到房间的一个角
+        #     （`kris_s_room` 离线渲染对照：现状只显示左上 1/4）；素材比房间小时更会
+        #     整片空白（`card_castle_1f` 真机：相机视口与素材世界矩形无交集）。
+        #     现口径 = 等比放大到**盖满**整间房（`scene_render.fit_bg_world`）。
+        _k7 = max(1000.0 / 660.0, 1000.0 / 480.0)      # 独立复算，不调被测函数
+        ok(r7[2] == int(round(660 * _k7 * 2)) and r7[3] == int(round(480 * _k7 * 2)),
+           'D7c 等比 k=max(1000/660,1000/480)=%.5f => 输出 %dx%d（盖满房间 2000x2000）实际=%s'
+           % (_k7, int(round(660 * _k7 * 2)), int(round(480 * _k7 * 2)), r7))
+        ok(r7[2] >= 1000 * 2 and r7[3] >= 1000 * 2,
+           'D7c2 两轴都 >= 房间像素（cover 的定义，留黑=0）实际=%s' % (r7,))
+        ok(bg7[0].get('fit') == 'cover', 'D7c3 指令标记 fit=cover 实际=%s'
+           % (bg7[0].get('fit'),))
+        _sx = r7[2] / float(660 * 2)
+        _sy = r7[3] / float(480 * 2)
+        ok(abs(_sx - _sy) < 0.01,
+           'D7c4 等比：两轴倍率相同（sx=%.4f sy=%.4f，禁非等比拉伸）' % (_sx, _sy))
         ok(bg7[0].get('native') == (660, 480),
            'D7d bg 指令带 native=(660,480) 实际=%s' % (bg7[0].get('native'),))
     # 负控制：不给 sprite_size → 退回房间矩形（**保守安全**，不是崩）
@@ -367,6 +389,9 @@ def sec_d():
     ok(bg7b and bg7b[0]['rect'][2] == 1000 * 2,
        'D7f 退化时按房间 1000x1000@2 = 2000x2000 实际=%s'
        % (bg7b[0]['rect'] if bg7b else None,))
+    ok(bg7b and bg7b[0].get('fit') == 'room',
+       'D7g 退化分支显式标 fit=room（不冒充 cover）实际=%s'
+       % (bg7b[0].get('fit') if bg7b else None,))
 
     # D8 背景在相机偏移下**同步平移**（"背景相对运动"的算术表达）
     #    相机右移 Δ 逻辑 → bg 像素左移 Δ×scale。这是零视差的直接判据。
@@ -383,20 +408,78 @@ def sec_d():
         ok(dx == -100 * 2,
            'D8 相机右移 100 逻辑 → 背景左移 200 像素（零视差）实际 dx=%s' % dx)
 
-    # D9 ★ 背景完全在视野外 → 被剔除（且**不**退化成 placeholder 假装有东西）
+    # D9 ★★★ 相机在房间任意角落，背景都**必须**盖满视口（第99轮真机缺陷的回归锁）
+    # 旧判据是「背景完全在视野外 -> 被剔除（不画看不见的东西）」—— 那条**已被推翻**：
+    # 它把"按素材原尺寸铺"当成了正确行为，于是相机跟到房间另一侧时背景整条消失，
+    # 屏幕上什么都不画、壁纸直接透出来（第99轮真机：`card_castle_1f` 房间 1840x1080 /
+    # 素材 1280x751，相机 (1385,787) 的视口与素材世界矩形无交集，plan 只剩一条
+    # 窗口外的 room_border，`canvas.grab()` 非透明采样 = 0）。
+    # 现口径：等比放大到盖满 -> 相机永远在背景内部 -> **必然可见**。
     st9 = SS.SceneState()
     st9.chapter_id = 'ch1'
     st9.original_room_id = 46
     st9.bg = 'bg/x.png'
     st9.objects = []
     cam9 = SC.Camera((640, 480), 0, 2.0)
-    # 把相机推到房间右下角 → 背景（660×480，在原点）完全出界
+    # 把相机推到房间右下角（目标远在天边 -> 四向钳制到右下）
     cam9.follow((0.0, 0.0, 1000.0, 1000.0), (5000, 5000, 5016, 5016))
     plan9 = SR.plan_frame(st9, cam9, geo, sprite_size=lambda n: (660, 480))
-    ok(len([i for i in plan9 if i['kind'] == SR.K_BG]) == 0,
-       'D9a 背景出界 → 无 bg 指令（不画看不见的东西）')
+    _bg9 = [i for i in plan9 if i['kind'] == SR.K_BG]
+    ok(len(_bg9) == 1,
+       'D9a 相机贴房间右下角 -> 背景**仍产出** 1 条（不得再整条消失）实际=%d' % len(_bg9))
     ok(len([i for i in plan9 if i['kind'] == SR.K_PLACEHOLDER]) == 0,
-       'D9b 背景出界 ≠ 缺背景（不产 placeholder）')
+       'D9b 背景盖满 != 缺背景（不产 placeholder）')
+    if _bg9:
+        _r9 = _bg9[0]['rect']
+        ok(_r9[0] <= 0 and _r9[1] <= 0 and _r9[0] + _r9[2] >= 640
+           and _r9[1] + _r9[3] >= 480,
+           'D9c 背景矩形**覆盖整个视口** 640x480（x<=0 y<=0 且右下>=视口）实际=%s' % (_r9,))
+    # D9d 房间底色（K_ROOM_FILL）在位、且盖满视口、在最前（= 最底层）
+    _rf9 = [i for i in plan9 if i['kind'] == SR.K_ROOM_FILL]
+    ok(len(_rf9) == 1, 'D9d1 无背景声明的场景产 1 条房间底色 实际=%d' % len(_rf9))
+    if _rf9:
+        ok(_rf9[0].get('color') == SR.ROOM_FILL_RGBA and SR.ROOM_FILL_RGBA[:3] == (0, 0, 0),
+           'D9d2 房间底色 = 不透明纯黑 %s（用户口径「剩下的用黑色填充」）'
+           % (SR.ROOM_FILL_RGBA,))
+        _rr9 = _rf9[0]['rect']
+        ok(_rr9[0] <= 0 and _rr9[1] <= 0 and _rr9[0] + _rr9[2] >= 640
+           and _rr9[1] + _rr9[3] >= 480,
+           'D9d3 房间底色盖满视口实际=%s' % (_rr9,))
+    ok(plan9 and plan9[0]['kind'] == SR.K_ROOM_FILL,
+       'D9d4 房间底色是计划里**第一条**（先画=最底层）实际首条=%s'
+       % (plan9[0]['kind'] if plan9 else None,))
+    # D9e 负控制：真·缺素材（bg=None）仍产 placeholder，且**仍有**房间底色
+    #     （证明 D9b 的 0 条不是"渲染层坏了"）
+    _fake9 = SS.SceneState()
+    _fake9.chapter_id = 'ch1'
+    _fake9.original_room_id = 46
+    _fake9.bg = None
+    _fake9.objects = []
+    _p9e = SR.plan_frame(_fake9, cam9, geo)
+    ok(len([i for i in _p9e if i['kind'] == SR.K_ROOM_FILL]) == 1
+       and len([i for i in _p9e if i['kind'] == SR.K_PLACEHOLDER]) == 1,
+       'D9e 缺素材 -> 黑底 + 1 条占位（黑底不因缺图而消失）实际=%s'
+       % (SR.plan_summary(_p9e),))
+    # D9f 负控制：桌面场景（声明式透明）**不许**产房间底色（否则盖住壁纸）
+    _fake9.bg = SR.TRANSPARENT_BG
+    _p9f = SR.plan_frame(_fake9, cam9, geo)
+    ok(len([i for i in _p9f if i['kind'] == SR.K_ROOM_FILL]) == 0
+       and len([i for i in _p9f if i['kind'] == SR.K_PLACEHOLDER]) == 0,
+       'D9f 声明式透明 -> 0 黑底 0 占位（桌面场景透出壁纸）实际=%s'
+       % (SR.plan_summary(_p9f),))
+    # D9g fit_bg_world 纯函数：正/负成对
+    ok(SR.fit_bg_world(320, 240, (0.0, 0.0, 320.0, 240.0))
+       == (0.0, 0.0, 320.0, 240.0),
+       'D9g1 素材==房间 -> 原样（k=1）实际=%s'
+       % (SR.fit_bg_world(320, 240, (0.0, 0.0, 320.0, 240.0)),))
+    _f = SR.fit_bg_world(660, 480, (0.0, 0.0, 1000.0, 1000.0))
+    ok(_f is not None and _f[2] >= 1000.0 and _f[3] >= 1000.0,
+       'D9g2 素材小于房间 -> 放大到两轴都 >= 房间 实际=%s' % (_f,))
+    ok(SR.fit_bg_world(0, 480, (0.0, 0.0, 1000.0, 1000.0)) is None,
+       'D9g3 负控制：素材宽 0 -> None（不伪装成合法矩形）')
+    ok(SR.fit_bg_world(660, 480, None) is None, 'D9g4 负控制：room=None -> None')
+    ok(SR.fit_bg_world(660, 480, (0.0, 0.0, 0.0, 1000.0)) is None,
+       'D9g5 负控制：房间宽 0 -> None')
 
 
 # ===========================================================================

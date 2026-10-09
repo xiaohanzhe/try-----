@@ -307,11 +307,11 @@ check('C2 路由条数 > 100（由原作连接生成，不再是 26 条手工链
 
 # --- C3：机制级断言 —— 每条规则的 _original 必须自洽于门的下标位移表 ---
 #     （这是 v2 的核心不变量：规则不是"编"的，是"推"出来的。）
-# ★★ 第89轮：desktop 的 8 扇**世界门**（A..F/W/X → ch1..ch5/ut/uty/oneshot）
+# ★★ 第89轮：desktop 的 **9 扇世界门**（A..F/W/X/Y → ch1..ch5/ut/uty/oneshot/outertale）
 #   是**跨作品**入口，不是"原作房间下标位移"—— 桌面不属于任何原作房间，
 #   自然没有 `room_delta`。本判据的意图是"凡由**原作门表**推出的边，其
 #   _original 必须与下标位移表自洽"，故按 `when_scene != 'desktop'` 圈定范围。
-#   desktop 门另有专门锁（verify_routes_order44 B7：恰 8 扇 / 同 priority /
+#   desktop 门另有专门锁（verify_routes_order44 B7：恰 9 扇 / 同 priority /
 #   目标场景存在），不是"排除即不管"。
 _DOOR_DELTA = {'A': 1, 'B': -1, 'C': 2}
 _ORIGIN = ('desktop',)
@@ -334,21 +334,21 @@ check('C3 每条规则的 _original 自洽于门的下标位移表（A+1 / B-1 /
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
 
-# C3b 规则只用了「已实证」的三种字母门 —— 不许悄悄混进 D/E/F/W/X
+# C3b 规则只用了「已实证」的三种字母门 —— 不许悄悄混进 D/E/F/W/X/Y
 #   ★ 第89轮：同理排除 desktop（它的 D/E/F/W/X 是**世界门**，属第89轮新契约，
-#     不是"混进原作边的杂字母"）。
+#     不是"混进原作边的杂字母"）；第99轮 desktop 又添了 Y 门（Outertale）。
 _LETTERS = sorted(set((r.get('_original') or {}).get('door_letter')
                       for r in (routes.get('routes') or [])
                       if r.get('when_scene') not in _ORIGIN))
-check('C3b 原作段只用 A/B/C 三种已实证字母门（D/E/F/W/X 一律不编原作边）',
+check('C3b 原作段只用 A/B/C 三种已实证字母门（D/E/F/W/X/Y 一律不编原作边）',
       set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
-# ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A..F/W/X（正控制），
+# ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A..F/W/X/Y（正控制），
 #    证明 C3/C3b 的"排除"没有把 desktop 整段漏掉。
 _desk_letters = sorted(set(
     (r.get('_original') or {}).get('door_letter')
     for r in (routes.get('routes') or []) if r.get('when_scene') == 'desktop'))
-check('C3c ★ desktop 世界门字母 == A..F + W/X（8 扇）',
-      _desk_letters == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X'],
+check('C3c ★ desktop 世界门字母 == A..F + W/X/Y（9 扇）',
+      _desk_letters == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y'],
       '实际=%s' % _desk_letters)
 
 # --- C4：锚点 —— krisroom 的 doorA 必须落到 krishallway（第44轮实证的真值）---

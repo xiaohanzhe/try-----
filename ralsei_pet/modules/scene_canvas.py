@@ -86,8 +86,15 @@ K_BG = 'bg'
 K_OBJ = 'obj'
 K_PLACEHOLDER = 'placeholder'
 K_ROOM_BORDER = 'room_border'
+#: ★★ 第99轮：房间底色（不透明黑）—— 用户原话「剩下的用黑色填充」。
+K_ROOM_FILL = 'room_fill'
 #: ★ 第50轮：光世界「扭蛋球」容器（四层：back / character / front / top）
 K_BUBBLE = 'bubble'
+
+#: 房间底色的**兜底**颜色（指令不带 `color` 时用它）。
+#: ⚠️ 正常路径下颜色由指令携带（`scene_render.ROOM_FILL_RGBA`）——
+#: 这里是"指令被人手写坏了"时的最后一道保险，**不是**真源。
+ROOM_FILL_COLOR = QColor(0, 0, 0, 255)
 
 #: 占位斜纹的线色（深灰）与底色（浅灰）—— 只在**浅色画布**上出现，
 #: 与桌宠默认的工作区色调不冲突，且一眼能看出"这不是内容"。
@@ -218,7 +225,9 @@ def paint_on(painter, plan, assets, view_size=None):
     for item in plan:
         try:
             kind = item.get('kind')
-            if kind == K_BG:
+            if kind == K_ROOM_FILL:
+                drew = _paint_room_fill(painter, item)
+            elif kind == K_BG:
                 drew = _paint_bg(painter, item, assets)
             elif kind == K_OBJ:
                 drew = _paint_obj(painter, item, assets)
@@ -245,12 +254,52 @@ def paint_on(painter, plan, assets, view_size=None):
     return drawn
 
 
-def _paint_bg(painter, item, assets):
-    """画背景：按指令给的像素矩形绘制（矩形 = `素材尺寸 × scale`，见 scene_render）。
+def _paint_room_fill(painter, item):
+    """画**房间底色**（不透明黑）—— 整个房间视口矩形，最先画 = 最底层。
 
-    ⚠️ 这里**不是**"拉伸铺满房间" —— 第44轮真机实测证明那样会放大像素风素材
-       （房间 1000×1000 vs 素材 660×480 ⇒ 糊掉）。矩形由渲染层算好，
-       本函数只负责落笔。
+    ★★ 第99轮新增（用户原话「剩下的用黑色填充」）
+    -------------------------------------------------
+    它是**兜底**不是主视觉：正常情况下房间已被 `bg` 等比放大盖满
+    （见 `scene_render.fit_bg_world`），黑只在三种情形露出来：
+      ① 素材缺失（缺图）；② 房间几何未知；③ 数据缺口（素材盖不满房间）。
+    为什么必须有它：没有它时未被盖到处是**透明**的 ⇒ 直接透出用户壁纸，
+    真机观感像"场景系统坏了"；有了黑底才是"这里没图"的正确表达。
+
+    ⚠️ 颜色优先取**指令携带的** `color`（`scene_render.ROOM_FILL_RGBA`），
+       `ROOM_FILL_COLOR` 只是指令被写坏时的最后一道保险 —— 避免"两处各写一份
+       真源、改一处忘另一处"（本项目最贵的坑）。
+
+    :return: 是否**真的落笔**（几何非法 → False）。
+    """
+    rect = _rect(item.get('rect'))
+    if rect.isEmpty():
+        return False
+    col = item.get('color')
+    if isinstance(col, (list, tuple)) and len(col) >= 3:
+        try:
+            if len(col) >= 4:
+                q = QColor(int(col[0]), int(col[1]), int(col[2]), int(col[3]))
+            else:
+                q = QColor(int(col[0]), int(col[1]), int(col[2]))
+        except (TypeError, ValueError):
+            q = ROOM_FILL_COLOR
+    else:
+        q = ROOM_FILL_COLOR
+    painter.fillRect(rect, QBrush(q))
+    return True
+
+
+def _paint_bg(painter, item, assets):
+    """画背景：按指令给的像素矩形绘制。
+
+    ⚠️ 矩形**已在渲染层算好**（`scene_render.fit_bg_world` —— 等比放大到盖满房间，
+       超出部分留在窗口外由 Qt 裁掉），本函数只负责落笔，**自己不做任何缩放决策**。
+
+    ★ 第99轮修正：本函数注释里曾写"不是拉伸铺满房间"（第44轮的口径）。
+      那句话的**有效部分**是"禁**非等比**拉伸"（会把像素风素材拉变形），
+      而"不许缩放"本身是错的 —— 背景 PNG 是屏幕像素分辨率的截图，
+      必须缩放到房间世界尺寸才对（否则只显示房间的一个角，甚至整片空白）。
+      现在：等比缩放由 `fit_bg_world` 决定，`drawPixmap` 只是执行者。
 
     :return: 是否**真的落笔**（几何非法 → False）。
     """

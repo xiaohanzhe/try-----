@@ -23,7 +23,8 @@
 
 绘制顺序（**从后到前**，等价原作的 depth 排序）
 -----------------------------------------------
-    1. `bg`         —— 背景铺满整个房间世界矩形（相机裁剪）
+    0. `room_fill`  —— ★ 第99轮新增：整间房的不透明底色（用户口径「剩下的用黑色填充」）
+    1. `bg`         —— 背景**等比放大到盖满整间房**（超出部分裁掉；相机裁剪）
     2. `objects`    —— 物件，按 `depth_of` 升序（远的先画）
     3. `overlay`    —— 本模块产出的"提示层"（缺背景时的占位斜纹 / 房间边框）
 
@@ -38,6 +39,8 @@
 | 房间几何查不到 | 退化为「房间 = 相机视口」（相机不移动） | `room_known=False` |
 | 背景文件找不到 | 不产 bg 指令，改产一条 `placeholder` | `bg_missing=True` |
 | 物件没素材 | 仍产指令（`pixmap=None`）—— 物件可能只是逻辑锚点 | `asset=None` |
+| 素材尺寸查不到 | bg 退化为「房间世界矩形」（= cover 的目标，**不是**素材尺寸） | `native=(None, None)` |
+| ★ 物件的 `src` 是原作**不可见触发器** | **不产**该物件指令（`visible=False`，画面本来画在背景里） | 无（就是没有它） |
 
 **为什么不"算不出就整段不画"**：整段不画会让桌面突然空掉，用户以为坏了；
 而"画个斜纹占位"传达了正确信息（这里本来有东西，只是素材没到）。
@@ -94,8 +97,26 @@ K_BG = 'bg'
 K_OBJ = 'obj'
 K_PLACEHOLDER = 'placeholder'
 K_ROOM_BORDER = 'room_border'
+#: ★★ 第99轮：**房间底色**（不透明黑）—— 用户原话「剩下的用黑色填充」。
+#: 语义 = 「房间的地板就是黑的」，铺在整个房间世界矩形上、**永远最先画**
+#: （= 最底层），从此"不切场景时透出壁纸"与"素材没盖到处透出壁纸"这两件事
+#: 都被堵死。⚠️ 声明式透明的桌面场景（`TRANSPARENT_BG`）**不产**这条
+#: —— 桌面场景的背景**就是**用户壁纸（见 `TRANSPARENT_BG` 说明）。
+K_ROOM_FILL = 'room_fill'
+#: 房间底色 RGBA（纯黑、不透明）。写进指令是刻意的：它是**用户口径的产物**，
+#: 应当能被回归锁逐字断言，而不是藏在 Qt 壳的颜色常量里。
+ROOM_FILL_RGBA = (0, 0, 0, 255)
 #: ★ 第50轮：光世界「扭蛋球」容器 —— 一个球产出 **4 条**指令（保序）。
 K_BUBBLE = 'bubble'
+
+#: ★★ 第99轮：「**我们自造的物件**」的 `kind` 白名单（隐形名单的逃生门）。
+#: ★ 与 `scene_system._AUTHORED_KINDS` 是**两份刻意重复**的常量 —— 理由同 K_*：
+#:   本模块不许 import 项目内模块（初始化环纪律）。"两边不一致"由
+#:   `verify_scene_fit99` 的 G 段（全量逐条对账两份实现）抓。
+#: 值为 `'prop'` 的依据：场景里 3206 个物件实例中 3197 个**没有 `kind`**
+#: （= 原作房间转储来的），剩下 9 个 `kind == 'prop'` 正是 `desktop.json`
+#: 的 9 扇桌面门 —— 它们借用了原作的 `src`（`obj_doorA/B/...`）。
+_AUTHORED_KINDS = ('prop',)
 
 #: ★★ 第89轮：`scene.bg` 取这个**魔法值** = "本场景就该透明，不许画背景/占位"。
 #: 与 `bg is None`（= 缺素材，仍画占位提醒补图）**刻意区分**：
@@ -299,6 +320,108 @@ def visible_in_view(rect, view_size):
     return not (x + w <= 0 or y + h <= 0 or x >= vw or y >= vh)
 
 
+def fit_bg_world(bg_w, bg_h, room_rect):
+    """把背景素材**等比**缩放到"刚好盖满整间房" → 世界矩形 `(l, t, r, b)`。
+
+    ★★★ 第99轮修正 —— 这条**推翻**了第44轮"按素材原尺寸铺"的裁定
+    -----------------------------------------------------------------
+    第44轮的写法是 `bg_world = (0, 0, 素材宽, 素材高)`（把**素材像素**当
+    **世界逻辑单位**用），并附了一条理由："拉伸到房间会把像素风素材放大 1.5 倍
+    ⇒ 糊掉"。那条理由只对了一半 —— **禁的是"非等比拉伸"**，不是"缩放"本身。
+
+    真实的口径（第99轮用 235 个带真背景的场景普查 + 离线渲染对照得出）：
+
+      · 原作现实世界是「**房间 320×240 逻辑 → ×2 输出 640×480 屏幕像素**」，
+        而导出的背景 PNG **就是屏幕分辨率的那张图**（`kris_s_room`：房间
+        320×240 ↔ 素材 640×480，正好 2 倍 —— 235 个样本里这类是主流）。
+      · 所以素材的 `1 像素` = 世界的 `0.5 逻辑单位`，**不是** `1 逻辑单位`。
+        第44轮把两者当同一个数 ⇒ 背景在屏幕上被额外放大 2 倍后
+        再被相机窗口裁掉，用户看到的是**房间的一个角**而不是整间房
+        （离线渲染对照图实证：`kris_s_room` 现状只显示左上 1/4）。
+
+    本函数给出正确落位：素材的 `k` 倍（`k = max(房间宽/素材宽, 房间高/素材高)`）
+    —— 取**较大**倍率 = 两轴都 ≥ 房间 = **一定盖满**（overflow 由相机/窗口裁掉）。
+
+    为什么是"盖满"而不是"装下"（`min`）：
+      用户口径是「**把原作全屏化**……但不是真的全屏，只是说像」——
+      画面必须铺满、不许留黑边；"装下"会在某一轴留黑边，与"照搬原作效果"相反。
+      黑只作**兜底**（素材缺失 / 房间未知 / 数据缺口），见 `K_ROOM_FILL`。
+
+    为什么必须**等比**（同一个 `k` 用到两轴）：
+      非等比拉伸会把像素风素材拉变形（第44轮的原始担心是对的，保留）。
+
+    :return: `(l, t, r, b)`（世界逻辑坐标，锚点 = 房间左上）；入参非法 →
+             `None`（**不伪装成一个"看起来合理"的矩形**，让调用方走退化分支）。
+    """
+    if not room_rect or len(room_rect) != 4:
+        return None
+    try:
+        bw = float(bg_w)
+        bh = float(bg_h)
+        rl = float(room_rect[0])
+        rt = float(room_rect[1])
+        rr = float(room_rect[2])
+        rb = float(room_rect[3])
+    except (TypeError, ValueError):
+        return None
+    if bw <= 0 or bh <= 0 or rr <= rl or rb <= rt:
+        return None
+    k = max((rr - rl) / bw, (rb - rt) / bh)
+    if k <= 0:
+        return None
+    return (rl, rt, rl + bw * k, rt + bh * k)
+
+
+def obj_is_hidden(obj, hidden):
+    """物件的 `src` 是原作**不可见触发器** ⇒ 这一帧不画它。
+
+    ★ 与 `scene_system.is_drawable_object()` 是**两份等价实现**（刻意重复）。
+      理由同 K_* 常量：本模块是纯数据层、**不许 import 项目内模块**
+      （初始化环纪律），所以不能直接复用那个函数；而"两边判得不一样"
+      这件事，靠回归锁（`verify_scene_fit99` 的 E 段做全量比对）来抓，
+      比"省一份实现"重要得多。
+
+    规则（逐字与 `scene_system.is_drawable_object` 对齐）：
+
+      · 判 `src`（**原作对象名**）而不是 `sprite`（素材名）—— 一个素材会被
+        多个对象复用（`spr_interactable` 同时是 `obj_readable_room1` 与
+        `obj_interactablesolid` 的贴图），而 `visible` 是**对象级**属性。
+      · 没有 `src`（我们自造的装饰/门/道具）⇒ **照画** —— 它们没有 `visible`。
+      · `hidden` 为空/缺失 ⇒ **照画**（= 第99轮之前的行为，名单丢了也不会桌面变空）。
+      · `hidden` 是字符串 ⇒ **照画**（字符串的 `in` 是子串匹配，必须先拒掉）。
+      · ★★★ **自造物件逃生门**：`authored is True` 或 `kind ∈ ('prop',)`
+        ⇒ 照画。名单描述的是**原作房间转储来的物件**，但我们自己摆的东西
+        （`desktop.json` 的 9 扇门）借用了原作的 `src` 来复用贴图与路由
+        ⇒ 不豁免就会被整批藏掉（第99轮 G2 实测：desktop 的 `plan objs`
+        从 **9 掉到 1**，`scene_p0` H11 / `check89` E 段 / `render_round44`
+        D3c 三处当场报红）。转储来的物件**从不写 `kind`**（3206 个实例里
+        3197 个无 `kind`），所以"写了 kind"本身就是自造声明。
+
+    第99轮真机症状：`kris_s_room` 修好背景后屏幕上冒出 9 个品红/白描边框 ——
+    正是 `obj_doorA` / `obj_markerB` / `obj_readable_room1`；查原作转储
+    （第43轮 `objmap43.txt`）三者 `vis=False` ⇒ 原作里根本不画。
+    全量普查：带 `src` 的物件实例 402 个中 **305 个（76%）** 属此类。
+    """
+    if not isinstance(obj, dict):
+        return False
+    if not hidden:
+        return False
+    if isinstance(hidden, (str, bytes)):
+        return False
+    # ★★★ 逃生门（与 `scene_system.is_drawable_object` 逐字对齐，别只改一边）
+    if obj.get('authored') is True:
+        return False
+    if obj.get('kind') in _AUTHORED_KINDS:
+        return False
+    src = obj.get('src')
+    if not isinstance(src, str) or not src:
+        return False
+    try:
+        return src in hidden
+    except TypeError:
+        return False
+
+
 def _anim_frame_index(anim, tick):
     """多帧物件的**当前帧号** —— 原作 sprite 逐帧动画的等价实现。
 
@@ -401,18 +524,24 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
 
     out = []
 
-    # ---- 1. 背景（**按素材原尺寸**铺在房间原点，相机裁剪）----
-    # ★★★ 第44轮真机实测修正（务必理解，这是最容易再写错的一处）
-    #   早先版本把"房间世界矩形"整个拉伸给背景（`drawPixmap(room_px, bg)`）。
-    #   真机一跑就错：`castle_front` 的房间世界是 1000×1000，而导出背景只有
-    #   660×480 —— 拉伸会把背景**放大 1.5 倍**，像素风素材立刻糊掉，
-    #   而且画面内容对不上（背景画的是原尺寸取景，不是整个房间）。
+    # ---- 1. 背景（**等比放大到盖满整间房**，超出部分由相机/窗口裁掉）----
+    # ★★★ 第99轮修正（务必理解，这是最容易再写错的一处）
+    #   早先版本把"素材像素"直接当"世界逻辑单位"铺在房间原点
+    #   （`bg_world = (0,0,bg_w,bg_h)`）。真机一跑就错，而且是**两种错**：
+    #     (a) 素材比房间小 → 相机跟到房间另一侧时背景**整个出界** ⇒ 屏幕空白
+    #         （第99轮真机定位：`card_castle_1f` 房间 1840×1080 / 素材 1280×751，
+    #          相机 (1385,787) 的视口与素材世界矩形**无交集** ⇒ plan 只剩一条
+    #          窗口外的 `room_border` ⇒ `canvas.grab()` 非透明采样 = 0 ⇒ 壁纸透出）；
+    #     (b) 素材不小于房间 → 屏幕**上背景被额外放大 2 倍**，用户只看到房间的一个角
+    #         （离线渲染对照：`kris_s_room` 现状只显示左上 1/4，而原作里整间房
+    #          恰好铺满一屏）。
+    #   根因：背景 PNG 是**屏幕像素分辨率**的截图（房间 320×240 ↔ 素材 640×480），
+    #        所以 `1 素材像素 = 0.5 世界逻辑单位`，不是 1。
+    #   正确模型见 `fit_bg_world()` 的长注释（含普查数据与两条备选口径的取舍）。
     #
-    #   正确模型：背景素材**自带尺寸**（`sprite_size(name)` 给），落到屏幕上就是
-    #   `素材像素 × scale`，位置在**房间原点**（原作背景层的 X/Y 偏移为 0 ——
-    #   第43轮已实证 1,014 图层里 HSpeed/VSpeed 非零 = 0，无偏移、无视差）。
-    #
-    #   链路：世界矩形 `(0,0,bgw,bgh)` → `to_view_rect` 得视口逻辑 → `to_output` 乘 scale。
+    #   ★ 仍然**禁非等比拉伸**（第44轮的原始担心是对的）：`fit_bg_world` 只出
+    #     一个等比系数 `k`，两轴同倍。
+    #   链路：世界矩形 `(0,0,bw*k,bh*k)` → `to_view_rect` 得视口逻辑 → `to_output` 乘 scale。
     bg = getattr(scene, 'bg', None)
     bg_name = bg if isinstance(bg, str) and bg else None
     # ★★ 第89轮：`TRANSPARENT_BG` 必须在**最前面**拦掉，否则它是真值字符串 ⇒
@@ -425,9 +554,25 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
         bg_name = None
     room_rect_ws = camera.to_view_rect(world)
     room_px = to_output(room_rect_ws, camera) if room_rect_ws is not None else None
+
+    # ---- 0. 房间底色（**最先画 = 最底层**）----
+    # ★★ 第99轮：用户原话「剩下的用黑色填充」。它是**兜底**而不是主视觉 ——
+    #   正常情况下房间已被 `bg` 盖满（见 `fit_bg_world`），黑只在
+    #   ① 素材缺失 ② 房间几何未知 ③ 数据缺口 三种情形下露出来。
+    #   为什么必须有它（真机症状）：没有它时，没被盖到的地方是**透明的** ⇒
+    #   直接把用户壁纸透出来，看起来像"场景系统坏了"而不是"这里没图"。
+    #   ⚠️ `TRANSPARENT_BG`（桌面场景）**不产** —— 桌面场景的背景**就是**壁纸。
+    if not _transparent_bg and room_px is not None:
+        out.append({
+            'kind': K_ROOM_FILL,
+            'rect': room_px,
+            'color': ROOM_FILL_RGBA,
+            'room_known': room_known,
+        })
+
     if bg_name:
         # 背景素材的真实像素尺寸（未乘 scale）。拿不到 → 退回房间世界矩形
-        # （**保守且安全**：至少铺满可见区，不会留白；只是可能有拉伸）。
+        # （第99轮起这**恰好就是** cover 的目标 ⇒ 退化分支与正常分支同观感）。
         bg_w = bg_h = None
         if callable(sprite_size):
             try:
@@ -437,12 +582,12 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
                     bg_w, bg_h = int(got[0]), int(got[1])
             except Exception:
                 bg_w = bg_h = None
-        if bg_w and bg_h:
-            # 背景世界矩形 = 原点 + 素材尺寸（原作背景层偏移恒 0）
-            bg_world = (0.0, 0.0, float(bg_w), float(bg_h))
-            bg_ws = camera.to_view_rect(bg_world)
+        fit = fit_bg_world(bg_w, bg_h, world) if (bg_w and bg_h) else None
+        if fit is not None:
+            bg_ws = camera.to_view_rect(fit)
             bg_px = to_output(bg_ws, camera) if bg_ws is not None else None
         else:
+            # 素材尺寸未知 → 直接用房间世界矩形（= 盖满，最保守且最安全）
             bg_px = room_px
         if bg_px is not None and visible_in_view(bg_px, view):
             out.append({
@@ -451,6 +596,7 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
                 'rect': bg_px,
                 'world': world,
                 'native': (bg_w, bg_h),
+                'fit': 'cover' if fit is not None else 'room',
                 'room_known': room_known,
             })
         elif bg_px is None:
@@ -478,9 +624,16 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
             })
 
     # ---- 2. 物件（按 depth 升序；本层只做变换 + 剔除，不排序 —— 排序在 scene_system）----
+    # ★★ 第99轮：**原作不可见触发器不画**。名单由数据层注入到场景对象上
+    #   （`SceneState.hidden_objects` ← `scene_system.load_obj_visible()`），
+    #   本模块**不读文件**（纯数据层纪律）。拿不到 ⇒ 空集合 ⇒ 旧行为。
+    #   ⚠️ 只影响**绘制**：触发器仍然是可交互物/道具目标，过滤不越界到那边去。
+    hidden = getattr(scene, 'hidden_objects', None)
     scale = camera.scale if camera.scale > 0 else 1.0
     for obj in (getattr(scene, 'objects', None) or []):
         if not isinstance(obj, dict):
+            continue
+        if obj_is_hidden(obj, hidden):
             continue
         pos = obj.get('pos')
         if not (isinstance(pos, (list, tuple)) and len(pos) == 2):
