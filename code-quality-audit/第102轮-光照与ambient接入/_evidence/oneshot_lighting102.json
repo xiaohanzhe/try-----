@@ -1,0 +1,57 @@
+{
+ "note": "原作光照语义取证（第102轮）。**未入库 lightmaps**：它们不是房间光照层。",
+ "conclusion": "add_light/del_light 是**事件脚本**级特殊效果，全库仅 7 次 / 6 间房；ambient 是**色调命令**（`ambient -100, -100, -100`）。",
+ "api_strings": [
+  "add_light :bulb,",
+  "add_light :eyes, 'niko_eyes', 1.0, ",
+  "add_light :window, ",
+  "ambient -100, -100, -100",
+  "ambient -30, -30, -30",
+  "blue_ambient",
+  "del_light :eyes",
+  "green_ambient",
+  "house_ambient"
+ ],
+ "call_sites": [
+  {
+   "room_id": 2,
+   "kind": "add_light",
+   "count": 2
+  },
+  {
+   "room_id": 2,
+   "kind": "del_light",
+   "count": 1
+  },
+  {
+   "room_id": 39,
+   "kind": "add_light",
+   "count": 1
+  },
+  {
+   "room_id": 180,
+   "kind": "add_light",
+   "count": 1
+  },
+  {
+   "room_id": 188,
+   "kind": "add_light",
+   "count": 1
+  },
+  {
+   "room_id": 188,
+   "kind": "del_light",
+   "count": 1
+  },
+  {
+   "room_id": 189,
+   "kind": "add_light",
+   "count": 1
+  },
+  {
+   "room_id": 203,
+   "kind": "add_light",
+   "count": 1
+  }
+ ]
+}

@@ -1,0 +1,2126 @@
+{
+ "note": "263 张合成图**亮度画像 + 五档归因**（第102轮）。「房间偏暗 ⇒ 因为没接 lightmaps」这个归因本轮**被证伪**：lightmaps 是**加色光罩**（用了只会更亮），ambient 是**调暗命令**且全库仅 7 次；而 263 张里 221 张（D 档）是**有实心瓦片却近黑** ⇒ 暗来自**原作瓦片/图集本身**。",
+ "classes": {
+  "A": 1,
+  "B": 2,
+  "C": 11,
+  "D": 221,
+  "E": 28
+ },
+ "summary": {
+  "n": 263,
+  "mean_lum": 30.754,
+  "dark_bucket_0_31": 184,
+  "exact_black": [
+   103,
+   165
+  ],
+  "brightest": 139.025
+ },
+ "rows": [
+  {
+   "room_id": 1,
+   "lum": 6.884,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 2,
+   "lum": 21.754,
+   "placed": 1216,
+   "opaque": 1216,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 3,
+   "lum": 0.723,
+   "placed": 1226,
+   "opaque": 1226,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 4,
+   "lum": 2.716,
+   "placed": 1635,
+   "opaque": 1626,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 5,
+   "lum": 0.208,
+   "placed": 1310,
+   "opaque": 1310,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 6,
+   "lum": 1.02,
+   "placed": 1200,
+   "opaque": 1200,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 7,
+   "lum": 88.97,
+   "placed": 1060,
+   "opaque": 1060,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 8,
+   "lum": 120.764,
+   "placed": 1045,
+   "opaque": 1045,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 9,
+   "lum": 92.925,
+   "placed": 251,
+   "opaque": 251,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 10,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 11,
+   "lum": 38.496,
+   "placed": 1577,
+   "opaque": 1577,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 12,
+   "lum": 38.777,
+   "placed": 7335,
+   "opaque": 5482,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 13,
+   "lum": 3.633,
+   "placed": 1604,
+   "opaque": 1604,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 14,
+   "lum": 44.554,
+   "placed": 5248,
+   "opaque": 3827,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 15,
+   "lum": 3.471,
+   "placed": 3269,
+   "opaque": 3255,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 16,
+   "lum": 1.58,
+   "placed": 1779,
+   "opaque": 1773,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 17,
+   "lum": 5.503,
+   "placed": 2204,
+   "opaque": 2173,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 18,
+   "lum": 27.232,
+   "placed": 12198,
+   "opaque": 10119,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 19,
+   "lum": 54.938,
+   "placed": 5956,
+   "opaque": 3351,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 20,
+   "lum": 0.049,
+   "placed": 1650,
+   "opaque": 1650,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 21,
+   "lum": 3.657,
+   "placed": 1600,
+   "opaque": 1600,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 22,
+   "lum": 1.179,
+   "placed": 625,
+   "opaque": 625,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 23,
+   "lum": 93.849,
+   "placed": 949,
+   "opaque": 949,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 24,
+   "lum": 2.677,
+   "placed": 1611,
+   "opaque": 1599,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 25,
+   "lum": 94.985,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 26,
+   "lum": 0.89,
+   "placed": 1650,
+   "opaque": 1650,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 27,
+   "lum": 110.406,
+   "placed": 9759,
+   "opaque": 2843,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 28,
+   "lum": 2.598,
+   "placed": 1645,
+   "opaque": 1645,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 29,
+   "lum": 96.091,
+   "placed": 9243,
+   "opaque": 4714,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 30,
+   "lum": 2.962,
+   "placed": 1222,
+   "opaque": 1222,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 31,
+   "lum": 2.801,
+   "placed": 1219,
+   "opaque": 1219,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 32,
+   "lum": 3.19,
+   "placed": 1231,
+   "opaque": 1231,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 33,
+   "lum": 2.863,
+   "placed": 1224,
+   "opaque": 1224,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 34,
+   "lum": 2.774,
+   "placed": 1252,
+   "opaque": 1252,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 35,
+   "lum": 2.964,
+   "placed": 1223,
+   "opaque": 1223,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 36,
+   "lum": 2.801,
+   "placed": 1219,
+   "opaque": 1219,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 37,
+   "lum": 100.793,
+   "placed": 7359,
+   "opaque": 3722,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 38,
+   "lum": 6.194,
+   "placed": 10908,
+   "opaque": 10851,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 39,
+   "lum": 126.778,
+   "placed": 363,
+   "opaque": 363,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 40,
+   "lum": 1.033,
+   "placed": 4912,
+   "opaque": 4912,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 41,
+   "lum": 0.844,
+   "placed": 2500,
+   "opaque": 2500,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 42,
+   "lum": 1.394,
+   "placed": 1200,
+   "opaque": 1200,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 43,
+   "lum": 96.692,
+   "placed": 12448,
+   "opaque": 6167,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 44,
+   "lum": 105.207,
+   "placed": 3176,
+   "opaque": 3150,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 45,
+   "lum": 0.99,
+   "placed": 3008,
+   "opaque": 3000,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 46,
+   "lum": 1.973,
+   "placed": 4204,
+   "opaque": 4200,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 47,
+   "lum": 81.558,
+   "placed": 2475,
+   "opaque": 2410,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 48,
+   "lum": 85.943,
+   "placed": 1984,
+   "opaque": 1969,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 49,
+   "lum": 83.242,
+   "placed": 1634,
+   "opaque": 1616,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 50,
+   "lum": 6.938,
+   "placed": 2762,
+   "opaque": 2762,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 51,
+   "lum": 7.845,
+   "placed": 3228,
+   "opaque": 3225,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 52,
+   "lum": 70.207,
+   "placed": 2725,
+   "opaque": 2711,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 53,
+   "lum": 9.207,
+   "placed": 2622,
+   "opaque": 2622,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 54,
+   "lum": 78.032,
+   "placed": 1864,
+   "opaque": 1383,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 55,
+   "lum": 97.644,
+   "placed": 148,
+   "opaque": 148,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 56,
+   "lum": 0.583,
+   "placed": 42012,
+   "opaque": 41971,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 57,
+   "lum": 2.084,
+   "placed": 2014,
+   "opaque": 2014,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 58,
+   "lum": 3.101,
+   "placed": 1222,
+   "opaque": 1212,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 59,
+   "lum": 7.721,
+   "placed": 305,
+   "opaque": 305,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 60,
+   "lum": 101.617,
+   "placed": 88,
+   "opaque": 88,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 61,
+   "lum": 101.643,
+   "placed": 21,
+   "opaque": 21,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 62,
+   "lum": 0.548,
+   "placed": 1200,
+   "opaque": 1200,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 63,
+   "lum": 101.748,
+   "placed": 2806,
+   "opaque": 0,
+   "cls": "A",
+   "blanks": true
+  },
+  {
+   "room_id": 64,
+   "lum": 6.195,
+   "placed": 1299,
+   "opaque": 1290,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 65,
+   "lum": 2.086,
+   "placed": 3326,
+   "opaque": 3321,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 66,
+   "lum": 10.044,
+   "placed": 5000,
+   "opaque": 5000,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 67,
+   "lum": 116.75,
+   "placed": 7359,
+   "opaque": 2486,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 68,
+   "lum": 10.18,
+   "placed": 500,
+   "opaque": 500,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 69,
+   "lum": 12.984,
+   "placed": 1022,
+   "opaque": 1022,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 70,
+   "lum": 22.049,
+   "placed": 15363,
+   "opaque": 13606,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 71,
+   "lum": 30.535,
+   "placed": 13350,
+   "opaque": 11721,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 72,
+   "lum": 12.663,
+   "placed": 5895,
+   "opaque": 5885,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 73,
+   "lum": 27.761,
+   "placed": 10786,
+   "opaque": 9018,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 74,
+   "lum": 13.006,
+   "placed": 1986,
+   "opaque": 1986,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 75,
+   "lum": 3.684,
+   "placed": 1596,
+   "opaque": 1596,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 76,
+   "lum": 8.616,
+   "placed": 1053,
+   "opaque": 1053,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 77,
+   "lum": 89.594,
+   "placed": 423,
+   "opaque": 410,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 78,
+   "lum": 8.616,
+   "placed": 1053,
+   "opaque": 1053,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 79,
+   "lum": 8.78,
+   "placed": 1053,
+   "opaque": 1053,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 80,
+   "lum": 8.616,
+   "placed": 1053,
+   "opaque": 1053,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 81,
+   "lum": 8.616,
+   "placed": 1053,
+   "opaque": 1053,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 82,
+   "lum": 8.616,
+   "placed": 1053,
+   "opaque": 1053,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 83,
+   "lum": 78.9,
+   "placed": 458,
+   "opaque": 458,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 84,
+   "lum": 62.718,
+   "placed": 8394,
+   "opaque": 8386,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 85,
+   "lum": 48.283,
+   "placed": 9617,
+   "opaque": 9617,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 86,
+   "lum": 3.333,
+   "placed": 25520,
+   "opaque": 25496,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 87,
+   "lum": 69.089,
+   "placed": 4349,
+   "opaque": 4349,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 88,
+   "lum": 47.111,
+   "placed": 1535,
+   "opaque": 1535,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 89,
+   "lum": 47.426,
+   "placed": 1155,
+   "opaque": 1155,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 90,
+   "lum": 71.194,
+   "placed": 4976,
+   "opaque": 4976,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 91,
+   "lum": 2.145,
+   "placed": 10929,
+   "opaque": 10919,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 92,
+   "lum": 13.313,
+   "placed": 1015,
+   "opaque": 1015,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 93,
+   "lum": 13.62,
+   "placed": 1003,
+   "opaque": 1003,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 94,
+   "lum": 14.151,
+   "placed": 985,
+   "opaque": 985,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 95,
+   "lum": 7.524,
+   "placed": 1902,
+   "opaque": 1895,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 96,
+   "lum": 14.372,
+   "placed": 2719,
+   "opaque": 2719,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 97,
+   "lum": 1.535,
+   "placed": 2636,
+   "opaque": 2635,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 98,
+   "lum": 12.224,
+   "placed": 2333,
+   "opaque": 2325,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 99,
+   "lum": 3.064,
+   "placed": 948,
+   "opaque": 947,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 100,
+   "lum": 1.762,
+   "placed": 900,
+   "opaque": 900,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 101,
+   "lum": 28.911,
+   "placed": 4234,
+   "opaque": 4176,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 102,
+   "lum": 3.201,
+   "placed": 3732,
+   "opaque": 3682,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 103,
+   "lum": 0.0,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "B",
+   "blanks": true
+  },
+  {
+   "room_id": 104,
+   "lum": 61.061,
+   "placed": 3820,
+   "opaque": 3820,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 105,
+   "lum": 12.927,
+   "placed": 2368,
+   "opaque": 2368,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 106,
+   "lum": 10.061,
+   "placed": 2294,
+   "opaque": 2294,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 107,
+   "lum": 2.199,
+   "placed": 915,
+   "opaque": 915,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 108,
+   "lum": 10.591,
+   "placed": 1565,
+   "opaque": 1565,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 109,
+   "lum": 7.566,
+   "placed": 1246,
+   "opaque": 1246,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 110,
+   "lum": 86.337,
+   "placed": 2094,
+   "opaque": 2094,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 111,
+   "lum": 7.054,
+   "placed": 2027,
+   "opaque": 2022,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 112,
+   "lum": 12.249,
+   "placed": 2387,
+   "opaque": 2381,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 113,
+   "lum": 9.024,
+   "placed": 1258,
+   "opaque": 1254,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 114,
+   "lum": 10.791,
+   "placed": 2252,
+   "opaque": 2252,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 115,
+   "lum": 9.956,
+   "placed": 2278,
+   "opaque": 2278,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 116,
+   "lum": 72.089,
+   "placed": 2792,
+   "opaque": 2778,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 117,
+   "lum": 11.071,
+   "placed": 1032,
+   "opaque": 1032,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 118,
+   "lum": 11.309,
+   "placed": 4276,
+   "opaque": 4276,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 119,
+   "lum": 1.285,
+   "placed": 7016,
+   "opaque": 7016,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 120,
+   "lum": 44.998,
+   "placed": 3076,
+   "opaque": 3076,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 121,
+   "lum": 9.651,
+   "placed": 3792,
+   "opaque": 3777,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 122,
+   "lum": 1.792,
+   "placed": 2508,
+   "opaque": 2508,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 123,
+   "lum": 74.319,
+   "placed": 388,
+   "opaque": 388,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 124,
+   "lum": 7.298,
+   "placed": 1261,
+   "opaque": 1258,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 125,
+   "lum": 7.556,
+   "placed": 1247,
+   "opaque": 1247,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 126,
+   "lum": 3.416,
+   "placed": 2535,
+   "opaque": 2535,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 127,
+   "lum": 109.495,
+   "placed": 11035,
+   "opaque": 3487,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 128,
+   "lum": 69.629,
+   "placed": 3814,
+   "opaque": 3792,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 129,
+   "lum": 7.478,
+   "placed": 1243,
+   "opaque": 1243,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 130,
+   "lum": 6.905,
+   "placed": 1236,
+   "opaque": 1233,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 131,
+   "lum": 11.149,
+   "placed": 1321,
+   "opaque": 1255,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 132,
+   "lum": 9.733,
+   "placed": 1314,
+   "opaque": 1314,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 133,
+   "lum": 2.429,
+   "placed": 1638,
+   "opaque": 1638,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 134,
+   "lum": 8.075,
+   "placed": 1670,
+   "opaque": 1665,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 135,
+   "lum": 1.413,
+   "placed": 1636,
+   "opaque": 1629,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 136,
+   "lum": 29.657,
+   "placed": 1954,
+   "opaque": 1950,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 137,
+   "lum": 1.652,
+   "placed": 1722,
+   "opaque": 1700,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 138,
+   "lum": 1.398,
+   "placed": 7000,
+   "opaque": 7000,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 139,
+   "lum": 7.554,
+   "placed": 494,
+   "opaque": 494,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 140,
+   "lum": 6.751,
+   "placed": 649,
+   "opaque": 644,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 141,
+   "lum": 6.802,
+   "placed": 467,
+   "opaque": 462,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 142,
+   "lum": 8.977,
+   "placed": 506,
+   "opaque": 500,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 143,
+   "lum": 8.65,
+   "placed": 515,
+   "opaque": 515,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 144,
+   "lum": 11.189,
+   "placed": 557,
+   "opaque": 549,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 145,
+   "lum": 6.036,
+   "placed": 520,
+   "opaque": 514,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 146,
+   "lum": 10.505,
+   "placed": 511,
+   "opaque": 511,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 147,
+   "lum": 7.5,
+   "placed": 507,
+   "opaque": 503,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 148,
+   "lum": 8.977,
+   "placed": 506,
+   "opaque": 500,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 149,
+   "lum": 6.802,
+   "placed": 467,
+   "opaque": 462,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 150,
+   "lum": 4.609,
+   "placed": 434,
+   "opaque": 431,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 151,
+   "lum": 13.539,
+   "placed": 609,
+   "opaque": 609,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 152,
+   "lum": 13.367,
+   "placed": 597,
+   "opaque": 587,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 153,
+   "lum": 9.04,
+   "placed": 512,
+   "opaque": 508,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 154,
+   "lum": 6.677,
+   "placed": 494,
+   "opaque": 494,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 155,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 156,
+   "lum": 79.413,
+   "placed": 281,
+   "opaque": 182,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 157,
+   "lum": 0.789,
+   "placed": 161,
+   "opaque": 161,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 158,
+   "lum": 1.156,
+   "placed": 169,
+   "opaque": 169,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 159,
+   "lum": 1.118,
+   "placed": 168,
+   "opaque": 168,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 160,
+   "lum": 1.117,
+   "placed": 168,
+   "opaque": 168,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 161,
+   "lum": 0.947,
+   "placed": 165,
+   "opaque": 165,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 162,
+   "lum": 1.117,
+   "placed": 168,
+   "opaque": 168,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 163,
+   "lum": 1.117,
+   "placed": 168,
+   "opaque": 168,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 164,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 165,
+   "lum": 0.0,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "B",
+   "blanks": true
+  },
+  {
+   "room_id": 166,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 167,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 168,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 169,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 170,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 171,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 172,
+   "lum": 15.621,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 173,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 174,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 175,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 176,
+   "lum": 4.697,
+   "placed": 1612,
+   "opaque": 1612,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 177,
+   "lum": 1.078,
+   "placed": 3610,
+   "opaque": 3600,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 178,
+   "lum": 1.105,
+   "placed": 1610,
+   "opaque": 1600,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 179,
+   "lum": 102.306,
+   "placed": 546,
+   "opaque": 2,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 180,
+   "lum": 21.856,
+   "placed": 1214,
+   "opaque": 1212,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 181,
+   "lum": 0.665,
+   "placed": 1226,
+   "opaque": 1226,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 182,
+   "lum": 2.422,
+   "placed": 1619,
+   "opaque": 1609,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 183,
+   "lum": 0.196,
+   "placed": 1310,
+   "opaque": 1310,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 184,
+   "lum": 1.484,
+   "placed": 4900,
+   "opaque": 4900,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 185,
+   "lum": 0.767,
+   "placed": 1650,
+   "opaque": 1650,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 186,
+   "lum": 5.059,
+   "placed": 1619,
+   "opaque": 1617,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 187,
+   "lum": 5.864,
+   "placed": 1228,
+   "opaque": 1222,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 188,
+   "lum": 20.917,
+   "placed": 1231,
+   "opaque": 1231,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 189,
+   "lum": 21.856,
+   "placed": 1214,
+   "opaque": 1212,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 190,
+   "lum": 0.592,
+   "placed": 4937,
+   "opaque": 4937,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 191,
+   "lum": 109.477,
+   "placed": 11025,
+   "opaque": 3483,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 192,
+   "lum": 4.948,
+   "placed": 1586,
+   "opaque": 1547,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 193,
+   "lum": 2.147,
+   "placed": 1656,
+   "opaque": 1638,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 194,
+   "lum": 2.704,
+   "placed": 1087,
+   "opaque": 1087,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 195,
+   "lum": 4.619,
+   "placed": 6207,
+   "opaque": 6106,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 196,
+   "lum": 2.955,
+   "placed": 5740,
+   "opaque": 5638,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 197,
+   "lum": 3.918,
+   "placed": 6298,
+   "opaque": 6172,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 198,
+   "lum": 119.776,
+   "placed": 68,
+   "opaque": 68,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 199,
+   "lum": 107.198,
+   "placed": 3781,
+   "opaque": 3725,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 200,
+   "lum": 110.78,
+   "placed": 9946,
+   "opaque": 3010,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 201,
+   "lum": 1.652,
+   "placed": 1722,
+   "opaque": 1700,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 202,
+   "lum": 6.222,
+   "placed": 10947,
+   "opaque": 10890,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 203,
+   "lum": 126.775,
+   "placed": 376,
+   "opaque": 375,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 204,
+   "lum": 3.416,
+   "placed": 2535,
+   "opaque": 2535,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 205,
+   "lum": 69.629,
+   "placed": 3814,
+   "opaque": 3792,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 206,
+   "lum": 10.216,
+   "placed": 5000,
+   "opaque": 5000,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 207,
+   "lum": 91.179,
+   "placed": 71,
+   "opaque": 71,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 208,
+   "lum": 4.946,
+   "placed": 7860,
+   "opaque": 7726,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 209,
+   "lum": 2.6,
+   "placed": 1645,
+   "opaque": 1645,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 210,
+   "lum": 3.918,
+   "placed": 6298,
+   "opaque": 6172,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 211,
+   "lum": 2.084,
+   "placed": 2014,
+   "opaque": 2014,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 212,
+   "lum": 9.891,
+   "placed": 5254,
+   "opaque": 5000,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 213,
+   "lum": 87.674,
+   "placed": 458,
+   "opaque": 439,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 214,
+   "lum": 81.648,
+   "placed": 2455,
+   "opaque": 2390,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 215,
+   "lum": 86.06,
+   "placed": 1961,
+   "opaque": 1946,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 216,
+   "lum": 72.089,
+   "placed": 2792,
+   "opaque": 2778,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 217,
+   "lum": 11.071,
+   "placed": 1032,
+   "opaque": 1032,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 218,
+   "lum": 10.591,
+   "placed": 1565,
+   "opaque": 1565,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 219,
+   "lum": 70.207,
+   "placed": 2725,
+   "opaque": 2711,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 220,
+   "lum": 9.207,
+   "placed": 2621,
+   "opaque": 2621,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 221,
+   "lum": 1.285,
+   "placed": 7016,
+   "opaque": 7016,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 222,
+   "lum": 2.67,
+   "placed": 2549,
+   "opaque": 2542,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 223,
+   "lum": 94.985,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 224,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 225,
+   "lum": 44.998,
+   "placed": 3076,
+   "opaque": 3076,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 226,
+   "lum": 101.617,
+   "placed": 88,
+   "opaque": 88,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 227,
+   "lum": 94.985,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 228,
+   "lum": 3.291,
+   "placed": 25540,
+   "opaque": 25516,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 229,
+   "lum": 1.535,
+   "placed": 2636,
+   "opaque": 2635,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 230,
+   "lum": 48.294,
+   "placed": 9617,
+   "opaque": 9617,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 231,
+   "lum": 62.718,
+   "placed": 8394,
+   "opaque": 8386,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 232,
+   "lum": 2.145,
+   "placed": 10929,
+   "opaque": 10919,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 233,
+   "lum": 69.089,
+   "placed": 4349,
+   "opaque": 4349,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 234,
+   "lum": 5.864,
+   "placed": 1228,
+   "opaque": 1222,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 235,
+   "lum": 8.075,
+   "placed": 1670,
+   "opaque": 1665,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 236,
+   "lum": 6.938,
+   "placed": 2762,
+   "opaque": 2762,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 237,
+   "lum": 12.663,
+   "placed": 5895,
+   "opaque": 5885,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 238,
+   "lum": 4.948,
+   "placed": 1586,
+   "opaque": 1547,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 239,
+   "lum": 116.768,
+   "placed": 7305,
+   "opaque": 2440,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 240,
+   "lum": 97.616,
+   "placed": 12631,
+   "opaque": 6347,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 241,
+   "lum": 10.995,
+   "placed": 7165,
+   "opaque": 6967,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 242,
+   "lum": 11.149,
+   "placed": 1321,
+   "opaque": 1255,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 243,
+   "lum": 0.279,
+   "placed": 9900,
+   "opaque": 9900,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 244,
+   "lum": 97.725,
+   "placed": 12559,
+   "opaque": 6282,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 245,
+   "lum": 0.192,
+   "placed": 949,
+   "opaque": 949,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 246,
+   "lum": 2.775,
+   "placed": 2500,
+   "opaque": 2500,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 247,
+   "lum": 101.748,
+   "placed": 0,
+   "opaque": 0,
+   "cls": "C",
+   "blanks": true
+  },
+  {
+   "room_id": 248,
+   "lum": 3.201,
+   "placed": 3732,
+   "opaque": 3682,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 249,
+   "lum": 3.773,
+   "placed": 3206,
+   "opaque": 3170,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 250,
+   "lum": 107.198,
+   "placed": 3782,
+   "opaque": 3725,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 251,
+   "lum": 3.416,
+   "placed": 2535,
+   "opaque": 2535,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 252,
+   "lum": 86.116,
+   "placed": 1953,
+   "opaque": 1938,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 253,
+   "lum": 2.199,
+   "placed": 915,
+   "opaque": 915,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 254,
+   "lum": 5.059,
+   "placed": 1619,
+   "opaque": 1617,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 255,
+   "lum": 28.064,
+   "placed": 357,
+   "opaque": 357,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 256,
+   "lum": 54.938,
+   "placed": 5956,
+   "opaque": 3351,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 257,
+   "lum": 48.294,
+   "placed": 9617,
+   "opaque": 9617,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 258,
+   "lum": 11.147,
+   "placed": 1321,
+   "opaque": 1255,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 259,
+   "lum": 9.146,
+   "placed": 714,
+   "opaque": 714,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 260,
+   "lum": 2.67,
+   "placed": 2549,
+   "opaque": 2542,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 261,
+   "lum": 139.025,
+   "placed": 480,
+   "opaque": 398,
+   "cls": "E",
+   "blanks": true
+  },
+  {
+   "room_id": 262,
+   "lum": 37.732,
+   "placed": 300,
+   "opaque": 300,
+   "cls": "D",
+   "blanks": true
+  },
+  {
+   "room_id": 263,
+   "lum": 115.965,
+   "placed": 480,
+   "opaque": 398,
+   "cls": "E",
+   "blanks": true
+  }
+ ]
+}
