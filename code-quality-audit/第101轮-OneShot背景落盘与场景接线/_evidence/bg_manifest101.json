@@ -1,0 +1,2128 @@
+{
+ "generated_at": "2026-10-09 21:19:23",
+ "count": 263,
+ "rows": [
+  {
+   "room_id": 1,
+   "file": "oneshot_map1.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.INIT"
+  },
+  {
+   "room_id": 2,
+   "file": "oneshot_map2.png",
+   "w": 800,
+   "h": 480,
+   "used": 1216,
+   "sid": "oneshot.mainline.Start"
+  },
+  {
+   "room_id": 3,
+   "file": "oneshot_map3.png",
+   "w": 640,
+   "h": 480,
+   "used": 1226,
+   "sid": "oneshot.mainline.Bathroom"
+  },
+  {
+   "room_id": 4,
+   "file": "oneshot_map4.png",
+   "w": 832,
+   "h": 480,
+   "used": 1635,
+   "sid": "oneshot.mainline.Livingroom"
+  },
+  {
+   "room_id": 5,
+   "file": "oneshot_map5.png",
+   "w": 640,
+   "h": 512,
+   "used": 1310,
+   "sid": "oneshot.mainline.Basement_Stairs"
+  },
+  {
+   "room_id": 6,
+   "file": "oneshot_map6.png",
+   "w": 640,
+   "h": 480,
+   "used": 1200,
+   "sid": "oneshot.unzoned.IGNORE"
+  },
+  {
+   "room_id": 7,
+   "file": "oneshot_map7.png",
+   "w": 1776,
+   "h": 1776,
+   "used": 1060,
+   "sid": "oneshot.barrens.Blue"
+  },
+  {
+   "room_id": 8,
+   "file": "oneshot_map8.png",
+   "w": 1776,
+   "h": 1776,
+   "used": 1045,
+   "sid": "oneshot.glen.Green"
+  },
+  {
+   "room_id": 9,
+   "file": "oneshot_map9.png",
+   "w": 1408,
+   "h": 1776,
+   "used": 251,
+   "sid": "oneshot.refuge.Red_sky"
+  },
+  {
+   "room_id": 10,
+   "file": "oneshot_map10.png",
+   "w": 1408,
+   "h": 1408,
+   "used": 0,
+   "sid": "oneshot.mainline.Tower"
+  },
+  {
+   "room_id": 11,
+   "file": "oneshot_map11.png",
+   "w": 640,
+   "h": 640,
+   "used": 1577,
+   "sid": "oneshot.mainline.DEBUG"
+  },
+  {
+   "room_id": 12,
+   "file": "oneshot_map12.png",
+   "w": 1120,
+   "h": 1600,
+   "used": 7335,
+   "sid": "oneshot.barrens.Entrance"
+  },
+  {
+   "room_id": 13,
+   "file": "oneshot_map13.png",
+   "w": 800,
+   "h": 480,
+   "used": 1604,
+   "sid": "oneshot.barrens.terminal_room"
+  },
+  {
+   "room_id": 14,
+   "file": "oneshot_map14.png",
+   "w": 1440,
+   "h": 800,
+   "used": 5248,
+   "sid": "oneshot.barrens.Outpost"
+  },
+  {
+   "room_id": 15,
+   "file": "oneshot_map15.png",
+   "w": 960,
+   "h": 800,
+   "used": 3269,
+   "sid": "oneshot.barrens.Outpost_interior"
+  },
+  {
+   "room_id": 16,
+   "file": "oneshot_map16.png",
+   "w": 640,
+   "h": 672,
+   "used": 1779,
+   "sid": "oneshot.barrens.Backroom"
+  },
+  {
+   "room_id": 17,
+   "file": "oneshot_map17.png",
+   "w": 800,
+   "h": 640,
+   "used": 2204,
+   "sid": "oneshot.barrens.Mineshaft_entrance"
+  },
+  {
+   "room_id": 18,
+   "file": "oneshot_map18.png",
+   "w": 1600,
+   "h": 1920,
+   "used": 12198,
+   "sid": "oneshot.barrens.Cliffs"
+  },
+  {
+   "room_id": 19,
+   "file": "oneshot_map19.png",
+   "w": 1120,
+   "h": 1280,
+   "used": 5956,
+   "sid": "oneshot.barrens.Docks"
+  },
+  {
+   "room_id": 20,
+   "file": "oneshot_map20.png",
+   "w": 880,
+   "h": 480,
+   "used": 1650,
+   "sid": "oneshot.mainline.basement"
+  },
+  {
+   "room_id": 21,
+   "file": "oneshot_map21.png",
+   "w": 800,
+   "h": 480,
+   "used": 1600,
+   "sid": "oneshot.barrens.Bed_room"
+  },
+  {
+   "room_id": 22,
+   "file": "oneshot_map22.png",
+   "w": 400,
+   "h": 400,
+   "used": 625,
+   "sid": "oneshot.refuge.Elevator_inside"
+  },
+  {
+   "room_id": 23,
+   "file": "oneshot_map23.png",
+   "w": 1120,
+   "h": 800,
+   "used": 949,
+   "sid": "oneshot.barrens.Lookout_point"
+  },
+  {
+   "room_id": 24,
+   "file": "oneshot_map24.png",
+   "w": 800,
+   "h": 480,
+   "used": 1611,
+   "sid": "oneshot.barrens.Cabin"
+  },
+  {
+   "room_id": 25,
+   "file": "oneshot_map25.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.refuge.store_pan"
+  },
+  {
+   "room_id": 26,
+   "file": "oneshot_map26.png",
+   "w": 880,
+   "h": 480,
+   "used": 1650,
+   "sid": "oneshot.mainline.basement_after_sun"
+  },
+  {
+   "room_id": 27,
+   "file": "oneshot_map27.png",
+   "w": 1504,
+   "h": 1504,
+   "used": 9759,
+   "sid": "oneshot.glen.Dock"
+  },
+  {
+   "room_id": 28,
+   "file": "oneshot_map28.png",
+   "w": 640,
+   "h": 640,
+   "used": 1645,
+   "sid": "oneshot.glen.Fishing_hut"
+  },
+  {
+   "room_id": 29,
+   "file": "oneshot_map29.png",
+   "w": 1664,
+   "h": 1184,
+   "used": 9243,
+   "sid": "oneshot.glen.Village"
+  },
+  {
+   "room_id": 30,
+   "file": "oneshot_map30.png",
+   "w": 640,
+   "h": 480,
+   "used": 1222,
+   "sid": "oneshot.glen.House_1___stew"
+  },
+  {
+   "room_id": 31,
+   "file": "oneshot_map31.png",
+   "w": 640,
+   "h": 480,
+   "used": 1219,
+   "sid": "oneshot.glen.House_2___tower"
+  },
+  {
+   "room_id": 32,
+   "file": "oneshot_map32.png",
+   "w": 640,
+   "h": 480,
+   "used": 1231,
+   "sid": "oneshot.glen.House_3"
+  },
+  {
+   "room_id": 33,
+   "file": "oneshot_map33.png",
+   "w": 640,
+   "h": 480,
+   "used": 1224,
+   "sid": "oneshot.glen.House_4___squares"
+  },
+  {
+   "room_id": 34,
+   "file": "oneshot_map34.png",
+   "w": 640,
+   "h": 480,
+   "used": 1252,
+   "sid": "oneshot.glen.House_5___storage"
+  },
+  {
+   "room_id": 35,
+   "file": "oneshot_map35.png",
+   "w": 640,
+   "h": 480,
+   "used": 1223,
+   "sid": "oneshot.glen.House_6___death_is_coming"
+  },
+  {
+   "room_id": 36,
+   "file": "oneshot_map36.png",
+   "w": 640,
+   "h": 480,
+   "used": 1219,
+   "sid": "oneshot.glen.House_7___are_you_god"
+  },
+  {
+   "room_id": 37,
+   "file": "oneshot_map37.png",
+   "w": 1344,
+   "h": 1344,
+   "used": 7359,
+   "sid": "oneshot.glen.Ruins"
+  },
+  {
+   "room_id": 38,
+   "file": "oneshot_map38.png",
+   "w": 1504,
+   "h": 1824,
+   "used": 10908,
+   "sid": "oneshot.glen.Ruins_In"
+  },
+  {
+   "room_id": 39,
+   "file": "oneshot_map39.png",
+   "w": 1408,
+   "h": 1280,
+   "used": 363,
+   "sid": "oneshot.glen.Maize"
+  },
+  {
+   "room_id": 40,
+   "file": "oneshot_map40.png",
+   "w": 1120,
+   "h": 1120,
+   "used": 4912,
+   "sid": "oneshot.glen.Alula"
+  },
+  {
+   "room_id": 41,
+   "file": "oneshot_map41.png",
+   "w": 800,
+   "h": 800,
+   "used": 2500,
+   "sid": "oneshot.glen.Computer_Room"
+  },
+  {
+   "room_id": 42,
+   "file": "oneshot_map42.png",
+   "w": 640,
+   "h": 480,
+   "used": 1200,
+   "sid": "oneshot.unzoned.Small_Room"
+  },
+  {
+   "room_id": 43,
+   "file": "oneshot_map43.png",
+   "w": 1664,
+   "h": 1600,
+   "used": 12448,
+   "sid": "oneshot.glen.Forest"
+  },
+  {
+   "room_id": 44,
+   "file": "oneshot_map44.png",
+   "w": 1184,
+   "h": 1920,
+   "used": 3176,
+   "sid": "oneshot.glen.The_Gate"
+  },
+  {
+   "room_id": 45,
+   "file": "oneshot_map45.png",
+   "w": 800,
+   "h": 960,
+   "used": 3008,
+   "sid": "oneshot.glen.Inside_2"
+  },
+  {
+   "room_id": 46,
+   "file": "oneshot_map46.png",
+   "w": 1120,
+   "h": 960,
+   "used": 4204,
+   "sid": "oneshot.glen.Inside_3"
+  },
+  {
+   "room_id": 47,
+   "file": "oneshot_map47.png",
+   "w": 1920,
+   "h": 1600,
+   "used": 2475,
+   "sid": "oneshot.refuge.City_Gate"
+  },
+  {
+   "room_id": 48,
+   "file": "oneshot_map48.png",
+   "w": 1920,
+   "h": 1280,
+   "used": 1984,
+   "sid": "oneshot.refuge.Elevator_Deck"
+  },
+  {
+   "room_id": 49,
+   "file": "oneshot_map49.png",
+   "w": 1280,
+   "h": 1280,
+   "used": 1634,
+   "sid": "oneshot.refuge.Apartments"
+  },
+  {
+   "room_id": 50,
+   "file": "oneshot_map50.png",
+   "w": 800,
+   "h": 880,
+   "used": 2762,
+   "sid": "oneshot.refuge.stairwell"
+  },
+  {
+   "room_id": 51,
+   "file": "oneshot_map51.png",
+   "w": 960,
+   "h": 800,
+   "used": 3228,
+   "sid": "oneshot.refuge.GeorgeRoom"
+  },
+  {
+   "room_id": 52,
+   "file": "oneshot_map52.png",
+   "w": 1280,
+   "h": 1280,
+   "used": 2725,
+   "sid": "oneshot.refuge.Cafe"
+  },
+  {
+   "room_id": 53,
+   "file": "oneshot_map53.png",
+   "w": 800,
+   "h": 800,
+   "used": 2622,
+   "sid": "oneshot.refuge.Cafe_inside"
+  },
+  {
+   "room_id": 54,
+   "file": "oneshot_map54.png",
+   "w": 1280,
+   "h": 1280,
+   "used": 1864,
+   "sid": "oneshot.refuge.Garden"
+  },
+  {
+   "room_id": 55,
+   "file": "oneshot_map55.png",
+   "w": 640,
+   "h": 640,
+   "used": 148,
+   "sid": "oneshot.mainline.Crossroads"
+  },
+  {
+   "room_id": 56,
+   "file": "oneshot_map56.png",
+   "w": 3200,
+   "h": 3200,
+   "used": 42012,
+   "sid": "oneshot.mainline.Teleport"
+  },
+  {
+   "room_id": 57,
+   "file": "oneshot_map57.png",
+   "w": 640,
+   "h": 800,
+   "used": 2014,
+   "sid": "oneshot.glen.Junction"
+  },
+  {
+   "room_id": 58,
+   "file": "oneshot_map58.png",
+   "w": 640,
+   "h": 480,
+   "used": 1222,
+   "sid": "oneshot.unzoned.Bedroom"
+  },
+  {
+   "room_id": 59,
+   "file": "oneshot_map59.png",
+   "w": 320,
+   "h": 240,
+   "used": 305,
+   "sid": "oneshot.glen.tutorial"
+  },
+  {
+   "room_id": 60,
+   "file": "oneshot_map60.png",
+   "w": 640,
+   "h": 480,
+   "used": 88,
+   "sid": "oneshot.mainline.Summit"
+  },
+  {
+   "room_id": 61,
+   "file": "oneshot_map61.png",
+   "w": 336,
+   "h": 272,
+   "used": 21,
+   "sid": "oneshot.mainline.Shatter"
+  },
+  {
+   "room_id": 62,
+   "file": "oneshot_map62.png",
+   "w": 640,
+   "h": 480,
+   "used": 1200,
+   "sid": "oneshot.mainline.Elevator"
+  },
+  {
+   "room_id": 63,
+   "file": "oneshot_map63.png",
+   "w": 976,
+   "h": 736,
+   "used": 2806,
+   "sid": "oneshot.mainline.Water"
+  },
+  {
+   "room_id": 64,
+   "file": "oneshot_map64.png",
+   "w": 672,
+   "h": 480,
+   "used": 1299,
+   "sid": "oneshot.unzoned.Livingroom"
+  },
+  {
+   "room_id": 65,
+   "file": "oneshot_map65.png",
+   "w": 1040,
+   "h": 800,
+   "used": 3326,
+   "sid": "oneshot.glen.Birdhouse"
+  },
+  {
+   "room_id": 66,
+   "file": "oneshot_map66.png",
+   "w": 3200,
+   "h": 400,
+   "used": 5000,
+   "sid": "oneshot.glen.passage"
+  },
+  {
+   "room_id": 67,
+   "file": "oneshot_map67.png",
+   "w": 1920,
+   "h": 1600,
+   "used": 7359,
+   "sid": "oneshot.glen.Burial_Grounds"
+  },
+  {
+   "room_id": 68,
+   "file": "oneshot_map68.png",
+   "w": 320,
+   "h": 400,
+   "used": 500,
+   "sid": "oneshot.unzoned.IGNORE_2"
+  },
+  {
+   "room_id": 69,
+   "file": "oneshot_map69.png",
+   "w": 720,
+   "h": 288,
+   "used": 1022,
+   "sid": "oneshot.barrens.Factory_interior"
+  },
+  {
+   "room_id": 70,
+   "file": "oneshot_map70.png",
+   "w": 1600,
+   "h": 2240,
+   "used": 15363,
+   "sid": "oneshot.barrens.Old_Factory"
+  },
+  {
+   "room_id": 71,
+   "file": "oneshot_map71.png",
+   "w": 2720,
+   "h": 1120,
+   "used": 13350,
+   "sid": "oneshot.barrens.Dormitories"
+  },
+  {
+   "room_id": 72,
+   "file": "oneshot_map72.png",
+   "w": 1152,
+   "h": 1120,
+   "used": 5895,
+   "sid": "oneshot.refuge.Lobby"
+  },
+  {
+   "room_id": 73,
+   "file": "oneshot_map73.png",
+   "w": 1952,
+   "h": 1408,
+   "used": 10786,
+   "sid": "oneshot.barrens.Swamp"
+  },
+  {
+   "room_id": 74,
+   "file": "oneshot_map74.png",
+   "w": 1120,
+   "h": 432,
+   "used": 1986,
+   "sid": "oneshot.refuge.Top_floor"
+  },
+  {
+   "room_id": 75,
+   "file": "oneshot_map75.png",
+   "w": 800,
+   "h": 480,
+   "used": 1596,
+   "sid": "oneshot.barrens.server_room"
+  },
+  {
+   "room_id": 76,
+   "file": "oneshot_map76.png",
+   "w": 560,
+   "h": 480,
+   "used": 1053,
+   "sid": "oneshot.barrens.110___mechanical_drawing"
+  },
+  {
+   "room_id": 77,
+   "file": "oneshot_map77.png",
+   "w": 800,
+   "h": 800,
+   "used": 423,
+   "sid": "oneshot.mainline.debug2"
+  },
+  {
+   "room_id": 78,
+   "file": "oneshot_map78.png",
+   "w": 560,
+   "h": 480,
+   "used": 1053,
+   "sid": "oneshot.barrens.117___mom"
+  },
+  {
+   "room_id": 79,
+   "file": "oneshot_map79.png",
+   "w": 560,
+   "h": 480,
+   "used": 1053,
+   "sid": "oneshot.barrens.112___infirmary"
+  },
+  {
+   "room_id": 80,
+   "file": "oneshot_map80.png",
+   "w": 560,
+   "h": 480,
+   "used": 1053,
+   "sid": "oneshot.barrens.118___robot_voice"
+  },
+  {
+   "room_id": 81,
+   "file": "oneshot_map81.png",
+   "w": 560,
+   "h": 480,
+   "used": 1053,
+   "sid": "oneshot.barrens.113___ocean"
+  },
+  {
+   "room_id": 82,
+   "file": "oneshot_map82.png",
+   "w": 560,
+   "h": 480,
+   "used": 1053,
+   "sid": "oneshot.barrens.119___cell"
+  },
+  {
+   "room_id": 83,
+   "file": "oneshot_map83.png",
+   "w": 800,
+   "h": 800,
+   "used": 458,
+   "sid": "oneshot.refuge.Red_ground"
+  },
+  {
+   "room_id": 84,
+   "file": "oneshot_map84.png",
+   "w": 2176,
+   "h": 864,
+   "used": 8394,
+   "sid": "oneshot.refuge_ground.Elevator_Street"
+  },
+  {
+   "room_id": 85,
+   "file": "oneshot_map85.png",
+   "w": 2176,
+   "h": 864,
+   "used": 9617,
+   "sid": "oneshot.refuge_ground.Vendor_Street"
+  },
+  {
+   "room_id": 86,
+   "file": "oneshot_map86.png",
+   "w": 2880,
+   "h": 2080,
+   "used": 25520,
+   "sid": "oneshot.refuge.To_Tower"
+  },
+  {
+   "room_id": 87,
+   "file": "oneshot_map87.png",
+   "w": 1120,
+   "h": 960,
+   "used": 4349,
+   "sid": "oneshot.refuge_ground.Library"
+  },
+  {
+   "room_id": 88,
+   "file": "oneshot_map88.png",
+   "w": 1280,
+   "h": 400,
+   "used": 1535,
+   "sid": "oneshot.unzoned.IGNORE_ToFactory"
+  },
+  {
+   "room_id": 89,
+   "file": "oneshot_map89.png",
+   "w": 960,
+   "h": 400,
+   "used": 1155,
+   "sid": "oneshot.unzoned.IGNORE_ToLibrary"
+  },
+  {
+   "room_id": 90,
+   "file": "oneshot_map90.png",
+   "w": 1280,
+   "h": 960,
+   "used": 4976,
+   "sid": "oneshot.refuge_ground.Factory"
+  },
+  {
+   "room_id": 91,
+   "file": "oneshot_map91.png",
+   "w": 1824,
+   "h": 1504,
+   "used": 10929,
+   "sid": "oneshot.refuge_ground.Back_Alley"
+  },
+  {
+   "room_id": 92,
+   "file": "oneshot_map92.png",
+   "w": 720,
+   "h": 288,
+   "used": 1015,
+   "sid": "oneshot.barrens.Factory_upstairs"
+  },
+  {
+   "room_id": 93,
+   "file": "oneshot_map93.png",
+   "w": 720,
+   "h": 288,
+   "used": 1003,
+   "sid": "oneshot.barrens.Factory_interior2"
+  },
+  {
+   "room_id": 94,
+   "file": "oneshot_map94.png",
+   "w": 720,
+   "h": 288,
+   "used": 985,
+   "sid": "oneshot.barrens.upstairs"
+  },
+  {
+   "room_id": 95,
+   "file": "oneshot_map95.png",
+   "w": 1152,
+   "h": 400,
+   "used": 1902,
+   "sid": "oneshot.refuge.Hall1"
+  },
+  {
+   "room_id": 96,
+   "file": "oneshot_map96.png",
+   "w": 800,
+   "h": 800,
+   "used": 2719,
+   "sid": "oneshot.unzoned.Lobby_OLD_VER"
+  },
+  {
+   "room_id": 97,
+   "file": "oneshot_map97.png",
+   "w": 800,
+   "h": 800,
+   "used": 2636,
+   "sid": "oneshot.refuge.X_room"
+  },
+  {
+   "room_id": 98,
+   "file": "oneshot_map98.png",
+   "w": 896,
+   "h": 640,
+   "used": 2333,
+   "sid": "oneshot.refuge.1st_room"
+  },
+  {
+   "room_id": 99,
+   "file": "oneshot_map99.png",
+   "w": 480,
+   "h": 480,
+   "used": 948,
+   "sid": "oneshot.refuge.lamplighter_house"
+  },
+  {
+   "room_id": 100,
+   "file": "oneshot_map100.png",
+   "w": 480,
+   "h": 480,
+   "used": 900,
+   "sid": "oneshot.unzoned.ignore"
+  },
+  {
+   "room_id": 101,
+   "file": "oneshot_map101.png",
+   "w": 2240,
+   "h": 480,
+   "used": 4234,
+   "sid": "oneshot.barrens.mineshaft"
+  },
+  {
+   "room_id": 102,
+   "file": "oneshot_map102.png",
+   "w": 1280,
+   "h": 640,
+   "used": 3732,
+   "sid": "oneshot.barrens.server_room_2"
+  },
+  {
+   "room_id": 103,
+   "file": "oneshot_map103.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.unzoned.Unused"
+  },
+  {
+   "room_id": 104,
+   "file": "oneshot_map104.png",
+   "w": 1120,
+   "h": 800,
+   "used": 3820,
+   "sid": "oneshot.refuge.courtyard"
+  },
+  {
+   "room_id": 105,
+   "file": "oneshot_map105.png",
+   "w": 896,
+   "h": 640,
+   "used": 2368,
+   "sid": "oneshot.refuge.left__pools"
+  },
+  {
+   "room_id": 106,
+   "file": "oneshot_map106.png",
+   "w": 896,
+   "h": 640,
+   "used": 2294,
+   "sid": "oneshot.refuge.right_3d_printers"
+  },
+  {
+   "room_id": 107,
+   "file": "oneshot_map107.png",
+   "w": 480,
+   "h": 480,
+   "used": 915,
+   "sid": "oneshot.glen.Bed_room"
+  },
+  {
+   "room_id": 108,
+   "file": "oneshot_map108.png",
+   "w": 640,
+   "h": 640,
+   "used": 1565,
+   "sid": "oneshot.refuge.Power_room"
+  },
+  {
+   "room_id": 109,
+   "file": "oneshot_map109.png",
+   "w": 640,
+   "h": 480,
+   "used": 1246,
+   "sid": "oneshot.refuge.Room1___bot"
+  },
+  {
+   "room_id": 110,
+   "file": "oneshot_map110.png",
+   "w": 1920,
+   "h": 1280,
+   "used": 2094,
+   "sid": "oneshot.refuge.Tower_deck"
+  },
+  {
+   "room_id": 111,
+   "file": "oneshot_map111.png",
+   "w": 1152,
+   "h": 432,
+   "used": 2027,
+   "sid": "oneshot.refuge.Hall2"
+  },
+  {
+   "room_id": 112,
+   "file": "oneshot_map112.png",
+   "w": 896,
+   "h": 640,
+   "used": 2387,
+   "sid": "oneshot.refuge.2nd_room"
+  },
+  {
+   "room_id": 113,
+   "file": "oneshot_map113.png",
+   "w": 560,
+   "h": 560,
+   "used": 1258,
+   "sid": "oneshot.refuge.Kip"
+  },
+  {
+   "room_id": 114,
+   "file": "oneshot_map114.png",
+   "w": 896,
+   "h": 640,
+   "used": 2252,
+   "sid": "oneshot.refuge.left_terminals"
+  },
+  {
+   "room_id": 115,
+   "file": "oneshot_map115.png",
+   "w": 896,
+   "h": 640,
+   "used": 2278,
+   "sid": "oneshot.refuge.right_robots"
+  },
+  {
+   "room_id": 116,
+   "file": "oneshot_map116.png",
+   "w": 1280,
+   "h": 1280,
+   "used": 2792,
+   "sid": "oneshot.refuge.Office"
+  },
+  {
+   "room_id": 117,
+   "file": "oneshot_map117.png",
+   "w": 640,
+   "h": 400,
+   "used": 1032,
+   "sid": "oneshot.refuge.entry_room"
+  },
+  {
+   "room_id": 118,
+   "file": "oneshot_map118.png",
+   "w": 1120,
+   "h": 960,
+   "used": 4276,
+   "sid": "oneshot.unzoned.big_office"
+  },
+  {
+   "room_id": 119,
+   "file": "oneshot_map119.png",
+   "w": 1120,
+   "h": 1600,
+   "used": 7016,
+   "sid": "oneshot.refuge.stairwell_2"
+  },
+  {
+   "room_id": 120,
+   "file": "oneshot_map120.png",
+   "w": 2240,
+   "h": 576,
+   "used": 3076,
+   "sid": "oneshot.refuge.Observation_Deck"
+  },
+  {
+   "room_id": 121,
+   "file": "oneshot_map121.png",
+   "w": 1120,
+   "h": 800,
+   "used": 3792,
+   "sid": "oneshot.refuge.Communal_area"
+  },
+  {
+   "room_id": 122,
+   "file": "oneshot_map122.png",
+   "w": 960,
+   "h": 640,
+   "used": 2508,
+   "sid": "oneshot.refuge.bathroom"
+  },
+  {
+   "room_id": 123,
+   "file": "oneshot_map123.png",
+   "w": 880,
+   "h": 480,
+   "used": 388,
+   "sid": "oneshot.refuge.landing"
+  },
+  {
+   "room_id": 124,
+   "file": "oneshot_map124.png",
+   "w": 640,
+   "h": 480,
+   "used": 1261,
+   "sid": "oneshot.refuge.Room2___peng"
+  },
+  {
+   "room_id": 125,
+   "file": "oneshot_map125.png",
+   "w": 640,
+   "h": 480,
+   "used": 1247,
+   "sid": "oneshot.refuge.Room3___bot_friend"
+  },
+  {
+   "room_id": 126,
+   "file": "oneshot_map126.png",
+   "w": 1600,
+   "h": 400,
+   "used": 2535,
+   "sid": "oneshot.glen.Birdhall"
+  },
+  {
+   "room_id": 127,
+   "file": "oneshot_map127.png",
+   "w": 1600,
+   "h": 1600,
+   "used": 11035,
+   "sid": "oneshot.glen.Research_Station"
+  },
+  {
+   "room_id": 128,
+   "file": "oneshot_map128.png",
+   "w": 1120,
+   "h": 800,
+   "used": 3814,
+   "sid": "oneshot.glen.Courtyard"
+  },
+  {
+   "room_id": 129,
+   "file": "oneshot_map129.png",
+   "w": 640,
+   "h": 480,
+   "used": 1243,
+   "sid": "oneshot.refuge.Room4___bird"
+  },
+  {
+   "room_id": 130,
+   "file": "oneshot_map130.png",
+   "w": 640,
+   "h": 480,
+   "used": 1236,
+   "sid": "oneshot.refuge.Room5___roomba"
+  },
+  {
+   "room_id": 131,
+   "file": "oneshot_map131.png",
+   "w": 336,
+   "h": 800,
+   "used": 1321,
+   "sid": "oneshot.mainline.Encounter_PENG"
+  },
+  {
+   "room_id": 132,
+   "file": "oneshot_map132.png",
+   "w": 640,
+   "h": 480,
+   "used": 1314,
+   "sid": "oneshot.refuge.Room6___plant"
+  },
+  {
+   "room_id": 133,
+   "file": "oneshot_map133.png",
+   "w": 640,
+   "h": 640,
+   "used": 1638,
+   "sid": "oneshot.glen.water_room"
+  },
+  {
+   "room_id": 134,
+   "file": "oneshot_map134.png",
+   "w": 640,
+   "h": 640,
+   "used": 1670,
+   "sid": "oneshot.refuge.Photo_center"
+  },
+  {
+   "room_id": 135,
+   "file": "oneshot_map135.png",
+   "w": 640,
+   "h": 640,
+   "used": 1636,
+   "sid": "oneshot.refuge.SECRET_RAM_CLUB"
+  },
+  {
+   "room_id": 136,
+   "file": "oneshot_map136.png",
+   "w": 800,
+   "h": 800,
+   "used": 1954,
+   "sid": "oneshot.glen.Inside_1"
+  },
+  {
+   "room_id": 137,
+   "file": "oneshot_map137.png",
+   "w": 640,
+   "h": 640,
+   "used": 1722,
+   "sid": "oneshot.refuge.rue"
+  },
+  {
+   "room_id": 138,
+   "file": "oneshot_map138.png",
+   "w": 1120,
+   "h": 1600,
+   "used": 7000,
+   "sid": "oneshot.unzoned.stairwell_demo"
+  },
+  {
+   "room_id": 139,
+   "file": "oneshot_map139.png",
+   "w": 320,
+   "h": 240,
+   "used": 494,
+   "sid": "oneshot.mainline.T1"
+  },
+  {
+   "room_id": 140,
+   "file": "oneshot_map140.png",
+   "w": 320,
+   "h": 240,
+   "used": 649,
+   "sid": "oneshot.mainline.T2"
+  },
+  {
+   "room_id": 141,
+   "file": "oneshot_map141.png",
+   "w": 320,
+   "h": 240,
+   "used": 467,
+   "sid": "oneshot.mainline.T3"
+  },
+  {
+   "room_id": 142,
+   "file": "oneshot_map142.png",
+   "w": 320,
+   "h": 240,
+   "used": 506,
+   "sid": "oneshot.mainline.T4"
+  },
+  {
+   "room_id": 143,
+   "file": "oneshot_map143.png",
+   "w": 320,
+   "h": 240,
+   "used": 515,
+   "sid": "oneshot.mainline.T5"
+  },
+  {
+   "room_id": 144,
+   "file": "oneshot_map144.png",
+   "w": 320,
+   "h": 240,
+   "used": 557,
+   "sid": "oneshot.mainline.T6"
+  },
+  {
+   "room_id": 145,
+   "file": "oneshot_map145.png",
+   "w": 320,
+   "h": 240,
+   "used": 520,
+   "sid": "oneshot.mainline.T7"
+  },
+  {
+   "room_id": 146,
+   "file": "oneshot_map146.png",
+   "w": 320,
+   "h": 240,
+   "used": 511,
+   "sid": "oneshot.mainline.T8"
+  },
+  {
+   "room_id": 147,
+   "file": "oneshot_map147.png",
+   "w": 320,
+   "h": 240,
+   "used": 507,
+   "sid": "oneshot.mainline.T9"
+  },
+  {
+   "room_id": 148,
+   "file": "oneshot_map148.png",
+   "w": 320,
+   "h": 240,
+   "used": 506,
+   "sid": "oneshot.mainline.T10"
+  },
+  {
+   "room_id": 149,
+   "file": "oneshot_map149.png",
+   "w": 320,
+   "h": 240,
+   "used": 467,
+   "sid": "oneshot.mainline.T11"
+  },
+  {
+   "room_id": 150,
+   "file": "oneshot_map150.png",
+   "w": 320,
+   "h": 240,
+   "used": 434,
+   "sid": "oneshot.mainline.T12"
+  },
+  {
+   "room_id": 151,
+   "file": "oneshot_map151.png",
+   "w": 320,
+   "h": 240,
+   "used": 609,
+   "sid": "oneshot.mainline.T13"
+  },
+  {
+   "room_id": 152,
+   "file": "oneshot_map152.png",
+   "w": 320,
+   "h": 240,
+   "used": 597,
+   "sid": "oneshot.mainline.T14"
+  },
+  {
+   "room_id": 153,
+   "file": "oneshot_map153.png",
+   "w": 320,
+   "h": 240,
+   "used": 512,
+   "sid": "oneshot.mainline.T15"
+  },
+  {
+   "room_id": 154,
+   "file": "oneshot_map154.png",
+   "w": 320,
+   "h": 240,
+   "used": 494,
+   "sid": "oneshot.mainline.T16"
+  },
+  {
+   "room_id": 155,
+   "file": "oneshot_map155.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.Step"
+  },
+  {
+   "room_id": 156,
+   "file": "oneshot_map156.png",
+   "w": 320,
+   "h": 320,
+   "used": 281,
+   "sid": "oneshot.mainline.Sunroom"
+  },
+  {
+   "room_id": 157,
+   "file": "oneshot_map157.png",
+   "w": 640,
+   "h": 640,
+   "used": 161,
+   "sid": "oneshot.unzoned.C1"
+  },
+  {
+   "room_id": 158,
+   "file": "oneshot_map158.png",
+   "w": 640,
+   "h": 640,
+   "used": 169,
+   "sid": "oneshot.unzoned.C2"
+  },
+  {
+   "room_id": 159,
+   "file": "oneshot_map159.png",
+   "w": 640,
+   "h": 640,
+   "used": 168,
+   "sid": "oneshot.unzoned.C3"
+  },
+  {
+   "room_id": 160,
+   "file": "oneshot_map160.png",
+   "w": 640,
+   "h": 640,
+   "used": 168,
+   "sid": "oneshot.unzoned.C5"
+  },
+  {
+   "room_id": 161,
+   "file": "oneshot_map161.png",
+   "w": 640,
+   "h": 640,
+   "used": 165,
+   "sid": "oneshot.unzoned.C4"
+  },
+  {
+   "room_id": 162,
+   "file": "oneshot_map162.png",
+   "w": 640,
+   "h": 640,
+   "used": 168,
+   "sid": "oneshot.unzoned.C6"
+  },
+  {
+   "room_id": 163,
+   "file": "oneshot_map163.png",
+   "w": 640,
+   "h": 640,
+   "used": 168,
+   "sid": "oneshot.unzoned.C7"
+  },
+  {
+   "room_id": 164,
+   "file": "oneshot_map164.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C1"
+  },
+  {
+   "room_id": 165,
+   "file": "oneshot_map165.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.unzoned.UNUSED"
+  },
+  {
+   "room_id": 166,
+   "file": "oneshot_map166.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C2"
+  },
+  {
+   "room_id": 167,
+   "file": "oneshot_map167.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.S1"
+  },
+  {
+   "room_id": 168,
+   "file": "oneshot_map168.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C3"
+  },
+  {
+   "room_id": 169,
+   "file": "oneshot_map169.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C4"
+  },
+  {
+   "room_id": 170,
+   "file": "oneshot_map170.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C5"
+  },
+  {
+   "room_id": 171,
+   "file": "oneshot_map171.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C6"
+  },
+  {
+   "room_id": 172,
+   "file": "oneshot_map172.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.C7"
+  },
+  {
+   "room_id": 173,
+   "file": "oneshot_map173.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.S4"
+  },
+  {
+   "room_id": 174,
+   "file": "oneshot_map174.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.S2"
+  },
+  {
+   "room_id": 175,
+   "file": "oneshot_map175.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.S3"
+  },
+  {
+   "room_id": 176,
+   "file": "oneshot_map176.png",
+   "w": 640,
+   "h": 640,
+   "used": 1612,
+   "sid": "oneshot.refuge.guest_room"
+  },
+  {
+   "room_id": 177,
+   "file": "oneshot_map177.png",
+   "w": 960,
+   "h": 960,
+   "used": 3610,
+   "sid": "oneshot.glen.Entry_ruins"
+  },
+  {
+   "room_id": 178,
+   "file": "oneshot_map178.png",
+   "w": 640,
+   "h": 640,
+   "used": 1610,
+   "sid": "oneshot.glen.2"
+  },
+  {
+   "room_id": 179,
+   "file": "oneshot_map179.png",
+   "w": 416,
+   "h": 336,
+   "used": 546,
+   "sid": "oneshot.mainline.Water2"
+  },
+  {
+   "room_id": 180,
+   "file": "oneshot_map180.png",
+   "w": 800,
+   "h": 480,
+   "used": 1214,
+   "sid": "oneshot.mainline.Start_2"
+  },
+  {
+   "room_id": 181,
+   "file": "oneshot_map181.png",
+   "w": 640,
+   "h": 480,
+   "used": 1226,
+   "sid": "oneshot.mainline.Bathroom_2"
+  },
+  {
+   "room_id": 182,
+   "file": "oneshot_map182.png",
+   "w": 832,
+   "h": 480,
+   "used": 1619,
+   "sid": "oneshot.mainline.Livingroom_2"
+  },
+  {
+   "room_id": 183,
+   "file": "oneshot_map183.png",
+   "w": 640,
+   "h": 512,
+   "used": 1310,
+   "sid": "oneshot.mainline.Basement_Stairs_2"
+  },
+  {
+   "room_id": 184,
+   "file": "oneshot_map184.png",
+   "w": 1120,
+   "h": 1120,
+   "used": 4900,
+   "sid": "oneshot.mainline.Hallway"
+  },
+  {
+   "room_id": 185,
+   "file": "oneshot_map185.png",
+   "w": 880,
+   "h": 480,
+   "used": 1650,
+   "sid": "oneshot.mainline.basement_after_sun_2"
+  },
+  {
+   "room_id": 186,
+   "file": "oneshot_map186.png",
+   "w": 640,
+   "h": 640,
+   "used": 1619,
+   "sid": "oneshot.refuge.sleepville"
+  },
+  {
+   "room_id": 187,
+   "file": "oneshot_map187.png",
+   "w": 640,
+   "h": 480,
+   "used": 1228,
+   "sid": "oneshot.refuge.fish_house"
+  },
+  {
+   "room_id": 188,
+   "file": "oneshot_map188.png",
+   "w": 800,
+   "h": 480,
+   "used": 1231,
+   "sid": "oneshot.mainline.Start_purple"
+  },
+  {
+   "room_id": 189,
+   "file": "oneshot_map189.png",
+   "w": 800,
+   "h": 480,
+   "used": 1214,
+   "sid": "oneshot.mainline.Start_3"
+  },
+  {
+   "room_id": 190,
+   "file": "oneshot_map190.png",
+   "w": 1120,
+   "h": 1120,
+   "used": 4937,
+   "sid": "oneshot.mainline.Hallway_purp"
+  },
+  {
+   "room_id": 191,
+   "file": "oneshot_map191.png",
+   "w": 1600,
+   "h": 1600,
+   "used": 11025,
+   "sid": "oneshot.glen.Research_Station_2"
+  },
+  {
+   "room_id": 192,
+   "file": "oneshot_map192.png",
+   "w": 640,
+   "h": 640,
+   "used": 1586,
+   "sid": "oneshot.glen.Power_room"
+  },
+  {
+   "room_id": 193,
+   "file": "oneshot_map193.png",
+   "w": 640,
+   "h": 640,
+   "used": 1656,
+   "sid": "oneshot.glen.Prophet_house"
+  },
+  {
+   "room_id": 194,
+   "file": "oneshot_map194.png",
+   "w": 528,
+   "h": 528,
+   "used": 1087,
+   "sid": "oneshot.barrens.backroom"
+  },
+  {
+   "room_id": 195,
+   "file": "oneshot_map195.png",
+   "w": 2240,
+   "h": 480,
+   "used": 6207,
+   "sid": "oneshot.barrens.extra_hallway"
+  },
+  {
+   "room_id": 196,
+   "file": "oneshot_map196.png",
+   "w": 2304,
+   "h": 480,
+   "used": 5740,
+   "sid": "oneshot.barrens.backhall"
+  },
+  {
+   "room_id": 197,
+   "file": "oneshot_map197.png",
+   "w": 2304,
+   "h": 480,
+   "used": 6298,
+   "sid": "oneshot.barrens.collapse"
+  },
+  {
+   "room_id": 198,
+   "file": "oneshot_map198.png",
+   "w": 480,
+   "h": 240,
+   "used": 68,
+   "sid": "oneshot.glen.POSTGAME_green"
+  },
+  {
+   "room_id": 199,
+   "file": "oneshot_map199.png",
+   "w": 1504,
+   "h": 1920,
+   "used": 3781,
+   "sid": "oneshot.glen.Gate"
+  },
+  {
+   "room_id": 200,
+   "file": "oneshot_map200.png",
+   "w": 1504,
+   "h": 1504,
+   "used": 9946,
+   "sid": "oneshot.glen.Dock_2"
+  },
+  {
+   "room_id": 201,
+   "file": "oneshot_map201.png",
+   "w": 640,
+   "h": 640,
+   "used": 1722,
+   "sid": "oneshot.refuge.rue_2"
+  },
+  {
+   "room_id": 202,
+   "file": "oneshot_map202.png",
+   "w": 1504,
+   "h": 1824,
+   "used": 10947,
+   "sid": "oneshot.glen.Ruins_In_2"
+  },
+  {
+   "room_id": 203,
+   "file": "oneshot_map203.png",
+   "w": 1408,
+   "h": 1280,
+   "used": 376,
+   "sid": "oneshot.glen.Maize_2"
+  },
+  {
+   "room_id": 204,
+   "file": "oneshot_map204.png",
+   "w": 1600,
+   "h": 400,
+   "used": 2535,
+   "sid": "oneshot.glen.Birdhall_2"
+  },
+  {
+   "room_id": 205,
+   "file": "oneshot_map205.png",
+   "w": 1120,
+   "h": 800,
+   "used": 3814,
+   "sid": "oneshot.glen.Courtyard_2"
+  },
+  {
+   "room_id": 206,
+   "file": "oneshot_map206.png",
+   "w": 3200,
+   "h": 400,
+   "used": 5000,
+   "sid": "oneshot.glen.passage_2"
+  },
+  {
+   "room_id": 207,
+   "file": "oneshot_map207.png",
+   "w": 480,
+   "h": 240,
+   "used": 71,
+   "sid": "oneshot.refuge.POSTGAME_RED_SKY"
+  },
+  {
+   "room_id": 208,
+   "file": "oneshot_map208.png",
+   "w": 2304,
+   "h": 640,
+   "used": 7860,
+   "sid": "oneshot.glen.mines_exit"
+  },
+  {
+   "room_id": 209,
+   "file": "oneshot_map209.png",
+   "w": 640,
+   "h": 640,
+   "used": 1645,
+   "sid": "oneshot.glen.Fishing_hut_2"
+  },
+  {
+   "room_id": 210,
+   "file": "oneshot_map210.png",
+   "w": 2304,
+   "h": 480,
+   "used": 6298,
+   "sid": "oneshot.barrens.protowalk"
+  },
+  {
+   "room_id": 211,
+   "file": "oneshot_map211.png",
+   "w": 640,
+   "h": 800,
+   "used": 2014,
+   "sid": "oneshot.glen.Junction_2"
+  },
+  {
+   "room_id": 212,
+   "file": "oneshot_map212.png",
+   "w": 3200,
+   "h": 400,
+   "used": 5254,
+   "sid": "oneshot.glen.passage_boat"
+  },
+  {
+   "room_id": 213,
+   "file": "oneshot_map213.png",
+   "w": 880,
+   "h": 880,
+   "used": 458,
+   "sid": "oneshot.refuge.Landing"
+  },
+  {
+   "room_id": 214,
+   "file": "oneshot_map214.png",
+   "w": 1920,
+   "h": 1600,
+   "used": 2455,
+   "sid": "oneshot.refuge.City_Gate_2"
+  },
+  {
+   "room_id": 215,
+   "file": "oneshot_map215.png",
+   "w": 1920,
+   "h": 1280,
+   "used": 1961,
+   "sid": "oneshot.refuge.Elevator_Deck_2"
+  },
+  {
+   "room_id": 216,
+   "file": "oneshot_map216.png",
+   "w": 1280,
+   "h": 1280,
+   "used": 2792,
+   "sid": "oneshot.refuge.Office_2"
+  },
+  {
+   "room_id": 217,
+   "file": "oneshot_map217.png",
+   "w": 640,
+   "h": 400,
+   "used": 1032,
+   "sid": "oneshot.refuge.entry_room_2"
+  },
+  {
+   "room_id": 218,
+   "file": "oneshot_map218.png",
+   "w": 640,
+   "h": 640,
+   "used": 1565,
+   "sid": "oneshot.refuge.Power_room_2"
+  },
+  {
+   "room_id": 219,
+   "file": "oneshot_map219.png",
+   "w": 1280,
+   "h": 1280,
+   "used": 2725,
+   "sid": "oneshot.refuge.Cafe_2"
+  },
+  {
+   "room_id": 220,
+   "file": "oneshot_map220.png",
+   "w": 800,
+   "h": 800,
+   "used": 2621,
+   "sid": "oneshot.refuge.Cafe_inside_2"
+  },
+  {
+   "room_id": 221,
+   "file": "oneshot_map221.png",
+   "w": 1120,
+   "h": 1600,
+   "used": 7016,
+   "sid": "oneshot.refuge.stairwell_3"
+  },
+  {
+   "room_id": 222,
+   "file": "oneshot_map222.png",
+   "w": 800,
+   "h": 800,
+   "used": 2549,
+   "sid": "oneshot.refuge.locked_room"
+  },
+  {
+   "room_id": 223,
+   "file": "oneshot_map223.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.refuge.store_pan_2"
+  },
+  {
+   "room_id": 224,
+   "file": "oneshot_map224.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.FINALE"
+  },
+  {
+   "room_id": 225,
+   "file": "oneshot_map225.png",
+   "w": 2240,
+   "h": 576,
+   "used": 3076,
+   "sid": "oneshot.refuge.Observation_Deck_2"
+  },
+  {
+   "room_id": 226,
+   "file": "oneshot_map226.png",
+   "w": 640,
+   "h": 480,
+   "used": 88,
+   "sid": "oneshot.mainline.Summit_2"
+  },
+  {
+   "room_id": 227,
+   "file": "oneshot_map227.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.refuge.POSTGAME_RED_GROUND"
+  },
+  {
+   "room_id": 228,
+   "file": "oneshot_map228.png",
+   "w": 2880,
+   "h": 2080,
+   "used": 25540,
+   "sid": "oneshot.refuge.To_Tower_2"
+  },
+  {
+   "room_id": 229,
+   "file": "oneshot_map229.png",
+   "w": 800,
+   "h": 800,
+   "used": 2636,
+   "sid": "oneshot.refuge.X_room_2"
+  },
+  {
+   "room_id": 230,
+   "file": "oneshot_map230.png",
+   "w": 2176,
+   "h": 864,
+   "used": 9617,
+   "sid": "oneshot.refuge_ground.Vendor_Street_2"
+  },
+  {
+   "room_id": 231,
+   "file": "oneshot_map231.png",
+   "w": 2176,
+   "h": 864,
+   "used": 8394,
+   "sid": "oneshot.refuge_ground.Elevator_Street_2"
+  },
+  {
+   "room_id": 232,
+   "file": "oneshot_map232.png",
+   "w": 1824,
+   "h": 1504,
+   "used": 10929,
+   "sid": "oneshot.refuge_ground.Back_Alley_2"
+  },
+  {
+   "room_id": 233,
+   "file": "oneshot_map233.png",
+   "w": 1120,
+   "h": 960,
+   "used": 4349,
+   "sid": "oneshot.refuge_ground.Library_2"
+  },
+  {
+   "room_id": 234,
+   "file": "oneshot_map234.png",
+   "w": 640,
+   "h": 480,
+   "used": 1228,
+   "sid": "oneshot.refuge.fish_house_2"
+  },
+  {
+   "room_id": 235,
+   "file": "oneshot_map235.png",
+   "w": 640,
+   "h": 640,
+   "used": 1670,
+   "sid": "oneshot.refuge.Photo_center_2"
+  },
+  {
+   "room_id": 236,
+   "file": "oneshot_map236.png",
+   "w": 800,
+   "h": 880,
+   "used": 2762,
+   "sid": "oneshot.refuge.stairwell_4"
+  },
+  {
+   "room_id": 237,
+   "file": "oneshot_map237.png",
+   "w": 1152,
+   "h": 1120,
+   "used": 5895,
+   "sid": "oneshot.refuge.Lobby_2"
+  },
+  {
+   "room_id": 238,
+   "file": "oneshot_map238.png",
+   "w": 640,
+   "h": 640,
+   "used": 1586,
+   "sid": "oneshot.glen.Power_room_2"
+  },
+  {
+   "room_id": 239,
+   "file": "oneshot_map239.png",
+   "w": 1920,
+   "h": 1600,
+   "used": 7305,
+   "sid": "oneshot.glen.burial_grounds_PLANE_FIXED"
+  },
+  {
+   "room_id": 240,
+   "file": "oneshot_map240.png",
+   "w": 1664,
+   "h": 1600,
+   "used": 12631,
+   "sid": "oneshot.glen.Forest_2"
+  },
+  {
+   "room_id": 241,
+   "file": "oneshot_map241.png",
+   "w": 960,
+   "h": 1280,
+   "used": 7165,
+   "sid": "oneshot.mainline.Tv_room"
+  },
+  {
+   "room_id": 242,
+   "file": "oneshot_map242.png",
+   "w": 336,
+   "h": 800,
+   "used": 1321,
+   "sid": "oneshot.mainline.Encounter"
+  },
+  {
+   "room_id": 243,
+   "file": "oneshot_map243.png",
+   "w": 320,
+   "h": 2640,
+   "used": 9900,
+   "sid": "oneshot.mainline.Credits"
+  },
+  {
+   "room_id": 244,
+   "file": "oneshot_map244.png",
+   "w": 1664,
+   "h": 1600,
+   "used": 12559,
+   "sid": "oneshot.glen.Forest_DOTN_USE_THIS"
+  },
+  {
+   "room_id": 245,
+   "file": "oneshot_map245.png",
+   "w": 480,
+   "h": 480,
+   "used": 949,
+   "sid": "oneshot.mainline.X_room"
+  },
+  {
+   "room_id": 246,
+   "file": "oneshot_map246.png",
+   "w": 800,
+   "h": 800,
+   "used": 2500,
+   "sid": "oneshot.mainline.squrz"
+  },
+  {
+   "room_id": 247,
+   "file": "oneshot_map247.png",
+   "w": 320,
+   "h": 240,
+   "used": 0,
+   "sid": "oneshot.mainline.SQUARES_BE_GONE"
+  },
+  {
+   "room_id": 248,
+   "file": "oneshot_map248.png",
+   "w": 1280,
+   "h": 640,
+   "used": 3732,
+   "sid": "oneshot.barrens.server_room_3"
+  },
+  {
+   "room_id": 249,
+   "file": "oneshot_map249.png",
+   "w": 880,
+   "h": 880,
+   "used": 3206,
+   "sid": "oneshot.mainline.study"
+  },
+  {
+   "room_id": 250,
+   "file": "oneshot_map250.png",
+   "w": 1504,
+   "h": 1920,
+   "used": 3782,
+   "sid": "oneshot.glen.Gate_2"
+  },
+  {
+   "room_id": 251,
+   "file": "oneshot_map251.png",
+   "w": 1600,
+   "h": 400,
+   "used": 2535,
+   "sid": "oneshot.glen.Birdhall_3"
+  },
+  {
+   "room_id": 252,
+   "file": "oneshot_map252.png",
+   "w": 1920,
+   "h": 1280,
+   "used": 1953,
+   "sid": "oneshot.refuge.Elevator_Deck_3"
+  },
+  {
+   "room_id": 253,
+   "file": "oneshot_map253.png",
+   "w": 480,
+   "h": 480,
+   "used": 915,
+   "sid": "oneshot.glen.Bed_room_2"
+  },
+  {
+   "room_id": 254,
+   "file": "oneshot_map254.png",
+   "w": 640,
+   "h": 640,
+   "used": 1619,
+   "sid": "oneshot.refuge.sleepville_2"
+  },
+  {
+   "room_id": 255,
+   "file": "oneshot_map255.png",
+   "w": 336,
+   "h": 272,
+   "used": 357,
+   "sid": "oneshot.mainline.Last_room"
+  },
+  {
+   "room_id": 256,
+   "file": "oneshot_map256.png",
+   "w": 1120,
+   "h": 1280,
+   "used": 5956,
+   "sid": "oneshot.barrens.Docks_2"
+  },
+  {
+   "room_id": 257,
+   "file": "oneshot_map257.png",
+   "w": 2176,
+   "h": 864,
+   "used": 9617,
+   "sid": "oneshot.refuge.Vendor_Street"
+  },
+  {
+   "room_id": 258,
+   "file": "oneshot_map258.png",
+   "w": 336,
+   "h": 800,
+   "used": 1321,
+   "sid": "oneshot.mainline.Memory"
+  },
+  {
+   "room_id": 259,
+   "file": "oneshot_map259.png",
+   "w": 336,
+   "h": 544,
+   "used": 714,
+   "sid": "oneshot.mainline.Post_Encounter"
+  },
+  {
+   "room_id": 260,
+   "file": "oneshot_map260.png",
+   "w": 800,
+   "h": 800,
+   "used": 2549,
+   "sid": "oneshot.refuge.locked_room_2"
+  },
+  {
+   "room_id": 261,
+   "file": "oneshot_map261.png",
+   "w": 352,
+   "h": 240,
+   "used": 480,
+   "sid": "oneshot.unzoned.pshot"
+  },
+  {
+   "room_id": 262,
+   "file": "oneshot_map262.png",
+   "w": 320,
+   "h": 240,
+   "used": 300,
+   "sid": "oneshot.mainline.language_debug"
+  },
+  {
+   "room_id": 263,
+   "file": "oneshot_map263.png",
+   "w": 352,
+   "h": 240,
+   "used": 480,
+   "sid": "oneshot.unzoned.pshot_2"
+  }
+ ],
+ "solid_empty_rooms": [
+  "oneshot_map10.png",
+  "oneshot_map25.png",
+  "oneshot_map103.png",
+  "oneshot_map155.png",
+  "oneshot_map165.png",
+  "oneshot_map167.png",
+  "oneshot_map173.png",
+  "oneshot_map174.png",
+  "oneshot_map175.png",
+  "oneshot_map223.png",
+  "oneshot_map224.png",
+  "oneshot_map227.png",
+  "oneshot_map247.png"
+ ],
+ "solid_transparent_ghosts": [
+  "oneshot_map63.png"
+ ]
+}

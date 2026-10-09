@@ -2425,6 +2425,35 @@ SUITES = [
                 '`"surprised_down" in unparse(node)` 认准写参块。',
     },
     {
+        'id': 'check101',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第101轮-OneShot背景落盘与场景接线', '_tools', 'check101.py'),
+        'offscreen': True,
+        'desc': '第一百零一轮：OneShot **263 间**背景「合成 → 落盘 → 两层接线 → 渲染出图」。'
+                '第100轮只打通管线（只在 `_evidence/` 产了 3 张样例），本轮落进产品：'
+                '① 263 张 `assets/scenes/bg/oneshot_map<N>.png`（从原作 `map<N>.tmx` 瓦片 + '
+                '`*.tsx` 图集 + `oneshot_map_colors.json` 底色逐像素合成，'
+                '**唯一真源** = 第100轮的 `os_bg100.py`，本轮只 import 它）；'
+                '② `bg`/`bg_source`/`bg_asset` 写进**两层登记**（`_zone.oneshot.*.json` 与 '
+                '`_index.json` 内联副本 —— 侦察实证两者逐字段全等，所以必须两处都改）。'
+                '★ 判据四段：A 落盘面（263 在位 / 尺寸 == **独立来源** `_room_geometry.json` '
+                '的房间几何 1:1 / 与第100轮样例逐像素相同）；'
+                'B 数据面（三字段合法 / 两层一致 / **无重复键** —— 首跑 bad=526 的守点：'
+                'OneShot 的 `bg_source` 后面还跟着 `objects` ⇒ 原行**带尾逗号**，'
+                '照搬第39轮"只认无逗号"的正则会漏替换并留下**重复键**，'
+                '而 Python json 对重复键取最后一个 ⇒ `bg_source` 恒 `none`）；'
+                'C **渲染面**（263 个场景逐个真跑 `SR.plan_frame` ⇒ 必须产 `K_BG` 且**盖满视口**，'
+                '外加"把 bg 置 None 必改出占位"的负控制 —— **数据接好了 ≠ 画得出来**）；'
+                'D 纪律（文件名/溯源与 room_id 自洽 / `bg_source` 只此新档 `tmx.composite` / '
+                '单色图画像 13+1 可复查）。'
+                '★ 本轮判据栽过两处并已修：① 单色判据（"空房"与 `blank*.tsx` 的**全透明占位**'
+                '都忠实，只有"有实心瓦片却画成单色"才是合成空转）；'
+                '② 行尾判据（`git show HEAD:` 给的是 autocrlf 归一化后的 LF，与工作区 CRLF 比'
+                '**必然报红** ⇒ 改判"diff 规模恰好 == 526×3 增 / 526×2 删"）。'
+                '★ 已知保真缺口（不在本锁内）：未接 `lightmaps` + 场景 `ambient`（偏暗）；'
+                '`events_map<N>.json` 的物件未画；`mapColors` 只覆盖 241/263（余 22 张走黑底）。',
+    },
+    {
         'id': 'verify_scene_fit99',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第99轮-睡觉惊醒与场景系统', '_tools',

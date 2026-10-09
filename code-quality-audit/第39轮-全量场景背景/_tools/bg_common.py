@@ -27,11 +27,15 @@ MIN_REAL_BG = (300, 200)
 MAX_FRAMES = 8
 
 #: 真背景档次（可直接落地，零编造）
-REAL_HOWS = ('room.bg_layer', 'room.asset_layer')
+#: ★ 第101轮扩：`tmx.composite` = 由**原作 tmx 地图 + 瓦片图集**逐像素合成的真背景
+#:   （OneShot 的 263 间房）。它和 `area_table` 那类"区域代表素材(近似)"**不是一回事** ——
+#:   像素全部来自原作，零编造 ⇒ 归真背景。若把它当近似档，会把真背景锁在 E1 门外。
+REAL_HOWS = ('room.bg_layer', 'room.asset_layer', 'tmx.composite')
 
 HOW_CN = {
     'room.bg_layer': '房间自带真背景',
     'room.asset_layer': '房间自带资源层',
+    'tmx.composite': '原作tmx逐像素合成',
     'override': '房间级指定',
     'area_table': '区域代表素材(近似)',
     'chapter_tiles': '章节兜底-平铺(近似)',

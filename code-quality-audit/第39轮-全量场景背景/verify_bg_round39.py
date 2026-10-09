@@ -226,6 +226,11 @@ check('B1 真背景场景的 bg/bg_source/bg_asset 三者 == 据原作事实重�
 _tampered = {ch: dict(rooms) for ch, rooms in rebuilt_rooms.items()}
 _victim = None
 for sid, ch, area, rid, raw, _p in ENTRIES:
+    # ★ 第101轮补：受害者必须来自**有溯源表的章**（否则下面 `_tampered[ch]` 直接
+    #   KeyError —— 那会让 B2 从"负控制"退化成"脚本崩溃"，比报红更糟）。
+    #   OneShot 等无溯源章第101轮起也带真背景（`tmx.composite`），会被这条撞上。
+    if ch not in _tampered:
+        continue
     if raw.get('bg_source') in C.REAL_HOWS and not os.path.isfile(
             os.path.join(SCENES, sid + '.json')):
         _victim = (sid, ch, rid)
@@ -259,6 +264,10 @@ check('B3 正控制：未篡改时同一判据为真（不是恒红）',
 # 负控制 2：把某场景的 bg_asset 改坏，判据必须抓到
 _bad_asset = []
 for sid, ch, area, rid, raw, _p in ENTRIES:
+    # ★ 第101轮补：同 B2 —— 无溯源章的条目进 `mismatches` 会被 `recompute` 跳过
+    #   （`ch not in rooms`）⇒ 返回空清单 ⇒ 负控制**恒假**（退化）。必须挑有溯源的章。
+    if ch not in rebuilt_rooms:
+        continue
     if raw.get('bg_source') in C.REAL_HOWS:
         fake = dict(raw)
         fake['bg_asset'] = 'bg___no_such_sprite__'

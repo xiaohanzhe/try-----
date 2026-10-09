@@ -14,7 +14,10 @@ import re
 import sys
 import types
 
-BASE = r"C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet"
+# ★ 第101轮修：原为硬编码主仓库绝对路径 ⇒ 在 git worktree 里会静默测**主仓库**
+#   那份代码（"判据比错对象"）。改为相对本文件定位产品根，与其余套件一致。
+HERE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.abspath(os.path.join(HERE, "..", "..", "ralsei_pet"))
 sys.path.insert(0, os.path.join(BASE, "modules"))
 
 results = []

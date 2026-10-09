@@ -10,8 +10,9 @@
    "name_raw": "INIT",
    "name_derived": false,
    "original_room_id": 1,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map1.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map1.tmx",
    "objects": []
   },
   "oneshot.mainline.Start": {
@@ -19,8 +20,9 @@
    "name_raw": "Start",
    "name_derived": false,
    "original_room_id": 2,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map2.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map2.tmx",
    "objects": []
   },
   "oneshot.mainline.Bathroom": {
@@ -28,8 +30,9 @@
    "name_raw": "Bathroom",
    "name_derived": false,
    "original_room_id": 3,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map3.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map3.tmx",
    "objects": []
   },
   "oneshot.mainline.Livingroom": {
@@ -37,8 +40,9 @@
    "name_raw": "Livingroom",
    "name_derived": false,
    "original_room_id": 4,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map4.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map4.tmx",
    "objects": []
   },
   "oneshot.mainline.Basement_Stairs": {
@@ -46,8 +50,9 @@
    "name_raw": "Basement Stairs",
    "name_derived": false,
    "original_room_id": 5,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map5.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map5.tmx",
    "objects": []
   },
   "oneshot.mainline.Tower": {
@@ -55,8 +60,9 @@
    "name_raw": "Tower",
    "name_derived": false,
    "original_room_id": 10,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map10.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map10.tmx",
    "objects": []
   },
   "oneshot.mainline.DEBUG": {
@@ -64,8 +70,9 @@
    "name_raw": "DEBUG",
    "name_derived": false,
    "original_room_id": 11,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map11.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map11.tmx",
    "objects": []
   },
   "oneshot.mainline.basement": {
@@ -73,8 +80,9 @@
    "name_raw": "basement",
    "name_derived": false,
    "original_room_id": 20,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map20.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map20.tmx",
    "objects": []
   },
   "oneshot.mainline.basement_after_sun": {
@@ -82,8 +90,9 @@
    "name_raw": "basement after sun",
    "name_derived": false,
    "original_room_id": 26,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map26.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map26.tmx",
    "objects": []
   },
   "oneshot.mainline.Crossroads": {
@@ -91,8 +100,9 @@
    "name_raw": "Crossroads",
    "name_derived": false,
    "original_room_id": 55,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map55.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map55.tmx",
    "objects": []
   },
   "oneshot.mainline.Teleport": {
@@ -100,8 +110,9 @@
    "name_raw": "Teleport",
    "name_derived": false,
    "original_room_id": 56,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map56.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map56.tmx",
    "objects": []
   },
   "oneshot.mainline.Summit": {
@@ -109,8 +120,9 @@
    "name_raw": "Summit",
    "name_derived": false,
    "original_room_id": 60,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map60.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map60.tmx",
    "objects": []
   },
   "oneshot.mainline.Shatter": {
@@ -118,8 +130,9 @@
    "name_raw": "Shatter",
    "name_derived": false,
    "original_room_id": 61,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map61.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map61.tmx",
    "objects": []
   },
   "oneshot.mainline.Elevator": {
@@ -127,8 +140,9 @@
    "name_raw": "Elevator",
    "name_derived": false,
    "original_room_id": 62,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map62.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map62.tmx",
    "objects": []
   },
   "oneshot.mainline.Water": {
@@ -136,8 +150,9 @@
    "name_raw": "Water",
    "name_derived": false,
    "original_room_id": 63,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map63.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map63.tmx",
    "objects": []
   },
   "oneshot.mainline.debug2": {
@@ -145,8 +160,9 @@
    "name_raw": "debug2",
    "name_derived": false,
    "original_room_id": 77,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map77.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map77.tmx",
    "objects": []
   },
   "oneshot.mainline.Encounter_PENG": {
@@ -154,8 +170,9 @@
    "name_raw": "Encounter PENG",
    "name_derived": false,
    "original_room_id": 131,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map131.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map131.tmx",
    "objects": []
   },
   "oneshot.mainline.T1": {
@@ -163,8 +180,9 @@
    "name_raw": "T1",
    "name_derived": false,
    "original_room_id": 139,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map139.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map139.tmx",
    "objects": []
   },
   "oneshot.mainline.T2": {
@@ -172,8 +190,9 @@
    "name_raw": "T2",
    "name_derived": false,
    "original_room_id": 140,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map140.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map140.tmx",
    "objects": []
   },
   "oneshot.mainline.T3": {
@@ -181,8 +200,9 @@
    "name_raw": "T3",
    "name_derived": false,
    "original_room_id": 141,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map141.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map141.tmx",
    "objects": []
   },
   "oneshot.mainline.T4": {
@@ -190,8 +210,9 @@
    "name_raw": "T4",
    "name_derived": false,
    "original_room_id": 142,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map142.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map142.tmx",
    "objects": []
   },
   "oneshot.mainline.T5": {
@@ -199,8 +220,9 @@
    "name_raw": "T5",
    "name_derived": false,
    "original_room_id": 143,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map143.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map143.tmx",
    "objects": []
   },
   "oneshot.mainline.T6": {
@@ -208,8 +230,9 @@
    "name_raw": "T6",
    "name_derived": false,
    "original_room_id": 144,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map144.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map144.tmx",
    "objects": []
   },
   "oneshot.mainline.T7": {
@@ -217,8 +240,9 @@
    "name_raw": "T7",
    "name_derived": false,
    "original_room_id": 145,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map145.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map145.tmx",
    "objects": []
   },
   "oneshot.mainline.T8": {
@@ -226,8 +250,9 @@
    "name_raw": "T8",
    "name_derived": false,
    "original_room_id": 146,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map146.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map146.tmx",
    "objects": []
   },
   "oneshot.mainline.T9": {
@@ -235,8 +260,9 @@
    "name_raw": "T9",
    "name_derived": false,
    "original_room_id": 147,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map147.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map147.tmx",
    "objects": []
   },
   "oneshot.mainline.T10": {
@@ -244,8 +270,9 @@
    "name_raw": "T10",
    "name_derived": false,
    "original_room_id": 148,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map148.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map148.tmx",
    "objects": []
   },
   "oneshot.mainline.T11": {
@@ -253,8 +280,9 @@
    "name_raw": "T11",
    "name_derived": false,
    "original_room_id": 149,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map149.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map149.tmx",
    "objects": []
   },
   "oneshot.mainline.T12": {
@@ -262,8 +290,9 @@
    "name_raw": "T12",
    "name_derived": false,
    "original_room_id": 150,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map150.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map150.tmx",
    "objects": []
   },
   "oneshot.mainline.T13": {
@@ -271,8 +300,9 @@
    "name_raw": "T13",
    "name_derived": false,
    "original_room_id": 151,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map151.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map151.tmx",
    "objects": []
   },
   "oneshot.mainline.T14": {
@@ -280,8 +310,9 @@
    "name_raw": "T14",
    "name_derived": false,
    "original_room_id": 152,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map152.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map152.tmx",
    "objects": []
   },
   "oneshot.mainline.T15": {
@@ -289,8 +320,9 @@
    "name_raw": "T15",
    "name_derived": false,
    "original_room_id": 153,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map153.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map153.tmx",
    "objects": []
   },
   "oneshot.mainline.T16": {
@@ -298,8 +330,9 @@
    "name_raw": "T16",
    "name_derived": false,
    "original_room_id": 154,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map154.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map154.tmx",
    "objects": []
   },
   "oneshot.mainline.Step": {
@@ -307,8 +340,9 @@
    "name_raw": "Step",
    "name_derived": false,
    "original_room_id": 155,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map155.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map155.tmx",
    "objects": []
   },
   "oneshot.mainline.Sunroom": {
@@ -316,8 +350,9 @@
    "name_raw": "Sunroom",
    "name_derived": false,
    "original_room_id": 156,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map156.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map156.tmx",
    "objects": []
   },
   "oneshot.mainline.C1": {
@@ -325,8 +360,9 @@
    "name_raw": "C1",
    "name_derived": false,
    "original_room_id": 164,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map164.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map164.tmx",
    "objects": []
   },
   "oneshot.mainline.C2": {
@@ -334,8 +370,9 @@
    "name_raw": "C2",
    "name_derived": false,
    "original_room_id": 166,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map166.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map166.tmx",
    "objects": []
   },
   "oneshot.mainline.S1": {
@@ -343,8 +380,9 @@
    "name_raw": "S1",
    "name_derived": false,
    "original_room_id": 167,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map167.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map167.tmx",
    "objects": []
   },
   "oneshot.mainline.C3": {
@@ -352,8 +390,9 @@
    "name_raw": "C3",
    "name_derived": false,
    "original_room_id": 168,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map168.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map168.tmx",
    "objects": []
   },
   "oneshot.mainline.C4": {
@@ -361,8 +400,9 @@
    "name_raw": "C4",
    "name_derived": false,
    "original_room_id": 169,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map169.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map169.tmx",
    "objects": []
   },
   "oneshot.mainline.C5": {
@@ -370,8 +410,9 @@
    "name_raw": "C5",
    "name_derived": false,
    "original_room_id": 170,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map170.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map170.tmx",
    "objects": []
   },
   "oneshot.mainline.C6": {
@@ -379,8 +420,9 @@
    "name_raw": "C6",
    "name_derived": false,
    "original_room_id": 171,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map171.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map171.tmx",
    "objects": []
   },
   "oneshot.mainline.C7": {
@@ -388,8 +430,9 @@
    "name_raw": "C7",
    "name_derived": false,
    "original_room_id": 172,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map172.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map172.tmx",
    "objects": []
   },
   "oneshot.mainline.S4": {
@@ -397,8 +440,9 @@
    "name_raw": "S4",
    "name_derived": false,
    "original_room_id": 173,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map173.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map173.tmx",
    "objects": []
   },
   "oneshot.mainline.S2": {
@@ -406,8 +450,9 @@
    "name_raw": "S2",
    "name_derived": false,
    "original_room_id": 174,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map174.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map174.tmx",
    "objects": []
   },
   "oneshot.mainline.S3": {
@@ -415,8 +460,9 @@
    "name_raw": "S3",
    "name_derived": false,
    "original_room_id": 175,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map175.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map175.tmx",
    "objects": []
   },
   "oneshot.mainline.Water2": {
@@ -424,8 +470,9 @@
    "name_raw": "Water2",
    "name_derived": false,
    "original_room_id": 179,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map179.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map179.tmx",
    "objects": []
   },
   "oneshot.mainline.Start_2": {
@@ -433,8 +480,9 @@
    "name_raw": "Start",
    "name_derived": false,
    "original_room_id": 180,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map180.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map180.tmx",
    "objects": []
   },
   "oneshot.mainline.Bathroom_2": {
@@ -442,8 +490,9 @@
    "name_raw": "Bathroom",
    "name_derived": false,
    "original_room_id": 181,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map181.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map181.tmx",
    "objects": []
   },
   "oneshot.mainline.Livingroom_2": {
@@ -451,8 +500,9 @@
    "name_raw": "Livingroom",
    "name_derived": false,
    "original_room_id": 182,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map182.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map182.tmx",
    "objects": []
   },
   "oneshot.mainline.Basement_Stairs_2": {
@@ -460,8 +510,9 @@
    "name_raw": "Basement Stairs",
    "name_derived": false,
    "original_room_id": 183,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map183.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map183.tmx",
    "objects": []
   },
   "oneshot.mainline.Hallway": {
@@ -469,8 +520,9 @@
    "name_raw": "Hallway",
    "name_derived": false,
    "original_room_id": 184,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map184.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map184.tmx",
    "objects": []
   },
   "oneshot.mainline.basement_after_sun_2": {
@@ -478,8 +530,9 @@
    "name_raw": "basement after sun",
    "name_derived": false,
    "original_room_id": 185,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map185.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map185.tmx",
    "objects": []
   },
   "oneshot.mainline.Start_purple": {
@@ -487,8 +540,9 @@
    "name_raw": "Start purple",
    "name_derived": false,
    "original_room_id": 188,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map188.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map188.tmx",
    "objects": []
   },
   "oneshot.mainline.Start_3": {
@@ -496,8 +550,9 @@
    "name_raw": "Start",
    "name_derived": false,
    "original_room_id": 189,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map189.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map189.tmx",
    "objects": []
   },
   "oneshot.mainline.Hallway_purp": {
@@ -505,8 +560,9 @@
    "name_raw": "Hallway purp",
    "name_derived": false,
    "original_room_id": 190,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map190.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map190.tmx",
    "objects": []
   },
   "oneshot.mainline.FINALE": {
@@ -514,8 +570,9 @@
    "name_raw": "FINALE",
    "name_derived": false,
    "original_room_id": 224,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map224.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map224.tmx",
    "objects": []
   },
   "oneshot.mainline.Summit_2": {
@@ -523,8 +580,9 @@
    "name_raw": "Summit",
    "name_derived": false,
    "original_room_id": 226,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map226.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map226.tmx",
    "objects": []
   },
   "oneshot.mainline.Tv_room": {
@@ -532,8 +590,9 @@
    "name_raw": "Tv room",
    "name_derived": false,
    "original_room_id": 241,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map241.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map241.tmx",
    "objects": []
   },
   "oneshot.mainline.Encounter": {
@@ -541,8 +600,9 @@
    "name_raw": "Encounter",
    "name_derived": false,
    "original_room_id": 242,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map242.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map242.tmx",
    "objects": []
   },
   "oneshot.mainline.Credits": {
@@ -550,8 +610,9 @@
    "name_raw": "Credits",
    "name_derived": false,
    "original_room_id": 243,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map243.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map243.tmx",
    "objects": []
   },
   "oneshot.mainline.X_room": {
@@ -559,8 +620,9 @@
    "name_raw": "X room",
    "name_derived": false,
    "original_room_id": 245,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map245.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map245.tmx",
    "objects": []
   },
   "oneshot.mainline.squrz": {
@@ -568,8 +630,9 @@
    "name_raw": "squrz",
    "name_derived": false,
    "original_room_id": 246,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map246.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map246.tmx",
    "objects": []
   },
   "oneshot.mainline.SQUARES_BE_GONE": {
@@ -577,8 +640,9 @@
    "name_raw": "SQUARES BE GONE",
    "name_derived": false,
    "original_room_id": 247,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map247.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map247.tmx",
    "objects": []
   },
   "oneshot.mainline.study": {
@@ -586,8 +650,9 @@
    "name_raw": "study",
    "name_derived": false,
    "original_room_id": 249,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map249.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map249.tmx",
    "objects": []
   },
   "oneshot.mainline.Last_room": {
@@ -595,8 +660,9 @@
    "name_raw": "Last room",
    "name_derived": false,
    "original_room_id": 255,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map255.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map255.tmx",
    "objects": []
   },
   "oneshot.mainline.Memory": {
@@ -604,8 +670,9 @@
    "name_raw": "Memory",
    "name_derived": false,
    "original_room_id": 258,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map258.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map258.tmx",
    "objects": []
   },
   "oneshot.mainline.Post_Encounter": {
@@ -613,8 +680,9 @@
    "name_raw": "Post Encounter",
    "name_derived": false,
    "original_room_id": 259,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map259.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map259.tmx",
    "objects": []
   },
   "oneshot.mainline.language_debug": {
@@ -622,8 +690,9 @@
    "name_raw": "language debug",
    "name_derived": false,
    "original_room_id": 262,
-   "bg": null,
-   "bg_source": "none",
+   "bg": "bg/oneshot_map262.png",
+   "bg_source": "tmx.composite",
+   "bg_asset": "map262.tmx",
    "objects": []
   }
  }

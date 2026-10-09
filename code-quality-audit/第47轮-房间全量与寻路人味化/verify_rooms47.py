@@ -189,6 +189,7 @@ def main():
     zone_cache = {}
     bad = {'U1': [], 'U2': [], 'U3': [], 'U4': [], 'U5': []}
     n_bg = 0
+    n_bg_by_ch = {}       # ★ 第101轮：分章计数 —— 让"涨/掉"可归因，不只对总数
     n_shard = 0           # ★ 用分片载体的场景数（负控制要用）
     neg_rid = []          # ★ 第89轮：original_room_id < 0 的哨兵场景（应只有 desktop）
     for ch, crec in (idx.get('chapters') or {}).items():
@@ -230,6 +231,7 @@ def main():
                 _bgv = body.get('bg')
                 if _bgv and _bgv != '__transparent__':
                     n_bg += 1
+                    n_bg_by_ch[ch] = n_bg_by_ch.get(ch, 0) + 1
 
     check('B1 U1 载体文件缺失 == 0（两种载体都覆盖）', not bad['U1'],
           '%d 个，例 %r' % (len(bad['U1']), bad['U1'][:3]))
@@ -286,8 +288,18 @@ def main():
     # ★ 第80轮改：分母不再写死 1014（OneShot 263 迁入后 = 1,277）。
     #   判据本意是"**有背景的场景数**如实钉住 235（Deltarune 侧已采素材的）"，
     #   分母只是上下文 ⇒ 改为**引用实际产品场景数**，不再手写常量。
-    check('B8 背景覆盖率如实钉住 == 235（分母 = 当前产品场景数 %d，待重导素材）' % n_scenes,
-          n_bg == 235, '实得 %d' % n_bg)
+    # ★★ 第101轮改：OneShot 263 间房落盘真背景（`tmx.composite`，逐像素合成原作 tmx）
+    #   ⇒ 有背景场景数 235 → 498。钉子跟着升，但**同时要求逐章交代构成** ——
+    #   只对总数会让"别处悄悄掉了 1、OneShot 又补了 1"这类漂移蒙混过关。
+    _BG_STOCK = 235      # 第39~100轮口径：Deltarune 侧已采素材（157 真背景 + 78 近似锚点）
+    _BG_ONESHOT = 263    # 第101轮：OneShot 263 间房 tmx 逐像素合成
+    _bg_pin = _BG_STOCK + _BG_ONESHOT
+    _oneshot_bg = n_bg_by_ch.get('oneshot', 0)
+    check('B8 背景覆盖率如实钉住 == %d（= 既有 %d + OneShot %d；分母 = 当前产品场景数 %d）'
+          % (_bg_pin, _BG_STOCK, _BG_ONESHOT, n_scenes),
+          n_bg == _bg_pin and _oneshot_bg == _BG_ONESHOT
+          and n_bg - _oneshot_bg == _BG_STOCK,
+          '实得 %d，分章 %s' % (n_bg, dict(sorted(n_bg_by_ch.items()))))
 
     # =======================================================================
     print()
