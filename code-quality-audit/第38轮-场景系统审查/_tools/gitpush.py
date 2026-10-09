@@ -36,7 +36,30 @@ import subprocess
 import sys
 import time
 
-REPO = r'C:\Users\23002\Desktop\项目文件夹\try - 副本'
+def _resolve_repo():
+    """★ 第101轮：原来硬编码主仓库绝对路径 ⇒ 在 `git worktree` 里跑会**静默操作另一棵树**
+    （推的是主仓库那个已同步的 `main`，报 `Everything up-to-date` 却什么都没推）。
+    改为从脚本自身位置向上找 `.git`（普通仓库下是目录；worktree 下是**文件**）
+    ⇒ 自动跟随调用方所在的那棵树。与本轮修掉的 round5/round6 三个老套件
+    （`BASE` 硬编码 `Desktop\\项目文件夹\\try - 副本`）属同一类跨轮次静默缺陷。
+    """
+    d = os.path.dirname(os.path.abspath(__file__))
+    for _ in range(16):
+        if os.path.exists(os.path.join(d, '.git')):
+            return d
+        parent = os.path.dirname(d)
+        if parent == d:
+            break
+        d = parent
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+REPO = _resolve_repo()
+# ★ 第101轮：当前分支不一定是 `main`（worktree 下是 `workbuddy/<name>`）。
+#   原写法固定 `push origin main` ⇒ 在 worktree 里推的是主仓库的 `main`（已同步）⇒ **假成功**。
+#   改为把**当前 HEAD** 推到远端 `main`：两种布局都正确，且仍是普通快进推送
+#   （远端若已分叉会被拒并如实报错，不会强推）。
+PUSH_REFSPEC = 'HEAD:main'
 GCM = (r'C:\Users\23002\.workbuddy\binaries\PortableGit\versions\1.2.0'
        r'\mingw64\bin\git-credential-manager.exe')
 CA = os.path.join(os.environ.get('TEMP', r'C:\Windows\Temp'), 'win_root_ca.pem')
@@ -272,6 +295,12 @@ def main():
     msg = sys.argv[1]
     do_push = '--no-push' not in sys.argv
     w('=== 提交推送日志 ===  %s' % time.strftime('%Y-%m-%d %H:%M:%S'))
+    # ★ 第101轮：把「在哪棵树 / 哪个分支 / 推什么 refspec」打出来自证，
+    #   否则「硬编码到别棵树」这类错**在全绿输出里看不出来**（本轮实测踩到）。
+    w('[0r] REPO   = %s' % REPO)
+    w('[0r] branch = %s'
+      % run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], timeout=60)[1].strip())
+    w('[0r] refspec= %s（把当前 HEAD 推到远端 main）' % PUSH_REFSPEC)
 
     if push_only:
         w('[0] --push-only：跳过 add/commit，直接推当前 HEAD')
@@ -377,7 +406,7 @@ def _push():
     used = ''
     for i, proxy in enumerate(proxies if proxies else [''], 1):
         w('[6.%d] push 尝试（代理=%s）' % (i, proxy or '直连'))
-        rc, o, e = run(['git'] + _opts(proxy) + ['push', 'origin', 'main'],
+        rc, o, e = run(['git'] + _opts(proxy) + ['push', 'origin', PUSH_REFSPEC],
                        timeout=300)
         w('      rc=%d' % rc)
         for ln in (o + e).splitlines():
