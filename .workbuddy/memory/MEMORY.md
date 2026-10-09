@@ -16,7 +16,7 @@
 - ⭐⭐ **代理端口逐端口实测 CONNECT 再选**。⭐⭐ **`autocrlf=true` 而工作区 EOL 有两代风格**（§65.2）⇒**编辑保持原 EOL**；中文路径⇒`git ls-files -z`+`surrogateescape`。
 - ★★★ **游戏文件 + UTMT ⇒ 详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**，⛔别形式卡死·**stdout 须落文件**）。
 ## 2. git push（skill `win-git-utf8-push`；**§39.5/§37.13/§71.4**）
-- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>] [--allow-del N]`**。提交信息用 **Write 写 UTF-8 + `git commit -F`**（`-m` 被 PS5.1 拆 argv⇒退0 **假成功**）。⛔ **绝不循环重试 push**。
+- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>] [--allow-del N]`**。提交信息用 **Write 写 UTF-8 + `git commit -F`**（`-m` 假成功，§39.5）。⛔ **绝不循环重试 push**。★★★ **worktree 下已修**（§101.13）：原 `REPO` 硬编码＋refspec 固定 `main` ⇒ **全绿却假成功**；现 `HEAD:main`+自证 `[0r]`。
 - ★ `--allow-del` **带数字**；超限先 `numstat` 归因。❗**核验命令自己会说谎**⇒`ls-remote` **独立构造**+3~5 重试+`git rev-parse origin/main` 交叉验证。
 - ★★ 两根因（**细节 §39.5，别手搓**）：**TLS**⇒`sslBackend=openssl`+HTTP/1.1；**凭据**⇒直取 GCM（`wincredman`+`never`）；`subprocess.run(input=…)` **必须喂 bytes**。
 ## 3. 勿回退契约（13 组；**原文见详版 §75.10** + §4.1–§4.12/§10/§23.9）
@@ -58,8 +58,8 @@
 
 ## 15. 99 · 睡觉后惊醒 + 场景系统「全屏化」 ★ 全文详版 §99
 - ★★★ **场景背景**：素材是**屏幕像素分辨率**截图 ⇒ 把它当**世界单位**铺就错：「素材<房间」相机跟出去**整条出界**、「≥房间」**多放大 2 倍**。修＝`fit_bg_world()` **等比 cover**（两轴同倍）＋ `K_ROOM_FILL` 纯黑房间底（最先画；裸桌面不产）。
-- ★★★ **隐身触发器**（`vis=False`）：抄原作 `spr=` **漏 `vis=`** ⇒ 把 `obj_readable_room1`/`obj_marker*`/`obj_door*` 画出来（真机：一屋子**品红框**）。★ 过滤器须接**两处**（`plan_frame` **自带**物件循环，**不调** `visible_objects`）⇒ 重复实现＋**对账判据**；边界＝**只影响绘制，不影响交互/道具**（普查数与名单见详版 §99.4）。
+- ★★★ **隐身触发器**（`vis=False`）：抄原作 `spr=` **漏 `vis=`** ⇒ 把 `obj_readable_room1`/`obj_marker*`/`obj_door*` 画出来（真机：一屋子**品红框**）。★ 过滤器须接**两处**（`plan_frame` **自带**物件循环，**不调** `visible_objects`）⇒ 重复实现＋**对账判据**；边界＝**只影响绘制，不影响交互/道具**。
 - ★★★ **逃生门（别删）**：桌面 **9 扇门借了原作 `src`** ⇒ 被名单**整批藏掉**（`check89` `plan_n 9→1`）。豁免＝`authored is True` ＋ `_AUTHORED_KINDS=('prop',)`。★★★ **给"转储数据"加过滤器前，先查"我自造的数据有没有借它的名字"。**
-- ★★★ **抓屏须自证"抓到宠物"**：用户**会在工作机上切虚拟桌面** ⇒ `grabWindow(0)` 抓到的是**没宠物的桌面**，工具照常出图＝**静默假证据**。修＝`pet_in_frame()`＋`GEN99_SELFTEST=1` 自测；`'out'`⇒**VERDICT=FAIL**。★ **「抓到画面了」≠「抓到宠物了」**。
+- ★★★ **抓屏须自证"抓到宠物"**：用户**会在工作机上切虚拟桌面** ⇒ `grabWindow(0)` 抓到的是**没宠物的桌面**，工具照常出图＝**静默假证据**。修＝`pet_in_frame()`＋`GEN99_SELFTEST=1` 自测；`'out'`⇒**VERDICT=FAIL**。
 - ★ 场景总 **2166**（四世界 1152）。★ 素材黑边**原作自带**⇒ **别再当 bug 查**（详版 §99.8）。
 
