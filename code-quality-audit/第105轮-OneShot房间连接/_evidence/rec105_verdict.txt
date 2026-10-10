@@ -1,0 +1,28 @@
+[shot105] 帧数 = 331
+[shot105] 场景变化行数 = 68 ⇒ C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第105轮-OneShot房间连接\_evidence\rec105_timeline.txt
+
+--- 录像里（产品报出的）场景序列 ---
+   1. desktop
+   2. oneshot.mainline.INIT
+   3. oneshot.mainline.S1
+   4. ch1.kris_room.kris_s_room
+   5. ch1.hometown.town_church
+   6. ch1.hometown.graveyard
+
+[PASS] A1 录像中出现起点房间 oneshot.mainline.INIT  —— 实际首见 oneshot 场景=['oneshot.mainline.INIT']
+[PASS] A2 录像中出现终点房间 oneshot.mainline.S1
+[FAIL] A3 逐门走过（oneshot 途经房间数 >= 1）  —— 途经=[] ｜ 产品日志 route=path 但 steps 无消费方（见 rec105_stdout.txt）
+[PASS] A4 HOP 行数 >= 3（INIT → … → S1 的多跳）  —— HOP=6 行；首行="t=2.228 frame=0  None  →  'desktop'   (chapter='desktop' rid=-1)"
+[PASS] A5 Deltarune 对照：起点 ch1.kris_room.kris_s_room 出现
+[PASS] A5b Deltarune 对照：终点（教堂）ch1.hometown.town_church 出现
+[PASS] A6 oneshot 房间里有 canvas_vis=True 的帧  —— 可见房间=['oneshot.mainline.INIT', 'oneshot.mainline.S1']
+[PASS] A7 本次录像换过场景（seen >= 4）  —— seen=6 个
+
+--- 注入日志（产品回报的 ret）---
+  t=6.289 SET-START(oneshot) scene='oneshot.mainline.INIT' chapter='oneshot' rid=1 switch_ok=True to='oneshot.mainline.INIT'
+  t=12.215 TRAVEL(oneshot) scene='oneshot.mainline.S1' chapter='oneshot' rid=167 target='oneshot.mainline.S1' ret=True  wall=0.03s
+  t=48.149 SET-START(delta) scene='ch1.kris_room.kris_s_room' chapter='ch1' rid=2 switch_ok=True to='ch1.kris_room.kris_s_room'
+  t=51.146 TRAVEL(delta) scene='ch1.hometown.town_church' chapter='ch1' rid=15 target='教堂' ret=True  wall=0.03s
+[shot105] 对照图 C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第105轮-OneShot房间连接\_evidence\rec105_contact_sheet.png  (6 格)
+
+==== shot105 判据：7 PASS / 1 FAIL ====

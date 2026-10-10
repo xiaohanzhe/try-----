@@ -1,0 +1,20 @@
+=== rec105 录制元信息（OneShot 房间连接 · mp4v 边抓边写 · 状态变化帧落小图）===
+pid                 = 37248
+时长设定            = 90 s
+抓屏周期            = 250 ms
+编码 fourcc         = mp4v
+注入                = REC105_INJECT=1
+  oneshot 起点/终点 = None → None（12000s）
+  delta 起点/终点   = None → None（48000s）
+实际帧数            = 331
+有效采集率          = 3.54 Hz
+关键帧 PNG 数       = 93
+墙钟耗时            = 93.5 s
+抓屏累计            = 22.6 s（每帧均 68.2 ms）
+编码累计            = 12.2 s（每帧均 37.0 ms）
+占用率(抓+编)/墙钟  = 37.2%
+屏幕                = 2560x1600
+frames/ 实际 PNG 数  = 93（计数器 93）
+录像                = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第105轮-OneShot房间连接\_evidence\rec105_raw.avi (19.8 MB)
+录像校验            = OK 可解码帧数=331
+退出码              = 0

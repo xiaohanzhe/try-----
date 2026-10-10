@@ -1,0 +1,4 @@
+t=6.289 SET-START(oneshot) scene='oneshot.mainline.INIT' chapter='oneshot' rid=1 switch_ok=True to='oneshot.mainline.INIT'
+t=12.215 TRAVEL(oneshot) scene='oneshot.mainline.S1' chapter='oneshot' rid=167 target='oneshot.mainline.S1' ret=True  wall=0.03s
+t=48.149 SET-START(delta) scene='ch1.kris_room.kris_s_room' chapter='ch1' rid=2 switch_ok=True to='ch1.kris_room.kris_s_room'
+t=51.146 TRAVEL(delta) scene='ch1.hometown.town_church' chapter='ch1' rid=15 target='教堂' ret=True  wall=0.03s
