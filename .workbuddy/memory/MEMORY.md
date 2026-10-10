@@ -17,7 +17,7 @@
 - ★★★ **游戏文件+UTMT⇒详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**，⛔别形式卡死·**stdout 须落文件**）。
 ## 2. git push（skill `win-git-utf8-push`；**§39.5/§37.13/§71.4**）
 - ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>] [--allow-del N]`**。提交信息用 **Write 写 UTF-8+`git commit -F`**（`-m` 假成功，§39.5）。⛔ **绝不循环重试 push**。★★★ **worktree 下已修**（§101.13）：原 `REPO` 硬编码＋refspec 固定 `main`⇒**全绿却假成功**；现 `HEAD:main`+自证 `[0r]`。
-- ★ `--allow-del` **带数字**；超限先 `numstat` 归因。❗**核验命令自己会说谎**⇒`ls-remote` **独立构造**+3~5 重试+`git rev-parse origin/main` 交叉验证。
+- ★ `--allow-del` **带数字**；超限先 `numstat` 归因。❗**核验命令自己会说谎**⇒`ls-remote` **独立构造**+3~5 重试+`git rev-parse origin/main` 交叉验证＋**必带 CA**（`sslCAInfo`，否则 TLS 假阴性）。
 - ★★ 两根因（**细节 §39.5，别手搓**）：**TLS**⇒`sslBackend=openssl`+HTTP/1.1；**凭据**⇒直取 GCM（`wincredman`+`never`）；`subprocess.run(input=…)` **必须喂 bytes**。
 ## 3. 勿回退契约（13 组；**原文见详版 §75.10**+§4.1–§4.12/§10/§23.9）
 ① `availableGeometry()` 只返主屏⇒用 `_virtual_screen_rect()`；★ **首帧落点**＝`pick_corner_screen_work_area()`（单屏恒等 (2410,1378)｜离屏 (650,450)）；② **建楼**：`floor_visible_contains` 唯一判据·禁 `WindowStaysOnTopHint`·甩飞必 `_fall_reason=None`·先 `show()` 再调 z 序·⚠️ **`climb_1_*`=朝右／`climb_0_*`=朝前**；③ `data_store` 唯一入口（vault=`E:\RalseiMemory\`，迁移**只复制**）· 裸进程脚本**先建 `QApplication`**；④ **G2 有 `HERMETIC_IDS`**·`save_baseline` **合并模式**·**新套件必须 `print('[PASS] %s')` 字面量**·判据名禁自带标记·置 `<轮次>/`⇒`ROOT=join(HERE,'..','..')`；⑤ ★★ 量桌宠/浮层**先声明 DPI 感知**；★★★ **透明分层窗口⇒屏幕工具"可见面积"失效**（几何仍准）⇒Win32 `IsWindowVisible`+内省对账（§73.8）。
