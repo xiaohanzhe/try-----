@@ -63,7 +63,7 @@
    "bg": "bg/oneshot_map88.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map88.tmx",
-   "objects": [{"pos":[1004,80],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[63,6],"depth":112,"src":"EV002"}]
+   "objects": [{"pos":[1004,80],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[63,6],"depth":112,"src":"EV002","blend":1}]
   },
   "oneshot.unzoned.IGNORE_ToLibrary": {
    "name": "IGNORE ToLibrary",

@@ -2577,6 +2577,59 @@ SUITES = [
                 '★ 已知保真缺口（不在本锁内）：`lightmaps`/特效未接（**接了会变亮**）；'
                 '`mapColors` 只覆盖 241/263；轮询/动效帧（`anim`）未接。',
     },
+    {
+        'id': 'check104',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第104轮-物件材质保真', '_tools', 'check104.py'),
+        'offscreen': True,
+        'desc': '第一百零四轮：OneShot 物件的**材质**（原作 `opacity` / `blend_type`）'
+                '不许漂移。第103轮只接了**几何**（栅格 + 锚点 + 切帧 + 接线），'
+                '`opacity`（半透明）与 `blend_type`（加色）还躺在原作 '
+                '`events_map<N>.json` 里没人消费；本轮把它们接上：'
+                '① **数据面** `graphic.opacity`(0..255) ⇒ 物件 `alpha = opacity/255`'
+                '（**只写 != 255 的**，**34** 条）；`graphic.blend_type == 1`（加色）'
+                '⇒ `blend = 1`（**389** 条）；并集 **399** 条 / **65** 个场景 / 6 个分片。'
+                '`blend_type == 2`（减色）本数据集里**一条都没有** ⇒ 不做、只登记。'
+                '② **渲染面** `scene_render.plan_frame` 把 `blend` 透传进绘制指令'
+                '（**只在非 0 时写键** ⇒ 没材质的 7,405 条指令**一字不变**）；'
+                '`scene_canvas._paint_obj` 在 `blend == 1` 时走 '
+                '`QPainter.CompositionMode_Plus` —— '
+                '★ 为什么不自己写像素算术：Qt 的 Plus 在**不透明目标**上恰好等于 RMXP 的 '
+                '`d = min(255, d + c·a_pixel·opacity)`，且复用 Qt 的合成快路径。'
+                '★ 本轮**最有说服力的样本**：`room 101` 的 `blue_silver`'
+                '（`src = "invisible silver"`）与 `room 210` 的 `blue_npc_prototype`'
+                '（`src = "invisi-proto"`）**opacity 就是 0** —— 原作把传送点画成"隐形"的，'
+                '本轮之前被我们一五一十地**画了出来**；'
+                '`start_lightmaps` 16 条 `opacity=35/155 且 blend=1` = 原作静态光罩；'
+                '`jars_light`(189) / `tv_light`(54) / `portal_rays`(19) 清一色 `blend=1` 发光体。'
+                '★ 判据四段：'
+                'A 数据面（从 6 个分片**自己数**）：计数（34/389/399/2）· 值域'
+                '（`alpha` 必须是 `n/255`，容差 1e-3 + 容差负控制）· 键集合 ⊆ 白名单 · '
+                '★★ **正负成对**（`opacity==255 且 blend_type==0` 的 7,405 条必须'
+                '**既无 `alpha` 也无 `blend`**）· 与 `_evidence/material104.json` 逐条对账；'
+                'B 渲染面（**真 QPainter，离屏逐像素**）：`plan_frame` 原样透传 · '
+                '「无材质的指令里**没有** `blend` 键」 · ★★ **加色像素 == RMXP 公式**'
+                '（纯红 a=128 叠灰 128：`blend=1` 得 (255,128,128)、`blend=0` 得 '
+                '(192,64,64)，差 191 级 ⇒ 判据真在分辨两种合成）· 加色**乘上 opacity** · '
+                '★★ **合成模式必须还原**（加色指令之后画的普通物件仍是 SourceOver）· '
+                '`alpha == 0` 画了等于没画 · 分层（`CompositionMode_*` 只许出现在 '
+                '`scene_canvas`，AST 查 `Attribute` 不吃注释）；'
+                'C 全量接线：65 个带材质场景逐个真跑 `plan_frame`（条数 + 逐条透传 + '
+                '零缺素材）；D 纪律：工具在位 · 零外部依赖（`ni`+`ko` 拼串）· '
+                '**无恒真判据**（AST 查 `ok()` 首参）。'
+                '★ 本套件**零外部盘依赖**（原作在 C 盘，回归碰不得）⇒ 独立验收由 '
+                '`verify104.py` 承担（直接读原作 `events_map*.json` 从头复算 + '
+                '**像素级** A/B：`alpha==0` 整条删掉必须逐像素不变、`blend=1` 改回 0 '
+                '必须变亮方向正确；**不进 G2**）；变异测试 `mutate104.py` **8** 个变异'
+                '（含 3 个**产品源码**变异：删透传 / 换合成模式 / 不还原合成模式）'
+                '全部被对应判据抓到。'
+                '★ 已知保真缺口（不在本锁内）：`blend_type=2`（减色，本数据集 0 条）；'
+                '`character_hue` / `step_anime` / `move_route`（原作是 MonoGame/.NET，'
+                '**无可读脚本** ⇒ 依据不足，只登记不做）；多页**条件页**：'
+                '**7** 条事件的 page1+ 会改 `opacity`/`blend_type`（全部由 switch/variable '
+                '门控）+ **222** 条可见物件的 **page0 自带条件** ⇒ 本轮固定取 `pages[0]`'
+                '（= 原作**初始态**，开局开关全 OFF），接入存档/开关状态前它们才有依据翻页。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')

@@ -18,6 +18,13 @@ u"""verify103.py —— 第103轮**独立验收**：不复用 `build103` 的任�
         就会被当作 `col=0` 静默画错。这里单独报出来，看它到底是 0 条还是若干条。
     (c) `character_name` 指向不存在的图集 —— 必须**如实跳过**并计数（应为 1 条 `npc_BIG`）。
 
+★★ 第104轮同步（**这不是放宽判据**）：
+  第104轮把原作页的 `opacity` / `blend_type` 接进了产品物件（`alpha` / `blend`）。
+  本脚本的"独立复算"必须**同步复算**这两项，否则 V8（逐条全等）会拿
+  "没有材质键的期望"去比"有材质键的实际" ⇒ 报 65 个场景"不一致"的**假红**。
+  判据的**鉴别力没有下降**：V8 仍是逐条全等，只是期望值跟着原作字段一起长；
+  并且新增 V4b 把"独立复算出来的 34 / 389"钉住。
+
 ⚠️ 本脚本**不进 G2**（要读 C 盘原作），是"验收工具"，不是回归锁。
 """
 import collections
@@ -116,7 +123,15 @@ for n in range(1, 400):
                          (int(e.get('x') or 0), int(e.get('y') or 0)),
                          cn, pt, d,
                          bool(pgs[0].get('always_on_bottom')),
-                         bool(pgs[0].get('always_on_top'))))
+                         bool(pgs[0].get('always_on_top')),
+                         # ★★ 第104轮：**材质**两字段（`opacity` / `blend_type`）。
+                         #   第104轮把它们接进了产品 ⇒ 本脚本的"独立复算"必须**同步
+                         #   复算**，否则 V8 会拿"没有材质键的期望"去比"有材质键的
+                         #   实际" ⇒ 报 65 个场景"不一致"的**假红**。
+                         #   ⚠️ 这不是放宽判据：判据的鉴别力仍在（逐条全等），
+                         #      只是期望值跟着**原作字段**一起长。
+                         int(g.get('opacity', 255)),
+                         int(g.get('blend_type', 0))))
 print('原作事件 %d ｜ 可见物件（含缺图集）%d ｜ 缺图集 %s ｜ 怪 direction %s ｜ 怪 pattern %s'
       % (n_events, len(raw_objs) + sum(missing.values()), dict(missing),
          dict(weird_dir), dict(weird_pat)))
@@ -133,12 +148,19 @@ ok(dict(missing) == {'npc_BIG': 1},
    'V3 缺图集**恰好** 1 条 `npc_BIG`（实际 %s）—— 守恒等式右边就靠它' % (dict(missing),))
 ok(len(raw_objs) == 7804,
    'V4 ★ 独立复算的可见物件数 == 7804（实际 %d）' % len(raw_objs))
+_nA = sum(1 for t in raw_objs if t[8] != 255)
+_nB = sum(1 for t in raw_objs if t[9] == 1)
+ok((_nA, _nB) == (34, 389),
+   u'V4b ★★ 第104轮**材质**：独立复算 `opacity!=255` %d / `blend_type==1` %d'
+   u'（期望 34 / 389）—— 本脚本的期望值必须跟着这两行一起长，'
+   u'否则 V8 会拿"没有材质键的期望"去比"有材质键的实际"⇒ **假红**'
+   % (_nA, _nB))
 
 # ---------------------------------------------------------------- 2 重新裁格
 # 每格：从图集裁 → 与磁盘 PNG **逐像素**比。这是"切帧正确"的第二条独立证据。
 seen = {}
 bad_cell = []
-for (_r, _nm, _t, cn, pt, d, _a, _b) in raw_objs:
+for (_r, _nm, _t, cn, pt, d, _a, _b, _op, _bl) in raw_objs:
     seen.setdefault((cn, pt, DIR_ROW[d]), 0)
     seen[(cn, pt, DIR_ROW[d])] += 1
 for (cn, col, row) in sorted(seen):
@@ -181,7 +203,7 @@ for zf in ZONE_FILES:
 
 # 独立复算 → "产品应有的样子"
 want = collections.defaultdict(list)
-for (r, nm, t, cn, pt, d, aob, aot) in raw_objs:
+for (r, nm, t, cn, pt, d, aob, aot, op, bl) in raw_objs:
     sid = room2sid.get(r)
     assert sid, '房间 %d 没有登记场景' % r
     sw, sh = png_size(os.path.join(PROPS, cn + '.png'))
@@ -200,6 +222,11 @@ for (r, nm, t, cn, pt, d, aob, aot) in raw_objs:
         it['layer'] = 'bottom'
     elif aot:
         it['layer'] = 'top'
+    # ★★ 第104轮：材质（与 `build104` 同口径，但这里是**独立**从原作字段推的）
+    if op != 255:
+        it['alpha'] = round(op / 255.0, 6)
+    if bl == 1:
+        it['blend'] = 1
     want[sid].append(it)
 for sid in want:
     want[sid].sort(key=lambda o: (o['depth'], o['tile'][1], o['tile'][0]))
@@ -226,7 +253,7 @@ if bad_rooms:
 # ---------------------------------------------------------------- 4 按房间对账
 # 原作侧 = 写进去的 + 缺图集跳过的（缺的**必须**算进来，否则判据自相抵消）
 w_room = collections.Counter(miss_room)
-for (r, _nm, _t, _c, _p, _d, _a, _b) in raw_objs:
+for (r, _nm, _t, _c, _p, _d, _a, _b, _op, _bl) in raw_objs:
     w_room[r] += 1
 s_room = collections.Counter()
 for zf in ZONE_FILES:

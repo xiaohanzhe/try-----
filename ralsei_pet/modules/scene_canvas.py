@@ -317,11 +317,48 @@ def _paint_bg(painter, item, assets):
     return True
 
 
+def _set_plus(painter, on):
+    """切换「加色」合成模式（`CompositionMode_Plus` / 回到 `SourceOver`）。
+
+    ★ 为什么要 `getattr` 而不是直接调：回归锁会注入**假画笔**（只记调用序列），
+      它没有 `setCompositionMode`。对假画笔返回 `False`，调用方此时按普通叠加画
+      —— 真机一定是 `QPainter`，所以这条降级路径不会被产品的像素行为掩盖
+      （`check104` B3 用**真** `QPainter` 做逐像素 A/B 锚点）。
+    """
+    fn = getattr(painter, 'setCompositionMode', None)
+    if fn is None:
+        return False
+    try:
+        fn(QPainter.CompositionMode_Plus if on
+           else QPainter.CompositionMode_SourceOver)
+        return True
+    except Exception as e:
+        _log.debug("scene_canvas 切换合成模式失败（按普通叠加继续）: %s", e)
+        return False
+
+
 def _paint_obj(painter, item, assets):
     """画物件：按 `rect` 左上角落位、指定尺寸。
 
     `depth` 排序在 `scene_system.visible_objects` 已做，指令清单里的顺序
     就是绘制顺序 —— 这里**不再排序**（排序是数据层的职责，见模块 docstring）。
+
+    ★★ 第104轮：**材质**（原作的 `opacity` / `blend_type`）
+    -----------------------------------------------------
+    · `alpha`（= 原作 `opacity/255`）用 `setOpacity` 直接落笔。
+      `alpha == 0` ⇒ 画了等于没画 —— 这正是原作的表达：`room 101` 的
+      `blue_silver`（`src = "invisible silver"`）与 `room 210` 的
+      `blue_npc_prototype`（`src = "invisi-proto"`）**opacity 就是 0**，
+      它们是"隐形"的传送点，本轮之前被我们一五一十地**画了出来**。
+    · `blend == 1`（**加色**）走 `QPainter.CompositionMode_Plus`。
+      ★ 为什么不自己写像素算术：Qt 的 Plus 在**不透明目标**上恰好等于 RMXP 的
+        `d = min(255, d + c · a_pixel · opacity)`（`check104` B3 是逐像素 A/B
+        锚点，且与 SourceOver 明确可分），而手写 per-pixel Python 循环会让
+        每帧多几十毫秒。
+      ★ 画完**必须还原**合成模式，否则这一条之后的所有物件都被加色
+        （本套件 B4 专门守这条）—— 本函数**自己成对**设置/还原，不指望调用方。
+    · `blend == 2`（减色）：**本数据集里一条都没有**（`build104` 实测只有 0/1），
+      本轮**不做** ⇒ 记一条 debug 后按普通叠加画，不假装实现。
 
     :return: 是否**真的落笔**。
     """
@@ -336,8 +373,34 @@ def _paint_obj(painter, item, assets):
         painter.setPen(QPen(MISSING_OBJ_PEN))
         painter.drawRect(rect)
         return True
-    if isinstance(alpha, (int, float)) and 0.0 <= alpha < 1.0:
-        painter.setOpacity(float(alpha))
+    try:
+        a = float(alpha)
+    except (TypeError, ValueError):
+        a = 1.0
+    if not (0.0 <= a <= 1.0):
+        a = 1.0
+    blend = item.get('blend')
+    try:
+        blend = int(blend)
+    except (TypeError, ValueError):
+        blend = 0
+    if blend == 2:
+        _log.debug("scene_canvas: 物件 %r 的 blend=2（减色）本轮未实现，"
+                   "按普通叠加画", name)
+        blend = 0
+    if blend == 1 and _set_plus(painter, True):
+        if a < 1.0:
+            painter.setOpacity(a)
+        try:
+            painter.drawPixmap(rect, pm)
+        finally:
+            # ★ finally：即便 drawPixmap 抛了，也不能把合成模式留给后面的物件
+            if a < 1.0:
+                painter.setOpacity(1.0)
+            _set_plus(painter, False)
+        return True
+    if a < 1.0:
+        painter.setOpacity(a)
         painter.drawPixmap(rect, pm)
         painter.setOpacity(1.0)
     else:

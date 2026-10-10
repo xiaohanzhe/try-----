@@ -670,6 +670,20 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
             alpha = float(alpha)
         except (TypeError, ValueError):
             alpha = 1.0
+        # ★★ 第104轮：**材质** —— 原作的 `blend_type`（0 普通 / 1 加色 / 2 减色）。
+        #   本数据集的物件只出现 0/1（`build104` 只写 1），**没有减色** ⇒ 本层
+        #   只透传 `1/2`，别的值一律当"没有材质"（不静默猜"那大概是想加色"）。
+        #   ⚠️ **只在非 0 时写键**：那 7,405 条没有材质的物件，指令因此**一字不变**
+        #      —— 加一个字段不该变成"改了所有指令"（否则回归基线会被整体牵连）。
+        #   ⚠️ 本模块**不碰任何 Qt API**（纯数据层纪律，check104 B7 守着）：
+        #      "怎么把加色画出来"是 `scene_canvas` 的事。
+        blend = obj.get('blend')
+        try:
+            blend = int(blend)
+        except (TypeError, ValueError):
+            blend = 0
+        if blend not in (1, 2):
+            blend = 0
         item = {
             'kind': K_OBJ,
             'name': name if isinstance(name, str) else None,
@@ -678,6 +692,8 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
             'alpha': alpha,
             'room_known': room_known,
         }
+        if blend:
+            item['blend'] = blend
         # ★ 动效自省：把帧号/总帧数带进指令（回归锁据此断言"真的在动"，
         #   不必去比对文件名字符串 —— 后者在改名时会静默假过）。
         if isinstance(anim, dict) and n_frames > 1:
