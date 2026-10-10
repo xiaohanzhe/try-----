@@ -11,7 +11,8 @@
       "kind=image/prop/bg": "相对本目录（<仓库>/ralsei_pet/assets/scenes/）"
     },
     "zone_file_pattern": "_zone.<chapter>.<area>.json",
-    "zone_note": "场景数据有两个来源，**优先级：独立 <scene_id>.json > 区域分片**。88 个\"锚点\"场景（第 36 轮登记，含桌面 desktop）各有独立文件；另有 926 个场景住在所在 (章,区域) 分片里（**合计 1,014 个**，全部登记在 _index.json），进区域时整片读一次（\"拿火把赶夜路\"）。同一场景只出现在一个来源。zone 场景的 name 是机械裁剪后的原样名（name_derived=true），name_raw 保存完整原作资源名。"
+    "zone_note": "场景数据有两个来源，**优先级：独立 <scene_id>.json > 区域分片**。88 个\"锚点\"场景（第 36 轮登记，含桌面 desktop）各有独立文件；另有 926 个场景住在所在 (章,区域) 分片里（**合计 1,014 个**，全部登记在 _index.json），进区域时整片读一次（\"拿火把赶夜路\"）。同一场景只出现在一个来源。zone 场景的 name 是机械裁剪后的原样名（name_derived=true），name_raw 保存完整原作资源名。",
+    "objects_source": "物件数据**只在区域分片**里（`objects`）；`_index.json` 内联副本的 `objects` 恒为**占位空表** —— 场景体由 `scene_system.load_scene` 从「独立文件 > 区域分片」取，索引行只提供 章/区/房间号。第101轮 `bg` 三字段两层同名是因为它只有几十字节；物件是 78 万字节的**派生**数据（由 tile/dir/pattern + 栅格规则可重算），再抄一份进索引没有收益。栅格与锚点规则见第103轮报告 §103 与 check103 A 段。"
   },
   "default_scene": "desktop",
   "chapters": {

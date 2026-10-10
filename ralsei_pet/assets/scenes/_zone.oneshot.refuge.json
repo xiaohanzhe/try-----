@@ -23,7 +23,7 @@
    "bg": "bg/oneshot_map22.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map22.tmx",
-   "objects": []
+   "objects": [{"pos":[156,176],"sprite":"oneshot_cells/niko_red_interior__c0r0.png","tile":[10,12],"depth":208,"src":"niko"},{"pos":[185,158],"sprite":"oneshot_cells/red_lamplighter_elevator__c0r0.png","tile":[12,12],"depth":208,"src":"plight"}]
   },
   "oneshot.refuge.store_pan": {
    "name": "store pan",
@@ -43,7 +43,7 @@
    "bg": "bg/oneshot_map47.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map47.tmx",
-   "objects": []
+   "objects": [{"pos":[719,636],"sprite":"oneshot_cells/guardians__c2r0.png","tile":[46,45],"depth":736,"src":"guardian"}]
   },
   "oneshot.refuge.Elevator_Deck": {
    "name": "Elevator Deck",
@@ -53,7 +53,7 @@
    "bg": "bg/oneshot_map48.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map48.tmx",
-   "objects": []
+   "objects": [{"pos":[44,32],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[3,3],"depth":64,"src":"robot"},{"pos":[684,448],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[43,29],"depth":480,"src":"EV042"},{"pos":[1228,448],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[77,29],"depth":480,"src":"EV018"},{"pos":[944,704],"sprite":"oneshot_cells/red_elevator__c0r0.png","tile":[60,46],"depth":752,"src":"elevator doors"},{"pos":[1228,720],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[77,46],"depth":752,"src":"EV020"},{"pos":[1532,720],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[96,46],"depth":752,"src":"EV040"},{"pos":[940,736],"sprite":"oneshot_cells/red_glitch__c3r3.png","tile":[59,47],"depth":768,"src":"demo glitch 2"},{"pos":[956,736],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[60,47],"depth":768,"src":"demo glitch 1"},{"pos":[972,736],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[61,47],"depth":768,"src":"demo glitch 2"},{"pos":[1008,752],"sprite":"oneshot_cells/red_catwalks_puzzles__c2r0.png","tile":[63,47],"depth":768,"src":"you tried"},{"pos":[953,734],"sprite":"oneshot_cells/red_lamplighter__c0r3.png","tile":[60,48],"depth":784,"src":"npc_plight"},{"pos":[1596,752],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[100,48],"depth":784,"src":"EV053"},{"pos":[1452,816],"sprite":"oneshot_cells/red_scenery1__c2r0.png","tile":[91,52],"depth":848,"src":"EV041"},{"pos":[1260,832],"sprite":"oneshot_cells/red_glitch_robot__c3r0.png","tile":[79,53],"depth":864,"src":"EV024"},{"pos":[1244,848],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[78,54],"depth":880,"src":"EV030"},{"pos":[940,704],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[59,45],"depth":1000736,"src":"demo glitch 2","layer":"top"},{"pos":[956,704],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[60,45],"depth":1000736,"src":"demo glitch 1","layer":"top"},{"pos":[972,704],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[61,45],"depth":1000736,"src":"demo glitch 1","layer":"top"}]
   },
   "oneshot.refuge.Apartments": {
    "name": "Apartments",
@@ -63,7 +63,7 @@
    "bg": "bg/oneshot_map49.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map49.tmx",
-   "objects": []
+   "objects": [{"pos":[508,576],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[32,37],"depth":608,"src":"EV004"},{"pos":[476,656],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[30,42],"depth":688,"src":"EV005"},{"pos":[620,656],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[39,42],"depth":688,"src":"EV006"},{"pos":[588,672],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[37,43],"depth":704,"src":"EV009"}]
   },
   "oneshot.refuge.stairwell": {
    "name": "stairwell",
@@ -83,7 +83,7 @@
    "bg": "bg/oneshot_map51.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map51.tmx",
-   "objects": []
+   "objects": [{"pos":[624,288],"sprite":"oneshot_cells/red_books__c0r0.png","tile":[39,18],"depth":304,"src":"first aid kit"},{"pos":[272,336],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[17,21],"depth":352,"src":"!collectible"},{"pos":[288,336],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[18,21],"depth":352,"src":"!collectible"},{"pos":[304,336],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[19,21],"depth":352,"src":"!collectible"},{"pos":[320,336],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[20,21],"depth":352,"src":"!collectible"},{"pos":[316,352],"sprite":"oneshot_cells/red_npc_george1__c0r0.png","tile":[20,23],"depth":384,"src":"npc_george"},{"pos":[208,400],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[13,25],"depth":416,"src":"!collectible"},{"pos":[224,400],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[14,25],"depth":416,"src":"!collectible"},{"pos":[480,416],"sprite":"oneshot_cells/red_books__c0r0.png","tile":[30,26],"depth":432,"src":"first aid kit"},{"pos":[592,416],"sprite":"oneshot_cells/red_books__c0r0.png","tile":[37,26],"depth":432,"src":"first aid kit"},{"pos":[640,416],"sprite":"oneshot_cells/red_books__c0r0.png","tile":[40,26],"depth":432,"src":"first aid kit"}]
   },
   "oneshot.refuge.Cafe": {
    "name": "Cafe",
@@ -93,7 +93,7 @@
    "bg": "bg/oneshot_map52.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map52.tmx",
-   "objects": []
+   "objects": [{"pos":[684,480],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[43,31],"depth":512,"src":"EV008"},{"pos":[828,480],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[52,31],"depth":512,"src":"EV007"},{"pos":[304,528],"sprite":"oneshot_cells/collectible__c0r0.png","tile":[19,33],"depth":544,"src":"!collectible"},{"pos":[668,512],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[42,33],"depth":544,"src":"EV011"},{"pos":[380,528],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[24,34],"depth":560,"src":"EV012"},{"pos":[684,576],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[43,37],"depth":608,"src":"EV006"},{"pos":[828,576],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[52,37],"depth":608,"src":"EV004"},{"pos":[396,608],"sprite":"oneshot_cells/red_glitch__c3r3.png","tile":[25,39],"depth":640,"src":"demo glitch 2"},{"pos":[476,608],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[30,39],"depth":640,"src":"EV010"}]
   },
   "oneshot.refuge.Cafe_inside": {
    "name": "Cafe inside",
@@ -103,7 +103,7 @@
    "bg": "bg/oneshot_map53.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map53.tmx",
-   "objects": []
+   "objects": [{"pos":[409,494],"sprite":"oneshot_cells/red_npc_cafe__c1r0.png","tile":[26,33],"depth":544,"src":"ling"},{"pos":[512,528],"sprite":"oneshot_cells/red_catwalks_puzzles__c1r0.png","tile":[32,33],"depth":544,"src":"tin"},{"pos":[576,576],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[36,36],"depth":592,"src":"!collectible"},{"pos":[528,576],"sprite":"oneshot_cells/collectible__c0r0.png","tile":[33,36],"depth":1000592,"src":"!collectible","layer":"top"}]
   },
   "oneshot.refuge.Garden": {
    "name": "Garden",
@@ -113,7 +113,7 @@
    "bg": "bg/oneshot_map54.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map54.tmx",
-   "objects": []
+   "objects": [{"pos":[624,320],"sprite":"oneshot_cells/collectible__c0r0.png","tile":[39,20],"depth":336,"src":"!collectible"}]
   },
   "oneshot.refuge.Lobby": {
    "name": "Lobby",
@@ -123,7 +123,7 @@
    "bg": "bg/oneshot_map72.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map72.tmx",
-   "objects": []
+   "objects": [{"pos":[480,0],"sprite":"oneshot_cells/green_marimo2__c0r0.png","tile":[30,0],"depth":16,"src":"EV033"},{"pos":[492,-16],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[31,0],"depth":16,"src":"EV034"},{"pos":[512,0],"sprite":"oneshot_cells/clovers__c0r0.png","tile":[32,0],"depth":16,"src":"EV035"},{"pos":[700,-16],"sprite":"oneshot_cells/blue_nursebot__c1r0.png","tile":[44,0],"depth":16,"src":"EV036"},{"pos":[716,-16],"sprite":"oneshot_cells/blue_npc_prophet__c0r0.png","tile":[45,0],"depth":16,"src":"EV037"},{"pos":[649,158],"sprite":"oneshot_cells/red_npc_2__c1r0.png","tile":[41,12],"depth":208,"src":"EV017"},{"pos":[288,224],"sprite":"oneshot_cells/collectible__c0r0.png","tile":[18,14],"depth":240,"src":"!collectible"},{"pos":[569,222],"sprite":"oneshot_cells/red_npc_robots_special__c1r0.png","tile":[36,16],"depth":272,"src":"librarian"},{"pos":[249,302],"sprite":"oneshot_cells/red_npc_library2__c1r0.png","tile":[16,21],"depth":352,"src":"EV052"},{"pos":[352,336],"sprite":"oneshot_cells/red_books2__c0r0.png","tile":[22,21],"depth":352,"src":"EV050"},{"pos":[409,302],"sprite":"oneshot_cells/red_npc_library2__c2r0.png","tile":[26,21],"depth":352,"src":"EV054"},{"pos":[288,320],"sprite":"oneshot_cells/red_npc_library__c0r0.png","tile":[19,22],"depth":368,"src":"luca"},{"pos":[448,352],"sprite":"oneshot_cells/red_books2__c1r0.png","tile":[28,22],"depth":368,"src":"bork"},{"pos":[832,304],"sprite":"oneshot_cells/red_npc_table__c0r0.png","tile":[54,22],"depth":368,"src":"EV001"},{"pos":[352,336],"sprite":"oneshot_cells/red_npc_library__c3r0.png","tile":[23,23],"depth":384,"src":"EV051"},{"pos":[633,430],"sprite":"oneshot_cells/red_npc_library2__c3r0.png","tile":[40,29],"depth":480,"src":"EV057"},{"pos":[361,606],"sprite":"oneshot_cells/red_npc_library2__c0r0.png","tile":[23,40],"depth":656,"src":"Whitney"},{"pos":[448,688],"sprite":"oneshot_cells/red_npc_library__c2r0.png","tile":[29,45],"depth":736,"src":"Ysef"},{"pos":[368,720],"sprite":"oneshot_cells/red_npc_library__c1r0.png","tile":[24,47],"depth":768,"src":"EV063"},{"pos":[832,672],"sprite":"oneshot_cells/red_catwalks_puzzles2__c1r0.png","tile":[53,44],"depth":1000720,"src":"EV043","layer":"top"}]
   },
   "oneshot.refuge.Top_floor": {
    "name": "Top floor",
@@ -153,7 +153,7 @@
    "bg": "bg/oneshot_map86.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map86.tmx",
-   "objects": []
+   "objects": [{"pos":[1472,912],"sprite":"oneshot_cells/water_waves_red__c0r0.png","tile":[92,57],"depth":928,"src":"EV012"},{"pos":[1712,912],"sprite":"oneshot_cells/water_waves_red__c3r0.png","tile":[107,57],"depth":928,"src":"EV014"},{"pos":[1488,928],"sprite":"oneshot_cells/water_waves_red__c0r0.png","tile":[93,58],"depth":944,"src":"EV011"},{"pos":[1696,928],"sprite":"oneshot_cells/water_waves_red__c3r0.png","tile":[106,58],"depth":944,"src":"EV015"},{"pos":[1504,944],"sprite":"oneshot_cells/water_waves_red__c0r0.png","tile":[94,59],"depth":960,"src":"EV010"},{"pos":[1680,944],"sprite":"oneshot_cells/water_waves_red__c3r0.png","tile":[105,59],"depth":960,"src":"EV013"},{"pos":[1520,960],"sprite":"oneshot_cells/water_waves_red__c2r0.png","tile":[95,60],"depth":976,"src":"EV023"},{"pos":[1536,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[96,60],"depth":976,"src":"EV016"},{"pos":[1552,960],"sprite":"oneshot_cells/water_waves_red__c2r0.png","tile":[97,60],"depth":976,"src":"EV022"},{"pos":[1568,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[98,60],"depth":976,"src":"EV017"},{"pos":[1616,960],"sprite":"oneshot_cells/water_waves_red__c2r0.png","tile":[101,60],"depth":976,"src":"EV018"},{"pos":[1632,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[102,60],"depth":976,"src":"EV021"},{"pos":[1648,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[103,60],"depth":976,"src":"EV020"},{"pos":[1664,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[104,60],"depth":976,"src":"EV019"},{"pos":[1600,624],"sprite":"oneshot_cells/collectible__c2r0.png","tile":[100,39],"depth":1000640,"src":"!collectible","layer":"top"}]
   },
   "oneshot.refuge.Hall1": {
    "name": "Hall1",
@@ -163,7 +163,7 @@
    "bg": "bg/oneshot_map95.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map95.tmx",
-   "objects": []
+   "objects": [{"pos":[224,144],"sprite":"oneshot_cells/DOORS__c2r0.png","tile":[14,10],"depth":176,"src":"door 3"},{"pos":[304,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[19,10],"depth":176,"src":"EV013"},{"pos":[384,144],"sprite":"oneshot_cells/DOORS__c2r0.png","tile":[24,10],"depth":176,"src":"door 2"},{"pos":[464,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[29,10],"depth":176,"src":"EV015"},{"pos":[672,144],"sprite":"oneshot_cells/DOORS__c2r0.png","tile":[42,10],"depth":176,"src":"door 1"},{"pos":[752,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[47,10],"depth":176,"src":"EV016"},{"pos":[832,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[52,10],"depth":176,"src":"EV014"},{"pos":[912,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[57,10],"depth":176,"src":"EV017"}]
   },
   "oneshot.refuge.X_room": {
    "name": "X room",
@@ -183,7 +183,7 @@
    "bg": "bg/oneshot_map98.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map98.tmx",
-   "objects": []
+   "objects": [{"pos":[304,224],"sprite":"oneshot_cells/red_light_puzzle_off__c0r0.png","tile":[19,14],"depth":240,"src":"1"},{"pos":[320,224],"sprite":"oneshot_cells/red_light_puzzle_off__c1r0.png","tile":[20,14],"depth":240,"src":"2"},{"pos":[336,224],"sprite":"oneshot_cells/red_light_puzzle_off__c1r0.png","tile":[21,14],"depth":240,"src":"3"},{"pos":[352,224],"sprite":"oneshot_cells/red_light_puzzle_off__c1r0.png","tile":[22,14],"depth":240,"src":"4"},{"pos":[368,224],"sprite":"oneshot_cells/red_light_puzzle_off__c2r0.png","tile":[23,14],"depth":240,"src":"5"},{"pos":[384,224],"sprite":"oneshot_cells/red_light_puzzle__c3r0.png","tile":[24,14],"depth":240,"src":"button"},{"pos":[432,208],"sprite":"oneshot_cells/door_automatic__c0r0.png","tile":[28,14],"depth":240,"src":"door GRAPHIC"},{"pos":[412,224],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[26,15],"depth":256,"src":"npc_mmrobot"}]
   },
   "oneshot.refuge.lamplighter_house": {
    "name": "lamplighter house",
@@ -193,7 +193,7 @@
    "bg": "bg/oneshot_map99.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map99.tmx",
-   "objects": []
+   "objects": [{"pos":[208,144],"sprite":"oneshot_cells/red_elevator__c3r0.png","tile":[14,11],"depth":192,"src":"lenses"},{"pos":[144,192],"sprite":"oneshot_cells/jars_new__c2r0.png","tile":[9,12],"depth":208,"src":"EV002"},{"pos":[256,192],"sprite":"oneshot_cells/red_books2__c0r0.png","tile":[16,12],"depth":208,"src":"EV022"},{"pos":[112,160],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[9,14],"depth":1000240,"src":"EV019","layer":"top"}]
   },
   "oneshot.refuge.courtyard": {
    "name": "courtyard",
@@ -203,7 +203,7 @@
    "bg": "bg/oneshot_map104.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map104.tmx",
-   "objects": []
+   "objects": [{"pos":[588,416],"sprite":"oneshot_cells/red_glitch_robot__c3r0.png","tile":[37,27],"depth":448,"src":"EV011"},{"pos":[604,416],"sprite":"oneshot_cells/red_glitch__c3r0.png","tile":[38,27],"depth":448,"src":"EV013"},{"pos":[553,414],"sprite":"oneshot_cells/red_scientists3__c1r0.png","tile":[35,28],"depth":464,"src":"EV009"},{"pos":[588,432],"sprite":"oneshot_cells/red_glitch_robot__c0r0.png","tile":[37,28],"depth":464,"src":"EV010"},{"pos":[604,432],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[38,28],"depth":464,"src":"EV012"}]
   },
   "oneshot.refuge.left__pools": {
    "name": "left- pools",
@@ -213,7 +213,7 @@
    "bg": "bg/oneshot_map105.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map105.tmx",
-   "objects": []
+   "objects": [{"pos":[272,288],"sprite":"oneshot_cells/collectible__c2r0.png","tile":[17,18],"depth":304,"src":"!collectible"},{"pos":[384,288],"sprite":"oneshot_cells/red_npc_table__c2r0.png","tile":[26,21],"depth":352,"src":"EV005"}]
   },
   "oneshot.refuge.right_3d_printers": {
    "name": "right-3d printers",
@@ -223,7 +223,7 @@
    "bg": "bg/oneshot_map106.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map106.tmx",
-   "objects": []
+   "objects": [{"pos":[320,240],"sprite":"oneshot_cells/robot_box__c0r0.png","tile":[21,18],"depth":304,"src":"EV011"},{"pos":[508,288],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[32,19],"depth":320,"src":"EV006"},{"pos":[560,256],"sprite":"oneshot_cells/robot_box__c0r0.png","tile":[36,19],"depth":320,"src":"EV009"},{"pos":[364,320],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[23,21],"depth":352,"src":"EV005"},{"pos":[428,336],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[27,22],"depth":368,"src":"EV012"},{"pos":[572,384],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[36,25],"depth":416,"src":"EV008"}]
   },
   "oneshot.refuge.Power_room": {
    "name": "Power room",
@@ -233,7 +233,7 @@
    "bg": "bg/oneshot_map108.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map108.tmx",
-   "objects": []
+   "objects": [{"pos":[272,192],"sprite":"oneshot_cells/blue_powercore2__c1r0.png","tile":[20,16],"depth":272,"src":"!generator"},{"pos":[316,256],"sprite":"oneshot_cells/red_robots__c0r3.png","tile":[20,17],"depth":288,"src":"npc_mechanic"},{"pos":[361,286],"sprite":"oneshot_cells/red_terminals_extra__c0r0.png","tile":[23,20],"depth":336,"src":"computer"},{"pos":[268,352],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[17,23],"depth":384,"src":"EV008"},{"pos":[288,368],"sprite":"oneshot_cells/red_catwalks_puzzles__c3r0.png","tile":[18,23],"depth":384,"src":"tape"}]
   },
   "oneshot.refuge.Room1___bot": {
    "name": "Room1 - bot",
@@ -243,7 +243,7 @@
    "bg": "bg/oneshot_map109.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map109.tmx",
-   "objects": []
+   "objects": [{"pos":[384,160],"sprite":"oneshot_cells/collectible__c2r0.png","tile":[24,10],"depth":176,"src":"!collectible"},{"pos":[252,192],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[16,13],"depth":224,"src":"npc_protectbot"}]
   },
   "oneshot.refuge.Tower_deck": {
    "name": "Tower deck",
@@ -263,7 +263,7 @@
    "bg": "bg/oneshot_map111.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map111.tmx",
-   "objects": []
+   "objects": [{"pos":[192,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[12,10],"depth":176,"src":"EV010"},{"pos":[272,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[17,10],"depth":176,"src":"EV011"},{"pos":[352,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[22,10],"depth":176,"src":"EV012"},{"pos":[432,144],"sprite":"oneshot_cells/DOORS__c2r0.png","tile":[27,10],"depth":176,"src":"door6"},{"pos":[640,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[40,10],"depth":176,"src":"EV013"},{"pos":[720,144],"sprite":"oneshot_cells/DOORS__c2r0.png","tile":[45,10],"depth":176,"src":"Door5"},{"pos":[800,144],"sprite":"oneshot_cells/DOORS__c2r0.png","tile":[50,10],"depth":176,"src":"door4"},{"pos":[880,144],"sprite":"oneshot_cells/DOORS__c3r0.png","tile":[55,10],"depth":176,"src":"EV003"}]
   },
   "oneshot.refuge.2nd_room": {
    "name": "2nd room",
@@ -273,7 +273,7 @@
    "bg": "bg/oneshot_map112.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map112.tmx",
-   "objects": []
+   "objects": [{"pos":[393,222],"sprite":"oneshot_cells/red_scientists2__c0r0.png","tile":[25,16],"depth":272,"src":"EV011"},{"pos":[537,286],"sprite":"oneshot_cells/red_scientists2__c1r0.png","tile":[34,20],"depth":336,"src":"EV012"},{"pos":[313,318],"sprite":"oneshot_cells/red_scientists3__c0r0.png","tile":[20,22],"depth":368,"src":"EV013"}]
   },
   "oneshot.refuge.Kip": {
    "name": "Kip",
@@ -283,7 +283,7 @@
    "bg": "bg/oneshot_map113.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map113.tmx",
-   "objects": []
+   "objects": [{"pos":[320,208],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[20,13],"depth":224,"src":"!collectible"},{"pos":[265,190],"sprite":"oneshot_cells/red_kip__c0r0.png","tile":[17,14],"depth":240,"src":"kip"},{"pos":[220,192],"sprite":"oneshot_cells/red_scenery__c3r0.png","tile":[14,13],"depth":1000224,"src":"screwdriver","layer":"top"}]
   },
   "oneshot.refuge.left_terminals": {
    "name": "left-terminals",
@@ -293,7 +293,7 @@
    "bg": "bg/oneshot_map114.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map114.tmx",
-   "objects": []
+   "objects": [{"pos":[320,240],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[21,17],"depth":288,"src":"EV006"},{"pos":[368,240],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[24,17],"depth":288,"src":"EV007"},{"pos":[416,240],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[27,17],"depth":288,"src":"EV008"},{"pos":[464,240],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[30,17],"depth":288,"src":"EV009"},{"pos":[512,240],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[33,17],"depth":288,"src":"EV010"},{"pos":[560,240],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[36,17],"depth":288,"src":"EV011"},{"pos":[473,254],"sprite":"oneshot_cells/red_scientists__c2r0.png","tile":[30,18],"depth":304,"src":"EV012"},{"pos":[617,254],"sprite":"oneshot_cells/red_scientists__c0r0.png","tile":[39,18],"depth":304,"src":"EV013"},{"pos":[336,304],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[22,21],"depth":352,"src":"EV020"},{"pos":[384,304],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[25,21],"depth":352,"src":"EV019"},{"pos":[432,304],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[28,21],"depth":352,"src":"EV018"},{"pos":[480,304],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[31,21],"depth":352,"src":"EV017"},{"pos":[528,304],"sprite":"oneshot_cells/red_terminals__c1r0.png","tile":[34,21],"depth":352,"src":"EV015"},{"pos":[521,318],"sprite":"oneshot_cells/red_scientists__c3r0.png","tile":[33,22],"depth":368,"src":"EV014"},{"pos":[377,334],"sprite":"oneshot_cells/red_scientists__c1r0.png","tile":[24,23],"depth":384,"src":"EV001"}]
   },
   "oneshot.refuge.right_robots": {
    "name": "right-robots",
@@ -303,7 +303,7 @@
    "bg": "bg/oneshot_map115.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map115.tmx",
-   "objects": []
+   "objects": [{"pos":[396,272],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[25,18],"depth":304,"src":"EV014"},{"pos":[284,288],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[18,19],"depth":320,"src":"EV008"},{"pos":[300,288],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[19,19],"depth":320,"src":"EV009"},{"pos":[316,288],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[20,19],"depth":320,"src":"EV010"},{"pos":[332,288],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[21,19],"depth":320,"src":"EV011"},{"pos":[364,288],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[23,19],"depth":320,"src":"EV012"},{"pos":[380,288],"sprite":"oneshot_cells/blue_robots_depowered__c3r1.png","tile":[24,19],"depth":320,"src":"EV015"},{"pos":[396,288],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[25,19],"depth":320,"src":"EV013"},{"pos":[329,318],"sprite":"oneshot_cells/red_scientists2__c3r0.png","tile":[21,22],"depth":368,"src":"EV005"},{"pos":[553,318],"sprite":"oneshot_cells/red_scientists2__c2r0.png","tile":[35,22],"depth":368,"src":"EV007"},{"pos":[364,352],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[23,23],"depth":384,"src":"EV006"}]
   },
   "oneshot.refuge.Office": {
    "name": "Office",
@@ -323,7 +323,7 @@
    "bg": "bg/oneshot_map117.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map117.tmx",
-   "objects": []
+   "objects": [{"pos":[272,176],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[17,11],"depth":192,"src":"!collectible"},{"pos":[297,142],"sprite":"oneshot_cells/red_npc_1__c1r0.png","tile":[19,11],"depth":192,"src":"watcher"}]
   },
   "oneshot.refuge.stairwell_2": {
    "name": "stairwell",
@@ -333,7 +333,7 @@
    "bg": "bg/oneshot_map119.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map119.tmx",
-   "objects": []
+   "objects": [{"pos":[588,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[37,54],"depth":880,"src":"EV015"},{"pos":[604,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[38,54],"depth":880,"src":"EV014"},{"pos":[620,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[39,54],"depth":880,"src":"EV013"},{"pos":[636,823],"sprite":"oneshot_cells/countdown__c3r2.png","tile":[40,54],"depth":880,"src":"EV017"},{"pos":[652,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[41,54],"depth":880,"src":"EV012"},{"pos":[668,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[42,54],"depth":880,"src":"EV011"},{"pos":[684,823],"sprite":"oneshot_cells/countdown__c3r2.png","tile":[43,54],"depth":880,"src":"EV018"},{"pos":[700,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[44,54],"depth":880,"src":"EV010"},{"pos":[716,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[45,54],"depth":880,"src":"EV009"},{"pos":[732,823],"sprite":"oneshot_cells/countdown__c3r2.png","tile":[46,54],"depth":880,"src":"EV019"},{"pos":[748,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[47,54],"depth":880,"src":"EV008"},{"pos":[764,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[48,54],"depth":880,"src":"EV007"},{"pos":[656,880],"sprite":"oneshot_cells/countdown_door__c0r1.png","tile":[43,57],"depth":928,"src":"countdown door"},{"pos":[912,1408],"sprite":"oneshot_cells/pc__c3r0.png","tile":[58,89],"depth":1440,"src":"pc"},{"pos":[672,816],"sprite":"oneshot_cells/collectible__c0r0.png","tile":[42,51],"depth":1000832,"src":"!collectible","layer":"top"}]
   },
   "oneshot.refuge.Observation_Deck": {
    "name": "Observation Deck",
@@ -353,7 +353,7 @@
    "bg": "bg/oneshot_map121.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map121.tmx",
-   "objects": []
+   "objects": [{"pos":[777,366],"sprite":"oneshot_cells/red_npc_1__c2r0.png","tile":[49,25],"depth":416,"src":"EV009"},{"pos":[224,400],"sprite":"oneshot_cells/red_catwalks_puzzles2__c0r0.png","tile":[15,27],"depth":448,"src":"fridge"}]
   },
   "oneshot.refuge.bathroom": {
    "name": "bathroom",
@@ -363,7 +363,7 @@
    "bg": "bg/oneshot_map122.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map122.tmx",
-   "objects": []
+   "objects": [{"pos":[608,192],"sprite":"oneshot_cells/red_catwalks_puzzles__c0r0.png","tile":[38,12],"depth":208,"src":"scissors"}]
   },
   "oneshot.refuge.landing": {
    "name": "landing",
@@ -383,7 +383,7 @@
    "bg": "bg/oneshot_map124.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map124.tmx",
-   "objects": []
+   "objects": [{"pos":[396,128],"sprite":"oneshot_cells/red_misc__c2r1.png","tile":[25,9],"depth":160,"src":"EV003"},{"pos":[377,222],"sprite":"oneshot_cells/red_npc_3__c1r0.png","tile":[24,16],"depth":272,"src":"EV001"}]
   },
   "oneshot.refuge.Room3___bot_friend": {
    "name": "Room3 - bot friend",
@@ -393,7 +393,7 @@
    "bg": "bg/oneshot_map125.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map125.tmx",
-   "objects": []
+   "objects": [{"pos":[265,110],"sprite":"oneshot_cells/red_npc_3__c0r0.png","tile":[17,9],"depth":160,"src":"EV004"},{"pos":[252,192],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[16,13],"depth":224,"src":"EV003"}]
   },
   "oneshot.refuge.Room4___bird": {
    "name": "Room4 - bird",
@@ -403,7 +403,7 @@
    "bg": "bg/oneshot_map129.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map129.tmx",
-   "objects": []
+   "objects": [{"pos":[252,128],"sprite":"oneshot_cells/green_npc_adult3__c0r0.png","tile":[16,9],"depth":160,"src":"EV002"},{"pos":[268,208],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[17,14],"depth":240,"src":"ram"},{"pos":[332,240],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[21,16],"depth":272,"src":"decorative bell"},{"pos":[412,240],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[26,16],"depth":272,"src":"decorative bell"}]
   },
   "oneshot.refuge.Room5___roomba": {
    "name": "Room5 - roomba",
@@ -413,7 +413,7 @@
    "bg": "bg/oneshot_map130.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map130.tmx",
-   "objects": []
+   "objects": [{"pos":[601,-18],"sprite":"oneshot_cells/red_npc_lampbot__c0r0.png","tile":[38,1],"depth":32,"src":"EV003"},{"pos":[300,240],"sprite":"oneshot_cells/roomba2__c0r0.png","tile":[19,16],"depth":272,"src":"roomba"}]
   },
   "oneshot.refuge.Room6___plant": {
    "name": "Room6 - plant",
@@ -423,7 +423,7 @@
    "bg": "bg/oneshot_map132.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map132.tmx",
-   "objects": []
+   "objects": [{"pos":[329,110],"sprite":"oneshot_cells/red_npc_2__c3r0.png","tile":[21,9],"depth":160,"src":"npc_mason"},{"pos":[400,208],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[25,13],"depth":224,"src":"!collectible"}]
   },
   "oneshot.refuge.Photo_center": {
    "name": "Photo center",
@@ -433,7 +433,7 @@
    "bg": "bg/oneshot_map134.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map134.tmx",
-   "objects": []
+   "objects": [{"pos":[256,112],"sprite":"oneshot_cells/red_npc_table__c1r0.png","tile":[18,10],"depth":176,"src":"light"},{"pos":[304,208],"sprite":"oneshot_cells/red_light_puzzle__c3r0.png","tile":[19,13],"depth":224,"src":"switch"},{"pos":[288,208],"sprite":"oneshot_cells/red_camera__c3r0.png","tile":[18,14],"depth":240,"src":"photo"},{"pos":[240,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[15,15],"depth":256,"src":"!lens"},{"pos":[256,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[16,15],"depth":256,"src":"!lens"},{"pos":[320,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[20,15],"depth":256,"src":"!lens"},{"pos":[336,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[21,15],"depth":256,"src":"!lens"}]
   },
   "oneshot.refuge.SECRET_RAM_CLUB": {
    "name": "SECRET RAM CLUB",
@@ -443,7 +443,7 @@
    "bg": "bg/oneshot_map135.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map135.tmx",
-   "objects": []
+   "objects": [{"pos":[256,128],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[16,8],"depth":144,"src":"!collectible"},{"pos":[172,144],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[11,10],"depth":176,"src":"decorative bell"},{"pos":[204,144],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[13,10],"depth":176,"src":"decorative bell"},{"pos":[236,144],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[15,10],"depth":176,"src":"decorative bell"},{"pos":[252,144],"sprite":"oneshot_cells/green_npc_misc__c1r0.png","tile":[16,10],"depth":176,"src":"shephard"},{"pos":[284,144],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[18,10],"depth":176,"src":"decorative bell"},{"pos":[316,144],"sprite":"oneshot_cells/green_scenery1__c0r1.png","tile":[20,10],"depth":176,"src":"decorative bell"},{"pos":[268,160],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[17,11],"depth":192,"src":"ram4"},{"pos":[172,176],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[11,12],"depth":208,"src":"ram1"},{"pos":[204,176],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[13,12],"depth":208,"src":"ram2"},{"pos":[300,176],"sprite":"oneshot_cells/green_npc_ram__c0r1.png","tile":[19,12],"depth":208,"src":"static"},{"pos":[172,192],"sprite":"oneshot_cells/green_npc_misc__c3r0.png","tile":[11,13],"depth":224,"src":"read only"},{"pos":[252,192],"sprite":"oneshot_cells/green_npc_ram__c2r1.png","tile":[16,13],"depth":224,"src":"demon ram"},{"pos":[316,192],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[20,13],"depth":224,"src":"ram5"},{"pos":[176,224],"sprite":"oneshot_cells/collectible__c0r0.png","tile":[11,14],"depth":240,"src":"!collectible"},{"pos":[320,224],"sprite":"oneshot_cells/items_tut__c0r0.png","tile":[20,14],"depth":240,"src":"EV015"},{"pos":[204,224],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[13,15],"depth":256,"src":"ram3"},{"pos":[300,224],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[19,15],"depth":256,"src":"ram6"}]
   },
   "oneshot.refuge.rue": {
    "name": "rue",
@@ -453,7 +453,7 @@
    "bg": "bg/oneshot_map137.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map137.tmx",
-   "objects": []
+   "objects": [{"pos":[332,304],"sprite":"oneshot_cells/red_rue__c0r0.png","tile":[21,20],"depth":336,"src":"EV012"},{"pos":[348,304],"sprite":"oneshot_cells/red_rue__c0r0.png","tile":[22,20],"depth":336,"src":"Rue"},{"pos":[320,336],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[20,21],"depth":352,"src":"!collectible"}]
   },
   "oneshot.refuge.guest_room": {
    "name": "guest room",
@@ -463,7 +463,7 @@
    "bg": "bg/oneshot_map176.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map176.tmx",
-   "objects": []
+   "objects": [{"pos":[272,160],"sprite":"oneshot_cells/red_books2__c0r0.png","tile":[17,10],"depth":176,"src":"georgebook"},{"pos":[208,144],"sprite":"oneshot_cells/bed__c0r0.png","tile":[14,11],"depth":192,"src":"EV001"}]
   },
   "oneshot.refuge.sleepville": {
    "name": "sleepville",
@@ -473,7 +473,7 @@
    "bg": "bg/oneshot_map186.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map186.tmx",
-   "objects": []
+   "objects": [{"pos":[256,320],"sprite":"oneshot_cells/bed__c0r0.png","tile":[17,22],"depth":368,"src":"bed"}]
   },
   "oneshot.refuge.fish_house": {
    "name": "fish house",
@@ -483,7 +483,7 @@
    "bg": "bg/oneshot_map187.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map187.tmx",
-   "objects": []
+   "objects": [{"pos":[272,112],"sprite":"oneshot_cells/red_fishtanks__c2r0.png","tile":[18,10],"depth":176,"src":"tank small"},{"pos":[320,112],"sprite":"oneshot_cells/red_fishtanks__c3r0.png","tile":[21,10],"depth":176,"src":"tank big"},{"pos":[272,128],"sprite":"oneshot_cells/red_fishtanks__c0r0.png","tile":[18,11],"depth":192,"src":"EV007"},{"pos":[320,128],"sprite":"oneshot_cells/red_fishtanks__c1r0.png","tile":[21,11],"depth":192,"src":"EV008"},{"pos":[208,160],"sprite":"oneshot_cells/red_fishtanks__c2r0.png","tile":[14,13],"depth":224,"src":"tank small"},{"pos":[249,174],"sprite":"oneshot_cells/red_npc_2__c0r0.png","tile":[16,13],"depth":224,"src":"npc_fishbowl"},{"pos":[208,176],"sprite":"oneshot_cells/red_fishtanks__c0r0.png","tile":[14,14],"depth":240},{"pos":[272,192],"sprite":"oneshot_cells/red_fishtanks__c3r0.png","tile":[18,15],"depth":256,"src":"tank big"},{"pos":[320,192],"sprite":"oneshot_cells/red_fishtanks__c3r0.png","tile":[21,15],"depth":256,"src":"tank big"},{"pos":[272,208],"sprite":"oneshot_cells/red_fishtanks__c1r0.png","tile":[18,16],"depth":272,"src":"EV024"},{"pos":[320,208],"sprite":"oneshot_cells/red_fishtanks__c1r0.png","tile":[21,16],"depth":272,"src":"EV011"}]
   },
   "oneshot.refuge.rue_2": {
    "name": "rue",
@@ -493,7 +493,7 @@
    "bg": "bg/oneshot_map201.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map201.tmx",
-   "objects": []
+   "objects": [{"pos":[300,272],"sprite":"oneshot_cells/red_rue__c0r0.png","tile":[19,18],"depth":304,"src":"rue"}]
   },
   "oneshot.refuge.POSTGAME_RED_SKY": {
    "name": "POSTGAME RED SKY",
@@ -513,7 +513,7 @@
    "bg": "bg/oneshot_map213.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map213.tmx",
-   "objects": []
+   "objects": [{"pos":[368,496],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[23,31],"depth":512,"src":"!collectible"},{"pos":[268,544],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[17,35],"depth":576,"src":"EV004"},{"pos":[252,560],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[16,36],"depth":592,"src":"EV003"},{"pos":[284,560],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[18,36],"depth":592,"src":"EV005"},{"pos":[252,592],"sprite":"oneshot_cells/green_npc_cedric__c0r2.png","tile":[16,38],"depth":624,"src":"cedric"}]
   },
   "oneshot.refuge.City_Gate_2": {
    "name": "City Gate",
@@ -523,7 +523,7 @@
    "bg": "bg/oneshot_map214.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map214.tmx",
-   "objects": []
+   "objects": [{"pos":[316,592],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[20,38],"depth":624,"src":"EV010"},{"pos":[348,592],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[22,38],"depth":624,"src":"EV015"},{"pos":[332,608],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[21,39],"depth":640,"src":"EV012"},{"pos":[719,636],"sprite":"oneshot_cells/guardians__c2r0.png","tile":[46,45],"depth":736,"src":"guardian"},{"pos":[876,704],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[55,45],"depth":736,"src":"EV004"},{"pos":[924,720],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[58,46],"depth":752,"src":"EV005"},{"pos":[748,640],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[47,41],"depth":1000672,"src":"EV016","layer":"top"},{"pos":[716,672],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[45,43],"depth":1000704,"src":"EV017","layer":"top"}]
   },
   "oneshot.refuge.Elevator_Deck_2": {
    "name": "Elevator Deck",
@@ -533,7 +533,7 @@
    "bg": "bg/oneshot_map215.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map215.tmx",
-   "objects": []
+   "objects": [{"pos":[44,32],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[3,3],"depth":64,"src":"robot"},{"pos":[636,448],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[40,29],"depth":480,"src":"EV056"},{"pos":[684,448],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[43,29],"depth":480,"src":"EV042"},{"pos":[1228,448],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[77,29],"depth":480,"src":"EV018"},{"pos":[620,480],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[39,31],"depth":512,"src":"EV055"},{"pos":[636,496],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[40,32],"depth":528,"src":"EV057"},{"pos":[944,704],"sprite":"oneshot_cells/red_elevator__c0r0.png","tile":[60,46],"depth":752,"src":"elevator doors"},{"pos":[1228,720],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[77,46],"depth":752,"src":"EV020"},{"pos":[1532,720],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[96,46],"depth":752,"src":"EV040"},{"pos":[940,736],"sprite":"oneshot_cells/red_glitch__c3r3.png","tile":[59,47],"depth":768,"src":"demo glitch 2"},{"pos":[972,736],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[61,47],"depth":768,"src":"demo glitch 2"},{"pos":[953,734],"sprite":"oneshot_cells/red_lamplighter__c0r3.png","tile":[60,48],"depth":784,"src":"npc_plight"},{"pos":[1596,752],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[100,48],"depth":784,"src":"EV053"},{"pos":[953,750],"sprite":"oneshot_cells/red_lamplighter__c0r3.png","tile":[60,49],"depth":800,"src":"EV004"},{"pos":[1452,816],"sprite":"oneshot_cells/red_scenery1__c2r0.png","tile":[91,52],"depth":848,"src":"EV041"},{"pos":[1260,832],"sprite":"oneshot_cells/red_glitch_robot__c3r0.png","tile":[79,53],"depth":864,"src":"EV024"},{"pos":[1244,848],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[78,54],"depth":880,"src":"EV030"},{"pos":[940,704],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[59,45],"depth":1000736,"src":"demo glitch 2","layer":"top"},{"pos":[956,704],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[60,45],"depth":1000736,"src":"demo glitch 1","layer":"top"},{"pos":[972,704],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[61,45],"depth":1000736,"src":"demo glitch 1","layer":"top"}]
   },
   "oneshot.refuge.Office_2": {
    "name": "Office",
@@ -553,7 +553,7 @@
    "bg": "bg/oneshot_map217.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map217.tmx",
-   "objects": []
+   "objects": [{"pos":[297,142],"sprite":"oneshot_cells/red_npc_1__c1r0.png","tile":[19,11],"depth":192,"src":"watcher"}]
   },
   "oneshot.refuge.Power_room_2": {
    "name": "Power room",
@@ -563,7 +563,7 @@
    "bg": "bg/oneshot_map218.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map218.tmx",
-   "objects": []
+   "objects": [{"pos":[272,192],"sprite":"oneshot_cells/blue_powercore2__c1r0.png","tile":[20,16],"depth":272,"src":"!generator"},{"pos":[316,256],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[20,17],"depth":288,"src":"npc_mechanic"},{"pos":[361,286],"sprite":"oneshot_cells/red_terminals_extra__c0r0.png","tile":[23,20],"depth":336,"src":"computer"},{"pos":[268,352],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[17,23],"depth":384,"src":"EV008"}]
   },
   "oneshot.refuge.Cafe_2": {
    "name": "Cafe",
@@ -573,7 +573,7 @@
    "bg": "bg/oneshot_map219.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map219.tmx",
-   "objects": []
+   "objects": [{"pos":[684,480],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[43,31],"depth":512,"src":"EV008"},{"pos":[828,480],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[52,31],"depth":512,"src":"EV007"},{"pos":[668,512],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[42,33],"depth":544,"src":"EV011"},{"pos":[380,528],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[24,34],"depth":560,"src":"EV012"},{"pos":[684,576],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[43,37],"depth":608,"src":"EV006"},{"pos":[828,576],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[52,37],"depth":608,"src":"EV004"},{"pos":[396,608],"sprite":"oneshot_cells/red_glitch__c3r3.png","tile":[25,39],"depth":640,"src":"demo glitch 2"},{"pos":[476,608],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[30,39],"depth":640,"src":"EV010"}]
   },
   "oneshot.refuge.Cafe_inside_2": {
    "name": "Cafe inside",
@@ -583,7 +583,7 @@
    "bg": "bg/oneshot_map220.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map220.tmx",
-   "objects": []
+   "objects": [{"pos":[505,462],"sprite":"oneshot_cells/red_npc_2__c3r0.png","tile":[32,31],"depth":512,"src":"npc_mason"},{"pos":[489,510],"sprite":"oneshot_cells/red_npc_1__c2r0.png","tile":[31,34],"depth":560,"src":"EV013"},{"pos":[553,526],"sprite":"oneshot_cells/red_npc_3__c0r0.png","tile":[35,35],"depth":576,"src":"EV009"},{"pos":[572,544],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[36,35],"depth":576,"src":"EV012"},{"pos":[508,576],"sprite":"oneshot_cells/green_npc_adult3__c0r2.png","tile":[32,37],"depth":608,"src":"EV015"},{"pos":[524,576],"sprite":"oneshot_cells/green_npc_ram__c2r2.png","tile":[33,37],"depth":608,"src":"ram"},{"pos":[380,592],"sprite":"oneshot_cells/red_misc__c2r1.png","tile":[24,38],"depth":624,"src":"EV003"},{"pos":[265,590],"sprite":"oneshot_cells/red_npc_cafe__c3r0.png","tile":[17,39],"depth":640,"src":"ling"},{"pos":[409,606],"sprite":"oneshot_cells/red_npc_3__c1r0.png","tile":[26,40],"depth":656,"src":"EV002"}]
   },
   "oneshot.refuge.stairwell_3": {
    "name": "stairwell",
@@ -593,7 +593,7 @@
    "bg": "bg/oneshot_map221.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map221.tmx",
-   "objects": []
+   "objects": [{"pos":[588,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[37,54],"depth":880,"src":"EV015"},{"pos":[604,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[38,54],"depth":880,"src":"EV014"},{"pos":[620,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[39,54],"depth":880,"src":"EV013"},{"pos":[636,823],"sprite":"oneshot_cells/countdown__c3r2.png","tile":[40,54],"depth":880,"src":"EV017"},{"pos":[652,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[41,54],"depth":880,"src":"EV012"},{"pos":[668,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[42,54],"depth":880,"src":"EV011"},{"pos":[684,823],"sprite":"oneshot_cells/countdown__c3r2.png","tile":[43,54],"depth":880,"src":"EV018"},{"pos":[700,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[44,54],"depth":880,"src":"EV010"},{"pos":[716,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[45,54],"depth":880,"src":"EV009"},{"pos":[732,823],"sprite":"oneshot_cells/countdown__c3r2.png","tile":[46,54],"depth":880,"src":"EV019"},{"pos":[748,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[47,54],"depth":880,"src":"EV008"},{"pos":[764,823],"sprite":"oneshot_cells/countdown__c0r3.png","tile":[48,54],"depth":880,"src":"EV007"},{"pos":[656,880],"sprite":"oneshot_cells/countdown_door__c0r1.png","tile":[43,57],"depth":928,"src":"countdown door"},{"pos":[812,928],"sprite":"oneshot_cells/green_npc_cedric__c0r3.png","tile":[51,59],"depth":960,"src":"cedric"},{"pos":[812,944],"sprite":"oneshot_cells/blue_npc_prototype__c0r3.png","tile":[51,60],"depth":976,"src":"proto"},{"pos":[912,1408],"sprite":"oneshot_cells/pc__c0r0.png","tile":[58,89],"depth":1440,"src":"pc"},{"pos":[332,1376],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[21,87],"depth":1001408,"src":"EV040","layer":"top"}]
   },
   "oneshot.refuge.locked_room": {
    "name": "locked room",
@@ -603,7 +603,7 @@
    "bg": "bg/oneshot_map222.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map222.tmx",
-   "objects": []
+   "objects": [{"pos":[592,160],"sprite":"oneshot_cells/blue_mineshaft_crossbars__c1r0.png","tile":[37,18],"depth":304,"src":"EV028"},{"pos":[224,304],"sprite":"oneshot_cells/door_automatic__c2r0.png","tile":[15,20],"depth":336,"src":"elevator door left"},{"pos":[560,304],"sprite":"oneshot_cells/door_automatic__c2r0.png","tile":[36,20],"depth":336,"src":"tower door right"},{"pos":[384,256],"sprite":"oneshot_cells/portal_rays__c1r0.png","tile":[24,21],"depth":352,"src":"EV035"},{"pos":[400,256],"sprite":"oneshot_cells/portal_rays__c2r0.png","tile":[25,21],"depth":352,"src":"EV036"},{"pos":[416,256],"sprite":"oneshot_cells/portal_rays__c3r0.png","tile":[26,21],"depth":352,"src":"EV037"},{"pos":[352,304],"sprite":"oneshot_cells/portal_rays__c0r0.png","tile":[22,24],"depth":400,"src":"EV033"},{"pos":[400,304],"sprite":"oneshot_cells/portal_rays__c0r0.png","tile":[25,24],"depth":400,"src":"EV032"},{"pos":[448,304],"sprite":"oneshot_cells/portal_rays__c0r0.png","tile":[28,24],"depth":400,"src":"EV034"},{"pos":[553,366],"sprite":"oneshot_cells/red_lamplighter__c0r0.png","tile":[35,25],"depth":416,"src":"plight"},{"pos":[236,288],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[15,19],"depth":1000320,"src":"EV026","layer":"top"},{"pos":[572,288],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[36,19],"depth":1000320,"src":"EV016","layer":"top"}]
   },
   "oneshot.refuge.store_pan_2": {
    "name": "store pan",
@@ -623,7 +623,7 @@
    "bg": "bg/oneshot_map225.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map225.tmx",
-   "objects": []
+   "objects": [{"pos":[332,256],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[21,17],"depth":288,"src":"EV017"},{"pos":[396,256],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[25,17],"depth":288,"src":"EV008"},{"pos":[492,256],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[31,17],"depth":288,"src":"EV010"},{"pos":[524,256],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[33,17],"depth":288,"src":"EV019"},{"pos":[576,272],"sprite":"oneshot_cells/collectible__c1r0.png","tile":[36,17],"depth":288,"src":"!collectible"},{"pos":[604,256],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[38,17],"depth":288,"src":"EV022"},{"pos":[316,272],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[20,18],"depth":304,"src":"EV009"},{"pos":[380,272],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[24,18],"depth":304,"src":"EV015"},{"pos":[524,272],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[33,18],"depth":304,"src":"EV011"},{"pos":[540,272],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[34,18],"depth":304,"src":"EV021"},{"pos":[348,288],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[22,19],"depth":320,"src":"EV018"},{"pos":[396,288],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[25,19],"depth":320,"src":"EV007"},{"pos":[508,288],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[32,19],"depth":320,"src":"EV013"},{"pos":[556,288],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[35,19],"depth":320,"src":"EV020"}]
   },
   "oneshot.refuge.POSTGAME_RED_GROUND": {
    "name": "POSTGAME RED GROUND",
@@ -643,7 +643,7 @@
    "bg": "bg/oneshot_map228.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map228.tmx",
-   "objects": []
+   "objects": [{"pos":[1408,688],"sprite":"oneshot_cells/door_automatic__c2r0.png","tile":[89,44],"depth":720,"src":"elevator left"},{"pos":[1760,688],"sprite":"oneshot_cells/door_automatic__c2r0.png","tile":[111,44],"depth":720,"src":"elevator right"},{"pos":[1724,720],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[108,46],"depth":752,"src":"EV029"},{"pos":[1788,752],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[112,48],"depth":784,"src":"EV030"},{"pos":[1756,800],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[110,51],"depth":832,"src":"EV031"},{"pos":[1472,912],"sprite":"oneshot_cells/water_waves_red__c0r0.png","tile":[92,57],"depth":928,"src":"EV012"},{"pos":[1712,912],"sprite":"oneshot_cells/water_waves_red__c3r0.png","tile":[107,57],"depth":928,"src":"EV014"},{"pos":[1488,928],"sprite":"oneshot_cells/water_waves_red__c0r0.png","tile":[93,58],"depth":944,"src":"EV011"},{"pos":[1696,928],"sprite":"oneshot_cells/water_waves_red__c3r0.png","tile":[106,58],"depth":944,"src":"EV015"},{"pos":[1504,944],"sprite":"oneshot_cells/water_waves_red__c0r0.png","tile":[94,59],"depth":960,"src":"EV010"},{"pos":[1680,944],"sprite":"oneshot_cells/water_waves_red__c3r0.png","tile":[105,59],"depth":960,"src":"EV013"},{"pos":[1520,960],"sprite":"oneshot_cells/water_waves_red__c2r0.png","tile":[95,60],"depth":976,"src":"EV023"},{"pos":[1536,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[96,60],"depth":976,"src":"EV016"},{"pos":[1552,960],"sprite":"oneshot_cells/water_waves_red__c2r0.png","tile":[97,60],"depth":976,"src":"EV022"},{"pos":[1568,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[98,60],"depth":976,"src":"EV017"},{"pos":[1616,960],"sprite":"oneshot_cells/water_waves_red__c2r0.png","tile":[101,60],"depth":976,"src":"EV018"},{"pos":[1632,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[102,60],"depth":976,"src":"EV021"},{"pos":[1648,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[103,60],"depth":976,"src":"EV020"},{"pos":[1664,960],"sprite":"oneshot_cells/water_waves_red__c1r0.png","tile":[104,60],"depth":976,"src":"EV019"},{"pos":[1772,672],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[111,43],"depth":1000704,"src":"EV028","layer":"top"}]
   },
   "oneshot.refuge.X_room_2": {
    "name": "X room",
@@ -663,7 +663,7 @@
    "bg": "bg/oneshot_map234.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map234.tmx",
-   "objects": []
+   "objects": [{"pos":[272,112],"sprite":"oneshot_cells/red_fishtanks__c2r0.png","tile":[18,10],"depth":176,"src":"tank small"},{"pos":[320,112],"sprite":"oneshot_cells/red_fishtanks__c3r0.png","tile":[21,10],"depth":176,"src":"tank big"},{"pos":[272,128],"sprite":"oneshot_cells/red_fishtanks__c0r0.png","tile":[18,11],"depth":192,"src":"EV007"},{"pos":[320,128],"sprite":"oneshot_cells/red_fishtanks__c1r0.png","tile":[21,11],"depth":192,"src":"EV008"},{"pos":[208,160],"sprite":"oneshot_cells/red_fishtanks__c2r0.png","tile":[14,13],"depth":224,"src":"tank small"},{"pos":[208,176],"sprite":"oneshot_cells/red_fishtanks__c0r0.png","tile":[14,14],"depth":240},{"pos":[272,192],"sprite":"oneshot_cells/red_fishtanks__c3r0.png","tile":[18,15],"depth":256,"src":"tank big"},{"pos":[320,192],"sprite":"oneshot_cells/red_fishtanks__c3r0.png","tile":[21,15],"depth":256,"src":"tank big"},{"pos":[272,208],"sprite":"oneshot_cells/red_fishtanks__c1r0.png","tile":[18,16],"depth":272,"src":"EV024"},{"pos":[320,208],"sprite":"oneshot_cells/red_fishtanks__c1r0.png","tile":[21,16],"depth":272,"src":"EV011"}]
   },
   "oneshot.refuge.Photo_center_2": {
    "name": "Photo center",
@@ -673,7 +673,7 @@
    "bg": "bg/oneshot_map235.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map235.tmx",
-   "objects": []
+   "objects": [{"pos":[256,112],"sprite":"oneshot_cells/red_npc_table__c1r0.png","tile":[18,10],"depth":176,"src":"light"},{"pos":[304,208],"sprite":"oneshot_cells/red_light_puzzle__c3r0.png","tile":[19,13],"depth":224,"src":"switch"},{"pos":[288,208],"sprite":"oneshot_cells/red_camera__c3r0.png","tile":[18,14],"depth":240,"src":"photo"},{"pos":[240,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[15,15],"depth":256,"src":"!lens"},{"pos":[256,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[16,15],"depth":256,"src":"!lens"},{"pos":[320,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[20,15],"depth":256,"src":"!lens"},{"pos":[336,224],"sprite":"oneshot_cells/red_camera__c2r3.png","tile":[21,15],"depth":256,"src":"!lens"}]
   },
   "oneshot.refuge.stairwell_4": {
    "name": "stairwell",
@@ -693,7 +693,7 @@
    "bg": "bg/oneshot_map237.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map237.tmx",
-   "objects": []
+   "objects": [{"pos":[480,0],"sprite":"oneshot_cells/green_marimo2__c0r0.png","tile":[30,0],"depth":16,"src":"EV033"},{"pos":[492,-16],"sprite":"oneshot_cells/blue_scenery3__c2r3.png","tile":[31,0],"depth":16,"src":"EV034"},{"pos":[512,0],"sprite":"oneshot_cells/clovers__c0r0.png","tile":[32,0],"depth":16,"src":"EV035"},{"pos":[700,-16],"sprite":"oneshot_cells/blue_nursebot__c1r0.png","tile":[44,0],"depth":16,"src":"EV036"},{"pos":[716,-16],"sprite":"oneshot_cells/blue_npc_prophet__c0r0.png","tile":[45,0],"depth":16,"src":"EV037"},{"pos":[508,176],"sprite":"oneshot_cells/red_npc_george1__c0r0.png","tile":[32,12],"depth":208,"src":"npc_george"},{"pos":[649,158],"sprite":"oneshot_cells/red_npc_2__c1r0.png","tile":[41,12],"depth":208,"src":"EV017"},{"pos":[320,176],"sprite":"oneshot_cells/red_vendors__c1r0.png","tile":[21,13],"depth":224,"src":"!vendor"},{"pos":[384,176],"sprite":"oneshot_cells/red_vendors__c0r0.png","tile":[25,13],"depth":224,"src":"!vendor"},{"pos":[672,176],"sprite":"oneshot_cells/red_vendors__c3r0.png","tile":[43,13],"depth":224,"src":"!vendor"},{"pos":[720,176],"sprite":"oneshot_cells/red_vendors__c2r0.png","tile":[46,13],"depth":224,"src":"!vendor"},{"pos":[752,160],"sprite":"oneshot_cells/red_kelvin__c0r0.png","tile":[50,14],"depth":240,"src":"EV157"},{"pos":[569,222],"sprite":"oneshot_cells/red_npc_robots_special__c1r0.png","tile":[36,16],"depth":272,"src":"librarian"},{"pos":[489,238],"sprite":"oneshot_cells/red_kip__c0r0.png","tile":[31,17],"depth":288,"src":"kip"},{"pos":[508,256],"sprite":"oneshot_cells/red_npc_george1__c0r0.png","tile":[32,17],"depth":288,"src":"npc_george2"},{"pos":[521,286],"sprite":"oneshot_cells/red_kip__c0r1.png","tile":[33,20],"depth":336,"src":"kip"},{"pos":[249,302],"sprite":"oneshot_cells/red_npc_library2__c1r0.png","tile":[16,21],"depth":352,"src":"EV052"},{"pos":[352,336],"sprite":"oneshot_cells/red_books2__c0r0.png","tile":[22,21],"depth":352,"src":"EV050"},{"pos":[409,302],"sprite":"oneshot_cells/red_npc_library2__c2r0.png","tile":[26,21],"depth":352,"src":"EV054"},{"pos":[288,320],"sprite":"oneshot_cells/red_npc_library__c0r0.png","tile":[19,22],"depth":368,"src":"luca"},{"pos":[448,352],"sprite":"oneshot_cells/red_books2__c1r0.png","tile":[28,22],"depth":368,"src":"bork"},{"pos":[832,304],"sprite":"oneshot_cells/red_npc_table__c0r0.png","tile":[54,22],"depth":368,"src":"EV001"},{"pos":[352,336],"sprite":"oneshot_cells/red_npc_library__c3r0.png","tile":[23,23],"depth":384,"src":"EV051"},{"pos":[729,350],"sprite":"oneshot_cells/red_npc_1__c0r0.png","tile":[46,24],"depth":400,"src":"EV004"},{"pos":[505,430],"sprite":"oneshot_cells/red_npc_3__c3r0.png","tile":[32,29],"depth":480,"src":"npc_camera"},{"pos":[633,430],"sprite":"oneshot_cells/red_npc_library2__c3r0.png","tile":[40,29],"depth":480,"src":"EV057"},{"pos":[457,462],"sprite":"oneshot_cells/red_scientists2__c1r0.png","tile":[29,31],"depth":512,"src":"EV178"},{"pos":[777,462],"sprite":"oneshot_cells/red_scientists2__c0r0.png","tile":[49,31],"depth":512,"src":"EV179"},{"pos":[489,526],"sprite":"oneshot_cells/red_scientists__c1r0.png","tile":[31,35],"depth":576,"src":"EV180"},{"pos":[649,526],"sprite":"oneshot_cells/red_scientists2__c3r0.png","tile":[41,35],"depth":576,"src":"EV181"},{"pos":[521,590],"sprite":"oneshot_cells/red_npc_2__c0r0.png","tile":[33,39],"depth":640,"src":"npc_fishbowl"},{"pos":[617,590],"sprite":"oneshot_cells/red_npc_2__c2r0.png","tile":[39,39],"depth":640,"src":"EV171"},{"pos":[377,606],"sprite":"oneshot_cells/red_npc_library2__c0r0.png","tile":[24,40],"depth":656,"src":"Whitney"},{"pos":[505,670],"sprite":"oneshot_cells/red_scientists3__c1r0.png","tile":[32,44],"depth":720,"src":"EV019"},{"pos":[448,688],"sprite":"oneshot_cells/red_npc_library__c2r0.png","tile":[29,45],"depth":736,"src":"Ysef"},{"pos":[681,702],"sprite":"oneshot_cells/red_npc_robots_special__c0r0.png","tile":[43,46],"depth":752,"src":"EV177"},{"pos":[368,720],"sprite":"oneshot_cells/red_npc_library__c1r0.png","tile":[24,47],"depth":768,"src":"EV063"},{"pos":[777,718],"sprite":"oneshot_cells/red_scientists3__c0r0.png","tile":[49,47],"depth":768,"src":"EV020"},{"pos":[572,832],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[36,53],"depth":864,"src":"EV169"},{"pos":[832,672],"sprite":"oneshot_cells/red_catwalks_puzzles2__c1r0.png","tile":[53,44],"depth":1000720,"src":"EV043","layer":"top"}]
   },
   "oneshot.refuge.Elevator_Deck_3": {
    "name": "Elevator Deck",
@@ -703,7 +703,7 @@
    "bg": "bg/oneshot_map252.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map252.tmx",
-   "objects": []
+   "objects": [{"pos":[44,32],"sprite":"oneshot_cells/red_robots__c0r0.png","tile":[3,3],"depth":64,"src":"robot"},{"pos":[636,448],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[40,29],"depth":480,"src":"EV056"},{"pos":[684,448],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[43,29],"depth":480,"src":"EV042"},{"pos":[1228,448],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[77,29],"depth":480,"src":"EV018"},{"pos":[620,480],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[39,31],"depth":512,"src":"EV055"},{"pos":[636,496],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[40,32],"depth":528,"src":"EV057"},{"pos":[944,704],"sprite":"oneshot_cells/red_elevator__c0r0.png","tile":[60,46],"depth":752,"src":"elevator doors"},{"pos":[1228,720],"sprite":"oneshot_cells/red_scenery1__c1r0.png","tile":[77,46],"depth":752,"src":"EV020"},{"pos":[1532,720],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[96,46],"depth":752,"src":"EV040"},{"pos":[940,736],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[59,47],"depth":768,"src":"EV006"},{"pos":[956,736],"sprite":"oneshot_cells/red_glitch__c1r1.png","tile":[60,47],"depth":768,"src":"EV007"},{"pos":[972,736],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[61,47],"depth":768,"src":"EV008"},{"pos":[1596,752],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[100,48],"depth":784,"src":"EV053"},{"pos":[1452,816],"sprite":"oneshot_cells/red_scenery1__c2r0.png","tile":[91,52],"depth":848,"src":"EV041"},{"pos":[1260,832],"sprite":"oneshot_cells/red_glitch_robot__c3r0.png","tile":[79,53],"depth":864,"src":"EV024"},{"pos":[668,848],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[42,54],"depth":880,"src":"EV005"},{"pos":[1244,848],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[78,54],"depth":880,"src":"EV030"},{"pos":[684,864],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[43,55],"depth":896,"src":"EV004"},{"pos":[940,704],"sprite":"oneshot_cells/red_glitch__c2r1.png","tile":[59,45],"depth":1000736,"src":"EV021","layer":"top"},{"pos":[956,704],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[60,45],"depth":1000736,"src":"EV023","layer":"top"},{"pos":[972,704],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[61,45],"depth":1000736,"src":"EV019","layer":"top"}]
   },
   "oneshot.refuge.sleepville_2": {
    "name": "sleepville",
@@ -713,7 +713,7 @@
    "bg": "bg/oneshot_map254.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map254.tmx",
-   "objects": []
+   "objects": [{"pos":[256,320],"sprite":"oneshot_cells/bed__c0r0.png","tile":[17,22],"depth":368,"src":"bed"}]
   },
   "oneshot.refuge.Vendor_Street": {
    "name": "Vendor Street",
@@ -723,7 +723,7 @@
    "bg": "bg/oneshot_map257.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map257.tmx",
-   "objects": []
+   "objects": [{"pos":[512,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[33,16],"depth":272,"src":"EV072"},{"pos":[688,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[44,16],"depth":272,"src":"EV073"},{"pos":[864,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[55,16],"depth":272,"src":"EV074"},{"pos":[1040,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[66,16],"depth":272,"src":"EV063"},{"pos":[1216,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[77,16],"depth":272,"src":"EV062"},{"pos":[1392,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[88,16],"depth":272,"src":"EV061"},{"pos":[1568,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[99,16],"depth":272,"src":"EV060"},{"pos":[1744,208],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[110,16],"depth":272,"src":"EV002"},{"pos":[240,272],"sprite":"oneshot_cells/door_automatic__c0r0.png","tile":[16,18],"depth":304,"src":"tower door right"},{"pos":[336,240],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[22,18],"depth":304,"src":"EV027"},{"pos":[304,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[20,23],"depth":384,"src":"EV043"},{"pos":[400,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[26,23],"depth":384,"src":"EV028"},{"pos":[512,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[33,23],"depth":384,"src":"EV029"},{"pos":[608,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[39,23],"depth":384,"src":"EV042"},{"pos":[704,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[45,23],"depth":384,"src":"EV030"},{"pos":[800,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[51,23],"depth":384,"src":"EV031"},{"pos":[896,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[57,23],"depth":384,"src":"EV032"},{"pos":[992,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[63,23],"depth":384,"src":"EV033"},{"pos":[1088,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[69,23],"depth":384,"src":"EV034"},{"pos":[1184,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[75,23],"depth":384,"src":"EV035"},{"pos":[1280,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[81,23],"depth":384,"src":"EV036"},{"pos":[1376,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[87,23],"depth":384,"src":"EV037"},{"pos":[1456,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[92,23],"depth":384,"src":"EV038"},{"pos":[1552,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[98,23],"depth":384,"src":"EV039"},{"pos":[1648,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[104,23],"depth":384,"src":"EV040"},{"pos":[1744,320],"sprite":"oneshot_cells/red_lamplighter_working__c1r0.png","tile":[110,23],"depth":384,"src":"EV041"},{"pos":[1452,400],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[91,26],"depth":432,"src":"EV094"},{"pos":[236,512],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[15,33],"depth":544,"src":"EV082"},{"pos":[448,528],"sprite":"oneshot_cells/sparkle_red1__c0r0.png","tile":[28,33],"depth":544,"src":"EV003"},{"pos":[252,528],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[16,34],"depth":560,"src":"EV081"},{"pos":[236,544],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[15,35],"depth":576,"src":"EV085"},{"pos":[252,560],"sprite":"oneshot_cells/red_glitch__c1r0.png","tile":[16,36],"depth":592,"src":"EV083"},{"pos":[480,576],"sprite":"oneshot_cells/sparkle_red1__c2r0.png","tile":[30,36],"depth":592,"src":"EV004"},{"pos":[268,576],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[17,37],"depth":608,"src":"EV084"},{"pos":[496,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[33,15],"depth":1000256,"src":"EV070","layer":"top"},{"pos":[672,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[44,15],"depth":1000256,"src":"EV069","layer":"top"},{"pos":[848,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[55,15],"depth":1000256,"src":"EV068","layer":"top"},{"pos":[1024,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[66,15],"depth":1000256,"src":"EV067","layer":"top"},{"pos":[1200,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[77,15],"depth":1000256,"src":"EV066","layer":"top"},{"pos":[1376,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[88,15],"depth":1000256,"src":"EV065","layer":"top"},{"pos":[1552,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[99,15],"depth":1000256,"src":"EV064","layer":"top"},{"pos":[1728,176],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[110,15],"depth":1000256,"src":"EV006","layer":"top"},{"pos":[320,208],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[22,17],"depth":1000288,"src":"EV071","layer":"top"},{"pos":[572,272],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[36,18],"depth":1000304,"src":"EV007","layer":"top"},{"pos":[636,272],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[40,18],"depth":1000304,"src":"EV023","layer":"top"},{"pos":[812,272],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[51,18],"depth":1000304,"src":"EV011","layer":"top"},{"pos":[972,272],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[61,18],"depth":1000304,"src":"EV078","layer":"top"},{"pos":[940,304],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[59,20],"depth":1000336,"src":"EV012","layer":"top"},{"pos":[988,320],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[62,21],"depth":1000352,"src":"EV013","layer":"top"},{"pos":[288,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[20,22],"depth":1000368,"src":"EV045","layer":"top"},{"pos":[384,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[26,22],"depth":1000368,"src":"EV044","layer":"top"},{"pos":[496,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[33,22],"depth":1000368,"src":"EV046","layer":"top"},{"pos":[604,336],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[38,22],"depth":1000368,"src":"EV008","layer":"top"},{"pos":[592,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[39,22],"depth":1000368,"src":"EV047","layer":"top"},{"pos":[688,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[45,22],"depth":1000368,"src":"EV048","layer":"top"},{"pos":[748,336],"sprite":"oneshot_cells/red_glitch__c1r2.png","tile":[47,22],"depth":1000368,"src":"EV010","layer":"top"},{"pos":[784,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[51,22],"depth":1000368,"src":"EV049","layer":"top"},{"pos":[828,336],"sprite":"oneshot_cells/red_glitch__c0r1.png","tile":[52,22],"depth":1000368,"src":"EV024","layer":"top"},{"pos":[880,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[57,22],"depth":1000368,"src":"EV050","layer":"top"},{"pos":[976,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[63,22],"depth":1000368,"src":"EV051","layer":"top"},{"pos":[1072,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[69,22],"depth":1000368,"src":"EV052","layer":"top"},{"pos":[1168,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[75,22],"depth":1000368,"src":"EV053","layer":"top"},{"pos":[1264,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[81,22],"depth":1000368,"src":"EV054","layer":"top"},{"pos":[1360,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[87,22],"depth":1000368,"src":"EV055","layer":"top"},{"pos":[1440,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[92,22],"depth":1000368,"src":"EV056","layer":"top"},{"pos":[1536,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[98,22],"depth":1000368,"src":"EV057","layer":"top"},{"pos":[1632,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[104,22],"depth":1000368,"src":"EV058","layer":"top"},{"pos":[1728,288],"sprite":"oneshot_cells/jars_light__c0r0.png","tile":[110,22],"depth":1000368,"src":"EV059","layer":"top"}]
   },
   "oneshot.refuge.locked_room_2": {
    "name": "locked room",
@@ -733,7 +733,7 @@
    "bg": "bg/oneshot_map260.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map260.tmx",
-   "objects": []
+   "objects": [{"pos":[224,304],"sprite":"oneshot_cells/door_automatic__c2r0.png","tile":[15,20],"depth":336,"src":"elevator door left"},{"pos":[560,304],"sprite":"oneshot_cells/door_automatic__c2r0.png","tile":[36,20],"depth":336,"src":"tower door right"},{"pos":[384,256],"sprite":"oneshot_cells/portal_rays__c1r0.png","tile":[24,21],"depth":352,"src":"EV035"},{"pos":[400,256],"sprite":"oneshot_cells/portal_rays__c2r0.png","tile":[25,21],"depth":352,"src":"EV036"},{"pos":[416,256],"sprite":"oneshot_cells/portal_rays__c3r0.png","tile":[26,21],"depth":352,"src":"EV037"},{"pos":[352,304],"sprite":"oneshot_cells/portal_rays__c0r0.png","tile":[22,24],"depth":400,"src":"EV033"},{"pos":[400,304],"sprite":"oneshot_cells/portal_rays__c0r0.png","tile":[25,24],"depth":400,"src":"EV032"},{"pos":[448,304],"sprite":"oneshot_cells/portal_rays__c0r0.png","tile":[28,24],"depth":400,"src":"EV034"},{"pos":[176,400],"sprite":"oneshot_cells/bed_special__c0r0.png","tile":[12,27],"depth":448,"src":"EV003"}]
   }
  }
 }

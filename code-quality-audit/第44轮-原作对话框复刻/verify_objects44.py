@@ -17,11 +17,22 @@
 （这正是第48轮 E3 踩过的坑）。核心鉴别力（A 结构 / B 锚点 / C 守恒 / D 负控制）
 一条没少。
 
+★★★ 第103轮**收窄口径**（务必先读，否则会把排除读成"改判据放水"）：
+  本锁只管 **Deltarune 命名空间** —— 素材在 `objs/`、守恒对着**第68轮 Deltarune 普查**算。
+  第103轮把 OneShot 的 **7,804** 个物件写进了 `_zone.oneshot.*.json`，它们的 `sprite`
+  形如 `oneshot_cells/<sheet>__c<col>r<row>.png`，是**另一个人群**（另有普查、另有锁 `check103`）。
+  本锁写这几条判据时，OneShot 的 `objects` 还全是空表（第102轮的结论就是"只入库不切帧"），
+  所以它当时"全量遍历 `_zone.*`"是对的；数据形态一变它就误报了 7,804 条"缺文件"。
+  ⇒ 现在**显式排除** OneShot 分片，并加 **A2b** 自证"被排除的那 6 个分片真的在盘上、
+    物件合计恰好 7,804" —— 排除要有账，不能当成掩护。
+
 判据分四段：
 
   A 结构不变量（对所有场景普适，不看具体数字）
      · 每条 object 必有 `pos`（2 个 int）与 `sprite`（非空 str）
      · `sprite` 必须指向 `objs/` 下**真实存在的文件**（这是"能画出来"的唯一保证）
+       —— 口径 = `objs/` 命名空间；OneShot 的 `oneshot_cells/` 由 `check103` 守
+     · ★ A2b 被排除的 OneShot 分片必须**存在且规模正确**（排除不是掩护）
      · 不得再有 `why_objects_is_empty` 这种**过期假话**注释
 
   B 真值锚点（具体场景的具体内容，来自原作普查，可回查）
@@ -104,6 +115,23 @@ EXPECT_TOTAL = EXPECT_TOTAL_ORIGINAL + DESKTOP_DOORS
 
 RE_ZONE = re.compile(r'^_zone\.(ch\d+)\.')
 
+# ★★★ 第103轮：本锁**只管 Deltarune 命名空间**（素材在 `objs/`）。
+#   起因：第103轮把 OneShot 的 7,804 个物件写进了 `_zone.oneshot.*.json`，
+#   它们的 `sprite` 形如 `oneshot_cells/<sheet>__c<col>r<row>.png` ——
+#   **不在** `objs/` 下。于是 A4（"sprite 指向 objs/ 真实文件"）报了 7,804 条
+#   "缺文件"，C1/C2/C3 的守恒也被撑到 804 场景 / 11,010 条。
+#   那不是回归，是**本锁的口径过宽**：它写这几条判据时，OneShot 的 objects
+#   还全是空表（第102轮的结论就是"只入库不切帧"）。
+#   ⇒ 正确做法不是"把 A4 放宽成什么都能指"，而是**把本锁钉在它自己的种群上**：
+#      · 本锁：`_zone.ch*` / `_zone.ut*` / 独立文件 —— 素材 `objs/`，
+#        守恒对着**第68轮 Deltarune 普查**算（唯一的独立来源）；
+#      · OneShot：归 `check103`（素材 `oneshot_cells/`，守恒对着第102轮普查算）。
+#   ★ 但"排除"必须**自证不是掩护**：下一个断言（A2b）要求被排除的那 6 个分片
+#     **真的在盘上、且物件合计恰好 7,804** —— 否则一个写错的过滤条件
+#     就能把整块数据藏起来而这里全绿。
+RE_ONESHOT_ZONE = re.compile(r'^_zone\.oneshot\.')
+ONESHOT_OBJ_TOTAL = 7804
+
 PASS = 0
 FAIL = 0
 
@@ -128,13 +156,30 @@ def main():
     obj_files = set(os.listdir(OBJS)) if os.path.isdir(OBJS) else set()
     ok(len(obj_files) >= 25, 'A1 objs/ 素材目录存在且有 %d 个文件' % len(obj_files))
 
-    zone_files = sorted(f for f in os.listdir(SCENES)
-                        if f.startswith('_zone.') and f.endswith('.json'))
+    all_zone_files = sorted(f for f in os.listdir(SCENES)
+                            if f.startswith('_zone.') and f.endswith('.json'))
+    # ★★★ 第103轮：把 OneShot 分片**剔除**（见 `RE_ONESHOT_ZONE` 注释），
+    #   本锁只对 Deltarune 命名空间负责。
+    zone_files = [f for f in all_zone_files if not RE_ONESHOT_ZONE.match(f)]
+    oneshot_zone_files = [f for f in all_zone_files if RE_ONESHOT_ZONE.match(f)]
     # ★ 第77轮改：原来是 `== 61`（Deltarune 分片数）。UT/黄魂 第77轮迁入后
     #   多了 `_zone.ut.rooms.json` / `_zone.uty.rooms.json` ⇒ 63。
     #   判据**本意**是"分片载体真在盘上"，故改成下界（加作品不误报，
     #   而"分片被误删"照样报红）。
-    ok(len(zone_files) >= 61, 'A2 分片文件 %d 个' % len(zone_files))
+    ok(len(zone_files) >= 61, 'A2 分片文件（Deltarune 命名空间）%d 个' % len(zone_files))
+
+    # ★★★ A2b：被排除的那一块**必须自证存在且规模正确** ——
+    #    否则"过滤条件写错"就能把整块数据藏起来，而本锁照样全绿。
+    os_zone_objs = 0
+    for zf in oneshot_zone_files:
+        zd = load(os.path.join(SCENES, zf))
+        for sid, raw in ((zd.get('scenes') if isinstance(zd, dict) else {}) or {}).items():
+            if isinstance(raw, dict) and isinstance(raw.get('objects'), list):
+                os_zone_objs += len(raw['objects'])
+    ok(len(oneshot_zone_files) == 6 and os_zone_objs == ONESHOT_OBJ_TOTAL,
+       'A2b ★★ 被本锁**刻意排除**的 OneShot 分片：%d 个、物件合计 %d == %d'
+       '（第103轮接线；归 `check103` 守）—— 排除是**有账**的，不是掩护'
+       % (len(oneshot_zone_files), os_zone_objs, ONESHOT_OBJ_TOTAL))
 
     # 收集全部场景 objects
     all_objs = []          # [(sprite, pos, src, 来源标签)]
@@ -202,7 +247,7 @@ def main():
     if bad_shape:
         for b in bad_shape[:5]:
             print('       坏样本: %r' % (b,))
-    ok(not missing_sprite, 'A4 所有 sprite 指向 objs/ 下真实文件 缺=%d'
+    ok(not missing_sprite, 'A4 所有 sprite（Deltarune 命名空间）指向 objs/ 下真实文件 缺=%d'
        % len(missing_sprite))
     if missing_sprite:
         for m in missing_sprite[:5]:

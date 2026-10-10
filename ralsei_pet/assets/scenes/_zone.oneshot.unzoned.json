@@ -63,7 +63,7 @@
    "bg": "bg/oneshot_map88.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map88.tmx",
-   "objects": []
+   "objects": [{"pos":[1004,80],"sprite":"oneshot_cells/red_scenery1__c0r0.png","tile":[63,6],"depth":112,"src":"EV002"}]
   },
   "oneshot.unzoned.IGNORE_ToLibrary": {
    "name": "IGNORE ToLibrary",
@@ -123,7 +123,7 @@
    "bg": "bg/oneshot_map138.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map138.tmx",
-   "objects": []
+   "objects": [{"pos":[704,1328],"sprite":"oneshot_cells/pc__c1r0.png","tile":[45,84],"depth":1360,"src":"pc"}]
   },
   "oneshot.unzoned.C1": {
    "name": "C1",
@@ -213,7 +213,7 @@
    "bg": "bg/oneshot_map261.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map261.tmx",
-   "objects": []
+   "objects": [{"pos":[144,64],"sprite":"oneshot_cells/unreal__c0r0.png","tile":[11,8],"depth":144,"src":"EV001"}]
   },
   "oneshot.unzoned.pshot_2": {
    "name": "pshot",
@@ -223,7 +223,7 @@
    "bg": "bg/oneshot_map263.png",
    "bg_source": "tmx.composite",
    "bg_asset": "map263.tmx",
-   "objects": []
+   "objects": [{"pos":[188,80],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[12,6],"depth":112,"src":"EV004"},{"pos":[144,64],"sprite":"oneshot_cells/unreal__c2r0.png","tile":[11,8],"depth":144,"src":"EV001"},{"pos":[156,96],"sprite":"oneshot_cells/red_glitch__c0r0.png","tile":[10,7],"depth":1000128,"src":"EV003","layer":"top"}]
   }
  }
 }

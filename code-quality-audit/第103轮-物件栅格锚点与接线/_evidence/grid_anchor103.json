@@ -1,0 +1,74 @@
+{
+ "note": "第103轮：OneShot 物件「栅格 + 锚点」规则及其**证据等级**。",
+ "tile_px": 16,
+ "cell": {
+  "formula": "sheet_w//4 x sheet_h//4",
+  "origin": "格左上",
+  "sample": {
+   "green_npc_cedric": [
+    96,
+    128,
+    24,
+    32
+   ],
+   "pc": [
+    192,
+    128,
+    48,
+    32
+   ],
+   "items_tut": [
+    64,
+    64,
+    16,
+    16
+   ],
+   "DOORS": [
+    64,
+    128,
+    16,
+    32
+   ],
+   "DOORS2": [
+    64,
+    128,
+    16,
+    32
+   ]
+  }
+ },
+ "col": "pattern",
+ "row": {
+  "map": {
+   "2": 0,
+   "4": 1,
+   "6": 2,
+   "8": 3
+  },
+  "why": "下/左/右/上 = RPG Maker 的 direction 行序（2/4/6/8）"
+ },
+ "anchor": {
+  "rule": "tile_bottom_center",
+  "formula": "pos = (tile_x*16 + 8 - cw//2, tile_y*16 + 16 - ch)",
+  "vertical": "proven_by_pixel",
+  "horizontal": "proven_by_pixel"
+ },
+ "anchor_evidence_note": "★ 本字段由 `anchor_cases103.json` 派生，不是手打（见 build103.py S4b 注释）。",
+ "evidence": {
+  "grid": "像素：`pc`(192x128) 行 0 四列 = 显示器 暗/蓝/绿/粉 四态、各含一张完整书桌 ⇒ 列 = pattern 且**只有 4 列**成立；3 列候选线把角色切成两半（放大图上肉眼可判）。数据：`pattern` 0~3 全有用量（1684 个物件用 3）⇒ 3 列无处置放；全部图集宽高能被 4 整除 0 例外。",
+  "vertical": "像素：`bg/oneshot_map4.png`（= `map4.tmx` 瓦片层 1:1 合成）列 21 的行 8/9 **全黑**（RGB max == 0）= 门洞；相邻列 20/22 同行 ≈13.5、同列行 10 ≈22.5 = 墙/地板。`DOORS2` 格恰 16x32（1 瓦片宽 x 2 瓦片高）；A1（格底贴瓦片底）覆盖行 8..9 = **正好落在门洞里**；A0（格左上贴瓦片左上）覆盖行 9..10 ⇒ 门掉到地板上（判据图 `cmp_door_map4_103.png`）。",
+  "horizontal": "**像素**（升级自推导）：把\"门洞法\"推广成「**宽物件（cw>=32 且 cw%16==0）落在**恰好同宽**的黑洞上」——判据 = 该行带内「含格落位的极大全黑列段」**恰等于**格的列集合（差一列即不算），加资格判据（洞必须**局部**：外圈至少一侧非黑，否则那是房间虚空而不是\"给物件留的洞\"）。6 候选（竖{底,顶} x 横{左,居中,右}）结果：**底+居中 54 例唯一赢**，底+左 0 / 底+右 0 / 顶 0（判据脚本 `probe103p.py` -> `anchor_cases103.json`；样例 `cmp_strict_tv_encounter_r131103.png` / `cmp_strict_tv_screens1_r241103.png`）。\"黑\"= 原作 `black.tsx` 瓦片，也就是**原作自己给物件留的洞**。"
+ },
+ "stats": {
+  "cells": 379,
+  "transparent_cells": 2,
+  "objects": 7804,
+  "objects_with_cell_wider_than_tile": 1848,
+  "cells_rule_hits": {
+   "col0": 179,
+   "col1": 92,
+   "col2": 58,
+   "col3": 50
+  }
+ }
+}

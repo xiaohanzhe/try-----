@@ -1,0 +1,86 @@
+{
+ "note": "第103轮真渲染（整间房 1:1，真画布）",
+ "rooms": [
+  {
+   "room": 4,
+   "sid": "oneshot.mainline.Livingroom",
+   "w": 832,
+   "h": 480,
+   "objects": 2,
+   "plan_items": 4,
+   "kinds": {
+    "room_fill": 1,
+    "bg": 1,
+    "obj": 2
+   },
+   "drawn": 4,
+   "drawn_bg_only": 2,
+   "missing_files": [],
+   "cache_missing": [],
+   "png": "render_map4_103.png",
+   "png_bg": "render_map4_bgonly_103.png"
+  },
+  {
+   "room": 12,
+   "sid": "oneshot.barrens.Entrance",
+   "w": 1120,
+   "h": 1600,
+   "objects": 289,
+   "plan_items": 291,
+   "kinds": {
+    "room_fill": 1,
+    "bg": 1,
+    "obj": 289
+   },
+   "drawn": 291,
+   "drawn_bg_only": 2,
+   "missing_files": [],
+   "cache_missing": [],
+   "png": "render_map12_103.png",
+   "png_bg": "render_map12_bgonly_103.png"
+  },
+  {
+   "room": 240,
+   "sid": "oneshot.glen.Forest_2",
+   "w": 1664,
+   "h": 1600,
+   "objects": 480,
+   "plan_items": 482,
+   "kinds": {
+    "room_fill": 1,
+    "bg": 1,
+    "obj": 480
+   },
+   "drawn": 482,
+   "drawn_bg_only": 2,
+   "missing_files": [],
+   "cache_missing": [],
+   "png": "render_map240_103.png",
+   "png_bg": "render_map240_bgonly_103.png"
+  },
+  {
+   "room": 43,
+   "sid": "oneshot.glen.Forest",
+   "w": 1664,
+   "h": 1600,
+   "objects": 389,
+   "plan_items": 391,
+   "kinds": {
+    "room_fill": 1,
+    "bg": 1,
+    "obj": 389
+   },
+   "drawn": 391,
+   "drawn_bg_only": 2,
+   "missing_files": [],
+   "cache_missing": [],
+   "png": "render_map43_103.png",
+   "png_bg": "render_map43_bgonly_103.png"
+  }
+ ],
+ "path_check": {
+  "objects": 7804,
+  "missing": 0,
+  "bad": []
+ }
+}

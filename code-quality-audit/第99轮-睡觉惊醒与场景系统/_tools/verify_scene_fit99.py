@@ -472,16 +472,29 @@ _MUST_STILL_DRAW = ('obj_savepoint',)
 
 
 def _scan_src_hidden(scenes):
-    """遍历全部场景，返回 `(带 src 实例总数, 被过滤数, 被过滤的 distinct src)`。
+    """遍历全部场景，返回 `(带 src 实例总数, 被过滤数, 被过滤的 distinct src,
+    loaded, 按命名空间拆分的 {(前缀): [总数, 被过滤数]})`。
 
     ⚠️ **一次加载、多次复用**：`load_scene(entry=)` 每次都重读区域分片
        （分片可达数百 KB），2166 个场景若反复加载会把套件的墙钟拖到分钟级
        —— G2 里每个套件都这么慢是不可接受的。所以这里自己缓存一次。
+
+    ★★★ 第103轮：**按 `sprite` 前缀拆两本账**（这是本函数返回第 5 项的动机）。
+      第103轮把 OneShot 的 7,804 个物件接进场景（`sprite` = `oneshot_cells/...`），
+      带 `src` 的实例从 **3,206 → 11,010**。G24 的"被过滤比例"分母一变大，
+      比例就从 **85.5% 掉到 24.9%** —— 看起来像"过滤失效"，实际是**分母换了物种**：
+      `_obj_visible.json` 的 901 个隐形名单全是**原作 Deltarune 触发器名**，
+      OneShot 的事件名（`EV005` / `remote` …）一个都不在里面，所以那 7,804 条
+      **本来就该全部照画**。混在一个分母里，这条判据既量不准 Deltarune 的过滤率，
+      也看不出 OneShot 有没有被误杀。
+      ⇒ 拆成 `objs/`（Deltarune，46 个触发器名所在的种群）与
+        `oneshot_cells/`（OneShot，应当 **0 被过滤**），各守各的真值。
     """
     tot = 0
     hid = 0
     seen = set()
     loaded = {}
+    ns = {}
     for sid, ent in scenes.items():
         sc = SS.load_scene(sid, entry=ent)
         if sc is None:
@@ -495,10 +508,16 @@ def _scan_src_hidden(scenes):
             if not isinstance(src, str) or not src:
                 continue
             tot += 1
+            spr = o.get('sprite')
+            key = (spr.split('/', 1)[0] + '/') if isinstance(spr, str) and '/' in spr \
+                else '(无前缀)'
+            slot = ns.setdefault(key, [0, 0])
+            slot[0] += 1
             if not SS.is_drawable_object(o, hidden):
                 hid += 1
+                slot[1] += 1
                 seen.add(src)
-    return tot, hid, seen, loaded
+    return tot, hid, seen, loaded, ns
 
 
 def sec_g():
@@ -646,14 +665,30 @@ def sec_g():
        'G21d 桌面的门逐条过 `is_drawable_object` 都为真')
 
     # ---- G 全量过滤面普查（机器统计，不看单例）----
-    tot, hid, seen, loaded = _scan_src_hidden(scenes)
-    print('  过滤面：带 src 实例 %d ｜ 被过滤 %d (%.1f%%) ｜ distinct src %d'
-          % (tot, hid, 100.0 * hid / max(1, tot), len(seen)))
-    ok(tot >= 3000,
-       'G23 带 src 的实例规模 >= 3000（真实量级；骤降说明场景数据被删）实际=%d' % tot)
-    ok(0.6 <= hid / max(1, tot) <= 0.95,
-       'G24 被过滤比例在 60%%~95%%（真值 85.5%%；过低=漏过滤，过高=误杀）实际=%.1f%%'
-       % (100.0 * hid / max(1, tot)))
+    tot, hid, seen, loaded, ns = _scan_src_hidden(scenes)
+    d_tot, d_hid = ns.get('objs/', [0, 0])            # Deltarune（46 个触发器名的种群）
+    o_tot, o_hid = ns.get('oneshot_cells/', [0, 0])   # OneShot（第103轮接线，全可见）
+    oth = sorted((k, v) for k, v in ns.items()
+                 if k not in ('objs/', 'oneshot_cells/') and v[0])
+    print('  过滤面：带 src 实例 %d（objs/ %d ｜ oneshot_cells/ %d ｜ 其他 %d）'
+          ' ｜ 被过滤 %d (%.1f%%) ｜ distinct src %d'
+          % (tot, d_tot, o_tot, sum(v[0] for _k, v in oth),
+             hid, 100.0 * hid / max(1, tot), len(seen)))
+    ok(d_tot >= 3000 and o_tot >= 7800,
+       'G23 带 src 的实例规模：`objs/`(Deltarune) %d >= 3000、'
+       '`oneshot_cells/`(OneShot) %d >= 7800（骤降说明场景数据被删）'
+       % (d_tot, o_tot))
+    ok(0.6 <= d_hid / max(1, d_tot) <= 0.95,
+       'G24 被过滤比例在 60%%~95%%（金标 85.5%%；过低=漏过滤，过高=误杀）实际=%.1f%%'
+       ' —— ★★ 分母**只数 `objs/` 命名空间**：那 46 个隐形触发器名全属 Deltarune，'
+       '把 OneShot 的 7,804 条并进来会让比例变成 %.1f%% 的**假异常**'
+       % (100.0 * d_hid / max(1, d_tot), 100.0 * hid / max(1, tot)))
+    ok(o_hid == 0,
+       'G24b ★★ OneShot 命名空间被过滤 **0** 条（`oneshot_cells/` 的 %d 条全是'
+       '真道具/NPC，一个都不该落进 901 个原作触发器名单；误杀 %d）' % (o_tot, o_hid))
+    ok(not oth,
+       'G24c `sprite` 前缀**只有** `objs/` 与 `oneshot_cells/` 两种'
+       '（出现第三种 ⇒ 有素材被放到没人守的命名空间里：%s）' % (oth[:3],))
     _diff = sorted(seen ^ set(_HIDDEN_SRC_SEEN))
     ok(_diff == [],
        'G25 过滤面 **恰好**是那 46 个触发器名（多/少都报红；差异=%s）'
