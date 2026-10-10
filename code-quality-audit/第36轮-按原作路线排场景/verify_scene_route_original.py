@@ -315,13 +315,32 @@ check('C2 路由条数 > 100（由原作连接生成，不再是 26 条手工链
 #   目标场景存在），不是"排除即不管"。
 _DOOR_DELTA = {'A': 1, 'B': -1, 'C': 2}
 _ORIGIN = ('desktop',)
+# ★★ 第105轮：路由表不再只有"门的下标位移"**一种**原作机制。
+#   OneShot（另一部作品）的房间连接是 **code-201 Transfer Player** 事件，
+#   没有门字母、也没有下标位移 —— 它自带 `_original.kind == 'oneshot_transfer'`。
+#   本判据原本只认 A+1/B-1/C+2，遇到 420 条 OneShot 边会整片报红（那是口径
+#   没跟上事实，不是缺陷）。⇒ 改为**按 `kind` 分派**：
+#     · kind == 'oneshot_transfer' → 自洽于"两端是两个不同的原作 map"；
+#     · 其余（第44轮门位移）→ 仍是 A+1 / B-1 / C+2 那套。
+#   注意这是**加严**不是放松：OneShot 分支仍要求 `_original` 是 dict 且带
+#   合法的 src_map/dst_map（且非自环），只是换了一套"自洽"的定义。
+_KIND_ONESHOT = 'oneshot_transfer'
 _struct_bad = []
+_n_oneshot = 0
 for _r in (routes.get('routes') or []):
     if _r.get('when_scene') in _ORIGIN:
         continue
     _o = _r.get('_original')
     if not isinstance(_o, dict):
         _struct_bad.append('%s(无_original)' % _r.get('to'))
+        continue
+    if _o.get('kind') == _KIND_ONESHOT:
+        _n_oneshot += 1
+        _s, _d = _o.get('src_map'), _o.get('dst_map')
+        if not (isinstance(_s, int) and isinstance(_d, int) and _s != _d):
+            _struct_bad.append('%s(oneshot src/dst=%r/%r)' % (_r.get('to'), _s, _d))
+        elif _o.get('chapter') != 'oneshot':
+            _struct_bad.append('%s(oneshot chapter=%r)' % (_r.get('to'), _o.get('chapter')))
         continue
     _L = _o.get('door_letter')
     if _L not in _DOOR_DELTA:
@@ -330,17 +349,44 @@ for _r in (routes.get('routes') or []):
     if _o.get('room_delta') != _DOOR_DELTA[_L]:
         _struct_bad.append('%s(位移=%r≠%d)' % (_r.get('to'), _o.get('room_delta'),
                                               _DOOR_DELTA[_L]))
-check('C3 每条规则的 _original 自洽于门的下标位移表（A+1 / B-1 / C+2；排除 desktop 世界门）',
+check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
+      '（门位移 A+1/B-1/C+2 ｜ OneShot 传送为两端不同的原作 map；排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
+
+# C3a2 —— ★ 第105轮正控制：OneShot 段**确实存在且被 C3 的新分支管到**
+#   （否则"换个更松的判据"可能变成"整段没人管"）。
+check('C3a2 ★ C3 的 OneShot 分支确有样本（%d 条 kind=%s）' % (_n_oneshot, _KIND_ONESHOT),
+      _n_oneshot > 0, 'oneshot 边 %d 条' % _n_oneshot)
+
+# C3a3 —— ★ 第105轮负控制：`kind=oneshot_transfer` 但 `src_map == dst_map`
+#   （自环）必须被判红 —— 证明 C3 的新分支**有鉴别力**，不是恒真。
+_neg_os = {'when_scene': 'oneshot.barrens.Blue',
+           'to': 'oneshot.barrens.Blue',
+           '_original': {'chapter': 'oneshot', 'kind': _KIND_ONESHOT,
+                         'src_map': 7, 'dst_map': 7}}
+_neg_bad = []
+_o = _neg_os['_original']
+_s, _d = _o.get('src_map'), _o.get('dst_map')
+if not (isinstance(_s, int) and isinstance(_d, int) and _s != _d):
+    _neg_bad.append('caught')
+elif _o.get('chapter') != 'oneshot':
+    _neg_bad.append('caught')
+check('C3a3 负控制：自环的 oneshot_transfer 会被 C3 的新分支判红（有鉴别力）',
+      _neg_bad == ['caught'], 'got=%r' % (_neg_bad,))
 
 # C3b 规则只用了「已实证」的三种字母门 —— 不许悄悄混进 D/E/F/W/X/Y
 #   ★ 第89轮：同理排除 desktop（它的 D/E/F/W/X 是**世界门**，属第89轮新契约，
 #     不是"混进原作边的杂字母"）；第99轮 desktop 又添了 Y 门（Outertale）。
+#   ★ 第105轮：OneShot 段**没有门字母**（`.get('door_letter')` 会是 None），
+#     必须先按 kind 排除再 `sorted()` —— 否则混合 None/str 排序直接
+#     `TypeError` 把整套件打死（本轮实测踩到）。判据意图不变：
+#     凡"门位移机制"的边只能用 A/B/C。
 _LETTERS = sorted(set((r.get('_original') or {}).get('door_letter')
                       for r in (routes.get('routes') or [])
-                      if r.get('when_scene') not in _ORIGIN))
-check('C3b 原作段只用 A/B/C 三种已实证字母门（D/E/F/W/X/Y 一律不编原作边）',
+                      if r.get('when_scene') not in _ORIGIN
+                      and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT))
+check('C3b 原作门位移段只用 A/B/C 三种已实证字母门（D/E/F/W/X/Y 一律不编原作边）',
       set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
 # ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A..F/W/X/Y（正控制），
 #    证明 C3/C3b 的"排除"没有把 desktop 整段漏掉。

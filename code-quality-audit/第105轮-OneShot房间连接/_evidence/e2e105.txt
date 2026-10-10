@@ -1,0 +1,100 @@
+========================================================================
+① 房间图规模（第105轮把 oneshot 章并了进来）
+========================================================================
+load_room_graph n_edges = 1202
+逐章边数 = {'ch1': 238, 'ch2': 323, 'ch3': 79, 'ch4': 72, 'ch5': 70, 'oneshot': 420}
+
+========================================================================
+② OneShot 章内端到端：oneshot.mainline.INIT → oneshot.mainline.S1
+========================================================================
+plan ok = True
+goal = 'oneshot.mainline.S1'
+scene_id = 'oneshot.mainline.S1'
+hops = 18
+error = None
+path = ['oneshot.mainline.INIT', 'oneshot.mainline.DEBUG', 'oneshot.mainline.T1', 'oneshot.mainline.T2', 'oneshot.mainline.T3', 'oneshot.mainline.T4', 'oneshot.mainline.T5', 'oneshot.mainline.T6', 'oneshot.mainline.T7', 'oneshot.mainline.T8', 'oneshot.mainline.T9', 'oneshot.mainline.T10', 'oneshot.mainline.T11', 'oneshot.mainline.T12', 'oneshot.mainline.T13', 'oneshot.mainline.T14', 'oneshot.mainline.T15', 'oneshot.mainline.T16', 'oneshot.mainline.S1']
+   {'from': 'oneshot.mainline.INIT', 'to': 'oneshot.mainline.DEBUG', 'door': 'init', 'reason': '走 init 出去'}
+   {'from': 'oneshot.mainline.DEBUG', 'to': 'oneshot.mainline.T1', 'door': 'ev078', 'reason': '走 ev078 出去'}
+   {'from': 'oneshot.mainline.T1', 'to': 'oneshot.mainline.T2', 'door': 'to_t2', 'reason': '走 to_t2 出去'}
+   {'from': 'oneshot.mainline.T2', 'to': 'oneshot.mainline.T3', 'door': 'to_t3', 'reason': '走 to_t3 出去'}
+   {'from': 'oneshot.mainline.T3', 'to': 'oneshot.mainline.T4', 'door': 'to_t4', 'reason': '走 to_t4 出去'}
+   {'from': 'oneshot.mainline.T4', 'to': 'oneshot.mainline.T5', 'door': 'ev002', 'reason': '走 ev002 出去'}
+   {'from': 'oneshot.mainline.T5', 'to': 'oneshot.mainline.T6', 'door': 'ev002', 'reason': '走 ev002 出去'}
+   {'from': 'oneshot.mainline.T6', 'to': 'oneshot.mainline.T7', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T7', 'to': 'oneshot.mainline.T8', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T8', 'to': 'oneshot.mainline.T9', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T9', 'to': 'oneshot.mainline.T10', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T10', 'to': 'oneshot.mainline.T11', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T11', 'to': 'oneshot.mainline.T12', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T12', 'to': 'oneshot.mainline.T13', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T13', 'to': 'oneshot.mainline.T14', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T14', 'to': 'oneshot.mainline.T15', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T15', 'to': 'oneshot.mainline.T16', 'door': 'ev001', 'reason': '走 ev001 出去'}
+   {'from': 'oneshot.mainline.T16', 'to': 'oneshot.mainline.S1', 'door': 'ev002', 'reason': '走 ev002 出去'}
+door/reason 为空的步数 = []
+
+--- describe_plan（真正注入给 AI 的那段中文）---
+【我打算这么走过去】（目的地：oneshot.mainline.S1，共 18 步）
+1. oneshot.mainline.INIT → oneshot.mainline.DEBUG：走 init 出去
+2. oneshot.mainline.DEBUG → oneshot.mainline.T1：走 ev078 出去
+3. oneshot.mainline.T1 → oneshot.mainline.T2：走 to_t2 出去
+4. oneshot.mainline.T2 → oneshot.mainline.T3：走 to_t3 出去
+5. oneshot.mainline.T3 → oneshot.mainline.T4：走 to_t4 出去
+6. oneshot.mainline.T4 → oneshot.mainline.T5：走 ev002 出去
+7. oneshot.mainline.T5 → oneshot.mainline.T6：走 ev002 出去
+8. oneshot.mainline.T6 → oneshot.mainline.T7：走 ev001 出去
+9. oneshot.mainline.T7 → oneshot.mainline.T8：走 ev001 出去
+10. oneshot.mainline.T8 → oneshot.mainline.T9：走 ev001 出去
+11. oneshot.mainline.T9 → oneshot.mainline.T10：走 ev001 出去
+12. oneshot.mainline.T10 → oneshot.mainline.T11：走 ev001 出去
+13. oneshot.mainline.T11 → oneshot.mainline.T12：走 ev001 出去
+14. oneshot.mainline.T12 → oneshot.mainline.T13：走 ev001 出去
+15. oneshot.mainline.T13 → oneshot.mainline.T14：走 ev001 出去
+16. oneshot.mainline.T14 → oneshot.mainline.T15：走 ev001 出去
+17. oneshot.mainline.T15 → oneshot.mainline.T16：走 ev001 出去
+18. oneshot.mainline.T16 → oneshot.mainline.S1：走 ev002 出去
+
+========================================================================
+③ 既有 Deltarune 未受影响（对照）
+========================================================================
+D 端到端 ok = True
+D hops = 7
+D scene_id = 'ch1.hometown.town_church'
+D error = None
+   前两步 {'from': 'ch1.kris_room.kris_s_room', 'to': 'ch1.home.krishallway', 'door': 'obj_doorA', 'reason': '走 obj_doorA 出去'}
+   前两步 {'from': 'ch1.home.krishallway', 'to': 'ch1.home.torhouse', 'door': 'obj_doorC', 'reason': '走 obj_doorC 出去'}
+kind='delta' 的 reason 仍是原措辞 = '走 obj_doorA 出去'
+kind='oneshot_transfer' 的 reason 走通用分支 = '走 west_door 出去'
+
+========================================================================
+④ OneShot 普通房间之间的连通抽样
+========================================================================
+oneshot.mainline.INIT            -> oneshot.mainline.Start             ok=True hops=1 err=None
+        oneshot.mainline.INIT → oneshot.mainline.Start：走 init 出去
+oneshot.glen.Village             -> oneshot.glen.Green                 ok=True hops=1 err=None
+        oneshot.glen.Village → oneshot.glen.Green：走 ram_bell 出去
+oneshot.glen.Village             -> oneshot.glen.House_3               ok=True hops=1 err=None
+        oneshot.glen.Village → oneshot.glen.House_3：走 house3_door 出去
+oneshot.glen.Dock                -> oneshot.glen.Fishing_hut           ok=True hops=1 err=None
+        oneshot.glen.Dock → oneshot.glen.Fishing_hut：走 door 出去
+oneshot.refuge.Hall1             -> oneshot.refuge.Hall2               ok=True hops=1 err=None
+        oneshot.refuge.Hall1 → oneshot.refuge.Hall2：走 west_exit 出去
+oneshot.refuge.Cafe              -> oneshot.refuge.Cafe_inside         ok=True hops=1 err=None
+        oneshot.refuge.Cafe → oneshot.refuge.Cafe_inside：走 entrance 出去
+
+--- 负控制：原作拓扑确实不通的一对，必须**如实**说走不到 ---
+oneshot.barrens.Dormitories -> oneshot.barrens.Cabin  ok=False hops=0 err=从房间 71 走不到房间 24（原作拓扑不通）
+  ★ 这不是缺陷：门候选本身不含这条边，判据 D1/D6 也守着「只由剧情传送支撑的房间不许混进来」。
+
+========================================================================
+⑤ 枢纽（原作 warp 房）—— 如实登记，不美化
+========================================================================
+oneshot.mainline.DEBUG 的出边数 = 64
+oneshot.mainline.INIT 的出边数 = 5
+从 INIT 出发可达房间数（全图） = 160
+从 INIT 出发可达房间数（禁 DEBUG / IGNORE） = 14
+  ★ 结论：OneShot 原作自己把 DEBUG 房做成**总枢纽**（64 个 warp），
+    所以「跨区可达」大半经它。这是**原作事实**，不是我们的捷径 ——
+    数据面照抄了 826 条 code-201，一条没加、一条没减。
+
+[DONE] 第105轮 OneShot 房间连接 · 端到端演示结束

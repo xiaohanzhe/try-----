@@ -14,7 +14,8 @@
    "obj_doorAny": "无任何代码 —— 纯占位标记，不参与换房间",
    "obj_markerA..X": "落点：从对应 door 进入本房间时玩家的落点坐标"
   },
-  "caveat": "边只覆盖「门对象驱动」的换房间。过场对象（obj_carcutscene / obj_krisroom / obj_insidEclosetcutscene / DEVICE_CONTACT 等）的 room_goto 属剧情转场，未计入连接图。"
+  "caveat": "边只覆盖「门对象驱动」的换房间。过场对象（obj_carcutscene / obj_krisroom / obj_insidEclosetcutscene / DEVICE_CONTACT 等）的 room_goto 属剧情转场，未计入连接图。",
+  "oneshot_note": "★ 第105轮：本图新增 `oneshot` 章（420 条边），来源 = 原作 OneShot 的 code-201（Transfer Player）事件指令（page0 且无条件；自环 19 条与 带条件的剧情传送 77 条**只登记不生成**）。`kind=oneshot_transfer` 与 Deltarune 的 `delta`/`table` 并列；`door` 是该边的代表性**事件名**归一化 slug（OneShot 没有门对象）。依据：code-quality-audit/第105轮-OneShot房间连接/_evidence/oneshot_transfers.json。⚠️ ch1~ch5 一个字段都没动（生成器内含指纹自证）。"
  },
  "chapters": {
   "ch1": {
@@ -6300,6 +6301,3372 @@
      "dst_name": "room_DARKbase_GMS2",
      "door": "obj_doorD_musfade",
      "kind": "delta"
+    }
+   ]
+  },
+  "oneshot": {
+   "folder": "OneShot",
+   "n_edges": 420,
+   "edges": [
+    {
+     "src": 1,
+     "src_name": "INIT",
+     "dst": 2,
+     "dst_name": "Start",
+     "door": "init",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 1,
+     "src_name": "INIT",
+     "dst": 11,
+     "dst_name": "DEBUG",
+     "door": "init",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 1,
+     "src_name": "INIT",
+     "dst": 255,
+     "dst_name": "Last room",
+     "door": "init",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 1,
+     "src_name": "INIT",
+     "dst": 258,
+     "dst_name": "Memory",
+     "door": "init",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 1,
+     "src_name": "INIT",
+     "dst": 262,
+     "dst_name": "language debug",
+     "door": "init",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 2,
+     "src_name": "Start",
+     "dst": 3,
+     "dst_name": "Bathroom",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 2,
+     "src_name": "Start",
+     "dst": 4,
+     "dst_name": "Livingroom",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 3,
+     "src_name": "Bathroom",
+     "dst": 2,
+     "dst_name": "Start",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 4,
+     "src_name": "Livingroom",
+     "dst": 2,
+     "dst_name": "Start",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 4,
+     "src_name": "Livingroom",
+     "dst": 5,
+     "dst_name": "Basement Stairs",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 5,
+     "src_name": "Basement Stairs",
+     "dst": 4,
+     "dst_name": "Livingroom",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 5,
+     "src_name": "Basement Stairs",
+     "dst": 20,
+     "dst_name": "basement",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 5,
+     "src_name": "Basement Stairs",
+     "dst": 26,
+     "dst_name": "basement after sun",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 6,
+     "src_name": "IGNORE",
+     "dst": 5,
+     "dst_name": "Basement Stairs",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 2,
+     "dst_name": "Start",
+     "door": "ev030",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 4,
+     "dst_name": "Livingroom",
+     "door": "ev028",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 5,
+     "dst_name": "Basement Stairs",
+     "door": "ev070",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev116",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 13,
+     "dst_name": "terminal room",
+     "door": "blue_teleport",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 14,
+     "dst_name": "Outpost",
+     "door": "ev011",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 15,
+     "dst_name": "Outpost interior",
+     "door": "ev013",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 18,
+     "dst_name": "Cliffs",
+     "door": "blue_teleport",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 21,
+     "dst_name": "Bed room",
+     "door": "ev026",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 22,
+     "dst_name": "Elevator inside",
+     "door": "ev043",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 24,
+     "dst_name": "Cabin",
+     "door": "ev018",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 27,
+     "dst_name": "Dock",
+     "door": "ev038",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "ev007",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 37,
+     "dst_name": "Ruins",
+     "door": "ev095",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 38,
+     "dst_name": "Ruins In",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 39,
+     "dst_name": "Maize",
+     "door": "ev010",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 44,
+     "dst_name": "The Gate",
+     "door": "ev095",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 47,
+     "dst_name": "City Gate",
+     "door": "ev071",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 48,
+     "dst_name": "Elevator Deck",
+     "door": "ev042",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 49,
+     "dst_name": "Apartments",
+     "door": "ev044",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 50,
+     "dst_name": "stairwell",
+     "door": "ev072",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 51,
+     "dst_name": "GeorgeRoom",
+     "door": "ev058",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 52,
+     "dst_name": "Cafe",
+     "door": "ev064",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 53,
+     "dst_name": "Cafe inside",
+     "door": "ev056",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 56,
+     "dst_name": "Teleport",
+     "door": "ev027",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 59,
+     "dst_name": "tutorial",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 63,
+     "dst_name": "Water",
+     "door": "ev082",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 67,
+     "dst_name": "Burial Grounds",
+     "door": "ev113",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 70,
+     "dst_name": "Old Factory",
+     "door": "ev064",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "ev063",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 72,
+     "dst_name": "Lobby",
+     "door": "ev031",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 73,
+     "dst_name": "Swamp",
+     "door": "blue_teleport",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 84,
+     "dst_name": "Elevator Street",
+     "door": "ev050",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 85,
+     "dst_name": "Vendor Street",
+     "door": "ev054",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 86,
+     "dst_name": "To Tower",
+     "door": "ev084",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 87,
+     "dst_name": "Library",
+     "door": "fireflies",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 91,
+     "dst_name": "Back Alley",
+     "door": "ev096",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 92,
+     "dst_name": "Factory upstairs",
+     "door": "ev015",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 93,
+     "dst_name": "Factory interior2",
+     "door": "ev017",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 97,
+     "dst_name": "X room",
+     "door": "ev076",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 98,
+     "dst_name": "1st room",
+     "door": "ev046",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 99,
+     "dst_name": "lamplighter house",
+     "door": "ev060",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 102,
+     "dst_name": "server room",
+     "door": "fireflies",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 112,
+     "dst_name": "2nd room",
+     "door": "ev009",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 117,
+     "dst_name": "entry room",
+     "door": "ev051",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 119,
+     "dst_name": "stairwell",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 124,
+     "dst_name": "Room2 - peng",
+     "door": "ev053",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 131,
+     "dst_name": "Encounter PENG",
+     "door": "ev106",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 134,
+     "dst_name": "Photo center",
+     "door": "ev059",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 135,
+     "dst_name": "SECRET RAM CLUB",
+     "door": "ev014",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 139,
+     "dst_name": "T1",
+     "door": "ev078",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 164,
+     "dst_name": "C1",
+     "door": "ev081",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 182,
+     "dst_name": "Livingroom",
+     "door": "ev098",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 184,
+     "dst_name": "Hallway",
+     "door": "ev115",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 187,
+     "dst_name": "fish house",
+     "door": "ev047",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 188,
+     "dst_name": "Start purple",
+     "door": "ev094",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 189,
+     "dst_name": "Start",
+     "door": "ev064",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 203,
+     "dst_name": "Maize",
+     "door": "ev025",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 241,
+     "dst_name": "Tv room",
+     "door": "ev104",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 242,
+     "dst_name": "Encounter",
+     "door": "ev109",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 243,
+     "dst_name": "Credits",
+     "door": "cedric",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 246,
+     "dst_name": "squrz",
+     "door": "text",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 249,
+     "dst_name": "study",
+     "door": "ev086",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 11,
+     "src_name": "DEBUG",
+     "dst": 255,
+     "dst_name": "Last room",
+     "door": "ev114",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 12,
+     "src_name": "Entrance",
+     "dst": 13,
+     "dst_name": "terminal room",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 14,
+     "src_name": "Outpost",
+     "dst": 15,
+     "dst_name": "Outpost interior",
+     "door": "outpost_entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 14,
+     "src_name": "Outpost",
+     "dst": 69,
+     "dst_name": "Factory interior",
+     "door": "factory_entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 15,
+     "src_name": "Outpost interior",
+     "dst": 14,
+     "dst_name": "Outpost",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 15,
+     "src_name": "Outpost interior",
+     "dst": 16,
+     "dst_name": "Backroom",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 16,
+     "src_name": "Backroom",
+     "dst": 15,
+     "dst_name": "Outpost interior",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 19,
+     "src_name": "Docks",
+     "dst": 21,
+     "dst_name": "Bed room",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 19,
+     "src_name": "Docks",
+     "dst": 27,
+     "dst_name": "Dock",
+     "door": "npc_rowbot",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 20,
+     "src_name": "basement",
+     "dst": 5,
+     "dst_name": "Basement Stairs",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 20,
+     "src_name": "basement",
+     "dst": 26,
+     "dst_name": "basement after sun",
+     "door": "lightbulb",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 21,
+     "src_name": "Bed room",
+     "dst": 19,
+     "dst_name": "Docks",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 22,
+     "src_name": "Elevator inside",
+     "dst": 84,
+     "dst_name": "Elevator Street",
+     "door": "elevator_chat",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 23,
+     "src_name": "Lookout point",
+     "dst": 24,
+     "dst_name": "Cabin",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 24,
+     "src_name": "Cabin",
+     "dst": 23,
+     "dst_name": "Lookout point",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 26,
+     "src_name": "basement after sun",
+     "dst": 5,
+     "dst_name": "Basement Stairs",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 27,
+     "src_name": "Dock",
+     "dst": 28,
+     "dst_name": "Fishing hut",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 27,
+     "src_name": "Dock",
+     "dst": 177,
+     "dst_name": "Entry ruins",
+     "door": "ev238",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 27,
+     "src_name": "Dock",
+     "dst": 178,
+     "dst_name": "2",
+     "door": "ev240",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 28,
+     "src_name": "Fishing hut",
+     "dst": 27,
+     "dst_name": "Dock",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 8,
+     "dst_name": "Green",
+     "door": "ram_bell",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 30,
+     "dst_name": "House 1 - stew",
+     "door": "house1_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 31,
+     "dst_name": "House 2 - tower",
+     "door": "house2_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 32,
+     "dst_name": "House 3",
+     "door": "house3_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 33,
+     "dst_name": "House 4 - squares",
+     "door": "house4_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 34,
+     "dst_name": "House 5 - storage",
+     "door": "house5_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 35,
+     "dst_name": "House 6 - death is coming",
+     "door": "house6_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 29,
+     "src_name": "Village",
+     "dst": 36,
+     "dst_name": "House 7 - are you god",
+     "door": "house7_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 30,
+     "src_name": "House 1 - stew",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 31,
+     "src_name": "House 2 - tower",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 32,
+     "src_name": "House 3",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 33,
+     "src_name": "House 4 - squares",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 34,
+     "src_name": "House 5 - storage",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 35,
+     "src_name": "House 6 - death is coming",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 36,
+     "src_name": "House 7 - are you god",
+     "dst": 29,
+     "dst_name": "Village",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 37,
+     "src_name": "Ruins",
+     "dst": 193,
+     "dst_name": "Prophet house",
+     "door": "ev193",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 38,
+     "src_name": "Ruins In",
+     "dst": 39,
+     "dst_name": "Maize",
+     "door": "maize_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 38,
+     "src_name": "Ruins In",
+     "dst": 40,
+     "dst_name": "Alula",
+     "door": "left_alula_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 38,
+     "src_name": "Ruins In",
+     "dst": 41,
+     "dst_name": "Computer Room",
+     "door": "computer_door_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 38,
+     "src_name": "Ruins In",
+     "dst": 57,
+     "dst_name": "Junction",
+     "door": "the_wall_exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 38,
+     "src_name": "Ruins In",
+     "dst": 126,
+     "dst_name": "Birdhall",
+     "door": "ev053",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 39,
+     "src_name": "Maize",
+     "dst": 8,
+     "dst_name": "Green",
+     "door": "maize",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 39,
+     "src_name": "Maize",
+     "dst": 38,
+     "dst_name": "Ruins In",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 40,
+     "src_name": "Alula",
+     "dst": 38,
+     "dst_name": "Ruins In",
+     "door": "left_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 41,
+     "src_name": "Computer Room",
+     "dst": 38,
+     "dst_name": "Ruins In",
+     "door": "computer_door_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 42,
+     "src_name": "Small Room",
+     "dst": 40,
+     "dst_name": "Alula",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 44,
+     "src_name": "The Gate",
+     "dst": 45,
+     "dst_name": "Inside 2",
+     "door": "ev015",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 44,
+     "src_name": "The Gate",
+     "dst": 57,
+     "dst_name": "Junction",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 44,
+     "src_name": "The Gate",
+     "dst": 136,
+     "dst_name": "Inside 1",
+     "door": "ev013",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 45,
+     "src_name": "Inside 2",
+     "dst": 44,
+     "dst_name": "The Gate",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 45,
+     "src_name": "Inside 2",
+     "dst": 46,
+     "dst_name": "Inside 3",
+     "door": "ev008",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 46,
+     "src_name": "Inside 3",
+     "dst": 45,
+     "dst_name": "Inside 2",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 49,
+     "src_name": "Apartments",
+     "dst": 74,
+     "dst_name": "Top floor",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 50,
+     "src_name": "stairwell",
+     "dst": 51,
+     "dst_name": "GeorgeRoom",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 50,
+     "src_name": "stairwell",
+     "dst": 72,
+     "dst_name": "Lobby",
+     "door": "stairs",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 51,
+     "src_name": "GeorgeRoom",
+     "dst": 50,
+     "dst_name": "stairwell",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 51,
+     "src_name": "GeorgeRoom",
+     "dst": 176,
+     "dst_name": "guest room",
+     "door": "ev014",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 52,
+     "src_name": "Cafe",
+     "dst": 53,
+     "dst_name": "Cafe inside",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 53,
+     "src_name": "Cafe inside",
+     "dst": 52,
+     "dst_name": "Cafe",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 57,
+     "src_name": "Junction",
+     "dst": 38,
+     "dst_name": "Ruins In",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 57,
+     "src_name": "Junction",
+     "dst": 44,
+     "dst_name": "The Gate",
+     "door": "the_wall_exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 65,
+     "src_name": "Birdhouse",
+     "dst": 126,
+     "dst_name": "Birdhall",
+     "door": "ev007",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 66,
+     "src_name": "passage",
+     "dst": 128,
+     "dst_name": "Courtyard",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 67,
+     "src_name": "Burial Grounds",
+     "dst": 212,
+     "dst_name": "passage_boat",
+     "door": "ev130",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 68,
+     "src_name": "IGNORE",
+     "dst": 128,
+     "dst_name": "Courtyard",
+     "door": "exit_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 69,
+     "src_name": "Factory interior",
+     "dst": 14,
+     "dst_name": "Outpost",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 69,
+     "src_name": "Factory interior",
+     "dst": 92,
+     "dst_name": "Factory upstairs",
+     "door": "stairs",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 70,
+     "src_name": "Old Factory",
+     "dst": 93,
+     "dst_name": "Factory interior2",
+     "door": "factory_entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 75,
+     "dst_name": "server room",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 76,
+     "dst_name": "110 - mechanical drawing",
+     "door": "110",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 78,
+     "dst_name": "117 - mom",
+     "door": "119",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 79,
+     "dst_name": "112 - infirmary",
+     "door": "117",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 80,
+     "dst_name": "118 - robot voice",
+     "door": "112",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 81,
+     "dst_name": "113 - ocean",
+     "door": "113",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 71,
+     "src_name": "Dormitories",
+     "dst": 82,
+     "dst_name": "119 - cell",
+     "door": "118",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 72,
+     "src_name": "Lobby",
+     "dst": 50,
+     "dst_name": "stairwell",
+     "door": "stairs",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 72,
+     "src_name": "Lobby",
+     "dst": 87,
+     "dst_name": "Library",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 72,
+     "src_name": "Lobby",
+     "dst": 113,
+     "dst_name": "Kip",
+     "door": "ev037",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 74,
+     "src_name": "Top floor",
+     "dst": 49,
+     "dst_name": "Apartments",
+     "door": "east_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 74,
+     "src_name": "Top floor",
+     "dst": 95,
+     "dst_name": "Hall1",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 74,
+     "src_name": "Top floor",
+     "dst": 121,
+     "dst_name": "Communal area",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 75,
+     "src_name": "server room",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 76,
+     "src_name": "110 - mechanical drawing",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 77,
+     "src_name": "debug2",
+     "dst": 11,
+     "dst_name": "DEBUG",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 78,
+     "src_name": "117 - mom",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 79,
+     "src_name": "112 - infirmary",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 80,
+     "src_name": "118 - robot voice",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 81,
+     "src_name": "113 - ocean",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 82,
+     "src_name": "119 - cell",
+     "dst": 71,
+     "dst_name": "Dormitories",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 84,
+     "src_name": "Elevator Street",
+     "dst": 91,
+     "dst_name": "Back Alley",
+     "door": "ev012",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 84,
+     "src_name": "Elevator Street",
+     "dst": 187,
+     "dst_name": "fish house",
+     "door": "ev019",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 85,
+     "src_name": "Vendor Street",
+     "dst": 86,
+     "dst_name": "To Tower",
+     "door": "tower_door_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 85,
+     "src_name": "Vendor Street",
+     "dst": 91,
+     "dst_name": "Back Alley",
+     "door": "ev019",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 85,
+     "src_name": "Vendor Street",
+     "dst": 134,
+     "dst_name": "Photo center",
+     "door": "ev010",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 86,
+     "src_name": "To Tower",
+     "dst": 84,
+     "dst_name": "Elevator Street",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 86,
+     "src_name": "To Tower",
+     "dst": 85,
+     "dst_name": "Vendor Street",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 86,
+     "src_name": "To Tower",
+     "dst": 97,
+     "dst_name": "X room",
+     "door": "ev005",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 87,
+     "src_name": "Library",
+     "dst": 72,
+     "dst_name": "Lobby",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 88,
+     "src_name": "IGNORE ToFactory",
+     "dst": 85,
+     "dst_name": "Vendor Street",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 89,
+     "src_name": "IGNORE ToLibrary",
+     "dst": 84,
+     "dst_name": "Elevator Street",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 90,
+     "src_name": "Factory",
+     "dst": 98,
+     "dst_name": "1st room",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 90,
+     "src_name": "Factory",
+     "dst": 105,
+     "dst_name": "left- pools",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 90,
+     "src_name": "Factory",
+     "dst": 106,
+     "dst_name": "right-3d printers",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 91,
+     "src_name": "Back Alley",
+     "dst": 84,
+     "dst_name": "Elevator Street",
+     "door": "ev017",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 91,
+     "src_name": "Back Alley",
+     "dst": 85,
+     "dst_name": "Vendor Street",
+     "door": "ev020",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 91,
+     "src_name": "Back Alley",
+     "dst": 99,
+     "dst_name": "lamplighter house",
+     "door": "ev011",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 91,
+     "src_name": "Back Alley",
+     "dst": 135,
+     "dst_name": "SECRET RAM CLUB",
+     "door": "ev013",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 91,
+     "src_name": "Back Alley",
+     "dst": 137,
+     "dst_name": "rue",
+     "door": "ev014",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 92,
+     "src_name": "Factory upstairs",
+     "dst": 69,
+     "dst_name": "Factory interior",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 93,
+     "src_name": "Factory interior2",
+     "dst": 70,
+     "dst_name": "Old Factory",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 94,
+     "src_name": "upstairs",
+     "dst": 93,
+     "dst_name": "Factory interior2",
+     "door": "stairs",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 95,
+     "src_name": "Hall1",
+     "dst": 74,
+     "dst_name": "Top floor",
+     "door": "east_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 95,
+     "src_name": "Hall1",
+     "dst": 109,
+     "dst_name": "Room1 - bot",
+     "door": "door_1",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 95,
+     "src_name": "Hall1",
+     "dst": 111,
+     "dst_name": "Hall2",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 95,
+     "src_name": "Hall1",
+     "dst": 122,
+     "dst_name": "bathroom",
+     "door": "bathroom",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 95,
+     "src_name": "Hall1",
+     "dst": 124,
+     "dst_name": "Room2 - peng",
+     "door": "door_2",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 95,
+     "src_name": "Hall1",
+     "dst": 125,
+     "dst_name": "Room3 - bot friend",
+     "door": "door_3",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 97,
+     "src_name": "X room",
+     "dst": 86,
+     "dst_name": "To Tower",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 98,
+     "src_name": "1st room",
+     "dst": 90,
+     "dst_name": "Factory",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 98,
+     "src_name": "1st room",
+     "dst": 105,
+     "dst_name": "left- pools",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 98,
+     "src_name": "1st room",
+     "dst": 106,
+     "dst_name": "right-3d printers",
+     "door": "exit_right",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 99,
+     "src_name": "lamplighter house",
+     "dst": 91,
+     "dst_name": "Back Alley",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 101,
+     "src_name": "mineshaft",
+     "dst": 17,
+     "dst_name": "Mineshaft entrance",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 102,
+     "src_name": "server room",
+     "dst": 194,
+     "dst_name": "backroom",
+     "door": "ev037",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 104,
+     "src_name": "courtyard",
+     "dst": 98,
+     "dst_name": "1st room",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 104,
+     "src_name": "courtyard",
+     "dst": 112,
+     "dst_name": "2nd room",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 104,
+     "src_name": "courtyard",
+     "dst": 114,
+     "dst_name": "left-terminals",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 104,
+     "src_name": "courtyard",
+     "dst": 115,
+     "dst_name": "right-robots",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 105,
+     "src_name": "left- pools",
+     "dst": 90,
+     "dst_name": "Factory",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 105,
+     "src_name": "left- pools",
+     "dst": 98,
+     "dst_name": "1st room",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 106,
+     "src_name": "right-3d printers",
+     "dst": 90,
+     "dst_name": "Factory",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 106,
+     "src_name": "right-3d printers",
+     "dst": 98,
+     "dst_name": "1st room",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 107,
+     "src_name": "Bed room",
+     "dst": 44,
+     "dst_name": "The Gate",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 108,
+     "src_name": "Power room",
+     "dst": 117,
+     "dst_name": "entry room",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 109,
+     "src_name": "Room1 - bot",
+     "dst": 95,
+     "dst_name": "Hall1",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 111,
+     "src_name": "Hall2",
+     "dst": 95,
+     "dst_name": "Hall1",
+     "door": "east_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 111,
+     "src_name": "Hall2",
+     "dst": 121,
+     "dst_name": "Communal area",
+     "door": "commune",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 111,
+     "src_name": "Hall2",
+     "dst": 129,
+     "dst_name": "Room4 - bird",
+     "door": "door4",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 111,
+     "src_name": "Hall2",
+     "dst": 130,
+     "dst_name": "Room5 - roomba",
+     "door": "door5",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 111,
+     "src_name": "Hall2",
+     "dst": 132,
+     "dst_name": "Room6 - plant",
+     "door": "door6",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 112,
+     "src_name": "2nd room",
+     "dst": 104,
+     "dst_name": "courtyard",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 112,
+     "src_name": "2nd room",
+     "dst": 113,
+     "dst_name": "Kip",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 112,
+     "src_name": "2nd room",
+     "dst": 114,
+     "dst_name": "left-terminals",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 112,
+     "src_name": "2nd room",
+     "dst": 115,
+     "dst_name": "right-robots",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 113,
+     "src_name": "Kip",
+     "dst": 112,
+     "dst_name": "2nd room",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 114,
+     "src_name": "left-terminals",
+     "dst": 104,
+     "dst_name": "courtyard",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 114,
+     "src_name": "left-terminals",
+     "dst": 112,
+     "dst_name": "2nd room",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 115,
+     "src_name": "right-robots",
+     "dst": 104,
+     "dst_name": "courtyard",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 115,
+     "src_name": "right-robots",
+     "dst": 112,
+     "dst_name": "2nd room",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 116,
+     "src_name": "Office",
+     "dst": 117,
+     "dst_name": "entry room",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 117,
+     "src_name": "entry room",
+     "dst": 108,
+     "dst_name": "Power room",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 117,
+     "src_name": "entry room",
+     "dst": 116,
+     "dst_name": "Office",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 117,
+     "src_name": "entry room",
+     "dst": 119,
+     "dst_name": "stairwell",
+     "door": "south_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 119,
+     "src_name": "stairwell",
+     "dst": 117,
+     "dst_name": "entry room",
+     "door": "south_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 121,
+     "src_name": "Communal area",
+     "dst": 74,
+     "dst_name": "Top floor",
+     "door": "north_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 121,
+     "src_name": "Communal area",
+     "dst": 111,
+     "dst_name": "Hall2",
+     "door": "commune",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 122,
+     "src_name": "bathroom",
+     "dst": 95,
+     "dst_name": "Hall1",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 124,
+     "src_name": "Room2 - peng",
+     "dst": 95,
+     "dst_name": "Hall1",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 125,
+     "src_name": "Room3 - bot friend",
+     "dst": 95,
+     "dst_name": "Hall1",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 126,
+     "src_name": "Birdhall",
+     "dst": 38,
+     "dst_name": "Ruins In",
+     "door": "ev006",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 126,
+     "src_name": "Birdhall",
+     "dst": 65,
+     "dst_name": "Birdhouse",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 126,
+     "src_name": "Birdhall",
+     "dst": 128,
+     "dst_name": "Courtyard",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 127,
+     "src_name": "Research Station",
+     "dst": 133,
+     "dst_name": "water room",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 127,
+     "src_name": "Research Station",
+     "dst": 238,
+     "dst_name": "Power room",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 128,
+     "src_name": "Courtyard",
+     "dst": 66,
+     "dst_name": "passage",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 128,
+     "src_name": "Courtyard",
+     "dst": 126,
+     "dst_name": "Birdhall",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 129,
+     "src_name": "Room4 - bird",
+     "dst": 111,
+     "dst_name": "Hall2",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 130,
+     "src_name": "Room5 - roomba",
+     "dst": 111,
+     "dst_name": "Hall2",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 131,
+     "src_name": "Encounter PENG",
+     "dst": 241,
+     "dst_name": "Tv room",
+     "door": "lvl_4_down",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 132,
+     "src_name": "Room6 - plant",
+     "dst": 111,
+     "dst_name": "Hall2",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 133,
+     "src_name": "water room",
+     "dst": 191,
+     "dst_name": "Research Station",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 134,
+     "src_name": "Photo center",
+     "dst": 85,
+     "dst_name": "Vendor Street",
+     "door": "ev006",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 135,
+     "src_name": "SECRET RAM CLUB",
+     "dst": 91,
+     "dst_name": "Back Alley",
+     "door": "ev016",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 136,
+     "src_name": "Inside 1",
+     "dst": 44,
+     "dst_name": "The Gate",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 137,
+     "src_name": "rue",
+     "dst": 91,
+     "dst_name": "Back Alley",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 138,
+     "src_name": "stairwell-demo",
+     "dst": 117,
+     "dst_name": "entry room",
+     "door": "south_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 139,
+     "src_name": "T1",
+     "dst": 140,
+     "dst_name": "T2",
+     "door": "to_t2",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 139,
+     "src_name": "T1",
+     "dst": 172,
+     "dst_name": "C7",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 140,
+     "src_name": "T2",
+     "dst": 139,
+     "dst_name": "T1",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 140,
+     "src_name": "T2",
+     "dst": 141,
+     "dst_name": "T3",
+     "door": "to_t3",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 141,
+     "src_name": "T3",
+     "dst": 140,
+     "dst_name": "T2",
+     "door": "unnamed",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 141,
+     "src_name": "T3",
+     "dst": 142,
+     "dst_name": "T4",
+     "door": "to_t4",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 142,
+     "src_name": "T4",
+     "dst": 139,
+     "dst_name": "T1",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 142,
+     "src_name": "T4",
+     "dst": 140,
+     "dst_name": "T2",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 142,
+     "src_name": "T4",
+     "dst": 141,
+     "dst_name": "T3",
+     "door": "to_t3",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 142,
+     "src_name": "T4",
+     "dst": 143,
+     "dst_name": "T5",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 143,
+     "src_name": "T5",
+     "dst": 142,
+     "dst_name": "T4",
+     "door": "to_t4",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 143,
+     "src_name": "T5",
+     "dst": 144,
+     "dst_name": "T6",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 144,
+     "src_name": "T6",
+     "dst": 140,
+     "dst_name": "T2",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 144,
+     "src_name": "T6",
+     "dst": 143,
+     "dst_name": "T5",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 144,
+     "src_name": "T6",
+     "dst": 145,
+     "dst_name": "T7",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 145,
+     "src_name": "T7",
+     "dst": 144,
+     "dst_name": "T6",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 145,
+     "src_name": "T7",
+     "dst": 146,
+     "dst_name": "T8",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 146,
+     "src_name": "T8",
+     "dst": 142,
+     "dst_name": "T4",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 146,
+     "src_name": "T8",
+     "dst": 143,
+     "dst_name": "T5",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 146,
+     "src_name": "T8",
+     "dst": 145,
+     "dst_name": "T7",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 146,
+     "src_name": "T8",
+     "dst": 147,
+     "dst_name": "T9",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 147,
+     "src_name": "T9",
+     "dst": 141,
+     "dst_name": "T3",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 147,
+     "src_name": "T9",
+     "dst": 146,
+     "dst_name": "T8",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 147,
+     "src_name": "T9",
+     "dst": 148,
+     "dst_name": "T10",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 148,
+     "src_name": "T10",
+     "dst": 140,
+     "dst_name": "T2",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 148,
+     "src_name": "T10",
+     "dst": 143,
+     "dst_name": "T5",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 148,
+     "src_name": "T10",
+     "dst": 147,
+     "dst_name": "T9",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 148,
+     "src_name": "T10",
+     "dst": 149,
+     "dst_name": "T11",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 149,
+     "src_name": "T11",
+     "dst": 144,
+     "dst_name": "T6",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 149,
+     "src_name": "T11",
+     "dst": 148,
+     "dst_name": "T10",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 149,
+     "src_name": "T11",
+     "dst": 150,
+     "dst_name": "T12",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 150,
+     "src_name": "T12",
+     "dst": 149,
+     "dst_name": "T11",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 150,
+     "src_name": "T12",
+     "dst": 151,
+     "dst_name": "T13",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 151,
+     "src_name": "T13",
+     "dst": 147,
+     "dst_name": "T9",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 151,
+     "src_name": "T13",
+     "dst": 148,
+     "dst_name": "T10",
+     "door": "ev005",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 151,
+     "src_name": "T13",
+     "dst": 149,
+     "dst_name": "T11",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 151,
+     "src_name": "T13",
+     "dst": 150,
+     "dst_name": "T12",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 151,
+     "src_name": "T13",
+     "dst": 152,
+     "dst_name": "T14",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 152,
+     "src_name": "T14",
+     "dst": 141,
+     "dst_name": "T3",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 152,
+     "src_name": "T14",
+     "dst": 144,
+     "dst_name": "T6",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 152,
+     "src_name": "T14",
+     "dst": 150,
+     "dst_name": "T12",
+     "door": "ev006",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 152,
+     "src_name": "T14",
+     "dst": 151,
+     "dst_name": "T13",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 152,
+     "src_name": "T14",
+     "dst": 153,
+     "dst_name": "T15",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 153,
+     "src_name": "T15",
+     "dst": 149,
+     "dst_name": "T11",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 153,
+     "src_name": "T15",
+     "dst": 152,
+     "dst_name": "T14",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 153,
+     "src_name": "T15",
+     "dst": 154,
+     "dst_name": "T16",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 154,
+     "src_name": "T16",
+     "dst": 153,
+     "dst_name": "T15",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 154,
+     "src_name": "T16",
+     "dst": 167,
+     "dst_name": "S1",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 164,
+     "src_name": "C1",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 166,
+     "src_name": "C2",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 168,
+     "src_name": "C3",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 169,
+     "src_name": "C4",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 170,
+     "src_name": "C5",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 171,
+     "src_name": "C6",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 172,
+     "src_name": "C7",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 172,
+     "src_name": "C7",
+     "dst": 139,
+     "dst_name": "T1",
+     "door": "ev005",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 176,
+     "src_name": "guest room",
+     "dst": 51,
+     "dst_name": "GeorgeRoom",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 177,
+     "src_name": "Entry ruins",
+     "dst": 27,
+     "dst_name": "Dock",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 178,
+     "src_name": "2",
+     "dst": 27,
+     "dst_name": "Dock",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 179,
+     "src_name": "Water2",
+     "dst": 164,
+     "dst_name": "C1",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 180,
+     "src_name": "Start",
+     "dst": 181,
+     "dst_name": "Bathroom",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 180,
+     "src_name": "Start",
+     "dst": 182,
+     "dst_name": "Livingroom",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 181,
+     "src_name": "Bathroom",
+     "dst": 180,
+     "dst_name": "Start",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 182,
+     "src_name": "Livingroom",
+     "dst": 180,
+     "dst_name": "Start",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 182,
+     "src_name": "Livingroom",
+     "dst": 183,
+     "dst_name": "Basement Stairs",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 183,
+     "src_name": "Basement Stairs",
+     "dst": 182,
+     "dst_name": "Livingroom",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 183,
+     "src_name": "Basement Stairs",
+     "dst": 185,
+     "dst_name": "basement after sun",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 184,
+     "src_name": "Hallway",
+     "dst": 182,
+     "dst_name": "Livingroom",
+     "door": "east_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 185,
+     "src_name": "basement after sun",
+     "dst": 183,
+     "dst_name": "Basement Stairs",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 187,
+     "src_name": "fish house",
+     "dst": 84,
+     "dst_name": "Elevator Street",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 188,
+     "src_name": "Start purple",
+     "dst": 3,
+     "dst_name": "Bathroom",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 188,
+     "src_name": "Start purple",
+     "dst": 4,
+     "dst_name": "Livingroom",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 189,
+     "src_name": "Start",
+     "dst": 181,
+     "dst_name": "Bathroom",
+     "door": "west_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 189,
+     "src_name": "Start",
+     "dst": 182,
+     "dst_name": "Livingroom",
+     "door": "south_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 191,
+     "src_name": "Research Station",
+     "dst": 133,
+     "dst_name": "water room",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 191,
+     "src_name": "Research Station",
+     "dst": 192,
+     "dst_name": "Power room",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 192,
+     "src_name": "Power room",
+     "dst": 191,
+     "dst_name": "Research Station",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 193,
+     "src_name": "Prophet house",
+     "dst": 37,
+     "dst_name": "Ruins",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 194,
+     "src_name": "backroom",
+     "dst": 102,
+     "dst_name": "server room",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 194,
+     "src_name": "backroom",
+     "dst": 196,
+     "dst_name": "backhall",
+     "door": "ev020",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 196,
+     "src_name": "backhall",
+     "dst": 194,
+     "dst_name": "backroom",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 196,
+     "src_name": "backhall",
+     "dst": 197,
+     "dst_name": "collapse",
+     "door": "ev011",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 197,
+     "src_name": "collapse",
+     "dst": 194,
+     "dst_name": "backroom",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 197,
+     "src_name": "collapse",
+     "dst": 208,
+     "dst_name": "mines exit",
+     "door": "ev010",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 197,
+     "src_name": "collapse",
+     "dst": 210,
+     "dst_name": "protowalk",
+     "door": "niko",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 199,
+     "src_name": "Gate",
+     "dst": 45,
+     "dst_name": "Inside 2",
+     "door": "ev015",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 199,
+     "src_name": "Gate",
+     "dst": 136,
+     "dst_name": "Inside 1",
+     "door": "ev013",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 199,
+     "src_name": "Gate",
+     "dst": 208,
+     "dst_name": "mines exit",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 199,
+     "src_name": "Gate",
+     "dst": 211,
+     "dst_name": "Junction",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 199,
+     "src_name": "Gate",
+     "dst": 253,
+     "dst_name": "Bed room",
+     "door": "ruins_entrance_top_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 200,
+     "src_name": "Dock",
+     "dst": 177,
+     "dst_name": "Entry ruins",
+     "door": "ev238",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 200,
+     "src_name": "Dock",
+     "dst": 178,
+     "dst_name": "2",
+     "door": "ev240",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 200,
+     "src_name": "Dock",
+     "dst": 209,
+     "dst_name": "Fishing hut",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 201,
+     "src_name": "rue",
+     "dst": 232,
+     "dst_name": "Back Alley",
+     "door": "ev002",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 202,
+     "src_name": "Ruins In",
+     "dst": 40,
+     "dst_name": "Alula",
+     "door": "left_alula_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 202,
+     "src_name": "Ruins In",
+     "dst": 203,
+     "dst_name": "Maize",
+     "door": "maize_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 202,
+     "src_name": "Ruins In",
+     "dst": 204,
+     "dst_name": "Birdhall",
+     "door": "ev053",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 202,
+     "src_name": "Ruins In",
+     "dst": 211,
+     "dst_name": "Junction",
+     "door": "the_wall_exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 203,
+     "src_name": "Maize",
+     "dst": 202,
+     "dst_name": "Ruins In",
+     "door": "exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 204,
+     "src_name": "Birdhall",
+     "dst": 202,
+     "dst_name": "Ruins In",
+     "door": "ev006",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 204,
+     "src_name": "Birdhall",
+     "dst": 205,
+     "dst_name": "Courtyard",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 205,
+     "src_name": "Courtyard",
+     "dst": 204,
+     "dst_name": "Birdhall",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 205,
+     "src_name": "Courtyard",
+     "dst": 206,
+     "dst_name": "passage",
+     "door": "north_door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 206,
+     "src_name": "passage",
+     "dst": 205,
+     "dst_name": "Courtyard",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 208,
+     "src_name": "mines exit",
+     "dst": 199,
+     "dst_name": "Gate",
+     "door": "ev008",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 209,
+     "src_name": "Fishing hut",
+     "dst": 200,
+     "dst_name": "Dock",
+     "door": "door",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 210,
+     "src_name": "protowalk",
+     "dst": 194,
+     "dst_name": "backroom",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 210,
+     "src_name": "protowalk",
+     "dst": 197,
+     "dst_name": "collapse",
+     "door": "ev011",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 210,
+     "src_name": "protowalk",
+     "dst": 208,
+     "dst_name": "mines exit",
+     "door": "ev010",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 211,
+     "src_name": "Junction",
+     "dst": 199,
+     "dst_name": "Gate",
+     "door": "the_wall_exit_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 211,
+     "src_name": "Junction",
+     "dst": 202,
+     "dst_name": "Ruins In",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 212,
+     "src_name": "passage_boat",
+     "dst": 67,
+     "dst_name": "Burial Grounds",
+     "door": "ev004",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 212,
+     "src_name": "passage_boat",
+     "dst": 205,
+     "dst_name": "Courtyard",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 216,
+     "src_name": "Office",
+     "dst": 217,
+     "dst_name": "entry room",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 217,
+     "src_name": "entry room",
+     "dst": 216,
+     "dst_name": "Office",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 217,
+     "src_name": "entry room",
+     "dst": 218,
+     "dst_name": "Power room",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 217,
+     "src_name": "entry room",
+     "dst": 221,
+     "dst_name": "stairwell",
+     "door": "south_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 218,
+     "src_name": "Power room",
+     "dst": 217,
+     "dst_name": "entry room",
+     "door": "west_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 219,
+     "src_name": "Cafe",
+     "dst": 220,
+     "dst_name": "Cafe inside",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 220,
+     "src_name": "Cafe inside",
+     "dst": 219,
+     "dst_name": "Cafe",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 221,
+     "src_name": "stairwell",
+     "dst": 217,
+     "dst_name": "entry room",
+     "door": "south_exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 228,
+     "src_name": "To Tower",
+     "dst": 229,
+     "dst_name": "X room",
+     "door": "ev005",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 228,
+     "src_name": "To Tower",
+     "dst": 230,
+     "dst_name": "Vendor Street",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 229,
+     "src_name": "X room",
+     "dst": 228,
+     "dst_name": "To Tower",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 230,
+     "src_name": "Vendor Street",
+     "dst": 228,
+     "dst_name": "To Tower",
+     "door": "tower_door_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 230,
+     "src_name": "Vendor Street",
+     "dst": 232,
+     "dst_name": "Back Alley",
+     "door": "ev019",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 230,
+     "src_name": "Vendor Street",
+     "dst": 237,
+     "dst_name": "Lobby",
+     "door": "ev086",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 231,
+     "src_name": "Elevator Street",
+     "dst": 232,
+     "dst_name": "Back Alley",
+     "door": "ev012",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 231,
+     "src_name": "Elevator Street",
+     "dst": 234,
+     "dst_name": "fish house",
+     "door": "ev019",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 232,
+     "src_name": "Back Alley",
+     "dst": 201,
+     "dst_name": "rue",
+     "door": "ev014",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 232,
+     "src_name": "Back Alley",
+     "dst": 230,
+     "dst_name": "Vendor Street",
+     "door": "ev020",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 232,
+     "src_name": "Back Alley",
+     "dst": 231,
+     "dst_name": "Elevator Street",
+     "door": "ev017",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 233,
+     "src_name": "Library",
+     "dst": 237,
+     "dst_name": "Lobby",
+     "door": "entrance",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 234,
+     "src_name": "fish house",
+     "dst": 231,
+     "dst_name": "Elevator Street",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 235,
+     "src_name": "Photo center",
+     "dst": 85,
+     "dst_name": "Vendor Street",
+     "door": "ev006",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 236,
+     "src_name": "stairwell",
+     "dst": 51,
+     "dst_name": "GeorgeRoom",
+     "door": "ev003",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 236,
+     "src_name": "stairwell",
+     "dst": 72,
+     "dst_name": "Lobby",
+     "door": "stairs",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 237,
+     "src_name": "Lobby",
+     "dst": 113,
+     "dst_name": "Kip",
+     "door": "ev037",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 237,
+     "src_name": "Lobby",
+     "dst": 233,
+     "dst_name": "Library",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 238,
+     "src_name": "Power room",
+     "dst": 127,
+     "dst_name": "Research Station",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 239,
+     "src_name": "burial grounds PLANE FIXED",
+     "dst": 67,
+     "dst_name": "Burial Grounds",
+     "door": "ev132",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 239,
+     "src_name": "burial grounds PLANE FIXED",
+     "dst": 212,
+     "dst_name": "passage_boat",
+     "door": "ev130",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 239,
+     "src_name": "burial grounds PLANE FIXED",
+     "dst": 213,
+     "dst_name": "Landing",
+     "door": "ev188",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 241,
+     "src_name": "Tv room",
+     "dst": 242,
+     "dst_name": "Encounter",
+     "door": "lvl_4_down",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 242,
+     "src_name": "Encounter",
+     "dst": 241,
+     "dst_name": "Tv room",
+     "door": "lvl_4_down",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 245,
+     "src_name": "X room",
+     "dst": 249,
+     "dst_name": "study",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 248,
+     "src_name": "server room",
+     "dst": 194,
+     "dst_name": "backroom",
+     "door": "ev037",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 248,
+     "src_name": "server room",
+     "dst": 256,
+     "dst_name": "Docks",
+     "door": "sqrzbgone",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 249,
+     "src_name": "study",
+     "dst": 245,
+     "dst_name": "X room",
+     "door": "ev043",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 250,
+     "src_name": "Gate",
+     "dst": 45,
+     "dst_name": "Inside 2",
+     "door": "ev015",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 250,
+     "src_name": "Gate",
+     "dst": 136,
+     "dst_name": "Inside 1",
+     "door": "ev013",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 250,
+     "src_name": "Gate",
+     "dst": 208,
+     "dst_name": "mines exit",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 250,
+     "src_name": "Gate",
+     "dst": 211,
+     "dst_name": "Junction",
+     "door": "ruins_entrance_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 250,
+     "src_name": "Gate",
+     "dst": 248,
+     "dst_name": "server room",
+     "door": "sqrzbgone",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 251,
+     "src_name": "Birdhall",
+     "dst": 250,
+     "dst_name": "Gate",
+     "door": "sqrzbgone",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 252,
+     "src_name": "Elevator Deck",
+     "dst": 251,
+     "dst_name": "Birdhall",
+     "door": "sqrzbgone",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 253,
+     "src_name": "Bed room",
+     "dst": 199,
+     "dst_name": "Gate",
+     "door": "exit",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 256,
+     "src_name": "Docks",
+     "dst": 255,
+     "dst_name": "Last room",
+     "door": "sqrzbgone",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 257,
+     "src_name": "Vendor Street",
+     "dst": 228,
+     "dst_name": "To Tower",
+     "door": "tower_door_left",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 257,
+     "src_name": "Vendor Street",
+     "dst": 237,
+     "dst_name": "Lobby",
+     "door": "ev086",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 257,
+     "src_name": "Vendor Street",
+     "dst": 252,
+     "dst_name": "Elevator Deck",
+     "door": "sqrzbgone",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 259,
+     "src_name": "Post Encounter",
+     "dst": 243,
+     "dst_name": "Credits",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 261,
+     "src_name": "pshot",
+     "dst": 263,
+     "dst_name": "pshot",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 262,
+     "src_name": "language debug",
+     "dst": 1,
+     "dst_name": "INIT",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 262,
+     "src_name": "language debug",
+     "dst": 2,
+     "dst_name": "Start",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 262,
+     "src_name": "language debug",
+     "dst": 119,
+     "dst_name": "stairwell",
+     "door": "ev011",
+     "kind": "oneshot_transfer"
+    },
+    {
+     "src": 263,
+     "src_name": "pshot",
+     "dst": 6,
+     "dst_name": "IGNORE",
+     "door": "ev001",
+     "kind": "oneshot_transfer"
     }
    ]
   }

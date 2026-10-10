@@ -25,8 +25,8 @@ E 产品接线（AST：main.py 预声明 4 字段 / 控制器真调 scene_pathfi
 ------------------------------------
 · **不写恒真判据**（"看着在守其实没守"）—— 每条都有鉴别力，见每段注释；
 · **正 / 负控制成对** —— 只说"教堂能定位到"不够，还要证明"不存在的地方**不能**定位到"；
-· **行为判据用真实量级输入** —— 用真实 _index.json（1,014 场景）与真实 _room_graph.json
-  （782 边），不用手搓的 3 条假数据；
+· **行为判据用真实量级输入** —— 用真实 _index.json（2,166 场景）与真实 _room_graph.json
+  （Deltarune 五章 782 边 + 第105轮并入的 OneShot 420 边 = 1,202 边），不用手搓的假数据；
 · **能从源码拿的别 import** —— E 段走 AST（不 import PyQt，不实例化 App）；
 · ★ **不依赖 E:\\Download\\_tmp**（按约定"用后即删"）—— 一旦依赖，临时区被清后
   不是报红而是**静默失去鉴别力**。
@@ -105,22 +105,44 @@ def seg_a():
     #   ★ 边数只有等值判据才有鉴别力：>0 是恒真（文件在手就 >0）。
     #   782 = 238+323+79+72+70（第42轮反汇编取证事实），写死在这里，
     #   万一有人重跑取证把某章丢了，这条会立刻报红。
+    #
+    #   ★★ 第105轮扩容（OneShot 房间连接）—— 本条的**本意没有变**：
+    #     「原作取证的五章，一章不缺、每章数一个不差」。变的只是「图里现在
+    #     多了一章 oneshot」（第105轮把 420 条 code-201 传送边接进
+    #     `_room_graph.json`，供逐门寻路用）。
+    #     ⇒ 修法是**收紧**不是放松：五章仍逐章等值（老常数 782 也**原样保留**
+    #       为「非 oneshot 小计」另立一条断言），再要求总数 == 分章数之和
+    #       （= 任何一章被丢/被塞都会被 `per_ch == expect_ch` 抓住，而不是
+    #        被总数平均掉）。**绝不用 `got >= 782` 这种下界**——那会放过
+    #        「某章丢了、别的章冒出来」这类静默退化。
     rg = SP.load_room_graph()
     got = rg.get('n_edges')
     per_ch = {ch: len(rec) for ch, rec in (rg.get('edges_by_chapter') or {}).items()}
-    expect_ch = {'ch1': 238, 'ch2': 323, 'ch3': 79, 'ch4': 72, 'ch5': 70}
-    check('A3', rg.get('ok') and got == 782 and per_ch == expect_ch,
-          'A3 原作房间图 782 条边 / 五章分章数正确（实得 %r，分章 %r）'
-          % (got, per_ch))
+    expect_ch = {'ch1': 238, 'ch2': 323, 'ch3': 79, 'ch4': 72, 'ch5': 70,
+                 'oneshot': 420}
+    FIVE_CH = ('ch1', 'ch2', 'ch3', 'ch4', 'ch5')
+    five_total = sum(v for k, v in per_ch.items() if k in FIVE_CH)
+    check('A3', rg.get('ok') and per_ch == expect_ch,
+          'A3 原作房间图分章数逐章正确（实得 %r）' % (per_ch,))
+    # A3b：老常数 782 不退休 —— 它现在的语义是「Deltarune 五章小计」。
+    check('A3b', five_total == 782,
+          'A3b Deltarune 五章小计仍 == 782（实得 %d）' % five_total)
+    # A3c：总边数必须等于分章数之和 —— 防「多出未登记章」「总数与分章数脱节」。
+    check('A3c', got == sum(expect_ch.values()) == sum(per_ch.values()),
+          'A3c 总边数 == Σ分章数（实得 %r / Σ分章 %r）'
+          % (got, sum(per_ch.values())))
 
     # ---- A4 邻接表自洽（坏边/自环被丢弃，边数守恒不满不溢）----
     #   ⚠️ 邻接表是**两层**：`{章: {src: [edge,...]}}`。
     #   第一版写成 `sum(len(v) for v in adj.values())` = 只数了**源房间数**（442），
     #   不是边数 —— 判据本身写错了（不是产品错）。正确 = Σ 每章 Σ 每个源的出边数。
+    #   ★ 第105轮：期望值改由 `expect_ch` 推（不再写死 782），要求仍是**等值**，
+    #     且**章集合必须完全一致**（`set(adj) == set(expect_ch)` 天然纳入 oneshot）。
     adj = SP.build_adjacency(rg.get('edges_by_chapter') or {})
     n_adj = sum(len(edges) for table in adj.values() for edges in table.values())
-    check('A4', n_adj == 782 and set(adj) == set(expect_ch),
-          'A4 邻接表边数与房间图一致（%d）且五章齐全' % n_adj)
+    check('A4', n_adj == sum(expect_ch.values()) and set(adj) == set(expect_ch),
+          'A4 邻接表边数与房间图一致（%d）且章齐全 %r'
+          % (n_adj, sorted(adj)))
 
     # ---- A5 索引可用（② 的地基）----
     # ★★ 第77轮改：原来是 `== 1014`（只有 Deltarune 时的快照）。

@@ -1,0 +1,28 @@
+原作目录 = C:\Users\23002\Desktop\项目文件夹\niko的秘密\OneShot.World.Machine.Edition.Build.16512634\gamedata\maps
+[PASS] A0 原作 maps 目录可达
+[PASS] A1 原作 code-201（Transfer Player）总数 == 826（实得 826）
+[PASS] A2 page0 且该页无条件 的"纯位置门" == 749（实得 749）
+[PASS] A3 带条件 / 非 page0 的"剧情传送" == 77（实得 77）
+[PASS] A4 计数自洽：826 == 749 + 77
+[PASS] A5 OneShot 场景登记 263 间（带 original_room_id，实得 263）
+[PASS] A6 门候选中无坏目标 / 无未登记房间（坏目标 0，未登记 0）
+[PASS] A7 自环（目标 == 自己）== 19（实得 19）
+[PASS] A8 ★跨房传送按 (src_map, dst_map) 去重 == 420 条唯一边（实得 420）
+[PASS] A9 计数守恒：去重前跨房 730 + 自环 19 == 门候选 749
+[PASS] B1 ★蒸馏证据 == 现扫原作（原作 420 / 证据 420 / 对称差 0）
+[PASS] B2 ★★产品 == 现扫原作（产品 420 / 原作 420 / 对称差 0）
+[PASS] B3 产品 oneshot 规则条数 420 == 唯一边数 420
+[PASS] C1 ★每条 oneshot 规则的 when_door 词根 == 由**原作事件**重推的 slug（不符 0: []）
+[PASS] C2 oneshot priority 恰为连续段 [3000, 3419]（实得 [3000, 3419]）
+[PASS] C3 每条规则的 reason 是"原作连接：从 OneShot·…"自然语言（喂给 AI 的理由）
+[PASS] C4 每条规则的 _original 都标了 chapter=oneshot / kind=oneshot_transfer
+[PASS] D1 无孤儿目标（无）
+[PASS] D2 产品里没有自环路由（19 条自环只登记）
+[PASS] D3 ★拓扑保真：产品边图的连通分量数 / 节点数 == 原作现算（5/212 vs 5/212）
+[PASS] D4 锚点：原作 map2「Start」的 west door → map3「Bathroom」在产品里（('oneshot.mainline.Start', 'oneshot.mainline.Bathroom')）
+[PASS] D5 锚点：这条边的 when_door == "west_door"（实得 'west_door'）
+[PASS] D6 只由剧情传送支撑的 42 对房间没有混进产品（泄漏 0: []）
+[PASS] D7 负控制：伪造的场景名不在边集合里（成员判定有区分度）
+[PASS] D8 负控制：slug 对不同事件名给出不同值（'west_door' vs 'east_door'）
+
+合计 PASS=25 FAIL=0

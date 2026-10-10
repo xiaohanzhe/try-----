@@ -156,10 +156,14 @@ ok(len(old_bad) >= 1,
 
 # B3 无回绕：全局 priority 声明序单调不减（新写法保证）
 # ★★ 第89轮修正（判据过窄 ⇒ 会误报，记忆 §4 铁律）：desktop 的 9 扇世界门是
-#   **手写表**，走自己的 priority 区间（200），被追加在原作生成边（priority 最高
-#   2478）之后 ⇒ 整表末段必然"下降一次"。但那**不是回绕缺陷** —— 回绕指的是
+#   **手写表**，走自己的 priority 区间（200），被追加在原作生成边（第105轮前
+#   最高 2478）之后 ⇒ 整表末段必然"下降一次"。但那**不是回绕缺陷** —— 回绕指的是
 #   **生成器**在同一遍扫描里让 priority 忽大忽小（会让出边顺序错乱）。手写段
 #   另起一段是设计，不是 bug。
+#   ★ 第105轮续注：OneShot 的 420 条传送边走**自己独立的段** `PRIO_BASE = 3000`
+#     （实测 [3000, 3419]），**整段追加在原作声明序末尾** ⇒ 本判据的语义（"段内
+#     单调不减"）不受影响，实测 "下降次数 = 0" 仍然成立。若将来有人把 oneshot
+#     段插进中间（而不是追加），本判据会立刻报红 —— 那正是它该守的东西。
 #   ⇒ 本判据只管**原作生成段**（排除 desktop 起源），手写段另有值域断言（B4）。
 _ORIGIN_WORKS_B3 = ('desktop',)
 _generated = [r for r in RL if r.get('when_scene') not in _ORIGIN_WORKS_B3]
@@ -229,6 +233,17 @@ CHS = ['chapter1_windows', 'chapter2_windows', 'chapter3_windows',
 TAG = {CHS[i]: 'ch%d' % (i + 1) for i in range(5)}
 DELTA = {'A': 1, 'B': -1, 'C': 2}
 
+#: ★★ 第105轮新增：OneShot 房间连接的**原作事实**蒸馏（仓库内，非临时区）。
+#: 为什么 C1 必须并入它：C1 的意图是「凡**原作房间**之间的边都必须可由原作
+#:   独立重算」—— 而"原作"现在有**两个**来源：Deltarune 的门下标位移表（ch1~5）
+#:   与 OneShot 的 code-201 传送表。第105轮把 OneShot 的 420 条边接进了同一张
+#:   路由表（`when_scene` 前缀 `oneshot.`），若 C1 只认门位移表，那 420 条就会
+#:   被当成"编出来的边"整片报红 —— 那不是发现缺陷，是判据口径没跟上事实。
+#:   ⇒ **不降低强度**：C1 从"== 门位移重算"升级为"== 门位移重算 ∪ OneShot 传送重算"，
+#:     产品侧任何**多出**或**缺失**的边仍然照抓。
+_OS_EV = os.path.join(ROOT, 'code-quality-audit', '第105轮-OneShot房间连接',
+                      '_evidence', 'oneshot_transfers.json')
+
 
 def rooms_path(i):
     """第 i 章门表路径：优先**仓库内证据**，再退到 E 盘临时区。"""
@@ -266,6 +281,33 @@ def pts(l):
         if len(p) >= 3:
             o.append((p[0], p[1], p[2]))
     return o
+
+
+def _oneshot_edges():
+    """★ 第105轮：从**仓库内蒸馏的 OneShot 原作事实**独立重算房间连接边。
+
+    :return: `(edges: set[(src_scene, dst_scene)], error: str|None)`
+
+    为什么读蒸馏文件而不是现扫原作：本套件在 G2 里跑，**不许依赖外部盘**
+    （E 盘掉线即暴露 —— 本项目已踩过：C 段曾静默退化成 SKIP）。蒸馏文件
+    由 `第105轮-OneShot房间连接/_tools/gen_routes105.py` 从原作 gamedata 生成，
+    内容**只有原作事实**（每条边的两端 map / 房名 / 来源事件），
+    不含生成器的决策字段 ⇒ 拿它重算不是自证。
+    """
+    if not os.path.isfile(_OS_EV):
+        return set(), '%s 不存在' % os.path.basename(_OS_EV)
+    try:
+        d = jload(_OS_EV)
+    except Exception as e:                    # 坏 JSON 也要如实报告，不吞
+        return set(), '解析失败: %r' % (e,)
+    out = set()
+    for e in (d.get('edges') or []):
+        s, t = e.get('src_scene'), e.get('dst_scene')
+        if isinstance(s, str) and s and isinstance(t, str) and t:
+            out.add((s, t))
+    if not out:
+        return set(), '证据里没有边'
+    return out, None
 
 
 have_rooms = all(os.path.isfile(rooms_path(i)) for i in range(len(CHS)))
@@ -307,12 +349,19 @@ if have_rooms:
     #   本判据的意图是"凡**原作房间**之间的边都必须可由门表独立重算"，故把
     #   非原作来源的边（起源场景是 desktop）排除；desktop 门另有专门锁
     #   （verify_scene_p0 B6：恰 8 扇；scene_route 的桌面连通段）。
+    # ★★ 第105轮：**不再**用"排除"处理 OneShot —— 改用"并入重算"（见 _OS_EV 注释）。
+    #   `desktop` 仍是排除，因为它压根不是原作房间；而 OneShot 的每一间房都是
+    #   原作房间，边也都能从原作 code-201 独立重算出来。
     _ORIGIN_WORKS = ('desktop',)
     prod_edges = set((r.get('when_scene'), r.get('to')) for r in RL
                      if r.get('when_scene') not in _ORIGIN_WORKS)
-    ok(prod_edges == orig_edges,
-       'C1 ★产品边集合 == 原作门表独立重算集合（各 %d 条，差值 %d；已排除 desktop 起源）'
-       % (len(prod_edges), len(prod_edges ^ orig_edges)))
+    os_edges, _os_err = _oneshot_edges()
+    ok(prod_edges == (orig_edges | os_edges),
+       'C1 ★产品边集合 == 原作独立重算集合（门位移 %d ∪ OneShot 传送 %d = %d 条；'
+       '产品 %d 条，差值 %d；已排除 desktop 起源）%s'
+       % (len(orig_edges), len(os_edges), len(orig_edges | os_edges),
+          len(prod_edges), len(prod_edges ^ (orig_edges | os_edges)),
+          ('｜证据读取失败: %s' % _os_err) if _os_err else ''))
 
     # C2 断链归因：'to 无出边的场景' 里，凡原作**能编出边**的都算真缺口。
     #   ⚠️ 判据必须是"原作侧按同一机制能编出边"，而不是"该房有没有字母门" ——
