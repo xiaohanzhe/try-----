@@ -6813,6 +6813,10 @@ class RalseiPet(QMainWindow):
             #       （绘制指令的坐标空间），画布则铺满整屏、把画面**居中偏移**。
             view = scene.plan_viewport()
             # ★ 画布尺寸 = 主屏物理尺寸（不随相机走）。
+            #   ⚠️ 第110轮：这一次 resize 会被后面的 `set_plan` 覆盖（它按 `view`
+            #     重设尺寸）⇒ **真正的整屏尺寸在 `set_plan` 之后**再铺一次
+            #     （见下方"顺序修正"）。这里保留是为了"本帧若中途异常、
+            #     至少画布尺寸是对的"，不是最终赋值点。
             sw, sh = self._primary_screen_size()
             canvas.resize(int(sw), int(sh))
             # ★ 画面在画布内的居中偏移（`fit_camera_to_screen` 写进宿主）。
@@ -6824,10 +6828,26 @@ class RalseiPet(QMainWindow):
             # ★ 第50轮：球的前层（含"塑料滤镜"）必须叠在**角色之上** ⇒ 分流给
             #   overlay 控件；后层留在画布（在角色之下）。合起来即原作 Draw_0 的序。
             behind, front = scene_render_mod.split_bubble_layers(plan)
-            canvas.set_plan(behind, view)
             # ★★ 第107轮：画布**固定铺满整屏**，不再跟着桌宠跑。
             #   （第89轮那套"居中 + 四向钳制"跟随摆位是"小窗口"时代的产物，
             #    已于本版废弃 —— 用户明确说「不是跟随移动的窗口」。）
+            # ★★★ 第110轮**真机抓帧抓出的活 bug**：`set_plan(behind, view)`
+            #   内部会 `resize(view_size)` —— 而 `view = plan_viewport()` 是
+            #   **相机尺寸**（= 画面尺寸，不是屏幕尺寸）。它紧跟在上面
+            #   `canvas.resize(sw, sh)`（= 整屏）之后 ⇒ **后写覆盖前写** ⇒
+            #   画布实际变成"画面那么大"而不是"整屏那么大"。
+            #   后果：`paintEvent` 的 `fillRect(self.rect(), 黑)` 只填画面那块 ⇒
+            #   **四周黑边不出现**，房间被贴在屏幕左上角（而不是居中 + 满屏黑框）。
+            #   ⚠️ 为什么第107/108/109 三轮都没抓到：
+            #     · 第107轮离屏录屏是 **800×600 屏 ⇒ 画面恰好也是 800×600**
+            #       （4:3 零黑边）⇒ `view == 整屏` ⇒ 覆盖后**看不出差别**（假绿）；
+            #     · 第109轮真机虽已现形（记录里 `canvas=(2133,1600)` ≠ 屏 2560×1600），
+            #       但那一轮**没断言** canvas == 屏（判据缺口）。
+            #   ⇒ 第110轮画面砍半后（1066×800 vs 屏 2560×1600）差异立刻显形。
+            # ★ 顺序修正：`set_plan` 会 resize ⇒ 必须**在它之后**把画布铺回整屏，
+            #   否则整屏尺寸被画面尺寸覆盖（见上）。`resize` 幂等（尺寸没变时不重排）。
+            canvas.set_plan(behind, view)
+            canvas.resize(int(sw), int(sh))
             self._place_scene_layer()
             self._update_bubble_overlay(front, view)
 

@@ -92,6 +92,79 @@ DEFAULT_BORDER = 0
 #: 「场景是全屏，不是跟随移动的窗口，是像原作全屏后的效果似的」）。
 SCENE_ASPECT = 4.0 / 3.0
 
+#: ★★★ 第110轮：场景画面占「最大 4:3 内接矩形」的比例（唯一自由度）。
+#:
+#: 用户口径（逐字）：「**别这么大啊**」+「**到刚才的一半才好一些**」
+#:   —— 指第107轮那版"铺满整屏"的画面（2560×1600 屏上被放大到 2133×1600、
+#:   `camera.scale = 6.67`，Ralsei 的行走精灵被画成约 273px 高）**太大了**。
+#:
+#: ⇒ `0.5` = 在最大内接矩形的基础上**再砍一半**（2133×1600 → 1066×800，
+#:   `scale` 6.67 → 3.33，Ralsei 约 273px → **137px**）。
+#:
+#: ★★★ 为什么在这里（而不是去改 `fit_fullscreen` 的入参）
+#: ------------------------------------------------------
+#: `fit_fullscreen` 是**纯函数**、有单测锚点（`check107 A5` 逐值钉死
+#: `(2560,1600) → (2133,1600,214,0)`），它的语义就是"最大内接"这件事本身。
+#: 把"再砍一半"塞进它的入参（`fit_fullscreen(sw/2, sh/2)`）会把**居中偏移**
+#: 算错（偏移必须相对**整块屏幕**，不是相对半块屏），是典型的"改错地方"。
+#: ⇒ 正确做法：保 `fit_fullscreen` 不动，把"占多大比例"独立成一个**具名常量**，
+#:   在 `fit_camera_to_screen` 里对**结果矩形**缩比 + 重新居中。
+#:
+#: ★★ 一处改、三处动（本项目最贵的坑 = "两处各写一份真源"）
+#:    `fit_camera_to_screen` 里 `scale = out_w / scoped_w` ⇒ 砍半后 `scale` 自动
+#:    减半 ⇒ `main.py` 的 `_cached_scale_factor = camera.scale × pet_scale` 跟着
+#:    减半 ⇒ **宠物同步变小**；`ui_scale()` 由 `pet_scale` 派生（与 scale 无关）
+#:    ⇒ UI 不受影响（第108轮口径：UI 倍率只跟 pet_scale 挂钩）。
+SCENE_FIT_FRACTION = 0.5
+
+
+def fit_fraction(view_w, view_h, ratio=SCENE_ASPECT, fraction=SCENE_FIT_FRACTION):
+    """★ 第110轮：在「最大 4:3 内接矩形」基础上**再乘一个比例**，并重新居中。
+
+    = `fit_fullscreen` 的结果矩形 × `fraction`，偏移按**整块屏幕**重算居中。
+
+    为什么不直接复用 `fit_fullscreen(w*fraction, h*fraction, ratio)`：
+      那等于"按一块更小的屏幕算内接" ⇒ 得到的仍是"铺满那块小屏"的矩形，
+      **居中偏移会错**（相对小屏居中 ≠ 相对整屏居中）。本函数的偏移一律相对
+      `view_w × view_h`（整块屏幕），这才是绘制时要 `translate` 的量。
+
+    :param view_w: 屏幕宽（像素，>0）。
+    :param view_h: 屏幕高（像素，>0）。
+    :param ratio: 画面宽高比。非法 → 用 `SCENE_ASPECT`。
+    :param fraction: 相对最大内接矩形的比例，`(0, 1]`。非法/越界 → 用
+        `SCENE_FIT_FRACTION`（**不静默取 1.0**：那会悄悄退回"铺满"）。
+    :return: `(w, h, ox, oy)`；输入非法 → `None`（不伪装成 `(0,0,0,0)`）。
+
+    ★★★ `fraction == 1.0` 时**逐值等价**于 `fit_fullscreen`（回归安全：
+       本函数是它的严格泛化，不是替换）。
+    """
+    fit = fit_fullscreen(view_w, view_h, ratio)
+    if not fit:
+        return None
+    try:
+        fr = float(fraction)
+    except (TypeError, ValueError):
+        fr = SCENE_FIT_FRACTION
+    if not (0.0 < fr <= 1.0):
+        fr = SCENE_FIT_FRACTION
+    w, h, _ox, _oy = fit
+    w = max(1, int(round(w * fr)))
+    h = max(1, int(round(h * fr)))
+    try:
+        vw = float(view_w)
+        vh = float(view_h)
+    except (TypeError, ValueError):
+        return None
+    if vw <= 0 or vh <= 0:
+        return None
+    ox = int(round((vw - w) / 2.0))
+    oy = int(round((vh - h) / 2.0))
+    if ox < 0:
+        ox = 0
+    if oy < 0:
+        oy = 0
+    return (w, h, ox, oy)
+
 
 def fit_fullscreen(view_w, view_h, ratio=SCENE_ASPECT):
     """把 **4:3 画面**按等比最大内接放进 `view_w × view_h` 的屏幕 → `(w, h, ox, oy)`。

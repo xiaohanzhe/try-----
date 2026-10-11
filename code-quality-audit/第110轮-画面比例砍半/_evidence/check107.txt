@@ -1,0 +1,104 @@
+========================================================================
+第107轮：场景真全屏化 + 全局缩放（宠物/场景/UI 同源）不许静默漂移
+ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+========================================================================
+
+-- A 全屏化数学（`fit_fullscreen`） --
+[PASS] ★ A1 ★★★ `scene_camera.fit_fullscreen` 存在（全屏化数学唯一真源）
+[PASS] ★ A2 ★★★ `fit_fullscreen` **零 Qt**（纯函数：scene_camera 顶层禁 Qt ⇒ `main.py` 初始化环不许破）
+[PASS] A3 ★★★ `SCENE_ASPECT` 常量 = 4/3（原作房间比；写死别的比例=画面变形）  <- got=1.3333333333333333
+[PASS] ★ A4 ★★★ 用 `<=` 判"高是不是限制轴"（含"相等 ⇒ 高限制"的边界）—— 写成 `max` 会让画面**溢出屏幕**（= 裁掉画面，不是留黑边）  <- LtE=True
+[PASS] ★ A4b ★★ `max(1, ...)` 兜底（极端屏幕不产 0 尺寸）  <- max 调用=2
+[PASS] ★ A5 ★★★ `fit_fullscreen` 返 **4 元组** `(w, h, ox, oy)`（画布尺寸 + 居中偏移 ⇒ 消费面要一次拿全）
+[PASS] ★ A6 ★★★ 非法输入（0 / 负 / None / 非数）返 `None`（不抛、不产 0 尺寸）—— 至少 2 处 None 返回（类型关 + 正数关）  <- None 返回=2
+[PASS] ★ A7 ★★ 用 `round(...)` 到整像素、**不许**"取偶数"那种写法（取偶会破坏 4:3 ⇒ 画面被拉扁）
+[PASS] ★ A8 ★★ docstring 写明"**为什么是 min 不是 max**"（否则下一个人会把方向搞反，且看不出错）
+[PASS] A9 ★★★ 真跑五例逐值相等（2560×1600 ⇒ 左右各 214 黑边｜4:3 ⇒ 零黑边｜竖屏 ⇒ 上下 680）  <- 偏差=[]
+[PASS] ★ A10 ★★★ 不变量：输出恒**在屏内**且**比例恒 4:3**（5 组屏幕）  <- 偏差=[]
+
+-- A11+ 第110轮：画面比例砍半（`SCENE_FIT_FRACTION`） --
+[PASS] ★ A11 ★★★ `scene_camera.SCENE_FIT_FRACTION` 存在且 == 0.5（用户逐字「别这么大啊」+「到刚才的一半才好一些」的单点真源）  <- 值=0.5
+[PASS] ★ A12 ★★★ 正控制：2560×1600 下 `scale` 由 6.666 **减半**到 3.331（宠物渲染倍率 = camera.scale × pet_scale ⇒ 宠物同步变小）  <- 6.666 -> 3.331
+[PASS] ★ A13 ★★★ `fraction=1.0` 时**逐值等价** `fit_fullscreen`（第110轮是它的严格泛化，不是替换 ⇒ 旧基线语义不会被悄悄改写）  <- 不等=[]
+[PASS] ★ A14 ★★★ 不变量：砍半后恒**在屏内** · **比例 4:3** · **偏移真居中**（5 组屏）  <- 偏差=[]
+
+-- B 相机全屏化（`fit_camera_to_screen`） --
+[PASS] ★ B1 ★★★ `scene_controller.fit_camera_to_screen` 存在（全屏化入口）
+[PASS] ★ B2 ★★★ `main.py` 真的调 `fit_camera_to_screen`（接线到位，防"写了没人用"）
+[PASS] ★ B3 ★★★ `fit_camera_to_screen` **签名里无** `frac`/`fraction` 形参（第110轮：比例是**内读单点真源常量**，不由调用方传 ⇒ 不会被各调用点写歪）  <- args=['self', 'screen_size', 'pet_scale']
+[PASS] ★ B4 ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fraction`（几何交给纯函数算内接矩形 + 比例缩比 + 居中偏移）
+[PASS] ★ B4b ★★★ `fit_fraction` **内部委托** `fit_fullscreen`（第110轮新增层不许自己另写一套内接数学 —— 那会变成第二份真源）
+[PASS] ★ B5 ★★★ **成对**写 `set_size` 与 `set_scale`（只抬一个 ⇒ "放大了但没铺开"或反之）
+[PASS] ★ B6 ★★★ `fit_camera_to_screen` 把逻辑窗口锁在 **320×240**（=`DEFAULT_CAMERA_SIZE/2` ⇒ 相机可见范围不变；★ 变了 = 镜头拉近/拉远，不是场景放大）—— ★ AST 求值实证  <- scoped=(320.0, 240.0)
+[PASS] ★ B6b 负控制：B6 有鉴别力（`base_w/4.0` 的假实现必须判假 ⇒ 求值得 160≠320）
+[PASS] ★ B7 ★★★ `scale = out_w / scoped_w`（放大的**唯一来源**；若写成 `scoped_w / out_w` 则全反）
+[PASS] ★ B8 ★★★ docstring 记录 `pet_scale` 的数学（曾写反成"镜头拉近"的教训）—— 防下一个人再犯
+
+-- C 画布铺满 + 固定摆位（"不是跟随移动的窗口"） --
+[PASS] ★ C1 ★★★ `SceneCanvas.set_output_offset` 存在（居中偏移消费面）
+[PASS] ★ C2 ★★★ `SceneCanvas.set_opaque_bg` 存在（非桌面场景盖不透明黑）
+[PASS] ★ C3 ★★★ `paintEvent` 真用 `_opaque_bg` 当 `if` 条件铺底（`fillRect`）—— ★ AST 判"真守卫 + 真铺底"，**排除短路**（`if False and _opaque_bg:` 这种"名字还在、行为已废"必须判假）
+[PASS] ★ C4 ★★★ `paintEvent` 真消费 `_offset_x/_offset_y`（translate 居中）
+[PASS] ★ C5 ★★★ `_place_scene_layer` 只 move 不 resize（尺寸归 set_plan 的 view_size）  <- move=1 resize=0
+[PASS] ★ C6 ★★★ `_place_scene_layer` **零四向钳制**（`max/min` 调用 == 0）—— 第107轮废弃第89轮"居中+四向钳制"（用户"不是跟随移动的窗口"）；残留 = 半新半旧不自洽  <- max=0 min=0
+[PASS] ★ C7 ★★★ `_place_scene_layer` 以**主屏**为基准（真调 `primaryScreen()`）⇒ 铺满主屏、不随宠物移动  <- primary=True
+[PASS] ★ C8 ★★ `_place_scene_layer` 真调 `geometry()`（取主屏物理几何）  <- geom=True
+[PASS] ★ C9 ★★ 摆位后显式 `repaint()`（透明顶层窗口 move 后不自动重绘 ⇒ 上屏空内容）
+[PASS] ★ C10 ★★★ `_primary_screen_size()` 存在（用**主屏物理**尺寸，不是多屏合并 —— 合并会把画面按两块屏铺）
+[PASS] ★ C10b ★★ 其中真调 `primaryScreen()`（不是 `_virtual_screen_size()`）
+[PASS] ★ C11 ★★★ `_update_scene_layer` 里把画布 `resize` 到主屏尺寸
+[PASS] ★ C12 ★★★ `_update_scene_layer` 真调 `set_output_offset` 与 `set_opaque_bg`
+[PASS] ★ C13 ★★★ `_update_scene_layer` 真调 `set_plan`（AST 调用序可见）  <- calls=['set_output_offset', 'set_opaque_bg', '_scene_is_transparent', 'split_bubble_layers', 'set_plan', 'resize', '_place_scene_layer', '_update_bubble_overlay', 'get', '_show_scene_layer', '_hide_scene_layer', 'debug']
+[PASS] ★ C14 ★★★ `resize` 出现在 `set_plan` **之后**（后写覆盖前写 ⇒ 必须最后铺整屏）  <- set_plan@25 resize@26
+[PASS] ★ C15 ★★★ `set_plan` 之后仍以 `_primary_screen_size()` 铺**整屏**（否则画布 = 画面尺寸 ⇒ 四周黑边消失、画面贴左上角）
+[PASS] ★ C15b ★★ 负控制：C14 有鉴别力（`resize` 排在 `set_plan` 前 ⇒ 必须判假）
+
+-- D 桌面透明 / 房间不透明 --
+[PASS] ★ D1 ★★★ `_scene_is_transparent()` 存在（决定是否铺黑底）
+[PASS] ★ D2 ★★★ 判据是 `bg == TRANSPARENT_BG`（显式声明，不是"没背景就算透明"）
+[PASS] ★ D3 ★★★ 取值失败/异常时**必须**返 `False`（保守：多盖黑 > 把房间漏成透明）—— ★ 定点判 `except` 块里的 `return False`（变异 M11：把异常返 `True` 必须报红；"数 `return False` 总数"会被别处掩盖 = 判据恒真）  <- except 里 return False=1, return True=0
+[PASS] ★ D4 ★★ `desktop.json` 的 `bg == "__transparent__"`（数据面 + 代码面同源）  <- bg='__transparent__'
+
+-- E 全局缩放（宠物 / 场景 / UI 同源） --
+[PASS] ★ E1 ★★★ `PET_SCALE_DEFAULT/MIN/MAX/STEP` 四常量齐  <- {'PET_SCALE_DEFAULT': 1.0, 'PET_SCALE_MIN': 0.4, 'PET_SCALE_MAX': 2.5, 'PET_SCALE_STEP': 0.1}
+[PASS] ★ E1b ★★★ `PET_SCALE_DEFAULT == 1.0`（1.0 = 与场景同比例 = 最贴原作）  <- got=1.0
+[PASS] ★ E1c ★★★ `MIN < DEFAULT < MAX` 且 STEP > 0（MIN=0.4 缩得下去 / MAX=2.5 放得开）  <- {'PET_SCALE_DEFAULT': 1.0, 'PET_SCALE_MIN': 0.4, 'PET_SCALE_MAX': 2.5, 'PET_SCALE_STEP': 0.1}
+[PASS] ★ E2 ★★★ `_cached_scale_factor` **真被赋值**（第44轮起从未赋值 ⇒ 恒走默认 2.0；第107轮接成真源）—— 至少 2 处赋值（初始 + 重算）  <- 赋值处数=3
+[PASS] ★ E2b ★★★ `_cached_scale_factor` 的赋值落在 **≥2 个不同方法**且必含重算路径`_refresh_pet_render_scale`（★ 只在初始处赋值 = 调档位不会重算 ⇒ 必须报红）  <- 涉及方法=['_load_persisted_pet_scale', '_refresh_pet_render_scale', 'init_systems']
+[PASS] ★ E3 ★★★ `_refresh_pet_render_scale` 的 `v = <某含 scale 的量> × <相对倍率>`（"每逻辑像素多少屏幕像素"= 与场景同一把尺）—— ★ AST **数据流**判（允许经局部变量中转：产品是 `sc = cam.scale` ⇒ `v = sc * rel`；绑语法形状会假红）
+[PASS] ★ E3c ★★ 相对倍率真从 `self.pet_scale` 取（不是写死 2.0 那种）
+[PASS] ★ E3b ★★ 倍率有下限钳位（防 0/负 ⇒ 贴图被缩没）
+[PASS] ★ E4 ★★★ `set_pet_scale(scale, step, persist)` 存在（用户口径"半自动或手动调"）
+[PASS] ★ E4b ★★★ 形参含 `persist`（测试必须能 `persist=False` 不写脏用户金库—— 第107轮血泪）  <- args=['self', 'scale', 'step', 'persist']
+[PASS] ★ E4c ★★★ `set_pet_scale` 真把 target 钳进 `PET_SCALE_MIN`（= `if <Compare 含 PET_SCALE_MIN>:` 且分支体真写回它）—— ★ AST 判"真守卫"，不判"常量名出现过"（变异 M15：改 `if False:` 必须报红）
+[PASS] ★ E4d ★★ `set_pet_scale` 真调 `_refresh_pet_render_scale`（改倍率必须立刻反映到渲染）
+[PASS] ★ E5 ★★★ `ui_scale()` 存在（用户口径"对话框之类的也要放大"）
+[PASS] ★ E5b ★★★ `ui_scale()` 用**平方根**折中（`** 0.5`）—— 线性会让 UI 跟宠物一起暴涨把屏占满
+[PASS] ★ E5c ★★★ `ui_scale()` 钳在 `[0.5, 3.0]`
+[PASS] ★ E5d ★★ `ui_scale()` 基准是 `PET_SCALE_DEFAULT`（默认档 = 1.0 不放大）
+[PASS] ★ E6 ★★★ 设置面板里有 `pet_scale_spinbox`（可视化调节入口）
+[PASS] ★ E6b ★★★ 面板真接 `set_pet_scale`（`persist=False` 实时预览）
+[PASS] ★ E6c ★★★ `save_config` 真调 `set_pet_scale(..., persist=True)`（落盘）
+[PASS] ★ E7 ★★★ `_load_persisted_pet_scale` 兼容旧键 `appearance.size`（旧档位名 small/normal/large/giant ⇒ 数字）
+[PASS] ★ E7b ★★★ 旧档位名映射与第107轮语义一致（`normal ⇒ 1.0` = 与场景同比例；**从源码 `literal_eval` 求值**，不写死）  <- map={'small': 0.6, 'normal': 1.0, 'large': 1.6, 'giant': 2.4}
+[PASS] ★ E7c ★★★ `_persist_pet_scale` 同时写数字子键 + 档位名（双向）—— 含字面量判据不走 `_code_only`（否则自己删掉要判的串）
+[PASS] ★ E8 ★★★ 接线方法（`init_systems`）里**调用顺序** = 读回设定 → 全屏化 → 刷新倍率（倒过来 ⇒ 倍率乘的是旧 scale，渲染尺寸错）—— ★ 按 **AST 语句/调用序** 判，不按字符 `.find()`（注释里提到 `fit_camera_to_screen` 会污染位置）  <- holder=init_systems 调用序 lps=50 fit=52 rr=55
+[PASS] ★ E8b ★★ 定位器体检：`RalseiPet.__init__`(744) 与 `PerformanceMonitor.__init__`(396) 是**不同**函数（否则 E8 可能一直在判错对象）  <- line 744 vs 396
+[PASS] ★ E8c ★★ 反向体检：三个调用**都不在** `RalseiPet.__init__` 里（证明 E8 必须按"含调用的方法"定位，写死 `__init__` 会恒假）
+[PASS] ★ E9 ★★ `fit_camera_to_screen` 真写 `pet.scene_scale`（自省/日志）
+
+-- F 零依赖纪律（scene_camera / scene_render 顶层） --
+[PASS] ★ F1 ★★★ `scene_camera` 顶层**零 Qt**（初始化环不许破）  <- top=['logging']
+[PASS] ★ F2 ★★★ `scene_render` 顶层**零 Qt**  <- top=['logging']
+[PASS] ★ F3 ★★ `scene_camera` **零函数内 import**（禁函数内 import 纪律）  <- 函数=[]
+[PASS] ★ F4 ★★ `scene_camera` 顶层**零项目内 import**（纯函数 ⇒ 可独立单测）  <- top=['logging']
+
+-- G 判据自身体检 --
+[PASS] ★ G1 ★★★ 本套件无 `ok(..., True)` 恒真判据（AST 复查）  <- 行=[]
+[PASS] ★ G2 ★★ 记账守恒（PASS+FAIL 总数 ≥ 45）  <- 总=77
+[PASS] ★ G3 ★★ 负控制：记账器有鉴别力（模拟 FAIL ⇒ 计数真 +1，已撤回）
+[PASS] ★ G4 ★★★ 九处令牌逐个回原文件 `in` 一次（判据守的符号真的在盘上）  <- 缺=[]
+
+========================================================================
+第107轮：FAIL 0 项 
+========================================================================

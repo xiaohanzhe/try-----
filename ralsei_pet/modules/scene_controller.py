@@ -406,7 +406,13 @@ class SceneController(object):
     # -----------------------------------------------------------------
 
     def fit_camera_to_screen(self, screen_size, pet_scale=None):
-        """把相机输出设为屏幕内**最大的 4:3 内接矩形**（= 场景全屏化的核心）。
+        """把相机输出设为屏幕内**4:3 内接矩形 × `SCENE_FIT_FRACTION`**（场景全屏化核心）。
+
+        ★★★ 第110轮：**不再是"最大"内接矩形**了。用户看过第107轮的成品后说
+        「**别这么大啊**」+「**到刚才的一半才好一些**」⇒ 画面 = 最大内接矩形
+        **再乘 `scene_camera.SCENE_FIT_FRACTION`（= 0.5）**，四周留更多黑边。
+        这个比例是唯一自由度，写在 `scene_camera` 里（纯数据层，可单测）；
+        本方法只负责把它喂给 `fit_fraction` 并落 `set_size` / `set_scale`。
 
         :param screen_size: 屏幕 `(w, h)` 像素（物理屏或可用区，见调用方）。
         :param pet_scale: ★ 第107轮 —— 宠物放大倍率。给了它，逻辑窗口（可见范围）
@@ -426,7 +432,7 @@ class SceneController(object):
 
         正确模型（本版）：
           · `scoped_w/h` **恒锁 320×240** ⇒ 相机看到的房间范围**不变**；
-          · `scale = out_w / 320` = 屏幕能给的**最大**放大（4:3 内接矩形决定）；
+          · `scale = out_w / 320` = 屏幕能给的放大（4:3 内接矩形 × 比例决定）；
           · `pet_scale` 只回写宿主 `pet.scene_scale`（供自省），**不参与**
             这里的几何 —— 宠物的屏幕大小由**渲染端** `_cached_scale_factor` 管，
             场景的屏幕大小由 `scale` 管；两者"看起来一起变大"是因为
@@ -453,7 +459,13 @@ class SceneController(object):
             scoped_w = base_w / 2.0          # 320
             scoped_h = base_h / 2.0          # 240
             room_ratio = scoped_w / scoped_h  # 4:3
-            fit = scene_camera.fit_fullscreen(sw, sh, room_ratio)
+            # ★★★ 第110轮：画面 = 最大 4:3 内接矩形 **再乘 `SCENE_FIT_FRACTION`**。
+            #   用户口径「别这么大啊」+「到刚才的一半才好一些」⇒ 0.5 砍半。
+            #   ⚠️ 必须走 `fit_fraction`（内部按**整块屏幕**重算居中偏移），
+            #      **不能**写成 `fit_fullscreen(sw*fr, sh*fr, ratio)` —— 那会把
+            #      居中偏移算成"相对半块屏"，画面会偏到左上角（见其 docstring）。
+            fit = scene_camera.fit_fraction(sw, sh, room_ratio,
+                                            scene_camera.SCENE_FIT_FRACTION)
             if not fit:
                 return None
             out_w, out_h, ox, oy = fit
@@ -464,9 +476,9 @@ class SceneController(object):
             pet.scene_scale = cam.scale       # 回写宿主（自省/日志用；单一真源仍是相机）
             # ★ 偏移也回写宿主：画布每帧要读它（`_update_scene_layer`）。
             pet._scene_output_offset = (ox, oy)
-            _log.info('场景全屏化：画面 %dx%d（占屏 %.0f%%×%.0f%%，偏移 %d,%d），scale=%.3f',
+            _log.info('场景全屏化：画面 %dx%d（占屏 %.0f%%×%.0f%%，比例 %.2f，偏移 %d,%d），scale=%.3f',
                       out_w, out_h, 100.0 * out_w / sw, 100.0 * out_h / sh,
-                      ox, oy, cam.scale)
+                      scene_camera.SCENE_FIT_FRACTION, ox, oy, cam.scale)
             return (out_w, out_h, ox, oy)
         except Exception as e:
             _log.warning('场景全屏化失败（保持原相机尺寸）: %s', e)

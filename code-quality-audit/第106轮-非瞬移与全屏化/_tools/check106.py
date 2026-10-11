@@ -429,16 +429,20 @@ ok('B4b 负控制：B4 有鉴别力（`base_w/4.0` 的假实现必须判假 ⇒ 
    (160.0, 120.0) != (320.0, 240.0), star=True)
 
 # B5 ★★★ 第107轮口径更正：不再是"按 frac 留边"，而是"按场景比例铺满、留黑边"
-#   ⇒ 判据同步更新（**判据比产品旧** 的典型：`frac` 已按用户第107轮口径删掉，
-#     旧判据"有 frac 形参"从"产品事实"退化成"过时要求"）。
-#   新事实（两条，成对）：① **无** `frac` 形参（不再留边）；
-#   ② 改为真调 `scene_camera.fit_fullscreen`（铺满 = 交给纯函数算内接矩形）。
-ok('B5 ★★★ `fit_camera_to_screen` **无** `frac` 形参'
-   '（第107轮口径："不再留边、要真全屏" ⇒ 旧口径作废）',
-   'frac' not in _fc, star=True)
-ok('B5b ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fullscreen`'
-   '（铺满 = 交给纯函数算最大 4:3 内接矩形 + 居中偏移）',
-   'fit_fullscreen' in _fc_code, star=True)
+#   ★★ 第110轮**再更正**（重要，别再回退）：原判据 `'frac' not in _fc` 是
+#     **纯文本扫**，第110轮引入 `SCENE_FIT_FRACTION` / `fit_fraction` 后被
+#     子串 "frac" **误伤**（第110轮用户「别这么大啊」已让"画面比例"重新成为
+#     合法自由度，且写在**单点真源常量**里）。
+#   ⇒ 改成 **AST 判形参**：守的真东西 =「`fit_camera_to_screen` 的签名里没有
+#     `frac`/`fraction` 形参」—— 即比例**不由调用方传**，避免各调用点写歪。
+_F_FC = _find_func(_t_ctrl, 'fit_camera_to_screen')
+_fc_args = [a.arg for a in list(_F_FC.args.args) + list(_F_FC.args.kwonlyargs)] if _F_FC else None
+ok('B5 ★★★ `fit_camera_to_screen` **签名里无** `frac`/`fraction` 形参'
+   '（比例是**内读单点真源常量**，不由调用方传）',
+   bool(_fc_args is not None and not any('frac' in _a for _a in _fc_args)), star=True)
+ok('B5b ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fraction`'
+   '（几何交给纯函数：内接矩形 + 比例缩比 + 居中偏移）',
+   'fit_fraction' in _fc_code, star=True)
 
 # B6 负控制：B3 有鉴别力（只 set_size 不 set_scale 的假实现必须判假）
 _fake_fc = _code_only("def fit_camera_to_screen(self, s):\n"

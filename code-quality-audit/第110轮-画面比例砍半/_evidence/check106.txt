@@ -1,0 +1,50 @@
+======================================================================
+第一百零六轮：非瞬移 + 全屏化 + 清死代码
+======================================================================
+
+-- A 非瞬移（逐跳走完，不是一步到位）--
+[PASS] ★ A1 ★★★ `scene_controller.walk_steps` 存在（逐跳执行器）
+[PASS] ★ A2 ★★★ `travel_to` 真的调 `walk_steps`（不是把 steps 抄进返回值就完事）—— 这是第105轮录屏打出的缺口（18 跳只走了最后一步）
+[PASS] ★ A3 ★★★ `travel_to` 的**有路线分支**里不再直切终点（`self.switch(`）—— 改由 walk_steps 逐跳；否则又会"一步到位"（实测分支判定="plan.get('ok')"）
+[PASS] ★ A3b ★★ `travel_to` 仍保留 `switch()` 调用（**直达降级分支**要用它；A3 已证明有路线分支里没有，所以这处只在 `route=direct` 里）
+[PASS] ★ A4 负控制：A3 有鉴别力（"①分支里直接 switch 终点"的假实现必须判**有** switch）
+[PASS] ★ A5 ★★★ `walk_steps` 有**链式校验**（step["from"] != 当前场景 ⇒ 中止）—— 否则路径与现实脱节时会乱走（★ AST 级：短路成 `False and …` 必须被抓）
+[PASS] ★ A6 ★★ `walk_steps` 每跳都走 `switch()`（不绕门禁、不直接写 current_scene）
+[PASS] ★ A7 ★★ `walk_steps` 失败时报 `aborted_at`（断点）且 `visited` 保留已走过的
+[PASS] ★ A8 ★★★ `walk_route_home` 存在（用户口径「非常快的按原路线返回……也要全程」）
+[PASS] ★ A9 ★★★ `walk_route_home` **真调用** `plan_route_to`（原路线）而非另算一条—— 算新路 = 变相瞬移（★ AST 级真调用，不是"提到名字"）
+[PASS] ★ A9b 负控制：A9 有鉴别力（把调用换成字面量直返的假实现必须判缺）
+[PASS] ★ A10 ★★ `travel_to` 返回值含 `walked`（真的走过的场景序列，供核验）
+[PASS] ★ A11 ★★ `main.travel_to_scene` 的日志真的带上 `walked`（消费方到位，防"抄了不用"）
+[PASS] ★ A12 负控制：A11 有鉴别力（不带 walked 的假实现必须判假）
+[PASS] ★ A13 ★★★ `walk_steps` 把"空 steps"当成功 0 跳（不是失败）
+
+-- B 全屏化（画布铺开 + 人物等比放大）--
+[PASS] ★ B1 ★★★ `scene_controller.fit_camera_to_screen` 存在（全屏化入口）
+[PASS] ★ B2 ★★★ `main.py` 真的调 `fit_camera_to_screen`（接线到位，防"写了没人用"）
+[PASS] ★ B3 ★★★ `fit_camera_to_screen` **成对**调 `set_size` 与 `set_scale`（只抬一个 ⇒ "放大了但没铺开"或反之）
+[PASS] ★ B4 ★★★ `fit_camera_to_screen` 把逻辑窗口锁在 320×240（=`DEFAULT_CAMERA_SIZE/2` ⇒ 相机可见范围不变）—— ★ AST 求值实证，不是"提到 scoped_w 就算数"
+[PASS] ★ B4b 负控制：B4 有鉴别力（`base_w/4.0` 的假实现必须判假 ⇒ 求值得 160≠320）
+[PASS] ★ B5 ★★★ `fit_camera_to_screen` **签名里无** `frac`/`fraction` 形参（比例是**内读单点真源常量**，不由调用方传）
+[PASS] ★ B5b ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fraction`（几何交给纯函数：内接矩形 + 比例缩比 + 居中偏移）
+[PASS] ★ B6 负控制：B3 有鉴别力（只 `set_size` 不 `set_scale` 的假实现必须判缺）
+[PASS] ★ B7 ★★ `viewport_size` 的上限仍是 `camera.size`（画布尺寸链没断）
+[PASS] ★ B8 ★★ `to_output` 仍是**乘** scale（"放大"唯一发生点；改成 ÷ 就全反）
+[PASS] ★ B9 ★★★ 画布对 bg/obj/角色走**同一条**已换算 rect（不再二次缩放）—— 即"人物随场景等比放大"是**自动**的，不是特判
+[PASS] ★ B10 ★★ 桌面虚拟房间几何 = 320×240（全屏化的逻辑基准，改了它基数就错）
+[PASS] ★ B11 ★★ `scene_camera.DEFAULT_CAMERA_SIZE` 仍是 (640,480)
+[PASS] ★ B12 负控制：B10 有鉴别力（几何不是 320×240 时必须判假）
+
+-- C 清死代码 --
+[PASS] ★ C1 ★★★ 全仓**没有** `camera_follow_or_create()` 的**调用**（该方法是幽灵符号：`SceneController` 里从不存在）—— 实得 0 处
+[PASS] ★ C2 ★★ `_update_scene_layer` 仍保留 `cam is None ⇒ _hide_scene_layer()` 降级（删死代码时不许把它一起删掉）—— ★ AST 级 `If(cam is None)` 体内真调隐藏（★ 按**结构**判，不按 `ast.dump` 子串 —— dump 里没有 "cam is None" 连续串）
+[PASS] ★ C3 负控制：C2 有鉴别力（不含该降级的假实现必须判假）
+[PASS] ★ C4 ★★ `main.py` 在那处留了"幽灵符号/历史误判"的说明注释
+
+-- D 判据自身体检 --
+[PASS] ★ D1 ★★★ 本套件无 `ok(..., True)` 恒真判据（AST 复查，实得 0 处）
+[PASS] ★ D2 ★★ 记账守恒（PASS+FAIL 总数 ≥ 28）
+[PASS] ★ D3 ★★ 负控制：记账器有鉴别力（模拟 FAIL ⇒ 计数真 +1，已撤回）
+======================================================================
+第106轮：FAIL 0 项
+======================================================================

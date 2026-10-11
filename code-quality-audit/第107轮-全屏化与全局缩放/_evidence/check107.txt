@@ -12,11 +12,18 @@
 [PASS] A9 ★★★ 真跑五例逐值相等（2560×1600 ⇒ 左右各 214 黑边｜4:3 ⇒ 零黑边｜竖屏 ⇒ 上下 680）  <- 偏差=[]
 [PASS] ★ A10 ★★★ 不变量：输出恒**在屏内**且**比例恒 4:3**（5 组屏幕）  <- 偏差=[]
 
+-- A11+ 第110轮：画面比例砍半（`SCENE_FIT_FRACTION`） --
+[PASS] ★ A11 ★★★ `scene_camera.SCENE_FIT_FRACTION` 存在且 == 0.5（用户逐字「别这么大啊」+「到刚才的一半才好一些」的单点真源）  <- 值=0.5
+[PASS] ★ A12 ★★★ 正控制：2560×1600 下 `scale` 由 6.666 **减半**到 3.331（宠物渲染倍率 = camera.scale × pet_scale ⇒ 宠物同步变小）  <- 6.666 -> 3.331
+[PASS] ★ A13 ★★★ `fraction=1.0` 时**逐值等价** `fit_fullscreen`（第110轮是它的严格泛化，不是替换 ⇒ 旧基线语义不会被悄悄改写）  <- 不等=[]
+[PASS] ★ A14 ★★★ 不变量：砍半后恒**在屏内** · **比例 4:3** · **偏移真居中**（5 组屏）  <- 偏差=[]
+
 -- B 相机全屏化（`fit_camera_to_screen`） --
 [PASS] ★ B1 ★★★ `scene_controller.fit_camera_to_screen` 存在（全屏化入口）
 [PASS] ★ B2 ★★★ `main.py` 真的调 `fit_camera_to_screen`（接线到位，防"写了没人用"）
-[PASS] ★ B3 ★★★ `fit_camera_to_screen` **无** `frac` 形参（第107轮口径"不再留边、要真全屏"⇒ 第106轮旧口径作废）
-[PASS] ★ B4 ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fullscreen`（铺满 = 交给纯函数算内接矩形 + 居中偏移）
+[PASS] ★ B3 ★★★ `fit_camera_to_screen` **签名里无** `frac`/`fraction` 形参（第110轮：比例是**内读单点真源常量**，不由调用方传 ⇒ 不会被各调用点写歪）  <- args=['self', 'screen_size', 'pet_scale']
+[PASS] ★ B4 ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fraction`（几何交给纯函数算内接矩形 + 比例缩比 + 居中偏移）
+[PASS] ★ B4b ★★★ `fit_fraction` **内部委托** `fit_fullscreen`（第110轮新增层不许自己另写一套内接数学 —— 那会变成第二份真源）
 [PASS] ★ B5 ★★★ **成对**写 `set_size` 与 `set_scale`（只抬一个 ⇒ "放大了但没铺开"或反之）
 [PASS] ★ B6 ★★★ `fit_camera_to_screen` 把逻辑窗口锁在 **320×240**（=`DEFAULT_CAMERA_SIZE/2` ⇒ 相机可见范围不变；★ 变了 = 镜头拉近/拉远，不是场景放大）—— ★ AST 求值实证  <- scoped=(320.0, 240.0)
 [PASS] ★ B6b 负控制：B6 有鉴别力（`base_w/4.0` 的假实现必须判假 ⇒ 求值得 160≠320）
@@ -37,6 +44,10 @@
 [PASS] ★ C10b ★★ 其中真调 `primaryScreen()`（不是 `_virtual_screen_size()`）
 [PASS] ★ C11 ★★★ `_update_scene_layer` 里把画布 `resize` 到主屏尺寸
 [PASS] ★ C12 ★★★ `_update_scene_layer` 真调 `set_output_offset` 与 `set_opaque_bg`
+[PASS] ★ C13 ★★★ `_update_scene_layer` 真调 `set_plan`（AST 调用序可见）  <- calls=['set_output_offset', 'set_opaque_bg', '_scene_is_transparent', 'split_bubble_layers', 'set_plan', 'resize', '_place_scene_layer', '_update_bubble_overlay', 'get', '_show_scene_layer', '_hide_scene_layer', 'debug']
+[PASS] ★ C14 ★★★ `resize` 出现在 `set_plan` **之后**（后写覆盖前写 ⇒ 必须最后铺整屏）  <- set_plan@25 resize@26
+[PASS] ★ C15 ★★★ `set_plan` 之后仍以 `_primary_screen_size()` 铺**整屏**（否则画布 = 画面尺寸 ⇒ 四周黑边消失、画面贴左上角）
+[PASS] ★ C15b ★★ 负控制：C14 有鉴别力（`resize` 排在 `set_plan` 前 ⇒ 必须判假）
 
 -- D 桌面透明 / 房间不透明 --
 [PASS] ★ D1 ★★★ `_scene_is_transparent()` 存在（决定是否铺黑底）
@@ -80,6 +91,6 @@
 
 -- G 判据自身体检 --
 [PASS] ★ G1 ★★★ 本套件无 `ok(..., True)` 恒真判据（AST 复查）  <- 行=[]
-[PASS] ★ G2 ★★ 记账守恒（PASS+FAIL 总数 ≥ 45）  <- 总=68
+[PASS] ★ G2 ★★ 记账守恒（PASS+FAIL 总数 ≥ 45）  <- 总=77
 [PASS] ★ G3 ★★ 负控制：记账器有鉴别力（模拟 FAIL ⇒ 计数真 +1，已撤回）
 [PASS] ★ G4 ★★★ 九处令牌逐个回原文件 `in` 一次（判据守的符号真的在盘上）  <- 缺=[]

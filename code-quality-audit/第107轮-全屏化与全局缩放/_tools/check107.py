@@ -242,6 +242,65 @@ except Exception as _e:
     ok(u'A10 ★★★ 不变量', False, u'异常 %s' % _e)
 
 # =====================================================================
+# A11~A14 ★★★ 第110轮：画面比例（`SCENE_FIT_FRACTION`）—— 用户「别这么大啊」
+# =====================================================================
+sec(u'A11+ 第110轮：画面比例砍半（`SCENE_FIT_FRACTION`）')
+
+# A11 常量存在且 = 0.5（用户「到刚才的一半才好一些」）
+_ff_frac = getattr(_SC, 'SCENE_FIT_FRACTION', None)
+ok(u'A11 ★★★ `scene_camera.SCENE_FIT_FRACTION` 存在且 == 0.5'
+   u'（用户逐字「别这么大啊」+「到刚才的一半才好一些」的单点真源）',
+   isinstance(_ff_frac, float) and abs(_ff_frac - 0.5) < 1e-9, star=True,
+   detail=u'值=%r' % (_ff_frac,))
+
+# A12 ★★★ 正控制：砍半后 scale 恰好减半（2560×1600：6.666 → 3.331）
+try:
+    _full = _SC.fit_fullscreen(2560, 1600)
+    _half = _SC.fit_fraction(2560, 1600)
+    _s_full = _full[0] / 320.0
+    _s_half = _half[0] / 320.0
+    ok(u'A12 ★★★ 正控制：2560×1600 下 `scale` 由 6.666 **减半**到 3.331'
+       u'（宠物渲染倍率 = camera.scale × pet_scale ⇒ 宠物同步变小）',
+       abs(_s_full - 6.666) < 0.01 and abs(_s_half - 3.331) < 0.01, star=True,
+       detail=u'%.3f -> %.3f' % (_s_full, _s_half))
+except Exception as _e:
+    ok(u'A12 ★★★ 正控制', False, u'异常 %s' % _e)
+
+# A13 ★★★ 负控制：`fraction=1.0` 必须**逐值等价** `fit_fullscreen`
+#     （若这层不是严格泛化，回归基线会被静默改写）
+try:
+    _eq_bad = []
+    for _w, _h in [(2560, 1600), (1920, 1080), (1600, 2560), (800, 600)]:
+        if _SC.fit_fraction(_w, _h, _SC.SCENE_ASPECT, 1.0) != _SC.fit_fullscreen(_w, _h):
+            _eq_bad.append((_w, _h))
+    ok(u'A13 ★★★ `fraction=1.0` 时**逐值等价** `fit_fullscreen`'
+       u'（第110轮是它的严格泛化，不是替换 ⇒ 旧基线语义不会被悄悄改写）',
+       not _eq_bad, star=True, detail=u'不等=%r' % (_eq_bad,))
+except Exception as _e:
+    ok(u'A13 ★★★ 泛化等价', False, u'异常 %s' % _e)
+
+# A14 ★★ 不变量：砍半后仍**在屏内** + **比例恒 4:3** + **偏移真居中**
+try:
+    _inv2_bad = []
+    for _w, _h in [(2560, 1600), (1920, 1080), (500, 500), (333, 777), (3840, 2160)]:
+        _r = _SC.fit_fraction(_w, _h)
+        if _r is None:
+            _inv2_bad.append(((_w, _h), 'None'))
+            continue
+        _ow, _oh, _ox, _oy = _r
+        if not (0 < _ow <= _w and 0 < _oh <= _h):
+            _inv2_bad.append(((_w, _h), 'overflow'))
+        if abs(_ow / float(_oh) - 4.0 / 3.0) > 0.01:
+            _inv2_bad.append(((_w, _h), 'ratio %.4f' % (_ow / float(_oh))))
+        # 真居中：左右黑边之差 ≤ 1px（int(round) 允许 1px 误差）
+        if abs((_w - _ow) / 2.0 - _ox) > 1.0 or abs((_h - _oh) / 2.0 - _oy) > 1.0:
+            _inv2_bad.append(((_w, _h), 'off-center ox=%d oy=%d' % (_ox, _oy)))
+    ok(u'A14 ★★★ 不变量：砍半后恒**在屏内** · **比例 4:3** · **偏移真居中**（5 组屏）',
+       not _inv2_bad, star=True, detail=u'偏差=%r' % (_inv2_bad,))
+except Exception as _e:
+    ok(u'A14 ★★★ 不变量', False, u'异常 %s' % _e)
+
+# =====================================================================
 # B. 相机全屏化
 # =====================================================================
 sec(u'B 相机全屏化（`fit_camera_to_screen`）')
@@ -255,12 +314,28 @@ ok(u'B2 ★★★ `main.py` 真的调 `fit_camera_to_screen`（接线到位，�
 _fcs_src = _func_source(_src_ctrl, _t_ctrl, 'fit_camera_to_screen')
 _fcs_code = _code_only(_fcs_src)
 
-ok(u'B3 ★★★ `fit_camera_to_screen` **无** `frac` 形参'
-   u'（第107轮口径"不再留边、要真全屏"⇒ 第106轮旧口径作废）',
-   u'frac' not in _fcs_code, star=True)
-ok(u'B4 ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fullscreen`'
-   u'（铺满 = 交给纯函数算内接矩形 + 居中偏移）',
-   u'fit_fullscreen' in _fcs_code, star=True)
+# B3 ★★ 第110轮改判：原判据 `'frac' not in _fcs_code` 是**纯文本扫**，现已被
+#     `SCENE_FIT_FRACTION` / `fit_fraction` 里的子串 "frac" 误伤（第107轮口径
+#     "不留边"也已被第110轮「别这么大啊」取代）。⇒ 改为 **AST 判形参**：
+#     守的真东西 =「`fit_camera_to_screen` 的签名里**没有** `frac`/`fraction`
+#     形参」—— 即"比例不是从调用方传进来的，而是内部读单点真源常量"。
+_fcs_args = []
+if _f_fcs is not None:
+    _fcs_args = [a.arg for a in list(_f_fcs.args.args) + list(_f_fcs.args.kwonlyargs)]
+ok(u'B3 ★★★ `fit_camera_to_screen` **签名里无** `frac`/`fraction` 形参'
+   u'（第110轮：比例是**内读单点真源常量**，不由调用方传 ⇒ 不会被各调用点写歪）',
+   not any(u'frac' in _a for _a in _fcs_args), star=True,
+   detail=u'args=%r' % (_fcs_args,))
+# B4 ★★ 第110轮改判：几何仍**必须**走纯函数，只是多了一层 `fit_fraction`
+#     （它内部委托 `fit_fullscreen`）。守的真东西 = 这条**委托链**不断。
+ok(u'B4 ★★★ `fit_camera_to_screen` 真调 `scene_camera.fit_fraction`'
+   u'（几何交给纯函数算内接矩形 + 比例缩比 + 居中偏移）',
+   u'fit_fraction' in _fcs_code, star=True)
+_f_ffr = _find_func(_t_cam, 'fit_fraction')
+_ffr_code = _code_only(_func_source(_src_cam, _t_cam, 'fit_fraction'))
+ok(u'B4b ★★★ `fit_fraction` **内部委托** `fit_fullscreen`'
+   u'（第110轮新增层不许自己另写一套内接数学 —— 那会变成第二份真源）',
+   u'fit_fullscreen' in _ffr_code, star=True)
 ok(u'B5 ★★★ **成对**写 `set_size` 与 `set_scale`'
    u'（只抬一个 ⇒ "放大了但没铺开"或反之）',
    u'set_size(' in _fcs_code and u'set_scale(' in _fcs_code, star=True)
@@ -445,6 +520,61 @@ ok(u'C11 ★★★ `_update_scene_layer` 里把画布 `resize` 到主屏尺寸',
    u'resize' in _usl_code and u'_primary_screen_size' in _usl_code, star=True)
 ok(u'C12 ★★★ `_update_scene_layer` 真调 `set_output_offset` 与 `set_opaque_bg`',
    u'set_output_offset' in _usl_code and u'set_opaque_bg' in _usl_code, star=True)
+
+# =====================================================================
+# C13~C15 ★★★ 第110轮：`set_plan` 的 resize 不许覆盖"整屏尺寸"
+#   —— 第110轮真机抓帧抓出的活 bug（第107/108/109 三轮漏网）
+# ---------------------------------------------------------------------
+#   真机证据（`第110轮-画面比例砍半/_evidence/frames110/`）：房间画面贴在
+#   屏幕**左上角**、四周黑边**不出现**（黑块只有 1066×800 而不是整屏 2560×1600）。
+#   根因：`SceneCanvas.set_plan(plan, view_size)` 内部 `resize(view_size)`，
+#   而 `view_size` 传的是 `plan_viewport()` = **相机尺寸（画面尺寸）**。
+#   它紧随 `canvas.resize(sw, sh)`（整屏）之后 ⇒ **后写覆盖前写**。
+#   ⚠️ 为什么前三轮是假绿：第107轮离屏录屏用 800×600 屏，画面恰好也 800×600
+#      （4:3 零黑边）⇒ `view == 整屏` ⇒ 覆盖后无差别。
+#   ⇒ 修法 + 判据：`_update_scene_layer` 里 **`set_plan` 之后必须再 `resize`
+#      一次到整屏尺寸**（AST 调用序钉住，不按字符 `.find()`）。
+#   ★ 这三条是"AST 调用序"判据（禁纯文本扫 —— 注释里提到函数名即误报，已五次）。
+_usl_calls = []          # (行, 函数名) 按源码顺序
+try:
+    _utree = ast.parse(textwrap.dedent(_usl))
+    for _n in ast.walk(_utree):
+        if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute):
+            _usl_calls.append((getattr(_n, 'lineno', 0), _n.func.attr))
+    _usl_calls.sort(key=lambda t: t[0])
+except Exception as _e:
+    _usl_calls = []
+_usl_names = [c[1] for c in _usl_calls]
+
+
+def _last_idx(name):
+    """最后一次出现的下标；没有 → -1。"""
+    idxs = [i for i, n in enumerate(_usl_names) if n == name]
+    return idxs[-1] if idxs else -1
+
+
+_i_plan = _last_idx('set_plan')
+_i_resize = _last_idx('resize')
+ok(u'C13 ★★★ `_update_scene_layer` 真调 `set_plan`（AST 调用序可见）',
+   _i_plan >= 0, star=True, detail=u'calls=%r' % (_usl_names[-12:],))
+ok(u'C14 ★★★ `resize` 出现在 `set_plan` **之后**（后写覆盖前写 ⇒ 必须最后铺整屏）',
+   _i_plan >= 0 and _i_resize > _i_plan, star=True,
+   detail=u'set_plan@%d resize@%d' % (_i_plan, _i_resize))
+ok(u'C15 ★★★ `set_plan` 之后仍以 `_primary_screen_size()` 铺**整屏**'
+   u'（否则画布 = 画面尺寸 ⇒ 四周黑边消失、画面贴左上角）',
+   u'_primary_screen_size' in _usl_code, star=True)
+# C15b ★★ 负控制：把两处顺序对调（resize 在 set_plan 之前）必须被判假
+_usl_bad = (u'canvas.resize(int(sw), int(sh))\n'
+            u'canvas.set_plan(behind, view)\n')
+try:
+    _btree = ast.parse(textwrap.dedent(_usl_bad))
+    _bad_names = [n.func.attr for n in ast.walk(_btree)
+                  if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)]
+    _bad_ok = (_bad_names.index('set_plan') < _bad_names.index('resize'))
+except Exception:
+    _bad_ok = True
+ok(u'C15b ★★ 负控制：C14 有鉴别力（`resize` 排在 `set_plan` 前 ⇒ 必须判假）',
+   not _bad_ok, star=True)
 
 # =====================================================================
 # D. 桌面透明 / 房间不透明

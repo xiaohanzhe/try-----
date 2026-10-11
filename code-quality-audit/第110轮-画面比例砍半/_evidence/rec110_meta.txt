@@ -1,0 +1,28 @@
+第110轮 · 录屏自检元数据
+QPA = windows
+主屏 = 2560x1600
+预期(砍半) = (1066, 800, 747, 400)
+预期(内接) = (2133, 1600, 214, 0)
+桌面采样 = {'tag': 'desktop', 'note': '桌面场景（透明，画面居中留黑边）', 'png': 'C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第110轮-画面比例砍半\\_evidence\\frames110\\k000_desktop.png', 'scene_id': 'desktop', 'cam_size': (1066, 800), 'scale': 3.3312, 'offset': (747, 400), 'pet_csf': 3.3312, 'transparent': True, 'canvas_size': (2560, 1600)}
+房间采样 = {'tag': 'room', 'note': '第一章房间（不透明，画面居中留黑边）', 'png': 'C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第110轮-画面比例砍半\\_evidence\\frames110\\k001_room.png', 'scene_id': 'ch1.kris_room.kris_s_room', 'cam_size': (1066, 800), 'scale': 3.3312, 'offset': (747, 400), 'pet_csf': 3.3312, 'transparent': False, 'canvas_size': (2560, 1600)}
+
+-- G1~G3 画面几何（真机采样 vs 现推预期） --
+[PASS] G0 ★★ 真机起来了（拿到了相机尺寸）  <- cam=(1066, 800)
+[PASS] G1 ★★★ 相机输出尺寸 == `fit_fraction(2560×1600)` 预期 (1066, 800, 747, 400)  <- 实测=(1066, 800) 预期=(1066, 800)
+[PASS] G2 ★★★ `scale` == 砍半后的现推值 3.331（= 内接版 6.666 的一半）  <- 实测=3.3312 预期=3.331
+[PASS] G3 ★★★ 偏移真居中（左右黑边对称 ⇒ offset.x == (屏宽-画面宽)/2）  <- 实测=(747, 400) 预期=(747, 400)
+
+-- G4~G5 结构未变（透明/不透明 · 全屏画布） --
+[PASS] G4 ★★ 桌面场景仍被识别为**透明**（`_scene_is_transparent()` 口径未破坏）  <- transparent=True
+[PASS] G4b ★★ 房间场景**不透明**（成对：否则壁纸会透出来）  <- transparent=False
+[PASS] G5 ★★ 宠物渲染倍率 == camera.scale × pet_scale（同源，宠物同步变小）  <- csf=3.3312 scale=3.3312
+[PASS] G5b ★★★ 画布尺寸 == **主屏物理尺寸** 2560x1600（第110轮修正：`set_plan` 曾把整屏尺寸覆盖成画面尺寸 ⇒ 黑边不出现、画面贴左上角）  <- canvas=(2560, 1600) 屏=(2560, 1600)
+
+-- G6 负控制：`fraction=1.0` 必须回到内接版（证明砍半真起作用） --
+[PASS] G6 ★★★ `fraction=1.0` ⇒ 逐值 == `fit_fullscreen`（砍半不是 no-op）  <- full=(2133, 1600, 214, 0) half=(1066, 800, 747, 400)
+[PASS] G6b ★★★ 砍半 ≠ 内接（两值必须不同，否则判据无鉴别力）  <- full=(2133, 1600) half=(1066, 800)
+
+-- G7 抓帧 --
+[PASS] G7 ★★ 人眼复核用的抓帧已落盘（真机应有 >0 张；离屏为 0 属预期）  <- png=3 qpa=windows
+
+PASS=11 FAIL=0
