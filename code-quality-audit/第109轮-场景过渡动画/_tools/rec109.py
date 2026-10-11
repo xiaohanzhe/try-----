@@ -126,23 +126,33 @@ try:
             traceback.print_exc()
 
     # ---- 采样器：真机下 `QTimer(16ms)` **不可靠**（窗口事件循环节流 ⇒ 实测
-    #   真机 `_samples` 全是 0）。改用**阻塞轮询**（阶段性 sleep + 直接读 α）——
-    #   过渡总时长仅 ~684ms，主线程短暂阻塞无害（这是测试支，不是产品）。
-    #   ★ 抓帧（`grabWindow`）会阻塞数百 ms ⇒ **只在定点**做，不放进轮询循环。
+    #   真机 `_samples` 全是 0）。改用**主动轮询 + 每次 `processEvents()`**：
+    #   ★★★ 这里栽过一次（首次重跑 α 恒 1.0）：纯 `time.sleep` 阻塞会把 Qt 事件
+    #     循环**饿死** ⇒ `update_movement` 这个 timer 驱动的状态机**不推进**
+    #     ⇒ 过渡永远停在 phase='out' 的 α=1.0（`降=True` 只因全程恒 1）。
+    #     ★ 这是**夹具污染被测**（不是产品 bug）⇒ 每轮必须 `processEvents()`，
+    #     让 30ms 的推进 timer 真的跑，才能采到 α(t) 的上升/下降段。
+    #   ★ 抓帧（`grabWindow`）会阻塞数百 ms ⇒ **只在定点**做（grab_every 控制）。
     def _poll(duration_ms, grab_every=0):
-        """在 `duration_ms` 内密集读 α 曲线（阻塞）。`grab_every>0` 时每 N 次抓帧。"""
+        """在 `duration_ms` 内密集读 α 曲线（**让事件循环跑起来**）。
+        `grab_every>0` 时每 N 次抓一帧。"""
         pet = _box.get('pet')
         if pet is None:
             return
         t_end = time.time() * 1000.0 + duration_ms
         n = 0
         while time.time() * 1000.0 < t_end:
+            # ★ 关键：先让事件循环把 timer（推进过渡）跑掉，再读 α。
+            try:
+                _app.processEvents()
+            except Exception:
+                pass
             _samples.append((time.time() * 1000.0, _alpha_of(pet),
                              _scene_of(pet)))
             n += 1
             if grab_every and n % grab_every == 0:
                 _snap(u'trans_f%03d' % len(_samples), u'过渡中', grab=True)
-            time.sleep(0.012)
+            time.sleep(0.008)
 
     # ---- 阶段 ----
     def _stage1():
@@ -182,7 +192,6 @@ try:
         try:
             _marks['scene_before'] = _scene_of(pet)
             _samples.clear()          # 只留过渡期间的曲线
-            _timer.start()
             _t_start = time.time() * 1000.0
             # 目标：第一章房间（已登记在案）
             _accepted = False
@@ -193,8 +202,11 @@ try:
                 _res['travel_err'] = str(_e)
             _marks['accepted'] = _accepted
             _marks['t_start'] = _t_start
-            # 过渡总时长 ~684ms；等 1400ms 收尾
-            QTimer.singleShot(1400, _stage4)
+            # ★★ 采集方式：**阻塞轮询**（原 `QTimer(16ms)` 在真机被事件循环节流 ⇒
+            #   采样全 0）。过渡总时长 ~684ms ⇒ 在这段时间里直接 sleep 读 α，
+            #   并每 ~15 次抓一帧 PNG（抓帧会阻塞数百 ms，故不做太密）。
+            _poll(900, grab_every=15)
+            QTimer.singleShot(200, _stage4)
         except Exception:
             _res['err'] = traceback.format_exc()
             try:
@@ -215,7 +227,8 @@ try:
             except Exception:
                 pass
             _marks['t_start2'] = time.time() * 1000.0
-            QTimer.singleShot(1400, _finish)
+            _poll(900, grab_every=0)
+            QTimer.singleShot(200, _finish)
         except Exception:
             _res['err'] = traceback.format_exc()
             try:
@@ -231,7 +244,6 @@ try:
         except Exception:
             pass
         finally:
-            _timer.stop()
             _res['samples'] = _samples
             _res['snaps'] = _snaps
             _res['marks'] = _marks

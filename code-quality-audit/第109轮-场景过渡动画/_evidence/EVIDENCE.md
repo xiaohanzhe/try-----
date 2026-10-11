@@ -147,3 +147,53 @@ t=9..  每帧 α -= 0.08  ⇒  约 12.5 帧后 α=0 自毁
   （实测 ch1 **没有** `obj_dw_transition` 的 code，只有 fade 体系）。
 - ✅ 交叉印证：第85轮独立抓到的门调用端（`obj_doorA_Other_19` / `Alarm_2`）
   与本轮同源一致。
+
+---
+
+## 6. 录屏自检（`_tools/rec109.py` · 真机 `QT_QPA_PLATFORM=windows`）
+
+> 用户铁律：「**一定要看录像而不是只读后台输出**」；解锁：「你可以录屏了，我现在不用电脑」。
+
+### 6.1 结果：**PASS=11 FAIL=0**
+
+真机实测 α(t) 曲线（`_evidence/rec109_meta.txt`）：
+
+```
+α 0.015（起点，正常态不遮屏）
+  ↑ 单调上升
+α 1.000 @ 290ms（换房那一拍全黑掩护）
+  ↓ 单调下降
+α 0.000（终点，画面恢复）
+desktop → ch1.kris_room.kris_s_room（accepted=True）
+```
+
+| 判据 | 实测 | 原作换算 | 结论 |
+|---|---|---|---|
+| T1 起点 α≈0 | 0.015 | — | PASS |
+| T2 峰值 α≈1 | 1.000 @290ms | 换房全黑掩护 | PASS |
+| T3 终点 α≈0 | 0.000 | — | PASS |
+| T4 先升后降 | 升=T 降=T 峰序 14/39 | `image_alpha += fadespeed` | PASS |
+| T5 淡出/淡入时长 | **290ms / 395ms** | 267 / 417ms（±60% 容差） | PASS |
+| T6/T6b/T6c 换房真实+可重复 | desktop→ch1→desktop | — | PASS |
+| T7 负控制：不动 ⇒ α 恒 0 | 0.0 | — | PASS |
+| T8 抓帧 ≥3 张 | 4 张 PNG | — | PASS |
+
+### 6.2 ★★★ 夹具踩的两个坑（都写进代码注释，防复发）
+
+1. **`_timer` 未定义 ⇒ 真机启动即崩**：上一轮把采集器从 `QTimer(16ms)` 改成"阻塞轮询"时，
+   漏删了 `_stage3` 里的 `_timer.start()` / `_finish` 里的 `_timer.stop()`，但 `_timer`
+   的创建已被移除 ⇒ `NameError: name '_timer' is not defined` ⇒ T0 直接 FAIL、零采样。
+   ⇒ 修法：改用 `_poll(900, grab_every=15)`（真的跑轮询）。
+2. **纯 `time.sleep` 阻塞 ⇒ 把 Qt 事件循环饿死 ⇒ 过渡状态机不推进**（首轮重跑 α 恒 1.0）：
+   `update_movement` 是 **timer 驱动**的，阻塞轮询期间 timer 不触发 ⇒ 过渡永远停在
+   `phase='out'` 的 α=1.0（`降=True` 只因全程恒 1，是**假绿**）。
+   ⇒ 修法：轮询每轮**先 `_app.processEvents()`** 再读 α，让 30ms 推进 timer 真跑。
+   ★ **这是"夹具污染被测"的又一例**（与"纯文本扫判据"同级）。
+
+### 6.3 人眼复核（4 帧已落盘 `frames109/`）
+
+- `k000_idle.png`：桌面态 —— **4 扇黑门贴屏幕边框**（上/下/左/右居中）、Ralsei 桌宠右下、
+  壁纸可见（透明场景）。
+- `k001_trans_f015.png`：过渡中（α≈0.21）—— ch1 房间已换、正在淡入；房间 4:3 居中带黑边。
+- `k002_after_trans.png`：过渡结束（α=0）—— ch1 Kris 房间全亮、干净。
+- `k003_back_desktop.png`：切回桌面 —— 门 + 桌宠 + 对话框全恢复。
