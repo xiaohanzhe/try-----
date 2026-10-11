@@ -649,17 +649,23 @@ def sec_g():
        % len(bare_objs))
     ok('hidden_objects' in SS.SceneState.__slots__,
        'G21 `hidden_objects` 在 SceneState 的 __slots__ 里（不是动态属性）')
-    # ★★ 产品级正控制：桌面 9 扇门**一扇都不许少**（自造物件逃生门的端到端证据）
+    # ★★ 产品级正控制：桌面 4 扇门**一扇都不许少**（自造物件逃生门的端到端证据）
+    #   ★★★ 第109轮：桌面由 9 扇（五章+UT+黄魂+OneShot+Outertale）**重做为 4 扇**
+    #     （用户「只有连接各个游戏也就是三角符文，oneshot，ut的门，有个例外 niko 的家」
+    #      ＋「4 个门挨着屏幕边框」）⇒ 期望值**从 `desk.objects` 现取**，不再写死 9。
+    #     真正要守的语义 = 「声明几扇，就真的画几扇」（逃生门端到端有效）。
     desk = SS.load_scene('desktop', entry=scenes.get('desktop'))
     dplan = SR.plan_frame(desk, _cam_at(320, 240), geo,
                           sprite_size=lambda n: (20, 20))
     dobjs = [it for it in dplan if it['kind'] == SR.K_OBJ]
-    ok(desk is not None and len(dobjs) == 9,
-       'G21b **桌面 9 扇门全部照画**（自造物件逃生门的端到端正控制）实际=%d' % len(dobjs))
+    _n_desk = len(getattr(desk, 'objects', None) or [])
+    ok(desk is not None and _n_desk == 4 and len(dobjs) == _n_desk,
+       'G21b **桌面 %d 扇门全部照画**（自造物件逃生门的端到端正控制）实际=%d'
+       % (_n_desk, len(dobjs)))
     ok(desk is not None
        and all(o.get('authored') is True for o in desk.objects),
-       'G21c `desktop.json` 的 9 扇门在**数据里**显式标了 `authored: true`'
-       '（自解释，不靠"kind 恰好是 prop"）')
+       'G21c `desktop.json` 的 %d 扇门在**数据里**显式标了 `authored: true`'
+       '（自解释，不靠"kind 恰好是 prop"）' % _n_desk)
     ok(desk is not None and all(SS.is_drawable_object(o, desk.hidden_objects)
                                 for o in desk.objects),
        'G21d 桌面的门逐条过 `is_drawable_object` 都为真')

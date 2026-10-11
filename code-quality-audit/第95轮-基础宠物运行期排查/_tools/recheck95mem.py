@@ -198,7 +198,12 @@ HAND = [
     '_subpixel_x', '_subpixel_y', '_speed_pos', '3.9', '102.3', '91.9%',
     # 第93轮产物
     'pick_corner_screen_work_area', 'availableGeometry', 'check93',
-    'climb_1_', 'handle_jump', '2410,1378', '650,450',
+    # ★ 第109轮修正：`650,450` → `650, 450`。令牌表是**人工表**，必须写
+    #   详版里的**真实写法**；原来写成无空格版 ⇒ C1 恒报"两处皆无"（判据
+    #   过窄 = 误报，与 §4「判据自己也会说谎」同型）。详版 §107 的表格里
+    #   唯一写法就是带空格的 `(650, 450)`（同行 `2410,1378` 之所以一直过，
+    #   是因为它在多屏布局段另有一处无空格写法）。
+    'climb_1_', 'handle_jump', '2410,1378', '650, 450',
     # 第94轮产物
     'is_sleeping_walk', 'walk_down_sleep', 'check94', 'mutate94', 'recheck94',
     'pet_ai', 'drag_position', 'dedb799', '4577',

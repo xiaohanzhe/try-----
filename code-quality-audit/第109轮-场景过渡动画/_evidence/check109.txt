@@ -1,0 +1,45 @@
+
+-- A 过渡机制存在且被消费（不是"写了没人用"） --
+[PASS] A1 ★★ `request_scene_transition` 方法存在  <- found=True
+[PASS] A2 ★★ `_advance_scene_transition` 方法存在  <- found=True
+[PASS] ★ A3 ★★★ `request_scene_transition` **真有调用点**（不是死函数 —— 本项目最贵的坑）  <- 调用点计数=1
+[PASS] ★ A4 ★★★ `_advance_scene_transition` **真有调用点**（每帧推进；没它过渡永远停在第一帧）  <- 调用点计数=1
+[PASS] ★ A5 ★★★ `_advance_scene_transition` 挂在**每帧** `update_movement` 上（原作是逐帧 `image_alpha += fadespeed`）  <- update_movement 内命中=True
+
+-- B 时序对齐原作（30fps） --
+[PASS] ★ B1 ★★★ 淡出时长 == 267ms（原作 `alarm[2]=8` 帧 ÷ 30fps）  <- SCENE_FADE_OUT_MS=267.0
+[PASS] ★ B2 ★★★ 淡入时长 == 417ms（原作 `1/0.08=12.5` 帧 ÷ 30fps）  <- SCENE_FADE_IN_MS=417.0
+[PASS] B3 负控制：淡出 ≠ 淡入（原作确实不对称：8 帧 vs 12.5 帧）  <- out=267.0 in=417.0
+
+-- C 阶段序 out → 换房 → in --
+[PASS] ★ C1 ★★★ 淡出阶段先置 α=1 **再**换房（`set_transition_alpha(1.0)` 先于 swap）  <- 序：alpha1@959 swap@1010
+[PASS] C2 ★★ 阶段在 `out` / `in` 之间切换（源码里两个 phase 字面量都在）  <- out=True in=True
+
+-- D 换房那一拍真的调 switch --
+[PASS] ★ D1 ★★★ `_do_scene_transition_swap` 体内**真调 `switch`**（只改状态不换房 = 过渡结束了场景没变）  <- switch 命中=True
+[PASS] D2 ★★ 换房成功后重算明/暗世界（`_possession_sync_world`）（与 `travel_to_scene` 同一条纪律）  <- sync-call=True feedback-call=False
+
+-- E 画布遮罩（set_transition_alpha + paintEvent 末叠黑） --
+[PASS] ★ E1 ★★★ `SceneCanvas.set_transition_alpha` 存在  <- found=True
+[PASS] E2 ★★ `set_transition_alpha` 对 α 做 **[0,1] 钳位**（超界会让 QColor 出错）  <- AST比较0.0=True AST比较1.0=True
+[PASS] ★ E3 ★★★ `paintEvent` 在**画完内容之后**叠黑遮罩（原作 `obj_fadeout` 也是最后画 → 盖在最上层）  <- paint_on@814 fillRect@1391
+[PASS] E4 ★★ 遮罩色 = **纯黑** `QColor(0,0,0)`（原作 `image_blend = c_black`）  <- TRANSITION_COLOR=QColor(0,0,0) 命中=True
+
+-- F 默认零回归：α=0 时不画遮罩 --
+[PASS] ★ F1 ★★★ `paintEvent` 的遮罩段**由 `_transition_alpha > 0.0` 守卫**（不守卫 ⇒ 正常态也填一层黑 = 全屏黑屏）  <- 守卫命中=True
+[PASS] F2 ★★ 构造时 `_transition_alpha = 0.0`（不切场景 ⇒ 零行为变化）  <- 初始化命中=True
+
+-- G 容错：非法 α 不动 · 异常必收尾 --
+[PASS] G1 ★★ `set_transition_alpha` 拒绝 NaN / 非数（不静默改成 0 或 1）  <- nan_guard=True try=True
+[PASS] ★ G2 ★★★ `_advance_scene_transition` 异常分支**必把 α 归 0**（否则"过渡卡住 ⇒ 全黑屏"，灾难性）  <- except 内归零命中=True
+
+-- H 可关开关 + 入口接线 --
+[PASS] H1 ★★ `SCENE_TRANSITION_ENABLED` 开关存在（可一刀关掉定位）  <- found=True value=True
+[PASS] H2 ★★ 开关为 False 时 `request_scene_transition` **返回 False**（调用方回落）  <- 守开关=True
+[PASS] ★ H3 ★★★ `travel_to_scene`（用户可见入口）**真走过渡**（不然又是"函数写对了、产品用不上"）  <- 命中=True
+[PASS] H4 ★★ `travel_to_scene` 保留**回落路径**（过渡被拒 ⇒ 老行为）  <- _travel_commit 命中=True
+
+-- I 判据自身体检 --
+[PASS] ★ I1 ★★★ 所有被判函数/类**都解析到了**（若为 None，后续所有 `in src` 判据全变恒假）  <- req=True adv=True swap=True sta=True pe=True um=True
+[PASS] I2 负控制：对一个**没有遮罩**的函数，`paintEvent` 判据会判否  <- 空树上 paintEvent=None
+[PASS] I3 A/B：`_calls` 对"调了"与"没调"给**不同**结果（否则 A3/A4 是恒真）  <- g=True h=False

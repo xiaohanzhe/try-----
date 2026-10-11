@@ -1108,6 +1108,30 @@ class RalseiPet(QMainWindow):
         self.scene_canvas.move(0, 0)
         self._scene_layer_visible = False
 
+        # ---- ★★★ 第109轮「原作式场景过渡」状态机 ----
+        # 原作实现（UTMT 反编译 ch1，逐字，证据见
+        #   `code-quality-audit/第109轮-场景过渡动画/_evidence/EVIDENCE.md`）：
+        #   踩门 → `instance_create(obj_fadeout)` [α=0，每帧 +0.08] 且 `alarm[2]=8`
+        #        → 8 帧后 `room_goto` + `instance_create(obj_persistentfadein)`
+        #          [α=1，每帧 -0.08，<=0 自毁]。
+        #   ⇒ 我们的映射：**淡出（黑变浓）→ 换房 → 淡入（黑变淡）**，遮罩恒为纯黑。
+        # ★ 为什么要有这套状态机而不是在 `switch()` 里直接 sleep：
+        #   桌宠是**单线程 Qt 主循环**，sleep 会冻结整个 UI（窗口/动画/灵魂全卡）。
+        #   必须**分帧推进**：每帧只推 α，到点才真正调 `switch()`。
+        # ★ 阶段语义（`_scene_trans_state['phase']`）：
+        #   `None`（不在过渡）/ `'out'`（淡出中）/ `'hold'`（换房那一拍，全黑）/
+        #   `'in'`（淡入中）。
+        # ★ 时长对齐原作（30fps）：淡出 = `8/30s`（对齐 `alarm[2]=8`）、
+        #   淡入 = `12.5/30s`（`1/0.08` 帧）。见 `SCENE_FADE_*_MS` 常量。
+        self._scene_trans_state = None
+        #: 过渡中要切到的目标场景（淡出完成后执行）。
+        self._scene_trans_target = None
+        #: 过渡开始时的墙钟（毫秒），用于按**真实时间**推进 α（不依赖帧率）。
+        self._scene_trans_t0 = 0.0
+        #: 有过渡在跑时置位 —— 供 `_update_scene_layer` 之外的调用方查询
+        #:   （例：走路勾子在过渡期间不该重复发起）。
+        self._scene_trans_active = False
+
         # ---- 球容器前层（第50轮）：★ 必须**盖在 sprite_label 之上** ----
         # 球的绘制序是 `back → 角色 → front → top`；角色是 `sprite_label` 画的，
         # 若把 front/top 也画进 `scene_canvas`（在角色**之下**），球壳会被角色盖住
@@ -5246,6 +5270,89 @@ class RalseiPet(QMainWindow):
                 _log.info('走动请求被忽略：场景系统未就绪')
                 return False
             before = self.__dict__.get('current_scene')
+            # ★★★ 第109轮「原作式场景过渡」：先**算好**目的地，再用过渡包住换房。
+            #   为什么不直接 `travel_to` 再补过渡：换房是同步的，等它跑完画面早已
+            #   跳变，再补一层"淡入"就会**先瞬变后淡入**（顺序反了，用户看得见）。
+            #   ⇒ 必须"先淡出 → 再在 α=1 那一拍换房 → 再淡入"（原作 `Alarm_2` 的序）。
+            target_sid = self._resolve_travel_target(target)
+            if target_sid and target_sid != before \
+                    and self.request_scene_transition(
+                        target_sid, on_done=self._travel_after_transition):
+                # 已进入过渡：真正的换房在 `_advance_scene_transition` 的
+                # 'out'→'in' 那一拍执行（见 `_do_scene_transition_swap`）。
+                _log.info('走动请求已转为**带过渡**执行 ⇒ %s', target_sid)
+                return True
+            return self._travel_commit(target, before)
+        except Exception:
+            _log.exception('走动处理异常（已忽略，宠物照常运行）')
+            return False
+
+    def _resolve_travel_target(self, target):
+        """**只算**目的地 scene_id（不换房），供过渡入口先拿目标。
+
+        ★ 为什么要单独一步：过渡必须在**换房之前**开始（先淡出），所以目标
+          必须在"还没换"的时候就能算出来。`scene.travel_to` 是"算 + 换"一体的，
+          不能直接用它（用它就已经换完了）。
+        ★ 复用与 `travel_to` **同一条**定位/寻路逻辑（不另写一份规则）：
+          先 `plan_route_to`，不可用退 `resolve_destination`。
+        ★ 算不出 / 有歧义 ⇒ 返回 None（调用方走老路径，由 `travel_to` 如实报错）。
+        """
+        try:
+            scene = getattr(self, 'scene', None)
+            if scene is None:
+                return None
+            plan = {}
+            try:
+                plan = scene.plan_route_to(target) or {}
+            except Exception:
+                plan = {}
+            if plan.get('ok') and plan.get('scene_id'):
+                return plan.get('scene_id')
+            rv = scene.resolve_destination(target) or {}
+            if rv.get('ok') and rv.get('scene_id') and not rv.get('ambiguous'):
+                return rv.get('scene_id')
+            return None
+        except Exception:
+            _log.debug('过渡前置定位失败（回落老路径）', exc_info=True)
+            return None
+
+    def _travel_after_transition(self, ok):
+        """过渡换房那一拍的回调：把"走完了"这件事按老路径收尾（报告 + 钩子）。
+
+        ★ 只在成功时收尾：失败由 `_do_scene_transition_swap` 记日志，这里不重复报
+          （否则用户会收到两条矛盾的提示）。
+        """
+        if not ok:
+            return
+        try:
+            self._travel_feedback_done()
+        except Exception:
+            _log.exception('过渡后走动收尾异常（已忽略）')
+
+    def _travel_feedback_done(self):
+        """走动成功后的**统一收尾**（过渡路径与直连路径共用）。
+
+        含：重算明/暗世界（第85轮 I2）+ 一句"到了哪儿"的如实反馈。
+        """
+        try:
+            self._possession_sync_world()
+        except Exception:
+            _log.exception('走动收尾：同步世界失败（已忽略）')
+        try:
+            sid = self.__dict__.get('current_scene')
+            scene = getattr(self, 'scene', None)
+            name = ''
+            try:
+                name = scene.description() if scene is not None else ''
+            except Exception:
+                name = ''
+            _log.info('走动完成 ⇒ %s（%s）', sid, name)
+        except Exception:
+            pass
+
+    def _travel_commit(self, target, before):
+        """**老路径**：同步走完（不带过渡 / 过渡被拒时的回落）。语义与第76轮一致。"""
+        try:
             rv = self.scene.travel_to(target)
             sid = (rv or {}).get('scene_id')
             if (rv or {}).get('ok') and sid and sid != before:
@@ -5258,10 +5365,10 @@ class RalseiPet(QMainWindow):
                           sid, rv.get('route'), rv.get('hops') or 0,
                           len(walked) or 1,
                           ' → '.join(str(x) for x in walked) if walked else '(单跳)')
-                # ★ 第85轮 I2：换了场景 ⇒ 重算明/暗世界（速度基准 3 / 4）。
-                #   挂在**用户可见的换场景入口**上，与 `_update_scene_layer` 读的是
-                #   同一处 `current_scene`（不一致会"人在暗世界、速度还是光世界"）。
-                self._possession_sync_world()
+                # ★ 第85轮 I2 + 第109轮：收尾统一走 `_travel_feedback_done`
+                #   （重算明/暗世界 + 记一条"到了哪儿"）—— 与过渡路径共用同一份逻辑，
+                #   避免"两条路径各收一次尾、迟早分叉"。
+                self._travel_feedback_done()
                 return True
             if (rv or {}).get('ok'):
                 # 已经在目标场景 / 目标就是当前场景 ⇒ 不算失败，但不是"换了"。
@@ -6391,6 +6498,32 @@ class RalseiPet(QMainWindow):
     SCENE_LAYER_ENABLED = True
 
     # ------------------------------------------------------------------
+    #  ★★★ 第109轮：**原作式场景过渡**（淡出 → 换房 → 淡入）
+    # ------------------------------------------------------------------
+    #  用户原话：「**进入场景的时候按原作有过度动画**」。
+    #  ★★ 原作出处（UTMT 反编译 Deltarune ch1，逐字，禁自创）：
+    #     · `obj_fadeout_Create_0`: `image_blend = c_black; fadespeed = 0.08; image_alpha = 0;`
+    #     · `obj_fadeout_Draw_0` : `image_alpha += fadespeed;`（α 0→1 = 变黑）
+    #     · `obj_persistentfadein_Create_0`: `fadespeed = -0.08; image_alpha = 1;`
+    #     · `obj_doorA_Other_19` : `instance_create(0,0,obj_fadeout); alarm[2] = 8;`
+    #     · `obj_doorA_Alarm_2`  : `instance_create(0,0,obj_persistentfadein); room_goto_next();`
+    #     证据：`code-quality-audit/第109轮-场景过渡动画/_evidence/EVIDENCE.md`。
+    #  ★ 时长换算（原作 `GMS2FPS = 30`，第43轮实证）：
+    #     · 淡出：`alarm[2]=8` 帧 ÷ 30fps = **267ms**（原作淡出只走到 α≈0.64 就换房，
+    #       换房那一拍由新房的 `persistentfadein` 以 α=1 全黑掩护 —— 见 EVIDENCE §3）。
+    #     · 淡入：`1/0.08 = 12.5` 帧 ÷ 30fps = **417ms**。
+    #  ★ 为什么做成"固定毫秒 + 分帧推进"而不是"每帧 +0.08"：
+    #     我们的桌宠不保证 30fps（主线程会阻塞），按帧推进会让慢机器上的过渡变长。
+    #     按**真实时间**推进 ⇒ 任何机器上都是 267ms/417ms，观感与原作一致。
+    #  ★★ 可关：把 `SCENE_TRANSITION_ENABLED` 置 False ⇒ 切场景**瞬时**（老行为），
+    #     所有既有回归判据在默认值下也不受影响（默认 True 才走过渡）。
+    SCENE_TRANSITION_ENABLED = True
+    #: 淡出时长（毫秒）= 原作 `alarm[2]=8` 帧 @30fps。
+    SCENE_FADE_OUT_MS = 267.0
+    #: 淡入时长（毫秒）= 原作 `1/0.08 = 12.5` 帧 @30fps。
+    SCENE_FADE_IN_MS = 417.0
+
+    # ------------------------------------------------------------------
     #  ★★★ 第107轮：**全局缩放**（宠物 / 场景 / UI 三者同源）
     # ------------------------------------------------------------------
     #  用户原话：
@@ -6705,6 +6838,135 @@ class RalseiPet(QMainWindow):
                 self._hide_scene_layer()
         except Exception as e:
             _log.debug("场景渲染层更新失败（本帧跳过）: %s", e)
+
+    # ------------------------------------------------------------------
+    #  ★★★ 第109轮：原作式场景过渡（淡出 → 换房 → 淡入）
+    # ------------------------------------------------------------------
+    def request_scene_transition(self, scene_id, on_done=None):
+        """发起一次**带过渡**的场景切换请求（用户可见入口应走这里）。
+
+        行为（对齐原作，见 `SCENE_TRANSITION_ENABLED` 注释）：
+          ① 遮罩 α 从现值线性涨到 1（`SCENE_FADE_OUT_MS`）——"变黑"；
+          ② α=1 那一拍执行真正的 `scene.switch(scene_id)`——"换房"；
+          ③ α 从 1 线性降到 0（`SCENE_FADE_IN_MS`）——"变亮"。
+
+        :param scene_id: 目标场景 id（必须登记在案，否则 `switch` 会拒）。
+        :param on_done: 可选回调 `on_done(ok)`；换房那一拍调一次（`ok` = switch 结果）。
+        :return: 是否**接受**了这次过渡请求。
+            · `True` = 已进入过渡（画面立刻开始变黑，别处不该再重复发起）；
+            · `False` = 未接受（过渡被关 / 无画布 / 已在过渡中 / 目标即当前场景），
+              调用方应改走直接 `switch`（老行为）。
+
+        ★ 为什么返回"是否接受"而不是"是否成功换房"：
+          本方法是**异步**的（跨多帧），返回值必须在**发起的那一帧**就有意义；
+          换房结果走 `on_done`。把两者混在一个返回值里，调用方必然写错
+          （"发起成功"被当成"已经到了"）。
+        ★ 已经在过渡中 ⇒ 拒绝新请求（不做队列）：原作的 `touched` 守卫
+          （`obj_doorA_Other_19`）就是"同一次过渡不重复触发"；多跳走路时
+          **每一跳各自发起一次**，依次串行完成。
+        """
+        if not getattr(self, 'SCENE_TRANSITION_ENABLED', False):
+            return False
+        if self.__dict__.get('_scene_trans_active'):
+            return False
+        canvas = getattr(self, 'scene_canvas', None)
+        if canvas is None:
+            return False
+        try:
+            if scene_id is None or scene_id == self.__dict__.get('current_scene'):
+                return False
+        except Exception:
+            pass
+        self._scene_trans_state = {'phase': 'out', 'on_done': on_done}
+        self._scene_trans_target = scene_id
+        self._scene_trans_t0 = time.time() * 1000.0
+        self._scene_trans_active = True
+        _log.info('场景过渡开始 ⇒ %s（淡出 %.0fms / 淡入 %.0fms）',
+                  scene_id, self.SCENE_FADE_OUT_MS, self.SCENE_FADE_IN_MS)
+        return True
+
+    def _advance_scene_transition(self, now_ms):
+        """每帧推进过渡状态机（挂在 `update_movement` 的 30ms 节拍上）。
+
+        ★ 幂等且自洽：不在过渡中 ⇒ 立刻返回（**零副作用**，不碰画布）。
+        ★ 任何异常都吞掉并把过渡**安全收尾**（回到 α=0 的不遮挡态）——
+          绝不允许"过渡卡住 ⇒ 屏幕永久全黑"这种灾难性失败模式。
+        """
+        st = self.__dict__.get('_scene_trans_state')
+        if not st:
+            return
+        canvas = getattr(self, 'scene_canvas', None)
+        if canvas is None:
+            self._scene_trans_state = None
+            self._scene_trans_active = False
+            return
+        try:
+            phase = st.get('phase')
+            t0 = self.__dict__.get('_scene_trans_t0') or now_ms
+            if phase == 'out':
+                # 淡出：α 0 → 1（`obj_fadeout`：`image_alpha += 0.08`）
+                span = float(self.SCENE_FADE_OUT_MS) or 1.0
+                a = (now_ms - t0) / span
+                if a >= 1.0:
+                    # 到点 ⇒ **换房那一拍**（原作 `Alarm_2`：room_goto + fadein）
+                    canvas.set_transition_alpha(1.0)
+                    self._do_scene_transition_swap(st)
+                    st['phase'] = 'in'
+                    self._scene_trans_t0 = now_ms
+                else:
+                    canvas.set_transition_alpha(a)
+            elif phase == 'in':
+                # 淡入：α 1 → 0（`obj_persistentfadein`：`image_alpha += -0.08`）
+                span = float(self.SCENE_FADE_IN_MS) or 1.0
+                a = 1.0 - (now_ms - t0) / span
+                if a <= 0.0:
+                    canvas.set_transition_alpha(0.0)
+                    self._scene_trans_state = None
+                    self._scene_trans_target = None
+                    self._scene_trans_active = False
+                    _log.info('场景过渡结束（画面已恢复）')
+                else:
+                    canvas.set_transition_alpha(a)
+            else:
+                # 未知阶段（不该发生）⇒ 安全收尾
+                canvas.set_transition_alpha(0.0)
+                self._scene_trans_state = None
+                self._scene_trans_active = False
+        except Exception:
+            _log.exception('场景过渡推进异常 ⇒ 立即收尾（绝不卡在全黑）')
+            try:
+                canvas.set_transition_alpha(0.0)
+            except Exception:
+                pass
+            self._scene_trans_state = None
+            self._scene_trans_active = False
+
+    def _do_scene_transition_swap(self, st):
+        """过渡的**换房那一拍**：执行真正的 `switch` 并通知回调。
+
+        与 `travel_to_scene` 的宿主侧纪律同源：换房成功要 `_possession_sync_world()`
+        （重算明/暗世界）；失败**如实记录**，不伪造"到了"。
+        ★ 回调异常不影响换房结果（`on_done` 是可选观察者）。
+        """
+        target = self.__dict__.get('_scene_trans_target')
+        ok = False
+        try:
+            scene = getattr(self, 'scene', None)
+            if scene is not None and target is not None:
+                ok = bool(scene.switch(target))
+                if ok:
+                    self._possession_sync_world()
+                    _log.info('场景过渡换房 ⇒ %s（成功）', target)
+                else:
+                    _log.info('场景过渡换房 ⇒ %s（switch 拒绝，保持原场景）', target)
+        except Exception:
+            _log.exception('场景过渡换房异常（已忽略，画面照常淡入）')
+        cb = st.get('on_done') if isinstance(st, dict) else None
+        if callable(cb):
+            try:
+                cb(ok)
+            except Exception:
+                _log.exception('场景过渡回调抛异常（已忽略）')
 
     def _scene_is_transparent(self):
         """★ 第107轮：当前场景是否**声明式透明**（= 桌面场景，背景就是用户壁纸）。
@@ -7265,6 +7527,15 @@ class RalseiPet(QMainWindow):
             self.update_environment()
             self.update_mood()
             self._last_env_update = current_time
+
+        # ---- ★★★ 场景过渡（第109轮）：每帧推进 α ----
+        # ★ 必须排在 `_update_scene_layer()` **之前**：过渡遮罩的 α 要在
+        #   本帧绘制（`paintEvent`）之前更新好，下一拍的画面才是新 α。
+        # ★ 为什么挂在这个 30ms 定时器：原作过渡就是 30fps 的逐帧 α 累加
+        #   （`image_alpha += fadespeed`），同拍最忠实。
+        # ★ 不在过渡中时本调用**立即返回**（`_scene_trans_state is None`）⇒
+        #   零行为变化，既有判据不受影响。
+        self._advance_scene_transition(current_time * 1000.0)
 
         # ---- 场景渲染层（第44轮 P1）：相机跟随 + 绘制指令消费 ----
         # 挂在这里而不是 update_animation(100ms)：原作相机是 **30fps 硬跟随**

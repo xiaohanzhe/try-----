@@ -246,8 +246,9 @@ def sec_d():
     #     ★★ 第99轮：D3c 原本写死 `== 8`。加第 9 扇门（Outertale）时它成了
     #       "判据与事实脱节"的样本。改成两条**不写死**的不变量：
     #         ① 声明的对象**全部**进绘制计划（声明 N ⇒ 计划里就有 N 条）；
-    #         ② 下限 9 —— 桌面门数 = 五章(A~E) + UT(F) + 黄魂(W) + OneShot(X)
-    #            + Outertale(Y)，第99轮起。
+    #         ② 下限 N —— 与声明的对象数一致。
+    #     ★★★ 第109轮**推翻 9 扇**（桌面只 4 扇世界门：OneShot/Niko家/UT/三角符文）
+    #       ⇒ 下限改由**声明对象数**派生（不再写死 9）。
     cam3 = SC.Camera((640, 480), 0, 2.0)
     cam3.follow((0.0, 0.0, 640.0, 480.0), None)
     plan3 = SR.plan_frame(sc_d, cam3, geo)
@@ -257,8 +258,8 @@ def sec_d():
        % (SCENES and getattr(sc_d, 'bg', '?'), len(ph)))
     _objs3 = [i for i in plan3 if i['kind'] == SR.K_OBJ]
     _want_objs3 = len(getattr(sc_d, 'objects', None) or [])
-    ok(len(_objs3) == _want_objs3 and _want_objs3 >= 9,
-       'D3c desktop 透明但仍渲染**全部** %d 个对象（透明≠整间空；下限 9 = 五章 + 四跨作品）'
+    ok(len(_objs3) == _want_objs3 and _want_objs3 >= 4,
+       'D3c desktop 透明但仍渲染**全部** %d 个对象（透明≠整间空；第109轮起 ≥ 4 扇世界门）'
        '实际=%d' % (_want_objs3, len(_objs3)))
     # D3d 负控制：真正的"缺素材"（bg=None）**必须**产 placeholder —— 证明
     #     D3b 的"0 条"不是因为渲染层坏了，而是因为 bg 声明了透明。

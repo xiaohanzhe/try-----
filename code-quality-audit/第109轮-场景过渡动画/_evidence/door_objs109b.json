@@ -1,0 +1,17 @@
+{
+ "obj_count": 12,
+ "objects": [
+  { "name": "obj_darkdoor", "sprite": "spr_darkdoor", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_darkdoorevent", "sprite": "spr_giantdarkdoor", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_shortcut_door", "sprite": "spr_shortcut_door", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_marker", "sprite": "", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_marker2", "sprite": "", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_doorparent", "sprite": "", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_doorA", "sprite": "spr_doorA", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorB", "sprite": "spr_doorB", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorE", "sprite": "spr_doorE", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorX", "sprite": "spr_doorX", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_markerA", "sprite": "spr_markerA", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_markerX", "sprite": "spr_markerX", "visible": false, "persistent": false, "depth": 0}
+ ]
+}

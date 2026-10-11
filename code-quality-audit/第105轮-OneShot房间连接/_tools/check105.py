@@ -50,13 +50,20 @@ MODULES = os.path.join(ROOT, 'ralsei_pet', 'modules')
 #: ★ 第105轮生成器的 priority 段起点（见 `gen_routes105.PRIO_BASE`）。
 PRIO_BASE = 3000
 
-#: ★ D 段用的**既有段指纹** —— 452 条非 oneshot 规则的 sha256。
+#: ★ D 段用的**既有段指纹** —— 非 oneshot 规则的 sha256。
 #: 为什么用指纹而不是条数：条数抓不住"改了一条 reason / 换了 to"。
 #: 这是"本轮是追加不是改写"的硬证据。将来若**有意**改既有段，
 #: 必须连着这里一起更新，并在报告里说明理由。
-OLD_FP = '364e75caaee1fb4f45965a0351a6f624a8eb38af4496fc01f7615af1f0029866'
-OLD_N = 452
-DESKTOP_N = 9
+#: ★★★ 第109轮**有意更新**（这是 D 段设计的用法，不是掩盖报红）：
+#:   桌面世界门由 9 扇（五章+UT+黄魂+OneShot+Outertale）**重做为 4 扇**
+#:   （用户「只有连接各个游戏也就是三角符文，oneshot，ut的门，有个例外 niko 的家」
+#:     ＋「4 个门挨着屏幕边框」）⇒ 现有段 452 → **447**（−5 扇旧门），
+#:   指纹随之变化。**变更范围仅限 `when_scene == "desktop"` 的 5 条**：
+#:   其余 447 条与第105轮逐字节相同（见 D2c 新增的分域校验：把 desktop 段
+#:   单独抽掉后，余下各域指纹仍等于第105轮值）。
+OLD_FP = '820d98f834cc4ef7a2656e388d280aad6fa9bdff7bf229bc923a1137a42607d1'
+OLD_N = 447
+DESKTOP_N = 4
 
 _N = [0]
 _FAIL = []
@@ -356,8 +363,25 @@ ok(fp(_neg_old) != OLD_FP,
    'D2b 负控制：改一条 reason 后 D2 的指纹确实变化（有鉴别力）')
 _desk = [r for r in _OLD if r.get('when_scene') == 'desktop']
 ok(len(_desk) == DESKTOP_N and sorted(str(r.get('when_door')) for r in _desk)
-   == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y'],
-   'D3 desktop 门段仍是 %d 扇 A..F/W/X/Y（本轮不许动它）' % DESKTOP_N)
+   == ['A', 'B', 'C', 'D'],
+   'D3 desktop 门段 = %d 扇 A~D（第109轮重做：OneShot/Niko家/UT/Deltarune）'
+   % DESKTOP_N)
+
+# D2c ★★★ 第109轮新增：**把 desktop 段单独抽掉**后，余下各域指纹须等于
+#   第105轮值 —— 证明第109轮对既有段的改动**只落在 desktop 段**，别的域一条没动。
+#   否则 OLD_FP 一更新就等于"整段既有段都可以被静默改写"（D 段守点失效）。
+_OLD_NO_DESK = [r for r in _OLD if r.get('when_scene') != 'desktop']
+# 第105轮 OLD 里 desktop 有 9 条 ⇒ 扣掉后剩 443 条；其指纹是**第105轮就已确定**的。
+_OLD_NO_DESK_FP_105 = 'f4e3d7d00f36d90fb9fa9c79018d146da8edc9e944b33e811c054ae2265232f8'
+ok(len(_OLD_NO_DESK) == 443 and fp(_OLD_NO_DESK) == _OLD_NO_DESK_FP_105,
+   'D2c ★ 抽掉 desktop 段后余下 %d 条既有规则指纹 == 第105轮值'
+   '（证明本轮只动 desktop 段）实测 %s…'
+   % (len(_OLD_NO_DESK), fp(_OLD_NO_DESK)[:16]))
+# —— 负控制：往"无 desktop 段"里塞一条假规则 ⇒ 指纹必变（有鉴别力）
+_neg_nd = list(_OLD_NO_DESK) + [{'when_scene': 'ch1.x', 'when_door': 'Z',
+                                 'to': 'nope', 'priority': 1}]
+ok(fp(_neg_nd) != _OLD_NO_DESK_FP_105,
+   'D2d 负控制：往无 desktop 段里塞一条假规则后指纹变化（有鉴别力）')
 
 # ===========================================================================
 #  E 只登记不生成的两类

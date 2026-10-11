@@ -108,6 +108,13 @@ MISSING_OBJ_PEN = QColor(255, 0, 255, 200)
 #: 房间边框颜色（半透明白）—— 大房间里这条框是"你在这个房间的哪一块"的唯一提示。
 ROOM_BORDER_COLOR = QColor(255, 255, 255, 70)
 
+#: ★★★ 第109轮「原作式场景过渡」：遮罩颜色 = **纯黑**。
+#: 原作出处（UTMT 反编译 ch1，逐字）：
+#:   `obj_fadeout_Create_0` / `obj_fadein_Create_0` / `obj_persistentfadein_Create_0`
+#:   三者都是 `image_blend = c_black;`（`spr_pixel_white` 白像素精灵被 blend 成黑）。
+#: 证据：`第109轮-场景过渡动画/_evidence/fade_codes.json`。
+TRANSITION_COLOR = QColor(0, 0, 0)
+
 
 class SceneAssetCache(object):
     """素材缓存：`name → QPixmap`，**只加载一次**，失败记进 `missing`。
@@ -597,6 +604,12 @@ class SceneCanvas(QWidget):
         #:   图标任务栏等一切东西」）⇒ 画布先铺一层不透明黑；桌面场景保持透明
         #:   （它的背景**就是**用户壁纸，见 `scene_render.TRANSPARENT_BG`）。
         self._opaque_bg = False
+        #: ★★★ 第109轮「原作式场景过渡」：全屏黑遮罩的不透明度（0.0~1.0）。
+        #:   0.0 = 不遮（正常态）；1.0 = 全黑（换房那一拍）。
+        #:   由宿主 `_advance_scene_transition()` 每帧推进（对齐原作 `obj_fadeout`
+        #:   α 0→1、`obj_persistentfadein` α 1→0，见 `TRANSITION_COLOR` 注释）。
+        #:   ★ 默认 0.0 ⇒ 不切场景时**零行为变化**（既有回归判据不被它影响）。
+        self._transition_alpha = 0.0
         self.last_drawn = 0
         self.hide()
 
@@ -640,6 +653,35 @@ class SceneCanvas(QWidget):
         就是用户壁纸，**必须**保持透明 —— 无条件填黑会把壁纸糊死。
         """
         self._opaque_bg = bool(on)
+
+    def set_transition_alpha(self, a):
+        """★★★ 第109轮：设置**全屏黑遮罩**的不透明度（0.0~1.0），并请求重绘。
+
+        语义对齐原作（见 `TRANSITION_COLOR` 注释）：`obj_fadeout` 让 α 从 0 涨到 1、
+        `obj_fadein` / `obj_persistentfadein` 让 α 从 1 降到 0，遮罩色恒为纯黑。
+
+        非法值（非数 / NaN）→ **静默忽略**（保持现值，不把它改成 0 或 1 ——
+        "画错一帧黑"比"画错一帧不黑"更糟，尤其换房那一拍正是靠全黑掩护）。
+        值会被钳到 `[0.0, 1.0]`。
+        """
+        try:
+            a = float(a)
+        except (TypeError, ValueError):
+            return
+        if a != a:  # NaN
+            return
+        if a < 0.0:
+            a = 0.0
+        elif a > 1.0:
+            a = 1.0
+        if a == self._transition_alpha:
+            return  # 没变 ⇒ 不重绘（每帧推进时省掉无谓 update）
+        self._transition_alpha = a
+        self.update()
+
+    def transition_alpha(self):
+        """当前过渡遮罩不透明度（0.0 = 无遮罩）。"""
+        return self._transition_alpha
 
     # -- 数据入口 --------------------------------------------------------
     def set_plan(self, plan, view_size=None):
@@ -687,6 +729,16 @@ class SceneCanvas(QWidget):
             if self._scale_x != 1.0 or self._scale_y != 1.0:
                 p.scale(self._scale_x, self._scale_y)
             self.last_drawn = paint_on(p, self._plan, self.assets, self._view_size)
+            # ★★★ 第109轮「原作式场景过渡」：**最后**叠一层全屏黑遮罩
+            #   （原作的 `obj_fadeout` / `obj_persistentfadein` 就是在所有房间内容
+            #    之后画的 —— 它们 depth=0 且后 `instance_create` ⇒ 盖在最上层）。
+            #   ★ 必须放在**所有 translate/scale 之外**：遮罩要盖满整块画布（整屏），
+            #     不受画面居中偏移与房间缩放影响（原作也是全屏盖）。
+            #   ★ `_transition_alpha == 0`（正常态）时**整段不执行** ⇒ 零行为变化。
+            if self._transition_alpha > 0.0:
+                _tc = QColor(TRANSITION_COLOR)
+                _tc.setAlphaF(self._transition_alpha)
+                p.fillRect(self.rect(), QBrush(_tc))
             p.end()
         except Exception as e:
             # 绘制失败不能拖垮主窗口（常驻进程纪律，见模块 docstring）。

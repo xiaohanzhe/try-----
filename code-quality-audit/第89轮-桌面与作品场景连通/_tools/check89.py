@@ -120,9 +120,22 @@ def _load(path):
 # ★★ 第99轮：门数**只在这里声明一次**（`_LETTERS_WANT`），其余判据全部由它取数。
 #   第89轮时这里写死了 12 处 `8` ⇒ 第99轮加第 9 扇门（Outertale）时**同一件事改了 12 遍**，
 #   且漏改一处就会"看着在守其实守不到"。字母集是真源，数量是它的派生值。
-#   字母 ↔ 世界（第89轮起）：A~E = Deltarune 第 1~5 章 · F = Undertale ·
-#   W = 黄魂（Undertale Yellow） · X = OneShot · Y = **Outertale（第99轮新增）**。
-_LETTERS_WANT = set('ABCDEF') | {'W', 'X', 'Y'}
+#
+# ★★★ 第109轮重做（**推翻第89/99轮的 9 扇**）：用户口径
+#   「**不是桌面只有一扇门，是只有连接各个游戏也就是三角符文，oneshot，ut的门，
+#    对了，有个例外，niko的家也在（记住这4个门挨着屏幕边框）**」
+#   ＋ 10-10 原话「**桌面连通光世界小镇中心，oneshot中niko第一次出现的房子下方的
+#    那个车厢，ut中人类坠落的地方**」＋ 10-11 三答「**正上（oneshot），正下（niko家），
+#    正左（ut），正右（三角符文）**」。
+#   ⇒ 桌面**只 4 扇门**：A=OneShot · B=Niko 的家 · C=UT · D=三角符文（Deltarune）。
+#   字母 ↔ 世界（第109轮起，**这是唯一真源**）：
+_A_DOOR_WORLD = {
+    'A': ('oneshot', 'oneshot.mainline.INIT'),   # 正上：Niko 第一次出现的房子下方的车厢（原作 room 1）
+    'B': ('oneshot', 'oneshot.mainline.Start'),  # 正下：Niko 的家（★ 彩蛋门，永远进不去）
+    'C': ('ut', 'ut.rooms.room_start'),          # 正左：人类坠落的地方（原作 room 0）
+    'D': ('ch1', 'ch1.hometown.town_mid'),       # 正右：光世界小镇中心（原作 room 11）
+}
+_LETTERS_WANT = set(_A_DOOR_WORLD.keys())
 _N_DOORS = len(_LETTERS_WANT)
 _d = _load(DESKTOP) or {}
 _doors = _d.get('objects') if isinstance(_d.get('objects'), list) else []
@@ -148,17 +161,41 @@ if _field_bad:
     for _b in _field_bad[:4]:
         print('        %s' % _b)
 
-# A2 门的 src 全是 `obj_door<字母>`，字母集合 = A..F + W + X + Y（不重不漏）
+# A2 门的 src 全是 `obj_door<字母>`，字母集合 = A~D（第109轮：4 扇，不重不漏）
 _letters = []
 for _o in _doors:
     _s = _o.get('src') if isinstance(_o, dict) else None
     if isinstance(_s, str) and _s.startswith('obj_door') and len(_s) == len('obj_door') + 1:
         _letters.append(_s[len('obj_door'):])
-check('A2 ★★★ %d 扇门用**不重不漏**的 %d 个不同字母（A~F + W + X + Y）'
+check('A2 ★★★ %d 扇门用**不重不漏**的 %d 个不同字母（第109轮起 = A~D：OneShot/Niko家/UT/Deltarune）'
       % (_N_DOORS, _N_DOORS),
       len(_letters) == _N_DOORS and set(_letters) == _LETTERS_WANT, star=True)
 if set(_letters) != _LETTERS_WANT:
     print('        got=%r want=%r' % (sorted(_letters), sorted(_LETTERS_WANT)))
+
+# A2b ★★★ 门 ↔ 世界 的映射与用户口径逐条对齐（第109轮新增）：
+#   A=OneShot · B=Niko的家 · C=UT · D=三角符文，且**位置是四边正中**（贴屏幕边框）。
+#   ★ 断"字母 + pos 与口径一致"，不只看字母集合 —— 否则把 C/D 对调也能全绿。
+_pos_rule = {'A': (138, 0), 'B': (138, 184), 'C': (0, 92), 'D': (276, 92)}
+_map_bad = []
+for _o in _doors:
+    if not isinstance(_o, dict):
+        continue
+    _s = _o.get('src') or ''
+    _L = _s[len('obj_door'):] if _s.startswith('obj_door') else None
+    _want_pos = _pos_rule.get(_L)
+    _p = _o.get('pos')
+    if _want_pos is None:
+        _map_bad.append('字母 %r 不在 A~D 里' % _L)
+        continue
+    if not (isinstance(_p, (list, tuple)) and len(_p) == 2
+            and (int(_p[0]), int(_p[1])) == _want_pos):
+        _map_bad.append('%s 位置=%r 期望=%r' % (_L, _p, _want_pos))
+check('A2b ★★★ 4 扇门的**字母 ↔ 位置**逐条等于口径（A 正上/B 正下/C 正左/D 正右，四边正中）',
+      not _map_bad, star=True)
+if _map_bad:
+    for _b in _map_bad[:4]:
+        print('        %s' % _b)
 
 # A3 房间几何存在且是 320×240（= 相机 scoped_size，相机固定不跟随）
 _geo = _load(GEOM) or {}
@@ -217,19 +254,36 @@ if _pos_bad:
         print('        %s' % _b)
 
 # A5 负控制：A4 的判据有鉴别力（把 pos 推到房间外必须被判越界）
+#   ★ 第109轮：锚点贴图名**由数据取**（`_sizes` 的第一项），不写死 —— 4 扇门
+#     现在共用 `spr_darkdoor_0.png`（44×56），写死 `spr_doorA_0.png` 会取不到。
+_sz_any = next(iter(_sizes.values()), None)
 _bad_ok = False
-if _rw and _rh and _sizes.get('spr_doorA_0.png'):
-    _sz = _sizes['spr_doorA_0.png']
+if _rw and _rh and _sz_any:
     _out = float(_rw) + 10.0
-    _bad_ok = not (0 <= _out and _out + _sz[0] <= _rw)
+    _bad_ok = not (0 <= _out and _out + _sz_any[0] <= _rw)
 check('A5 负控制：A4 有鉴别力（pos 推到房间外必须判越界）', _bad_ok, star=True)
 
-# A6 全部门贴图**真在盘**且尺寸一致（20×20）
-_sz_set = set(_sizes.values())
-check('A6 ★★ %d 张门贴图真在盘且尺寸一致（`spr_door*_0.png` = 20×20）' % _N_DOORS,
-      len(_sizes) == _N_DOORS and all(v == (20, 20) for v in _sizes.values()), star=True)
-if _sz_set != {(20, 20)}:
+# A6 ★★★ 第109轮：门贴图 = **任意门 `spr_darkdoor_0.png`（44×56）**
+#   用户口径「**只有进世界，也就是桌面上那个用任意门**」；且素材**真在盘**。
+#   ★ 判据从"9 张各不同、20×20"改为"每扇门的贴图在盘且都是同一张 44×56 的任意门"
+#     —— 同时钉住"外观已换成任意门"，防回退成蓝框绿字母的 `spr_door*_0.png`。
+#   ★★ 第109轮：门贴图真尺寸提成常量 `_A_DOOR_SPRITE_PX` —— E3（真机 rect 尺寸）
+#     也由它现推，避免两处各写一遍（写歪一处 = 判据与事实脱节）。
+_A_DOOR_SPRITE_PX = _sizes.get('spr_darkdoor_0.png') or (44, 56)
+check('A6 ★★★ 门贴图 = 任意门 `spr_darkdoor_0.png`（44×56，真在盘）'
+      '（用户「桌面上那个用任意门」）',
+      _sizes == {'spr_darkdoor_0.png': (44, 56)}, star=True)
+if _sizes != {'spr_darkdoor_0.png': (44, 56)}:
     print('        sizes=%r' % (_sizes,))
+
+# A6b ★★ 反向：4 扇门**都不许**再用 20×20 的 `spr_door<字母>_0.png` 贴图
+#   （那是"编辑器视角"的蓝框绿字母，原作玩家看不到 —— 见详版 §109.2 的 UTMT 实证）
+_old_spr = [o.get('sprite') for o in _doors
+            if isinstance(o, dict) and str(o.get('sprite') or '').startswith('objs/spr_door')]
+check('A6b ★★ 4 扇门都不许再用 20×20 的 `spr_door<字母>_0.png`（蓝框绿字母已按原作隐藏）',
+      not _old_spr, star=True)
+if _old_spr:
+    print('        仍在使用: %r' % (_old_spr,))
 
 # ================================================================ B. 路由表
 # ★★★ `_scene_pool` / `resolve_target` / 索引核对 —— 一律走 **`load_index()`**
@@ -277,19 +331,52 @@ if _rt_bad:
     for _b in _rt_bad[:4]:
         print('        %s' % _b)
 
-# B4 桌面路由**覆盖跨作品**（ut / uty / oneshot / outertale 各一条）—— 用户「该接入的作品全了吗」
-#   ★ 第99轮：用户点名「那几个世界（oneshot，ut，dr，uty，outertale）的入口……你记得添上」
-#     ⇒ 第四条（Outertale）也必须**从桌面真能推门进去**，不只是索引里挂了个名。
+# B4 ★★★ 桌面门覆盖**三个世界** + Niko 的家（第109轮口径）
+#   ★ 第89轮口径是"ut / uty / oneshot / outertale 各一条"（9 扇门的时代）；
+#     第109轮用户把桌面收窄成 4 扇 ⇒ 覆盖变为 **Deltarune（ch1）/ OneShot / UT**
+#     三门 + **Niko 的家**（既是 OneShot 世界、又是一扇**彩蛋门**）。
 _targets = [x.get('to') or '' for x in _desktop_routes]
-_cross = {'ut': False, 'uty': False, 'oneshot': False, 'outertale': False}
+_cross = {'ch1': False, 'oneshot': False, 'ut': False}
 for _t in _targets:
     for _k in _cross:
         if _t.startswith(_k + '.'):
             _cross[_k] = True
-check('B4 ★★★ 桌面门覆盖**四个跨作品**（Undertale / 黄魂 / OneShot / Outertale 各有入口）',
+check('B4 ★★★ 桌面门覆盖**三个世界**（Deltarune 三角符文 / OneShot / Undertale）',
       all(_cross.values()), star=True)
 if not all(_cross.values()):
     print('        %r targets=%r' % (_cross, _targets))
+
+# B4b ★★★ 4 条路由的 `to` **逐条等于口径目标**（不只是"前缀对得上"）
+#   ★ 防"把 C/D 的目标对调也能全绿"：把字母 ↔ 目标写死在这里比对。
+_tgt_map = {L: v[1] for L, v in _A_DOOR_WORLD.items()}
+_got_map = {}
+for _x in _desktop_routes:
+    _got_map[_x.get('when_door')] = _x.get('to')
+_tgt_bad = {L: (_got_map.get(L), _tgt_map[L]) for L in _tgt_map if _got_map.get(L) != _tgt_map[L]}
+check('B4b ★★★ 4 条桌面路由的字母 ↔ 目标**逐条等于口径**'
+      '（A→oneshot.mainline.INIT · B→oneshot.mainline.Start · C→ut.rooms.room_start · D→ch1.hometown.town_mid）',
+      not _tgt_bad, star=True)
+if _tgt_bad:
+    print('        不符: %r' % (_tgt_bad,))
+
+# B4c ★★ "三个世界各自的起点"这一层也对齐（第109轮新口径的证据锚：
+#   OneShot 门进的是**车厢** room 1 · UT 门进的是**坠落处** room 0 ·
+#   三角符文门进的是**光世界小镇中心** room 11）
+_room_want = {'A': 1, 'B': 2, 'C': 0, 'D': 11}
+_room_bad = []
+_SID2ROOM = {}
+for _sid, _sv in (_INDEX.get('scenes') or {}).items():
+    if isinstance(_sv, dict):
+        _SID2ROOM[_sid] = _sv.get('original_room_id')
+for _L, _want in _room_want.items():
+    _sid = _tgt_map.get(_L)
+    _got = _SID2ROOM.get(_sid)
+    if _got != _want:
+        _room_bad.append('%s %s room=%r 期望=%r' % (_L, _sid, _got, _want))
+check('B4c ★★ 三个世界的落点房间号 = 原作真值（OneShot 车厢=1 · UT 坠落处=0 · 小镇中心=11）',
+      not _room_bad, star=True)
+if _room_bad:
+    print('        %r' % (_room_bad,))
 
 # B5 负控制：B3 的判据有鉴别力（编一个不存在的目标必须被判定失败）
 _fake_to = 'ch1.nope.nope'
@@ -564,7 +651,7 @@ try:
                     _pet.scene.switch('desktop')
 
                 _push(0, 'push0')
-                _push(6, 'push6')
+                _push(3, 'push3')
             except Exception as _e:
                 _res['push_err'] = str(_e)
         except Exception as _e:
@@ -606,12 +693,19 @@ check('D6 ★★★ 真机：菜单**第一条**是跨章/跨作品入口（`坐
 if _dest_ids:
     print('        dests[:6] = %r' % (_dest_ids[:6],))
 
-# D7 ★★ 桌面菜单里**含「回桌面」以外的跨界目标**（ut / uty / oneshot / outertale 至少各一）
+# D7 ★★ 桌面菜单里**含「回桌面」以外的跨界目标**（第109轮起 = 三世界各一）
+#   ★ 原口径「ut / uty / oneshot / outertale 至少各一」已随 4 门重做**失效**
+#     （W/X/Y 不再建门 ⇒ 无 uty/outertale）。
+#   ★★ 但**判据不能直接断门目标**：`reachable_destinations()` 是**章级**入口清单
+#      （每章只取一个代表场景，H1 的 docstring 写死了这条语义），而 4 个门目标是
+#      **门级**机制（由 `DoorProp` / `travel_to` 消费，F2/F4 已覆盖）。
+#     ⇒ D7 该断的是「三世界在章级菜单里都有一扇可回的门」——
+#        `ch1`（三角符文）/ `ut`（Undertale）/ `oneshot`（OneShot）各至少一条。
 _joined = ' | '.join([str(x) for x in _dest_ids])
-check('D7 ★★ 真机菜单含四个跨作品入口（ut / uty / oneshot / outertale）',
-      ('ut.' in _joined) and ('uty.' in _joined)
-      and ('oneshot.' in _joined) and ('outertale.' in _joined),
-      star=True)
+_want_prefixes = ['ch1.', 'ut.', 'oneshot.']
+check('D7 ★★ 真机菜单含三世界章级入口（ch1 三角符文 / ut / oneshot 各至少一条'
+      '—— 「任何场景下都有路可走」的兜底）',
+      all(p in _joined for p in _want_prefixes), star=True)
 
 # ================================================================ E. 渲染计划（真机）
 check('E1 ★★★ 真机：相机已 follow 且**固定**在 (0,0,320,240)'
@@ -633,13 +727,21 @@ check('E2 ★★★ 真机：`plan_frame` 产出 **%d 条 obj**（%d 扇门真�
 #     而不是"恰好四个字节是 40"。改成从 `_res['scale']` 现推。
 _objs_rect = _res.get('objs') or []
 _scale = _res.get('scale')
-_expect = int(round(20 * _scale)) if isinstance(_scale, (int, float)) else None
-_sz_ok = (_expect is not None
-          and all(r[2] == _expect and r[3] == _expect
+#   ★★★ 第109轮改判据：桌面门贴图由 **`spr_doorA`（20×20）** 换成
+#     **任意门 `spr_darkdoor`（44×56，两轴不等）** ⇒ 旧判据「宽高都 == 20×scale」
+#     **假红**（44≠56）。真正要守的语义是「rect 尺寸 == 门贴图原始尺寸 × 相机 scale」，
+#     所以期望值改为**从盘上读贴图真尺寸**（`_A_DOOR_SPRITE_PX`，44×56）现推。
+_expect_w = (int(round(_A_DOOR_SPRITE_PX[0] * _scale))
+             if isinstance(_scale, (int, float)) else None)
+_expect_h = (int(round(_A_DOOR_SPRITE_PX[1] * _scale))
+             if isinstance(_scale, (int, float)) else None)
+_sz_ok = (_expect_w is not None
+          and all(r[2] == _expect_w and r[3] == _expect_h
                   for _n, r in _objs_rect if len(r) == 4))
-check('E3 ★★★ 真机：%d 扇门的 rect 尺寸 = **%s×%s**（贴图 20 × 相机 scale %s）'
+check('E3 ★★★ 真机：%d 扇门的 rect 尺寸 = **%s×%s**（任意门贴图 %s×%s × 相机 scale %s）'
       '—— 即 `sprite_size` 真被传进产品真路径'
-      % (_N_DOORS, _expect, _expect, _scale),
+      % (_N_DOORS, _expect_w, _expect_h,
+         _A_DOOR_SPRITE_PX[0], _A_DOOR_SPRITE_PX[1], _scale),
       len(_objs_rect) == _N_DOORS and _sz_ok, star=True)
 if _objs_rect and not _sz_ok:
     print('        rects=%r' % (_objs_rect,))
@@ -689,15 +791,18 @@ check('F3 ★★ 真机：A 门 `travel_to` 返回 `ok=True` 且 `hops==1`（直
       and _res['push0_ok'].get('ok') is True
       and _res['push0_ok'].get('hops') == 1, star=True)
 
-# F4 ★★ 推 W 门 ⇒ 真切到「W 门声明的目标」（同为跨作品那条路）
-_w_rule = [x for x in _desktop_routes if x.get('when_door') == 'W']
-_w_expect = _w_rule[0].get('to') if _w_rule else None
-check('F4 ★★ 真机：推 **W 门**（黄魂）⇒ 真切到 W 门声明的目标，且目标以 `uty.` 开头',
-      _w_expect is not None and _w_expect.startswith('uty.')
-      and _res.get('push6_after') == _w_expect, star=True)
-if _res.get('push6_after') is not None:
-    print('        push[6]: %r -> %r (期望 %r)'
-          % (_res.get('push6_before'), _res.get('push6_after'), _w_expect))
+# F4 ★★ 推 **D 门（三角符文 / Deltarune）** ⇒ 真切到「D 门声明的目标」（跨作品那条路）
+#   ★ 第109轮：原推 W 门（黄魂 / outertale）已随 4 门重做**取消**（W/X/Y 不再建门）
+#     ⇒ 改推 D 门（正右 = 三角符文），目标应落在 `ch1.`（光世界小镇中心）。
+_d_rule = [x for x in _desktop_routes if x.get('when_door') == 'D']
+_d_expect = _d_rule[0].get('to') if _d_rule else None
+check('F4 ★★ 真机：推 **D 门**（三角符文 / Deltarune）⇒ 真切到 D 门声明的目标，'
+      '且目标以 `ch1.` 开头（光世界小镇中心）',
+      _d_expect is not None and _d_expect.startswith('ch1.')
+      and _res.get('push3_after') == _d_expect, star=True)
+if _res.get('push3_after') is not None:
+    print('        push[3]: %r -> %r (期望 %r)'
+          % (_res.get('push3_before'), _res.get('push3_after'), _d_expect))
 
 # ================================================================ G. 旧行为不回归
 # G1 ★★ 负控制：**未知/空 want** 不该被 `-1` 档命中（`-1` 是"逐字相等"，不是通配）

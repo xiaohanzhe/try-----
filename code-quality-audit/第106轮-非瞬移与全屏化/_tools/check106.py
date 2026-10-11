@@ -320,9 +320,20 @@ ok('A10 ★★ `travel_to` 返回值含 `walked`（真的走过的场景序列�
    "'walked'" in _src_ctrl, star=True)
 
 # A11 ★★ main.py 的 travel_to_scene 日志真的用了 walked（消费方到位）
+# ★★ 第109轮口径迁移（"判据过窄=误报"，产品语义未变）：
+#   第109轮为做"原作式过渡动画"把走动重构为入口(`travel_to_scene`，只算目的地+
+#   起过渡) → 过渡换房那一拍(`_travel_after_transition`) → 统一收尾
+#   (`_travel_feedback_done`)；**带 `walked` 的日志**随收尾一起搬进了
+#   `_travel_commit`（直连/回落路径）。⇒ 只查 `travel_to_scene` 会在
+#   "行为正确、日志搬家"时**假红**。
+#   ⇒ 搜索域改为"入口 ∪ 直连回落 ∪ 过渡收尾"三处中**任一处**带 `walked`
+#     （A12 负控制仍在：三处都没有 `walked` 的假实现必须判假）。
 _tts = _func_source(_src_main, _t_main, 'travel_to_scene')
+_commit = _func_source(_src_main, _t_main, '_travel_commit')
+_fdone = _func_source(_src_main, _t_main, '_travel_feedback_done')
+_walked_consumed = ('walked' in _tts) or ('walked' in _commit) or ('walked' in _fdone)
 ok('A11 ★★ `main.travel_to_scene` 的日志真的带上 `walked`（消费方到位，防"抄了不用"）',
-   'walked' in _tts, star=True)
+   _walked_consumed, star=True)
 
 # A12 负控制：A11 有鉴别力
 ok('A12 负控制：A11 有鉴别力（不带 walked 的假实现必须判假）',

@@ -2755,6 +2755,36 @@ SUITES = [
                 '`except` 返 True、两段钳位同拆等）。'
                 '★ 本套件**零外部盘依赖**（回归碰不得 E 盘）。',
     },
+    {
+        'id': 'check109',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第109轮-场景过渡动画', '_tools', 'check109.py'),
+        'offscreen': True,
+        'desc': '第一百零九轮：**进入场景的原作式过渡动画**（纯黑遮罩 alpha 线性渐变）'
+                '不许静默漂移。★ 取证（UTMT 反编译 ch1，逐字）：'
+                '`obj_fadeout` / `obj_fadein` / `obj_persistentfadein` 三者 '
+                '`image_blend = c_black`（= 纯黑，落在 `spr_pixel_white` 上）· '
+                '`fadespeed = ±0.08`（macOS 淡出 0.14，**平台不对称**，如实记录）· '
+                '`alarm[2] = 8` 帧 @30fps ⇒ 淡出 267ms、'
+                '`1/0.08 = 12.5` 帧 ⇒ 淡入 417ms · 无音效、无"按任意键跳过"。'
+                '★ A 机制存在且**被消费**：`request_scene_transition` 有真调用点 · '
+                '`_advance_scene_transition` 挂在 `update_movement`'
+                '（30ms 帧钩子 = 原作 GMS2FPS）。★ B 时序常量 = 原作换算值'
+                '（B3 负控制：淡出/淡入两者**必须不同**，不然换了常量也发现不了）。'
+                '★ C 阶段序：**先置 α=1 再换房**（`set_transition_alpha(1.0)` '
+                'AST 序**先于** `_do_scene_transition_swap`）。★ D 换房真调 `switch`。'
+                '★ E 画布遮罩：`paint_on` **先于** `fillRect`（画完内容再叠黑）· '
+                '色值 `QColor(0,0,0)` · 遮罩在**所有 translate/scale 之外**'
+                '（否则遮罩会跟着相机平移 ⇒ 露边）。★ F 默认零回归：'
+                '`_transition_alpha > 0.0` 真守卫 · 构造值 0.0（不动产品时行为一字不变）。'
+                '★ G 容错：`except` 内必把 α 归 0（否则异常 ⇒ 全黑卡死 = 比报错更糟）。'
+                '★ H 可关开关 `SCENE_TRANSITION_ENABLED` + 入口接线'
+                '（`travel_to_scene` 真走过渡、且保留 `_travel_commit` 回落路径）。'
+                '★ I 判据自身体检（所有被判函数/类都**解析到了**，'
+                '否则后续 `in src` 判据全变恒假 · 正/负控制成对）。'
+                '★★ 判据一律走 AST，禁纯文本扫（"提到某名字"类恒真判据已四次发作）。'
+                '★ 本套件**零外部盘依赖**（回归碰不得 E 盘）。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')

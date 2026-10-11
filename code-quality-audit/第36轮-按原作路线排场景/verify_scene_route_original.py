@@ -388,13 +388,15 @@ _LETTERS = sorted(set((r.get('_original') or {}).get('door_letter')
                       and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT))
 check('C3b 原作门位移段只用 A/B/C 三种已实证字母门（D/E/F/W/X/Y 一律不编原作边）',
       set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
-# ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A..F/W/X/Y（正控制），
+# ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A~D（正控制），
 #    证明 C3/C3b 的"排除"没有把 desktop 整段漏掉。
+#    ★★★ 第109轮**推翻 9 扇**（用户口径「只有连接各个游戏也就是三角符文，oneshot，
+#      ut的门，有个例外 niko 的家也在（这4个门挨着屏幕边框）」）⇒ 桌面只 A~D。
 _desk_letters = sorted(set(
     (r.get('_original') or {}).get('door_letter')
     for r in (routes.get('routes') or []) if r.get('when_scene') == 'desktop'))
-check('C3c ★ desktop 世界门字母 == A..F + W/X/Y（9 扇）',
-      _desk_letters == ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y'],
+check('C3c ★ desktop 世界门字母 == A~D（4 扇：OneShot/Niko家/UT/Deltarune）',
+      _desk_letters == ['A', 'B', 'C', 'D'],
       '实际=%s' % _desk_letters)
 
 # --- C4：锚点 —— krisroom 的 doorA 必须落到 krishallway（第44轮实证的真值）---

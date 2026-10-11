@@ -193,11 +193,14 @@ ok(all(isinstance(r.get('when_door'), str) and r.get('when_door')
 # ★★ 第99轮：字母表**只声明一次**（`_DESK_WANT`），数量由它派生 —— 第89轮这里是
 #    写死的 8，第99轮加 Outertale（用户点名要的第五个世界入口）时就成了
 #    "判据与事实脱节"的样本。
-_DESK_WANT = ['A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y']
+# ★★★ 第109轮**推翻 9 扇**（用户口径「只有连接各个游戏也就是三角符文，oneshot，ut
+#    的门，有个例外 niko 的家也在（这4个门挨着屏幕边框）」）⇒ 桌面只 A~D：
+#    A=OneShot · B=Niko的家 · C=UT · D=三角符文。
+_DESK_WANT = ['A', 'B', 'C', 'D']
 _desk_routes = [r for r in RL if r.get('when_scene') == 'desktop']
 _desk_letters = sorted(str(r.get('when_door')) for r in _desk_routes)
 ok(_desk_letters == _DESK_WANT,
-   'B7a desktop 恰 %d 扇世界门且字母 = A..F + W/X/Y 实际=%s'
+   'B7a desktop 恰 %d 扇世界门且字母 = A~D 实际=%s'
    % (len(_DESK_WANT), _desk_letters))
 _desk_prios = set(r.get('priority') for r in _desk_routes)
 ok(len(_desk_prios) == 1 and next(iter(_desk_prios)) == 200,

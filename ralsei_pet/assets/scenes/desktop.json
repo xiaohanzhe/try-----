@@ -18,111 +18,109 @@
   },
   "objects": [
     {
-      "id": "desk_door_ch1",
+      "id": "desk_door_oneshot",
       "kind": "prop",
       "authored": true,
       "src": "obj_doorA",
-      "sprite": "objs/spr_doorA_0.png",
-      "pos": [40, 96],
+      "sprite": "objs/spr_darkdoor_0.png",
+      "anim": {
+        "base": "objs/spr_darkdoor",
+        "frames": 3,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      },
+      "pos": [
+        138,
+        0
+      ],
       "depth": 0
     },
     {
-      "id": "desk_door_ch2",
+      "id": "desk_door_niko_home",
       "kind": "prop",
       "authored": true,
       "src": "obj_doorB",
-      "sprite": "objs/spr_doorB_0.png",
-      "pos": [70, 96],
-      "depth": 0
-    },
-    {
-      "id": "desk_door_ch3",
-      "kind": "prop",
-      "authored": true,
-      "src": "obj_doorC",
-      "sprite": "objs/spr_doorC_0.png",
-      "pos": [100, 96],
-      "depth": 0
-    },
-    {
-      "id": "desk_door_ch4",
-      "kind": "prop",
-      "authored": true,
-      "src": "obj_doorD",
-      "sprite": "objs/spr_doorD_0.png",
-      "pos": [130, 96],
-      "depth": 0
-    },
-    {
-      "id": "desk_door_ch5",
-      "kind": "prop",
-      "authored": true,
-      "src": "obj_doorE",
-      "sprite": "objs/spr_doorE_0.png",
-      "pos": [160, 96],
+      "sprite": "objs/spr_darkdoor_0.png",
+      "anim": {
+        "base": "objs/spr_darkdoor",
+        "frames": 3,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      },
+      "pos": [
+        138,
+        184
+      ],
       "depth": 0
     },
     {
       "id": "desk_door_ut",
       "kind": "prop",
       "authored": true,
-      "src": "obj_doorF",
-      "sprite": "objs/spr_doorF_0.png",
-      "pos": [190, 96],
+      "src": "obj_doorC",
+      "sprite": "objs/spr_darkdoor_0.png",
+      "anim": {
+        "base": "objs/spr_darkdoor",
+        "frames": 3,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      },
+      "pos": [
+        0,
+        92
+      ],
       "depth": 0
     },
     {
-      "id": "desk_door_uty",
+      "id": "desk_door_deltarune",
       "kind": "prop",
       "authored": true,
-      "src": "obj_doorW",
-      "sprite": "objs/spr_doorW_0.png",
-      "pos": [220, 96],
-      "depth": 0
-    },
-    {
-      "id": "desk_door_oneshot",
-      "kind": "prop",
-      "authored": true,
-      "src": "obj_doorX",
-      "sprite": "objs/spr_doorX_0.png",
-      "pos": [250, 96],
-      "depth": 0
-    },
-    {
-      "id": "desk_door_outertale",
-      "kind": "prop",
-      "authored": true,
-      "src": "obj_doorY",
-      "sprite": "objs/spr_doorY_0.png",
-      "pos": [280, 96],
+      "src": "obj_doorD",
+      "sprite": "objs/spr_darkdoor_0.png",
+      "anim": {
+        "base": "objs/spr_darkdoor",
+        "frames": 3,
+        "frame_ms": 33.3,
+        "src": "default_30fps"
+      },
+      "pos": [
+        276,
+        92
+      ],
       "depth": 0
     }
   ],
-  "anchors": {},
-  "transition": null,
-
   "_comment": {
-    "purpose": "P0 骨架的**零行为变化**证明件。它声明的所有可渲染项都是 null/空，因此即使渲染层（P1）接上，画面也与现状完全一致 —— 像素仍然只由 Ralsei 自己的 sprite_label 提供（main.py paintEvent 的唯一动作是填全透明）。",
+    "purpose": "P0 骨架的**零行为变化**证明件。桌面的可渲染项只有 4 扇世界门；背景声明式透明（`__transparent__`）⇒ 透出壁纸，像素其余部分仍只由 Ralsei 自己的 sprite_label 提供。",
     "why_desktop_is_a_scene": "用户原话『桌面也会被我当成一个场景』。桌面在物理系统里早就是一等公民（floor_manager.desktop_floor，type='desktop'、platform_height=0，且 _desktop_floor_y() 是『地面』y 坐标的唯一真源），所以映射到场景系统是天然对齐，不是特例。",
     "round89_desktop_doors": {
       "why": "用户口径（第89轮）『我到现在都没看到能切换场景的门』。实测根因：桌面章只有 1 间场景，`reachable_destinations` 的『同章』过滤让菜单恒为空，且桌面无 original_room_id ⇒ 视口 0×0 ⇒ 什么都画不出来。",
-      "original_room_id": "-1 = 桌面的**虚拟房间**（见 _room_geometry.json 的 `desktop:-1`）。★ 尺寸裁定 = **320×240**，不是 640×480：相机 `scoped_size()` = `size/scale` = 640/2 = 320×240，房间正好等于相机逻辑窗口时 `camera_rect` 走 `center_rect` 分支 ⇒ **相机固定、不跟随宠物**（`(0,0,320,240)`），门的位置才稳定可预测。若用 640×480，房间大于相机 ⇒ 相机去追宠物（宠物在世界坐标里被归一化到 ~(628,480)），静止时视野约 x∈[468,628] ⇒ 排在前面的门**全落在视野外**（第89轮实测：`plan objs=0`）—— 这也不是 bug，是尺寸选错。",
-      "doors": "9 扇 = 五章 + UT + 黄魂 + OneShot + **Outertale**，各用一扇不同字母的门贴图（A~F/W/X/**Y**）。`src` 必须是 `obj_door<字母>`（`classify()` / `door_letter_of()` 认它）。★ 第99轮补 Y（Outertale）：贴图 `spr_doorY_0.png` 的**方框逐像素抄自 `spr_doorA_0.png`**（81 px 蓝框 + 铰链凸块），**字母 Y 为本项目按同规格手绘**（因为 Outertale 原作没有 `obj_doorY`，不存在'照抄一张 Y 门'的可能）—— 生成脚本 `第99轮…/_tools/make_doorY99.py`，含自动对齐自证。",
-      "pos_rule": "门贴图 `spr_doorA~F/W/X/Y_0.png` 统一 **20×20**，渲染时居中锚定（`rect` 的 x 是**中心 x**）⇒ 9 扇横排 `x = 40 + 30*i`（i=0..8），中心范围 40~280、占宽 20 ⇒ 落在 `[30,290] ⊂ [0,320]`，两端各留 30/30 逻辑像素余量（**对称**）。y 统一 96（房间纵向中点附近），门高 20 ⇒ `[86,106] ⊂ [0,240]`。铺成 1280×480 输出像素后是一排齐整的门廊，居中偏上。★ 第99轮由 8 扇（`x = 56 + 30*i`）改为 9 扇：原间距 30 保持不变，整排**左移 16 并重新居中**，避免第 9 扇顶到右边界（若沿用旧起点，第 9 扇中心 296 ⇒ 右余量仅 14，左右不对称）。",
-      "how_targets_resolve": "桌面的门**走 `_routes.json`**（与所有别的场景同一条路）：`item_interact.build_props` 把 `obj_door<字母>` 建成 `DoorProp`（`door_letter_of()` 认字母），点击时 `route_for_door(routes, 'desktop', letter)` 在 `when_scene='desktop'` 的条目里按字母取目标（`priority=200`，高于原作边的 100~110）。★ **第99轮勘误**：原文写「目标由 `scene_controller` 的 `_DESKTOP_DOORS` 给出，`build_props` 对 desktop 走该表」—— 全仓库 **`_DESKTOP_DOORS` 零命中**，那个符号从来不存在；真实实现一直是路由表这条路。桌面 9 条路由见 `_routes.json` 的 `when_scene='desktop'` 分组。"
+      "original_room_id": "-1 = 桌面的**虚拟房间**（见 _room_geometry.json 的 `desktop:-1`）。★ 尺寸裁定 = **320×240**，不是 640×480：相机 `scoped_size()` = `size/scale` = 640/2 = 320×240，房间正好等于相机逻辑窗口时 `camera_rect` 走 `center_rect` 分支 ⇒ **相机固定、不跟随宠物**（`(0,0,320,240)`），门的位置才稳定可预测。"
+    },
+    "round109_desktop_doors": {
+      "why": "用户口径（第109轮）『**不是桌面只有一扇门，是只有连接各个游戏也就是三角符文，oneshot，ut的门，对了，有个例外，niko的家也在（记住这4个门挨着屏幕边框）**』。⇒ 推翻第89/99轮的 9 扇横排（五章 + UT + 黄魂 + OneShot + Outertale），桌面**只 4 扇门**。",
+      "original_room_id": "-1（虚拟房间，见上）。",
+      "four_doors": "A=OneShot（正上） · B=Niko 的家（正下，★彩蛋门） · C=UT（正左） · D=三角符文/Deltarune（正右）。★ 五章**不各占一扇门** —— 经三角符文那台任意门进光世界，再由原作路线走。",
+      "user_pos_spec": "用户 10-11 逐字（三答）：门排布 →『**正上（oneshot），正下（niko家），正左（ut），正右（三角符文）**』；门形态 →『**只有进世界，也就是桌面上那个用任意门，其他的维持原作玩家视角下的门的样子就好**』；字母 →『**按原作玩家看到的视角，也就是隐藏掉，你好好看看原作代码**』。",
+      "why_darkdoor_sprite": "用户『桌面上那个用任意门』⇒ 4 扇门统一用**任意门** `spr_darkdoor_0.png`（44×56 / 3 帧）。★ 为什么不用 `spr_doorA~Y_0.png`（20×20 蓝框+绿字母）：UTMT 反编译实证 —— 原作 `obj_doorA~Y` 全部 `visible: false`、`obj_doorA` **无 Draw 事件**（只有 `Alarm_2` 跳房间 + `Other_19` 交互），玩家**看不到**蓝框绿字母；那是**编辑器视角**。玩家能看到的是 `obj_darkdoor`（`visible: true`，`spr_darkdoor` 44×56）。",
+      "src_vs_sprite": "★ 保留 `src = obj_door<字母>`（驱动字母路由 `door_letter_of()`），只把 `sprite` 换成任意门 ⇒ **路由不变、外观变**。`scene_render.plan_frame` 用 `sprite` 字段取图、`src` 只参与 `obj_is_hidden()` 过滤。",
+      "pos_rule": "★ 房间 320×240、贴图 44×56、渲染 `rect` 的 `pos` 是**左上角** ⇒ 四边正中、贴屏幕边框：正上 `x=(320-44)//2=138, y=0`；正下 `x=138, y=240-56=184`；正左 `x=0, y=(240-56)//2=92`；正右 `x=320-44=276, y=92`。",
+      "letter_hidden": "用户『字母**按原作玩家看到的视角，也就是隐藏掉**』。改用 `spr_darkdoor`（无字母）后，字母 A~Y **自动不可见** —— 这就是『隐藏』的落地方式，不需要额外遮罩。",
+      "how_targets_resolve": "桌面的门**走 `_routes.json`**（与所有别的场景同一条路）：`item_interact.build_props` 把 `obj_door<字母>` 建成 `DoorProp`（`door_letter_of()` 认字母），点击时 `route_for_door(routes, 'desktop', letter)` 在 `when_scene='desktop'` 的条目里按字母取目标（`priority=200`）。★ 4 条路由：A→oneshot.mainline.INIT（车厢）· B→oneshot.mainline.Start（Niko 的家）· C→ut.rooms.room_start（坠落处）· D→ch1.hometown.town_mid（光世界小镇中心）。"
     },
     "how_to_fill_it_in_later": [
-      "1. bg: 填字符串（相对本目录，如 \"bg/desktop_night.png\"）或 {'variants': [...]}（轮播，例如白天/夜晚）。P0 留 null。",
+      "1. bg: 填字符串（相对本目录，如 \"bg/desktop_night.png\"）或 {'variants': [...]}（轮播，例如白天/夜晚）。桌面保持 `__transparent__`。",
       "2. objects: 每个物件 ≥ {'id','kind','z','pos' 或 'anchor'}；kind 决定路径口径（见 _index.json 的 path_rules）。",
-      "3. ambient: 借 customization_system.py 里**早已定义、从未接线**的 appearance.weather_effects / lighting_effects / particle_effects（customization_system.py:28-30）与 environment.home_location（:71）—— 那是本项目官方预留的接入坑位，场景系统应当接管它，不另起炉灶。",
+      "3. ambient: 借 customization_system.py 里**早已定义、从未接线**的 appearance.weather_effects / lighting_effects / particle_effects 与 environment.home_location —— 那是本项目官方预留的接入坑位。",
       "4. anchors: 场景自带锚点（相对本场景的『区域矩形』，与 _anchors.json 的相对整屏不同）。"
     ],
     "object_schema": {
       "id": "场景内唯一名（用于深度排错、AI 提及、存档）",
       "kind": "sprite | image | prop | bg（决定路径口径；未知 kind 按 image 处理＝相对本目录，安全侧）",
-      "pos": "[x, y] 绝对屏幕像素。写了它就不看 anchor。（可选）",
+      "pos": "[x, y] **左上角**绝对像素。写了它就不看 anchor。（可选）",
       "anchor": "命名锚点，先查本场景 anchors、再查 _anchors.json。（可选）",
+      "sprite": "★ 渲染实际取图的字段（`plan_frame` 用它）。与 `src` 可不同：`src` 驱动分类/隐藏判定，`sprite` 决定外观。",
+      "anim": "{'base','frames','frame_ms','src'} 逐帧动画。`base` 拼 `<base>_<i>.png`；`frame_ms` 走毫秒取帧；`src` 记帧率来源（'default_30fps'）。",
       "alpha": "0.0~1.0，默认 1.0。0 或负 → 整件丢弃",
       "depth": "绘制排序键，越小越先画（越远）。不写则由 y 推导。（可选）",
       "y": "仅参与深度推导（不写 depth 时用）",

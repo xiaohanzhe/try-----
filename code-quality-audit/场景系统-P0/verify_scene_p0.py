@@ -269,10 +269,14 @@ ok('B5 desktop.json 能被 load_scene 加载（返回 SceneState 而非 None）'
 # ★★ 第99轮：门数**不再写死在断言里**，改成"字母集恰好等于声明的世界表"。
 #   原始写死的 `8` 在第99轮加第 9 扇门（Outertale，用户点名要的第五个世界）
 #   时成了"判据与事实脱节"的样本；字母集是真源，数量由它派生。
-#   字母 ↔ 世界：A~E = Deltarune 第1~5章 · F = UT · W = 黄魂 · X = OneShot ·
-#                Y = Outertale。
+#   ★★★ 第109轮**推翻 9 扇**（用户口径「**不是桌面只有一扇门，是只有连接各个游戏
+#     也就是三角符文，oneshot，ut的门，对了，有个例外，niko的家也在（记住这4个门
+#     挨着屏幕边框）**」）：
+#     桌面**只 4 扇门** —— A=OneShot · B=Niko的家 · C=UT · D=三角符文。
+#     （旧的 A~E=五章 / F=UT / W=黄魂 / X=OneShot / Y=Outertale **全部作废**：
+#      五章经三角符文一台任意门进；黄魂/Outertale 不是用户点名的「4 个门」。）
 _TRANSPARENT = '__transparent__'
-_DESK_WORLD_LETTERS = ('A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y')
+_DESK_WORLD_LETTERS = ('A', 'B', 'C', 'D')
 _DESK_DOORS = sorted(
     (o.get('src'), tuple(o.get('pos') or ()))
     for o in (getattr(_DESK, 'objects', None) or [])

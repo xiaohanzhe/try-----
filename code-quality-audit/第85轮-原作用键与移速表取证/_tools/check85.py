@@ -521,7 +521,21 @@ check('G ★★ 接线：`set_running` 的接收者是附身状态机（`poss*`�
 # I2 接线：必须有 `_possession_sync_world` 且被调用 ≥2 处（init + 换场景）
 _sync_def = 'def _possession_sync_world' in _msrc
 _sync_calls = _method_calls_in(_mtree_main, _msrc, 'init_possession', '_possession_sync_world')
+# ★★ 第109轮口径迁移（"判据过窄=误报"，但**不是**产品错）：
+#   原来的搜索域写死 `travel_to_scene`。第109轮为做"原作式过渡动画"把走动
+#   重构为三段：`travel_to_scene`（入口，只算目的地 + 起过渡）→ 过渡换房那一拍
+#   调 `_travel_after_transition` → `_travel_feedback_done`（**统一收尾**，
+#   过渡路径与直连路径共用）。重算明/暗世界被挪进 `_travel_feedback_done`。
+#   ⇒ 产品语义**没丢**（换场景后照样重算），丢的只是"它恰好写在 travel_to_scene
+#     里"这个**实现位置**。若继续只认 `travel_to_scene`，判据就会在
+#     "行为正确、代码搬家"时**假红** —— 正是第106轮 A11/A9 修过的同一类错。
+#   ⇒ 搜索域改为**换场景收尾的真实发生点**：`_travel_feedback_done`
+#     （第109轮起）∪ `travel_to_scene`（旧路径/回落）∪ `_travel_commit`（直连回落）。
+#   下方 `>= 2` 阈值不变：仍要求"init 之外**另有一处**换场景收尾"，
+#   若有人把 `_travel_feedback_done` 里的那次调用**删掉**，本判据照样报红。
+_sync_calls += _method_calls_in(_mtree_main, _msrc, '_travel_feedback_done', '_possession_sync_world')
 _sync_calls += _method_calls_in(_mtree_main, _msrc, 'travel_to_scene', '_possession_sync_world')
+_sync_calls += _method_calls_in(_mtree_main, _msrc, '_travel_commit', '_possession_sync_world')
 check('G ★★★ 接线：`_possession_sync_world` 已定义' , _sync_def, star=True)
 check('G ★★★ 接线：同步世界在 init 与换场景**两处**都被调（实得 %d 处）'
       % len(_sync_calls), len(_sync_calls) >= 2, star=True)

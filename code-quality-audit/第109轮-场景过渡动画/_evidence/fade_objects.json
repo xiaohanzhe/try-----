@@ -1,0 +1,15 @@
+{
+ "obj_count": 10,
+ "objects": [
+  { "name": "obj_doorA_musfade", "sprite": "spr_doorA", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorB_musfade", "sprite": "spr_doorB", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorC_musfade", "sprite": "spr_doorC", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorD_musfade", "sprite": "spr_doorD", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorX_musfade", "sprite": "spr_doorX", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_doorw_musfade", "sprite": "spr_doorW", "visible": false, "persistent": false, "depth": 0},
+  { "name": "obj_fadeout", "sprite": "spr_pixel_white", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_fadein", "sprite": "spr_pixel_white", "visible": true, "persistent": false, "depth": 0},
+  { "name": "obj_persistentfadein", "sprite": "spr_pixel_white", "visible": true, "persistent": true, "depth": 0},
+  { "name": "obj_fadechain", "sprite": "spr_chainpiece", "visible": true, "persistent": false, "depth": 0}
+ ]
+}

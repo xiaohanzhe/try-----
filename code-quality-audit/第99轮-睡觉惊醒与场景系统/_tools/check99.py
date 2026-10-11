@@ -170,7 +170,13 @@ _UM = _src_of('update_movement')
 
 check('A0 五个方法都真取到了（防「取不到 ⇒ `not in` 恒真」）',
       all(bool(x) for x in (_TS, _RJ, _UA, _RS, _UM)),
-      'lens=%s' % [len(x) for x in (_TS, _RJ, _UA, _RS, _UM)])
+      # ★★ 第109轮修正：原探针回显 `lens=[649,921,19149,487,15397]` 的**绝对长度**
+      #   ⇒ 任何人在任一被取方法里插几行（第109轮给 `update_movement` 加了
+      #   `_advance_scene_transition` 调用 ⇒ 15397→15455）都会让 G2 报
+      #   "输出与基线不一致"，而**判据一条没变**（仍是 PASS）。这与第75轮
+      #   "行号是脆性信息"同源：真正要守的是"**取到了**（非空）"，不是"恰好多少字"。
+      #   ⇒ 只打非空标记，不打长度。
+      'ok=%s' % [bool(x) for x in (_TS, _RJ, _UA, _RS, _UM)])
 
 check('A1 `trigger_surprise` 里**显式**把惊吓落到画面'
       '（`change_animation(_target, force=True)`）且方向只分 down / up'
