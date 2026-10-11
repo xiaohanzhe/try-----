@@ -588,6 +588,15 @@ class SceneCanvas(QWidget):
         self._view_size = (0, 0)
         self._scale_x = 1.0
         self._scale_y = 1.0
+        #: ★★ 第107轮「场景全屏化」：画面（4:3 内接矩形）相对本画布左上角的
+        #:   居中偏移。画布 = **整块屏幕**，画面只占其中一块，其余填黑。
+        #:   由 `_update_scene_layer` 每帧从 `pet._scene_output_offset` 喂进来。
+        self._offset_x = 0
+        self._offset_y = 0
+        #: ★★ 第107轮：非桌面场景要**完全盖住屏幕**（用户口径「不透过桌面壁纸、
+        #:   图标任务栏等一切东西」）⇒ 画布先铺一层不透明黑；桌面场景保持透明
+        #:   （它的背景**就是**用户壁纸，见 `scene_render.TRANSPARENT_BG`）。
+        self._opaque_bg = False
         self.last_drawn = 0
         self.hide()
 
@@ -606,6 +615,31 @@ class SceneCanvas(QWidget):
             return
         self._scale_x = sx
         self._scale_y = sy
+
+    def set_output_offset(self, ox, oy):
+        """★ 第107轮：画面在本画布内的**居中偏移**（像素）。
+
+        画布 = 整块屏幕，画面（`camera.size`）只占其中一个居中的 4:3 矩形；
+        绘制时把画笔整体 `translate(ox, oy)` 即可，四周天然留黑
+        （由 `_opaque_bg` 的底把它填黑）。
+
+        非法值（非数）→ **不动**（保持现状，不静默改成 0,0）。
+        """
+        try:
+            ox = int(round(float(ox)))
+            oy = int(round(float(oy)))
+        except (TypeError, ValueError):
+            return
+        self._offset_x = ox
+        self._offset_y = oy
+
+    def set_opaque_bg(self, on):
+        """★ 第107轮：是否先用**不透明黑**铺满整块画布（非桌面场景 = True）。
+
+        为什么做成开关而不是无条件填黑：桌面场景（`TRANSPARENT_BG`）的"背景"
+        就是用户壁纸，**必须**保持透明 —— 无条件填黑会把壁纸糊死。
+        """
+        self._opaque_bg = bool(on)
 
     # -- 数据入口 --------------------------------------------------------
     def set_plan(self, plan, view_size=None):
@@ -640,6 +674,15 @@ class SceneCanvas(QWidget):
         try:
             p = QPainter(self)
             p.setRenderHint(QPainter.SmoothPixmapTransform, False)
+            # ★★ 第107轮：非桌面场景 —— 先铺**不透明黑**盖满整块画布
+            #   （用户口径「不透过桌面壁纸，图标任务栏等一切东西」）。
+            #   画面只占居中一块，四周的黑边正是"按场景比例铺满、留黑边"。
+            #   桌面场景 `_opaque_bg=False` ⇒ 保持透明、透出壁纸。
+            if self._opaque_bg:
+                p.fillRect(self.rect(), QBrush(ROOM_FILL_COLOR))
+            # ★ 第107轮：画面在画布内的居中偏移（画布=整屏，画面=4:3 内接）。
+            if self._offset_x or self._offset_y:
+                p.translate(self._offset_x, self._offset_y)
             # 整桌平铺：房间坐标 → 桌面像素（sx/sy 不等 = 按比例映射，允许非等比）。
             if self._scale_x != 1.0 or self._scale_y != 1.0:
                 p.scale(self._scale_x, self._scale_y)

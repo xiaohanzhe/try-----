@@ -452,8 +452,16 @@ check('D init_possession 从 NPC 登记表收集目标（build_targets）',
 _calls = _msrc
 _i_npc = _calls.find('self.init_npc_systems()')
 _i_pos = _calls.find('self.init_possession()')
-check('D ★ 启动顺序：init_npc_systems 在 init_possession 之前（%d < %d）'
-      % (_i_npc, _i_pos), 0 <= _i_npc < _i_pos, star=True)
+# ★★ 第106轮修正：原先回显 `find()` 的**字符偏移**（60040 < 60653）⇒ main.py
+#   上方插 16 行后偏移整体漂移 ⇒ G2 报假 DIFF，而语义（谁在前）没变。
+#   ⇒ 改成**语义判据**：只断"先出现、且都找到了"，回显 O(1) 的是/否，
+#      不回显随文件长度变化的绝对值。
+_i_npc_ok = (_i_npc >= 0)
+_i_pos_ok = (_i_pos >= 0)
+check('D ★ 启动顺序：init_npc_systems 在 init_possession 之前（先者已找到=%s，'
+      '后者已找到=%s，顺序正确=%s）'
+      % (_i_npc_ok, _i_pos_ok, _i_npc_ok and _i_pos_ok and _i_npc < _i_pos),
+      0 <= _i_npc < _i_pos, star=True)
 
 # D6：_possession_tick 在 update_movement 早退分支之前
 _um = _func_src(_mtree, _msrc, 'update_movement') or ''

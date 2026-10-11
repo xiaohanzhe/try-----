@@ -499,9 +499,13 @@ def _method_calls_in(tree, src, method_name, attr):
 # I1 接线：keyPressEvent 里必须真调 set_running(True)；keyReleaseEvent 里 False
 _kp_true = _method_calls_in(_mtree_main, _msrc, 'keyPressEvent', 'set_running')
 _kr_false = _method_calls_in(_mtree_main, _msrc, 'keyReleaseEvent', 'set_running')
-check('G ★★★ 接线：`keyPressEvent` 真调 `set_running`（%r）' % _kp_true,
+# ★★ 第106轮修正：探针原本回显 `_kp_true` 的**绝对行号** ⇒ main.py 上方插了
+#   16 行（全屏化接线）后行号 5288→5308、5381→5401，G2 报"输出与基线不一致"，
+#   而**判据一条没变**（仍是 PASS）。这正是第75轮"行号是脆性信息"的复演 ——
+#   真正要守的语义是"有真调用"，不是"恰好在第 5288 行"。⇒ 只打**条数**。
+check('G ★★★ 接线：`keyPressEvent` 真调 `set_running`（%d 处）' % len(_kp_true),
       len(_kp_true) >= 1, star=True)
-check('G ★★★ 接线：`keyReleaseEvent` 真调 `set_running`（%r）' % _kr_false,
+check('G ★★★ 接线：`keyReleaseEvent` 真调 `set_running`（%d 处）' % len(_kr_false),
       len(_kr_false) >= 1, star=True)
 # 负控制：set_running 的接收者必须是 `poss`（否则"跑键发给了灵魂"）
 _recv_ok = False
@@ -528,8 +532,8 @@ check('G ★★ 接线：世界判据走**唯一来源** `scene_system.world_of_
 check('G ★★ 接线：闸的取值口 `_interact_level` 已定义',
       'def _interact_level' in _msrc, star=True)
 _gate_calls = _method_calls_in(_mtree_main, _msrc, '_possession_tick', 'set_interact')
-check('G ★★★ 接线：`_possession_tick` 每帧**真调** `set_interact`（%r）' % _gate_calls,
-      len(_gate_calls) >= 1, star=True)
+check('G ★★★ 接线：`_possession_tick` 每帧**真调** `set_interact`（%d 处）'
+      % len(_gate_calls), len(_gate_calls) >= 1, star=True)
 check('G ★★ 接线：闸取值口用了 `INTERACT_MENU` / `INTERACT_FREE`（不编档位）',
       'possession_mod.INTERACT_MENU' in _msrc
       and 'possession_mod.INTERACT_FREE' in _msrc, star=True)
@@ -546,8 +550,8 @@ check('G ★★ 接线：`set_interact` 的接收者是附身状态机（`poss*`
 
 # I5 接线：toggle_possession 里真调 accept_confirm
 _af = _method_calls_in(_mtree_main, _msrc, 'toggle_possession', 'accept_confirm')
-check('G ★★★ 接线：`toggle_possession` 真调 `accept_confirm`（%r）' % _af,
-      len(_af) >= 1, star=True)
+check('G ★★★ 接线：`toggle_possession` 真调 `accept_confirm`（%d 处）'
+      % len(_af), len(_af) >= 1, star=True)
 
 # I10 接线：init_plot_mark 定义 + 被调用；mark_plot_done 定义；落盘走 data_store
 check('G ★★★ 接线：`init_plot_mark` 已定义', 'def init_plot_mark' in _msrc,
@@ -563,7 +567,8 @@ for _fn in ast.walk(_mtree_main):
         if (isinstance(_sub, ast.Call) and isinstance(_sub.func, ast.Attribute)
                 and _sub.func.attr == 'init_plot_mark'):
             _check_calls.append((_fn.name, _sub.lineno))
-check('G ★★★ 接线：`init_plot_mark` 真被调用（实得 %r）' % (_check_calls[:3],),
+check('G ★★★ 接线：`init_plot_mark` 真被调用（%d 处，调用者=%r）'
+      % (len(_check_calls), [c[0] for c in _check_calls][:3]),
       len(_check_calls) >= 1, star=True)
 check('G ★★★ 接线：`mark_plot_done` 已定义（只记录不销毁的入口）',
       'def mark_plot_done' in _msrc, star=True)

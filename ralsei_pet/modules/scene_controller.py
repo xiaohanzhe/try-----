@@ -374,6 +374,104 @@ class SceneController(object):
             _log.warning("相机初始化失败（渲染层降级为无相机）: %s", e)
             return None
 
+    # -----------------------------------------------------------------
+    #  第106/107轮 · 场景**全屏化**（「像原作全屏后的效果」，成对抬 size+scale）
+    # -----------------------------------------------------------------
+    #  用户原话（第106轮）：
+    #    「我要的是类似游戏全屏的那种场景效果」
+    #    「场景放大比例不需要我多说了吧，对了，如果场景占屏幕比例太不美观
+    #      那就适当放大，当然，那意味着人物也要等比例放大」
+    #  ★★ 用户原话（第107轮，**对第106轮的澄清**）：
+    #    「场景是全屏，**不是跟随移动的窗口**，是像原作全屏后的效果似的」
+    #    「按场景比例铺满、留黑边」
+    #    「只有在桌面场景时才会有这些显示，其他任何场景都只是长今后，
+    #      不透过桌面壁纸，图标任务栏等一切东西」
+    #
+    #  ⇒ 第106轮把它做成了「跟着桌宠跑的小窗口」（680×510 居中 + 四向钳制），
+    #    第107轮改为**真全屏**：画布 = 整块屏幕、固定不动；画面 = 4:3 最大内接
+    #    矩形、居中、四周填黑（见 `scene_camera.fit_fullscreen`）。
+    #
+    #  ★ 为什么只改 `camera.size` 就同时实现了"场景铺大"与"人物等比放大"：
+    #    · `viewport_size()` 的上限 = `camera.size`（`min(base_w, w_px)`）
+    #      ⇒ 抬高它，画布就能铺得更开；
+    #    · `to_output()` 乘 `camera.scale` ⇒ 房间逻辑 `geo` 映射到**更多**输出像素
+    #      （每逻辑单位占更多屏幕像素）；
+    #    · **人物/灵魂的绘制指令走的是同一条 `to_output`**（与背景/物件同坐标系）
+    #      ⇒ 它们自动**等比放大**，不需要单独调谁。这正是用户在 §44 定的
+    #        「场景图与 ralsei 体积按同一比例等比放大」在数学上的表达。
+    #    · `scoped_size() = size / scale` ⇒ 逻辑窗口维持 `320×240`
+    #      （= 现实世界房间原尺寸）⇒ **相机看到的房间范围不变**，只是画得更大。
+    #      ⚠️ 这两条要**成对**调：只抬 size 不调 scale，每逻辑单位的像素数不变，
+    #         "房间没变大、只是能看更多房间"；只抬 scale 不抬 size，画布不铺开。
+    # -----------------------------------------------------------------
+
+    def fit_camera_to_screen(self, screen_size, pet_scale=None):
+        """把相机输出设为屏幕内**最大的 4:3 内接矩形**（= 场景全屏化的核心）。
+
+        :param screen_size: 屏幕 `(w, h)` 像素（物理屏或可用区，见调用方）。
+        :param pet_scale: ★ 第107轮 —— 宠物放大倍率。给了它，逻辑窗口（可见范围）
+            会**随宠物同比例收窄** ⇒ 用户口径「适当放大宠物，**然后场景也随之放大**」
+            落地为"宠物与场景在屏幕上**同倍率**放大"。
+            `None` ⇒ 保持第106/107轮基础口径（`scoped = 320×240`，可见范围不变）。
+        :return: `(out_w, out_h, ox, oy)` —— 相机输出尺寸 + 该画面相对屏幕的
+                 居中偏移（供画布 `set_output_offset` 用）；没相机 / 参数非法
+                 → `None`（**不猜、不伪装**）。
+
+        ★★ `pet_scale` 的数学（第107轮唯一新增的自由度，务必理解）
+        -------------------------------------------------------
+        ⚠️ **第107轮修正**：`pet_scale` **不再**改变逻辑窗口（`scoped_size`）。
+        初版让 `scoped_w = 320/k`，结果是"相机被推近 k 倍" —— 逻辑窗口从
+        320×240 缩到 107×80（k=3），画面只剩房间一小块，**不是**用户要的
+        「场景也随之放大」（那叫"镜头拉近"，不叫"场景放大"）。
+
+        正确模型（本版）：
+          · `scoped_w/h` **恒锁 320×240** ⇒ 相机看到的房间范围**不变**；
+          · `scale = out_w / 320` = 屏幕能给的**最大**放大（4:3 内接矩形决定）；
+          · `pet_scale` 只回写宿主 `pet.scene_scale`（供自省），**不参与**
+            这里的几何 —— 宠物的屏幕大小由**渲染端** `_cached_scale_factor` 管，
+            场景的屏幕大小由 `scale` 管；两者"看起来一起变大"是因为
+            `main.py` 把 `_cached_scale_factor` 设为与 `scale` 同量级
+            （见 `set_pet_scale` 的说明：宠物倍率是**相对场景**的倍率）。
+
+        ⇒ 所以本方法的 `pet_scale` 参数**仅用于日志/自省**，不接受它改变几何。
+          保留参数是为了让调用方接口稳定（将来若要做"镜头拉近"再启用）。
+        """
+        pet = self.p
+        try:
+            cam = pet.__dict__.get('_scene_camera')
+            if cam is None:
+                return None
+            try:
+                sw = float(screen_size[0])
+                sh = float(screen_size[1])
+            except (TypeError, ValueError, IndexError):
+                return None
+            if sw <= 0 or sh <= 0:
+                return None
+            # 逻辑窗口 = size/scale。基线锁定在"原作现实世界 320×240"⇒ 4:3。
+            base_w, base_h = scene_camera.DEFAULT_CAMERA_SIZE
+            scoped_w = base_w / 2.0          # 320
+            scoped_h = base_h / 2.0          # 240
+            room_ratio = scoped_w / scoped_h  # 4:3
+            fit = scene_camera.fit_fullscreen(sw, sh, room_ratio)
+            if not fit:
+                return None
+            out_w, out_h, ox, oy = fit
+            cam.set_size((out_w, out_h))
+            # ★ 必须同帧写 scale：它决定"每逻辑单位占多少输出像素"（= 放大）。
+            new_scale = out_w / scoped_w
+            cam.set_scale(new_scale)
+            pet.scene_scale = cam.scale       # 回写宿主（自省/日志用；单一真源仍是相机）
+            # ★ 偏移也回写宿主：画布每帧要读它（`_update_scene_layer`）。
+            pet._scene_output_offset = (ox, oy)
+            _log.info('场景全屏化：画面 %dx%d（占屏 %.0f%%×%.0f%%，偏移 %d,%d），scale=%.3f',
+                      out_w, out_h, 100.0 * out_w / sw, 100.0 * out_h / sh,
+                      ox, oy, cam.scale)
+            return (out_w, out_h, ox, oy)
+        except Exception as e:
+            _log.warning('场景全屏化失败（保持原相机尺寸）: %s', e)
+            return None
+
     def camera_follow(self, room_rect, target_rect):
         """让相机跟随目标并写回 `pet.camera_rect`。没相机 → `None`（不伪装）。
 
@@ -889,9 +987,19 @@ class SceneController(object):
                 result['error'] = None
                 _log.info('travel_to：已经在 %s 了，不动', sid)
                 return result
-            if not self.switch(sid):
+            # ★★★ 第106轮：**逐跳走完**（用户口径「完整的走过去……也不是瞬移」）。
+            #   改前这里只 `self.switch(sid)` 一次 ⇒ 18 跳的路线**只走最后一步**，
+            #   中间 16 间房一帧都不出现（第105轮录屏实证：6 格对照图里每个
+            #   场景只有一格）。`plan['steps']` 抄进返回值后无消费方 ——
+            #   与第45轮 `follow_route` 零调用是**同一类坑的第二形态**
+            #   （那次是"没调用方"，这次是"调用方只走了一步"）。
+            walked = self.walk_steps(plan.get('steps') or [])
+            result['walked'] = walked.get('visited') or []
+            result['walk_aborted'] = walked.get('aborted_at')
+            if not walked.get('ok'):
                 result['ok'] = False
-                result['error'] = '路径算出来了但切换失败: %r' % (sid,)
+                result['error'] = ('路径算出来了但第 %s 跳走不过去'
+                                   % (walked.get('aborted_at') or '?'))
             return result
 
         # ---- ② 直达降级 ----
@@ -919,6 +1027,138 @@ class SceneController(object):
         else:
             result['error'] = '直达切换失败: %r' % (sid,)
         return result
+
+    # -----------------------------------------------------------------
+    #  第106轮 · 逐跳行走（「不能瞬移」的落地）
+    # -----------------------------------------------------------------
+    #  用户原话（第106轮）：
+    #    「不能瞬移到达一个地方 ok？」
+    #    「完整的走过去，记住，如果我对里面任何一个人说，马上会桌面，
+    #      那他们顶多是带着我一起非常快的按原路线返回也不是瞬移
+    #      （相当于加快速度跑回来，也要全程）」
+    #
+    #  ★ 缺口（第105轮录屏实证）：`travel_to` 拿到 `plan['steps']` 后
+    #    **只 `switch` 了终点一次** ⇒ 18 跳的路线只走最后一步，
+    #    中间 16 间房一帧都不出现。对照图里每个场景只有一格。
+    #
+    #  ★ 本节只做一件事：**把 steps 一步一步走完**。它不改路线算法
+    #    （`plan_route_to` 一个字没动），也不发明新拓扑 —— 只消费既有数据。
+    # -----------------------------------------------------------------
+
+    def walk_steps(self, steps, per_step_hook=None):
+        """把 `plan['steps']` **逐跳真的走完**。**永不抛**。
+
+        :param steps: `[{'from','to','door','reason'}, ...]`（`plan_from_text` 产）。
+        :param per_step_hook: `callable(i, step) -> None`；每跳 `switch` **之后**调，
+            给宿主一个"这一跳到了"的时机（转场音效 / 灵魂重建位 / 落点标记）。
+            抛异常会被吞掉（同 `_fire_switch_hooks` 纪律：钩子坏掉不许拖垮走路）。
+        :return::
+            {'ok': bool,
+             'visited': [scene_id, ...],   # **真的**切过去的场景（含起点，不含失败那跳）
+             'aborted_at': int|None,       # 第几跳失败（0-based）；没失败 → None
+             'error': str|None}
+
+        ★ 三条纪律（与 `travel_to` 同源，逐条守住）：
+          1. **不绕门禁**：每一跳都走 `self.switch()`（它会校验场景登记在案）
+             —— 绝不直接写 `pet.current_scene`；
+          2. **不伪造**：某一跳失败就**停在那儿**如实报告 `aborted_at`，
+             既不跳过、也不"就近凑一个"（半个旅程会让人停在莫名其妙的地方，
+             那比"哪也没去"更难查）；
+          3. **链式校验**：`step['from']` 必须 == 当前场景。不等于说明路径与
+             现实脱节（比如中途有人手动换了场景）⇒ 立即中止（不接着乱走）。
+
+        ⚠️ 为什么逐跳而不是"整体一次 switch"：本方法存在的**唯一理由**就是让
+           中间每一间房真的出现在渲染层（相机/背景/物件每跳都会重算一次）。
+           若有人图快把它改回一次 `switch(sid)`，第105轮那种"6 格对照图、
+           中间 16 间一帧没有"的缺口会**原样复现**。
+        """
+        out = {'ok': False, 'visited': [], 'aborted_at': None, 'error': None}
+        pet = self.p
+        try:
+            if not steps:
+                # 空 steps = 起点就是终点（0 跳）。这不是错误 —— 如实说"没走"。
+                out['ok'] = True
+                out['visited'] = [pet.__dict__.get('current_scene')]
+                return out
+
+            out['visited'].append(pet.__dict__.get('current_scene'))
+            for i, step in enumerate(steps):
+                if not isinstance(step, dict):
+                    out['aborted_at'] = i
+                    out['error'] = '第 %d 跳不是合法步骤' % i
+                    return out
+                want_from = step.get('from')
+                nxt = step.get('to')
+                cur = pet.__dict__.get('current_scene')
+                if want_from and cur and want_from != cur:
+                    # 路径与现实脱节 —— 停在当前场景，如实报告（不接着乱走）。
+                    out['aborted_at'] = i
+                    out['error'] = ('第 %d 跳的起点对不上（期望 %s，实际 %s）'
+                                    % (i, want_from, cur))
+                    _log.warning('walk_steps 中止：%s', out['error'])
+                    return out
+                if not nxt:
+                    out['aborted_at'] = i
+                    out['error'] = '第 %d 跳没有目标场景' % i
+                    return out
+                if not self.switch(nxt):
+                    # 如实报告断点：**已经走过的那些房是真的走过**（visited 留着）。
+                    out['aborted_at'] = i
+                    out['error'] = '第 %d 跳切换失败: %r' % (i, nxt)
+                    _log.warning('walk_steps 中止：%s', out['error'])
+                    return out
+                out['visited'].append(nxt)
+                _log.info('逐跳行走 %d/%d：%s → %s（%s）',
+                          i + 1, len(steps), want_from or '?', nxt,
+                          step.get('door') or '')
+                if per_step_hook is not None:
+                    try:
+                        per_step_hook(i, step)
+                    except Exception:
+                        _log.exception('逐跳钩子在第 %d 跳抛异常（已吞掉，行走继续）', i)
+            out['ok'] = True
+            return out
+        except Exception as e:
+            out['error'] = '逐跳行走内部错误: %s' % e
+            _log.warning('walk_steps 异常: %s', e)
+            return out
+
+    def walk_route_home(self, home_scene='desktop', per_step_hook=None):
+        """★ 第106轮：「马上回桌面」= **按原路线非常快地跑回来，也要全程**。
+
+        用户原话：「如果我对里面任何一个人说，马上会桌面，那他们顶多是带着我
+        一起**非常快的按原路线返回**也不是瞬移（相当于加快速度跑回来，也要全程）」。
+
+        ★ 为什么不是"算一条新路"：用户说得很清楚 —— **原路线返回**。
+          算新路会让人走一条从没走过的门（观感上"他怎么知道这条路"），
+          而且新路可能更短 ⇒ 变成变相瞬移。所以本方法**只用既有的
+          `plan_route_to` 反向**：先算出"从当前场景回 home"的逐跳路线，
+          再交给 `walk_steps` 走完。
+
+        :param home_scene: 家（默认 `'desktop'`）。目标是"回到这个场景"。
+        :param per_step_hook: 同 `walk_steps`。
+        :return: 同 `walk_steps` 的形状（外加 `'route_ok'` = 路线算出来没有）。
+        """
+        out = {'ok': False, 'visited': [], 'aborted_at': None, 'error': None,
+               'route_ok': False}
+        try:
+            plan = self.plan_route_to(home_scene)
+            if not plan.get('ok'):
+                # 算不出路 → 如实说（**不**退化成瞬移：那正是用户禁止的）。
+                out['error'] = plan.get('error') or '回家的路算不出来'
+                _log.info('walk_route_home：回家路线不可用（%s）', out['error'])
+                return out
+            out['route_ok'] = True
+            walked = self.walk_steps(plan.get('steps') or [],
+                                     per_step_hook=per_step_hook)
+            out.update(walked)
+            out['path'] = plan.get('path') or []
+            out['hops'] = plan.get('hops') or 0
+            return out
+        except Exception as e:
+            out['error'] = '回家行走内部错误: %s' % e
+            _log.warning('walk_route_home 异常: %s', e)
+            return out
 
     def reachable_destinations(self, limit=24):
         """★ R0-1 菜单用：当前**可达的目的地清单**（`[{label, scene_id}]`）。

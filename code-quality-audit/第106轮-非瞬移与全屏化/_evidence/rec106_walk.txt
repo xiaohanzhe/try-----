@@ -1,0 +1,30 @@
+# 第106轮 非瞬移 · 逐跳取证（产品钩子采样，零丢帧）
+# 起点 = oneshot.mainline.INIT  终点 = oneshot.mainline.S1
+# plan hops = 18，walk_steps ret = {'ok': True, 'visited': ['oneshot.mainline.INIT', 'oneshot.mainline.DEBUG', 'oneshot.mainline.T1', 'oneshot.mainline.T2', 'oneshot.mainline.T3', 'oneshot.mainline.T4', 'oneshot.mainline.T5', 'oneshot.mainline.T6', 'oneshot.mainline.T7', 'oneshot.mainline.T8', 'oneshot.mainline.T9', 'oneshot.mainline.T10', 'oneshot.mainline.T11', 'oneshot.mainline.T12', 'oneshot.mainline.T13', 'oneshot.mainline.T14', 'oneshot.mainline.T15', 'oneshot.mainline.T16', 'oneshot.mainline.S1'], 'aborted_at': None, 'error': None}，wall = 0.324s
+#
+  第  0 跳  oneshot.mainline.INIT        → oneshot.mainline.DEBUG        door=init        到达后 current_scene=oneshot.mainline.DEBUG        cam=1732x1299 scale=5.4125
+  第  1 跳  oneshot.mainline.DEBUG       → oneshot.mainline.T1           door=ev078       到达后 current_scene=oneshot.mainline.T1           cam=1732x1299 scale=5.4125
+  第  2 跳  oneshot.mainline.T1          → oneshot.mainline.T2           door=to_t2       到达后 current_scene=oneshot.mainline.T2           cam=1732x1299 scale=5.4125
+  第  3 跳  oneshot.mainline.T2          → oneshot.mainline.T3           door=to_t3       到达后 current_scene=oneshot.mainline.T3           cam=1732x1299 scale=5.4125
+  第  4 跳  oneshot.mainline.T3          → oneshot.mainline.T4           door=to_t4       到达后 current_scene=oneshot.mainline.T4           cam=1732x1299 scale=5.4125
+  第  5 跳  oneshot.mainline.T4          → oneshot.mainline.T5           door=ev002       到达后 current_scene=oneshot.mainline.T5           cam=1732x1299 scale=5.4125
+  第  6 跳  oneshot.mainline.T5          → oneshot.mainline.T6           door=ev002       到达后 current_scene=oneshot.mainline.T6           cam=1732x1299 scale=5.4125
+  第  7 跳  oneshot.mainline.T6          → oneshot.mainline.T7           door=ev001       到达后 current_scene=oneshot.mainline.T7           cam=1732x1299 scale=5.4125
+  第  8 跳  oneshot.mainline.T7          → oneshot.mainline.T8           door=ev001       到达后 current_scene=oneshot.mainline.T8           cam=1732x1299 scale=5.4125
+  第  9 跳  oneshot.mainline.T8          → oneshot.mainline.T9           door=ev001       到达后 current_scene=oneshot.mainline.T9           cam=1732x1299 scale=5.4125
+  第 10 跳  oneshot.mainline.T9          → oneshot.mainline.T10          door=ev001       到达后 current_scene=oneshot.mainline.T10          cam=1732x1299 scale=5.4125
+  第 11 跳  oneshot.mainline.T10         → oneshot.mainline.T11          door=ev001       到达后 current_scene=oneshot.mainline.T11          cam=1732x1299 scale=5.4125
+  第 12 跳  oneshot.mainline.T11         → oneshot.mainline.T12          door=ev001       到达后 current_scene=oneshot.mainline.T12          cam=1732x1299 scale=5.4125
+  第 13 跳  oneshot.mainline.T12         → oneshot.mainline.T13          door=ev001       到达后 current_scene=oneshot.mainline.T13          cam=1732x1299 scale=5.4125
+  第 14 跳  oneshot.mainline.T13         → oneshot.mainline.T14          door=ev001       到达后 current_scene=oneshot.mainline.T14          cam=1732x1299 scale=5.4125
+  第 15 跳  oneshot.mainline.T14         → oneshot.mainline.T15          door=ev001       到达后 current_scene=oneshot.mainline.T15          cam=1732x1299 scale=5.4125
+  第 16 跳  oneshot.mainline.T15         → oneshot.mainline.T16          door=ev001       到达后 current_scene=oneshot.mainline.T16          cam=1732x1299 scale=5.4125
+  第 17 跳  oneshot.mainline.T16         → oneshot.mainline.S1           door=ev002       到达后 current_scene=oneshot.mainline.S1           cam=1732x1299 scale=5.4125
+[PASS] W1 每跳都被钩子采到（18 跳 / 期望 18）  —— 零丢帧 = 仪器保真（抓屏端做不到，见文件头说明）
+[PASS] W2 ★★★ 中间房间真的走过（途经 17 间 >= 1）  —— 途经=['oneshot.mainline.DEBUG', 'oneshot.mainline.T1', 'oneshot.mainline.T2', 'oneshot.mainline.T3', 'oneshot.mainline.T4', 'oneshot.mainline.T5']
+[PASS] W3 逐跳链条无断点（每跳 `from` == 上一跳的 `to`）  —— 首='oneshot.mainline.INIT' 末='oneshot.mainline.S1'
+[PASS] W4 产品声明落地 == 实际落地（`current_scene` == `to`）
+[PASS] W5 终点到达 oneshot.mainline.S1  —— 末跳到达='oneshot.mainline.S1'
+[PASS] W6 walk_steps 报成功  —— ret={'ok': True, 'visited': ['oneshot.mainline.INIT', 'oneshot.mainline.DEBUG', 'oneshot.mainline.T1', 'oneshot.mainline.T2', 'oneshot.mainline.T3', 'oneshot.mainline.T4', 'oneshot.mainline.T5', 'oneshot.mainline.T6', 'oneshot.mainline.T7', 'oneshot.mainline.T8', 'oneshot.mainline.T9', 'oneshot.mainline.T10', 'oneshot.mainline.T11', 'oneshot.mainline.T12', 'oneshot.mainline.T13', 'oneshot.mainline.T14', 'oneshot.mainline.T15', 'oneshot.mainline.T16', 'oneshot.mainline.S1'], 'aborted_at': None, 'error': None}
+[PASS] W7 ★ 全屏化在走路期间已生效（cam scale > 2.0）  —— 首跳 cam=1732x1299 scale=5.4125
+[PASS] W8 ★ 走动真的是**逐步**发生（18 跳用了 0.324s ⇒ 每跳 18.0 ms，不是瞬时跳变）

@@ -1,0 +1,19 @@
+=== verify106：第106轮独立验收（换一套代码重推同一批结论）===
+ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+
+[PASS] V1 `travel_to` 真调 `walk_steps`（非瞬移落地；AST 真调用，不吃注释）
+[PASS] V2 `walk_steps` 每跳 `switch()`（AST 数调用，实得 1 处）
+[PASS] V3 `walk_route_home` 真调 `plan_route_to`（复用原路线 ⇒ 不是变相瞬移）
+[PASS] V4 `fit_camera_to_screen` **成对**写 `set_size` + `set_scale`（size=True scale=True；只写一个 ⇒ 逻辑窗口就漂了）
+[PASS] V5 逻辑窗口基准 **AST 求值** ⇒ scoped = (320, 240)（相机可见范围不变）  —— 实得 (320.0, 240.0)
+[PASS] V6 全仓**零** `camera_follow_or_create()` 调用（死代码清理，实得 0 处）
+
+--- 行为面：真起产品（offscreen）---
+[PASS] V7 产品真值：cam=680x510 scale=2.1250 scoped=320x240（scoped 恒 320×240 且 scale>2 且 size>640）
+[PASS] V8a 产品真值：plan 与 steps 一致（hops=18 steps=18）
+[PASS] V8b 🎯 **逐跳见证**：钩子采到 18/18 跳（零丢帧）
+[PASS] V8c 🎯 **中间房间真走过**（途经 17 间 >= 1 —— 第105轮此条为 0）  —— 途经=['oneshot.mainline.DEBUG', 'oneshot.mainline.T1', 'oneshot.mainline.T2', 'oneshot.mainline.T3', 'oneshot.mainline.T4', 'oneshot.mainline.T5']
+[PASS] V8d 每跳落地 == 声明（产品 `current_scene` == step.to）
+[PASS] V8e `walk_steps` 报成功且无断点
+
+==== verify106：12 PASS / 0 FAIL ====

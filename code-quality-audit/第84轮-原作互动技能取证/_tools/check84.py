@@ -195,7 +195,10 @@ check('C ★★ 附身成立调 `_possession_play_squeak`（原作 `snd_play(snd
 check('C ★★ 附身成立收起灵魂（`hide_soul`，操控权转移）',
       len(_calls_in(_mtree, '_possession_on_begin', 'hide_soul')) > 0, star=True)
 _ck = _calls_in(_mtree, '_possession_on_begin', 'release_all')
-check('C ★★★ 附身成立清灵魂残留键（原作 `control_clear(2)`，AST 真调用 %r）' % _ck,
+# ★★ 第106轮修正：探针原本回显 `_ck`（**绝对行号**）⇒ main.py 上方插 16 行后
+#   行号漂移 ⇒ G2 报假 DIFF 而判据未变（第75轮"行号是脆性信息"复演）。
+#   ⇒ 只回显**方法形态**（`soul.release_all`），不回显行号。
+check('C ★★★ 附身成立清灵魂残留键（原作 `control_clear(2)`，AST 形态 %r）' % (_ck,),
       len(_ck) > 0, star=True)
 check('C ★ 清键调在魂身上（`soul.release_all()` 形态）',
       any(s.startswith('soul.') for s in _ck))
@@ -271,8 +274,8 @@ if _fo_node is not None:
     #     ① 失焦时确实会清灵魂按键（走 `soul.state.clear_keys()`）；
     #     ② 走的是 `SoulState.clear_keys`（而不是被 `SoulOverlay.release_all` 的静默 except 兜住）。
     _good_fo = _obj_calls_in(_mtree, _msrc, 'focusOutEvent', 'clear_keys', 'soul.state')
-    check('C ★★★ 失焦时清灵魂按键 `soul.state.clear_keys()`（AST 级，真调用 %r）'
-          % _good_fo, len(_good_fo) >= 1, star=True)
+    check('C ★★★ 失焦时清灵魂按键 `soul.state.clear_keys()`（AST 级，%d 处）'
+          % len(_good_fo), len(_good_fo) >= 1, star=True)
     # 负控制：被附身侧走的是 `poss.release_all()`（`PossessionState` 上该别名与
     #   `clear_keys` **同源**，两者都在）—— 证明"两个对象用不同方法名"是刻意的、非遗漏。
     _poss_fo = _obj_calls_in(_mtree, _msrc, 'focusOutEvent', 'release_all', 'poss')
@@ -418,7 +421,7 @@ _bad_soul = _obj_calls_in(_mtree, _msrc, '_possession_on_begin', 'clear_keys', '
 check('D5 ★★★ 附身入口**不**对 `self.soul` 调 `clear_keys`（会静默 AttributeError）',
       _bad_soul == [], star=True)
 _ok_soul = _obj_calls_in(_mtree, _msrc, '_possession_on_begin', 'release_all', 'soul')
-check('D5 ★★★ 附身入口对 `self.soul` 调 `release_all`（真调用 %r）' % _ok_soul,
+check('D5 ★★★ 附身入口对 `self.soul` 调 `release_all`（%d 处）' % len(_ok_soul),
       len(_ok_soul) >= 1, star=True)
 _bad_state = _obj_calls_in(_mtree, _msrc, 'focusOutEvent', 'release_all', 'soul')
 check('D5 ★★ 失焦处**不**对 `self.soul` 调 `release_all`（走 state 更直白）',

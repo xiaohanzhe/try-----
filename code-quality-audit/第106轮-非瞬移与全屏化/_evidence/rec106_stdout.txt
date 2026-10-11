@@ -1,0 +1,151 @@
+Building prefix dict from the default dictionary ...
+[rec106] 上一轮关键帧已整目录归档到 frames_prev_20261011_004600
+2026-10-11 00:46:10 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+Loading model from cache E:\RalseiMemory\cache\jieba.cache
+2026-10-11 00:46:11 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+Loading model cost 1.638 seconds.
+Prefix dict has been built successfully.
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-11 00:46:14 [INFO] ralsei_pet.modules.scene_controller — 全屏化：相机输出 1732x1299（占屏 68%×85%），scale=5.412
+2026-10-11 00:46:14 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-11 00:46:14 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-11 00:46:14 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-11 00:46:14 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-11 00:46:14 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 9 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2490, 1548) 48x48 速度上限 360px/s；灵魂场景位置 0 个：
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — NPC 生活档案：E:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 34 人）
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=E:\RalseiMemory\npc_memory
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 幽灵：接触时长已读回 接触=181s 决心=0.017 档位=dim
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=181s 决心=0.017 档位=dim
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=181s 决心=0.017 档位=dim
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-11 00:46:14 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+[rec106] shown pid=43912 title='Ralsei Pet'
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 ut.rooms.room_start
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 uty.rooms.rm_intro
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 uty.rooms.rm_intro
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC police 自己挪到了 ut.rooms.room_start
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ut.rooms.room_start
+2026-10-11 00:46:17 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-11 00:46:20 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.INIT 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:20 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.INIT ⇒ 按"宠物 + 原作偏移"出生
+[rec106][INJECT] SET-START(oneshot) switch_ok=True to='oneshot.mainline.INIT'
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.DEBUG 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.DEBUG ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 1/18：oneshot.mainline.INIT → oneshot.mainline.DEBUG（init）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T1 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T1 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 2/18：oneshot.mainline.DEBUG → oneshot.mainline.T1（ev078）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T2 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T2 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 3/18：oneshot.mainline.T1 → oneshot.mainline.T2（to_t2）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T3 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T3 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 4/18：oneshot.mainline.T2 → oneshot.mainline.T3（to_t3）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T4 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T4 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 5/18：oneshot.mainline.T3 → oneshot.mainline.T4（to_t4）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T5 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T5 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 6/18：oneshot.mainline.T4 → oneshot.mainline.T5（ev002）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T6 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T6 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 7/18：oneshot.mainline.T5 → oneshot.mainline.T6（ev002）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T7 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T7 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 8/18：oneshot.mainline.T6 → oneshot.mainline.T7（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T8 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T8 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 9/18：oneshot.mainline.T7 → oneshot.mainline.T8（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T9 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T9 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 10/18：oneshot.mainline.T8 → oneshot.mainline.T9（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T10 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T10 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 11/18：oneshot.mainline.T9 → oneshot.mainline.T10（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T11 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T11 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 12/18：oneshot.mainline.T10 → oneshot.mainline.T11（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T12 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T12 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 13/18：oneshot.mainline.T11 → oneshot.mainline.T12（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T13 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T13 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 14/18：oneshot.mainline.T12 → oneshot.mainline.T13（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T14 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T14 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 15/18：oneshot.mainline.T13 → oneshot.mainline.T14（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T15 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T15 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 16/18：oneshot.mainline.T14 → oneshot.mainline.T15（ev001）
+2026-10-11 00:46:24 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.T16 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:24 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.T16 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:24 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 17/18：oneshot.mainline.T15 → oneshot.mainline.T16（ev001）
+2026-10-11 00:46:25 [WARNING] ralsei_pet.main — 场景 oneshot.mainline.S1 判不出明/暗世界 ⇒ 道具域保持不变（当前=light）
+2026-10-11 00:46:25 [INFO] ralsei_pet.main — 灵魂第一次到场景 oneshot.mainline.S1 ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:46:25 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 18/18：oneshot.mainline.T16 → oneshot.mainline.S1（ev002）
+2026-10-11 00:46:25 [INFO] ralsei_pet.main — 走动 ⇒ oneshot.mainline.S1（route=path，18 跳，实走 19 间：oneshot.mainline.INIT → oneshot.mainline.DEBUG → oneshot.mainline.T1 → oneshot.mainline.T2 → oneshot.mainline.T3 → oneshot.mainline.T4 → oneshot.mainline.T5 → oneshot.mainline.T6 → oneshot.mainline.T7 → oneshot.mainline.T8 → oneshot.mainline.T9 → oneshot.mainline.T10 → oneshot.mainline.T11 → oneshot.mainline.T12 → oneshot.mainline.T13 → oneshot.mainline.T14 → oneshot.mainline.T15 → oneshot.mainline.T16 → oneshot.mainline.S1）
+[rec106][INJECT] TRAVEL(oneshot) target='oneshot.mainline.S1' ret=True  wall=0.34s
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC kris 自己挪到了 oneshot.mainline.C5
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC susie 自己挪到了 oneshot.glen.2
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC king 自己挪到了 oneshot.unzoned.C6
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC queen 自己挪到了 oneshot.unzoned.Bedroom
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 oneshot.unzoned.Bedroom
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 oneshot.glen.Birdhall
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 oneshot.mainline.C6
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC npc_room 自己挪到了 oneshot.unzoned.C3
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 oneshot.mainline.C3
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 oneshot.glen.Burial_Grounds
+2026-10-11 00:46:47 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 oneshot.barrens.113___ocean
+2026-10-11 00:46:53 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 1/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+2026-10-11 00:46:56 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 2/4）: HTTPConnectionPool(host='127.0.0.1', port=65236): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+2026-10-11 00:46:59 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 3/4）: HTTPConnectionPool(host='127.0.0.1', port=65236): Max retries exceeded with url: http://localhost:11434/v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+2026-10-11 00:47:02 [WARNING] ralsei_pet.LocalAI — 本地 AI HTTP 502（服务端错误，重试 4/4）: upstream connect failed: 由于目标计算机积极拒绝，无法连接。 (os error 10061)
+
+2026-10-11 00:47:14 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.kris_room.kris_s_room ⇒ 按"宠物 + 原作偏移"出生
+[rec106][INJECT] SET-START(delta) switch_ok=True to='ch1.kris_room.kris_s_room'
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 ch3.dark_world.dark_world
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 ut.rooms.room_start
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 outertale.wastelands.w_start
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC mike 自己挪到了 ch1.hometown.hospital_lobby
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ch1.hometown.hospital_hallway
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 ch1.field.field_great_door
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ch1.field.field_checkers4
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.home.krishallway ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 1/7：ch1.kris_room.kris_s_room → ch1.home.krishallway（obj_doorA）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorD（字母 D）在场景 ch1.home.torhouse 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorX_musfade（字母 X）在场景 ch1.home.torhouse 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.home.torhouse ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 2/7：ch1.home.krishallway → ch1.home.torhouse（obj_doorC）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorX_musfade（字母 X）在场景 ch1.hometown.town_krisyard 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.hometown.town_krisyard ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 3/7：ch1.home.torhouse → ch1.hometown.town_krisyard（obj_doorX_musfade）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorX（字母 X）在场景 ch1.hometown.town_north 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorD（字母 D）在场景 ch1.hometown.town_north 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.hometown.town_north ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 4/7：ch1.hometown.town_krisyard → ch1.hometown.town_north（obj_doorC）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorD（字母 D）在场景 ch1.hometown.town_mid 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorX（字母 X）在场景 ch1.hometown.town_mid 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorW（字母 W）在场景 ch1.hometown.town_mid 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.hometown.town_mid ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 5/7：ch1.hometown.town_north → ch1.hometown.town_mid（obj_doorC）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorX（字母 X）在场景 ch1.hometown.town_south 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorW（字母 W）在场景 ch1.hometown.town_south 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorD（字母 D）在场景 ch1.hometown.town_south 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.hometown.town_south ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 6/7：ch1.hometown.town_mid → ch1.hometown.town_south（obj_doorC）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorX（字母 X）在场景 ch1.hometown.town_church 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.item_interact — 门 obj_doorD（字母 D）在场景 ch1.hometown.town_church 查不到路由 ⇒ 不建（不造假门）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 灵魂第一次到场景 ch1.hometown.town_church ⇒ 按"宠物 + 原作偏移"出生
+2026-10-11 00:47:17 [INFO] ralsei_pet.modules.scene_controller — 逐跳行走 7/7：ch1.hometown.town_south → ch1.hometown.town_church（obj_doorC）
+2026-10-11 00:47:17 [INFO] ralsei_pet.main — 走动 ⇒ ch1.hometown.town_church（route=path，7 跳，实走 8 间：ch1.kris_room.kris_s_room → ch1.home.krishallway → ch1.home.torhouse → ch1.hometown.town_krisyard → ch1.hometown.town_north → ch1.hometown.town_mid → ch1.hometown.town_south → ch1.hometown.town_church）
+[rec106][INJECT] TRAVEL(delta) target='教堂' ret=True  wall=0.11s
+[rec106] life=70s reached, quitting
+[rec106] exit rc=0 frames=231 keypng=18
+2026-10-11 00:47:31 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）

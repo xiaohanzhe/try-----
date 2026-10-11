@@ -1380,6 +1380,21 @@ class RalseiPet(QMainWindow):
         #   ✅ 这条同时满足"至少与 Ralsei 一致"（取等号 = 一致）与
         #      "不必全屏"（640×480 的房间在 1080p 上只占约 1/3 宽）。
         self.scene_scale = 2.0                      # ★ 房间放大系数（= 原作输出倍率）
+        # ★★★ 第107轮：**全局宠物缩放**（用户口径）
+        #   「适当放大宠物，然后场景也随之放大」+「全局都放大，也即半自动或者是手动
+        #     可以调整宠物大小」+「UI，也就是我所说的游戏中的对话框之类的也要放大」。
+        #
+        #   真源 = `self._cached_scale_factor`（全仓**原先从未被赋值**，恒走默认 2.0
+        #   ⇒ 宠物一直是 42×82 屏幕像素）。现在改为：
+        #     · `PET_SCALE_DEFAULT` 是默认倍率（第107轮从 2.0 抬高到 3.0 ——
+        #       "适当放大宠物"的直接落地）；
+        #     · `_cached_scale_factor` 由 `set_pet_scale()` 真实写入（半自动/手动调）；
+        #     · 宠物放大后，`scene_scale` **同步抬高**（场景随宠物等比放大）——
+        #       这正是用户 §44「场景图与 ralsei 体积按同一比例等比放大」的算术表达。
+        #   ⚠️ 三者必须**同源**：宠物 scale → 场景 scale → UI scale，都从
+        #      `_cached_scale_factor` 派生，不许各自另写一份常量（本项目最贵的坑）。
+        self._cached_scale_factor = self.PET_SCALE_DEFAULT
+        self.pet_scale = self.PET_SCALE_DEFAULT
         self.camera_rect = None                     # 相机矩形缓存（P1 渲染层消费）
         # ---- 渲染层（第44轮 P1：房间几何 + 绘制计划）状态 ----
         self._scene_geometry = {}                   # 房间世界几何表（_room_geometry.json 的 rooms）
@@ -1408,7 +1423,33 @@ class RalseiPet(QMainWindow):
         # —— 这正是原作口径（GMS2 原生相机 camera_set_view_target，见 scene_camera）。
         # `init_camera()` 只做「建 Camera 实例 + 从宿主读放大系数」，
         # **不注册定时器、不改渲染路径**（与 P0「不切场景时零行为变化」同一条纪律）。
+        # ★★ 第107轮：先把**用户存过的宠物倍率**读回来（默认 3.0），再建相机 ——
+        #   顺序有意义：`init_camera()` 会从宿主读 `scene_scale`，而 `scene_scale`
+        #   随后会被 `fit_camera_to_screen` 按屏幕重算，所以这里只需把**宠物倍率**
+        #   落到 `_cached_scale_factor`（渲染层读它）。读不到就用默认值（不改动）。
+        self._load_persisted_pet_scale()
         self.scene.init_camera()
+        # ---- 全屏化（第106轮 → 第107轮改真全屏）----
+        # 用户口径（第106轮）：「我要的是类似游戏全屏的那种场景效果」「如果场景占
+        # 屏幕比例太不美观那就适当放大，当然，那意味着人物也要等比例放大」。
+        # 用户口径（第107轮澄清）：「场景是全屏，**不是跟随移动的窗口**，是像原作
+        # 全屏后的效果似的」+「按场景比例铺满、留黑边」+「只有在桌面场景时才会
+        # 有这些显示，其他任何场景都只是长今后，不透过桌面壁纸，图标任务栏等
+        # 一切东西」。
+        # ⇒ 画布 = **主屏物理尺寸**、固定不动；画面 = 4:3 最大内接矩形、居中。
+        # `fit_camera_to_screen` **成对**抬高 `camera.size`（画布铺开）与
+        # `camera.scale`（每逻辑单位占更多像素 ⇒ 背景/物件/人物**同一条
+        # `to_output`** 自动等比放大）；`scoped_size()` 维持 320×240 不变
+        # ⇒ 相机可见范围不变，只是画得更大。
+        # ⚠️ 幂等 + 永不抛：失败就保持 640×480（第44轮口径），桌宠照常跑。
+        try:
+            self.scene.fit_camera_to_screen(self._primary_screen_size(),
+                                            pet_scale=self.pet_scale)
+        except Exception as _e:
+            _log.warning('全屏化接线失败（保持 640×480）: %s', _e)
+        # ★★ 第107轮：相机就位后**才**能算宠物渲染倍率（= 场景 scale × 相对倍率）
+        #   —— 顺序不可倒（见 `_refresh_pet_render_scale`）。
+        self._refresh_pet_render_scale()
         # ---- 渲染层接线（第44轮 P1）----
         # 房间几何表：渲染层要画房间（相机钳制 / 背景铺排 / 物件裁剪）必须知道
         # **房间的世界尺寸**（原作里 6,220×1,920 的大房间也有）—— 产品场景 JSON
@@ -5198,8 +5239,15 @@ class RalseiPet(QMainWindow):
             rv = self.scene.travel_to(target)
             sid = (rv or {}).get('scene_id')
             if (rv or {}).get('ok') and sid and sid != before:
-                _log.info('走动 ⇒ %s（route=%s，%d 跳）',
-                          sid, rv.get('route'), rv.get('hops') or 0)
+                # ★ 第106轮：把**真的走过的**逐跳路径也报出来（用户口径
+                #   「完整的走过去……不是瞬移」）。`walked` 是 `walk_steps()`
+                #   每跳 `switch` 成功后记下的场景序列 ⇒ 它非空就说明**真的走了**，
+                #   而不是"算完一步到位"。日志里带上它，事后查录像时有据可依。
+                walked = (rv or {}).get('walked') or []
+                _log.info('走动 ⇒ %s（route=%s，%d 跳，实走 %d 间：%s）',
+                          sid, rv.get('route'), rv.get('hops') or 0,
+                          len(walked) or 1,
+                          ' → '.join(str(x) for x in walked) if walked else '(单跳)')
                 # ★ 第85轮 I2：换了场景 ⇒ 重算明/暗世界（速度基准 3 / 4）。
                 #   挂在**用户可见的换场景入口**上，与 `_update_scene_layer` 读的是
                 #   同一处 `current_scene`（不一致会"人在暗世界、速度还是光世界"）。
@@ -6332,6 +6380,46 @@ class RalseiPet(QMainWindow):
     #  ⚠️ 保留这个开关本身：渲染出问题时可一刀关掉定位（不是死代码）。
     SCENE_LAYER_ENABLED = True
 
+    # ------------------------------------------------------------------
+    #  ★★★ 第107轮：**全局缩放**（宠物 / 场景 / UI 三者同源）
+    # ------------------------------------------------------------------
+    #  用户原话：
+    #    「适当放大宠物，然后场景也随之放大」
+    #    「全局都放大，也即半自动或者是手动可以调整宠物大小」
+    #    「UI，也就是我所说的游戏中的对话框之类的也要放大」
+    #    （此前）「场景占屏幕比例太不美观那就适当放大，当然，那意味着人物
+    #      也要等比例放大」
+    #
+    #  ★★ 正确的耦合方向（第107轮实测修正，务必理解，曾写反一次）
+    #  ------------------------------------------------------------
+    #  · **场景**的屏幕大小由**屏幕**决定（4:3 最大内接矩形）：
+    #      `camera.scale = 画面宽 / 320`（2560×1600 屏 ⇒ 2133/320 ≈ 6.67）。
+    #    这是"每逻辑单位占多少屏幕像素"，也是**场景的放大倍率**。
+    #  · **宠物**的屏幕大小由 `_cached_scale_factor` 决定
+    #      （窗口 = 精灵容器 × 这个系数）。
+    #  · ⇒ 两者要"看起来一起变大"，宠物倍率必须与**场景倍率同量级**。
+    #    原作里 Ralsei 行走精灵 41px 高、房间逻辑高 240 ⇒ 人物占房间高
+    #    41/240 ≈ 0.171。屏幕上房间高 1600px ⇒ 人物该约 273px 高
+    #    ⇒ `scale_factor ≈ 273/41 ≈ 6.67` = **正是场景 scale**。
+    #
+    #  ⚠️ 曾写反的方向：让 `camera.scale` 随宠物倍率涨（`scoped_w = 320/k`）。
+    #    那等于"镜头拉近"—— 逻辑窗口从 320×240 缩到 107×80（k=3），
+    #    画面只剩房间一小块，**不是**"场景放大"。
+    #    正确做法：`scoped` 恒 320×240（可见范围不变），宠物倍率**只**管
+    #    宠物自己在屏幕上的大小；"配得上场景"由**默认值**对齐。
+    #
+    #  ⇒ `PET_SCALE_DEFAULT` 的实际含义 = "宠物相对场景的倍率"，
+    #     `1.0` = 与场景 scale 完全同比例（最贴原作的比例）。
+    #     `>1` = 宠物比原作比例更大（用户要的"适当放大宠物"）。
+    # ------------------------------------------------------------------
+    #: 宠物相对**场景**的倍率（1.0 = 与场景 scale 同比例 = 最贴原作）。
+    PET_SCALE_DEFAULT = 1.0
+    #: 可调区间（设置里的加减不会越界）。
+    PET_SCALE_MIN = 0.4
+    PET_SCALE_MAX = 2.5
+    #: 手动调整的步长（"手动/半自动调整宠物大小"）。
+    PET_SCALE_STEP = 0.1
+
     def _pet_target_rect(self, room_rect=None):
         """宠物在**房间世界坐标**里的包围盒 —— 相机的跟随目标（`camera_set_view_target`）。
 
@@ -6395,6 +6483,33 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
         return (1920, 1080)
+
+    def _primary_screen_size(self):
+        """★ 第107轮：**主屏物理尺寸** `(w, h)` —— 场景全屏化用。
+
+        为什么不能用 `_virtual_screen_size()`：那是**多屏合并**的虚拟桌面矩形
+        （本机 2560×1600 也许是 5120×1600），拿它算"4:3 内接矩形"会把画面按
+        **两块屏**去铺 ⇒ 用户只在一块屏前，看到的画面被撑到屏外。
+        用户口径「场景是全屏，不是跟随移动的窗口」指的是**他面前那块屏**。
+
+        取用 `QApplication.primaryScreen().geometry()`（物理像素，含任务栏区域
+        —— 用户要的是"像原作全屏"，不是"避开任务栏"，见第107轮否认 `frac` 的理由）。
+        取不到 → 退回 `availableGeometry()`；再取不到 → `_virtual_screen_size()`。
+        """
+        try:
+            scr = QApplication.primaryScreen()
+            if scr is not None:
+                g = scr.geometry()
+                if g.width() > 0 and g.height() > 0:
+                    return (int(g.width()), int(g.height()))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        try:
+            g = QApplication.desktop().availableGeometry()
+            return (max(1, g.width()), max(1, g.height()))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return self._virtual_screen_size()
 
     # ------------------------------------------------------------------
     #  ★★ 第76轮 R4 · 视角跟随的锚点 = 灵魂（用户口径）
@@ -6497,21 +6612,17 @@ class RalseiPet(QMainWindow):
                 return
             cam = self.__dict__.get('_scene_camera')
             state = self.__dict__.get('_scene_state')
-            # ★★★ 第89轮真机血泪（"看不到场景"的**第一根因**）：
-            #   `_scene_camera` 在 `__init__` 里被设为 `None`，而**全项目再无第二处
-            #   赋值点** —— 相机的**唯一**建法 `scene.camera_follow_or_create()`
-            #   零调用（`grep` 实证）。于是本函数每帧都在下面 `cam is None` 处
-            #   直接 `_hide_scene_layer()` 返回 ⇒ **画布永远不显示**，
-            #   而 `_show_scene_layer` / `plan_frame` / 8 扇门 / 路由表 全都没问题。
-            #   症状极具迷惑性：offscreen 下 `travel_to` 状态正确切换、
-            #   `plan_frame` 手算也出指令，只有**真机屏幕上什么都没有**。
-            #   ⇒ 这正是记忆里那条「**函数写对了 ≠ 产品用上了**」（最贵坑）的复演。
-            #   处置：这里**惰性补建**（幂等，重复调无副作用）。
-            #   ⚠️ 为什么不放到 `__init__`：`scene_camera.DEFAULT_CAMERA_SIZE`
-            #     只在真渲染时才有意义；且本函数已有 `SCENE_LAYER_ENABLED` 总闸，
-            #     放在闸内才能保持"关掉总闸 ⇒ 零行为变化"。
-            if cam is None and state is not None:
-                cam = scene.camera_follow_or_create()
+            # ★★★ 第106轮复检：这里**曾经**有一行惰性补建
+            #   `cam = scene.camera_follow_or_create()` —— 那是第89轮的误判：
+            #   真凶不是"相机没建"，而是当时相机确实已由 `__init__` 的
+            #   `self.scene.init_camera()`（本文件 L1411）建好了，**死的是这行**。
+            #   实证：`SceneController` 里**没有** `camera_follow_or_create`
+            #   （`grep` 全仓零命中）⇒ 真走到这一行会抛 `AttributeError`，
+            #   然后被本函数末尾的 `except` 吞掉 ⇒ 每帧静默隐藏画布。
+            #   而 `cam` 由 L1411 建好后**永不回 None** ⇒ 这一行从未执行过。
+            #   ⇒ 第106轮删掉它（连同过时注释），只留 `cam is None` 的守卫。
+            #   ⚠️ 保住"相机没建时隐藏画布"这条行为：那仍是合法降级
+            #      （比如 `SCENE_LAYER_ENABLED` 开着但相机初始化失败）。
             if cam is None or state is None:
                 self._hide_scene_layer()
                 return
@@ -6553,17 +6664,27 @@ class RalseiPet(QMainWindow):
                                     tick=int(time.time() * 1000),
                                     bubbles=self._active_bubbles(room_rect))
             # 3) 交给画布（画布自己 resize + update）。
-            #    画布尺寸用 `plan_viewport()`（= 收缩后的小房间尺寸 / 大房间的相机尺寸），
-            #    而不是相机原始尺寸 —— 小房间要收缩，否则房间只占中间一块
-            #    （与用户「房间放大些」的意图相反，见 scene_render.viewport_size）。
+            #    ★★ 第107轮：画布 = **整屏固定**（用户口径「不是跟随移动的窗口，
+            #       是像原作全屏后的效果」）。画面（4:3 内接矩形）由
+            #       `fit_camera_to_screen` 算好，`view` 仍是**画面**尺寸
+            #       （绘制指令的坐标空间），画布则铺满整屏、把画面**居中偏移**。
             view = scene.plan_viewport()
+            # ★ 画布尺寸 = 主屏物理尺寸（不随相机走）。
+            sw, sh = self._primary_screen_size()
+            canvas.resize(int(sw), int(sh))
+            # ★ 画面在画布内的居中偏移（`fit_camera_to_screen` 写进宿主）。
+            _off = self.__dict__.get('_scene_output_offset') or (0, 0)
+            canvas.set_output_offset(_off[0], _off[1])
+            # ★★ 桌面场景**不**铺黑（它的背景就是壁纸）；其余场景一律不透明
+            #   ⇒ 完全盖住桌面壁纸 / 图标 / 任务栏（用户第107轮口径）。
+            canvas.set_opaque_bg(not self._scene_is_transparent())
             # ★ 第50轮：球的前层（含"塑料滤镜"）必须叠在**角色之上** ⇒ 分流给
             #   overlay 控件；后层留在画布（在角色之下）。合起来即原作 Draw_0 的序。
             behind, front = scene_render_mod.split_bubble_layers(plan)
             canvas.set_plan(behind, view)
-            # ★★ 第89轮：独立窗口每帧都要**跟位** —— 桌宠在动（走/被拖），
-            #   画布中心必须跟着走，否则"桌面即场景"变成"场景钉死在某一处"。
-            #   放在 set_plan 之后：此时 view 已 resize 生效，width/height 是当帧真值。
+            # ★★ 第107轮：画布**固定铺满整屏**，不再跟着桌宠跑。
+            #   （第89轮那套"居中 + 四向钳制"跟随摆位是"小窗口"时代的产物，
+            #    已于本版废弃 —— 用户明确说「不是跟随移动的窗口」。）
             self._place_scene_layer()
             self._update_bubble_overlay(front, view)
 
@@ -6575,52 +6696,56 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("场景渲染层更新失败（本帧跳过）: %s", e)
 
+    def _scene_is_transparent(self):
+        """★ 第107轮：当前场景是否**声明式透明**（= 桌面场景，背景就是用户壁纸）。
+
+        判据来自场景数据本身（`scene_render.TRANSPARENT_BG`），**不靠场景名硬编码**
+        —— 这样将来别的场景若声明透明也能正确处理（"任何场景都全屏盖住"是默认，
+        "透明"是数据显式声明的例外）。
+
+        非桌面场景 ⇒ 返回 False ⇒ 画布铺不透明黑底、完全盖住桌面（用户口径
+        「不透过桌面壁纸，图标任务栏等一切东西」）。
+        取不到场景 / 任何异常 ⇒ 返回 **False**（保守：宁可多盖一层黑，
+        也不要漏出来透出桌面 —— 与"判不出世界取暗世界"同一条保守口径）。
+        """
+        try:
+            state = self.__dict__.get('_scene_state')
+            if state is None:
+                state = getattr(self, 'current_scene_state', None)
+            if state is None:
+                return False
+            bg = getattr(state, 'bg', None)
+            if bg is None and isinstance(state, dict):
+                bg = state.get('bg')
+            return bg == scene_render_mod.TRANSPARENT_BG
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return False
+
     def _place_scene_layer(self):
-        """把场景画布摆到**以桌宠为中心、但被钳制在屏幕可用区内**的位置。
+        """把场景画布摆到**整屏固定位置**（第107轮；不再跟随桌宠）。
 
-        ★★★ 为什么是"居中 + 四向钳制"（第89轮真机两版修正的结论，第93轮沿用）
-        --------------------------------------------------------------
-        第一版：画布中心 == 桌宠窗口中心。真机露馅：桌宠默认在屏幕**右下角**，
-          画布 640×480 居中上去 ⇒ 右边 220px、下边 68px 跑到屏幕外，且正好压在
-          任务栏上 —— 8 扇门（`y=192` ⇒ 屏幕 y≈1380）全被任务栏盖住。
-        第二版（试过又被否）：画布钉在屏幕可用区左上角 `(0,0)`。不溢出，但当桌宠
-          在右下角时画布在左上角，二者脱节 ⇒ 看不出"我的桌宠在这个场景里"。
-        ★ 正确口径 = **居中 + 四向钳制**，与 `scene_camera.camera_rect()` 的
-          「房间比相机小 ⇒ 该轴居中；房间比相机大 ⇒ 跟随目标 + 四向钳制」
-          **完全同构**（两轴独立）。这不是巧合 —— 相机在房间里的钳制、画布在屏幕里的
-          钳制，是同一个问题的两种尺度；用同一套规则就不会分叉。
+        ★★★ 为什么废弃第89轮那套"居中 + 四向钳制"（用户第107轮澄清）
+        ------------------------------------------------------------
+        第89轮的画布是个 **680×510 的小窗口**，"跟着桌宠走"才看得出"我的桌宠在
+        这个场景里"。但用户第107轮明确：「场景是全屏，**不是跟随移动的窗口**，
+        是像原作全屏后的效果似的」+「按场景比例铺满、留黑边」。
+        ⇒ 画布改为**铺满整块屏幕**、位置固定不变（画面居中由
+        `set_output_offset` 负责，四周黑边由 `set_opaque_bg` 的黑底负责）。
+        跟随摆位在这里**只剩"摆到屏幕原点"**这一件事。
 
-        ★ 只摆 `pos`，**不 resize** —— 尺寸归 `set_plan` 的 `view_size`
-          （= `plan_viewport()` 的收缩结果，小房间会收缩）。
+        ★ 用主屏几何（不是虚拟桌面）：多屏合并时 `x()` 可能是负的
+          （`_virtual_screen_rect()` 的原点），而画布是**一块屏**的东西。
         """
         try:
             canvas = self.scene_canvas
             if not getattr(canvas, 'as_window', False):
                 return                      # 子控件模式：坐标相对父窗口，不摆
-            sw_rect = self._virtual_screen_rect()
-            # ★ `_virtual_screen_rect()` 返回 **QRect**（不是 4 元组）——
-            #   写成 `rect[0]` 会抛 TypeError，而本方法整体在 try 里 ⇒
-            #   被静默吞掉、画布钉在 (0,0)（"看起来没报错但其实没生效"）。
-            if sw_rect is None:
+            scr = QApplication.primaryScreen()
+            if scr is None:
                 return
-            s_l, s_t = int(sw_rect.x()), int(sw_rect.y())
-            s_r = s_l + int(sw_rect.width())
-            s_b = s_t + int(sw_rect.height())
-            cw = max(1, canvas.width())
-            chh = max(1, canvas.height())
-            cx = self.pos().x() + self.width() // 2      # 桌宠中心（屏幕坐标）
-            cy = self.pos().y() + self.height() // 2
-            x = cx - cw // 2
-            y = cy - chh // 2
-            if cw <= (s_r - s_l):
-                x = max(s_l, min(x, s_r - cw))
-            else:
-                x = s_l                      # 画布比屏幕还宽 ⇒ 贴左（不居中）
-            if chh <= (s_b - s_t):
-                y = max(s_t, min(y, s_b - chh))
-            else:
-                y = s_t
-            canvas.move(x, y)
+            g = scr.geometry()
+            canvas.move(int(g.x()), int(g.y()))
             # ★★ 第89轮真机关键：独立透明窗口 **move/resize 之后必须显式重绘**。
             #   实测（`cv.grab()` 画得出 8 扇门、屏幕截图上却一个都没有）：
             #   Windows 对 `WA_TranslucentBackground` 顶层窗口的合成依赖 backing
@@ -6630,6 +6755,194 @@ class RalseiPet(QMainWindow):
             canvas.repaint()
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def set_pet_scale(self, scale=None, step=None, persist=True):
+        """★★★ 第107轮：**手动 / 半自动调整宠物大小**，并让场景与 UI 随之同源。
+
+        :param scale: 相对**场景**的目标倍率。`None` ⇒ 按 `step` 在当前值上加减。
+        :param step: 相对步长（如 `+0.1` / `-0.1`）。`scale` 给了就忽略它。
+        :param persist: 是否写回 `customization_config.json`。
+        :return: 实际生效的倍率（已钳进 `PET_SCALE_MIN..PET_SCALE_MAX`）。
+
+        ★★★ 三者同源（本项目最贵的坑 = "两处各写一份真源、改一处忘另一处"）
+        ----------------------------------------------------------------
+        ① **宠物渲染**：`_cached_scale_factor = camera.scale × pet_scale`
+           —— 宠物窗口 = 精灵容器 × 这个值。乘 `camera.scale` 是"与场景同比例"，
+           再乘 `pet_scale` 是用户可调的"相对场景倍数"。
+        ② **场景**：`camera.scale` 由屏幕决定（`fit_camera_to_screen`），
+           本方法**不**改它 —— 场景的屏幕大小是屏幕的固有上限。
+        ③ **UI**：`ui_scale()` 由 `pet_scale` 派生（对 1.0 取平方根）。
+        """
+        try:
+            cur = float(self.pet_scale)
+        except (TypeError, ValueError):
+            cur = self.PET_SCALE_DEFAULT
+        try:
+            if scale is None:
+                s = float(step) if step is not None else 0.0
+                target = cur + s
+            else:
+                target = float(scale)
+        except (TypeError, ValueError):
+            return cur
+        # 钳位（不是报错 —— 与全项目"越界一律钳"口径一致）
+        if target < self.PET_SCALE_MIN:
+            target = self.PET_SCALE_MIN
+        elif target > self.PET_SCALE_MAX:
+            target = self.PET_SCALE_MAX
+        # 归整到步长（避免 1.0000000001 这类浮点噪声进配置文件）
+        target = round(target / self.PET_SCALE_STEP) * self.PET_SCALE_STEP
+        target = round(target, 2)
+        if target < self.PET_SCALE_MIN:
+            target = self.PET_SCALE_MIN
+        elif target > self.PET_SCALE_MAX:
+            target = self.PET_SCALE_MAX
+
+        self.pet_scale = target
+        # ★ 重算宠物渲染倍率（= 场景 scale × 相对倍率）
+        self._refresh_pet_render_scale()
+        # ★ UI 由 `pet_scale` 派生（无需额外状态，见 `ui_scale`）
+        if persist:
+            self._persist_pet_scale(target)
+        _log.info('宠物缩放 = %.2f（相对场景；渲染倍率 %.3f）',
+                  target, self.__dict__.get('_cached_scale_factor', 0.0))
+        return target
+
+    def _refresh_pet_render_scale(self):
+        """按 **场景 scale × 相对倍率** 重算宠物渲染倍率（幂等、永不抛）。
+
+        ★ 为什么宠物倍率必须**乘** `camera.scale` 而不是直接用：
+          `_cached_scale_factor` 是"每逻辑像素多少屏幕像素"，必须与场景同一把尺
+          —— 否则宠物在 2560 屏与 800 屏上占房间的比例会不一致（实测：
+          直接用 2.0 时，2560 屏上 Ralsei 只有 82px 高，而一块瓦片就 107px，
+          人比砖还小）。
+        ★ 拿不到相机（相机没建）⇒ 退回纯相对倍率（不静默改成别的数）。
+        """
+        try:
+            rel = float(self.pet_scale)
+        except (TypeError, ValueError):
+            rel = 1.0
+        sc = 2.0
+        try:
+            cam = self.__dict__.get('_scene_camera')
+            if cam is not None:
+                sc = float(getattr(cam, 'scale', 2.0)) or 2.0
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        v = sc * rel
+        # 保底：太小会让窗口退化成 1px（渲染层会 max(1,..)，但那等于看不见）
+        if v < 0.1:
+            v = 0.1
+        self._cached_scale_factor = v
+
+    def _apply_scale_to_scene(self):
+        """应用缩放设定：先把相机按屏幕/宠物口径重算，再刷新宠物渲染倍率。
+
+        ⚠️ 顺序有意义：宠物渲染倍率 = **场景 scale** × 相对倍率，
+           所以必须**先**让相机就位（`fit_camera_to_screen`），**再**算宠物。
+        """
+        try:
+            fit = getattr(self.scene, 'fit_camera_to_screen', None)
+            if callable(fit):
+                fit(self._primary_screen_size(), pet_scale=self.pet_scale)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        self._refresh_pet_render_scale()
+
+    def _load_persisted_pet_scale(self):
+        """★★★ 第107轮：启动时把用户存过的宠物倍率读回来（失败一律容忍）。
+
+        读取优先级：`appearance.pet_scale`（新键，数字）→ `appearance.size`
+        （旧键，档位名 `small/normal/large/giant`）→ 默认 `PET_SCALE_DEFAULT`。
+
+        ⚠️ 只写内存字段（`pet_scale` / `_cached_scale_factor`），**不触发**任何
+          重算 —— 因为本方法在 `init_camera()` **之前**调用，那之后紧跟着的
+          `fit_camera_to_screen()` 会把比例关系一次性建对。
+        ⚠️ 任何异常（配置损坏 / 字段类型不对）⇒ 保持默认值，绝不让桌宠起不来。
+        """
+        try:
+            cs = getattr(self, 'customization', None) or getattr(self, 'customization_system', None)
+            data = getattr(cs, 'customization_data', None) if cs is not None else None
+            if not isinstance(data, dict):
+                return
+            app = data.get('appearance')
+            if not isinstance(app, dict):
+                return
+            v = app.get('pet_scale')
+            if v is None:
+                # 旧键：档位名 → **相对场景倍率**（第107轮语义；见类常量说明）
+                name = app.get('size')
+                if isinstance(name, str):
+                    _map = {'small': 0.6, 'normal': 1.0, 'large': 1.6, 'giant': 2.4}
+                    v = _map.get(name)
+            if v is None:
+                return
+            v = float(v)
+            if v < self.PET_SCALE_MIN:
+                v = self.PET_SCALE_MIN
+            elif v > self.PET_SCALE_MAX:
+                v = self.PET_SCALE_MAX
+            self.pet_scale = round(v, 2)
+            self._cached_scale_factor = self.pet_scale
+            _log.info('读回宠物缩放设定：%.2f', self.pet_scale)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def _persist_pet_scale(self, value):
+        """把宠物倍率写回 `customization_config.json` 的 `appearance`。
+
+        ★ 落到**既有**的 `size` 字段（`small/normal/large/giant` 那套是第 1 轮
+          留下的**零消费者**占位；第107轮把它**真正接上**：数字倍率写 `pet_scale`
+          子键，档位名 `size` 同时维护以便旧读取方仍能工作）。
+        ⚠️ 写失败只记日志 —— 存不下配置不该让调整当场失效（内存里已生效）。
+        """
+        try:
+            cs = getattr(self, 'customization', None) or getattr(self, 'customization_system', None)
+            if cs is None:
+                return
+            data = getattr(cs, 'customization_data', None)
+            if not isinstance(data, dict):
+                return
+            app = data.setdefault('appearance', {})
+            app['pet_scale'] = float(value)
+            # 档位名（向后兼容，按第107轮的"相对场景倍率"语义分档）
+            if value <= 0.8:
+                app['size'] = 'small'
+            elif value <= 1.3:
+                app['size'] = 'normal'
+            elif value <= 1.9:
+                app['size'] = 'large'
+            else:
+                app['size'] = 'giant'
+            save = getattr(cs, 'save_config', None)
+            if callable(save):
+                save()
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    def ui_scale(self):
+        """★★★ 第107轮：**UI 缩放倍率**（对话框等「游戏中的对话框之类」）。
+
+        与宠物/场景**同源**：直接由 `pet_scale` 派生，但**不**用满 —— UI 若与
+        像素精灵同倍率会大得离谱（2.5× 的对话框会占掉半屏）。取
+        `sqrt(pet_scale / PET_SCALE_DEFAULT)` 是折中：默认档（1.0）时 UI **不**放大，
+        宠物 2.5 时 UI 放大 1.58×，宠物 0.4 时 UI 缩到 0.63×。
+        ⇒ 保证"默认档不动、只有用户主动放大宠物时 UI 才跟着温和放大"。
+
+        返回 `[0.5, 3.0]` 内的浮点（下限保护避免对话框缩到不可读，
+        上限保护避免极端倍率把 UI 撑爆屏）。
+        """
+        try:
+            base = float(self.PET_SCALE_DEFAULT) or 1.0
+            cur = float(self.pet_scale)
+            r = (cur / base) ** 0.5
+        except Exception:
+            r = 1.0
+        if r < 0.5:
+            r = 0.5
+        elif r > 3.0:
+            r = 3.0
+        return r
 
     def _show_scene_layer(self):
         """显示场景画布（独立窗口模式下摆到桌宠中心）。
@@ -11475,7 +11788,8 @@ class RalseiPet(QMainWindow):
         # 创建对话框
         dialog = QDialog(self)
         dialog.setWindowTitle("Ralsei Pet 配置")
-        dialog.setFixedSize(400, 500)
+        # ★ 第107轮：多了一组「外观/缩放」，高度从 500 抬到 580 免得控件被挤掉。
+        dialog.setFixedSize(400, 580)
         dialog.setWindowFlags(Qt.WindowSystemMenuHint | Qt.WindowTitleHint)
         
         # 创建主布局
@@ -11585,7 +11899,42 @@ class RalseiPet(QMainWindow):
         movement_layout.addLayout(max_speed_layout)
         
         main_layout.addWidget(movement_group)
-        
+
+        # ★★★ 第107轮：**外观 / 缩放**组（用户口径「全局都放大，也即半自动
+        #   或者是手动可以调整宠物大小」+「UI，也就是我所说的游戏中的对话框
+        #   之类的也要放大」）。
+        #   一个 spinbox 同时驱动三者（宠物 / 场景 / UI）—— 见 `set_pet_scale`。
+        appearance_group = QGroupBox("外观 / 缩放（宠物 · 场景 · UI 同源）")
+        appearance_layout = QVBoxLayout(appearance_group)
+
+        size_layout = QHBoxLayout()
+        size_layout.addWidget(QLabel("宠物大小倍率:"))
+        self.pet_scale_spinbox = QDoubleSpinBox()
+        self.pet_scale_spinbox.setRange(float(self.PET_SCALE_MIN),
+                                        float(self.PET_SCALE_MAX))
+        self.pet_scale_spinbox.setSingleStep(float(self.PET_SCALE_STEP))
+        self.pet_scale_spinbox.setDecimals(1)
+        self.pet_scale_spinbox.setValue(float(self.pet_scale))
+        size_layout.addWidget(self.pet_scale_spinbox)
+        appearance_layout.addLayout(size_layout)
+
+        _size_hint = QLabel(
+            "调大后宠物与场景一起放大（约 %.1f× ~ %.1f×）。UI（对话框等）"
+            "按平方根温和跟随，默认档不放大。改完点保存或直接实时预览。"
+            % (self.PET_SCALE_MIN, self.PET_SCALE_MAX))
+        _size_hint.setWordWrap(True)
+        _size_hint.setStyleSheet("color:#888888;font-size:9pt;")
+        appearance_layout.addWidget(_size_hint)
+
+        # 实时预览：值一变就应用（"半自动调整"—— 用户不必先保存再看效果）
+        try:
+            self.pet_scale_spinbox.valueChanged.connect(
+                lambda v: self.set_pet_scale(v, persist=False))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        main_layout.addWidget(appearance_group)
+
         # 按钮布局
         button_layout = QHBoxLayout()
         
@@ -11638,6 +11987,13 @@ class RalseiPet(QMainWindow):
         # 更新运动配置
         self.config_manager.set("movement.min_speed", self.min_speed_spinbox.value())
         self.config_manager.set("movement.max_speed", self.max_speed_spinbox.value())
+
+        # ★★★ 第107轮：宠物大小倍率（宠物 / 场景 / UI 同源，见 `set_pet_scale`）。
+        #   对话框里已实时预览（`persist=False`），这里落盘。
+        try:
+            self.set_pet_scale(self.pet_scale_spinbox.value(), persist=True)
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
         
         # 更新应用配置
         self.api_enabled = api_config['enabled']

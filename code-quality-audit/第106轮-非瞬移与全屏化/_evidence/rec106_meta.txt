@@ -1,0 +1,21 @@
+=== rec106 录制元信息（非瞬移 + 全屏化 · mp4v 边抓边写 · 状态变化帧落小图）===
+pid                 = 43912
+时长设定            = 70 s
+抓屏周期            = 250 ms
+编码 fourcc         = mp4v
+注入                = REC106_INJECT=1
+  oneshot 起点/终点 = None → None（10000s）
+  delta 起点/终点   = None → None（Nones）
+  回程 REC106_HOME  = 0（Nones）
+实际帧数            = 231
+有效采集率          = 3.18 Hz
+关键帧 PNG 数       = 18
+墙钟耗时            = 72.7 s
+抓屏累计            = 18.7 s（每帧均 80.8 ms）
+编码累计            = 13.1 s（每帧均 56.5 ms）
+占用率(抓+编)/墙钟  = 43.6%
+屏幕                = 2560x1600
+frames/ 实际 PNG 数  = 18（计数器 18）
+录像                = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第106轮-非瞬移与全屏化\_evidence\rec106_raw.avi (25.7 MB)
+录像校验            = OK 可解码帧数=231
+退出码              = 0

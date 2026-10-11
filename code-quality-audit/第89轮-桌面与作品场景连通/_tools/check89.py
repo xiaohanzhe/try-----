@@ -518,6 +518,9 @@ try:
             _st = _pet.__dict__.get('_scene_state')
             _res['scene_id'] = getattr(_st, 'scene_id', None)
             _res['cam_rect'] = _cam.rect if _cam else None
+            # ★ 第106轮：把相机的**真实 scale**也报出来 —— E3 的期望 rect 尺寸
+            #   由它现推（贴图 20 × scale），不再写死 40（全屏化会改它）。
+            _res['scale'] = _cam.scale if _cam else None
             _res['viewport'] = _pet.scene.plan_viewport()
             # ★ 产品真路径（main.py:_update_scene_layer）—— 必须传 sprite_size
             _cv = _pet.__dict__.get('scene_canvas')
@@ -620,22 +623,37 @@ check('E2 ★★★ 真机：`plan_frame` 产出 **%d 条 obj**（%d 扇门真�
       % (_N_DOORS, _N_DOORS),
       _res.get('objs') is not None and len(_res['objs']) == _N_DOORS, star=True)
 
-# E3 ★★★ rect 尺寸 = 贴图尺寸 × scale（20 × 2.0 = 40）——
+# E3 ★★★ rect 尺寸 = 贴图尺寸 × scale ——
 #   ★★ 这条是本轮最贵的探针教训：漏传 `sprite_size` ⇒ 尺寸退化成 (1,1)。
+#   ★★★ 第106轮改判据：**期望值从相机的真实 scale 推**，不写死 40。
+#     起因：第106轮「全屏化」把 camera.scale 由 2.0 抬到 2.125（输出 680×510）
+#     ⇒ 门的 rect 由 40×40 变 42×42 —— 老判据写死 40 **假红**。
+#     这正是「判据与事实脱节」（路由/参数改了，判据还钉着旧数）的又一例：
+#     真正要守的语义是「rect 尺寸 == 贴图原始尺寸 × 相机 scale」，
+#     而不是"恰好四个字节是 40"。改成从 `_res['scale']` 现推。
 _objs_rect = _res.get('objs') or []
-_sz_ok = all(r[2] == 40 and r[3] == 40 for _n, r in _objs_rect if len(r) == 4)
-check('E3 ★★★ 真机：%d 扇门的 rect 尺寸 = **40×40**（贴图 20 × scale 2.0）'
-      '—— 即 `sprite_size` 真被传进产品真路径' % _N_DOORS,
+_scale = _res.get('scale')
+_expect = int(round(20 * _scale)) if isinstance(_scale, (int, float)) else None
+_sz_ok = (_expect is not None
+          and all(r[2] == _expect and r[3] == _expect
+                  for _n, r in _objs_rect if len(r) == 4))
+check('E3 ★★★ 真机：%d 扇门的 rect 尺寸 = **%s×%s**（贴图 20 × 相机 scale %s）'
+      '—— 即 `sprite_size` 真被传进产品真路径'
+      % (_N_DOORS, _expect, _expect, _scale),
       len(_objs_rect) == _N_DOORS and _sz_ok, star=True)
 if _objs_rect and not _sz_ok:
     print('        rects=%r' % (_objs_rect,))
 
-# E4 ★★ 全部门的 rect **全在视口内**（640×480）
+# E4 ★★ 全部门的 rect **全在视口内**
+#   ★★★ 第106轮改判据：视口尺寸**不再写死 640×480**（全屏化后是 680×510，
+#     且随屏幕而变）—— 从 `plan_viewport()` 的真实返回值取，只断言
+#     "门的 rect 全落在 [0, viewport] 内"（语义），不断言具体数字（事实）。
 _vw, _vh = (_res.get('viewport') or (0, 0))[:2]
 _in_ok = all(0 <= r[0] and 0 <= r[1] and r[0] + r[2] <= _vw and r[1] + r[3] <= _vh
              for _n, r in _objs_rect if len(r) == 4)
-check('E4 ★★ 真机：%d 扇门 rect **全在视口内**（不会被裁掉）' % _N_DOORS,
-      len(_objs_rect) == _N_DOORS and _in_ok and _vw == 640 and _vh == 480, star=True)
+check('E4 ★★ 真机：%d 扇门 rect **全在视口内**（%d×%d，不会被裁掉）'
+      % (_N_DOORS, _vw, _vh),
+      len(_objs_rect) == _N_DOORS and _in_ok and _vw > 0 and _vh > 0, star=True)
 if _objs_rect:
     print('        rects=%r' % ([r for _n, r in _objs_rect],))
 
@@ -827,7 +845,15 @@ check('I4 ★★★ `_show_scene_layer` 的 `lower()` **必须与 `as_window` �
       '（独立窗口无条件 lower() ⇒ 沉到桌面之下 ⇒ 整块画布不上屏）'
       '—— 判据走 AST 定位函数体，且**同时认属性与字符串常量**两种写法',
       (not _calls_lower) or _has_guard, star=True)
-print('        lower() 调用行=%r  有 as_window 守卫=%r' % (_calls_lower, _has_guard))
+# ★★★ 第106轮：探针**不打印绝对行号**（只打印条数 + 布尔）。
+#   起因：本轮在 main.py 上方插了 16 行注释 ⇒ `_calls_lower=[6664]` 变 `[6680]`
+#   ⇒ G2 报**假 DIFF**（计数一条没变，只有行号漂了）。
+#   这正是第75轮那条「行号是纯脆性信息」的复演 —— 当时只给 traceback 加了
+#   `line <LN>` 归一化，**探针自己打的字面量行号没被覆盖**。与其去改归一化器
+#   （会影响所有套件），不如让探针**不产生**脆性信息：判据本身是布尔的，
+#   行号对"守没守住"毫无贡献。
+print('        lower() 调用数=%d  有 as_window 守卫=%r'
+      % (len(_calls_lower), _has_guard))
 
 # I5 ★★ `_place_scene_layer` 存在，且**只 move 不 resize**
 _pl_moves = []
@@ -843,7 +869,9 @@ check('I5 ★★ `_place_scene_layer()` 存在，且**只 move 不 resize**'
       '（尺寸归 `set_plan` 的 view_size，否则小房间会被撑回相机尺寸）'
       '—— 判据走 AST（原字符串切片切歪 ⇒ 误报）',
       _PL is not None and bool(_pl_moves) and not _pl_resizes, star=True)
-print('        place move 行=%r  resize 行=%r' % (_pl_moves, _pl_resizes))
+# 同上（第106轮）：只打条数，不打行号 —— 行号漂移会造成假 DIFF。
+print('        place move 数=%d  resize 数=%d'
+      % (len(_pl_moves), len(_pl_resizes)))
 
 # I6 ★★ `_place_scene_layer` 必须用 **QRect 接口**（无下标取址）
 _pl_subscripts = []
@@ -857,7 +885,8 @@ check('I6 ★★ `_place_scene_layer` **不得**对 `_virtual_screen_rect()` 的
       _PL is not None and not _pl_subscripts, star=True)
 print('        place 下标取址行=%r' % (_pl_subscripts,))
 
-# I7 ★★ 四向钳制（AST：同时有 max/min 调用）
+# I7 ★★★ 第107轮口径更正：**废弃四向钳制**，改为「固定摆屏原点」
+#   （AST：数 `max/min` 调用 —— 第89轮要求 ≥1，第107轮要求 ==0）
 _pl_max = _pl_min = 0
 if _PL is not None:
     for _n in ast.walk(_PL):
@@ -866,12 +895,42 @@ if _PL is not None:
                 _pl_max += 1
             elif _n.func.id == 'min':
                 _pl_min += 1
-check('I7 ★★ `_place_scene_layer` 有**四向钳制**（`max(s_l, min(x, ...))`），'
-      '与 `scene_camera.camera_rect` 的"跟随+四向钳制"**同构**'
-      '（不钳制 ⇒ 画布溢出屏幕 / 压任务栏 ⇒ 门被盖住）'
+#   ★ 起因：用户第107轮原话「**场景是全屏，不是跟随移动的窗口，是像原作全屏后的效果似的**」
+#     + AskUserQuestion「**按场景比例铺满、留黑边**」。
+#     ⇒ 第89轮那套「居中 + 四向钳制」（让画布跟着宠物在屏内移动）**已按用户口径废弃**：
+#       现在画布尺寸 = **主屏物理尺寸**（铺满屏），摆位 = **主屏原点**（不动），
+#       所以既不需要钳制、也不该再有 `max/min`。
+#   ⇒ 判据同步更新为**新事实**（两条，成对）：
+#       ① 仍**只 move 不 resize**（I5 已守）；
+#       ② **不得**再出现 `max/min` 钳制（钳制 = 跟随窗口时代的残留；
+#          若还在 ⇒ 说明半新半旧，画布尺寸与摆位不自洽）。
+#   ⚠️ 这正是「**判据比产品旧**」的又一例（同 B5）：口径变了，判据必须跟着变，
+#      否则事实合法演进 = 假红。
+check('I7 ★★★ `_place_scene_layer` **不再**做四向钳制（第107轮口径："不是跟随移动的'
+      '窗口" ⇒ 固定摆主屏原点；残留 `max/min` = 半新半旧不自洽）'
       '—— 判据走 AST 数 max/min 调用',
-      _pl_max >= 1 and _pl_min >= 1, star=True)
+      _PL is not None and _pl_max == 0 and _pl_min == 0, star=True)
 print('        place max 调用=%d  min 调用=%d' % (_pl_max, _pl_min))
+
+# I7b ★★★ 第107轮新事实：摆位基准是**主屏原点**（不是"居中 + 钳制"）
+#   语义：`_place_scene_layer` 里同时出现 `primaryScreen()` 与 `geometry()`，
+#   且把 geometry 的 x/y 直接喂给 `move`（固定铺满，不随宠物移动）。
+#   ★ 用 AST 判"真有 move 调用 + 真取 primaryScreen/geometry"，
+#     不扫字符串（文档串/注释一提名字就误报 —— 已四次发作）。
+_pl_has_primary = False
+_pl_has_geometry = False
+if _PL is not None:
+    for _n in ast.walk(_PL):
+        if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute):
+            if _n.func.attr == 'primaryScreen':
+                _pl_has_primary = True
+            if _n.func.attr == 'geometry':
+                _pl_has_geometry = True
+check('I7b ★★★ `_place_scene_layer` 以**主屏**为基准摆位'
+      '（真调 `primaryScreen()` + `geometry()` ⇒ 铺满主屏、不随宠物移动）',
+      _PL is not None and _pl_has_primary and _pl_has_geometry, star=True)
+print('        place primaryScreen=%r  geometry=%r'
+      % (_pl_has_primary, _pl_has_geometry))
 
 # I8 ★★ 摆位后显式重绘
 _pl_repaint = False

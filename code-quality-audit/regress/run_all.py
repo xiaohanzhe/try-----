@@ -2059,7 +2059,8 @@ SUITES = [
                 'F 推门真切场景（`build_props` 建 8 个 DoorProp · `travel_to` 真改 `scene_id`） / '
                 'G 旧行为不回归 · '
                 'I ★★★ 可见性（`as_window=True` / `lower()` 与 as_window 绑定 / '
-                '`_place_scene_layer` 只 move 不 resize + 四向钳制 —— 判据全走 AST） / '
+                '`_place_scene_layer` 只 move 不 resize · **第107轮起改固定摆主屏原点、'
+                '不再四向钳制**（用户口径"不是跟随移动的窗口"）—— 判据全走 AST） / '
                 'J ★★★ 不许自作主张开 B站（**全项目代码层零 B站 URL 字面量** · '
                 '`suggest_watching_video` 无代开三件套 + 负控制 · 陪看能力未误伤 · '
                 '用户明确指令「打开浏览器」仍可用）/ '
@@ -2668,6 +2669,91 @@ SUITES = [
                 '变异测试 `mutate105.py` **9/9** 全部被对应判据抓到。'
                 '★ 已知保真缺口（不在本锁内）：77 条剧情传送（**只登记**，等开关/剧情'
                 '状态面接入才有依据）；19 条同图自环（原作「出去又回来」，登记不动）。',
+    },
+    {
+        'id': 'check106',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第106轮-非瞬移与全屏化', '_tools', 'check106.py'),
+        'offscreen': False,
+        'desc': '第一百零六轮：**非瞬移（逐跳走完）** + **场景全屏化（等比放大）**。'
+                '★ A 非瞬移：第105轮录屏打出的真缺口 —— `travel_to()` 算出 '
+                '`plan["steps"]`（桌面→OneShot S1 实测 **18 跳**）后**只调一次 '
+                '`self.switch(sid)`**，`steps` 抄进返回值即无消费方 ⇒'
+                '「路径算出来了，但没人走」（与第45轮 `follow_route` 零调用是'
+                '**同一类坑的第二形态**）。用户口径「完整的走过去……'
+                '如果我对里面任何一个人说马上回桌面，他们顶多是带着我一起**非常快地'
+                '按原路线返回**，也不是瞬移」。⇒ 新增 `walk_steps()`（逐跳 `switch()`、'
+                '链式校验 `from==当前`、失败停在 `aborted_at` 且 `visited` 保留、'
+                '空 steps = 成功 0 跳）+ `walk_route_home()`（**复用** `plan_route_to` '
+                '的原路线交给 `walk_steps` 走完 —— 另算新路 = 变相瞬移）；'
+                '`travel_to` 的有路线分支改逐跳、直达降级分支**原样保留**。'
+                '★★ B 全屏化：用户口径「类似游戏全屏」「占屏比例不美观就适当放大，'
+                '**那意味着人物也要等比例放大**」⇒ 新增 `fit_camera_to_screen()`，'
+                '**成对**写 `camera.size` 与 `camera.scale`（`scale = out_w/320`）'
+                '⇒ `scoped_size()` 恒 **320×240**（可见范围不变、画布铺开）；'
+                '背景/物件/**人物与灵魂 walk 同一条 `to_output`**（乘法发生点唯一）'
+                '⇒ 人物自动等比放大，**不需要**特判。'
+                '★★★ **第107轮口径更正**（用户「**场景是全屏，不是跟随移动的窗口，'
+                '是像原作全屏后的效果似的**」＋「**按场景比例铺满、留黑边**」）：'
+                '`fit_camera_to_screen` **删掉 `frac` 形参**、改调纯函数 '
+                '`scene_camera.fit_fullscreen()`（最大 4:3 内接矩形 + 居中偏移）'
+                '⇒ 画布铺满主屏物理尺寸、固定摆主屏原点（**废弃第89轮的"居中+四向钳制"**）；'
+                '实测 2560×1600 屏 ⇒ **2133×1600 @ scale 6.666（左右各 214 黑边）**、'
+                '800×600 离屏 ⇒ 800×600 @ 2.500（4:3 零黑边）。'
+                '（第106轮原口径 `frac` 留边 / 680×510 @ 2.125 **已作废**。）'
+                '★ C 清死代码：`main.py` 里 `scene.camera_follow_or_create()`'
+                '（全仓无此方法，真走到会 `AttributeError` 被 `except` 吞）已删，'
+                '阶梯降级保留。★ D 判据自身体检（AST 查无 `ok(..., True)` 恒真）。'
+                '★ 本套件**零外部盘依赖**（回归碰不得 E 盘）。',
+    },
+    {
+        'id': 'check107',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第107轮-全屏化与全局缩放', '_tools', 'check107.py'),
+        'offscreen': True,
+        'desc': '第一百零七轮：**场景真全屏化** + **全局缩放（宠物/场景/UI 同源）**'
+                '不许静默漂移。★ A 全屏化数学：`scene_camera.fit_fullscreen()` '
+                '纯函数（**零 Qt、零项目内 import、零函数内 import**）· '
+                '`SCENE_ASPECT = 4/3` · 用 `<=` 判限制轴（写 `max` 会**溢出屏幕**= 裁画面）· '
+                '返 **4 元组** `(w,h,ox,oy)` · 非法输入返 `None`（≥2 处）· '
+                '真跑五例逐值（**2560×1600 ⇒ 2133×1600 左右各 214 黑边**｜'
+                '**800×600 ⇒ 零黑边**｜竖屏 1600×2560 ⇒ 上下各 680）· 不变量'
+                '（恒在屏内 + 恒 4:3 + 居中）。★ B 相机：`fit_camera_to_screen` '
+                '**无 `frac` 形参**（第107轮口径「不再留边、要真全屏」⇒ 第106轮旧口径作废）· '
+                '真调 `fit_fullscreen` · **成对** `set_size`+`set_scale` · '
+                'AST 求值 `scoped == 320×240`（可见范围不变 = 不是镜头拉近）· '
+                '`scale = out_w / scoped_w`（放大唯一来源）。★ C 画布铺满 + 固定摆位：'
+                '`set_output_offset` / `set_opaque_bg` 在位 · `paintEvent` **真守卫**消费'
+                '（AST 排除 `if False and ...` 短路 —— 变异 M8 逼出来）· '
+                '`_place_scene_layer` 只 move 不 resize · **零四向钳制**'
+                '（`max/min` == 0，废弃第89轮"居中+四向钳制"）· 以**主屏**为基准'
+                '（`primaryScreen()` + `geometry()`）· 摆位后 `repaint()` · '
+                '`_primary_screen_size()` 用主屏物理尺寸（非多屏合并）。'
+                '★ D 桌面透明 / 房间不透明：`_scene_is_transparent()` · '
+                '`bg == TRANSPARENT_BG` 显式声明 · **`except` 块必返 `False`**'
+                '（AST 定点判 —— 变异 M11 逼出来："数 `return False` 总数"会被别处掩盖）· '
+                '`desktop.json` 数据面同源。★ E 全局缩放：`PET_SCALE_*` 四常量'
+                '（DEFAULT=1.0 = 与场景同比例 = 最贴原作）· `_cached_scale_factor` '
+                '**真被赋值**（第44轮起从未赋值 ⇒ 恒走默认 2.0）· '
+                'AST **数据流**判 `v = <含 scale 的量> × <相对倍率>`'
+                '（允许 `getattr(cam,\'scale\',…)` 与局部变量中转 —— 变异 M13 逼出来）· '
+                '`set_pet_scale(persist=)` 真钳位（AST 判真守卫）· `ui_scale()` '
+                '**平方根**折中 + 钳 `[0.5,3.0]` · 设置面板 `pet_scale_spinbox` 实时预览'
+                '（`persist=False`）+ `save_config` 落盘 · 旧档位名双向兼容'
+                '（`literal_eval` 求值 `normal ⇒ 1.0`）· **接线调用顺序**'
+                '（读回 → 全屏化 → 刷新倍率；按 AST 调用序判，不按字符 `.find()`'
+                '—— 注释里提到 `fit_camera_to_screen` 会污染位置）。'
+                '★ F 零依赖纪律（`scene_camera`/`scene_render` 顶层零 Qt/零项目内）。'
+                '★ G 判据自身体检（无 `ok(...,True)` 恒真 · 记账守恒 · '
+                '九处令牌逐个回原文件 `in`）。'
+                '★★ 数值实证由 `verify107.py` 承担（**21 PASS/0 FAIL**，不进 G2）；'
+                '录屏几何自证由 `rec107.py` 承担（**13 PASS/0 FAIL**：'
+                '画布 == 主屏尺寸 · 位置 == 主屏原点 · **宠物移动后画布位置不变**'
+                '= "不是跟随移动的窗口"的直接反证 · 桌面透明/房间不透明成对）；'
+                '变异测试 `mutate107.py` **16/16** 全部被对应判据抓到'
+                '（含 `_place_scene_layer` 改回四向钳制、`paintEvent` 短路、'
+                '`except` 返 True、两段钳位同拆等）。'
+                '★ 本套件**零外部盘依赖**（回归碰不得 E 盘）。',
     },
 ]
 # ---------------------------------------------------------------- 归一化

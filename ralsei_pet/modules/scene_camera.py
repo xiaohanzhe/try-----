@@ -86,6 +86,70 @@ DEFAULT_CAMERA_SIZE = (640, 480)
 DEFAULT_BORDER = 0
 
 
+#: 场景画面的宽高比（= 原作相机逻辑窗口 320×240）。★ 第107轮「场景全屏化」
+#: 的锚点：无论屏幕多宽/多高，画面一律按 **4:3** 等比放大到最大内接矩形，
+#: 剩下的用黑色填充（用户第44轮原话「剩下的用黑色填充」，第107轮重申
+#: 「场景是全屏，不是跟随移动的窗口，是像原作全屏后的效果似的」）。
+SCENE_ASPECT = 4.0 / 3.0
+
+
+def fit_fullscreen(view_w, view_h, ratio=SCENE_ASPECT):
+    """把 **4:3 画面**按等比最大内接放进 `view_w × view_h` 的屏幕 → `(w, h, ox, oy)`。
+
+    ★★★ 第107轮：用户口径「场景是全屏，不是跟随移动的窗口，是像原作全屏后的
+    效果似的」+「按场景比例铺满、留黑边」+「只有在桌面场景时才会有这些显示，
+    其他任何场景都只是长今后，不透过桌面壁纸，图标任务栏等一切东西」。
+
+    ⇒ 数学模型：屏幕上放一个**最大的 4:3 矩形**（`w/h == ratio`），水平/垂直居中；
+       画布本身 = **整块屏幕**（`view_w × view_h`），这块矩形之外全部填黑。
+       `(ox, oy)` = 该矩形相对屏幕左上角的**居中偏移**（永远 >= 0）。
+
+    为什么要 `min` 而不是 `max`（本函数唯一容易写错处）
+    --------------------------------------------------
+    要"内接"，两个约束都必须满足：
+      · 按**高**铺满 ⇒ `w = view_h * ratio`，需要 `w <= view_w`；
+      · 按**宽**铺满 ⇒ `h = view_w / ratio`，需要 `h <= view_h`。
+    取两者中**放得下**的那个（`min` 的就是这个意思 —— 先按宽高各算一版，
+    取尺寸更小的）。写成 `max` 会让矩形溢出屏幕（等于"放大过头"，用户看见的
+    是画面被裁掉而不是留黑边）。
+
+    ⚠️ **不许 `round` 到偶数/对齐**：像素风画面在非整数倍下本来就有半像素采样，
+       强行对齐会引入 1px 偏差，反而让"左右黑边是否对称"变成玄学。
+       这里只做 `int(round())`，其余交给 Qt 绘制。
+
+    :param view_w: 屏幕宽（像素，>0）。
+    :param view_h: 屏幕高（像素，>0）。
+    :param ratio: 画面宽高比。非法（<=0 / 非数）→ 用 `SCENE_ASPECT`。
+    :return: `(w, h, ox, oy)`；输入非法（尺寸 <=0 / 非数）→ `None`
+             （**不伪装成 (0,0,0,0)** —— 与本模块「算不出就返回 None」同律）。
+    """
+    try:
+        vw = float(view_w)
+        vh = float(view_h)
+        rt = float(ratio)
+    except (TypeError, ValueError):
+        return None
+    if vw <= 0 or vh <= 0:
+        return None
+    if rt <= 0:
+        rt = SCENE_ASPECT
+    w_by_h = vh * rt          # 按高铺满时的宽
+    h_by_w = vw / rt          # 按宽铺满时的高
+    if w_by_h <= vw:
+        w, h = w_by_h, vh     # 高是限制轴 ⇒ 左右留黑边
+    else:
+        w, h = vw, h_by_w     # 宽是限制轴 ⇒ 上下留黑边
+    w = max(1, int(round(w)))
+    h = max(1, int(round(h)))
+    ox = int(round((vw - w) / 2.0))
+    oy = int(round((vh - h) / 2.0))
+    if ox < 0:
+        ox = 0
+    if oy < 0:
+        oy = 0
+    return (w, h, ox, oy)
+
+
 def clamp(value, low, high):
     """把 `value` 钳进 `[low, high]`。
 

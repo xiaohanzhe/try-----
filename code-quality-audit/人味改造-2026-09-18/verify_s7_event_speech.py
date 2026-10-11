@@ -672,12 +672,32 @@ class _Dui(object):
         self._streaming = False
         self._inputting = False
         self._ai_inflight = False
+        # ★★ 第107轮修：桩必须跟上**第75轮**的产品改动。
+        #   第75轮按用户裁定关掉了思考占位（`dialogue_ui.AI_THINKING_PLACEHOLDER_ENABLED
+        #   = False`）⇒ `_ai_thinking_on()` 不再往 `typing_text` 写「……」，
+        #   「正在等回复」改由**显式状态位 `_ai_pending`** 承担。
+        #   本桩原先两处都没跟上，造成 **D2/D2b/D2c 三条假 FAIL**：
+        #     ① 桩的 `_ai_thinking_on` 还写占位 ⇒ 仿真里"等回复"仍表现为占位串；
+        #     ② 桩**没有 `_ai_pending` 属性** ⇒ 产品 `_event_ai_ready` 走兼容分支
+        #        `if getattr(dui,'_ai_pending',None) is None:` ⇒ 回落旧判据
+        #        `typing_text == AI_THINKING_PLACEHOLDER` ⇒ 命中**桩自己刚写的占位**
+        #        ⇒ 判成"主人在等回复" ⇒ 事件被让路走罐头 ⇒ 分片一个都没进 `stream_delta`。
+        #   ⚠️ 教训同 §11.6「桩要跟着主程序调用面走」：产品改了**可观测状态位**，
+        #      桩不跟进 ⇒ 假红（比漏测更糟：会让人去改**没有缺陷**的产品代码）。
+        self._ai_pending = False
 
     def add_dialogue(self, speaker, msg, face='normal', _streamed=False):
         # 复刻真 dialogue_ui：思考占位只是"等待"提示，绝不能被当成一条正式消息
         # （`add_dialogue` 里那段 `if self.typing_text == AI_THINKING_PLACEHOLDER`）
         if self.typing_text == self.AI_THINKING_PLACEHOLDER:
             self.typing_text = ''
+        # ★ 复刻真 dialogue_ui 的**第75轮**语义：落定一条真消息就结束"空等"。
+        #   真实现里那行是 `if speaker != 'user': self._ai_pending = False`
+        #   —— 必须排除 `user`，否则"用户回显 → 请求发出"之间等待位会被自己抹掉。
+        #   桩若不复制这一步，D6c/D8 这类"兜底之后下一个事件还能不能走 AI"的
+        #   用例会**永久卡在"等回复"** ⇒ 后续事件全被让路 ⇒ 假红。
+        if speaker != 'user':
+            self._ai_pending = False
         self.said.append((speaker, msg, face, bool(_streamed)))
         # 复刻真 dialogue_ui：落定一条消息会把流式状态收掉
         # （`_finalize_stream` / `stop_typing` 都会清 `_streaming`）
@@ -687,9 +707,15 @@ class _Dui(object):
         self.shown += 1
 
     def _ai_thinking_on(self):
-        # 复刻真 dialogue_ui 的可观测效果：进"等待首字"态 + 前台写「……」
+        # 复刻真 dialogue_ui 的可观测效果（**第75轮后的口径**）：
+        #   ① 进"等待首字"态 —— 由**显式状态位 `_ai_pending=True`** 承担；
+        #   ② 前台**不写**「……」（`AI_THINKING_PLACEHOLDER_ENABLED = False`），
+        #      而是清空 —— 用户裁定"不要思考占位，加载出来了再回复就好"。
+        # ⚠️ 下面 `typing_text = ''` 不是随手写的空串：D1c 会断言"占位没被当成一条消息"，
+        #    若这里改成写占位，产品侧的兼容分支会把这次事件判成"主人在等回复"。
         self.thinking = getattr(self, 'thinking', 0) + 1
-        self.typing_text = self.AI_THINKING_PLACEHOLDER
+        self._ai_pending = True
+        self.typing_text = ''
 
     def _is_user_inputting(self):
         return self._inputting
@@ -697,6 +723,11 @@ class _Dui(object):
     def stream_delta(self, chunk):
         self.deltas.append(chunk)
         self._streaming = chunk is not None
+        # ★ 复刻真 dialogue_ui `_stream_begin`（第75轮）：**首字真到了**就不再"空等"
+        #   —— 事件台词此时可以插进来（main 的 `_event_ai_ready` 靠这一位让路）。
+        #   桩缺这一步时，`deltas=['诶？', None]` 这类用例里首字已到、等待位却仍是 True。
+        if chunk is not None:
+            self._ai_pending = False
 
 
 def make_host(api_enabled=True, cfg=None, auto=True, reply_value=None, delay_ms=0,
@@ -756,12 +787,19 @@ ok('D1 AI 档：请求已发出、框子先开、且**没有**立刻说罐头',
 ok('D1b 事件请求带上了 on_delta（流式）', callable(h.chat_calls[0]['on_delta']))
 ok('D1d 事件请求带上了 lean=True（否则 system 每轮都变 → 前缀缓存失效 → 必超时限）',
    h.chat_calls[0]['lean'] is True, h.chat_calls[0])
-ok('D1c 等待首字期间框子是「……」态（不是空白），且占位没被当成一条消息',
+ok('D1c 等待首字期间**已进"等待"态**（`_ai_pending=True`）—— 第75轮关掉思考占位后，'
+   '"在等回复"改由显式状态位承担；且占位/清空的框子都没被当成一条消息',
    h.dialogue_ui.thinking == 1
-   and h.dialogue_ui.typing_text == h.dialogue_ui.AI_THINKING_PLACEHOLDER
+   # ★★ 必须用 `getattr(..., None)` 而不是直接 `h.dialogue_ui._ai_pending`：
+   #   直接取属性的话，桩一旦缺这个位就抛 `AttributeError` ⇒ **整个套件崩掉**，
+   #   后续 130+ 条判据一条都不执行。崩掉比报红**更危险**：报红至少在清单里，
+   #   崩掉只是"输出截断"，容易被读成"跑完了、看起来挺绿"。
+   #   （实测：`fixture_s7_drift.py` 的变体 D 正是靠这条崩出来才发现的。）
+   and getattr(h.dialogue_ui, '_ai_pending', None) is True
    and not h.dialogue_ui.said,
-   (getattr(h.dialogue_ui, 'thinking', None), h.dialogue_ui.typing_text,
-    h.dialogue_ui.said))
+   (getattr(h.dialogue_ui, 'thinking', None),
+    getattr(h.dialogue_ui, '_ai_pending', '<缺失>'),
+    h.dialogue_ui.typing_text, h.dialogue_ui.said))
 pump(250)
 ok('D2 AI 回复到达后说 AI 那句（罐头让位）', last_msg(h) == '诶？你戳我做什么呀！', h.dialogue_ui.said)
 ok('D2b 分片确实进了 dialogue_ui.stream_delta',

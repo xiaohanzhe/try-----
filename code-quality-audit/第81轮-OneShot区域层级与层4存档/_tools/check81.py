@@ -571,7 +571,11 @@ except Exception:
 _missing = sorted(_ra_ids - _bl_ids)
 check('G5 ★★ 新套件必须已固化进基线（防"入列 SUITES 却漏 --update ⇒ 永远 BASELINE ⇒ 静默不比对"）',
       bool(_ra_ids) and bool(_bl_ids) and not _missing,
-      'suite=%d baseline=%d 缺=%s' % (len(_ra_ids), len(_bl_ids), _missing or '无'))
+      # ★★ 第106轮修正：原先这里回显 `suite=%d baseline=%d` ⇒ 两数**随套件数变化**
+      #   （入列一个新套件就 97→98）⇒ G2 报假 DIFF，而判据语义（缺集为空）一字未变。
+      #   判据本身是对的（它守的正是"没有只在 SUITES 里、不在基线里的 id"）⇒
+      #   **不回显**那两个随规模变化的计数，只留缺集这一 O(1) 的事实。
+      '缺=%s' % (_missing or '无',))
 # 负控制：从基线副本摘掉一个真 id ⇒ 缺集必须非空（证明 G5 有鉴别力，非恒真）
 _bl_minus = set(_bl_ids)
 if _ra_ids:

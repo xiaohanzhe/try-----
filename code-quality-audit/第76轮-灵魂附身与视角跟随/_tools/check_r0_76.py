@@ -205,7 +205,36 @@ _calls = len(re.findall(r'self\.travel_to_scene\(', _main))
 #   （动态目的地项 + 回桌面）。写死 3 是过窄（会误报，见 §60.3）。
 check('D main.py 里 travel_to_scene 真实调用 >= 2（实得 %d）' % _calls, _calls >= 2)
 
-check('D travel_to 真的会调 switch（不绕门禁）', 'self.switch(sid)' in _sc)
+# ★★★ 第106轮改判据：原串 `'self.switch(sid)' in _sc` 守的是"travel_to 直接
+#   调 switch" —— 但第106轮起 travel_to **不再自己 switch 一步**，改为把
+#   `steps` 交给 `walk_steps()` **逐跳**走（用户口径「不能瞬移……完整的走过去」）。
+#   ⇒ 真正的语义是「**不绕门禁**：一切换都经 switch()」，而不是"哪一行字面量"。
+#   ⚠️ 判据写成字面量串是脆性的：实现换一种等价写法（逐跳）就会**假红**。
+#      这里改成"travel_to **或它委托的 walk_steps** 里真的出现 `self.switch(`"。
+def _has_switch_call(src):
+    """`src` 里有没有 `self.switch(` 调用（AST，不看注释/文档串）。
+
+    不能用纯文本扫：`travel_to` 的 docstring 里就写着 `switch()` 这个词，
+    纯文本扫会把"注释里提了一嘴"当成"真的调了"（本项目第 4 次栽在这上面）。
+    """
+    import ast as _ast
+    try:
+        _tree = _ast.parse(src)
+    except SyntaxError:
+        return False
+    for _n in _ast.walk(_tree):
+        if isinstance(_n, _ast.Call) and isinstance(_n.func, _ast.Attribute):
+            if _n.func.attr == 'switch':
+                _v = _n.func.value
+                if isinstance(_v, _ast.Name) and _v.id == 'self':
+                    return True
+    return False
+
+
+check('D travel_to / walk_steps 真的会调 switch（不绕门禁）', _has_switch_call(_sc))
+# ★ 负控制：判据有鉴别力（一个只碰注释、不真调 switch 的源码必须判假）
+check('D 负控制：`_has_switch_call` 对"只有注释提到 switch"的源码判假',
+      _has_switch_call('# self.switch(x) 只在注释里\npass\n') is False)
 # ★ 判据串修正：代码用的是 `result.update({... 'route': ...})`，
 #   而不是 `result['route'] = ...`。原判据串选错 ⇒ 恒假（自己踩的坑）。
 check('D travel_to 有 direct 降级标记（route 键真的被写入）',
