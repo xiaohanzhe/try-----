@@ -504,7 +504,7 @@ from modules.scene_canvas import SceneCanvas, BubbleOverlay
 #   相当于这也是一个有互动的实体」
 # 分工：
 #   soul_entity  纯逻辑：位置/速度/按键/拖拽/钳制/场景位置簿/门控（零依赖，可离线回归）
-#   soul_overlay 绘制：把 state 画成桌面上的那只 48×48 SOUL（独立顶层窗口）
+#   soul_overlay 绘制：把 state 画成桌面上的那只 24×24 SOUL（独立顶层窗口）
 #   src/main.py  组装：热键 / 每帧推进 / 键盘桥 / 与场景和可交互物的接线
 # ⚠️ `SoulOverlay` 走**模块引用**（`soul_overlay_mod.SoulOverlay`）而不是直接名字导入：
 #    第55轮要同时用到 `load_soul_sprites` 与 `direction_of_qt_key`，
@@ -15830,7 +15830,7 @@ class RalseiPet(QMainWindow):
 
         # 2.53 ★ 第55轮：收起灵魂窗口。
         # ⚠️ 灵魂是 **parent=None 的独立顶层窗口**，不会随主窗口一起销毁 ——
-        #    不显式收掉的话，宠物退出后桌面上会留一块 48×48 的红方块。
+        #    不显式收掉的话，宠物退出后桌面上会留一块 24×24 的红方块。
         #    （这是"独立窗口"的代价，必须在这里还上。）
         try:
             soul = getattr(self, 'soul', None)

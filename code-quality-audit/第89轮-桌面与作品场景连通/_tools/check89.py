@@ -615,7 +615,18 @@ try:
             _plan = _pet.scene.plan_frame(
                 sprite_size=_cv.assets.sprite_size, tick=int(_t.time() * 1000))
             _res['plan_n'] = len(_plan)
-            _res['objs'] = [(it.get('name'), tuple(it.get('rect') or ()))
+
+            # ★★★ 第109轮：桌面门现在是**动画**（`spr_darkdoor` 3 帧），`plan_frame`
+            #   按 `tick=int(time()*1000)` 取当前帧 ⇒ 名字里的 `_N` **随墙钟变**
+            #   （实测连跑 3 次得 `_1` / `_0` / `_2`）。把帧号原样 dump 进 G2 基线
+            #   = 偶发假 DIFF（正是「判据禁回显随时相变绝对值」那条）。
+            #   这里**只对 dump 去帧号**（`spr_darkdoor_2.png` → `spr_darkdoor.png`），
+            #   帧动画本身由 `anim_round44` 专测；rect 与 obj 条数不受影响。
+            def _norm_name(_n):
+                import re as _re
+                return _re.sub(r'_\d+\.png$', '.png', str(_n or ''))
+
+            _res['objs'] = [(_norm_name(it.get('name')), tuple(it.get('rect') or ()))
                             for it in _plan if it.get('kind') == 'obj']
             _res['canvas_visible'] = bool(_cv.isVisible())
             # 菜单

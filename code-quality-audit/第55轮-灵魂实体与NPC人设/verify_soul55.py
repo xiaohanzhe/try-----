@@ -51,6 +51,7 @@ from PyQt5.QtCore import QEvent, QPoint, Qt          # noqa: E402
 from PyQt5.QtGui import QKeyEvent                     # noqa: E402
 from PyQt5.QtWidgets import QApplication              # noqa: E402
 import main as M                                      # noqa: E402
+import soul_entity as SE                              # noqa: E402  单点真源（尺寸/速度倍率）
 
 FAILS = []
 N = [0]
@@ -99,18 +100,32 @@ for a in ('animation_timer', 'ai_timer', 'stats_timer', 'dialogue_init_timer',
 soul = pet.soul
 W, H = soul.state.size
 SCR = pet.soul.screen_bounds()
+# ★★★ 第109轮用户口径「**灵魂的尺寸缩小到现在的一半**」⇒ 真源从写死的 3 倍改为
+#   **从产品常量反推**。判据单点真源化的理由：尺寸、满速、0.1s 位移三者都随
+#   `DISPLAY_SCALE` 同比例变化 —— 若仍写死 48 / 360 / 36，则"减半"这件事会
+#   在三条判据上同时报红（且都只是同一个原因）。真源对齐后才不会重复踩。
+_SPR = 16                                    # 原作 spr_heart 逻辑尺寸（soul_entity.LOGICAL_SIZE）
+try:
+    _DS = float(SE.DISPLAY_SCALE)
+except Exception:
+    _DS = 1.5
+_EXP_SIZE = (int(round(_SPR * _DS)), int(round(_SPR * _DS)))
+_EXP_SPEED = 4.0 * 30.0 * _DS               # 原作 4px/帧 * 30fps * 倍率
+_EXP_STEP = _EXP_SPEED * 0.1                 # 推进 0.1s 的位移
 print('== 环境 ==')
 print('  虚拟屏 rect =', SCR)
 print('  宠物窗口 =', (pet.x(), pet.y(), pet.width(), pet.height()))
 print('  灵魂 size =', (W, H), 'scale =', soul.state.scale,
       'speed =', soul.state.speed_per_sec, 'px/s')
-print('  SOUL px/s 期望 = 4*30*3 =', 4 * 30 * 3)
+print('  SOUL 期望 size = %s（16 × DISPLAY_SCALE=%s）px/s 期望 = %.1f'
+      % (_EXP_SIZE, _DS, _EXP_SPEED))
 
 # ---------------------------------------------------------------- 1. 建起来
 check('S1 灵魂已建且可见', soul is not None and soul.isVisible())
-check('S2 尺寸 = 16*3 = 48x48', (W, H) == (48, 48), str((W, H)))
-check('S3 满速 = 原作 4px/帧 * 30fps * 3 倍',
-      almost(soul.state.speed_per_sec, 360.0), '%.1f' % soul.state.speed_per_sec)
+check('S2 尺寸 = 16 × DISPLAY_SCALE(%s) = %s×%s' % (_DS, _EXP_SIZE[0], _EXP_SIZE[1]),
+      (W, H) == _EXP_SIZE, str((W, H)))
+check('S3 满速 = 原作 4px/帧 * 30fps * DISPLAY_SCALE(%s) = %.0f' % (_DS, _EXP_SPEED),
+      almost(soul.state.speed_per_sec, _EXP_SPEED), '%.1f' % soul.state.speed_per_sec)
 check('S4 独立顶层窗口（parent 为空）', soul.parent() is None,
       repr(soul.parent()))
 check('S5 未加置顶标记',
@@ -160,8 +175,8 @@ press(Qt.Key_Left)
 check('K1 按下 ← 后按键集合 = (left,)', soul.state.pressed() == ('left',),
       str(soul.state.pressed()))
 tick(0.1)
-check('K2 按 ← 推进 0.1s 位移 = -36px（4*30*3*0.1）',
-      almost(soul.state.x, base_x - 36.0) and almost(soul.state.y, base_y),
+check('K2 按 ← 推进 0.1s 位移 = -%.0fpx（4*30*%s*0.1）' % (_EXP_STEP, _DS),
+      almost(soul.state.x, base_x - _EXP_STEP) and almost(soul.state.y, base_y),
       '位移 (%.1f, %.1f)' % (soul.state.x - base_x, soul.state.y - base_y))
 release(Qt.Key_Left)
 check('K3 松开 ← 后按键集合为空', soul.state.pressed() == (),
@@ -178,7 +193,7 @@ bx3, by3 = soul.state.x, soul.state.y
 tick(0.1)
 dx, dy = soul.state.x - bx3, soul.state.y - by3
 check('K5 对角线两轴各满速（√2 倍，照抄原作分轴赋值）',
-      almost(dx, -36.0) and almost(dy, -36.0),
+      almost(dx, -_EXP_STEP) and almost(dy, -_EXP_STEP),
       '(%.1f, %.1f)' % (dx, dy))
 release(Qt.Key_Left)
 release(Qt.Key_Up)
@@ -188,8 +203,8 @@ soul.state.clear_keys()
 press(Qt.Key_Right)
 bx4 = soul.state.x
 tick(5.0)          # 假掉帧 5 秒
-check('K6 dt=5.0s 只按 MAX_DT(0.1s) 结算 ⇒ 位移 36px（不瞬移）',
-      almost(soul.state.x - bx4, 36.0), '位移 %.1f' % (soul.state.x - bx4))
+check('K6 dt=5.0s 只按 MAX_DT(0.1s) 结算 ⇒ 位移 %.0fpx（不瞬移）' % _EXP_STEP,
+      almost(soul.state.x - bx4, _EXP_STEP), '位移 %.1f' % (soul.state.x - bx4))
 release(Qt.Key_Right)
 soul.state.clear_keys()
 
@@ -338,8 +353,12 @@ check('D2 起点 = 灵魂当前位置（不是 QCursor.pos()）',
 #   ⇒ 偶发假 DIFF（第66→67轮之间实测命中一次：175.0 → 176.0，两行都还是 PASS）。
 #   ⇒ 正解不是放大容差、也不是每次 `--update` 盖掉，而是**把时钟冻结**，
 #     让 elapsed **精确等于** `drag_duration` 的一半（1.0 / 2.0）。
-#     此时 progress = 0.5、eased = 0.875，位移恒为 (175.0, 87.0)
-#     —— 与既有基线逐字节相同（y 的 87.5 被产品的 `int()` 截断成 87，也是确定行为）。
+#     此时 progress = 0.5、eased = 0.875，位移恒为 (dx*0.875, dy*0.875)
+#     —— 与既有基线逐字节相同（y 的 .5 被产品的 `int()` 截断成整数，也是确定行为）。
+#     ★★★ 第109轮：位移 = `(start→target) × 0.875`，其中 start→target 是**夹具自己**
+#       传的 (200,100) 偏移 —— **与灵魂尺寸/倍率无关**（`update_mouse_drag` 推的是
+#       光标目标点，不按灵魂像素缩放）。故这里由 start/target 现算，不写死 175。
+_EXP_DRAG_X = abs(pet.drag_target_pos.x() - pet.drag_start_pos.x()) * 0.875
 _t_origin = pet.drag_start_time                 # 产品自己记的起点
 pet.drag_start_time -= 1.0                      # ⇒ 冻结时钟下 elapsed 恰为 1.0
 _old_time = M.time
@@ -351,8 +370,8 @@ finally:
 moved = (soul.state.x - before[0], soul.state.y - before[1])
 check('D3 update_mouse_drag 推动的是**灵魂**（位置变了）',
       moved[0] > 0 and moved[1] > 0, '位移 (%.1f, %.1f)' % moved)
-check('D4 缓动 < 线性（缓出：1-(1-0.5)^3 = 0.875 ⇒ 200*0.875=175）',
-      almost(moved[0], 175.0, 2.0), '期望 ~175 实际 %.1f' % moved[0])
+check('D4 缓动 < 线性（缓出：1-(1-0.5)^3 = 0.875 ⇒ 200*0.875=%.0f）' % _EXP_DRAG_X,
+      almost(moved[0], _EXP_DRAG_X, 2.0), '期望 ~%.0f 实际 %.1f' % (_EXP_DRAG_X, moved[0]))
 pet.drag_start_time -= 5.0          # 超过 drag_duration ⇒ 自动结束
 pet.update_mouse_drag()
 check('D5 时间到 ⇒ 自动 stop（is_dragging_mouse=False）',
