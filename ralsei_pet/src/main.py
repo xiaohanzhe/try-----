@@ -1506,6 +1506,16 @@ class RalseiPet(QMainWindow):
         # ★★★ 它**只记一个 True，不做任何销毁**（用户口径「别毁」）。
         self.init_plot_mark()
 
+        # ---- UI 缩放下发（第108轮，缺口②）----
+        # 为什么排在**全链最末**：`_apply_ui_scale()` 要给**已经建出来**的 UI 控件
+        #   （对话框 `dialogue_ui` / S 键菜单 `item_menu_ui`）下发倍率 —— 建一个发一次
+        #   是 N 次重复，建完发一次才是"一次算清"。放在这里保证两者都在。
+        # ★ 幂等：内部逐个 `getattr` + 判可调用，缺控件不影响其余（见其 docstring）。
+        # ★ 与 `set_pet_scale()` 的关系：那里也发一次（改档位要立刻生效）；
+        #   这里补的是"**启动时**用读回的持久化倍率发一次"—— `set_pet_scale`
+        #   只在用户改档时被调，光靠它则"上次设的 2.0"重启后 UI 不生效。
+        self._apply_ui_scale()
+
     # ==================================================================
     #  灵魂（SOUL，第55轮）—— 可拖拽 / 可键盘操控 / 可自由出入各场景
     # ==================================================================
@@ -6801,12 +6811,49 @@ class RalseiPet(QMainWindow):
         self.pet_scale = target
         # ★ 重算宠物渲染倍率（= 场景 scale × 相对倍率）
         self._refresh_pet_render_scale()
-        # ★ UI 由 `pet_scale` 派生（无需额外状态，见 `ui_scale`）
+        # ★★★ 第108轮：把 UI 倍率**真正下发**给对话框 / 菜单等控件。
+        #   `ui_scale()` 原先只有定义、零消费（缺口②：「UI 也要放大」只做了一半）。
+        self._apply_ui_scale()
         if persist:
             self._persist_pet_scale(target)
         _log.info('宠物缩放 = %.2f（相对场景；渲染倍率 %.3f）',
                   target, self.__dict__.get('_cached_scale_factor', 0.0))
         return target
+
+    def _apply_ui_scale(self):
+        """★★★ 第108轮：把 `ui_scale()` 下发给各个 UI 控件（缺口②的落地）。
+
+        ★ 为什么是"下发"而不是"各控件自己去问倍率"
+        ----------------------------------------
+        倍率真源只有一处（本类的 `ui_scale()`，由 `pet_scale` 派生）。若让每个
+        控件自己去宿主身上取，就产生了 N 个"谁知道倍率"的入口 —— 这正是本项目
+        反复踩的"两份真源"裂缝。⇒ 宿主统一算一次、统一发。
+
+        ★ 为什么用 `getattr` 逐个试而不是写死控件名
+        ----------------------------------------
+        控件可能**没建出来**（道具系统初始化失败 ⇒ `item_menu_ui is None`；
+        对话框在极早期也可能还没建）。逐个 `getattr` + 判 `apply_ui_scale` 可调用，
+        ⇒ 少一个控件不影响其余控件（"缺一个不该全废"）。
+
+        ★ 幂等：`apply_ui_scale` 自身从基准重算（见其 docstring），重复调用无副作用。
+        """
+        try:
+            s = float(self.ui_scale())
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return None
+        done = []
+        for name in ('dialogue_ui', 'item_menu_ui'):
+            try:
+                w = getattr(self, name, None)
+                fn = getattr(w, 'apply_ui_scale', None)
+                if callable(fn):
+                    fn(s)
+                    done.append(name)
+            except Exception as e:
+                # 单个控件缩放失败不许拖垮其余（更不许拖垮设档动作本身）
+                _log.debug('UI 缩放下发失败（%s）: %s', name, e)
+        return done
 
     def _refresh_pet_render_scale(self):
         """按 **场景 scale × 相对倍率** 重算宠物渲染倍率（幂等、永不抛）。

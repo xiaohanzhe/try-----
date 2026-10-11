@@ -185,6 +185,7 @@ check("A2b `_maybe_break_turn` 同时受 SINGLE_TURN_MODE 与 TURN_GAP_SECONDS �
 # ★★ 调用顺序：必须在 `_commit_previous_ralsei_into_history()` **之后** ——
 #    在它前面清，刚清完那一句又会被 commit 追加回来，等于没清（静默失效）。
 _a2c_ok = False
+_seq = []
 if _add is not None:
     _seq = [getattr(getattr(n, 'func', None), 'attr', None)
             for n in ast.walk(_add) if isinstance(n, ast.Call)]
@@ -192,7 +193,18 @@ if _add is not None:
         _a2c_ok = (_seq.index('_commit_previous_ralsei_into_history')
                    < _seq.index('_maybe_break_turn'))
 check("A2c add_dialogue 里 `_maybe_break_turn` 排在 commit **之后**（顺序反了就静默失效）",
-      _a2c_ok, "调用序=%s" % (_seq if _add is not None else None))
+      _a2c_ok, "idx(commit)=%s idx(break)=%s"
+      % (_seq.index('_commit_previous_ralsei_into_history')
+         if _a2c_ok or ('_commit_previous_ralsei_into_history' in _seq
+                        and '_maybe_break_turn' in _seq) else None,
+         _seq.index('_maybe_break_turn')
+         if _a2c_ok or ('_commit_previous_ralsei_into_history' in _seq
+                        and '_maybe_break_turn' in _seq) else None))
+# ★★ 判据坑（第108轮修）：detail 原先回显**完整调用序列表** ⇒ 任何无关调用插入
+#   （第108轮在 `add_dialogue` 里加了两处 `_html_pt`）都会让本行 DIFF，而判据语义
+#   一个字没变。与第107轮 `check107 E2` 的"行号回显"同型（判据禁回显随时相变的
+#   绝对值）。⇒ 改成只回显**本判据实际比较的两个 token 的位置**（相对量，与无关
+#   调用无关）；`_a2c_ok` 的计算**一个字不动**（只是可读性回显）。
 
 # ★ 间隔必须在 `_note_focus()` 之前取（它会把 _last_activity 刷成现在）
 _a2d_ok = False

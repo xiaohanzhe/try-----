@@ -448,6 +448,22 @@ class DialogueUI(QWidget):
         self._base_width = self.BASE_WIDTH
         self._min_dialogue_h = 72
         self._max_dialogue_h = 380  # 上限防止占满全屏
+        # ★★★ 第108轮：UI 缩放 —— 记住**基准值**，缩放后由 `apply_ui_scale` 重算。
+        #   基准必须在此处（构建完）快照一次：否则第二次缩放会把"已放大的值"
+        #   当成基准再乘一遍（幂等性就此丢掉，改档位会越改越大）。
+        self._ui_scale = 1.0
+        self._ui_base = {
+            'inset': int(self.BOX_INSET),
+            'base_width': int(self.BASE_WIDTH),
+            'min_box_height': int(self.MIN_BOX_HEIGHT),
+            'font_cursor': 11, 'font_name': 12, 'font_body': 13,
+            'font_input': 11, 'font_send': 9,
+            'cursor_size': 14, 'face_size': 84, 'face_pix': 78,
+            'input_h': 48, 'send_w': 72, 'send_h': 48,
+            'min_dialogue_h': 72, 'max_dialogue_h': 380,
+            'name_label_h': 18, 'right_spacing': 4,
+            'html_user_pt': 10, 'html_npc_pt': 10,
+        }
         right_col.addWidget(self.dialogue_content, 1)
 
         # —— 输入区域（默认折叠，用户交互时展开）——
@@ -594,7 +610,114 @@ class DialogueUI(QWidget):
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     # ------------------------------------------------------------------ face
+    # ---------------------------------------------------------------- UI 缩放
+    def apply_ui_scale(self, scale):
+        """★★★ 第108轮：按宿主给的倍率**整体**缩放对话框（含框体/字号/头像）。
+
+        用户口径逐字：「**UI，也就是我所说的游戏中的对话框之类的也要放大**」。
+        倍率真源在宿主 —— `RalseiPet.ui_scale()`（由 `pet_scale` 派生的平方根）。
+        本方法**只消费**，不自己再算一遍（"两处各写一份真源"是本项目最贵的坑）。
+
+        ★ 为什么每处都从 `self._ui_base` 基准重算，而不是在现值上乘
+        ----------------------------------------------------------
+        后者**不幂等**：1.0 → 1.5 → 1.0 会留下 1.5 的残留（现值已改过），
+        改档位就会越改越大。基准快照 + 每次重算 ⇒ `f(f(x)) == f(x)`。
+
+        ★ 关于"原作到底缩不缩放"（**不许假装**）
+        ------------------------------------
+        第44轮反编译取证（`_evidence/gml/`）：原作的对话框尺寸全是**固定像素常量**
+        写在 view 坐标里（`scr_dbox` 的 `xxx+38 / +602 / +154`、`scr_texttype` 的
+        `charline=33 / hspace=8 / vspace=18`、字体 `fnt_main` em=12）——
+        **原作自己的 UI 并不缩放**。
+        ⇒ "UI 随场景放大"是**我们的产品口径**（因为我们的场景是等比放大的，
+           UI 不跟着放大会显得像贴在屏幕上的一张纸），**不是**原作行为。
+           本条如实记录，供将来对账。
+
+        :param scale: 目标倍率。非法（`None` / 非数 / `NaN` / `<= 0`）⇒ **原样不动**
+                      （不猜、不退化成别的数）。可调区间由宿主钳位，这里只防脏值。
+        :return: 实际生效的倍率（被忽略时返回上一次的值）。
+        """
+        try:
+            s = float(scale)
+        except (TypeError, ValueError):
+            return self._ui_scale
+        # NaN 自己 != 自己；负值与 0 会让尺寸退化成 0（看不见）
+        if s != s or s <= 0.0:
+            return self._ui_scale
+        base = getattr(self, '_ui_base', None)
+        if not isinstance(base, dict):
+            return self._ui_scale       # 未完成构建（或老对象）⇒ 不动
+
+        def _i(key, lo=1):
+            """基准值 × 倍率，取整并保底 `lo`（防 0 尺寸）。"""
+            try:
+                v = int(round(float(base[key]) * s))
+            except Exception:
+                return lo
+            return v if v >= lo else lo
+
+        try:
+            # —— 框体几何（内缩 = 原作 32px 边框带，必须跟着放大）——
+            self.BOX_INSET = _i('inset')
+            self._base_width = _i('base_width', 64)
+            self._min_dialogue_h = _i('min_dialogue_h', 8)
+            self._max_dialogue_h = _i('max_dialogue_h', 16)
+
+            # —— 字号（像素字体的 point_size 直接乘）——
+            self._cursor_label.setFont(_ralsei_font(_i('font_cursor'), bold=False))
+            self.name_label.setFont(_ralsei_font(_i('font_name'), bold=True))
+            self.dialogue_content.setFont(_ralsei_font(_i('font_body'), bold=False))
+            self.input_field.setFont(_ralsei_font(_i('font_input'), bold=False))
+            self.send_button.setFont(_ralsei_font(_i('font_send'), bold=True))
+
+            # —— 固定尺寸控件 ——
+            cs = _i('cursor_size', 4)
+            self._cursor_label.setFixedSize(cs, cs)
+            fs = _i('face_size', 8)
+            self.face_label.setFixedSize(fs, fs)
+            self.input_field.setFixedHeight(_i('input_h', 8))
+            self.send_button.setFixedSize(_i('send_w', 8), _i('send_h', 8))
+
+            # —— 框体素材的缩放（黑底/边框/角块都按倍率绘制）——
+            try:
+                self._frame.set_content_scale(s)
+            except Exception as e:      # 防御性：框体缩放失败不该拖垮字号
+                _log.debug("dialogue_ui 框体缩放未生效: %s", e)
+
+            # —— 布局内缩也要同步（否则放大后文字会压到边框带上）——
+            try:
+                _inner = self._frame.layout()
+                if _inner is not None:
+                    m = self.BOX_INSET
+                    _inner.setContentsMargins(m, m, m, m)
+            except Exception as e:
+                _log.debug("dialogue_ui 内缩同步失败: %s", e)
+
+            # —— 头像位图同步（否则 84 的框里贴 1.5 倍的小头像）——
+            try:
+                self.set_face(getattr(self, '_last_face', 'normal'))
+            except Exception as e:
+                _log.debug("dialogue_ui 头像重贴失败: %s", e)
+
+            self._ui_scale = s
+            # 尺寸变了 ⇒ 立刻按新几何重排（并把 ▼ 贴回右下角）
+            try:
+                self._recalc_size_to_content()
+                self._position_cursor_overlay()
+            except Exception as e:
+                _log.debug("dialogue_ui 缩放后重排失败: %s", e)
+        except Exception as e:          # 修复：原先静默吞噬
+            _log.debug("dialogue_ui UI 缩放异常（已忽略）: %s", e)
+        return self._ui_scale
+
     def set_face(self, face_type):
+        # ★★ 第108轮：记住"最后一次要贴的表情"—— UI 缩放后要按新尺寸**重贴**
+        #   （否则框放大了、头像还是旧的小图）。不记的话只能贴成 normal，
+        #   那会让"缩放一下表情就变了"，是可见的行为破坏。
+        try:
+            self._last_face = face_type
+        except Exception:
+            pass
         name = _resolve_face_name(face_type)
         loader = self.parent.sprite_loader
         # 兜底：解析出的素材名若不存在（新增/拼错的表情键、emotion_system 返回
@@ -607,8 +730,21 @@ class DialogueUI(QWidget):
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         pixmap = loader.get_face(name)
         if pixmap and not pixmap.isNull():
+            # ★★ 第108轮：贴图尺寸 = 基准 78 × UI 倍率（与 face_label 的 84×倍率配套，
+            #   两者都从 `_ui_base` 派生 ⇒ 框与图始终同比例）。
+            _sc = float(getattr(self, '_ui_scale', 1.0))
+            _base = getattr(self, '_ui_base', None)
+            _pix_base = 78
+            if isinstance(_base, dict):
+                try:
+                    _pix_base = int(_base.get('face_pix', 78))
+                except Exception:
+                    _pix_base = 78
+            _side = int(round(_pix_base * _sc))
+            if _side < 8:
+                _side = 8
             self.face_label.setPixmap(
-                pixmap.scaled(78, 78, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+                pixmap.scaled(_side, _side, Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
     # ---------------------------------------------------------------- typing
     def add_dialogue(self, speaker, message, face_type="normal", _streamed=False):
@@ -668,7 +804,7 @@ class DialogueUI(QWidget):
                 _label = speaker
             self._reset_front_stage()
             self._history_html += (
-                f'<div style="color:#c9a86a;font-size:10pt;line-height:1.45;'
+                f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
                 f'margin:2px 0 2px 0;">▸ {_html.escape(str(_label))}: {safe_message}</div>')
             self.typing_text = ""
             self.typing_index = 0
@@ -702,7 +838,7 @@ class DialogueUI(QWidget):
                 # 主人开口本身就是最强的"新一轮"信号。
                 self._history_html = ""
             self._history_html += (
-                f'<div style="color:#9aa0aa;font-size:10pt;line-height:1.45;'
+                f'<div style="color:#9aa0aa;font-size:{self._html_pt(10)}pt;line-height:1.45;'
                 f'margin:2px 0 4px 0;">▸ YOU: {safe_message}</div>')
             self.typing_text = ""   # 前台清空：最新的一条是用户消息
             self._refresh_display()
@@ -715,6 +851,25 @@ class DialogueUI(QWidget):
     @staticmethod
     def _is_npc_speaker(speaker):
         return isinstance(speaker, str) and speaker not in ("ralsei", "user")
+
+    def _html_pt(self, base_pt):
+        """★ 第108轮：HTML 内联字号也要跟随 UI 倍率（`font-size:10pt` 是硬编码的）。
+
+        为什么必须有这个帮助方法：正文里"你说的话 / NPC 说的话"是拼进 `setHtml`
+        的 `<div style="font-size:10pt">` —— 那是**字符串里的字号**，
+        `setFont()` 管不到它。不缩它 = 框放大了但历史区那几行还是小字。
+        """
+        try:
+            s = float(getattr(self, '_ui_scale', 1.0))
+        except (TypeError, ValueError):
+            s = 1.0
+        if s != s or s <= 0.0:
+            s = 1.0
+        try:
+            v = int(round(float(base_pt) * s))
+        except (TypeError, ValueError):
+            v = int(base_pt) if base_pt else 10
+        return v if v >= 4 else 4
 
     def _reset_front_stage(self):
         """把前台收拾干净，准备写一条新内容（占位 / 打字机 / 上一条 Ralsei 都收掉）。
@@ -754,7 +909,7 @@ class DialogueUI(QWidget):
         if self.SINGLE_TURN_MODE:
             self._history_html = ""
         self._history_html += (
-            f'<div style="color:#9aa0aa;font-size:10pt;line-height:1.45;'
+            f'<div style="color:#9aa0aa;font-size:{self._html_pt(10)}pt;line-height:1.45;'
             f'margin:2px 0 2px 0;">▸ 你对 {safe_label} 说: {safe_msg}</div>')
         self.typing_text = ""
         self.typing_index = 0
@@ -783,7 +938,7 @@ class DialogueUI(QWidget):
         safe_msg = _html.escape(text)
         self._reset_front_stage()
         self._history_html += (
-            f'<div style="color:#c9a86a;font-size:10pt;line-height:1.45;'
+            f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
             f'margin:2px 0 2px 0;">▸ {safe_label}: {safe_msg}</div>')
         self.typing_text = ""
         self.typing_index = 0
@@ -1096,9 +1251,14 @@ class DialogueUI(QWidget):
 
             # —— 根据输入框是否可见 + 内容高度，计算整个窗口的目标高度 ——
             frame_v_pad = 2 * self.BOX_INSET   # 原作框四周各 34px 内缩
-            name_label_h = 18
-            right_spacing = 4
-            face_h = 84
+            # ★ 第108轮：这三个以前是硬编码（18 / 4 / 84）—— UI 放大后它们必须
+            #   一起放大，否则"框变大了但行高没变"，正文会被挤到边框带上。
+            #   仍然从 `_ui_base` 基准派生，保证幂等。
+            _b = self._ui_base if isinstance(getattr(self, '_ui_base', None), dict) else {}
+            _s = float(getattr(self, '_ui_scale', 1.0)) or 1.0
+            name_label_h = int(round(float(_b.get('name_label_h', 18)) * _s))
+            right_spacing = int(round(float(_b.get('right_spacing', 4)) * _s))
+            face_h = int(round(float(_b.get('face_size', 84)) * _s))
             body_h = name_label_h + right_spacing + clamped_h
             if self._input_bar_reserved():
                 body_h += right_spacing + self._input_bar.sizeHint().height()

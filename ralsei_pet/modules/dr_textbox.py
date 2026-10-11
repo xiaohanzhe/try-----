@@ -258,10 +258,77 @@ def paint_dark_box(painter, x1, y1, x2, y2, frame, sprites=None):
         painter.drawPixmap(rect, pm)
 
 
+def paint_dark_box_scaled(painter, x1, y1, x2, y2, frame, scale, sprites=None):
+    """★★ 第108轮：`paint_dark_box` 的**等比放大版**（框体随 UI 倍率放大）。
+
+    ★ 做法：把"框矩形"的四个边**按倍率换算**，其余公式**逐字不动** ——
+      这样"边框带厚度 / 角块尺寸 / 黑底内缩"全部自动等比：
+          边厚 BAND(32) → BAND×s；角块 32 → 32×s；黑底内缩 14 → 14×s。
+      ⇒ 不重写一份几何公式（那才会有"两份真源"的裂缝）。
+
+    ★ 与 `paint_dark_box` 的关系：`scale == 1.0` 时两者**逐像素等价**
+      （`int(round(v*1.0)) == v` 对整数 v 恒成立）—— 判据 G 段会真跑对拍。
+
+    ⚠️ 入参 `x1/y1/x2/y2` 与 `paint_dark_box` 同义（**未缩放**的绘制区），
+       缩放发生在本函数内部 —— 调用方不必先乘，避免"乘两遍"。
+    """
+    try:
+        s = float(scale)
+    except (TypeError, ValueError):
+        s = 1.0
+    if s != s or s <= 0.0:
+        s = 1.0
+
+    def _m(v):
+        return int(round(float(v) * s))
+
+    sp = sprites or default_sprites()
+    # 黑底：四边各内缩 BLACK_INSET × s（与原式同构，只是每项都过 _m）
+    painter.fillRect(QRect(_m(x1) + _m(BLACK_INSET), _m(y1) + _m(BLACK_INSET),
+                           max(0, _m((x2 - x1) - 2 * BLACK_INSET)),
+                           max(0, _m((y2 - y1) - 2 * BLACK_INSET))),
+                     QColor(0, 0, 0))
+    # 框体：先把矩形边界映射到缩放后坐标，再跑**同一套** darkbox_blits
+    for item in darkbox_blits(_m(x1), _m(y1), _m(x2), _m(y2), frame):
+        kind = item[0]
+        r = item[1]
+        if kind == 'fill':
+            continue
+        # 注意：darkbox_blits 内部的 BAND/CORNER_SIZE 是**未缩放**常量，
+        # 直接拿来当像素宽高会偏小 ⇒ 这里按倍率补回（带厚 × s、角块 × s）。
+        if kind in ('top', 'top_v'):
+            rect = QRect(int(r[0]), int(r[1]), int(r[2]), _m(BAND))
+        elif kind in ('left', 'left_h'):
+            rect = QRect(int(r[0]), int(r[1]), _m(BAND), int(r[3]))
+        else:
+            _cs = _m(CORNER_SIZE)
+            rect = QRect(int(r[0]), int(r[1]), _cs, _cs)
+        if kind == 'top':
+            pm = sp.top(False)
+        elif kind == 'top_v':
+            pm = sp.top(True)
+        elif kind == 'left':
+            pm = sp.left(False)
+        elif kind == 'left_h':
+            pm = sp.left(True)
+        else:
+            hf, vf = item[2]
+            pm = sp.corner(frame, hf, vf)
+        painter.drawPixmap(rect, pm)
+
+
 class DrTextboxFrame(QWidget):
     """自绘原作对话框：黑底 + 32px 白边框 + 8 帧动画角。
 
     只负责"画框"；内容布局由调用方按 CONTENT_INSET 内缩摆放。
+
+    ★★ 第108轮追加：`set_content_scale(s)` —— 框体（黑底/边框带/角块）按倍率
+       绘制。**不改素材**（不做 pixmap 预缩放），只在**绘制矩形**上乘倍率，
+       原因有二：
+         ① 角块是 32px 的像素图，Qt 的 `drawPixmap(rect, pm)` 会把 16px 精灵
+            拉伸到目标矩形 —— 放大时与 `draw_sprite_ext(..., 2, 2, ...)` 同语义；
+         ② 预缩放要缓存 8 帧 × 4 翻转 = 32 张 bitmap/倍率，倍率连续变化时是
+            无界缓存。绘制期乘倍率则零缓存、零状态。
     """
 
     CONTENT_INSET = CONTENT_INSET
@@ -273,10 +340,37 @@ class DrTextboxFrame(QWidget):
         self._tick = 0
         self._frame = 0
         self._sprites = None
+        # ★ 第108轮：框体内容倍率（1.0 = 原作像素；宿主 `ui_scale()` 下发）。
+        #   `None` 表示"还没设过" ⇒ 绘制走原路径（逐字节等价于第44轮行为）。
+        self._content_scale = None
         self._timer = QTimer(self)
         self._timer.setInterval(TYPE_INTERVAL_MS)
         self._timer.timeout.connect(self._advance)
         self._timer.start()
+
+    # -- 缩放 -----------------------------------------------------------
+    def set_content_scale(self, scale):
+        """设置框体绘制倍率。非法值（`None`/`NaN`/`<=0`）⇒ 退回 1.0 语义。
+
+        :return: 实际生效的倍率（`None` = 未启用缩放，走原路径）。
+        """
+        try:
+            s = float(scale)
+        except (TypeError, ValueError):
+            self._content_scale = None
+            self.update()
+            return None
+        if s != s or s <= 0.0:
+            self._content_scale = None
+            self.update()
+            return None
+        self._content_scale = s
+        self.update()
+        return s
+
+    def content_scale(self):
+        """当前框体倍率；`None` = 未启用（原路径）。"""
+        return self._content_scale
 
     # -- 动画 -----------------------------------------------------------
     def _advance(self):
@@ -321,8 +415,16 @@ class DrTextboxFrame(QWidget):
         try:
             p = QPainter(self)
             p.setRenderHint(QPainter.SmoothPixmapTransform, False)
-            paint_dark_box(p, 0, 0, self.width(), self.height(),
-                           self._frame, self._sprites)
+            # ★★ 第108轮：有倍率 ⇒ 把框体矩形整体按倍率放大后再画。
+            #   原路径（`_content_scale is None`）**一个字节没变** ——
+            #   这正是"零回归"的做法：不走新分支就等于第44轮的老行为。
+            _s = getattr(self, '_content_scale', None)
+            if _s is None or _s == 1.0:
+                paint_dark_box(p, 0, 0, self.width(), self.height(),
+                               self._frame, self._sprites)
+            else:
+                paint_dark_box_scaled(p, 0, 0, self.width(), self.height(),
+                                      self._frame, _s, self._sprites)
             p.end()
         except Exception as e:  # 防御性：绘制失败不能拖垮主窗口
             _log.debug("dr_textbox 绘制异常（已忽略）: %s", e)

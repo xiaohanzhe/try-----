@@ -48,7 +48,8 @@
 [PASS] ★ E1 ★★★ `PET_SCALE_DEFAULT/MIN/MAX/STEP` 四常量齐  <- {'PET_SCALE_DEFAULT': 1.0, 'PET_SCALE_MIN': 0.4, 'PET_SCALE_MAX': 2.5, 'PET_SCALE_STEP': 0.1}
 [PASS] ★ E1b ★★★ `PET_SCALE_DEFAULT == 1.0`（1.0 = 与场景同比例 = 最贴原作）  <- got=1.0
 [PASS] ★ E1c ★★★ `MIN < DEFAULT < MAX` 且 STEP > 0（MIN=0.4 缩得下去 / MAX=2.5 放得开）  <- {'PET_SCALE_DEFAULT': 1.0, 'PET_SCALE_MIN': 0.4, 'PET_SCALE_MAX': 2.5, 'PET_SCALE_STEP': 0.1}
-[PASS] ★ E2 ★★★ `_cached_scale_factor` **真被赋值**（第44轮起从未赋值 ⇒ 恒走默认 2.0；第107轮接成真源）—— 至少 2 处赋值（__init__ + _refresh）  <- 赋值行=[1396, 6836, 6886]
+[PASS] ★ E2 ★★★ `_cached_scale_factor` **真被赋值**（第44轮起从未赋值 ⇒ 恒走默认 2.0；第107轮接成真源）—— 至少 2 处赋值（初始 + 重算）  <- 赋值处数=3
+[PASS] ★ E2b ★★★ `_cached_scale_factor` 的赋值落在 **≥2 个不同方法**且必含重算路径`_refresh_pet_render_scale`（★ 只在初始处赋值 = 调档位不会重算 ⇒ 必须报红）  <- 涉及方法=['_load_persisted_pet_scale', '_refresh_pet_render_scale', 'init_systems']
 [PASS] ★ E3 ★★★ `_refresh_pet_render_scale` 的 `v = <某含 scale 的量> × <相对倍率>`（"每逻辑像素多少屏幕像素"= 与场景同一把尺）—— ★ AST **数据流**判（允许经局部变量中转：产品是 `sc = cam.scale` ⇒ `v = sc * rel`；绑语法形状会假红）
 [PASS] ★ E3c ★★ 相对倍率真从 `self.pet_scale` 取（不是写死 2.0 那种）
 [PASS] ★ E3b ★★ 倍率有下限钳位（防 0/负 ⇒ 贴图被缩没）
@@ -79,6 +80,6 @@
 
 -- G 判据自身体检 --
 [PASS] ★ G1 ★★★ 本套件无 `ok(..., True)` 恒真判据（AST 复查）  <- 行=[]
-[PASS] ★ G2 ★★ 记账守恒（PASS+FAIL 总数 ≥ 45）  <- 总=67
+[PASS] ★ G2 ★★ 记账守恒（PASS+FAIL 总数 ≥ 45）  <- 总=68
 [PASS] ★ G3 ★★ 负控制：记账器有鉴别力（模拟 FAIL ⇒ 计数真 +1，已撤回）
 [PASS] ★ G4 ★★★ 九处令牌逐个回原文件 `in` 一次（判据守的符号真的在盘上）  <- 缺=[]

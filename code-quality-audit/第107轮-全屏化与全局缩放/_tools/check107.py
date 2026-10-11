@@ -522,17 +522,46 @@ ok(u'E1c ★★★ `MIN < DEFAULT < MAX` 且 STEP > 0'
    u'%r' % (_ps_consts,), star=True)
 
 # E2 _cached_scale_factor 真被赋值（全仓历史：从未被赋值，恒走默认 2.0）
+# ★★ 第108轮修正：初版回显 `赋值行=[1396, 6836, 6886]` —— **判据回显了随时相变的
+#   绝对值（行号）**。第108轮在 `_refresh_pet_render_scale` 前插了 `_apply_ui_scale`
+#   ⇒ 行号整体平移 ⇒ 输出 DIFF，但**语义零变化**（这正是记忆里那条
+#   「判据禁回显随时相变的绝对值（日期/行号）」）。⇒ 改为**只报个数**，
+#   并把鉴别力**提高**到语义层：不仅数数量，还要求这两个**方法名**各有一处
+#   （"只在一处赋值"和"两处都赋值"必须可区分）。
 _csf_assigns = []
-for _n in ast.walk(_t_main):
-    if isinstance(_n, ast.Assign):
-        for _t in _n.targets:
-            if isinstance(_t, ast.Attribute) and _t.attr == '_cached_scale_factor':
-                _csf_assigns.append(_n.lineno)
-            elif isinstance(_t, ast.Name) and _t.id == '_cached_scale_factor':
-                _csf_assigns.append(_n.lineno)
+_csf_where = set()
+for _cls in (ast.walk(_t_main) if isinstance(_t_main, ast.AST) else []):
+    if not isinstance(_cls, ast.ClassDef):
+        continue
+    for _meth in _cls.body:
+        if not isinstance(_meth, ast.FunctionDef):
+            continue
+        for _n in ast.walk(_meth):
+            if not isinstance(_n, ast.Assign):
+                continue
+            for _t in _n.targets:
+                if (isinstance(_t, ast.Attribute)
+                        and _t.attr == '_cached_scale_factor'):
+                    _csf_assigns.append(_n.lineno)
+                    _csf_where.add(_meth.name)
+                elif (isinstance(_t, ast.Name)
+                        and _t.id == '_cached_scale_factor'):
+                    _csf_assigns.append(_n.lineno)
+                    _csf_where.add(_meth.name)
 ok(u'E2 ★★★ `_cached_scale_factor` **真被赋值**（第44轮起从未赋值 ⇒ 恒走默认 2.0；'
-   u'第107轮接成真源）—— 至少 2 处赋值（__init__ + _refresh）',
-   len(_csf_assigns) >= 2, u'赋值行=%r' % (_csf_assigns,), star=True)
+   u'第107轮接成真源）—— 至少 2 处赋值（初始 + 重算）',
+   len(_csf_assigns) >= 2, u'赋值处数=%d' % (len(_csf_assigns),), star=True)
+# ★★ 第108轮新增（**由一次真报红换来的**）：赋值必须落在 ≥2 个**不同方法**里，
+#   且必含 `_refresh_pet_render_scale`（"改档位就重算"的那条路径）。
+#   ⚠️ 判据自身体检：初版写死要求 `__init__` 在场 ⇒ **报红**。回查发现
+#      第107轮那句"`__init__` + `_refresh`"**它自己的措辞就不准**：
+#      初始值实际写在 `init_systems()`（1396 行）里，不是 `__init__`。
+#      ⇒ 判据绑了错的方法名 = **判据错，不是产品错**（先怀疑判据，第二次见效）。
+#      正解 = 判**语义**："有两处、且其中一处是重算路径" —— 不猜第一处叫什么。
+ok(u'E2b ★★★ `_cached_scale_factor` 的赋值落在 **≥2 个不同方法**且必含重算路径'
+   u'`_refresh_pet_render_scale`（★ 只在初始处赋值 = 调档位不会重算 ⇒ 必须报红）',
+   len(_csf_where) >= 2 and u'_refresh_pet_render_scale' in _csf_where,
+   u'涉及方法=%s' % (sorted(_csf_where),), star=True)
 
 _f_rr = _find_func(_t_main, '_refresh_pet_render_scale')
 _rr_src = _func_source(_src_main, _t_main, '_refresh_pet_render_scale')

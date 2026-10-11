@@ -186,7 +186,76 @@ class ItemMenuUI(QWidget):
 
         self._last_msg = None
         self._rows = []          # [(marker_label, text_label)]
+        # ★★ 第108轮：UI 缩放基准快照（同 `DialogueUI.apply_ui_scale` 的做法：
+        #   从基准重算才幂等；在现值上乘会越改越大）。
+        self._ui_scale = 1.0
+        self._ui_base = {
+            'panel_w': int(PANEL_BASE_WIDTH),
+            'cursor_col_w': int(CURSOR_COL_W),
+            'body_point': int(BODY_POINT),
+            'title_point': int(TITLE_POINT),
+            'margin': int(PANEL_MARGIN),
+        }
         self._build()
+
+    # ------------------------------------------------------------------ UI 缩放
+    def apply_ui_scale(self, scale):
+        """★★★ 第108轮：按宿主给的倍率整体缩放 S 键菜单面板。
+
+        与对话框同源、同纪律（见 `DialogueUI.apply_ui_scale` 的完整说明）：
+        从 `_ui_base` **基准**重算，非法值原样不动，永远不抛。
+
+        :return: 实际生效的倍率（被忽略时返回上一次的值）。
+        """
+        try:
+            s = float(scale)
+        except (TypeError, ValueError):
+            return self._ui_scale
+        if s != s or s <= 0.0:
+            return self._ui_scale
+        base = getattr(self, '_ui_base', None)
+        if not isinstance(base, dict):
+            return self._ui_scale
+
+        def _i(key, lo=1):
+            try:
+                v = int(round(float(base[key]) * s))
+            except Exception:
+                return lo
+            return v if v >= lo else lo
+
+        try:
+            _w = _i('panel_w', 48)
+            self._panel_width = _w
+            # 框体（复用 dr_textbox 的缩放绘制 —— 菜单与对话框同一种框）
+            try:
+                self._frame.set_content_scale(s)
+            except Exception as e:
+                _log.debug('菜单框体缩放未生效: %s', e)
+            # 字号：标题 + 正文（行内标记与文本都用 BODY_POINT）
+            if self._title is not None:
+                self._title.setFont(_font(_i('body_point') + 1, bold=True))
+            if self._hint is not None:
+                self._hint.setFont(_font(_i('body_point') - 1 if _i('body_point') > 4 else 3))
+            # ★ 已建出来的行要**同时**重设字号（`_add_row` 建行时用的是当时的
+            #   BODY_POINT；不重设就是"新版面 + 旧字号"的拼接脸）。
+            for marker, text in self._rows:
+                try:
+                    marker.setFont(_font(_i('body_point'), bold=True))
+                    marker.setFixedWidth(_i('cursor_col_w', 2))
+                    text.setFont(_font(_i('body_point')))
+                except Exception as e:
+                    _log.debug('菜单行缩放失败: %s', e)
+            self._ui_scale = s
+            # 尺寸与位置都要按新倍率重算
+            self._refit()
+            try:
+                self._place()
+            except Exception as e:
+                _log.debug('菜单缩放后摆位失败: %s', e)
+        except Exception:
+            _log.exception('菜单 UI 缩放失败（已忽略）')
+        return self._ui_scale
 
     # ------------------------------------------------------------------ 构建
     def _build(self):
@@ -201,7 +270,7 @@ class ItemMenuUI(QWidget):
         col.setSpacing(4)
 
         self._title = QLabel('', self._frame)
-        self._title.setFont(_font(TITLE_POINT, bold=True))
+        self._title.setFont(_font(self._pt('body_point', BODY_POINT) + 1, bold=True))
         self._title.setStyleSheet('color: #ffffff; background: transparent;')
         col.addWidget(self._title)
 
@@ -212,11 +281,12 @@ class ItemMenuUI(QWidget):
         col.addLayout(self._rows_box)
 
         self._hint = QLabel('', self._frame)
-        self._hint.setFont(_font(BODY_POINT - 1))
+        self._hint.setFont(_font(self._pt('body_point', BODY_POINT) - 1
+                                 if self._pt('body_point', BODY_POINT) > 4 else 3))
         self._hint.setStyleSheet('color: #b9b9b9; background: transparent;')
         col.addWidget(self._hint)
 
-        self.resize(PANEL_BASE_WIDTH, 120)
+        self.resize(self._pt('panel_w', PANEL_BASE_WIDTH), 120)
         self.hide()
 
     # ------------------------------------------------------------------ 渲染
@@ -229,6 +299,25 @@ class ItemMenuUI(QWidget):
                 w.deleteLater()
         self._rows = []
 
+    def _pt(self, key, fallback):
+        """★★ 第108轮：从 `_ui_base` 基准 × 当前倍率算出字号/尺寸（幂等的唯一入口）。
+
+        所有尺寸/字号都走这里 —— 没有第二处乘法，就没有"两份真源"。
+        """
+        base = getattr(self, '_ui_base', None)
+        try:
+            raw = float(base[key]) if isinstance(base, dict) else float(fallback)
+        except Exception:
+            raw = float(fallback)
+        try:
+            s = float(getattr(self, '_ui_scale', 1.0))
+        except (TypeError, ValueError):
+            s = 1.0
+        if s != s or s <= 0.0:
+            s = 1.0
+        v = int(round(raw * s))
+        return v if v >= 1 else 1
+
     def _add_row(self, marker, text):
         row = QWidget(self._frame)
         row.setAttribute(Qt.WA_TranslucentBackground)
@@ -236,11 +325,12 @@ class ItemMenuUI(QWidget):
         h.setContentsMargins(0, 0, 0, 0)
         h.setSpacing(0)
         mk = QLabel(marker, row)
-        mk.setFont(_font(BODY_POINT, bold=True))
-        mk.setFixedWidth(CURSOR_COL_W)
+        # ★ 第108轮：建行时就按**当前**倍率取字号（缩放中途开会也立刻是对的）
+        mk.setFont(_font(self._pt('body_point', BODY_POINT), bold=True))
+        mk.setFixedWidth(self._pt('cursor_col_w', CURSOR_COL_W))
         mk.setStyleSheet('color: #ffffff; background: transparent;')
         tx = QLabel(text, row)
-        tx.setFont(_font(BODY_POINT))
+        tx.setFont(_font(self._pt('body_point', BODY_POINT)))
         tx.setStyleSheet('color: #ffffff; background: transparent;')
         h.addWidget(mk)
         h.addWidget(tx, 1)
@@ -316,7 +406,9 @@ class ItemMenuUI(QWidget):
         self._frame.layout().activate()
         h = self.sizeHint().height()
         h = max(h, dr_textbox.BAND * 2 + 8)
-        self.resize(PANEL_BASE_WIDTH, h)
+        # ★ 第108轮：宽度按 UI 倍率（没有 `_ui_base` 时退回类常量 = 原行为）
+        _w = self._pt('panel_w', PANEL_BASE_WIDTH)
+        self.resize(_w, h)
 
     def _place(self):
         """摆到宠物旁边，并钳制在屏幕内（屏幕矩形由宿主注入，见契约①）。
@@ -333,7 +425,9 @@ class ItemMenuUI(QWidget):
         if r is None:
             return
         ax, ay, aw, ah = r
-        x = ax + aw + PANEL_MARGIN
+        # ★ 第108轮：面板与宠物之间的间距也随 UI 倍率（否则放大后菜单会贴到宠物脸上）
+        _pm = self._pt('margin', PANEL_MARGIN)
+        x = ax + aw + _pm
         y = ay - self.height() // 2
         scr = None
         if self.screen_rect is not None:
@@ -344,7 +438,7 @@ class ItemMenuUI(QWidget):
         if scr:
             sx, sy, sw, sh = scr
             if x + self.width() > sx + sw:
-                x = ax - PANEL_MARGIN - self.width()   # 右边放不下 ⇒ 摆左边
+                x = ax - _pm - self.width()   # 右边放不下 ⇒ 摆左边
             x = max(sx, min(x, sx + sw - self.width()))
             y = max(sy, min(y, sy + sh - self.height()))
         self.move(x, y)
