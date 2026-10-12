@@ -62,8 +62,18 @@ code-quality-audit/*/_evidence/_tmp*/
 #   run1 的自然录制放在 `_evidence/run1_natural/` 子目录 ⇒ 136 MB 的 avi **漏网**
 #   （`git status` 里显示为待提交）。⇒ 改用 `**` 递归匹配，并连带忽略逐帧抓屏 PNG
 #   （与 §90 的 `shots/` 同理：含整个桌面 + 体积 ~11 MB，且可由 rec97.py 复跑再生）。
+# ★ 第112轮修正（2026-10-13）：上面 `**/*.avi` **仍有洞** —— 在 git 的 glob 里
+#   `**/` 要求「至少一层目录」，所以**直接躺在 `_evidence/` 根下**的录屏
+#   （`_evidence/rec105_raw.avi`、`_evidence/rec99_raw.avi` …）**一条都不匹配**
+#   ⇒ 本轮实测 **20 个 avi（合计约 775 MB，含历代 rec96~rec106）全部漏网**，
+#   被 `git add -A` 收进暂存区，直接把 push 拖到 42 分钟仍未完成。
+#   ⇒ 每条规则同时写「一层」+「递归」两种形状，彻底封死。
+code-quality-audit/*/_evidence/*.avi
 code-quality-audit/*/_evidence/**/*.avi
+code-quality-audit/*/_evidence/*.mp4
 code-quality-audit/*/_evidence/**/*.mp4
+# 同理：`frames/` 也要覆盖「一层 + 递归」两种形状。
+code-quality-audit/*/_evidence/frames/
 code-quality-audit/*/_evidence/**/frames/
 # 第99轮加（2026-10-09）：录制端会把上一轮的 `frames/` 改名成 `frames_prev_<ts>/` 归档，
 #   而 `**/frames/` 是**精确目录名**匹配 ⇒ `frames_prev_*` 逃逸、12 张抓屏帧漏网待提交。

@@ -6,9 +6,7 @@
   "chapter_name": "桌面",
   "area_id": "desktop",
   "area_name": "桌面",
-
   "original_room_id": -1,
-
   "bg": "__transparent__",
   "bgm": null,
   "ambient": {
@@ -23,12 +21,6 @@
       "authored": true,
       "src": "obj_doorA",
       "sprite": "objs/spr_darkdoor_0.png",
-      "anim": {
-        "base": "objs/spr_darkdoor",
-        "frames": 3,
-        "frame_ms": 33.3,
-        "src": "default_30fps"
-      },
       "pos": [
         138,
         0
@@ -41,12 +33,6 @@
       "authored": true,
       "src": "obj_doorB",
       "sprite": "objs/spr_darkdoor_0.png",
-      "anim": {
-        "base": "objs/spr_darkdoor",
-        "frames": 3,
-        "frame_ms": 33.3,
-        "src": "default_30fps"
-      },
       "pos": [
         138,
         184
@@ -58,16 +44,10 @@
       "kind": "prop",
       "authored": true,
       "src": "obj_doorC",
-      "sprite": "objs/spr_darkdoor_0.png",
-      "anim": {
-        "base": "objs/spr_darkdoor",
-        "frames": 3,
-        "frame_ms": 33.3,
-        "src": "default_30fps"
-      },
+      "sprite": "objs/ut_castle_realdoor_0.png",
       "pos": [
         0,
-        92
+        70
       ],
       "depth": 0
     },
@@ -76,16 +56,10 @@
       "kind": "prop",
       "authored": true,
       "src": "obj_doorD",
-      "sprite": "objs/spr_darkdoor_0.png",
-      "anim": {
-        "base": "objs/spr_darkdoor",
-        "frames": 3,
-        "frame_ms": 33.3,
-        "src": "default_30fps"
-      },
+      "sprite": "objs/spr_shortcut_door_0.png",
       "pos": [
-        276,
-        92
+        284,
+        94
       ],
       "depth": 0
     }
@@ -107,6 +81,16 @@
       "pos_rule": "★ 房间 320×240、贴图 44×56、渲染 `rect` 的 `pos` 是**左上角** ⇒ 四边正中、贴屏幕边框：正上 `x=(320-44)//2=138, y=0`；正下 `x=138, y=240-56=184`；正左 `x=0, y=(240-56)//2=92`；正右 `x=320-44=276, y=92`。",
       "letter_hidden": "用户『字母**按原作玩家看到的视角，也就是隐藏掉**』。改用 `spr_darkdoor`（无字母）后，字母 A~Y **自动不可见** —— 这就是『隐藏』的落地方式，不需要额外遮罩。",
       "how_targets_resolve": "桌面的门**走 `_routes.json`**（与所有别的场景同一条路）：`item_interact.build_props` 把 `obj_door<字母>` 建成 `DoorProp`（`door_letter_of()` 认字母），点击时 `route_for_door(routes, 'desktop', letter)` 在 `when_scene='desktop'` 的条目里按字母取目标（`priority=200`）。★ 4 条路由：A→oneshot.mainline.INIT（车厢）· B→oneshot.mainline.Start（Niko 的家）· C→ut.rooms.room_start（坠落处）· D→ch1.hometown.town_mid（光世界小镇中心）。"
+    },
+    "round112_door_sprites": {
+      "why": "用户口径（第112轮）：『门也不是都长那样啊，而且摆放的位置也不在屏幕四周啊』+『你要不要自己看看那是不是任意门啊，我说的是那个门框』+『ut 就用王座那个门』（确认选 `bg_castle_realdoor`）。",
+      "root_cause": "★★★ 真因（本会话实测修正）= 桌面 4 扇门里 3 扇带 `anim`，而 `spr_darkdoor` 的帧1=**空门框**、帧2=**一片空**（PNG 163/132 字节 vs 帧0 的 413）⇒ 门在「可见 33ms / 空白 66ms」之间**频闪**（frame_ms=33.3）。用户看到的「那不是门」= **频闪的矩形**，不是贴图选错。`rect` 位置一直是对的。",
+      "ut_door": "★ UT 门 = `bg_castle_realdoor`（44×99）—— 用户『王座那个门』。取证：UT `room_castle_throneroom`（王座之间）里立着的就是它，金色/黄铜描边 + 拱形 + 顶部三角符文。由 `UndertaleModCli` 从 `undertale.apk` 的 `assets/game.droid` 导出（见 `第112轮…/_evidence/`）。",
+      "deltarune_door": "★ 三角符文门 = `spr_shortcut_door`（36×52，2 帧：关/开，**两帧都完整可见**）—— 用户选定。★ 但**同样不做 anim**（理由见 `fix_static`）。",
+      "oneshot_door": "OneShot 门 = 维持 `spr_darkdoor_0.png`（44×56 帧0，**可见的那一帧**）。用户「oneshot 和 niko 的家不变」= 指**不加渐显功能**，非贴图不改；但我没有 OneShot 门的替代贴图口径 ⇒ 不擅自改，只用它的**可见帧0** + 去掉频闪 anim。",
+      "pos_recalc": "★ 贴图尺寸变了 ⇒ 重新算靠边框位置（房间 320×240、`pos`=左上角、四边中点贴屏框）：正上 OneShot 44×56 → (138,0)；正下 Niko家 44×56 → (138,184)；正左 UT 44×99 → (0,70)；正右 符文 36×52 → (284,94)。",
+      "no_anim_for_ut": "★★ 现在**4 扇门都没有 `anim`**（统一静态）。UT 门 `bg_castle_realdoor` 本就单帧；另 3 扇的 `anim` 是本轮**主动删除**的（频闪根因）。",
+      "fix_static": "★★★ 处置（第112轮收尾）：**4 扇门全部改成静态单帧**（删 `anim`，只留 `sprite`）。门的「开/关」在桌面上没有语义 —— 它不是原作里会开合的门，频闪只会像 bug。★ 与 UT 门一致（`bg_castle_realdoor` 本就单帧、无 anim）。★ 副作用：`anim_round44` 的「带 anim 的物件 265→261 条」是**合法基线上移**。"
     },
     "how_to_fill_it_in_later": [
       "1. bg: 填字符串（相对本目录，如 \"bg/desktop_night.png\"）或 {'variants': [...]}（轮播，例如白天/夜晚）。桌面保持 `__transparent__`。",

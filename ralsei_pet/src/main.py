@@ -593,6 +593,10 @@ from modules import item_menu_ui as item_menu_ui_mod
 from modules import item_interact as item_interact_mod
 from modules import global_hotkey as global_hotkey_mod
 from modules import scene_system as scene_system_mod
+# ★★★ 第112轮 #47：**门随实体靠近渐显**（只桌面 UT / 三角符文两扇）。
+# 零依赖纯函数模块（`reveal_alpha` / `apply_to_objects`）—— 与 `possession` 同规格：
+# 不 import Qt、不读文件、不持状态，回归套件可直接 import 单测。
+from modules import door_reveal as door_reveal_mod
 # 伙伴交互协议（第46轮）：`InteractBus`（= 原作 `global.interact` 全局锁）+
 # `Interactable`（= 原作 `myinteract` 三态）。道具/场景可交互物都挂在这套协议上，
 # 不另起一套 —— 那会让"对话时能不能点东西"出现两套互相不知道的锁。
@@ -3133,6 +3137,10 @@ class RalseiPet(QMainWindow):
         self._npc_invited = []          # 说上过话的 NPC（换场景时才有资格被问"跟不跟"）
         self._npc_follow_pending = []   # 纯 NPC 的"想跟但等你点头"
         self._npc_talking = None        # 最近一次在跟谁说话
+        # ★★★ 第112轮：Niko 的家问答护栏的**计数器**（用户口径「继续追问」）。
+        #   第 1 次问 ⇒ 人设线（按原作正常回答）；第 2 次及以后 ⇒ 「内容以屏蔽」。
+        #   只在"这一轮确实在问 Niko 的家"时推进（见 `_niko_home_guard`）。
+        self._niko_home_asked_n = 0
         self._npc_last_decision = None  # 最近一次跟随决策 (npc_id, choice, source)
         # ---- 第56轮：站位 / 游荡 / 编队（与说话、跟随**正交**的三件事）----
         #: `npc_placement.PlacementBook`（34 条站位 + 1 条编队 + 9 条结对 + 桌面白名单）。
@@ -3539,13 +3547,65 @@ class RalseiPet(QMainWindow):
             on_reply(None)
             return False
         try:
-            self.chat_with_ai(text, on_reply, on_delta, speaker=npc_id,
+            self.chat_with_ai(text, self._niko_home_guard(text, on_reply),
+                              on_delta, speaker=npc_id,
                               model=self._npc_model(npc_id))
         except Exception:
             _log.exception('NPC %s 对话发起异常', npc_id)
             on_reply(None)
             return False
         return True
+
+    # ---------------------------------------------------------------- Niko 的家问答护栏（第112轮）
+    def _niko_home_guard(self, user_text, on_reply):
+        """★★★ 第112轮：**Niko 的家问答护栏 —— 两条线都接**（用户逐字）。
+
+        用户口径：
+          「如果用户问**其他人** niko 家长啥样那就让他们**先正常回答** niko
+            在原作里描述的那样，**如果继续追问**那就回答「**内容以屏蔽**」」
+        ⇒ 两条线：
+          ① **人设线**（第 1 次问）⇒ 放行，让模型按原作正常回答（**不改一个字**）；
+          ② **护栏线**（第 2 次及以后问同一件事）⇒ 直接回 `niko_home.BLOCKED_REPLY`。
+
+        ★★★ 为什么包 `on_reply` 而不是拦在"发请求"之前：
+          人设线的整段回答必须**由模型给出**（用户要"正常回答"）——
+          我们不能预先知道模型会不会提 Niko 家。所以：请求照发，
+          只在**回调返回后**按"这一轮是第几次问 Niko 家"决定**是否覆盖**成屏蔽语。
+        ★ 计数只认"这一轮用户的话**确实在问 Niko 的家**"（关键词命中），
+          不是"每说一句都 +1" —— 否则正常闲聊也会把计数器推过阈值。
+        ★ 计数在**同一个会话内**累计、切人**不重置**（用户说的是"继续追问"，
+          没限定同一个人）；但**换了话题**（这一轮不命中关键词）不推进。
+        """
+        try:
+            import modules.niko_home as _nh
+        except Exception:
+            try:
+                from modules import niko_home as _nh
+            except Exception:
+                return on_reply           # 拿不到护栏模块 ⇒ **如实放行**（不假装有护栏）
+
+        # ① 这一轮用户是不是在问 Niko 的家？
+        asking = _nh.looks_like_niko_home_question(user_text)
+        if not asking:
+            return on_reply               # 与 Niko 的家无关 ⇒ 完全不动（零行为变化）
+
+        # ② 推进计数，并按第几次给出**是否屏蔽**
+        n = _nh.normalize_ask_count(self.__dict__.get('_niko_home_asked_n', 0))
+        self._niko_home_asked_n = n
+        blocked_text, is_blocked = _nh.niko_home_reply(n)
+        if not is_blocked:
+            _log.info('Niko 的家问答：第 %d 次询问 ⇒ 人设线（按原作正常回答）', n)
+            return on_reply               # ★ 第一次 ⇒ 放行，模型正常答
+
+        _log.info('Niko 的家问答：第 %d 次追问 ⇒ 护栏线「%s」', n, blocked_text)
+
+        def _blocked(_answer):
+            try:
+                on_reply(blocked_text)
+            except Exception:
+                _log.exception('Niko 的家问答：屏蔽语回调失败')
+
+        return _blocked
 
     # ---------------------------------------------------------------- 跟随（AI 决策）
     def _npc_follow_policy(self, npc):
@@ -4897,6 +4957,8 @@ class RalseiPet(QMainWindow):
                 inventory=self.inventory,
                 bus=self.interact_bus,
                 routes=routes,
+                on_egg=self._niko_home_egg,
+                egg_gate=self._niko_home_gate,
             )
         except Exception:
             _log.exception('可交互物构建失败（本场景没有可交互物，不影响其它功能）')
@@ -4988,6 +5050,194 @@ class RalseiPet(QMainWindow):
             _log.exception('暗之泉切场景失败：%s', scene_id)
             return False
 
+    # ---------------------------------------------------------------- #47 Niko 的家彩蛋（第111轮）
+    def _niko_home_gate(self, actor):
+        """★★★ 第112轮：Niko 的家**准入门槛**的可注入形态。
+
+        用户口径（逐字）：「**niko 的家确保只是除了用户（灵魂）不可以进去
+        其他人都能进去哦**」。
+
+        ★★★ 为什么做成"宿主注入"而不是让 `item_interact` 自己 import：
+          `item_interact` 是**零依赖 L1**（`第48轮 verify_items48` 的 `G1`
+          硬闸：顶层与函数内**都不许** import 项目内模块 —— 项目里
+          `main.py` 在 import 期就建控制器，函数内 import 项目模块会把
+          初始化环接上，症状是 import 期直接崩、零输出）。
+          ⇒ 判据真源仍只有一处（`niko_home.can_enter`），但**消费侧**改为
+            注入。改判据只需改 `niko_home`，两个消费点（协议层 / 直接调用）
+            都跟着变。
+
+        :returns: `(allowed: bool, reason: str)` —— 与 `niko_home.can_enter`
+                  同签名，`item_interact` 只转发不解释。
+        """
+        try:
+            import modules.niko_home as _nh
+            return _nh.can_enter(actor)
+        except Exception:
+            return True, 'unknown'      # 判不出 ⇒ 放行（保守侧 = 不挡人）
+
+    def _niko_home_egg(self, prop):
+        """★★★ 第111轮 #47：**Niko 的家 —— 永远进不去的彩蛋**。
+
+        用户口径（逐字，详版 §109.2）：
+          · 连问三次确认；第三次的选项是「我再考虑考虑」/「我确定！！！」；
+          · 选「我确定！！！」**不是进门**，而是**伴随三角符文的高级爆炸特效**；
+          · 爆炸之后**选项又变回「我再考虑考虑」**——无论怎么点，**永远进不去**。
+
+        ★ 为什么"选确定"之后还要把选项变回去：用户口径就是要「永远进不去」。
+          若这里真去 `switch()`，将来素材补齐就会"意外能进"（见
+          `NikoHomeDoorProp` 的 docstring）。所以本函数**从不**调用任何切场景 API。
+
+        :returns: 是否"发生了点什么"（三连确认说出来就算 True，与是否进门无关）。
+        """
+        # ★★★ 第112轮：**准入门槛（第二道，与 `NikoHomeDoorProp.on_interact` 同判据）**。
+        #   用户口径「niko 的家确保只是除了用户（灵魂）不可以进去其他人都能进去哦」。
+        #   ★ 为什么两处都判：`on_interact` 是第一道（在协议层，actor 由 `interact()`
+        #     显式传入）；这里是第二道 —— 万一将来有别处**直接调** `_niko_home_egg`
+        #     （绕过 `Interactable` 协议），门槛仍然生效。**同一判据、同一模块**
+        #     （`niko_home.can_enter`），所以不存在"两处各写一套、改一处忘另一处"。
+        #   ★ `prop.actor` = `companion.Interactable.interact()` 记下的发起者；
+        #     拿不到（直接手搓 prop / 老调用点）⇒ `None` ⇒ `can_enter` 放行
+        #     （保守侧 = 不挡人）。
+        try:
+            import modules.niko_home as _nh
+            _allowed, _why = _nh.can_enter(getattr(prop, 'actor', None))
+        except Exception:
+            _allowed, _why = True, 'unknown'      # 判不出 ⇒ 放行（不挡人）
+        if not _allowed:
+            _log.info('Niko 的家彩蛋：发起者是用户（灵魂）⇒ 拒绝进入（彩蛋永不破）')
+            try:
+                if self._item_prop_present is not None:
+                    self._item_prop_present('（……你进不去。）', None)
+            except Exception:
+                _log.exception('Niko 的家彩蛋：拒绝语弹出失败')
+            return False
+
+        texts = getattr(prop, 'egg_texts', None) or item_interact_mod.NIKO_HOME_EGG_TEXT
+        if not texts:
+            return False
+        # ① 先说三轮台词（每轮都跟着一次确认；台词走既有 `present` 唯一入口）。
+        confirmed = 0
+        for i, line in enumerate(texts):
+            if self._item_prop_present is not None:
+                try:
+                    self._item_prop_present(line, None)
+                except Exception:
+                    _log.exception('Niko 的家彩蛋：第 %d 句台词失败', i + 1)
+            # ② 问"确定吗"（最后一次的选项文案结构 = 原作 OneShot 的两选项）。
+            yes = self._niko_home_ask(i)
+            if not yes:
+                _log.info('Niko 的家彩蛋：第 %d 轮选了「我再考虑考虑」⇒ 到此为止（没进门）'
+                          % (i + 1))
+                return True
+            confirmed = i + 1
+        # ③ 三次都选「我确定！！！」⇒ 爆炸特效，然后**什么都不发生**。
+        _log.info('Niko 的家彩蛋：三轮都选了「我确定！！！」⇒ 爆炸特效（**仍然不进**）')
+        self._niko_home_explode(prop)
+        return True
+
+    def _niko_home_ask(self, round_index):
+        """弹一个两选项确认框（**原作 OneShot 的两选项结构**）。
+
+        ★ 最后一次（`round_index == 2`）的"确定"选项文案是「我确定！！！」，
+          前两次是「我确定」。这是用户口径里的逐字差别。
+        :returns: True = 选了"确定"；False = 选了"再考虑"（或对话框不可用）。
+        """
+        try:
+            from PyQt5 import QtWidgets
+            parent = self if isinstance(self, QtWidgets.QWidget) else None
+            yes_label = '我确定！！！' if round_index >= 2 else '我确定'
+            box = QtWidgets.QMessageBox(parent)
+            box.setWindowTitle('Niko 的家')
+            box.setText('（门纹丝不动。）')
+            box.setIcon(QtWidgets.QMessageBox.Question)
+            b_yes = box.addButton(yes_label, QtWidgets.QMessageBox.AcceptRole)
+            b_no = box.addButton('我再考虑考虑', QtWidgets.QMessageBox.RejectRole)
+            box.setDefaultButton(b_no)
+            box.exec_()
+            return box.clickedButton() is b_yes
+        except Exception:
+            _log.exception('Niko 的家彩蛋：确认框不可用 ⇒ 如实按"再考虑"处理')
+            return False
+
+    def _niko_home_explode(self, prop):
+        """★★★ 「伴随三角符文的高级爆炸特效」——`spr_realisticexplosion` 17 帧。
+
+        用户口径：爆炸要**伴随三角符文**（Deltarune 招牌特效）。素材见
+        `assets/scenes/objs/spr_realisticexplosion_0..16.png`（原作 ch1 导出）。
+
+        ★ 实现：在桌面场景的彩蛋门位置起一个**临时逐帧 overlay**，播完 17 帧后
+          自毁。**不复用场景 objects**——那是声明式数据，往里塞临时帧会污染存档。
+        """
+        try:
+            from PyQt5 import QtCore, QtWidgets, QtGui
+            parent = self if isinstance(self, QtWidgets.QWidget) else None
+            if parent is None:
+                return
+            base = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                '..', 'assets', 'scenes', 'objs',
+                                'spr_realisticexplosion_%d.png')
+            frames = []
+            for i in range(17):
+                p = base % i
+                if os.path.isfile(p):
+                    frames.append(QtGui.QPixmap(p))
+            if not frames:
+                _log.info('Niko 的家彩蛋：爆炸帧素材不在盘 ⇒ 无特效（如实跳过）')
+                return
+            # ★★★ 透明是**必须的**：爆炸贴图 71×100 里绝大部分像素 alpha=0
+            #   （见 `spr_realisticexplosion_*.png` 的 alpha 极值 0~255）。
+            #   ❗ 带 parent 的 QLabel **不会**让 `WA_TranslucentBackground` 生效
+            #   （Qt 只在顶层窗口上应用该属性）⇒ 实机首版画面是**一整块不透明黑方块**
+            #   （第111轮真机抓帧 `k001_boom.png` 实证）。所以这里建**无 parent 的顶层窗口**。
+            #   ★★ **禁用 `Qt.WindowStaysOnTopHint`** —— 这是本项目的**硬契约**
+            #   （记忆铁律「建楼：…禁 `WindowStaysOnTopHint`」；`round13_build` 的
+            #   `E1` 就是专门守它的）。爆炸是**纯视觉覆盖层**，抢不抢 z 序无所谓：
+            #   它只存在 ~578ms，且 `raise_()` 已经能让它盖在同进程窗口之上。
+            lbl = QtWidgets.QLabel(None)
+            lbl.setWindowFlags(QtCore.Qt.FramelessWindowHint
+                               | QtCore.Qt.Tool
+                               | QtCore.Qt.WindowTransparentForInput)
+            lbl.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
+            lbl.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, True)
+            lbl.setAttribute(QtCore.Qt.WA_ShowWithoutActivating, True)
+            lbl.setStyleSheet('background: transparent; border: none;')
+            # 落点 = 屏幕正中（用户口径没说位置；桌面正中的"爆炸"最符合直觉）。
+            scr = self._virtual_screen_rect()
+            cx = int(scr.center().x())
+            cy = int(scr.center().y())
+            idx = {'i': 0}
+
+            def _step():
+                if idx['i'] >= len(frames):
+                    try:
+                        timer.stop()
+                    except Exception:
+                        pass
+                    try:
+                        lbl.hide()
+                        lbl.deleteLater()
+                    except Exception:
+                        pass
+                    return
+                pm = frames[idx['i']]
+                lbl.setPixmap(pm)
+                lbl.resize(pm.size())
+                lbl.move(cx - pm.width() // 2, cy - pm.height() // 2)
+                lbl.show()
+                lbl.raise_()
+                idx['i'] += 1
+
+            timer = QtCore.QTimer(parent)
+            timer.timeout.connect(_step)
+            timer.start(34)          # 原作 30fps ≈ 33.3ms
+            # 保引用防 GC（`_step` 闭包也引用了 timer/lbl，这里是第二道保险）；
+            # **顺带暴露帧索引**，好让录屏自检断言"动画真在跑"
+            # （否则只能看到"挂了个 QLabel"，证明不了在播）。
+            self._niko_egg_fx = (lbl, timer, idx)
+            _step()
+        except Exception:
+            _log.exception('Niko 的家彩蛋：爆炸特效启动失败（忽略，不影响进门判定）')
+
     def interact_scene_prop(self):
         """交互请求的唯一入口（对应原作的 `scr_interact()`）。
 
@@ -5055,7 +5305,22 @@ class RalseiPet(QMainWindow):
             if prop is None:
                 prop = props[0]
                 why = '%s ⇒ 退回登记顺序第一个' % why
-        ok = bool(prop.interact())
+        # ★★★ 第112轮：**把"谁在交互"传给可交互物**（此前这里不传，恒为 None）。
+        #   用户口径「niko 的家确保只是除了用户（灵魂）不可以进去其他人都能进去哦」
+        #   —— 要让门能分辨发起者，`actor` 必须真的传下去。
+        #   ★ 主体名 = `'soul'`（灵魂可见时）/ `'pet'`（灵魂不可见 ⇒ 是桌宠本人在点）。
+        #     `'soul'` 正是 `niko_home._USER_SUBJECTS` 里的成员 ⇒ 会被判成"用户"。
+        #   ★ `'pet'` **不在**该集合里 ⇒ 桌宠本人点 Niko 家门 = **放行**
+        #     （严格按用户逐字："除了用户（灵魂）"，桌宠 Ralsei 属于"其他人"）。
+        #   ★ 绝不让 actor 传错导致异常：整段在 try 里，判不出就退回 None
+        #     （None 在 `can_enter` 里 = 放行 ⇒ 保守侧仍是"不挡人"）。
+        _actor = None
+        try:
+            _actor = 'soul' if self._soul_visible() else 'pet'
+        except Exception as e:
+            _log.debug('交互主体名判定失败（按 None 处理）: %s', e)
+            _actor = None
+        ok = bool(prop.interact(_actor))
         _log.info('交互 ⇒ %s（本场景共 %d 件可交互物；%s）：%s',
                   prop.describe(), len(props), why,
                   '发生了' if ok else '什么也没发生')
@@ -6803,6 +7068,40 @@ class RalseiPet(QMainWindow):
                         _log.info('回到暗世界，自动脱下扭蛋球：%s', dropped)
                 self._bubble_world = world_now
 
+            # 2.7) ★★★ 第112轮 #47：**门随实体靠近渐显**（只桌面 UT / 三角符文两扇）。
+            #   用户口径「在检测到实体靠近后才从透明到实象，中间要有个从虚到实的
+            #   过度动画，**只针对桌面上的 ut 和三角符文的门**，oneshot 和 niko
+            #   的家不变」。
+            #   ★ 实现 = 在 `plan_frame` **之前**就地给那两个物件写 `alpha`
+            #     （`scene_render` 已经支持逐物件 alpha，不需要改渲染层）。
+            #   ★ 幂等：alpha 只由 (实体矩形, 门矩形) 决定，与上一帧无关
+            #     ⇒ 掉帧不会让动画变慢/停在半途。
+            #   ★ 永不抛：整套逻辑在 `door_reveal` 里做了防御，这里再包一层
+            #     —— 一个显示上的小效果**绝不允许**让整帧渲染失败。
+            #   ★ `sizer` 传**同一个尺寸源**（`canvas.assets.sprite_size`）：
+            #     门矩形必须与实际绘制的 PNG 尺寸一致，否则"靠近"的判定会偏。
+            #     名字口径与 `plan_frame` 对齐（单帧用 `sprite`，多帧用 `base_0`）。
+            try:
+                if self._scene_is_desktop_scene():
+                    _drv = door_reveal_mod
+                    _ent = self._camera_target_rect(room_rect)
+                    _sit = getattr(state, 'scene_id', None) or 'desktop'
+                    _objs = getattr(state, 'objects', None) or []
+
+                    def _door_sizer(_o):
+                        _nm = _o.get('sprite') or _o.get('image')
+                        _an = _o.get('anim')
+                        if isinstance(_an, dict) and _an.get('base'):
+                            # 帧0 = 稳态外观（与 `plan_frame` tick=0 口径一致）
+                            _nm = '%s_0.png' % _an['base']
+                        if isinstance(_nm, str):
+                            return canvas.assets.sprite_size(_nm)
+                        return None
+
+                    _drv.apply_to_objects(_objs, _sit, _ent, sizer=_door_sizer)
+            except Exception as e:
+                _log.debug("门渐显（第112轮）防御性异常（已忽略）: %s", e)
+
             plan = scene.plan_frame(sprite_size=canvas.assets.sprite_size,
                                     tick=int(time.time() * 1000),
                                     bubbles=self._active_bubbles(room_rect))
@@ -6987,6 +7286,31 @@ class RalseiPet(QMainWindow):
                 cb(ok)
             except Exception:
                 _log.exception('场景过渡回调抛异常（已忽略）')
+
+    def _scene_is_desktop_scene(self):
+        """★ 第112轮 #47：当前场景是不是**桌面**（门渐显只在桌面适用）。
+
+        ★ 为什么不用 `_scene_is_transparent()` 代替：那个判的是"背景声明透明"，
+          虽然今天恰好只有桌面透明，但**语义不同**（将来若有个别的透明场景，
+          用它会误开渐显）。这里按 `scene_id` 判，口径与用户逐字的
+          「只针对**桌面上的** ut 和三角符文的门」一致。
+
+        取不到 / 任何异常 ⇒ `False`（保守：宁可不做效果，也不要在大世界里
+        把门刷成半透明 —— 那会是个真 bug）。
+        """
+        try:
+            state = self.__dict__.get('_scene_state')
+            if state is None:
+                state = getattr(self, 'current_scene_state', None)
+            if state is None:
+                return False
+            sid = getattr(state, 'scene_id', None)
+            if sid is None and isinstance(state, dict):
+                sid = state.get('scene_id')
+            return sid == 'desktop'
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return False
 
     def _scene_is_transparent(self):
         """★ 第107轮：当前场景是否**声明式透明**（= 桌面场景，背景就是用户壁纸）。

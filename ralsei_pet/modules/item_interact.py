@@ -414,7 +414,7 @@ class InspectProp(PropInteractable):
 
 def build_props(scene, chapter, world, present=None, heal_all=None,
                 on_enter=None, inventory=None, bus=None, pickups=None,
-                routes=None):
+                routes=None, on_egg=None, egg_gate=None):
     """把一个场景的 `objects` 变成可交互物列表。
 
     参数
@@ -437,6 +437,14 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
         ★ 第76轮：路由表（`scene_routing.load_routes()` 的结果）。给了它
         才会构建**门**（`obj_doorA~F`）—— 因为门的目标只能从路由表查。
         不给 / 为空 ⇒ 门仍不进列表（保持既有行为，**零行为变化**）。
+    on_egg : callable(prop) -> bool
+        ★★★ 第111轮 #47：**Niko 的家彩蛋**（`desktop` 的 `B` 门）专用。
+        它与路由表无关 —— 那扇门**没有**目标场景，交互走这里
+        （三连确认 + 爆炸特效 + 永远进不去）。不给 ⇒ 该门不建（**不造假门**）。
+    egg_gate : callable(actor) -> (bool, str)
+        ★★★ 第112轮：Niko 的家**准入门槛**（注入式）。宿主 `main.py` 传
+        `niko_home.can_enter` —— 本模块是零依赖 L1，`G1` 硬闸禁止 import
+        项目内模块，所以**只能注入**。不给 ⇒ 该门放行（等价旧行为）。
 
     ★ `key` 的构造规则：`<scene_id>#<objects下标>`。
       为什么不用 `src`：同一个房间里可能有 **多个** 同名对象（例如两个 `obj_savepoint`），
@@ -488,7 +496,23 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
             #     · 查得到目标 —— 查不到 ⇒ 不建（而不是建一扇推不开的门）。
             letter = door_letter_of(src)
             tgt = route_for_door(routes, sid, letter) if letter else None
-            if letter and tgt:
+            # ★★★ 第111轮 #47：Niko 的家 = 永远进不去的彩蛋（须在普通分支之前判）。
+            #   ★ 与普通门同款契约：**前置条件缺一不可，缺了就不建**（不造假门）。
+            #     彩蛋门的"前置条件"是 `on_egg` —— 没它就没法执行三连确认，
+            #     建出来只会是一扇"点了没反应"的假门。
+            #   ★★ **必须 `if/elif` 且把彩蛋判断放在最前**：这扇门在 `_routes.json`
+            #     里**故意没有**条目（它没有目标场景），所以正常情况走不到下面；
+            #     但万一将来有人给它补了路由，也必须**仍然**走彩蛋而不是去切场景
+            #     （用户口径「永远进不去」）——否则就是埋雷。
+            if letter and (sid, letter) == NIKO_HOME_EGG_DOOR:
+                if on_egg is not None:
+                    out.append(NikoHomeDoorProp(key, src=src,
+                                                egg_texts=NIKO_HOME_EGG_TEXT,
+                                                on_egg=on_egg, gate=egg_gate,
+                                                present=present, bus=bus))
+                else:
+                    _log.info('Niko 的家门 %s 没接 on_egg ⇒ 不建（不造假门）', src)
+            elif letter and tgt:
                 out.append(DoorProp(key, src=src, door_letter=letter,
                                     target_scene=tgt, on_enter=on_enter,
                                     present=present, bus=bus))
@@ -547,6 +571,97 @@ class DoorProp(PropInteractable):
             _log.info('门 %s 通向 %s 但切换失败（保持当前场景）', self.src, target)
             return False
         return True
+
+
+#: ★★★ 第111轮 #47：**Niko 的家门 = 永远进不去的彩蛋**（用户口径，详版 §109.2/§111.1）。
+#:
+#: 原作里 Niko 的家**没有可用素材**，所以当初就设计成"进不去的彩蛋"：
+#: 连问三次确认，最后一次选「我确定！！！」之后**不是进门**，而是
+#: **伴随三角符文的高级爆炸特效**，然后选项又变回「我再考虑考虑」——
+#: 无论怎么点，**永远进不去**。
+#:
+#: 三连台词（原作 OneShot 的对话风格，用户逐字给定）：
+#:   ① 「你确定吗？」
+#:   ② 「你这样的行为可能导致世界崩坏，你真的确定吗？」
+#:   ③ 「你真的不再考虑考虑了吗？」
+#: 选项：`我再考虑考虑` / `我确定！！！`。
+#:
+#: ★ 素材出处（用户口径「任何素材都从这里找」）：
+#:   · 爆炸 = Deltarune ch1 `spr_realisticexplosion`（17 帧，71×100）
+#:     ⇒ `assets/scenes/objs/spr_realisticexplosion_*.png`
+#:   · 光门 = OneShot `npc/door_portal.xnb` ⇒ `assets/scenes/objs/niko_door_portal.png`
+#:   · 光线 = OneShot `npc/portal_rays.xnb` ⇒ `assets/scenes/objs/niko_portal_rays.png`
+#:   · 闪光 = OneShot `npc/sparkle_blue1.xnb` ⇒ `assets/scenes/objs/niko_sparkle_blue1.png`
+#:   （由 `第111轮…/_tools/extract111.py` 提取，详见该轮 `_evidence/EVIDENCE.md`）
+#: ★★★ 第112轮：三连台词**在这里保留字面量**，同时 `modules/niko_home.py`
+#: 也持有一份同值常量 —— **不互相 import**。理由：
+#:   ① `item_interact` 是**零依赖 L1**（`G1` 硬闸：顶层/函数内都不许 import
+#:      项目内模块，否则接上初始化环 ⇒ import 期崩、零输出）。
+#:   ② 于是"单一真源"改为**机器断言锁**（本项目既有做法，同 `door_reveal`
+#:      的 `DOOR_LETTERS` ↔ `item_interact` 那份的 H4/H5 一致性判据）。
+#: 由 `check112` 的 **L2b** 断言两份**逐字完全相等**（改任一份即报红）。
+NIKO_HOME_EGG_TEXT = ('你确定吗？',
+                      '你这样的行为可能导致世界崩坏，你真的确定吗？',
+                      '你真的不再考虑考虑了吗？')
+
+#: 彩蛋门的**唯一身份**：(场景, 门字母)。桌面 B = Niko 的家（正下）。
+NIKO_HOME_EGG_DOOR = ('desktop', 'B')
+
+
+class NikoHomeDoorProp(DoorProp):
+    """★★★ 第111轮 #47：Niko 的家 —— **永远进不去的彩蛋门**。
+
+    与普通 `DoorProp` 的唯一差别：它**没有** `target_scene`（不存在能进的目标），
+    交互走 `on_egg()`（宿主实现的三连确认 + 爆炸特效）。
+
+    ★ 为什么不共用 `on_enter`：`on_enter(scene_id)` 的语义是"真的切到某场景"，
+      而彩蛋**永远不切**（用户口径：「永远进不去」）。硬塞一个假 scene_id
+      进去，将来真有人补了 Niko 家的素材，就会"意外能进"——那才是埋雷。
+    """
+
+    def __init__(self, key, src, egg_texts=None, on_egg=None,
+                 present=None, bus=None, gate=None):
+        DoorProp.__init__(self, key, src, door_letter=NIKO_HOME_EGG_DOOR[1],
+                          target_scene=None, routes=None, on_enter=None,
+                          present=present, bus=bus)
+        self.egg_texts = tuple(egg_texts or NIKO_HOME_EGG_TEXT)
+        self.on_egg = on_egg
+        # ★★★ 第112轮：准入门槛 —— **注入式回调**（`(actor) -> (allowed, why)`）。
+        #   为什么不在这里写判据：本模块是零依赖 L1，`G1` 硬闸禁止 import
+        #   项目内模块（顶层/函数内皆禁）。宿主 `main.py` 已 import 两边，
+        #   由它注入 `niko_home.can_enter`；本模块只消费。
+        self.gate = gate
+
+    def on_interact(self, actor=None):
+        if self.on_egg is None:
+            _log.warning('Niko 的家门 %s 没接 on_egg ⇒ 如实返回"没发生"', self.key)
+            return False
+        # ★★★ 第112轮：**准入门槛** —— 只有用户（灵魂）进不去，其他人能进。
+        #   用户口径「niko 的家确保只是除了用户（灵魂）不可以进去其他人都能进去哦」。
+        #   ★★★ **判据不在这里**（`item_interact` 是零依赖 L1，`G1` 硬闸禁止
+        #     import 项目内模块 —— 连函数内都不许，否则接上初始化环）。
+        #     ⇒ 本类只做**分派**：宿主（`main.py`）通过 `gate=` 回调注入判定函数。
+        #     ★ 未注入（`gate is None`）⇒ **放行**（`can_enter(None)` 的既有语义：
+        #       `None` = NPC/系统自主触发 ⇒ 按用户口径"其他人都能进"）。
+        allowed, _why = True, 'no-gate'
+        if self.gate is not None:
+            try:
+                allowed, _why = self.gate(actor)
+            except Exception:
+                allowed = True      # 判不出 ⇒ 放行（保守侧 = 不挡人）
+        if not allowed:
+            if self.present is not None:
+                try:
+                    self.dialog = self.present('（……你进不去。）', actor)
+                except Exception:
+                    _log.exception('Niko 的家门：拒绝语弹出失败（key=%s）', self.key)
+            _log.info('Niko 的家门：发起者是用户（灵魂）⇒ 拒绝进入（彩蛋永不破）')
+            return False
+        try:
+            return bool(self.on_egg(self))
+        except Exception:
+            _log.exception('Niko 的家门彩蛋执行失败（key=%s）', self.key)
+            return False
 
 
 #: ★ 门字母表（照抄原作 `obj_doorA~F` 的命名集合）。
