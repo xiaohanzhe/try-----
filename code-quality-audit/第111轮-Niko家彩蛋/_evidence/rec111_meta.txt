@@ -1,0 +1,37 @@
+第111轮 · 录屏自检元数据（#47 Niko 的家彩蛋）
+QPA = windows
+ask_log = [{'label': '我确定', 'clicked': True}, {'round': 0, 'yes_label': '我确定', 'ret': True}, {'label': '我确定', 'clicked': True}, {'round': 1, 'yes_label': '我确定', 'ret': True}, {'label': '我确定！！！', 'clicked': True}, {'round': 2, 'yes_label': '我确定！！！', 'ret': True}]
+speech_log = ['你确定吗？', '你这样的行为可能导致世界崩坏，你真的确定吗？', '你真的不再考虑考虑了吗？']
+before = {'tag': 'desktop', 'note': '桌面（彩蛋门所在场景）', 'png': 'C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第111轮-Niko家彩蛋\\_evidence\\frames111\\k000_desktop.png', 'scene_id': 'desktop', 'props': ['DoorProp', 'NikoHomeDoorProp', 'DoorProp', 'DoorProp'], 'egg_fx': False, 'fx_frame': None}
+boom = {'tag': 'boom', 'note': '★爆炸进行时（spr_realisticexplosion 正在播）', 'png': 'C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第111轮-Niko家彩蛋\\_evidence\\frames111\\k001_boom.png', 'scene_id': 'desktop', 'props': ['DoorProp', 'NikoHomeDoorProp', 'DoorProp', 'DoorProp'], 'egg_fx': True, 'fx_frame': 7}
+after = {'tag': 'after_egg', 'note': '彩蛋三连确认 + 爆炸之后', 'png': 'C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第111轮-Niko家彩蛋\\_evidence\\frames111\\k002_after_egg.png', 'scene_id': 'desktop', 'props': ['DoorProp', 'NikoHomeDoorProp', 'DoorProp', 'DoorProp'], 'egg_fx': True, 'fx_frame': 8}
+final = {'tag': 'after_fx', 'note': '爆炸播完之后（仍应停在桌面）', 'png': 'C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第111轮-Niko家彩蛋\\_evidence\\frames111\\k003_after_fx.png', 'scene_id': 'desktop', 'props': ['DoorProp', 'NikoHomeDoorProp', 'DoorProp', 'DoorProp'], 'egg_fx': True, 'fx_frame': 17}
+
+-- G1 彩蛋门真的被建成可交互物 --
+[PASS] G0 ★★ 真机起来了（拿到桌面场景采样）  <- scene='desktop'
+[PASS] G1 ★★★ 桌面场景里有 `NikoHomeDoorProp`（真机 item_props 里找到了）  <- props=['DoorProp', 'NikoHomeDoorProp', 'DoorProp', 'DoorProp']
+[PASS] G1b ★★★ 该门 `target_scene` 为空（**结构上不存在能进的目标**）  <- no_target=True
+
+-- G2 三连确认：问三次、文案按口径递增 --
+[PASS] G2 ★★★ 确认框被问了 **3 次**（三连确认）  <- got=3 [0, 1, 2]
+[PASS] G2b ★★★ 第 1/2 次的"确定"按钮文案是「我确定」  <- labels=['我确定', '我确定', '我确定！！！']
+[PASS] G2c ★★★ 第 3 次的"确定"按钮文案是「我确定！！！」  <- label='我确定！！！'
+[PASS] G2d ★★ 三次都选了"确定"（自动点击生效）  <- ret=[True, True, True]
+
+-- G3 三句台词逐字播出（顺序也对） --
+[PASS] G3 ★★★ 三句台词都播出来了  <- speech=['你确定吗？', '你这样的行为可能导致世界崩坏，你真的确定吗？', '你真的不再考虑考虑了吗？']
+
+-- G4 ★★★ 核心语义：**永远进不去** --
+[PASS] G4 ★★★ 彩蛋执行前后 **场景 id 不变**（'desktop' → 'desktop'）——真的没进门  <- before='desktop' after='desktop'
+[PASS] G4b ★★★ 爆炸播完之后**仍停在桌面**（'desktop'）  <- final='desktop'
+[PASS] G4c ★★ 负控制：桌面场景 id 确实**是** desktop（否则"不变"可能是两边都 None）  <- before='desktop'
+
+-- G5 爆炸特效真的起来了（表现层） --
+[PASS] G5 ★★ 彩蛋交互时起了爆炸特效（`_niko_egg_fx` 有引用）  <- egg_fx=True qpa=windows
+[PASS] G5b ★★★ 爆炸帧索引真在推进（中途第 7 帧）—— 不是"挂了个空引用"  <- boom=7 after=8
+[PASS] G5c ★★ 爆炸中途的抓帧已落盘（人眼能看到火球，而不是只看到"播完"）  <- png='C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第111轮-Niko家彩蛋\\_evidence\\frames111\\k001_boom.png'
+
+-- G6 抓帧 --
+[PASS] G6 ★★ 人眼复核用的抓帧已落盘（真机应有 >0 张；离屏为 0 属预期）  <- png=4 qpa=windows
+
+PASS=15 FAIL=0

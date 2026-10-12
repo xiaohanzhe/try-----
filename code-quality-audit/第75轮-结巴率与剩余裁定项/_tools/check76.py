@@ -575,7 +575,17 @@ def _c5_sync_sprite_called():
             if isinstance(f, ast.Attribute) and f.attr == '_sync_pet_tracker_sprite':
                 sync_lines.append(node.lineno)
             if isinstance(f, ast.Attribute) and f.attr == 'setPixmap':
-                pixmap_lines.append(node.lineno)
+                # ★★ 第111轮：**只统计宠物自己的 `sprite_label`**。
+                #   本判据守的是"宠物换帧后要同步部位识别"这条不变量；
+                #   而 `main.py` 里还有**别的** QLabel 也用 `setPixmap`
+                #   （第111轮新增的 Niko 家爆炸特效层 `lbl.setPixmap(pm)`，
+                #   它是一个独立的无 parent 顶层窗口，跟宠物 tracker 毫无关系）。
+                #   把它们一并计入 ⇒ **假红**（实测：3 处 setPixmap / 2 处同步）。
+                recv = f.value
+                rname = recv.id if isinstance(recv, ast.Name) else (
+                    recv.attr if isinstance(recv, ast.Attribute) else None)
+                if rname == 'sprite_label':
+                    pixmap_lines.append(node.lineno)
     sync_lines.sort()
     pixmap_lines.sort()
 
