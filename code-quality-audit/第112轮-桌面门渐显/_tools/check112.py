@@ -7,6 +7,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                     '..', '..', '..'))
 sys.path.insert(0, os.path.join(ROOT, 'ralsei_pet'))
 sys.path.insert(0, os.path.join(ROOT, 'ralsei_pet', 'modules'))
+_PKG = os.path.join(ROOT, 'ralsei_pet')
 
 from modules import door_reveal as dr
 # ★★★ `item_interact` 是**零依赖 L1**（`G1` 硬闸）⇒ 直接 import 它即可，
@@ -14,7 +15,12 @@ from modules import door_reveal as dr
 from modules import item_interact as _ii
 
 ok = fail = 0
-def check(name, cond, star=False):
+def check(name, cond, star=False, detail=None):
+    """`detail` = 可选诊断串（**只**在失败时打印，避免 PASS 行被噪声淹没）。
+
+    ★ 第112轮续新增：N9~N17 那批判据要回显"实际读到的值"（贴图清单 / 摆位坐标），
+      否则报红时无从判断是产品错还是判据错（本项目铁律：报红先怀疑判据）。
+    """
     global ok, fail
     if cond:
         ok += 1
@@ -22,6 +28,8 @@ def check(name, cond, star=False):
     else:
         fail += 1
         print('[FAIL] %s' % name)
+        if detail:
+            print('       detail: %s' % (detail,))
 
 print('=== A. 纯函数基本形 ===')
 # A1: 距离很远 ⇒ 下限
@@ -159,11 +167,15 @@ _by_src = {o.get('src'): o for o in _d['objects']}
 check('G1 仍 4 扇门', len(_d['objects']) == 4, star=True)
 check('G2 UT 门 = ut_castle_realdoor',
       _by_src['obj_doorC']['sprite'] == 'objs/ut_castle_realdoor_0.png', star=True)
-check('G3 符文门 = spr_shortcut_door_0',
-      _by_src['obj_doorD']['sprite'] == 'objs/spr_shortcut_door_0.png', star=True)
+# ★★★ 第112轮续：符文门贴图口径更正 —— 用户「你要不要自己看看那是不是任意门啊，
+#     我说的是那个门框」+「是哪个门框似的那个门」⇒ 「任意门」= 长得像门框的那扇
+#     = `spr_giantdarkdoor_0.png`（180×155 金边卷草纹门框）。旧值 `spr_shortcut_door_0`
+#     （36×52 粉紫独门）是「一扇门」不是「门框」。判据名同步更新（勿留旧口径）。
+check('G3 符文门 = spr_giantdarkdoor_0（门框形态）',
+      _by_src['obj_doorD']['sprite'] == 'objs/spr_giantdarkdoor_0.png', star=True)
 check('G4 ★ UT 门无 anim（单帧，避免找 _1.png）', 'anim' not in _by_src['obj_doorC'], star=True)
-_dr_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'spr_shortcut_door_1.png')
-check('G5 ★ 符文门 2 帧素材都在盘', os.path.exists(_dr_png), star=True)
+_dr_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'spr_giantdarkdoor_0.png')
+check('G5 ★ 符文门素材在盘（巨门框单帧）', os.path.exists(_dr_png), star=True)
 _ut_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'ut_castle_realdoor_0.png')
 check('G6 UT 门素材在盘', os.path.exists(_ut_png), star=True)
 
@@ -711,6 +723,857 @@ for n in _ast.walk(_main_tree):
         if nm and nm.lstrip('_') == 'scene_is_desktop_scene':
             _n8d = True
 check('N8d ★★★ 渐显受 `_scene_is_desktop_scene()` 守卫（只在桌面跑）', _n8d, star=True)
+
+
+# ===========================================================================
+#  ★★★ 第112轮续：**桌面 4 门「放在外面」+ 门样式裁定**
+#  用户口径（逐字）：「放到屏幕边缘哦」/「不是，那个门你单独放在外面呗」
+#  →「只桌面场景时，固定贴屏」/「各用原尺寸」/「是哪个门框似的那个门」
+# ===========================================================================
+
+# N9: 零依赖模块 `desk_doors` 真的存在且**零 import**（与 possession 同规格）。
+_dd_path = os.path.join(ROOT, 'ralsei_pet', 'modules', 'desk_doors.py')
+_dd_src = ''
+try:
+    with io.open(_dd_path, encoding='utf-8') as _f:
+        _dd_src = _f.read()
+except Exception:
+    _dd_src = ''
+check('N9 ★ desk_doors.py 存在', bool(_dd_src))
+_dd_imports = set()
+if _dd_src:
+    for _n in _ast.walk(_ast.parse(_dd_src)):
+        if isinstance(_n, _ast.Import):
+            for _a in _n.names:
+                _dd_imports.add((_a.name or '').split('.')[0])
+        elif isinstance(_n, _ast.ImportFrom):
+            if _n.module:
+                _dd_imports.add(_n.module.split('.')[0])
+check('N9b ★★ desk_doors.py 零 import（纯标准库算术，可被回归直接 import）',
+      not _dd_imports, star=True, detail='imports=%s' % sorted(_dd_imports))
+
+# N10: 摆位真源 —— `SIDE_LETTERS` 四方位 ↔ 字母，与 desktop.json 的字母一致。
+_dd_mod = None
+try:
+    sys.path.insert(0, os.path.join(ROOT, 'ralsei_pet'))
+    from modules import desk_doors as _dd_mod
+except Exception:
+    _dd_mod = None
+check('N10 ★ desk_doors 可 import', _dd_mod is not None)
+_want_sides = (('top', 'A'), ('bottom', 'B'), ('left', 'C'), ('right', 'D'))
+check('N10b ★★★ SIDE_LETTERS == 正上A/正下B/正左C/正右D（用户逐字三答）',
+      getattr(_dd_mod, 'SIDE_LETTERS', None) == _want_sides,
+      star=True,
+      detail='got=%s' % (getattr(_dd_mod, 'SIDE_LETTERS', None),))
+
+# N11: **核心行为** —— 门贴**屏幕边缘**（不再落在中间）。
+#   判据 = 四扇门真的贴着所在边的物理边界（margin 内）。
+_n11_ok = True
+_n11_detail = []
+if _dd_mod is not None:
+    _SW, _SH = 2560, 1600
+    _sizes = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
+    _placed = _dd_mod.plan_screen_doors(_sizes, _SW, _SH)
+    _map = dict(_placed)
+    check('N11 ★ 四扇门都算出摆位', len(_placed) == 4,
+          detail='n=%d' % len(_placed))
+    # top 门 y == 0；bottom 门 y+h == SH；left 门 x == 0；right 门 x+w == SW
+    if 'A' in _map:
+        _x, _y, _w, _h = _map['A']
+        if _y != 0:
+            _n11_ok = False
+        _n11_detail.append('A(y=%d)' % _y)
+    else:
+        _n11_ok = False
+    if 'B' in _map:
+        _x, _y, _w, _h = _map['B']
+        if _y + _h != _SH:
+            _n11_ok = False
+        _n11_detail.append('B(y+h=%d/%d)' % (_y + _h, _SH))
+    else:
+        _n11_ok = False
+    if 'C' in _map:
+        _x, _y, _w, _h = _map['C']
+        if _x != 0:
+            _n11_ok = False
+        _n11_detail.append('C(x=%d)' % _x)
+    else:
+        _n11_ok = False
+    if 'D' in _map:
+        _x, _y, _w, _h = _map['D']
+        if _x + _w != _SW:
+            _n11_ok = False
+        _n11_detail.append('D(x+w=%d/%d)' % (_x + _w, _SW))
+    else:
+        _n11_ok = False
+    check('N11b ★★★ 四门真贴屏幕物理边（A上/B下/C左/D右，margin=0）',
+          _n11_ok, star=True, detail=' '.join(_n11_detail))
+else:
+    check('N11b ★★★ 四门真贴屏幕物理边（A上/B下/C左/D右，margin=0）',
+          False, star=True, detail='desk_doors 取不到')
+
+# N12: **各用原尺寸**（贴图原像素，不乘房间缩放）。
+_n12_ok = True
+if _dd_mod is not None:
+    for _side, _lt in _want_sides:
+        _sz = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}[_lt]
+        _r = _dd_mod.door_screen_rect(_side, _sz, 2560, 1600)
+        if _r is None or _r[2] != _sz[0] or _r[3] != _sz[1]:
+            _n12_ok = False
+    check('N12 ★★★ 门用贴图原尺寸（DOOR_SCALE=1.0 时 w/h == sprite 原像素）',
+          _n12_ok, star=True)
+else:
+    check('N12 ★★★ 门用贴图原尺寸（DOOR_SCALE=1.0 时 w/h == sprite 原像素）', False)
+
+# N12b: ★ 负控制 —— 把屏幕上边中点门换成左下角，判据必须报不同结果
+#   （证明 N11b 不是"任何矩形都通过"）。
+if _dd_mod is not None:
+    _r_top = _dd_mod.door_screen_rect('top', (44, 56), 2560, 1600)
+    _r_bot = _dd_mod.door_screen_rect('bottom', (44, 56), 2560, 1600)
+    check('N12b ★ 负控制：top 与 bottom 得到**不同** y（N11b 有区分力）',
+          bool(_r_top and _r_bot and _r_top[1] != _r_bot[1]),
+          star=True, detail='top_y=%s bottom_y=%s' % (
+              _r_top[1] if _r_top else None, _r_bot[1] if _r_bot else None))
+    # 非法输入 ⇒ None（不伪装成 0 尺寸）
+    check('N12c ★ 非法输入（side 认不出 / 尺寸<=0）⇒ None，不伪装 0 矩形',
+          _dd_mod.door_screen_rect('middle', (44, 56), 2560, 1600) is None
+          and _dd_mod.door_screen_rect('top', (0, 56), 2560, 1600) is None,
+          star=True)
+else:
+    check('N12b ★ 负控制：top 与 bottom 得到**不同** y（N11b 有区分力）', False, star=True)
+    check('N12c ★ 非法输入（side 认不出 / 尺寸<=0）⇒ None，不伪装 0 矩形', False, star=True)
+
+# N13: **画布通道** —— `SceneCanvas.set_screen_doors` 存在，且画在
+#   `translate/scale` **之外**（AST：`_paint_screen_doors` 调用点必须在
+#   `p.scale(...)` 所在函数体内、且**不在**任何 `with`/translate 之后 —— 简化为
+#   断言两件事：① 方法存在；② `paintEvent` 里有 `self._paint_screen_doors(p)` 调用）。
+_sc_path = os.path.join(ROOT, 'ralsei_pet', 'modules', 'scene_canvas.py')
+_sc_src = ''
+try:
+    with io.open(_sc_path, encoding='utf-8') as _f:
+        _sc_src = _f.read()
+except Exception:
+    _sc_src = ''
+_sc_tree = _ast.parse(_sc_src) if _sc_src else None
+check('N13 ★ scene_canvas 有 set_screen_doors 方法',
+      bool(_sc_tree) and any(
+          isinstance(_n, _ast.FunctionDef) and _n.name == 'set_screen_doors'
+          for _n in _ast.walk(_sc_tree)), star=True)
+_n13b = False
+if _sc_tree:
+    for _n in _ast.walk(_sc_tree):
+        if isinstance(_n, _ast.FunctionDef) and _n.name == 'paintEvent':
+            for _m in _ast.walk(_n):
+                if (isinstance(_m, _ast.Call)
+                        and isinstance(_m.func, _ast.Attribute)
+                        and _m.func.attr == '_paint_screen_doors'):
+                    _n13b = True
+check('N13b ★★★ paintEvent 里真调 `_paint_screen_doors`（非死代码）',
+      _n13b, star=True)
+# N13c: ★ 负控制 —— 换个不存在的方法名 ⇒ 0 次
+_n13c = 0
+if _sc_tree:
+    for _n in _ast.walk(_sc_tree):
+        if (isinstance(_n, _ast.Call)
+                and isinstance(_n.func, _ast.Attribute)
+                and _n.func.attr == 'no_such_paint_qqq'):
+            _n13c += 1
+check('N13c ★ 负控制：不存在的方法名 ⇒ 0 次（N13b 有区分力）', _n13c == 0, star=True)
+
+# N14: **不画两遍** —— plan_frame 必须认 `enabled is False`（第112轮续补的剔除）。
+_sr_path = os.path.join(ROOT, 'ralsei_pet', 'modules', 'scene_render.py')
+_sr_src = ''
+try:
+    with io.open(_sr_path, encoding='utf-8') as _f:
+        _sr_src = _f.read()
+except Exception:
+    _sr_src = ''
+_sr_tree = _ast.parse(_sr_src) if _sr_src else None
+_n14 = False
+if _sr_tree:
+    for _n in _ast.walk(_sr_tree):
+        if isinstance(_n, _ast.FunctionDef) and _n.name == 'plan_frame':
+            for _m in _ast.walk(_n):
+                # 找 `obj.get('enabled') is False` 形状的 Compare
+                if (isinstance(_m, _ast.Compare)
+                        and isinstance(_m.ops[0], _ast.Is)
+                        and isinstance(_m.comparators[0], _ast.Constant)
+                        and _m.comparators[0].value is False):
+                    _left = _m.left
+                    if (isinstance(_left, _ast.Call)
+                            and isinstance(_left.func, _ast.Attribute)
+                            and _left.func.attr == 'get'
+                            and _left.args
+                            and isinstance(_left.args[0], _ast.Constant)
+                            and _left.args[0].value == 'enabled'):
+                        _n14 = True
+check('N14 ★★★ plan_frame 认 `enabled is False` ⇒ 房间层不再画那 4 扇门（不重复）',
+      _n14, star=True)
+# N14b: ★ 负控制 —— 同一查找换 `'no_such_key'` ⇒ 应为 0（证明 N14 非恒真）
+_n14b = False
+if _sr_tree:
+    for _n in _ast.walk(_sr_tree):
+        if isinstance(_n, _ast.FunctionDef) and _n.name == 'plan_frame':
+            for _m in _ast.walk(_n):
+                if (isinstance(_m, _ast.Compare)
+                        and isinstance(_m.left, _ast.Call)
+                        and isinstance(_m.left.func, _ast.Attribute)
+                        and _m.left.func.attr == 'get'
+                        and _m.left.args
+                        and isinstance(_m.left.args[0], _ast.Constant)
+                        and _m.left.args[0].value == 'no_such_key_qqq'):
+                    _n14b = True
+check('N14b ★ 负控制：`no_such_key_qqq` 的 Compare ⇒ 不存在（N14 有区分力）',
+      not _n14b, star=True)
+
+# N15: **门样式** —— desktop.json 的 4 门贴图 = 用户裁定的四张（逐门）。
+_need_sprites = {
+    'desk_door_oneshot': 'objs/spr_darkdoor_0.png',
+    'desk_door_niko_home': 'objs/niko_door_portal.png',
+    'desk_door_ut': 'objs/ut_castle_realdoor_0.png',
+    'desk_door_deltarune': 'objs/spr_giantdarkdoor_0.png',
+}
+_dj_path = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'desktop.json')
+_dj = {}
+try:
+    with io.open(_dj_path, encoding='utf-8') as _f:
+        _dj = json.load(_f)
+except Exception:
+    _dj = {}
+_got_sprites = {}
+for _o in (_dj.get('objects') or []):
+    if isinstance(_o, dict) and _o.get('id'):
+        _got_sprites[_o['id']] = _o.get('sprite')
+check('N15 ★ 4 门贴图 == 裁定表（OneShot暗门/Niko家光门/UT王座门/符文巨门框）',
+      _got_sprites == _need_sprites, star=True,
+      detail='got=%s' % _got_sprites)
+check('N15b ★★ Niko 家门用光门 `niko_door_portal`（用户「用原作 niko 最后回家的光门」）',
+      _got_sprites.get('desk_door_niko_home') == 'objs/niko_door_portal.png', star=True)
+check('N15c ★★ 三角符文门用门框 `spr_giantdarkdoor`（用户「是哪个门框似的那个门」）',
+      _got_sprites.get('desk_door_deltarune') == 'objs/spr_giantdarkdoor_0.png', star=True)
+check('N15d ★★ UT 门仍用王座门 `ut_castle_realdoor`（用户「ut 就用王座那个门」）',
+      _got_sprites.get('desk_door_ut') == 'objs/ut_castle_realdoor_0.png', star=True)
+# N15e: ★ 负控制 —— 4 门贴图**不全相同**（用户「门也不是都长那样啊」）
+check('N15e ★★ 负控制：4 门贴图不是同一张（用户「门也不是都长那样」）',
+      len(set(_got_sprites.values())) == 4, star=True,
+      detail='distinct=%d' % len(set(_got_sprites.values())))
+
+# N16: 4 门**全部 enabled=False**（房间层不画，交给屏幕层）。
+_n16_all = bool(_dj) and all(
+    isinstance(_o, dict) and _o.get('id', '').startswith('desk_door')
+    and _o.get('enabled') is False
+    for _o in (_dj.get('objects') or [])
+    if isinstance(_o, dict) and str(_o.get('id', '')).startswith('desk_door'))
+check('N16 ★★ 4 门全 `enabled: false`（房间层剔除，只屏幕层画）',
+      _n16_all, star=True)
+# N16b: ★★ 但物件**仍在 objects 里**（路由/渐显要读到它们）——这是"不重复画"的关键。
+check('N16b ★★ 4 门仍在 desktop.json 的 objects 里（数据留给路由/渐显）',
+      len([_o for _o in (_dj.get('objects') or [])
+           if isinstance(_o, dict)
+           and str(_o.get('id', '')).startswith('desk_door')]) == 4, star=True)
+
+# N17: ★★★ main.py 真把两者接起来（AST，非字符串）：
+#   ① 调 `set_screen_doors`；② 调 `_desktop_screen_doors`；③ 受
+#   `_scene_is_desktop_scene()` 守卫（用户「只桌面场景时，固定贴屏」）。
+_n17a = _n17b = False
+for _n in _ast.walk(_main_tree):
+    if isinstance(_n, _ast.Call):
+        _fn = _n.func
+        _nm = _fn.attr if isinstance(_fn, _ast.Attribute) else (
+            _fn.id if isinstance(_fn, _ast.Name) else '')
+        if _nm == 'set_screen_doors':
+            _n17a = True
+        if _nm == '_desktop_screen_doors':
+            _n17b = True
+check('N17 ★★★ main.py 真调 `set_screen_doors`（AST）', _n17a, star=True)
+check('N17b ★★ main.py 真调 `_desktop_screen_doors`（AST，算摆位）', _n17b, star=True)
+# N17c: 两者**在同一个 try 块内** ⇒ 近似判"受同一守卫"。更硬的判法：
+#   断言 `_desktop_screen_doors` 的调用**嵌套在**某个 `if` 的 test 里含
+#   `_scene_is_desktop_scene` —— 用 AST 精确判。
+_n17c = False
+for _n in _ast.walk(_main_tree):
+    if not isinstance(_n, _ast.If):
+        continue
+    _t = _n.test
+    _tnames = set()
+    for _m in _ast.walk(_t):
+        if isinstance(_m, _ast.Call):
+            _f2 = _m.func
+            _tnames.add(_f2.attr if isinstance(_f2, _ast.Attribute) else (
+                _f2.id if isinstance(_f2, _ast.Name) else ''))
+    if 'scene_is_desktop_scene' not in ' '.join(_tnames):
+        # 允许 `self._scene_is_desktop_scene()` 写法：上面已取 attr 名
+        _joined = ' '.join(sorted(_tnames))
+        if 'scene_is_desktop_scene' not in _joined:
+            continue
+    for _m in _ast.walk(_n):
+        if (isinstance(_m, _ast.Call)
+                and isinstance(_m.func, _ast.Attribute)
+                and _m.func.attr == '_desktop_screen_doors'):
+            _n17c = True
+check('N17c ★★★ 屏幕层门受 `_scene_is_desktop_scene()` 守卫（只桌面场景显示）',
+      _n17c, star=True)
+
+# ==========================================================================
+#  N18~N22 ★★★ 第112轮续二：门对齐 Ralsei 量级（用户「门的尺寸和 ralsei 的尺寸
+#      调换一下差不多」＋「门的稍微大一点」）
+# ==========================================================================
+print('')
+print('=== N18. ★★★ 门对齐 Ralsei 量级（缩放到宠物外接盒） ===')
+_DD_T = _ast.parse(io.open(
+    os.path.join(ROOT, 'ralsei_pet', 'modules', 'desk_doors.py'),
+    encoding='utf-8').read())
+
+
+def _dd_const(name):
+    """从 `desk_doors.py` 的 AST 取模块级常量值（禁纯文本扫/禁 eval 源串）。"""
+    for _n in _DD_T.body:
+        if isinstance(_n, _ast.Assign):
+            for _t in _n.targets:
+                if isinstance(_t, _ast.Name) and _t.id == name:
+                    try:
+                        return _ast.literal_eval(_n.value)
+                    except Exception:
+                        return None
+    return None
+
+
+# N18a: `DOOR_FIT_CAP` 存在且 = 1.2（门外接盒 = Ralsei 盒 × 1.2 ⇒「稍微大一点」）。
+_n18a_cap = _dd_const('DOOR_FIT_CAP')
+check('N18a ★★★ `DOOR_FIT_CAP` = 1.2（门外接盒 = Ralsei 盒 × 1.2，用户「稍微大一点」）',
+      _n18a_cap == 1.2, star=True, detail='DOOR_FIT_CAP=%r' % (_n18a_cap,))
+
+# N18b: 统一倍率函数存在（AST 函数定义），且 `fit_door_scale`（单扇版）也保留。
+_dd_funcs = {n.name for n in _ast.walk(_DD_T) if isinstance(n, _ast.FunctionDef)}
+check('N18b ★★★ `fit_doors_uniform_scale()` 存在（统一倍率 = 门↔宠物盒的唯一真源）',
+      'fit_doors_uniform_scale' in _dd_funcs, star=True)
+check('N18b2 ★★ 单扇版 `fit_door_scale()` 保留（"单扇 vs 宠物盒"这个局部问题的解）',
+      'fit_door_scale' in _dd_funcs, star=True)
+
+# N18c: `plan_screen_doors` 真有 `pet_box` 形参（老调用点不传 ⇒ 走旧口径）。
+_pnd_args = None
+for _n in _ast.walk(_DD_T):
+    if isinstance(_n, _ast.FunctionDef) and _n.name == 'plan_screen_doors':
+        _pnd_args = [a.arg for a in _n.args.args]
+check('N18c ★★★ `plan_screen_doors(..., pet_box=None)`（有宠物盒 ⇒ 统一倍率对齐；'
+      '不传 ⇒ 退回"各用原尺寸"，老调用点零变化）',
+      _pnd_args is not None and 'pet_box' in _pnd_args,
+      star=True, detail='args=%r' % (_pnd_args,))
+
+# N18d ★★★ 行为级：给四张真门尺寸 + Ralsei 盒 ⇒ **统一倍率**下每扇门的
+#   外接盒都**不超过** cap × 宠物盒。
+try:
+    from modules import desk_doors as _DD2  # noqa: E402
+except Exception as _e:
+    _DD2 = None
+    print('        [warn] desk_doors 导入失败: %r' % (_e,))
+_pet = (230, 157)                      # 真机量得（69×3.33125 / 47×3.33125 取整）
+_sz4 = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
+_n18d_bad = []
+_n18d_rows = []
+if _DD2 is not None:
+    _cap = float(getattr(_DD2, 'DOOR_FIT_CAP', 1.2))
+    _k = _DD2.fit_doors_uniform_scale(_sz4, _pet)
+    for _L, _wh in _sz4.items():
+        _w, _h = _wh[0] * _k, _wh[1] * _k
+        _n18d_rows.append('%s %.0fx%.0f' % (_L, _w, _h))
+        if _w > _cap * _pet[0] + 1e-6 or _h > _cap * _pet[1] + 1e-6:
+            _n18d_bad.append('%s -> %.1fx%.1f 超过 cap=%.2f×宠物盒(%dx%d)'
+                             % (_L, _w, _h, _cap, _pet[0], _pet[1]))
+check('N18d ★★★ 行为级：**统一倍率**下四扇门外接盒**都不超过** cap × 宠物盒'
+      '（门不再是 Ralsei 的 2.7 倍）',
+      _DD2 is not None and not _n18d_bad,
+      star=True, detail='k=%.4f rows=%r bad=%r'
+                        % (_k if _DD2 else 0, _n18d_rows, _n18d_bad))
+
+# N18d2 ★★★ **统一倍率**：四扇门用的是**同一个** k（"按原作等比放大"的核心）。
+#   ★★★ 判据必须**结构化**（第112轮续三实证）：旧写法
+#     `abs(_wh[0]*_k / _wh[0] - _k) < 1e-9` 是**代数恒真**（左侧 ≡ _k）
+#     ⇒ 把内核改成逐门也照样 PASS（mutate M21 实证 MISSED）。这就是
+#     契约里说的"判据只判提到某名字 = 恒真"的又一例。
+#   ⇒ 真判据要点（与产品行为挂钩、且**非恒等**）：
+#     (a) 用源码里"是否只出现**一次** `door_screen_rect(...)` 调用 +
+#         该调用的 `scale=` 实参走**同一个** `_s_uniform`（AST 结构）；
+#     (b) 行为级：**逐门各自按 `fit_door_scale` 算**的四个不同倍率，与
+#         统一倍率 `k` **不相等**（A/B/C/D 的原尺寸差异 ⇒ 逐门必分叉）
+#         ⇒ 若产品真走统一倍率，则"四门屏幕宽/原宽"全等；若走逐门则不等。
+#     这就是**非恒等**的鉴别判据：真值来自 `fit_door_scale`（产品另一个函数），
+#     不是 `_wh[0]*_k/_wh[0]` 这种自洽恒等式。
+_n18d2_ok = False
+_n18d2_detail = ''
+_n18d2_ast_ok = False
+try:
+    _dd_src = io.open(
+        os.path.join(_PKG, 'modules', 'desk_doors.py'),
+        encoding='utf-8', newline='').read()
+    _dd_tree = _ast.parse(_dd_src)
+    # --- (a) AST：plan_screen_doors 里 `door_screen_rect(...)` 的 `scale=`
+    #     实参必须是**同一个名字**（`_s_uniform`），出现且仅出现一次赋值。
+    _n18d2_ast_ok = False
+    for _fn in _ast.walk(_dd_tree):
+        if not (isinstance(_fn, _ast.FunctionDef)
+                and _fn.name == 'plan_screen_doors'):
+            continue
+        _calls = []
+        for _node in _ast.walk(_fn):
+            if (isinstance(_node, _ast.Call)
+                    and isinstance(_node.func, _ast.Name)
+                    and _node.func.id == 'door_screen_rect'):
+                _scale_kw = [kw for kw in _node.keywords
+                             if kw.arg == 'scale']
+                _calls.append(_scale_kw[0].value if _scale_kw else None)
+        # 每个 call 的 scale= 实参都必须是 Name 且**同名**
+        _names = set()
+        for _v in _calls:
+            if isinstance(_v, _ast.Name):
+                _names.add(_v.id)
+        _n18d2_ast_ok = (len(_calls) >= 1 and len(_names) == 1
+                         and None not in _calls)
+except Exception as _e:
+    print('        [warn] N18d2 AST 检查异常: %r' % (_e,))
+
+if _DD2 is not None:
+    _k = _DD2.fit_doors_uniform_scale(_sz4, _pet)
+    # --- (b) 行为级（**非恒等**）：逐门倍率由产品另一个函数算出 ⇒ 四门必分叉。
+    _solo = dict((_L, _DD2.fit_door_scale((_wh[0], _wh[1]), _pet))
+                 for _L, _wh in _sz4.items())
+    _spread = max(_solo.values()) - min(_solo.values())
+    # 统一倍率真生效 ⇒ 屏幕宽/原宽 == 同一个 k（即"四门共用一把尺"）
+    _ratios = [_wh[0] * _k / float(_wh[0]) for _wh in _sz4.values()]
+    _uniform_ruler = (max(_ratios) - min(_ratios)) < 1e-9
+    # 且**逐门倍率确实是分叉的**（否则这个鉴别判据本身恒真 = 又一个坑）
+    _solo_differs = _spread > 1e-6
+    _n18d2_ok = bool(_n18d2_ast_ok and _uniform_ruler and _solo_differs)
+    _n18d2_detail = ('ast_same_scale=%r  k=%.5f  尺=%r  逐门 k=%r(分叉=%.3f)'
+                     % (_n18d2_ast_ok, _k, [round(r, 5) for r in _ratios],
+                        dict((L, round(v, 3)) for L, v in _solo.items()),
+                        _spread))
+check('N18d2 ★★★ 统一倍率：四扇门用**同一个 k**（AST 判 `scale=` 同源 + '
+      '逐门倍率**确实分叉**⇒判据非恒等）',
+      _n18d2_ok, star=True, detail=_n18d2_detail)
+
+# N18e ★★★ 负控制：统一倍率有鉴别力 —— 宠物盒放大一倍，k 必须跟着变大。
+_n18e_ok = False
+if _DD2 is not None:
+    _k1 = _DD2.fit_doors_uniform_scale(_sz4, (230, 157))
+    _k2 = _DD2.fit_doors_uniform_scale(_sz4, (460, 314))
+    _n18e_ok = (_k2 > _k1)
+check('N18e ★★★ 负控制：`fit_doors_uniform_scale` 有鉴别力'
+      '（宠物盒放大一倍 ⇒ k 跟着变大）',
+      _n18e_ok, star=True)
+
+# N18f ★★ 非法输入 ⇒ 退回 `DOOR_SCALE`（不抛、不返 0、不返 None）。
+_n18f_ok = False
+if _DD2 is not None:
+    try:
+        _vals = [_DD2.fit_door_scale(None, _pet),
+                 _DD2.fit_door_scale((0, 0), _pet),
+                 _DD2.fit_door_scale((44, 56), None),
+                 _DD2.fit_door_scale((44, 56), (0, 0))]
+        _n18f_ok = all(isinstance(v, float) and v > 0 for v in _vals)
+    except Exception as _e:
+        print('        [warn] 非法输入抛了: %r' % (_e,))
+check('N18f ★★ 非法输入（None/0 尺寸）⇒ 仍返正 float（退回 `DOOR_SCALE`，不抛）',
+      _n18f_ok, star=True)
+
+# N18g ★★★ 行为级：`plan_screen_doors` 带 `pet_box` 与不带时**结果必须不同**
+#   （否则"新增参数但没人真用"——本项目最贵的坑）。
+_n18g_ok = False
+if _DD2 is not None:
+    _with = _DD2.plan_screen_doors(_sz4, 2560, 1600, pet_box=_pet)
+    _without = _DD2.plan_screen_doors(_sz4, 2560, 1600)
+    if len(_with) == 4 and len(_without) == 4:
+        _n18g_ok = ([r for _l, r in _with] != [r for _l, r in _without])
+check('N18g ★★★ 带 `pet_box` 与不带时**结果不同**（防"加了参数但没真用"）',
+      _n18g_ok, star=True)
+
+# N18h ★★★ 缩放后四扇门仍**逐边贴屏幕物理边**（缩放不该破坏贴边）。
+_n18h_bad = []
+if _DD2 is not None:
+    _side_of = {'A': 'top', 'B': 'bottom', 'C': 'left', 'D': 'right'}
+    for _l, _r in _DD2.plan_screen_doors(_sz4, 2560, 1600, pet_box=_pet):
+        _x, _y, _w, _h = _r
+        _sd = _side_of[_l]
+        if _sd == 'top' and _y != 0:
+            _n18h_bad.append('%s 正上 y=%d' % (_l, _y))
+        elif _sd == 'bottom' and _y + _h != 1600:
+            _n18h_bad.append('%s 正下 y+h=%d' % (_l, _y + _h))
+        elif _sd == 'left' and _x != 0:
+            _n18h_bad.append('%s 正左 x=%d' % (_l, _x))
+        elif _sd == 'right' and _x + _w != 2560:
+            _n18h_bad.append('%s 正右 x+w=%d' % (_l, _x + _w))
+check('N18h ★★★ 缩放后四扇门仍**逐边贴屏幕物理边**（缩放不破坏贴边）',
+      _DD2 is not None and not _n18h_bad, star=True, detail='bad=%r' % (_n18h_bad,))
+
+# N19 ★★★ `main.py` 真把宠物盒送进 `plan_screen_doors`（AST：`pet_box=` 关键字实参）。
+_main_t = _ast.parse(io.open(os.path.join(ROOT, 'ralsei_pet', 'src', 'main.py'),
+                             encoding='utf-8').read())
+_n19 = False
+_n19_uses_label = False
+for _n in _ast.walk(_main_t):
+    if isinstance(_n, _ast.Call):
+        _kw = [k.arg for k in _n.keywords if k.arg]
+        if 'pet_box' in _kw:
+            _n19 = True
+            break
+check('N19 ★★★ `main.py` 真把 `pet_box=` 送进 `plan_screen_doors`（AST 关键字实参）',
+      _n19, star=True)
+
+# N19b ★★★ 宠物盒真源 = `desk_doors.pet_screen_box(_cached_scale_factor)`（标准体量），
+#   `sprite_label` 只许出现在**兜底**分支里。
+#   ★★ 旧版这条只查 "`'sprite_label' in _body`" ⇒ **恒真**（兜底分支里还留着它，
+#      改了真源它照样 PASS —— 判据只判"提到某名字"的典型翻车）。改成 AST 结构化断言：
+#      ① `_desktop_screen_doors` 里必须**真调用** `pet_screen_box`；
+#      ② 传给它的实参必须**源自** `_cached_scale_factor`；
+#      ③ `sprite_label` 的取用必须落在 `pet_box is None` 的兜底 `if` 体内。
+_n19b_call_petbox = False     # ① 真调用 pet_screen_box
+_n19b_arg_is_cached = False   # ② 实参含 _cached_scale_factor
+_n19b_label_only_fallback = False  # ③ sprite_label 只在兜底分支
+
+
+def _refers_cached(_node):
+    """判断某表达式是否**引用了** `_cached_scale_factor`。
+
+    ★ 两种真实写法都会出现（第一版只认 ①，于是把 ② 误判成"没引用"，报假 FAIL）：
+      ① 属性访问：`self._cached_scale_factor`
+      ② 字符串取属性：`getattr(self, '_cached_scale_factor', None)`
+        —— 这里 `'_cached_scale_factor'` 是 `ast.Constant`(str)，不是 `Attribute`。
+    """
+    for _s in _ast.walk(_node):
+        if isinstance(_s, _ast.Attribute) and _s.attr == '_cached_scale_factor':
+            return True
+        if isinstance(_s, _ast.Constant) and _s.value == '_cached_scale_factor':
+            return True
+    return False
+
+
+def _attr_root_name(_node):
+    """沿 `a.b.c` / `a['b']` 链取最左的名字（取不到 ⇒ None）。"""
+    while True:
+        if isinstance(_node, _ast.Attribute):
+            _node = _node.value
+        elif isinstance(_node, _ast.Subscript):
+            _node = _node.value
+        else:
+            return getattr(_node, 'id', None)
+
+
+for _n in _ast.walk(_main_t):
+    if not (isinstance(_n, _ast.FunctionDef) and _n.name == '_desktop_screen_doors'):
+        continue
+    # ① 真调用 pet_screen_box
+    #   ★ 必须先**收集别名**再判调用（两遍）：`ast.walk` 的遍历顺序不保证
+    #     `Assign` 排在 `Call` 前面，一遍扫会偶发漏别名（第一版就栽在这）。
+    _aliases = set()
+    for _a2 in _ast.walk(_n):
+        if isinstance(_a2, _ast.Assign):
+            if _refers_cached(_a2.value):
+                for _t in _a2.targets:
+                    if isinstance(_t, _ast.Name):
+                        _aliases.add(_t.id)
+    for _c in _ast.walk(_n):
+        if (isinstance(_c, _ast.Call)
+                and _attr_root_name(_c.func) == 'desk_doors_mod'
+                and isinstance(_c.func, _ast.Attribute)
+                and _c.func.attr == 'pet_screen_box'):
+            _n19b_call_petbox = True
+            # ② 实参链里含 `_cached_scale_factor`，或含**它的别名**（局部中转）。
+            for _a in list(_c.args) + [k.value for k in _c.keywords]:
+                if _refers_cached(_a) or any(
+                        isinstance(_s, _ast.Name) and _s.id in _aliases
+                        for _s in _ast.walk(_a)):
+                    _n19b_arg_is_cached = True
+    # ③ sprite_label 的取用是否只在"pet_box is None"的兜底 if 体内
+    _label_nodes = [x for x in _ast.walk(_n)
+                    if isinstance(x, _ast.Attribute) and x.attr == 'sprite_label']
+    if _label_nodes:
+        _fallback_spans = []
+        for _st in _ast.walk(_n):
+            if isinstance(_st, _ast.If):
+                _cond = _ast.unparse(_st.test)
+                if 'pet_box' in _cond and 'None' in _cond:
+                    _fallback_spans.append((_st.lineno, getattr(_st, 'end_lineno', _st.lineno)))
+        if _fallback_spans:
+            _n19b_label_only_fallback = all(
+                any(_a <= _x.lineno <= _b for (_a, _b) in _fallback_spans)
+                for _x in _label_nodes)
+
+check('N19b ★★★ 宠物盒真源 = `pet_screen_box(_cached_scale_factor)`'
+      '（标准体量；`sprite_label` 只许作兜底）',
+      _n19b_call_petbox and _n19b_arg_is_cached and _n19b_label_only_fallback,
+      star=True,
+      detail='call=%s arg_cached=%s label_fallback_only=%s'
+             % (_n19b_call_petbox, _n19b_arg_is_cached,
+                _n19b_label_only_fallback))
+
+# ============================================================================
+# N20~N23 ★★★ 第112轮续三：门摆位的**稳定性**与**坐标系**
+#   （本轮真机抓帧抓出两个 bug，这两条判据就是把它们钉死）
+# ============================================================================
+# N20 ★★★ `PET_BOX_LOGICAL` = (69, 47)（idle 组容器，**不随动画组变**）。
+#   那是"用户看到静止 Ralsei 的那个体量"（2560×1600 屏上 229×156）。
+check('N20 ★★★ `PET_BOX_LOGICAL` = (69, 47)（idle 组容器 = 标准体量，不随动画跳）',
+      _DD2 is not None and getattr(_DD2, 'PET_BOX_LOGICAL', None) == (69, 47),
+      star=True,
+      detail='got=%r' % (getattr(_DD2, 'PET_BOX_LOGICAL', None) if _DD2 else None,))
+
+# N21 ★★★ 行为级：`pet_screen_box()` 与 `sprite_label` **解耦** ——
+#   同一位移倍率下反复调用结果**恒等**，且等于 `(69×k, 47×k)`。
+_n21_ok = False
+_n21_detail = 'DD2 未导入'
+if _DD2 is not None:
+    try:
+        _a = _DD2.pet_screen_box(3.33125)
+        _b = _DD2.pet_screen_box(3.33125)
+        _c = _DD2.pet_screen_box(1.0)
+        _n21_ok = (_a == _b == (230, 157)) and (_c == (69, 47))
+        _n21_detail = 'k=3.33125 ⇒ %r（期望 (230,157)）｜k=1.0 ⇒ %r' % (_a, _c)
+    except Exception as e:
+        _n21_detail = '异常 %s' % e
+check('N21 ★★★ 行为级：`pet_screen_box(3.33125)` == (230,157) 且确定性（同输入恒等输出）',
+      _n21_ok, star=True, detail=_n21_detail)
+
+# N21b ★★ 负控制：倍率非法 ⇒ 返 `None`（调用方据此走兜底，**不返 (0,0)**）。
+_n21b_bad = []
+if _DD2 is not None:
+    for _bad in (None, 0, -1, 'x', float('nan')):
+        try:
+            _r = _DD2.pet_screen_box(_bad)
+            if _r is not None:
+                _n21b_bad.append('%r ⇒ %r' % (_bad, _r))
+        except Exception as _e:
+            _n21b_bad.append('%r 抛 %s' % (_bad, _e))
+check('N21b ★★ 负控制：`pet_screen_box` 非法倍率 ⇒ 返 `None`（供兜底，不返 0 盒）',
+      _DD2 is not None and not _n21b_bad, star=True, detail='bad=%r' % (_n21b_bad,))
+
+# N22 ★★★ `scene_canvas.paintEvent` 真把"房间坐标变换"**包起来**（save/restore），
+#   否则屏幕门会被 `translate(offset)` 整体推走（本轮真 bug：`last_drawn=4` 但
+#   四扇门区域 100% 透明）。
+#   ★ 用 AST 判**调用序**：`p.save()` 必须出现在 `p.translate(...)` 之前，
+#     且 `p.restore()` 必须夹在 `paint_on(...)` 与 `_paint_screen_doors(...)` 之间。
+_cv_path = os.path.join(ROOT, 'ralsei_pet', 'modules', 'scene_canvas.py')
+_cv_t = _ast.parse(io.open(_cv_path, encoding='utf-8').read())
+_n22_ok = False
+_n22_detail = '未找到 paintEvent'
+for _n in _ast.walk(_cv_t):
+    if not (isinstance(_n, _ast.FunctionDef) and _n.name == 'paintEvent'):
+        continue
+    # 收集带行号的调用序。
+    # ★ `p.xxx(...)` 是 `Attribute`（save/translate/restore/_paint_screen_doors），
+    #   而 `paint_on(...)` 是**模块级函数**（`Name`）⇒ 两种都要收，否则
+    #   `paint_on` 找不到（第一版就是这样误报 FAIL 的）。
+    _seq = []
+    for _c in _ast.walk(_n):
+        if isinstance(_c, _ast.Call):
+            if isinstance(_c.func, _ast.Attribute):
+                _seq.append((_c.lineno, _c.func.attr))
+            elif isinstance(_c.func, _ast.Name):
+                _seq.append((_c.lineno, _c.func.id))
+    _seq.sort()
+    _i_save = next((i for i, (_l, _a) in enumerate(_seq) if _a == 'save'), -1)
+    _i_tr = next((i for i, (_l, _a) in enumerate(_seq) if _a == 'translate'), -1)
+    _i_rest = next((i for i, (_l, _a) in enumerate(_seq) if _a == 'restore'), -1)
+    _i_on = next((i for i, (_l, _a) in enumerate(_seq) if _a == 'paint_on'), -1)
+    _i_sd = next((i for i, (_l, _a) in enumerate(_seq) if _a == '_paint_screen_doors'), -1)
+    _n22_ok = (-1 < _i_save < _i_tr) and (-1 < _i_on < _i_rest < _i_sd)
+    _n22_detail = ('save@%d translate@%d paint_on@%d restore@%d screen_doors@%d'
+                   % (_i_save, _i_tr, _i_on, _i_rest, _i_sd))
+    break
+check('N22 ★★★ `paintEvent` 用 `save/restore` 圈住房间变换'
+      '（屏幕门画在**未平移**的整屏坐标上）',
+      _n22_ok, star=True, detail=_n22_detail)
+
+# N22b ★★ 负控制：若把 `restore()` 拿掉，屏幕门就会落在 `translate` 之后
+#   ⇒ 判据必须能识别"restore 不在 paint_on 与 screen_doors 之间"。
+#   （用**变异源码**跑同一段 AST 逻辑，正向证明判据有鉴别力。）
+_n22b_ok = False
+try:
+    _mut_src = io.open(_cv_path, encoding='utf-8').read().replace(
+        '            p.restore()\r\n', '', 1)
+    if _mut_src == io.open(_cv_path, encoding='utf-8').read():
+        _mut_src = io.open(_cv_path, encoding='utf-8').read().replace(
+            '            p.restore()\n', '', 1)
+    _mt = _ast.parse(_mut_src)
+    for _n in _ast.walk(_mt):
+        if isinstance(_n, _ast.FunctionDef) and _n.name == 'paintEvent':
+            _seq = []
+            for _c in _ast.walk(_n):
+                if isinstance(_c, _ast.Call):
+                    if isinstance(_c.func, _ast.Attribute):
+                        _seq.append((_c.lineno, _c.func.attr))
+                    elif isinstance(_c.func, _ast.Name):
+                        _seq.append((_c.lineno, _c.func.id))
+            _seq.sort()
+            _i_rest = next((i for i, (_l, _a) in enumerate(_seq) if _a == 'restore'), -1)
+            _i_on = next((i for i, (_l, _a) in enumerate(_seq) if _a == 'paint_on'), -1)
+            _i_sd = next((i for i, (_l, _a) in enumerate(_seq)
+                          if _a == '_paint_screen_doors'), -1)
+            _n22b_ok = not (-1 < _i_on < _i_rest < _i_sd)   # 变异后**必须**判不满足
+            break
+except Exception:
+    _n22b_ok = False
+check('N22b ★★ 负控制：删掉 `p.restore()` ⇒ N22 那条判据**必不满足**（判据有鉴别力）',
+      _n22b_ok, star=True)
+
+# N23 ★★★ `_paint_screen_doors` 逐门画的是**画布坐标**（不自行加 offset）。
+#   判据：该方法的 AST 里**不许出现** `_offset_x` / `_offset_y` / `translate`。
+#   ★ 为什么必须这样：一旦它自己 translate 一次，与 `paintEvent` 的 restore 一叠加
+#     就是双重偏移（"改一处忘另一处"的经典形态）。
+_n23_bad = []
+for _n in _ast.walk(_cv_t):
+    if isinstance(_n, _ast.FunctionDef) and _n.name == '_paint_screen_doors':
+        for _x in _ast.walk(_n):
+            if isinstance(_x, _ast.Attribute) and _x.attr in ('_offset_x', '_offset_y'):
+                _n23_bad.append('引用 %s' % _x.attr)
+            if isinstance(_x, _ast.Call) and isinstance(_x.func, _ast.Attribute) \
+                    and _x.func.attr == 'translate':
+                _n23_bad.append('调用 translate')
+        break
+check('N23 ★★★ `_paint_screen_doors` **不自加偏移**'
+      '（不许出现 `_offset_*` / `translate`，防与 paintEvent 双重偏移）',
+      not _n23_bad, star=True, detail='bad=%r' % (_n23_bad,))
+
+# ===========================================================================
+# 续四（用户口径：「门单独贴屏满屏 / room 用第二个档 / 其他黑边 / 宠物最多 1.5 个文件夹」）
+# ===========================================================================
+print('=== N 续四：宠物体量上限 + 门↔场景彻底解耦 ===')
+
+# N24 ★★★ 宠物体量上限常量存在且 = 144（用户「最多 1.5 个文件夹」⇒ 1.5×96）。
+try:
+    _n24_val = getattr(_DD2, 'PET_MAX_LONG_SIDE_PX', None)
+except Exception:
+    _n24_val = None
+check('N24 ★★★ `PET_MAX_LONG_SIDE_PX` == 144'
+      '（用户「宠物最多 1.5 个文件夹大小」⇒ 1.5 × 图标本体 96px）',
+      _n24_val == 144, star=True, detail='val=%r' % (_n24_val,))
+
+# N25 ★★★ 行为级：钳制把 2560 屏上的 3.33125 钳到「最长边 == 144」。
+_n25_ok = False
+_n25_detail = ''
+if _DD2 is not None:
+    _k_hi = _DD2.clamp_scale_factor_for_max_side(3.33125)
+    _box_hi = _DD2.pet_screen_box(_k_hi)
+    _n25_ok = (_box_hi is not None and max(_box_hi) == 144)
+    _n25_detail = 'clamp(3.33125)=%.5f ⇒ 盒=%r 最长边=%r' % (
+        _k_hi, _box_hi, max(_box_hi) if _box_hi else None)
+check('N25 ★★★ 行为级：`clamp_scale_factor_for_max_side(3.33125)` '
+      '⇒ 宠物盒最长边**恰好 144**', _n25_ok, star=True, detail=_n25_detail)
+
+# N26 ★★★ **只减不增**：本来就小的倍率**不被撑大**（用户要的是"上限"不是"固定值"）。
+_n26_ok = False
+if _DD2 is not None:
+    _small = 1.0   # 144/69 ≈ 2.087 > 1.0 ⇒ 不该被放大
+    _n26_ok = (_DD2.clamp_scale_factor_for_max_side(_small) == _small)
+check('N26 ★★★ 钳制**只减不增**（k=1.0 本来就小 ⇒ 原样返回，不被撑到上限）',
+      _n26_ok, star=True)
+
+# N27 ★★ 负控制：非法输入（None / 0 / NaN）**原样返回**（不抛、不猜、不返 0 盒）。
+_n27_ok = False
+if _DD2 is not None:
+    try:
+        _r_none = _DD2.clamp_scale_factor_for_max_side(None)
+        _r_zero = _DD2.clamp_scale_factor_for_max_side(0)
+        _r_nan = _DD2.clamp_scale_factor_for_max_side(float('nan'))
+        _n27_ok = (_r_none is None and _r_zero == 0
+                   and isinstance(_r_nan, float) and _r_nan != _r_nan)
+    except Exception as _e:
+        print('        [warn] 非法输入抛了: %r' % (_e,))
+check('N27 ★★ 负控制：非法倍率（None/0/NaN）⇒ **原样返回**（不抛、不猜）',
+      _n27_ok, star=True)
+
+# N28 ★★★ `main.py` 真把钳制接进 `_refresh_pet_render_scale`（功能有消费者）。
+#   判据：AST 在该函数体内找到对 `clamp_scale_factor_for_max_side` 的**真调用**。
+_n28_ok = False
+_n28_detail = ''
+try:
+    _main_src = io.open(os.path.join(_PKG, 'src', 'main.py'),
+                        encoding='utf-8', newline='').read()
+    _main_t = _ast.parse(_main_src)
+    for _fn in _ast.walk(_main_t):
+        if (isinstance(_fn, _ast.FunctionDef)
+                and _fn.name == '_refresh_pet_render_scale'):
+            _calls = []
+            for _n in _ast.walk(_fn):
+                if isinstance(_n, _ast.Call):
+                    _f = _n.func
+                    _nm = (_f.attr if isinstance(_f, _ast.Attribute)
+                           else _f.id if isinstance(_f, _ast.Name) else None)
+                    if _nm == 'clamp_scale_factor_for_max_side':
+                        _calls.append(_nm)
+            # 且赋值 `self._cached_scale_factor = v` 必须在**调用之后**（AST 语句序）
+            _idx_call = None
+            _idx_assign = None
+            for _i, _st in enumerate(getattr(_fn, 'body', []) or []):
+                for _n in _ast.walk(_st):
+                    if isinstance(_n, _ast.Call):
+                        _f = _n.func
+                        _nm = (_f.attr if isinstance(_f, _ast.Attribute)
+                               else _f.id if isinstance(_f, _ast.Name) else None)
+                        if _nm == 'clamp_scale_factor_for_max_side' and _idx_call is None:
+                            _idx_call = _i
+                    if (isinstance(_n, _ast.Assign) and _idx_assign is None):
+                        for _t in _n.targets:
+                            if (isinstance(_t, _ast.Attribute)
+                                    and _t.attr == '_cached_scale_factor'):
+                                _idx_assign = _i
+            _n28_ok = (len(_calls) >= 1 and _idx_call is not None
+                       and _idx_assign is not None and _idx_call <= _idx_assign)
+            _n28_detail = 'calls=%d idx_call=%r idx_assign=%r' % (
+                len(_calls), _idx_call, _idx_assign)
+            break
+except Exception as _e:
+    _n28_detail = 'AST 异常: %r' % (_e,)
+check('N28 ★★★ `main._refresh_pet_render_scale` **真调用**钳制'
+      '（且 `_cached_scale_factor` 赋值在钳制**之后**）',
+      _n28_ok, star=True, detail=_n28_detail)
+
+# N29 ★★★ **门↔场景解耦**：`_desktop_screen_doors` 的 AST 里**不许**出现
+#   `SCENE_FIT_FRACTION` / `fit_fraction` / `camera` / `_offset_*`
+#   （用户「不必把桌面上那个门当成场景系统里」）。
+#   ★ 判据走 AST 属性/名字，不走文本（防注释里提一句就误判）。
+_n29_bad = []
+try:
+    for _fn in _ast.walk(_main_t):
+        if (isinstance(_fn, _ast.FunctionDef)
+                and _fn.name == '_desktop_screen_doors'):
+            for _x in _ast.walk(_fn):
+                if isinstance(_x, _ast.Attribute):
+                    if _x.attr in ('SCENE_FIT_FRACTION', 'fit_fraction',
+                                   '_offset_x', '_offset_y'):
+                        _n29_bad.append('attr %s' % _x.attr)
+                if isinstance(_x, _ast.Name) and _x.id in (
+                        'SCENE_FIT_FRACTION', 'fit_fraction'):
+                    _n29_bad.append('name %s' % _x.id)
+                # ★★ 还要认**字符串字面量**（`getattr(canvas, '_offset_y', 0)` 是
+                #   本项目踩过两次的坑：名字在 AST 里是 `Constant` 不是 `Attribute`）。
+                if isinstance(_x, _ast.Constant) and isinstance(_x.value, str):
+                    if _x.value in ('SCENE_FIT_FRACTION', 'fit_fraction',
+                                    '_offset_x', '_offset_y'):
+                        _n29_bad.append('const %r' % _x.value)
+            break
+except Exception as _e:
+    _n29_bad.append('AST 异常 %r' % (_e,))
+check('N29 ★★★ 门↔场景**彻底解耦**：`_desktop_screen_doors` 的 AST 里'
+      '**不出现** `SCENE_FIT_FRACTION`/`fit_fraction`/`_offset_*`',
+      not _n29_bad, star=True, detail='bad=%r' % (_n29_bad,))
+
+# N30 ★★★ 行为级：改 `SCENE_FIT_FRACTION` ⇒ 门的**输入**只有屏幕尺寸 ⇒ 输出不变。
+#   （判据 = 纯函数性：同 (sizes, screen_w, screen_h, pet_box) 必得同结果，
+#    与场景比例无关。这是"解耦"的可执行证据，不是靠读代码。）
+_n30_ok = False
+_n30_detail = ''
+if _DD2 is not None:
+    try:
+        _sz = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
+        _r1 = _DD2.plan_screen_doors(_sz, 2560, 1600, pet_box=(144, 98))
+        _r2 = _DD2.plan_screen_doors(_sz, 2560, 1600, pet_box=(144, 98))
+        _n30_ok = (_r1 == _r2 and len(_r1) == 4)
+        _n30_detail = 'n=%d 稳定=%r' % (len(_r1), _r1 == _r2)
+    except Exception as _e:
+        _n30_detail = '异常: %r' % (_e,)
+check('N30 ★★★ 行为级：`plan_screen_doors` **只吃屏幕尺寸**'
+      '（同输入恒等输出 ⇒ 与场景比例无关，解耦可执行证据）',
+      _n30_ok, star=True, detail=_n30_detail)
 
 print('')
 print('结论：%d PASS / %d FAIL' % (ok, fail))

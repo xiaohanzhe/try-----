@@ -597,6 +597,10 @@ from modules import scene_system as scene_system_mod
 # 零依赖纯函数模块（`reveal_alpha` / `apply_to_objects`）—— 与 `possession` 同规格：
 # 不 import Qt、不读文件、不持状态，回归套件可直接 import 单测。
 from modules import door_reveal as door_reveal_mod
+# ★★★ 第112轮续：**桌面 4 扇世界门的屏幕层摆位**（用户「放到屏幕边缘」「门你单独
+# 放在外面」「只桌面场景时，固定贴屏」「各用原尺寸」）。同样是零依赖纯函数模块：
+# 只管"算出每扇门在整屏上的矩形"，不碰 Qt、不读文件。
+from modules import desk_doors as desk_doors_mod
 # 伙伴交互协议（第46轮）：`InteractBus`（= 原作 `global.interact` 全局锁）+
 # `Interactable`（= 原作 `myinteract` 三态）。道具/场景可交互物都挂在这套协议上，
 # 不另起一套 —— 那会让"对话时能不能点东西"出现两套互相不知道的锁。
@@ -7150,8 +7154,41 @@ class RalseiPet(QMainWindow):
             self._place_scene_layer()
             self._update_bubble_overlay(front, view)
 
+            # 3.5) ★★★ 第112轮续：**桌面世界门放在"外面"**（不参与房间缩放）。
+            #   用户口径（逐字）：「**放到屏幕边缘哦**」→「**不是，那个门你单独
+            #   放在外面呗**」→「**只桌面场景时，固定贴屏**」+「**各用原尺寸**」。
+            #   真因：第110轮把画面砍半（`SCENE_FIT_FRACTION=0.5`）后，门的
+            #   「**房间边缘**」落到了屏幕「**中间**」（2560×1600 屏上画面只占
+            #   1066×800、居中于 (747,400)）⇒ 用户看到门不在四周边框上。
+            #   ★ 修法 = 门**脱离房间图层**，改按**整屏坐标**画（`desk_doors`
+            #     算摆位，`SceneCanvas.set_screen_doors` 通道画）⇒ 与房间缩放
+            #     **彻底解耦**（只桌面场景非空；其余场景送 `[]` ⇒ 零行为变化）。
+            #   ★ 与 `plan_frame` 的房间层门**不重复**：两者都画会看到"门里还有
+            #     一扇门"，故第112轮续把 `desktop.json` 的 4 扇门从**渲染层**剔除
+            #     （见下方 `_hide_desktop_room_doors`），只留它们驱动
+            #     `door_reveal` 的靠近判定与字母路由。
+            try:
+                if self._scene_is_desktop_scene():
+                    canvas.set_screen_doors(self._desktop_screen_doors(int(sw), int(sh)))
+                else:
+                    canvas.set_screen_doors(None)
+            except Exception as e:
+                _log.debug("屏幕层门（第112轮续）防御性异常（已忽略）: %s", e)
+                try:
+                    canvas.set_screen_doors(None)
+                except Exception:
+                    pass
+
             # 4) 有 bg / 物件 才显示画布；纯占位/空 → 隐藏（保持桌面原样）
-            if behind and any(it.get('kind') in ('bg', 'obj') for it in behind):
+            # ★★★ 第112轮续修：**屏幕层有门时也必须显示画布** ——
+            #   桌面场景的 4 扇门全部 `enabled:false`（改由屏幕层画）⇒ `behind`
+            #   里一个 obj 都没有 ⇒ 老判据会把画布**隐藏**，而 `paintEvent` 不跑
+            #   ⇒ 屏幕层的门**根本不会上屏**（"功能写了但没有消费者"的复演）。
+            #   实证：`check89` 真机探针 `canvas_visible=false` + `plan_n=0`。
+            #   ⇒ 判据补上 `_screen_doors` 这一路。
+            _has_screen_doors = bool(getattr(canvas, 'has_screen_doors', False))
+            if _has_screen_doors or (behind and any(it.get('kind') in ('bg', 'obj')
+                                                    for it in behind)):
                 self._show_scene_layer()
             else:
                 self._hide_scene_layer()
@@ -7311,6 +7348,106 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
             return False
+
+    def _desktop_screen_doors(self, screen_w, screen_h):
+        """★ 第112轮续：算桌面 4 扇门的**屏幕层**摆位 ⇒ `[(sprite, (x,y,w,h)), ...]`。
+
+        用户口径（逐字）：「**放到屏幕边缘哦**」/「**不是，那个门你单独放在外面呗**」
+        →「**只桌面场景时，固定贴屏**」+「**各用原尺寸**」
+        → ★★ 第112轮续二：「**门的尺寸和 ralsei 的尺寸调换一下差不多**」+
+          「**门的稍微大一点**」。
+
+        数据源 = 当前场景 `desktop.json` 的 `objects`（4 扇 `kind=='prop'` 门）：
+          · `src`（`obj_door<字母>`）→ 字母 → 方位（由 `desk_doors.SIDE_LETTERS` 定）；
+          · `sprite` → 贴图名 → **原始像素尺寸**（`canvas.assets.sprite_size`，
+            单一真源；用户「各用原尺寸」）。
+        ⇒ 尺寸取不到的门**跳过**（不猜、不画占位块），这是"算不出就不画"的保守侧。
+
+        ★★ 续二/续三：**门对齐 Ralsei 量级** —— 宠物盒交给
+          `desk_doors.fit_doors_uniform_scale()` 算**统一倍率**（用户「按原作等比
+          放大」）⇒ 四扇门与 Ralsei 同量级，且门**彼此之间**的大小关系照原作。
+          ⇒ 原来 180×155 / 192×128 的门（Ralsei 才 ~230×157）不再喧宾夺主。
+
+        ★★★ 续三：宠物盒的**真源已修正**为「标准体量」`PET_BOX_LOGICAL`=(69,47) ×
+          `_cached_scale_factor`（`desk_doors.pet_screen_box()`）。
+          原来取 `sprite_label.width()/height()` —— 那是**当前动画帧**的尺寸，
+          真机实测在 **229×156 ↔ 63×133** 之间来回跳（idle 69×47 vs 19×40 的帧）
+          ⇒ **门跟着一跳一跳变大小**。`sprite_label` 现在只作兜底。
+
+        ★★★ 续四：**门与场景画面彻底解耦**（用户「不必把桌面上那个门当成场景系统里，
+          你把他贴着屏幕放就好」）。本方法只吃 `screen_w/screen_h`（**屏幕物理尺寸**）
+          —— 不读相机、不读 `SCENE_FIT_FRACTION`、不读画面偏移。⇒ 画面用哪一档
+          比例（50% 居中 / 铺满）都**不影响门**：门恒贴屏幕四边中点。
+          （`set_screen_doors` 通道 + `paintEvent` 的 `save/restore` 已保证
+          门画在**未平移未缩放**的整屏坐标上。见 `scene_canvas.py`。）
+
+        ★ 为什么读 `desktop.json` 的 objects 而不是在代码里写死 4 个贴图名：
+          贴图是**数据**（第112轮已按用户口径逐门改过：A=OneShot、B=Niko 家用光门、
+          C=UT 王座门、D=三角符文巨门框）⇒ 放在数据里，改贴图不用动代码，
+          也就不会出现"代码里一份、JSON 里一份"的两处真源。
+        """
+        try:
+            canvas = getattr(self, 'scene_canvas', None)
+            if canvas is None:
+                return []
+            state = self.__dict__.get('_scene_state')
+            if state is None:
+                state = getattr(self, 'current_scene_state', None)
+            objs = getattr(state, 'objects', None)
+            if objs is None and isinstance(state, dict):
+                objs = state.get('objects')
+            if not objs:
+                return []
+            # 字母 → 贴图名（同字母只取第一条：`desktop.json` 里字母本就唯一，
+            # 万一重复，**取先出现的那条**——可复现，不依赖 dict 顺序）。
+            by_letter = {}
+            for o in objs:
+                if not isinstance(o, dict):
+                    continue
+                letter = door_reveal_mod.door_letter_of_local(o.get('src'))
+                if not letter or letter in by_letter:
+                    continue
+                nm = o.get('sprite') or o.get('image')
+                if isinstance(nm, str) and nm:
+                    by_letter[letter] = nm
+            if not by_letter:
+                return []
+            sizes = {}
+            for letter, nm in by_letter.items():
+                sz = canvas.assets.sprite_size(nm)
+                if isinstance(sz, (list, tuple)) and len(sz) == 2:
+                    sizes[letter] = (sz[0], sz[1])
+            # ★★★ 续三：宠物盒 —— 必须用**标准体量**，不能用 `sprite_label` 的当前尺寸。
+            #   真 bug 实录（本轮真机）：`sprite_label` 的尺寸 = **当前动画帧 × 倍率**，
+            #   运行期在 **229×156（idle 69×47 × 3.331）↔ 63×133（19×40 的帧）** 之间跳
+            #   ⇒ 门跟着一跳一跳变大小（用户可见的闪烁）。
+            #   门尺寸该由"Ralsei **标准体量**"决定 ⇒ 用 `PET_BOX_LOGICAL`(21×41，原作
+            #   行走精灵，第44轮双源验证) × `_cached_scale_factor`。
+            #   `sprite_label` 只作**兜底**：万一倍率取不到，至少还有个量级相近的值。
+            pet_box = None
+            try:
+                _k = getattr(self, '_cached_scale_factor', None)
+                pet_box = desk_doors_mod.pet_screen_box(_k)
+            except Exception as e:
+                _log.debug("按标准体量算宠物盒失败: %s", e)
+                pet_box = None
+            if pet_box is None:
+                # 兜底：当前帧尺寸（会跳，但至少是"宠物真实占的像素"，比不缩放好）。
+                try:
+                    _lw = int(self.sprite_label.width())
+                    _lh = int(self.sprite_label.height())
+                    if _lw > 1 and _lh > 1:
+                        pet_box = (_lw, _lh)
+                        _log.debug("宠物盒退回当前帧尺寸（会随动画跳）: %r", pet_box)
+                except Exception as e:
+                    _log.debug("取宠物盒失败（门退回原尺寸口径）: %s", e)
+            placed = desk_doors_mod.plan_screen_doors(sizes, screen_w, screen_h,
+                                                      pet_box=pet_box)
+            # 摆位（字母）→ 贴图名
+            return [(by_letter[l], r) for l, r in placed if l in by_letter]
+        except Exception as e:
+            _log.debug("桌面屏幕门摆位（第112轮续）防御性异常（已忽略）: %s", e)
+            return []
 
     def _scene_is_transparent(self):
         """★ 第107轮：当前场景是否**声明式透明**（= 桌面场景，背景就是用户壁纸）。
@@ -7486,6 +7623,18 @@ class RalseiPet(QMainWindow):
         # 保底：太小会让窗口退化成 1px（渲染层会 max(1,..)，但那等于看不见）
         if v < 0.1:
             v = 0.1
+        # ★★★ 第112轮续四：**宠物体量上限**（用户「宠物最多 1.5 个文件夹大小」）。
+        #   144px 上限由 `desk_doors.PET_MAX_LONG_SIDE_PX` 持有（唯一真源）。
+        #   ★ 只减不增 ⇒ 用户手动调小（pet_scale < 上限）时**不受影响**。
+        #   ★ 数值实证：2560×1600 屏上 sc×1.0 = 3.33125 ⇒ 最宽 69×3.33 ≈ 229px
+        #     > 144 ⇒ 会被钳到 144/69 ≈ 2.087 ⇒ 显示约 144×98（"1.5 个文件夹"）。
+        try:
+            _dd = self.__dict__.get('_desk_doors_mod')
+            if _dd is None:
+                from modules import desk_doors as _dd  # 局部导入：零依赖模块，安全
+            v = _dd.clamp_scale_factor_for_max_side(v)
+        except Exception as e:
+            _log.debug("宠物最长边钳制失败（用未钳倍率）: %s", e)
         self._cached_scale_factor = v
 
     def _apply_scale_to_scene(self):

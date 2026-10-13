@@ -269,7 +269,31 @@ def sec_c():
     k3 = [it['kind'] for it in p3]
     ok(SR.K_ROOM_FILL not in k3, 'C3b 桌面场景 0 条黑底 实际=%s' % (k3,))
     ok(SR.K_PLACEHOLDER not in k3, 'C3c 桌面场景 0 条占位（不盖壁纸）')
-    ok(SR.K_OBJ in k3, 'C3d 桌面场景的门仍在（透明≠整间空）实际=%s' % (k3,))
+    # ★★★ 第112轮续改口径：桌面 4 扇世界门**已从房间渲染层搬到屏幕层**
+    #   （用户「放到屏幕边缘哦」→「只桌面场景时，固定贴屏」）⇒ 4 门全部
+    #   `enabled:false` ⇒ 房间层**恰好 0 条 obj**。
+    #   ★★ 不许改成恒真的 "K_OBJ not in k3" —— 鉴别力搬到 C3e（屏幕层 4 扇）。
+    ok(SR.K_OBJ not in k3,
+       'C3d ★★★ 第112轮续：桌面房间层 **0 条 obj**（4 门已改屏幕层绘制）实际=%s' % (k3,))
+    # C3e ★★★ 屏幕层接棒：门仍在（"透明≠整间空"语义不变，只换了绘制层）。
+    _c3e_n = -1
+    _c3e_detail = ''
+    try:
+        import desk_doors as _DD99  # noqa: E402
+        _sz99 = {}
+        for _o in (getattr(sc_d, 'objects', None) or []):
+            _L = str(_o.get('src') or '')
+            _L = _L[len('obj_door'):] if _L.startswith('obj_door') else None
+            if _L:
+                _sz99[_L] = (44, 56)
+        _c3e_n = len(_DD99.plan_screen_doors(_sz99, 2560, 1600))
+    except Exception as _e:
+        _c3e_detail = ' 异常=%r' % (_e,)
+    _c3e_want = len(getattr(sc_d, 'objects', None) or [])
+    ok(_c3e_n == _c3e_want and _c3e_want >= 4,
+       'C3e ★★★ 第112轮续：桌面屏幕层**仍渲染全部 %d 扇世界门**'
+       '（透明≠整间空，只是改在屏幕层画）实际=%d%s'
+       % (_c3e_want, _c3e_n, _c3e_detail))
 
     # C4 负控制：真·缺素材（bg=None）→ 黑底仍在 + 1 条占位
     st4 = SS.SceneState()
@@ -659,9 +683,45 @@ def sec_g():
                           sprite_size=lambda n: (20, 20))
     dobjs = [it for it in dplan if it['kind'] == SR.K_OBJ]
     _n_desk = len(getattr(desk, 'objects', None) or [])
-    ok(desk is not None and _n_desk == 4 and len(dobjs) == _n_desk,
-       'G21b **桌面 %d 扇门全部照画**（自造物件逃生门的端到端正控制）实际=%d'
+    # ★★★ 第112轮续改口径：桌面 4 门已改屏幕层绘制（`enabled:false`）⇒ 房间层 0 条。
+    #   ★★ 但 G21b 真正要守的语义（**自造物件 `authored` 能绕过隐形名单**）**没变** ——
+    #      所以把这条语义**从桌面搬到一份"只有一个自造门 + 一个隐形名"的手搓场景**上验，
+    #      这样判据既跟事实对齐、又不丢鉴别力（桌面的 0 条由 G21b2 单独守）。
+    _auth_scene = SS.SceneState()
+    _auth_scene.scene_id = 'unit_authored'
+    _auth_scene.bg = None
+    _auth_scene.hidden_objects = frozenset(['obj_doorA'])   # 名字落进隐形名单
+    _auth_scene.objects = [
+        {'id': 'authored_door', 'src': 'obj_doorA', 'authored': True,
+         'kind': 'prop', 'sprite': 'objs/spr_darkdoor_0.png', 'pos': [10, 10]},
+    ]
+    _aplan = SR.plan_frame(_auth_scene, _cam_at(320, 240), geo,
+                           sprite_size=lambda n: (20, 20))
+    _aobjs = [it for it in _aplan if it['kind'] == SR.K_OBJ]
+    ok(len(_aobjs) == 1,
+       'G21b **自造物件（`authored:true`）能绕过隐形名单照画**'
+       '（端到端正控制；隐形名单里确实有 `obj_doorA`）实际=%d' % len(_aobjs))
+    # G21b2 ★★★ 桌面 4 门**不在房间层**（第112轮续：改屏幕层绘制，防"又画一遍"）。
+    ok(desk is not None and _n_desk == 4 and len(dobjs) == 0,
+       'G21b2 ★★★ 第112轮续：桌面 %d 扇门**不在房间层**（已改屏幕层）实际=%d'
        % (_n_desk, len(dobjs)))
+    # G21b3 ★★★ 桌面 4 门**在屏幕层**（鉴别力接棒：门真的还在）。
+    _g21b3_n = -1
+    _g21b3_detail = ''
+    try:
+        import desk_doors as _DD99b  # noqa: E402
+        _sz99b = {}
+        for _o in (getattr(desk, 'objects', None) or []):
+            _L = str(_o.get('src') or '')
+            _L = _L[len('obj_door'):] if _L.startswith('obj_door') else None
+            if _L:
+                _sz99b[_L] = (44, 56)
+        _g21b3_n = len(_DD99b.plan_screen_doors(_sz99b, 2560, 1600))
+    except Exception as _e:
+        _g21b3_detail = ' 异常=%r' % (_e,)
+    ok(_g21b3_n == _n_desk and _n_desk >= 4,
+       'G21b3 ★★★ 第112轮续：桌面 %d 扇门**在屏幕层真被算出**（门没丢）实际=%d%s'
+       % (_n_desk, _g21b3_n, _g21b3_detail))
     ok(desk is not None
        and all(o.get('authored') is True for o in desk.objects),
        'G21c `desktop.json` 的 %d 扇门在**数据里**显式标了 `authored: true`'

@@ -635,6 +635,17 @@ def plan_frame(scene, camera, geo_table=None, tick=0, sprite_size=None,
             continue
         if obj_is_hidden(obj, hidden):
             continue
+        # ★★★ 第112轮续：`enabled is False` ⇒ 本帧不画（与 `scene_system.
+        #   visible_objects` 的第 1 条规则**逐字对齐**）。
+        #   为什么必须在这里补：`plan_frame` 遍历的是 `scene.objects` **全体**，
+        #   不走 `visible_objects`（那条路的过滤在多场景批量出图时用）。原实现
+        #   **不认 `enabled`** ⇒ 桌面 4 扇门改成"屏幕层绘制"后，若只给它们打
+        #   `enabled=False`，房间层仍会照画一次 ⇒ **屏幕上出现两遍门**。
+        #   ★ 只影响**绘制**：`enabled=False` 的物件仍在 `scene.objects` 里 ⇒
+        #     字母路由（`item_interact.build_props`）与靠近渐显（`door_reveal`）
+        #     照常读到它们 —— 这正是"门交给外层画、但数据仍在场景里"的关键。
+        if obj.get('enabled') is False:
+            continue
         pos = obj.get('pos')
         if not (isinstance(pos, (list, tuple)) and len(pos) == 2):
             continue

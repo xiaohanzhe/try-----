@@ -258,9 +258,33 @@ def sec_d():
        % (SCENES and getattr(sc_d, 'bg', '?'), len(ph)))
     _objs3 = [i for i in plan3 if i['kind'] == SR.K_OBJ]
     _want_objs3 = len(getattr(sc_d, 'objects', None) or [])
-    ok(len(_objs3) == _want_objs3 and _want_objs3 >= 4,
-       'D3c desktop 透明但仍渲染**全部** %d 个对象（透明≠整间空；第109轮起 ≥ 4 扇世界门）'
-       '实际=%d' % (_want_objs3, len(_objs3)))
+    # ★★★ 第112轮续改口径：桌面的 4 扇世界门**已从房间渲染层搬到屏幕层**
+    #   （用户「放到屏幕边缘哦」→「只桌面场景时，固定贴屏」）⇒ `desktop.json`
+    #   4 门全部 `enabled:false` ⇒ 房间层 `plan_frame` **必然 0 条 obj**。
+    #   ★ 本判据**不许改成恒真的 "== 0"**：改为两条互补判据 ——
+    #     (a) 房间层：**恰好 0 条**（防回退成"又画一遍"）；
+    #     (b) 屏幕层：`desk_doors.plan_screen_doors` **恰好 4 扇**（门真的还在）。
+    ok(len(_objs3) == 0,
+       'D3c ★★★ 第112轮续：desktop 房间层 **0 条 obj**（4 门已改屏幕层绘制）实际=%d'
+       % len(_objs3))
+    # D3e：屏幕层接棒 —— 门仍在（"透明≠整间空"这条语义没变，只是画的地方变了）。
+    _scr_n = -1
+    _scr_detail = ''
+    try:
+        import desk_doors as _DD44  # noqa: E402
+        _sz44 = {}
+        for _o in (getattr(sc_d, 'objects', None) or []):
+            _L = str(_o.get('src') or '')
+            _L = _L[len('obj_door'):] if _L.startswith('obj_door') else None
+            if _L:
+                _sz44[_L] = (44, 56)
+        _scr_n = len(_DD44.plan_screen_doors(_sz44, 2560, 1600))
+    except Exception as _e:
+        _scr_detail = ' 异常=%r' % (_e,)
+    ok(_scr_n == _want_objs3 and _want_objs3 >= 4,
+       'D3e ★★★ 第112轮续：desktop 屏幕层**仍渲染全部 %d 扇世界门**'
+       '（透明≠整间空，只是改在屏幕层画）实际=%d%s'
+       % (_want_objs3, _scr_n, _scr_detail))
     # D3d 负控制：真正的"缺素材"（bg=None）**必须**产 placeholder —— 证明
     #     D3b 的"0 条"不是因为渲染层坏了，而是因为 bg 声明了透明。
     class _FakeScene:

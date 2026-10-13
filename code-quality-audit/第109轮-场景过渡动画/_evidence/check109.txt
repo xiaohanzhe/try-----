@@ -22,11 +22,11 @@
 -- E 画布遮罩（set_transition_alpha + paintEvent 末叠黑） --
 [PASS] ★ E1 ★★★ `SceneCanvas.set_transition_alpha` 存在  <- found=True
 [PASS] E2 ★★ `set_transition_alpha` 对 α 做 **[0,1] 钳位**（超界会让 QColor 出错）  <- AST比较0.0=True AST比较1.0=True
-[PASS] ★ E3 ★★★ `paintEvent` 在**画完内容之后**叠黑遮罩（原作 `obj_fadeout` 也是最后画 → 盖在最上层）  <- paint_on@814 fillRect@1391
+[PASS] ★ E3 ★★★ `paintEvent` 在**画完内容之后**叠黑遮罩（原作 `obj_fadeout` 也是最后画 → 盖在最上层）  <- 语句序 paint_on **先于** 过渡遮罩 fillRect = True
 [PASS] E4 ★★ 遮罩色 = **纯黑** `QColor(0,0,0)`（原作 `image_blend = c_black`）  <- TRANSITION_COLOR=QColor(0,0,0) 命中=True
 
 -- F 默认零回归：α=0 时不画遮罩 --
-[PASS] ★ F1 ★★★ `paintEvent` 的遮罩段**由 `_transition_alpha > 0.0` 守卫**（不守卫 ⇒ 正常态也填一层黑 = 全屏黑屏）  <- 守卫命中=True
+[PASS] ★ F1 ★★★ `paintEvent` 的遮罩段**由 `_transition_alpha > 0.0` 守卫**（不守卫 ⇒ 正常态也填一层黑 = 全屏黑屏）  <- AST真If守卫命中=True
 [PASS] F2 ★★ 构造时 `_transition_alpha = 0.0`（不切场景 ⇒ 零行为变化）  <- 初始化命中=True
 
 -- G 容错：非法 α 不动 · 异常必收尾 --

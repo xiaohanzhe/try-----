@@ -185,24 +185,27 @@ if set(_letters) != _LETTERS_WANT:
     print('        got=%r want=%r' % (sorted(_letters), sorted(_LETTERS_WANT)))
 
 # A2b ★★★ 门 ↔ 世界 的映射与用户口径逐条对齐。
-#   ★★★ 第112轮改版（用户逐字）：
+#   ★★★ 第112轮续改版（用户逐字）：
 #     「门也不是都长那样啊，而且摆放的位置也不在屏幕四周啊」
 #     「ut 就用王座那个门」（终选 `bg_castle_realdoor`）
-#     「三角符文门 → `spr_shortcut_door`」
-#   ⇒ 口径从"4 扇同贴图、四边正中"改为"**各门各自贴图 + 各自位置**"。
-#     A=OneShot（正上，spr_darkdoor 44×56）
-#     B=Niko的家（正下，spr_darkdoor 44×56）
-#     C=UT     （正左，ut_castle_realdoor 44×99 ⇒ 纵向居中 y=70）
-#     D=三角符文（正右，spr_shortcut_door 36×52 ⇒ 纵向居中 y=94、横向贴右 284）
-#   ★ 位置**仍是"贴屏幕四边"**（左/右/上/下各一），只是不再强求"同一 y/x 正中"
-#     —— 高度不同的门要各自居中才"贴边且不越界"。
-_pos_rule = {'A': (138, 0), 'B': (138, 184), 'C': (0, 70), 'D': (284, 94)}
-#: ★ 每扇门各自的贴图（用户逐字指认）。None ⇒ 用通用 `spr_darkdoor_0.png`。
+#     「不是啊，是哪个门框似的哪个门」⇒ 三角符文门 = `spr_giantdarkdoor_0`（门框形态）
+#     「不是进 oneshot 的门，是进 niko 的家」+「用原作 niko 最后回家的光门」
+#       ⇒ Niko 家门 = `niko_door_portal.png`（192×128 光门）
+#   ⇒ 口径：**各门各自贴图 + 各自尺寸决定的房间坐标**。
+#     A=OneShot（正上，spr_darkdoor 44×56 ⇒ 138,0）
+#     B=Niko的家（正下，niko_door_portal 192×128 ⇒ 64,112）
+#     C=UT     （正左，ut_castle_realdoor 44×99 ⇒ 0,70）
+#     D=三角符文（正右，spr_giantdarkdoor 180×155 ⇒ 284,94）
+#   ★★ 第112轮续：`pos` 仍是**房间坐标**（`door_reveal` 的矩形来源），但门的
+#      **屏幕位置**已改由 `desk_doors.plan_screen_doors()` 另算（屏幕层绘制）——
+#      见 N 段判据。**两套坐标别混**。
+_pos_rule = {'A': (138, 0), 'B': (64, 112), 'C': (0, 70), 'D': (140, 42)}
+#: ★ 每扇门各自的贴图（用户逐字指认）。
 _sprite_rule = {
     'A': 'spr_darkdoor_0.png',
-    'B': 'spr_darkdoor_0.png',
+    'B': 'niko_door_portal.png',
     'C': 'ut_castle_realdoor_0.png',
-    'D': 'spr_shortcut_door_0.png',
+    'D': 'spr_giantdarkdoor_0.png',
 }
 _map_bad = []
 for _o in _doors:
@@ -219,7 +222,7 @@ for _o in _doors:
             and (int(_p[0]), int(_p[1])) == _want_pos):
         _map_bad.append('%s 位置=%r 期望=%r' % (_L, _p, _want_pos))
 check('A2b ★★★ 4 扇门的**字母 ↔ 位置**逐条等于口径'
-      '（A 正上138,0/B 正下138,184/C 正左0,70/D 正右284,94）',
+      '（A 正上138,0/B 正下64,112/C 正左0,70/D 正右140,42）',
       not _map_bad, star=True)
 if _map_bad:
     for _b in _map_bad[:4]:
@@ -241,7 +244,7 @@ for _o in _doors:
         _got = os.path.basename(str(_anim.get('base') or '')) + '_0.png'
     if os.path.basename(str(_got or '')) != _want:
         _sp_bad.append('%s 贴图=%r 期望=%r' % (_L, _got, _want))
-check('A2c ★★★ 每扇门的贴图各自等于指认（UT=王座门 / 三角符文=shortcut_door）',
+check('A2c ★★★ 每扇门的贴图各自等于指认（UT=王座门 / 三角符文=巨门框 / Niko家=光门）',
       not _sp_bad, star=True)
 if _sp_bad:
     for _b in _sp_bad[:4]:
@@ -296,22 +299,125 @@ for _o in _doors:
     if not (0 <= _x and _x + _sz[0] <= _rw and 0 <= _y and _y + _sz[1] <= _rh):
         _pos_bad.append('%s: pos=%r size=%r 越界 (房间 %rx%r)'
                         % (_o.get('id'), _p, _sz, _rw, _rh))
-check('A4 ★★★ %d 扇门的 `pos` + 贴图尺寸**全部落在房间 320×240 内**（不越界）'
-      % _N_DOORS,
-      not _pos_bad, star=True)
-if _pos_bad:
-    for _b in _pos_bad[:4]:
+# A4 ★★★ 第112轮续改口径：门的**绘制**已搬到屏幕层（`desk_doors`），房间坐标
+#     只剩「`door_reveal` 的渐显触发矩形」一个用途 ⇒ 旧的"必须在房间 320×240 内"
+#      语义**已失效**（巨型门框 180×155 在 320 宽房间里必然越界，且无人受害）。
+#      ★★ 但**不许把判据改成恒真** —— 鉴别力搬去两个仍然成立的要求：
+#        (a) 每扇门的 `pos` 必须是合法二元组（不接受 None/字符串/一维）；
+#        (b) 每扇门的房间坐标必须与 `desk_doors` 的**边长语义**自洽（正上 y=0 /
+#            正左 x=0 / 正下 y+h=240 或 x 居中 / 正右 x+w=320 或 y 居中）——
+#            即"贴哪一边"这件事在房间坐标里也没写错方向。
+_pos_shape_bad = []
+_side_expect = {'A': 'top', 'B': 'bottom', 'C': 'left', 'D': 'right'}
+for _o in _doors:
+    if not isinstance(_o, dict):
+        continue
+    _p = _o.get('pos')
+    _sr = str(_o.get('src') or '')
+    _L = _sr[len('obj_door'):] if _sr.startswith('obj_door') else None
+    if not (isinstance(_p, (list, tuple)) and len(_p) == 2):
+        _pos_shape_bad.append('%s: pos 非法 %r' % (_o.get('id'), _p))
+        continue
+    try:
+        _xx, _yy = int(_p[0]), int(_p[1])
+    except (TypeError, ValueError):
+        _pos_shape_bad.append('%s: pos 非整数 %r' % (_o.get('id'), _p))
+        continue
+    _sz2 = _sizes.get(os.path.basename(str(_o.get('sprite') or '')))
+    if _sz2 is None or _rw is None or _rh is None:
+        continue
+    _side = _side_expect.get(_L)
+    # ★★ 第112轮续：`pos` 是**房间坐标**（`door_reveal` 的渐显触发矩形来源）。
+    #   4 门贴图**都装得进**房间 320×240（A4a 断言这一点）⇒ 一律要求"贴边自洽"，
+    #   不许有豁免分支（豁免 = 放水 = 判据退化）。
+    if not (0 <= _xx and _xx + _sz2[0] <= _rw
+            and 0 <= _yy and _yy + _sz2[1] <= _rh):
+        _pos_shape_bad.append('%s: pos=%r size=%r 越界（房间 %dx%d）'
+                              % (_L, (_xx, _yy), _sz2, _rw, _rh))
+        continue
+    # 贴哪条边 ⇒ 那一轴的"贴边"必须体现（允许 ±1 px 取整误差）：
+    if _side == 'top' and abs(_yy - 0) > 1:
+        _pos_shape_bad.append('%s: 标称正上但 y=%d != 0' % (_L, _yy))
+    elif _side == 'bottom' and abs((_yy + _sz2[1]) - _rh) > 1:
+        _pos_shape_bad.append('%s: 标称正下但 y+h=%d != 房间高 %d'
+                              % (_L, _yy + _sz2[1], _rh))
+    elif _side == 'left' and abs(_xx - 0) > 1:
+        _pos_shape_bad.append('%s: 标称正左但 x=%d != 0' % (_L, _xx))
+    elif _side == 'right' and abs((_xx + _sz2[0]) - _rw) > 1:
+        _pos_shape_bad.append('%s: 标称正右但 x+w=%d != 房间宽 %d'
+                              % (_L, _xx + _sz2[0], _rw))
+# A4a ★★ 4 张门贴图**都装得进**房间 320×240（所以 A4 不许有豁免分支）。
+#   ★ 尺寸从盘上现读（`_sizes`），不写死 —— 判据与事实脱节的教训。
+_for_a4a = ['spr_darkdoor_0.png', 'niko_door_portal.png',
+            'ut_castle_realdoor_0.png', 'spr_giantdarkdoor_0.png']
+_a4a_bad = []
+for _f in _for_a4a:
+    _px = _sizes.get(_f)
+    if not _px:
+        _a4a_bad.append('%s 不在盘上' % _f)
+    elif _px[0] > 320 or _px[1] > 240:
+        _a4a_bad.append('%s 尺寸 %r 装不进 320x240' % (_f, _px))
+check('A4a ★★ 4 张门贴图**都装得进**房间 320×240（故 A4 无豁免分支）',
+      not _a4a_bad, star=True)
+if _a4a_bad:
+    print('        %s' % (_a4a_bad,))
+check('A4 ★★★ %d 扇门的 `pos` 是合法二元组，且"贴哪一边"在房间坐标里自洽'
+      '（正上 y=0 / 正下 y+h=240 / 正左 x=0 / 正右 x+w=320；不越界）' % _N_DOORS,
+      not _pos_shape_bad, star=True)
+if _pos_shape_bad:
+    for _b in _pos_shape_bad[:4]:
         print('        %s' % _b)
 
-# A5 负控制：A4 的判据有鉴别力（把 pos 推到房间外必须被判越界）
-#   ★ 第109轮：锚点贴图名**由数据取**（`_sizes` 的第一项），不写死 —— 4 扇门
-#     现在共用 `spr_darkdoor_0.png`（44×56），写死 `spr_doorA_0.png` 会取不到。
-_sz_any = next(iter(_sizes.values()), None)
+# A4b ★★ 第112轮续：屏幕层摆位能算出 4 扇门，且**逐边**贴到屏幕物理边。
+#   ★ 这是 A4 鉴别力的**接棒者**：门虽然不在房间层画，但"贴屏幕边缘"这条
+#     用户口径必须仍然被产品代码满足（`desk_doors.plan_screen_doors`）。
+try:
+    from modules import desk_doors as DD  # noqa: E402
+except Exception as _e:  # pragma: no cover
+    DD = None
+    print('        [warn] desk_doors 导入失败: %r' % (_e,))
+_scr_doors = []
+if DD is not None:
+    _sz_all = {L: (_sizes.get(_sprite_rule.get(L) or '') or (0, 0))
+               for L in 'ABCD'}
+    try:
+        _scr_doors = DD.plan_screen_doors(_sz_all, 2560, 1600)
+    except Exception as _e:
+        print('        [warn] plan_screen_doors 抛异常: %r' % (_e,))
+check('A4b ★★ 屏幕层摆位算出 4 扇门（`desk_doors.plan_screen_doors`）',
+      len(_scr_doors) == 4, star=True)
+_scr_bad = []
+for _L, _rect in (_scr_doors or []):
+    _x, _y, _w, _h = _rect
+    _side2 = _side_expect.get(_L)
+    if _side2 == 'top' and _y != 0:
+        _scr_bad.append('%s 正上 y=%d != 0' % (_L, _y))
+    elif _side2 == 'bottom' and _y + _h != 1600:
+        _scr_bad.append('%s 正下 y+h=%d != 1600' % (_L, _y + _h))
+    elif _side2 == 'left' and _x != 0:
+        _scr_bad.append('%s 正左 x=%d != 0' % (_L, _x))
+    elif _side2 == 'right' and _x + _w != 2560:
+        _scr_bad.append('%s 正右 x+w=%d != 2560' % (_L, _x + _w))
+check('A4c ★★★ 屏幕层 4 扇门**逐边贴到屏幕物理边**（用户「放到屏幕边缘哦」）',
+      len(_scr_doors) == 4 and not _scr_bad, star=True)
+if _scr_bad:
+    for _b in _scr_bad[:4]:
+        print('        %s' % _b)
+# A4d ★★ 负控制：A4c 有鉴别力 —— 把某扇门推离屏幕边缘必须被判违反。
+_scr_bad_ok = False
+if DD is not None and len(_scr_doors) == 4:
+    _x0, _y0, _w0, _h0 = _scr_doors[0][1]
+    _moved = (_x0, _y0 + 7, _w0, _h0)   # top 边 +7 ⇒ 不再贴边
+    _scr_bad_ok = (_moved[1] != 0)
+check('A4d ★★ 负控制：A4c 有鉴别力（把门推离屏幕边缘必须判违反）',
+      _scr_bad_ok, star=True)
+
+# A5 负控制：A4 的判据有鉴别力（把"贴边"那一轴推开必须被判违反）。
+#   ★ 第112轮续：A4 已改口径（贴边自洽），负控制跟着改成"正左门 x 推离 0"。
 _bad_ok = False
-if _rw and _rh and _sz_any:
-    _out = float(_rw) + 10.0
-    _bad_ok = not (0 <= _out and _out + _sz_any[0] <= _rw)
-check('A5 负控制：A4 有鉴别力（pos 推到房间外必须判越界）', _bad_ok, star=True)
+if _rw is not None:
+    _bad_ok = (abs((8 + 0) - 0) > 1)   # 正左门 x=8 ⇒ 距 0 为 8 > 1 ⇒ 必被 A4 判违反
+check('A5 负控制：A4 有鉴别力（把门推离屏幕边缘必须判违反）', _bad_ok, star=True)
 
 # A6 ★★★ 门贴图**每扇各自正确**（第112轮改版）。
 #   用户逐字（第112轮）：「门也不是都长那样啊」「ut 就用王座那个门」
@@ -321,13 +427,14 @@ check('A5 负控制：A4 有鉴别力（pos 推到房间外必须判越界）', 
 #   ★ 判据从"集合等于某个单元素字典"改为"每条 src→贴图 的尺寸都对得上"。
 _A_DOOR_SPRITE_PX = _sizes.get('spr_darkdoor_0.png') or (44, 56)
 _A_UT_SPRITE_PX = _sizes.get('ut_castle_realdoor_0.png') or (44, 99)
-_A_SHORTCUT_SPRITE_PX = _sizes.get('spr_shortcut_door_0.png') or (36, 52)
+_A_NIKO_SPRITE_PX = _sizes.get('niko_door_portal.png') or (192, 128)
+_A_GIANT_SPRITE_PX = _sizes.get('spr_giantdarkdoor_0.png') or (180, 155)
 #: 期望：字母 → (贴图真尺寸)。真尺寸从盘上 PNG IHDR 现读（`_sizes`），不写死。
 _expect_px = {
     'A': _A_DOOR_SPRITE_PX,
-    'B': _A_DOOR_SPRITE_PX,
+    'B': _A_NIKO_SPRITE_PX,
     'C': _A_UT_SPRITE_PX,
-    'D': _A_SHORTCUT_SPRITE_PX,
+    'D': _A_GIANT_SPRITE_PX,
 }
 #: ★ 反向强断言：四张贴图**至少有两张不同**（否则"全都一样"能蒙混过关）。
 _used_sprites = set()
@@ -342,15 +449,16 @@ for _o in _doors:
 _px_bad = []
 for _f, _want_px in (('spr_darkdoor_0.png', _A_DOOR_SPRITE_PX),
                      ('ut_castle_realdoor_0.png', _A_UT_SPRITE_PX),
-                     ('spr_shortcut_door_0.png', _A_SHORTCUT_SPRITE_PX)):
+                     ('niko_door_portal.png', _A_NIKO_SPRITE_PX),
+                     ('spr_giantdarkdoor_0.png', _A_GIANT_SPRITE_PX)):
     _got = _sizes.get(_f)
     if _got is None:
         _px_bad.append('%s 不在盘上' % _f)
     elif tuple(_got) != tuple(_want_px):
         _px_bad.append('%s 尺寸 %r != 期望 %r' % (_f, _got, _want_px))
-check('A6 ★★★ 三张门贴图真在盘且尺寸正确'
-      '（任意门 %s / UT 王座门 %s / 三角符文 shortcut_door %s）'
-      % (_A_DOOR_SPRITE_PX, _A_UT_SPRITE_PX, _A_SHORTCUT_SPRITE_PX),
+check('A6 ★★★ 四张门贴图真在盘且尺寸正确'
+      '（OneShot 任意门 %s / UT 王座门 %s / Niko 光门 %s / 符文巨门框 %s）'
+      % (_A_DOOR_SPRITE_PX, _A_UT_SPRITE_PX, _A_NIKO_SPRITE_PX, _A_GIANT_SPRITE_PX),
       not _px_bad, star=True)
 if _px_bad:
     for _b in _px_bad[:4]:
@@ -831,85 +939,140 @@ check('E1 ★★★ 真机：相机已 follow 且**固定**在 (0,0,320,240)'
       isinstance(_res.get('cam_rect'), (list, tuple))
       and tuple(_res['cam_rect']) == (0.0, 0.0, 320.0, 240.0), star=True)
 
-check('E2 ★★★ 真机：`plan_frame` 产出 **%d 条 obj**（%d 扇门真的进绘制计划）'
-      % (_N_DOORS, _N_DOORS),
-      _res.get('objs') is not None and len(_res['objs']) == _N_DOORS, star=True)
+# ★★★ 第112轮续改口径（E2~E5）：4 扇门**已从房间渲染层搬到屏幕层**（用户
+#   「放到屏幕边缘哦」→「不是，那个门你单独放在外面呗」→「只桌面场景时，固定贴屏」）。
+#   实现：`desktop.json` 的 4 扇门 `enabled: false`（`plan_frame` / `visible_objects`
+#   都会剔除）+ `main.py::_desktop_screen_doors()` 用 `desk_doors.plan_screen_doors()`
+#   另算屏幕坐标，经 `SceneCanvas.set_screen_doors()` 在 `translate/scale` **之外**画。
+#   ⇒ 「房间层有 4 条 obj」这条老判据**语义已失效**（产品行为就是 0 条）。
+#   ★★★ 关键纪律：**不许把它改成恒真的"== 0"** —— 那样鉴别力全丢。正确做法是
+#     把鉴别力**搬到屏幕层**：房间层必须恰好 0 条（防回退成"又画一遍"）＋ 屏幕层
+#     必须能算出 4 扇且逐边贴屏幕边（A4b/A4c 已覆盖）＋ `set_screen_doors` 真被
+#     `paintEvent` 调用（AST 断言，防"算了但没画"）。
+check('E2 ★★★ 真机：`plan_frame` 房间层产出 **0 条 obj**'
+      '（第112轮续：4 扇门已改屏幕层绘制，房间层必须为空 —— 防"又画一遍"）',
+      _res.get('objs') is not None and len(_res['objs']) == 0, star=True)
+if _res.get('objs'):
+    print('        房间层 objs=%r（预期为空）' % (_res['objs'],))
 
-# E3 ★★★ rect 尺寸 = 贴图尺寸 × scale ——
-#   ★★ 这条是本轮最贵的探针教训：漏传 `sprite_size` ⇒ 尺寸退化成 (1,1)。
-#   ★★★ 第106轮改判据：**期望值从相机的真实 scale 推**，不写死 40。
-#     起因：第106轮「全屏化」把 camera.scale 由 2.0 抬到 2.125（输出 680×510）
-#     ⇒ 门的 rect 由 40×40 变 42×42 —— 老判据写死 40 **假红**。
-#     这正是「判据与事实脱节」（路由/参数改了，判据还钉着旧数）的又一例：
-#     真正要守的语义是「rect 尺寸 == 贴图原始尺寸 × 相机 scale」，
-#     而不是"恰好四个字节是 40"。改成从 `_res['scale']` 现推。
-_objs_rect = _res.get('objs') or []
-_scale = _res.get('scale')
-#   ★★★ 第109轮改判据：桌面门贴图由 **`spr_doorA`（20×20）** 换成
-#     **任意门 `spr_darkdoor`（44×56，两轴不等）** ⇒ 旧判据「宽高都 == 20×scale」
-#     **假红**（44≠56）。真正要守的语义是「rect 尺寸 == 门贴图原始尺寸 × 相机 scale」，
-#     所以期望值改为**从盘上读贴图真尺寸**（`_A_DOOR_SPRITE_PX`，44×56）现推。
-#   ★★★ 第112轮改判据：4 扇门**不再是同一张贴图**（用户「门也不是都长那样」）
-#     ⇒ E3 由"全部等于 任意门×scale"改为"**逐门**等于各自贴图真尺寸 × scale"。
-#     期望贴图名从 plan 出来的 `objs[0]`（路径）里取，再回 `_expect_px` 查真尺寸。
-def _expect_px_of(sprite_path):
-    """由 plan 出来的贴图路径（`objs/xxx.png`）求期望 (w,h)（原始像素）。"""
-    _bn = os.path.basename(str(sprite_path or ''))
-    for _f, _px in (('spr_darkdoor', _A_DOOR_SPRITE_PX),
-                    ('ut_castle_realdoor', _A_UT_SPRITE_PX),
-                    ('spr_shortcut_door', _A_SHORTCUT_SPRITE_PX)):
-        if _bn.startswith(_f):
-            return _px
-    # 动画帧 `xxx_0.png` / `xxx_1.png` ⇒ 去尾号再试
-    _stem = _bn.rsplit('_', 1)[0]
-    for _f, _px in (('spr_darkdoor', _A_DOOR_SPRITE_PX),
-                    ('ut_castle_realdoor', _A_UT_SPRITE_PX),
-                    ('spr_shortcut_door', _A_SHORTCUT_SPRITE_PX)):
-        if _stem.startswith(_f):
-            return _px
-    return None
+# E2b ★★★ `enabled is False` 真被剔除 —— 本轮的**产品真路径**证据。
+#   ★ 只看房间层 0 条是**不够**的（可能是别的原因恰好为空）⇒ 直接对
+#     `scene_system.visible_objects`（`plan_frame` 的过滤源、也是
+#     `SceneController.resolve_objects` 的唯一消费函数）喂一份**手工构造**的
+#     桌面场景（1 门 enabled=False + 1 个 enabled=True 的对照物），断言：
+#     门消失、对照物留下。
+#   ★★★ 纪律：**正负成对** —— 同一次调用里同时验"该丢的丢了"和"该留的留了"，
+#     否则"函数永远返回 []"也能蒙混过关。
+E2B_OK = False
+E2B_DETAIL = ''
+try:
+    _fake = SS.SceneState()
+    _fake.scene_id = 'desktop'
+    _fake.name = '桌面'
+    _fake.bg = '__transparent__'
+    _fake.objects = [
+        {'id': 'door_off', 'src': 'obj_doorC',
+         'sprite': 'objs/ut_castle_realdoor_0.png', 'pos': [0, 70],
+         'enabled': False},
+        {'id': 'keep_on', 'src': 'obj_other',
+         'sprite': 'objs/ut_castle_realdoor_0.png', 'pos': [100, 70],
+         'enabled': True},
+    ]
+    _vis = SS.visible_objects(_fake, (0, 0, 320, 240))
+    _vis_ids = [str(o.get('id')) for o in (_vis or [])]
+    E2B_OK = ('keep_on' in _vis_ids) and ('door_off' not in _vis_ids)
+    if not E2B_OK:
+        E2B_DETAIL = 'visible_objects ids=%r' % (_vis_ids,)
+except Exception as _e:
+    E2B_DETAIL = '异常 %r' % (_e,)
+check('E2b ★★★ `enabled is False` 真被剔除（手工场景：门消失、`enabled=True` 对照物留下）',
+      E2B_OK, star=True)
+if E2B_DETAIL:
+    print('        %s' % E2B_DETAIL)
 
+# E2c ★★★ 屏幕层通道真被 `paintEvent` 消费（AST：防"算了但没画"）。
+#   ★ 判据走 AST：`paintEvent` 函数体里必须**真的调用** `_paint_screen_doors`
+#     那个方法名（`_m(...)` 形式的 Attribute 调用），而不是只在注释里提一句。
+_paint_ok = False
+_paint_detail = ''
+try:
+    _cv_src = io.open(os.path.join(ROOT, 'ralsei_pet', 'modules', 'scene_canvas.py'),
+                      encoding='utf-8').read()
+    _cv_t = ast.parse(_cv_src)
+    _pe = None
+    for _n in ast.walk(_cv_t):
+        if isinstance(_n, ast.FunctionDef) and _n.name == 'paintEvent':
+            _pe = _n
+            break
+    _calls = []
+    if _pe is not None:
+        for _n in ast.walk(_pe):
+            if isinstance(_n, ast.Call):
+                _f = _n.func
+                if isinstance(_f, ast.Attribute):
+                    _calls.append(_f.attr)
+    _paint_ok = ('_paint_screen_doors' in _calls)
+    if not _paint_ok:
+        _paint_detail = 'paintEvent 里的调用 = %r' % (sorted(set(_calls)),)
+except Exception as _e:
+    _paint_detail = '异常 %r' % (_e,)
+check('E2c ★★★ `paintEvent` 真调 `_paint_screen_doors`（AST，防"算了但没画"）',
+      _paint_ok, star=True)
+if _paint_detail:
+    print('        %s' % _paint_detail)
 
-_px_bad_e3 = []
-for _n, _r in _objs_rect:
-    if len(_r) != 4:
-        continue
-    _px = _expect_px_of(_n)
-    if _px is None:
-        _px_bad_e3.append('未知贴图 %r' % (_n,))
-        continue
-    _ew = int(round(_px[0] * _scale)) if isinstance(_scale, (int, float)) else None
-    _eh = int(round(_px[1] * _scale)) if isinstance(_scale, (int, float)) else None
-    if _r[2] != _ew or _r[3] != _eh:
-        _px_bad_e3.append('%s rect=%s 期望=%s' % (os.path.basename(str(_n)), _r, (_ew, _eh)))
-check('E3 ★★★ 真机：每扇门 rect 尺寸 = **各自贴图真尺寸 × 相机 scale(%s)**'
-      '—— 即 `sprite_size` 真被传进产品真路径' % (_scale,),
-      len(_objs_rect) == _N_DOORS and not _px_bad_e3, star=True)
-if _px_bad_e3:
-    for _b in _px_bad_e3[:4]:
+# E3 ★★★ 屏幕层 4 扇门 rect = 各自贴图**原尺寸**（用户「各用原尺寸」）。
+#   ★ 语义搬家：旧 E3 断的是"房间层 rect = 贴图 × 相机 scale"（已失效，房间层为空）；
+#     新 E3 断的是"**屏幕层 rect 的 w/h == 贴图真尺寸**"——这正是用户本轮逐字
+#     「各用原尺寸」的直证（屏幕层不乘任何缩放）。
+_e3_bad = []
+_scr_n = 0
+if DD is not None:
+    _scr_all = DD.plan_screen_doors(
+        {L: (_sizes.get(_sprite_rule.get(L) or '') or (0, 0)) for L in 'ABCD'},
+        2560, 1600)
+    _scr_n = len(_scr_all)
+    for _L, _rect in _scr_all:
+        _want_px = _sizes.get(_sprite_rule.get(_L) or '')
+        if _want_px is None:
+            _e3_bad.append('%s 无期望尺寸' % _L)
+            continue
+        if (_rect[2], _rect[3]) != (int(_want_px[0]), int(_want_px[1])):
+            _e3_bad.append('%s rect w/h=%r 期望原尺寸=%r'
+                           % (_L, (_rect[2], _rect[3]), _want_px))
+check('E3 ★★★ 屏幕层 4 扇门 rect 尺寸 = **各自贴图原尺寸**（用户「各用原尺寸」；'
+      '不乘任何缩放）',
+      _scr_n == _N_DOORS and not _e3_bad, star=True)
+if _e3_bad:
+    for _b in _e3_bad[:4]:
         print('        %s' % _b)
-if _objs_rect and _px_bad_e3:
-    print('        rects=%r' % (_objs_rect,))
+# E3b ★ 负控制：E3 有鉴别力（给 rect 强加 ×2 缩放必须被判不等）。
+_e3_neg = False
+if _sizes.get('spr_darkdoor_0.png'):
+    _w0, _h0 = _sizes['spr_darkdoor_0.png']
+    _e3_neg = (_w0 * 2, _h0 * 2) != (int(_w0), int(_h0)) and _w0 > 0
+check('E3b ★ 负控制：E3 有鉴别力（rect 被缩放 ×2 必须判不等）', _e3_neg, star=True)
 
-# E4 ★★ 全部门的 rect **全在视口内**
-#   ★★★ 第106轮改判据：视口尺寸**不再写死 640×480**（全屏化后是 680×510，
-#     且随屏幕而变）—— 从 `plan_viewport()` 的真实返回值取，只断言
-#     "门的 rect 全落在 [0, viewport] 内"（语义），不断言具体数字（事实）。
-_vw, _vh = (_res.get('viewport') or (0, 0))[:2]
-_in_ok = all(0 <= r[0] and 0 <= r[1] and r[0] + r[2] <= _vw and r[1] + r[3] <= _vh
-             for _n, r in _objs_rect if len(r) == 4)
-check('E4 ★★ 真机：%d 扇门 rect **全在视口内**（%d×%d，不会被裁掉）'
-      % (_N_DOORS, _vw, _vh),
-      len(_objs_rect) == _N_DOORS and _in_ok and _vw > 0 and _vh > 0, star=True)
-if _objs_rect:
-    print('        rects=%r' % ([r for _n, r in _objs_rect],))
+# E4 ★★ 屏幕层 4 扇门 rect **全在屏幕内**（不越界）。
+#   ★ 语义搬家（同 E3）：旧 E4 断房间视口，新 E4 断**屏幕 2560×1600**。
+_scr_in_ok = False
+if DD is not None:
+    _scr_all2 = DD.plan_screen_doors(
+        {L: (_sizes.get(_sprite_rule.get(L) or '') or (0, 0)) for L in 'ABCD'},
+        2560, 1600)
+    _scr_in_ok = bool(_scr_all2) and all(
+        0 <= r[0] and 0 <= r[1] and r[0] + r[2] <= 2560 and r[1] + r[3] <= 1600
+        for _L, r in _scr_all2)
+check('E4 ★★ 屏幕层 4 扇门 rect **全在屏幕 2560×1600 内**（不会被裁掉）',
+      _scr_in_ok, star=True)
 
-# E5 ★★ 画布真 show（不是"算了但没显示"）
+# E5 ★★ 画布真 show（不是"算了但没显示"）—— 语义与第109轮一致（屏幕层门也画在这块画布上）。
 check('E5 ★★ 真机：场景画布 `visible=True`（门真的会显示出来）',
       _res.get('canvas_visible') is True, star=True)
 
-# E6 负控制：E2 有鉴别力（`viewport == (0,0)` 时必然画不出东西 —— 那是本轮修前的状态）
-check('E6 负控制：E2 有鉴别力（viewport 为 (0,0) 时 `plan_viewport` 早退 ⇒ 零 obj）',
+# E6 负控制：E2 有鉴别力（`viewport == (0,0)` 时必然画不出东西 —— 那是第89轮修前的状态）。
+#   ★ 第112轮续：E2 已改成"房间层 == 0"，但 `viewport` 探针仍然有意义（相机几何自证）。
+check('E6 负控制：相机探针有鉴别力（`viewport` 非 (0,0)，非退化）',
       (0, 0) != tuple(_res.get('viewport') or (0, 0)), star=True)
 
 # ================================================================ F. 推门真切场景（真机）

@@ -610,6 +610,10 @@ class SceneCanvas(QWidget):
         #:   α 0→1、`obj_persistentfadein` α 1→0，见 `TRANSITION_COLOR` 注释）。
         #:   ★ 默认 0.0 ⇒ 不切场景时**零行为变化**（既有回归判据不被它影响）。
         self._transition_alpha = 0.0
+        #: ★ 第112轮续：**屏幕坐标**的世界门 `[(sprite_id, (x, y, w, h)), ...]`。
+        #:   由宿主每帧送 `set_screen_doors()`；只桌面场景非空。★ 默认空 ⇒
+        #:   不碰场景时**零行为变化**（既有回归判据全不受影响）。
+        self._screen_doors = []
         self.last_drawn = 0
         self.hide()
 
@@ -711,6 +715,70 @@ class SceneCanvas(QWidget):
     def view_size(self):
         return self._view_size
 
+    # -- 屏幕层门（第112轮续）-------------------------------------------
+    def set_screen_doors(self, doors):
+        """★ 第112轮续：设置**屏幕坐标**的世界门清单（不参与房间缩放）。
+
+        用户口径（逐字）：「**放到屏幕边缘哦**」/「**不是，那个门你单独放在外面呗**」
+        →「**只桌面场景时，固定贴屏**」+「**各用原尺寸**」。
+
+        `doors` = `[(sprite_id, (x, y, w, h)), ...]`：
+          · `sprite_id` = `assets.get()` 认得的贴图名（如 `'objs/spr_giantdarkdoor_0.png'`）；
+          · `(x, y, w, h)` = **画布（= 整屏）坐标**的矩形，`x/y` 为左上角。
+        ⇒ 由 `display.desk_doors.plan_screen_doors()` 算出（那里是摆位唯一真源）。
+
+        ★ 为什么走**独立通道**而不是塞进 `plan`：`plan` 里的指令一律经过
+          `p.translate(offset)` + `p.scale(scale)`（房间坐标 → 画面像素）。
+          屏幕门**必须绕开这两步**，否则又会被房间缩放推回屏幕中间（那正是
+          用户抱怨的"不在屏幕边缘"）。两条路径分开，是这个需求唯一正确的结构。
+
+        `None` / 空 ⇒ **清空**（桌面上不再画门）。
+        """
+        if not doors:
+            self._screen_doors = []
+            return
+        fixed = []
+        for it in doors:
+            try:
+                sid = it[0]
+                r = it[1]
+                if not sid or not isinstance(r, (list, tuple)) or len(r) != 4:
+                    continue
+                fixed.append((str(sid), (int(r[0]), int(r[1]),
+                                         int(r[2]), int(r[3]))))
+            except (TypeError, ValueError, IndexError):
+                continue
+        self._screen_doors = fixed
+
+    @property
+    def has_screen_doors(self):
+        """★★ 第112轮续：本帧是否有屏幕层门要画（**只读**，供宿主决定画布显隐）。
+
+        ★ 为什么需要它：桌面场景的 4 扇门全部 `enabled:false`（改由屏幕层画）⇒
+          `plan` 里一个 obj 都没有 ⇒ 宿主原来那条"有 bg/obj 才 show"的判据会把
+          画布**隐藏**，而 `paintEvent` 不跑 ⇒ 屏幕层的门**根本不会上屏**。
+          （`check89` 真机探针 `canvas_visible=false` 就是这个 bug 的直接证据。）
+        """
+        return bool(self._screen_doors)
+
+    def _paint_screen_doors(self, painter):
+        """在**画布坐标**画屏幕门（`translate/scale` 之外，故不受房间缩放影响）。
+
+        返回画了几扇（供 `last_drawn` 统计；取不到贴图的门**跳过**，不画占位方块 ——
+        宁可不画，也不要在桌面上糊一块色块）。
+        """
+        n = 0
+        for sid, (x, y, w, h) in self._screen_doors:
+            try:
+                pm = self.assets.get(sid)
+                if pm is None or pm.isNull():
+                    continue
+                painter.drawPixmap(QRect(x, y, w, h), pm)
+                n += 1
+            except Exception:
+                continue
+        return n
+
     # -- 绘制 ------------------------------------------------------------
     def paintEvent(self, event):  # noqa: N802 (Qt 命名)
         try:
@@ -722,6 +790,14 @@ class SceneCanvas(QWidget):
             #   桌面场景 `_opaque_bg=False` ⇒ 保持透明、透出壁纸。
             if self._opaque_bg:
                 p.fillRect(self.rect(), QBrush(ROOM_FILL_COLOR))
+            # ★★★ 第112轮续三修：把"房间坐标 → 画面像素"的变换**单独包起来**。
+            #   真 bug 实录（本轮真机抓帧）：`translate(offset)` + `scale()` 执行后
+            #   **没有恢复** ⇒ 后面两个"整屏坐标"的绘制段（屏幕门 / 过渡遮罩）
+            #   都被整体平移了 `(747,400)`（2560×1600 屏上画面的居中偏移）⇒
+            #   `_paint_screen_doors` 明明执行了（`last_drawn=4`），门却画到
+            #   **错位处**，抓图里四扇门区域 100% 透明（每门 0/64 不透明点）。
+            #   ⇒ `save()` 在这里、`restore()` 在 `paint_on` 之后。
+            p.save()
             # ★ 第107轮：画面在画布内的居中偏移（画布=整屏，画面=4:3 内接）。
             if self._offset_x or self._offset_y:
                 p.translate(self._offset_x, self._offset_y)
@@ -729,6 +805,14 @@ class SceneCanvas(QWidget):
             if self._scale_x != 1.0 or self._scale_y != 1.0:
                 p.scale(self._scale_x, self._scale_y)
             self.last_drawn = paint_on(p, self._plan, self.assets, self._view_size)
+            p.restore()
+            # ★★★ 第112轮续：**屏幕层世界门** —— 画在**画布坐标**（= 整屏坐标），
+            #   不受 `translate/scale` 影响（用户「门你单独放在外面」「固定贴屏」）。
+            #   ★ 与过渡遮罩的相对序：门在遮罩**之下**（换房时门也该一起被黑掉，
+            #     否则"变黑"过程里门外还亮着 4 个方块，穿帮）。
+            #   ★ 空清单时**整段不执行** ⇒ 零行为变化。
+            if self._screen_doors:
+                self.last_drawn += self._paint_screen_doors(p)
             # ★★★ 第109轮「原作式场景过渡」：**最后**叠一层全屏黑遮罩
             #   （原作的 `obj_fadeout` / `obj_persistentfadein` 就是在所有房间内容
             #    之后画的 —— 它们 depth=0 且后 `instance_create` ⇒ 盖在最上层）。

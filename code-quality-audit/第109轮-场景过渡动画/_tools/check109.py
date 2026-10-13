@@ -256,16 +256,82 @@ ok(u'E2 ★★ `set_transition_alpha` 对 α 做 **[0,1] 钳位**（超界会让
 
 # ★★★ paintEvent 里的遮罩段：必须是**最后**（在 paint_on 之后），且在
 #   translate/scale **之外**（否则遮罩会被画面偏移/缩放带跑）。
+#   ★★★ 第112轮续三修正：旧写法用**字符串** `in` + `rindex`，detail 还回显
+#     中文偏移量（`paint_on@855 fillRect@2208`）——
+#      ① 违反契约「判据禁纯文本扫」（注释/串一提名字即误报）；
+#      ② 违反契约「判据禁回显随时相变绝对值（含行号）」——
+#         上方代码增删几行 ⇒ 偏移量必变 ⇒ 基线反复 DIFF（本轮 check109
+#         已经因为 `paintEvent` 加 `save/restore` 而 DIFF 过一次）。
+#   ⇒ 改为 **AST 结构**：在 `paintEvent` 的**语句序列**里找
+#     `paint_on(...)` 与 `fillRect(...)` 两类 `Call`，判"序号关系"，
+#     detail 只输出 `idx_a < idx_b`（**序关系**，不随行号/偏移漂移）。
 _pe = _func(_t_canvas, 'paintEvent', cls=_CANVAS)
-_pe_src = ast.get_source_segment(_canvas_src, _pe) if _pe is not None else u''
-_have_paint = u'paint_on' in _pe_src
-_have_mask = u'_transition_alpha' in _pe_src and u'fillRect' in _pe_src
-_order_ok = (_have_paint and _have_mask
-             and _pe_src.rindex(u'paint_on') < _pe_src.rindex(u'fillRect'))
+
+
+def _first_call_lineno(func_node, names, within_if_with=None):
+    """`func_node` 内 `names` 中被调函数的**首次出现行号**（只用于比大小）。
+
+    ★★★ 第112轮续三：**必须限定"在过渡遮罩那个 if 分支内"**！
+      早先版本取 `fillRect` 的**全局首次** ⇒ 命中的是 `paintEvent` 开头那句
+      `if self._opaque_bg: p.fillRect(self.rect(), ...)`（**房间黑底**，
+      本来就该在内容**之前**）⇒ 判据必红（误报）。
+      ⇒ 加 `within_if_with`：只统计**其祖先 `If` 的 test 里出现该名字**的调用
+        （这里 = `_transition_alpha`）—— 这才是"过渡遮罩那次 fillRect"。
+
+    ★ 为什么用 `lineno` 而不是"顶层语句索引"（第112轮续三另一处实证失败）：
+      `paintEvent` 顶层 body 只有一条 `try:`，两类调用**都在 try 内** ⇒
+      顶层语句索引**恒相等**（都是 0）⇒ 判不出先后。
+    ★ `lineno` **只做 `<` 比较**，**绝不回显**（契约：禁回显随相变绝对值，含行号）。
+    """
+    if func_node is None:
+        return None
+    _best = None
+    if within_if_with is None:
+        # ★ 不限 If：扫**整个函数体**（`paint_on(...)` 是 `paintEvent` 的顶层
+        #   语句，不在任何 `If` 内 ⇒ 只在 If 里找会漏掉它，line=None）。
+        for _n in ast.walk(func_node):
+            if isinstance(_n, ast.Call):
+                _f = _n.func
+                _nm = (_f.id if isinstance(_f, ast.Name)
+                       else _f.attr if isinstance(_f, ast.Attribute) else None)
+                if _nm in names:
+                    _ln = getattr(_n, 'lineno', None)
+                    if _ln is not None and (_best is None or _ln < _best):
+                        _best = _ln
+        return _best
+    for _parent in ast.walk(func_node):
+        if not isinstance(_parent, ast.If):
+            continue
+        # 该 If 的 test 里必须出现 `within_if_with`（Name/Attribute 皆可）
+        _hit = False
+        for _t in ast.walk(_parent.test):
+            if isinstance(_t, ast.Attribute) and _t.attr == within_if_with:
+                _hit = True
+            elif isinstance(_t, ast.Name) and _t.id == within_if_with:
+                _hit = True
+        if not _hit:
+            continue
+        for _n in ast.walk(_parent):
+            if isinstance(_n, ast.Call):
+                _f = _n.func
+                _nm = (_f.id if isinstance(_f, ast.Name)
+                       else _f.attr if isinstance(_f, ast.Attribute) else None)
+                if _nm in names:
+                    _ln = getattr(_n, 'lineno', None)
+                    if _ln is not None and (_best is None or _ln < _best):
+                        _best = _ln
+    return _best
+
+
+_ln_paint = _first_call_lineno(_pe, {'paint_on'})
+_ln_mask = _first_call_lineno(_pe, {'fillRect'},
+                              within_if_with='_transition_alpha')
+_order_ok = (_ln_paint is not None and _ln_mask is not None
+             and _ln_paint < _ln_mask)
 ok(u'E3 ★★★ `paintEvent` 在**画完内容之后**叠黑遮罩'
    u'（原作 `obj_fadeout` 也是最后画 → 盖在最上层）',
-   _order_ok, u'paint_on@%s fillRect@%s'
-   % (_pe_src.find(u'paint_on'), _pe_src.rfind(u'fillRect')), star=True)
+   _order_ok, u'语句序 paint_on **先于** 过渡遮罩 fillRect = %r'
+   % (_order_ok,), star=True)
 
 # ★★ 遮罩色 = 纯黑（原作出处 `image_blend = c_black`）
 _tcol = _num_const(_t_canvas, 'TRANSITION_COLOR')
@@ -286,10 +352,38 @@ ok(u'E4 ★★ 遮罩色 = **纯黑** `QColor(0,0,0)`（原作 `image_blend = c_
 # ---------------------------------------------------------------------
 sec(u'F 默认零回归：α=0 时不画遮罩')
 
-_mask_guarded = u'_transition_alpha > 0.0' in _pe_src
+def _has_alpha_guard(func_node):
+    """`paintEvent` 里是否存在 `if <含 _transition_alpha 的比较> > 0` 的真守卫。
+
+    ★★★ 第112轮续三：旧写法 `'_transition_alpha > 0.0' in _pe_src` 是**文本扫**
+      ⇒ 注释里写一句 `# _transition_alpha > 0.0 才画` 就恒真（契约已四次发作）。
+    ⇒ 走 AST：必须是**真 `If` 节点**，其 `test` 是 `Compare`，且左右出现
+      `_transition_alpha` 这个 **Name/Attribute** ⇒ 注释/字符串不可能命中。
+    """
+    if func_node is None:
+        return False
+    for _n in ast.walk(func_node):
+        if not isinstance(_n, ast.If):
+            continue
+        _t = _n.test
+        if not isinstance(_t, ast.Compare):
+            continue
+        _names = set()
+        for _x in [_t.left] + list(_t.comparators):
+            for _y in ast.walk(_x):
+                if isinstance(_y, ast.Attribute) and _y.attr == '_transition_alpha':
+                    _names.add('attr')
+                elif isinstance(_y, ast.Name) and _y.id == '_transition_alpha':
+                    _names.add('name')
+        if _names:
+            return True
+    return False
+
+
+_mask_guarded = _has_alpha_guard(_pe)
 ok(u'F1 ★★★ `paintEvent` 的遮罩段**由 `_transition_alpha > 0.0` 守卫**'
    u'（不守卫 ⇒ 正常态也填一层黑 = 全屏黑屏）',
-   _mask_guarded, u'守卫命中=%r' % _mask_guarded, star=True)
+   _mask_guarded, u'AST真If守卫命中=%r' % _mask_guarded, star=True)
 
 # ★ 初始化值 = 0.0（构造完不遮挡）
 _init = _func(_t_canvas, '__init__', cls=_CANVAS)

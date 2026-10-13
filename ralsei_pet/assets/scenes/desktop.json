@@ -25,19 +25,21 @@
         138,
         0
       ],
-      "depth": 0
+      "depth": 0,
+      "enabled": false
     },
     {
       "id": "desk_door_niko_home",
       "kind": "prop",
       "authored": true,
       "src": "obj_doorB",
-      "sprite": "objs/spr_darkdoor_0.png",
+      "sprite": "objs/niko_door_portal.png",
       "pos": [
-        138,
-        184
+        64,
+        112
       ],
-      "depth": 0
+      "depth": 0,
+      "enabled": false
     },
     {
       "id": "desk_door_ut",
@@ -49,19 +51,21 @@
         0,
         70
       ],
-      "depth": 0
+      "depth": 0,
+      "enabled": false
     },
     {
       "id": "desk_door_deltarune",
       "kind": "prop",
       "authored": true,
       "src": "obj_doorD",
-      "sprite": "objs/spr_shortcut_door_0.png",
+      "sprite": "objs/spr_giantdarkdoor_0.png",
       "pos": [
-        284,
-        94
+        140,
+        42
       ],
-      "depth": 0
+      "depth": 0,
+      "enabled": false
     }
   ],
   "_comment": {
@@ -84,13 +88,17 @@
     },
     "round112_door_sprites": {
       "why": "用户口径（第112轮）：『门也不是都长那样啊，而且摆放的位置也不在屏幕四周啊』+『你要不要自己看看那是不是任意门啊，我说的是那个门框』+『ut 就用王座那个门』（确认选 `bg_castle_realdoor`）。",
-      "root_cause": "★★★ 真因（本会话实测修正）= 桌面 4 扇门里 3 扇带 `anim`，而 `spr_darkdoor` 的帧1=**空门框**、帧2=**一片空**（PNG 163/132 字节 vs 帧0 的 413）⇒ 门在「可见 33ms / 空白 66ms」之间**频闪**（frame_ms=33.3）。用户看到的「那不是门」= **频闪的矩形**，不是贴图选错。`rect` 位置一直是对的。",
+      "root_cause": "★★★ 真因（第112轮续·实测推翻旧记载）= `spr_darkdoor_0/1/2` **三帧全部不透明**（opaque px 均 2464/2464，实测）：帧0=青灰双开门、帧1=**纯黑** (0,0,0,255)×2316、帧2=**纯深灰** (41,41,52,255) 铺满。带 `anim`(frame_ms=33.3) ⇒ 观感＝「门 → 黑块 → 灰块」约 10 Hz 循环闪 ⇒ 用户看到的「那不是门」= **闪烁的矩形**。★ 旧记载「帧1/2 是空白」**是错的**（把深色板误当成透明），本轮已更正。",
       "ut_door": "★ UT 门 = `bg_castle_realdoor`（44×99）—— 用户『王座那个门』。取证：UT `room_castle_throneroom`（王座之间）里立着的就是它，金色/黄铜描边 + 拱形 + 顶部三角符文。由 `UndertaleModCli` 从 `undertale.apk` 的 `assets/game.droid` 导出（见 `第112轮…/_evidence/`）。",
-      "deltarune_door": "★ 三角符文门 = `spr_shortcut_door`（36×52，2 帧：关/开，**两帧都完整可见**）—— 用户选定。★ 但**同样不做 anim**（理由见 `fix_static`）。",
-      "oneshot_door": "OneShot 门 = 维持 `spr_darkdoor_0.png`（44×56 帧0，**可见的那一帧**）。用户「oneshot 和 niko 的家不变」= 指**不加渐显功能**，非贴图不改；但我没有 OneShot 门的替代贴图口径 ⇒ 不擅自改，只用它的**可见帧0** + 去掉频闪 anim。",
-      "pos_recalc": "★ 贴图尺寸变了 ⇒ 重新算靠边框位置（房间 320×240、`pos`=左上角、四边中点贴屏框）：正上 OneShot 44×56 → (138,0)；正下 Niko家 44×56 → (138,184)；正左 UT 44×99 → (0,70)；正右 符文 36×52 → (284,94)。",
+      "deltarune_door": "★★★ 三角符文门 = `spr_giantdarkdoor_0.png`（**180×155 金边卷草纹门框**）。依据：用户 10-12「**你要不要自己看看那是不是任意门啊，我说的是那个门框**」＋本轮追问「是哪个门框似的那个门」⇒ **「任意门」= 长得像门框的那扇** = `spr_giantdarkdoor`（`giant`=巨大，与用户「那俩太大个了」吻合）。★ 替代旧值 `spr_shortcut_door_0`（36×52 粉紫独门）—— 那是「一扇门」不是「门框」。",
+      "oneshot_door": "OneShot 门 = `spr_darkdoor_0.png`（44×56，**帧0 = 青灰双开门**）。★ 用户 10-12「oneshot 和 niko 的家**不变**」＝指**不加渐显功能**，非贴图不改；但用户 10-11 又要求「维持原作玩家视角下的门的样子」⇒ 保留帧0（唯一像门的一帧）、**去掉 anim**（防闪烁）。★ OneShot 场景为纯 Tiled 合成背景、无物件级素材引用 ⇒ **没有**可提取的 OneShot 专属门贴图，此为该门当前最优解。",
+      "pos_recalc": "★ 贴图尺寸逐门定**房间坐标**（房间 320×240、`pos`=左上角、贴房间四边中点）：正上 OneShot 44×56 → (138, 0)；正下 Niko 家 **192×128 → (64, 112)**；正左 UT 44×99 → (0, 70)；正右 符文巨门框 **180×155 → (140, 42)**（x=320-180=140、y=(240-155)//2=42）。★ 这是 `door_reveal` 的渐显触发矩形来源；门的**屏幕位置**由 `desk_doors` 另算（屏幕坐标、各用原尺寸）—— **两套坐标，别混**。",
       "no_anim_for_ut": "★★ 现在**4 扇门都没有 `anim`**（统一静态）。UT 门 `bg_castle_realdoor` 本就单帧；另 3 扇的 `anim` 是本轮**主动删除**的（频闪根因）。",
-      "fix_static": "★★★ 处置（第112轮收尾）：**4 扇门全部改成静态单帧**（删 `anim`，只留 `sprite`）。门的「开/关」在桌面上没有语义 —— 它不是原作里会开合的门，频闪只会像 bug。★ 与 UT 门一致（`bg_castle_realdoor` 本就单帧、无 anim）。★ 副作用：`anim_round44` 的「带 anim 的物件 265→261 条」是**合法基线上移**。"
+      "fix_static": "★★★ 处置（第112轮收尾）：**4 扇门全部改成静态单帧**（删 `anim`，只留 `sprite`）。门的「开/关」在桌面上没有语义 —— 它不是原作里会开合的门，频闪只会像 bug。★ 与 UT 门一致（`bg_castle_realdoor` 本就单帧、无 anim）。★ 副作用：`anim_round44` 的「带 anim 的物件 265→261 条」是**合法基线上移**。",
+      "niko_home_door": "★★★ Niko 的家门 = `niko_door_portal.png`（192×128，品红几何光门）。依据：用户 10-10 逐字「用原作 **niko 最后回家的光门**变成暗门即可」+「niko 回家…用**原作回家时候的光门**即可」；10-11 再明确「**不是进 oneshot 的门，是进 niko 的家**」。★ 尺寸 192×128 ⇒ 靠边框坐标重算为 (64, 112)（正下：x=(320-192)//2=64，y=240-128=112；贴屏幕底边）。",
+      "styles_correction": "★★★ 纠正一处**误读**（第112轮核心）：用户 10-11 逐字「**只有进世界，也就是桌面上那个用任意门，其他的维持原作玩家视角下的门的样子就好**」—— 这是**对照关系**：「进世界」那扇（＝正右三角符文，通往光世界的总入口）用**任意门**；「其他的」（OneShot / Niko 家 / UT）**维持原作玩家视角下的门的样子**，**不是**任意门。旧注释写成「4 扇统一用任意门」⇒ 正是用户 10-12 追问「**门也不是都长那样啊**」「**你要不要自己看看那是不是任意门啊，我说的是那个门框**」的根源。★ 现态（已定案）：A=OneShot 用 `spr_darkdoor_0`（帧0 青灰双开门）· B=Niko 家用光门 `niko_door_portal` · C=UT 用王座门 `ut_castle_realdoor_0` · D=三角符文用 `spr_giantdarkdoor_0`（**门框**）。★ D 的「门框」身份已由用户本轮逐字确认（「**是哪个门框似的哪个门**」），不再是待确认项。",
+      "fit_fraction": "★★★「门不在屏幕边缘」的真因**不是 `pos`**（`pos` 一直贴房间四边中点、正确），而是 `scene_camera.SCENE_FIT_FRACTION`（第110轮「砍半」=0.5）⇒ 房间画面在 2560×1600 屏上只占 1066×800、居中于 (747,400) ⇒ 门的「**房间边缘**」落到了屏幕「**中间**」。★ 与「Ralsei 尺寸」**同一个旋钮**（`_cached_scale_factor = camera.scale × pet_scale`）。",
+      "screen_layer": "★★★ 第112轮续「**门放到屏幕边缘**」的落地 = **门脱离房间图层，改由屏幕层画**。用户口径（逐字）：「**放到屏幕边缘哦**」→「**不是，那个门你单独放在外面呗**」→「**只桌面场景时，固定贴屏**」+「**各用原尺寸**」。实现：`desk_doors.plan_screen_doors()` 算摆位（四边中点、按贴图原尺寸、不乘房间缩放）→ `SceneCanvas.set_screen_doors()` 在 `translate/scale` **之外**画。★ 为避免画两遍，本文件的 4 扇门**全部 `enabled: false`**（第112轮续给 `scene_render.plan_frame` 补了这条剔除；`scene_system.visible_objects` 早有）。★ 但物件**仍在 `scene.objects` 里** ⇒ 字母路由（`build_props`）与靠近渐显（`door_reveal`）照常工作—— 这是「数据留在场景、绘制交给外层」的关键。★ `pos` 保留为**房间坐标**（`door_reveal` 的矩形来源），屏幕层位置由 `desk_doors` 另算（两套坐标，别混）。"
     },
     "how_to_fill_it_in_later": [
       "1. bg: 填字符串（相对本目录，如 \"bg/desktop_night.png\"）或 {'variants': [...]}（轮播，例如白天/夜晚）。桌面保持 `__transparent__`。",

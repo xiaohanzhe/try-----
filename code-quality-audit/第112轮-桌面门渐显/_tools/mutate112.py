@@ -30,6 +30,9 @@ REL = {
     'item_interact': os.path.join('ralsei_pet', 'modules', 'item_interact.py'),
     'desktop_json': os.path.join('ralsei_pet', 'assets', 'scenes', 'desktop.json'),
     'main': os.path.join('ralsei_pet', 'src', 'main.py'),
+    # ★ 第112轮续三新增（门对齐 Ralsei + 屏幕层坐标系）
+    'desk_doors': os.path.join('ralsei_pet', 'modules', 'desk_doors.py'),
+    'scene_canvas': os.path.join('ralsei_pet', 'modules', 'scene_canvas.py'),
 }
 
 
@@ -224,12 +227,83 @@ mutate(u'M10 UT 门加回 anim（频闪根因回归）',
        ' "frame_ms": 33.3},')
 
 # ---------------------------------------------------------------------------
-# M11: 符文门贴图改错（D 门）
+# M11（已下线）：符文门贴图锚点 `spr_shortcut_door_0.png` 已不存在
+#   ★ 第112轮续三用户把符文门改成 `spr_darkdoor_0.png` ⇒ 旧锚点命中 0 次。
+#   ★ 不再"绕过"（契约：清理守卫/失效锚点 ⇒ 如实登记，不硬凑）。原判据
+#     `check112` 里"四门贴图逐字"那条**仍在**（N9/N10 系列），只是本变异
+#     的锚点被素材迭代作废 ⇒ 用下面 M21/M22 承担"统一倍率"这条新线的鉴别力。
 # ---------------------------------------------------------------------------
-mutate(u'M11 符文门贴图改错',
-       'desktop_json',
-       '"sprite": "objs/spr_shortcut_door_0.png"',
-       '"sprite": "objs/spr_darkdoor_0.png"')
+
+# ---------------------------------------------------------------------------
+# M21: 统一倍率核被改成**"每扇门各自贴上限"**的逐门口径
+#   ★ 原内核：`k = min(c*pw/max_w, c*ph/max_h)`（取"最大的那扇" ⇒ 四门共用）。
+#   ★ 变异：改成"最小的那扇"⇒ 相当于给小门单独放大 ⇒ 大小关系被磨平。
+#     （直接把 `max_w/max_h` 改成 `min_w/min_h` 语义：用 `1.0` 代替 ⇒ 等价
+#      于 `k = c*pw/1` ⇒ 四门统一但**不再贴宠物盒**，N18d/N18e 必红。
+#      为让 N18d2 也有鉴别力，这里改成"逐门各自算"的真实退化：
+#      `k = c * pw / max_w` 只用宽轴 ⇒ 高轴失控。）
+#   锚点 = `k = min(c * pw / max_w, c * ph / max_h)`（全文唯一）。
+#   期望被抓：N18d（超 cap）/ N18e（负控制）。
+# ---------------------------------------------------------------------------
+mutate(u'M21 ★★★ `fit_doors_uniform_scale` 内核退化（只用宽轴 ⇒ 高轴失控）',
+       'desk_doors',
+       '    k = min(c * pw / max_w, c * ph / max_h)',
+       '    k = c * pw / max_w  # 变异：丢掉高轴约束（逐门化的第一步）')
+
+# ---------------------------------------------------------------------------
+# M22: `plan_screen_doors` 不再走统一倍率（`_s_uniform` 恒等于传入的全局 `scale`）
+#   锚点 = `        _s_uniform = fit_doors_uniform_scale(sizes, pet_box)`
+#          （8 空格缩进；见 desk_doors.py L291）。
+#   期望被抓：N18g（带 pet_box 与不带结果必须不同）+ N18d2（AST 判 scale= 同源）。
+# ---------------------------------------------------------------------------
+mutate(u'M22 ★★★ `plan_screen_doors` 不用统一倍率（`_s_uniform` 恒为全局 scale）',
+       'desk_doors',
+       '        _s_uniform = fit_doors_uniform_scale(sizes, pet_box)',
+       '        _s_uniform = scale  # 变异：退回逐门/全局口径')
+
+# ---------------------------------------------------------------------------
+# M23: `PET_MAX_LONG_SIDE_PX` 放大到 500（宠物上限失效）
+#   锚点 = `PET_MAX_LONG_SIDE_PX = 144`（全文唯一）。期望被抓：N24 + N25。
+# ---------------------------------------------------------------------------
+mutate(u'M23 ★★★ `PET_MAX_LONG_SIDE_PX` 改 500（宠物上限失效）',
+       'desk_doors',
+       'PET_MAX_LONG_SIDE_PX = 144',
+       'PET_MAX_LONG_SIDE_PX = 500  # 变异：上限形同虚设')
+
+# ---------------------------------------------------------------------------
+# M24: 钳制"只减不增"被破坏（改成**恒定返 cap** ⇒ 把小宠物也撑大）
+#   锚点 = `    return k if k <= cap else cap`。期望被抓：N26。
+# ---------------------------------------------------------------------------
+mutate(u'M24 ★★★ 钳制不再"只减不增"（恒定返 cap ⇒ 小宠物被撑大）',
+       'desk_doors',
+       '    return k if k <= cap else cap',
+       '    return cap  # 变异：恒定返上限（小宠物被撑大）')
+
+# ---------------------------------------------------------------------------
+# M25: `main.py` 摘掉钳制调用（上限没接进渲染链 = "功能写了没消费者"）
+#   锚点 = `            v = _dd.clamp_scale_factor_for_max_side(v)`。
+#   期望被抓：N28。
+# ---------------------------------------------------------------------------
+mutate(u'M25 ★★★ main 摘掉钳制调用（上限没接进渲染链）',
+       'main',
+       '            v = _dd.clamp_scale_factor_for_max_side(v)',
+       '            pass  # 变异：不钳')
+
+# ---------------------------------------------------------------------------
+# M26: `_desktop_screen_doors` 引回场景比例（门重新耦合进场景系统）
+#   锚点 = `            canvas = getattr(self, 'scene_canvas', None)` 之后插一行。
+#   ★ 用 `_offset_y` 这个**只属于房间变换**的量做标记（N29 专抓它）。
+#   期望被抓：N29。
+# ---------------------------------------------------------------------------
+mutate(u'M26 ★★★ `_desktop_screen_doors` 引回场景量（门重新耦合）',
+       'main',
+       '            canvas = getattr(self, \'scene_canvas\', None)\n'
+       '            if canvas is None:\n'
+       '                return []',
+       '            canvas = getattr(self, \'scene_canvas\', None)\n'
+       '            _probe = getattr(canvas, \'_offset_y\', 0)  # 变异：门又看场景了\n'
+       '            if canvas is None:\n'
+       '                return []')
 
 # ---------------------------------------------------------------------------
 # M12: main.py 把 door_reveal 接线摘掉（渐显不再接进渲染路径）
@@ -256,6 +330,72 @@ mutate(u'M14 _niko_home_gate 恒放行（内核失效）',
        'main',
        '            import modules.niko_home as _nh\n            return _nh.can_enter(actor)',
        '            import modules.niko_home as _nh\n            return True, "unknown"')
+
+# ---------------------------------------------------------------------------
+# M15 ★★★ 宠物盒退回"当前帧尺寸"（`sprite_label`）⇒ 门会随动画一跳一跳变大小
+#   = 本轮真机抓到的**真 bug 复现**。判据 N19b 必须抓到。
+# ---------------------------------------------------------------------------
+mutate(u'M15 宠物盒退回 sprite_label（门随动画跳 = 本轮真 bug 复现）',
+       'main',
+       '                pet_box = desk_doors_mod.pet_screen_box(_k)',
+       '                pet_box = (int(self.sprite_label.width()),'
+       ' int(self.sprite_label.height()))')
+
+# ---------------------------------------------------------------------------
+# M16 ★★★ `PET_BOX_LOGICAL` 改成行走帧口径 21×41（门会小一圈 ⇒ 不再是"差不多"）
+# ---------------------------------------------------------------------------
+mutate(u'M16 PET_BOX_LOGICAL 改 21×41（门小一圈）',
+       'desk_doors',
+       'PET_BOX_LOGICAL = (69, 47)',
+       'PET_BOX_LOGICAL = (21, 41)')
+
+# ---------------------------------------------------------------------------
+# M17 ★★★ `paintEvent` 漏掉 `p.restore()` ⇒ 屏幕门被 `translate(offset)` 推走
+#   = 本轮真机抓到的**第二个真 bug 复现**（`last_drawn=4` 但门区域全透明）。
+#   ⚠️ 锚点必须**唯一**：`p.restore()` 在 `scene_canvas.py` 里可能出现多次
+#   （`_paint_screen_doors` 里若有自己的 save/restore）⇒ 带上前后文定位。
+# ---------------------------------------------------------------------------
+mutate(u'M17 删掉 paintEvent 的 p.restore()（门被平移推走 = 真 bug 复现）',
+       'scene_canvas',
+       '            self.last_drawn = paint_on(p, self._plan, self.assets,'
+       ' self._view_size)\n            p.restore()',
+       '            self.last_drawn = paint_on(p, self._plan, self.assets,'
+       ' self._view_size)')
+
+# ---------------------------------------------------------------------------
+# M18 ★★ `_paint_screen_doors` 里自己加一次 offset ⇒ 双重偏移
+#   （判据 N23 必须抓到："不许出现 `_offset_*`"）
+# ---------------------------------------------------------------------------
+mutate(u'M18 `_paint_screen_doors` 自加 offset（双重偏移）',
+       'scene_canvas',
+       '        n = 0\n        for sid, (x, y, w, h) in self._screen_doors:',
+       '        n = 0\n        painter.translate(self._offset_x, self._offset_y)\n'
+       '        for sid, (x, y, w, h) in self._screen_doors:')
+
+# ---------------------------------------------------------------------------
+# M19 ★★ `pet_screen_box` 非法输入返回 `(0, 0)` 而不是 `None`
+#   （判据 N21b 必须抓到）
+# ---------------------------------------------------------------------------
+mutate(u'M19 `pet_screen_box` 非法输入返 (0,0) 而不是 None',
+       'desk_doors',
+       '    if not (k > 0.0) or k != k:          # <=0 / NaN\n        return None',
+       '    if not (k > 0.0) or k != k:          # <=0 / NaN\n        return (0, 0)')
+
+# ---------------------------------------------------------------------------
+# M20 ★★ `save()` 与 `translate()` 的**顺序**倒过来（先 translate 后 save）
+#   ⇒ restore 会把 save 之前的变换恢复，等于没包住 ⇒ 判据 N22 的
+#     "save 必须在 translate 之前" 也该抓到。
+#   ⚠️ 这条是"序"的变异 —— 用它证明 N22 判的是**顺序**而不是"存在性"。
+# ---------------------------------------------------------------------------
+mutate(u'M20 save/translate 顺序颠倒（N22 判的是“序”不是“存在”）',
+       'scene_canvas',
+       '            p.save()\n            # ★ 第107轮：画面在画布内的居中偏移'
+       '（画布=整屏，画面=4:3 内接）。\n'
+       '            if self._offset_x or self._offset_y:\n'
+       '                p.translate(self._offset_x, self._offset_y)',
+       '            if self._offset_x or self._offset_y:\n'
+       '                p.translate(self._offset_x, self._offset_y)\n'
+       '            p.save()')
 
 # ---------------------------------------------------------------------------
 # 收尾：确认工作区真文件**一字未改**

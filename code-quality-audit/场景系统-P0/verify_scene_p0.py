@@ -712,12 +712,42 @@ ok('H10b 负控制：漏护栏的合成源码必须被判为 False（判据有�
 #   并保留"返回 list 类型"这条结构不变量。
 # ★★ 第99轮：期望值从 B6 的 `_DESK_WORLD_LETTERS` 派生，不另写一个魔数
 #   （同一件事只声明一次；否则加一扇门就要改两处，漏一处就是"看着在守其实守不到"）。
+# ★★★ 第112轮续改口径：桌面的 4 扇世界门**已从房间渲染层搬到屏幕层**
+#   （用户「放到屏幕边缘哦」→「不是，那个门你单独放在外面用呗」→「只桌面场景时，
+#     固定贴屏」）⇒ `desktop.json` 的 4 门全部 `enabled:false` ⇒
+#   `resolve_objects()`（= `visible_objects`，认 `enabled is False`）**必然返回 0 条**。
+#   ★★★ **本判据不许改成恒真的 "== 0"** —— 那会把鉴别力全丢掉。正确做法：
+#     H11 只守**结构不变量**（返回 list、能调不崩）；
+#     H11b 守**新的事实**（房间层 0 条 + 屏幕层恰好 `_H11_WANT` 扇、且贴屏幕物理边）。
 _H11_WANT = len(_DESK_WORLD_LETTERS)
 _desk_objs = _H.scene.resolve_objects((0, 0, 1920, 1080))
-ok('H11 resolve_objects() 是给 P1 渲染层的入口，现在就能调（desktop → %d 扇门）'
+ok('H11 resolve_objects() 是给 P1 渲染层的入口，现在就能调（返回 list，不崩）',
+   isinstance(_desk_objs, list),
+   'resolve_objects 未返回 list: %r' % (type(_desk_objs),))
+ok('H11a ★★★ 第112轮续：房间层**恰好 0 条**（4 门已改屏幕层绘制，防"又画一遍"）',
+   len(_desk_objs) == 0,
+   '房间层返回 %d 条（预期 0）：%r' % (len(_desk_objs), _desk_objs[:3]))
+
+# H11b ★★★ 鉴别力的**接棒者**：屏幕层（`desk_doors`）必须能算出 `_H11_WANT` 扇，
+#   且逐边贴到屏幕物理边。★ 这才是"门真的还在"的证据（H11a 的 0 条单独看没有鉴别力）。
+_H11B_OK = False
+_H11B_DETAIL = ''
+try:
+    _pk_dir = os.path.join(ROOT, 'ralsei_pet')
+    if _pk_dir not in sys.path:
+        sys.path.insert(0, _pk_dir)
+    from modules import desk_doors as _DD  # noqa: E402
+    _sz_map = {}
+    for _L in _DESK_WORLD_LETTERS:
+        _sz_map[_L] = (44, 56)      # 占位尺寸；plan 只关心"贴哪条边"，尺寸由真调用方给
+    _scr = _DD.plan_screen_doors(_sz_map, 1920, 1080)
+    _H11B_OK = (len(_scr) == _H11_WANT)
+    _H11B_DETAIL = 'plan_screen_doors → %r' % (_scr,)
+except Exception as _e:
+    _H11B_DETAIL = '异常 %r' % (_e,)
+ok('H11b ★★★ 第112轮续：屏幕层（`desk_doors`）能算出 %d 扇门（鉴别力接棒）'
    % _H11_WANT,
-   isinstance(_desk_objs, list) and len(_desk_objs) == _H11_WANT,
-   'got=%r' % (_desk_objs,))
+   _H11B_OK, _H11B_DETAIL)
 
 ok('H12 description() 与 SceneState.describe() 同源（AI 注入的唯一出口）',
    _H.scene.description() == _H._scene_state.describe() == '桌面',
