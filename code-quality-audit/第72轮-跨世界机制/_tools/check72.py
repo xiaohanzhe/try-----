@@ -180,7 +180,15 @@ check('B4 world_gate 里出现 roam_scope（本轮确实改了门控，不是只
 _i_roam = _wg_src.find('roam_scope != RoamScope.HOME')
 _i_ch = _wg_src.find('if not npc.chapters:')
 check('B5 跨作品分支排在 chapters 判空**之前**（顺序反了会给误导性理由码）',
-      0 <= _i_roam < _i_ch, 'roam@%d chapters@%d' % (_i_roam, _i_ch))
+      0 <= _i_roam < _i_ch,
+      # ★★ 第114轮：**不再回显 `roam@3370 chapters@3883` 这类绝对偏移**。
+      #   它们是"在第几个字符"——**随源码任何一处增删而变**：本轮我在
+      #   `world_gate` 上方加了 `CHAPTER_ALIASES` + 3 个纯函数（约 45 行），
+      #   这条判据就凭白产出一条**假 DIFF**（断言本身其实仍然成立）。
+      #   本判据要守的是**先后次序**，不是字符位置 ⇒ 改为只报"找没找到"。
+      #   与第107轮 `E8b`"不回显行号"的处置同源（铁律：判据禁回显随相变绝对值）。
+      '跨作品分支=%s｜chapters 判空=%s' % ('找到' if _i_roam >= 0 else '**缺失**',
+                                            '找到' if _i_ch >= 0 else '**缺失**'))
 
 # --------------------------------------------------------------------------
 print('=' * 74)

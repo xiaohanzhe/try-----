@@ -3349,6 +3349,21 @@ class RalseiPet(QMainWindow):
             _log.exception('差事看板建立失败（"派角色办事"不可用，其余照常）')
             self.npc_errand = None
 
+        # ★★ 第114轮：把**上次没办完**的差事读回来（`npc_errands.json`）。
+        #   ⚠️ 必须排在"建空看板"**之后**（替换它）—— 反过来会被空板覆盖（静默丢档），
+        #      这与上一段 `npc_roam` 的灌档顺序是同一条教训。
+        #   ★ **只在建板成功时**才读：建板失败已明确降级为"派角色办事不可用"，
+        #     此时把档读回来会让那个降级失效（读回来的板是 enabled 的）。
+        if self.npc_errand is not None:
+            _er = self._npc_errand_load()
+            if _er is not None:
+                # ★ 开关一律**继承当前**，不复活档里那个（上次可能是开着的，这次可能关了）。
+                _er.enabled = (bool(RalseiPet.NPC_ERRAND_ENABLED)
+                               and bool(RalseiPet.NPC_AUTONOMOUS_MOVE))
+                self.npc_errand = _er
+                _log.info('NPC 差事：读回 %d 条在办 / %d 条已办',
+                          len(_er), len(_er.done))
+
         # ---- ★★★ 第81轮：层4 存档 —— 把层1/2/3 的状态读回内存 ----
         # ★ 顺序很重要：**先有 `self.npc_roam`（上一段建的）**，再把书里那份驻留表
         #   灌回去 —— 反过来会让"读回来的驻留表"被随后新建的空表覆盖（静默丢档）。
@@ -4567,6 +4582,139 @@ class RalseiPet(QMainWindow):
 
     # ------------------------------------------------------ 层5 差事（§109.5）
 
+    def _npc_errand_world(self, dest_scene):
+        """差事目的地属于哪个世界 → `'light'` / `'dark'`（★ 判不出 ⇒ `'dark'`）。
+
+        ★★ 为什么要自己算一份，而不是直接用 `scene_system.world_of_scene()`
+        --------------------------------------------------------------
+        两者服务**不同的保守侧**，合并会出错：
+
+        · `world_of_scene()` 服务**道具系统**，要回答"是不是回到光世界了" ——
+          而"回到光世界"会**把暗世界道具变成垃圾** ⇒ 判不出时必须返回 `None`
+          （保守地**不触发**那次销毁）。它的 `'unknown'` 因此是个**显式状态**
+          （docstring 原话："未判定是一个显式状态，不是暗世界"）。
+        · 本函数服务**门控**，要回答"这个 NPC 能不能去那儿" ——
+          判不出时的保守侧是"**不许去**"，不是"当光世界放行"。
+
+        ★ 真正逼出第三条路的只有**迁入章**：`_worlds.json` 把
+          `oneshot` / `outertale` / `ut` / `uty` 的**全部**房间标成 `unknown`，
+          `meta.unknown_rooms` 的原文理由是「迁入章，明暗判定表未建
+          （如实标 unknown，见第77/80轮）」—— 那是**"我们还没判"**，
+          **不是**"它们是光世界"。
+
+        口径（本函数即真源）：
+          ① `overrides` 命中 ⇒ 用它（`desktop` → `light`）；
+          ② `rooms[chapter][room_id]` ∈ {light, dark} ⇒ 用它；
+          ③ 其余（`unknown` / 无登记 / 读不到）⇒ **归 `dark`**。
+
+        ★★★ 为什么 ③ 归 `dark` 而不是 `light`（这一条决定用户主用例能不能跑）
+        --------------------------------------------------------------------
+        · 用户主用例（§109.5 逐字）：「我让 ralsei 去 **oneshot** 里干什么事情，
+          **他能去**，干，然后产生结果」⇒ 派 Ralsei 去迁入章**必须能去**。
+        · 归 `light` ⇒ `world_gate` 的光世界分支对 Ralsei（纯暗世界居民）
+          要求球（`light_needs_bubble`）⇒ **当场封死那个主用例**。
+        · 归 `dark` ⇒ 走的正是"**别的**暗世界"那一段，而
+          「只有 ralsei 能自由在其他暗世界走」恰是既有口径（`free_dark_roam`）
+          ⇒ 与用户口径严丝合缝。
+        · 反向也自洽：`ut_*` / `hy_*` / `os_*` 归 `dark` 后，仍然只能
+          "回自己作品那侧"（`RoamScope.NON_DARK`），进 Deltarune 暗世界照样被拒。
+        """
+        cache = self.__dict__.get('_npc_errand_world_cache')
+        if cache is None:
+            cache = {}
+            self._npc_errand_world_cache = cache
+        if dest_scene in cache:
+            return cache[dest_scene]
+        w = self._npc_errand_world_uncached(dest_scene)
+        cache[dest_scene] = w
+        return w
+
+    @staticmethod
+    def _npc_errand_world_uncached(dest_scene):
+        """`_npc_errand_world` 的**无缓存**实现。
+
+        ★ 拆出来的理由：缓存包在调用侧，这里**每次真读盘** ⇒ 判据可以直接拿它
+          验"到底读到了什么"，不必先污染缓存、也不必猜缓存命中与否。
+        """
+        if not isinstance(dest_scene, str) or not dest_scene:
+            return npc_system_mod.WORLD_DARK
+        try:
+            worlds = scene_system_mod.load_worlds() or {}
+            ov = worlds.get('overrides') or {}
+            if dest_scene in ov and ov[dest_scene] in ('light', 'dark'):
+                return ov[dest_scene]
+            idx = scene_system_mod.load_index() or {}
+            entry = (idx.get('scenes') or {}).get(dest_scene)
+            if isinstance(entry, dict):
+                ch = entry.get('chapter_id')
+                rid = entry.get('original_room_id')
+                if ch and rid is not None:
+                    rec = (worlds.get('rooms') or {}).get(ch)
+                    if isinstance(rec, dict):
+                        w = rec.get(str(rid))
+                        if w in ('light', 'dark'):
+                            return w
+        except Exception as e:
+            _log.debug('差事目的地世界判定失败（按暗世界处理）: %s', e)
+        return npc_system_mod.WORLD_DARK
+
+    def _npc_errand_gate(self, npc_id, dest_scene):
+        """**差事门控** → `(ok, 说明)`。★ 唯一调用点两处：`assign_errand`（派发时）
+        与 `_npc_errand_tick`（每拍压位置之前）。
+
+        用户口径（第114轮，逐字）：
+          「**被派不可进入原本不可进入的世界**，比如暗之民不能在没有球的情况下
+             进光世界」
+
+        ★★ 判据**只有一份** = `npc_system.world_gate` —— 本函数只负责喂它三样：
+          ① 这个 NPC（注册表里没有 ⇒ 直接拒，并说人话）；
+          ② 目的地的**世界**（`_npc_errand_world`，口径见那里的 docstring）；
+          ③ `carried` = 他此刻**在不在球里**（`_npc_carried_ids`，**只读状态**）。
+
+        ★ 为什么拒绝文案直接用 `g.detail` 而不另写一张"理由码 → 人话"映射表：
+          `world_gate` 的每个拒绝分支**已经**产出中文人话
+          （如"X 是暗世界居民，脱离暗世界必须被装进球"）⇒ 再映射一次就是
+          "同一份规则两处算"，正是本项目最贵的坑（改一处忘一处 ⇒ 两个真相）。
+        """
+        reg = getattr(self, 'npc_registry', None)
+        npc = reg.get(npc_id) if reg is not None else None
+        if npc is None:
+            return False, '注册表里查不到这个人'
+        world = self._npc_errand_world(dest_scene)
+        try:
+            carried = npc_id in (self._npc_carried_ids() or [])
+        except Exception:
+            carried = False
+        try:
+            g = npc_system_mod.world_gate(npc, world, scene_id=dest_scene,
+                                          carried=carried)
+        except Exception as e:
+            _log.debug('差事门控判定异常（按拒处理）: %s', e)
+            return False, '门控判定失败'
+        if g.ok:
+            return True, g.detail or ''
+        return False, (g.detail or '他去不了那里')
+
+    def _npc_errand_note(self, npc_id, text):
+        """把一句**差事相关的话**落进该 NPC 的记忆（派发被拒 / 中途被拦）。
+
+        ★ 为什么不复用 `_npc_errand_commit`：后者的入参是 `Errand`
+          （`done` 那一刻**定格的结果**），而这里要写的是**没有 `Errand`** 的
+          那两种情况（派发当场被拒 / 半路作废）。两者都做 `remember + save`，
+          但**触发点与数据形状不同** —— 且 `check113 E6` 锁的正是
+          `_npc_errand_commit` 体内的 `remember`/`save` 调用，合并会让那条锁失效。
+        ★ 与 `_npc_errand_commit` 同规：`MiniMemory` 非线程安全 ⇒ 只在主线程调
+          （两个调用点都在主循环里）；失败只记 debug，绝不影响桌宠运行。
+        """
+        mem = getattr(self, 'npc_memory', None)
+        if mem is None or not text:
+            return
+        try:
+            mem.remember(npc_id, '（%s）' % text, who=npc_id)
+            mem.save(npc_id)
+        except Exception as e:
+            _log.debug('差事写记忆失败（已忽略）: %s', e)
+
     def assign_errand(self, npc_id, dest_scene, what, **kw):
         """派**任意角色**去某场景办一件事（§109.5 要点 3 的**唯一入口**）。
 
@@ -4589,6 +4737,23 @@ class RalseiPet(QMainWindow):
         board = getattr(self, 'npc_errand', None)
         if board is None:
             return None
+        # ★★★ 第114轮：**派发的当场**就过世界门控。
+        #
+        # 用户口径（逐字）：「**被派不可进入原本不可进入的世界**，比如暗之民
+        # 不能在没有球的情况下进光世界」⇒ 差事**继承**门控，被派不是特权。
+        #
+        # ★ 为什么放在这里（而不是只放在 `_npc_errand_tick`）：
+        #   放这儿 ⇒ 用户在**点头那一刻**就知道"他去不了"，`assign_errand`
+        #   当场返回 `None`；只放 tick ⇒ 他会先"上路"，90 秒后才被悄悄拦下，
+        #   用户看到的是"他明明答应了我，然后什么都没发生"。
+        #   ⚠️ tick 里**仍然要判**（见那里的注释：`carried` 与场景归属会变），
+        #   两处调的是**同一个** `_npc_errand_gate` ⇒ 规则只有一份。
+        ok, why = self._npc_errand_gate(npc_id, dest_scene)
+        if not ok:
+            _log.info('差事被门控拒绝：%s → %s（%s）', npc_id, dest_scene, why)
+            self._npc_errand_note(npc_id,
+                                  '我本来要去 %s，但去不了 —— %s' % (dest_scene, why))
+            return None
         now = kw.pop('now', None)
         if now is None:
             now = time.time()
@@ -4597,6 +4762,293 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug('派差事失败（已忽略）: %s', e)
             return None
+
+    # ------------------------------------------------ 层5 派发入口（第114轮）
+
+    #: ★ 第114轮：用户嘴里"那个地方" → **场景前缀**。
+    #:   ★ 键只有**原作作品名 / 电脑桌面** —— 这是"一切根据原作"的合法演绎，
+    #:     **不是台词**。⚠️ 别在这儿塞"苏西家的客厅"这类具体房间名：具体房间
+    #:     由 `_index.json`（场景表）决定，两处都写就是"同一件事两个真相"。
+    #:   ★ 用**元组**而不是字典：要按长度降序匹配，否则 `oneshot` 会被 `one` 吃掉。
+    #:   ⚠️ 短名（`ut` / `niko`）**必须**配词边界匹配（见 `_errand_parse_intent`），
+    #:     否则 `but` / `put` / `niko123` 都会被当成地名。
+    ERRAND_PLACE_ALIASES = (
+        ('one shot', 'oneshot'), ('oneshot', 'oneshot'),
+        ('尼科的家', 'oneshot'), ('niko的家', 'oneshot'),
+        ('尼科', 'oneshot'), ('niko', 'oneshot'),
+        ('undertale', 'ut'), ('传说之下', 'ut'), ('ut', 'ut'),
+        ('outertale', 'outertale'), ('域外', 'outertale'),
+        ('deltarune', 'ch1'), ('三角符文', 'ch1'),
+        ('电脑桌面', 'desktop'), ('desktop', 'desktop'), ('桌面', 'desktop'),
+    )
+
+    #: "这句话在不在派活"的**意图信号词** —— 这是判据，不是台词。
+    #: ⚠️ 刻意**不含**"要"（"我要吃"会被误判成派活），也**不含**"去"
+    #:   （"你去哪了"会被误判成派活）。
+    ERRAND_INTENT_VERBS = ('让', '派', '叫', '请', '麻烦')
+
+    def _errand_index(self):
+        """`_index.json`（场景表）—— **进程内只读一次**。
+
+        ★ 为什么缓存：`load_index()` 每次都会读盘并展平 2166 行场景登记，
+          而派活判据**每说一句话**都会用到 ⇒ 不缓存就是"每句闲聊读一次 JSON"。
+        """
+        cache = self.__dict__.get('_errand_index_cache')
+        if cache is None:
+            try:
+                cache = scene_system_mod.load_index() or {}
+            except Exception as e:
+                _log.debug('场景索引读取失败（派活地点解析将退化）: %s', e)
+                cache = {}
+            self._errand_index_cache = cache
+        return cache
+
+    def _errand_reachable(self):
+        """当前场景可达的目的地（**复用** `_npc_roam_reachable`，不另算一份）。"""
+        try:
+            return [s for s in (self._npc_roam_reachable() or ()) if s]
+        except Exception:
+            return []
+
+    def _errand_scene_in(self, prefix):
+        """**某个场景前缀（章 / 作品）具体去哪一间** → `scene_id`（认不出 ⇒ `None`）。
+
+        两条来源，**顺序有意义**：
+          ① 当前场景**可达**的目的地 —— 优先用它，因为可达列表就是"门"，
+             而**人也是从门走的**（与第109轮「当原作门逐门寻路（禁瞬移）」同源）；
+          ② 兜底 = 场景索引里该前缀的**第一间**（`sorted` ⇒ 可复现，
+             不依赖 dict 的遍历顺序）。
+        """
+        for sid in self._errand_reachable():
+            if npc_system_mod.scene_chapter(sid) == prefix:
+                return sid
+        try:
+            cands = sorted(s for s in (self._errand_index().get('scenes') or {})
+                           if npc_system_mod.scene_chapter(s) == prefix)
+        except Exception:
+            cands = []
+        return cands[0] if cands else None
+
+    def _errand_place_label(self, scene_id):
+        """给**人（模型）看**的地点名（`章·区域`）；查不到 ⇒ 原样回 `scene_id`。
+
+        ★ 为什么不直接把 `scene_id` 塞进提示词：`ch1.hometown.town_mid` 对模型
+          是个"无关符号"，而「三角符文·家乡」才是它认识的东西 —— 提示词说的
+          得是**人话**，否则模型只会照抄那串 id。
+        """
+        try:
+            entry = (self._errand_index().get('scenes') or {}).get(scene_id)
+            if isinstance(entry, dict):
+                c = entry.get('chapter_name') or entry.get('chapter_id')
+                a = entry.get('area_name') or entry.get('area_id')
+                if c and a:
+                    return '%s·%s' % (c, a)
+                if c:
+                    return str(c)
+        except Exception:
+            pass
+        return scene_id
+
+    @staticmethod
+    def _errand_strip_leads(s):
+        """剥掉"帮我 / 帮忙 / 帮 / 去 / 到 / 往"这类**引导词**（最多剥 3 层）。"""
+        s = (s or '').strip()
+        for _ in range(3):
+            before = s
+            for lead in ('帮我', '帮忙', '帮', '去', '到', '往'):
+                if s.startswith(lead):
+                    s = s[len(lead):]
+                    break
+            s = s.strip().lstrip('，,。.、:：!！?？ ').strip()
+            if s == before:
+                break
+        return s
+
+    def _errand_parse_intent(self, text):
+        """「让 X 去 Y 办事」→ `(npc_id, scene_id, 事)`；**不是派活 ⇒ `None`**。
+
+        ★ 五步**缺一不可** —— 宁可漏判，不可误判：
+          漏判只是"这句话被当普通聊天"（无害）；误判会让一句闲聊变成
+          "某人**真的**跑出去了"（有害，而且用户看不出是自己哪句话触发的）。
+          ① 句子里有意图词（`ERRAND_INTENT_VERBS`）；
+          ② 句子里有一个**登记过的角色名**（`self._npc_aliases`：长的优先，
+             且要求**词边界** —— `susiex` 不算 `susie`）；
+          ③ 句子里有一个**地点**（`ERRAND_PLACE_ALIASES`，长的优先）；
+          ④ 那个角色**不是"正在跟你说话的人"** —— 人类不会派自己出去；
+          ⑤ 角色名与地点名**区间不重叠**（否则「派 niko 去 niko 家」会被读成
+             「派 niko 去 niko」）。
+        """
+        if not isinstance(text, str) or not text.strip():
+            return None
+        low = text.lower()
+        if not any(v in low for v in RalseiPet.ERRAND_INTENT_VERBS):
+            return None
+        # ---- ③ 地点（最长优先；并列取靠前）----
+        # ★ **必须配词边界**：短名 `ut` / `niko` 不设边界就会命中 `but` / `put`
+        #   / `niko123`。判法与角色名同一条（前后不能是 ASCII 字母数字；
+        #   中文别名天然通过）。
+        ph = []
+        for alias, prefix in RalseiPet.ERRAND_PLACE_ALIASES:
+            i = low.find(alias)
+            while i >= 0:
+                j = i + len(alias)
+                b = low[i - 1] if i > 0 else ''
+                a = low[j] if j < len(low) else ''
+                if not ((b.isascii() and b.isalnum())
+                        or (a.isascii() and a.isalnum())):
+                    ph.append((len(alias), i, prefix))
+                    break
+                i = low.find(alias, i + 1)
+        if not ph:
+            return None
+        ph.sort(key=lambda t: (-t[0], t[1]))
+        alen, pi, prefix = ph[0]
+        pspan = (pi, pi + alen)
+        # ---- ② 角色名 ----
+        best = None
+        for alias, nid in (self._npc_aliases or {}).items():
+            start = low.find(alias)
+            while start >= 0:
+                end = start + len(alias)
+                if not (end <= pspan[0] or start >= pspan[1]):     # ⑤ 不压地点
+                    start = low.find(alias, start + 1)
+                    continue
+                b = low[start - 1] if start > 0 else ''
+                a = low[end] if end < len(low) else ''
+                bad_edge = ((b.isascii() and b.isalnum())
+                            or (a.isascii() and a.isalnum()))
+                if not bad_edge:
+                    cand = (len(alias), start, nid)
+                    if (best is None or cand[0] > best[0]
+                            or (cand[0] == best[0] and cand[1] < best[1])):
+                        best = cand
+                start = low.find(alias, start + 1)
+        if best is None:
+            return None
+        target_id = best[2]
+        # ---- ④ 不能派自己 ----
+        if target_id == (self._npc_talking or 'ralsei'):
+            return None
+        # ---- 目的地 ----
+        dest = self._errand_scene_in(prefix)
+        if not dest:
+            return None
+        # ---- 事（地点之后剩下的那截）----
+        what = RalseiPet._errand_strip_leads(text[pspan[1]:])
+        if not what:
+            what = '去看看'
+        return target_id, dest, what
+
+    def handle_errand_command(self, text):
+        """★★★ 第114轮：**派发入口** —— 用户说「让 X 去 Y 办事」时走这里。
+
+        返回 `True` = 已识别为派活（并且**已经回应了用户**）；
+        `False` = 不是派活 ⇒ 让调用方继续走正常对话（**零行为变化**）。
+
+        ★★ 两条用户口径（逐字）在这里怎么落地
+        -------------------------------------
+        · 「派发入口这类的我也不懂，**按照人类的逻辑来就好**」
+          ⇒ **人类逻辑** = 听到请求 → 答应 → 对方出发 → 回来告诉你结果。
+            所以这里只做四件事，各司其职：
+              ① **识别** = `_errand_parse_intent`（确定性，不猜）；
+              ② **问路** = `_npc_errand_gate`（★ 与 `assign_errand` **同一条门控**）；
+              ③ **派**   = `assign_errand()`（层5 的**唯一**入口）；
+              ④ **回应** = `_errand_ack`（**交给模型**）。
+        · 「**没有硬性对话，用AI自己生成即可**」
+          ⇒ ★★ 本方法里**一句给用户看的台词都不写**：代码只保证"识别得对、
+            路走得通、派得出去"，**说什么**由模型按发起者的人设生成。
+            ⚠️ 唯一的固定文本是**送给模型的系统提示**（不是台词），且
+               `remember=False` ⇒ **不进任何人的记忆**。
+
+        ★ 为什么这个入口挂在 `dialogue_ui.send_message` 的**点名之前**：
+          「让苏西去…」里可能同时出现别的角色名；先判派活就不会被误当成点名。
+        """
+        if not RalseiPet.NPC_ERRAND_ENABLED:
+            return False
+        if getattr(self, 'npc_errand', None) is None:
+            return False
+        intent = self._errand_parse_intent(text)
+        if intent is None:
+            return False
+        target_id, dest_scene, what = intent
+        asker = self._npc_talking or 'ralsei'
+        # ② 问路（**与派发同一条门控**：能被派 ≠ 能去）
+        ok, why = self._npc_errand_gate(target_id, dest_scene)
+        if not ok:
+            # ★★★ 第114轮补（**真缺口**，`rec114 B7` 实跑抓到）：**本入口被拒也要留痕**。
+            #
+            # 为什么必须在这里补一次：本入口走的是"**先问路、后派人**" —— 门控不合格
+            # 就**根本不会**调到 `assign_errand`，而"去不了"那句记忆原本只写在
+            # `assign_errand` 内部那一支 ⇒ 从**对话层**被拒的人**一个字都不留**：
+            # 用户过两天问他"上次让你去的地方怎么样了"，他只会茫然
+            # （他压根不记得有过这回事）—— 而"办不成也要留下结果"正是本轮口径。
+            #
+            # ⚠️ 会不会重复落一条：不会。走到这个分支 ⇒ `assign_errand` **没被调用过**
+            #    ⇒ 它内部那支不可能已经落过（两处**互斥**，同一件事只留一条记忆）。
+            self._npc_errand_note(target_id,
+                                  '我本来要去 %s，但去不了 —— %s' % (dest_scene, why))
+        elif self.assign_errand(target_id, dest_scene, what) is None:
+            ok = False
+            why = '他没能接上这趟差事'
+        _log.info('派活：%s 让 %s 去 %s 办「%s」 ⇒ %s',
+                  asker, target_id, dest_scene, what,
+                  '已派出' if ok else ('去不了（%s）' % why))
+        # ④ 回应 —— **完全交给模型**（用发起者的人设）
+        self._errand_ack(asker, target_id, dest_scene, what, ok, why)
+        return True
+
+    def _errand_ack(self, asker_id, target_id, dest_scene, what, ok, why):
+        """让人（模型）自己回应这次派活。★ **台词一个字都不写死**。
+
+        ★ 两条线（Ralsei 与 NPC 走的是**两套 system prompt**）：
+          · 发起者是 NPC（登记过 + 装了人设）⇒ `speaker=asker_id`；
+          · 否则 ⇒ `speaker=None`（Ralsei 主链路，用 `assets/ralsei_persona.md`）。
+            ⚠️ **不能**硬传 `speaker='ralsei'`：`npc_persona_of('ralsei')` 拿不到人设
+              （它只在 `assets/npc/persona/` 里找，而 Ralsei 的真源是
+              `assets/ralsei_persona.md`）⇒ 那条链路会**拒绝开口**。
+              ★ 这是本轮勘察时抓到的一个真陷阱（76 个 persona 文件里没有 ralsei）。
+        ★ `remember=False`：这条提示是**协议**，不是"谁说过的话" ⇒ 不进记忆
+          （用户的原话早已由各自的链路记下，重复记一次反而会污染上下文）。
+        """
+        if not self._npc_ai_available():
+            _log.info('派活：模型不可用 ⇒ 不发确认语（差事本身照常进行）')
+            return
+        who = self.npc_label(target_id) or target_id
+        where = self._errand_place_label(dest_scene)
+        if ok:
+            brief = ('（系统提示，用户看不到）用户刚才让你派人办事：你已经答应，'
+                     '让「%s」去「%s」办「%s」，他已经在路上了。'
+                     '请用你自己的语气简短地回应用户（一到两句；'
+                     '**不要**提到这条提示，也不要复述本句）。' % (who, where, what))
+        else:
+            brief = ('（系统提示，用户看不到）用户刚才让你派人办事：你想让'
+                     '「%s」去「%s」办「%s」，但**他去不了**（原因：%s）。'
+                     '请用你自己的语气简短地告诉用户这件事（一到两句；'
+                     '**不要**提到这条提示，不要复述本句，不要自称系统）。'
+                     % (who, where, what, why))
+        speaker = asker_id
+        if speaker == 'ralsei' or not self.npc_persona_of(speaker):
+            speaker = None
+        try:
+            self.chat_with_ai(brief,
+                              lambda r: self._errand_show_reply(asker_id, r),
+                              None, speaker=speaker, remember=False,
+                              model=(self._npc_model(asker_id) if speaker else None))
+        except Exception as e:
+            _log.debug('派活确认语发起失败（已忽略）: %s', e)
+
+    def _errand_show_reply(self, asker_id, reply):
+        """把模型的回应显示出来 —— **谁答的就显示成谁说的**（不串味）。"""
+        if not reply:
+            return
+        try:
+            ui = getattr(self, 'dialogue_ui', None)
+            if ui is None:
+                return
+            ui.add_dialogue(asker_id, reply, 'normal')
+            ui.show_dialogue()
+        except Exception as e:
+            _log.debug('派活回应显示失败（已忽略）: %s', e)
 
     def _npc_errand_tick(self, now=None):
         """推进差事一节拍。→ `{'arrived': [...], 'finished': [...]}`。
@@ -4629,13 +5081,37 @@ class RalseiPet(QMainWindow):
             touched = False
             # ① 在办的人 ⇒ **压在目的地上**。★ 每拍都压（而不是只在 `arrived` 那拍）：
             #    因为 `_npc_roam_tick` 可能刚把他摇去别处 —— 被派出的人**优先**。
+            #
+            # ★★★ 第114轮：压位置**之前**先过**世界门控**（用户口径「被派不可
+            #   进入原本不可进入的世界」）。★ 为什么**每拍**都重判、而不是
+            #   派发时判一次就够 —— 出发时合法的两件事都会中途变：
+            #     · `carried`（在不在球里）：用户把球摘了 ⇒ 原来能去的现在不能；
+            #     · 他自己的场景归属：重建身体 / 别的差事都可能把他重新安置。
+            #   两处（派发 + 这里）调的是**同一个** `_npc_errand_gate` ⇒ 规则只有一份。
+            dropped = []
             for nid, dest in board.working_positions():
+                _ok, _why = self._npc_errand_gate(nid, dest)
+                if not _ok:
+                    # ★ **作废**这条差事，而不是"这一拍先跳过"：留在表里的话，
+                    #   `working_positions()` 会**每拍**把他压向一个进不去的场景
+                    #   ⇒ 他永远回不了家，也不再参与自主生活。
+                    board.abort(nid)
+                    dropped.append((nid, dest, _why))
+                    continue
                 cur = roam.get(nid)
                 if cur is not None and getattr(cur, 'scene', None) == dest:
                     continue          # 已经压在目的地 ⇒ 不重复写（省盘、省无谓事件）
                 _e = board.working_of(nid)
                 roam.put(nid, dest, now,
                          reason=(_e.reason() if _e is not None else 'errand'))
+                touched = True
+            # ①·5 被门控拦下的 ⇒ 落一句「去不了」。
+            #   ★ 「办不成」也是一种结果 —— 用户口径要的是"产生结果"，
+            #     而"他去不了"正是这件事的结果；静默丢弃会让他"好像没这回事"。
+            for nid, dest, _why in dropped:
+                _log.info('差事中途被门控拦下：%s → %s（%s）', nid, dest, _why)
+                self._npc_errand_note(
+                    nid, '我本来要去 %s，但去不了 —— %s' % (dest, _why))
                 touched = True
             # ② 办完的 ⇒ **撤覆盖**（回落静态归属 = 回家）+ 结果落进他的记忆。
             for nid, err in (out.get('finished') or ()):
@@ -4646,6 +5122,9 @@ class RalseiPet(QMainWindow):
                 # ★ 位置变了 ⇒ 重建**当前场景**的身体（否则"人到了、画还在旧场景"）。
                 self._npc_seed_bodies(self._npc_scene_id())
                 self._npc_plan_save()
+                # ★★ 第114轮：差事也落盘（自己的档 = `npc_errands.json`）。
+                #    与生活档案分开两本的理由见 `npc_errand.FILENAME` 的注释。
+                self._npc_errand_save()
         except Exception as e:
             _log.debug('差事推进异常（本节拍跳过）: %s', e)
             return {'arrived': [], 'finished': []}
@@ -4713,6 +5192,86 @@ class RalseiPet(QMainWindow):
             ok = False
         if ok:
             self._npc_plan_last_save = now
+        return ok
+
+    # ------------------------------------------------ 层5 差事落盘（第114轮）
+
+    def _npc_errand_file(self):
+        """差事落盘路径（`data_store` 唯一入口；取不到 ⇒ `None` = 退内存态）。
+
+        ⚠️ 与 `_npc_plan_file()` / `_ghost_state_path()` 同一条纪律：
+          **不在底层模块里 import data_store**（初始化环，本项目栽过 4 次），
+          路径一律由**调用方注入**，这里只当那个调用方。
+
+        ★ 文件名真源 = `npc_errand.FILENAME`（`'npc_errands.json'`）。
+        ★★ 为什么**不与生活档案（`npc_life.json`）合用一本**：见那个常量的注释 ——
+          `npc_plan_store.Book` 的顶层形状被 `check81 D4~D7` 四条断言锁死，且
+          `Book.from_dict` 只认 `schema_version == 1` ⇒ 往里加键会让**老档案整本
+          被判版本不符**（丢的是驻留表与"昨晚睡哪"，代价远大于差事本身）。
+        """
+        try:
+            import data_store
+            return data_store.app_file(npc_errand_mod.FILENAME)
+        except Exception as e:
+            _log.debug('差事落盘路径不可用（退内存态）: %s', e)
+            return None
+
+    def _npc_errand_load(self):
+        """启动时把差事读回来 → `ErrandBoard`（读不到 / 读坏 ⇒ `None` = 退空看板）。
+
+        ★ 读法照 `_ghost_load()`：标准库 `io` / `json` 在**函数内** import
+          （`main` 顶层没有 `json`，这是本文件既有惯例）。
+        ★ `ErrandBoard.from_dict` 自己保证"坏数据**不半成品还原**"
+          （缺 `start` / `arrive_at` / `finish_at` 任一 ⇒ 丢那一条）——
+          宁可少一条"出门"，也不要"某人被永远压在某个场景上回不了家"。
+        """
+        path = self._npc_errand_file()
+        self._npc_errand_path = path
+        if not path:
+            return None
+        try:
+            import io
+            import json
+            import os
+            if not os.path.isfile(path):
+                return None
+            with io.open(path, encoding='utf-8') as fh:
+                raw = json.load(fh)
+        except Exception as e:
+            _log.debug('差事读盘失败（退空看板）: %s', e)
+            return None
+        try:
+            return npc_errand_mod.ErrandBoard.from_dict(raw)
+        except Exception as e:
+            _log.debug('差事档结构不符（退空看板）: %s', e)
+            return None
+
+    def _npc_errand_save(self, force=False):
+        """把差事看板写回盘 → `bool`。**绝不抛**（与 `_ghost_save` / `_npc_plan_save` 同规）。
+
+        ★ 节流共用 `NPC_PLAN_SAVE_EVERY`（120s）：两者都是"世界**真**变了才值得
+          写一次"的同类事件，不为它另立常量（少一处可调的重复真源）。
+        ★ 写**复用** `npc_plan_store.save()` —— 它只要求对方有 `to_dict()`，而
+          `ErrandBoard.to_dict()` 正好满足（`{enabled, active, done}`），
+          且它自带原子写（`.tmp` + `os.replace`）。
+        ⚠️ 读**不能**复用 `npc_plan_store.load()`：那条路走 `Book.from_dict`，
+           它只认 `schema_version == 1` ⇒ 会把差事档判成"版本不符"、返回空书。
+        """
+        board = getattr(self, 'npc_errand', None)
+        path = getattr(self, '_npc_errand_path', None)
+        if board is None or not path:
+            return False
+        now = time.time()
+        last = getattr(self, '_npc_errand_last_save', 0.0) or 0.0
+        if not force and (now - last) < RalseiPet.NPC_PLAN_SAVE_EVERY:
+            return False
+        try:
+            ok = bool(npc_plan_store_mod.save(path, board))
+        except Exception as e:
+            _log.debug('差事落盘失败（已忽略）: %s', e)
+            ok = False
+        if ok:
+            self._npc_errand_last_save = now
         return ok
 
     def _npc_roam_roster(self):

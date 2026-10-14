@@ -1,0 +1,182 @@
+=== _routes.json (C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\scenes\_routes.json) ===
+顶层键: ['_fallback', 'meta', 'routes', 'schema_version']
+  schema_version: 1
+  meta: dict(8) keys=['note', 'how_it_works', 'rule_fields', 'source_of_truth', 'mechanism', 'coverage_policy', 'critical_warning_priority_beats_score', 'oneshot_note']
+  routes: list(867)
+      {'to': 'ch1.card_castle.cc_rudinn', 'priority': 110, 'reason': '原作连接：从 纸牌城堡·一层 的 A 门离开，落到 纸牌城堡·rudinn 的 A 落点（房间数组下标 +1）。', 'when_scene': 'ch1.card_castle.card_castle_1f', 'when_door': 'A', '_original': {'chapter': 'ch1', 'door_letter': 'A', 'room_delta': 1, 'src_room_name': 'room_cc_1f', 'dst_room_name': 'room_cc_rudinn'}}
+      {'to': 'ch1.card_castle.cc_entrance', 'priority': 111, 'reason': '原作连接：从 纸牌城堡·一层 的 B 门离开，落到 纸牌城堡·entrance 的 B 落点（房间数组下标 -1）。', 'when_scene': 'ch1.card_castle.card_castle_1f', 'when_door': 'B', '_original': {'chapter': 'ch1', 'door_letter': 'B', 'room_delta': -1, 'src_room_name': 'room_cc_1f', 'dst_room_name': 'room_cc_entrance'}}
+      {'to': 'ch1.card_castle.cc_2f', 'priority': 112, 'reason': '原作连接：从 纸牌城堡·一层 的 C 门离开，落到 纸牌城堡·2f 的 C 落点（房间数组下标 +2）。', 'when_scene': 'ch1.card_castle.card_castle_1f', 'when_door': 'C', '_original': {'chapter': 'ch1', 'door_letter': 'C', 'room_delta': 2, 'src_room_name': 'room_cc_1f', 'dst_room_name': 'room_cc_2f'}}
+      {'to': 'ch1.card_castle.cc_lancer', 'priority': 118, 'reason': '原作连接：从 纸牌城堡·五层 的 A 门离开，落到 纸牌城堡·lancer 的 A 落点（房间数组下标 +1）。', 'when_scene': 'ch1.card_castle.card_castle_5f', 'when_door': 'A', '_original': {'chapter': 'ch1', 'door_letter': 'A', 'room_delta': 1, 'src_room_name': 'room_cc_5f', 'dst_room_name': 'room_cc_lancer'}}
+      {'to': 'ch1.card_castle.cc_6f', 'priority': 119, 'reason': '原作连接：从 纸牌城堡·五层 的 C 门离开，落到 纸牌城堡·6f 的 C 落点（房间数组下标 +2）。', 'when_scene': 'ch1.card_castle.card_castle_5f', 'when_door': 'C', '_original': {'chapter': 'ch1', 'door_letter': 'C', 'room_delta': 2, 'src_room_name': 'room_cc_5f', 'dst_room_name': 'room_cc_6f'}}
+      {'to': 'ch1.card_castle.cc_prison2', 'priority': 126, 'reason': '原作连接：从 纸牌城堡·牢房 的 A 门离开，落到 纸牌城堡·prison2 的 A 落点（房间数组下标 +1）。', 'when_scene': 'ch1.card_castle.card_castle_prison', 'when_door': 'A', '_original': {'chapter': 'ch1', 'door_letter': 'A', 'room_delta': 1, 'src_room_name': 'room_cc_prison_to_elevator', 'dst_room_name': 'room_cc_prison2'}}
+  _fallback: dict(2) keys=['to', 'reason']
+
+=== _worlds.json (C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\scenes\_worlds.json) ===
+顶层键: ['areas', 'meta', 'overrides', 'rooms', 'schema_version']
+
+--- meta ---
+{
+ "generator": "code-quality-audit/第48轮-道具与背包系统/_tools/gen_worlds48.py",
+ "light_areas": [
+  "kris_room",
+  "home",
+  "hometown",
+  "light_world",
+  "noelles_house"
+ ],
+ "original_judgement": "global.darkzone：0=光明世界 / 1=暗世界（第46轮实证）",
+ "overrides_why": "desktop 是我们自建场景，不对应原作房间；口径见产品记忆 §43.6。",
+ "rule": "房间名暗前缀优先（防 room_dw_mansion_krisroom 误判）→ 光前缀 → 光区域表 → 否则暗前缀→暗",
+ "source": "code-quality-audit/第38轮-场景系统审查/_evidence/房间表_全量.json（五章全量房间表）",
+ "unknown_rooms": [
+  {
+   "area": null,
+   "chapter": "ch1",
+   "resource": "room_myroom_dark",
+   "room_id": 136,
+   "why": "无区域、无可辨房间名"
+  },
+  {
+   "area": "hometown",
+   "chapter": "ch3",
+   "resource": "room_town_krisyard_dark",
+   "room_id": 110,
+   "why": "光世界前缀 room_town_ 但名字含 dark（疑为夜间变体），需 darkzone 实证"
+  },
+  {
+   "area": "home",
+   "chapter": "ch4",
+   "resource": "room_krisroom_dark",
+   "room_id": 159,
+   "why": "光世界前缀 room_krisroom 但名字含 dark（疑为夜间变体），需 darkzone 实证"
+  },
+  {
+   "area": "hometown",
+   "chapter": "ch4",
+   "resource": "room_town_krisyard_dark",
+   "room_id": 166,
+   "why": "光世界前缀 room_town_ 但名字含 dark（疑为夜间变体），需 darkzone 实证"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 1,
+   "area": null,
+   "resource": "INIT",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 2,
+   "area": null,
+   "resource": "Start",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 3,
+   "area": null,
+   "resource": "Bathroom",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 4,
+   "area": null,
+   "resource": "Livingroom",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 5,
+   "area": null,
+   "resource": "Basement Stairs",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 6,
+   "area": null,
+   "resource": "IGNORE",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 7,
+   "area": null,
+   "resource": "Blue",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 8,
+   "area": null,
+   "resource": "Green",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 9,
+   "area": null,
+   "resource": "Red sky",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 10,
+   "area": null,
+   "resource": "Tower",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 11,
+   "area": null,
+   "resource": "DEBUG",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 12,
+   "area": null,
+   "resource": "Entrance",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 13,
+   "area": null,
+   "resource": "terminal room",
+   "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"
+  },
+  {
+   "chapter": "oneshot",
+   "room_id": 14,
+   "area": null,
+
+
+--- areas（逐章）---
+  ch1            n=11    {'dark': 8, 'light': 3}
+  ch2            n=12    {'dark': 8, 'light': 4}
+  ch3            n=17    {'dark': 13, 'light': 4}
+  ch4            n=15    {'dark': 10, 'light': 5}
+  ch5            n=15    {'dark': 10, 'light': 5}
+  oneshot        n=6     {'unknown': 6}
+  outertale      n=7     {'unknown': 7}
+  ut             n=1     {'unknown': 1}
+  uty            n=1     {'unknown': 1}
+
+--- rooms（逐章取值分布）---
+  ch1            n=134   {'light': 32, 'dark': 101, 'unknown': 1}
+  ch2            n=246   {'dark': 209, 'light': 37}
+  ch3            n=194   {'dark': 155, 'unknown': 1, 'light': 38}
+  ch4            n=268   {'dark': 210, 'light': 56, 'unknown': 2}
+  ch5            n=208   {'dark': 165, 'light': 43}
+  oneshot        n=263   {'unknown': 263}
+       前 12 条: [('1', 'unknown'), ('10', 'unknown'), ('100', 'unknown'), ('101', 'unknown'), ('102', 'unknown'), ('103', 'unknown'), ('104', 'unknown'), ('105', 'unknown'), ('106', 'unknown'), ('107', 'unknown'), ('108', 'unknown'), ('109', 'unknown')]
+  outertale      n=244   {'unknown': 244}
+  ut             n=358   {'unknown': 358}
+       前 12 条: [('0', 'unknown'), ('1', 'unknown'), ('10', 'unknown'), ('100', 'unknown'), ('101', 'unknown'), ('102', 'unknown'), ('103', 'unknown'), ('104', 'unknown'), ('105', 'unknown'), ('106', 'unknown'), ('107', 'unknown'), ('108', 'unknown')]
+  uty            n=287   {'unknown': 287}
+
+--- 未判定清单（meta 里的，原文照抄）---
+  unknown_rooms = [{"area": null, "chapter": "ch1", "resource": "room_myroom_dark", "room_id": 136, "why": "无区域、无可辨房间名"}, {"area": "hometown", "chapter": "ch3", "resource": "room_town_krisyard_dark", "room_id": 110, "why": "光世界前缀 room_town_ 但名字含 dark（疑为夜间变体），需 darkzone 实证"}, {"area": "home", "chapter": "ch4", "resource": "room_krisroom_dark", "room_id": 159, "why": "光世界前缀 room_krisroom 但名字含 dark（疑为夜间变体），需 darkzone 实证"}, {"area": "hometown", "chapter": "ch4", "resource": "room_town_krisyard_dark", "room_id": 166, "why": "光世界前缀 room_town_ 但名字含 dark（疑为夜间变体），需 darkzone 实证"}, {"chapter": "oneshot", "room_id": 1, "area": null, "resource": "INIT", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 2, "area": null, "resource": "Start", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 3, "area": null, "resource": "Bathroom", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 4, "area": null, "resource": "Livingroom", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 5, "area": null, "resource": "Basement Stairs", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 6, "area": null, "resource": "IGNORE", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 7, "area": null, "resource": "Blue", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 8, "area": null, "resource": "Green", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 9, "area": null, "resource": "Red sky", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 10, "area": null, "resource": "Tower", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 11, "area": null, "resource": "DEBUG", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter": "oneshot", "room_id": 12, "area": null, "resource": "Entrance", "why": "迁入章，明暗判定表未建（如实标 unknown，见第77/80轮）"}, {"chapter":

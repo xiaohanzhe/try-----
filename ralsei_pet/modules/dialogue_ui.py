@@ -1825,6 +1825,20 @@ class DialogueUI(QWidget):
             self._input_bar.hide()
         self._recalc_size_to_content()
 
+        # ★ 第114轮：**派发意图**（「让 X 去 Y 办事」）—— 位置有三处讲究：
+        #   ① 在**点名之后** —— 点名是"对某人说话"，与"派人办事"是两回事，
+        #      而且 `parse_address` 只认 `@名字` / `名字：`，两不相干；
+        #   ② 在 `add_dialogue("user", …)` **之后** —— 用户说的这句要照常回显；
+        #   ③ 在 `handle_chat_commands` **之前** —— 否则「请苏西去…」可能被
+        #      某个闲聊关键词指令先截获（本项目踩过"退出游戏被闲聊指令截获"）。
+        #   返回 `False` ⇒ 压根没这回事，一切照旧（**零行为变化**）。
+        try:
+            _errand_fn = getattr(self.parent, 'handle_errand_command', None)
+            if callable(_errand_fn) and _errand_fn(user_input):
+                return
+        except Exception as e:
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+
         # 先检查聊天指令
         cmd = self.handle_chat_commands(user_input)
         if cmd:

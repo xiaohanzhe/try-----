@@ -1,0 +1,31 @@
+ROOT   = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+PROJ   = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet
+scenes_dir = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\scenes
+index.ok = True  schema=1  scenes=2166  default=desktop  err=None
+worlds.ok = True  rooms_chapters=9  overrides=['desktop']  err=None
+routes_path = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\scenes\_routes.json  exists=True
+routes.desktop 类型 = NoneType
+
+scene_id                                       | chapter      | room_id  | world 
+------------------------------------------------------------------------------------------
+desktop                                        | desktop      | -1       | light    (override)
+<None>                                         | -            | -        | -        (空场景)
+ch1.hometown.town_mid                          | ch1          | 11       | light    (rooms[ch1][11])
+oneshot.mainline.INIT                          | oneshot      | 1        | None     (该房登记为 unknown)
+ut.rooms.room_start                            | ut           | 0        | None     (该房登记为 unknown)
+ch1.dark_world.card_castle_entrance            | None         | None     | None     (index 里没有这个场景)
+ch1.card_castle.card_castle_1f                 | ch1          | 114      | dark     (rooms[ch1][114])
+ch1.card_castle.card_castle_5f                 | ch1          | 123      | dark     (rooms[ch1][123])
+ch1.card_castle.card_castle_prison             | ch1          | 107      | dark     (rooms[ch1][107])
+ch1.card_castle.card_castle_throne             | ch1          | 126      | dark     (rooms[ch1][126])
+ch1.card_castle.card_castle_unknown            | ch1          | 111      | dark     (rooms[ch1][111])
+
+=== world_gate 边界（scene_id=None 时）===
+  world=None    npc=ralsei  -> ok=False reason=leave_dark_world       detail=未知世界 None
+  world=None    npc=kris    -> ok=False reason=leave_dark_world       detail=未知世界 None
+  world='light' npc=ralsei  -> ok=False reason=light_needs_bubble     detail=Ralsei 是暗世界居民，脱离暗世界必须被装进球
+  world='light' npc=kris    -> ok=True  reason=ok                     detail=light_free
+  world='dark'  npc=ralsei  -> ok=True  reason=ok                     detail=no_scene_id
+  world='dark'  npc=kris    -> ok=True  reason=ok                     detail=no_scene_id
+  world='weird' npc=ralsei  -> ok=False reason=leave_dark_world       detail=未知世界 'weird'
+  world='weird' npc=kris    -> ok=False reason=leave_dark_world       detail=未知世界 'weird'

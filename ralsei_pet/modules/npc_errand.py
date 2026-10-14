@@ -73,6 +73,17 @@ DONE = 'done'
 #: 用于在日志/存档里**区分**"自主挪窝"与"被派出办事"。
 REASON_PREFIX = 'errand:'
 
+#: ★ 第114轮：差事落盘文件名（路径由宿主用 `data_store.app_file(FILENAME)` 解析）。
+#:
+#: ★★ 为什么**单独一个文件**，而不是塞进 `npc_plan_store.Book`（生活档案）：
+#:   `Book` 的顶层形状（`schema_version` / `roam` / `plans` 三个键）被
+#:   `check81` 的 D4~D7 四条断言锁死，且 `Book.from_dict` **只认**
+#:   `schema_version == 1` ⇒ 往里加第四个键会让**已写下的老档案整本被判版本不符**
+#:   （丢的是驻留表与"昨晚睡哪"，代价远大于差事本身）。
+#:   而差事的生命周期只有几分钟（`DEFAULT_TRAVEL_SECONDS + DEFAULT_WORK_SECONDS`），
+#:   本就**不必与长期档案同生共死** —— 两本文件，各自演进。
+FILENAME = 'npc_errands.json'
+
 
 def default_result(npc_id, dest_scene, what):
     """结果模板（宿主没给自定义结果时用）。
@@ -243,6 +254,23 @@ class ErrandBoard(object):
         self._active[npc_id] = e
         return e
 
+    def abort(self, npc_id):
+        """**半途作废**某人的在办差事。返回被撤掉的 `Errand`（本来没在办 ⇒ `None`）。
+
+        ★★ 与"办完"的区别（这两种收尾**不能混**）：
+          · 办完 = `step()` 走完 `working → done`，**产出一句话**（`result`），
+            并由宿主机写入该 NPC 的记忆；
+          · 作废 = **外部叫停**，`_active` 里移除、**不进 `done`、不留结果**。
+        ⇒ 为什么必须能作废而不是"放着不管"：被派出的人每到一拍都要被
+          `working_positions()` 压一次位置。若一条**永远走不通**的差事留在表里，
+          他会**被永久钉在某个进不去的场景上**（回不了家、也不参与自主生活）。
+          第114轮的门控拦截、将来的"用户取消"都走这条出口。
+
+        ★ 返回对象的 `status` 是**作废前**的值（`traveling` / `working`）——
+          调用方**不要**拿它判"办完了"；它的用途是日志与"我还原到哪一步"。
+        """
+        return self._active.pop(npc_id, None)
+
     def step(self, now):
         """推进一拍（**纯函数式**：只改自己）。
 
@@ -355,6 +383,14 @@ WIRING = collections.OrderedDict((
                '`board.assign(now, ...)`；★ `npc_id` 不做白名单（任何人都可以）'),
     ('tick', '主循环在 `_npc_roam_tick()` **之后**调 `_npc_errand_tick(now)`；'
              '顺序即优先级 —— 差事**压过**自发挪窝'),
+    ('gate', '★ 第114轮：**派发时**与**每拍压位置之前**都要过 '
+             '`npc_system.world_gate(npc, world_of(dest), scene_id=dest, '
+             'carried=...)` —— 用户口径「被派不可进入原本不可进入的世界」'
+             '（差事**继承**门控，不是特权）。'),
+    ('abort', '门控拒 / 用户取消 ⇒ `board.abort(nid)`（**半途作废**：不进 `done`、'
+              '不留结果），并落一条"去不了"的记忆。'
+              '★ 为什么不能只是"跳过不压位置"：那条差事会**永远**留在 '
+              '`working_positions()` 里，把人反复压向一个进不去的场景。'),
     ('put', '每拍对 `working_positions()` 逐个 `roam.put(nid, scene, now, '
             'reason=errand.reason())`，随后 `_npc_seed_bodies(_npc_scene_id())`'),
     ('finish', '`step()` 的 `finished` ⇒ `roam.drop(nid)`（回落静态归属）+ '
