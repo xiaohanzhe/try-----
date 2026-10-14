@@ -641,6 +641,13 @@ from modules import npc_intent as npc_intent_mod
 #   切场景时被调 ⇒「NPC = 当前场景的装饰」⇒ **用户不动，世界就冻住**（与 L2 正相反）。
 #   ★ `enabled=False` 时 `step()` 零副作用 ⇒ 产品默认关时行为与第78轮逐字相同。
 from modules import npc_roam as npc_roam_mod
+# ★★★ 第113轮（§109.5「灵魂视角」）：NPC 自主生活 · **层5 差事**（零依赖）。
+#   要解决的问题：`npc_roam` 只能表达"他自己想去哪"（**自发**）—— 不能表达
+#   "**我派他去**哪办一件事、办完有结果"（用户口径：「我让 ralsei 去 oneshot 里
+#   干什么事情，**他能去，干，然后产生结果**，甚至**我中途进去的时候也能看到过程**」
+#   「那个可派 ralsei 做任务那个**只是个例子，任何人都可以**」）。
+#   ★ 本模块**不 import 任何项目模块** —— 位置写入由宿主用 `roam.put()` 完成。
+from modules import npc_errand as npc_errand_mod
 # ★★★ 第81轮：NPC 自主生活 · **层4 存档**（零依赖：只 import 标准库，路径由调用方注入）。
 #   要解决的问题：层1/2/3 的状态**只在内存** —— 桌宠一重启，`RoamState` 清空、
 #   `Plan` 丢失 ⇒ NPC「昨天睡在朋友家」这件事第二天就不记得了，
@@ -3118,6 +3125,14 @@ class RalseiPet(QMainWindow):
     #: ★ 30s 一次：既不会「一帧换一次房」，也不会「半天不动」（驻留期本身是分钟级）。
     NPC_AUTONOMOUS_TICK = 30.0
 
+    #: ★★★ 第113轮（§109.5「灵魂视角」）：**差事**（"派任意角色去别世界办事"）总开关。
+    #: ★ 关掉它 ⇒ `_npc_errand_tick()` 立刻返回、`assign_errand()` 恒 `None`
+    #:   ⇒ 行为与"没有层5"逐字相同。
+    #: ★★ 注意：**产品默认开着也不改变任何行为** —— 因为差事只能由 `assign_errand()`
+    #:   **显式派出**；没人派 ⇒ 看板恒空。所以它是"一键封口"，**不是**零回归开关
+    #:   （零回归由"恒空看板"结构保证，见 `npc_errand` 抬头）。
+    NPC_ERRAND_ENABLED = True
+
     #: ★★★ 第81轮（层4 存档）：生活档案的**落盘节流**（秒）。
     #: ★ 120s：驻留期本身是分钟级（`MIN_DWELL_SECONDS` 也是分钟级），120s 足够
     #:   把"世界变了"及时写下去；同时避免每拍都写盘（E 盘 exFAT，无谓写会磨损）。
@@ -3137,6 +3152,10 @@ class RalseiPet(QMainWindow):
         self.npc_personas = {}
         self.npc_memory = None
         self.npc_followers = None
+        # ★★★ 第113轮（§109.5「灵魂视角」）：**差事看板** —— 谁被派去别处办事。
+        #   默认 `None`（建失败 ⇒ `assign_errand` 恒返回 None，只降级不抛出）。
+        #   ★ 没被派过 ⇒ 看板恒空 ⇒ **零行为变化**（无需开关即零回归）。
+        self.npc_errand = None
         self._npc_aliases = {}
         self._npc_invited = []          # 说上过话的 NPC（换场景时才有资格被问"跟不跟"）
         self._npc_follow_pending = []   # 纯 NPC 的"想跟但等你点头"
@@ -3315,6 +3334,20 @@ class RalseiPet(QMainWindow):
         except Exception:
             _log.exception('自主移动：驻留表建立失败（退化为"全体回站位表"）')
             self.npc_roam = None
+
+        # ---- ★★★ 第113轮（§109.5「灵魂视角」）：层5 **差事看板** ----
+        # ★ 与 `npc_roam` **同开关**：自主移动关了 ⇒ 差事也不推进。两者都要改
+        #   "他在哪"，只开一个会得到"人被派出去、但世界冻结"的半吊子态。
+        # ★ 没被 `assign_errand()` 派过 ⇒ 看板恒空 ⇒ **零行为变化**
+        #   （所以零回归**不需要**额外开关；`NPC_ERRAND_ENABLED` 只是"一键封口"）。
+        try:
+            self.npc_errand = npc_errand_mod.ErrandBoard(
+                enabled=bool(RalseiPet.NPC_AUTONOMOUS_MOVE))
+            _log.info('NPC 差事看板：%s（可派任意角色去别世界办事；没派过就恒空）',
+                      '开' if self.npc_errand.enabled else '关')
+        except Exception:
+            _log.exception('差事看板建立失败（"派角色办事"不可用，其余照常）')
+            self.npc_errand = None
 
         # ---- ★★★ 第81轮：层4 存档 —— 把层1/2/3 的状态读回内存 ----
         # ★ 顺序很重要：**先有 `self.npc_roam`（上一段建的）**，再把书里那份驻留表
@@ -4531,6 +4564,111 @@ class RalseiPet(QMainWindow):
         if moved or expired:
             self._npc_plan_save()
         return out
+
+    # ------------------------------------------------------ 层5 差事（§109.5）
+
+    def assign_errand(self, npc_id, dest_scene, what, **kw):
+        """派**任意角色**去某场景办一件事（§109.5 要点 3 的**唯一入口**）。
+
+        用户口径（逐字）：
+          「我让 ralsei 去 oneshot 里干什么事情，**他能去，干，然后产生结果**，
+             甚至**我中途进去的时候也能看到过程**」
+          「那个可派 ralsei 做任务那个**只是个例子，任何人都可以**」
+
+        ⇒ ★★ 本函数对 `npc_id` **不做任何白名单**：主角团、OneShot 的路人、
+           Undertale 的怪物 —— 谁都能被派。**别**在这里加"只有 Ralsei 能接"。
+
+        参数（`kw` 透传给 `ErrandBoard.assign`）：
+          `travel`  在路上多久（秒，默认 90）
+          `work`    到了之后办多久（秒，默认 300）
+          `result`  自定义结果文本（不给 ⇒ `npc_errand.default_result` 模板）
+          `now`     绝对秒（不给 ⇒ `time.time()`）
+
+        返回 `Errand`；看板没就位 / 参数非法 / 名额满 ⇒ `None`（**只降级不抛**）。
+        """
+        board = getattr(self, 'npc_errand', None)
+        if board is None:
+            return None
+        now = kw.pop('now', None)
+        if now is None:
+            now = time.time()
+        try:
+            return board.assign(now, npc_id, dest_scene, what, **kw)
+        except Exception as e:
+            _log.debug('派差事失败（已忽略）: %s', e)
+            return None
+
+    def _npc_errand_tick(self, now=None):
+        """推进差事一节拍。→ `{'arrived': [...], 'finished': [...]}`。
+
+        ★★ **必须排在 `_npc_roam_tick()` 之后**（同一拍内）—— **顺序即优先级**：
+          被派出的人**压过**自发挪窝（本函数用 `roam.put()` 覆盖 roam 本拍的决定）。
+
+        ★ 三件必须同时成立：① `NPC_ERRAND_ENABLED` 开；② 看板就位且 `enabled`；
+          ③ `npc_roam` 就位（差事"落地"的方式就是写驻留表）。
+
+        ★★ 与显示**彻底解耦**（§109.5 要点 1/2）：本函数**只改 NPC 自己的位置**，
+          绝不切场景显示 —— 显示切换的唯一驱动仍是灵魂/用户操作。
+          所以"我（灵魂）不动 ⇒ 桌面显示不变"，但我**切进**他所在场景就能看到他
+          （`_npc_seed_bodies` 按驻留表把他画在那里）。
+        """
+        if not RalseiPet.NPC_ERRAND_ENABLED:
+            return {'arrived': [], 'finished': []}
+        board = getattr(self, 'npc_errand', None)
+        roam = getattr(self, 'npc_roam', None)
+        if board is None or roam is None or not board.enabled:
+            return {'arrived': [], 'finished': []}
+        if now is None:
+            now = time.time()
+        try:
+            now = float(now)
+        except (TypeError, ValueError):
+            return {'arrived': [], 'finished': []}
+        try:
+            out = board.step(now)
+            touched = False
+            # ① 在办的人 ⇒ **压在目的地上**。★ 每拍都压（而不是只在 `arrived` 那拍）：
+            #    因为 `_npc_roam_tick` 可能刚把他摇去别处 —— 被派出的人**优先**。
+            for nid, dest in board.working_positions():
+                cur = roam.get(nid)
+                if cur is not None and getattr(cur, 'scene', None) == dest:
+                    continue          # 已经压在目的地 ⇒ 不重复写（省盘、省无谓事件）
+                _e = board.working_of(nid)
+                roam.put(nid, dest, now,
+                         reason=(_e.reason() if _e is not None else 'errand'))
+                touched = True
+            # ② 办完的 ⇒ **撤覆盖**（回落静态归属 = 回家）+ 结果落进他的记忆。
+            for nid, err in (out.get('finished') or ()):
+                roam.drop(nid)
+                touched = True
+                self._npc_errand_commit(nid, err)
+            if touched:
+                # ★ 位置变了 ⇒ 重建**当前场景**的身体（否则"人到了、画还在旧场景"）。
+                self._npc_seed_bodies(self._npc_scene_id())
+                self._npc_plan_save()
+        except Exception as e:
+            _log.debug('差事推进异常（本节拍跳过）: %s', e)
+            return {'arrived': [], 'finished': []}
+        return out
+
+    def _npc_errand_commit(self, npc_id, err):
+        """办完一件事 ⇒ 把**结果**落进他的记忆（§109.5「我下次进场能观察到」）。
+
+        ★ `MiniMemory` **非线程安全** ⇒ 只在主线程调（本函数只被 `_npc_errand_tick`
+          调用，而它跑在主循环里）。
+        ★ 落失败**只记 debug**，绝不影响桌宠运行（与 `_ghost_save` / `_npc_plan_save` 同规）。
+        """
+        mem = getattr(self, 'npc_memory', None)
+        if mem is None:
+            return
+        try:
+            txt = getattr(err, 'result', '') or ''
+            if not txt:
+                return
+            mem.remember(npc_id, '（%s）' % txt, who=npc_id)
+            mem.save(npc_id)
+        except Exception as e:
+            _log.debug('差事结果写记忆失败（已忽略）: %s', e)
 
     # ---------------------------------------------------------------- 层4 存档
     def _npc_plan_file(self):
@@ -8009,6 +8147,14 @@ class RalseiPet(QMainWindow):
         #   （`update_movement` 的**所有早退分支之前**）—— 他们过日子不该看宠物睡没睡。
         # ★ 关掉开关（默认）时本函数**立刻返回**，零副作用（零回归）。
         self._npc_roam_tick(current_time)
+
+        # ---- ★★★ NPC「差事」（第113轮 · 层5，§109.5「灵魂视角」）：紧随其后 ----
+        # ★★ **顺序即优先级**：`npc_roam` 先跑完（本拍可能有人"自发挪窝"），本函数
+        #    再把"被派出的人"压回目的地 ⇒ **差事压过自发**。反过来会让"派他出门
+        #    办事"在下一次 roam 决策时被摇走（30s 拍上偶发，最难查）。
+        # ★ 本函数内部自己判 `NPC_ERRAND_ENABLED` / 看板是否就位；没人被派过 ⇒
+        #   看板恒空 ⇒ 一次 put 都不发生（零行为变化）。
+        self._npc_errand_tick(current_time)
 
         # 优化：减少环境和心情更新频率（每5秒更新一次）
         if getattr(self, '_last_env_update', None) is not None:

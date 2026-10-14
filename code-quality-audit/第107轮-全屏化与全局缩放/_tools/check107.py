@@ -963,13 +963,17 @@ for _n in ast.walk(_t_main):
                     _rp_init = _c
                 elif _n.name == 'PerformanceMonitor':
                     _pm_init = _c
-ok(u'E8b ★★ 定位器体检：`RalseiPet.__init__`(744) 与 '
-   u'`PerformanceMonitor.__init__`(396) 是**不同**函数'
-   u'（否则 E8 可能一直在判错对象）',
+ok(u'E8b ★★ 定位器体检：`RalseiPet.__init__` 与 '
+   u'`PerformanceMonitor.__init__` 是**不同**函数'
+   u'（否则 E8 可能一直在判错对象）'
+   u'—— ★★ 判据名/detail **都不回显行号**：行号会随任何人在上面的插入而相变，'
+   u'一回显就把"别人的改动"误报成本套件失败（第113轮实测：加 7 行 ⇒ 本套件假 DIFF）',
    _pm_init is not None and _rp_init is not None
    and _pm_init.lineno != _rp_init.lineno,
-   u'line %r vs %r' % (getattr(_rp_init, 'lineno', None),
-                       getattr(_pm_init, 'lineno', None)), star=True)
+   u'both_found=%s lineno_differs=%s'
+   % (_pm_init is not None and _rp_init is not None,
+      (_pm_init is not None and _rp_init is not None
+       and _pm_init.lineno != _rp_init.lineno)), star=True)
 ok(u'E8c ★★ 反向体检：三个调用**都不在** `RalseiPet.__init__` 里'
    u'（证明 E8 必须按"含调用的方法"定位，写死 `__init__` 会恒假）',
    _rp_init is not None

@@ -1,0 +1,64 @@
+第113轮 复检报告（core-file-recheck）
+============================================================
+PASS=55 FAIL=0
+
+[PASS] P1 parse main.py
+[PASS] P1 parse npc_errand.py
+[PASS] P1 parse check113.py
+[PASS] P1 parse mutate113.py
+[PASS] P1 parse rec113.py
+[PASS] P1 json baseline.json
+[PASS] P1 json rec113_report.json
+[PASS] P1 EVIDENCE 围栏成对  fences=6
+[PASS] P2 速查本标题全在  missing=[]
+[PASS] P2 速查本无标题粘连  lines=[]
+[PASS] P2 负控制：人为粘连必被检出  fixture_changed=True
+[PASS] P2 详版 §113 恰一处  count=1
+[PASS] P2 详版无标题粘连  lines=[]
+[PASS] P2 详版新增区间零粘连
+[PASS] P2 当日日志首行  '# 2026-10-14 工作日志'
+[PASS] P2 当日日志有第113轮小节
+[PASS] P3 main.py 无BOM
+[PASS] P3 main.py 无U+FFFD
+[PASS] P3 main.py CRLF  crlf=16821 want=16821
+[PASS] P3 main.py 裸LF  bare=0 want=0
+[PASS] P3 npc_errand.py 无BOM
+[PASS] P3 npc_errand.py 无U+FFFD
+[PASS] P3 npc_errand.py CRLF  crlf=0 want=0
+[PASS] P3 npc_errand.py 全LF  crlf=0 bare=364
+[PASS] P3 MEMORY.md 无BOM
+[PASS] P3 MEMORY.md 无U+FFFD
+[PASS] P3 MEMORY.md CRLF  crlf=0 want=0
+[PASS] P3 MEMORY.md 全LF  crlf=0 bare=61
+[PASS] P3 参考-契约与历轮（详版）.md 无BOM
+[PASS] P3 参考-契约与历轮（详版）.md 无U+FFFD
+[PASS] P3 参考-契约与历轮（详版）.md CRLF  crlf=0 want=0
+[PASS] P3 参考-契约与历轮（详版）.md 全LF  crlf=0 bare=12640
+[PASS] P3 2026-10-14.md 无BOM
+[PASS] P3 2026-10-14.md 无U+FFFD
+[PASS] P3 2026-10-14.md CRLF  crlf=0 want=0
+[PASS] P3 2026-10-14.md 全LF  crlf=0 bare=159
+[PASS] P4 check113.py 无恒真判据(名字级AST)  bad=[]
+[PASS] P4 check113.py 正则/AST 交叉一致  regex=0 ast=0
+[PASS] P4 mutate113.py 无恒真判据(名字级AST)  bad=[]
+[PASS] P4 mutate113.py 正则/AST 交叉一致  regex=0 ast=0
+[PASS] P4 rec113.py 无恒真判据(名字级AST)  bad=[]
+[PASS] P4 rec113.py 正则/AST 交叉一致  regex=0 ast=0
+[PASS] P4 recheck113.py 无恒真判据(名字级AST)  bad=[]
+[PASS] P4 recheck113.py 正则/AST 交叉一致  regex=2 ast=2
+[PASS] P4 负控制：真恒真必被检出  bad=["'只有恒真'"]
+[PASS] P5 no-op 控制（确有被删令牌）  removed=2
+[PASS] P5 被删令牌无静默丢失  unhandled=[]
+[PASS] P5 负控制夹具自证(生僻串原本不在任何处)
+[PASS] P5 负控制：伪造令牌不命中
+[PASS] P6 工作区无意外项  extra=[] missing=[]
+[PASS] P6 未残留八进制转义
+[PASS] P6 负控制：伪造项被判意外
+[PASS] P7 G2 套件数与全 IDENTICAL  rows=103 {'IDENTICAL': 103}
+[PASS] P7 G2 无 DIFF/BASELINE/SKIP  {'IDENTICAL': 103}
+[PASS] P7 G2 合计行  合计：PASS=5479 FAIL=0  套件=103
+
+---- 信息（不计入判据） ----
+[INFO] P5 被删令牌清单 = ['全表见详版', '未实现']
+[INFO] P5 命中方式 = {'全表见详版': 'whitelist(anchor in quick)', '未实现': 'detail:raw'}
+[INFO] P6 现盘条目 = [' M .workbuddy/memory/MEMORY.md', ' M .workbuddy/memory/参考-契约与历轮（详版）.md', ' M code-quality-audit/regress/baseline.json', ' M code-quality-audit/regress/run_all.py', ' M code-quality-audit/第107轮-全屏化与全局缩放/_evidence/check107.txt', ' M code-quality-audit/第107轮-全屏化与全局缩放/_tools/check107.py', ' M ralsei_pet/src/main.py', '?? .workbuddy/memory/2026-10-14.md', '?? code-quality-audit/第113轮-灵魂视角差事/', '?? ralsei_pet/modules/npc_errand.py']

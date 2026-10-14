@@ -79,7 +79,7 @@
 [PASS] ★ E7b ★★★ 旧档位名映射与第107轮语义一致（`normal ⇒ 1.0` = 与场景同比例；**从源码 `literal_eval` 求值**，不写死）  <- map={'small': 0.6, 'normal': 1.0, 'large': 1.6, 'giant': 2.4}
 [PASS] ★ E7c ★★★ `_persist_pet_scale` 同时写数字子键 + 档位名（双向）—— 含字面量判据不走 `_code_only`（否则自己删掉要判的串）
 [PASS] ★ E8 ★★★ 接线方法（`init_systems`）里**调用顺序** = 读回设定 → 全屏化 → 刷新倍率（倒过来 ⇒ 倍率乘的是旧 scale，渲染尺寸错）—— ★ 按 **AST 语句/调用序** 判，不按字符 `.find()`（注释里提到 `fit_camera_to_screen` 会污染位置）  <- holder=init_systems 调用序 lps=50 fit=52 rr=55
-[PASS] ★ E8b ★★ 定位器体检：`RalseiPet.__init__`(744) 与 `PerformanceMonitor.__init__`(396) 是**不同**函数（否则 E8 可能一直在判错对象）  <- line 752 vs 396
+[PASS] ★ E8b ★★ 定位器体检：`RalseiPet.__init__` 与 `PerformanceMonitor.__init__` 是**不同**函数（否则 E8 可能一直在判错对象）—— ★★ 判据名/detail **都不回显行号**：行号会随任何人在上面的插入而相变，一回显就把"别人的改动"误报成本套件失败（第113轮实测：加 7 行 ⇒ 本套件假 DIFF）  <- both_found=True lineno_differs=True
 [PASS] ★ E8c ★★ 反向体检：三个调用**都不在** `RalseiPet.__init__` 里（证明 E8 必须按"含调用的方法"定位，写死 `__init__` 会恒假）
 [PASS] ★ E9 ★★ `fit_camera_to_screen` 真写 `pet.scene_scale`（自省/日志）
 
