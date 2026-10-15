@@ -7,7 +7,7 @@
  "susie": "susie",
  "papyrus_alias": "papyrus",
  "deny_dest": "ch1.kris_room.kris_s_room",
- "sandbox": "C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_hsxexuzk",
+ "sandbox": "C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_bk262jak",
  "vault_patched": true,
  "snaps": [
   {
@@ -17,12 +17,12 @@
    "scene_id": "desktop",
    "board_len": 0,
    "board_active": [],
-   "resident_ralsei": "ch1.kris_room.kris_s_room",
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
    "pet_geo": [
-    2388,
-    1379,
-    144,
-    98
+    2425,
+    1415,
+    43,
+    85
    ],
    "pet_visible": true,
    "screen": [
@@ -37,12 +37,12 @@
    "scene_id": "desktop",
    "board_len": 0,
    "board_active": [],
-   "resident_ralsei": "ch1.kris_room.kris_s_room",
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
    "pet_geo": [
-    2388,
-    1379,
-    144,
-    98
+    2425,
+    1415,
+    43,
+    85
    ],
    "pet_visible": true,
    "screen": [
@@ -59,12 +59,12 @@
    "board_active": [
     "ralsei"
    ],
-   "resident_ralsei": "ch1.kris_room.kris_s_room",
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
    "pet_geo": [
-    2388,
-    1379,
-    144,
-    98
+    2425,
+    1415,
+    43,
+    85
    ],
    "pet_visible": true,
    "screen": [
@@ -82,12 +82,12 @@
     "ralsei",
     "ut_papyrus"
    ],
-   "resident_ralsei": "ch1.kris_room.kris_s_room",
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
    "pet_geo": [
-    2388,
-    1379,
-    144,
-    98
+    2425,
+    1415,
+    43,
+    85
    ],
    "pet_visible": true,
    "screen": [
@@ -107,10 +107,10 @@
    ],
    "resident_ralsei": "oneshot.barrens.Blue",
    "pet_geo": [
-    2388,
-    1379,
-    144,
-    98
+    2425,
+    1415,
+    43,
+    85
    ],
    "pet_visible": true,
    "screen": [
@@ -130,10 +130,10 @@
    ],
    "resident_ralsei": "oneshot.barrens.Blue",
    "pet_geo": [
-    2388,
-    1379,
-    144,
-    98
+    2425,
+    1415,
+    43,
+    85
    ],
    "pet_visible": true,
    "screen": [
@@ -152,13 +152,13 @@
   "[PASS] A6 开关默认开",
   "[PASS] A7 开局看板为空（没派过 ⇒ 零行为变化）  <- len=0",
   "[PASS] A8 别名表里 Papyrus 有归属（跨作品回家的主角）  <- 别名='papyrus' -> ut_papyrus",
-  "[PASS] A9 ★★ 桌宠窗口**真的在屏幕上**（否则 6 帧都是纯壁纸，录像等于空证据）  <- visible=True geo=[2388,1379,144,98] screen=2560x1600",
+  "[PASS] A9 ★★ 桌宠窗口**真的在屏幕上**（否则 6 帧都是纯壁纸，录像等于空证据）  <- visible=True geo=[2425,1415,43,85] screen=2560x1600",
   "\n-- B. ★★★ 门控的拒绝面（用户点名的例子：暗之民无球不能进光世界） --",
   "[PASS] B1 ★ 这句话**被识别为派活**（入口认出来了）",
   "[PASS] B2 目的地解析到三角符文那一侧（ch1.*）  <- dest=ch1.kris_room.kris_s_room",
   "[PASS] B3 该目的地的世界 = light（所以 Ralsei 无球进不去）  <- world=light",
   "[PASS] B4 ★★★ **门控真拦住了**：看板里没多出这条差事  <- len 0 -> 0",
-  "[PASS] B5 ★★ 位置真源**没被改写**（他没被\"送出去\"）  <- ch1.kris_room.kris_s_room -> ch1.kris_room.kris_s_room",
+  "[PASS] B5 ★★ 位置真源**没被改写**（他没被\"送出去\"）  <- ch4.kris_room.kris_s_room -> ch4.kris_room.kris_s_room",
   "[PASS] B6 ★ 与显示解耦（被拒也不动我的画面）",
   "[PASS] B7 ★★ \"办不成\"也**留下结果**：他记忆里多了一条\"去不了\"  <- hist 0 -> 1  命中=True",
   "[PASS] B8 ★ 回应仍交给模型（`_errand_ack` 真被调过）  <- calls=1",
@@ -187,13 +187,13 @@
   "[PASS] C'12 ★★ 负控制也**留下结果**（他被拒时记忆里多一条「去不了」）  <- hist 0 -> 1  命中=True",
   "[PASS] C'13 ★ 显示仍没被切（两次派活全程）  <- scene=desktop",
   "\n-- D. 落地 + \"我中途进去能看到过程\" --",
-  "[PASS] D1 ★★★ 到达 ⇒ 位置真源变成目标场景（两个人都到了）  <- ralsei ch1.kris_room.kris_s_room -> oneshot.barrens.Blue（目标 oneshot.barrens.Blue）｜ut_papyrus None -> ut.rooms.room_start（目标 ut.rooms.room_start）",
+  "[PASS] D1 ★★★ 到达 ⇒ 位置真源变成目标场景（两个人都到了）  <- ralsei ch4.kris_room.kris_s_room -> oneshot.barrens.Blue（目标 oneshot.barrens.Blue）｜ut_papyrus None -> ut.rooms.room_start（目标 ut.rooms.room_start）",
   "[PASS] D2 ★ 过程可观察（working 期间查得到\"谁在哪、在办什么\"）  <- pos=[('ralsei', 'oneshot.barrens.Blue'), ('ut_papyrus', 'ut.rooms.room_start')]",
   "[PASS] D3 ★ 在办期间重复推进**不抖**（幂等：还在那儿、还在办）",
-  "[PASS] D4 ★★★ 「我中途进去能看到过程」：按驻留表在**目标场景**重建身体 ⇒ 他在里面  <- ut.rooms.room_start 场景 4 个 NPC，含 ut_papyrus=True（ralsei 也在里面=False）",
+  "[PASS] D4 ★★★ 「我中途进去能看到过程」：按驻留表在**目标场景**重建身体 ⇒ 他在里面  <- ut.rooms.room_start 场景 2 个 NPC，含 ut_papyrus=True（ralsei 也在里面=False）",
   "[PASS] D5 ★ 与显示解耦（推进全程没切我的画面）",
   "\n-- E. 落盘（真写盘 + 真读回；★ 写的是沙箱，不是用户档） --",
-  "[PASS] E0 落盘路径已注入且**在沙箱里**  <- path=C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_hsxexuzk\\npc_errands.json",
+  "[PASS] E0 落盘路径已注入且**在沙箱里**  <- path=C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_bk262jak\\npc_errands.json",
   "[PASS] E1 ★ `_npc_errand_save(force=True)` ⇒ True",
   "[PASS] E2 ★★ 盘上真有这个文件",
   "[PASS] E3 ★★ 盘上结构 = `{enabled, active, done}`（差事自己的档）  <- keys=['active', 'done', 'enabled']",
@@ -206,8 +206,8 @@
   "[PASS] F3 ★ 看板一字不动  <- 2 -> 2",
   "[PASS] F4 ★ 显示场景一字不动",
   "[PASS] F5 ★★ **每个**快照都取到了窗口几何（非恒真护栏：不许 `None` 混进集合里蒙混）  <- 取到几何 5/5 条",
-  "[PASS] F6 ★★★ 没有任何一次快照出现\"接近全屏\"的窗口（全屏 = 切了场景画布 ⇒ \"与显示解耦\"就被打破了）  <- 阈值 1280x800｜最大边长 144｜出现过的几何=[(2388, 1379, 144, 98)]",
+  "[PASS] F6 ★★★ 没有任何一次快照出现\"接近全屏\"的窗口（全屏 = 切了场景画布 ⇒ \"与显示解耦\"就被打破了）  <- 阈值 1280x800｜最大边长 85｜出现过的几何=[(2425, 1415, 43, 85)]",
   "\n-- G. 收尾 --",
-  "[PASS] G1 ★ 收尾无异常；沙箱留在原地备查（绝不 rmtree —— 本机清理守卫会拦）  <- sandbox=C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_hsxexuzk"
+  "[PASS] G1 ★ 收尾无异常；沙箱留在原地备查（绝不 rmtree —— 本机清理守卫会拦）  <- sandbox=C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_bk262jak"
  ]
 }

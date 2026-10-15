@@ -2,11 +2,11 @@
 -- S1~S3 画布铺满 / 固定摆位 / 不跟随 --
 [PASS] S1 ★★★ 画布尺寸 == 主屏物理尺寸（铺满）  <- canvas=(800, 600) screen=(800, 600)
 [PASS] S2 ★★★ 画布位置 == 主屏原点（固定摆放，不是居中/钳制）  <- pos=(0, 0) screen_org=(0, 0)
-[PASS] S4 ★★★ `cam.size` == `fit_fullscreen(主屏)` 前两位  <- cam=(800, 600) fit=(800, 600, 0, 0)
-[PASS] S4b ★★★ `cam.scale == cam_w/320` 且 `scoped == (320,240)`  <- scale=2.5 scoped=(320, 240)
-[PASS] S6 ★★ 输出偏移真进画布（`_offset_x/_offset_y` == fit 的 ox/oy）  <- off=(0, 0) fit_off=(0, 0)
-[PASS] S3 ★★★ 宠物移动后画布位置**不变**（用户口径"**不是跟随移动的窗口**"的直接反证）  <- before=(0, 0) after=(0, 0) pet (634, 449)→(733, 544)
-[PASS] S3b 负控制：宠物真移动了（否则 S3 是 no-op 恒真）  <- (634, 449) → (733, 544)
+[PASS] S4 ★★★ 画面是画布内的**居中视口**：`cam + 2*off == canvas`（画布=整屏、画面=0.5 档，二者不等才是对的）  <- cam=(400,300) off=(200, 150) canvas=(800, 600)
+[PASS] S4b ★★★ `cam.scale == cam_w/320` 且 `scoped == (320,240)`  <- scale=1.25 cam_w=400 scoped=(320, 240)
+[PASS] S6 ★★ 输出偏移 = 居中留黑边（`_offset_x/_offset_y` == (屏-画布)/2）  <- off=(200, 150) expect=(200, 150)
+[PASS] S3 ★★★ 宠物移动后画布位置**不变**（用户口径"**不是跟随移动的窗口**"的直接反证）  <- before=(0, 0) after=(0, 0) pet (657, 471)→(837, 591)
+[PASS] S3b 负控制：宠物真移动了（否则 S3 是 no-op 恒真）  <- (657, 471) → (837, 591)
 
 -- S5 桌面透明 / 房间不透明 --
 [PASS] S5 ★★ 非桌面场景 ⇒ `_opaque_bg=True`（用户口径"不透过桌面壁纸、图标、任务栏"）  <- opaque=True scene=ch1.kris_room.kris_s_room
@@ -19,8 +19,8 @@
 [PASS] S7b 帧目录在盘  <- C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第107轮-全屏化与全局缩放\_evidence\frames107
 
 ---- SEQ ----
-{'tag': 'desktop_init', 'note': '桌面场景 · 初始化', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (0, 0), 'opaque': False, 'cam_size': (800, 600), 'cam_scale': 2.5, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 2.5, 'scene_id': 'desktop', 'screen': (0, 0, 800, 600), 'pet_pos': (634, 449)}
-{'tag': 'after_move', 'note': '宠物移动后（画布须**不动**）', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (0, 0), 'opaque': False, 'cam_size': (800, 600), 'cam_scale': 2.5, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 2.5, 'scene_id': 'desktop', 'screen': (0, 0, 800, 600), 'pet_pos': (733, 544)}
-{'tag': 'room_ch1', 'note': '第一章房间（须铺不透明黑，不透过壁纸）', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (0, 0), 'opaque': True, 'cam_size': (800, 600), 'cam_scale': 2.5, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 2.5, 'scene_id': 'ch1.kris_room.kris_s_room', 'screen': (0, 0, 800, 600), 'pet_pos': (633, 512)}
-{'tag': 'back_desktop', 'note': '切回桌面', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (0, 0), 'opaque': True, 'cam_size': (800, 600), 'cam_scale': 2.5, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 2.5, 'scene_id': 'ch1.kris_room.kris_s_room', 'screen': (0, 0, 800, 600), 'pet_pos': (559, 488)}
-{'tag': 'desktop_final', 'note': '回到桌面（透明恢复）', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (0, 0), 'opaque': False, 'cam_size': (800, 600), 'cam_scale': 2.5, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 2.5, 'scene_id': 'desktop', 'screen': (0, 0, 800, 600), 'pet_pos': (482, 464)}
+{'tag': 'desktop_init', 'note': '桌面场景 · 初始化', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (200, 150), 'opaque': False, 'cam_size': (400, 300), 'cam_scale': 1.25, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 1.25, 'scene_id': 'desktop', 'screen': (0, 0, 800, 600), 'pet_pos': (657, 471)}
+{'tag': 'after_move', 'note': '宠物移动后（画布须**不动**）', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (200, 150), 'opaque': False, 'cam_size': (400, 300), 'cam_scale': 1.25, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 1.25, 'scene_id': 'desktop', 'screen': (0, 0, 800, 600), 'pet_pos': (837, 591)}
+{'tag': 'room_ch1', 'note': '第一章房间（须铺不透明黑，不透过壁纸）', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (200, 150), 'opaque': True, 'cam_size': (400, 300), 'cam_scale': 1.25, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 1.25, 'scene_id': 'ch1.kris_room.kris_s_room', 'screen': (0, 0, 800, 600), 'pet_pos': (837, 591)}
+{'tag': 'back_desktop', 'note': '切回桌面', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (200, 150), 'opaque': True, 'cam_size': (400, 300), 'cam_scale': 1.25, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 1.25, 'scene_id': 'ch1.kris_room.kris_s_room', 'screen': (0, 0, 800, 600), 'pet_pos': (837, 591)}
+{'tag': 'desktop_final', 'note': '回到桌面（透明恢复）', 'canvas_size': (800, 600), 'canvas_pos': (0, 0), 'off': (200, 150), 'opaque': False, 'cam_size': (400, 300), 'cam_scale': 1.25, 'scoped': (320, 240), 'pet_scale': 1.0, 'render': 1.25, 'scene_id': 'desktop', 'screen': (0, 0, 800, 600), 'pet_pos': (837, 591)}

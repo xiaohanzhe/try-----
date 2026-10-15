@@ -44,6 +44,8 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
 #   有了它，`mutate115.py` 可以放心破坏，**产线文件一个字节都不动**
 #   （本项目铁律：判据不许改变被测状态）。
 PET = os.environ.get('RALSEI_PET_OVERRIDE') or os.path.join(ROOT, 'ralsei_pet')
+MODULES = os.path.join(PET, 'modules')
+PKG_DIR = PET
 PERSONA_MD = os.path.join(PET, 'assets', 'ralsei_persona.md')
 MAIN = os.path.join(PET, 'src', 'main.py')
 
@@ -248,12 +250,24 @@ check('C2a ★ NPC 共用尾块已写明「知道自己是游戏 + 不悲观」'
                                     ANCHOR_NPC_NOT_SAD in _NPC_TAIL))
 check('C2b 尾块里不点名任何具体作品（76 份跨 Deltarune/UT/OneShot/UTY，点名会串）',
       not any(w in _NPC_TAIL for w in ('《Deltarune》', '《Undertale》', '《OneShot》')))
-_NPC_FILES = sorted(f for f in os.listdir(NPC_DIR) if f.endswith('.txt'))
+# ★★ 崩掉比报红更糟：`NPC_DIR` 在**变异测试的临时树**里不存在（`mutate115` 只拷
+#    人设真源与 main.py），首版直接 `os.listdir` ⇒ **整条套件崩在中途**，
+#    后面的 D 段（含"无恒真判据"）根本没跑到 ⇒ `mutate115 M10` 报 MISSED。
+#    ⇒ 目录不在时**如实判 FAIL**，绝不让套件崩。
+# ★★ 这一条**必须是真判据**（第115轮 D4 自己抓出来的）：
+#   首版写成 `if not isdir(...): FAIL; else: check(name, True)` ⇒ else 分支是**字面量 True**，
+#   正是"看着在守、其实恒真"的那类判据 ⇒ 被本套件 D4 报红（**判据自己也过审计**）。
+#   ⇒ 改成先算成一个**可能为假**的变量再交给 check。
+_NPC_DIR_OK = os.path.isdir(NPC_DIR)
+check('C2b0 NPC 人设目录存在（否则 C2 段无法评估）', _NPC_DIR_OK, star=True,
+      detail=NPC_DIR)
+_NPC_FILES = (sorted(f for f in os.listdir(NPC_DIR) if f.endswith('.txt'))
+              if _NPC_DIR_OK else [])
 _NPC_TAILS = set()
 _NPC_CR = 0
 _NPC_MISS = []
 for _fn in _NPC_FILES:
-    _raw = _raw_os = None
+    _raw_os = None
     _p = os.path.join(NPC_DIR, _fn)
     with io.open(_p, 'rb') as _fh:
         _raw_os = _fh.read()
@@ -267,7 +281,7 @@ for _fn in _NPC_FILES:
     if '\r' in _tail:
         _NPC_CR += 1
 check('C2c 76 份尾块**逐字节相同**（单一真源，不是 76 份各写一遍）',
-      len(_NPC_TAILS) == 1 and not _NPC_MISS, star=True,
+      len(_NPC_FILES) > 0 and len(_NPC_TAILS) == 1 and not _NPC_MISS, star=True,
       detail='distinct=%d miss=%d files=%d' % (len(_NPC_TAILS), len(_NPC_MISS),
                                                len(_NPC_FILES)))
 check('C2d 尾块内部是 LF（正文 CRLF / 尾块 LF，改动时别混）', _NPC_CR == 0,
@@ -292,6 +306,52 @@ check('C2f 每条记录 5 个字段（chars/bytes/sha256/sha256_lf/tail_sha256�
 check('C2g ★负控制：把尾块里的新句抹掉 ⇒ C2a 的判据函数必须为假',
       not ((ANCHOR_NPC_KNOWS_GAME in _NPC_TAIL.replace(ANCHOR_NPC_KNOWS_GAME, ''))),
       star=True)
+
+print('=== C3. 出戏闸：`机器人` 身份词不许一刀切（AI 全量扫 96 位抓到的真缺口）===')
+# ★★ 缺口是怎么被发现的：`ai115_sweep.py` 对**注册表全量 96 位**各真发一次请求，
+#    才暴露出 OneShot/UTY 里**有 4 位角色本身就是机器人**，而 `_OOC_PATTERNS` 里的
+#    裸词 `'机器人'` 把他们**一律判退**（其中 `os_kelvin` / `os_rowbot`
+#    连"抬温 + `_RETRY_NUDGE` 重采样"都救不回来 ⇒ 永远说不出自我介绍）。
+#    ★ 抽样**发现不了**它 —— 这正是用户说"每一个都测一下"的价值。
+#    归因脚本 `ai115_retry.py`（逐道闸拆开）+ 验证 `ai115_oocfix.py`。
+try:
+    if MODULES not in sys.path:
+        sys.path.insert(0, MODULES)
+    if PKG_DIR not in sys.path:
+        sys.path.insert(0, PKG_DIR)
+    from modules import event_speech as _ES
+except Exception as _e:  # noqa: BLE001
+    _ES = None
+    check('C3a0 event_speech 可导入', False, star=True, detail=repr(_e))
+
+if _ES is not None:
+    _BOT_LINES = (
+        u'……你好。我是一台空间加热器机器人。在这里等待猫，提供温暖。我是 Kelvin。',
+        u'[我是划船机器人 #310。我来自 Barrens 与 Glen 之间的水域运输网络。]',
+        u'哦！你从一个陌生的地方醒来吗？正如我的预言所预言的那样。我是预言中的先知机器人——ProphetBot。',
+        u'...我是 Sousborg. 一台厨师的机器人。我在等待有人告诉我如何煎一个鸡蛋。',
+    )
+    _OOC_LINES = (
+        u'我是语言模型，没有身体。',
+        u'作为一个AI助手，我无法感受这个动作。',
+        u'抱歉，我没有触觉无法感受被拉肩，停一下别紧张。',
+        u'我只是个机器人，没有感觉。',
+        u'这超出了我的设定，我不能回答。',
+    )
+    check('C3a ★★ 表里已无**裸词** `机器人`（用 == 精确判；身份词不是出戏标记）',
+          not any(p == u'机器人' for p in _ES._OOC_PATTERNS), star=True,
+          detail='仍存在裸词' if any(p == u'机器人' for p in _ES._OOC_PATTERNS) else None)
+    _bot_bad = [_t[:16] for _t in _BOT_LINES if _ES.looks_out_of_character(_t)]
+    check('C3b ★ 4 位机器人的自我介绍**全部放行**（人设 ≠ 出戏）',
+          not _bot_bad, star=True, detail='仍被拦=%r' % (_bot_bad,))
+    _ooc_bad = [_t[:16] for _t in _OOC_LINES if not _ES.looks_out_of_character(_t)]
+    check('C3c ★负控制：真出戏样本**仍然全部拦住**'
+          '（「我只是个机器人，没有感觉」靠 `没有感觉` 拦）',
+          not _ooc_bad, star=True, detail='漏网=%r' % (_ooc_bad,))
+    check('C3d 正控制：正常台词不被误伤',
+          not _ES.looks_out_of_character(u'谢谢你，小豆。让我靠你一会儿。'))
+    check('C3e 客服腔那道闸未被本次改动波及（仍拦 `有什么可以帮`）',
+          _ES.looks_like_assistant_speak(u'早安，有什么我可以帮忙的吗？'))
 
 print('=== D. 判据自身体检 ===')
 check('D1 判据条数经 check() 记账（防"写了没调 check"）',

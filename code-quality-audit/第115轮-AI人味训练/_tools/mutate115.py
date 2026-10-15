@@ -64,13 +64,22 @@ def run_check(pet_root, extra_check_dir=None):
 
 
 def fresh_tree(tag):
-    """造一份 pet 临时树（只拷被判的两个文件所在的必要子树）。"""
+    """造一份 pet 临时树（拷**被判的**必要子树）。
+
+    ★ 第115轮补：必须把 `assets/npc/`（索引 + 76 份人设）也拷进来 ——
+      首版只拷 `assets/ralsei_persona.md` 与 `src/main.py`，于是 check115 的 C2 段
+      在临时树里**崩**（`os.listdir` 撞不存在的目录），把后面的 D 段一起带走 ⇒
+      `M10` 假 MISSED。**夹具不保真 = 假红/假漏，两头都会咬人。**
+    """
     base = tempfile.mkdtemp(prefix='mut115_%s_' % tag)
     pet = os.path.join(base, 'ralsei_pet')
     os.makedirs(os.path.join(pet, 'assets'))
     os.makedirs(os.path.join(pet, 'src'))
     shutil.copy2(os.path.join(PET, PERSONA_REL), os.path.join(pet, PERSONA_REL))
     shutil.copy2(os.path.join(PET, MAIN_REL), os.path.join(pet, MAIN_REL))
+    src_npc = os.path.join(PET, 'assets', 'npc')
+    if os.path.isdir(src_npc):
+        shutil.copytree(src_npc, os.path.join(pet, 'assets', 'npc'))
     return base, pet
 
 

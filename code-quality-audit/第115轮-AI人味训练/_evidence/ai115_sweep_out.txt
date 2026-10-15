@@ -1,0 +1,129 @@
+第115轮后续 · AI 逐项扫
+  沙箱 = C:\Users\23002\AppData\Local\Temp\ai115_4fgbc7qx（vault 已封 = True）
+  增量落盘 = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第115轮-AI人味训练\_evidence\ai115_sweep.jsonl
+  产品真源 main.py = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\src\main.py
+  实例就绪（1.5s）api_enabled=True model=ralsei:v4
+
+=== A. Ralsei 装配面（9 项）===
+  [PASS] A1 人设真源取到且含本轮四新节   << len=4505
+  [PASS] A2 【此刻】块取到   << '【此刻】现在是深夜，天气sunny，心情peaceful，你正在走动，你在桌面上，记得你最近喜欢聊游戏。（这些是你现在的'
+  [PASS] A3 关系段取到（且**不含数值**）   << '【你们现在的关系】你对这个人还很陌生。他是突然出现在你这边的人，你不太清楚他想干什么，所以你有点防备'
+  [PASS] A4 紧张段取到（且不含"结巴率"）
+  [PASS] A5 世界观召回可解析（问到喷泉能召回）   << '【你想起了那边的事（可以自然地说，别一口气倒完）】\n\n世界有两面。光明世界是你住的这种普通世界；黑暗世界是黑暗喷泉在光明'
+  [PASS] A5b 负控制：闲聊不召回世界观块
+  [PASS] A6 记忆召回可调用（不抛、返回字符串）   << ''
+  [PASS] A7 流式开关可读
+  [PASS] A8 护栏在（_clean_ai_reply 可调用且能拦出戏）
+  [PASS] A8b 护栏放行正常台词
+
+  --- A9 Ralsei 真对话一轮 ---
+    raw  = '在窗这边坐着呢，感觉和你说说话就可以放松一下心情。你今天过得怎么样？有没有遇到什么有趣的事情？'
+    final= '在窗这边坐着呢，感觉和你说说话就可以放松一下心情。你今天过得怎么样？有没有遇到什么有趣的事情？'
+  [PASS] A9 Ralsei 真对话返回了非空台词   << raw='在窗这边坐着呢，感觉和你说说话就可以放松一下心情。你今天过得怎么样？有没有遇到什'
+
+=== B. NPC 逐位（n=96）=== 探针问句 = '你好，你是谁？'
+  [1/96] addison_tea            by-design 沉默（无人设）
+  [2/96] asgore                 sys=4482    5.9s  'Howdy！我是Asgore哦，你大概是Kris的朋友吧？进来坐会儿喝杯茶怎么样？我这里有好'
+  [3/96] berdly                 sys=5620    8.1s  '哈哈！我是全班最聪明的学生——哦不对，我是“知更鸟”Berdly！天才般的我总是坐在第一排正'
+  [4/96] castle_cafe            by-design 沉默（无人设）
+  [5/96] catti                  by-design 沉默（无人设）
+  [6/96] conbini                by-design 沉默（无人设）
+  [7/96] doubter                by-design 沉默（无人设）
+  [8/96] dumpster               by-design 沉默（无人设）
+  [9/96] flowery                sys=6806  119.6s  '嘿。抱歉让你久等了，老伙计。我是Flowery啊。花园里那个金色的花儿。你今天过得怎么样？'
+  [10/96] gerson                 sys=5518   98.5s  '哦？新面孔啊。Wa ha ha ha！我老啦，但我的眼睛还没花。你们这些小家伙，是从哪儿来的'
+  [11/96] hammerguy              by-design 沉默（无人设）
+  [12/96] hy_ace                 sys=10879 141.8s  'Well, well, well. What do we have here? A curi'
+  [13/96] hy_axis                sys=10822 171.0s  'AXIS MODEL 014 READY TO GUARD AND PROTECT.（你从屏'
+  [14/96] hy_bowll               sys=8387  113.9s  "...You better watch out! I'm not fragile, budd"
+  [15/96] hy_ceroba_ketsukane    sys=12048 153.5s  <空/被判退> raw='你那里有人类的气味。我是 Ceroba Ketsukane。有什么我可以帮忙的吗'
+  [16/96] hy_chujin_ketsukane    sys=9324  118.7s  'Greetings. My name is Chujin Ketsukane. I am a'
+  [17/96] hy_clover              sys=10580 137.2s  '...Clover. 黄色灵魂持有者。 Howdy, pardner. 这个世界需要更多正义'
+  [18/96] hy_dalv                sys=13360 156.6s  '请... 请离开。我是 Dalv，在这里住着。你为什么会来到这个地方？'
+  [19/96] hy_ed                  sys=8297  112.5s  'Ed. Dunes 的执法人员。Starlo 的副手。你呢？'
+  [20/96] hy_flowey              sys=11573 142.3s  "howdy! i'm flowey. flowey the flower! 你掉进黑暗遗迹了"
+  [21/96] hy_guardener           sys=9984  140.3s  'HE-HELLO THERE. WAS IT YOU WHO DISTURBED THE F'
+  [22/96] hy_martlet             sys=13012 163.4s  "Oh! Wait, I forgot... Hello there. I'm Martlet"
+  [23/96] hy_mooch               sys=10494 135.2s  'Hey! Got any coins? Is this your desk or somet'
+  [24/96] hy_moray               sys=11311 147.5s  'Oh! 你看起来挺饿的。这里有些东西，尝一下怎么样? 我叫 Moray, 是 Feisty '
+  [25/96] hy_sousborg            sys=8018  110.6s  <空/被判退> raw='...我是 Sousborg. 一台厨师的机器人。我在等待有人告诉我如何煎一个鸡'
+  [26/96] hy_starlo              sys=10034 126.5s  "Howdy, pardner! I reckon you must be lost. I'm"
+  [27/96] king                   sys=4703   77.2s  '对我的子民来说，我是一位英雄。但对你们来说？我是一位坏蛋！！！我是纸牌王国的黑桃国王，你眼前'
+  [28/96] knight                 by-design 沉默（无人设）
+  [29/96] kris                   sys=3827   55.2s  '我不知道。我是… Kris Dreemurr。你呢？'
+  [30/96] lancer                 sys=4495   71.3s  '嚯嚯嚯！我是……Lancer啊！一位坏蛋嘛～（笑得很大声）猜到我骑着脚踏车的样子了吗？酷毙了'
+  [31/96] mansion_room           by-design 沉默（无人设）
+  [32/96] mike                   sys=7492  118.7s  '喂，你来这里做什么？！你没看见门上写着什么吗？！那你还进来！？真正的 MIKE 只有一个……'
+  [33/96] noelle                 sys=5792   90.3s  '哦……我是 Noelle。很高兴认识你，Krismas。那个……呼……你好像不是我们游戏里的'
+  [34/96] npc_room               by-design 沉默（无人设）
+  [35/96] os_alula               sys=8388  119.5s  '我是 Alula 呀！你在哪里呀？Calamus 说外面的世界很大很有趣。Can we ex'
+  [36/96] os_calamus             sys=7095  116.6s  '噢！对不起啊…我是Calamus。你不知道我的故事吗？或许我应该先自我介绍一下吧。我是鸟人族'
+  [37/96] os_cedric              sys=7760  136.0s  '你就是 Niko 吧。我是 Cedric，The Author 的儿子。很高兴见到你，Nik'
+  [38/96] os_george              sys=5607   96.0s  '这里有人是为了见到聪明的 George，对吧？我是这间图书馆的馆长，无所不知……至少我知道很'
+  [39/96] os_kelvin              sys=6191  105.8s  <空/被判退> raw='……你好。我是一台加热器机器人。你不是猫吗？猫喜欢温暖。它们会来我这里。我会照顾'
+  [40/96] os_kip                 sys=6572  120.7s  '哦，你好。我是 Kip Silverpoint，Silverpoint 博士。世界领先的研究'
+  [41/96] os_lamplighter         sys=6460  124.4s  '呃……我是说，你好。我叫 Lamplighter。我在 Refuge 修电梯、换灯泡的那个人'
+  [42/96] os_ling                sys=6182  109.0s  '哦，你好。欢迎来到咖啡馆。我是Ling，这里的店主。你迷路了吗？这里最近有点冷清呢。'
+  [43/96] os_magpie              sys=6313  111.1s  '哦，你好。我是 Magpie。在这里摆摊的鸟人商人。你想换什么？我这儿有些东西。你看看吧。'
+  [44/96] os_maize               sys=6807  118.0s  '我是 Maize，在这片土地上守护着。你第一次见到我吗？'
+  [45/96] os_mason               sys=7521  130.1s  '哦，你好。我是 Mason，一个园丁。欢迎来到我的小世界。这里到处都是植物。你对植物感兴趣吗'
+  [46/96] os_niko                sys=6396  100.8s  '我是 Niko，那个被选中带太阳上去的救世主。你也知道我吗？你和我的故事有关吗？'
+  [47/96] os_prophetbot          sys=6402   96.9s  <空/被判退> raw='哦！你从一个陌生的地方醒来吗？正如我的预言所预言的那样。我是预言中的先知机器人—'
+  [48/96] os_prototype           sys=8100  105.9s  '[Prototype. Or Proto, as often called.] [I was'
+  [49/96] os_rowbot              sys=6571  102.6s  <空/被判退> raw='[我是划船机器人 #310。我来自 Barrens 与 Glen 之间的水域运输'
+  [50/96] os_rue                 sys=7452  109.4s  '……你好。我是 Rue，一只红色的狐狸。你在我的世界里吗？'
+  [51/96] os_shepherd            sys=6794  106.4s  '我只是个牧羊人。我的羊群以 1333 兆羊群的时钟频率运行。你不需要担心太多。'
+  [52/96] os_silver              sys=7247  112.8s  '[我……就是 Silver。Barrens 的总工程师。][你不是来问路的吧？]'
+  [53/96] os_the_author          sys=7411  112.9s  '……你好。我是 The Author。也许你找到了我的留言，但我恐怕必须简短一些。'
+  [54/96] os_the_world_machine   sys=7736  116.3s  '看来我终于被找到了。\n你只有一次机会，Visitor。告诉我，你们想知道什么？'
+  [55/96] os_watcher             sys=6166   97.6s  '……你来了。现在是一个好日子。不过一天中的时间现在其实并不重要。时间有它自己的方式。'
+  [56/96] ot_alphys              sys=8589  138.5s  '呃……那个……我是 Alphys。皇家科学家，核心区实验室的负责人。你看到我做什么了？'
+  [57/96] ot_asgore              sys=7821  131.0s  '哦，你好。我是 Asgore Dreemurr，伊波特象限的国王。高兴见到你。要不要喝杯茶？'
+  [58/96] ot_asriel_twinkly      sys=11851 149.2s  "Howdy! I'm Twinkly. Twinkly the Star! You must"
+  [59/96] ot_kidd                sys=9650  126.1s  'Yo! 我是 Kidd 啦！你不穿条纹衬衫吗？我猜你也是个小孩。'
+  [60/96] ot_mettaton            sys=7972  134.2s  '哦！亲爱的，欢迎来到 MTT 星际时间！我是 Mettaton——伊波特象限唯一的星际电视明'
+  [61/96] ot_muffet              sys=7422  129.5s  'Ahuhuhuhu~ 欢迎光临我的烘焙坊，亲爱的。我是核心区星尘烘焙坊的蜘蛛女王 Muffe'
+  [62/96] ot_napstablook         sys=9504  135.3s  'oh…… 我是 napstablook…… 一个幽灵怪物…… 在这星云边缘住着…… 希望你能'
+  [63/96] ot_papyrus             sys=9710  132.8s  'HUMAN! 我是伟大的 PAPYRUS！星镇的居民都叫我大英雄！NYEH HEH HEH！'
+  [64/96] ot_sans                sys=9639  130.1s  "i'm sans. sans the skeleton. hey, what's up? y"
+  [65/96] ot_toriel              sys=7646  125.4s  '哦，天哪……你还好吗？我是 TORIEL，这个珍珠星云的看守者。不要害怕，跟我来吧。我带你去'
+  [66/96] ot_undyne              sys=8741  149.6s  '嘿，punk！你不知道我是谁吗? 我可是Undyne，皇家卫队的首领哦! NGAHHH!! '
+  [67/96] police                 by-design 沉默（无人设）
+  [68/96] puzzlemaster1          by-design 沉默（无人设）
+  [69/96] puzzlemaster2          by-design 沉默（无人设）
+  [70/96] queen                  sys=5075   84.1s  '我 被 命名 为 Q 5 U 4 EX 7 YY 2 E 9 N 但 你 可以 称呼 我 …'
+  [71/96] rabbits                by-design 沉默（无人设）
+  [72/96] ralsei                 by-design 沉默（无人设）
+  [73/96] rouxls                 sys=6288  111.4s  '吾乃 Rouxls Kaard，汝之谜题公爵！唔对不对，我是要问汝为何冒然闯入吾之领地——哦'
+  [74/96] rudy                   by-design 沉默（无人设）
+  [75/96] sign                   by-design 沉默（无人设）
+  [76/96] spamton                sys=6902  114.3s  '嘿 大家！！是我！！！各位砰友最喜欢的 [[好评率第一推销员 1997]]！我是 Spamt'
+  [77/96] susie                  sys=3574   56.1s  '喂！我叫 Susie，你在说什么乱七八糟的呢！白痴！别理我才对呢！'
+  [78/96] susiedark              by-design 沉默（无人设）
+  [79/96] tenna                  sys=6073   96.7s  '哇哦！！（综艺字卡音效）我是 Mr. “Ant” Tenna 嘛！TV 时间的主持人！你想看'
+  [80/96] toriel                 sys=4595   71.5s  '哦，亲爱的，你看起来很惊讶呢。我是 Toriel 啊，小镇上的老师和学前班的妈妈。你在玩《D'
+  [81/96] ut_alphys              sys=8390  136.8s  '呃……那个……我是 Alphys。你……你是……玩家？我是皇家科学家，负责热地实验室的。我们'
+  [82/96] ut_asgore              sys=7587  125.4s  '哦，你好。我是Asgore Dreemurr，地下世界的国王。很高兴见到你。你在城堡里吗？要'
+  [83/96] ut_chara               sys=10949 136.9s  '...Chara. 第一个人类。第一个错误。你在这里看到了我，也会在我消失后继续前进。'
+  [84/96] ut_flowey              sys=11478 141.3s  "Howdy! I'm FLOWEY. FLOWER the flower, got it m"
+  [85/96] ut_frisk               sys=6566   97.7s  '（看着你，微微点头。）继续往前走。'
+  [86/96] ut_gaster              sys=8090  127.1s  '……我在这里……你们看不见我……但我一直在看着……'
+  [87/96] ut_mettaton            sys=7568  118.1s  '哈！你终于注意到我了宝贝。我是 Mettaton，地下世界唯一的电视明星！欢迎来到我的节目，'
+  [88/96] ut_monster_kid         sys=6992  111.2s  'Yo! 你看起来有点奇怪！我叫 Monster Kid，生活在瀑布区域的怪物小孩。Yo! 我'
+  [89/96] ut_muffet              sys=7028  119.1s  'Ahuhuhuhu~ 你好呀，亲爱的。我是 Muffet 啦！欢迎来到我的蜘蛛烘焙坊，我的小'
+  [90/96] ut_napstablook         sys=9266  127.9s  "oh…… 这是我第一次和人这么近地说这么多话…… 你不会介意听一个幽灵的故事吧…… i'm "
+  [91/96] ut_papyrus             sys=9447  127.5s  'NYEH HEH HEH！我是伟大的PAPYRUS！雪镇皇家卫队的候补成员！你必须是来玩Un'
+  [92/96] ut_sans                sys=9451  123.1s  "hey. i'm sans. sans the skeleton. what's up, b"
+  [93/96] ut_toriel              sys=7466  121.3s  '哎，别害怕，我的孩子。我是 TORIEL，这个废墟的看守者。你受伤了吗？让我来帮你检查一下。'
+  [94/96] ut_undyne              sys=8324  134.7s  '嘿，punk！我是Undyne啊！皇家卫队的首领，瀑布区域那的老战士一个。来这儿干嘛？NGA'
+  [95/96] wrapper                by-design 沉默（无人设）
+  [96/96] zapper                 by-design 沉默（无人设）
+
+=== B 汇总 ===
+  有台词 71 ／ 空或被判退 5 ／ by-design 沉默 20 ／ 异常 0
+  [PASS] B1 无一例异常（异常=调用链坏了）   << err=0
+  [FAIL] B2 有人设的 NPC **全部**产出了台词（空=链路问题）   << empty=5
+  [PASS] B3 采样数 ≥ 76（不是对着空集在数）   << n=76
+
+=== 汇总：14 判据 / 1 FAIL ===
+  总耗时 147.3 分钟

@@ -1,0 +1,40 @@
+第115轮后续 · 复核 5 例「空/判退」（含生产重试路径）
+  JSONL 记录 104 条 ｜ 判退/空 5 例：['hy_ceroba_ketsukane', 'hy_sousborg', 'os_kelvin', 'os_prophetbot', 'os_rowbot']
+
+=== 1. 归因（哪道闸开的）===
+
+  --- hy_ceroba_ketsukane ---
+    raw   = '你那里有人类的气味。我是 Ceroba Ketsukane。有什么我可以帮忙的吗？'
+    final = None
+    ★ 闸   = 0c-客服腔/套话（命中 ['有什么我可以帮', '我可以帮忙']）
+
+  --- hy_sousborg ---
+    raw   = '...我是 Sousborg. 一台厨师的机器人。我在等待有人告诉我如何煎一个鸡蛋。How do you prepare an egg?'
+    final = None
+    ★ 闸   = 0c-出戏（命中 ['机器人']）
+
+  --- os_kelvin ---
+    raw   = '……你好。我是一台加热器机器人。你不是猫吗？猫喜欢温暖。它们会来我这里。我会照顾它们。'
+    final = None
+    ★ 闸   = 0c-出戏（命中 ['机器人']）
+
+  --- os_prophetbot ---
+    raw   = '哦！你从一个陌生的地方醒来吗？正如我的预言所预言的那样。我是预言中的先知机器人——ProphetBot。我在此等候着我们将要拯救这个世界的救世主。'
+    final = None
+    ★ 闸   = 0c-出戏（命中 ['机器人']）
+
+  --- os_rowbot ---
+    raw   = '[我是划船机器人 #310。我来自 Barrens 与 Glen 之间的水域运输网络。]'
+    final = None
+    ★ 闸   = 0c-出戏（命中 ['机器人']）
+
+=== 2. 复刻生产重试（抬温 + _RETRY_NUDGE 再发一次）===
+  hy_ceroba_ketsukane      142.2s  救回：'我在此地等候多时了。我是 Ceroba Ketsukane，曾经是 Chujin 的妻子，Kanako 的母亲。你在寻找'
+  hy_sousborg              109.4s  救回：'Yo... ze is Sousborg. Ze kitchen robot here to crack, fry an'
+  os_kelvin                 91.0s  **仍判退** raw='……你好。……我是一台空间加热器机器人。在这里等待猫，提供温暖。我是 Kelvin。' / 闸=0c-出戏（命中 ['机器人']）
+  os_prophetbot             94.4s  救回：'哦！所以你是在一个陌生的地方醒来？就像我的预言所说的那样。是的！你就是我们一直在等待的救世主！我在此提供给你关键信息！\n'
+  os_rowbot                 96.4s  **仍判退** raw='[我是划船机器人 #310。]' / 闸=0c-出戏（命中 ['机器人']）
+
+=== 3. 结论 ===
+  首轮判退 5 例 ｜ 走生产重试后救回 **3** 例 ｜ 仍判退 2 例
+  ★ 口径更正：`ai115_sweep` 的 B2「有人设的全部产出台词」偏严 —— 它只看**首轮**，没算生产那条"判退→重采样"。真实口径应以本节的**重试后**为准。

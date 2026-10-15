@@ -3,11 +3,11 @@
 [PASS] T7 ★★ 未发起过渡时 α 恒 0（`idle_alpha_max` 为空或 0）  <- idle_alpha_max=0.0
 
 -- T1~T6 过渡曲线（真机行为证据） --
-[PASS] T1 ★★★ 过渡起点 α ≈ 0（正常态不遮屏）  <- alpha0=0.015
-[PASS] T2 ★★★ 过渡中 α 触达 ≈ 1（换房那一拍全黑掩护 —— 原作序）  <- alpha_max=1.000 @ 290ms
+[PASS] T1 ★★★ 过渡起点 α ≈ 0（正常态不遮屏）  <- alpha0=0.008
+[PASS] T2 ★★★ 过渡中 α 触达 ≈ 1（换房那一拍全黑掩护 —— 原作序）  <- alpha_max=1.000 @ 284ms
 [PASS] T3 ★★★ 过渡终点 α 回到 0（画面已恢复，不残留全黑）  <- alpha_end=0.000
-[PASS] T4 ★★ α 曲线"先升后降"（不是瞬间跳变 —— 原作是逐帧 `image_alpha += fadespeed`）  <- 升=True 降=True 峰序=14/39
-[PASS] T5 ★★ 淡出段时长 ≈ 267ms、淡入段 ≈ 417ms（原作换算；容差 ±60%）  <- out=290ms in=395ms（原作 267/417；淡入终点=α首次回0）
+[PASS] T4 ★★ α 曲线"先升后降"（不是瞬间跳变 —— 原作是逐帧 `image_alpha += fadespeed`）  <- 升=True 降=True 峰序=16/48
+[PASS] T5 ★★ 淡出段时长 ≈ 267ms、淡入段 ≈ 417ms（原作换算；容差 ±60%）  <- out=284ms in=402ms（原作 267/417；淡入终点=α首次回0）
 [PASS] T6 ★★★ 过渡真的换了场景（scene_id 前后不同）  <- desktop → ch1.kris_room.kris_s_room（accepted=True）
 [PASS] T6b ★★ 请求被接受（走的是过渡路径，不是同步回落）  <- accepted=True
 [PASS] T6c ★★ 第二次切换（回桌面）后 α 也回到 0（可重复，不卡死）  <- alpha_end2=0.0
@@ -17,48 +17,57 @@
 [PASS] T8b 帧目录在盘  <- C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第109轮-场景过渡动画\_evidence\frames109
 
 ---- CURVE ----
-1791741293655.2ms	0.0150	ch1.kris_room.kris_s_room
-1791741293691.6ms	0.1963	ch1.kris_room.kris_s_room
-1791741293703.2ms	0.1963	ch1.kris_room.kris_s_room
-1791741293712.8ms	0.1963	ch1.kris_room.kris_s_room
-1791741293721.5ms	0.1963	ch1.kris_room.kris_s_room
-1791741293755.7ms	0.4277	ch1.kris_room.kris_s_room
-1791741293768.9ms	0.4277	ch1.kris_room.kris_s_room
-1791741293778.9ms	0.4277	ch1.kris_room.kris_s_room
-1791741293815.3ms	0.6519	ch1.kris_room.kris_s_room
-1791741293829.6ms	0.6519	ch1.kris_room.kris_s_room
-1791741293837.9ms	0.6519	ch1.kris_room.kris_s_room
-1791741293846.5ms	0.6519	ch1.kris_room.kris_s_room
-1791741293893.4ms	0.8967	ch1.kris_room.kris_s_room
-1791741293905.5ms	0.8967	ch1.kris_room.kris_s_room
-1791741293945.2ms	1.0000	desktop
-1791741293960.9ms	1.0000	desktop
-1791741293969.5ms	1.0000	desktop
-1791741293996.0ms	0.8477	desktop
-1791741294030.7ms	0.7697	desktop
-1791741294076.0ms	0.6853	desktop
-1791741294089.0ms	0.6853	desktop
-1791741294117.6ms	0.5588	desktop
-1791741294148.9ms	0.4876	desktop
-1791741294187.6ms	0.3986	desktop
-1791741294200.7ms	0.3986	desktop
-1791741294209.8ms	0.3986	desktop
-1791741294218.0ms	0.3986	desktop
-1791741294242.3ms	0.2517	desktop
-1791741294289.6ms	0.1535	desktop
-1791741294303.5ms	0.1535	desktop
-1791741294312.0ms	0.1535	desktop
-1791741294339.7ms	0.0268	desktop
-1791741294367.5ms	0.0000	desktop
-1791741294394.4ms	0.0000	desktop
-1791741294407.0ms	0.0000	desktop
-1791741294434.1ms	0.0000	desktop
-1791741294486.9ms	0.0000	desktop
-1791741294500.5ms	0.0000	desktop
-1791741294524.4ms	0.0000	desktop
+1792094008083.7ms	0.0075	ch1.kris_room.kris_s_room
+1792094008093.7ms	0.0075	ch1.kris_room.kris_s_room
+1792094008102.7ms	0.0075	ch1.kris_room.kris_s_room
+1792094008111.2ms	0.0075	ch1.kris_room.kris_s_room
+1792094008141.3ms	0.2362	ch1.kris_room.kris_s_room
+1792094008150.3ms	0.2362	ch1.kris_room.kris_s_room
+1792094008159.3ms	0.2362	ch1.kris_room.kris_s_room
+1792094008167.8ms	0.2362	ch1.kris_room.kris_s_room
+1792094008176.3ms	0.2362	ch1.kris_room.kris_s_room
+1792094008205.8ms	0.4800	ch1.kris_room.kris_s_room
+1792094008237.4ms	0.5944	ch1.kris_room.kris_s_room
+1792094008246.9ms	0.5944	ch1.kris_room.kris_s_room
+1792094008255.4ms	0.5944	ch1.kris_room.kris_s_room
+1792094008263.9ms	0.5944	ch1.kris_room.kris_s_room
+1792094008294.3ms	0.8081	ch1.kris_room.kris_s_room
+1792094008325.8ms	0.9256	ch1.kris_room.kris_s_room
+1792094008367.3ms	1.0000	desktop
+1792094008376.9ms	1.0000	desktop
+1792094008385.9ms	1.0000	desktop
+1792094008412.9ms	0.8702	desktop
+1792094008424.5ms	0.8702	desktop
+1792094008450.0ms	0.7778	desktop
+1792094008474.5ms	0.7142	desktop
+1792094008484.0ms	0.7142	desktop
+1792094008510.0ms	0.6337	desktop
+1792094008519.5ms	0.6337	desktop
+1792094008547.8ms	0.5378	desktop
+1792094008575.3ms	0.4796	desktop
+1792094008604.3ms	0.4136	desktop
+1792094008634.9ms	0.3440	desktop
+1792094008665.4ms	0.2708	desktop
+1792094008674.9ms	0.2708	desktop
+1792094008709.9ms	0.1772	desktop
+1792094008719.4ms	0.1772	desktop
+1792094008728.4ms	0.1772	desktop
+1792094008769.0ms	0.0488	desktop
+1792094008777.5ms	0.0488	desktop
+1792094008786.5ms	0.0488	desktop
+1792094008795.0ms	0.0488	desktop
+1792094008816.5ms	0.0000	desktop
+1792094008827.1ms	0.0000	desktop
+1792094008849.6ms	0.0000	desktop
+1792094008858.1ms	0.0000	desktop
+1792094008878.6ms	0.0000	desktop
+1792094008891.1ms	0.0000	desktop
+1792094008919.7ms	0.0000	desktop
+1792094008944.2ms	0.0000	desktop
+1792094008953.2ms	0.0000	desktop
 
 ---- SNAPS ----
-{'tag': 'idle', 'note': '未切场景（α 应恒 0）', 'alpha': 0.0, 'scene_id': 'desktop', 'canvas_size': (2133, 1600), 'canvas_pos': (0, 0), 'trans_active': False, 'png': 'k000_idle.png'}
-{'tag': 'trans_f015', 'note': '过渡中', 'alpha': 0.20740302289418466, 'scene_id': 'ch1.kris_room.kris_s_room', 'canvas_size': (2133, 1600), 'canvas_pos': (0, 0), 'trans_active': True, 'png': 'k001_trans_f015.png'}
-{'tag': 'after_trans', 'note': '过渡结束后（α 须回 0、场景已变）', 'alpha': 0.0, 'scene_id': 'ch1.kris_room.kris_s_room', 'canvas_size': (2133, 1600), 'canvas_pos': (0, 0), 'trans_active': False, 'png': 'k002_after_trans.png'}
-{'tag': 'back_desktop', 'note': '切回桌面后（α 须回 0）', 'alpha': 0.0, 'scene_id': 'desktop', 'canvas_size': (2133, 1600), 'canvas_pos': (0, 0), 'trans_active': False, 'png': 'k003_back_desktop.png'}
+{'tag': 'idle', 'note': '未切场景（α 应恒 0）', 'alpha': 0.0, 'scene_id': 'desktop', 'canvas_size': (2560, 1600), 'canvas_pos': (0, 0), 'trans_active': False, 'png': 'k000_idle.png'}
+{'tag': 'trans_f015', 'note': '过渡中', 'alpha': 1.0, 'scene_id': 'ch1.kris_room.kris_s_room', 'canvas_size': (2560, 1600), 'canvas_pos': (0, 0), 'trans_active': True, 'png': 'k001_trans_f015.png'}
+{'tag': 'after_trans', 'note': '过渡结束后（α 须回 0、场景已变）', 'alpha': 0.0, 'scene_id': 'ch1.kris_room.kris_s_room', 'canvas_size': (2560, 1600), 'canvas_pos': (0, 0), 'trans_active': False, 'png': 'k002_after_trans.png'}
+{'tag': 'back_desktop', 'note': '切回桌面后（α 须回 0）', 'alpha': 0.0, 'scene_id': 'desktop', 'canvas_size': (2560, 1600), 'canvas_pos': (0, 0), 'trans_active': False, 'png': 'k003_back_desktop.png'}

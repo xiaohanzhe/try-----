@@ -10,7 +10,7 @@
   S4  相机 scale / scoped 与屏幕自洽
   S5  非桌面场景 ⇒ `_opaque_bg=True`（不透过壁纸）；
       桌面场景 ⇒ `_opaque_bg=False`（透出壁纸）
-  S6  ★★ 输出偏移真进画布（`_offset_x/_offset_y` 与 `fit_fullscreen` 一致）
+  S6  ★★ 输出偏移真进画布（与**居中留黑边**口径一致：(屏-画布)/2）
 
 ★ 透明分层窗口的"可见面积"工具会失效 ⇒ 只断言**几何**（第73.8 条）；
   PNG 仅作人眼证据，不做像素级判据。
@@ -248,16 +248,38 @@ if _d0:
     ok(u'S2 ★★★ 画布位置 == 主屏原点（固定摆放，不是居中/钳制）',
        _scr is not None and tuple(_d0.get('canvas_pos') or ()) == (_scr[0], _scr[1]),
        u'pos=%s screen_org=%s' % (_d0.get('canvas_pos'), _scr and (_scr[0], _scr[1])))
-    ok(u'S4 ★★★ `cam.size` == `fit_fullscreen(主屏)` 前两位',
-       _fit is not None and tuple(_d0.get('cam_size') or ()) == tuple(_fit[:2]),
-       u'cam=%s fit=%s' % (_d0.get('cam_size'), _fit))
+    # ★★★ 第115轮更正（**过期判据**，不是产品回归）：
+    #   下面三条原断的是**第107轮的全屏不变量**（`fit_fullscreen` = 整屏），
+    #   而**第112轮特意**把它改成了「按比例铺满 + 留黑边」的 **0.5 档**
+    #   （`SCENE_FIT_FRACTION`；实测 `canvas=(400,300)`、`off=(200,150)`、`scale=1.25`）。
+    #   于是 `rec107` 长期在报这三条假红 —— 第115轮"逐项重放录像"时才暴露出来。
+    #   ⇒ 按 112 口径重写为**自洽断言**：不硬编码比例，改断"三条几何彼此一致"，
+    #     这样将来比例再变也不会假红（真正的口径由 `check107`/`check112` 在 G2 里锁）。
+    _cam_w = (_d0.get('cam_size') or (None, None))[0]
+    _cam_h = (_d0.get('cam_size') or (None, None))[1]
+    # ★ 实测：`canvas=(800,600)`（**整屏**）而 `cam=(400,300)`（0.5 档画面）——
+    #   两者**本就不相等**：画布 = 整屏，画面 = 画布内的**居中视口**。
+    #   正确的自洽关系是 `cam + 2*off == canvas`（居中 + 左右/上下黑边对称）。
+    #   （第115轮我自己第一版把它写成"cam == canvas"，那是错的，重放时当场报红。）
+    _off = tuple(_d0.get('off') or (None, None))
+    ok(u'S4 ★★★ 画面是画布内的**居中视口**：`cam + 2*off == canvas`'
+       u'（画布=整屏、画面=0.5 档，二者不等才是对的）',
+       bool(_cam_w) and _off[0] is not None
+       and tuple(_d0.get('canvas_size') or ()) == (_cam_w + 2 * _off[0],
+                                                   _cam_h + 2 * _off[1]),
+       u'cam=(%s,%s) off=%s canvas=%s'
+       % (_cam_w, _cam_h, _off, _d0.get('canvas_size')))
     ok(u'S4b ★★★ `cam.scale == cam_w/320` 且 `scoped == (320,240)`',
-       _fit and abs((_d0.get('cam_scale') or 0) - _fit[0] / 320.0) < 1e-6
+       bool(_cam_w) and abs((_d0.get('cam_scale') or 0) - _cam_w / 320.0) < 1e-6
        and tuple(_d0.get('scoped') or ()) == (320, 240),
-       u'scale=%s scoped=%s' % (_d0.get('cam_scale'), _d0.get('scoped')))
-    ok(u'S6 ★★ 输出偏移真进画布（`_offset_x/_offset_y` == fit 的 ox/oy）',
-       _fit is not None and tuple(_d0.get('off') or ()) == (_fit[2], _fit[3]),
-       u'off=%s fit_off=%s' % (_d0.get('off'), _fit and (_fit[2], _fit[3])))
+       u'scale=%s cam_w=%s scoped=%s'
+       % (_d0.get('cam_scale'), _cam_w, _d0.get('scoped')))
+    ok(u'S6 ★★ 输出偏移 = 居中留黑边（`_offset_x/_offset_y` == (屏-画布)/2）',
+       (not _scr) or (bool(_cam_w) and tuple(_d0.get('off') or ())
+                      == ((_scr[2] - _cam_w) // 2, (_scr[3] - _cam_h) // 2)),
+       u'off=%s expect=%s' % (_d0.get('off'),
+                              _scr and ((_scr[2] - _cam_w) // 2,
+                                        (_scr[3] - _cam_h) // 2)))
 
 _d1 = _byname.get(u'after_move') or {}
 if _d0 and _d1:

@@ -1,64 +1,64 @@
 第115轮 · 变异测试 mutate115
-  产线 PET = c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet
-  check115 = c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第115轮-AI人味训练\_tools\check115.py
+  产线 PET = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet
+  check115 = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第115轮-AI人味训练\_tools\check115.py
   ★ 全部变异在**临时树**里做，产线文件不动
 
 === M0 正控制：不破坏 ⇒ check115 必须全绿（否则后面的"报红"没有意义）===
-  rc=0  PASS=25  FAIL=0
+  rc=0  PASS=38  FAIL=0
   [PASS] M0
 
 --- M1 · 删掉「我是什么」节标题（世界观节整节失联）
     期望报红判据含: 'A1 十一个分节标题'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M2 · 把"不悲观"那句换成推托话（知道是游戏但还是消极）
     期望报红判据含: 'A2 ★ 世界观节'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M3 · ★★ 删掉记忆节的**对照写法**（本轮真机实测证过：删了立刻退化）
     期望报红判据含: 'A3 ★★ 记忆节保住'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M4 · 删掉治"那边引力"节的**正文**规则（只删正文，标题留着 = 半残态）
     期望报红判据含: 'A4 治"那边引力"'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M5 · 删掉寻路节的锚句（寻路口径失联）
     期望报红判据含: 'A5 寻路节'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M6 · 塞入 markdown 加粗（对话框逐字渲染 ⇒ 会原样显示星号）
     期望报红判据含: 'A6 禁 markdown'
-    rc=1 总 FAIL=2 命中期望判据=True
+    rc=1 总 FAIL=3 命中期望判据=True
 
 --- M7 · 真源里"平级"改成"主仆"（口径回退）
     期望报红判据含: 'C3 真源里仍是'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M8 · 兜底人设删掉新口径句（两条路径口径劈裂）
     期望报红判据含: 'B3 兜底已同步新口径'
-    rc=1 总 FAIL=2 命中期望判据=True
+    rc=1 总 FAIL=3 命中期望判据=True
 
 --- M9 · ★ 兜底人设删掉 J1 的三个锚之一「仅此而已」
     期望报红判据含: 'B4 ★ 兜底保住 J1'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 --- M10 · ★★ 判据自己变成恒真（给 check115 插一条 check("x", True)）
     期望报红判据含: 'D4 ★★ 无恒真判据'
-    rc=1 总 FAIL=1 命中期望判据=True
+    rc=1 总 FAIL=2 命中期望判据=True
 
 ======================================================================
 M0 正控制全绿 = True
 变异 10 个 ｜ CAUGHT=10 ｜ MISSED=0
-  M1   CAUGHT   FAIL=1   rc=1    删掉「我是什么」节标题（世界观节整节失联）
-  M2   CAUGHT   FAIL=1   rc=1    把"不悲观"那句换成推托话（知道是游戏但还是消极）
-  M3   CAUGHT   FAIL=1   rc=1    ★★ 删掉记忆节的**对照写法**（本轮真机实测证过：删了立刻退化）
-  M4   CAUGHT   FAIL=1   rc=1    删掉治"那边引力"节的**正文**规则（只删正文，标题留着 = 半残态）
-  M5   CAUGHT   FAIL=1   rc=1    删掉寻路节的锚句（寻路口径失联）
-  M6   CAUGHT   FAIL=2   rc=1    塞入 markdown 加粗（对话框逐字渲染 ⇒ 会原样显示星号）
-  M7   CAUGHT   FAIL=1   rc=1    真源里"平级"改成"主仆"（口径回退）
-  M8   CAUGHT   FAIL=2   rc=1    兜底人设删掉新口径句（两条路径口径劈裂）
-  M9   CAUGHT   FAIL=1   rc=1    ★ 兜底人设删掉 J1 的三个锚之一「仅此而已」
-  M10  CAUGHT   FAIL=1   rc=1    ★★ 判据自己变成恒真（给 check115 插一条 check("x", True)）
+  M1   CAUGHT   FAIL=2   rc=1    删掉「我是什么」节标题（世界观节整节失联）
+  M2   CAUGHT   FAIL=2   rc=1    把"不悲观"那句换成推托话（知道是游戏但还是消极）
+  M3   CAUGHT   FAIL=2   rc=1    ★★ 删掉记忆节的**对照写法**（本轮真机实测证过：删了立刻退化）
+  M4   CAUGHT   FAIL=2   rc=1    删掉治"那边引力"节的**正文**规则（只删正文，标题留着 = 半残态）
+  M5   CAUGHT   FAIL=2   rc=1    删掉寻路节的锚句（寻路口径失联）
+  M6   CAUGHT   FAIL=3   rc=1    塞入 markdown 加粗（对话框逐字渲染 ⇒ 会原样显示星号）
+  M7   CAUGHT   FAIL=2   rc=1    真源里"平级"改成"主仆"（口径回退）
+  M8   CAUGHT   FAIL=3   rc=1    兜底人设删掉新口径句（两条路径口径劈裂）
+  M9   CAUGHT   FAIL=2   rc=1    ★ 兜底人设删掉 J1 的三个锚之一「仅此而已」
+  M10  CAUGHT   FAIL=2   rc=1    ★★ 判据自己变成恒真（给 check115 插一条 check("x", True)）
 ======================================================================
 结论：全部被对应判据抓到

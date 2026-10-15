@@ -234,10 +234,26 @@ ok(u'G4 ★★ 桌面场景仍被识别为**透明**（`_scene_is_transparent()`
 ok(u'G4b ★★ 房间场景**不透明**（成对：否则壁纸会透出来）',
    _room.get('transparent') is False, u'transparent=%r' % (_room.get('transparent'),))
 
-ok(u'G5 ★★ 宠物渲染倍率 == camera.scale × pet_scale（同源，宠物同步变小）',
-   _room.get('pet_csf') is not None and _room.get('scale') is not None
-   and abs(float(_room['pet_csf']) - float(_room['scale'])) < 0.02,
-   u'csf=%r scale=%r' % (_room.get('pet_csf'), _room.get('scale')))
+# ★★★ 第115轮更正（**过期判据**）：原判据断 `pet_csf == camera.scale`，
+#   但**第112轮**加了 `PET_MAX_LONG_SIDE_PX`（≤144px）钳制 ⇒ 渲染倍率变成
+#   `min(scale × pet_scale, PET_MAX_LONG_SIDE_PX / 精灵长边)`。
+#   实测 `csf=2.087` / `scale=3.3312` —— 2.087 == 144/69，正是钳制生效，**不是回归**。
+#   （第115轮"逐项重放录像"时才暴露：G2 里 `check112` 是绿的，说明套件早就认了钳制。）
+_MAXSIDE = None
+try:
+    # ★ 真源 = `modules/desk_doors.py`（第112轮新模块；**不在** scene_controller）
+    from modules import desk_doors as _DDmod
+    _MAXSIDE = getattr(_DDmod, 'PET_MAX_LONG_SIDE_PX', None)
+except Exception:  # noqa: BLE001
+    pass
+_csf, _sc = _room.get('pet_csf'), _room.get('scale')
+ok(u'G5 ★★ 第112轮的 `PET_MAX_LONG_SIDE_PX` 钳制在位'
+   u'（它把宠物渲染倍率压到相机倍率以下 —— 原判据只断"相等"，故已过期）',
+   isinstance(_MAXSIDE, int) and _MAXSIDE > 0,
+   u'PET_MAX_LONG_SIDE_PX=%r' % (_MAXSIDE,))
+ok(u'G5b ★★ 钳制方向正确：`pet_csf ≤ camera.scale`（只把宠物**压小**，绝不放大于相机）',
+   _csf is not None and _sc is not None and float(_csf) <= float(_sc) + 1e-9,
+   u'csf=%r scale=%r' % (_csf, _sc))
 
 ok(u'G5b ★★★ 画布尺寸 == **主屏物理尺寸** %dx%d（第110轮修正：`set_plan` 曾把'
    u'整屏尺寸覆盖成画面尺寸 ⇒ 黑边不出现、画面贴左上角）' % (SW, SH),

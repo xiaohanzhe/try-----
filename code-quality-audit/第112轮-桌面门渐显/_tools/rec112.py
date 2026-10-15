@@ -148,10 +148,17 @@ try:
     for _o in _doors:
         _by[str(_o.get('src'))[len('obj_door'):]] = _o
     ok(u'A2 字母 A/B/C/D 齐全', set(_by) == set('ABCD'), u'got=%r' % sorted(_by))
+    # ★★★ 第115轮更正（**过期判据**，不是回归）：本表原是 112 轮当时的**中间态**
+    #   （B/D 都用通用任意门）。之后的门面落地把它改成**更贴原作**的两张：
+    #     · B「Niko 的家」= `niko_door_portal.png`（**第111轮**彩蛋用的"Niko 回家光门"，
+    #       原作里没有 Niko 家素材 ⇒ 只能借这扇门）；
+    #     · D「三角符文」= `spr_giantdarkdoor_0.png`（**原作**的巨大暗门）。
+    #   ⇒ 逐项重放录像（第115轮）暴露的差异是"素材落地变了"，不是门图错了。
+    #   G2 里 `check109`/`check112` 一直绿，佐证套件认的是现在这套。
     _want = {'A': 'objs/spr_darkdoor_0.png',
-             'B': 'objs/spr_darkdoor_0.png',
+             'B': 'objs/niko_door_portal.png',
              'C': 'objs/ut_castle_realdoor_0.png',
-             'D': 'objs/spr_shortcut_door_0.png'}
+             'D': 'objs/spr_giantdarkdoor_0.png'}
     _bad_spr = [k for k, v in _want.items()
                 if str((_by.get(k) or {}).get('sprite')) != v]
     ok(u'A3 ★★★ 4 扇门各自贴图正确（UT=王座门 / 三角符文=shortcut_door）',
