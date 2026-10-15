@@ -1,0 +1,30 @@
+第115轮 · NPC 新口径落地的**独立**验证（只读，对照来源 = git HEAD）
+  索引 tail_text = 417 字符 ｜ tail_sha256 = 7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4
+  NEW_BULLET（尾块新增的那一行）= '· 你知道自己是游戏里的一个角色，是被人写出来的 —— 这件事不让你难过，就当是出身，日子照样是真的过。被问到就平平淡淡认一句，认完顺着往下聊；不悲情，也不许把话拐到"设定""程序""模型"上去。'
+
+=== A/B/C · 逐文件（n=76）===
+  [PASS] A1 全部尾块 == 索引 tail_text + 换行（76 份）   << []
+  [PASS] A2 尾块内部无 CR（仍是 LF 口径）   << []
+  [PASS] B ★ 76 份**正文前缀逐字节等于 git HEAD**（只动了尾块）   << []
+  [PASS] C ★ 尾块只多了一行（行数差 == 1）   << []
+  [PASS] F 76 份尾块**依旧彼此逐字节相同**（单一真源未破）   << distinct=1
+
+=== D · 索引一致性 ===
+  [PASS] D1 tail_sha256 == sha256(tail_text)
+  [PASS] D2 记录条数仍是 76   << n=76
+  [PASS] D3 每条记录 5 个字段全部重算命中   << []
+  [PASS] D4 旧 tail_sha256 已不在索引里（确实被替换）
+  [PASS] D5 身份字段 id 全部在位
+  [PASS] D5 身份字段 file 全部在位
+  [PASS] D5 身份字段 work 全部在位
+  [PASS] D5 身份字段 sections 全部在位
+  [PASS] D5 身份字段 tail_added 全部在位
+  [PASS] D5 身份字段 name 全部在位
+  [PASS] D5 身份字段 name_plain 全部在位
+
+=== E · 负控制（判据必须不是恒真）===
+  [PASS] E1 拿**旧的** tail_text 去比 tail_sha256 ⇒ 必须不等
+  [PASS] E2 旧 tail_sha256 恰是 fd46fd7d…（与第115轮前一致）
+  [PASS] E3 正控制：新 tail_text 哈希 == 索引值
+
+=== 汇总：19 判据 / 0 FAIL ===

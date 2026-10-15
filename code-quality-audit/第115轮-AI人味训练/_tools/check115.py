@@ -31,7 +31,9 @@
   （注释/字符串里提一句名字就恒真 —— 本项目已发作五次，见详版 §108.6）。
 """
 import ast
+import hashlib
 import io
+import json
 import os
 import re
 import sys
@@ -219,6 +221,77 @@ check('C2 ★ 兜底与真源口径一致：兜底讲的那层"知道自己是�
       ('是被人写出来的' in _FB_TXT) and (ANCHOR_KNOWS_GAME in P_TEXT), star=True)
 check('C3 真源里仍是"平级"口径（兜底与真源同锚）',
       '平级' in P_TEXT, detail='平级=%s' % ('平级' in P_TEXT))
+
+print('=== C2. NPC 76 份人设尾块（「他们」也要铺）===')
+# 口径来源：用户原话是**复数**——「**他们**知道他们是游戏，但并不对此感到悲观」。
+# Ralsei 落在 `assets/ralsei_persona.md`；NPC 落在**共用的尾块**「本项目补充 —— 桌宠运行口径」。
+# 该尾块的真源 = `assets/npc/_personas.json` 的 `tail_text`（76 份 .txt 由它统一注入）。
+# ★★ 哈希账（第115轮实测钉死的口径，别再猜）：
+#     `tail_sha256` = sha256(**tail_text**)（LF、无尾换行）；
+#     每记录 `chars` = 含 CRLF 的字符数 · `bytes` = 磁盘字节 · `sha256` = sha(raw) ·
+#     `sha256_lf` = sha(LF 归一)；.txt **正文是 CRLF、尾块是 LF**，尾块一直到 EOF。
+NPC_INDEX = os.path.join(PET, 'assets', 'npc', '_personas.json')
+NPC_DIR = os.path.join(PET, 'assets', 'npc', 'persona')
+ANCHOR_NPC_KNOWS_GAME = '你知道自己是游戏里的一个角色'
+ANCHOR_NPC_NOT_SAD = '这件事不让你难过'
+NPC_MARK = u'【本项目补充'
+try:
+    _NPC = json.loads(_read(NPC_INDEX))
+except Exception as _e:  # noqa: BLE001
+    _NPC = {}
+    check('C2b0 NPC 索引可解析', False, star=True, detail=repr(_e))
+_NPC_TAIL = _NPC.get('tail_text') or ''
+check('C2a ★ NPC 共用尾块已写明「知道自己是游戏 + 不悲观」',
+      (ANCHOR_NPC_KNOWS_GAME in _NPC_TAIL) and (ANCHOR_NPC_NOT_SAD in _NPC_TAIL),
+      star=True,
+      detail='知道=%s 不悲观=%s' % (ANCHOR_NPC_KNOWS_GAME in _NPC_TAIL,
+                                    ANCHOR_NPC_NOT_SAD in _NPC_TAIL))
+check('C2b 尾块里不点名任何具体作品（76 份跨 Deltarune/UT/OneShot/UTY，点名会串）',
+      not any(w in _NPC_TAIL for w in ('《Deltarune》', '《Undertale》', '《OneShot》')))
+_NPC_FILES = sorted(f for f in os.listdir(NPC_DIR) if f.endswith('.txt'))
+_NPC_TAILS = set()
+_NPC_CR = 0
+_NPC_MISS = []
+for _fn in _NPC_FILES:
+    _raw = _raw_os = None
+    _p = os.path.join(NPC_DIR, _fn)
+    with io.open(_p, 'rb') as _fh:
+        _raw_os = _fh.read()
+    _t = _raw_os.decode('utf-8')
+    _i = _t.find(NPC_MARK)
+    if _i < 0:
+        _NPC_MISS.append(_fn)
+        continue
+    _tail = _t[_i:]
+    _NPC_TAILS.add(hashlib.sha256(_tail[:-1].encode('utf-8')).hexdigest())
+    if '\r' in _tail:
+        _NPC_CR += 1
+check('C2c 76 份尾块**逐字节相同**（单一真源，不是 76 份各写一遍）',
+      len(_NPC_TAILS) == 1 and not _NPC_MISS, star=True,
+      detail='distinct=%d miss=%d files=%d' % (len(_NPC_TAILS), len(_NPC_MISS),
+                                               len(_NPC_FILES)))
+check('C2d 尾块内部是 LF（正文 CRLF / 尾块 LF，改动时别混）', _NPC_CR == 0,
+      detail='含 CR 的文件数=%d' % _NPC_CR)
+check('C2e 索引 tail_sha256 == sha256(tail_text)',
+      _NPC.get('tail_sha256') == hashlib.sha256(
+          _NPC_TAIL.encode('utf-8')).hexdigest())
+_REC_BAD = []
+for _r in (_NPC.get('personas') or []):
+    _p = os.path.join(PET, 'assets', 'npc', _r['file'])
+    with io.open(_p, 'rb') as _fh:
+        _b = _fh.read()
+    _tx = _b.decode('utf-8')
+    if not (_r['chars'] == len(_tx) and _r['bytes'] == len(_b)
+            and _r['sha256'] == hashlib.sha256(_b).hexdigest()
+            and _r['sha256_lf'] == hashlib.sha256(
+                _b.replace(b'\r\n', b'\n')).hexdigest()
+            and _r['tail_sha256'] == _NPC.get('tail_sha256')):
+        _REC_BAD.append(_r.get('id'))
+check('C2f 每条记录 5 个字段（chars/bytes/sha256/sha256_lf/tail_sha256）重算全部命中',
+      not _REC_BAD, star=True, detail='%r 共%d' % (_REC_BAD[:4], len(_REC_BAD)))
+check('C2g ★负控制：把尾块里的新句抹掉 ⇒ C2a 的判据函数必须为假',
+      not ((ANCHOR_NPC_KNOWS_GAME in _NPC_TAIL.replace(ANCHOR_NPC_KNOWS_GAME, ''))),
+      star=True)
 
 print('=== D. 判据自身体检 ===')
 check('D1 判据条数经 check() 记账（防"写了没调 check"）',

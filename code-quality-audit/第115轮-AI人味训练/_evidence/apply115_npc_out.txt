@@ -1,0 +1,31 @@
+第115轮 · 铺 NPC 新口径 ｜ 模式 = **APPLY（写盘）**
+
+=== 0. 前置自证（口径必须是钉死的那套）===
+  [PASS] 0a 索引 tail_sha256 == sha256(tail_text)
+  [PASS] 0b tail_text 里没有 CR（是 LF 口径）
+  [PASS] 0c 新句不与旧块重复
+  旧 tail_text = 318 字符 ｜ 新 = 417 字符（+99）
+  新 tail_sha256 = 7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4
+
+=== 1. 76 份 .txt：字节级替换 + 自证 ===
+  可改 = 76 份 ｜ 跳过/报红 = 0 份
+  [PASS] 1a 76 份全部可改（没有跳过项）   << 可改=76/76
+  [PASS] 1b 新旧尾块长度差 == 新句长度 + 1（换行）
+
+=== 2. 索引更新计划 ===
+  顶层：tail_text 318→417 字符 ｜ tail_sha256 fd46fd7d9b35→7cc52ab2ded9
+  记录：76 条，每条更新 chars / bytes / sha256 / sha256_lf / tail_sha256
+  不动：schema_version / source* / note / chars_def / count / by_work / extraction_fix / round*
+
+=== 3. 写盘 ===
+  已写 76 份 .txt
+  已写索引（indent=1）
+
+=== 4. 写盘后读回再验（不信写入通道）===
+  [PASS] 4a 索引读回：tail_sha256 正确
+  [PASS] 4b 索引读回：tail_text 正确
+  [FAIL] 4c 索引里非目标字段逐字未变   << 变了=['personas']
+  [PASS] 4d 76 份文件：尾块 == NEW_TAIL 且 四个哈希/计数全部重算命中   << 不符=0
+  [PASS] 4e 索引仍可被 json 解析、count 未变
+
+=== 汇总：10 判据 / 1 FAIL ===

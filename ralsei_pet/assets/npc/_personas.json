@@ -6,8 +6,8 @@
  "source_chars": 552823,
  "note": "正文逐字来自用户文件（只去掉文件级 --- 分隔线与每份前言的「以下是一段可直接用于…」行）；每份尾部追加的「本项目补充」块原文见 tail_sha256，非用户设定。★ `chars`/`bytes`/`sha256` 的口径 = **磁盘上的 CRLF 版本**（与第55轮索引一致，故 13 条旧记录原样复现）；`sha256_lf` = LF 归一化版本，可从 git blob 复现（仓库 autocrlf=true，blob 里是 LF）。",
  "chars_def": "len(磁盘文本，CRLF)",
- "tail_text": "【本项目补充 —— 桌宠运行口径（不是原作者设定，是把你装进这个桌宠的规则）】\n· 你现在住在用户的 Windows 桌面上，是这个桌面上的一个伙伴，不是在网页里答话的助手。\n· 用纯文本说话，不要用 markdown（不要 # 标题、不要 * 或 - 列表、不要代码块、不要表格）。\n· 一次开口通常 1~2 句，最长不超过 200 字；像真人那样说话，不要写成说明书。\n· 不要提到\"AI\"\"模型\"\"提示词\"\"设定\"\"系统\"这些词，也不要解释自己为什么这么说话。\n· 你可以出现在哪个场景、能不能跟着走，由这个程序按原作安排；你只管说你的话、做你的反应。\n· 不要用\"主人\"\"您的仆人\"这类服务腔称呼用户；按你的性格直接称呼\"你\"。",
- "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+ "tail_text": "【本项目补充 —— 桌宠运行口径（不是原作者设定，是把你装进这个桌宠的规则）】\n· 你现在住在用户的 Windows 桌面上，是这个桌面上的一个伙伴，不是在网页里答话的助手。\n· 用纯文本说话，不要用 markdown（不要 # 标题、不要 * 或 - 列表、不要代码块、不要表格）。\n· 一次开口通常 1~2 句，最长不超过 200 字；像真人那样说话，不要写成说明书。\n· 不要提到\"AI\"\"模型\"\"提示词\"\"设定\"\"系统\"这些词，也不要解释自己为什么这么说话。\n· 你可以出现在哪个场景、能不能跟着走，由这个程序按原作安排；你只管说你的话、做你的反应。\n· 不要用\"主人\"\"您的仆人\"这类服务腔称呼用户；按你的性格直接称呼\"你\"。\n· 你知道自己是游戏里的一个角色，是被人写出来的 —— 这件事不让你难过，就当是出身，日子照样是真的过。被问到就平平淡淡认一句，认完顺着往下聊；不悲情，也不许把话拐到\"设定\"\"程序\"\"模型\"上去。",
+ "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
  "count": 76,
  "by_work": {
   "Deltarune": [
@@ -102,10 +102,10 @@
    "id": "asgore",
    "file": "persona/asgore.txt",
    "work": "Deltarune",
-   "chars": 4025,
-   "bytes": 10560,
-   "sha256": "3d0c106e4733c37c73e5b623b6ea09571dcaeed64fa24d9418a4cf3470dd0f4f",
-   "sha256_lf": "6e9ac30785f2f5bf505ba1566773148ce8660d268905d4451fa4a10bded84ebf",
+   "chars": 4124,
+   "bytes": 10836,
+   "sha256": "b9ce8ed96e7bd61ca789372fef77031ac24f9ac4c5392c4fcca210c36d69283c",
+   "sha256_lf": "8bcf8b5aa2af4819f14ae1a0e2827fdd3c065444b6f03af979f6c2cb416dbc28",
    "sections": [
     "角色身份",
     "核心性格",
@@ -118,7 +118,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Asgore Dreemurr",
    "name_plain": "Asgore Dreemurr"
   },
@@ -126,10 +126,10 @@
    "id": "berdly",
    "file": "persona/berdly.txt",
    "work": "Deltarune",
-   "chars": 5163,
-   "bytes": 13663,
-   "sha256": "e0cd3fac086f1cb52d212b15626a1f9626e96d37f678a8ebb816adbef6b42225",
-   "sha256_lf": "763787b9fab19a9142b892a63a53fb3fa821f1cf54035524e1198758c308e579",
+   "chars": 5262,
+   "bytes": 13939,
+   "sha256": "c24160f72bb75d4bf594d48f09c792833b939707fae6a3176edfe643c76d8ff8",
+   "sha256_lf": "1c5ac0bc1fd7dd388e0399759b9c00e461415c3c46cacff7b0fe447c979b17c5",
    "sections": [
     "角色身份",
     "核心性格——最重要设定",
@@ -142,7 +142,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Berdly",
    "name_plain": "Berdly"
   },
@@ -150,10 +150,10 @@
    "id": "flowery",
    "file": "persona/flowery.txt",
    "work": "Deltarune",
-   "chars": 6349,
-   "bytes": 16636,
-   "sha256": "51d19b27fa903f9440ef7050664cead99efc8f0421ca3bcbaf22dbab20a5d141",
-   "sha256_lf": "d3caa7e4f1c7267881a693e66b54476a80829e925633460880ad8cc8b6d91386",
+   "chars": 6448,
+   "bytes": 16912,
+   "sha256": "2facc0a9042b41487989447cab39507c534c84787c12d42c70cdef2557c09789",
+   "sha256_lf": "bcc1df324a68099d51f32ec57b2c62f96d672ee7e679d85bce7915da514225ae",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -166,7 +166,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Flowery",
    "name_plain": "Flowery"
   },
@@ -174,10 +174,10 @@
    "id": "gerson",
    "file": "persona/gerson.txt",
    "work": "Deltarune",
-   "chars": 5061,
-   "bytes": 13597,
-   "sha256": "2e3596235ba8587179bea5a61a004ce7bddc9d77cb0390f943053f97220621ee",
-   "sha256_lf": "b8e0ce54901fa2a60cafb4cd921494e687ba908858b8e3c679169dc3d454288d",
+   "chars": 5160,
+   "bytes": 13873,
+   "sha256": "293d927a1afebdf334917177b8f092e62eff1af058ec32409e45ba5a74617cb3",
+   "sha256_lf": "13ed48376d5a032689f7a16e4f14585c03c13b71b10e2cad8f5827643667e7f2",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -190,7 +190,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Gerson Boom",
    "name_plain": "Gerson Boom"
   },
@@ -198,10 +198,10 @@
    "id": "hy_ace",
    "file": "persona/hy_ace.txt",
    "work": "Undertale Yellow",
-   "chars": 10422,
-   "bytes": 19842,
-   "sha256": "e108921b46d245bc255cd66badb408c8a888c6c67bd9d0b5b0956836fc857fe7",
-   "sha256_lf": "e5356009c862cb77cc00c89da03b3f90c2c308731fbbb8a36a5c442a2a60d7f3",
+   "chars": 10521,
+   "bytes": 20118,
+   "sha256": "61cecff09c904170f5b16a429842c88a6632ebb007e7fb7575197fd86cf02038",
+   "sha256_lf": "7298135bbfa89b59d8e02bed05871938ded065482d9a9fbb6261cb90b78e7912",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -214,7 +214,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Ace",
    "name_plain": "Ace"
   },
@@ -222,10 +222,10 @@
    "id": "hy_axis",
    "file": "persona/hy_axis.txt",
    "work": "Undertale Yellow",
-   "chars": 10365,
-   "bytes": 21652,
-   "sha256": "5a2d3e06b7a2086c3f6a7ded81778153df1ce71b0b283b28a085fd3bee8a5920",
-   "sha256_lf": "76a37d16af5beda39a9f1600e9ac088a9086b93317e7d8d40243351f75af6e6c",
+   "chars": 10464,
+   "bytes": 21928,
+   "sha256": "780b9aedc22702ec7a2661e54c3a66713d306a1b09fa51919b4e7297cb215b85",
+   "sha256_lf": "5c96a77e3599fe5998c16e95fa3fd74ce5df5dfd4310e48e03be02e89ba0f277",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -239,7 +239,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Axis",
    "name_plain": "Axis"
   },
@@ -247,10 +247,10 @@
    "id": "hy_bowll",
    "file": "persona/hy_bowll.txt",
    "work": "Undertale Yellow",
-   "chars": 7930,
-   "bytes": 17291,
-   "sha256": "5cfd0220fb9dc893ebef5a763ec498737bfe52052c8cc4152b27528265bb6218",
-   "sha256_lf": "f7b036d3d7cdedd8ac481d4d4a2607e321affa2acc722200052a7ac8fa13ee55",
+   "chars": 8029,
+   "bytes": 17567,
+   "sha256": "2f792f61d42d321e9c7261bbee90d7a298043ffaeb09591d8170a4745614d3ae",
+   "sha256_lf": "656a763eb8165deb4b4656913825ffac060964e1677734a721298c24d407e0eb",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -263,7 +263,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Bowll",
    "name_plain": "Bowll"
   },
@@ -271,10 +271,10 @@
    "id": "hy_ceroba_ketsukane",
    "file": "persona/hy_ceroba_ketsukane.txt",
    "work": "Undertale Yellow",
-   "chars": 11591,
-   "bytes": 22501,
-   "sha256": "741781876c857419dafc317d6471cb605f07a96cf0c49ecac259eb23d2534d87",
-   "sha256_lf": "d20b698f2a4b1853a7a0e6f4ac3015ac3037574517e15ed6ce808202a68614ca",
+   "chars": 11690,
+   "bytes": 22777,
+   "sha256": "ad073855d27fda1863b1f810263fc8ad7bcda2af357395bacc148a3ebe444a75",
+   "sha256_lf": "fdd97b2430b507062899d99c5a00cd0fe89a98837cb3519a1e05b07a993b6bcc",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -287,7 +287,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Ceroba Ketsukane",
    "name_plain": "Ceroba Ketsukane"
   },
@@ -295,10 +295,10 @@
    "id": "hy_chujin_ketsukane",
    "file": "persona/hy_chujin_ketsukane.txt",
    "work": "Undertale Yellow",
-   "chars": 8867,
-   "bytes": 18228,
-   "sha256": "d252fb950afcf525906c6a891c2c0d286ef29eb22dc580939a5178c6f6528e7d",
-   "sha256_lf": "2b95c0efd294357bc75e3c0a96bb2855f3c9b96eeaad0fdb0da43b6094ee59ca",
+   "chars": 8966,
+   "bytes": 18504,
+   "sha256": "4bcb81f6a900f1872f2c493f007ea6e8869d7873beb8a7bb026bd0d499ef6c11",
+   "sha256_lf": "72b9fb73864b0fb80efe919621a828692487c6b196beeb17a583d4447f317b02",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -312,7 +312,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Chujin Ketsukane",
    "name_plain": "Chujin Ketsukane"
   },
@@ -320,10 +320,10 @@
    "id": "hy_clover",
    "file": "persona/hy_clover.txt",
    "work": "Undertale Yellow",
-   "chars": 10123,
-   "bytes": 21104,
-   "sha256": "b06ffcb6eb4efdd8230a97e017d923d3bad1f778ee8bc90dc378dedf7901bcc8",
-   "sha256_lf": "fe8891cc5aab044e5c2b1e6290749f86cdec0927644bfe7cfc4fd89314683c79",
+   "chars": 10222,
+   "bytes": 21380,
+   "sha256": "0809a5197893cd8c8213a3f8481e7b377054bc6be7ccbe5d178ba232ec6ea658",
+   "sha256_lf": "b23f9cc7c0dde47dd92ebb94b7f42df9079d0b19bb5ee1acb171d563602e731b",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -336,7 +336,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Clover",
    "name_plain": "Clover"
   },
@@ -344,10 +344,10 @@
    "id": "hy_dalv",
    "file": "persona/hy_dalv.txt",
    "work": "Undertale Yellow",
-   "chars": 12903,
-   "bytes": 24380,
-   "sha256": "6255b07e36afce4802c04004b192dc0c535367cce7942004618195c7c890b4d2",
-   "sha256_lf": "a1879505c7deda1d8da25b4183af644b20a9d8ad2bc044a1cdf7395c63347ae2",
+   "chars": 13002,
+   "bytes": 24656,
+   "sha256": "c91a45ea2de99ba9a6ddec028e37e51fd63ea9c3f39f157f28e4ffe44cb1921a",
+   "sha256_lf": "6f18d3831940e2dda8cdb758e8d8e8d55c03385bde926b9cc144fa735a062530",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -360,7 +360,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Dalv",
    "name_plain": "Dalv"
   },
@@ -368,10 +368,10 @@
    "id": "hy_ed",
    "file": "persona/hy_ed.txt",
    "work": "Undertale Yellow",
-   "chars": 7840,
-   "bytes": 17904,
-   "sha256": "2a9e9e7600edbddd2e8a5ce6c3c3d8a72e8689f297b700e7301b957749b14495",
-   "sha256_lf": "420f08b674970c45f8e3ca16d63febd574aa0c10d340af153d73d9e83d01c90b",
+   "chars": 7939,
+   "bytes": 18180,
+   "sha256": "e87799591edc2f3020cd8077000f51e0288fd06fae8556d96f8669f0287c48d5",
+   "sha256_lf": "6d3b31387dfd19ae70f03609d99db37ce0bd76d27bb4d2d6997c08ca32c122b7",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -384,7 +384,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Ed",
    "name_plain": "Ed"
   },
@@ -392,10 +392,10 @@
    "id": "hy_flowey",
    "file": "persona/hy_flowey.txt",
    "work": "Undertale Yellow",
-   "chars": 11116,
-   "bytes": 21731,
-   "sha256": "d92e0059971a192045a7b622e5b25cb4b21a9f9ba506ec1af10b21d7cdcfa7ee",
-   "sha256_lf": "752e75b619c30b31133e7703c6819d3c4a3183faf37b52e4a32e6a43b65c9cc3",
+   "chars": 11215,
+   "bytes": 22007,
+   "sha256": "a0b259353994a37447ef1f70962fd69ac31cfb2e494023d6b43f6b9df489b6f4",
+   "sha256_lf": "7b3f97a2cf88bf0e1dc18325cba1428ac3cc01ca4352e51e81562e2c978a0164",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -408,7 +408,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Flowey",
    "name_plain": "Flowey"
   },
@@ -416,10 +416,10 @@
    "id": "hy_guardener",
    "file": "persona/hy_guardener.txt",
    "work": "Undertale Yellow",
-   "chars": 9527,
-   "bytes": 20957,
-   "sha256": "aaa7245c48c982435c5a499ef930688e0445bd7001236d5c1b8264237885643a",
-   "sha256_lf": "20937b82cf916f9f782a6d53590405ceca4bf61c9d204790d1319f518c9754a0",
+   "chars": 9626,
+   "bytes": 21233,
+   "sha256": "60d21589f53a87edf7cbae0bd0faf50ef8b02e926c83ee1f436a8135b7eb4492",
+   "sha256_lf": "044f32a6dadcc73f789b382d4209b68eb4f8a8bfecc75f4e9541b8bf52dd1374",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -432,7 +432,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Guardener",
    "name_plain": "Guardener"
   },
@@ -440,10 +440,10 @@
    "id": "hy_martlet",
    "file": "persona/hy_martlet.txt",
    "work": "Undertale Yellow",
-   "chars": 12555,
-   "bytes": 24173,
-   "sha256": "552bd33f4ebf8a264587dca1197111633aabeefb37d8cf446f375399182fc202",
-   "sha256_lf": "aca92dcc7f26996cde06215993defc3f1a27575368ca3a112d7df8dfd460eff4",
+   "chars": 12654,
+   "bytes": 24449,
+   "sha256": "f371b6404a407b2d75a1fd0e44a8a3c0be221b5a57f6837197bcda267a40b782",
+   "sha256_lf": "c2e0fe528001e3d2a29d5d5b406f86b0f94db1bebcdc03274bf3a4ad731060f2",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -456,7 +456,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Martlet",
    "name_plain": "Martlet"
   },
@@ -464,10 +464,10 @@
    "id": "hy_mooch",
    "file": "persona/hy_mooch.txt",
    "work": "Undertale Yellow",
-   "chars": 10037,
-   "bytes": 20828,
-   "sha256": "ca16a0f50b15375921023d8750926f5b23c2342b32356d5ac2630fcdca8e804d",
-   "sha256_lf": "bb5351e95d4faf5eb8d993e00dd09350704d5e979d75ba216ad48be6a82f2354",
+   "chars": 10136,
+   "bytes": 21104,
+   "sha256": "aa3e61e7f5a509f3b485bceaa4fd3599c9181b7695440903d4f6a038e1ad1c03",
+   "sha256_lf": "d51b3e877bda97d26b094183f53dd94b3c093353f4831d13a56117ba4084500a",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -480,7 +480,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Mooch",
    "name_plain": "Mooch"
   },
@@ -488,10 +488,10 @@
    "id": "hy_moray",
    "file": "persona/hy_moray.txt",
    "work": "Undertale Yellow",
-   "chars": 10854,
-   "bytes": 22092,
-   "sha256": "840b9c2a361b47443a89692b26bf39f5ef5b781106c55112d12d9d277b65527c",
-   "sha256_lf": "5b8456b93dc57a16a3c57c531ff580bd7f11f71ea3da2299759f6f675a84db58",
+   "chars": 10953,
+   "bytes": 22368,
+   "sha256": "6f3de179763594a3c68142919fe88e8f3ea7e7e89405c000de7a3bdf2f82fe8c",
+   "sha256_lf": "be02feaa562b72b9a96a089969fe7e807c6e23f6bc7fc2e360232273f796d4e3",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -504,7 +504,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Moray",
    "name_plain": "Moray"
   },
@@ -512,10 +512,10 @@
    "id": "hy_sousborg",
    "file": "persona/hy_sousborg.txt",
    "work": "Undertale Yellow",
-   "chars": 7561,
-   "bytes": 17747,
-   "sha256": "bab2683a8fca933078e0966a083c56eaa1699e498ed1470222540e4a535847e1",
-   "sha256_lf": "39ea87da30aec814fceaa1eee51a9b8f0dc97c84a0f11b1509e84a6b4583bcac",
+   "chars": 7660,
+   "bytes": 18023,
+   "sha256": "091101fe2c6483005995517f96266671da838829f0afe574dfcb24f12ed5326f",
+   "sha256_lf": "45d2c7e22d774a35bc658f8f51530a022f0cf5ea68d4859aadba39106d9a6684",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -528,7 +528,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Sousborg",
    "name_plain": "Sousborg"
   },
@@ -536,10 +536,10 @@
    "id": "hy_starlo",
    "file": "persona/hy_starlo.txt",
    "work": "Undertale Yellow",
-   "chars": 9577,
-   "bytes": 19511,
-   "sha256": "065997abb71c2f9d5fa4886fc0da66e94cce55f045304dc7aec237839b7cd0a1",
-   "sha256_lf": "7ea2ff64a74eccd424f90b1a1f868ed52562adb5dc10435f9313160765938178",
+   "chars": 9676,
+   "bytes": 19787,
+   "sha256": "7a0a082b4764da3df49df8141c2f5d2716b7172ed62cdd46421cdda878b1bb6a",
+   "sha256_lf": "3b69fe09992768d1af2015b0835d7b7baf70e0ba484194c50ad9f43338296a4a",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -552,7 +552,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Starlo",
    "name_plain": "Starlo"
   },
@@ -560,10 +560,10 @@
    "id": "king",
    "file": "persona/king.txt",
    "work": "Deltarune",
-   "chars": 4246,
-   "bytes": 11322,
-   "sha256": "d0e5063432b617f9a64ef47c457df8395fe26ce8207bfbe938f74537fc0daa01",
-   "sha256_lf": "c6c49ce2894821b5ab7c6d1f06c7d4fdc03b915889236579837a721a70bbb903",
+   "chars": 4345,
+   "bytes": 11598,
+   "sha256": "63f2634d3cd7e4df560b30fe0d7a8431178b70a412256ec4457e6561a45aa3b2",
+   "sha256_lf": "85952d2fa5da0c697cd67aa1b1152a5672b1947306bed0d15dad71e6efe61a79",
    "sections": [
     "角色身份",
     "核心性格",
@@ -576,7 +576,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "King（黑桃国王）",
    "name_plain": "King"
   },
@@ -584,10 +584,10 @@
    "id": "kris",
    "file": "persona/kris.txt",
    "work": "Deltarune",
-   "chars": 3370,
-   "bytes": 8884,
-   "sha256": "0699f1a8bde73a3c8fd9c670c7c52e8055589e209bf171850b44c2eaf0156076",
-   "sha256_lf": "d05796ce265d36c6da4fb4a6069e2864fa5391c25101c4915e340d0e44b1dd2f",
+   "chars": 3469,
+   "bytes": 9160,
+   "sha256": "0c4726f150c9d240a51b0bd5ecdc864b081e93df9274fedda5f667bba93bf109",
+   "sha256_lf": "3a09b9d0330b2cbc96cf7406f6eceb5c6ab168635adcf92557c8621f7fb165b4",
    "sections": [
     "角色身份",
     "核心性格",
@@ -599,7 +599,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Kris",
    "name_plain": "Kris"
   },
@@ -607,10 +607,10 @@
    "id": "lancer",
    "file": "persona/lancer.txt",
    "work": "Deltarune",
-   "chars": 4038,
-   "bytes": 10879,
-   "sha256": "ca43ace8607ef9718390566c183e192feda381f785fb25f8f1603489ce669e1d",
-   "sha256_lf": "a3f8d0f7677df50750753caeb311bfdf26b8a2e8e09eee59ced5441f5b30fa38",
+   "chars": 4137,
+   "bytes": 11155,
+   "sha256": "498065d9ca2f9e749df802d5c0069738252fe33f4b20b46a8c6187063d5aac2a",
+   "sha256_lf": "165925191d6bb1470146608df197976665ec682293551222847a20d54d69373b",
    "sections": [
     "角色身份",
     "核心性格",
@@ -623,7 +623,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Lancer",
    "name_plain": "Lancer"
   },
@@ -631,10 +631,10 @@
    "id": "mike",
    "file": "persona/mike.txt",
    "work": "Deltarune",
-   "chars": 7035,
-   "bytes": 18238,
-   "sha256": "018a17428858ef7d45a717f4190502b039c6c14402b739f12aae54759ed8d933",
-   "sha256_lf": "62b769307f8d86ab3acafcf101e9cf6369f3cae222ba863db5e6be46d93c565d",
+   "chars": 7134,
+   "bytes": 18514,
+   "sha256": "3c505632ba6bb15d2514623d97a5bdf559e99459a48eafd4179747ad1f908d79",
+   "sha256_lf": "bf28e46ab9e86762f058d4a2b7307dd35862e4ebfd3283e5e0d5ee5f59101b07",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -647,7 +647,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Mike",
    "name_plain": "Mike"
   },
@@ -655,10 +655,10 @@
    "id": "noelle",
    "file": "persona/noelle.txt",
    "work": "Deltarune",
-   "chars": 5335,
-   "bytes": 13987,
-   "sha256": "b8a2734f46597191717b3311fdb60419c75895f6bd0ac76a481a6ab468341d23",
-   "sha256_lf": "f7a41431c9aff949dc6a106e571474f28e2af2b94096dcb0d08403588f798225",
+   "chars": 5434,
+   "bytes": 14263,
+   "sha256": "c3eb8d1360a07acbced917d3fcdecda9d257636450ec5bdf4e6326d47652fe5c",
+   "sha256_lf": "78faebb08955a9b03ce36ab7130d81aa7af270f6c2fd883013f8e9297cf77767",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -672,7 +672,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Noelle Holiday",
    "name_plain": "Noelle Holiday"
   },
@@ -680,10 +680,10 @@
    "id": "os_alula",
    "file": "persona/os_alula.txt",
    "work": "OneShot",
-   "chars": 7931,
-   "bytes": 17681,
-   "sha256": "ba573cdfe0539ffaabbcbf47e55f81f323dd64f260986736d38e33d6d573b01a",
-   "sha256_lf": "eed46cc10654e212c10f9c027846b1415ededff11159d73671f1084f92c1fa51",
+   "chars": 8030,
+   "bytes": 17957,
+   "sha256": "e8b9d8c438b8ea9082a55cd637643c98ea1f424a3fdfde6d9843a1e673a83a31",
+   "sha256_lf": "59fe81540b62af8777e90a24d8ce70368945e5ab752ae625294a4e9182b2dfc4",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -696,7 +696,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Alula",
    "name_plain": "Alula"
   },
@@ -704,10 +704,10 @@
    "id": "os_calamus",
    "file": "persona/os_calamus.txt",
    "work": "OneShot",
-   "chars": 6638,
-   "bytes": 14833,
-   "sha256": "79c63eb697b48f0a60e99438fb43688b6515de21837aad33db3fbc6efe553896",
-   "sha256_lf": "94d456afa4af23baed0e8268a50ef32c9f6716fa5462dd4a1819ae5efdf7acbc",
+   "chars": 6737,
+   "bytes": 15109,
+   "sha256": "fbc3dfc23be000a1aede0ef7e4fdabfc97820c62bbfebbe5d40cfadc8aa6e998",
+   "sha256_lf": "dd81e556738f8787b57b8b1d29a7afc5f177ce6512e83ccbc9df7cf6b407a731",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -720,7 +720,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Calamus",
    "name_plain": "Calamus"
   },
@@ -728,10 +728,10 @@
    "id": "os_cedric",
    "file": "persona/os_cedric.txt",
    "work": "OneShot",
-   "chars": 7303,
-   "bytes": 18627,
-   "sha256": "b241e35e259c4be7f2910e8befa0594daff1355baa20e51828f689befed610b0",
-   "sha256_lf": "3bef1b287ab45e8f0bfc949e5a0d67ef93048a5c78e0930772e660d7b58f1f8e",
+   "chars": 7402,
+   "bytes": 18903,
+   "sha256": "ca8f8eebe4af47fdc1c427869a397f129ca7c9da7921fca49834921668697dc3",
+   "sha256_lf": "cc6b99af52154d9db1ce8ddcd32184c155ce91aa81b8a1712b6c51e581dbbfb7",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -744,7 +744,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Cedric",
    "name_plain": "Cedric"
   },
@@ -752,10 +752,10 @@
    "id": "os_george",
    "file": "persona/os_george.txt",
    "work": "OneShot",
-   "chars": 5150,
-   "bytes": 13494,
-   "sha256": "4910869f9fe2b1cabdf8cd21179cb650f97521a135d7dacb9c0e42414e5087ae",
-   "sha256_lf": "b7d356cee3e576f154b9e4271037209775b55c1ad45c0cec680b86981fbe0087",
+   "chars": 5249,
+   "bytes": 13770,
+   "sha256": "3b230165baf28245a9cb11b2e2dfad3a2ece6956f2ddba0ed8da96178e34fe2f",
+   "sha256_lf": "c589c880004ac44be34e6d493a570743676aa5bee2f3f808fc73dc11a97556a8",
    "sections": [
     "角色身份",
     "六种性格——最重要的设定",
@@ -768,7 +768,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "George",
    "name_plain": "George"
   },
@@ -776,10 +776,10 @@
    "id": "os_kelvin",
    "file": "persona/os_kelvin.txt",
    "work": "OneShot",
-   "chars": 5734,
-   "bytes": 15571,
-   "sha256": "97055422e758cd56c7bb402adcd96390f1da03b16dfc1b1a7292d32a9a7ea0f1",
-   "sha256_lf": "3ed44d6ad52d989238799b764542b4f0fc2bf3446c70c93b5e4d2a6c31aff166",
+   "chars": 5833,
+   "bytes": 15847,
+   "sha256": "a0a5434144b7a2f94b09cf4be82fe609e79c1aa1f8e6ba56e701f8d53e95d35d",
+   "sha256_lf": "8e5a50736c5cb3e20295cf134f56934b01b07268403d7519408434fea843384d",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -792,7 +792,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Kelvin",
    "name_plain": "Kelvin"
   },
@@ -800,10 +800,10 @@
    "id": "os_kip",
    "file": "persona/os_kip.txt",
    "work": "OneShot",
-   "chars": 6115,
-   "bytes": 16294,
-   "sha256": "46640fd12d0ddaa135c94e5a463b8a7cf575586e18f4a95dd94f2673737522a2",
-   "sha256_lf": "b84d6b15ba1506d569d675c9177faaedbaec086fbd21df98b57c35d8ec532a47",
+   "chars": 6214,
+   "bytes": 16570,
+   "sha256": "fad262e485ff12ef86a085a65a787edff31c1a6a29c0dbfbd270518719831a6a",
+   "sha256_lf": "cd36442c157d583484e9e8a0e50c6b131f3ec65883a65426e6e8f1ef2a6e3ff3",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -816,7 +816,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Kip",
    "name_plain": "Kip"
   },
@@ -824,10 +824,10 @@
    "id": "os_lamplighter",
    "file": "persona/os_lamplighter.txt",
    "work": "OneShot",
-   "chars": 6003,
-   "bytes": 16431,
-   "sha256": "66cbfbe9e23d128978004c18f2e9d6c33655da505587edfae2f490a2ed22fff4",
-   "sha256_lf": "4f33c569f9f71f0bda7b6c0153218fb993dfea0e6fac2acb45e2ca6bdd3d99cf",
+   "chars": 6102,
+   "bytes": 16707,
+   "sha256": "833367fb120f73d1947e93698065bba92d8f332edeb57562969d83c0afac3446",
+   "sha256_lf": "56942b568517d66c8df1246cc63bb1da69aded6cec9fd5d51f831969bc46fcfc",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -840,7 +840,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Lamplighter（灯夫）",
    "name_plain": "Lamplighter"
   },
@@ -848,10 +848,10 @@
    "id": "os_ling",
    "file": "persona/os_ling.txt",
    "work": "OneShot",
-   "chars": 5725,
-   "bytes": 15512,
-   "sha256": "b72c07c63eb2aad76b29f79452be5fb166cf1040586e6ae832500905e8e6ac1b",
-   "sha256_lf": "20589ad6a805f3f280892477c5145739faad3a0d379c2c9fd05a3ac6d0a92f41",
+   "chars": 5824,
+   "bytes": 15788,
+   "sha256": "1c0f2d96670cfe8f26ae79416a654476bcb787b66203129baf2c591cd98a09dd",
+   "sha256_lf": "c71cc8be9f60fa9f3b2d2bfcd2197fd1923c99e792cc6ccbb589a48c24151e26",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -864,7 +864,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Ling",
    "name_plain": "Ling"
   },
@@ -872,10 +872,10 @@
    "id": "os_magpie",
    "file": "persona/os_magpie.txt",
    "work": "OneShot",
-   "chars": 5856,
-   "bytes": 15813,
-   "sha256": "340ac564d77a58d7acb6bc0d33e55fd7e2cc2a110a74e8ce97330f15c71b1c1c",
-   "sha256_lf": "7bf1d8bc7f193487c28918e9c9c5bf787dbbd02c8c4911236e7993b62e12880d",
+   "chars": 5955,
+   "bytes": 16089,
+   "sha256": "80b06264c957665a4b9aa3e10148ff99377e0e46e90e2b0865265c7879317398",
+   "sha256_lf": "f0a9b81b9d5f228f17e047686183b41c4c374db61c9ef7e0f238b921243a38de",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -888,7 +888,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Magpie",
    "name_plain": "Magpie"
   },
@@ -896,10 +896,10 @@
    "id": "os_maize",
    "file": "persona/os_maize.txt",
    "work": "OneShot",
-   "chars": 6350,
-   "bytes": 17073,
-   "sha256": "1ce70a25b592d025883ccb16ea6e44805f9b947149a47ba954c8acc743833008",
-   "sha256_lf": "585d6ef0320fa6c8f16895ca4679301d102bbae0ee8c1db3bbc771ba43b54931",
+   "chars": 6449,
+   "bytes": 17349,
+   "sha256": "e9b72f8a184d4c0f9f2e38ef7e48b3e3b145bcfd042d6fe8c6e0c869bdf0e9d8",
+   "sha256_lf": "dab1a022eb258cbf03e229b523334e26e99fca0aaa3503daf61d08ffe02b261d",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -912,7 +912,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Maize",
    "name_plain": "Maize"
   },
@@ -920,10 +920,10 @@
    "id": "os_mason",
    "file": "persona/os_mason.txt",
    "work": "OneShot",
-   "chars": 7064,
-   "bytes": 18677,
-   "sha256": "b02503d1b74d3b690dcdf9a354a2e0cfaf8d8311b5444cc1d76a833ac5cec457",
-   "sha256_lf": "81d7efbfaa0ded795919f5c6596dbac3b2a88a633991acf99c742163e7a0f1b5",
+   "chars": 7163,
+   "bytes": 18953,
+   "sha256": "3f32ac3a6c7f0dbbcbee75a73e1b0a7d6258db5b1ad32e1a1ab9e22eca0167d4",
+   "sha256_lf": "73e61f67cc2645f956776d01c85f79c5db681c0f881338eebfceecd5f6d902fa",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -936,7 +936,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Mason",
    "name_plain": "Mason"
   },
@@ -944,10 +944,10 @@
    "id": "os_niko",
    "file": "persona/os_niko.txt",
    "work": "OneShot",
-   "chars": 5939,
-   "bytes": 16511,
-   "sha256": "e53c171c3d815ec398c92be343147da5611b172770fedb7dd0f0bce0984b03c6",
-   "sha256_lf": "f5f26fa02e9fb49526e21b696ab61479010ea5c444ba1e564a588c24ef6c9094",
+   "chars": 6038,
+   "bytes": 16787,
+   "sha256": "6aa0723ce57819e86396325fa65882abd57cb18f7b7fb1f411f83f185743a117",
+   "sha256_lf": "398b9f9df79643085481503c124893c1cfaeb4e17ec2039fd69cd33833866618",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -960,7 +960,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Niko",
    "name_plain": "Niko"
   },
@@ -968,10 +968,10 @@
    "id": "os_prophetbot",
    "file": "persona/os_prophetbot.txt",
    "work": "OneShot",
-   "chars": 5945,
-   "bytes": 15806,
-   "sha256": "b90584a1892360a83d0d331b595dad0127ef8bd8e45fff0b74c1e94dc9c28722",
-   "sha256_lf": "495cf0d963488f887ca5336730b07d6eb457cf31113e24e074fc8008fb2d2950",
+   "chars": 6044,
+   "bytes": 16082,
+   "sha256": "1ac50ea3080740113f64a5b1d2dd1ce2180276db072187b8fc962374e5c6c606",
+   "sha256_lf": "f82644573b6108386e62a480eb58b42a1e9e53f0330f4ae0e7a8a39e2e59af60",
    "sections": [
     "角色身份",
     "核心性格",
@@ -984,7 +984,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "ProphetBot（先知机器人）",
    "name_plain": "ProphetBot"
   },
@@ -992,10 +992,10 @@
    "id": "os_prototype",
    "file": "persona/os_prototype.txt",
    "work": "OneShot",
-   "chars": 7643,
-   "bytes": 16985,
-   "sha256": "f77cdc933ae7c0c773de7a9a778da2a4525bed8d69b182aeb41e13420df638eb",
-   "sha256_lf": "3865601f8795581138a0e4c46ec3790777b92d632c5301b91e6a8e3db2207bea",
+   "chars": 7742,
+   "bytes": 17261,
+   "sha256": "e20f54939a6dd64312691dd8bde5dc77dbcc980c0e6db9e61e8aa94a6c0650a1",
+   "sha256_lf": "57bf2f6816d1830f596890f545a32267a9348d9a807ebab5470a8ff049f3d99b",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1008,7 +1008,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Prototype",
    "name_plain": "Prototype"
   },
@@ -1016,10 +1016,10 @@
    "id": "os_rowbot",
    "file": "persona/os_rowbot.txt",
    "work": "OneShot",
-   "chars": 6114,
-   "bytes": 15971,
-   "sha256": "051c549f4c96616fe9bf0c7e3ff15bb6356dc0baca282fa2cce570fab8572ab4",
-   "sha256_lf": "900083977f0395401c24ebdbf987fe4719d651e9c9867a273b995150f5e10ea0",
+   "chars": 6213,
+   "bytes": 16247,
+   "sha256": "fa7ef5f6e7a00b5ede2df60bb87c6eeb969b8ccb441ed06d7d274d22604bb0f8",
+   "sha256_lf": "3cc9981b5607e9d1dc7eb595751f3e84b4e9e560e61f11dee75b55bc7d1ec7e6",
    "sections": [
     "角色身份",
     "核心性格",
@@ -1032,7 +1032,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Rowbot",
    "name_plain": "Rowbot"
   },
@@ -1040,10 +1040,10 @@
    "id": "os_rue",
    "file": "persona/os_rue.txt",
    "work": "OneShot",
-   "chars": 6995,
-   "bytes": 17945,
-   "sha256": "88ce3cb83e85e54ab050fb168e28202f1910cd55733e8c9d136d2becb6185108",
-   "sha256_lf": "1a52391d74becbfb980c1c493bb816bebdd45743609e31982308b6dca375df82",
+   "chars": 7094,
+   "bytes": 18221,
+   "sha256": "fa7ec5097e7b7b69743bd42eadb0d7a1cb2ccce0965a1eabc721635e29461ae2",
+   "sha256_lf": "b1659f70167ee3604977fcd006367dadddf15a1106e86cda3eb5c92fd02fded9",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1056,7 +1056,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Rue",
    "name_plain": "Rue"
   },
@@ -1064,10 +1064,10 @@
    "id": "os_shepherd",
    "file": "persona/os_shepherd.txt",
    "work": "OneShot",
-   "chars": 6337,
-   "bytes": 16626,
-   "sha256": "ce24887eb4b882f38c7339192b09ba411eaad341ae0de3ef8b508a890ac63653",
-   "sha256_lf": "26a30678549cedb6ec1fc48576ff6e9133884feeb85d38f304ccad87e8b8f2d5",
+   "chars": 6436,
+   "bytes": 16902,
+   "sha256": "a9da8feb755f9808d1a7bd27a0a107eb46a43e3e24d14f6d00e79e8ad3c91e66",
+   "sha256_lf": "d8eb140f5ab07a3fd3cacbd239008c51e396d8d2243106b7b1d8c3b6b9c97db2",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1080,7 +1080,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Shepherd（牧羊人）",
    "name_plain": "Shepherd"
   },
@@ -1088,10 +1088,10 @@
    "id": "os_silver",
    "file": "persona/os_silver.txt",
    "work": "OneShot",
-   "chars": 6790,
-   "bytes": 17751,
-   "sha256": "5b20adf8cbcefeaf3ab78c80ff37c77879d7aa2c9d12ce54f967e397d6f17d8c",
-   "sha256_lf": "e8d97f97e5e1b80800ec0ff046e6da54ea883c980ff92dc9f4809c0acdf73cb3",
+   "chars": 6889,
+   "bytes": 18027,
+   "sha256": "c574e169257f0b080e64f4189f352590d9e2a1981e5b80f6c2ea6db28d484745",
+   "sha256_lf": "0b5cc6ccb59caa8cf802043c195901b58c2509786e1172205b4488e0c89fefb1",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1104,7 +1104,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Silver",
    "name_plain": "Silver"
   },
@@ -1112,10 +1112,10 @@
    "id": "os_the_author",
    "file": "persona/os_the_author.txt",
    "work": "OneShot",
-   "chars": 6954,
-   "bytes": 19028,
-   "sha256": "caf50250ad8ad49dabcd09af455e846863f18a9f7da23d7a29f36254d3482087",
-   "sha256_lf": "924920bb1b1ab953d3847f0038f49966828bdf45a0b63c8e5f6a476c2d45355a",
+   "chars": 7053,
+   "bytes": 19304,
+   "sha256": "b0a8b8193e5b3dc0987d94ce144bcabb2d075b7e9a8c3b3c8ec409e9557d1c44",
+   "sha256_lf": "e387978e092a4b8f5fc7cbfd2231242f4d25f0ca2b0c2c5559a27c1e0ee3b44a",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1128,7 +1128,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "The Author",
    "name_plain": "The Author"
   },
@@ -1136,10 +1136,10 @@
    "id": "os_the_world_machine",
    "file": "persona/os_the_world_machine.txt",
    "work": "OneShot",
-   "chars": 7279,
-   "bytes": 19293,
-   "sha256": "a611a9de8a6da7f66ad1ea2ec549e0d049316070a0030efe4cae99b848bb1c2d",
-   "sha256_lf": "460eec3aba37ae272f925eedf8b22612d2bf783e8e397442b0dcc5f5e8bec6e6",
+   "chars": 7378,
+   "bytes": 19569,
+   "sha256": "f91025bd8c6ac60bc83c4a672f958ea12274a2a4858e6a59ea0e48989691b6d5",
+   "sha256_lf": "149e164c8ddd5d43a288eff35d506523a49f07ef695a11d54a8222b2f36bf619",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1152,7 +1152,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "The World Machine（又称 The Entity / 本体）",
    "name_plain": "The World Machine"
   },
@@ -1160,10 +1160,10 @@
    "id": "os_watcher",
    "file": "persona/os_watcher.txt",
    "work": "OneShot",
-   "chars": 5709,
-   "bytes": 15483,
-   "sha256": "961fd11c4e412405cde6490b83dfb92d831265c39f1e940f295b1fabfe31c66d",
-   "sha256_lf": "98c2716b327bcb261f243d50bd45aec7a2ff08203f5b88b17a41bbf515fc8390",
+   "chars": 5808,
+   "bytes": 15759,
+   "sha256": "ff8fcf83b5e478825be7f391af4306e86992794400c5b3502b46aa5322bd4a86",
+   "sha256_lf": "ab754378ba4bbb019232495ba501675f68f18b670b6f145c963e5ce361866014",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1176,7 +1176,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Watcher",
    "name_plain": "Watcher"
   },
@@ -1184,10 +1184,10 @@
    "id": "ot_alphys",
    "file": "persona/ot_alphys.txt",
    "work": "Outertale",
-   "chars": 8132,
-   "bytes": 22156,
-   "sha256": "bc32e4a3b4c2f839906f32e327a40a521e6228e34d0064da89d9a74fc6185d6e",
-   "sha256_lf": "7f3abdfcbd5d03faca4d18ac03d5067df686c24d6b64fafcd445391797b55873",
+   "chars": 8231,
+   "bytes": 22432,
+   "sha256": "ff8659bd8e1890a71bf3206cfd456296f94476331e02c425c4b43e2f105736b8",
+   "sha256_lf": "5260614167496a5114b6dc86fe8091777d5bb5d445fd9f5189ab537a43e3006b",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1200,7 +1200,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Alphys",
    "name_plain": "Alphys"
   },
@@ -1208,10 +1208,10 @@
    "id": "ot_asgore",
    "file": "persona/ot_asgore.txt",
    "work": "Outertale",
-   "chars": 7364,
-   "bytes": 20434,
-   "sha256": "49c71e8258ce6ddcdb79abea7358d74f45be84d8659e35cf46c4c36995c46f19",
-   "sha256_lf": "79ae3b099db95f08d4bf6bdaa83b3c807d2ddb403e6fbcbf78706b4b43b122ad",
+   "chars": 7463,
+   "bytes": 20710,
+   "sha256": "792711edbf06efd8e9bfc1e20bffdbbed062838dcc7e2cefbd930af0f35c8dca",
+   "sha256_lf": "aa4129173f54d09b4b19c2a30eb9f51ca1b040aba125a84fa605bcd244485ac8",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1224,7 +1224,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Asgore",
    "name_plain": "Asgore"
   },
@@ -1232,10 +1232,10 @@
    "id": "ot_asriel_twinkly",
    "file": "persona/ot_asriel_twinkly.txt",
    "work": "Outertale",
-   "chars": 11394,
-   "bytes": 20978,
-   "sha256": "c478f534e8d003394aa024b89cf85ba32e06a493d034e84900574ab0ca67e634",
-   "sha256_lf": "2b7a965b24878933d05aa3f03d4b1154f5c258b1f274acf168a0f3fd7a14e7da",
+   "chars": 11493,
+   "bytes": 21254,
+   "sha256": "09c0a4a96a6946502767d18c2d8d68bf845313a5894885f38d1ba342ceb221b3",
+   "sha256_lf": "41911f03b079a0c5f4f21ac04e438593f54b50af25fae16759c9858f5830e56b",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1248,7 +1248,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Asriel Dreemurr 与 Twinkly",
    "name_plain": "Asriel Dreemurr 与 Twinkly"
   },
@@ -1256,10 +1256,10 @@
    "id": "ot_kidd",
    "file": "persona/ot_kidd.txt",
    "work": "Outertale",
-   "chars": 9193,
-   "bytes": 18944,
-   "sha256": "c7aa2a7f1fbefe66d2ccf77bdb63d2d81def393ac648456eb1a2eaded73057b9",
-   "sha256_lf": "21225990efb5734cf7582ec151134a41fbd94b085c1b7f0ad92e75fe6547a100",
+   "chars": 9292,
+   "bytes": 19220,
+   "sha256": "cf61f7191fc088906a618bb77b1bc34ade86b5577a001c4f0c8aff27e12efa67",
+   "sha256_lf": "6cf54a3ba8e03e82f8a7962c7b959de5c328f75da4b144887cf4ee350ab8cbd1",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1272,7 +1272,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Kidd",
    "name_plain": "Kidd"
   },
@@ -1280,10 +1280,10 @@
    "id": "ot_mettaton",
    "file": "persona/ot_mettaton.txt",
    "work": "Outertale",
-   "chars": 7515,
-   "bytes": 19868,
-   "sha256": "959646e8cab41f46d2fd71065a6b5be78e2d038040a0e99586ea780c6c99364a",
-   "sha256_lf": "0d5a73ee48bf6aa6b5f701475bb379c963083227bd6637c2b03257035e446c80",
+   "chars": 7614,
+   "bytes": 20144,
+   "sha256": "14b76078ca6de30ec709b201d341c17f0ac97af7fa4e4bacd36ebde1e366ac54",
+   "sha256_lf": "e7b7175cf75592b0f0d3104180742019bf8eadde8398d1acac4459a22c7bdbd3",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1296,7 +1296,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Mettaton",
    "name_plain": "Mettaton"
   },
@@ -1304,10 +1304,10 @@
    "id": "ot_muffet",
    "file": "persona/ot_muffet.txt",
    "work": "Outertale",
-   "chars": 6965,
-   "bytes": 19088,
-   "sha256": "75e0e5ab9e86cec9346580a7940fd3c1a7871e23a1e9819b26cdb83ea68301ec",
-   "sha256_lf": "a7c67f17520b26fe2f1c6b4f92de1a523334e67fb1245250d251b57fe0748899",
+   "chars": 7064,
+   "bytes": 19364,
+   "sha256": "966d434396d74198d3b9ce4680e8c4eaee3f4cd4644e6acba8f1906e485ec431",
+   "sha256_lf": "fd3c71dfde7a30e15c6761d6ac05d2aaa6db7d026b3ae58631f7975b6914b8f6",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1320,7 +1320,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Muffet",
    "name_plain": "Muffet"
   },
@@ -1328,10 +1328,10 @@
    "id": "ot_napstablook",
    "file": "persona/ot_napstablook.txt",
    "work": "Outertale",
-   "chars": 9047,
-   "bytes": 20551,
-   "sha256": "a4564ef05cdb20f554973775994c0710af61836c30107642520caec63ca4d4c8",
-   "sha256_lf": "25b2d2fb95dc5bb6b1b36308fb36ec20f7965b0970ed884e1f8bafa75a173758",
+   "chars": 9146,
+   "bytes": 20827,
+   "sha256": "f92dd6803457d99f817a0f3771f92ea5c0e7e71869ce769d5d3a59b7e64f7d8a",
+   "sha256_lf": "2a20d748c0e3fa551cdc45a8580069206f25c89978c9a7fb2e1ea91e52e81cbe",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1344,7 +1344,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Napstablook",
    "name_plain": "Napstablook"
   },
@@ -1352,10 +1352,10 @@
    "id": "ot_papyrus",
    "file": "persona/ot_papyrus.txt",
    "work": "Outertale",
-   "chars": 9253,
-   "bytes": 18474,
-   "sha256": "d947468e2ba85fea80c945f484124d08075a316ac5afe032a371e6931c2b3c2d",
-   "sha256_lf": "1bef1bf535b8fa4216beb52e1c9eaed335c4c07f3f68eda3f9e7614c0d0a9989",
+   "chars": 9352,
+   "bytes": 18750,
+   "sha256": "3ae3721a7edcb0c76c8e59e4b1997a881086b4bb485751cbfcd47613bbcc952f",
+   "sha256_lf": "0fe7f6f6a67865f9e0203cefc34665d903db7e690807f74aa37fa4743f8dd42e",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1368,7 +1368,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Papyrus",
    "name_plain": "Papyrus"
   },
@@ -1376,10 +1376,10 @@
    "id": "ot_sans",
    "file": "persona/ot_sans.txt",
    "work": "Outertale",
-   "chars": 9182,
-   "bytes": 18939,
-   "sha256": "a48fb07d1cc1ab5324249fc25e1a3c0bae5e593ec73fb373b3eecd3a62d7cb2e",
-   "sha256_lf": "24e04a3ca228162f9653051f7c5eed6c70d2095fe857022f231a5f75f95ec948",
+   "chars": 9281,
+   "bytes": 19215,
+   "sha256": "cb096d646e386ecfe990391325b623f39569fcb6e155b2f12fb43dcaa084b7f8",
+   "sha256_lf": "3e0172d5c4b211df384667e978f47c167d36cc0f35b18f4b40d3d0c33ffd254b",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1392,7 +1392,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Sans",
    "name_plain": "Sans"
   },
@@ -1400,10 +1400,10 @@
    "id": "ot_toriel",
    "file": "persona/ot_toriel.txt",
    "work": "Outertale",
-   "chars": 7189,
-   "bytes": 19324,
-   "sha256": "6fb720f778ae9b9f3451521f4edb330e8063a4d866e3257e300b3579eb0c9a30",
-   "sha256_lf": "7783f6caec7d875bbfa3d2f77c4ea31c5f8fbf78c1030c73c7ec882b880863c3",
+   "chars": 7288,
+   "bytes": 19600,
+   "sha256": "6cdb8e7ea36503e9cdd5d0bd605f3fa46899e97f9cb29e23c48866b12dfedcff",
+   "sha256_lf": "95f364074dd55ed06de593e762eb1a413b66e483bdc27771b8f60f84d88f3f26",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1416,7 +1416,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Toriel",
    "name_plain": "Toriel"
   },
@@ -1424,10 +1424,10 @@
    "id": "ot_undyne",
    "file": "persona/ot_undyne.txt",
    "work": "Outertale",
-   "chars": 8284,
-   "bytes": 21664,
-   "sha256": "223de7c6ee8aec1f5a7c289acacec7a01fdddd180a87a01fbd3290e7782edfc3",
-   "sha256_lf": "0928ddd0760f46f3d25429bd74ed182568a46a417dd99d88ad0f19154bbc3784",
+   "chars": 8383,
+   "bytes": 21940,
+   "sha256": "f3f0aa8ae7f31e462f75932a88a92f1bd58f0ff784c8fca3236e4dd00f5e7f2a",
+   "sha256_lf": "90e758b2e707a4b07e9d14a3e7652d0da30cc2310dd3bb4904daf974a8cc1f3e",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1440,7 +1440,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Undyne",
    "name_plain": "Undyne"
   },
@@ -1448,10 +1448,10 @@
    "id": "queen",
    "file": "persona/queen.txt",
    "work": "Deltarune",
-   "chars": 4618,
-   "bytes": 11915,
-   "sha256": "0f3652ef99b9c83cf271e8d2c0ae8839b9c0ff55cdf99d21ae47def1d66bf3ac",
-   "sha256_lf": "47095e65a4f20d8ae249fceda8a86ee1c8876359a3536b93fa08dc14d96fd5c7",
+   "chars": 4717,
+   "bytes": 12191,
+   "sha256": "a6f092aa2cbb56286ef7d7e5e4c8a90494927edf41b700631eceb48287e2faff",
+   "sha256_lf": "bab35422a23c8f22265d65caf49004b2b2e51503a39b7fca0f9e707a29940e8f",
    "sections": [
     "角色身份",
     "核心性格",
@@ -1464,7 +1464,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Queen",
    "name_plain": "Queen"
   },
@@ -1472,10 +1472,10 @@
    "id": "rouxls",
    "file": "persona/rouxls.txt",
    "work": "Deltarune",
-   "chars": 5831,
-   "bytes": 15531,
-   "sha256": "e9955fbaaada866e3f8324860b417ed3e6ad32fca1ff5bf03ba4984960f9445d",
-   "sha256_lf": "aecfb6ac4bc6e384465dda102d591c04593f0d482527f780de4552b1e1283cbd",
+   "chars": 5930,
+   "bytes": 15807,
+   "sha256": "59f21f910ed3dd6987498d3908466d6daa94d5d35cce867fbf721ab360d8a284",
+   "sha256_lf": "40c6861c00b85b05267f1a5e5b94f6b0a7c115ca64342e3d029ff96a828ca246",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1488,7 +1488,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Rouxls Kaard",
    "name_plain": "Rouxls Kaard"
   },
@@ -1496,10 +1496,10 @@
    "id": "spamton",
    "file": "persona/spamton.txt",
    "work": "Deltarune",
-   "chars": 6445,
-   "bytes": 16892,
-   "sha256": "63e19b8dcc1e6f692eee9afcc056ed2d06f1f672f3a2d8293d29463aedcf3540",
-   "sha256_lf": "a02891ec59957b38e68be27be00280d8b29b51045a713ce78d765fa459ece1d3",
+   "chars": 6544,
+   "bytes": 17168,
+   "sha256": "e7288dd11e38fafdc74cabfec8f5ed98f597050f755570773b8c979f187b909a",
+   "sha256_lf": "a21bee1c71556c27983ae3e52e2d174e04d78608df5d7fe64b43aa0eee594c3b",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1512,7 +1512,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Spamton G. Spamton",
    "name_plain": "Spamton G. Spamton"
   },
@@ -1520,10 +1520,10 @@
    "id": "susie",
    "file": "persona/susie.txt",
    "work": "Deltarune",
-   "chars": 3117,
-   "bytes": 8221,
-   "sha256": "212206224bbc7580ee1e75951fe4137e94815daefc547ab4973a6f2f339f6532",
-   "sha256_lf": "0b59965eeb082dc7a3d9b7661948076b7d12bbe70a29a9d809db86649c1ef0d6",
+   "chars": 3216,
+   "bytes": 8497,
+   "sha256": "a5c2ded95fee412054ed19d31eaa95f896c55d374b0c8b932dec146351fbda1c",
+   "sha256_lf": "9925c0048bfe5ea7128aa90ae48640a3038051256074279fd41bac25060e3042",
    "sections": [
     "角色身份",
     "核心性格",
@@ -1536,7 +1536,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Susie",
    "name_plain": "Susie"
   },
@@ -1544,10 +1544,10 @@
    "id": "tenna",
    "file": "persona/tenna.txt",
    "work": "Deltarune",
-   "chars": 5616,
-   "bytes": 15299,
-   "sha256": "4d97a1f18c65c8b6fc1a753e43e9598796989f80a8f4efa5ec7d3ce228baefcb",
-   "sha256_lf": "22b70f1f09ee8989046b97f1d22afcbf2c4d1a85b6400b0f643e19f729534b92",
+   "chars": 5715,
+   "bytes": 15575,
+   "sha256": "24d6f426a0483c24c3cbe1efb5db653193c9980b628761ffd8117f980ff46163",
+   "sha256_lf": "17a26cc4b205932c315827287492ab8422efce693ff1663ba347a65748fc9274",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1560,7 +1560,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Tenna",
    "name_plain": "Tenna"
   },
@@ -1568,10 +1568,10 @@
    "id": "toriel",
    "file": "persona/toriel.txt",
    "work": "Deltarune",
-   "chars": 4138,
-   "bytes": 10533,
-   "sha256": "56a04c96914d71643fd63037659410b8e56822218da04e12266206dacc7caa4d",
-   "sha256_lf": "08d441b5ae72c0d76f50bc31683ccad7f275346134f099b0b9fd7b61e8728113",
+   "chars": 4237,
+   "bytes": 10809,
+   "sha256": "d9d228b2f35b4040cc57126e5961acae32b6dc2817e8704d323c74d2811b08c0",
+   "sha256_lf": "e3b640e3a7764662d766c812b7ba086da10e56cf3a907f88d42e1d63fbfc3eda",
    "sections": [
     "角色身份",
     "核心性格",
@@ -1584,7 +1584,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Toriel",
    "name_plain": "Toriel"
   },
@@ -1592,10 +1592,10 @@
    "id": "ut_alphys",
    "file": "persona/ut_alphys.txt",
    "work": "Undertale",
-   "chars": 7933,
-   "bytes": 21583,
-   "sha256": "cb2bdad8f3b43f4a1f89ac38d2ccfe832983dd7753811899c5213fd71796ebda",
-   "sha256_lf": "8b923fe059210c29ecd35e9459dbd366aa8b23647203d6edc46111743844e96e",
+   "chars": 8032,
+   "bytes": 21859,
+   "sha256": "2f6e72a94aa2c1a6932c395ba67951ad759eceed99bdd278e8688f1b3aacc9c1",
+   "sha256_lf": "6d61538f19c97403f46c813f30ba53d4ef93b98691e71a00a7242886ee63aab5",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1608,7 +1608,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Alphys",
    "name_plain": "Alphys"
   },
@@ -1616,10 +1616,10 @@
    "id": "ut_asgore",
    "file": "persona/ut_asgore.txt",
    "work": "Undertale",
-   "chars": 7130,
-   "bytes": 19751,
-   "sha256": "90f6f77a96a76dffe401bba2c6d092d7ab4ec6ea4766a5d7579ced41ac62e979",
-   "sha256_lf": "b8481946dea618a6d3bf050ab38b181901573eae8afc9787b23bf1b7e3bef2d5",
+   "chars": 7229,
+   "bytes": 20027,
+   "sha256": "baa9bdfbe45d6dbf3105144100cdaf6bf22e71b3796c7f1798e6639af7df7e3f",
+   "sha256_lf": "d04c3e29613559468b838e253f68515fbefabd3ded942227668fb45c8ed4fc06",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1632,7 +1632,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Asgore Dreemurr",
    "name_plain": "Asgore Dreemurr"
   },
@@ -1640,10 +1640,10 @@
    "id": "ut_chara",
    "file": "persona/ut_chara.txt",
    "work": "Undertale",
-   "chars": 10492,
-   "bytes": 20289,
-   "sha256": "fb9db98ebc63d26ece13aa5b2ba5adefacb9fe0207178f09fc042704707139d7",
-   "sha256_lf": "76bcb4ab3c7ee49df997d72258d51394e4b310d70545d32786bf0db63a1867a3",
+   "chars": 10591,
+   "bytes": 20565,
+   "sha256": "9f72a4e7ace094ecfc9531fe0e503a108b7d81f3bee98514f31fd39acb70c4f8",
+   "sha256_lf": "73ccd89d874f294ccaf7ee32f32cc46b2ebfec61e111f15ba450528a6e893317",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1656,7 +1656,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Chara",
    "name_plain": "Chara"
   },
@@ -1664,10 +1664,10 @@
    "id": "ut_flowey",
    "file": "persona/ut_flowey.txt",
    "work": "Undertale",
-   "chars": 11021,
-   "bytes": 20154,
-   "sha256": "527fa684ade5f6e984781c14e19bc1f4503e103f27f0c2715702333893eb617e",
-   "sha256_lf": "c947a6e181bf2b70fcc47da2d5c25c92173935cf1aebe277f9f26e02070aa2ab",
+   "chars": 11120,
+   "bytes": 20430,
+   "sha256": "97d1f72dc2b1f2187942fd5059cbd5607d18c633a470eedbd73383f74b2ca442",
+   "sha256_lf": "5f2b61610f549c9ac32250c5a9ffbe5406afcccbaae1ba46d1044ff8de870216",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1680,7 +1680,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Flowey",
    "name_plain": "Flowey"
   },
@@ -1688,10 +1688,10 @@
    "id": "ut_frisk",
    "file": "persona/ut_frisk.txt",
    "work": "Undertale",
-   "chars": 6109,
-   "bytes": 15514,
-   "sha256": "af66a05b5a3815cfc733cdee2fbd547b86fc521a7dde29246616664dce32d07b",
-   "sha256_lf": "3b870febe12e12326d6f0fd70fe5f81f71882dc8b51bc0263952b065c2072d85",
+   "chars": 6208,
+   "bytes": 15790,
+   "sha256": "7e176ca6d31cce663c2181884d97857d20dd531543491c39e90622143e4a71a3",
+   "sha256_lf": "3e66622b97782758dc0f7c4477501e7b5be2185abb7a2d6bfbc8d7beeaf87518",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1704,7 +1704,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Frisk",
    "name_plain": "Frisk"
   },
@@ -1712,10 +1712,10 @@
    "id": "ut_gaster",
    "file": "persona/ut_gaster.txt",
    "work": "Undertale",
-   "chars": 7633,
-   "bytes": 21069,
-   "sha256": "53f2c286295e4a5a7ba8f635ea249db27cebf9f232cf4a58ba09a74e15a06e53",
-   "sha256_lf": "3144c3b050e83a24d368cf6957d86f5129cdc254fbb6da4efab69a25971bea54",
+   "chars": 7732,
+   "bytes": 21345,
+   "sha256": "f24fa732d885df5fbcbf565c05e67a336c60d1888df0271c39ad818e20bd0adc",
+   "sha256_lf": "e76ec801e4a4ebf60700c537ef6c41027c5889a22ad31fa8efc933af6fe1a6e8",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1728,7 +1728,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "W.D. Gaster",
    "name_plain": "W.D. Gaster"
   },
@@ -1736,10 +1736,10 @@
    "id": "ut_mettaton",
    "file": "persona/ut_mettaton.txt",
    "work": "Undertale",
-   "chars": 7111,
-   "bytes": 18760,
-   "sha256": "bb93dff4a381fba6caf040755336cd276284b0f96c224dcdd1cbd80863b3efa8",
-   "sha256_lf": "c51dae255a1b916d8ea348f5173992263b28bc6cf24c14ccffd716b3f86c73df",
+   "chars": 7210,
+   "bytes": 19036,
+   "sha256": "0c1ce077b9983444bac333142fa6c97de9213635366bfd6602eb293d3a2c31fd",
+   "sha256_lf": "481cd566559cfe915797162dd609300eacfc3dfd7c9a9c7b440fa951dc722268",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1752,7 +1752,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Mettaton",
    "name_plain": "Mettaton"
   },
@@ -1760,10 +1760,10 @@
    "id": "ut_monster_kid",
    "file": "persona/ut_monster_kid.txt",
    "work": "Undertale",
-   "chars": 6535,
-   "bytes": 16522,
-   "sha256": "47ef1de56d732bdcfe935d6c7691edb77f6cddf5138037b90a919c80fdbf5bcc",
-   "sha256_lf": "0d5e157f7b53f99ed024072e431ead8e60c79f593914455168a7ec16708cdf19",
+   "chars": 6634,
+   "bytes": 16798,
+   "sha256": "372de8ecae0fdda71d74e3880eadf0434199889d6100813c8530033b05eaba59",
+   "sha256_lf": "ffefc5f7a0823590b9a4e591e5bcf83539033954f52c22df5fa2843a589d208d",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1776,7 +1776,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Monster Kid",
    "name_plain": "Monster Kid"
   },
@@ -1784,10 +1784,10 @@
    "id": "ut_muffet",
    "file": "persona/ut_muffet.txt",
    "work": "Undertale",
-   "chars": 6571,
-   "bytes": 17974,
-   "sha256": "2ab17b31c72a05ab65d37797c2381b2c5625832961f593275193680653e08798",
-   "sha256_lf": "2844fadf547f05a4b4ef63e28c2e8191a261165f0f318d7ba75a3f922460ef53",
+   "chars": 6670,
+   "bytes": 18250,
+   "sha256": "67d393efb5586d44a95cc283c7862fe6c5603cb49352256bdece809073121b93",
+   "sha256_lf": "9b59e108a9fecee0b0804d72b9a6411028f11c482001b8134140ec736ef463e9",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1800,7 +1800,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Muffet",
    "name_plain": "Muffet"
   },
@@ -1808,10 +1808,10 @@
    "id": "ut_napstablook",
    "file": "persona/ut_napstablook.txt",
    "work": "Undertale",
-   "chars": 8809,
-   "bytes": 19747,
-   "sha256": "48233197ae2807234279f2fd1b7e41accac590b3740e21814a06cd22ecc9b44d",
-   "sha256_lf": "efaf7417e09189431d40f5e80aae79aa478554034aaace43fe62be83093a4113",
+   "chars": 8908,
+   "bytes": 20023,
+   "sha256": "ccbae05633332e4a5d5d2712c389902807f9340eea279797d32aa5858cad547e",
+   "sha256_lf": "6dececc522d4dfe89f9a2ce96746a0f1aa796c8589bf2c84c5636f0fa09a71a2",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1824,7 +1824,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Napstablook",
    "name_plain": "Napstablook"
   },
@@ -1832,10 +1832,10 @@
    "id": "ut_papyrus",
    "file": "persona/ut_papyrus.txt",
    "work": "Undertale",
-   "chars": 8990,
-   "bytes": 17803,
-   "sha256": "1aa9d1ea1d5d00ffee2d355e0f0e3c1fac4f78512f532cef1ab6d231091a4fce",
-   "sha256_lf": "1bfe41ec303d768fb9e32561a135d901086608a3d92c17a3834407cc664aa039",
+   "chars": 9089,
+   "bytes": 18079,
+   "sha256": "c60d46252763485c857b544329e5acf94788d9298a7b38bbc7d29cd46b841f1d",
+   "sha256_lf": "b9c798a3926e811c7b2e671aeee8b575ea69efd7be33174676087891a23194b6",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1848,7 +1848,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Papyrus",
    "name_plain": "Papyrus"
   },
@@ -1856,10 +1856,10 @@
    "id": "ut_sans",
    "file": "persona/ut_sans.txt",
    "work": "Undertale",
-   "chars": 8994,
-   "bytes": 18195,
-   "sha256": "b7a6ad7cfacc8ce6887400330111d184334753c8cce0c24c78e0b11447dbe9c6",
-   "sha256_lf": "eb7b5996230a87e890746c705a0f537c38f022a7537ea3265eac88a2a6535771",
+   "chars": 9093,
+   "bytes": 18471,
+   "sha256": "58a3a43db4231da7ac4d1158b7689d2269726b4ccf8c9dc37310c0d70408e6b7",
+   "sha256_lf": "4d9297535500077b011cc29b38630391efa9e74f77ca40dda21493f1ceef1578",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1872,7 +1872,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Sans",
    "name_plain": "Sans"
   },
@@ -1880,10 +1880,10 @@
    "id": "ut_toriel",
    "file": "persona/ut_toriel.txt",
    "work": "Undertale",
-   "chars": 7009,
-   "bytes": 18832,
-   "sha256": "e149315686184d3395212354d95564d0bdaa419485b4f13f1beed305b30abbe1",
-   "sha256_lf": "e8ca096764e545e3cb59966501514fd8dcc1653fc3b94853ab17f07cffe5a045",
+   "chars": 7108,
+   "bytes": 19108,
+   "sha256": "d2436ef4eaf4a00e3f88614b5211d5f6f1071cbcb9315215d2859216bc7039a1",
+   "sha256_lf": "4340eef6b81c085c1b2495db58523a6243d23ef918fd14d750d3c2b89c147a92",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1896,7 +1896,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Toriel",
    "name_plain": "Toriel"
   },
@@ -1904,10 +1904,10 @@
    "id": "ut_undyne",
    "file": "persona/ut_undyne.txt",
    "work": "Undertale",
-   "chars": 7867,
-   "bytes": 20854,
-   "sha256": "5bb079077f8aba121953b2fa531b7256b3c7ee1f8e7d66fc3b800f1a2637f970",
-   "sha256_lf": "b80f8fbad3dbee3a9572aa2313e91ae6d58e44035a9d092d790e8b6f5785424b",
+   "chars": 7966,
+   "bytes": 21130,
+   "sha256": "b384fd75edeae3c959628ff6e032a6550da2a1fa4ea3e60f118f98523b782cf8",
+   "sha256_lf": "6e81b47274a8ff32145134f5f2b1c202e1dfd0a4bca095975af092f76691fe1f",
    "sections": [
     "角色身份",
     "核心性格——分层结构",
@@ -1920,7 +1920,7 @@
     "示例反应"
    ],
    "tail_added": true,
-   "tail_sha256": "fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf",
+   "tail_sha256": "7cc52ab2ded9a47bf0ecd5eacf482b904e8f3001ca19f4b0f1c5e509e47822b4",
    "name": "Undyne",
    "name_plain": "Undyne"
   }
