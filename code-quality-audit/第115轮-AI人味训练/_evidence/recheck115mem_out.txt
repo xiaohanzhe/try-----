@@ -1,9 +1,9 @@
 第115轮 · 记忆改动复检（recheck115mem）
 
 === P1 · 体积（真口径 = UTF-16 码元数）===
-  速查本 js_len = 9544 / 10000（余量 456）
+  速查本 js_len = 9927 / 10000（余量 73）
   详版   js_len = 606450
-  [PASS] P1 速查本 js_len ≤ 10000   << js_len=9544
+  [PASS] P1 速查本 js_len ≤ 10000   << js_len=9927
   [PASS] P1b 口径自证：js_len == len(encode utf-16-le)//2
 
 === P2/P3 · 指针章节 ===
