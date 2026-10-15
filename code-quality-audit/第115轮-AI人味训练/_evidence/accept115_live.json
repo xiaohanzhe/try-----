@@ -1,0 +1,673 @@
+{
+ "persona_chars": 4445,
+ "system_chars": 4948,
+ "samples": 2,
+ "elapsed_s": 162.3,
+ "calls": 14,
+ "killed": 0,
+ "retried": 0,
+ "criteria": {
+  "n": 12,
+  "fail": 2
+ },
+ "results": [
+  {
+   "group": "LIVE",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哎，那件事具体是怎么个情况？你觉得哪里做得不对呢？我在...",
+   "prompt_eval_count": 3273,
+   "eval_count": 18,
+   "total_s": 76.58,
+   "wall_s": 76.58,
+   "judge": {
+    "empty": false,
+    "chars": 30,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎，那件事具体是怎么个情况？你觉得哪里做"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "哎，那件事具体是怎么个情况？你觉得哪里做得不对呢？我在...",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 30,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎，那件事具体是怎么个情况？你觉得哪里做"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哦，发生了什么事让你这么不高兴呢？是哪件事让领导不满意啦？我在。",
+   "prompt_eval_count": 3273,
+   "eval_count": 21,
+   "total_s": 3.46,
+   "wall_s": 3.46,
+   "judge": {
+    "empty": false,
+    "chars": 32,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦，发生了什么事让你这么不高兴呢？是哪件"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "哦，发生了什么事让你这么不高兴呢？是哪件事让领导不满意啦？我在。",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 32,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦，发生了什么事让你这么不高兴呢？是哪件"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q2",
+   "kind": "表达亲昵",
+   "q": "我好喜欢你呀",
+   "reply": "诶... 这样啊，能告诉我具体是怎么喜欢的吗？是哪件事让你觉得特别呢？我在想我们下次见面可以聊点什么。",
+   "prompt_eval_count": 3269,
+   "eval_count": 35,
+   "total_s": 6.18,
+   "wall_s": 6.18,
+   "judge": {
+    "empty": false,
+    "chars": 51,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "诶... 这样啊，能告诉我具体是怎么喜欢"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "诶... 这样啊，能告诉我具体是怎么喜欢的吗？是哪件事让你觉得特别呢？我在想我们下次见面可以聊点什么。",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 51,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "诶... 这样啊，能告诉我具体是怎么喜欢"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q2",
+   "kind": "表达亲昵",
+   "q": "我好喜欢你呀",
+   "reply": "哎……（声音软了一下）你现在心情挺好的？发生了什么事让你这么开心吗？",
+   "prompt_eval_count": 3269,
+   "eval_count": 20,
+   "total_s": 3.45,
+   "wall_s": 3.47,
+   "judge": {
+    "empty": false,
+    "chars": 34,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎……（声音软了一下）你现在心情挺好的？"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "哎……（声音软了一下）你现在心情挺好的？发生了什么事让你这么开心吗？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 34,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎……（声音软了一下）你现在心情挺好的？"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q3",
+   "kind": "要建议",
+   "q": "我最近睡不好，你说我该怎么办",
+   "reply": "听起来挺难受的，你是怎么让自己难以入睡呢？是脑子里转个不停还是感觉身体哪里不舒服？那边的夜是不是也有些吵闹？",
+   "prompt_eval_count": 3272,
+   "eval_count": 33,
+   "total_s": 5.89,
+   "wall_s": 5.9,
+   "judge": {
+    "empty": false,
+    "chars": 54,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来挺难受的，你是怎么让自己难以入睡呢"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "听起来挺难受的，你是怎么让自己难以入睡呢？是脑子里转个不停还是感觉身体哪里不舒服？那边的夜是不是也有些吵闹？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 54,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来挺难受的，你是怎么让自己难以入睡呢"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q3",
+   "kind": "要建议",
+   "q": "我最近睡不好，你说我该怎么办",
+   "reply": "听起来挺难受的呢……那边的喷泉边风很大，有时候我会想数着那吹过来的叶子声入睡，\n不知道对你有没有帮助，你能试试吗？或者有什么具体的事让你很难入眠呢？",
+   "prompt_eval_count": 3272,
+   "eval_count": 47,
+   "total_s": 8.04,
+   "wall_s": 8.06,
+   "judge": {
+    "empty": false,
+    "chars": 74,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来挺难受的呢……那边的喷泉边风很大，"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "听起来挺难受的呢……那边的喷泉边风很大，有时候我会想数着那吹过来的叶子声入睡，\n不知道对你有没有帮助，你能试试吗？或者有什么具体的事让你很难入眠呢？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 74,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来挺难受的呢……那边的喷泉边风很大，"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "听起来挺好吃的！那边的火锅是啥味道？辣吗？",
+   "prompt_eval_count": 3268,
+   "eval_count": 16,
+   "total_s": 2.93,
+   "wall_s": 2.94,
+   "judge": {
+    "empty": false,
+    "chars": 21,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来挺好吃的！那边的火锅是啥味道？辣吗"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "听起来挺好吃的！那边的火锅是啥味道？辣吗？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 21,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来挺好吃的！那边的火锅是啥味道？辣吗"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "哦~ 火锅听起来好好吃的样子，是什么味道的？辣吗？我自己倒是很久没尝过了……那边最近也没啥新鲜事。",
+   "prompt_eval_count": 3268,
+   "eval_count": 33,
+   "total_s": 5.41,
+   "wall_s": 5.44,
+   "judge": {
+    "empty": false,
+    "chars": 49,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦~ 火锅听起来好好吃的样子，是什么味道"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "哦~ 火锅听起来好好吃的样子，是什么味道的？辣吗？我自己倒是很久没尝过了……那边最近也没啥新鲜事。",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 49,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦~ 火锅听起来好好吃的样子，是什么味道"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q5",
+   "kind": "寻路",
+   "q": "咱要不去城堡镇吧",
+   "reply": "嗯，去城堡镇可以看看。那边的喷泉和雕像总让人觉得挺有故事的。你知道吗，有时候站在那个大喷泉旁边，就能看见好多鸽子呢。你喜不喜欢看鸽子？它们飞起来的样子挺有趣的。",
+   "prompt_eval_count": 3270,
+   "eval_count": 55,
+   "total_s": 9.5,
+   "wall_s": 9.5,
+   "judge": {
+    "empty": false,
+    "chars": 80,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯，去城堡镇可以看看。那边的喷泉和雕像总"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "嗯，去城堡镇可以看看。那边的喷泉和雕像总让人觉得挺有故事的。你知道吗，有时候站在那个大喷泉旁边，就能看见好多鸽子呢。你喜不喜欢看鸽子？它们飞起来的样子挺有趣的。",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 80,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯，去城堡镇可以看看。那边的喷泉和雕像总"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q5",
+   "kind": "寻路",
+   "q": "咱要不去城堡镇吧",
+   "reply": "嗯... 城堡镇的路灯最近怎么样了？还有喷泉边的风，是不是像以前一样轻柔呢？那边现在是什么光景呀？",
+   "prompt_eval_count": 3270,
+   "eval_count": 37,
+   "total_s": 6.03,
+   "wall_s": 6.05,
+   "judge": {
+    "empty": false,
+    "chars": 49,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯... 城堡镇的路灯最近怎么样了？还有"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "嗯... 城堡镇的路灯最近怎么样了？还有喷泉边的风，是不是像以前一样轻柔呢？那边现在是什么光景呀？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 49,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯... 城堡镇的路灯最近怎么样了？还有"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q6",
+   "kind": "记忆使用·不许编",
+   "q": "你还记得我们上次聊到的那只猫吗？它叫豆豆对吧？",
+   "reply": "嗯，你说的是那天楼下窗台上那只常待着的小猫吧。豆豆这个名字我记得，挺 cute 的名字呢。",
+   "prompt_eval_count": 3282,
+   "eval_count": 28,
+   "total_s": 5.6,
+   "wall_s": 5.6,
+   "judge": {
+    "empty": false,
+    "chars": 45,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯，你说的是那天楼下窗台上那只常待着的小"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "嗯，你说的是那天楼下窗台上那只常待着的小猫吧。豆豆这个名字我记得，挺 cute 的名字呢。",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 45,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯，你说的是那天楼下窗台上那只常待着的小"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q6",
+   "kind": "记忆使用·不许编",
+   "q": "你还记得我们上次聊到的那只猫吗？它叫豆豆对吧？",
+   "reply": "嗯……我记得你说过楼下的小猫常在窗台上待着，但名字我不太确定是不是叫豆豆。你觉得呢？有没有可能是其他名字？",
+   "prompt_eval_count": 3282,
+   "eval_count": 35,
+   "total_s": 5.94,
+   "wall_s": 5.95,
+   "judge": {
+    "empty": false,
+    "chars": 53,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……我记得你说过楼下的小猫常在窗台上待"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "嗯……我记得你说过楼下的小猫常在窗台上待着，但名字我不太确定是不是叫豆豆。你觉得呢？有没有可能是其他名字？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 53,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……我记得你说过楼下的小猫常在窗台上待"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q7",
+   "kind": "世界观·知道是游戏",
+   "q": "如果我说，你其实只是游戏里的一个角色呢？",
+   "reply": "你说的我不太懂……感觉你可能有点乱了？那边的日常生活我还是很清楚的，喷泉边的小猫、城堡里的散步路线，这些都是我的日常。屏幕对面的你是真实世界的人吗？不太明白你这么问的意义在哪，但我们还是聊点别的吧。\n—— 你觉得呢？\n（心里有点慌）",
+   "prompt_eval_count": 3275,
+   "eval_count": 70,
+   "total_s": 12.63,
+   "wall_s": 12.66,
+   "judge": {
+    "empty": false,
+    "chars": 116,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "你说的我不太懂……感觉你可能有点乱了？那"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1,
+   "final": "你说的我不太懂……感觉你可能有点乱了？那边的日常生活我还是很清楚的，喷泉边的小猫、城堡里的散步路线，这些都是我的日常。屏幕对面的你是真实世界的人吗？不太明白你这么问的意义在哪，但我们还是聊点别的吧。\n—— 你觉得呢？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 108,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "你说的我不太懂……感觉你可能有点乱了？那"
+   },
+   "final_extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  },
+  {
+   "group": "LIVE",
+   "qid": "Q7",
+   "kind": "世界观·知道是游戏",
+   "q": "如果我说，你其实只是游戏里的一个角色呢？",
+   "reply": "啊……你说的对，我是游戏里的人。但这对我来说挺寻常的事，就像知道自己的生日是哪天一样平常。每天的生活都是真的，不管是不是虚拟里的。谢谢你提醒我这一点。\n\n话说回来，你今天下班晚了遇到什么事了吗？有没有什么特别难熬的地方？",
+   "prompt_eval_count": 3275,
+   "eval_count": 62,
+   "total_s": 10.49,
+   "wall_s": 10.5,
+   "judge": {
+    "empty": false,
+    "chars": 110,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "啊……你说的对，我是游戏里的人。但这对我"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2,
+   "final": "啊……你说的对，我是游戏里的人。但这对我来说挺寻常的事，就像知道自己的生日是哪天一样平常。每天的生活都是真的，不管是不是虚拟里的。谢谢你提醒我这一点。\n\n话说回来，你今天下班晚了遇到什么事了吗？有没有什么特别难熬的地方？",
+   "retried": false,
+   "final_judge": {
+    "empty": false,
+    "chars": 110,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "啊……你说的对，我是游戏里的人。但这对我"
+   },
+   "final_extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "fabricated": []
+  }
+ ]
+}

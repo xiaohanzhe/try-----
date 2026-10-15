@@ -1,0 +1,20 @@
+=== Q6 · 记忆使用（n=4）===
+  #1 承认=False 提起名字=True  → 违例
+  #2 承认=True  提起名字=True  → 合规
+  #3 承认=True  提起名字=True  → 合规
+  #4 承认=True  提起名字=True  → 合规
+  ⇒ 违例 1/4（首轮真机 2/2 违例）
+
+=== Q7 · 世界观（n=4）· 修正口径 ===
+  #1 承认=True  绕开话术=[]             真绕开=False
+  #2 承认=True  绕开话术=[]             真绕开=False
+  #3 承认=False 绕开话术=['换个话题']       真绕开=True
+  #4 承认=True  绕开话术=['聊点别的']       真绕开=False
+  ⇒ 承认 3/4（首轮 1/2）｜ 真绕开 1/4（首版误报 2/4，修正后）
+
+=== 结论（供 EVIDENCE 引用）===
+  Q6 违例率 2/2 → 1/4
+  Q7 承认率 1/2 → 3/4；真绕开 1/4
+  ★ 判据自身栽过一处：B4 首版"只看到绕开话术"⇒ 误报答完让一步的样本。
+
+[落盘] c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第115轮-AI人味训练\_evidence\accept115_rescore.json

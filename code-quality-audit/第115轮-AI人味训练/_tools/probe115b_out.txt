@@ -1,0 +1,17 @@
+=== 0. 环境里的代理变量（为什么 A 会 502）===
+   HTTP_PROXY     = http://127.0.0.1:54715
+   HTTPS_PROXY    = http://127.0.0.1:54715
+   http_proxy     = http://127.0.0.1:54715
+   https_proxy    = http://127.0.0.1:54715
+
+=== 1. TCP 直连 127.0.0.1:11434 ===
+   [CLOSED] 127.0.0.1:11434  (TimeoutError('timed out'))
+   [CLOSED] 127.0.0.1:11435  (TimeoutError('timed out'))
+
+=== 2. /api/tags（绕代理）===
+[FAIL] URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+
+=== 3. 重点模型元信息（/api/show，绕代理）===
+
+=== 4. 显存/内存相关（能不能跑 7B）===
+   （跳过：FileNotFoundError(2, '系统找不到指定的文件。', None, 2, None)）

@@ -1,0 +1,23 @@
+=== 1. Ollama 是否在跑 ===
+[FAIL] /api/tags 不可达：<HTTPError 502: 'Bad Gateway'>
+   ⇒ 说明 Ollama 服务没起（或换了端口）。需要用户先启动 Ollama。
+
+=== 2. 候选模型元信息（/api/show）===
+
+=== 3. persona / 人设资产清单 ===
+[OK] ralsei_persona.md            chars=3617  CRLF=0
+[OK] npc/persona/*.txt  76 个
+     合计 566951 字符，均 7460 字/个
+     样例：asgore.txt, berdly.txt, flowery.txt, gerson.txt, hy_ace.txt, hy_axis.txt, hy_bowll.txt, hy_ceroba_ketsukane.txt, hy_chujin_ketsukane.txt, hy_clover.txt
+[OK] npc\_registry.json
+
+=== 4. 生成链路的"权重"落点（只读 grep）===
+   temperature            ralsei_pet\modules\ai_driver.py, ralsei_pet\modules\api_client.py, ralsei_pet\modules\command_manager.py, ralsei_pet\modules\config_manager.py, ralsei_pet\modules\customization_system.py, ralsei_pet\modules\desktop_interaction.py, ralsei_pet\src\main.py
+   top_p                  ralsei_pet\modules\desktop_interaction.py, ralsei_pet\modules\dialogue_ui.py, ralsei_pet\modules\file_sheet_controller.py, ralsei_pet\modules\hide_controller.py, ralsei_pet\modules\sprite_loader.py, ralsei_pet\src\main.py
+   num_ctx                ralsei_pet\modules\api_client.py, ralsei_pet\modules\config_manager.py, ralsei_pet\src\main.py
+   repeat_penalty         ralsei_pet\modules\api_client.py, ralsei_pet\modules\config_manager.py, ralsei_pet\src\main.py
+   num_predict            ralsei_pet\modules\api_client.py, ralsei_pet\src\main.py
+   keep_alive             ralsei_pet\modules\api_client.py, ralsei_pet\src\main.py
+   /api/chat              ralsei_pet\modules\api_client.py
+   v1/chat/completions    ralsei_pet\modules\api_client.py, ralsei_pet\modules\config_manager.py, ralsei_pet\src\main.py
+   max_tokens             ralsei_pet\modules\api_client.py, ralsei_pet\modules\config_manager.py, ralsei_pet\src\main.py

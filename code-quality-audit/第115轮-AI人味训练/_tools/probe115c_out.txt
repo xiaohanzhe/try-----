@@ -1,0 +1,39 @@
+=== 1. ollama 可执行文件 ===
+   shutil.which(ollama) = 'C:\\Users\\23002\\AppData\\Local\\Programs\\Ollama\\ollama.EXE'
+   [OK  ] C:\Users\23002\AppData\Local\Programs\Ollama\ollama.exe
+   [MISS] C:\Users\23002\AppData\Local\Ollama\ollama.exe
+   [MISS] C:\Program Files\Ollama\ollama.exe
+   [OK  ] C:\Users\23002\AppData\Local\Programs\Ollama\ollama.exe
+
+=== 2. ollama 模型目录 ===
+   [OK  ] C:\Users\23002\.ollama
+   [OK  ] C:\Users\23002\.ollama\models
+   [OK  ] C:\Users\23002\.ollama\models\blobs
+   [OK  ] C:\Users\23002\.ollama\models\manifests
+   blobs 文件数 = 14
+   大文件（>100MB）2 个：
+          4.36 GB  sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730
+          2.33 GB  sha256-85e4a5b7b8ef0e48af0e8658f5aaab9c2324c76c1641493f4d1e25fce54b18b9
+
+=== 3. manifests（看有哪些模型被注册）===
+   registry.ollama.ai\library\qwen2.5\7b-instruct-q4_K_M
+   registry.ollama.ai\library\qwen3\4b-instruct-2507-q4_K_M
+   registry.ollama.ai\library\ralsei\v3
+   registry.ollama.ai\library\ralsei\v4
+
+=== 4. Ollama 环境变量 / 日志 ===
+   server.log [OK] C:\Users\23002\AppData\Local\Ollama\server.log
+   server.log 大小 = 0.00 MB
+      | time=2026-10-15T01:57:20.048+08:00 level=INFO source=routes.go:2005 msg="server config" env="map[CUDA_VISIBLE_DEVICES: GGML_VK_VISIBLE_DEVICES: GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVI
+      | time=2026-10-15T01:57:20.068+08:00 level=INFO source=routes.go:2007 msg="Ollama cloud disabled: false"
+      | time=2026-10-15T01:57:20.096+08:00 level=INFO source=images.go:922 msg="total blobs: 14"
+      | time=2026-10-15T01:57:20.100+08:00 level=INFO source=images.go:930 msg="total unused blobs removed: 0"
+      | time=2026-10-15T01:57:20.103+08:00 level=INFO source=routes.go:2065 msg="Listening on 127.0.0.1:11434 (version 0.34.4)"
+      | time=2026-10-15T01:57:20.117+08:00 level=INFO source=runner.go:60 msg="discovering available GPUs..."
+      | time=2026-10-15T01:57:21.791+08:00 level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=3h13m53.224777321s consecutive_failures=0
+      | time=2026-10-15T01:57:24.959+08:00 level=INFO source=runner.go:405 msg="dropping integrated GPU; to enable, set OLLAMA_IGPU_ENABLE=1" id=0 library=Vulkan compute=0.0 name=Vulkan0 d
+      | time=2026-10-15T01:57:24.959+08:00 level=INFO source=types.go:50 msg="inference compute" id=cpu library=cpu compute="" name=cpu description=cpu libdirs=ollama driver="" pci_id="" t
+      | time=2026-10-15T01:57:24.960+08:00 level=INFO source=routes.go:2115 msg="vram-based default context" total_vram="0 B" default_num_ctx=4096
+      | [GIN] 2026/10/15 - 01:57:24 | 200 |            0s |       127.0.0.1 | HEAD     "/"
+      | [GIN] 2026/10/15 - 01:57:24 | 200 |            0s |       127.0.0.1 | GET      "/api/version"
+      | [GIN] 2026/10/15 - 01:57:24 | 200 |     30.2364ms |       127.0.0.1 | GET      "/api/tags"
