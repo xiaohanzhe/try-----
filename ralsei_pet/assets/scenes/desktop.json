@@ -20,9 +20,9 @@
       "kind": "prop",
       "authored": true,
       "src": "obj_doorA",
-      "sprite": "objs/spr_darkdoor_0.png",
+      "sprite": "objs/desk_door_oneshot_black.png",
       "pos": [
-        138,
+        64,
         0
       ],
       "depth": 0,
@@ -80,6 +80,15 @@
       "door_identity_adjudication": "★★★ **每扇门用哪张美术，按用户逐字裁定，别再凭印象改**：A=`spr_darkdoor_0`（用户「维持原作玩家视角下的门的样子」）· B=`niko_door_portal`（「用原作 niko 最后回家的光门」）· C=`ut_castle_realdoor_0`（「ut 就用王座那个门」）· D=`spr_giantdarkdoor_0`（「**不是啊，是哪个门框似的哪个门**」）。★ D 的口径**改过一次，别改回去**：10-12 的 AskUserQuestion 用户先选过 `spr_shortcut_door`（36×52 粉紫独门），**10-13 的 AskUserQuestion（选项「先保持现状（推荐）/ 换成金边拱门框 / 换成青灰双开门」）用户回「不是啊，是哪个门框似的哪个门」⇒ 覆盖前一次，终选巨门框**。第116轮曾据一份**摘要的转述**（只看到 10-12 那次）把 D 回退成 `spr_shortcut_door_0` —— 那是错的，已撤销。取证脚本 = `第116轮.../_tools/find116_all_ask.py`（挖问答对）＋ `find116_short.py`（挖用户短句原话），原始结果落在 `_evidence/rec116/find116_all_ask.txt`（:26499 / :24690 两条）与 `find116_doors_all.txt`。",
       "why_key_black_is_not_deviating_from_原作": "★ 「扣黑」不是改画：`ut_castle_realdoor_0.png` 是从 UT **背景图** `bg_castle_realdoor` 里抠出来的 ⇒ 那圈黑**字面就是原房间的背景**（用户逐字「**黑底**也没去干净」用词精确）；`spr_giantdarkdoor_0.png` 的黑同理（与贴图边框连通 63.1% ⇒ 是衬底而不是门板）。真正是门板本身的黑（门 A）**没有**被扣（见上条）。",
       "alpha_note": "不透明度另一路（门渐显 alpha）**不在这里**：那由 `door_reveal.screen_reveal_alpha()` 按**屏幕像素口径**现算，见 `main._desktop_screen_doors` 与 `main._pet_screen_rect`。"
+    },
+    "round117_oneshot_black_and_bigger": {
+      "user_spec": "用户 2026-10-18 逐字：「oneshot 用最后 **niko 回家走的那道门**，但**颜色变成黑光**，然后 **niko 的家还是用他那道**，**ut 的门就用你的那个就好**，对了**大一点都**」。",
+      "door_A": "门 A（OneShot）= `objs/desk_door_oneshot_black.png` —— 就是把门 B 那张 `niko_door_portal.png` 做成**黑光**版：**尺寸 192×128 与原件完全一致、alpha 逐像素一致**（⇒ 形状/摆放/边界一个像素都不变，只换颜色）。生成脚本 = `第117轮.../_tools/key117_black.py`（取色公式写在脚本 docstring 里，可复算）。",
+      "door_B_C_D_unchanged": "门 B 仍是 `niko_door_portal.png`（用户「niko 的家还是用他那道」）· 门 C 仍是 `desk_door_ut.png`（「ut 的门就用你的那个就好」）· 门 D 仍是 `desk_door_deltarune.png`（本轮未提，不动）。",
+      "why_not_spr_darkdoor": "★ 门 A 原来用 `spr_darkdoor_0.png`（44×56，`obj_darkdoor` 的贴图）。本轮按用户新口径换成「回家光门」⇒ 门 A 从 44×56 变成 192×128。★ 后果如实登记：`pos` 必须跟着改（房间坐标贴正上：`x=(320-192)//2=64, y=0`），否则数据里的摆位会与贴图尺寸脱节（房间层虽 `enabled:false` 不画，但**数据不该说谎**）。",
+      "bigger": "「大一点都」落在**唯一旋钮** `desk_doors.DOOR_FIT_CAP`：**1.2 → 1.6**（四扇门**统一**倍率，按原作等比）。真机 2560×1600 实测：`k` 0.759 → **1.012**；门 D 137×118 → **182×157**、门 B 146×97 → **194×129**、门 C 33×75 → **45×100**、门 A 33×42 → **194×129**（A 换了贴图，本来就会变大，与放大叠加）。",
+      "blacklight_is_not_a_black_block": "★★★ 「黑光」不等于「一块黑」（第116轮用户报的「黑底也没去干净」就是整片黑）。色相映射保住了**层次**：以亮度 `t=l/255` 映射到 `R=4+96t, G=2+24t, B=6+84t` ⇒ 最暗 `rgb(4,2,6)`、最亮 `rgb(100,26,90)`（深品紫，保留原门「品红」的色相记忆）。可见亮度档数 **16**（原件本身只有 20 档 —— 它是 1.8 KB 的索引色平涂图），中位 47.2 → **12.6**，最亮 255 → **55.4**。",
+      "why_not_runtime_tint": "产品里门是 `drawPixmap` 直贴（`scene_canvas._paint_screen_doors`），没有着色管线；把调色塞进渲染循环 = 每帧算 24576 像素 + 素材真源分裂。⇒ 生成**静态变体**，让「门长什么样」仍可被回归逐像素校验。"
     },
     "why_desktop_is_a_scene": "用户原话『桌面也会被我当成一个场景』。桌面在物理系统里早就是一等公民（floor_manager.desktop_floor，type='desktop'、platform_height=0，且 _desktop_floor_y() 是『地面』y 坐标的唯一真源），所以映射到场景系统是天然对齐，不是特例。",
     "round89_desktop_doors": {

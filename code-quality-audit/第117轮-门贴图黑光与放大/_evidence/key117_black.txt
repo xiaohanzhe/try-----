@@ -1,0 +1,10 @@
+== 第117轮 · OneShot 门「黑光」变体 ==
+源：niko_door_portal.png  →  产物：desk_door_oneshot_black.png
+尺寸 192×128（与原件一致：True）
+原件: 尺寸 192×128 · alpha0=12288(50.0%) alpha255=12288(50.0%) · 可见亮度 min=5.0 p10=5.0 中位=47.2 p90=255.0 max=255.0 · 可见档数=20
+黑光: 尺寸 192×128 · alpha0=12288(50.0%) alpha255=12288(50.0%) · 可见亮度 min=3.9 p10=3.9 中位=12.6 p90=55.4 max=55.4 · 可见档数=16
+alpha 逐像素一致 = True
+黑光可见亮度档数 = 16（原件 20 档；要求 ≥ 12）
+黑光最亮 = 55.4（要求 30 ≤ max ≤ 120：既真"黑"，又不至于整块看不见）
+对照图：C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第117轮-门贴图黑光与放大\_evidence\png117\oneshot_black_compare.png
+（左=原件 品红光门 · 中=黑光变体 · 右=黑光叠在深浅棋盘上）

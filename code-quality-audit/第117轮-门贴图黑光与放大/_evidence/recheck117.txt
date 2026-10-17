@@ -1,0 +1,77 @@
+[PASS] ① 语法 desk_doors.py  
+[PASS] ① 语法 check117.py  
+[PASS] ① 语法 mutate117.py  
+[PASS] ① 语法 key117_black.py  
+[PASS] ① 语法 calc117_size.py  
+[PASS] ① 语法 probe117_portal.py  
+[PASS] ① 语法 shot117_doorform.py  
+[PASS] ① 语法 verify117_shot.py  
+[PASS] ① 语法 check112.py  
+[PASS] ① 语法 check89.py  
+[PASS] ① 语法 run_all.py  
+[PASS] ① JSON desktop.json  
+[PASS] ① JSON baseline.json  
+[PASS] ① JSON mutate117.json  
+[PASS] ① JSON verify117_shot.json  
+[PASS] ② 桌面正好 4 扇门  n=4
+[PASS] ② 门 id 齐全  ['desk_door_deltarune', 'desk_door_niko_home', 'desk_door_oneshot', 'desk_door_ut']
+[PASS] ② 门 A 贴图=黑光变体  objs/desk_door_oneshot_black.png
+[PASS] ② 门 A pos=(64,0)  [64, 0]
+[PASS] ② 门 B 仍用原件  objs/niko_door_portal.png
+[PASS] ② 门 C 仍用 desk_door_ut  objs/desk_door_ut.png
+[PASS] ② 门 D 仍用 desk_door_deltarune  objs/desk_door_deltarune.png
+[PASS] ② 四门都 enabled=False（纯声明件）  
+[PASS] ② _comment 有 round117 记账  ['round117_oneshot_black_and_bigger']
+[PASS] ② 贴图存在 desk_door_oneshot_black.png  2339 B
+[PASS] ② 贴图存在 niko_door_portal.png  1787 B
+[PASS] ② 贴图存在 desk_door_ut.png  1143 B
+[PASS] ② 贴图存在 desk_door_deltarune.png  14332 B
+[PASS] ② 黑光变体 192x128  (192, 128)
+[PASS] ② 与原件同尺寸  (192, 128) vs (192, 128)
+[PASS] ③ 编码 desk_doors.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 check117.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 mutate117.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 key117_black.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 calc117_size.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 probe117_portal.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 shot117_doorform.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 verify117_shot.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 check112.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 check89.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 run_all.py（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 desktop.json（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 baseline.json（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 mutate117.json（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 verify117_shot.json（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 MEMORY.md（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 参考-契约与历轮（详版）.md（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ③ 编码 2026-10-18.md（无 BOM / 无 U+FFFD）  BOM=False U+FFFD=False
+[PASS] ④ 无恒真判据 check117.py  
+[PASS] ④ 无恒真判据 mutate117.py  
+[PASS] ④ 无恒真判据 check112.py  
+[PASS] ④ 无恒真判据 check89.py  
+[PASS] ④ check117 有 D5 负控制（cap=1.2 四门更小）  
+[PASS] ④ check117 有 A3b 负控制（alpha 全 255 判否）  
+[PASS] ⑤ desk_doors.DOOR_FIT_CAP == 1.6  
+[PASS] ⑤ 门 A 贴图名在 desktop.json  
+[PASS] ⑤ run_all.SUITES 有 check117  
+[PASS] ⑤ mutate117 全 CAUGHT（11 条）  11/11
+[PASS] ⑤ verify117_shot 12 PASS / 0 FAIL  pass=12 fail=0
+[PASS] ⑤ 四门 rect 全在（屏幕层）  ['A', 'B', 'C', 'D']
+[PASS] ⑤ 门 A vs 黑光 < 5（该像）  0.143
+[PASS] ⑤ 门 A vs 品红原件 > 30（该不像）  66.953
+[PASS] ⑤ 负控制 A 右移 24px > 20  36.591
+[PASS] ⑤ MEMORY.md js_len <= 10000（含 CRLF）  js_len=9944 余量=+56
+[PASS] ⑤ 速查含令牌 `check117`  
+[PASS] ⑤ 速查含令牌 `mutate117`  
+[PASS] ⑤ 速查含令牌 `desk_door_oneshot_black`  
+[PASS] ⑤ 速查含令牌 `DOOR_FIT_CAP`  
+[PASS] ⑤ 速查含令牌 `182×157`  
+[INFO] ⑥ 工作区（非严格）脏 12 项：M .gitignore |  M .workbuddy/memory/MEMORY.md |  M ".workbuddy/memory/\345\217\202\350\200\203-\345\245\221\347\272\246\344\270\216\345\216\206\350\275\256\357\274\210\350\257\246\347\211\210\357\274\211.md" |  M code-quality-audit/regress/baseline.json |  M code-quality-audit/regress/run_all.py |  M "code-quality-audit/\347\254\254112\350\275\256-\346\241\214\351\235\242\351\227\250\346\270\220\346\230\276/_tools/check112.py"
+[PASS] ⑦ 基线 check117 pass=33 fail=0  实际 {'exit': 0, 'fail': 0, 'pass': 33, 'sha256': 'e740c92e753558c2689ac0465227de900bd7625bf59a5a4c034a7bbd238a4138'}
+[PASS] ⑦ 基线 check112 pass=172 fail=0  实际 {'exit': 0, 'fail': 0, 'pass': 172, 'sha256': 'a4000fa3713496951d322886ccaae03463490c6bd3d0cf3a8a8fa2bf391999d3'}
+[PASS] ⑦ 基线 check89 pass=78 fail=0  实际 {'exit': 0, 'fail': 0, 'pass': 78, 'sha256': '88bed5c0a7f24db5074d765277a15bffa52190849d0da279b213bfbcf1808025'}
+[PASS] ⑦ 基线 objects_round44 pass=16 fail=0  实际 {'exit': 0, 'fail': 0, 'pass': 16, 'sha256': 'e91eb005cc72ee4d7a3c167938b40554828d117647b9ac52cfd506fbde02f944'}
+[PASS] ⑦ 基线 items_round68 pass=22 fail=0  实际 {'exit': 0, 'fail': 0, 'pass': 22, 'sha256': '48f873f1e853e223279aa7f3fa0366fbbeb689e3871cc21c07665b20929fe9a8'}
+
+74 PASS / 0 FAIL

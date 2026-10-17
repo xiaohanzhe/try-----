@@ -115,3 +115,10 @@ _tmp_*
 # 第95轮加：仓库内的临时工作目录（约定放 `E:\Download\_tmp\`，但偶有脚本/工具
 # 在工作区里自建 `.tmp/` —— 那属于纯临时产物，绝不该入库）
 .tmp/
+
+# 第117轮加：`shot*_full*.png`（整屏抓图）不入库。
+# 理由同 §90/§96/§98：① 公开仓库，整屏图含整个桌面（壁纸/图标/文件名 = 用户隐私）；
+# ② 体积：4 张 2560×1528 合计约 38 MB，纯二进制史；③ 可复算：`_tools/shot117_doorform.py`
+# 能重跑再生，且**逐门裁图**（`*_doorA~D.png`，各 ~200 KB）已入库，判据不依赖整屏图。
+code-quality-audit/*/_evidence/*/shot*_full*.png
+code-quality-audit/*/_evidence/shot*_full*.png

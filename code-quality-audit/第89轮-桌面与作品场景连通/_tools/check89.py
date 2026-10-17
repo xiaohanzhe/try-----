@@ -206,10 +206,10 @@ if set(_letters) != _LETTERS_WANT:
 #      `bg_castle_realdoor` 抠出来的，那圈黑**字面就是原房间背景**。生成脚本 =
 #      `第116轮…/_tools/key116_doors.py --key`；世界内（`_zone.ch1.castle_town.json`）
 #      **必须仍是原件**（那里背景本就黑，黑门洞是对的）—— 由 `check112` 的 G7/G8 钉。
-_pos_rule = {'A': (138, 0), 'B': (64, 112), 'C': (0, 70), 'D': (140, 42)}
+_pos_rule = {'A': (64, 0), 'B': (64, 112), 'C': (0, 70), 'D': (140, 42)}
 #: ★ 每扇门各自的贴图（用户逐字指认）。
 _sprite_rule = {
-    'A': 'spr_darkdoor_0.png',
+    'A': 'desk_door_oneshot_black.png',
     'B': 'niko_door_portal.png',
     'C': 'desk_door_ut.png',
     'D': 'desk_door_deltarune.png',
@@ -229,7 +229,7 @@ for _o in _doors:
             and (int(_p[0]), int(_p[1])) == _want_pos):
         _map_bad.append('%s 位置=%r 期望=%r' % (_L, _p, _want_pos))
 check('A2b ★★★ 4 扇门的**字母 ↔ 位置**逐条等于口径'
-      '（A 正上138,0/B 正下64,112/C 正左0,70/D 正右140,42）',
+      '（A 正上64,0/B 正下64,112/C 正左0,70/D 正右140,42）',
       not _map_bad, star=True)
 if _map_bad:
     for _b in _map_bad[:4]:
@@ -355,7 +355,7 @@ for _o in _doors:
                               % (_L, _xx + _sz2[0], _rw))
 # A4a ★★ 4 张门贴图**都装得进**房间 320×240（所以 A4 不许有豁免分支）。
 #   ★ 尺寸从盘上现读（`_sizes`），不写死 —— 判据与事实脱节的教训。
-_for_a4a = ['spr_darkdoor_0.png', 'niko_door_portal.png',
+_for_a4a = ['desk_door_oneshot_black.png', 'niko_door_portal.png',
             'desk_door_ut.png', 'desk_door_deltarune.png']
 _a4a_bad = []
 for _f in _for_a4a:
@@ -434,7 +434,7 @@ check('A5 负控制：A4 有鉴别力（把门推离屏幕边缘必须判违反�
 #   ★★ 第116轮：C/D 改成**去了黑底的桌面变体**（尺寸与原件逐字相同 ⇒ 判据只换名字，
 #      语义不变）—— 理由见 A2b 上方那段；原件仍在盘上（G8/A6 都查得到）。
 #   ★ 判据从"集合等于某个单元素字典"改为"每条 src→贴图 的尺寸都对得上"。
-_A_DOOR_SPRITE_PX = _sizes.get('spr_darkdoor_0.png') or (44, 56)
+_A_DOOR_SPRITE_PX = _sizes.get('desk_door_oneshot_black.png') or (192, 128)
 _A_UT_SPRITE_PX = _sizes.get('desk_door_ut.png') or (44, 99)
 _A_NIKO_SPRITE_PX = _sizes.get('niko_door_portal.png') or (192, 128)
 _A_GIANT_SPRITE_PX = _sizes.get('desk_door_deltarune.png') or (180, 155)
@@ -456,7 +456,7 @@ for _o in _doors:
     if _want:
         _used_sprites.add(_want)
 _px_bad = []
-for _f, _want_px in (('spr_darkdoor_0.png', _A_DOOR_SPRITE_PX),
+for _f, _want_px in (('desk_door_oneshot_black.png', _A_DOOR_SPRITE_PX),
                      ('desk_door_ut.png', _A_UT_SPRITE_PX),
                      ('niko_door_portal.png', _A_NIKO_SPRITE_PX),
                      ('desk_door_deltarune.png', _A_GIANT_SPRITE_PX)):
@@ -466,7 +466,7 @@ for _f, _want_px in (('spr_darkdoor_0.png', _A_DOOR_SPRITE_PX),
     elif tuple(_got) != tuple(_want_px):
         _px_bad.append('%s 尺寸 %r != 期望 %r' % (_f, _got, _want_px))
 check('A6 ★★★ 四张门贴图真在盘且尺寸正确'
-      '（OneShot 任意门 %s / UT 王座门 %s / Niko 光门 %s / 符文巨门框 %s）'
+      '（OneShot 黑光光门 %s / UT 王座门 %s / Niko 光门 %s / 符文巨门框 %s）'
       % (_A_DOOR_SPRITE_PX, _A_UT_SPRITE_PX, _A_NIKO_SPRITE_PX, _A_GIANT_SPRITE_PX),
       not _px_bad, star=True)
 if _px_bad:
@@ -1057,8 +1057,8 @@ if _e3_bad:
         print('        %s' % _b)
 # E3b ★ 负控制：E3 有鉴别力（给 rect 强加 ×2 缩放必须被判不等）。
 _e3_neg = False
-if _sizes.get('spr_darkdoor_0.png'):
-    _w0, _h0 = _sizes['spr_darkdoor_0.png']
+if _sizes.get('desk_door_oneshot_black.png'):
+    _w0, _h0 = _sizes['desk_door_oneshot_black.png']
     _e3_neg = (_w0 * 2, _h0 * 2) != (int(_w0), int(_h0)) and _w0 > 0
 check('E3b ★ 负控制：E3 有鉴别力（rect 被缩放 ×2 必须判不等）', _e3_neg, star=True)
 

@@ -797,7 +797,7 @@ _n11_ok = True
 _n11_detail = []
 if _dd_mod is not None:
     _SW, _SH = 2560, 1600
-    _sizes = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
+    _sizes = {'A': (192, 128), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
     _placed = _dd_mod.plan_screen_doors(_sizes, _SW, _SH)
     _map = dict(_placed)
     check('N11 ★ 四扇门都算出摆位', len(_placed) == 4,
@@ -841,7 +841,7 @@ else:
 _n12_ok = True
 if _dd_mod is not None:
     for _side, _lt in _want_sides:
-        _sz = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}[_lt]
+        _sz = {'A': (192, 128), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}[_lt]
         _r = _dd_mod.door_screen_rect(_side, _sz, 2560, 1600)
         if _r is None or _r[2] != _sz[0] or _r[3] != _sz[1]:
             _n12_ok = False
@@ -958,7 +958,12 @@ check('N14b ★ 负控制：`no_such_key_qqq` 的 Compare ⇒ 不存在（N14 �
 #     而 `ut_castle_realdoor_0` 本就是从 UT **背景图** `bg_castle_realdoor` 抠出来的
 #     ⇒ 那圈黑**字面就是原房间背景**。原件仍在盘上、世界内仍用原件（见 G7/G8）。
 _need_sprites = {
-    'desk_door_oneshot': 'objs/spr_darkdoor_0.png',
+    # ★★★ 第117轮**改钉**（不是放宽）：门 A 的贴图从 `spr_darkdoor_0.png`
+    #   （44×56 的暗门）换成「Niko 回家光门」的**黑光变体**
+    #   `desk_door_oneshot_black.png`（192×128，alpha 与原件逐像素一致、只压暗偏紫）。
+    #   真因 = 用户 10-18 逐字「**oneshot 用最后 niko 回家走的那道门，但颜色变成黑光**」。
+    #   原始件 `spr_darkdoor_0.png` **仍在盘上**（世界内仍可能引用，见 check117 E4）。
+    'desk_door_oneshot': 'objs/desk_door_oneshot_black.png',
     'desk_door_niko_home': 'objs/niko_door_portal.png',
     'desk_door_ut': 'objs/desk_door_ut.png',
     'desk_door_deltarune': 'objs/desk_door_deltarune.png',
@@ -974,7 +979,7 @@ _got_sprites = {}
 for _o in (_dj.get('objects') or []):
     if isinstance(_o, dict) and _o.get('id'):
         _got_sprites[_o['id']] = _o.get('sprite')
-check('N15 ★ 4 门贴图 == 裁定表（OneShot暗门/Niko家光门/UT王座门·去黑底/符文巨门框·去黑底）',
+check('N15 ★ 4 门贴图 == 裁定表（OneShot黑光光门/Niko家光门/UT王座门·去黑底/符文巨门框·去黑底）',
       _got_sprites == _need_sprites, star=True,
       detail='got=%s' % _got_sprites)
 check('N15b ★★ Niko 家门用光门 `niko_door_portal`（用户「用原作 niko 最后回家的光门」）',
@@ -1071,10 +1076,14 @@ def _dd_const(name):
     return None
 
 
-# N18a: `DOOR_FIT_CAP` 存在且 = 1.2（门外接盒 = Ralsei 盒 × 1.2 ⇒「稍微大一点」）。
+# N18a: `DOOR_FIT_CAP` 存在且 = 1.6（门外接盒 = Ralsei 盒 × 1.6 ⇒「大一点都」）。
+#   ★★★ 第117轮**改钉**：1.2 → **1.6**。真因 = 用户 10-18 逐字「**对了大一点都**」
+#     （在"稍微大一点"=1.2 的基础上再放大 33%；真机 k 从 0.759 → 1.012）。
+#   ★ 这个常量是"门整体大小"的**唯一旋钮** —— 用户再要"大一点/小一点"只改它，
+#     别去动各门贴图像素（那会破坏"按原作等比放大"）。
 _n18a_cap = _dd_const('DOOR_FIT_CAP')
-check('N18a ★★★ `DOOR_FIT_CAP` = 1.2（门外接盒 = Ralsei 盒 × 1.2，用户「稍微大一点」）',
-      _n18a_cap == 1.2, star=True, detail='DOOR_FIT_CAP=%r' % (_n18a_cap,))
+check('N18a ★★★ `DOOR_FIT_CAP` = 1.6（门外接盒 = Ralsei 盒 × 1.6，用户「大一点都」）',
+      _n18a_cap == 1.6, star=True, detail='DOOR_FIT_CAP=%r' % (_n18a_cap,))
 
 # N18b: 统一倍率函数存在（AST 函数定义），且 `fit_door_scale`（单扇版）也保留。
 _dd_funcs = {n.name for n in _ast.walk(_DD_T) if isinstance(n, _ast.FunctionDef)}
@@ -1101,7 +1110,7 @@ except Exception as _e:
     _DD2 = None
     print('        [warn] desk_doors 导入失败: %r' % (_e,))
 _pet = (230, 157)                      # 真机量得（69×3.33125 / 47×3.33125 取整）
-_sz4 = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
+_sz4 = {'A': (192, 128), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
 _n18d_bad = []
 _n18d_rows = []
 if _DD2 is not None:
@@ -1597,7 +1606,7 @@ _n30_ok = False
 _n30_detail = ''
 if _DD2 is not None:
     try:
-        _sz = {'A': (44, 56), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
+        _sz = {'A': (192, 128), 'B': (192, 128), 'C': (44, 99), 'D': (180, 155)}
         _r1 = _DD2.plan_screen_doors(_sz, 2560, 1600, pet_box=(144, 98))
         _r2 = _DD2.plan_screen_doors(_sz, 2560, 1600, pet_box=(144, 98))
         _n30_ok = (_r1 == _r2 and len(_r1) == 4)

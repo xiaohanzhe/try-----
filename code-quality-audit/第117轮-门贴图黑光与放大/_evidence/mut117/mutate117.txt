@@ -1,0 +1,52 @@
+========================================================================
+M0 正控制：临时树原样 ⇒ 必须 33 PASS / 0 FAIL（否则下面全是假 CAUGHT）
+========================================================================
+  rc=0  尾部=['结论：33 PASS / 0 FAIL']
+
+[M1  A1   门 A 贴图回退成旧暗门 spr_darkdoor_0]  rc=1  FAIL=1  ⇒ CAUGHT
+    [FAIL] A1 ★★★ 门 A（`desk_door_oneshot`）的 sprite == `objs/desk_door_oneshot_black.png`
+
+[M2  A4   变体整张换成原件（号称黑光，其实没变暗）]  rc=1  FAIL=3  ⇒ CAUGHT
+    [FAIL] A4 ★★★ 黑光确实**更暗**：中位亮度 47.2 < 原件 47.2（用户「颜色变成黑光」）
+
+[M3  A3   变体 alpha 全置 255（形状被改）]  rc=1  FAIL=3  ⇒ CAUGHT
+    [FAIL] A3 ★★★ 黑光变体的 **alpha 与原件逐像素一致**（形状/透明区零漂移）
+
+[M4  A4b  变体涂成单一色（糊成一块，第116轮用户报过的形态）]  rc=1  FAIL=3  ⇒ CAUGHT
+    [FAIL] A4b ★★★ 黑光**不是一块黑**：可见亮度档数 1 ≥ max(6, 原件 20 × 0.6) = 12
+
+[M5  B1   门 B 也被换成黑光变体（"niko 的加"没保住原色）]  rc=1  FAIL=4  ⇒ CAUGHT
+    [FAIL] B1 ★★★ 门 B（`desk_door_niko_home`）的 sprite == `objs/niko_door_portal.png`（用户「niko 的加还是用他那道」）
+
+[M6  C1   门 C（UT）被换掉]  rc=1  FAIL=2  ⇒ CAUGHT
+    [FAIL] C1 ★★★ 门 C（`desk_door_ut`）的 sprite == `objs/desk_door_ut.png`
+
+[M7  D1   DOOR_FIT_CAP 回退成 1.2（"大一点"失效）]  rc=1  FAIL=4  ⇒ CAUGHT
+    [FAIL] D1 ★★★ `DOOR_FIT_CAP` 字面量 == 1.6（AST 取值；用户「大一点都」）
+
+[M8  D3   cap 改成 3.0（放大过头，越过"按原作"区间）]  rc=1  FAIL=3  ⇒ CAUGHT
+    [FAIL] D3 ★★★ 统一倍率 k == 1.8968 ∈ (1.00, 1.03)（原件像素已基本"按原作"）
+
+[M9  D6   EDGE_MARGIN 0 -> 24（门被顶离屏幕边框）]  rc=1  FAIL=1  ⇒ CAUGHT
+    [FAIL] D6 ★★★ 放大后四扇门仍**逐边贴屏幕物理边**（A上/B下/C左/D右）
+
+[M10 D7   统一倍率退回"逆门算"（按 A 门定尺 ⇒ 四门不再同一把尺）]  rc=1  FAIL=2  ⇒ CAUGHT
+    [FAIL] D7 ★★★ 四门共用**同一把尺**：逐门 w/h **精确等于** round(原尺寸 × k=1.011613)（逐门倍率分叉 0.572 ⇒ 判据非恒等）
+
+[M11 E3   把一扇门 enabled 改回 true（房间层又画一遍）]  rc=1  FAIL=1  ⇒ CAUGHT
+    [FAIL] E3 ★★ 4 门仍全 `enabled: false`（房间层剔除，只屏幕层画）
+
+========================================================================
+变异合计：11 条 ｜ CAUGHT=11 ｜ MISSED=0 ｜ NOT-APPLIED=0
+  M1  A1   门 A 贴图回退成旧暗门 spr_darkdoor_0                 CAUGHT       [FAIL] A1 ★★★ 门 A（`desk_door_oneshot`）的 sprite == `objs/desk_door_oneshot_black.png`
+  M2  A4   变体整张换成原件（号称黑光，其实没变暗）                        CAUGHT       [FAIL] A4 ★★★ 黑光确实**更暗**：中位亮度 47.2 < 原件 47.2（用户「颜色变成黑光」）
+  M3  A3   变体 alpha 全置 255（形状被改）                       CAUGHT       [FAIL] A3 ★★★ 黑光变体的 **alpha 与原件逐像素一致**（形状/透明区零漂移）
+  M4  A4b  变体涂成单一色（糊成一块，第116轮用户报过的形态）                  CAUGHT       [FAIL] A4b ★★★ 黑光**不是一块黑**：可见亮度档数 1 ≥ max(6, 原件 20 × 0.6) = 12
+  M5  B1   门 B 也被换成黑光变体（"niko 的加"没保住原色）                CAUGHT       [FAIL] B1 ★★★ 门 B（`desk_door_niko_home`）的 sprite == `objs/niko_door_portal.png`（用户「niko 的加还是用他那道」）
+  M6  C1   门 C（UT）被换掉                                  CAUGHT       [FAIL] C1 ★★★ 门 C（`desk_door_ut`）的 sprite == `objs/desk_door_ut.png`
+  M7  D1   DOOR_FIT_CAP 回退成 1.2（"大一点"失效）               CAUGHT       [FAIL] D1 ★★★ `DOOR_FIT_CAP` 字面量 == 1.6（AST 取值；用户「大一点都」）
+  M8  D3   cap 改成 3.0（放大过头，越过"按原作"区间）                  CAUGHT       [FAIL] D3 ★★★ 统一倍率 k == 1.8968 ∈ (1.00, 1.03)（原件像素已基本"按原作"）
+  M9  D6   EDGE_MARGIN 0 -> 24（门被顶离屏幕边框）               CAUGHT       [FAIL] D6 ★★★ 放大后四扇门仍**逐边贴屏幕物理边**（A上/B下/C左/D右）
+  M10 D7   统一倍率退回"逆门算"（按 A 门定尺 ⇒ 四门不再同一把尺）             CAUGHT       [FAIL] D7 ★★★ 四门共用**同一把尺**：逐门 w/h **精确等于** round(原尺寸 × k=1.011613)（逐门倍率分叉 0.572 ⇒ 判据非恒等）
+  M11 E3   把一扇门 enabled 改回 true（房间层又画一遍）               CAUGHT       [FAIL] E3 ★★ 4 门仍全 `enabled: false`（房间层剔除，只屏幕层画）
+========================================================================
