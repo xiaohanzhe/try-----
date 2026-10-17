@@ -60,8 +60,40 @@ REPO = _resolve_repo()
 #   改为把**当前 HEAD** 推到远端 `main`：两种布局都正确，且仍是普通快进推送
 #   （远端若已分叉会被拒并如实报错，不会强推）。
 PUSH_REFSPEC = 'HEAD:main'
-GCM = (r'C:\Users\23002\.workbuddy\binaries\PortableGit\versions\1.2.0'
-       r'\mingw64\bin\git-credential-manager.exe')
+def _resolve_gcm():
+    u"""★ 第116轮：PortableGit 升级后**硬编码 1.2.0 路径失效**（`FileNotFoundError(2)`）。
+
+    表现为：提交成功、`[5] cred user='' pw_len=0` ⇒ **静默不推**（本工具的"不弹窗"
+    设计把它变成 `COMMITTED_ONLY`，所以不会假成功，但也不会推上去）。
+
+    解析顺序（都只在**已知的**几个目录里找，不扫盘）：
+      ① `git config --get credential.helper` 指向的真 exe（跟随仓库配置，最稳）；
+      ② `<本项目>/.workbuddy/binaries/PortableGit/versions/*/mingw64/bin/` 里**版本号最大**的那份。
+    """
+    try:
+        r = subprocess.run(['git', 'config', '--get', 'credential.helper'],
+                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        raw = r.stdout.decode('utf-8', 'replace').strip().lstrip('!')
+        cand = raw.strip('"').strip()
+        if cand and os.path.isfile(cand) and cand.lower().endswith('.exe'):
+            return cand
+    except Exception:                                    # noqa: BLE001
+        pass
+    try:
+        import glob as _glob
+        pat = os.path.join(r'C:\Users\23002\.workbuddy\binaries\PortableGit',
+                           'versions', '*', 'mingw64', 'bin',
+                           'git-credential-manager.exe')
+        cands = sorted(_glob.glob(pat))
+        if cands:
+            return cands[-1]
+    except Exception:                                    # noqa: BLE001
+        pass
+    return (r'C:\Users\23002\.workbuddy\binaries\PortableGit'
+            r'\versions\1.3.0\mingw64\bin\git-credential-manager.exe')
+
+
+GCM = _resolve_gcm()
 CA = os.path.join(os.environ.get('TEMP', r'C:\Windows\Temp'), 'win_root_ca.pem')
 # ★ 第45轮修正：日志**不写进仓库**。原写法落在 tracked 文件里、每次运行覆盖
 #   ⇒ 每次 push 后该文件必然变脏，逼出「为日志再提一次」的死循环。
