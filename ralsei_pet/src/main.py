@@ -7593,6 +7593,47 @@ class RalseiPet(QMainWindow):
             _log.debug("main 防御性异常（已忽略）: %s", e)
         return (1920, 1080)
 
+    def _desktop_layer_size(self):
+        """★★★ 第116轮：**桌面场景**下画布 / 门使用的"可用屏幕"尺寸 `(w, h)`。
+
+        为什么不能沿用整屏（`_primary_screen_size`）
+        --------------------------------------------
+        第107轮的"整屏"口径是为**场景画面**定的（用户要「像原作全屏」）。但
+        **桌面场景**的画布是一条**全透明覆盖层**，只画 4 扇贴边的世界门，没有
+        任何理由去覆盖任务栏。而"铺满整屏的无边框窗口"会被 Windows 当成
+        **全屏应用** ⇒ shell 反复收 / 放任务栏 ⇒ 屏幕最下那条带以 ~5.7 Hz
+        在「我们的窗口」↔「任务栏」之间翻 —— 这正是用户报的
+        「**门在闪现**」（门 B 就在这条带里）与「**对话框也是闪现**」。
+
+        真机取证（`code-quality-audit/第116轮…/_tools/`）
+        -------------------------------------------------
+          · `z3_116.py`（**负控制：不起桌宠**）：任务栏 z 名次恒为 4，
+            **变化 0 次**；
+          · `z2_116.py`（起桌宠）：任务栏名次 **4 ↔ 312**，**7.25 Hz**
+            （⇒ 排除环境噪声，确是桌宠引起）；
+          · `z4_116.py`（A/B）：画布 2560×**1600** ⇒ **5.72 Hz**；
+            画布 2560×**1528**（= 工作区）⇒ **0.00 Hz**（名次恒为 6）；
+          · `band116.py`：屏幕 y 1528..1600 以 **4.2 Hz** 在「我们的对话框」↔
+            「任务栏」之间**整宽**翻；两态均值图 `band116_b6_stateHi/Lo.png`
+            直给（高态 = 输入框「说点什么…」，低态 = 任务栏图标条）。
+
+        ★ 1528 这个数**不是猜的**：`availableGeometry()` 本机实测工作区高 =
+          1528（屏 1600 − 任务栏 72px）。换机器 / 改任务栏高度都自动跟随。
+
+        ★ 只作用于**桌面场景**；场景（非桌面）画面走第107轮的整屏口径，本方法
+          不碰它（那条口径涉及用户明确要求，不在此处擅自改）。
+        """
+        try:
+            scr = QApplication.primaryScreen()
+            if scr is not None:
+                g = scr.geometry()
+                a = scr.availableGeometry()
+                if g.width() > 0 and a.height() > 0:
+                    return (int(g.width()), int(a.height()))
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+        return self._primary_screen_size()
+
     def _primary_screen_size(self):
         """★ 第107轮：**主屏物理尺寸** `(w, h)` —— 场景全屏化用。
 
@@ -7818,6 +7859,17 @@ class RalseiPet(QMainWindow):
             #     （见下方"顺序修正"）。这里保留是为了"本帧若中途异常、
             #     至少画布尺寸是对的"，不是最终赋值点。
             sw, sh = self._primary_screen_size()
+            # ★★★ 第116轮：「门在闪现」＋「对话框也是闪现」的真因 —— 画布铺满
+            #   **整屏**（含任务栏那 72px）后被 Windows 当成全屏应用，shell 反复
+            #   收/放任务栏，那条带以 ~5.7 Hz 在「我们的窗口 ↔ 任务栏」之间翻。
+            #   ⇒ **桌面场景**（画布是纯透明覆盖层，只画 4 扇贴边的门）改用
+            #     **工作区**尺寸，画布不再盖住任务栏。
+            #   取证与 A/B（负控制 0 Hz / 整屏 5.72 Hz / 工作区 0.00 Hz）见
+            #   `_desktop_layer_size` 的 docstring。
+            #   ★ 场景（非桌面）仍是整屏 —— 那条是用户明确要的"像原作全屏"，
+            #     不在本轮擅自改（遗留项已记入第116轮报告）。
+            if self._scene_is_desktop_scene():
+                sw, sh = self._desktop_layer_size()
             canvas.resize(int(sw), int(sh))
             # ★ 画面在画布内的居中偏移（`fit_camera_to_screen` 写进宿主）。
             _off = self.__dict__.get('_scene_output_offset') or (0, 0)
@@ -8046,8 +8098,102 @@ class RalseiPet(QMainWindow):
             _log.debug("main 防御性异常（已忽略）: %s", e)
             return False
 
+    @staticmethod
+    def _door_alpha_of(obj):
+        u"""★ 第116轮：从场景物件取"门渐显"用的 `alpha`。
+
+        :param obj: `desktop.json` 的一条 object（dict）。
+        :return: `0.0~1.0` 的浮点。**取不到 / 非法 / NaN ⇒ `1.0`**。
+
+        ★ 为什么默认是 **1.0**（而不是 0）：
+          `door_reveal.REVEAL_DOORS` 只覆盖 `desktop` 的 `C`/`D` 两扇；
+          `A`（OneShot）/ `B`（Niko 的家）**从不**被写 `alpha` ⇒ 取默认时必须
+          是**全不透明**，否则会把用户明确要求「**不变**」的那两扇门也一起淡化
+          —— 那是比原 bug 更糟的"修坏"。口径来源 = 用户第112轮逐字
+          「**oneshot 和 niko 的家不变**」。
+        ★ 为什么非法值也回 1.0 而不是 0.0：这里的好数据是常态，坏数据只可能来自
+          外部手改 JSON。回 1.0 = "门照常显示"，回 0.0 = "门消失" —— 前者是
+          用户一眼看得见的问题，后者是"门去哪了"的疑难杂症。选可诊断的那侧。
+        """
+        try:
+            a = float(obj.get('alpha', 1.0))
+        except (AttributeError, TypeError, ValueError):
+            return 1.0
+        if a != a:                      # NaN
+            return 1.0
+        if a < 0.0:
+            return 0.0
+        if a > 1.0:
+            return 1.0
+        return a
+
+    def _pet_screen_rect(self, pet_box=None):
+        u"""★ 第116轮：宠物在**屏幕像素**里的矩形（门渐显要的"实体"）。
+
+        :param pet_box: 可选 `(w, h)` —— 宠物在屏幕上的**标准外接盒**。
+            不传 ⇒ 自己取 `desk_doors.pet_screen_box(self._cached_scale_factor)`。
+        :return: `(l, t, r, b)`（屏幕像素）；取不到 ⇒ `None`。
+
+        ★★★ 为什么另起一个方法，不用 `_camera_target_rect()`：
+          那个是**视角锚点**（第76轮 R4 用户口径「视角永远跟着灵魂走」），
+          它**优先灵魂**。而桌面上的灵魂**恒停在 (2487,1500)**、从不移动
+          ⇒ 拿它当"实体"，门渐显就成了一个**冻结值**。
+          第116轮真机实测（`probe116_doors.py`）：把宠物窗口强制横扫全屏，
+          宠物与门的屏幕间距极差 **2382 px**，门 C 的 alpha 恒 0.140、
+          门 D 恒 1.000，**极差 0.000** —— 功能是死的。
+          用户要的是「在检测到**实体**靠近后…」；在桌面上用户看到的实体
+          就是 Ralsei 本人。⇒ 渐显的实体 = **宠物**，与视角锚点**刻意分开**。
+
+        ★★ 为什么用**标准盒**而不是 `sprite_label` 的当前尺寸：后者 = "此刻在播
+          哪一组动画"的尺寸，运行期在 144×98 ↔ 39×83 之间跳 ⇒ 用它会让门的
+          alpha 跟着动画一跳一跳（门**尺寸**踩过同一个坑，见
+          `desk_doors.PET_BOX_LOGICAL` 的长注释）。"接近判定"由宠物的
+          **标准体量**决定，不由"此刻在播什么"决定。
+
+        ★ 为什么以**窗口中心**为锚：宠物窗口按 sprite 尺寸自适应，窗口中心
+          即绘制中心 ⇒ "标准盒 + 当前中心" = 稳定体量 + 真实位置。
+        """
+        try:
+            cx = float(self.x()) + float(self.width()) / 2.0
+            cy = float(self.y()) + float(self.height()) / 2.0
+        except Exception as e:
+            _log.debug("取宠物窗口中心失败（门渐显退回物件 alpha）: %s", e)
+            return None
+        box = pet_box
+        if box is None:
+            try:
+                box = desk_doors_mod.pet_screen_box(
+                    getattr(self, '_cached_scale_factor', None))
+            except Exception as e:
+                _log.debug("按标准体量算宠物盒失败（门渐显）: %s", e)
+                box = None
+        if box is None:
+            # 兜底：当前帧尺寸（会随动画跳，但至少是"宠物真占的像素"）。
+            try:
+                box = (int(self.sprite_label.width()),
+                       int(self.sprite_label.height()))
+            except Exception:
+                box = None
+        try:
+            bw = float(box[0])
+            bh = float(box[1])
+        except (TypeError, ValueError, IndexError):
+            return None
+        if not (bw > 0.0) or not (bh > 0.0):
+            return None
+        return (cx - bw / 2.0, cy - bh / 2.0, cx + bw / 2.0, cy + bh / 2.0)
+
     def _desktop_screen_doors(self, screen_w, screen_h):
-        """★ 第112轮续：算桌面 4 扇门的**屏幕层**摆位 ⇒ `[(sprite, (x,y,w,h)), ...]`。
+        """★ 第112轮续：算桌面 4 扇门的**屏幕层**摆位。
+
+        返回 `[(sprite, (x, y, w, h), alpha), ...]`。
+        ★★★ 第116轮新增第 3 项 `alpha`：门渐显（`door_reveal`）写在场景物件上的
+          不透明度**必须送到屏幕层**才能生效 —— 详见下方 `by_letter` 处的真因说明。
+          `A`/`B` 恒 `1.0`（用户口径「oneshot 和 niko 的家不变」）。
+        ★★★ 第116轮**再改一次**：`alpha` 不再读物件上那个值，而是本方法在
+          **屏幕像素口径**现算（实体 = 宠物屏幕矩形，门矩形 = 本方法算出的
+          `r`）—— 真因见下方 `placed` 之后那段长注释；物件上那个值只作
+          拿不到宠物矩形时的**兜底**。
 
         用户口径（逐字）：「**放到屏幕边缘哦**」/「**不是，那个门你单独放在外面呗**」
         →「**只桌面场景时，固定贴屏**」+「**各用原尺寸**」
@@ -8097,7 +8243,27 @@ class RalseiPet(QMainWindow):
                 return []
             # 字母 → 贴图名（同字母只取第一条：`desktop.json` 里字母本就唯一，
             # 万一重复，**取先出现的那条**——可复现，不依赖 dict 顺序）。
+            # ★★★ 第116轮：同时记下 **`alpha`** —— 这就是"门渐显"要送到屏幕层的量。
+            #   真因（本轮真机录屏逐帧 + 代码走读，两条独立证据）：
+            #   门从"房间图层"搬到"屏幕图层"时，**`alpha` 这一路没接过去** ——
+            #   上面 7785 起的 `door_reveal.apply_to_objects()` 老老实实把
+            #   C(UT)/D(符文) 的 `alpha` 写进了场景物件，可这 4 扇门在房间层被
+            #   `enabled:false` 剔除 ⇒ `plan_frame` 根本不画它们 ⇒ `alpha` 无人消费；
+            #   而屏幕层的 `SceneCanvas._paint_screen_doors()` 直接 `drawPixmap`
+            #   **不读 alpha**。⇒ 后果 = 用户第112轮要的"靠近才从虚到实"**完全失效**，
+            #   C/D 在屏幕上**恒为全不透明实心黑块** —— 这正是第116轮用户逐字
+            #   「**黑底也没去干净**」＋「**你门的形式也没用对**」的同一个根因。
+            #   ⇒ 出口带上 alpha，由 `set_screen_doors` → `_paint_screen_doors`
+            #     用 `painter.setOpacity()` 落笔。
+            #   ★ A/B 不属 `REVEAL_DOORS` ⇒ `apply_to_objects` 从不给它们写 alpha
+            #     ⇒ 这里取默认 1.0，**严格保住用户口径「oneshot 和 niko 的家不变」**。
+            #   ★★★ 第116轮修正：这一路现在只是**兜底**（拿不到宠物屏幕矩形时）。
+            #     主路径在下面按屏幕像素现算 —— 因为门自第112轮续四起就按屏幕
+            #     坐标贴屏绘制，而这里读的 `obj['alpha']` 是按**房间坐标**算的
+            #     （`apply_to_objects` 的 `desktop.json pos`）⇒ 两套坐标错位，
+            #     真机实测门 D 恒 100% 不透明。详见 `placed` 之后那段。
             by_letter = {}
+            alpha_by_letter = {}
             for o in objs:
                 if not isinstance(o, dict):
                     continue
@@ -8107,6 +8273,7 @@ class RalseiPet(QMainWindow):
                 nm = o.get('sprite') or o.get('image')
                 if isinstance(nm, str) and nm:
                     by_letter[letter] = nm
+                    alpha_by_letter[letter] = self._door_alpha_of(o)
             if not by_letter:
                 return []
             sizes = {}
@@ -8140,8 +8307,44 @@ class RalseiPet(QMainWindow):
                     _log.debug("取宠物盒失败（门退回原尺寸口径）: %s", e)
             placed = desk_doors_mod.plan_screen_doors(sizes, screen_w, screen_h,
                                                       pet_box=pet_box)
-            # 摆位（字母）→ 贴图名
-            return [(by_letter[l], r) for l, r in placed if l in by_letter]
+
+            # ★★★ 第116轮：**渐显改在屏幕像素口径现算**（原来读物件上 `door_reveal`
+            #   写的值）。真因两条（真机逐帧 + 内省，见 `door_reveal.NEAR_FRAC`
+            #   那段长注释）：
+            #   ① 原来喂的"实体"是 `_camera_target_rect()` —— 它**优先灵魂**，
+            #      而桌面上的灵魂恒停 (2487,1500) ⇒ alpha 是**冻结值**；
+            #   ② 原来门矩形取 `desktop.json` 的**房间坐标**（门 D 那条 = 半个
+            #      房间）⇒ 与门**实际画在屏幕哪**脱节 ⇒ 门 D 恒 100% 不透明，
+            #      屏幕纯黑比中位 **0.820** = 用户「黑底也没去干净」。
+            #   ⇒ 现在：**实体 = 宠物屏幕矩形**（`_pet_screen_rect`，
+            #     标准体量 + 当前中心）、**门矩形 = 上面刚算出的 `r`**
+            #     （就是"门真画在哪"那个矩形）。两者同一坐标系 ⇒ 不会再错位。
+            #   ★ 拿不到宠物矩形 ⇒ 退回物件上 `door_reveal` 写的 alpha
+            #     （房间口径的老路径，`apply_to_objects` 仍在上面 7802 处
+            #     按 check112 N8 的硬闸保留着）。
+            sid = None
+            try:
+                _st = self.__dict__.get('_scene_state')
+                sid = getattr(_st, 'scene_id', None)
+            except Exception:
+                sid = None
+            if not isinstance(sid, str) or not sid:
+                sid = 'desktop'
+            ent = self._pet_screen_rect(pet_box)
+            out = []
+            for l, r in placed:
+                if l not in by_letter:
+                    continue
+                if ent is None:
+                    a = alpha_by_letter.get(l, 1.0)
+                else:
+                    a = door_reveal_mod.screen_reveal_alpha(
+                        sid, l, ent,
+                        (float(r[0]), float(r[1]),
+                         float(r[0] + r[2]), float(r[1] + r[3])),
+                        screen_w, screen_h)
+                out.append((by_letter[l], r, a))
+            return out
         except Exception as e:
             _log.debug("桌面屏幕门摆位（第112轮续）防御性异常（已忽略）: %s", e)
             return []
@@ -8460,18 +8663,34 @@ class RalseiPet(QMainWindow):
         """
         try:
             canvas = self.scene_canvas
+            as_window = bool(getattr(canvas, 'as_window', False))
             # ★ 先摆位再 show：否则会先在 (0,0) 闪一帧
             self._place_scene_layer()
+            _just_shown = False
             if not canvas.isVisible():
                 canvas.show()
+                _just_shown = True
                 self._scene_layer_visible = True
                 self._place_scene_layer()   # show 后尺寸才定，二次校正
             # ★★ `lower()` **必须**挂 `as_window` 守卫（check89 I4 守这条）：
             #   独立顶层窗口下 `lower()` 的语义是"沉到**所有窗口**之下"，
             #   会连同桌面壳一起被压下去 ⇒ 整块画布不上屏。
-            if getattr(canvas, 'as_window', False):
-                # 独立顶层窗口：**不 lower**，反要 raise_（见 docstring 的血泪）
-                canvas.raise_()
+            if as_window:
+                # ★★★ 第116轮真机定位：「门在闪现」＋「对话框也是闪现」的真因
+                #   就是**这里原来"每帧都抢一次顶层"**。
+                #   取证（`code-quality-audit/第116轮…/_tools/`）：
+                #     · `zprobe116.py`：4.0 s 内 `canvas.raise_()` 被调 **40 次
+                #       （10 Hz）**，同刻"桌宠 ↔ 任务栏"的 z 名次翻转 **3.72 次/s**；
+                #     · `band116.py`：屏幕 y≈1528..1600（**正是 Windows 任务栏
+                #       那一条**）以 **4.2 Hz** 在「我们的对话框」↔「任务栏」之间
+                #       **整宽**翻；两个状态的均值图 `band116_b6_stateHi/Lo.png`
+                #       直给 —— 高态 = 输入框「说点什么…」，低态 = 任务栏图标条。
+                #   机理：`raise_()` 会把顶层窗口 `SetWindowPos` 到非置顶带的最前，
+                #   与"永远置顶"的 Shell 任务栏**反复争位** ⇒ 那条带高频闪。
+                #   ⇒ 只在**从隐藏变可见**的那一刻抢一次；已可见时**不再抢**
+                #     —— 两个窗口都是我们自己的，相对次序不会被外人改。
+                if _just_shown:
+                    canvas.raise_()
             else:
                 canvas.lower()   # 子控件模式：压到 sprite_label 之下
         except Exception as e:

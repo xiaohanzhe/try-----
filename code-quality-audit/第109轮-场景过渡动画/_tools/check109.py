@@ -191,12 +191,17 @@ ok(u'B3 负控制：淡出 ≠ 淡入（原作确实不对称：8 帧 vs 12.5 �
 sec(u'C 阶段序 out → 换房 → in')
 
 _adv_src = ast.get_source_segment(_main_src, _adv) if _adv is not None else u''
+# ★ 第116轮修正：`detail` 绿时空（文本恒定），红时才给偏移诊断。
+#   原写法绿时也回显 `_adv_src.find(...)` 的**字符偏移** ⇒ 该函数上方任何改动都会
+#   挪动偏移 ⇒ 报假 DIFF（断言其实没变）。同记忆铁律：
+#   **判据禁回显随时相变的绝对值（含行号/偏移/下标）**。
+_c1_ok = (u"set_transition_alpha(1.0)" in _adv_src
+          and u"_do_scene_transition_swap" in _adv_src
+          and _adv_src.index(u"set_transition_alpha(1.0)")
+          < _adv_src.index(u"_do_scene_transition_swap"))
 ok(u'C1 ★★★ 淡出阶段先置 α=1 **再**换房（`set_transition_alpha(1.0)` 先于 swap）',
-   (u"set_transition_alpha(1.0)" in _adv_src
-    and u"_do_scene_transition_swap" in _adv_src
-    and _adv_src.index(u"set_transition_alpha(1.0)")
-    < _adv_src.index(u"_do_scene_transition_swap")),
-   u'序：alpha1@%s swap@%s'
+   _c1_ok,
+   u'' if _c1_ok else u'序：alpha1@%s swap@%s'
    % (_adv_src.find(u"set_transition_alpha(1.0)"),
       _adv_src.find(u"_do_scene_transition_swap")), star=True)
 ok(u'C2 ★★ 阶段在 `out` / `in` 之间切换（源码里两个 phase 字面量都在）',

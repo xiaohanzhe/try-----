@@ -44,8 +44,8 @@
 [PASS] ★ C10b ★★ 其中真调 `primaryScreen()`（不是 `_virtual_screen_size()`）
 [PASS] ★ C11 ★★★ `_update_scene_layer` 里把画布 `resize` 到主屏尺寸
 [PASS] ★ C12 ★★★ `_update_scene_layer` 真调 `set_output_offset` 与 `set_opaque_bg`
-[PASS] ★ C13 ★★★ `_update_scene_layer` 真调 `set_plan`（AST 调用序可见）  <- calls=['_place_scene_layer', '_update_bubble_overlay', '_scene_is_desktop_scene', 'set_screen_doors', '_desktop_screen_doors', 'set_screen_doors', 'debug', 'set_screen_doors', 'get', '_show_scene_layer', '_hide_scene_layer', 'debug']
-[PASS] ★ C14 ★★★ `resize` 出现在 `set_plan` **之后**（后写覆盖前写 ⇒ 必须最后铺整屏）  <- set_plan@34 resize@35
+[PASS] ★ C13 ★★★ `_update_scene_layer` 真调 `set_plan`（AST 调用序可见）
+[PASS] ★ C14 ★★★ `resize` 出现在 `set_plan` **之后**（后写覆盖前写 ⇒ 必须最后铺整屏）
 [PASS] ★ C15 ★★★ `set_plan` 之后仍以 `_primary_screen_size()` 铺**整屏**（否则画布 = 画面尺寸 ⇒ 四周黑边消失、画面贴左上角）
 [PASS] ★ C15b ★★ 负控制：C14 有鉴别力（`resize` 排在 `set_plan` 前 ⇒ 必须判假）
 

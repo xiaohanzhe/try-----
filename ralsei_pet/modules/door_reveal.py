@@ -64,6 +64,41 @@ MIN_ALPHA = 0.14
 #: 完全实体时的 alpha。
 MAX_ALPHA = 1.0
 
+# ---------------------------------------------------------------------------
+#  ★★★ 第116轮：**屏幕像素口径**的阈值（另一套，别跟上面的房间逻辑像素混）
+# ---------------------------------------------------------------------------
+# 为什么必须再加一套口径（本轮真机逐帧 + 内省两条独立证据）
+# ------------------------------------------------------------
+# 用户逐字：「门在闪现，**黑底也没去干净**，并且对话框也是闪现，而且，
+#           **你门的形式也没用对**」「你自己录屏然后逐帧分析去」
+#
+# 逐帧取证（`probe116_doors.py`，50Hz 内省 + 像素）测到两件事：
+#  ① **渐显完全没生效**：把宠物窗口强制横扫全屏（与门的屏幕间距极差
+#     **2382 px**），门 C 的 alpha 恒 `0.140`、门 D 恒 `1.000`，**极差 0.000**。
+#     真因 = 宿主喂的"实体"是 `_camera_target_rect()`，而它**优先灵魂**
+#     （第76轮 R4 口径）。桌面上的灵魂**恒停在 (2487,1500)**、从不移动
+#     ⇒ alpha 是个**冻结值**。★ 功能是死的，不是"参数不好看"。
+#  ② **触发矩形与门的真实位置脱节**：`apply_to_objects()` 吃的是
+#     `desktop.json` 里的 `pos`（**房间逻辑坐标**，门还在房间图层时的几何）。
+#     门 D 那条 = (140,42,320,197)，**占了 320×240 房间的右半张** ⇒
+#     宠物站在房间右下角时矩形间距只有 **3 个逻辑单位** ⇒ 恒判"贴着门"
+#     ⇒ 门 D **永远 100% 不透明**。真机像素：门 D 矩形内**纯黑比中位 0.820**
+#     —— 这正是用户「黑底也没去干净」的像素证据。
+#     而门 D 的**真实绘制位置**是屏幕右边缘 (2423,741,137,118)；按同一套
+#     归一化映射回房间只有 ~17 逻辑像素宽 ⇒ **两套坐标早就不重合**。
+#
+# ⇒ 结论：门自第112轮续四起就**按屏幕坐标贴屏绘制**（`desk_doors`），
+#   所以"接近程度"也必须在**屏幕坐标**里量 —— 实体与门在同一个坐标系，
+#   且与门"实际画在哪"**永远一致**（同一个 `(x,y,w,h)`）。
+#   用"占屏幕**短边**的比值"而非写死像素数 ⇒ 换分辨率/换显示器行为一致。
+#
+#: 开始渐显的距离（占屏幕**短边**的比值）。0.45 × 1600(短边) = 720 px。
+#: 观感：宠物从屏幕中央走向某扇门，走过约 3/4 的路程才开始显形。
+NEAR_FRAC = 0.45
+
+#: 完全实体化的距离（占屏幕短边的比值）。0.08 × 1600 = 128 px。
+FAR_FRAC = 0.08
+
 
 def _clamp01(x):
     """钳进 `[0, 1]`（非数/异常输入 ⇒ 0.0，**不抛**）。"""
@@ -183,6 +218,61 @@ def is_reveal_door(scene_id, letter):
         return False
     key = (str(scene_id), str(letter).upper())
     return key in REVEAL_DOORS
+
+
+def pixel_near_far(screen_w, screen_h, near_frac=NEAR_FRAC, far_frac=FAR_FRAC):
+    """屏幕尺寸 ⇒ **屏幕像素**口径的 `(near, far)`。
+
+    :return: `(近阈值, 全实阈值)`，单位 = 像素；非法输入 ⇒ `(0.0, 0.0)`
+        （调用方据此判"算不出 ⇒ 不做渐显"，见 `screen_reveal_alpha`）。
+
+    ★ 为什么按**短边**而不是宽/高各算：门贴在四条边的**中点**上，横向门与
+      纵向门到屏幕中心的距离本来就不同（2560 宽 vs 1600 高）；按短边统一
+      取一个尺度，四条边的手感才一致。
+    """
+    try:
+        sw = float(screen_w)
+        sh = float(screen_h)
+        nf = float(near_frac)
+        ff = float(far_frac)
+    except (TypeError, ValueError):
+        return (0.0, 0.0)
+    if sw <= 0.0 or sh <= 0.0:
+        return (0.0, 0.0)
+    if nf != nf or ff != ff:            # NaN
+        return (0.0, 0.0)
+    short = sw if sw < sh else sh
+    return (short * nf, short * ff)
+
+
+def screen_reveal_alpha(scene_id, letter, entity_rect, door_rect,
+                        screen_w, screen_h,
+                        near_frac=NEAR_FRAC, far_frac=FAR_FRAC):
+    """★★★ 第116轮主入口：**屏幕像素**口径的门 alpha。
+
+    :param scene_id: 当前场景 id（只有 `('desktop','C')` / `('desktop','D')` 命中）。
+    :param letter: 门字母（`'A'..'Y'`）。
+    :param entity_rect: 实体（宠物）的**屏幕像素**矩形 `(l, t, r, b)`。
+    :param door_rect: 这扇门的**屏幕像素**矩形 —— 必须与
+        `desk_doors.plan_screen_doors()` 输出的那个**逐字同一个**矩形，
+        即"门实际画在哪"。★ 这是本函数存在的全部理由：门画在屏幕坐标上，
+        距离就必须在屏幕坐标里量。
+    :param screen_w, screen_h: 屏幕（画布）尺寸 ⇒ 由 `pixel_near_far` 折成阈值。
+    :return: `MIN_ALPHA .. MAX_ALPHA`；非目标门 ⇒ **恒 `MAX_ALPHA`**。
+
+    ★ A/B 恒 `MAX_ALPHA`：用户逐字「**oneshot 和 niko 的家不变**」。
+      判据走 `is_reveal_door()`（字母白名单），不是"桌面上所有门"。
+    ★ 算不出阈值（屏幕尺寸非法）⇒ 返回 `MAX_ALPHA`（**不动渐显**）。
+      与 `rect_gap()` 的"坏数据 ⇒ 当很远"**刻意相反**，理由：那两扇门是
+      **通往别的世界的唯一入口**，让它变成近乎不可见是**功能性损失**；
+      而"没渐显"只是外观退回到第112轮之前的样子。**保守侧在这里 = 保可见。**
+    """
+    if not is_reveal_door(scene_id, letter):
+        return MAX_ALPHA
+    near, far = pixel_near_far(screen_w, screen_h, near_frac, far_frac)
+    if near <= 0.0 or far <= 0.0:
+        return MAX_ALPHA
+    return reveal_alpha(entity_rect, door_rect, near=near, far=far)
 
 
 def door_rect_from_pos(pos, size):

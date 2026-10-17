@@ -1,0 +1,57 @@
+[
+  {
+    "tag": "M1  E1  桌面尺寸改回 geometry()（盖满整屏）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E1 ★★★ 桌面画布吃**工作区**尺寸（`_desktop_layer_size` 真调 `availableGeometry`）—— 铺满整屏会被 Windows 当全屏应用，shell 反复收放任务栏"
+  },
+  {
+    "tag": "M2  E1b 桌面分支不用 _desktop_layer_size()",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E1b ★★★ `_update_scene_layer` 里**桌面分支**真用 `_desktop_layer_size`（且受 `_scene_is_desktop_scene` 守卫 —— 非桌面场景仍走第107轮整屏口径）"
+  },
+  {
+    "tag": "M3  E2a 屏幕门不调 screen_reveal_alpha()",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E2a ★★★ `_desktop_screen_doors` 真调 `screen_reveal_alpha`（渐显从\"房间坐标\"改到\"**屏幕像素**口径\"）"
+  },
+  {
+    "tag": "M4  E2b 屏幕层不读 alpha（setOpacity 拿掉）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E2b ★★★ `_paint_screen_doors` 真按**逐门 alpha** 落笔（`setOpacity` 的实参是变量而非常量还原 ⇒ 渐显在屏幕层真有消费者）"
+  },
+  {
+    "tag": "M5  E3  门 D 回退成原件 spr_giantdarkdoor_0（带回黑底）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E3 ★★★ 三角符文门 = **巨门框**桌面版（用户 10-13「不是啊，是哪个门框似的哪个门」）—— 不许再被回退成 `spr_shortcut_door`"
+  },
+  {
+    "tag": "M6  E4b show_dialogue 加回字面量 setStartValue(0.0)",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E4b ★★★ `show_dialogue` 里**再无**字面量 `setStartValue(0.0)`（老写法 = 每来一条消息先整个隐到全透明 ⇒ 用户看到的\"对话框闪现\"）"
+  },
+  {
+    "tag": "M7  E4d fade_plan 稳态也判\"要淡入\"（退化成每次都重淡）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E4d ★★★ 行为级：**已可见 + 已在稳态（含取整容差）** ⇒ 不重淡入、直接钉稳态"
+  },
+  {
+    "tag": "M8  E5  _show_scene_layer 顶层无条件 raise_()",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E5 ★★★ `_show_scene_layer` 里 `raise_()` **被条件守卫**（不再每帧无条件抢顶层）—— 与\"永远置顶\"的任务栏反复争位就是那条带高频闪的机理"
+  },
+  {
+    "tag": "M9  B1  diag96 少设 RALSEI_MEMORY_DIR（只设另两把）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] B1 `diag96_exit.py` 三把闸都**真的赋了值**"
+  },
+  {
+    "tag": "M10 C1  重放器又对外宣称\"各 rec*.py 自带沙箱\"",
+    "status": "CAUGHT",
+    "hit": "[FAIL] C1 重放器**对外输出**里不再有那句假声明"
+  },
+  {
+    "tag": "M11 A2  vault_guard.compare 退化成恒\"完全一致\"",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A2 正控：增/删/改三种变化**一次不漏**"
+  }
+]

@@ -75,6 +75,82 @@ _log = logging.getLogger(_pet_logger_name(__name__))
 
 
 # ---------------------------------------------------------------------------
+# ★★★ 第116轮：对话框淡入/淡出的**唯一真源** + 纯函数 `fade_plan()`
+# ---------------------------------------------------------------------------
+#: 稳态不透明度。★ 原值是散落在 `show_dialogue` 里的字面量 `0.98`，本轮收上来。
+#: 注意**不是 1.0** —— 留 2% 让对话框与桌面有一点融合感（既有观感，不擅改）。
+STEADY_OPACITY = 0.98
+
+#: 淡入时长（毫秒）。原值 320。
+FADE_IN_MS = 320
+
+#: 淡出时长（毫秒）。原值 260。
+FADE_OUT_MS = 260
+
+#: 判定"已在稳态"的容差。
+#: ★ 为什么需要容差而不是 `==`：Windows 上 `windowOpacity()` 的**回读值会取整**，
+#: 真机实测稳态回读 = **0.976**（写入 0.98）⇒ 用等号判会把稳态误判成"还没到位"
+#: ⇒ 又退化成每次都重淡入（本轮要修的那个 bug）。
+STEADY_EPS = 0.05
+
+
+def fade_plan(is_visible, cur_opacity, steady=STEADY_OPACITY, eps=STEADY_EPS):
+    u"""`show_dialogue()` 该不该"重新淡入" ⇒ `(start, need_anim)`（第116轮）。
+
+    用户口径（第116轮，逐字）
+    --------------------------
+    「门在闪现，黑底也没去干净，并且**对话框也是闪现**」
+
+    真因（真机录屏 + 逐帧取证，**不是推测**）
+    ----------------------------------------
+    原 `show_dialogue()` **无条件** `setStartValue(0.0)`（紧随 `show()`）：
+    每来一条消息，窗口先整个隐到**全透明**、再从 0 淡回 0.98。
+    实测（`rec116`，30 秒 / 136 帧 / 每 100 ms 一帧）`windowOpacity()` 序列
+    在 `0.976` 稳态上出现 **3 次塌陷** —— 帧 9 = `0.161`、帧 51 = `0.000`、
+    帧 52 = `0.137`、帧 108 = `0.376`，间隔恰好 ≈ 一句一次（9 s / 12 s）。
+    放大裁图肉眼复核：`op==0.000` 那两帧**整个对话框连同输入框/SEND 全部消失**，
+    只剩壁纸与任务栏 ⇒ 用户看到的"闪现"。
+
+    判定规则
+    --------
+      · **已可见且已在稳态（含取整容差）** ⇒ `(steady, False)`：不建动画，
+        直接钉在稳态。← 这一条就是"消除闪现"。
+      · **不可见**（从无到有）⇒ `(0.0, True)`：从全透明淡入（原有的正确用法）。
+      · **可见但没到位**（淡入半途 / 被外部改低）⇒ `(cur, True)`：
+        从**当前值**续淡。★ 起点**绝不低于当前值** ⇒ 任何路径都不会"忽然全隐"。
+
+    ★ 纯函数、零依赖、**永不抛**：非法输入按"不可见 + 从 0 起"处理
+      （最保守的观感：宁可多淡一次，也不要凭空把已经在的框钉死）。
+    """
+    try:
+        cur = float(cur_opacity)
+    except (TypeError, ValueError):
+        cur = 0.0
+    if cur != cur:                      # NaN
+        cur = 0.0
+    try:
+        st = float(steady)
+    except (TypeError, ValueError):
+        st = STEADY_OPACITY
+    try:
+        ep = float(eps)
+    except (TypeError, ValueError):
+        ep = STEADY_EPS
+    if ep != ep or ep < 0.0:            # NaN / 负数 ⇒ 回默认容差
+        ep = STEADY_EPS
+    if st != st or st <= 0.0:
+        st = STEADY_OPACITY
+    if not bool(is_visible):
+        return (0.0, True)
+    if cur < 0.0:
+        cur = 0.0
+    if cur >= st - ep:
+        return (st, False)
+    return (cur, True)
+
+
+
+# ---------------------------------------------------------------------------
 # 加载项目根目录下的"普通字体.ttf"，作为 Ralsei 说话字体（全局注册一次）
 # ---------------------------------------------------------------------------
 _FONT_FAMILY = None
@@ -1641,13 +1717,29 @@ class DialogueUI(QWidget):
                 _old.finished.disconnect()
             except Exception as e:  # 修复：原先静默吞噬
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
-        # 淡入（存到 self._fade_anim 防止被 GC）
-        self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
-        self._fade_anim.setDuration(320)
-        self._fade_anim.setStartValue(0.0)
-        self._fade_anim.setEndValue(0.98)
-        self._fade_anim.setEasingCurve(QEasingCurve.OutCubic)
-        self._fade_anim.start()
+        # ★★★ 第116轮修复「对话框也是闪现」（用户逐字）。
+        #   原实现**无条件** `setStartValue(0.0)` ⇒ 每来一条消息，窗口先整个隐到
+        #   全透明再淡回来。真机录屏实测 30 秒里塌陷 3 次（帧 9=0.161 / 51=0.000 /
+        #   52=0.137 / 108=0.376，一句一次）；`op==0.000` 那两帧整个框（含输入框
+        #   与 SEND）全部消失，只剩壁纸 —— 那就是用户看到的"闪"。
+        #   ⇒ 该不该重淡入**全交给纯函数** `fade_plan()`（零依赖、可被回归直接判）。
+        try:
+            _start, _need = fade_plan(self.isVisible(), self.windowOpacity())
+        except Exception as e:
+            _log.debug("dialogue_ui 淡入判定异常（按需淡入兜底）: %s", e)
+            _start, _need = 0.0, True
+        if not _need:
+            # 稳态：**不建动画**，直接钉在稳态 ⇒ 新消息不再让框闪一下。
+            self._fade_anim = None
+            self.setWindowOpacity(_start)
+        else:
+            # 淡入（存到 self._fade_anim 防止被 GC）；★ 起点 = 当前值，不压到 0
+            self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
+            self._fade_anim.setDuration(FADE_IN_MS)
+            self._fade_anim.setStartValue(_start)
+            self._fade_anim.setEndValue(STEADY_OPACITY)
+            self._fade_anim.setEasingCurve(QEasingCurve.OutCubic)
+            self._fade_anim.start()
 
     def hide_dialogue(self):
         self._auto_hide_timer.stop()
@@ -1665,7 +1757,7 @@ class DialogueUI(QWidget):
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 淡出（存到 self._fade_anim 防止被 GC）
         self._fade_anim = QPropertyAnimation(self, b"windowOpacity")
-        self._fade_anim.setDuration(260)
+        self._fade_anim.setDuration(FADE_OUT_MS)
         self._fade_anim.setStartValue(self.windowOpacity())
         self._fade_anim.setEndValue(0.0)
         self._fade_anim.setEasingCurve(QEasingCurve.InQuad)

@@ -46,7 +46,7 @@
       "kind": "prop",
       "authored": true,
       "src": "obj_doorC",
-      "sprite": "objs/ut_castle_realdoor_0.png",
+      "sprite": "objs/desk_door_ut.png",
       "pos": [
         0,
         70
@@ -59,7 +59,7 @@
       "kind": "prop",
       "authored": true,
       "src": "obj_doorD",
-      "sprite": "objs/spr_giantdarkdoor_0.png",
+      "sprite": "objs/desk_door_deltarune.png",
       "pos": [
         140,
         42
@@ -70,6 +70,17 @@
   ],
   "_comment": {
     "purpose": "P0 骨架的**零行为变化**证明件。桌面的可渲染项只有 4 扇世界门；背景声明式透明（`__transparent__`）⇒ 透出壁纸，像素其余部分仍只由 Ralsei 自己的 sprite_label 提供。",
+    "round116_desk_door_sprites": {
+      "why": "用户 2026-10 逐字（真机跑起来后报的缺陷）：「门在闪现，**黑底也没去干净**，并且对话框也是闪现，而且，**你门的形式也没用对**」「你自己录屏然后逐帧分析去」。",
+      "evidence": "★ 逐帧取证（`第116轮.../_tools/probe116_doors.py`，产品内省 25 次/s + 像素双通道）＋ 贴图结构分析（`key116_doors.py`）。真机实测：**门 D 矩形内纯黑比中位 0.820** —— 屏幕上那块就是实心黑。",
+      "root_cause": "门 C（`ut_castle_realdoor_0`，44×99）与门 D（`spr_giantdarkdoor_0`，180×155）这两张**原作贴图本身就是不透明黑底卡片**：纯黑占全图 **76.4%** / **82.6%**（`max channel <= 26 且 alpha >= 250`）。直接贴到桌面上 = 一块黑（这就是用户说的「黑底」）。",
+      "fix": "→ **桌面专用变体**（`objs/desk_door_ut.png` / `objs/desk_door_deltarune.png`）：把近黑像素**扣成透明**（`BLACK_MAX=26`、`BLACK_MAX..SOFT_MAX=96` 线性软边防锯齿）。纯黑 0.764→**0.000**、0.826→**0.000**，**像素尺寸一字不变**（44×99 / 180×155 ⇒ 门摆位与大小不受影响）。生成脚本 = `key116_doors.py --key`，棋盘对照图见 `_evidence/rec116/analysis/doors116_key.png`。",
+      "why_not_overwrite": "★★★ **绝不原地覆盖原件**：`spr_giantdarkdoor_0.png` **还被 `_zone.ch1.castle_town.json`（暗世界城堡镇）用着**，在暗世界里那面黑门洞是**对的**（暗世界背景本就黑），扣掉会把世界内的门变成空框。⇒ 桌面用变体、世界内保留原贴图。这也正好对上用户第112轮逐字的「**只针对桌面上的 ut 和三角符文的门**」。",
+      "why_not_key_other_two": "门 A（`spr_darkdoor_0`）近黑占 18.8% 且**与边框连通 93.1%**（那就是门板本身）⇒ 扣黑会把门板吃掉只剩白描边（棋盘对照图实证）；门 B（`niko_door_portal`）连通比仅 2.7%、扣完与原件几乎无差。且用户第112轮明确「**oneshot 和 niko 的家不变**」⇒ 这两扇**不产变体**。",
+      "door_identity_adjudication": "★★★ **每扇门用哪张美术，按用户逐字裁定，别再凭印象改**：A=`spr_darkdoor_0`（用户「维持原作玩家视角下的门的样子」）· B=`niko_door_portal`（「用原作 niko 最后回家的光门」）· C=`ut_castle_realdoor_0`（「ut 就用王座那个门」）· D=`spr_giantdarkdoor_0`（「**不是啊，是哪个门框似的哪个门**」）。★ D 的口径**改过一次，别改回去**：10-12 的 AskUserQuestion 用户先选过 `spr_shortcut_door`（36×52 粉紫独门），**10-13 的 AskUserQuestion（选项「先保持现状（推荐）/ 换成金边拱门框 / 换成青灰双开门」）用户回「不是啊，是哪个门框似的哪个门」⇒ 覆盖前一次，终选巨门框**。第116轮曾据一份**摘要的转述**（只看到 10-12 那次）把 D 回退成 `spr_shortcut_door_0` —— 那是错的，已撤销。取证脚本 = `第116轮.../_tools/find116_all_ask.py`（挖问答对）＋ `find116_short.py`（挖用户短句原话），原始结果落在 `_evidence/rec116/find116_all_ask.txt`（:26499 / :24690 两条）与 `find116_doors_all.txt`。",
+      "why_key_black_is_not_deviating_from_原作": "★ 「扣黑」不是改画：`ut_castle_realdoor_0.png` 是从 UT **背景图** `bg_castle_realdoor` 里抠出来的 ⇒ 那圈黑**字面就是原房间的背景**（用户逐字「**黑底**也没去干净」用词精确）；`spr_giantdarkdoor_0.png` 的黑同理（与贴图边框连通 63.1% ⇒ 是衬底而不是门板）。真正是门板本身的黑（门 A）**没有**被扣（见上条）。",
+      "alpha_note": "不透明度另一路（门渐显 alpha）**不在这里**：那由 `door_reveal.screen_reveal_alpha()` 按**屏幕像素口径**现算，见 `main._desktop_screen_doors` 与 `main._pet_screen_rect`。"
+    },
     "why_desktop_is_a_scene": "用户原话『桌面也会被我当成一个场景』。桌面在物理系统里早就是一等公民（floor_manager.desktop_floor，type='desktop'、platform_height=0，且 _desktop_floor_y() 是『地面』y 坐标的唯一真源），所以映射到场景系统是天然对齐，不是特例。",
     "round89_desktop_doors": {
       "why": "用户口径（第89轮）『我到现在都没看到能切换场景的门』。实测根因：桌面章只有 1 间场景，`reachable_destinations` 的『同章』过滤让菜单恒为空，且桌面无 original_room_id ⇒ 视口 0×0 ⇒ 什么都画不出来。",
@@ -80,7 +91,7 @@
       "original_room_id": "-1（虚拟房间，见上）。",
       "four_doors": "A=OneShot（正上） · B=Niko 的家（正下，★彩蛋门） · C=UT（正左） · D=三角符文/Deltarune（正右）。★ 五章**不各占一扇门** —— 经三角符文那台任意门进光世界，再由原作路线走。",
       "user_pos_spec": "用户 10-11 逐字（三答）：门排布 →『**正上（oneshot），正下（niko家），正左（ut），正右（三角符文）**』；门形态 →『**只有进世界，也就是桌面上那个用任意门，其他的维持原作玩家视角下的门的样子就好**』；字母 →『**按原作玩家看到的视角，也就是隐藏掉，你好好看看原作代码**』。",
-      "why_darkdoor_sprite": "用户『桌面上那个用任意门』⇒ 4 扇门统一用**任意门** `spr_darkdoor_0.png`（44×56 / 3 帧）。★ 为什么不用 `spr_doorA~Y_0.png`（20×20 蓝框+绿字母）：UTMT 反编译实证 —— 原作 `obj_doorA~Y` 全部 `visible: false`、`obj_doorA` **无 Draw 事件**（只有 `Alarm_2` 跳房间 + `Other_19` 交互），玩家**看不到**蓝框绿字母；那是**编辑器视角**。玩家能看到的是 `obj_darkdoor`（`visible: true`，`spr_darkdoor` 44×56）。",
+      "why_darkdoor_sprite": "用户『桌面上那个用任意门』⇒ 4 扇门统一用**任意门** `spr_darkdoor_0.png`（44×56 / 3 帧）。★ 为什么不用 `spr_doorA~Y_0.png`（20×20 蓝框+绿字母）：UTMT 反编译实证 —— 原作 `obj_doorA~Y` 全部 `visible: false`、`obj_doorA` **无 Draw 事件**（只有 `Alarm_2` 跳房间 + `Other_19` 交互），玩家**看不到**蓝框绿字母；那是**编辑器视角**。玩家能看到的是 `obj_darkdoor`（`visible: true`，`spr_darkdoor` 44×56）。★★ 第112轮更正：「这一句被读成『4 扇统一任意门』是**误读** —— 它是**对照句**（『进世界』那扇用任意门／『其他』的维持原作门的样子），第112轮已按用户逐字把 4 扇拆成 4 张不同美术，见 `round112_door_sprites` 与 `round116_desk_door_sprites`。」",
       "src_vs_sprite": "★ 保留 `src = obj_door<字母>`（驱动字母路由 `door_letter_of()`），只把 `sprite` 换成任意门 ⇒ **路由不变、外观变**。`scene_render.plan_frame` 用 `sprite` 字段取图、`src` 只参与 `obj_is_hidden()` 过滤。",
       "pos_rule": "★ 房间 320×240、贴图 44×56、渲染 `rect` 的 `pos` 是**左上角** ⇒ 四边正中、贴屏幕边框：正上 `x=(320-44)//2=138, y=0`；正下 `x=138, y=240-56=184`；正左 `x=0, y=(240-56)//2=92`；正右 `x=320-44=276, y=92`。",
       "letter_hidden": "用户『字母**按原作玩家看到的视角，也就是隐藏掉**』。改用 `spr_darkdoor`（无字母）后，字母 A~Y **自动不可见** —— 这就是『隐藏』的落地方式，不需要额外遮罩。",

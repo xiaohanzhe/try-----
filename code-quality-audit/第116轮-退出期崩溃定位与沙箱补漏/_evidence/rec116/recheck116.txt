@@ -1,0 +1,29 @@
+[PASS] R1 语法可解析：check116.py
+[PASS] R1 语法可解析：mutate116.py
+[PASS] R1 语法可解析：run_all.py
+[PASS] R2a MEMORY.md 有 §22 节
+[PASS] R2b MEMORY.md 锁号速查含 check116 与 mutate116
+[PASS] R2c 当日日志存在且五个小节标题都在
+[PASS] R3 MEMORY.md 无 BOM / 无 U+FFFD
+[PASS] R3 2026-10-17.md 无 BOM / 无 U+FFFD
+[PASS] R4 MEMORY.md 的 JS 长度 ≤ 10000（实到 9983）
+[PASS] R5 check116.py 无 `check(..., True)` 恒真判据
+[PASS] R6 令牌回验 `RALSEI_MEMORY_DIR` 在盘且真出现
+[PASS] R6 令牌回验 `STEADY_EPS` 在盘且真出现
+[PASS] R6 令牌回验 `_just_shown` 在盘且真出现
+[PASS] R6 令牌回验 `availableGeometry` 在盘且真出现
+[PASS] R6 令牌回验 `desk_door_deltarune` 在盘且真出现
+[PASS] R6 令牌回验 `desk_door_ut` 在盘且真出现
+[PASS] R6 令牌回验 `fade_plan` 在盘且真出现
+[PASS] R6 令牌回验 `vault_guard` 在盘且真出现
+[PASS] R6b 下沉令牌 `oneshot.mainline.INIT` 在详版可检索
+[PASS] R6b 下沉令牌 `ut.rooms.room_start` 在详版可检索
+[PASS] R6b 下沉令牌 `ch1.hometown.town_mid` 在详版可检索
+[PASS] R6b 下沉令牌 `mutate115` 在详版可检索
+[PASS] R6b 下沉令牌 `tray_hint_shown` 在详版可检索
+[PASS] R6b 下沉令牌 `find_device_dir` 在详版可检索
+[PASS] R6b 下沉令牌 `60B` 在详版可检索
+[PASS] R7a baseline.json 里 check116 已固化
+[PASS] R7b 基线 PASS 计数 == 40（实到 40）
+
+合计 PASS=27 FAIL=0（共 27 条）

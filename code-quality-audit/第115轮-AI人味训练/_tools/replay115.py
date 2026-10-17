@@ -5,9 +5,24 @@
 用户口径：「把咱目前所有轮…所有轮的改动都**逐项录屏测试**，测试完没问题再推进」
 
 ★ 为什么重放既有脚本、而不是新写一堆：
-  那些 `rec*.py` 是**当年照着真机行为**写出来的（沙箱三件套 + `pet.show()` + 抓帧 + 断言），
+  那些 `rec*.py` 是**当年照着真机行为**写出来的（`pet.show()` + 抓帧 + 断言），
   重跑它们 = 用它当年的判据复核**今天**的代码 ⇒ 这是最保真的"逐项录屏回归"。
   新写脚本反而会引入"我猜的 API"。
+
+★★★ 第115轮补正（**原头部声明是错的，必须记下来**）：
+  首版头部写的是「各 rec*.py 自带 `RALSEI_DATA_DIR`→mkdtemp + `vault_root=None`」。
+  实测**不成立**：11 个 `rec*.py` 里**只有 `rec114.py` 有沙箱**，
+  `rec96/105/106/107/109~113` 全是裸跑；而且 `rec114` 那套也**不完整**。
+  后果：那次重放**确实写进了用户真实的 `E:\RalseiMemory\`**
+  （实测 `npc_memory/*.json` mtime = 2026-10-16 03:57:48、`npc_life.json` 03:57:48）。
+  ⇒ 本版起，**沙箱由重放器统一注入**（不改各轮历史脚本，保持它们当年的样子）：
+     `RALSEI_MEMORY_DIR`（★ 真源头，优先级最高）/ `RALSEI_DATA_DIR` /
+     `RALSEI_DESKTOP` / 外加 `QT_QPA_PLATFORM=windows`。
+  ⇒ 并且**不信自称**：跑前/跑后用 `_shared/vault_guard.py` 拍指纹比对，
+     有差异就**非零退出并落盘**（详见 `_evidence/VAULT_GUARD.json`）。
+  ★ 为什么少一个闸就漏：`data_store` 只是**包装层**，路径真源在 `memory_store`；
+     记忆系统**直接**用 `memory_store`，绕开了对 `data_store.vault_root` 的猴补丁；
+     `memory_store.find_device_dir()` 里 `RALSEI_MEMORY_DIR` 才是最上一道。
 
 ★ 诚实的覆盖面（不许含糊）：
   · **有录像脚本可重放的**：第96轮（用户视角）+ 第105~114轮 ⇒ 本脚本全跑；
@@ -78,8 +93,25 @@ def main():
     say('第115轮后续 · 逐项重放录像')
     say('  ROOT = %s' % ROOT)
     say('  解释器 = %s' % PY)
-    say('  ★ 真机：QT_QPA_PLATFORM 将由各脚本自己决定（rec*.py 里 `setdefault("offscreen")`）')
-    say('  ★ 沙箱：各 rec*.py 自带 `RALSEI_DATA_DIR`→mkdtemp + `vault_root=None`（不碰用户角色记忆）')
+    say('  ★ 真机：重放器向子进程显式注入 `QT_QPA_PLATFORM=windows`')
+    say('  ★ 沙箱：重放器向子进程注入 `RALSEI_MEMORY_DIR` / `RALSEI_DATA_DIR` /')
+    say('          `RALSEI_DESKTOP`（各轮 rec*.py 历史脚本**不改**，保持当年原样）')
+
+    # ★★★ 外部尺子：跑前拍用户记忆库指纹（**不信任何脚本自称沙箱**）
+    sys.path.insert(0, os.path.join(CQA, '_shared'))
+    vg = None
+    vault_before = None
+    try:
+        import vault_guard as vg
+        vault_before = vg.snapshot()
+        if vault_before is None:
+            say('  ★ 记忆库根不存在（%s）⇒ 本次无法比对' % vg.DEFAULT_ROOT)
+            vg = None
+        else:
+            say('  ★ 记忆库指纹已拍：%d 个文件（%s）'
+                % (len(vault_before), vg.DEFAULT_ROOT))
+    except Exception as e:
+        say('  ★ 记忆库指纹拍摄失败（结尾会如实报错）: %r' % (e,))
     say('')
 
     results = []
@@ -103,6 +135,17 @@ def main():
         #     才配叫"逐项**录屏**测试"。
         env = dict(os.environ)
         env['QT_QPA_PLATFORM'] = 'windows'
+        # ★★★ 沙箱四闸（由重放器统一注入；各轮历史脚本**不动**）
+        #   ⚠️ 只设 `RALSEI_DATA_DIR` + 猴补丁 `data_store.vault_root` 是**拦不住**的：
+        #      `data_store` 只是包装层，路径真源是 `memory_store`；记忆系统**直接**用
+        #      `memory_store`（绕过猴补丁），而 `find_device_dir()` 里
+        #      **`RALSEI_MEMORY_DIR`（ENV_DIR）优先级最高** ⇒ 那才是真正的闸。
+        _sb = tempfile.mkdtemp(prefix='replay115_%s_' % rid)
+        for _sub in ('vault', 'staging', 'desktop'):
+            os.makedirs(os.path.join(_sb, _sub), exist_ok=True)
+        env['RALSEI_MEMORY_DIR'] = os.path.join(_sb, 'vault')
+        env['RALSEI_DATA_DIR'] = os.path.join(_sb, 'staging')
+        env['RALSEI_DESKTOP'] = os.path.join(_sb, 'desktop')
         try:
             p = subprocess.run([PY, rel], cwd=os.path.join(CQA, rdir), env=env,
                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -128,12 +171,46 @@ def main():
         for l in rec['tail']:
             say('      | %s' % l[:150])
 
+    # ★★★ 跑完：用**外部尺子**复核用户记忆库指纹 —— 不许自称"我沙箱了"
+    guard_rc = None
+    guard_note = 'skipped'
+    if vg is not None and vault_before is not None:
+        try:
+            vault_after = vg.snapshot()
+            a, rem, c = vg.compare(vault_before, vault_after)
+            guard_rc = 0 if (not a and not rem and not c) else 1
+            guard_note = (u'一致 ✓ %d 个文件未变（用户记忆库没被碰）'
+                          % len(vault_after)) if guard_rc == 0 else \
+                (u'★ 有差异 added=%d removed=%d changed=%d'
+                 % (len(a), len(rem), len(c)))
+            say('\n[vault_guard] %s' % guard_note)
+            for k in a[:20]:
+                say('   + 新增 %s' % k)
+            for k in rem[:20]:
+                say('   - 消失 %s' % k)
+            for k, _o, _n in c[:20]:
+                say('   ~ 变化 %s' % k)
+            with io.open(os.path.join(EV, 'VAULT_GUARD.json'), 'w',
+                         encoding='utf-8', newline='\n') as _f:
+                json.dump({'root': getattr(vg, 'DEFAULT_ROOT', None),
+                           'before_n': len(vault_before),
+                           'after_n': len(vault_after) if vault_after else None,
+                           'added': a, 'removed': rem,
+                           'changed': [k for k, _o, _n in c],
+                           'verdict': guard_note},
+                          _f, ensure_ascii=False, indent=1)
+        except Exception as e:
+            guard_rc, guard_note = 2, u'★ 复核失败 %r' % (e,)
+            say('\n[vault_guard] %s' % guard_note)
+
     say('\n' + '=' * 74)
     tot_p = sum(r.get('pass', 0) for r in results)
     tot_f = sum(r.get('fail', 0) for r in results)
     tot_png = sum(r.get('png_new', 0) for r in results)
     bad = [r['id'] for r in results
            if r.get('fail') or (r.get('rc') not in (0, None)) or r.get('timed_out')]
+    if guard_rc:
+        bad.append('vault_guard')
     say('合计：脚本 %d ｜ PASS=%d ｜ FAIL=%d ｜ PNG 新增=%d' % (len(results), tot_p, tot_f, tot_png))
     say('有问题的项：%r' % (bad,))
     say('★ 结论：%s' % ('全部通过' if not bad else '★ 见上面有问题的项'))
@@ -141,7 +218,8 @@ def main():
     with io.open(os.path.join(EV, 'REPLAY115.json'), 'w',
                  encoding='utf-8', newline='') as f:
         json.dump({'results': results, 'totals': {'pass': tot_p, 'fail': tot_f,
-                                                  'png': tot_png, 'bad': bad}},
+                                                  'png': tot_png, 'bad': bad},
+                   'vault_guard': {'rc': guard_rc, 'note': guard_note}},
                   f, ensure_ascii=False, indent=1)
     return 0 if not bad else 1
 

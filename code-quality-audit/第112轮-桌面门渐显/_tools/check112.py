@@ -165,19 +165,44 @@ _dp = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'desktop.json')
 _d = json.load(io.open(_dp, encoding='utf-8'))
 _by_src = {o.get('src'): o for o in _d['objects']}
 check('G1 仍 4 扇门', len(_d['objects']) == 4, star=True)
-check('G2 UT 门 = ut_castle_realdoor',
-      _by_src['obj_doorC']['sprite'] == 'objs/ut_castle_realdoor_0.png', star=True)
+# ★★★ 第116轮**改钉**（不是放宽）：门 C/D 的桌面贴图从"原作原件"改成
+#   "**桌面专用变体**"（把近黑底扣成透明）。真因 = 用户逐字「黑底也没去干净」
+#   ＋真机实测门 D 矩形内**纯黑比中位 0.820**（原件纯黑占 82.6%）。
+#   变体 = `objs/desk_door_ut.png` / `objs/desk_door_deltarune.png`，由
+#   `第116轮.../_tools/key116_doors.py --key` 生成，**像素尺寸与原件逐字相同**。
+#   ⇒ 本判据仍然逐字钉"选的是哪张美术"（同一张 UT 王座门 / 同一张巨门框），
+#     只是钉到"去了黑底的桌面版"。世界内（`_zone.ch1.castle_town.json`）
+#     **必须仍是原件** —— 见 G7/G8。
+check('G2 UT 门 = desk_door_ut（UT 王座门，去了黑底的桌面版）',
+      _by_src['obj_doorC']['sprite'] == 'objs/desk_door_ut.png', star=True)
 # ★★★ 第112轮续：符文门贴图口径更正 —— 用户「你要不要自己看看那是不是任意门啊，
 #     我说的是那个门框」+「是哪个门框似的那个门」⇒ 「任意门」= 长得像门框的那扇
 #     = `spr_giantdarkdoor_0.png`（180×155 金边卷草纹门框）。旧值 `spr_shortcut_door_0`
 #     （36×52 粉紫独门）是「一扇门」不是「门框」。判据名同步更新（勿留旧口径）。
-check('G3 符文门 = spr_giantdarkdoor_0（门框形态）',
-      _by_src['obj_doorD']['sprite'] == 'objs/spr_giantdarkdoor_0.png', star=True)
+#     ★ 第116轮：沿用同一张门框美术，但用**去了黑底的桌面版**（见 G2 上的说明）。
+check('G3 符文门 = desk_door_deltarune（巨门框，去了黑底的桌面版）',
+      _by_src['obj_doorD']['sprite'] == 'objs/desk_door_deltarune.png', star=True)
 check('G4 ★ UT 门无 anim（单帧，避免找 _1.png）', 'anim' not in _by_src['obj_doorC'], star=True)
-_dr_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'spr_giantdarkdoor_0.png')
-check('G5 ★ 符文门素材在盘（巨门框单帧）', os.path.exists(_dr_png), star=True)
-_ut_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'ut_castle_realdoor_0.png')
-check('G6 UT 门素材在盘', os.path.exists(_ut_png), star=True)
+_dr_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'desk_door_deltarune.png')
+check('G5 ★ 符文门素材在盘（巨门框桌面版单帧）', os.path.exists(_dr_png), star=True)
+_ut_png = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs', 'desk_door_ut.png')
+check('G6 UT 门素材在盘（UT 王座门桌面版）', os.path.exists(_ut_png), star=True)
+# ★★★ G7/G8（第116轮新增，**防"顺手把世界内的门也扣了"**）：
+#   暗世界城堡镇（`_zone.ch1.castle_town.json`）里的巨门框**必须仍是原件**
+#   —— 那里背景本就是黑的，黑门洞是**对的**；而且用户的渐显口径逐字
+#   「只针对**桌面上的** ut 和三角符文的门」。两条一起钉，改一边就报红。
+_zone_p = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes',
+                       '_zone.ch1.castle_town.json')
+_zone_txt = io.open(_zone_p, encoding='utf-8').read()
+check('G7 ★★★ 世界内（ch1 城堡镇）仍用原件 spr_giantdarkdoor_0（不许被桌面变体顶掉）',
+      'objs/spr_giantdarkdoor_0.png' in _zone_txt
+      and 'desk_door_deltarune' not in _zone_txt, star=True)
+check('G8 ★★ 两张原件**仍在盘上**（世界内与未来回溯都靠它）',
+      os.path.exists(os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'objs',
+                                  'spr_giantdarkdoor_0.png'))
+      and os.path.exists(os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes',
+                                      'objs', 'ut_castle_realdoor_0.png')),
+      star=True)
 
 print('=== H. ★★★ 零依赖 + 字母表不分叉 ===')
 # H1: 「零依赖」是设计承诺 —— ★★ **不能**看 `sys.modules`（那会被"同进程里
@@ -927,11 +952,16 @@ check('N14b ★ 负控制：`no_such_key_qqq` 的 Compare ⇒ 不存在（N14 �
       not _n14b, star=True)
 
 # N15: **门样式** —— desktop.json 的 4 门贴图 = 用户裁定的四张（逐门）。
+#   ★★★ 第116轮**改钉**（不是放宽）：C/D 换成**去了黑底的桌面变体**
+#     （`desk_door_ut.png` / `desk_door_deltarune.png`，像素尺寸与原件逐字相同）。
+#     真因 = 用户逐字「**黑底也没去干净**」＋真机实测门 D 矩形内纯黑比中位 **0.820**；
+#     而 `ut_castle_realdoor_0` 本就是从 UT **背景图** `bg_castle_realdoor` 抠出来的
+#     ⇒ 那圈黑**字面就是原房间背景**。原件仍在盘上、世界内仍用原件（见 G7/G8）。
 _need_sprites = {
     'desk_door_oneshot': 'objs/spr_darkdoor_0.png',
     'desk_door_niko_home': 'objs/niko_door_portal.png',
-    'desk_door_ut': 'objs/ut_castle_realdoor_0.png',
-    'desk_door_deltarune': 'objs/spr_giantdarkdoor_0.png',
+    'desk_door_ut': 'objs/desk_door_ut.png',
+    'desk_door_deltarune': 'objs/desk_door_deltarune.png',
 }
 _dj_path = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes', 'desktop.json')
 _dj = {}
@@ -944,15 +974,18 @@ _got_sprites = {}
 for _o in (_dj.get('objects') or []):
     if isinstance(_o, dict) and _o.get('id'):
         _got_sprites[_o['id']] = _o.get('sprite')
-check('N15 ★ 4 门贴图 == 裁定表（OneShot暗门/Niko家光门/UT王座门/符文巨门框）',
+check('N15 ★ 4 门贴图 == 裁定表（OneShot暗门/Niko家光门/UT王座门·去黑底/符文巨门框·去黑底）',
       _got_sprites == _need_sprites, star=True,
       detail='got=%s' % _got_sprites)
 check('N15b ★★ Niko 家门用光门 `niko_door_portal`（用户「用原作 niko 最后回家的光门」）',
       _got_sprites.get('desk_door_niko_home') == 'objs/niko_door_portal.png', star=True)
-check('N15c ★★ 三角符文门用门框 `spr_giantdarkdoor`（用户「是哪个门框似的那个门」）',
-      _got_sprites.get('desk_door_deltarune') == 'objs/spr_giantdarkdoor_0.png', star=True)
-check('N15d ★★ UT 门仍用王座门 `ut_castle_realdoor`（用户「ut 就用王座那个门」）',
-      _got_sprites.get('desk_door_ut') == 'objs/ut_castle_realdoor_0.png', star=True)
+# ★★★ N15c：巨门框 —— 口径**改过一次，别改回去**。用户 10-12 选过 `spr_shortcut_door`，
+#   10-13 的 AskUserQuestion 回「不是啊，是哪个门框似的哪个门」**覆盖**它（终选巨门框）。
+check('N15c ★★ 三角符文门用巨门框（用户「是哪个门框似的那个门」）'
+      '—— 且**不许回退**成 `spr_shortcut_door`',
+      _got_sprites.get('desk_door_deltarune') == 'objs/desk_door_deltarune.png', star=True)
+check('N15d ★★ UT 门仍用王座门（用户「ut 就用王座那个门」）· 桌面版去了黑底',
+      _got_sprites.get('desk_door_ut') == 'objs/desk_door_ut.png', star=True)
 # N15e: ★ 负控制 —— 4 门贴图**不全相同**（用户「门也不是都长那样啊」）
 check('N15e ★★ 负控制：4 门贴图不是同一张（用户「门也不是都长那样」）',
       len(set(_got_sprites.values())) == 4, star=True,

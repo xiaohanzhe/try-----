@@ -722,10 +722,17 @@ class SceneCanvas(QWidget):
         用户口径（逐字）：「**放到屏幕边缘哦**」/「**不是，那个门你单独放在外面呗**」
         →「**只桌面场景时，固定贴屏**」+「**各用原尺寸**」。
 
-        `doors` = `[(sprite_id, (x, y, w, h)), ...]`：
+        `doors` = `[(sprite_id, (x, y, w, h), alpha), ...]`：
           · `sprite_id` = `assets.get()` 认得的贴图名（如 `'objs/spr_giantdarkdoor_0.png'`）；
-          · `(x, y, w, h)` = **画布（= 整屏）坐标**的矩形，`x/y` 为左上角。
+          · `(x, y, w, h)` = **画布（= 整屏）坐标**的矩形，`x/y` 为左上角；
+          · `alpha`（第116轮新增，**可省**）= `0.0~1.0` 的门不透明度。
+            省 / 非法 ⇒ `1.0`（全不透明，与老行为逐字节一致）。
         ⇒ 由 `display.desk_doors.plan_screen_doors()` 算出（那里是摆位唯一真源）。
+        ★★★ `alpha` 为什么必须在这条通道里（第116轮）：门渐显由 `door_reveal`
+          写在**场景物件**上，可门已被移出房间图层（`desktop.json` 里
+          `enabled:false`）⇒ `alpha` 在房间层**没有消费者**；屏幕层原来只
+          `drawPixmap` **也不读**它 ⇒ 渐显整条失效、C/D 恒为实心黑块
+          （用户逐字：「黑底也没去干净」「你门的形式也没用对」）。
 
         ★ 为什么走**独立通道**而不是塞进 `plan`：`plan` 里的指令一律经过
           `p.translate(offset)` + `p.scale(scale)`（房间坐标 → 画面像素）。
@@ -744,8 +751,20 @@ class SceneCanvas(QWidget):
                 r = it[1]
                 if not sid or not isinstance(r, (list, tuple)) or len(r) != 4:
                     continue
+                a = 1.0
+                if len(it) >= 3:
+                    try:
+                        a = float(it[2])
+                    except (TypeError, ValueError):
+                        a = 1.0
+                    if a != a:                  # NaN
+                        a = 1.0
+                    elif a < 0.0:
+                        a = 0.0
+                    elif a > 1.0:
+                        a = 1.0
                 fixed.append((str(sid), (int(r[0]), int(r[1]),
-                                         int(r[2]), int(r[3]))))
+                                         int(r[2]), int(r[3])), a))
             except (TypeError, ValueError, IndexError):
                 continue
         self._screen_doors = fixed
@@ -766,14 +785,34 @@ class SceneCanvas(QWidget):
 
         返回画了几扇（供 `last_drawn` 统计；取不到贴图的门**跳过**，不画占位方块 ——
         宁可不画，也不要在桌面上糊一块色块）。
+
+        ★★★ 第116轮：按**逐门 `alpha`** 落笔（`painter.setOpacity`）。
+          原实现只 `drawPixmap` ⇒ 门渐显（`door_reveal` 写的 alpha）在屏幕层
+          **没有消费者** ⇒ C(UT)/D(符文) 恒为**全不透明实心黑块**
+          （用户逐字「黑底也没去干净」）。`alpha >= 0.999` 时**刻意不调
+          `setOpacity`** —— 保住"老路径一个像素都不变"（`A`/`B` 与无 alpha 的
+          调用点走的就是这条）。
+          ★ `finally` 里**无条件还原 1.0**：`setOpacity` 是画家的**持久状态**，
+          忘了还原会把后面画的所有东西一起跟着变淡（`paintEvent` 之后还要画
+          过渡遮罩）。
         """
         n = 0
-        for sid, (x, y, w, h) in self._screen_doors:
+        for item in self._screen_doors:
             try:
+                sid = item[0]
+                x, y, w, h = item[1]
+                a = item[2]
                 pm = self.assets.get(sid)
                 if pm is None or pm.isNull():
                     continue
-                painter.drawPixmap(QRect(x, y, w, h), pm)
+                if a >= 0.999:
+                    painter.drawPixmap(QRect(x, y, w, h), pm)
+                else:
+                    try:
+                        painter.setOpacity(a)
+                        painter.drawPixmap(QRect(x, y, w, h), pm)
+                    finally:
+                        painter.setOpacity(1.0)
                 n += 1
             except Exception:
                 continue

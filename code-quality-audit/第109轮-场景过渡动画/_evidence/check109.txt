@@ -12,7 +12,7 @@
 [PASS] B3 负控制：淡出 ≠ 淡入（原作确实不对称：8 帧 vs 12.5 帧）  <- out=267.0 in=417.0
 
 -- C 阶段序 out → 换房 → in --
-[PASS] ★ C1 ★★★ 淡出阶段先置 α=1 **再**换房（`set_transition_alpha(1.0)` 先于 swap）  <- 序：alpha1@959 swap@1010
+[PASS] ★ C1 ★★★ 淡出阶段先置 α=1 **再**换房（`set_transition_alpha(1.0)` 先于 swap）
 [PASS] C2 ★★ 阶段在 `out` / `in` 之间切换（源码里两个 phase 字面量都在）  <- out=True in=True
 
 -- D 换房那一拍真的调 switch --

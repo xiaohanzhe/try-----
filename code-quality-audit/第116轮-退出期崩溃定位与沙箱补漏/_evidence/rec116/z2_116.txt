@@ -1,0 +1,37 @@
+# z2_116 —— 顶层 z 序 + 扩展样式
+pet      hwnd=2098822 class='Qt5152QWindowToolSaveBits' exstyle=0x00080080  TOPMOST=False TOOLWIN=True APPWIN=False
+canvas   hwnd=4918074 class='Qt5152QWindowToolSaveBits' exstyle=0x00080080  TOPMOST=False TOOLWIN=True APPWIN=False
+taskbar  hwnd=197100 class='Shell_TrayWnd' exstyle=0x00000088  TOPMOST=True TOOLWIN=True APPWIN=False
+
+采样 60 次（3.66 s）
+桌宠在任务栏之上：翻转 29 次 ⇒ 7.25 Hz
+
+前 12 个采样的 z 名次（pet/canvas/taskbar）+ 列表头 8 个窗口:
+  t=1.565  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.696  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.718  {'pet': 6, 'canvas': 21, 'taskbar': 4}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Shell_TrayWnd', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True)]
+  t=1.758  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.792  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.823  {'pet': 6, 'canvas': 21, 'taskbar': 4}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Shell_TrayWnd', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True)]
+  t=1.870  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.891  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.938  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.986  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=1.998  {'pet': 5, 'canvas': 20, 'taskbar': 312}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Chrome_WidgetWin_1', 'Trae CN', True), ('#32770', '', True)]
+  t=2.050  {'pet': 4, 'canvas': 21, 'taskbar': 5}
+      head=[('ThumbnailDeviceHelperWnd', '', True), ('ThumbnailDeviceHelperWnd', '', True), ('ForegroundStaging', '', True), ('ForegroundStaging', '', True), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet', True), ('Shell_TrayWnd', '', True), ('Qt5152QWindowToolSaveBits', 'python', True), ('Chrome_WidgetWin_1', 'Trae CN', True)]
+
+★ 翻转 t=1.718：前 {'pet': 5, 'canvas': 20, 'taskbar': 312} / 后 {'pet': 6, 'canvas': 21, 'taskbar': 4}
+   前 head=[('ThumbnailDeviceHelperWnd', ''), ('ThumbnailDeviceHelperWnd', ''), ('ForegroundStaging', ''), ('ForegroundStaging', ''), ('Qt5152QWindowToolSaveBits', 'python'), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet'), ('Chrome_WidgetWin_1', 'Trae CN'), ('#32770', '')]
+   后 head=[('ThumbnailDeviceHelperWnd', ''), ('ThumbnailDeviceHelperWnd', ''), ('ForegroundStaging', ''), ('ForegroundStaging', ''), ('Shell_TrayWnd', ''), ('Qt5152QWindowToolSaveBits', 'python'), ('Qt5152QWindowToolSaveBits', 'Ralsei Pet'), ('Chrome_WidgetWin_1', 'Trae CN')]

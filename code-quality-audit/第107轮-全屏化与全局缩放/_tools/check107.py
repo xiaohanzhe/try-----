@@ -555,11 +555,20 @@ def _last_idx(name):
 
 _i_plan = _last_idx('set_plan')
 _i_resize = _last_idx('resize')
+# ★★★ 第116轮修正：`detail` **只在判假时**才带"调序下标/尾部调用名"。
+#   原写法 `detail=u'set_plan@%d resize@%d'` 把**下标**回显进 stdout（下标 = 该函数内
+#   第几次调用 ⇒ 在第116轮 `_update_scene_layer` 里加了两处调用后，它就变成
+#   `36/37`，于是 `run_all` 拿 sha256 一比就报 DIFF —— 而**断言本身没动**。
+#   这正是记忆里那条铁律：**判据禁回显随时相变的绝对值（含行号/下标）**。
+#   ⇒ 改法：绿时 detail 为空（文本恒定）；红时才给诊断（此时本来就该报红）。
+_c14_ok = _i_plan >= 0 and _i_resize > _i_plan
 ok(u'C13 ★★★ `_update_scene_layer` 真调 `set_plan`（AST 调用序可见）',
-   _i_plan >= 0, star=True, detail=u'calls=%r' % (_usl_names[-12:],))
+   _i_plan >= 0, star=True,
+   detail=(u'' if _i_plan >= 0 else u'calls=%r' % (_usl_names[-12:],)))
 ok(u'C14 ★★★ `resize` 出现在 `set_plan` **之后**（后写覆盖前写 ⇒ 必须最后铺整屏）',
-   _i_plan >= 0 and _i_resize > _i_plan, star=True,
-   detail=u'set_plan@%d resize@%d' % (_i_plan, _i_resize))
+   _c14_ok, star=True,
+   detail=(u'' if _c14_ok
+           else u'`resize` 未排在 `set_plan` 之后（顺序反了或缺失）'))
 ok(u'C15 ★★★ `set_plan` 之后仍以 `_primary_screen_size()` 铺**整屏**'
    u'（否则画布 = 画面尺寸 ⇒ 四周黑边消失、画面贴左上角）',
    u'_primary_screen_size' in _usl_code, star=True)

@@ -188,24 +188,31 @@ if set(_letters) != _LETTERS_WANT:
 #   ★★★ 第112轮续改版（用户逐字）：
 #     「门也不是都长那样啊，而且摆放的位置也不在屏幕四周啊」
 #     「ut 就用王座那个门」（终选 `bg_castle_realdoor`）
-#     「不是啊，是哪个门框似的哪个门」⇒ 三角符文门 = `spr_giantdarkdoor_0`（门框形态）
+#     「不是啊，是哪个门框似的哪个门」⇒ 三角符文门 = **巨门框**（`spr_giantdarkdoor`）
 #     「不是进 oneshot 的门，是进 niko 的家」+「用原作 niko 最后回家的光门」
 #       ⇒ Niko 家门 = `niko_door_portal.png`（192×128 光门）
 #   ⇒ 口径：**各门各自贴图 + 各自尺寸决定的房间坐标**。
 #     A=OneShot（正上，spr_darkdoor 44×56 ⇒ 138,0）
 #     B=Niko的家（正下，niko_door_portal 192×128 ⇒ 64,112）
 #     C=UT     （正左，ut_castle_realdoor 44×99 ⇒ 0,70）
-#     D=三角符文（正右，spr_giantdarkdoor 180×155 ⇒ 284,94）
+#     D=三角符文（正右，spr_giantdarkdoor 180×155 ⇒ 320-180=140, (240-155)//2=42）
 #   ★★ 第112轮续：`pos` 仍是**房间坐标**（`door_reveal` 的矩形来源），但门的
 #      **屏幕位置**已改由 `desk_doors.plan_screen_doors()` 另算（屏幕层绘制）——
 #      见 N 段判据。**两套坐标别混**。
+#   ★★★ 第116轮**改钉**（不是放宽）：门 C/D 的桌面贴图换成"**去了黑底的桌面变体**"
+#      （`objs/desk_door_ut.png` / `objs/desk_door_deltarune.png`，像素尺寸与原件逐字
+#      相同）。真因 = 用户逐字「**黑底也没去干净**」＋真机实测门 D 矩形内**纯黑比中位
+#      0.820**。★ 变体不是"改了原作美术"：`ut_castle_realdoor_0` 就是从 UT **背景图**
+#      `bg_castle_realdoor` 抠出来的，那圈黑**字面就是原房间背景**。生成脚本 =
+#      `第116轮…/_tools/key116_doors.py --key`；世界内（`_zone.ch1.castle_town.json`）
+#      **必须仍是原件**（那里背景本就黑，黑门洞是对的）—— 由 `check112` 的 G7/G8 钉。
 _pos_rule = {'A': (138, 0), 'B': (64, 112), 'C': (0, 70), 'D': (140, 42)}
 #: ★ 每扇门各自的贴图（用户逐字指认）。
 _sprite_rule = {
     'A': 'spr_darkdoor_0.png',
     'B': 'niko_door_portal.png',
-    'C': 'ut_castle_realdoor_0.png',
-    'D': 'spr_giantdarkdoor_0.png',
+    'C': 'desk_door_ut.png',
+    'D': 'desk_door_deltarune.png',
 }
 _map_bad = []
 for _o in _doors:
@@ -349,7 +356,7 @@ for _o in _doors:
 # A4a ★★ 4 张门贴图**都装得进**房间 320×240（所以 A4 不许有豁免分支）。
 #   ★ 尺寸从盘上现读（`_sizes`），不写死 —— 判据与事实脱节的教训。
 _for_a4a = ['spr_darkdoor_0.png', 'niko_door_portal.png',
-            'ut_castle_realdoor_0.png', 'spr_giantdarkdoor_0.png']
+            'desk_door_ut.png', 'desk_door_deltarune.png']
 _a4a_bad = []
 for _f in _for_a4a:
     _px = _sizes.get(_f)
@@ -419,16 +426,18 @@ if _rw is not None:
     _bad_ok = (abs((8 + 0) - 0) > 1)   # 正左门 x=8 ⇒ 距 0 为 8 > 1 ⇒ 必被 A4 判违反
 check('A5 负控制：A4 有鉴别力（把门推离屏幕边缘必须判违反）', _bad_ok, star=True)
 
-# A6 ★★★ 门贴图**每扇各自正确**（第112轮改版）。
+# A6 ★★★ 门贴图**每扇各自正确**（第112轮改版；第116轮改钉到桌面变体）。
 #   用户逐字（第112轮）：「门也不是都长那样啊」「ut 就用王座那个门」
-#     + 「三角符文门 → `spr_shortcut_door`」。
+#     + 「不是啊，是哪个门框似的哪个门」（三角符文门 = 巨门框）。
 #   第109轮口径「4 扇都用 44×56 任意门」已被用户否定 ⇒ 本判据随之改成
 #   **四张不同贴图，各自的真尺寸与盘上一致**（防回退成"四扇同图"）。
+#   ★★ 第116轮：C/D 改成**去了黑底的桌面变体**（尺寸与原件逐字相同 ⇒ 判据只换名字，
+#      语义不变）—— 理由见 A2b 上方那段；原件仍在盘上（G8/A6 都查得到）。
 #   ★ 判据从"集合等于某个单元素字典"改为"每条 src→贴图 的尺寸都对得上"。
 _A_DOOR_SPRITE_PX = _sizes.get('spr_darkdoor_0.png') or (44, 56)
-_A_UT_SPRITE_PX = _sizes.get('ut_castle_realdoor_0.png') or (44, 99)
+_A_UT_SPRITE_PX = _sizes.get('desk_door_ut.png') or (44, 99)
 _A_NIKO_SPRITE_PX = _sizes.get('niko_door_portal.png') or (192, 128)
-_A_GIANT_SPRITE_PX = _sizes.get('spr_giantdarkdoor_0.png') or (180, 155)
+_A_GIANT_SPRITE_PX = _sizes.get('desk_door_deltarune.png') or (180, 155)
 #: 期望：字母 → (贴图真尺寸)。真尺寸从盘上 PNG IHDR 现读（`_sizes`），不写死。
 _expect_px = {
     'A': _A_DOOR_SPRITE_PX,
@@ -448,9 +457,9 @@ for _o in _doors:
         _used_sprites.add(_want)
 _px_bad = []
 for _f, _want_px in (('spr_darkdoor_0.png', _A_DOOR_SPRITE_PX),
-                     ('ut_castle_realdoor_0.png', _A_UT_SPRITE_PX),
+                     ('desk_door_ut.png', _A_UT_SPRITE_PX),
                      ('niko_door_portal.png', _A_NIKO_SPRITE_PX),
-                     ('spr_giantdarkdoor_0.png', _A_GIANT_SPRITE_PX)):
+                     ('desk_door_deltarune.png', _A_GIANT_SPRITE_PX)):
     _got = _sizes.get(_f)
     if _got is None:
         _px_bad.append('%s 不在盘上' % _f)
