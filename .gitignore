@@ -79,6 +79,13 @@ code-quality-audit/*/_evidence/**/frames/
 #   而 `**/frames/` 是**精确目录名**匹配 ⇒ `frames_prev_*` 逃逸、12 张抓屏帧漏网待提交。
 #   理由同 §90/§96/§97/§98：抓屏帧含整个桌面（用户隐私）、纯二进制史、且可由 rec99.py 复跑再生。
 code-quality-audit/*/_evidence/**/frames_*/
+# 第117轮加（2026-10-18）：`keyframes/`（录屏抽帧的整屏 PNG，7 张 ≈ 61 MB）。
+#   理由同 frames/：① 公开仓库，整屏图含整个桌面（壁纸/图标/文件名 = 用户隐私）；
+#   ② 体积：单张 8.8 MB，纯二进制史；③ 可由 `_tools/rec117.py` + `rec117.avi` 复跑再生，
+#   判据与报告只依赖 `rec117_frames.csv`（17 KB，已入库）与逐门裁图 `doors117_track_*.png`。
+#   同样写「一层 + 递归」两种形状。
+code-quality-audit/*/_evidence/keyframes/
+code-quality-audit/*/_evidence/**/keyframes/
 
 # 第98轮加（2026-10-08）：`_evidence/` **根目录**下的拼图 PNG（`shot98_*.png` 之类）。
 # 为什么补这一条：上面三条 `**` 只覆盖子目录，而抽帧拼图是直接落在 `_evidence/` 根下的

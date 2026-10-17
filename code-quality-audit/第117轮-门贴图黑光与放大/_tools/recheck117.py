@@ -55,6 +55,10 @@ PY = [
     'code-quality-audit/第117轮-门贴图黑光与放大/_tools/probe117_portal.py',
     'code-quality-audit/第117轮-门贴图黑光与放大/_tools/shot117_doorform.py',
     'code-quality-audit/第117轮-门贴图黑光与放大/_tools/verify117_shot.py',
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/rec117.py',
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/fast117.py',
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/check117_rec.py',
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/sheet117.py',
     'code-quality-audit/第112轮-桌面门渐显/_tools/check112.py',
     'code-quality-audit/第89轮-桌面与作品场景连通/_tools/check89.py',
     'code-quality-audit/regress/run_all.py',
@@ -69,6 +73,7 @@ TXT = PY + JSONS + [
     '.workbuddy/memory/MEMORY.md',
     '.workbuddy/memory/参考-契约与历轮（详版）.md',
     '.workbuddy/memory/2026-10-18.md',
+    'code-quality-audit/第117轮-门贴图黑光与放大/录屏逐帧报告.md',
 ]
 
 # ---------------------------------------------------------------- ① 语法
@@ -213,6 +218,18 @@ ck('⑤ 四门 rect 全在（屏幕层）', len(_v117.get('per_door', {})) == 4,
 ck('⑤ 门 A vs 黑光 < 5（该像）', _v117.get('A_vs_black', 999) < 5, _v117.get('A_vs_black'))
 ck('⑤ 门 A vs 品红原件 > 30（该不像）', _v117.get('A_vs_orig', -1) > 30, _v117.get('A_vs_orig'))
 ck('⑤ 负控制 A 右移 24px > 20', _v117.get('A_shift24', -1) > 20, _v117.get('A_shift24'))
+
+# 录屏逐帧（rec117）的结论必须真在盘上，且 0 红
+_recf = os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大/_evidence/rec117/check117_rec.json')
+if os.path.isfile(_recf):
+    _rj = json.loads(rd(_recf))
+    ck('⑤ 录屏逐帧 30 条全绿', _rj.get('fail') == 0 and _rj.get('ok') == 30,
+       'ok=%s fail=%s 帧=%s' % (_rj.get('ok'), _rj.get('fail'), _rj.get('frames')))
+    ck('⑤ 录屏四门 rect 在盘上', len(_rj.get('rects', {})) == 4, _rj.get('rects'))
+else:
+    ck('⑤ 录屏逐帧结果存在', False, '缺 check117_rec.json（先跑 check117_rec.py）')
+_wr = os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大/_evidence/rec117/fast117_writes.csv')
+ck('⑤ 写入路径序列（判"闪"的硬证据）在盘上', os.path.isfile(_wr))
 
 _mem = rd(os.path.join(ROOT, '.workbuddy/memory/MEMORY.md'))
 _js = len(_mem.encode('utf-16-le')) // 2
