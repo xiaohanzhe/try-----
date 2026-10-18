@@ -7918,9 +7918,14 @@ class RalseiPet(QMainWindow):
             #     `door_reveal` 的靠近判定与字母路由。
             try:
                 if self._scene_is_desktop_scene():
-                    canvas.set_screen_doors(self._desktop_screen_doors(int(sw), int(sh)))
+                    _doors = self._desktop_screen_doors(int(sw), int(sh))
+                    canvas.set_screen_doors(_doors)
+                    # ★ 第117轮：同一份矩形交给对话框 ⇒ 它会避开「正下」那扇门
+                    #   （门的位置是用户逐字指定的，所以让**对话框**动）。
+                    self._register_door_avoid(_doors)
                 else:
                     canvas.set_screen_doors(None)
+                    self._register_door_avoid(None)
             except Exception as e:
                 _log.debug("屏幕层门（第112轮续）防御性异常（已忽略）: %s", e)
                 try:
@@ -8182,6 +8187,50 @@ class RalseiPet(QMainWindow):
         if not (bw > 0.0) or not (bh > 0.0):
             return None
         return (cx - bw / 2.0, cy - bh / 2.0, cx + bw / 2.0, cy + bh / 2.0)
+
+    def _register_door_avoid(self, doors):
+        u"""★ 第117轮：把「正下」那扇门的屏幕矩形交给对话框，让**对话框**避让。
+
+        起因（真机 1:1 对照 `第117轮…/_evidence/rec117/ab117_doorB.png`）：
+          对话框 = **不透明黑面板** `(970,1360,620,236)`，门 B「Niko 的家」=
+          `(1183,1399,194,129)` —— 水平/垂直区间都被完全包含 ⇒ 一有消息门就整块消失
+          （录屏 37 帧里 15 帧如此，约 40% 的时间）。
+
+        ★★★ 为什么是"对话框让"而不是"门让"：用户第112轮逐字「**这4个门挨着
+          屏幕边框**」＋「正上/正下/正左/正右」⇒ 门的位置是**被指定的**；
+          对话框"贴底居中"从没被指定过。两害相权，动对话框。
+          （另两个被否掉的方案：门往上挪 168 px ⇒ 不再贴边框；门沿底边侧移
+          ⇒ 不再"正下"。）
+
+        :param doors: `_desktop_screen_doors()` 的返回值 `[(sprite, (x,y,w,h), alpha)]`；
+            传 `None` / `[]` ⇒ **清空避让**（非桌面场景、或门画不出来时）。
+        """
+        rects = []
+        try:
+            if doors:
+                cand = []
+                for item in doors:
+                    try:
+                        _s, r, _a = item
+                        x, y, w, h = (int(r[0]), int(r[1]), int(r[2]), int(r[3]))
+                    except (TypeError, ValueError, IndexError):
+                        continue
+                    cand.append((y + h, (x, y, w, h)))
+                if cand:
+                    # 底边最低的那扇 = 「正下」（A 在上、C/D 在左右两侧中部）
+                    cand.sort()
+                    rects = [cand[-1][1]]
+        except Exception as e:
+            _log.debug("第117轮 计算避让门矩形失败（本轮不做避让）: %s", e)
+            return
+        ui = getattr(self, 'dialogue_ui', None)
+        fn = getattr(ui, 'set_avoid_rects', None)
+        if not callable(fn):
+            return
+        try:
+            fn(rects)
+        except Exception as e:
+            _log.debug("第117轮 登记对话框避让矩形失败（已忽略）: %s", e)
 
     def _desktop_screen_doors(self, screen_w, screen_h):
         """★ 第112轮续：算桌面 4 扇门的**屏幕层**摆位。

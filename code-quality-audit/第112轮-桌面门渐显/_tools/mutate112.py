@@ -148,6 +148,8 @@ mutate(u'M1 白名单扩到 A/B（违背"只 UT/符文"）',
 
 # ---------------------------------------------------------------------------
 # M2: MIN_ALPHA 改成 0（用户要的是"透明到实象"但保留可发现性 ⇒ 0 = 找不到门）
+#     ★ 第117轮：曾短暂改成 0.50（误判"门 D 看不见"），复核后**已回退 0.14**
+#       ⇒ 锚点回到 0.14。**锚点必须与产品源码逐字一致**，否则变异静默不生效。
 # ---------------------------------------------------------------------------
 mutate(u'M2 MIN_ALPHA 改 0（门会彻底看不见）',
        'door_reveal',
@@ -211,18 +213,21 @@ mutate(u'M8 第2次门槛改第1次（第一句就屏蔽）',
 # ---------------------------------------------------------------------------
 # M9: desktop.json 把 UT 门贴图改回任意门（违背"ut 就用王座那个门"）
 # ---------------------------------------------------------------------------
+# ★ 第117轮**修锚点**（原先 SKIP：锚点还写着 `ut_castle_realdoor_0.png`，
+#   第116轮已把 UT 门换成"去了黑底的桌面版" `desk_door_ut.png` ⇒ 命中 0 次 = 变异静默失效）。
 mutate(u'M9 UT 门贴图改回任意门（违背用户点名）',
        'desktop_json',
-       '"sprite": "objs/ut_castle_realdoor_0.png"',
+       '"sprite": "objs/desk_door_ut.png"',
        '"sprite": "objs/spr_darkdoor_0.png"')
 
 # ---------------------------------------------------------------------------
 # M10: 把 anim 加回 UT 门（重启频闪根因）
+#   ★ 同上：锚点跟着第116轮的贴图改名同步。
 # ---------------------------------------------------------------------------
 mutate(u'M10 UT 门加回 anim（频闪根因回归）',
        'desktop_json',
-       '"sprite": "objs/ut_castle_realdoor_0.png",',
-       '"sprite": "objs/ut_castle_realdoor_0.png",\n'
+       '"sprite": "objs/desk_door_ut.png",',
+       '"sprite": "objs/desk_door_ut.png",\n'
        '      "anim": {"base": "objs/ut_castle_realdoor", "frames": 2,'
        ' "frame_ms": 33.3},')
 
@@ -366,11 +371,14 @@ mutate(u'M17 删掉 paintEvent 的 p.restore()（门被平移推走 = 真 bug �
 # M18 ★★ `_paint_screen_doors` 里自己加一次 offset ⇒ 双重偏移
 #   （判据 N23 必须抓到："不许出现 `_offset_*`"）
 # ---------------------------------------------------------------------------
+# ★ 第117轮**修锚点**（原先 SKIP）：第116轮把循环体从
+#   `for sid, (x, y, w, h) in self._screen_doors:` 改成 `for item in self._screen_doors:`
+#   （要带逐门 alpha）⇒ 旧锚点命中 0 次，这条变异**静默不生效**。
 mutate(u'M18 `_paint_screen_doors` 自加 offset（双重偏移）',
        'scene_canvas',
-       '        n = 0\n        for sid, (x, y, w, h) in self._screen_doors:',
+       '        n = 0\n        for item in self._screen_doors:',
        '        n = 0\n        painter.translate(self._offset_x, self._offset_y)\n'
-       '        for sid, (x, y, w, h) in self._screen_doors:')
+       '        for item in self._screen_doors:')
 
 # ---------------------------------------------------------------------------
 # M19 ★★ `pet_screen_box` 非法输入返回 `(0, 0)` 而不是 `None`

@@ -345,6 +345,26 @@ class DialogueUI(QWidget):
     MIN_BOX_HEIGHT = 220
 
     # ------------------------------------------------------------------
+    # ★★★ 第117轮 · 对话框**避开桌面门**（用户口径「这4个门挨着屏幕边框」的必然结果）
+    #
+    # 真机 1:1 对照（`第117轮…/_evidence/rec117/ab117_doorB.png`）实测：
+    #   · 对话框 = **不透明黑面板** `(970,1360,620,236)`（贴底居中，`bottom - dh - 4`）；
+    #   · 门 B「Niko 的家」= `(1183,1399,194,129)`（贴底居中）。
+    #   ⇒ 两者的**水平区间与垂直区间都被完全包含** ⇒ 一有消息，「Niko 的家」整块消失
+    #     （录屏 37 帧里 15 帧处于这个状态，约 **40%** 的时间）。
+    #
+    # ★ 为什么改**对话框**而不是挪门：用户第112轮逐字要求「**这4个门挨着屏幕边框**」，
+    #   且四门方位固定为「正上/正下/正左/正右」。把门挪走 = 改用户口径；
+    #   把对话框抬起来 = **只改"这个面板贴不贴底"**，而这一条用户从未指定。
+    #   两害相权，动对话框。
+    #
+    # ★ 只在**宿主登记了避让矩形**时生效（见 `set_avoid_rects`）⇒ 非桌面场景、
+    #   或门画不出来时，行为与第116轮**一字不变**。
+    # ------------------------------------------------------------------
+    #: 对话框与门的**最小间隙**（像素）。贴太近会看起来像"被门顶住"。
+    AVOID_GAP = 8
+
+    # ------------------------------------------------------------------
     # ★★ 第52轮 · 单轮显示 + 常驻输入栏
     #
     # 用户口径逐字：
@@ -668,6 +688,9 @@ class DialogueUI(QWidget):
         self.drag_position = QPoint()
         self._is_dragging = False
         self._user_moved = False
+
+        # ★ 第117轮：宿主（桌面场景）登记的"对话框不许压住"的矩形；空 = 不避让。
+        self._avoid_rects = []
 
         # 位置跟随定时器：对话框可见时持续贴在 ralsei 上方
         self._follow_timer = QTimer(self)
@@ -1764,6 +1787,64 @@ class DialogueUI(QWidget):
         self._fade_anim.finished.connect(self.hide)
         self._fade_anim.start()
 
+    # ------------------------------------------------------------------ 避让桌面门
+    def set_avoid_rects(self, rects):
+        u"""登记"对话框不许压住"的屏幕矩形（宿主调用，第117轮）。
+
+        :param rects: `[(x, y, w, h), ...]`（**屏幕/画布像素**，左上角口径）；
+            `None` / `[]` ⇒ 清空（非桌面场景、或门画不出来时宿主会这么调）。
+
+        ★ 只保存、不立即 move：真正的避让在 `_position_above_ralsei` 里算
+          （那里才知道对话框自己的 `dw/dh`）。⇒ 本方法**幂等、无副作用**，
+          可以在每次重绘时被调用。
+        ★ 坏数据（非 4 元组 / 非数）**跳过**，不清空已登记的（保守：宁可少让一次，
+          也不要因为宿主某次传了脏值把避让彻底关掉）。
+        """
+        out = []
+        try:
+            for r in (rects or []):
+                if not r:
+                    continue
+                if len(r) != 4:
+                    continue
+                out.append(tuple(int(round(float(v))) for v in r))
+        except (TypeError, ValueError, IndexError):
+            pass
+        if rects is None or (isinstance(rects, (list, tuple)) and len(rects) == 0):
+            out = []
+        self._avoid_rects = out
+
+    def _avoided_bottom_y(self, bottom_y, x, w, h, min_top):
+        u"""对话框底边 `bottom_y` ⇒ **抬到所有冲突门的上方**之后的底边（第117轮）。
+
+        · 水平/垂直任一轴不重叠 ⇒ 不算冲突（`AVOID_GAP` 计入垂直判定）；
+        · 冲突 ⇒ 新底边 = 门顶 - `AVOID_GAP`（取所有冲突门里**最高的那扇**的上沿）；
+        · 抬出屏幕（`y < min_top`）⇒ 钳到 `min_top`（宁可压住门，也不要把框顶出屏幕）。
+        · 没有登记 / 没有冲突 ⇒ **原样返回**（⇒ 老行为零变化）。
+
+        ★ 纯函数式（只读 `self._avoid_rects`），不移动窗口 ⇒ 可被回归直接断言。
+        """
+        rects = getattr(self, '_avoid_rects', None)
+        if not rects:
+            return bottom_y
+        y = bottom_y
+        try:
+            top_limit = bottom_y
+            for (rx, ry, rw, rh) in rects:
+                if x + w <= rx or rx + rw <= x:          # 水平不重叠
+                    continue
+                if y + h + self.AVOID_GAP <= ry or ry + rh <= y:
+                    continue                            # 垂直不重叠
+                cand = ry - self.AVOID_GAP - h          # 底边移到门上方
+                if cand < top_limit:
+                    top_limit = cand
+            y = top_limit
+            if y < min_top:
+                y = min_top
+        except (TypeError, ValueError):
+            return bottom_y
+        return y
+
     def _position_above_ralsei(self):
         """对话框定位：用户拖过后保持用户位置，否则定位到屏幕正下方居中。"""
         # 用户拖过一次后永远不再自动定位，保持用户放的位置（不管可见与否）
@@ -1792,6 +1873,9 @@ class DialogueUI(QWidget):
             # 水平居中，垂直贴底
             center_x = (left + right) // 2 - dw // 2
             bottom_y = bottom - dh - 4
+            # ★ 第117轮：若会压住宿主登记的门（"正下"那扇），把**对话框**抬上去。
+            #   没有登记 ⇒ 原样返回 ⇒ 第116轮的行为一字不变。
+            bottom_y = self._avoided_bottom_y(bottom_y, center_x, dw, dh, top)
             # 修复：_follow_timer 每 100ms 调用本函数，位置没变时不要重复 move
             # （重复 move 会持续触发窗口移动事件，浪费 CPU 且可能引起轻微抖动）
             if (center_x, bottom_y) != getattr(self, '_last_anchor_pos', None):

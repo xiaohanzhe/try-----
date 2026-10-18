@@ -53,5 +53,20 @@
     "tag": "M11 E3   把一扇门 enabled 改回 true（房间层又画一遍）",
     "status": "CAUGHT",
     "hit": "[FAIL] E3 ★★ 4 门仍全 `enabled: false`（房间层剔除，只屏幕层画）"
+  },
+  {
+    "tag": "M12 F7   main 摘掉桌面分支的登记调用（门 B 又被对话框盖住）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] F7 ★★★ main 定义 `_register_door_avoid` 且**两处**调用（桌面登记 / 非桌面清空）"
+  },
+  {
+    "tag": "M13 F3   避让计算恒不抬（形同虚设）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] F3 ★★★ 行为级：登记门 B ⇒ 对话框**上抬到门上方**（底边 <= 门顶 - gap）"
+  },
+  {
+    "tag": "M14 F2   AVOID_GAP 改成 0（框与门贴死）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] F2 ★★ `AVOID_GAP` 是正数（门与对话框不许贴死）"
   }
 ]

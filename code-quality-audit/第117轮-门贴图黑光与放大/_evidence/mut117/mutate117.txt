@@ -1,7 +1,7 @@
 ========================================================================
-M0 正控制：临时树原样 ⇒ 必须 33 PASS / 0 FAIL（否则下面全是假 CAUGHT）
+M0 正控制：临时树原样 ⇒ 必须**全 PASS / 0 FAIL**（否则下面全是假 CAUGHT）
 ========================================================================
-  rc=0  尾部=['结论：33 PASS / 0 FAIL']
+  rc=0  尾部=['结论：40 PASS / 0 FAIL']
 
 [M1  A1   门 A 贴图回退成旧暗门 spr_darkdoor_0]  rc=1  FAIL=1  ⇒ CAUGHT
     [FAIL] A1 ★★★ 门 A（`desk_door_oneshot`）的 sprite == `objs/desk_door_oneshot_black.png`
@@ -36,8 +36,17 @@ M0 正控制：临时树原样 ⇒ 必须 33 PASS / 0 FAIL（否则下面全是�
 [M11 E3   把一扇门 enabled 改回 true（房间层又画一遍）]  rc=1  FAIL=1  ⇒ CAUGHT
     [FAIL] E3 ★★ 4 门仍全 `enabled: false`（房间层剔除，只屏幕层画）
 
+[M12 F7   main 摘掉桌面分支的登记调用（门 B 又被对话框盖住）]  rc=1  FAIL=1  ⇒ CAUGHT
+    [FAIL] F7 ★★★ main 定义 `_register_door_avoid` 且**两处**调用（桌面登记 / 非桌面清空）
+
+[M13 F3   避让计算恒不抬（形同虚设）]  rc=1  FAIL=2  ⇒ CAUGHT
+    [FAIL] F3 ★★★ 行为级：登记门 B ⇒ 对话框**上抬到门上方**（底边 <= 门顶 - gap）
+
+[M14 F2   AVOID_GAP 改成 0（框与门贴死）]  rc=1  FAIL=1  ⇒ CAUGHT
+    [FAIL] F2 ★★ `AVOID_GAP` 是正数（门与对话框不许贴死）
+
 ========================================================================
-变异合计：11 条 ｜ CAUGHT=11 ｜ MISSED=0 ｜ NOT-APPLIED=0
+变异合计：14 条 ｜ CAUGHT=14 ｜ MISSED=0 ｜ NOT-APPLIED=0
   M1  A1   门 A 贴图回退成旧暗门 spr_darkdoor_0                 CAUGHT       [FAIL] A1 ★★★ 门 A（`desk_door_oneshot`）的 sprite == `objs/desk_door_oneshot_black.png`
   M2  A4   变体整张换成原件（号称黑光，其实没变暗）                        CAUGHT       [FAIL] A4 ★★★ 黑光确实**更暗**：中位亮度 47.2 < 原件 47.2（用户「颜色变成黑光」）
   M3  A3   变体 alpha 全置 255（形状被改）                       CAUGHT       [FAIL] A3 ★★★ 黑光变体的 **alpha 与原件逐像素一致**（形状/透明区零漂移）
@@ -49,4 +58,7 @@ M0 正控制：临时树原样 ⇒ 必须 33 PASS / 0 FAIL（否则下面全是�
   M9  D6   EDGE_MARGIN 0 -> 24（门被顶离屏幕边框）               CAUGHT       [FAIL] D6 ★★★ 放大后四扇门仍**逐边贴屏幕物理边**（A上/B下/C左/D右）
   M10 D7   统一倍率退回"逆门算"（按 A 门定尺 ⇒ 四门不再同一把尺）             CAUGHT       [FAIL] D7 ★★★ 四门共用**同一把尺**：逐门 w/h **精确等于** round(原尺寸 × k=1.011613)（逐门倍率分叉 0.572 ⇒ 判据非恒等）
   M11 E3   把一扇门 enabled 改回 true（房间层又画一遍）               CAUGHT       [FAIL] E3 ★★ 4 门仍全 `enabled: false`（房间层剔除，只屏幕层画）
+  M12 F7   main 摘掉桌面分支的登记调用（门 B 又被对话框盖住）               CAUGHT       [FAIL] F7 ★★★ main 定义 `_register_door_avoid` 且**两处**调用（桌面登记 / 非桌面清空）
+  M13 F3   避让计算恒不抬（形同虚设）                               CAUGHT       [FAIL] F3 ★★★ 行为级：登记门 B ⇒ 对话框**上抬到门上方**（底边 <= 门顶 - gap）
+  M14 F2   AVOID_GAP 改成 0（框与门贴死）                       CAUGHT       [FAIL] F2 ★★ `AVOID_GAP` 是正数（门与对话框不许贴死）
 ========================================================================

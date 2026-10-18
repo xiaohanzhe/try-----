@@ -59,7 +59,15 @@ PY = [
     'code-quality-audit/第117轮-门贴图黑光与放大/_tools/fast117.py',
     'code-quality-audit/第117轮-门贴图黑光与放大/_tools/check117_rec.py',
     'code-quality-audit/第117轮-门贴图黑光与放大/_tools/sheet117.py',
+    # ★ 第117轮补（同日第二轮）：1:1 判定工具 + 被改动的两个产品文件
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/alpha117_pick.py',
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/ab117_alpha.py',
+    'code-quality-audit/第117轮-门贴图黑光与放大/_tools/ab117_doorB.py',
+    'ralsei_pet/modules/dialogue_ui.py',
+    'ralsei_pet/modules/door_reveal.py',
+    'ralsei_pet/src/main.py',
     'code-quality-audit/第112轮-桌面门渐显/_tools/check112.py',
+    'code-quality-audit/第112轮-桌面门渐显/_tools/mutate112.py',
     'code-quality-audit/第89轮-桌面与作品场景连通/_tools/check89.py',
     'code-quality-audit/regress/run_all.py',
 ]
@@ -185,6 +193,7 @@ def tautologies(p):
 
 
 for rel in ('code-quality-audit/第117轮-门贴图黑光与放大/_tools/check117.py',
+            'code-quality-audit/第117轮-门贴图黑光与放大/_tools/check117_rec.py',
             'code-quality-audit/第117轮-门贴图黑光与放大/_tools/mutate117.py',
             'code-quality-audit/第112轮-桌面门渐显/_tools/check112.py',
             'code-quality-audit/第89轮-桌面与作品场景连通/_tools/check89.py'):
@@ -206,7 +215,7 @@ ck('⑤ run_all.SUITES 有 check117', "'check117'" in _ra or '"check117"' in _ra
 _mut = json.loads(rd(os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大/_evidence/mut117/mutate117.json')))
 _mrows = _mut if isinstance(_mut, list) else _mut.get('results') or _mut.get('mutations') or []
 _caught = [r for r in _mrows if str(r.get('status', r.get('result', ''))).upper().startswith('CAUGHT')]
-ck('⑤ mutate117 全 CAUGHT（11 条）', len(_mrows) == 11 and len(_caught) == 11,
+ck('⑤ mutate117 全 CAUGHT（14 条）', len(_mrows) == 14 and len(_caught) == 14,
    '%d/%d' % (len(_caught), len(_mrows)))
 _v117 = json.loads(rd(os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大/_evidence/rec117/verify117_shot.json')))
 ck('⑤ verify117_shot 12 PASS / 0 FAIL',
@@ -223,13 +232,37 @@ ck('⑤ 负控制 A 右移 24px > 20', _v117.get('A_shift24', -1) > 20, _v117.ge
 _recf = os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大/_evidence/rec117/check117_rec.json')
 if os.path.isfile(_recf):
     _rj = json.loads(rd(_recf))
-    ck('⑤ 录屏逐帧 30 条全绿', _rj.get('fail') == 0 and _rj.get('ok') == 30,
+    ck('⑤ 录屏逐帧 34 条全绿', _rj.get('fail') == 0 and _rj.get('ok') == 34,
        'ok=%s fail=%s 帧=%s' % (_rj.get('ok'), _rj.get('fail'), _rj.get('frames')))
     ck('⑤ 录屏四门 rect 在盘上', len(_rj.get('rects', {})) == 4, _rj.get('rects'))
+    # ★ 避让的**真机**证据：门 B 在对话框可见时遮挡 0%，而不避让时会挡住 ~97%
+    ck('⑤ 门 B 遮挡（避让后）== 0', _rj.get('cover', {}).get('B') == 0.0,
+       _rj.get('cover'))
+    ck('⑤ 反事实：不避让时门 B 遮挡 >= 0.96（问题真实）',
+       float(_rj.get('cover', {}).get('B_unlifted') or 0) >= 0.96, _rj.get('cover'))
 else:
     ck('⑤ 录屏逐帧结果存在', False, '缺 check117_rec.json（先跑 check117_rec.py）')
 _wr = os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大/_evidence/rec117/fast117_writes.csv')
 ck('⑤ 写入路径序列（判"闪"的硬证据）在盘上', os.path.isfile(_wr))
+
+# ★ 第117轮补（同日第二轮）：对话框避让 + 渐显下限复核 的**令牌回验**
+_du = rd(os.path.join(ROOT, 'ralsei_pet/modules/dialogue_ui.py'))
+ck('⑤ dialogue_ui 有 `_avoided_bottom_y`（避让入口）', '_avoided_bottom_y' in _du)
+ck('⑤ dialogue_ui 有 `set_avoid_rects`（登记口）', 'set_avoid_rects' in _du)
+ck('⑤ dialogue_ui 的 AVOID_GAP == 8', 'AVOID_GAP = 8' in _du.replace('\r\n', '\n'))
+_mn = rd(os.path.join(ROOT, 'ralsei_pet/src/main.py'))
+ck('⑤ main 调了 `_register_door_avoid`（两处）',
+   _mn.count('_register_door_avoid(') >= 3, _mn.count('_register_door_avoid('))
+_dr = rd(os.path.join(ROOT, 'ralsei_pet/modules/door_reveal.py'))
+ck('⑤ door_reveal.MIN_ALPHA 复核后仍为 0.14（误判已回退）',
+   'MIN_ALPHA = 0.14' in _dr.replace('\r\n', '\n'))
+ck('⑤ door_reveal 注释里记了"缩略图判据的错觉"（防下轮再误判）',
+   '缩略图' in _dr and 'ab117_alpha' in _dr)
+for _f in ('ab117_alpha_C.png', 'ab117_alpha_D.png', 'ab117_doorB.png',
+           'alpha117_pick.json'):
+    ck('⑤ 1:1 对照产物在盘：%s' % _f,
+       os.path.isfile(os.path.join(ROOT, 'code-quality-audit/第117轮-门贴图黑光与放大'
+                                        '/_evidence/rec117', _f)))
 
 _mem = rd(os.path.join(ROOT, '.workbuddy/memory/MEMORY.md'))
 _js = len(_mem.encode('utf-16-le')) // 2
@@ -253,7 +286,7 @@ else:
 # ---------------------------------------------------------------- ⑦ 基线
 _bj = json.loads(rd(os.path.join(ROOT, 'code-quality-audit/regress/baseline.json')))
 _su = _bj.get('suites', {})
-EXPECT = {'check117': 33, 'check112': 172, 'check89': 78,
+EXPECT = {'check117': 40, 'check112': 173, 'check89': 78,
           'objects_round44': 16, 'items_round68': 22}
 for sid, want in EXPECT.items():
     e = _su.get(sid)

@@ -75,12 +75,15 @@ def info(msg):
 
 
 sys.path.insert(0, PKG)                       # ★ 是 PKG（`modules/` 的父目录），不是 PKG/src
+# ★ 第117轮修：原来写成 `try: ... ck(..., True)` —— 判据条件是个**字面量 True**，
+#   被自己的复检 `④ 无恒真判据` 抓到（"恒真判据比不写还危险"）。改成先把结果落到
+#   变量、再判变量 ⇒ 条件真的由"import 成没成"决定。
 try:
     from modules import desk_doors as DD
-    ck('V0 能 import 产品模块 desk_doors（零依赖）', True)
+    _dd_ok, _dd_err = True, ''
 except Exception as e:                                            # noqa: BLE001
-    DD = None
-    ck('V0 能 import 产品模块 desk_doors（零依赖）', False, repr(e))
+    DD, _dd_ok, _dd_err = None, False, repr(e)
+ck('V0 能 import 产品模块 desk_doors（零依赖）', _dd_ok, _dd_err)
 
 # ---------------------------------------------------------------- CSV / avi
 rows = []
@@ -147,6 +150,26 @@ for Lt in 'CD':
     ck('V9b 门 %s alpha 在 (0,1) 内（确属渐显，不是漏画/全亮）' % Lt,
        0.0 < min(al) and max(al) < 1.0, '%.4f~%.4f' % (min(al), max(al)))
 
+# ---------------------------------------------------------------- 渐显下限（本轮改动）
+# ★★★ 第117轮：`MIN_ALPHA` 0.14 → **0.50**（由 `alpha117_pick.py` 反解背景测 ΔL 定的）。
+#   这两条把改动**钉在真机数据上**，而不是只钉源码常量 —— 若哪天产品改回 0.14，
+#   就算源码常量被同步改了，真机录屏里门 C 的 alpha 也会立刻落回 0.14 ⇒ 报红。
+try:
+    from modules import door_reveal as _DRM
+    _MIN = float(_DRM.MIN_ALPHA)
+except Exception as _e:                                          # noqa: BLE001
+    _DRM = None
+    _MIN = None
+    info('取不到 door_reveal.MIN_ALPHA（%r）⇒ V19/V19b 直接判红' % (_e,))
+_c_al = set(float(r['C_alpha']) for r in rows)
+_d_al = set(float(r['D_alpha']) for r in rows)
+ck('V19 门 C 在真机上的 alpha == 产品 MIN_ALPHA（%.2f）' % (_MIN if _MIN else -1),
+   _MIN is not None and len(_c_al) == 1 and abs(list(_c_al)[0] - _MIN) < 1e-6,
+   '录制取值=%s' % sorted(_c_al))
+ck('V19b 门 D（按距离更实一档）alpha 也 >= MIN_ALPHA（渐显只剩半档）',
+   _MIN is not None and bool(_d_al) and min(_d_al) >= _MIN - 1e-9,
+   '%.4f~%.4f' % (min(_d_al), max(_d_al)))
+
 # ---------------------------------------------------------------- 像素（掩膜内 + 分块）
 def load_pair(rel, w, h):
     with Image.open(os.path.join(ASSETS, rel.replace('/', os.sep))).convert('RGBA') as im:
@@ -202,16 +225,27 @@ if frames and len(RECT) == 4 and len(frames) == len(rows):
     ck('V10c 首帧确实不同 ⇒ 录到了"门出现"的那一刻（不是从头就在）',
        pdA[0] > 20.0, '首帧 %.2f' % pdA[0])
 
-    # ---- 门 B：只在 P2（对话框已隐藏）判 ----
+    # ---- 门 B：只在 P2 **且对话框确实不在**的帧判 ----
+    # ★ 第117轮补：Ralsei 会自己说话，对话框可能在 P2 里再弹出来（实测 t=9.185）。
+    #   那一帧门 B 是**被不透明 UI 整块盖住**的（V13 量到 100%）⇒ 拿它比像素是
+    #   **口径错了**（比的是对话框的底色，不是门）。⇒ 只在 `dlg_vis == '0'` 的帧判。
+    #   ★ 这不是放宽：仍然要求**每一张干净帧**都 ≤ 8，并且**干净帧数 ≥ 5**（否则"没有
+    #     干净帧"会被判成通过）。被排除的帧数如实 INFO 打印。
     p2 = [i for i, r in enumerate(rows) if r['phase'] == 'P2']
-    resB = [(i, cmp_at(frames[i], RECT['B'], SPRITE['B'])) for i in p2]
+    p2c = [i for i in p2 if rows[i]['dlg_vis'] == '0']
+    n_skip = len(p2) - len(p2c)
+    if n_skip:
+        info('P2 共 %d 帧，其中 %d 帧对话框可见（门 B 被整块盖住）⇒ 像素判据只用剩下的 '
+             '%d 帧（盖住时比的是对话框底色，不是门）' % (len(p2), n_skip, len(p2c)))
+    ck('V11a P2 里"对话框不在"的干净帧足够多（>= 5）', len(p2c) >= 5, '%d 帧' % len(p2c))
+    resB = [(i, cmp_at(frames[i], RECT['B'], SPRITE['B'])) for i in p2c]
     okB = [r for _, r in resB if r is not None]
     bdB = [r[1] for r in okB]
     pdB = [r[0] for r in okB]
     ck('V11 门 B 在 P2 **逐帧**分块均值比对（block8 <= 8）',
        bool(bdB) and max(bdB) <= 8.0,
-       'P2 %d 帧，max=%.2f 中位 %.2f' % (len(bdB), max(bdB) if bdB else -1,
-                                        float(np.median(bdB)) if bdB else -1))
+       '干净帧 %d，max=%.2f 中位 %.2f' % (len(bdB), max(bdB) if bdB else -1,
+                                         float(np.median(bdB)) if bdB else -1))
     if pdB:
         info('门 B 逐像素 mean|Δ|≈%.1f，分块口径 %.1f ⇒ 差值来自 mp4 对细线的高频损失，'
              '不是内容不对（换图会差 30+，见门 D 硬比的 34）'
@@ -222,9 +256,12 @@ if frames and len(RECT) == 4 and len(frames) == len(rows):
     wA = max(abs(seqA[i] - seqA[i - 1]) for i in range(1, len(seqA)))
     ck('V12 门 A（除首帧）帧间无跳变（<=3）', wA <= 3.0, 'max=%.2f' % wA)
 
-    seqB = [float(r['B_lum']) for r in rows if r['phase'] == 'P2' and r['B_lum']]
+    # ★ 第117轮补：同样只看"对话框不在"的帧 —— 否则对话框一弹一收，B_lum 从 91.7
+    #   跳到 5.6（实测），把"UI 出现"误判成"门在闪"。
+    seqB = [float(rows[i]['B_lum']) for i in p2c if rows[i]['B_lum']]
     wB = max(abs(seqB[i] - seqB[i - 1]) for i in range(1, len(seqB))) if len(seqB) > 1 else 0.0
-    ck('V12b 门 B 在 P2 帧间无跳变（<=12）', wB <= 12.0, 'max=%.2f' % wB)
+    ck('V12b 门 B 在 P2 帧间无跳变（<=12）', wB <= 12.0,
+       'max=%.2f（%d 个干净帧）' % (wB, len(seqB)))
 
 # ---------------------------------------------------------------- 遮挡量化
 def inter(a, b):
@@ -238,14 +275,42 @@ def inter(a, b):
 dlg = set((int(r['dlg_x']), int(r['dlg_y']), int(r['dlg_w']), int(r['dlg_h']))
           for r in rows if r['dlg_w'])
 COVER = {}
+# ★★★ 第117轮改钉：`MIN_ALPHA` 那次是我误判（已回退），但"门 B 被对话框整块盖住"
+#   这条是**实测事实**（1:1 对照 `ab117_doorB.png`：面板不透明黑）。
+#   修法 = 让对话框让位（`dialogue_ui._avoided_bottom_y`）。
+#   ⇒ 判据从"遮挡 100% 如实量化"改成 **"避让后遮挡必须为 0"**，并且**同时**算出
+#     "不避让时会遮多少"，用来证明①这个问题真实存在 ②判据有鉴别力（不是恒真）。
 if dlg and len(RECT) == 4:
-    dr = sorted(dlg)[0]
-    for Lt in 'ABCD':
-        COVER[Lt] = round(inter(RECT[Lt], dr) / float(RECT[Lt][2] * RECT[Lt][3]), 4)
-        info('门 %s 被对话框遮挡 %.1f%%（对话框 rect=%s，%d 种取值）'
-             % (Lt, COVER[Lt] * 100, dr, len(dlg)))
-ck('V13 门 B 遮挡率被如实量化（门 B 在底边正中 ⇒ 有消息时会被整块盖住）',
-   'B' in COVER and COVER['B'] >= 0.9, '%.1f%%' % (COVER.get('B', -1) * 100))
+    # 只在"对话框真的可见"的帧上量（隐藏帧的几何是上一次的残留，不该混进来）
+    vis = [(int(r['dlg_x']), int(r['dlg_y']), int(r['dlg_w']), int(r['dlg_h']))
+           for r in rows
+           if r['dlg_w'] and r.get('dlg_vis') == '1' and float(r.get('dlg_op') or 0) > 0.9]
+    vis = vis or []
+    if vis:
+        cv = [inter(RECT['B'], rr) / float(RECT['B'][2] * RECT['B'][3]) for rr in vis]
+        COVER['B'] = round(max(cv), 4)
+        info('对话框可见 %d 帧；门 B 被遮挡 最大 %.1f%% / 中位 %.1f%%'
+             % (len(vis), max(cv) * 100, sorted(cv)[len(cv) // 2] * 100))
+        # 反事实：把这块面板放回"贴底"老位置 ⇒ 应该 100% 盖住门 B
+        hypo = []
+        for (dx, dy, dw, dh) in vis:
+            hypo.append(inter(RECT['B'], (dx, CANVAS[1] - dh - 4, dw, dh))
+                        / float(RECT['B'][2] * RECT['B'][3]))
+        # ★ 期望值不是 100% 而是 **推导出来的上界**：老定位是 `bottom - dh - 4`
+        #   ⇒ 面板底边离屏幕底 4 px ⇒ 门 B（高 129、贴底）**最下面 4 px 永远露着**
+        #   ⇒ 最大遮挡 = (129-4)/129 = **96.9%**。写成 0.99 会是一条**恒假判据**。
+        _cap = (RECT['B'][3] - 4.0) / float(RECT['B'][3])
+        COVER['B_unlifted'] = round(max(hypo), 4)
+        ck('V13 ★★★ 门 B 在对话框可见时**一点没被挡**（避让生效）',
+           max(cv) <= 0.0, '最大 %.1f%%（对话框 rect 取值 %d 种）'
+           % (max(cv) * 100, len(vis)))
+        ck('V13b ★★ 反事实：若不避让、面板仍贴底 ⇒ 门 B 几乎全被盖住（问题真实 + 判据有鉴别力）',
+           min(hypo) >= _cap - 1e-3,
+           '不避让时遮挡 %.1f%%（上界 %.1f%% = (门高129-贴底4)/129）'
+           % (min(hypo) * 100, _cap * 100))
+    else:
+        info('本轮没有"对话框可见"的帧 ⇒ 无法量遮挡（不是通过，是没数据）')
+        ck('V13 门 B 遮挡率可量（需要至少一帧对话框可见）', False, 'vis=0')
 
 # ---------------------------------------------------------------- 对话框 / 任务栏
 p1 = [r for r in rows if r['phase'] == 'P1']

@@ -453,6 +453,107 @@ check('E5 ★ 数据里留有 `_comment.round117_oneshot_black_and_bigger`（口
       detail='type=%r keys=%r' % (type(_r117).__name__,
                                   sorted(_r117) if isinstance(_r117, dict) else None))
 
+# ===========================================================================
+#  F 组 · 对话框避开「正下」那扇门（第117轮录屏逐帧发现的真问题）
+# ===========================================================================
+# 用户口径（第112轮逐字）：「**这4个门挨着屏幕边框**」＋「正上（oneshot），
+#   **正下（niko家）**，正左（ut），正右（三角符文）」⇒ **门的位置是被指定的**。
+# 真机 1:1 对照（`_evidence/rec117/ab117_doorB.png`）：对话框是**不透明黑面板**
+#   `(970,1360,620,236)`，门 B `(1183,1399,194,129)` 被**整块**包含
+#   ⇒ 一有消息「Niko 的家」就消失（录屏 37 帧里 15 帧如此）。
+# ⇒ 修法 = **让对话框让位**（上抬到门上方），门一个像素不动。
+# ★ 判据覆盖三层：① 两个方法真的存在（AST）；② 几何计算**行为级**正确；
+#   ③ `main` 两处分支都真的登记了（if 桌面 / else 清空）。
+_DLG_PY = os.path.join(ROOT, 'ralsei_pet', 'modules', 'dialogue_ui.py')
+_MAIN_PY = os.path.join(ROOT, 'ralsei_pet', 'src', 'main.py')
+try:
+    _dlg_txt = io.open(_DLG_PY, encoding='utf-8').read()
+    _dlg_tree = _ast.parse(_dlg_txt)
+    _DLG_ERR = None
+except Exception as _e:                                         # noqa: BLE001
+    _dlg_txt, _dlg_tree, _DLG_ERR = '', None, repr(_e)
+
+_dlg_funcs = set()
+_dlg_gap = None
+if _dlg_tree is not None:
+    for _n in _ast.walk(_dlg_tree):
+        if isinstance(_n, _ast.ClassDef) and _n.name == 'DialogueUI':
+            for _m in _n.body:
+                if isinstance(_m, _ast.FunctionDef):
+                    _dlg_funcs.add(_m.name)
+                if (isinstance(_m, _ast.Assign) and len(_m.targets) == 1
+                        and isinstance(_m.targets[0], _ast.Name)
+                        and _m.targets[0].id == 'AVOID_GAP'
+                        and isinstance(_m.value, _ast.Constant)):
+                    _dlg_gap = _m.value.value
+check('F1 ★★★ `DialogueUI` 有 `set_avoid_rects` / `_avoided_bottom_y`（避让接得上）',
+      {'set_avoid_rects', '_avoided_bottom_y'} <= _dlg_funcs, star=True,
+      detail='有=%r err=%r' % (sorted(_dlg_funcs), _DLG_ERR))
+check('F2 ★★ `AVOID_GAP` 是正数（门与对话框不许贴死）',
+      isinstance(_dlg_gap, (int, float)) and _dlg_gap > 0, star=True,
+      detail='AVOID_GAP=%r' % (_dlg_gap,))
+
+# ---- 行为级：用**桩对象**直接调方法（不需要 QApplication，也不改任何状态）----
+#   ★ 桩比产品"旧"会报假红 ⇒ 这里只给方法真正读的两个属性。
+try:
+    sys.path.insert(0, os.path.join(ROOT, 'ralsei_pet'))
+    from modules.dialogue_ui import DialogueUI as _DU
+    _DU_ERR = None
+except Exception as _e:                                         # noqa: BLE001
+    _DU, _DU_ERR = None, repr(_e)
+
+if _DU is not None:
+    import types as _types
+
+    def _stub(rects, gap=8):
+        return _types.SimpleNamespace(_avoid_rects=list(rects), AVOID_GAP=gap)
+
+    # 真机实测几何：屏幕 2560×1528、对话框 620×236 贴底 4 px、门 B (1183,1399,194,129)
+    _dw, _dh, _bot = 620, 236, 1528
+    _x = (2560 - _dw) // 2                  # 970（居中）
+    _y0 = _bot - _dh - 4                    # 1288
+    _B = (1183, 1399, 194, 129)
+    _yB = _DU._avoided_bottom_y(_stub([_B]), _y0, _x, _dw, _dh, 0)
+    check('F3 ★★★ 行为级：登记门 B ⇒ 对话框**上抬到门上方**（底边 <= 门顶 - gap）',
+          _yB < _y0 and (_yB + _dh) <= (_B[1] - _DU.AVOID_GAP), star=True,
+          detail='y0=%r y=%r 框底=%r 门顶=%r' % (_y0, _yB, _yB + _dh, _B[1]))
+    # 负控制 1：不登记 ⇒ 一个像素都不动（老行为）
+    _yN = _DU._avoided_bottom_y(_stub([]), _y0, _x, _dw, _dh, 0)
+    check('F4 ★★ 负控制：没有登记 ⇒ 原样返回（非桌面/画不出门时零行为变化）',
+          _yN == _y0, star=True, detail='%r vs %r' % (_yN, _y0))
+    # 负控制 2：左右两侧的门（x 不重叠）**不触发**避让
+    _yC = _DU._avoided_bottom_y(_stub([(0, 714, 45, 100)]), _y0, _x, _dw, _dh, 0)
+    _yA = _DU._avoided_bottom_y(_stub([(1183, 0, 194, 129)]), _y0, _x, _dw, _dh, 0)
+    check('F5 ★★ 负控制：门 C（左侧）/ 门 A（顶部）**都不触发**避让',
+          _yC == _y0 and _yA == _y0, star=True, detail='C=%r A=%r y0=%r' % (_yC, _yA, _y0))
+    # 边界：门比对话框还高（上抬会把框顶出屏幕）⇒ 钳到 min_top（宁可压门，也不出屏）
+    #   ★ 必须给一个**够高**的矩形才构造得出：门 A 那种"顶部小门"根本不与底边对话框
+    #     重叠（F5 已证），所以这里用合成矩形 (1183,200,194,1200)。
+    _yT = _DU._avoided_bottom_y(_stub([(1183, 200, 194, 1200)]), _y0, _x, _dw, _dh, 40)
+    check('F6 ★ 抬出屏幕 ⇒ 钳到 min_top（不把对话框顶出屏幕）',
+          _yT == 40, star=True, detail='%r（期望 40，min_top=40）' % (_yT,))
+else:
+    check('F3/F4/F5/F6 行为级避让', False, star=False, detail='import 失败 %r' % (_DU_ERR,))
+
+# ---- 接线：main 里 if/else 两个分支都登记 ----
+try:
+    _main_tree = _ast.parse(io.open(_MAIN_PY, encoding='utf-8').read())
+    _MAIN_ERR = None
+except Exception as _e:                                         # noqa: BLE001
+    _main_tree, _MAIN_ERR = None, repr(_e)
+_calls = 0
+_defs = 0
+if _main_tree is not None:
+    for _n in _ast.walk(_main_tree):
+        if (isinstance(_n, _ast.Call) and isinstance(_n.func, _ast.Attribute)
+                and _n.func.attr == '_register_door_avoid'):
+            _calls += 1
+        if isinstance(_n, _ast.FunctionDef) and _n.name == '_register_door_avoid':
+            _defs += 1
+check('F7 ★★★ main 定义 `_register_door_avoid` 且**两处**调用（桌面登记 / 非桌面清空）',
+      _defs == 1 and _calls >= 2, star=True,
+      detail='defs=%d calls=%d err=%r' % (_defs, _calls, _MAIN_ERR))
+
 print('')
 print(u'结论：%d PASS / %d FAIL' % (ok, fail))
 sys.exit(1 if fail else 0)

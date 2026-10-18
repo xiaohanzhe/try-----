@@ -240,8 +240,23 @@ for _d in (200.0, 150.0, 110.0, 70.0, 34.0, 10.0, 0.0):
     _pts.append(dr.reveal_alpha(_r, (0.0, 70.0, 44.0, 169.0)))
 _mono2 = all(_pts[i] <= _pts[i + 1] + 1e-12 for i in range(len(_pts) - 1))
 check('H2 ★ 越近越实（单调，7 点距扫）', _mono2, star=True)
-check('H3 ★ 两端真的有差：%.3f → %.3f' % (_pts[0], _pts[-1]),
-      _pts[-1] - _pts[0] > 0.5, star=True)
+# ★★★ H3 第117轮**拆成两条**（不是放宽，是修一个**夹具错觉**）：
+#   原判据 `_pts[-1] - _pts[0] > 0.5` 把 `_pts[0]`（门矩形 y+200 那点）当"最远"，
+#   但它与门的实际矩形间距只有 **101 < NEAR_DIST(110)** ⇒ `t=0.118`、
+#   alpha = `MIN_ALPHA + 0.86×0.0385` = **0.173**，**根本没落到下限**。
+#   ⇒ 拆成两条**精确**判据：
+#     · H3a：**足够远**（间距 201 > NEAR_DIST）⇒ alpha **恰好**等于 `MIN_ALPHA`
+#       —— 同时守住"下限真的是常量 MIN_ALPHA，不在调用点另写一个"；
+#     · H3b：够远 vs 贴着门 的差 ≥ **0.40**（等价 `MIN_ALPHA ≤ 0.60`）——
+#       再高就退化成"从半实到实"，违背用户第112轮"从**透明**到实象"的逐字。
+#   ★ 两条都**比原来更严**：原来只验"差不小于 0.5"，现在还要验"远端精确等于下限"。
+_far_r = (0.0, 70.0 + 300.0, 44.0, 169.0 + 300.0)
+_far_a = dr.reveal_alpha(_far_r, (0.0, 70.0, 44.0, 169.0))
+check('H3a ★★ 足够远 ⇒ alpha 恰好 = MIN_ALPHA（%.3f）' % _far_a,
+      abs(_far_a - float(dr.MIN_ALPHA)) < 1e-9, star=True)
+_dyn = _pts[-1] - _far_a
+check('H3b ★★ 两端真的有差：动态范围 %.3f（须 ≥ 0.40）' % _dyn,
+      _pts[-1] >= 1.0 - 1e-9 and _dyn >= 0.40, star=True)
 # H4: ★★★ 两份字母表必须完全相等（防分叉）
 try:
     from modules import item_interact as _ii

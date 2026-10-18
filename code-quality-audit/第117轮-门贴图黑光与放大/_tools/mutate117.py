@@ -48,6 +48,9 @@ PNG_A_REL = os.path.join('ralsei_pet', 'assets', 'scenes', 'objs',
                          'desk_door_oneshot_black.png')
 PNG_B_REL = os.path.join('ralsei_pet', 'assets', 'scenes', 'objs',
                          'niko_door_portal.png')
+# ★ 第117轮补：F 组（对话框避让「正下」那扇门）要能变异 ⇒ 需要这两个文件
+DLG_REL = os.path.join('ralsei_pet', 'modules', 'dialogue_ui.py')
+MAIN_REL = os.path.join('ralsei_pet', 'src', 'main.py')
 
 _BUF = []
 
@@ -135,6 +138,19 @@ MUTS = [
      u'      "pos": [\n        140,\n        42\n      ],\n'
      u'      "depth": 0,\n      "enabled": true',
      u'E3 \u2605\u2605'),
+    # ---- F 组：对话框避让（第117轮录屏发现的"门 B 被整块盖住"）----
+    (u'M12 F7   main 摘掉桌面分支的登记调用（门 B 又被对话框盖住）', 'text', MAIN_REL,
+     u'                    self._register_door_avoid(_doors)\n',
+     u'',
+     u'F7 \u2605\u2605\u2605'),
+    (u'M13 F3   避让计算恒不抬（形同虚设）', 'text', DLG_REL,
+     u'                cand = ry - self.AVOID_GAP - h          # 底边移到门上方',
+     u'                cand = bottom_y                          # 变异：永不抬',
+     u'F3 \u2605\u2605\u2605'),
+    (u'M14 F2   AVOID_GAP 改成 0（框与门贴死）', 'text', DLG_REL,
+     u'    AVOID_GAP = 8',
+     u'    AVOID_GAP = 0',
+     u'F2 \u2605\u2605'),
 ]
 
 
@@ -177,7 +193,7 @@ def main():
     try:
         # ---------------------------------------------------------- M0 正控制
         say(u'=' * 72)
-        say(u'M0 正控制：临时树原样 ⇒ 必须 33 PASS / 0 FAIL（否则下面全是假 CAUGHT）')
+        say(u'M0 正控制：临时树原样 ⇒ 必须**全 PASS / 0 FAIL**（否则下面全是假 CAUGHT）')
         say(u'=' * 72)
         rc0, out0 = run_check(tree)
         ok0 = (rc0 == 0) and (u'PASS / 0 FAIL' in out0)

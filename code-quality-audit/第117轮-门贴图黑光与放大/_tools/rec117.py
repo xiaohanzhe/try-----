@@ -249,6 +249,12 @@ _cw.writerow(COLS)
 _N = [0]
 _t0 = time.time()
 _hid = [False]
+#: ★ 第117轮补（本轮实测踩到）：Ralsei 会**自己说话**（`event_speech`）⇒ 14 s 内对话框
+#:   会**再次弹出**。上一版只在 t=7.0 `hide()` 一次，结果 t=9.185 它又可见了（`dlg_vis`
+#:   0→1），把 P2 里的门 B **整块盖住** ⇒ V11（门 B 像素）/V12b（门 B 帧间）/V15（P2 应隐藏）
+#:   三条判据全被 **UI 污染成假红**（门 B 分块差从 5 掉到 83）。
+#:   ⇒ P2 期间**每 tick 复查**：只要又可见就再 hide 一次（幂等、不闪），并在结尾如实打印次数。
+_rehide = [0]
 _TG = [0.0, 0]
 _TE = [0.0, 0]
 _KEYDIR = os.path.join(OUT, 'keyframes')
@@ -259,6 +265,16 @@ def tick():
     i = _N[0]
     el = time.time() - _t0
     phase = 'P2' if _hid[0] else 'P1'
+    # ★ 第117轮：P2 每 tick 先"守住隐藏"（Ralsei 会自己说话让对话框再弹出来），
+    #   **在抓图之前**做 —— 否则刚被弹出来那一帧仍会录进 P2，门 B 又被盖住。
+    if _hid[0] and d is not None:
+        try:
+            if d.isVisible():
+                d.hide()
+                app.processEvents()
+                _rehide[0] += 1
+        except Exception:                                        # noqa: BLE001
+            pass
     g0 = time.time()
     pm = _scr.grabWindow(0)
     img = pm.toImage()
@@ -335,6 +351,8 @@ def tick():
             % (1000 * _TG[0] / max(1, _TG[1]), 1000 * _TE[0] / max(1, _TE[1]),
                1000.0 / max(1e-6, 1000 * (_TG[0] + _TE[0]) / max(1, _TG[1]))))
         say('avi = %s (%.1f MB)' % (RAW, os.path.getsize(RAW) / 1048576.0))
+        say('P2 期间"对话框又自己弹出来"被再次隐藏 **%d 次**（Ralsei 自主说话；'
+            '不处理的话门 B 会被盖住 ⇒ 判据假红）' % _rehide[0])
         if d is not None and _hid[0]:
             try:
                 d.show()
