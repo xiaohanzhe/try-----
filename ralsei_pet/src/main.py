@@ -5631,6 +5631,24 @@ class RalseiPet(QMainWindow):
         `item_interact.PROP_CLASSES` 把这些类标注成 `in_data=False + gap`，
         `build_props()` 遇到它们会**跳过而不是造假可交互物**。数据补齐后不用改代码。
         """
+        # ★★★ 第118轮：**丢弃旧道具之前，先把它们占着的全局交互锁放掉**。
+        #   真因（真机探针实证）：`Interactable.interact()` 在 `on_interact`
+        #   返回 True 时会把状态置成"对话中"并**保持** `interact_bus` 的锁；
+        #   而推门（`DoorProp`）正是返回 True。换场景时旧道具被整个丢掉，
+        #   锁的持有者成了**没人再 update 的僵尸对象** ⇒ 之后所有可交互物
+        #   `try_acquire` 全部失败（表现："推过一次门之后，回到桌面按 E 全没反应"）。
+        #   ⇒ 重建时按"持有者身份"释放（`release(obj)` 只在 obj 就是持有者时生效，
+        #     不会误放别人的锁）。
+        try:
+            _bus = getattr(self, 'interact_bus', None)
+            if _bus is not None:
+                for _old in (getattr(self, 'item_props', None) or []):
+                    try:
+                        _bus.release(_old)
+                    except Exception:                            # noqa: BLE001
+                        pass
+        except Exception as e:                                   # noqa: BLE001
+            _log.debug('第118轮 释放旧可交互物锁失败（忽略）: %s', e)
         self.item_props = []
         if self.inventory is None:
             return
@@ -5837,27 +5855,34 @@ class RalseiPet(QMainWindow):
         return True
 
     def _niko_home_ask(self, round_index):
-        """弹一个两选项确认框（**原作 OneShot 的两选项结构**）。
+        u"""弹一块**三角符文风格**的选择框（不是系统弹窗）。
+
+        ★★★ 第118轮改（用户逐字）：「你要按照**三角符文的那选择**来啊，
+          **不是干巴巴的弹窗**」⇒ 原来这里用 `QMessageBox`（标题栏 + 问号 +
+          系统按钮），与"把原作搬到桌面上"的整体调性冲突。
+          现改为 `modules/dr_choice.choose()`：**同一份原作框体**
+          （`dr_textbox.paint_dark_box_scaled`，角上宝石 30fps 逐帧）
+          + **红色灵魂**停在选中行左边 + 方向键上下 / Enter 落定。
 
         ★ 最后一次（`round_index == 2`）的"确定"选项文案是「我确定！！！」，
           前两次是「我确定」。这是用户口径里的逐字差别。
-        :returns: True = 选了"确定"；False = 选了"再考虑"（或对话框不可用）。
+        ★ 默认停在「我再考虑考虑」（`default_index=1`）—— 与原来的
+          `setDefaultButton(b_no)` 同义：手滑按回车不会误触"确定"。
+        :returns: True = 选了"确定"；False = 选了"再考虑"（或选择框不可用）。
         """
         try:
-            from PyQt5 import QtWidgets
-            parent = self if isinstance(self, QtWidgets.QWidget) else None
+            from modules import dr_choice
             yes_label = '我确定！！！' if round_index >= 2 else '我确定'
-            box = QtWidgets.QMessageBox(parent)
-            box.setWindowTitle('Niko 的家')
-            box.setText('（门纹丝不动。）')
-            box.setIcon(QtWidgets.QMessageBox.Question)
-            b_yes = box.addButton(yes_label, QtWidgets.QMessageBox.AcceptRole)
-            b_no = box.addButton('我再考虑考虑', QtWidgets.QMessageBox.RejectRole)
-            box.setDefaultButton(b_no)
-            box.exec_()
-            return box.clickedButton() is b_yes
+            try:
+                _sc = float(self.ui_scale())
+            except Exception:
+                _sc = 1.0
+            idx = dr_choice.choose(self, [yes_label, '我再考虑考虑'],
+                                   scale=_sc, default_index=1, cancel_index=1,
+                                   prompt='（门纹丝不动。）')
+            return idx == 0
         except Exception:
-            _log.exception('Niko 的家彩蛋：确认框不可用 ⇒ 如实按"再考虑"处理')
+            _log.exception('Niko 的家彩蛋：选择框不可用 ⇒ 如实按"再考虑"处理')
             return False
 
     def _niko_home_explode(self, prop):
@@ -5993,13 +6018,30 @@ class RalseiPet(QMainWindow):
             return False
         prop = None
         why = ''
+        # ★★★ 第118轮：**桌面场景先按"看得见的那扇门"选**（屏幕距离），不再走房间坐标。
+        #   真机探针（`第118轮…/_tools/probe118_doors.py`）抓到的真 bug：
+        #   站到**画在屏幕左边缘**的 UT 门上、朝左按 E —— 进的是**三角符文**那扇
+        #   （`ch1.hometown.town_mid`）。四扇门**全都**这样。
+        #   真因：交互的"实体"取的是**灵魂**，而桌面上的灵魂恒停 (2487,1500)（右下角）
+        #   ⇒ 射线永远从右下角出发、永远不命中 ⇒ 降级成"离**灵魂**最近的物件" = 门 D。
+        #   ★ 与第116轮门渐显踩的是**同一个根因**（那里已改用宠物屏幕矩形）。
+        #   桌面上用户能看到的实体是 Ralsei 本人，门也画在屏幕坐标里 ⇒ 就在屏幕坐标里
+        #   量距离：**宠物盒 ↔ 门矩形**（`door_reveal.rect_gap`，与渐显同一把尺）。
         try:
-            pick = self._npc_interact_pick_prop(props)
+            dpick = self._desktop_door_pick(props)
         except Exception as e:
-            _log.debug('物件射线探测异常（退回最近距离）: %s', e)
-            pick = None
-        if pick is not None:
-            prop, why = pick
+            _log.debug('第118轮 桌面门选取异常（退回房间坐标路径）: %s', e)
+            dpick = None
+        if dpick is not None:
+            prop, why = dpick
+        if prop is None:
+            try:
+                pick = self._npc_interact_pick_prop(props)
+            except Exception as e:
+                _log.debug('物件射线探测异常（退回最近距离）: %s', e)
+                pick = None
+            if pick is not None:
+                prop, why = pick
         if prop is None:
             # ---- ③ 逐级降级：旧的"按灵魂位置选最近"→"登记顺序第一个" ----
             prop, why = self._soul_pick_prop(props)
@@ -6017,7 +6059,18 @@ class RalseiPet(QMainWindow):
         #     （None 在 `can_enter` 里 = 放行 ⇒ 保守侧仍是"不挡人"）。
         _actor = None
         try:
-            _actor = 'soul' if self._soul_visible() else 'pet'
+            # ★★★ 第118轮：**桌面上发起交互的是"桌宠本人"，不是灵魂**。
+            #   真因（真机探针 `probe118_doors.py`）：桌面场景里 `_soul_visible()`
+            #   为真（灵魂覆盖层窗口是显示的），但那个灵魂**恒停 (2487,1500)**
+            #   且屏幕上根本看不见（第116轮已实证）⇒ 于是「niko 的家」永远被判成
+            #   "用户（灵魂）发起" ⇒ **永久拒绝**，三连确认彩蛋**一次都触发不了**。
+            #   用户口径是「除了用户（灵魂）不可以进去，其他人都能进去」；桌面上
+            #   用户看到/操作的是 Ralsei 本人 ⇒ 主体 = `'pet'` 才是实话。
+            #   ★ 非桌面场景不动（那里灵魂真的是可操作实体）。
+            if self._scene_is_desktop_scene():
+                _actor = 'pet'
+            else:
+                _actor = 'soul' if self._soul_visible() else 'pet'
         except Exception as e:
             _log.debug('交互主体名判定失败（按 None 处理）: %s', e)
             _actor = None
@@ -6028,6 +6081,87 @@ class RalseiPet(QMainWindow):
         return ok
 
     # ---------------------------------------------------------------- 射线交互（第88轮）
+    def _desktop_door_pick(self, props):
+        u"""★ 第118轮：桌面场景里，按**画在屏幕上的那道门**离宠物多近来选一件。
+
+        返回 `(prop, 说明)`；不适用（非桌面 / 没有门 prop / 取不到几何）⇒ `None`
+        （调用方按原路径继续，**行为零变化**）。
+
+        ★★★ 为什么必须另起一条（真机探针实证，不是猜）
+        ------------------------------------------------------------
+        `probe118_doors.py` 把宠物窗口中心摆到**每扇门画出来的位置**、朝屏幕外，
+        再调产品自己的 `interact_scene_prop()`：
+            门 A（正上）⇒ 选中 `obj_doorD`、场景 → `ch1.hometown.town_mid`（D 的路由）
+            门 B/C/D    ⇒ 同样选中 `obj_doorD`
+        四扇门**全进三角符文**。真因链：
+          ① `_npc_interact_actor_room_xy()` 优先取**灵魂**（第76轮"视角跟灵魂"口径）；
+          ② 桌面上的灵魂**恒停 (2487,1500)**（第116轮已实证）⇒ 射线永远从右下角出发；
+          ③ 射线打不到任何门（门在房间四角）⇒ 降级 `_soul_pick_prop` 取"离**灵魂**最近"
+             ⇒ 门 D 的 `pos`(140,42) 恰是离右下角最近的 ⇒ **永远是它**。
+        而门自第112轮续四起就**画在屏幕坐标**里（`desk_doors`）—— 与房间里那个 `pos`
+        早就不是一回事了。所以"你在哪扇门旁边"只能在**屏幕坐标**里量。
+
+        ★ 只对**桌面**生效：别的场景里灵魂是真正在走动的实体，原路径是对的。
+
+        ★ 门与 prop 怎么对上：`key`（`desktop#<下标>`）→ `_scene_state.objects[下标]`
+          → `door_letter_of_local(src)` 得字母；门矩形那条列表里只有 `sprite` 名，
+          所以再用"同一批 objects 的 `sprite` → 字母"反过来查。**两处都从同一份数据
+          推**，不另存一份映射（否则迟早分叉）。
+        """
+        try:
+            if not self._scene_is_desktop_scene():
+                return None
+            state = self.__dict__.get('_scene_state')
+            objs = getattr(state, 'objects', None)
+            if not isinstance(objs, (list, tuple)) or not objs:
+                return None
+            if not props:
+                return None
+            by_letter = {}
+            sprite_to_letter = {}
+            for p in props:
+                i = self._soul_prop_index(getattr(p, 'key', None))
+                if i is None or i >= len(objs):
+                    continue
+                o = objs[i]
+                if not isinstance(o, dict):
+                    continue
+                letter = door_reveal_mod.door_letter_of_local(o.get('src'))
+                if not letter:
+                    continue
+                by_letter.setdefault(letter, p)
+                nm = o.get('sprite') or o.get('image')
+                if isinstance(nm, str) and nm:
+                    sprite_to_letter[nm] = letter
+            if not by_letter:
+                return None
+            sw, sh = self._desktop_layer_size()
+            doors = self._desktop_screen_doors(int(sw), int(sh))
+            pet = self._pet_screen_rect()
+            if not doors or pet is None:
+                return None
+            best = None
+            for item in doors:
+                try:
+                    spr, r = item[0], item[1]
+                    x, y, w, h = (float(r[0]), float(r[1]), float(r[2]), float(r[3]))
+                except (TypeError, ValueError, IndexError):
+                    continue
+                letter = sprite_to_letter.get(str(spr))
+                if letter is None or letter not in by_letter:
+                    continue
+                gap = door_reveal_mod.rect_gap(
+                    pet, (x, y, x + w, y + h))
+                if best is None or gap < best[0]:
+                    best = (gap, letter)
+            if best is None:
+                return None
+            return (by_letter[best[1]],
+                    '桌面门 %s（宠物↔门 屏幕间距 %.0f px）' % (best[1], best[0]))
+        except Exception as e:                                   # noqa: BLE001
+            _log.debug('第118轮 桌面门选取异常: %s', e)
+            return None
+
     def _npc_interact_actor_room_xy(self):
         """**发起交互的那个实体**的房间坐标 `(x, y)`；拿不到 ⇒ `None`（不猜）。
 
@@ -7995,6 +8129,36 @@ class RalseiPet(QMainWindow):
                   scene_id, self.SCENE_FADE_OUT_MS, self.SCENE_FADE_IN_MS)
         return True
 
+    def _tick_item_props(self):
+        u"""★ 第118轮：每帧驱动 `Interactable.update(dt)` —— 真正会**释放全局交互锁**。
+
+        ★★★ 为什么必须有（真机探针 `第118轮…/_tools/probe118_doors.py` 抓到）
+        ---------------------------------------------------------------
+        `companion.Interactable.interact()` 的语义：`on_interact()` 返回 True
+        ⇒ 状态置 `MYINTERACT_DIALOG` 并**保持全局锁**（`interact_bus`），
+        只有 `update()` 里那条"`dialog_done()` ⇒ 解锁 + 冷却"才会放开。
+        而**全仓从来没有人调过 `update()`**（`grep "prop.update"` 零命中）——
+        ⇒ 第一次推门进世界（`DoorProp` 返回 True）之后，那扇门**永久占着锁**，
+          回到桌面再按 `E`：门 B/C/D 全返回 False（探针实测，只有门 A 成功）。
+          这是"一次交互 = 交互系统永久瘫痪"级的事故，且**长得像"门随机失灵"**。
+
+        ★ 为什么挂在这个 30ms 定时器：`Interactable.update(dt)` 的 `dt` 是**秒**，
+          而这里正是全项目统一的 30fps 帧钩子（源作 `GMS2FPS=30`）；
+          挂在 100ms 的动画定时器上会让冷却/解锁慢 3 倍。
+        ★ 一次异常**不许**打断整轮：`try/except` 在循环体内（某一件坏掉，
+          其余的照样解锁）—— 与 `interact()` 里"一次异常 = 全部失灵"的教训同源。
+        """
+        props = getattr(self, 'item_props', None)
+        if not props:
+            return
+        dt = 0.03                      # = 本定时器的周期（30fps）
+        for p in props:
+            try:
+                p.update(dt)
+            except Exception as e:                               # noqa: BLE001
+                _log.debug('道具 update 异常（key=%r，已忽略）: %s',
+                           getattr(p, 'key', None), e)
+
     def _advance_scene_transition(self, now_ms):
         """每帧推进过渡状态机（挂在 `update_movement` 的 30ms 节拍上）。
 
@@ -9002,6 +9166,8 @@ class RalseiPet(QMainWindow):
         # ★ 不在过渡中时本调用**立即返回**（`_scene_trans_state is None`）⇒
         #   零行为变化，既有判据不受影响。
         self._advance_scene_transition(current_time * 1000.0)
+        # ★★★ 第118轮：**每帧驱动可交互物的 `update()`**（释放全局交互锁）。
+        self._tick_item_props()
 
         # ---- 场景渲染层（第44轮 P1）：相机跟随 + 绘制指令消费 ----
         # 挂在这里而不是 update_animation(100ms)：原作相机是 **30fps 硬跟随**

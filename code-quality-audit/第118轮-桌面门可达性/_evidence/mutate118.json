@@ -1,0 +1,37 @@
+[
+  {
+    "tag": "M1  A5   摘掉桌面门选取的调用（退回房间坐标射线）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A5 ★★★ 接线顺序：桌面门选取**排在**房间坐标射线之前"
+  },
+  {
+    "tag": "M2  A2   桌面门选取改用房间坐标的实体（同一坑复发）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A2 ★★★ 它**不使用**房间坐标的实体（不许再调 `_npc_interact_actor_room_xy`）"
+  },
+  {
+    "tag": "M3  B2   帧钩子不再驱动 update（全局锁永久占着）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] B2 ★★★ 它真调 `update`（不是只遍历一遍）"
+  },
+  {
+    "tag": "M4  C1   先清空列表再释放（顺序反了 = 僵尸锁照旧）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] C1 ★★★ 重建道具**先 release 旧持有者**、再清空列表（语句序）"
+  },
+  {
+    "tag": "M5  D1   桌面上又把主体判回 soul（彩蛋永远弹不出）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] D1 ★★★ 桌面上发起交互的主体是 `'pet'`（否则 Niko 家永远判成用户 ⇒ 彩蛋永不触发）"
+  },
+  {
+    "tag": "M6  G5   选择框退回系统弹窗 QMessageBox",
+    "status": "CAUGHT",
+    "hit": "[FAIL] G5 ★★★ `_niko_home_ask` **不再**用系统弹窗 QMessageBox（用户否掉的形态）"
+  },
+  {
+    "tag": "M7  G3   红心素材名改错（光标没了）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] G3 ★★★ 光标 = 原作红心：`heart_pixmap()` 真能载入（素材名/路径都对）"
+  }
+]
