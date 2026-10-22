@@ -1,20 +1,20 @@
 # 项目记忆 — ralsei_pet（Deltarune Ralsei 桌宠）
 
 > **全文在 `参考-契约与历轮（详版）.md`**（不注入）。留铁律+索引+裁定。
-> ⚠️ 真口径＝**JS 长度**（含 CRLF）；**别为凑上限削语义**；读文件**字节忠实**（`newline=''`）。❗❗**只许 Write/Edit**；**日志 append-only**（skill `agent-memory-compaction`）。
+> ⚠️ 真口径＝**JS 长度**（含 CRLF）；**别为凑上限削语义**；读文件**字节忠实**（`newline=''`）。❗❗**只许 Write/Edit**；**日志 append-only**。
 ## 0. 铁律
 - 每轮改动即 **commit+push**；称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
 - ❗**仓库根=`try - 副本`**（`ralsei_pet` 子目录）⇒**G2 cwd=仓库根**。远端 `github.com/xiaohanzhe/try-----.git`（★公开）。真机起＝`src/main.py`（单实例锁 `Global\RalseiPetMutex`；透明非置顶⇒**甩飞/抛物线只可离屏断言**）。
 - ★★★ **按键账本 API**：`self.soul`=`SoulOverlay`⇒**只能 `release_all()`**；`soul.state`=`SoulState`⇒**只能 `clear_keys()`**。写错=静默 `AttributeError` 被吞（`check84 D5`）。
 - 改码前先跑 G2 `regress/run_all.py`（须**全 IDENTICAL**）；改断言/文案→`--only <suite> --update`。★★ **新增合法零依赖模块撞两闸**：`round5_smoke`（模块数）＋`scene_p0` **A6 白名单**（手加 `_CTL_ALLOWED`）。★ **只读优先、改动最小**；★"写了 N 个文件"须 `os.listdir` 查盘；★★ **回归套件不许依赖临时区/外部盘**⇒**蒸馏进仓库**。❗❗**改过"重要核心文件"必复检**（skill `core-file-recheck`）。★★★ **改两层登记前先查重复键**（`json` 取最后一个⇒静默错值）；★★ **老套件 BASE 可能硬编码⇒worktree 里测错树**。
 ## 1. 环境（细则 §1/§18/§19/§21/§23.10/§37/§65.2）
-- ⚠️ **Bash 常整体坏掉**（`ls/head/cat` 全 127）→ **一律 Python+Write/Read**。❗别从 Bash 调 PowerShell；❗❗**别内联 `python -c`**（反引号/`\n` 被吞）。Python 一律 **`C:\Python311\python.exe`**；后台 `&`+`run_in_background`，杀用 psutil。❗❗❗ **未提交文件绝不能 `git checkout --`**（109轮抹掉 4 门改写）⇒ 改重要文件前先 commit/留备份。
-- ★★ **写入通道会整体失效**（~25min 自愈；E 盘 `Errno 22`）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。
+- ⚠️ **Bash 常整体坏掉**（`ls/head/cat` 全 127）→ **一律 Python+Write/Read**。❗别从 Bash 调 PowerShell；❗❗**别内联 `python -c`**（反引号/`\n` 被吞）。Python 一律 **`C:\Python311\python.exe`**；后台 `&`+`run_in_background`，杀用 psutil。❗❗❗ **未提交文件绝不能 `git checkout --`**⇒ 改重要文件前先 commit/留备份。
+- ★★ **写入通道会整体失效**（~25min 自愈）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。
 - ❗❗**临时/备份绝不放工作区**（`git add -A` 记为删除）⇒ 一律 `E:\Download\_tmp\`；**提交前必看 `git diff --cached --numstat`**。❗**清理守卫累计删（50）**：症状=**import 期被 SIGTERM、零输出**⇒**改名归档**。
 - ⭐⭐ 代理**逐端口实测 CONNECT** 再选。⭐⭐ **编辑保持原 EOL**；中文路径⇒`git ls-files -z`+`surrogateescape`。
 - ★★★ **游戏文件+UTMT⇒详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**·**stdout 须落文件**）。
 ## 2. git push（skill `win-git-utf8-push`；**§39.5/§37.13/§71.4/§101.13**）
-- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>] [--allow-del N]`**。提交信息用 **Write 写 UTF-8+`git commit -F`**（`-m` 假成功）。⛔ **绝不循环重试 push**。★★★ **worktree 已修**：`REPO` 硬编码＋refspec 固定 `main`⇒**全绿假成功**；现 `HEAD:main`+自证 `[0r]`。
+- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>] [--allow-del N]`**。提交信息用 **Write 写 UTF-8+`git commit -F`**（`-m` 假成功）。⛔ **绝不循环重试 push**。★★★ **worktree 已修**（`REPO` 硬编码／refspec 固定 `main`⇒假成功）：`HEAD:main`+自证 `[0r]`。
 - ★ `--allow-del` **带数字**；超限先 `numstat` 归因。❗**核验命令自己会说谎**⇒`ls-remote` **独立构造**+3~5 重试+`rev-parse origin/main` 交叉验证＋**必带 CA**（否则 TLS 假阴性）。
 - ★★ 两根因（**细节 §39.5**）：**TLS**⇒`sslBackend=openssl`+HTTP/1.1；**凭据**⇒直取 GCM；`subprocess.run(input=…)` **必喂 bytes**。
 ## 3. 勿回退契约（13 组；**原文见详版 §75.10**+§4.1–§4.12/§10/§23.9）
@@ -29,7 +29,7 @@
 ## 6. H4/H5 拆分（休眠线）⇒ 详版 §8.1–§8.6；勿重测。
 ## 7. 场景/伙伴/道具/球/人设/幽灵线 ★ **动手前必 Read 详版 §87.11（令牌全表）**
 口径：**「把原作的世界搬到桌面上…桌面也是一个场景」**＋**「一切根据原作」**＋**「任何素材都从这里找」**。
-- ★★★ **桌面只 4 门（§109.2）**＝三角符文(小镇中心)/OneShot(Niko家下方车厢)/UT(坠落处)+**Niko的家**(例外)；**挨屏幕边框**；**当原作门逐门寻路（禁瞬移）**；★★★ **Niko 的家＝彩蛋**（三连确认**永远进不去**，选"我确定"⇒爆炸后变回）；**只 5 章**。★ `desktop.json` 4 扇(正上A/正下B/正左C/正右D、贴边、**全静态无 anim**)＋`_routes.json` 4 条；**尺寸见 §22**。
+- ★★★ **桌面只 4 门（§109.2）**＝三角符文(小镇中心)/OneShot(Niko家下方车厢)/UT(坠落处)+**Niko的家**(例外)；**挨屏幕边框**；**当原作门逐门寻路（禁瞬移）**；★★★ **Niko 的家＝彩蛋**（三连确认**永远进不去**，选"我确定"⇒爆炸后变回）；**只 5 章**。★ `desktop.json` 4 扇(正上A/正下B/正左C/正右D、贴边、**全静态无 anim**)＋`_routes.json` 4 条。
 - ★★★ **相机/换房/拓扑**：**背景移动＝相机平移不是视差**；门＝`Data.Rooms` **下标偏移**（A+1/B-1/C+2）；**无门＝不可达**；**对象索引按名字**。
 - ★★ **世界门控**：光世界**不需球**（**Ralsei 例外必须靠球**）／暗世界只进自己登记的章；★ **球缩放由 `fit_scale` 反推，禁硬用 1.55**。
 - ★★★ **人设/幽灵**：真源 `assets/npc/persona/*.txt`（**76**）+`_registry.json`（**96**）；★★ 切块**不能按 `---`**；★★★ **两层登记**都要；★ 幽灵已接线（轴＝**与 Kris 接触时长**）。
@@ -39,41 +39,42 @@
 ## 8. 性能线 ★ 铁律⇒**动手前 Read §78.11**
 - ★★★ **首字/并发/`keep_alive` 三铁律**：冷热差 23~190 倍·`NUM_PARALLEL=1`⇒并发＝排队·`keep_alive` 必走原生 `/api/chat`（底座 `ralsei:v4`·`api.timeout≥60`）。★ **115轮**：首字瓶颈＝**prompt 长度**（冷 prefill 21~27s·热 3~10s·冷载入 77s），**换大模型更慢**。
 ## 9. 用户口径（**优先于我的技术判断**）
-- **「prompt 尽量完整」**⇒提速只靠**缓存／后端／模型**（不许砍 prompt）。**「用 7B 就是要他贴合人物且不出 bug」**。**「结巴」**=**减少但不许到 0**⇒**待排期**。**「开机自启」＝选项非硬性**。★★ **当前主轴见 §7**；**这阶段 ok 才进下一阶段**。★★ **工作方式**：「**测完了没问题后按你的计划来**」⇒ **测绿即连续推进**。★ **范围**：暗世界也做⇒**全部 1,251 间**。
+- **「prompt 尽量完整」**⇒提速只靠**缓存／后端／模型**（不许砍 prompt）。**「用 7B 就是要他贴合人物且不出 bug」**。**「结巴」**=**减少但不许到 0**⇒**待排期**。**「开机自启」＝选项非硬性**。★★ **当前主轴见 §7**；**工作方式**「**测完了没问题后按你的计划来**」⇒**测绿即连续推进**、这阶段 ok 才进下一阶段。★ **范围**：暗世界也做⇒**全部 1,251 间**。
 ## 10. 历轮索引
-**锁号速查**（新→旧）：`check118`(**29**)+`mutate118`(**7/7**)·`check117`(**40**)+`mutate117`(**14/14**)·`check116`(**40**)+`mutate116`(**11/11**)·`check115`(**25**)·`check114`(**84**)；113 及更早见详版 §72~§114。
+**锁号速查**（新→旧）：`check118`(**31**)+`check118_rec`(**36**)+`mutate118`(**7/7**)+`mutate118_rec`(**10/10**)·`check117`(**40**)+`mutate117`(**14/14**)·`check116`(**40**)+`mutate116`(**11/11**)·`check115`(**25**)·`check114`(**84**)；113 及更早见详版 §72~§114。
 **近轮指针**：95＝3 真 bug＋**G2 首零 DIFF**｜96/99~105＝详版同名节（`K_ROOM_FILL`·379帧·7804接线·opacity/blend·code-201/420）｜102＝光照归因＋7,805 普查｜106＝非瞬移＋全屏初版｜107 起见 §19~§22。
 ## 11. 待裁定/已裁定（★**已裁定的绝不重问**；全文见详版 §71+§*.9）
 **★★★ 口径（81/96轮）**：「记忆不要随便修改」＝**角色的记忆**（`data_store`）**非**助手记忆⇒**该记就记**、**不许再问**。动记忆门槛：**实证超限/被要求＋先补详版＋逐令牌回验＋守恒**；★★ **`check95 A2` 硬闸**（`js_len ≤ 10000`＝**UTF-16 码元数**）。❗别说成"尊重用户口径"。
 **已落地/🟢已裁定/遗留池 ⇒ 正文与令牌全在详版 `§71补`**（115轮下沉）。速查留三条：**`has_ball` 不删** / `move_to_edge_and_shrink()` **零调用⇒只记不修** · **35 角色未登记 `home`**（回落 `scene`）· **99 置顶窗口** vs 契约②**有张力⇒待澄清**。
 ## 19. 107/108/110/112·全屏化＋全局缩放⇒ **详版 §107/§108/§110/§112续四**
-- ★★★ 口径 6 条（逐字全文 §107）：场景全屏·按比例铺满留黑边·相机跟随宠物·非桌面不透壁纸/图标/任务栏·全局放大·UI 对话框也放大。★★★ **原作 UI 不缩放**⇒这是**我们的产品口径**，不许假装还原。★未做：隐字母。
-- ★★★ **【112续四】已落地**（详版 §112续四；锁 `check107`/`check112`）：门拆出场景（`_desktop_screen_doors`）·room **0.5 档**（`SCENE_FIT_FRACTION`）·非桌面**黑边**／桌面**透明**·`PET_MAX_LONG_SIDE_PX` **≤144px**（**只减不增**）·`camera.scale=out_w/320`·`ui_scale()`＝**平方根**钳 `[0.5,3.0]`（**幂等＝快照+重算**）。
+- ★★★ 口径 6 条（全文 §107）：场景全屏·按比例铺满留黑边·相机跟随宠物·非桌面不透壁纸/图标/任务栏·全局放大·UI 也放大。★★★ **原作 UI 不缩放**＝**我们的产品口径**，不许假装还原。★未做：隐字母。
+- ★★★ **【112续四】已落地**（详版 §112续四；锁 `check107`/`check112`）：门拆出场景·room **0.5 档**（`SCENE_FIT_FRACTION`）·非桌面**黑边**／桌面**透明**·`PET_MAX_LONG_SIDE_PX` **≤144px**（**只减不增**）·`camera.scale=out_w/320`·`ui_scale()`＝**√**钳 `[0.5,3.0]`（**幂等＝快照+重算**）。
 ## 20. 114·差事「门控＋派发＋落盘」⇒ **详版 §114**
-- ★★★ **门控** `world_gate(npc,world,scene_id,carried)` **四条按序**：**⓪桌面** `DESKTOP_ALLOWED_IDS`=ralsei/kris/susie/lancer（**必先于光世界**）→①光世界 `light_needs_bubble` 假即放行、真＝**仅 Ralsei**+`escape_via_bubble`+`carried`→②暗世界 `roam_scope`：`ALL`**仅 Niko**→`chapter_matches`→`free_dark_roam`**仅 Ralsei**；迁入章判不出⇒**保守归 `dark`**（`A8`）。★ **章名** `ut`/`uty`↔`undertale`/`undertale_yellow` 在**比较处归一**（`CHAPTER_ALIASES`），**数据不动**。
-- ★★★ **入口/落盘**：`handle_errand_command` 挂 `dialogue_ui.send_message`（**回显后、指令前**）；**拒分支也必落一次记忆**（`_npc_errand_note` 在 `if` 体 / `assign_errand` 在 `elif` 体，**互斥**）；台词全交 `chat_with_ai`（`speaker=None`）；`npc_errands.json` 读必须 `json`+`from_dict`（`load` 只认 `schema_version==1`⇒**恒空**）；`_npc_errand_tick` 排 `_npc_roam_tick` **之后**。★★★ **录像**：必 `pet.show()`·按 `frameGeometry()` 证几何（§114）。
+- ★★★ **门控** `world_gate(npc,world,scene_id,carried)` **四条按序**：**⓪桌面** `DESKTOP_ALLOWED_IDS`=ralsei/kris/susie/lancer（**必先于光世界**）→①光世界 `light_needs_bubble` 假即放行、真＝**仅 Ralsei**+`escape_via_bubble`+`carried`→②暗世界 `roam_scope`：`ALL`**仅 Niko**→`chapter_matches`→`free_dark_roam`**仅 Ralsei**；迁入章判不出⇒**保守归 `dark`**（`A8`）。★ 章名 `ut`/`uty`↔`undertale`/`undertale_yellow` 在**比较处归一**（`CHAPTER_ALIASES`，数据不动）。
+- ★★★ **入口/落盘**：`handle_errand_command` 挂 `send_message`（**回显后、指令前**）；**拒分支也必落一次记忆**（`_npc_errand_note` 在 `if` / `assign_errand` 在 `elif`，**互斥**）；台词全交 `chat_with_ai`（`speaker=None`）；`npc_errands.json` 必须 `json`+`from_dict`（`load` 只认 `schema_version==1`⇒**恒空**）；`_npc_errand_tick` 排 `_npc_roam_tick` **之后**。
 
 ## 21. 115·AI人味训练（受控A/B⇒改人设）⇒ **详版 §115**
 - ★★★ **L1 先做**（persona＋参数＋护栏）；**L3 未攒够数据集前禁谈**。
 - ★★★ **写进 prompt 的字面都会被照着说 ⇒要写就写"你想要的"那句**（反面例句=毒药）；**「就该说X而不是Y」的对照式示范有效**。
 - ★★★ **`HTTP_PROXY`⇒urllib 连 localhost 也丢代理**=502 假故障（必 `ProxyHandler({})`）；**沙箱结束拆进程树**。★**新口径**：知道是游戏·**不悲观**。
-- ★ **115 遗留**：「那边引力」**2/4**·Q6 **1/4**·**NPC 76 份已铺**（`tail_sha256`·`apply115_npc` **19/0**）·未做 L2／L3／流式。
-- ★★ **115 判据教训**：**判据"崩掉"比"报红"更糟**（缺文件要如实 FAIL、不许抛）；**出戏闸禁放"身份词"**（`机器人` 拦死 4 位）。
+- ★ **115 遗留**见详版 §115：Q6 **1/4**·`tail_sha256`/`apply115_npc` **19/0**·L2／L3／流式未做。
+- ★★ **115 判据教训**：**判据"崩掉"比"报红"更糟**（缺文件如实 FAIL）；**出戏闸禁放"身份词"**（`机器人` 拦死 4 位）。
 
 ## 22. 116~117·门贴图（黑底/黑光）＋四门放大＋沙箱 ⇒ **详版 §116＋§117**
-- ★★★ **沙箱真源头=`RALSEI_MEMORY_DIR`**（`data_store` 只是包装层）⇒ **三把闸在 `import main` 之前**（`vault_guard` 指纹量，**不看代码**）。
-- ★★★ **桌面画布吃 `availableGeometry()`**（铺满⇒被当全屏应用⇒任务栏 5.72Hz 翻）；`raise_()` 只许在 `_just_shown`。
-- ★★★ **原作贴图本身是黑底卡片**（门 C/D 纯黑 76.4%/82.6%）⇒ 桌面变体 `desk_door_ut`/`desk_door_deltarune`（尺寸不变）·**原件不改**（暗世界在用）；**门 D＝巨门框**（10-13 逐字，摘要不算原话）。
+- ★★★ **沙箱真源头=`RALSEI_MEMORY_DIR`**（`data_store` 只是包装层）⇒ **三把闸在 `import main` 之前**（`vault_guard` 指纹量）。
+- ★★★ **桌面画布吃 `availableGeometry()`**（铺满⇒被当全屏⇒任务栏 5.72Hz 翻）；`raise_()` 只许在 `_just_shown`。
+- ★★★ **原作贴图本身是黑底卡片**（门 C/D 纯黑 76.4%/82.6%）⇒ 桌面变体 `desk_door_ut`/`desk_door_deltarune`（尺寸不变）·**原件不改**（暗世界在用）；**门 D＝巨门框**（§116）。
 - ★★★ **门 A=`objs/desk_door_oneshot_black.png`**（`niko_door_portal` 黑光变体：同 192×128·**alpha 逐像素一致**·`R=4+96t/G=2+24t/B=6+84t`）；门 B/C **不动**；`spr_darkdoor_0` 留盘。
 - ★★★ **门大小唯一旋钮 `DOOR_FIT_CAP` 1.2→1.6**（「大一点都」＝四门都大）：pet(144,98)·k=1.0116·D 182×157（§117.3）。
 - ★★★ **真机像素对账**：`drawPixmap`＝**最近邻**⇒判据须 **NEAREST+腐蚀1px 只比内部**（§117.9）。
-- ★★ **对话框**：`fade_plan` 唯一真源·`STEADY_EPS=0.05`·判据禁只看"提到 `setOpacity`"（被 `finally` 的 `setOpacity(1.0)` 喂饱，§116.3）。
-- ★★ 老套件改口径：`check89` 门 A pos→(64,0)、`check112` N15/N18a；**CRLF 锚点带 `\r\n`**。
-- ★★★ **判"看不看得见"须 1:1 带上下文**（缩略拼图抹掉 17.5% 的金框 ⇒ 误判"门 D 看不见"、差点改下限 `MIN_ALPHA`；已回退 0.14，ΔE 11~14 够）；**对话框避让门 B**＝门不挪·框上抬（真机遮挡 0%）⇒ 详版 §117.11。
+- ★★ **对话框**：`fade_plan` 唯一真源·`STEADY_EPS=0.05`·判据禁只看"提到 `setOpacity`"（§116.3）。
+- ★★ 老套件改口径见 §116：`check89` A→(64,0)·`check112` N15/N18a；**CRLF 锚点带 `\r\n`**。
+- ★★★ **判"看不看得见"须 1:1 带上下文**（缩略拼图抹掉 17.5% 的金框 ⇒ 误判"门 D 看不见"、差点改下限 `MIN_ALPHA`；已回退 0.14，ΔE 11~14 够）；**对话框避让门 B**＝门不挪·框上抬（遮挡 0%）⇒ §117.11。
 
 
-## 23. 118·门可达性 ⇒ **详版 §118**
+## 23. 118·门可达性＋录屏复核 ⇒ **详版 §118**
 - ★★★ **桌面门按屏幕几何选** `_desktop_door_pick`：灵魂恒停⇒站哪都进三角符文。
 - ★★★ **每帧驱动 `update()` + 重建道具先 `release`**：否则推一次门⇒**交互永久失灵**。
-- ★★★ 彩蛋选择框＝`dr_choice`（原作框+红心），**禁 QMessageBox**；桌面 actor=`pet`。
-- ★★ 判据先 append detail 再 print ⇒ **FAIL 不打印**。
+- ★★★ 彩蛋选择框＝`dr_choice`（原作框+红心），**禁 QMessageBox**；桌面 actor=`pet`；**框让位对话气泡**（`_dialogue_rect`+`GAP_PX=10`；旧叠 61px）。
+- ★★★ **录屏三坑**：同一 QTimer 不能在自己槽里重入（模态零帧⇒`singleShot(0)`）·`QImage` 是 BGRA⇒喂 `PIL` 当 RGB **红蓝颠倒**·`pet.show()`+`frameGeometry()` 证几何。
+- ★★ 判据先 append detail 再 print（否则 **FAIL 不打印**）；**不能评估就如实 FAIL，禁 `if got:` 静默跳过**（变异漏判）。
