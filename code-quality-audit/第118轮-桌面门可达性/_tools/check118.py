@@ -339,8 +339,54 @@ try:
           _b2.picked == 1, star=True, detail='picked=%r' % (_b2.picked,))
     check('G10 ★★ 选择框绘制真的走了原作框（自带 `paint_dark_box_scaled` 调用点）',
           hasattr(_dc.DrChoiceBox, 'paintEvent'), star=True)
+
+    # ★★★ 第118轮真机录屏发现（`_evidence/rec118/shots/choice_1to1_*.png`）：
+    #   框原来固定摆「工作区底边往上 120×scale」⇒ 与对话气泡**上下叠了 61 px**，
+    #   裁图里能看到对话气泡的左上角从选择框左边戳出来。用户口径是
+    #   「按**三角符文**那样」—— 原作里文字和选项在**同一个框**，绝不能
+    #   看起来像"弹窗压着弹窗"。
+    #   ⇒ 行为级验证（不看代码里有没有写 `_dialogue_rect`）：给一个**可见的**假
+    #     对话气泡，框必须让到它上沿之上；**同时**做配对对照：没有气泡时要
+    #     退回原来的贴底摆法 —— 两条一起才说明这条判据不是恒真。
+    _holder = QtWidgets.QWidget()
+    _holder.resize(10, 10)
+    _dlg = QtWidgets.QWidget()
+    _dlg.setWindowFlags(QtCore.Qt.Tool)
+    # ★ 假气泡必须摆进**这块虚拟屏**里：离屏平台只有 800×600，
+    #   第一版把它放到 y=1100（屏外）⇒ "有气泡"那一档反而更靠下，
+    #   配对对照就变成了假红（无气泡 bottom=478 < 有气泡 bottom=1087）。
+    #   ⇒ 按屏幕几何摆，不写死坐标。
+    _sg = _app.primaryScreen().availableGeometry()
+    _dlg.setGeometry(
+        _sg.left() + 40,
+        _sg.top() + int(_sg.height() * 0.62),
+        max(120, _sg.width() - 80),
+        max(80, int(_sg.height() * 0.30)))
+    _dlg.show()
+    _holder.dialogue_ui = _dlg
+    _app.processEvents()
+    _b3 = _dc.DrChoiceBox(_holder, ['我确定', '我再考虑考虑'], scale=1.0,
+                          default_index=1)
+    _g3 = _b3.geometry()
+    _dt = _dlg.frameGeometry().top()
+    check('G11 ★★★ 行为级：对话气泡在显示 ⇒ 选择框让到**它上沿之上**（不再叠）',
+          _g3.bottom() <= _dt, star=True,
+          detail='框 bottom=%d 气泡 top=%d（旧摆法会压到气泡里） 屏=%r'
+                 % (_g3.bottom(), _dt, (_sg.width(), _sg.height())))
+    _b4 = _dc.DrChoiceBox(None, ['我确定', '我再考虑考虑'], scale=1.0,
+                          default_index=1)
+    _g4 = _b4.geometry()
+    check('G12 ★★ 配对对照：**没有**对话气泡时退回贴底摆法（不是恒让位）',
+          _g4.bottom() > _g3.bottom(), star=True,
+          detail='无气泡 bottom=%d vs 有气泡 bottom=%d'
+                 % (_g4.bottom(), _g3.bottom()))
+    try:
+        _dlg.close()
+        _holder.close()
+    except Exception:                                            # noqa: BLE001
+        pass
 except Exception as e:                                            # noqa: BLE001
-    check('G8/G9/G10 行为级（离屏 Qt 不可用）', False, detail=repr(e))
+    check('G8~G12 行为级（离屏 Qt 不可用）', False, detail=repr(e))
 
 # ===========================================================================
 #  F · 判据自身体检

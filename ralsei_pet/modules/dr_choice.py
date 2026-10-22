@@ -110,17 +110,60 @@ class DrChoiceBox(QtWidgets.QDialog):
         f.setBold(bool(bold))
         return f
 
+    #: 与对话框之间留的缝（屏幕像素）。原作里选项和文字是**同一个框**，
+    #: 我们这边是两块独立窗口 ⇒ 至少不能**叠**在一起。
+    GAP_PX = 10
+
+    def _dialogue_rect(self, parent):
+        u"""正在说话的那块对话气泡的屏幕矩形；没在显示 ⇒ `None`。
+
+        ★ 为什么要有它（第118轮真机录屏发现）：选择框原来固定摆在
+          「工作区底边往上 120×scale」，而对话框（第117轮为躲门 B 上抬过）正好
+          占着底边那一块 ⇒ **两块框上下叠了 61 px**，录屏裁图里能看到对话框的
+          左上角从选择框左边戳出来。用户口径是「按**三角符文**那样」——原作里
+          文字和选项在**同一个框**里，绝不能看起来像"弹窗压着弹窗"。
+        ★ 零依赖：只按属性探测（`parent.dialogue_ui`），拿不到就返回 None，
+          调用方退回原来的摆法 —— 不影响任何别的调用点。
+        """
+        try:
+            dlg = getattr(parent, 'dialogue_ui', None)
+            if dlg is None or not dlg.isVisible():
+                return None
+            g = dlg.frameGeometry()
+            if g.width() <= 0 or g.height() <= 0:
+                return None
+            return g
+        except Exception:                                        # noqa: BLE001
+            return None
+
     def _place(self, parent):
-        u"""摆位：**贴屏幕底部偏上**（原作选择框就在对话区上方），水平居中。
+        u"""摆位：**优先紧贴对话气泡的上沿**，其次贴屏幕底部偏上，最后居中。
 
         ★ 拿不到屏幕 ⇒ 居中到 parent 上方；都没有 ⇒ 屏幕正中（宁可难看也不崩）。
         """
+        w, h = self.width(), self.height()
+        # ① 对话气泡在显示 ⇒ 摆在它正上方（不重叠、不留大缝）
         try:
-            if parent is not None and hasattr(parent, 'ui_scale'):
-                pass
+            dg = self._dialogue_rect(parent)
+            if dg is not None:
+                x = dg.center().x() - w // 2
+                y = dg.top() - h - int(self.GAP_PX * self._scale)
+                scr0 = QtWidgets.QApplication.primaryScreen()
+                g0 = scr0.availableGeometry() if scr0 is not None else None
+                if g0 is not None:
+                    x = max(g0.left() + 4, min(x, g0.right() - w - 4))
+                    if y < g0.top() + 4:
+                        # 上面放不下（对话框太高）⇒ 退回"贴底"那一档，别顶出屏幕
+                        y = max(g0.top() + 4, dg.top() - h - int(self.GAP_PX * self._scale))
+                self.move(int(x), int(y))
+                _log.debug('dr_choice 摆在对话气泡上方: (%d,%d) 气泡=%r',
+                           int(x), int(y), dg)
+                return
+        except Exception as e:                                   # noqa: BLE001
+            _log.debug('dr_choice 按对话气泡摆位失败（退回贴底）: %s', e)
+        try:
             scr = QtWidgets.QApplication.primaryScreen()
             g = scr.availableGeometry() if scr is not None else None
-            w, h = self.width(), self.height()
             if g is not None:
                 x = g.center().x() - w // 2
                 y = g.bottom() - h - int(120 * self._scale)
