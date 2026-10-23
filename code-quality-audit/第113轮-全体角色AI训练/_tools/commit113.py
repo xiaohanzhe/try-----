@@ -54,8 +54,8 @@ PATHS = [
 ]
 
 DEL_LIMIT = 2000        # 删除行数硬上限（本轮没有任何删除，超了就是路径写错）
-BASE = ['-c', 'core.quotepath=false', '-c', 'http.sslBackend=openssl',
-        '-c', 'http.version=HTTP/1.1']
+BASE = ['-c', 'core.quotepath=false', '-c', 'http.sslBackend=schannel',
+        '-c', 'http.schannelCheckRevoke=false', '-c', 'http.version=HTTP/1.1']
 
 
 def w(msg):
@@ -69,7 +69,7 @@ def run(args, timeout=300):
 
 
 def index_digest():
-    """暂存区摘要：按 porcelain 两位状态码分组计数。用来证明"没动过"。"""
+    """暂存区摘要：按 porcelain 两位状态码分组计数。"""
     rc, o, e = run(['status', '--porcelain'])
     if rc != 0:
         return None, (o + e).strip()[:200]
@@ -80,6 +80,21 @@ def index_digest():
         code = ln[:2]
         cnt[code] = cnt.get(code, 0) + 1
     return cnt, ''
+
+
+def staged_deletes():
+    """**已暂存的删除**（`D `）路径集合 —— 用户那 1017 个就靠这个守。
+
+    ★ 为什么不能拿整个 status 摘要前后比对：我自己提交成功的路径
+      会自然从 status 里消失（`M `→`''`、`??`→`''`），那是**提交的应有结果**，
+      不是"动了用户的暂存区"。上一版就是这么误报的 —— 判据得盯着
+      **唯一该守住的东西**，而不是所有会变的东西。
+    """
+    rc, o, e = run(['status', '--porcelain'])
+    if rc != 0:
+        return None
+    return {ln[3:] for ln in o.splitlines() if ln[:2] == 'D '}
+
 
 def fmt_digest(cnt):
     if cnt is None:
@@ -101,9 +116,11 @@ def main(argv):
         w('!! 提交信息文件不存在：%s' % msg_file)
         return 2
 
-    w('[1] 提交前暂存区摘要（用户那批删除应当原样在这里）')
-    before, err = index_digest()
-    w('    ' + fmt_digest(before) + ('  ' + err if err else ''))
+    w('[1] 提交前：已暂存的删除（用户那 1017 条应当原样在这里）')
+    before_c, err = index_digest()
+    before = staged_deletes()
+    w('    status 摘要：' + fmt_digest(before_c) + ('  ' + err if err else ''))
+    w('    已暂存删除 %d 条' % (len(before) if before is not None else -1))
 
     w('[2] 统计本轮改动（工作区 vs HEAD，限定路径）')
     rc, o, e = run(['diff', 'HEAD', '--numstat', '--'] + PATHS)
@@ -187,6 +204,26 @@ def main(argv):
         w('    !! 已本地撤销该 commit（reset --soft，工作区与 index 未动）rc=%d' % rc2)
         return 6
 
+    w('[3c] ★ 分叉闸：远端是另一条线就**不推**（推了会覆盖主线）')
+    rc, o, e = run(['ls-remote', 'origin', 'refs/heads/main'], timeout=120)
+    remote = ''
+    for ln in o.splitlines():
+        if ln.endswith('refs/heads/main'):
+            remote = ln.split()[0]
+    if not remote:
+        w('    远端读不到（网络/代理） ⇒ 不推，等人工')
+        w('=== 结论 = COMMITTED_LOCAL_ONLY（远端不可达）===')
+        return 0
+    rc, _, _ = run(['merge-base', '--is-ancestor', remote, local])
+    if rc != 0:
+        rc2, o2, _ = run(['log', '--oneline', '%s..%s' % (local, remote)])
+        n = len([x for x in o2.splitlines() if x.strip()])
+        w('    远端 main=%s，比本地多 %d 个提交 ⇒ **分叉**' % (remote[:12], n))
+        w('    ⇒ 不推送（直接 push 会被 git 拒；强推会覆盖主线成果）')
+        w('=== 结论 = COMMITTED_LOCAL_ONLY（分叉，未推送）===')
+        return 0
+    w('    远端是本地祖先（可快进） ⇒ 继续推送')
+
     w('[4] push（openssl + HTTP/1.1）')
     rc, o, e = run(['push', 'origin', 'main'], timeout=300)
     w('    rc=%d' % rc)
@@ -208,13 +245,18 @@ def main(argv):
     ok = bool(remote) and remote == local
     w('    远端 == 本地：%s' % ok)
 
-    w('[6] 提交后暂存区摘要（必须与 [1] 逐字相同）')
-    after, err = index_digest()
-    w('    ' + fmt_digest(after) + ('  ' + err if err else ''))
+    w('[6] 提交后：已暂存的删除必须**逐条**与 [1] 相同')
+    after_c, err = index_digest()
+    after = staged_deletes()
+    w('    status 摘要：' + fmt_digest(after_c) + ('  ' + err if err else ''))
+    w('    已暂存删除 %d 条' % (len(after) if after is not None else -1))
     same = (before == after)
-    w('    与 [1] 相同：%s' % same)
+    w('    删除集合与 [1] 相同：%s' % same)
     if not same:
-        w('    !! 暂存区被改动了 —— 请人工核对（git status）')
+        miss = sorted((before or set()) - (after or set()))[:5]
+        extra = sorted((after or set()) - (before or set()))[:5]
+        w('    !! 变化：少了 %s / 多了 %s' % (miss, extra))
+        w('    !! 请人工核对（git status）')
 
     w('=== 结论 = %s ===' % ('PUSHED' if (ok and same) else
                              ('PUSHED_BUT_INDEX_CHANGED' if ok else 'NOT_VERIFIED')))
