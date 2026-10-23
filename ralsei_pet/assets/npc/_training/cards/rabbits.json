@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "rabbits",
+ "name": "Rabbits",
+ "name_cn": "兔子们",
+ "tier": "plain",
+ "lines": [
+  "（一群兔子安静地看着你。）",
+  "（其中一只挪了挪位置。）",
+  "（然后它们都不动了。）",
+  "（像什么也没发生过。）"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

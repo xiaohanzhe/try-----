@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "rudy",
+ "name": "Rudy",
+ "name_cn": "鲁迪",
+ "tier": "plain",
+ "lines": [
+  "孩子，你看起来跑了不少路。",
+  "歇会儿吧，我不着急。",
+  "路还长着呢。",
+  "记得吃饭。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

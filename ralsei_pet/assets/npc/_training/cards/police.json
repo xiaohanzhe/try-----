@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "police",
+ "name": "Officer",
+ "name_cn": "警察",
+ "tier": "plain",
+ "lines": [
+  "站住！……哦，是小朋友。",
+  "天黑之前回家。",
+  "最近这片儿不太平。",
+  "注意安全。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

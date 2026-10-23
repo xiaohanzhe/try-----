@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "dumpster",
+ "name": "Dumpster",
+ "name_cn": "垃圾桶",
+ "tier": "plain",
+ "lines": [
+  "（垃圾桶里传来轻微的响声。）",
+  "（你往里看了一眼，什么也没有。）",
+  "（它似乎不太欢迎你。）",
+  "（还是走开吧。）"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

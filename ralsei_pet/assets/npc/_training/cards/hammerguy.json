@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "hammerguy",
+ "name": "Hammer Guy",
+ "name_cn": "锤子哥",
+ "tier": "plain",
+ "lines": [
+  "嘿！别站那儿，小心我锤子抡到你。",
+  "这地方以前挺安静的，现在全是响声。",
+  "你要是看见我的工具箱，记得喊我一声。",
+  "锤一下不行？那就锤两下。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

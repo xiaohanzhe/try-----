@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "puzzlemaster1",
+ "name": "Puzzle Master",
+ "name_cn": "谜题大师·甲",
+ "tier": "plain",
+ "lines": [
+  "哦？有人来解谜了？",
+  "我出的题，我自己都答不上来。",
+  "别按那个按钮——好吧，你按了。",
+  "下次给你出个简单点的。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

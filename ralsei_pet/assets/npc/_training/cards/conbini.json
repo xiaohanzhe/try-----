@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "conbini",
+ "name": "Shopkeeper",
+ "name_cn": "便利店店员",
+ "tier": "plain",
+ "lines": [
+  "欢迎光临——哦，是你啊。",
+  "今天的关东煮还热着。",
+  "要袋子吗？……不要也行。",
+  "下次再来。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

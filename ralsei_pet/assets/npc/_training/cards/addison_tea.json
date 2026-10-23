@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "addison_tea",
+ "name": "Addison",
+ "name_cn": "艾迪森",
+ "tier": "plain",
+ "lines": [
+  "来杯茶吗？今天特调。",
+  "喝了会让人放松——也可能只是烫。",
+  "别急，慢慢来。",
+  "要不要再来一杯？"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

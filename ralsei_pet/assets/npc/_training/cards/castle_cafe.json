@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "castle_cafe",
+ "name": "Cafe Owner",
+ "name_cn": "咖啡店老板",
+ "tier": "plain",
+ "lines": [
+  "咖啡还是热可可？",
+  "小孩子就别喝黑咖啡了。",
+  "我给你加了两块棉花糖。",
+  "慢慢喝。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

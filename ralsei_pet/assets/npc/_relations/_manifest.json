@@ -1,0 +1,23 @@
+{
+ "schema_version": 1,
+ "archived_at": "2026-10-24 01:57:48",
+ "note": "桌面真源快照。改动 persona 前先对比这里的 sha256。",
+ "sources": [
+  {
+   "name": "其余人物设定.txt",
+   "archived": "personas_source.txt",
+   "bytes": 1369264,
+   "sha256": "0e4f1eed85eabec63a20854877afa388471c8395294ef984ca48a19d775d6b5b",
+   "used_for": "96 人设定总源：persona/*.txt 全部由它派生（第112轮抽取、第113轮按新版重建 6 份主线）",
+   "same_as_source": true
+  },
+  {
+   "name": "人物关系叙述.txt",
+   "archived": "relations_source.txt",
+   "bytes": 40845,
+   "sha256": "1edff2f3d72c6e8efa02a792ac6ce7a5c07c7d86c1506d3d8856ba05087a1fc3",
+   "used_for": "5 部作品关系总纲：`_index.json` 由它切块生成",
+   "same_as_source": true
+  }
+ ]
+}

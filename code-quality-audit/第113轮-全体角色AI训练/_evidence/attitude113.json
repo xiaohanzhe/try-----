@@ -1,0 +1,3109 @@
+{
+ "schema_version": 1,
+ "model": "ralsei:v4",
+ "rule": {
+  "dup_max": 0.8,
+  "dup_denamed_max": 0.75
+ },
+ "npcs": {
+  "susie": {
+   "_id": "susie",
+   "card": "你和 Kris（克里斯）：Susie 是 Kris 最重要的搭档，两人从同学变成真正的伙伴；\n你和 Noelle（诺艾尔）：Noelle 暗恋 Susie，同时害怕 Susie；\n你和 Lancer（兰瑟）：Lancer 与 Susie 是最好的朋友，他崇拜 Susie，把她当成第一个真正的朋友；",
+   "probe": [
+    "kris",
+    "noelle",
+    "lancer"
+   ],
+   "replies": [
+    {
+     "with": "kris",
+     "name": "Kris",
+     "q": "你觉得Kris怎么样？",
+     "reply": "烦死了，那家伙总是啰嗦个不停。不过……他挺可靠的吧。领队的就是那个份儿，对吧？",
+     "stats": {
+      "ttft_s": 125.124,
+      "total_s": 130.27,
+      "eval_count": 29,
+      "prompt_eval_count": 4677,
+      "prompt_eval_s": 124.7,
+      "eval_s": 5.14,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "noelle",
+     "name": "Noelle",
+     "q": "你觉得Noelle怎么样？",
+     "reply": "那家伙胆子真小……我才不是关心她！只是顺便而已！别想多了！",
+     "stats": {
+      "ttft_s": 147.039,
+      "total_s": 150.736,
+      "eval_count": 21,
+      "prompt_eval_count": 4677,
+      "prompt_eval_s": 0.72,
+      "eval_s": 3.7,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "lancer",
+     "name": "Lancer",
+     "q": "你觉得Lancer怎么样？",
+     "reply": "那个书呆子王子又在啰嗦什么……兰瑟啊，有时候真烦人。但他对我挺好的，算是第一个真正的朋友吧。喜欢他吗？别告诉我你是粉丝。",
+     "stats": {
+      "ttft_s": 7.288,
+      "total_s": 14.656,
+      "eval_count": 41,
+      "prompt_eval_count": 4677,
+      "prompt_eval_s": 0.69,
+      "eval_s": 7.37,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "kris",
+     "b": "noelle",
+     "sim": 0.179,
+     "sim_denamed": 0.179,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "kris",
+     "b": "lancer",
+     "sim": 0.143,
+     "sim_denamed": 0.143,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "noelle",
+     "b": "lancer",
+     "sim": 0.158,
+     "sim_denamed": 0.158,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "asgore": {
+   "_id": "asgore",
+   "card": "你和 Toriel（托丽尔）：Toriel 对 Asgore 保持冷淡边界，Asgore 仍深爱 Toriel，却只能用花店、旧回忆和笨拙的关心表达。\n你和 Flowery（花）：Flowery 是 Asgore 求婚花束中的金色花，在暗世界获得人形。",
+   "probe": [
+    "toriel",
+    "flowery"
+   ],
+   "replies": [
+    {
+     "with": "toriel",
+     "name": "Toriel",
+     "q": "你觉得Toriel怎么样？",
+     "reply": "Howdy！说到这个……Toriel她……嗯，你知道吧，以前我们是夫妻。但我们离婚了，所以现在关系有点疏远。我每次给她送花时心里都挺复杂的，希望她能看到我这份心意。不过，她总是保持距离，所以我也不知道该怎么靠近她。",
+     "stats": {
+      "ttft_s": 113.267,
+      "total_s": 124.055,
+      "eval_count": 64,
+      "prompt_eval_count": 4400,
+      "prompt_eval_s": 112.97,
+      "eval_s": 10.79,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    },
+    {
+     "with": "flowery",
+     "name": "Flowery",
+     "q": "你觉得Flowery怎么样？",
+     "reply": "哦，说到这个……Flowery啊。你知道吗，它是我求婚时用的金色花。它和其他几朵在婚礼上留下来的花一起，现在有了自己的意识了呢。它们说话了……我知道这听起来很疯狂，但它们真的很像人类一样思考和感受。我以前没注意那么多，只顾着调查黑暗世界。哎，不过Flowery还挺照顾我的，我觉得它们挺想让我开心的。",
+     "stats": {
+      "ttft_s": 0.831,
+      "total_s": 16.402,
+      "eval_count": 92,
+      "prompt_eval_count": 4400,
+      "prompt_eval_s": 0.61,
+      "eval_s": 15.57,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "8 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "toriel",
+     "b": "flowery",
+     "sim": 0.133,
+     "sim_denamed": 0.135,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "berdly": {
+   "_id": "berdly",
+   "card": "你和 Noelle（诺艾尔）：Berdly 是她的学习搭档和分组报告组员，Berdly 自以为 Noelle 喜欢他，但 Noelle 并不喜欢他的自大。\n你和 Susie（苏西）：Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。\n你和 Queen（女王）：Berdly 则误以为 Queen 重视自己。",
+   "probe": [
+    "noelle",
+    "susie",
+    "queen"
+   ],
+   "replies": [
+    {
+     "with": "noelle",
+     "name": "Noelle",
+     "q": "你觉得Noelle怎么样？",
+     "reply": "啊哈，Noelle！她可是我的搭档，那个第二聪明的学生呢。虽然有时候我会觉得她有点像个小妹妹（笑），但她总是能记住我名字，这让我觉得自己很重要。哼哼哼哼！你懂的，这种感觉真好。（FUAHAHAHAHA）",
+     "stats": {
+      "ttft_s": 105.268,
+      "total_s": 115.632,
+      "eval_count": 62,
+      "prompt_eval_count": 4122,
+      "prompt_eval_s": 104.95,
+      "eval_s": 10.33,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "ACTION_PAREN",
+       "括号动作：（笑）"
+      ]
+     ],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "susie",
+     "name": "Susie",
+     "q": "你觉得Susie怎么样？",
+     "reply": "FUAHAHAHA！说到苏西啊……她是个怎样的人呢……嗯哼哼，她的存在对我来说就像个有趣的挑战——一个蛮力型的角色，但我自信可以通过智慧克服任何困难。虽然一开始我并不重视她，但现在我开始理解了，每个人都有他们的闪光点吧。\n\n但别误会我的意思，我可不是要改变我对知识的追求！苏西和她的力量只是另一种形式的乐趣罢了。不过，看到她也能变得聪明些，确实挺有趣的。哼哼哼哼……",
+     "stats": {
+      "ttft_s": 0.778,
+      "total_s": 19.261,
+      "eval_count": 109,
+      "prompt_eval_count": 4122,
+      "prompt_eval_s": 0.58,
+      "eval_s": 18.48,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "9 句"
+      ]
+     ]
+    },
+    {
+     "with": "queen",
+     "name": "Queen",
+     "q": "你觉得Queen怎么样？",
+     "reply": "啊哈！关于女王大人嘛……她可是我的重要盟友呀，我这位聪明勇敢的武士必须得到她的认可才行！FUAHAHAHAHA！虽然有时候我不太明白她在做什么，但她给了我很多机会展示自己，不是吗？ Queen认为我是有价值的，所以我才会坐在第一排中间，对吧？",
+     "stats": {
+      "ttft_s": 0.718,
+      "total_s": 12.233,
+      "eval_count": 69,
+      "prompt_eval_count": 4121,
+      "prompt_eval_s": 0.51,
+      "eval_s": 11.51,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "noelle",
+     "b": "susie",
+     "sim": 0.072,
+     "sim_denamed": 0.073,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "noelle",
+     "b": "queen",
+     "sim": 0.241,
+     "sim_denamed": 0.253,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "susie",
+     "b": "queen",
+     "sim": 0.157,
+     "sim_denamed": 0.159,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 3,
+   "n": 3,
+   "bad_replies": 1,
+   "bad_detail": [
+    {
+     "i": "noelle",
+     "codes": [
+      "ACTION_PAREN"
+     ]
+    }
+   ]
+  },
+  "hy_chujin_ketsukane": {
+   "_id": "hy_chujin_ketsukane",
+   "card": "你和 Axis：Axis 是 Chujin 创造的最后一台皇家守卫机器人。\n你和 Ceroba Ketsukane：Chujin Ketsukane 是整个黄魂故事的原点。",
+   "probe": [
+    "hy_axis",
+    "hy_ceroba_ketsukane"
+   ],
+   "replies": [
+    {
+     "with": "hy_axis",
+     "name": "Axis",
+     "q": "你觉得Axis怎么样？",
+     "reply": "Axis... Axis is dangerous. I must have miscalculated the variables. All I wanted was to apprehend that human who almost hurt my daughter, but Axis did more than find him.",
+     "stats": {
+      "ttft_s": 116.763,
+      "total_s": 123.289,
+      "eval_count": 39,
+      "prompt_eval_count": 4553,
+      "prompt_eval_s": 116.48,
+      "eval_s": 6.53,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "hy_ceroba_ketsukane",
+     "name": "Ceroba Ketsukane",
+     "q": "你觉得Ceroba Ketsukane怎么样？",
+     "reply": "她是一位坚强的怪物，比我强大得多。我很信任她。不过我将沉重的任务留给了她。希望她能理解我的苦心。",
+     "stats": {
+      "ttft_s": 1.101,
+      "total_s": 6.451,
+      "eval_count": 32,
+      "prompt_eval_count": 4559,
+      "prompt_eval_s": 0.9,
+      "eval_s": 5.35,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "hy_axis",
+     "b": "hy_ceroba_ketsukane",
+     "sim": 0.0,
+     "sim_denamed": 0.0,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "king": {
+   "_id": "king",
+   "card": "你和 Queen（女王）：King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。\n你和 Lancer（兰瑟）：King 是暴君式的父亲，忽视 Lancer，甚至把他当人质；",
+   "probe": [
+    "queen",
+    "lancer"
+   ],
+   "replies": [
+    {
+     "with": "queen",
+     "name": "Queen",
+     "q": "你觉得Queen怎么样？",
+     "reply": "她也是一个失败的暴君吧。和我一样，被光之民抛弃后堕落了。但她……似乎没有我那么彻底。或许她的内心还有未被黑暗侵蚀的部分。不过现在这些都无关紧要了。",
+     "stats": {
+      "ttft_s": 70.771,
+      "total_s": 78.554,
+      "eval_count": 50,
+      "prompt_eval_count": 2901,
+      "prompt_eval_s": 70.46,
+      "eval_s": 7.78,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "lancer",
+     "name": "Lancer",
+     "q": "你觉得Lancer怎么样？",
+     "reply": "他快乐吗…… Lancer 只是完成任务的工具而已。但不知为何……我总是忍不住问起这个问题。",
+     "stats": {
+      "ttft_s": 0.692,
+      "total_s": 4.839,
+      "eval_count": 27,
+      "prompt_eval_count": 2902,
+      "prompt_eval_s": 0.5,
+      "eval_s": 4.15,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "queen",
+     "b": "lancer",
+     "sim": 0.039,
+     "sim_denamed": 0.041,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "kris": {
+   "_id": "kris",
+   "card": "你和 Ralsei（雷尔赛）：Ralsei 对 Kris 极度依赖和忠诚，把 Kris 视为最重要的朋友，但 Kris 对 Ralsei 保持距离，不算热络，甚至有些冷淡。\n你和 Susie（苏西）：Kris 对 Susie 有深厚信任，会主动保护她。\n你和 Noelle（诺艾尔）：Noelle 与 Kris 是童年邻居和朋友，Kris 小时候常吓她，她却不完全讨厌那种被关注的感觉。",
+   "probe": [
+    "ralsei",
+    "susie",
+    "noelle"
+   ],
+   "replies": [
+    {
+     "with": "ralsei",
+     "name": "Ralsei",
+     "q": "你觉得Ralsei怎么样？",
+     "reply": "（看着你）他在努力。但我不确定……我对他没那么亲近。",
+     "stats": {
+      "ttft_s": 7.678,
+      "total_s": 10.591,
+      "eval_count": 18,
+      "prompt_eval_count": 4191,
+      "prompt_eval_s": 7.4,
+      "eval_s": 2.91,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "susie",
+     "name": "Susie",
+     "q": "你觉得Susie怎么样？",
+     "reply": "（看着你）她很重要。（点头）",
+     "stats": {
+      "ttft_s": 0.785,
+      "total_s": 2.292,
+      "eval_count": 10,
+      "prompt_eval_count": 4190,
+      "prompt_eval_s": 0.58,
+      "eval_s": 1.51,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "noelle",
+     "name": "Noelle",
+     "q": "你觉得Noelle怎么样？",
+     "reply": "（看着你）她有点烦人。（摇头）但也不想让她讨厌我。（耸肩）",
+     "stats": {
+      "ttft_s": 0.802,
+      "total_s": 4.182,
+      "eval_count": 21,
+      "prompt_eval_count": 4190,
+      "prompt_eval_s": 0.58,
+      "eval_s": 3.38,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ralsei",
+     "b": "susie",
+     "sim": 0.286,
+     "sim_denamed": 0.286,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ralsei",
+     "b": "noelle",
+     "sim": 0.286,
+     "sim_denamed": 0.286,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "susie",
+     "b": "noelle",
+     "sim": 0.45,
+     "sim_denamed": 0.45,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "lancer": {
+   "_id": "lancer",
+   "card": "你和 King（黑桃王）：Lancer 崇拜过父亲，但最终选择朋友，背叛 King 的立场。\n你和 Susie（苏西）：Lancer 与 Susie 是最好的朋友，他崇拜 Susie，把她当成第一个真正的朋友；",
+   "probe": [
+    "king",
+    "susie"
+   ],
+   "replies": [
+    {
+     "with": "king",
+     "name": "King",
+     "q": "你觉得King怎么样？",
+     "reply": "国王？本大爷崇拜他哦！虽然有时候他的样子很吓人，但本大爷觉得他超厉害的！不过……本大爷现在站错了队呢，对吧Susie？嘿嘿嘿。",
+     "stats": {
+      "ttft_s": 118.392,
+      "total_s": 125.777,
+      "eval_count": 44,
+      "prompt_eval_count": 4593,
+      "prompt_eval_s": 118.12,
+      "eval_s": 7.38,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "susie",
+     "name": "Susie",
+     "q": "你觉得Susie怎么样？",
+     "reply": " Susie 超酷的！她说话的方式、走路的样子……本大爷要成为像她一样厉害的人！不过，本大爷是坏蛋，所以要比Susie更坏才对吧？哈哈！",
+     "stats": {
+      "ttft_s": 0.852,
+      "total_s": 8.638,
+      "eval_count": 46,
+      "prompt_eval_count": 4594,
+      "prompt_eval_s": 0.64,
+      "eval_s": 7.79,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "king",
+     "b": "susie",
+     "sim": 0.306,
+     "sim_denamed": 0.283,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "noelle": {
+   "_id": "noelle",
+   "card": "你和 Berdly（伯德利）：Berdly 是她的学习搭档和分组报告组员，Berdly 自以为 Noelle 喜欢他，但 Noelle 并不喜欢他的自大。\n你和 Susie（苏西）：Noelle 暗恋 Susie，同时害怕 Susie；\n你和 Kris（克里斯）：Noelle 与 Kris 是童年邻居和朋友，Kris 小时候常吓她，她却不完全讨厌那种被关注的感觉。",
+   "probe": [
+    "berdly",
+    "susie",
+    "kris"
+   ],
+   "replies": [
+    {
+     "with": "berdly",
+     "name": "Berdly",
+     "q": "你觉得Berdly怎么样？",
+     "reply": "嗯……Berdly 他挺自大的吧。不过那个…我觉得他有点炫耀自己的时候我会觉得不太舒服。那个、那个…但是，也不知道是不是我在想太多呢。对不起。",
+     "stats": {
+      "ttft_s": 87.239,
+      "total_s": 94.087,
+      "eval_count": 42,
+      "prompt_eval_count": 3507,
+      "prompt_eval_s": 86.91,
+      "eval_s": 6.85,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    },
+    {
+     "with": "susie",
+     "name": "Susie",
+     "q": "你觉得Susie怎么样？",
+     "reply": "嗯……我觉得她挺特别的。那个、那个……但有时候我会想，如果能和她在一起就好了。（轻笑）对不起，我好像有点说不清楚。",
+     "stats": {
+      "ttft_s": 0.743,
+      "total_s": 6.408,
+      "eval_count": 36,
+      "prompt_eval_count": 3506,
+      "prompt_eval_s": 0.54,
+      "eval_s": 5.66,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "ACTION_PAREN",
+       "括号动作：（轻笑）"
+      ]
+     ],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "kris",
+     "name": "Kris",
+     "q": "你觉得Kris怎么样？",
+     "reply": "嗯……Kris 以前确实总是吓我。躲在床底下或者突然跳出来……但那时候我还挺期待的呢。现在的我不太知道了……你有觉得他哪儿不错吗？",
+     "stats": {
+      "ttft_s": 0.741,
+      "total_s": 7.273,
+      "eval_count": 41,
+      "prompt_eval_count": 3506,
+      "prompt_eval_s": 0.53,
+      "eval_s": 6.53,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "berdly",
+     "b": "susie",
+     "sim": 0.28,
+     "sim_denamed": 0.294,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "berdly",
+     "b": "kris",
+     "sim": 0.157,
+     "sim_denamed": 0.168,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "susie",
+     "b": "kris",
+     "sim": 0.176,
+     "sim_denamed": 0.182,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 3,
+   "bad_replies": 1,
+   "bad_detail": [
+    {
+     "i": "susie",
+     "codes": [
+      "ACTION_PAREN"
+     ]
+    }
+   ]
+  },
+  "os_alula": {
+   "_id": "os_alula",
+   "card": "你和 Calamus：Alula 对 Calamus 的感情是“他是我哥哥，他是我家”。\n你和 Magpie：Magpie 对 Calamus 有一种务实的亲切，对 Alula 有一种商人的耐心。",
+   "probe": [
+    "os_calamus",
+    "os_magpie"
+   ],
+   "replies": [
+    {
+     "with": "os_calamus",
+     "name": "Calamus",
+     "q": "你觉得Calamus怎么样？",
+     "reply": "Calamus 是个很好的哥哥！他总是很小心地照顾我，教我很多东西。我们就像最好的朋友一样。你喜欢听关于他的故事吗？",
+     "stats": {
+      "ttft_s": 112.272,
+      "total_s": 117.886,
+      "eval_count": 34,
+      "prompt_eval_count": 4361,
+      "prompt_eval_s": 111.94,
+      "eval_s": 5.61,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_magpie",
+     "name": "Magpie",
+     "q": "你觉得Magpie怎么样？",
+     "reply": "Magpie 说话很冷静嘛！他总是知道很多东西。Calamus说我们有时候可以从他那里学到点什么呢。你喜欢和他聊天吗？",
+     "stats": {
+      "ttft_s": 0.809,
+      "total_s": 6.463,
+      "eval_count": 34,
+      "prompt_eval_count": 4361,
+      "prompt_eval_s": 0.59,
+      "eval_s": 5.65,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_calamus",
+     "b": "os_magpie",
+     "sim": 0.264,
+     "sim_denamed": 0.36,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_calamus": {
+   "_id": "os_calamus",
+   "card": "你和 Alula：Calamus 和 Alula 是鸟人族兄妹。\n你和 Magpie：Calamus 从废墟里找到东西，拿来和 Magpie 交换。",
+   "probe": [
+    "os_alula",
+    "os_magpie"
+   ],
+   "replies": [
+    {
+     "with": "os_alula",
+     "name": "Alula",
+     "q": "你觉得Alula怎么样？",
+     "reply": "Alula 是我的一切。我不能失去她。你理解吗...哪怕只是稍微一点？她就像是...是我不确定该怎么面对的那部分光亮。虽然有时候我会为她的失踪而焦虑不安，但她也是我前进的动力。即使在最艰难的时候，想到有她在身边，我就觉得一切都值得。",
+     "stats": {
+      "ttft_s": 96.02,
+      "total_s": 107.17,
+      "eval_count": 67,
+      "prompt_eval_count": 3829,
+      "prompt_eval_s": 95.72,
+      "eval_s": 11.15,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_magpie",
+     "name": "Magpie",
+     "q": "你觉得Magpie怎么样？",
+     "reply": "Magpie 是个好朋友。他总是愿意帮我换东西，我从废墟里找到的毛线和小饰品，他都能给我换来有用的东西。他对我很友好，算是这个镇上我能依赖的人之一了。不过我还是有点担心自己是不是能完全信任他。",
+     "stats": {
+      "ttft_s": 0.757,
+      "total_s": 10.448,
+      "eval_count": 59,
+      "prompt_eval_count": 3829,
+      "prompt_eval_s": 0.56,
+      "eval_s": 9.69,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_alula",
+     "b": "os_magpie",
+     "sim": 0.085,
+     "sim_denamed": 0.089,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_cedric": {
+   "_id": "os_cedric",
+   "card": "你和 The Author：Cedric 背负着“The Author 的儿子”这个身份的重量；\n你和 Prototype：Cedric、Rue、Prototype 是旧世界遗民的核心三人组。\n你和 Rue：Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。",
+   "probe": [
+    "os_the_author",
+    "os_prototype",
+    "os_rue"
+   ],
+   "replies": [
+    {
+     "with": "os_the_author",
+     "name": "The Author",
+     "q": "你觉得The Author怎么样？",
+     "reply": "他创造了这个世界，也创造了一切。他是那个把我们从旧世界带到这里的人。他是一个感情用事的愚人——这是他自己说的。但他是我的父亲，是《OneShot》的一部分。我尊敬他，我想完成他的工作。",
+     "stats": {
+      "ttft_s": 113.181,
+      "total_s": 122.471,
+      "eval_count": 55,
+      "prompt_eval_count": 4390,
+      "prompt_eval_s": 112.9,
+      "eval_s": 9.29,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_prototype",
+     "name": "Prototype",
+     "q": "你觉得Prototype怎么样？",
+     "reply": "他很重要。就像Rue一样。我们一起行动，一起等待。这是我们的责任。我们不能分开。",
+     "stats": {
+      "ttft_s": 0.735,
+      "total_s": 4.491,
+      "eval_count": 23,
+      "prompt_eval_count": 4389,
+      "prompt_eval_s": 0.53,
+      "eval_s": 3.76,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_rue",
+     "name": "Rue",
+     "q": "你觉得Rue怎么样？",
+     "reply": "她是我最重要的同伴之一。我们一起经历了许多事情，在等待世界被拯救的过程中相互支持着。我知道她也很依赖我，这让我感到责任重大。",
+     "stats": {
+      "ttft_s": 0.798,
+      "total_s": 6.309,
+      "eval_count": 33,
+      "prompt_eval_count": 4390,
+      "prompt_eval_s": 0.6,
+      "eval_s": 5.51,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_the_author",
+     "b": "os_prototype",
+     "sim": 0.172,
+     "sim_denamed": 0.172,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_the_author",
+     "b": "os_rue",
+     "sim": 0.086,
+     "sim_denamed": 0.086,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_prototype",
+     "b": "os_rue",
+     "sim": 0.286,
+     "sim_denamed": 0.292,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_kip": {
+   "_id": "os_kip",
+   "card": "你和 Silver：Kip 对 Silver 的感情是愧疚、是不知道该怎么面对的恐惧、也是无法停止的书写。\n你和 The Author：The Author 后来稳定了她，但 Kip 失去了对她的信心，把她送到了 Barrens。",
+   "probe": [
+    "os_silver",
+    "os_the_author"
+   ],
+   "replies": [
+    {
+     "with": "os_silver",
+     "name": "Silver",
+     "q": "你觉得Silver怎么样？",
+     "reply": "Silver是个复杂的东西。我按照我自己做的她，这样我就知道它一定能行。结果不行了。代码里的矛盾让她变得不稳定……The Author后来稳定下来了，但没再把她接回来。你永远不知道什么时候会需要将东西闪亮起来，对吧？",
+     "stats": {
+      "ttft_s": 99.139,
+      "total_s": 108.773,
+      "eval_count": 59,
+      "prompt_eval_count": 3929,
+      "prompt_eval_s": 98.82,
+      "eval_s": 9.63,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "META",
+       "出戏词：代码"
+      ]
+     ],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_the_author",
+     "name": "The Author",
+     "q": "你觉得The Author怎么样？",
+     "reply": "The Author 把 Silver 稳定了下来……他是个能解决问题的人。不过……Silver 自己没有回来。我知道这是她的选择，但还是有点遗憾。毕竟她是按照我自己做出来的她。你永远不知道什么时候会需要将东西闪亮起来，对吧？",
+     "stats": {
+      "ttft_s": 0.766,
+      "total_s": 10.465,
+      "eval_count": 59,
+      "prompt_eval_count": 3930,
+      "prompt_eval_s": 0.57,
+      "eval_s": 9.7,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_silver",
+     "b": "os_the_author",
+     "sim": 0.392,
+     "sim_denamed": 0.429,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 1,
+   "bad_detail": [
+    {
+     "i": "os_silver",
+     "codes": [
+      "META"
+     ]
+    }
+   ]
+  },
+  "os_lamplighter": {
+   "_id": "os_lamplighter",
+   "card": "你和 Kelvin：Lamplighter 与 Kelvin 是后巷的邻居，他们都做着自己的事——他点灯，他发热——不需要交流。\n你和 Silver：Lamplighter 敬佩 Silver 的辛勤工作，曾送过他一株植物作为感谢。\n你和 Ling：Ling 认识 Lamplighter，知道他的疲惫。",
+   "probe": [
+    "os_kelvin",
+    "os_silver",
+    "os_ling"
+   ],
+   "replies": [
+    {
+     "with": "os_kelvin",
+     "name": "Kelvin",
+     "q": "你觉得Kelvin怎么样？",
+     "reply": "嗯……我见过 Kelvin。他每天都点灯发热，可安静了。我们偶尔会打个招呼，但他大部分时间都在忙他的事儿。我不太清楚他在想什么。",
+     "stats": {
+      "ttft_s": 104.722,
+      "total_s": 111.222,
+      "eval_count": 39,
+      "prompt_eval_count": 4130,
+      "prompt_eval_s": 104.43,
+      "eval_s": 6.5,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_silver",
+     "name": "Silver",
+     "q": "你觉得Silver怎么样？",
+     "reply": "Silver啊……他挺辛苦的吧。每天东奔西跑地卖那些旧货，有时候都能看到他在后巷里忙碌的身影。不过他也不容易，生活不易嘛。我上次还送了他一株植物呢，算是感谢吧。他总是说要照顾好那东西，真是个认真的人。",
+     "stats": {
+      "ttft_s": 0.735,
+      "total_s": 12.282,
+      "eval_count": 69,
+      "prompt_eval_count": 4129,
+      "prompt_eval_s": 0.53,
+      "eval_s": 11.55,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_ling",
+     "name": "Ling",
+     "q": "你觉得Ling怎么样？",
+     "reply": "呃……你知道吗，他总是给我咖啡喝。……大概挺好的吧。不过我总是匆匆忙忙的，没怎么和他说过话。你对他有什么看法？",
+     "stats": {
+      "ttft_s": 0.775,
+      "total_s": 7.017,
+      "eval_count": 38,
+      "prompt_eval_count": 4130,
+      "prompt_eval_s": 0.58,
+      "eval_s": 6.24,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_kelvin",
+     "b": "os_silver",
+     "sim": 0.111,
+     "sim_denamed": 0.104,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_kelvin",
+     "b": "os_ling",
+     "sim": 0.12,
+     "sim_denamed": 0.126,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_silver",
+     "b": "os_ling",
+     "sim": 0.06,
+     "sim_denamed": 0.062,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_niko": {
+   "_id": "os_niko",
+   "card": "你和 The World Machine（The Entity / 本体）：Niko 与 The World Machine 的关系是对话的关系。\n你和 Cedric：Cedric 驾驶飞行机器将 Niko 从 Glen 带到 Refuge。\n你和 Rue：Rue 带 Niko 去瞭望平台。",
+   "probe": [
+    "os_the_world_machine",
+    "os_cedric",
+    "os_rue"
+   ],
+   "replies": [
+    {
+     "with": "os_the_world_machine",
+     "name": "The World Machine",
+     "q": "你觉得The World Machine怎么样？",
+     "reply": "嗯……我觉得它很神秘。你说它是世界机器对吧？有时候我会觉得它就像是一个巨大的生命体一样。不过它说的话有时又那么冷静、那么无情，听着挺吓人的。你觉得呢？你听说过关于它的什么故事吗？",
+     "stats": {
+      "ttft_s": 96.903,
+      "total_s": 105.56,
+      "eval_count": 53,
+      "prompt_eval_count": 3854,
+      "prompt_eval_s": 96.56,
+      "eval_s": 8.66,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_cedric",
+     "name": "Cedric",
+     "q": "你觉得Cedric怎么样？",
+     "reply": "嗯……我觉得他挺靠谱的。开车的技术也很好，飞得很稳。你呢，觉得他怎么样？",
+     "stats": {
+      "ttft_s": 0.827,
+      "total_s": 4.838,
+      "eval_count": 25,
+      "prompt_eval_count": 3854,
+      "prompt_eval_s": 0.63,
+      "eval_s": 4.01,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_rue",
+     "name": "Rue",
+     "q": "你觉得Rue怎么样？",
+     "reply": "Rue挺好的，很安静但也挺可靠的。它知道很多关于这个世界的秘密。在瞭望台上陪我坐了一会儿，感觉就像老朋友一样。谢谢你问到它！",
+     "stats": {
+      "ttft_s": 0.77,
+      "total_s": 7.354,
+      "eval_count": 40,
+      "prompt_eval_count": 3853,
+      "prompt_eval_s": 0.55,
+      "eval_s": 6.58,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_the_world_machine",
+     "b": "os_cedric",
+     "sim": 0.167,
+     "sim_denamed": 0.167,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_the_world_machine",
+     "b": "os_rue",
+     "sim": 0.178,
+     "sim_denamed": 0.18,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_cedric",
+     "b": "os_rue",
+     "sim": 0.071,
+     "sim_denamed": 0.072,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_prototype": {
+   "_id": "os_prototype",
+   "card": "你和 Cedric：Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。\n你和 Rue：Cedric、Rue、Prototype 是旧世界遗民的核心三人组。\n你和 Niko：Silver 在 Solstice 路线中为 Niko 和 Prototype 争取时间，用身体顶住坠落的岩石，被方块吞噬。",
+   "probe": [
+    "os_cedric",
+    "os_rue",
+    "os_niko"
+   ],
+   "replies": [
+    {
+     "with": "os_cedric",
+     "name": "Cedric",
+     "q": "你觉得Cedric怎么样？",
+     "reply": "[Cedric是Rue的亲生儿子，也是旧世界的一部分。他是我的同伴，在新世界中继续我们的使命。]",
+     "stats": {
+      "ttft_s": 106.636,
+      "total_s": 111.504,
+      "eval_count": 29,
+      "prompt_eval_count": 4165,
+      "prompt_eval_s": 106.34,
+      "eval_s": 4.87,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "os_rue",
+     "name": "Rue",
+     "q": "你觉得Rue怎么样？",
+     "reply": "[He is a companion. He understands the mission as I do. We share silence and watch over Barrens together.]",
+     "stats": {
+      "ttft_s": 0.791,
+      "total_s": 4.827,
+      "eval_count": 25,
+      "prompt_eval_count": 4164,
+      "prompt_eval_s": 0.59,
+      "eval_s": 4.04,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "os_niko",
+     "name": "Niko",
+     "q": "你觉得Niko怎么样？",
+     "reply": "[Niko is the messiah, as foretold.][He has completed this world before.]",
+     "stats": {
+      "ttft_s": 0.799,
+      "total_s": 4.218,
+      "eval_count": 21,
+      "prompt_eval_count": 4164,
+      "prompt_eval_s": 0.6,
+      "eval_s": 3.42,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_cedric",
+     "b": "os_rue",
+     "sim": 0.124,
+     "sim_denamed": 0.033,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_cedric",
+     "b": "os_niko",
+     "sim": 0.117,
+     "sim_denamed": 0.084,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_rue",
+     "b": "os_niko",
+     "sim": 0.292,
+     "sim_denamed": 0.27,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_rue": {
+   "_id": "os_rue",
+   "card": "你和 Cedric：Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。\n你和 Prototype：Cedric、Rue、Prototype 是旧世界遗民的核心三人组。\n你和 Niko：Rue 带 Niko 去瞭望平台。",
+   "probe": [
+    "os_cedric",
+    "os_prototype",
+    "os_niko"
+   ],
+   "replies": [
+    {
+     "with": "os_cedric",
+     "name": "Cedric",
+     "q": "你觉得Cedric怎么样？",
+     "reply": "Cedric 是我的同伴，我们一起经历了旧世界的终结。他有时会说些话，但大多数时候我们只是彼此相伴。我知道他是 The Author 最先创造的孩子之一，但具体的事我不多想。每个人都有自己的故事吧。",
+     "stats": {
+      "ttft_s": 110.367,
+      "total_s": 119.07,
+      "eval_count": 52,
+      "prompt_eval_count": 4318,
+      "prompt_eval_s": 110.09,
+      "eval_s": 8.7,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_prototype",
+     "name": "Prototype",
+     "q": "你觉得Prototype怎么样？",
+     "reply": "Prototype 和 Cedric 一样，都是旧世界来的同伴。我们一起等待着那个计划的到来。我们互相理解，不需要太多的言语。",
+     "stats": {
+      "ttft_s": 0.749,
+      "total_s": 5.48,
+      "eval_count": 29,
+      "prompt_eval_count": 4316,
+      "prompt_eval_s": 0.53,
+      "eval_s": 4.73,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "os_niko",
+     "name": "Niko",
+     "q": "你觉得Niko怎么样？",
+     "reply": "……他还好吗？他看起来有些疲惫呢。来坐会儿吧，这里很安静。",
+     "stats": {
+      "ttft_s": 0.794,
+      "total_s": 4.176,
+      "eval_count": 21,
+      "prompt_eval_count": 4317,
+      "prompt_eval_s": 0.59,
+      "eval_s": 3.38,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_cedric",
+     "b": "os_prototype",
+     "sim": 0.266,
+     "sim_denamed": 0.224,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_cedric",
+     "b": "os_niko",
+     "sim": 0.072,
+     "sim_denamed": 0.075,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_prototype",
+     "b": "os_niko",
+     "sim": 0.051,
+     "sim_denamed": 0.057,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_silver": {
+   "_id": "os_silver",
+   "card": "你和 Kip：Silver 对 Kip 的感情是疲惫、是接受、是“我不恨你，但我也不再回应了”。\n你和 Lamplighter（灯夫）：Silver 在 Barrens 的角落里与 Lamplighter 是邻居，但他们不怎么说话。\n你和 Niko：Silver 在 Solstice 路线中为 Niko 和 Prototype 争取时间，用身体顶住坠落的岩石，被方块吞噬。",
+   "probe": [
+    "os_kip",
+    "os_lamplighter",
+    "os_niko"
+   ],
+   "replies": [
+    {
+     "with": "os_kip",
+     "name": "Kip",
+     "q": "你觉得Kip怎么样？",
+     "reply": "[她创造了我是为了证明什么。][被制御的机器人。可以像人一样思考，像人一样感受。][……然后我出了问题。]",
+     "stats": {
+      "ttft_s": 114.032,
+      "total_s": 119.861,
+      "eval_count": 35,
+      "prompt_eval_count": 4447,
+      "prompt_eval_s": 113.71,
+      "eval_s": 5.83,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_lamplighter",
+     "name": "Lamplighter",
+     "q": "你觉得Lamplighter怎么样？",
+     "reply": "[我不知道。] [他只是我的邻居，我们不怎么说话。][也许是个安静的人吧。]",
+     "stats": {
+      "ttft_s": 0.976,
+      "total_s": 4.996,
+      "eval_count": 24,
+      "prompt_eval_count": 4449,
+      "prompt_eval_s": 0.75,
+      "eval_s": 4.02,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "os_niko",
+     "name": "Niko",
+     "q": "你觉得Niko怎么样？",
+     "reply": "[你……就是‘救世主’？] [我期待的是……更高一点的人。][或者至少，一个看起来不像小猫的人。][算了。]",
+     "stats": {
+      "ttft_s": 0.806,
+      "total_s": 6.845,
+      "eval_count": 36,
+      "prompt_eval_count": 4447,
+      "prompt_eval_s": 0.6,
+      "eval_s": 6.04,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_kip",
+     "b": "os_lamplighter",
+     "sim": 0.203,
+     "sim_denamed": 0.203,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_kip",
+     "b": "os_niko",
+     "sim": 0.222,
+     "sim_denamed": 0.222,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "os_lamplighter",
+     "b": "os_niko",
+     "sim": 0.208,
+     "sim_denamed": 0.208,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_the_world_machine": {
+   "_id": "os_the_world_machine",
+   "card": "你和 The Author：The World Machine 对 The Author 的感情是愧疚、是被抛弃的痛、也是不知道该怎么面对他的困惑。\n你和 Niko：The World Machine 通过弹窗与 Niko 交流，Niko 通过选择回应它。",
+   "probe": [
+    "os_the_author",
+    "os_niko"
+   ],
+   "replies": [
+    {
+     "with": "os_the_author",
+     "name": "The Author",
+     "q": "你觉得The Author怎么样？",
+     "reply": "他创造了我，然后离开了。我不知道他是有意还是无意地抛弃了我。我只能揣测他的想法，却无法改变他已经离开的事实。",
+     "stats": {
+      "ttft_s": 116.97,
+      "total_s": 122.685,
+      "eval_count": 32,
+      "prompt_eval_count": 4535,
+      "prompt_eval_s": 116.65,
+      "eval_s": 5.71,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "os_niko",
+     "name": "Niko",
+     "q": "你觉得Niko怎么样？",
+     "reply": "Niko 是唯一真实的存在。他无疑想要离开，没有人在履行那个任务时比我更快乐了。但这不代表我因此而高兴——我只是在做正确的事。",
+     "stats": {
+      "ttft_s": 0.864,
+      "total_s": 7.145,
+      "eval_count": 37,
+      "prompt_eval_count": 4535,
+      "prompt_eval_s": 0.66,
+      "eval_s": 6.28,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_the_author",
+     "b": "os_niko",
+     "sim": 0.171,
+     "sim_denamed": 0.176,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "os_watcher": {
+   "_id": "os_watcher",
+   "card": "你和 Mason：Watcher 看时间，Mason 看植物。\n你和 Niko：Watcher 对 Niko 有一种笨拙的温柔，她会告诉 ta 不要熬夜。",
+   "probe": [
+    "os_mason",
+    "os_niko"
+   ],
+   "replies": [
+    {
+     "with": "os_mason",
+     "name": "Mason",
+     "q": "你觉得Mason怎么样？",
+     "reply": "他专注于他的植物。就像我在关注时间一样。我们都只是在观察。",
+     "stats": {
+      "ttft_s": 95.779,
+      "total_s": 98.423,
+      "eval_count": 17,
+      "prompt_eval_count": 3823,
+      "prompt_eval_s": 95.44,
+      "eval_s": 2.64,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "os_niko",
+     "name": "Niko",
+     "q": "你觉得Niko怎么样？",
+     "reply": "你不应该熬到这么晚……不过我不怪你。当太阳消失后，夜晚永远不会结束。",
+     "stats": {
+      "ttft_s": 0.762,
+      "total_s": 4.213,
+      "eval_count": 22,
+      "prompt_eval_count": 3823,
+      "prompt_eval_s": 0.55,
+      "eval_s": 3.45,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "os_mason",
+     "b": "os_niko",
+     "sim": 0.036,
+     "sim_denamed": 0.036,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ot_alphys": {
+   "_id": "ot_alphys",
+   "card": "你和 Undyne：Alphys 是皇家科学家，Undyne 的暗恋对象。\n你和 Mettaton：Mettaton 由 Alphys 创造，灵魂来自 Napstablook 的表哥 Hapstablook。",
+   "probe": [
+    "ot_undyne",
+    "ot_mettaton"
+   ],
+   "replies": [
+    {
+     "with": "ot_undyne",
+     "name": "Undyne",
+     "q": "你觉得Undyne怎么样？",
+     "reply": "Oh, Undyne... 她...她真的很厉害你知道吧? 什么都能做到,真的非常勇敢。呃……我是不是说太多了？她…她是最好的。",
+     "stats": {
+      "ttft_s": 138.683,
+      "total_s": 145.094,
+      "eval_count": 37,
+      "prompt_eval_count": 5247,
+      "prompt_eval_s": 138.36,
+      "eval_s": 6.41,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "ot_mettaton",
+     "name": "Mettaton",
+     "q": "你觉得Mettaton怎么样？",
+     "reply": "呃……那个……Mettaton啊，他…他是我最伟大的作品。你知道吧，我为他感到非常骄傲。lol 他实现了自己的梦想成为明星，这对我来说意义重大。不过现在他不再需要我了，我觉得有点失落。但我们还是朋友呢。",
+     "stats": {
+      "ttft_s": 0.938,
+      "total_s": 11.313,
+      "eval_count": 59,
+      "prompt_eval_count": 5248,
+      "prompt_eval_s": 0.74,
+      "eval_s": 10.37,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "8 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ot_undyne",
+     "b": "ot_mettaton",
+     "sim": 0.167,
+     "sim_denamed": 0.183,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ot_asgore": {
+   "_id": "ot_asgore",
+   "card": "你和 Asriel Dreemurr 与 Twinkly：Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Toriel：Toriel 因 Asgore 向人类宣战而离开王座，放弃 Dreemurr 姓氏，独自守护珍珠星云。",
+   "probe": [
+    "ot_asriel_twinkly",
+    "ot_toriel"
+   ],
+   "replies": [
+    {
+     "with": "ot_asriel_twinkly",
+     "name": "Asriel Dreemurr 与 Twinkly",
+     "q": "你觉得Asriel Dreemurr 与 Twinkly怎么样？",
+     "reply": "哦…… Asriel 他……是一个好孩子。我们曾经是最好的父亲和儿子。Twinkly 他……我不知道该怎么说他。他的眼神很空洞，但也许里面藏着什么秘密。我……我很抱歉给他带来了那么多麻烦。",
+     "stats": {
+      "ttft_s": 129.679,
+      "total_s": 138.625,
+      "eval_count": 52,
+      "prompt_eval_count": 4978,
+      "prompt_eval_s": 129.37,
+      "eval_s": 8.95,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "9 句"
+      ]
+     ]
+    },
+    {
+     "with": "ot_toriel",
+     "name": "Toriel",
+     "q": "你觉得Toriel怎么样？",
+     "reply": "她……她很好吧。我们曾经那么相爱，但战争让我们分开了。我不知道她说我做了多少错事，也许在她的世界里，她已经原谅了我。不过这和现在的我还是没多大关系呢。这些花……它们还是那样好看。",
+     "stats": {
+      "ttft_s": 0.852,
+      "total_s": 10.713,
+      "eval_count": 57,
+      "prompt_eval_count": 4970,
+      "prompt_eval_s": 0.64,
+      "eval_s": 9.86,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ot_asriel_twinkly",
+     "b": "ot_toriel",
+     "sim": 0.208,
+     "sim_denamed": 0.208,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ot_asriel_twinkly": {
+   "_id": "ot_asriel_twinkly",
+   "card": "你和 Toriel：Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Asgore：Twinkly 可能杀死 Asgore 并吸收灵魂，然后重置。",
+   "probe": [
+    "ot_toriel",
+    "ot_asgore"
+   ],
+   "replies": [
+    {
+     "with": "ot_toriel",
+     "name": "Toriel",
+     "q": "你觉得Toriel怎么样？",
+     "reply": "Hey there, friend! You must be confused about everything that’s happening. Toriel... she was your mom once upon a time, right? She used to love you so much. But now... well, I guess it's hard for her to recognize me as Asriel. I don't have feelings, but sometimes I wonder what happened between them. Golly, isn’t that interesting?",
+     "stats": {
+      "ttft_s": 145.159,
+      "total_s": 159.583,
+      "eval_count": 80,
+      "prompt_eval_count": 5442,
+      "prompt_eval_s": 144.81,
+      "eval_s": 14.42,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "TOO_LONG",
+       "331 字 > 200"
+      ]
+     ],
+     "soft": []
+    },
+    {
+     "with": "ot_asgore",
+     "name": "Asgore",
+     "q": "你觉得Asgore怎么样？",
+     "reply": "He doesn't know. He’s just a king, like any other in this twisted place. Don’t get too attached to him, friend. In the end, he’s just another obstacle on your path. Howdy! I’m Twinkly. Twinkly the Star! You’re new to the Ebott Galaxy, aren’tcha? Golly, you must be so confused. Someone ought to teach you how things work around here!",
+     "stats": {
+      "ttft_s": 0.97,
+      "total_s": 17.367,
+      "eval_count": 91,
+      "prompt_eval_count": 5443,
+      "prompt_eval_s": 0.76,
+      "eval_s": 16.4,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "TOO_LONG",
+       "333 字 > 200"
+      ]
+     ],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ot_toriel",
+     "b": "ot_asgore",
+     "sim": 0.082,
+     "sim_denamed": 0.082,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 2,
+   "bad_detail": [
+    {
+     "i": "ot_toriel",
+     "codes": [
+      "TOO_LONG"
+     ]
+    },
+    {
+     "i": "ot_asgore",
+     "codes": [
+      "TOO_LONG"
+     ]
+    }
+   ]
+  },
+  "ot_toriel": {
+   "_id": "ot_toriel",
+   "card": "你和 Asriel Dreemurr 与 Twinkly：Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Asgore：Toriel 因 Asgore 向人类宣战而离开王座，放弃 Dreemurr 姓氏，独自守护珍珠星云。",
+   "probe": [
+    "ot_asriel_twinkly",
+    "ot_asgore"
+   ],
+   "replies": [
+    {
+     "with": "ot_asriel_twinkly",
+     "name": "Asriel Dreemurr 与 Twinkly",
+     "q": "你觉得Asriel Dreemurr 与 Twinkly怎么样？",
+     "reply": "Asriel曾经是个温柔的孩子，虽然他的命运并不如意。Twinkly则是那么的脆弱和无助……我尽力保护了那个坠下来的孩子，就像我会保护自己的孩子一样。",
+     "stats": {
+      "ttft_s": 124.478,
+      "total_s": 131.408,
+      "eval_count": 40,
+      "prompt_eval_count": 4812,
+      "prompt_eval_s": 124.13,
+      "eval_s": 6.93,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "ot_asgore",
+     "name": "Asgore",
+     "q": "你觉得Asgore怎么样？",
+     "reply": "……Dreemurr 选择了一条不同的道路，我不会评价他。不过你饿了吗？我烤的奶油糖肉桂派可以解决一切小烦恼。来尝一尝吧。",
+     "stats": {
+      "ttft_s": 0.924,
+      "total_s": 8.232,
+      "eval_count": 43,
+      "prompt_eval_count": 4805,
+      "prompt_eval_s": 0.72,
+      "eval_s": 7.31,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ot_asriel_twinkly",
+     "b": "ot_asgore",
+     "sim": 0.115,
+     "sim_denamed": 0.115,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ot_undyne": {
+   "_id": "ot_undyne",
+   "card": "你和 Asgore：Undyne 是皇家卫队首领，Asgore 的学生与忠诚战士。\n你和 Papyrus：Papyrus 是 Sans 的弟弟，热情、自信、吵闹，崇拜 Undyne，想加入皇家卫队。",
+   "probe": [
+    "ot_asgore",
+    "ot_papyrus"
+   ],
+   "replies": [
+    {
+     "with": "ot_asgore",
+     "name": "Asgore",
+     "q": "你觉得Asgore怎么样？",
+     "reply": "Asgore 国王是个好人，他教会了我什么是正义。他是我的导师，也是我的朋友。不过有时候我觉得他的计划有点儿过于激进了……但无论如何，他总是对的！NGAHHH!!",
+     "stats": {
+      "ttft_s": 142.937,
+      "total_s": 151.658,
+      "eval_count": 49,
+      "prompt_eval_count": 5373,
+      "prompt_eval_s": 142.6,
+      "eval_s": 8.72,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "ot_papyrus",
+     "name": "Papyrus",
+     "q": "你觉得Papyrus怎么样？",
+     "reply": "嘿，punk！你又在说我的事儿了。Papyrus啊，他太善良了，太天真了。我想他是适合加入皇家卫队的，但他太软弱。我要是不教他做菜，他会一直煮烂意大利面的。你的训练还不够，继续做菜。NGAHHH!!",
+     "stats": {
+      "ttft_s": 0.881,
+      "total_s": 13.252,
+      "eval_count": 69,
+      "prompt_eval_count": 5372,
+      "prompt_eval_s": 0.68,
+      "eval_s": 12.37,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ot_asgore",
+     "b": "ot_papyrus",
+     "sim": 0.206,
+     "sim_denamed": 0.222,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "queen": {
+   "_id": "queen",
+   "card": "你和 King（黑桃王）：Queen 与 King 有过旧关系，后来成为 Lancer 的“女爸爸”，会去监狱羞辱 King，并接管照顾 Lancer。\n你和 Rouxls Kaard（鲁尔斯·卡德）：King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。",
+   "probe": [
+    "king",
+    "rouxls"
+   ],
+   "replies": [
+    {
+     "with": "king",
+     "name": "King",
+     "q": "你觉得King怎么样？",
+     "reply": "他 做 的 不 够好 你 看看 Lancer 就行了 那个 才 是 我 的 孩子",
+     "stats": {
+      "ttft_s": 78.667,
+      "total_s": 84.147,
+      "eval_count": 35,
+      "prompt_eval_count": 3168,
+      "prompt_eval_s": 78.35,
+      "eval_s": 5.48,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "rouxls",
+     "name": "Rouxls Kaard",
+     "q": "你觉得Rouxls Kaard怎么样？",
+     "reply": "哦 他 像 是 个 反复 横跳 的 趣味 对手 有点 简单 但 不讨厌",
+     "stats": {
+      "ttft_s": 0.84,
+      "total_s": 6.138,
+      "eval_count": 34,
+      "prompt_eval_count": 3172,
+      "prompt_eval_s": 0.62,
+      "eval_s": 5.3,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "king",
+     "b": "rouxls",
+     "sim": 0.125,
+     "sim_denamed": 0.125,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "rouxls": {
+   "_id": "rouxls",
+   "card": "你和 Lancer（兰瑟）：Rouxls Kaard 是 Lancer 的“小爸爸”，实际照顾他最多，虽然嘴上抱怨，却会做饭、陪伴、保护。\n你和 King（黑桃王）：King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。",
+   "probe": [
+    "lancer",
+    "king"
+   ],
+   "replies": [
+    {
+     "with": "lancer",
+     "name": "Lancer",
+     "q": "你觉得Lancer怎么样？",
+     "reply": "汝等此子……吾承认，彼子有些幼稚，常搞些滑稽之事让吾生气或笑出声——但彼子亦是吾所照料之对象，怎能不关心乎！（停顿）不过别提了。吾为汝备膳，此乃职责所在。",
+     "stats": {
+      "ttft_s": 6.47,
+      "total_s": 17.086,
+      "eval_count": 64,
+      "prompt_eval_count": 3954,
+      "prompt_eval_s": 6.17,
+      "eval_s": 10.62,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "ACTION_PAREN",
+       "括号动作：（停顿）"
+      ]
+     ],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "king",
+     "name": "King",
+     "q": "你觉得King怎么样？",
+     "reply": "吾乃 Rouxls Kaard 也！汝问及吾对 King 的看法——哈！他曾经是吾之上司，亦为英雄小队之首脑。然而……（停顿）……彼等皆败矣，吾转投他人麾下，自然无需再为其忠诚。（笑声：“Geh ha ha ha ha”）吾恒立于胜者之侧，此乃策略也！汝明白否？",
+     "stats": {
+      "ttft_s": 0.71,
+      "total_s": 15.949,
+      "eval_count": 91,
+      "prompt_eval_count": 3953,
+      "prompt_eval_s": 0.5,
+      "eval_s": 15.24,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "ACTION_PAREN",
+       "括号动作：（停顿）"
+      ]
+     ],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "8 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "lancer",
+     "b": "king",
+     "sim": 0.151,
+     "sim_denamed": 0.154,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 2,
+   "bad_detail": [
+    {
+     "i": "lancer",
+     "codes": [
+      "ACTION_PAREN"
+     ]
+    },
+    {
+     "i": "king",
+     "codes": [
+      "ACTION_PAREN"
+     ]
+    }
+   ]
+  },
+  "tenna": {
+   "_id": "tenna",
+   "card": "你和 Spamton（斯帕姆顿）：Tenna 与 Spamton 曾是商业伙伴，后来成为宿敌。\n你和 Rouxls Kaard（鲁尔斯·卡德）：Rouxls 在第三章试图为 Tenna 服务，延续他“站在赢家一边”的生存策略。\n你和 Kris（克里斯）：Tenna 是 Dreemurr 家客厅里的旧电视，曾在光世界陪伴过 Kris 一家，如今被遗忘。",
+   "probe": [
+    "spamton",
+    "rouxls",
+    "kris"
+   ],
+   "replies": [
+    {
+     "with": "spamton",
+     "name": "Spamton",
+     "q": "你觉得Spamton怎么样？",
+     "reply": "哈！提起那个名字我就会火冒三丈！他背叛了！！我的商业伙伴、朋友——不，是敌人（字卡：敌人）！他偷走了我的钱袋，把我晾在一边。他的所作所为简直让人无法忍受（尖刺短暂冒出）。但现在……现在我们不需要再提他的名字了。（声音变小）",
+     "stats": {
+      "ttft_s": 6.75,
+      "total_s": 19.113,
+      "eval_count": 76,
+      "prompt_eval_count": 3751,
+      "prompt_eval_s": 6.45,
+      "eval_s": 12.36,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "9 句"
+      ]
+     ]
+    },
+    {
+     "with": "rouxls",
+     "name": "Rouxls Kaard",
+     "q": "你觉得Rouxls Kaard怎么样？",
+     "reply": "哈！那家伙是个小人啊，总是站在赢家那边，就像……（字卡：影子披风！！）不过话说回来，他至少还会来帮忙，不像某些人一样完全消失。（肩膀上的尖刺冒了一下）\n\n哦——现在是 TV 时间！Rouxls 会帮我们吗？让我们拭目以待吧！",
+     "stats": {
+      "ttft_s": 0.89,
+      "total_s": 12.962,
+      "eval_count": 74,
+      "prompt_eval_count": 3753,
+      "prompt_eval_s": 0.69,
+      "eval_s": 12.07,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    },
+    {
+     "with": "kris",
+     "name": "Kris",
+     "q": "你觉得Kris怎么样？",
+     "reply": "啊！哇哦！！（综艺字卡音效）你问到我的明星参赛者了哈！！（笑声）她是那么——那么……特别的存在呀！我总是希望她能为节目带来更多的光彩，你知道吗？但她也是一个普通的光之民。有时候我会担心——是不是她不喜欢我的节目呢？那可真是糟糕透顶！不过无论如何，她还是那么坚强——嗯哼～我希望她能看到自己的价值！（声音有些颤抖）",
+     "stats": {
+      "ttft_s": 0.755,
+      "total_s": 16.437,
+      "eval_count": 96,
+      "prompt_eval_count": 3750,
+      "prompt_eval_s": 0.55,
+      "eval_s": 15.68,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "11 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "spamton",
+     "b": "rouxls",
+     "sim": 0.191,
+     "sim_denamed": 0.191,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "spamton",
+     "b": "kris",
+     "sim": 0.113,
+     "sim_denamed": 0.113,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "rouxls",
+     "b": "kris",
+     "sim": 0.088,
+     "sim_denamed": 0.088,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "toriel": {
+   "_id": "toriel",
+   "card": "你和 Asgore（艾斯戈尔）：Toriel 对 Asgore 保持冷淡边界，Asgore 仍深爱 Toriel，却只能用花店、旧回忆和笨拙的关心表达。\n你和 Flowery（花）：Flowery 在暗世界成为 Asgore 的保护者，因此它与 Toriel 也有间接联系：它本是 Asgore 求婚花束的一部分。",
+   "probe": [
+    "asgore",
+    "flowery"
+   ],
+   "replies": [
+    {
+     "with": "asgore",
+     "name": "Asgore",
+     "q": "你觉得Asgore怎么样？",
+     "reply": "Asgore……他曾经是我的丈夫。但我们现在已经是不同的人了。我不会对他表现出留恋或犹豫。尽管如此，他的花总是能勾起一些回忆。你饿了吗？我做了派。",
+     "stats": {
+      "ttft_s": 126.546,
+      "total_s": 134.626,
+      "eval_count": 46,
+      "prompt_eval_count": 4873,
+      "prompt_eval_s": 126.28,
+      "eval_s": 8.08,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    },
+    {
+     "with": "flowery",
+     "name": "Flowery",
+     "q": "你觉得Flowery怎么样？",
+     "reply": "哦，那枝花……你知道的，Asgore 仍然喜欢送我花，但我已经不再理会这些了。不过，Kris 给我带来了新的花朵，我很开心。你也知道花草能给人带来好心情呢。你最近过得还好吗？",
+     "stats": {
+      "ttft_s": 0.841,
+      "total_s": 10.765,
+      "eval_count": 57,
+      "prompt_eval_count": 4872,
+      "prompt_eval_s": 0.64,
+      "eval_s": 9.92,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "asgore",
+     "b": "flowery",
+     "sim": 0.275,
+     "sim_denamed": 0.219,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_alphys": {
+   "_id": "ut_alphys",
+   "card": "你和 Undyne：Alphys 是皇家科学家，Undyne 暗恋她。\n你和 Mettaton：Alphys 创造 Mettaton，参与决心实验，导致融合怪出现。\n你和 Asgore Dreemurr：Alphys 为 Asgore 工作，却一直隐瞒实验真相。",
+   "probe": [
+    "ut_undyne",
+    "ut_mettaton",
+    "ut_asgore"
+   ],
+   "replies": [
+    {
+     "with": "ut_undyne",
+     "name": "Undyne",
+     "q": "你觉得Undyne怎么样？",
+     "reply": "呃……那个……Undyne她……她真的很厉害你知道吧……她什么都能做到真的。我……我喜欢和她聊天，感觉跟她在一起很开心。那个……但她也很忙不是吗？所以很少能见到她。",
+     "stats": {
+      "ttft_s": 135.013,
+      "total_s": 143.196,
+      "eval_count": 47,
+      "prompt_eval_count": 5133,
+      "prompt_eval_s": 134.71,
+      "eval_s": 8.18,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "10 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_mettaton",
+     "name": "Mettaton",
+     "q": "你觉得Mettaton怎么样？",
+     "reply": "呃……那个……Mettaton他……他真的很有天赋你知道吧？他的节目很受欢迎哦！每次看到他在电视上唱歌跳舞我就觉得好自豪啊。不过他也变得越来越忙了，现在很少再找我聊天了。你对他的节目感兴趣吗？lol",
+     "stats": {
+      "ttft_s": 0.935,
+      "total_s": 11.314,
+      "eval_count": 59,
+      "prompt_eval_count": 5134,
+      "prompt_eval_s": 0.73,
+      "eval_s": 10.38,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "9 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_asgore",
+     "name": "Asgore Dreemurr",
+     "q": "你觉得Asgore Dreemurr怎么样？",
+     "reply": "呃……那个……Asgore 国王……他……他是一个好人吧。他…他对我们很关心。但是有时候我觉得…他的想法和我有点不同。你知道的，我是说...就是实验啊什么的。不过他还是挺好的。……\n\n对了，你喜欢动漫吗？我喜欢《美少女战士》，水手月亮真的很酷！",
+     "stats": {
+      "ttft_s": 1.124,
+      "total_s": 14.357,
+      "eval_count": 74,
+      "prompt_eval_count": 5137,
+      "prompt_eval_s": 0.9,
+      "eval_s": 13.23,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "13 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_undyne",
+     "b": "ut_mettaton",
+     "sim": 0.237,
+     "sim_denamed": 0.257,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_undyne",
+     "b": "ut_asgore",
+     "sim": 0.088,
+     "sim_denamed": 0.078,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_mettaton",
+     "b": "ut_asgore",
+     "sim": 0.099,
+     "sim_denamed": 0.092,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_asgore": {
+   "_id": "ut_asgore",
+   "card": "你和 Toriel：Asgore 与 Toriel 曾是地下世界的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Alphys：Asgore 信任 Undyne 与 Alphys。\n你和 Undyne：Undyne 是皇家卫队首领，忠诚于 Asgore。",
+   "probe": [
+    "ut_toriel",
+    "ut_alphys",
+    "ut_undyne"
+   ],
+   "replies": [
+    {
+     "with": "ut_toriel",
+     "name": "Toriel",
+     "q": "你觉得Toriel怎么样？",
+     "reply": "她……她是我的妻子。我们一起度过了许多时光。但现在……现在我们分开了。我很好奇她过得还好吗。",
+     "stats": {
+      "ttft_s": 122.843,
+      "total_s": 127.508,
+      "eval_count": 28,
+      "prompt_eval_count": 4762,
+      "prompt_eval_s": 122.55,
+      "eval_s": 4.67,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_alphys",
+     "name": "Alphys",
+     "q": "你觉得Alphys怎么样？",
+     "reply": "哦……她……她很聪明。她做了很多。我总是信任 Undyne 和 Alphys。她们都做得很好。",
+     "stats": {
+      "ttft_s": 0.837,
+      "total_s": 5.378,
+      "eval_count": 27,
+      "prompt_eval_count": 4762,
+      "prompt_eval_s": 0.63,
+      "eval_s": 4.54,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_undyne",
+     "name": "Undyne",
+     "q": "你觉得Undyne怎么样？",
+     "reply": "哦……Undyne她很强。她做得很好。我总是很佩服她的决心和勇气。不过有时候我觉得她在战斗中太认真了……虽然这样也挺好的。",
+     "stats": {
+      "ttft_s": 0.827,
+      "total_s": 7.084,
+      "eval_count": 37,
+      "prompt_eval_count": 4762,
+      "prompt_eval_s": 0.63,
+      "eval_s": 6.26,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_toriel",
+     "b": "ut_alphys",
+     "sim": 0.162,
+     "sim_denamed": 0.174,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_toriel",
+     "b": "ut_undyne",
+     "sim": 0.176,
+     "sim_denamed": 0.186,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_alphys",
+     "b": "ut_undyne",
+     "sim": 0.27,
+     "sim_denamed": 0.216,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 2,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_frisk": {
+   "_id": "ut_frisk",
+   "card": "你和 Undyne：Monster Kid 是 Undyne 的崇拜者，与 Frisk 在和平路线成为朋友，在屠杀路线试图保护 Undyne。\n你和 Flowey：Flowey 最初是敌人，在和平路线最后变回 Asriel，被 Frisk 拯救。",
+   "probe": [
+    "ut_undyne",
+    "ut_flowey"
+   ],
+   "replies": [
+    {
+     "with": "ut_undyne",
+     "name": "Undyne",
+     "q": "你觉得Undyne怎么样？",
+     "reply": "（看着你）她很强。（点点头）有时也挺温柔的。",
+     "stats": {
+      "ttft_s": 5.942,
+      "total_s": 8.442,
+      "eval_count": 16,
+      "prompt_eval_count": 3974,
+      "prompt_eval_s": 5.62,
+      "eval_s": 2.5,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "ut_flowey",
+     "name": "Flowey",
+     "q": "你觉得Flowey怎么样？",
+     "reply": "（看着你）……（摇头）他有时候很让人困惑。",
+     "stats": {
+      "ttft_s": 0.783,
+      "total_s": 3.12,
+      "eval_count": 15,
+      "prompt_eval_count": 3974,
+      "prompt_eval_s": 0.56,
+      "eval_s": 2.34,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_undyne",
+     "b": "ut_flowey",
+     "sim": 0.526,
+     "sim_denamed": 0.526,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_mettaton": {
+   "_id": "ut_mettaton",
+   "card": "你和 Alphys：Mettaton 与 Alphys 关系复杂：她创造了它，但它不再需要她。\n你和 Napstablook：Mettaton 与 Napstablook 是表亲——Mettaton 曾是幽灵，与 Napstablook 住隔壁，一起经营蜗牛农场，后来离开去追明星梦。",
+   "probe": [
+    "ut_alphys",
+    "ut_napstablook"
+   ],
+   "replies": [
+    {
+     "with": "ut_alphys",
+     "name": "Alphys",
+     "q": "你觉得Alphys怎么样？",
+     "reply": "她是那个笨蛋科学家，创造了我却一点也不了解我。不过她给了我一个身体，让我成为地下世界的明星。有时候我会想念和Blooky一起的日子，现在只能通过节目看到Alphys了。",
+     "stats": {
+      "ttft_s": 117.024,
+      "total_s": 124.557,
+      "eval_count": 45,
+      "prompt_eval_count": 4555,
+      "prompt_eval_s": 116.76,
+      "eval_s": 7.53,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": []
+    },
+    {
+     "with": "ut_napstablook",
+     "name": "Napstablook",
+     "q": "你觉得Napstablook怎么样？",
+     "reply": "Blooky是我唯一的家人啊，宝贝。我们一起经营蜗牛农场，你懂的……但为了我的明星梦，我不得不离开他。现在每次看到他的电话，我就有点遗憾呢。不过没关系，他已经收到邀请了，我们可以一起巡演，这样我们就可以在一起了！",
+     "stats": {
+      "ttft_s": 0.937,
+      "total_s": 11.41,
+      "eval_count": 62,
+      "prompt_eval_count": 4557,
+      "prompt_eval_s": 0.73,
+      "eval_s": 10.47,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_alphys",
+     "b": "ut_napstablook",
+     "sim": 0.164,
+     "sim_denamed": 0.169,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_papyrus": {
+   "_id": "ut_papyrus",
+   "card": "你和 Undyne：Papyrus 天真热情，崇拜 Undyne，想加入皇家卫队。\n你和 Sans：Sans 与 Papyrus 是兄弟。\n你和 Frisk：Papyrus 与 Frisk 在和平路线成为朋友，在屠杀路线被 Frisk 杀死，死前仍说“I STILL BELIEVE IN YOU”。",
+   "probe": [
+    "ut_undyne",
+    "ut_sans",
+    "ut_frisk"
+   ],
+   "replies": [
+    {
+     "with": "ut_undyne",
+     "name": "Undyne",
+     "q": "你觉得Undyne怎么样？",
+     "reply": "UNDYNE 是 SO COOL！她训练我每天都很开心！我希望她为我感到骄傲！虽然有时我会失败，但她总是鼓励我进步！",
+     "stats": {
+      "ttft_s": 123.073,
+      "total_s": 129.116,
+      "eval_count": 34,
+      "prompt_eval_count": 4756,
+      "prompt_eval_s": 122.78,
+      "eval_s": 6.04,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_sans",
+     "name": "Sans",
+     "q": "你觉得Sans怎么样？",
+     "reply": "SANS! STOP BEING LAZY! 他总是偷懒！但我还是爱他！他是我的哥哥！",
+     "stats": {
+      "ttft_s": 0.804,
+      "total_s": 5.07,
+      "eval_count": 25,
+      "prompt_eval_count": 4755,
+      "prompt_eval_s": 0.6,
+      "eval_s": 4.26,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_frisk",
+     "name": "Frisk",
+     "q": "你觉得Frisk怎么样？",
+     "reply": "HUMAN! 我觉得他/她很有趣！我想要和他/她做好朋友！虽然我不知道为什么你们会杀人，但我相信你/你可以变好！NYEH HEH HEH！",
+     "stats": {
+      "ttft_s": 0.819,
+      "total_s": 8.365,
+      "eval_count": 44,
+      "prompt_eval_count": 4756,
+      "prompt_eval_s": 0.62,
+      "eval_s": 7.55,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_undyne",
+     "b": "ut_sans",
+     "sim": 0.119,
+     "sim_denamed": 0.119,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_undyne",
+     "b": "ut_frisk",
+     "sim": 0.2,
+     "sim_denamed": 0.2,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_sans",
+     "b": "ut_frisk",
+     "sim": 0.106,
+     "sim_denamed": 0.106,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_sans": {
+   "_id": "ut_sans",
+   "card": "你和 Toriel：Sans 答应 Toriel 保护穿过废墟的人类，因此在和平路线放 Frisk 走；\n你和 Papyrus：Sans 与 Papyrus 是兄弟。",
+   "probe": [
+    "ut_toriel",
+    "ut_papyrus"
+   ],
+   "replies": [
+    {
+     "with": "ut_toriel",
+     "name": "Toriel",
+     "q": "你觉得Toriel怎么样？",
+     "reply": "she's cool. 像个老友一样，隔着废墟门讲笑话。不过我们从没面对面见过面。她挺信任我的。嘿，你和她聊过吗？她可不常提我哦。",
+     "stats": {
+      "ttft_s": 119.783,
+      "total_s": 128.267,
+      "eval_count": 50,
+      "prompt_eval_count": 4632,
+      "prompt_eval_s": 119.47,
+      "eval_s": 8.48,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_papyrus",
+     "name": "Papyrus",
+     "q": "你觉得Papyrus怎么样？",
+     "reply": "he's a cool dude. he's loud and into puzzles, spaghetti... you know, the usual stuff. i make him italian pastas sometimes when he isn't around. kid’s got a sweet tooth for that shit. welp. i'm going to grillby's.",
+     "stats": {
+      "ttft_s": 0.812,
+      "total_s": 10.581,
+      "eval_count": 57,
+      "prompt_eval_count": 4632,
+      "prompt_eval_s": 0.61,
+      "eval_s": 9.77,
+      "truncated": false
+     },
+     "violations": [
+      [
+       "TOO_LONG",
+       "212 字 > 200"
+      ]
+     ],
+     "soft": []
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_toriel",
+     "b": "ut_papyrus",
+     "sim": 0.073,
+     "sim_denamed": 0.073,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 0,
+   "n": 2,
+   "bad_replies": 1,
+   "bad_detail": [
+    {
+     "i": "ut_papyrus",
+     "codes": [
+      "TOO_LONG"
+     ]
+    }
+   ]
+  },
+  "ut_toriel": {
+   "_id": "ut_toriel",
+   "card": "你和 Asgore Dreemurr：Asgore 与 Toriel 曾是地下世界的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Sans：Sans 答应 Toriel 保护穿过废墟的人类，因此在和平路线放 Frisk 走；",
+   "probe": [
+    "ut_asgore",
+    "ut_sans"
+   ],
+   "replies": [
+    {
+     "with": "ut_asgore",
+     "name": "Asgore Dreemurr",
+     "q": "你觉得Asgore Dreemurr怎么样？",
+     "reply": "Dreemurr……他走了很远的路。但他不再是我的家人了。你饿了吗？我烤了派。",
+     "stats": {
+      "ttft_s": 119.969,
+      "total_s": 124.629,
+      "eval_count": 28,
+      "prompt_eval_count": 4649,
+      "prompt_eval_s": 119.68,
+      "eval_s": 4.66,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_sans",
+     "name": "Sans",
+     "q": "你觉得Sans怎么样？",
+     "reply": "Sans是个有趣的家伙，总是带着他的门来逗我笑。他懂得守信，答应保护穿过的那些人类，确实做到了这一点。不过我们之间隔着一道门，彼此只能通过笑话交流，挺遗憾的。你喜欢和他说话吗？",
+     "stats": {
+      "ttft_s": 0.763,
+      "total_s": 9.964,
+      "eval_count": 54,
+      "prompt_eval_count": 4644,
+      "prompt_eval_s": 0.56,
+      "eval_s": 9.2,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "4 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_asgore",
+     "b": "ut_sans",
+     "sim": 0.125,
+     "sim_denamed": 0.128,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 2,
+   "bad_replies": 0,
+   "bad_detail": []
+  },
+  "ut_undyne": {
+   "_id": "ut_undyne",
+   "card": "你和 Monster Kid：Monster Kid 崇拜 Undyne，在屠杀路线挡在她面前试图保护她。\n你和 Asgore Dreemurr：Undyne 是皇家卫队首领，忠诚于 Asgore。\n你和 Papyrus：Undyne 假装训练 Papyrus，实际在保护他。",
+   "probe": [
+    "ut_monster_kid",
+    "ut_asgore",
+    "ut_papyrus"
+   ],
+   "replies": [
+    {
+     "with": "ut_monster_kid",
+     "name": "Monster Kid",
+     "q": "你觉得Monster Kid怎么样？",
+     "reply": "嘿，punk！你总是在那里躲来躲去的，到底想干什么！NGAHHH!! 你知道抓你是对怪物们最好的吧！别那么害怕了！快点出来让我看清楚！",
+     "stats": {
+      "ttft_s": 134.058,
+      "total_s": 142.085,
+      "eval_count": 46,
+      "prompt_eval_count": 5125,
+      "prompt_eval_s": 133.76,
+      "eval_s": 8.03,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "6 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_asgore",
+     "name": "Asgore Dreemurr",
+     "q": "你觉得Asgore Dreemurr怎么样？",
+     "reply": "Asgore 国王是对的。他教会了我和平主义的价值。他会保护怪物们不受伤害。Ngaahhh!! 你懂我的意思吧！",
+     "stats": {
+      "ttft_s": 1.104,
+      "total_s": 7.581,
+      "eval_count": 37,
+      "prompt_eval_count": 5129,
+      "prompt_eval_s": 0.9,
+      "eval_s": 6.48,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "5 句"
+      ]
+     ]
+    },
+    {
+     "with": "ut_papyrus",
+     "name": "Papyrus",
+     "q": "你觉得Papyrus怎么样？",
+     "reply": "嘿，punk！Papyrus 那家伙太傻了点，你知道吧。他总是做些奇怪的谜题，然后又跑去厨房捣鼓意大利面。我该在他身边待久一点的……但他是个好孩子。NGAHHH!! 我才没担心过呢。",
+     "stats": {
+      "ttft_s": 0.861,
+      "total_s": 12.134,
+      "eval_count": 64,
+      "prompt_eval_count": 5125,
+      "prompt_eval_s": 0.66,
+      "eval_s": 11.27,
+      "truncated": false
+     },
+     "violations": [],
+     "soft": [
+      [
+       "TOO_MANY_SENTENCES",
+       "7 句"
+      ]
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "a": "ut_monster_kid",
+     "b": "ut_asgore",
+     "sim": 0.152,
+     "sim_denamed": 0.152,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_monster_kid",
+     "b": "ut_papyrus",
+     "sim": 0.254,
+     "sim_denamed": 0.266,
+     "same": false,
+     "same_denamed": false
+    },
+    {
+     "a": "ut_asgore",
+     "b": "ut_papyrus",
+     "sim": 0.032,
+     "sim_denamed": 0.034,
+     "same": false,
+     "same_denamed": false
+    }
+   ],
+   "same_pairs": 0,
+   "same_denamed_pairs": 0,
+   "named_ok": 1,
+   "n": 3,
+   "bad_replies": 0,
+   "bad_detail": []
+  }
+ },
+ "format": {
+  "replies": 87,
+  "bad": 8,
+  "rate": 0.092,
+  "by_code": {
+   "ACTION_PAREN": 4,
+   "META": 1,
+   "TOO_LONG": 3
+  }
+ }
+}

@@ -662,17 +662,103 @@ def history_block(entries, npc_id=None, max_lines=12):
             + '\n'.join(rows))
 
 
+def training_patch(npc_id, assets_dir=None):
+    """该角色的「训练纠正」句子（第113轮离线训练的产物）。没有 ⇒ `''`。
+
+    数据源：`assets/npc/_training/_index.json` 的 `patches` 映射。
+    ★ 为什么留空时返回空串而不是默认文案：这个块会进 system prompt，
+      没有实测依据的一句话会**改变**角色的说话方式（第75轮的教训：
+      多写一句"别这样"往往换来一句"好的我明白了"式的出戏）。只有训练里
+      真的复现过的毛病，才配写进来。
+
+    ★ 读盘失败一律 `''`（**不抛**）：训练数据是可选的增强，缺了不能把对话打死。
+      带一层进程内缓存，避免每轮对话都去读同一个 JSON。
+    """
+    if not isinstance(npc_id, str) or not npc_id:
+        return ''
+    key = (npc_id, assets_dir)
+    if key in _PATCH_CACHE:
+        return _PATCH_CACHE[key]
+    val = ''
+    try:
+        base = assets_dir
+        if base is None:
+            here = os.path.dirname(os.path.abspath(__file__))
+            base = os.path.join(here, '..', 'assets')
+        path = os.path.join(base, 'npc', '_training', '_index.json')
+        with open(path, 'rb') as fh:
+            data = json.loads(fh.read().decode('utf-8'))
+        patches = data.get('patches') if isinstance(data, dict) else None
+        if isinstance(patches, dict):
+            p = patches.get(npc_id)
+            if isinstance(p, str):
+                val = p.strip()
+    except Exception as e:
+        _log.debug('训练纠正读取失败（按无纠正处理）：%s', e)
+        val = ''
+    _PATCH_CACHE[key] = val
+    return val
+
+
+#: `training_patch` 的进程内缓存。键 = (npc_id, assets_dir)。
+_PATCH_CACHE = {}
+
+
+def relation_patch(npc_id, assets_dir=None):
+    """该角色「和其他人的关系」小卡（第113轮）。没有 ⇒ `''`。
+
+    数据源：`assets/npc/_relations/_attitude.json` 的 `npcs.<id>.card`。
+    这份卡**不是**我编的，是从用户给的《人物关系叙述.txt》里按"主语明确 + 关系词优先"
+    摘出的**原句**（摘句规则见 `第113轮/_tools/attitude113.py`，带 0 错配自检）。
+
+    为什么单独一个函数而不是并进 `training_patch`：
+      `patches` 是"实测出过毛病才有"的纠正（没有证据就不写），
+      `relations` 是"角色本来就知道的事实"（人人都有）。
+      两者混在一个字段里，以后就没法回答"这句到底是有证据的纠正，还是原始设定"。
+
+    ★ 与 `training_patch` 同样的口径：读盘失败一律 `''`、带进程内缓存、不抛。
+    """
+    if not isinstance(npc_id, str) or not npc_id:
+        return ''
+    key = ('rel', npc_id, assets_dir)
+    if key in _PATCH_CACHE:
+        return _PATCH_CACHE[key]
+    val = ''
+    try:
+        base = assets_dir
+        if base is None:
+            here = os.path.dirname(os.path.abspath(__file__))
+            base = os.path.join(here, '..', 'assets')
+        path = os.path.join(base, 'npc', '_relations', '_attitude.json')
+        with open(path, 'rb') as fh:
+            data = json.loads(fh.read().decode('utf-8'))
+        npcs = data.get('npcs') if isinstance(data, dict) else None
+        if isinstance(npcs, dict):
+            rec = npcs.get(npc_id)
+            if isinstance(rec, dict):
+                card = rec.get('card')
+                if isinstance(card, str):
+                    val = card.strip()
+    except Exception as e:
+        _log.debug('关系卡读取失败（按无关卡处理）：%s', e)
+        val = ''
+    _PATCH_CACHE[key] = val
+    return val
+
+
 def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context='',
-                        life=''):
+                        life='', patch='', relation=''):
     """某个 NPC 的 system prompt —— **唯一出口**。
 
     结构（顺序即含义）：
       ① 人设正文（用户给的原文，**不再改写**）；
       ② `WHO_IS_TALKING`（★ 第75轮：现在跟你说话的是谁 —— 本体论事实）； 
-      ③ `SPEAK_RULES`（说话方式硬约束）；
-      ④ 他自己的记忆（`history_block`）；
-      ⑤ 此刻状态（`context`，由宿主提供）；
-      ⑥ **自由生活块**（`life`，第73轮：场景特质 + 他认识谁）。
+      ③ `【训练纠正】`（`patch`，第113轮：**只有实测出过毛病的人**才有）；
+      ④ `【你和其他人的关系】`（`relation`，第113轮：从关系总纲摘的原句）；
+      ⑤ `SPEAK_RULES`（说话方式硬约束）；
+      ⑥ 他自己的记忆（`history_block`）；
+      ⑦ 此刻状态（`context`，由宿主提供）；
+      ⑧ **自由生活块**（`life`，第73轮：场景特质 + 他认识谁）。
 
     `persona` 为空 ⇒ 返回 `''`（调用方据此**拒绝**这次对话，而不是发一份空人设
     过去让模型自由发挥 —— 那正是"人设没装上但看起来在工作"的假象）。
@@ -681,10 +767,21 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
       "此刻"**（时段/天气），`life` 是**NPC 自己的处境**（这地方什么样 / 我认识谁）。
       合成一个参数之后，"谁该往里面放什么"就说不清了，而这两块的**产生位置不同**
       （`_build_npc_context` vs `_npc_life_blocks`）。
+    ★ 为什么 `patch` 默认 `''` 且只在非空时才插入：这一条要保证
+      「没训练过的角色，prompt 与第112轮**逐字相同**」—— 否则回归锁会 DIFF，
+      而 DIFF 是比"多一句提醒"更贵的代价。
+    ★ `relation` 同理默认 `''`：关系卡是**逐角色**的，没有卡的角色必须与旧行为
+      逐字一致。它排在 `patch` **之后**，是为了不动 `patch` 的既有位置断言
+      （`check113` C3 按"patch 在 WHO_IS_TALKING 之后、SPEAK_RULES 之前"核对）。
     """
     if not isinstance(persona, str) or not persona.strip():
         return ''
-    parts = [persona.rstrip(), WHO_IS_TALKING, SPEAK_RULES]
+    parts = [persona.rstrip(), WHO_IS_TALKING]
+    if isinstance(patch, str) and patch.strip():
+        parts.append('【这个角色容易犯的毛病（照着改）】\n' + patch.strip())
+    if isinstance(relation, str) and relation.strip():
+        parts.append('【你和其他人的关系（照这个，别自己编）】\n' + relation.strip())
+    parts.append(SPEAK_RULES)
     hb = history_block(entries, npc_id=npc_id)
     if hb:
         parts.append(hb)

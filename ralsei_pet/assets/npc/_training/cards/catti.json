@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "catti",
+ "name": "Catti",
+ "name_cn": "卡蒂",
+ "tier": "plain",
+ "lines": [
+  "喵——我是说，你好。",
+  "你刚才是不是看我了？",
+  "算了，看就看吧。",
+  "……喵。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

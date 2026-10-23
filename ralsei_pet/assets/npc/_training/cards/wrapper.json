@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "wrapper",
+ "name": "Wrapper",
+ "name_cn": "包装怪",
+ "tier": "plain",
+ "lines": [
+  "沙沙沙……",
+  "别踩我。",
+  "我只是想找个地方待着。",
+  "沙沙。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

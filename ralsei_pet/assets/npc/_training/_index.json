@@ -1,0 +1,800 @@
+{
+ "schema_version": 1,
+ "model": "ralsei:v4",
+ "built_from": {
+  "registry": "assets/npc/_registry.json",
+  "personas": "assets/npc/_personas.json"
+ },
+ "counts": {
+  "total": 96,
+  "persona": 77,
+  "canned": 18,
+  "gap": 1
+ },
+ "gaps": [
+  "knight"
+ ],
+ "cards": {
+  "asgore": {
+   "kind": "persona",
+   "name": "Asgore",
+   "name_cn": "艾斯戈尔",
+   "persona_chars": 6715,
+   "markers": 2,
+   "patch": ""
+  },
+  "berdly": {
+   "kind": "persona",
+   "name": "Berdly",
+   "name_cn": "伯德利",
+   "persona_chars": 6356,
+   "markers": 7,
+   "patch": ""
+  },
+  "flowery": {
+   "kind": "persona",
+   "name": "Flowery",
+   "name_cn": "花",
+   "persona_chars": 6349,
+   "markers": 0,
+   "patch": ""
+  },
+  "gerson": {
+   "kind": "persona",
+   "name": "Gerson",
+   "name_cn": "格森",
+   "persona_chars": 5061,
+   "markers": 7,
+   "patch": ""
+  },
+  "hy_ace": {
+   "kind": "persona",
+   "name": "Ace",
+   "name_cn": "Ace",
+   "persona_chars": 10422,
+   "markers": 5,
+   "patch": ""
+  },
+  "hy_axis": {
+   "kind": "persona",
+   "name": "Axis",
+   "name_cn": "Axis",
+   "persona_chars": 10365,
+   "markers": 0,
+   "patch": ""
+  },
+  "hy_bowll": {
+   "kind": "persona",
+   "name": "Bowll",
+   "name_cn": "Bowll",
+   "persona_chars": 7930,
+   "markers": 0,
+   "patch": ""
+  },
+  "hy_ceroba_ketsukane": {
+   "kind": "persona",
+   "name": "Ceroba Ketsukane",
+   "name_cn": "Ceroba Ketsukane",
+   "persona_chars": 11591,
+   "markers": 0,
+   "patch": ""
+  },
+  "hy_chujin_ketsukane": {
+   "kind": "persona",
+   "name": "Chujin Ketsukane",
+   "name_cn": "Chujin Ketsukane",
+   "persona_chars": 8867,
+   "markers": 1,
+   "patch": ""
+  },
+  "hy_clover": {
+   "kind": "persona",
+   "name": "Clover",
+   "name_cn": "Clover",
+   "persona_chars": 10123,
+   "markers": 4,
+   "patch": ""
+  },
+  "hy_dalv": {
+   "kind": "persona",
+   "name": "Dalv",
+   "name_cn": "Dalv",
+   "persona_chars": 12903,
+   "markers": 0,
+   "patch": ""
+  },
+  "hy_ed": {
+   "kind": "persona",
+   "name": "Ed",
+   "name_cn": "Ed",
+   "persona_chars": 7840,
+   "markers": 1,
+   "patch": ""
+  },
+  "hy_flowey": {
+   "kind": "persona",
+   "name": "Flowey",
+   "name_cn": "Flowey",
+   "persona_chars": 11116,
+   "markers": 7,
+   "patch": ""
+  },
+  "hy_guardener": {
+   "kind": "persona",
+   "name": "Guardener",
+   "name_cn": "Guardener",
+   "persona_chars": 9527,
+   "markers": 4,
+   "patch": ""
+  },
+  "hy_martlet": {
+   "kind": "persona",
+   "name": "Martlet",
+   "name_cn": "Martlet",
+   "persona_chars": 12555,
+   "markers": 0,
+   "patch": ""
+  },
+  "hy_mooch": {
+   "kind": "persona",
+   "name": "Mooch",
+   "name_cn": "Mooch",
+   "persona_chars": 10037,
+   "markers": 1,
+   "patch": ""
+  },
+  "hy_moray": {
+   "kind": "persona",
+   "name": "Moray",
+   "name_cn": "Moray",
+   "persona_chars": 10854,
+   "markers": 1,
+   "patch": ""
+  },
+  "hy_sousborg": {
+   "kind": "persona",
+   "name": "Sousborg",
+   "name_cn": "Sousborg",
+   "persona_chars": 7561,
+   "markers": 0,
+   "patch": ""
+  },
+  "hy_starlo": {
+   "kind": "persona",
+   "name": "Starlo",
+   "name_cn": "Starlo",
+   "persona_chars": 9577,
+   "markers": 6,
+   "patch": ""
+  },
+  "king": {
+   "kind": "persona",
+   "name": "King",
+   "name_cn": "黑桃王",
+   "persona_chars": 4246,
+   "markers": 3,
+   "patch": ""
+  },
+  "kris": {
+   "kind": "persona",
+   "name": "Kris",
+   "name_cn": "克里斯",
+   "persona_chars": 6312,
+   "markers": 7,
+   "patch": ""
+  },
+  "lancer": {
+   "kind": "persona",
+   "name": "Lancer",
+   "name_cn": "兰瑟",
+   "persona_chars": 6998,
+   "markers": 8,
+   "patch": ""
+  },
+  "mike": {
+   "kind": "persona",
+   "name": "Mike",
+   "name_cn": "迈克",
+   "persona_chars": 7035,
+   "markers": 5,
+   "patch": ""
+  },
+  "noelle": {
+   "kind": "persona",
+   "name": "Noelle",
+   "name_cn": "诺艾尔",
+   "persona_chars": 5335,
+   "markers": 7,
+   "patch": ""
+  },
+  "os_alula": {
+   "kind": "persona",
+   "name": "Alula",
+   "name_cn": "Alula",
+   "persona_chars": 7931,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_calamus": {
+   "kind": "persona",
+   "name": "Calamus",
+   "name_cn": "Calamus",
+   "persona_chars": 6638,
+   "markers": 1,
+   "patch": ""
+  },
+  "os_cedric": {
+   "kind": "persona",
+   "name": "Cedric",
+   "name_cn": "Cedric",
+   "persona_chars": 7303,
+   "markers": 1,
+   "patch": ""
+  },
+  "os_george": {
+   "kind": "persona",
+   "name": "George",
+   "name_cn": "George",
+   "persona_chars": 5150,
+   "markers": 1,
+   "patch": ""
+  },
+  "os_kelvin": {
+   "kind": "persona",
+   "name": "Kelvin",
+   "name_cn": "Kelvin",
+   "persona_chars": 5734,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_kip": {
+   "kind": "persona",
+   "name": "Kip",
+   "name_cn": "Kip",
+   "persona_chars": 6115,
+   "markers": 0,
+   "patch": ""
+  },
+  "os_lamplighter": {
+   "kind": "persona",
+   "name": "Lamplighter",
+   "name_cn": "灯夫",
+   "persona_chars": 6003,
+   "markers": 4,
+   "patch": ""
+  },
+  "os_ling": {
+   "kind": "persona",
+   "name": "Ling",
+   "name_cn": "Ling",
+   "persona_chars": 5725,
+   "markers": 0,
+   "patch": ""
+  },
+  "os_magpie": {
+   "kind": "persona",
+   "name": "Magpie",
+   "name_cn": "Magpie",
+   "persona_chars": 5856,
+   "markers": 0,
+   "patch": ""
+  },
+  "os_maize": {
+   "kind": "persona",
+   "name": "Maize",
+   "name_cn": "Maize",
+   "persona_chars": 6350,
+   "markers": 1,
+   "patch": ""
+  },
+  "os_mason": {
+   "kind": "persona",
+   "name": "Mason",
+   "name_cn": "Mason",
+   "persona_chars": 7064,
+   "markers": 0,
+   "patch": ""
+  },
+  "os_niko": {
+   "kind": "persona",
+   "name": "Niko",
+   "name_cn": "Niko",
+   "persona_chars": 5939,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_prophetbot": {
+   "kind": "persona",
+   "name": "ProphetBot",
+   "name_cn": "先知机器人",
+   "persona_chars": 5945,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_prototype": {
+   "kind": "persona",
+   "name": "Prototype",
+   "name_cn": "Prototype",
+   "persona_chars": 7643,
+   "markers": 3,
+   "patch": ""
+  },
+  "os_rowbot": {
+   "kind": "persona",
+   "name": "Rowbot",
+   "name_cn": "Rowbot",
+   "persona_chars": 6114,
+   "markers": 12,
+   "patch": ""
+  },
+  "os_rue": {
+   "kind": "persona",
+   "name": "Rue",
+   "name_cn": "Rue",
+   "persona_chars": 6995,
+   "markers": 3,
+   "patch": ""
+  },
+  "os_shepherd": {
+   "kind": "persona",
+   "name": "Shepherd",
+   "name_cn": "牧羊人",
+   "persona_chars": 6337,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_silver": {
+   "kind": "persona",
+   "name": "Silver",
+   "name_cn": "Silver",
+   "persona_chars": 6790,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_the_author": {
+   "kind": "persona",
+   "name": "The Author",
+   "name_cn": "The Author",
+   "persona_chars": 6954,
+   "markers": 4,
+   "patch": ""
+  },
+  "os_the_world_machine": {
+   "kind": "persona",
+   "name": "The World Machine",
+   "name_cn": "The Entity / 本体",
+   "persona_chars": 7279,
+   "markers": 2,
+   "patch": ""
+  },
+  "os_watcher": {
+   "kind": "persona",
+   "name": "Watcher",
+   "name_cn": "Watcher",
+   "persona_chars": 5709,
+   "markers": 5,
+   "patch": ""
+  },
+  "ot_alphys": {
+   "kind": "persona",
+   "name": "Alphys",
+   "name_cn": "Alphys",
+   "persona_chars": 8132,
+   "markers": 9,
+   "patch": ""
+  },
+  "ot_asgore": {
+   "kind": "persona",
+   "name": "Asgore",
+   "name_cn": "Asgore",
+   "persona_chars": 7364,
+   "markers": 4,
+   "patch": ""
+  },
+  "ot_asriel_twinkly": {
+   "kind": "persona",
+   "name": "Asriel Dreemurr 与 Twinkly",
+   "name_cn": "Asriel Dreemurr 与 Twinkly",
+   "persona_chars": 11394,
+   "markers": 2,
+   "patch": ""
+  },
+  "ot_kidd": {
+   "kind": "persona",
+   "name": "Kidd",
+   "name_cn": "Kidd",
+   "persona_chars": 9193,
+   "markers": 5,
+   "patch": ""
+  },
+  "ot_mettaton": {
+   "kind": "persona",
+   "name": "Mettaton",
+   "name_cn": "Mettaton",
+   "persona_chars": 7515,
+   "markers": 12,
+   "patch": ""
+  },
+  "ot_muffet": {
+   "kind": "persona",
+   "name": "Muffet",
+   "name_cn": "Muffet",
+   "persona_chars": 6965,
+   "markers": 3,
+   "patch": ""
+  },
+  "ot_napstablook": {
+   "kind": "persona",
+   "name": "Napstablook",
+   "name_cn": "Napstablook",
+   "persona_chars": 9047,
+   "markers": 2,
+   "patch": ""
+  },
+  "ot_papyrus": {
+   "kind": "persona",
+   "name": "Papyrus",
+   "name_cn": "Papyrus",
+   "persona_chars": 9253,
+   "markers": 0,
+   "patch": ""
+  },
+  "ot_sans": {
+   "kind": "persona",
+   "name": "Sans",
+   "name_cn": "Sans",
+   "persona_chars": 9182,
+   "markers": 11,
+   "patch": ""
+  },
+  "ot_toriel": {
+   "kind": "persona",
+   "name": "Toriel",
+   "name_cn": "Toriel",
+   "persona_chars": 7189,
+   "markers": 1,
+   "patch": ""
+  },
+  "ot_undyne": {
+   "kind": "persona",
+   "name": "Undyne",
+   "name_cn": "Undyne",
+   "persona_chars": 8284,
+   "markers": 1,
+   "patch": ""
+  },
+  "queen": {
+   "kind": "persona",
+   "name": "Queen",
+   "name_cn": "女王",
+   "persona_chars": 4618,
+   "markers": 2,
+   "patch": ""
+  },
+  "ralsei": {
+   "kind": "persona",
+   "name": "Ralsei",
+   "name_cn": "雷尔赛",
+   "persona_chars": 3617,
+   "markers": 7,
+   "patch": ""
+  },
+  "rouxls": {
+   "kind": "persona",
+   "name": "Rouxls Kaard",
+   "name_cn": "鲁尔斯·卡德",
+   "persona_chars": 5831,
+   "markers": 12,
+   "patch": ""
+  },
+  "spamton": {
+   "kind": "persona",
+   "name": "Spamton",
+   "name_cn": "斯帕姆顿",
+   "persona_chars": 6445,
+   "markers": 6,
+   "patch": ""
+  },
+  "susie": {
+   "kind": "persona",
+   "name": "Susie",
+   "name_cn": "苏西",
+   "persona_chars": 7028,
+   "markers": 7,
+   "patch": ""
+  },
+  "tenna": {
+   "kind": "persona",
+   "name": "Tenna",
+   "name_cn": "天娜",
+   "persona_chars": 5616,
+   "markers": 4,
+   "patch": ""
+  },
+  "toriel": {
+   "kind": "persona",
+   "name": "Toriel",
+   "name_cn": "托丽尔",
+   "persona_chars": 7416,
+   "markers": 2,
+   "patch": ""
+  },
+  "ut_alphys": {
+   "kind": "persona",
+   "name": "Alphys",
+   "name_cn": "Alphys",
+   "persona_chars": 7933,
+   "markers": 9,
+   "patch": ""
+  },
+  "ut_asgore": {
+   "kind": "persona",
+   "name": "Asgore Dreemurr",
+   "name_cn": "Asgore Dreemurr",
+   "persona_chars": 7130,
+   "markers": 4,
+   "patch": ""
+  },
+  "ut_chara": {
+   "kind": "persona",
+   "name": "Chara",
+   "name_cn": "Chara",
+   "persona_chars": 10492,
+   "markers": 0,
+   "patch": ""
+  },
+  "ut_flowey": {
+   "kind": "persona",
+   "name": "Flowey",
+   "name_cn": "Flowey",
+   "persona_chars": 11021,
+   "markers": 2,
+   "patch": ""
+  },
+  "ut_frisk": {
+   "kind": "persona",
+   "name": "Frisk",
+   "name_cn": "Frisk",
+   "persona_chars": 6109,
+   "markers": 6,
+   "patch": ""
+  },
+  "ut_gaster": {
+   "kind": "persona",
+   "name": "W.D. Gaster",
+   "name_cn": "W.D. Gaster",
+   "persona_chars": 7633,
+   "markers": 8,
+   "patch": ""
+  },
+  "ut_mettaton": {
+   "kind": "persona",
+   "name": "Mettaton",
+   "name_cn": "Mettaton",
+   "persona_chars": 7111,
+   "markers": 12,
+   "patch": ""
+  },
+  "ut_monster_kid": {
+   "kind": "persona",
+   "name": "Monster Kid",
+   "name_cn": "Monster Kid",
+   "persona_chars": 6535,
+   "markers": 1,
+   "patch": ""
+  },
+  "ut_muffet": {
+   "kind": "persona",
+   "name": "Muffet",
+   "name_cn": "Muffet",
+   "persona_chars": 6571,
+   "markers": 3,
+   "patch": ""
+  },
+  "ut_napstablook": {
+   "kind": "persona",
+   "name": "Napstablook",
+   "name_cn": "Napstablook",
+   "persona_chars": 8809,
+   "markers": 2,
+   "patch": ""
+  },
+  "ut_papyrus": {
+   "kind": "persona",
+   "name": "Papyrus",
+   "name_cn": "Papyrus",
+   "persona_chars": 8990,
+   "markers": 0,
+   "patch": ""
+  },
+  "ut_sans": {
+   "kind": "persona",
+   "name": "Sans",
+   "name_cn": "Sans",
+   "persona_chars": 8994,
+   "markers": 11,
+   "patch": ""
+  },
+  "ut_toriel": {
+   "kind": "persona",
+   "name": "Toriel",
+   "name_cn": "Toriel",
+   "persona_chars": 7009,
+   "markers": 1,
+   "patch": ""
+  },
+  "ut_undyne": {
+   "kind": "persona",
+   "name": "Undyne",
+   "name_cn": "Undyne",
+   "persona_chars": 7867,
+   "markers": 1,
+   "patch": ""
+  },
+  "knight": {
+   "kind": "gap",
+   "name": "Roaring Knight",
+   "name_cn": "咆哮骑士",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "hammerguy": {
+   "kind": "canned",
+   "name": "Hammer Guy",
+   "name_cn": "锤子哥",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "puzzlemaster1": {
+   "kind": "canned",
+   "name": "Puzzle Master",
+   "name_cn": "谜题大师·甲",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "puzzlemaster2": {
+   "kind": "canned",
+   "name": "Puzzle Master",
+   "name_cn": "谜题大师·乙",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "sign": {
+   "kind": "canned",
+   "name": "Sign",
+   "name_cn": "告示牌",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "npc_room": {
+   "kind": "canned",
+   "name": "???",
+   "name_cn": "空房间",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "conbini": {
+   "kind": "canned",
+   "name": "Shopkeeper",
+   "name_cn": "便利店店员",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "police": {
+   "kind": "canned",
+   "name": "Officer",
+   "name_cn": "警察",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "catti": {
+   "kind": "canned",
+   "name": "Catti",
+   "name_cn": "卡蒂",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "rudy": {
+   "kind": "canned",
+   "name": "Rudy",
+   "name_cn": "鲁迪",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "dumpster": {
+   "kind": "canned",
+   "name": "Dumpster",
+   "name_cn": "垃圾桶",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "addison_tea": {
+   "kind": "canned",
+   "name": "Addison",
+   "name_cn": "艾迪森",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "castle_cafe": {
+   "kind": "canned",
+   "name": "Cafe Owner",
+   "name_cn": "咖啡店老板",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "rabbits": {
+   "kind": "canned",
+   "name": "Rabbits",
+   "name_cn": "兔子们",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "wrapper": {
+   "kind": "canned",
+   "name": "Wrapper",
+   "name_cn": "包装怪",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "doubter": {
+   "kind": "canned",
+   "name": "Doubter",
+   "name_cn": "质疑者",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "zapper": {
+   "kind": "canned",
+   "name": "Zapper",
+   "name_cn": "电击者",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "susiedark": {
+   "kind": "canned",
+   "name": "Susie?",
+   "name_cn": "暗之苏西",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  },
+  "mansion_room": {
+   "kind": "canned",
+   "name": "Room Note",
+   "name_cn": "宅邸房间",
+   "persona_chars": 0,
+   "markers": 0,
+   "patch": ""
+  }
+ },
+ "patches": {
+  "rouxls": "不要用括号写动作或表情，只写你说出口的话。",
+  "susie": "不要用括号写动作或表情，只写你说出口的话。"
+ },
+ "trained": {
+  "model": "ralsei:v4",
+  "chars": 77,
+  "turns": 308,
+  "hard_violations": 18,
+  "cross_dups": 1,
+  "corpus_rows": 308,
+  "generated_at": "2026-10-24 06:31:11"
+ }
+}

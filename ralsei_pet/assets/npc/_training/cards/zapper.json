@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "zapper",
+ "name": "Zapper",
+ "name_cn": "电击者",
+ "tier": "plain",
+ "lines": [
+  "别碰我，噼里啪啦的。",
+  "我不是故意的。",
+  "离远点就好。",
+  "……谢谢。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

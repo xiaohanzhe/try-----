@@ -1,0 +1,813 @@
+{
+ "summary": {
+  "chars_with_dialogue": 77,
+  "turns": 308,
+  "hard_violations": 18,
+  "violation_codes": {
+   "ACTION_PAREN": 18
+  },
+  "per_char": {
+   "asgore": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 173.9
+   },
+   "berdly": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     3,
+     4
+    ],
+    "cost_s": 55.7
+   },
+   "flowery": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 130.9
+   },
+   "gerson": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 24.1
+   },
+   "hy_ace": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 169.8
+   },
+   "hy_axis": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 206.0
+   },
+   "hy_bowll": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 74.0
+   },
+   "hy_ceroba_ketsukane": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 178.2
+   },
+   "hy_chujin_ketsukane": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 150.6
+   },
+   "hy_clover": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 159.5
+   },
+   "hy_dalv": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 187.5
+   },
+   "hy_ed": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 127.2
+   },
+   "hy_flowey": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 181.0
+   },
+   "hy_guardener": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     3,
+     4
+    ],
+    "cost_s": 188.4
+   },
+   "hy_martlet": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 224.9
+   },
+   "hy_mooch": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 278.7
+   },
+   "hy_moray": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 180.0
+   },
+   "hy_sousborg": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 140.9
+   },
+   "hy_starlo": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 160.0
+   },
+   "king": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 89.7
+   },
+   "kris": {
+    "turns": 4,
+    "violations": 4,
+    "codes": [
+     "ACTION_PAREN"
+    ],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 146.6
+   },
+   "lancer": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 185.5
+   },
+   "mike": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 154.3
+   },
+   "noelle": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 112.3
+   },
+   "os_alula": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 138.2
+   },
+   "os_calamus": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 126.1
+   },
+   "os_cedric": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 146.2
+   },
+   "os_george": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 119.2
+   },
+   "os_kelvin": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 128.9
+   },
+   "os_kip": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 134.9
+   },
+   "os_lamplighter": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 154.1
+   },
+   "os_ling": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 121.0
+   },
+   "os_magpie": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 119.6
+   },
+   "os_maize": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 122.4
+   },
+   "os_mason": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 139.9
+   },
+   "os_niko": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 135.7
+   },
+   "os_prophetbot": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 120.4
+   },
+   "os_prototype": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 125.0
+   },
+   "os_rowbot": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 136.3
+   },
+   "os_rue": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 133.4
+   },
+   "os_shepherd": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 138.7
+   },
+   "os_silver": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 131.9
+   },
+   "os_the_author": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 173.5
+   },
+   "os_the_world_machine": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 137.2
+   },
+   "os_watcher": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 120.4
+   },
+   "ot_alphys": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 164.3
+   },
+   "ot_asgore": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     3,
+     4
+    ],
+    "cost_s": 156.5
+   },
+   "ot_asriel_twinkly": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 187.6
+   },
+   "ot_kidd": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 152.8
+   },
+   "ot_mettaton": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 170.7
+   },
+   "ot_muffet": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 179.0
+   },
+   "ot_napstablook": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     3,
+     4
+    ],
+    "cost_s": 184.3
+   },
+   "ot_papyrus": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 169.6
+   },
+   "ot_sans": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 168.7
+   },
+   "ot_toriel": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 154.3
+   },
+   "ot_undyne": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 173.4
+   },
+   "queen": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 121.1
+   },
+   "ralsei": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 104.2
+   },
+   "rouxls": {
+    "turns": 4,
+    "violations": 4,
+    "codes": [
+     "ACTION_PAREN"
+    ],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 263.4
+   },
+   "spamton": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 150.0
+   },
+   "susie": {
+    "turns": 4,
+    "violations": 3,
+    "codes": [
+     "ACTION_PAREN"
+    ],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 217.4
+   },
+   "tenna": {
+    "turns": 4,
+    "violations": 4,
+    "codes": [
+     "ACTION_PAREN"
+    ],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 237.7
+   },
+   "toriel": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 163.0
+   },
+   "ut_alphys": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 193.0
+   },
+   "ut_asgore": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     3,
+     4
+    ],
+    "cost_s": 155.1
+   },
+   "ut_chara": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 157.4
+   },
+   "ut_flowey": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 178.8
+   },
+   "ut_frisk": {
+    "turns": 4,
+    "violations": 3,
+    "codes": [
+     "ACTION_PAREN"
+    ],
+    "marker_hit": [
+     1,
+     4
+    ],
+    "cost_s": 119.6
+   },
+   "ut_gaster": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 167.0
+   },
+   "ut_mettaton": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 177.2
+   },
+   "ut_monster_kid": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 130.1
+   },
+   "ut_muffet": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 151.7
+   },
+   "ut_napstablook": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 163.7
+   },
+   "ut_papyrus": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": null,
+    "cost_s": 161.9
+   },
+   "ut_sans": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     4,
+     4
+    ],
+    "cost_s": 162.7
+   },
+   "ut_toriel": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     0,
+     4
+    ],
+    "cost_s": 145.5
+   },
+   "ut_undyne": {
+    "turns": 4,
+    "violations": 0,
+    "codes": [],
+    "marker_hit": [
+     2,
+     4
+    ],
+    "cost_s": 193.7
+   }
+  },
+  "calls": 371,
+  "retries": 63,
+  "truncated_chars": [],
+  "ttft_cold_median": 1.31,
+  "ttft_warm_median": null,
+  "len_median": 69,
+  "len_max": 200,
+  "cross_dups": 1,
+  "cross_dup_chars": 2,
+  "patch_pass": {
+   "kris": {
+    "before": 4,
+    "after": 1,
+    "turns": 4,
+    "fixed": false,
+    "still": 1
+   },
+   "rouxls": {
+    "before": 4,
+    "after": 0,
+    "turns": 4,
+    "fixed": true,
+    "still": 0
+   },
+   "susie": {
+    "before": 3,
+    "after": 0,
+    "turns": 4,
+    "fixed": true,
+    "still": 0
+   },
+   "tenna": {
+    "before": 4,
+    "after": 4,
+    "turns": 4,
+    "fixed": false,
+    "still": 4
+   },
+   "ut_frisk": {
+    "before": 3,
+    "after": 2,
+    "turns": 4,
+    "fixed": false,
+    "still": 2
+   }
+  },
+  "patch_fixed": 2,
+  "patch_still": 3
+ },
+ "patches": {
+  "rouxls": "不要用括号写动作或表情，只写你说出口的话。",
+  "susie": "不要用括号写动作或表情，只写你说出口的话。"
+ },
+ "dup_pairs": [
+  {
+   "turn": 1,
+   "a": "ot_asgore",
+   "b": "ut_asgore",
+   "sim": 1.0,
+   "text_a": "哦，你好。很高兴见到你。要不要喝杯茶？我刚刚泡了一壶金色花茶。",
+   "text_b": "哦，你好。很高兴见到你。要不要喝杯茶？我刚刚泡了一壶金色花茶。"
+  }
+ ],
+ "corpus_rows": 308
+}

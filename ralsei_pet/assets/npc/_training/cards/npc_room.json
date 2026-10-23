@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "npc_room",
+ "name": "???",
+ "name_cn": "空房间",
+ "tier": "plain",
+ "lines": [
+  "这间屋子什么都没有。",
+  "什么都没有，也是一种有。",
+  "你可以在这儿站一会儿。",
+  "反正也没人赶你。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

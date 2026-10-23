@@ -1,0 +1,2196 @@
+{
+ "schema_version": 1,
+ "built_from": {
+  "relations_index": "_index.json",
+  "relations_sha256": "1edff2f3d72c6e8efa02a792ac6ce7a5c07c7d86c1506d3d8856ba05087a1fc3"
+ },
+ "card_max": 220,
+ "max_pairs": 3,
+ "npcs": {
+  "asgore": {
+   "pairs": [
+    {
+     "with": "toriel",
+     "with_name": "Toriel",
+     "with_name_cn": "托丽尔",
+     "cooccur": 2,
+     "score": 6,
+     "sentences": [
+      "Toriel 对 Asgore 保持冷淡边界，Asgore 仍深爱 Toriel，却只能用花店、旧回忆和笨拙的关心表达。",
+      "Toriel 与 Asgore 曾是夫妻，现在是离婚状态。"
+     ]
+    },
+    {
+     "with": "flowery",
+     "with_name": "Flowery",
+     "with_name_cn": "花",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Flowery 是 Asgore 求婚花束中的金色花，在暗世界获得人形。"
+     ]
+    }
+   ],
+   "card": "你和 Toriel（托丽尔）：Toriel 对 Asgore 保持冷淡边界，Asgore 仍深爱 Toriel，却只能用花店、旧回忆和笨拙的关心表达。\n你和 Flowery（花）：Flowery 是 Asgore 求婚花束中的金色花，在暗世界获得人形。",
+   "probe": [
+    "toriel",
+    "flowery"
+   ],
+   "probe_names": [
+    "Toriel",
+    "Flowery"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "berdly": {
+   "pairs": [
+    {
+     "with": "noelle",
+     "with_name": "Noelle",
+     "with_name_cn": "诺艾尔",
+     "cooccur": 3,
+     "score": 4,
+     "sentences": [
+      "Berdly 是她的学习搭档和分组报告组员，Berdly 自以为 Noelle 喜欢他，但 Noelle 并不喜欢他的自大。",
+      "Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。"
+     ]
+    },
+    {
+     "with": "susie",
+     "with_name": "Susie",
+     "with_name_cn": "苏西",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。"
+     ]
+    },
+    {
+     "with": "queen",
+     "with_name": "Queen",
+     "with_name_cn": "女王",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Berdly 则误以为 Queen 重视自己。",
+      "Queen 统治赛博世界，把 Berdly 当棋子，却真心相信 Noelle 很强大，想让 Noelle“选择让自己快乐的世界”。"
+     ]
+    }
+   ],
+   "card": "你和 Noelle（诺艾尔）：Berdly 是她的学习搭档和分组报告组员，Berdly 自以为 Noelle 喜欢他，但 Noelle 并不喜欢他的自大。\n你和 Susie（苏西）：Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。\n你和 Queen（女王）：Berdly 则误以为 Queen 重视自己。",
+   "probe": [
+    "noelle",
+    "susie",
+    "queen"
+   ],
+   "probe_names": [
+    "Noelle",
+    "Susie",
+    "Queen"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "flowery": {
+   "pairs": [
+    {
+     "with": "asgore",
+     "with_name": "Asgore",
+     "with_name_cn": "艾斯戈尔",
+     "cooccur": 3,
+     "score": 2,
+     "sentences": [
+      "Flowery 在暗世界成为 Asgore 的保护者，因此它与 Toriel 也有间接联系：它本是 Asgore 求婚花束的一部分。",
+      "Flowery 是 Asgore 求婚花束中的金色花，在暗世界获得人形。"
+     ]
+    }
+   ],
+   "card": "你和 Asgore（艾斯戈尔）：Flowery 在暗世界成为 Asgore 的保护者，因此它与 Toriel 也有间接联系：它本是 Asgore 求婚花束的一部分。",
+   "probe": [
+    "asgore"
+   ],
+   "probe_names": [
+    "Asgore"
+   ],
+   "unused_pairs": 1,
+   "work": "deltarune"
+  },
+  "gerson": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "king": {
+   "pairs": [
+    {
+     "with": "queen",
+     "with_name": "Queen",
+     "with_name_cn": "女王",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。",
+      "Queen 与 King 有过旧关系，后来成为 Lancer 的“女爸爸”，会去监狱羞辱 King，并接管照顾 Lancer。"
+     ]
+    },
+    {
+     "with": "lancer",
+     "with_name": "Lancer",
+     "with_name_cn": "兰瑟",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "King 是暴君式的父亲，忽视 Lancer，甚至把他当人质；",
+      "Queen 与 King 有过旧关系，后来成为 Lancer 的“女爸爸”，会去监狱羞辱 King，并接管照顾 Lancer。"
+     ]
+    }
+   ],
+   "card": "你和 Queen（女王）：King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。\n你和 Lancer（兰瑟）：King 是暴君式的父亲，忽视 Lancer，甚至把他当人质；",
+   "probe": [
+    "queen",
+    "lancer"
+   ],
+   "probe_names": [
+    "Queen",
+    "Lancer"
+   ],
+   "unused_pairs": 1,
+   "work": "deltarune"
+  },
+  "kris": {
+   "pairs": [
+    {
+     "with": "ralsei",
+     "with_name": "Ralsei",
+     "with_name_cn": "雷尔赛",
+     "cooccur": 1,
+     "score": 8,
+     "sentences": [
+      "Ralsei 对 Kris 极度依赖和忠诚，把 Kris 视为最重要的朋友，但 Kris 对 Ralsei 保持距离，不算热络，甚至有些冷淡。"
+     ]
+    },
+    {
+     "with": "susie",
+     "with_name": "Susie",
+     "with_name_cn": "苏西",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Kris 对 Susie 有深厚信任，会主动保护她。",
+      "Susie 是 Kris 最重要的搭档，两人从同学变成真正的伙伴；"
+     ]
+    },
+    {
+     "with": "noelle",
+     "with_name": "Noelle",
+     "with_name_cn": "诺艾尔",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Noelle 与 Kris 是童年邻居和朋友，Kris 小时候常吓她，她却不完全讨厌那种被关注的感觉。"
+     ]
+    }
+   ],
+   "card": "你和 Ralsei（雷尔赛）：Ralsei 对 Kris 极度依赖和忠诚，把 Kris 视为最重要的朋友，但 Kris 对 Ralsei 保持距离，不算热络，甚至有些冷淡。\n你和 Susie（苏西）：Kris 对 Susie 有深厚信任，会主动保护她。\n你和 Noelle（诺艾尔）：Noelle 与 Kris 是童年邻居和朋友，Kris 小时候常吓她，她却不完全讨厌那种被关注的感觉。",
+   "probe": [
+    "ralsei",
+    "susie",
+    "noelle"
+   ],
+   "probe_names": [
+    "Ralsei",
+    "Susie",
+    "Noelle"
+   ],
+   "unused_pairs": 1,
+   "work": "deltarune"
+  },
+  "lancer": {
+   "pairs": [
+    {
+     "with": "king",
+     "with_name": "King",
+     "with_name_cn": "黑桃王",
+     "cooccur": 3,
+     "score": 6,
+     "sentences": [
+      "Lancer 崇拜过父亲，但最终选择朋友，背叛 King 的立场。",
+      "Lancer 是 King 的儿子。"
+     ]
+    },
+    {
+     "with": "susie",
+     "with_name": "Susie",
+     "with_name_cn": "苏西",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Lancer 与 Susie 是最好的朋友，他崇拜 Susie，把她当成第一个真正的朋友；"
+     ]
+    }
+   ],
+   "card": "你和 King（黑桃王）：Lancer 崇拜过父亲，但最终选择朋友，背叛 King 的立场。\n你和 Susie（苏西）：Lancer 与 Susie 是最好的朋友，他崇拜 Susie，把她当成第一个真正的朋友；",
+   "probe": [
+    "king",
+    "susie"
+   ],
+   "probe_names": [
+    "King",
+    "Susie"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "noelle": {
+   "pairs": [
+    {
+     "with": "berdly",
+     "with_name": "Berdly",
+     "with_name_cn": "伯德利",
+     "cooccur": 3,
+     "score": 4,
+     "sentences": [
+      "Berdly 是她的学习搭档和分组报告组员，Berdly 自以为 Noelle 喜欢他，但 Noelle 并不喜欢他的自大。",
+      "Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。"
+     ]
+    },
+    {
+     "with": "susie",
+     "with_name": "Susie",
+     "with_name_cn": "苏西",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Noelle 暗恋 Susie，同时害怕 Susie；",
+      "Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。"
+     ]
+    },
+    {
+     "with": "kris",
+     "with_name": "Kris",
+     "with_name_cn": "克里斯",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Noelle 与 Kris 是童年邻居和朋友，Kris 小时候常吓她，她却不完全讨厌那种被关注的感觉。"
+     ]
+    }
+   ],
+   "card": "你和 Berdly（伯德利）：Berdly 是她的学习搭档和分组报告组员，Berdly 自以为 Noelle 喜欢他，但 Noelle 并不喜欢他的自大。\n你和 Susie（苏西）：Noelle 暗恋 Susie，同时害怕 Susie；\n你和 Kris（克里斯）：Noelle 与 Kris 是童年邻居和朋友，Kris 小时候常吓她，她却不完全讨厌那种被关注的感觉。",
+   "probe": [
+    "berdly",
+    "susie",
+    "kris"
+   ],
+   "probe_names": [
+    "Berdly",
+    "Susie",
+    "Kris"
+   ],
+   "unused_pairs": 1,
+   "work": "deltarune"
+  },
+  "queen": {
+   "pairs": [
+    {
+     "with": "king",
+     "with_name": "King",
+     "with_name_cn": "黑桃王",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Queen 与 King 有过旧关系，后来成为 Lancer 的“女爸爸”，会去监狱羞辱 King，并接管照顾 Lancer。",
+      "King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。"
+     ]
+    },
+    {
+     "with": "rouxls",
+     "with_name": "Rouxls Kaard",
+     "with_name_cn": "鲁尔斯·卡德",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。"
+     ]
+    }
+   ],
+   "card": "你和 King（黑桃王）：Queen 与 King 有过旧关系，后来成为 Lancer 的“女爸爸”，会去监狱羞辱 King，并接管照顾 Lancer。\n你和 Rouxls Kaard（鲁尔斯·卡德）：King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。",
+   "probe": [
+    "king",
+    "rouxls"
+   ],
+   "probe_names": [
+    "King",
+    "Rouxls Kaard"
+   ],
+   "unused_pairs": 3,
+   "work": "deltarune"
+  },
+  "ralsei": {
+   "pairs": [
+    {
+     "with": "kris",
+     "with_name": "Kris",
+     "with_name_cn": "克里斯",
+     "cooccur": 1,
+     "score": 8,
+     "sentences": [
+      "Ralsei 对 Kris 极度依赖和忠诚，把 Kris 视为最重要的朋友，但 Kris 对 Ralsei 保持距离，不算热络，甚至有些冷淡。"
+     ]
+    }
+   ],
+   "card": "你和 Kris（克里斯）：Ralsei 对 Kris 极度依赖和忠诚，把 Kris 视为最重要的朋友，但 Kris 对 Ralsei 保持距离，不算热络，甚至有些冷淡。",
+   "probe": [
+    "kris"
+   ],
+   "probe_names": [
+    "Kris"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "rouxls": {
+   "pairs": [
+    {
+     "with": "lancer",
+     "with_name": "Lancer",
+     "with_name_cn": "兰瑟",
+     "cooccur": 1,
+     "score": 6,
+     "sentences": [
+      "Rouxls Kaard 是 Lancer 的“小爸爸”，实际照顾他最多，虽然嘴上抱怨，却会做饭、陪伴、保护。"
+     ]
+    },
+    {
+     "with": "king",
+     "with_name": "King",
+     "with_name_cn": "黑桃王",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。"
+     ]
+    }
+   ],
+   "card": "你和 Lancer（兰瑟）：Rouxls Kaard 是 Lancer 的“小爸爸”，实际照顾他最多，虽然嘴上抱怨，却会做饭、陪伴、保护。\n你和 King（黑桃王）：King 是英雄小队的敌人，Queen 则从对手变成休战对象，Rouxls 是反复横跳的亦敌亦友。",
+   "probe": [
+    "lancer",
+    "king"
+   ],
+   "probe_names": [
+    "Lancer",
+    "King"
+   ],
+   "unused_pairs": 2,
+   "work": "deltarune"
+  },
+  "rudy": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "spamton": {
+   "pairs": [
+    {
+     "with": "tenna",
+     "with_name": "Tenna",
+     "with_name_cn": "天娜",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Tenna 与 Spamton 曾是商业伙伴，后来成为宿敌。"
+     ]
+    }
+   ],
+   "card": "你和 Tenna（天娜）：Tenna 与 Spamton 曾是商业伙伴，后来成为宿敌。",
+   "probe": [
+    "tenna"
+   ],
+   "probe_names": [
+    "Tenna"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "susie": {
+   "pairs": [
+    {
+     "with": "kris",
+     "with_name": "Kris",
+     "with_name_cn": "克里斯",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Susie 是 Kris 最重要的搭档，两人从同学变成真正的伙伴；",
+      "Kris 对 Susie 有深厚信任，会主动保护她。"
+     ]
+    },
+    {
+     "with": "noelle",
+     "with_name": "Noelle",
+     "with_name_cn": "诺艾尔",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Noelle 暗恋 Susie，同时害怕 Susie；",
+      "Berdly 后来表示自己也迷恋 Susie，这直接激怒了 Noelle。"
+     ]
+    },
+    {
+     "with": "lancer",
+     "with_name": "Lancer",
+     "with_name_cn": "兰瑟",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Lancer 与 Susie 是最好的朋友，他崇拜 Susie，把她当成第一个真正的朋友；"
+     ]
+    }
+   ],
+   "card": "你和 Kris（克里斯）：Susie 是 Kris 最重要的搭档，两人从同学变成真正的伙伴；\n你和 Noelle（诺艾尔）：Noelle 暗恋 Susie，同时害怕 Susie；\n你和 Lancer（兰瑟）：Lancer 与 Susie 是最好的朋友，他崇拜 Susie，把她当成第一个真正的朋友；",
+   "probe": [
+    "kris",
+    "noelle",
+    "lancer"
+   ],
+   "probe_names": [
+    "Kris",
+    "Noelle",
+    "Lancer"
+   ],
+   "unused_pairs": 2,
+   "work": "deltarune"
+  },
+  "tenna": {
+   "pairs": [
+    {
+     "with": "spamton",
+     "with_name": "Spamton",
+     "with_name_cn": "斯帕姆顿",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Tenna 与 Spamton 曾是商业伙伴，后来成为宿敌。"
+     ]
+    },
+    {
+     "with": "rouxls",
+     "with_name": "Rouxls Kaard",
+     "with_name_cn": "鲁尔斯·卡德",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Rouxls 在第三章试图为 Tenna 服务，延续他“站在赢家一边”的生存策略。"
+     ]
+    },
+    {
+     "with": "kris",
+     "with_name": "Kris",
+     "with_name_cn": "克里斯",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Tenna 是 Dreemurr 家客厅里的旧电视，曾在光世界陪伴过 Kris 一家，如今被遗忘。"
+     ]
+    }
+   ],
+   "card": "你和 Spamton（斯帕姆顿）：Tenna 与 Spamton 曾是商业伙伴，后来成为宿敌。\n你和 Rouxls Kaard（鲁尔斯·卡德）：Rouxls 在第三章试图为 Tenna 服务，延续他“站在赢家一边”的生存策略。\n你和 Kris（克里斯）：Tenna 是 Dreemurr 家客厅里的旧电视，曾在光世界陪伴过 Kris 一家，如今被遗忘。",
+   "probe": [
+    "spamton",
+    "rouxls",
+    "kris"
+   ],
+   "probe_names": [
+    "Spamton",
+    "Rouxls Kaard",
+    "Kris"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "toriel": {
+   "pairs": [
+    {
+     "with": "asgore",
+     "with_name": "Asgore",
+     "with_name_cn": "艾斯戈尔",
+     "cooccur": 3,
+     "score": 6,
+     "sentences": [
+      "Toriel 对 Asgore 保持冷淡边界，Asgore 仍深爱 Toriel，却只能用花店、旧回忆和笨拙的关心表达。",
+      "Toriel 与 Asgore 曾是夫妻，现在是离婚状态。"
+     ]
+    },
+    {
+     "with": "flowery",
+     "with_name": "Flowery",
+     "with_name_cn": "花",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Flowery 在暗世界成为 Asgore 的保护者，因此它与 Toriel 也有间接联系：它本是 Asgore 求婚花束的一部分。"
+     ]
+    }
+   ],
+   "card": "你和 Asgore（艾斯戈尔）：Toriel 对 Asgore 保持冷淡边界，Asgore 仍深爱 Toriel，却只能用花店、旧回忆和笨拙的关心表达。\n你和 Flowery（花）：Flowery 在暗世界成为 Asgore 的保护者，因此它与 Toriel 也有间接联系：它本是 Asgore 求婚花束的一部分。",
+   "probe": [
+    "asgore",
+    "flowery"
+   ],
+   "probe_names": [
+    "Asgore",
+    "Flowery"
+   ],
+   "unused_pairs": 0,
+   "work": "deltarune"
+  },
+  "os_alula": {
+   "pairs": [
+    {
+     "with": "os_calamus",
+     "with_name": "Calamus",
+     "with_name_cn": "Calamus",
+     "cooccur": 3,
+     "score": 0,
+     "sentences": [
+      "Alula 对 Calamus 的感情是“他是我哥哥，他是我家”。",
+      "Calamus 和 Alula 是鸟人族兄妹。"
+     ]
+    },
+    {
+     "with": "os_magpie",
+     "with_name": "Magpie",
+     "with_name_cn": "Magpie",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Magpie 对 Calamus 有一种务实的亲切，对 Alula 有一种商人的耐心。"
+     ]
+    }
+   ],
+   "card": "你和 Calamus：Alula 对 Calamus 的感情是“他是我哥哥，他是我家”。\n你和 Magpie：Magpie 对 Calamus 有一种务实的亲切，对 Alula 有一种商人的耐心。",
+   "probe": [
+    "os_calamus",
+    "os_magpie"
+   ],
+   "probe_names": [
+    "Calamus",
+    "Magpie"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_calamus": {
+   "pairs": [
+    {
+     "with": "os_alula",
+     "with_name": "Alula",
+     "with_name_cn": "Alula",
+     "cooccur": 3,
+     "score": 0,
+     "sentences": [
+      "Calamus 和 Alula 是鸟人族兄妹。",
+      "Calamus 对 Alula 的感情是“她是我的一切，我不能失去她”。"
+     ]
+    },
+    {
+     "with": "os_magpie",
+     "with_name": "Magpie",
+     "with_name_cn": "Magpie",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Calamus 从废墟里找到东西，拿来和 Magpie 交换。",
+      "Magpie 对 Calamus 有一种务实的亲切，对 Alula 有一种商人的耐心。"
+     ]
+    }
+   ],
+   "card": "你和 Alula：Calamus 和 Alula 是鸟人族兄妹。\n你和 Magpie：Calamus 从废墟里找到东西，拿来和 Magpie 交换。",
+   "probe": [
+    "os_alula",
+    "os_magpie"
+   ],
+   "probe_names": [
+    "Alula",
+    "Magpie"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_cedric": {
+   "pairs": [
+    {
+     "with": "os_the_author",
+     "with_name": "The Author",
+     "with_name_cn": "The Author",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Cedric 背负着“The Author 的儿子”这个身份的重量；"
+     ]
+    },
+    {
+     "with": "os_prototype",
+     "with_name": "Prototype",
+     "with_name_cn": "Prototype",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Cedric、Rue、Prototype 是旧世界遗民的核心三人组。",
+      "Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。"
+     ]
+    },
+    {
+     "with": "os_rue",
+     "with_name": "Rue",
+     "with_name_cn": "Rue",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Cedric、Rue、Prototype 是旧世界遗民的核心三人组。",
+      "Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。"
+     ]
+    }
+   ],
+   "card": "你和 The Author：Cedric 背负着“The Author 的儿子”这个身份的重量；\n你和 Prototype：Cedric、Rue、Prototype 是旧世界遗民的核心三人组。\n你和 Rue：Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。",
+   "probe": [
+    "os_the_author",
+    "os_prototype",
+    "os_rue"
+   ],
+   "probe_names": [
+    "The Author",
+    "Prototype",
+    "Rue"
+   ],
+   "unused_pairs": 1,
+   "work": "oneshot"
+  },
+  "os_george": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_kelvin": {
+   "pairs": [
+    {
+     "with": "os_lamplighter",
+     "with_name": "Lamplighter",
+     "with_name_cn": "灯夫",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Lamplighter 与 Kelvin 是后巷的邻居，他们都做着自己的事——他点灯，他发热——不需要交流。",
+      "Lamplighter 在 Refuge 的后巷点灯，Kelvin 在同一个后巷的角落里发热。"
+     ]
+    }
+   ],
+   "card": "你和 Lamplighter（灯夫）：Lamplighter 与 Kelvin 是后巷的邻居，他们都做着自己的事——他点灯，他发热——不需要交流。",
+   "probe": [
+    "os_lamplighter"
+   ],
+   "probe_names": [
+    "Lamplighter"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_kip": {
+   "pairs": [
+    {
+     "with": "os_silver",
+     "with_name": "Silver",
+     "with_name_cn": "Silver",
+     "cooccur": 4,
+     "score": 2,
+     "sentences": [
+      "Kip 对 Silver 的感情是愧疚、是不知道该怎么面对的恐惧、也是无法停止的书写。",
+      "Kip 是 Refuge 的首席工程师，Silver 的创造者。"
+     ]
+    },
+    {
+     "with": "os_the_author",
+     "with_name": "The Author",
+     "with_name_cn": "The Author",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "The Author 后来稳定了她，但 Kip 失去了对她的信心，把她送到了 Barrens。"
+     ]
+    }
+   ],
+   "card": "你和 Silver：Kip 对 Silver 的感情是愧疚、是不知道该怎么面对的恐惧、也是无法停止的书写。\n你和 The Author：The Author 后来稳定了她，但 Kip 失去了对她的信心，把她送到了 Barrens。",
+   "probe": [
+    "os_silver",
+    "os_the_author"
+   ],
+   "probe_names": [
+    "Silver",
+    "The Author"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_lamplighter": {
+   "pairs": [
+    {
+     "with": "os_kelvin",
+     "with_name": "Kelvin",
+     "with_name_cn": "Kelvin",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Lamplighter 与 Kelvin 是后巷的邻居，他们都做着自己的事——他点灯，他发热——不需要交流。",
+      "Lamplighter 在 Refuge 的后巷点灯，Kelvin 在同一个后巷的角落里发热。"
+     ]
+    },
+    {
+     "with": "os_silver",
+     "with_name": "Silver",
+     "with_name_cn": "Silver",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Lamplighter 敬佩 Silver 的辛勤工作，曾送过他一株植物作为感谢。",
+      "Silver 在 Barrens 的角落里与 Lamplighter 是邻居，但他们不怎么说话。"
+     ]
+    },
+    {
+     "with": "os_ling",
+     "with_name": "Ling",
+     "with_name_cn": "Ling",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Ling 认识 Lamplighter，知道他的疲惫。"
+     ]
+    }
+   ],
+   "card": "你和 Kelvin：Lamplighter 与 Kelvin 是后巷的邻居，他们都做着自己的事——他点灯，他发热——不需要交流。\n你和 Silver：Lamplighter 敬佩 Silver 的辛勤工作，曾送过他一株植物作为感谢。\n你和 Ling：Ling 认识 Lamplighter，知道他的疲惫。",
+   "probe": [
+    "os_kelvin",
+    "os_silver",
+    "os_ling"
+   ],
+   "probe_names": [
+    "Kelvin",
+    "Silver",
+    "Ling"
+   ],
+   "unused_pairs": 1,
+   "work": "oneshot"
+  },
+  "os_ling": {
+   "pairs": [
+    {
+     "with": "os_lamplighter",
+     "with_name": "Lamplighter",
+     "with_name_cn": "灯夫",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Ling 知道 Lamplighter 的疲惫，知道他的焦虑，但他不会试图改变他，他只是给他端上咖啡。",
+      "Ling 认识 Lamplighter，知道他的疲惫。"
+     ]
+    }
+   ],
+   "card": "你和 Lamplighter（灯夫）：Ling 知道 Lamplighter 的疲惫，知道他的焦虑，但他不会试图改变他，他只是给他端上咖啡。",
+   "probe": [
+    "os_lamplighter"
+   ],
+   "probe_names": [
+    "Lamplighter"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_magpie": {
+   "pairs": [
+    {
+     "with": "os_calamus",
+     "with_name": "Calamus",
+     "with_name_cn": "Calamus",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Magpie 对 Calamus 有一种务实的亲切，对 Alula 有一种商人的耐心。",
+      "Calamus 从废墟里找到东西，拿来和 Magpie 交换。"
+     ]
+    }
+   ],
+   "card": "你和 Calamus：Magpie 对 Calamus 有一种务实的亲切，对 Alula 有一种商人的耐心。",
+   "probe": [
+    "os_calamus"
+   ],
+   "probe_names": [
+    "Calamus"
+   ],
+   "unused_pairs": 1,
+   "work": "oneshot"
+  },
+  "os_maize": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_mason": {
+   "pairs": [
+    {
+     "with": "os_watcher",
+     "with_name": "Watcher",
+     "with_name_cn": "Watcher",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Watcher 看时间，Mason 看植物。"
+     ]
+    }
+   ],
+   "card": "你和 Watcher：Watcher 看时间，Mason 看植物。",
+   "probe": [
+    "os_watcher"
+   ],
+   "probe_names": [
+    "Watcher"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_niko": {
+   "pairs": [
+    {
+     "with": "os_the_world_machine",
+     "with_name": "The World Machine",
+     "with_name_cn": "The Entity / 本体",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Niko 与 The World Machine 的关系是对话的关系。",
+      "The World Machine 通过弹窗与 Niko 交流，Niko 通过选择回应它。"
+     ]
+    },
+    {
+     "with": "os_cedric",
+     "with_name": "Cedric",
+     "with_name_cn": "Cedric",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Cedric 驾驶飞行机器将 Niko 从 Glen 带到 Refuge。"
+     ]
+    },
+    {
+     "with": "os_rue",
+     "with_name": "Rue",
+     "with_name_cn": "Rue",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Rue 带 Niko 去瞭望平台。"
+     ]
+    }
+   ],
+   "card": "你和 The World Machine（The Entity / 本体）：Niko 与 The World Machine 的关系是对话的关系。\n你和 Cedric：Cedric 驾驶飞行机器将 Niko 从 Glen 带到 Refuge。\n你和 Rue：Rue 带 Niko 去瞭望平台。",
+   "probe": [
+    "os_the_world_machine",
+    "os_cedric",
+    "os_rue"
+   ],
+   "probe_names": [
+    "The World Machine",
+    "Cedric",
+    "Rue"
+   ],
+   "unused_pairs": 4,
+   "work": "oneshot"
+  },
+  "os_prophetbot": {
+   "pairs": [
+    {
+     "with": "os_prototype",
+     "with_name": "Prototype",
+     "with_name_cn": "Prototype",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "ProphetBot 是 Prototype 的简化复制品，被安置在 Barrens 的前哨等待救世主。"
+     ]
+    }
+   ],
+   "card": "你和 Prototype：ProphetBot 是 Prototype 的简化复制品，被安置在 Barrens 的前哨等待救世主。",
+   "probe": [
+    "os_prototype"
+   ],
+   "probe_names": [
+    "Prototype"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_prototype": {
+   "pairs": [
+    {
+     "with": "os_cedric",
+     "with_name": "Cedric",
+     "with_name_cn": "Cedric",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。",
+      "Cedric、Rue、Prototype 是旧世界遗民的核心三人组。"
+     ]
+    },
+    {
+     "with": "os_rue",
+     "with_name": "Rue",
+     "with_name_cn": "Rue",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。",
+      "Cedric、Rue、Prototype 是旧世界遗民的核心三人组。"
+     ]
+    },
+    {
+     "with": "os_niko",
+     "with_name": "Niko",
+     "with_name_cn": "Niko",
+     "cooccur": 1,
+     "score": -2,
+     "sentences": [
+      "Silver 在 Solstice 路线中为 Niko 和 Prototype 争取时间，用身体顶住坠落的岩石，被方块吞噬。"
+     ]
+    }
+   ],
+   "card": "你和 Cedric：Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。\n你和 Rue：Cedric、Rue、Prototype 是旧世界遗民的核心三人组。\n你和 Niko：Silver 在 Solstice 路线中为 Niko 和 Prototype 争取时间，用身体顶住坠落的岩石，被方块吞噬。",
+   "probe": [
+    "os_cedric",
+    "os_rue",
+    "os_niko"
+   ],
+   "probe_names": [
+    "Cedric",
+    "Rue",
+    "Niko"
+   ],
+   "unused_pairs": 1,
+   "work": "oneshot"
+  },
+  "os_rowbot": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_rue": {
+   "pairs": [
+    {
+     "with": "os_cedric",
+     "with_name": "Cedric",
+     "with_name_cn": "Cedric",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。",
+      "Cedric、Rue、Prototype 是旧世界遗民的核心三人组。"
+     ]
+    },
+    {
+     "with": "os_prototype",
+     "with_name": "Prototype",
+     "with_name_cn": "Prototype",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。",
+      "Cedric、Rue、Prototype 是旧世界遗民的核心三人组。"
+     ]
+    },
+    {
+     "with": "os_niko",
+     "with_name": "Niko",
+     "with_name_cn": "Niko",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Rue 带 Niko 去瞭望平台。"
+     ]
+    }
+   ],
+   "card": "你和 Cedric：Rue 是“最先创造的孩子”，Cedric 是“亲生儿子”，Prototype 是“原版先知”。\n你和 Prototype：Cedric、Rue、Prototype 是旧世界遗民的核心三人组。\n你和 Niko：Rue 带 Niko 去瞭望平台。",
+   "probe": [
+    "os_cedric",
+    "os_prototype",
+    "os_niko"
+   ],
+   "probe_names": [
+    "Cedric",
+    "Prototype",
+    "Niko"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_shepherd": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_silver": {
+   "pairs": [
+    {
+     "with": "os_kip",
+     "with_name": "Kip",
+     "with_name_cn": "Kip",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Silver 对 Kip 的感情是疲惫、是接受、是“我不恨你，但我也不再回应了”。",
+      "Kip 至今仍在给 Silver 写信，Silver 从未回复。"
+     ]
+    },
+    {
+     "with": "os_lamplighter",
+     "with_name": "Lamplighter",
+     "with_name_cn": "灯夫",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Silver 在 Barrens 的角落里与 Lamplighter 是邻居，但他们不怎么说话。"
+     ]
+    },
+    {
+     "with": "os_niko",
+     "with_name": "Niko",
+     "with_name_cn": "Niko",
+     "cooccur": 1,
+     "score": -2,
+     "sentences": [
+      "Silver 在 Solstice 路线中为 Niko 和 Prototype 争取时间，用身体顶住坠落的岩石，被方块吞噬。"
+     ]
+    }
+   ],
+   "card": "你和 Kip：Silver 对 Kip 的感情是疲惫、是接受、是“我不恨你，但我也不再回应了”。\n你和 Lamplighter（灯夫）：Silver 在 Barrens 的角落里与 Lamplighter 是邻居，但他们不怎么说话。\n你和 Niko：Silver 在 Solstice 路线中为 Niko 和 Prototype 争取时间，用身体顶住坠落的岩石，被方块吞噬。",
+   "probe": [
+    "os_kip",
+    "os_lamplighter",
+    "os_niko"
+   ],
+   "probe_names": [
+    "Kip",
+    "Lamplighter",
+    "Niko"
+   ],
+   "unused_pairs": 1,
+   "work": "oneshot"
+  },
+  "os_the_author": {
+   "pairs": [
+    {
+     "with": "os_kip",
+     "with_name": "Kip",
+     "with_name_cn": "Kip",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "The Author 后来稳定了她，但 Kip 失去了对她的信心，把她送到了 Barrens。"
+     ]
+    }
+   ],
+   "card": "你和 Kip：The Author 后来稳定了她，但 Kip 失去了对她的信心，把她送到了 Barrens。",
+   "probe": [
+    "os_kip"
+   ],
+   "probe_names": [
+    "Kip"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_the_world_machine": {
+   "pairs": [
+    {
+     "with": "os_the_author",
+     "with_name": "The Author",
+     "with_name_cn": "The Author",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "The World Machine 对 The Author 的感情是愧疚、是被抛弃的痛、也是不知道该怎么面对他的困惑。",
+      "The World Machine 与 The Author 的关系最为复杂。"
+     ]
+    },
+    {
+     "with": "os_niko",
+     "with_name": "Niko",
+     "with_name_cn": "Niko",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "The World Machine 通过弹窗与 Niko 交流，Niko 通过选择回应它。"
+     ]
+    }
+   ],
+   "card": "你和 The Author：The World Machine 对 The Author 的感情是愧疚、是被抛弃的痛、也是不知道该怎么面对他的困惑。\n你和 Niko：The World Machine 通过弹窗与 Niko 交流，Niko 通过选择回应它。",
+   "probe": [
+    "os_the_author",
+    "os_niko"
+   ],
+   "probe_names": [
+    "The Author",
+    "Niko"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "os_watcher": {
+   "pairs": [
+    {
+     "with": "os_mason",
+     "with_name": "Mason",
+     "with_name_cn": "Mason",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Watcher 看时间，Mason 看植物。"
+     ]
+    },
+    {
+     "with": "os_niko",
+     "with_name": "Niko",
+     "with_name_cn": "Niko",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Watcher 对 Niko 有一种笨拙的温柔，她会告诉 ta 不要熬夜。"
+     ]
+    }
+   ],
+   "card": "你和 Mason：Watcher 看时间，Mason 看植物。\n你和 Niko：Watcher 对 Niko 有一种笨拙的温柔，她会告诉 ta 不要熬夜。",
+   "probe": [
+    "os_mason",
+    "os_niko"
+   ],
+   "probe_names": [
+    "Mason",
+    "Niko"
+   ],
+   "unused_pairs": 0,
+   "work": "oneshot"
+  },
+  "ut_alphys": {
+   "pairs": [
+    {
+     "with": "ut_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 3,
+     "score": 2,
+     "sentences": [
+      "Alphys 是皇家科学家，Undyne 暗恋她。",
+      "Asgore 信任 Undyne 与 Alphys。"
+     ]
+    },
+    {
+     "with": "ut_mettaton",
+     "with_name": "Mettaton",
+     "with_name_cn": "Mettaton",
+     "cooccur": 3,
+     "score": 0,
+     "sentences": [
+      "Alphys 创造 Mettaton，参与决心实验，导致融合怪出现。",
+      "Mettaton 与 Alphys 关系复杂：她创造了它，但它不再需要她。"
+     ]
+    },
+    {
+     "with": "ut_asgore",
+     "with_name": "Asgore Dreemurr",
+     "with_name_cn": "Asgore Dreemurr",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Alphys 为 Asgore 工作，却一直隐瞒实验真相。",
+      "Asgore 信任 Undyne 与 Alphys。"
+     ]
+    }
+   ],
+   "card": "你和 Undyne：Alphys 是皇家科学家，Undyne 暗恋她。\n你和 Mettaton：Alphys 创造 Mettaton，参与决心实验，导致融合怪出现。\n你和 Asgore Dreemurr：Alphys 为 Asgore 工作，却一直隐瞒实验真相。",
+   "probe": [
+    "ut_undyne",
+    "ut_mettaton",
+    "ut_asgore"
+   ],
+   "probe_names": [
+    "Undyne",
+    "Mettaton",
+    "Asgore Dreemurr"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_asgore": {
+   "pairs": [
+    {
+     "with": "ut_toriel",
+     "with_name": "Toriel",
+     "with_name_cn": "Toriel",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Asgore 与 Toriel 曾是地下世界的国王与皇后，Asriel 是他们的亲生儿子。",
+      "Asgore 因此向人类宣战，Toriel 反对战争，离开王座，两人离婚。"
+     ]
+    },
+    {
+     "with": "ut_alphys",
+     "with_name": "Alphys",
+     "with_name_cn": "Alphys",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Asgore 信任 Undyne 与 Alphys。",
+      "Alphys 为 Asgore 工作，却一直隐瞒实验真相。"
+     ]
+    },
+    {
+     "with": "ut_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Asgore 信任 Undyne 与 Alphys。",
+      "Undyne 是皇家卫队首领，忠诚于 Asgore。"
+     ]
+    }
+   ],
+   "card": "你和 Toriel：Asgore 与 Toriel 曾是地下世界的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Alphys：Asgore 信任 Undyne 与 Alphys。\n你和 Undyne：Undyne 是皇家卫队首领，忠诚于 Asgore。",
+   "probe": [
+    "ut_toriel",
+    "ut_alphys",
+    "ut_undyne"
+   ],
+   "probe_names": [
+    "Toriel",
+    "Alphys",
+    "Undyne"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_chara": {
+   "pairs": [
+    {
+     "with": "ut_frisk",
+     "with_name": "Frisk",
+     "with_name_cn": "Frisk",
+     "cooccur": 2,
+     "score": -1,
+     "sentences": [
+      "Chara 附着在 Frisk 身上，在屠杀路线中苏醒，在和平路线中安息。",
+      "Frisk 与 Chara 共用身体与决心，但 Frisk 是沉默的容器，Chara 是过去的回声。"
+     ]
+    }
+   ],
+   "card": "你和 Frisk：Chara 附着在 Frisk 身上，在屠杀路线中苏醒，在和平路线中安息。",
+   "probe": [
+    "ut_frisk"
+   ],
+   "probe_names": [
+    "Frisk"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_flowey": {
+   "pairs": [
+    {
+     "with": "ut_frisk",
+     "with_name": "Frisk",
+     "with_name_cn": "Frisk",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Flowey 最初是敌人，在和平路线最后变回 Asriel，被 Frisk 拯救。"
+     ]
+    }
+   ],
+   "card": "你和 Frisk：Flowey 最初是敌人，在和平路线最后变回 Asriel，被 Frisk 拯救。",
+   "probe": [
+    "ut_frisk"
+   ],
+   "probe_names": [
+    "Frisk"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_frisk": {
+   "pairs": [
+    {
+     "with": "ut_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 2,
+     "score": 6,
+     "sentences": [
+      "Monster Kid 是 Undyne 的崇拜者，与 Frisk 在和平路线成为朋友，在屠杀路线试图保护 Undyne。",
+      "Undyne 在瀑布追捕 Frisk，在热地战斗，若被倒水且未杀怪物，则与 Frisk 成为朋友。"
+     ]
+    },
+    {
+     "with": "ut_flowey",
+     "with_name": "Flowey",
+     "with_name_cn": "Flowey",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Flowey 最初是敌人，在和平路线最后变回 Asriel，被 Frisk 拯救。"
+     ]
+    }
+   ],
+   "card": "你和 Undyne：Monster Kid 是 Undyne 的崇拜者，与 Frisk 在和平路线成为朋友，在屠杀路线试图保护 Undyne。\n你和 Flowey：Flowey 最初是敌人，在和平路线最后变回 Asriel，被 Frisk 拯救。",
+   "probe": [
+    "ut_undyne",
+    "ut_flowey"
+   ],
+   "probe_names": [
+    "Undyne",
+    "Flowey"
+   ],
+   "unused_pairs": 5,
+   "work": "undertale"
+  },
+  "ut_gaster": {
+   "pairs": [
+    {
+     "with": "ut_alphys",
+     "with_name": "Alphys",
+     "with_name_cn": "Alphys",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Gaster 是 Alphys 的前任皇家科学家，核心的创造者，决心提取机的设计者。"
+     ]
+    }
+   ],
+   "card": "你和 Alphys：Gaster 是 Alphys 的前任皇家科学家，核心的创造者，决心提取机的设计者。",
+   "probe": [
+    "ut_alphys"
+   ],
+   "probe_names": [
+    "Alphys"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_mettaton": {
+   "pairs": [
+    {
+     "with": "ut_alphys",
+     "with_name": "Alphys",
+     "with_name_cn": "Alphys",
+     "cooccur": 3,
+     "score": 0,
+     "sentences": [
+      "Mettaton 与 Alphys 关系复杂：她创造了它，但它不再需要她。",
+      "Mettaton 由 Alphys 创造，梦想前往地表成为明星。"
+     ]
+    },
+    {
+     "with": "ut_napstablook",
+     "with_name": "Napstablook",
+     "with_name_cn": "Napstablook",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Mettaton 与 Napstablook 是表亲——Mettaton 曾是幽灵，与 Napstablook 住隔壁，一起经营蜗牛农场，后来离开去追明星梦。"
+     ]
+    }
+   ],
+   "card": "你和 Alphys：Mettaton 与 Alphys 关系复杂：她创造了它，但它不再需要她。\n你和 Napstablook：Mettaton 与 Napstablook 是表亲——Mettaton 曾是幽灵，与 Napstablook 住隔壁，一起经营蜗牛农场，后来离开去追明星梦。",
+   "probe": [
+    "ut_alphys",
+    "ut_napstablook"
+   ],
+   "probe_names": [
+    "Alphys",
+    "Napstablook"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_monster_kid": {
+   "pairs": [
+    {
+     "with": "ut_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 2,
+     "score": 6,
+     "sentences": [
+      "Monster Kid 是 Undyne 的崇拜者，与 Frisk 在和平路线成为朋友，在屠杀路线试图保护 Undyne。",
+      "Monster Kid 崇拜 Undyne，在屠杀路线挡在她面前试图保护她。"
+     ]
+    }
+   ],
+   "card": "你和 Undyne：Monster Kid 是 Undyne 的崇拜者，与 Frisk 在和平路线成为朋友，在屠杀路线试图保护 Undyne。",
+   "probe": [
+    "ut_undyne"
+   ],
+   "probe_names": [
+    "Undyne"
+   ],
+   "unused_pairs": 1,
+   "work": "undertale"
+  },
+  "ut_muffet": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_napstablook": {
+   "pairs": [
+    {
+     "with": "ut_mettaton",
+     "with_name": "Mettaton",
+     "with_name_cn": "Mettaton",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Napstablook 是 Mettaton 的表亲，害羞、抑郁、自我贬低，独自经营蜗牛农场。",
+      "Mettaton 与 Napstablook 是表亲——Mettaton 曾是幽灵，与 Napstablook 住隔壁，一起经营蜗牛农场，后来离开去追明星梦。"
+     ]
+    }
+   ],
+   "card": "你和 Mettaton：Napstablook 是 Mettaton 的表亲，害羞、抑郁、自我贬低，独自经营蜗牛农场。",
+   "probe": [
+    "ut_mettaton"
+   ],
+   "probe_names": [
+    "Mettaton"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_papyrus": {
+   "pairs": [
+    {
+     "with": "ut_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Papyrus 天真热情，崇拜 Undyne，想加入皇家卫队。",
+      "Undyne 假装训练 Papyrus，实际在保护他。"
+     ]
+    },
+    {
+     "with": "ut_sans",
+     "with_name": "Sans",
+     "with_name_cn": "Sans",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Sans 与 Papyrus 是兄弟。"
+     ]
+    },
+    {
+     "with": "ut_frisk",
+     "with_name": "Frisk",
+     "with_name_cn": "Frisk",
+     "cooccur": 1,
+     "score": 1,
+     "sentences": [
+      "Papyrus 与 Frisk 在和平路线成为朋友，在屠杀路线被 Frisk 杀死，死前仍说“I STILL BELIEVE IN YOU”。"
+     ]
+    }
+   ],
+   "card": "你和 Undyne：Papyrus 天真热情，崇拜 Undyne，想加入皇家卫队。\n你和 Sans：Sans 与 Papyrus 是兄弟。\n你和 Frisk：Papyrus 与 Frisk 在和平路线成为朋友，在屠杀路线被 Frisk 杀死，死前仍说“I STILL BELIEVE IN YOU”。",
+   "probe": [
+    "ut_undyne",
+    "ut_sans",
+    "ut_frisk"
+   ],
+   "probe_names": [
+    "Undyne",
+    "Sans",
+    "Frisk"
+   ],
+   "unused_pairs": 0,
+   "work": "undertale"
+  },
+  "ut_sans": {
+   "pairs": [
+    {
+     "with": "ut_toriel",
+     "with_name": "Toriel",
+     "with_name_cn": "Toriel",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Sans 答应 Toriel 保护穿过废墟的人类，因此在和平路线放 Frisk 走；",
+      "Sans 隔着废墟大门与 Toriel 讲冷笑话，两人成为朋友。"
+     ]
+    },
+    {
+     "with": "ut_papyrus",
+     "with_name": "Papyrus",
+     "with_name_cn": "Papyrus",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Sans 与 Papyrus 是兄弟。"
+     ]
+    }
+   ],
+   "card": "你和 Toriel：Sans 答应 Toriel 保护穿过废墟的人类，因此在和平路线放 Frisk 走；\n你和 Papyrus：Sans 与 Papyrus 是兄弟。",
+   "probe": [
+    "ut_toriel",
+    "ut_papyrus"
+   ],
+   "probe_names": [
+    "Toriel",
+    "Papyrus"
+   ],
+   "unused_pairs": 1,
+   "work": "undertale"
+  },
+  "ut_toriel": {
+   "pairs": [
+    {
+     "with": "ut_asgore",
+     "with_name": "Asgore Dreemurr",
+     "with_name_cn": "Asgore Dreemurr",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Asgore 与 Toriel 曾是地下世界的国王与皇后，Asriel 是他们的亲生儿子。",
+      "Asgore 因此向人类宣战，Toriel 反对战争，离开王座，两人离婚。"
+     ]
+    },
+    {
+     "with": "ut_sans",
+     "with_name": "Sans",
+     "with_name_cn": "Sans",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Sans 答应 Toriel 保护穿过废墟的人类，因此在和平路线放 Frisk 走；",
+      "Sans 隔着废墟大门与 Toriel 讲冷笑话，两人成为朋友。"
+     ]
+    }
+   ],
+   "card": "你和 Asgore Dreemurr：Asgore 与 Toriel 曾是地下世界的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Sans：Sans 答应 Toriel 保护穿过废墟的人类，因此在和平路线放 Frisk 走；",
+   "probe": [
+    "ut_asgore",
+    "ut_sans"
+   ],
+   "probe_names": [
+    "Asgore Dreemurr",
+    "Sans"
+   ],
+   "unused_pairs": 1,
+   "work": "undertale"
+  },
+  "ut_undyne": {
+   "pairs": [
+    {
+     "with": "ut_monster_kid",
+     "with_name": "Monster Kid",
+     "with_name_cn": "Monster Kid",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Monster Kid 崇拜 Undyne，在屠杀路线挡在她面前试图保护她。"
+     ]
+    },
+    {
+     "with": "ut_asgore",
+     "with_name": "Asgore Dreemurr",
+     "with_name_cn": "Asgore Dreemurr",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Undyne 是皇家卫队首领，忠诚于 Asgore。",
+      "Asgore 信任 Undyne 与 Alphys。"
+     ]
+    },
+    {
+     "with": "ut_papyrus",
+     "with_name": "Papyrus",
+     "with_name_cn": "Papyrus",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Undyne 假装训练 Papyrus，实际在保护他。",
+      "Papyrus 天真热情，崇拜 Undyne，想加入皇家卫队。"
+     ]
+    }
+   ],
+   "card": "你和 Monster Kid：Monster Kid 崇拜 Undyne，在屠杀路线挡在她面前试图保护她。\n你和 Asgore Dreemurr：Undyne 是皇家卫队首领，忠诚于 Asgore。\n你和 Papyrus：Undyne 假装训练 Papyrus，实际在保护他。",
+   "probe": [
+    "ut_monster_kid",
+    "ut_asgore",
+    "ut_papyrus"
+   ],
+   "probe_names": [
+    "Monster Kid",
+    "Asgore Dreemurr",
+    "Papyrus"
+   ],
+   "unused_pairs": 2,
+   "work": "undertale"
+  },
+  "hy_ace": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_axis": {
+   "pairs": [
+    {
+     "with": "hy_chujin_ketsukane",
+     "with_name": "Chujin Ketsukane",
+     "with_name_cn": "Chujin Ketsukane",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Axis 是 Chujin 创造的最后一台皇家守卫机器人。",
+      "Axis 是 Chujin 创造的最后一台皇家守卫机器人。"
+     ]
+    }
+   ],
+   "card": "你和 Chujin Ketsukane：Axis 是 Chujin 创造的最后一台皇家守卫机器人。",
+   "probe": [
+    "hy_chujin_ketsukane"
+   ],
+   "probe_names": [
+    "Chujin Ketsukane"
+   ],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_bowll": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_ceroba_ketsukane": {
+   "pairs": [
+    {
+     "with": "hy_chujin_ketsukane",
+     "with_name": "Chujin Ketsukane",
+     "with_name_cn": "Chujin Ketsukane",
+     "cooccur": 3,
+     "score": 2,
+     "sentences": [
+      "Ceroba 是 Chujin 的遗孀，Kanako 的母亲。",
+      "Chujin Ketsukane 是整个黄魂故事的原点。"
+     ]
+    }
+   ],
+   "card": "你和 Chujin Ketsukane：Ceroba 是 Chujin 的遗孀，Kanako 的母亲。",
+   "probe": [
+    "hy_chujin_ketsukane"
+   ],
+   "probe_names": [
+    "Chujin Ketsukane"
+   ],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_chujin_ketsukane": {
+   "pairs": [
+    {
+     "with": "hy_axis",
+     "with_name": "Axis",
+     "with_name_cn": "Axis",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Axis 是 Chujin 创造的最后一台皇家守卫机器人。",
+      "Axis 是 Chujin 创造的最后一台皇家守卫机器人。"
+     ]
+    },
+    {
+     "with": "hy_ceroba_ketsukane",
+     "with_name": "Ceroba Ketsukane",
+     "with_name_cn": "Ceroba Ketsukane",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Chujin Ketsukane 是整个黄魂故事的原点。",
+      "Chujin 在临终前将完成血清的重担交给了 Ceroba。"
+     ]
+    }
+   ],
+   "card": "你和 Axis：Axis 是 Chujin 创造的最后一台皇家守卫机器人。\n你和 Ceroba Ketsukane：Chujin Ketsukane 是整个黄魂故事的原点。",
+   "probe": [
+    "hy_axis",
+    "hy_ceroba_ketsukane"
+   ],
+   "probe_names": [
+    "Axis",
+    "Ceroba Ketsukane"
+   ],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_clover": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_dalv": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_ed": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_flowey": {
+   "pairs": [
+    {
+     "with": "hy_clover",
+     "with_name": "Clover",
+     "with_name_cn": "Clover",
+     "cooccur": 2,
+     "score": 0,
+     "sentences": [
+      "Flowey 对 Clover 的感情是复杂的——它不愿承认自己在乎，但它的停顿里有东西。",
+      "Flowey 在 Clover 坠落后成为 ta 的“存档点”——它拥有 Clover 的存档文件，在 ta 死亡时让 ta 复活。"
+     ]
+    }
+   ],
+   "card": "你和 Clover：Flowey 对 Clover 的感情是复杂的——它不愿承认自己在乎，但它的停顿里有东西。",
+   "probe": [
+    "hy_clover"
+   ],
+   "probe_names": [
+    "Clover"
+   ],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_guardener": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_martlet": {
+   "pairs": [
+    {
+     "with": "hy_chujin_ketsukane",
+     "with_name": "Chujin Ketsukane",
+     "with_name_cn": "Chujin Ketsukane",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Martlet 是 Chujin 的学生和好友，也是 Kanako 的 mentorship 角色。"
+     ]
+    }
+   ],
+   "card": "你和 Chujin Ketsukane：Martlet 是 Chujin 的学生和好友，也是 Kanako 的 mentorship 角色。",
+   "probe": [
+    "hy_chujin_ketsukane"
+   ],
+   "probe_names": [
+    "Chujin Ketsukane"
+   ],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_mooch": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_moray": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_sousborg": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "hy_starlo": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "yellow"
+  },
+  "ot_alphys": {
+   "pairs": [
+    {
+     "with": "ot_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Alphys 是皇家科学家，Undyne 的暗恋对象。"
+     ]
+    },
+    {
+     "with": "ot_mettaton",
+     "with_name": "Mettaton",
+     "with_name_cn": "Mettaton",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Mettaton 由 Alphys 创造，灵魂来自 Napstablook 的表哥 Hapstablook。"
+     ]
+    }
+   ],
+   "card": "你和 Undyne：Alphys 是皇家科学家，Undyne 的暗恋对象。\n你和 Mettaton：Mettaton 由 Alphys 创造，灵魂来自 Napstablook 的表哥 Hapstablook。",
+   "probe": [
+    "ot_undyne",
+    "ot_mettaton"
+   ],
+   "probe_names": [
+    "Undyne",
+    "Mettaton"
+   ],
+   "unused_pairs": 1,
+   "work": "outertale"
+  },
+  "ot_asgore": {
+   "pairs": [
+    {
+     "with": "ot_asriel_twinkly",
+     "with_name": "Asriel Dreemurr 与 Twinkly",
+     "with_name_cn": "Asriel Dreemurr 与 Twinkly",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。",
+      "Twinkly 可能杀死 Asgore 并吸收灵魂，然后重置。"
+     ]
+    },
+    {
+     "with": "ot_toriel",
+     "with_name": "Toriel",
+     "with_name_cn": "Toriel",
+     "cooccur": 2,
+     "score": 4,
+     "sentences": [
+      "Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。",
+      "Toriel 因 Asgore 向人类宣战而离开王座，放弃 Dreemurr 姓氏，独自守护珍珠星云。"
+     ]
+    }
+   ],
+   "card": "你和 Asriel Dreemurr 与 Twinkly：Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Toriel：Toriel 因 Asgore 向人类宣战而离开王座，放弃 Dreemurr 姓氏，独自守护珍珠星云。",
+   "probe": [
+    "ot_asriel_twinkly",
+    "ot_toriel"
+   ],
+   "probe_names": [
+    "Asriel Dreemurr 与 Twinkly",
+    "Toriel"
+   ],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_asriel_twinkly": {
+   "pairs": [
+    {
+     "with": "ot_toriel",
+     "with_name": "Toriel",
+     "with_name_cn": "Toriel",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。"
+     ]
+    },
+    {
+     "with": "ot_asgore",
+     "with_name": "Asgore",
+     "with_name_cn": "Asgore",
+     "cooccur": 2,
+     "score": -1,
+     "sentences": [
+      "Twinkly 可能杀死 Asgore 并吸收灵魂，然后重置。",
+      "Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。"
+     ]
+    }
+   ],
+   "card": "你和 Toriel：Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Asgore：Twinkly 可能杀死 Asgore 并吸收灵魂，然后重置。",
+   "probe": [
+    "ot_toriel",
+    "ot_asgore"
+   ],
+   "probe_names": [
+    "Toriel",
+    "Asgore"
+   ],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_kidd": {
+   "pairs": [
+    {
+     "with": "ot_undyne",
+     "with_name": "Undyne",
+     "with_name_cn": "Undyne",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Kidd（Monster Kid）是星镇的小怪物，Undyne 的头号粉丝。"
+     ]
+    }
+   ],
+   "card": "你和 Undyne：Kidd（Monster Kid）是星镇的小怪物，Undyne 的头号粉丝。",
+   "probe": [
+    "ot_undyne"
+   ],
+   "probe_names": [
+    "Undyne"
+   ],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_mettaton": {
+   "pairs": [
+    {
+     "with": "ot_alphys",
+     "with_name": "Alphys",
+     "with_name_cn": "Alphys",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Mettaton 由 Alphys 创造，灵魂来自 Napstablook 的表哥 Hapstablook。"
+     ]
+    }
+   ],
+   "card": "你和 Alphys：Mettaton 由 Alphys 创造，灵魂来自 Napstablook 的表哥 Hapstablook。",
+   "probe": [
+    "ot_alphys"
+   ],
+   "probe_names": [
+    "Alphys"
+   ],
+   "unused_pairs": 1,
+   "work": "outertale"
+  },
+  "ot_muffet": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_napstablook": {
+   "pairs": [],
+   "card": "",
+   "probe": [],
+   "probe_names": [],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_papyrus": {
+   "pairs": [
+    {
+     "with": "ot_sans",
+     "with_name": "Sans",
+     "with_name_cn": "Sans",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Papyrus 是 Sans 的弟弟，热情、自信、吵闹，崇拜 Undyne，想加入皇家卫队。"
+     ]
+    }
+   ],
+   "card": "你和 Sans：Papyrus 是 Sans 的弟弟，热情、自信、吵闹，崇拜 Undyne，想加入皇家卫队。",
+   "probe": [
+    "ot_sans"
+   ],
+   "probe_names": [
+    "Sans"
+   ],
+   "unused_pairs": 1,
+   "work": "outertale"
+  },
+  "ot_sans": {
+   "pairs": [
+    {
+     "with": "ot_papyrus",
+     "with_name": "Papyrus",
+     "with_name_cn": "Papyrus",
+     "cooccur": 1,
+     "score": 0,
+     "sentences": [
+      "Sans 是 Papyrus 的哥哥，曾经是皇家科学家。"
+     ]
+    }
+   ],
+   "card": "你和 Papyrus：Sans 是 Papyrus 的哥哥，曾经是皇家科学家。",
+   "probe": [
+    "ot_papyrus"
+   ],
+   "probe_names": [
+    "Papyrus"
+   ],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_toriel": {
+   "pairs": [
+    {
+     "with": "ot_asriel_twinkly",
+     "with_name": "Asriel Dreemurr 与 Twinkly",
+     "with_name_cn": "Asriel Dreemurr 与 Twinkly",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。"
+     ]
+    },
+    {
+     "with": "ot_asgore",
+     "with_name": "Asgore",
+     "with_name_cn": "Asgore",
+     "cooccur": 2,
+     "score": 2,
+     "sentences": [
+      "Toriel 因 Asgore 向人类宣战而离开王座，放弃 Dreemurr 姓氏，独自守护珍珠星云。",
+      "Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。"
+     ]
+    }
+   ],
+   "card": "你和 Asriel Dreemurr 与 Twinkly：Asgore 与 Toriel 曾是伊波特象限的国王与皇后，Asriel 是他们的亲生儿子。\n你和 Asgore：Toriel 因 Asgore 向人类宣战而离开王座，放弃 Dreemurr 姓氏，独自守护珍珠星云。",
+   "probe": [
+    "ot_asriel_twinkly",
+    "ot_asgore"
+   ],
+   "probe_names": [
+    "Asriel Dreemurr 与 Twinkly",
+    "Asgore"
+   ],
+   "unused_pairs": 0,
+   "work": "outertale"
+  },
+  "ot_undyne": {
+   "pairs": [
+    {
+     "with": "ot_asgore",
+     "with_name": "Asgore",
+     "with_name_cn": "Asgore",
+     "cooccur": 1,
+     "score": 4,
+     "sentences": [
+      "Undyne 是皇家卫队首领，Asgore 的学生与忠诚战士。"
+     ]
+    },
+    {
+     "with": "ot_papyrus",
+     "with_name": "Papyrus",
+     "with_name_cn": "Papyrus",
+     "cooccur": 1,
+     "score": 2,
+     "sentences": [
+      "Papyrus 是 Sans 的弟弟，热情、自信、吵闹，崇拜 Undyne，想加入皇家卫队。"
+     ]
+    }
+   ],
+   "card": "你和 Asgore：Undyne 是皇家卫队首领，Asgore 的学生与忠诚战士。\n你和 Papyrus：Papyrus 是 Sans 的弟弟，热情、自信、吵闹，崇拜 Undyne，想加入皇家卫队。",
+   "probe": [
+    "ot_asgore",
+    "ot_papyrus"
+   ],
+   "probe_names": [
+    "Asgore",
+    "Papyrus"
+   ],
+   "unused_pairs": 1,
+   "work": "outertale"
+  }
+ },
+ "coverage": {
+  "npcs": 77,
+  "no_relation_text": [],
+  "no_probe": [
+   "gerson",
+   "rudy",
+   "os_george",
+   "os_maize",
+   "os_rowbot",
+   "os_shepherd",
+   "ut_muffet",
+   "hy_ace",
+   "hy_bowll",
+   "hy_clover",
+   "hy_dalv",
+   "hy_ed",
+   "hy_guardener",
+   "hy_mooch",
+   "hy_moray",
+   "hy_sousborg",
+   "hy_starlo",
+   "ot_muffet",
+   "ot_napstablook"
+  ]
+ },
+ "selfcheck": {
+  "bad_pairs": [],
+  "ok": true
+ }
+}

@@ -17,13 +17,7 @@ import sys
 import time
 import types
 
-# ★★ 第101轮修：原为**硬编码的主仓库绝对路径**
-#   （`C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet`）。那会让本套件在
-#   **git worktree** 里跑 G2 时，静默地去测**主仓库**那份代码 —— 正是本仓库反复
-#   栽过的"**判据比错对象**"（改的是 A 树，断言看的是 B 树 ⇒ 全绿也没有鉴别力）。
-#   本 G2 其余 90 个套件一律"相对本文件"定位产品根，这里统一过来。
-HERE = os.path.dirname(os.path.abspath(__file__))
-BASE = os.path.abspath(os.path.join(HERE, "..", "..", "ralsei_pet"))
+BASE = r"C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet"
 sys.path.insert(0, os.path.join(BASE, "src"))
 sys.path.insert(0, os.path.join(BASE, "modules"))
 
@@ -380,6 +374,16 @@ def make_fall_stub(launch_y=500, floor_y=700):
     o.dialogue_ui = FakeDialogueUI()
     o.emotion_system = types.SimpleNamespace(react_to_event=lambda *a, **k: None)
     o.sound_manager = types.SimpleNamespace(play_splat=lambda: None)
+    # ★ 第98轮起 `handle_fall` 的台词走**唯一入口** `speak_event`（不再直写
+    #   `add_dialogue`）。桩宿主必须跟着升级 —— 否则 SimpleNamespace 上没这个方法，
+    #   D 段一进 `handle_fall` 就 AttributeError，**整段 D/E/F 静默不跑**，
+    #   G2 只看到 `exit=1 / PASS=21`，很像"判据失败"其实是夹具过时。
+    o.spoke = []
+
+    def _speak_event(kind, pool, face="neutral", instant=False):
+        o.spoke.append((kind, tuple(pool or ()), face, instant))
+
+    o.speak_event = _speak_event
     o.last_interaction_time = 0.0
     o._pos = QPoint(500, launch_y)
     o.pos = lambda: o._pos
@@ -404,22 +408,6 @@ def make_fall_stub(launch_y=500, floor_y=700):
 
     o.change_animation = _ca
     o.play_animation_once = _once_
-
-    # ★★ 第101轮修：第98轮起，`handle_fall` 的"晕乎/恢复"两句台词不再直接
-    #   `add_dialogue`，而是走台词唯一出口 `speak_event(..., instant=True)`
-    #   （`main.py` 第9299 / 第9319 行）。桩宿主没跟上"主程序内部调用面"
-    #   ⇒ `AttributeError` **在 C 段之后把整份套件打断**：D/E/F 三段共 19 条
-    #   断言一条都没跑到（**比报红更危险** —— 报告上只看到"套件自身 FAIL"）。
-    #   语义最小复刻（与上面 `make_drag_stub` 同一口径）：取池子第一句落到
-    #   `dialogue_ui` 并返回它。本组断言只关心物理量（`_fall_phase` / `_anims` /
-    #   `pos`），复刻到"确实说了一句话"这一层就够。
-    def _speak_event(kind, pool=None, face="happy", instant=False):
-        text = pool[0] if pool else ""
-        if text:
-            o.dialogue_ui.add_dialogue("ralsei", text, face)
-        return text
-
-    o.speak_event = _speak_event
     return o
 
 

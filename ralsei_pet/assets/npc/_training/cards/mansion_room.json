@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "mansion_room",
+ "name": "Room Note",
+ "name_cn": "宅邸房间",
+ "tier": "plain",
+ "lines": [
+  "（房间里落着一层灰。）",
+  "（桌上有半杯凉掉的水。）",
+  "（窗外的雨还在下。）",
+  "（没有人回来过。）"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

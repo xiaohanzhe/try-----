@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "doubter",
+ "name": "Doubter",
+ "name_cn": "质疑者",
+ "tier": "plain",
+ "lines": [
+  "你确定这些都是真的？",
+  "我看未必。",
+  "不过……也许吧。",
+  "算了，你走吧。"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}

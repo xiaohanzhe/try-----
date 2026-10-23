@@ -1,0 +1,19 @@
+{
+ "schema_version": 1,
+ "kind": "canned",
+ "id": "sign",
+ "name": "Sign",
+ "name_cn": "告示牌",
+ "tier": "plain",
+ "lines": [
+  "（牌子上写着：前方请勿奔跑。）",
+  "（牌子背面画着一个箭头。）",
+  "（有人用粉笔补了一句：跑也没关系。）",
+  "（还有一行小字：摔了别找我。）"
+ ],
+ "voice_markers": [],
+ "patch": "",
+ "eval": {
+  "note": "plain 档：4~10 句内置台词，不经过模型（第49轮口径）"
+ }
+}
