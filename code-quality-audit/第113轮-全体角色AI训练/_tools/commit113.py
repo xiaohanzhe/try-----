@@ -154,21 +154,17 @@ def main(argv):
         w('!! 这些路径没有任何改动 ⇒ 没有可提交的内容')
         return 3
 
-    # 全新目录（pathspec 匹配不到已跟踪文件）先报户口：add -N 只登记路径、不暂存内容
-    new_dirs = []
-    for p in PATHS:
-        rc, o, e = run(['ls-files', '--', p])
-        if rc == 0 and not o.strip():
-            new_dirs.append(p)
+    # ★ `git commit --only` 只认**已跟踪**路径：路径下的未跟踪文件必须先用
+    #   `git add -N`（intent-to-add：只登记路径，**不暂存内容**）"报户口"。
+    #   上一版只对"整条新目录"做 -N，漏掉了落在**已跟踪目录**里的新文件
+    #   （`_tools/push113.py` 就这么被漏掉的）⇒ 现在对全部 PATHS 幂等地做一遍。
     if dry:
-        w('[DRY] 本机会 add -N 的路径 %d 条：%s' % (len(new_dirs), new_dirs))
         w('[DRY] 只做检查，不 add / 不 commit / 不 push')
         return 0
-    for p in new_dirs:
+    for p in PATHS:
         rc, o, e = run(['add', '-N', '--', p])
-        w('    add -N %-50s rc=%d %s' % (p, rc, (e.strip()[:70])))
-    if new_dirs:
-        w('    （同一路径已跟踪的不需要 -N；上面列出的是 pathspec 里没有已跟踪文件的）')
+        if rc != 0:
+            w('    add -N %-52s rc=%d %s' % (p, rc, e.strip()[:70]))
 
     w('[3] commit --only（不动 index 里其它内容）')
     rc, o, e = run(['commit', '--only', '-F', msg_file, '--'] + PATHS)
@@ -198,6 +194,11 @@ def main(argv):
         if a == '0' and d.isdigit() and int(d) > 0:
             c_pure.append(path)
     w('    commit 内 %d 文件 / -%d 行 / 纯删除 %d 个' % (c_files, c_del, len(c_pure)))
+    want = files + len(new_files)
+    if c_files < want:
+        w('    !! 只提交了 %d 个文件，但预期 %d（%d 改动 + %d 新增未跟踪）'
+          % (c_files, want, files, len(new_files)))
+        w('    !! ⇒ 有未跟踪文件没进 commit（--only 不认未跟踪路径，需 add -N）')
     if c_pure or c_files > 600:
         w('    !! 夹带了不该有的改动：%s' % (c_pure[:5] or '文件数异常'))
         rc2, o2, _ = run(['reset', '--soft', 'HEAD~1'])
