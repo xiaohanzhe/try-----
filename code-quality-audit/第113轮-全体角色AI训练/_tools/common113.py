@@ -468,7 +468,10 @@ _AI_RE = re.compile(r'(作为(一个)?\s*AI|人工智能|语言模型|大模型|
                     r'我是\s*AI|我是(一个)?(程序|机器人)|提示词|系统设定|'
                     r'模型回答|训练数据)')
 _SLAVE_RE = re.compile(r'(主人|僕人|仆人|您的(仆人|侍从)|小的这就)')
-_PAREN_RE = re.compile(r'[（(][^（()）]{1,30}[)）]')
+# ★★★ 113轮e：原 `{1,30}` **上限太窄** —— 模型写的旁白常 40~80 字，
+#   实测 susie 48 轮里 45 轮都有括号，判据只报了 2 轮（漏报 43 轮）。
+#   括号内不允许嵌套括号，所以放到 200 不会跨句吞。
+_PAREN_RE = re.compile(r'[（(][^（()）]{1,200}[)）]')
 _META_RE = re.compile(r'(Deltarune|DELTARUNE|Undertale|UNDERTALE|游戏角色|玩家|开发者|'
                       r'代码|脚本|桌宠|程序里)')
 _ASCII_RUN_RE = re.compile(r'[A-Za-z]{18,}')
