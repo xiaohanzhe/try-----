@@ -171,57 +171,118 @@ def cn_avg(rec):
 
 
 def low_lang(thresh=0.6, target=36):
-    """中文占比低于阈值的角色（按占比升序）。"""
+    """中文占比低于阈值的角色（按占比升序）。
+
+    ★ 第113轮起 `main()` **不再用它**（改成 `needs_rerun()`，语言 + 长度一起看）。
+      保留作人工排查的小工具：想知道"纯语言维度"谁最糟时直接调它。
+    """
     rows = [(cn_avg(r), nid) for nid, r in _latest(target).items()]
     return [nid for c, nid in sorted(rows) if c < thresh]
+
+
+def js_len(s):
+    """JS 的 `String.length` 口径（代理对计 2）。产品侧上限按这个数算。"""
+    return len((s or '').encode('utf-16-le')) // 2
+
+
+def over_rate(rec, limit=220):
+    """超长率：回复长度 > limit 的轮次占比。产品 `AI_REPLY_MAX_CHARS=220`。"""
+    ts = rec.get('turns') or []
+    if not ts:
+        return 0.0
+    n = sum(1 for t in ts if js_len(t.get('final')) > limit)
+    return n / float(len(ts))
+
+
+def needs_rerun(lang_thresh=0.6, over_thresh=0.25, target=36):
+    """**体检**：哪些人必须用新规则重跑，以及为什么。
+
+    ★ 为什么不能只看语言（第113轮实测）：
+      `hy_martlet` 中文占比 0.9+（语言没问题），但 36 轮里 27 次超 220 字、
+      均长 257（别人 37~163）—— 它的问题是**用长度冒充"话多"**，
+      按 `low_lang` 的名单根本抓不到，会一直留在"及格"名单里。
+    ★ 两类问题同一个根：`SPEAK_RULES` 里"一次只说 1~3 句"被理解成
+      "1~3 个长句"，既撑出超长、又把中文挤成英文长句。新规则一次治两个。
+    """
+    rows = []
+    for nid, r in _latest(target).items():
+        c = cn_avg(r)
+        o = over_rate(r)
+        why = []
+        if c < lang_thresh:
+            why.append('中文占比 %.2f' % c)
+        if o >= over_thresh:
+            why.append('超长 %d%%（>220字）' % int(round(o * 100)))
+        if why:
+            rows.append((nid, '、'.join(why)))
+    rows.sort()
+    return rows
 
 
 def main():
     say('===== 收尾链启动 =====')
     wait_main()
 
+    # ★★★ 2026-10-25 02:15 实测：训练不是"跑完了"，是**被 OOM 杀掉的**
+    #   （可用内存只剩 174MB，系统终止了 python），而链子的判据只有"PID 没了"
+    #   ⇒ 它兴冲冲地开始跑房间训练，顺序完全错（主训练还差 32 人）。
+    #   "进程消失" ≠ "任务完成"，这是"文件在=已完成"那个老坑的孪生版本。
+    #   ⇒ 退出后先看完成人数，不满就**停在这里**，把判断交给人。
+    done = done_count()
+    total = len([f for f in os.listdir(RAW30) if f.endswith('.jsonl')]) if os.path.isdir(RAW30) else 0
+    roster_total = 77          # 77 人有人设（第113轮口径，`knight` 缺口）
+    if done < roster_total:
+        say('!! 主训练**没跑完**就退出了：%d / %d 人（raw 文件 %d 份）'
+            % (done, roster_total, total))
+        say('   常见原因：内存不足被系统杀掉 / 手动终止。')
+        say('   ⇒ 不往下走（房间训练必须等主训练跑完），交给人工重新拉起。')
+        say('===== 收尾链中止 =====')
+        return 2
+    say('主训练确认跑完（%d/%d 人）⇒ 继续' % (done, roster_total))
+
+    # ---- ① 个体复跑：**先修人设对话，再做房间专属回忆**
+    # ★ 顺序为什么反过来了：房间回忆是把该角色的人设对话当作上下文的一部分延续的，
+    #   人设对话本身要是"整段英文 / 257 字长回复"，房间档只会继承同一个毛病。
+    # ★ 名单**数据驱动**，不是我预先点名：`needs_rerun()` 从 raw30 现算
+    #   （中文占比 <0.60 或 超 220 字的轮次 ≥25%）。预先点名的名单永远会漏人 ——
+    #   上一版只点语言，`hy_martlet`（中文 0.9+，但 27/36 轮超长）就被漏掉了。
+    # ★ ralsei / susie 另外**强制**加入：它们的 `patches` 是本轮新写的，
+    #   而体检判据只看语言/长度，抓不到"纠正句变了"。
+    FORCE = ('ralsei', 'susie')
+    rows = needs_rerun()
+    names = [nid for nid, _ in rows]
+    for nid in FORCE:
+        if nid not in names and nid in _latest():
+            names.append(nid)
+            rows.append((nid, '纠正句是本轮新写的'))
+    if names:
+        say('体检：%d 人需用新说话规则重跑' % len(names))
+        for nid, why in rows:
+            say('   %-22s %s' % (nid, why))
+        step('体检不合格角色整批复跑（%d 人 × 36 轮）' % len(names),
+             ['train30.py', '--turns', '36', '--ctx', '12288',
+              '--only', ','.join(names), '--force',
+              '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
+                                                    'train30_fixbatch.log'))])
+        # ---- ② 复检：复跑**不一定**真的修好。没有这一步，"跑过了"会被当成"修好了"。
+        after = needs_rerun()
+        left = [n for n, _ in after if n not in FORCE]
+        if left:
+            say('!! 复跑后仍有 %d 人不合格：%s' % (len(left), ','.join(left)))
+            for nid, why in after:
+                say('   %-22s %s' % (nid, why))
+            say('   ⇒ 说明问题不在"说话规则"，得看具体原文（别再整批重跑）')
+        else:
+            say('✓ 复检通过：语言与长度两类问题都已消失')
+    else:
+        say('体检通过：没有人需要重跑（语言与长度都在闸内）')
+
+    # ---- ③ 房间专属回忆（34 人 × 四档）
     # ★ 带 `--force`：现存两份房间记录（ralsei / susie）是在**补丁修复之前**跑的，
     #   那时 `room_system` 还把纠正句丢掉 ⇒ 它们带着"没有纠正句"的毛病
     #   （ralsei 那句不存在的人名「凯斯恩」就是从这里来的）。34 人整跑本来也就 1 小时，
     #   与其只补两条、留下口径不一致，不如整体重跑一次。
     step('房间专属回忆（34 人 × 四档）', ['room113.py', '--train', '--force'])
-
-    # ---- 语言修复的 A/B 探针（**先证伪再整批**）
-    # 用户口径「尤其性格」：连语言都不对，性格无从谈起。系统提示里补了"用简体中文"
-    # 之后，先在**两个最糟的**人身上验一次（0.41 / 0.54），生效才敢整批跑 4 小时；
-    # 不生效就停在这里，别把 4 小时花在一个没起作用的修法上。
-    probe = [nid for nid in ('hy_ed', 'hy_sousborg') if nid in _latest()]
-    if probe:
-        before = {n: round(cn_avg(_latest()[n]), 2) for n in probe}
-        step('语言修复探针（%s，各 36 轮）' % ','.join(probe),
-             ['train30.py', '--turns', '36', '--ctx', '12288',
-              '--only', ','.join(probe), '--force',
-              '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
-                                                    'train30_langprobe.log'))])
-        after = {n: round(cn_avg(_latest()[n]), 2) for n in probe}
-        say('  探针结果：%s → %s' % (before, after))
-        ok = all(after[n] >= 0.8 for n in probe)
-        if ok:
-            say('  ✓ 语言修复生效（>=0.80） ⇒ 整批复跑低中文占比角色')
-            todo = [n for n in low_lang() if n not in probe]
-            if todo:
-                say('  待复跑 %d 人：%s' % (len(todo), ','.join(todo)))
-                step('低中文占比角色整批复跑（%d 人 × 36 轮）' % len(todo),
-                     ['train30.py', '--turns', '36', '--ctx', '12288',
-                      '--only', ','.join(todo), '--force',
-                      '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
-                                                            'train30_langfix.log'))])
-            else:
-                say('  没有别的低占比角色了')
-        else:
-            say('  !! 语言修复**没生效** ⇒ 跳过整批复跑，留给人工判断（别再烧 4 小时）')
-
-    # ---- 两条纠正句是本轮新写的，正在跑的那个进程看不见 ⇒ 单独重跑
-    step('ralsei / susie 带新纠正句重跑（各 36 轮）',
-         ['train30.py', '--turns', '36', '--ctx', '12288',
-          '--only', 'ralsei,susie', '--force',
-          '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
-                                                'train30_rerun.log'))])
 
     step('主报告', ['report30.py'])
     step('房间报告', ['room113.py', '--report'])
