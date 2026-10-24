@@ -76,10 +76,22 @@ def script_for(card):
 
 
 def system_for(card, patch=''):
-    """★ 与运行时同一个出口（`npc_persona.build_system_prompt`）。"""
+    """★ 与运行时同一个出口（`npc_persona.build_system_prompt`）。
+
+    ★★★ 2026-10-25 修：这里原来**只传了 `patch`**，没传 `relation` ——
+      也就是说训练时模型根本不知道"关系对象是谁"，可产品运行时是注入关系卡的。
+      后果有两个，都很隐蔽：
+        · 违反本文件自己写的"输入必须与运行时同源"；
+        · 关系段三句「你觉得 X 怎么样」答得高度同质（`attitude_dup` 高）——
+          不是模型不会区分人，是**它压根没拿到关系设定**。
+      ⇒ 现在补齐 `relation`，并加上 `evolution`（角色自己说过的关系轨迹）。
+      两者都默认 `''`，没有卡的角色 prompt 与旧版逐字一致。
+    """
     return C._NP.build_system_prompt(
         card['name'], card['_persona_text'], entries=[], npc_id=card['id'],
-        context='', life='', patch=patch)
+        context='', life='', patch=patch,
+        relation=C._NP.relation_patch(card['id']),
+        evolution=C._NP.evolution_patch(card['id']))
 
 
 def run_conversation(card, patch='', phase='baseline'):

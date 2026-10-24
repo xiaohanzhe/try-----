@@ -2,14 +2,14 @@
 """第113轮 · 收尾链：主训练退出 → 房间训练 → 两条纠正句复跑 → 出报告
 
 ## 为什么要有这个东西
-主训练 77 人 × 36 轮要跑约 16 小时，会话不可能一直开着。但**后台进程能跨会话存活**
+主训练 77 人 × 48 轮（2026-10-25 起）要跑约 18 小时，会话不可能一直开着。但**后台进程能跨会话存活**
 （实测：上一会话起的 `train30.py` 这一会话还在跑）。所以把剩下的步骤串成链，
 让它在主训练自然退出之后自己往下走，不依赖"我还醒着"。
 
 ## 顺序
-1. `train30.py --turns 36`（**已经在跑**，这里只等它，不重复启动）
+1. `train30.py --turns 48`（**已经在跑**，这里只等它，不重复启动）
 2. `room113.py --train` —— 34 人有房间回忆，四档递减
-3. `train30.py --turns 36 --only ralsei,susie --force` —— 这两条纠正句是本轮新写的，
+3. `train30.py --turns 48 --only ralsei,susie --force` —— 这两条纠正句是本轮新写的，
    而正在跑的那个进程在启动时就把 `_index.json` 读进内存了，改索引它看不见
    ⇒ 必须单独重跑一次才生效。日志单独一份，别把主日志搅浑。
 4. `report30.py` + `room113.py --report`
@@ -30,6 +30,15 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
 LOG = os.path.abspath(os.path.join(HERE, '..', '_evidence', 'chain113.log'))
+
+#: 轮数与 ctx 一律取 train30 的真源，不再在本文件里写死。
+#: ★ 2026-10-25 剧本从 36 扩到 48，如果这里还写 36，`done_count()` 会数出 0 人，
+#:   完成度守卫直接判"训练没跑完"并把整条链中止 —— 而且日志说"没跑完"，
+#:   看着像训练真的失败了。
+sys.path.insert(0, HERE)
+import train30 as T          # noqa: E402
+TURNS = T.TURNS_DEFAULT
+CTX = T.CTX30
 
 
 def say(msg):
@@ -71,7 +80,7 @@ def alive(pids):
     return False
 
 
-def done_count(target=36):
+def done_count(target=TURNS):
     """已完成 target 轮的人数（按 raw30 里 turns_n 判，不按文件存在判）。"""
     raw = os.path.abspath(os.path.join(HERE, '..', '_evidence', 'raw30'))
     n = 0
@@ -132,7 +141,7 @@ def step(title, args):
 RAW30 = os.path.abspath(os.path.join(HERE, '..', '_evidence', 'raw30'))
 
 
-def _latest(target=36):
+def _latest(target=TURNS):
     """id → 最新一条 target 轮记录。"""
     import json
     out = {}
@@ -170,7 +179,7 @@ def cn_avg(rec):
     return tot / len(ts)
 
 
-def low_lang(thresh=0.6, target=36):
+def low_lang(thresh=0.6, target=TURNS):
     """中文占比低于阈值的角色（按占比升序）。
 
     ★ 第113轮起 `main()` **不再用它**（改成 `needs_rerun()`，语言 + 长度一起看）。
@@ -194,7 +203,7 @@ def over_rate(rec, limit=220):
     return n / float(len(ts))
 
 
-def needs_rerun(lang_thresh=0.6, over_thresh=0.25, target=36):
+def needs_rerun(lang_thresh=0.6, over_thresh=0.25, target=TURNS):
     """**体检**：哪些人必须用新规则重跑，以及为什么。
 
     ★ 为什么不能只看语言（第113轮实测）：
@@ -259,8 +268,8 @@ def main():
         say('体检：%d 人需用新说话规则重跑' % len(names))
         for nid, why in rows:
             say('   %-22s %s' % (nid, why))
-        step('体检不合格角色整批复跑（%d 人 × 36 轮）' % len(names),
-             ['train30.py', '--turns', '36', '--ctx', '12288',
+        step('体检不合格角色整批复跑（%d 人 × %d 轮）' % (len(names), TURNS),
+             ['train30.py', '--turns', str(TURNS), '--ctx', str(CTX),
               '--only', ','.join(names), '--force',
               '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
                                                     'train30_fixbatch.log'))])

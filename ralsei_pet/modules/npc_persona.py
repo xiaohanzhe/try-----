@@ -765,8 +765,67 @@ def relation_patch(npc_id, assets_dir=None):
     return val
 
 
+#: `evolution_patch` 里"优先取哪些轮"的特征词 —— 这些是**关系轨迹**，不是静态评价。
+_EVOLVE_HINTS = ('后来', '变化', '改观', '闹翻', '一开始', '以前', '后来才')
+
+
+def evolution_patch(npc_id, assets_dir=None, limit=3):
+    """该角色**自己说过的**关系轨迹（第113轮b）。没有 ⇒ `''`。
+
+    数据源：`assets/npc/_relations/_evolution.json`（由 `_tools/evolve113.py`
+    从训练记录里抽出来**单独存**的一份）。
+
+    ★ 与 `relation_patch` 的分工（别把两者混成一个）：
+      · `relation_patch` = 原作的**静态设定**（"Susie 和 Kris 是队友"），来自关系总纲；
+      · `evolution_patch` = 角色在训练里说的**关系怎么变**（"一开始很烦他，后来……"）。
+      前者是一张不动的卡片，装不下时间轴；后者才是用户要的"可随着发展变动"。
+
+    ★ 为什么要单独落盘、不每次从 `raw30` 现算：`raw30` 会被 `--force` 重跑覆盖，
+      而关系认知是**跨轮要留下**的东西 —— 用户原话
+      「每个人间的关系是可随着发展变动的哦，可别前期训练完后期不记得全没了」。
+
+    ★ 读盘失败一律 `''`、带进程内缓存、不抛 —— 与 `training_patch` 同口径。
+      默认 `''` 还保证「没有演化卡的角色，prompt 与旧版逐字一致」（回归锁不会凭空 DIFF）。
+    """
+    if not isinstance(npc_id, str) or not npc_id:
+        return ''
+    key = ('evo', npc_id, assets_dir)
+    if key in _PATCH_CACHE:
+        return _PATCH_CACHE[key]
+    val = ''
+    try:
+        base = assets_dir
+        if base is None:
+            here = os.path.dirname(os.path.abspath(__file__))
+            base = os.path.join(here, '..', 'assets')
+        path = os.path.join(base, 'npc', '_relations', '_evolution.json')
+        with open(path, 'rb') as fh:
+            data = json.loads(fh.read().decode('utf-8'))
+        rec = ((data.get('npcs') or {}).get(npc_id) or {}) if isinstance(data, dict) else {}
+        pairs = rec.get('pairs') or []
+        # 先取带"变化"特征的，再补其余 —— 注入位置有限，先放信息量最大的
+        pri = [p for p in pairs if any(h in (p.get('q') or '') for h in _EVOLVE_HINTS)]
+        rest = [p for p in pairs if p not in pri]
+        picked = (pri + rest)[:max(1, int(limit))]
+        rows = []
+        for p in picked:
+            q = (p.get('q') or '').strip()
+            a = (p.get('a') or '').strip()
+            if not a:
+                continue
+            rows.append('· 有人问过你「%s」，你当时是这样答的：「%s」' % (q[:64], a[:96]))
+        if rows:
+            val = ('【你和别人之间的事（这些是你自己说过的，别否认也别重编）】\n'
+                   + '\n'.join(rows))
+    except Exception as e:
+        _log.debug('关系演化卡读取失败（按无演化卡处理）：%s', e)
+        val = ''
+    _PATCH_CACHE[key] = val
+    return val
+
+
 def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context='',
-                        life='', patch='', relation=''):
+                        life='', patch='', relation='', evolution=''):
     """某个 NPC 的 system prompt —— **唯一出口**。
 
     结构（顺序即含义）：
@@ -800,6 +859,11 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
         parts.append('【这个角色容易犯的毛病（照着改）】\n' + patch.strip())
     if isinstance(relation, str) and relation.strip():
         parts.append('【你和其他人的关系（照这个，别自己编）】\n' + relation.strip())
+    # ★ 第113轮b：关系**轨迹**（角色自己在训练里说过的"一开始…后来…"）。
+    #   排在静态关系卡**之后**：先给设定，再给"这段设定后来怎么演变"，
+    #   顺序反了模型会拿一句旧回忆去覆盖人设里写明的关系。
+    if isinstance(evolution, str) and evolution.strip():
+        parts.append(evolution.strip())
     parts.append(SPEAK_RULES)
     hb = history_block(entries, npc_id=npc_id)
     if hb:

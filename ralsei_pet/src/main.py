@@ -3467,7 +3467,12 @@ class RalseiPet(QMainWindow):
             _log.debug('NPC %s 记忆读取异常（按无记忆处理）: %s', npc_id, e)
         return npc_persona_mod.build_system_prompt(
             npc.name, persona, entries, npc_id, self._build_npc_context(npc_id),
-            life=self._npc_life_blocks(npc_id))
+            life=self._npc_life_blocks(npc_id),
+            # ★ 第113轮：训练纠正块（判红的那句）、对他人的关系卡、关系演化卡。
+            #   三者都走各自的"读不到就返回空串"出口 ⇒ 没训练过的角色 prompt 逐字不变。
+            patch=npc_persona_mod.training_patch(npc_id),
+            relation=npc_persona_mod.relation_patch(npc_id),
+            evolution=npc_persona_mod.evolution_patch(npc_id))
 
     def _npc_model(self, npc_id):
         """这个 NPC 该用哪个 Ollama 句柄 —— `None` = **跟随 App 配置**。
