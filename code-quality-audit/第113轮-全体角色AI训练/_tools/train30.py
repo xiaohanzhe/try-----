@@ -420,6 +420,10 @@ def metrics_of(turns, markers):
     return {
         'marker_turns': hit_any, 'marker_turns_rate': round(hit_any / n, 2),
         'marker_hits_total': hit_total,
+        # 语言（第113轮续）：中文占比。`hy_*` 8 人实测 0.00 ⇒ 整段说英文，
+        # 对中文用户等于这个角色不可用。这里只登记，判红由 gate_reply 的 NOT_CN 负责。
+        'lang': {'avg_cn': round(sum(C.cn_ratio(t['final']) for t in turns) / n, 2),
+                 'low_turns': sum(1 for t in turns if C.cn_ratio(t['final']) < 0.6)},
         'memory': mem,
         'plot': plot,
         'plot_states': states,
@@ -455,6 +459,9 @@ def transcript_md(rec, card):
              '| 剧情回答接住 cue | %d / %d（带 cue 的那几轮；追问不计）|' % (
                  m['plot_relevant'], m.get('plot_rel_n', len(m['plot']))),
              '| 态度同质 | %d 组雷同 / %d 组 |' % (m['attitude_dup'], len(m['attitude_pairs'])),
+             '| 语言 | 中文占比 %.2f（低于 0.6 的 %d 轮）|' % (
+                 (m.get('lang') or {}).get('avg_cn', 1.0),
+                 (m.get('lang') or {}).get('low_turns', 0)),
              '']
     for t in rec['turns']:
         st = t.get('stats') or {}

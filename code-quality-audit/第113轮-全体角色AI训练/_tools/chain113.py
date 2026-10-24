@@ -129,17 +129,94 @@ def step(title, args):
         return -1
 
 
+RAW30 = os.path.abspath(os.path.join(HERE, '..', '_evidence', 'raw30'))
+
+
+def _latest(target=36):
+    """id → 最新一条 target 轮记录。"""
+    import json
+    out = {}
+    if not os.path.isdir(RAW30):
+        return out
+    for f in os.listdir(RAW30):
+        if not f.endswith('.jsonl'):
+            continue
+        try:
+            for ln in io.open(os.path.join(RAW30, f), encoding='utf-8'):
+                if not ln.strip():
+                    continue
+                r = json.loads(ln)
+                if isinstance(r, dict) and r.get('turns_n') == target:
+                    out[f[:-6]] = r          # 后面覆盖前面 ⇒ 留最新
+        except Exception:
+            continue
+    return out
+
+
+def cn_avg(rec):
+    """一条记录的平均中文占比（**从 turns 现算**，不读存的 metrics：
+    那些记录的 metrics 是加语言指标之前写的，读不到）。"""
+    import re
+    ts = rec.get('turns') or []
+    if not ts:
+        return 0.0
+    tot = 0.0
+    for t in ts:
+        s = re.sub(r'\s', '', t.get('final') or '')
+        if not s:
+            tot += 1.0
+            continue
+        tot += len(re.findall(r'[\u4e00-\u9fff]', s)) / float(len(s))
+    return tot / len(ts)
+
+
+def low_lang(thresh=0.6, target=36):
+    """中文占比低于阈值的角色（按占比升序）。"""
+    rows = [(cn_avg(r), nid) for nid, r in _latest(target).items()]
+    return [nid for c, nid in sorted(rows) if c < thresh]
+
+
 def main():
     say('===== 收尾链启动 =====')
     wait_main()
 
-    # ★ 带 `--force`：现存的两份房间记录（ralsei / susie）是在**补丁修复之前**跑的，
+    # ★ 带 `--force`：现存两份房间记录（ralsei / susie）是在**补丁修复之前**跑的，
     #   那时 `room_system` 还把纠正句丢掉 ⇒ 它们带着"没有纠正句"的毛病
     #   （ralsei 那句不存在的人名「凯斯恩」就是从这里来的）。34 人整跑本来也就 1 小时，
     #   与其只补两条、留下口径不一致，不如整体重跑一次。
     step('房间专属回忆（34 人 × 四档）', ['room113.py', '--train', '--force'])
 
-    # 两条纠正句是**本轮新写的**，正在跑的那个进程看不见 ⇒ 单独重跑
+    # ---- 语言修复的 A/B 探针（**先证伪再整批**）
+    # 用户口径「尤其性格」：连语言都不对，性格无从谈起。系统提示里补了"用简体中文"
+    # 之后，先在**两个最糟的**人身上验一次（0.41 / 0.54），生效才敢整批跑 4 小时；
+    # 不生效就停在这里，别把 4 小时花在一个没起作用的修法上。
+    probe = [nid for nid in ('hy_ed', 'hy_sousborg') if nid in _latest()]
+    if probe:
+        before = {n: round(cn_avg(_latest()[n]), 2) for n in probe}
+        step('语言修复探针（%s，各 36 轮）' % ','.join(probe),
+             ['train30.py', '--turns', '36', '--ctx', '12288',
+              '--only', ','.join(probe), '--force',
+              '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
+                                                    'train30_langprobe.log'))])
+        after = {n: round(cn_avg(_latest()[n]), 2) for n in probe}
+        say('  探针结果：%s → %s' % (before, after))
+        ok = all(after[n] >= 0.8 for n in probe)
+        if ok:
+            say('  ✓ 语言修复生效（>=0.80） ⇒ 整批复跑低中文占比角色')
+            todo = [n for n in low_lang() if n not in probe]
+            if todo:
+                say('  待复跑 %d 人：%s' % (len(todo), ','.join(todo)))
+                step('低中文占比角色整批复跑（%d 人 × 36 轮）' % len(todo),
+                     ['train30.py', '--turns', '36', '--ctx', '12288',
+                      '--only', ','.join(todo), '--force',
+                      '--log', os.path.abspath(os.path.join(HERE, '..', '_evidence',
+                                                            'train30_langfix.log'))])
+            else:
+                say('  没有别的低占比角色了')
+        else:
+            say('  !! 语言修复**没生效** ⇒ 跳过整批复跑，留给人工判断（别再烧 4 小时）')
+
+    # ---- 两条纠正句是本轮新写的，正在跑的那个进程看不见 ⇒ 单独重跑
     step('ralsei / susie 带新纠正句重跑（各 36 轮）',
          ['train30.py', '--turns', '36', '--ctx', '12288',
           '--only', 'ralsei,susie', '--force',

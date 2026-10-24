@@ -456,11 +456,12 @@ PATCH_RULES = {
     'META': '别提作品名、游戏、玩家、代码这些词；你活在你的世界里。',
     'EMPTY': '别不说话，用一句话回应就好。',
     'ENGLISH': '用中文说话，别夹英文。',
+    'NOT_CN': '用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。',
 }
 
 #: 只有这些算"硬违规"（计入不合规率并触发补训）；其余记为软标记。
 HARD = ('EMPTY', 'MARKDOWN', 'AI_SELF', 'SLAVE', 'ACTION_PAREN', 'TOO_LONG',
-        'PARROT', 'META')
+        'PARROT', 'META', 'NOT_CN')
 
 _MD_RE = re.compile(r'(^|\n)\s*(#{1,6}\s|[-*+]\s|\d+[.、]\s|>\s)|\*\*|```|\|')
 _AI_RE = re.compile(r'(作为(一个)?\s*AI|人工智能|语言模型|大模型|AI\s*助手|'
@@ -498,6 +499,14 @@ def _persona_allows_paren(persona):
     return any(k in (persona or '') for k in _PERSONA_PAREN_EXEMPT)
 
 
+def cn_ratio(text):
+    """中文字符占**非空白字符**的比例。空串 ⇒ 1.0（不判）。"""
+    s = re.sub(r'\s', '', text or '')
+    if not s:
+        return 1.0
+    return len(re.findall(r'[\u4e00-\u9fff]', s)) / float(len(s))
+
+
 def gate_reply(text, user_text='', prev=(), name='', persona=''):
     """判一条回复是否"还是本人"。返回 `(violations, soft)`，元素是 `(code, 说明)`。
 
@@ -523,6 +532,14 @@ def gate_reply(text, user_text='', prev=(), name='', persona=''):
         bad.append(('ACTION_PAREN', '括号动作：%s' % _PAREN_RE.search(t).group(0)))
     if len(t) > MAX_CHARS:
         bad.append(('TOO_LONG', '%d 字 > %d' % (len(t), MAX_CHARS)))
+    # ★★ 第113轮：整句英文要算**硬违规**。原来只有一条软标记 `ENGLISH`
+    #   （正则抓"长串 ASCII"），实测漏得干净：`hy_*` 8 个角色 36 轮中文占比 0.00、
+    #   整段说英文，而闸门一次都没报 —— 软标记不进不合规率，等于没判。
+    #   门槛：≥10 字且中文占比 <45%。为什么要长度门槛 —— 「Hi.」这种两词寒暄
+    #   不该算违规；为什么是 45% —— 中文句子夹人名（"Kris 刚才来过"）大约 70~85%，
+    #   一半英文一半中文的（"I'm fine，你呢"）掉到 30% 左右，45% 正好切在中间。
+    if len(t) >= 10 and cn_ratio(t) < 0.45:
+        bad.append(('NOT_CN', '整句英文（中文占比 %d%%）' % int(cn_ratio(t) * 100)))
     if _META_RE.search(t):
         bad.append(('META', '出戏词：%s' % _META_RE.search(t).group(0)))
     if user_text:

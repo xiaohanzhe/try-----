@@ -165,6 +165,29 @@ def main(argv):
             L.append('  - 答：%s' % p['final'])
         L.append('')
 
+    # ②c 语言（第113轮续）：先说"能不能用"，再说"像不像"
+    L.append('## ②c 语言：他到底在不在说中文')
+    L.append('')
+    low_lang = [r for r in rows
+                if (r['metrics'].get('lang') or {}).get('avg_cn', 1.0) < 0.6]
+    L.append('**中文占比低于 0.6 的角色：%d / %d 人**' % (len(low_lang), len(rows)))
+    L.append('')
+    if low_lang:
+        L.append('| 角色 | 中文占比 | 中文 <0.6 的轮数 |')
+        L.append('|---|---|---|')
+        for r in sorted(low_lang, key=lambda r: (r['metrics'].get('lang') or {}).get('avg_cn', 0)):
+            lg = r['metrics'].get('lang') or {}
+            L.append('| `%s` %s | **%.2f** | %d/%d |' % (
+                r['id'], r['name'], lg.get('avg_cn', 0), lg.get('low_turns', 0), target))
+        L.append('')
+        L.append('> 这不是"风格差异"：中文用户看到整段英文，等于**这个角色不可用**。'
+                 '根因是 system 里**从来没有"用中文说话"这一条**（`SPEAK_RULES` 第113轮补上），'
+                 '而这些角色的人设原文里大段引用英文台词，模型顺着台词的语言走了。')
+        L.append('')
+    else:
+        L.append('（全部在说中文）')
+        L.append('')
+
     L.append('## ③ 口癖（人设登记的口头禅有没有自然冒出来）')
     L.append('')
     L.append('| 角色 | 命中轮数 | 登记的口癖 |')

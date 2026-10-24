@@ -1,0 +1,13 @@
+{
+ "schema_version": 1,
+ "note": "纠正句（patch）的**人工判读**依据。闸门判不出来的毛病（语义错、编人名、记忆错记）走这里。check113 D6 会核验：source 文件必须存在，且 quote 必须逐字出现在里面；D6c 用不存在引文做负控制，证明这个核验会失败。",
+ "reasons": {
+  "ralsei": {
+   "what": "房间轮说出不存在的人名「凯斯恩」（把 Kris / Susie 拼起来造了个名字）",
+   "why_not_gate": "gate_reply 的判据是格式/出戏类（markdown、自称 AI、括号、超长、说英文）；编人名是语义错误，正则抓不到，写宽了会误伤真实人名",
+   "source": "code-quality-audit/第113轮-全体角色AI训练/_evidence/patch_evidence/ralsei_hallucination.md",
+   "quote": "记得那天我和凯斯恩在喷泉边打水仗",
+   "origin": "code-quality-audit/第113轮-全体角色AI训练/_evidence/raw_room/ralsei.jsonl（会被房间轮重跑覆盖，故逐字摘到 source）"
+  }
+ }
+}

@@ -165,6 +165,20 @@ check('B4 复读自己上一句 ⇒ REPEAT；正控制：换一句则不报',
           '哼，随你。', '嗯', ('哼。',), 'X')[0]],
       repr(codes))
 
+# ---- 语言判据（第113轮：整句英文要判硬违规，不能只当软标记）
+# 实测中文占比：整句英文 0.00 / 中文夹人名 0.68 / 两词寒暄(3字，长度闸挡掉) / 半句英文 0.41
+_en_bad = [c for c, _ in C.gate_reply(
+    "I don't know who you are but I ask you to leave. Please leave.", '你是谁？', (), 'X')[0]]
+_cn_ok = [c for c, _ in C.gate_reply('Kris 刚才来过，我让他先坐下等你了。', '谁来了？', (), 'X')[0]]
+_short_ok = [c for c, _ in C.gate_reply('Hi.', '你好', (), 'X')[0]]
+_mix_half = [c for c, _ in C.gate_reply('别担心，I am fine，真的没事。', '你还好吗？', (), 'X')[0]]
+check('B4b 语言判据：整句英文 ⇒ NOT_CN；中文夹人名 / 两词寒暄**不许**报（长度闸 + 45% 阈值）',
+      'NOT_CN' in _en_bad and 'NOT_CN' not in _cn_ok
+      and 'NOT_CN' not in _short_ok,
+      'en=%s cn=%s short=%s' % (_en_bad, _cn_ok, _short_ok))
+check('B4c 阈值边界：一半英文（0.41）**要**报 —— 这不是"夹个词"，是半句话变了语言',
+      'NOT_CN' in _mix_half, repr(_mix_half))
+
 # ---------------------------------------------------------------- C 产品契约
 mark('C 产品契约：没训练过的角色 prompt 逐字不变')
 import npc_persona as NP  # noqa: E402
@@ -322,13 +336,61 @@ dup_involved = set()
 for d in (rep.get('dup_pairs') or []):
     dup_involved.add(d.get('a'))
     dup_involved.add(d.get('b'))
+
+
+#: ★★ 人工判读的证据（第113轮续）：有些毛病**闸门判不出来** ——
+#:  ralsei 在房间轮说出了「凯斯恩」这个不存在的人名，那不是格式问题、也不是
+#:  "自称 AI"，任何正则都抓不到，只能人读出来。这类纠正句必须有**可核验的来源**，
+#:  否则"我觉得他有毛病"就能往 system 里塞句子，patch 会变成第二个未经验证的人设。
+#:
+#: 所以要求：`source`（相对仓库根的真实文件）+ `quote`（**必须真的出现在那个文件里**）。
+#: 这不是盖章放行：D6c 用一条"引用不存在的串"做负控制，证明这个核验**会**失败。
+REASONS_PATH = os.path.join(C.EVID, 'patch_reasons.json')
+reasons = (C.load_json(REASONS_PATH, {}) or {}).get('reasons') or {}
+
+
+def _declared_ok(nid):
+    """人工证据是否**真的核验通过**（文件存在 + 引文确实在里面）。"""
+    r = reasons.get(nid) or {}
+    src, quote = r.get('source') or '', r.get('quote') or ''
+    if not (src and quote):
+        return False
+    p = src if os.path.isabs(src) else os.path.join(ROOT, src)
+    if not os.path.isfile(p):
+        return False
+    # ★ 这里原来写 `io.open(...)` 而本文件**没 import io** ⇒ NameError 被
+    #   `except Exception` 吞掉，D6 一直报"无依据"，看起来像"证据没写够"。
+    #   教训：**新写的 try/except 分支必须有独立验证**（这次是 D6c 的负控制救的场）。
+    #   顺手把"读失败"也留个痕，别再用 `return False` 一把糊住。
+    try:
+        with open(p, encoding='utf-8', errors='replace') as f:
+            return quote in f.read()
+    except OSError as e:
+        print('    !! 读不了证据文件 %s：%r' % (p, e))
+        return False
+
+
 no_reason = [nid for nid in patches
-             if (per_char.get(nid, {}).get('violations', 0) == 0 and nid not in dup_involved)]
+             if (per_char.get(nid, {}).get('violations', 0) == 0
+                 and nid not in dup_involved
+                 and not _declared_ok(nid))]
 check('D6 每条 patch 都有依据（判红或跨角色撞车）；无证据却写纠正必须报红',
       not no_reason, '无依据：%s' % (','.join(no_reason[:8]) or '无'))
 check('D6b patch 长度 ≤ 160 字（纠正句不许变成第二份人设）',
       all(len(p) <= 160 for p in patches.values()),
       '最长 %d' % (max([len(p) for p in patches.values()] or [0])))
+
+# 负控制：核验机制本身必须"会失败"，否则上面那条 D6 就是盖章放行
+_bogus = {'source': '_evidence/patch_reasons.json', 'quote': '这句话在文件里绝对不存在__XYZ'}
+_keep = reasons.get('__ctrl__')
+reasons['__ctrl__'] = _bogus
+_bogus_ok = _declared_ok('__ctrl__')
+if _keep is None:
+    reasons.pop('__ctrl__', None)
+else:
+    reasons['__ctrl__'] = _keep
+check('D6c 负控制：引文在文件里不存在 ⇒ _declared_ok 必须返回 False（不是盖章放行）',
+      _bogus_ok is False, 'bogus_ok=%r' % (_bogus_ok,))
 
 # ---------------------------------------------------------------- E 区分度
 mark('E 跨角色区分度（"不是同一个 AI 换皮"）')
