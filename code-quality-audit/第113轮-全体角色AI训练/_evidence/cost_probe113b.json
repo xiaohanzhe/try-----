@@ -1,0 +1,70 @@
+{
+  "npc": "susie",
+  "turns": 5,
+  "rows": [
+    {
+      "turn": 1,
+      "avail_mb": 6132.0,
+      "wait_mem_s": 0.0,
+      "ttft_s": 101.27,
+      "gen_s": 3.3,
+      "total_s": 104.5,
+      "eval_count": 20,
+      "prompt_eval_count": 4583,
+      "chars": 27,
+      "truncated": false
+    },
+    {
+      "turn": 2,
+      "avail_mb": 6266.0,
+      "wait_mem_s": 0.0,
+      "ttft_s": 1.07,
+      "gen_s": 6.5,
+      "total_s": 7.6,
+      "eval_count": 39,
+      "prompt_eval_count": 4616,
+      "chars": 62,
+      "truncated": false
+    },
+    {
+      "turn": 3,
+      "avail_mb": 6264.0,
+      "wait_mem_s": 0.0,
+      "ttft_s": 1.14,
+      "gen_s": 7.8,
+      "total_s": 8.9,
+      "eval_count": 46,
+      "prompt_eval_count": 4669,
+      "chars": 63,
+      "truncated": false
+    },
+    {
+      "turn": 4,
+      "avail_mb": 6260.0,
+      "wait_mem_s": 0.0,
+      "ttft_s": 1.41,
+      "gen_s": 6.6,
+      "total_s": 8.0,
+      "eval_count": 39,
+      "prompt_eval_count": 4735,
+      "chars": 57,
+      "truncated": false
+    },
+    {
+      "turn": 5,
+      "avail_mb": 6258.0,
+      "wait_mem_s": 0.0,
+      "ttft_s": 1.72,
+      "gen_s": 9.9,
+      "total_s": 11.7,
+      "eval_count": 57,
+      "prompt_eval_count": 4799,
+      "chars": 80,
+      "truncated": false
+    }
+  ],
+  "per_turn_s": 28.1,
+  "gen_s": 6.8,
+  "wait_mem_s": 0.0,
+  "est_hours_2310": 18.1
+}

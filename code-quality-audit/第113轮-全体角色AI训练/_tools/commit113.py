@@ -48,6 +48,7 @@ PATHS = [
     'ralsei_pet/modules/npc_persona.py',
     'ralsei_pet/assets/npc/_relations',
     'ralsei_pet/assets/npc/_training',
+    'ralsei_pet/assets/npc/_rooms',
     'ralsei_pet/assets/npc/persona',
     'code-quality-audit/第113轮-全体角色AI训练',
     'code-quality-audit/第六轮/verify_round6_fixes.py',

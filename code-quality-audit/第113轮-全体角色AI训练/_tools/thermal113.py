@@ -60,7 +60,8 @@ COOL_SECONDS = 180          # 触发后冷却时长
 
 #: 受看护的脚本。第113轮的后半段是"态度评测"，它同样长时间打模型，
 #: 不能只盯 `dialogue113.py`（盯漏了就等于这段时间没有保护）。
-WATCHED = ('dialogue113.py', 'attitude113.py')
+#: 第113轮b 加了 `train30.py`（77 人 × 30 轮 ≈ 11 小时满载，是最需要看护的一档）。
+WATCHED = ('dialogue113.py', 'attitude113.py', 'train30.py')
 
 
 def find_train_pids():
@@ -185,22 +186,41 @@ def main():
     baseline = []          # 开局 5 个采样的 tps 中位数
     strikes = 0
     last_tps = None
+    seen_pids = set()
     while True:
         row = sample()
         write_csv(row)
-        if row['tps'] is not None:
-            if len(baseline) < 5:
-                baseline.append(row['tps'])
-                log('基线采样 %d/5：%.2f tok/s' % (len(baseline), row['tps']))
+        if row['tps'] is None:
+            # ★★★ 第113轮b 修的真 bug（教训：**两种不同的原因不能共用一个计数器**）
+            #   `tps is None` = 这段时间**没有产出**：冷 prefill（实测每个角色切换
+            #   要 100~230s！）、内存闸等待、角色之间的冷却。这些都不是"降频"。
+            #   原实现只在 `tps is not None` 分支里动 strikes ⇒ 冷 prefill 期间
+            #   strikes 原样攒着，攒够 3 次就把正在跑 12 小时的训练 terminate 掉。
+            #   实测代价：一次 36 轮验证跑（17:xx）就是这样被误杀的。
+            if strikes:
+                log('吞吐无产出（prefill/等待/冷却）⇒ 判定计数清零（原 %d 次）' % strikes)
+            strikes = 0
+        elif len(baseline) < 5:
+            baseline.append(row['tps'])
+            log('基线采样 %d/5：%.2f tok/s' % (len(baseline), row['tps']))
+        else:
+            base = statistics.median(baseline)
+            if row['tps'] < base * TPS_FLOOR:
+                strikes += 1
+                log('⚠️ 吞吐 %.2f tok/s < 基线 %.2f 的 %.0f%%（第 %d 次）'
+                    % (row['tps'], base, TPS_FLOOR * 100, strikes))
             else:
-                base = statistics.median(baseline)
-                if row['tps'] < base * TPS_FLOOR:
-                    strikes += 1
-                    log('⚠️ 吞吐 %.2f tok/s < 基线 %.2f 的 %.0f%%（第 %d 次）'
-                        % (row['tps'], base, TPS_FLOOR * 100, strikes))
-                else:
-                    strikes = 0
+                strikes = 0
+        if row['tps'] is not None:
             last_tps = row['tps']
+
+        pids = row['train_pids']
+        # 训练进程变了（重启/续跑）⇒ 新进程第一轮必然是冷 prefill，旧基线不适用
+        if set(pids) != seen_pids:
+            seen_pids = set(pids)
+            if strikes:
+                log('训练进程集合变化 ⇒ 判定计数清零')
+            strikes = 0
 
         pids = row['train_pids']
         if row['mem_avail_mb'] < args.mem_floor:

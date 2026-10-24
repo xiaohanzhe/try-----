@@ -1,0 +1,607 @@
+{
+ "schema_version": 1,
+ "note": "房间专属回忆的数据面：NPC → 房间 → 可读说法（含区域中文名）。三级证据 original/derived/authored 与站位表同口径，没房间的人不训练、不编安身之所。",
+ "source": {
+  "index": "assets/scenes/_index.json（章节/区域/场景三级，含 name 与 original_room_id）",
+  "rooms": "assets/scenes/_original_rooms.json（原作反编译 scr_roomname）",
+  "placement": "assets/npc/_placement.json 的 placement[]",
+  "aliases": "assets/scenes/_aliases.json",
+  "missing": "第87轮-每人一个家/_evidence/homes87.json 已在\"已暂存删除\"里，故退回用 placement 的站位 + 场景索引"
+ },
+ "npcs": {
+  "ralsei": {
+   "room_id": 63,
+   "chapter": "ch2",
+   "room_raw": "room_dw_ralsei_castle_front",
+   "scene": "ch2.ralsei_room.dw_ralsei_castle_front",
+   "area_name": "拉尔赛的城堡",
+   "scene_name": "拉尔赛的城堡·castle_front",
+   "room_name": "",
+   "label": "拉尔赛的城堡·castle_front",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫"
+   ],
+   "source": "derived",
+   "evidence": "原作房间 `room_dw_ralsei_castle_front`（ch2:63, 1000x1000）= 他的城堡正门；另有 `room_dw_castle_rooms_ralsei`（ch4:155 / ch5:65）= 他在城堡镇的客房。"
+  },
+  "kris": {
+   "room_id": 71,
+   "chapter": "ch2",
+   "room_raw": "room_dw_castle_rooms_kris",
+   "scene": "ch2.my_castle_town.dw_castle_rooms_kris",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·rooms_kris",
+   "room_name": "",
+   "label": "我的城堡镇·rooms_kris",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_dw_castle_rooms_kris`（ch2:71）就是他在城堡镇的客房。"
+  },
+  "susie": {
+   "room_id": 72,
+   "chapter": "ch2",
+   "room_raw": "room_dw_castle_rooms_susie",
+   "scene": "ch2.my_castle_town.dw_castle_rooms_susie",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·rooms_susie",
+   "room_name": "",
+   "label": "我的城堡镇·rooms_susie",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_dw_castle_rooms_susie`（ch2:72）；另有 `room_dw_castle_rooms_kris_susie`（ch4:246）= 两人合房。"
+  },
+  "toriel": {
+   "room_id": 28,
+   "chapter": "ch1",
+   "room_raw": "room_torielclass",
+   "scene": "ch1.hometown.torielclass",
+   "area_name": "家乡",
+   "scene_name": "家乡·torielclass",
+   "room_name": "",
+   "label": "家乡·torielclass",
+   "cn_alias": [
+    "小镇",
+    "镇上"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_torielclass`（ch1:28）= 她的教室；她是学校的老师。"
+  },
+  "asgore": {
+   "room_id": 20,
+   "chapter": "ch5",
+   "room_raw": "room_town_north",
+   "scene": "ch5.hometown.town_north",
+   "area_name": "家乡",
+   "scene_name": "家乡·town_north",
+   "room_name": "",
+   "label": "家乡·town_north",
+   "cn_alias": [
+    "小镇",
+    "镇上"
+   ],
+   "source": "derived",
+   "evidence": "原作对象 `obj_town_north_asgore`（ch5）= 他在家乡北边摆摊；房间 `room_town_north`（ch5:20, 1800x240）是横向长街。"
+  },
+  "king": {
+   "room_id": 69,
+   "chapter": "ch2",
+   "room_raw": "room_dw_castle_dungeon",
+   "scene": "ch2.my_castle_town.dw_castle_dungeon",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·dungeon",
+   "room_name": "",
+   "label": "我的城堡镇·dungeon",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "`ch2.obj_npc_king_Step_0.gml`：`x < 1380` 时把 `hspeed` 累计加到 3 以上并 `y -= 4`；否则若 `x > xstart` 则 `hspeed -= 1` 且 `y += 4`（**走回出生点**）；末尾 `x = min(x, 1455)` 硬钳制。⚠️ 右行那"
+  },
+  "lancer": {
+   "room_id": 89,
+   "chapter": "ch4",
+   "room_raw": "room_cc_lancer",
+   "scene": "ch4.card_castle.cc_lancer",
+   "area_name": "纸牌城堡",
+   "scene_name": "纸牌城堡·lancer",
+   "room_name": "",
+   "label": "纸牌城堡·lancer",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫"
+   ],
+   "source": "derived",
+   "evidence": "`ch4.obj_room_castle_lancer_Create_0.gml` 硬坐标：Lancer=(793,92)、Mr. Elegance=(869,92)、Dozer=(940,47)、Ponman=(665,268)、Hacker=(740,254)、Swatchling=(656,26)。坐标 x 最大"
+  },
+  "queen": {
+   "room_id": 167,
+   "chapter": "ch4",
+   "room_raw": "room_dw_castle_rooms_queen",
+   "scene": "ch4.my_castle_town.dw_castle_rooms_queen",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·rooms_queen",
+   "room_name": "",
+   "label": "我的城堡镇·rooms_queen",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "`ch4.obj_room_castle_queen_Create_0.gml` 硬坐标：`instance_create(200, 150, obj_npc_room)` 且 `sprite_index = spr_queen_walk_up`；同房还有 trashy(315,175)、Rouxls 台灯(127,2"
+  },
+  "spamton": {
+   "room_id": 148,
+   "chapter": "ch2",
+   "room_raw": "room_dw_city_spamton_shop_interior",
+   "scene": "ch2.cyber_city.dw_city_spamton_shop_interior",
+   "area_name": "赛博都市",
+   "scene_name": "赛博都市·spamton_shop_interior",
+   "room_name": "",
+   "label": "赛博都市·spamton_shop_interior",
+   "cn_alias": [
+    "便利店",
+    "商店",
+    "店",
+    "赛博都市"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_dw_city_spamton_shop_interior`（ch2:148）与 `room_dw_city_spamton_shop_exterior`（ch2:108）就是他的店。"
+  },
+  "berdly": {
+   "room_id": 30,
+   "chapter": "ch2",
+   "room_raw": "room_town_school",
+   "scene": "ch2.hometown.town_school",
+   "area_name": "家乡",
+   "scene_name": "家乡·town_school",
+   "room_name": "",
+   "label": "家乡·town_school",
+   "cn_alias": [
+    "学校",
+    "校园",
+    "教学楼",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_town_school`（ch2:30）= 家乡的学校；他是学生。"
+  },
+  "noelle": {
+   "room_id": 30,
+   "chapter": "ch2",
+   "room_raw": "room_town_school",
+   "scene": "ch2.hometown.town_school",
+   "area_name": "家乡",
+   "scene_name": "家乡·town_school",
+   "room_name": "",
+   "label": "家乡·town_school",
+   "cn_alias": [
+    "学校",
+    "校园",
+    "教学楼",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_town_school`（ch2:30）；她是学生，与 Berdly 同班。"
+  },
+  "tenna": {
+   "room_id": 168,
+   "chapter": "ch4",
+   "room_raw": "room_dw_castle_rooms_tenna",
+   "scene": "ch4.my_castle_town.dw_castle_rooms_tenna",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·rooms_tenna",
+   "room_name": "",
+   "label": "我的城堡镇·rooms_tenna",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "`ch4.obj_room_castle_tenna_Step_0.gml` 里 `x = 478; y = 376;`（他跳舞的那一支）；同房还有 Rouxls 台灯。"
+  },
+  "rouxls": {
+   "room_id": 59,
+   "chapter": "ch3",
+   "room_raw": "room_dw_castle_cafe",
+   "scene": "ch3.my_castle_town.dw_castle_cafe",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·cafe",
+   "room_name": "",
+   "label": "我的城堡镇·cafe",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作者在**咖啡店**值班：`ch5.obj_npc_castle_cafe_Create_0.gml` 里`_rouxls_npc = scr_dark_marker(760, 60, spr_rurus_idle_half)`；ch4 里他则在 Queen 房当台灯 (127,275)。⚠️ 他的注册表 `chap"
+  },
+  "gerson": {
+   "room_id": 69,
+   "chapter": "ch4",
+   "room_raw": "room_dw_castle_dojo",
+   "scene": "ch4.my_castle_town.dw_castle_dojo",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·dojo",
+   "room_name": "",
+   "label": "我的城堡镇·dojo",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "`ch4.obj_npc_gerson_Create_0.gml` 有完整状态机（写字/想事/纸稿/旋转）但**没有站位脚本**，也没有 `room ==` 分派 ⇒ 拿不到原作房间与坐标。"
+  },
+  "mike": {
+   "room_id": 213,
+   "chapter": "ch5",
+   "room_raw": "room_dw_castle_tv_mike",
+   "scene": "ch5.my_castle_town.dw_castle_tv_mike",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·tv_mike",
+   "room_name": "",
+   "label": "我的城堡镇·tv_mike",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_dw_castle_tv_mike`（ch5:213）—— 房间名就是他的名字。"
+  },
+  "flowery": {
+   "room_id": 177,
+   "chapter": "ch5",
+   "room_raw": "room_dw_fcastle_cafe",
+   "scene": "ch5.flower_castle.flower_castle_cafe",
+   "area_name": "花之城堡",
+   "scene_name": "花之城堡·咖啡厅",
+   "room_name": "Flower Castle - Cafe",
+   "label": "花之城堡·Flower Castle - Cafe",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "咖啡馆"
+   ],
+   "source": "original",
+   "evidence": "原作房间 `room_dw_fcastle_cafe`（ch5:177, 880x680，显示名 `Flower Castle - Cafe`）= 花之城堡·咖啡厅；他的据点房间 `room_dw_fcastle_flowery`(ch5:226) 也在同一片区域。"
+  },
+  "hammerguy": {
+   "room_id": 11,
+   "chapter": "ch1",
+   "room_raw": "room_town_mid",
+   "scene": "ch1.hometown.town_mid",
+   "area_name": "家乡",
+   "scene_name": "家乡·town_mid",
+   "room_name": "",
+   "label": "家乡·town_mid",
+   "cn_alias": [
+    "小镇",
+    "镇上"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_hammerguy_Create_0.gml` 只有 119 B 的初值（没有站位脚本）。"
+  },
+  "puzzlemaster1": {
+   "room_id": 60,
+   "chapter": "ch1",
+   "room_raw": "room_field_puzzletutorial",
+   "scene": "ch1.field.field_puzzletutorial",
+   "area_name": "希望与梦想之原",
+   "scene_name": "希望与梦想之原·puzzletutorial",
+   "room_name": "",
+   "label": "希望与梦想之原·puzzletutorial",
+   "cn_alias": [
+    "原野",
+    "田野"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_room_Create_0.gml` 的暗世界分支：`room == room_field_puzzletutorial` → `sprite_index = spr_npc_puzzlepiece`。"
+  },
+  "puzzlemaster2": {
+   "room_id": 55,
+   "chapter": "ch1",
+   "room_raw": "room_field_puzzle1",
+   "scene": "ch1.field.field_puzzle1",
+   "area_name": "希望与梦想之原",
+   "scene_name": "希望与梦想之原·puzzle1",
+   "room_name": "",
+   "label": "希望与梦想之原·puzzle1",
+   "cn_alias": [
+    "原野",
+    "田野"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_puzzlemaster2_Create_0.gml` 用 `x < 350 / 250 / 150` 分档决定他戴几顶帽子（beanie[0..2]），⇒ 同一对象按 x 位置区分多个谜题大师。"
+  },
+  "sign": {
+   "room_id": 7,
+   "chapter": "ch1",
+   "room_raw": "room_town_krisyard",
+   "scene": "ch1.hometown.town_krisyard",
+   "area_name": "家乡",
+   "scene_name": "家乡·town_krisyard",
+   "room_name": "",
+   "label": "家乡·town_krisyard",
+   "cn_alias": [
+    "小镇",
+    "镇上"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_sign_Create_0.gml` 按房间换精灵：`room == room_town_krisyard` → `spr_torcar_u`；`room == room_town_north` → `spr_npc_asgoretruck`；`room == room_beach` → `s"
+  },
+  "npc_room": {
+   "room_id": 35,
+   "chapter": "ch1",
+   "room_raw": "room_dark1a",
+   "scene": "ch1.unknown.unknown",
+   "area_name": "？？？？？？",
+   "scene_name": "？？？？？？",
+   "room_name": "",
+   "label": "？？？？？？",
+   "cn_alias": [],
+   "source": "derived",
+   "evidence": "注册表里他的 name 是 `???`、name_cn 是\"空房间\"；对应原作通用占位对象 `obj_npc_room`。原作 room 35 的**显示名**就是 `??????`（内部名 `room_dark1a`，640x480）。"
+  },
+  "mansion_room": {
+   "room_id": 150,
+   "chapter": "ch2",
+   "room_raw": "room_dw_mansion_krisroom",
+   "scene": "ch2.queens_mansion.dw_mansion_krisroom",
+   "area_name": "女王宅邸",
+   "scene_name": "女王宅邸·krisroom",
+   "room_name": "",
+   "label": "女王宅邸·krisroom",
+   "cn_alias": [
+    "老家",
+    "家",
+    "卧室",
+    "房间"
+   ],
+   "source": "derived",
+   "evidence": "`ch2.obj_npc_mansion_room_Create_0.gml`：`room == room_dw_mansion_krisroom` 分支里给出 6 组硬坐标（bathbombs 120,152 / jongler 124,323 / toriel_piano 448,326 / knife_jello"
+  },
+  "conbini": {
+   "room_id": 47,
+   "chapter": "ch2",
+   "room_raw": "room_lw_conbini",
+   "scene": "ch2.light_world.lw_conbini",
+   "area_name": "光世界",
+   "scene_name": "光世界·conbini",
+   "room_name": "",
+   "label": "光世界·conbini",
+   "cn_alias": [
+    "便利店",
+    "光世界"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_lw_conbini`（ch2:47, 540x240）= 便利店。"
+  },
+  "police": {
+   "room_id": 46,
+   "chapter": "ch2",
+   "room_raw": "room_lw_police",
+   "scene": "ch2.light_world.lw_police",
+   "area_name": "光世界",
+   "scene_name": "光世界·police",
+   "room_name": "",
+   "label": "光世界·police",
+   "cn_alias": [
+    "光世界"
+   ],
+   "source": "derived",
+   "evidence": "原作房间名 `room_lw_police`（ch2:46, 320x240）= 警察局；`ch2.obj_npc_police_Create_0.gml` 给出同房硬坐标（napstablook 92,84；办公桌 128,97；笼子 177,35）。"
+  },
+  "catti": {
+   "room_id": 38,
+   "chapter": "ch2",
+   "room_raw": "room_diner",
+   "scene": "ch2.hometown.diner",
+   "area_name": "家乡",
+   "scene_name": "家乡·diner",
+   "room_name": "",
+   "label": "家乡·diner",
+   "cn_alias": [
+    "餐厅",
+    "饭店",
+    "餐馆",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_room_Create_0.gml`：`room == room_diner` 且 `x < 120` → `sprite_index = spr_npc_cattiwaitress`（女侍）。同房其它 NPC 也靠 x 档位区分（如 120<=x<=140 → `spr_npc_qc`）。"
+  },
+  "rudy": {
+   "room_id": 36,
+   "chapter": "ch2",
+   "room_raw": "room_hospital_rudy",
+   "scene": "ch2.hometown.hospital_rudy",
+   "area_name": "家乡",
+   "scene_name": "家乡·hospital_rudy",
+   "room_name": "",
+   "label": "家乡·hospital_rudy",
+   "cn_alias": [
+    "医院",
+    "诊所",
+    "小镇",
+    "镇上"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_room_Create_0.gml`：`room == room_hospital_rudy` → `sprite_index = spr_rudy_d`；`ch2.obj_npc_rudy_Create_0.gml` 里`global.flag[316] == 1` 时 `x += 5`。"
+  },
+  "dumpster": {
+   "room_id": 28,
+   "chapter": "ch2",
+   "room_raw": "room_town_apartments",
+   "scene": "ch2.hometown.town_apartments",
+   "area_name": "家乡",
+   "scene_name": "家乡·town_apartments",
+   "room_name": "",
+   "label": "家乡·town_apartments",
+   "cn_alias": [
+    "小镇",
+    "镇上"
+   ],
+   "source": "derived",
+   "evidence": "`ch2.obj_npc_dumpster_Step_0.gml` 里出现 Susie 的互动，但没有 `room ==` 分派 ⇒ 拿不到原作房间。"
+  },
+  "addison_tea": {
+   "room_id": 65,
+   "chapter": "ch2",
+   "room_raw": "room_dw_castle_cafe",
+   "scene": "ch2.my_castle_town.dw_castle_cafe",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·cafe",
+   "room_name": "",
+   "label": "我的城堡镇·cafe",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作里\"Addison 一族\"在赛博世界摆摊；城堡镇的咖啡厅是同类店员值守的地方（ch5 实证 Rouxls 就在咖啡店代班：`ch5.obj_npc_castle_cafe_Create_0.gml`）。但他本人的站位无可溯源证据。"
+  },
+  "castle_cafe": {
+   "room_id": 57,
+   "chapter": "ch5",
+   "room_raw": "room_dw_castle_cafe",
+   "scene": "ch5.my_castle_town.dw_castle_cafe",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·cafe",
+   "room_name": "",
+   "label": "我的城堡镇·cafe",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "`ch5.obj_npc_castle_cafe_Create_0.gml` 整段就是这间咖啡店的布点：Rouxls(760,60)、Coody(360,83)、6 组吊灯(178+i*76, 10)、10 处壁炉火（145,4 / 222,73 / 150,50 / 625,11 / 640,67 / 550,98 "
+  },
+  "rabbits": {
+   "room_id": 56,
+   "chapter": "ch5",
+   "room_raw": "room_dw_castle_restaurant",
+   "scene": "ch5.my_castle_town.dw_castle_restaurant",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·restaurant",
+   "room_name": "",
+   "label": "我的城堡镇·restaurant",
+   "cn_alias": [
+    "餐厅",
+    "饭店",
+    "餐馆",
+    "城堡"
+   ],
+   "source": "derived",
+   "evidence": "原作有 `spr_npc_rabbick_*`（ch3 `room_dw_b3bs_rabbick_a/b`）与`spr_npc_rabbick_car`（ch4 Queen 房 720,239）⇒ \"兔子\"确实成群出现，但注册表把他登记在 ch5，而 ch5 没有对应房间证据。"
+  },
+  "wrapper": {
+   "room_id": 54,
+   "chapter": "ch5",
+   "room_raw": "room_dw_castle_town",
+   "scene": "ch5.my_castle_town.my_castle_town",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇",
+   "room_name": "My Castle Town",
+   "label": "我的城堡镇·My Castle Town",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "original",
+   "evidence": "没有找到 `obj_npc_wrapper` 的站位脚本。"
+  },
+  "doubter": {
+   "room_id": 54,
+   "chapter": "ch5",
+   "room_raw": "room_dw_castle_town",
+   "scene": "ch5.my_castle_town.my_castle_town",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇",
+   "room_name": "My Castle Town",
+   "label": "我的城堡镇·My Castle Town",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "original",
+   "evidence": "没有找到 `obj_npc_doubter` 的站位脚本。"
+  },
+  "zapper": {
+   "room_id": 325,
+   "chapter": "ch4",
+   "room_raw": "room_dw_castle_tv_zone_minigame",
+   "scene": "ch4.my_castle_town.dw_castle_tv_zone_minigame",
+   "area_name": "我的城堡镇",
+   "scene_name": "我的城堡镇·tv_zone_minigame",
+   "room_name": "",
+   "label": "我的城堡镇·tv_zone_minigame",
+   "cn_alias": [
+    "城堡",
+    "宫殿",
+    "王宫",
+    "小镇"
+   ],
+   "source": "derived",
+   "evidence": "原作有 `room_dw_b3bs_zapper_a/b/c/d`（ch3:157/164/161/182，宽度 1600/2760/640/640）⇒ zapper 是电视世界的\"电击者\"，成排出现、按房间分区。"
+  },
+  "susiedark": {
+   "room_id": 34,
+   "chapter": "ch1",
+   "room_raw": "room_dark1",
+   "scene": "ch1.dark_world.dark1",
+   "area_name": "黑暗世界",
+   "scene_name": "黑暗世界·dark1",
+   "room_name": "",
+   "label": "黑暗世界·dark1",
+   "cn_alias": [
+    "黑暗世界"
+   ],
+   "source": "derived",
+   "evidence": "`ch1.obj_npc_susiedark_Other_10.gml` / `ch2` / `ch3` 都有这个对象，但都是对话脚本，没有 `room ==` 分派。注册表把她记为 `Susie?`（暗之苏西），与主角 Susie 不是同一条。"
+  }
+ },
+ "stats": {
+  "original": 3,
+  "derived": 31,
+  "authored": 0,
+  "no_room": 50
+ },
+ "counts": {
+  "placed": 84,
+  "with_room": 34,
+  "unplaced": 62
+ }
+}

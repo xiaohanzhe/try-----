@@ -364,12 +364,20 @@ def _post(path, payload, timeout=300):
     return urllib.request.urlopen(req, timeout=timeout)
 
 
-def chat(messages, seed=None, temperature=None, num_predict=None, timeout=300):
-    """一次流式对话。返回 `(text, stats)`；失败抛异常（由调用方记账，不吞）。"""
+def chat(messages, seed=None, temperature=None, num_predict=None, timeout=300,
+         num_ctx=None):
+    """一次流式对话。返回 `(text, stats)`；失败抛异常（由调用方记账，不吞）。
+
+    `num_ctx`：默认 `None` ⇒ 用模块常量 `NUM_CTX`（8192，与 Modelfile 一致）⇒
+    **老调用方行为逐字不变**。只有"30 轮长对话"那种会把 prompt 顶到 8k 上限的
+    场景才显式放大（顶到上限的后果是**从头截断**，等于把人设开头丢掉，必须避免）。
+    ★ 改 num_ctx 会让 Ollama **重新加载模型**（约 10s，实测 warmup 10.3s），
+      所以整场训练必须用同一个值，不能一会儿 8k 一会儿 16k。
+    """
     opts = {
         'temperature': TEMPERATURE if temperature is None else temperature,
         'num_predict': NUM_PREDICT if num_predict is None else num_predict,
-        'num_ctx': NUM_CTX,
+        'num_ctx': NUM_CTX if num_ctx is None else int(num_ctx),
     }
     if seed is not None:
         opts['seed'] = int(seed)
