@@ -60,8 +60,56 @@ REPO = _resolve_repo()
 #   改为把**当前 HEAD** 推到远端 `main`：两种布局都正确，且仍是普通快进推送
 #   （远端若已分叉会被拒并如实报错，不会强推）。
 PUSH_REFSPEC = 'HEAD:main'
-GCM = (r'C:\Users\23002\.workbuddy\binaries\PortableGit\versions\1.2.0'
-       r'\mingw64\bin\git-credential-manager.exe')
+
+
+def _find_gcm():
+    """自动定位 `git-credential-manager.exe`。
+
+    ★ 第113轮修正：原先是**硬编码** `versions\\1.2.0\\...`。WorkBuddy 升级
+      PortableGit 后目录变成 `1.3.0`，于是 `subprocess.run([GCM, 'get'])` 直接
+      `FileNotFoundError` ⇒ 凭据取不到 ⇒ 打印"无凭据 ⇒ 不 push"，
+      **看起来像"没登录"，其实是路径过期**。
+
+    搜索顺序：
+      ① `~/.workbuddy/binaries/PortableGit/versions/*/mingw64/bin/`（取最大版本号）
+      ② `shutil.which('git-credential-manager')`
+      ③ `git --exec-path` 同级 / `mingw64/bin`
+    都找不到 ⇒ 返回 `None`（调用方据此如实报错，不静默假装成功）。
+    """
+    import glob
+    import shutil
+    base = os.path.join(os.path.expanduser('~'), '.workbuddy', 'binaries',
+                        'PortableGit', 'versions')
+    cands = glob.glob(os.path.join(base, '*', 'mingw64', 'bin',
+                                   'git-credential-manager.exe'))
+
+    def _ver(p):
+        try:
+            return tuple(int(x) for x in
+                         p.split(os.sep)[-4].replace('current', '0').split('.'))
+        except Exception:
+            return (0,)
+
+    cands = [c for c in cands if os.path.isfile(c)]
+    if cands:
+        return sorted(cands, key=_ver)[-1]
+    w = shutil.which('git-credential-manager')
+    if w:
+        return w
+    try:
+        ex = subprocess.run(['git', '--exec-path'], capture_output=True,
+                            timeout=30).stdout.decode('utf-8', 'replace').strip()
+        for p in (os.path.join(ex, '..', '..', 'bin', 'git-credential-manager.exe'),
+                  os.path.join(ex, 'git-credential-manager.exe')):
+            p = os.path.abspath(p)
+            if os.path.isfile(p):
+                return p
+    except Exception:
+        pass
+    return None
+
+
+GCM = _find_gcm()
 CA = os.path.join(os.environ.get('TEMP', r'C:\Windows\Temp'), 'win_root_ca.pem')
 # ★ 第45轮修正：日志**不写进仓库**。原写法落在 tracked 文件里、每次运行覆盖
 #   ⇒ 每次 push 后该文件必然变脏，逼出「为日志再提一次」的死循环。
