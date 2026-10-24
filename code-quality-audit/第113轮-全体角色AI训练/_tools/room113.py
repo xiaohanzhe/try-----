@@ -222,19 +222,35 @@ def tier_prompt(npc, info, tier):
     return ('（你今天第三次走进%s%s。这次只是经过。）' % (place, alias))
 
 
-def room_system(card, info):
+def room_system(card, info, patch=''):
     """system **全程固定**（只说明"你在哪"），四档的差别一律放进 user 的舞台指示。
 
     ★ 为什么（实测）：第一版把"第几次进入"写进 system ⇒ 四档四份 system ⇒
       每档都要重付一次冷 prefill（实测 154s / 4 档）。合成一段对话后
       只需一次冷 prefill，34 人从约 1.4 小时降到约 0.6 小时。
+
+    ★★ 2026-10-24 修：这里原来写死 `D.system_for(card, '')` —— 把 `_index.json`
+      里该角色的**纠正句整条丢掉**了。后果不是"少一句提示"，而是**已经修掉的毛病
+      在房间轮重新长出来**（susie/rouxls 的"括号写动作"就是这么被修掉的）。
+      训练器把纠正句当资产存着，另一条入口却不用，等于白修。
     """
-    base = D.system_for(card, '')
+    base = D.system_for(card, patch)
     extra = ['', '【你现在的处境】', '你正站在%s。' % (info.get('label') or '一个房间')]
     if info.get('cn_alias'):
         extra.append('这一带也常被叫作%s。' % '、'.join(info['cn_alias']))
     extra.append('你知道这里的一草一木 —— 想说话的时候是**主动开口**，不是等别人问。')
     return base + '\n'.join(extra)
+
+
+_PATCH_CACHE = {}
+
+
+def patch_of(nid):
+    """取该角色的纠正句（`_training/_index.json` 的 `patches`）。"""
+    if not _PATCH_CACHE:
+        idx = C.load_json(os.path.join(C.TRAIN_DIR, '_index.json'), {}) or {}
+        _PATCH_CACHE.update(idx.get('patches') or {})
+    return _PATCH_CACHE.get(nid, '') or ''
 
 
 #: 舞台指示（user 侧）。四档差别全在这里。
@@ -257,11 +273,11 @@ def tier_prompt(npc, info, tier):
             '别再多说。）' % place)
 
 
-def run_one(card, nid, info, verbose=False):
+def run_one(card, nid, info, verbose=False, patch=''):
     """一段对话里连做四档：只付一次冷 prefill。"""
     turns = []
     t0 = time.time()
-    system = room_system(card, info)
+    system = room_system(card, info, patch)
     msgs = [{'role': 'system', 'content': system}]
     prev = []
     for tier in TIERS:
@@ -391,7 +407,7 @@ def train(argv):
             print('[跳过] %s：训练卡缺失' % nid)
             continue
         print('[%d/%d] %s（%s）' % (i, len(todo), nid, npcs[nid]['label'][:20]), end='', flush=True)
-        rec = run_one(card, nid, npcs[nid], verbose=verbose)
+        rec = run_one(card, nid, npcs[nid], verbose=verbose, patch=patch_of(nid))
         C.append_jsonl(os.path.join(RAW_ROOM, nid + '.jsonl'), rec)
         m = rec['metrics']
         print('  房间命中 %d/4 · 回望 %d · 递减 %s · 沉默 %s · %.0fs'

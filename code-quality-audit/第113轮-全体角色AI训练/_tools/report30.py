@@ -34,6 +34,12 @@ def load_all(target=TARGET):
             if isinstance(r, dict) and r.get('turns_n') == target:
                 best = r
         if best:
+            # ★★★ 判据后算：jsonl 里存着**训练当时**那份 `metrics`。一旦判据改过
+            #   （比如回望判定从三态补到四态），读旧 metrics 就会让报告永远停在旧口径上——
+            #   2026-10-24 就踩过：补了词表，报告数字纹丝不动，差点当成"改判据没用"。
+            #   ⇒ 一律从 `turns` 用**当前** metrics_of 重算；原始数据才是真源。
+            best['metrics'] = T.metrics_of(best.get('turns') or [],
+                                           best.get('voice_markers') or [])
             rows.append(best)
     return rows
 
@@ -121,35 +127,42 @@ def main(argv):
     tot_lb = sum((r['metrics'].get('plot_states') or {}).get('lookback', 0) for r in rows)
     tot_mx = sum((r['metrics'].get('plot_states') or {}).get('mixed', 0) for r in rows)
     tot_im = sum((r['metrics'].get('plot_states') or {}).get('immersed', 0) for r in rows)
-    tot_pl = tot_lb + tot_mx + tot_im
-    L.append('**全场**：回望 **%d** / 混合 %d / 沉浸 **%d**（共 %d 轮剧情问答）⇒ 回望率 **%.0f%%**'
-             % (tot_lb, tot_mx, tot_im, tot_pl, 100.0 * tot_lb / max(1, tot_pl)))
+    tot_un = sum((r['metrics'].get('plot_states') or {}).get('unmarked', 0) for r in rows)
+    tot_pl = tot_lb + tot_mx + tot_im + tot_un
+    L.append('**全场**：回望 **%d** / 混合 %d / 沉浸 **%d** / 无锚点 %d（共 %d 轮剧情问答）'
+             '⇒ 回望率 **%.0f%%**'
+             % (tot_lb, tot_mx, tot_im, tot_un, tot_pl, 100.0 * tot_lb / max(1, tot_pl)))
     L.append('')
-    L.append('| 角色 | 回望 | 混合 | 沉浸 | 答得合理 |')
-    L.append('|---|---|---|---|---|')
+    L.append('> 四态口径（`retro_of`）：**回望**=有回忆词无进行时词／**混合**=两者都有／'
+             '**沉浸**=真出现进行时锚点（正在·此刻·眼下）／**无锚点**=两者都没有。')
+    L.append('> 「无锚点」**不等于坏**：只是没把"当时/那会儿"写出来，得人眼看过才算数，'
+             '所以下面把它和"沉浸"一起抽样。')
+    L.append('')
+    L.append('| 角色 | 回望 | 混合 | 沉浸 | 无锚点 | 接住 cue |')
+    L.append('|---|---|---|---|---|---|')
     srt = sorted(rows, key=lambda r: (r['metrics'].get('plot_states') or {}).get('lookback', 0))
     for r in srt[:12]:
         ps = r['metrics'].get('plot_states') or {}
-        L.append('| `%s` %s | %d | %d | **%d** | %d/%d |' % (
+        L.append('| `%s` %s | %d | %d | **%d** | %d | %d/%d |' % (
             r['id'], r['name'], ps.get('lookback', 0), ps.get('mixed', 0),
-            ps.get('immersed', 0), r['metrics'].get('plot_relevant', 0),
-            len(r['metrics'].get('plot') or [])))
+            ps.get('immersed', 0), ps.get('unmarked', 0),
+            r['metrics'].get('plot_relevant', 0),
+            r['metrics'].get('plot_rel_n', len(r['metrics'].get('plot') or []))))
     L.append('')
-    # 抽两条"沉浸"样本 —— 比数字更能说明问题
-    samples = []
-    for r in rows:
-        for p in (r['metrics'].get('plot') or []):
-            if p['state'] == 'immersed':
-                samples.append((r['id'], p))
-    if samples:
-        L.append('**沉浸样本（这就是要修的样子）**：')
+    # 抽"沉浸"和"无锚点"两类样本 —— 比数字更能说明问题
+    for want, title in (('immersed', '**沉浸样本（这就是要修的样子：文字落在进行时）**'),
+                        ('unmarked', '**无锚点样本（没写回忆词，需要人眼判是否仍在回忆）**')):
+        samples = [(r['id'], p) for r in rows for p in (r['metrics'].get('plot') or [])
+                   if p['state'] == want]
+        L.append(title)
         L.append('')
+        if not samples:
+            L.append('（无）')
+            L.append('')
+            continue
         for nid, p in samples[:3]:
             L.append('- `%s` 问：%s' % (nid, p['user']))
             L.append('  - 答：%s' % p['final'])
-        L.append('')
-    else:
-        L.append('（没有发现"沉浸"样本 —— 全部带过去时锚点）')
         L.append('')
 
     L.append('## ③ 口癖（人设登记的口头禅有没有自然冒出来）')

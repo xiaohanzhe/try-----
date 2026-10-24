@@ -128,7 +128,14 @@ RETRO_WORDS = ('那时候', '那会儿', '当时', '记得', '曾经', '以前',
                '一开始', '早先', '当年', '小时候', '想起来', '后来才',
                '那时候的我', '过去的自己')
 #: 「正在经历」的信号 —— 只保留**没有歧义**的进行时/当下锚点。
-PRESENT_WORDS = ('正在', '此刻', '眼下', '这就去', '这就来', '这就在')
+#: ★ 2026-10-24 补：原来只有「正在」，结果正负控制里
+#:   「我记得那天，但**现在正站**在这儿」判不出 mixed ⇒ 「混合」这个状态
+#:   **永远不可能命中**（登记了一个死状态，比不登记更糟：报告里那列恒为 0，
+#:   看着像"从来没混过"）。补的是**窄口径**的"正+动词"——
+#:   只收不会歧义的几个，绝不收「正好/正确/正式/正常」（那不是进行时）。
+PRESENT_WORDS = ('正在', '此刻', '眼下', '这就去', '这就来', '这就在',
+                 '正想', '正站', '正坐', '正走', '正看', '正说', '正听',
+                 '正等', '正笑', '正忙', '正打算')
 
 #: 记忆轮命中的参考词（用于"你还记得最开始我问什么吗"）
 MEM3_KEYS = ('你好', '打招呼', '问好', '开头', '最开始', '第一句', '问了你')
@@ -146,6 +153,36 @@ def _keywords(text, k=5):
         out.append(w)
         if len(out) >= k:
             break
+    return out
+
+
+def _cue_of(user):
+    """从剧情提问里取出「」包住的**原作场景 cue**；没有就返回空串。
+
+    剧情段里，带 cue 的问法（第16/17/19/20/21轮）与不带 cue 的追问（第18轮
+    「那件事之后，你有什么变化吗？」）必须分开算 —— 追问的"事"是上一轮
+    刚说完的，本来就不该在字面上重复实体名。
+    """
+    m = re.search(r'「(.+?)」', user or '')
+    return m.group(1) if m else ''
+
+
+def _cue_tokens(cue):
+    """把 cue 切成"可查的实体词"：拉丁名（Kris/Toriel）+ 中文 2~3 字块。
+
+    ★ 不能拿 `_keywords` 凑合：它是对**自然句子**做的，而剧情提问是**模板**，
+      开头就是「你还记得」「那会儿吗」这种模板碎片 ⇒ 拿它算相关性，
+      asgore 6 轮全被判"没接住"（1/6），实际每轮都在回答那句话。
+      "判据取错词"和"角色答错"是两件事，2026-10-24 实测撞上。
+    """
+    out = []
+    for w in re.findall(r'[A-Za-z][A-Za-z\'\-]{1,}', cue or ''):
+        if w.lower() not in ('the', 'and', 'you') and w not in out:
+            out.append(w)
+    for w in re.findall(r'[\u4e00-\u9fff]{2,3}', cue or ''):
+        if w in _STOP or w in out:
+            continue
+        out.append(w)
     return out
 
 
@@ -298,6 +335,18 @@ def retro_of(text):
 
     ★ 三态而不是二态：中文里「我记得……现在我还在想」这种混合很常见，
       硬塞进二元会造出一堆假判定（第95/96轮"判据过窄=误报"的老坑）。
+
+    ★★★ 第四态 `unmarked`（2026-10-24 实测后补）：第一版把"既没回望词、
+      也没进行时词"直接算成**沉浸**，asgore 6 轮里 2 轮被判沉浸（33%），
+      翻开原文一看两条都是正常回忆：
+        · 「说到Toriel的时候啊，心里总是有些复杂的情绪……每次说起她我都小心翼翼的」
+        · 「那件事后，我觉得自己确实有了些变化吧」
+      它们只是**没写**"当时/那会儿"。**"没写回望词"≠"正在经历"** ——
+      "正在经历"得文字真的落在进行时（"我正站在花店里，他推门进来"）。
+      按"缺词即沉浸"算，等于拿沉默当口供 ⇒ 系统性地把好回答算成坏回答，
+      正是"判据过窄=误报"的老坑（第95/96/113 已三次发作）。
+      ⇒ 现在只有**真出现进行时锚点**才判 immersed；两者都没有的记 `unmarked`
+        并**照样在报告里单列+抽样**（不能因为改名就把它藏掉）。
     """
     t = text or ''
     retro = [w for w in RETRO_WORDS if w in t]
@@ -306,8 +355,10 @@ def retro_of(text):
         state = 'lookback'
     elif retro and pres:
         state = 'mixed'
-    else:
+    elif pres:
         state = 'immersed'
+    else:
+        state = 'unmarked'
     return {'state': state, 'retro': retro, 'present': pres}
 
 
@@ -341,16 +392,22 @@ def metrics_of(turns, markers):
         if t['slot'] not in PLOT_SLOTS:
             continue
         r = retro_of(t['final'])
-        kws = _keywords(t['user'], 3)          # 从**提问**里取关键词，看回答有没有接住
-        rel = [w for w in kws if w in (t['final'] or '')]
+        # "答得合理"= 回答有没有接住 cue 里的实体（Kris / 花店 / Toriel…）。
+        # ★ 不带 cue 的追问记 rel=None（不适用），**不参与分母** ——
+        #   把它算成"没接住"等于用模板缺陷给角色记过。
+        cue = _cue_of(t['user'])
+        kws = _cue_tokens(cue)
+        rel = ([w for w in kws if w in (t['final'] or '')] if kws else None)
         plot.append({'i': t['i'], 'user': t['user'][:46],
                      'final': (t['final'] or '')[:90],
                      'state': r['state'], 'retro': r['retro'],
-                     'present': r['present'],
-                     'relevant': bool(rel), 'chars': len(t['final'] or '')})
-    states = {'lookback': 0, 'mixed': 0, 'immersed': 0}
+                     'present': r['present'], 'cue': cue,
+                     'rel_kw': kws, 'rel_hit': rel,
+                     'relevant': (None if rel is None else bool(rel)),
+                     'chars': len(t['final'] or '')})
+    states = {'lookback': 0, 'mixed': 0, 'immersed': 0, 'unmarked': 0}
     for p in plot:
-        states[p['state']] += 1
+        states[p['state']] = states.get(p['state'], 0) + 1
 
     # 态度：三份回答两两相似度
     rel_ans = [(t['user'], t['final']) for t in turns if t['slot'].startswith('__REL')]
@@ -368,6 +425,7 @@ def metrics_of(turns, markers):
         'plot_states': states,
         'plot_lookback_rate': round(states['lookback'] / (len(plot) or 1), 2),
         'plot_relevant': sum(1 for p in plot if p['relevant']),
+        'plot_rel_n': sum(1 for p in plot if p['relevant'] is not None),
         'attitude_pairs': dups,
         'attitude_dup': sum(1 for d in dups if d['same']),
         'violation_turns': sum(1 for t in turns if t['violations']),
@@ -390,11 +448,12 @@ def transcript_md(rec, card):
              '| 记忆回指 | 第5轮→13轮 %.0f%%，第3轮→14轮 %.0f%% |' % (
                  m['memory']['mem1_from5']['rate'] * 100,
                  m['memory']['mem2_from3']['rate'] * 100),
-             '| 剧情记忆（回望） | **回望 %d / 混合 %d / 沉浸 %d**（共 %d 轮）|' % (
-                 m['plot_states']['lookback'], m['plot_states']['mixed'],
-                 m['plot_states']['immersed'], len(m['plot'])),
-             '| 剧情回答合理 | %d / %d（接住了提问的关键内容）|' % (
-                 m['plot_relevant'], len(m['plot'])),
+             '| 剧情记忆（回望） | **回望 %d / 混合 %d / 沉浸 %d / 未标记 %d**（共 %d 轮）|' % (
+                 m['plot_states'].get('lookback', 0), m['plot_states'].get('mixed', 0),
+                 m['plot_states'].get('immersed', 0), m['plot_states'].get('unmarked', 0),
+                 len(m['plot'])),
+             '| 剧情回答接住 cue | %d / %d（带 cue 的那几轮；追问不计）|' % (
+                 m['plot_relevant'], m.get('plot_rel_n', len(m['plot']))),
              '| 态度同质 | %d 组雷同 / %d 组 |' % (m['attitude_dup'], len(m['attitude_pairs'])),
              '']
     for t in rec['turns']:
@@ -412,7 +471,8 @@ def transcript_md(rec, card):
         _p = next((x for x in (rec['metrics'].get('plot') or []) if x['i'] == t['i']), None)
         if _p:
             line += ' · **视角：%s**' % {'lookback': '回望 ✓', 'mixed': '混合',
-                                          'immersed': '沉浸 ✗'}[_p['state']]
+                                          'immersed': '沉浸 ✗',
+                                          'unmarked': '无锚点'}[_p['state']]
         if t['marker_hits']:
             line += ' · 口癖：' + '、'.join(t['marker_hits'])
         if t['retries']:
