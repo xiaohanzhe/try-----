@@ -399,6 +399,24 @@ _QUOTED_IN_PAREN = re.compile(r'["“”「」‘’]')
 _ANY_PAREN_RE = re.compile(r'[（(]([^）)]{0,200})[）)]')
 
 
+#: ★★★ 第113轮f：括号里的**引号片段** = 角色真正说出口的话。
+#: 实测 susie 48 轮 48 处括号里 **47 处**是 `（你皱了皱眉，“其实我挺想去的。”）`
+#: 这种形态 —— 旧护栏删掉整段，等于把她要说的话一起扔了。
+#: 所以先「救」：把引号里的话提出来当台词，括号里的旁白部分再按原规则丢。
+_QUOTED_SPAN_RE = re.compile(
+    r'[\u201c\u0022\u300c]([^\u201c\u201d\u0022\u300d]{1,300})[\u201d\u0022\u300d]')
+
+
+def _rescue_quoted(m):
+    """括号内有引号 ⇒ 返回引号里的台词；没有引号 ⇒ 原样返回（交给后面几道闸）。"""
+    inner = m.group(1) or ''
+    spans = [s.strip() for s in _QUOTED_SPAN_RE.findall(inner)]
+    spans = [s for s in spans if s]
+    if not spans:
+        return m.group(0)
+    return ''.join(spans)
+
+
 def strip_action_parentheticals(text):
     """删掉台词里夹带的「括号旁白」，返回剩下的台词。
 
@@ -433,8 +451,12 @@ def strip_action_parentheticals(text):
         return m.group(0)              # 其余（含第一人称心里话）→ 原样保留
 
     _before = text
+    # 丁闸（第113轮f）：**先救出台词** —— 括号里有引号的，把引号内容提出来，
+    #   否则后面几道闸会把它连旁白一起删掉（susie 98% 的括号都是这种）。
+    #   ⚠️ 顺序是硬约束：必须在甲/丙之前，否则台词早被删没了。
+    t = _ANY_PAREN_RE.sub(_rescue_quoted, text)
     # 甲闸：动作旁白（括号内以动作动词开头）
-    t = _ACTION_PAREN_RE.sub('', text)
+    t = _ACTION_PAREN_RE.sub('', t)
     # 丙闸：描述性旁白
     t = _ANY_PAREN_RE.sub(_kill_narration, t)
     if t != _before:

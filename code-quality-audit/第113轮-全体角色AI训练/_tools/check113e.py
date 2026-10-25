@@ -64,12 +64,17 @@ def check(desc, cond, detail=''):
 S = ES.strip_action_parentheticals
 
 # ---- A 正控制：真实模型输出（susie 第1/3/4/6 轮，一字未改） ----
+# ★★★ 第113轮f 改期望：括号里**包着台词**的不再整段删，而是把引号里的内容**救出来**
+#   当台词（实测 susie 48 处括号里 47 处是这种，删掉等于把她要说的话全丢了）。
 POS = [
-    ('第1轮', '烦死了。（你皱起眉头看着屏幕那边的人，“你别这么盯着我看。我才没空想东想西的！”）', '烦死了。'),
+    ('第1轮', '烦死了。（你皱起眉头看着屏幕那边的人，“你别这么盯着我看。我才没空想东想西的！”）',
+     '烦死了。你别这么盯着我看。我才没空想东想西的！'),
     ('第3轮', '先啃点东西充饥。（你轻描淡写地说道）不过晚上得开夜车。', '先啃点东西充饥。不过晚上得开夜车。'),
-    ('第4轮', '哈，你说那个啊。（你的目光闪烁了一下，“有时候确实会沉迷进去好几个小时……”）', '哈，你说那个啊。'),
+    ('第4轮', '哈，你说那个啊。（你的目光闪烁了一下，“有时候确实会沉迷进去好几个小时……”）',
+     '哈，你说那个啊。有时候确实会沉迷进去好几个小时……'),
     ('第6轮', '嗯……其实我没特别想留下的地方。（你的目光游离，“不过在黑暗世界的湖边挺好的。”）',
-     '嗯……其实我没特别想留下的地方。'),
+     '嗯……其实我没特别想留下的地方。不过在黑暗世界的湖边挺好的。'),
+    ('第7轮', '哦对。（你顿了顿，「其实我一直记着那件事。」）', '哦对。其实我一直记着那件事。'),
 ]
 
 # ---- B 负控制：正常台词，一个字都不许动 ----
@@ -123,15 +128,22 @@ check('C9 两把尺刻意不同：`（你懂的）` 产品保留、训练报违�
 
 # ==================================================== D 破坏性负控制
 def _with_broken_guard(fn):
-    """**把新判据拆干净**：三条新东西一起拆，只拆一条不算数（§95.13）。"""
-    saved = (ES._SECOND_PERSON_NARRATION, ES._QUOTED_IN_PAREN, ES._ANY_PAREN_RE)
+    """**把新判据拆干净**：四条一起拆，只拆一条不算数（§95.13）。
+
+    ★ 第113轮f 追加第四条：`_rescue_quoted`。不拆它，引号里的话会被救出来，
+      正控制就"看起来仍然生效"—— 那正是"负控制没拆干净"的假绿。
+    """
+    saved = (ES._SECOND_PERSON_NARRATION, ES._QUOTED_IN_PAREN, ES._ANY_PAREN_RE,
+             ES._rescue_quoted)
     try:
         ES._SECOND_PERSON_NARRATION = re.compile(r'(?!)')
         ES._QUOTED_IN_PAREN = re.compile(r'(?!)')
         ES._ANY_PAREN_RE = re.compile(r'[（(]([^）)]{0,40})[）)]')
+        ES._rescue_quoted = lambda m: m.group(0)
         return fn()
     finally:
-        (ES._SECOND_PERSON_NARRATION, ES._QUOTED_IN_PAREN, ES._ANY_PAREN_RE) = saved
+        (ES._SECOND_PERSON_NARRATION, ES._QUOTED_IN_PAREN, ES._ANY_PAREN_RE,
+         ES._rescue_quoted) = saved
 
 
 _broken_kept = _with_broken_guard(lambda: [S(s) for _, s, _ in POS])
@@ -165,6 +177,28 @@ check('D3 ★ 上限改回 {1,30} 后训练判据必须重新漏报（证明 C �
 check('D4 破坏性测试结束后全局已还原',
       bool(C._PAREN_RE.search(POS[0][1])) and S(POS[0][1]) == POS[0][2],
       '判据与护栏均正常')
+
+
+def _with_broken_rescue(fn):
+    """只拆「救出台词」这一闸（其余照旧），看台词是不是真的会跟着旁白一起消失。"""
+    saved = ES._rescue_quoted
+    try:
+        ES._rescue_quoted = lambda m: m.group(0)   # 不救 ⇒ 原样交给后续几闸删掉
+        return fn()
+    finally:
+        ES._rescue_quoted = saved
+
+
+_lost = _with_broken_rescue(lambda: [S(s) for _, s, _ in POS])
+check('D5 ★ 拆掉「救出台词」后，引号里的话必须跟着旁白一起消失（证明 A 的新期望不是恒真）',
+      all('你别这么盯着我看' not in g for g in _lost[:1])
+      and all('有时候确实会沉迷进去' not in g for g in _lost[2:3]),
+      '拆掉后第1轮=%r' % (_lost[0][:26],))
+
+# 拆完之后，**不含引号**的那条（第3轮）结果不该变 —— 说明救出闸只动"包台词"的那类
+_lost3 = _lost[1]
+check('D6 救出闸只动「包台词」的括号，纯动作旁白行为不变',
+      _lost3 == POS[1][2], repr(_lost3))
 
 print()
 print('合计：PASS=%d FAIL=%d' % (_n_pass, _n_fail))

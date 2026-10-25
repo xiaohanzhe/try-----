@@ -289,6 +289,36 @@ _PREF_BAD_WORDS = ('水平', '一般', '似乎', '好像', '总是', '经常', '
                    '比较', '其实', '只是', '不会', '不能', '没什么')
 
 
+#: ★ 第113轮f：主题的「去泛化 2 字词干」黑名单。
+#: 为什么需要它：`pref_relevant` 原来只认**逐字主题词**，「在线滑板游戏」这种复合词
+#: 模型很难原样说出口，于是答得再具体也算不中（asgore 5/6 条好答案被判 0）。
+#: 放宽只取 2 字切片，但必须把「游戏/在线/东西/地方/时候…」这类**到处都有**的切片剔掉，
+#: 否则判据会退化成"只要说话就命中"（恒真）。
+_PREF_GENERIC = ('在线', '游戏', '东西', '地方', '时候', '什么', '事情', '感觉',
+                 '工作', '一个', '这个', '那个', '自己', '别人', '喜欢', '爱好')
+
+
+def pref_stems(topics):
+    """主题 → 可匹配词干（含原词）。只取 2 字切片并剔掉泛词。
+
+    ★ 这是**放宽下限、不是放水**：`在线滑板游戏` 只贡献 `滑板`（`游戏`/`在线` 被剔），
+      所以「我把一个滑板摔进 Noelle 的包里」能命中，而「沉迷进去好几个小时」仍然不命中
+      —— 后者本来就没落到具体东西上。
+    """
+    out = {}
+    for t in (topics or ()):
+        if not isinstance(t, str) or len(t) < 2:
+            continue
+        cand = [t]
+        for k in range(len(t) - 1):
+            g = t[k:k + 2]
+            if g in _PREF_GENERIC or g in cand:
+                continue
+            cand.append(g)
+        out[t] = cand
+    return out
+
+
 def pref_topics(card):
     """从人设的「兴趣爱好与小特点」章节抽**偏好主题**（不是整句）。
 
@@ -348,7 +378,11 @@ FALLBACK_PLOT = (
 #: 偏好追问（`%s` = 人设里的具体爱好）。★ 两句都**先给一个判断再问**，
 #: 这样模型要么纠正、要么顺着展开，比开放式"你还喜欢什么"信息量大得多。
 PREF_TEMPLATES = (
-    '我注意到你好像挺喜欢「%s」的。是那种一投入就忘了时间的喜欢，还是闲着没事才碰一碰？',
+    # ★ 第113轮f：原来是**二选一**（「一投入就忘时间 还是 闲着没事才碰」）——
+    #   模型在两个选项里挑一个就能交差，实测产出「哈，你说那个啊……沉迷进去好几个小时」
+    #   这种不落地的回答，甚至把话题推回给用户（「你可以试着搜搜攻略」）。
+    #   改成**要一个具体细节**：喜欢哪一点 + 平常怎么弄。
+    '我注意到你好像挺喜欢「%s」的。喜欢它哪一点？说个具体的——你平常是怎么弄的？',
     '「%s」这件事——有没有哪一次是你到现在还会想起来的？那次到底发生了什么？',
 )
 FALLBACK_PREF = (
@@ -649,12 +683,19 @@ def metrics_of(turns, markers, card_of_turns=None):
     # 偏好 ★ 用户 2026-10-25 新增维度：回答里有没有**落到自己的具体偏好**上。
     # 判据 = 回答是否提到该角色人设里登记过的偏好主题词；没有素材的角色记 `None`（不适用）。
     topics = pref_topics(card_of_turns) if card_of_turns else []
+    stems = pref_stems(topics)
     pref_rows = []
     for t in turns:
         if t['slot'] not in PREF_SLOTS:
             continue
         fin = t['final'] or ''
-        hit = [w for w in topics if w in fin]
+        # ★ 第113轮f：原词**或**去泛化词干命中都算「落到具体东西上」
+        hit = []
+        for _topic, _cands in stems.items():
+            for _w in _cands:
+                if _w in fin:
+                    hit.append(_topic if _w == _topic else '%s~%s' % (_topic, _w))
+                    break
         pref_rows.append({'i': t['i'], 'user': t['user'][:46],
                           'final': fin[:90], 'hit': hit,
                           'relevant': (None if not topics else bool(hit)),
