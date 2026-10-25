@@ -75,6 +75,46 @@ _log = logging.getLogger(_pet_logger_name(__name__))
 
 
 # ---------------------------------------------------------------------------
+# 角色档位（第113轮h）—— 机器档角色的「全大写」由**渲染层**表现，不由模型
+# ---------------------------------------------------------------------------
+try:
+    import npc_persona as _npcp
+except ImportError:  # 允许被包外单独导入（如单测直接跑本文件）
+    try:
+        import os as _os3
+        import sys as _sys3
+        _sys3.path.append(_os3.path.dirname(_os3.path.abspath(__file__)))
+        import npc_persona as _npcp
+    except ImportError:
+        _npcp = None
+
+#: 只把 ASCII 小写转大写：中文原样、标点原样。
+#: ★ 用 `translate` 而不是 `str.upper()`：`upper()` 会把 `ß` 变成 `SS`（长度都变），
+#:   还会动到某些全角字符；而我们要的只是"拉丁字母看起来像机器人喊出来的"。
+_ASCII_UPPER = str.maketrans('abcdefghijklmnopqrstuvwxyz',
+                             'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+
+def _caps_on(npc_id):
+    """该 NPC 的台词是否**显示层全大写**（读 `assets/npc/_kinds.json` 的 `caps`）。
+
+    ★ 判据是 `caps_of()` 而**不是** `kind_of() == 'machine'`：
+      两者正交 —— `ot_papyrus` / `ut_papyrus` 是骷髅、`queen` 是暗之民，
+      都不该按机器口吻说话，但原作里都是全大写；反过来 `os_kelvin` 是机器却不大写。
+      用 kind 当大写判据会同时漏掉前者、多算后者。
+    ★ 任何异常都返回 False：观感只是增强，**不能**因为一个 json 读不到
+      就让整条对话渲染失败（那样用户看到的是"桌宠坏了"，不是"档位没配"）。
+    """
+    if _npcp is None:
+        return False
+    try:
+        return bool(_npcp.caps_of(npc_id))
+    except Exception as e:  # 修复：原先静默吞噬
+        _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        return False
+
+
+# ---------------------------------------------------------------------------
 # 加载项目根目录下的"普通字体.ttf"，作为 Ralsei 说话字体（全局注册一次）
 # ---------------------------------------------------------------------------
 _FONT_FAMILY = None
@@ -803,9 +843,22 @@ class DialogueUI(QWidget):
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 _label = speaker
             self._reset_front_stage()
+            # ★★ 第113轮h：`caps` 登记角色的「全大写」放在**渲染层**做，不逼模型输出英文。
+            #   缘起：`hy_guardener` 人设原文要求「所有对话都以大写字母输出」，可中文
+            #   没有大小写 —— 模型收到这条只能改去说英文（实测中文占比 0.00，36/36 轮）。
+            #   ⇒ 语言归模型（说简体中文），观感归渲染。
+            #   ★ 不用 `QFont.setCapitalization()`：那是**控件级**属性，会给整个
+            #     `dialogue_content` 设上，把历史区里别人说过的话一起改掉；这里只影响这条。
+            #     （`check113h` B3 用 AST 守着"不许调这个方法"，不扫文本 —— 注释里提到它
+            #       本来是说明理由的，纯文本扫会自指误报。）
+            #   ★ 必须在 `_html.escape` **之前**做：先转义再大写会把 `&amp;` 变成
+            #     `&AMP;`，HTML 实体坏掉，屏幕上直接显形。
+            _disp_msg = safe_message
+            if _caps_on(speaker):
+                _disp_msg = _html.escape(message.translate(_ASCII_UPPER))
             self._history_html += (
                 f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
-                f'margin:2px 0 2px 0;">▸ {_html.escape(str(_label))}: {safe_message}</div>')
+                f'margin:2px 0 2px 0;">▸ {_html.escape(str(_label))}: {_disp_msg}</div>')
             self.typing_text = ""
             self.typing_index = 0
             self.is_typing = False

@@ -35,7 +35,36 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
 SCENES = os.path.join(ROOT, 'ralsei_pet', 'assets', 'scenes')
 BIGMAP = os.path.join(ROOT, 'code-quality-audit', '第66轮-大图连通与mod并入',
                       '_evidence', 'bigmap66.json')
-SRC_DIR = r'E:\Download\_extract61\_data'
+
+# ★★★ 第113轮h：原作转储**必须先进仓库**，外置盘只作兜底。
+#
+#   起因（实测，2026-10-25）：全量 G2 里 `check77` 抖成 DIFF ——
+#     基线记的是 `[SKIP] … 原作转储不在（E:/Download/…）`（录基线那一刻 E 盘掉线），
+#     复跑时 E 盘回来了 ⇒ 变成 `[PASS] B1 ut：原作 338 间…` / `PASS=31`（基线是 29）。
+#   一次瞬时掉盘就能让基线永久抖动，这是**结构性缺陷**，不是"环境噪声"：
+#     · E 盘是外挂盘，本会话实测多次 `os.path.exists('E:/')` 为 False
+#       （`os.listdir('E:/')` → `OSError(22, '函数不正确。')`）；
+#     · 记忆铁律：**回归套件不许依赖临时区/外部盘 ⇒ 蒸馏进仓库。**
+#
+#   ⇒ 两份 `ut_rooms.json`（ut 311 KB + uty 330 KB，合计 ~640 KB）已复制到
+#     `<本轮>/_evidence/src61/{undertale,undertale_yellow}/`，作为**第一优先**来源；
+#     外置盘路径保留为兜底（老机器上还想用原盘时仍可用）。
+#     ⚠️ 只有两级都找不到才 SKIP —— 那时说明仓库被裁剪过，属于真问题。
+_SRC_CANDIDATES = [
+    os.path.join(HERE, '..', '_evidence', 'src61'),   # ★ 仓库内（首选，稳定）
+    r'E:\Download\_extract61\_data',                  # 外置盘（兜底）
+]
+
+
+def _resolve_src(sub):
+    """按 `_SRC_CANDIDATES` 顺序找到某作品的原作转储；都找不到返回 `(None, [])`。"""
+    tried = []
+    for base in _SRC_CANDIDATES:
+        p = os.path.abspath(os.path.join(base, sub, 'ut_rooms.json'))
+        tried.append(p)
+        if os.path.isfile(p):
+            return p, tried
+    return None, tried
 
 PASS = 0
 FAIL = 0
@@ -125,14 +154,18 @@ print('=' * 74)
 
 for work, ch in (('ut', 'ut'), ('uty', 'uty')):
     sub = 'undertale' if work == 'ut' else 'undertale_yellow'
-    src = os.path.join(SRC_DIR, sub, 'ut_rooms.json')
-    if not os.path.isfile(src):
+    src, tried = _resolve_src(sub)
+    if src is None:
         # ★★ 第89轮修正（记忆 §4 铁律「外部盘缺失则 SKIP 不假红」）：
         #   原判据把"源盘不在"当成 FAIL —— 但 E 盘是可掉线的外挂盘（本会话实测
         #   多次 `E:/` 不存在）。**环境缺失 ≠ 产品错**，报红会污染整轮回归读数
         #   （且按 §3⑤ 合并模式 --update 会把假红固化成基线，后患更大）。
         #   正解：源盘不在 ⇒ SKIP（不打 FAIL），源盘在 ⇒ 照旧逐条核对锚点。
-        print('[SKIP] %s 原作转储不在（%s）⇒ B0..B2 跳过，不假红' % (work, src))
+        # ★★★ 第113轮h：现在**仓库内已有一份**，所以正常情况根本走不到这里；
+        #   真走到这里说明 `_evidence/src61/` 被裁掉了 —— 那时把两条路径都打出来，
+        #   免得后人以为"是 E 盘又掉了"而放过仓库缺件。
+        print('[SKIP] %s 原作转储不在（仓库与外置盘都没有：%s）⇒ B0..B2 跳过，不假红'
+              % (work, ' | '.join(tried)))
         continue
     raw = jload(src)['rooms']
     bn = big_by_work[work]

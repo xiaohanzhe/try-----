@@ -647,6 +647,170 @@ SPEAK_RULES = (
     "比如普通的一句：嗯，我知道了。那我先去看看。"
 )
 
+
+# ---------------------------------------------------------------- 角色档位（第113轮h）
+#: 用户口径（2026-10-25 逐字）：
+#:   「像是 oneshot 里很多没被制御的机器人**不必要要求活人感**」
+#:   「别只顾着三人啊，这三人当示例然后再推进到其他人身上即可」
+#:
+#: ⇒ 上面那四句「你大多数时候就是普通人在聊天」是**给有活人感的角色**的。
+#:   机器人按"普通人"演反而失真（机器不该寒暄、不该有社交焦虑）；但**也不是放开演极端**
+#:   —— 用户上一条「要和正常人一样」的另一半正是"别过火"。
+#:
+#: ★★★ 档位**不靠正则猜**，只认 `assets/npc/_kinds.json` 的显式登记，缺省 human。
+#:   证据：`kind113.py` 的普查两边都错 —— `ut_monster_kid`（小孩）进了候选，
+#:   `hy_axis`（人设明写"最后一台皇家守卫机器人"）反而漏了。物种这种事，正则不如人。
+#:
+#: ★★ human 档必须与旧版**逐字相同**：`speak_rules_for()` 的 human 分支直接返回
+#:   `SPEAK_RULES` 本身（同一个对象，不是"拼一份看起来一样的"）。
+KINDS_FILENAME = '_kinds.json'
+KIND_VALUES = ('human', 'machine')
+
+#: human 档与 machine 档的**唯一差异段**（就是 `SPEAK_RULES` 末尾那四句）。
+#: ★ 它必须是 `SPEAK_RULES` 的真后缀 —— `check113h` 有判据守着，
+#:   防止以后改了 `SPEAK_RULES` 忘了同步这里，让 machine 档悄悄退回 human。
+PERSONA_TONE_HUMAN = (
+    "性格是你的底色，不是每句话都要演出来的东西。"
+    "你大多数时候就是普通人在聊天：有情绪，但不会一直顶在最高点。"
+    "想表达态度，靠你选什么词、先注意到什么，而不是靠把话说重。"
+    "比如普通的一句：嗯，我知道了。那我先去看看。"
+)
+
+#: machine 档的替身段。写法受同一条硬约束：**只描述"正常长什么样"**，
+#: 不描述"违规长什么样"（后者等于给模板；113g 探针实测违规率 1/10 → 10/10）。
+#: ★ 这里**不写"全部大写"**：中文没有大小写，这条要求搬到中文产品里只会让模型
+#:   去说英文（实测 `hy_guardener` 中文占比 0.00）。"机器感"交给措辞与渲染层。
+PERSONA_TONE_MACHINE = (
+    "你是机器或程序，不必装成普通人，也不用寒暄客套。"
+    "说话保持平直、简短：通报状态、陈述结论、报编号，情绪可以有但语气是平的。"
+    "想强调什么，靠把事实说清楚，不靠加重语气。"
+)
+
+
+#: 「显示层全大写」覆盖句 —— 只对 `_kinds.json` 里 `caps` 登记过的角色注入。
+#: ★★★ 为什么需要这一层（用户口径 2026-10-25：「事实上，他不是有字体吗，你直接用就好了」）：
+#:   中文没有大小写。人设里写「你说话全部使用大写字母」，在中文产品里**执行不了**，
+#:   模型为了满足它只能**改说英文** —— 实测 `hy_guardener` 中文占比 0.00（36/36 轮全英文）。
+#:   ⇒ 「大写」不是语言要求，是**显示效果**：`dialogue_ui` 渲染时把 ASCII 小写转大写，
+#:     模型只管说中文。这一段就是给模型的**覆盖句**，把冲突就地消解。
+#: ★ 为什么不逐份改人设：6 个角色共有 22 处「大写」表述，而英文台词是**原作依据**
+#:   （`check113g` C3 专门守着不许删）。逐份改＝既累又容易把依据改坏；
+#:   一句覆盖放进机制层，改一次对所有登记角色生效 —— 这才是用户说的「可批量」。
+CAPS_RULE = (
+    "人设里凡是要求你「全部大写」「不要用小写」的地方，说的是**显示效果**："
+    "屏幕上会自动把字母转成大写，不需要你为此改变说法。"
+    "你一律用中文说话，不要因为这条要求改说英文；"
+    "人设里那些英文台词是原作依据，用来让你理解语气，不要照搬。"
+)
+
+
+def kinds_path(root=None, assets_dir=None):
+    """档位登记表路径（与 `_personas.json` 同目录）。"""
+    base = assets_dir
+    if base is None:
+        if root is None:
+            here = os.path.dirname(os.path.abspath(__file__))
+            base = os.path.join(here, '..', 'assets')
+        else:
+            base = os.path.join(root, 'assets')
+    return os.path.abspath(os.path.join(base, 'npc', KINDS_FILENAME))
+
+
+_KINDS_CACHE = {}
+
+
+def load_kinds(root=None, assets_dir=None):
+    """读 `assets/npc/_kinds.json` → `{id: kind}`。读不到 ⇒ `{}`（不抛）。
+
+    ★ 文件**不存在**时静默当全 human（档位是增强，不是运行前提）；
+      文件在但格式坏，必须 warning —— 静默把机器人当人演是最难查的一类错。
+    """
+    path = kinds_path(root, assets_dir)
+    cached = _KINDS_CACHE.get(path)
+    if cached is not None:
+        return cached
+    out = {}
+    try:
+        with open(path, 'rb') as fh:
+            raw = fh.read()
+        data = json.loads(raw.decode('utf-8'))
+        kinds = data.get('kinds') if isinstance(data, dict) else None
+        if isinstance(kinds, dict):
+            out = {k: v for k, v in kinds.items()
+                   if isinstance(k, str) and k and v in KIND_VALUES}
+            bad = [k for k, v in kinds.items()
+                   if isinstance(k, str) and v not in KIND_VALUES]
+            if bad:
+                _log.warning('_kinds.json 里有非法档位值（已忽略）：%s', bad[:8])
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        _log.warning('_kinds.json 读不出来（%s）：%s ⇒ 全部按 human 处理', path, e)
+    _KINDS_CACHE[path] = out
+    return out
+
+
+def kind_of(npc_id, root=None, assets_dir=None):
+    """角色档位：`'machine'` 或 `'human'`。未知 id / 读不到登记 ⇒ `'human'`（保守）。"""
+    if not isinstance(npc_id, str) or not npc_id:
+        return 'human'
+    return load_kinds(root, assets_dir).get(npc_id, 'human')
+
+
+_CAPS_CACHE = {}
+
+
+def load_caps(root=None, assets_dir=None):
+    """读 `assets/npc/_kinds.json` 的 `caps` 名单 → `set(id)`。读不到 ⇒ `set()`（不抛）。
+
+    ★ 与 `kinds` **正交**：机器档未必全大写（`os_kelvin` 就不是），
+      全大写的也未必是机器（`ot_papyrus` / `ut_papyrus` 是骷髅，`queen` 是暗之民）。
+      所以不能用 `kind == 'machine'` 当大写判据 —— 那会把 Papyrus 漏掉、把 Kelvin 多算。
+    """
+    path = kinds_path(root, assets_dir)
+    cached = _CAPS_CACHE.get(path)
+    if cached is not None:
+        return cached
+    out = set()
+    try:
+        with open(path, 'rb') as fh:
+            data = json.loads(fh.read().decode('utf-8'))
+        caps = data.get('caps') if isinstance(data, dict) else None
+        if isinstance(caps, list):
+            out = {x for x in caps if isinstance(x, str) and x}
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        _log.warning('_kinds.json 的 caps 读不出来（%s）：%s ⇒ 一律不加大写覆盖', path, e)
+    _CAPS_CACHE[path] = out
+    return out
+
+
+def caps_of(npc_id, root=None, assets_dir=None):
+    """这个角色的台词是否在**显示层**以全大写呈现。未知 / 读不到 ⇒ `False`。
+
+    ★ 缺省 `False` 而不是 `True`：覆盖句只在确有其事时才加，
+      否则每个普通角色都收到一句"人设要求你全大写"的提示 —— 那是凭空造设定。
+    """
+    if not isinstance(npc_id, str) or not npc_id:
+        return False
+    return npc_id in load_caps(root, assets_dir)
+
+
+def speak_rules_for(kind=None, npc_id=None):
+    """按档位取【说话方式】段 —— `build_system_prompt` 的唯一入口。
+
+    `kind` 显式给出时优先（训练脚本可强制），否则按 `npc_id` 查登记。
+    """
+    k = kind if kind in KIND_VALUES else kind_of(npc_id)
+    if k != 'machine':
+        return SPEAK_RULES
+    if PERSONA_TONE_HUMAN and PERSONA_TONE_HUMAN in SPEAK_RULES:
+        return SPEAK_RULES.replace(PERSONA_TONE_HUMAN, PERSONA_TONE_MACHINE)
+    # 规则漂了（后缀对不上）⇒ 退回 human，不静默产出"半套规则"
+    _log.warning('SPEAK_RULES 里找不到 PERSONA_TONE_HUMAN ⇒ machine 档退回 human')
+    return SPEAK_RULES
+
 #: ★ 第75轮：「现在跟你说话的是谁」—— 与 `SPEAK_RULES` **同级**的一段独立硬约束。
 #: 为什么必须单独加这一段（用户真机反馈的根因）：
 #:   用户对某个 NPC 说「你好啊」，得到的回复是一个 `？`。
@@ -835,7 +999,7 @@ def evolution_patch(npc_id, assets_dir=None, limit=3):
 
 
 def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context='',
-                        life='', patch='', relation='', evolution=''):
+                        life='', patch='', relation='', evolution='', kind=None):
     """某个 NPC 的 system prompt —— **唯一出口**。
 
     结构（顺序即含义）：
@@ -843,7 +1007,7 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
       ② `WHO_IS_TALKING`（★ 第75轮：现在跟你说话的是谁 —— 本体论事实）； 
       ③ `【训练纠正】`（`patch`，第113轮：**只有实测出过毛病的人**才有）；
       ④ `【你和其他人的关系】`（`relation`，第113轮：从关系总纲摘的原句）；
-      ⑤ `SPEAK_RULES`（说话方式硬约束）；
+      ⑤ 说话方式硬约束（`speak_rules_for()`，按 `_kinds.json` 分 human / machine 两档）；
       ⑥ 他自己的记忆（`history_block`）；
       ⑦ 此刻状态（`context`，由宿主提供）；
       ⑧ **自由生活块**（`life`，第73轮：场景特质 + 他认识谁）。
@@ -874,7 +1038,12 @@ def build_system_prompt(npc_name, persona, entries=None, npc_id=None, context=''
     #   顺序反了模型会拿一句旧回忆去覆盖人设里写明的关系。
     if isinstance(evolution, str) and evolution.strip():
         parts.append(evolution.strip())
-    parts.append(SPEAK_RULES)
+    parts.append(speak_rules_for(kind, npc_id))
+    # ★★ 第113轮h：`caps` 登记过的角色，紧跟一段**覆盖句**把「全大写」解成显示效果。
+    #   位置故意贴住 `SPEAK_RULES`：越靠后越有分量，且紧挨着它要覆盖的对象。
+    #   未登记的角色**一字不加**（`check113h` C2 守着这条，否则等于给所有人造设定）。
+    if caps_of(npc_id):
+        parts.append(CAPS_RULE)
     hb = history_block(entries, npc_id=npc_id)
     if hb:
         parts.append(hb)

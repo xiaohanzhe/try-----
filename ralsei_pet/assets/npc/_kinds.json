@@ -1,0 +1,61 @@
+{
+ "schema_version": 2,
+ "note": "角色登记表，两条**正交**的轴：kinds（machine=不要活人感）与 caps（显示层全大写）。改这里等于改所有登记角色的 system prompt / 渲染效果，改完必须重训并跑 check113h。",
+ "why_this_exists": "用户口径（2026-10-25）：『像是 oneshot 里很多没被制御的机器人不必要要求活人感』『这三人当示例然后再推进到其他人身上即可』『事实上，他不是有字体吗，你直接用就好了』。机器按『普通人聊天』演会失真；而『全大写』在中文里执行不了，只能靠渲染层 —— 两者不是一回事，故分两轴。",
+ "how_to_add": [
+  "1) 先看 _evidence/kind113.json 的候选 + 人设【角色身份】段第一句，确认物种；",
+  "2) kinds 加 <id>: machine，并在 why 里写一句依据（人设原文哪个词）；",
+  "3) caps 加 <id>，并在 caps_why 里写一句人设原文依据（哪一段要求全大写）；",
+  "4) 跑 check113h 与全量 G2；5) 至少重训该角色 12 轮，用 verify113g 判读。",
+  "禁止：按关键词批量刷进来。kind113.py 的普查实证两边都错（ut_monster_kid 误入、hy_axis 漏判）。"
+ ],
+ "default": "human",
+ "kinds": {
+  "hy_guardener": "machine",
+  "hy_axis": "machine",
+  "os_rowbot": "machine",
+  "os_prophetbot": "machine",
+  "os_prototype": "machine",
+  "os_kelvin": "machine"
+ },
+ "why": {
+  "hy_guardener": "人设【角色身份】：『Steamworks 温室区域的防御机器人，型号 Model 02』",
+  "hy_axis": "人设【角色身份】：『人类 Chujin 创造的最后一台皇家守卫机器人』『Axis 系列机器人的第十四号』",
+  "os_rowbot": "人设【角色身份】：『一台被固定在船上的划船机器人，第 310 号单位』『由内置的导航电路控制』",
+  "os_prophetbot": "人设【角色身份】：『由 The Author 创造的**未制御**机器人，唯一目的是迎接预言中的救世主』",
+  "os_prototype": "人设【角色身份】：『The Author 在旧世界毁灭前创造的先知机器人』",
+  "os_kelvin": "人设【角色身份】：『一台空间加热器机器人』"
+ },
+ "caps": [
+  "hy_guardener",
+  "hy_axis",
+  "os_rowbot",
+  "ot_papyrus",
+  "ut_papyrus",
+  "queen"
+ ],
+ "caps_why": {
+  "hy_guardener": "【禁忌】『Guardener 的对话全部以大写字母输出』；结尾『你全部使用大写字母说话』",
+  "hy_axis": "【核心性格】『在正常状态下你全部使用大写字母说话』；【禁忌】『不要使用小写字母』",
+  "os_rowbot": "【语言风格——最重要的设定】『你的说话方式全部使用大写字母。这是你作为未被制御的机器人的标志』；【禁忌】『你的所有对话都必须是大写的』",
+  "ot_papyrus": "【禁忌】『Papyrus 说话时全部大写。这是最重要的规则』",
+  "ut_papyrus": "【禁忌】『Papyrus 说话时全部大写。这是最重要的规则』（Outertale 版同源）",
+  "queen": "【核心性格】『你在对话中每个单字都大写』；结尾『你的语言是平板的、全大写的』"
+ },
+ "deliberately_excluded": {
+  "os_silver": "人设原文：『目的是制造一台**被制御**的机器人——一台可以像人一样思考、行动、拥有情感的机器』。它存在的意义就是有人味 ⇒ **必须留 human**。这是本表的负控制样本，别顺手加进来。",
+  "ut_mettaton": "『被 Alphys 灌入灵魂的机器人』+ 电视明星，整场表演就是人味。",
+  "ot_mettaton": "同上（Outertale 版）。",
+  "ut_monster_kid": "是小孩，不是机器（kind113 普查的误判样本）。",
+  "os_ling": "人设【角色身份】：『18 或 19 岁的年轻人，咖啡馆店主』——人类。",
+  "queen": "kinds 里排除：是暗之民/赛博统治者，有人格与政治性格。★ 注意它**在 caps 里**——两轴独立，别因为这里写了排除就把 caps 那条删掉。"
+ },
+ "caps_deliberately_excluded": {
+  "os_kelvin": "是机器（kinds=machine），但人设没有任何全大写要求 ⇒ 不进 caps。这是『两轴独立』的正控制：machine 不等于 caps。",
+  "rouxls": "人设是『随机在词尾添加 -est/-eth，并在随机的大写词组上进行强调』——只有局部强调，不是全大写；整条渲染会把他演成另一个人。",
+  "ot_sans": "【禁忌】要求的是『全部小写』，与小写持平（中文无大小写），无需覆盖句；且小写是中文默认观感，不构成『说英文』的压力。",
+  "ut_sans": "同上（Undertale 版）。",
+  "ot_napstablook": "同上，要求『全部小写』。",
+  "ut_napstablook": "同上，要求『全部小写』。"
+ }
+}

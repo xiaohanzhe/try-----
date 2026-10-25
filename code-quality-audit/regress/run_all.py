@@ -2875,6 +2875,25 @@ SUITES = [
                 '★★ 结论诚实标注：当前新 prompt 批次（23 角色）最高过火率仅 0.06，'
                 '**过火尚未被数据证实** —— 本规则是预防性护栏，不是缺陷修复。',
     },
+    {
+        'id': 'check113h',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第113轮-全体角色AI训练', '_tools', 'check113h.py'),
+        'offscreen': False,
+        'desc': '第一百一十三轮h：**角色档位两轴**（machine=不要活人感 / caps=显示层全大写）'
+                '不许静默失效 —— 用户口径「他不是有字体吗，你直接用就好了」'
+                '「别只顾着三人啊，这三人当示例然后再推进到其他人身上即可」'
+                '「oneshot 里很多没被制御的机器人不必要要求活人感」。'
+                'A 档位机制：human 段是 `SPEAK_RULES` 的**真后缀** · human 档返回**同一个对象** · '
+                '★ A10 **两轴正交**（ot_papyrus 是 human 却大写 / os_kelvin 是 machine 却不大写，'
+                '拿 kind 推 caps 必红其一）· A9 破坏性负控制：拆掉后缀 ⇒ machine 档必须退回 human · '
+                'B 渲染层：`if _caps_on(speaker)` 分支内做 ASCII 大写化 —— **AST 判，不扫字符串** · '
+                '★ B3 只用 AST 判有没有真的**调用** `QFont.setCapitalization`（纯文本扫会被'
+                '「解释为什么不用它」的注释打红，已连踩六次）+ B3b 判据自检 · '
+                'C 覆盖句：`caps` 登记角色 prompt 必带 `CAPS_RULE`，**未登记的一字不加**（C2 负控制）· '
+                '★ C4 反向守着「不许把人设里的原作台词依据删掉」。'
+                '★★ 判据刻意**不**去人设里数「全部大写」出现几次 —— 那是原作依据，删了才是错。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
@@ -3075,6 +3094,33 @@ _SLEEP_WINDOW_NOISE = re.compile(
 )
 
 
+# ---------------------------------------------------------------------------
+# ★ 第113轮h：**外置盘/分区探测失败**的日志行 —— 环境状态，整行剔除。
+#
+#   起因（实测，2026-10-25）：跑全量 G2 时 10 个套件集体 DIFF，而 PASS/FAIL 计数
+#   **一条没变**。逐条看 `.diff.txt` 都在同一位置多一行：
+#     `<TS> [WARNING] ralsei_pet.desktop_interaction — 获取存储分区信息失败:
+#      [WinError 1] 函数不正确。: 'E://'`
+#   直接查盘确认根因不在代码：
+#     `os.path.exists('E:/')` → **False**；`os.listdir('E:/')` → `OSError(22, '函数不正确。')`
+#   ⇒ 用户的 E 盘**整体掉线**（exFAT 外置盘，仓库文件在 C 盘、不受影响），
+#     产品每次枚举分区就多一条告警。换回一个"盘在"的时刻，这行又消失 ⇒
+#     逐字节基线对它**必然假红**，而且假红形态最容易骗人（计数全对、只多一行）。
+#
+#   ⚠️ 代价（写清楚）：抹平后**"存储盘掉了"在这条 stdout 上看不见了**。
+#      真正该守的是数据落点：`data_store` 的 vault 解析、`npc_memory` 落盘、
+#      `check67`/`check73` 的隔离目录断言 —— 它们不依赖这行 stdout。
+#      另：本行只承载"这台机器此刻有没有 E 盘"这一**与被测行为无关**的环境事实。
+#
+#   形态：`… ralsei_pet.desktop_interaction — 获取存储分区信息失败: <任意>`
+#        （只匹配前缀到"失败"，**不**吃盘符/错误码 —— 盘符 `E:` `D:` 都可能变。）
+# ---------------------------------------------------------------------------
+_STORAGE_PROBE_NOISE = re.compile(
+    r'^(?:<TS>\s*)?(?:\[(?:INFO|WARNING|ERROR)\]\s*)?'
+    r'ralsei_pet\.desktop_interaction\s+—\s+获取存储分区信息失败'
+)
+
+
 def normalize(text):
     """把"每次运行都不一样"的东西抹平，只留下语义内容。"""
     t = text.replace('\r\n', '\n').replace('\r', '\n')
@@ -3102,6 +3148,8 @@ def normalize(text):
         if _NPC_ROAM_NOISE.match(ln):  # ★ 第95轮：NPC 自主移动（真时钟驱动，见常量注释）
             continue
         if _LOCAL_AI_NOISE.match(ln) or _SLEEP_WINDOW_NOISE.match(ln):  # ★ 第98轮：本地 AI 连接失败 + 就寝决策（见常量注释）
+            continue
+        if _STORAGE_PROBE_NOISE.match(ln):  # ★ 第113轮h：外置盘掉线时的分区探测告警（见常量注释）
             continue
         if not ln:
             if blank:
