@@ -304,19 +304,49 @@ def main(argv):
                      a['emph'], a['ellip'], a['apol'], st['cn_rate'], st['chars_avg'],
                      st['paren_turns'], st['n'], st['hard_turns'], st['n']))
 
-        # ---- 前置判据：新四句真在 prompt 里 ----
+        # ---- 前置判据：性格校准段真在 prompt 里（**按档位分流**）----
+        #
+        # ★★★ 第113轮h 修（本轮实测到的判据失效）：
+        #   原来这条写死「四句人话必须在 prompt 里」。可这一轮把角色分成两档后，
+        #   `speak_rules_for(machine)` 会**用机段替换掉**那四句（两段互补，不是叠加）——
+        #   于是 `hy_guardener`（machine 档）必然报 "缺：四条"，**判据红而产品对**。
+        #   ⇒ 正解是按档位分流：
+        #       human  档：四句人话齐，且**不许**出现机段；
+        #       machine 档：机段在，且四句人话**必须不在**（保两段互斥，防"两段都塞"）。
+        #   两条都成对断言，任一侧塞错都能被抓到。
         checks = []
         try:
             sys_txt = system_text_now(nid, (new_rec.get('patch') or ''))
         except Exception as e:      # 重算失败不许当通过
             sys_txt = None
             print('  (重算 system 失败：%r)' % (e,))
+        NP = C._NP
+        _kind = NP.kind_of(nid)
+        _caps = NP.caps_of(nid)
         if sys_txt is None:
-            checks.append(('当前代码 prompt 含新四句', False, '重算失败，无法确认'))
+            checks.append(('当前代码 prompt 的档位段齐全', False, '重算失败，无法确认'))
+        elif _kind == 'machine':
+            miss_m = NP.PERSONA_TONE_MACHINE not in sys_txt
+            leaked = [s for s in anchors if s in sys_txt]
+            checks.append(('当前代码 prompt 的档位段（machine：机段在、四句人话不在）',
+                           (not miss_m) and (not leaked),
+                           '机段缺=%s 人话残留=%d 条' % (miss_m, len(leaked))))
+            print('  档位：machine（caps=%s）⇒ 期望机段替换掉四句人话' % _caps)
         else:
             miss = [s for s in anchors if s not in sys_txt]
-            checks.append(('当前代码 prompt 含新四句（%d 条）' % len(anchors),
+            checks.append(('当前代码 prompt 的档位段（human：%d 条人话齐）' % len(anchors),
                            not miss, ('缺：%s' % '|'.join(miss)) if miss else '齐'))
+            print('  档位：human（caps=%s）' % _caps)
+
+        # ★ caps 登记的角色，覆盖句必须在（"全大写是显示效果，你一律说中文"）。
+        #   与 `check113h` C1 同源判据，这里再判一次是因为**训练语料就是它生成的** ——
+        #   覆盖句没进 prompt，训练出来的中文占比再低也说明不了产品问题。
+        if sys_txt is not None and _caps:
+            checks.append(('caps 角色 prompt 含覆盖句 CAPS_RULE',
+                           NP.CAPS_RULE in sys_txt,
+                           '' if NP.CAPS_RULE in sys_txt else '缺覆盖句'))
+
+        if sys_txt is not None:
             # 信息行：与语料长度对照**不作判据**（关系卡会变），只打印备查
             print('  prompt 长度：语料记 %s ／ 当前重算 %d（差值来自 relation/evolution 卡'
                   '更新，**不作判据**）' % (new['system_chars'], len(sys_txt)))
