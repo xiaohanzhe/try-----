@@ -337,18 +337,27 @@ def _probe_proxies(limit=3):
 
 def main():
     if len(sys.argv) < 2:
-        w('usage: gitpush.py <msgfile> [--no-push] | gitpush.py --push-only')
+        w('usage: gitpush.py <msgfile> [--no-push] [--refspec <src:dst>] | gitpush.py --push-only')
         return 1
     push_only = '--push-only' in sys.argv
     msg = sys.argv[1]
     do_push = '--no-push' not in sys.argv
+    # ★ 第113轮f：`--refspec` 可覆盖推送目标，**默认仍是 `HEAD:main`**（历史行为一字不变）。
+    #   为什么需要：本地第113轮线与 `origin/main`（第118轮）已分叉 18/28，
+    #   硬推 `HEAD:main` 必被拒（non-fast-forward），强推会抹掉远端 28 条提交。
+    #   ⇒ 这条线改为推独立分支留档（`HEAD:local-113`），不 merge、不 force。
+    global PUSH_REFSPEC
+    if '--refspec' in sys.argv:
+        _i = sys.argv.index('--refspec')
+        if _i + 1 < len(sys.argv):
+            PUSH_REFSPEC = sys.argv[_i + 1]
     w('=== 提交推送日志 ===  %s' % time.strftime('%Y-%m-%d %H:%M:%S'))
     # ★ 第101轮：把「在哪棵树 / 哪个分支 / 推什么 refspec」打出来自证，
     #   否则「硬编码到别棵树」这类错**在全绿输出里看不出来**（本轮实测踩到）。
     w('[0r] REPO   = %s' % REPO)
     w('[0r] branch = %s'
       % run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], timeout=60)[1].strip())
-    w('[0r] refspec= %s（把当前 HEAD 推到远端 main）' % PUSH_REFSPEC)
+    w('[0r] refspec= %s（把当前 HEAD 推到该远端分支；默认 main）' % PUSH_REFSPEC)
 
     if push_only:
         w('[0] --push-only：跳过 add/commit，直接推当前 HEAD')
@@ -452,6 +461,9 @@ def _push():
     # ★ 有界尝试：候选之间是**不同配置**（http 隧道 / socks5h / 不同端口），
     #   不是拿同一个配置反复砸。上限 = `_probe_proxies(limit=3)`。
     used = ''
+    # ★ 第113轮f：核验必须跟着 refspec 的**目标分支**走，否则推 local-113 时
+    #   还去查 refs/heads/main ⇒ 必然不一致 ⇒ 把成功报成 NOT_PUSHED（假红）。
+    _DST = PUSH_REFSPEC.rsplit(':', 1)[-1].strip() or 'main'
     for i, proxy in enumerate(proxies if proxies else [''], 1):
         w('[6.%d] push 尝试（代理=%s）' % (i, proxy or '直连'))
         rc, o, e = run(['git'] + _opts(proxy) + ['push', 'origin', PUSH_REFSPEC],
@@ -474,13 +486,13 @@ def _push():
     remote = ''
     for cand in ([used] if used else (proxies or [''])):
         rc, o, _ = run(['git'] + _opts(cand) + ['ls-remote', 'origin',
-                                                'refs/heads/main'], timeout=90)
+                                                'refs/heads/' + _DST], timeout=90)
         remote = o.strip().split('\t')[0] if o.strip() else ''
         w('[7] ls-remote（代理=%s）= %s' % (cand or '直连', remote or '(空)'))
         if remote:
             break
-    tracking = run(['git', 'rev-parse', 'origin/main'], timeout=60)[1].strip()
-    w('[8] origin/main = %s' % tracking)
+    tracking = run(['git', 'rev-parse', 'origin/' + _DST], timeout=60)[1].strip()
+    w('[8] origin/%s = %s' % (_DST, tracking))
     ok = bool(local) and local == remote == tracking
     w('[9] 双向一致 = %s' % ok)
     w('=== 结论 = %s ===' % ('PUSHED' if ok else 'NOT_PUSHED'))
