@@ -189,7 +189,12 @@ a = NP.build_system_prompt(name, persona, [], 'probe', '', '')
 b = NP.build_system_prompt(name, persona, [], 'probe', '', '', patch='')
 c = NP.build_system_prompt(name, persona, [], 'probe', '', '', patch='')
 check('C1 不传 patch 与传 patch="" 输出逐字相同（旧角色零行为变化）',
-      a == b and a == c and len(a) > 100, 'len=%d/%d' % (len(a), len(b)))
+      a == b and a == c and len(a) > 100,
+      # ★★ 第113轮g：**只在不等时**才回显长度。
+      #   原来无条件打 'len=%d/%d'，而 prompt 长度会随 `SPEAK_RULES` 的任何改动变化
+      #   ⇒ 判据本身（两次输出逐字相同）明明成立，却因为 detail 里的数字变了整条判 DIFF。
+      #   这就是「判据禁回显随时相变的绝对值」的同型错误（第113轮g 实测栽了一次）。
+      ('' if (a == b == c) else 'len=%d/%d' % (len(a), len(b))))
 
 patched = NP.build_system_prompt(name, persona, [], 'probe', '', '', patch='测试纠正句')
 check('C2 有 patch 时真的进了 prompt',

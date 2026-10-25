@@ -1,0 +1,1033 @@
+{
+ "soft_cap": {
+  "excl": 0.75,
+  "multi": 1.0,
+  "caps": 0.5,
+  "emph": 0.5,
+  "ellip": 1.5,
+  "apol": 0.5
+ },
+ "soft_cap_note": {
+  "excl": {
+   "unit": "每句",
+   "why": "每句都带感叹号 = 靠吼叫撑情绪；正常人只在真激动时用"
+  },
+  "multi": {
+   "unit": "每轮",
+   "why": "一轮里最多一处「！！」；再多就是漫画式夸张"
+  },
+  "caps": {
+   "unit": "每句",
+   "why": "每两句最多一个 6+ 字母的大写词；成片大写 = 一直在吼"
+  },
+  "emph": {
+   "unit": "每句",
+   "why": "每两句最多一次「超级/绝对/根本」；句句加码 = 用强度冒充性格"
+  },
+  "ellip": {
+   "unit": "每句",
+   "why": "每句最多一个半「……」；通篇省略号 = 柔弱/欲言又止演过头"
+  },
+  "apol": {
+   "unit": "每句",
+   "why": "每两句最多一次道歉；句句自责 = 过度卑微"
+  }
+ },
+ "p90": {
+  "excl": 0.5,
+  "multi": 0,
+  "caps": 0.0,
+  "emph": 0.2,
+  "ellip": 0.6,
+  "apol": 0.0
+ },
+ "rows": [
+  {
+   "id": "asgore",
+   "name": "艾斯戈尔",
+   "turns": 48,
+   "avg": {
+    "excl": 0.166,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.102,
+    "ellip": 0.194,
+    "apol": 0.008
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7720,
+   "started_at": "2026-10-25 03:31:27"
+  },
+  {
+   "id": "berdly",
+   "name": "伯德利",
+   "turns": 36,
+   "avg": {
+    "excl": 0.473,
+    "multi": 0.0,
+    "caps": 0.291,
+    "emph": 0.074,
+    "ellip": 0.154,
+    "apol": 0.007
+   },
+   "over_turns": 3,
+   "over_rate": 0.083,
+   "worst": {
+    "excl": 2,
+    "caps": 1
+   },
+   "has_lang": false,
+   "system_chars": 6667,
+   "started_at": "2026-10-24 17:28:21"
+  },
+  {
+   "id": "flowery",
+   "name": "花",
+   "turns": 36,
+   "avg": {
+    "excl": 0.221,
+    "multi": 0.0,
+    "caps": 0.203,
+    "emph": 0.01,
+    "ellip": 0.193,
+    "apol": 0.022
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 6660,
+   "started_at": "2026-10-24 17:38:30"
+  },
+  {
+   "id": "gerson",
+   "name": "格森",
+   "turns": 36,
+   "avg": {
+    "excl": 0.299,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.057,
+    "ellip": 0.084,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 5372,
+   "started_at": "2026-10-24 17:44:42"
+  },
+  {
+   "id": "hy_ace",
+   "name": "Ace",
+   "turns": 36,
+   "avg": {
+    "excl": 0.095,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.084,
+    "ellip": 0.044,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 10733,
+   "started_at": "2026-10-24 17:50:52"
+  },
+  {
+   "id": "hy_axis",
+   "name": "Axis",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.375,
+    "emph": 0.0,
+    "ellip": 0.403,
+    "apol": 0.0
+   },
+   "over_turns": 12,
+   "over_rate": 0.333,
+   "worst": {
+    "caps": 12
+   },
+   "has_lang": false,
+   "system_chars": 10676,
+   "started_at": "2026-10-24 18:01:44"
+  },
+  {
+   "id": "hy_bowll",
+   "name": "Bowll",
+   "turns": 36,
+   "avg": {
+    "excl": 0.45,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.753,
+    "apol": 0.0
+   },
+   "over_turns": 11,
+   "over_rate": 0.306,
+   "worst": {
+    "ellip": 4,
+    "excl": 8
+   },
+   "has_lang": false,
+   "system_chars": 8241,
+   "started_at": "2026-10-24 18:15:47"
+  },
+  {
+   "id": "hy_ceroba_ketsukane",
+   "name": "Ceroba Ketsukane",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.014,
+    "ellip": 0.072,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 11902,
+   "started_at": "2026-10-24 18:37:19"
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "name": "Chujin Ketsukane",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 9178,
+   "started_at": "2026-10-24 18:47:10"
+  },
+  {
+   "id": "hy_clover",
+   "name": "Clover",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 1.037,
+    "apol": 0.0
+   },
+   "over_turns": 3,
+   "over_rate": 0.083,
+   "worst": {
+    "ellip": 3
+   },
+   "has_lang": false,
+   "system_chars": 10434,
+   "started_at": "2026-10-24 18:56:16"
+  },
+  {
+   "id": "hy_dalv",
+   "name": "Dalv",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.694,
+    "apol": 0.0
+   },
+   "over_turns": 4,
+   "over_rate": 0.111,
+   "worst": {
+    "ellip": 4
+   },
+   "has_lang": false,
+   "system_chars": 13214,
+   "started_at": "2026-10-24 19:08:17"
+  },
+  {
+   "id": "hy_ed",
+   "name": "Ed",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.006,
+    "ellip": 0.022,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 8151,
+   "started_at": "2026-10-24 19:34:12"
+  },
+  {
+   "id": "hy_flowey",
+   "name": "Flowey",
+   "turns": 36,
+   "avg": {
+    "excl": 0.176,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.167,
+    "apol": 0.0
+   },
+   "over_turns": 4,
+   "over_rate": 0.111,
+   "worst": {
+    "excl": 4
+   },
+   "has_lang": false,
+   "system_chars": 11427,
+   "started_at": "2026-10-24 19:38:52"
+  },
+  {
+   "id": "hy_guardener",
+   "name": "Guardener",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 9.083,
+    "emph": 0.0,
+    "ellip": 0.972,
+    "apol": 0.0
+   },
+   "over_turns": 36,
+   "over_rate": 1.0,
+   "worst": {
+    "caps": 36,
+    "ellip": 5
+   },
+   "has_lang": false,
+   "system_chars": 9838,
+   "started_at": "2026-10-24 19:44:51"
+  },
+  {
+   "id": "hy_martlet",
+   "name": "Martlet",
+   "turns": 36,
+   "avg": {
+    "excl": 0.2,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.042,
+    "ellip": 0.007,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.028,
+   "worst": {
+    "emph": 1
+   },
+   "has_lang": false,
+   "system_chars": 12866,
+   "started_at": "2026-10-24 19:55:01"
+  },
+  {
+   "id": "hy_mooch",
+   "name": "Mooch",
+   "turns": 36,
+   "avg": {
+    "excl": 0.079,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.038,
+    "ellip": 0.014,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 10348,
+   "started_at": "2026-10-24 20:26:23"
+  },
+  {
+   "id": "hy_moray",
+   "name": "Moray",
+   "turns": 36,
+   "avg": {
+    "excl": 0.021,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.026,
+    "ellip": 0.016,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 11165,
+   "started_at": "2026-10-24 20:35:21"
+  },
+  {
+   "id": "hy_sousborg",
+   "name": "Sousborg",
+   "turns": 36,
+   "avg": {
+    "excl": 0.016,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.014,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7872,
+   "started_at": "2026-10-24 20:44:33"
+  },
+  {
+   "id": "hy_starlo",
+   "name": "Starlo",
+   "turns": 36,
+   "avg": {
+    "excl": 0.357,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.066,
+    "ellip": 0.07,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.028,
+   "worst": {
+    "excl": 1
+   },
+   "has_lang": false,
+   "system_chars": 9888,
+   "started_at": "2026-10-24 20:51:04"
+  },
+  {
+   "id": "king",
+   "name": "黑桃王",
+   "turns": 36,
+   "avg": {
+    "excl": 0.18,
+    "multi": 0.083,
+    "caps": 0.0,
+    "emph": 0.009,
+    "ellip": 0.269,
+    "apol": 0.0
+   },
+   "over_turns": 2,
+   "over_rate": 0.056,
+   "worst": {
+    "excl": 2
+   },
+   "has_lang": false,
+   "system_chars": 4557,
+   "started_at": "2026-10-24 21:01:57"
+  },
+  {
+   "id": "kris",
+   "name": "克里斯",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.042,
+    "ellip": 0.079,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 6623,
+   "started_at": "2026-10-24 21:08:02"
+  },
+  {
+   "id": "lancer",
+   "name": "兰瑟",
+   "turns": 36,
+   "avg": {
+    "excl": 0.454,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.067,
+    "ellip": 0.115,
+    "apol": 0.014
+   },
+   "over_turns": 2,
+   "over_rate": 0.056,
+   "worst": {
+    "excl": 2
+   },
+   "has_lang": false,
+   "system_chars": 7309,
+   "started_at": "2026-10-24 21:13:15"
+  },
+  {
+   "id": "mike",
+   "name": "迈克",
+   "turns": 36,
+   "avg": {
+    "excl": 0.675,
+    "multi": 0.889,
+    "caps": 0.0,
+    "emph": 0.138,
+    "ellip": 0.638,
+    "apol": 0.005
+   },
+   "over_turns": 11,
+   "over_rate": 0.306,
+   "worst": {
+    "excl": 10,
+    "multi": 2,
+    "emph": 1
+   },
+   "has_lang": false,
+   "system_chars": 7346,
+   "started_at": "2026-10-24 21:24:35"
+  },
+  {
+   "id": "noelle",
+   "name": "诺艾尔",
+   "turns": 36,
+   "avg": {
+    "excl": 0.053,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.066,
+    "ellip": 0.412,
+    "apol": 0.076
+   },
+   "over_turns": 1,
+   "over_rate": 0.028,
+   "worst": {
+    "ellip": 1,
+    "apol": 1
+   },
+   "has_lang": false,
+   "system_chars": 5646,
+   "started_at": "2026-10-24 21:34:55"
+  },
+  {
+   "id": "os_alula",
+   "name": "Alula",
+   "turns": 36,
+   "avg": {
+    "excl": 0.469,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.04,
+    "ellip": 0.049,
+    "apol": 0.0
+   },
+   "over_turns": 2,
+   "over_rate": 0.056,
+   "worst": {
+    "excl": 2
+   },
+   "has_lang": false,
+   "system_chars": 8242,
+   "started_at": "2026-10-24 21:43:04"
+  },
+  {
+   "id": "os_calamus",
+   "name": "Calamus",
+   "turns": 36,
+   "avg": {
+    "excl": 0.04,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.08,
+    "ellip": 0.191,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 6949,
+   "started_at": "2026-10-24 21:56:38"
+  },
+  {
+   "id": "os_cedric",
+   "name": "Cedric",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.01,
+    "ellip": 0.066,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7659,
+   "started_at": "2026-10-24 22:29:32"
+  },
+  {
+   "id": "os_george",
+   "name": "George",
+   "turns": 36,
+   "avg": {
+    "excl": 0.172,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.069,
+    "ellip": 0.179,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.028,
+   "worst": {
+    "excl": 1
+   },
+   "has_lang": true,
+   "system_chars": 5506,
+   "started_at": "2026-10-24 23:15:04"
+  },
+  {
+   "id": "os_kelvin",
+   "name": "Kelvin",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.028,
+    "ellip": 0.069,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6090,
+   "started_at": "2026-10-24 23:25:18"
+  },
+  {
+   "id": "os_kip",
+   "name": "Kip",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.054,
+    "ellip": 0.018,
+    "apol": 0.006
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6471,
+   "started_at": "2026-10-24 23:31:50"
+  },
+  {
+   "id": "os_lamplighter",
+   "name": "灯夫",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.031,
+    "ellip": 0.171,
+    "apol": 0.023
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6359,
+   "started_at": "2026-10-24 23:44:34"
+  },
+  {
+   "id": "os_ling",
+   "name": "Ling",
+   "turns": 36,
+   "avg": {
+    "excl": 0.007,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.035,
+    "ellip": 0.068,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6081,
+   "started_at": "2026-10-24 23:54:57"
+  },
+  {
+   "id": "os_magpie",
+   "name": "Magpie",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.024,
+    "ellip": 0.045,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6212,
+   "started_at": "2026-10-25 00:05:17"
+  },
+  {
+   "id": "os_maize",
+   "name": "Maize",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.022,
+    "ellip": 0.03,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6706,
+   "started_at": "2026-10-25 00:12:23"
+  },
+  {
+   "id": "os_mason",
+   "name": "Mason",
+   "turns": 36,
+   "avg": {
+    "excl": 0.016,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.045,
+    "ellip": 0.019,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7420,
+   "started_at": "2026-10-25 00:19:39"
+  },
+  {
+   "id": "os_niko",
+   "name": "Niko",
+   "turns": 36,
+   "avg": {
+    "excl": 0.152,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.137,
+    "ellip": 0.147,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.028,
+   "worst": {
+    "emph": 1
+   },
+   "has_lang": true,
+   "system_chars": 6295,
+   "started_at": "2026-10-25 00:26:52"
+  },
+  {
+   "id": "os_prophetbot",
+   "name": "先知机器人",
+   "turns": 36,
+   "avg": {
+    "excl": 0.34,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.029,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6301,
+   "started_at": "2026-10-25 00:37:01"
+  },
+  {
+   "id": "os_prototype",
+   "name": "Prototype",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7999,
+   "started_at": "2026-10-25 00:45:21"
+  },
+  {
+   "id": "os_rowbot",
+   "name": "Rowbot",
+   "turns": 36,
+   "avg": {
+    "excl": 0.014,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.074,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6470,
+   "started_at": "2026-10-25 00:50:49"
+  },
+  {
+   "id": "os_rue",
+   "name": "Rue",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.032,
+    "ellip": 0.269,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7351,
+   "started_at": "2026-10-25 00:56:26"
+  },
+  {
+   "id": "os_shepherd",
+   "name": "牧羊人",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.032,
+    "ellip": 0.016,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6693,
+   "started_at": "2026-10-25 01:03:20"
+  },
+  {
+   "id": "os_silver",
+   "name": "Silver",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.028,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7146,
+   "started_at": "2026-10-25 01:12:23"
+  },
+  {
+   "id": "os_the_author",
+   "name": "The Author",
+   "turns": 36,
+   "avg": {
+    "excl": 0.009,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.088,
+    "ellip": 0.014,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7310,
+   "started_at": "2026-10-25 01:17:13"
+  },
+  {
+   "id": "os_the_world_machine",
+   "name": "The Entity / 本体",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.028,
+    "ellip": 0.056,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7635,
+   "started_at": "2026-10-25 01:30:42"
+  },
+  {
+   "id": "os_watcher",
+   "name": "Watcher",
+   "turns": 36,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.007,
+    "ellip": 0.032,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 6065,
+   "started_at": "2026-10-25 01:35:03"
+  },
+  {
+   "id": "ot_alphys",
+   "name": "Alphys",
+   "turns": 36,
+   "avg": {
+    "excl": 0.121,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.133,
+    "ellip": 0.905,
+    "apol": 0.021
+   },
+   "over_turns": 2,
+   "over_rate": 0.056,
+   "worst": {
+    "emph": 1,
+    "apol": 1,
+    "ellip": 1
+   },
+   "has_lang": true,
+   "system_chars": 8488,
+   "started_at": "2026-10-25 02:16:46"
+  },
+  {
+   "id": "ot_asgore",
+   "name": "Asgore",
+   "turns": 36,
+   "avg": {
+    "excl": 0.006,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.042,
+    "ellip": 0.19,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": true,
+   "system_chars": 7720,
+   "started_at": "2026-10-25 02:27:17"
+  },
+  {
+   "id": "susie",
+   "name": "苏西",
+   "turns": 48,
+   "avg": {
+    "excl": 0.193,
+    "multi": 0.0,
+    "caps": 0.008,
+    "emph": 0.057,
+    "ellip": 0.204,
+    "apol": 0.024
+   },
+   "over_turns": 1,
+   "over_rate": 0.021,
+   "worst": {
+    "excl": 1
+   },
+   "has_lang": true,
+   "system_chars": 7761,
+   "started_at": "2026-10-25 04:59:08"
+  }
+ ],
+ "files": 48,
+ "chars": 48,
+ "turns": 1752,
+ "dropped_old_batches": 5,
+ "selfcheck": {
+  "rage": {
+   "excl": 1.75,
+   "multi": 2,
+   "caps": 0.0,
+   "emph": 0.5,
+   "ellip": 0.0,
+   "apol": 0.0
+  },
+  "meek": {
+   "excl": 0.0,
+   "multi": 0,
+   "caps": 0.0,
+   "emph": 0.0,
+   "ellip": 5.0,
+   "apol": 6.0
+  },
+  "normal": {
+   "excl": 0.0,
+   "multi": 0,
+   "caps": 0.0,
+   "emph": 0.0,
+   "ellip": 0.0,
+   "apol": 0.0
+  },
+  "normal_batch_over": 0
+ }
+}
