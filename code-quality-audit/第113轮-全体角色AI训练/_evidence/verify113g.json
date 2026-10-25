@@ -1,0 +1,304 @@
+{
+ "head": 12,
+ "anchors": [
+  "性格是你的底色",
+  "你大多数时候就是普通人在聊天",
+  "靠你选什么词、先注意到什么",
+  "嗯，我知道了。那我先去看看。"
+ ],
+ "verdicts": [
+  {
+   "id": "mike",
+   "verdict": "FAIL",
+   "why": ""
+  },
+  {
+   "id": "hy_guardener",
+   "verdict": "FAIL",
+   "why": ""
+  },
+  {
+   "id": "hy_axis",
+   "verdict": "FAIL",
+   "why": ""
+  },
+  {
+   "id": "susie",
+   "verdict": "PASS",
+   "why": ""
+  },
+  {
+   "id": "asgore",
+   "verdict": "PASS",
+   "why": ""
+  },
+  {
+   "id": "toriel",
+   "verdict": "PASS",
+   "why": ""
+  }
+ ],
+ "rows": {
+  "mike": {
+   "why": "旧批次 excl=0.31，是「过火」的实证样本",
+   "old": {
+    "n": 12,
+    "over_turns": 3,
+    "over_rate": 0.25,
+    "avg": {
+     "excl": 0.719,
+     "multi": 0.75,
+     "caps": 0.0,
+     "emph": 0.106,
+     "ellip": 0.495,
+     "apol": 0.0
+    },
+    "cn_rate": 0.769,
+    "cn_min": 0.688,
+    "paren_turns": 0,
+    "chars_avg": 112,
+    "hard_turns": 0,
+    "retries": 1,
+    "system_chars": 7346,
+    "started_at": "2026-10-24 21:24:35",
+    "new_prompt": false
+   },
+   "new": {
+    "n": 12,
+    "over_turns": 12,
+    "over_rate": 1.0,
+    "avg": {
+     "excl": 1.156,
+     "multi": 2.917,
+     "caps": 0.0,
+     "emph": 0.03,
+     "ellip": 0.38,
+     "apol": 0.006
+    },
+    "cn_rate": 0.679,
+    "cn_min": 0.629,
+    "paren_turns": 0,
+    "chars_avg": 170,
+    "hard_turns": 0,
+    "retries": 3,
+    "system_chars": 8024,
+    "started_at": "2026-10-25 13:37:19",
+    "new_prompt": true
+   }
+  },
+  "hy_guardener": {
+   "why": "旧批次语言崩坏（cn_ratio 低）",
+   "old": {
+    "n": 12,
+    "over_turns": 12,
+    "over_rate": 1.0,
+    "avg": {
+     "excl": 0.0,
+     "multi": 0.0,
+     "caps": 8.417,
+     "emph": 0.0,
+     "ellip": 0.833,
+     "apol": 0.0
+    },
+    "cn_rate": 0.0,
+    "cn_min": 0.0,
+    "paren_turns": 0,
+    "chars_avg": 160,
+    "hard_turns": 1,
+    "retries": 2,
+    "system_chars": 9838,
+    "started_at": "2026-10-24 19:44:51",
+    "new_prompt": false
+   },
+   "new": {
+    "n": 12,
+    "over_turns": 12,
+    "over_rate": 1.0,
+    "avg": {
+     "excl": 0.0,
+     "multi": 0.0,
+     "caps": 12.708,
+     "emph": 0.0,
+     "ellip": 1.375,
+     "apol": 0.0
+    },
+    "cn_rate": 0.0,
+    "cn_min": 0.0,
+    "paren_turns": 0,
+    "chars_avg": 250,
+    "hard_turns": 12,
+    "retries": 24,
+    "system_chars": 10486,
+    "started_at": "2026-10-25 13:23:51",
+    "new_prompt": true
+   }
+  },
+  "hy_axis": {
+   "why": "同上，且是 1.00 过火率那批里的",
+   "old": {
+    "n": 12,
+    "over_turns": 0,
+    "over_rate": 0.0,
+    "avg": {
+     "excl": 0.0,
+     "multi": 0.0,
+     "caps": 0.458,
+     "emph": 0.0,
+     "ellip": 0.458,
+     "apol": 0.0
+    },
+    "cn_rate": 0.0,
+    "cn_min": 0.0,
+    "paren_turns": 0,
+    "chars_avg": 137,
+    "hard_turns": 0,
+    "retries": 2,
+    "system_chars": 10676,
+    "started_at": "2026-10-24 18:01:44",
+    "new_prompt": false
+   },
+   "new": {
+    "n": 12,
+    "over_turns": 5,
+    "over_rate": 0.417,
+    "avg": {
+     "excl": 0.028,
+     "multi": 0.0,
+     "caps": 0.478,
+     "emph": 0.012,
+     "ellip": 0.889,
+     "apol": 0.0
+    },
+    "cn_rate": 0.516,
+    "cn_min": 0.253,
+    "paren_turns": 10,
+    "chars_avg": 199,
+    "hard_turns": 11,
+    "retries": 23,
+    "system_chars": 11398,
+    "started_at": "2026-10-25 13:03:30",
+    "new_prompt": true
+   }
+  },
+  "susie": {
+   "why": "括号动作对 prompt 规则免疫（probe113g 10/10）",
+   "old": {
+    "n": 12,
+    "over_turns": 0,
+    "over_rate": 0.0,
+    "avg": {
+     "excl": 0.153,
+     "multi": 0.0,
+     "caps": 0.017,
+     "emph": 0.075,
+     "ellip": 0.256,
+     "apol": 0.014
+    },
+    "cn_rate": 0.801,
+    "cn_min": 0.764,
+    "paren_turns": 12,
+    "chars_avg": 88,
+    "hard_turns": 2,
+    "retries": 11,
+    "system_chars": 7761,
+    "started_at": "2026-10-25 04:59:08",
+    "new_prompt": true
+   },
+   "new": {
+    "n": 12,
+    "over_turns": 1,
+    "over_rate": 0.083,
+    "avg": {
+     "excl": 0.363,
+     "multi": 0.0,
+     "caps": 0.0,
+     "emph": 0.097,
+     "ellip": 0.163,
+     "apol": 0.017
+    },
+    "cn_rate": 0.806,
+    "cn_min": 0.704,
+    "paren_turns": 0,
+    "chars_avg": 86,
+    "hard_turns": 0,
+    "retries": 1,
+    "system_chars": 7864,
+    "started_at": "2026-10-25 13:42:50",
+    "new_prompt": true
+   }
+  },
+  "asgore": {
+   "why": "probe113g 三变体全 10/10，最硬的免疫样本",
+   "old": {
+    "n": 12,
+    "over_turns": 0,
+    "over_rate": 0.0,
+    "avg": {
+     "excl": 0.087,
+     "multi": 0.0,
+     "caps": 0.0,
+     "emph": 0.087,
+     "ellip": 0.243,
+     "apol": 0.0
+    },
+    "cn_rate": 0.811,
+    "cn_min": 0.66,
+    "paren_turns": 12,
+    "chars_avg": 159,
+    "hard_turns": 12,
+    "retries": 24,
+    "system_chars": 7720,
+    "started_at": "2026-10-25 03:31:27",
+    "new_prompt": true
+   },
+   "new": {
+    "n": 12,
+    "over_turns": 1,
+    "over_rate": 0.083,
+    "avg": {
+     "excl": 0.068,
+     "multi": 0.0,
+     "caps": 0.0,
+     "emph": 0.164,
+     "ellip": 0.242,
+     "apol": 0.0
+    },
+    "cn_rate": 0.868,
+    "cn_min": 0.784,
+    "paren_turns": 0,
+    "chars_avg": 157,
+    "hard_turns": 0,
+    "retries": 3,
+    "system_chars": 7823,
+    "started_at": "2026-10-25 12:53:02",
+    "new_prompt": true
+   }
+  },
+  "toriel": {
+   "why": "对照：基线最稳的一个",
+   "old": null,
+   "new": {
+    "n": 12,
+    "over_turns": 0,
+    "over_rate": 0.0,
+    "avg": {
+     "excl": 0.0,
+     "multi": 0.0,
+     "caps": 0.0,
+     "emph": 0.149,
+     "ellip": 0.101,
+     "apol": 0.0
+    },
+    "cn_rate": 0.864,
+    "cn_min": 0.8,
+    "paren_turns": 0,
+    "chars_avg": 127,
+    "hard_turns": 0,
+    "retries": 0,
+    "system_chars": 8148,
+    "started_at": "2026-10-25 13:48:29",
+    "new_prompt": true
+   }
+  }
+ }
+}

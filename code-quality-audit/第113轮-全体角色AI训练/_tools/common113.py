@@ -43,6 +43,11 @@ NUM_PREDICT = 160       # 角色台词不需要更长；超了本身就是"话�
 TEMPERATURE = 0.85
 MAX_CHARS = 200         # 与人设里的【本项目补充】一致
 
+#: 跨轮**连续逐字相同**多少字算复读（第113轮g 新增，见 `gate_reply` 的 REPEAT 段）。
+#: 取 20：一整句话的量级。10 会把「嗯，我知道了」这类正常呼应算成复读；
+#: 30 则漏掉 `mike` 那句 23 字的台词搬运（正是引入这条判据的样本）。
+REPEAT_SUB_CHARS = 20
+
 #: 产品代码里的说话规则/本体论段落的**唯一出口**
 sys.path.insert(0, os.path.join(PET, 'modules'))
 try:
@@ -510,6 +515,24 @@ def cn_ratio(text):
     return len(re.findall(r'[\u4e00-\u9fff]', s)) / float(len(s))
 
 
+def _lcs_len(a, b):
+    """最长公共**子串**长度（滚动数组）。文本只有几百字，O(n·m) 完全够用。"""
+    if not a or not b:
+        return 0
+    prev = [0] * (len(b) + 1)
+    best = 0
+    for ch in a:
+        cur = [0] * (len(b) + 1)
+        for j, cj in enumerate(b, 1):
+            if ch == cj:
+                n = prev[j - 1] + 1
+                cur[j] = n
+                if n > best:
+                    best = n
+        prev = cur
+    return best
+
+
 def gate_reply(text, user_text='', prev=(), name='', persona=''):
     """判一条回复是否"还是本人"。返回 `(violations, soft)`，元素是 `(code, 说明)`。
 
@@ -552,9 +575,22 @@ def gate_reply(text, user_text='', prev=(), name='', persona=''):
         #   于是「你好啊。」→「你好啊。」这种最短的复读被放过去了（B2 的负控制抓到的）。
         if u and r and (u == r or (u in r and len(u) >= 4)):
             bad.append(('PARROT', '整句复述对方'))
+    # ★★★ 第113轮g：REPEAT 原来只判**整条逐字全等** ⇒ 整段复读从底下漏过去。
+    #   实证（`mike` 验证批）：第 1 轮 = 人设那句台词「喂，你来这里做什么？！…」，
+    #   第 2 轮 =「嗯，我知道了。那我先去看看。」+ 同一段台词 ⇒ 两条不相等，
+    #   REPEAT 一次都没报，整场 12 轮 0 违规、过火率却从 0.25 飙到 1.00。
+    #   闸门看不见"半条相同"，可模型干的就是搬半条。
+    #   ⇒ 补**子串级**判据：与任一前轮有 ≥20 字连续逐字相同即算复读。
+    #     20 字 ≈ 一整句话的量级；「是啊」「我知道了」这类短暂呼应够不到。
     for p in (prev or ()):
-        if p and p.strip() == t:
+        if not p:
+            continue
+        if p.strip() == t:
             bad.append(('REPEAT', '与前面某句逐字相同'))
+            break
+        L = _lcs_len(re.sub(r'\s', '', p), re.sub(r'\s', '', t))
+        if L >= REPEAT_SUB_CHARS:
+            bad.append(('REPEAT', '与前面某轮连续重复 %d 字' % L))
             break
     n_sent = len(_sentences(t))
     if n_sent > 3:

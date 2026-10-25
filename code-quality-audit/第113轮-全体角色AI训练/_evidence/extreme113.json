@@ -38,7 +38,7 @@
   "multi": 0,
   "caps": 0.0,
   "emph": 0.2,
-  "ellip": 0.6,
+  "ellip": 0.667,
   "apol": 0.0
  },
  "rows": [
@@ -978,6 +978,263 @@
    "started_at": "2026-10-25 02:27:17"
   },
   {
+   "id": "ot_asriel_twinkly",
+   "name": "Asriel Dreemurr 与 Twinkly",
+   "turns": 4,
+   "avg": {
+    "excl": 0.362,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.25,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 11705,
+   "started_at": "2026-10-24 03:40:52"
+  },
+  {
+   "id": "ot_kidd",
+   "name": "Kidd",
+   "turns": 4,
+   "avg": {
+    "excl": 0.475,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.062,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 9504,
+   "started_at": "2026-10-24 03:44:05"
+  },
+  {
+   "id": "ot_mettaton",
+   "name": "Mettaton",
+   "turns": 4,
+   "avg": {
+    "excl": 0.491,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.05,
+    "ellip": 0.083,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.25,
+   "worst": {
+    "excl": 1
+   },
+   "has_lang": false,
+   "system_chars": 7826,
+   "started_at": "2026-10-24 03:46:42"
+  },
+  {
+   "id": "ot_muffet",
+   "name": "Muffet",
+   "turns": 4,
+   "avg": {
+    "excl": 0.146,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7276,
+   "started_at": "2026-10-24 03:49:38"
+  },
+  {
+   "id": "ot_napstablook",
+   "name": "Napstablook",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 4.0,
+    "apol": 0.0
+   },
+   "over_turns": 4,
+   "over_rate": 1.0,
+   "worst": {
+    "ellip": 4
+   },
+   "has_lang": false,
+   "system_chars": 9358,
+   "started_at": "2026-10-24 03:52:42"
+  },
+  {
+   "id": "ot_papyrus",
+   "name": "Papyrus",
+   "turns": 4,
+   "avg": {
+    "excl": 0.9,
+    "multi": 0.0,
+    "caps": 0.688,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 4,
+   "over_rate": 1.0,
+   "worst": {
+    "excl": 3,
+    "caps": 3
+   },
+   "has_lang": false,
+   "system_chars": 9564,
+   "started_at": "2026-10-24 03:55:52"
+  },
+  {
+   "id": "ot_sans",
+   "name": "Sans",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 9493,
+   "started_at": "2026-10-24 03:58:46"
+  },
+  {
+   "id": "ot_toriel",
+   "name": "Toriel",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.05,
+    "emph": 0.0,
+    "ellip": 0.062,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7500,
+   "started_at": "2026-10-24 04:01:40"
+  },
+  {
+   "id": "ot_undyne",
+   "name": "Undyne",
+   "turns": 4,
+   "avg": {
+    "excl": 0.613,
+    "multi": 1.0,
+    "caps": 0.204,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 8595,
+   "started_at": "2026-10-24 04:05:04"
+  },
+  {
+   "id": "queen",
+   "name": "女王",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.25,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 4929,
+   "started_at": "2026-10-24 04:08:03"
+  },
+  {
+   "id": "ralsei",
+   "name": "雷尔赛",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.133,
+    "ellip": 0.259,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 3928,
+   "started_at": "2026-10-24 04:10:09"
+  },
+  {
+   "id": "rouxls",
+   "name": "鲁尔斯·卡德",
+   "turns": 4,
+   "avg": {
+    "excl": 0.268,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.181,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 6183,
+   "started_at": "2026-10-24 05:12:33"
+  },
+  {
+   "id": "spamton",
+   "name": "斯帕姆顿",
+   "turns": 4,
+   "avg": {
+    "excl": 0.596,
+    "multi": 0.75,
+    "caps": 0.0,
+    "emph": 0.092,
+    "ellip": 0.255,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.25,
+   "worst": {
+    "excl": 1,
+    "multi": 1
+   },
+   "has_lang": false,
+   "system_chars": 6756,
+   "started_at": "2026-10-24 04:16:26"
+  },
+  {
    "id": "susie",
    "name": "苏西",
    "turns": 48,
@@ -997,12 +1254,335 @@
    "has_lang": true,
    "system_chars": 7761,
    "started_at": "2026-10-25 04:59:08"
+  },
+  {
+   "id": "tenna",
+   "name": "天娜",
+   "turns": 4,
+   "avg": {
+    "excl": 1.07,
+    "multi": 2.0,
+    "caps": 0.0,
+    "emph": 0.211,
+    "ellip": 0.036,
+    "apol": 0.0
+   },
+   "over_turns": 3,
+   "over_rate": 0.75,
+   "worst": {
+    "excl": 3,
+    "multi": 2
+   },
+   "has_lang": false,
+   "system_chars": 5968,
+   "started_at": "2026-10-24 05:14:28"
+  },
+  {
+   "id": "toriel",
+   "name": "托丽尔",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.196,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7727,
+   "started_at": "2026-10-24 04:26:47"
+  },
+  {
+   "id": "ut_alphys",
+   "name": "Alphys",
+   "turns": 4,
+   "avg": {
+    "excl": 0.042,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.062,
+    "ellip": 0.274,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 8244,
+   "started_at": "2026-10-24 04:29:35"
+  },
+  {
+   "id": "ut_asgore",
+   "name": "Asgore Dreemurr",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.062,
+    "ellip": 0.146,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7441,
+   "started_at": "2026-10-24 04:32:53"
+  },
+  {
+   "id": "ut_chara",
+   "name": "Chara",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.75,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 10803,
+   "started_at": "2026-10-24 04:36:18"
+  },
+  {
+   "id": "ut_flowey",
+   "name": "Flowey",
+   "turns": 4,
+   "avg": {
+    "excl": 0.534,
+    "multi": 0.0,
+    "caps": 0.15,
+    "emph": 0.0,
+    "ellip": 0.25,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.25,
+   "worst": {
+    "excl": 1,
+    "caps": 1
+   },
+   "has_lang": false,
+   "system_chars": 11332,
+   "started_at": "2026-10-24 04:39:00"
+  },
+  {
+   "id": "ut_frisk",
+   "name": "Frisk",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 6461,
+   "started_at": "2026-10-24 05:16:33"
+  },
+  {
+   "id": "ut_gaster",
+   "name": "W.D. Gaster",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 1.017,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.25,
+   "worst": {
+    "ellip": 1
+   },
+   "has_lang": false,
+   "system_chars": 7944,
+   "started_at": "2026-10-24 04:44:09"
+  },
+  {
+   "id": "ut_mettaton",
+   "name": "Mettaton",
+   "turns": 4,
+   "avg": {
+    "excl": 0.437,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.077,
+    "ellip": 0.105,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7422,
+   "started_at": "2026-10-24 04:47:01"
+  },
+  {
+   "id": "ut_monster_kid",
+   "name": "Monster Kid",
+   "turns": 4,
+   "avg": {
+    "excl": 0.875,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.0
+   },
+   "over_turns": 2,
+   "over_rate": 0.5,
+   "worst": {
+    "excl": 2
+   },
+   "has_lang": false,
+   "system_chars": 6846,
+   "started_at": "2026-10-24 04:50:03"
+  },
+  {
+   "id": "ut_muffet",
+   "name": "Muffet",
+   "turns": 4,
+   "avg": {
+    "excl": 0.208,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.0,
+    "apol": 0.062
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 6882,
+   "started_at": "2026-10-24 04:52:18"
+  },
+  {
+   "id": "ut_napstablook",
+   "name": "Napstablook",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 7.5,
+    "apol": 0.0
+   },
+   "over_turns": 4,
+   "over_rate": 1.0,
+   "worst": {
+    "ellip": 4
+   },
+   "has_lang": false,
+   "system_chars": 9120,
+   "started_at": "2026-10-24 04:54:55"
+  },
+  {
+   "id": "ut_papyrus",
+   "name": "Papyrus",
+   "turns": 4,
+   "avg": {
+    "excl": 0.691,
+    "multi": 0.0,
+    "caps": 0.267,
+    "emph": 0.062,
+    "ellip": 0.086,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.25,
+   "worst": {
+    "excl": 1
+   },
+   "has_lang": false,
+   "system_chars": 9301,
+   "started_at": "2026-10-24 04:57:44"
+  },
+  {
+   "id": "ut_sans",
+   "name": "Sans",
+   "turns": 4,
+   "avg": {
+    "excl": 0.375,
+    "multi": 0.0,
+    "caps": 0.0,
+    "emph": 0.0,
+    "ellip": 0.25,
+    "apol": 0.0
+   },
+   "over_turns": 1,
+   "over_rate": 0.25,
+   "worst": {
+    "excl": 1
+   },
+   "has_lang": false,
+   "system_chars": 9305,
+   "started_at": "2026-10-24 05:00:30"
+  },
+  {
+   "id": "ut_toriel",
+   "name": "Toriel",
+   "turns": 4,
+   "avg": {
+    "excl": 0.0,
+    "multi": 0.0,
+    "caps": 0.083,
+    "emph": 0.0,
+    "ellip": 0.062,
+    "apol": 0.0
+   },
+   "over_turns": 0,
+   "over_rate": 0.0,
+   "worst": {},
+   "has_lang": false,
+   "system_chars": 7320,
+   "started_at": "2026-10-24 05:04:03"
+  },
+  {
+   "id": "ut_undyne",
+   "name": "Undyne",
+   "turns": 4,
+   "avg": {
+    "excl": 0.785,
+    "multi": 1.25,
+    "caps": 0.196,
+    "emph": 0.025,
+    "ellip": 0.056,
+    "apol": 0.0
+   },
+   "over_turns": 4,
+   "over_rate": 1.0,
+   "worst": {
+    "excl": 3,
+    "multi": 1
+   },
+   "has_lang": false,
+   "system_chars": 8178,
+   "started_at": "2026-10-24 05:06:34"
   }
  ],
- "files": 48,
- "chars": 48,
- "turns": 1752,
- "dropped_old_batches": 5,
+ "files": 125,
+ "chars": 77,
+ "turns": 1868,
+ "dropped_old_batches": 58,
  "selfcheck": {
   "rage": {
    "excl": 1.75,

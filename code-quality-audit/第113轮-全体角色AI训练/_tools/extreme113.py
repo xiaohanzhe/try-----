@@ -25,8 +25,16 @@ import re
 import sys
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-RAW = os.path.join(HERE, '..', '_evidence', 'raw30')
-OUT = os.path.join(HERE, '..', '_evidence', 'extreme113.json')
+EV = os.path.join(HERE, '..', '_evidence')
+# ★★★ 第113轮g 更正：本目录下有**两批**语料，别只看一批就下结论 ——
+#   `raw/`    = 每人 **4 轮** × **77 人**（第113轮第一遍，10-24 凌晨，早期 schema）
+#   `raw30/`  = 每人 **36 轮** × 目前 **48 人**（升级版，10-24 16:11 之后）
+#   两批都扫，同角色按 `started_at` 取最新的一条 ⇒ 覆盖 77 人且每人用最佳证据。
+RAW_DIRS = [
+    (os.path.join(EV, 'raw'), 'raw(4轮/人)'),
+    (os.path.join(EV, 'raw30'), 'raw30(36轮/人)'),
+]
+OUT = os.path.join(EV, 'extreme113.json')
 
 RE_EXCL = re.compile(r'[!！]')
 RE_MULTI = re.compile(r'([!！?？])\1+')
@@ -103,13 +111,18 @@ def pick_latest(files):
 
 
 def main():
-    files = sorted(glob.glob(os.path.join(RAW, '*.jsonl')))
+    files = []
+    for d, label in RAW_DIRS:
+        got = sorted(glob.glob(os.path.join(d, '*.jsonl')))
+        files.extend(got)
+        print('  源 %-16s %3d 个文件' % (label, len(got)))
     if not files:
-        print('!! 没有语料：%s' % RAW)
+        print('!! 没有语料：%s' % [d for d, _ in RAW_DIRS])
         return 2
+    print('合计语料文件 %d 个' % len(files))
     best, dropped = pick_latest(files)
-    print('语料文件 %d 个 → 去重后角色 %d 个（丢弃旧批次 %d 条）'
-          % (len(files), len(best), len(dropped)))
+    print('→ 去重后角色 %d 个（同角色多条只留 `started_at` 最新的一条，丢弃 %d 条）'
+          % (len(best), len(dropped)))
     for cid, old, new in dropped[:6]:
         print('   丢弃 %-16s %s（保留 %s）' % (cid, old, new))
 

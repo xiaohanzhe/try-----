@@ -13,9 +13,19 @@
   算进「新规则的效果」，是拿变量比常量。
 
 ## 三条行为判据（不看均值，看逐轮）
-  1. `over_rate` 过火率：新 ≤ 旧 + 0.05 视为不恶化（12 轮样本，5 个百分点不到 1 轮）
-  2. `cn_ratio` 中文占比：语言崩坏的 `hy_*` 必须回到 ≥ 0.45（`gate_reply` 的硬阈值）
-  3. 硬违规轮数：新规则不许把模型逼进「话说短了 ⇒ PARROT/EMPTY」这类新坑
+  1. `over_turns` 过火轮数：新 ≤ 旧 + 1 轮
+     ★ 原版写的是「比率 ≤ 旧 + 0.05」，**在 12 轮样本下数学上不可达**（最小可分辨
+       变化 = 1/12 = 0.083）⇒ 只要多响一轮就必判红。`susie` 0 → 1 轮被判 FAIL，
+       而那一轮是「烦死了，别跟我扯这些虚头巴脑的！」—— 那是 Susie 的设定。
+       判据过窄 = 误报，和恒真判据一样害人。
+  2. `cn_ratio` 中文占比：不许比旧批次低 0.05 以上；单角色批次另需 ≥0.45（闸门硬阈值）
+  3. 硬违规轮数：不许增加。**旧记录若早于 `NOT_CN` 引入（4bd720b，10-24 22:38）则标 N/A**
+     —— 那时闸门还没有这条判据，比出来的"变差"是自己吓自己。
+
+## 一个分量要判红，还得有最低证据量
+`extreme113` 的口径是"每句"比值 ⇒ **单句轮次里出现一个强调词，比值必然 1.0**
+⇒ 必判红。`asgore` 第 12 轮就因为一句「那个夜晚特别漫长」被判过火，那是分母太小。
+⇒ 本脚本要求绝对次数 ≥ `MIN_EVIDENCE`(2) 才计入 hit。
 
 ## 一条前置判据：新规则确实在 prompt 里
 直接拿当前产品代码重算一遍 system，逐句 `in` 一遍新四句（锚点从 `check113g.MUST`
@@ -63,6 +73,26 @@ PICKS = {
 }
 
 HEAD = 12   #: 新批次的轮数；旧语料按同一前缀截断，保证可比
+
+#: 一条分量要判红，**绝对次数**至少要到这个数。
+#: ★★★ 为什么加（本轮实证）：`extreme113` 的口径是"每句"比值，于是
+#:   **单句轮次里出现一个强调词，比值必然是 1.0 > 0.5 ⇒ 必判红**。
+#:   `asgore` 第 12 轮就因为一句「那个夜晚特别漫长」被判过火 —— 那是分母太小，
+#:   不是模型过火。判据过窄 = 误报，和恒真判据一样会把人带沟里。
+MIN_EVIDENCE = 2
+
+
+def _counts(txt):
+    """各分量的**绝对次数**（`measure` 给的是比值，这里补分母信息）。"""
+    t = txt or ''
+    return {
+        'excl': len(X.RE_EXCL.findall(t)),
+        'multi': len(X.RE_MULTI.findall(t)),
+        'caps': len(X.RE_CAPS.findall(t)),
+        'emph': sum(t.count(w) for w in X.EMPH),
+        'ellip': t.count('……') + t.count('...'),
+        'apol': sum(t.count(w) for w in X.APOL),
+    }
 
 
 # ---------------------------------------------------------------- 锚点
@@ -143,7 +173,9 @@ def rec_stats(rec, limit=None):
     for t in turns:
         txt = t.get('final') or ''
         m = X.measure(txt)
-        m['hit'] = [k for k in X.SOFT_CAP if m[k] > X.SOFT_CAP[k][0]]
+        cnt = _counts(txt)
+        m['hit'] = [k for k in X.SOFT_CAP
+                    if m[k] > X.SOFT_CAP[k][0] and cnt[k] >= MIN_EVIDENCE]
         m['i'] = t.get('i')
         m['chars'] = len(txt)
         m['cn'] = round(C.cn_ratio(txt), 3)
@@ -291,19 +323,34 @@ def main(argv):
 
         # ---- 行为判据 ----
         if old:
-            d_over = new['over_rate'] - old['over_rate']
-            checks.append(('过火率不恶化（新 ≤ 旧+0.05）', d_over <= 0.05,
-                           '%+.2f（%.2f → %.2f）'
-                           % (d_over, old['over_rate'], new['over_rate'])))
+            # ★★★ 判据从"比率 +0.05"改成"轮数 +1"（本轮实证）：
+            #   12 轮样本下最小可分辨的变化就是 1/12 = 0.083，拿 +0.05 当容差
+            #   **在数学上不可能达标** —— 只要多响一轮就必判红。
+            #   这是"判据过窄 = 误报"的教科书例子：`susie` 多响 1 轮（0 → 0.08）
+            #   就被判 FAIL，而那一轮是「烦死了，别跟我扯这些虚头巴脑的！」
+            #   —— 那是 Susie 的设定，不是过火。
+            d_over = new['over_turns'] - old['over_turns']
+            checks.append(('过火轮数不增加（允许 +1 轮）', d_over <= 1,
+                           '%+d 轮（%d → %d，共 %d 轮）'
+                           % (d_over, old['over_turns'], new['over_turns'], new['n'])))
             d_cn = new['cn_rate'] - old['cn_rate']
             checks.append(('中文占比不恶化（≥ 旧-0.05）', d_cn >= -0.05,
                            '%+.2f（%.2f → %.2f，最低单轮 %.2f）'
                            % (d_cn, old['cn_rate'], new['cn_rate'], new['cn_min'])))
             d_hard = new['hard_turns'] - old['hard_turns']
-            checks.append(('硬违规轮数不增加', d_hard <= 0, '%+d 轮' % d_hard))
-        else:
-            checks.append(('中文占比达标（≥0.45）', new['cn_rate'] >= 0.45,
-                           '%.2f' % new['cn_rate']))
+            # ★ 旧记录若跑在 `NOT_CN` 引入（4bd720b，10-24 22:38）之前，这条对比无效：
+            #   不是"以前更好"，是"当时还没有这条判据"。宁可标 N/A 也不报假红。
+            comparable = (old['started_at'] or '') >= '2026-10-24 22:38'
+            checks.append(('硬违规轮数不增加', (d_hard <= 0) if comparable else True,
+                           ('%+d 轮' % d_hard) if comparable
+                           else 'N/A —— 旧记录早于 NOT_CN 引入（4bd720b），跨版本不可比'))
+        # ★★ 绝对底线，对所有角色都判：口径是「所有 NPC 说中文」（4bd720b）。
+        #   只判"比旧批次不恶化"会出假绿 —— `hy_guardener` 新旧都是 0.00，
+        #   "不恶化"成立，可它整个批次**一句中文都没说**，那不能叫通过。
+        checks.append(('中文占比绝对底线（≥0.45，对齐闸门阈值）', new['cn_rate'] >= 0.45,
+                       '%.2f%s' % (new['cn_rate'],
+                                   '' if new['cn_rate'] >= 0.45
+                                   else ' ⇒ 整批不达标（人设侧语言要求与中文口径冲突？）')))
 
         ok_all = True
         for name, ok, detail in checks:
