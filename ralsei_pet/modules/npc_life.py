@@ -300,6 +300,90 @@ def trait_hint(traits):
             + '。（这是环境事实，不是台词 —— 按你自己的性子决定要不要理它，别逐条念。）')
 
 
+# ---------------------------------------------------------------- 空间认知（第113轮j）
+
+#: 场景标签的层级分隔符：`区 · 场景名`。
+PLACE_SEP = ' · '
+
+#: 区名**自己就带** `PLACE_SEP` 时用的替代连接符（第113轮j）。
+#: ★ 为什么需要它：OneShot 的区名是 `主线 · 家/塔/终局`，已经占用了中点。
+#:   再拼场景名就有两种坏结果 —— 要么三段（`主线 · 家/塔/终局 · FINALE`，
+#:   读者分不清哪层是哪层），要么干脆不拼、把末级地名丢掉（`FINALE` 没了，
+#:   模型就不知道这是终局场景）。换一个分隔符两头都能保住。
+PLACE_JOIN_ALT = ' — '
+
+#: 这些**区名**对模型没有信息量（它们是我们的容器，不是作品里的地方）⇒ 不显示。
+#: ★ 为什么用白名单式的"已知填充名"而不是"短于 2 字就不要"：
+#:   「桌面」只有 2 个字但是真地名，按长度判会把它误删。
+PLACE_FILLER = frozenset(('全部房间', 'unzoned', '未分区', 'unknown', '未知'))
+
+
+def place_container(area_name):
+    """这个**区名**是不是我们自己的容器？⇒ True 表示「不是作品里的地方」。
+
+    ★ 为什么不能只做 `area_name in PLACE_FILLER`：索引里同一类容器有两种写法，
+      带括注的那种（`未分区（废弃/调试/演示）`）精确匹配不上。第113轮j 全量普查
+      因此漏判 **26 条**，模型会在 prompt 里读到「未分区（废弃/调试/演示） · Bedroom」
+      —— 它看到的是我们的目录结构，不是作品里的地名。
+    ★ 只剥**一层**括注取主干：多剥会把 `城堡镇（废墟）` 也误判成容器。
+    """
+    s = str(area_name or '').strip()
+    if not s:
+        return False
+    if s in PLACE_FILLER:
+        return True
+    core = s.split('（', 1)[0].split('(', 1)[0].strip()
+    return bool(core) and core in PLACE_FILLER
+
+def room_word(raw):
+    """把**原作房间 id** 变成能读的词：`rm_steamworks_29` → `steamworks 29`。
+
+    ★ 为什么不直接给模型看 `rm_steamworks_29`：全小写 + `rm_` 前缀，模型读到多半会
+      照抄成"我住在 rm_steamworks_29" —— 比不给还糟。
+    ★ 为什么这样改不算编造：只做**去前缀 + 下划线转空格**，`steamworks`、`29` 都是原作写的，
+      一个词都没换。中文名拿不到时才走这条（黄魂 1251 间 / UT 没有中文名，
+      OneShot 是英文原题，Deltarune 有中文名）。
+    ★ 只取末段：`uty.rooms.rm_steamworks_29` 的前两段是**我们的登记结构**，不是作品里的名字。
+    """
+    s = str(raw or '').strip()
+    if not s:
+        return ''
+    s = s.rsplit('.', 1)[-1]
+    # `rm_` = 黄魂/UT 的房间前缀；`room_` = Deltarune 的（`room_dw_ralsei_castle_front`）
+    for _p in ('rm_', 'room_'):
+        if s.startswith(_p):
+            s = s[len(_p):]
+            break
+    return ' '.join(part for part in s.replace('_', ' ').split() if part)
+
+
+def place_hint(here='', home='', near=(), at_home=False):
+    """【你现在在哪】/【你的归属地】/【你还记得这些地方】—— 三个都空 ⇒ `''`（不产空块）。
+
+    ★ 为什么不塞进 `trait_hint`：`trait_hint` 说的是"这地方**什么样**"（安静 / 拥挤），
+      这里说的是"你**在地图的哪儿**"。前者描述气氛、后者是坐标事实；混进一句里，
+      模型会把"你在城堡镇"当成形容气氛的词去发挥。
+    ★ `at_home` 由调用方**判好再传**，不让模型自己比：`here == home` 时若还说
+      "你平常在那儿待着，累了会想回去"，模型会以为家在**别处**，说出"我该回家了"
+      —— 而它就在家。这是"同一份事实两处算"的典型坑，所以只算一次。
+    """
+    blocks = []
+    if here:
+        blocks.append('【你现在在哪】%s。' % here)
+    if home:
+        if at_home:
+            blocks.append('【你的归属地】%s —— 就是这儿，你现在就在自己待惯了的地方。' % home)
+        else:
+            blocks.append('【你的归属地】%s —— 你平常在那儿待着，累了会想回去。' % home)
+    near = [n for n in (near or ()) if n]
+    if near:
+        blocks.append('【你还记得这些地方】' + '、'.join(near) + '。')
+    if not blocks:
+        return ''
+    blocks.append('（这些是位置事实，不是台词 —— 顺着说自己要去哪、想回哪就行，别照着念。）')
+    return '\n'.join(blocks)
+
+
 # ---------------------------------------------------------------- 在场者感知（第86轮）
 
 #: 相对方位词（按"你看的方向"分档）—— **粗档**，不给精确坐标。

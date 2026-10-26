@@ -4165,6 +4165,102 @@ class RalseiPet(QMainWindow):
             pass
         return ' '.join(parts)
 
+    def _scene_label_map(self):
+        """懒加载 `assets/scenes/_index.json` → `{scene_id: (章名, 区名, 场景名)}`。
+
+        ★ 读不到 ⇒ 空表（`{}`），**不是异常**：位置块会退回 `room_word()`，
+          整条链路仍然可用 —— 这是本项目"读不到就返回空、不抛"的一贯做法。
+        ★ 为什么缓存：索引里有 2166 个场景；NPC 一分钟可能开口好几次，
+          每次都重读 400KB JSON 纯属浪费（`_scene_labels` 为 `None` 才算没读过）。
+        """
+        cached = getattr(self, '_scene_labels', None)
+        if cached is not None:
+            return cached
+        m = {}
+        try:
+            path = os.path.join(project_root, 'assets', 'scenes', '_index.json')
+            with open(path, 'r', encoding='utf-8') as fh:
+                idx = json.load(fh)
+            for _cid, ch in ((idx or {}).get('chapters') or {}).items():
+                ch_name = str((ch or {}).get('name') or '')
+                for _aid, ar in ((ch or {}).get('areas') or {}).items():
+                    area_name = str((ar or {}).get('name') or '')
+                    for scid, sc in ((ar or {}).get('scenes') or {}).items():
+                        sc = sc or {}
+                        # ★ 存 5 元组：多带 `name_derived` 与 `name_raw`。
+                        #   `name_derived=True` 的名字是我们**推导出来的**
+                        #   （区名 + 房间 id 末段），拿它当原作名会既重复又带 id。
+                        m[str(scid)] = (ch_name, area_name,
+                                        str(sc.get('name') or ''),
+                                        bool(sc.get('name_derived')),
+                                        str(sc.get('name_raw') or ''))
+        except Exception as e:
+            _log.debug('场景索引读取失败（位置块退回 room_word）: %s', e)
+            m = {}
+        self._scene_labels = m
+        return m
+
+    def _scene_place_label(self, sid):
+        """场景 id → 可读标签 `区 · 场景名（章名）`；取不到 ⇒ `''`（**不猜**）。
+
+        ★ 三级回落，每级**只从已有数据里取**：
+          ① `_index.json` 的 `name`（Deltarune 有中文名、OneShot 是英文原题）；
+          ② 没有名字 ⇒ `npc_life.room_word(sid)`（`rm_steamworks_29` → `steamworks 29`）；
+          ③ 连 id 都没有 ⇒ `''`，调用方据此**不产块**（不写"你在某个地方"这种废话）。
+        ★ 区名 == 场景名时只留一个：`城堡镇 · 城堡镇（第一章 · 黑暗世界）` 读起来像结巴。
+        """
+        sid = str(sid or '').strip()
+        if not sid:
+            return ''
+        tail = sid.rsplit('.', 1)[-1]
+        info = self._scene_label_map().get(sid) or ('', '', '', False, '')
+        ch_name, area_name, name, derived, raw = info
+        # ① `name_derived=True` ⇒ 这个名字是我们**推的**（区名 + id 末段），当无名
+        if derived:
+            name = ''
+        # ② 名字其实就是内部 id ⇒ 当无名，交给 ⑤ 用 `room_word` 转成能读的词。
+        #    ★ 两条判据缺一不可：
+        #      a) 全小写且等于末段（`bullettest` / `room_start`）——
+        #         `islower()` 是关键：OneShot 的 `Blue`/`FINALE` 是大写真名字。
+        #      b) **`room_word()` 会改动它**（`rm_dalvExit` → `dalvExit`）——
+        #         黄魂那 4 个混合大小写的 id 靠 a 判不出来，全量普查才抓到。
+        #    ★ 为什么不写 `startswith('rm_')`：那是把字面判断换个字面，
+        #      再多一种前缀就又要改。`room_word` 是 id→可读词的唯一出口，
+        #      用它的**行为差异**判，它演进时这里自动跟着走。
+        elif (name and name == tail
+              and (name.islower() or name != npc_life_mod.room_word(name))):
+            name = ''
+        # ③ 容器名（「全部房间」「未分区（废弃/调试/演示）」）不是地方名
+        #    ★ 必须走 `place_container()`：索引里带括注的写法精确匹配不上，
+        #      第113轮j 全量普查因此漏判 26 条。
+        if npc_life_mod.place_container(area_name):
+            area_name = ''
+        # ③b 场景名**自己已经带着区名**（`纸牌城堡` + `纸牌城堡·一层`）⇒ 剥掉重复前缀。
+        #    ★ 只认**完整前缀**（`startswith`）且剥完必须非空：
+        #      模糊包含会把 `原野上` 用区名 `原野` 剥成 `上` —— 地名被截断比重复更糟。
+        if area_name and name and name != area_name and name.startswith(area_name):
+            _rest = name[len(area_name):].lstrip(' ·-—_')
+            if _rest:
+                name = _rest
+        # ④ 区名**自己带**分隔符（`主线 · 家/塔/终局`）⇒ 换一个分隔符接末级名。
+        #    ★ 早先这里是「直接不拼名字」，结果 `oneshot.mainline.FINALE` 输出成
+        #      「主线 · 家/塔/终局」：重复没了，但真正的末级地名 `FINALE` 也没了 ——
+        #      修一条丢一条，模型反而更不知道自己在哪个场景。
+        if area_name and name and area_name != name:
+            sep = (npc_life_mod.PLACE_JOIN_ALT
+                   if npc_life_mod.PLACE_SEP in area_name
+                   else npc_life_mod.PLACE_SEP)
+            label = area_name + sep + name
+        else:
+            label = name or area_name
+        # ⑤ 兜底：原作房间名（`rm_steamworks_29` → `steamworks 29`）
+        if not label:
+            label = npc_life_mod.room_word(raw) or npc_life_mod.room_word(sid)
+        # ④ 章名与位置同名时不加括注（`桌面（桌面）` 像结巴）
+        if ch_name and label and ch_name != label:
+            return '%s（%s）' % (label, ch_name)
+        return label or ch_name
+
     def _npc_life_blocks(self, npc_id):
         """NPC 的「自由生活」三块提示 —— ★ **只加"他此刻能看见的"，不加"他是谁"**。
 
@@ -4178,6 +4274,32 @@ class RalseiPet(QMainWindow):
           "他叫什么、大概在哪个方位、你跟他熟到什么程度"，**怎么判断来人是谁，是 NPC 自己的事**。
         """
         out = []
+        # ---- ⓪ 空间认知（★ 第113轮j）：他得先知道"自己在哪儿" ----
+        #   ★ 为什么排在【你周围】之前：位置是**坐标事实**，"这地方什么样"是在它之上
+        #     的描述。顺序反了，模型先读到"这里很安静"再读到"你在城堡镇"，
+        #     就容易把地点当成形容气氛的词去发挥。
+        #   ★ home 走 `npc_placement.home_of()`（登记 home > 回落 scene > None），
+        #     与"回家 / 就寝"用的是**同一个出口** ⇒ 不会出现"它以为家在 A、
+        #     roam 却把它送回 B"这种同一事实两处算的分叉。
+        #   ★ 任何一步失败都只 `debug` 掉：位置块是增益，不该把整句 prompt 拖垮。
+        try:
+            sid = self._npc_scene_id()
+            home_id = None
+            try:
+                if self.npc_placement is not None:
+                    home_id = self.npc_placement.home_of(npc_id)
+            except Exception as e:
+                _log.debug('归属地解析失败（按无 home 处理）: %s', e)
+            here_txt = self._scene_place_label(sid)
+            home_txt = self._scene_place_label(home_id)
+            if here_txt or home_txt:
+                ph = npc_life_mod.place_hint(
+                    here=here_txt, home=home_txt,
+                    at_home=bool(sid and home_id and sid == home_id))
+                if ph:
+                    out.append(ph)
+        except Exception as e:
+            _log.debug('空间认知分片失败（已忽略）: %s', e)
         try:
             traits = npc_life_mod.scene_traits(self._npc_scene_text())
             hint = npc_life_mod.trait_hint(traits)
