@@ -36,6 +36,7 @@ import io
 import json
 import logging
 import os
+import re
 import sys
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -364,6 +365,42 @@ for nid in sorted(set(_targets) | set(_caps_ids)):
 
 check('C5 索引 `_personas.json` 的 chars/bytes/sha256/sha256_lf 与磁盘同源（两层登记第一层）',
       not _sync_bad, '不同步：%r' % (_sync_bad,))
+
+# ---------------------------------------------------------------- C6 语言回归
+# ★★★ 这是第113轮i 用 A/B 实测换来的**可执行判据**，不是风格规定：
+#   人设示例段的英文密度是第一预测因子（实测 hy_guardener 示例段 49% 拉丁 ⇒ 中文占比 0.00；
+#   译成中文后 3% 拉丁 ⇒ 0.79；hy_axis 52% ⇒ 0.21，译后 7% ⇒ 0.66）。
+#   所以守「示例段不许有整句英文」，等于守「角色说中文」这件事本身。
+# ★ 为什么只守这两只：同批 6 个 caps 角色的分诊读数是
+#   queen 0.92 / os_rowbot 0.68 / ot_papyrus 0.58 / ut_papyrus 0.55 —— 这几个是
+#   「中文打底 + 英文口头禅」的**健康形态**（Papyrus 的 `HUMAN!` 是原作特征）。
+#   把它们也"修干净"＝把角色改坏。**判据只守病历，不守体质。**
+_LATIN_RUN = re.compile(r"[A-Za-z][A-Za-z'\-]*\s+[A-Za-z][A-Za-z'\-]*\s+[A-Za-z][A-Za-z'\-]*")
+
+
+def _sample_section(txt):
+    """取【示例反应】段（到下一个 `---` 边界为止）。找不到返空串，不抛。"""
+    i = txt.find('【示例反应】')
+    if i < 0:
+        return ''
+    j = txt.find('\n---', i)
+    return txt[i:j if j > 0 else len(txt)]
+
+
+_resid = {}
+for _nid in ('hy_guardener', 'hy_axis'):
+    _p = persona_path(_nid)
+    _resid[_nid] = (len(_LATIN_RUN.findall(_sample_section(_read(_p))))
+                    if os.path.isfile(_p) else -1)
+
+check('C6 已中文化的两个角色，示例段**零**英文整句残留（连续 3 个英文单词就算）',
+      all(v == 0 for v in _resid.values()), '残留=%r' % (_resid,))
+
+# ★ 正控制：同一正则对 `ot_papyrus`（示例段 74% 拉丁、未中文化）必须报出 >0。
+#   没有这一条，C6 就是「找 0 个」式判据 —— 正则写错、路径读空都能让它恒绿。
+_ctl_hits = len(_LATIN_RUN.findall(_sample_section(_read(persona_path('ot_papyrus')))))
+check('C6b 正控制：同一正则对 `ot_papyrus`（未中文化）必须报出 >0（否则 C6 恒真）',
+      _ctl_hits > 0, '命中 %d 处' % _ctl_hits)
 
 # ---------------------------------------------------------------- 汇总
 print()

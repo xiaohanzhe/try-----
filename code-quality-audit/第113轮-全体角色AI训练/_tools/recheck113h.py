@@ -91,9 +91,13 @@ check('② 缺省档位仍是 human（改动没把默认值带偏）', kd.get('d
       'default=%r' % (kd.get('default'),))
 
 bl = json.loads(raw(FILES['baseline']).decode('utf-8'))
-check('② baseline.json 可解析，check113h 已进基线且记 22 条',
-      (bl.get('suites') or {}).get('check113h', {}).get('pass') == 22,
-      'pass=%r' % ((bl.get('suites') or {}).get('check113h', {}).get('pass'),))
+# ★ 判据不许回显随时相变的绝对值（第94轮教训）：这里原本写死 `== 22`，
+#   而第113轮i 给 check113h 加了 C6/C6b 两条 ⇒ 24 条 ⇒ 判据自己报红。
+#   真判据 = 「已进基线，且条数没**缩水**」（新增判据是好事，删判据才是问题）。
+_h_pass = (bl.get('suites') or {}).get('check113h', {}).get('pass')
+check('② baseline.json 可解析，check113h 已进基线且条数没缩水（≥22）',
+      isinstance(_h_pass, int) and _h_pass >= 22,
+      'pass=%r' % (_h_pass,))
 
 md = raw(FILES['evidence_md']).decode('utf-8')
 _heads = [ln for ln in md.splitlines() if ln.startswith('## ')]
