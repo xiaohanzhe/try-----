@@ -45,6 +45,14 @@ for _cid, ch in _id['chapters'].items():
 class Stub(object):
     npc_life_mod = L
 
+    #: 人读脚本专用的小人名集合（**产品走 `npc_registry.ids()`**，见 `_place_proper`）。
+    #: 只影响 `Asgore's Kitchen` 这类所有格 —— 漏一个人名不会算错地方，
+    #: 只是少一个 `'s`，人读时看得见。
+    _PROPER = frozenset(('asgore', 'toriel', 'noelle', 'susie', 'kris', 'ralsei',
+                         'clover', 'martlet', 'ceroba', 'starlo', 'dalv',
+                         'flowey', 'papyrus', 'sans', 'undyne', 'alphys',
+                         'mettaton', 'spamton', 'lancer', 'berdly'))
+
     def _scene_label_map(self):
         return IDXMAP
 
@@ -54,8 +62,16 @@ class Stub(object):
     def _activity_label(self, sid, core, hits):
         return _NS['_activity_label'](self, sid, core, hits)
 
-    def _activity_places(self, kind, chapter):
+    def _activity_places(self, kind, chapter=''):
         return _NS['_activity_places'](self, kind, chapter)
+
+    def _place_proper(self):
+        return self._PROPER
+
+    def _place_names_en(self):
+        #: 中文人名 ⇒ 英文名。产品从 `npc_registry.name_cn` 现取；人读脚本给空表
+        #: （现行数据里 2166 个场景的地名**没有一个含中文**，见 Validation_113l §5）。
+        return {}
 
 
 def main():

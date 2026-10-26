@@ -424,7 +424,8 @@ ACTIVITY_KINDS = ('eat', 'rest', 'play', 'work')
 ACTIVITY_SAY = {
     'eat': '吃点东西',
     'rest': '歇一会儿',
-    'play': '出去转转',
+    # ★ 不能写 `出去转转`：模板是「要去%s」，拼起来成「要去出去转转」（叠了"去"）。
+    'play': '转一圈',
     'work': '办点事',
 }
 
@@ -601,6 +602,122 @@ def place_type_name(word):
     return PLACE_GLOSS.get(w.lower(), w)
 
 
+#: 英文地名里**不首字母大写**的虚词（不在首词时）。
+_EN_MINOR = frozenset(('of', 'the', 'a', 'an', 'and', 'in', 'at', 'on', 'to',
+                       'for', 'by', 'with'))
+
+#: 楼层缩写 → 口语说法。
+#: ★ `2f` 不是地名的一部分，是"二层"的缩写；照抄进 prompt 模型会读成 "two f"。
+#:   只收实测出现过的几个（黄魂 `tundra inn 2f`、`steamworks 3f`）。
+_FLOOR_EN = {
+    '1f': 'First Floor', '2f': 'Second Floor', '3f': 'Third Floor',
+    '4f': 'Fourth Floor', 'b1f': 'Basement',
+    '1st': 'First Floor', '2nd': 'Second Floor', '3rd': 'Third Floor',
+}
+
+#: 已知缩写 → 正确写法。★ 只收**确定**的：`tv` 是 Deltarune 的 `TV World`，
+#: `ut`/`uty` 是作品缩写（`Undertale` / `Undertale Yellow`）。
+#: 不收 `dw`/`lw`（那是我们的区名前缀，`room_word` 已经剥掉了）。
+_ABBR_EN = {'tv': 'TV', 'ut': 'UT', 'uty': 'UTY',
+            # `truelab` 是 id 粘连词（`room_truelab_bedroom`），原作写作 True Lab。
+            'truelab': 'True Lab'}
+
+#: CJK **文字**码位段 —— 只用于"这个真名是不是中文"。
+#: ★ 刻意**不收**标点段：`0x3000-0x303F`（`、`「」）与 `0xFF00`（全角括号）
+#:   是排版符号，不是文字。把它们算成中文会让「零中文地名」的判据**恒假** ——
+#:   `Hometown · Diner、Light World · Icee Pizza` 明明全英文，却因为列表用的
+#:   `、` 被判成中文。第113轮l 实测踩过（4 条 J 判据假红）。
+_CJK_RANGES = ((0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xFAFF))
+
+
+#: **id 形态**的容器区：`ut.rooms.*` / `uty.rooms.*`。
+#: ★ 与 `PLACE_FILLER`（中文区名）分工：那个挡「全部房间」这种叫法，这个挡
+#:   `rooms` 这个 id。两者都是我们的目录结构，不是作品里的地方 —— 不挡的话
+#:   1251 间房的标签全变成 `Rooms · X`，模型会把 `Rooms` 当成真地名，
+#:   而它其实相当于"磁盘上的文件夹"。
+PLACE_CONTAINER_IDS = frozenset(('rooms',))
+
+
+def has_cjk(text):
+    """这段文本里有中日韩字符吗？⇒ True 表示"是中文名，不是英文地名"。
+
+    ★ 用途只有一个：`place_label` 决定**能不能**用真名。Deltarune 的真名是中文
+      （`理想餐厅`），和英文区名（`Hometown`）拼在一起会变成半中半英；
+      这种情形退回原作 id 末段（`diner` ⇒ `Diner`），整条标签才是同一种语言。
+    """
+    for ch in str(text or ''):
+        o = ord(ch)
+        for lo, hi in _CJK_RANGES:
+            if lo <= o <= hi:
+                return True
+    return False
+
+
+def speakable_en(text, proper=()):
+    """原作 id 末段 → **能说出口的英文地名**：`castle cafe` → `Castle Cafe`。
+
+    ★★ 为什么必须整形（用户口径「有些 room 名称并不口语化」）：
+      原作 id 是给程序看的 —— `c asgore kitchen` / `couch overworld 01` /
+      `tundra inn 2f`。直接塞进 prompt，模型会照抄成"去 c asgore kitchen"，
+      比不给还糟（与 `room_word` 里 `rm_steamworks_29` 是同一条道理）。
+    ★ 只做**四件**事，一件都不多：
+      ① 下划线转空格 ② 楼层缩写说成人话 ③ 每个词首字母大写（虚词除外）
+      ④ 人名 + 地点词 ⇒ 所有格 `Asgore's Kitchen`。
+      **不替换任何实词、不补冠词、不猜同义词** —— 名字必须还是原作那个名字。
+    ★ `proper` 是**人名集合**（小写）。只用于判首词要不要加 `'s`：
+      `asgore kitchen` 在集合里 ⇒ `Asgore's Kitchen`；`castle cafe` 不在 ⇒
+      `Castle Cafe`（给 `castle` 也加 `'s` 就成了不存在的"城堡的咖啡店"）。
+    """
+    toks = str(text or '').replace('_', ' ').split()
+    if not toks:
+        return ''
+    props = {str(p).strip().lower() for p in (proper or ()) if str(p).strip()}
+    words = []
+    for i, tok in enumerate(toks):
+        low = tok.lower()
+        if low in _FLOOR_EN:
+            words.append(_FLOOR_EN[low])
+            continue
+        if low in _ABBR_EN:
+            words.append(_ABBR_EN[low])
+            continue
+        # ★ id 里的 `_s_` 是**所有格分隔**：`noelle_s_house` = `Noelle's House`。
+        #   `_`→空格后 `s` 变成一个独立词，不合并就会拼成
+        #   `Noelle's S House`（还因为前词是人名多吃了个 `'s`）。第113轮l 实测。
+        if low == 's' and i > 0 and words:
+            # ★ 前词可能已经按人名加过 `'s`（`noelle s house` 的 `noelle`）——
+            #   再拼一次就成 `Noelle's's House`。第113轮l 实测。
+            if not words[-1].endswith("'s"):
+                words[-1] += "'s"
+            continue
+        if low in _EN_MINOR and i > 0:
+            words.append(low)
+            continue
+        w = tok[:1].upper() + tok[1:]
+        if i == 0 and len(toks) > 1 and low in props:
+            w += "'s"
+        words.append(w)
+    return ' '.join(words)
+
+
+def de_cjk_names(text, names_en=None):
+    """把地名里夹着的**中文人名**换成英文名：`托丽尔的房子` ⇒ `Toriel的房子`。
+
+    ★ 为什么只换人名、不换别的：地名里只有"人名"有**确定的**英文对应
+      （`npc_registry` 里就有 `name`），其余中文（`的房子` / `餐厅`）没有可靠译法，
+      瞎翻就是**编造地名**。换完仍含中文的，由 `place_label` 整条退回原作 id 末段。
+    ★ 长名优先：同时存在 `Ketsukane 家` 与 `Ketsukane` 时，先换长的才不会留半截。
+    """
+    s = str(text or '')
+    if not s or not names_en:
+        return s
+    for cn in sorted(names_en, key=lambda k: -len(k)):
+        en = names_en.get(cn)
+        if cn and en and cn in s:
+            s = s.replace(cn, en)
+    return s
+
+
 def trim_core_at_type(core, hits):
     """把 `core` 截到**类型词为止**：`hospital hallway` → `hospital`。
 
@@ -631,66 +748,70 @@ def trim_core_at_type(core, hits):
     return ' '.join(toks[:cut + 1])
 
 
-def place_label(area, detail, core, hits, sep=PLACE_SEP):
-    """拼一个**能说出口**的地点标签：`家乡 · diner（餐厅）`。
+def label_key(text):
+    """地名归一：只留字母数字（`Noelle's House` 与 `Noelles House` ⇒ 同一个键）。
+
+    ★ 为什么需要：id 里带不带所有格分隔符是**命名习惯**，不是两个地方。
+      不归一就会出现 `Noelles House · Noelle's House` 这种自我复读。
+    """
+    return ''.join(ch for ch in str(text or '').casefold() if ch.isalnum())
+
+
+def place_label(area, detail, core, hits, sep=PLACE_SEP, proper=(),
+                names_en=None):
+    """拼一个**能说出口的英文地名**：`Hometown · Diner`。
 
     参数
     ----
-    area   : 区名。★ 调用方一般已过滤容器名，这里**再过滤一次**（两道都便宜，
-             任何一边漏了都不会把「未分区」印给模型）。
-    detail : **已经能读的名字**（真名 / 剥过区段名的原作名，如 `希望之园 · 理想餐厅`）。
-             非空 ⇒ 直接用它，只补中文类型。
+    area   : 区名 / 区 id（**英文**）。容器名会被滤掉。
+    detail : **已经能读的原作名**。★ 只有它**不含中文**时才用 —— 中文真名
+             （`理想餐厅`）和英文区名拼在一起是半中半英，宁可退回 id 末段。
     core   : 原作 id 末段（**剥过区段名**，如 `diner` / `castle cafe`）。
-    hits   : `place_matches` 命中的类型词，`hits[0]` 决定括注的中文类型。
+    hits   : `place_matches` 命中的类型词，用于把 `core` 截到类型词为止。
     sep    : 层级分隔符。
+    proper : 人名集合（小写），用于 `Asgore's Kitchen` 这类所有格。
+    names_en : 中文人名 → 英文名的映射（`托丽尔` ⇒ `Toriel`）。★ 用户口径
+             「人名也要改成英文」—— 只换人名，不换地名里的其他中文。
 
-    ★★ 为什么需要这个函数（而不是直接用 `_scene_place_label`）：
-      对 `name_derived=True` 的场景，`_scene_place_label` 只剩区名（`家乡`），
-      而 `diner` 在 **id 末段**里 —— 端到端就输出成「你们这儿真有的地方：家乡」，
-      用户要的「那要不去 XXX 家餐厅」里那个 **XXX 家餐厅** 没了。第113轮k 实测。
+    ★★ 为什么全是英文（第113轮l 用户口径「名字用英文」）：
+      原先输出 `家乡 · diner（餐厅）` —— 中文区名 + 英文 id + 中文翻译括注，
+      三种东西挤在一行，模型念出来是"去家乡 diner 括号餐厅"。改成
+      `Hometown · Diner` 后它只有一件事要念。
+    ★ 中文类型名（`place_type_name`）**仍然有用**，但只在内部当**去重键**
+      （同一家医院的走廊/大厅/病房合成一条），不进 prompt。
     ★ 纯拼接：不查索引、不猜名字。数据从哪来是调用方的事。
     """
+    # ★ 先换人名再判"是不是中文"：`托丽尔的房子` 换完是 `Toriel的房子`，
+    #   仍含中文 ⇒ 走 core 那一支（`toriel house` ⇒ `Toriel's House`）。
+    area = de_cjk_names(area, names_en)
+    detail = de_cjk_names(detail, names_en)
+    core = de_cjk_names(core, names_en)
     area = str(area or '').strip()
-    if place_container(area):
+    if place_container(area) or area.lower() in PLACE_CONTAINER_IDS:
         area = ''
-    detail = ' '.join(str(detail or '').split())
     core = trim_core_at_type(
         strip_room_index(' '.join(str(core or '').split())), hits)
 
-    cn = ''
-    for w in (hits or ()):
-        w = str(w or '').strip()
-        if w:
-            cn = place_type_name(w)
-            break
-
-    # ★ 区名**自己带括注**（`城市（地表区）`）⇒ 换一个分隔符，否则两层括注
-    #   读起来分不清哪个是注释（与 113j「区名自带中点」同一条道理）。
-    #   ★ 只在**本函数拼**的那一支生效；`detail` 那一支的字符串是
-    #     `_scene_place_label` 产出的（仍用中点）—— 改它会动 113j 的位置块契约，
-    #     收益只是"好看一眼"，所以不动。
-    if area and ('（' in area or '(' in area):
-        sep = PLACE_JOIN_ALT
-
-    # ★ 括注去重必须**不分大小写**：`place_type_name('dock')` 查不到中文就原样返回
-    #   `dock`，而 `'dock' not in 'Dock'` 会因大小写成立 ⇒ `Dock（dock）` 自我括注。
-    #   `casefold()` 比 `lower()` 更稳（土耳其等等，虽然这里用不上）。
-    def _has(hay, needle):
-        return needle.casefold() in hay.casefold()
-
-    # ① 已经有像样的名字 ⇒ 原样用（`希望之园 · 理想餐厅` 不许再加 `（餐厅）`）
-    if detail:
-        if cn and not _has(detail, cn):
-            return '%s（%s）' % (detail, cn)
-        return detail
-
-    # ② 只剩区名 ⇒ 用原作 id 末段当细节
-    body = core
-    if body:
-        if cn and not _has(body, cn):
-            body = '%s（%s）' % (body, cn)
-        return (area + sep + body) if area else body
-    return area
+    area_en = speakable_en(area)
+    body = ''
+    if detail and not has_cjk(detail):
+        # ★ 真名也要去尾号：`Steamworks Factory 01` / `Dunes 30 House 1`
+        #   是索引里的英文真名，不 strip 就原样进 prompt（B 判据抓不到，
+        #   因为它们不是"中文"也不是"id 形态"）。第113轮l 人眼通读抓到。
+        body = speakable_en(strip_room_index(detail), proper)
+    # ★ `detail` 只是**区名的复读** ⇒ 它没有"哪一家"的信息，必须用 core 补。
+    #   实测：`ch5.garden.garden_ideal_diner` 的 base = `Garden`（场景名被判无名、
+    #   只剩区名），照用会让整条候选变成 `Garden` —— 用户要的那个 XXX 家餐厅没了。
+    if body and area_en and label_key(body) == label_key(area_en):
+        body = ''
+    if not body:
+        body = speakable_en(core, proper)
+    # ★ 区名与店名同名（`diner` 区里的 `diner`）⇒ 只留一个，否则 `Diner · Diner`
+    if area_en and body and label_key(area_en) == label_key(body):
+        return body
+    if area_en and body:
+        return area_en + sep + body
+    return body or area_en
 
 
 def strip_room_index(core):
@@ -710,12 +831,17 @@ def strip_room_index(core):
     while len(toks) > 1 and len(toks[0]) == 1 and toks[0].isalpha() \
             and toks[0].isascii():
         toks.pop(0)
+    # ★ 行首**纯数字**同理：`dark_sanctuary_1_library` 剥掉区名前缀后剩
+    #   `1 library`，那个 `1` 是场景序号，不是地名（输出成 `· 1 Library` 很怪）。
+    #   只去**行首**：`dunes 30 house` 的 `30` 在中间（是门牌），不动。
+    while len(toks) > 1 and toks[0].isdigit():
+        toks.pop(0)
     while toks and toks[-1].isdigit():
         toks.pop()
     return ' '.join(toks)
 
 
-def activity_hint(kind, places, note='', limit=4):
+def activity_hint(kind, places, note='', limit=4, cross=False):
     """【这会儿能张罗的事】—— 有人提到要去干什么，他手边**真有哪些地方**可提。
 
     参数
@@ -725,6 +851,9 @@ def activity_hint(kind, places, note='', limit=4):
              能不能去是门控的事（`world_gate` / 章归属），策略层不碰。
     note   : 可选的一句上下文（比如"他刚才问要不要一起"）。
     limit  : 最多列几个。太多模型会挑花眼，反而说不出一个具体的。
+    cross  : 候选里**混进了别处/别章**的地方 ⇒ 换一句更诚实的引导。
+             ★ 跨区域后还说"你们这儿真有的地方"就是**撒谎** —— 模型会当真，
+               把别处的餐厅说成"走两步就到"。第113轮l。
 
     返回 `''` 表示**没有可说的** —— 不产块，而不是写"附近没什么地方"这种废话。
     """
@@ -747,10 +876,16 @@ def activity_hint(kind, places, note='', limit=4):
     head = '【这会儿能张罗的事】'
     if note:
         head += str(note).strip() + ' '
-    lines = [
-        head + '要去%s，你们这儿真有的地方：%s。' % (ACTIVITY_SAY[kind], '、'.join(names)),
-        '（想接这个话就提一个，用你自己平常的说法 —— 别照着念，也别硬拉人家去。）',
-    ]
+    if cross:
+        lines = [
+            head + '要去%s，能想到的地方：%s。' % (ACTIVITY_SAY[kind], '、'.join(names)),
+            '（有的不在你这一带 —— 提的时候把"在哪儿"也说出来；还用你自己平常的说法，别照着念，别让人以为走两步就到。）',
+        ]
+    else:
+        lines = [
+            head + '要去%s，你们这儿真有的地方：%s。' % (ACTIVITY_SAY[kind], '、'.join(names)),
+            '（想接这个话就提一个，用你自己平常的说法 —— 别照着念，也别硬拉人家去。）',
+        ]
     return '\n'.join(lines)
 
 

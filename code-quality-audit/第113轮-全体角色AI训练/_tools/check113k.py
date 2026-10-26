@@ -19,14 +19,20 @@ A 抽取：产品那几个方法真的抽到了（抽不到后面全是假绿）
 B 听懂：四种活动的**意图词**；多个同时命中取**语序最先**的那个。
 C `place_matches` **正负成对**：`town_school` 要命中 `school`（`_` 在正则里不是词首，
   必须先转空格）；而 `sparks` 不含 `park`、`graveyard` 不含 `yard`（子串误报）。
-D 候选必须**能说出是哪一家**：`家乡 · diner（餐厅）`，不是光秃秃的 `家乡`。
+D 候选必须**能说出是哪一家**：`Hometown · Diner`，不是光秃秃的 `Hometown`。
   ★ 这条是第113轮k 端到端实测抓到的真错误 —— 第一版输出「真有的地方：家乡」，
     用户要的那个「XXX 家餐厅」没了。
-E 负控制：无关的话不产块 · 判不出章不产块（宁可不张罗，也不推荐别的世界）·
-  **调试区不算去处**（`ch5.system` 的三个测试房）。
+  ★★ 第113轮l 起**全英文**（用户口径「名字用英文」「人名也要改成英文」）：
+    中文类型名（`（餐厅）`）只在内部当**去重键**，不进 prompt。
+E 负控制：无关的话不产块 · **调试区不算去处**（`ch5.system` 的三个测试房）·
+  ★ 第113轮l 起「判不出章」**不再阻塞**（用户口径「可以跨区域哦」）——
+    它只影响"同章优先"和引导语（`activity_hint(cross=)`）。
 F 翻译表**不越权**：`station`/`dock` 猜不准就**不翻**（`Research Station` 不是火车站）。
+  ★ 翻译表现在**不进 prompt**，只供去重键用 —— 但规则本身照旧要守。
 G 名字整形：去房号、去行首单字母、截到类型词为止 —— 三条都**正负成对**。
-H **全量普查**：所有章 × 四种活动，标签非空、零内部标记、零章括注。
+H **全量普查**：所有章 × 四种活动，标签非空、零内部标记、零章括注、零中文。
+K 英文地名 / 口语化 / 跨区域（第113轮l）：`speakable_en` 四条规则、所有格
+  **正负成对**、容器区 `rooms`（`Rooms · Shop` 是内部结构泄漏）、中文人名换英文。
 I AST 接线：`heard` 真的从 `chat_with_ai` 一路传到 `_npc_life_blocks`，且**有闸**
   （`if heard:` 才产块）—— 这条错了就是给所有 NPC 无条件加行、等于改人设。
 J 方法级端到端（抽产品 `_npc_life_blocks` 整段挂桩跑）。
@@ -124,7 +130,8 @@ def _kw_calls(tree, funcname, kw):
 
 
 METHODS = ('_scene_place_label', '_activity_label', '_activity_chapter',
-           '_activity_places', '_npc_life_blocks')
+           '_activity_places', '_npc_life_blocks',
+           '_place_proper', '_place_names_en')
 _NS = {'npc_life_mod': L, '_log': logging.getLogger('check113k')}
 _MISSING = []
 for _n in METHODS:
@@ -159,6 +166,14 @@ class _Place(object):
         return self._home
 
 
+#: 桩用的人名集合 / 中文→英文映射。
+#: ★ 只放**判定需要**的几个，不抄全表 —— 这里测的是"有没有按人名加 `'s`"和
+#:   "中文人名有没有被换掉"，不是测 registry 内容。
+_PROPER = frozenset(('asgore', 'toriel', 'susie', 'kris', 'ralsei', 'clover',
+                     'martlet', 'ceroba'))
+_NAMES_EN = {'托丽尔': 'Toriel', '艾斯戈尔': 'Asgore', '苏西': 'Susie'}
+
+
 class _Stub(object):
     """桩：只提供产品代码真正用到的那几个出口。
 
@@ -174,6 +189,12 @@ class _Stub(object):
 
     def _scene_label_map(self):
         return _IDXMAP
+
+    def _place_proper(self):
+        return _PROPER
+
+    def _place_names_en(self):
+        return _NAMES_EN
 
     def _scene_place_label(self, sid, with_chapter=True):
         return _NS['_scene_place_label'](self, sid, with_chapter=with_chapter)
@@ -209,13 +230,6 @@ def _blocks(stub, heard=None):
 
 def _places(stub, kind, chap):
     return stub._activity_places(kind, chap)
-
-
-def _type_of(lbl):
-    """从 `家乡 · diner（餐厅）` 里取括注的类型名（没有括注 ⇒ ''）。"""
-    if '（' in lbl and lbl.endswith('）'):
-        return lbl.rsplit('（', 1)[1][:-1]
-    return ''
 
 
 # ================================================================ A 抽取
@@ -303,19 +317,31 @@ _st = _Stub('ch1.hometown.town_square')
 _eat = _places(_st, 'eat', 'ch1')
 _eat_lbl = [lbl for _s, lbl in _eat]
 check('D1 ch1 吃饭候选**点名到店**（不是一个光秃秃的区名）',
-      bool(_eat_lbl) and all(lbl != '家乡' for lbl in _eat_lbl), '%r' % (_eat_lbl,))
-check('D2 候选带**中文类型名**（餐厅/餐馆/咖啡店/厨房/披萨店）',
-      bool(_eat_lbl) and all(_type_of(lbl) for lbl in _eat_lbl), '%r' % (_eat_lbl,))
+      bool(_eat_lbl) and all(lbl != 'Hometown' for lbl in _eat_lbl),
+      '%r' % (_eat_lbl[:3],))
+check('D2 候选**零中文**（口径「名字用英文」「人名也要改成英文」）',
+      bool(_eat_lbl) and not any(L.has_cjk(lbl) for lbl in _eat_lbl),
+      '%r' % ([l for l in _eat_lbl if L.has_cjk(l)][:2],))
+check('D2b 候选是**首字母大写**的地名（不是全小写 id 形态 `diner`）',
+      bool(_eat_lbl)
+      and all(lbl.split(L.PLACE_SEP)[-1][:1].isupper() for lbl in _eat_lbl),
+      '%r' % (_eat_lbl[:3],))
 check('D3 候选**不带章括注**（四项各带一遍「（第一章…）」纯属噪音）',
-      all('（第' not in lbl and '章' not in _type_of(lbl) for lbl in _eat_lbl),
-      '%r' % (_eat_lbl,))
+      all('（第' not in lbl for lbl in _eat_lbl), '%r' % (_eat_lbl[:3],))
 _work = _places(_st, 'work', 'ch1')
 _work_lbl = [lbl for _s, lbl in _work]
-_types = [_type_of(lbl) for lbl in _work_lbl]
-check('D4 去重不变量：**同一个区里不许有两家同类型的店**',
-      len(set(_types)) == len(_types), '%r' % (_work_lbl,))
-check('D5 去重**不许过度**：不同类别必须都留着（医院/图书馆/学校）',
-      len(set(_types)) >= 2, '%r' % (_types,))
+# ★ 断行为：`activity_hint` 拿到**重复的名字**时只能列一次。
+#   （不直接数 `_work`，因为跨区域后 `ch1` 与 `ch2` 的 `Hometown · Hospital`
+#   是两家店、两个去重键 —— 候选里两条都在，是 hint 那一层合并的。）
+_dup = [('ch1.hometown.hospital_lobby', 'Hometown · Hospital'),
+        ('ch1.hometown.hospital_hallway', 'Hometown · Hospital'),
+        ('ch1.hometown.library', 'Hometown · Library')]
+_dup_out = L.activity_hint('work', _dup)
+check('D4 去重不变量：同一个名字**只列一次**（走廊/大厅合成一条）',
+      _dup_out.count('Hometown · Hospital') == 1, repr(_dup_out))
+check('D5 去重**不许过度**：不同类别必须都留着（医院 ≠ 图书馆）',
+      'Hometown · Library' in _dup_out and 'Hometown · Hospital' in _dup_out,
+      repr(_dup_out))
 # 正/负成对：`with_chapter` 开关必须真的有效，且默认值不许动 113j 的位置块
 _lbl_def = _st._scene_place_label('ch1.hometown.diner')
 _lbl_no = _st._scene_place_label('ch1.hometown.diner', with_chapter=False)
@@ -332,17 +358,19 @@ check('E2 无关的话（`今天天气不错`）⇒ 不产块',
       '【这会儿能张罗的事】' not in _blocks(_st, heard='今天天气不错'))
 _st_noch = _Stub(None, None)
 check('E3 判不出章 ⇒ `_activity_chapter` 返空串', _st_noch._activity_chapter('ralsei') == '')
-check('E4 判不出章 ⇒ 不产块（宁可不张罗，也不推荐别的世界）',
-      '【这会儿能张罗的事】' not in _blocks(_st_noch, heard='咱吃饭去吧'))
+_e4 = _blocks(_st_noch, heard='咱吃饭去吧')
+check('E4 判不出章**不再阻塞**（跨区域）：照样能张罗，但要说清"有的在别处"',
+      ('【这会儿能张罗的事】' in _e4) and ('有的不在你这一带' in _e4),
+      repr([x for x in _e4.split('\n') if '这会儿能张罗' in x][:1]))
 _dbg = []
 for _k in L.ACTIVITY_KINDS:
     for _sid, _lbl in _places(_st, _k, 'ch5'):
         if _sid.split('.')[1] in L.PLACE_SKIP_AREA_IDS or '系统与演出' in _lbl:
             _dbg.append((_k, _sid))
 check('E5 调试区（`ch5.system` 三个测试房）**不算去处**', not _dbg, '%r' % (_dbg[:3],))
-check('E5b 负控制：ch5 **真地方**还在（证明 E5 不是把整章砍了）',
-      any('希望之园' in lbl or '家乡' in lbl
-          for _k in L.ACTIVITY_KINDS for _s, lbl in _places(_st, _k, 'ch5')))
+check('E5b 负控制：ch5 **自己的地方**还在（证明 E5 不是把整章砍了）',
+      any(_s.startswith('ch5.') for _k in L.ACTIVITY_KINDS
+          for _s, _lbl in _places(_st, _k, 'ch5')))
 
 # ================================================================ F 翻译表
 print()
@@ -387,25 +415,48 @@ check('G3c 负控制：命中不到类型词 ⇒ **原样返回**，不猜',
 print()
 print('--- H 全量普查（所有章 × 四种活动）---')
 _chaps = sorted({s.split('.')[0] for s in _IDXMAP})
+#: 裸的**通用类型词**：只有"这是一家餐厅"、看不出在哪儿的标签。
+#: ★ 为什么不是"所有不带 ` · ` 的都算裸"：`Flower Castle` / `Green Room` / `Core`
+#:   本身就是完整地名（区名 == 场景名时 `_scene_place_label` 只留一个），
+#:   不带分隔符也说得出在哪儿。第113轮l 实测：按"必须含分隔符"判会误伤它们。
+_BARE_TYPES = {v.lower() for v in L.PLACE_GLOSS.values()} | set(L.PLACE_GLOSS)
 _bad = []
 _empt = []
+_noloc = []
 for _c in _chaps:
     for _k in L.ACTIVITY_KINDS:
         for _sid, _lbl in _places(_st, _k, _c):
             if not _lbl:
                 _empt.append((_c, _k, _sid))
                 continue
-            if not _sid.startswith(_c + '.'):
-                _bad.append((_c, _k, _sid, 'CROSS_CHAPTER'))
-            for _tok in ('（第', 'rm_', 'dw ', 'lw ', 'room_', '全部房间', '未分区', 'None'):
+            # ★ 跨区域是**要的**（用户口径「可以跨区域哦」）⇒ 不再判"跨章=错"，
+            #   改判"跨章不许只给一个通用类型词"：`Diner` 在 10 个世界里都有。
+            if not _sid.startswith(_c + '.') and _lbl.strip().lower() in _BARE_TYPES:
+                _noloc.append((_c, _k, _sid, _lbl))
+            for _tok in ('（第', 'rm ', 'dw ', 'lw ', 'room_', 'Rooms',
+                         '全部房间', '未分区', 'None', '（餐厅', '（商店'):
                 if _tok in _lbl:
                     _bad.append((_c, _k, _sid, _tok))
 check('H1 零空标签', not _empt, '%r' % (_empt[:3],))
-check('H2 零跨章污染（推荐别的世界是硬错）', not any(b[3] == 'CROSS_CHAPTER' for b in _bad))
-check('H3 零内部标记 / 零章括注', not [b for b in _bad if b[3] != 'CROSS_CHAPTER'],
-      '%r' % ([b for b in _bad if b[3] != 'CROSS_CHAPTER'][:3],))
-check('H4 四种活动**至少有一种**在 ch1 有候选（原作里家乡有 diner/学校/图书馆）',
-      sum(1 for _k in L.ACTIVITY_KINDS if _places(_st, _k, 'ch1')) >= 2)
+check('H2 跨区域**不许出现裸的通用类型词**（`Diner` / `Shop` 看不出在哪个世界）',
+      not _noloc, '%r' % (_noloc[:3],))
+check('H2b 正控制：无区名时 `place_label` **确实**只给裸名（证明 H2 有牙）',
+      L.place_label('', '', 'diner', ['diner']).strip().lower() in _BARE_TYPES,
+      repr(L.place_label('', '', 'diner', ['diner'])))
+check('H3 零内部标记 / 零容器名 / 零章括注 / 零中文类型括注', not _bad,
+      '%r' % (_bad[:3],))
+check('H4 四种活动在 ch1 **都**有候选（跨区域后不该再出现"一种都没有"）',
+      all(_places(_st, _k, 'ch1') for _k in L.ACTIVITY_KINDS))
+# ★ 断行为：候选里**不许有同名项**。跨章同名店（`ch1`/`ch2`/`ch3` 的
+#   `hometown.diner`）是同一家店的不同章节版本，留着会占满 `limit=4` 的名额，
+#   模型看到两个 `Hometown · Diner` 只会犹豫。
+_duplbl = []
+for _k in L.ACTIVITY_KINDS:
+    _ls = [_l for _s, _l in _places(_st, _k, 'ch1')]
+    if len(set(_ls)) != len(_ls):
+        _duplbl.append(_k)
+check('H5 同一种活动里**同一个名字只出现一次**（跨章同名店合成一条）',
+      not _duplbl, '%r' % (_duplbl,))
 
 # ================================================================ I AST 接线
 print()
@@ -452,21 +503,69 @@ print('--- J 方法级端到端（抽产品整段挂桩跑）---')
 for _line, _want in _CASES:
     _out = _blocks(_st, heard=_line)
     _has = '【这会儿能张罗的事】' in _out
-    if _want == 'eat':
-        check('J `%s` ⇒ 产块且点名"餐厅"' % _line,
-              _has and '餐厅' in _out,
-              repr([x for x in _out.split('\n') if '这会儿能张罗' in x][:1]))
-    elif _want == 'work':
-        check('J `%s` ⇒ 产块且点名具体地方' % _line,
-              _has and '（' in _out,
-              repr([x for x in _out.split('\n') if '这会儿能张罗' in x][:1]))
-    else:
-        # ch1 家乡真没有旅店/游乐场 —— **静默是对的**，编一个才是错
-        check('J `%s`（ch1 原作里真没有这类地方）⇒ **不产块**' % _line, not _has)
-check('J5 块里明确"真有的地方"（防模型以为可以编）',
-      '真有的地方' in _blocks(_st, heard='咱吃饭去吧'))
-check('J6 块里明确"别照着念"（防固定例句被逐字搬走 —— 人设失真的头号来源）',
-      '别照着念' in _blocks(_st, heard='咱吃饭去吧'))
+    check('J `%s` ⇒ 产块' % _line, _has,
+          repr([x for x in _out.split('\n') if '这会儿能张罗' in x][:1]))
+    if _has:
+        _names_txt = _out.split('：')[-1].split('。')[0]
+        check('J `%s` ⇒ 点名到具体地方（含 ` · `）且**零中文**' % _line,
+              (' · ' in _names_txt) and not L.has_cjk(_names_txt),
+              repr(_names_txt))
+# ★ 断**机制**不绑数据：同一批地方，`cross` 开关必须真的换引导语。
+#   （不判"ch1 的块里一定有某句话" —— 那会随素材增减而红，是绑数据。）
+_same = [('ch1.hometown.a', 'Hometown · Diner'),
+         ('ch1.hometown.b', 'Hometown · Cafe')]
+_mixed = _same + [('ch2.cyber_city.c', 'Cyber City · Pizza')]
+check('J5 `cross` 开关**真的**改文案（同章说"真有的地方"，混章说"有的在别处"）',
+      ('真有的地方' in L.activity_hint('eat', _same, cross=False))
+      and ('有的不在你这一带' in L.activity_hint('eat', _mixed, cross=True))
+      and L.activity_hint('eat', _same, cross=False)
+      != L.activity_hint('eat', _mixed, cross=True))
+check('J5b 负控制：不传 `cross` 时**不许**冒出"有的不在你这一带"（默认仍是同章口径）',
+      '有的不在你这一带' not in L.activity_hint('eat', _same))
+check('J6 两种文案都明确"别照着念"（固定例句被逐字搬走 = 人设失真头号来源）',
+      ('别照着念' in L.activity_hint('eat', _same))
+      and ('别照着念' in L.activity_hint('eat', _mixed, cross=True)))
+
+# ================================================================ K 英文 / 口语化 / 跨区域
+print()
+print('--- K 英文地名 · 口语化 · 跨区域（第113轮l 用户口径）---')
+check('K1 口语化：`castle cafe` ⇒ `Castle Cafe`（逐词 Title Case）',
+      L.speakable_en('castle cafe') == 'Castle Cafe',
+      repr(L.speakable_en('castle cafe')))
+check('K2 所有格：**人名词** + 地点词 ⇒ `Asgore\'s Kitchen`',
+      L.speakable_en('asgore kitchen', _PROPER) == "Asgore's Kitchen",
+      repr(L.speakable_en('asgore kitchen', _PROPER)))
+check('K2b 负控制：`castle` 不在人名表 ⇒ **不许**加 `\'s`（会编出不存在的店）',
+      L.speakable_en('castle cafe', _PROPER) == 'Castle Cafe',
+      repr(L.speakable_en('castle cafe', _PROPER)))
+check('K3 楼层缩写说成人话：`tundra inn 2f` ⇒ `Tundra Inn Second Floor`',
+      L.speakable_en('tundra inn 2f') == 'Tundra Inn Second Floor',
+      repr(L.speakable_en('tundra inn 2f')))
+check('K4 虚词不大写：`hall of fame` ⇒ `Hall of Fame`',
+      L.speakable_en('hall of fame') == 'Hall of Fame',
+      repr(L.speakable_en('hall of fame')))
+check('K5 中文人名换英文：`托丽尔的房子` ⇒ `Toriel的房子`',
+      L.de_cjk_names('托丽尔的房子', _NAMES_EN) == 'Toriel的房子',
+      repr(L.de_cjk_names('托丽尔的房子', _NAMES_EN)))
+check('K5b 负控制：没有映射 ⇒ **原样返回**（不许瞎翻任何中文）',
+      L.de_cjk_names('托丽尔的房子') == '托丽尔的房子')
+check('K6 容器区 `rooms` 不许当地名（`ut.rooms.*` ⇒ 作品缩写，不是 `Rooms · X`）',
+      not [1 for _k in L.ACTIVITY_KINDS for _s, _l in _places(_st, _k, 'ut')
+           if _l.startswith('Rooms')])
+check('K6b 负控制：`ut.rooms.*` 的候选**还在**（缩写替换不是把整区砍了）',
+      any(_s.startswith('ut.rooms.') for _k in L.ACTIVITY_KINDS
+          for _s, _l in _places(_st, _k, 'ut')))
+check('K7 真跨区域了（ch1 的 play 候选里**必须有**非 ch1 的）',
+      any(not _s.startswith('ch1.') for _s, _l in _places(_st, 'play', 'ch1')))
+check('K8 跨区域**同章排前面**（有同章的就必须排第一）',
+      all(_places(_st, _k, 'ch1')[0][0].startswith('ch1.')
+          for _k in L.ACTIVITY_KINDS
+          if any(_s.startswith('ch1.') for _s, _l in _places(_st, _k, 'ch1'))))
+_all_lbl = [_l for _c in _chaps for _k in L.ACTIVITY_KINDS
+            for _s, _l in _places(_st, _k, _c)]
+check('K9 全量普查里**零中文地名**（含人名）',
+      bool(_all_lbl) and not any(L.has_cjk(_l) for _l in _all_lbl),
+      '%r' % ([_l for _l in _all_lbl if L.has_cjk(_l)][:3],))
 
 # ================================================================ 汇总
 print()

@@ -103,8 +103,12 @@ for name, path in (('npc_life.py', LIFE_P), ('main.py', MAIN_P)):
        '%d/%d' % (txt.count('\r\n'), txt.count('\n')))
 ok('main.py 末行无换行（既有形态，改动没顺手"修"掉它）',
    not MAIN.endswith('\n'))
-ok('npc_life.py 行数 = 1243', LIFE.count('\n') == 1243, str(LIFE.count('\n')))
-ok('main.py 行数 = 16797', MAIN.count('\n') == 16797, str(MAIN.count('\n')))
+# ★ 只判**下界**：k 轮快照是 1243，l 轮起继续长；缩水才是回滚事故的信号
+#   （见仓库铁律「工作区会被回滚而 git 不报错」）。`== 1243` 会随演进恒红。
+ok('npc_life.py 行数 >= 1243（k 轮快照；只增不减）',
+   LIFE.count('\n') >= 1243, str(LIFE.count('\n')))
+ok('main.py 行数 >= 16797（k 轮快照；只增不减）',
+   MAIN.count('\n') >= 16797, str(MAIN.count('\n')))
 
 # ================================================================ ④ 恒真判据
 print()
@@ -136,9 +140,16 @@ _doc_tokens = ('家乡 · diner（餐厅）', 'PLACE_SKIP_AREA_IDS', 'trim_core_
 for t in _doc_tokens:
     ok('文档提到 `%s`' % t, t in DOC)
 # 文档里的数字 → 对应来源
-ok('文档「60 条」== check113k 实跑 PASS 数',
-   '60' in DOC and os.path.isfile(OUT_P) and 'PASS=60 FAIL=0' in read(OUT_P),
-   (read(OUT_P)[-60:] if os.path.isfile(OUT_P) else 'MISSING _out/check113k.txt'))
+# ★ 判据数**只许增加**：l 轮把 60 增到 79。改成"实跑数 >= 文档记的 60" ——
+#   盯的是"有没有被砍"（砍判据 = 悄悄放宽），不是"有没有加"。
+_suites_pass = -1
+if os.path.isfile(OUT_P):
+    for _ln in read(OUT_P).splitlines():
+        if _ln.startswith('合计：PASS='):
+            _suites_pass = int(_ln.split('PASS=')[1].split()[0])
+            break
+ok('文档「60 条」（k 轮快照）<= check113k 实跑 PASS 数',
+   '60' in DOC and _suites_pass >= 60, '实得 %r' % (_suites_pass,))
 # ★ 套件 id **不全是 `check*` 前缀**（`s7_event_speech` / `round8_dialogue` 等），
 #   第一版按 `'id': 'check` 数得到 49 ⇒ **判据过窄 = 误报**。
 #   第二版按 `'id':` 数得到 110（文件里别处也有同名键）⇒ 还是文本扫的问题。
@@ -157,9 +168,9 @@ ok('文档「2166 场景」== 索引实际条数',
    sum(len(a.get('scenes') or {})
        for c in json.loads(read(IDX_P))['chapters'].values()
        for a in (c.get('areas') or {}).values()) == 2166)
-ok('文档「1243 / 16797 行」与实际一致',
-   '1243' in DOC and '16797' in DOC and LIFE.count('\n') == 1243
-   and MAIN.count('\n') == 16797)
+ok('文档「1243 / 16797 行」是 k 轮快照且实际只增不减',
+   '1243' in DOC and '16797' in DOC and LIFE.count('\n') >= 1243
+   and MAIN.count('\n') >= 16797)
 # 关键样本仍在
 _idx = json.loads(read(IDX_P))
 # ★ 索引里的键是**完整 sid**（`ch1.hometown.diner`），不是末段 ——

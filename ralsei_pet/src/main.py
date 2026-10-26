@@ -4212,9 +4212,9 @@ class RalseiPet(QMainWindow):
           ② 没有名字 ⇒ `npc_life.room_word(sid)`（`rm_steamworks_29` → `steamworks 29`）；
           ③ 连 id 都没有 ⇒ `''`，调用方据此**不产块**（不写"你在某个地方"这种废话）。
         ★ 区名 == 场景名时只留一个：`城堡镇 · 城堡镇（第一章 · 黑暗世界）` 读起来像结巴。
-        ★ `with_chapter=False` ⇒ **不拼章名括注**。给活动候选用的：候选**本来就被
-          `_activity_places` 限定在同一章里**，四项各带一遍「（第一章 · 黑暗世界）」
-          纯属噪音，还把「那要不去 XXX 家餐厅」里的 XXX 挤没了。
+        ★ `with_chapter=False` ⇒ **不拼章名括注**。给活动候选用的：候选可能跨章
+          （第113轮l 起），四项各带一遍「（第一章 · 黑暗世界）」纯属噪音，还把
+          「那要不去 XXX 家餐厅」里的 XXX 挤没了 —— 跨区域靠**区名前缀**说明在哪儿。
           默认 True ⇒ 位置块（第113轮j）的输出**逐字不变**。
         """
         sid = str(sid or '').strip()
@@ -4246,7 +4246,11 @@ class RalseiPet(QMainWindow):
         # ③b 场景名**自己已经带着区名**（`纸牌城堡` + `纸牌城堡·一层`）⇒ 剥掉重复前缀。
         #    ★ 只认**完整前缀**（`startswith`）且剥完必须非空：
         #      模糊包含会把 `原野上` 用区名 `原野` 剥成 `上` —— 地名被截断比重复更糟。
-        if area_name and name and name != area_name and name.startswith(area_name):
+        # ★ 大小写不敏感：英文名常是 `cyber_field_arcade`（小写 id）配区名
+        #   `Cyber Field`，`startswith` 区分大小写就剥不掉，于是输出
+        #   `Cyber Field · Cyber Field Arcade`。第113轮l 实测（人眼读出来的）。
+        if (area_name and name and name.casefold() != area_name.casefold()
+                and name.casefold().startswith(area_name.casefold())):
             _rest = name[len(area_name):].lstrip(' ·-—_')
             if _rest:
                 name = _rest
@@ -4276,8 +4280,9 @@ class RalseiPet(QMainWindow):
 
         ★ 先看当前场景，再看归属地：跨作品角色（`_placement.json` 里 `scene=null`）
           不在任何场景里，但它登记的 `home` 有章。
-        ★ 都判不出 ⇒ `''`，调用方据此**不产块**。宁可这次不张罗，
-          也不能推荐另一个世界的餐厅 —— 那是硬错，模型会当真。
+        ★ 都判不出 ⇒ `''`。★ 第113轮l 起它**不再是阻塞条件**（用户口径
+          「可以跨区域哦」）：`''` 只表示"没有同章优先的偏好"，候选照样从全库取，
+          但块里会换成"有的不在你这一带"的说法（见 `activity_hint(cross=)`）。
         """
         sid = None
         try:
@@ -4294,100 +4299,201 @@ class RalseiPet(QMainWindow):
             return ''
         return sid.split('.')[0]
 
-    def _activity_places(self, kind, chapter):
-        """`chapter` 里「能 kind 这件事」的地点 ⇒ `[(scene_id, 可读名), ...]`。
+    def _activity_places(self, kind, chapter=''):
+        """全库「能 kind 这件事」的地点 ⇒ `[(scene_id, 英文地名), ...]`。
 
-        ★★ 三条硬约束，每条都是第113轮k 实测踩出来的：
-          1. **只在本章里找** —— 跨作品推荐是硬错。
-          2. **必须剥掉区段名**再匹配：`ch5` 整个区叫 `garden`、房间 id 全是
+        ★★ 第113轮l 起**跨区域**（用户口径「可以跨区域哦」）：
+          原先只在本章找，`ch1` 的 rest / play 一个候选都没有（原作里家乡没有
+          公园 / 旅店这类房），模型就永远张不开这个口。现在扫全库，**同章排前面**。
+        ★ 四条硬约束（每条都是第113轮k 实测踩出来的）：
+          1. **必须剥掉区段名**再匹配：`ch5` 整个区叫 `garden`、房间 id 全是
              `dw_garden_*`，不剥的话 106 间房会全部判成"公园"。
-          3. **只认强信号**（房间名 / 剥过前缀的原作名），**不用区名** ——
+          2. **只认强信号**（房间名 / 剥过前缀的原作名），**不用区名** ——
              否则「这个区叫希望之园」会被读成「每间房都是公园」。
-          4. **系统/演出/调试区一律不算去处**（`PLACE_SKIP_AREA_IDS`）——
+          3. **系统 / 演出 / 调试区一律不算去处**（`PLACE_SKIP_AREA_IDS`）——
              `ch5.system` 是三个调试房，推荐它等于把人送进测试关。
-        ★ 缓存：2166 个场景，每次说话都全扫一遍太贵。
+          4. **去重键必须带章**：`(章, 区 id, 中文类型名)`。跨区域后 `ch1` 的
+             diner 和 `ch3` 的 diner 是**两家店**，键里不带章会被合成一条，
+             跨区域的收益直接归零。
+        ★ 缓存只存**章无关**的那一份（按 sid 排好），同章优先在返回时再做 ——
+          ⚠️ 不能把"按章排好的列表"塞进 `(kind,)` 键的缓存：第二个章会拿到
+          第一个章的排序，跨章调用时表现为"同章优先失效"，而且**不报错**。
         """
-        if not chapter:
+        if kind not in npc_life_mod.ACTIVITY_SAY:
             return []
-        key = (kind, chapter)
+        key = (kind,)
         cache = getattr(self, '_act_places_cache', None)
         if cache is None:
             cache = {}
             self._act_places_cache = cache
-        if key in cache:
-            return cache[key]
+        out = cache.get(key)
+        if out is None:
+            rows = []       # (sid, 标签, 去重键)
+            try:
+                for sid, info in self._scene_label_map().items():
+                    sid_s = str(sid)
+                    _ch, _area, _name, _derived, _raw = info
+                    parts = sid_s.split('.')
+                    area_id = parts[1] if len(parts) >= 3 else ''
+                    # ★ 系统 / 演出 / 调试区不是"去处"（位置标签里照旧显示）
+                    if area_id in npc_life_mod.PLACE_SKIP_AREA_IDS:
+                        continue
+                    core = npc_life_mod.room_word(_raw)
+                    if not core or core == area_id:
+                        # ★ `name_raw` 只存了**区名**（或空）时不能就这么用：
+                        #   实测 `ch5.garden.garden_ideal_diner` 的 name_raw = `garden`
+                        #   ⇒ 整条候选变成 `Garden`，"哪一家"没了。用 sid 末段兜底。
+                        core = npc_life_mod.room_word(sid_s)
+                    # ★★ 区名前缀要比**两种写法**：`area_id` 是下划线形态
+                    #   （`cyber_field`），而 `core` 来自 `room_word(sid 末段)` ——
+                    #   `room_word` 已经把 `_` 转成空格（`cyber field arcade`）。
+                    #   只比一种就剥不掉 ⇒ 输出 `Cyber Field · Cyber Field Arcade`。
+                    _cut = -1
+                    for _ak in (area_id, area_id.replace('_', ' ')):
+                        for _sep in (' ', '_'):
+                            if _ak and core.startswith(_ak + _sep):
+                                _cut = len(_ak) + 1
+                                break
+                        if _cut > 0:
+                            break
+                    if _cut > 0:
+                        core = core[_cut:]
+                    # 强信号文本：剥过前缀 / 区段名的原作名 +（非推导时）场景名
+                    text = '%s %s' % (core, '' if _derived else _name)
+                    hits = npc_life_mod.place_matches(text, kind)
+                    if not hits:
+                        continue
+                    lbl = self._activity_label(sid_s, core, hits)
+                    if not lbl:
+                        continue
+                    rows.append((sid_s, lbl,
+                                 (parts[0], area_id,
+                                  npc_life_mod.place_type_name(hits[0]))))
+            except Exception as e:
+                _log.debug('活动候选筛选失败（按无候选处理）: %s', e)
+                rows = []
 
-        rows = []       # (sid, 标签, 去重键)
-        try:
-            for sid, info in self._scene_label_map().items():
-                sid_s = str(sid)
-                if not sid_s.startswith(chapter + '.'):
+            rows.sort(key=lambda t: t[0])    # 确定性顺序 ⇒ 同一句话每次同样结果
+            out = []
+            seen = set()
+            for sid_s, lbl, dkey in rows:
+                if dkey in seen:
                     continue
-                _ch, _area, _name, _derived, _raw = info
-                parts = sid_s.split('.')
-                area_id = parts[1] if len(parts) >= 3 else ''
-                # ★ 系统/演出/调试区不是"去处"（位置标签里照旧显示，人得知道自己在哪）
-                if area_id in npc_life_mod.PLACE_SKIP_AREA_IDS:
+                seen.add(dkey)
+                out.append((sid_s, lbl))
+            # ★ 再按**标签**去一次：`ch1`/`ch2`/`ch3` 的 `hometown.diner` 是同一家店
+            #   的不同章节版本，标签一模一样（实测 `ch1 eat` 27 条里 Diner 出现 3 次）。
+            #   留着会占满 `limit=4` 的名额，模型看到两个同名项只会犹豫。
+            #   去重键 `(章, 区, 类型)` 那一层管的是"不同章的不同店"，这一层管的是
+            #   "**给模型看的时候，同名就是同一个地方**"。
+            _seen_lbl = set()
+            _dedup = []
+            for sid_s, lbl in out:
+                if lbl in _seen_lbl:
                     continue
-                core = npc_life_mod.room_word(_raw)
-                if area_id and core.startswith(area_id + ' '):
-                    core = core[len(area_id) + 1:]
-                # 强信号文本：剥过前缀/区段名的原作名 +（非推导时）场景名
-                text = '%s %s' % (core, '' if _derived else _name)
-                hits = npc_life_mod.place_matches(text, kind)
-                if not hits:
-                    continue
-                lbl = self._activity_label(sid_s, core, hits)
-                if not lbl:
-                    continue
-                # ★ 去重键 =（区名, 中文类型名）。同一家医院的走廊/大厅/病房
-                #   合成一条；不同区或不同类型**不合并**（餐馆 ≠ 咖啡店）。
-                area_k = '' if npc_life_mod.place_container(_area) else str(_area or '')
-                rows.append((sid_s, lbl, (area_k, npc_life_mod.place_type_name(hits[0]))))
-        except Exception as e:
-            _log.debug('活动候选筛选失败（按无候选处理）: %s', e)
-            rows = []
-
-        rows.sort(key=lambda t: t[0])    # 确定性顺序 ⇒ 同一句话每次同样结果
-        out = []
-        seen = set()
-        for sid_s, lbl, dkey in rows:
-            if dkey in seen:
-                continue
-            seen.add(dkey)
-            out.append((sid_s, lbl))
-        cache[key] = out
-        return out
+                _seen_lbl.add(lbl)
+                _dedup.append((sid_s, lbl))
+            out = _dedup
+            cache[key] = out
+        if chapter:
+            # 同章优先；`sorted` 稳定 ⇒ 同章内部仍是 sid 序
+            return sorted(out, key=lambda p: 0 if p[0].startswith(chapter + '.') else 1)
+        return list(out)
 
     def _activity_label(self, sid, core, hits):
-        """活动候选的**可说出口的名字**：`家乡 · diner（餐厅）`（**不带章括注**）。
+        """活动候选的**能说出口的英文地名**：`Hometown · Diner`（**不带章括注**）。
 
         ★ 与 `_scene_place_label` 的分工：
-          · 它给的是「**你在哪**」——只有区名也算够用（模型知道自己在"家乡"）；
-          · 这里要的是「**能去哪一家**」——必须说出是哪一家（餐厅 / 咖啡店 / 图书馆），
-            否则模型只能答「那要不去家乡」，答不出用户要的「那要不去 XXX 家餐厅」。
-        ★ 细节词优先用真名（`希望之园 · 理想餐厅`），没有再退回**原作 id 末段**
-          （`diner` / `castle cafe`）—— 两级都只从已有数据里取，**不编店名**。
+          · 它给的是「**你在哪**」—— 只有区名也算够用（模型知道自己在 Hometown）；
+          · 这里要的是「**能去哪一家**」—— 必须说出是哪一家（Diner / Cafe /
+            Library），否则模型只能答「那要不去 Hometown」，答不出用户要的
+            「那要不去 XXX 家餐厅」里那个 XXX。
+        ★ 全是英文（第113轮l 用户口径「名字用英文」）：区名取**区 id** 整形
+          （`hometown` ⇒ `Hometown`），不取中文区名 —— 中文区名 + 英文店名
+          拼在一行，模型念出来是"去家乡 Diner"。
+        ★ 细节词优先用**不含中文**的真名（OneShot `Research Station`）；
+          Deltarune 的真名是中文（`理想餐厅`），退回原作 id 末段（`diner`）。
+          两级都只从已有数据里取，**不编店名**。
         """
         sid = str(sid or '').strip()
         if not sid:
             return ''
-        # 真名那一支直接借 `_scene_place_label`（它已经处理好剥区名前缀、剥容器名），
-        # 只是不带章括注；处理不了 `name_derived` 的部分由 `place_label` 用 core 补。
-        base = self._scene_place_label(sid, with_chapter=False)
-        if not base:
-            return ''
-        info = self._scene_label_map().get(sid) or ('', '', '', False, '')
-        area_name = info[1]
-        if npc_life_mod.place_container(area_name):
-            area_name = ''
-        # base 比区名多出信息 ⇒ 它是真名；否则 base 就只是区名，交给 core 补细节。
-        detail = '' if (not area_name or base == area_name) else base
+        parts = sid.split('.')
+        area_id = parts[1] if len(parts) >= 3 else ''
+        if area_id in npc_life_mod.PLACE_SKIP_AREA_IDS:
+            area_id = ''
+        elif area_id in npc_life_mod.PLACE_CONTAINER_IDS:
+            # `ut.rooms.*` / `uty.rooms.*`：`rooms` 是我们的**房间容器**，不是地名。
+            # 用作品缩写顶替 —— `UT · Water Shop` 说得出"哪部作品的店"，
+            # 直接置空只剩 `Water Shop`，跨区域时模型不知道在哪个世界。
+            _work = parts[0]
+            area_id = (_work.upper()
+                       if (len(_work) <= 4 and _work.isalpha()) else _work)
+        # 真名那一支借 `_scene_place_label`（它已经处理剥区名前缀 / 剥容器名 /
+        # `name_derived`），只是不带章括注；含中文的一律不用（见 docstring）。
         try:
-            return npc_life_mod.place_label(area_name, detail, core, hits)
+            base = self._scene_place_label(sid, with_chapter=False)
         except Exception as e:
-            _log.debug('活动地名拼接失败（退回位置标签）: %s', e)
-            return base
+            _log.debug('活动真名解析失败（退回 id 末段）: %s', e)
+            base = ''
+        detail = base if (base and not npc_life_mod.has_cjk(base)) else ''
+        try:
+            return npc_life_mod.place_label(
+                area_id, detail, core, hits, proper=self._place_proper(),
+                names_en=self._place_names_en())
+        except Exception as e:
+            _log.debug('活动地名拼接失败（退回 id 末段）: %s', e)
+            return npc_life_mod.speakable_en(core)
+
+    def _place_proper(self):
+        """人名集合（小写）—— `place_label` 判所有格用：`Asgore's Kitchen`。
+
+        ★ 从 `npc_registry` **现取**，不手抄：手抄一份人名表迟早和 96 张卡漂开，
+          而这里的用途只是"这个词是不是人名"，判错只影响一个 `'s`。
+        ★ 缓存一次（`_place_proper_cache`）：96 个 id × 每次说话都重建不值当。
+        """
+        names = getattr(self, '_place_proper_cache', None)
+        if names is not None:
+            return names
+        names = set()
+        try:
+            reg = self.npc_registry
+            if reg is not None:
+                for nid in reg.ids():
+                    seg = str(nid).rsplit('.', 1)[-1].strip().lower()
+                    if seg:
+                        names.add(seg)
+        except Exception as e:
+            _log.debug('人名集合构建失败（按空处理）: %s', e)
+        self._place_proper_cache = names
+        return names
+
+    def _place_names_en(self):
+        """中文人名 → 英文名。`托丽尔` ⇒ `Toriel`（用户口径「人名也要改成英文」）。
+
+        ★ 从 `npc_registry` **现取**（`name_cn` / `name` / id 末段），不手抄 ——
+          手抄一份 96 人对照表迟早和角色卡漂开，而这里判错只影响地名里的人名。
+        ★ 英文名自己也含中文（少数卡 `name` 就是中文）⇒ 退回 id 末段，
+          **绝不把中文原样当英文名**塞回 prompt。
+        """
+        m = getattr(self, '_place_names_en_cache', None)
+        if m is not None:
+            return m
+        m = {}
+        try:
+            reg = self.npc_registry
+            if reg is not None:
+                for npc in reg.all():
+                    cn = str(getattr(npc, 'name_cn', '') or '').strip()
+                    en = str(getattr(npc, 'name', '') or '').strip()
+                    if not en or npc_life_mod.has_cjk(en):
+                        en = str(getattr(npc, 'id', '') or '').rsplit('.', 1)[-1]
+                    if cn and en and not npc_life_mod.has_cjk(en):
+                        m[cn] = npc_life_mod.speakable_en(en)
+        except Exception as e:
+            _log.debug('人名英文化失败（按空处理）: %s', e)
+        self._place_names_en_cache = m
+        return m
 
     def _npc_life_blocks(self, npc_id, heard=None):
         """NPC 的「自由生活」三块提示 —— ★ **只加"他此刻能看见的"，不加"他是谁"**。
@@ -4468,9 +4574,15 @@ class RalseiPet(QMainWindow):
             try:
                 _act, _hit = npc_life_mod.detect_activity(heard)
                 if _act:
-                    _places = self._activity_places(
-                        _act, self._activity_chapter(npc_id))
-                    _hint = npc_life_mod.activity_hint(_act, _places)
+                    _chap = self._activity_chapter(npc_id)
+                    _places = self._activity_places(_act, _chap)
+                    # ★ 前 4 条里有不在本章的 ⇒ 要给"有的在别处"的提示语：
+                    #   跨区域后还说"你们这儿真有的地方"就是撒谎，模型会当真。
+                    _cross = (any(not _s.startswith(_chap + '.')
+                                  for _s, _lb in _places[:4]) if _chap
+                              else bool(_places))
+                    _hint = npc_life_mod.activity_hint(
+                        _act, _places, cross=_cross)
                     if _hint:
                         out.append(_hint)
             except Exception as e:
