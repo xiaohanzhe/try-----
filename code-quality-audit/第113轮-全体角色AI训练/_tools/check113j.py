@@ -202,6 +202,19 @@ check('B3 拼接主体不许出现三段（` · ` 在主体里最多 1 次）',
       not _three, '三段=%r' % (_three[:3],))
 check('B4 括号成对、不许 `（（` / `）（`', not _paren, '%r' % (_paren[:3],))
 
+# ★ B5 容器判据**正负成对**。只判"带括注的容器名要认"会过宽：
+#   真地名也有带括注的（`城堡镇（废墟）`），一刀切成容器就等于把地名删了。
+#   第113轮j 修 26 条漏判时，第一版就是把 `split('（')[0]` 当唯一判据。
+_c_yes = (L.place_container('未分区（废弃/调试/演示）')
+          and L.place_container('全部房间')
+          and L.place_container('未分区'))
+_c_no = (not L.place_container('城堡镇（废墟）')
+         and not L.place_container('荒野')
+         and not L.place_container('')
+         and not L.place_container(None))
+check('B5 容器名判据正负成对（`未分区（…）`/`全部房间` 认；`城堡镇（废墟）`/空 不许误杀）',
+      _c_yes and _c_no, '认=%s 不认=%s' % (_c_yes, _c_no))
+
 
 # ================================================================ C
 print()
