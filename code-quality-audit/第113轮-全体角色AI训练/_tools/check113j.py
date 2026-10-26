@@ -59,6 +59,7 @@ ROOT = os.path.abspath(os.path.join(ROUND, '..', '..'))
 PET = os.path.join(ROOT, 'ralsei_pet')
 MAIN = os.path.join(PET, 'src', 'main.py')
 IDX = os.path.join(PET, 'assets', 'scenes', '_index.json')
+REG = os.path.join(PET, 'assets', 'npc', '_registry.json')
 
 sys.path.insert(0, os.path.join(PET, 'modules'))
 import npc_life as L                                        # noqa: E402
@@ -116,9 +117,31 @@ def _scene_index():
     return m
 
 
+def _place_proper():
+    """与产品 `_place_proper()` **同口径**：`npc_registry` 里每个 id 的末段（小写）。
+
+    ★ 为什么桩必须有它（第113轮m）：`_scene_place_label` 的 ⑥ 英文整形要传
+      `proper=self._place_proper()`，桩不提供 ⇒ `AttributeError` 直接崩。
+    ★ 为什么不在这写死 `{'asgore', ...}`：产品是从**角色登记册现取**的，写死
+      一份就等于给"人名集合"另立一个真源，96 张卡一改这里就悄悄过期。
+      这里读同一个 `_registry.json`，只跳过 Qt 那套 `npc_registry` 包装。
+    """
+    out = set()
+    try:
+        reg = json.loads(io.open(REG, encoding='utf-8').read())
+        for row in (reg.get('npcs') or []):
+            seg = str((row or {}).get('id') or '').rsplit('.', 1)[-1].strip().lower()
+            if seg:
+                out.add(seg)
+    except Exception as _e:                                 # noqa: BLE001
+        print('  registry 读取失败（人名集合按空处理）：%s' % _e)
+    return out
+
+
 _SRC = io.open(MAIN, encoding='utf-8', newline='').read()
 _CODE, _FN = _method_src(_SRC, '_scene_place_label')
 _IDX = _scene_index()
+_PROPER = _place_proper()
 
 
 class _LabelStub(object):
@@ -126,6 +149,9 @@ class _LabelStub(object):
 
     def _scene_label_map(self):
         return _IDX
+
+    def _place_proper(self):
+        return _PROPER
 
 
 _ns = {'npc_life_mod': L}
@@ -147,7 +173,9 @@ check('A0 从产品源码里取到 `_scene_place_label`（取不到 ⇒ 后面�
 # ★ 用例固定写死：跟着数据规模漂会制造假 DIFF
 _CASES = [
     ('ch1.castle_town.castle_town', '城堡镇'),
-    ('uty.rooms.rm_steamworks_29', 'steamworks 29'),
+    # ★ 第113轮m 起位置块也要整形 ⇒ 这里跟着变成 `Steamworks 29`。
+    #   不是"迁就实现"：真名 `steamworks 29` 一个字母没少，只是首字母大写。
+    ('uty.rooms.rm_steamworks_29', 'Steamworks 29'),
     ('oneshot.mainline.FINALE', 'FINALE'),
     ('ch2.ralsei_room.dw_ralsei_castle_front', '拉尔赛的城堡'),
     ('desktop', '桌面'),
@@ -171,6 +199,84 @@ check('A4 章名与位置同名时不加括注（`桌面（桌面）` 读起来�
       '桌面（桌面）' not in label('desktop'))
 
 
+print()
+print('--- A5~A8 地名整形（第113轮m：口语化 / 复合词 / 中文无副作用）---')
+
+# ★ 取模块常量一律 `getattr`（第106轮以来的铁律）：直接点属性，将来改名就是
+#   `AttributeError` 把整个套件炸掉，而 G2 只看到"这轮红了"，看不出是测试自己的问题。
+_MINOR = set(getattr(L, '_EN_MINOR', ()) or ())
+check('A5a 虚词表可读（读不到 ⇒ A7/B6 白名单为空，会误报正确输出）', bool(_MINOR))
+
+# ★★ A5 `Bed_room` 曾输出成 `Barrens · Bed` —— 类型词 `bed` 在首位就截断，
+#    "房间"丢了。根因是 `room_word` 把 `Bed_room` 拼成 `bed room` 后逐词判类型词。
+#    正/负成对：复合词必须合成（`Bedroom`），但**单个** `bed` 仍要按原样截断。
+_bed_b = label('oneshot.barrens.Bed_room')
+_bed_g = label('oneshot.glen.Bed_room')
+check('A5 复合类型词合成：`Bed_room` ⇒ `Bedroom`，不许截成 `Bed`',
+      'Bedroom' in _bed_b and 'Bedroom' in _bed_g
+      and 'Bed room' not in _bed_b and 'Bed room' not in _bed_g,
+      '%r / %r' % (_bed_b, _bed_g))
+
+# ★ A6 负控制：整形**不许**把"本来就短的名字"也拉长。
+#   真有单间就叫 `Bed`（`place_type_name` 判它时只该留 `Bed`），
+#   若合并函数写成"见到 bed+任意词就拼"，这里会把它变成 `Bedroom`。
+_merge_neg = L._merge_type_compounds(['bed', 'xyz'])
+check('A6 负控制：拼起来不是词就不许合并（`bed xyz` 原样保留）',
+      _merge_neg == ['bed', 'xyz'], '%r' % (_merge_neg,))
+
+# ★★ A5b **破坏性负控制**：把合并函数换成恒等，A5 的判据必须真的变红。
+#    只写 A5（"结果里有 Bedroom"）证明不了它是**因为合并**才过的 ——
+#    万一哪天别的环节也顺手拼了个 Bedroom，A5 会一直绿而合并早被删掉。
+_orig_merge = getattr(L, '_merge_type_compounds', None)
+_mut_bed = None
+try:
+    L._merge_type_compounds = lambda toks: list(toks)
+    _mut_bed = label('oneshot.barrens.Bed_room')
+finally:
+    if _orig_merge is not None:
+        L._merge_type_compounds = _orig_merge
+check('A5b 破坏性负控制：合并函数换成恒等 ⇒ `Bedroom` 必须消失（证明 A5 不是恒真）',
+      bool(_orig_merge) and _mut_bed is not None
+      and 'Bedroom' not in _mut_bed and 'Bed Room' in _mut_bed,
+      '%r' % (_mut_bed,))
+
+
+def _lower_toks(s):
+    """标签主体里的小写英文**实词**（剥掉章名括注、放过虚词）。"""
+    body = s[:(s.rindex('（') if s.endswith('）') and '（' in s else len(s))]
+    return [t for t in body.replace('·', ' ').split()
+            if t.isascii() and t.isalpha() and t[:1].islower()
+            and t not in _MINOR]
+
+
+# ★★ A7 英文一律 Title Case —— 同一份 prompt 里活动块是 `Town Square`、
+#    位置块是 `town square`，模型会挑一个照抄。判据取**产品真实输出**，
+#    不用 `speakable_en` 自证（那等于让被测函数自己判自己）。
+#    ★ 虚词（`the`/`to`/`in`）本来就该小写（`Snowdin Secret to Everybody`），
+#      不排除它们会把这 6 条正确输出判红 —— 判据过宽也是错。
+_shaped = label('uty.rooms.rm_steamworks_29')
+check('A7 英文地名首字母大写（小写 id 词语不许落进 prompt，虚词除外）',
+      not _lower_toks(_shaped), '小写词=%r' % (_lower_toks(_shaped)[:3],))
+
+# ★★ A7b 同样来一次破坏：拿掉整形函数 ⇒ 小写必须重新出现。
+_orig_speak = getattr(L, 'speakable_en', None)
+_mut_shape = None
+try:
+    L.speakable_en = lambda text, proper=(): str(text or '')
+    _mut_shape = label('uty.rooms.rm_steamworks_29')
+finally:
+    if _orig_speak is not None:
+        L.speakable_en = _orig_speak
+check('A7b 破坏性负控制：拿掉整形 ⇒ 小写词重新出现（证明 A7 不是恒真）',
+      bool(_orig_speak) and _mut_shape is not None and bool(_lower_toks(_mut_shape)),
+      '%r' % (_mut_shape,))
+
+# ★ A8 中文不许被整形动过一个字（负控制：整形的"副作用"边界）
+check('A8 负控制：纯中文标签逐字不变（`城堡镇` 不许变成别的）',
+      label('ch1.castle_town.castle_town').startswith('城堡镇')
+      and label('desktop') == '桌面', '%r' % label('desktop'))
+
+
 # ================================================================ B
 print()
 print('--- B 全量普查（一个场景都不落）---')
@@ -178,11 +284,13 @@ print('--- B 全量普查（一个场景都不落）---')
 _LEAK_TOK = ('rm_', 'room_', '全部房间', '未分区', 'unzoned', 'unknown', '.rooms.')
 
 _empty, _leak, _three, _paren = [], [], [], []
+_ALL_LABELS = []          # (sid, label) —— B6 整形普查用，不打印条数
 for _sid in _IDX:
     _got = label(_sid)
     if not _got:
         _empty.append(_sid)
         continue
+    _ALL_LABELS.append((_sid, _got))
     for _t in _LEAK_TOK:
         if _t in _got:
             _leak.append((_sid, _t, _got))
@@ -214,6 +322,18 @@ _c_no = (not L.place_container('城堡镇（废墟）')
          and not L.place_container(None))
 check('B5 容器名判据正负成对（`未分区（…）`/`全部房间` 认；`城堡镇（废墟）`/空 不许误杀）',
       _c_yes and _c_no, '认=%s 不认=%s' % (_c_yes, _c_no))
+
+# ★★ B6 全量整形普查（第113轮m）：2166 个标签里**不许**再有小写英文实词。
+#    只查一个 `steamworks` 说明不了覆盖面 —— 实测全量里另有 6 条虚词小写
+#    （`Snowdin Secret to Everybody`），那是**对的**英文，所以白名单是虚词表本身，
+#    而不是"看到小写就报红"（那样 6 条正确输出会被判死，判据比 bug 更吵）。
+_lower_all = []
+for _sid, _got in _ALL_LABELS:
+    _lt = _lower_toks(_got)
+    if _lt:
+        _lower_all.append((_sid, _lt, _got))
+check('B6 全量：小写英文实词 0 条（虚词例外，见注释）',
+      not _lower_all, '%r' % (_lower_all[:3],))
 
 
 # ================================================================ C

@@ -4268,6 +4268,16 @@ class RalseiPet(QMainWindow):
         # ⑤ 兜底：原作房间名（`rm_steamworks_29` → `steamworks 29`）
         if not label:
             label = npc_life_mod.room_word(raw) or npc_life_mod.room_word(sid)
+        # ⑥ 英文整形：`town square` ⇒ `Town Square`。
+        #    ★ 为什么必须做：活动块早就走 `speakable_en`（`Town Square`），位置块却是
+        #      原始小写 `town square` —— 同一份 prompt 两种写法，模型会挑一个照抄。
+        #      ★ 放在**拼章名之前**：章名括注是中文（`（第一章 · 黑暗世界）`），
+        #      分开做能保证"地名部分"逐字可测。
+        #    ★ 幂等：活动候选那一支（`with_chapter=False`）还会再过一次
+        #      `place_label` → `speakable_en`；Title Case 幂等、`'s` 有守卫，两遍一样。
+        #    ★ 对中文无副作用：`纸牌城堡 · 一层` 逐字不变（`·` 不是词）。
+        if label:
+            label = npc_life_mod.speakable_en(label, proper=self._place_proper())
         # ④ 章名与位置同名时不加括注（`桌面（桌面）` 像结巴）
         if with_chapter and ch_name and label and ch_name != label:
             return '%s（%s）' % (label, ch_name)

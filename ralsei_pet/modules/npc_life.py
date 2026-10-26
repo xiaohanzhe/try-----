@@ -668,7 +668,11 @@ def speakable_en(text, proper=()):
       `asgore kitchen` 在集合里 ⇒ `Asgore's Kitchen`；`castle cafe` 不在 ⇒
       `Castle Cafe`（给 `castle` 也加 `'s` 就成了不存在的"城堡的咖啡店"）。
     """
-    toks = str(text or '').replace('_', ' ').split()
+    # ★ ⑤ 复合词先合起来：`bed room` ⇒ `bedroom`（第113轮m）。
+    #   上游把 `Bed_room` 的 `_` 换成空格后，"房间"被拆成两个词 ——
+    #   念出来是 `Bed Room`，不如 `Bedroom` 口语。只合**拼起来真在词表里**的相邻词，
+    #   所以 `bed xyz` 原样保留（不是"见到两词就粘"）。
+    toks = _merge_type_compounds(str(text or '').replace('_', ' ').split())
     if not toks:
         return ''
     props = {str(p).strip().lower() for p in (proper or ()) if str(p).strip()}
@@ -718,6 +722,28 @@ def de_cjk_names(text, names_en=None):
     return s
 
 
+#: 两个词**拼起来**才是类型词的复合词：`bed` + `room` ⇒ `bedroom`。
+#: ★ 为什么需要（实测）：OneShot 的 `Bed_room` 经 `room_word` 变成 `bed room`，
+#:   `place_matches` 命中的是 `bed`（在**首位**）⇒ `trim_core_at_type` 在第一个词
+#:   就截断，标签成了 `Barrens · Bed`（一张床）。而 `bedroom` 本身就是类型词。
+#: ★ 只认**拼接结果真的在词表里**的：`coffee`+`shop` = `coffeeshop` 不在表里 ⇒
+#:   **不合并**。宁可少合，也不要把两个词硬拼成一个不存在的新名字。
+_TYPE_VOCAB = frozenset(
+    list(PLACE_GLOSS.keys())
+    + [w for _t in PLACE_WORDS.values() for w in _t.get('en', ())])
+
+
+def _merge_type_compounds(toks):
+    """相邻两个词拼起来是类型词 ⇒ 合成一个：`['bed','room']` ⇒ `['bedroom']`。"""
+    out = []
+    for t in toks:
+        if out and (out[-1] + t).lower() in _TYPE_VOCAB:
+            out[-1] = out[-1] + t
+            continue
+        out.append(t)
+    return out
+
+
 def trim_core_at_type(core, hits):
     """把 `core` 截到**类型词为止**：`hospital hallway` → `hospital`。
 
@@ -732,7 +758,8 @@ def trim_core_at_type(core, hits):
       走的是 `detail` 那一支，根本不进这里。
     ★ 命中不到类型词（`plat lab` 之类分词怪例）⇒ **原样返回**，不猜。
     """
-    toks = str(core or '').split()
+    # ★ 先合复合词再判：`bed room` ⇒ `bedroom`（否则会在 `bed` 处截断成「床」）。
+    toks = _merge_type_compounds(str(core or '').split())
     if len(toks) < 2:
         return ' '.join(toks)
     lows = [t.lower() for t in toks]

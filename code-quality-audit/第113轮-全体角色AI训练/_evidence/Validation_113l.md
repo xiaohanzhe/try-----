@@ -187,8 +187,8 @@ cd ../../regress && python run_all.py
 
 ## 7. 已知缺口（不当成绩报）
 
-1. **位置块仍是原始小写**：`【你现在在哪】town square。` —— 活动块是 Title Case，位置块沿用 113j 的输出（只改了"英文前缀剥除"的大小写）。要不要统一成 `Town Square`，等一句确认。
-2. **`Bed` 而不是 `Bedroom`**：`oneshot.barrens.Bed_room` 被 `trim_core_at_type` 截到类型词 `bed`。`Barrens · Bed` 能读，但不如 `Bedroom`。
+1. ~~**位置块仍是原始小写**~~ —— **已在 §10 关掉**（`town square` ⇒ `Town Square`）。
+2. ~~**`Bed` 而不是 `Bedroom`**~~ —— **已在 §10 关掉**（`Bed_room` ⇒ `Bedroom`）。
 3. **`Glen · House` 丢了 `stew`**：该场景 `name` 未登记，只能给到 `House`。要补名字得改索引（本轮不做）。
 4. **中间编号保留**：`UTY · Dunes 30 House` —— `30` 是黄魂的房间序号（门牌），我没删（删了就是编造）。
 5. **跨区域的"远"没有量化**：只说"不在你这一带"，没有距离/楼层概念。真要做需要 `_room_graph.json` 的边权（第105轮已有 1,202 边）。
@@ -327,3 +327,112 @@ D6 为什么要改：它原来只认 `report30.json` 的 `per_char` 摘要，而
 | `.../_tools/verify_aiself113l.py` | **新建**（点验产品读取链路 + 正负控制） |
 | `.../_evidence/ab_aiself113l.json` 等 3 个 | 三轮实测的原始回复 |
 | `ralsei_pet/assets/npc/_training/_index.json` | 补 22 条 → **全部撤销**（与 HEAD 零 diff） |
+
+---
+
+## 10. 续：地名整形收尾（第113轮m）—— 位置块 Title Case + 复合词 `Bedroom`
+
+用户说「**那继续吧，做完一个模块再结束对话就好**」。接的是 §7 已知缺口 1、2 ——
+两条都是"标签能读，但不像人话"。
+
+### 10.1 两处症状（人眼读出来的，不是报错）
+
+| # | 输出 | 问题 |
+|---|---|---|
+| 1 | `【你现在在哪】town square。` | 活动块早就整形（`Town Square`），位置块照抄索引里的原始小写 ⇒ **同一份 prompt 两种写法** |
+| 2 | `荒野 · Bed Room`（`oneshot.barrens.Bed_room`） | "房间"被拆成两个词念出来 |
+
+第 1 条上一轮我判断成"等一句确认再动"，其实用户口径「**变口语化一些**」已经覆盖了它，
+不必再问。
+
+### 10.2 根因是**两个不同的地方**
+
+| # | 根因 | 为什么之前没修 |
+|---|---|---|
+| 1 | `_scene_place_label` 从头到尾没有整形这一步（`speakable_en` 只用在活动候选那条链上） | 上一轮只改了"英文前缀剥除"的 `casefold` 比较，整形没接 |
+| 2 | `room_word('Bed_room')` ⇒ `bed room`，`place_matches` 命中 `bed` 且它在**首位** ⇒ `trim_core_at_type` 在第一个词就截断 | 逐词判类型词，没考虑"两个词拼起来才是类型词" |
+
+★★ 第 2 条上一轮只修了 `trim_core_at_type` 那一侧（`_merge_type_compounds`），
+**位置块走的是另一条路**：`_index.json` 里 `Bed_room` 的 `name` 就是 `Bed room`，
+根本不经过 `trim_core_at_type`。所以这轮看到的仍是 `Bed Room` ——
+**"修了一处"不等于"这一处修好了"**。
+
+### 10.3 修法（两行，都在各自唯一的出口上）
+
+1. `npc_life.speakable_en()`：`toks = _merge_type_compounds(text.replace('_',' ').split())`
+   —— 整形函数本来就叫"能说出口的地名"，复合词合并属于它的职责，放这儿**三处调用点
+   （活动地名 / 位置块 / 人名英文化）同时受益**。放 `main.py` 就变成只修一条链。
+2. `main._scene_place_label()` ⑥：`label = speakable_en(label, proper=self._place_proper())`
+   —— 放在**拼章名括注之前**，这样"地名部分"逐字可测，中文章名不被碰。
+
+幂等：`with_chapter=False` 那一支还会再过一次 `place_label` → `speakable_en`；
+Title Case 幂等、`'s` 有守卫，两遍一样。
+
+### 10.4 影响面实测（不是"应该没影响"）
+
+| 项 | 数 | 说明 |
+|---|---|---|
+| 全量 2166 个位置标签里**变了**的 | **3** | 只有 `oneshot.{barrens,glen}.Bed_room*` 三条：`Bed Room` ⇒ `Bedroom` |
+| 其中 `glen.Bed_room_2` | 1 | 与 `Bed_room` 同款，顺带一致 |
+| 真机套件被波及的判据 | **2** | `check73` 的 E4 / E4b 详情串：`town church` ⇒ `Town Church`、`torielclass` ⇒ `Torielclass` |
+| 判据条数 | 30 → **38** | 新增 A5a / A5 / A5b / A6 / A7 / A7b / A8 / B6 |
+
+`check73` 那两行是**预期变化**（正是要修的），已 `--update` 重建基线，diff 里只有这两行。
+
+### 10.5 判据：正负成对 + **两条破坏性负控制**
+
+| 判据 | 守什么 | 反例（必须不成立） |
+|---|---|---|
+| A5 | `Bed_room` ⇒ `Bedroom`（`Bed room` 不许出现） | — |
+| **A5b** | **把 `_merge_type_compounds` 换成恒等 ⇒ `Bedroom` 必须消失** | 实跑输出 `荒野 · Bed Room` |
+| A6 | `bed xyz` 不许合并（拼起来不是词） | 输出 `['bed','xyz']` |
+| A7 | 英文地名不许有小写**实词** | — |
+| **A7b** | **把 `speakable_en` 换成恒等 ⇒ 小写必须重新出现** | 实跑输出 `steamworks 29（黄魂 · Undertale Yellow）` |
+| A8 | 纯中文标签逐字不变（`桌面` / `城堡镇`） | — |
+| B6 | 全量 2166 条：小写实词 **0 条** | 虚词白名单（见下） |
+
+★★ A5b / A7b 是本轮最该记的两条：只写 A5（"结果里有 `Bedroom`"）证明不了它是
+**因为合并**才过的 —— 万一以后别的环节顺手拼了个 `Bedroom`，A5 会一直绿而合并早被删。
+破坏性负控制让"判据本身是否还有牙"变成每次回归都验一遍。
+
+★★ B6 的白名单是**虚词表本身**（`_EN_MINOR`），不是"看到小写就报红"：
+实测全量里有 6 条**正确**的小写 —— `Snowdin Secret to Everybody` / `Ruins in` /
+`the Gate` / `to Tower` —— 一刀切会把它们判死，**判据比 bug 更吵**。
+
+### 10.6 判据自己栽的一次（第 113 轮m 内）
+
+`check113j` 直接崩：
+
+```
+AttributeError: '_LabelStub' object has no attribute '_place_proper'
+```
+
+`_scene_place_label` 是**用 AST 从产品里抽出来 exec 的**，所以它新加的
+`self._place_proper()` 依赖必须由桩补 —— 而桩只给了 `_scene_label_map()`。
+⇒ 教训：**给被抽取的方法加新 `self.xxx` 依赖，等于给所有挂这个桩的套件加了一个破坏性变更**。
+桩里补的是**同口径**实现（读同一份 `_registry.json` 取 id 末段小写），
+不是写死 `{'asgore', ...}` —— 写死就等于给"人名集合"另立真源。
+
+### 10.7 已知缺口（不当成绩报，接 §7）
+
+3. **`Glen · House` 丢了 `stew`**：该场景 `name` 未登记，只能给到 `House`。要补名字得改索引。
+4. **中间编号保留**：`UTY · Dunes 30 House` —— `30` 是黄魂的门牌号，没删（删了就是编造）。
+5. **跨区域的"远"没有量化**：只说"不在你这一带"，没有距离概念。需要 `_room_graph.json` 的边权。
+6. `Torielclass`（`torielclass` 场景）仍是**粘连**的一块 —— 它是原作 id 就长这样，
+   拼成 `Toriel Class` 属于"猜词"，本轮不做。
+
+### 10.8 改动清单（续 §8）
+
+| 文件 | 变化 |
+|---|---|
+| `ralsei_pet/modules/npc_life.py` | 1378 → **1405** 行（`speakable_en` 接复合词合并 + 注释） |
+| `ralsei_pet/src/main.py` | 16910 → **16920** 行（`_scene_place_label` ⑥ 整形成英文） |
+| `.../_tools/check113j.py` | 30 → **38** 条；桩补 `_place_proper()`；`_CASES` 里 `steamworks 29` ⇒ `Steamworks 29` |
+| `.../_tools/patch_label113m.py` | **新建**（唯一写盘入口：CRLF 锚点 + 唯一性检查 + `ast.parse` 自证） |
+| `code-quality-audit/regress/run_all.py` | `check113j` 的 `desc` 追加 m 轮口径 |
+| `code-quality-audit/regress/baseline.json` | 重建 `check113j`（38 条）、`check73`（91 条，两行详情） |
+| `.../_evidence/Validation_113l.md` | 本节；§7 第 1、2 条划掉 |
+
+回归：`check113j` **38/38** · `check113k` **80/80** · `check113l` **35/35** ·
+全量 G2 **PASS=5642 FAIL=0 / 109 套件全部 IDENTICAL**（唯一 `IDENTICAL*` 是既有
+`check75c` 空行噪声）。算术自证：上轮 5634 + `check113j` 新增 8 条 = **5642**。
