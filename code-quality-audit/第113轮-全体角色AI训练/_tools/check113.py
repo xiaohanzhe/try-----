@@ -391,8 +391,32 @@ def _declared_ok(nid):
         return False
 
 
+#: ★★★ 第113轮l：证据要认**原始记录**，不能只认报告摘要。
+#:   起因（实测）：给 22 个「自称 AI」的人补纠正句之后 D6 直接报红，说他们"无依据"——
+#:   而 `raw30` 里明明记着他们在**第 33 轮**被判了 `AI_SELF`。
+#:   根因：`report30.json` 的 `per_char` 是按**当时的轮数**汇总的，第 33 轮根本不在
+#:   那份汇总的范围内（摘要看不见 → 判据以为"没发生"）。
+#:   ⇒ 这正是本套件 D5 那条判据的道理：报告不许自己说一套。**证据也一样**，
+#:     派生摘要会随轮数口径漂移，只有 `raw30` 是训练当时的原始记录。
+#:
+#: 注意这条**不是**放宽：它把证据从"二手摘要"换成"一手记录"，
+#: 至于"补的这个码对不对"——由 `check113l` 的 A 组按**违规码**精确守
+#: （拿了 `AI_SELF` 纠正句的人，必须真有 `AI_SELF` 的记录）。
+_RAW_EVID = {}
+_RAW30 = os.path.join(C.EVID, 'raw30')
+if os.path.isdir(_RAW30):
+    for _f in sorted(os.listdir(_RAW30)):
+        if not _f.endswith('.jsonl'):
+            continue
+        for _rec in C.read_jsonl(os.path.join(_RAW30, _f)):
+            _nid = _rec.get('id') or _f[:-6]
+            for _t in _rec.get('turns') or []:
+                for _c, _d in (_t.get('violations') or []):
+                    _RAW_EVID.setdefault(_nid, set()).add(_c)
+
 no_reason = [nid for nid in patches
              if (per_char.get(nid, {}).get('violations', 0) == 0
+                 and not _RAW_EVID.get(nid)
                  and nid not in dup_involved
                  and not _declared_ok(nid))]
 check('D6 每条 patch 都有依据（判红或跨角色撞车）；无证据却写纠正必须报红',
@@ -412,6 +436,13 @@ else:
     reasons['__ctrl__'] = _keep
 check('D6c 负控制：引文在文件里不存在 ⇒ _declared_ok 必须返回 False（不是盖章放行）',
       _bogus_ok is False, 'bogus_ok=%r' % (_bogus_ok,))
+# ★ 上面 D6 换了一手证据源（`raw30`），就必须证明那个源**真的读进来了**：
+#   路径写错 ⇒ 恒空 ⇒ D6 悄悄退回二手摘要 ⇒ 又是"看着在守其实没守"。
+check('D6d 原始记录（raw30）真的读到了证据（空 ⇒ D6 退回二手摘要，等于没换）',
+      bool(_RAW_EVID), '角色数 %d' % len(_RAW_EVID))
+check('D6e 负控制：不存在的 id 不许有证据（否则 D6 对任何 id 都放行）',
+      not _RAW_EVID.get('__no_such_npc__'),
+      '%r' % (sorted(_RAW_EVID.get('__no_such_npc__') or []),))
 
 # ---------------------------------------------------------------- E 区分度
 mark('E 跨角色区分度（"不是同一个 AI 换皮"）')
