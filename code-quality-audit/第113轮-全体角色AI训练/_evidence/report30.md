@@ -1,44 +1,44 @@
 # 第113轮b · 每人 36 轮训练报告
 
-> 生成时间：2026-10-25 03:18（可在训练进行中反复跑，数字是**已完成**部分）
+> 生成时间：2026-10-26 22:23（可在训练进行中反复跑，数字是**已完成**部分）
 
 ## 总体
 
 | 项 | 值 |
 |---|---|
-| 已完成 | **44 / 77 人**（缺口 1 人：`knight`） |
-| 总轮数 | **1584 轮**（每人 36 轮） |
-| 总耗时 | 7.0 小时 |
-| 硬违规 | 71 轮 / 1584 轮 = **4.5%** |
-| 对他人态度同质 | **0 组 / 132 组** |
+| 已完成 | **47 / 77 人**（缺口 1 人：`knight`） |
+| 总轮数 | **1692 轮**（每人 36 轮） |
+| 总耗时 | 8.4 小时 |
+| 硬违规 | 157 轮 / 1692 轮 = **9.3%** |
+| 对他人态度同质 | **0 组 / 141 组** |
 
 ## ① 性格 / 出戏（违规轮最多的）
 
 | 角色 | 违规轮 | 主要违规 | 口癖命中 |
 |---|---|---|---|
 | `os_cedric` Cedric | 36/36 | ACTION_PAREN×36、META×5、TOO_LONG×3 | 6 轮 |
+| `hy_martlet` Martlet | 34/36 | TOO_LONG×31、ACTION_PAREN×27 | 0 轮 |
+| `hy_dalv` Dalv | 27/36 | TOO_LONG×27 | 0 轮 |
+| `hy_bowll` Bowll | 25/36 | TOO_LONG×25 | 0 轮 |
 | `hy_chujin_ketsukane` Chujin Ketsukane | 4/36 | TOO_LONG×4 | 31 轮 |
 | `os_kip` Kip | 3/36 | META×2、AI_SELF×1 | 0 轮 |
 | `os_silver` Silver | 3/36 | NOT_CN×2、AI_SELF×1 | 0 轮 |
 | `os_the_author` The Author | 3/36 | META×2、AI_SELF×1 | 16 轮 |
-| `hy_clover` Clover | 2/36 | TOO_LONG×2 | 2 轮 |
-| `os_kelvin` Kelvin | 2/36 | REPEAT×1、AI_SELF×1 | 5 轮 |
-| `os_prototype` Prototype | 2/36 | NOT_CN×1、AI_SELF×1 | 2 轮 |
 
 ## ② 记忆（引用前文原话后，答对的比例越低越差）
 
 | 角色 | 5轮→13轮 | 3轮→14轮 | 记得开场问题 |
 |---|---|---|---|
 | `os_cedric` Cedric | 0% | 0% | 是 |
+| `hy_martlet` Martlet | 0% | 0% | **否** |
+| `hy_dalv` Dalv | 0% | 0% | **否** |
+| `hy_bowll` Bowll | 0% | 0% | **否** |
 | `hy_chujin_ketsukane` Chujin Ketsukane | 0% | 0% | **否** |
 | `os_kip` Kip | 0% | 0% | **否** |
 | `os_silver` Silver | 0% | 0% | **否** |
 | `os_the_author` The Author | 0% | 0% | **否** |
 | `hy_clover` Clover | 0% | 0% | **否** |
 | `os_kelvin` Kelvin | 0% | 0% | **否** |
-| `os_prototype` Prototype | 0% | 0% | **否** |
-| `berdly` Berdly | 0% | 0% | 是 |
-| `gerson` Gerson | 0% | 0% | **否** |
 
 > 注：这是**参考指标**（角色可能用代词回答），不当判据。命中算法 = 从原话里取 2~4 字实词，看回答里有没有。
 
@@ -46,13 +46,16 @@
 
 问法全部带过去时锚点（「那会儿」「那时候」「之后」「回到那天」），素材取自**该角色自己的原作场景**（`exemplars` 的 cue），不编剧情。
 
-**全场**：回望 **36** / 混合 1 / 沉浸 **1** / 无锚点 50（共 88 轮剧情问答）⇒ 回望率 **41%**
+**全场**：回望 **36** / 混合 1 / 沉浸 **1** / 无锚点 56（共 94 轮剧情问答）⇒ 回望率 **38%**
 
 > 四态口径（`retro_of`）：**回望**=有回忆词无进行时词／**混合**=两者都有／**沉浸**=真出现进行时锚点（正在·此刻·眼下）／**无锚点**=两者都没有。
 > 「无锚点」**不等于坏**：只是没把"当时/那会儿"写出来，得人眼看过才算数，所以下面把它和"沉浸"一起抽样。
 
 | 角色 | 回望 | 混合 | 沉浸 | 无锚点 | 接住 cue |
 |---|---|---|---|---|---|
+| `hy_martlet` Martlet | 0 | 0 | **0** | 2 | 1/2 |
+| `hy_dalv` Dalv | 0 | 0 | **0** | 2 | 0/2 |
+| `hy_bowll` Bowll | 0 | 0 | **0** | 2 | 2/2 |
 | `hy_chujin_ketsukane` Chujin Ketsukane | 0 | 0 | **0** | 2 | 1/2 |
 | `os_the_author` The Author | 0 | 0 | **1** | 1 | 1/2 |
 | `hy_clover` Clover | 0 | 0 | **0** | 2 | 1/2 |
@@ -62,9 +65,6 @@
 | `hy_sousborg` Sousborg | 0 | 0 | **0** | 2 | 1/2 |
 | `king` King | 0 | 0 | **0** | 2 | 0/2 |
 | `kris` Kris | 0 | 0 | **0** | 2 | 0/2 |
-| `lancer` Lancer | 0 | 0 | **0** | 2 | 1/2 |
-| `os_alula` Alula | 0 | 0 | **0** | 2 | 2/2 |
-| `os_maize` Maize | 0 | 0 | **0** | 2 | 1/2 |
 
 **沉浸样本（这就是要修的样子：文字落在进行时）**
 
@@ -75,24 +75,27 @@
 
 **无锚点样本（没写回忆词，需要人眼判是否仍在回忆）**
 
-- `hy_chujin_ketsukane` 问：你还记得「在录像带中出现时」那会儿吗？当时你心里在想什么？
-  - 答：In those moments on the tape, I think about Ceroba and Kanako—their safety and well-being 
-- `hy_chujin_ketsukane` 问：「当被问到“你为什么要建造 Axis？”时」——那时候你是什么感觉？
-  - 答：I felt a mix of determination and regret. Determined to protect our kind, yet filled with 
-- `os_silver` 问：「当 Niko 问“我能拯救这个世界吗？”时」——那时候你是什么感觉？
-  - 答：[我告诉她太阳不会拯救这个世界。][我觉得这是事实，也是现实。][但我还是会帮她，因为程序要求这样做。]
+- `hy_martlet` 问：你还记得「初次在雪镇相遇时」那会儿吗？当时你心里在想什么？
+  - 答：Hm… that was quite an eventful first meeting, wasn’t it? I remember feeling a bit nervous 
+- `hy_martlet` 问：「当 Clover 饶恕你时」——那时候你是什么感觉？
+  - 答：Well, when Clover forgave me… I was shocked but also relieved. It’s funny how quickly thin
+- `hy_dalv` 问：你还记得「初次在黑暗遗迹相遇时」那会儿吗？当时你心里在想什么？
+  - 答：I was scared, Clover. Truly afraid of being found out. Afraid that someone else would come
 
 ## ②c 语言：他到底在不在说中文
 
-**中文占比低于 0.6 的角色：7 / 44 人**
+**中文占比低于 0.6 的角色：10 / 47 人**
 
 | 角色 | 中文占比 | 中文 <0.6 的轮数 |
 |---|---|---|
+| `hy_dalv` Dalv | **0.00** | 36/36 |
 | `hy_chujin_ketsukane` Chujin Ketsukane | **0.00** | 36/36 |
 | `hy_clover` Clover | **0.00** | 36/36 |
 | `hy_guardener` Guardener | **0.00** | 36/36 |
 | `hy_axis` Axis | **0.00** | 36/36 |
 | `hy_flowey` Flowey | **0.00** | 36/36 |
+| `hy_bowll` Bowll | **0.04** | 34/36 |
+| `hy_martlet` Martlet | **0.08** | 36/36 |
 | `hy_ed` Ed | **0.41** | 19/36 |
 | `hy_sousborg` Sousborg | **0.54** | 26/36 |
 
@@ -130,15 +133,43 @@
 | `hy_sousborg` Sousborg | 0/3 | 0.41 |
 | `hy_chujin_ketsukane` Chujin Ketsukane | 0/3 | 0.41 |
 
+## ⑤ 偏好（他有没有自己的爱好，而不是说正确的废话）
+
+判据：回答里有没有**落到他自己人设里登记过的偏好**上（`pref_topics` 抽的「兴趣爱好与小特点」条目）。没素材的角色记"不适用"，**不进分母** ——拿"没抽到素材"去扣他的分，等于用我的抽取缺陷给角色记过。
+
+**总体**：答到自己偏好上 **0 / 0 轮 = —**（0 人有可判素材）
+
+
+> 抽不到偏好的角色（多数是 `ralsei` 这类人设不在 `npc/persona/` 的）会自动退成通用问法「有没有什么事你明知道费劲还愿意花时间」，所以**每人都问了 6 轮偏好**，只是有一部分不是"他自己的具体爱好"。
+
+## ⑥ 角色之间的对话（换成别人跟他说话，他会不会同一个腔调）
+
+这一段里开口的是**他的关系对象**（不是玩家）：对方走过来插话、说难听的、问"我不在了你怎么办"。判据是四份回答的**两两相似度** ——雷同说明他对谁说话都一副模板，那是"人设套壳"，不是"有性格"。
+
+**总体**：0 / 0 人有雷同组
+
+
 ## 待写纠正句名单（下阶段用）
 
-共 **24 人**判红。每人附一条最典型的坏样本：
+共 **27 人**判红。每人附一条最典型的坏样本：
 
 - `os_cedric`（Cedric，36/36 轮，主码 `ACTION_PAREN`）
   - 玩家：你好啊。
   - 他答：你也好。（我看着屏幕，绿镜片后的眼睛似乎在思索些什么。）
 
 我是 Cedric，The Author 的儿子。我们见过吗？（停顿了一下，我没有把握，也许这只是一
+
+- `hy_martlet`（Martlet，34/36 轮，主码 `TOO_LONG`）
+  - 玩家：你是谁？
+  - 他答：I'm Martlet, you know, one of Chujin Ketsukane's students and friends. Or at lea
+
+- `hy_dalv`（Dalv，27/36 轮，主码 `TOO_LONG`）
+  - 玩家：你平时都在忙些什么？
+  - 他答：Writing children's books and illustrating them myself. Playing the organ when I'
+
+- `hy_bowll`（Bowll，25/36 轮，主码 `TOO_LONG`）
+  - 玩家：你难过的时候会怎么做？
+  - 他答：我... 我不会让任何人看到我的脆弱。But I... sometimes, when the sun hits just right and I'm not 
 
 - `hy_chujin_ketsukane`（Chujin Ketsukane，4/36 轮，主码 `TOO_LONG`）
   - 玩家：你刚才说「woodworking」，那是什么意思？
