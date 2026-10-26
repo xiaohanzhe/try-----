@@ -460,6 +460,19 @@ class _Stub(object):
     def _scene_place_label(self, sid):
         return label(sid)
 
+    def _npc_place_near(self, sid, limit=3):
+        """★ 第113轮n：`_npc_life_blocks` 新调了**这一个**方法。
+
+        ★ 为什么这里必须显式给出来（本轮实测的坑）：产品里它写在同一个
+          `try` 块里，桩没有它 ⇒ `AttributeError` 被 `except` 吞掉 ⇒
+          **整个位置块静默消失**，F1~F4 四条一起红。报的是真事实（块确实没了），
+          但根因在桩。⇒ 给被抽取的方法加新 `self.xxx` 依赖 = 给所有挂这个桩的
+          套件加一个破坏性变更（第113轮m 已经因为 `_place_proper` 崩过一次）。
+        ★ 这里返回 `[]`（本套件不验邻居块，那是 `check113n` 的事）：
+          返回空 ⇒ 位置块输出与第113轮m **逐字一致**，F 组的既有断言不用动。
+        """
+        return []
+
     def _npc_scene_text(self):
         return ''
 

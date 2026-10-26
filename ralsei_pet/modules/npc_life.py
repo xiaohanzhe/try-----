@@ -398,7 +398,12 @@ def place_hint(here='', home='', near=(), at_home=False):
             blocks.append('【你的归属地】%s —— 你平常在那儿待着，累了会想回去。' % home)
     near = [n for n in (near or ()) if n]
     if near:
-        blocks.append('【你还记得这些地方】' + '、'.join(near) + '。')
+        # ★ 第113轮n：`near` 不再是"凭记忆列几个"，而是**一扇门就能到的邻居**
+        #   （真源 = 原作门连接图，见 `main._npc_place_near`）。所以补一句
+        #   "就在这一带，走过去能到" —— 用户口径是「训练一下他们**寻路**的能力」，
+        #   只说"我记得有这些地方"模型不会拿它当路线依据。
+        blocks.append('【你还记得这些地方】' + '、'.join(near)
+                      + ' —— 就在这一带，走过去能到。')
     if not blocks:
         return ''
     blocks.append('（这些是位置事实，不是台词 —— 顺着说自己要去哪、想回哪就行，别照着念。）')

@@ -238,6 +238,48 @@ def build_adjacency(graph):
     return adj
 
 
+def neighbor_rooms(graph, chapter, room, limit=None):
+    """从 `room` 出发**走一扇门就到**的房间下标（升序去重，去掉自己）。
+
+    :param graph: `{章: [edge, ...]}` —— 即 `load_room_graph()['edges_by_chapter']`
+    :param chapter: 章 id（`ch1` / `oneshot` …）
+    :param room: 房间下标（int）
+    :param limit: 最多返回几个（`None` = 不限）
+    :return: `[int, ...]`；章不存在 / 坏输入 / 一个邻居都没有 ⇒ `[]`
+
+    ★ 为什么只要 **1 跳**（第113轮n）：这是给「【你还记得这些地方】」用的 ——
+      一扇门就能到，模型说"往那边走能到教堂"是**真的**。2 跳开始就成了
+      "知道但没去过"，既说不清怎么走，也更容易编路线。
+    ★ 为什么**按房间下标升序**、不按边表顺序：边表顺序是反汇编产物的副产物，
+      换一份内容相同的图，展示顺序就会变 ⇒ 假 DIFF。排序保证同输入必同输出。
+    ★ 自环丢掉：`load_room_graph()` 已经滤过一遍，但本函数也可能被直接喂
+      别的图（探针 / 测试夹具），所以**自己再判一次**，不靠上游。
+    """
+    if not isinstance(graph, dict):
+        return []
+    edges = graph.get(chapter)
+    if not isinstance(edges, (list, tuple)):
+        return []
+    try:
+        room = int(room)
+    except (TypeError, ValueError):
+        return []
+    out = set()
+    for e in edges:
+        if not isinstance(e, dict):
+            continue
+        if e.get('src') != room:
+            continue
+        dst = e.get('dst')
+        if not isinstance(dst, int) or dst == room:
+            continue
+        out.add(dst)
+    rooms = sorted(out)
+    if isinstance(limit, int) and limit >= 0:
+        rooms = rooms[:limit]
+    return rooms
+
+
 # ===========================================================================
 #  ★ ③ 寻路（纯函数 —— 回归锁主战场）
 # ===========================================================================

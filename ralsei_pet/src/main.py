@@ -625,6 +625,13 @@ from modules import npc_placement as npc_placement_mod
 #   把自己知道的说给别人"。再糊回 `npc_system` 会让 49 轮那道零依赖 AST 闸面对一个
 #   体积翻倍的模块（与 `npc_placement` 分出去的同一个理由）。
 from modules import npc_life as npc_life_mod
+# 场景寻路（第45轮）。★ 第113轮n 起【你还记得这些地方】从**原作门连接图**取
+# 1 跳邻居 —— 这里只**读图**，不做路径搜索、不做决策（决策层是 `npc_roam`）。
+# ★ 为什么要 import：`place_hint(near=)` 从第113轮j 起就是**预留未接线**的一块，
+#   缺的正是"去哪儿问邻居"这一个出口。问 `scene_pathfind` 而不是另读一遍
+#   `_room_graph.json`：那个文件的位置由 `room_graph_path()` 一处决定
+#   （第105轮 `gen_routes105` 也按这个路径回写），另开一处就是两个真源。
+from modules import scene_pathfind as scene_pathfind_mod
 # ★★★ 第78轮：NPC 自主生活 · **层1 意图层**（零依赖纯函数：去哪 / 找谁 / 干什么 /
 #   生活规划 / 睡哪）。用户口径（逐字）：「他们生活是生活，我和他们只是朋友，而不是
 #   主导人…不会因为缺少一个人哪怕是我他们就不生活了」「去哪？找谁？干什么？生活规划
@@ -4181,6 +4188,10 @@ class RalseiPet(QMainWindow):
         if cached is not None:
             return cached
         m = {}
+        # ★ 第113轮n：顺手把**原作房间下标**也存下来（寻路用）。
+        #   同一次 JSON 解析里存，不另读一遍 400KB；也**不并进 5 元组** ——
+        #   那个元组被 `check113j` 的桩逐位读取，多一位就要同步改桩。
+        room_of, room_by = {}, {}
         try:
             path = os.path.join(project_root, 'assets', 'scenes', '_index.json')
             with open(path, 'r', encoding='utf-8') as fh:
@@ -4198,11 +4209,35 @@ class RalseiPet(QMainWindow):
                                         str(sc.get('name') or ''),
                                         bool(sc.get('name_derived')),
                                         str(sc.get('name_raw') or ''))
+                        _rid = sc.get('original_room_id')
+                        if isinstance(_rid, int):
+                            room_of[str(scid)] = _rid
+                            # 同一章里房间里号唯一 ⇒ 反查表用 (章, 下标) 做键。
+                            room_by.setdefault((str(_cid), _rid), str(scid))
         except Exception as e:
             _log.debug('场景索引读取失败（位置块退回 room_word）: %s', e)
             m = {}
+            room_of, room_by = {}, {}
+        self._scene_rooms_cache = room_of
+        self._scene_by_room_cache = room_by
         self._scene_labels = m
         return m
+
+    def _scene_rooms(self):
+        """`{scene_id: original_room_id}` —— 原作房间下标（寻路用）。
+
+        ★ 与 `_scene_label_map()` **共用一次解析**（缓存写在那边）；这里只保证
+          "没读过就先读一次"。读不到 ⇒ `{}`（邻居块随之不产出，不抛）。
+        """
+        if getattr(self, '_scene_labels', None) is None:
+            self._scene_label_map()
+        return getattr(self, '_scene_rooms_cache', None) or {}
+
+    def _scene_by_room(self):
+        """`{(章 id, 房间下标): scene_id}` —— `_scene_rooms()` 的反查表。"""
+        if getattr(self, '_scene_labels', None) is None:
+            self._scene_label_map()
+        return getattr(self, '_scene_by_room_cache', None) or {}
 
     def _scene_place_label(self, sid, with_chapter=True):
         """场景 id → 可读标签 `区 · 场景名（章名）`；取不到 ⇒ `''`（**不猜**）。
@@ -4282,6 +4317,99 @@ class RalseiPet(QMainWindow):
         if with_chapter and ch_name and label and ch_name != label:
             return '%s（%s）' % (label, ch_name)
         return label or ch_name
+
+    # ---------------------------------------------------------------- 附近有什么（第113轮n）
+
+    def _room_graph_edges(self):
+        """`{章: [edge, ...]}` —— 原作门连接图（懒加载 + 缓存）。读不到 ⇒ `{}`。
+
+        ★ 数据文件的位置**不在这里决定**，交给 `scene_pathfind.room_graph_path()`：
+          第105轮 `gen_routes105.patch_room_graph()` 也按那个路径回写，
+          这里另开一处就是两个真源（改一处、另一处不跟着动，且不报错）。
+        ★ 读不到只 `debug`：邻居块是**增益**，没图就整块不产（退化到第113轮j 的样子），
+          绝不因此拖垮对话。
+        """
+        cached = getattr(self, '_room_edges_cache', None)
+        if cached is not None:
+            return cached
+        edges = {}
+        try:
+            g = scene_pathfind_mod.load_room_graph()
+            if isinstance(g, dict) and g.get('ok'):
+                got = g.get('edges_by_chapter')
+                if isinstance(got, dict):
+                    edges = got
+            else:
+                _log.debug('房间图不可用（邻居块将不产出）: %s',
+                           (g or {}).get('error') if isinstance(g, dict) else g)
+        except Exception as e:
+            _log.debug('房间图读取异常（邻居块将不产出）: %s', e)
+            edges = {}
+        self._room_edges_cache = edges
+        return edges
+
+    def _npc_place_near(self, sid, limit=3):
+        """从他**当前场景**出发、**走一扇门就到**的地方 ⇒ 能说出口的地名。
+
+        ★ 真源 = 原作门连接图。**不是**我们编的"附近"，也**不按坐标算近** ——
+          房间坐标是各自的局部系，跨房比距离在原理上不成立（第44轮已证伪）。
+        ★★ 名字为什么取**原作房间 id 整形后的英文**（`room_diner` ⇒ `Diner`），
+          而不是 `_scene_place_label()`：后者遇到 `name_derived=True` 只吐区名，
+          于是 5 个邻居**全叫「家乡」** —— 等于什么都没说。第113轮n 探针实测。
+          位置块已经说过区名了，这里要的是"哪一间"。
+        ★ 过滤三条：调试/演出区（`PLACE_SKIP_AREA_IDS`）、容器区（`PLACE_FILLER`
+          里那些 `unknown` 之类）、空标签；再按名字去重（跨章同名房间只报一次）。
+        ★ 任何一步失败 ⇒ `[]`（同 113j：位置块只加不拖）。
+        """
+        sid = str(sid or '').strip()
+        if not sid:
+            return []
+        try:
+            limit = int(limit)
+        except (TypeError, ValueError):
+            limit = 3
+        if limit <= 0:
+            return []
+        chapter = sid.split('.')[0]
+        room = self._scene_rooms().get(sid)
+        if not isinstance(room, int):
+            return []
+        edges = self._room_graph_edges()
+        if not edges:
+            return []
+        by_room = self._scene_by_room()
+        labels = self._scene_label_map()
+        # 多取几个再筛：调试区 / 容器区 / 空标签都要在下面被剔掉。
+        cand = scene_pathfind_mod.neighbor_rooms(
+            edges, chapter, room, limit=max(6, limit * 3))
+        out, seen = [], set()
+        for rid in cand:
+            nsid = by_room.get((chapter, rid))
+            if not nsid or nsid == sid:
+                continue
+            parts = nsid.split('.')
+            aid = parts[1] if len(parts) >= 3 else ''
+            if aid in npc_life_mod.PLACE_SKIP_AREA_IDS:
+                continue
+            if aid in npc_life_mod.PLACE_FILLER:
+                continue
+            info = labels.get(nsid) or ('', '', '', False, '')
+            area_name, _name, _derived, raw = info[1], info[2], info[3], info[4]
+            if npc_life_mod.place_container(area_name):
+                continue
+            word = npc_life_mod.speakable_en(
+                npc_life_mod.room_word(raw or parts[-1]),
+                proper=self._place_proper())
+            if not word:
+                continue
+            key = word.casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(word)
+            if len(out) >= limit:
+                break
+        return out
 
     # ---------------------------------------------------------------- 活动与去处（第113轮k）
 
@@ -4536,9 +4664,14 @@ class RalseiPet(QMainWindow):
                 _log.debug('归属地解析失败（按无 home 处理）: %s', e)
             here_txt = self._scene_place_label(sid)
             home_txt = self._scene_place_label(home_id)
-            if here_txt or home_txt:
+            # ★ 第113轮n：【你还记得这些地方】接上了 —— 从**原作门连接图**取
+            #   1 跳邻居。用户口径「训练一下他们**寻路**的能力」：只给坐标
+            #   （在哪 / 归属地）他仍说不出"往那边走能到哪"，这一块补的正是这个。
+            #   ★ 失败 ⇒ `[]`，`place_hint` 自己会跳过空 near（不产空块）。
+            near_txt = self._npc_place_near(sid)
+            if here_txt or home_txt or near_txt:
                 ph = npc_life_mod.place_hint(
-                    here=here_txt, home=home_txt,
+                    here=here_txt, home=home_txt, near=near_txt,
                     at_home=bool(sid and home_id and sid == home_id))
                 if ph:
                     out.append(ph)

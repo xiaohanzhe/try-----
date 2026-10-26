@@ -963,13 +963,22 @@ for _n in ast.walk(_t_main):
                     _rp_init = _c
                 elif _n.name == 'PerformanceMonitor':
                     _pm_init = _c
-ok(u'E8b ★★ 定位器体检：`RalseiPet.__init__`(744) 与 '
-   u'`PerformanceMonitor.__init__`(396) 是**不同**函数'
+# ★★ 第113轮n 修：这里原来把行号**写死在描述里**（`(744)` / `(396)`），还把
+#    `RalseiPet.__init__` 的实际行号打进 detail —— 于是**只要在 `__init__` 之上
+#    加一行代码**（本轮加了一个 import + 6 行注释 = 7 行），E8b 就从
+#    `line 748 vs 396` 变成 `line 755 vs 396`，基线假 DIFF。
+#    判据本身（两者 `lineno` 不同）没问题，坏的是**回显了随代码布局漂移的绝对值**。
+#    这与"判据禁回显随时相变的绝对值（含行号）"是同一条，已是第 6 次发作。
+#    ⇒ 描述去掉行号，detail 只打**布尔**（两者是否都找到、是否同一行）。
+ok(u'E8b ★★ 定位器体检：`RalseiPet.__init__` 与 '
+   u'`PerformanceMonitor.__init__` 是**不同**函数'
    u'（否则 E8 可能一直在判错对象）',
    _pm_init is not None and _rp_init is not None
    and _pm_init.lineno != _rp_init.lineno,
-   u'line %r vs %r' % (getattr(_rp_init, 'lineno', None),
-                       getattr(_pm_init, 'lineno', None)), star=True)
+   u'都在=%s 同一行=%s' % (
+       bool(_rp_init is not None and _pm_init is not None),
+       bool(_rp_init is not None and _pm_init is not None
+            and _rp_init.lineno == _pm_init.lineno)), star=True)
 ok(u'E8c ★★ 反向体检：三个调用**都不在** `RalseiPet.__init__` 里'
    u'（证明 E8 必须按"含调用的方法"定位，写死 `__init__` 会恒假）',
    _rp_init is not None
