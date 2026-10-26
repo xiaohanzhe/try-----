@@ -184,8 +184,15 @@ for _n in _LIFE_T.body:
             _top_imports.add(_a.name.split('.')[0])
     elif isinstance(_n, ast.ImportFrom):
         _top_imports.add((_n.module or '').split('.')[0])
-check('B2 ★ 零依赖：`npc_life` 顶层 import 只含标准库（实测 {collections}）',
-      _top_imports <= {'collections'}, str(sorted(_top_imports)))
+# ★★ 白名单**不许手抄**：第113轮k 加 `import re`（`place_matches` 要词边界）时，
+#   这里手抄的 `{'collections'}` 漏了它 ⇒ 标准库被判成"非标准库"，**误报**。
+#   直接问解释器要标准库名单（`sys.stdlib_module_names`，3.10+），
+#   以后再加标准库判据自动跟着走；`main` / `modules` 这类项目内模块仍会报红。
+_STDLIB = set(getattr(sys, 'stdlib_module_names', ())) or {
+    'collections', 're', 'os', 'json', 'math', 'random', 'time',
+    'logging', 'itertools', 'functools', 'typing', 'dataclasses'}
+check('B2 ★ 零依赖：`npc_life` 顶层 import 只含标准库（白名单取 sys.stdlib_module_names）',
+      _top_imports <= _STDLIB, str(sorted(_top_imports)))
 
 _fn_imports = []
 for _n in ast.walk(_LIFE_T):

@@ -109,7 +109,11 @@ check('A ★★ 定义 `where_of`', 'def where_of(' in _LSRC, star=True)
 check('A ★★ 定义 `presence_hint`', 'def presence_hint(' in _LSRC, star=True)
 
 # ★★★ 零依赖：顶层 import 只准白名单；**零函数内 import**；不 import 项目内模块
-_ALLOWED = {'logging', 'math', 'collections', 'os', 'time', 'random', 'json'}
+# ★★★ 白名单**不许手抄**（第113轮k 实测）：加 `import re` 后这份手抄表漏了它
+#   ⇒ 标准库被判成"非标准库"、两个套件同时假红。直接问解释器要名单，
+#   项目内模块（`main` / `modules`）不在里面，判据**没有放宽**。
+_ALLOWED = set(getattr(sys, 'stdlib_module_names', ())) or {
+    'logging', 'math', 'collections', 'os', 'time', 'random', 'json', 're'}
 _tops = []
 _nested = []
 for _n in _LTREE.body:

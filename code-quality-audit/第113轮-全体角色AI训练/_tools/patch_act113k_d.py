@@ -251,6 +251,10 @@ def main():
     ]
     tags = ['main _scene_place_label 签名', 'main 文档串', 'main 章括注开关', 'main _activity_places 接线']
     for (old, new), tag in zip(pairs, tags):
+        # ★★ 锚点里的换行必须换成文件真实 EOL：`main.py` 全 CRLF，
+        #    写成 LF 会「锚点没命中」—— 而这看起来像"已经改过了"，最容易误判。
+        old = old.replace('\n', NL)
+        new = new.replace('\n', NL)
         must(t, old, tag)
         t = t.replace(old, new, 1)
         print('[ OK ] %s' % tag)

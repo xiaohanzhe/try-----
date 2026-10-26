@@ -319,6 +319,16 @@ PLACE_JOIN_ALT = ' — '
 PLACE_FILLER = frozenset(('全部房间', 'unzoned', '未分区', 'unknown', '未知'))
 
 
+#: 这些**区 id** 是我们自己的系统 / 演出 / 调试区，不是作品里的地方 ⇒
+#:   **不给"去处"候选**（位置标签照旧显示，人在里面也要知道自己在哪）。
+#: ★ 与 `PLACE_FILLER` 分工：那个按**区名**过滤（容器叫「全部房间」），
+#:   这个按 **id** 过滤 —— `系统与演出` 读起来像真地名，按名字判会漏；
+#:   而 id 是索引结构的一部分、不是文案，按 id 判不会误伤真地名。
+#: ★ 实测：`ch5.system` = `plat_lab` / `rhythmgame_editor` / `shop_ch5` 三个**调试房**，
+#:   不拦的话 NPC 会建议「那要不去系统与演出那家商店」—— 把人送进测试关。
+PLACE_SKIP_AREA_IDS = frozenset(('system', 'unzoned', 'test', 'debug', 'tmp'))
+
+
 def place_container(area_name):
     """这个**区名**是不是我们自己的容器？⇒ True 表示「不是作品里的地方」。
 
@@ -466,12 +476,41 @@ PLACE_WORDS = {
 }
 
 
+#: 意图词前面的**否定词**：出现就说明"他不是要去"。
+#: ★ 为什么需要：`我不饿` 里那个 `饿` 会让 NPC 立刻推荐餐厅 —— 用户刚说吃饱，
+#:   桌宠还劝他吃饭，这是"不像人"的典型（第113轮k 自查）。
+_NEG_HEADS = '不没别甭勿莫'
+#: 往前看几个字。取 3：`我不太饿` 的 `不` 与 `饿` 隔两个字。
+_NEG_WINDOW = 3
+#: **断句符**：否定不跨句。
+#: ★ 踩过：「我不累，出去逛逛」里 `出去` 距 `不` 是 3 个字、中间还有个逗号，
+#:   不切断的话 `出去` 被误否 ⇒ 退回命中更靠后的 `逛`（意思对了，但命中的词错了）；
+#:   更坏的情形是后半句真正想说的那个词也被否掉。
+_NEG_BREAK = '，。！？；：、,.!?;: \t\r\n…—~（）()「」'
+
+
+def _negated(s, i):
+    """`s[i:]` 开头的那个词，**同一口气里**前面有否定词吗？
+
+    ★ 窗口 `_NEG_WINDOW` 个字内、且中间不许夹断句符。
+    """
+    if i <= 0:
+        return False
+    seg = s[max(0, i - _NEG_WINDOW):i]
+    if any(ch in _NEG_BREAK for ch in seg):
+        return False
+    return any(ch in _NEG_HEADS for ch in seg)
+
+
 def detect_activity(text):
     """一句话里认「他要去干什么」⇒ `(kind, 命中的词)`；认不出 `(None, '')`。
 
     ★ 多个活动同时命中时取**句子里最先出现**的那个：
       "吃完饭去逛逛" 的第一件事是吃饭。按表顺序取会得到与语序无关的答案，那是错的。
     ★ 空串 / None ⇒ `(None, '')`，不猜。
+    ★★ **否定**要认（`我不饿` / `没吃饭` / `别玩了`）⇒ 那个词不算 —— 否则
+      用户刚说吃饱，桌宠就开始推荐餐厅。只否**被否的那一处**，不整句丢弃：
+      `我不累，出去逛逛` 里的 `出去` 仍然该命中 `play`。
     """
     s = str(text or '').strip().lower()
     if not s:
@@ -479,7 +518,12 @@ def detect_activity(text):
     best_kind, best_word, best_at = None, '', len(s) + 1
     for kind in ACTIVITY_KINDS:
         for w in INTENT_WORDS.get(kind, ()):
-            i = s.find(w.lower())
+            wl = w.lower()
+            i = s.find(wl)
+            # ★ 同一词可能在一句里出现多次（`我不饿，你想吃点什么`）：被否掉的那次
+            #   跳过、继续找下一次，**不能**因为第一处是否定就当整句没提。
+            while i >= 0 and _negated(s, i):
+                i = s.find(wl, i + 1)
             if 0 <= i < best_at:
                 best_kind, best_word, best_at = kind, w, i
     return (best_kind, best_word)
@@ -509,6 +553,166 @@ def place_matches(text, kind):
         if re.search(r'\b%s\b' % re.escape(w), s):
             out.append(w)
     return out
+
+
+#: 地点类型词 → 中文类型名。
+#: ★★ 这是**翻译**，不是给地方起名：`diner` 就是餐厅、`cafe` 就是咖啡店。
+#:   原作没给中文名（Deltarune 全是 `room_diner` 这种 id、UT 是 `room_fire_restaurant`），
+#:   我们就**照字面翻**；**绝不编**「XX 家餐厅」这种店名 —— 编出来的名字模型会当真，
+#:   而那家店在原作里根本不存在。
+#: ★ 只收**第113轮k 全量普查里实际出现过**的词：`eat` diner/restaurant/cafe/kitchen/
+#:   pizza · `rest` house/couch/bed/bedroom/cabin/inn · `play` carnival/garden/plaza ·
+#:   `work` school/hospital/library/lab/shop/store/office/dock/factory/station。
+#:   查不到的英文词**原样留着**（宁可给英文，也不给它编个中文名）。
+PLACE_GLOSS = {
+    # -- 吃
+    'diner': '餐厅', 'restaurant': '餐馆', 'cafe': '咖啡店', 'coffee': '咖啡馆',
+    'kitchen': '厨房', 'bakery': '面包店', 'pizza': '披萨店', 'burger': '汉堡店',
+    'tavern': '酒馆', 'bar': '酒吧', 'food': '餐馆',
+    # -- 歇
+    'inn': '旅店', 'hotel': '旅馆', 'motel': '汽车旅馆', 'bedroom': '卧室',
+    'bed': '床', 'couch': '沙发', 'cabin': '小屋', 'house': '房子', 'home': '家',
+    'lodge': '小屋', 'dorm': '宿舍', 'apartment': '公寓',
+    # -- 玩
+    'park': '公园', 'garden': '花园', 'plaza': '广场', 'yard': '院子',
+    'playground': '操场', 'carnival': '游乐场', 'arcade': '游戏厅', 'stage': '舞台',
+    'theater': '剧院', 'theatre': '剧院',
+    # -- 办事
+    'shop': '商店', 'store': '商店', 'market': '市场', 'factory': '工厂',
+    'office': '办公室', 'library': '图书馆', 'school': '学校', 'hospital': '医院',
+    'clinic': '诊所', 'lab': '实验室', 'mine': '矿', 'bank': '银行',
+    # ★★ `station` / `dock` **故意不在这里**（第113轮k 全量人读）：
+    #   OneShot 的 `Research Station` 是**研究站**不是火车站、UT 的
+    #   `room_fire_dock` 到底是码头还是停靠点我判不准 —— 猜错就是**编造地名**，
+    #   比留着英文更糟（模型自己看得懂 `Research Station`）。表格里**只放
+    #   我确定**的翻译，宁缺毋滥。
+}
+
+
+def place_type_name(word):
+    """地点类型词 → 中文类型名。中文词原样返回；英文查 `PLACE_GLOSS`；查不到原样返回。
+
+    ★ 中文词原样返回是有意的：`餐` / `咖啡` / `舞台` 本身就是原作给的中文名的一部分，
+      再翻一次（`餐`→`餐厅`）反而会把 `理想餐厅` 变成 `理想餐厅（餐厅）`。
+    """
+    w = str(word or '').strip()
+    if not w:
+        return ''
+    return PLACE_GLOSS.get(w.lower(), w)
+
+
+def trim_core_at_type(core, hits):
+    """把 `core` 截到**类型词为止**：`hospital hallway` → `hospital`。
+
+    ★★ 为什么必须截（正反两面都是实测）：
+      · 类型词**之后**的是**同一栋楼里的具体房间**（`hospital lobby` / `hospital
+        hallway` / `library upstairs` / `shop interior` / `couch overworld`）——
+        留着会把"去哪儿"说成"去那栋楼的某间房"，而走廊/楼上在原作里不是去处。
+      · 类型词**之前**的是**店名的前半截**（`icee pizza` / `castle cafe` /
+        `fire restaurant` / `b3bs shop` / `city spamton shop`）—— 截掉就只剩
+        「披萨店」「咖啡店」，同城几家店全糊成一个，模型说不出是哪一家。
+    ★ 只按**空白分词**比：中文词（`餐` / `咖啡` / `舞台`）出现在**真名**里，
+      走的是 `detail` 那一支，根本不进这里。
+    ★ 命中不到类型词（`plat lab` 之类分词怪例）⇒ **原样返回**，不猜。
+    """
+    toks = str(core or '').split()
+    if len(toks) < 2:
+        return ' '.join(toks)
+    lows = [t.lower() for t in toks]
+    cut = -1
+    for h in (hits or ()):
+        h = str(h or '').strip().lower()
+        if not h or ' ' in h:
+            continue
+        if h in lows:
+            cut = max(cut, lows.index(h))
+    if cut < 0 or cut >= len(toks) - 1:
+        return ' '.join(toks)
+    return ' '.join(toks[:cut + 1])
+
+
+def place_label(area, detail, core, hits, sep=PLACE_SEP):
+    """拼一个**能说出口**的地点标签：`家乡 · diner（餐厅）`。
+
+    参数
+    ----
+    area   : 区名。★ 调用方一般已过滤容器名，这里**再过滤一次**（两道都便宜，
+             任何一边漏了都不会把「未分区」印给模型）。
+    detail : **已经能读的名字**（真名 / 剥过区段名的原作名，如 `希望之园 · 理想餐厅`）。
+             非空 ⇒ 直接用它，只补中文类型。
+    core   : 原作 id 末段（**剥过区段名**，如 `diner` / `castle cafe`）。
+    hits   : `place_matches` 命中的类型词，`hits[0]` 决定括注的中文类型。
+    sep    : 层级分隔符。
+
+    ★★ 为什么需要这个函数（而不是直接用 `_scene_place_label`）：
+      对 `name_derived=True` 的场景，`_scene_place_label` 只剩区名（`家乡`），
+      而 `diner` 在 **id 末段**里 —— 端到端就输出成「你们这儿真有的地方：家乡」，
+      用户要的「那要不去 XXX 家餐厅」里那个 **XXX 家餐厅** 没了。第113轮k 实测。
+    ★ 纯拼接：不查索引、不猜名字。数据从哪来是调用方的事。
+    """
+    area = str(area or '').strip()
+    if place_container(area):
+        area = ''
+    detail = ' '.join(str(detail or '').split())
+    core = trim_core_at_type(
+        strip_room_index(' '.join(str(core or '').split())), hits)
+
+    cn = ''
+    for w in (hits or ()):
+        w = str(w or '').strip()
+        if w:
+            cn = place_type_name(w)
+            break
+
+    # ★ 区名**自己带括注**（`城市（地表区）`）⇒ 换一个分隔符，否则两层括注
+    #   读起来分不清哪个是注释（与 113j「区名自带中点」同一条道理）。
+    #   ★ 只在**本函数拼**的那一支生效；`detail` 那一支的字符串是
+    #     `_scene_place_label` 产出的（仍用中点）—— 改它会动 113j 的位置块契约，
+    #     收益只是"好看一眼"，所以不动。
+    if area and ('（' in area or '(' in area):
+        sep = PLACE_JOIN_ALT
+
+    # ★ 括注去重必须**不分大小写**：`place_type_name('dock')` 查不到中文就原样返回
+    #   `dock`，而 `'dock' not in 'Dock'` 会因大小写成立 ⇒ `Dock（dock）` 自我括注。
+    #   `casefold()` 比 `lower()` 更稳（土耳其等等，虽然这里用不上）。
+    def _has(hay, needle):
+        return needle.casefold() in hay.casefold()
+
+    # ① 已经有像样的名字 ⇒ 原样用（`希望之园 · 理想餐厅` 不许再加 `（餐厅）`）
+    if detail:
+        if cn and not _has(detail, cn):
+            return '%s（%s）' % (detail, cn)
+        return detail
+
+    # ② 只剩区名 ⇒ 用原作 id 末段当细节
+    body = core
+    if body:
+        if cn and not _has(body, cn):
+            body = '%s（%s）' % (body, cn)
+        return (area + sep + body) if area else body
+    return area
+
+
+def strip_room_index(core):
+    """去掉**纯数字的房号**：`couch overworld 01` → `couch overworld`。
+
+    ★ 为什么要去：ch3 有 8 间 `dw_couch_overworld_01..05`，留着房号会输出
+      「黑暗世界 · couch overworld 01（沙发）」等 4 条几乎一样的东西 ——
+      模型只会挑花眼，说不出一个具体的。
+    ★ 只去**纯数字**：`tundra inn 2f` 的 `2f` 有意义（二层），不动它。
+    ★ 另去**行首单字母**（`c asgore kitchen` → `asgore kitchen`）：那是 Outertale
+      把区名缩写进 id 的产物，不是店名的一部分。第113轮k 全量人读抓到。
+    """
+    toks = [t for t in str(core or '').split() if t]
+    # ★ 行首的**单字母**是区名缩写（Outertale 的 `c_asgore_kitchen` → `c`）：
+    #   留在 prompt 里像打错字。只认行首、只认单个 ASCII 字母 ——
+    #   `House 1 - stew` 的 `1`、`tundra inn 2f` 的 `2f` 都不受影响。
+    while len(toks) > 1 and len(toks[0]) == 1 and toks[0].isalpha() \
+            and toks[0].isascii():
+        toks.pop(0)
+    while toks and toks[-1].isdigit():
+        toks.pop()
+    return ' '.join(toks)
 
 
 def activity_hint(kind, places, note='', limit=4):
