@@ -41,6 +41,7 @@
 """
 
 import collections
+import re
 
 # ---------------------------------------------------------------- 场景特质
 
@@ -349,10 +350,20 @@ def room_word(raw):
     if not s:
         return ''
     s = s.rsplit('.', 1)[-1]
-    # `rm_` = 黄魂/UT 的房间前缀；`room_` = Deltarune 的（`room_dw_ralsei_castle_front`）
-    for _p in ('rm_', 'room_'):
-        if s.startswith(_p):
-            s = s[len(_p):]
+    # ★★ 前缀必须**循环剥**，而且已知前缀是这几个：
+    #   `rm_`   = 黄魂 / UT 的房间
+    #   `room_` = Deltarune 的房间（但它常常**套着**下一层：`room_dw_…`）
+    #   `dw_`   = 暗世界（dark world）· `lw_` = 光世界（light world）
+    # 第113轮j 只剥一层、漏了 dw_/lw_ ⇒ 模型会读到 `dw garden video`。
+    # 这些**全是我们的命名**，不是作品里的词，露出来等于把内部结构塞给模型。
+    # 循环最多剥 4 层（前缀表长度），防止某个畸形名字把循环拖成死循环。
+    _PREFIXES = ('rm_', 'room_', 'dw_', 'lw_')
+    for _ in range(len(_PREFIXES)):
+        for _p in _PREFIXES:
+            if s.startswith(_p):
+                s = s[len(_p):]
+                break
+        else:
             break
     return ' '.join(part for part in s.replace('_', ' ').split() if part)
 
@@ -382,6 +393,161 @@ def place_hint(here='', home='', near=(), at_home=False):
         return ''
     blocks.append('（这些是位置事实，不是台词 —— 顺着说自己要去哪、想回哪就行，别照着念。）')
     return '\n'.join(blocks)
+
+
+# ---------------------------------------------------------------- 活动与去处（第113轮k）
+
+#: 用户口径（2026-10-26 逐字）：
+#: 「我说的**特定事件**就是指，**吃饭，活动，休息，做任务**等，他能识别出来要去哪，
+#:   并**给出建议**这样的，就像是人类之间问，咱吃饭去吧，别人会回答，
+#:   **那要不去 XXX 家餐厅**？这样的话一样」
+#:
+#: ⇒ 两件事必须分开：① 从**话里**听出"要去干什么"（`detect_activity`，只认意图词）；
+#:   ② 知道**哪儿真能干这事**（`place_matches` / `activity_hint`，只认地点词）。
+#:   ★ 混成一张表会**因果倒置**（"因为人在餐厅所以他在吃饭"）——
+#:     而人说话是"我想吃饭，所以去餐厅"。
+
+#: 活动类型。顺序 = `detect_activity` 的并列兜底顺序，不承载语义。
+ACTIVITY_KINDS = ('eat', 'rest', 'play', 'work')
+
+#: 活动 → 一句人话。**不是台词模板** —— 台词由模型自己组织（见 `activity_hint`）。
+ACTIVITY_SAY = {
+    'eat': '吃点东西',
+    'rest': '歇一会儿',
+    'play': '出去转转',
+    'work': '办点事',
+}
+
+#: 听懂别人在张罗什么。★ 只认**意图**，不认地名（地名在 `PLACE_WORDS`）。
+INTENT_WORDS = {
+    'eat': ('吃', '饭', '饿', '餐', '喝', '咖啡', '茶', '酒', '点心', '夜宵',
+            '早餐', '午饭', '晚饭', '下馆子', 'eat', 'food', 'hungry', 'dinner',
+            'lunch', 'breakfast'),
+    'rest': ('累', '困', '睡', '歇', '休息', '躺', '打个盹', '回去', '回家',
+             'tired', 'sleep', 'rest', 'nap'),
+    'play': ('玩', '逛', '出去', '转转', '溜达', '散步', '活动', '热闹',
+             'walk', 'play', 'stroll', 'hang out'),
+    'work': ('办事', '上班', '上课', '看病', '任务', '工作', '买东西', '买点',
+             'work', 'task', 'errand', 'buy'),
+}
+
+#: 哪儿能干什么。★ 中英两份：Deltarune 有中文名（`西姆的店`），
+#: UT / 黄魂 / OneShot 只有英文原题（`diner` / `inn` / `pizza`）。
+#: ★★ 刻意**不收**这些泛词（都是实测踩出来的误报）：
+#:   `room`（我们的内部前缀，会命中一切）· `park`（`sparks` 含它）·
+#:   `yard`（`graveyard` 是墓地）· `pool`（`poolsroom` 是泳池房）·
+#:   `church`（ch4 有 114 间 `dw_church_*`，会把整池淹没）。
+PLACE_WORDS = {
+    'eat': {
+        'zh': ('餐', '饭', '食', '厨', '咖啡', '茶', '酒馆', '小吃', '面包',
+               '甜点', '食堂', '烘焙'),
+        'en': ('restaurant', 'diner', 'cafe', 'coffee', 'kitchen', 'bakery',
+               'tavern', 'bar', 'dinner', 'lunch', 'breakfast', 'food', 'pizza',
+               'burger', 'soda'),
+    },
+    'rest': {
+        'zh': ('床', '卧室', '睡', '休息', '旅店', '旅馆', '客栈', '沙发', '公寓',
+               '宿舍'),
+        'en': ('bed', 'bedroom', 'sleep', 'rest', 'inn', 'hotel', 'motel', 'home',
+               'house', 'couch', 'lodge', 'cabin', 'dorm', 'apartment'),
+    },
+    'play': {
+        'zh': ('游乐', '公园', '广场', '花园', '庭院', '操场', '游艺', '舞台',
+               '剧场', '泳池', '游戏厅'),
+        'en': ('park', 'plaza', 'garden', 'yard', 'playground', 'arcade', 'stage',
+               'theater', 'theatre', 'amusement', 'carnival'),
+    },
+    'work': {
+        'zh': ('商店', '市场', '工厂', '办公', '图书', '学校', '教室', '医院',
+               '诊所', '实验室', '矿', '码头', '车站', '邮局', '银行'),
+        'en': ('shop', 'store', 'market', 'factory', 'office', 'library', 'school',
+               'hospital', 'clinic', 'lab', 'mine', 'station', 'dock', 'bank'),
+    },
+}
+
+
+def detect_activity(text):
+    """一句话里认「他要去干什么」⇒ `(kind, 命中的词)`；认不出 `(None, '')`。
+
+    ★ 多个活动同时命中时取**句子里最先出现**的那个：
+      "吃完饭去逛逛" 的第一件事是吃饭。按表顺序取会得到与语序无关的答案，那是错的。
+    ★ 空串 / None ⇒ `(None, '')`，不猜。
+    """
+    s = str(text or '').strip().lower()
+    if not s:
+        return (None, '')
+    best_kind, best_word, best_at = None, '', len(s) + 1
+    for kind in ACTIVITY_KINDS:
+        for w in INTENT_WORDS.get(kind, ()):
+            i = s.find(w.lower())
+            if 0 <= i < best_at:
+                best_kind, best_word, best_at = kind, w, i
+    return (best_kind, best_word)
+
+
+def place_matches(text, kind):
+    """这段文本像不像「能干 kind 这件事的地方」⇒ 命中的词列表（空 = 不像）。
+
+    ★★ 调用方传进来的文本**必须已经剥掉区段名**。`ch5` 整个区叫 `garden`，
+      房间 id 全是 `dw_garden_*` —— 不剥的话 106 间房会全部命中 `play`，
+      「这个区叫希望之园」就被读成「每间房都是公园」。第113轮k 实测踩过。
+
+    ★ 英文一律 `\b` 词边界：`sparks` 不含词 `park`，`graveyard` 不含词 `yard`。
+    """
+    # ★ `_` 转空格：`town_school` 里的 `school` 在正则里**不是**词首
+    #   （`\w` 含 `_`）⇒ `\bschool\b` 匹配不上。调用方一般已过 `room_word`，
+    #   但这里再容一次 —— 任何一边漏了都不会静默失效。
+    s = str(text or '').replace('_', ' ').lower()
+    if not s or kind not in PLACE_WORDS:
+        return []
+    table = PLACE_WORDS[kind]
+    out = []
+    for w in table.get('zh', ()):
+        if w in s:
+            out.append(w)
+    for w in table.get('en', ()):
+        if re.search(r'\b%s\b' % re.escape(w), s):
+            out.append(w)
+    return out
+
+
+def activity_hint(kind, places, note='', limit=4):
+    """【这会儿能张罗的事】—— 有人提到要去干什么，他手边**真有哪些地方**可提。
+
+    参数
+    ----
+    kind   : `ACTIVITY_KINDS` 之一；不认识 ⇒ `''`（不产块）
+    places : `[(scene_id, 可读名), ...]`。★ **调用方按"能去"筛好**再传 ——
+             能不能去是门控的事（`world_gate` / 章归属），策略层不碰。
+    note   : 可选的一句上下文（比如"他刚才问要不要一起"）。
+    limit  : 最多列几个。太多模型会挑花眼，反而说不出一个具体的。
+
+    返回 `''` 表示**没有可说的** —— 不产块，而不是写"附近没什么地方"这种废话。
+    """
+    if kind not in ACTIVITY_SAY:
+        return ''
+    names = []
+    for pair in (places or ()):
+        try:
+            _sid, lbl = pair
+        except (TypeError, ValueError):
+            continue
+        lbl = str(lbl or '').strip()
+        if lbl and lbl not in names:
+            names.append(lbl)
+        if len(names) >= max(1, int(limit or 4)):
+            break
+    if not names:
+        return ''
+
+    head = '【这会儿能张罗的事】'
+    if note:
+        head += str(note).strip() + ' '
+    lines = [
+        head + '要去%s，你们这儿真有的地方：%s。' % (ACTIVITY_SAY[kind], '、'.join(names)),
+        '（想接这个话就提一个，用你自己平常的说法 —— 别照着念，也别硬拉人家去。）',
+    ]
+    return '\n'.join(lines)
 
 
 # ---------------------------------------------------------------- 在场者感知（第86轮）
