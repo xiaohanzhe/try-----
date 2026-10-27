@@ -39,6 +39,7 @@ import os
 import statistics
 import sys
 import time
+import urllib.request
 
 import psutil
 
@@ -167,6 +168,64 @@ def stop_training(pids, reason):
             log('终止 %d 失败：%s' % (pid, e))
 
 
+#: 内存吃紧时"先卸载模型再复查"的次数（每次之间等 UNLOAD_WAIT 秒）
+UNLOAD_TRIES = 2
+UNLOAD_WAIT = 10
+#: 卸载后要恢复到下限的多少倍才算"缓解"（刚好过线 ⇒ 下一秒又撞闸，白折腾）
+UNLOAD_OK_FACTOR = 4
+
+
+def mem_avail_mb():
+    return psutil.virtual_memory().available / 1048576.0
+
+
+def unload_model(timeout=180):
+    """让 ollama **主动释放推理进程**（`keep_alive=0`），返回是否成功。
+
+    ★★★ 为什么需要这个（2026-10-28 事故实证）：
+      `llama-server` 的 RSS 会随训练**持续增长** —— 21:54 时 5.9 GB，06:30 时 **11.7 GB**，
+      可用内存被压到 **17 MB**，看护于是直接 terminate 了正在跑 39/75 的训练。
+      但实测：调一次 `keep_alive=0` 卸载，可用内存 **1.21 GB → 13.56 GB（回收 12.35 GB）**，
+      `llama-server` 整个进程退出。
+      ⇒ **内存压力几乎全在推理进程里，卸载就能解**，"杀训练"应该是最后手段而不是第一步。
+      代价只是下一轮要冷加载（实测 4.52 s）+ 重建 prompt 缓存。
+    """
+    try:
+        body = json.dumps({'model': C.MODEL, 'keep_alive': 0}).encode('utf-8')
+        req = urllib.request.Request(C.OLLAMA + '/api/generate', data=body,
+                                     headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return 200 <= r.status < 300
+    except Exception as e:                                  # noqa: BLE001
+        log('  卸载模型失败：%s: %s' % (type(e).__name__, e))
+        return False
+
+
+def relieve_mem(floor_mb, read_mem=None, do_unload=None, tries=None, wait=None):
+    """内存吃紧时**先卸载模型再复查**。返回 `'ok'`（已缓解，可继续跑）/ `'still_low'`（真不足）。
+
+    ★★ 为什么抽成函数：这条分支的**正面路径在真机上复现不出来** ——
+      "卸载前低于下限、卸载后回到下限 4 倍以上" 只有在 `llama-server` 长时间涨到 11 GB
+      之后才会出现（见 `unload_model` 的注释）。不抽出来就**只能靠读代码相信它**。
+      参数可注入 ⇒ 三种组合都能用假件跑一遍。
+    """
+    read_mem = read_mem or mem_avail_mb
+    do_unload = do_unload or unload_model
+    tries = UNLOAD_TRIES if tries is None else tries
+    wait = UNLOAD_WAIT if wait is None else wait
+    for k in range(tries):
+        ok = do_unload()
+        if wait:
+            time.sleep(wait)
+        free = read_mem()
+        log('  第 %d 次卸载%s ⇒ 可用 %.0fMB'
+            % (k + 1, '成功' if ok else '失败', free))
+        if free >= floor_mb * UNLOAD_OK_FACTOR:
+            return 'ok'
+    # 没到"宽裕"档，但只要已经越过下限就继续跑 —— 刚好过线也比杀训练强
+    return 'ok' if read_mem() >= floor_mb else 'still_low'
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--watch', type=int, default=20)
@@ -224,10 +283,18 @@ def main():
 
         pids = row['train_pids']
         if row['mem_avail_mb'] < args.mem_floor:
-            log('🛑 可用内存 %dMB < %dMB，停训练（防换页卡死）'
+            # ★★★ 第113轮q 修（2026-10-28 事故）：原来这里是"一见低内存就 terminate"，
+            #   结果在 39/75 处把训练杀了，而**同一时刻卸载模型能立刻回收 12.35 GB**。
+            #   顺序改成：先卸 → 复查 → 仍不足才杀。杀之前必须先把"能自己解的"解掉。
+            log('⚠️ 可用内存 %dMB < %dMB，先卸载模型试试（不急着杀训练）'
                 % (row['mem_avail_mb'], args.mem_floor))
-            stop_training(pids, 'mem')
-            return 2
+            if relieve_mem(args.mem_floor) == 'still_low':
+                log('🛑 卸载后仍不足 %dMB，停训练（防换页卡死）' % args.mem_floor)
+                stop_training(pids, 'mem')
+                return 2
+            log('  内存已缓解 ⇒ 继续跑（下一个角色会冷加载模型，首轮 prefill 会慢）')
+            time.sleep(args.watch)
+            continue
         if strikes >= TPS_STRIKES:
             log('🛑 连续 %d 次吞吐跌破 %.0f%%（%.2f tok/s），判为疑似降频/过热，停训练并冷却 %ds'
                 % (TPS_STRIKES, TPS_FLOOR * 100, last_tps or -1, COOL_SECONDS))
