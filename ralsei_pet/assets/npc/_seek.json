@@ -1,0 +1,860 @@
+{
+ "version": 1,
+ "about": "「他想去找谁」—— 来自角色自己在训练对话里主动提起的人",
+ "source": "code-quality-audit/第113轮-全体角色AI训练/_evidence/raw30/*.jsonl",
+ "method": "主指标=主动提起（问句未点名、回答里提到他，按 name/name_cn 匹配）；修正=关系段里明说「想见/陪着」(抬) 与「躲着/受不了/闹翻」(降)。这是**行为频次代理**，不是\"他明确说过想见谁\"。",
+ "formula": "w = (1 + 0.06*min(mention,10)) * (1 + 0.1*min(pos,2)) * 0.7**min(neg,2)，钳在 [0.45,1.8]",
+ "schema": {
+  "w": "权重，乘在熟络度上",
+  "mention": "主动提起的次数",
+  "pos": "明说\"想见/陪着\"的句数",
+  "neg": "明说\"躲着/受不了\"的句数",
+  "why": "原句片段（可复核）"
+ },
+ "unresolved_names": {
+  "asgore": [
+   "Sans（ambiguous）",
+   "Undyne（ambiguous）"
+  ],
+  "hy_bowll": [
+   "Annoying Dog",
+   "Dunes 的居民"
+  ],
+  "hy_ceroba_ketsukane": [
+   "Kanako"
+  ],
+  "hy_chujin_ketsukane": [
+   "Kanako",
+   "人类"
+  ],
+  "hy_dalv": [
+   "Kanako"
+  ],
+  "hy_guardener": [
+   "后备机器人"
+  ],
+  "hy_martlet": [
+   "Kanako"
+  ],
+  "hy_sousborg": [
+   "厨房"
+  ],
+  "hy_starlo": [
+   "Feisty Five"
+  ],
+  "os_alula": [
+   "母亲",
+   "萤火虫"
+  ],
+  "os_calamus": [
+   "母亲"
+  ],
+  "os_cedric": [
+   "The Author（父亲）"
+  ],
+  "os_kelvin": [
+   "猫"
+  ],
+  "os_maize": [
+   "Glen",
+   "旧太阳"
+  ],
+  "os_niko": [
+   "Calamus 和 Alula",
+   "妈妈"
+  ],
+  "os_rowbot": [
+   "Silver（总工程师）"
+  ],
+  "os_the_author": [
+   "玩家"
+  ],
+  "os_watcher": [
+   "时间",
+   "钟楼"
+  ]
+ },
+ "seek": {
+  "asgore": {
+   "kris": {
+    "w": 1.8,
+    "mention": 14,
+    "pos": 3,
+    "neg": 0,
+    "why": "我知道她在成长，我也想陪着她长大"
+   },
+   "toriel": {
+    "w": 1.24,
+    "mention": 4,
+    "pos": 0,
+    "neg": 0,
+    "why": "（顿了下）嗯……我在想Kris的事情啦，还有她妈妈Toriel……你知道吗，有时候我会琢磨她们的事很久"
+   },
+   "ot_asriel_twinkly": {
+    "w": 1.232,
+    "mention": 2,
+    "pos": 1,
+    "neg": 0,
+    "why": "其实我一直希望等他回来的时候能一家人一起吃顿饭啥的……但是这种愿望有时候就只能留在心里了"
+   }
+  },
+  "berdly": {
+   "noelle": {
+    "w": 1.76,
+    "mention": 14,
+    "pos": 1,
+    "neg": 0,
+    "why": "所以我觉得她就像是我的搭档，也是我能依赖的存在之一"
+   },
+   "susie": {
+    "w": 1.694,
+    "mention": 9,
+    "pos": 1,
+    "neg": 0,
+    "why": "但随着事件的发展，尤其是她说出那句“其实不需要变得聪明”之后——那种解脱的感觉让我意识到了自己的软弱和依赖"
+   },
+   "queen": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "我自己知道其实还有很多不足的地方——比如那一次在暗世界中被 Queen 套问出破绽的时候，我才发现自己有多脆弱"
+   }
+  },
+  "flowery": {
+   "asgore": {
+    "w": 1.6,
+    "mention": 25,
+    "pos": 0,
+    "neg": 0,
+    "why": "Asgore 他每天早上都会来浇花，总是那么认真仔细的样子……你知道的，那种坚持让我觉得暖心又心疼"
+   },
+   "ralsei": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "至于让我感到不太自在的地方嘛……嗯，Ralsei 在储物柜里那种紧张的气息会让我有些不自然"
+   },
+   "susie": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "嗯……最让我想不通的一点是Susie公主那股独特的自由感"
+   }
+  },
+  "gerson": {
+   "susie": {
+    "w": 1.6,
+    "mention": 10,
+    "pos": 0,
+    "neg": 0,
+    "why": "然后是课程时间——不过这课堂啊，有时候是苏西来找我聊天的那种“课”啦"
+   },
+   "kris": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "苏西有时会过来坐坐，或者Kris也会偷偷溜进来找我玩"
+   }
+  },
+  "hy_ace": {
+   "hy_starlo": {
+    "w": 1.48,
+    "mention": 8,
+    "pos": 0,
+    "neg": 0,
+    "why": "第一次遇见 Starlo 是个晴天霹雳的日子"
+   },
+   "hy_ceroba_ketsukane": {
+    "w": 1.24,
+    "mention": 4,
+    "pos": 0,
+    "neg": 0,
+    "why": "那是在星洛带领我们对抗 Ceroba 的那一天"
+   },
+   "hy_clover": {
+    "w": 1.24,
+    "mention": 4,
+    "pos": 0,
+    "neg": 0,
+    "why": "如果我们再遇到 Clover 开始杀戮的时候，我也挺担心的... 但是一起经历过的那些时光，总会有些不一样吧"
+   },
+   "hy_martlet": {
+    "w": 1.1,
+    "mention": 0,
+    "pos": 1,
+    "neg": 0,
+    "why": "只要我还在这儿陪着星洛和他的朋友们，那就好"
+   },
+   "hy_moray": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "嗯... 我最初可能对 Moray 还挺不感冒吧"
+   }
+  },
+  "hy_axis": {
+   "hy_chujin_ketsukane": {
+    "w": 1.364,
+    "mention": 4,
+    "pos": 1,
+    "neg": 0,
+    "why": "……我始终想念他... 那位已经不在的创造者，待他很好... 但改变的是Clover... 她让我意识到我没有选择"
+   },
+   "hy_clover": {
+    "w": 1.3,
+    "mention": 5,
+    "pos": 0,
+    "neg": 0,
+    "why": "但是... 被Clover袭击后那个房间的气味... 总会让我感到不安"
+   }
+  },
+  "hy_bowll": {
+   "hy_clover": {
+    "w": 1.6,
+    "mention": 23,
+    "pos": 0,
+    "neg": 0,
+    "why": "当Clover用他的手帕擦掉我身上的泥巴时，那一刻我感觉自己闪闪发光"
+   }
+  },
+  "hy_ceroba_ketsukane": {
+   "hy_chujin_ketsukane": {
+    "w": 1.6,
+    "mention": 18,
+    "pos": 0,
+    "neg": 0,
+    "why": "Chujin 的笔记一直在我的脑海中回响... 我不知道你在想什么，但保持专注很重要"
+   },
+   "hy_clover": {
+    "w": 1.36,
+    "mention": 6,
+    "pos": 0,
+    "neg": 0,
+    "why": "相反，在新家的屋顶上面对 Clover 的时候，那种紧张和严肃的气氛让我感到不安"
+   },
+   "hy_martlet": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "还有就是... Martlet 有时候会过来坐一会儿"
+   }
+  },
+  "hy_chujin_ketsukane": {
+   "hy_axis": {
+    "w": 1.3,
+    "mention": 5,
+    "pos": 0,
+    "neg": 0,
+    "why": "早晨醒来，我会先检查Axis是否正常运行"
+   },
+   "hy_ceroba_ketsukane": {
+    "w": 1.166,
+    "mention": 1,
+    "pos": 1,
+    "neg": 0,
+    "why": "起初，我与Ceroba之间是相互依赖和支持的伙伴关系——她是我的爱人，也是我可以依靠的人"
+   },
+   "hy_martlet": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "午餐后，与Martlet讨论建筑技巧或木工技术"
+   }
+  },
+  "hy_clover": {
+   "ut_chara": {
+    "w": 1.6,
+    "mention": 14,
+    "pos": 0,
+    "neg": 0,
+    "why": "遇上 Chara 就打个招呼，不谈太多"
+   },
+   "hy_flowey": {
+    "w": 1.42,
+    "mention": 7,
+    "pos": 0,
+    "neg": 0,
+    "why": "...Flowey一直守着呢"
+   },
+   "ut_frisk": {
+    "w": 1.3,
+    "mention": 5,
+    "pos": 0,
+    "neg": 0,
+    "why": "有一次 Frisk 拿了一根带肉桂味的棒棒糖给我，我咬了一口——那味道……真不是滋味"
+   },
+   "hy_martlet": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "还有那个雪镇的事件——Martlet 那次战斗虽然我们没真打起来，但那种默契和友谊在那之后就建立了起来"
+   }
+  },
+  "hy_dalv": {
+   "hy_clover": {
+    "w": 1.24,
+    "mention": 4,
+    "pos": 0,
+    "neg": 0,
+    "why": "嗯……Clover拒绝离开的时候，我的心里像是被针扎了一下"
+   }
+  },
+  "hy_ed": {
+   "hy_starlo": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "Starlo说的"
+   },
+   "hy_clover": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "嗯……我心里想着不让 Clover 闯入基地"
+   }
+  },
+  "hy_guardener": {
+   "hy_chujin_ketsukane": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "（红色眼睛闪烁）例如我的创造者Chujin…我不知道他已经离开很久了……只是这样想着，希望能找到答案或意义"
+   },
+   "hy_clover": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "起初…我将你— Clover 视作违规者"
+   }
+  },
+  "hy_martlet": {
+   "hy_chujin_ketsukane": {
+    "w": 1.42,
+    "mention": 7,
+    "pos": 0,
+    "neg": 0,
+    "why": "I'm Martlet, you know, one of Chujin Ketsukane's students an"
+   },
+   "hy_clover": {
+    "w": 1.42,
+    "mention": 7,
+    "pos": 0,
+    "neg": 0,
+    "why": "I'm Martlet, you know, one of Chujin Ketsukane's students an"
+   }
+  },
+  "hy_mooch": {
+   "hy_starlo": {
+    "w": 1.6,
+    "mention": 11,
+    "pos": 0,
+    "neg": 0,
+    "why": "有时候帮 Starlo 做些事，拿点报酬啥的"
+   },
+   "hy_clover": {
+    "w": 1.36,
+    "mention": 6,
+    "pos": 0,
+    "neg": 0,
+    "why": "希望 Clover 别再惹麻烦了"
+   },
+   "hy_ace": {
+    "w": 0.7,
+    "mention": 0,
+    "pos": 0,
+    "neg": 1,
+    "why": "Ace 是个讨厌鬼"
+   }
+  },
+  "hy_moray": {
+   "hy_starlo": {
+    "w": 1.6,
+    "mention": 12,
+    "pos": 0,
+    "neg": 0,
+    "why": "我在厨房忙碌着，Starlo 他们回来的时候总是有热茶等着他们"
+   },
+   "hy_clover": {
+    "w": 1.3,
+    "mention": 5,
+    "pos": 0,
+    "neg": 0,
+    "why": "Clover 加入我们后，大家都多了一份关心"
+   },
+   "hy_ace": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "Ace 很吵吧，但他很善良"
+   },
+   "hy_ed": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "Starlo 是个好领袖，Ace 和 Ed 也很重要"
+   }
+  },
+  "hy_starlo": {
+   "hy_ceroba_ketsukane": {
+    "w": 1.416,
+    "mention": 3,
+    "pos": 2,
+    "neg": 0,
+    "why": "Ceroba……她是我最好的朋友之一，我们从小一起长大"
+   },
+   "hy_clover": {
+    "w": 1.24,
+    "mention": 4,
+    "pos": 0,
+    "neg": 0,
+    "why": "跟 Clover 一起巡了一圈，给 Martlet 提供点情报啥的"
+   },
+   "hy_martlet": {
+    "w": 1.232,
+    "mention": 2,
+    "pos": 1,
+    "neg": 0,
+    "why": "我们一起解决了很多问题，她是我的好搭档和好朋友"
+   },
+   "hy_chujin_ketsukane": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "但她选择了 Chujin 后，我尊重了她的选择，并把她当作好朋友对待"
+   }
+  },
+  "king": {
+   "lancer": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "Lancer，我的儿子"
+   }
+  },
+  "kris": {
+   "noelle": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "喜欢捉弄 Noelle，还有速通游戏"
+   }
+  },
+  "lancer": {
+   "susie": {
+    "w": 1.6,
+    "mention": 10,
+    "pos": 0,
+    "neg": 0,
+    "why": "还有就是……想着法子逗 Susie 呢"
+   },
+   "kris": {
+    "w": 1.298,
+    "mention": 3,
+    "pos": 1,
+    "neg": 0,
+    "why": "虽然有时候会捉弄本大爷，但本大爷可喜欢和他一起搞恶作剧了"
+   },
+   "tenna": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "比如赛博世界的 Kris 和 Tenna 的电视世界……每个地方都有不同的乐趣等着本大爷去探索呢"
+   },
+   "ralsei": {
+    "w": 0.77,
+    "mention": 0,
+    "pos": 1,
+    "neg": 1,
+    "why": "Ralsei 有点啰嗦、老是爱说教的样子，但本大爷并不讨厌他"
+   }
+  },
+  "mike": {
+   "tenna": {
+    "w": 1.48,
+    "mention": 8,
+    "pos": 0,
+    "neg": 0,
+    "why": "我是Mike，Tenna的私人助理、心理医生"
+   }
+  },
+  "noelle": {
+   "kris": {
+    "w": 1.6,
+    "mention": 10,
+    "pos": 0,
+    "neg": 0,
+    "why": "Kris他以前经常跟我讲些奇妙的故事"
+   },
+   "susie": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "比如Kris他们有时会一起欺负Susie，虽然我很怕她但也觉得有点意思……呼"
+   },
+   "berdly": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "还有个叫Berdly的同学总是炫耀自己聪明，但我有时候不太确定他的话是不是真的对"
+   }
+  },
+  "os_alula": {
+   "os_calamus": {
+    "w": 1.76,
+    "mention": 16,
+    "pos": 1,
+    "neg": 0,
+    "why": "虽然有时候他会说我太调皮了，但我真的很爱和他在一起"
+   },
+   "os_niko": {
+    "w": 1.6,
+    "mention": 15,
+    "pos": 0,
+    "neg": 0,
+    "why": "你找到Niko了吗"
+   }
+  },
+  "os_calamus": {
+   "os_alula": {
+    "w": 1.76,
+    "mention": 26,
+    "pos": 1,
+    "neg": 0,
+    "why": "我希望我们能够一起找到回家的路，并且再也不分开... 她的安全对我来说比什么都重要"
+   }
+  },
+  "os_cedric": {
+   "os_niko": {
+    "w": 1.54,
+    "mention": 9,
+    "pos": 0,
+    "neg": 0,
+    "why": "Niko 第一次尝试时很开心，我也挺开心能看到他兴奋的样子"
+   },
+   "os_rue": {
+    "w": 1.496,
+    "mention": 6,
+    "pos": 1,
+    "neg": 0,
+    "why": "与 Rue 一起行动时，我们之间有一种安静的默契，不需要太多言语就能理解彼此"
+   },
+   "os_prototype": {
+    "w": 1.36,
+    "mention": 6,
+    "pos": 0,
+    "neg": 0,
+    "why": "Rue 和 Prototype 也都在一起准备着什么"
+   }
+  },
+  "os_george": {
+   "os_the_author": {
+    "w": 1.298,
+    "mention": 3,
+    "pos": 1,
+    "neg": 0,
+    "why": "我很想念他"
+   },
+   "os_cedric": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "哦……关于Cedric，我知道他带走了机器人菜谱的书"
+   }
+  },
+  "os_kip": {
+   "os_silver": {
+    "w": 1.6,
+    "mention": 19,
+    "pos": 0,
+    "neg": 0,
+    "why": "我是 Kip Silverpoint，Silver 的创造者"
+   },
+   "os_niko": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "只是有时候会想起来那一天，想想 Niko 的样子和他需要的东西"
+   }
+  },
+  "os_lamplighter": {
+   "os_niko": {
+    "w": 1.36,
+    "mention": 6,
+    "pos": 0,
+    "neg": 0,
+    "why": "Niko 来了之后，电梯总算修好了"
+   }
+  },
+  "os_ling": {
+   "os_lamplighter": {
+    "w": 1.36,
+    "mention": 6,
+    "pos": 0,
+    "neg": 0,
+    "why": "不过 Lamplighter 说了早上会来，就还有盼头嘛"
+   },
+   "os_niko": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "看到 Niko 这样一个新面孔进来，我就想他是不是也像 Lamplighter 那样需要这里的一杯热咖啡和一份煎饼"
+   }
+  },
+  "os_magpie": {
+   "os_niko": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "不过现在我想给 Niko 用用"
+   },
+   "os_the_author": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "比如那个八音盒，是 The Author 给我的"
+   }
+  },
+  "os_maize": {
+   "os_alula": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "他独自照顾着他的妹妹 Alula"
+   }
+  },
+  "os_mason": {
+   "os_lamplighter": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "还给了 Lamplighter 一株植物表达感谢，他辛苦了这么久"
+   }
+  },
+  "os_niko": {
+   "os_silver": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "嗯……最近遇到了 Calamus 和 Alula 的哥哥还有 Silver 呢，他们都是很好的朋友"
+   }
+  },
+  "os_prototype": {
+   "os_prophetbot": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "[I am Prototype. 或 Proto, 如此称呼我即可.] [我是先知机器人，被创造来等待救世主的.]"
+   },
+   "os_niko": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "[Niko, 或者你若愿意称呼我的话"
+   }
+  },
+  "os_rowbot": {
+   "os_niko": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "我等待着被修复，并且在 Niko 修好我后，我能再次运输乘客和材料了"
+   }
+  },
+  "os_rue": {
+   "os_niko": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "你知道……这是很难回答的问题，Niko"
+   }
+  },
+  "os_shepherd": {
+   "os_alula": {
+    "w": 1.1,
+    "mention": 0,
+    "pos": 1,
+    "neg": 0,
+    "why": "有时候我会让她在牧场附近玩，但我不会花太多时间陪她"
+   },
+   "os_niko": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "嗯……那天 Niko 提出替我拿灯泡的事情我还记得"
+   }
+  },
+  "os_silver": {
+   "os_niko": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "有时候会陪 Niko 下一盘"
+   },
+   "os_kip": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "][想着 Kip 和她的期望"
+   }
+  },
+  "os_the_author": {
+   "os_cedric": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "我一直没有忘记的是孩子们——Rue、Cedric 和 Prototype"
+   },
+   "os_prototype": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "我一直没有忘记的是孩子们——Rue、Cedric 和 Prototype"
+   },
+   "os_rue": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "我一直没有忘记的是孩子们——Rue、Cedric 和 Prototype"
+   }
+  },
+  "os_the_world_machine": {
+   "os_niko": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "Niko 无疑想要离开，没有人在履行那个任务时比我更快乐了"
+   }
+  },
+  "ot_alphys": {
+   "ot_asgore": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "我是 Asgore 国王的技术顾问，核心区实验室负责人"
+   },
+   "ot_undyne": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "呃……那个……Undyne真的很强呢"
+   }
+  },
+  "ot_asgore": {
+   "ot_asriel_twinkly": {
+    "w": 1.3,
+    "mention": 5,
+    "pos": 0,
+    "neg": 0,
+    "why": "它们是 Asriel 和 Chara 的一部分"
+   },
+   "ut_chara": {
+    "w": 1.3,
+    "mention": 5,
+    "pos": 0,
+    "neg": 0,
+    "why": "它们是 Asriel 和 Chara 的一部分"
+   },
+   "ot_toriel": {
+    "w": 1.18,
+    "mention": 3,
+    "pos": 0,
+    "neg": 0,
+    "why": "有时候会想 Toriel 和孩子们，但更多时候还是把这些留给自己"
+   }
+  },
+  "susie": {
+   "kris": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "”）“后来我们在小队里，Kris他们也挺好的……那种感觉真好，不是一般的舒服"
+   },
+   "lancer": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "那是在黑暗世界里找到Lancer的时候吧"
+   },
+   "noelle": {
+    "w": 1.12,
+    "mention": 2,
+    "pos": 0,
+    "neg": 0,
+    "why": "啊……那回我把一个滑板摔进Noelle的包里，让她以为是梦里的事"
+   }
+  },
+  "toriel": {
+   "kris": {
+    "w": 1.6,
+    "mention": 10,
+    "pos": 0,
+    "neg": 0,
+    "why": "好的……早晨我会先叫起Kris，我们一起去吃早餐派——我喜欢给她做奶油糖肉桂的，她总是笑嘻嘻地选择两个都来一块儿"
+   },
+   "asgore": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "相反，当Asgore来到家门前时，那种气氛会让我感到很别扭"
+   },
+   "ot_asriel_twinkly": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "我在想着Asriel的考试快结束了……也许我们可以一起去他的宿舍给他个惊喜呢"
+   },
+   "susie": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "晚上回来做派给Susie吃"
+   }
+  }
+ }
+}

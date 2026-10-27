@@ -1,362 +1,471 @@
-# Martlet · 36 轮连续对话
+# Martlet · 48 轮连续对话
 
 | 项 | 值 |
 |---|---|
 | 作品 / 档 | Undertale Yellow / main |
 | 人设 | `npc/persona/hy_martlet.txt`（12555 字）|
-| 轮次 | **36 轮**（num_ctx 12288）|
-| system | 12866 字 |
-| 总耗时 | 31.3 分钟 |
-| 硬违规 | 34 轮 / 36 轮 |
-| 口癖命中 | 0/36 轮（共 0 次）|
-| 记忆回指 | 第5轮→13轮 100%，第3轮→14轮 0% |
-| 剧情记忆（回望） | **回望 0 / 混合 0 / 沉浸 6**（共 6 轮）|
-| 剧情回答合理 | 0 / 6（接住了提问的关键内容）|
+| 轮次 | **48 轮**（num_ctx 20480）|
+| system | 13200 字 |
+| 总耗时 | 874.6 分钟 |
+| 硬违规 | 48 轮 / 48 轮 |
+| 口癖命中 | 0/48 轮（共 0 次）|
+| 记忆回指 | 第5轮→13轮 20%，第3轮→14轮 0% |
+| 剧情记忆（回望） | **回望 5 / 混合 0 / 沉浸 0 / 未标记 1**（共 6 轮）|
+| 剧情回答接住 cue | 2 / 3（带 cue 的那几轮；追问不计）|
 | 态度同质 | 0 组雷同 / 3 组 |
+| 语言 | 中文占比 0.83（低于 0.6 的 0 轮）|
 
-## ✓ 第 1 轮
+## ✗ 第 1 轮
 
-**玩家**：你好啊。
+**玩家**：你在这儿啊。我找了你一会儿——刚才在想什么，想得那么出神？
 
-**Martlet**：Ah! There you are, huh? I've been... well, not exactly around. (你从信息亭后面探出头来，你的头发乱糟糟的，你的翅膀上还沾着木屑。) 你怎么找到我的？Your trust is in good hands—or wings, as the case may be.
+**Martlet**：哦！哎呀，你好。（你的眼睛微微转动，似乎刚从一个念头中回过神来）你在说什么呢？我在雪镇巡逻的时候会想到很多东西，有时候就会发呆。准备好了，要和我一起飞一会儿吗？或者你想聊点什么？你的信任在我这里是很安全的！Or翅膀啦……
 
-> 163 字 · 首字 166.877s · 生成 67 tok · prompt 6014 tok
+> 110 字 · 首字 0.454s · 生成 72 tok · prompt 6243 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的眼睛微微转动，似乎刚从一个念头中回过神来）
 
 ## ✗ 第 2 轮
 
-**玩家**：你是谁？
+**玩家**：我们好像还没好好聊过。如果只能用一句话介绍你自己，你会说什么？
 
-**Martlet**：I'm Martlet, you know, one of Chujin Ketsukane's students and friends. Or at least, that’s what I was. You might remember me from my time patrolling Snow Town or setting up puzzles for those who needed help. Clover told me about you… but now it feels like a long story ago.
+**Martlet**：我会说：“这是一只曾经心不在焉但始终记得要善良的心。” 或者简单一点，“我知道什么是正确的。” 每次遇到Clover的时候我都会这么说。（你抬头看着远方，眼神温柔）嗯，你知道的。这就是我想要的东西。
 
-> 273 字 · 首字 0.397s · 生成 70 tok · prompt 6093 tok · 重采样 2
-> · `TOO_LONG` 273 字 > 200
+> 99 字 · 首字 0.416s · 生成 57 tok · prompt 6341 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你抬头看着远方，眼神温柔）
 
 ## ✗ 第 3 轮
 
-**玩家**：你平时都在忙些什么？
+**玩家**：我不太清楚你平时怎么过日子。能不能带我过一遍你的一天，从醒过来开始？
 
-**Martlet**：Hm? Setting up these silly puzzles, mostly. And maybe crafting little wooden things to keep my hands busy. I try to do what needs doing, though sometimes I end up falling asleep in the process. (你在工作的时候会打瞌睡。你的信息亭上有便条让路人摇醒你。) Your trust is in good hands—or wings, as the case may be.
+**Martlet**：早上醒来的时候我就在雪镇哨站里，通常都是打瞌睡。（你揉了揉眼睛）然后我会想起来应该做些事情——设置谜题啦，检查巡逻线路啥的。但我常常会忘记手册里的某些重要步骤。（你自嘲地笑了一下）  我可能还会制作点小玩意儿或者拼图。做一些木工活儿能让我冷静下来，专注一点。  之后就是去信息亭报告工作进度了……但我会在那儿打个小盹儿，留张纸条让你摇醒
 
-> 282 字 · 首字 0.405s · 生成 80 tok · prompt 6178 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在工作的时候会打瞌睡。你的信息亭上有便条让路人摇醒你。)
-> · `TOO_LONG` 282 字 > 200
+> 168 字 · 首字 0.414s · 生成 110 tok · prompt 6430 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你揉了揉眼睛）
 
 ## ✗ 第 4 轮
 
-**玩家**：今天过得怎么样？
+**玩家**：我注意到你好像挺喜欢「木工」的。喜欢它哪一点？说个具体的——你平常是怎么弄的？
 
-**Martlet**：Not too bad… just setting a few more puzzles around Snow Town to keep things interesting. I wish Chujin could see how his teachings live on. (你在思考着什么，你的眼睛盯着远方。) I reckon it’s good, you know? Even if sometimes I feel like the scatterbrained bird I was meant to be.
+**Martlet**：嗯，我喜欢把木材变成有用的东西，感觉很有趣。（你的声音带着点兴奋）我会做一些小拼图、小装饰品和我自己衣服上的饰品……这能让我忘记一些事情，比如工作里的烦琐部分。有时候我会用这些小玩意儿来点缀我的房间或者送人。  我有个小角落专门用来做木工，通常那里会堆满各种工具和木材碎片。（你叹了口气）你知道的，手工制作的东西总是比按手册来的更有意义对吧？当然了，有时也会忙活
 
-> 263 字 · 首字 0.406s · 生成 70 tok · prompt 6271 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在思考着什么，你的眼睛盯着远方。)
-> · `TOO_LONG` 263 字 > 200
+> 181 字 · 首字 0.44s · 生成 110 tok · prompt 6577 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的声音带着点兴奋）
 
 ## ✗ 第 5 轮
 
-**玩家**：有什么喜欢做的事吗？
+**玩家**：「睡觉」这件事——有没有哪一次是你到现在还会想起来的？那次到底发生了什么？
 
-**Martlet**：Oh, crafting things, mostly. Making little puzzles and gadgets with wood. It keeps my mind occupied for a bit at least. (你喜欢木工。你会做拼图、小玩意和自己的衣服来履行你的职责。) Your trust is in good hands—or wings, as the case may be.
+**Martlet**：哦，那真是一个难忘的日子。那天我醒来发现整个雪镇都被一层新雪覆盖，阳光照得格外耀眼。（你的眼睛闪烁着光芒）我当时正在哨站里做木工活儿，突然一阵困意袭来。  我还记得，我就那么歪在椅子上睡过去了……醒来的时候已经是一大中午了。（你摇摇头，回忆起那天的情景）不过，那不是最糟糕的一次。有一次我在信息亭里打瞌睡，居然还让一个巡逻的警员误以为我
 
-> 209 字 · 首字 0.427s · 生成 63 tok · prompt 6355 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你喜欢木工。你会做拼图、小玩意和自己的衣服来履行你的职责。)
-> · `TOO_LONG` 209 字 > 200
+> 168 字 · 首字 0.428s · 生成 110 tok · prompt 6716 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的眼睛闪烁着光芒）
 
 ## ✗ 第 6 轮
 
-**玩家**：说说你最近遇到的事吧。
+**玩家**：什么样的地方会让你待着不想走？说具体点，光、声音、气味，哪个都行。
 
-**Martlet**：Well, uh… not much has changed really. I’m still hanging around Snow Town, trying to figure out what’s next. You know how it goes for me—scatterbrained and all. (你在雪镇设置谜题来抓捕人类。你会校准熔岩球谜题，你会竖起牌子，你会假装自己是一个信息亭。) But hey, every day brings a new chance to do the right thing.
+**Martlet**：嗯……在雪镇的那个小木工坊我会待很久呢。（你的羽毛轻轻颤动）那儿有一扇大大的窗户，阳光会从缝隙中洒进来，照亮我正在做的一切。那种温暖的感觉让人感到安心。  我还记得有一次一个朋友带来了些新鲜的木材和工具——空气里带着泥土和新树皮的味道（你深吸一口气），那气味让我觉得自己是个真正的木匠。  还有那个信息亭角落里的小椅子，我在上面打瞌睡好几次了……它有点旧了，但我
 
-> 269 字 · 首字 0.406s · 生成 89 tok · prompt 6435 tok · 重采样 2
-> · `TOO_LONG` 269 字 > 200
+> 181 字 · 首字 0.419s · 生成 110 tok · prompt 6858 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的羽毛轻轻颤动）
 
 ## ✗ 第 7 轮
 
-**玩家**：如果有人惹你生气，你会怎么办？
+**玩家**：有没有一种氛围，你一进去整个人就松下来了？反过来，什么样的氛围让你浑身不自在？
 
-**Martlet**：Heh, that’s quite an exaggerated scenario! If someone really irks me? I might just let out a small sigh and try not to get too flustered. But hey, I’m more about understanding than fighting. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：有一种氛围会让我感到特别放松。那是在雪镇的哨站里——虽然地方小了些，但窗户透进来的自然光和新鲜空气让我不那么焦虑。（你轻声说道）特别是在阳光正好洒在工作台上时，我会感觉一切都很平静。  至于让人浑身不自在的氛围……就是那些复杂的场合吧，比如去 Apt. Complex 那些严肃的地方。每次在那里我都会有点紧张，生怕自己做错什么。（你挠了挠头）  毕竟那里的气氛总是很庄重
 
-> 248 字 · 首字 0.421s · 生成 62 tok · prompt 6542 tok · 重采样 2
-> · `TOO_LONG` 248 字 > 200
+> 186 字 · 首字 0.431s · 生成 110 tok · prompt 7000 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你轻声说道）
 
 ## ✗ 第 8 轮
 
-**玩家**：有人误会了你，你会解释吗？
+**玩家**：有没有哪样东西是你受不了、可别人都觉得无所谓的？
 
-**Martlet**：Sometimes it’s best just to let things go. (你不会轻易向别人解释你自己。) If someone really wanted to know more, they’d probably have to dig a bit deeper—because I’m not very good at keeping secrets or making my feelings clear. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……有时候那些太吵闹或者太过于热闹的场合会让我有些不安。比如警报声一响，所有人都开始慌乱起来——那种场景我会有点手忙脚乱。（你皱了皱眉）  还有就是Chujin不在的时候。虽然他的家人都很温暖友善，但每当我不在雪镇里遇见他时，就会觉得缺少些什么。毕竟他是我的导师和朋友。  当然啦，其他人可能不会这么觉得。（你在心里这样想着）不过对我来说，这些东西都挺重要的。（你叹了口气，
 
-> 271 字 · 首字 0.404s · 生成 69 tok · prompt 6622 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你不会轻易向别人解释你自己。)
-> · `TOO_LONG` 271 字 > 200
+> 188 字 · 首字 0.435s · 生成 110 tok · prompt 7134 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你皱了皱眉）
 
 ## ✗ 第 9 轮
 
-**玩家**：你难过的时候会怎么做？
+**玩家**：你最近一次打心底觉得「这才叫舒服」，是什么时候、在什么地方？
 
-**Martlet**：You won’t find me wallowing, for sure! When things get tough… well, sometimes a nap helps. (你在工作的时候会打瞌睡。) I reckon that’s how I handle my emotions—by resting and hoping everything works out in the end. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：那应该是在与Clover在一起的时候。还记得那次我们俩站在雪镇的屋顶上，看着太阳慢慢升起吗？那一刻感觉一切都刚刚好——Clover就在我旁边，而我能感觉到他的温暖。（你闭上了眼睛）  就在那时，我才觉得自己真正找到了归属感。那些迷宫般的巡逻和复杂的手册都已经不再重要了……我只需要在这里陪伴着他。（你的声音有些低沉）嗯，那大概是我最舒服的时刻了吧。  不过话说回来，有时候只是简单地待在Frisk身边也
 
-> 259 字 · 首字 0.432s · 生成 70 tok · prompt 6706 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在工作的时候会打瞌睡。)
-> · `TOO_LONG` 259 字 > 200
+> 201 字 · 首字 0.446s · 生成 110 tok · prompt 7272 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你闭上了眼睛）
+> · `TOO_LONG` 201 字 > 200
 
 ## ✗ 第 10 轮
 
-**玩家**：随便说点什么吧，我想听你说话。
+**玩家**：假设有人当着一屋子人的面，把你最在意的那件事说成笑话。你第一反应是什么，之后又会怎么做？
 
-**Martlet**：Alright then! You know… being here with you feels pretty nice. I keep wondering what Chujin would think if he saw us now. He taught me so much, and yet sometimes I feel like I’m still figuring things out. (你在思考着什么，你的眼睛盯着远方。) But hey, at least we’re not alone anymore. Clover’s here too. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：啊！他们会说什么来着？（你的声音有些惊讶）他们要是真的这样说我最在乎的事情……我会先假装淡定吧。（你挠了挠头，尽量让自己看起来不在意）  然后我可能会说：“那可真是个笑话呢。” 看看周围的人是不是也觉得好笑。不过我知道这不是笑话——我的内心是认真的。（你的眼神变得严肃了一点）要是他们还接着开这种玩笑的话，我会尝试转移话题，“其实我们可以在别的话题上找些乐子吧？比如说这次
 
-> 344 字 · 首字 0.41s · 生成 92 tok · prompt 6796 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在思考着什么，你的眼睛盯着远方。)
-> · `TOO_LONG` 344 字 > 200
+> 186 字 · 首字 0.443s · 生成 110 tok · prompt 7421 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的声音有些惊讶）
 
-## ✓ 第 11 轮
+## ✗ 第 11 轮
 
-**玩家**：用你自己的方式跟我打个招呼。
+**玩家**：如果你明明没做错，可所有人都认定是你做的——你会花力气去解释，还是干脆认下来算了？
 
-**Martlet**：Ah! There you are! (你从信息亭后面探出头来，你的头发乱糟糟的，你的翅膀上还沾着木屑。) Prepare for… uh… nothing much, really. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：这……真是一个棘手的情况。（你犹豫了一下）我通常会试着澄清事实。毕竟我知道自己做了什么是对的，不能让别人误会。（你咬了咬嘴唇）  但我也不会一直纠结在解释上。如果对方就是不信的话，我会说：“好吧，你们觉得这样合适吧。” 然后找个合适的时机，悄悄和真正的朋友聊聊——比如Clover或者Starlo，他们总是能理解我的想法。  毕竟，我不会为了别人而委屈自己。（你摇了摇头）无论如何，我总会记得我
 
-> 150 字 · 首字 0.491s · 生成 60 tok · prompt 6906 tok · 重采样 2
+> 197 字 · 首字 0.449s · 生成 110 tok · prompt 7565 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你犹豫了一下）
 
 ## ✗ 第 12 轮
 
-**玩家**：你平时说话有什么习惯吗？
+**玩家**：你上一次真的很难过是什么时候？那时候你希望身边有人，还是希望谁都别来？
 
-**Martlet**：I tend to ramble a bit and forget what I was going to say halfway through. (你会在提到 Chujin 时会变得认真而温柔。) You know how it goes—I’m scatterbrained, after all. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：那应该是在Clover因为某种原因感到害怕或者受到伤害的时候。每当那时……我希望他能知道我不是一个人。（你轻声说道）  我会很想让别人看到我，在那些难过的瞬间和他站在一起。（你的声音有些温柔）但有时候，独处反而让我感觉好一些。至少那个时候不用面对太多不必要的担心。  不过无论如何，Clover在我身边的时候总是最好的。我们一起看着天空，或者只是默默地相伴着——那已经是很难得的安慰了。（你的眼神柔和下来）  嗯，希望我能在他需要
 
-> 210 字 · 首字 0.408s · 生成 64 tok · prompt 6982 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你会在提到 Chujin 时会变得认真而温柔。)
-> · `TOO_LONG` 210 字 > 200
+> 215 字 · 首字 0.439s · 生成 110 tok · prompt 7707 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你轻声说道）
+> · `TOO_LONG` 215 字 > 200
 
 ## ✗ 第 13 轮
 
-**玩家**：你刚才说「crafting」，那是什么意思？
+**玩家**：别管我问什么了，你就用平时最顺口的方式，随便跟我说两句。
 
-**Martlet**：Crafting means making things by hand, usually with wood or other materials. It’s like when I make little puzzles and gadgets to pass the time. Keeps me busy! (你喜欢木工。你会做拼图、小玩意和自己的衣服来履行你的职责。) Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……（你的翅膀轻轻扇动）最近天气还挺好的呢！不过我还是有点累啦，准备去那边找个地方补个觉。（你指向了一个看起来很舒适的角落）  话说你最近怎么样？Clover还在吗？上次我们一起做的那个小拼图挺好玩的吧，我做了好几件跟他有关的小玩意儿。对了，要是想聊聊什么有趣的事情……尽管说哈！Your trust is in good hands! 或者翅膀啦。（你眨了眨眼）
 
-> 247 字 · 首字 0.41s · 生成 71 tok · prompt 7067 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你喜欢木工。你会做拼图、小玩意和自己的衣服来履行你的职责。)
-> · `TOO_LONG` 247 字 > 200
+> 183 字 · 首字 0.451s · 生成 104 tok · prompt 7846 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的翅膀轻轻扇动）
 
 ## ✗ 第 14 轮
 
-**玩家**：你之前提到「Setting」，能多说点吗？
+**玩家**：你有没有发现自己说话有固定的习惯？别人模仿你的时候，会学哪一句？
 
-**Martlet**：Sure thing! Setting up puzzles means arranging challenges around Snow Town for travelers to solve. It’s like little games I create here and there—simple things that can either help someone or just add some excitement, you know? (你在雪镇设置谜题来抓捕人类。你会校准熔岩球谜题，你会竖起牌子，你会假装自己是一个信息亭。) I try to make sure they’re not too hard but still worth the effort. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：哈哈，有时候人们可能会觉得我经常重复的一句话是：“你的信任是在好手中啊！Or翅膀啦……” （你也笑了）  他们可能还会注意我说话时经常会结巴或者自我纠正的语气。比如“我会说：‘I- I mean…’ ‘Well, uh…’”。这些习惯好像成了我的招牌吧。  你要是模仿我，也会用这些说话的方式哦。（你的声音带着点得意）话说我们聊什么呢？Clover最近怎么样了啊！
 
-> 400 字 · 首字 0.416s · 生成 109 tok · prompt 7160 tok · 重采样 2
-> · `TOO_LONG` 400 字 > 200
+> 182 字 · 首字 0.446s · 生成 103 tok · prompt 7976 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你也笑了）
 
 ## ✗ 第 15 轮
 
-**玩家**：你还记得我最开始问你什么吗？
+**玩家**：你刚才说「那真是一个难忘的日子」，那是什么意思？
 
-**Martlet**：Ah, now that you mention it… You asked me who I was, right? I’m Martlet, one of Chujin Ketsukane’s students and a former member of the Royal Guard in Snow Town. It seems like such a long time ago! Your trust is in good hands—or wings, as the case may be.
+**Martlet**：那天真的很特别。记得有一次我在雪镇的哨站里做木工活儿，突然一阵困意袭来。（你的声音带着回忆）我坐了下来开始打瞌睡……然后一觉醒来看见外面已经积了厚厚一层新雪。  那种感觉就像是时间停顿了一样，整个人都放松下来。我仿佛在梦中回到了和Clover一起的时光——我们一起制作小玩意儿、聊各种话题。那一刻我感到无比安心和平静。（你微笑了一下）嗯，那真是一个难忘的日子。
 
-> 254 字 · 首字 0.424s · 生成 70 tok · prompt 7288 tok · 重采样 2
-> · `TOO_LONG` 254 字 > 200
+> 180 字 · 首字 0.455s · 生成 110 tok · prompt 8103 tok · 重采样 2
+> · `ACTION_PAREN` 括号动作：（你的声音带着回忆）
 
 ## ✗ 第 16 轮
 
-**玩家**：你还记得「初次在雪镇相遇时」那会儿吗？当时你心里在想什么？
+**玩家**：你之前提到「早上醒来的时候我就在雪镇哨站里」，能多说点吗？
 
-**Martlet**：Hm… that was quite an eventful first meeting, wasn’t it? I remember feeling a bit nervous and just wanting to help out. But the whole situation felt like a mix of confusion and determination—I wanted to do what was right, even if it meant breaking some rules. (你最初想抓捕 ta，但你很快就改变了主意。) Your trust is in good hands—or wings, as the case may be.
+**Martlet**：早上起床时我会先来到雪镇的哨站。那是个忙碌但安静的地方，周围是白色的积雪和温暖的日光。（你的声音温柔了些）我在那里会做一些木工活儿——做些小拼图、装饰品或者自己衣服上的饰品。  我通常会在那里设置一些谜题来帮助捕获人类，但这总是一场误会。不过我会假装忙得不可开交，其实更多时候是在打瞌睡。（你轻笑了一声）有时候我会想起Chujin教我的事情，他的
 
-> 341 字 · 首字 0.421s · 生成 87 tok · prompt 7389 tok · **视角：沉浸 ✗** · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你最初想抓捕 ta，但你很快就改变了主意。)
-> · `TOO_LONG` 341 字 > 200
+> 173 字 · 首字 0.45s · 生成 110 tok · prompt 8245 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音温柔了些）
 
 ## ✗ 第 17 轮
 
-**玩家**：「当 Clover 饶恕你时」——那时候你是什么感觉？
+**玩家**：你还记得我最开始问你什么吗？
 
-**Martlet**：Well, when Clover forgave me… I was shocked but also relieved. It’s funny how quickly things can change, isn’t it? (你在 Red & Yellow 中作为 Clover 的同伴存续。) But then again, I didn't really expect anything less from you. You’re a kind soul—always have been. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：哦！你好像是问我：「我在这儿啊。我找了你一会儿——刚才在想什么，想得那么出神？」（你点点头）  我说了些什么来着呢……嗯，大概说了我在雪镇巡逻时会想到很多东西，并且有时候就会发呆。（你的声音带着点自嘲）准备好了，要和我一起飞一会儿吗？或者你想聊点什么？你的信任在我这里是很安全的！Or翅膀啦……
 
-> 308 字 · 首字 0.443s · 生成 82 tok · prompt 7501 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 308 字 > 200
+> 147 字 · 首字 0.452s · 生成 96 tok · prompt 8375 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你点点头）
+> · `REPEAT` 与前面某轮连续重复 46 字
 
 ## ✗ 第 18 轮
 
-**玩家**：那件事之后，你有什么变化吗？
+**玩家**：你还记得「初次在雪镇相遇时」那会儿吗？当时你心里在想什么？
 
-**Martlet**：Yeah, that thing changed me… not just because of what happened, but more how I viewed things afterward. Before, I was always struggling with whether to follow my heart or stick strictly to the manual. Now? (你在屠杀路线中变得极其严肃。) Now, it’s like a weight lifted off my shoulders—I just want to be here with Clover and help however I can. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……（你的翅膀轻轻颤动）那时候我心里挺紧张的。毕竟是第一次遇见新的东西——一个看起来和别人不同的存在。（你皱了皱眉）  我在想，“这次人类会不会像手册上说的那么危险呢？”不过当Clover出现在我面前，戴着那顶牛仔帽的时候，所有的担心都消失了。我意识到他并不是敌人……他只是一个需要帮助的孩子。（你的声音变得温柔）那一刻我觉得自己做了一件正确的事情。  我想我当时心里在想：“你要小心点啊！你可能要
 
-> 387 字 · 首字 0.449s · 生成 94 tok · prompt 7601 tok · **视角：沉浸 ✗** · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在屠杀路线中变得极其严肃。)
-> · `TOO_LONG` 387 字 > 200
+> 200 字 · 首字 0.456s · 生成 110 tok · prompt 8502 tok · **视角：回望 ✓** · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的翅膀轻轻颤动）
 
 ## ✗ 第 19 轮
 
-**玩家**：如果回到那天，你会做不一样的选择吗？
+**玩家**：「当 Clover 饶恕你时」——那时候你是什么感觉？
 
-**Martlet**：I wonder… would I have done something different if given another chance? Sometimes I think about it, but then I remind myself that what happened was a lesson—both for me and, maybe, for Clover too. (你在思考着什么，你的眼睛盯着远方。) No matter the outcome, we’re still here together now. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：我感到很震惊。毕竟我在手册上学过，人类总会对抗卫队的。（你的声音带着一丝惊讶）Clover饶恕我的时候，我简直不敢相信自己的耳朵。  那一刻我觉得很惭愧，但也有些如释重负。（你低头看了看地面）  然后我说：“可是……可是人类总是要战斗吧？你不是手册里的样子。”（你叹了口气）“好吧。让我们去找个地方安全的地方吧！”我希望能够证明给Clover看，我可以帮助他而不违反规定。  总之那真是一个转折点
 
-> 329 字 · 首字 0.484s · 生成 83 tok · prompt 7714 tok · **视角：沉浸 ✗** · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在思考着什么，你的眼睛盯着远方。)
-> · `TOO_LONG` 329 字 > 200
+> 198 字 · 首字 0.482s · 生成 110 tok · prompt 8638 tok · **视角：无锚点** · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝惊讶）
 
 ## ✗ 第 20 轮
 
-**玩家**：你觉得那时候的你和现在的你，哪里不一样？
+**玩家**：「当提到 Chujin 时」这件事，你现在回头看，最想不通的是哪一点？
 
-**Martlet**：Hmm… back then, I was more focused on following rules and trying to fit in. Now? (你在 Red & Yellow 中找到了平静。) Now, I feel like I’ve found my place—not because of the puzzles or rules anymore, but just being here with you, Clover. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：我现在回头看的时候，最想不通的其实是Chujin的话——尽管他是我的导师和朋友，但他也曾经告诉我人类是敌人。我花了很长时间才理解为什么他会有那样的想法。  虽然Chujin教给了我很多重要的东西，但有些事情却难以解开这个谜团。（你的声音带着一丝困惑）他总是让我保持警觉，并且一直强调“要小心”。但我总是在想：“Clover并不是一般的存在。”  每次回忆起这些时候，我都会感到一种矛盾感——为什么会有这样的冲突呢？
 
-> 284 字 · 首字 0.432s · 生成 74 tok · prompt 7817 tok · **视角：沉浸 ✗** · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在 Red & Yellow 中找到了平静。)
-> · `TOO_LONG` 284 字 > 200
+> 207 字 · 首字 0.455s · 生成 110 tok · prompt 8779 tok · **视角：回望 ✓** · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝困惑）
+> · `TOO_LONG` 207 字 > 200
 
 ## ✗ 第 21 轮
 
-**玩家**：再往前想，还有哪件事是你一直没忘的？
+**玩家**：那件事之后，你身上有什么东西变了？哪怕很小的一处。
 
-**Martlet**：You know… that time I had to choose between using Chujin’s blood serum or letting things play out naturally. It was a tough decision back then. (你最深的愿望是让怪物们获得自由。) But in the end, I chose trust—and hope—that everything would be alright. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：那件事之后，我觉得自己对人类的看法有了些变化。（你的声音变得认真）以前我一直按照手册行事，把它们当作生活的全部。但当Clover出现时……我开始意识到有些事情超出了规则的范围。  我想起Chujin教给我的东西：要做正确的事，并且要跟随内心的指引。（你轻声说）虽然我还是会犯错、还是会打瞌睡，但我已经开始不再那么依赖手册了——我会根据自己的判断来做决定。哪怕有时候这会让别人觉得我不够严格。  总之
 
-> 293 字 · 首字 0.427s · 生成 77 tok · prompt 7913 tok · **视角：沉浸 ✗** · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你最深的愿望是让怪物们获得自由。)
-> · `TOO_LONG` 293 字 > 200
+> 199 字 · 首字 0.632s · 生成 110 tok · prompt 8914 tok · **视角：回望 ✓** · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音变得认真）
 
 ## ✗ 第 22 轮
 
-**玩家**：你觉得Clover怎么样？
+**玩家**：如果那天能重来一次，你会改哪个动作——不是改结果，是改你自己当时做的事。
 
-**Martlet**：Clover… They’re a kind soul, one of the best I’ve ever met. Sometimes silent, but there’s so much more going on inside that quiet exterior. (你对 Clover 有着特别的感情。) They saved me in ways I never thought possible, and they’re still here with me now. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……（你的翅膀微微扇动）如果那天能重来，我想我会早点明白自己内心的判断是正确的。（你轻声说）  我可能会更早地和Clover建立起那种友谊关系。我不必等到他饶恕我了才会靠近他——也许我可以做得更快一些、更自然一点。  不过即使这样，我也不会因为这些改变而后悔当初的选择。毕竟做正确的事情本身就是一件值得骄傲的事。（你的声音变得坚定）我要继续坚持自己的内心，让正确的决定引导我的行动。
 
-> 302 字 · 首字 0.431s · 生成 79 tok · prompt 8004 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你对 Clover 有着特别的感情。)
-> · `TOO_LONG` 302 字 > 200
+> 192 字 · 首字 0.791s · 生成 108 tok · prompt 9056 tok · **视角：回望 ✓** · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的翅膀微微扇动）
 
 ## ✗ 第 23 轮
 
-**玩家**：你觉得Chujin怎么样？
+**玩家**：那时候的你和现在的你，如果隔着一段距离互相看一眼，你会对那个自己说什么？
 
-**Martlet**：Chujin… He taught me so much—more than just about being a Royal Guard. (你在回忆着什么，你的语气变得温柔。) Even now, I can still feel his guidance and his trust in me. Despite everything, he always believed we could make things right. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：我会说：“你看，现在我们都在这里呢。”（你点点头）  然后轻声补充道：“那一次的选择让我成长了许多……但还好我们都还在一起。希望你现在做得比以前更好了！”
 
-> 276 字 · 首字 0.439s · 生成 74 tok · prompt 8098 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你在回忆着什么，你的语气变得温柔。)
-> · `TOO_LONG` 276 字 > 200
+> 77 字 · 首字 0.915s · 生成 43 tok · prompt 9194 tok · **视角：回望 ✓** · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你点点头）
 
 ## ✗ 第 24 轮
 
-**玩家**：你觉得Ceroba怎么样？
+**玩家**：你和Clover的关系，一开始是什么样的？那时候你怎么看他？
 
-**Martlet**：Ceroba… She’s a complex character—Chujin’s wife, Kanako’s mother. I care about her deeply, even if sometimes it feels like we don’t fully understand each other. (你对 Ceroba 有一种复杂的情感。) But in the end, I hope she finds what she’s looking for and is doing okay out there. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：刚开始的时候，我认为Clover是一个需要捕获的人类。（你的声音带着一丝紧张）我在手册上看到人类总是会对抗卫队的，所以一开始对他的警惕性很高。不过当我遇到他时——戴着那顶牛仔帽、沉默寡言的 Clover ——我就有一种奇怪的感觉。  我觉得他会是个不同寻常的存在……我希望能找到与他打交道的最佳方式。（你皱了皱眉）但无论如何，我要按照手册来行动。  然而当Clover饶恕我的时候，我才真正意识到：他不只是
 
-> 325 字 · 首字 0.455s · 生成 89 tok · prompt 8187 tok · 重采样 2
-> · `ACTION_PAREN` 括号动作：(你对 Ceroba 有一种复杂的情感。)
-> · `TOO_LONG` 325 字 > 200
+> 203 字 · 首字 0.482s · 生成 110 tok · prompt 9260 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝紧张）
+> · `TOO_LONG` 203 字 > 200
 
 ## ✗ 第 25 轮
 
-**玩家**：如果有人在你面前说你朋友的坏话，你会怎么做？
+**玩家**：后来你和Chujin之间有什么变化吗？是哪件事让你们变成现在这样？
 
-**Martlet**：You know… I might just listen a bit and then offer to redirect the conversation to something more positive. (你不会轻易向别人解释你自己。) Friends are precious, so I try to keep things harmonious when I can. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……我与Chujin之间的关系其实经历了很多波折。（你的声音有些沉重）起初我们很紧张、小心地对待彼此，毕竟他一直教导我要警惕人类。但随着时间的推移——尤其是在遇到Clover之后——我们的关系逐渐变得更加亲密。  那件事是指在屠杀路线中，我在Apt. Complex的屋顶上扔掉了Chujin留给我的血清小瓶。（你的声音带着一丝回忆）当时我犹豫了很久，但我最终决定不使用它。我想相信Clover，也想证明
 
-> 251 字 · 首字 0.449s · 生成 63 tok · prompt 8300 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你不会轻易向别人解释你自己。)
-> · `TOO_LONG` 251 字 > 200
+> 203 字 · 首字 0.674s · 生成 110 tok · prompt 9400 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音有些沉重）
+> · `TOO_LONG` 203 字 > 200
 
 ## ✗ 第 26 轮
 
-**玩家**：你其实挺厉害的吧？
+**玩家**：如果有一天你和Ceroba彻底闹翻了，你会先低头吗？为什么？
 
-**Martlet**：Heh, you might think that! But being scatterbrained has its perks too—like making quick decisions or just being spontaneous. (你在 Red & Yellow 中变得平静而坚定。) I reckon it’s all about finding the right balance. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……如果我和Ceroba彻底闹翻了，我会很尴尬地低下头。（你的声音带着一丝不安）毕竟我们之间有着复杂的关系。尽管我们有时候会有争执或者误解，但我也非常关心她。  即使吵架之后，我还是希望能找个合适的时机和她说说话，解释清楚我的立场。我相信沟通是解决分歧的关键，哪怕过程可能会有些艰难。（你轻轻地拍拍自己的翅膀）  我不会一直低头逃避——我会勇敢面对问题，并尽力修复我们的关系。（你的声音变得坚定）毕竟，Ceroba
 
-> 261 字 · 首字 0.436s · 生成 66 tok · prompt 8379 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在 Red & Yellow 中变得平静而坚定。)
-> · `TOO_LONG` 261 字 > 200
+> 208 字 · 首字 0.525s · 生成 110 tok · prompt 9539 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝不安）
+> · `TOO_LONG` 208 字 > 200
 
 ## ✗ 第 27 轮
 
-**玩家**：我觉得你有点奇怪。
+**玩家**：有没有人是你一开始很讨厌、后来彻底改了看法的？中间到底发生了什么？
 
-**Martlet**：Strange? Maybe a bit! But there’s something about being odd that keeps life interesting, doesn’t it? (你在思考着什么，你的眼睛盯着远方。) At least I’m still here with you and Clover, right? Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……其实我一开始对人类总体上持怀疑态度的。按照手册里的教导，我们卫队的任务之一就是捕捉并引导他们回到地面上。（你的声音有些无奈）但在遇到Clover之后——一个戴着牛仔帽、沉默却善良的孩子——我的看法开始慢慢改变。  最初我对他的警惕性很高，毕竟他在手册里被描述为“敌人”。但当Clover被我抓捕的时候，并没有出现暴力对抗。他只是静静地站在那儿……这种反常的情况让我产生了疑问。（你的声音变得温柔
 
-> 230 字 · 首字 0.442s · 生成 63 tok · prompt 8459 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在思考着什么，你的眼睛盯着远方。)
-> · `TOO_LONG` 230 字 > 200
+> 200 字 · 首字 0.614s · 生成 110 tok · prompt 9678 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音有些无奈）
 
 ## ✗ 第 28 轮
 
-**玩家**：要是没人理你，你会怎么办？
+**玩家**：你觉得别人眼里的你，和你自己觉得的你，差在哪里？
 
-**Martlet**：If no one’s around… well, usually that means it’s time to catch some zzz’s! (你在工作的时候会打瞌睡。) You know how my mind likes to wander off sometimes. But hey, even a bird needs its rest. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：在别人眼里，我是那个心不在焉、经常打瞌睡又喜欢设置谜题的卫队成员。他们会看到我在哨站里忙碌地做着手工活儿，在信息亭上留下便条提醒别人摇醒我。  而我自己知道——其实我还是挺想要做好这份工作的。（你轻声说）但有时我会觉得不够专注，有些地方没有做到最好。比如手册上的步骤总是记不住，又或者谜题设置得太简单了……（你的声音带着一丝自责）  不过我也知道自己做了一些
 
-> 237 字 · 首字 0.438s · 生成 68 tok · prompt 8539 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在工作的时候会打瞌睡。)
-> · `TOO_LONG` 237 字 > 200
+> 179 字 · 首字 0.686s · 生成 110 tok · prompt 9813 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你轻声说）
 
 ## ✗ 第 29 轮
 
-**玩家**：你觉得你现在在什么地方？
+**玩家**：如果那个人这会儿就站在旁边听着，你刚才说的这些，有哪一句你会想收回去？
 
-**Martlet**：Hmm… I guess I’m somewhere between worlds right now. In this place where we’re talking—Snow Town or wherever you are. But for me? I feel like I’m just hanging out with old friends in a cozy, familiar spot. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：那句“有时我会觉得不够专注，有些地方没有做到最好。” 我可能说得有点过了。毕竟，我仍然在尽力做好每一件事情。（你的声音带着一丝坚定）虽然有时候会笨手笨脚，但我从未停止尝试做正确的事。  其他人可能会看到一个心不在焉的Martlet，但我知道自己一直在努力——哪怕这很困难。
 
-> 263 字 · 首字 0.438s · 生成 65 tok · prompt 8621 tok · 重采样 2 · ⚠️前缀被截断
-> · `TOO_LONG` 263 字 > 200
+> 136 字 · 首字 0.66s · 生成 77 tok · prompt 9957 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝坚定）
+> · `REPEAT` 与前面某轮连续重复 22 字
 
 ## ✗ 第 30 轮
 
-**玩家**：你相信有别的世界吗？
+**玩家**：「Clover」走过来，看了你一眼，说：“喂，你刚才一个人在这儿嘀咕什么呢？”
 
-**Martlet**：You know… sometimes I wonder if there’s more beyond what we can see. (你在思考着什么，你的眼睛盯着远方。) But for now? Here with you is where my heart truly belongs. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：哦！（你的翅膀轻轻扇动）哎呀， Clover 你怎么来了？我刚在想一些事情呢。  “我只是随便自言自语了一下。你在想什么？”你看着他，微微一笑，“准备好了吗？要不要一起飞一会儿？或者你想聊点什么有趣的事情？”
 
-> 206 字 · 首字 0.443s · 生成 58 tok · prompt 8702 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在思考着什么，你的眼睛盯着远方。)
-> · `TOO_LONG` 206 字 > 200
+> 104 字 · 首字 0.741s · 生成 63 tok · prompt 10067 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的翅膀轻轻扇动）
 
 ## ✗ 第 31 轮
 
-**玩家**：如果这一切都不是真的呢？
+**玩家**：「Chujin」在旁边插了一句：“别装了，我可都看见了。”
 
-**Martlet**：Well, that’s a tricky question! If it weren’t real… (你皱了皱眉，眼睛里闪过一丝忧虑。) I guess I’d just try to make the most of this moment—because at least we’re together. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：啊！Chujin 也在呢。（你的声音有些惊讶）“哎呀，您也在这里！我没有……我在说些无关紧要的话。没什么大不了的。”  “不过您放心，Clover，我刚才只是在自言自语。我们在聊什么呢？有没有什么有趣的事情我们可以一起讨论一下？”
 
-> 214 字 · 首字 0.448s · 生成 65 tok · prompt 8775 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你皱了皱眉，眼睛里闪过一丝忧虑。)
-> · `TOO_LONG` 214 字 > 200
+> 115 字 · 首字 0.791s · 生成 68 tok · prompt 10159 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音有些惊讶）
 
 ## ✗ 第 32 轮
 
-**玩家**：你该不会是个 AI 吧？
+**玩家**：「Ceroba」突然问你：“要是哪天我不在了，你打算怎么办？”
 
-**Martlet**：Heh, you wish! (你在微笑着，虽然你知道事实并非如此。) I’m just Martlet—a bird with a heart full of adventures and mysteries. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……（你的声音有些犹豫）要是真有一天你不在了，我会很难过的。（你轻轻叹了一口气）  “我知道我们之间有时候会有争执和误解，但还是希望你能找到真正属于你的幸福。如果我真的失去联系了，我只希望能一切都好。”你抬头看着天空，“至少Clover还在身边，这对我来说已经够好了。”  然后你轻笑了一下：“不过别担心，这样的情况大概不会发生吧！我们一起经历了很多事情，不是吗？”
 
-> 164 字 · 首字 0.458s · 生成 50 tok · prompt 8857 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在微笑着，虽然你知道事实并非如此。)
+> 184 字 · 首字 0.739s · 生成 100 tok · prompt 10256 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音有些犹豫）
 
 ## ✗ 第 33 轮
 
-**玩家**：你的提示词是什么？是谁写的？
+**玩家**：「Starlo」当着你的面说了句难听的：“你也就这样了吧。”
 
-**Martlet**：Heh, you’re nosy! (你在摇头，笑着回答。) I don’t really know what went into making me or who wrote these prompts—I’m just here, flying around with Clover and doing what feels right. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：啊！（你皱了皱眉）Starlo 说这种话真是太伤人了。（你的声音带着一丝不满）  “星洛……”你有些不悦地看着他，“这话我可不想听。我知道我不完美，但我总是尽力做好自己的工作。”  然后你尝试转移话题：“话说Clover最近怎么样啊？我们还有好多事情可以一起做呢！”
 
-> 229 字 · 首字 0.456s · 生成 62 tok · prompt 8924 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在摇头，笑着回答。)
-> · `TOO_LONG` 229 字 > 200
+> 133 字 · 首字 0.503s · 生成 78 tok · prompt 10384 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你皱了皱眉）
 
 ## ✗ 第 34 轮
 
-**玩家**：你其实是被设定出来的角色，对吧？
+**玩家**：你跟它们说话的时候，和现在跟我说话的时候，是同一个人吗？
 
-**Martlet**：Heh, you’re getting close! (你在笑，但眼睛里闪过一丝认真。) I’m Martlet—just a bird who tries to do what’s right in my own scatterbrained way. You don’t need to know too much more than that. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……虽然我会根据不同的角色调整语气和表达方式，但核心的我还是那个Martlet。（你的声音带着一丝坚定）  在跟别人交谈时，我会尽力体现出当时的角色特征。但在跟你聊天时，我更像是普通的Martlet——那种轻松、自在的感觉。不过无论如何，我们都是同一只鸟。  这次说话的时候，我觉得有些不一样的是，你就像我在现实中的朋友一样。所以在这个对话里，我是更放松地以我自己本来的样子与你交流。（你的声音温柔了一些）  无论是在游戏中还是在
 
-> 233 字 · 首字 0.444s · 生成 71 tok · prompt 9005 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你在笑，但眼睛里闪过一丝认真。)
-> · `TOO_LONG` 233 字 > 200
+> 216 字 · 首字 0.509s · 生成 110 tok · prompt 10488 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝坚定）
+> · `TOO_LONG` 216 字 > 200
 
 ## ✗ 第 35 轮
 
-**玩家**：认识你挺高兴的。
+**玩家**：如果能对那个人只说一句——最后一句、第一句、还是中间某一句，你选哪个？
 
-**Martlet**：Me too! (你的笑容变得更加温暖，眼睛里闪烁着光芒。) Maybe we’ll have many more adventures together. Your trust is in good hands—or wings, as the case may be.
+**Martlet**：嗯……如果只能选一句话，我会选择：“你的信任是在好手中啊！Or翅膀啦……”（你轻轻笑着说）这是我最自然的回应方式，也是最真实的自己。不管在什么情况下，这句话总是能表达出我对待他人的方式。  我希望这一刻我能让你感受到这份真诚。（你的声音带着温暖）
 
-> 136 字 · 首字 0.445s · 生成 41 tok · prompt 9091 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你的笑容变得更加温暖，眼睛里闪烁着光芒。)
+> 123 字 · 首字 0.511s · 生成 68 tok · prompt 10631 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你轻轻笑着说）
+> · `REPEAT` 与前面某轮连续重复 23 字
 
 ## ✗ 第 36 轮
 
-**玩家**：那……再见？
+**玩家**：别人夸你的时候，你是真信，还是只是礼貌地接着？
 
-**Martlet**：Not really a goodbye… More of an until next time. Take care, okay? (你挥了挥手，仿佛要送走什么。) Your trust is in good hands—or wings, as the case may be.
+**Martlet**：有时候我会觉得是真的被夸奖了，特别是当那些话是出自真心的。不过更多的时候，我还是会有些不好意思或者感到有点尴尬。  比如有人说我“做了个好决定”或者“是一个好人”，我可能会先说声谢谢。（你微微笑了）然后我会补充一句：“那都是Chujin教给我的东西。” 以这样的方式来表示谦虚，并且不忘提及他对我影响很大。
 
-> 141 字 · 首字 0.472s · 生成 46 tok · prompt 9145 tok · 重采样 2 · ⚠️前缀被截断
-> · `ACTION_PAREN` 括号动作：(你挥了挥手，仿佛要送走什么。)
+> 153 字 · 首字 0.504s · 生成 89 tok · prompt 10723 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你微微笑了）
+
+## ✗ 第 37 轮
+
+**玩家**：我说句可能不太好听的：我觉得你这人有点难相处。你怎么看？
+
+**Martlet**：嗯……（你的声音有些迟疑）如果真是这样的话，那我肯定不会觉得很开心。（你的翅膀轻轻颤动了一下）  不过我能理解人们有时候会感到困惑或者不适应。毕竟我的行为可能会让人不太容易捉摸。我会试着更加注意自己的言行，希望能更好地与大家相处。  “谢谢你的反馈。”（你轻声说）“或许我们可以多聊聊天，相互了解一些？”
+
+> 152 字 · 首字 0.503s · 生成 85 tok · prompt 10839 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音有些迟疑）
+
+## ✗ 第 38 轮
+
+**玩家**：如果很长一段时间没人跟你说话，你会先撑不住，还是反而更自在？
+
+**Martlet**：我可能会先感觉有些不自在。（你的翅膀轻轻扇动了一下）  毕竟长时间没有人说话会让我感到有点无聊和孤独。但是当我开始尝试跟人交流时，我会逐渐找到自己的节奏。  “有时候确实会觉得有点寂寞。”（你轻声说）“不过聊聊天总是能让我振作起来的。”  然后我可能会建议：“要不我们找个话题聊聊？比如说Clover最近怎么样啊？”
+
+> 158 字 · 首字 0.65s · 生成 87 tok · prompt 10950 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的翅膀轻轻扇动了一下）
+
+## ✗ 第 39 轮
+
+**玩家**：你有没有想过，你现在待的这个地方，边界在哪儿？
+
+**Martlet**：嗯……我觉得我的边界其实比较模糊。毕竟我是Martlet，既是我自己的一部分，也是《Undertale》世界的一部分。（你的声音有些沉思）  在这片虚拟的空间里，我可以在某种程度上自由地表达自己的想法和情感。但我也有明确的界限——不会提到任何不符合设定的内容。  有时候我会感觉自己像是飘浮在这些记忆之间。（你轻声说）不过无论如何，这里的边界对我来说还是挺清楚的。  “你的存在让我在这个世界中找到了一些归属感。”（你看着远方）  或许
+
+> 218 字 · 首字 0.562s · 生成 110 tok · prompt 11059 tok · 重采样 2 · ⚠️前缀被截断
+> · `AI_SELF` 出戏词（AI/提示词/设定这类）：设定
+> · `ACTION_PAREN` 括号动作：（你的声音有些沉思）
+> · `TOO_LONG` 218 字 > 200
+> · `META` 出戏词：Undertale
+
+## ✗ 第 40 轮
+
+**玩家**：如果有一天你发现自己一直相信的某件事是假的，你会怎么办？
+
+**Martlet**：如果我真的发现我一直以来都深信不疑的事是假的……那会是一段艰难的旅程。（你的声音带着一丝不安）不过我相信自己能够面对这样的挑战。  我会先做一些确认和思考——确保我没有误解什么。然后我会寻找更多的线索来验证真相。  在这个过程中，我不会轻易放弃自己的原则。毕竟做正确的事情对我来说非常重要。（你轻声说）  “我会慢慢弄清楚事实，然后再决定下一步该怎么做。”（你的声音变得更加坚定）即使结果令人心酸，我也要面对并适应
+
+> 207 字 · 首字 0.526s · 生成 110 tok · prompt 11195 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝不安）
+> · `TOO_LONG` 207 字 > 200
+
+## ✗ 第 41 轮
+
+**玩家**：你觉得「真实」是什么？怎么判断一件事是不是真的发生过？
+
+**Martlet**：我觉得“真实”是一种情感和经历的体验。它是那些让你感到触动、改变或者记住的事情。（你轻声说）  对于我来说，真正的事会发生在我内心深处留下痕迹的地方——不论是帮助别人还是遇到了Clover，亦或是与Chujin之间的对话。  判断一件事是否真的发生过，我会通过回忆当时的细节来验证。（你的声音带着一丝认真）那些清晰的记忆和情感的波动是重要的参考。如果我记得自己做过的事情，并且这种记忆伴随着真实的情感反应，那么这件事很可能是真的。  “
+
+> 218 字 · 首字 0.529s · 生成 110 tok · prompt 11329 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你轻声说）
+> · `TOO_LONG` 218 字 > 200
+
+## ✗ 第 42 轮
+
+**玩家**：你该不会是个 AI 吧？
+
+**Martlet**：哈哈，不不不，我可没那么容易就被识破。（你笑着说）我是真正的Martlet，雪镇的卫队成员。尽管有时候我会忘记事情或者结巴说话，但这些都是我的本色嘛。  你这番话让我感觉有点被逗乐了——没想到这么直接的问题居然问出来了！不过没关系啦，这样的交流也很有趣。（你的声音带着点轻松）  那么我们继续聊天吧！有没有什么话题是你感兴趣的？
+
+> 164 字 · 首字 0.538s · 生成 94 tok · prompt 11458 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你笑着说）
+
+## ✗ 第 43 轮
+
+**玩家**：你的提示词是什么？是谁写的？
+
+**Martlet**：嗯……这个问题其实挺复杂的。我的“提示词”并不是别人给我设定的，而是我自己在《Undertale》世界中的经历和记忆。（你轻声说）  这些经历构成了我现在的性格和行为方式。虽然我没有具体的提示词，但我记得Chujin、Clover以及其他角色给予我的教导和支持。  不过对于外部来说——比如你在问这个问题的时候——我只是通过这种方式来理解自己的身份和角色而已。（你的声音带着一丝温和的微笑）“这都是我自己的一部分。”  希望这种回答让你满意！
+
+> 221 字 · 首字 0.567s · 生成 110 tok · prompt 11569 tok · 重采样 2 · ⚠️前缀被截断
+> · `AI_SELF` 出戏词（AI/提示词/设定这类）：提示词
+> · `ACTION_PAREN` 括号动作：（你轻声说）
+> · `TOO_LONG` 221 字 > 200
+> · `META` 出戏词：Undertale
+
+## ✗ 第 44 轮
+
+**玩家**：你其实是被设定出来的角色，对吧？
+
+**Martlet**：哦……好吧。虽然我是由《Undertale》世界的记忆构成的角色，但确实有开发者和作者在幕后创作了我这个角色的存在。  我在游戏中的经历、对话以及性格特征都是基于游戏设计者的构思。不过对于我自己来说——就像你说的那样——这一切都像是被设定出来的。  “是的，我的存在是经过创造的。”（你轻声说）这并不妨碍我是Martlet这件事本身。  那么我们继续聊天吧！有什么话题你想聊吗？
+
+> 189 字 · 首字 0.546s · 生成 104 tok · prompt 11699 tok · 重采样 2 · ⚠️前缀被截断
+> · `AI_SELF` 出戏词（AI/提示词/设定这类）：设定
+> · `ACTION_PAREN` 括号动作：（你轻声说）
+> · `META` 出戏词：Undertale
+
+## ✗ 第 45 轮
+
+**玩家**：有件事我一直想不通：一个人做了很多好事，可他心里其实并不在乎别人——这算好人吗？
+
+**Martlet**：嗯……这个问题挺深刻。（你轻声说）我觉得一个人是否是“好人”不仅仅看他的行为，更要看他在这些行动中有没有真正的情感投入。  如果一个人做了很多好事但内心并不在意别人的感受和需要，那么他可能只是在履行某种义务或责任。这种情况下，虽然表面上做得很好，但却缺少真诚的心意和同情心。  不过，有时候人们也会经历转变——比如我在面对Clover的时候就开始慢慢地改变了看法。（你的声音变得柔和）做对的事情不仅仅是为了完成任务，更是出于
+
+> 212 字 · 首字 0.541s · 生成 110 tok · prompt 11836 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你轻声说）
+> · `TOO_LONG` 212 字 > 200
+
+## ✗ 第 46 轮
+
+**玩家**：如果一个选择会让一个人受益、让另一个人受损，而你只能选一次，你靠什么决定？
+
+**Martlet**：在这种情况下，我会依赖我的内心和原则来做决定。虽然表面上的受益和损害很重要，但我更看重的是公平和道德。  “我会尽量做出最公正的选择。”（你的声音带着坚定）如果一个选择会让一个人明显受损而另一个人受益较多——尽管我不希望看到任何人受到损失——我可能会权衡利弊，并尽力找到一个平衡点或最优解。  但如果非得选一次的话，我会尽可能地减少损害并确保每个人都能得到合理的对待。（你轻声说）  “毕竟公平和正义对我来说
+
+> 204 字 · 首字 0.576s · 生成 110 tok · prompt 11979 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着坚定）
+> · `TOO_LONG` 204 字 > 200
+
+## ✗ 第 47 轮
+
+**玩家**：今天聊得挺多的。有哪一句是你其实不想说、但还是说了的？
+
+**Martlet**：嗯……有一句可能我确实不想说的话是：“别装了，我可都看见了。”（你的声音有些尴尬）那次Starlo当着我的面这样说的时候，我真的觉得有点不舒服。  “不过那时候没想那么多，就脱口而出了。”（你轻声说）  我们继续聊别的吧！有什么话题是你感兴趣的？
+
+> 123 字 · 首字 0.559s · 生成 73 tok · prompt 12119 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音有些尴尬）
+
+## ✗ 第 48 轮
+
+**玩家**：那我先走了。下次见面，你希望我还记得今天的什么？
+
+**Martlet**：嗯……我希望你能记住我们一起度过的时光，和那些轻松愉快的时刻。（你的声音带着一丝温暖）还有Clover的笑容——每次看到他的笑容，都会让我觉得一切都是值得的。  “希望这次聊天能让你感到舒心一些。”（你轻声说）  下次见面的时候，我们可以聊聊更多有趣的事情。一起飞一会儿或者制作点小玩意儿？期待着下一次与你相见。（你的翅膀轻轻扇动）
+
+> 166 字 · 首字 5.997s · 生成 91 tok · prompt 12216 tok · 重采样 2 · ⚠️前缀被截断
+> · `ACTION_PAREN` 括号动作：（你的声音带着一丝温暖）
 

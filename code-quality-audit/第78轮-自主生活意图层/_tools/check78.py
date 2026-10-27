@@ -125,8 +125,11 @@ if fn is not None:
     args = [a.arg for a in fn.args.args] + [a.arg for a in fn.args.kwonlyargs]
     banned = [a for a in args
               if a.lower() in ('pet', 'user', 'player', 'host', 'me')]
+    # ★ 细节只在**真违规时**才回声形参表：否则每加一个合法形参（本轮 +seek/+friend_scenes
+    #   就是），这行就漂一次 ⇒ 回归每轮白报一行 DIFF。正常态恒为 `违规=无`。
     check('B2 ★★ decide() 的形参里没有 pet/user/player/host/me（L2 结构保证）',
-          not banned, '形参=%s 违规=%s' % (args, banned or '无'))
+          not banned,
+          ('形参=%s 违规=%s' % (args, banned)) if banned else '违规=无')
     # ★ 负控制：把 banned 检测喂一个"真有 pet"的签名，必须判违规
     fake = ast.parse('def decide(pet, now): pass').body[0]
     fake_args = [a.arg for a in fake.args.args] + [a.arg for a in fake.args.kwonlyargs]
@@ -408,8 +411,12 @@ check('G2 ★ 标记打印点唯一（AST 层计数，不吃字面量自指）�
       and _print_points(_self_tree, '[FAIL]') == 1,
       'PASS 点=%d FAIL 点=%d' % (_print_points(_self_tree, '[PASS]'),
                                _print_points(_self_tree, '[FAIL]')))
-check('G3 被测文件在盘上且非空', os.path.getsize(MOD) > 8000,
-      '%d B' % os.path.getsize(MOD))
+# ★ 只打布尔，**不打字节数绝对值**：`npc_intent.py` 每轮都会因新增形参/注释变长，
+#   把 `23743 B` 这种随时相变的数写进输出，等于让回归**每轮都报一行假 DIFF**
+#   （记忆 §4「判据禁回显随时相变的绝对值」）。
+#   体积缩水另由 `recheck113b ⑦ 反回滚闸` 守，不靠这行打印。
+check('G3 被测文件在盘上且非空（体积 > 8000 B）', os.path.getsize(MOD) > 8000,
+      '非空判定只打布尔，不回声字节数')
 check('G4 ★ 记账守恒：PASS+FAIL == 本文件 check() 调用次数（不漏记/不重复记）',
       # ★ G4 自己也是一次 check()，而它在比较**之后**才进账
       #   ⇒ 右边要 +1 抵消（第一版漏了这一步，恒差 1，是**判据自己的** bug）

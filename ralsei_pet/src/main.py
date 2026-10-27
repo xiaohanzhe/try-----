@@ -639,6 +639,13 @@ from modules import scene_pathfind as scene_pathfind_mod
 #   睡觉」「人味，人味，还 tm 是人味」。
 #   ★ `decide()` 的签名里**没有** pet/user/player —— 这是 L2 的**结构保证**（见 `check78`）。
 from modules import npc_intent as npc_intent_mod
+# ★★★ 第113轮p：「他想去找谁」—— NPC 之间互相寻找的**偏好层**（用户 2026-10-27
+#   「npc 之间寻找偏好也要有哦」）。零依赖、只读 `assets/npc/_seek.json`。
+#   ★ 它同时补掉一个静默缺陷：`npc_intent._pick_friend` 原来把目的地设成
+#     **随机可达点**（`_pick_reachable`），"说去看朋友"其实走到了别处。
+#     这里把"那人在哪（`_npc_roam_friends` 的第三元素）"和"想找谁（本登记表）"
+#     一起喂给 `decide()`。
+from modules import npc_seek as npc_seek_mod
 # ★★★ 第79轮：NPC 自主生活 · **层2 驻留层**（零依赖：把「静态归属」升级成
 #   「静态归属 + 动态驻留覆盖」）。要解决的头号障碍：`_npc_seed_bodies()` 只在启动与
 #   切场景时被调 ⇒「NPC = 当前场景的装饰」⇒ **用户不动，世界就冻住**（与 L2 正相反）。
@@ -3172,6 +3179,9 @@ class RalseiPet(QMainWindow):
         self.npc_bonds = None
         #: 跨世界契约（`assets/npc/_crossworld.json`）；读不到 ⇒ `{}`（降级，不抛）。
         self.npc_crossworld = {}
+        #: 「他想去找谁」登记表缓存（`assets/npc/_seek.json`，第113轮p）。
+        #: `None` = 还没读过（懒加载）；空表 = 读过但没有素材 —— **两者语义不同**。
+        self._npc_seek_cache = None
         #: 「同一角色的不同 AU 版本」配对集合（`set[frozenset]`，只含 `au_family_members`）。
         self._npc_au_pairs = set()
         # ---- 第79轮：自主移动（层1 意图 + 层2 驻留）----
@@ -5206,7 +5216,17 @@ class RalseiPet(QMainWindow):
                 fam = 0.0
                 if bonds is not None:
                     try:
-                        fam = float(bonds.familiarity(npc_id, oid) or 0.0)
+                        # ★★★ 第113轮p：这里原本写的是 `bonds.familiarity(...)` ——
+                        #   而 `npc_life.Bonds` **根本没有这个方法**（只有
+                        #   `get/known/meet/pair(s)/seed/tick/to_dict/from_dict`）。
+                        #   因为整块包在 `except Exception` 里，`AttributeError` 被
+                        #   静默吞成 `fam = 0.0` ⇒ 下面 `if fam <= 0.0: continue` ⇒
+                        #   **`friends` 对每个 NPC 都恒为 `[]`**。
+                        #   后果（全部无声）：`visit_friend` 永不发生、睡朋友家永不
+                        #   发生、`npc_seek` 的「他想找谁」权重**永远没有候选可乘**。
+                        #   ★ 这是"形状有了、也接线了、值恒为空"——任何报告都读不出来
+                        #     （`check78` 的 E/F 段喂的是合成 friends，绕过了这里）。
+                        fam = float(bonds.get(npc_id, oid) or 0.0)
                     except Exception:
                         fam = 0.0
                 if fam <= 0.0:
@@ -5228,6 +5248,54 @@ class RalseiPet(QMainWindow):
         book = getattr(self, 'npc_placement', None)
         return book.scene_of(npc_id) if book is not None else None
 
+    def _npc_seek_table(self):
+        """懒加载 `assets/npc/_seek.json`（「他想找谁」，第113轮p）。读不到 ⇒ 空表。
+
+        ★★ "读不到"必须退化成**空表**而不是"人人 1.0"：
+          空表 ⇒ `weights_of()` 返 `{}` ⇒ `decide()` 走**旧代码路径**（逐值相同）；
+          若退化成"每人 ×1.0"，虽然数值上也等价，但会在别处（比如 `_pick_friend`
+          的加权分支）多走一条不必要的路 —— 让"没数据"和"没偏好"混为一谈。
+        """
+        cached = getattr(self, '_npc_seek_cache', None)
+        if cached is not None:
+            return cached
+        table = npc_seek_mod.empty_table()
+        try:
+            path = os.path.join(project_root, 'assets', 'npc', npc_seek_mod.FILENAME)
+            if os.path.isfile(path):
+                table = npc_seek_mod.load(path)
+        except Exception as e:
+            _log.debug('读取 _seek.json 失败（按无偏好处理）: %s', e)
+            table = npc_seek_mod.empty_table()
+        self._npc_seek_cache = table
+        return table
+
+    def _npc_seek_weights(self, npc_id):
+        """`{朋友id: 倍数}` —— 他**想找谁**（真源 `_seek.json`）。没登记 ⇒ `{}`。"""
+        try:
+            return npc_seek_mod.weights_of(self._npc_seek_table(), npc_id)
+        except Exception as e:
+            _log.debug('取「想找谁」权重异常（按无偏好处理）: %s', e)
+            return {}
+
+    def _npc_friend_scenes(self, friends):
+        """`[(id, familiar, scene), ...]` → `{id: scene}`（第113轮p）。
+
+        ★★ 为什么要单独提出这个函数：`_npc_roam_decide` 原来是
+          `friends=[(i, f) for i, f, _s in (friends or ())]` —— 第三元素**被丢掉**，
+          于是 `_pick_friend` 只能把目的地设成随机可达点。
+          这里把"那人在哪"原样传下去；查不到就**不放进字典**（由决策层回落并如实
+          标 `visit_friend_away`，不把回落伪装成成功）。
+        """
+        out = {}
+        for item in (friends or ()):
+            try:
+                if len(item) >= 3 and item[0] and item[2]:
+                    out[item[0]] = item[2]
+            except TypeError:
+                continue
+        return out
+
     def _npc_roam_decide(self, npc_id, now, *, traits=None, familiar=0.0,
                          home=None, reachable=None, friends=None):
         """**询问他自己的 AI**：这一拍去哪（← 用户口径 L3）。
@@ -5236,6 +5304,9 @@ class RalseiPet(QMainWindow):
           - `home`      = 他的静态归属（`_placement.json`）；
           - `reachable` = `scene_controller.reachable_destinations()`；
           - `friends`   = `npc_bonds` 里熟络度 > 0 的人 + 他们住哪。
+          - `seek`      = 「他想找谁」（`_seek.json`，第113轮p）；
+          - `friend_scenes` = 那些朋友**在哪**（第113轮p：原来这一列被丢掉了，
+            导致"去找朋友"的目的地只能是随机点）。
 
         ★★ 第81轮（层4）：`last` 不再硬编码 `None` —— 改从**生活档案**里取他上一次的
           意图（`Plan.intent`），并把本次结果 `note()` 回书里。这是 L5「人味」的核心
@@ -5262,6 +5333,8 @@ class RalseiPet(QMainWindow):
             friends=[(i, f) for i, f, _s in (friends or ())],
             favorites=None,
             last=last_intent,
+            seek=self._npc_seek_weights(npc_id),
+            friend_scenes=self._npc_friend_scenes(friends),
         )
         # ★ 记回档案：`note()` 自带 history 有界（keep=12），不会无限长。
         if plan is not None:

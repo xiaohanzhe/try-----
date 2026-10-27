@@ -285,7 +285,8 @@ class Intent(object):
 
 def decide(npc_id, now, *, phase=None, traits=None, familiar=0.0,
            home=None, favorites=None, reachable=None, friends=None,
-           last=None, extra_weights=None, salt=''):
+           last=None, extra_weights=None, salt='',
+           seek=None, friend_scenes=None):
     """**替这个 NPC 决定这一拍干什么**（← 用户口径 L3：由各自的 AI 决定）。
 
     ★★ 签名里**没有** `pet` / `user` / `player`（L2 的结构保证）。
@@ -297,6 +298,11 @@ def decide(npc_id, now, *, phase=None, traits=None, familiar=0.0,
     reachable   : **现在真能去**的场景 id 列表（由 `scene_controller` 的门/BFS 提供）
     friends     : `[(id, familiar), ...]` 熟络度（自己算，本模块只消费）
     last        : 上一次的 `Intent`（L5：**读上次结果**，避免原地打转）
+    seek        : `{id: 倍数}` —— **「他想找谁」**（第113轮p，真源 `assets/npc/_seek.json`）。
+                  `None` ⇒ 全部 ×1.0，**与旧行为逐值相同**。
+    friend_scenes: `{id: 场景 id}` —— 那几个人**在哪**（第113轮p）。
+                  给了且那个场景 `in reachable` ⇒ 目的地就是那儿；
+                  `None` ⇒ 回落旧行为（随机可达点），逐值等价。
 
     返回 `Intent`。
     """
@@ -342,7 +348,8 @@ def decide(npc_id, now, *, phase=None, traits=None, familiar=0.0,
         else:
             what, dest, why = 'wander', _pick_reachable(reach, rng), 'home_unreachable'
     elif what == 'visit_friend':
-        who, dest, why = _pick_friend(fdat, reach, rng)
+        who, dest, why = _pick_friend(fdat, reach, rng, seek=seek,
+                                      scenes=friend_scenes)
         if dest is None:
             what, why = 'wander', 'no_friend_reachable'
             dest = _pick_reachable(reach, rng)
@@ -381,25 +388,58 @@ def _pick_from(pool, rng):
     return pool[rng.randrange(len(pool))]
 
 
-def _pick_friend(friends, reach, rng):
-    """挑一个**熟且到得了**的朋友。→ `(who, dest, why)`；挑不到 → `(None, None, 原因)`。"""
+def _seek_mul(seek, who):
+    """`seek` 里 `who` 的倍数；没有 / 坏值 ⇒ **1.0**（中性）。"""
+    if not isinstance(seek, dict) or not who:
+        return 1.0
+    try:
+        v = float(seek.get(who) if seek.get(who) is not None else 1.0)
+    except (TypeError, ValueError):
+        return 1.0
+    return v if v > 0 else 1.0
+
+
+def _pick_friend(friends, reach, rng, seek=None, scenes=None):
+    """挑一个**熟且到得了**的朋友。→ `(who, dest, why)`；挑不到 → `(None, None, 原因)`。
+
+    ★★★ 第113轮p 修的真缺陷：原来无论挑中谁，`dest` 都是
+      `_pick_reachable(reach, rng)` —— **随机一个能去的地方**。于是
+      "他说去看朋友"其实走到了别处，而且**任何报告都读不出来**
+      （`Intent.who` 有值、`dest_scene` 也有值、全程没有异常）。
+      ⇒ 现在：`scenes` 里查得到那人在哪、且那个场景**真能去** ⇒ 目的地就是那儿
+        （`why='visit_friend'`）；查不到才回落随机点（`why='visit_friend_away'`，
+        **如实标明"没找到人在哪"**，别把回落伪装成成功）。
+
+    ★ `seek` 是偏好倍数（`npc_seek` 给的），乘在熟络度上；`None` ⇒ 全部 ×1.0
+      ⇒ 权重、随机数消耗、选人都与旧版**逐值相同**。
+    """
     if not friends:
         return None, None, 'no_friends'
-    # 只在"他住的场景可达"的里面挑；按熟络度加权
+    # 只在"他住的场景可达"的里面挑；按熟络度 × 偏好加权
     cand = [(i, f) for i, f in friends if f > 0 and i]
     if not cand:
         return None, None, 'no_known_friend'
-    wts = [max(1e-6, f) for _, f in cand]
+    wts = [max(1e-6, f) * _seek_mul(seek, i) for i, f in cand]
     total = sum(wts)
     x = rng.random() * total
     acc = 0.0
+    who = cand[-1][0]
     for (i, f), wv in zip(cand, wts):
         acc += wv
         if x < acc:
-            # ★ 朋友的"场景"由调用方在 favorites/home 里给；这里只回 id
-            return i, _pick_reachable(reach, rng), 'visit_friend'
-    i, _f = cand[-1]
-    return i, _pick_reachable(reach, rng), 'visit_friend'
+            who = i
+            break
+    dest = None
+    if isinstance(scenes, dict):
+        sc = scenes.get(who)
+        if sc and sc in reach:
+            dest = sc
+    if dest is None:
+        # ★ 没给 `scenes`（旧调用方）⇒ 原因串也保持旧值，**逐字节等价**；
+        #   给了却没找到 ⇒ 才写 `visit_friend_away`，如实标明"没找到人在哪"。
+        away = 'visit_friend_away' if isinstance(scenes, dict) else 'visit_friend'
+        return who, _pick_reachable(reach, rng), away
+    return who, dest, 'visit_friend'
 
 
 # ---------------------------------------------------------------- Plan（L5）

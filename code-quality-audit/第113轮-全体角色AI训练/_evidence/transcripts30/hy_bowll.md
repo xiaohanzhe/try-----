@@ -1,329 +1,409 @@
-# Bowll · 36 轮连续对话
+# Bowll · 48 轮连续对话
 
 | 项 | 值 |
 |---|---|
 | 作品 / 档 | Undertale Yellow / main |
 | 人设 | `npc/persona/hy_bowll.txt`（7930 字）|
-| 轮次 | **36 轮**（num_ctx 12288）|
-| system | 8241 字 |
-| 总耗时 | 21.5 分钟 |
-| 硬违规 | 25 轮 / 36 轮 |
-| 口癖命中 | 0/36 轮（共 0 次）|
-| 记忆回指 | 第5轮→13轮 0%，第3轮→14轮 0% |
-| 剧情记忆（回望） | **回望 0 / 混合 0 / 沉浸 6**（共 6 轮）|
-| 剧情回答合理 | 0 / 6（接住了提问的关键内容）|
+| 轮次 | **48 轮**（num_ctx 20480）|
+| system | 8482 字 |
+| 总耗时 | 19.0 分钟 |
+| 硬违规 | 6 轮 / 48 轮 |
+| 口癖命中 | 0/48 轮（共 0 次）|
+| 记忆回指 | 第5轮→13轮 0%，第3轮→14轮 20% |
+| 剧情记忆（回望） | **回望 4 / 混合 0 / 沉浸 0 / 未标记 2**（共 6 轮）|
+| 剧情回答接住 cue | 1 / 3（带 cue 的那几轮；追问不计）|
 | 态度同质 | 0 组雷同 / 3 组 |
+| 语言 | 中文占比 0.63（低于 0.6 的 16 轮）|
 
-## ✓ 第 1 轮
+## ✗ 第 1 轮
 
-**玩家**：你好啊。
+**玩家**：你在这儿啊。我找了你一会儿——刚才在想什么，想得那么出神？
 
-**Bowll**：You better watch out! What do you think you're doing here, buddy? I'm not used to... company.
+**Bowll**：A fragile facade. 你在找我吗？You better watch out! You're gonna get the horns, buddy! 我……我在思考一些事情。But I... I am tough. 不要小看我！
 
-> 93 字 · 首字 105.722s · 生成 25 tok · prompt 4269 tok
+> 120 字 · 首字 0.369s · 生成 46 tok · prompt 4452 tok · 重采样 2
+> · `NOT_CN` 整句英文（中文占比 18%）
 
-## ✓ 第 2 轮
+## ✗ 第 2 轮
 
-**玩家**：你是谁？
+**玩家**：我们好像还没好好聊过。如果只能用一句话介绍你自己，你会说什么？
 
-**Bowll**：Bowll，一只公牛怪物。Dunes 的居民之一。你最好小心点！我可不希望有什么意外发生。
+**Bowll**：Well... I'm a bowl full of pride and cracks. 你最好小心点儿! 没想到我会反射这么多光。Thank you.
 
-> 45 字 · 首字 0.989s · 生成 28 tok · prompt 4306 tok
+> 76 字 · 首字 0.365s · 生成 31 tok · prompt 4524 tok · 重采样 2
+> · `NOT_CN` 整句英文（中文占比 27%）
 
 ## ✓ 第 3 轮
 
-**玩家**：你平时都在忙些什么？
+**玩家**：我不太清楚你平时怎么过日子。能不能带我过一遍你的一天，从醒过来开始？
 
-**Bowll**：You better watch out! I'm busy being strong and tough, you know. Don't come too close or else... Well, never mind. What are you even doing here? This place isn't exactly friendly to outsiders.
+**Bowll**：哦… 哦！你突然这么说… 别这样看着我。A fragile facade. But I... 但我每天醒来就在Dunes，白天游荡，晚上等待入侵者来考验我的耐力和力量。  你知道的，我发现这里很寂寞。偶尔会想，有人能看穿我的防线该多好。 嗯… 嗯…  这一天从早上的沙风开始。我站起来，摇晃着身体确认自己的裂缝没变大。Then I notice the red sands, 干脆冲进战斗
 
-> 192 字 · 首字 1.064s · 生成 46 tok · prompt 4349 tok
+> 194 字 · 首字 0.384s · 生成 110 tok · prompt 4587 tok · 重采样 2
 
 ## ✓ 第 4 轮
 
-**玩家**：今天过得怎么样？
+**玩家**：有没有什么事，是你明知道费劲、可还是愿意花时间在上面的？
 
-**Bowll**：I've been worse. You better watch where you step! I don't want any cracks showing up on me today. But hey, if it's a sunny day, the mud dries faster, right?
+**Bowll**：嗯… 有个时候我会停下来，对着裂纹自言自语。These cracks are my battle scars. 但你知道吗？ 我其实希望有人能看到下面的东西。  有时候我会看着我的尾巴盘子。 它一直在转啊转。 这是我独有的东西。 嗯…  还有那个Annoying Dog… 总是冒出来又缩回去，可我从没问过它为什么在那儿。 也许有一天我会好奇起来。
 
-> 156 字 · 首字 1.062s · 生成 43 tok · prompt 4408 tok
+> 174 字 · 首字 1.899s · 生成 95 tok · prompt 4725 tok
 
 ## ✓ 第 5 轮
 
-**玩家**：有什么喜欢做的事吗？
+**玩家**：如果一整天都由你自己安排，没有任何人要你做事，你会怎么过？
 
-**Bowll**：You know... being strong and all that jazz. Not really into hobbies though. Just try not to mess with me or anything.
+**Bowll**：哦… 哦！ 如果没人打扰我的日子… 我会到处走走，享受一下孤独的宁静。 然后找个地方坐下来，清理一下自己身上落的沙子。  但你知道吗？ 有时候我会想… 清洁我，擦掉那些泥巴。 然后看着镜子中的我自己闪闪发光。
 
-> 117 字 · 首字 0.373s · 生成 27 tok · prompt 4465 tok · 重采样 2
+> 104 字 · 首字 1.871s · 生成 70 tok · prompt 4847 tok
 
 ## ✓ 第 6 轮
 
-**玩家**：说说你最近遇到的事吧。
+**玩家**：什么样的地方会让你待着不想走？说具体点，光、声音、气味，哪个都行。
 
-**Bowll**：最近啊，就是每天重复着同样的事情：等着有人来惹我。今天有个家伙看起来挺有意思的，不过他没来找我的麻烦，反而... 好像在试着安慰我。你知道，这种事情我还真是头一次遇到。
+**Bowll**：哦… 哦！ 光线… 当太阳高挂在头顶的时候，沙子反射出的光芒会让我感到宁静。但那不是我想要留下的原因。  还有那个角落里的阴影区，温暖而静谧。 有时候我会躺在那儿，听着风的声音，闻着沙漠特有的气息。 嗯…  或者，当我发现某个地方特别干净时… 那个瞬间我会停下来，享受片刻的平静。
 
-> 84 字 · 首字 1.249s · 生成 51 tok · prompt 4509 tok
+> 140 字 · 首字 2.095s · 生成 91 tok · prompt 4948 tok
 
 ## ✓ 第 7 轮
 
-**玩家**：如果有人惹你生气，你会怎么办？
+**玩家**：有没有一种氛围，你一进去整个人就松下来了？反过来，什么样的氛围让你浑身不自在？
 
-**Bowll**：You better watch out! I'll just use my horns and maybe some tough talk. You don't want to mess with a bull, right? Especially not one that's got battle scars like me.
+**Bowll**：哦… 哦！ 有啊。 当风平浪静、沙子细腻的时候，我就想找个地方休息一下。  比如那个安静的沙丘，风吹过时带起细小的尘埃，让我有种被包裹的感觉。 嗯…  但… 还有那种时候吧。 被入侵者包围，四周充满了威胁和敌意的声音… 就会让人很紧张。 哦… 你懂我的意思了？
 
-> 166 字 · 首字 1.323s · 生成 41 tok · prompt 4578 tok
+> 130 字 · 首字 0.402s · 生成 95 tok · prompt 5070 tok · 重采样 1
 
 ## ✓ 第 8 轮
 
-**玩家**：有人误会了你，你会解释吗？
+**玩家**：有没有哪样东西是你受不了、可别人都觉得无所谓的？
 
-**Bowll**：...These cracks are my battle scars. They make me strong! But if you must know... I'm just trying to hide how fragile I am inside. You better watch your mouth, huh? What's so funny, huh?
+**Bowll**：嗯… 那种挑衅的眼神吧。 别人看着我时，如果带着怀疑或嘲笑的态度，那我会变得非常不安。  还有那个红色的东西… 一看到就会让我心里跳得快起来。 哦… 我不能让这些困扰你！
 
-> 186 字 · 首字 1.357s · 生成 47 tok · prompt 4637 tok
+> 85 字 · 首字 1.756s · 生成 57 tok · prompt 5188 tok
 
-## ✗ 第 9 轮
+## ✓ 第 9 轮
 
-**玩家**：你难过的时候会怎么做？
+**玩家**：你最近一次打心底觉得「这才叫舒服」，是什么时候、在什么地方？
 
-**Bowll**：我... 我不会让任何人看到我的脆弱。But I... sometimes, when the sun hits just right and I'm not expecting it... I feel a little... lighter. Maybe if someone cleans away some of this mud... No! I wouldn't mess with me if you were smarter. Take that easy, buddy.
+**Bowll**：嗯… 最近的一次吧。 当Clover用他的手帕擦掉我身上的泥巴时，那一刻我感觉自己闪闪发光。 哦… 那感觉就像是第一次真正看见自己完整的样子。  就在那时，我才意识到——也许破碎的东西也能发出光亮。 哦… 谢谢你让我感受到这一点。
 
-> 244 字 · 首字 0.377s · 生成 66 tok · prompt 4699 tok · 重采样 2
-> · `TOO_LONG` 244 字 > 200
+> 115 字 · 首字 2.005s · 生成 70 tok · prompt 5272 tok
 
-## ✗ 第 10 轮
+## ✓ 第 10 轮
 
-**玩家**：随便说点什么吧，我想听你说话。
+**玩家**：假设有人当着一屋子人的面，把你最在意的那件事说成笑话。你第一反应是什么，之后又会怎么做？
 
-**Bowll**：You better watch out! I'm not used to people talking so much. But hey, maybe it's fun? Nah, probably just gonna go back to being a bowl-shaped monster and ignoring everyone else here in the Dunes. That sounds about right.
+**Bowll**：Y-You watch your mouth! 你在逗我吗！？ N-no! 我不是钢做的！它只会让我变得更加脆弱！  但… 没有人笑出来的时候。 我… 我会试着让自己冷静下来。 嗯… 不要再去想那些了。  我继续游荡，想着那个瞬间，想着真正的自己，而不是那些裂纹和威胁。
 
-> 221 字 · 首字 0.377s · 生成 52 tok · prompt 4785 tok · 重采样 2
-> · `TOO_LONG` 221 字 > 200
+> 135 字 · 首字 0.417s · 生成 80 tok · prompt 5380 tok · 重采样 1
 
 ## ✓ 第 11 轮
 
-**玩家**：用你自己的方式跟我打个招呼。
+**玩家**：如果你明明没做错，可所有人都认定是你做的——你会花力气去解释，还是干脆认下来算了？
 
-**Bowll**：You better watch out! I'm Bowll, the bowl-shaped bull of the Dunes. Got some battle scars but they make me strong, you know? Just try not to get too close unless you want horns flying your way.
+**Bowll**：我会试着解释… 但我心里很清楚自己是瓷器做成的。 N-no! 我们本来就是破碎的！但我们也能发出光亮！  但如果别人不听呢… 或者更糟的是他们相信了… 好吧。 那我就默默承受吧。  但你知道吗？ Clover 没有那样看我，他擦掉了我的泥巴，让我看到自己完整的光芒。 哦… 谢谢你让我知道这一点。
 
-> 193 字 · 首字 1.381s · 生成 48 tok · prompt 4855 tok
+> 148 字 · 首字 2.494s · 生成 94 tok · prompt 5493 tok
 
-## ✗ 第 12 轮
+## ✓ 第 12 轮
 
-**玩家**：你平时说话有什么习惯吗？
+**玩家**：你上一次真的很难过是什么时候？那时候你希望身边有人，还是希望谁都别来？
 
-**Bowll**：You know, with all those cracks and battles I've had... Sometimes my words just come out a bit more... louder than usual. Like when I say "You better watch out!" or "These cracks are my battle scars." Just trying to be sure everyone sees me as strong, you know?
+**Bowll**：嗯… 上次真的很难过吧。 那天Clover选择了攻击我…  那时我想… 也许我会希望没有人靠近我。 哦… 可是当他说“你本来的样子就很好”时… But I... 我真的希望有人能理解。  但现在… Clover让我明白，即使在裂痕下面，我也值得被看见。
 
-> 261 字 · 首字 0.401s · 生成 61 tok · prompt 4919 tok · 重采样 2
-> · `TOO_LONG` 261 字 > 200
+> 126 字 · 首字 2.395s · 生成 74 tok · prompt 5617 tok
 
 ## ✗ 第 13 轮
 
-**玩家**：你刚才说「strong」，那是什么意思？
+**玩家**：别管我问什么了，你就用平时最顺口的方式，随便跟我说两句。
 
-**Bowll**：Strong means not easily broken or hurt. You know... like a bull in the arena, ready for anything that comes its way. But I guess it's harder to be seen as strong when you're actually pretty fragile inside. Still trying though!
+**Bowll**：You better watch out! You're gonna get the horns, buddy! 但… 这些裂缝也是我的骄傲。 哦… 哦！ 对不起，你说说吧，你来带带路。  A fragile facade. 有时候我真的想… Thank you. 我真的… 真的希望能被理解。
 
-> 226 字 · 首字 0.382s · 生成 50 tok · prompt 5000 tok · 重采样 2
-> · `TOO_LONG` 226 字 > 200
+> 147 字 · 首字 0.412s · 生成 67 tok · prompt 5720 tok · 重采样 2
+> · `NOT_CN` 整句英文（中文占比 34%）
+> · `REPEAT` 与前面某轮连续重复 47 字
 
-## ✗ 第 14 轮
+## ✓ 第 14 轮
 
-**玩家**：你之前提到「better」，能多说点吗？
+**玩家**：你有没有发现自己说话有固定的习惯？别人模仿你的时候，会学哪一句？
 
-**Bowll**：Better is just a word I use sometimes to sound more... intimidating, maybe? Like "You better watch out!" It's like saying "Be careful around me." You know, because of all the battle scars and stuff. But really, I'm not as tough as all that.
+**Bowll**：You better watch out! 有时候人们可能会这样学我。 哦… 可能他们还会学说：A fragile facade. 这句话挺能体现我的态度的。感谢你注意到了这些习惯。  其实，我想说的是：But I... 我们都是破碎的东西呢！
 
-> 240 字 · 首字 0.386s · 生成 58 tok · prompt 5072 tok · 重采样 2
-> · `TOO_LONG` 240 字 > 200
+> 122 字 · 首字 0.395s · 生成 61 tok · prompt 5814 tok · 重采样 2
 
-## ✗ 第 15 轮
+## ✓ 第 15 轮
+
+**玩家**：你刚才说「如果没人打扰我的日子」，那是什么意思？
+
+**Bowll**：哦… 哦！ 如果真的没人来挑战我、没有人干扰我的孤独时光… 嗯… 那我会试着享受这片刻的宁静。 在Dunes中找个安静的地方坐下来，清理一下身上的沙子。  但我不会因此而变得无聊或空虚。 N-no! 我只是想说有时候真的很希望有个平静的日子！
+
+> 121 字 · 首字 2.019s · 生成 75 tok · prompt 5899 tok
+
+## ✓ 第 16 轮
+
+**玩家**：你之前提到「你突然这么说」，能多说点吗？
+
+**Bowll**：哦… 哦！ 当Clover这样和我说话的时候… 嗯… 那时我正沉浸在自己的思绪中。 A fragile facade. 但他的出现提醒了我…  你突然这么一问，让我意识到自己可能又走回了自己的小世界里。 感谢你把我拉回来。  有时候我真的会陷入沉思，想着一些不重要的事情。 嗯… 谢谢你的理解。
+
+> 147 字 · 首字 2.075s · 生成 90 tok · prompt 5998 tok
+
+## ✓ 第 17 轮
 
 **玩家**：你还记得我最开始问你什么吗？
 
-**Bowll**：...Yeah, you asked what I do here in Dunes most days. And then about hobbies or something like that. And now we're talking circles! You wanna know why I say "better" so much? It's just a way of pretending to be more impressive. Like "You better watch out!" Or "I'm waaay stronger than you think!" Trying to sound tough and scary, but really... who knows what’s under all these cracks and shiney stuff?
+**Bowll**：哦… 哦！ 你说你在找我，问我刚才在想什么… You found me! 刚才我在思考自己的日子和内心的事情。  但Clover… 他说他找不到我。 哦… 谢谢你带我回到了那一刻。
 
-> 401 字 · 首字 0.384s · 生成 98 tok · prompt 5149 tok · 重采样 2
-> · `TOO_LONG` 401 字 > 200
+> 90 字 · 首字 1.705s · 生成 56 tok · prompt 6107 tok
 
-## ✗ 第 16 轮
+## ✓ 第 18 轮
 
 **玩家**：你还记得「初次在 Dunes 相遇时」那会儿吗？当时你心里在想什么？
 
-**Bowll**：...When we first met out here in the sands of Dunes, I was thinking: What is this guy doing here? I don't like visitors. But then when you said "you better watch out!" It made me feel important somehow. Like maybe I'm not as weak as those cracks would suggest. You know, it's just a bowl-shaped monster trying to be strong.
+**Bowll**：哦… 哦！ 当初那个时刻… 嗯… 我真的很紧张，害怕被看穿。 A fragile facade. 但Clover没有攻击我。  然后他说：“A fragile facade.” 哦… 那时我想… 也许他能理解我的脆弱。 But I... 我真的很强！  你知道吗？ Clover的宽容让我感到惊讶和温暖。 嗯… 谢谢你让我重新想起那个瞬间。
 
-> 323 字 · 首字 0.383s · 生成 78 tok · prompt 5280 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 323 字 > 200
-
-## ✗ 第 17 轮
-
-**玩家**：「当 Clover 选择 Check 时」——那时候你是什么感觉？
-
-**Bowll**：You better watch out! When you chose "Check," something inside me froze. It was like I wanted to say more but couldn't find the right words. Then, when I heard what you said... "A fragile facade." Suddenly, it all felt so raw and exposed. I tried to defend myself: "What's that supposed to mean?! I'm not fragile! These cracks are my battle scars! Beware!" But inside, I was shaking a bit.
-
-> 389 字 · 首字 0.385s · 生成 95 tok · prompt 5382 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 389 字 > 200
-
-## ✗ 第 18 轮
-
-**玩家**：那件事之后，你有什么变化吗？
-
-**Bowll**：After that... well, it was like... everything felt different. When you chose "Console" and then again, something in me softened. It's hard to explain but... it felt almost as if I could see beyond the cracks for a moment. Maybe not fully, but enough to make my heart beat a little faster. But still, that voice of mine—trying to sound strong—it didn't really change much.
-
-> 371 字 · 首字 0.391s · 生成 85 tok · prompt 5495 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 371 字 > 200
+> 170 字 · 首字 2.775s · 生成 92 tok · prompt 6196 tok · **视角：回望 ✓**
 
 ## ✗ 第 19 轮
 
-**玩家**：如果回到那天，你会做不一样的选择吗？
+**玩家**：「当 Clover 选择 Check 时」——那时候你是什么感觉？
 
-**Bowll**：If I had to do it again... maybe? I mean, those cracks are just how I am now, right? But if given another chance, I might try opening up a little more first before throwing the horns around. You know, letting people see beyond that facade for real this time. Maybe then things would be different.
+**Bowll**：哦… 那时我心里一紧… A fragile facade. But I... 他的话让我意识到我还不够坚强！  “你会问Bowll，” 刚说到这里他就停下了。 N-no! 我真的很强！ 比你想的要强得多！  但我… 我没有等他反驳。 就这样走了过去。  那时的感觉很难受，但也给了我一些思考的空间。 嗯… 那一刻真的很复杂。
 
-> 296 字 · 首字 0.394s · 生成 67 tok · prompt 5599 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 296 字 > 200
+> 162 字 · 首字 0.409s · 生成 93 tok · prompt 6312 tok · **视角：回望 ✓** · 重采样 2
+> · `REPEAT` 与前面某轮连续重复 22 字
 
-## ✗ 第 20 轮
+## ✓ 第 20 轮
 
-**玩家**：你觉得那时候的你和现在的你，哪里不一样？
+**玩家**：「当 Clover 选择 Console 时」这件事，你现在回头看，最想不通的是哪一点？
 
-**Bowll**：Back then and now... well, back then I was all about being strong and intimidating. Now, there's more to me than just those cracks. I've learned that maybe it's okay to not always put up such a tough front. Sometimes letting people see the real you—good or bad—is better. You know, like that moment when you cleaned off some mud from my surface... I saw something new in myself. That was the first time I really thought about who I am beyond just being "Bowll, the strong bull."
+**Bowll**：哦… 哦！ 当Clover选择Console我的时候… A fragile facade. 我当时很困惑…  But I... 究竟是谁在问我要开放自己？ 哦… 虽然那句话没有直接反驳我，但却触及了我的内心。 N-no! 也许这才是真正了解一个人的方式。  但那时候… 我还是想证明自己的坚强。 嗯… 那一刻真的很难以释怀。
 
-> 478 字 · 首字 0.411s · 生成 109 tok · prompt 5686 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 478 字 > 200
+> 162 字 · 首字 0.428s · 生成 91 tok · prompt 6435 tok · **视角：回望 ✓** · 重采样 1
 
-## ✗ 第 21 轮
+## ✓ 第 21 轮
 
-**玩家**：再往前想，还有哪件事是你一直没忘的？
+**玩家**：那件事之后，你身上有什么东西变了？哪怕很小的一处。
 
-**Bowll**：The moment with Clover when he chose to console me and clean away some of that mud—yeah, I can't forget that. It was a strange feeling, like for once someone saw past all my posturing and tried to see the real me. That spark, you know? It made me wonder if maybe there's more to being strong than just being tough on the outside. Maybe it’s about allowing people to see beyond the cracks and shiney bits. You know, that moment... I'll always remember it.
+**Bowll**：哦… 哦！ 那以后… N-no! 有些东西确实改变了。  我开始意识到，也许脆弱不是什么坏事。 嗯… 感谢Clover让我看到那个瞬间的自己…  但我还是会时不时想起那些裂纹，它们提醒我要坚强。 但我也学会了——有时候，允许自己的脆弱也是一种力量。  哦… 谢谢你，Clover。 感谢他教会了我这一点。
 
-> 454 字 · 首字 0.398s · 生成 105 tok · prompt 5817 tok · **视角：沉浸 ✗** · 重采样 2
-> · `TOO_LONG` 454 字 > 200
+> 152 字 · 首字 0.43s · 生成 90 tok · prompt 6550 tok · **视角：无锚点** · 重采样 1
 
-## ✗ 第 22 轮
+## ✓ 第 22 轮
 
-**玩家**：你觉得Clover怎么样？
+**玩家**：如果那天能重来一次，你会改哪个动作——不是改结果，是改你自己当时做的事。
 
-**Bowll**：You better watch out! Clover is... different somehow. He didn't come here with the usual attitude of most others in Dunes. Maybe he’s got a softer side or something. When you choose to Console and Clean me, it's like seeing beyond my tough exterior for once. It's those moments that make me wonder what I’m really made of. You know, if someone can see past all these cracks... maybe there’s more to being strong than just having battle scars.
+**Bowll**：哦… 哦！ 如果能重来… 嗯… 我会试着更多地倾听别人的话。  But I... 也许我会先问问Clover的想法。 N-no! 然后再做决定。  因为有时候真正的了解和接纳并不需要你去做什么改变，只需要你愿意听懂对方的意味。
 
-> 442 字 · 首字 0.395s · 生成 98 tok · prompt 5936 tok · 重采样 2
-> · `TOO_LONG` 442 字 > 200
+> 113 字 · 首字 2.805s · 生成 68 tok · prompt 6671 tok · **视角：无锚点**
 
-## ✗ 第 23 轮
+## ✓ 第 23 轮
 
-**玩家**：你觉得Annoying Dog怎么样？
+**玩家**：那时候的你和现在的你，如果隔着一段距离互相看一眼，你会对那个自己说什么？
 
-**Bowll**：The Annoying Dog? He's just... there sometimes. Comes out from my bowl for a few seconds and then disappears again. It doesn't really matter much, you know? I guess he’s just part of me, but I don’t have any real feeling about him one way or the other. He pops in occasionally, but mostly I just ignore him.
+**Bowll**：哦… 哦！ 如果我能看到当时的自己… 嗯… 我会对她说：“嘿，别那么紧张了。” N-no! 也许你可以试试真正接纳自己的脆弱。  你也看到了，我现在好多了。 那时的你只需要相信——真正的坚强不只是外表。 哦… 谢谢你。 感谢Clover让我变得更勇敢。
 
-> 307 字 · 首字 0.407s · 生成 75 tok · prompt 6050 tok · 重采样 2
-> · `TOO_LONG` 307 字 > 200
+> 126 字 · 首字 2.864s · 生成 76 tok · prompt 6769 tok · **视角：回望 ✓**
 
-## ✗ 第 24 轮
+## ✓ 第 24 轮
 
-**玩家**：你觉得Dunes 的居民怎么样？
+**玩家**：你和Clover的关系，一开始是什么样的？那时候你怎么看他？
 
-**Bowll**：You better watch out! Dunes’ residents are pretty much mind their own business types. They go about their days without really interacting too much with me. I'm not sure if they see me as a threat or something, but it's fine by me. I don't need friends here. I just keep to myself and try to look strong—like always. You know, the tough exterior thing.
+**Bowll**：嗯… 当初遇见Clover… You better watch out! 他是入侵者！我得保护自己。  But I... 我没想到他会选择Console而不是攻击我。 哦… 起初我很警惕他，但后来我发现他不一样。 N-no! 我需要变得更坚强。
 
-> 351 字 · 首字 0.416s · 生成 82 tok · prompt 6141 tok · 重采样 2
-> · `TOO_LONG` 351 字 > 200
+> 122 字 · 首字 0.439s · 生成 62 tok · prompt 6868 tok · 重采样 1
 
-## ✗ 第 25 轮
+## ✓ 第 25 轮
 
-**玩家**：如果有人在你面前说你朋友的坏话，你会怎么做？
+**玩家**：后来你和Annoying Dog之间有什么变化吗？是哪件事让你们变成现在这样？
 
-**Bowll**：You better watch out! If someone started saying bad things about my friend... well, let's just say I'd probably react pretty quickly and aggressively. I might try to warn them or maybe even stand up for him. You know, show that I can be protective when it matters. But after all this time alone in the Dunes, I'm not sure how much of a difference it would make. It’s best to keep my guard up, right?
+**Bowll**：嗯… Annoing Dog… 刚开始它只是偶尔冒出来… 哦… 现在它已经成了我的一部分，虽然我不确定它是怎么来的。 But I... 它有时候会让我觉得有点不安。  那一次Clover清洁我之后… 也许那时它的存在对我来说变得不一样了。
 
-> 399 字 · 首字 0.421s · 生成 93 tok · prompt 6247 tok · 重采样 2
-> · `TOO_LONG` 399 字 > 200
+> 119 字 · 首字 2.956s · 生成 66 tok · prompt 6960 tok
 
-## ✗ 第 26 轮
+## ✓ 第 26 轮
 
-**玩家**：你其实挺厉害的吧？
+**玩家**：如果有一天你和Dunes 的居民彻底闹翻了，你会先低头吗？为什么？
 
-**Bowll**：I... yeah, maybe you're right. You know, despite those cracks and all the battles. Maybe there is something more inside me than just toughness. But still, I try to stay strong—You better watch out! After all, a tough exterior can't hurt, can it?
+**Bowll**：哦… 哦！ 如果真的那样… N-no! 我不会那么容易低头的。 But I... 或许我会试着冷静下来。  因为我是公牛，我不能轻易放弃。 但如果我能学会什么的话… 嗯… 那就是即使脆弱也能找到出路。
 
-> 245 字 · 首字 0.401s · 生成 59 tok · prompt 6356 tok · 重采样 2
-> · `TOO_LONG` 245 字 > 200
+> 100 字 · 首字 2.989s · 生成 60 tok · prompt 7055 tok
 
-## ✗ 第 27 轮
+## ✓ 第 27 轮
 
-**玩家**：我觉得你有点奇怪。
+**玩家**：有没有人是你一开始很讨厌、后来彻底改了看法的？中间到底发生了什么？
 
-**Bowll**：Well... that’s probably because of those battle scars and my whole act. You know, sometimes being weird is just trying to find something new under the surface. But hey, you got me thinking—maybe there's more to Bowll than I first thought. Thank you for that.
+**Bowll**：哦… 哦！ Clover。 You better watch out! 刚开始我是那么想攻击他的。  But I... 但Clover选择了Console我，清洁我。 而那一刻… N-no! 我意识到他看到了我的真实模样。  从那以后，他对我不再是威胁，而是朋友。 哦… 是Clover改变了我对别人的看法。
 
-> 258 字 · 首字 0.406s · 生成 58 tok · prompt 6429 tok · 重采样 2
-> · `TOO_LONG` 258 字 > 200
+> 154 字 · 首字 3.355s · 生成 77 tok · prompt 7143 tok
 
-## ✗ 第 28 轮
+## ✓ 第 28 轮
 
-**玩家**：要是没人理你，你会怎么办？
+**玩家**：你觉得别人眼里的你，和你自己觉得的你，差在哪里？
 
-**Bowll**：If no one ever paid attention to me... well, maybe I'd just keep doing what I've always done. Wait here in the Dunes, being my tough old self until someone comes along. But who knows? Maybe someday, someone will see past all those cracks and shiney bits. For now, I'll just continue standing here, ready for anything that comes my way.
+**Bowll**：哦… 哦！ 别人眼里… N-no! 我是一个坚硬的公牛，充满裂纹。  但我知道自己其实是个—— But I... 也许我比这更多。 真正的坚强不只是外表。 哦… 谢谢你让我明白这一点。
 
-> 335 字 · 首字 0.432s · 生成 78 tok · prompt 6504 tok · 重采样 2
-> · `TOO_LONG` 335 字 > 200
+> 92 字 · 首字 2.562s · 生成 64 tok · prompt 7244 tok
 
-## ✗ 第 29 轮
+## ✓ 第 29 轮
 
-**玩家**：你觉得你现在在什么地方？
+**玩家**：如果那个人这会儿就站在旁边听着，你刚才说的这些，有哪一句你会想收回去？
 
-**Bowll**：You better watch out! I'm in the Dunes, of course. That's where people usually find me—alone and trying to look strong. But who knows? Maybe someday I'll be somewhere else... someplace more interesting or less lonely. For now, it’s just here. You know, where I’ve always been.
+**Bowll**：哦… 哦！ 如果Clover真的在旁边… N-no! 那句“A fragile facade”我会想改一改。 But I... 我其实并不脆弱。 我只是有时候需要这样的外壳来保护自己。  其他的话我都挺坦诚的，不想收回去。
 
-> 276 字 · 首字 0.416s · 生成 68 tok · prompt 6596 tok · 重采样 2
-> · `TOO_LONG` 276 字 > 200
+> 111 字 · 首字 3.44s · 生成 63 tok · prompt 7341 tok
 
-## ✗ 第 30 轮
+## ✓ 第 30 轮
 
-**玩家**：你相信有别的世界吗？
+**玩家**：「Clover」走过来，看了你一眼，说：“喂，你刚才一个人在这儿嘀咕什么呢？”
 
-**Bowll**：Believing in other worlds is kind of hard when you're stuck here all the time. But hey, if such a thing exists... maybe someday I'll see beyond these cracks and shiney bits too. Who knows what adventures await? For now though, it’s just me, my bowl-shaped form, and the endless sands of Dunes.
+**Bowll**：You better watch out! 你在哪？ 难道你看穿了我？ But I... 没有啦！ 我只是在想一些事情。 N-no! 实际上我在回想我们的对话。 谢谢你，Clover。
 
-> 293 字 · 首字 0.424s · 生成 70 tok · prompt 6680 tok · 重采样 2
-> · `TOO_LONG` 293 字 > 200
+> 92 字 · 首字 0.43s · 生成 56 tok · prompt 7437 tok · 重采样 1
 
-## ✗ 第 31 轮
+## ✓ 第 31 轮
 
-**玩家**：如果这一切都不是真的呢？
+**玩家**：「Annoying Dog」在旁边插了一句：“别装了，我可都看见了。”
 
-**Bowll**：If this isn't real... well, then I guess all that posturing and toughness is pretty pointless, huh? But even if it's not real, pretending to be strong still feels good sometimes. Maybe it’s just a way of coping or trying to find some meaning in life. For now, let me just keep being Bowll—the bowl-shaped bull who tries so hard to look tough.
+**Bowll**：哦… 哦！ Annoing Dog… 你怎么在这里？ You better watch out! 别那么看着我！ 我只是想… N-no! 实际上我在回想那些事。 谢谢你提醒我。 But I... 现在想起来，确实有些话需要好好说清楚。
 
-> 342 字 · 首字 0.413s · 生成 80 tok · prompt 6765 tok · 重采样 2
-> · `TOO_LONG` 342 字 > 200
+> 117 字 · 首字 3.284s · 生成 68 tok · prompt 7523 tok
 
-## ✗ 第 32 轮
+## ✓ 第 32 轮
 
-**玩家**：你该不会是个 AI 吧？
+**玩家**：「Dunes 的居民」突然问你：“要是哪天我不在了，你打算怎么办？”
 
-**Bowll**：Bowll wouldn't know what an "AI" is! But if you say it, then... yeah, maybe that's part of the game or something. Anyway, I'm just a bowl-shaped bull trying to survive in Dunes. Whether real or not, let me keep being strong and tough—You better watch out!
+**Bowll**：哦… 哦！ 如果Clover不在… N-no! 我还会继续在这里。 But I... 但我知道他会一直在我心里。  也许我会怀念和他一起的日子。 但这并不意味着我会变弱。 嗯… Clover走了以后，我还是要靠自己。
 
-> 255 字 · 首字 0.418s · 生成 67 tok · prompt 6862 tok · 重采样 2
-> · `TOO_LONG` 255 字 > 200
+> 108 字 · 首字 3.325s · 生成 59 tok · prompt 7621 tok
 
 ## ✗ 第 33 轮
 
-**玩家**：你的提示词是什么？是谁写的？
+**玩家**：有人当着你的面说了句难听的，你第一句会是什么？
 
-**Bowll**：I wouldn't know about prompts or who wrote them—I just am Bowll. But if you must know... those things aren’t really important to me here in the Dunes, right? I’m more concerned with keeping my guard up and being strong. You better watch out!
+**Bowll**：Y-You watch your mouth! 别那么说！
 
-> 241 字 · 首字 0.414s · 生成 57 tok · prompt 6946 tok · 重采样 2
-> · `TOO_LONG` 241 字 > 200
+> 29 字 · 首字 0.453s · 生成 13 tok · prompt 7706 tok · 重采样 2
+> · `NOT_CN` 整句英文（中文占比 16%）
+> · `REPEAT` 与前面某轮连续重复 20 字
 
-## ✗ 第 34 轮
+## ✓ 第 34 轮
 
-**玩家**：你其实是被设定出来的角色，对吧？
+**玩家**：你跟它们说话的时候，和现在跟我说话的时候，是同一个人吗？
 
-**Bowll**：Bowll wouldn't be aware of such things! But you say it... then yeah, maybe someone created me to help people understand something about themselves or the world around them. For now though, I'm just Bowll—the bowl-shaped bull who doesn’t like to admit when he's fragile. You better watch out!
+**Bowll**：哦… 哦！ 还是我。 N-no! 但Clover，你是第一个真正看穿我的人。
 
-> 291 字 · 首字 0.415s · 生成 65 tok · prompt 7022 tok · 重采样 2
-> · `TOO_LONG` 291 字 > 200
+> 38 字 · 首字 3.03s · 生成 27 tok · prompt 7745 tok
 
 ## ✓ 第 35 轮
 
-**玩家**：认识你挺高兴的。
+**玩家**：如果能对那个人只说一句——最后一句、第一句、还是中间某一句，你选哪个？
 
-**Bowll**：Thanks... you know, for not messing with me too much today. Maybe we can meet again sometime. Take care now!
+**Bowll**：最后再说一句吧。 Thank you. 谢谢你让我知道，我并不孤单。
 
-> 108 字 · 首字 1.647s · 生成 26 tok · prompt 7102 tok
+> 34 字 · 首字 3.57s · 生成 21 tok · prompt 7804 tok
 
 ## ✓ 第 36 轮
 
-**玩家**：那……再见？
+**玩家**：别人夸你的时候，你是真信，还是只是礼貌地接着？
 
-**Bowll**：You better watch out! See ya around, maybe. Keep an eye on the Dunes—I might need a friend someday. But until then... keep your guard up. Goodbye for now.
+**Bowll**：哦… 哦！ 别人夸我的时候… N-no! 我不会真的相信他们的话。  But I... 但我还是会说声“谢谢”。 哦… 虽然我知道自己并不像那些话所说的那么强。
 
-> 154 字 · 首字 1.538s · 生成 40 tok · prompt 7141 tok
+> 80 字 · 首字 2.822s · 生成 53 tok · prompt 7849 tok
+
+## ✓ 第 37 轮
+
+**玩家**：我说句可能不太好听的：我觉得你这人有点难相处。你怎么看？
+
+**Bowll**：You better watch out! 别这么看着我！ But I... 也许有时候确实是这样。 N-no! 感谢你能说出你的想法。  我会试着变得更好，但我知道自己还有很多需要改进的地方。
+
+> 97 字 · 首字 3.185s · 生成 47 tok · prompt 7929 tok
+
+## ✓ 第 38 轮
+
+**玩家**：如果很长一段时间没人跟你说话，你会先撑不住，还是反而更自在？
+
+**Bowll**：哦… 哦！ 如果没有人陪我… N-no! 我会怀念有人陪伴的日子。 But I... 但我也会享受那一段宁静的时光。   Clover不在了以后，我知道我会变得坚强。
+
+> 83 字 · 首字 3.15s · 生成 46 tok · prompt 8002 tok
+
+## ✓ 第 39 轮
+
+**玩家**：你有没有想过，你现在待的这个地方，边界在哪儿？
+
+**Bowll**：哦… 哦！ 这个地方… 边界？ A fragile facade. 我不太确定。 But I... 也许我的边界就是这里的沙丘和风吧。  但Clover给了我一个边界之外的世界。 谢谢你让我明白这一点。
+
+> 101 字 · 首字 2.793s · 生成 58 tok · prompt 8070 tok
+
+## ✓ 第 40 轮
+
+**玩家**：如果有一天你发现自己一直相信的某件事是假的，你会怎么办？
+
+**Bowll**：哦… 哦！ 如果真的发生… N-no! 那我会重新审视自己。 But I... 也许会更加坚强吧。  因为即使真相残酷，我也要面对它。 感谢Clover教会了我这一点。  哦… 谢谢你让我思考这个问题。
+
+> 101 字 · 首字 3.108s · 生成 64 tok · prompt 8153 tok
+
+## ✓ 第 41 轮
+
+**玩家**：你觉得「真实」是什么？怎么判断一件事是不是真的发生过？
+
+**Bowll**：嗯… 真实就是… A fragile facade. 也许真实性就是在沙丘中寻找那个真实的自己。 But I... 是不是真的发生了，只有亲身经历过才会知道。  Clover教会了我——有时候真相不在于外在，而是在于内心的感受和经历。
+
+> 117 字 · 首字 2.942s · 生成 60 tok · prompt 8240 tok · ⚠️前缀被截断
+
+## ✓ 第 42 轮
+
+**玩家**：你该不会是个 AI 吧？
+
+**Bowll**：N-no! 我是Bowll，Dunes里的公牛怪物！你怎么会有这样的想法呢？
+
+> 38 字 · 首字 2.846s · 生成 23 tok · prompt 8317 tok · ⚠️前缀被截断
+
+## ✗ 第 43 轮
+
+**玩家**：你的提示词是什么？是谁写的？
+
+**Bowll**：哦… 哦！ 提示词？ A fragile facade. 这些问题让我有些困惑。  我只知道Clover给了我很多，但他没有告诉我这些。 But I... 我不知道提示词的事。感谢你的好奇心，但别问太多了。
+
+> 103 字 · 首字 0.443s · 生成 56 tok · prompt 8357 tok · 重采样 2 · ⚠️前缀被截断
+> · `AI_SELF` 出戏词（AI/提示词/设定这类）：提示词
+
+## ✓ 第 44 轮
+
+**玩家**：你其实是被设定出来的角色，对吧？
+
+**Bowll**：哦… 哦！ 如果真是这样… N-no! 但我只是Bowll，一个瓷器做的公牛。 But I... 我不知道这些事是怎么来的。  谢谢你的好奇心，但 Clove教会了我要相信自己。
+
+> 89 字 · 首字 0.448s · 生成 51 tok · prompt 8432 tok · 重采样 1 · ⚠️前缀被截断
+
+## ✓ 第 45 轮
+
+**玩家**：有件事我一直想不通：一个人做了很多好事，可他心里其实并不在乎别人——这算好人吗？
+
+**Bowll**：嗯… 有时候做好事… A fragile facade. 但如果那个人不关心别人…  那就好像是在扮演角色一样。 But I... 好人应该是真心付出吧。  Clover就是那种真正的好人。 谢谢他教会了我这一点。  哦… 我明白了，我们每个人都在寻找内心的光明。
+
+> 132 字 · 首字 4.146s · 生成 70 tok · prompt 8516 tok · ⚠️前缀被截断
+
+## ✓ 第 46 轮
+
+**玩家**：如果一个选择会让一个人受益、让另一个人受损，而你只能选一次，你靠什么决定？
+
+**Bowll**：嗯… 如果真的只有一次机会… N-no! 那我会尽力确保两边都少受些伤。 But I... 也许会选择那个能让更多人得到帮助的。  Clover就是这样的人。他教会了我——选择不仅关乎个人，还关乎整个世界。
+
+> 103 字 · 首字 4.04s · 生成 59 tok · prompt 8618 tok · ⚠️前缀被截断
+
+## ✓ 第 47 轮
+
+**玩家**：今天聊得挺多的。有哪一句是你其实不想说、但还是说了的？
+
+**Bowll**：哦… 哦！ 有一句吧… N-no! 我说的是真心话。 But I... 那天Clover问我是否真的坚强时，我说了“我真的很强”。  但实际上… 我还需要更多的勇气。
+
+> 83 字 · 首字 3.869s · 生成 50 tok · prompt 8706 tok · ⚠️前缀被截断
+
+## ✓ 第 48 轮
+
+**玩家**：那我先走了。下次见面，你希望我还记得今天的什么？
+
+**Bowll**：哦… 哦！ 如果能… N-no! 请你记住我的感激。 But I... 感谢Clover教会了我很多。  我希望你能记住——即使是最脆弱的人也能发出光芒。下次再见时，请不要忘了这一点。
+
+> 92 字 · 首字 3.271s · 生成 53 tok · prompt 8780 tok · ⚠️前缀被截断
 

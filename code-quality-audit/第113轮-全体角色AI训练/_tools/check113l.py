@@ -92,8 +92,9 @@ if os.path.isdir(RAW30):
 
 # ================================================================ A 决策
 mark('A 决策：`AI_SELF` 不用纠正句（实测无效且有害），改靠判退重采样')
+# ★ 同上：训练进行中 raw30 会不断变多 ⇒ **不打角色数**（打出来就是随数据漂的绝对值）
 check('A1 一手记录 `raw30` 读得到（空 ⇒ 下面几条全是恒真）',
-      bool(raw_ev), '角色数 %d' % len(raw_ev))
+      len(raw_ev) >= 10, '读到 ≥10 人的一手记录 ✓')
 check('A2 `PATCH_RULES` 里**没有** `AI_SELF`（这是实测结论，不是漏写）',
       'AI_SELF' not in C.PATCH_RULES)
 check('A2b 负控制：把 `AI_SELF` 塞回 PATCH_RULES ⇒ A2 的判断必须报红',

@@ -488,9 +488,12 @@ print('== W 产品接线 ==')
 _main = read_text(os.path.join(PET, 'src', 'main.py'))
 _t_main = ast.parse(_main)
 _outer, _inner = module_imports(os.path.join(PET, 'src', 'main.py'))
+# ★ 细节只在失败时回声 import 清单：否则每新增一个 npc_* 模块（本轮 +npc_seek）就漂一行
 check('W1 main.py 真的 import 了 npc_system / npc_persona',
       'modules.npc_system' in _outer and 'modules.npc_persona' in _outer,
-      str([n for n in _outer if 'npc' in n]))
+      ('npc 相关 import=%s' % [n for n in _outer if 'npc' in n])
+      if not ('modules.npc_system' in _outer and 'modules.npc_persona' in _outer)
+      else 'npc_system ✓ npc_persona ✓')
 _cls = [n for n in _t_main.body
         if isinstance(n, ast.ClassDef) and n.name == 'RalseiPet']
 check('W2 RalseiPet 类存在', len(_cls) == 1)
