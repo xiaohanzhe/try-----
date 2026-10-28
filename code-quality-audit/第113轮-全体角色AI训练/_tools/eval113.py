@@ -176,14 +176,28 @@ def build_patches(data, cards, dups, roster_by_id=None):
         # ★ 第113轮s：元叙事角色的 META 纠正要豁免（详见 common113._persona_is_meta）。
         #   实测 13 个拿到 META 纠正的角色**全部**在人设里反复讲这些词，
         #   其中 6 个是 OneShot 系（玩家/代码/世界机器就是设定内核）。
+        #   ★★ 113轮s 追加更正：**不能按整类剔**。`ut_papyrus` 的 2 条 META 撞的是
+        #   `Undertale`——他原话「我确实是按照设定来扮演的角色。《Undertale》中的
+        #   Papyrus 就是这样被描述和设计的」，这是**真出戏**，整类剔就等于放过了他
+        #   （我第一版就是这么写的，靠回原始违规才发现）。
+        #   ⇒ 改成**逐条按命中词**判：软词（玩家/代码/世界机器…）才豁免，
+        #     硬词（作品名/游戏角色/开发者/桌宠）永不豁免。
         is_meta, n_meta = C._persona_is_meta(persona)
         if is_meta:
-            kept = [v for v in vios if v[0] != 'META']
-            if len(kept) != len(vios):
+            kept, soft_n = [], 0
+            for v in vios:
+                if v[0] == 'META' and C.meta_hit_is_soft(v[1]):
+                    soft_n += 1
+                    continue
+                kept.append(v)
+            if soft_n:
+                hard_n = len(vios) - len(kept) - soft_n
                 exempt.append({'npc': nid, 'code': 'META',
-                               'n': len(vios) - len(kept),
+                               'n': soft_n,
                                'why': '人设本身是元叙事（玩家/代码/世界机器等出现 %d 次），'
-                                      '提这些词是在照设定说话' % n_meta})
+                                      '提这些词是在照设定说话' % n_meta
+                                      + ('；另有 %d 条撞的是作品名/开发者，**不豁免**' % hard_n
+                                         if hard_n else '')})
             vios = kept
         card = cards.get(nid, {})
         parts = []
@@ -499,6 +513,23 @@ def merge_patches(old, new):
     return merged, rep
 
 
+def strip_paren_rule(text):
+    u"""剔掉补丁里「不要用括号…」那一句，**其余纠正原样保留**。
+
+    只给 `_persona_allows_paren` 为真的角色用（kris/tenna/ut_frisk/os_silver…）。
+    ★ 为什么需要单独一步：豁免是第113轮s 才加的，而他们的卡片/索引里早就留着
+      那句老补丁 ⇒ 运行时 prompt 一边说"用括号表示动作"、一边说"不要用括号"。
+    ★ 为什么不能靠 `merge_patches`：它的规则是"保留旧键"，算不出来的旧句子
+      **不会**被删 ⇒ 不主动剔就永远是矛盾态。
+    ★ 为什么只删一句而不是清空：他们还有「别重复」「两三句」要留着。
+    """
+    sents = _split_sents(text or u'')
+    keep = [s for s in sents if u'括号' not in s]
+    if len(keep) == len(sents):
+        return text or u''
+    return u' '.join(keep).strip()
+
+
 def main(argv):
     roster, gaps = C.load_roster()
     cards = collect_cards()
@@ -507,16 +538,34 @@ def main(argv):
         print('还没有任何对话记录，先跑 dialogue113.py --phase baseline')
         return 1
     dups = cross_dups(data)
-    patches, dup_count, exempt = build_patches(data, cards, dups,
-                                               {r['id']: r for r in roster})
+    roster_by_id = {r['id']: r for r in roster}
+    patches, dup_count, exempt = build_patches(data, cards, dups, roster_by_id)
     summary = summarize(data, cards, dups)
     n_corpus = write_corpus(data, cards, roster)
 
+    # ★★ 113轮s：**括号豁免的角色，旧补丁里那句「不要用括号…」必须剔掉**。
+    #   豁免是这一轮才加的，而 `kris`/`tenna`/`ut_frisk` 的卡片里早就留着那句
+    #   （那是加豁免之前算出来的）⇒ 运行时 prompt 一边要求"用括号表示动作"、
+    #   一边要求"不要用括号"，自相矛盾。
+    #   ⚠️ 只删**这一句**，不是清空补丁：他们的「别重复」「两三句」还要留着。
+    #   ⚠️ 也不能靠 `merge_patches` —— 它的规则是"保留旧键"，不会主动删。
+    strip_nids = set()
+    for nid, persona in [(k, (v.get('persona') or '')) for k, v in roster_by_id.items()]:
+        if not C._persona_allows_paren(persona):
+            continue
+        cur = (cards.get(nid) or {}).get('patch') or ''
+        if u'括号' in cur:
+            strip_nids.add(nid)
+
     # —— 回填：卡片 + 索引（索引是运行时唯一读的口径）——
-    for nid, p in patches.items():
+    for nid in list(patches) + [n for n in sorted(strip_nids) if n not in patches]:
         card = cards.get(nid)
         if not card:
             continue
+        p = patches.get(nid)
+        if p is None:
+            # 只有"要剔句"的份 —— 保留旧补丁里除括号句以外的内容。
+            p = strip_paren_rule(card.get('patch') or '')
         card['patch'] = p
         card['eval'] = {
             'violations': summary['per_char'].get(nid, {}).get('violations', 0),
@@ -531,6 +580,13 @@ def main(argv):
     idx = C.load_json(idx_path, {}) or {}
     # ★ 第113轮s：不能直接 `idx['patches'] = patches` —— 见 `merge_patches` 的说明。
     merged, mrep = merge_patches(idx.get('patches') or {}, patches)
+    # ★ 索引侧同样要剔（卡片已剔，索引是运行时真正读的那一份，两边必须一致）
+    for nid in sorted(strip_nids):
+        cur = merged.get(nid)
+        if cur and u'括号' in cur:
+            new_txt = strip_paren_rule(cur)
+            print(u'  [patches] %s 剔掉括号纠正：%d → %d 字' % (nid, len(cur), len(new_txt)))
+            merged[nid] = new_txt
     idx['patches'] = merged
     for line in mrep:
         print('  [patches] %s' % line)

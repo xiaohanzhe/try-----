@@ -498,7 +498,11 @@ PATCH_RULES = {
     'MARKDOWN': '说话就是说话，不要用 #、*、-、编号这些排版符号，也不要分点。',
     # 'AI_SELF': —— 故意不设。见上方实测结论（写了会更差）。
     'SLAVE': '不要用「主人」称呼对方，也不要端着"服务"的腔调；按你的性格直接说「你」。',
-    'ACTION_PAREN': '不要用括号写动作或表情，只写你说出口的话。',
+    # ★ 113轮s：措辞原来只写"动作或表情"，而闸门 `_PAREN_RE` 抓的是**任何**括号插入。
+    #   `ut_papyrus` 45 条括号里基本没有动作：「（对了，你喜欢意大利面吗？）」
+    #   「（她总是要求我穿好衣服）」—— 那是**插话**。旧措辞对他不成立
+    #   （他会想"我又没写动作"），等于补丁对他无效。改成覆盖三类。
+    'ACTION_PAREN': '不要用括号加动作、表情或插话，只写你说出口的话。',
     'TOO_LONG': '一次最多两三句，短一点，像随口说出来的。',
     'TOO_MANY_SENTENCES': '一次最多两三句，别一口气说一长串。',
     'PARROT': '不要复述对方的话，直接接你自己的反应。',
@@ -593,6 +597,42 @@ def _persona_is_meta(persona):
     p = persona or ''
     n = sum(p.count(w) for w in _META_WORDS)
     return n >= _META_MIN_HITS, n
+
+
+#: META 违规的**命中词**分两档 —— 只有软词可以因为"人设本身是元叙事"而豁免。
+#:   · 软词 = 这个世界观内部的词（玩家/代码/世界机器/程序…）。
+#:     对 `os_niko`/`os_rowbot` 这类角色，说这些词**就是照设定说话**。
+#:   · 硬词 = 元层面词（作品名 / 游戏角色 / 开发者 / 桌宠）。
+#:     任何角色撞上都算出戏，**永不豁免**。
+#: ★★ 这条是从一次真错里总结的：第一版按 `v[0] != 'META'` **整类剔**，
+#:   结果 `ut_papyrus` 那 2 条「我确实是按照设定来扮演的角色。《Undertale》中的
+#:   Papyrus 就是这样被描述和设计的」也被放过了 —— 那是彻底的出戏。
+#:   ★ 顺带一个坑：`_META_WORDS` 里每个角色都有 **2 次固定模板命中**
+#:   （「不要代码块」+「由这个程序按原作安排」），所以阈值 5 的真实余量只有 3。
+_META_HARD_WORDS = (u'deltarune', u'undertale', u'游戏角色', u'开发者', u'桌宠')
+_META_SOFT_WORDS = (u'玩家', u'世界机器', u'代码', u'程序', u'脚本',
+                    u'第四面墙', u'游戏窗口', u'元叙事')
+
+
+def meta_hit_word(detail):
+    """从违规说明 `出戏词：X` 里取出 `X`。取不到就把原文整段返回。"""
+    s = str(detail or u'')
+    i = max(s.find(u'：'), s.find(u':'))
+    return (s[i + 1:].strip() if i >= 0 else s.strip())
+
+
+def meta_hit_is_soft(detail):
+    """这条 META 违规撞的是**软词**吗（软词才允许豁免）。
+
+    ★ 判据方向要守死：**认不出来的一律当硬词**（不豁免）。
+      反过来写（"没认出硬词就豁免"）会把新加的词悄悄放过。
+    """
+    w = meta_hit_word(detail).lower()
+    if not w:
+        return False
+    if any(h in w for h in _META_HARD_WORDS):
+        return False
+    return any(s in w for s in _META_SOFT_WORDS)
 
 
 def cn_ratio(text):
@@ -697,12 +737,19 @@ def gate_reply(text, user_text='', prev=(), name='', persona=''):
 def build_patch(violations, markers, relations_list):
     """违规清单 → 一段**短的**纠正（最多 3 句）。
 
-    顺序即优先级：先修"结构性"的（markdown / 自称 AI），再修"语气"的。
+    顺序即优先级：先修"身份/格式"崩坏的（markdown / 自称 AI / 叫主人），
+    再修"语言"（`NOT_CN`，整句英文等于这个角色不可用），最后才是语气与长度。
     跨角色撞车（`DUP`）由 eval 追加，它需要口癖词，所以单独一个入口。
     """
     codes = [c for c, _ in violations]
     want, seen = [], set()
-    for c in ('MARKDOWN', 'AI_SELF', 'SLAVE', 'ACTION_PAREN', 'META',
+    # ★★★ 第113轮s：**`NOT_CN` 原来漏在这张表外面** —— `PATCH_RULES['NOT_CN']`
+    #   写好了、却永远发不出来。实证后果：`ut_sans` 48 轮里 47 轮整句英文
+    #   （「i'm sans. sans the skeleton.」），最后拿到的补丁只有「两三句」
+    #   + 「别重复」两条，最严重的问题一句纠正都没有。
+    #   这与 `eval113` 读错目录是同一类错：**规则写了，但没接到出口**。
+    #   位置：前三项是身份/格式崩坏，必须先修；语言不可用排其后。
+    for c in ('MARKDOWN', 'AI_SELF', 'SLAVE', 'NOT_CN', 'ACTION_PAREN', 'META',
               'TOO_LONG', 'TOO_MANY_SENTENCES', 'PARROT', 'REPEAT', 'ENGLISH', 'EMPTY'):
         if c in codes and c not in seen and c in PATCH_RULES:
             seen.add(c)
