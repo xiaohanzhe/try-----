@@ -1,0 +1,32 @@
+第115轮 · 全量实例坐标索引
+1251 间房 / 47895 个实例 / 1945 个不同对象（其中带非 1 缩放的 808 个、带旋转的 58 个）
+
+ch1：147 间 / 3513 实例 / 167 对象
+ch2：278 间 / 8050 实例 / 470 对象
+ch3：246 间 / 9892 实例 / 702 对象
+ch4：328 间 / 13953 实例 / 613 对象
+ch5：252 间 / 12487 实例 / 585 对象
+
+实例最多的 10 个（x/y 区间是跨房原始值，只用于看量级）：
+  obj_solidblocksized                        inst=5204  rooms=418  x[-800.0..15280.0] y[-320.0..19360.0]
+  obj_soliddark                              inst=2427  rooms=255  x[-280.0..4800.0] y[-47.0..4680.0]
+  obj_solidblock                             inst=2007  rooms=159  x[-120.0..2440.0] y[-29.0..2800.0]
+  obj_board_solid                            inst=1778  rooms=38   x[0.0..6080.0] y[-96.0..6208.0]
+  obj_solidblockDark                         inst=1306  rooms=132  x[-560.0..7080.0] y[0.0..9000.0]
+  obj_mainchara                              inst=1116  rooms=1116 x[-260.0..9920.0] y[-64.0..19698.0]
+  obj_readable_room1                         inst=973   rooms=241  x[23.0..3010.0] y[32.0..2273.0]
+  obj_climb_climbable                        inst=954   rooms=55   x[-2280.0..5520.0] y[-520.0..19480.0]
+  obj_markerAny                              inst=919   rooms=443  x[-160.0..15160.0] y[0.0..19698.0]
+  obj_darkcontroller                         inst=881   rooms=881  x[-760.0..5720.0] y[-480.0..8520.0]
+
+带缩放的（前 10 个）：
+  obj_solidblocksized                        766 种缩放 最常见的 ['1', '2']
+  obj_soliddark                              524 种缩放 最常见的 ['1', '1']
+  obj_solidblock                             330 种缩放 最常见的 ['1', '1']
+  obj_board_solid                            170 种缩放 最常见的 ['1', '1']
+  obj_solidblockDark                         315 种缩放 最常见的 ['3', '3']
+  obj_mainchara                              5 种缩放 最常见的 ['2', '2']
+  obj_readable_room1                         195 种缩放 最常见的 ['1', '1']
+  obj_climb_climbable                        57 种缩放 最常见的 ['1', '1']
+  obj_markerAny                              2 种缩放 最常见的 ['1', '1']
+  obj_doorAny                                123 种缩放 最常见的 ['1', '2']

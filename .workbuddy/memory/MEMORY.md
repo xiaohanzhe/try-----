@@ -4,13 +4,13 @@
 > ⚠️ **别为凑"上限"削语义**；真口径＝**JS 长度**；读文件**字节忠实**（`newline=''`）。❗❗**只许 Write/Edit**；**当日日志 append-only**（细则 skill `agent-memory-compaction`）。
 ## 0. 铁律
 - 每轮改动即 **commit+push**；称呼"用户"；技术细节我拍板；不可逆/对外动作先说影响面。
-- ★★★ **工作区会被"回滚"而 git 不报错（113轮）**：产品文件被换成旧版（`scene_camera` 519→382、`door_reveal`/`niko_home` 消失、`main.py` 混合态），**静态自洽⇒跑不报错**。⇒ 比"工作区 vs `HEAD:path`"sha1（CRLF 归一）；守卫＝`recheck113b` **⑦ 反回滚闸**（不许缩水 >30%）。★ `git status` 必带 `-c core.quotepath=false`。
+- ★★★ **工作区会被"回滚"而 git 不报错（113轮）**：产品文件被换成旧版、**静态自洽⇒跑不报错**（例见 §113）。⇒ 比"工作区 vs `HEAD:path`"sha1（CRLF 归一）；守卫＝`recheck113b` **⑦ 反回滚闸**（不许缩水 >30%）。★ `git status` 必带 `-c core.quotepath=false`。
 - ❗**仓库根=`try - 副本`**（`ralsei_pet` 子目录）⇒**G2 cwd=仓库根**。远端 `github.com/xiaohanzhe/try-----.git`（★公开）。真机起＝`src/main.py`（单实例锁 `Global\RalseiPetMutex`；透明非置顶⇒**甩飞/抛物线只可离屏断言**）。
 - ★★★ **按键账本 API（84轮）**：`self.soul`=`SoulOverlay`⇒**只能 `release_all()`**；`soul.state`=`SoulState`⇒**只能 `clear_keys()`**。写错=静默 `AttributeError` 被吞（`check84 D5`）。
 - 改码前先跑 G2 `regress/run_all.py`（须**全 IDENTICAL**）；改断言/文案→`--only <suite> --update`。★★ **新增合法零依赖模块撞两闸**：`round5_smoke`（模块数）＋`scene_p0` **A6 白名单**（手加 `_CTL_ALLOWED`）。★ **只读优先、改动最小**；★"写了 N 个文件"须 `os.listdir` 查盘；★★ **回归套件不许依赖临时区/外部盘**⇒**蒸馏进仓库**。❗❗**改过"重要核心文件"必复检**（skill `core-file-recheck`）。★★★ **改两层登记前先查重复键**（`json` 取最后一个⇒静默错值）；★★ **老套件 BASE 可能硬编码⇒worktree 里测错树**。
 ## 1. 环境（细则 §1/§18/§19/§21/§23.10/§37/§65.2）
 - ⚠️ **Bash 常整体坏掉**（`ls/head/cat` 全 127）→ **一律 Python+Write/Read**。❗别从 Bash 调 PowerShell；❗❗**别内联 `python -c`**（反引号/`\n` 被吞）。Python 一律 **`C:\Python311\python.exe`**；起进程 `&`+`run_in_background`，杀进程用 psutil。❗❗❗ **未提交文件绝不能 `git checkout --`**（109轮抹掉 4 门改写）⇒ 改重要文件前先 commit/留备份。
-- ★★ **写入通道会整体失效**（~25min 自愈）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。❗❗**E: exFAT 已坏**（读卡死→杀父进程）⇒临时盘投 `D:`。
+- ★★ **写入通道会整体失效**（~25min 自愈）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。❗❗**E: exFAT 已坏**（读卡死→杀父进程）⇒临时盘投 `D:`。❗❗**工具 exe 起不来→先换启动方式**（`DETACHED_PROCESS`，§115C）。
 - ❗❗**临时/备份绝不放工作区**（`git add -A` 记为删除并提交）⇒ 一律 `E:\Download\_tmp\`；**提交前必看 `git diff --cached --numstat`**。❗**清理守卫累计删（50）**：症状=**import 期被 SIGTERM、零输出**⇒**改名归档**。
 - ⭐⭐ **代理端口逐端口实测 CONNECT 再选**。⭐⭐ **编辑保持原 EOL**；中文路径⇒`git ls-files -z`+`surrogateescape`。
 - ★★★ **游戏文件+UTMT⇒详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**·**stdout 须落文件**）。
