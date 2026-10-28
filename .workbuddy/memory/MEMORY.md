@@ -10,7 +10,7 @@
 - 改码前先跑 G2 `regress/run_all.py`（须**全 IDENTICAL**）；改断言/文案→`--only <suite> --update`。★★ **新增合法零依赖模块撞两闸**：`round5_smoke`（模块数）＋`scene_p0` **A6 白名单**（手加 `_CTL_ALLOWED`）。★ **只读优先、改动最小**；★"写了 N 个文件"须 `os.listdir` 查盘；★★ **回归套件不许依赖临时区/外部盘**⇒**蒸馏进仓库**。❗❗**改过"重要核心文件"必复检**（skill `core-file-recheck`）。★★★ **改两层登记前先查重复键**（`json` 取最后一个⇒静默错值）；★★ **老套件 BASE 可能硬编码⇒worktree 里测错树**。
 ## 1. 环境（细则 §1/§18/§19/§21/§23.10/§37/§65.2）
 - ⚠️ **Bash 常整体坏掉**（`ls/head/cat` 全 127）→ **一律 Python+Write/Read**。❗别从 Bash 调 PowerShell；❗❗**别内联 `python -c`**（反引号/`\n` 被吞）。Python 一律 **`C:\Python311\python.exe`**；起进程 `&`+`run_in_background`，杀进程用 psutil。❗❗❗ **未提交文件绝不能 `git checkout --`**（109轮抹掉 4 门改写）⇒ 改重要文件前先 commit/留备份。
-- ★★ **写入通道会整体失效**（~25min 自愈；E 盘瞬时 `Errno 22`）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。
+- ★★ **写入通道会整体失效**（~25min 自愈）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。❗❗**E: exFAT 已坏**（读卡死→杀父进程）⇒临时盘投 `D:`。
 - ❗❗**临时/备份绝不放工作区**（`git add -A` 记为删除并提交）⇒ 一律 `E:\Download\_tmp\`；**提交前必看 `git diff --cached --numstat`**。❗**清理守卫累计删（50）**：症状=**import 期被 SIGTERM、零输出**⇒**改名归档**。
 - ⭐⭐ **代理端口逐端口实测 CONNECT 再选**。⭐⭐ **编辑保持原 EOL**；中文路径⇒`git ls-files -z`+`surrogateescape`。
 - ★★★ **游戏文件+UTMT⇒详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**·**stdout 须落文件**）。

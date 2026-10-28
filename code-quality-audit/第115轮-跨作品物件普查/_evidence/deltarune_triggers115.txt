@@ -1,0 +1,404 @@
+第115轮 · 事件触发器（占位精灵，不是布景，不用填功能简介）
+共 401 个对象 / 1668 次实例
+
+obj_climb_pathturner                       spr_debug_arrow10      inst=543  rooms=11  ch=4  room_test_climb_0001 | room_dw_church_intro_gerson | room_dw_churchb_rotatingtower2
+obj_rotating_tower_animation               spr_debug_40x40        inst=177  rooms=7   ch=4  room_dw_churchc_titanclimb1 | room_dw_churchc_titanclimb2 | room_dw_churchc_titanclimb1_old
+obj_climb_destructableclimbarea            spr_debug_lightning_area inst=122  rooms=7   ch=4  room_dw_church_crumbletower | room_dw_churchc_titanclimb1 | room_dw_churchc_titanclimb1_old
+obj_climb_susie_controller                 spr_debug_arrow10      inst=120  rooms=8   ch=45  room_test_climb_new | room_dw_churchb_rotatingtower | room_dw_churchc_titanclimb2
+obj_climb_animationmarker                  spr_debug_40x40        inst=68   rooms=7   ch=4  room_dw_churchc_titanclimb1 | room_dw_churchc_titanclimb2 | room_dw_churchc_titanclimb1_old
+obj_climb_destructableareatrigger          spr_debug_lightning_area_mask inst=60   rooms=8   ch=4  room_dw_churchc_titanclimb1 | room_dw_churchc_titanclimb2 | room_dw_churchc_titanclimb1_old
+obj_plat_cam_nudgezone                     spr_debug_40x40_dotted_aqua inst=53   rooms=16  ch=5  room_dw_garden_finalplatforming_right | room_dw_garden_aquahole | room_dw_garden_aquaplatforming
+obj_climb_cloudspeedcontroller             spr_debug_lightning_area inst=18   rooms=5   ch=4  room_dw_churchc_slidingpiano | room_dw_churchc_titanclimb2 | room_dw_churchc_titanclimb2_old
+obj_rotating_tower_controller_new          spr_event              inst=15   rooms=15  ch=45  room_dw_church_dogclimb | room_rotating_tower_new_test | room_rotating_tower_new_example
+obj_board_event_bridgepuzzle               spr_board_event        inst=11   rooms=3   ch=3  room_board_tests | room_board_2 | room_dw_teevie_susiebridge
+obj_church_piano_hint                      spr_crosshair_7x7      inst=10   rooms=6   ch=4  room_dw_church_intropiano | room_dw_church_pianopiece_left | room_dw_church_darkmaze
+obj_board_swordroute_treeteleportroom      spr_board_triggerarea  inst=9    rooms=2   ch=3  room_board_1_sword | room_board_1_sword_trees
+obj_climb_peachcatcher                     spr_board_triggerarea  inst=9    rooms=1   ch=5  room_dw_cliff_bunnyfarm
+obj_dw_fcastle_foxhunt                     spr_event              inst=5    rooms=5   ch=5  room_dw_fcastle_foxhunt | room_dw_fcastle_foxhunt_terakota | room_dw_fcastle_foxhunt_socks
+obj_unusedclassevent                       spr_event              inst=5    rooms=5   ch=12345  room_school_unusedroom
+obj_cutscene_test                          spr_event              inst=4    rooms=4   ch=2345  room_cutscene_tester
+obj_darklanding                            spr_event              inst=4    rooms=4   ch=123  room_castle_outskirts | room_dw_castle_west_cliff_old | room_dw_castle_west_cliff
+obj_dw_church_staticlight_overworld        spr_crosshair_7x7      inst=4    rooms=1   ch=4  room_dw_church_intro_gerson
+obj_dw_churchc_dodge_trigger               spr_debug_40x40        inst=4    rooms=1   ch=4  room_dw_churchc_dodge
+obj_example_cutscene_b                     spr_event              inst=4    rooms=4   ch=2345  room_cutscene_tester_b
+obj_light_following                        spr_debug_light        inst=4    rooms=3   ch=4  room_dw_church_jackenstein | room_dw_church_intropiano | room_dw_church_darkclimb
+obj_b2s_northernlightsroom                 spr_board_event        inst=3    rooms=1   ch=3  room_board_2_sword
+obj_b3bs_stealth                           spr_debug_stealth      inst=3    rooms=3   ch=3  room_dw_b3bs_zapper_a | room_dw_b3bs_cooltrashy | room_dw_teevie_stealth_d
+obj_board_preshadowmantle                  spr_board_triggerarea  inst=3    rooms=2   ch=3  room_board_preshadowmantle | room_board_preshadowmantle_repeat
+obj_dw_churchb_rotatingtower               spr_eventsmall         inst=3    rooms=3   ch=4  room_dw_churchb_rotatingtower | room_dw_churchb_rotatingtower_old | room_dw_churchb_rotatingtower_tiled
+obj_dw_churchc_titanclimb2                 spr_eventsmall         inst=3    rooms=3   ch=4  room_dw_churchc_titanclimb2 | room_dw_churchc_titanclimb2_old2 | room_dw_churchc_titanclimb2_tiled
+obj_plat_antisoftlock_zone                 spr_debug_40x40_dotted inst=3    rooms=2   ch=5  room_dw_fcastle_right_puzzle | room_dw_fcastle_sidepuzzle
+obj_room_castle_town                       spr_event              inst=3    rooms=3   ch=345  room_dw_castle_town
+obj_tower_dog_event_setter                 spr_debug_40x40        inst=3    rooms=1   ch=4  room_dw_church_dogclimb
+obj_zen_sand                               spr_debug_footprint_zone inst=3    rooms=3   ch=5  room_dw_fcastle_shinobeetle_encounter | room_dw_fcastle_sandtrap | room_dw_fcastle_zenlooker
+obj_b1rockstrigger                         spr_board_event        inst=2    rooms=1   ch=3  room_board_1
+obj_b2iceregion                            spr_board_event        inst=2    rooms=2   ch=3  room_board_2 | room_board_3
+obj_b2savelancer                           spr_board_event        inst=2    rooms=2   ch=3  room_board_tests | room_board_2
+obj_board_b2sword_boatwarp                 spr_board_triggerarea  inst=2    rooms=2   ch=3  room_board_2 | room_board_2_sword
+obj_board_dungeon_2_roomWriter             spr_board_event        inst=2    rooms=1   ch=3  room_board_dungeon_2
+obj_board_event_lawnmower                  spr_board_event        inst=2    rooms=2   ch=3  room_board_boattest | room_board_2
+obj_board_eventtile                        spr_event              inst=2    rooms=1   ch=3  room_board1_oldtest
+obj_ch2_scene4                             spr_event              inst=2    rooms=2   ch=2  room_castle_town | room_dw_castle_area_2
+obj_dw_b3bs_zapper_a                       spr_board_event        inst=2    rooms=2   ch=3  room_dw_b3bs_zapper_a | room_dw_b3bs_zapper_a_old
+obj_dw_church_bookshelfpuzzle              spr_eventsmall         inst=2    rooms=2   ch=4  room_dw_church_bookshelfpuzzle | room_dw_church_bookshelfpuzzle_rev
+obj_dw_church_waterfall                    spr_debug_40x40        inst=2    rooms=2   ch=4  room_dw_church_moneyfountain | room_dw_churchb_moneyfountain
+obj_dw_church_worshiproom                  spr_eventsmall         inst=2    rooms=2   ch=4  room_dw_church_worshiproom | room_dw_churchb_worshiproom
+obj_dw_churchb_library                     spr_eventsmall         inst=2    rooms=2   ch=4  room_dw_churchb_library_alternate | room_dw_churchb_library
+obj_dw_churchb_prophecymaze                spr_eventsmall         inst=2    rooms=2   ch=4  room_dw_churchb_prophecymaze | room_dw_churchb_prophecymaze_old
+obj_dw_churchc_prophecies                  spr_eventsmall_1       inst=2    rooms=2   ch=4  room_dw_churchc_prophecies | room_dw_churchc_prophecies_backup
+obj_dw_churchc_titanclimb1                 spr_eventsmall         inst=2    rooms=2   ch=4  room_dw_churchc_titanclimb1 | room_dw_churchc_titanclimb1_tiled
+obj_dw_fcastle_top_intro                   spr_event              inst=2    rooms=2   ch=5  room_dw_fcastle_top_intro | room_dw_fcastle_asgore
+obj_elevatorcontroller                     spr_event              inst=2    rooms=2   ch=1  room_cc_prisonelevator | room_cc_elevator
+obj_forestmaze_controller                  spr_event              inst=2    rooms=2   ch=1  room_forest_maze1 | room_forest_maze2
+obj_overworld_dashbullet_spawner           spr_debug_40x40        inst=2    rooms=2   ch=5  room_dw_garden_starwalkerdash | room_dw_cliff_kawkawdash
+obj_prophecytext                           spr_crosshair_7x7      inst=2    rooms=1   ch=4  room_dw_church_shadowgerson
+obj_activator_mansion_east_2f_transformed_new spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_east_2f_ufo_old
+obj_b0entrance                             spr_board_event        inst=1    rooms=1   ch=3  room_board_intro
+obj_b1_finale                              spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1_finalehalls                         spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1bonuszone                            spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1cactusfield1                         spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1cactusfield2                         spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1controls                             spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1enemy                                spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1intro                                spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1lancer                               spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1mailroom                             spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1mailroom_intro                       spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1oasis                                spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1power                                spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1push2                                spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1pushpyramid                          spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1pyramid1                             spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1pyramid2                             spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1pyramid_rouxlsjoke                   spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1quiz                                 spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1rocks1                               spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1sphinx                               spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1spring                               spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1store                                spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1susiedig                             spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b1swordconnector                       spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_b2_antlionroom                         spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_crabroom                            spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_a1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_a2                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_b1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_b2                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_c1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_c2                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_d1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_d2                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_e1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_ice_e2                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_moneyhole                           spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2_southwaterarea                      spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2atlantis                             spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2atlantisentrance                     spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2atlantispreview                      spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2bombfun                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2bombfun2                             spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2bossencounterroom                    spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2bridgeintro                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2bridgepuzzle1                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2bridgepuzzle2_alt                    spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2camera                               spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2d_dungeoncorner                      spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_dungeonend                         spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_firstencounter                     spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_firstswitches                      spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_intro                              spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_mazeescape                         spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_mazemanager                        spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_threefreeze                        spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2d_treefreeze                         spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_b2danger1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2enemy1                               spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2enemysquabble                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2enrichmentenclosure                  spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2fashionshop1                         spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2fashionshop2                         spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2ferntalk                             spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2heartisland                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2intro                                spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2lancersalsa                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2loverbridge                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2loverscliff                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2lovershallway                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2mowdock                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2ninfriendotop                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2northcross                           spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2pantheonentrance                     spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2photohint                            spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2pippinsisland                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2pyramidrouxlsstore                   spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2quiz2                                spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2raftget                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2raftintro                            spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2ralseichoose                         spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2riversouth                           spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2s_heartisland                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2_sword
+obj_b2s_swordmanager                       spr_board_event        inst=1    rooms=1   ch=3  room_board_2_sword
+obj_b2s_swordroom                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2_sword
+obj_b2s_tennaentrance                      spr_board_event        inst=1    rooms=1   ch=3  room_board_2_sword
+obj_b2s_tennamonologue                     spr_board_event        inst=1    rooms=1   ch=3  room_board_2_sword
+obj_b2sadislandprev                        spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2southwest                            spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2tennaleave1                          spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2waterfall                            spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2westpip                              spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b2westshop                             spr_board_event        inst=1    rooms=1   ch=3  room_board_2
+obj_b3alley                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3belevator                            spr_board_event        inst=1    rooms=1   ch=3  room_board_3b
+obj_b3belevatorroom                        spr_board_event        inst=1    rooms=1   ch=3  room_board_3b
+obj_b3bfinale                              spr_board_event        inst=1    rooms=1   ch=3  room_board_3b
+obj_b3bintro                               spr_board_event        inst=1    rooms=1   ch=3  room_board_3b
+obj_b3bridge                               spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3bs_bibliox                           spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_bibliox
+obj_b3bs_bigtest                           spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bstest_big
+obj_b3bs_cheaterpippins                    spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_cheaterpippins
+obj_b3bs_cooltrashy                        spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_cooltrashy
+obj_b3bs_introscene                        spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_intro
+obj_b3bs_jail2                             spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_jail2
+obj_b3bs_lancerget                         spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_lancerget
+obj_b3bs_rabbick_a                         spr_event              inst=1    rooms=1   ch=3  room_dw_b3bs_rabbick_a
+obj_b3bs_watercooler                       spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_watercooler
+obj_b3bs_zapper_b                          spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_zapper_b
+obj_b3bs_zapper_c                          spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_zapper_c
+obj_b3bs_zapper_d                          spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_zapper_d
+obj_b3cactusfield                          spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3camerashop                           spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3center                               spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3danger1                              spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3danger2                              spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3desert                               spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3dock1                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3dock2                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3elevator                             spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3encountera                           spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3entertainmentalley                   spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3entertainmentdistrict                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3gameshow                             spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3grassjoke                            spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3intro                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3lobby                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3quiza                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3quizb                                spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3s_swordmanager                       spr_board_event        inst=1    rooms=1   ch=3  room_board_3_sword
+obj_b3stairs                               spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3underground                          spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3undergroundleft                      spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_b3undergroundright                     spr_board_event        inst=1    rooms=1   ch=3  room_board_3
+obj_board_1_sword_b1store                  spr_board_event        inst=1    rooms=1   ch=3  room_board_1_sword
+obj_board_b2_boatwarp                      spr_board_triggerarea  inst=1    rooms=1   ch=3  room_board_2
+obj_board_b3_elevatorcheck                 spr_board_triggerarea  inst=1    rooms=1   ch=3  room_board_3
+obj_board_b3bs_intro                       spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_intro
+obj_board_b3s_repeatintro                  spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_3
+obj_board_cactusmanager                    spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_board_dungeon3_sheltertunnel           spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_3
+obj_board_dungeon_2_jingle_controller      spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_2
+obj_board_dungeon_3_jingle_controller      spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_3
+obj_board_event_b2swap                     spr_board_event        inst=1    rooms=1   ch=3  room_board_tests
+obj_board_event_intro1                     spr_board_event        inst=1    rooms=1   ch=3  room_board_intro
+obj_board_event_intro2                     spr_board_event        inst=1    rooms=1   ch=3  room_board_intro
+obj_board_event_ninfight                   spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_board_preshadowmantle_repeat           spr_board_event        inst=1    rooms=1   ch=3  room_board_preshadowmantle_repeat
+obj_board_tvinteract                       spr_board_triggerarea  inst=1    rooms=1   ch=3  room_dw_puzzlecloset_3
+obj_board_warptopreshadowmantle            spr_board_triggerarea  inst=1    rooms=1   ch=3  room_board_dungeon_3
+obj_bpush1                                 spr_board_event        inst=1    rooms=1   ch=3  room_board_1
+obj_carcutscene                            spr_event              inst=1    rooms=1   ch=1  room_town_krisyard
+obj_castlefront_event                      spr_event              inst=1    rooms=1   ch=1  room_forest_castlefront
+obj_ch2_city08                             spr_event              inst=1    rooms=1   ch=2  room_dw_city_mansion_front
+obj_ch2_city_berdly                        spr_event              inst=1    rooms=1   ch=2  room_dw_city_berdly
+obj_ch2_room_castle_transformed            spr_event              inst=1    rooms=1   ch=2  room_dw_castle_area_2_transformed
+obj_ch2_room_city_traffic_jam              spr_event              inst=1    rooms=1   ch=2  room_dw_city_traffic_4
+obj_ch2_room_mansion_east_1f_secret        spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_east_1f_secret
+obj_ch2_scene10                            spr_event              inst=1    rooms=1   ch=2  room_dw_cyber_queen_boxing
+obj_ch2_scene6                             spr_event              inst=1    rooms=1   ch=2  room_dw_castle_area_2_transformed
+obj_ch2_sceneex2                           spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_b_east
+obj_ch3_BTB04                              spr_event              inst=1    rooms=1   ch=3  room_dw_snow_zone
+obj_ch3_GSA01G                             spr_event              inst=1    rooms=1   ch=3  room_dw_tv_cutscene1g
+obj_ch3_GSB02                              spr_event              inst=1    rooms=1   ch=3  room_dw_rhythm
+obj_ch3_gachaunknown                       spr_board_event        inst=1    rooms=1   ch=3  room_ch3_gacharoom_unknown
+obj_ch3_man_controller                     spr_board_event        inst=1    rooms=1   ch=3  room_dw_ch3_man
+obj_ch4_DCA08A                             spr_event              inst=1    rooms=1   ch=4  room_dw_church_lantern2
+obj_ch5_DWCL01                             spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_yellow_miniboss
+obj_ch5_DWCL03                             spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_yellowjail
+obj_ch5_DWCR02                             spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_obscured_bullets
+obj_confettikiller                         spr_board_triggerarea  inst=1    rooms=1   ch=3  room_dw_teevie_susiezilla
+obj_controller_city_mice2                  spr_event              inst=1    rooms=1   ch=2  room_dw_city_mice2
+obj_controller_city_mice3                  spr_event              inst=1    rooms=1   ch=2  room_dw_city_mice3
+obj_controller_dining3                     spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_dining3
+obj_controller_dininghall                  spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_dininghall
+obj_controller_dw_city_mice                spr_event              inst=1    rooms=1   ch=2  room_dw_city_mice
+obj_controller_dw_cyber_post_music_boss_slide spr_event              inst=1    rooms=1   ch=2  room_dw_cyber_post_music_boss_slide
+obj_controller_dw_mansion_fire_paintings   spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_fire_paintings
+obj_controller_keyboard_puzzle_1           spr_event              inst=1    rooms=1   ch=2  room_dw_cyber_keyboard_puzzle_1
+obj_controller_keyboard_puzzle_2           spr_event              inst=1    rooms=1   ch=2  room_dw_cyber_keyboard_puzzle_2
+obj_controller_keyboard_puzzle_3           spr_event              inst=1    rooms=1   ch=2  room_dw_cyber_keyboard_puzzle_3
+obj_controller_mansion_hands               spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_hands
+obj_debugload                              spr_board_triggerarea  inst=1    rooms=1   ch=3  room_battletest
+obj_dungeon3_tennataps                     spr_board_event        inst=1    rooms=1   ch=3  room_board_dungeon_3
+obj_dw_b3bs_camerareminder                 spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_camerareminder
+obj_dw_b3bs_extrapuzzle                    spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_extrapuzzle
+obj_dw_b3bs_jail1                          spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_jail1
+obj_dw_b3bs_mysterypuzzle                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_mysterypuzzle
+obj_dw_b3bs_rabbick_b                      spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_rabbick_b
+obj_dw_b3bs_rouxls_lanina                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_rouxls_lanina
+obj_dw_b3bs_sadshadowguys                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_b3bs_sadshadowguys
+obj_dw_castle_church_climb                 spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_castle_church_climb
+obj_dw_castle_church_entrance              spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_castle_church_entrance
+obj_dw_ch3_puzzlecloset0_introsequence     spr_event              inst=1    rooms=1   ch=3  room_dw_puzzlecloset_0
+obj_dw_church_bellclimb                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_bellclimb
+obj_dw_church_bellhall_bookroom            spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_bellhall_bookroom
+obj_dw_church_biblioxencounter             spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_biblioxencounter
+obj_dw_church_bookshelfpuzzle1_old         spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_bookshelfpuzzle1
+obj_dw_church_climbtut                     spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_climbtut
+obj_dw_church_dark_maze_controller         spr_event              inst=1    rooms=1   ch=4  room_dw_church_jackenstein
+obj_dw_church_darkclimb                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_darkclimb
+obj_dw_church_darkmaze                     spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_darkmaze
+obj_dw_church_holywatercooler              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_holywatercooler
+obj_dw_church_intro1                       spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_intro1
+obj_dw_church_intro_gerson                 spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_intro_gerson
+obj_dw_church_intro_guei                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_intro_guei
+obj_dw_church_intropiano                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_intropiano
+obj_dw_church_jackenstein                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_jackenstein
+obj_dw_church_knightclimb                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_knightclimb
+obj_dw_church_knightclimbpost              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_knightclimb_post
+obj_dw_church_lantern_hallway              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_lantern_hallway
+obj_dw_church_minorlegend                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_minorlegend
+obj_dw_church_mizzleencounter              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_mizzleencounter
+obj_dw_church_moneyfountain                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_moneyfountain
+obj_dw_church_nwconnect                    spr_eventsmall_1       inst=1    rooms=1   ch=4  room_dw_church_nwconnect
+obj_dw_church_organpuzzle                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_organpuzzle
+obj_dw_church_pianopiece_left              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_pianopiece_left
+obj_dw_church_pianopiece_left_b            spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_pianopiece_left_b
+obj_dw_church_pianopiece_right             spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_pianopiece_right
+obj_dw_church_pianopiece_rightprophecy     spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_pianopiece_rightprophecy
+obj_dw_church_pianopuzzle                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_pianopuzzle
+obj_dw_church_quicktest                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_quicktest
+obj_dw_church_rightconnect                 spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_rightconnect
+obj_dw_church_ripplepuzzle_postgers        spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_ripplepuzzle_postgers
+obj_dw_church_rippleworship                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_rippleworship
+obj_dw_church_ripseq1                      spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_ripseq1
+obj_dw_church_ripseq2                      spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_ripseq2
+obj_dw_church_savepoint                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_savepoint
+obj_dw_church_secretpiano                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_secretpiano
+obj_dw_church_shadowgerson                 spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_shadowgerson
+obj_dw_church_sideclimb                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_sideclimb
+obj_dw_church_stairspreview                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_stairspreview
+obj_dw_church_tallbookcases                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_tallbookcases
+obj_dw_church_trueclimbadventure           spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_trueclimbadventure
+obj_dw_church_turtles                      spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_turtles
+obj_dw_church_waterfallroom                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_church_waterfallroom
+obj_dw_churchb_bellroom                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_bellroom
+obj_dw_churchb_bookshelf                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_bookshelf
+obj_dw_churchb_darkclimb                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_darkclimb
+obj_dw_churchb_darkclimb_scene             spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_darkclimb_scene
+obj_dw_churchb_escherstaircase             spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_escherstaircase
+obj_dw_churchb_extinguisher                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_extinguisher
+obj_dw_churchb_fireplace                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_fireplace
+obj_dw_churchb_fountain                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_fountain
+obj_dw_churchb_gallery                     spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_gallery
+obj_dw_churchb_gersonchase                 spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_gersonchase
+obj_dw_churchb_gersonstudy                 spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_gersonstudy
+obj_dw_churchb_libraryconnector            spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_libraryconnector
+obj_dw_churchb_man                         spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_man
+obj_dw_churchb_moneyfountain               spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_moneyfountain
+obj_dw_churchb_prophecyencounter           spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_prophecyencounter
+obj_dw_churchb_ripple1                     spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_ripple1
+obj_dw_churchb_ripplepost                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_ripplepost
+obj_dw_churchb_rotatingtower2              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_rotatingtower2
+obj_dw_churchb_savepoint                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_savepoint
+obj_dw_churchb_staircaseintro              spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_staircaseintro
+obj_dw_churchb_windows                     spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchb_windows
+obj_dw_churchc_angelprophecy               spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_angelprophecy
+obj_dw_churchc_angelprophecy_encounter     spr_eventsmall_1       inst=1    rooms=1   ch=4  room_dw_churchc_angelprophecy_encounter
+obj_dw_churchc_darkswords                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_darkswords
+obj_dw_churchc_dodge                       spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_dodge
+obj_dw_churchc_encounter1                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_encounter1
+obj_dw_churchc_encounter2                  spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_encounter2
+obj_dw_churchc_prepretitan                 spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_prepretitan
+obj_dw_churchc_pretitan                    spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_pretitan
+obj_dw_churchc_ripplesneak_poc             spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_ripplesneak_poc
+obj_dw_churchc_savepoint                   spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_savepoint
+obj_dw_churchc_slidingpiano                spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_slidingpiano
+obj_dw_churchc_superprophecies             spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_superprophecies
+obj_dw_churchc_titanclimb2_post            spr_eventsmall         inst=1    rooms=1   ch=4  room_dw_churchc_titanclimb2_post
+obj_dw_churchc_treasurechest               spr_eventsmall_1       inst=1    rooms=1   ch=4  room_dw_churchc_treasurechest
+obj_dw_cliff_bunnyfarm                     spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_cliff_bunnyfarm
+obj_dw_cliff_cutdown_tutorial              spr_event              inst=1    rooms=1   ch=5  room_dw_cliff_cutdown_tutorial
+obj_dw_cliff_eastcliff                     spr_event              inst=1    rooms=1   ch=5  room_dw_cliff_eastcliff
+obj_dw_cliff_kawkawdash                    spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_cliff_kawkawdash
+obj_dw_cliff_netskieclimb                  spr_event              inst=1    rooms=1   ch=5  room_dw_cliff_netskieclimb
+obj_dw_cliff_precipice                     spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_cliff_precipice
+obj_dw_cliff_shicave                       spr_event              inst=1    rooms=1   ch=5  room_dw_cliff_shicave
+obj_dw_cliff_silver_hammer                 spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_cliff_silver_hammer
+obj_dw_dogballoon                          spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_dogballoon
+obj_dw_dogplatforming                      spr_event              inst=1    rooms=1   ch=5  room_dogplatforming
+obj_dw_fcastle_asgore                      spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_asgore
+obj_dw_fcastle_blueroom                    spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_blueroom
+obj_dw_fcastle_bromides                    spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_bromides
+obj_dw_fcastle_cafe                        spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_cafe
+obj_dw_fcastle_dangerous_platforming       spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_dangerous_platforming
+obj_dw_fcastle_foyer                       spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_foyer
+obj_dw_fcastle_fusumadodge                 spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_fusumadodge
+obj_dw_fcastle_gloves_tower                spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_gloves_tower
+obj_dw_fcastle_green_checkpoint            spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_green_checkpoint
+obj_dw_fcastle_left_twodoors               spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_left_twodoors
+obj_dw_fcastle_obscured_bullets            spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_obscured_bullets
+obj_dw_fcastle_orange_puppet_introduction  spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_orange_puppet_introduction
+obj_dw_fcastle_pinkroom                    spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_pinkroom
+obj_dw_fcastle_pinkshop                    spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_pinkshop
+obj_dw_fcastle_post_party_jail             spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_post_party_jail
+obj_dw_fcastle_right_puzzle                spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_right_puzzle
+obj_dw_fcastle_sandtrap                    spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_sandtrap
+obj_dw_fcastle_second_diner                spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_second_diner
+obj_dw_fcastle_seth_encounter              spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_seth_encounter
+obj_dw_fcastle_terracotta_bonus            spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_terracotta_bonus
+obj_dw_fcastle_top_ascent                  spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_top_ascent
+obj_dw_fcastle_top_pinkdoor                spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_top_pinkdoor
+obj_dw_fcastle_trainroom                   spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_trainroom
+obj_dw_fcastle_yellow_miniboss             spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_yellow_miniboss
+obj_dw_fcastle_zenlooker                   spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_fcastle_zenlooker
+obj_dw_flowerydash                         spr_event              inst=1    rooms=1   ch=5  room_dw_fcastle_flowerydash
+obj_dw_garden_aqua                         spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_aqua
+obj_dw_garden_diner                        spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_diner
+obj_dw_garden_enemyrush                    spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_enemyrush
+obj_dw_garden_fishingspot                  spr_event              inst=1    rooms=1   ch=5  room_dw_garden_fishingspot
+obj_dw_garden_floradinnencounter           spr_event              inst=1    rooms=1   ch=5  room_dw_garden_floradinnencounter
+obj_dw_garden_flowerygardening             spr_event              inst=1    rooms=1   ch=5  room_dw_garden_flowerygardening
+obj_dw_garden_hardpressureplates           spr_event              inst=1    rooms=1   ch=5  room_dw_garden_hardpressureplates
+obj_dw_garden_hopschef                     spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_hopschef
+obj_dw_garden_intro                        spr_event              inst=1    rooms=1   ch=5  room_dw_garden_intro
+obj_dw_garden_meetflowery                  spr_event              inst=1    rooms=1   ch=5  room_dw_garden_meetflowery
+obj_dw_garden_mushrooms                    spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_mushrooms
+obj_dw_garden_ralseicupboard               spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_ralseicupboard
+obj_dw_garden_shearydodge                  spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_garden_shearydodge
+obj_dw_garden_shearyguide                  spr_event              inst=1    rooms=1   ch=5  room_dw_garden_shearyguide
+obj_dw_garden_susiechase                   spr_event              inst=1    rooms=1   ch=5  room_dw_garden_susiechase
+obj_dw_pink_encounter                      spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_pink_encounter
+obj_dw_puzzlecloset_1_consolesequence      spr_board_event        inst=1    rooms=1   ch=3  room_dw_puzzlecloset_1
+obj_dw_puzzlecloset_1_solidarea            spr_board_event        inst=1    rooms=1   ch=3  room_dw_puzzlecloset_1
+obj_dw_ralsei_castle_basketball            spr_eventsmall         inst=1    rooms=1   ch=5  room_dw_ralsei_castle_basketball
+obj_dw_teevie_audiencepits                 spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_audiencepits
+obj_dw_teevie_lightmaze                    spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_lightmaze
+obj_dw_teevie_maze                         spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_maze
+obj_dw_teevie_ribbicks_a                   spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_ribbicks_a
+obj_dw_teevie_ribbicks_b                   spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_ribbicks_b
+obj_dw_teevie_shadow_guys                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_shadow_guys
+obj_dw_teevie_shuttahmaze                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_shuttahmaze
+obj_dw_teevie_stealth                      spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_stealth
+obj_dw_teevie_susiebridge                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_susiebridge
+obj_dw_teevie_susiezilla                   spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_susiezilla
+obj_dw_teevie_watercooler                  spr_board_event        inst=1    rooms=1   ch=3  room_dw_teevie_watercooler
+obj_jokerbg_triangle_real                  spr_event              inst=1    rooms=1   ch=1  room_cc_joker
+obj_kingcutscene                           spr_event              inst=1    rooms=1   ch=1  room_cc_kingbattle
+obj_lotterymouseController                 spr_event              inst=1    rooms=1   ch=2  room_dw_mansion_mouseLottery
+obj_pc3_room1                              spr_board_event        inst=1    rooms=1   ch=3  room_dw_puzzlecloset_3
+obj_pc3_room2                              spr_board_event        inst=1    rooms=1   ch=3  room_dw_puzzlecloset_3
+obj_room_green_room                        spr_event              inst=1    rooms=1   ch=3  room_dw_green_room
+obj_room_man                               spr_eventsmall         inst=1    rooms=1   ch=5  room_man
+obj_room_teevie_rhythm                     spr_event              inst=1    rooms=1   ch=3  room_dw_teevie_rhythm
+obj_viroring_controller                    spr_event              inst=1    rooms=1   ch=2  room_dw_cyber_viro_ring
+obj_weirdEvent_addison_city_big_2          spr_event              inst=1    rooms=1   ch=2  room_dw_city_big_2
