@@ -24,16 +24,54 @@ CROSS_DUP = 0.85        # 跨角色"撞车"的相似度阈值（归一化后）
 MIN_TURN_FOR_DUP = 2    # 至少两轮撞车才算"这个人没有自己的说话方式"
 
 
+def pick_main_record(recs):
+    u"""从一个人可能有的多条记录里挑**主记录**（评测与补丁都以它为准）。
+
+    ★ 第113轮s 修的真 bug —— 「接线了，但接错对象」：
+      这里原本写的是 `next(r for r in recs if r.get('phase') == 'baseline')`。
+      而 `train30` 写盘的记录 `phase='t30'`（48 轮），`dialogue113` 写的是
+      `phase='baseline'`（4 轮）。**同一个 raw30 文件里两条都在**，于是本函数
+      一直只挑到那条**旧的 4 轮冒烟记录** ⇒ 评测评的是别的东西：
+        · 77 人里只算出 **2 条** patch（`rouxls`/`susie`，都是 4 轮那遍撞的）；
+        · 48 轮实测出的 **419 次 `ACTION_PAREN`**、146 次 `AI_SELF`、
+          108 次 `NOT_CN`，**一条都没变成运行时纠正**；
+        · `cards/*.json` 的 `eval` 对 74 个新训角色**全为空**。
+      数字看着正常（有报告、有表格），但它评的那批数据早就被覆盖了。
+
+    改法：**按轮数挑，不看 phase 名字**。同轮数时优先 `baseline`（老口径的偏好）。
+    `phase == 'patch'` 的记录单独走"补训后"通道，不参与主记录竞争。
+    """
+    cand = [r for r in (recs or []) if isinstance(r, dict) and r.get('phase') != 'patch']
+    if not cand:
+        # 没有非 patch 记录时退回任意一条，避免整人凭空消失
+        cand = [r for r in (recs or []) if isinstance(r, dict)]
+        if not cand:
+            return None
+
+    def _key(r):
+        n = r.get('turns_n') or len(r.get('turns') or [])
+        return (n, 1 if r.get('phase') == 'baseline' else 0)
+
+    return max(cand, key=_key)
+
+
 def load_all():
+    u"""读**主记录目录**：优先 48 轮的 `raw30`，没有才退回旧的 `raw`（4 轮）。
+
+    ★ 第113轮s：原来硬用 `C.RAW`（`_evidence/raw`，4 轮 `dialogue113` 的产物）。
+      48 轮训练写在 `_evidence/raw30`，两个目录**从没接上** ——
+      所以"训练 48 轮"这件事在评测里等于没发生（详见 `pick_main_record`）。
+    """
+    raw_dir = C.RAW30 if os.path.isdir(C.RAW30) else C.RAW
     out = {}
-    if not os.path.isdir(C.RAW):
+    if not os.path.isdir(raw_dir):
         return out
-    for fn in sorted(os.listdir(C.RAW)):
+    for fn in sorted(os.listdir(raw_dir)):
         if not fn.endswith('.jsonl'):
             continue
         nid = fn[:-6]
-        recs = C.read_jsonl(os.path.join(C.RAW, fn))
-        base = next((r for r in recs if r.get('phase') == 'baseline'), None)
+        recs = C.read_jsonl(os.path.join(raw_dir, fn))
+        base = pick_main_record(recs)
         patched = next((r for r in recs if r.get('phase') == 'patch'), None)
         out[nid] = {'baseline': base, 'patch': patched}
     return out
@@ -377,6 +415,78 @@ def report_md(summary, patches, cards, dups, roster, gaps, exempt=None):
     return '\n'.join(L) + '\n'
 
 
+def _split_sents(s):
+    u"""按句末标点切句（保留标点），用于"逐句求并集"。"""
+    out, cur = [], ''
+    for ch in (s or ''):
+        cur += ch
+        if ch in u'。！？!?':
+            if cur.strip():
+                out.append(cur.strip())
+            cur = ''
+    if cur.strip():
+        out.append(cur.strip())
+    return out
+
+
+def merge_text(old, new):
+    u"""把两条补丁按**句子**求并集：谁多留谁，双方各有的都留下。
+
+    ★ 为什么不是"二选一"（第一版就是这么写的，dry-run 抓出来了）：
+      逐键比较时 `ralsei` 的旧补丁是「只认得原作里真有的名字…不要自己造人名」，
+      新算出来的是「一次最多两三句…别重复」，**两边互不包含** ——
+      "取新的"会把那条**手写的名字规则删掉**（那是别的轮因为"凯斯恩"这类
+      拼名才加的），"取旧的"又会让本轮的重复/啰嗦毛病没有纠正。
+      这两句纠正彼此不冲突，**该同时在场**。
+    """
+    old, new = (old or '').strip(), (new or '').strip()
+    if not old:
+        return new
+    if not new:
+        return old
+    if new in old:
+        return old
+    if old in new:
+        return new
+    have = {x.strip(u'。 ') for x in _split_sents(old)}
+    extra = [x for x in _split_sents(new) if x.strip(u'。 ') not in have]
+    if not extra:
+        return old
+    return old + ' ' + ' '.join(extra)
+
+
+def merge_patches(old, new):
+    u"""把本次算出的 `new` 并进已有的 `old`，**不许静默删掉算不出来的旧补丁**。
+
+    ★ 为什么需要（第113轮s dry-run 实测）：`main` 原来是 `idx['patches'] = patches`
+      —— **整体替换**。而 `build_patches` 只从本轮 raw30 现算，它不知道旧补丁是谁写的。
+      实测后果：`ralsei` 那条「只认得原作里真有的名字…不要自己造人名」
+      是**别的轮手写**的，本轮算不出来 ⇒ 直接替换会把它**删掉**，
+      等于把那轮修好的毛病（自造人名）原样放回产品。
+
+    规则：
+      ① 只有新键 ⇒ 用新的（本轮有证据）；
+      ② 只有旧键 ⇒ **保留旧的**（没证据推翻它，删了就是信息丢失）；
+      ③ 两边都有 ⇒ `merge_text` 求并集（详见其说明）。
+    返回 `(merged, 报告行 list)`。
+    """
+    old, new = dict(old or {}), dict(new or {})
+    merged, rep = {}, []
+    for k in sorted(set(old) | set(new)):
+        if k not in old:
+            merged[k] = new[k]
+            rep.append(u'+ %s 新增' % k)
+        elif k not in new:
+            merged[k] = old[k]
+            rep.append(u'= %s 本轮算不出来，**保留旧补丁**（否则会被删）' % k)
+        else:
+            t = merge_text(old[k], new[k])
+            merged[k] = t
+            if t != old[k]:
+                rep.append(u'~ %s 合并：%d → %d 字' % (k, len(old[k]), len(t)))
+    return merged, rep
+
+
 def main(argv):
     roster, gaps = C.load_roster()
     cards = collect_cards()
@@ -407,7 +517,11 @@ def main(argv):
 
     idx_path = os.path.join(C.TRAIN_DIR, '_index.json')
     idx = C.load_json(idx_path, {}) or {}
-    idx['patches'] = patches
+    # ★ 第113轮s：不能直接 `idx['patches'] = patches` —— 见 `merge_patches` 的说明。
+    merged, mrep = merge_patches(idx.get('patches') or {}, patches)
+    idx['patches'] = merged
+    for line in mrep:
+        print('  [patches] %s' % line)
     idx['trained'] = {
         'model': C.MODEL,
         'chars': summary['chars_with_dialogue'],

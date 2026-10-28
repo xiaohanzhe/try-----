@@ -35,6 +35,13 @@ TRAIN_DIR = os.path.join(NPC_DIR, '_training')
 EVID = os.path.join(ROUND, '_evidence')
 TRANSCRIPTS = os.path.join(EVID, 'transcripts')
 RAW = os.path.join(EVID, 'raw')
+#: 第113轮s：**48 轮训练记录**（`train30` 写这里）。
+#: ★ 与上面的 `RAW` **不是同一个目录**：`RAW` 是早期 4 轮 `dialogue113` 的产物，
+#:   每个文件里那条 `phase='baseline'` 只有 4 轮。`eval113` 原来只读 `RAW`，
+#:   于是评测与补丁一直在评**那 4 轮**：77 人只算出 2 条 patch，
+#:   48 轮实测出的 419 次 `ACTION_PAREN` / 146 次 `AI_SELF` / 108 次 `NOT_CN`
+#:   一条都没回到产品（`_index.json.patches` 长期只有 3 条）。
+RAW30 = os.path.join(EVID, 'raw30')
 
 OLLAMA = 'http://localhost:11434'
 MODEL = 'ralsei:v4'

@@ -3067,6 +3067,34 @@ SUITES = [
     # 带注释整体查名册 ⇒ 精确匹配落空、前缀匹配也不成立 ⇒ 判 unknown 丢掉。
     # 实测 33 条未解析里**就这一条是真漏**（27 条名册外人、5 条 `ot_`/`ut_` 重名），
     # 修完 `os_rowbot → os_silver` 解出来，理由正是"导航坏了要去找她修"。
+    # ------------------------------------------------------------ 第113轮s
+    # 为什么进 G2：这是**两处静默失效**，都不报错、也不影响跑通，只是成果不进产品。
+    # ① `eval113.load_all` 只认 `phase=='baseline'`，而 `train30` 写 `phase='t30'`；
+    #    同一 raw30 文件里两条都在 ⇒ 评测一直在评**旧的 4 轮**记录：
+    #    77 人只产出 **2 条** patch，48 轮实测的 **419 次 `ACTION_PAREN`**、
+    #    146 次 `AI_SELF`、108 次 `NOT_CN` **一条都没变成运行时纠正**
+    #    （`_index.json.patches` 长期只有 3 条）。数字看着正常，评的是别的东西。
+    # ② `main` 里 `idx['patches'] = patches` 是**整体替换** ⇒ 会把别的轮
+    #    **手写**的 `ralsei` 名字规则（为「凯斯恩」这类拼名而加）静默删掉。
+    # 判据：A 按轮数挑 / A2 负回归证明与旧写法不同 / B~D 边界 /
+    #       E~E5 并集规则 / F 旧键不许丢 / F2 负回归证明差异真实 / G 真数据集成核对。
+    {
+        'id': 'test_evalpick113s',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第113轮-全体角色AI训练', '_tools',
+                               'test_evalpick113s.py'),
+        'desc': '第一百一十三轮s：**训练成果回到产品这一步曾经整条断掉** —— '
+                '`eval113.load_all` 只认 `phase==baseline`（4 轮 `dialogue113` 的记录），'
+                '而 48 轮的 `train30` 写的是 `phase=t30`，且**每个 raw30 文件里两条都在** ⇒ '
+                '评测一直在评那 4 轮：77 人只算出 **2 条** patch，'
+                '本轮实测的 419 次 `ACTION_PAREN`/146 次 `AI_SELF`/108 次 `NOT_CN` '
+                '**一条都没回到产品**（`_index.json.patches` 长期只有 3 条）。'
+                '接上 `raw30` 后同一份数据算出 **57 条** patch（54 个角色第一次有纠正）。'
+                '同轮还修了回填方式：`idx["patches"] = patches` 是整体替换，'
+                '会把别的轮手写的 `ralsei` 名字规则删掉 ⇒ 改成按句求并集。'
+                '判据 A/A2 证明选法变了且与旧写法结果不同；E3 钉住"互不包含时取并集'
+                '而不是二选一"；F/F2 正负对照证明旧键不会丢；G 用真 `_index.json` 核对。',
+    },
     {
         'id': 'test_seekresolve113r',
         'script': os.path.join(ROOT, 'code-quality-audit',
