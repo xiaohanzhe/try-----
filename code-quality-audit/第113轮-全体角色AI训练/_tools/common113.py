@@ -570,6 +570,31 @@ def _persona_allows_paren(persona):
     return any(k in (persona or '') for k in _PERSONA_PAREN_EXEMPT)
 
 
+#: ★★★ 第113轮s：**元叙事角色**豁免「别提作品名/游戏/玩家/代码」这类纠正。
+#:   实测（13 个拿到 META 纠正的角色全部命中这些词）：
+#:     · `os_the_world_machine` —— 正文里"代码/程序/电脑"出现 **78 次**，
+#:       设定就是「对世界本身的模拟…在电脑中重现」；
+#:     · `os_niko` —— 「你与『玩家』是两个独立存在的角色，玩家通过游戏窗口与你交流」（52 次）；
+#:     · `os_rowbot` —— 「你就是你的程序，而你的程序就是你的运行逻辑」（41 次）；
+#:     · `os_the_author`（45 次）/ `os_shepherd`（17 次，爱好就是编程）/ `noelle`（电子游戏）。
+#:   对这些人写「别提…游戏、玩家、代码」= **要求角色违反自己的人设**，
+#:   与 `_PERSONA_PAREN_EXEMPT` 是同一类错（那轮 18 处"违规"里 11 处是误报）。
+#:   ⚠️ 只在**人设自己就反复讲这些词**时才豁免（阈值见 `_persona_is_meta`），
+#:      否则会把真正的出戏（模型自己提"这个游戏/你是玩家"）一起放过。
+_META_WORDS = (u'玩家', u'世界机器', u'代码', u'程序', u'第四面墙', u'游戏窗口', u'元叙事')
+_META_MIN_HITS = 5          # 人设里这些词至少出现这么多次才算"元叙事设定"
+
+
+def _persona_is_meta(persona):
+    """人设本身就建立在"玩家/代码/世界是虚拟的"之上 ⇒ META 类纠正要豁免。
+
+    返回 `(是否豁免, 命中次数)`，次数留着打日志用（别让豁免变成"看不出来发生过"）。
+    """
+    p = persona or ''
+    n = sum(p.count(w) for w in _META_WORDS)
+    return n >= _META_MIN_HITS, n
+
+
 def cn_ratio(text):
     """中文字符占**非空白字符**的比例。空串 ⇒ 1.0（不判）。"""
     s = re.sub(r'\s', '', text or '')

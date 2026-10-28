@@ -107,6 +107,38 @@ def main():
               u'不要自己造人名' in (m2.get('ralsei') or ''),
               '%d 字' % len(m2.get('ralsei') or ''))
 
+    # ---- H~H3 元叙事豁免（`_persona_is_meta`）
+    #    ★ 为什么要有：OneShot 系的「玩家/代码/世界机器」**就是设定内核**，
+    #      对他们写「别提…玩家、代码」= 要求角色违反自己的人设。
+    #      而 `berdly`/`noelle` 虽然爱打游戏，`_META_RE` **并不抓「游戏」**这个词
+    #      （只抓 Deltarune/Undertale/游戏角色/玩家/开发者/代码/脚本/桌宠/程序里），
+    #      他们实测撞的是「Deltarune」「游戏角色」「开发者」⇒ 补丁该留。
+    #    ★ 夹具必须用**真人设原文**：第一版我手写了一段，只有 3 次命中、被判不豁免
+    #      ⇒ 又栽在"夹具不保真"上。真数据里这 8 个人是 7~59 次，
+    #      模板句最多 2 次 ⇒ 阈值 5 两边都有余量，不是我凑出来的。
+    pdir = os.path.join(C.NPC_DIR, 'persona')
+    wm_path = os.path.join(pdir, 'os_the_world_machine.txt')
+    with open(wm_path, 'r', encoding='utf-8') as fh:
+        persona_wm = fh.read()
+    ok, n = C._persona_is_meta(persona_wm)
+    check('H ★★ 真人设 `os_the_world_machine` ⇒ 判豁免', ok and n >= 5, '命中 %d 次' % n)
+
+    boiler = u'· 用纯文本说话，不要用 markdown（不要 # 标题、不要 * 或 - 列表、不要代码块、不要表格）。'
+    ok2, n2 = C._persona_is_meta(boiler)
+    check('H2 ★★ 负控制：只有模板句里的"代码块" ⇒ **不豁免**（噪声 1~2 次，远低于阈值 5）',
+          not ok2, '命中 %d 次' % n2)
+
+    ok3, n3 = C._persona_is_meta('')
+    check('H3 空人设 ⇒ 不豁免、不抛', not ok3 and n3 == 0, '命中 %d 次' % n3)
+
+    # 真数据：8 个元叙事角色应被豁免，而"只是模板句撞词"的不该
+    roster_p = {r['id']: (r.get('persona') or '') for r in C.load_roster()[0]}
+    should = ['os_niko', 'os_rowbot', 'os_the_author', 'os_the_world_machine',
+              'os_shepherd', 'os_cedric', 'os_rue', 'ut_papyrus']
+    miss = [i for i in should if not C._persona_is_meta(roster_p.get(i, ''))[0]]
+    check('H4 8 个 OneShot/UT 元叙事角色在真数据上全部判豁免', not miss,
+          '漏: %s' % (miss or '无'))
+
     print('\n' + '=' * 60)
     print('合计：PASS=%d FAIL=%d' % (_ok, _n - _ok))
     print('=' * 60)

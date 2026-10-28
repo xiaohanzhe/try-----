@@ -173,6 +173,18 @@ def build_patches(data, cards, dups, roster_by_id=None):
                                'n': len(vios) - len(kept),
                                'why': '人设明确要求字卡/音效/字幕，括号插入是本角色的表演形式'})
             vios = kept
+        # ★ 第113轮s：元叙事角色的 META 纠正要豁免（详见 common113._persona_is_meta）。
+        #   实测 13 个拿到 META 纠正的角色**全部**在人设里反复讲这些词，
+        #   其中 6 个是 OneShot 系（玩家/代码/世界机器就是设定内核）。
+        is_meta, n_meta = C._persona_is_meta(persona)
+        if is_meta:
+            kept = [v for v in vios if v[0] != 'META']
+            if len(kept) != len(vios):
+                exempt.append({'npc': nid, 'code': 'META',
+                               'n': len(vios) - len(kept),
+                               'why': '人设本身是元叙事（玩家/代码/世界机器等出现 %d 次），'
+                                      '提这些词是在照设定说话' % n_meta})
+            vios = kept
         card = cards.get(nid, {})
         parts = []
         main_patch = C.build_patch([(c, w) for c, w in vios], card.get('voice_markers'),
