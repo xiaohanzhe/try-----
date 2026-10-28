@@ -1,0 +1,503 @@
+GameObjects = 353
+0	obj_switchAsyncHelper	spr=	vis=True	pers=False
+1	obj_debug_gui	spr=	vis=True	pers=True
+2	obj_chapter_continue	spr=	vis=True	pers=False
+3	obj_event_manager_debug	spr=	vis=True	pers=True
+4	obj_choicer_old	spr=spr_heartsmall	vis=True	pers=False
+5	obj_choicer_neo	spr=spr_alphysdesk	vis=True	pers=False
+6	obj_face_parent	spr=	vis=True	pers=False
+7	obj_face	spr=	vis=True	pers=False
+8	obj_smallface	spr=spr_smallface_s0	vis=True	pers=False
+9	obj_dialoguer	spr=	vis=True	pers=False
+10	obj_writer	spr=	vis=True	pers=False
+11	obj_fallpaper	spr=spr_papersit	vis=True	pers=False
+12	obj_insideclosetcutscene	spr=spr_susier_plain	vis=True	pers=False
+13	obj_darkdoor	spr=spr_darkdoor	vis=True	pers=False
+14	obj_classscene	spr=spr_event	vis=False	pers=False
+15	obj_schoollobbycutscene	spr=spr_event	vis=False	pers=False
+16	obj_schooldesk	spr=spr_classdesk	vis=True	pers=False
+17	obj_solidblock	spr=spr_solidsmall	vis=False	pers=False
+18	obj_interactablesolid	spr=spr_interactable	vis=False	pers=False
+19	obj_tem_school	spr=spr_tem_sit	vis=True	pers=False
+20	obj_torielclass_event	spr=spr_torieldesk	vis=False	pers=False
+21	obj_unusedclassevent	spr=spr_event	vis=True	pers=False
+22	obj_alphysdesk	spr=spr_alphysdesk	vis=True	pers=False
+23	obj_rudy	spr=spr_rudy_d	vis=True	pers=False
+24	obj_church_event	spr=spr_church	vis=True	pers=False
+25	obj_town_shelter_event	spr=spr_shelter	vis=True	pers=False
+26	obj_town_event	spr=spr_event	vis=False	pers=False
+27	obj_alphysalley_event	spr=spr_event	vis=False	pers=False
+28	obj_flowershop_event	spr=spr_asgoreu_notpiss	vis=True	pers=False
+29	obj_onionbody	spr=spr_onionblue	vis=True	pers=False
+30	obj_mainchara	spr=spr_krisd	vis=True	pers=False
+31	obj_onion_event	spr=spr_event	vis=False	pers=False
+32	obj_carcutscene	spr=spr_event	vis=True	pers=False
+33	obj_hallway_mirror	spr=spr_torhouse_mirror	vis=True	pers=False
+34	obj_krisroom	spr=spr_bedsheet	vis=True	pers=False
+35	obj_rurus_checker_event	spr=spr_event	vis=False	pers=False
+36	obj_cc_event	spr=spr_event	vis=False	pers=False
+37	obj_jokerbattleevent	spr=spr_joker_main	vis=True	pers=False
+38	obj_elevatorcontroller	spr=spr_event	vis=True	pers=False
+39	obj_lancerbakesale_event	spr=spr_bakesale_lancer	vis=True	pers=False
+40	obj_cloverpuzzle_event	spr=spr_clubs_idle	vis=True	pers=False
+41	obj_prisonevent	spr=spr_event	vis=False	pers=False
+42	obj_lancerbattle2_event	spr=spr_lancer_battle	vis=True	pers=False
+43	obj_lancerchase2	spr=spr_event	vis=False	pers=False
+44	obj_castlefront_event	spr=spr_event	vis=True	pers=False
+45	obj_susieandlancer_event	spr=spr_event	vis=False	pers=False
+46	obj_thrashcontroller	spr=	vis=True	pers=False
+47	obj_thrashmachine	spr=spr_thrashweapon_duck	vis=True	pers=False
+48	obj_thrashmaker_event	spr=spr_lancer_ut	vis=True	pers=False
+49	obj_suitspuzzle_event	spr=spr_lancer_ut	vis=True	pers=False
+50	obj_susiebadguy_event	spr=spr_lancer_rt	vis=True	pers=False
+51	obj_thrashafter_event	spr=spr_lancer_rt	vis=True	pers=False
+52	obj_thrashafter_follow	spr=spr_lancer_dt	vis=True	pers=False
+53	obj_rurus_appear	spr=spr_rurus_appear	vis=True	pers=False
+54	obj_rurus_event	spr=spr_rurus_idle	vis=True	pers=False
+55	obj_lancerscare2	spr=spr_lancer_rt	vis=True	pers=False
+56	obj_scarelancerevent	spr=spr_lancer_rt	vis=True	pers=False
+57	obj_getsusieevent	spr=spr_susieu_dark	vis=True	pers=False
+58	obj_boxpuzzle_event	spr=spr_fencedoor	vis=True	pers=False
+59	obj_hathyfightevent	spr=spr_lancer_dt	vis=True	pers=False
+60	obj_darkdoorevent	spr=spr_giantdarkdoor	vis=True	pers=False
+61	obj_tutorialbattleevent	spr=spr_event	vis=False	pers=False
+62	obj_ralsei_runevent	spr=spr_castle_fountain	vis=True	pers=False
+63	obj_interactable	spr=	vis=True	pers=False
+64	obj_lancerguide	spr=spr_lancer_lt	vis=True	pers=False
+65	obj_thrashzone_event	spr=spr_lancer_rt	vis=True	pers=False
+66	obj_insultzone_event	spr=spr_lancer_rt	vis=True	pers=False
+67	obj_preforest_event	spr=spr_event	vis=False	pers=False
+68	obj_candytree_event	spr=spr_event	vis=False	pers=False
+69	obj_cloverhole	spr=spr_cloverhole	vis=True	pers=False
+70	obj_npc_hammerguy	spr=spr_hammerguy	vis=True	pers=False
+71	obj_shortcut_door	spr=spr_shortcut_door	vis=True	pers=False
+72	obj_npc_puzzlemaster1	spr=spr_npc_puzzlepiece	vis=True	pers=False
+73	obj_npc_puzzlemaster2	spr=spr_npc_puzzlepiece	vis=True	pers=False
+74	obj_cakesmoke	spr=spr_cakesmoke	vis=True	pers=False
+75	obj_npc_susiedark	spr=spr_susieu_dark	vis=True	pers=False
+76	obj_darkcastle_event	spr=spr_event	vis=False	pers=False
+77	obj_darklanding	spr=spr_event	vis=True	pers=False
+78	obj_wobblything_slide	spr=spr_wobblything	vis=True	pers=False
+79	obj_lancerslideevent	spr=	vis=True	pers=False
+80	obj_lancerchaseevent	spr=spr_event	vis=False	pers=False
+81	obj_darkslide	spr=spr_solidtall	vis=False	pers=False
+82	obj_darkwakeevent	spr=spr_event	vis=False	pers=False
+83	obj_savepoint	spr=spr_savepoint	vis=True	pers=False
+84	obj_readable	spr=spr_interactable	vis=False	pers=False
+85	obj_animation	spr=	vis=True	pers=False
+86	obj_marker	spr=	vis=True	pers=False
+87	obj_marker2	spr=	vis=True	pers=False
+88	obj_readable_room1	spr=spr_interactable	vis=False	pers=False
+89	obj_npc_toriel	spr=spr_toriel_dt	vis=True	pers=False
+90	obj_npc_facing	spr=spr_placeholder	vis=True	pers=False
+91	obj_npc_room	spr=spr_npc_puzzlepiece	vis=True	pers=False
+92	obj_npc_room_animated	spr=spr_npc_icemascot_fake	vis=True	pers=False
+93	obj_treasure_room	spr=spr_treasurebox	vis=True	pers=False
+94	obj_npc_sign	spr=spr_npc_sign	vis=True	pers=False
+95	obj_event_room	spr=spr_event	vis=False	pers=False
+96	obj_doorparent	spr=	vis=True	pers=False
+97	obj_doorA	spr=spr_doorA	vis=False	pers=False
+98	obj_doorA_musfade	spr=spr_doorA	vis=False	pers=False
+99	obj_doorB_musfade	spr=spr_doorB	vis=False	pers=False
+100	obj_doorB	spr=spr_doorB	vis=False	pers=False
+101	obj_doorC	spr=spr_doorC	vis=False	pers=False
+102	obj_doorC_musfade	spr=spr_doorC	vis=False	pers=False
+103	obj_doorD	spr=spr_doorD	vis=False	pers=False
+104	obj_doorD_musfade	spr=spr_doorD	vis=False	pers=False
+105	obj_doorE	spr=spr_doorE	vis=False	pers=False
+106	obj_doorF	spr=spr_doorF	vis=False	pers=False
+107	obj_doorX	spr=spr_doorX	vis=False	pers=False
+108	obj_doorX_musfade	spr=spr_doorX	vis=False	pers=False
+109	obj_doorw_musfade	spr=spr_doorW	vis=False	pers=False
+110	obj_markerA	spr=spr_markerA	vis=False	pers=False
+111	obj_markerB	spr=spr_markerB	vis=False	pers=False
+112	obj_markerC	spr=spr_markerC	vis=False	pers=False
+113	obj_markerD	spr=spr_markerD	vis=False	pers=False
+114	obj_markerE	spr=spr_markerE	vis=False	pers=False
+115	obj_markerF	spr=spr_markerF	vis=False	pers=False
+116	obj_markerr	spr=spr_markerX	vis=False	pers=False
+117	obj_markers	spr=spr_markerX	vis=False	pers=False
+118	obj_markert	spr=spr_markerX	vis=False	pers=False
+119	obj_markeru	spr=spr_markerX	vis=False	pers=False
+120	obj_markerv	spr=spr_markerX	vis=False	pers=False
+121	obj_markerw	spr=spr_markerW	vis=False	pers=False
+122	obj_markerX	spr=spr_markerX	vis=False	pers=False
+123	obj_doorW	spr=spr_doorX	vis=False	pers=False
+124	obj_musicer	spr=spr_musicer	vis=False	pers=False
+125	obj_musicer_darkcliff	spr=spr_musicer	vis=False	pers=False
+126	obj_musicer_town	spr=spr_musicer	vis=False	pers=False
+127	obj_musicer_field	spr=spr_musicer	vis=False	pers=False
+128	obj_musicer_forest	spr=spr_musicer	vis=False	pers=False
+129	obj_musicer_quietforest	spr=spr_musicer	vis=False	pers=False
+130	obj_musicer_man	spr=spr_musicer	vis=False	pers=False
+131	obj_musicer_darkcastle	spr=spr_musicer	vis=False	pers=False
+132	obj_musicer_bird	spr=spr_giantdarkdoor	vis=False	pers=False
+133	obj_wave_fx	spr=spr_leaves_shaking	vis=True	pers=False
+134	obj_astream	spr=spr_heart	vis=True	pers=True
+135	obj_gameover_init	spr=spr_heart	vis=True	pers=False
+136	obj_ralseibook	spr=spr_rbook	vis=True	pers=False
+137	obj_jokerbg_triangle_real	spr=spr_event	vis=True	pers=False
+138	obj_backgrounderparent	spr=	vis=True	pers=False
+139	obj_fieldmuslogo	spr=spr_fieldmuslogo	vis=True	pers=False
+140	obj_backgrounder_standard	spr=	vis=True	pers=False
+141	obj_backgrounder_sprite	spr=spr_event	vis=True	pers=False
+142	obj_panner	spr=	vis=True	pers=False
+143	obj_fadeout	spr=spr_pixel_white	vis=True	pers=False
+144	obj_fadein	spr=spr_pixel_white	vis=True	pers=False
+145	obj_persistentfadein	spr=spr_pixel_white	vis=True	pers=True
+146	obj_loadscreen	spr=spr_pixel_white	vis=True	pers=True
+147	obj_shake	spr=	vis=True	pers=False
+148	obj_castle_torch	spr=spr_castle_torch	vis=True	pers=False
+149	obj_castle_house	spr=spr_castle_shop	vis=True	pers=False
+150	obj_bluhpainting	spr=spr_cc_lancerpainting	vis=True	pers=False
+151	obj_lightfairy	spr=spr_lightfairy	vis=True	pers=False
+152	obj_blocktree_bg	spr=spr_blocktree_parts	vis=True	pers=False
+153	obj_purplegrass	spr=spr_tile_darkgrass_middle	vis=True	pers=False
+154	obj_slidedust	spr=spr_slidedust	vis=True	pers=False
+155	obj_darklancer	spr=spr_darklancer	vis=True	pers=False
+156	obj_dustball	spr=spr_dustball	vis=True	pers=False
+157	obj_dustball_pilebreak	spr=spr_dustball	vis=True	pers=False
+158	obj_dustpile	spr=spr_dustpile	vis=True	pers=False
+159	obj_dustpile_susie	spr=spr_dustpile	vis=True	pers=False
+160	obj_wobblything	spr=spr_wobblything	vis=True	pers=False
+161	obj_wobblything_evil	spr=spr_wobblything_evil	vis=True	pers=False
+162	obj_anim	spr=	vis=False	pers=False
+163	obj_kingcutscene	spr=spr_event	vis=True	pers=False
+164	obj_shakeobj	spr=	vis=False	pers=False
+165	obj_darkfountain	spr=spr_fountainedge	vis=True	pers=False
+166	obj_darkfountain_event	spr=spr_heart_centered	vis=True	pers=False
+167	obj_fountainkris	spr=spr_krisu_bright	vis=True	pers=False
+168	obj_chaseenemy	spr=spr_diamond_overworld	vis=True	pers=False
+169	obj_excblcon	spr=spr_exc	vis=True	pers=False
+170	obj_testoverworldenemy	spr=spr_diamondm_idle	vis=True	pers=False
+171	obj_encounterbasic	spr=	vis=True	pers=False
+172	obj_caterpillarchara	spr=spr_susied_party	vis=True	pers=False
+173	obj_darkcontroller	spr=	vis=True	pers=False
+174	obj_healwriter	spr=	vis=True	pers=False
+175	obj_menuwriter	spr=	vis=True	pers=False
+176	obj_battlealphaer	spr=spr_heart	vis=True	pers=False
+177	obj_starwalker_battle	spr=spr_starwalker_idle	vis=True	pers=False
+178	obj_starwalker_overworld	spr=spr_starwalker_body	vis=True	pers=False
+179	obj_starwalker_offswitch	spr=spr_starwalker_offswitch_b	vis=True	pers=False
+180	obj_overworldheart	spr=spr_heart_outline2	vis=True	pers=False
+181	obj_solidenemy_2	spr=spr_solidenemy_b	vis=False	pers=False
+182	obj_solidenemy	spr=spr_solidenemy	vis=False	pers=False
+183	obj_scissordancer	spr=spr_scissordancer	vis=True	pers=False
+184	obj_dancer_gen	spr=spr_heart	vis=True	pers=False
+185	obj_darkponman_ow	spr=spr_ponman_dark	vis=True	pers=False
+186	obj_ob_gen	spr=spr_heart	vis=True	pers=False
+187	obj_overworldbulletparent	spr=	vis=True	pers=False
+188	obj_ob_checkertile	spr=spr_checkertile_bullet	vis=True	pers=False
+189	obj_overworld_spade_homing	spr=spr_spadebullet	vis=True	pers=False
+190	obj_overworld_spade	spr=spr_spadebullet	vis=True	pers=False
+191	obj_overworld_spademaker	spr=spr_spadebullet	vis=True	pers=False
+192	obj_afterimage	spr=	vis=True	pers=False
+193	obj_afterimage_grow	spr=	vis=True	pers=False
+194	obj_attackpress	spr=spr_pressfront	vis=True	pers=False
+195	obj_basicattack	spr=spr_attack_cut1	vis=True	pers=False
+196	obj_battlecontroller	spr=	vis=True	pers=False
+197	obj_battlesolid	spr=	vis=True	pers=False
+198	obj_bulletgenparent	spr=	vis=True	pers=False
+199	obj_bulletparent	spr=	vis=True	pers=False
+200	obj_burstbolt	spr=spr_attackspot	vis=True	pers=False
+201	obj_collidebullet	spr=	vis=True	pers=False
+202	obj_chasebullet	spr=spr_diamondbullet	vis=True	pers=False
+203	obj_regularbullet	spr=	vis=True	pers=False
+204	obj_regularbullet_permanent	spr=	vis=True	pers=False
+205	obj_darkener	spr=	vis=True	pers=False
+206	obj_grazebox	spr=spr_grazeappear	vis=True	pers=False
+207	obj_healeffect	spr=	vis=True	pers=False
+208	obj_healsparkle	spr=spr_healsparkle	vis=True	pers=False
+209	obj_heartburst	spr=spr_heartoutline	vis=True	pers=False
+210	obj_heartmarker	spr=spr_diamondbullet_form	vis=False	pers=False
+211	obj_lancerbike	spr=spr_lancerbike	vis=True	pers=False
+212	obj_heroparent	spr=spr_krisb_idle	vis=True	pers=False
+213	obj_herokris	spr=spr_krisplace	vis=True	pers=False
+214	obj_herosusie	spr=spr_krisplace	vis=True	pers=False
+215	obj_heroralsei	spr=spr_krisplace	vis=True	pers=False
+216	obj_initializer	spr=	vis=True	pers=False
+217	obj_krisplace	spr=spr_krisplace	vis=True	pers=False
+218	obj_monster1	spr=spr_dummymonster	vis=True	pers=False
+219	obj_moveheart	spr=spr_dodgeheart	vis=True	pers=False
+220	obj_returnheart	spr=spr_dodgeheart	vis=True	pers=False
+221	obj_whiteedge	spr=spr_whiteedge	vis=True	pers=False
+222	obj_forest_area5_puzzle	spr=spr_event	vis=False	pers=False
+223	obj_forestmaze_controller	spr=spr_event	vis=True	pers=False
+224	obj_tempblock_room	spr=spr_solidenemy	vis=False	pers=False
+225	obj_suitspuzz	spr=spr_suitsicon	vis=True	pers=False
+226	obj_suitspuzz_button	spr=spr_suitsbutton	vis=True	pers=False
+227	obj_pushableblock	spr=spr_npc_block	vis=True	pers=False
+228	obj_glowtile	spr=spr_glowtile_off	vis=True	pers=False
+229	obj_blocktile	spr=spr_glowtile_step	vis=True	pers=False
+230	obj_glowtilepuzz	spr=spr_hourglass_switch_off	vis=True	pers=False
+231	obj_darkeyepuzzle_switch	spr=spr_interactable	vis=False	pers=False
+232	obj_darkeyepuzzle	spr=spr_darkeye	vis=True	pers=False
+233	obj_dicebul	spr=	vis=True	pers=False
+234	obj_heartblcon	spr=spr_heartblcon_0	vis=True	pers=False
+235	obj_clubsbullet	spr=spr_clubsbullet	vis=True	pers=False
+236	obj_clubsbullet_dark	spr=spr_clubsbullet_dark	vis=True	pers=False
+237	obj_dbullet_maker	spr=spr_diamondbullet_form	vis=True	pers=False
+238	obj_dbullet_vert	spr=spr_diamondbullet_vert	vis=True	pers=False
+239	obj_heartshaper	spr=spr_heartbullet	vis=False	pers=False
+240	obj_spinheart	spr=spr_spinheart	vis=True	pers=False
+241	obj_dbulletcontroller	spr=spr_grazemask	vis=False	pers=False
+242	obj_monsterparent	spr=	vis=True	pers=False
+243	obj_ralseibullet	spr=spr_smallbullet	vis=True	pers=False
+244	obj_dummyenemy	spr=spr_dummymonster	vis=True	pers=False
+245	obj_ralseienemy	spr=spr_ralseib_idle_enemy	vis=True	pers=False
+246	obj_placeholderenemy	spr=spr_diamondm_idle	vis=True	pers=False
+247	obj_chain_of_hell	spr=spr_chainfront	vis=True	pers=False
+248	obj_chainking	spr=spr_chainking_spin	vis=True	pers=False
+249	obj_chainpiece	spr=spr_chainpiece	vis=True	pers=False
+250	obj_fadechain	spr=spr_chainpiece	vis=True	pers=False
+251	obj_finalchain	spr=spr_chainfront	vis=True	pers=False
+252	obj_king_body	spr=spr_chainking_spin	vis=True	pers=False
+253	obj_growtangle_bouncer	spr=spr_battlebg_2	vis=True	pers=False
+254	obj_nonsolid_growtangle	spr=spr_battlebg_wavechain	vis=True	pers=False
+255	obj_skychain	spr=spr_chainfront	vis=True	pers=False
+256	obj_wavechain	spr=spr_chainfront	vis=True	pers=False
+257	obj_dknight_slasher	spr=spr_diamond_knight_slash	vis=True	pers=False
+258	obj_rudinnranger	spr=spr_daimond_knight_idle	vis=True	pers=False
+259	obj_jigsawbullet	spr=spr_jigsawbullet	vis=True	pers=False
+260	obj_jigsawryenemy	spr=spr_jigsawry_idle	vis=True	pers=False
+261	obj_checkers_enemy	spr=spr_checkers_idle	vis=True	pers=False
+262	obj_checker_animtest	spr=spr_smallchecker_idle	vis=True	pers=False
+263	obj_throwtarget	spr=spr_checkers_crown	vis=True	pers=False
+264	obj_ralseithrown	spr=spr_ralsei_thrown	vis=True	pers=False
+265	obj_throwralsei	spr=spr_susieb_throwralseiready	vis=True	pers=False
+266	obj_checkers_leap	spr=spr_checkers_idle	vis=True	pers=False
+267	obj_ponman_appear	spr=spr_ponman_appear	vis=True	pers=False
+268	obj_ponman_enemy	spr=spr_ponman_idle	vis=True	pers=False
+269	obj_heartbomb_blast	spr=spr_bomb_heart	vis=True	pers=False
+270	obj_suitbomb	spr=spr_suitsbomb	vis=True	pers=False
+271	obj_joker_body	spr=spr_joker_main	vis=True	pers=False
+272	obj_centerscythe	spr=spr_joker_scythebody	vis=True	pers=False
+273	obj_laserscythe	spr=spr_joker_scythebody	vis=True	pers=False
+274	obj_bigscythe	spr=jokerscythebig_mask	vis=True	pers=False
+275	obj_carouselbullet	spr=spr_carousel	vis=True	pers=False
+276	obj_joker_teleport	spr=spr_joker_teleport	vis=True	pers=False
+277	obj_spadering	spr=spr_diamondbullet	vis=False	pers=False
+278	obj_rabbick_bush	spr=spr_rabbick_bushhole	vis=True	pers=False
+279	obj_carrotthrower	spr=spr_rabbitthrower	vis=True	pers=False
+280	obj_rabbitbullet	spr=spr_rabbitbullet	vis=True	pers=False
+281	obj_rabbick_enemy	spr=spr_rabbick_enemy	vis=True	pers=False
+282	obj_blockbullet_fall	spr=spr_blockbullet_mini	vis=True	pers=False
+283	obj_bloxer_enemy	spr=spr_blockguy_spared	vis=True	pers=False
+284	obj_lancerbike_neo	spr=spr_lancerbike	vis=True	pers=False
+285	obj_axebullet	spr=spr_axebullet_b	vis=True	pers=False
+286	obj_lancerboss	spr=spr_lancerbike	vis=True	pers=False
+287	obj_lancerboss2	spr=spr_lancer_battle	vis=True	pers=False
+288	obj_diamondenemy	spr=spr_diamondm_idle	vis=True	pers=False
+289	obj_susieenemy	spr=spr_susie_enemy	vis=True	pers=False
+290	obj_lancerboss3	spr=spr_lancerbike	vis=True	pers=False
+291	obj_king_boss	spr=spr_chainking_idle	vis=True	pers=False
+292	obj_joker	spr=spr_joker_main	vis=True	pers=False
+293	obj_clubsenemy	spr=spr_clubs_idle	vis=True	pers=False
+294	obj_clubsenemy_old	spr=spr_clubs_idle	vis=True	pers=False
+295	obj_heartenemy	spr=spr_heartenemy_idle	vis=True	pers=False
+296	obj_headhathy	spr=spr_hathyx_idle	vis=True	pers=False
+297	obj_smallcheckers_enemy	spr=spr_smallchecker_idle	vis=True	pers=False
+298	obj_pacifyspell	spr=	vis=True	pers=False
+299	obj_deathanim	spr=	vis=True	pers=False
+300	obj_defeatanim	spr=	vis=True	pers=False
+301	obj_healanim	spr=spr_sparestar_anim	vis=False	pers=False
+302	obj_oflash	spr=	vis=True	pers=False
+303	obj_rudebuster_anim	spr=spr_susie_rudebuster	vis=True	pers=False
+304	obj_rudebuster_bolt	spr=spr_rudebuster_beam	vis=True	pers=False
+305	obj_hypnofx	spr=spr_hypnoring	vis=True	pers=False
+306	obj_spareanim	spr=	vis=True	pers=False
+307	obj_battleback	spr=	vis=True	pers=False
+308	obj_spellphase	spr=	vis=True	pers=False
+309	obj_battleblcon	spr=spr_battleblcon	vis=True	pers=False
+310	obj_endbattle	spr=	vis=True	pers=False
+311	obj_growtangle	spr=spr_battlebg_0	vis=True	pers=False
+312	obj_dmgwriter	spr=	vis=True	pers=False
+313	obj_heart	spr=spr_dodgeheart	vis=True	pers=False
+314	obj_shop1	spr=	vis=True	pers=False
+315	obj_shop2	spr=	vis=True	pers=False
+316	DEVICE_APPEARANCE	spr=IMAGE_SOUL_BLUR	vis=True	pers=False
+317	DEVICE_CHOICE	spr=IMAGE_SOUL_BLUR	vis=True	pers=False
+318	DEVICE_CONTACT	spr=	vis=True	pers=False
+319	DEVICE_FAILURE	spr=	vis=True	pers=False
+320	DEVICE_GONERMAKER	spr=IMAGE_GONERHEAD	vis=True	pers=False
+321	DEVICE_MENU	spr=	vis=True	pers=False
+322	DEVICE_OBACK_4	spr=	vis=True	pers=False
+323	PROCESS_LOGO	spr=IMAGE_LOGO	vis=True	pers=False
+324	PROCESS_DOG	spr=IMAGE_DOG	vis=True	pers=False
+325	obj_credits	spr=	vis=True	pers=False
+326	obj_dkris_event	spr=spr_dkris_dl	vis=True	pers=False
+327	obj_darkphone_event	spr=	vis=False	pers=False
+328	obj_time	spr=spr_darkconfigbt	vis=True	pers=True
+329	obj_move_to_point	spr=	vis=True	pers=False
+330	obj_legend	spr=	vis=True	pers=False
+331	obj_savemenu	spr=	vis=True	pers=False
+332	obj_initializer2	spr=	vis=True	pers=False
+333	obj_tensionbar	spr=spr_tensionbar	vis=True	pers=False
+334	obj_overworldc	spr=	vis=True	pers=False
+335	obj_sdl	spr=spr_sdl	vis=False	pers=False
+336	obj_sdr	spr=spr_sdr	vis=False	pers=False
+337	obj_sul	spr=spr_sul	vis=False	pers=False
+338	obj_sur	spr=spr_sur	vis=False	pers=False
+339	obj_soliddark	spr=spr_soliddark	vis=False	pers=False
+340	obj_sur_dark	spr=spr_sur_dark	vis=False	pers=False
+341	obj_sdl_dark	spr=spr_sdl_dark	vis=False	pers=False
+342	obj_solidlong	spr=spr_solidlong	vis=False	pers=False
+343	obj_diag	spr=spr_diagonalsolid	vis=True	pers=False
+344	obj_solidcircle	spr=spr_solidcircle	vis=True	pers=False
+345	obj_diamond	spr=spr_soliddiamond	vis=True	pers=False
+346	obj_84_lang_helper	spr=spr_84_lang	vis=False	pers=False
+347	obj_gamecontroller	spr=	vis=False	pers=True
+348	obj_debugcontroller	spr=	vis=False	pers=True
+349	obj_splashscreen	spr=	vis=True	pers=False
+350	obj_roomcontroller	spr=	vis=False	pers=True
+351	obj_event_manager	spr=	vis=False	pers=True
+352	obj_screen_loading	spr=	vis=True	pers=False
+
+== Rooms = 147 ==
+0	ROOM_INITIALIZE
+1	PLACE_CONTACT
+2	room_krisroom
+3	room_krishallway
+4	room_torroom
+5	room_torhouse
+6	room_torbathroom
+7	room_town_krisyard
+8	room_town_northwest
+9	room_town_north
+10	room_beach
+11	room_town_mid
+12	room_town_apartments
+13	room_town_south
+14	room_town_school
+15	room_town_church
+16	room_graveyard
+17	room_town_shelter
+18	room_hospital_lobby
+19	room_hospital_hallway
+20	room_hospital_rudy
+21	room_hospital_room2
+22	room_diner
+23	room_townhall
+24	room_flowershop_1f
+25	room_flowershop_2f
+26	room_library
+27	room_alphysalley
+28	room_torielclass
+29	room_schoollobby
+30	room_alphysclass
+31	room_schooldoor
+32	room_insidecloset
+33	room_school_unusedroom
+34	room_dark1
+35	room_dark1a
+36	room_dark2
+37	room_dark3
+38	room_dark3a
+39	room_dark_wobbles
+40	room_dark_eyepuzzle
+41	room_dark7
+42	room_dark_chase1
+43	room_dark_chase2
+44	room_castle_outskirts
+45	room_castle_town
+46	room_castle_front
+47	room_castle_tutorial
+48	room_castle_darkdoor
+49	room_field_start
+50	room_field_forest
+51	room_field1
+52	room_field2
+53	room_field2A
+54	room_field_topchef
+55	room_field_puzzle1
+56	room_field_maze
+57	room_field_puzzle2
+58	room_field_getsusie
+59	room_field_shop1
+60	room_field_puzzletutorial
+61	room_field3
+62	room_field_boxpuzzle
+63	room_field4
+64	room_field_secret1
+65	room_field_checkers4
+66	room_field_checkers2
+67	room_field_checkers6
+68	room_field_checkers3
+69	room_field_checkers1
+70	room_field_checkers5
+71	room_field_checkers7
+72	room_field_checkersboss
+73	room_forest_savepoint1
+74	room_forest_area0
+75	room_forest_area1
+76	room_forest_area2
+77	room_forest_area2A
+78	room_forest_puzzle1
+79	room_forest_beforeclover
+80	room_forest_area3A
+81	room_forest_area3
+82	room_forest_savepoint2
+83	room_forest_smith
+84	room_forest_area4
+85	room_forest_dancers1
+86	room_forest_secret1
+87	room_forest_thrashmaker
+88	room_forest_starwalker
+89	room_forest_area5
+90	room_forest_savepoint_relax
+91	room_forest_maze1
+92	room_forest_maze_deadend
+93	room_forest_maze_susie
+94	room_forest_maze2
+95	room_forest_maze_deadend2
+96	room_forest_savepoint3
+97	room_forest_fightsusie
+98	room_forest_afterthrash2
+99	room_forest_afterthrash3
+100	room_forest_afterthrash4
+101	room_forest_castleview
+102	room_forest_chase1
+103	room_forest_chase2
+104	room_forest_castlefront
+105	room_cc_prison_cells
+106	room_cc_prisonlancer
+107	room_cc_prison_to_elevator
+108	room_cc_prison2
+109	room_cc_prisonelevator
+110	room_cc_elevator
+111	room_cc_prison_prejoker
+112	room_cc_joker
+113	room_cc_entrance
+114	room_cc_1f
+115	room_cc_rudinn
+116	room_cc_2f
+117	room_cc_rurus1
+118	room_cc_3f
+119	room_cc_hathy
+120	room_cc_4f
+121	room_cc_rurus2
+122	room_cc_clover
+123	room_cc_5f
+124	room_cc_lancer
+125	room_cc_6f
+126	room_cc_throneroom
+127	room_cc_preroof
+128	room_cc_kingbattle
+129	room_cc_prefountain
+130	room_cc_fountain
+131	PLACE_DOG
+132	room_legend
+133	room_shop1
+134	room_shop2
+135	room_gameover
+136	room_myroom_dark
+137	PLACE_LOGO
+138	PLACE_FAILURE
+139	PLACE_MENU
+140	room_ed
+141	room_empty
+142	room_man
+143	room_DARKempty
+144	room_battletest
+145	room_splashscreen
+146	room_chapter_continue
