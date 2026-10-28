@@ -1,0 +1,6993 @@
+OneShot 背景物件 · 待命名清单
+============================================================
+共 815 类图案 / 2123 个物件块 / 77629 格。
+每个图案只需填一次，所有出现位置共用。
+「类型」= removable（可整块拆走，底下就是地板）/ partial（部分格没地板垫底）。
+填完把本文件发回即可，中文名和功能说明都只在 ★ 后面那两行。
+
+A 组「典型物件」643 类 / 1885 块 —— 按复用块数降序，先填前面的，一次命名覆盖最多地方。
+B 组「大面积拼合」172 类 / 238 块 —— 4-连通把贴在一起的墙/窗/门并成了一坨（有的一张就 79×15 格），是场景结构不是物品，放在最后，
+    不想填可以整组留空。
+
+
+############################################################
+#  典型物件 组（643 类 / 1885 块）
+############################################################
+
+[A001] 50 块 / 800 格 / 4x4 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (58,0)，px [928, 0, 992, 64]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 1 行第 1 列
+  原作自动编号：EV033 EV034 EV038 EV039 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A002] 42 块 / 42 格 / 1x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (38,55)，px [608, 880, 624, 896]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_01.png  第 1 行第 2 列
+  原作自动编号：EV146
+  ★中文名：
+  ★功能说明：
+
+[A003] 38 块 / 114 格 / 3x1 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (18,63)，px [288, 1008, 336, 1024]
+  出现于 8 间房
+  看样：_evidence/thumbs/sheet_01.png  第 1 行第 3 列
+  原作自动编号：EV017 EV018 EV020 EV022 …共66个
+  ★中文名：
+  ★功能说明：
+
+[A004] 26 块 / 78 格 / 3x1 removable
+  图集：red_in.tsx
+  首见：map53 Cafe inside  第 1 层，格 (26,27)，px [416, 432, 464, 448]
+  出现于 8 间房
+  看样：_evidence/thumbs/sheet_01.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A005] 24 块 / 96 格 / 2x2 removable
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (62,32)，px [992, 512, 1024, 544]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_01.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A006] 24 块 / 24 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (43,15)，px [688, 240, 704, 256]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A007] 21 块 / 189 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (15,27)，px [240, 432, 288, 480]
+  出现于 6 间房
+  看样：_evidence/thumbs/sheet_01.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A008] 21 块 / 42 格 / 2x1 removable
+  图集：red_in.tsx
+  首见：map95 Hall1  第 2 层，格 (12,8)，px [192, 128, 224, 144]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A009] 21 块 / 21 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 2 层，格 (18,19)，px [288, 304, 304, 320]
+  出现于 7 间房
+  看样：_evidence/thumbs/sheet_01.png  第 2 行第 3 列
+  原作自动编号：EV001 EV002 EV003 EV006 …共14个
+  ★中文名：
+  ★功能说明：
+
+[A010] 21 块 / 21 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (54,24)，px [864, 384, 880, 400]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_01.png  第 2 行第 4 列
+  原作自动编号：EV002 EV004 EV022 EV094 …共13个
+  ★中文名：
+  ★功能说明：
+
+[A011] 21 块 / 21 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 1 层，格 (16,12)，px [256, 192, 272, 208]
+  出现于 8 间房
+  看样：_evidence/thumbs/sheet_01.png  第 2 行第 5 列
+  原作自动编号：EV007 EV012
+  ★中文名：
+  ★功能说明：
+
+[A012] 19 块 / 19 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 1 层，格 (25,11)，px [400, 176, 416, 192]
+  出现于 11 间房
+  看样：_evidence/thumbs/sheet_01.png  第 2 行第 6 列
+  原作自动编号：EV011
+  ★中文名：
+  ★功能说明：
+
+[A013] 17 块 / 68 格 / 4x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (19,24)，px [304, 384, 368, 400]
+  出现于 6 间房
+  看样：_evidence/thumbs/sheet_01.png  第 3 行第 1 列
+  原作自动编号：EV017 EV018 EV019 EV027 …共39个
+  ★中文名：
+  ★功能说明：
+
+[A014] 16 块 / 240 格 / 3x5 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (49,30)，px [784, 480, 832, 560]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 3 行第 2 列
+  原作自动编号：EV009 EV019 EV074 EV080 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A015] 16 块 / 80 格 / 5x1 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (35,68)，px [560, 1088, 640, 1104]
+  出现于 8 间房
+  看样：_evidence/thumbs/sheet_01.png  第 3 行第 3 列
+  原作自动编号：EV023 EV024 EV036 EV037 …共36个
+  ★中文名：
+  ★功能说明：
+
+[A016] 16 块 / 16 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (36,11)，px [576, 176, 592, 192]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 3 行第 4 列
+  原作自动编号：EV026 EV027 EV030 EV031 …共23个
+  ★中文名：
+  ★功能说明：
+
+[A017] 15 块 / 15 格 / 1x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (49,0)，px [784, 0, 800, 16]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A018] 15 块 / 15 格 / 1x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (46,50)，px [736, 800, 752, 816]
+  出现于 6 间房
+  看样：_evidence/thumbs/sheet_01.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A019] 14 块 / 420 格 / 5x6 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (20,47)，px [320, 752, 400, 848]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 4 行第 1 列
+  原作自动编号：EV010 EV011 EV038 EV049 …共13个
+  ★中文名：
+  ★功能说明：
+
+[A020] 14 块 / 14 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 1 层，格 (22,11)，px [352, 176, 368, 192]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A021] 14 块 / 14 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 1 层，格 (20,17)，px [320, 272, 336, 288]
+  出现于 9 间房
+  看样：_evidence/thumbs/sheet_01.png  第 4 行第 3 列
+  原作自动编号：EV004 EV005 EV006 EV007
+  ★中文名：
+  ★功能说明：
+
+[A022] 14 块 / 14 格 / 1x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (7,34)，px [112, 544, 128, 560]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_01.png  第 4 行第 4 列
+  原作自动编号：EV068 EV069 EV075 EV076 …共23个
+  ★中文名：
+  ★功能说明：
+
+[A023] 13 块 / 130 格 / 5x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (26,35)，px [416, 560, 496, 592]
+  出现于 6 间房
+  看样：_evidence/thumbs/sheet_01.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A024] 13 块 / 13 格 / 1x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (113,0)，px [1808, 0, 1824, 16]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A025] 13 块 / 13 格 / 1x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (60,44)，px [960, 704, 976, 720]
+  出现于 8 间房
+  看样：_evidence/thumbs/sheet_01.png  第 5 行第 1 列
+  原作自动编号：EV003 EV008 EV029 EV076 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A026] 12 块 / 12 格 / 1x1 removable
+  图集：blank7.tsx
+  首见：map71 Dormitories  第 1 层，格 (156,28)，px [2496, 448, 2512, 464]
+  出现于 6 间房
+  看样：_evidence/thumbs/sheet_01.png  第 5 行第 2 列
+  原作自动编号：EV010
+  ★中文名：
+  ★功能说明：
+
+[A027] 11 块 / 33 格 / 3x1 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (14,41)，px [224, 656, 272, 672]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A028] 11 块 / 11 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (65,68)，px [1040, 1088, 1056, 1104]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_01.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A029] 11 块 / 11 格 / 1x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (56,27)，px [896, 432, 912, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_01.png  第 5 行第 5 列
+  原作自动编号：EV142 EV288
+  ★中文名：
+  ★功能说明：
+
+[A030] 10 块 / 100 格 / 4x4 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (44,28)，px [704, 448, 768, 512]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 5 行第 6 列
+  原作自动编号：EV030 EV136 EV140 EV141 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A031] 10 块 / 40 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (48,29)，px [768, 464, 800, 496]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 6 行第 1 列
+  原作自动编号：EV179 EV180 EV181
+  ★中文名：
+  ★功能说明：
+
+[A032] 10 块 / 20 格 / 2x1 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (15,23)，px [240, 368, 272, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 6 行第 2 列
+  原作自动编号：EV004 EV051 EV058
+  ★中文名：
+  ★功能说明：
+
+[A033] 9 块 / 36 格 / 1x4 removable
+  图集：blank7.tsx
+  首见：map38 Ruins In  第 2 层，格 (41,46)，px [656, 736, 672, 800]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_01.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A034] 8 块 / 96 格 / 12x1 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (16,16)，px [256, 256, 448, 272]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A035] 8 块 / 64 格 / 4x2 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (39,3)，px [624, 48, 688, 80]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 6 行第 5 列
+  原作自动编号：EV023 EV024 EV025 EV080 …共22个
+  ★中文名：
+  ★功能说明：
+
+[A036] 8 块 / 56 格 / 3x3 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (37,50)，px [592, 800, 640, 848]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_01.png  第 6 行第 6 列
+  原作自动编号：EV032 EV033 EV034 EV058 …共22个
+  ★中文名：
+  ★功能说明：
+
+[A037] 8 块 / 48 格 / 2x3 removable
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (68,26)，px [1088, 416, 1120, 464]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A038] 8 块 / 16 格 / 2x1 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (37,6)，px [592, 96, 624, 112]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 1 行第 2 列
+  原作自动编号：EV028 EV029 EV030 EV031 …共21个
+  ★中文名：
+  ★功能说明：
+
+[A039] 8 块 / 16 格 / 1x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (36,43)，px [576, 688, 592, 720]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 1 行第 3 列
+  原作自动编号：EV148 EV150
+  ★中文名：
+  ★功能说明：
+
+[A040] 8 块 / 8 格 / 1x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map101 mineshaft  第 2 层，格 (33,6)，px [528, 96, 544, 112]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A041] 8 块 / 8 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 2 层，格 (25,25)，px [400, 400, 416, 416]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_02.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A042] 7 块 / 56 格 / 8x1 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (33,61)，px [528, 976, 656, 992]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 1 行第 6 列
+  原作自动编号：EV023 EV036 EV037 EV038 …共42个
+  ★中文名：
+  ★功能说明：
+
+[A043] 7 块 / 49 格 / 7x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (69,32)，px [1104, 512, 1216, 528]
+  出现于 7 间房
+  看样：_evidence/thumbs/sheet_02.png  第 2 行第 1 列
+  原作自动编号：EV023 EV024 EV038 EV041 …共29个
+  ★中文名：
+  ★功能说明：
+
+[A044] 7 块 / 7 格 / 1x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (85,30)，px [1360, 480, 1376, 496]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 2 行第 2 列
+  原作自动编号：EV009 EV018
+  ★中文名：
+  ★功能说明：
+
+[A045] 7 块 / 7 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map73 Swamp  第 1 层，格 (14,61)，px [224, 976, 240, 992]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_02.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A046] 6 块 / 96 格 / 8x2 removable
+  图集：green.tsx
+  首见：map199 Gate  第 2 层，格 (31,99)，px [496, 1584, 624, 1616]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 2 行第 4 列
+  原作自动编号：EV030 EV044 EV062 EV067 …共32个
+  ★中文名：
+  ★功能说明：
+
+[A047] 6 块 / 60 格 / 10x1 removable
+  图集：red_factory.tsx
+  首见：map87 Library  第 1 层，格 (15,23)，px [240, 368, 400, 384]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 2 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A048] 6 块 / 60 格 / 2x5 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (46,0)，px [736, 0, 768, 80]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 2 行第 6 列
+  原作自动编号：EV027 EV028
+  ★中文名：
+  ★功能说明：
+
+[A049] 6 块 / 60 格 / 10x1 removable
+  图集：red_factory.tsx
+  首见：map87 Library  第 1 层，格 (15,18)，px [240, 288, 400, 304]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A050] 6 块 / 54 格 / 3x3 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (79,46)，px [1264, 736, 1312, 784]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 3 行第 2 列
+  原作自动编号：EV443 EV449 EV450 EV451 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A051] 6 块 / 36 格 / 3x2 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 2 层，格 (31,42)，px [496, 672, 544, 704]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A052] 6 块 / 30 格 / 5x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (74,30)，px [1184, 480, 1264, 496]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_02.png  第 3 行第 4 列
+  原作自动编号：EV018
+  ★中文名：
+  ★功能说明：
+
+[A053] 6 块 / 30 格 / 5x1 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (26,48)，px [416, 768, 496, 784]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 3 行第 5 列
+  原作自动编号：EV025 EV035 EV040 EV056 …共21个
+  ★中文名：
+  ★功能说明：
+
+[A054] 6 块 / 24 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (24,21)，px [384, 336, 416, 368]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 3 行第 6 列
+  原作自动编号：EV051 EV054 EV063 EV064 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A055] 6 块 / 24 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (25,23)，px [400, 368, 432, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A056] 6 块 / 18 格 / 1x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (33,21)，px [528, 336, 544, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_02.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A057] 6 块 / 18 格 / 1x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (31,21)，px [496, 336, 512, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_02.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A058] 6 块 / 12 格 / 1x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (79,36)，px [1264, 576, 1280, 608]
+  出现于 6 间房
+  看样：_evidence/thumbs/sheet_02.png  第 4 行第 4 列
+  原作自动编号：EV012 EV022 EV118
+  ★中文名：
+  ★功能说明：
+
+[A059] 6 块 / 12 格 / 2x1 removable
+  图集：green_in.tsx
+  首见：map57 Junction  第 1 层，格 (14,13)，px [224, 208, 256, 224]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A060] 6 块 / 6 格 / 1x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (50,64)，px [800, 1024, 816, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_02.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A061] 6 块 / 6 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (42,36)，px [672, 576, 688, 592]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_02.png  第 5 行第 1 列
+  原作自动编号：EV115 EV116 EV117
+  ★中文名：
+  ★功能说明：
+
+[A062] 6 块 / 6 格 / 1x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (47,74)，px [752, 1184, 768, 1200]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_02.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A063] 5 块 / 315 格 / 8x14 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (60,2)，px [960, 32, 1088, 256]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 5 行第 3 列
+  原作自动编号：EV032 EV038 EV069 EV073
+  ★中文名：
+  ★功能说明：
+
+[A064] 5 块 / 240 格 / 8x8 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (93,6)，px [1488, 96, 1616, 224]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A065] 5 块 / 200 格 / 7x8 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (73,4)，px [1168, 64, 1280, 192]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A066] 5 块 / 160 格 / 8x6 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (95,6)，px [1520, 96, 1648, 192]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A067] 5 块 / 90 格 / 3x6 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 2 层，格 (40,30)，px [640, 480, 688, 576]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A068] 5 块 / 35 格 / 1x7 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (25,54)，px [400, 864, 416, 976]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_02.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A069] 5 块 / 30 格 / 3x2 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 2 层，格 (32,55)，px [512, 880, 560, 912]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_02.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A070] 5 块 / 30 格 / 6x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (54,9)，px [864, 144, 960, 160]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 6 行第 4 列
+  原作自动编号：EV172 EV173 EV174 EV175 …共15个
+  ★中文名：
+  ★功能说明：
+
+[A071] 5 块 / 30 格 / 2x3 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (26,21)，px [416, 336, 448, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_02.png  第 6 行第 5 列
+  原作自动编号：EV005 EV008 EV026
+  ★中文名：
+  ★功能说明：
+
+[A072] 5 块 / 20 格 / 4x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (58,65)，px [928, 1040, 992, 1056]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_02.png  第 6 行第 6 列
+  原作自动编号：EV112 EV130 EV180 EV186
+  ★中文名：
+  ★功能说明：
+
+[A073] 5 块 / 15 格 / 1x3 removable
+  图集：red_in.tsx
+  首见：map95 Hall1  第 1 层，格 (28,11)，px [448, 176, 464, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 1 行第 1 列
+  原作自动编号：EV003 EV008 EV014 EV015 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A074] 5 块 / 15 格 / 1x3 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 2 层，格 (47,33)，px [752, 528, 768, 576]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 1 行第 2 列
+  原作自动编号：EV004 EV094 EV098 EV118
+  ★中文名：
+  ★功能说明：
+
+[A075] 5 块 / 10 格 / 2x1 removable
+  图集：red_in.tsx
+  首见：map50 stairwell  第 1 层，格 (19,18)，px [304, 288, 336, 304]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_03.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A076] 5 块 / 10 格 / 2x1 removable
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (25,32)，px [400, 512, 432, 528]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A077] 5 块 / 5 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (72,80)，px [1152, 1280, 1168, 1296]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_03.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A078] 5 块 / 5 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (37,15)，px [592, 240, 608, 256]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_03.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A079] 5 块 / 5 格 / 1x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (126,23)，px [2016, 368, 2032, 384]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_03.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A080] 5 块 / 5 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 2 层，格 (23,20)，px [368, 320, 384, 336]
+  出现于 5 间房
+  看样：_evidence/thumbs/sheet_03.png  第 2 行第 2 列
+  原作自动编号：EV003 EV009 EV017 EV018 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A081] 5 块 / 5 格 / 1x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (16,26)，px [256, 416, 272, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_03.png  第 2 行第 3 列
+  原作自动编号：EV236 EV257
+  ★中文名：
+  ★功能说明：
+
+[A082] 4 块 / 128 格 / 8x4 removable
+  图集：red_alley.tsx
+  首见：map86 To Tower  第 1 层，格 (58,61)，px [928, 976, 1056, 1040]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A083] 4 块 / 76 格 / 19x1 removable
+  图集：red_factory.tsx
+  首见：map87 Library  第 1 层，格 (13,26)，px [208, 416, 512, 432]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 2 行第 5 列
+  原作自动编号：EV007
+  ★中文名：
+  ★功能说明：
+
+[A084] 4 块 / 72 格 / 9x2 removable
+  图集：red_factory_in.tsx
+  首见：map98 1st room  第 1 层，格 (31,18)，px [496, 288, 640, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 2 行第 6 列
+  原作自动编号：EV012
+  ★中文名：
+  ★功能说明：
+
+[A085] 4 块 / 48 格 / 3x4 removable
+  图集：blank7.tsx
+  首见：map196 backhall  第 1 层，格 (15,14)，px [240, 224, 288, 288]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A086] 4 块 / 36 格 / 9x1 removable
+  图集：red.tsx
+  首见：map54 Garden  第 1 层，格 (29,36)，px [464, 576, 608, 592]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_03.png  第 3 行第 2 列
+  原作自动编号：EV055 EV057
+  ★中文名：
+  ★功能说明：
+
+[A087] 4 块 / 32 格 / 8x1 removable
+  图集：blue_jagged.tsx
+  首见：map196 backhall  第 1 层，格 (10,19)，px [160, 304, 288, 320]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A088] 4 块 / 32 格 / 4x3 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 1 层，格 (14,14)，px [224, 224, 288, 272]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 3 行第 4 列
+  原作自动编号：EV003 EV012
+  ★中文名：
+  ★功能说明：
+
+[A089] 4 块 / 32 格 / 4x2 removable
+  图集：green.tsx
+  首见：map199 Gate  第 2 层，格 (72,101)，px [1152, 1616, 1216, 1648]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 3 行第 5 列
+  原作自动编号：EV036 EV037 EV038 EV039 …共14个
+  ★中文名：
+  ★功能说明：
+
+[A090] 4 块 / 32 格 / 4x2 removable
+  图集：red_in.tsx
+  首见：map53 Cafe inside  第 1 层，格 (28,39)，px [448, 624, 512, 656]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A091] 4 块 / 28 格 / 7x1 removable
+  图集：red_factory.tsx
+  首见：map104 courtyard  第 1 层，格 (25,22)，px [400, 352, 512, 368]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_03.png  第 4 行第 1 列
+  原作自动编号：EV010 EV012
+  ★中文名：
+  ★功能说明：
+
+[A092] 4 块 / 28 格 / 2x4 removable
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (59,61)，px [944, 976, 976, 1040]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A093] 4 块 / 24 格 / 3x2 removable
+  图集：blank7.tsx
+  首见：map196 backhall  第 1 层，格 (18,12)，px [288, 192, 336, 224]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A094] 4 块 / 24 格 / 6x1 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (18,11)，px [288, 176, 384, 192]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_03.png  第 4 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A095] 4 块 / 16 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (17,24)，px [272, 384, 304, 416]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 4 行第 5 列
+  原作自动编号：EV093 EV094 EV137 EV138
+  ★中文名：
+  ★功能说明：
+
+[A096] 4 块 / 12 格 / 3x1 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 2 层，格 (34,30)，px [544, 480, 592, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_03.png  第 4 行第 6 列
+  原作自动编号：EV027
+  ★中文名：
+  ★功能说明：
+
+[A097] 4 块 / 8 格 / 2x1 removable
+  图集：red_start.tsx
+  首见：map58 Bedroom  第 1 层，格 (25,17)，px [400, 272, 432, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A098] 4 块 / 8 格 / 2x1 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 2 层，格 (20,12)，px [320, 192, 352, 208]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 5 行第 2 列
+  原作自动编号：EV007 EV008
+  ★中文名：
+  ★功能说明：
+
+[A099] 4 块 / 8 格 / 2x1 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (64,114)，px [1024, 1824, 1056, 1840]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A100] 4 块 / 8 格 / 1x2 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 1 层，格 (24,22)，px [384, 352, 400, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_03.png  第 5 行第 4 列
+  原作自动编号：EV016 EV019 EV020 EV021 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A101] 4 块 / 8 格 / 1x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (49,31)，px [784, 496, 800, 528]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 5 行第 5 列
+  原作自动编号：EV142
+  ★中文名：
+  ★功能说明：
+
+[A102] 4 块 / 8 格 / 1x2 removable
+  图集：green_in.tsx
+  首见：map57 Junction  第 1 层，格 (12,17)，px [192, 272, 208, 304]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 5 行第 6 列
+  原作自动编号：EV005
+  ★中文名：
+  ★功能说明：
+
+[A103] 4 块 / 4 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (16,24)，px [256, 384, 272, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A104] 4 块 / 4 格 / 1x1 removable
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (76,37)，px [1216, 592, 1232, 608]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A105] 4 块 / 4 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (23,24)，px [368, 384, 384, 400]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_03.png  第 6 行第 3 列
+  原作自动编号：EV051 EV058
+  ★中文名：
+  ★功能说明：
+
+[A106] 4 块 / 4 格 / 1x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (49,50)，px [784, 800, 800, 816]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_03.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A107] 4 块 / 4 格 / 1x1 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (31,50)，px [496, 800, 512, 816]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_03.png  第 6 行第 5 列
+  原作自动编号：EV094 EV490
+  ★中文名：
+  ★功能说明：
+
+[A108] 4 块 / 4 格 / 1x1 removable
+  图集：green.tsx
+  首见：map27 Dock  第 2 层，格 (54,32)，px [864, 512, 880, 528]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_03.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A109] 4 块 / 4 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (72,30)，px [1152, 480, 1168, 496]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_04.png  第 1 行第 1 列
+  原作自动编号：EV123 EV124 EV125 EV268
+  ★中文名：
+  ★功能说明：
+
+[A110] 4 块 / 4 格 / 1x1 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (37,15)，px [592, 240, 608, 256]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_04.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A111] 3 块 / 183 格 / 15x7 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (76,8)，px [1216, 128, 1456, 240]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 1 行第 3 列
+  原作自动编号：EV065 EV066
+  ★中文名：
+  ★功能说明：
+
+[A112] 3 块 / 171 格 / 57x1 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (31,23)，px [496, 368, 1408, 384]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 1 行第 4 列
+  原作自动编号：EV008 EV010 EV024 EV026 …共25个
+  ★中文名：
+  ★功能说明：
+
+[A113] 3 块 / 162 格 / 9x6 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (44,16)，px [704, 256, 848, 352]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A114] 3 块 / 156 格 / 12x5 removable
+  图集：black.tsx, blue_mineshaft.tsx
+  首见：map196 backhall  第 2 层，格 (6,16)，px [96, 256, 288, 336]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 1 行第 6 列
+  原作自动编号：EV001
+  ★中文名：
+  ★功能说明：
+
+[A115] 3 块 / 156 格 / 12x8 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 1 层，格 (87,8)，px [1392, 128, 1584, 256]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 2 行第 1 列
+  原作自动编号：EV060 EV061 EV064 EV065
+  ★中文名：
+  ★功能说明：
+
+[A116] 3 块 / 144 格 / 47x2 partial
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (73,32)，px [1168, 512, 1920, 544]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A117] 3 块 / 135 格 / 9x8 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (31,7)，px [496, 112, 640, 240]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 2 行第 3 列
+  原作自动编号：EV070
+  ★中文名：
+  ★功能说明：
+
+[A118] 3 块 / 135 格 / 5x11 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (45,47)，px [720, 752, 800, 928]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 2 行第 4 列
+  原作自动编号：EV073 EV074 EV075 EV076 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A119] 3 块 / 129 格 / 8x9 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (14,46)，px [224, 736, 352, 880]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 2 行第 5 列
+  原作自动编号：EV234 EV283
+  ★中文名：
+  ★功能说明：
+
+[A120] 3 块 / 93 格 / 5x7 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (27,32)，px [432, 512, 512, 624]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 2 行第 6 列
+  原作自动编号：EV080 EV091 EV092 EV391 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A121] 3 块 / 90 格 / 5x6 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (39,54)，px [624, 864, 704, 960]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 3 行第 1 列
+  原作自动编号：EV097 EV098 EV099 EV100 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A122] 3 块 / 78 格 / 26x1 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (0,37)，px [0, 592, 416, 608]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 3 行第 2 列
+  原作自动编号：EV083 EV084
+  ★中文名：
+  ★功能说明：
+
+[A123] 3 块 / 66 格 / 22x1 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (92,23)，px [1472, 368, 1824, 384]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 3 行第 3 列
+  原作自动编号：EV038 EV039 EV040 EV041 …共9个
+  ★中文名：
+  ★功能说明：
+
+[A124] 3 块 / 63 格 / 2x12 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 1 层，格 (78,54)，px [1248, 864, 1280, 1056]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 3 行第 4 列
+  原作自动编号：EV024 EV030
+  ★中文名：
+  ★功能说明：
+
+[A125] 3 块 / 60 格 / 8x4 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (54,9)，px [864, 144, 992, 208]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A126] 3 块 / 54 格 / 3x6 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 1 层，格 (6,23)，px [96, 368, 144, 464]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 3 行第 6 列
+  原作自动编号：EV008 EV026 EV029
+  ★中文名：
+  ★功能说明：
+
+[A127] 3 块 / 54 格 / 18x1 partial
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (94,49)，px [1504, 784, 1792, 800]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 4 行第 1 列
+  原作自动编号：EV053
+  ★中文名：
+  ★功能说明：
+
+[A128] 3 块 / 54 格 / 3x6 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 1 层，格 (12,23)，px [192, 368, 240, 464]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 4 行第 2 列
+  原作自动编号：EV007 EV025 EV028 EV031 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A129] 3 块 / 51 格 / 4x6 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (17,30)，px [272, 480, 336, 576]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A130] 3 块 / 45 格 / 3x7 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (98,8)，px [1568, 128, 1616, 240]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 4 行第 4 列
+  原作自动编号：EV064
+  ★中文名：
+  ★功能说明：
+
+[A131] 3 块 / 36 格 / 12x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (80,49)，px [1280, 784, 1472, 800]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A132] 3 块 / 36 格 / 9x4 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 2 层，格 (12,22)，px [192, 352, 336, 416]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 4 行第 6 列
+  原作自动编号：EV028 EV031 EV038
+  ★中文名：
+  ★功能说明：
+
+[A133] 3 块 / 36 格 / 2x6 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 2 层，格 (16,9)，px [256, 144, 288, 240]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A134] 3 块 / 36 格 / 3x4 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 1 层，格 (29,6)，px [464, 96, 512, 160]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A135] 3 块 / 33 格 / 11x1 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (45,107)，px [720, 1712, 896, 1728]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 5 行第 3 列
+  原作自动编号：EV040 EV045 EV046 EV047 …共14个
+  ★中文名：
+  ★功能说明：
+
+[A136] 3 块 / 33 格 / 5x5 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (79,38)，px [1264, 608, 1344, 688]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 5 行第 4 列
+  原作自动编号：EV019 EV020 EV021 EV022 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A137] 3 块 / 33 格 / 6x4 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (49,27)，px [784, 432, 880, 496]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 5 行第 5 列
+  原作自动编号：EV010 EV191 EV192 EV193 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A138] 3 块 / 27 格 / 9x1 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (20,23)，px [320, 368, 464, 384]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 5 行第 6 列
+  原作自动编号：EV028 EV043 EV044 EV045
+  ★中文名：
+  ★功能说明：
+
+[A139] 3 块 / 24 格 / 4x2 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (34,16)，px [544, 256, 608, 288]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A140] 3 块 / 24 格 / 1x8 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 1 层，格 (0,23)，px [0, 368, 16, 496]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A141] 3 块 / 24 格 / 8x1 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (53,104)，px [848, 1664, 976, 1680]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 6 行第 3 列
+  原作自动编号：EV031 EV032 EV050 EV051 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A142] 3 块 / 21 格 / 7x1 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (65,103)，px [1040, 1648, 1152, 1664]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 6 行第 4 列
+  原作自动编号：EV037 EV038 EV039 EV052 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A143] 3 块 / 21 格 / 7x1 partial
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (35,49)，px [560, 784, 672, 800]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A144] 3 块 / 21 格 / 1x7 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (0,23)，px [0, 368, 16, 480]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_04.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A145] 3 块 / 21 格 / 7x1 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (17,29)，px [272, 464, 384, 480]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 1 行第 1 列
+  原作自动编号：EV086
+  ★中文名：
+  ★功能说明：
+
+[A146] 3 块 / 21 格 / 5x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (23,22)，px [368, 352, 448, 384]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 1 行第 2 列
+  原作自动编号：EV082 EV083 EV084 EV149 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A147] 3 块 / 21 格 / 5x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (51,20)，px [816, 320, 896, 352]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 1 行第 3 列
+  原作自动编号：EV167 EV168 EV189 EV190 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A148] 3 块 / 18 格 / 3x2 removable
+  图集：black.tsx
+  首见：map241 Tv room  第 2 层，格 (49,36)，px [784, 576, 832, 608]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 1 行第 4 列
+  原作自动编号：EV067 EV070 EV097 EV100 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A149] 3 块 / 18 格 / 5x2 partial
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (73,49)，px [1168, 784, 1248, 816]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A150] 3 块 / 18 格 / 2x3 removable
+  图集：red_in.tsx
+  首见：map95 Hall1  第 1 层，格 (16,11)，px [256, 176, 288, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_05.png  第 1 行第 6 列
+  原作自动编号：EV010
+  ★中文名：
+  ★功能说明：
+
+[A151] 3 块 / 18 格 / 3x2 removable
+  图集：green_in.tsx
+  首见：map126 Birdhall  第 1 层，格 (56,6)，px [896, 96, 944, 128]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A152] 3 块 / 18 格 / 4x3 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (69,98)，px [1104, 1568, 1168, 1616]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A153] 3 块 / 18 格 / 3x2 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (14,34)，px [224, 544, 272, 576]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 2 行第 3 列
+  原作自动编号：EV002 EV009
+  ★中文名：
+  ★功能说明：
+
+[A154] 3 块 / 15 格 / 5x1 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (26,30)，px [416, 480, 496, 496]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A155] 3 块 / 15 格 / 1x5 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 2 层，格 (0,13)，px [0, 208, 16, 288]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 2 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A156] 3 块 / 15 格 / 3x3 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (62,26)，px [992, 416, 1040, 464]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 2 行第 6 列
+  原作自动编号：EV178 EV386 EV387
+  ★中文名：
+  ★功能说明：
+
+[A157] 3 块 / 15 格 / 1x5 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 2 层，格 (4,22)，px [64, 352, 80, 432]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 3 行第 1 列
+  原作自动编号：EV039
+  ★中文名：
+  ★功能说明：
+
+[A158] 3 块 / 12 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map109 Room1 - bot  第 1 层，格 (22,8)，px [352, 128, 384, 160]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 3 行第 2 列
+  原作自动编号：EV006 EV007 EV008 EV009 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A159] 3 块 / 12 格 / 3x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (15,20)，px [240, 320, 288, 352]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A160] 3 块 / 12 格 / 3x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (59,18)，px [944, 288, 992, 320]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 3 行第 4 列
+  原作自动编号：EV170 EV186 EV187 EV188 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A161] 3 块 / 12 格 / 4x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (44,49)，px [704, 784, 768, 800]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A162] 3 块 / 12 格 / 3x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (65,29)，px [1040, 464, 1088, 496]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 3 行第 6 列
+  原作自动编号：EV011 EV045 EV046 EV178 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A163] 3 块 / 12 格 / 1x4 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 1 层，格 (32,12)，px [512, 192, 528, 256]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 4 行第 1 列
+  原作自动编号：EV070 EV072
+  ★中文名：
+  ★功能说明：
+
+[A164] 3 块 / 12 格 / 4x1 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (15,62)，px [240, 992, 304, 1008]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A165] 3 块 / 12 格 / 4x1 removable
+  图集：green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (62,19)，px [992, 304, 1056, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 4 行第 3 列
+  原作自动编号：EV185 EV186 EV187 EV192 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A166] 3 块 / 9 格 / 2x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (24,19)，px [384, 304, 416, 336]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 4 行第 4 列
+  原作自动编号：EV155 EV158 EV159
+  ★中文名：
+  ★功能说明：
+
+[A167] 3 块 / 9 格 / 3x1 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 2 层，格 (6,22)，px [96, 352, 144, 368]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 4 行第 5 列
+  原作自动编号：EV039
+  ★中文名：
+  ★功能说明：
+
+[A168] 3 块 / 9 格 / 2x2 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (46,94)，px [736, 1504, 768, 1536]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A169] 3 块 / 9 格 / 2x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (84,39)，px [1344, 624, 1376, 656]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 5 行第 1 列
+  原作自动编号：EV019 EV053 EV198
+  ★中文名：
+  ★功能说明：
+
+[A170] 3 块 / 6 格 / 2x1 removable
+  图集：red_alley.tsx
+  首见：map135 SECRET RAM CLUB  第 1 层，格 (12,5)，px [192, 80, 224, 96]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A171] 3 块 / 6 格 / 2x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (31,23)，px [496, 368, 528, 384]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 5 行第 3 列
+  原作自动编号：EV006
+  ★中文名：
+  ★功能说明：
+
+[A172] 3 块 / 6 格 / 1x2 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 1 层，格 (22,25)，px [352, 400, 368, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 5 行第 4 列
+  原作自动编号：EV002 EV018 EV022 EV034 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A173] 3 块 / 6 格 / 1x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (33,62)，px [528, 992, 544, 1024]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A174] 3 块 / 6 格 / 1x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (71,74)，px [1136, 1184, 1152, 1216]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A175] 3 块 / 6 格 / 1x2 removable
+  图集：green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (86,25)，px [1376, 400, 1392, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 6 行第 1 列
+  原作自动编号：EV191 EV308
+  ★中文名：
+  ★功能说明：
+
+[A176] 3 块 / 6 格 / 1x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (74,77)，px [1184, 1232, 1200, 1264]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A177] 3 块 / 3 格 / 1x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (36,67)，px [576, 1072, 592, 1088]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_05.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A178] 3 块 / 3 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (20,23)，px [320, 368, 336, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_05.png  第 6 行第 4 列
+  原作自动编号：EV311 EV312
+  ★中文名：
+  ★功能说明：
+
+[A179] 3 块 / 3 格 / 1x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (100,30)，px [1600, 480, 1616, 496]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A180] 3 块 / 3 格 / 1x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (54,59)，px [864, 944, 880, 960]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_05.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A181] 3 块 / 3 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (16,21)，px [256, 336, 272, 352]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 1 行第 1 列
+  原作自动编号：EV007 EV020 EV021 EV022
+  ★中文名：
+  ★功能说明：
+
+[A182] 3 块 / 3 格 / 1x1 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (31,23)，px [496, 368, 512, 384]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_06.png  第 1 行第 2 列
+  原作自动编号：EV006
+  ★中文名：
+  ★功能说明：
+
+[A183] 3 块 / 3 格 / 1x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 1 层，格 (78,68)，px [1248, 1088, 1264, 1104]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_06.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A184] 3 块 / 3 格 / 1x1 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 2 层，格 (9,8)，px [144, 128, 160, 144]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_06.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A185] 3 块 / 3 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (31,56)，px [496, 896, 512, 912]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A186] 3 块 / 3 格 / 1x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 1 层，格 (79,66)，px [1264, 1056, 1280, 1072]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_06.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A187] 3 块 / 3 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 1 层，格 (19,18)，px [304, 288, 320, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_06.png  第 2 行第 1 列
+  原作自动编号：EV011 EV012 EV013
+  ★中文名：
+  ★功能说明：
+
+[A188] 2 块 / 128 格 / 14x5 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (44,35)，px [704, 560, 928, 640]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 2 行第 2 列
+  原作自动编号：EV029 EV030 EV066 EV067 …共14个
+  ★中文名：
+  ★功能说明：
+
+[A189] 2 块 / 122 格 / 12x6 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (15,25)，px [240, 400, 432, 496]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 2 行第 3 列
+  原作自动编号：EV110 EV111 EV112 EV113 …共12个
+  ★中文名：
+  ★功能说明：
+
+[A190] 2 块 / 114 格 / 14x7 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (100,8)，px [1600, 128, 1824, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 2 行第 4 列
+  原作自动编号：EV040 EV041
+  ★中文名：
+  ★功能说明：
+
+[A191] 2 块 / 110 格 / 10x12 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (66,56)，px [1056, 896, 1216, 1088]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 2 行第 5 列
+  原作自动编号：EV038 EV130 EV408 EV409 …共13个
+  ★中文名：
+  ★功能说明：
+
+[A192] 2 块 / 108 格 / 27x2 removable
+  图集：red_obsdeck.tsx
+  首见：map120 Observation Deck  第 1 层，格 (0,19)，px [0, 304, 432, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 2 行第 6 列
+  原作自动编号：EV001 EV007 EV009 EV015 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A193] 2 块 / 104 格 / 9x9 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (23,40)，px [368, 640, 512, 784]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 3 行第 1 列
+  原作自动编号：EV033 EV078 EV093 EV094 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A194] 2 块 / 96 格 / 9x8 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (55,7)，px [880, 112, 1024, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 3 行第 2 列
+  原作自动编号：EV037
+  ★中文名：
+  ★功能说明：
+
+[A195] 2 块 / 96 格 / 8x8 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (49,8)，px [784, 128, 912, 256]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 3 行第 3 列
+  原作自动编号：EV031 EV037
+  ★中文名：
+  ★功能说明：
+
+[A196] 2 块 / 92 格 / 9x6 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (52,52)，px [832, 832, 976, 928]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 3 行第 4 列
+  原作自动编号：EV072 EV103 EV104 EV105 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A197] 2 块 / 90 格 / 9x9 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 2 层，格 (61,0)，px [976, 0, 1120, 144]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A198] 2 块 / 90 格 / 14x4 partial
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (10,32)，px [160, 512, 384, 576]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 3 行第 6 列
+  原作自动编号：EV012
+  ★中文名：
+  ★功能说明：
+
+[A199] 2 块 / 90 格 / 1x45 removable
+  图集：red.tsx
+  首见：map47 City Gate  第 1 层，格 (22,0)，px [352, 0, 368, 720]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 4 行第 1 列
+  原作自动编号：EV012 EV015
+  ★中文名：
+  ★功能说明：
+
+[A200] 2 块 / 90 格 / 3x15 removable
+  图集：red_factory.tsx, red_walkway.tsx
+  首见：map104 courtyard  第 1 层，格 (21,22)，px [336, 352, 384, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_06.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A201] 2 块 / 86 格 / 10x9 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (51,32)，px [816, 512, 976, 656]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 4 行第 3 列
+  原作自动编号：EV010 EV193 EV194 EV197 …共25个
+  ★中文名：
+  ★功能说明：
+
+[A202] 2 块 / 74 格 / 37x1 removable
+  图集：red_factory.tsx
+  首见：map87 Library  第 1 层，格 (0,44)，px [0, 704, 592, 720]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 4 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A203] 2 块 / 74 格 / 9x9 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (28,32)，px [448, 512, 592, 656]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 4 行第 5 列
+  原作自动编号：EV068 EV149 EV154 EV156 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A204] 2 块 / 68 格 / 8x5 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (44,18)，px [704, 288, 832, 368]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 4 行第 6 列
+  原作自动编号：EV039 EV045 EV046 EV105 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A205] 2 块 / 66 格 / 6x7 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (43,30)，px [688, 480, 784, 592]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A206] 2 块 / 64 格 / 8x4 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (18,17)，px [288, 272, 416, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 5 行第 2 列
+  原作自动编号：EV050 EV054 EV122 EV123 …共9个
+  ★中文名：
+  ★功能说明：
+
+[A207] 2 块 / 64 格 / 8x4 removable
+  图集：red_water.tsx
+  首见：map105 left- pools  第 1 层，格 (16,23)，px [256, 368, 384, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_06.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A208] 2 块 / 64 格 / 8x7 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (78,9)，px [1248, 144, 1376, 256]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 5 行第 4 列
+  原作自动编号：EV033 EV039
+  ★中文名：
+  ★功能说明：
+
+[A209] 2 块 / 64 格 / 12x4 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (72,66)，px [1152, 1056, 1344, 1120]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 5 行第 5 列
+  原作自动编号：EV038 EV119 EV121 EV412 …共30个
+  ★中文名：
+  ★功能说明：
+
+[A210] 2 块 / 60 格 / 5x6 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (26,23)，px [416, 368, 496, 464]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 5 行第 6 列
+  原作自动编号：EV003 EV155 EV159
+  ★中文名：
+  ★功能说明：
+
+[A211] 2 块 / 60 格 / 5x6 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (80,41)，px [1280, 656, 1360, 752]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 6 行第 1 列
+  原作自动编号：EV007 EV175 EV224 EV245
+  ★中文名：
+  ★功能说明：
+
+[A212] 2 块 / 60 格 / 5x7 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (78,40)，px [1248, 640, 1328, 752]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 6 行第 2 列
+  原作自动编号：EV245
+  ★中文名：
+  ★功能说明：
+
+[A213] 2 块 / 58 格 / 5x6 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (72,37)，px [1152, 592, 1232, 688]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 6 行第 3 列
+  原作自动编号：EV354 EV373 EV436
+  ★中文名：
+  ★功能说明：
+
+[A214] 2 块 / 58 格 / 5x9 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (46,50)，px [736, 800, 816, 944]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 6 行第 4 列
+  原作自动编号：EV103 EV130
+  ★中文名：
+  ★功能说明：
+
+[A215] 2 块 / 58 格 / 5x7 removable
+  图集：green.tsx
+  首见：map199 Gate  第 1 层，格 (20,93)，px [320, 1488, 400, 1600]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 6 行第 5 列
+  原作自动编号：EV160 EV188 EV190
+  ★中文名：
+  ★功能说明：
+
+[A216] 2 块 / 56 格 / 5x9 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (51,27)，px [816, 432, 896, 576]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_06.png  第 6 行第 6 列
+  原作自动编号：EV138 EV139 EV143
+  ★中文名：
+  ★功能说明：
+
+[A217] 2 块 / 56 格 / 14x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (44,26)，px [704, 416, 928, 448]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A218] 2 块 / 56 格 / 28x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (86,39)，px [1376, 624, 1824, 640]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A219] 2 块 / 56 格 / 8x7 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (44,39)，px [704, 624, 832, 736]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 1 行第 3 列
+  原作自动编号：EV040 EV044 EV076 EV428 …共25个
+  ★中文名：
+  ★功能说明：
+
+[A220] 2 块 / 54 格 / 4x9 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (79,52)，px [1264, 832, 1328, 976]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 1 行第 4 列
+  原作自动编号：EV458 EV459 EV460 EV461 …共9个
+  ★中文名：
+  ★功能说明：
+
+[A221] 2 块 / 52 格 / 13x2 partial
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (10,40)，px [160, 640, 368, 672]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A222] 2 块 / 52 格 / 5x7 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (33,35)，px [528, 560, 608, 672]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 1 行第 6 列
+  原作自动编号：EV005 EV033 EV077 EV384
+  ★中文名：
+  ★功能说明：
+
+[A223] 2 块 / 50 格 / 5x5 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 2 层，格 (27,32)，px [432, 512, 512, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_07.png  第 2 行第 1 列
+  原作自动编号：EV061 EV064 EV096 EV098
+  ★中文名：
+  ★功能说明：
+
+[A224] 2 块 / 50 格 / 5x5 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 2 层，格 (39,32)，px [624, 512, 704, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_07.png  第 2 行第 2 列
+  原作自动编号：EV045 EV046 EV055 EV058
+  ★中文名：
+  ★功能说明：
+
+[A225] 2 块 / 48 格 / 6x4 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (52,27)，px [832, 432, 928, 496]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 2 行第 3 列
+  原作自动编号：EV099 EV100 EV101 EV102 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A226] 2 块 / 48 格 / 4x9 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (31,1)，px [496, 16, 560, 160]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A227] 2 块 / 46 格 / 15x9 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (17,70)，px [272, 1120, 512, 1264]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 2 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A228] 2 块 / 46 格 / 23x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (0,12)，px [0, 192, 368, 208]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A229] 2 块 / 44 格 / 22x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (114,33)，px [1824, 528, 2176, 544]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A230] 2 块 / 40 格 / 6x6 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (47,24)，px [752, 384, 848, 480]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 3 行第 2 列
+  原作自动编号：EV142 EV143 EV144
+  ★中文名：
+  ★功能说明：
+
+[A231] 2 块 / 40 格 / 4x5 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (44,9)，px [704, 144, 768, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A232] 2 块 / 40 格 / 7x8 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (31,27)，px [496, 432, 608, 560]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 3 行第 4 列
+  原作自动编号：EV068 EV148 EV149 EV150 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A233] 2 块 / 38 格 / 5x4 removable
+  图集：green.tsx
+  首见：map199 Gate  第 2 层，格 (44,98)，px [704, 1568, 784, 1632]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 3 行第 5 列
+  原作自动编号：EV029 EV135 EV163 EV199 …共9个
+  ★中文名：
+  ★功能说明：
+
+[A234] 2 块 / 38 格 / 9x3 removable
+  图集：red_factory_in.tsx
+  首见：map98 1st room  第 1 层，格 (16,17)，px [256, 272, 400, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 3 行第 6 列
+  原作自动编号：EV011
+  ★中文名：
+  ★功能说明：
+
+[A235] 2 块 / 38 格 / 4x7 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (23,28)，px [368, 448, 432, 560]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 4 行第 1 列
+  原作自动编号：EV153
+  ★中文名：
+  ★功能说明：
+
+[A236] 2 块 / 36 格 / 9x2 removable
+  图集：red_factory_in.tsx
+  首见：map98 1st room  第 1 层，格 (16,24)，px [256, 384, 400, 416]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A237] 2 块 / 36 格 / 3x6 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (54,44)，px [864, 704, 912, 800]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 4 行第 3 列
+  原作自动编号：EV220 EV221 EV275
+  ★中文名：
+  ★功能说明：
+
+[A238] 2 块 / 36 格 / 18x1 removable
+  图集：red_factory.tsx
+  首见：map90 Factory  第 1 层，格 (13,26)，px [208, 416, 496, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_07.png  第 4 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A239] 2 块 / 32 格 / 4x5 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (73,35)，px [1168, 560, 1232, 640]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 4 行第 5 列
+  原作自动编号：EV223 EV244
+  ★中文名：
+  ★功能说明：
+
+[A240] 2 块 / 32 格 / 4x4 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (64,28)，px [1024, 448, 1088, 512]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A241] 2 块 / 30 格 / 3x5 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (89,9)，px [1424, 144, 1472, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 5 行第 1 列
+  原作自动编号：EV012 EV013 EV014
+  ★中文名：
+  ★功能说明：
+
+[A242] 2 块 / 30 格 / 4x4 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (28,6)，px [448, 96, 512, 160]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A243] 2 块 / 30 格 / 3x5 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (52,42)，px [832, 672, 880, 752]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 5 行第 3 列
+  原作自动编号：EV043 EV059 EV060 EV061 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A244] 2 块 / 30 格 / 5x5 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (30,7)，px [480, 112, 560, 192]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A245] 2 块 / 28 格 / 4x4 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (60,39)，px [960, 624, 1024, 688]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 5 行第 5 列
+  原作自动编号：EV163
+  ★中文名：
+  ★功能说明：
+
+[A246] 2 块 / 28 格 / 14x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (19,23)，px [304, 368, 528, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 5 行第 6 列
+  原作自动编号：EV055 EV058 EV059 EV060
+  ★中文名：
+  ★功能说明：
+
+[A247] 2 块 / 26 格 / 13x1 removable
+  图集：red.tsx
+  首见：map47 City Gate  第 1 层，格 (71,50)，px [1136, 800, 1344, 816]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A248] 2 块 / 26 格 / 8x3 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (76,68)，px [1216, 1088, 1344, 1136]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 6 行第 2 列
+  原作自动编号：EV416 EV417 EV418 EV419 …共18个
+  ★中文名：
+  ★功能说明：
+
+[A249] 2 块 / 26 格 / 13x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (33,26)，px [528, 416, 736, 432]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 6 行第 3 列
+  原作自动编号：EV056 EV057 EV061 EV062
+  ★中文名：
+  ★功能说明：
+
+[A250] 2 块 / 26 格 / 13x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (114,23)，px [1824, 368, 2032, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 6 行第 4 列
+  原作自动编号：EV043 EV044 EV073 EV074 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A251] 2 块 / 26 格 / 5x4 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (31,39)，px [496, 624, 576, 688]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 6 行第 5 列
+  原作自动编号：EV156
+  ★中文名：
+  ★功能说明：
+
+[A252] 2 块 / 26 格 / 5x3 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (47,34)，px [752, 544, 832, 592]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_07.png  第 6 行第 6 列
+  原作自动编号：EV137
+  ★中文名：
+  ★功能说明：
+
+[A253] 2 块 / 26 格 / 3x5 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (64,69)，px [1024, 1104, 1072, 1184]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 1 行第 1 列
+  原作自动编号：EV016 EV032 EV057 EV127 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A254] 2 块 / 24 格 / 4x3 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 1 层，格 (77,59)，px [1232, 944, 1296, 992]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 1 行第 2 列
+  原作自动编号：EV013 EV025 EV026 EV027
+  ★中文名：
+  ★功能说明：
+
+[A255] 2 块 / 24 格 / 5x3 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (59,60)，px [944, 960, 1024, 1008]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 1 行第 3 列
+  原作自动编号：EV110 EV111 EV406
+  ★中文名：
+  ★功能说明：
+
+[A256] 2 块 / 24 格 / 4x5 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (23,36)，px [368, 576, 432, 656]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 1 行第 4 列
+  原作自动编号：EV155
+  ★中文名：
+  ★功能说明：
+
+[A257] 2 块 / 24 格 / 4x3 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 1 层，格 (31,21)，px [496, 336, 560, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 1 行第 5 列
+  原作自动编号：EV020 EV021 EV022 EV023
+  ★中文名：
+  ★功能说明：
+
+[A258] 2 块 / 24 格 / 4x3 partial
+  图集：red_in.tsx
+  首见：map124 Room2 - peng  第 1 层，格 (19,6)，px [304, 96, 368, 144]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A259] 2 块 / 22 格 / 11x1 removable
+  图集：red_factory.tsx
+  首见：map87 Library  第 1 层，格 (43,18)，px [688, 288, 864, 304]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A260] 2 块 / 22 格 / 11x1 removable
+  图集：red_factory.tsx
+  首见：map87 Library  第 1 层，格 (43,23)，px [688, 368, 864, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A261] 2 块 / 22 格 / 3x5 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (30,4)，px [480, 64, 528, 144]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A262] 2 块 / 22 格 / 7x2 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (33,40)，px [528, 640, 640, 672]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 2 行第 4 列
+  原作自动编号：EV022 EV042 EV043 EV044 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A263] 2 块 / 22 格 / 4x4 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (48,28)，px [768, 448, 832, 512]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 2 行第 5 列
+  原作自动编号：EV139 EV142 EV144
+  ★中文名：
+  ★功能说明：
+
+[A264] 2 块 / 20 格 / 5x2 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (27,15)，px [432, 240, 512, 272]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A265] 2 块 / 20 格 / 5x3 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 2 层，格 (31,27)，px [496, 432, 576, 480]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A266] 2 块 / 20 格 / 4x3 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (23,42)，px [368, 672, 432, 720]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 3 行第 2 列
+  原作自动编号：EV093 EV157
+  ★中文名：
+  ★功能说明：
+
+[A267] 2 块 / 20 格 / 5x3 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (33,65)，px [528, 1040, 608, 1088]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 3 行第 3 列
+  原作自动编号：EV016 EV026 EV027 EV028 …共13个
+  ★中文名：
+  ★功能说明：
+
+[A268] 2 块 / 20 格 / 5x3 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 2 层，格 (30,24)，px [480, 384, 560, 432]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A269] 2 块 / 20 格 / 5x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (34,35)，px [544, 560, 624, 592]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A270] 2 块 / 20 格 / 4x3 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (12,53)，px [192, 848, 256, 896]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A271] 2 块 / 18 格 / 3x3 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 1 层，格 (12,77)，px [192, 1232, 240, 1280]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 4 行第 1 列
+  原作自动编号：EV017 EV018 EV019
+  ★中文名：
+  ★功能说明：
+
+[A272] 2 块 / 18 格 / 4x4 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (52,16)，px [832, 256, 896, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 4 行第 2 列
+  原作自动编号：EV001
+  ★中文名：
+  ★功能说明：
+
+[A273] 2 块 / 18 格 / 3x3 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (62,45)，px [992, 720, 1040, 768]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 4 行第 3 列
+  原作自动编号：EV442 EV464 EV479
+  ★中文名：
+  ★功能说明：
+
+[A274] 2 块 / 18 格 / 7x2 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (69,31)，px [1104, 496, 1216, 528]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 4 行第 4 列
+  原作自动编号：EV047 EV048 EV049 EV050 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A275] 2 块 / 18 格 / 6x2 partial
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (67,48)，px [1072, 768, 1168, 800]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 4 行第 5 列
+  原作自动编号：EV274
+  ★中文名：
+  ★功能说明：
+
+[A276] 2 块 / 18 格 / 3x3 removable
+  图集：blank1.tsx, blue.tsx
+  首见：map19 Docks  第 1 层，格 (35,55)，px [560, 880, 608, 928]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 4 行第 6 列
+  原作自动编号：EV051 EV115
+  ★中文名：
+  ★功能说明：
+
+[A277] 2 块 / 16 格 / 2x4 removable
+  图集：red_in.tsx
+  首见：map124 Room2 - peng  第 1 层，格 (13,8)，px [208, 128, 240, 192]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 5 行第 1 列
+  原作自动编号：EV005 EV006 EV007 EV008 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A278] 2 块 / 16 格 / 4x2 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (40,58)，px [640, 928, 704, 960]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 5 行第 2 列
+  原作自动编号：EV020 EV170 EV222
+  ★中文名：
+  ★功能说明：
+
+[A279] 2 块 / 16 格 / 6x2 removable
+  图集：green.tsx
+  首见：map27 Dock  第 2 层，格 (47,33)，px [752, 528, 848, 560]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A280] 2 块 / 16 格 / 8x1 removable
+  图集：red_in.tsx
+  首见：map187 fish house  第 2 层，格 (14,7)，px [224, 112, 352, 128]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A281] 2 块 / 12 格 / 3x3 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (36,49)，px [576, 784, 624, 832]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A282] 2 块 / 12 格 / 6x1 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 2 层，格 (35,14)，px [560, 224, 656, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_08.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A283] 2 块 / 12 格 / 3x2 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (34,72)，px [544, 1152, 592, 1184]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 6 行第 1 列
+  原作自动编号：EV021 EV165
+  ★中文名：
+  ★功能说明：
+
+[A284] 2 块 / 12 格 / 2x5 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (20,48)，px [320, 768, 352, 848]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 6 行第 2 列
+  原作自动编号：EV164 EV169 EV200 EV201
+  ★中文名：
+  ★功能说明：
+
+[A285] 2 块 / 12 格 / 4x3 removable
+  图集：green.tsx
+  首见：map199 Gate  第 1 层，格 (16,98)，px [256, 1568, 320, 1616]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 6 行第 3 列
+  原作自动编号：EV053 EV081 EV111 EV160 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A286] 2 块 / 12 格 / 3x2 removable
+  图集：red_factory_in.tsx
+  首见：map114 left-terminals  第 1 层，格 (20,23)，px [320, 368, 368, 400]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_08.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A287] 2 块 / 12 格 / 1x6 removable
+  图集：red_obsdeck.tsx
+  首见：map222 locked room  第 1 层，格 (22,19)，px [352, 304, 368, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 6 行第 5 列
+  原作自动编号：EV002 EV016 EV033
+  ★中文名：
+  ★功能说明：
+
+[A288] 2 块 / 12 格 / 6x1 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 2 层，格 (39,13)，px [624, 208, 720, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_08.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A289] 2 块 / 12 格 / 3x2 removable
+  图集：red_in.tsx
+  首见：map109 Room1 - bot  第 2 层，格 (13,10)，px [208, 160, 256, 192]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 1 行第 1 列
+  原作自动编号：EV002 EV009 EV010
+  ★中文名：
+  ★功能说明：
+
+[A290] 2 块 / 12 格 / 1x6 removable
+  图集：red_obsdeck.tsx
+  首见：map222 locked room  第 1 层，格 (28,19)，px [448, 304, 464, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 1 行第 2 列
+  原作自动编号：EV001 EV018 EV034
+  ★中文名：
+  ★功能说明：
+
+[A291] 2 块 / 12 格 / 5x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (32,50)，px [512, 800, 592, 832]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 1 行第 3 列
+  原作自动编号：EV033 EV034 EV073 EV088 …共11个
+  ★中文名：
+  ★功能说明：
+
+[A292] 2 块 / 10 格 / 3x3 removable
+  图集：green.tsx
+  首见：map199 Gate  第 1 层，格 (86,95)，px [1376, 1520, 1424, 1568]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 1 行第 4 列
+  原作自动编号：EV181
+  ★中文名：
+  ★功能说明：
+
+[A293] 2 块 / 10 格 / 3x3 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (40,36)，px [640, 576, 688, 624]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 1 行第 5 列
+  原作自动编号：EV136
+  ★中文名：
+  ★功能说明：
+
+[A294] 2 块 / 10 格 / 4x2 removable
+  图集：green.tsx
+  首见：map199 Gate  第 1 层，格 (12,96)，px [192, 1536, 256, 1568]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 1 行第 6 列
+  原作自动编号：EV026 EV085 EV111 EV137 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A295] 2 块 / 10 格 / 2x3 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (71,34)，px [1136, 544, 1168, 592]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A296] 2 块 / 10 格 / 2x3 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (76,69)，px [1216, 1104, 1248, 1152]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A297] 2 块 / 10 格 / 2x3 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (27,76)，px [432, 1216, 464, 1264]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A298] 2 块 / 10 格 / 5x1 removable
+  图集：red.tsx
+  首见：map47 City Gate  第 1 层，格 (75,42)，px [1200, 672, 1280, 688]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A299] 2 块 / 10 格 / 4x2 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (72,69)，px [1152, 1104, 1216, 1136]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 2 行第 5 列
+  原作自动编号：EV419 EV466 EV467 EV471 …共9个
+  ★中文名：
+  ★功能说明：
+
+[A300] 2 块 / 8 格 / 2x2 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (19,18)，px [304, 288, 336, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A301] 2 块 / 8 格 / 1x4 removable
+  图集：red_in.tsx
+  首见：map109 Room1 - bot  第 2 层，格 (26,8)，px [416, 128, 432, 192]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A302] 2 块 / 8 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 2 层，格 (46,22)，px [736, 352, 768, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 3 行第 2 列
+  原作自动编号：EV004 EV046 EV108 EV109
+  ★中文名：
+  ★功能说明：
+
+[A303] 2 块 / 8 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 2 层，格 (13,36)，px [208, 576, 240, 608]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_09.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A304] 2 块 / 8 格 / 2x2 partial
+  图集：red_in.tsx
+  首见：map53 Cafe inside  第 2 层，格 (35,30)，px [560, 480, 592, 512]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A305] 2 块 / 8 格 / 2x2 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 2 层，格 (21,18)，px [336, 288, 368, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 3 行第 5 列
+  原作自动编号：EV004 EV009 EV016
+  ★中文名：
+  ★功能说明：
+
+[A306] 2 块 / 8 格 / 4x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (117,2)，px [1872, 32, 1936, 48]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A307] 2 块 / 8 格 / 4x1 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (23,28)，px [368, 448, 432, 464]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A308] 2 块 / 8 格 / 2x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (12,16)，px [192, 256, 224, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A309] 2 块 / 8 格 / 2x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 2 层，格 (40,66)，px [640, 1056, 672, 1088]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A310] 2 块 / 8 格 / 2x2 removable
+  图集：red_alley.tsx
+  首见：map91 Back Alley  第 1 层，格 (54,18)，px [864, 288, 896, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 4 行第 4 列
+  原作自动编号：EV014 EV028
+  ★中文名：
+  ★功能说明：
+
+[A311] 2 块 / 8 格 / 2x3 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (36,53)，px [576, 848, 608, 896]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 4 行第 5 列
+  原作自动编号：EV167
+  ★中文名：
+  ★功能说明：
+
+[A312] 2 块 / 6 格 / 3x1 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (28,44)，px [448, 704, 496, 720]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 4 行第 6 列
+  原作自动编号：EV036 EV037 EV038 EV039 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A313] 2 块 / 6 格 / 2x2 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (65,49)，px [1040, 784, 1072, 816]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A314] 2 块 / 6 格 / 1x3 removable
+  图集：blank7.tsx
+  首见：map38 Ruins In  第 2 层，格 (35,31)，px [560, 496, 576, 544]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A315] 2 块 / 6 格 / 3x1 removable
+  图集：red_start.tsx
+  首见：map58 Bedroom  第 1 层，格 (14,20)，px [224, 320, 272, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A316] 2 块 / 6 格 / 2x2 removable
+  图集：green_in.tsx
+  首见：map107 Bed room  第 1 层，格 (16,14)，px [256, 224, 288, 256]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 5 行第 4 列
+  原作自动编号：EV007
+  ★中文名：
+  ★功能说明：
+
+[A317] 2 块 / 6 格 / 2x2 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (74,73)，px [1184, 1168, 1216, 1200]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A318] 2 块 / 6 格 / 2x2 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (38,15)，px [608, 240, 640, 272]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A319] 2 块 / 6 格 / 3x1 removable
+  图集：red_alley.tsx
+  首见：map99 lamplighter house  第 1 层，格 (10,4)，px [160, 64, 208, 80]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_09.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A320] 2 块 / 6 格 / 1x3 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (33,24)，px [528, 384, 544, 432]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 6 行第 2 列
+  原作自动编号：EV055
+  ★中文名：
+  ★功能说明：
+
+[A321] 2 块 / 6 格 / 3x1 removable
+  图集：green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (76,44)，px [1216, 704, 1264, 720]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_09.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A322] 2 块 / 6 格 / 2x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (36,33)，px [576, 528, 608, 560]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 6 行第 4 列
+  原作自动编号：EV148
+  ★中文名：
+  ★功能说明：
+
+[A323] 2 块 / 6 格 / 1x3 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (45,24)，px [720, 384, 736, 432]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 6 行第 5 列
+  原作自动编号：EV054
+  ★中文名：
+  ★功能说明：
+
+[A324] 2 块 / 6 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map50 stairwell  第 1 层，格 (24,21)，px [384, 336, 416, 368]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_09.png  第 6 行第 6 列
+  原作自动编号：EV001 EV005 EV006
+  ★中文名：
+  ★功能说明：
+
+[A325] 2 块 / 6 格 / 2x2 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 1 层，格 (23,12)，px [368, 192, 400, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 1 行第 1 列
+  原作自动编号：EV008 EV017 EV018
+  ★中文名：
+  ★功能说明：
+
+[A326] 2 块 / 6 格 / 1x3 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 2 层，格 (17,12)，px [272, 192, 288, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 1 行第 2 列
+  原作自动编号：EV012
+  ★中文名：
+  ★功能说明：
+
+[A327] 2 块 / 6 格 / 1x3 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (25,8)，px [400, 128, 416, 176]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A328] 2 块 / 6 格 / 2x2 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (22,46)，px [352, 736, 384, 768]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A329] 2 块 / 4 格 / 1x2 removable
+  图集：blank7.tsx
+  首见：map136 Inside 1  第 1 层，格 (18,26)，px [288, 416, 304, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A330] 2 块 / 4 格 / 1x2 removable
+  图集：red_obsdeck.tsx
+  首见：map222 locked room  第 2 层，格 (22,23)，px [352, 368, 368, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 1 行第 6 列
+  原作自动编号：EV002 EV016 EV033
+  ★中文名：
+  ★功能说明：
+
+[A331] 2 块 / 4 格 / 1x2 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (69,37)，px [1104, 592, 1120, 624]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A332] 2 块 / 4 格 / 1x2 removable
+  图集：red_obsdeck.tsx
+  首见：map222 locked room  第 2 层，格 (28,23)，px [448, 368, 464, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 2 行第 2 列
+  原作自动编号：EV001 EV018 EV034
+  ★中文名：
+  ★功能说明：
+
+[A333] 2 块 / 4 格 / 2x1 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (24,52)，px [384, 832, 416, 848]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 2 行第 3 列
+  原作自动编号：EV057 EV206
+  ★中文名：
+  ★功能说明：
+
+[A334] 2 块 / 4 格 / 1x2 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (78,73)，px [1248, 1168, 1264, 1200]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 2 行第 4 列
+  原作自动编号：EV054
+  ★中文名：
+  ★功能说明：
+
+[A335] 2 块 / 4 格 / 2x1 removable
+  图集：blank7.tsx
+  首见：map156 Sunroom  第 2 层，格 (8,3)，px [128, 48, 160, 64]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 2 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A336] 2 块 / 4 格 / 1x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (22,55)，px [352, 880, 368, 912]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 2 行第 6 列
+  原作自动编号：EV021 EV214
+  ★中文名：
+  ★功能说明：
+
+[A337] 2 块 / 4 格 / 2x1 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (38,48)，px [608, 768, 640, 784]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A338] 2 块 / 4 格 / 1x2 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (18,35)，px [288, 560, 304, 592]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A339] 2 块 / 4 格 / 2x1 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (45,28)，px [720, 448, 752, 464]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 3 行第 3 列
+  原作自动编号：EV329
+  ★中文名：
+  ★功能说明：
+
+[A340] 2 块 / 4 格 / 1x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (26,35)，px [416, 560, 432, 592]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A341] 2 块 / 4 格 / 1x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (34,53)，px [544, 848, 560, 880]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 3 行第 5 列
+  原作自动编号：EV168
+  ★中文名：
+  ★功能说明：
+
+[A342] 2 块 / 4 格 / 2x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 1 层，格 (49,17)，px [784, 272, 816, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A343] 2 块 / 4 格 / 2x1 removable
+  图集：blue.tsx
+  首见：map18 Cliffs  第 1 层，格 (76,51)，px [1216, 816, 1248, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A344] 2 块 / 4 格 / 2x1 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 2 层，格 (17,28)，px [272, 448, 304, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 4 行第 2 列
+  原作自动编号：EV016
+  ★中文名：
+  ★功能说明：
+
+[A345] 2 块 / 4 格 / 1x2 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (70,117)，px [1120, 1872, 1136, 1904]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A346] 2 块 / 4 格 / 1x2 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (15,61)，px [240, 976, 256, 1008]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 4 行第 4 列
+  原作自动编号：EV198
+  ★中文名：
+  ★功能说明：
+
+[A347] 2 块 / 4 格 / 1x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (27,38)，px [432, 608, 448, 640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 4 行第 5 列
+  原作自动编号：EV300 EV301
+  ★中文名：
+  ★功能说明：
+
+[A348] 2 块 / 4 格 / 2x1 removable
+  图集：red.tsx
+  首见：map213 Landing  第 1 层，格 (10,32)，px [160, 512, 192, 528]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 4 行第 6 列
+  原作自动编号：EV001
+  ★中文名：
+  ★功能说明：
+
+[A349] 2 块 / 4 格 / 2x1 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (42,34)，px [672, 544, 704, 560]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A350] 2 块 / 4 格 / 2x1 removable
+  图集：factory in.tsx
+  首见：map94 upstairs  第 1 层，格 (6,8)，px [96, 128, 128, 144]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 5 行第 2 列
+  原作自动编号：EV010 EV015 EV017 EV020 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A351] 2 块 / 4 格 / 1x2 removable
+  图集：green.tsx
+  首见：map199 Gate  第 2 层，格 (18,97)，px [288, 1552, 304, 1584]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A352] 2 块 / 4 格 / 1x2 removable
+  图集：red_obsdeck.tsx
+  首见：map222 locked room  第 1 层，格 (25,23)，px [400, 368, 416, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 5 行第 4 列
+  原作自动编号：EV003 EV017 EV032
+  ★中文名：
+  ★功能说明：
+
+[A353] 2 块 / 4 格 / 2x1 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (23,69)，px [368, 1104, 400, 1120]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A354] 2 块 / 4 格 / 2x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (52,55)，px [832, 880, 864, 896]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 5 行第 6 列
+  原作自动编号：EV206 EV297
+  ★中文名：
+  ★功能说明：
+
+[A355] 2 块 / 4 格 / 1x2 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (10,72)，px [160, 1152, 176, 1184]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 6 行第 1 列
+  原作自动编号：EV028 EV037 EV038
+  ★中文名：
+  ★功能说明：
+
+[A356] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (55,34)，px [880, 544, 896, 560]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A357] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (73,38)，px [1168, 608, 1184, 624]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A358] 2 块 / 2 格 / 1x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 1 层，格 (46,14)，px [736, 224, 752, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A359] 2 块 / 2 格 / 1x1 removable
+  图集：green_mineshaft.tsx
+  首见：map208 mines exit  第 2 层，格 (30,5)，px [480, 80, 496, 96]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_10.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A360] 2 块 / 2 格 / 1x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 1 层，格 (47,17)，px [752, 272, 768, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_10.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A361] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (46,20)，px [736, 320, 752, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A362] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (43,28)，px [688, 448, 704, 464]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 1 行第 2 列
+  原作自动编号：EV110 EV112 EV261
+  ★中文名：
+  ★功能说明：
+
+[A363] 2 块 / 2 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map50 stairwell  第 1 层，格 (21,22)，px [336, 352, 352, 368]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 1 行第 3 列
+  原作自动编号：EV003 EV007
+  ★中文名：
+  ★功能说明：
+
+[A364] 2 块 / 2 格 / 1x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 2 层，格 (52,20)，px [832, 320, 848, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 1 行第 4 列
+  原作自动编号：EV038 EV039 EV040
+  ★中文名：
+  ★功能说明：
+
+[A365] 2 块 / 2 格 / 1x1 removable
+  图集：green_in.tsx
+  首见：map38 Ruins In  第 1 层，格 (26,68)，px [416, 1088, 432, 1104]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A366] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map199 Gate  第 1 层，格 (90,97)，px [1440, 1552, 1456, 1568]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 1 行第 6 列
+  原作自动编号：EV181 EV182
+  ★中文名：
+  ★功能说明：
+
+[A367] 2 块 / 2 格 / 1x1 removable
+  图集：red_factory_in.tsx
+  首见：map113 Kip  第 1 层，格 (10,15)，px [160, 240, 176, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A368] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (35,43)，px [560, 688, 576, 704]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A369] 2 块 / 2 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (18,64)，px [288, 1024, 304, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A370] 2 块 / 2 格 / 1x1 removable
+  图集：tower.tsx
+  首见：map150 T12  第 2 层，格 (11,5)，px [176, 80, 192, 96]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 2 行第 4 列
+  原作自动编号：EV002 EV006
+  ★中文名：
+  ★功能说明：
+
+[A371] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (40,24)，px [640, 384, 656, 400]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 2 行第 5 列
+  原作自动编号：EV066 EV404
+  ★中文名：
+  ★功能说明：
+
+[A372] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (46,73)，px [736, 1168, 752, 1184]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A373] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (77,55)，px [1232, 880, 1248, 896]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 3 行第 1 列
+  原作自动编号：EV201 EV203 EV208
+  ★中文名：
+  ★功能说明：
+
+[A374] 2 块 / 2 格 / 1x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 1 层，格 (41,17)，px [656, 272, 672, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A375] 2 块 / 2 格 / 1x1 removable
+  图集：blue_in.tsx
+  首见：map13 terminal room  第 1 层，格 (14,17)，px [224, 272, 240, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A376] 2 块 / 2 格 / 1x1 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (51,17)，px [816, 272, 832, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_11.png  第 3 行第 4 列
+  原作自动编号：EV001
+  ★中文名：
+  ★功能说明：
+
+[A377] 2 块 / 2 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (51,26)，px [816, 416, 832, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A378] 2 块 / 2 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map176 guest room  第 1 层，格 (18,12)，px [288, 192, 304, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 3 行第 6 列
+  原作自动编号：EV009 EV010
+  ★中文名：
+  ★功能说明：
+
+[A379] 1 块 / 64 格 / 15x6 removable
+  图集：factory in.tsx
+  首见：map69 Factory interior  第 1 层，格 (27,8)，px [432, 128, 672, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 4 行第 1 列
+  原作自动编号：EV010 EV016
+  ★中文名：
+  ★功能说明：
+
+[A380] 1 块 / 64 格 / 19x5 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (10,36)，px [160, 576, 464, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 4 行第 2 列
+  原作自动编号：EV049 EV052 EV061 EV064 …共13个
+  ★中文名：
+  ★功能说明：
+
+[A381] 1 块 / 63 格 / 10x9 removable
+  图集：green.tsx, green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (51,46)，px [816, 736, 976, 880]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 4 行第 3 列
+  原作自动编号：EV092 EV154 EV155 EV156 …共16个
+  ★中文名：
+  ★功能说明：
+
+[A382] 1 块 / 61 格 / 13x9 removable
+  图集：green.tsx
+  首见：map191 Research Station  第 1 层，格 (42,39)，px [672, 624, 880, 768]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 4 行第 4 列
+  原作自动编号：EV002 EV021 EV031 EV045 …共22个
+  ★中文名：
+  ★功能说明：
+
+[A383] 1 块 / 61 格 / 12x8 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (11,24)，px [176, 384, 368, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 4 行第 5 列
+  原作自动编号：EV011 EV049 EV129 EV207 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A384] 1 块 / 60 格 / 7x12 removable
+  图集：green.tsx
+  首见：map191 Research Station  第 2 层，格 (41,42)，px [656, 672, 768, 864]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 4 行第 6 列
+  原作自动编号：EV031 EV032 EV046 EV085 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A385] 1 块 / 60 格 / 60x1 removable
+  图集：red.tsx
+  首见：map89 IGNORE ToLibrary  第 2 层，格 (0,11)，px [0, 176, 960, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 5 行第 1 列
+  原作自动编号：EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[A386] 1 块 / 58 格 / 16x4 removable
+  图集：black.tsx, blue_jagged.tsx
+  首见：map208 mines exit  第 1 层，格 (128,15)，px [2048, 240, 2304, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A387] 1 块 / 56 格 / 10x7 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (74,68)，px [1184, 1088, 1344, 1200]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 5 行第 3 列
+  原作自动编号：EV054 EV118 EV123
+  ★中文名：
+  ★功能说明：
+
+[A388] 1 块 / 56 格 / 14x11 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (50,37)，px [800, 592, 1024, 768]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 5 行第 4 列
+  原作自动编号：EV106 EV115 EV128 EV140 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A389] 1 块 / 56 格 / 6x10 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (60,33)，px [960, 528, 1056, 688]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A390] 1 块 / 56 格 / 28x2 removable
+  图集：blank7.tsx
+  首见：map212 passage_boat  第 2 层，格 (34,5)，px [544, 80, 992, 112]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 5 行第 6 列
+  原作自动编号：EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[A391] 1 块 / 55 格 / 55x1 partial
+  图集：red.tsx
+  首见：map49 Apartments  第 1 层，格 (25,56)，px [400, 896, 1280, 912]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A392] 1 块 / 54 格 / 10x7 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 2 层，格 (16,31)，px [256, 496, 416, 608]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 6 行第 2 列
+  原作自动编号：EV049 EV052 EV103 EV106
+  ★中文名：
+  ★功能说明：
+
+[A393] 1 块 / 54 格 / 16x6 removable
+  图集：factory in.tsx
+  首见：map69 Factory interior  第 1 层，格 (1,8)，px [16, 128, 272, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 6 行第 3 列
+  原作自动编号：EV001 EV003 EV011 EV012 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A394] 1 块 / 53 格 / 9x9 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 2 层，格 (66,17)，px [1056, 272, 1200, 416]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 6 行第 4 列
+  原作自动编号：EV074 EV090 EV106 EV180 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A395] 1 块 / 52 格 / 12x5 removable
+  图集：black.tsx, green_mineshaft.tsx
+  首见：map208 mines exit  第 2 层，格 (6,16)，px [96, 256, 288, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A396] 1 块 / 51 格 / 16x5 removable
+  图集：factory in.tsx
+  首见：map92 Factory upstairs  第 1 层，格 (1,8)，px [16, 128, 272, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_11.png  第 6 行第 6 列
+  原作自动编号：EV003 EV004 EV008 EV009 …共15个
+  ★中文名：
+  ★功能说明：
+
+[A397] 1 块 / 50 格 / 10x6 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 1 层，格 (2,55)，px [32, 880, 192, 976]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 1 行第 1 列
+  原作自动编号：EV059 EV062 EV083 EV086 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A398] 1 块 / 50 格 / 12x11 removable
+  图集：green_grass2.tsx
+  首见：map37 Ruins  第 1 层，格 (5,21)，px [80, 336, 272, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A399] 1 块 / 49 格 / 49x1 removable
+  图集：red_factory.tsx
+  首见：map90 Factory  第 1 层，格 (31,49)，px [496, 784, 1280, 800]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A400] 1 块 / 48 格 / 6x8 removable
+  图集：tower.tsx
+  首见：map150 T12  第 2 层，格 (6,7)，px [96, 112, 192, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A401] 1 块 / 47 格 / 11x5 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (10,24)，px [160, 384, 336, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A402] 1 块 / 47 格 / 11x5 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (29,24)，px [464, 384, 640, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A403] 1 块 / 47 格 / 21x15 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (28,69)，px [448, 1104, 784, 1344]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 2 行第 1 列
+  原作自动编号：EV025 EV026 EV027 EV034 …共17个
+  ★中文名：
+  ★功能说明：
+
+[A404] 1 块 / 46 格 / 28x2 removable
+  图集：blank7.tsx
+  首见：map212 passage_boat  第 1 层，格 (34,5)，px [544, 80, 992, 112]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 2 行第 2 列
+  原作自动编号：EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[A405] 1 块 / 44 格 / 28x2 removable
+  图集：blank7.tsx
+  首见：map212 passage_boat  第 1 层，格 (34,8)，px [544, 128, 992, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 2 行第 3 列
+  原作自动编号：EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[A406] 1 块 / 42 格 / 5x14 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (60,101)，px [960, 1616, 1040, 1840]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A407] 1 块 / 41 格 / 21x2 partial
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (13,63)，px [208, 1008, 544, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 2 行第 5 列
+  原作自动编号：EV102 EV122 EV158
+  ★中文名：
+  ★功能说明：
+
+[A408] 1 块 / 40 格 / 4x18 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 2 层，格 (47,82)，px [752, 1312, 816, 1600]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 2 行第 6 列
+  原作自动编号：EV249 EV270 EV271 EV272 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A409] 1 块 / 40 格 / 8x5 removable
+  图集：tower.tsx
+  首见：map140 T2  第 2 层，格 (6,10)，px [96, 160, 224, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A410] 1 块 / 40 格 / 40x1 removable
+  图集：red.tsx
+  首见：map48 Elevator Deck  第 2 层，格 (8,32)，px [128, 512, 768, 528]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A411] 1 块 / 38 格 / 7x9 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (13,44)，px [208, 704, 320, 848]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A412] 1 块 / 38 格 / 10x7 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (29,30)，px [464, 480, 624, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A413] 1 块 / 38 格 / 7x10 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (55,47)，px [880, 752, 992, 912]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 3 行第 5 列
+  原作自动编号：EV033
+  ★中文名：
+  ★功能说明：
+
+[A414] 1 块 / 37 格 / 5x11 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (59,121)，px [944, 1936, 1024, 2112]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A415] 1 块 / 35 格 / 5x11 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (68,64)，px [1088, 1024, 1168, 1200]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A416] 1 块 / 34 格 / 9x5 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (40,40)，px [640, 640, 784, 720]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A417] 1 块 / 34 格 / 4x11 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (61,56)，px [976, 896, 1040, 1072]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A418] 1 块 / 33 格 / 8x5 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 2 层，格 (28,12)，px [448, 192, 576, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 4 行第 4 列
+  原作自动编号：EV052 EV118 EV137 EV157 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A419] 1 块 / 33 格 / 16x15 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (30,64)，px [480, 1024, 736, 1264]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A420] 1 块 / 32 格 / 16x2 removable
+  图集：factory in.tsx
+  首见：map94 upstairs  第 1 层，格 (1,11)，px [16, 176, 272, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A421] 1 块 / 32 格 / 7x8 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 2 层，格 (54,38)，px [864, 608, 976, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 5 行第 1 列
+  原作自动编号：EV395 EV421 EV430 EV431 …共10个
+  ★中文名：
+  ★功能说明：
+
+[A422] 1 块 / 31 格 / 7x5 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (36,25)，px [576, 400, 688, 480]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A423] 1 块 / 31 格 / 7x8 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (54,38)，px [864, 608, 976, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 5 行第 3 列
+  原作自动编号：EV395 EV421 EV430 EV431 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A424] 1 块 / 30 格 / 10x5 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (37,36)，px [592, 576, 752, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 5 行第 4 列
+  原作自动编号：EV055 EV058 EV115 EV118 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A425] 1 块 / 30 格 / 6x5 removable
+  图集：blank1.tsx, blue.tsx
+  首见：map14 Outpost  第 2 层，格 (54,17)，px [864, 272, 960, 352]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 5 行第 5 列
+  原作自动编号：EV069 EV097 EV098 EV166
+  ★中文名：
+  ★功能说明：
+
+[A426] 1 块 / 30 格 / 6x7 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (40,95)，px [640, 1520, 736, 1632]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 5 行第 6 列
+  原作自动编号：EV159 EV162
+  ★中文名：
+  ★功能说明：
+
+[A427] 1 块 / 30 格 / 2x15 removable
+  图集：red.tsx
+  首见：map49 Apartments  第 1 层，格 (15,26)，px [240, 416, 272, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A428] 1 块 / 30 格 / 15x2 removable
+  图集：blue_jagged.tsx
+  首见：map208 mines exit  第 1 层，格 (115,6)，px [1840, 96, 2080, 128]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A429] 1 块 / 30 格 / 17x14 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 2 层，格 (28,70)，px [448, 1120, 720, 1344]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 6 行第 3 列
+  原作自动编号：EV025 EV034 EV078 EV101 …共12个
+  ★中文名：
+  ★功能说明：
+
+[A430] 1 块 / 30 格 / 15x16 removable
+  图集：start_tower.tsx
+  首见：map183 Basement Stairs  第 1 层，格 (11,8)，px [176, 128, 416, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A431] 1 块 / 30 格 / 6x7 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 1 层，格 (34,25)，px [544, 400, 640, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 6 行第 5 列
+  原作自动编号：EV014 EV026 EV027 EV028 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A432] 1 块 / 30 格 / 10x3 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (11,30)，px [176, 480, 336, 528]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_12.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A433] 1 块 / 30 格 / 10x3 removable
+  图集：red_alley.tsx
+  首见：map135 SECRET RAM CLUB  第 2 层，格 (11,5)，px [176, 80, 336, 128]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A434] 1 块 / 30 格 / 15x16 removable
+  图集：start.tsx
+  首见：map5 Basement Stairs  第 1 层，格 (11,8)，px [176, 128, 416, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A435] 1 块 / 29 格 / 6x6 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (60,55)，px [960, 880, 1056, 976]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 1 行第 3 列
+  原作自动编号：EV105 EV109 EV110
+  ★中文名：
+  ★功能说明：
+
+[A436] 1 块 / 29 格 / 5x6 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (72,37)，px [1152, 592, 1232, 688]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 1 行第 4 列
+  原作自动编号：EV354 EV373
+  ★中文名：
+  ★功能说明：
+
+[A437] 1 块 / 29 格 / 5x6 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (40,40)，px [640, 640, 720, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A438] 1 块 / 28 格 / 7x4 removable
+  图集：purple_wall.tsx
+  首见：map190 Hallway purp  第 2 层，格 (38,49)，px [608, 784, 720, 848]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A439] 1 块 / 28 格 / 5x6 removable
+  图集：green.tsx
+  首见：map44 The Gate  第 1 层，格 (20,93)，px [320, 1488, 400, 1584]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A440] 1 块 / 28 格 / 14x2 removable
+  图集：blue_jagged.tsx
+  首见：map208 mines exit  第 1 层，格 (130,8)，px [2080, 128, 2304, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A441] 1 块 / 26 格 / 26x1 removable
+  图集：red.tsx
+  首见：map110 Tower deck  第 2 层，格 (21,51)，px [336, 816, 752, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A442] 1 块 / 25 格 / 5x5 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (45,47)，px [720, 752, 800, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 2 行第 4 列
+  原作自动编号：EV063 EV084 EV087
+  ★中文名：
+  ★功能说明：
+
+[A443] 1 块 / 25 格 / 5x5 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (48,34)，px [768, 544, 848, 624]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 2 行第 5 列
+  原作自动编号：EV067 EV070
+  ★中文名：
+  ★功能说明：
+
+[A444] 1 块 / 24 格 / 2x12 removable
+  图集：red.tsx
+  首见：map49 Apartments  第 1 层，格 (18,25)，px [288, 400, 320, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A445] 1 块 / 24 格 / 7x8 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (36,26)，px [576, 416, 688, 544]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 3 行第 1 列
+  原作自动编号：EV014 EV027 EV028 EV029 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A446] 1 块 / 23 格 / 6x4 removable
+  图集：red_in.tsx
+  首见：map111 Hall2  第 1 层，格 (31,10)，px [496, 160, 592, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A447] 1 块 / 23 格 / 5x5 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (28,47)，px [448, 752, 528, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 3 行第 3 列
+  原作自动编号：EV054 EV057 EV108 EV111
+  ★中文名：
+  ★功能说明：
+
+[A448] 1 块 / 22 格 / 11x2 removable
+  图集：red.tsx
+  首见：map110 Tower deck  第 2 层，格 (28,31)，px [448, 496, 624, 528]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A449] 1 块 / 22 格 / 6x6 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 1 层，格 (41,18)，px [656, 288, 752, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 3 行第 5 列
+  原作自动编号：EV039 EV040
+  ★中文名：
+  ★功能说明：
+
+[A450] 1 块 / 21 格 / 9x4 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (25,56)，px [400, 896, 544, 960]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 3 行第 6 列
+  原作自动编号：EV029
+  ★中文名：
+  ★功能说明：
+
+[A451] 1 块 / 21 格 / 21x1 removable
+  图集：red_factory_in.tsx
+  首见：map115 right-robots  第 2 层，格 (17,18)，px [272, 288, 608, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 4 行第 1 列
+  原作自动编号：EV008 EV009 EV010 EV011 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A452] 1 块 / 21 格 / 12x2 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (39,47)，px [624, 752, 816, 784]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A453] 1 块 / 20 格 / 4x7 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (44,69)，px [704, 1104, 768, 1216]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 4 行第 3 列
+  原作自动编号：EV065 EV135 EV144 EV146 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A454] 1 块 / 20 格 / 8x5 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (32,60)，px [512, 960, 640, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 4 行第 4 列
+  原作自动编号：EV065 EV066
+  ★中文名：
+  ★功能说明：
+
+[A455] 1 块 / 20 格 / 20x1 removable
+  图集：red_factory_in.tsx
+  首见：map106 right-3d printers  第 2 层，格 (18,23)，px [288, 368, 608, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 4 行第 5 列
+  原作自动编号：EV012
+  ★中文名：
+  ★功能说明：
+
+[A456] 1 块 / 19 格 / 4x6 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (53,55)，px [848, 880, 912, 976]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A457] 1 块 / 18 格 / 11x2 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (82,53)，px [1312, 848, 1488, 880]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A458] 1 块 / 16 格 / 8x2 removable
+  图集：blue_jagged.tsx
+  首见：map101 mineshaft  第 1 层，格 (13,20)，px [208, 320, 336, 352]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A459] 1 块 / 16 格 / 16x1 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 2 层，格 (17,17)，px [272, 272, 528, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A460] 1 块 / 16 格 / 7x3 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (24,28)，px [384, 448, 496, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A461] 1 块 / 16 格 / 3x6 removable
+  图集：red_in.tsx
+  首见：map125 Room3 - bot friend  第 2 层，格 (13,6)，px [208, 96, 256, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 5 行第 5 列
+  原作自动编号：EV005
+  ★中文名：
+  ★功能说明：
+
+[A462] 1 块 / 15 格 / 6x4 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (37,20)，px [592, 320, 688, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 5 行第 6 列
+  原作自动编号：EV012 EV032 EV033 EV034 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A463] 1 块 / 15 格 / 4x6 removable
+  图集：green_grass2.tsx
+  首见：map37 Ruins  第 1 层，格 (0,18)，px [0, 288, 64, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A464] 1 块 / 14 格 / 7x2 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (24,25)，px [384, 400, 496, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A465] 1 块 / 14 格 / 4x9 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (26,19)，px [416, 304, 480, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 6 行第 3 列
+  原作自动编号：EV061 EV097 EV118 EV158 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A466] 1 块 / 14 格 / 6x4 removable
+  图集：green.tsx
+  首见：map200 Dock  第 1 层，格 (32,61)，px [512, 976, 608, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A467] 1 块 / 13 格 / 5x3 removable
+  图集：green_mineshaft.tsx
+  首见：map208 mines exit  第 1 层，格 (117,26)，px [1872, 416, 1952, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 6 行第 5 列
+  原作自动编号：EV008 EV009
+  ★中文名：
+  ★功能说明：
+
+[A468] 1 块 / 13 格 / 13x1 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 1 层，格 (1,25)，px [16, 400, 224, 416]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_13.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A469] 1 块 / 12 格 / 3x6 partial
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (7,53)，px [112, 848, 160, 944]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 1 行第 1 列
+  原作自动编号：EV035 EV037 EV059 EV083 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A470] 1 块 / 12 格 / 3x4 removable
+  图集：red_start.tsx
+  首见：map64 Livingroom  第 1 层，格 (25,7)，px [400, 112, 448, 176]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A471] 1 块 / 12 格 / 10x2 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (18,32)，px [288, 512, 448, 544]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 1 行第 3 列
+  原作自动编号：EV008
+  ★中文名：
+  ★功能说明：
+
+[A472] 1 块 / 12 格 / 6x2 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 1 层，格 (11,27)，px [176, 432, 272, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 1 行第 4 列
+  原作自动编号：EV008 EV009
+  ★中文名：
+  ★功能说明：
+
+[A473] 1 块 / 12 格 / 10x2 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (34,53)，px [544, 848, 704, 880]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A474] 1 块 / 12 格 / 7x6 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 2 层，格 (45,64)，px [720, 1024, 832, 1120]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 1 行第 6 列
+  原作自动编号：EV025 EV026 EV027 EV028 …共9个
+  ★中文名：
+  ★功能说明：
+
+[A475] 1 块 / 12 格 / 3x6 removable
+  图集：green_in.tsx
+  首见：map202 Ruins In  第 1 层，格 (44,49)，px [704, 784, 752, 880]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A476] 1 块 / 11 格 / 1x11 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (22,3)，px [352, 48, 368, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A477] 1 块 / 11 格 / 4x3 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (32,34)，px [512, 544, 576, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A478] 1 块 / 11 格 / 5x3 removable
+  图集：blue.tsx
+  首见：map18 Cliffs  第 1 层，格 (20,79)，px [320, 1264, 400, 1312]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A479] 1 块 / 11 格 / 9x3 removable
+  图集：blank7.tsx, blue_jagged.tsx
+  首见：map208 mines exit  第 1 层，格 (121,17)，px [1936, 272, 2080, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 2 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A480] 1 块 / 11 格 / 11x1 removable
+  图集：red.tsx
+  首见：map110 Tower deck  第 2 层，格 (28,45)，px [448, 720, 624, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A481] 1 块 / 11 格 / 5x3 removable
+  图集：blue.tsx
+  首见：map17 Mineshaft entrance  第 1 层，格 (19,18)，px [304, 288, 384, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A482] 1 块 / 10 格 / 10x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 3 层，格 (15,39)，px [240, 624, 400, 640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 3 行第 2 列
+  原作自动编号：EV127 EV137
+  ★中文名：
+  ★功能说明：
+
+[A483] 1 块 / 10 格 / 9x2 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 1 层，格 (22,30)，px [352, 480, 496, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A484] 1 块 / 10 格 / 4x3 removable
+  图集：blue.tsx
+  首见：map17 Mineshaft entrance  第 1 层，格 (30,17)，px [480, 272, 544, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A485] 1 块 / 10 格 / 4x4 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (45,20)，px [720, 320, 784, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 3 行第 5 列
+  原作自动编号：EV013
+  ★中文名：
+  ★功能说明：
+
+[A486] 1 块 / 10 格 / 3x5 removable
+  图集：green_grass2.tsx
+  首见：map37 Ruins  第 1 层，格 (1,25)，px [16, 400, 64, 480]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 3 行第 6 列
+  原作自动编号：EV057 EV058
+  ★中文名：
+  ★功能说明：
+
+[A487] 1 块 / 10 格 / 3x7 partial
+  图集：green.tsx
+  首见：map44 The Gate  第 2 层，格 (10,86)，px [160, 1376, 208, 1488]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 4 行第 1 列
+  原作自动编号：EV112 EV118
+  ★中文名：
+  ★功能说明：
+
+[A488] 1 块 / 9 格 / 4x4 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 1 层，格 (9,32)，px [144, 512, 208, 576]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A489] 1 块 / 9 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (125,38)，px [2000, 608, 2048, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A490] 1 块 / 9 格 / 9x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (23,61)，px [368, 976, 512, 992]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 4 行第 4 列
+  原作自动编号：EV018 EV019 EV020 EV021 …共12个
+  ★中文名：
+  ★功能说明：
+
+[A491] 1 块 / 9 格 / 4x3 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (34,12)，px [544, 192, 608, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A492] 1 块 / 9 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (52,38)，px [832, 608, 880, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A493] 1 块 / 9 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (66,21)，px [1056, 336, 1104, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A494] 1 块 / 9 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (35,21)，px [560, 336, 608, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A495] 1 块 / 9 格 / 2x5 removable
+  图集：blue_outposts.tsx
+  首见：map16 Backroom  第 1 层，格 (22,19)，px [352, 304, 384, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A496] 1 块 / 9 格 / 9x1 removable
+  图集：red_factory_in.tsx
+  首见：map115 right-robots  第 2 层，格 (17,14)，px [272, 224, 416, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A497] 1 块 / 9 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (104,21)，px [1664, 336, 1712, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 5 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A498] 1 块 / 9 格 / 3x4 removable
+  图集：green.tsx
+  首见：map199 Gate  第 2 层，格 (88,97)，px [1408, 1552, 1456, 1616]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 5 行第 6 列
+  原作自动编号：EV179 EV180 EV181 EV182
+  ★中文名：
+  ★功能说明：
+
+[A499] 1 块 / 9 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 2 层，格 (84,35)，px [1344, 560, 1392, 608]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A500] 1 块 / 8 格 / 4x2 removable
+  图集：green.tsx
+  首见：map27 Dock  第 2 层，格 (39,31)，px [624, 496, 688, 528]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 6 行第 2 列
+  原作自动编号：EV227
+  ★中文名：
+  ★功能说明：
+
+[A501] 1 块 / 8 格 / 3x3 removable
+  图集：green.tsx
+  首见：map199 Gate  第 2 层，格 (24,98)，px [384, 1568, 432, 1616]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 6 行第 3 列
+  原作自动编号：EV188 EV189
+  ★中文名：
+  ★功能说明：
+
+[A502] 1 块 / 8 格 / 4x2 removable
+  图集：red_factory_in.tsx
+  首见：map112 2nd room  第 1 层，格 (26,25)，px [416, 400, 480, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A503] 1 块 / 8 格 / 2x4 removable
+  图集：red_in.tsx
+  首见：map124 Room2 - peng  第 1 层，格 (26,14)，px [416, 224, 448, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 6 行第 5 列
+  原作自动编号：EV005 EV015
+  ★中文名：
+  ★功能说明：
+
+[A504] 1 块 / 8 格 / 4x2 removable
+  图集：red_alley.tsx
+  首见：map99 lamplighter house  第 2 层，格 (11,20)，px [176, 320, 240, 352]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_14.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A505] 1 块 / 8 格 / 5x4 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (49,50)，px [784, 800, 864, 864]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A506] 1 块 / 8 格 / 5x2 removable
+  图集：blue.tsx
+  首见：map17 Mineshaft entrance  第 1 层，格 (13,14)，px [208, 224, 288, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A507] 1 块 / 8 格 / 4x2 removable
+  图集：start_tower.tsx
+  首见：map182 Livingroom  第 1 层，格 (29,19)，px [464, 304, 528, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A508] 1 块 / 8 格 / 8x1 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 2 层，格 (23,30)，px [368, 480, 496, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A509] 1 块 / 8 格 / 4x4 partial
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (61,33)，px [976, 528, 1040, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 1 行第 5 列
+  原作自动编号：EV029 EV196 EV197 EV374 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A510] 1 块 / 8 格 / 4x2 removable
+  图集：red_in.tsx
+  首见：map124 Room2 - peng  第 1 层，格 (14,13)，px [224, 208, 288, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 1 行第 6 列
+  原作自动编号：EV007 EV008 EV009 EV010
+  ★中文名：
+  ★功能说明：
+
+[A511] 1 块 / 8 格 / 8x1 removable
+  图集：red_factory_in.tsx
+  首见：map115 right-robots  第 2 层，格 (30,14)，px [480, 224, 608, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A512] 1 块 / 8 格 / 4x2 removable
+  图集：red_start.tsx
+  首见：map64 Livingroom  第 1 层，格 (16,12)，px [256, 192, 320, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A513] 1 块 / 8 格 / 2x4 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (19,70)，px [304, 1120, 336, 1184]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 2 行第 3 列
+  原作自动编号：EV001 EV031 EV032
+  ★中文名：
+  ★功能说明：
+
+[A514] 1 块 / 8 格 / 8x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (35,71)，px [560, 1136, 688, 1152]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 2 行第 4 列
+  原作自动编号：EV040 EV130
+  ★中文名：
+  ★功能说明：
+
+[A515] 1 块 / 7 格 / 4x2 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 2 层，格 (11,24)，px [176, 384, 240, 416]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 2 行第 5 列
+  原作自动编号：EV039
+  ★中文名：
+  ★功能说明：
+
+[A516] 1 块 / 7 格 / 5x3 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (51,62)，px [816, 992, 896, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 2 行第 6 列
+  原作自动编号：EV028 EV029 EV047 EV067 …共7个
+  ★中文名：
+  ★功能说明：
+
+[A517] 1 块 / 7 格 / 5x3 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (34,26)，px [544, 416, 624, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 3 行第 1 列
+  原作自动编号：EV016 EV017 EV050 EV126 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A518] 1 块 / 7 格 / 4x2 removable
+  图集：green_grass2.tsx
+  首见：map37 Ruins  第 1 层，格 (17,26)，px [272, 416, 336, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A519] 1 块 / 7 格 / 4x2 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (46,13)，px [736, 208, 800, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 3 行第 3 列
+  原作自动编号：EV029
+  ★中文名：
+  ★功能说明：
+
+[A520] 1 块 / 7 格 / 3x3 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 2 层，格 (42,21)，px [672, 336, 720, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 3 行第 4 列
+  原作自动编号：EV024 EV026
+  ★中文名：
+  ★功能说明：
+
+[A521] 1 块 / 7 格 / 4x2 removable
+  图集：green_in.tsx
+  首见：map65 Birdhouse  第 1 层，格 (36,34)，px [576, 544, 640, 576]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 3 行第 5 列
+  原作自动编号：EV014 EV015 EV016
+  ★中文名：
+  ★功能说明：
+
+[A522] 1 块 / 7 格 / 4x2 removable
+  图集：red_in.tsx
+  首见：map121 Communal area  第 1 层，格 (46,28)，px [736, 448, 800, 480]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 3 行第 6 列
+  原作自动编号：EV027
+  ★中文名：
+  ★功能说明：
+
+[A523] 1 块 / 6 格 / 3x2 removable
+  图集：start.tsx
+  首见：map4 Livingroom  第 1 层，格 (25,18)，px [400, 288, 448, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 4 行第 1 列
+  原作自动编号：EV010 EV012
+  ★中文名：
+  ★功能说明：
+
+[A524] 1 块 / 6 格 / 3x3 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (14,36)，px [224, 576, 272, 624]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A525] 1 块 / 6 格 / 3x2 removable
+  图集：red_in.tsx
+  首见：map124 Room2 - peng  第 2 层，格 (25,16)，px [400, 256, 448, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 4 行第 3 列
+  原作自动编号：EV001 EV005 EV015
+  ★中文名：
+  ★功能说明：
+
+[A526] 1 块 / 6 格 / 2x3 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (36,24)，px [576, 384, 608, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 4 行第 4 列
+  原作自动编号：EV033 EV034 EV035 EV036
+  ★中文名：
+  ★功能说明：
+
+[A527] 1 块 / 6 格 / 6x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (39,45)，px [624, 720, 720, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 4 行第 5 列
+  原作自动编号：EV072 EV073 EV131 EV132 …共8个
+  ★中文名：
+  ★功能说明：
+
+[A528] 1 块 / 6 格 / 6x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 3 层，格 (12,50)，px [192, 800, 288, 816]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A529] 1 块 / 6 格 / 3x2 partial
+  图集：red_factory.tsx
+  首见：map156 Sunroom  第 1 层，格 (9,14)，px [144, 224, 192, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A530] 1 块 / 6 格 / 3x2 removable
+  图集：start_tower.tsx
+  首见：map182 Livingroom  第 1 层，格 (25,18)，px [400, 288, 448, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 5 行第 2 列
+  原作自动编号：EV010 EV012
+  ★中文名：
+  ★功能说明：
+
+[A531] 1 块 / 6 格 / 3x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (12,33)，px [192, 528, 240, 560]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A532] 1 块 / 6 格 / 3x4 removable
+  图集：green_grass2.tsx
+  首见：map37 Ruins  第 1 层，格 (6,27)，px [96, 432, 144, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A533] 1 块 / 6 格 / 2x3 removable
+  图集：red_factory_in.tsx
+  首见：map112 2nd room  第 2 层，格 (23,13)，px [368, 208, 400, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 5 行第 5 列
+  原作自动编号：EV011 EV028 EV029
+  ★中文名：
+  ★功能说明：
+
+[A534] 1 块 / 6 格 / 3x2 removable
+  图集：red_in.tsx
+  首见：map132 Room6 - plant  第 1 层，格 (14,6)，px [224, 96, 272, 128]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A535] 1 块 / 5 格 / 3x2 removable
+  图集：green_in.tsx
+  首见：map28 Fishing hut  第 2 层，格 (14,17)，px [224, 272, 272, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 6 行第 1 列
+  原作自动编号：EV010 EV011
+  ★中文名：
+  ★功能说明：
+
+[A536] 1 块 / 5 格 / 4x2 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (18,30)，px [288, 480, 352, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 6 行第 2 列
+  原作自动编号：EV008
+  ★中文名：
+  ★功能说明：
+
+[A537] 1 块 / 5 格 / 3x3 removable
+  图集：green_grass2.tsx
+  首见：map37 Ruins  第 1 层，格 (15,29)，px [240, 464, 288, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A538] 1 块 / 5 格 / 1x5 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (14,47)，px [224, 752, 240, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 6 行第 4 列
+  原作自动编号：EV072 EV075
+  ★中文名：
+  ★功能说明：
+
+[A539] 1 块 / 5 格 / 2x4 removable
+  图集：red_in.tsx
+  首见：map129 Room4 - bird  第 2 层，格 (25,8)，px [400, 128, 432, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 6 行第 5 列
+  原作自动编号：EV011
+  ★中文名：
+  ★功能说明：
+
+[A540] 1 块 / 5 格 / 2x3 removable
+  图集：green_in.tsx
+  首见：map65 Birdhouse  第 1 层，格 (26,28)，px [416, 448, 448, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_15.png  第 6 行第 6 列
+  原作自动编号：EV004
+  ★中文名：
+  ★功能说明：
+
+[A541] 1 块 / 5 格 / 3x3 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (61,45)，px [976, 720, 1024, 768]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 1 行第 1 列
+  原作自动编号：EV094
+  ★中文名：
+  ★功能说明：
+
+[A542] 1 块 / 5 格 / 5x1 removable
+  图集：start.tsx
+  首见：map2 Start  第 1 层，格 (20,20)，px [320, 320, 400, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 1 行第 2 列
+  原作自动编号：EV021
+  ★中文名：
+  ★功能说明：
+
+[A543] 1 块 / 5 格 / 5x1 removable
+  图集：blank7.tsx
+  首见：map156 Sunroom  第 2 层，格 (8,11)，px [128, 176, 208, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A544] 1 块 / 5 格 / 5x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 3 层，格 (23,50)，px [368, 800, 448, 816]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 1 行第 4 列
+  原作自动编号：EV081
+  ★中文名：
+  ★功能说明：
+
+[A545] 1 块 / 5 格 / 4x2 removable
+  图集：green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (72,44)，px [1152, 704, 1216, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A546] 1 块 / 5 格 / 5x1 removable
+  图集：red_start.tsx
+  首见：map58 Bedroom  第 1 层，格 (22,20)，px [352, 320, 432, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A547] 1 块 / 5 格 / 5x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 2 层，格 (40,64)，px [640, 1024, 720, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A548] 1 块 / 5 格 / 1x5 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (18,34)，px [288, 544, 304, 624]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A549] 1 块 / 4 格 / 1x4 removable
+  图集：blue_outposts.tsx
+  首见：map16 Backroom  第 1 层，格 (23,28)，px [368, 448, 384, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A550] 1 块 / 4 格 / 2x2 removable
+  图集：blue_outposts.tsx
+  首见：map24 Cabin  第 1 层，格 (11,17)，px [176, 272, 208, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 2 行第 4 列
+  原作自动编号：EV024 EV025
+  ★中文名：
+  ★功能说明：
+
+[A551] 1 块 / 4 格 / 3x2 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (7,42)，px [112, 672, 160, 704]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 2 行第 5 列
+  原作自动编号：EV080 EV081 EV082 EV132 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A552] 1 块 / 4 格 / 2x2 removable
+  图集：blank7.tsx
+  首见：map208 mines exit  第 2 层，格 (120,12)，px [1920, 192, 1952, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A553] 1 块 / 4 格 / 2x2 removable
+  图集：red_start.tsx
+  首见：map64 Livingroom  第 1 层，格 (29,16)，px [464, 256, 496, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A554] 1 块 / 4 格 / 4x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (12,23)，px [192, 368, 256, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A555] 1 块 / 4 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 2 层，格 (24,11)，px [384, 176, 416, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A556] 1 块 / 4 格 / 2x2 removable
+  图集：red_start.tsx
+  首见：map58 Bedroom  第 1 层，格 (14,15)，px [224, 240, 256, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A557] 1 块 / 4 格 / 2x2 removable
+  图集：red_start.tsx
+  首见：map64 Livingroom  第 1 层，格 (18,9)，px [288, 144, 320, 176]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A558] 1 块 / 4 格 / 2x2 removable
+  图集：red_start.tsx
+  首见：map58 Bedroom  第 1 层，格 (21,15)，px [336, 240, 368, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A559] 1 块 / 4 格 / 4x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (21,53)，px [336, 848, 400, 864]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A560] 1 块 / 4 格 / 4x1 removable
+  图集：blue_jagged.tsx
+  首见：map208 mines exit  第 1 层，格 (115,19)，px [1840, 304, 1904, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A561] 1 块 / 4 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map176 guest room  第 2 层，格 (12,10)，px [192, 160, 224, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 4 行第 3 列
+  原作自动编号：EV001 EV005 EV008 EV012 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A562] 1 块 / 4 格 / 1x4 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (19,2)，px [304, 32, 320, 96]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 4 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A563] 1 块 / 4 格 / 2x2 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (24,13)，px [384, 208, 416, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A564] 1 块 / 4 格 / 2x2 removable
+  图集：red_start.tsx
+  首见：map58 Bedroom  第 1 层，格 (18,15)，px [288, 240, 320, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A565] 1 块 / 4 格 / 2x2 removable
+  图集：red_alley.tsx
+  首见：map99 lamplighter house  第 1 层，格 (11,8)，px [176, 128, 208, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 5 行第 1 列
+  原作自动编号：EV003 EV006 EV009
+  ★中文名：
+  ★功能说明：
+
+[A566] 1 块 / 4 格 / 2x2 removable
+  图集：red_alley.tsx
+  首见：map99 lamplighter house  第 1 层，格 (14,8)，px [224, 128, 256, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 5 行第 2 列
+  原作自动编号：EV007 EV008
+  ★中文名：
+  ★功能说明：
+
+[A567] 1 块 / 3 格 / 2x2 removable
+  图集：factory in.tsx
+  首见：map92 Factory upstairs  第 2 层，格 (12,10)，px [192, 160, 224, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 5 行第 3 列
+  原作自动编号：EV003 EV004 EV008 EV028 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A568] 1 块 / 3 格 / 2x2 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (49,45)，px [784, 720, 816, 752]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A569] 1 块 / 3 格 / 1x3 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (34,24)，px [544, 384, 560, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 5 行第 5 列
+  原作自动编号：EV036 EV037
+  ★中文名：
+  ★功能说明：
+
+[A570] 1 块 / 3 格 / 1x3 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 1 层，格 (18,31)，px [288, 496, 304, 544]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A571] 1 块 / 3 格 / 2x2 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (16,50)，px [256, 800, 288, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A572] 1 块 / 3 格 / 2x2 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (32,51)，px [512, 816, 544, 848]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 6 行第 2 列
+  原作自动编号：EV076 EV077 EV219 EV332 …共5个
+  ★中文名：
+  ★功能说明：
+
+[A573] 1 块 / 3 格 / 1x3 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (39,24)，px [624, 384, 640, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 6 行第 3 列
+  原作自动编号：EV032 EV033
+  ★中文名：
+  ★功能说明：
+
+[A574] 1 块 / 3 格 / 1x3 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 2 层，格 (41,18)，px [656, 288, 672, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 6 行第 4 列
+  原作自动编号：EV166 EV212
+  ★中文名：
+  ★功能说明：
+
+[A575] 1 块 / 3 格 / 2x2 removable
+  图集：blue.tsx
+  首见：map18 Cliffs  第 1 层，格 (38,87)，px [608, 1392, 640, 1424]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A576] 1 块 / 3 格 / 3x1 removable
+  图集：start.tsx
+  首见：map2 Start  第 1 层，格 (14,20)，px [224, 320, 272, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_16.png  第 6 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A577] 1 块 / 3 格 / 2x2 removable
+  图集：blue_outposts.tsx
+  首见：map16 Backroom  第 2 层，格 (19,21)，px [304, 336, 336, 368]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 1 行第 1 列
+  原作自动编号：EV014
+  ★中文名：
+  ★功能说明：
+
+[A578] 1 块 / 3 格 / 1x3 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 3 层，格 (26,59)，px [416, 944, 432, 992]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A579] 1 块 / 3 格 / 1x3 removable
+  图集：red.tsx
+  首见：map110 Tower deck  第 1 层，格 (21,48)，px [336, 768, 352, 816]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A580] 1 块 / 3 格 / 3x1 removable
+  图集：blank7.tsx
+  首见：map208 mines exit  第 1 层，格 (116,17)，px [1856, 272, 1904, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A581] 1 块 / 3 格 / 2x2 removable
+  图集：green_grass1.tsx
+  首见：map29 Village  第 2 层，格 (64,39)，px [1024, 624, 1056, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 1 行第 5 列
+  原作自动编号：EV093 EV140
+  ★中文名：
+  ★功能说明：
+
+[A582] 1 块 / 3 格 / 2x2 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (46,52)，px [736, 832, 768, 864]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A583] 1 块 / 3 格 / 3x1 removable
+  图集：blue_in.tsx
+  首见：map13 terminal room  第 1 层，格 (16,17)，px [256, 272, 304, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A584] 1 块 / 3 格 / 1x3 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (14,31)，px [224, 496, 240, 544]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 2 行第 2 列
+  原作自动编号：EV235
+  ★中文名：
+  ★功能说明：
+
+[A585] 1 块 / 3 格 / 2x2 removable
+  图集：factory in.tsx
+  首见：map69 Factory interior  第 1 层，格 (24,8)，px [384, 128, 416, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A586] 1 块 / 3 格 / 3x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 1 层，格 (6,72)，px [96, 1152, 144, 1168]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 2 行第 4 列
+  原作自动编号：EV028
+  ★中文名：
+  ★功能说明：
+
+[A587] 1 块 / 3 格 / 2x2 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (34,29)，px [544, 464, 576, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 2 行第 5 列
+  原作自动编号：EV026 EV027 EV028
+  ★中文名：
+  ★功能说明：
+
+[A588] 1 块 / 2 格 / 1x2 removable
+  图集：green.tsx
+  首见：map200 Dock  第 1 层，格 (53,50)，px [848, 800, 864, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 2 行第 6 列
+  原作自动编号：EV298
+  ★中文名：
+  ★功能说明：
+
+[A589] 1 块 / 2 格 / 1x2 removable
+  图集：start_tower.tsx
+  首见：map181 Bathroom  第 2 层，格 (18,13)，px [288, 208, 304, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 3 行第 1 列
+  原作自动编号：EV005
+  ★中文名：
+  ★功能说明：
+
+[A590] 1 块 / 2 格 / 1x2 removable
+  图集：red_start.tsx
+  首见：map64 Livingroom  第 1 层，格 (14,8)，px [224, 128, 240, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A591] 1 块 / 2 格 / 1x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 2 层，格 (35,68)，px [560, 1088, 576, 1120]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A592] 1 块 / 2 格 / 1x2 removable
+  图集：blank1.tsx
+  首见：map14 Outpost  第 1 层，格 (35,12)，px [560, 192, 576, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 3 行第 4 列
+  原作自动编号：EV118 EV137
+  ★中文名：
+  ★功能说明：
+
+[A593] 1 块 / 2 格 / 1x2 removable
+  图集：blue_outposts.tsx
+  首见：map24 Cabin  第 1 层，格 (11,14)，px [176, 224, 192, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 3 行第 5 列
+  原作自动编号：EV004 EV040
+  ★中文名：
+  ★功能说明：
+
+[A594] 1 块 / 2 格 / 2x1 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (67,87)，px [1072, 1392, 1104, 1408]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A595] 1 块 / 2 格 / 1x2 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (12,35)，px [192, 560, 208, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A596] 1 块 / 2 格 / 2x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (18,29)，px [288, 464, 320, 480]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A597] 1 块 / 2 格 / 2x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (12,21)，px [192, 336, 224, 352]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A598] 1 块 / 2 格 / 1x2 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 1 层，格 (42,16)，px [672, 256, 688, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 4 行第 4 列
+  原作自动编号：EV014
+  ★中文名：
+  ★功能说明：
+
+[A599] 1 块 / 2 格 / 1x2 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 2 层，格 (49,53)，px [784, 848, 800, 880]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A600] 1 块 / 2 格 / 2x1 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 1 层，格 (29,18)，px [464, 288, 496, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A601] 1 块 / 2 格 / 2x1 removable
+  图集：red_alley.tsx
+  首见：map99 lamplighter house  第 2 层，格 (11,8)，px [176, 128, 208, 144]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 5 行第 1 列
+  原作自动编号：EV003 EV006
+  ★中文名：
+  ★功能说明：
+
+[A602] 1 块 / 2 格 / 1x2 removable
+  图集：start.tsx
+  首见：map4 Livingroom  第 2 层，格 (28,14)，px [448, 224, 464, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A603] 1 块 / 2 格 / 1x2 removable
+  图集：tower.tsx
+  首见：map151 T13  第 2 层，格 (15,3)，px [240, 48, 256, 80]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 5 行第 3 列
+  原作自动编号：EV002
+  ★中文名：
+  ★功能说明：
+
+[A604] 1 块 / 2 格 / 1x2 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (18,26)，px [288, 416, 304, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A605] 1 块 / 2 格 / 2x1 removable
+  图集：start_tower.tsx
+  首见：map181 Bathroom  第 1 层，格 (17,16)，px [272, 256, 304, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 5 行第 5 列
+  原作自动编号：EV006 EV007
+  ★中文名：
+  ★功能说明：
+
+[A606] 1 块 / 2 格 / 1x2 removable
+  图集：factory in.tsx
+  首见：map92 Factory upstairs  第 2 层，格 (8,10)，px [128, 160, 144, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 5 行第 6 列
+  原作自动编号：EV012 EV021 EV027
+  ★中文名：
+  ★功能说明：
+
+[A607] 1 块 / 2 格 / 1x2 partial
+  图集：green.tsx
+  首见：map250 Gate  第 2 层，格 (11,88)，px [176, 1408, 192, 1440]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A608] 1 块 / 2 格 / 2x1 removable
+  图集：start.tsx
+  首见：map3 Bathroom  第 2 层，格 (17,16)，px [272, 256, 304, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 6 行第 2 列
+  原作自动编号：EV006 EV007
+  ★中文名：
+  ★功能说明：
+
+[A609] 1 块 / 2 格 / 2x1 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (46,26)，px [736, 416, 768, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A610] 1 块 / 2 格 / 1x2 removable
+  图集：green_in.tsx
+  首见：map65 Birdhouse  第 2 层，格 (36,35)，px [576, 560, 592, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 6 行第 4 列
+  原作自动编号：EV016
+  ★中文名：
+  ★功能说明：
+
+[A611] 1 块 / 2 格 / 2x1 removable
+  图集：green_in.tsx
+  首见：map65 Birdhouse  第 1 层，格 (38,29)，px [608, 464, 640, 480]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 6 行第 5 列
+  原作自动编号：EV011 EV028 EV030
+  ★中文名：
+  ★功能说明：
+
+[A612] 1 块 / 2 格 / 2x1 removable
+  图集：start.tsx
+  首见：map3 Bathroom  第 1 层，格 (17,16)，px [272, 256, 304, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_17.png  第 6 行第 6 列
+  原作自动编号：EV006 EV007
+  ★中文名：
+  ★功能说明：
+
+[A613] 1 块 / 2 格 / 2x1 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (61,52)，px [976, 832, 1008, 848]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 1 行第 1 列
+  原作自动编号：EV154 EV205
+  ★中文名：
+  ★功能说明：
+
+[A614] 1 块 / 2 格 / 1x2 removable
+  图集：start.tsx
+  首见：map3 Bathroom  第 2 层，格 (18,13)，px [288, 208, 304, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 1 行第 2 列
+  原作自动编号：EV005
+  ★中文名：
+  ★功能说明：
+
+[A615] 1 块 / 2 格 / 1x2 removable
+  图集：start_tower.tsx
+  首见：map182 Livingroom  第 2 层，格 (28,14)，px [448, 224, 464, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A616] 1 块 / 2 格 / 1x2 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (66,82)，px [1056, 1312, 1072, 1344]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A617] 1 块 / 2 格 / 1x2 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 1 层，格 (19,32)，px [304, 512, 320, 544]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 1 行第 5 列
+  原作自动编号：EV215
+  ★中文名：
+  ★功能说明：
+
+[A618] 1 块 / 2 格 / 2x1 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (49,26)，px [784, 416, 816, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A619] 1 块 / 2 格 / 2x1 removable
+  图集：start_tower.tsx
+  首见：map181 Bathroom  第 2 层，格 (17,16)，px [272, 256, 304, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 2 行第 1 列
+  原作自动编号：EV006 EV007
+  ★中文名：
+  ★功能说明：
+
+[A620] 1 块 / 1 格 / 1x1 removable
+  图集：tower.tsx
+  首见：map147 T9  第 2 层，格 (4,5)，px [64, 80, 80, 96]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A621] 1 块 / 1 格 / 1x1 removable
+  图集：start.tsx
+  首见：map4 Livingroom  第 2 层，格 (32,10)，px [512, 160, 528, 176]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 2 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A622] 1 块 / 1 格 / 1x1 removable
+  图集：factory in.tsx
+  首见：map69 Factory interior  第 1 层，格 (8,9)，px [128, 144, 144, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A623] 1 块 / 1 格 / 1x1 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 2 层，格 (69,65)，px [1104, 1040, 1120, 1056]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 2 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A624] 1 块 / 1 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 2 层，格 (32,34)，px [512, 544, 528, 560]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A625] 1 块 / 1 格 / 1x1 removable
+  图集：start.tsx
+  首见：map4 Livingroom  第 1 层，格 (27,14)，px [432, 224, 448, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[A626] 1 块 / 1 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map24 Cabin  第 1 层，格 (22,13)，px [352, 208, 368, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 3 行第 2 列
+  原作自动编号：EV038
+  ★中文名：
+  ★功能说明：
+
+[A627] 1 块 / 1 格 / 1x1 removable
+  图集：finale.tsx
+  首见：map241 Tv room  第 3 层，格 (9,39)，px [144, 624, 160, 640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A628] 1 块 / 1 格 / 1x1 removable
+  图集：tower.tsx
+  首见：map150 T12  第 1 层，格 (4,2)，px [64, 32, 80, 48]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A629] 1 块 / 1 格 / 1x1 removable
+  图集：factory in.tsx
+  首见：map92 Factory upstairs  第 2 层，格 (40,11)，px [640, 176, 656, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 3 行第 5 列
+  原作自动编号：EV035
+  ★中文名：
+  ★功能说明：
+
+[A630] 1 块 / 1 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (20,26)，px [320, 416, 336, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A631] 1 块 / 1 格 / 1x1 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 2 层，格 (38,18)，px [608, 288, 624, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 4 行第 1 列
+  原作自动编号：EV401
+  ★中文名：
+  ★功能说明：
+
+[A632] 1 块 / 1 格 / 1x1 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 2 层，格 (41,30)，px [656, 480, 672, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[A633] 1 块 / 1 格 / 1x1 removable
+  图集：red_in.tsx
+  首见：map96 Lobby-OLD VER  第 2 层，格 (34,34)，px [544, 544, 560, 560]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[A634] 1 块 / 1 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (48,44)，px [768, 704, 784, 720]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 4 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A635] 1 块 / 1 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (46,44)，px [736, 704, 752, 720]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[A636] 1 块 / 1 格 / 1x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map101 mineshaft  第 2 层，格 (7,20)，px [112, 320, 128, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 4 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[A637] 1 块 / 1 格 / 1x1 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (25,23)，px [400, 368, 416, 384]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 5 行第 1 列
+  原作自动编号：EV155 EV216
+  ★中文名：
+  ★功能说明：
+
+[A638] 1 块 / 1 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 1 层，格 (25,18)，px [400, 288, 416, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 5 行第 2 列
+  原作自动编号：EV015
+  ★中文名：
+  ★功能说明：
+
+[A639] 1 块 / 1 格 / 1x1 removable
+  图集：blank.tsx
+  首见：map23 Lookout point  第 2 层，格 (25,14)，px [400, 224, 416, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 5 行第 3 列
+  原作自动编号：EV014 EV020 EV023 EV025 …共6个
+  ★中文名：
+  ★功能说明：
+
+[A640] 1 块 / 1 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map15 Outpost interior  第 2 层，格 (18,22)，px [288, 352, 304, 368]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[A641] 1 块 / 1 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map16 Backroom  第 2 层，格 (17,22)，px [272, 352, 288, 368]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 5 行第 5 列
+  原作自动编号：EV012 EV013 EV014
+  ★中文名：
+  ★功能说明：
+
+[A642] 1 块 / 1 格 / 1x1 removable
+  图集：blue_outposts.tsx
+  首见：map16 Backroom  第 2 层，格 (14,27)，px [224, 432, 240, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 5 行第 6 列
+  原作自动编号：EV006
+  ★中文名：
+  ★功能说明：
+
+[A643] 1 块 / 1 格 / 1x1 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (38,49)，px [608, 784, 624, 800]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+
+############################################################
+#  大面积拼合 组（172 类 / 238 块）
+############################################################
+
+[B001] 1 块 / 4900 格 / 70x70 partial
+  图集：green_in.tsx, ruins_interior.tsx
+  首见：map40 Alula  第 1 层，格 (0,0)，px [0, 0, 1120, 1120]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 6 行第 2 列
+  原作自动编号：EV039
+  ★中文名：
+  ★功能说明：
+
+[B002] 1 块 / 3300 格 / 20x165 removable
+  图集：finale.tsx
+  首见：map243 Credits  第 1 层，格 (0,0)，px [0, 0, 320, 2640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 6 行第 3 列
+  原作自动编号：EV064 EV065 EV066 EV067 …共25个
+  ★中文名：
+  ★功能说明：
+
+[B003] 1 块 / 3300 格 / 20x165 removable
+  图集：finale.tsx
+  首见：map243 Credits  第 2 层，格 (0,0)，px [0, 0, 320, 2640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 6 行第 4 列
+  原作自动编号：EV064 EV065 EV066 EV067 …共25个
+  ★中文名：
+  ★功能说明：
+
+[B004] 1 块 / 1213 格 / 138x18 removable
+  图集：black.tsx, blank7.tsx, green_mineshaft.tsx
+  首见：map208 mines exit  第 2 层，格 (6,4)，px [96, 64, 2304, 352]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_18.png  第 6 行第 5 列
+  原作自动编号：EV001 EV002 EV003 EV004 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B005] 2 块 / 2198 格 / 138x16 removable
+  图集：black.tsx, blank7.tsx, blue_mineshaft.tsx
+  首见：map197 collapse  第 2 层，格 (6,4)，px [96, 64, 2304, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_18.png  第 6 行第 6 列
+  原作自动编号：EV003 EV004 EV005 EV008 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B006] 1 块 / 1062 格 / 26x65 removable
+  图集：red_alley.tsx, red_walkway.tsx, x.tsx
+  首见：map228 To Tower  第 1 层，格 (87,4)，px [1392, 64, 1808, 1104]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 1 行第 1 列
+  原作自动编号：EV005 EV006 EV010 EV011 …共22个
+  ★中文名：
+  ★功能说明：
+
+[B007] 1 块 / 1042 格 / 26x65 removable
+  图集：red_alley.tsx, red_walkway.tsx
+  首见：map86 To Tower  第 1 层，格 (87,4)，px [1392, 64, 1808, 1104]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 1 行第 2 列
+  原作自动编号：EV005 EV006 EV010 EV011 …共16个
+  ★中文名：
+  ★功能说明：
+
+[B008] 3 块 / 2847 格 / 79x15 removable
+  图集：red_interior1.tsx
+  首见：map85 Vendor Street  第 2 层，格 (48,39)，px [768, 624, 2032, 864]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_19.png  第 1 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[B009] 1 块 / 884 格 / 58x27 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 2 层，格 (1,53)，px [16, 848, 944, 1280]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 1 行第 4 列
+  原作自动编号：EV001 EV004 EV005 EV006 …共67个
+  ★中文名：
+  ★功能说明：
+
+[B010] 2 块 / 1670 格 / 54x30 partial
+  图集：red.tsx
+  首见：map116 Office  第 1 层，格 (0,31)，px [0, 496, 864, 976]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B011] 2 块 / 1532 格 / 84x47 removable
+  图集：red_alley.tsx, red_walkway.tsx
+  首见：map86 To Tower  第 2 层，格 (58,48)，px [928, 768, 2272, 1520]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 1 行第 6 列
+  原作自动编号：EV001 EV002 EV003 EV004 …共22个
+  ★中文名：
+  ★功能说明：
+
+[B012] 1 块 / 753 格 / 112x74 partial
+  图集：blank7.tsx, red.tsx, red_walkway.tsx
+  首见：map48 Elevator Deck  第 1 层，格 (8,6)，px [128, 96, 1920, 1280]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 2 行第 1 列
+  原作自动编号：EV018 EV020 EV024 EV030 …共9个
+  ★中文名：
+  ★功能说明：
+
+[B013] 2 块 / 1448 格 / 85x74 partial
+  图集：blank7.tsx, red.tsx, red_walkway.tsx
+  首见：map215 Elevator Deck  第 1 层，格 (35,6)，px [560, 96, 1920, 1280]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 2 行第 2 列
+  原作自动编号：EV004 EV005 EV006 EV007 …共20个
+  ★中文名：
+  ★功能说明：
+
+[B014] 2 块 / 1242 格 / 51x30 partial
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (10,30)，px [160, 480, 976, 960]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 2 行第 3 列
+  原作自动编号：EV004 EV006 EV007 EV008 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B015] 1 块 / 546 格 / 138x4 removable
+  图集：blue_mineshaft.tsx
+  首见：map195 extra hallway  第 2 层，格 (0,9)，px [0, 144, 2208, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B016] 1 块 / 513 格 / 65x21 partial
+  图集：red.tsx
+  首见：map49 Apartments  第 1 层，格 (15,37)，px [240, 592, 1280, 928]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 2 行第 5 列
+  原作自动编号：EV004 EV005 EV006 EV008 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B017] 1 块 / 495 格 / 138x4 removable
+  图集：blue_mineshaft.tsx
+  首见：map195 extra hallway  第 2 层，格 (0,16)，px [0, 256, 2208, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 2 行第 6 列
+  原作自动编号：EV001 EV003
+  ★中文名：
+  ★功能说明：
+
+[B018] 1 块 / 481 格 / 21x64 removable
+  图集：blank7.tsx
+  首见：map54 Garden  第 2 层，格 (29,16)，px [464, 256, 800, 1280]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 3 行第 1 列
+  原作自动编号：EV001
+  ★中文名：
+  ★功能说明：
+
+[B019] 2 块 / 906 格 / 124x6 removable
+  图集：blank7.tsx, blue_jagged.tsx, blue_mineshaft.tsx
+  首见：map197 collapse  第 1 层，格 (20,14)，px [320, 224, 2304, 320]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 3 行第 2 列
+  原作自动编号：EV003 EV004 EV005 EV008 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B020] 3 块 / 1344 格 / 32x14 removable
+  图集：red_interior1.tsx
+  首见：map85 Vendor Street  第 1 层，格 (73,34)，px [1168, 544, 1680, 768]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_19.png  第 3 行第 3 列
+  原作自动编号：EV019 EV020 EV021 EV022
+  ★中文名：
+  ★功能说明：
+
+[B021] 1 块 / 423 格 / 100x8 removable
+  图集：black.tsx, blue_mineshaft.tsx
+  首见：map196 backhall  第 2 层，格 (6,4)，px [96, 64, 1696, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B022] 2 块 / 828 格 / 138x3 removable
+  图集：blue_jagged.tsx
+  首见：map195 extra hallway  第 1 层，格 (0,8)，px [0, 128, 2208, 176]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B023] 1 块 / 387 格 / 47x20 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 1 层，格 (7,54)，px [112, 864, 864, 1184]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 3 行第 6 列
+  原作自动编号：EV001 EV004 EV005 EV006 …共53个
+  ★中文名：
+  ★功能说明：
+
+[B024] 1 块 / 384 格 / 30x29 removable
+  图集：green.tsx, green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (74,32)，px [1184, 512, 1664, 976]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 4 行第 1 列
+  原作自动编号：EV099 EV100 EV101 EV103 …共41个
+  ★中文名：
+  ★功能说明：
+
+[B025] 1 块 / 368 格 / 97x6 removable
+  图集：blank7.tsx, blue_jagged.tsx, green_mineshaft.tsx
+  首见：map208 mines exit  第 1 层，格 (20,14)，px [320, 224, 1872, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 4 行第 2 列
+  原作自动编号：EV001 EV002 EV003 EV004 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B026] 1 块 / 366 格 / 44x19 removable
+  图集：blank1.tsx, blue.tsx
+  首见：map14 Outpost  第 1 层，格 (31,17)，px [496, 272, 1200, 576]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 4 行第 3 列
+  原作自动编号：EV069 EV074 EV078 EV079 …共13个
+  ★中文名：
+  ★功能说明：
+
+[B027] 1 块 / 366 格 / 21x20 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (43,65)，px [688, 1040, 1024, 1360]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 4 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B028] 2 块 / 690 格 / 134x4 removable
+  图集：blue_jagged.tsx
+  首见：map197 collapse  第 1 层，格 (10,6)，px [160, 96, 2304, 160]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 4 行第 5 列
+  原作自动编号：EV009
+  ★中文名：
+  ★功能说明：
+
+[B029] 1 块 / 339 格 / 86x6 removable
+  图集：blank7.tsx, blue_jagged.tsx, blue_mineshaft.tsx
+  首见：map196 backhall  第 1 层，格 (20,14)，px [320, 224, 1696, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 4 行第 6 列
+  原作自动编号：EV006 EV007 EV008 EV009 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B030] 2 块 / 676 格 / 13x26 removable
+  图集：red.tsx
+  首见：map116 Office  第 1 层，格 (60,35)，px [960, 560, 1168, 976]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_19.png  第 5 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B031] 1 块 / 325 格 / 80x6 removable
+  图集：blue_mineshaft.tsx
+  首见：map101 mineshaft  第 2 层，格 (13,7)，px [208, 112, 1488, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B032] 1 块 / 307 格 / 86x5 removable
+  图集：black.tsx, blank7.tsx, blue_mineshaft.tsx
+  首见：map196 backhall  第 2 层，格 (20,15)，px [320, 240, 1696, 320]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 5 行第 3 列
+  原作自动编号：EV006 EV007 EV008 EV009 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B033] 1 块 / 304 格 / 49x10 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 2 层，格 (7,42)，px [112, 672, 896, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 5 行第 4 列
+  原作自动编号：EV007 EV008 EV015 EV016 …共31个
+  ★中文名：
+  ★功能说明：
+
+[B034] 1 块 / 300 格 / 20x15 removable
+  图集：tower.tsx
+  首见：map140 T2  第 1 层，格 (0,0)，px [0, 0, 320, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 5 行第 5 列
+  原作自动编号：EV001
+  ★中文名：
+  ★功能说明：
+
+[B035] 1 块 / 288 格 / 26x30 partial
+  图集：red.tsx
+  首见：map110 Tower deck  第 1 层，格 (21,17)，px [336, 272, 752, 752]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 5 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[B036] 1 块 / 287 格 / 105x4 removable
+  图集：blue_jagged.tsx
+  首见：map208 mines exit  第 1 层，格 (10,6)，px [160, 96, 1840, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B037] 1 块 / 281 格 / 74x11 removable
+  图集：black.tsx, blue_mineshaft.tsx
+  首见：map101 mineshaft  第 2 层，格 (12,16)，px [192, 256, 1376, 432]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 6 行第 2 列
+  原作自动编号：EV015 EV016 EV020 EV022 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B038] 1 块 / 269 格 / 96x4 removable
+  图集：blue_jagged.tsx
+  首见：map196 backhall  第 1 层，格 (10,6)，px [160, 96, 1696, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[B039] 1 块 / 249 格 / 89x4 removable
+  图集：blue_jagged.tsx
+  首见：map101 mineshaft  第 1 层，格 (13,7)，px [208, 112, 1632, 176]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 6 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B040] 1 块 / 246 格 / 72x24 partial
+  图集：blank7.tsx, red.tsx
+  首见：map47 City Gate  第 1 层，格 (0,46)，px [0, 736, 1152, 1120]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B041] 1 块 / 238 格 / 72x24 partial
+  图集：blank7.tsx, red.tsx
+  首见：map214 City Gate  第 1 层，格 (0,46)，px [0, 736, 1152, 1120]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_19.png  第 6 行第 6 列
+  原作自动编号：EV004 EV005 EV008 EV009
+  ★中文名：
+  ★功能说明：
+
+[B042] 1 块 / 228 格 / 79x4 removable
+  图集：blue_jagged.tsx
+  首见：map101 mineshaft  第 1 层，格 (23,18)，px [368, 288, 1632, 352]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B043] 2 块 / 448 格 / 56x6 partial
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 2 层，格 (12,12)，px [192, 192, 1088, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 1 行第 2 列
+  原作自动编号：EV001 EV003 EV004 EV005 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B044] 2 块 / 444 格 / 111x2 removable
+  图集：red_obsdeck.tsx
+  首见：map120 Observation Deck  第 1 层，格 (29,19)，px [464, 304, 2240, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 1 行第 3 列
+  原作自动编号：EV004 EV011 EV013 EV020 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B045] 2 块 / 434 格 / 43x6 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 2 层，格 (3,20)，px [48, 320, 736, 416]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 1 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B046] 2 块 / 434 格 / 24x19 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (36,46)，px [576, 736, 960, 1040]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 1 行第 5 列
+  原作自动编号：EV040 EV042 EV044 EV072 …共54个
+  ★中文名：
+  ★功能说明：
+
+[B047] 2 块 / 434 格 / 43x6 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (3,20)，px [48, 320, 736, 416]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[B048] 1 块 / 213 格 / 24x18 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (36,47)，px [576, 752, 960, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 2 行第 1 列
+  原作自动编号：EV072 EV073 EV074 EV075 …共29个
+  ★中文名：
+  ★功能说明：
+
+[B049] 1 块 / 211 格 / 16x14 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 1 层，格 (96,17)，px [1536, 272, 1792, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B050] 5 块 / 1050 格 / 15x14 removable
+  图集：blue.tsx
+  首见：map71 Dormitories  第 1 层，格 (27,17)，px [432, 272, 672, 496]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 2 行第 3 列
+  原作自动编号：EV012 EV520 EV521
+  ★中文名：
+  ★功能说明：
+
+[B051] 1 块 / 202 格 / 14x15 removable
+  图集：black.tsx, tower.tsx
+  首见：map56 Teleport  第 1 层，格 (105,43)，px [1680, 688, 1904, 928]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B052] 2 块 / 400 格 / 56x6 removable
+  图集：blue_mineshaft.tsx
+  首见：map102 server room  第 2 层，格 (12,20)，px [192, 320, 1088, 416]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 2 行第 5 列
+  原作自动编号：EV006 EV007 EV008 EV009 …共16个
+  ★中文名：
+  ★功能说明：
+
+[B053] 1 块 / 197 格 / 66x19 partial
+  图集：red.tsx
+  首见：map110 Tower deck  第 1 层，格 (46,32)，px [736, 512, 1792, 816]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 2 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[B054] 1 块 / 194 格 / 19x24 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (23,35)，px [368, 560, 672, 944]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 3 行第 1 列
+  原作自动编号：EV076 EV077 EV078 EV079 …共28个
+  ★中文名：
+  ★功能说明：
+
+[B055] 1 块 / 189 格 / 15x13 removable
+  图集：tower.tsx
+  首见：map151 T13  第 1 层，格 (2,2)，px [32, 32, 272, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 3 行第 2 列
+  原作自动编号：EV001 EV002 EV003 EV004 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B056] 1 块 / 188 格 / 14x14 removable
+  图集：black.tsx, tower.tsx
+  首见：map152 T14  第 1 层，格 (3,1)，px [48, 16, 272, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 3 行第 3 列
+  原作自动编号：EV001 EV002 EV003 EV004 …共6个
+  ★中文名：
+  ★功能说明：
+
+[B057] 1 块 / 169 格 / 13x13 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (12,51)，px [192, 816, 400, 1024]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B058] 1 块 / 168 格 / 12x15 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (62,3)，px [992, 48, 1184, 288]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B059] 1 块 / 163 格 / 12x14 removable
+  图集：tower.tsx
+  首见：map144 T6  第 1 层，格 (3,1)，px [48, 16, 240, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 3 行第 6 列
+  原作自动编号：EV001 EV002 EV003 EV004 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B060] 1 块 / 162 格 / 12x14 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (80,37)，px [1280, 592, 1472, 816]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B061] 2 块 / 320 格 / 30x19 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (20,29)，px [320, 464, 800, 768]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 4 行第 2 列
+  原作自动编号：EV005 EV033 EV037 EV039 …共50个
+  ★中文名：
+  ★功能说明：
+
+[B062] 2 块 / 318 格 / 15x15 partial
+  图集：green.tsx
+  首见：map27 Dock  第 2 层，格 (23,27)，px [368, 432, 608, 672]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 4 行第 3 列
+  原作自动编号：EV167 EV189 EV196 EV202 …共14个
+  ★中文名：
+  ★功能说明：
+
+[B063] 1 块 / 158 格 / 26x11 removable
+  图集：blue.tsx
+  首见：map14 Outpost  第 1 层，格 (14,14)，px [224, 224, 640, 400]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 4 行第 4 列
+  原作自动编号：EV018 EV029 EV109 EV118 …共6个
+  ★中文名：
+  ★功能说明：
+
+[B064] 1 块 / 154 格 / 14x11 removable
+  图集：red_factory.tsx
+  首见：map104 courtyard  第 1 层，格 (28,39)，px [448, 624, 672, 800]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B065] 1 块 / 150 格 / 22x9 removable
+  图集：unreality2.tsx
+  首见：map263 pshot  第 1 层，格 (0,1)，px [0, 16, 352, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 4 行第 6 列
+  原作自动编号：EV001 EV002 EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[B066] 1 块 / 150 格 / 22x9 removable
+  图集：unreality.tsx
+  首见：map261 pshot  第 1 层，格 (0,1)，px [0, 16, 352, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 5 行第 1 列
+  原作自动编号：EV001 EV002
+  ★中文名：
+  ★功能说明：
+
+[B067] 1 块 / 147 格 / 16x10 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (105,51)，px [1680, 816, 1936, 976]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B068] 2 块 / 290 格 / 9x18 removable
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (67,34)，px [1072, 544, 1216, 832]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 5 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[B069] 1 块 / 144 格 / 49x8 removable
+  图集：black.tsx, finale.tsx
+  首见：map241 Tv room  第 2 层，格 (5,33)，px [80, 528, 864, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 5 行第 4 列
+  原作自动编号：EV015 EV016 EV049 EV052 …共27个
+  ★中文名：
+  ★功能说明：
+
+[B070] 1 块 / 142 格 / 18x19 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (20,29)，px [320, 464, 608, 768]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 5 行第 5 列
+  原作自动编号：EV078 EV080 EV081 EV091 …共8个
+  ★中文名：
+  ★功能说明：
+
+[B071] 2 块 / 276 格 / 10x14 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (40,31)，px [640, 496, 800, 720]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 5 行第 6 列
+  原作自动编号：EV001 EV002
+  ★中文名：
+  ★功能说明：
+
+[B072] 1 块 / 138 格 / 138x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map195 extra hallway  第 1 层，格 (0,16)，px [0, 256, 2208, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 6 行第 1 列
+  原作自动编号：EV001 EV003
+  ★中文名：
+  ★功能说明：
+
+[B073] 1 块 / 134 格 / 10x14 removable
+  图集：tower.tsx
+  首见：map153 T15  第 1 层，格 (4,1)，px [64, 16, 224, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 6 行第 2 列
+  原作自动编号：EV001 EV002 EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[B074] 1 块 / 132 格 / 11x12 removable
+  图集：tower.tsx
+  首见：map143 T5  第 1 层，格 (5,3)，px [80, 48, 256, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 6 行第 3 列
+  原作自动编号：EV002
+  ★中文名：
+  ★功能说明：
+
+[B075] 1 块 / 131 格 / 10x14 removable
+  图集：tower.tsx
+  首见：map147 T9  第 1 层，格 (4,1)，px [64, 16, 224, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 6 行第 4 列
+  原作自动编号：EV001 EV002 EV003
+  ★中文名：
+  ★功能说明：
+
+[B076] 1 块 / 131 格 / 11x13 removable
+  图集：tower.tsx
+  首见：map146 T8  第 1 层，格 (4,2)，px [64, 32, 240, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_20.png  第 6 行第 5 列
+  原作自动编号：EV001 EV002 EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[B077] 2 块 / 256 格 / 10x13 removable
+  图集：tower.tsx
+  首见：map142 T4  第 1 层，格 (5,2)，px [80, 32, 240, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_20.png  第 6 行第 6 列
+  原作自动编号：EV001 EV002 EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[B078] 1 块 / 126 格 / 14x9 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (12,56)，px [192, 896, 416, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 1 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B079] 2 块 / 250 格 / 21x20 removable
+  图集：black.tsx, finale.tsx
+  首见：map131 Encounter PENG  第 1 层，格 (0,7)，px [0, 112, 336, 432]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 1 行第 2 列
+  原作自动编号：EV005 EV006 EV007 EV008 …共11个
+  ★中文名：
+  ★功能说明：
+
+[B080] 1 块 / 125 格 / 21x19 removable
+  图集：black.tsx, finale.tsx
+  首见：map258 Memory  第 1 层，格 (0,7)，px [0, 112, 336, 416]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 1 行第 3 列
+  原作自动编号：EV005
+  ★中文名：
+  ★功能说明：
+
+[B081] 2 块 / 248 格 / 14x39 removable
+  图集：blue.tsx
+  首见：map19 Docks  第 1 层，格 (14,24)，px [224, 384, 448, 1008]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 1 行第 4 列
+  原作自动编号：EV035 EV036 EV037 EV120 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B082] 2 块 / 240 格 / 10x12 removable
+  图集：tower.tsx
+  首见：map139 T1  第 1 层，格 (5,3)，px [80, 48, 240, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 1 行第 5 列
+  原作自动编号：EV001 EV002
+  ★中文名：
+  ★功能说明：
+
+[B083] 1 块 / 120 格 / 27x12 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (21,28)，px [336, 448, 768, 640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 1 行第 6 列
+  原作自动编号：EV004 EV013 EV016 EV017 …共13个
+  ★中文名：
+  ★功能说明：
+
+[B084] 1 块 / 118 格 / 24x32 removable
+  图集：green.tsx, green_grass2.tsx
+  首见：map27 Dock  第 1 层，格 (29,44)，px [464, 704, 848, 1216]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 2 行第 1 列
+  原作自动编号：EV031 EV032 EV033 EV034 …共33个
+  ★中文名：
+  ★功能说明：
+
+[B085] 1 块 / 116 格 / 30x8 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (22,42)，px [352, 672, 832, 800]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B086] 1 块 / 116 格 / 42x7 partial
+  图集：red.tsx
+  首见：map213 Landing  第 1 层，格 (13,33)，px [208, 528, 880, 640]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 2 行第 3 列
+  原作自动编号：EV003 EV004 EV005 EV006 …共24个
+  ★中文名：
+  ★功能说明：
+
+[B087] 1 块 / 114 格 / 13x11 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (61,10)，px [976, 160, 1184, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B088] 1 块 / 113 格 / 19x15 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (35,69)，px [560, 1104, 864, 1344]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 2 行第 5 列
+  原作自动编号：EV063 EV064 EV065 EV067 …共41个
+  ★中文名：
+  ★功能说明：
+
+[B089] 2 块 / 224 格 / 18x10 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (37,9)，px [592, 144, 880, 304]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 2 行第 6 列
+  原作自动编号：EV001 EV019 EV020
+  ★中文名：
+  ★功能说明：
+
+[B090] 1 块 / 112 格 / 8x14 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (18,15)，px [288, 240, 416, 464]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 3 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B091] 1 块 / 110 格 / 15x8 removable
+  图集：tower.tsx
+  首见：map151 T13  第 2 层，格 (2,7)，px [32, 112, 272, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 3 行第 2 列
+  原作自动编号：EV003
+  ★中文名：
+  ★功能说明：
+
+[B092] 2 块 / 218 格 / 14x14 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 1 层，格 (56,0)，px [896, 0, 1120, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 3 行第 3 列
+  原作自动编号：EV021 EV022
+  ★中文名：
+  ★功能说明：
+
+[B093] 1 块 / 108 格 / 19x14 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (35,70)，px [560, 1120, 864, 1344]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 3 行第 4 列
+  原作自动编号：EV067 EV068 EV069 EV070 …共37个
+  ★中文名：
+  ★功能说明：
+
+[B094] 1 块 / 108 格 / 28x4 removable
+  图集：blank7.tsx
+  首见：map212 passage_boat  第 2 层，格 (34,8)，px [544, 128, 992, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 3 行第 5 列
+  原作自动编号：EV003 EV004
+  ★中文名：
+  ★功能说明：
+
+[B095] 1 块 / 106 格 / 11x31 removable
+  图集：green.tsx, green_grass2.tsx
+  首见：map27 Dock  第 1 层，格 (32,6)，px [512, 96, 688, 592]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 3 行第 6 列
+  原作自动编号：EV193 EV203 EV227 EV240 …共5个
+  ★中文名：
+  ★功能说明：
+
+[B096] 3 块 / 315 格 / 15x16 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (23,52)，px [368, 832, 608, 1088]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_21.png  第 4 行第 1 列
+  原作自动编号：EV035 EV071 EV076 EV077 …共38个
+  ★中文名：
+  ★功能说明：
+
+[B097] 3 块 / 312 格 / 8x13 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (44,9)，px [704, 144, 832, 352]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_21.png  第 4 行第 2 列
+  原作自动编号：EV001 EV002 EV003
+  ★中文名：
+  ★功能说明：
+
+[B098] 1 块 / 102 格 / 10x24 removable
+  图集：green.tsx
+  首见：map29 Village  第 1 层，格 (24,45)，px [384, 720, 544, 1104]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 4 行第 3 列
+  原作自动编号：EV047 EV048 EV049 EV050 …共18个
+  ★中文名：
+  ★功能说明：
+
+[B099] 1 块 / 102 格 / 11x32 removable
+  图集：green.tsx
+  首见：map200 Dock  第 1 层，格 (32,6)，px [512, 96, 688, 608]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 4 行第 4 列
+  原作自动编号：EV193 EV203 EV227 EV240 …共11个
+  ★中文名：
+  ★功能说明：
+
+[B100] 2 块 / 202 格 / 15x20 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (27,41)，px [432, 656, 672, 976]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 4 行第 5 列
+  原作自动编号：EV005 EV033 EV037 EV039 …共49个
+  ★中文名：
+  ★功能说明：
+
+[B101] 1 块 / 101 格 / 17x11 removable
+  图集：study.tsx
+  首见：map249 study  第 1 层，格 (25,21)，px [400, 336, 672, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 4 行第 6 列
+  原作自动编号：EV019 EV034 EV035 EV036 …共13个
+  ★中文名：
+  ★功能说明：
+
+[B102] 1 块 / 97 格 / 18x11 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (43,30)，px [688, 480, 976, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 5 行第 1 列
+  原作自动编号：EV010 EV191 EV192 EV193 …共12个
+  ★中文名：
+  ★功能说明：
+
+[B103] 1 块 / 95 格 / 19x12 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 1 层，格 (35,70)，px [560, 1120, 864, 1312]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 5 行第 2 列
+  原作自动编号：EV001 EV003 EV067 EV068 …共32个
+  ★中文名：
+  ★功能说明：
+
+[B104] 1 块 / 94 格 / 15x27 removable
+  图集：green.tsx, green_grass2.tsx
+  首见：map200 Dock  第 1 层，格 (38,49)，px [608, 784, 848, 1216]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 5 行第 3 列
+  原作自动编号：EV031 EV037 EV044 EV051 …共20个
+  ★中文名：
+  ★功能说明：
+
+[B105] 1 块 / 94 格 / 13x8 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (80,44)，px [1280, 704, 1488, 832]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B106] 2 块 / 184 格 / 11x16 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (41,45)，px [656, 720, 832, 976]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 5 行第 5 列
+  原作自动编号：EV002 EV029 EV030 EV032 …共21个
+  ★中文名：
+  ★功能说明：
+
+[B107] 1 块 / 92 格 / 12x23 removable
+  图集：green.tsx
+  首见：map191 Research Station  第 1 层，格 (11,9)，px [176, 144, 368, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 5 行第 6 列
+  原作自动编号：EV049 EV129 EV207 EV215 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B108] 1 块 / 92 格 / 26x7 partial
+  图集：red.tsx, red_walkway.tsx
+  首见：map110 Tower deck  第 1 层，格 (21,46)，px [336, 736, 752, 848]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B109] 2 块 / 180 格 / 9x10 removable
+  图集：black.tsx, red_alley.tsx
+  首见：map97 X room  第 1 层，格 (20,18)，px [320, 288, 464, 448]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_21.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B110] 1 块 / 90 格 / 17x9 removable
+  图集：blue.tsx
+  首见：map17 Mineshaft entrance  第 1 层，格 (18,8)，px [288, 128, 560, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 6 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[B111] 1 块 / 90 格 / 13x32 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (36,0)，px [576, 0, 784, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 6 行第 4 列
+  原作自动编号：EV003 EV004 EV005 EV163 …共41个
+  ★中文名：
+  ★功能说明：
+
+[B112] 1 块 / 90 格 / 15x6 removable
+  图集：tower.tsx
+  首见：map152 T14  第 2 层，格 (3,9)，px [48, 144, 288, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 6 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B113] 1 块 / 89 格 / 9x17 removable
+  图集：green.tsx
+  首见：map43 Forest  第 2 层，格 (52,52)，px [832, 832, 976, 1104]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_21.png  第 6 行第 6 列
+  原作自动编号：EV059 EV060 EV061 EV062 …共24个
+  ★中文名：
+  ★功能说明：
+
+[B114] 1 块 / 88 格 / 41x10 removable
+  图集：factory in.tsx
+  首见：map69 Factory interior  第 2 层，格 (1,4)，px [16, 64, 672, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 1 行第 1 列
+  原作自动编号：EV001 EV003 EV010 EV011 …共10个
+  ★中文名：
+  ★功能说明：
+
+[B115] 1 块 / 87 格 / 14x9 partial
+  图集：green.tsx
+  首见：map239 burial grounds PLANE FIXED  第 1 层，格 (72,51)，px [1152, 816, 1376, 960]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 1 行第 2 列
+  原作自动编号：EV048 EV188 EV189
+  ★中文名：
+  ★功能说明：
+
+[B116] 1 块 / 87 格 / 14x9 partial
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (72,51)，px [1152, 816, 1376, 960]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 1 行第 3 列
+  原作自动编号：EV048 EV188 EV197 EV199 …共16个
+  ★中文名：
+  ★功能说明：
+
+[B117] 1 块 / 87 格 / 41x10 removable
+  图集：factory in.tsx
+  首见：map93 Factory interior2  第 2 层，格 (1,4)，px [16, 64, 672, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 1 行第 4 列
+  原作自动编号：EV017 EV018 EV019
+  ★中文名：
+  ★功能说明：
+
+[B118] 1 块 / 86 格 / 11x8 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (40,38)，px [640, 608, 816, 736]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 1 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B119] 1 块 / 86 格 / 41x8 removable
+  图集：factory in.tsx
+  首见：map92 Factory upstairs  第 2 层，格 (1,6)，px [16, 96, 672, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 1 行第 6 列
+  原作自动编号：EV003 EV004 EV008 EV009 …共28个
+  ★中文名：
+  ★功能说明：
+
+[B120] 2 块 / 168 格 / 21x4 removable
+  图集：red_alley.tsx
+  首见：map86 To Tower  第 1 层，格 (113,53)，px [1808, 848, 2144, 912]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 2 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B121] 2 块 / 168 格 / 21x4 removable
+  图集：red_alley.tsx
+  首见：map86 To Tower  第 1 层，格 (66,53)，px [1056, 848, 1392, 912]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 2 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B122] 1 块 / 84 格 / 11x13 removable
+  图集：green.tsx
+  首见：map37 Ruins  第 1 层，格 (41,23)，px [656, 368, 832, 576]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 2 行第 3 列
+  原作自动编号：EV004 EV013 EV015 EV049 …共14个
+  ★中文名：
+  ★功能说明：
+
+[B123] 1 块 / 84 格 / 17x14 removable
+  图集：green.tsx
+  首见：map240 Forest  第 2 层，格 (44,62)，px [704, 992, 976, 1216]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 2 行第 4 列
+  原作自动编号：EV007 EV059 EV060 EV061 …共25个
+  ★中文名：
+  ★功能说明：
+
+[B124] 1 块 / 84 格 / 19x15 removable
+  图集：green.tsx, green_grass1.tsx
+  首见：map29 Village  第 1 层，格 (54,50)，px [864, 800, 1168, 1040]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 2 行第 5 列
+  原作自动编号：EV091 EV098 EV100 EV102 …共41个
+  ★中文名：
+  ★功能说明：
+
+[B125] 1 块 / 83 格 / 41x8 removable
+  图集：factory in.tsx
+  首见：map94 upstairs  第 2 层，格 (1,6)，px [16, 96, 672, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 2 行第 6 列
+  原作自动编号：EV004 EV005 EV007 EV008 …共38个
+  ★中文名：
+  ★功能说明：
+
+[B126] 1 块 / 83 格 / 17x6 removable
+  图集：red_in.tsx
+  首见：map51 GeorgeRoom  第 1 层，格 (25,22)，px [400, 352, 672, 448]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 3 行第 1 列
+  原作自动编号：EV006 EV007 EV019 EV020 …共19个
+  ★中文名：
+  ★功能说明：
+
+[B127] 2 块 / 160 格 / 16x5 removable
+  图集：red_alley.tsx
+  首见：map86 To Tower  第 2 层，格 (92,44)，px [1472, 704, 1728, 784]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 3 行第 2 列
+  原作自动编号：EV029
+  ★中文名：
+  ★功能说明：
+
+[B128] 1 块 / 80 格 / 40x2 removable
+  图集：red_in.tsx
+  首见：map74 Top floor  第 1 层，格 (15,11)，px [240, 176, 880, 208]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 3 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[B129] 1 块 / 80 格 / 80x1 removable
+  图集：red.tsx
+  首见：map88 IGNORE ToFactory  第 2 层，格 (0,11)，px [0, 176, 1280, 192]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 3 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B130] 1 块 / 80 格 / 16x5 removable
+  图集：red_in.tsx
+  首见：map122 bathroom  第 1 层，格 (24,5)，px [384, 80, 640, 160]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B131] 1 块 / 80 格 / 8x10 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 2 层，格 (18,22)，px [288, 352, 416, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[B132] 1 块 / 79 格 / 13x7 removable
+  图集：blank1.tsx, blue.tsx
+  首见：map17 Mineshaft entrance  第 2 层，格 (22,8)，px [352, 128, 560, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B133] 1 块 / 79 格 / 12x7 removable
+  图集：tower.tsx
+  首见：map144 T6  第 2 层，格 (3,8)，px [48, 128, 240, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 4 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B134] 1 块 / 78 格 / 6x13 removable
+  图集：tower.tsx
+  首见：map150 T12  第 1 层，格 (6,1)，px [96, 16, 192, 224]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 4 行第 3 列
+  原作自动编号：EV001 EV002
+  ★中文名：
+  ★功能说明：
+
+[B135] 2 块 / 154 格 / 15x13 removable
+  图集：finale.tsx
+  首见：map131 Encounter PENG  第 2 层，格 (0,8)，px [0, 128, 240, 336]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 4 行第 4 列
+  原作自动编号：EV005 EV039
+  ★中文名：
+  ★功能说明：
+
+[B136] 1 块 / 77 格 / 11x7 removable
+  图集：tower.tsx
+  首见：map143 T5  第 2 层，格 (5,8)，px [80, 128, 256, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B137] 1 块 / 77 格 / 15x13 removable
+  图集：finale.tsx
+  首见：map258 Memory  第 2 层，格 (0,8)，px [0, 128, 240, 336]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 4 行第 6 列
+  原作自动编号：EV005
+  ★中文名：
+  ★功能说明：
+
+[B138] 1 块 / 76 格 / 9x11 removable
+  图集：study.tsx
+  首见：map249 study  第 1 层，格 (15,21)，px [240, 336, 384, 512]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 5 行第 1 列
+  原作自动编号：EV027 EV028 EV041 EV046 …共7个
+  ★中文名：
+  ★功能说明：
+
+[B139] 1 块 / 76 格 / 38x2 removable
+  图集：red_in.tsx
+  首见：map118 big office  第 1 层，格 (17,13)，px [272, 208, 880, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 5 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B140] 1 块 / 76 格 / 9x14 removable
+  图集：blue_outposts.tsx
+  首见：map16 Backroom  第 1 层，格 (13,19)，px [208, 304, 352, 528]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 5 行第 3 列
+  原作自动编号：EV004 EV006 EV009 EV010 …共17个
+  ★中文名：
+  ★功能说明：
+
+[B141] 1 块 / 76 格 / 11x7 removable
+  图集：tower.tsx
+  首见：map145 T7  第 2 层，格 (5,8)，px [80, 128, 256, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 5 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B142] 2 块 / 150 格 / 13x9 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (60,54)，px [960, 864, 1168, 1008]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 5 行第 5 列
+  原作自动编号：EV039 EV040 EV067 EV068 …共13个
+  ★中文名：
+  ★功能说明：
+
+[B143] 2 块 / 150 格 / 17x7 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (41,40)，px [656, 640, 928, 752]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 5 行第 6 列
+  原作自动编号：EV009 EV020 EV043 EV059 …共30个
+  ★中文名：
+  ★功能说明：
+
+[B144] 1 块 / 75 格 / 24x7 removable
+  图集：blue_in.tsx
+  首见：map21 Bed room  第 1 层，格 (13,12)，px [208, 192, 592, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 6 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B145] 1 块 / 75 格 / 24x7 removable
+  图集：blue_in.tsx
+  首见：map13 terminal room  第 1 层，格 (13,12)，px [208, 192, 592, 304]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 6 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B146] 4 块 / 296 格 / 12x8 removable
+  图集：green.tsx
+  首见：map27 Dock  第 1 层，格 (47,29)，px [752, 464, 944, 592]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_22.png  第 6 行第 3 列
+  原作自动编号：EV054 EV164 EV200 EV215 …共12个
+  ★中文名：
+  ★功能说明：
+
+[B147] 2 块 / 148 格 / 9x11 partial
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (57,46)，px [912, 736, 1056, 912]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 6 行第 4 列
+  原作自动编号：EV011 EV165 EV187 EV221 …共6个
+  ★中文名：
+  ★功能说明：
+
+[B148] 2 块 / 148 格 / 17x6 removable
+  图集：red_in.tsx
+  首见：map72 Lobby  第 1 层，格 (15,40)，px [240, 640, 512, 736]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_22.png  第 6 行第 5 列
+  原作自动编号：EV010 EV018 EV019 EV065 …共18个
+  ★中文名：
+  ★功能说明：
+
+[B149] 1 块 / 73 格 / 15x9 removable
+  图集：green.tsx
+  首见：map244 Forest DOTN USE THIS  第 2 层，格 (46,61)，px [736, 976, 976, 1120]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_22.png  第 6 行第 6 列
+  原作自动编号：EV001 EV059 EV060 EV061 …共21个
+  ★中文名：
+  ★功能说明：
+
+[B150] 2 块 / 144 格 / 12x12 removable
+  图集：green.tsx
+  首见：map240 Forest  第 1 层，格 (66,70)，px [1056, 1120, 1248, 1312]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 1 行第 1 列
+  原作自动编号：EV031 EV056 EV057 EV116 …共23个
+  ★中文名：
+  ★功能说明：
+
+[B151] 2 块 / 144 格 / 12x6 removable
+  图集：blue.tsx
+  首见：map12 Entrance  第 1 层，格 (17,43)，px [272, 688, 464, 784]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 1 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B152] 1 块 / 72 格 / 24x4 removable
+  图集：blue_in.tsx
+  首见：map75 server room  第 1 层，格 (13,12)，px [208, 192, 592, 256]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 1 行第 3 列
+  原作自动编号：EV001 EV002 EV003 EV005
+  ★中文名：
+  ★功能说明：
+
+[B153] 1 块 / 72 格 / 72x1 removable
+  图集：blue_mineshaft.tsx
+  首见：map101 mineshaft  第 1 层，格 (30,16)，px [480, 256, 1632, 272]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 1 行第 4 列
+  原作自动编号：EV016 EV020 EV022 EV023
+  ★中文名：
+  ★功能说明：
+
+[B154] 1 块 / 72 格 / 11x8 removable
+  图集：tower.tsx
+  首见：map146 T8  第 2 层，格 (4,7)，px [64, 112, 240, 240]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 1 行第 5 列
+  原作自动编号：EV001 EV004
+  ★中文名：
+  ★功能说明：
+
+[B155] 3 块 / 213 格 / 33x8 removable
+  图集：red_ground.tsx
+  首见：map85 Vendor Street  第 1 层，格 (100,6)，px [1600, 96, 2128, 224]
+  出现于 3 间房
+  看样：_evidence/thumbs/sheet_23.png  第 1 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[B156] 1 块 / 71 格 / 22x13 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (44,47)，px [704, 752, 1056, 960]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 2 行第 1 列
+  原作自动编号：EV025 EV026 EV027 EV028 …共33个
+  ★中文名：
+  ★功能说明：
+
+[B157] 1 块 / 71 格 / 12x12 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (66,70)，px [1056, 1120, 1248, 1312]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 2 行第 2 列
+  原作自动编号：EV031 EV056 EV057 EV116 …共12个
+  ★中文名：
+  ★功能说明：
+
+[B158] 2 块 / 140 格 / 12x12 removable
+  图集：green.tsx
+  首见：map67 Burial Grounds  第 1 层，格 (34,22)，px [544, 352, 736, 544]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 2 行第 3 列
+  原作自动编号：EV140 EV141 EV145 EV146 …共9个
+  ★中文名：
+  ★功能说明：
+
+[B159] 2 块 / 140 格 / 10x7 removable
+  图集：tower.tsx
+  首见：map139 T1  第 2 层，格 (5,8)，px [80, 128, 240, 240]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 2 行第 4 列
+  ★中文名：
+  ★功能说明：
+
+[B160] 1 块 / 70 格 / 8x18 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (34,116)，px [544, 1856, 672, 2144]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 2 行第 5 列
+  原作自动编号：EV106 EV213
+  ★中文名：
+  ★功能说明：
+
+[B161] 1 块 / 70 格 / 8x15 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 2 层，格 (41,39)，px [656, 624, 784, 864]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 2 行第 6 列
+  原作自动编号：EV031 EV032 EV045 EV046 …共15个
+  ★中文名：
+  ★功能说明：
+
+[B162] 2 块 / 138 格 / 10x9 removable
+  图集：green.tsx
+  首见：map128 Courtyard  第 2 层，格 (28,9)，px [448, 144, 608, 288]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 3 行第 1 列
+  原作自动编号：EV015 EV016 EV017 EV040
+  ★中文名：
+  ★功能说明：
+
+[B163] 1 块 / 69 格 / 10x13 removable
+  图集：green.tsx
+  首见：map43 Forest  第 1 层，格 (66,56)，px [1056, 896, 1216, 1104]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 3 行第 2 列
+  ★中文名：
+  ★功能说明：
+
+[B164] 2 块 / 136 格 / 10x12 removable
+  图集：green.tsx, green_grass2.tsx
+  首见：map27 Dock  第 1 层，格 (24,30)，px [384, 480, 544, 672]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 3 行第 3 列
+  原作自动编号：EV196 EV202 EV229 EV237 …共8个
+  ★中文名：
+  ★功能说明：
+
+[B165] 2 块 / 134 格 / 15x27 partial
+  图集：red.tsx
+  首见：map52 Cafe  第 1 层，格 (29,6)，px [464, 96, 704, 528]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 3 行第 4 列
+  原作自动编号：EV008 EV011
+  ★中文名：
+  ★功能说明：
+
+[B166] 1 块 / 67 格 / 7x11 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (21,47)，px [336, 752, 448, 928]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 3 行第 5 列
+  ★中文名：
+  ★功能说明：
+
+[B167] 1 块 / 67 格 / 7x11 removable
+  图集：blue.tsx
+  首见：map70 Old Factory  第 1 层，格 (37,47)，px [592, 752, 704, 928]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 3 行第 6 列
+  ★中文名：
+  ★功能说明：
+
+[B168] 4 块 / 264 格 / 11x6 removable
+  图集：tower.tsx
+  首见：map142 T4  第 2 层，格 (5,9)，px [80, 144, 256, 240]
+  出现于 4 间房
+  看样：_evidence/thumbs/sheet_23.png  第 4 行第 1 列
+  ★中文名：
+  ★功能说明：
+
+[B169] 2 块 / 132 格 / 66x1 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 2 层，格 (46,23)，px [736, 368, 1792, 384]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 4 行第 2 列
+  原作自动编号：EV021 EV045 EV046 EV047 …共24个
+  ★中文名：
+  ★功能说明：
+
+[B170] 2 块 / 130 格 / 25x8 removable
+  图集：red_ground.tsx
+  首见：map84 Elevator Street  第 1 层，格 (111,6)，px [1776, 96, 2176, 224]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 4 行第 3 列
+  ★中文名：
+  ★功能说明：
+
+[B171] 2 块 / 130 格 / 14x10 removable
+  图集：green.tsx
+  首见：map127 Research Station  第 1 层，格 (69,50)，px [1104, 800, 1328, 960]
+  出现于 2 间房
+  看样：_evidence/thumbs/sheet_23.png  第 4 行第 4 列
+  原作自动编号：EV027 EV028 EV063 EV088 …共15个
+  ★中文名：
+  ★功能说明：
+
+[B172] 1 块 / 65 格 / 5x13 removable
+  图集：tower.tsx
+  首见：map56 Teleport  第 1 层，格 (60,28)，px [960, 448, 1040, 656]
+  出现于 1 间房
+  看样：_evidence/thumbs/sheet_23.png  第 4 行第 5 列
+  ★中文名：
+  ★功能说明：
+
