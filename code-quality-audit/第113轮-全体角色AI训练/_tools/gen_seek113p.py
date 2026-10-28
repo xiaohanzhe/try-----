@@ -21,6 +21,7 @@ u"""生成 `assets/npc/_seek.json`（「他想去找谁」登记表，第113轮p
 import io
 import json
 import os
+import re
 import sys
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -97,6 +98,37 @@ def _dedup(seq):
     return out
 
 
+_NOTE_RE = re.compile(u'[（(][^）)]*[）)]\\s*$')
+# 本文件自己加在 `unresolved_names` 里的**原因标记**（见 `_id_of`）。
+_MARKERS = u'ambiguous,unknown'
+
+
+def _strip_note(nm):
+    u"""`Silver（总工程师）` → `Silver`（只剥**尾部那一个**括号注释，纯字符串操作）。
+
+    ★ 为什么需要（第113轮r 实测）：`os_rowbot` 提到的是 `Silver（总工程师）`，
+      带注释整体去查名册 ⇒ 精确匹配落空、前缀匹配也不成立（`Silver（总工程师）`
+      不是 `Silver` 的前缀）⇒ 被判 `unknown` 丢弃。而 `os_silver` **唯一**，
+      本该是 Rowbot → Silver 这条线。33 条未解析里就这一条是真漏
+      （另 27 条是名册外的人、5 条是 `ot_`/`ut_` 重名，拒绝猜是对的）。
+
+    ★ 这里**只管剥**，不管"该不该信"：`（ambiguous）` / `（unknown）` 是
+      `unresolved_names` 里的**展示标记**，剥不剥由 `pick_id` 那边的"原因回传"处理。
+      反过来把标记判断塞进本函数会让 `pick_id('Sans（ambiguous）')` 退化成
+      `unknown`（丢掉更准的 `ambiguous`）—— `test_seekresolve113r` 的 B 抓到的就是这个。
+
+    剥完短于 3 字则原样返回（`A（b）` 剥了等于没名字，容易误伤）。
+    """
+    s = str(nm or '')
+    m = _NOTE_RE.search(s)
+    if not m:
+        return s
+    core = s[:m.start()].strip()
+    if len(core) < 3:
+        return s
+    return core
+
+
 def pick_id(nm, src_id, by_name, by_lower, by_cn, ids):
     """名字 → npc_id，**按作品前缀消歧**。→ `(id 或 None, 原因)`。
 
@@ -124,6 +156,21 @@ def pick_id(nm, src_id, by_name, by_lower, by_cn, ids):
                 if str(nm2).lower().startswith(low):
                     cand.extend(lst)
             cand = _dedup([c for c in cand if c in ids])
+    if not cand:
+        # ★ 第113轮r：剥掉尾部括号注释再试一次（`Silver（总工程师）`）。
+        #   每次递归都严格变短 ⇒ 不会无限递归。
+        #   ★ 若剥完仍然没解开、而括号里本来就是**本文件的标记**，就把那个原因
+        #     原样回传 —— 否则 `Sans（ambiguous）` 会退化成 `unknown`，
+        #     把"两人重名"误报成"名册里没这人"。
+        core = _strip_note(nm)
+        if core != str(nm):
+            got, why = pick_id(core, src_id, by_name, by_lower, by_cn, ids)
+            if got:
+                return got, why
+            mm = _NOTE_RE.search(str(nm))
+            inner = mm.group(0).strip(u'（）()').strip().lower() if mm else ''
+            if inner in _MARKERS.split(','):
+                return None, inner
     if not cand:
         return None, 'unknown'
     if len(cand) == 1:
