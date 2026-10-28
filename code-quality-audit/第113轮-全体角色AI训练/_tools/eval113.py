@@ -441,8 +441,15 @@ def report_md(summary, patches, cards, dups, roster, gaps, exempt=None):
     return '\n'.join(L) + '\n'
 
 
+#: 判断「新旧两句是同一条规则」的标记词 —— 只认**很窄**的几条。
+#: ★ 为什么必须窄：`ralsei` 那条「只认得原作里真有的名字…不要自己造人名」是别的轮
+#:   **手写**的，任何一条标记词都不含 ⇒ 永远不会被替换掉（F/F2 判据守着）。
+#: 加新词前先问一句：会不会有手写规则里也出现这个词？
+_SUPERSEDE_MARKS = (u'不要用括号', u'说话就是说话')
+
+
 def _split_sents(s):
-    u"""按句末标点切句（保留标点），用于"逐句求并集"。"""
+    u"""按句末标点切句（保留标点），用于"逐句求并集"与"整句替换"。"""
     out, cur = [], ''
     for ch in (s or ''):
         cur += ch
@@ -474,11 +481,27 @@ def merge_text(old, new):
         return old
     if old in new:
         return new
-    have = {x.strip(u'。 ') for x in _split_sents(old)}
-    extra = [x for x in _split_sents(new) if x.strip(u'。 ') not in have]
-    if not extra:
+    old_s = _split_sents(old)
+    new_s = _split_sents(new)
+    # ★★ 113轮s：**同一条规则的旧措辞要被新措辞替换，不能两句并排**。
+    #   实证：`ACTION_PAREN` 的文案这轮从「不要用括号写动作或表情」改成
+    #   「不要用括号加动作、表情或插话」⇒ 纯求并集会得到两句几乎同义的纠正，
+    #   `susie`/`rouxls` 都中招（prompt 里两句都在，白占字数还互相稀释）。
+    #   判据故意写得很窄：**只有共享 `_SUPERSEDE_MARKS` 里的标记词**才算同一条规则，
+    #   避免把 `ralsei` 那条手写名字规则误删（它不含任何标记词）。
+    drop = set()
+    for ns in new_s:
+        for mark in _SUPERSEDE_MARKS:
+            if mark in ns:
+                for i, os_ in enumerate(old_s):
+                    if mark in os_ and os_.strip(u'。 ') != ns.strip(u'。 '):
+                        drop.add(i)
+    have = {x.strip(u'。 ') for x in new_s}
+    keep = [x for i, x in enumerate(old_s) if i not in drop and x.strip(u'。 ') not in have]
+    extra = [x for x in new_s if x.strip(u'。 ') not in {y.strip(u'。 ') for y in old_s}]
+    if not extra and not drop:
         return old
-    return old + ' ' + ' '.join(extra)
+    return u' '.join(keep + extra).strip()
 
 
 def merge_patches(old, new):
