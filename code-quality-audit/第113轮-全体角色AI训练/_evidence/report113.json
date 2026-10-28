@@ -1,813 +1,1161 @@
 {
  "summary": {
   "chars_with_dialogue": 77,
-  "turns": 308,
-  "hard_violations": 18,
+  "turns": 3696,
+  "hard_violations": 1227,
   "violation_codes": {
-   "ACTION_PAREN": 18
+   "ACTION_PAREN": 419,
+   "REPEAT": 267,
+   "TOO_LONG": 203,
+   "NOT_CN": 155,
+   "AI_SELF": 151,
+   "META": 30,
+   "MARKDOWN": 2
   },
   "per_char": {
    "asgore": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 51,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "TOO_LONG"
     ],
-    "cost_s": 173.9
+    "marker_hit": [
+     33,
+     48
+    ],
+    "cost_s": 5256.1
    },
    "berdly": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     3,
-     4
+    "turns": 48,
+    "violations": 8,
+    "codes": [
+     "AI_SELF",
+     "META",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 55.7
+    "marker_hit": [
+     13,
+     48
+    ],
+    "cost_s": 1699.7
    },
    "flowery": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 130.9
+    "cost_s": 1301.7
    },
    "gerson": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 24.1
+    "marker_hit": [
+     18,
+     48
+    ],
+    "cost_s": 931.2
    },
    "hy_ace": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 31,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 169.8
+    "marker_hit": [
+     3,
+     48
+    ],
+    "cost_s": 2517.6
    },
    "hy_axis": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
+    ],
     "marker_hit": null,
-    "cost_s": 206.0
+    "cost_s": 826.8
    },
    "hy_bowll": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 8,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT"
+    ],
     "marker_hit": null,
-    "cost_s": 74.0
+    "cost_s": 1140.9
    },
    "hy_ceroba_ketsukane": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 13,
+    "codes": [
+     "AI_SELF",
+     "META",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 178.2
+    "cost_s": 1547.3
    },
    "hy_chujin_ketsukane": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 6,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT"
     ],
-    "cost_s": 150.6
+    "marker_hit": null,
+    "cost_s": 783.3
    },
    "hy_clover": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 7,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 159.5
+    "cost_s": 1282.6
    },
    "hy_dalv": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "AI_SELF"
+    ],
     "marker_hit": null,
-    "cost_s": 187.5
+    "cost_s": 1313.6
    },
    "hy_ed": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 127.2
+    "marker_hit": [
+     1,
+     48
+    ],
+    "cost_s": 672.8
    },
    "hy_flowey": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 12,
+    "codes": [
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 181.0
+    "marker_hit": [
+     37,
+     48
+    ],
+    "cost_s": 1120.5
    },
    "hy_guardener": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     3,
-     4
+    "turns": 48,
+    "violations": 63,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 188.4
+    "marker_hit": null,
+    "cost_s": 2889.0
    },
    "hy_martlet": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 70,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "META",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 224.9
+    "cost_s": 52475.8
    },
    "hy_mooch": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 51,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 278.7
+    "cost_s": 2917.1
    },
    "hy_moray": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 65,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": [
      1,
-     4
+     48
     ],
-    "cost_s": 180.0
+    "cost_s": 3562.2
    },
    "hy_sousborg": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 76,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 140.9
+    "cost_s": 1981.2
    },
    "hy_starlo": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 41,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 160.0
+    "marker_hit": [
+     35,
+     48
+    ],
+    "cost_s": 2599.9
    },
    "king": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
     ],
-    "cost_s": 89.7
+    "marker_hit": [
+     17,
+     48
+    ],
+    "cost_s": 618.5
    },
    "kris": {
-    "turns": 4,
-    "violations": 4,
+    "turns": 48,
+    "violations": 2,
     "codes": [
-     "ACTION_PAREN"
+     "AI_SELF"
     ],
     "marker_hit": [
-     2,
-     4
+     5,
+     48
     ],
-    "cost_s": 146.6
+    "cost_s": 526.9
    },
    "lancer": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 185.5
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 1366.1
    },
    "mike": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 7,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 154.3
+    "marker_hit": [
+     37,
+     48
+    ],
+    "cost_s": 1649.9
    },
    "noelle": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF",
+     "META"
     ],
-    "cost_s": 112.3
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 1047.4
    },
    "os_alula": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 7,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 138.2
+    "cost_s": 1490.0
    },
    "os_calamus": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 5,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 126.1
+    "cost_s": 1124.4
    },
    "os_cedric": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "AI_SELF",
+     "META",
+     "REPEAT"
     ],
-    "cost_s": 146.2
+    "marker_hit": [
+     2,
+     48
+    ],
+    "cost_s": 795.1
    },
    "os_george": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 10,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 119.2
+    "cost_s": 1335.3
    },
    "os_kelvin": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
     ],
-    "cost_s": 128.9
+    "marker_hit": [
+     7,
+     48
+    ],
+    "cost_s": 754.1
    },
    "os_kip": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF"
+    ],
     "marker_hit": null,
-    "cost_s": 134.9
+    "cost_s": 1044.3
    },
    "os_lamplighter": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 154.1
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 825.7
    },
    "os_ling": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "AI_SELF",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 121.0
+    "cost_s": 1319.1
    },
    "os_magpie": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "AI_SELF"
+    ],
     "marker_hit": null,
-    "cost_s": 119.6
+    "cost_s": 883.7
    },
    "os_maize": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 5,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 122.4
+    "cost_s": 749.5
    },
    "os_mason": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 139.9
+    "cost_s": 969.1
    },
    "os_niko": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 64,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "META",
+     "TOO_LONG"
     ],
-    "cost_s": 135.7
+    "marker_hit": [
+     21,
+     48
+    ],
+    "cost_s": 2952.7
    },
    "os_prophetbot": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
+    "turns": 48,
+    "violations": 25,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
     ],
-    "cost_s": 120.4
+    "marker_hit": [
+     3,
+     48
+    ],
+    "cost_s": 1028.6
    },
    "os_prototype": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN"
     ],
-    "cost_s": 125.0
+    "marker_hit": [
+     1,
+     48
+    ],
+    "cost_s": 372.0
    },
    "os_rowbot": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
+    "turns": 48,
+    "violations": 6,
+    "codes": [
+     "AI_SELF",
+     "META",
+     "REPEAT"
     ],
-    "cost_s": 136.3
+    "marker_hit": [
+     14,
+     48
+    ],
+    "cost_s": 570.7
    },
    "os_rue": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "META"
     ],
-    "cost_s": 133.4
+    "marker_hit": [
+     5,
+     48
+    ],
+    "cost_s": 902.6
    },
    "os_shepherd": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 16,
+    "codes": [
+     "AI_SELF",
+     "META",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 138.7
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 1366.1
    },
    "os_silver": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "REPEAT"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 131.9
+    "cost_s": 399.9
    },
    "os_the_author": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF",
+     "META"
     ],
-    "cost_s": 173.5
+    "marker_hit": [
+     16,
+     48
+    ],
+    "cost_s": 684.5
    },
    "os_the_world_machine": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 7,
+    "codes": [
+     "AI_SELF",
+     "META"
+    ],
     "marker_hit": [
      0,
-     4
+     48
     ],
-    "cost_s": 137.2
+    "cost_s": 612.7
    },
    "os_watcher": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
+    "turns": 48,
+    "violations": 6,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
     ],
-    "cost_s": 120.4
+    "marker_hit": [
+     6,
+     48
+    ],
+    "cost_s": 779.1
    },
    "ot_alphys": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 164.3
+    "marker_hit": [
+     40,
+     48
+    ],
+    "cost_s": 966.4
    },
    "ot_asgore": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     3,
-     4
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 156.5
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 1494.4
    },
    "ot_asriel_twinkly": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
+    "turns": 48,
+    "violations": 49,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 187.6
+    "marker_hit": [
+     3,
+     48
+    ],
+    "cost_s": 3094.5
    },
    "ot_kidd": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 152.8
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 1106.4
    },
    "ot_mettaton": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 5,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 170.7
+    "marker_hit": [
+     44,
+     48
+    ],
+    "cost_s": 1569.8
    },
    "ot_muffet": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF"
     ],
-    "cost_s": 179.0
+    "marker_hit": [
+     47,
+     48
+    ],
+    "cost_s": 1083.0
    },
    "ot_napstablook": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     3,
-     4
+    "turns": 48,
+    "violations": 40,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
     ],
-    "cost_s": 184.3
+    "marker_hit": [
+     13,
+     48
+    ],
+    "cost_s": 2213.0
    },
    "ot_papyrus": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+    "turns": 48,
+    "violations": 6,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "NOT_CN",
+     "TOO_LONG"
+    ],
     "marker_hit": null,
-    "cost_s": 169.6
+    "cost_s": 1694.6
    },
    "ot_sans": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
+    "turns": 48,
+    "violations": 9,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT"
     ],
-    "cost_s": 168.7
+    "marker_hit": [
+     46,
+     48
+    ],
+    "cost_s": 1508.5
    },
    "ot_toriel": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
-    ],
-    "cost_s": 154.3
-   },
-   "ot_undyne": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
-    ],
-    "cost_s": 173.4
-   },
-   "queen": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
-    ],
-    "cost_s": 121.1
-   },
-   "ralsei": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 104.2
-   },
-   "rouxls": {
-    "turns": 4,
+    "turns": 48,
     "violations": 4,
     "codes": [
-     "ACTION_PAREN"
+     "AI_SELF",
+     "TOO_LONG"
     ],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 263.4
-   },
-   "spamton": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 150.0
-   },
-   "susie": {
-    "turns": 4,
-    "violations": 3,
-    "codes": [
-     "ACTION_PAREN"
-    ],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 217.4
-   },
-   "tenna": {
-    "turns": 4,
-    "violations": 4,
-    "codes": [
-     "ACTION_PAREN"
-    ],
-    "marker_hit": [
-     2,
-     4
-    ],
-    "cost_s": 237.7
-   },
-   "toriel": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     1,
-     4
-    ],
-    "cost_s": 163.0
-   },
-   "ut_alphys": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
-    ],
-    "cost_s": 193.0
-   },
-   "ut_asgore": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
     "marker_hit": [
      3,
-     4
+     48
     ],
-    "cost_s": 155.1
+    "cost_s": 1024.8
    },
-   "ut_chara": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": null,
-    "cost_s": 157.4
-   },
-   "ut_flowey": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
+   "ot_undyne": {
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "AI_SELF",
+     "TOO_LONG"
+    ],
     "marker_hit": [
-     2,
-     4
+     31,
+     48
     ],
-    "cost_s": 178.8
+    "cost_s": 1863.0
    },
-   "ut_frisk": {
-    "turns": 4,
+   "queen": {
+    "turns": 48,
     "violations": 3,
+    "codes": [
+     "AI_SELF"
+    ],
+    "marker_hit": [
+     35,
+     48
+    ],
+    "cost_s": 955.4
+   },
+   "ralsei": {
+    "turns": 48,
+    "violations": 5,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     11,
+     48
+    ],
+    "cost_s": 863.7
+   },
+   "rouxls": {
+    "turns": 48,
+    "violations": 33,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "META",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 2482.5
+   },
+   "spamton": {
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF",
+     "REPEAT"
+    ],
+    "marker_hit": [
+     15,
+     48
+    ],
+    "cost_s": 1592.2
+   },
+   "susie": {
+    "turns": 48,
+    "violations": 2,
     "codes": [
      "ACTION_PAREN"
     ],
     "marker_hit": [
-     1,
-     4
+     7,
+     48
     ],
-    "cost_s": 119.6
-   },
-   "ut_gaster": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 167.0
-   },
-   "ut_mettaton": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 177.2
-   },
-   "ut_monster_kid": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 130.1
-   },
-   "ut_muffet": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 151.7
-   },
-   "ut_napstablook": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 163.7
-   },
-   "ut_papyrus": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": null,
-    "cost_s": 161.9
-   },
-   "ut_sans": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     4,
-     4
-    ],
-    "cost_s": 162.7
-   },
-   "ut_toriel": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     0,
-     4
-    ],
-    "cost_s": 145.5
-   },
-   "ut_undyne": {
-    "turns": 4,
-    "violations": 0,
-    "codes": [],
-    "marker_hit": [
-     2,
-     4
-    ],
-    "cost_s": 193.7
-   }
-  },
-  "calls": 371,
-  "retries": 63,
-  "truncated_chars": [],
-  "ttft_cold_median": 1.31,
-  "ttft_warm_median": null,
-  "len_median": 69,
-  "len_max": 200,
-  "cross_dups": 1,
-  "cross_dup_chars": 2,
-  "patch_pass": {
-   "kris": {
-    "before": 4,
-    "after": 1,
-    "turns": 4,
-    "fixed": false,
-    "still": 1
-   },
-   "rouxls": {
-    "before": 4,
-    "after": 0,
-    "turns": 4,
-    "fixed": true,
-    "still": 0
-   },
-   "susie": {
-    "before": 3,
-    "after": 0,
-    "turns": 4,
-    "fixed": true,
-    "still": 0
+    "cost_s": 871.1
    },
    "tenna": {
-    "before": 4,
-    "after": 4,
-    "turns": 4,
-    "fixed": false,
-    "still": 4
+    "turns": 48,
+    "violations": 5,
+    "codes": [
+     "AI_SELF",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     13,
+     48
+    ],
+    "cost_s": 1630.6
+   },
+   "toriel": {
+    "turns": 48,
+    "violations": 2,
+    "codes": [
+     "AI_SELF",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     23,
+     48
+    ],
+    "cost_s": 1245.5
+   },
+   "ut_alphys": {
+    "turns": 48,
+    "violations": 6,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     38,
+     48
+    ],
+    "cost_s": 1506.7
+   },
+   "ut_asgore": {
+    "turns": 48,
+    "violations": 50,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 2376.4
+   },
+   "ut_chara": {
+    "turns": 48,
+    "violations": 32,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": null,
+    "cost_s": 1407.6
+   },
+   "ut_flowey": {
+    "turns": 48,
+    "violations": 5,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     1,
+     48
+    ],
+    "cost_s": 1756.6
    },
    "ut_frisk": {
-    "before": 3,
-    "after": 2,
-    "turns": 4,
-    "fixed": false,
-    "still": 2
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "AI_SELF"
+    ],
+    "marker_hit": [
+     8,
+     48
+    ],
+    "cost_s": 379.2
+   },
+   "ut_gaster": {
+    "turns": 48,
+    "violations": 3,
+    "codes": [
+     "AI_SELF"
+    ],
+    "marker_hit": [
+     21,
+     48
+    ],
+    "cost_s": 741.0
+   },
+   "ut_mettaton": {
+    "turns": 48,
+    "violations": 11,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     45,
+     48
+    ],
+    "cost_s": 2294.7
+   },
+   "ut_monster_kid": {
+    "turns": 48,
+    "violations": 4,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN"
+    ],
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 1044.0
+   },
+   "ut_muffet": {
+    "turns": 48,
+    "violations": 1,
+    "codes": [
+     "AI_SELF"
+    ],
+    "marker_hit": [
+     35,
+     48
+    ],
+    "cost_s": 1734.8
+   },
+   "ut_napstablook": {
+    "turns": 48,
+    "violations": 7,
+    "codes": [
+     "AI_SELF",
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     4,
+     48
+    ],
+    "cost_s": 1593.0
+   },
+   "ut_papyrus": {
+    "turns": 48,
+    "violations": 81,
+    "codes": [
+     "ACTION_PAREN",
+     "AI_SELF",
+     "MARKDOWN",
+     "META",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": null,
+    "cost_s": 4785.5
+   },
+   "ut_sans": {
+    "turns": 48,
+    "violations": 113,
+    "codes": [
+     "NOT_CN",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     48,
+     48
+    ],
+    "cost_s": 3477.3
+   },
+   "ut_toriel": {
+    "turns": 48,
+    "violations": 9,
+    "codes": [
+     "AI_SELF",
+     "META",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     5,
+     48
+    ],
+    "cost_s": 2274.2
+   },
+   "ut_undyne": {
+    "turns": 48,
+    "violations": 17,
+    "codes": [
+     "AI_SELF",
+     "REPEAT",
+     "TOO_LONG"
+    ],
+    "marker_hit": [
+     28,
+     48
+    ],
+    "cost_s": 3561.8
    }
   },
-  "patch_fixed": 2,
-  "patch_still": 3
+  "calls": 6137,
+  "retries": 2441,
+  "truncated_chars": [
+   "asgore",
+   "berdly",
+   "flowery",
+   "gerson",
+   "hy_ace",
+   "hy_axis",
+   "hy_bowll",
+   "hy_ceroba_ketsukane",
+   "hy_chujin_ketsukane",
+   "hy_clover",
+   "hy_dalv",
+   "hy_flowey",
+   "hy_guardener",
+   "hy_martlet",
+   "hy_mooch",
+   "hy_moray",
+   "hy_sousborg",
+   "hy_starlo",
+   "lancer",
+   "mike",
+   "noelle",
+   "os_alula",
+   "os_calamus",
+   "os_cedric",
+   "os_george",
+   "os_kip",
+   "os_lamplighter",
+   "os_ling",
+   "os_magpie",
+   "os_mason",
+   "os_niko",
+   "os_rue",
+   "os_shepherd",
+   "ot_alphys",
+   "ot_asgore",
+   "ot_asriel_twinkly",
+   "ot_kidd",
+   "ot_mettaton",
+   "ot_muffet",
+   "ot_napstablook",
+   "ot_papyrus",
+   "ot_sans",
+   "ot_toriel",
+   "ot_undyne",
+   "rouxls",
+   "spamton",
+   "susie",
+   "tenna",
+   "toriel",
+   "ut_alphys",
+   "ut_asgore",
+   "ut_chara",
+   "ut_flowey",
+   "ut_gaster",
+   "ut_mettaton",
+   "ut_muffet",
+   "ut_napstablook",
+   "ut_papyrus",
+   "ut_sans",
+   "ut_toriel",
+   "ut_undyne"
+  ],
+  "ttft_cold_median": 2.11,
+  "ttft_warm_median": null,
+  "len_median": 120,
+  "len_max": 465,
+  "cross_dups": 0,
+  "cross_dup_chars": 0,
+  "patch_pass": {},
+  "patch_fixed": 0,
+  "patch_still": 0
  },
  "patches": {
-  "rouxls": "不要用括号写动作或表情，只写你说出口的话。",
-  "susie": "不要用括号写动作或表情，只写你说出口的话。"
+  "asgore": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+  "berdly": "别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "flowery": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_ace": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+  "hy_axis": "别把刚才说过的话再说一遍，换个说法。",
+  "hy_bowll": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_ceroba_ketsukane": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。",
+  "hy_chujin_ketsukane": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_clover": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_flowey": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_guardener": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_martlet": "不要用括号加动作、表情或插话，只写你说出口的话。 别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。",
+  "hy_mooch": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 不要用括号加动作、表情或插话，只写你说出口的话。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_moray": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_sousborg": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "hy_starlo": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+  "king": "别把刚才说过的话再说一遍，换个说法。",
+  "mike": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "noelle": "别提作品名、游戏、玩家、代码这些词；你活在你的世界里。",
+  "os_alula": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "os_calamus": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "os_cedric": "别把刚才说过的话再说一遍，换个说法。",
+  "os_george": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "os_kelvin": "别把刚才说过的话再说一遍，换个说法。",
+  "os_ling": "一次最多两三句，短一点，像随口说出来的。",
+  "os_maize": "别把刚才说过的话再说一遍，换个说法。",
+  "os_mason": "一次最多两三句，短一点，像随口说出来的。",
+  "os_niko": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+  "os_prophetbot": "别把刚才说过的话再说一遍，换个说法。",
+  "os_prototype": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。",
+  "os_rowbot": "别把刚才说过的话再说一遍，换个说法。",
+  "os_shepherd": "别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "os_silver": "别把刚才说过的话再说一遍，换个说法。",
+  "os_watcher": "别把刚才说过的话再说一遍，换个说法。",
+  "ot_asgore": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ot_asriel_twinkly": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ot_mettaton": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ot_napstablook": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ot_papyrus": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+  "ot_sans": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 别把刚才说过的话再说一遍，换个说法。",
+  "ot_toriel": "一次最多两三句，短一点，像随口说出来的。",
+  "ot_undyne": "一次最多两三句，短一点，像随口说出来的。",
+  "ralsei": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "rouxls": "不要用括号加动作、表情或插话，只写你说出口的话。 别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。",
+  "spamton": "别把刚才说过的话再说一遍，换个说法。",
+  "susie": "不要用括号加动作、表情或插话，只写你说出口的话。",
+  "tenna": "一次最多两三句，短一点，像随口说出来的。",
+  "toriel": "一次最多两三句，短一点，像随口说出来的。",
+  "ut_alphys": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ut_asgore": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ut_chara": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ut_flowey": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。",
+  "ut_mettaton": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+  "ut_monster_kid": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。",
+  "ut_napstablook": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ut_papyrus": "说话就是说话，不要用 #、*、-、编号这些排版符号，也不要分点。 不要用括号加动作、表情或插话，只写你说出口的话。 别提作品名、游戏、玩家、代码这些词；你活在你的世界里。",
+  "ut_sans": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ut_toriel": "别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+  "ut_undyne": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。"
  },
- "dup_pairs": [
-  {
-   "turn": 1,
-   "a": "ot_asgore",
-   "b": "ut_asgore",
-   "sim": 1.0,
-   "text_a": "哦，你好。很高兴见到你。要不要喝杯茶？我刚刚泡了一壶金色花茶。",
-   "text_b": "哦，你好。很高兴见到你。要不要喝杯茶？我刚刚泡了一壶金色花茶。"
-  }
- ],
- "corpus_rows": 308
+ "dup_pairs": [],
+ "corpus_rows": 3696
 }

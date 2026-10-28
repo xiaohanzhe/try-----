@@ -212,9 +212,9 @@ def build_patches(data, cards, dups, roster_by_id=None):
         if not parts:
             continue
         patch = ' '.join(parts)
-        if len(patch) > 160:
-            patch = patch[:160]
-        patches[nid] = patch
+        # ★ 第114轮：原来这里是 `patch[:160]` —— 会切在半句上（「不要自己造人」）。
+        #   改用 `cap_patch`：只裁整句，且只裁模板生成的（这里是本轮现算的，全是模板）。
+        patches[nid] = cap_patch(patch)
     return patches, dup_count, exempt
 
 
@@ -462,7 +462,71 @@ def _split_sents(s):
     return out
 
 
-def merge_text(old, new):
+#: 单条补丁的硬上限 —— 判据是 `check113 D6b` / `check113l B4`，两边都写死 160。
+#: ★ 为什么要有：补丁是"三条以内的即时纠正"，长过人设就成了第二份人设，
+#:   会在 prompt 里跟 `ralsei_persona.md` 抢话权（越长越容易被模型忽略）。
+PATCH_MAX_CHARS = 160
+
+#: 能被认出来"这是我们自己生成的句子"的**非** `PATCH_RULES` 模板（口癖补丁）。
+#: 判据故意窄：只认 `common113.build_voice_patch` 的**开头**，别的一律当手写。
+_AUTO_SENT_PREFIX = (u'这才是你说话的样子：',)
+
+
+def _is_auto_sent(s):
+    u"""这句是不是模板生成的（⇒ 超长时可裁）。**手写句一律 False**。
+
+    ★ 为什么必须能区分：`ralsei` 补丁里「只认得原作里真有的名字…」（84 字）和
+      「不要自己造人名…」（55 字）是**别的轮手写**的，为"凯斯恩"这类拼名才加的；
+      `check113 D6b` 报的 179 字里，超出的部分其实是本轮自动追加的
+      「一次最多两三句…」（21）+「别把刚才说过的话再说一遍…」（19）。
+      一刀切的 `text[:160]` 会把手写句切成「不要自己造人」这种断头话。
+    """
+    t = (s or '').strip()
+    if not t:
+        return False
+    bare = t.strip(u'。 ')
+    for v in C.PATCH_RULES.values():
+        if bare == (v or '').strip(u'。 '):
+            return True
+    for p in _AUTO_SENT_PREFIX:
+        if t.startswith(p):
+            return True
+    return False
+
+
+def cap_patch(text, limit=PATCH_MAX_CHARS, drops=None):
+    u"""把补丁压到 `limit` 以内，**只裁模板生成的整句，绝不切半句、绝不动手写句**。
+
+    ★ 为什么不 `text[:limit]`：旧写法切在半句上 ——「不要自己造人」这种断头纠正
+      比超长更糟（模型会当成半句话丢掉）。
+    ★ 为什么不从尾部一路砍：手写句有可能排在末尾（`ralsei` 的 55 字那句就在第三位）。
+      所以是**从尾往前只挑模板句裁**，遇到手写句跳过、继续往前找。
+    ★ 裁到头还超（整条都是手写长文）⇒ 返回裁过的结果，让 `D6b` 继续报红交人判断，
+      **不静默把它改成"看起来合格"**。
+    ★ `len(text) <= limit` 时**原样返回**（不做任何重排版），保证不动无关数据。
+    """
+    if len(text or '') <= limit:
+        return text or u''
+    sents = _split_sents(text)
+    keep = list(sents)
+    n_drop = 0
+    i = len(keep) - 1
+    while len(u' '.join(keep)) > limit and i >= 0:
+        if _is_auto_sent(keep[i]):
+            if drops is not None:
+                drops.append(keep[i])
+            keep = keep[:i] + keep[i + 1:]
+            n_drop += 1
+        i -= 1
+    # ★ 一句都没裁时**必须原样返回** —— 否则 `_split_sents` + `' '.join` 的重排版
+    #   会改变文本（实测把 189 字的手写串变成 195 字）。负控制抓出来的。
+    if not n_drop:
+        return text
+    out = u' '.join(keep).strip()
+    return out or (text or u'')
+
+
+def merge_text(old, new, drops=None):
     u"""把两条补丁按**句子**求并集：谁多留谁，双方各有的都留下。
 
     ★ 为什么不是"二选一"（第一版就是这么写的，dry-run 抓出来了）：
@@ -474,13 +538,15 @@ def merge_text(old, new):
     """
     old, new = (old or '').strip(), (new or '').strip()
     if not old:
-        return new
+        return cap_patch(new, drops=drops)
     if not new:
-        return old
+        return cap_patch(old, drops=drops)
     if new in old:
-        return old
+        # ★ 第114轮：这条早退**也要过 `cap_patch`** —— 实测就是这个分支把 ralsei
+        #   的 179 字原样带过去（本轮算出来的两句早已在旧补丁里 ⇒ `new in old`）。
+        return cap_patch(old, drops=drops)
     if old in new:
-        return new
+        return cap_patch(new, drops=drops)
     old_s = _split_sents(old)
     new_s = _split_sents(new)
     # ★★ 113轮s：**同一条规则的旧措辞要被新措辞替换，不能两句并排**。
@@ -500,8 +566,8 @@ def merge_text(old, new):
     keep = [x for i, x in enumerate(old_s) if i not in drop and x.strip(u'。 ') not in have]
     extra = [x for x in new_s if x.strip(u'。 ') not in {y.strip(u'。 ') for y in old_s}]
     if not extra and not drop:
-        return old
-    return u' '.join(keep + extra).strip()
+        return cap_patch(old, drops=drops)
+    return cap_patch(u' '.join(keep + extra).strip(), drops=drops)
 
 
 def merge_patches(old, new):
@@ -522,17 +588,23 @@ def merge_patches(old, new):
     old, new = dict(old or {}), dict(new or {})
     merged, rep = {}, []
     for k in sorted(set(old) | set(new)):
+        drops = []
         if k not in old:
-            merged[k] = new[k]
+            merged[k] = cap_patch(new[k], drops=drops)
             rep.append(u'+ %s 新增' % k)
         elif k not in new:
-            merged[k] = old[k]
+            # ★ 第114轮：存量条目也要过一遍 —— 旧版 `build_patches` 用 `patch[:160]`
+            #   截过，但 `merge_text` 的并集**没有上限**，历史上攒出过 ralsei 的 179 字。
+            merged[k] = cap_patch(old[k], drops=drops)
             rep.append(u'= %s 本轮算不出来，**保留旧补丁**（否则会被删）' % k)
         else:
-            t = merge_text(old[k], new[k])
+            t = merge_text(old[k], new[k], drops=drops)
             merged[k] = t
             if t != old[k]:
                 rep.append(u'~ %s 合并：%d → %d 字' % (k, len(old[k]), len(t)))
+        if drops:
+            rep.append(u'  ! %s 裁掉 %d 句自动生成的：%s' % (
+                k, len(drops), u' / '.join(x[:18] for x in drops)))
     return merged, rep
 
 
@@ -551,6 +623,31 @@ def strip_paren_rule(text):
     if len(keep) == len(sents):
         return text or u''
     return u' '.join(keep).strip()
+
+
+def _keep_card_sents(cur, target):
+    u"""把"只存在于卡片里"的句子补回 `target` —— 但**已被新措辞取代的不补**。
+
+    ★ 为什么要这一步：回填时 `cards/<nid>.json` 与 `_index.json` 的 `patches`
+      写的是同一份值，只要哪一边漏写，重建索引（`cards113.py`）就会拿卡片的值
+      盖掉索引 ⇒ 手写补丁被冲掉（`ralsei` 那两句就是这么丢的，`C1` 报的 59 条
+      不一致里 57 条是"卡片侧压根是空串"）。
+    ★ 为什么不能无脑求并集：实测 `rouxls`/`susie` 的卡片里还留着**旧措辞**
+      「不要用括号写动作或表情」，而索引侧已经换成了「…加动作、表情或插话」。
+      两句并排 = prompt 里一条规则两个版本，白占字数还互相稀释
+      （这正是 `_SUPERSEDE_MARKS` 存在的理由，这里复用它）。
+    """
+    cur_s = _split_sents(cur or u'')
+    if not cur_s:
+        return target
+    have = {x.strip(u'。 ') for x in _split_sents(target or u'')}
+    marks = {m for m in _SUPERSEDE_MARKS if m in (target or u'')}
+    add = [x for x in cur_s
+           if x.strip(u'。 ') not in have
+           and not any(m in x for m in marks)]
+    if not add:
+        return target
+    return cap_patch(u' '.join(_split_sents(target or u'') + add))
 
 
 def main(argv):
@@ -580,15 +677,32 @@ def main(argv):
         if u'括号' in cur:
             strip_nids.add(nid)
 
-    # —— 回填：卡片 + 索引（索引是运行时唯一读的口径）——
-    for nid in list(patches) + [n for n in sorted(strip_nids) if n not in patches]:
+    # —— 先算"唯一一份"补丁：索引与卡片必须写同一个值 ——
+    #   ★ 第114轮：原来是"先把新算的写进卡片，再 merge 进索引" ⇒ 两边必然不同
+    #     （`check113l C1` 报 59 条不一致，其中 `ralsei` 卡片侧连手写句都没了）。
+    #     改成先合并、后一次性回填两边。
+    idx_path = os.path.join(C.TRAIN_DIR, '_index.json')
+    idx = C.load_json(idx_path, {}) or {}
+    merged, mrep = merge_patches(idx.get('patches') or {}, patches)
+    for nid in sorted(strip_nids):
+        cur = merged.get(nid)
+        if cur and u'括号' in cur:
+            new_txt = strip_paren_rule(cur)
+            print(u'  [patches] %s 剔掉括号纠正：%d → %d 字' % (nid, len(cur), len(new_txt)))
+            merged[nid] = new_txt
+
+    idx_cards = idx.get('cards') or {}
+    for nid in sorted(set(merged) | strip_nids):
         card = cards.get(nid)
         if not card:
             continue
-        p = patches.get(nid)
+        p = merged.get(nid)
         if p is None:
             # 只有"要剔句"的份 —— 保留旧补丁里除括号句以外的内容。
             p = strip_paren_rule(card.get('patch') or '')
+        p = _keep_card_sents(card.get('patch') or '', p)
+        if nid in merged:
+            merged[nid] = p
         card['patch'] = p
         card['eval'] = {
             'violations': summary['per_char'].get(nid, {}).get('violations', 0),
@@ -598,18 +712,11 @@ def main(argv):
         }
         C.write_text(os.path.join(C.TRAIN_DIR, 'cards', nid + '.json'),
                      json.dumps(card, ensure_ascii=False, indent=1) + '\n')
+        # `_index.json` 里的 `cards` 是镜像，重建索引会拿它回写 `patches` ⇒ 必须同步
+        if isinstance(idx_cards.get(nid), dict):
+            idx_cards[nid]['patch'] = p
 
-    idx_path = os.path.join(C.TRAIN_DIR, '_index.json')
-    idx = C.load_json(idx_path, {}) or {}
-    # ★ 第113轮s：不能直接 `idx['patches'] = patches` —— 见 `merge_patches` 的说明。
-    merged, mrep = merge_patches(idx.get('patches') or {}, patches)
-    # ★ 索引侧同样要剔（卡片已剔，索引是运行时真正读的那一份，两边必须一致）
-    for nid in sorted(strip_nids):
-        cur = merged.get(nid)
-        if cur and u'括号' in cur:
-            new_txt = strip_paren_rule(cur)
-            print(u'  [patches] %s 剔掉括号纠正：%d → %d 字' % (nid, len(cur), len(new_txt)))
-            merged[nid] = new_txt
+    idx['cards'] = idx_cards
     idx['patches'] = merged
     for line in mrep:
         print('  [patches] %s' % line)

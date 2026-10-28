@@ -120,6 +120,18 @@
   "max_chars": 200,
   "max_sentences": 3
  },
- "patch": "",
- "eval": {}
+ "patch": "不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+ "eval": {
+  "violations": 51,
+  "codes": [
+   "ACTION_PAREN",
+   "AI_SELF",
+   "TOO_LONG"
+  ],
+  "cross_dups": 0,
+  "marker_hit": [
+   33,
+   48
+  ]
+ }
 }

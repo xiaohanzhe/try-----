@@ -133,6 +133,20 @@
   "max_chars": 200,
   "max_sentences": 3
  },
- "patch": "",
- "eval": {}
+ "patch": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 不要用括号加动作、表情或插话，只写你说出口的话。 一次最多两三句，短一点，像随口说出来的。",
+ "eval": {
+  "violations": 11,
+  "codes": [
+   "ACTION_PAREN",
+   "AI_SELF",
+   "NOT_CN",
+   "REPEAT",
+   "TOO_LONG"
+  ],
+  "cross_dups": 0,
+  "marker_hit": [
+   45,
+   48
+  ]
+ }
 }

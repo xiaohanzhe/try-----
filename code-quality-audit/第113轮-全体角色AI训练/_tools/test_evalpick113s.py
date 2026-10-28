@@ -244,10 +244,27 @@ def main():
     check('L2 负控制：没有括号句的补丁**原样返回**（不误删别的）',
           E.strip_paren_rule(u'一次最多两三句。别重复。') == u'一次最多两三句。别重复。')
     check('L3 空串 / None 安全', E.strip_paren_rule(u'') == u'' and E.strip_paren_rule(None) == u'')
-    # L4 真数据：kris 现在的卡片里确实有括号句（否则 L 组就是空转）
-    kp = E.collect_cards().get('kris', {}).get('patch') or u''
-    check('L4 ★ 夹具前提成立：`kris` 现盘补丁里确实有括号句',
-          u'括号' in kp and u'括号' not in E.strip_paren_rule(kp), '%r' % kp[:40])
+    # L4 真数据：**守状态，不守"夹具里还有括号句"**。
+    #   ★ 第114轮：原来断言「kris 现盘补丁里确实有括号句」—— 那是**前提**，
+    #     而前提已经被本轮的 `apply_aiself113l --apply` 完成了（kris 补丁清空 ⇒ `''`）。
+    #     前提消失后这条恒假/恒真都不再守任何东西。改成断言**结果状态**：
+    #     所有括号豁免角色的补丁里都不许再有「不要用括号…」。
+    _par_ids = [r['id'] for r in (C.load_roster()[0] or [])
+                if C._persona_allows_paren(r.get('persona') or '')]
+    _cards_now = E.collect_cards()
+    _still = [n for n in _par_ids
+              if u'括号' in ((_cards_now.get(n) or {}).get('patch') or '')]
+    _nonempty = [n for n in _par_ids
+                 if ((_cards_now.get(n) or {}).get('patch') or '').strip()]
+    check('L4 ★ 真数据：括号豁免角色的补丁里都不再有「不要用括号」那句',
+          bool(_par_ids) and not _still,
+          '豁免 %d 人 / 残留：%s' % (len(_par_ids), ','.join(_still) or '无'))
+    check('L4b 负控制：这批人里仍有非空补丁（不是靠"全清空"达标的）',
+          bool(_nonempty), '有补丁 %d 人' % len(_nonempty))
+    # L4c 正控制：真数据里**非豁免**角色（susie）的补丁含括号句，剔函数确实会动它
+    _su = (_cards_now.get('susie') or {}).get('patch') or u''
+    check('L4c ★ 正控制：`susie`（非豁免）补丁含括号句，`strip_paren_rule` 对真文本有效',
+          u'括号' in _su and u'括号' not in E.strip_paren_rule(_su), '%d 字' % len(_su))
     check('L5 ★ 人设自证：kris 属于括号豁免名单（所以剔他是对的）',
           C._persona_allows_paren((C.load_roster()[0] and
                                    {r['id']: r for r in C.load_roster()[0]}['kris']['persona']) or u''))

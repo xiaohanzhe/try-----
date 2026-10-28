@@ -113,6 +113,17 @@
   "max_chars": 200,
   "max_sentences": 3
  },
- "patch": "",
- "eval": {}
+ "patch": "用简体中文说话（人名地名照原样写没关系）；除非对方要你说英文，不要整句说英文。 别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。",
+ "eval": {
+  "violations": 13,
+  "codes": [
+   "AI_SELF",
+   "META",
+   "NOT_CN",
+   "REPEAT",
+   "TOO_LONG"
+  ],
+  "cross_dups": 0,
+  "marker_hit": null
+ }
 }

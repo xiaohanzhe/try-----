@@ -106,6 +106,18 @@
   "max_chars": 200,
   "max_sentences": 3
  },
- "patch": "",
- "eval": {}
+ "patch": "一次最多两三句，短一点，像随口说出来的。 别把刚才说过的话再说一遍，换个说法。",
+ "eval": {
+  "violations": 10,
+  "codes": [
+   "AI_SELF",
+   "REPEAT",
+   "TOO_LONG"
+  ],
+  "cross_dups": 0,
+  "marker_hit": [
+   0,
+   48
+  ]
+ }
 }

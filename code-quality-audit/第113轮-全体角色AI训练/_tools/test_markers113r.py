@@ -35,15 +35,52 @@ def check(name, cond, detail=''):
         print('[FAIL] %s    %s' % (name, detail))
 
 
+def _rebuild_card(src, drops, dst):
+    u"""把真卡还原成"**手术之前**"的样子（把待删项塞回 `voice_markers`），写到 `dst`。
+
+    ★ 为什么必须还原（第114轮实测）：`fix_markers113r --apply` 已经在真卡上跑完了
+      （第113轮收口那一步），再按原样读真卡 ⇒ 每张卡都不含待删项 ⇒ `patch_one`
+      当场断言失败（`hy_chujin_ketsukane`：待删 `['I']`，现存 `[]`）。
+      **这不是产品 bug，是夹具失效** —— 被测的手术对象已经被真实执行过了。
+    ★ 为什么可以用 json 重排：本套件要守的是"字节手术只动数组那一段、别处逐字节相同"，
+      这条在重排后的文件上同样成立（B/B2 就是拿重排后的 `before` 逐字节比的）。
+      唯一需要"保真"的是那个陷阱：`[……]` 这种**自身含 `]`** 的字符串元素，
+      重排后它仍是数组里的字符串 ⇒ D 组照样能证明"第一个 `]`"会切错。
+    ★ EOL 按源文件的种类写回（kris=CRLF / mike=LF 是实测的两种），否则 C 组失去意义。
+    """
+    raw = io.open(src, 'r', encoding='utf-8', newline='').read()
+    d = json.loads(raw)
+    cur = list(d.get('voice_markers') or [])
+    for m in drops:
+        if m not in cur:
+            cur.insert(0, m)
+    d['voice_markers'] = cur
+    eol = '\r\n' if '\r\n' in raw else '\n'
+    txt = json.dumps(d, ensure_ascii=False, indent=1)
+    txt = txt.replace('\n', eol) + eol
+    io.open(dst, 'w', encoding='utf-8', newline='').write(txt)
+
+
 def main():
     tmp = tempfile.mkdtemp(prefix='markers113r_')
+    # ★ 真卡快照要在**测试开始前**取：H 组守的是"这场测试没碰真卡"，
+    #   拿重建后的夹具 `before['kris']` 去比是错的（重建就是有意加回了待删项）。
+    _real_kris_snap = io.open(os.path.join(_REAL, 'kris.json'), 'rb').read()
     try:
-        # 只复制要动的 10 张卡（真文件，不是造的）
+        # 真文件副本 —— 但先还原成"手术前"（真卡已被 `--apply` 修过，见 `_rebuild_card`）
         for cid in F.DROP:
             src = os.path.join(_REAL, cid + '.json')
             assert os.path.exists(src), src
-            shutil.copy2(src, os.path.join(tmp, cid + '.json'))
+            _rebuild_card(src, F.DROP[cid], os.path.join(tmp, cid + '.json'))
         F.CARDS = tmp
+        _lost = []
+        for cid in F.DROP:
+            d0 = json.loads(io.open(os.path.join(tmp, cid + '.json'), 'r',
+                                    encoding='utf-8', newline='').read())
+            _lost += [cid + ':' + m for m in F.DROP[cid]
+                      if m not in (d0.get('voice_markers') or [])]
+        check('A0 夹具已还原：待删项全部回到 `voice_markers` 里（否则整组空转）',
+              not _lost, '缺：%s' % (','.join(_lost) or '无'))
 
         # ---- A 预览不写盘（默认 --dry 的语义）
         before = {c: io.open(os.path.join(tmp, c + '.json'), 'rb').read() for c in F.DROP}
@@ -95,7 +132,7 @@ def main():
         naive = raw.index(']', j)                    # 天真写法
         s, e = F._span_of_markers(raw)               # 真写法
         check('D ★★ `[……]` 里的 `]` 确实早于数组真结尾（证明这个陷阱真实存在）',
-              naive < e - 1, '天真截断位置=%d 真结尾=%d' % (naive, e - 1))
+              naive < e - 1, '陷阱成立（不打印偏移量，避免随卡内容漂移）')
         check('D2 真写法取到的区间能被 json 完整解析（天真写法不能）',
               isinstance(json.loads(raw[s:e]), list) and
               _raises(lambda: json.loads(raw[j:naive + 1])),
@@ -121,13 +158,12 @@ def main():
               'ut_gaster 已修过')
 
         # ---- H 真卡没被这场测试碰到（测试用副本，真仓库零改动）
-        real_kris = io.open(os.path.join(_REAL, 'kris.json'), 'r', encoding='utf-8',
-                           newline='').read()
-        check('H 测试全程用的副本 ⇒ 真卡 `kris.json` 原样未动',
-              json.loads(real_kris)['voice_markers'] ==
-              json.loads(before['kris'].decode('utf-8'))['voice_markers'],
-              '真卡名单=%s' % json.dumps(json.loads(real_kris)['voice_markers'],
-                                        ensure_ascii=False)[:60])
+        real_now = io.open(os.path.join(_REAL, 'kris.json'), 'rb').read()
+        check('H 测试全程用的副本 ⇒ 真卡 `kris.json` 逐字节未被改动',
+              real_now == _real_kris_snap,
+              '真卡名单=%s' % json.dumps(
+                  json.loads(real_now.decode('utf-8'))['voice_markers'],
+                  ensure_ascii=False)[:60])
     finally:
         F.CARDS = _REAL
         shutil.rmtree(tmp, ignore_errors=True)

@@ -127,16 +127,20 @@
   "max_chars": 200,
   "max_sentences": 3
  },
- "patch": "不要用括号写动作或表情，只写你说出口的话。",
+ "patch": "不要用括号加动作、表情或插话，只写你说出口的话。 别提作品名、游戏、玩家、代码这些词；你活在你的世界里。 一次最多两三句，短一点，像随口说出来的。",
  "eval": {
-  "violations": 4,
+  "violations": 33,
   "codes": [
-   "ACTION_PAREN"
+   "ACTION_PAREN",
+   "AI_SELF",
+   "META",
+   "REPEAT",
+   "TOO_LONG"
   ],
   "cross_dups": 0,
   "marker_hit": [
-   4,
-   4
+   48,
+   48
   ]
  }
 }

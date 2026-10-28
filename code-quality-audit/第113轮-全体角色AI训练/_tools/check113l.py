@@ -148,8 +148,15 @@ if P is not None:
     _read = [n for n, p in patches.items() if P.training_patch(n) != p]
     check('C2b `training_patch()` 对每条 patch 原样返回', not _read,
           '读回不符：%s' % (','.join(sorted(_read)) or '无'))
+    # ★ 第114轮：原来把 `flowery` 写死成"没写过的人"，而他这轮**真的训出补丁了**
+    #   ⇒ 判据从"守行为"退化成"守某个人没补丁"（夹具前提失效的典型）。
+    #   改成动态取"有卡片但没补丁"的那批人，逐个必须返回空串 —— 守的是
+    #   「`training_patch` 不许给默认句、不许串号」，和具体是谁无关。
+    _untrained = sorted(set(cards) - set(patches))
     check('C2c 负控制：没写过的人 / 未知 id 仍是空串（不许串号、不许给默认句）',
-          P.training_patch('flowery') == '' and P.training_patch('__nope__') == '')
+          bool(_untrained) and all(P.training_patch(n) == '' for n in _untrained)
+          and P.training_patch('__nope__') == '',
+          '有卡无补丁 %d 人' % len(_untrained))
 
 # ================================================================ D 尺子
 mark('D `_AI_RE` 口径：裸词判红，但"程序"故意不禁（人设内用法）')

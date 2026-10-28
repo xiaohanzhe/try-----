@@ -313,12 +313,14 @@ check('D3 每人一份可读对话记录（transcripts/<id>.md），且真含四
 corpus_dir = os.path.join(C.TRAIN_DIR, 'corpus')
 bad_corpus = []
 corpus_rows = 0
+corpus_per = {}
 if not os.path.isdir(corpus_dir):
     bad_corpus.append('目录不存在')
 else:
     for nid in base_ids:
         p = os.path.join(corpus_dir, nid + '.jsonl')
         rows = C.read_jsonl(p)
+        corpus_per[nid] = rows
         corpus_rows += len(rows)
         if not rows:
             bad_corpus.append(nid + ':空')
@@ -333,19 +335,64 @@ else:
                 break
 check('D4 语料每人一份、三段式 messages（system/user/assistant）且 system 非空',
       not bad_corpus, '%d 条 / 问题：%s' % (corpus_rows, ','.join(bad_corpus[:6]) or '无'))
-check('D4b 语料条数 == 77 人 × 4 轮（不缺轮、不重复追加）',
-      corpus_rows == len(roster) * 4, '%d vs %d' % (corpus_rows, len(roster) * 4))
+
+# ---------------------------------------------------------------- D4b/D5
+# ★★ 第114轮：这两条判据**从"只跑 4 轮冒烟"那天起就已经过时**，不是产品坏了。
+#   实证：`corpus_rows` 3696、报告 `turns` 3696，而旧判据拿 `_evidence/raw`（4 轮/人）
+#   重算得到 308 —— 因为 `eval113` 早就改成读**主记录**（`raw30`，每人 48 轮那遍），
+#   见 `pick_main_record` 的说明（那是第113轮s 修的真 bug）。
+#   ⇒ 判据跟着口径走，但**仍然独立重算**：这里故意把选主记录的规则**再写一遍**，
+#     不 import `eval113.pick_main_record`，否则"判据用被测函数"= 恒真。
+
+def _pick_main(recs):
+    u"""与 `eval113.pick_main_record` **同口径**的独立实现（按轮数挑，平手优先 baseline）。"""
+    cand = [r for r in (recs or []) if isinstance(r, dict) and r.get('phase') != 'patch']
+    if not cand:
+        cand = [r for r in (recs or []) if isinstance(r, dict)]
+    if not cand:
+        return None
+    return max(cand, key=lambda r: (r.get('turns_n') or len(r.get('turns') or []),
+                                    1 if r.get('phase') == 'baseline' else 0))
+
+
+_main_raw_dir = C.RAW30 if os.path.isdir(C.RAW30) else C.RAW
+main_raws = {}
+if os.path.isdir(_main_raw_dir):
+    for fn in sorted(os.listdir(_main_raw_dir)):
+        if fn.endswith('.jsonl'):
+            main_raws[fn[:-6]] = C.read_jsonl(os.path.join(_main_raw_dir, fn))
+
+_dup_rows = []
+_short = []
+for nid, rows in corpus_per.items():
+    seen = set()
+    for r in rows:
+        u = ((r.get('messages') or [{}, {}])[1] or {}).get('content') or ''
+        if u in seen:
+            _dup_rows.append(nid)
+            break
+        seen.add(u)
+    mrec = _pick_main(main_raws.get(nid) or [])
+    n_final = len([t for t in ((mrec or {}).get('turns') or []) if t.get('final')])
+    if len(rows) != n_final:
+        _short.append('%s:%d/%d' % (nid, len(rows), n_final))
+check('D4b 语料条数 == 主记录里有 final 的轮数（不缺轮、不重复追加）',
+      not _dup_rows and not _short,
+      '重复：%s / 不符：%s' % (','.join(sorted(_dup_rows)[:5]) or '无',
+                            ','.join(_short[:5]) or '无'))
 
 rep = C.load_json(os.path.join(C.EVID, 'report113.json'), {}) or {}
 summary = rep.get('summary') or {}
 recount_turns = 0
 recount_viol = 0
-for nid in base_ids:
-    rec = next(r for r in raws[nid] if r.get('phase') == 'baseline')
-    recount_turns += len(rec.get('turns') or [])
-    for t in rec.get('turns') or []:
+for nid in sorted(main_raws):
+    mrec = _pick_main(main_raws[nid])
+    if not mrec:
+        continue
+    recount_turns += len(mrec.get('turns') or [])
+    for t in mrec.get('turns') or []:
         recount_viol += len(t.get('violations') or [])
-check('D5 报告里的 轮数/违规数 == 从 raw 重算的结果（报告不许自己说一套）',
+check('D5 报告里的 轮数/违规数 == 从 raw30 主记录重算的结果（报告不许自己说一套）',
       summary.get('turns') == recount_turns and summary.get('hard_violations') == recount_viol,
       '报告=%s/%s 重算=%d/%d' % (summary.get('turns'), summary.get('hard_violations'),
                                  recount_turns, recount_viol))
