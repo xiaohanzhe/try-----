@@ -1,0 +1,3866 @@
+{
+ "by_scene": {
+  "outertale.aerialis.a_lab_virt": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room1_292",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room2_332",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (看 起 来 像 是 一 份 &  游 戏 攻 略 ^1， 还 是 ...？ ) /%%",
+    "instances": 1,
+    "ja": "＊ (ゲームの　こうりゃくメモ…？)/%%",
+    "key": "obj_readable_room3_200",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 这 是 你 ...？ /%%",
+    "instances": 3,
+    "ja": "＊ これは…　じぶん？/%%",
+    "key": "obj_readable_room4_145",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (抽 屉 里 有 一 把 银 色 钥 匙 。 ) /",
+    "instances": 2,
+    "ja": "＊ (ひきだしに　ぎんのカギが&　 はいっている)/",
+    "key": "obj_readable_room5_177",
+    "obj": "obj_readable_room5"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room5_92",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.aerialis.a_pacing": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room1_304",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room2_343",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room3_213",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room4_159",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* (这 是 个 什 么 鬼 ?)/%",
+    "instances": 4,
+    "ja": "＊ (これは　なんだろう…)/%",
+    "key": "obj_readable_room5_203",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.aerialis.a_path1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 个 冰 箱 。 ^1) &*  (奇 怪 的 是 ， 里 面 是 暖 的 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (れいぞうこだ^1)&＊ (ふれると　なぜか　アツい…)/%%",
+    "key": "obj_readable_room1_299",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (它 们 都 被 标 上 了 &  “ 人 类 历 史 ” 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (ぜんぶのラベルに&　 「ニンゲンのれきし」と&　 かいてある)/%%",
+    "key": "obj_readable_room3_207",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (在 纸 上 写 着 &  “ 谢 谢 你 让 我 梦 想 成 真 。 ” ) /%%",
+    "instances": 10,
+    "ja": "＊ (「ボクのゆめを&　 かなえてくれて　ありがとう」　と&　 かいてある)/%%",
+    "key": "obj_readable_room5_104",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.citadel.c_alley": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (我 不 能 战 斗 。 ) &*  (我 不 能 思 考 。 ) /",
+    "instances": 2,
+    "ja": "＊ (我は戦えぬ)&＊ (我は思案もできぬ)/",
+    "key": "obj_readable_room1_390",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.citadel.c_archive_exit": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (门 被 藤 条 卡 死 了 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (ドアには　ツタが　からまっていて&　 あかない)/%%",
+    "key": "obj_readable_room1_565",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.citadel.c_archive_foundryB1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (一 个 棺 材 。 ^1) &*  (上 面 刻 着 一 个 名 字 。 ) /",
+    "instances": 2,
+    "ja": "＊ (かんおけだ^1)&＊ (なまえが　きざまれている)/",
+    "key": "obj_readable_room1_86",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.citadel.c_archive_foundryB3": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* (\"\\[C].\")/",
+    "instances": 3,
+    "ja": "＊ (「\\[C]」)/",
+    "key": "obj_readable_room1_90",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.citadel.c_archive_foundryB4": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* “ 房 间 正 在 翻 修 。 ” /%%",
+    "instances": 2,
+    "ja": "＊ 「かいそうちゅう」/%%",
+    "key": "obj_readable_room1_139",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 只 是 一 个 普 通 的 旧 桶 ^3 & &  里 面 装 满 了 蜗 牛 。 /%%",
+    "instances": 2,
+    "ja": "＊ ごくふつうの　ふるいバケツだ^3。& &　 カタツムリが　はいっている。/%%",
+    "key": "obj_readable_room2_119",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.citadel.c_archive_path2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 看 看 这 些 酷 炫 的 玩 具 ！ ^2 &* 你 对 它 们 一 点 都 不 感 兴 趣 。 /%%",
+    "instances": 1,
+    "ja": "＊ オモチャがたくさん^2！&＊ まったく　きょうみを&　 そそられない。/%%",
+    "key": "obj_readable_room1_82",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (它 们 看 起 来 都 很 破 旧 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (なにもかも&　 かなり　ふるびている)/%%",
+    "key": "obj_readable_room2_100",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (通 心 粉 拼 成 的 花 图 案 。 ) ^1 &*  (‘ 给 国 王 老 爹 ！ ’ ) /%%",
+    "instances": 1,
+    "ja": "＊ (マカロニを　はりつけてつくった&　 はなの　え　だ^1)&＊ (「パパキングへ！」)/%%",
+    "key": "obj_readable_room3_79",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 无 论 如 何 ^1， 依 然 是 你 。 /%%",
+    "instances": 1,
+    "ja": "＊ いろいろあったけど^1 &　 じぶんは　やっぱり　じぶんだ。/%%",
+    "key": "obj_readable_room4_67",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.citadel.c_archive_starton1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 不 知 为 何 ^1， &  冰 箱 里 有 块 名 牌 巧 克 力 。 /%%",
+    "instances": 1,
+    "ja": "＊ なぜか^1　ゆうめいなメーカーの&　 チョコレートが　はいっている。/%%",
+    "key": "obj_readable_room1_143",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 里 面 是 一 本 从 201X年 初 &  开 始 的 旧 日 历 。 /%%",
+    "instances": 4,
+    "ja": "＊ 201X年の　はじめの&　 ふるいカレンダーだ。/%%",
+    "key": "obj_readable_room2_111",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 这 是 我 ^1， \\[C]./%%",
+    "instances": 2,
+    "ja": "＊ これは　じぶん^1…&　 \\[C]だ。/%%",
+    "key": "obj_readable_room4_70",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.citadel.c_archive_starton2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...还 有 一 件 粉 色 的 手 织 毛 衣 ^1，&  上 面 写 着 “ 大 老 爹 ” 。/",
+    "instances": 2,
+    "ja": "＊ …ピンクの　てあみセーターに^1は&　 「ミスター・パパ」と　かいてある。/%%",
+    "key": "obj_readable_room1_125",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 里 面 有 一 套 圣 诞 老 人 的 衣 服 。 /%%",
+    "instances": 1,
+    "ja": "＊ サンタクロースのコスチュームが&　 はいっている。/%%",
+    "key": "obj_readable_room2_90",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 抽 屉 里 有 些 花 籽 &  和 许 多 坏 掉 的 蜡 笔 。 /%%",
+    "instances": 1,
+    "ja": "＊ ひきだしの　なかには&　 はなの　たねと　おれたクレヨンが&　 はいっている。/%%",
+    "key": "obj_readable_room3_81",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* “ 怪 物 历 史 第 四 部 分 ” /",
+    "instances": 3,
+    "ja": "＊ 「モンスターのれきし」&　 だい4かん/",
+    "key": "obj_readable_room4_110",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (墨 水 仍 有 点 湿 润 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (インクは　まだ&　 かわききっていない)/%%",
+    "key": "obj_readable_room5_74",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.citadel.c_archive_starton3": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 王 座 /%%",
+    "instances": 2,
+    "ja": "＊ 謁見の間/%%",
+    "key": "obj_readable_room1_84",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\R* 我 的 画 。 /%%",
+    "instances": 1,
+    "ja": "\\R＊ これは　じぶんが　かいた。/%%",
+    "key": "obj_readable_room3_63",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 一 张 单 人 床 。 ) /%%",
+    "instances": 6,
+    "ja": "＊ (メタトンの　しんばんぐみの&　 プロモーション用ポスターだ)/",
+    "key": "obj_readable_room4_99",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 我 们 的 衣 服 。 /%%",
+    "instances": 1,
+    "ja": "＊ じぶんたちの　ふくだ。/%%",
+    "key": "obj_readable_room5_68",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.citadel.c_archive_starton4": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 树 丛 后 面 藏 着 个 摄 像 头 。 /%%",
+    "instances": 1,
+    "ja": "＊ …！^1？&＊ しげみに　かくしカメラがある。/%%",
+    "key": "obj_readable_room1_151",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 正 因 为 由 魔 法 构 成 ^1， &  怪 物 们 的 躯 体 和 他 们 的 &  灵 魂 是 密 不 可 分 的 。 /",
+    "instances": 1,
+    "ja": "＊ まりょくで　こうせいされている&　 モンスターたちの　からだ^1は&　 タマシイと　れんどうする。/",
+    "key": "obj_readable_room3_85",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 我 已 经 看 过 这 个 了 。 /%%",
+    "instances": 2,
+    "ja": "＊ これは　もう　よんだ。/%%",
+    "key": "obj_readable_room4_83",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 灶 台 。 /%%",
+    "instances": 2,
+    "ja": "＊ コンロだ。/%%",
+    "key": "obj_readable_room4_90",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.citadel.c_archive_wastelands4": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (另 一 个 &  被 白 布 包 住 的 王 座 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (もうひとつの　ぎょくざだ。&　 しろいシーツが　かかっている)/%%",
+    "key": "obj_readable_room2_115",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.citadel.c_bastion": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (它 已 经 彻 底 报 废 了 。 ) ^1 &*  (完 全 没 有 办 法 修 理 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (かんぜんに　はかいされている^1)&＊ (しゅうりは　ふかのうだろう)/%%",
+    "key": "obj_readable_room1_406",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.citadel.c_elevator2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (但 ^1， 保 持 耐 心 ^1， &  我 一 定 能 做 到 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (だが^1　耐え忍び&　 待つことができれば&　 道は開かれるだろう)/%%",
+    "key": "obj_readable_room1_395",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 记 录 编 号 2/",
+    "instances": 2,
+    "ja": "＊ No. 2/",
+    "key": "obj_readable_room2_400",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.citadel.c_pacing": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (穿 过 北 面 的 房 间 ^1， &  终 点 就 会 打 开 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (北の間を歩めば&　 「終わり」は開かれるだろう)/%%",
+    "key": "obj_readable_room1_385",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.citadel.c_road1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (解 决 这 个 谜 题 ， &  终 点 就 会 打 开 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (このパズルを解けば&　 「終わり」は開かれるだろう)/%%",
+    "key": "obj_readable_room1_380",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (到 东 边 去 ！ ^1) &*  (这 里 是 终 点 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (東へ！^1)&＊ (そこが　「終わり」だ)/%%",
+    "key": "obj_readable_room2_395",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.citadel.c_road2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (为 什 么 不 休 息 一 下 &  来 点 小 吃 呢 ？ ) /%%",
+    "instances": 2,
+    "ja": "＊ (肩の力を抜いて&　 軽食でもいかが？)/%%",
+    "key": "obj_readable_room1_401",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.core.a_core_left1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 皇 家 纪 念 喷 泉 &* 建 成 于 201X年 &*  (镁 塔 顿 是 上 周 加 的 ) /%%",
+    "instances": 8,
+    "ja": "＊ 王国　きねんの　ふんすい&＊ 201X年　かんせい&＊ (メタトンは　せんしゅう　ついか)/%%",
+    "key": "obj_readable_room1_633",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.core.a_core_left2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* “ 这 里 的 食 物 好 极 了 ！ ^1” &* “ 迷 人 的 风 格 和 芬 芳 的 气 息 ！ ^1” &* “ 我 的 脸 美 味 无 比 ！ ” /",
+    "instances": 3,
+    "ja": "%%",
+    "key": "obj_readable_room1_639",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 某 种 超 大 瓶 的 香 水 ) ^1 &*  (常 芳 型 香 水 。 ) /",
+    "instances": 3,
+    "ja": "＊ (こうすいが　はいった&　 きょだいな　ボトルだ^1)&＊ (「オー・デ・レクタングル」…)/",
+    "key": "obj_readable_room2_549",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (提 米 的 雕 像 ..^1. 超 级 著 民 ^1) &*  (超 级 ！ ！ ！ ！ ！ ！ ！ ！ ！ ！ ) /%%",
+    "instances": 4,
+    "ja": "＊ (手ミーの　ぞぅ^1…&　 めちゃﾕｰﾒィ^1)&＊ (ﾔﾊﾞぉ！！！)/%%",
+    "key": "obj_readable_room3_320",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.core.a_core_left3": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (喷 泉 上 有 几 行 铭 文 。 ) /",
+    "instances": 1,
+    "ja": "＊ (ふんすいに　ひぶんが&　 きざまれている)/",
+    "key": "obj_readable_room1_628",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.core.a_core_main": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (东 面 ...) &*  (终 点 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (東：)&＊ (「終わり」)/%%",
+    "key": "obj_readable_room1_375",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.core.a_core_right1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (上 面 说 &   明 星 自 己 就 会 发 光 ...) /%%",
+    "instances": 1,
+    "ja": "＊ (「スターは　みずから　かがやく」&　 と　かいてある…)/%%",
+    "key": "obj_readable_room1_646",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (盖 子 大 的 很 夸 张 ^1， &  你 没 法 打 开 它 。 )/%%",
+    "instances": 1,
+    "ja": "＊ (キャップが&　 いように　おおきく^1て&　 あけることが　できない)/%%",
+    "key": "obj_readable_room2_554",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.core.a_lookout": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (等 等 。 ^1) &*  (这 只 是 个 羊 角 面 包 ...) /%%",
+    "instances": 1,
+    "ja": "＊ (…とおもったら^1 &　 ただのクロワッサンだった)/%%",
+    "key": "obj_readable_room1_369",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (北 方 ^1， 勇 者 之 路 。 ) &*  (西 方 ^1， 贤 者 之 路 。 ) &*  (每 条 路 都 将 通 往 尽 头 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (北は^1　戦士の道)&＊ (西は^1　賢者の道)&＊ (いずれの道も「終わり」へ続く)/%%",
+    "key": "obj_readable_room2_390",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.foundry.f_artifact": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 他 们 突 然 袭 来 ， &  毫 不 留 情 。 /%%",
+    "instances": 2,
+    "ja": "＊ 彼らは何の前触れもなく&　 攻めてくると^1　我々を襲い^1 &　 ひとりも見逃しはしなかった。/%%",
+    "key": "obj_readable_room1_274",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 团 结 一 致 的 人 类 太 过 强 大 ， &  而 我 们 怪 物 ， 太 过 弱 小 。 /",
+    "instances": 2,
+    "ja": "＊ 団結したニンゲンたちは&　 あまりに強く　モンスターたちは&　 あまりに非力だった。/",
+    "key": "obj_readable_room2_318",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.foundry.f_bird": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (太 棒 了 ， 你 可 以 从 这 个 角 度 &  看 到 南 面 的 墙 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (この　かくどから&　 みなみの　かべが　みえて&　 ラッキーだ)/%%",
+    "key": "obj_readable_room2_569",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.foundry.f_chute": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\E0* 所 以 艾 菲 斯 改 造 了 我 的 &  冰 箱 ， 让 它 能 加 热 食 物 ！ /",
+    "instances": 2,
+    "ja": "\\E0＊ だから　アルフィー^1に&　 あっためるように&　 かいぞうしてもらった！/",
+    "key": "obj_readable_room1_347",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\E3* 可 惜 ！ ^1 &* 死 宅 禁 止 入 内 ！ /",
+    "instances": 1,
+    "ja": "\\E3＊ ざんねんだったな^1！&＊ オタクは&　 たちいりきんしだッ！/",
+    "key": "obj_readable_room2_373",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\E4* 他 所 做 的 只 是 &  妖 媚 地 躺 在 钢 琴 上 .../",
+    "instances": 3,
+    "ja": "\\E4＊ ひたすら　ピアノの&　 うえに　ねそべってた&　 ことがあった。/",
+    "key": "obj_readable_room3_242",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 记 录 编 号 5/",
+    "instances": 2,
+    "ja": "＊ No. 5/",
+    "key": "obj_readable_room4_182",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (...袖 珍 的 剑 ^1， 斧 头 ^1， &  长 矛 ^1， 双 截 棍 ...) /%%",
+    "instances": 4,
+    "ja": "＊ (…ミニサイズのつるぎ^1…&　 オノ^1…　ヤリ^1…　ヌンチャク…)/%%",
+    "key": "obj_readable_room5_145",
+    "obj": "obj_readable_room5"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\E6* 通 常 他 都 可 以 平 稳 着 地 。 /%%",
+    "instances": 4,
+    "ja": "\\E6＊ いつもは&　 ちゃくちも　かんぺきに&　 きめるのにッ！/%%",
+    "key": "obj_readable_room5_154",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.foundry.f_corner": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 天 使 ...&* 一 位 曾 见 过 地 表 的 天 使 .../",
+    "instances": 2,
+    "ja": "＊ 「地上を見し者…&　 すなわち　天使は舞い戻る…」/",
+    "key": "obj_readable_room1_256",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.foundry.f_corridor": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* “ 人 类 和 怪 物 的 战 争 。 ” /%%",
+    "instances": 1,
+    "ja": "＊ 「ニンゲンとモンスターの戦争史」/%%",
+    "key": "obj_readable_room1_235",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 人 类 无 比 强 大 。 &* 几 乎 所 有 怪 物 的 &  灵 魂 加 起 来 .../",
+    "instances": 1,
+    "ja": "＊ ニンゲンは圧倒的な強さを持つ。&＊ 全モンスターのタマシイを&　 集結して　ようやく…/",
+    "key": "obj_readable_room2_295",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 那 份 力 量 使 得 它 即 使 &  在 死 后 也 能 留 存 于 体 外 。 /%%",
+    "instances": 1,
+    "ja": "＊ ニンゲンのタマシイは　死後も&　 肉体を離れ　存在しつづけることが&　 可能なのだ。/%%",
+    "key": "obj_readable_room3_147",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 一 个 拥 有 着 人 类 灵 魂 的 怪 物 ..^1.&* 一 只 拥 有 无 尽 力 量 &  的 恐 怖 猛 兽 。 /%%",
+    "instances": 1,
+    "ja": "＊ モンスターがニンゲンのタマシイを&　 取り込めば^1　底知れぬ力を持つ&　 恐ろしい怪物となるのだ。/%%",
+    "key": "obj_readable_room4_139",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 张 图 画 莫 名 地 &  令 人 很 不 安 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (どこか　みるものを&　 ふあんにさせる　え　だ)/%%",
+    "key": "obj_readable_room5_131",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.foundry.f_error": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 前 八 个 音 符 就 行 了 。 /%%",
+    "instances": 2,
+    "ja": "＊ 最初の8音だけでいい。/%%",
+    "key": "obj_readable_room5_126",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.foundry.f_kitchen": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 人 类 ， 害 怕 我 们 的 力 量 ^1， &  向 我 们 发 动 了 战 争 。 /",
+    "instances": 1,
+    "ja": "＊ そして　恐怖に駆られた&　 ニンゲンたちは^1 &　 我々モンスターに戦いを挑んだ。/",
+    "key": "obj_readable_room1_269",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 我 总 是 抓 到 &  同 一 只 。 /%%",
+    "instances": 1,
+    "ja": "＊ だから　つかまるのは&　 おなじムシ　ばっかり。/%%",
+    "key": "obj_readable_room2_326",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (像 是 某 样 东 西 的 便 条 ^1。 &  但 它 从 头 到 尾 都 是 鬼 画 符 。 )/",
+    "instances": 1,
+    "ja": "＊ (なにかのメモのようだ^1…&　 ミミズが　はったような　じで&　 かいてある)/",
+    "key": "obj_readable_room3_195",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 你 能 管 管 你 朋 友 吗 ...？ /",
+    "instances": 1,
+    "ja": "＊ その　おともだち…なんとかして&　 もらえませんか…？/",
+    "key": "obj_readable_room4_126",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.foundry.f_lobby": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 受 伤 ， 战 败 ， 害 怕 着 死 亡 ， &  我 们 向 人 类 投 降 了 。 /",
+    "instances": 2,
+    "ja": "＊ 完膚無きまでに打ちのめされた&　 我々は^1　根絶やしにされることを&　 恐れ　ニンゲンたちに降伏した。/",
+    "key": "obj_readable_room1_241",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 当 怪 物 死 去 时 ， &  他 的 灵 魂 会 消 失 。 /",
+    "instances": 2,
+    "ja": "＊ モンスターが死ぬと&　 そのタマシイは　ただちに&　 消滅する。/",
+    "key": "obj_readable_room2_302",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 一 种 特 殊 的 称 为 “ Boss怪 物 ” &  的 怪 物 的 灵 魂 。 /",
+    "instances": 2,
+    "ja": "＊ 「ボスモンスター」と呼ばれる&　 特殊な種族のタマシイである。/",
+    "key": "obj_readable_room3_154",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.foundry.f_napstablook": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 七 个 最 强 大 的 人 类 魔 法 师 &  用 法 术 将 我 们 封 印 在 地 底 。 /",
+    "instances": 2,
+    "ja": "＊ そして　強大な力を持つ　7人の&　 ニンゲンの魔術師が^1　その魔力で&　 我々を地底の世界に封印した。/",
+    "key": "obj_readable_room1_247",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 如 果 有 一 股 强 大 的 ， &  相 当 于 七 个 人 类 灵 魂 的 力 量 ， &  施 加 到 结 界 上 .../",
+    "instances": 2,
+    "ja": "＊ 7人のニンゲンのタマシイに&　 匹敵する　強大な力で撃てば…/",
+    "key": "obj_readable_room2_310",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 人 类 根 本 不 可 能 到 这 里 。 /",
+    "instances": 2,
+    "ja": "＊ したがって　ニンゲンが&　 現れることもない。/",
+    "key": "obj_readable_room3_165",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.foundry.f_prepuzzle": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "%%",
+    "instances": 4,
+    "ja": "＊ ひとたび道を定めたら&　 心を変えることなかれ。/%%",
+    "key": "obj_readable_room1_652",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (她 在 等 人 放 她 出 去 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (だれかが　だしてくれるのを&　 まっている)/%%",
+    "key": "obj_readable_room2_560",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "%%",
+    "instances": 2,
+    "ja": "%%",
+    "key": "obj_readable_room3_325",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.foundry.f_puzzle2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 阿 嚏 ^1！ &* 本 来 是 想 抓 虫 子 ^1， &  但 我 刚 得 了 感 冒 .../%%",
+    "instances": 2,
+    "ja": "＊ ハックション^1！&＊ ムシを　つかまえたかったの^1に&　 カゼのウイルス　つかまえちゃった…/%%",
+    "key": "obj_readable_room1_263",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.foundry.f_puzzle3": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (一 个 破 旧 的 &  长 着 猫 耳 的 &  人 类 女 性 手 办 。 )/%%",
+    "instances": 2,
+    "ja": "＊ (ネコみみが　ついた　ニンゲンの&　 おんなのこの　フィギュア。&　 ふるくて　ボロボロだ)/%%",
+    "key": "obj_readable_room1_280",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.foundry.f_sans": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 但 人 类 有 一 个 弱 点 。 &* 讽 刺 的 是 ， 那 正 是 他 们 &  灵 魂 中 蕴 含 的 强 大 力 量 。 /",
+    "instances": 2,
+    "ja": "＊ だがニンゲンにも弱点が1つある。&　 その弱点には皮肉にも　彼らの&　 タマシイの強さが関係している。/",
+    "key": "obj_readable_room3_142",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.foundry.f_story1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* “ 这 就 是 人 类 们 害 怕 的 能 力 。 ” /%%",
+    "instances": 2,
+    "ja": "＊ ニンゲンたちは　これを恐れた。/%%",
+    "key": "obj_readable_room1_228",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.foundry.f_village": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 有 时 候 ..^1.&* 会 有 我 喜 欢 看 的 节 目 .../%%",
+    "instances": 2,
+    "ja": "＊ それで^1　おもしろい　ばんぐみを&　 みるヨ^1…　ときどきネ…/%%",
+    "key": "obj_readable_room3_303",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.special._credits4": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 顺 着 路 走 。 /%%",
+    "instances": 1,
+    "ja": "＊ (手ミーのふか～い　れきし)/%%",
+    "key": "obj_readable_room1_65",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.special._frontier1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 西 面 的 房 间 &  是 东 面 房 间 的 蓝 图 。 /%%",
+    "instances": 1,
+    "ja": "＊ 西の間は 東の間の&　 青写真。/%%",
+    "key": "obj_readable_room1_66",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.special._frontier3": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 四 分 之 三 的 石 头 &  希 望 你 推 它 们 。 /%%",
+    "instances": 2,
+    "ja": "＊ 灰色の岩　4つのうち3つが&　 押されることを望む。/%%",
+    "key": "obj_readable_room1_67",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.special._frontier8": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (在 墙 缝 里 有 一 只 &  蚂 蚁 大 小 的 青 蛙 ...) ^1 &*  (它 在 向 你 招 手 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (かべの　われめのなかに&　 アリんこサイズの　カエルが…^1)&＊ (こちらに　てを　ふっている)/%%",
+    "key": "obj_readable_room1_68",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.starton.s_backrooms": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (抽 屉 里 有 一 本 相 册 。 ) /",
+    "instances": 3,
+    "ja": "＊ (ひきだしの　なかに&　 アルバムが　はいっている)/",
+    "key": "obj_readable_room1_590",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (你 往 抽 屉 里 看 了 看 。 ^1) &*  (里 面 有 某 种 徽 章 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (ひきだしを　あけてみた^1)&＊ (バッジのようなものが&　 はいっている)/%%",
+    "key": "obj_readable_room2_539",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (蓝 图 。 ^1) &*  (你 看 不 懂 这 种 符 号 ...) /",
+    "instances": 1,
+    "ja": "＊ (せっけいず　だ^1)&＊ (みなれない　もじで　かいてあ^1り&　 かいどく　できない…)/",
+    "key": "obj_readable_room3_286",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (在 帘 布 后 面 有 一 台 &  奇 怪 的 机 器 。 ^1) &*  (它 似 乎 坏 了 。 ) /%%",
+    "instances": 3,
+    "ja": "＊ (カーテンの　うしろに&　 きみょうな　きかいが　ある^1)&＊ (こわれているようだ)/%%",
+    "key": "obj_readable_room4_212",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (你 把 它 挂 在 了 你 的 钥 匙 圈 上 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (キーホルダーに　とりつけた)/%%",
+    "key": "obj_readable_room5_186",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.starton.s_battle": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 如 果 你 犯 了 个 错 误 &  敲 击 铃 铛 花 会 把 这 些 &  桥 之 花 种 召 回 原 处 。 /%%",
+    "instances": 2,
+    "ja": "＊ 過ちをおかしたならば　鐘の花を&　 鳴らせ。足場の種は　始まりの&　 場所に戻るだろう。/%%",
+    "key": "obj_readable_room3_139",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_beddinng": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\E1他 总 是 忘 了 &给 它 喂 东 西 。 /",
+    "instances": 1,
+    "ja": "\\E1兄ちゃんは&いつも&エサやりを&わすれる&から…/",
+    "key": "obj_readable_room2_259",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "它 总 是 让 我 想 起 &生 命 中 重 要 的 事 。 /%%",
+    "instances": 2,
+    "ja": "じんせいに&おいて、&なにが&たいせつか&おもい&ださせて&くれる/%%",
+    "key": "obj_readable_room3_175",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_bridge": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (锁 住 了 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (カギが　かかっている)/%%",
+    "key": "obj_readable_room1_580",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 个 枕 头 芯 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (カバーのとれた　まくらだ)/%%",
+    "key": "obj_readable_room2_534",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.starton.s_dogs": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 一 份 关 于 怪 物 葬 礼 &  的 学 校 报 告 。 ) /",
+    "instances": 1,
+    "ja": "＊ (がくせいが　かいた　レポートだ。&　 モンスターの　とむらいのぎしき&　 について　まとめてある)/",
+    "key": "obj_readable_room1_164",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 在 这 座 桥 底 下 &  藏 着 一 部 摄 像 机 。 /%%",
+    "instances": 3,
+    "ja": "＊ …！^1？&＊ はしのしたに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room3_124",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_exit": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 许 愿 室 /%%",
+    "instances": 2,
+    "ja": "＊ 願いの間/%%",
+    "key": "obj_readable_room3_141",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_grillbys": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "安 黛 因 在 海 湾 里 &找 到 了 它 .../",
+    "instances": 4,
+    "ja": "アンダイン&が、&うみべで&みつけた&んだ…/",
+    "key": "obj_readable_room2_276",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.starton.s_jenga": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 在 这 里 的 树 上 &  藏 着 一 部 摄 像 机 。 /%%",
+    "instances": 2,
+    "ja": "＊ …！^1？&＊ あたりの木に　かくしカメラが&　 しかけてある。/%%",
+    "key": "obj_readable_room3_128",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_math": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...HP上 限 是 什 么 啊 ？ /%%",
+    "instances": 1,
+    "ja": "＊ …さいだいHPって　なぁに？/%%",
+    "key": "obj_readable_room1_208",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.starton.s_pacing": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "请 别 进 入 神 秘 小 屋 。 /%%",
+    "instances": 1,
+    "ja": "この&あやしい&こやには、&はいら&ないで&ください！/%%",
+    "key": "obj_readable_room2_483",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 当 四 个 桥 花 种 在 水 中 &  排 成 一 条 线 时 ^1， &  它 们 就 会 开 花 。 /%%",
+    "instances": 2,
+    "ja": "＊ 「足場の種」は&　 水面に4つ並ぶ^1と&　 花を咲かせる。/%%",
+    "key": "obj_readable_room3_132",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (你 打 开 锁 进 去 了 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (カギをあけて&　 なかに　はいった…)/%%",
+    "key": "obj_readable_room4_222",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.starton.s_papyrus": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 开 关 现 在 被 卡 住 了 。 /%%",
+    "instances": 4,
+    "ja": "＊ スイッチは　うごかなくなった。/%%",
+    "key": "obj_readable_room1_158",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 在 这 棵 树 里 面 &  藏 着 一 部 摄 像 机 。 /%%",
+    "instances": 1,
+    "ja": "＊ …！^1？&＊ 木に　かくしカメラが&　 しかけてある。/%%",
+    "key": "obj_readable_room3_116",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_sans": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 在 雪 地 里 藏 着 一 个 开 关 ^1。 &* 喀 哒 ！ /%%",
+    "instances": 1,
+    "ja": "＊ ゆきのなかに&　 スイッチが　かくれている^1。&＊ カチッ！/%%",
+    "key": "obj_readable_room1_155",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "这 是 我 兄 弟 的 &宠 物 石 头 。 /",
+    "instances": 1,
+    "ja": "それは、&兄ちゃんの&ペット&ロック&だよ/",
+    "key": "obj_readable_room2_252",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.starton.s_sansroom": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "%%",
+    "instances": 2,
+    "ja": "%%",
+    "key": "obj_readable_room4_237",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.starton.s_start": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\W* 藉 由 这 些 品 质 ^1， &  你 在 “ \\R雪 球 游 戏 \\W” 中 &  获 得 了 胜 利 。 /",
+    "instances": 1,
+    "ja": "\\W＊ あなたは　それらを　くしし^1 &　 「\\Rボールゲーム\\W」で&　 しょうりした。/",
+    "key": "obj_readable_room2_178",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 在 这 棵 树 里 面 &  藏 着 一 部 摄 像 机 。 /%%",
+    "instances": 1,
+    "ja": "＊ …！^1？&＊ 木に　かくしカメラが&　 しかけてある。/%%",
+    "key": "obj_readable_room3_112",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.starton.s_town1": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 怪 物 们 的 葬 礼 ^1， &  严 格 地 说 ^2， 非 常 酷 炫 。 /",
+    "instances": 1,
+    "ja": "＊ モンスターの　そうしきは^1 &　 せんもんてき　かんてんから&　 みても　めちゃカッコイイ。/",
+    "key": "obj_readable_room1_198",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 人 类 ^1， 从 物 质 形 态 上 说 ^1， &  比 我 们 强 大 得 多 。 /",
+    "instances": 1,
+    "ja": "＊ にくたいを　もつ　ニンゲン^1は &　 われわれ　モンスターより&　 はるかに　きょうりょくだ。/",
+    "key": "obj_readable_room2_149",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 如 果 一 个 怪 物 不 想 战 斗 ^1， &  他 的 防 御 会 减 弱 。 /",
+    "instances": 1,
+    "ja": "＊ このため^1　たたかいを　のぞまぬ&　 モンスターは^1　ぼうぎょりょくが&　 ていかする。/",
+    "key": "obj_readable_room3_89",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 不 再 害 怕 人 类 ^1， &  我 们 搬 离 了 旧 城 市 ^1， 家 。 /",
+    "instances": 1,
+    "ja": "＊ ニンゲンのきょういから&　 かいほうされた　われわれ^1は&　 「ホーム」のまちを　あとにした。/",
+    "key": "obj_readable_room4_114",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 然 而 “ 灵 魂 ” 中 最 纯 粹 的 &  本 质 仍 是 未 知 的 。 /",
+    "instances": 1,
+    "ja": "＊ しかし　そもそも「タマシイ」とは&　 どういうものなのか　よくわかって&　 いないのが　げんじょうだ。/",
+    "key": "obj_readable_room5_138",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "outertale.starton.s_town2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (里 面 是 许 多 &  杉 斯 和 许 多 你 不 认 识 的 人 &  一 起 拍 的 照 片 。 ) /",
+    "instances": 1,
+    "ja": "＊ (みたことのない　ひとたちと&　 いっしょに　うつった　サンズの&　 しゃしんが　なんまいもある)/",
+    "key": "obj_readable_room1_595",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 个 表 演 顺 序 表 ^1) &*  (喜 剧 演 员 ^1， 舞 者 ^1， 杉 斯 ...^1) &*  (然 后 是 中 场 休 息 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (こうえんスケジュールだ^1)&＊ (げいにん^1　ダンサー^1　サンズ^1…)&＊ (いまは　きゅうけいのようだ)/%%",
+    "key": "obj_readable_room2_544",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (...或 者 这 只 是 &  写 的 太 难 看 了 。 ) /",
+    "instances": 2,
+    "ja": "＊ (…じが　きたなすぎる&　 だけかもしれない)/",
+    "key": "obj_readable_room3_291",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (锁 住 了 。 ) /%%",
+    "instances": 3,
+    "ja": "＊ (カギが　かかっている)/%%",
+    "key": "obj_readable_room4_217",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.wastelands.w_alley2": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 在 这 坨 雪 当 中 &  藏 着 一 部 摄 像 机 。 /%%",
+    "instances": 2,
+    "ja": "＊ …！^1？&＊ ゆきのかたまりの　なかに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room3_108",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.wastelands.w_blooky": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* “ 房 间 正 在 翻 修 。 ” /%%",
+    "instances": 1,
+    "ja": "＊ 「かいそうちゅう」/%%",
+    "key": "obj_readable_room1_142",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 哦 ^2！ &* 这 是 “ 水 香 肠 。 ” /%%",
+    "instances": 2,
+    "ja": "＊ これは…^2！&＊ 「ウォーターソーセージ」だ。/%%",
+    "key": "obj_readable_room2_135",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 一 些 白 色 的 毛 &  堵 在 下 水 管 里 。 /%%",
+    "instances": 1,
+    "ja": "＊ はいすいこうには　しろい&　 どうぶつのけが　つまっている。/%%",
+    "key": "obj_readable_room3_83",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 依 然 是 你 ^1， 弗 里 斯 克 。 /%%",
+    "instances": 1,
+    "ja": "＊ やっぱり　じぶんだよ^1 &　 フリスク。/%%",
+    "key": "obj_readable_room4_63",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 一 朵 金 色 的 花 。 /%%",
+    "instances": 1,
+    "ja": "＊ きんいろの　はなだ。/%%",
+    "key": "obj_readable_room4_66",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.wastelands.w_coffin": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 如 果 你 能 读 懂 这 个 ^1， &  就 按 下 红 色 的 开 关 。 /%%",
+    "instances": 2,
+    "ja": "＊ この注意書きが見えているな^1ら&　 赤いスイッチを押すべし。/%%",
+    "key": "obj_readable_room1_72",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.wastelands.w_danger": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 如 果 你 能 读 懂 这 个 ^1， &  就 按 下 绿 色 的 开 关 。 /%%",
+    "instances": 2,
+    "ja": "＊ この注意書きが見えているな^1ら&　 緑のスイッチを押すべし。/%%",
+    "key": "obj_readable_room1_73",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.wastelands.w_dummy": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 如 果 你 能 读 懂 这 个 ^1， &  就 按 下 蓝 色 的 开 关 。 /%%",
+    "instances": 2,
+    "ja": "＊ この注意書きが見えているな^1ら&　 青いスイッチを押すべし。/%%",
+    "key": "obj_readable_room1_71",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.wastelands.w_junction": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 这 个 派 的 尺 寸 &  吓 得 你 完 全 不 敢 吃 它 。 /%%",
+    "instances": 1,
+    "ja": "＊ あまりにも　おおきなパイなので&　 おそろしくて　たべるきにならない。/%%",
+    "key": "obj_readable_room2_140",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (一 些 白 色 的 毛 &  堵 在 下 水 管 里 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (はいすいこうには　しろい&　 どうぶつのけが　つまっている)/%%",
+    "key": "obj_readable_room3_84",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\R* 刀 子 在 哪 。 /%%",
+    "instances": 2,
+    "ja": "\\R＊ ナイフはどこだ。/%%",
+    "key": "obj_readable_room4_76",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 灶 台 非 常 干 净 ^1。 &* 托 丽 尔 一 定 是 用 的 火 魔 法 。 /%%",
+    "instances": 2,
+    "ja": "＊ コンロは　よごれていない^1。&＊ トリエルは　まほうで　りょうりを&　 しているのだろう。/%%",
+    "key": "obj_readable_room4_77",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 再 也 没 有 人 会 用 这 个 了 .../%%",
+    "instances": 2,
+    "ja": "＊ これを　つかうひとは&　 もういない…/%%",
+    "key": "obj_readable_room4_78",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (有 个 纸 条 。 ) ^1 &* 哈 喽 ^1！ 随 便 吃 点 想 吃 的 吧 ！ /%%",
+    "instances": 2,
+    "ja": "＊ (かきおきだ^1)&＊ ハロー^1！　たべたいものが　あったら&　 どうぞ　ごじゆうに！/%%",
+    "key": "obj_readable_room4_79",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "outertale.wastelands.w_lobby": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* (那 里 面 有 一 只 青 蛙 ...^2)&* (等 等 ^1! 有 两 只 !)/",
+    "instances": 1,
+    "ja": "＊ (なかに　カエルが　1ぴき…^2)&＊ (いや^1…2ひきいる！)/",
+    "key": "obj_readable_room1_69_console_1",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.wastelands.w_mouse": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 看 起 来 像 是 园 艺 工 具 。 /%%",
+    "instances": 1,
+    "ja": "＊ ガーデニングの　どうぐのようだ。/%%",
+    "key": "obj_readable_room1_81",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 被 困 在 结 界 之 后 ， &  惧 怕 人 类 进 一 步 袭 击 ， &  我 们 选 择 了 撤 退 。 /",
+    "instances": 2,
+    "ja": "＊ バリアのなかに　とじこめられた&　 われわれは^1　さらなるこうげきを&　 おそれ^1　たいきゃくした。/",
+    "key": "obj_readable_room2_80",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.wastelands.w_pacing": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (积 满 灰 尘 的 玩 具 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (ほこりまみれの　オモチャだ)/%%",
+    "key": "obj_readable_room1_83",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (一 个 空 相 框 。 ) &*  (有 人 擦 去 了 它 的 灰 尘 。 ) /%%",
+    "instances": 2,
+    "ja": "＊ (からっぽの　しゃしんたてだ)&＊ (だれかが　ほこりを&　 はらったようだ)/%%",
+    "key": "obj_readable_room2_63",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 幅 金 色 花 儿 的 画 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (きんいろの　はなの　え　だ)/%%",
+    "key": "obj_readable_room3_60",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.wastelands.w_party": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 这 是 托 丽 尔 的 袜 子 收 藏 。 /%%",
+    "instances": 1,
+    "ja": "＊ トリエルの&　 くつしたコレクションだ。/%%",
+    "key": "obj_readable_room1_112",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 这 是 本 地 底 植 物 的 百 科 全 书 。 &  你 翻 到 了 中 间 .../",
+    "instances": 3,
+    "ja": "＊ ちかにせいそくする　しょくぶつの&　 ずかんだ。まんなかあたりの&　 ページを　ひらいてみた…/",
+    "key": "obj_readable_room2_124",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (起 初 ， 你 觉 得 它 只 比 &  一 张 单 人 床 大 。 ) /",
+    "instances": 2,
+    "ja": "＊ (ダブルサイズよりも&　 おおきい…)/",
+    "key": "obj_readable_room3_71",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.wastelands.w_puzzle4": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (这 是 一 部 从 201X年 末 开 始 的 &  旧 日 历 。 ) ^1 &*  (一 个 日 期 被 圈 了 起 来 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (201X年の　おわりの&　 ふるいカレンダーだ^1)&＊ (ある　ひづけに　まるがついている)/%%",
+    "key": "obj_readable_room1_75",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "*  (一 朵 金 色 的 花 。 ) /%%",
+    "instances": 1,
+    "ja": "＊ (きんいろの　はなだ)/%%",
+    "key": "obj_readable_room2_114",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.wastelands.w_toriel_asriel": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* ...！ ^1？ &* 在 这 个 ..^1.“ 岗 哨 站 ” 后 面 &  藏 着 一 部 摄 像 机 。 /%%",
+    "instances": 2,
+    "ja": "＊ …！^1？&＊ みはりごや？のうらに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room3_104",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "outertale.wastelands.w_toriel_hallway": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "\\W* \\O勇 敢 ^1。  \\Y正 义 。 \\W  &*\\B 正 直 ^1。  \\G友 善 ^1。 \\W &*\\P毅 力 ^1。  \\L耐 心 。  \\W /",
+    "instances": 2,
+    "ja": "\\W＊ \\Oゆうき^1　\\Yせいぎ^1 \\W &＊ \\Bせいじつさ^1　\\Gやさしさ^1 \\W &＊ \\Pこんき^1　\\Lにんたい。\\W /",
+    "key": "obj_readable_room2_166",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "outertale.wastelands.w_tutorial": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 远 处 的 门 并 不 是 出 口 ^1， &* 只 是 表 示 视 角 的 旋 转 。 /%%",
+    "instances": 1,
+    "ja": "＊ 端の扉は出口にあらず^1。&＊ 入るたびに 視点が&　 変わるのみ。/%%",
+    "key": "obj_readable_room1_70",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "outertale.wastelands.w_zigzag": [
+   {
+    "cn": null,
+    "cn_tight": null,
+    "en": "* 这 些 书 本 很 破 旧 ...&* 它 们 肯 定 已 经 被 读 过 多 次 了 。 /%%",
+    "instances": 2,
+    "ja": "＊ ボロボロのほんだ…&＊ だれかが　くりかえし&　 よんだのだろう。/%%",
+    "key": "obj_readable_room1_74",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_asghouse1": [
+   {
+    "cn": "\\R*  (我 来 这 里 的 那 天 。 ) /%%",
+    "cn_tight": "\\R*  (我来这里的那天。 ) /%%",
+    "en": "\\R* (The date I came here.)/%%",
+    "instances": 1,
+    "ja": "\\R＊ (ここに　きた　ひ　だ)/%%",
+    "key": "obj_readable_room1_78",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (另 一 个 &  被 白 布 包 住 的 王 座 。 ) /%%",
+    "cn_tight": "*  (另一个 &  被白布包住的王座。 ) /%%",
+    "en": "* (It's another throne covered&  by a white sheet.)/%%",
+    "instances": 1,
+    "ja": "＊ (もうひとつの　ぎょくざだ。&　 しろいシーツが　かかっている)/%%",
+    "key": "obj_readable_room2_115",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_asghouse2": [
+   {
+    "cn": "* 看 看 这 些 酷 炫 的 玩 具 ！ ^2 &* 你 对 它 们 一 点 都 不 感 兴 趣 。 /%%",
+    "cn_tight": "* 看看这些酷炫的玩具！ ^2 &* 你对它们一点都不感兴趣。 /%%",
+    "en": "* Look at these cool toys^2!&* They don't interest you&  at all./%%",
+    "instances": 1,
+    "ja": "＊ オモチャがたくさん^2！&＊ まったく　きょうみを&　 そそられない。/%%",
+    "key": "obj_readable_room1_82",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (它 们 看 起 来 都 很 破 旧 。 ) /%%",
+    "cn_tight": "*  (它们看起来都很破旧。 ) /%%",
+    "en": "* (They all seem very worn.)/%%",
+    "instances": 2,
+    "ja": "＊ (なにもかも&　 かなり　ふるびている)/%%",
+    "key": "obj_readable_room2_100",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (通 心 粉 拼 成 的 花 图 案 。 ) ^1 &*  (‘ 给 国 王 老 爹 ！ ’ ) /%%",
+    "cn_tight": "*  (通心粉拼成的花图案。 ) ^1 &*  (‘ 给国王老爹！ ’ ) /%%",
+    "en": "* (Macaroni art of a flower.^1)&* ('For King Dad!')/%%",
+    "instances": 1,
+    "ja": "＊ (マカロニを　はりつけてつくった&　 はなの　え　だ^1)&＊ (「パパキングへ！」)/%%",
+    "key": "obj_readable_room3_79",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 无 论 如 何 ^1， 依 然 是 你 。 /%%",
+    "cn_tight": "* 无论如何 ^1， 依然是你。 /%%",
+    "en": "* Despite everything^1, it's&  still you./%%",
+    "instances": 1,
+    "ja": "＊ いろいろあったけど^1 &　 じぶんは　やっぱり　じぶんだ。/%%",
+    "key": "obj_readable_room4_67",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_asghouse3": [
+   {
+    "cn": "* 不 知 为 何 ^1， &  冰 箱 里 有 块 名 牌 巧 克 力 。 /%%",
+    "cn_tight": "* 不知为何 ^1， &  冰箱里有块名牌巧克力。 /%%",
+    "en": "* For some reason^1, there&  is a brand-name chocolate&  bar in the fridge./%%",
+    "instances": 1,
+    "ja": "＊ なぜか^1　ゆうめいなメーカーの&　 チョコレートが　はいっている。/%%",
+    "key": "obj_readable_room1_143",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 里 面 是 一 本 从 201X年 初 &  开 始 的 旧 日 历 。 /%%",
+    "cn_tight": "* 里面是一本从 201X年初 &  开始的旧日历。 /%%",
+    "en": "* Inside is an old calendar&  from the beginning of&  201X./%%",
+    "instances": 4,
+    "ja": "＊ 201X年の　はじめの&　 ふるいカレンダーだ。/%%",
+    "key": "obj_readable_room2_111",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 这 是 我 ^1， \\[C]./%%",
+    "cn_tight": "* 这是我 ^1， \\[C]./%%",
+    "en": "* It's me^1, \\[C]./%%",
+    "instances": 2,
+    "ja": "＊ これは　じぶん^1…&　 \\[C]だ。/%%",
+    "key": "obj_readable_room4_70",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_asgoreroom": [
+   {
+    "cn": "* ...和 一 件 粉 色 的 ^1， 手 工 纺 织 的 &  毛 衣 ， 上 面 写 着 &  “ 大 老 爹 ” 。 /%%",
+    "cn_tight": "* ...和一件粉色的 ^1， 手工纺织的 &  毛衣， 上面写着 &  “ 大老爹 ” 。 /%%",
+    "en": "* ... and a pink^1, hand-knit&  sweater that says&  \"Mr. Dad Guy.\"/%%",
+    "instances": 2,
+    "ja": "＊ …ピンクの　てあみセーターに^1は&　 「ミスター・パパ」と　かいてある。/%%",
+    "key": "obj_readable_room1_125",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 里 面 有 一 套 圣 诞 老 人 的 衣 服 。 /%%",
+    "cn_tight": "* 里面有一套圣诞老人的衣服。 /%%",
+    "en": "* There's a Santa Claus outfit&  inside./%%",
+    "instances": 1,
+    "ja": "＊ サンタクロースのコスチュームが&　 はいっている。/%%",
+    "key": "obj_readable_room2_90",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 抽 屉 里 有 些 花 籽 &  和 许 多 坏 掉 的 蜡 笔 。 /%%",
+    "cn_tight": "* 抽屉里有些花籽 &  和许多坏掉的蜡笔。 /%%",
+    "en": "* Inside the drawer are&  flower seeds and some&  broken crayons./%%",
+    "instances": 1,
+    "ja": "＊ ひきだしの　なかには&　 はなの　たねと　おれたクレヨンが&　 はいっている。/%%",
+    "key": "obj_readable_room3_81",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* “ 怪 物 历 史 第 四 部 分 ” /",
+    "cn_tight": "* “ 怪物历史第四部分 ” /",
+    "en": "* \"MONSTER HISTORY PART 4\"/",
+    "instances": 3,
+    "ja": "＊ 「モンスターのれきし」&　 だい4かん/",
+    "key": "obj_readable_room4_110",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "*  (墨 水 仍 有 点 湿 润 。 ) /%%",
+    "cn_tight": "*  (墨水仍有点湿润。 ) /%%",
+    "en": "* (The ink is still almost wet.)/%%",
+    "instances": 2,
+    "ja": "＊ (インクは　まだ&　 かわききっていない)/%%",
+    "key": "obj_readable_room5_74",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_asrielroom": [
+   {
+    "cn": "*  (积 满 灰 尘 的 玩 具 。 ) /%%",
+    "cn_tight": "*  (积满灰尘的玩具。 ) /%%",
+    "en": "* (Dusty toys.)/%%",
+    "instances": 2,
+    "ja": "＊ (ほこりまみれの　オモチャだ)/%%",
+    "key": "obj_readable_room1_83",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (一 个 空 相 框 。 ) &*  (有 人 擦 去 了 它 的 灰 尘 。 ) /%%",
+    "cn_tight": "*  (一个空相框。 ) &*  (有人擦去了它的灰尘。 ) /%%",
+    "en": "* (An empty photo frame.)&* (Someone's dusted it off.)/%%",
+    "instances": 2,
+    "ja": "＊ (からっぽの　しゃしんたてだ)&＊ (だれかが　ほこりを&　 はらったようだ)/%%",
+    "key": "obj_readable_room2_63",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (这 是 幅 金 色 花 儿 的 画 。 ) /%%",
+    "cn_tight": "*  (这是幅金色花儿的画。 ) /%%",
+    "en": "* (It's a drawing of a&  golden flower.)/%%",
+    "instances": 1,
+    "ja": "＊ (きんいろの　はなの　え　だ)/%%",
+    "key": "obj_readable_room3_60",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_asrielroom_final": [
+   {
+    "cn": "* 王 座 /%%",
+    "cn_tight": "* 王座 /%%",
+    "en": "* Throne Room/%%",
+    "instances": 2,
+    "ja": "＊ 謁見の間/%%",
+    "key": "obj_readable_room1_84",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "\\R* .../%%",
+    "cn_tight": "\\R* .../%%",
+    "en": "\\R* .../%%",
+    "instances": 2,
+    "ja": "\\R＊ …/%%",
+    "key": "obj_readable_room2_72",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "\\R* 我 的 画 。 /%%",
+    "cn_tight": "\\R* 我的画。 /%%",
+    "en": "\\R* My drawing./%%",
+    "instances": 1,
+    "ja": "\\R＊ これは　じぶんが　かいた。/%%",
+    "key": "obj_readable_room3_63",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 我 的 床 。 /%%",
+    "cn_tight": "* 我的床。 /%%",
+    "en": "* My bed./%%",
+    "instances": 6,
+    "ja": "＊ じぶんの　ベッドだ。/%%",
+    "key": "obj_readable_room4_98",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* 我 们 的 衣 服 。 /%%",
+    "cn_tight": "* 我们的衣服。 /%%",
+    "en": "* Our clothes./%%",
+    "instances": 1,
+    "ja": "＊ じぶんたちの　ふくだ。/%%",
+    "key": "obj_readable_room5_68",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_castle_coffins2": [
+   {
+    "cn": "* (\"\\[C].\")/",
+    "cn_tight": "* (\"\\[C].\")/",
+    "en": "* (\"\\[C].\")/",
+    "instances": 3,
+    "ja": "＊ (「\\[C]」)/",
+    "key": "obj_readable_room1_90",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_castle_finalshoehorn": [
+   {
+    "cn": "*  (一 个 棺 材 。 ^1) &*  (上 面 刻 着 一 个 名 字 。 ) /",
+    "cn_tight": "*  (一个棺材。 ^1) &*  (上面刻着一个名字。 ) /",
+    "en": "* (It's a coffin.^1)&* (There's a name engraved on&  it.)/",
+    "instances": 2,
+    "ja": "＊ (かんおけだ^1)&＊ (なまえが　きざまれている)/",
+    "key": "obj_readable_room1_86",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_castle_throneroom": [
+   {
+    "cn": "* “ 房 间 正 在 翻 修 。 ” /%%",
+    "cn_tight": "* “ 房间正在翻修。 ” /%%",
+    "en": "* \"Room under renovations.\"/%%",
+    "instances": 2,
+    "ja": "＊ 「かいそうちゅう」/%%",
+    "key": "obj_readable_room1_139",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 只 是 一 个 普 通 的 旧 桶 ^3 & &  里 面 装 满 了 蜗 牛 。 /%%",
+    "cn_tight": "* 只是一个普通的旧桶 ^3 & &  里面装满了蜗牛。 /%%",
+    "en": "* Just a regular old bucket^3 & &  of snails./%%",
+    "instances": 2,
+    "ja": "＊ ごくふつうの　ふるいバケツだ^3。& &　 カタツムリが　はいっている。/%%",
+    "key": "obj_readable_room2_119",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_fire_cookingshow": [
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room1_304",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 1,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room2_343",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 1,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room3_213",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room4_159",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* (这 是 个 什 么 鬼 ?)/%",
+    "cn_tight": "* (这是个什么鬼 ?)/%",
+    "en": "* (What the hey is this?)/%",
+    "instances": 4,
+    "ja": "＊ (これは　なんだろう…)/%",
+    "key": "obj_readable_room5_203",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_fire_core_branch": [
+   {
+    "cn": "*  (解 决 这 个 谜 题 ， &  终 点 就 会 打 开 。 ) /%%",
+    "cn_tight": "*  (解决这个谜题， &  终点就会打开。 ) /%%",
+    "en": "* (Solve this puzzle,&  and The End will open.)/%%",
+    "instances": 2,
+    "ja": "＊ (このパズルを解けば&　 「終わり」は開かれるだろう)/%%",
+    "key": "obj_readable_room1_380",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (到 东 边 去 ！ ^1) &*  (这 里 是 终 点 。 ) /%%",
+    "cn_tight": "*  (到东边去！ ^1) &*  (这里是终点。 ) /%%",
+    "en": "* (To the East^1!)&* (This is The End.)/%%",
+    "instances": 2,
+    "ja": "＊ (東へ！^1)&＊ (そこが　「終わり」だ)/%%",
+    "key": "obj_readable_room2_395",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_fire_core_center": [
+   {
+    "cn": "*  (为 什 么 不 休 息 一 下 &  来 点 小 吃 呢 ？ ) /%%",
+    "cn_tight": "*  (为什么不休息一下 &  来点小吃呢？ ) /%%",
+    "en": "* (Why not relax and have&  a nice snack?)/%%",
+    "instances": 2,
+    "ja": "＊ (肩の力を抜いて&　 軽食でもいかが？)/%%",
+    "key": "obj_readable_room1_401",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_core_left": [
+   {
+    "cn": "*  (穿 过 北 面 的 房 间 ^1， &  终 点 就 会 打 开 。 ) /%%",
+    "cn_tight": "*  (穿过北面的房间 ^1， &  终点就会打开。 ) /%%",
+    "en": "* (Traverse the northern&  room^1, and The End will&  open.)/%%",
+    "instances": 2,
+    "ja": "＊ (北の間を歩めば&　 「終わり」は開かれるだろう)/%%",
+    "key": "obj_readable_room1_385",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_core_right": [
+   {
+    "cn": "*  (但 ^1， 保 持 耐 心 ^1， &  我 一 定 能 做 到 。 ) /%%",
+    "cn_tight": "*  (但 ^1， 保持耐心 ^1， &  我一定能做到。 ) /%%",
+    "en": "* (But^1, with patience^1,&  I will make my way&  through.)/%%",
+    "instances": 2,
+    "ja": "＊ (だが^1　耐え忍び&　 待つことができれば&　 道は開かれるだろう)/%%",
+    "key": "obj_readable_room1_395",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 记 录 编 号 2/",
+    "cn_tight": "* 记录编号 2/",
+    "en": "* ENTRY NUMBER 2/",
+    "instances": 2,
+    "ja": "＊ No. 2/",
+    "key": "obj_readable_room2_400",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_fire_core_top": [
+   {
+    "cn": "*  (我 不 能 战 斗 。 ) &*  (我 不 能 思 考 。 ) /",
+    "cn_tight": "*  (我不能战斗。 ) &*  (我不能思考。 ) /",
+    "en": "* (I cannot fight.)&* (I cannot think.)/",
+    "instances": 2,
+    "ja": "＊ (我は戦えぬ)&＊ (我は思案もできぬ)/",
+    "key": "obj_readable_room1_390",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_core_treasureleft": [
+   {
+    "cn": "*  (它 已 经 彻 底 报 废 了 。 ) ^1 &*  (完 全 没 有 办 法 修 理 。 ) /%%",
+    "cn_tight": "*  (它已经彻底报废了。 ) ^1 &*  (完全没有办法修理。 ) /%%",
+    "en": "* (It's completely trashed.^1)&* (There's no way it could&  ever be repaired.)/%%",
+    "instances": 2,
+    "ja": "＊ (かんぜんに　はかいされている^1)&＊ (しゅうりは　ふかのうだろう)/%%",
+    "key": "obj_readable_room1_406",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_hotelbed": [
+   {
+    "cn": "*  (上 面 说 &   明 星 自 己 就 会 发 光 ...) /%%",
+    "cn_tight": "*  (上面说 &   明星自己就会发光 ...) /%%",
+    "en": "* (It says that stars make&  their own light...)/%%",
+    "instances": 1,
+    "ja": "＊ (「スターは　みずから　かがやく」&　 と　かいてある…)/%%",
+    "key": "obj_readable_room1_646",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (盖 子 大 的 很 夸 张 ^1， &  你 没 法 打 开 它 。 )/%%",
+    "cn_tight": "*  (盖子大的很夸张 ^1， &  你没法打开它。 )/%%",
+    "en": "* (The cap is so comically large^1,&  you can't open it.)/%%",
+    "instances": 1,
+    "ja": "＊ (キャップが&　 いように　おおきく^1て&　 あけることが　できない)/%%",
+    "key": "obj_readable_room2_554",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_fire_hoteldoors": [
+   {
+    "cn": "*  (喷 泉 上 有 几 行 铭 文 。 ) /",
+    "cn_tight": "*  (喷泉上有几行铭文。 ) /",
+    "en": "* (There's an inscription on&  this fountain.)/",
+    "instances": 1,
+    "ja": "＊ (ふんすいに　ひぶんが&　 きざまれている)/",
+    "key": "obj_readable_room1_628",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_hotelfront_2": [
+   {
+    "cn": "*  (东 面 ...) &*  (终 点 。 ) /%%",
+    "cn_tight": "*  (东面 ...) &*  (终点。 ) /%%",
+    "en": "* (East...)&* (The End.)/%%",
+    "instances": 1,
+    "ja": "＊ (東：)&＊ (「終わり」)/%%",
+    "key": "obj_readable_room1_375",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_hotellobby": [
+   {
+    "cn": "* 皇 家 纪 念 喷 泉 &* 建 成 于 201X年 &*  (Mettaton是 上 周 加 的 ) /%%",
+    "cn_tight": "* 皇家纪念喷泉 &* 建成于 201X年 &*  (Mettaton是上周加的 ) /%%",
+    "en": "* Royal Memorial Fountain&* Built 201X&* (Mettaton Added Last Week)/%%",
+    "instances": 8,
+    "ja": "＊ 王国　きねんの　ふんすい&＊ 201X年　かんせい&＊ (メタトンは　せんしゅう　ついか)/%%",
+    "key": "obj_readable_room1_633",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_lab1": [
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 1,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room1_292",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room2_332",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (看 起 来 像 是 一 份 &  游 戏 攻 略 ^1， 还 是 ...？ ) /%%",
+    "cn_tight": "*  (看起来像是一份 &  游戏攻略 ^1， 还是 ...？ ) /%%",
+    "en": "* (It seems like a walkthrough&  to a game^1, or...?)/%%",
+    "instances": 1,
+    "ja": "＊ (ゲームの　こうりゃくメモ…？)/%%",
+    "key": "obj_readable_room3_200",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 这 是 你 ...？ /%%",
+    "cn_tight": "* 这是你 ...？ /%%",
+    "en": "* It's you...?/%%",
+    "instances": 3,
+    "ja": "＊ これは…　じぶん？/%%",
+    "key": "obj_readable_room4_145",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "*  (抽 屉 里 有 一 把 银 色 钥 匙 。 ) /",
+    "cn_tight": "*  (抽屉里有一把银色钥匙。 ) /",
+    "en": "* (Inside the drawer is a silver&  key.)/",
+    "instances": 2,
+    "ja": "＊ (ひきだしに　ぎんのカギが&　 はいっている)/",
+    "key": "obj_readable_room5_177",
+    "obj": "obj_readable_room5"
+   },
+   {
+    "cn": "*  (太 暗 了 看 不 清 &  墙 边 。 ) /%%",
+    "cn_tight": "*  (太暗了看不清 &  墙边。 ) /%%",
+    "en": "* (It's too dark to see&  near the walls.)/%%",
+    "instances": 2,
+    "ja": "＊ (くらくて　よくみえない)/%%",
+    "key": "obj_readable_room5_92",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_fire_lab2": [
+   {
+    "cn": "*  (这 是 个 冰 箱 。 ^1) &*  (奇 怪 的 是 ， 里 面 是 暖 的 。 ) /%%",
+    "cn_tight": "*  (这是个冰箱。 ^1) &*  (奇怪的是， 里面是暖的。 ) /%%",
+    "en": "* (It's a fridge.^1)&* (It's strangely warm.)/%%",
+    "instances": 2,
+    "ja": "＊ (れいぞうこだ^1)&＊ (ふれると　なぜか　アツい…)/%%",
+    "key": "obj_readable_room1_299",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (它 们 都 被 标 上 了 &  “ 人 类 历 史 ” 。 ) /%%",
+    "cn_tight": "*  (它们都被标上了 &  “ 人类历史 ” 。 ) /%%",
+    "en": "* (They are all labelled \"Human&  History.\")/%%",
+    "instances": 2,
+    "ja": "＊ (ぜんぶのラベルに&　 「ニンゲンのれきし」と&　 かいてある)/%%",
+    "key": "obj_readable_room3_207",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "*  (在 纸 上 写 着 &  “ 谢 谢 你 让 我 梦 想 成 真 。 ” ) /%%",
+    "cn_tight": "*  (在纸上写着 &  “ 谢谢你让我梦想成真。 ” ) /%%",
+    "en": "* (On the flap it says \"Thank&  you for making my dreams&  come true.\")/%%",
+    "instances": 10,
+    "ja": "＊ (「ボクのゆめを&　 かなえてくれて　ありがとう」　と&　 かいてある)/%%",
+    "key": "obj_readable_room5_104",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_fire_pacing": [
+   {
+    "cn": "*  (一 对 被 命 运 阻 隔 的 爱 人 ^1， &  一 出 牛 郎 织 女 式 的 悲 剧 ...) /",
+    "cn_tight": "*  (一对被命运阻隔的爱人 ^1， &  一出牛郎织女式的悲剧 ...) /",
+    "en": "* (A tragic tale of two star-&  crossed lovers^1, kept apart&  by the tides of fate...)/",
+    "instances": 2,
+    "ja": "＊ (うんめいの　なみに　ひきさかれ^1た&　 ふうんな　こいびとたちの&　 ひげきらしい…)/",
+    "key": "obj_readable_room1_621",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_fire_restaurant": [
+   {
+    "cn": "* “ 这 里 的 食 物 好 极 了 ！ ^1” &* “ 迷 人 的 风 格 和 芬 芳 的 气 息 ！ ^1” &* “ 我 的 脸 美 味 无 比 ！ ” /",
+    "cn_tight": "* “ 这里的食物好极了！ ^1” &* “ 迷人的风格和芬芳的气息！ ^1” &* “ 我的脸美味无比！ ” /",
+    "en": "* \"The food is to die for!^1\"&* \"Gorgeous style and fragrance!^1\"&* \"My face tastes beautiful!\"/",
+    "instances": 3,
+    "ja": "%%",
+    "key": "obj_readable_room1_639",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (这 是 某 种 超 大 瓶 的 香 水 ) ^1 &*  (常 芳 型 香 水 。 ) /",
+    "cn_tight": "*  (这是某种超大瓶的香水 ) ^1 &*  (常芳型香水。 ) /",
+    "en": "* (It's some sort of giant bottle&  of perfume.^1)&* (Eau de Rectangle.)/",
+    "instances": 3,
+    "ja": "＊ (こうすいが　はいった&　 きょだいな　ボトルだ^1)&＊ (「オー・デ・レクタングル」…)/",
+    "key": "obj_readable_room2_549",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (tem的 雕 像 ..^1. 超 级 著 民 ^1) &*  (超 级 ！ ！ ！ ！ ！ ！ ！ ！ ！ ！ ) /%%",
+    "cn_tight": "*  (tem的雕像 ..^1. 超级著民 ^1) &*  (超级！ ！ ！ ！ ！ ！ ！ ！ ！ ！ ) /%%",
+    "en": "* (Statue of tem..^1. very famus^1)&* (VERY!!!!!!!!!)/%%",
+    "instances": 4,
+    "ja": "＊ (手ミーの　ぞぅ^1…&　 めちゃﾕｰﾒィ^1)&＊ (ﾔﾊﾞぉ！！！)/%%",
+    "key": "obj_readable_room3_320",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_fire_spidershop": [
+   {
+    "cn": "*  (等 等 。 ^1) &*  (这 只 是 个 羊 角 面 包 ...) /%%",
+    "cn_tight": "*  (等等。 ^1) &*  (这只是个羊角面包 ...) /%%",
+    "en": "* (Wait.^1)&* (It's just a croissant...)/%%",
+    "instances": 1,
+    "ja": "＊ (…とおもったら^1 &　 ただのクロワッサンだった)/%%",
+    "key": "obj_readable_room1_369",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (北 方 ^1， 勇 者 之 路 。 ) &*  (西 方 ^1， 贤 者 之 路 。 ) &*  (每 条 路 都 将 通 往 尽 头 。 ) /%%",
+    "cn_tight": "*  (北方 ^1， 勇者之路。 ) &*  (西方 ^1， 贤者之路。 ) &*  (每条路都将通往尽头。 ) /%%",
+    "en": "* (North^1, the warrior's path.)&* (West^1, the sage's path.)&* (Any path leads to The End.)/%%",
+    "instances": 1,
+    "ja": "＊ (北は^1　戦士の道)&＊ (西は^1　賢者の道)&＊ (いずれの道も「終わり」へ続く)/%%",
+    "key": "obj_readable_room2_390",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_ice_dog": [
+   {
+    "cn": "*  (这 是 某 个 讲 Mettaton的 &  电 视 节 目 。 ) /%%",
+    "cn_tight": "*  (这是某个讲 Mettaton的 &  电视节目。 ) /%%",
+    "en": "* (It's some kind of TV show&  featuring Mettaton.)/%%",
+    "instances": 1,
+    "ja": "＊ (メタトンが　しゅつえんする&　 ばんぐみだ)/%%",
+    "key": "obj_readable_room3_315",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 哈 ！ ^1？ &* 在 瀑 布 中 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* 哈！ ^1？ &* 在瀑布中 &  藏着一部摄像机。 /%%",
+    "en": "* Huh!^1?&* There's a camera behind&  the waterfall./%%",
+    "instances": 1,
+    "ja": "＊ ！^1？&＊ たきのうらに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room4_234",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_kitchen": [
+   {
+    "cn": "*  (冰 箱 里 放 满 了 &  未 开 封 的 蜗 牛 罐 子 。 ) /%%",
+    "cn_tight": "*  (冰箱里放满了 &  未开封的蜗牛罐子。 ) /%%",
+    "en": "* (The fridge is full of&  unopened containers of&  snails.)/%%",
+    "instances": 1,
+    "ja": "＊ (カタツムリの　はいった　ようきが&　 たくさん　ならんでいる。&　 ふたをあけた　けいせきはない)/%%",
+    "key": "obj_readable_room1_144",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 这 个 派 的 尺 寸 &  吓 得 你 完 全 不 敢 吃 它 。 /%%",
+    "cn_tight": "* 这个派的尺寸 &  吓得你完全不敢吃它。 /%%",
+    "en": "* The size of the pie&  intimidates you too much&  for you to eat it./%%",
+    "instances": 1,
+    "ja": "＊ あまりにも　おおきなパイなので&　 おそろしくて　たべるきにならない。/%%",
+    "key": "obj_readable_room2_140",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (一 些 白 色 的 毛 &  堵 在 下 水 管 里 。 ) /%%",
+    "cn_tight": "*  (一些白色的毛 &  堵在下水管里。 ) /%%",
+    "en": "* (There is some white fur&  stuck in the drain.)/%%",
+    "instances": 1,
+    "ja": "＊ (はいすいこうには　しろい&　 どうぶつのけが　つまっている)/%%",
+    "key": "obj_readable_room3_84",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "\\R* 刀 子 在 哪 。 /%%",
+    "cn_tight": "\\R* 刀子在哪。 /%%",
+    "en": "\\R* Where are the knives./%%",
+    "instances": 2,
+    "ja": "\\R＊ ナイフはどこだ。/%%",
+    "key": "obj_readable_room4_76",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* 灶 台 非 常 干 净 ^1。 &* Toriel一 定 是 用 的 火 魔 法 。 /%%",
+    "cn_tight": "* 灶台非常干净 ^1。 &* Toriel一定是用的火魔法。 /%%",
+    "en": "* The stovetop is very clean^1.&* Toriel must use fire&  magic instead./%%",
+    "instances": 2,
+    "ja": "＊ コンロは　よごれていない^1。&＊ トリエルは　まほうで　りょうりを&　 しているのだろう。/%%",
+    "key": "obj_readable_room4_77",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* 再 也 没 有 人 会 用 这 个 了 .../%%",
+    "cn_tight": "* 再也没有人会用这个了 .../%%",
+    "en": "* No one will use this&  anymore.../%%",
+    "instances": 2,
+    "ja": "＊ これを　つかうひとは&　 もういない…/%%",
+    "key": "obj_readable_room4_78",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "*  (有 个 纸 条 。 ) ^1 &* 哈 喽 ^1！ 随 便 吃 点 想 吃 的 吧 ！ /%%",
+    "cn_tight": "*  (有个纸条。 ) ^1 &* 哈喽 ^1！ 随便吃点想吃的吧！ /%%",
+    "en": "* (It's a note.^1)&* Howdy^1! Help yourself to&  anything you want!/%%",
+    "instances": 2,
+    "ja": "＊ (かきおきだ^1)&＊ ハロー^1！　たべたいものが　あったら&　 どうぞ　ごじゆうに！/%%",
+    "key": "obj_readable_room4_79",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_kitchen_final": [
+   {
+    "cn": "\\R* 没 有 巧 克 力 。 /%%",
+    "cn_tight": "\\R* 没有巧克力。 /%%",
+    "en": "\\R* No chocolate./%%",
+    "instances": 1,
+    "ja": "\\R＊ チョコレートは　ない。/%%",
+    "key": "obj_readable_room1_147",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 正 因 为 由 魔 法 构 成 ^1， &  怪 物 们 的 躯 体 和 他 们 的 &  灵 魂 是 密 不 可 分 的 。 /",
+    "cn_tight": "* 正因为由魔法构成 ^1， &  怪物们的躯体和他们的 &  灵魂是密不可分的。 /",
+    "en": "* Because they are made of&  magic^1, monsters' bodies are&  attuned to their SOUL./",
+    "instances": 1,
+    "ja": "＊ まりょくで　こうせいされている&　 モンスターたちの　からだ^1は&　 タマシイと　れんどうする。/",
+    "key": "obj_readable_room3_85",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 我 已 经 看 过 这 个 了 。 /%%",
+    "cn_tight": "* 我已经看过这个了。 /%%",
+    "en": "* I've read this already./%%",
+    "instances": 2,
+    "ja": "＊ これは　もう　よんだ。/%%",
+    "key": "obj_readable_room4_83",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* 灶 台 。 /%%",
+    "cn_tight": "* 灶台。 /%%",
+    "en": "* Stovetop./%%",
+    "instances": 2,
+    "ja": "＊ コンロだ。/%%",
+    "key": "obj_readable_room4_90",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_ruins13": [
+   {
+    "cn": "* (那 里 面 有 一 只 青 蛙 ...^2)&* (等 等 ^1! 有 两 只 !)/",
+    "cn_tight": "* (那里面有一只青蛙 ...^2)&* (等等 ^1! 有两只 !)/",
+    "en": "* (There's a frog inside...^2)&* (Wait^1! There are two!)/",
+    "instances": 1,
+    "ja": "＊ (なかに　カエルが　1ぴき…^2)&＊ (いや^1…2ひきいる！)/",
+    "key": "obj_readable_room1_69_console_1",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins14": [
+   {
+    "cn": "* 远 处 的 门 并 不 是 出 口 ^1， &* 只 是 表 示 视 角 的 旋 转 。 /%%",
+    "cn_tight": "* 远处的门并不是出口 ^1， &* 只是表示视角的旋转。 /%%",
+    "en": "* The far door is not an exit^1.&* It simply marks a rotation&  in perspective./%%",
+    "instances": 1,
+    "ja": "＊ 端の扉は出口にあらず^1。&＊ 入るたびに 視点が&　 変わるのみ。/%%",
+    "key": "obj_readable_room1_70",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins15A": [
+   {
+    "cn": "* 如 果 你 在 读 这 个 ^1， &  按 下 蓝 色 的 开 关 。 /%%",
+    "cn_tight": "* 如果你在读这个 ^1， &  按下蓝色的开关。 /%%",
+    "en": "* If you can read this^1,&  press the blue switch./%%",
+    "instances": 2,
+    "ja": "＊ この注意書きが見えているな^1ら&　 青いスイッチを押すべし。/%%",
+    "key": "obj_readable_room1_71",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins15B": [
+   {
+    "cn": "* 如 果 你 在 读 这 个 ^1， &  按 下 红 色 的 开 关 。 /%%",
+    "cn_tight": "* 如果你在读这个 ^1， &  按下红色的开关。 /%%",
+    "en": "* If you can read this^1,&  press the red switch./%%",
+    "instances": 2,
+    "ja": "＊ この注意書きが見えているな^1ら&　 赤いスイッチを押すべし。/%%",
+    "key": "obj_readable_room1_72",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins15C": [
+   {
+    "cn": "* 如 果 你 在 读 这 个 ^1， &  按 下 绿 色 的 开 关 。 /%%",
+    "cn_tight": "* 如果你在读这个 ^1， &  按下绿色的开关。 /%%",
+    "en": "* If you can read this^1,&  press the green switch./%%",
+    "instances": 2,
+    "ja": "＊ この注意書きが見えているな^1ら&　 緑のスイッチを押すべし。/%%",
+    "key": "obj_readable_room1_73",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins15D": [
+   {
+    "cn": "* 这 些 书 本 很 破 旧 ...&* 它 们 肯 定 已 经 被 读 过 多 次 了 。 /%%",
+    "cn_tight": "* 这些书本很破旧 ...&* 它们肯定已经被读过多次了。 /%%",
+    "en": "* These books are worn...&* They must have been read&  many times./%%",
+    "instances": 2,
+    "ja": "＊ ボロボロのほんだ…&＊ だれかが　くりかえし&　 よんだのだろう。/%%",
+    "key": "obj_readable_room1_74",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins2": [
+   {
+    "cn": "* 顺 着 路 走 。 /%%",
+    "cn_tight": "* 顺着路走。 /%%",
+    "en": "* Stay on the path./%%",
+    "instances": 1,
+    "ja": "＊ (手ミーのふか～い　れきし)/%%",
+    "key": "obj_readable_room1_65",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins3": [
+   {
+    "cn": "* 西 面 的 房 间 &  是 东 面 房 间 的 蓝 图 。 /%%",
+    "cn_tight": "* 西面的房间 &  是东面房间的蓝图。 /%%",
+    "en": "* The western room is the&  eastern room's blueprint./%%",
+    "instances": 1,
+    "ja": "＊ 西の間は 東の間の&　 青写真。/%%",
+    "key": "obj_readable_room1_66",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins5": [
+   {
+    "cn": "* 四 分 之 三 的 石 头 &  希 望 你 推 它 们 。 /%%",
+    "cn_tight": "* 四分之三的石头 &  希望你推它们。 /%%",
+    "en": "* Three out of four grey rocks&  recommend you push them./%%",
+    "instances": 2,
+    "ja": "＊ 灰色の岩　4つのうち3つが&　 押されることを望む。/%%",
+    "key": "obj_readable_room1_67",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_ruins9": [
+   {
+    "cn": "*  (在 墙 缝 里 有 一 只 &  蚂 蚁 大 小 的 青 蛙 ...) ^1 &*  (它 在 向 你 招 手 。 ) /%%",
+    "cn_tight": "*  (在墙缝里有一只 &  蚂蚁大小的青蛙 ...) ^1 &*  (它在向你招手。 ) /%%",
+    "en": "* (There's an ant-sized frog in&  a crack in the wall...^1)&* (It waves at you.)/%%",
+    "instances": 1,
+    "ja": "＊ (かべの　われめのなかに&　 アリんこサイズの　カエルが…^1)&＊ (こちらに　てを　ふっている)/%%",
+    "key": "obj_readable_room1_68",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_torhouse1": [
+   {
+    "cn": "*  (这 是 一 部 从 201X年 末 开 始 的 &  旧 日 历 。 ) ^1 &*  (一 个 日 期 被 圈 了 起 来 。 ) /%%",
+    "cn_tight": "*  (这是一部从 201X年末开始的 &  旧日历。 ) ^1 &*  (一个日期被圈了起来。 ) /%%",
+    "en": "* (There's an old calendar from&  the end of 201X.^1)&* (A date is circled on it.)/%%",
+    "instances": 1,
+    "ja": "＊ (201X年の　おわりの&　 ふるいカレンダーだ^1)&＊ (ある　ひづけに　まるがついている)/%%",
+    "key": "obj_readable_room1_75",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (一 朵 金 色 的 花 。 ) /%%",
+    "cn_tight": "*  (一朵金色的花。 ) /%%",
+    "en": "* (It's a golden flower.)/%%",
+    "instances": 1,
+    "ja": "＊ (きんいろの　はなだ)/%%",
+    "key": "obj_readable_room2_114",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_torhouse2": [
+   {
+    "cn": "* 看 起 来 像 是 园 艺 工 具 。 /%%",
+    "cn_tight": "* 看起来像是园艺工具。 /%%",
+    "en": "* Seems like gardening tools./%%",
+    "instances": 1,
+    "ja": "＊ ガーデニングの　どうぐのようだ。/%%",
+    "key": "obj_readable_room1_81",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 被 困 在 结 界 之 后 ， &  惧 怕 人 类 进 一 步 袭 击 ， &  我 们 选 择 了 撤 退 。 /",
+    "cn_tight": "* 被困在结界之后， &  惧怕人类进一步袭击， &  我们选择了撤退。 /",
+    "en": "* Trapped behind the barrier&  and fearful of further&  human attacks^1, we retreated./",
+    "instances": 2,
+    "ja": "＊ バリアのなかに　とじこめられた&　 われわれは^1　さらなるこうげきを&　 おそれ^1　たいきゃくした。/",
+    "key": "obj_readable_room2_80",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_torhouse3": [
+   {
+    "cn": "* “ 房 间 正 在 翻 修 。 ” /%%",
+    "cn_tight": "* “ 房间正在翻修。 ” /%%",
+    "en": "* \"Room under renovations.\"/%%",
+    "instances": 1,
+    "ja": "＊ 「かいそうちゅう」/%%",
+    "key": "obj_readable_room1_142",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 哦 ^2！ &* 这 是 “ 水 香 肠 。 ” /%%",
+    "cn_tight": "* 哦 ^2！ &* 这是 “ 水香肠。 ” /%%",
+    "en": "* Oh^2!&* It is a \"water sausage.\"/%%",
+    "instances": 2,
+    "ja": "＊ これは…^2！&＊ 「ウォーターソーセージ」だ。/%%",
+    "key": "obj_readable_room2_135",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 一 些 白 色 的 毛 &  堵 在 下 水 管 里 。 /%%",
+    "cn_tight": "* 一些白色的毛 &  堵在下水管里。 /%%",
+    "en": "* There is some white fur&  stuck in the drain./%%",
+    "instances": 1,
+    "ja": "＊ はいすいこうには　しろい&　 どうぶつのけが　つまっている。/%%",
+    "key": "obj_readable_room3_83",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 依 然 是 你 ^1， Frisk。 /%%",
+    "cn_tight": "* 依然是你 ^1， Frisk。 /%%",
+    "en": "* Still just you^1, Frisk./%%",
+    "instances": 2,
+    "ja": "＊ やっぱり　じぶんだよ^1 &　 フリスク。/%%",
+    "key": "obj_readable_room4_63",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* 一 朵 金 色 的 花 。 /%%",
+    "cn_tight": "* 一朵金色的花。 /%%",
+    "en": "* It's a golden flower./%%",
+    "instances": 2,
+    "ja": "＊ きんいろの　はなだ。/%%",
+    "key": "obj_readable_room4_66",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_torielroom": [
+   {
+    "cn": "* 这 是 TORIEL的 袜 子 收 藏 。 /%%",
+    "cn_tight": "* 这是 TORIEL的袜子收藏。 /%%",
+    "en": "* It's TORIEL's sock&  collection./%%",
+    "instances": 1,
+    "ja": "＊ トリエルの&　 くつしたコレクションだ。/%%",
+    "key": "obj_readable_room1_112",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 这 是 本 地 底 植 物 的 百 科 全 书 。 &  你 翻 到 了 中 间 .../",
+    "cn_tight": "* 这是本地底植物的百科全书。 &  你翻到了中间 .../",
+    "en": "* It's an encyclopedia of&  subterranean plants. You&  open to the middle.../",
+    "instances": 3,
+    "ja": "＊ ちかにせいそくする　しょくぶつの&　 ずかんだ。まんなかあたりの&　 ページを　ひらいてみた…/",
+    "key": "obj_readable_room2_124",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (起 初 ， 你 觉 得 它 只 比 &  一 张 单 人 床 大 。 ) /",
+    "cn_tight": "*  (起初， 你觉得它只比 &  一张单人床大。 ) /",
+    "en": "* (Earlier^1, you identified&  this as bigger than a&  twin-sized bed.)/",
+    "instances": 2,
+    "ja": "＊ (ダブルサイズよりも&　 おおきい…)/",
+    "key": "obj_readable_room3_71",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_truelab_bedroom": [
+   {
+    "cn": "* 每 一 个 “ 陨 落 ” 的 人 .../",
+    "cn_tight": "* 每一个 “ 陨落 ” 的人 .../",
+    "en": "* Everyone that had fallen&  down.../",
+    "instances": 1,
+    "ja": "＊ うごかなくなったモンスターたちが…/",
+    "key": "obj_readable_room1_476",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 记 录 编 号 10/",
+    "cn_tight": "* 记录编号 10/",
+    "en": "* ENTRY NUMBER 10/",
+    "instances": 1,
+    "ja": "＊ No. 10/",
+    "key": "obj_readable_room2_424",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_truelab_castle_elevator": [
+   {
+    "cn": "*  (点 唱 机 坏 了 。 ) /%%",
+    "cn_tight": "*  (点唱机坏了。 ) /%%",
+    "en": "* (The jukebox is broken.)/%%",
+    "instances": 2,
+    "ja": "＊ (ジュークボックスは&　 こわれている)/%%",
+    "key": "obj_readable_room1_575",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_truelab_cooler": [
+   {
+    "cn": "* 家 属 们 一 直 给 我 打 电 话 &  问 我 他 们 什 么 时 候 能 回 家 。 /",
+    "cn_tight": "* 家属们一直给我打电话 &  问我他们什么时候能回家。 /",
+    "en": "* the families keep calling&  me to ask when everyone&  is coming home./",
+    "instances": 1,
+    "ja": "＊ いぞくから　ひっきりなしに&　 でんわがくる^1…　みんなは&　 いつ　かえってくるのかって。/",
+    "key": "obj_readable_room1_538",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* ASGORE今 天 给 我 发 了 五 条 短 信 。 /",
+    "cn_tight": "* ASGORE今天给我发了五条短信。 /",
+    "en": "* ASGORE left me five&  messages today./",
+    "instances": 1,
+    "ja": "＊ きょうは　アズゴアからの&　 るすでんが　5けん。/",
+    "key": "obj_readable_room2_462",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 我 现 在 把 所 有 的 时 间 &  都 花 在 垃 圾 堆 上 了 。 /",
+    "cn_tight": "* 我现在把所有的时间 &  都花在垃圾堆上了。 /",
+    "en": "* i spend all my time at&  the garbage dump now/",
+    "instances": 1,
+    "ja": "＊ さいきんは　ずっと&　 ゴミすてばに　いる。/",
+    "key": "obj_readable_room3_272",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_truelab_determination": [
+   {
+    "cn": "*  (看 起 来 被 关 掉 了 。 ) /%%",
+    "cn_tight": "*  (看起来被关掉了。 ) /%%",
+    "en": "* (It seems to be turned off.)/%%",
+    "instances": 1,
+    "ja": "＊ (でんげんが&　 きれているようだ)/%%",
+    "key": "obj_readable_room1_517",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_truelab_elevatorinside": [
+   {
+    "cn": "*  (门 被 藤 条 卡 死 了 。 ) /%%",
+    "cn_tight": "*  (门被藤条卡死了。 ) /%%",
+    "en": "* (The door is jammed shut&  with vines.)/%%",
+    "instances": 2,
+    "ja": "＊ (ドアには　ツタが　からまっていて&　 あかない)/%%",
+    "key": "obj_readable_room1_565",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_truelab_fan": [
+   {
+    "cn": "* 现 在 mettaton红 了 ^1， &  就 不 再 和 我 说 话 了 。 /",
+    "cn_tight": "* 现在 mettaton红了 ^1， &  就不再和我说话了。 /",
+    "en": "* now that mettaton's made it&  big^1, he never talks to&  me anymore./",
+    "instances": 1,
+    "ja": "＊ メタトンは　スターになって^1 &　 もう　わたしとは　しゃべって&　 くれなくなった。/",
+    "key": "obj_readable_room2_452",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_truelab_hall1": [
+   {
+    "cn": "* 是 时 候 ..^1.&* 做 国 王 让 我 做 的 事 了 。 /",
+    "cn_tight": "* 是时候 ..^1.&* 做国王让我做的事了。 /",
+    "en": "* This is it..^1.&* Time to do what the King&  has asked me to do./",
+    "instances": 1,
+    "ja": "＊ ついに^1…&　 王の　いらいを&　 じっこうする　ときがきた。/",
+    "key": "obj_readable_room1_425",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 结 界 被 灵 魂 的 力 量 封 锁 了 .../",
+    "cn_tight": "* 结界被灵魂的力量封锁了 .../",
+    "en": "* The barrier is locked by&  SOUL power../",
+    "instances": 1,
+    "ja": "＊ バリアは&　 タマシイのエネルギーで&　 ふういんされている…/",
+    "key": "obj_readable_room2_405",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 但 抽 取 一 个 活 着 的 怪 物 的 灵 魂 &  需 要 大 到 难 以 置 信 的 能 量 .../",
+    "cn_tight": "* 但抽取一个活着的怪物的灵魂 &  需要大到难以置信的能量 .../",
+    "en": "* But extracting a SOUL from&  a living monster would&  require incredible power.../",
+    "instances": 1,
+    "ja": "＊ しかし　いきたモンスターから&　 タマシイを　ちゅうしゅつするには&　 すさまじいパワーが　ひつよう…/",
+    "key": "obj_readable_room3_254",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 我 做 到 了 。 /",
+    "cn_tight": "* 我做到了。 /",
+    "en": "* I've done it./",
+    "instances": 1,
+    "ja": "＊ ついに　やった。/",
+    "key": "obj_readable_room4_193",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_truelab_hall2": [
+   {
+    "cn": "* ASGORE召 集 大 家 &  在 城 外 探 寻 “ 陨 落 ” &  的 怪 物 。 /",
+    "cn_tight": "* ASGORE召集大家 &  在城外探寻 “ 陨落 ” &  的怪物。 /",
+    "en": "* ASGORE asked everyone&  outside the city for monsters&  that had \"fallen down.\"/",
+    "instances": 1,
+    "ja": "＊ 王は　国民ぜんいん^1に&　 “うごかなくなった”モンスターを&　 さしだすよう　おふれを　だした。/",
+    "key": "obj_readable_room1_441",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_truelab_hall3": [
+   {
+    "cn": "* 看 起 来 这 项 研 究 已 经 &  无 法 进 行 下 去 了 .../",
+    "cn_tight": "* 看起来这项研究已经 &  无法进行下去了 .../",
+    "en": "* Seems like this research&  was a dead end.../",
+    "instances": 1,
+    "ja": "＊ じっけんは&　 いきづまっちゃったけど…/",
+    "key": "obj_readable_room1_497",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 不 . 不 。 不 ！ 不 ！ 不 ！ 不 ！ 不 ！ /%%",
+    "cn_tight": "* 不 . 不。 不！ 不！ 不！ 不！ 不！ /%%",
+    "en": "* no No NO NO NO NO NO/%%",
+    "instances": 1,
+    "ja": "＊ ウソ…　どうしよう…&　 どうしよう…！！/%%",
+    "key": "obj_readable_room2_439",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_truelab_hub": [
+   {
+    "cn": "*  (看 起 来 被 关 掉 了 。 ) /%%",
+    "cn_tight": "*  (看起来被关掉了。 ) /%%",
+    "en": "* (It seems to be turned off.)/%%",
+    "instances": 1,
+    "ja": "＊ (でんげんが&　 きれているようだ)/%%",
+    "key": "obj_readable_room1_435",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_truelab_mirror": [
+   {
+    "cn": "* 当 时 机 成 熟 时 &  我 们 需 要 一 个 容 器 &  来 承 载 怪 物 们 的 灵 魂 。 /",
+    "cn_tight": "* 当时机成熟时 &  我们需要一个容器 &  来承载怪物们的灵魂。 /",
+    "en": "* We'll need a vessel to&  wield the monster SOULs&  when the time comes./",
+    "instances": 1,
+    "ja": "＊ モンスターのタマシイをいれる&　 うつわが　ひつようになる。/",
+    "key": "obj_readable_room1_486",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 关 于 容 器 的 实 验 失 败 了 。 /",
+    "cn_tight": "* 关于容器的实验失败了。 /",
+    "en": "* experiments on the&  vessel are a failure./",
+    "instances": 1,
+    "ja": "＊ 「うつわ」の　じっけんは&　 しっぱい。/",
+    "key": "obj_readable_room2_429",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (Sans肮 脏 的 袜 子 堆 。 ^1) &*  (好 ..^1. 好 羞 人 ...？ ) /%%",
+    "cn_tight": "*  (Sans肮脏的袜子堆。 ^1) &*  (好 ..^1. 好羞人 ...？ ) /%%",
+    "en": "* (It's Sans's dirty sock pile.^1)&* (Sc..^1. scandalous...?)/%%",
+    "instances": 1,
+    "ja": "＊ (サンズの　よごれた　くつしただ^1)&＊ (ヘ^1…　ヘンタイ…？)/%%",
+    "key": "obj_readable_room4_206",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_truelab_operatingroom": [
+   {
+    "cn": "* 事 情 的 进 展 并 不 顺 利 。 /",
+    "cn_tight": "* 事情的进展并不顺利。 /",
+    "en": "* things aren't going well./",
+    "instances": 1,
+    "ja": "＊ もんだい　はっせい。/",
+    "key": "obj_readable_room1_454",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_truelab_prebed": [
+   {
+    "cn": "* 毫 无 进 展 ^1。 &* 我 不 知 道 要 怎 么 办 。 /",
+    "cn_tight": "* 毫无进展 ^1。 &* 我不知道要怎么办。 /",
+    "en": "* nothing is happening^1.&* i don't know what to do./",
+    "instances": 1,
+    "ja": "＊ なにもおこらない^1。&＊ どうすればいいのか&　 わからない。/",
+    "key": "obj_readable_room1_467",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 其 中 一 具 躯 体 睁 开 了 眼 睛 。 /%%",
+    "cn_tight": "* 其中一具躯体睁开了眼睛。 /%%",
+    "en": "* one of the bodies opened&  its eyes./%%",
+    "instances": 1,
+    "ja": "＊ したいの　ひとつが　めをあけた。/%%",
+    "key": "obj_readable_room2_417",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_truelab_prepower": [
+   {
+    "cn": "* 记 录 编 号 8/",
+    "cn_tight": "* 记录编号 8/",
+    "en": "* ENTRY NUMBER 8/",
+    "instances": 1,
+    "ja": "＊ No. 8/",
+    "key": "obj_readable_room1_548",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 记 录 编 号 18/",
+    "cn_tight": "* 记录编号 18/",
+    "en": "* ENTRY NUMBER 18/",
+    "instances": 1,
+    "ja": "＊ No. 18/",
+    "key": "obj_readable_room2_473",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_truelab_tv": [
+   {
+    "cn": "* 我 一 直 在 研 究 人 类 ， &  看 看 能 不 能 找 到 一 些 &  关 于 他 们 灵 魂 的 信 息 。 /",
+    "cn_tight": "* 我一直在研究人类， &  看看能不能找到一些 &  关于他们灵魂的信息。 /",
+    "en": "* I've been researching humans&  to see if I can find any&  info about their SOULS./",
+    "instances": 1,
+    "ja": "＊ タマシイに　かんする&　 じょうほうを　えるため^1 &　 ニンゲンについて　しらべた。/",
+    "key": "obj_readable_room1_523",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (看 上 去 是 按 字 母 顺 序 &  排 列 存 放 的 ^1， 除 了 零 星 几 盘 ...^1) &*  (...粘 乎 乎 的 ？ ) /%%",
+    "cn_tight": "*  (看上去是按字母顺序 &  排列存放的 ^1， 除了零星几盘 ...^1) &*  (...粘乎乎的？ ) /%%",
+    "en": "* (They seem to be alphabetized^1,&  save for a few stray...^1)&* (... sticky ones?)/%%",
+    "instances": 2,
+    "ja": "＊ (アルファベットじゅんのようだが^1…&　 いくつかバラバラのものもあり…&　 それらは　ベトベトしている…)/%%",
+    "key": "obj_readable_room2_446",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 记 录 编 号 21/",
+    "cn_tight": "* 记录编号 21/",
+    "en": "* ENTRY NUMBER 21/",
+    "instances": 2,
+    "ja": "＊ No. 21/",
+    "key": "obj_readable_room3_266",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra1": [
+   {
+    "cn": "\\W* \\O勇 敢 ^1。  \\Y正 义 。 \\W  &*\\B 正 直 ^1。  \\G友 善 ^1。 \\W &*\\P毅 力 ^1。  \\L耐 心 。  \\W /",
+    "cn_tight": "\\W* \\O勇敢 ^1。  \\Y正义。 \\W  &*\\B 正直 ^1。  \\G友善 ^1。 \\W &*\\P毅力 ^1。  \\L耐心。  \\W /",
+    "en": "\\W* \\OBravery^1. \\YJustice.\\W  &*\\B Integrity^1. \\GKindness^1.\\W &*\\P Perseverance^1. \\LPatience. \\W /",
+    "instances": 2,
+    "ja": "\\W＊ \\Oゆうき^1　\\Yせいぎ^1 \\W &＊ \\Bせいじつさ^1　\\Gやさしさ^1 \\W &＊ \\Pこんき^1　\\Lにんたい。\\W /",
+    "key": "obj_readable_room2_166",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_tundra2": [
+   {
+    "cn": "* ...！ ^1？ &* 在 这 个 ..^1.“ 岗 哨 站 ” 后 面 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* ...！ ^1？ &* 在这个 ..^1.“ 岗哨站 ” 后面 &  藏着一部摄像机。 /%%",
+    "en": "* ...!^1?&* There is a camera behind the..^1.&  \"sentry station.\"/%%",
+    "instances": 2,
+    "ja": "＊ …！^1？&＊ みはりごや？のうらに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room3_104",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra4": [
+   {
+    "cn": "* ...！ ^1？ &* 在 这 坨 雪 当 中 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* ...！ ^1？ &* 在这坨雪当中 &  藏着一部摄像机。 /%%",
+    "en": "* ...!^1?&* There's a camera hidden inside&  this lump of snow./%%",
+    "instances": 2,
+    "ja": "＊ …！^1？&＊ ゆきのかたまりの　なかに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room3_108",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra8": [
+   {
+    "cn": "\\W* 藉 由 这 些 品 质 ^1， &  你 在 “ \\R雪 球 游 戏 \\W” 中 &  获 得 了 胜 利 。 /",
+    "cn_tight": "\\W* 藉由这些品质 ^1， &  你在 “ \\R雪球游戏 \\W” 中 &  获得了胜利。 /",
+    "en": "\\W* Using these^1, you were&  able to win at \"\\RBall Game\\W.\"/",
+    "instances": 1,
+    "ja": "\\W＊ あなたは　それらを　くしし^1 &　 「\\Rボールゲーム\\W」で&　 しょうりした。/",
+    "key": "obj_readable_room2_178",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* ...！ ^1？ &* 在 这 棵 树 里 面 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* ...！ ^1？ &* 在这棵树里面 &  藏着一部摄像机。 /%%",
+    "en": "* ...!^1?&* There's a camera hidden inside&  this tree./%%",
+    "instances": 1,
+    "ja": "＊ …！^1？&＊ 木に　かくしカメラが&　 しかけてある。/%%",
+    "key": "obj_readable_room3_112",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra8A": [
+   {
+    "cn": "* 在 雪 地 里 藏 着 一 个 开 关 ^1。 &* 喀 哒 ！ /%%",
+    "cn_tight": "* 在雪地里藏着一个开关 ^1。 &* 喀哒！ /%%",
+    "en": "* There's a switch hidden&  in the snow^1.&* Click!/%%",
+    "instances": 1,
+    "ja": "＊ ゆきのなかに&　 スイッチが　かくれている^1。&＊ カチッ！/%%",
+    "key": "obj_readable_room1_155",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "这 是 我 兄 弟 的 &宠 物 石 头 。 /",
+    "cn_tight": "这是我兄弟的 &宠物石头。 /",
+    "en": "THIS IS MY BROTHER'S&PET ROCK./",
+    "instances": 1,
+    "ja": "それは、&兄ちゃんの&ペット&ロック&だよ/",
+    "key": "obj_readable_room2_252",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_tundra_dangerbridge": [
+   {
+    "cn": "* ...！ ^1？ &* 在 这 里 的 树 上 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* ...！ ^1？ &* 在这里的树上 &  藏着一部摄像机。 /%%",
+    "en": "* ...!^1?&* There's a camera hidden in&  the trees here./%%",
+    "instances": 2,
+    "ja": "＊ …！^1？&＊ あたりの木に　かくしカメラが&　 しかけてある。/%%",
+    "key": "obj_readable_room3_128",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra_grillby": [
+   {
+    "cn": "*  (锁 住 了 。 ) /%%",
+    "cn_tight": "*  (锁住了。 ) /%%",
+    "en": "* (It's locked.)/%%",
+    "instances": 1,
+    "ja": "＊ (カギが　かかっている)/%%",
+    "key": "obj_readable_room1_580",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (这 是 个 枕 头 芯 。 ) /%%",
+    "cn_tight": "*  (这是个枕头芯。 ) /%%",
+    "en": "* (It's an uncovered pillow.)/%%",
+    "instances": 1,
+    "ja": "＊ (カバーのとれた　まくらだ)/%%",
+    "key": "obj_readable_room2_534",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_tundra_inn": [
+   {
+    "cn": "* ...HP上 限 是 什 么 啊 ？ /%%",
+    "cn_tight": "* ...HP上限是什么啊？ /%%",
+    "en": "* ... what's maximum HP?/%%",
+    "instances": 1,
+    "ja": "＊ …さいだいHPって　なぁに？/%%",
+    "key": "obj_readable_room1_208",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_tundra_lesserdog": [
+   {
+    "cn": "*  (这 是 一 份 关 于 怪 物 葬 礼 &  的 学 校 报 告 。 ) /",
+    "cn_tight": "*  (这是一份关于怪物葬礼 &  的学校报告。 ) /",
+    "en": "* (It's a school report about&  monster funerals.)/",
+    "instances": 1,
+    "ja": "＊ (がくせいが　かいた　レポートだ。&　 モンスターの　とむらいのぎしき&　 について　まとめてある)/",
+    "key": "obj_readable_room1_164",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* ...！ ^1？ &* 在 这 座 桥 底 下 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* ...！ ^1？ &* 在这座桥底下 &  藏着一部摄像机。 /%%",
+    "en": "* ...!^1?&* There's a camera underneath&  the bridge./%%",
+    "instances": 3,
+    "ja": "＊ …！^1？&＊ はしのしたに&　 かくしカメラが　しかけてある。/%%",
+    "key": "obj_readable_room3_124",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra_library": [
+   {
+    "cn": "* 怪 物 们 的 葬 礼 ^1， &  严 格 地 说 ^2， 非 常 酷 炫 。 /",
+    "cn_tight": "* 怪物们的葬礼 ^1， &  严格地说 ^2， 非常酷炫。 /",
+    "en": "* Monster funerals^1, technically&  speaking^2, are cool as heck./",
+    "instances": 1,
+    "ja": "＊ モンスターの　そうしきは^1 &　 せんもんてき　かんてんから&　 みても　めちゃカッコイイ。/",
+    "key": "obj_readable_room1_198",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 人 类 ^1， 从 物 质 形 态 上 说 ^1， &  比 我 们 强 大 得 多 。 /",
+    "cn_tight": "* 人类 ^1， 从物质形态上说 ^1， &  比我们强大得多。 /",
+    "en": "* Humans^1, with their physical&  forms^1, are far stronger&  than us./",
+    "instances": 1,
+    "ja": "＊ にくたいを　もつ　ニンゲン^1は &　 われわれ　モンスターより&　 はるかに　きょうりょくだ。/",
+    "key": "obj_readable_room2_149",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 如 果 一 个 怪 物 不 想 战 斗 ^1， &  他 的 防 御 会 减 弱 。 /",
+    "cn_tight": "* 如果一个怪物不想战斗 ^1， &  他的防御会减弱。 /",
+    "en": "* If a monster doesn't want&  to fight^1, its defenses will&  weaken./",
+    "instances": 1,
+    "ja": "＊ このため^1　たたかいを　のぞまぬ&　 モンスターは^1　ぼうぎょりょくが&　 ていかする。/",
+    "key": "obj_readable_room3_89",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 不 再 害 怕 人 类 ^1， &  我 们 搬 离 了 旧 城 市 ^1， 家 。 /",
+    "cn_tight": "* 不再害怕人类 ^1， &  我们搬离了旧城市 ^1， 家。 /",
+    "en": "* Fearing the humans no longer^1,&  we moved out of our old&  city^1, HOME./",
+    "instances": 1,
+    "ja": "＊ ニンゲンのきょういから&　 かいほうされた　われわれ^1は&　 「ホーム」のまちを　あとにした。/",
+    "key": "obj_readable_room4_114",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "* 然 而 “ 灵 魂 ” 中 最 纯 粹 的 &  本 质 仍 是 未 知 的 。 /",
+    "cn_tight": "* 然而 “ 灵魂 ” 中最纯粹的 &  本质仍是未知的。 /",
+    "en": "* But the absolute nature of&  \"SOUL\" is unknown./",
+    "instances": 1,
+    "ja": "＊ しかし　そもそも「タマシイ」とは&　 どういうものなのか　よくわかって&　 いないのが　げんじょうだ。/",
+    "key": "obj_readable_room5_138",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_tundra_paproom": [
+   {
+    "cn": "UNDYNE在 海 湾 里 &找 到 了 它 .../",
+    "cn_tight": "UNDYNE在海湾里 &找到了它 .../",
+    "en": "UNDYNE FOUND IT&AT THE BAY.../",
+    "instances": 4,
+    "ja": "アンダイン&が、&うみべで&みつけた&んだ…/",
+    "key": "obj_readable_room2_276",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_tundra_sansbasement": [
+   {
+    "cn": "*  (里 面 是 许 多 &  Sans和 许 多 你 不 认 识 的 人 &  一 起 拍 的 照 片 。 ) /",
+    "cn_tight": "*  (里面是许多 &  Sans和许多你不认识的人 &  一起拍的照片。 ) /",
+    "en": "* (There are photos of Sans with&  a lot of people you don't&  recognize.)/",
+    "instances": 1,
+    "ja": "＊ (みたことのない　ひとたちと&　 いっしょに　うつった　サンズの&　 しゃしんが　なんまいもある)/",
+    "key": "obj_readable_room1_595",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (这 是 个 表 演 顺 序 表 ^1) &*  (喜 剧 演 员 ^1， 舞 者 ^1， Sans...^1) &*  (然 后 是 中 场 休 息 。 ) /%%",
+    "cn_tight": "*  (这是个表演顺序表 ^1) &*  (喜剧演员 ^1， 舞者 ^1， Sans...^1) &*  (然后是中场休息。 ) /%%",
+    "en": "* (It's a performance schedule.^1)&* (Comedians^1, dancers^1, Sans...^1)&* (Seems there's a break now.)/%%",
+    "instances": 1,
+    "ja": "＊ (こうえんスケジュールだ^1)&＊ (げいにん^1　ダンサー^1　サンズ^1…)&＊ (いまは　きゅうけいのようだ)/%%",
+    "key": "obj_readable_room2_544",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (...或 者 这 只 是 &  写 的 太 难 看 了 。 ) /",
+    "cn_tight": "*  (...或者这只是 &  写的太难看了。 ) /",
+    "en": "* (... or maybe it's just the&  handwriting.)/",
+    "instances": 2,
+    "ja": "＊ (…じが　きたなすぎる&　 だけかもしれない)/",
+    "key": "obj_readable_room3_291",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "*  (锁 住 了 。 ) /%%",
+    "cn_tight": "*  (锁住了。 ) /%%",
+    "en": "* (It's locked.)/%%",
+    "instances": 3,
+    "ja": "＊ (カギが　かかっている)/%%",
+    "key": "obj_readable_room4_217",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_tundra_sanshouse": [
+   {
+    "cn": "\\E1他 总 是 忘 了 &给 它 喂 东 西 。 /",
+    "cn_tight": "\\E1他总是忘了 &给它喂东西。 /",
+    "en": "\\E1HE ALWAYS FORGETS&TO FEED IT./",
+    "instances": 1,
+    "ja": "\\E1兄ちゃんは&いつも&エサやりを&わすれる&から…/",
+    "key": "obj_readable_room2_259",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "它 总 是 让 我 想 起 &生 命 中 重 要 的 事 。 /%%",
+    "cn_tight": "它总是让我想起 &生命中重要的事。 /%%",
+    "en": "IT ALWAYS REMINDS&ME OF WHAT'S&IMPORTANT IN LIFE./%%",
+    "instances": 2,
+    "ja": "じんせいに&おいて、&なにが&たいせつか&おもい&ださせて&くれる/%%",
+    "key": "obj_readable_room3_175",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra_sansroom": [
+   {
+    "cn": "*  (抽 屉 里 有 一 本 相 册 。 ) /",
+    "cn_tight": "*  (抽屉里有一本相册。 ) /",
+    "en": "* (There's a photo album inside&  the drawer.)/",
+    "instances": 3,
+    "ja": "＊ (ひきだしの　なかに&　 アルバムが　はいっている)/",
+    "key": "obj_readable_room1_590",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (你 往 抽 屉 里 看 了 看 。 ^1) &*  (里 面 有 某 种 徽 章 。 ) /%%",
+    "cn_tight": "*  (你往抽屉里看了看。 ^1) &*  (里面有某种徽章。 ) /%%",
+    "en": "* (You look in the drawer.^1)&* (There's some kind of badge.)/%%",
+    "instances": 1,
+    "ja": "＊ (ひきだしを　あけてみた^1)&＊ (バッジのようなものが&　 はいっている)/%%",
+    "key": "obj_readable_room2_539",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (蓝 图 。 ^1) &*  (你 看 不 懂 这 种 符 号 ...) /",
+    "cn_tight": "*  (蓝图。 ^1) &*  (你看不懂这种符号 ...) /",
+    "en": "* (Blueprints.^1)&* (You can't read the symbols&  they're written in...)/",
+    "instances": 1,
+    "ja": "＊ (せっけいず　だ^1)&＊ (みなれない　もじで　かいてあ^1り&　 かいどく　できない…)/",
+    "key": "obj_readable_room3_286",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "*  (在 帘 布 后 面 有 一 台 &  奇 怪 的 机 器 。 ^1) &*  (它 似 乎 坏 了 。 ) /%%",
+    "cn_tight": "*  (在帘布后面有一台 &  奇怪的机器。 ^1) &*  (它似乎坏了。 ) /%%",
+    "en": "* (There's a strange machine&  behind the curtain.^1)&* (It seems to be broken.)/%%",
+    "instances": 3,
+    "ja": "＊ (カーテンの　うしろに&　 きみょうな　きかいが　ある^1)&＊ (こわれているようだ)/%%",
+    "key": "obj_readable_room4_212",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "*  (你 把 它 挂 在 了 你 的 钥 匙 圈 上 。 ) /%%",
+    "cn_tight": "*  (你把它挂在了你的钥匙圈上。 ) /%%",
+    "en": "* (You put it on your keychain.)/%%",
+    "instances": 2,
+    "ja": "＊ (キーホルダーに　とりつけた)/%%",
+    "key": "obj_readable_room5_186",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_tundra_snowpuzz": [
+   {
+    "cn": "* 开 关 现 在 被 卡 住 了 。 /%%",
+    "cn_tight": "* 开关现在被卡住了。 /%%",
+    "en": "* The switch is stuck now./%%",
+    "instances": 4,
+    "ja": "＊ スイッチは　うごかなくなった。/%%",
+    "key": "obj_readable_room1_158",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* ...！ ^1？ &* 在 这 棵 树 里 面 &  藏 着 一 部 摄 像 机 。 /%%",
+    "cn_tight": "* ...！ ^1？ &* 在这棵树里面 &  藏着一部摄像机。 /%%",
+    "en": "* ...!^1?&* There's a camera hidden inside&  this tree./%%",
+    "instances": 1,
+    "ja": "＊ …！^1？&＊ 木に　かくしカメラが&　 しかけてある。/%%",
+    "key": "obj_readable_room3_116",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_tundra_town": [
+   {
+    "cn": "请 别 进 入 神 秘 小 屋 。 /%%",
+    "cn_tight": "请别进入神秘小屋。 /%%",
+    "en": "PLEASE DON'T ENTER&THE MYSTERIOUS&SHACK./%%",
+    "instances": 1,
+    "ja": "この&あやしい&こやには、&はいら&ないで&ください！/%%",
+    "key": "obj_readable_room2_483",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 当 四 个 桥 花 种 在 水 中 &  排 成 一 条 线 时 ^1， &  它 们 就 会 开 花 。 /%%",
+    "cn_tight": "* 当四个桥花种在水中 &  排成一条线时 ^1， &  它们就会开花。 /%%",
+    "en": "* When four Bridge Seeds align&  in the water^1, they will&  sprout./%%",
+    "instances": 2,
+    "ja": "＊ 「足場の種」は&　 水面に4つ並ぶ^1と&　 花を咲かせる。/%%",
+    "key": "obj_readable_room3_132",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "*  (你 打 开 锁 进 去 了 。 ) /%%",
+    "cn_tight": "*  (你打开锁进去了。 ) /%%",
+    "en": "* (You unlocked the door and&  entered.)/%%",
+    "instances": 1,
+    "ja": "＊ (カギをあけて&　 なかに　はいった…)/%%",
+    "key": "obj_readable_room4_222",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_water11": [
+   {
+    "cn": "*  (太 棒 了 ， 你 可 以 从 这 个 角 度 &  看 到 南 面 的 墙 。 ) /%%",
+    "cn_tight": "*  (太棒了， 你可以从这个角度 &  看到南面的墙。 ) /%%",
+    "en": "* (It's a nice thing you can&  see the southern wall from&  this angle.)/%%",
+    "instances": 2,
+    "ja": "＊ (この　かくどから&　 みなみの　かべが　みえて&　 ラッキーだ)/%%",
+    "key": "obj_readable_room2_569",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_water12": [
+   {
+    "cn": "* “ 这 就 是 人 类 们 害 怕 的 能 力 。 ” /%%",
+    "cn_tight": "* “ 这就是人类们害怕的能力。 ” /%%",
+    "en": "* \"This is the power that&  the humans feared.\"/%%",
+    "instances": 2,
+    "ja": "＊ ニンゲンたちは　これを恐れた。/%%",
+    "key": "obj_readable_room1_228",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_water14": [
+   {
+    "cn": "* 受 伤 ， 战 败 ， 害 怕 着 死 亡 ， &  我 们 向 人 类 投 降 了 。 /",
+    "cn_tight": "* 受伤， 战败， 害怕着死亡， &  我们向人类投降了。 /",
+    "en": "* Hurt, beaten, and fearful for&  our lives, we surrendered&  to the humans./",
+    "instances": 2,
+    "ja": "＊ 完膚無きまでに打ちのめされた&　 我々は^1　根絶やしにされることを&　 恐れ　ニンゲンたちに降伏した。/",
+    "key": "obj_readable_room1_241",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 当 怪 物 死 去 时 ， &  他 的 灵 魂 会 消 失 。 /",
+    "cn_tight": "* 当怪物死去时， &  他的灵魂会消失。 /",
+    "en": "* When a monster dies, its&  SOUL disappears./",
+    "instances": 2,
+    "ja": "＊ モンスターが死ぬと&　 そのタマシイは　ただちに&　 消滅する。/",
+    "key": "obj_readable_room2_302",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 一 种 特 殊 的 称 为 “ Boss怪 物 ” &  的 怪 物 的 灵 魂 。 /",
+    "cn_tight": "* 一种特殊的称为 “ Boss怪物 ” &  的怪物的灵魂。 /",
+    "en": "* The SOUL of a special species&  of monster called a&  \"Boss Monster.\"/",
+    "instances": 2,
+    "ja": "＊ 「ボスモンスター」と呼ばれる&　 特殊な種族のタマシイである。/",
+    "key": "obj_readable_room3_154",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water15": [
+   {
+    "cn": "* 七 个 最 强 大 的 人 类 魔 法 师 &  用 法 术 将 我 们 封 印 在 地 底 。 /",
+    "cn_tight": "* 七个最强大的人类魔法师 &  用法术将我们封印在地底。 /",
+    "en": "* Seven of their greatest&  magicians sealed us underground&  with a magic spell./",
+    "instances": 2,
+    "ja": "＊ そして　強大な力を持つ　7人の&　 ニンゲンの魔術師が^1　その魔力で&　 我々を地底の世界に封印した。/",
+    "key": "obj_readable_room1_247",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 如 果 有 一 股 强 大 的 ， &  相 当 于 七 个 人 类 灵 魂 的 力 量 ， &  施 加 到 结 界 上 .../",
+    "cn_tight": "* 如果有一股强大的， &  相当于七个人类灵魂的力量， &  施加到结界上 .../",
+    "en": "* If a huge power, equivalent&  to seven human SOULs, attacks&  the barrier.../",
+    "instances": 2,
+    "ja": "＊ 7人のニンゲンのタマシイに&　 匹敵する　強大な力で撃てば…/",
+    "key": "obj_readable_room2_310",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 人 类 根 本 不 可 能 到 这 里 。 /",
+    "cn_tight": "* 人类根本不可能到这里。 /",
+    "en": "* There is no way a human&  could come here./",
+    "instances": 2,
+    "ja": "＊ したがって　ニンゲンが&　 現れることもない。/",
+    "key": "obj_readable_room3_165",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water17": [
+   {
+    "cn": "*  (一 个 破 旧 的 &  长 着 猫 耳 的 &  人 类 女 性 手 办 。 )/%%",
+    "cn_tight": "*  (一个破旧的 &  长着猫耳的 &  人类女性手办。 )/%%",
+    "en": "* (It's a beat-up figurine&  of a female human with&  cat ears.)/%%",
+    "instances": 2,
+    "ja": "＊ (ネコみみが　ついた　ニンゲンの&　 おんなのこの　フィギュア。&　 ふるくて　ボロボロだ)/%%",
+    "key": "obj_readable_room1_280",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_water19": [
+   {
+    "cn": "* 天 使 ...&* 一 位 曾 见 过 地 表 的 天 使 .../",
+    "cn_tight": "* 天使 ...&* 一位曾见过地表的天使 .../",
+    "en": "* The Angel...&* The One Who Has Seen The&  Surface.../",
+    "instances": 2,
+    "ja": "＊ 「地上を見し者…&　 すなわち　天使は舞い戻る…」/",
+    "key": "obj_readable_room1_256",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_water3": [
+   {
+    "cn": "%%",
+    "cn_tight": "%%",
+    "en": "%%",
+    "instances": 2,
+    "ja": "%%",
+    "key": "obj_readable_room4_237",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_water5": [
+   {
+    "cn": "* 许 愿 室 /%%",
+    "cn_tight": "* 许愿室 /%%",
+    "en": "* WISHING ROOM/%%",
+    "instances": 2,
+    "ja": "＊ 願いの間/%%",
+    "key": "obj_readable_room3_141",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water6": [
+   {
+    "cn": "* 但 人 类 有 一 个 弱 点 。 &* 讽 刺 的 是 ， 那 正 是 他 们 &  灵 魂 中 蕴 含 的 强 大 力 量 。 /",
+    "cn_tight": "* 但人类有一个弱点。 &* 讽刺的是， 那正是他们 &  灵魂中蕴含的强大力量。 /",
+    "en": "* But humans have one weakness.&* Ironically, it is the strength&  of their SOUL./",
+    "instances": 2,
+    "ja": "＊ だがニンゲンにも弱点が1つある。&　 その弱点には皮肉にも　彼らの&　 タマシイの強さが関係している。/",
+    "key": "obj_readable_room3_142",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water7": [
+   {
+    "cn": "* “ 人 类 和 怪 物 的 战 争 。 ” /%%",
+    "cn_tight": "* “ 人类和怪物的战争。 ” /%%",
+    "en": "* \"The War of Humans and&  Monsters.\"/%%",
+    "instances": 2,
+    "ja": "＊ 「ニンゲンとモンスターの戦争史」/%%",
+    "key": "obj_readable_room1_235",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 人 类 无 比 强 大 。 &* 几 乎 所 有 怪 物 的 &  灵 魂 加 起 来 .../",
+    "cn_tight": "* 人类无比强大。 &* 几乎所有怪物的 &  灵魂加起来 .../",
+    "en": "* Humans are unbelievably strong.&* It would take the SOUL of&  nearly every monster.../",
+    "instances": 2,
+    "ja": "＊ ニンゲンは圧倒的な強さを持つ。&＊ 全モンスターのタマシイを&　 集結して　ようやく…/",
+    "key": "obj_readable_room2_295",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "* 那 份 力 量 使 得 它 即 使 &  在 死 后 也 能 留 存 于 体 外 。 /%%",
+    "cn_tight": "* 那份力量使得它即使 &  在死后也能留存于体外。 /%%",
+    "en": "* Its power allows it to persist&  outside the human body, even&  after death./%%",
+    "instances": 2,
+    "ja": "＊ ニンゲンのタマシイは　死後も&　 肉体を離れ　存在しつづけることが&　 可能なのだ。/%%",
+    "key": "obj_readable_room3_147",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 一 个 拥 有 着 人 类 灵 魂 的 怪 物 ..^1.&* 一 只 拥 有 无 尽 力 量 &  的 恐 怖 猛 兽 。 /%%",
+    "cn_tight": "* 一个拥有着人类灵魂的怪物 ..^1.&* 一只拥有无尽力量 &  的恐怖猛兽。 /%%",
+    "en": "* A monster with a human SOUL..^1.&* A horrible beast with&  unfathomable power./%%",
+    "instances": 2,
+    "ja": "＊ モンスターがニンゲンのタマシイを&　 取り込めば^1　底知れぬ力を持つ&　 恐ろしい怪物となるのだ。/%%",
+    "key": "obj_readable_room4_139",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "*  (这 张 图 画 莫 名 地 &  令 人 很 不 安 。 ) /%%",
+    "cn_tight": "*  (这张图画莫名地 &  令人很不安。 ) /%%",
+    "en": "* (There's something very&  unsettling about this drawing.)/%%",
+    "instances": 2,
+    "ja": "＊ (どこか　みるものを&　 ふあんにさせる　え　だ)/%%",
+    "key": "obj_readable_room5_131",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_water_blookhouse": [
+   {
+    "cn": "* 有 时 候 ..^1.&* 会 有 我 喜 欢 看 的 节 目 .../%%",
+    "cn_tight": "* 有时候 ..^1.&* 会有我喜欢看的节目 .../%%",
+    "en": "* there's a show i like to&  watch on it..^1.&* sometimes.../%%",
+    "instances": 2,
+    "ja": "＊ それで^1　おもしろい　ばんぐみを&　 みるヨ^1…　ときどきネ…/%%",
+    "key": "obj_readable_room3_303",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water_bridgepuzz1": [
+   {
+    "cn": "* 如 果 你 犯 了 个 错 误 &  敲 击 铃 铛 花 会 把 这 些 &  桥 之 花 种 召 回 原 处 。 /%%",
+    "cn_tight": "* 如果你犯了个错误 &  敲击铃铛花会把这些 &  桥之花种召回原处。 /%%",
+    "en": "* If an error is made, the Bell&  Blossom can call Bridge Seeds&  back to where they started./%%",
+    "instances": 2,
+    "ja": "＊ 過ちをおかしたならば　鐘の花を&　 鳴らせ。足場の種は　始まりの&　 場所に戻るだろう。/%%",
+    "key": "obj_readable_room3_139",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water_nicecream": [
+   {
+    "cn": "* 阿 嚏 ^1！ &* 本 来 是 想 抓 虫 子 ^1， &  但 我 刚 得 了 感 冒 .../%%",
+    "cn_tight": "* 阿嚏 ^1！ &* 本来是想抓虫子 ^1， &  但我刚得了感冒 .../%%",
+    "en": "* Achoo^1!&* Tried to catch a bug^1, but&  I just caught a cold.../%%",
+    "instances": 2,
+    "ja": "＊ ハックション^1！&＊ ムシを　つかまえたかったの^1に&　 カゼのウイルス　つかまえちゃった…/%%",
+    "key": "obj_readable_room1_263",
+    "obj": "obj_readable_room1"
+   }
+  ],
+  "ut.rooms.room_water_piano": [
+   {
+    "cn": "* 前 八 个 音 符 就 行 了 。 /%%",
+    "cn_tight": "* 前八个音符就行了。 /%%",
+    "en": "* Only the first 8 are fine./%%",
+    "instances": 2,
+    "ja": "＊ 最初の8音だけでいい。/%%",
+    "key": "obj_readable_room5_126",
+    "obj": "obj_readable_room5"
+   }
+  ],
+  "ut.rooms.room_water_prebird": [
+   {
+    "cn": "* 人 类 ， 害 怕 我 们 的 力 量 ^1， &  向 我 们 发 动 了 战 争 。 /",
+    "cn_tight": "* 人类， 害怕我们的力量 ^1， &  向我们发动了战争。 /",
+    "en": "* The humans, afraid of our&  power^1, declared war on us./",
+    "instances": 1,
+    "ja": "＊ そして　恐怖に駆られた&　 ニンゲンたちは^1 &　 我々モンスターに戦いを挑んだ。/",
+    "key": "obj_readable_room1_269",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 我 总 是 抓 到 &  同 一 只 。 /%%",
+    "cn_tight": "* 我总是抓到 &  同一只。 /%%",
+    "en": "* I keep catching the same&  one./%%",
+    "instances": 1,
+    "ja": "＊ だから　つかまるのは&　 おなじムシ　ばっかり。/%%",
+    "key": "obj_readable_room2_326",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "*  (像 是 某 样 东 西 的 便 条 ^1。 &  但 它 从 头 到 尾 都 是 鬼 画 符 。 )/",
+    "cn_tight": "*  (像是某样东西的便条 ^1。 &  但它从头到尾都是鬼画符。 )/",
+    "en": "* (Seems like the notes to&  something^1, but it's all&  written in chicken scratch.)/",
+    "instances": 1,
+    "ja": "＊ (なにかのメモのようだ^1…&　 ミミズが　はったような　じで&　 かいてある)/",
+    "key": "obj_readable_room3_195",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 你 能 管 管 你 朋 友 吗 ...？ /",
+    "cn_tight": "* 你能管管你朋友吗 ...？ /",
+    "en": "* Can you do something about&  your friend...?/",
+    "instances": 1,
+    "ja": "＊ その　おともだち…なんとかして&　 もらえませんか…？/",
+    "key": "obj_readable_room4_126",
+    "obj": "obj_readable_room4"
+   }
+  ],
+  "ut.rooms.room_water_preundyne": [
+   {
+    "cn": "* 他 们 突 然 袭 来 ， &  毫 不 留 情 。 /%%",
+    "cn_tight": "* 他们突然袭来， &  毫不留情。 /%%",
+    "en": "* They attacked suddenly, and&  without mercy./%%",
+    "instances": 2,
+    "ja": "＊ 彼らは何の前触れもなく&　 攻めてくると^1　我々を襲い^1 &　 ひとりも見逃しはしなかった。/%%",
+    "key": "obj_readable_room1_274",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "* 团 结 一 致 的 人 类 太 过 强 大 ， &  而 我 们 怪 物 ， 太 过 弱 小 。 /",
+    "cn_tight": "* 团结一致的人类太过强大， &  而我们怪物， 太过弱小。 /",
+    "en": "* United, the humans were too&  powerful, and us monsters,&  too weak./",
+    "instances": 2,
+    "ja": "＊ 団結したニンゲンたちは&　 あまりに強く　モンスターたちは&　 あまりに非力だった。/",
+    "key": "obj_readable_room2_318",
+    "obj": "obj_readable_room2"
+   }
+  ],
+  "ut.rooms.room_water_temvillage": [
+   {
+    "cn": "%%",
+    "cn_tight": "%%",
+    "en": "%%",
+    "instances": 4,
+    "ja": "＊ ひとたび道を定めたら&　 心を変えることなかれ。/%%",
+    "key": "obj_readable_room1_652",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "*  (她 在 等 人 放 她 出 去 。 ) /%%",
+    "cn_tight": "*  (她在等人放她出去。 ) /%%",
+    "en": "* (She's waiting for someone to&  let her out.)/%%",
+    "instances": 1,
+    "ja": "＊ (だれかが　だしてくれるのを&　 まっている)/%%",
+    "key": "obj_readable_room2_560",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "%%",
+    "cn_tight": "%%",
+    "en": "%%",
+    "instances": 2,
+    "ja": "%%",
+    "key": "obj_readable_room3_325",
+    "obj": "obj_readable_room3"
+   }
+  ],
+  "ut.rooms.room_water_undynehouse": [
+   {
+    "cn": "\\E0* 所 以 Alphys改 造 了 我 的 &  冰 箱 ， 让 它 能 加 热 食 物 ！ /",
+    "cn_tight": "\\E0* 所以 Alphys改造了我的 &  冰箱， 让它能加热食物！ /",
+    "en": "\\E0* So Alphys fixed up&  my fridge so it&  heats up food instead!/",
+    "instances": 2,
+    "ja": "\\E0＊ だから　アルフィー^1に&　 あっためるように&　 かいぞうしてもらった！/",
+    "key": "obj_readable_room1_347",
+    "obj": "obj_readable_room1"
+   },
+   {
+    "cn": "\\E3* 可 惜 ！ ^1 &* 死 宅 禁 止 入 内 ！ /",
+    "cn_tight": "\\E3* 可惜！ ^1 &* 死宅禁止入内！ /",
+    "en": "\\E3* TOO BAD^1!&* No nerds allowed!/",
+    "instances": 1,
+    "ja": "\\E3＊ ざんねんだったな^1！&＊ オタクは&　 たちいりきんしだッ！/",
+    "key": "obj_readable_room2_373",
+    "obj": "obj_readable_room2"
+   },
+   {
+    "cn": "\\E4* 他 所 做 的 只 是 &  妖 媚 地 躺 在 钢 琴 上 .../",
+    "cn_tight": "\\E4* 他所做的只是 &  妖媚地躺在钢琴上 .../",
+    "en": "\\E4* All he did was&  lie seductively&  on the piano.../",
+    "instances": 3,
+    "ja": "\\E4＊ ひたすら　ピアノの&　 うえに　ねそべってた&　 ことがあった。/",
+    "key": "obj_readable_room3_242",
+    "obj": "obj_readable_room3"
+   },
+   {
+    "cn": "* 记 录 编 号 5/",
+    "cn_tight": "* 记录编号 5/",
+    "en": "* ENTRY NUMBER 5/",
+    "instances": 2,
+    "ja": "＊ No. 5/",
+    "key": "obj_readable_room4_182",
+    "obj": "obj_readable_room4"
+   },
+   {
+    "cn": "*  (...袖 珍 的 剑 ^1， 斧 头 ^1， &  长 矛 ^1， 双 截 棍 ...) /%%",
+    "cn_tight": "*  (...袖珍的剑 ^1， 斧头 ^1， &  长矛 ^1， 双截棍 ...) /%%",
+    "en": "* (... tiny swords^1, axes^1,&  spears^1, nunchucks...)/%%",
+    "instances": 4,
+    "ja": "＊ (…ミニサイズのつるぎ^1…&　 オノ^1…　ヤリ^1…　ヌンチャク…)/%%",
+    "key": "obj_readable_room5_145",
+    "obj": "obj_readable_room5"
+   },
+   {
+    "cn": "\\E6* 通 常 他 都 可 以 平 稳 着 地 。 /%%",
+    "cn_tight": "\\E6* 通常他都可以平稳着地。 /%%",
+    "en": "\\E6* Normally he NAILS&  the landing./%%",
+    "instances": 4,
+    "ja": "\\E6＊ いつもは&　 ちゃくちも　かんぺきに&　 きめるのにッ！/%%",
+    "key": "obj_readable_room5_154",
+    "obj": "obj_readable_room5"
+   }
+  ]
+ },
+ "games": {
+  "outertale": {
+   "dup_oid": 0,
+   "entries": 161,
+   "keys_without_text": 0,
+   "rooms_without_scene": 29,
+   "scenes_out": 75,
+   "scenes_with_oid": 244,
+   "status": "OK",
+   "unresolved": 27,
+   "unresolved_list": [
+    {
+     "n": 1,
+     "obj": "obj_readable_flowers1",
+     "room_idx": 4,
+     "scene": "outertale.special._credits1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_sign1",
+     "room_idx": 8,
+     "scene": "outertale.special._frontier1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_switch1",
+     "room_idx": 8,
+     "scene": "outertale.special._frontier1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_plaque_1",
+     "room_idx": 16,
+     "scene": "outertale.special._frontier9",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_plaque_2",
+     "room_idx": 16,
+     "scene": "outertale.special._frontier9",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_sign2",
+     "room_idx": 21,
+     "scene": "outertale.wastelands.w_lobby",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room1",
+     "room_idx": 37,
+     "scene": "outertale.wastelands.w_junction",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 59,
+     "scene": "outertale.starton.s_robot",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_modernbook",
+     "room_idx": 74,
+     "scene": "outertale.starton.s_town1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room3",
+     "room_idx": 77,
+     "scene": "outertale.starton.s_grillbys",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room2",
+     "room_idx": 142,
+     "scene": "outertale.aerialis.a_path1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room4",
+     "room_idx": 142,
+     "scene": "outertale.aerialis.a_path1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 4,
+     "obj": "obj_readable_room_editor",
+     "room_idx": 142,
+     "scene": "outertale.aerialis.a_path1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room1",
+     "room_idx": 220,
+     "scene": "outertale.citadel.c_archive_wastelands4",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room2",
+     "room_idx": 224,
+     "scene": "outertale.citadel.c_archive_starton3",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room3",
+     "room_idx": 246,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room1",
+     "room_idx": 260,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room1",
+     "room_idx": 302,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 340,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 342,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 343,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 344,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 345,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 346,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 5,
+     "obj": "obj_readable_room5",
+     "room_idx": 348,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 6,
+     "obj": "obj_readable_room5",
+     "room_idx": 356,
+     "scene": null,
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room_editor",
+     "room_idx": 356,
+     "scene": null,
+     "why": "no_room_guard"
+    }
+   ]
+  },
+  "ut": {
+   "dup_oid": 0,
+   "entries": 194,
+   "keys_without_text": 0,
+   "rooms_without_scene": 0,
+   "scenes_out": 91,
+   "scenes_with_oid": 358,
+   "status": "OK",
+   "unresolved": 15,
+   "unresolved_list": [
+    {
+     "n": 1,
+     "obj": "obj_readable_flowers1",
+     "room_idx": 4,
+     "scene": "ut.rooms.room_area1",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_sign1",
+     "room_idx": 8,
+     "scene": "ut.rooms.room_ruins3",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_switch1",
+     "room_idx": 8,
+     "scene": "ut.rooms.room_ruins3",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_plaque_1",
+     "room_idx": 16,
+     "scene": "ut.rooms.room_ruins10",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_plaque_2",
+     "room_idx": 16,
+     "scene": "ut.rooms.room_ruins10",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_sign2",
+     "room_idx": 21,
+     "scene": "ut.rooms.room_ruins13",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room5",
+     "room_idx": 59,
+     "scene": "ut.rooms.room_tundra_xoxopuzz",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_modernbook",
+     "room_idx": 74,
+     "scene": "ut.rooms.room_tundra_library",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room3",
+     "room_idx": 77,
+     "scene": "ut.rooms.room_tundra_paproom",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room2",
+     "room_idx": 142,
+     "scene": "ut.rooms.room_fire_lab2",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room4",
+     "room_idx": 142,
+     "scene": "ut.rooms.room_fire_lab2",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 4,
+     "obj": "obj_readable_room_editor",
+     "room_idx": 142,
+     "scene": "ut.rooms.room_fire_lab2",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room3",
+     "room_idx": 246,
+     "scene": "ut.rooms.room_truelab_hub",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 1,
+     "obj": "obj_readable_room1",
+     "room_idx": 260,
+     "scene": "ut.rooms.room_truelab_fan",
+     "why": "no_room_guard"
+    },
+    {
+     "n": 2,
+     "obj": "obj_readable_room1",
+     "room_idx": 302,
+     "scene": "ut.rooms.room_water7_older",
+     "why": "no_room_guard"
+    }
+   ]
+  },
+  "uty": {
+   "dup_oid": 0,
+   "entries": 0,
+   "keys_without_text": 0,
+   "rooms_without_scene": 0,
+   "scenes_out": 0,
+   "scenes_with_oid": 287,
+   "status": "OK",
+   "unresolved": 0,
+   "unresolved_list": []
+  }
+ },
+ "markers_note": "正文里的 % & / ^1 ^2 是原作控制符（换页/换行/按键停顿），**未解码**，原样保留；渲染规则定下来之前不许在数据层替换。",
+ "markers_raw": true,
+ "note": "可读物的正文：键由「房间」决定（原作 obj_readable_*_Alarm_0 里 if (room == N) 选键），不是按实例坐标。本文件只收录\"该房间真的摆了该可读物\"的组合。",
+ "schema_version": 1
+}

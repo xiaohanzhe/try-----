@@ -3131,6 +3131,29 @@ SUITES = [
                 'H 测试只在副本上跑（真卡零改动）。'
                 '⚠️ 脚本自带闸门：`train30.py` 在跑就拒绝执行（中途改会让同一份报告混两套口径）。',
     },
+    # ★ 第117轮（补第115轮 §16）：**可读物正文资产**是产品数据，被手改/回滚都不会报错
+    #   （空串照样能显示），所以要像守产品代码一样守它。
+    {
+        'id': 'check_readable_asset115',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第115轮-跨作品物件普查', '_tools',
+                               'check_readable_asset115.py'),
+        'desc': '第117轮（补第115轮 §16）：**可读物正文资产** '
+                '`ralsei_pet/assets/scenes/_readable_text.json` —— 文本键由「房间」决定'
+                '（原作 `obj_readable_*_Alarm_0` 里的 `if (room == N)`；反射取证 '
+                '`ValueVariable={room}`），**不是**按实例坐标。A 结构（`schema_version` · '
+                '`markers_raw` 为真 = % & / ^1 没被偷偷替换 · `markers_note` 在位，标记'
+                '**未解码**）· B 分母（ut ≥150 条 / outertale ≥120 条；uty 的 0 条是'
+                '**原作事实**，显式记 EMPTY，不当作通过）· C 引用完整性（每个 scene_id 真在'
+                '产品 `_zone.*.json` 里、每个 key 真在 `readables115.json` 里）· D 正文非空白'
+                '（不用空串顶）· ★E `cn_tight` 去空白后与 `cn` 逐字相等（只许少空格，'
+                '不是改了几个字）· ★F 分母守恒（资产里每个 (场景,对象) 组合都真在 '
+                '`inst_full.tsv` 有实例，不造挂载点）· ★G 未解如实登记（ut 15 / outertale 27 '
+                '**没有**混进 by_scene）· H 三条破坏性负控制（正文改空白 / key 改名 / '
+                'cn_tight 换字 ⇒ 对应判据必须变红）· I 自检（AST 数恒真判据 + 正负控制；'
+                '第一版用正则扫文本，被自己的正控制字符串打红 ⇒ 改 AST）。'
+                '★ 本套件**零外部盘依赖**（只读仓库内文件）。',
+    },
     {
         'id': 'check113p',
         'script': os.path.join(ROOT, 'code-quality-audit',
