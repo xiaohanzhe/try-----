@@ -1,0 +1,80 @@
+MARK	gml_Script_SCR_TEXT	/%,&,%,%%,%%%	22
+MARK	gml_Script_SCR_GAMESTART	%%%	1
+MARK	gml_Script_scr_itemuseb	/%,%	3
+CAND	gml_Script_scr_textskip	25
+CAND	gml_Script_scr_msgup	56
+MARK	gml_Script_scr_msgup	%%%	1
+CAND	gml_Script_scr_writetext	65
+CAND	gml_Script_scr_regulartext	16
+CAND	gml_Script_SCR_TEXTSETUP	28
+MARK	gml_Script_scr_shop_draw_status	/8	1
+MARK	gml_Script_scr_loadcredits	%%%	2
+CAND	gml_Script_ossafe_file_text_close	30
+CAND	gml_Script_ossafe_file_text_eof	21
+CAND	gml_Script_ossafe_file_text_open_read	142
+CAND	gml_Script_ossafe_file_text_open_write	35
+CAND	gml_Script_ossafe_file_text_read_real	52
+CAND	gml_Script_ossafe_file_text_read_string	51
+CAND	gml_Script_ossafe_file_text_readln	50
+CAND	gml_Script_ossafe_file_text_write_real	23
+CAND	gml_Script_ossafe_file_text_write_string	22
+CAND	gml_Script_ossafe_file_text_writeln	21
+CAND	gml_Script_scr_drawtext_icons	119
+CAND	gml_Script_scr_drawtext_icons_multiline	166
+CAND	gml_Script_scr_gettext	262
+MARK	gml_Script_textdata_en	/,%%,%%%	129
+MARK	gml_Script_textdata_ja	/,%%,%%%	127
+CAND	gml_Script_scr_drawtext_centered	15
+CAND	gml_Script_scr_drawtext_centered_scaled	114
+MARK	gml_Script_scr_kanatype_append	/	1
+CAND	gml_Script_texture_set_interpolation	3
+MARK	gml_Object_obj_battlecontroller_Create_0	%%%	1
+MARK	gml_Object_obj_battlecontroller_Step_0	/%,%%%	2
+MARK	gml_Object_obj_papdate_Step_0	%%	1
+MARK	gml_Object_obj_testmonster_Alarm_6	%%%	1
+MARK	gml_Object_obj_dogeB_Alarm_6	%%%	1
+MARK	gml_Object_obj_bara03_Alarm_6	%%%	1
+MARK	gml_Object_obj_bara04_Alarm_6	%%%	1
+MARK	gml_Object_obj_essaystuff_Draw_0	/%%	1
+MARK	gml_Object_obj_nextbattle_pl_Draw_0	/20	1
+MARK	gml_Object_obj_sansb_Alarm_6	%%%	1
+MARK	gml_Object_obj_basicmonster_Alarm_6	%%%	1
+CAND	gml_Object_obj_sadmsggen_Create_0	9
+CAND	gml_Object_obj_sadmsggen_Alarm_0	20
+CAND	gml_Object_obj_sadmsggen_PreCreate_0	2
+CAND	gml_Object_obj_dialoguer_Create_0	296
+CAND	gml_Object_obj_dialoguer_Destroy_0	11
+CAND	gml_Object_obj_dialoguer_Step_0	341
+CAND	gml_Object_obj_dialoguer_Draw_0	225
+CAND	gml_Object_obj_dialoguer_PreCreate_0	2
+MARK	gml_Object_obj_base_writer_Create_0	%%%	1
+MARK	gml_Object_obj_base_writer_Alarm_0	/,&,%,^	4
+MARK	gml_Object_obj_base_writer_Draw_0	/,&,%,^	9
+MARK	gml_Object_OBJ_NOMSCWRITER_Create_0	%%%	1
+CAND	gml_Object_obj_textdrawtest_Create_0	6
+CAND	gml_Object_obj_textdrawtest_Alarm_0	2
+CAND	gml_Object_obj_textdrawtest_Draw_0	22
+CAND	gml_Object_obj_textdrawtest_PreCreate_0	2
+MARK	gml_Object_obj_readable_room1_Alarm_0	%%	1
+MARK	gml_Object_obj_readable_room4_Alarm_0	%%	1
+MARK	gml_Object_obj_readable_room_editor_Alarm_0	%%	2
+CAND	gml_Object_obj_sistertext_Create_0	59
+CAND	gml_Object_obj_sistertext_Alarm_3	36
+CAND	gml_Object_obj_sistertext_Alarm_2	21
+CAND	gml_Object_obj_sistertext_Alarm_0	23
+CAND	gml_Object_obj_sistertext_Draw_0	113
+CAND	gml_Object_obj_sistertext_PreCreate_0	2
+MARK	gml_Object_obj_overworldcontroller_Draw_0	/	1
+MARK	gml_Object_obj_time_Draw_64	/	2
+MARK	gml_Object_obj_gameintro_fake_Create_0	%%%	1
+MARK	gml_Object_obj_vsflowey_heart_Create_0	%%%	1
+MARK	gml_Object_obj_cloverchara_Collision_1576	/	1
+MARK	gml_Script_scr_ghosttalk	/,/%%	3
+MARK	gml_Script_scr_cloface	%	1
+MARK	gml_Script_scr_charface	%	1
+MARK	gml_Object_obj_kanako_Alarm_6	%%%	1
+CAND	gml_Object_obj_void_charadialogue_Collision_1576	14
+CAND	gml_Object_obj_void_charadialogue_Create_0	26
+CAND	gml_Object_obj_void_charadialogue_Alarm_0	10
+MARK	gml_Script_scr_next_talk_check	/,/%%	3
+TOTAL	codes=8374	hits=37	cands=42

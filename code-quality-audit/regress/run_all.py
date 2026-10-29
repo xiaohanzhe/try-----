@@ -3155,6 +3155,26 @@ SUITES = [
                 '★ 本套件**零外部盘依赖**（只读仓库内文件）。',
     },
     {
+        'id': 'check_readable_wire117',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第115轮-跨作品物件普查', '_tools',
+                               'check_readable_wire117.py'),
+        'desc': '第117轮：**可读物真的说原文** —— 控制符解码 + 资产载入 + 接进可交互物。'
+                '数据层继续保留原始标记（`markers_raw` 仍为真，见 '
+                '`check_readable_asset115`），解码只在**显示层**做，规则全部来自反编译取证'
+                '（`_evidence/raw/ut/gml/`：`obj_base_writer_Draw_0` 分派 · `SCR_NEWLINE` '
+                '`&`=真换行 · `Alarm_0` `^N`=停顿 · `scr_replace_buttons_pc` `[C]`=按键字形）：'
+                '`&`=换行 · 单个 `%`=换页（本产品单框 ⇒ 退化成换行）· `%%`=**消息结束**（截断）· '
+                '`/`=等按键且**不移动书写点**（删且**不换行**）· `^N`=停顿 · `\\\\X`=颜色/字体/音效 · '
+                '`[C]`=字形占位。A 纯函数 13 条，`%` vs `%%`、`&` vs `/` **正负成对**；'
+                'B 资产账目守恒（保留+解空+重复==原始 355）+ 解码后无 `% & / ^ \\\\` 残留；'
+                'C 真跑 `build_props`：给表用原文 / 不给表回落兜底 / 场景不在表里不造假（三条成对）；'
+                'D 与"朴素实现（一律删标记字符）"必须不同 + B4 谓词非恒真；'
+                'E AST 接线（`main.py` 真传 `readables=` 且来自 `load_readable_text`；'
+                '`build_props` 函数体真用该参数；`item_interact` 仍零依赖）；F 自检（AST 数恒真 + 无 BOM）。'
+                '★ 零外部盘依赖（只读仓库内资产）。',
+    },
+    {
         'id': 'check113p',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第113轮-全体角色AI训练', '_tools', 'check113p.py'),

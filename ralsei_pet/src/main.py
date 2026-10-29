@@ -5546,6 +5546,19 @@ class RalseiPet(QMainWindow):
                     routes = self.__dict__.get('_scene_routes')
             except Exception:
                 _log.exception('路由表加载失败（门不可推，其余照常）')
+            # ★ 第117轮：可读物正文（`assets/scenes/_readable_text.json`）。
+            #   进程内只读一次（14 万字符的 JSON，不必每次换场景都解析）。
+            #   读不到 ⇒ 空表 ⇒ 可读物回落兜底台词，不影响其它可交互物。
+            readables = self.__dict__.get('_readable_table')
+            if readables is None:
+                try:
+                    readables = item_interact_mod.load_readable_text(
+                        os.path.join(project_root, 'assets', 'scenes',
+                                     item_interact_mod.READABLE_FILENAME))
+                except Exception:
+                    _log.exception('可读物正文表载入失败（回落到兜底台词）')
+                    readables = {}
+                self._readable_table = readables
             self.item_props = item_interact_mod.build_props(
                 scene,
                 self.inventory.chapter,
@@ -5558,6 +5571,7 @@ class RalseiPet(QMainWindow):
                 routes=routes,
                 on_egg=self._niko_home_egg,
                 egg_gate=self._niko_home_gate,
+                readables=readables,
             )
         except Exception:
             _log.exception('可交互物构建失败（本场景没有可交互物，不影响其它功能）')

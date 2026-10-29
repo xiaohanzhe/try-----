@@ -55,7 +55,17 @@ def main(argv):
     ap.add_argument('--csx', required=True, help='_tools 下的 csx 文件名')
     ap.add_argument('--out', required=True, help='csx 在工作目录里产出的文件名')
     ap.add_argument('--no-distil', action='store_true', help='只留在工作目录，不复制进仓库')
+    # ★ 第117轮：只跑某一款（默认仍是全部三款，历史行为一字不变）。
+    #   理由：一次 load 一款 data 要几分钟，探针往往只针对其中一款。
+    ap.add_argument('--game', default=None, help='只跑这一款：ut / uty / outertale')
     a = ap.parse_args(argv)
+    games = GAMES
+    if a.game:
+        games = [g for g in GAMES if g[0] == a.game]
+        if not games:
+            print('[FAIL] 未知 --game=%r（可选 %s）'
+                  % (a.game, '/'.join(g[0] for g in GAMES)))
+            return 2
 
     csx = a.csx if os.path.isabs(a.csx) else os.path.join(HERE, a.csx)
     if not os.path.isfile(csx):
@@ -76,7 +86,7 @@ def main(argv):
     w('CSX = %s' % csx)
     w('OUT = %s' % a.out)
     rows = []
-    for key, src, exp_rooms in GAMES:
+    for key, src, exp_rooms in games:
         w('=' * 60)
         d = os.path.join(WORK, key)
         os.makedirs(d, exist_ok=True)

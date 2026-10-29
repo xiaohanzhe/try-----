@@ -38,7 +38,7 @@
 | `savepoint` | `SavePointProp` | `obj_savepoint_Other_10`：按 `room` 给台词 + **全队回满 HP** |
 | `fountain` | `FountainProp` | 暗之泉（产品第一站 = `ch1.room_town_north`，见 §43.6） |
 | `pickup` | `PickupProp` | 落点表驱动（`assets/items/pickups.json`）；**没有表就如实不建物** |
-| `readable` / `sign` | `ReadableProp` | 产品口径文本（原文本在外部语言包，拿不到） |
+| `readable` / `sign` | `ReadableProp` | ★ 第117轮：**原作正文**（`_readable_text.json`）；查不到才回落产品口径兜底 |
 | `chest` / `interactable` / `furniture` | `InspectProp` | 同上；第68轮新增（此前落进 `else` 被静默丢弃） |
 | `door` | —— | 交回**路由层**（`classify` 标 `handled_by='scene_routing'`） |
 """
@@ -353,7 +353,10 @@ class ReadableProp(PropInteractable):
     """可读物 / 招牌 —— 第68轮补采后**已有实例**（`obj_readable_room1` 856 条 /
     `obj_npc_sign` 81 条等）。
 
-    文本走 `READABLE_TEXT`（产品口径：原文本在 `lang_zh_names.json`，拿不到）。
+    ★ 第117轮：台词**接上原作正文**（`assets/scenes/_readable_text.json`，
+      按 `(场景, 对象)` 索引；键由房间决定，见 `load_readable_text` 的说明）。
+      查不到时仍走 `READABLE_TEXT` 的兜底台词 —— 兜底那句说的是"字迹模糊"，
+      **不假装读懂了原作**。
     """
 
     def __init__(self, key, text, src='obj_readable', kind='readable', present=None, bus=None):
@@ -414,7 +417,7 @@ class InspectProp(PropInteractable):
 
 def build_props(scene, chapter, world, present=None, heal_all=None,
                 on_enter=None, inventory=None, bus=None, pickups=None,
-                routes=None, on_egg=None, egg_gate=None):
+                routes=None, on_egg=None, egg_gate=None, readables=None):
     """把一个场景的 `objects` 变成可交互物列表。
 
     参数
@@ -445,6 +448,10 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
         ★★★ 第112轮：Niko 的家**准入门槛**（注入式）。宿主 `main.py` 传
         `niko_home.can_enter` —— 本模块是零依赖 L1，`G1` 硬闸禁止 import
         项目内模块，所以**只能注入**。不给 ⇒ 该门放行（等价旧行为）。
+    readables : dict
+        ★ 第117轮：`load_readable_text()` 的结果（`{scene_id: {obj: 正文}}`）。
+        给了 ⇒ 可读物用**原作正文**；没给 / 查不到 ⇒ 沿用 `READABLE_TEXT` 兜底
+        （**不造假、也不崩**）。
 
     ★ `key` 的构造规则：`<scene_id>#<objects下标>`。
       为什么不用 `src`：同一个房间里可能有 **多个** 同名对象（例如两个 `obj_savepoint`），
@@ -479,7 +486,13 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
                 out.append(PickupProp('%s@%s' % (key, item_id), item_id, world,
                                       inventory=inventory, present=present, bus=bus))
         elif kind in ('readable', 'sign'):
-            out.append(ReadableProp(key, READABLE_TEXT.get(src, READABLE_TEXT['_default']),
+            # ★ 第117轮：先查原作正文（`_readable_text.json`，按 (场景, 对象) 定位），
+            #   查不到才用兜底台词。**兜底不等于造文本** —— 兜底那句明确说的是
+            #   "字迹模糊"，不会假装读懂了原作。
+            rtext = None
+            if readables:
+                rtext = (readables.get(str(sid)) or {}).get(src)
+            out.append(ReadableProp(key, rtext or READABLE_TEXT.get(src, READABLE_TEXT['_default']),
                                     src=src, kind=kind, present=present, bus=bus))
         elif kind in INSPECT_KINDS:
             # ★ 第68轮：宝箱 / 通用可交互物 / 可调查家具 —— 普查与产物里**已有实例**，
@@ -748,12 +761,178 @@ def route_for_door(routes, scene_id, letter):
 #: ★ 门 / 暗之泉通向哪（保留旧名，避免破坏既有引用）。
 FOUNTAIN_TARGET = 'ch1.castle_town.castle_town'
 
-#: 可读物台词（**产品口径**：原文在语言包里，拿不到）。
+#: ★ 兜底台词（**仅当**场景里查不到原作正文时才用；第117轮起绝大多数可读物
+#: 已经有原作正文，见 `load_readable_text`）。
 READABLE_TEXT = {'_default': '* 上面写着些什么，但字迹已经模糊了。'}
+
+#: 原作正文资产的文件名（相对 `ralsei_pet/assets/scenes/`）。宿主据此拼路径，
+#: 名字只在这里出现一次 —— 免得两边各写一份、改一处漏一处。
+READABLE_FILENAME = '_readable_text.json'
+
+# ---------------------------------------------------------------- 可读物正文
+#: 正文里的转义字母 —— 取自 `obj_base_writer_Draw_0` 反编译，**不多不少**就是这些：
+#:   `R G W Y X B O L P p` = 改颜色；`C` = event_user(1)（画按键/表情）；
+#:   `M` = 写 flag[20]；`E` = 表情；`F` = 脸；`T` = 换字体；`S` = 音效；`z` = 额外延时。
+#: 证据目录：`code-quality-audit/第115轮-跨作品物件普查/_evidence/raw/ut/gml/`
+_ESCAPE_LETTERS = 'RGWYXBOLPpCMEFSTz'
+
+#: 这几种转义**后面还跟着一个字符**（数字或字母），要一起吞掉，否则那个字符会漏到界面上。
+_ESCAPE_TWO = 'MEFTSz'
+
+#: 按键字形占位。`scr_replace_buttons_pc` 把 `\*Z/\*X/\*C` 换成了 `[Z]/[X]/[C]`；
+#: `[A]/[D]` 是左右方向键（换成 `key_left/key_right` 的文案，这里一并当占位处理）。
+_BUTTON_TOKENS = ('[Z]', '[X]', '[C]', '[A]', '[D]')
+
+
+def decode_readable(raw, newline=u'\n'):
+    u"""把原作正文里的控制符解成能直接显示的纯文本。
+
+    规则**全部有代码出处**（`obj_base_writer_Draw_0` / `SCR_NEWLINE` /
+    `obj_base_writer_Alarm_0` 反编译，存于第115轮 `_evidence/raw/ut/gml/`）：
+
+    | 标记 | 原作行为 | 这里 |
+    |---|---|---|
+    | `&` | `SCR_NEWLINE`：书写点 `myy += vspacing` —— **真换行** | → `newline` |
+    | `%`（后不接 `%`）| `stringno++`，换下一段文本（**新文本框**） | → `newline`（我们单框） |
+    | `%%` | `instance_destroy()` —— **消息到此结束** | 截断 |
+    | `/` | `halt=1` 后 `break`，**不移动书写点**（等按键） | 删（无视觉） |
+    | `/%` `/^N` `/*` | `halt=2/4/6`（等按键再换页/停顿/特殊） | 删 `/`，其余按各自规则 |
+    | `^N` | `delay = N*10` 停顿一瞬；`^0` 不产生停顿 | 删 |
+    | `\\X` | 转义（颜色/表情/字体/音效…），见 `_ESCAPE_LETTERS` | 删 |
+    | `[C]` 等 | 按键字形占位（画不出按键图标） | 删 |
+
+    ★ 不做的事：**不猜**。「一屏几行」「每行几个字」这类排版参数是绘制时才决定的，
+      本函数只去掉控制符、保留原字形与标点，换行位置按原作给的 `&` / `%`。
+
+    ★ 已知简化：原作 `%` 是**换新文本框**，本产品可读物只有一个气泡 ⇒ 退化成换行。
+      要还原分页，得先有分页的文本框（未做）。
+    """
+    if not isinstance(raw, str) or not raw:
+        return u''
+    out = []
+    i = 0
+    n = len(raw)
+    while i < n:
+        c = raw[i]
+        if c == u'\\':
+            nxt = raw[i + 1] if i + 1 < n else u''
+            if nxt == u'*':
+                # `\*C` 这种"按键字形"的原始形态，吞掉 `\*` 与后面那个字母
+                i += 3 if (i + 2 < n and raw[i + 2] in u'ZXCAD') else 2
+                continue
+            if nxt == u'[':
+                # `\[C]`：只多出这一层 `\`，后面的 `[C]` 交给字形占位规则去吞。
+                # 实测 4 条正文里有这种形态（`* It's me^1, \[C].`）；
+                # 若在这里连 `[` 一起吞掉，会残留一个裸 `C]`（residue 脚本抓到过）。
+                i += 1
+                continue
+            if nxt in _ESCAPE_LETTERS:
+                i += 2 + (1 if nxt in _ESCAPE_TWO else 0)
+                continue
+            i += 2          # 不认识的转义：丢 `\` 和它后面那个字符（不留在界面上）
+            continue
+        if c == u'&':
+            out.append(newline)
+            i += 1
+            continue
+        if c == u'/':
+            i += 1          # 等按键，不移动书写点
+            continue
+        if c == u'%':
+            if i + 1 < n and raw[i + 1] == u'%':
+                break       # `%%` = 消息结束，后面的内容原作根本不显示
+            out.append(newline)
+            i += 1
+            continue
+        if c == u'^':
+            i += 2 if (i + 1 < n and raw[i + 1].isdigit()) else 1
+            continue
+        tok = None
+        for t in _BUTTON_TOKENS:
+            if raw.startswith(t, i):
+                tok = t
+                break
+        if tok is not None:
+            i += len(tok)
+            continue
+        out.append(c)
+        i += 1
+
+    text = u''.join(out)
+    lines = [ln.rstrip() for ln in text.split(newline)]
+    # ★ 删掉 `[C]` / `\*C` 这类字形占位后，前后两个空格会并排留下（"按  键"）。
+    #   这里把**连续半角空格**压成一个；全角空格（U+3000，日文里是正常间距）不动。
+    #   ★ 不用 `re`：`item_interact` 的顶层 import 被 `items_round48` 的 G1 闸
+    #     逐个点名核对（白名单只有 collections/json/logging/os + companion），
+    #     为了两个空格引入一个新模块不值得 —— 循环压更省事、也零新增依赖。
+    _sq = []
+    for ln in lines:
+        while u'  ' in ln:
+            ln = ln.replace(u'  ', u' ')
+        _sq.append(ln)
+    lines = _sq
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    while lines and not lines[-1].strip():
+        lines.pop()
+    return newline.join(lines)
+
+
+def load_readable_text(path):
+    u"""读 `assets/scenes/_readable_text.json` → `{scene_id: {obj: 显示文本}}`。
+
+    文件不在 / 读不动 ⇒ 返回空表（**不抛**）：调用方回落到 `READABLE_TEXT` 的兜底台词，
+    不能因为一份数据资产缺失就把可交互物构建整个搞崩。
+
+    ★ 数据形状：`by_scene[scene_id]` 是条目列表，每条 = `{obj, key, cn, cn_tight, en, ja}`。
+      取正文的优先级 **`cn_tight` → `cn` → `en` → `ja`**：
+      `cn_tight` 是把字间空格压掉的版本（outertale 的 `en` 槽里装的是**中文**且字间带空格，
+      逐字带空格直接显示会散架）；`en` 兜底是因为原作正文表在 `textdata_en` 里最全。
+    ★ 同一 `(scene, obj)` 可能有多条（341 个组合里 10 个）—— 那是原作 Alarm 里
+      还有**第二层守卫**（剧情/全局变量）没解。这里**只取第一条**并记账，
+      不静默随机、也不假装能区分（要区分得先解第二层）。
+    """
+    if not path or not os.path.isfile(path):
+        _log.info('可读物正文表不存在（可读物回落到兜底台词）：%s', path)
+        return {}
+    try:
+        with open(path, 'r', encoding='utf-8') as fh:
+            d = json.load(fh)
+    except Exception:
+        _log.exception('可读物正文表读取失败 %s', path)
+        return {}
+
+    out = {}
+    n_entries = 0
+    n_dup = 0
+    for sid, entries in (d.get('by_scene') or {}).items():
+        per = {}
+        for e in entries or ():
+            if not isinstance(e, dict):
+                continue
+            obj = e.get('obj')
+            if not obj:
+                continue
+            raw = (e.get('cn_tight') or e.get('cn')
+                   or e.get('en') or e.get('ja'))
+            txt = decode_readable(raw)
+            if not txt:
+                continue
+            if obj in per:
+                n_dup += 1      # 第二层守卫未解：只认第一条，其余记账
+                continue
+            per[obj] = txt
+            n_entries += 1
+        if per:
+            out[str(sid)] = per
+    _log.info('可读物正文已载入：%d 个场景 / %d 条（同组合重复丢弃 %d 条）',
+              len(out), n_entries, n_dup)
+    return out
 
 
 def load_pickups(path):
     """读产品口径的拾取落点表。文件不在 ⇒ 返回空表（**不抛**，也不假装有）。"""
+
     if not path or not os.path.isfile(path):
         return {}
     try:

@@ -890,4 +890,100 @@ python _tools/readable_bind115.py
 
 
 
+## 17. 正文里的控制符怎么解（第117轮补：反编译取证，不许拍脑袋）
+
+### 17.1 结论先行：一张表，几类标记，全部有代码出处
+
+| 标记 | 原作行为（GML 原文） | 产品显示 |
+| --- | --- | --- |
+| `&` | `script_execute(SCR_NEWLINE)` —— 书写点 `myy += vspacing` | **换行** |
+| `%`（后不接 `%`）| `stringno++`，`originalstring = mystring[stringno]` ⇒ **换新文本框** | 换行（本产品可读物只有一个气泡） |
+| `%%` | `instance_destroy(); break;` ⇒ **消息到此结束** | **截断**，后面不显示 |
+| `/` | `halt = 1; … break;` —— **不移动书写点**，只等按键 | 删除，**不换行** |
+| `/%` `/*` `/^N` | `halt = 2 / 6 / 4`（等按键后换页 / 特殊 / 停顿） | 删 `/`，其余按各自规则 |
+| `^N` | `Alarm_0`：`delay = real(ch) * 10` —— 停顿一瞬；`^0` 不产生停顿 | 删除 |
+| `\X` | 颜色 `R G W Y X B O L P p` · `C`=`event_user(1)` · `M/E/F/T/S/z` 各吞 1~2 个字符 | 删除 |
+| `[C]` | `scr_replace_buttons_pc` 把 `\*C` 换成 `[C]`（按键字形） | 删除（画不出按键图标） |
+
+### 17.2 取证路径（这是本轮新打通的能力，值得记）
+
+前几轮只知道 `UndertaleModCli load <data> -s <csx>` 能跑脚本；本轮发现 CLI 还有
+**`dump` 子命令可以直接反编译成 GML**：
+
+```
+UndertaleModCli.exe dump <data 副本> -o <输出目录> -c <code 名>   # -c 可重复多次
+# ⇒ <输出目录>/CodeEntries/<code 名>.gml
+```
+
+★ 三个踩过的坑：
+1. `-c A B C` 会被当成**一个**名字（报 `does not contain a code entry named "A B C"`）
+   ⇒ 必须 `-c A -c B -c C`。
+2. 工具进程**必须分离启动**（`DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP`）并把 stdout 落文件，
+   否则前台跑会被连带杀掉、输出为空（本仓库 `_tools/cli_help115.py` 就是这个壳）。
+3. 反编译产物要**蒸馏进仓库**（`_evidence/raw/ut/gml/`），别放临时盘 —— 回归/复核要能离线重跑。
+
+### 17.3 为什么 `/` 不能当换行（本轮最容易写错的一处）
+
+`/` 在 `obj_base_writer_Draw_0` 里只做三件事：置 `halt`、`break`、**不动 `myx/myy`**。
+真正下移书写点的是 `&`（`SCR_NEWLINE`）。
+
+⇒ 把 `/` 也当换行，会在**每一句"等按键"的地方凭空多出一行**。素材里 `/%%` 是最常见的收尾，
+一旦写成换行，所有可读物末尾都会多一行空白。
+
+### 17.4 产品侧怎么用（三步，全部在显示层）
+
+```
+assets/scenes/_readable_text.json      ← 数据层：markers_raw 仍为 true（原样保留）
+        ↓ item_interact.load_readable_text(path)
+{sid: {obj: 已解码文本}}                ← 载入时解码一次（进程内缓存）
+        ↓ main._rebuild_item_props → build_props(..., readables=表)
+ReadableProp.text → dialogue_ui 气泡    ← 可读物说的就是原作正文
+```
+
+- `decode_readable(raw)`：纯函数，无状态，13 条判据逐条锁（`%` vs `%%`、`&` vs `/` **正负成对**）。
+- `load_readable_text(path)`：读不到 / 读坏 ⇒ 返回空表 + 记日志，**不抛**
+  （不能因为一份数据资产缺失就把可交互物构建整个搞崩）。
+- `build_props(..., readables=None)`：给了就用原文；没给 / 查不到 ⇒ 沿用 `READABLE_TEXT`
+  的兜底那句「字迹已经模糊了」—— **兜底不等于造文本**。
+- 正文取值优先级 `cn_tight → cn → en → ja`：`cn_tight` 是压掉字间空格的版本
+  （outertale 的 `en` 槽里装的是**中文**、字间带空格，直接显示会散架）。
+
+### 17.5 量化（355 条的账目，一条不差）
+
+| 项 | 数 | 说明 |
+| --- | --- | --- |
+| 资产条目 | **355** | `by_scene` 里所有条目（166 个场景） |
+| 解码后保留 | **335** | 164 个场景真的拿到了正文 |
+| 解完为空 | 6 | 原文就是 `%%`（只有终止符）⇒ 该回落 |
+| 判为重复 | 14 | 同一 `(场景, 对象)` 多条：`Alarm` 里还有**第二层守卫**没解，只取第一条 |
+| 解码后残留控制符 | **0** | `% & / ^ \ ]` 全清；`*` 保留（原作行首符，不是控制符） |
+
+### 17.6 本轮没做的事（如实登记）
+
+1. **第二层守卫**：10 个组合（14 条）在同一 `(房间,对象)` 上有多个键，差别在剧情/全局变量
+   （例：`switch1` 走 `PushGlb <全局> == 5`）。要"每实例一文本"，得先解这层。
+2. **分页**：原作 `%` 是换新文本框；产品可读物只有一个气泡 ⇒ 退化成换行。要还原得分页文本框。
+3. **`[C]` 字形**：按键图标画不出来，只能删。删掉后原文形如 `* It's me, .` —— **如实难看，不假装**。
+4. **未解 15 / 27 例**（§16.4）：7 种单例小对象走全局守卫，仍未解。
+
+### 17.7 复现
+
+```
+# 反编译（产物落 _evidence/raw/ut/gml/）
+python _tools/run_csx_ut.py --csx probe_markers.csx --out probe_markers.txt --game ut
+python _tools/cli_help115.py dump D:/_wb_tmp/dw_ut/ut/game.droid -o D:/_wb_tmp/dw_ut/gml_out \
+       -c gml_Script_SCR_TEXT -c gml_Script_SCR_TEXTTYPE -c gml_Object_obj_base_writer_Draw_0
+# 解码效果与账目（只读仓库内文件）
+python _tools/residue115.py      # 残留字符：应当只剩 `*`
+python _tools/ledger115.py       # 355 = 335 + 6 + 14
+python _tools/scan_markers115.py # 正文里出现过哪些控制符
+```
+
+判据：`_tools/check_readable_wire117.py`（**34 条**，已进 G2 / `baseline.json`）。
+
+
+
+
+
+
 
