@@ -1,0 +1,2161 @@
+GameObjects = 1800
+0	obj_backgrounder_parent	spr=	vis=True	pers=False
+1	obj_musicobjectparent	spr=	vis=True	pers=False
+2	obj_solidsmall	spr=spr_solidsmall	vis=False	pers=False
+3	obj_solidthin	spr=spr_solidsmallthin	vis=False	pers=False
+4	obj_solidtall_2	spr=spr_solidtall_2	vis=False	pers=False
+5	obj_solidextall_2	spr=spr_solidextall_2	vis=False	pers=False
+6	obj_solidexwide	spr=spr_solidexwide	vis=False	pers=False
+7	obj_solidline	spr=spr_hline	vis=False	pers=False
+8	obj_solidwide	spr=spr_solidwide	vis=False	pers=False
+9	obj_diagoparent	spr=	vis=True	pers=False
+10	obj_sdr	spr=spr_sdr	vis=False	pers=False
+11	obj_sdl	spr=spr_sdl	vis=False	pers=False
+12	obj_sur	spr=spr_sur	vis=False	pers=False
+13	obj_sul	spr=spr_sul	vis=False	pers=False
+14	obj_solidtall	spr=spr_solidtall	vis=False	pers=False
+15	obj_solidlong	spr=spr_solidlong	vis=False	pers=False
+16	obj_solidlongleft	spr=spr_solidlongother	vis=False	pers=False
+17	obj_core_bridgeleg	spr=spr_corebridgepiece	vis=True	pers=False
+18	obj_core_glowbg	spr=spr_glowbg	vis=True	pers=False
+19	obj_core_glowtotem	spr=spr_glowtotem	vis=True	pers=False
+20	obj_core_glowwall	spr=spr_core_glowwall	vis=True	pers=False
+21	obj_core_lightline_l	spr=spr_core_lightst_left	vis=True	pers=False
+22	obj_core_lightline_m	spr=spr_core_lightst_m	vis=True	pers=False
+23	obj_core_lightline_r	spr=spr_core_lightst_r	vis=True	pers=False
+24	obj_core_lightstrip	spr=spr_core_wallstrip_l	vis=True	pers=False
+25	obj_core_lightstrip_m	spr=spr_core_wallstrip_m	vis=True	pers=False
+26	obj_coreobj_parent	spr=	vis=True	pers=False
+27	obj_coredoor_anim	spr=spr_coredoor	vis=True	pers=False
+28	obj_bigcoredoor_anim	spr=spr_bigcoredoor	vis=True	pers=False
+29	obj_coresign	spr=spr_coresign	vis=True	pers=False
+30	obj_darktotem_anim	spr=spr_darknesstotem	vis=True	pers=False
+31	obj_elev_floorsign	spr=spr_floorsign_l1	vis=True	pers=False
+32	obj_elevatorgem	spr=spr_elevatorgem_r	vis=True	pers=False
+33	obj_soundtest	spr=	vis=True	pers=False
+34	obj_mkid_goner	spr=spr_mkid_goner_d	vis=True	pers=False
+35	obj_gaster_follower_a	spr=spr_g_follower_2	vis=True	pers=False
+36	obj_gaster_follower_b	spr=spr_g_follower_1	vis=True	pers=False
+37	obj_gaster_follower_c	spr=spr_g_follower_3	vis=True	pers=False
+38	obj_greydoor	spr=spr_greydoor	vis=True	pers=False
+39	obj_mysteryman	spr=spr_mysteryman	vis=True	pers=False
+40	obj_wrongnumbersong	spr=spr_event	vis=False	pers=False
+41	obj_otherphonecall	spr=spr_event	vis=False	pers=False
+42	obj_dogshrine_door	spr=spr_ds2_switchdoor	vis=True	pers=False
+43	obj_dogshrine2	spr=spr_ds2_mascot2	vis=True	pers=False
+44	obj_mewmew_npc	spr=spr_npc_mewmew	vis=True	pers=False
+45	obj_magicglass	spr=spr_magicglass	vis=True	pers=False
+46	obj_magicglass_personal	spr=spr_magicglass	vis=True	pers=False
+47	obj_cosmeticpillar_a	spr=spr_vinespillar	vis=True	pers=False
+48	obj_cosmeticpillar_b	spr=spr_brokenpillar	vis=True	pers=False
+49	obj_icecavewall	spr=spr_icecavewall	vis=True	pers=False
+50	obj_icetosteam	spr=	vis=True	pers=False
+51	obj_waterfall_waterfall	spr=spr_waterfall_midtop	vis=True	pers=False
+52	obj_brightwaterfall	spr=spr_waterfall_bright_mt	vis=True	pers=False
+53	obj_dockanim	spr=spr_dockanim	vis=True	pers=False
+54	obj_cogsmall	spr=spr_cogsmall_e	vis=True	pers=False
+55	obj_hotland_bottomedge	spr=spr_hotland_leftedge	vis=True	pers=False
+56	obj_hotland_rededge	spr=spr_hotland_rededge	vis=True	pers=False
+57	obj_hotland_rededge_x	spr=spr_hotland_rededge	vis=True	pers=False
+58	obj_piper_bluejet	spr=spr_steamer_bottom	vis=True	pers=False
+59	obj_piper_steam	spr=spr_steamer_bottom	vis=True	pers=False
+60	obj_redpipev	spr=spr_redpipe_middle	vis=True	pers=False
+61	obj_steamplume2	spr=spr_steamplume2	vis=True	pers=False
+62	obj_lighttower	spr=spr_lighttower	vis=True	pers=False
+63	obj_gaster_room	spr=	vis=True	pers=False
+64	obj_endcastlemusic	spr=	vis=True	pers=False
+65	obj_pitsound	spr=	vis=True	pers=False
+66	obj_menumusictest	spr=	vis=True	pers=False
+67	obj_ruinsmusic	spr=	vis=True	pers=False
+68	obj_coremusic	spr=	vis=True	pers=False
+69	obj_sansmusic	spr=	vis=True	pers=False
+70	obj_lavamusic	spr=	vis=True	pers=False
+71	obj_hotelmusic	spr=	vis=True	pers=False
+72	obj_lavaoogmusic	spr=	vis=True	pers=False
+73	obj_coreambiencemusic	spr=	vis=True	pers=False
+74	obj_tundramusic	spr=	vis=True	pers=False
+75	obj_townmusic	spr=	vis=True	pers=False
+76	obj_ambientwater	spr=	vis=True	pers=False
+77	obj_ambientrain	spr=	vis=True	pers=False
+78	obj_watermusic	spr=	vis=True	pers=False
+79	obj_undynecoolmusic	spr=	vis=True	pers=False
+80	obj_quietwatermusic	spr=	vis=True	pers=False
+81	obj_temvillagemusic	spr=	vis=True	pers=False
+82	obj_labmusic	spr=	vis=True	pers=False
+83	obj_truelabmusic	spr=	vis=True	pers=False
+84	obj_mysterymusic	spr=	vis=True	pers=False
+85	obj_castle_part1music	spr=	vis=True	pers=False
+86	obj_castle_part2music	spr=	vis=True	pers=False
+87	obj_tundramusicspecial1	spr=	vis=True	pers=False
+88	obj_housemusic	spr=	vis=True	pers=False
+89	obj_basementmusic	spr=	vis=True	pers=False
+90	obj_musicchecker	spr=spr_event	vis=False	pers=False
+91	obj_birbnoise	spr=	vis=True	pers=False
+92	obj_walknoise	spr=	vis=True	pers=False
+93	obj_soundcombo	spr=	vis=True	pers=False
+94	obj_foodsound	spr=	vis=False	pers=False
+95	obj_musfadeout	spr=	vis=True	pers=False
+96	obj_musfadepause	spr=	vis=True	pers=False
+97	obj_undertaletitle	spr=spr_undertaletitle	vis=True	pers=False
+98	obj_intromenu	spr=	vis=True	pers=False
+99	obj_introlast	spr=spr_introlast	vis=False	pers=False
+100	obj_titleimage	spr=spr_undertaletitle	vis=True	pers=False
+101	obj_introfader	spr=spr_pixblk	vis=True	pers=False
+102	obj_introtangle	spr=	vis=True	pers=False
+103	obj_introimage	spr=spr_introimage	vis=True	pers=False
+104	obj_ct_fallobj	spr=	vis=True	pers=False
+105	obj_joypadmenu	spr=	vis=True	pers=False
+106	obj_controltest	spr=spr_roachdance	vis=True	pers=False
+107	obj_settingsmenu	spr=	vis=True	pers=False
+108	obj_lightray	spr=	vis=True	pers=False
+109	obj_trianglelightray	spr=	vis=True	pers=False
+110	obj_roomofdog	spr=spr_tobdogl	vis=False	pers=False
+111	obj_genanim	spr=	vis=True	pers=False
+112	obj_genafterimage	spr=	vis=True	pers=False
+113	obj_confetti	spr=spr_confetti	vis=True	pers=False
+114	obj_bouncer	spr=	vis=True	pers=False
+115	obj_pollener	spr=	vis=True	pers=False
+116	obj_fx_waver	spr=	vis=True	pers=False
+117	obj_whitesploder	spr=	vis=True	pers=False
+118	obj_glowparticle_1	spr=spr_glowparticle_1	vis=True	pers=False
+119	obj_glowparticlegen_1	spr=	vis=True	pers=False
+120	obj_bg_glower	spr=spr_shop1_bg	vis=True	pers=False
+121	obj_imageview	spr=	vis=True	pers=False
+122	obj_flasher	spr=spr_whitefader	vis=True	pers=False
+123	obj_glowfly1	spr=spr_glowfly	vis=True	pers=False
+124	obj_icecave_fader	spr=	vis=True	pers=False
+125	obj_watercave_fader	spr=	vis=True	pers=False
+126	obj_waterstar_bg	spr=spr_twinklestar	vis=True	pers=False
+127	obj_backgrounder_dock	spr=	vis=True	pers=False
+128	obj_backgrounder_tundra	spr=	vis=True	pers=False
+129	obj_backgrounder_core	spr=	vis=True	pers=False
+130	obj_backgrounder_lava	spr=	vis=True	pers=False
+131	obj_backgrounder_lastruins	spr=	vis=True	pers=False
+132	obj_backgrounder_castle	spr=	vis=True	pers=False
+133	obj_garden_overlayshadow	spr=	vis=True	pers=False
+134	obj_backgrounder_pillar	spr=spr_foregroundpillar	vis=True	pers=False
+135	obj_finalbarrier	spr=	vis=True	pers=False
+136	obj_hotlandparalava	spr=spr_hotlandlava	vis=True	pers=False
+137	obj_hotlandrock_bg	spr=	vis=True	pers=False
+138	obj_mainend	spr=	vis=True	pers=False
+139	obj_endflowey	spr=	vis=True	pers=False
+140	obj_endflowey_regret	spr=	vis=True	pers=False
+141	obj_credits_short	spr=spr_undertaletitle	vis=True	pers=False
+142	obj_screen	spr=	vis=True	pers=True
+143	obj_quittingmessage	spr=spr_quittingmessage	vis=True	pers=False
+144	obj_battleblcon	spr=spr_exc	vis=True	pers=False
+145	obj_transheart	spr=spr_heartsmall	vis=True	pers=False
+146	obj_battler	spr=	vis=True	pers=False
+147	obj_battlerflowey	spr=	vis=True	pers=False
+148	obj_battlerquick	spr=	vis=True	pers=False
+149	obj_battlerstory	spr=	vis=True	pers=False
+150	obj_tempblack	spr=	vis=True	pers=False
+151	obj_fader	spr=spr_pixblk	vis=True	pers=False
+152	obj_persistentfader	spr=spr_pixblk	vis=True	pers=True
+153	obj_unfader	spr=spr_pixblk	vis=True	pers=False
+154	obj_whitefader	spr=spr_whitefader	vis=True	pers=False
+155	obj_transitioner	spr=	vis=True	pers=False
+156	obj_musfadein	spr=	vis=True	pers=False
+157	obj_gameover	spr=	vis=True	pers=True
+158	obj_battlecontroller	spr=	vis=True	pers=False
+159	obj_vaporized_new	spr=	vis=True	pers=False
+160	obj_vaporized_old	spr=	vis=True	pers=False
+161	obj_vaporized	spr=	vis=True	pers=False
+162	obj_vaporizedspare	spr=	vis=False	pers=False
+163	obj_spared	spr=	vis=True	pers=False
+164	obj_vaporacquirer	spr=	vis=True	pers=False
+165	obj_friendgraph	spr=	vis=True	pers=False
+166	obj_graphparent	spr=	vis=True	pers=False
+167	obj_egggraph	spr=spr_egggraph	vis=True	pers=False
+168	obj_specialgraph	spr=	vis=True	pers=False
+169	obj_daygraph	spr=spr_sunicon	vis=True	pers=False
+170	obj_crimegraph	spr=spr_crimegraph	vis=True	pers=False
+171	obj_radar	spr=	vis=True	pers=False
+172	obj_populationgraph	spr=	vis=True	pers=False
+173	obj_papdate	spr=spr_papdate	vis=True	pers=False
+174	obj_adate	spr=	vis=True	pers=False
+175	obj_alphys_fly	spr=spr_adate_intotrash	vis=True	pers=False
+176	obj_ua_throwtest	spr=spr_ua_pet	vis=True	pers=False
+177	obj_adate_papyrus	spr=spr_adate_papyrus	vis=True	pers=False
+178	obj_garbagebg	spr=	vis=True	pers=False
+179	obj_adate_trashcan	spr=spr_adate_trashcan_bottom	vis=True	pers=False
+180	obj_adate_body	spr=spr_adate_body	vis=True	pers=False
+181	obj_adate_ubody	spr=spr_adate_ubody	vis=True	pers=False
+182	obj_instantnoodleitem	spr=	vis=True	pers=False
+183	obj_blackborderer	spr=	vis=True	pers=False
+184	obj_gameoverbg	spr=spr_gameoverbg	vis=True	pers=False
+185	obj_battlefader	spr=spr_pixblk	vis=True	pers=False
+186	obj_dustcloud	spr=spr_dustcloud	vis=True	pers=False
+187	obj_hpname	spr=spr_hpname	vis=True	pers=False
+188	obj_shaker	spr=	vis=True	pers=False
+189	obj_battlebg	spr=spr_battlebg	vis=True	pers=False
+190	obj_blconsm	spr=spr_blconsm	vis=True	pers=False
+191	obj_blconwdflowey	spr=spr_blconwdshrt	vis=True	pers=False
+192	obj_blconwideslave	spr=spr_blconwdshrt	vis=True	pers=False
+193	obj_dmgwriter	spr=	vis=True	pers=False
+194	obj_dmgwriter_old	spr=	vis=True	pers=False
+195	obj_whtpxlgrav	spr=spr_pixwht	vis=True	pers=False
+196	obj_blkpxlgrav	spr=spr_pixblk	vis=True	pers=False
+197	obj_blkpxltall	spr=spr_pixeltall	vis=True	pers=False
+198	obj_blkpxl0tall	spr=spr_pixeltall	vis=False	pers=False
+199	obj_coverup	spr=spr_pxbg	vis=True	pers=False
+200	obj_torieldisapprove	spr=spr_torieldisapprove	vis=True	pers=False
+201	obj_guidearrows	spr=spr_guidearrows	vis=True	pers=False
+202	obj_floweybattle1	spr=spr_floweynice	vis=True	pers=False
+203	obj_dummymonster	spr=spr_dummybattle	vis=True	pers=False
+204	obj_torielcutscene	spr=spr_torielside1	vis=True	pers=False
+205	obj_floweydraw	spr=	vis=True	pers=False
+206	obj_winkstar	spr=spr_winkstar	vis=True	pers=False
+207	obj_fakefroggit	spr=spr_froggit	vis=True	pers=False
+208	object391	spr=spr_froggit	vis=True	pers=False
+209	obj_testmonster	spr=spr_froggit	vis=True	pers=False
+210	obj_whimsun	spr=spr_whimsun	vis=True	pers=False
+211	obj_migosp	spr=spr_migosp	vis=True	pers=False
+212	obj_vegetoid	spr=spr_vegetoid	vis=True	pers=False
+213	obj_loox	spr=spr_loox	vis=True	pers=False
+214	obj_napstablook	spr=spr_napstabattle	vis=True	pers=False
+215	obj_torielboss	spr=spr_torielboss	vis=True	pers=False
+216	obj_moldsmal	spr=spr_moldsmal	vis=True	pers=False
+217	obj_froggit	spr=spr_froggit	vis=True	pers=False
+218	obj_froglegs	spr=spr_froglegs	vis=True	pers=False
+219	obj_froghead	spr=spr_froghead	vis=True	pers=False
+220	obj_icecap	spr=spr_icecap	vis=True	pers=False
+221	obj_jerry	spr=spr_jerry	vis=True	pers=False
+222	obj_icecube	spr=spr_icecube	vis=True	pers=False
+223	obj_dogeparent	spr=	vis=True	pers=False
+224	obj_lesserdoge	spr=spr_lesserdoge	vis=True	pers=False
+225	obj_lesserdogetail	spr=spr_lesserdogetail	vis=True	pers=False
+226	obj_lesserdogehead	spr=spr_lesserdogehead	vis=True	pers=False
+227	obj_dogeBtail	spr=spr_dogeBtail	vis=True	pers=False
+228	obj_greatdog	spr=spr_greatdog	vis=True	pers=False
+229	obj_glydeshot	spr=spr_glydeshot	vis=True	pers=False
+230	obj_bigglydeshot	spr=spr_glydeshot	vis=True	pers=False
+231	obj_glyde_body	spr=spr_glyde_hurt	vis=True	pers=False
+232	obj_glydeb	spr=spr_glyde_hurt	vis=False	pers=False
+233	obj_papyrusdeadhead	spr=spr_papyrusboss_head	vis=True	pers=False
+234	obj_papyrusdeadbody	spr=spr_papyrusboss_body	vis=True	pers=False
+235	obj_papyrusbody	spr=spr_papyrusboss_anim	vis=True	pers=False
+236	obj_papyrusboss	spr=spr_papyrusboss	vis=True	pers=False
+237	obj_gyftrotgift	spr=spr_gyfgift	vis=True	pers=False
+238	obj_gyfcloud	spr=spr_gyftcloud	vis=True	pers=False
+239	obj_gyftrot	spr=spr_gyftrot	vis=True	pers=False
+240	obj_gyftrothead	spr=spr_gyftrothead	vis=True	pers=False
+241	obj_gyftrotbody	spr=spr_gyftrotbody	vis=True	pers=False
+242	obj_gyftrotmouth	spr=spr_gyftrotmouth	vis=True	pers=False
+243	obj_greatdogbody	spr=spr_greatdog_n	vis=True	pers=False
+244	obj_dogeB	spr=spr_dogeB	vis=True	pers=False
+245	obj_mandogbody	spr=spr_mandognormal	vis=True	pers=False
+246	obj_womandogbody	spr=spr_womandognormal	vis=True	pers=False
+247	obj_mandogax	spr=spr_mandogax	vis=True	pers=False
+248	obj_womandogax	spr=spr_womandogax	vis=True	pers=False
+249	obj_mandog	spr=spr_mandoge	vis=True	pers=False
+250	obj_womandog	spr=spr_womandoge	vis=True	pers=False
+251	obj_movedoge	spr=spr_movedoge	vis=True	pers=False
+252	obj_movedogehead	spr=spr_movedogeheada	vis=True	pers=False
+253	obj_movedogebody	spr=spr_movedogebody	vis=True	pers=False
+254	obj_movedogearms	spr=spr_movedogearms	vis=True	pers=False
+255	obj_movedogetail	spr=spr_movedogetail	vis=True	pers=False
+256	obj_snowdrake	spr=spr_snowdrake	vis=True	pers=False
+257	obj_chilldrake	spr=spr_snowdrake	vis=True	pers=False
+258	obj_drakehead	spr=spr_snowdrake_head	vis=True	pers=False
+259	obj_drakebody	spr=spr_snowdrake_body	vis=True	pers=False
+260	obj_woshua	spr=spr_woshua	vis=True	pers=False
+261	obj_woshpart	spr=	vis=True	pers=False
+262	obj_woshbody	spr=spr_woshbody	vis=True	pers=False
+263	obj_shyren	spr=spr_shyren	vis=True	pers=False
+264	obj_shyrenbody	spr=spr_shyren_hide	vis=True	pers=False
+265	obj_agentbody	spr=spr_shyren_agent	vis=True	pers=False
+266	obj_undynesiner2	spr=	vis=True	pers=False
+267	obj_spearblocker	spr=	vis=True	pers=False
+268	obj_greenspeargen	spr=	vis=True	pers=False
+269	obj_blockbullet	spr=spr_bullet_test	vis=True	pers=False
+270	obj_blockbullet2	spr=spr_bullet_testx	vis=True	pers=False
+271	obj_boxsiner	spr=	vis=True	pers=False
+272	obj_risespearbullet	spr=spr_risespearbullet	vis=True	pers=False
+273	obj_risespearbulletgen	spr=	vis=True	pers=False
+274	obj_spearbulletfollowgen	spr=	vis=True	pers=False
+275	obj_spearbullet_follow	spr=spr_whitespearbullet	vis=True	pers=False
+276	obj_undyneboss	spr=spr_undyneb	vis=True	pers=False
+277	obj_undyneb_body	spr=	vis=True	pers=False
+278	obj_undynebody2	spr=spr_undyneb2	vis=True	pers=False
+279	obj_undynebattle2	spr=spr_aaron	vis=True	pers=False
+280	obj_rotspeargen_gen	spr=	vis=True	pers=False
+281	obj_rotspeargen	spr=	vis=True	pers=False
+282	obj_rotspear	spr=spr_followspear_2	vis=True	pers=False
+283	obj_followspeargen_2	spr=	vis=True	pers=False
+284	obj_followspear_2	spr=spr_followspear_2	vis=True	pers=False
+285	obj_undynex_body	spr=spr_undynex_example	vis=True	pers=False
+286	obj_undyne_ex	spr=spr_undyneb	vis=True	pers=False
+287	obj_mkid_b_body	spr=spr_mkid_battle_etc	vis=True	pers=False
+288	obj_mkid_battle	spr=spr_mkid_battle_etc	vis=False	pers=False
+289	obj_generalsiner	spr=	vis=True	pers=False
+290	obj_gladdummy	spr=spr_dummybattle_glad	vis=True	pers=False
+291	obj_maddummy	spr=spr_dummybattle	vis=True	pers=False
+292	obj_maddum_drawer	spr=	vis=True	pers=False
+293	obj_aaron	spr=spr_aaron	vis=True	pers=False
+294	obj_aaronbody	spr=spr_aaronbody	vis=True	pers=False
+295	obj_tembattle	spr=spr_tembattle	vis=True	pers=False
+296	obj_moldsmalx_part	spr=spr_moldsmalx_part	vis=True	pers=False
+297	obj_moldsmalx	spr=spr_moldsmal	vis=True	pers=False
+298	obj_tembody	spr=spr_tembody	vis=True	pers=False
+299	obj_moldsmalx_body	spr=spr_moldsmal	vis=True	pers=False
+300	obj_shockermaker	spr=	vis=True	pers=False
+301	obj_mettatonb_quiz	spr=spr_mettatonb	vis=True	pers=False
+302	obj_mettatonb_second	spr=spr_mettatonb	vis=False	pers=False
+303	obj_mettatonb_third	spr=spr_mettatonb	vis=False	pers=False
+304	obj_mettatonnn_writer	spr=	vis=True	pers=False
+305	obj_mettatonb_body	spr=spr_mettatonb	vis=True	pers=False
+306	obj_mettatonb_body2	spr=spr_mettatonb	vis=True	pers=False
+307	obj_zoomaton	spr=spr_mettatonb_shirt	vis=True	pers=False
+308	obj_jarfly	spr=spr_jarfly	vis=True	pers=False
+309	obj_flyjar	spr=spr_flyjar	vis=True	pers=False
+310	obj_answernodule	spr=	vis=True	pers=False
+311	obj_questionasker	spr=spr_alphyshelper	vis=True	pers=False
+312	obj_greenarmor	spr=spr_greenarmor	vis=True	pers=False
+313	obj_bara01	spr=spr_bara01hurt	vis=False	pers=False
+314	obj_bara02	spr=spr_bara02hurt	vis=False	pers=False
+315	obj_bara03	spr=spr_aaron	vis=True	pers=False
+316	obj_bara04	spr=spr_aaron	vis=True	pers=False
+317	obj_warplinegen	spr=	vis=True	pers=False
+318	obj_xbulletgen	spr=	vis=True	pers=False
+319	obj_xbullet	spr=spr_xbullet	vis=True	pers=False
+320	obj_warplinebullet	spr=	vis=True	pers=False
+321	obj_sweat99	spr=spr_sweat99	vis=True	pers=False
+322	obj_barabody	spr=	vis=True	pers=False
+323	obj_exhaustbullet	spr=spr_incendiaryflame	vis=True	pers=False
+324	obj_vertplanegreen	spr=spr_vertplanegreen	vis=True	pers=False
+325	obj_vertplanebullet	spr=spr_vertplane	vis=True	pers=False
+326	obj_vertplanegen	spr=	vis=True	pers=False
+327	obj_incendiary	spr=spr_incendiaryflame	vis=True	pers=False
+328	obj_incendiarybomb	spr=spr_incendiarybomb	vis=True	pers=False
+329	obj_sideplanebullet	spr=spr_sideplanebullet	vis=True	pers=False
+330	obj_incendiarygen	spr=	vis=True	pers=False
+331	obj_tsunderplane	spr=spr_tsunderplane	vis=False	pers=False
+332	obj_planeexhaust	spr=spr_tsunderplanecloud	vis=True	pers=False
+333	obj_tsunderplane_body	spr=spr_tsunderplane	vis=True	pers=False
+334	obj_vulkinlightning	spr=spr_vulkinlightning	vis=True	pers=False
+335	obj_vulkincloudbul	spr=spr_vulkincloudbul	vis=True	pers=False
+336	obj_lavabullet	spr=spr_lavaflame	vis=True	pers=False
+337	obj_sidelava	spr=spr_lavaside	vis=True	pers=False
+338	obj_lavafiregen	spr=	vis=True	pers=False
+339	obj_vulkincloud	spr=spr_vulkincloud	vis=True	pers=False
+340	obj_vulkinbody	spr=spr_vulkinbody	vis=True	pers=False
+341	obj_vulkin	spr=spr_vulkinhurt	vis=False	pers=False
+342	obj_orangefire	spr=spr_orangefire	vis=True	pers=False
+343	obj_ropebul	spr=spr_ropebul	vis=False	pers=False
+344	obj_ropebulgen	spr=	vis=True	pers=False
+345	obj_heatwaver	spr=	vis=True	pers=False
+346	obj_pyropebody	spr=spr_pyropebody	vis=True	pers=False
+347	obj_pyrope	spr=spr_pyropehurt	vis=False	pers=False
+348	obj_blastbul	spr=spr_bombexplosion	vis=True	pers=False
+349	obj_bombbul	spr=spr_bombd	vis=True	pers=False
+350	obj_bombgen	spr=	vis=True	pers=False
+351	obj_grosscupcake2	spr=spr_cupcakemonster	vis=True	pers=False
+352	obj_spiderbulletparent	spr=	vis=True	pers=False
+353	obj_hideouscupcake	spr=spr_hideouscupcake	vis=True	pers=False
+354	obj_fakeborderdraw	spr=	vis=True	pers=False
+355	obj_donutbullet	spr=spr_donutbullet	vis=True	pers=False
+356	obj_spiderbulletgen	spr=	vis=True	pers=False
+357	obj_spiderbullet	spr=spr_spiderbullet1	vis=True	pers=False
+358	obj_vertspider	spr=spr_spiderbullet1	vis=True	pers=False
+359	obj_croissant	spr=spr_croissantr	vis=True	pers=False
+360	obj_vertcroissant	spr=spr_croissantr	vis=True	pers=False
+361	obj_signspider	spr=spr_tinyspider	vis=True	pers=False
+362	obj_telegramspider	spr=spr_tinyspider	vis=True	pers=False
+363	obj_sadspider	spr=spr_tinyspider	vis=True	pers=False
+364	obj_spiderb	spr=spr_muffethurt	vis=False	pers=False
+365	obj_spiderpour	spr=spr_spiderpour	vis=True	pers=False
+366	obj_spiderb_body	spr=spr_spiderb_head	vis=True	pers=False
+367	obj_purpleheart	spr=spr_heartpurple_center	vis=True	pers=False
+368	obj_crosszap	spr=spr_crosszap	vis=True	pers=False
+369	obj_wizardorb_wall	spr=spr_wizard_orb2	vis=True	pers=False
+370	obj_wizardorb_chaser	spr=spr_wizard_orb2	vis=True	pers=False
+371	obj_orbsprinkle	spr=spr_wizard_orbsprinkle	vis=True	pers=False
+372	obj_wizardbody	spr=spr_wizard_full	vis=True	pers=False
+373	obj_wizard	spr=spr_wizardhurt	vis=False	pers=False
+374	obj_hammergen	spr=	vis=True	pers=False
+375	obj_knighthammer	spr=spr_knighthammer	vis=True	pers=False
+376	obj_sunbullet	spr=spr_sunbullet	vis=True	pers=False
+377	obj_meteorshine	spr=spr_meteorshine	vis=True	pers=False
+378	obj_meteorbullet	spr=spr_moonmeteor	vis=True	pers=False
+379	obj_skymoon	spr=spr_skymoon	vis=True	pers=False
+380	obj_sunmoon	spr=spr_sunmoon	vis=True	pers=False
+381	obj_skyorb	spr=spr_skyorb	vis=True	pers=False
+382	obj_finalknight	spr=spr_knighthurt	vis=False	pers=False
+383	obj_finalknight_body	spr=spr_finalknight	vis=True	pers=False
+384	obj_megaflybulletgen	spr=	vis=True	pers=False
+385	obj_megaflybullet	spr=spr_megaflybullet	vis=True	pers=False
+386	obj_frogbullet_gen	spr=	vis=True	pers=False
+387	obj_frogbullet_ex	spr=spr_frogbullet_stop	vis=True	pers=False
+388	obj_frogbullet_ex_old	spr=spr_frogbullet_stop	vis=True	pers=False
+389	obj_finalfroggit	spr=spr_finalfroggithurt	vis=False	pers=False
+390	obj_finalfroggit_body	spr=spr_finalfroggit	vis=True	pers=False
+391	obj_astigmatism	spr=spr_astigmatismhurt	vis=False	pers=False
+392	obj_astigmatism_body	spr=spr_astigmatism_anim2	vis=True	pers=False
+393	obj_stromboli	spr=spr_circlebulletmed_ex	vis=True	pers=False
+394	obj_astigmatismgen	spr=	vis=True	pers=False
+395	obj_stromboligen	spr=	vis=True	pers=False
+396	obj_sonbullet	spr=spr_circlebulletmed_ex	vis=True	pers=False
+397	obj_astigmatism_bullet	spr=spr_circlebulletlarge_ex	vis=True	pers=False
+398	obj_whimsalot	spr=spr_whimsalothurt	vis=False	pers=False
+399	obj_butterflybullet_2	spr=spr_butterflybullet	vis=True	pers=False
+400	obj_whimsalot_body	spr=spr_whimsalot	vis=True	pers=False
+401	obj_butterflybullet_gen_2	spr=	vis=True	pers=False
+402	obj_butterflybullet_gen	spr=	vis=True	pers=False
+403	obj_butterflybullet	spr=spr_butterflybullet	vis=True	pers=False
+404	obj_battlebomb_body	spr=spr_battlebomb	vis=True	pers=False
+405	obj_battlebomb	spr=spr_aaron	vis=True	pers=False
+406	obj_ratingsmaster	spr=	vis=True	pers=False
+407	obj_mettatonex	spr=spr_aaron	vis=True	pers=False
+408	obj_stagecloud	spr=spr_stagecloud_bad	vis=True	pers=False
+409	obj_mett_bossintro	spr=	vis=True	pers=False
+410	obj_mettshine	spr=spr_mettshine	vis=True	pers=False
+411	obj_fallofflimb	spr=	vis=True	pers=False
+412	obj_mettb_body	spr=spr_mettb_upperbody	vis=True	pers=False
+413	obj_essaystuff	spr=	vis=True	pers=False
+414	obj_startroom_pl	spr=	vis=True	pers=False
+415	obj_gameover_test_pl	spr=	vis=True	pers=False
+416	obj_nextbattle_pl	spr=	vis=True	pers=False
+417	obj_metttestbulletparent	spr=	vis=True	pers=False
+418	obj_mettattackgen	spr=	vis=True	pers=False
+419	obj_happybreaktime	spr=spr_happybreaktime	vis=True	pers=False
+420	obj_legline_l	spr=spr_mettlegbullet_l	vis=True	pers=False
+421	obj_legline_r	spr=spr_mettlegbullet_r	vis=True	pers=False
+422	obj_bulletblocker	spr=spr_blackbox_pl	vis=True	pers=False
+423	obj_bulletbomb	spr=spr_plusbomb	vis=True	pers=False
+424	obj_mettheart_parent	spr=	vis=True	pers=False
+425	obj_mettheart_1	spr=spr_mettheart	vis=True	pers=False
+426	obj_mettheart_2	spr=spr_mettheart	vis=True	pers=False
+427	obj_mettheart_3	spr=spr_mettheart	vis=True	pers=False
+428	obj_mettheart_4	spr=spr_mettheart	vis=True	pers=False
+429	obj_brokenpiece	spr=spr_parasolmett	vis=True	pers=False
+430	obj_discoball_pl	spr=spr_discoball_pl	vis=True	pers=False
+431	obj_bobskids	spr=spr_eggbullet_pl	vis=True	pers=False
+432	obj_bigbob	spr=spr_bigbob	vis=True	pers=False
+433	obj_eggbullet_pl	spr=spr_eggbullet_pl	vis=True	pers=False
+434	obj_eggcarton_pl	spr=spr_eggcarton_pl	vis=True	pers=False
+435	obj_mettfodder	spr=spr_parasolmett	vis=True	pers=False
+436	obj_dancemett	spr=spr_tinydancemett	vis=True	pers=False
+437	obj_mettlightning_pl	spr=spr_mettlightning_pl	vis=True	pers=False
+438	obj_kissybullet_pl	spr=spr_kissbullet	vis=True	pers=False
+439	obj_blackbox_rewinder	spr=spr_recbox	vis=True	pers=False
+440	obj_mettstick	spr=spr_mettstick	vis=True	pers=False
+441	obj_metthand_l	spr=spr_metthand_pl	vis=True	pers=False
+442	obj_metthand_r	spr=spr_metthand_r	vis=True	pers=False
+443	obj_mettleg_l	spr=spr_mettlegbullet_l	vis=True	pers=False
+444	obj_mettleg_r	spr=spr_mettlegbullet_l	vis=True	pers=False
+445	obj_plusbomb_explosion	spr=spr_plusbomb_coreblast	vis=True	pers=False
+446	obj_blackbox_pl	spr=spr_blackbox_pl	vis=True	pers=False
+447	obj_upbox_pl	spr=spr_upbox	vis=True	pers=False
+448	obj_upbox_new_pl	spr=spr_upbox	vis=True	pers=False
+449	obj_plusbomb	spr=spr_plusbomb	vis=True	pers=False
+450	obj_heartshot_pl	spr=spr_yellowbullet_pl	vis=True	pers=False
+451	obj_heart_pl	spr=spr_yellowheart_pl	vis=True	pers=False
+452	obj_starburst_x	spr=spr_starburst_x	vis=True	pers=False
+453	obj_mettheart_burst	spr=spr_mettheart_centered	vis=True	pers=False
+454	obj_mettaton_neo	spr=spr_aaron	vis=True	pers=False
+455	obj_mneo_body	spr=	vis=True	pers=False
+456	obj_doodleball	spr=spr_doodlebullet	vis=False	pers=False
+457	obj_doodlebug_body	spr=spr_doodlebug	vis=True	pers=False
+458	obj_doodlebug	spr=spr_doodlebug	vis=False	pers=False
+459	obj_doodlebullet	spr=spr_doodlebullet	vis=True	pers=False
+460	obj_sorry_trashball	spr=spr_sorrytrashball	vis=True	pers=False
+461	obj_sorrybody	spr=spr_sorry_example	vis=True	pers=False
+462	obj_sosorry	spr=spr_sorry_d	vis=False	pers=False
+463	obj_randomhandgen	spr=	vis=True	pers=False
+464	obj_handbulletgen	spr=	vis=True	pers=False
+465	obj_handbullet_new	spr=spr_handbullet_old_r	vis=True	pers=False
+466	obj_firestormgen	spr=spr_firebullet_center_generous	vis=True	pers=False
+467	obj_asgorebulparent	spr=	vis=True	pers=False
+468	obj_asgoreattackgen	spr=	vis=True	pers=False
+469	obj_sidedam	spr=	vis=True	pers=False
+470	obj_sinefiregen_asg_lv1	spr=	vis=True	pers=False
+471	obj_sinefiregen_asg_lv2_usethis	spr=	vis=True	pers=False
+472	obj_sinefiregen_asglv3	spr=	vis=True	pers=False
+473	obj_helixfiregen	spr=	vis=True	pers=False
+474	obj_cfiregen	spr=	vis=True	pers=False
+475	obj_sided_fire	spr=spr_firebullet_noc	vis=True	pers=False
+476	obj_genericfire	spr=spr_firebullet_center_generous	vis=True	pers=False
+477	obj_cfire	spr=spr_firebullet_center_generous	vis=True	pers=False
+478	obj_sinefire_asghelix	spr=spr_firebullet_center_generous	vis=True	pers=False
+479	obj_asgore_spearswipe	spr=spr_asgore_swipe_nospear	vis=True	pers=False
+480	obj_asgore_spearswipegen	spr=spr_asgore_flashsilhouette	vis=True	pers=False
+481	obj_eyeflash	spr=spr_asgore_eyeflash	vis=True	pers=False
+482	obj_asgoreb	spr=spr_aaron	vis=True	pers=False
+483	obj_mercybutton_part	spr=spr_mercybutton_shatter	vis=True	pers=False
+484	obj_mercybutton_shatter	spr=spr_mercybutton_normal	vis=True	pers=False
+485	obj_asgorefakespear	spr=spr_asgorespear	vis=True	pers=False
+486	obj_asgore_finalintro	spr=spr_asgore_prebrandish	vis=True	pers=False
+487	obj_purplegradienter	spr=	vis=True	pers=False
+488	obj_orangeparticlegen	spr=	vis=True	pers=False
+489	obj_orangeparticle	spr=spr_orangeparticle	vis=True	pers=False
+490	obj_spearafterimage	spr=	vis=True	pers=False
+491	obj_spearafterimage2	spr=spr_asgorespear	vis=True	pers=False
+492	obj_asgoreb_body	spr=	vis=True	pers=False
+493	obj_asgorespear	spr=spr_asgorespear	vis=True	pers=False
+494	obj_asgfakeheart	spr=spr_torheart_again	vis=True	pers=False
+495	obj_spinbullet_last	spr=spr_spinbullet_outline	vis=True	pers=False
+496	obj_spinbullet_lastgen	spr=	vis=True	pers=False
+497	obj_asgore_lastcutscene	spr=spr_asgore_kneel	vis=True	pers=False
+498	obj_floweygonk	spr=spr_floweygonk	vis=True	pers=False
+499	obj_gameshake	spr=	vis=True	pers=False
+500	obj_truechara	spr=spr_truechara	vis=True	pers=False
+501	obj_sansbullet_parent	spr=	vis=True	pers=False
+502	obj_gasterblaster	spr=spr_gasterblaster	vis=True	pers=False
+503	obj_sans_bonebul	spr=spr_s_bonebul_top	vis=True	pers=False
+504	obj_bonewall_normal	spr=spr_s_bonewall_wide	vis=True	pers=False
+505	obj_bonewall	spr=spr_s_bonewall	vis=True	pers=False
+506	obj_bonestab	spr=	vis=True	pers=False
+507	obj_boneloop_v	spr=spr_s_boneloop	vis=True	pers=False
+508	obj_menubone_bottom	spr=spr_s_boneloop_out	vis=True	pers=False
+509	obj_menubone	spr=spr_s_boneloop_out	vis=True	pers=False
+510	obj_s_fakefightbt	spr=spr_fightbt	vis=True	pers=False
+511	obj_emptyborder_s	spr=spr_emptyborder	vis=True	pers=False
+512	obj_sans_z_battle	spr=spr_sans_z_battle	vis=True	pers=False
+513	obj_strike_temp	spr=spr_strike	vis=True	pers=False
+514	obj_menubone_maker	spr=	vis=True	pers=False
+515	obj_sansshadowgen	spr=	vis=True	pers=False
+516	obj_sans_shaker	spr=	vis=True	pers=False
+517	obj_vplatgen	spr=	vis=True	pers=False
+518	obj_3platgen	spr=	vis=True	pers=False
+519	obj_boneplat	spr=	vis=True	pers=False
+520	obj_heart_sansbattle	spr=spr_heart_battle_pl	vis=True	pers=False
+521	obj_sansb_body	spr=spr_sansb_face	vis=True	pers=False
+522	obj_gasterbl_gen	spr=	vis=True	pers=False
+523	obj_sansb	spr=spr_aaron	vis=False	pers=False
+524	obj_white_ender	spr=	vis=True	pers=False
+525	obj_black_ender	spr=	vis=True	pers=False
+526	obj_flowey_wilt	spr=spr_flowey_wilted	vis=True	pers=False
+527	obj_storybattle_gen	spr=	vis=True	pers=False
+528	obj_melonbulgen	spr=	vis=True	pers=False
+529	obj_melonbullet	spr=spr_melonbullet	vis=True	pers=False
+530	obj_melontooth	spr=spr_melontooth	vis=True	pers=False
+531	obj_meloneye	spr=spr_melonbullet	vis=True	pers=False
+532	obj_lemonbread	spr=spr_aaron	vis=True	pers=False
+533	obj_lemonbread_body	spr=spr_lemonbread_head	vis=True	pers=False
+534	obj_amalgambul_parent	spr=	vis=True	pers=False
+535	obj_clawfailuregen	spr=	vis=True	pers=False
+536	obj_clawbullet_failure	spr=spr_clawbullet	vis=True	pers=False
+537	obj_clawbullet_gravityfailure	spr=spr_clawbullet	vis=True	pers=False
+538	obj_strangeman_head	spr=spr_strangeman_floathead	vis=True	pers=False
+539	obj_butterflyhead	spr=spr_strangeman_headless_walk	vis=True	pers=False
+540	obj_strangeman_headloss	spr=spr_strangeman_headless_walk	vis=True	pers=False
+541	obj_strangeman_butterfly	spr=spr_butterfly_bullet2	vis=True	pers=False
+542	obj_strangeman_intro	spr=spr_strangeman_walk	vis=True	pers=False
+543	obj_insanetri	spr=	vis=True	pers=False
+544	obj_insanesq	spr=	vis=True	pers=False
+545	obj_freakbulletgen	spr=spr_freakbullet	vis=False	pers=False
+546	obj_freakbullet	spr=spr_freakbullet	vis=True	pers=False
+547	obj_dogmissle	spr=spr_dogmissle	vis=True	pers=False
+548	obj_amalgam_laserdog	spr=spr_nofacedog	vis=True	pers=False
+549	obj_amalgam_rocketdog	spr=spr_nofacedog_legtuck	vis=True	pers=False
+550	obj_amalgam_tooth	spr=spr_amalgam_tooth	vis=True	pers=False
+551	obj_amalgam_biter	spr=	vis=True	pers=False
+552	obj_heart_deletelater	spr=	vis=True	pers=False
+553	obj_reaperbird_body	spr=spr_reaperbird_head	vis=True	pers=False
+554	obj_reaperbird	spr=spr_aaron	vis=True	pers=False
+555	obj_snowdrakemom_body	spr=spr_snowdrakesmom	vis=True	pers=False
+556	obj_snowdrakemom	spr=spr_aaron	vis=True	pers=False
+557	obj_memoryhead_body	spr=spr_memoryhead	vis=True	pers=False
+558	obj_memoryhead	spr=spr_froggit	vis=True	pers=False
+559	obj_endogeny	spr=spr_aaron	vis=True	pers=False
+560	obj_endogeny_body	spr=spr_endogeny	vis=True	pers=False
+561	obj_screenwhiter	spr=	vis=True	pers=True
+562	obj_ripoff_undyne	spr=spr_aaron	vis=True	pers=False
+563	obj_ripoff_papyrus	spr=spr_aaron	vis=True	pers=False
+564	obj_ripoff_sans	spr=spr_aaron	vis=True	pers=False
+565	obj_ripoff_alphys	spr=spr_aaron	vis=True	pers=False
+566	obj_ripoff_toriel	spr=spr_aaron	vis=True	pers=False
+567	obj_ripoff_asgore	spr=spr_aaron	vis=True	pers=False
+568	obj_asrielb	spr=spr_asriel_afterimager	vis=True	pers=False
+569	obj_asrielfinal	spr=spr_aaron	vis=True	pers=False
+570	obj_asrielpanels	spr=spr_asrielpanels	vis=True	pers=True
+571	obj_heart_another	spr=spr_another_heart_placeholder	vis=True	pers=False
+572	obj_afinal_body	spr=	vis=True	pers=False
+573	obj_asriel_body	spr=spr_asriel_afterimager	vis=True	pers=False
+574	obj_roundedge	spr=	vis=True	pers=False
+575	obj_afterimage_asriel	spr=	vis=True	pers=False
+576	obj_handlightning	spr=	vis=True	pers=False
+577	obj_ultimatarget	spr=spr_redtarget	vis=False	pers=False
+578	obj_blastorb	spr=spr_beamcircle	vis=True	pers=False
+579	obj_ultimagen	spr=	vis=True	pers=False
+580	obj_ultimabullet	spr=spr_ultimabullet	vis=True	pers=False
+581	obj_ultimatrail	spr=	vis=True	pers=False
+582	obj_lastbeam	spr=	vis=True	pers=False
+583	obj_explodestar	spr=	vis=True	pers=False
+584	obj_regstar_blt	spr=spr_regstar	vis=True	pers=False
+585	obj_stormstar_gen	spr=	vis=True	pers=False
+586	obj_stormstar	spr=spr_stormstar	vis=True	pers=False
+587	obj_gunarm_bolt	spr=spr_asriel_gunbolt	vis=True	pers=False
+588	obj_gunarm_firepattern	spr=spr_asriel_gunarm_shot	vis=True	pers=False
+589	obj_rainbowtarget	spr=spr_rainbowtarget	vis=True	pers=False
+590	obj_rainbowbolt_testgen	spr=	vis=True	pers=False
+591	obj_rainbowbolt_realgen	spr=	vis=True	pers=False
+592	obj_rainbowbolt	spr=spr_rainbowbolt	vis=True	pers=False
+593	obj_swordtwinkle	spr=spr_asriel_swordtwinkle	vis=True	pers=False
+594	obj_asriel_swordmaster	spr=spr_swordmaster	vis=False	pers=False
+595	obj_asriel_swordarm	spr=spr_asriel_swordlessarm	vis=True	pers=False
+596	obj_asbulletparent	spr=	vis=True	pers=False
+597	obj_hg_wholescreen	spr=	vis=True	pers=False
+598	obj_hg_debris	spr=spr_hg_debris_small	vis=True	pers=False
+599	obj_hg_body	spr=spr_hypergoner	vis=True	pers=False
+600	obj_migospel	spr=spr_migospel_hurt	vis=False	pers=False
+601	obj_migospel_body	spr=spr_migospel_hurt	vis=True	pers=False
+602	obj_parsnik	spr=spr_parsnik_hurt	vis=False	pers=False
+603	obj_parsnik_body	spr=spr_parsnik_hurt	vis=True	pers=False
+604	obj_moldessa_body	spr=	vis=True	pers=False
+605	obj_moldessa	spr=spr_moldessa_hurt	vis=False	pers=False
+606	obj_torboss_2ndtime	spr=spr_torielboss_kneel	vis=True	pers=False
+607	obj_hard_dog	spr=spr_tobdogl	vis=True	pers=False
+608	obj_mewmew_boss	spr=spr_boss_mewmew_idle	vis=True	pers=False
+609	obj_halfbullet	spr=spr_mmbul_full	vis=True	pers=False
+610	obj_halfbullet_gen	spr=spr_heart_posmarker	vis=True	pers=False
+611	obj_hearthalf	spr=spr_heart_lefthalf	vis=True	pers=False
+612	obj_mewmew_body	spr=spr_boss_mewmew_idle	vis=True	pers=False
+613	obj_monster_extrabody	spr=	vis=True	pers=False
+614	obj_basicmonster	spr=spr_aaron	vis=True	pers=False
+615	obj_monsterparent	spr=	vis=True	pers=False
+616	obj_torielflame_X	spr=spr_torielflame	vis=True	pers=False
+617	obj_radialfakegen	spr=	vis=True	pers=False
+618	obj_radialfakegenx	spr=	vis=True	pers=False
+619	obj_friendlypellet	spr=spr_spinbullet	vis=True	pers=False
+620	obj_fakepellet	spr=spr_spinbullet	vis=True	pers=False
+621	blt_chasefire1	spr=spr_firebullet	vis=True	pers=False
+622	blt_floatfire	spr=spr_firebullet	vis=True	pers=False
+623	blt_chasefire2	spr=spr_firebullet	vis=True	pers=False
+624	blt_handbullet1	spr=spr_handbullet	vis=True	pers=False
+625	blt_handbullet2	spr=spr_handbullet	vis=True	pers=False
+626	blt_hoopbullet1	spr=spr_circlebulletmed2	vis=False	pers=False
+627	blt_firehelix1	spr=spr_firebullet	vis=True	pers=False
+628	blt_minihelix	spr=spr_firebullet	vis=True	pers=False
+629	blt_avoidfire	spr=spr_firebullet	vis=True	pers=False
+630	blt_hoopbullet2	spr=spr_circlebulletmd1	vis=True	pers=False
+631	blt_blookhat	spr=spr_blookhat	vis=True	pers=False
+632	blt_splinterbig	spr=spr_bulletmd	vis=True	pers=False
+633	blt_splinter	spr=spr_bulletsm	vis=True	pers=False
+634	blt_butterfly1	spr=spr_butterflybllt	vis=True	pers=False
+635	blt_leapfrog	spr=spr_smallfrogbullet	vis=True	pers=False
+636	blt_roachdance	spr=spr_roachdance	vis=True	pers=False
+637	blt_butterfly2	spr=spr_butterflybllt	vis=True	pers=False
+638	blt_roachbullet	spr=spr_roachbullet	vis=True	pers=False
+639	blt_vegbullet	spr=spr_vegbullet	vis=True	pers=False
+640	blt_gravbullet	spr=spr_carrotbullet	vis=True	pers=False
+641	blt_flybullet	spr=spr_flybullet	vis=True	pers=False
+642	blt_crybullet	spr=spr_teardrop	vis=True	pers=False
+643	blt_crybullet2	spr=spr_teardrop	vis=True	pers=False
+644	blt_streambullet	spr=spr_streambullet	vis=True	pers=False
+645	blt_pollendrop	spr=spr_bulletmd	vis=True	pers=False
+646	blt_scootdog	spr=spr_tobydogscoot	vis=True	pers=False
+647	blt_coolbus	spr=spr_coolbus	vis=True	pers=False
+648	blt_superbone	spr=spr_superbone	vis=True	pers=False
+649	blt_tobydogbone	spr=spr_tobydogeat	vis=True	pers=False
+650	blt_potentiallyblue	spr=	vis=True	pers=False
+651	blt_dogspear	spr=spr_dogspear	vis=True	pers=False
+652	blt_barkbullet	spr=spr_barkbullet	vis=True	pers=False
+653	blt_sadbullet	spr=spr_smheartbullet	vis=True	pers=False
+654	blt_hat	spr=spr_hatbullet	vis=True	pers=False
+655	blt_icicle	spr=spr_iciclebullet	vis=True	pers=False
+656	blt_clawbullet_white	spr=spr_rotclawbullet	vis=True	pers=False
+657	blt_4sidebullet	spr=spr_clawbullet	vis=True	pers=False
+658	blt_tinypom_leap	spr=spr_tinypomwag	vis=True	pers=False
+659	blt_whitespear	spr=spr_whitespear	vis=True	pers=False
+660	obj_iceteeth	spr=	vis=True	pers=False
+661	blt_sizebone	spr=spr_bonetop	vis=True	pers=False
+662	blt_topbone	spr=spr_bonebottom	vis=True	pers=False
+663	blt_bluespear	spr=spr_bluespear	vis=True	pers=False
+664	blt_pblueattack	spr=spr_bluespear	vis=True	pers=False
+665	blt_bluesword	spr=spr_bluesword	vis=True	pers=False
+666	blt_whiteax	spr=spr_bluesword	vis=True	pers=False
+667	blt_loopbulletgrow	spr=spr_smheartbullet	vis=True	pers=False
+668	blt_dummyknife	spr=spr_dummyknife	vis=True	pers=False
+669	blt_dummybullet	spr=spr_dummybullet	vis=True	pers=False
+670	blt_dummyshot	spr=spr_dummyshot	vis=True	pers=False
+671	blt_dummymissle	spr=spr_hotlandmissle	vis=True	pers=False
+672	obj_maintem	spr=spr_temfront	vis=True	pers=False
+673	obj_temleg	spr=	vis=True	pers=False
+674	blt_musbul1	spr=spr_musbul_1	vis=True	pers=False
+675	blt_growbullet	spr=spr_waterbul	vis=True	pers=False
+676	blt_soapbul	spr=spr_soapbul	vis=True	pers=False
+677	blt_shinebullet	spr=spr_glitterbul	vis=True	pers=False
+678	blt_stalk1	spr=spr_wormbul	vis=True	pers=False
+679	blt_stalk2	spr=spr_wormbul	vis=True	pers=False
+680	blt_stalkloop	spr=spr_circlebulletb	vis=True	pers=False
+681	blt_temhand	spr=spr_temhand	vis=True	pers=False
+682	blt_sweatdrop	spr=spr_teardrop	vis=False	pers=False
+683	blt_uspear	spr=spr_uspearbul	vis=False	pers=False
+684	blt_muscbul	spr=spr_muscbul1	vis=True	pers=False
+685	obj_blackboxtest	spr=spr_blackboxbl	vis=True	pers=False
+686	obj_blackboxpart	spr=spr_blackboxpart	vis=True	pers=False
+687	obj_bluelaser_b	spr=	vis=True	pers=False
+688	blt_parent	spr=	vis=True	pers=False
+689	blt_parent_noborder	spr=	vis=True	pers=False
+690	blt_direct	spr=spr_bulletmd	vis=True	pers=False
+691	blt_thatch	spr=spr_dirbullet	vis=True	pers=False
+692	blt_gen	spr=spr_bulletgenmd	vis=True	pers=False
+693	blt_laser	spr=	vis=True	pers=False
+694	obj_giftgen	spr=	vis=True	pers=False
+695	obj_blueattackgen	spr=	vis=True	pers=False
+696	obj_sleepdog	spr=spr_sleepdog	vis=True	pers=False
+697	obj_loopdog	spr=spr_tinypombark	vis=True	pers=False
+698	obj_loopbulletgrowgen	spr=	vis=False	pers=False
+699	obj_musbulgen	spr=	vis=True	pers=False
+700	obj_woshspiralgen	spr=	vis=True	pers=False
+701	obj_stalkergen	spr=	vis=True	pers=False
+702	obj_8smallgen	spr=	vis=True	pers=False
+703	obj_sweatbulgen	spr=	vis=True	pers=False
+704	obj_muscbulgen	spr=	vis=True	pers=False
+705	obj_quickgen	spr=	vis=False	pers=False
+706	obj_blackbulletgen1	spr=	vis=True	pers=False
+707	obj_carrotshot	spr=spr_carrotshot	vis=True	pers=False
+708	obj_stardrop	spr=spr_stardrop	vis=True	pers=False
+709	obj_carrotstargen	spr=	vis=True	pers=False
+710	obj_rotategen	spr=	vis=False	pers=False
+711	obj_butterfly2gen	spr=	vis=True	pers=False
+712	obj_bulletgenthatched	spr=	vis=True	pers=False
+713	obj_lasergen1	spr=	vis=True	pers=False
+714	obj_bulletgenparent	spr=	vis=True	pers=False
+715	obj_bulletgen1	spr=	vis=True	pers=False
+716	obj_crygen1	spr=	vis=True	pers=False
+717	obj_crygen2	spr=	vis=True	pers=False
+718	obj_crygen3	spr=	vis=True	pers=False
+719	obj_sadmsggen	spr=spr_bulletNapstaSad	vis=True	pers=False
+720	obj_allaroundgen	spr=	vis=True	pers=False
+721	obj_4sidegen	spr=	vis=True	pers=False
+722	obj_1sidegen	spr=	vis=True	pers=False
+723	obj_gyftgen	spr=	vis=True	pers=False
+724	obj_hoopgen1	spr=	vis=True	pers=False
+725	obj_lightpunch	spr=spr_regfist	vis=True	pers=False
+726	obj_strongpunch	spr=spr_hyperfist	vis=True	pers=False
+727	obj_battlethingparent	spr=	vis=True	pers=False
+728	obj_targetparent	spr=	vis=True	pers=False
+729	obj_fadebar	spr=spr_fadebar	vis=True	pers=False
+730	obj_xtarget	spr=spr_targetchoice	vis=True	pers=False
+731	obj_ztarget	spr=spr_targetchoice	vis=True	pers=False
+732	obj_fisttargettest	spr=spr_dumbtarget	vis=True	pers=False
+733	obj_knifetargettest	spr=spr_dumbtarget	vis=True	pers=False
+734	obj_shoetargettest	spr=spr_dumbtarget	vis=True	pers=False
+735	obj_notebook_attackanim	spr=spr_notebook_attack	vis=True	pers=False
+736	obj_gunshot_stab	spr=spr_gunshot_stab	vis=True	pers=False
+737	obj_gunshot_star	spr=spr_gunshot_stab	vis=True	pers=False
+738	obj_gunshot_2	spr=spr_gunshot_remnant	vis=True	pers=False
+739	obj_frypan_star	spr=spr_frypan_star	vis=True	pers=False
+740	obj_frypan_impact	spr=spr_frypan_impact	vis=True	pers=False
+741	obj_pressZ	spr=spr_pressz_press	vis=True	pers=False
+742	obj_slice	spr=spr_strike	vis=True	pers=False
+743	obj_targetchoice	spr=spr_targetchoice	vis=True	pers=False
+744	obj_targetchoiceshoe	spr=spr_targetchoice	vis=True	pers=False
+745	obj_targetchoicefist	spr=spr_targetchoice	vis=True	pers=False
+746	obj_targetchoiceHITSEVERYONE	spr=spr_targetchoice	vis=True	pers=False
+747	obj_target	spr=spr_target	vis=True	pers=False
+748	obj_heartshot	spr=spr_heartbullet	vis=True	pers=False
+749	obj_heartshot_bounceaway	spr=spr_heartbullet	vis=True	pers=False
+750	obj_growheart	spr=spr_heartyellow_center	vis=True	pers=False
+751	obj_cutsceneheart	spr=spr_heartred_center	vis=True	pers=False
+752	obj_heart	spr=spr_heart	vis=True	pers=False
+753	obj_heartdefeated	spr=spr_heart	vis=True	pers=False
+754	obj_torheart	spr=spr_torheart	vis=True	pers=False
+755	obj_heartshard	spr=spr_heartshards	vis=True	pers=False
+756	obj_theartshard	spr=spr_theartshards	vis=True	pers=False
+757	obj_fakeheart	spr=spr_heart	vis=True	pers=False
+758	obj_dateheart	spr=spr_heart	vis=True	pers=False
+759	obj_fightbt	spr=spr_fightbt	vis=True	pers=False
+760	obj_talkbt	spr=spr_talkbt	vis=True	pers=False
+761	obj_itembt	spr=spr_itembt	vis=True	pers=False
+762	obj_spellbt	spr=spr_spellbt	vis=True	pers=False
+763	obj_sparebt	spr=spr_sparebt	vis=True	pers=False
+764	obj_btparent	spr=spr_fightbt	vis=True	pers=False
+765	obj_anybt	spr=spr_fightbt	vis=True	pers=False
+766	obj_borderparent	spr=	vis=True	pers=False
+767	obj_lborder	spr=spr_border	vis=True	pers=False
+768	obj_uborder	spr=spr_border	vis=True	pers=False
+769	obj_rborder	spr=spr_border	vis=True	pers=False
+770	obj_dborder	spr=spr_border	vis=True	pers=False
+771	obj_growshrink	spr=spr_border	vis=True	pers=False
+772	obj_torface	spr=	vis=True	pers=False
+773	obj_torbody	spr=spr_face_torielbody	vis=True	pers=False
+774	obj_face_torieltalk	spr=spr_face_torielhappytalk	vis=True	pers=False
+775	obj_face_torglasses	spr=spr_face_torielglasses	vis=True	pers=False
+776	obj_face_torielblink	spr=spr_face_torielhappyblink	vis=True	pers=False
+777	obj_face_floweytalk	spr=spr_floweynice	vis=True	pers=False
+778	obj_floface	spr=	vis=True	pers=False
+779	obj_face_alphys	spr=spr_alphysface_0	vis=True	pers=False
+780	obj_face_asgore	spr=spr_asgore_face0	vis=True	pers=False
+781	obj_face_asriel	spr=spr_face_asriel0	vis=True	pers=False
+782	obj_face_mettaton	spr=spr_mettface_general	vis=True	pers=False
+783	obj_face	spr=	vis=True	pers=False
+784	obj_face_papyrus	spr=spr_face_papyrus	vis=True	pers=False
+785	obj_face_sans	spr=spr_face_sans	vis=True	pers=False
+786	obj_face_undyne	spr=spr_face_undyne0	vis=True	pers=False
+787	obj_storagemenu	spr=	vis=False	pers=False
+788	obj_dialoguer	spr=	vis=True	pers=False
+789	OBJ_WRITERCREATOR	spr=	vis=True	pers=True
+790	OBJ_BLCON	spr=spr_blconsm	vis=True	pers=False
+791	obj_base_writer	spr=	vis=True	pers=False
+792	OBJ_WRITER	spr=	vis=True	pers=False
+793	obj_choicer	spr=spr_heartsmall	vis=True	pers=False
+794	OBJ_NOMSCWRITER	spr=	vis=True	pers=False
+795	OBJ_INSTAWRITER	spr=	vis=True	pers=False
+796	obj_door_t	spr=spr_doorX	vis=False	pers=False
+797	obj_door_u	spr=spr_doorX	vis=False	pers=False
+798	obj_door_ruins13	spr=spr_doorX	vis=False	pers=False
+799	obj_door_s_musfade	spr=spr_doorX	vis=False	pers=False
+800	obj_door_w	spr=spr_doorX	vis=False	pers=False
+801	obj_door_v	spr=spr_doorX	vis=False	pers=False
+802	obj_demodoorA	spr=spr_doorA	vis=False	pers=False
+803	obj_doorparent	spr=	vis=True	pers=False
+804	obj_markerB	spr=spr_markerB	vis=False	pers=False
+805	obj_markerC	spr=spr_markerC	vis=False	pers=False
+806	obj_markerD	spr=spr_markerD	vis=False	pers=False
+807	obj_markerX	spr=spr_markerX	vis=False	pers=False
+808	obj_markerw	spr=spr_markerX	vis=False	pers=False
+809	obj_markerv	spr=spr_markerX	vis=False	pers=False
+810	obj_markeru	spr=spr_markerX	vis=False	pers=False
+811	obj_markert	spr=spr_markerX	vis=False	pers=False
+812	obj_markers	spr=spr_markerX	vis=False	pers=False
+813	obj_markerr	spr=spr_markerX	vis=False	pers=False
+814	obj_exitmarker3	spr=	vis=False	pers=False
+815	obj_doorA	spr=spr_doorA	vis=False	pers=False
+816	obj_doorB	spr=spr_doorB	vis=False	pers=False
+817	obj_doorC	spr=spr_doorC	vis=False	pers=False
+818	obj_doorD	spr=spr_doorD	vis=False	pers=False
+819	obj_doorCmusicfade	spr=spr_doorC	vis=False	pers=False
+820	obj_doorDmusicfade	spr=spr_doorD	vis=False	pers=False
+821	obj_doorAmusicfade	spr=spr_doorA	vis=False	pers=False
+822	obj_doorXmusicfade	spr=spr_doorX	vis=False	pers=False
+823	obj_doorBmusicfade	spr=spr_doorB	vis=False	pers=False
+824	obj_markerA	spr=spr_markerA	vis=False	pers=False
+825	obj_stairstep	spr=spr_stepmask	vis=False	pers=False
+826	obj_solidrailing	spr=spr_railing	vis=True	pers=False
+827	obj_solidrailing2	spr=spr_railing2	vis=True	pers=False
+828	obj_solidrailing3	spr=spr_railingpiece1	vis=True	pers=False
+829	obj_staircollission	spr=spr_stairmask	vis=False	pers=False
+830	obj_solidparent	spr=	vis=True	pers=False
+831	obj_redswitch_1	spr=spr_colorswitch	vis=True	pers=False
+832	obj_blueswitch_1	spr=spr_colorswitch	vis=True	pers=False
+833	obj_greenswitch_1	spr=spr_colorswitch	vis=True	pers=False
+834	obj_bigpie	spr=spr_bigpie	vis=True	pers=False
+835	obj_readable_flowers1	spr=spr_interactable	vis=False	pers=False
+836	obj_readable_switch1	spr=spr_switch	vis=True	pers=False
+837	obj_switchadvice1	spr=spr_tornote	vis=True	pers=False
+838	obj_switchadvice2	spr=spr_tornote	vis=True	pers=False
+839	obj_readable_plaque_1	spr=spr_interactable	vis=False	pers=False
+840	obj_readable_plaque_2	spr=spr_interactable	vis=False	pers=False
+841	obj_nastytree	spr=spr_nastytree	vis=True	pers=False
+842	obj_cactus	spr=spr_cactus	vis=True	pers=False
+843	obj_hearthflame	spr=spr_hearthflame	vis=True	pers=False
+844	obj_smallfrog	spr=spr_smallfrog	vis=True	pers=False
+845	obj_smallfrog_xadvice	spr=spr_smallfrog	vis=True	pers=False
+846	obj_smallchair	spr=spr_smallchair	vis=True	pers=False
+847	obj_kitchentable	spr=spr_diningtable	vis=True	pers=False
+848	obj_lchair	spr=spr_leftchair	vis=True	pers=False
+849	obj_rchair	spr=spr_rightchair	vis=True	pers=False
+850	obj_uchair	spr=spr_topchair	vis=True	pers=False
+851	obj_nastrytree_bottom	spr=spr_nastytreebottom	vis=True	pers=False
+852	obj_dummy1	spr=spr_dummy	vis=True	pers=False
+853	obj_readable_sign1	spr=spr_npc_sign	vis=True	pers=False
+854	obj_readable_sign2	spr=spr_npc_sign	vis=True	pers=False
+855	obj_papyrussign	spr=spr_npc_sign	vis=True	pers=False
+856	obj_ribbon_pickup	spr=spr_ribbon	vis=True	pers=False
+857	obj_knife_pickup	spr=spr_groundknife	vis=True	pers=False
+858	obj_pie_pickup	spr=spr_pieslice	vis=True	pers=False
+859	obj_cheesetable1	spr=spr_cheesetable	vis=True	pers=False
+860	obj_napstablook1	spr=spr_napstablook_gr	vis=True	pers=False
+861	obj_vegetoid_overworld	spr=spr_vegetableoutside	vis=True	pers=False
+862	obj_napstablook2	spr=spr_napstablook_grsm	vis=True	pers=False
+863	obj_candydish1	spr=spr_candydish	vis=True	pers=False
+864	obj_candydish2	spr=spr_candydish_bad	vis=True	pers=False
+865	obj_smallweb	spr=spr_smallweb	vis=True	pers=False
+866	obj_bigweb	spr=spr_bigweb	vis=True	pers=False
+867	obj_pillar_1	spr=spr_pillar	vis=True	pers=False
+868	obj_downstairs	spr=spr_downstairs	vis=True	pers=False
+869	obj_toroverworld2	spr=spr_toriel_d	vis=True	pers=False
+870	obj_toroverworld1	spr=spr_toriel_d	vis=True	pers=False
+871	obj_toroverworld3	spr=spr_toriel_d	vis=True	pers=False
+872	obj_toroverworld4	spr=spr_toriel_d	vis=True	pers=False
+873	obj_torhandhold1	spr=spr_toriel_handhold_r	vis=True	pers=False
+874	obj_toroverworld5	spr=spr_toriel_d	vis=True	pers=False
+875	obj_toroverworld6	spr=spr_toriel_d	vis=True	pers=False
+876	obj_toroverworld7	spr=spr_toriel_lt	vis=True	pers=False
+877	obj_torinteractable1	spr=spr_toriel_lt	vis=True	pers=False
+878	obj_torinteractable7	spr=spr_toriel_lt	vis=True	pers=False
+879	obj_chairiel	spr=spr_chairiel	vis=True	pers=False
+880	obj_torinteractable2	spr=spr_toriel_l	vis=True	pers=False
+881	obj_torinteractable3	spr=spr_toriel_l	vis=True	pers=False
+882	obj_torinteractable4	spr=spr_toriel_dt	vis=True	pers=False
+883	obj_torinteractable5	spr=spr_toriel_rt	vis=True	pers=False
+884	obj_torinteractable6	spr=spr_toriel_dt	vis=True	pers=False
+885	obj_floweytalker1	spr=spr_flowey	vis=True	pers=False
+886	obj_pbflame	spr=spr_pbflame	vis=True	pers=False
+887	obj_toribuster	spr=spr_whitefader	vis=False	pers=False
+888	obj_floweytrigger	spr=spr_event	vis=False	pers=False
+889	obj_floweytrigger2	spr=spr_event	vis=False	pers=False
+890	obj_torieltrigger1	spr=spr_event	vis=False	pers=False
+891	obj_torieltrigger2	spr=spr_event	vis=False	pers=False
+892	obj_torieltrigger3	spr=spr_event	vis=False	pers=False
+893	obj_torieltrigger4	spr=spr_event	vis=False	pers=False
+894	obj_tordogcall	spr=spr_event	vis=False	pers=False
+895	obj_torieltrigger5	spr=spr_event	vis=False	pers=False
+896	obj_torieltrigger6	spr=spr_event	vis=False	pers=False
+897	obj_torieltrigger7	spr=spr_event	vis=False	pers=False
+898	obj_torieltrigger8	spr=spr_event	vis=False	pers=False
+899	obj_torieltrigger9	spr=spr_event	vis=False	pers=False
+900	obj_torieltrigger10	spr=spr_event	vis=False	pers=False
+901	obj_torieltrigger11	spr=spr_event	vis=False	pers=False
+902	obj_torieltrigger12	spr=spr_event	vis=False	pers=False
+903	obj_switchhelptrigger	spr=spr_event	vis=False	pers=False
+904	obj_torgen_house1	spr=	vis=False	pers=False
+905	obj_encountertrigger1	spr=spr_event	vis=False	pers=False
+906	obj_plotwall1	spr=spr_event	vis=False	pers=False
+907	obj_plotwall2	spr=spr_event	vis=False	pers=False
+908	obj_plotwall3	spr=spr_event	vis=False	pers=False
+909	obj_plotwall4	spr=spr_event	vis=False	pers=False
+910	obj_plotwall5	spr=spr_event	vis=False	pers=False
+911	obj_plotwall6	spr=spr_event	vis=False	pers=False
+912	obj_rock_activator	spr=spr_event	vis=False	pers=False
+913	obj_torielcall1	spr=spr_event	vis=False	pers=False
+914	obj_torielcall2	spr=spr_event	vis=False	pers=False
+915	obj_torielcall3	spr=spr_event	vis=False	pers=False
+916	obj_torielcall4	spr=spr_event	vis=False	pers=False
+917	obj_torielcall5	spr=spr_event	vis=False	pers=False
+918	obj_finaldoor	spr=spr_ruinsdoor1	vis=True	pers=False
+919	obj_spiketile1	spr=spr_spiketile	vis=True	pers=False
+920	obj_spiketile2	spr=spr_spiketile	vis=True	pers=False
+921	obj_pushrock1	spr=spr_rock	vis=True	pers=False
+922	obj_pushrock2	spr=spr_rock	vis=True	pers=False
+923	obj_pushrock3	spr=spr_rock	vis=True	pers=False
+924	obj_goofyrock	spr=spr_rock	vis=True	pers=False
+925	obj_holedown	spr=spr_holemask	vis=False	pers=False
+926	obj_holedown3	spr=spr_holemask3	vis=False	pers=False
+927	obj_holedown2	spr=spr_event	vis=False	pers=False
+928	obj_sockdrawer	spr=spr_interactable	vis=False	pers=False
+929	obj_asriellamp	spr=spr_interactable	vis=False	pers=False
+930	obj_asrielbed	spr=spr_interactable	vis=False	pers=False
+931	obj_cosmetichole	spr=spr_hole	vis=True	pers=False
+932	obj_holeup	spr=spr_solidlong	vis=False	pers=False
+933	obj_holeup2	spr=spr_solidlong	vis=False	pers=False
+934	obj_floorswitch1	spr=spr_groundswitch1	vis=True	pers=False
+935	obj_wallswitchcut1	spr=spr_switch	vis=True	pers=False
+936	obj_plotswitch1	spr=spr_switch	vis=True	pers=False
+937	obj_mousehole	spr=spr_mousehole	vis=True	pers=False
+938	obj_plotswitch2	spr=spr_switch	vis=True	pers=False
+939	obj_ruinsdoor1	spr=spr_ruinsdoor1	vis=True	pers=False
+940	obj_mirrorreflection	spr=spr_maincharad	vis=True	pers=False
+941	obj_plotswitch3	spr=spr_switch	vis=True	pers=False
+942	obj_singletree	spr=spr_singletree	vis=True	pers=False
+943	obj_ladiesfishingrod	spr=spr_fishingrod	vis=True	pers=False
+944	obj_dogtreat	spr=spr_dogtreat	vis=True	pers=False
+945	obj_chewtoy	spr=spr_chewtoy	vis=True	pers=False
+946	obj_doggiebed	spr=spr_dogbed	vis=True	pers=False
+947	obj_dogfood	spr=spr_dogbowl	vis=True	pers=False
+948	obj_sanssnowman	spr=spr_snowsans	vis=True	pers=False
+949	obj_papyrussnowman	spr=spr_snowpap	vis=True	pers=False
+950	obj_smalldoghouse	spr=spr_doghousesmall	vis=True	pers=False
+951	obj_snowpoff	spr=spr_snowpoff	vis=True	pers=False
+952	obj_snowdecahedron	spr=spr_rollsnow	vis=True	pers=False
+953	obj_switch	spr=spr_specialswitch	vis=True	pers=False
+954	obj_spaghetti	spr=spr_spaghetti	vis=True	pers=False
+955	obj_microwave	spr=spr_microwave	vis=True	pers=False
+956	obj_spagnot	spr=spr_notepaper	vis=True	pers=False
+957	obj_papcheckpoint	spr=spr_papcheckpoint	vis=True	pers=False
+958	obj_sanscheckpoint	spr=spr_sanscheck	vis=True	pers=False
+959	obj_nicecreamguy	spr=spr_icecreamguy_sad	vis=True	pers=False
+960	obj_crossword	spr=spr_notepaper	vis=True	pers=False
+961	obj_nicesnowman	spr=spr_sadsnowman	vis=True	pers=False
+962	obj_dtrapfire	spr=spr_dtrapfire	vis=True	pers=False
+963	obj_dogpillar3	spr=spr_dogpillar3	vis=True	pers=False
+964	obj_dogpillar4	spr=spr_dogpillar4	vis=True	pers=False
+965	obj_dogpillar5	spr=spr_dogpillar5	vis=True	pers=False
+966	obj_dogpillarparent	spr=spr_dogpillar1	vis=True	pers=False
+967	obj_dogneck2	spr=spr_dogneck2	vis=True	pers=False
+968	obj_dogneck3	spr=spr_dogneck3	vis=True	pers=False
+969	obj_dogneck4	spr=spr_dogneck4	vis=True	pers=False
+970	obj_dogneck5	spr=spr_dogneck5	vis=True	pers=False
+971	obj_dogneckparent	spr=spr_dogneck1	vis=True	pers=False
+972	obj_dogpillar2	spr=spr_dogpillar2	vis=True	pers=False
+973	obj_sansbasemententer	spr=spr_event	vis=False	pers=False
+974	obj_teleigloo	spr=spr_igloo	vis=True	pers=False
+975	obj_ruins_reentrance	spr=spr_ruins_reentrance	vis=True	pers=False
+976	obj_waterdivot_test	spr=spr_waterdivot_blue	vis=True	pers=False
+977	obj_icecube_room	spr=spr_waterice	vis=True	pers=False
+978	obj_icecube_water1	spr=spr_waterice	vis=True	pers=False
+979	obj_tinybgman	spr=spr_tinybgman	vis=True	pers=False
+980	obj_tinybghouse	spr=spr_tinybghouse	vis=True	pers=False
+981	obj_tinybgpuff	spr=spr_tinybgpuff	vis=True	pers=False
+982	obj_fogmaker	spr=	vis=True	pers=False
+983	obj_fogmaker_complex	spr=	vis=True	pers=False
+984	obj_dogpoff	spr=spr_dogpoff	vis=True	pers=False
+985	obj_xoxo	spr=spr_xoxo	vis=True	pers=False
+986	obj_xoxocontroller1	spr=spr_groundswitch1	vis=True	pers=False
+987	obj_falltransition	spr=	vis=True	pers=False
+988	obj_superdrophole	spr=spr_event_small	vis=False	pers=False
+989	obj_specialdrophole	spr=spr_event_small	vis=False	pers=False
+990	obj_dogehouse	spr=spr_dogstandfront	vis=True	pers=False
+991	obj_dogehouseback	spr=spr_doghouseback	vis=True	pers=False
+992	obj_tundragatebar	spr=spr_tundragatebar	vis=True	pers=False
+993	obj_stick	spr=spr_stick	vis=True	pers=False
+994	obj_fakedarksans	spr=spr_sans_r_dark	vis=True	pers=False
+995	obj_snowfloor	spr=spr_pixwht	vis=True	pers=False
+996	obj_creeptree1	spr=spr_treeshadow	vis=True	pers=False
+997	obj_creeptree_stickbreak	spr=spr_treeshadow	vis=True	pers=False
+998	obj_creeptree_sansmaker	spr=spr_treeshadow	vis=True	pers=False
+999	obj_convenientlamp	spr=spr_convenientlamp	vis=True	pers=False
+1000	obj_darksanstrigger	spr=spr_event	vis=False	pers=False
+1001	obj_sansbyetrigger	spr=spr_event	vis=False	pers=False
+1002	obj_papyrus1	spr=spr_event	vis=False	pers=False
+1003	obj_specialtile	spr=	vis=True	pers=False
+1004	obj_shockblock	spr=spr_shockblock	vis=False	pers=False
+1005	obj_orbhead	spr=spr_orb	vis=True	pers=False
+1006	obj_mandog_actor	spr=spr_mandogwalk	vis=True	pers=False
+1007	obj_womandog_actor	spr=spr_womandogwalk	vis=True	pers=False
+1008	obj_papyrus2	spr=spr_event	vis=False	pers=False
+1009	obj_papyrus3	spr=spr_event	vis=False	pers=False
+1010	obj_papyrus4	spr=spr_event	vis=False	pers=False
+1011	obj_papyrus5	spr=spr_event	vis=False	pers=False
+1012	obj_papyrus6	spr=spr_event	vis=False	pers=False
+1013	obj_papyrus7	spr=spr_event	vis=False	pers=False
+1014	obj_papyrus8	spr=spr_event	vis=False	pers=False
+1015	obj_golfedge	spr=spr_event	vis=False	pers=False
+1016	obj_papyrussteps	spr=spr_papyrus_steps	vis=True	pers=False
+1017	obj_puzzlewall1	spr=spr_event	vis=False	pers=False
+1018	obj_puzzlewall2	spr=spr_event	vis=False	pers=False
+1019	obj_dogetrigger1	spr=spr_event	vis=False	pers=False
+1020	obj_dogringbell	spr=spr_event	vis=False	pers=False
+1021	obj_forcedright	spr=spr_event	vis=False	pers=False
+1022	obj_pofftrigger	spr=spr_event	vis=False	pers=False
+1023	obj_fakesanstrigger	spr=spr_event	vis=False	pers=False
+1024	obj_rollsnowgen	spr=	vis=False	pers=False
+1025	obj_golfhole	spr=spr_hole2	vis=True	pers=False
+1026	obj_rollgrow	spr=spr_rollsnow	vis=True	pers=False
+1027	obj_rollsnow	spr=spr_rollsnow	vis=True	pers=False
+1028	obj_iceflag	spr=spr_iceflag	vis=True	pers=False
+1029	object466	spr=spr_rollsnow	vis=True	pers=False
+1030	obj_darksans1	spr=spr_sans_r_dark	vis=True	pers=False
+1031	obj_sans_interactable1	spr=spr_sans_d	vis=True	pers=False
+1032	obj_sans_room	spr=spr_sans_d	vis=True	pers=False
+1033	obj_doublesans	spr=spr_sans_d	vis=True	pers=False
+1034	obj_dogroom_npc	spr=spr_faun	vis=True	pers=False
+1035	obj_papyrusparent	spr=	vis=True	pers=False
+1036	obj_papyrus_room	spr=spr_papyrus_d	vis=True	pers=False
+1037	obj_papyrus_guide	spr=spr_papyrus_d	vis=True	pers=False
+1038	obj_papyrus_hisroom	spr=spr_papyrus_d	vis=True	pers=False
+1039	obj_papyrus_houseoutside	spr=spr_papyrus_d	vis=True	pers=False
+1040	obj_sanssteps	spr=spr_sanssteps	vis=True	pers=False
+1041	obj_papyrus_actor_mad	spr=spr_papyrus_d	vis=True	pers=False
+1042	obj_papyrus_actor	spr=spr_papyrus_d	vis=True	pers=False
+1043	obj_sans_actor	spr=spr_sans_d	vis=True	pers=False
+1044	obj_telescope	spr=spr_telescope	vis=True	pers=False
+1045	obj_starchecker	spr=spr_starcheckeredit	vis=True	pers=False
+1046	obj_undyneencounter1	spr=spr_event	vis=False	pers=False
+1047	obj_undyneencounter2	spr=spr_event	vis=False	pers=False
+1048	obj_undyneencounter3	spr=spr_event	vis=False	pers=False
+1049	obj_undyneencounter4	spr=spr_event	vis=False	pers=False
+1050	obj_magicstar	spr=spr_magicstar	vis=True	pers=False
+1051	obj_nospear	spr=spr_nospear	vis=False	pers=False
+1052	obj_undynespear	spr=spr_undynespear	vis=True	pers=False
+1053	obj_undynespear_shadow	spr=spr_undynespear	vis=True	pers=False
+1054	obj_spearshadow	spr=spr_undynespearshadow	vis=True	pers=False
+1055	obj_uspeargen	spr=	vis=True	pers=False
+1056	obj_speartilegen	spr=	vis=True	pers=False
+1057	obj_speartilefake	spr=spr_tilespear_fullbottom	vis=True	pers=False
+1058	obj_speartile	spr=spr_tilespear	vis=True	pers=False
+1059	obj_napstafridge	spr=spr_fridge_smallhitbox	vis=True	pers=False
+1060	obj_garbagepile	spr=spr_trashheap	vis=True	pers=False
+1061	obj_garbagefridge	spr=spr_rustfridge	vis=True	pers=False
+1062	obj_undynetrash	spr=spr_trashcan	vis=True	pers=False
+1063	obj_garbagecooler	spr=spr_cooler_water	vis=True	pers=False
+1064	obj_assortedtrash	spr=spr_dvdcase_water	vis=True	pers=False
+1065	obj_damndummy	spr=spr_dummy	vis=True	pers=False
+1066	obj_bonedrawer	spr=spr_bonedrawer	vis=True	pers=False
+1067	obj_potstir	spr=	vis=True	pers=False
+1068	obj_bonedrawer_check	spr=spr_interactable	vis=False	pers=False
+1069	obj_spaghot	spr=spr_spaghot_a	vis=True	pers=False
+1070	obj_potheat	spr=	vis=True	pers=False
+1071	obj_undyne_actor	spr=spr_undyne_d	vis=True	pers=False
+1072	obj_controlspear	spr=spr_undynespear_end	vis=True	pers=False
+1073	obj_undynedate_inside	spr=	vis=True	pers=False
+1074	obj_undynedate_outside	spr=	vis=True	pers=False
+1075	obj_undynedate_afterward	spr=spr_event	vis=False	pers=False
+1076	obj_glassshard	spr=spr_glassshard	vis=True	pers=False
+1077	obj_undynewindow_foreground	spr=spr_undynewindow_foreground	vis=True	pers=False
+1078	obj_undynewindow	spr=spr_undynewindow	vis=True	pers=False
+1079	obj_undyne_throwspear	spr=spr_undyne_throwspear	vis=True	pers=False
+1080	obj_undynespear_anim1	spr=spr_undynespear	vis=True	pers=False
+1081	obj_papyrus_window	spr=spr_papyrus_windowjump	vis=True	pers=False
+1082	obj_foodbreak	spr=spr_teaboxes	vis=True	pers=False
+1083	obj_riverman	spr=spr_riverman	vis=True	pers=False
+1084	obj_dogboat_thing	spr=spr_dogboat	vis=True	pers=False
+1085	obj_dogboat_pillar	spr=spr_waterpillar	vis=True	pers=False
+1086	obj_onionsan_event	spr=spr_event	vis=False	pers=False
+1087	obj_onionbody	spr=spr_onionblue	vis=True	pers=False
+1088	obj_oniont	spr=spr_oniontblue	vis=True	pers=False
+1089	obj_water_doomreminder	spr=spr_event	vis=False	pers=False
+1090	obj_blookdiary	spr=spr_book	vis=True	pers=False
+1091	obj_blookhouses	spr=spr_blookhouses	vis=True	pers=False
+1092	obj_foreground_waterfall	spr=spr_waterfall_anim	vis=True	pers=False
+1093	obj_glowstone	spr=spr_magicalcrystal	vis=True	pers=False
+1094	obj_waterpillar	spr=spr_waterpillar	vis=True	pers=False
+1095	obj_inwaterspot	spr=spr_event_small	vis=False	pers=False
+1096	obj_indryspot	spr=spr_event_small	vis=False	pers=False
+1097	obj_wakeupchara	spr=	vis=True	pers=False
+1098	obj_tobdog_pendant	spr=spr_tobdogl	vis=True	pers=False
+1099	obj_sentrystation_bg	spr=spr_sanscheck	vis=True	pers=False
+1100	obj_sans_sentry2	spr=spr_sans_d	vis=True	pers=False
+1101	obj_grasssounder	spr=	vis=True	pers=False
+1102	obj_tallgrass	spr=spr_tallgrass	vis=True	pers=False
+1103	obj_starker	spr=spr_starkshadow	vis=True	pers=False
+1104	obj_quicheguilt	spr=	vis=True	pers=True
+1105	obj_waterripple	spr=spr_waterripple	vis=True	pers=False
+1106	obj_proxglower	spr=spr_smallstar	vis=True	pers=False
+1107	obj_glowshroompuzzle	spr=	vis=True	pers=False
+1108	obj_darknesspuzzle	spr=	vis=True	pers=False
+1109	obj_darkness_undyne	spr=	vis=True	pers=False
+1110	obj_undyne_echoflower	spr=spr_echoflower	vis=True	pers=False
+1111	obj_glowshroom	spr=spr_glowshroom	vis=True	pers=False
+1112	obj_darknesslantern	spr=spr_glowshroom	vis=False	pers=False
+1113	obj_cosmetic_glowstar	spr=spr_glowstar	vis=True	pers=False
+1114	obj_cosmeticecho	spr=spr_echoflower	vis=True	pers=False
+1115	obj_groundtorch	spr=spr_groundtorch_off	vis=True	pers=False
+1116	obj_torchpuzzle	spr=	vis=True	pers=False
+1117	obj_boardride_a	spr=spr_waterboard	vis=True	pers=False
+1118	obj_runaway	spr=spr_waterboard	vis=True	pers=False
+1119	obj_fakedoor	spr=spr_fakedoor	vis=False	pers=False
+1120	obj_waterboardpuzzle1	spr=	vis=True	pers=False
+1121	obj_bellblossom	spr=spr_bellblossom	vis=True	pers=False
+1122	obj_waterspot	spr=spr_event	vis=False	pers=False
+1123	obj_waterstop	spr=spr_whitefader	vis=False	pers=False
+1124	obj_waterboard	spr=spr_bridgeseed	vis=True	pers=False
+1125	obj_mkid_actor	spr=spr_mkid_d	vis=True	pers=False
+1126	obj_mkid_shadow	spr=spr_mkid_r_shadow	vis=True	pers=False
+1127	obj_undynea_actor	spr=spr_undynea_d	vis=True	pers=False
+1128	obj_undynea_chaser	spr=spr_undyne_helmet_d	vis=True	pers=False
+1129	obj_undynea_actor2	spr=spr_undynea_d	vis=True	pers=False
+1130	obj_monsterkidtrigger1	spr=spr_event	vis=False	pers=False
+1131	obj_monsterkidtrigger2	spr=spr_event	vis=False	pers=False
+1132	obj_monsterkidtrigger3	spr=spr_event	vis=False	pers=False
+1133	obj_monsterkidtrigger4	spr=spr_event	vis=False	pers=False
+1134	obj_monsterkidtrigger5	spr=spr_event	vis=False	pers=False
+1135	obj_monsterkidtrigger6	spr=spr_event	vis=True	pers=False
+1136	obj_monsterkidtrigger7	spr=spr_event	vis=False	pers=False
+1137	obj_monsterkidtrigger8	spr=	vis=False	pers=False
+1138	obj_undynetrigger_boss2	spr=spr_event	vis=False	pers=False
+1139	obj_undynetrigger_boss	spr=	vis=True	pers=False
+1140	obj_dummytrigger	spr=spr_event	vis=False	pers=False
+1141	obj_napstablookfriendtrigger	spr=spr_event	vis=False	pers=False
+1142	obj_napstablook_actor	spr=spr_napstablook_u_headphone	vis=True	pers=False
+1143	obj_napstablookdate	spr=spr_event	vis=False	pers=False
+1144	obj_napstablookdate_music	spr=	vis=True	pers=True
+1145	obj_napstablook_cd	spr=spr_book	vis=True	pers=False
+1146	obj_waterpushrockgen	spr=	vis=True	pers=False
+1147	obj_waterpushrock	spr=spr_waterpushrock	vis=True	pers=False
+1148	obj_waterpushrock_2	spr=spr_waterpushrock	vis=True	pers=False
+1149	obj_orangeattackNPC	spr=spr_npc_bunbun	vis=True	pers=False
+1150	obj_snail2	spr=spr_snail	vis=True	pers=False
+1151	obj_snail3	spr=spr_slug	vis=True	pers=False
+1152	obj_snailguy	spr=spr_snailguy	vis=True	pers=False
+1153	obj_stable	spr=spr_stable	vis=True	pers=False
+1154	obj_redacted_a	spr=spr_redacted_a	vis=True	pers=False
+1155	obj_napstablook_farm1	spr=spr_napstablook_d	vis=True	pers=False
+1156	obj_napstablook_farm2	spr=spr_napstablook_d	vis=True	pers=False
+1157	obj_rarependant	spr=spr_magicpendant	vis=True	pers=False
+1158	obj_fearundynenpc1	spr=spr_npc_rabbitkid	vis=True	pers=False
+1159	obj_umbrellabox	spr=spr_umbrellaholder	vis=True	pers=False
+1160	obj_statueplink	spr=spr_statueplink	vis=True	pers=False
+1161	obj_normalplink	spr=spr_statueplink	vis=True	pers=False
+1162	obj_statuedrop	spr=spr_statuedrop	vis=True	pers=False
+1163	obj_normaldrop	spr=spr_statuedrop	vis=True	pers=False
+1164	obj_puddle	spr=spr_puddle1	vis=True	pers=False
+1165	obj_umbrellamask	spr=spr_umbrellamask	vis=False	pers=False
+1166	obj_rainer	spr=	vis=True	pers=False
+1167	obj_musicstatue	spr=spr_statue	vis=True	pers=False
+1168	obj_echoflower	spr=spr_echoflower	vis=True	pers=False
+1169	obj_fearundynenpc2	spr=spr_npc_reddemon	vis=True	pers=False
+1170	obj_carrybird	spr=spr_smallbird	vis=True	pers=False
+1171	obj_undyne1	spr=spr_event	vis=True	pers=False
+1172	obj_papyrus_undyne1_actor	spr=spr_papyrus_r_stark	vis=True	pers=False
+1173	obj_shyrenstrewn	spr=spr_interactable	vis=False	pers=False
+1174	obj_undyne1_old	spr=spr_event	vis=False	pers=False
+1175	obj_shyrentrigger	spr=spr_event	vis=False	pers=False
+1176	obj_undyne_blockwrecker	spr=spr_event	vis=False	pers=False
+1177	obj_purpledude	spr=spr_purpledude	vis=True	pers=False
+1178	obj_piano	spr=spr_uprightpiano	vis=True	pers=False
+1179	obj_paino	spr=	vis=True	pers=False
+1180	obj_alphys_npc	spr=spr_alphys_d	vis=True	pers=False
+1181	obj_alphys_actor	spr=spr_alphys_d	vis=True	pers=False
+1182	obj_mettaton_actor	spr=spr_mettaton_talk	vis=True	pers=False
+1183	obj_mettaton_npc	spr=spr_mettaton_talk	vis=True	pers=False
+1184	obj_flychara_placeholder	spr=spr_flychara_placeholder	vis=True	pers=False
+1185	obj_failegg	spr=spr_mettfaileggyolk	vis=True	pers=False
+1186	obj_milkofhell_splatter	spr=spr_milk_of_hell_splatter	vis=True	pers=False
+1187	obj_milkofhell_drop	spr=spr_milk_of_hell_droplet	vis=True	pers=False
+1188	obj_sugarbullet_drop	spr=spr_sugarbullet_hit	vis=True	pers=False
+1189	obj_milkofhell_shot	spr=spr_milk_of_hell_shot	vis=True	pers=False
+1190	obj_sugarbullet	spr=spr_sugarbullet	vis=True	pers=False
+1191	obj_mett_eggbullet	spr=spr_mett_eggbullet	vis=True	pers=False
+1192	obj_trueflymett	spr=spr_mett_eggcarton	vis=True	pers=False
+1193	obj_kitchenforcefield	spr=spr_event	vis=True	pers=False
+1194	obj_cookhud	spr=spr_goalhud	vis=True	pers=False
+1195	obj_jetpackchara	spr=spr_maincharau	vis=True	pers=False
+1196	obj_mettsugar	spr=spr_mettflour	vis=True	pers=False
+1197	obj_metteggs	spr=spr_mettflour	vis=True	pers=False
+1198	obj_bouncelight	spr=spr_flylightning	vis=True	pers=False
+1199	obj_flylight_a	spr=spr_flylightning	vis=True	pers=False
+1200	obj_flymett	spr=spr_flymett1	vis=True	pers=False
+1201	obj_mettmilk	spr=spr_event	vis=True	pers=False
+1202	obj_mettcounter	spr=spr_mettcounter	vis=True	pers=False
+1203	obj_countermiddle	spr=spr_event	vis=False	pers=False
+1204	obj_chefhat	spr=spr_chefhat	vis=True	pers=False
+1205	obj_cookshowevent	spr=spr_event	vis=True	pers=False
+1206	obj_counterscroller	spr=spr_countertop	vis=True	pers=False
+1207	obj_chimesparkle	spr=spr_chimesparkle1	vis=True	pers=False
+1208	obj_killervisage	spr=spr_killervisage	vis=True	pers=False
+1209	obj_phonetojetpack	spr=spr_yellowphone_o	vis=True	pers=False
+1210	obj_flamedrawer	spr=spr_hearthflame	vis=True	pers=False
+1211	obj_cherrygen	spr=	vis=True	pers=False
+1212	obj_cherrypetal	spr=spr_cherrypetal	vis=True	pers=False
+1213	obj_playmovement	spr=spr_event	vis=True	pers=False
+1214	obj_textdrawtest	spr=	vis=True	pers=False
+1215	obj_songwriter	spr=spr_event	vis=True	pers=False
+1216	obj_mettaton_flightdress	spr=spr_mettaton_dressflight	vis=True	pers=False
+1217	obj_mettaton_dress1	spr=spr_mettaton_dress1	vis=True	pers=False
+1218	obj_mettaton_dress2	spr=spr_mettaton_noarm	vis=True	pers=False
+1219	obj_tilehud	spr=spr_timehud_vert	vis=True	pers=False
+1220	obj_multitileevent	spr=	vis=True	pers=False
+1221	obj_insidiousconveyor	spr=spr_event_small	vis=True	pers=False
+1222	obj_tileguy	spr=spr_maincharad	vis=True	pers=False
+1223	obj_tileguytileparent	spr=	vis=True	pers=False
+1224	obj_tilered	spr=spr_tilered	vis=True	pers=False
+1225	obj_tilepurple	spr=spr_tilepurple	vis=True	pers=False
+1226	obj_tilepink	spr=spr_tilepink	vis=True	pers=False
+1227	obj_tileyellow	spr=spr_tileyellow	vis=True	pers=False
+1228	obj_tileorange	spr=spr_tileorange	vis=True	pers=False
+1229	obj_tileblue	spr=spr_tileblue	vis=True	pers=False
+1230	obj_tileblueactsyellow	spr=spr_tileblue	vis=True	pers=False
+1231	obj_tilegreen	spr=spr_tilegreen	vis=True	pers=False
+1232	obj_mettnews_artifact	spr=spr_tobdogl_still	vis=True	pers=False
+1233	obj_mettanchor	spr=spr_mettanchor_shufflepaper	vis=True	pers=False
+1234	obj_mettnewsevent	spr=spr_event	vis=True	pers=False
+1235	obj_mettnews_battleobj	spr=spr_tobdog_sleep_fire	vis=True	pers=False
+1236	obj_doomtimer	spr=	vis=True	pers=True
+1237	obj_mettnews_part	spr=	vis=True	pers=False
+1238	obj_wordburst	spr=spr_bombburst	vis=True	pers=False
+1239	obj_wordfall_word	spr=spr_wordfall1	vis=True	pers=False
+1240	obj_wordfall	spr=	vis=True	pers=False
+1241	obj_mettnews_ticker	spr=	vis=True	pers=False
+1242	obj_spidertable	spr=spr_spidertable_items	vis=True	pers=False
+1243	obj_spidertalkevent	spr=spr_event	vis=False	pers=False
+1244	obj_highspider	spr=spr_purplespider_overworld	vis=True	pers=False
+1245	obj_slowdownwalk	spr=spr_event	vis=True	pers=False
+1246	obj_slowdownwalk_x	spr=spr_event	vis=True	pers=False
+1247	obj_spiderstrand	spr=spr_webpl	vis=True	pers=False
+1248	obj_spidergirl_shop	spr=spr_muffet_overworld	vis=True	pers=False
+1249	obj_targetguy	spr=spr_targetguy	vis=True	pers=False
+1250	obj_whitebox_o	spr=spr_whitebox_o	vis=True	pers=False
+1251	obj_blackbox_o_shatter	spr=spr_blackbox_o_shatter	vis=True	pers=False
+1252	obj_blackbox_o	spr=spr_blackbox_o	vis=True	pers=False
+1253	obj_shotguy	spr=spr_shotguy	vis=True	pers=False
+1254	obj_shootguy	spr=spr_shootguy	vis=True	pers=False
+1255	obj_killerboysnightout_event	spr=spr_event	vis=False	pers=False
+1256	obj_killerlab_event	spr=spr_event	vis=False	pers=False
+1257	obj_alphysfollow_event	spr=spr_event	vis=False	pers=False
+1258	obj_mettdestroyed_event	spr=spr_event	vis=True	pers=False
+1259	obj_mettboss_event	spr=spr_event	vis=True	pers=False
+1260	obj_speedline	spr=spr_speedline	vis=True	pers=False
+1261	obj_scrollaway_event	spr=	vis=True	pers=False
+1262	obj_warrior_event	spr=spr_event	vis=False	pers=False
+1263	obj_theend_forcefield	spr=spr_event	vis=False	pers=False
+1264	obj_powerlaser_event	spr=spr_event	vis=True	pers=False
+1265	obj_core_laserswitch	spr=spr_onoffswitch_off	vis=True	pers=False
+1266	obj_core_enemyevent	spr=spr_event	vis=False	pers=False
+1267	obj_core_enemyevent2	spr=spr_event	vis=False	pers=False
+1268	obj_precore_event	spr=spr_event	vis=False	pers=False
+1269	obj_undyne_lettercall	spr=spr_event	vis=False	pers=False
+1270	obj_darkman_actor	spr=spr_darkman_l	vis=True	pers=False
+1271	obj_sans_prefinaldate	spr=spr_sans_d	vis=True	pers=False
+1272	obj_sansdate3	spr=spr_event	vis=False	pers=False
+1273	obj_bottomglower	spr=	vis=True	pers=False
+1274	obj_restaurant_darker	spr=	vis=True	pers=False
+1275	obj_triswitchevent	spr=spr_event	vis=False	pers=False
+1276	obj_triswitch	spr=spr_onoffswitch_off	vis=True	pers=False
+1277	obj_boysnightout	spr=spr_event	vis=False	pers=False
+1278	obj_waveguy	spr=spr_darkman_l	vis=True	pers=False
+1279	obj_elevatorpanel	spr=spr_elevatorpanel	vis=True	pers=False
+1280	obj_finalelevatorpanel	spr=spr_elevatorpanel	vis=True	pers=False
+1281	obj_elevatordoor	spr=spr_elevatordoorframe	vis=True	pers=False
+1282	obj_failuredog	spr=spr_balancehotdog	vis=True	pers=False
+1283	obj_hotdog	spr=spr_balancehotdog	vis=True	pers=False
+1284	obj_hotdoggen	spr=	vis=True	pers=False
+1285	obj_conveyorsnapper	spr=	vis=True	pers=False
+1286	obj_conveyorpuzzle1	spr=	vis=True	pers=False
+1287	obj_chipdoor_trigger	spr=spr_event	vis=False	pers=False
+1288	obj_chipdoor_l	spr=spr_chipdoor_red	vis=True	pers=False
+1289	obj_chipdoor_r	spr=spr_chipdoor_red	vis=True	pers=False
+1290	obj_orangelaser_o	spr=spr_lasermachine	vis=True	pers=False
+1291	obj_bluelaser_o	spr=spr_lasermachine_b	vis=True	pers=False
+1292	obj_sideconveyorl	spr=spr_event	vis=True	pers=False
+1293	obj_alphysconveyor	spr=spr_event	vis=True	pers=False
+1294	obj_discoball	spr=spr_discoball	vis=True	pers=False
+1295	obj_mettwallhole	spr=spr_mettatonhole	vis=True	pers=False
+1296	obj_dogfoodbag	spr=spr_dogfoodbag	vis=True	pers=False
+1297	obj_switch_room	spr=spr_onoffswitch_off	vis=True	pers=False
+1298	obj_laserswitch1	spr=spr_onoffswitch_off	vis=True	pers=False
+1299	obj_alphystrigger1	spr=spr_event	vis=False	pers=False
+1300	obj_alphystrigger2	spr=spr_event	vis=False	pers=False
+1301	obj_slidingdoor	spr=spr_slidingdoorframe	vis=True	pers=False
+1302	obj_sans_sleep	spr=spr_sans_sleep	vis=True	pers=False
+1303	obj_zzz	spr=spr_zzz	vis=True	pers=False
+1304	obj_snoozer	spr=spr_zzz	vis=False	pers=False
+1305	obj_undynefall	spr=spr_undynea_rfall	vis=True	pers=False
+1306	obj_undynetrigger_dry	spr=spr_event	vis=False	pers=False
+1307	obj_autowater	spr=spr_event	vis=False	pers=False
+1308	obj_watercooler	spr=spr_watercooler_devoid	vis=True	pers=False
+1309	obj_watercooler_old	spr=spr_snail	vis=True	pers=False
+1310	obj_true_antiwaver	spr=spr_event	vis=True	pers=False
+1311	obj_true_lavawaver	spr=obj_hugelavawave	vis=True	pers=False
+1312	obj_hotlandsign	spr=	vis=True	pers=False
+1313	obj_labcamera	spr=spr_bigmonitor	vis=True	pers=False
+1314	obj_labdarkness	spr=	vis=True	pers=False
+1315	obj_disembodiedfoxhead	spr=spr_disembodiedfoxhead	vis=True	pers=False
+1316	obj_royal_rabbitbounce	spr=spr_royalguard_rabbit_d	vis=True	pers=False
+1317	obj_alabdoor_l	spr=spr_labdoor_hang_r	vis=True	pers=False
+1318	obj_outsideworld_event	spr=spr_event	vis=True	pers=False
+1319	obj_underground_exit	spr=spr_event	vis=False	pers=False
+1320	obj_friendc_event	spr=spr_event	vis=True	pers=False
+1321	obj_toriel_friendc	spr=spr_toriel_dt	vis=True	pers=False
+1322	obj_sans_friendc	spr=spr_sans_d	vis=True	pers=False
+1323	obj_undyne_friendc	spr=spr_undyne_dt	vis=True	pers=False
+1324	obj_papyrus_friendc	spr=spr_papyrus_dt	vis=True	pers=False
+1325	obj_alphys_friendc	spr=spr_alphys_d	vis=True	pers=False
+1326	obj_asgore_friendc	spr=spr_asgore_dt	vis=True	pers=False
+1327	obj_barrierevent	spr=	vis=True	pers=False
+1328	obj_earlystorybattle	spr=	vis=True	pers=False
+1329	obj_lock_and_key	spr=spr_key_and_note	vis=True	pers=False
+1330	obj_latchkey	spr=spr_smallkey	vis=True	pers=False
+1331	obj_asgore_prebarrier_event	spr=spr_event	vis=False	pers=False
+1332	obj_asgore_actor	spr=spr_asgore_u	vis=True	pers=False
+1333	obj_asgoremeet_event	spr=spr_event	vis=False	pers=False
+1334	obj_coffin	spr=spr_coffin_closed	vis=True	pers=False
+1335	obj_lastsans_trigger	spr=spr_event	vis=False	pers=False
+1336	obj_sans_shift_tester	spr=	vis=True	pers=False
+1337	obj_story_engager	spr=spr_event	vis=False	pers=False
+1338	obj_lastruins_bg	spr=	vis=True	pers=False
+1339	obj_asgore_otest	spr=spr_asgore_r	vis=True	pers=False
+1340	obj_lchair_grey	spr=spr_lchair_grey	vis=True	pers=False
+1341	obj_asgorethrone	spr=spr_asgorethrone	vis=True	pers=False
+1342	obj_torielthrone	spr=spr_torielthrone	vis=True	pers=False
+1343	obj_rchair_grey	spr=spr_rchair_grey	vis=True	pers=False
+1344	obj_uchair_grey	spr=spr_uchair_grey	vis=True	pers=False
+1345	obj_diningtable_grey	spr=spr_diningtable_grey	vis=True	pers=False
+1346	obj_heartcontainer	spr=spr_heartcontainer_appear	vis=True	pers=False
+1347	obj_cosmeticblcon	spr=spr_exc	vis=True	pers=False
+1348	obj_musblcon	spr=spr_musblc	vis=True	pers=False
+1349	obj_stalkerflowey	spr=spr_floweysink	vis=True	pers=False
+1350	obj_trigger_room	spr=spr_event	vis=False	pers=False
+1351	obj_phonecall_room	spr=spr_event	vis=False	pers=False
+1352	obj_notify_room	spr=spr_event	vis=False	pers=False
+1353	obj_knock_room	spr=spr_interactable	vis=False	pers=False
+1354	obj_readable_room1	spr=spr_interactable	vis=False	pers=False
+1355	obj_readable_room2	spr=spr_interactable	vis=False	pers=False
+1356	obj_readable_room3	spr=spr_interactable	vis=False	pers=False
+1357	obj_readable_room4	spr=spr_interactable	vis=False	pers=False
+1358	obj_readable_room5	spr=spr_interactable	vis=False	pers=False
+1359	obj_readable_room_editor	spr=spr_interactable	vis=False	pers=False
+1360	obj_spikes_room	spr=spr_spiketile	vis=True	pers=False
+1361	obj_savepoint	spr=spr_savepoint	vis=True	pers=False
+1362	obj_sign_room	spr=spr_npc_sign	vis=True	pers=False
+1363	obj_sansbox	spr=spr_chestbox	vis=True	pers=False
+1364	obj_plotwall_room	spr=spr_event	vis=False	pers=False
+1365	obj_mainchara_actor	spr=spr_maincharad	vis=True	pers=False
+1366	obj_lazyencounterer	spr=spr_event	vis=False	pers=False
+1367	obj_lazyencounterer_core	spr=spr_event	vis=False	pers=False
+1368	obj_npc_room	spr=spr_regnpc_1	vis=True	pers=False
+1369	obj_mysterydoor	spr=spr_mysterydoor	vis=True	pers=False
+1370	obj_iceroom_dog	spr=spr_tobdog_sleep_trash	vis=True	pers=False
+1371	obj_iceroom_fakedog	spr=spr_tobdogl_still	vis=True	pers=False
+1372	obj_switchbasic	spr=spr_switch	vis=True	pers=False
+1373	obj_npc_marker	spr=	vis=False	pers=False
+1374	obj_wanderparent	spr=spr_event	vis=False	pers=False
+1375	obj_solidnpcparent	spr=	vis=True	pers=False
+1376	obj_npctest	spr=spr_npc_d	vis=True	pers=False
+1377	obj_readable	spr=	vis=True	pers=False
+1378	obj_interactable	spr=	vis=True	pers=False
+1379	obj_readablesolid	spr=	vis=True	pers=False
+1380	obj_iceevent	spr=spr_event_small	vis=False	pers=False
+1381	obj_iceeventx4	spr=spr_event	vis=False	pers=False
+1382	obj_iceeventup	spr=spr_solidtall	vis=False	pers=False
+1383	obj_iceeventright	spr=spr_solidlong	vis=False	pers=False
+1384	obj_fakefalls	spr=spr_fakefalls	vis=True	pers=False
+1385	obj_fakefalls_bg	spr=spr_fakefalls	vis=True	pers=False
+1386	obj_fakebridge	spr=spr_fakebridge	vis=True	pers=False
+1387	obj_fakewaterl	spr=spr_fakewaterl	vis=True	pers=False
+1388	obj_fakewaterm	spr=spr_fakewaterm	vis=True	pers=False
+1389	obj_fakewaterr	spr=spr_fakewaterr	vis=True	pers=False
+1390	obj_fakewatershadowl	spr=spr_fakewatershadowl	vis=True	pers=False
+1391	obj_fakewatershadowm	spr=spr_fakewatershadowm	vis=True	pers=False
+1392	obj_fakewatershadowr	spr=spr_fakewatershadowr	vis=True	pers=False
+1393	obj_fakewateropenl	spr=spr_fakewateropenl	vis=True	pers=False
+1394	obj_fakewateropenm	spr=spr_fakewateropenm	vis=True	pers=False
+1395	obj_fakewateropenr	spr=spr_fakewateropenr	vis=True	pers=False
+1396	obj_fakewater	spr=	vis=True	pers=False
+1397	obj_librarysign	spr=spr_librarysign	vis=True	pers=False
+1398	obj_encountererparent	spr=	vis=True	pers=False
+1399	obj_encount_fire1	spr=	vis=False	pers=False
+1400	obj_encount_core1	spr=	vis=False	pers=False
+1401	obj_encounterer_water1	spr=	vis=False	pers=False
+1402	obj_encounterer_water2	spr=	vis=False	pers=False
+1403	obj_encounter_ruins2	spr=	vis=False	pers=False
+1404	obj_encounterer_ruins3	spr=	vis=False	pers=False
+1405	obj_encounterer_ruins4	spr=	vis=False	pers=False
+1406	obj_encounterer_ruins6	spr=	vis=False	pers=False
+1407	obj_encounterer_ruins5	spr=	vis=False	pers=False
+1408	obj_encounter_ruins1	spr=	vis=False	pers=False
+1409	obj_encounterer_tundra1	spr=	vis=False	pers=False
+1410	obj_encounterer_jerry	spr=	vis=False	pers=False
+1411	obj_encoutnerer_gyftrot	spr=	vis=False	pers=False
+1412	obj_encounterer_glyde	spr=	vis=False	pers=False
+1413	obj_burgerpants_body	spr=spr_bpants_face	vis=True	pers=False
+1414	obj_shop5_body	spr=spr_5_temexampl	vis=True	pers=False
+1415	obj_shopmouth1	spr=spr_shopkeeper1mouth	vis=True	pers=False
+1416	obj_shopkeeper2	spr=	vis=True	pers=False
+1417	obj_shopeyes1	spr=spr_shopkeeper1eyes	vis=True	pers=False
+1418	obj_shopkeeper_catty	spr=spr_cattybody	vis=True	pers=False
+1419	obj_shopkeeper_bratty	spr=spr_brattybody	vis=True	pers=False
+1420	obj_shop1	spr=	vis=True	pers=False
+1421	obj_shop2	spr=	vis=True	pers=False
+1422	obj_shop3	spr=	vis=True	pers=False
+1423	obj_brattysign	spr=spr_brattysign_ja	vis=True	pers=False
+1424	obj_shop4	spr=	vis=True	pers=False
+1425	obj_shop5	spr=	vis=True	pers=False
+1426	obj_kitchenchecker	spr=spr_heartblue	vis=True	pers=False
+1427	obj_darkroom_event	spr=	vis=True	pers=False
+1428	obj_treadmill_event	spr=	vis=False	pers=False
+1429	obj_trashnado	spr=spr_trash_paperball	vis=False	pers=False
+1430	obj_paptrash	spr=spr_trashcan	vis=True	pers=False
+1431	obj_papstove	spr=spr_stove	vis=True	pers=False
+1432	obj_papfridge	spr=spr_fridge	vis=True	pers=False
+1433	obj_sansdoor	spr=spr_sansdoor	vis=True	pers=False
+1434	obj_papcouch	spr=spr_papcouch	vis=True	pers=False
+1435	obj_carbed	spr=spr_carbed	vis=True	pers=False
+1436	obj_papbookshelf	spr=spr_bookshelf	vis=True	pers=False
+1437	obj_papcomputer	spr=spr_computer	vis=True	pers=False
+1438	obj_actiontable	spr=spr_actionfigures	vis=True	pers=False
+1439	obj_bonebox	spr=spr_bonebox	vis=True	pers=False
+1440	obj_papdoor	spr=spr_papdoor	vis=True	pers=False
+1441	obj_paphouse_entrance	spr=spr_papdoor	vis=False	pers=False
+1442	obj_booktable	spr=spr_minitable	vis=True	pers=False
+1443	obj_papsink	spr=spr_papsink	vis=True	pers=False
+1444	obj_paptable	spr=spr_table	vis=True	pers=False
+1445	obj_paptv	spr=spr_flattv_off	vis=True	pers=False
+1446	obj_iceconveyorbelt	spr=spr_conveyorbelt_single	vis=True	pers=False
+1447	obj_throwwolf	spr=spr_wolfthrow	vis=True	pers=False
+1448	obj_silo1	spr=spr_silo1	vis=True	pers=False
+1449	obj_flyingiceblock	spr=spr_iceblock	vis=True	pers=False
+1450	obj_paphouse	spr=spr_papyrushouse	vis=True	pers=False
+1451	obj_libcounter	spr=spr_libcounter	vis=True	pers=False
+1452	obj_cutetable	spr=spr_cutetable	vis=True	pers=False
+1453	obj_papshed	spr=spr_awfulshed	vis=True	pers=False
+1454	obj_papmailbox	spr=spr_mailbox	vis=True	pers=False
+1455	obj_sansmailbox	spr=spr_sansmailbox	vis=True	pers=False
+1456	obj_xmastree	spr=spr_xmastree	vis=True	pers=False
+1457	obj_booth	spr=spr_booths	vis=True	pers=False
+1458	obj_bottomtable	spr=spr_bottomtable	vis=True	pers=False
+1459	obj_pokertable	spr=spr_pokertable	vis=True	pers=False
+1460	obj_lessdogtable	spr=spr_lessdogtable	vis=True	pers=False
+1461	obj_innevent1	spr=	vis=True	pers=False
+1462	obj_townnpc_bunlady	spr=spr_npc_bunbun	vis=True	pers=False
+1463	obj_townnpc_innlady	spr=spr_npc_innkeep	vis=True	pers=False
+1464	obj_townnpc_bunboy	spr=spr_npc_rabbitkid	vis=True	pers=False
+1465	obj_townnpc_bear1	spr=spr_npc_bear	vis=True	pers=False
+1466	obj_townnpc_beartree	spr=spr_npc_giftbear	vis=True	pers=False
+1467	obj_townnpc_reddemon	spr=spr_npc_reddemon	vis=True	pers=False
+1468	obj_townnpc_unfunny	spr=spr_npc_wrapmouse	vis=True	pers=False
+1469	obj_townnpc_hatescity	spr=spr_punkhamster	vis=True	pers=False
+1470	obj_townnpc_slimedad	spr=spr_npc_dadslime	vis=True	pers=False
+1471	obj_townnpc_icewolf	spr=spr_icewolf	vis=True	pers=False
+1472	obj_townnpc_slimeson	spr=spr_npc_kidslime1	vis=True	pers=False
+1473	obj_townnpc_slimedaughter	spr=spr_npc_kidslime2	vis=True	pers=False
+1474	obj_grillbynpc_hotandbothered	spr=spr_npc_buncrazy	vis=True	pers=False
+1475	obj_grillbynpc_hot2	spr=spr_npc_redbird	vis=True	pers=False
+1476	obj_grillbynpc_grillby	spr=spr_npc_grillby	vis=True	pers=False
+1477	obj_townnpc_weirdfish	spr=spr_npc_uglyfish	vis=True	pers=False
+1478	obj_grillbynpc_sansdate	spr=spr_sans_u	vis=False	pers=False
+1479	obj_grillbynpc_snowman1	spr=spr_fashionsnowman	vis=True	pers=False
+1480	obj_grillbynpc_snowman2	spr=spr_regsnowman	vis=True	pers=False
+1481	obj_grillbynpc_foodmonster	spr=spr_bigmouth	vis=True	pers=False
+1482	obj_grillbynpc_womandog	spr=spr_womandogwalk	vis=True	pers=False
+1483	obj_grillbynpc_mandog	spr=spr_mandogwalk	vis=True	pers=False
+1484	obj_grillbynpc_doggo	spr=spr_movedoge_o	vis=True	pers=False
+1485	obj_grillbynpc_lesserdog	spr=spr_lessdog_table	vis=True	pers=False
+1486	obj_townnpc_fightingbear	spr=spr_movedoge_o	vis=True	pers=False
+1487	obj_librarynpc_lizard1	spr=spr_npc_liblizard	vis=True	pers=False
+1488	obj_librarynpc_wordsearch	spr=spr_npc_ladygarf	vis=True	pers=False
+1489	obj_librarynpc_jumbler	spr=spr_npc_mikewazowski	vis=True	pers=False
+1490	obj_librarynpc_lizard2	spr=spr_npc_scarflady	vis=True	pers=False
+1491	obj_readable_modernbook	spr=spr_interactable	vis=False	pers=False
+1492	obj_bigdog	spr=spr_npc_bigdog	vis=True	pers=False
+1493	obj_townnpc_monsterkid1	spr=spr_mkid_d	vis=True	pers=False
+1494	obj_muffetnpc2	spr=spr_muffet_overworld	vis=True	pers=False
+1495	obj_heatsflamesman	spr=spr_heatsf_normal	vis=True	pers=False
+1496	obj_saddragon	spr=spr_saddragon	vis=True	pers=False
+1497	obj_artclass_sign	spr=spr_npc_sign	vis=True	pers=False
+1498	obj_diamondkid	spr=spr_diamondboy	vis=True	pers=False
+1499	obj_ficus	spr=spr_ficus	vis=True	pers=False
+1500	obj_slimejanitor	spr=spr_slimejanitor	vis=True	pers=False
+1501	obj_hotelreceptionist	spr=spr_hotel_receptionist1	vis=True	pers=False
+1502	obj_shamblingmass	spr=spr_shamblingmass	vis=True	pers=False
+1503	obj_clamguy	spr=spr_clamguy_a	vis=True	pers=False
+1504	obj_clamgirl	spr=spr_clamgirl_a	vis=True	pers=False
+1505	obj_businessmanticore	spr=spr_businessmanticore	vis=True	pers=False
+1506	obj_snowdrakedad	spr=spr_snowdrakedad	vis=True	pers=False
+1507	obj_vulkinnpc	spr=spr_vulkinpc	vis=True	pers=False
+1508	obj_darksausagenpc	spr=spr_darkman_laugh	vis=True	pers=False
+1509	obj_pyropenpc	spr=spr_pyropenpc	vis=True	pers=False
+1510	obj_tsunderplanenpc	spr=spr_tsunderplanenpc	vis=True	pers=False
+1511	obj_bedlump	spr=spr_bedlump	vis=True	pers=False
+1512	obj_mttfountain	spr=spr_mttfountain	vis=True	pers=False
+1513	obj_iceflower	spr=spr_iceflower	vis=True	pers=False
+1514	obj_snowdinlogo	spr=spr_snowdinlogo	vis=True	pers=False
+1515	obj_snowhat	spr=spr_snowhat	vis=True	pers=False
+1516	obj_snowhatparticle	spr=spr_snowhatparticle	vis=True	pers=False
+1517	obj_chilldrakenpc	spr=spr_chilldrakenpc	vis=True	pers=False
+1518	obj_gyftrotnpc	spr=spr_gyftrotnpc	vis=True	pers=False
+1519	obj_snowdrakenpc	spr=spr_snowdrakenpc	vis=True	pers=False
+1520	obj_icecap_npcb	spr=spr_icecapb_npc	vis=True	pers=False
+1521	obj_icecap_npcr	spr=spr_icecapr_npc	vis=True	pers=False
+1522	obj_icecap_npcg	spr=spr_icecapg_npc	vis=True	pers=False
+1523	obj_pianosolution	spr=spr_pianosolution	vis=True	pers=False
+1524	obj_puzzlehater	spr=spr_puzzlehater	vis=True	pers=False
+1525	obj_puzzlehaterbox	spr=spr_puzzlehater_box	vis=True	pers=False
+1526	obj_icegen_undynef2	spr=spr_waterice	vis=True	pers=False
+1527	obj_shyrensisternpc	spr=spr_amalgam_save_npc	vis=True	pers=False
+1528	obj_sistertext	spr=	vis=True	pers=False
+1529	obj_shyrenmovenpc	spr=spr_shyren_overworld	vis=True	pers=False
+1530	obj_temnpc	spr=spr_temmie_lt	vis=True	pers=False
+1531	obj_longsnail	spr=spr_longsnail	vis=True	pers=False
+1532	obj_hivestem	spr=spr_temmie_lt	vis=True	pers=False
+1533	obj_judgeshroom	spr=spr_mushroomdance_prep	vis=True	pers=False
+1534	obj_aaronnpc	spr=spr_aaronnpc	vis=True	pers=False
+1535	obj_woshuanpc	spr=spr_woshuanpc	vis=True	pers=False
+1536	obj_nothingness_event	spr=	vis=True	pers=False
+1537	obj_golddisplay	spr=spr_heartyellow_flip	vis=True	pers=False
+1538	obj_itemswapper	spr=	vis=True	pers=False
+1539	obj_overworldcontroller	spr=spr_heartgtfo	vis=True	pers=False
+1540	obj_trophy_awarder	spr=	vis=False	pers=False
+1541	object59	spr=spr_froggit	vis=True	pers=False
+1542	obj_bouncersteam	spr=spr_bouncersteam	vis=True	pers=False
+1543	obj_bouncetilecontoller	spr=	vis=True	pers=False
+1544	obj_bouncetileparent	spr=	vis=True	pers=False
+1545	obj_bounceleft	spr=spr_venter_l	vis=True	pers=False
+1546	obj_bounceup	spr=spr_venter_u	vis=True	pers=False
+1547	obj_bouncedown	spr=spr_venter_d	vis=True	pers=False
+1548	obj_bounceright	spr=spr_venter_r	vis=True	pers=False
+1549	obj_conveyor_parent	spr=	vis=True	pers=False
+1550	obj_conveyorr	spr=spr_solidlong	vis=True	pers=False
+1551	obj_conveyorl	spr=spr_solidlongother	vis=True	pers=False
+1552	obj_conveyoru	spr=spr_event	vis=True	pers=False
+1553	obj_conveyord	spr=spr_solidtall	vis=True	pers=False
+1554	obj_rblock	spr=spr_doorX	vis=False	pers=False
+1555	obj_rtile	spr=spr_rtile	vis=True	pers=False
+1556	obj_lab_powerswitch	spr=spr_interactable	vis=False	pers=False
+1557	obj_bed_key	spr=spr_bed_dark_nosheet	vis=True	pers=False
+1558	obj_bed_watcher	spr=spr_bed_dark_nosheet	vis=True	pers=False
+1559	obj_labfan	spr=spr_wallfan	vis=True	pers=False
+1560	obj_labtv_event	spr=spr_interactable	vis=True	pers=False
+1561	obj_mirror_overlay	spr=spr_mirror_overlay	vis=True	pers=False
+1562	obj_darkplant	spr=spr_plant_dark	vis=True	pers=False
+1563	obj_operatingtable	spr=spr_operatingtable	vis=True	pers=False
+1564	obj_torn_note	spr=spr_tornnote	vis=True	pers=False
+1565	obj_darkfridge	spr=spr_fridge_dark	vis=True	pers=False
+1566	obj_bed_dark	spr=spr_bed_dark	vis=True	pers=False
+1567	obj_wallmonitor	spr=spr_monitor_dark	vis=True	pers=False
+1568	obj_labfog	spr=spr_amalgam_dogball	vis=True	pers=False
+1569	obj_amalgam_dogpiece	spr=spr_amalgam_dogpiece	vis=True	pers=False
+1570	obj_amalgam_dogevent	spr=spr_amalgam_dogball	vis=True	pers=False
+1571	obj_amalgam_save	spr=spr_savepoint	vis=True	pers=False
+1572	obj_amalgam_fridge	spr=spr_fridge_dark	vis=True	pers=False
+1573	obj_amalgam_exc	spr=spr_amalgam_exc	vis=True	pers=False
+1574	obj_darksink	spr=spr_sink_dark	vis=True	pers=False
+1575	obj_showercurtain	spr=spr_showercurtain_empty	vis=True	pers=False
+1576	obj_colorlever	spr=spr_lever_noeye	vis=True	pers=False
+1577	obj_labdoor	spr=spr_darkelevator_l	vis=True	pers=False
+1578	obj_labelevator_a	spr=	vis=True	pers=False
+1579	obj_labelevator_b	spr=spr_event	vis=True	pers=False
+1580	obj_labelevator_open	spr=	vis=True	pers=False
+1581	obj_spritecheck	spr=	vis=True	pers=False
+1582	obj_dogshrine	spr=spr_dogshrine_dog	vis=True	pers=False
+1583	obj_time	spr=	vis=True	pers=True
+1584	obj_mainchara	spr=spr_maincharad	vis=True	pers=False
+1585	obj_f_frasier	spr=	vis=True	pers=False
+1586	obj_f_gamestart	spr=	vis=True	pers=False
+1587	obj_transheart_fake	spr=spr_ourheart	vis=True	pers=False
+1588	obj_floweybattler2	spr=	vis=True	pers=False
+1589	obj_floweyfacer	spr=spr_tv_floweyface	vis=True	pers=False
+1590	obj_fileerased_part	spr=spr_fileerased_parts	vis=True	pers=False
+1591	obj_mainchara_fake	spr=spr_f_maincharad	vis=True	pers=False
+1592	obj_savepoint_fake	spr=spr_savepoint	vis=True	pers=False
+1593	obj_gamemenu_fake	spr=	vis=True	pers=False
+1594	obj_gameintro_fake	spr=spr_fakeintro	vis=True	pers=False
+1595	obj_vsflowey_heart	spr=spr_ourheart	vis=True	pers=False
+1596	obj_vsflowey_shaker	spr=	vis=True	pers=False
+1597	obj_fx_bgen	spr=	vis=True	pers=False
+1598	obj_flowey_bulletmaster	spr=	vis=True	pers=False
+1599	obj_flowey_master	spr=	vis=True	pers=False
+1600	obj_floweybodyparent	spr=	vis=True	pers=False
+1601	obj_floweyx_tv	spr=spr_floweyx_tv	vis=True	pers=False
+1602	obj_fleshface	spr=spr_floweyx_fleshmound	vis=True	pers=False
+1603	obj_floweyx_flipeye	spr=spr_flipeye_holder	vis=True	pers=False
+1604	obj_floweyx_mouth	spr=spr_floweyx_mouthl	vis=True	pers=False
+1605	obj_floweyx_lefteye	spr=spr_lefteye_overlay	vis=True	pers=False
+1606	obj_floweyx_behind	spr=spr_floweyx_behind	vis=True	pers=False
+1607	obj_floweypipetest	spr=spr_pipepart	vis=True	pers=False
+1608	obj_floweypipetest_2	spr=spr_pipepart	vis=True	pers=False
+1609	obj_floweypipetest_3	spr=spr_pipepart	vis=True	pers=False
+1610	obj_flowey_fightbt	spr=spr_fightbt_center	vis=True	pers=False
+1611	obj_floweyslice	spr=spr_slice_o	vis=True	pers=False
+1612	obj_flowey_writer	spr=	vis=True	pers=False
+1613	obj_floweydmgwriter	spr=	vis=True	pers=False
+1614	obj_vsflowey_heartdefeated	spr=spr_ourheart	vis=True	pers=False
+1615	obj_6parent	spr=	vis=True	pers=False
+1616	obj_6flasher	spr=	vis=True	pers=False
+1617	obj_6soul_helpcutscene	spr=spr_allsoul	vis=True	pers=False
+1618	obj_6soul_lastcutscene	spr=spr_allsoul	vis=True	pers=False
+1619	obj_6bparent	spr=spr_6gun_bullet	vis=True	pers=False
+1620	obj_6heal	spr=spr_6pan_egg	vis=True	pers=False
+1621	obj_6gun_bullet	spr=spr_6gun_bullet	vis=True	pers=False
+1622	obj_6gun_crosshair	spr=spr_6gun_crosshair	vis=True	pers=False
+1623	obj_6gun	spr=spr_6gun	vis=True	pers=False
+1624	obj_6gun_act	spr=spr_actbt_center	vis=True	pers=False
+1625	obj_6shoe_musicnote	spr=spr_6shoe_musicnote	vis=True	pers=False
+1626	obj_6shoe_part	spr=spr_6shoe	vis=True	pers=False
+1627	obj_6shoe_act	spr=spr_actbt_center	vis=True	pers=False
+1628	obj_6shoe_master	spr=	vis=True	pers=False
+1629	obj_6glove_part	spr=spr_6glove	vis=True	pers=False
+1630	obj_6glove_act	spr=spr_actbt_center	vis=True	pers=False
+1631	obj_6glove_boss	spr=	vis=True	pers=False
+1632	obj_6pan_fire	spr=spr_6pan_fire	vis=True	pers=False
+1633	obj_6pan	spr=spr_6pan	vis=True	pers=False
+1634	obj_6pan_act	spr=spr_actbt_center	vis=True	pers=False
+1635	obj_centeract_parent	spr=spr_actbt_center	vis=True	pers=False
+1636	obj_6book_wordbullet	spr=spr_wordbullet_mask	vis=True	pers=False
+1637	obj_6book_act	spr=spr_actbt_center	vis=True	pers=False
+1638	obj_6book_master	spr=	vis=True	pers=False
+1639	obj_6knife	spr=spr_6knife_big	vis=True	pers=False
+1640	obj_6knife_act	spr=spr_actbt_center	vis=True	pers=False
+1641	obj_floweybullet_parent	spr=	vis=True	pers=False
+1642	obj_f_handfork	spr=spr_f_handknife	vis=True	pers=False
+1643	obj_f_handgun	spr=spr_f_handgun_neo	vis=True	pers=False
+1644	obj_f_shotflame	spr=spr_floweyx_flame_move	vis=True	pers=False
+1645	obj_mouthball	spr=spr_mouthball	vis=True	pers=False
+1646	obj_mouthball_s	spr=spr_mouthball	vis=True	pers=False
+1647	obj_eyewarning	spr=spr_eyewarning	vis=True	pers=False
+1648	obj_floweynukesplosion	spr=spr_floweynuke_explosion	vis=True	pers=False
+1649	obj_floweynuke	spr=spr_floweynuke	vis=True	pers=False
+1650	obj_eyeshot_a	spr=spr_eyeshot_a	vis=True	pers=False
+1651	obj_gigavine	spr=spr_gigavine	vis=True	pers=False
+1652	obj_gigavine_preview	spr=	vis=True	pers=False
+1653	obj_mouthbeam	spr=spr_mouthbeam	vis=True	pers=False
+1654	obj_floweyx_flamethrower	spr=spr_floweyx_flamethrower	vis=True	pers=False
+1655	obj_floweyx_oldflamethrower	spr=spr_floweyx_flamethrower	vis=True	pers=False
+1656	obj_floweyx_flame_old	spr=spr_floweyx_flame	vis=True	pers=False
+1657	obj_floweyx_flame	spr=spr_floweyx_flame_move	vis=True	pers=False
+1658	obj_chaosbomb	spr=spr_chaosbomb	vis=True	pers=False
+1659	obj_spinbullet_huge_gen_preview	spr=	vis=True	pers=False
+1660	obj_spinbullet_huge_gen	spr=	vis=True	pers=False
+1661	obj_spinbullet_final_gen	spr=	vis=True	pers=False
+1662	obj_spinbullet_huge	spr=spr_spinbullet_huge	vis=True	pers=False
+1663	obj_floweyfly_burst	spr=spr_floweyfly_burst	vis=True	pers=False
+1664	obj_floweyfly	spr=spr_floweyfly	vis=True	pers=False
+1665	obj_venus_pl_bg	spr=spr_venus_bg	vis=True	pers=False
+1666	obj_venus_pl	spr=spr_venus_placeholder	vis=True	pers=False
+1667	obj_flowey_bgdraw	spr=spr_red_edge	vis=True	pers=False
+1668	obj_bgpipe	spr=spr_bgpipe	vis=True	pers=False
+1669	obj_sidestalk	spr=spr_sidestalk	vis=True	pers=False
+1670	obj_floweyarm	spr=spr_floweyarm	vis=True	pers=False
+1671	obj_vines_flowey	spr=spr_vines_flowey	vis=True	pers=False
+1672	obj_dentata_full	spr=spr_dentata_none	vis=True	pers=False
+1673	obj_randomfacer	spr=spr_tvinside_old	vis=True	pers=False
+1674	obj_tv_inside	spr=spr_tvinside_old	vis=False	pers=False
+1675	obj_bringitinguys	spr=	vis=True	pers=False
+1676	obj_strangetangle	spr=	vis=True	pers=False
+1677	obj_asrielappear	spr=spr_kidasriel_back	vis=True	pers=False
+1678	obj_friendprotector	spr=spr_firebullet_center2	vis=True	pers=False
+1679	obj_spinbullet_friendscene	spr=spr_spinbullet_outline2	vis=True	pers=False
+1680	obj_spinbulletgen_friendscene	spr=	vis=True	pers=False
+1681	obj_flowey_friendscene	spr=spr_flowey_riseanim	vis=True	pers=False
+1682	obj_friendscene_gigavine	spr=spr_gigavine_highhitbox	vis=True	pers=False
+1683	obj_objshake	spr=	vis=True	pers=False
+1684	obj_friendparent	spr=	vis=True	pers=False
+1685	obj_papyrus_friendscene	spr=spr_papdate	vis=True	pers=False
+1686	obj_alphys_friendscene	spr=spr_adate_bodycoat	vis=True	pers=False
+1687	obj_sans_friendscene	spr=spr_sans_bbody	vis=True	pers=False
+1688	obj_sadgore	spr=spr_sadgore	vis=True	pers=False
+1689	obj_friendscene	spr=	vis=True	pers=False
+1690	obj_undyne_endingbody	spr=spr_undyneb_noanim	vis=True	pers=False
+1691	obj_asgore_firehit	spr=spr_asgore_prebrandish	vis=True	pers=False
+1692	obj_tblcon	spr=spr_blconwdshrt	vis=True	pers=False
+1693	obj_torielbody	spr=spr_toriel_bodyonly	vis=True	pers=False
+1694	obj_wrapshock	spr=spr_toriel_wrap	vis=False	pers=False
+1695	obj_FinalWriter	spr=	vis=True	pers=False
+1696	obj_barriercut	spr=	vis=True	pers=False
+1697	obj_mhd	spr=spr_monsterheart_place	vis=True	pers=False
+1698	obj_asriel_overworldanim	spr=spr_asriel_d	vis=True	pers=False
+1699	obj_timersplits	spr=	vis=True	pers=True
+1700	obj_monster_pl	spr=spr_monster_pl	vis=True	pers=False
+1701	obj_castroll	spr=	vis=True	pers=False
+1702	obj_the_end_really	spr=	vis=True	pers=False
+1703	obj_creditsword	spr=	vis=True	pers=False
+1704	obj_ebottfadein	spr=spr_mtebott	vis=True	pers=False
+1705	obj_endmyroom	spr=spr_myroom_doorbg	vis=True	pers=False
+1706	obj_endmettevent	spr=spr_mett_individual	vis=True	pers=False
+1707	obj_endschoolanim	spr=spr_mkid_r	vis=True	pers=False
+1708	obj_tinyleaf	spr=spr_tinyleaf	vis=True	pers=False
+1709	obj_tinymusicnote	spr=spr_tinymusicnote	vis=True	pers=False
+1710	obj_endcaranim	spr=spr_papyrus_cape_flip	vis=True	pers=False
+1711	obj_beachdebris	spr=spr_beachdebris	vis=True	pers=False
+1712	obj_endbeachanim	spr=spr_undyne_torso_shuffle	vis=True	pers=False
+1713	obj_creditsheart	spr=spr_heart_credits	vis=True	pers=False
+1714	obj_creditboss	spr=	vis=True	pers=False
+1715	obj_creditbullet	spr=	vis=True	pers=False
+1716	obj_creditsloader	spr=	vis=True	pers=False
+1717	objLayerChecker	spr=	vis=True	pers=True
+1718	obj_cloverchara	spr=spr_event	vis=False	pers=False
+1719	obj_cloverinteractable	spr=spr_clover_rt	vis=True	pers=False
+1720	obj_steamworksmusic	spr=	vis=True	pers=False
+1721	obj_autofire	spr=spr_autofire_toggle_c	vis=True	pers=False
+1722	obj_parallax_background_steamworks_34	spr=	vis=True	pers=False
+1723	obj_steamworks_37_elevator	spr=spr_steamworks_37_elevator	vis=True	pers=False
+1724	obj_steamworks_factory_elevator	spr=spr_factory_04_elevator	vis=True	pers=False
+1725	obj_encounterer_steamworks	spr=	vis=False	pers=False
+1726	obj_jandroidhead	spr=spr_jandroid_head	vis=True	pers=False
+1727	obj_jandroidbody	spr=	vis=True	pers=False
+1728	obj_jandroid	spr=spr_jandroid_spared	vis=True	pers=False
+1729	obj_newhomemusic	spr=	vis=True	pers=False
+1730	obj_rednpc	spr=spr_npc_red	vis=True	pers=False
+1731	obj_clovergeno	spr=spr_clover_hatless	vis=True	pers=False
+1732	obj_jane_doe_lost	spr=spr_jane_doe_lost	vis=True	pers=False
+1733	obj_flowey_genoscene	spr=spr_flowey_riseanim2	vis=True	pers=False
+1734	obj_cloverblast	spr=spr_clover_geno_laser_loop	vis=True	pers=False
+1735	obj_firstkill	spr=spr_event	vis=False	pers=False
+1736	obj_heart_yellow_blast	spr=spr_heart_yellow_charge	vis=True	pers=False
+1737	obj_floweysurface	spr=spr_floweysink	vis=True	pers=False
+1738	obj_modcredits	spr=	vis=True	pers=False
+1739	obj_bailador_encounter	spr=spr_event	vis=False	pers=False
+1740	obj_face_clover	spr=spr_clover_neutral	vis=True	pers=False
+1741	obj_face_chara	spr=spr_chara_neutral	vis=True	pers=False
+1742	obj_elbailador	spr=spr_npc_bailador_down	vis=True	pers=False
+1743	obj_shinix	spr=spr_gay_scrimblo	vis=True	pers=False
+1744	obj_mainchara_funking	spr=spr_mainchara_funking	vis=True	pers=False
+1745	obj_kanako	spr=	vis=True	pers=False
+1746	obj_kanako_overworld	spr=spr_watchingman	vis=True	pers=False
+1747	obj_kanako_attackgen	spr=	vis=True	pers=False
+1748	obj_integrity_star	spr=spr_6shoe_star	vis=True	pers=False
+1749	obj_kanako_petal	spr=spr_ceroba_attack_petal_1	vis=True	pers=False
+1750	obj_kanako_fire1	spr=spr_kanako_fireball	vis=True	pers=False
+1751	obj_kanako_fire1_gen	spr=	vis=True	pers=False
+1752	obj_kanako_fire2	spr=spr_kanako_fireball	vis=True	pers=False
+1753	obj_kanako_fire2_gen	spr=	vis=True	pers=False
+1754	obj_kanako_fire2_gen_gen	spr=	vis=True	pers=False
+1755	obj_heartdance	spr=spr_heartdance_coltest	vis=True	pers=False
+1756	obj_bgdog	spr=spr_bgdog	vis=True	pers=False
+1757	obj_chair_man	spr=spr_chair_man	vis=True	pers=False
+1758	obj_sans_cardboard	spr=spr_sans_dt	vis=True	pers=False
+1759	obj_dancenote	spr=spr_notebullet	vis=True	pers=False
+1760	obj_dancenote_gen	spr=	vis=True	pers=False
+1761	obj_ghostbuds	spr=	vis=True	pers=False
+1762	obj_void_charadialogue	spr=spr_event	vis=False	pers=False
+1763	obj_photobooth	spr=spr_photobooth	vis=True	pers=False
+1764	obj_bgbone	spr=spr_bgbone	vis=True	pers=False
+1765	obj_bgdog2	spr=spr_backbone	vis=True	pers=False
+1766	obj_forklift	spr=spr_dogliftcertified	vis=True	pers=False
+1767	obj_ripoff_clover	spr=spr_aaron	vis=True	pers=False
+1768	obj_battlegroup_input	spr=	vis=True	pers=False
+1769	obj_floweyreact	spr=	vis=True	pers=False
+1770	obj_ghostint	spr=spr_ghost_clover_down	vis=True	pers=False
+1771	obj_ghostint2	spr=spr_ghost_chara_down	vis=True	pers=False
+1772	obj_firerpuzzlebit	spr=spr_event	vis=False	pers=False
+1773	obj_face_dalv	spr=spr_dalv_head_regular	vis=True	pers=False
+1774	obj_dalv_interactable	spr=spr_dalv_dt	vis=True	pers=False
+1775	obj_omorireference	spr=spr_event	vis=False	pers=False
+1776	obj_static_background	spr=spr_noise	vis=True	pers=False
+1777	obj_undynebg	spr=	vis=True	pers=False
+1778	obj_undynebg2	spr=	vis=True	pers=False
+1779	obj_theirbody	spr=spr_them	vis=True	pers=False
+1780	obj_theirweapon	spr=spr_6gun	vis=True	pers=False
+1781	obj_gun_bullet	spr=spr_6gun_bullet	vis=True	pers=False
+1782	obj_mttbg	spr=	vis=True	pers=False
+1783	obj_roomselector	spr=	vis=True	pers=True
+1784	obj_face_ceroba	spr=spr_portrait_ceroba_neutral	vis=True	pers=False
+1785	obj_ceroba_interactable	spr=spr_ceroba_ut	vis=True	pers=False
+1786	obj_kanakobody	spr=spr_subjectbody	vis=True	pers=False
+1787	obj_integrity_warning	spr=	vis=True	pers=False
+1788	obj_integrity_shoe	spr=spr_6shoe	vis=True	pers=False
+1789	obj_kanako_petal_pile	spr=spr_ceroba_attack_petal_pile	vis=True	pers=False
+1790	obj_cloverclover	spr=spr_cloverclover	vis=True	pers=False
+1791	obj_judgement_scale_base	spr=spr_judgementscale_base	vis=True	pers=False
+1792	obj_judgement_scale	spr=spr_judgementscale	vis=True	pers=False
+1793	obj_judgement_scale_top	spr=spr_judgementscale_top	vis=True	pers=False
+1794	obj_mttposter	spr=bg_mettposter	vis=True	pers=False
+1795	obj_background_hotland_roof	spr=spr_rooftop_core	vis=True	pers=False
+1796	obj_kanako_fire2_warn	spr=spr_rainbowtarget	vis=True	pers=False
+1797	obj_parallax_pipes	spr=	vis=True	pers=False
+1798	obj_hangout_spot	spr=spr_chimesparkle1	vis=True	pers=False
+1799	obj_mobilecontrols	spr=	vis=True	pers=True
+
+== Rooms = 358 ==
+0	room_start
+1	room_introstory
+2	room_introimage
+3	room_intromenu
+4	room_area1
+5	room_area1_2
+6	room_ruins1
+7	room_ruins2
+8	room_ruins3
+9	room_ruins4
+10	room_ruins5
+11	room_ruins6
+12	room_ruins7
+13	room_ruins7A
+14	room_ruins8
+15	room_ruins9
+16	room_ruins10
+17	room_ruins11
+18	room_ruins12A
+19	room_ruins12
+20	room_ruins12B
+21	room_ruins13
+22	room_ruins14
+23	room_ruins15A
+24	room_ruins15B
+25	room_ruins15C
+26	room_ruins15D
+27	room_ruins15E
+28	room_ruins16
+29	room_ruins17
+30	room_ruins18OLD
+31	room_ruins19
+32	room_torhouse1
+33	room_torhouse2
+34	room_torhouse3
+35	room_torielroom
+36	room_asrielroom
+37	room_kitchen
+38	room_basement1
+39	room_basement2
+40	room_basement3
+41	room_basement4
+42	room_basement5
+43	room_ruinsexit
+44	room_tundra1
+45	room_tundra2
+46	room_tundra3
+47	room_tundra3A
+48	room_tundra4
+49	room_tundra5
+50	room_tundra6
+51	room_tundra6A
+52	room_tundra7
+53	room_tundra8
+54	room_tundra8A
+55	room_tundra9
+56	room_tundra_spaghetti
+57	room_tundra_snowpuzz
+58	room_tundra_xoxosmall
+59	room_tundra_xoxopuzz
+60	room_tundra_randoblock
+61	room_tundra_lesserdog
+62	room_tundra_icehole
+63	room_tundra_iceentrance
+64	room_tundra_iceexit_new
+65	room_tundra_iceexit
+66	room_tundra_poffzone
+67	room_tundra_dangerbridge
+68	room_tundra_town
+69	room_tundra_town2
+70	room_tundra_dock
+71	room_tundra_inn
+72	room_tundra_inn_2f
+73	room_tundra_grillby
+74	room_tundra_library
+75	room_tundra_garage
+76	room_tundra_sanshouse
+77	room_tundra_paproom
+78	room_tundra_sansroom
+79	room_tundra_sansroom_dark
+80	room_tundra_sansbasement
+81	room_fogroom
+82	room_water1
+83	room_water2
+84	room_water3
+85	room_water3A
+86	room_water4
+87	room_water_bridgepuzz1
+88	room_water5
+89	room_water5A
+90	room_water6
+91	room_water7
+92	room_water8
+93	room_water9
+94	room_water_savepoint1
+95	room_water11
+96	room_water_nicecream
+97	room_water12
+98	room_water_shoe
+99	room_water_bird
+100	room_water_onionsan
+101	room_water14
+102	room_water_piano
+103	room_water_dogroom
+104	room_water_statue
+105	room_water_prewaterfall
+106	room_water_waterfall
+107	room_water_waterfall2
+108	room_water_waterfall3
+109	room_water_waterfall4
+110	room_water_preundyne
+111	room_water_undynebridge
+112	room_water_undynebridgeend
+113	room_water_trashzone1
+114	room_water_trashsavepoint
+115	room_water_trashzone2
+116	room_water_friendlyhub
+117	room_water_undyneyard
+118	room_water_undynehouse
+119	room_water_blookyard
+120	room_water_blookhouse
+121	room_water_hapstablook
+122	room_water_farm
+123	room_water_prebird
+124	room_water_shop
+125	room_water_dock
+126	room_water15
+127	room_water16
+128	room_water_temvillage
+129	room_water17
+130	room_water18
+131	room_water19
+132	room_water20
+133	room_water21
+134	room_water_undynefinal
+135	room_water_undynefinal2
+136	room_water_undynefinal3
+137	room_fire1
+138	room_fire2
+139	room_fire_prelab
+140	room_fire_dock
+141	room_fire_lab1
+142	room_fire_lab2
+143	room_fire3
+144	room_fire5
+145	room_fire6
+146	room_fire6A
+147	room_fire_lasers1
+148	room_fire7
+149	room_fire8
+150	room_fire_shootguy_2
+151	room_fire9
+152	room_fire_shootguy_1
+153	room_fire_turn
+154	room_fire_cookingshow
+155	room_fire_savepoint1
+156	room_fire_elevator_r1
+157	room_fire_elevator_r2
+158	room_fire_hotdog
+159	room_fire_walkandbranch
+160	room_fire_sorry
+161	room_fire_apron
+162	room_fire10
+163	room_fire_rpuzzle
+164	room_fire_mewmew2
+165	room_fire_boysnightout
+166	room_fire_newsreport
+167	room_fire_coreview2
+168	room_fire_elevator_l2
+169	room_fire_elevator_l3
+170	room_fire_spidershop
+171	room_fire_walkandbranch2
+172	room_fire_conveyorlaser
+173	room_fire_shootguy_3
+174	room_fire_preshootguy4
+175	room_fire_shootguy_4
+176	room_fire_savepoint2
+177	room_fire_spider
+178	room_fire_pacing
+179	room_fire_operatest
+180	room_fire_multitile
+181	room_fire_hotelfront_1
+182	room_fire_hotelfront_2
+183	room_fire_hotellobby
+184	room_fire_restaurant
+185	room_fire_hoteldoors
+186	room_fire_hotelbed
+187	room_fire_elevator_r3
+188	room_fire_precore
+189	room_fire_core1
+190	room_fire_core2
+191	room_fire_core3
+192	room_fire_core4
+193	room_fire_core5
+194	room_fire_core_freebattle
+195	room_fire_core_laserfun
+196	room_fire_core_branch
+197	room_fire_core_bottomleft
+198	room_fire_core_left
+199	room_fire_core_topleft
+200	room_fire_core_top
+201	room_fire_core_topright
+202	room_fire_core_right
+203	room_fire_core_bottomright
+204	room_fire_core_center
+205	room_fire_shootguy_5
+206	room_fire_core_treasureleft
+207	room_fire_core_treasureright
+208	room_fire_core_warrior
+209	room_fire_core_bridge
+210	room_fire_core_premett
+211	room_fire_core_metttest
+212	room_fire_core_final
+213	room_fire_elevator
+214	room_fire_elevator_l1
+215	room_fire_finalelevator
+216	room_castle_elevatorout
+217	room_castle_precastle
+218	room_castle_hook
+219	room_castle_front
+220	room_asghouse1
+221	room_asghouse2
+222	room_asghouse3
+223	room_asgoreroom
+224	room_asrielroom_final
+225	room_kitchen_final
+226	room_basement1_final
+227	room_basement2_final
+228	room_basement3_final
+229	room_basement4_final
+230	room_lastruins_corridor
+231	room_sanscorridor
+232	room_castle_finalshoehorn
+233	room_castle_coffins1
+234	room_castle_coffins2
+235	room_castle_throneroom
+236	room_castle_prebarrier
+237	room_castle_barrier
+238	room_castle_exit
+239	room_undertale_end
+240	room_castle_trueexit
+241	room_outsideworld
+242	room_fire_labelevator
+243	room_truelab_elevatorinside
+244	room_truelab_elevator
+245	room_truelab_hall1
+246	room_truelab_hub
+247	room_truelab_hall2
+248	room_truelab_operatingroom
+249	room_truelab_redlever
+250	room_truelab_prebed
+251	room_truelab_bedroom
+252	room_truelab_mirror
+253	room_truelab_bluelever
+254	room_truelab_hall3
+255	room_truelab_shower
+256	room_truelab_determination
+257	room_truelab_tv
+258	room_truelab_cooler
+259	room_truelab_greenlever
+260	room_truelab_fan
+261	room_truelab_castle_elevator
+262	room_truelab_prepower
+263	room_truelab_power
+264	room_gaster
+265	room_icecave1
+266	room_ice_dog
+267	room2
+268	room_water_fakehallway
+269	room_mysteryman
+270	room_soundtest
+271	TESTROOM
+272	room_water_redacted
+273	room_water13
+274	room_overworld
+275	room_overworld3
+276	bullettest
+277	room_water16A
+278	room_end_castroll
+279	room_end_highway
+280	room_end_beach
+281	room_end_metta
+282	room_end_school
+283	room_end_mtebott
+284	room_creditsdodger
+285	room_end_myroom
+286	room_end_theend
+287	room_spritecheck
+288	room_settings
+289	room_controltest
+290	room_f_start
+291	room_f_intro
+292	room_f_menu
+293	room_f_room
+294	room_floweyx
+295	room_f_phrase
+296	room_fire4
+297	room_fire10_old
+298	room_fire10A_old
+299	room_tundra_placeholder
+300	room_ruins12B_old
+301	room_tundra_rollsnow
+302	room_water7_older
+303	room_meetundyne_old
+304	room_water_mushroom
+305	room_monsteralign_test
+306	room_battle
+307	room_floweybattle
+308	room_fastbattle
+309	room_storybattle
+310	room_gameover
+311	room_shop1
+312	room_shop2
+313	room_shop3
+314	room_shop4
+315	room_shop5
+316	room_riverman_transition
+317	room_papdate
+318	room_adate
+319	room_flowey_endchoice
+320	room_flowey_regret
+321	room_empty
+322	room_emptywhite
+323	room_emptyblack
+324	room_nothingness
+325	room_undertale
+326	room_of_dog
+327	room_quizholder
+328	room_friendtest
+329	room_bringitinguys
+330	room_asrielappears
+331	room_goodbyeasriel
+332	room_asrielmemory
+333	room_asrieltest
+334	room_afinaltest
+335	room_dogshrine
+336	room_dogshrine_ruined
+337	room_dogshrine_mewmew
+338	room_of_bog
+339	room_fire_elevator_s
+340	room_steamworks_36
+341	room_steamworks_35
+342	room_steamworks_34
+343	room_steamworks_33
+344	room_steamworks_32
+345	room_steamworks_factory_elevator
+346	room_newhome_01
+347	room_newhome_elevator
+348	room_newhome_02
+349	room_newhome_03
+350	room_newhome_04
+351	room_modcredits
+352	room_smile
+353	room_god
+354	room_water_yellow
+355	coming_soon
+356	room_fire_alley
+357	room_fire_rooftop
