@@ -225,6 +225,11 @@ def summarize(data, cards, dups):
     ttft_cold, ttft_warm, trunc, retries = [], [], [], 0
     len_all = []
     calls = 0
+    #: ★ 2026-10-29 追加：把「尺子」也写进报告 —— prompt 峰值 / 该场实际 ctx。
+    #:   只报「有没有截断」而不报这两个数，事后无法判断判据是否成立
+    #:   （这正是本轮 1,010 轮虚报藏了四天的原因）。
+    pec_max = 0
+    ctx_used = None
     for nid, recs in sorted(data.items()):
         base = recs.get('baseline')
         if not base:
@@ -239,7 +244,17 @@ def summarize(data, cards, dups):
             retries += t.get('retries') or 0
             if st.get('ttft_s') is not None:
                 (ttft_warm if (st.get('prompt_eval_count') or 0) < 100 else ttft_cold).append(st['ttft_s'])
-            if st.get('truncated'):
+            # ★★★ 2026-10-29 修：**不能信 `st['truncated']`**。
+            #   `truncated` 是**写盘那一刻**用常量 `NUM_CTX`(8192) 判的，
+            #   而 `train30` 实际用 `num_ctx=20480` ⇒ 历史 jsonl 里固化了一批**虚报**
+            #   （实测 1,010 轮，峰值 12,216，真实余量还有 8,264）。
+            #   报告因此写出「61 人的 prompt 顶到 num_ctx=8192」这种根本没发生的事故。
+            #   ⇒ 评测端按**该记录自己的 ctx** 重判，不看历史布尔值。
+            _ctx = base.get('ctx') or C.NUM_CTX
+            if ctx_used is None:
+                ctx_used = _ctx
+            pec_max = max(pec_max, st.get('prompt_eval_count') or 0)
+            if (st.get('prompt_eval_count') or 0) >= _ctx:
                 trunc.append(nid)
             if t.get('final'):
                 len_all.append(len(t['final']))
@@ -256,12 +271,23 @@ def summarize(data, cards, dups):
         p2 = recs.get('patch')
         if not p2:
             continue
-        before = per_char.get(nid, {}).get('violations', 0)
-        now = sum(1 for t in p2.get('turns') or [] if t.get('violations'))
-        after[nid] = {'before': before, 'after': now,
-                      'turns': len(p2.get('turns') or []),
-                      'fixed': before > 0 and now == 0,
-                      'still': now}
+        base = recs.get('baseline') or {}
+        # ★★★ 2026-10-29 修「分子分母不同源」：原来
+        #     before = per_char[nid]['violations']  ← 违规**处数**（一条回答里两个违规算 2）
+        #     now    = 有违规的**轮数**
+        #   两个不同量纲，却又都拿 `v['turns']`（补训的 4 轮）当分母 ⇒ 整张表是错的
+        #   （"补训前 6/4 轮" 这种数学上不可能的数就是这么来的）。
+        #   ⇒ 两边统一成「**有违规的轮数 / 总轮数**」，各用各的分母。
+        b_turns = base.get('turns') or []
+        b_bad = sum(1 for t in b_turns if t.get('violations'))
+        p_turns = p2.get('turns') or []
+        p_bad = sum(1 for t in p_turns if t.get('violations'))
+        after[nid] = {'before': b_bad, 'before_n': len(b_turns),
+                      'after': p_bad, 'after_n': len(p_turns),
+                      'before_rate': round(b_bad / (len(b_turns) or 1), 3),
+                      'after_rate': round(p_bad / (len(p_turns) or 1), 3),
+                      'fixed': b_bad > 0 and p_bad == 0,
+                      'still': p_bad}
     return {
         'chars_with_dialogue': sum(1 for v in data.values() if v.get('baseline')),
         'turns': turns_total,
@@ -271,6 +297,8 @@ def summarize(data, cards, dups):
         'calls': calls,
         'retries': retries,
         'truncated_chars': sorted(set(trunc)),
+        'pec_max': pec_max,
+        'ctx_used': ctx_used,
         'ttft_cold_median': round(statistics.median(ttft_cold), 2) if ttft_cold else None,
         'ttft_warm_median': round(statistics.median(ttft_warm), 3) if ttft_warm else None,
         'len_median': int(statistics.median(len_all)) if len_all else 0,
@@ -297,7 +325,18 @@ def write_corpus(data, cards, roster):
     for nid, recs in sorted(data.items()):
         base, p2 = recs.get('baseline'), recs.get('patch')
         ok = lambda r: sum(1 for t in (r or {}).get('turns', []) if not t.get('violations'))
-        use = p2 if (p2 and ok(p2) > ok(base)) else base
+        # ★★★ 2026-10-29 修：原来无条件 `use = p2 if (p2 and ok(p2) > ok(base)) else base`。
+        #   可比性被两件事破坏：
+        #     ① `ok()` 是**绝对合规轮数**，而补训 4 轮、基线 48 轮 —— 48 轮天然碾压，
+        #        比的是"谁跑得多"而不是"谁答得好"；
+        #     ② 万一补训真的全对（4/4 对 0/48），就会把 48 轮的语料**换成 4 轮**，
+        #        语料凭空少 44 条。实测就发生了：`asgore` 基线 48 轮全违规（ok=0），
+        #        补训 4/4 合规 ⇒ 语料总数从 3696 掉到 3652。
+        #        **补训越"成功"，训练语料越少** —— 这是最不该有的反向激励。
+        #   ⇒ 只有**轮数相同**（即同一份剧本）才允许替换；否则一律保留基线。
+        same_len = (len((p2 or {}).get('turns') or [])
+                    == len((base or {}).get('turns') or []))
+        use = p2 if (p2 and same_len and ok(p2) > ok(base)) else base
         if not use:
             continue
         item = by_id.get(nid)
@@ -354,15 +393,25 @@ def report_md(summary, patches, cards, dups, roster, gaps, exempt=None):
     mean = {'AI_SELF': '自称 AI / 模型 / 程序', 'MARKDOWN': '输出排版标记',
             'SLAVE': '「主人」等服务腔', 'ACTION_PAREN': '括号写动作',
             'META': '提到作品名/游戏/玩家/代码', 'TOO_LONG': '超过 200 字',
-            'PARROT': '整句复述对方', 'REPEAT': '复读自己上一句', 'EMPTY': '空回复'}
+            'PARROT': '整句复述对方', 'REPEAT': '复读自己上一句', 'EMPTY': '空回复',
+            # ★ 2026-10-29 补：原来 `NOT_CN` 不在表里 ⇒ 报告里那一行含义是空的，
+            #   155 次违规没有解释。判据表的"含义"列必须自己也是全的。
+            'NOT_CN': '整句说英文（中文占比 < 0.6）'}
     for code, n in s['violation_codes'].items():
         L.append('| `%s` | %d | %s |' % (code, n, mean.get(code, '')))
     L.append('')
     L.append('- 实际调用 **%d 次**（含重采样 %d 次）' % (s['calls'], s['retries']))
-    L.append('- 首字：冷 **%ss** / 热 **%ss**（中位数）' % (s['ttft_cold_median'], s['ttft_warm_median']))
+    L.append('- 首字：冷 **%s** / 热 **%s**（秒，中位数）' % (
+        ('%.2f' % s['ttft_cold_median']) if s['ttft_cold_median'] is not None else '无样本',
+        ('%.3f' % s['ttft_warm_median']) if s['ttft_warm_median'] is not None else '无样本'))
     L.append('- 回复长度中位数 **%d 字**，最长 **%d 字**' % (s['len_median'], s['len_max']))
+    L.append('- prompt 峰值 **%d token** / 该场 num_ctx **%s** ⇒ 余量 **%s**' % (
+        s.get('pec_max') or 0,
+        s.get('ctx_used') if s.get('ctx_used') else '未知',
+        ((s['ctx_used'] - (s.get('pec_max') or 0))
+         if s.get('ctx_used') else '未知')))
     if s['truncated_chars']:
-        L.append('- ⚠️ **有 %d 人的 prompt 顶到 num_ctx=8192（前缀被截断）**：%s —— '
+        L.append('- ⚠️ **有 %d 人的 prompt 顶到该场 num_ctx 上限（前缀被截断）**：%s —— '
                  '这是"人设太长"的真实代价，不是模型的问题' % (
                      len(s['truncated_chars']), '、'.join(s['truncated_chars'])))
     L.append('')
@@ -402,17 +451,26 @@ def report_md(summary, patches, cards, dups, roster, gaps, exempt=None):
         L.append('> 这些不计入纠正：给他写"别用括号"等于逼他违反自己的人设。')
         L.append('')
     if s['patch_pass']:
-        L.append('### 补训前后')
+        L.append('### 补训前后（⚠️ 抽样且**不可比**，见下）')
         L.append('')
-        L.append('| 角色 | 补训前不合规轮 | 补训后不合规轮 | 结果 |')
+        L.append('| 角色 | 补训前（不合规轮/总轮） | 补训后（不合规轮/总轮） | 轮均合规率变化 |')
         L.append('|---|---|---|---|')
         for nid, v in sorted(s['patch_pass'].items()):
-            res = '✅ 全绿' if v['after'] == 0 else (
-                '有改善' if v['after'] < v['before'] else '未改善')
-            if v['after'] > 0 and nid in {e['npc'] for e in (exempt or [])}:
-                res += '（判据豁免，不计）'
+            d = v['after_rate'] - v['before_rate']
+            mark = '↓ %.3f' % d if d < 0 else ('↑ %.3f' % d if d > 0 else '＝')
             L.append('| `%s` | %d/%d | %d/%d | %s |' % (
-                nid, v['before'], v['turns'], v['after'], v['turns'], res))
+                nid, v['before'], v['before_n'], v['after'], v['after_n'], mark))
+        L.append('')
+        L.append('> **这张表不能当作"纠正有效"的证据。** 原因是**换了两套考题**：')
+        L.append('> 补训走 `dialogue113.script_for()` 的 4 句老剧本（`TURNS[0..2]`），')
+        L.append('> 而 48 轮基线走 `train30.SCRIPT48`（偏好 6 / 压力 3 / 口癖 2 / 记忆 3 /')
+        L.append('> 剧情 / 关系 / 角色间对话）。题目不同 ⇒ 违规率不可直接比。')
+        L.append('> 正确做法：补训必须跑**同一份 SCRIPT48**（或只重测判红的那些 slot），')
+        L.append('> 且轮数要够 48，才有资格谈"纠正有没有压住毛病"。已记为待办。')
+        L.append('')
+        L.append('> 另：本轮补训只跑了 **%d 人**（全量 59 人需约 5 小时 CPU）。'
+                 '每人约 245 秒/4 轮，成本几乎全在**该角色第一轮**的冷 prefill'
+                 '（`prefill=232s`，因为 system 一换、前缀缓存全失效）。' % len(s['patch_pass']))
         L.append('')
     L.append('## 5. 逐角色')
     L.append('')
@@ -567,7 +625,17 @@ def merge_text(old, new, drops=None):
     extra = [x for x in new_s if x.strip(u'。 ') not in {y.strip(u'。 ') for y in old_s}]
     if not extra and not drop:
         return cap_patch(old, drops=drops)
-    return cap_patch(u' '.join(keep + extra).strip(), drops=drops)
+    # ★★★ 2026-10-29 修「不幂等」：原来是 `keep + extra`（旧独有在前、新句在后）。
+    #   实证（`probe2` 连续迭代）：`ralsei` 的补丁在 **158 ⇄ 160** 之间形成 2-循环，
+    #   连跑三次 `eval113`，写进产品的 `_index.json` 竟然出现两个不同 sha1
+    #   （`432ff0a2…` / `a2c5618f…`）——**同一份输入，每次产出不同的产品数据**。
+    #   机制：他的名字规则 2 句是**手写**（`_is_auto_sent` 为假，不被裁），
+    #   加上 2 句模板句共 180 字，而上限 160 只装得下「2 手写 + 1 模板」。
+    #   旧顺序下"保留哪一句模板"取决于**旧值里恰好有哪一句** ⇒ 每轮换一个，永远收敛不了。
+    #   ⇒ 顺序改成「本轮算出来的在前、旧独有句追加在后」：保留哪句就**只由本轮输入决定**，
+    #     同一个 new 必得同一个结果（`cap_patch` 裁的也永远是同一句）。
+    ordered = list(new_s) + keep
+    return cap_patch(u' '.join(ordered).strip(), drops=drops)
 
 
 def merge_patches(old, new):

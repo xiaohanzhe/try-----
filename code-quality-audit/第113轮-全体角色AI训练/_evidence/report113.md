@@ -4,7 +4,7 @@
 
 ## 0. 一句话结论
 
-在**无 GPU（18 核 CPU）**的本机上，对 **77 个角色**跑了 **3696 轮**真实对话；第一遍硬违规 **1227 处**，跨角色撞车 **0 对**；对判红的角色注入训练纠正后重跑，**0 人转全绿**、0 人仍有问题。
+在**无 GPU（18 核 CPU）**的本机上，对 **77 个角色**跑了 **3696 轮**真实对话；第一遍硬违规 **1227 处**，跨角色撞车 **0 对**；对判红的角色注入训练纠正后重跑，**5 人转全绿**、4 人仍有问题。
 
 ## 1. 覆盖
 
@@ -23,15 +23,15 @@
 | `ACTION_PAREN` | 419 | 括号写动作 |
 | `REPEAT` | 267 | 复读自己上一句 |
 | `TOO_LONG` | 203 | 超过 200 字 |
-| `NOT_CN` | 155 |  |
+| `NOT_CN` | 155 | 整句说英文（中文占比 < 0.6） |
 | `AI_SELF` | 151 | 自称 AI / 模型 / 程序 |
 | `META` | 30 | 提到作品名/游戏/玩家/代码 |
 | `MARKDOWN` | 2 | 输出排版标记 |
 
 - 实际调用 **6137 次**（含重采样 2441 次）
-- 首字：冷 **2.11s** / 热 **Nones**（中位数）
+- 首字：冷 **2.11** / 热 **无样本**（秒，中位数）
 - 回复长度中位数 **120 字**，最长 **465 字**
-- ⚠️ **有 61 人的 prompt 顶到 num_ctx=8192（前缀被截断）**：asgore、berdly、flowery、gerson、hy_ace、hy_axis、hy_bowll、hy_ceroba_ketsukane、hy_chujin_ketsukane、hy_clover、hy_dalv、hy_flowey、hy_guardener、hy_martlet、hy_mooch、hy_moray、hy_sousborg、hy_starlo、lancer、mike、noelle、os_alula、os_calamus、os_cedric、os_george、os_kip、os_lamplighter、os_ling、os_magpie、os_mason、os_niko、os_rue、os_shepherd、ot_alphys、ot_asgore、ot_asriel_twinkly、ot_kidd、ot_mettaton、ot_muffet、ot_napstablook、ot_papyrus、ot_sans、ot_toriel、ot_undyne、rouxls、spamton、susie、tenna、toriel、ut_alphys、ut_asgore、ut_chara、ut_flowey、ut_gaster、ut_mettaton、ut_muffet、ut_napstablook、ut_papyrus、ut_sans、ut_toriel、ut_undyne —— 这是"人设太长"的真实代价，不是模型的问题
+- prompt 峰值 **12216 token** / 该场 num_ctx **20480** ⇒ 余量 **8264**
 
 ## 3. 跨角色撞车（"是不是同一个 AI 换皮"）
 
@@ -115,6 +115,29 @@
 | `os_the_world_machine` | META | 4 | 人设本身是元叙事（玩家/代码/世界机器等出现 59 次），提这些词是在照设定说话 |
 
 > 这些不计入纠正：给他写"别用括号"等于逼他违反自己的人设。
+
+### 补训前后（⚠️ 抽样且**不可比**，见下）
+
+| 角色 | 补训前（不合规轮/总轮） | 补训后（不合规轮/总轮） | 轮均合规率变化 |
+|---|---|---|---|
+| `asgore` | 48/48 | 0/4 | ↓ -1.000 |
+| `berdly` | 6/48 | 4/4 | ↑ 0.875 |
+| `flowery` | 1/48 | 0/4 | ↓ -0.021 |
+| `hy_ace` | 18/48 | 3/4 | ↑ 0.375 |
+| `hy_axis` | 2/48 | 1/4 | ↑ 0.208 |
+| `hy_bowll` | 6/48 | 0/4 | ↓ -0.125 |
+| `hy_ceroba_ketsukane` | 9/48 | 0/4 | ↓ -0.188 |
+| `hy_chujin_ketsukane` | 5/48 | 2/4 | ↑ 0.396 |
+| `susie` | 2/48 | 0/4 | ↓ -0.042 |
+
+> **这张表不能当作"纠正有效"的证据。** 原因是**换了两套考题**：
+> 补训走 `dialogue113.script_for()` 的 4 句老剧本（`TURNS[0..2]`），
+> 而 48 轮基线走 `train30.SCRIPT48`（偏好 6 / 压力 3 / 口癖 2 / 记忆 3 /
+> 剧情 / 关系 / 角色间对话）。题目不同 ⇒ 违规率不可直接比。
+> 正确做法：补训必须跑**同一份 SCRIPT48**（或只重测判红的那些 slot），
+> 且轮数要够 48，才有资格谈"纠正有没有压住毛病"。已记为待办。
+
+> 另：本轮补训只跑了 **9 人**（全量 59 人需约 5 小时 CPU）。每人约 245 秒/4 轮，成本几乎全在**该角色第一轮**的冷 prefill（`prefill=232s`，因为 system 一换、前缀缓存全失效）。
 
 ## 5. 逐角色
 

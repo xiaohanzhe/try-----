@@ -39,6 +39,12 @@ import common113 as C
 MEM_FLOOR_MB = 450          # 低于此值就等（模型常驻 ~7.6G 是常态，不能按空闲内存嫌少）
 MAX_WAIT_S = 240            # 等满 4 分钟仍不够就硬着头皮试，失败记 error 不崩
 
+#: 本模块每次对话用的上下文窗口 —— 与 `train30.CTX30` **同值**（20,480）。
+#: ★ 为什么不 `from train30 import CTX30`：`train30` 自己 `import dialogue113`，
+#:   反向导入会成环（`ImportError: partially initialized module`）。
+#:   两个常量的一致性由 `check_chain113u.py` 的 D1 用 AST 对锁，不靠人记。
+DIALOG_CTX = 20480
+
 
 def wait_for_memory(floor=MEM_FLOOR_MB, max_wait=MAX_WAIT_S):
     """内存不足就等一等。返回实际等了多少秒（0 = 没等）。"""
@@ -94,8 +100,18 @@ def system_for(card, patch=''):
         evolution=C._NP.evolution_patch(card['id']))
 
 
-def run_conversation(card, patch='', phase='baseline'):
-    """跑一轮完整对话，返回记录（含每次尝试）。"""
+def run_conversation(card, patch='', phase='baseline', ctx=None):
+    """跑一轮完整对话，返回记录（含每次尝试）。
+
+    `ctx`：本轮上下文窗口。**默认 `DIALOG_CTX`（20,480），不是模块默认的 8,192。**
+    ★★★ 2026-10-29 修：原来调用 `C.chat(msgs, ...)` **没传 `num_ctx`** ⇒ 用 8,192。
+      `system_for()` 已经把「人设 + 关系卡 + 训练纠正」全拼进去了，最长实测
+      **13,455 字**（`hy_dalv`，约 9.3k token）⇒ 光 system 就顶穿 8k，
+      后果不是报错而是**静默从头部截断**（人设开头被丢掉）。
+      补训的目的是"验证纠正句能不能压住毛病"，而人设被切掉之后
+      量到的根本不是同一个角色 —— 数字会对不上，但日志看着一切正常。
+    """
+    ctx = DIALOG_CTX if ctx is None else int(ctx)
     system = system_for(card, patch)
     msgs = [{'role': 'system', 'content': system}]
     turns = []
@@ -110,7 +126,7 @@ def run_conversation(card, patch='', phase='baseline'):
             temp = C.TEMPERATURE + 0.15 * attempt
             wait_for_memory()          # ★ 内存闸：不够就等，不死
             try:
-                text, stats = C.chat(msgs, seed=seed, temperature=temp)
+                text, stats = C.chat(msgs, seed=seed, temperature=temp, num_ctx=ctx)
             except Exception as e:
                 attempts.append({'attempt': attempt, 'seed': seed, 'temp': temp,
                                  'error': repr(e)[:200], 'text': ''})
@@ -143,6 +159,7 @@ def run_conversation(card, patch='', phase='baseline'):
         'name': card['name'],
         'name_cn': card.get('name_cn', ''),
         'model': C.MODEL,
+        'ctx': ctx,
         'system_chars': len(system),
         'patch': patch,
         'turns': turns,
@@ -224,9 +241,45 @@ def load_card(nid, roster_by_id):
     return card
 
 
+#: ★★★ 2026-10-29 修「接线接错对象」（这是第113轮s 修过一次的同一类 bug 的**另一半**）：
+#:   `eval113.load_all()` 早就改成「`raw30` 存在就读 raw30」，但**写盘这边没改** ——
+#:   `dialogue113` 仍然读写 `C.RAW`（`_evidence/raw`，4 轮 baseline 的旧目录）。
+#:   后果有两层，都很安静：
+#:     ① 补训筛选 `existing_phases(x).get('baseline').hard_violations` 读的是旧目录，
+#:        跟 48 轮训练完全脱钩 ⇒ 筛出 **0 人**（报告里那句「补训后全绿 0 人」真相就是这个）；
+#:     ② 就算跑了，patch 记录也写进 `raw/`，而评测只读 `raw30/` ⇒ **永远看不见**。
+#:   ⇒ 现在**读写用同一个目录判断**，与 `eval113.load_all()` 逐字一致。
+MAIN_RAW = C.RAW30 if os.path.isdir(C.RAW30) else C.RAW
+
+#: ★ 补训转录单独放。**绝不能写回 `transcripts30/`** —— 那里是 48 轮训练的转录，
+#:   同名文件会被覆盖，而 48 轮那份是不可再生的（重跑要 10+ 小时）。
+TR_PATCH = os.path.join(C.EVID, 'transcripts_patch')
+
+
 def existing_phases(nid):
-    recs = C.read_jsonl(os.path.join(C.RAW, nid + '.jsonl'))
+    """该角色**主记录目录**里已有的各阶段记录（同阶段多条取最后一条）。"""
+    recs = C.read_jsonl(os.path.join(MAIN_RAW, nid + '.jsonl'))
     return {r.get('phase'): r for r in recs if isinstance(r, dict)}
+
+
+def main_record(nid):
+    """该角色的**主记录**：非 `patch` 里轮数最多的那条（与 `eval113.pick_main_record` 同口径）。
+
+    ★ 为什么不能用 `existing_phases(nid)['baseline']`：48 轮训练写的是 `phase='t30'`，
+       `baseline` 这个键在 `raw30` 里**根本不存在** ⇒ 那个判断恒为 0 人。
+        这正是「判据指向一个不存在的键」——比报红更隐蔽：它不报错，只是筛出空集。
+
+    ★★ 为什么**不能**走 `existing_phases()`：那个函数按 `phase` 做键，而一个人可能
+       有多条同 phase 记录（susie 就是 6/6/48/12 轮，**四条全叫 `t30`**），
+       字典推导式会把前面的**覆盖**掉，只留最后一条 12 轮的 ⇒ 又挑错了。
+       所以这里直接读**原始记录列表**，不经过按 phase 折叠的那一层。
+    """
+    recs = C.read_jsonl(os.path.join(MAIN_RAW, nid + '.jsonl'))
+    cand = [r for r in recs
+            if isinstance(r, dict) and r.get('phase') != 'patch']
+    if not cand:
+        return None
+    return max(cand, key=lambda r: (r.get('turns_n') or len(r.get('turns') or [])))
 
 
 def main(argv):
@@ -256,8 +309,12 @@ def main(argv):
     if only:
         todo = [x for x in todo if x in only]
     if phase == 'patch':
-        # 只补训"第一遍判红"的人 —— 全绿的人没有可纠正的东西，重跑只是烧 CPU
-        todo = [x for x in todo if existing_phases(x).get('baseline', {}).get('hard_violations', 0) > 0]
+        # 只补训"第一遍判红"的人 —— 全绿的人没有可纠正的东西，重跑只是烧 CPU。
+        # ★ 判据改用**主记录**（48 轮那条），不再查 `baseline` 这个 phase 名（见 main_record）。
+        def _red(x):
+            r = main_record(x) or {}
+            return (r.get('hard_violations') or 0) > 0
+        todo = [x for x in todo if _red(x)]
     if not force:
         todo = [x for x in todo if phase not in existing_phases(x)]
     if limit:
@@ -269,7 +326,8 @@ def main(argv):
     loaded = C.model_loaded()
     if not loaded:
         print('预热中（冷加载约 40s）…')
-        print('  =>', C.warmup())
+        # ★ 预热就用正式的 ctx，否则第一轮真请求会再触发一次重载（见 common113.warmup）
+        print('  =>', C.warmup(num_ctx=DIALOG_CTX))
 
     t_all = time.time()
     done = 0
@@ -284,10 +342,13 @@ def main(argv):
             continue
         print('[%d/%d] %s …' % (done + 1, len(todo), nid), end='', flush=True)
         rec = run_conversation(card, patch=patch, phase=phase)
-        C.append_jsonl(os.path.join(C.RAW, nid + '.jsonl'), rec)
-        prev2 = existing_phases(nid).get('baseline')
+        # ★ 写进**主记录目录**（与评测同一条链）；追加写，不覆盖历史记录。
+        C.append_jsonl(os.path.join(MAIN_RAW, nid + '.jsonl'), rec)
+        prev2 = main_record(nid) if phase == 'patch' else None
         md = transcript_md(rec, card, pass2=(prev2 if phase == 'patch' else None))
-        C.write_text(os.path.join(C.TRANSCRIPTS, nid + '.md'), md)
+        # ★ 转录写单独目录：`transcripts30/` 里的 48 轮转录不可再生，不许覆盖。
+        C.write_text(os.path.join(TR_PATCH if phase == 'patch' else C.TRANSCRIPTS,
+                                  nid + '.md'), md)
         print(' %d 处违规 / %.0fs' % (rec['hard_violations'], rec['cost_s']))
         done += 1
         # 散热节奏：每个角色后歇一会；每 N 个角色再停久一点

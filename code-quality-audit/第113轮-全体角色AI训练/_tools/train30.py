@@ -874,7 +874,8 @@ def main(argv):
 
     if not C.model_loaded():
         print('预热中（冷加载约 40s）…', flush=True)
-        print('  =>', C.warmup())
+        # ★ 预热就得用训练要用的 ctx —— 否则第一轮真请求再触发一次重载（约 75~150s 白付）
+        print('  =>', C.warmup(num_ctx=ctx))
 
     t_all = time.time()
     done = 0

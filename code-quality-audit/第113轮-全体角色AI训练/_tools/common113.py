@@ -386,10 +386,18 @@ def chat(messages, seed=None, temperature=None, num_predict=None, timeout=300,
     ★ 改 num_ctx 会让 Ollama **重新加载模型**（约 10s，实测 warmup 10.3s），
       所以整场训练必须用同一个值，不能一会儿 8k 一会儿 16k。
     """
+    # ★★★ 2026-10-29 修判据 bug：`eff_ctx` 必须**先算出来再两处共用**。
+    #   原来 payload 用 `num_ctx`、`truncated` 判据却写死常量 `NUM_CTX`(8192) ——
+    #   train30 用 ctx=20480 训练时，**任何 prompt 超过 8192 token 的轮次都被记成
+    #   「前缀被截断」**，实测虚报 1,010 轮（峰值 12,216，真实余量还有 8,264）。
+    #   转录 md 里那一大片「⚠️前缀被截断」全是假的。
+    #   这是「判据也是被测物」的典型：判据拿了一个与被测场景无关的常量。
+    #   ⇒ 判据必须用**本次请求实际生效的 ctx**。
+    eff_ctx = NUM_CTX if num_ctx is None else int(num_ctx)
     opts = {
         'temperature': TEMPERATURE if temperature is None else temperature,
         'num_predict': NUM_PREDICT if num_predict is None else num_predict,
-        'num_ctx': NUM_CTX if num_ctx is None else int(num_ctx),
+        'num_ctx': eff_ctx,
     }
     if seed is not None:
         opts['seed'] = int(seed)
@@ -428,8 +436,11 @@ def chat(messages, seed=None, temperature=None, num_predict=None, timeout=300,
         'prompt_eval_s': round((final.get('prompt_eval_duration') or 0) / 1e9, 2),
         'eval_s': round((final.get('eval_duration') or 0) / 1e9, 2),
         # ★ prompt_eval_count 顶到 num_ctx = 前缀被**静默截断**（实测风险，
-        #   长人设 12k 字 ≈ 6k+ token，加多轮历史就会撞上 8192）
-        'truncated': bool((final.get('prompt_eval_count') or 0) >= NUM_CTX),
+        #   长人设 12k 字 ≈ 6k+ token，加多轮历史就会撞上 ctx 上限）。
+        #   ⚠️ 阈值必须是 `eff_ctx`（本次生效值），**不是**模块常量 —— 见上面那段注释。
+        'truncated': bool((final.get('prompt_eval_count') or 0) >= eff_ctx),
+        #: 记下来供事后核对：判据用的到底是哪个 ctx（否则又变成"看不出用的哪把尺子"）
+        'num_ctx_used': eff_ctx,
     }
     return ''.join(pieces), stats
 
@@ -443,11 +454,20 @@ def model_loaded():
         return []
 
 
-def warmup():
-    """预热一次（把 40s 冷加载从"第一个角色"的账上挪走，便于统计）。"""
+def warmup(num_ctx=None):
+    """预热一次（把 40s 冷加载从"第一个角色"的账上挪走，便于统计）。
+
+    ★★ `num_ctx` 必须跟正式请求**一致**（2026-10-29 实测代价）。
+      Ollama 的 ctx 一变就**重载模型**（约 75~150s）。原来这里不传 ⇒ 用 8,192 预热，
+      第一轮真请求又切成 20,480 ⇒ **白付一次重载**。
+      实测 susie 补训：4 轮实际生成只用了 22.5 秒，wall-clock 却是 269 秒，
+      差的 246 秒里有两次重载的分。批量跑 59 人时这次重载只需付**一次**，
+      但每次单独起进程都会重犯 ⇒ 预热就该用最终要用的那个 ctx。
+    """
     t0 = time.time()
     try:
-        chat([{'role': 'user', 'content': '嗨'}], num_predict=8, timeout=300)
+        chat([{'role': 'user', 'content': '嗨'}], num_predict=8, timeout=300,
+             num_ctx=num_ctx)
     except Exception as e:
         return {'ok': False, 'error': str(e), 's': round(time.time() - t0, 1)}
     return {'ok': True, 's': round(time.time() - t0, 1)}
