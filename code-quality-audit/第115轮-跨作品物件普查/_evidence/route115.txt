@@ -1,0 +1,35 @@
+三款连通图的可达性实测（BFS，起点=桌面门通向的那间落地房）
+
+======================================================================
+[ut] 房间 338 / 入口 room_area1 / 对上产品 scene：按 original_room_id 338/338，按名字 338/338
+  策略         边数      可达      可回      双向      最深层     连通块    走进去出不来
+  exact      131     1       1       1       0       38/14  0
+          起点=room_area1 最远=room_area1  出不来样例: 无
+  room_first 500     4       1       1       2       12/239 3
+          起点=room_area1 最远=room_floweybattle  出不来样例: room_intromenu、room_area1_2、room_floweybattle
+  safe       611     3       2       2       2       12/87  1
+          起点=room_area1 最远=room_floweybattle  出不来样例: room_floweybattle
+  loose      694     280     270     265     109     5/293  15
+          起点=room_area1 最远=room_fire_boysnightout  出不来样例: room_intromenu、room_undertale_end、room_gaster、room2、TESTROOM、bullettest
+======================================================================
+[uty] 房间 287 / 入口 rm_ruins00 / 对上产品 scene：按 original_room_id 287/287，按名字 287/287
+  策略         边数      可达      可回      双向      最深层     连通块    走进去出不来
+  exact      1       1       1       1       0       1/2    0
+          起点=rm_ruins00 最远=rm_ruins00  出不来样例: 无
+  room_first 1       1       1       1       0       1/2    0
+          起点=rm_ruins00 最远=rm_ruins00  出不来样例: 无
+  safe       1       1       1       1       0       1/2    0
+          起点=rm_ruins00 最远=rm_ruins00  出不来样例: 无
+  loose      1       1       1       1       0       1/2    0
+          起点=rm_ruins00 最远=rm_ruins00  出不来样例: 无
+======================================================================
+[outertale] 房间 358 / 入口 room_area1 / 对上产品 scene：按 original_room_id 244/358，按名字 0/358
+  策略         边数      可达      可回      双向      最深层     连通块    走进去出不来
+  exact      144     1       1       1       0       42/15  0
+          起点=room_area1 最远=room_area1  出不来样例: 无
+  room_first 527     4       1       1       2       11/249 3
+          起点=room_area1 最远=room_floweybattle  出不来样例: room_intromenu、room_area1_2、room_floweybattle
+  safe       640     3       2       2       2       13/95  1
+          起点=room_area1 最远=room_floweybattle  出不来样例: room_floweybattle
+  loose      732     283     285     268     96      4/312  15
+          起点=room_area1 最远=room_fire_elevator_r2  出不来样例: room_intromenu、room_undertale_end、room_gaster、room2、TESTROOM、room_overworld
