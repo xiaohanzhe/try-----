@@ -1,0 +1,22 @@
+三款交互点语义（815 间房 / 5274 个可交互实例）
+
+分类：门 3189 · 命名标记 1210 · 可读物 716 · 招牌 88 · 存档点 68 · 宝箱 3
+（另有其它 30862 个非交互场景物件，不在本节口径内 —— 它们归 §12 的物件分级）
+细分：门洞/出口 466 · 假门 311 · 挡路物 27 · 书架 4 · 箱子 3 · 书 2
+
+[ut] 门实例 1299：exact 解析 239 / inferred 解析 309 / 多候选 2 / 无解 749
+     room_area1             obj_doorA                -> room_area1_2           (inferred)
+     room_ruins1            obj_doorA                -> room_ruins2            (inferred)
+     room_ruins1            obj_doorA                -> room_ruins2            (inferred)
+     room_ruins2            obj_doorA                -> room_ruins3            (inferred)
+
+[uty] 门实例 523：exact 解析 0 / inferred 解析 0 / 多候选 0 / 无解 523
+
+[outertale] 门实例 1367：exact 解析 256 / inferred 解析 324 / 多候选 2 / 无解 785
+     room_ruins1            obj_doorA                -> room_ruins2            (inferred)
+     room_ruins1            obj_doorA                -> room_ruins2            (inferred)
+     room_ruins2            obj_doorA                -> room_ruins3            (inferred)
+     room_ruins2            obj_doorA                -> room_ruins3            (inferred)
+
+门总计 3189 个：exact 495 / inferred 633
+存档点 68 · 可读物 716 · 招牌 88 · 宝箱 3 · 传送 0 · 标记 1210
