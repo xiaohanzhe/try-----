@@ -987,3 +987,162 @@ python _tools/scan_markers115.py # 正文里出现过哪些控制符
 
 
 
+
+
+## 18. 第119轮 · 可读物的「第二层 if」：同一房间同一对象有多个候选，到底选哪条
+
+### 18.1 一句话结论
+
+原作 `obj_readable_*_Alarm_0` **不是** `if / else if` 链，而是**一串平行的 `if`**，
+每个块直接覆盖 `global.msg[0]` ⇒ 语义是「**最后一条成立的赋值获胜**」。
+所以"默认可读物正文"= **守卫最松（`base`：除房间外无条件）的那批里最后一条**，
+既不是"编号最小的键"，也不是"解析出来的第一条"。第117轮的"取第一条"是个**猜测**，
+本轮把它换成了可判定的规则，并补回了它漏掉的 595 条候选。
+
+### 18.2 取证：原文长什么样
+
+`_evidence/raw/ut/gml_readable/gml_Object_obj_readable_room5_Alarm_0.gml`：
+
+```gml
+if (room == room_fire_lab1)
+{
+    global.msg[0] = scr_gettext("obj_readable_room5_92");      // ← base：进房就有
+    if (global.plot < 126 && scr_murderlv() < 12)
+        global.msg[0] = scr_gettext("obj_readable_room5_93");   // ← state：剧情推进后覆盖
+    if (y >= 125 && x > 800)
+        global.msc = 827;                                      // ← pos：交给 msc 脚本
+}
+if (room == room_fire_lab1 && x > 828 && x < 868 && y < 90)
+{
+    global.msg[0] = scr_gettext("obj_readable_room5_177");      // ← pos：按坐标选
+}
+```
+
+指令流侧能看到同一件事（`dump_ins_room119.csx` 的产物，ins 344~367）：
+
+```
+344 PushBltn {room}      345 PushI 141      346 Cmp     347 Bf 16
+348 Push {x}  349 PushI 828  350 Cmp  351 Bf 11
+352 Push {x}  353 PushI 868  354 Cmp  355 Bf 6
+356 Push {y}  357 PushI 90   358 Cmp
+362 Push "obj_readable_room5_177"
+```
+
+**两条取证路径一致**（`room == 141` 就是 `room_fire_lab1`：`Data.Rooms` 下标 141，
+由 `probe_rooms.csx` 直接 dump 出来核对）。
+
+> ⚠️ 本轮踩过的一个自伤：我先用正则 `if \(room == (\w+)\)` 找"最近的房间块"，
+> 而这条原文是 `if (room == room_fire_lab1 && x > 828 …)`（**条件在同一行**），
+> 正则匹配不上，于是把 `_177` 误判成 `room_fire2` 的键，一度以为两条取证路径**互相矛盾**。
+> 教训：**归因前先确认自己取证的谓词覆盖了真实写法**（同一类错误第 108 轮已犯过五次）。
+
+### 18.3 第117轮的数据源缺陷（实测，不是推测）
+
+v1 的键来自指令流：`PushBltn room` 后面紧跟的 `PushI` 当作房间守卫。但那个 `pending`
+**只被下一个字符串 push 消费一次**，所以同一个 `if (room == X)` 块里的第 2、3… 个键
+拿不到房间，被记成 `-1` 后丢弃。
+
+`audit119.py` 拿 GML 原文逐条对账（这是独立第二条路径）：
+
+| 作品 | 可比组合 | 完全一致 | 表里多出（污染） | 表里缺少 |
+| --- | --- | --- | --- | --- |
+| ut | 187 | 82 | **0** | **105** |
+| outertale | 154 | 76 | **0** | **78** |
+
+⇒ **没有绑错房间**（这点 v1 是对的），但**少了 183 个组合的分支**。
+
+### 18.4 v2 资产与选择规则
+
+`_readable_text.json` 升到 `schema_version: 2`，每条候选多了三列：
+
+| 字段 | 含义 |
+| --- | --- |
+| `guard` | `base`（除房间外无条件）/ `pos`（只多出 x/y 比较）/ `state`（还有剧情、全局变量、函数调用） |
+| `guard_text` | 除房间外的条件原文（`pos` / `state` 才有） |
+| `order` | 该条在 GML 里的赋值顺序（**顺序即语义**） |
+
+选择规则落在 `item_interact.pick_readable_entry()`（纯函数，可单测）：
+
+1. 有 `base` ⇒ 取**最后一条** `base`（执行到最后覆盖出来的就是它）；
+2. 没有 `base` ⇒ 取列表第一条（`pos` 要实例坐标、`state` 要运行时状态，产品侧都还没有，
+   如实按原文顺序取，不猜）；
+3. v1 老资产没有 `guard` 字段 ⇒ 走第 2 条，行为与第117轮**逐字一致**（向后兼容）。
+
+★ 补一道**空文本回退**（`readable_text_of()`，本轮实测需要）：选中的 `base` 那条原文可能
+只有终止符 `%%`，解完是空串 —— 直接采用就等于"这间房读不出字"。实测 v2 里有 **2 条**这种
+`base`，不做回退加载器会**少 2 条**（162 场景 / 333 条 vs 164 / 335）。
+回退顺序 = 选中那条 → 其余按文件顺序 → 全空才返回空串（回落兜底台词，**不造假**）。
+
+### 18.5 量化（954 条的账目）
+
+| 项 | 数 | 说明 |
+| --- | --- | --- |
+| v1 交付 | 355 条 / 341 组合 | 第117轮 |
+| v2 交付 | **954 条 / 341 组合** | 组合数**一模一样**（说明"只收真的摆了可读物"的纪律没被破坏） |
+| 丢弃 | **0** | 写盘前拿 `readable_v1_keys.txt`（git HEAD 快照 355 条）逐条对账 |
+| 新增 | 595 | 同一房间的其余分支 |
+| guard 分布 | base 535 / pos 52 / state 367 | |
+| 无 `base` 的组合 | 34 | 只能靠 `pos`/`state` 选，如实标注 |
+| 死代码候选 | 59 | 该房间**根本没摆**这个对象 ⇒ 这段 `if` 永不成立，不进资产 |
+| 未解 | ut 19 / outertale 186 | 19 = 没有房间条件；outertale 另有 167 个房间在产品里**没有场景** |
+
+加载器实测：**164 个场景 / 335 条**（与 v1 **持平**：组合数相同、空文本回退补齐了那 2 条；
+但**读到的是哪一句变了**）。例：
+`ut.rooms.room_fire_lab1` 的 `obj_readable_room5` 从 `_177`（按坐标才成立的支线）
+改成了 `_92`（进房就显示的正文）——这才是原作的默认观感。
+
+### 18.6 逐实例位置绑定：能力就绪，产品侧还没有坐标
+
+`posbind119.py` 用实例坐标把 `pos` 守卫真正算了一遍（逐实例执行全部平行 `if`）：
+
+| 作品 | 逐实例行 | 有位置赋值 | **实例之间冲突** | 无确定值 |
+| --- | --- | --- | --- | --- |
+| ut | 337 | 177 组 | 8 组 | 16 组 |
+| outertale | 290 | 141 组 | 7 组 | 17 组 |
+
+冲突的 15 组就是"同一个房间、同一个可读物、两个实例读到的正文不同"（例：
+`room_torielroom` 的 `obj_readable_room2`：`x=65` 读 `_124`，`x=142/162` 读 `_127`）。
+产物落 `_evidence/readable_pos119.<game>.tsv`（`scene / obj / x / y / certain_key /
+uncertain_overrides`）。**这一层产品侧暂时用不上**，原因见 18.7。
+
+### 18.7 阻塞项（必须说清楚，否则等于假装做完了）
+
+1. **ut / outertale 的场景在产品里是空壳**：`_zone.ut.rooms.json`（358 场景）与
+   `_zone.outertale.*`（244 场景）里 `objects` **全为 0 条**、`bg` **全为 `null`**
+   （`bg_source: none`）。也就是说可读物正文**读得到、但没地方摆**——
+   `build_props` 消费的是 `scene['objects']`，没有物件就没有可交互物。
+   要让这一整条链在界面上生效，下一步得先给这两款补**背景 + 物件**（第115轮
+   `cross_props115.json` 有 1,056 行分级素材；背景要新做纹理导出）。
+2. **`global.msc = N`**（ut 28 条 / outertale 28 条）：正文交给 msc 脚本，需要另找 msc 表，
+   本轮**没解**，只在 `guard_text` 里如实留下证据。
+3. **`global.msg[1..14]`**：多段文本，本轮只按 `msg[0]` 建资产（后续段仍未收）。
+4. **分页**：原作 `%` 是换新文本框，产品只有一个气泡 ⇒ 退化成换行（第117轮既有结论）。
+
+### 18.8 复现与判据
+
+```
+# 1) 反编译（第118轮产物已在仓库：_evidence/raw/{ut,outertale}/gml_readable/）
+python _tools/conds118.py            # GML → (alarm, depth, cond, target, key) TSV
+python _tools/ci_check118.py         # 与指令流交叉校验：交集 203 / 仅在指令流侧 0
+# 2) 标注守卫等级 + 逐实例绑定
+python _tools/plan119.py             # → readable_plan119.<game>.tsv (+ .unresolved.tsv)
+python _tools/posbind119.py          # → readable_pos119.<game>.tsv
+# 3) 重建资产（先 dry-run 看对账，再 --write）
+python _tools/build_readable_v2.py
+python _tools/build_readable_v2.py --write
+# 4) 对账
+python _tools/audit119.py            # 表 vs GML：污染应为 0
+```
+
+判据：`_tools/check_readable_guard119.py`（**23 条**，已进 G2）。
+同轮把两张老锁改到 v2 口径（**改判据、不删数据**）：
+
+- `check_readable_wire117` 的 `B2/B5/B7` 原来写死"只取第一条 + 重复 < 30 条"，
+  v2 把分支全收后那条上界只会逼人删数据 ⇒ 改成**恒等式**（采用 + 未采用 + 解空 == 原始条目）
+  + 结构断言（每条带合法 `guard`），并新增 `B8`（多条候选时必须选中最后一条 `base`）、
+  `B9`（无 `base` 组合数 ≤ 40，涨上去说明解析退化）；
+- `check_readable_asset115` 的 `A2`（schema 1→{1,2} 且 v2 必须带 `guard`）、
+  `B1/B2`（条目下界 300/250）、`G1`（未解条目必须带 `why`，且 `room_without_scene`
+  那批**逐条反查 zone 确认真的没场景**——不是自证）、`G3` 文案按新事实重写。
+
+全量 G2：**5900 PASS / 0 FAIL / 118 套件**（`check75c` 仍只有空行噪声，未刷基线）。

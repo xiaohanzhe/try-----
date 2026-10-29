@@ -1,0 +1,643 @@
+alarm	depth	cond	target	key
+gml_Object_obj_readable_modernbook_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_modernbook_Alarm_0	0		msg[0]	obj_readable_modernbook_59
+gml_Object_obj_readable_modernbook_Alarm_0	0		msg[0]	obj_readable_modernbook_60
+gml_Object_obj_readable_modernbook_Alarm_0	0		msg[1]	obj_readable_modernbook_61
+gml_Object_obj_readable_modernbook_Alarm_0	0		msg[2]	obj_readable_modernbook_62
+gml_Object_obj_readable_modernbook_Alarm_0	0		msg[3]	obj_readable_modernbook_63
+gml_Object_obj_readable_modernbook_Alarm_0	1	scr_murderlv() >= 7	msg[0]	obj_readable_modernbook_68
+gml_Object_obj_readable_room1_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_room1_Alarm_0	0		msg[0]	obj_readable_room1_64
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins2	msg[0]	obj_readable_room1_65
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins3	msg[0]	obj_readable_room1_66
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins5	msg[0]	obj_readable_room1_67
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins9	msg[0]	obj_readable_room1_68
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_ruins13 && global.osflavor >= 3	msg[0]	obj_readable_room1_69_console_1
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_ruins13 && global.osflavor >= 3	msg[1]	obj_readable_room1_69_console_2
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_ruins13 && global.osflavor >= 3	msg[2]	obj_readable_room1_69_console_3
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_ruins13 && global.osflavor >= 3	msg[3]	obj_readable_room1_69_console_4
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_ruins13 && ELSE_OF: room == room_ruins13	msg[0]	obj_readable_room1_69
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins14	msg[0]	obj_readable_room1_70
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins15A	msg[0]	obj_readable_room1_71
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins15B	msg[0]	obj_readable_room1_72
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins15C	msg[0]	obj_readable_room1_73
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_ruins15D	msg[0]	obj_readable_room1_74
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_torhouse1	msg[0]	obj_readable_room1_75
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asghouse1	msg[0]	obj_readable_room1_78
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_asghouse1 && scr_murderlv() >= 16	msg[0]	obj_readable_room1_79
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_torhouse2	msg[0]	obj_readable_room1_81
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asghouse2	msg[0]	obj_readable_room1_82
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asrielroom	msg[0]	obj_readable_room1_83
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asrielroom_final	msg[0]	obj_readable_room1_84
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_castle_finalshoehorn	msg[0]	obj_readable_room1_86
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_castle_coffins2	msg[0]	obj_readable_room1_90
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_castle_coffins2	msg[1]	obj_readable_room1_91
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_castle_coffins2	msg[2]	obj_readable_room1_92
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_castle_coffins2 && global.flag[7] == 1	msg[0]	obj_readable_room1_96
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_castle_coffins2 && global.flag[7] == 1	msg[1]	obj_readable_room1_97
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_castle_coffins2 && global.flag[7] == 1	msg[2]	obj_readable_room1_98
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_castle_coffins2 && scr_murderlv() >= 16	msg[0]	obj_readable_room1_103
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_torielroom	msc	MSC_524
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_torielroom && x > 192	msc	MSC_0
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_torielroom && x > 192	msg[0]	obj_readable_room1_112
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_torielroom && x > 192	msg[1]	obj_readable_room1_113
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_torielroom && x > 192 && read > 0	msg[0]	obj_readable_room1_114
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_torielroom && x > 192 && global.flag[7] == 1	msg[0]	obj_readable_room1_118
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_torielroom && x > 192 && global.flag[7] == 1	msg[1]	obj_readable_room1_119
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asgoreroom	msg[0]	obj_readable_room1_125
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asgoreroom	msg[1]	obj_readable_room1_126
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_asgoreroom && scr_murderlv() >= 16	msg[0]	obj_readable_room1_130
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_asgoreroom && y > 120	msg[0]	obj_readable_room1_134
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_castle_throneroom	msg[0]	obj_readable_room1_139
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_torhouse3	msg[0]	obj_readable_room1_142
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_asghouse3	msg[0]	obj_readable_room1_143
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_kitchen	msg[0]	obj_readable_room1_144
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_kitchen_final	msg[0]	obj_readable_room1_147
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_kitchen_final && scr_murderlv() >= 16	msg[0]	obj_readable_room1_151
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra1	msg[0]	obj_readable_room1_154
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra8A	msg[0]	obj_readable_room1_155
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_snowpuzz && global.plot <= 48	msg[0]	obj_readable_room1_158
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_snowpuzz && global.plot > 48	msg[0]	obj_readable_room1_159
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_snowpuzz && scr_murderlv() >= 3	msg[0]	obj_readable_room1_162
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_lesserdog	msg[0]	obj_readable_room1_164
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_library	msg[0]	obj_readable_room1_198
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_library	msg[1]	obj_readable_room1_199
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_library	msg[2]	obj_readable_room1_200
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_library	msg[3]	obj_readable_room1_201
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_library	msg[4]	obj_readable_room1_202
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_library	msg[5]	obj_readable_room1_203
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_inn	msg[0]	obj_readable_room1_208
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_inn	msg[1]	obj_readable_room1_209
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_inn && global.flag[7] == 1	msg[0]	obj_readable_room1_213
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_inn && global.flag[7] == 1	msg[1]	obj_readable_room1_214
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_inn && scr_murderlv() >= 7	msg[0]	obj_readable_room1_219
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water12	msg[0]	obj_readable_room1_228
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water12	msg[1]	obj_readable_room1_229
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water7	msg[0]	obj_readable_room1_235
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water7	msg[1]	obj_readable_room1_236
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water14	msg[0]	obj_readable_room1_241
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water15	msg[0]	obj_readable_room1_247
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water15	msg[1]	obj_readable_room1_248
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water15	msg[2]	obj_readable_room1_249
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water19	msg[0]	obj_readable_room1_256
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water19	msg[1]	obj_readable_room1_257
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water19	msg[2]	obj_readable_room1_258
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_nicecream	msg[0]	obj_readable_room1_263
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_prebird	msg[0]	obj_readable_room1_269
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_preundyne	msg[0]	obj_readable_room1_274
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_preundyne	msg[1]	obj_readable_room1_275
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water17	msg[0]	obj_readable_room1_280
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_lab1	msg[0]	obj_readable_room1_292
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_lab1 && global.plot < 126 && scr_murderlv() < 12	msg[0]	obj_readable_room1_293
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_lab2	msg[0]	obj_readable_room1_299
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_cookingshow	msg[0]	obj_readable_room1_304
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot < 134	msg[0]	obj_readable_room1_306
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[0]	obj_readable_room1_312
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[1]	obj_readable_room1_313
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[0]	obj_readable_room1_320
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[1]	obj_readable_room1_321
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[2]	obj_readable_room1_322
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[3]	obj_readable_room1_323
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[4]	obj_readable_room1_324
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[5]	obj_readable_room1_325
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_fire_cookingshow && global.plot == 134 && specialread > 0	msg[0]	obj_readable_room1_328
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_fire_cookingshow && global.plot == 134 && specialread > 0	msg[1]	obj_readable_room1_329
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_fire_cookingshow && global.plot == 134 && specialread > 0	msg[2]	obj_readable_room1_330
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_undynehouse	msc	MSC_0
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_water_undynehouse && x > 180	msg[0]	obj_readable_room1_347
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_water_undynehouse && x > 180	msg[1]	obj_readable_room1_349
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_water_undynehouse && x > 180	msg[2]	obj_readable_room1_350
+gml_Object_obj_readable_room1_Alarm_0	3	room == room_water_undynehouse && x > 180 && read > 0	msg[0]	obj_readable_room1_354
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_water_undynehouse && ELSE_OF: room == room_water_undynehouse	msg[0]	obj_readable_room1_360
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_water_undynehouse && ELSE_OF: room == room_water_undynehouse	msg[1]	obj_readable_room1_361
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_water_undynehouse && ELSE_OF: room == room_water_undynehouse	msg[2]	obj_readable_room1_362
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_spidershop	msg[0]	obj_readable_room1_369
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_spidershop	msg[1]	obj_readable_room1_370
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_hotelfront_2	msg[0]	obj_readable_room1_375
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_branch	msg[0]	obj_readable_room1_380
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_left	msg[0]	obj_readable_room1_385
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_top	msg[0]	obj_readable_room1_390
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_right	msg[0]	obj_readable_room1_395
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_right	msg[1]	obj_readable_room1_396
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_center	msg[0]	obj_readable_room1_401
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_treasureleft	msg[0]	obj_readable_room1_406
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_core_metttest	msg[0]	obj_readable_room1_416
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_fire_core_metttest && global.flag[425] == 0	msg[0]	obj_readable_room1_419
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall1	msg[0]	obj_readable_room1_425
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall1	msg[1]	obj_readable_room1_426
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall1	msg[2]	obj_readable_room1_427
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall1	msg[3]	obj_readable_room1_428
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_hall1 && global.flag[485] == 1	msg[0]	obj_readable_room1_430
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hub	msg[0]	obj_readable_room1_435
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_hub && global.flag[485] == 1	msg[0]	obj_readable_room1_436
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[0]	obj_readable_room1_441
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[1]	obj_readable_room1_442
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[2]	obj_readable_room1_443
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[3]	obj_readable_room1_444
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[4]	obj_readable_room1_445
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[5]	obj_readable_room1_446
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall2	msg[6]	obj_readable_room1_447
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_hall2 && global.flag[485] == 1	msg[0]	obj_readable_room1_449
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_operatingroom	msg[0]	obj_readable_room1_454
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_operatingroom	msg[1]	obj_readable_room1_455
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_operatingroom	msg[2]	obj_readable_room1_456
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_operatingroom	msg[3]	obj_readable_room1_457
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_operatingroom	msg[4]	obj_readable_room1_458
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_operatingroom	msg[5]	obj_readable_room1_459
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_operatingroom && global.flag[485] == 1	msg[0]	obj_readable_room1_462
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_prebed	msg[0]	obj_readable_room1_467
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_prebed	msg[1]	obj_readable_room1_468
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_prebed	msg[2]	obj_readable_room1_469
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_prebed	msg[3]	obj_readable_room1_470
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prebed && global.flag[485] == 1	msg[0]	obj_readable_room1_471
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_bedroom	msg[0]	obj_readable_room1_476
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_bedroom	msg[1]	obj_readable_room1_477
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_bedroom	msg[2]	obj_readable_room1_478
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_bedroom	msg[3]	obj_readable_room1_479
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_bedroom	msg[4]	obj_readable_room1_480
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_bedroom && global.flag[485] == 1	msg[0]	obj_readable_room1_481
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_mirror	msg[0]	obj_readable_room1_486
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_mirror	msg[1]	obj_readable_room1_487
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_mirror	msg[2]	obj_readable_room1_488
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_mirror	msg[3]	obj_readable_room1_489
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_mirror	msg[4]	obj_readable_room1_490
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_mirror	msg[5]	obj_readable_room1_491
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_mirror && global.flag[485] == 1	msg[0]	obj_readable_room1_492
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall3	msg[0]	obj_readable_room1_497
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall3	msg[1]	obj_readable_room1_498
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall3	msg[2]	obj_readable_room1_499
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall3	msg[3]	obj_readable_room1_500
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall3	msg[4]	obj_readable_room1_501
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_hall3	msg[5]	obj_readable_room1_502
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_hall3 && global.flag[485] == 1	msg[0]	obj_readable_room1_503
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_determination	msg[0]	obj_readable_room1_517
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_determination && global.flag[485] == 1	msg[0]	obj_readable_room1_518
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_tv	msg[0]	obj_readable_room1_523
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_tv	msg[1]	obj_readable_room1_524
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_tv	msg[2]	obj_readable_room1_525
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_tv	msg[3]	obj_readable_room1_526
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_tv	msg[4]	obj_readable_room1_527
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_tv && global.flag[485] == 1	msg[0]	obj_readable_room1_528
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_fan	msc	MSC_780
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_cooler	msg[0]	obj_readable_room1_538
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_cooler	msg[1]	obj_readable_room1_539
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_cooler	msg[2]	obj_readable_room1_540
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_cooler	msg[3]	obj_readable_room1_541
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_cooler && global.flag[485] == 1	msg[0]	obj_readable_room1_542
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_cooler && global.flag[490] == 0	msg[0]	obj_readable_room1_543
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_prepower	msg[0]	obj_readable_room1_548
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[0]	obj_readable_room1_551
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[1]	obj_readable_room1_552
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[2]	obj_readable_room1_553
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[3]	obj_readable_room1_554
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[4]	obj_readable_room1_555
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[5]	obj_readable_room1_556
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[6]	obj_readable_room1_557
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[7]	obj_readable_room1_558
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[8]	obj_readable_room1_559
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_elevatorinside	msg[0]	obj_readable_room1_565
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_castle_elevatorout	msg[0]	obj_readable_room1_570
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_truelab_castle_elevator	msg[0]	obj_readable_room1_575
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_grillby	msg[0]	obj_readable_room1_580
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_blookyard	msg[0]	obj_readable_room1_585
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_sansroom	msg[0]	obj_readable_room1_590
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_sansbasement	msg[0]	obj_readable_room1_595
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_sansbasement	msg[1]	obj_readable_room1_596
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_tundra_sansbasement	msg[2]	obj_readable_room1_597
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[7] == 1	msg[0]	obj_readable_room1_602
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[7] == 1	msg[1]	obj_readable_room1_603
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[7] == 1	msg[2]	obj_readable_room1_604
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[7] == 1	msg[3]	obj_readable_room1_605
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[279] == 1	msg[0]	obj_readable_room1_610
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[279] == 1	msg[1]	obj_readable_room1_611
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[279] == 1	msg[2]	obj_readable_room1_612
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[279] == 1	msg[3]	obj_readable_room1_613
+gml_Object_obj_readable_room1_Alarm_0	2	room == room_tundra_sansbasement && global.flag[279] == 1	msg[4]	obj_readable_room1_614
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_pacing	msg[0]	obj_readable_room1_621
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_pacing	msg[1]	obj_readable_room1_622
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_pacing	msg[2]	obj_readable_room1_623
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_hoteldoors	msg[0]	obj_readable_room1_628
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_hotellobby	msg[0]	obj_readable_room1_633
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_hotellobby	msg[1]	obj_readable_room1_634
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_restaurant	msg[0]	obj_readable_room1_639
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_restaurant	msg[1]	obj_readable_room1_640
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_restaurant	msg[2]	obj_readable_room1_641
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_hotelbed	msg[0]	obj_readable_room1_646
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_fire_hotelbed	msg[1]	obj_readable_room1_647
+gml_Object_obj_readable_room1_Alarm_0	1	room == room_water_temvillage	msg[0]	obj_readable_room1_652
+gml_Object_obj_readable_room2_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_room2_Alarm_0	0		msg[0]	obj_readable_room2_60
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asrielroom	msg[0]	obj_readable_room2_63
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_asrielroom && global.flag[7] == 1	msg[0]	obj_readable_room2_67
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asrielroom_final	msg[0]	obj_readable_room2_72
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_asrielroom_final && scr_murderlv() >= 16	msg[0]	obj_readable_room2_75
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse2	msg[0]	obj_readable_room2_80
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse2	msg[1]	obj_readable_room2_81
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse2	msg[2]	obj_readable_room2_82
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse2	msg[3]	obj_readable_room2_83
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse2	msg[4]	obj_readable_room2_84
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse2	msg[5]	obj_readable_room2_85
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asgoreroom	msg[0]	obj_readable_room2_90
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asgoreroom	msg[1]	obj_readable_room2_91
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_asgoreroom && scr_murderlv() >= 16	msg[0]	obj_readable_room2_94
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asghouse2	msg[0]	obj_readable_room2_100
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asghouse2	msg[1]	obj_readable_room2_101
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_asghouse2 && scr_murderlv() >= 16	msg[0]	obj_readable_room2_105
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asghouse3	msg[0]	obj_readable_room2_111
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse1	msg[0]	obj_readable_room2_114
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_asghouse1	msg[0]	obj_readable_room2_115
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_castle_throneroom	msg[0]	obj_readable_room2_119
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torielroom	msg[0]	obj_readable_room2_124
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_torielroom && x > 90	msg[0]	obj_readable_room2_127
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_torielroom && x > 90	msg[1]	obj_readable_room2_128
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_torielroom && x > 90	msg[2]	obj_readable_room2_129
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_torhouse3	msg[0]	obj_readable_room2_135
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_torhouse3 && global.flag[50] == 1	msg[0]	obj_readable_room2_136
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_kitchen	msg[0]	obj_readable_room2_140
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_kitchen && global.flag[103] > 0	msg[0]	obj_readable_room2_141
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_kitchen && global.flag[7] == 1	msg[0]	obj_readable_room2_144
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_library	msg[0]	obj_readable_room2_149
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_library	msg[1]	obj_readable_room2_150
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_library	msg[2]	obj_readable_room2_151
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_library	msg[3]	obj_readable_room2_152
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_icecave1	msg[0]	obj_readable_room2_164
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra1	msg[0]	obj_readable_room2_166
+gml_Object_obj_readable_room2_Alarm_0	5	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && global.flag[387] == 0	msg[0]	obj_readable_room2_178
+gml_Object_obj_readable_room2_Alarm_0	5	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && global.flag[387] == 0	msg[1]	obj_readable_room2_179
+gml_Object_obj_readable_room2_Alarm_0	5	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && global.flag[387] == 0	msg[2]	obj_readable_room2_180
+gml_Object_obj_readable_room2_Alarm_0	5	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && ELSE_OF: obj_iceflag.image_index == 0	msg[0]	obj_readable_room2_186
+gml_Object_obj_readable_room2_Alarm_0	5	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && ELSE_OF: obj_iceflag.image_index == 0	msg[1]	obj_readable_room2_187
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 1	msg[0]	obj_readable_room2_194
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 1	msg[1]	obj_readable_room2_195
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 2	msg[0]	obj_readable_room2_201
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 2	msg[1]	obj_readable_room2_202
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 3	msg[0]	obj_readable_room2_208
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 3	msg[1]	obj_readable_room2_209
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 4	msg[0]	obj_readable_room2_215
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 4	msg[1]	obj_readable_room2_216
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 5	msg[0]	obj_readable_room2_222
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 5	msg[1]	obj_readable_room2_223
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 6	msg[0]	obj_readable_room2_229
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 6	msg[1]	obj_readable_room2_230
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra8 && instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 6	msg[2]	obj_readable_room2_231
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra8 && instance_exists(obj_iceflag) && ELSE_OF: instance_exists(obj_iceflag)	msg[0]	obj_readable_room2_238
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra8 && ELSE_OF: room == room_tundra8	msg[0]	obj_readable_room2_245
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra8 && ELSE_OF: room == room_tundra8 && global.flag[203] >= 16	msg[0]	obj_readable_room2_247
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra8A	msg[0]	obj_readable_room2_252
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[1]	obj_readable_room2_259
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[2]	obj_readable_room2_260
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[3]	obj_readable_room2_261
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[4]	obj_readable_room2_262
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[5]	obj_readable_room2_263
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && ELSE_OF: room == room_tundra_sanshouse	msg[0]	obj_readable_room2_266
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_sanshouse && read > 0	msg[0]	obj_readable_room2_268
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[1]	obj_readable_room2_276
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[2]	obj_readable_room2_277
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[3]	obj_readable_room2_278
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[4]	obj_readable_room2_279
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[5]	obj_readable_room2_280
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[6]	obj_readable_room2_281
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[7]	obj_readable_room2_282
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[8]	obj_readable_room2_283
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[9]	obj_readable_room2_284
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && instance_exists(obj_papyrusparent)	msg[10]	obj_readable_room2_285
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && ELSE_OF: room == room_tundra_paproom	msg[0]	obj_readable_room2_287
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_paproom && read > 0	msg[0]	obj_readable_room2_288
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water7	msg[0]	obj_readable_room2_295
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water7	msg[1]	obj_readable_room2_296
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water7	msg[2]	obj_readable_room2_297
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water14	msg[0]	obj_readable_room2_302
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water14	msg[1]	obj_readable_room2_303
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water14	msg[2]	obj_readable_room2_304
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water15	msg[0]	obj_readable_room2_310
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water15	msg[1]	obj_readable_room2_311
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water15	msg[2]	obj_readable_room2_312
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_preundyne	msg[0]	obj_readable_room2_318
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_preundyne	msg[1]	obj_readable_room2_319
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_preundyne	msg[2]	obj_readable_room2_320
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_prebird	msg[0]	obj_readable_room2_326
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_prebird	msg[1]	obj_readable_room2_327
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_lab1	msg[0]	obj_readable_room2_332
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_fire_lab1 && global.plot < 126 && scr_murderlv() < 12	msg[0]	obj_readable_room2_333
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_lab2	msc	MSC_643
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_cookingshow	msg[0]	obj_readable_room2_343
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_fire_cookingshow && global.plot < 134	msg[0]	obj_readable_room2_345
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[0]	obj_readable_room2_353
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[1]	obj_readable_room2_354
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_fire_cookingshow && global.plot == 134	msg[0]	obj_readable_room2_360
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_undynehouse	msc	MSC_0
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_water_undynehouse && x < 100	msg[0]	obj_readable_room2_373
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_water_undynehouse && x < 100	msg[1]	obj_readable_room2_374
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_water_undynehouse && x < 100	msg[2]	obj_readable_room2_375
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_water_undynehouse && x < 100 && read > 0	msg[0]	obj_readable_room2_377
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_spidershop	msg[0]	obj_readable_room2_390
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_core_branch	msg[0]	obj_readable_room2_395
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_core_right	msg[0]	obj_readable_room2_400
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall1	msg[0]	obj_readable_room2_405
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall1	msg[1]	obj_readable_room2_406
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall1	msg[2]	obj_readable_room2_407
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall1	msg[3]	obj_readable_room2_408
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall1	msg[4]	obj_readable_room2_409
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall1	msg[5]	obj_readable_room2_410
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_hall1 && global.flag[485] == 1	msg[0]	obj_readable_room2_412
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_prebed	msg[0]	obj_readable_room2_417
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_prebed	msg[1]	obj_readable_room2_418
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_prebed && global.flag[485] == 1	msg[0]	obj_readable_room2_419
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_bedroom	msg[0]	obj_readable_room2_424
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_mirror	msg[0]	obj_readable_room2_429
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_mirror	msg[1]	obj_readable_room2_430
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_mirror	msg[2]	obj_readable_room2_431
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_mirror	msg[3]	obj_readable_room2_432
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_mirror	msg[4]	obj_readable_room2_433
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_mirror && global.flag[485] == 1	msg[0]	obj_readable_room2_434
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall3	msg[0]	obj_readable_room2_439
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_hall3	msg[1]	obj_readable_room2_440
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_hall3 && global.flag[485] == 1	msg[0]	obj_readable_room2_441
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_tv	msg[0]	obj_readable_room2_446
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_tv	msg[1]	obj_readable_room2_447
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_fan	msg[0]	obj_readable_room2_452
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_fan	msg[1]	obj_readable_room2_453
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_fan	msg[2]	obj_readable_room2_454
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_fan	msg[3]	obj_readable_room2_455
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_fan	msg[4]	obj_readable_room2_456
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_fan	msg[5]	obj_readable_room2_457
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_cooler	msg[0]	obj_readable_room2_462
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_cooler	msg[1]	obj_readable_room2_463
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_cooler	msg[2]	obj_readable_room2_464
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_cooler	msg[3]	obj_readable_room2_465
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_cooler	msg[4]	obj_readable_room2_466
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_cooler && global.flag[485] == 1	msg[0]	obj_readable_room2_467
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_cooler && global.flag[490] == 0	msg[0]	obj_readable_room2_468
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_truelab_prepower	msg[0]	obj_readable_room2_473
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[0]	obj_readable_room2_476
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_truelab_prepower && global.flag[485] == 1	msg[1]	obj_readable_room2_477
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_town	msg[0]	obj_readable_room2_483
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room)	msg[1]	obj_readable_room2_488
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[1]	obj_readable_room2_492
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[2]	obj_readable_room2_493
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[4]	obj_readable_room2_495
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[6]	obj_readable_room2_497
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[7]	obj_readable_room2_498
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[8]	obj_readable_room2_499
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	msg[10]	obj_readable_room2_501
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0	msg[1]	obj_readable_room2_506
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[1]	obj_readable_room2_509
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[3]	obj_readable_room2_511
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[5]	obj_readable_room2_513
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[6]	obj_readable_room2_514
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[8]	obj_readable_room2_516
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[9]	obj_readable_room2_517
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[11]	obj_readable_room2_519
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[12]	obj_readable_room2_520
+gml_Object_obj_readable_room2_Alarm_0	4	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	msg[14]	obj_readable_room2_522
+gml_Object_obj_readable_room2_Alarm_0	3	room == room_tundra_town && instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && read > 0	msg[1]	obj_readable_room2_528
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_grillby	msg[0]	obj_readable_room2_534
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_sansroom	msg[0]	obj_readable_room2_539
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_tundra_sansbasement	msg[0]	obj_readable_room2_544
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_restaurant	msg[0]	obj_readable_room2_549
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_hotelbed	msg[0]	obj_readable_room2_554
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_fire_hotelbed	msg[1]	obj_readable_room2_555
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water_temvillage	msg[0]	obj_readable_room2_560
+gml_Object_obj_readable_room2_Alarm_0	2	room == room_water_temvillage && global.flag[7] == 1	msg[0]	obj_readable_room2_563
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water11	msg[0]	obj_readable_room2_569
+gml_Object_obj_readable_room2_Alarm_0	1	room == room_water11	msg[1]	obj_readable_room2_570
+gml_Object_obj_readable_room3_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_room3_Alarm_0	0		msg[0]	obj_readable_room3_59
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_asrielroom	msg[0]	obj_readable_room3_60
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_asrielroom_final	msg[0]	obj_readable_room3_63
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_asrielroom_final && scr_murderlv() >= 16	msg[0]	obj_readable_room3_66
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_torielroom	msg[0]	obj_readable_room3_71
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_torielroom && global.flag[7] == 1	msg[0]	obj_readable_room3_74
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_torielroom && global.flag[7] == 1	msg[1]	obj_readable_room3_75
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_asghouse2	msg[0]	obj_readable_room3_79
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_asgoreroom	msg[0]	obj_readable_room3_81
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_torhouse3	msg[0]	obj_readable_room3_83
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_kitchen	msg[0]	obj_readable_room3_84
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_kitchen_final	msg[0]	obj_readable_room3_85
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_library	msg[0]	obj_readable_room3_89
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_library	msg[1]	obj_readable_room3_90
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_library	msg[2]	obj_readable_room3_91
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_library	msg[3]	obj_readable_room3_92
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_library	msg[4]	obj_readable_room3_93
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra2	msg[0]	obj_readable_room3_104
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra4	msg[0]	obj_readable_room3_108
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra8	msg[0]	obj_readable_room3_112
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_snowpuzz	msg[0]	obj_readable_room3_116
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_xoxopuzz	msg[0]	obj_readable_room3_120
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_lesserdog	msg[0]	obj_readable_room3_124
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_dangerbridge	msg[0]	obj_readable_room3_128
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_town	msg[0]	obj_readable_room3_132
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_bridgepuzz1	msg[0]	obj_readable_room3_139
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water5	msg[0]	obj_readable_room3_141
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water6	msg[0]	obj_readable_room3_142
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water7	msg[0]	obj_readable_room3_147
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water7	msg[1]	obj_readable_room3_148
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water14	msg[0]	obj_readable_room3_154
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water14	msg[1]	obj_readable_room3_155
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water14	msg[2]	obj_readable_room3_156
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water14	msg[3]	obj_readable_room3_157
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water14	msg[4]	obj_readable_room3_158
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water14	msg[5]	obj_readable_room3_159
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water15	msg[0]	obj_readable_room3_165
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water15	msg[1]	obj_readable_room3_166
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water15	msg[2]	obj_readable_room3_167
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[1]	obj_readable_room3_175
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_tundra_sanshouse && instance_exists(obj_papyrusparent)	msg[2]	obj_readable_room3_176
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_tundra_sanshouse && ELSE_OF: room == room_tundra_sanshouse	msg[0]	obj_readable_room3_180
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_paproom	msc	MSC_561
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_prebird	msg[0]	obj_readable_room3_195
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_fire_lab1	msg[0]	obj_readable_room3_200
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_fire_lab1	msg[1]	obj_readable_room3_201
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_fire_lab1 && global.plot < 126 && scr_murderlv() < 12	msg[0]	obj_readable_room3_202
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_fire_lab2	msg[0]	obj_readable_room3_207
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_fire_lab2	msg[1]	obj_readable_room3_208
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_fire_cookingshow	msg[0]	obj_readable_room3_213
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_fire_cookingshow && global.plot < 134	msg[0]	obj_readable_room3_215
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[0]	obj_readable_room3_222
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[1]	obj_readable_room3_223
+gml_Object_obj_readable_room3_Alarm_0	3	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc) && global.plot == 134	msg[0]	obj_readable_room3_228
+gml_Object_obj_readable_room3_Alarm_0	3	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc) && global.plot == 134	msg[1]	obj_readable_room3_229
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_undynehouse	msc	MSC_0
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_undynehouse	msg[0]	obj_readable_room3_242
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_undynehouse	msg[1]	obj_readable_room3_243
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_undynehouse	msg[2]	obj_readable_room3_244
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_undynehouse	msg[3]	obj_readable_room3_245
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_undynehouse	msg[4]	obj_readable_room3_246
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_water_undynehouse && talkedto > 0	msg[0]	obj_readable_room3_248
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hall1	msg[0]	obj_readable_room3_254
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hall1	msg[1]	obj_readable_room3_255
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hall1	msg[2]	obj_readable_room3_256
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hall1	msg[3]	obj_readable_room3_257
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hall1	msg[4]	obj_readable_room3_258
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hall1	msg[5]	obj_readable_room3_259
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_truelab_hall1 && global.flag[485] == 1	msg[0]	obj_readable_room3_261
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_tv	msg[0]	obj_readable_room3_266
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_cooler	msg[0]	obj_readable_room3_272
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_cooler	msg[1]	obj_readable_room3_273
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_cooler	msg[2]	obj_readable_room3_274
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_truelab_cooler && global.flag[485] == 1	msg[0]	obj_readable_room3_275
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_truelab_cooler && global.flag[490] == 0	msg[0]	obj_readable_room3_276
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_truelab_hub	msc	MSC_829
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_sansroom	msg[0]	obj_readable_room3_286
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_sansbasement	msg[0]	obj_readable_room3_291
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_sansbasement	msg[1]	obj_readable_room3_292
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_tundra_sansbasement	msg[2]	obj_readable_room3_293
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_water_blookhouse && instance_exists(obj_napstablook_actor)	msg[0]	obj_readable_room3_303
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_water_blookhouse && instance_exists(obj_napstablook_actor)	msg[1]	obj_readable_room3_304
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_water_blookhouse && ELSE_OF: room == room_water_blookhouse	msg[0]	obj_readable_room3_308
+gml_Object_obj_readable_room3_Alarm_0	2	room == room_water_blookhouse && ELSE_OF: room == room_water_blookhouse	msg[1]	obj_readable_room3_309
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_ice_dog	msg[0]	obj_readable_room3_315
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_fire_restaurant	msg[0]	obj_readable_room3_320
+gml_Object_obj_readable_room3_Alarm_0	1	room == room_water_temvillage	msg[0]	obj_readable_room3_325
+gml_Object_obj_readable_room4_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_room4_Alarm_0	0		msg[0]	obj_readable_room4_60
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_torhouse3	msg[0]	obj_readable_room4_63
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_torhouse3 && global.flag[7] == 1	msg[0]	obj_readable_room4_64
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_torhouse3 && murdererlv1() == 1	msg[0]	obj_readable_room4_66
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_asghouse2	msg[0]	obj_readable_room4_67
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_asghouse3	msg[0]	obj_readable_room4_70
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_asghouse3 && scr_murderlv() >= 16	msg[0]	obj_readable_room4_73
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_kitchen && x < 130	msg[0]	obj_readable_room4_76
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_kitchen && murdererlv1() == 1 && x < 130	msg[0]	obj_readable_room4_77
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_kitchen && x > 130	msg[0]	obj_readable_room4_78
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_kitchen && x > 130 && global.flag[45] == 4	msg[0]	obj_readable_room4_79
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_kitchen_final && x < 130	msg[0]	obj_readable_room4_83
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_kitchen_final && x < 130 && scr_murderlv() >= 16	msg[0]	obj_readable_room4_84
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_kitchen_final && x > 130	msg[0]	obj_readable_room4_90
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_kitchen_final && x > 130 && scr_murderlv() >= 16	msg[0]	obj_readable_room4_91
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_asrielroom_final && x < 160	msg[0]	obj_readable_room4_98
+gml_Object_obj_readable_room4_Alarm_0	3	room == room_asrielroom_final && x < 160 && scr_murderlv() >= 16	msg[0]	obj_readable_room4_99
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_asrielroom_final && x > 160	msg[0]	obj_readable_room4_104
+gml_Object_obj_readable_room4_Alarm_0	3	room == room_asrielroom_final && x > 160 && scr_murderlv() >= 16	msg[0]	obj_readable_room4_105
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_asgoreroom	msg[0]	obj_readable_room4_110
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_library	msg[0]	obj_readable_room4_114
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_library	msg[1]	obj_readable_room4_116
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_library	msg[2]	obj_readable_room4_117
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_library	msg[3]	obj_readable_room4_118
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_library	msg[4]	obj_readable_room4_119
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_library	msg[5]	obj_readable_room4_120
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water_prebird	msg[0]	obj_readable_room4_126
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water_prebird	msg[1]	obj_readable_room4_127
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water_prebird	msg[2]	obj_readable_room4_128
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_water_prebird && global.flag[97] == 1	msg[0]	obj_readable_room4_131
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water7	msg[0]	obj_readable_room4_139
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water7	msg[1]	obj_readable_room4_140
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_fire_lab1	msg[0]	obj_readable_room4_145
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_fire_lab1 && global.plot < 126	msg[0]	obj_readable_room4_146
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_fire_lab1 && scr_murderlv() >= 12	msg[0]	obj_readable_room4_147
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_fire_lab2	msc	MSC_645
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_fire_cookingshow	msg[0]	obj_readable_room4_159
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_fire_cookingshow && global.plot < 134 && scr_murderlv() < 12	msg[0]	obj_readable_room4_161
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[0]	obj_readable_room4_168
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[1]	obj_readable_room4_169
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc)	msg[2]	obj_readable_room4_170
+gml_Object_obj_readable_room4_Alarm_0	3	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc) && global.plot == 134	msg[0]	obj_readable_room4_174
+gml_Object_obj_readable_room4_Alarm_0	3	room == room_fire_cookingshow && instance_exists(obj_mettaton_npc) && global.plot == 134	msg[1]	obj_readable_room4_175
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water_undynehouse	msg[0]	obj_readable_room4_182
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_water_undynehouse && x > 200	msc	MSC_714
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[0]	obj_readable_room4_193
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[1]	obj_readable_room4_194
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[2]	obj_readable_room4_195
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[3]	obj_readable_room4_196
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[4]	obj_readable_room4_197
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[5]	obj_readable_room4_198
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_hall1	msg[6]	obj_readable_room4_199
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_truelab_hall1 && global.flag[485] == 1	msg[0]	obj_readable_room4_201
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_truelab_mirror	msg[0]	obj_readable_room4_206
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_tundra_sansroom && y < 128	msc	MSC_845
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_sansroom	msg[0]	obj_readable_room4_212
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_tundra_sansbasement	msg[0]	obj_readable_room4_217
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_tundra_town && global.flag[497] < 3	msg[0]	obj_readable_room4_222
+gml_Object_obj_readable_room4_Alarm_0	2	room == room_tundra_town && global.flag[497] >= 3	msg[0]	obj_readable_room4_226
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_ice_dog	msg[0]	obj_readable_room4_234
+gml_Object_obj_readable_room4_Alarm_0	1	room == room_water3	msg[0]	obj_readable_room4_237
+gml_Object_obj_readable_room5_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_room5_Alarm_0	0		msg[0]	obj_readable_room5_64
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_asrielroom_final	msg[0]	obj_readable_room5_68
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_asrielroom_final && scr_murderlv() >= 16	msg[0]	obj_readable_room5_69
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_asgoreroom	msg[0]	obj_readable_room5_74
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_asgoreroom	msg[1]	obj_readable_room5_75
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_asgoreroom && global.flag[7] == 1	msg[1]	obj_readable_room5_78
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_asgoreroom && scr_murderlv() >= 16	msg[0]	obj_readable_room5_80
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_asgoreroom && x < 208	msg[0]	obj_readable_room5_82
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_tundra_xoxopuzz	msc	MSC_696
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_fire_lab1	msg[0]	obj_readable_room5_92
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab1 && global.plot < 126 && scr_murderlv() < 12	msg[0]	obj_readable_room5_93
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab1 && y >= 125 && x > 800	msc	MSC_827
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab2 && x < 130	msg[0]	obj_readable_room5_104
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab2 && x < 130	msg[1]	obj_readable_room5_105
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab2 && x < 204 && x > 144	msg[0]	obj_readable_room5_110
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab2 && x < 204 && x > 144	msg[1]	obj_readable_room5_111
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab2 && x < 575 && x > 474	msg[0]	obj_readable_room5_116
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire_lab2 && x > 575	msc	MSC_647
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water_piano	msg[0]	obj_readable_room5_126
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water_piano	msg[1]	obj_readable_room5_127
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water7	msg[0]	obj_readable_room5_131
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water7	msg[1]	obj_readable_room5_132
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_tundra_library	msg[0]	obj_readable_room5_138
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_tundra_library	msg[1]	obj_readable_room5_139
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_tundra_library	msg[2]	obj_readable_room5_140
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water_undynehouse	msg[0]	obj_readable_room5_145
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water_undynehouse	msg[1]	obj_readable_room5_146
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water_undynehouse && x < 80	msg[0]	obj_readable_room5_154
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_water_undynehouse && x < 80	msg[1]	obj_readable_room5_155
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_fire2	msg[0]	obj_readable_room5_160
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire2 && global.flag[353] > 7	msg[0]	obj_readable_room5_163
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire2 && global.flag[353] > 15	msg[0]	obj_readable_room5_167
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_fire2 && global.flag[353] > 15 && global.flag[7] == 1	msg[0]	obj_readable_room5_171
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_fire_lab1 && x > 828 && x < 868 && y < 90	msg[0]	obj_readable_room5_177
+gml_Object_obj_readable_room5_Alarm_0	3	room == room_tundra_sansroom && x < 128 && global.flag[497] < 3	msg[0]	obj_readable_room5_186
+gml_Object_obj_readable_room5_Alarm_0	3	room == room_tundra_sansroom && x < 128 && global.flag[497] < 3	msg[1]	obj_readable_room5_187
+gml_Object_obj_readable_room5_Alarm_0	3	room == room_tundra_sansroom && x < 128 && ELSE_OF: x < 128	msg[0]	obj_readable_room5_192
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_tundra_sansroom && ELSE_OF: room == room_tundra_sansroom	msg[0]	obj_readable_room5_197
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_fire_cookingshow	msg[0]	obj_readable_room5_203
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_dogshrine	msc	MSC_0
+gml_Object_obj_readable_room5_Alarm_0	1	room == room_dogshrine	msg[0]	obj_readable_room5_209
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 1	msc	MSC_950
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 2	msg[0]	obj_readable_room5_216
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 2	msg[1]	obj_readable_room5_217
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 2	msg[2]	obj_readable_room5_218
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 3	msc	MSC_955
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 4	msg[0]	obj_readable_room5_226
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 4	msg[1]	obj_readable_room5_227
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 5	msg[0]	obj_readable_room5_231
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 5	msg[1]	obj_readable_room5_232
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 6	msg[0]	obj_readable_room5_236
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 6	msg[1]	obj_readable_room5_237
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 7	msg[0]	obj_readable_room5_241
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 7	msg[1]	obj_readable_room5_242
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 8	msg[0]	obj_readable_room5_246
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 8	msg[1]	obj_readable_room5_247
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 8	msg[2]	obj_readable_room5_248
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 9	msg[0]	obj_readable_room5_252
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 9	msg[1]	obj_readable_room5_253
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 10	msg[0]	obj_readable_room5_257
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 10	msg[1]	obj_readable_room5_258
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 10	msg[2]	obj_readable_room5_259
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 10	msg[3]	obj_readable_room5_260
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 11	msg[0]	obj_readable_room5_264
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 11	msg[1]	obj_readable_room5_265
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 12	msg[0]	obj_readable_room5_269
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 12	msg[1]	obj_readable_room5_270
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 12	msg[2]	obj_readable_room5_271
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine && dognumber == 12	msg[3]	obj_readable_room5_272
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine_ruined && locked == 1	msg[0]	obj_readable_room5_ds2_0
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine_ruined && locked == 1	msg[1]	obj_readable_room5_ds2_1
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine_ruined && locked == 1	msg[2]	obj_readable_room5_ds2_2
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine_ruined && ELSE_OF: room == room_dogshrine_ruined	msg[0]	obj_readable_room5_ds2_3
+gml_Object_obj_readable_room5_Alarm_0	2	room == room_dogshrine_ruined && ELSE_OF: room == room_dogshrine_ruined	msg[1]	obj_readable_room5_ds2_4
+gml_Object_obj_readable_room5_Alarm_0	3	room == room_dogshrine_ruined && ELSE_OF: room == room_dogshrine_ruined && read >= 1	msg[0]	obj_readable_room5_ds2_5
+gml_Object_obj_readable_room5_Alarm_0	3	room == room_dogshrine_ruined && ELSE_OF: room == room_dogshrine_ruined && read >= 1	msg[1]	obj_readable_room5_ds2_6
+gml_Object_obj_readable_room5_Alarm_0	3	room == room_dogshrine_ruined && ELSE_OF: room == room_dogshrine_ruined && read >= 1	msg[2]	obj_readable_room5_ds2_7
+gml_Object_obj_readable_sign2_Alarm_0	0		msc	MSC_0
+gml_Object_obj_readable_sign2_Alarm_0	0		msg[0]	obj_readable_sign2_55
+gml_Object_obj_readable_sign2_Alarm_0	0		msg[1]	obj_readable_sign2_56
+gml_Object_obj_readable_switch1_Alarm_0	2	global.plot < 5 && instance_exists(obj_torinteractable2)	msc	MSC_0
+gml_Object_obj_readable_switch1_Alarm_0	2	global.plot < 5 && instance_exists(obj_torinteractable2)	msg[0]	obj_readable_switch1_65
+gml_Object_obj_readable_switch1_Alarm_0	2	global.plot < 5 && instance_exists(obj_torinteractable2)	msg[1]	obj_readable_switch1_66
+gml_Object_obj_readable_switch1_Alarm_0	2	global.plot < 5 && instance_exists(obj_torinteractable2)	msg[2]	obj_readable_switch1_67
+gml_Object_obj_readable_switch1_Alarm_0	3	global.plot < 5 && instance_exists(obj_torinteractable2) && global.flag[6] == 1	msg[0]	obj_readable_switch1_71
+gml_Object_obj_readable_switch1_Alarm_0	2	global.plot < 5 && ELSE_OF: global.plot < 5	msc	MSC_0
+gml_Object_obj_readable_switch1_Alarm_0	2	global.plot < 5 && ELSE_OF: global.plot < 5	msg[0]	obj_readable_switch1_81
+gml_Object_obj_readable_switch1_Alarm_0	1	global.plot >= 5	msc	MSC_0
+gml_Object_obj_readable_switch1_Alarm_0	1	global.plot >= 5	msg[0]	obj_readable_switch1_91

@@ -878,19 +878,66 @@ def decode_readable(raw, newline=u'\n'):
     return newline.join(lines)
 
 
+def pick_readable_entry(entries):
+    u"""在一组同 `(场景, 对象)` 的候选里选出**该显示的那一条**（纯函数，便于单测）。
+
+    ★★★ 第119轮：语义是「**最后一条成立的赋值获胜**」，不是"找唯一分支"。
+      原作 `obj_readable_*_Alarm_0` 是一串**平行的 `if`**，每个块直接覆盖
+      `global.msg[0]`（`_evidence/raw/ut/gml_readable/` 有原文）。
+      所以守卫最松的那批（`guard == 'base'`，除房间外无条件）里**最后一条**
+      就是"剧情还没推进时玩家看到的那句"；后面的 `pos`/`state` 分支只在
+      条件成立时才覆盖它。
+
+    ★ 取不到 `base` 时退回**列表第一条**（`pos` 需要实例坐标、`state` 需要
+      运行时状态，产品侧都还没有 ⇒ 如实按原文顺序取，不猜）。
+    ★ v1 老资产**没有** `guard` 字段 ⇒ 走"第一条"分支，行为与第117轮完全一致。
+    """
+    if not entries:
+        return None
+    base = [e for e in entries if isinstance(e, dict) and e.get('guard') == 'base']
+    if base:
+        return base[-1]
+    return entries[0]
+
+
+def readable_text_of(entries):
+    u"""在一组候选里选出**最终显示的那句正文**（`pick_readable_entry` + 空文本回退）。
+
+    ★ 第119轮补的这道回退有实测依据：`pick_readable_entry` 选中的 `base` 那条，
+      原文可能**只有终止符**（`"%%"`）⇒ 解完是空串。若直接采用，就等于
+      "这间房读不出字"（退回兜底台词），而同一 `(场景,对象)` 的其它候选明明是好的。
+      实测 v2 资产里这种 `base` 有 2 条 ⇒ 不做回退会让加载器**少 2 条**正文
+      （162 场景 / 333 条 vs 164 / 335）。
+    ★ 回退顺序：先 `pick_readable_entry` 的结果，再按文件顺序试其余候选，
+      **第一个解出非空文本的就用**；全空 ⇒ 返回 `u''`（调用方回落兜底，不造假）。
+    """
+    if not entries:
+        return u''
+    first = pick_readable_entry(entries)
+    order = [first] + [e for e in entries if e is not first]
+    for e in order:
+        if not isinstance(e, dict):
+            continue
+        raw = (e.get('cn_tight') or e.get('cn') or e.get('en') or e.get('ja'))
+        txt = decode_readable(raw)
+        if txt:
+            return txt
+    return u''
+
+
 def load_readable_text(path):
     u"""读 `assets/scenes/_readable_text.json` → `{scene_id: {obj: 显示文本}}`。
 
     文件不在 / 读不动 ⇒ 返回空表（**不抛**）：调用方回落到 `READABLE_TEXT` 的兜底台词，
     不能因为一份数据资产缺失就把可交互物构建整个搞崩。
 
-    ★ 数据形状：`by_scene[scene_id]` 是条目列表，每条 = `{obj, key, cn, cn_tight, en, ja}`。
+    ★ 数据形状：`by_scene[scene_id]` 是条目列表，每条 =
+      `{obj, key, guard, guard_text, order, cn, cn_tight, en, ja, instances}`。
       取正文的优先级 **`cn_tight` → `cn` → `en` → `ja`**：
       `cn_tight` 是把字间空格压掉的版本（outertale 的 `en` 槽里装的是**中文**且字间带空格，
       逐字带空格直接显示会散架）；`en` 兜底是因为原作正文表在 `textdata_en` 里最全。
-    ★ 同一 `(scene, obj)` 可能有多条（341 个组合里 10 个）—— 那是原作 Alarm 里
-      还有**第二层守卫**（剧情/全局变量）没解。这里**只取第一条**并记账，
-      不静默随机、也不假装能区分（要区分得先解第二层）。
+    ★ 同一 `(scene, obj)` 现在**必然**有多条（v2 把 189 个组合的分支全收了）——
+      选哪条由 `pick_readable_entry()` 决定，规则见它的 docstring。
     """
     if not path or not os.path.isfile(path):
         _log.info('可读物正文表不存在（可读物回落到兜底台词）：%s', path)
@@ -904,29 +951,38 @@ def load_readable_text(path):
 
     out = {}
     n_entries = 0
-    n_dup = 0
+    n_alt = 0
+    n_no_base = 0
     for sid, entries in (d.get('by_scene') or {}).items():
-        per = {}
+        grouped = {}
+        order = []
         for e in entries or ():
             if not isinstance(e, dict):
                 continue
             obj = e.get('obj')
             if not obj:
                 continue
-            raw = (e.get('cn_tight') or e.get('cn')
-                   or e.get('en') or e.get('ja'))
-            txt = decode_readable(raw)
+            if obj not in grouped:
+                grouped[obj] = []
+                order.append(obj)
+            grouped[obj].append(e)
+        per = {}
+        for obj in order:
+            cand = grouped[obj]
+            if len(cand) > 1:
+                n_alt += len(cand) - 1
+            if not any(e.get('guard') == 'base' for e in cand):
+                n_no_base += 1
+            txt = readable_text_of(cand)
             if not txt:
-                continue
-            if obj in per:
-                n_dup += 1      # 第二层守卫未解：只认第一条，其余记账
                 continue
             per[obj] = txt
             n_entries += 1
         if per:
             out[str(sid)] = per
-    _log.info('可读物正文已载入：%d 个场景 / %d 条（同组合重复丢弃 %d 条）',
-              len(out), n_entries, n_dup)
+    _log.info('可读物正文已载入：%d 个场景 / %d 条（同组合候选另有 %d 条未采用；'
+              '无 base 守卫的组合 %d 个）',
+              len(out), n_entries, n_alt, n_no_base)
     return out
 
 

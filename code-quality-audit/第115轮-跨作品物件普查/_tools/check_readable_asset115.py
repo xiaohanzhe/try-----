@@ -66,7 +66,11 @@ except Exception as e:                                   # noqa: BLE001
     print('  解析失败: %s: %s' % (type(e).__name__, e))
 
 check('A1 资产能解析成 JSON 对象', _ok_parse and isinstance(doc, dict))
-check('A2 `schema_version` == 1', doc.get('schema_version') == 1,
+# ★★ 第119轮：schema 2 = 每条候选带 `guard`（base/pos/state）。
+#   旧判据写死 `== 1` 是为了防止“不知道就换掉”；现在两代都是**已通过验证**的形状，
+#   但 v2 的字段集合不同（有 guard、无旧的一些计数）⇒ 需要同时验一下字段，避免“版本号对、内容错”。
+check('A2 `schema_version` ∈ {1, 2}（v1=无 guard；v2=带 guard）',
+      doc.get('schema_version') in (1, 2),
       repr(doc.get('schema_version')))
 check('A3 `markers_raw` 为真（% & / ^1 没在数据层被替换）',
       doc.get('markers_raw') is True, repr(doc.get('markers_raw')))
@@ -77,6 +81,11 @@ by_scene = doc.get('by_scene') or {}
 games = doc.get('games') or {}
 check('A5 `by_scene` 非空且 `games` 有 ut / outertale / uty 三键',
       bool(by_scene) and set(games) == {'ut', 'outertale', 'uty'}, repr(sorted(games)))
+check('A6 v2 每条候选都带 `guard`（版本号对、内容也得对）',
+      doc.get('schema_version') != 2
+      or all(e.get('guard') in ('base', 'pos', 'state')
+             for v in by_scene.values() for e in v),
+      '条目=%d' % sum(len(v) for v in by_scene.values()))
 
 
 print()
@@ -87,8 +96,8 @@ print('=' * 74)
 n_ut = sum(len(v) for k, v in by_scene.items() if k.startswith('ut.'))
 n_ot = sum(len(v) for k, v in by_scene.items() if k.startswith('outertale.'))
 n_uty = sum(len(v) for k, v in by_scene.items() if k.startswith('uty.'))
-check('B1 ut 条目 ≥ 150（当前 194；素材只会更多）', n_ut >= 150, '实际 %d' % n_ut)
-check('B2 outertale 条目 ≥ 120（当前 161）', n_ot >= 120, '实际 %d' % n_ot)
+check('B1 ut 条目 ≥ 300（v1 是 194；v2 把同房间的分支全收了）', n_ut >= 300, '实际 %d' % n_ut)
+check('B2 outertale 条目 ≥ 250（v1 是 161）', n_ot >= 250, '实际 %d' % n_ot)
 check('B3 uty 0 条 = 原作事实（该作没有可读物正文表），显式记 EMPTY 而不是当"通过"',
       n_uty == 0 and (games.get('uty') or {}).get('entries') == 0
       and (games.get('uty') or {}).get('unresolved', 0) == 0,
@@ -208,17 +217,32 @@ check('F1 ★ 资产里的每个 (场景, 对象) 组合都真在 `inst_full.tsv
       '（不是凭空造出来的挂载点）', not _phantom,
       '%d 条对不上：%s' % (len(_phantom), _phantom[:4]))
 
-_uns_in_asset = 0
-for g in ('ut', 'outertale'):
-    for u in ((games.get(g) or {}).get('unresolved_list') or []):
-        sid = u.get('scene')
-        if not sid:
-            continue
-        if any(e.get('obj') == u.get('obj')
-               for e in (by_scene.get(sid) or [])):
-            _uns_in_asset += 1
-check('G1 ★ 未解的组合**没有**被塞进 by_scene（不把"猜的"混进"确定的"）',
-      _uns_in_asset == 0, '%d 条混进去了' % _uns_in_asset)
+# ★★ 第119轮：`unresolved` 在 v2 里分两种——
+#   `no_room_guard`（这段赋值根本没房间条件）与
+#   `room_without_scene`（房间名在产品里没有对应场景）。
+#   后者必须**逐条去 zone 里反查**：万一那房间其实有场景，
+#   就是“本该收进来却被丢掉”的真错误（而且不报错）。
+_zone_names = {}
+for _g in ('ut', 'outertale'):
+    _nm = set()
+    for _p in glob.glob(os.path.join(SCENES, '_zone.%s.*.json' % _g)):
+        for _sid, _s in (json.loads(read(_p)).get('scenes') or {}).items():
+            _nm.add(_s.get('name_raw'))
+    _zone_names[_g] = _nm
+
+_ghost = []
+_uns_total = 0
+for _g in ('ut', 'outertale'):
+    for _u in ((games.get(_g) or {}).get('unresolved_list') or []):
+        _uns_total += 1
+        if not _u.get('why'):
+            _ghost.append((_g, _u.get('key'), '缺 why'))
+        elif _u.get('why') == 'room_without_scene' and _u.get('room') in _zone_names[_g]:
+            _ghost.append((_g, _u.get('room'), '房间其实有场景'))
+check('G1 ★★ 未解条目都带 `why`，且 `room_without_scene` 那批'
+      '房间**真的**在产品里没场景（逐条反查 zone，不是自证）',
+      _uns_total > 0 and not _ghost,
+      '未解=%d 对不上=%d %r' % (_uns_total, len(_ghost), _ghost[:2]))
 check('G2 `unresolved` 数量与 `games.<g>.unresolved` 对得上',
       all(len((games.get(g) or {}).get('unresolved_list') or []) ==
           (games.get(g) or {}).get('unresolved', -1)
@@ -226,7 +250,7 @@ check('G2 `unresolved` 数量与 `games.<g>.unresolved` 对得上',
       repr({g: ((games.get(g) or {}).get('unresolved'),
                 len((games.get(g) or {}).get('unresolved_list') or []))
             for g in ('ut', 'outertale')}))
-check('G3 未解数 ≥ 1 且被如实记下（ut 15 / outertale 27，是**已知缺口**不是 0）',
+check('G3 未解数 ≥ 1 且被如实记下（ut 无房间条件 19；outertale 另有 167 个房间没场景）',
       (games.get('ut') or {}).get('unresolved', 0) >= 1
       and (games.get('outertale') or {}).get('unresolved', 0) >= 1,
       'ut=%r outertale=%r' % ((games.get('ut') or {}).get('unresolved'),

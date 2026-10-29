@@ -1,0 +1,291 @@
+scene	obj	x	y	certain_key	uncertain_overrides
+outertale.aerialis.a_lab_virt	obj_readable_room1	560	120	obj_readable_room1_292	global.plot < 126|scr_murderlv() < 12|obj_readable_room1_293
+outertale.aerialis.a_lab_virt	obj_readable_room2	500	100	obj_readable_room2_332	global.plot < 126|scr_murderlv() < 12|obj_readable_room2_333
+outertale.aerialis.a_lab_virt	obj_readable_room2	520	100	obj_readable_room2_332	global.plot < 126|scr_murderlv() < 12|obj_readable_room2_333
+outertale.aerialis.a_lab_virt	obj_readable_room3	480	120	obj_readable_room3_200	global.plot < 126|scr_murderlv() < 12|obj_readable_room3_202
+outertale.aerialis.a_lab_virt	obj_readable_room4	360	80	obj_readable_room4_145	global.plot < 126|obj_readable_room4_146|scr_murderlv() >= 12|obj_readable_room4_147
+outertale.aerialis.a_lab_virt	obj_readable_room4	380	80	obj_readable_room4_145	global.plot < 126|obj_readable_room4_146|scr_murderlv() >= 12|obj_readable_room4_147
+outertale.aerialis.a_lab_virt	obj_readable_room4	400	80	obj_readable_room4_145	global.plot < 126|obj_readable_room4_146|scr_murderlv() >= 12|obj_readable_room4_147
+outertale.aerialis.a_lab_virt	obj_readable_room5	540	100	obj_readable_room5_92	global.plot < 126|scr_murderlv() < 12|obj_readable_room5_93
+outertale.aerialis.a_lab_virt	obj_readable_room5	840	80	obj_readable_room5_177	global.plot < 126|scr_murderlv() < 12|obj_readable_room5_93
+outertale.aerialis.a_pacing	obj_readable_room1	60	320	obj_readable_room1_304	global.plot < 134|obj_readable_room1_306|instance_exists(obj_mettaton_npc)|obj_readable_room1_312|global.plot == 134|obj_readable_room1_320|specialread > 0|obj_readable_room1_328
+outertale.aerialis.a_pacing	obj_readable_room1	80	320	obj_readable_room1_304	global.plot < 134|obj_readable_room1_306|instance_exists(obj_mettaton_npc)|obj_readable_room1_312|global.plot == 134|obj_readable_room1_320|specialread > 0|obj_readable_room1_328
+outertale.aerialis.a_pacing	obj_readable_room2	265	320	obj_readable_room2_343	global.plot < 134|obj_readable_room2_345|instance_exists(obj_mettaton_npc)|obj_readable_room2_353|global.plot == 134|obj_readable_room2_360
+outertale.aerialis.a_pacing	obj_readable_room3	90	382	obj_readable_room3_213	global.plot < 134|obj_readable_room3_215|instance_exists(obj_mettaton_npc)|obj_readable_room3_222|global.plot == 134|obj_readable_room3_228
+outertale.aerialis.a_pacing	obj_readable_room4	210	320	obj_readable_room4_159	global.plot < 134|scr_murderlv() < 12|obj_readable_room4_161|instance_exists(obj_mettaton_npc)|obj_readable_room4_168|global.plot == 134|obj_readable_room4_174
+outertale.aerialis.a_pacing	obj_readable_room4	230	320	obj_readable_room4_159	global.plot < 134|scr_murderlv() < 12|obj_readable_room4_161|instance_exists(obj_mettaton_npc)|obj_readable_room4_168|global.plot == 134|obj_readable_room4_174
+outertale.aerialis.a_pacing	obj_readable_room5	460	340	obj_readable_room5_203	
+outertale.aerialis.a_pacing	obj_readable_room5	460	360	obj_readable_room5_203	
+outertale.aerialis.a_pacing	obj_readable_room5	480	340	obj_readable_room5_203	
+outertale.aerialis.a_pacing	obj_readable_room5	480	360	obj_readable_room5_203	
+outertale.aerialis.a_path1	obj_readable_room1	740	120	obj_readable_room1_299	
+outertale.aerialis.a_path1	obj_readable_room1	760	120	obj_readable_room1_299	
+outertale.aerialis.a_path1	obj_readable_room2	700	120		
+outertale.aerialis.a_path1	obj_readable_room2	720	120		
+outertale.aerialis.a_path1	obj_readable_room3	660	120	obj_readable_room3_207	
+outertale.aerialis.a_path1	obj_readable_room3	680	120	obj_readable_room3_207	
+outertale.aerialis.a_path1	obj_readable_room4	620	120		
+outertale.aerialis.a_path1	obj_readable_room4	640	120		
+outertale.aerialis.a_path1	obj_readable_room5	57	120	obj_readable_room5_104	
+outertale.aerialis.a_path1	obj_readable_room5	75	120	obj_readable_room5_104	
+outertale.aerialis.a_path1	obj_readable_room5	165	117	obj_readable_room5_110	
+outertale.aerialis.a_path1	obj_readable_room5	174	117	obj_readable_room5_110	
+outertale.aerialis.a_path1	obj_readable_room5	483	120	obj_readable_room5_116	
+outertale.aerialis.a_path1	obj_readable_room5	507	120	obj_readable_room5_116	
+outertale.aerialis.a_path1	obj_readable_room5	531	120	obj_readable_room5_116	
+outertale.aerialis.a_path1	obj_readable_room5	546	120	obj_readable_room5_116	
+outertale.aerialis.a_path1	obj_readable_room5	580	120		
+outertale.aerialis.a_path1	obj_readable_room5	600	120		
+outertale.citadel.c_alley	obj_readable_room1	60	80	obj_readable_room1_390	
+outertale.citadel.c_alley	obj_readable_room1	80	80	obj_readable_room1_390	
+outertale.citadel.c_archive_exit	obj_readable_room1	140	100	obj_readable_room1_565	
+outertale.citadel.c_archive_exit	obj_readable_room1	160	100	obj_readable_room1_565	
+outertale.citadel.c_archive_foundryB1	obj_readable_room1	260	100	obj_readable_room1_86	
+outertale.citadel.c_archive_foundryB1	obj_readable_room1	280	100	obj_readable_room1_86	
+outertale.citadel.c_archive_foundryB3	obj_readable_room1	140	140	obj_readable_room1_90	global.flag[7] == 1|obj_readable_room1_96
+outertale.citadel.c_archive_foundryB3	obj_readable_room1	140	160	obj_readable_room1_90	global.flag[7] == 1|obj_readable_room1_96
+outertale.citadel.c_archive_foundryB3	obj_readable_room1	140	180	obj_readable_room1_90	global.flag[7] == 1|obj_readable_room1_96
+outertale.citadel.c_archive_foundryB4	obj_readable_room1	150	215	obj_readable_room1_139	
+outertale.citadel.c_archive_foundryB4	obj_readable_room1	150	230	obj_readable_room1_139	
+outertale.citadel.c_archive_foundryB4	obj_readable_room2	210	110	obj_readable_room2_119	
+outertale.citadel.c_archive_foundryB4	obj_readable_room2	230	110	obj_readable_room2_119	
+outertale.citadel.c_archive_path2	obj_readable_room1	278	56	obj_readable_room1_82	
+outertale.citadel.c_archive_path2	obj_readable_room2	226	61	obj_readable_room2_100	scr_murderlv() >= 16|obj_readable_room2_105
+outertale.citadel.c_archive_path2	obj_readable_room2	250	62	obj_readable_room2_100	scr_murderlv() >= 16|obj_readable_room2_105
+outertale.citadel.c_archive_path2	obj_readable_room3	157	57	obj_readable_room3_79	
+outertale.citadel.c_archive_path2	obj_readable_room4	101	161	obj_readable_room4_67	
+outertale.citadel.c_archive_starton1	obj_readable_room1	360	122	obj_readable_room1_143	
+outertale.citadel.c_archive_starton1	obj_readable_room2	206	133	obj_readable_room2_111	
+outertale.citadel.c_archive_starton1	obj_readable_room2	225	133	obj_readable_room2_111	
+outertale.citadel.c_archive_starton1	obj_readable_room2	327	134	obj_readable_room2_111	
+outertale.citadel.c_archive_starton1	obj_readable_room2	701	131	obj_readable_room2_111	
+outertale.citadel.c_archive_starton1	obj_readable_room4	640	125	obj_readable_room4_70	scr_murderlv() >= 16|obj_readable_room4_73
+outertale.citadel.c_archive_starton1	obj_readable_room4	663	125	obj_readable_room4_70	scr_murderlv() >= 16|obj_readable_room4_73
+outertale.citadel.c_archive_starton2	obj_readable_room1	60	69	obj_readable_room1_125	scr_murderlv() >= 16|obj_readable_room1_130
+outertale.citadel.c_archive_starton2	obj_readable_room1	84	69	obj_readable_room1_125	scr_murderlv() >= 16|obj_readable_room1_130
+outertale.citadel.c_archive_starton2	obj_readable_room2	124	68	obj_readable_room2_90	scr_murderlv() >= 16|obj_readable_room2_94
+outertale.citadel.c_archive_starton2	obj_readable_room3	162	46	obj_readable_room3_81	
+outertale.citadel.c_archive_starton2	obj_readable_room4	186	74	obj_readable_room4_110	
+outertale.citadel.c_archive_starton2	obj_readable_room4	186	94	obj_readable_room4_110	
+outertale.citadel.c_archive_starton2	obj_readable_room4	186	115	obj_readable_room4_110	
+outertale.citadel.c_archive_starton2	obj_readable_room5	190	154	obj_readable_room5_82	global.flag[7] == 1|scr_murderlv() >= 16|obj_readable_room5_80
+outertale.citadel.c_archive_starton2	obj_readable_room5	212	171	obj_readable_room5_74	global.flag[7] == 1|scr_murderlv() >= 16|obj_readable_room5_80
+outertale.citadel.c_archive_starton3	obj_readable_room1	208	150	obj_readable_room1_84	
+outertale.citadel.c_archive_starton3	obj_readable_room1	228	150	obj_readable_room1_84	
+outertale.citadel.c_archive_starton3	obj_readable_room3	92	86	obj_readable_room3_63	scr_murderlv() >= 16|obj_readable_room3_66
+outertale.citadel.c_archive_starton3	obj_readable_room4	64	134		scr_murderlv() >= 16|obj_readable_room4_99
+outertale.citadel.c_archive_starton3	obj_readable_room4	68	132		scr_murderlv() >= 16|obj_readable_room4_99
+outertale.citadel.c_archive_starton3	obj_readable_room4	70	98		scr_murderlv() >= 16|obj_readable_room4_99
+outertale.citadel.c_archive_starton3	obj_readable_room4	70	118		scr_murderlv() >= 16|obj_readable_room4_99
+outertale.citadel.c_archive_starton3	obj_readable_room4	194	116		scr_murderlv() >= 16|obj_readable_room4_105
+outertale.citadel.c_archive_starton3	obj_readable_room4	194	132		scr_murderlv() >= 16|obj_readable_room4_105
+outertale.citadel.c_archive_starton3	obj_readable_room5	162	100	obj_readable_room5_68	scr_murderlv() >= 16|obj_readable_room5_69
+outertale.citadel.c_archive_starton4	obj_readable_room1	30	140		scr_murderlv() >= 16|obj_readable_room1_151
+outertale.citadel.c_archive_starton4	obj_readable_room3	64	140	obj_readable_room3_85	
+outertale.citadel.c_archive_starton4	obj_readable_room4	92	140	obj_readable_room4_83	scr_murderlv() >= 16|obj_readable_room4_84
+outertale.citadel.c_archive_starton4	obj_readable_room4	150	140	obj_readable_room4_90	scr_murderlv() >= 16|obj_readable_room4_91
+outertale.citadel.c_archive_wastelands4	obj_readable_room2	40	58	obj_readable_room2_115	
+outertale.citadel.c_bastion	obj_readable_room1	140	60	obj_readable_room1_406	
+outertale.citadel.c_bastion	obj_readable_room1	160	60	obj_readable_room1_406	
+outertale.citadel.c_elevator2	obj_readable_room1	200	80	obj_readable_room1_395	
+outertale.citadel.c_elevator2	obj_readable_room1	220	80	obj_readable_room1_395	
+outertale.citadel.c_elevator2	obj_readable_room2	60	80	obj_readable_room2_400	
+outertale.citadel.c_elevator2	obj_readable_room2	80	80	obj_readable_room2_400	
+outertale.citadel.c_pacing	obj_readable_room1	40	80	obj_readable_room1_385	
+outertale.citadel.c_pacing	obj_readable_room1	60	80	obj_readable_room1_385	
+outertale.citadel.c_road1	obj_readable_room1	200	80	obj_readable_room1_380	
+outertale.citadel.c_road1	obj_readable_room1	220	80	obj_readable_room1_380	
+outertale.citadel.c_road1	obj_readable_room2	60	80	obj_readable_room2_395	
+outertale.citadel.c_road1	obj_readable_room2	80	80	obj_readable_room2_395	
+outertale.citadel.c_road2	obj_readable_room1	220	80	obj_readable_room1_401	
+outertale.citadel.c_road2	obj_readable_room1	240	80	obj_readable_room1_401	
+outertale.core.a_core_left1	obj_readable_room1	160	388	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	160	400	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	178	388	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	178	400	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	196	400	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	198	388	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	218	388	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left1	obj_readable_room1	218	398	obj_readable_room1_633	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_633
+outertale.core.a_core_left2	obj_readable_room1	265	80	obj_readable_room1_639	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_639
+outertale.core.a_core_left2	obj_readable_room1	285	80	obj_readable_room1_639	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_639
+outertale.core.a_core_left2	obj_readable_room1	305	80	obj_readable_room1_639	scr_murderlv() >= 11 || global.plot >= 198 || global.flag[7] == 1 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_639
+outertale.core.a_core_left2	obj_readable_room2	490	80	obj_readable_room2_549	
+outertale.core.a_core_left2	obj_readable_room2	510	80	obj_readable_room2_549	
+outertale.core.a_core_left2	obj_readable_room2	525	80	obj_readable_room2_549	
+outertale.core.a_core_left2	obj_readable_room3	120	80	obj_readable_room3_320	
+outertale.core.a_core_left2	obj_readable_room3	140	80	obj_readable_room3_320	
+outertale.core.a_core_left2	obj_readable_room3	435	80	obj_readable_room3_320	
+outertale.core.a_core_left2	obj_readable_room3	450	80	obj_readable_room3_320	
+outertale.core.a_core_left3	obj_readable_room1	196	120	obj_readable_room1_628	
+outertale.core.a_core_main	obj_readable_room1	50	20		global.flag[7] == 1 || scr_murderlv() >= 12|obj_readable_room1_375|ELSE_OF: room == room_fire_hotelfront_2|obj_readable_room1_375
+outertale.core.a_core_right1	obj_readable_room1	70	54	obj_readable_room1_646	
+outertale.core.a_core_right1	obj_readable_room2	230	54	obj_readable_room2_554	
+outertale.core.a_lookout	obj_readable_room1	148	108	obj_readable_room1_369	
+outertale.core.a_lookout	obj_readable_room2	194	104	obj_readable_room2_390	
+outertale.foundry.f_artifact	obj_readable_room1	140	40	obj_readable_room1_274	
+outertale.foundry.f_artifact	obj_readable_room1	160	40	obj_readable_room1_274	
+outertale.foundry.f_artifact	obj_readable_room2	280	40	obj_readable_room2_318	
+outertale.foundry.f_artifact	obj_readable_room2	300	40	obj_readable_room2_318	
+outertale.foundry.f_bird	obj_readable_room2	280	180	obj_readable_room2_569	
+outertale.foundry.f_bird	obj_readable_room2	300	180	obj_readable_room2_569	
+outertale.foundry.f_chute	obj_readable_room1	150	60		ELSE_OF: room == room_water_undynehouse|obj_readable_room1_360
+outertale.foundry.f_chute	obj_readable_room1	250	60	obj_readable_room1_347	read > 0|obj_readable_room1_354|ELSE_OF: room == room_water_undynehouse|obj_readable_room1_360
+outertale.foundry.f_chute	obj_readable_room2	50	40	obj_readable_room2_373	read > 0|obj_readable_room2_377
+outertale.foundry.f_chute	obj_readable_room3	64	105	obj_readable_room3_242	talkedto > 0|obj_readable_room3_248
+outertale.foundry.f_chute	obj_readable_room3	64	120	obj_readable_room3_242	talkedto > 0|obj_readable_room3_248
+outertale.foundry.f_chute	obj_readable_room3	80	120	obj_readable_room3_242	talkedto > 0|obj_readable_room3_248
+outertale.foundry.f_chute	obj_readable_room4	100	60	obj_readable_room4_182	
+outertale.foundry.f_chute	obj_readable_room4	260	120	obj_readable_room4_182	
+outertale.foundry.f_chute	obj_readable_room5	20	140	obj_readable_room5_154	
+outertale.foundry.f_chute	obj_readable_room5	20	160	obj_readable_room5_154	
+outertale.foundry.f_chute	obj_readable_room5	190	60	obj_readable_room5_145	
+outertale.foundry.f_chute	obj_readable_room5	210	60	obj_readable_room5_145	
+outertale.foundry.f_corner	obj_readable_room1	140	100	obj_readable_room1_256	
+outertale.foundry.f_corner	obj_readable_room1	160	100	obj_readable_room1_256	
+outertale.foundry.f_corridor	obj_readable_room1	100	100	obj_readable_room1_235	
+outertale.foundry.f_corridor	obj_readable_room2	180	100	obj_readable_room2_295	
+outertale.foundry.f_corridor	obj_readable_room3	260	100	obj_readable_room3_147	
+outertale.foundry.f_corridor	obj_readable_room4	340	100	obj_readable_room4_139	
+outertale.foundry.f_corridor	obj_readable_room5	420	100	obj_readable_room5_131	
+outertale.foundry.f_error	obj_readable_room5	200	100	obj_readable_room5_126	
+outertale.foundry.f_error	obj_readable_room5	220	100	obj_readable_room5_126	
+outertale.foundry.f_kitchen	obj_readable_room1	420	140	obj_readable_room1_269	
+outertale.foundry.f_kitchen	obj_readable_room2	330	100	obj_readable_room2_326	
+outertale.foundry.f_kitchen	obj_readable_room3	270	100	obj_readable_room3_195	
+outertale.foundry.f_kitchen	obj_readable_room4	210	140	obj_readable_room4_126	global.flag[97] == 1|obj_readable_room4_131
+outertale.foundry.f_lobby	obj_readable_room1	320	60	obj_readable_room1_241	
+outertale.foundry.f_lobby	obj_readable_room1	340	60	obj_readable_room1_241	
+outertale.foundry.f_lobby	obj_readable_room2	500	100	obj_readable_room2_302	
+outertale.foundry.f_lobby	obj_readable_room2	520	100	obj_readable_room2_302	
+outertale.foundry.f_lobby	obj_readable_room3	600	100	obj_readable_room3_154	
+outertale.foundry.f_lobby	obj_readable_room3	620	100	obj_readable_room3_154	
+outertale.foundry.f_napstablook	obj_readable_room1	200	100	obj_readable_room1_247	
+outertale.foundry.f_napstablook	obj_readable_room1	220	100	obj_readable_room1_247	
+outertale.foundry.f_napstablook	obj_readable_room2	360	100	obj_readable_room2_310	
+outertale.foundry.f_napstablook	obj_readable_room2	380	100	obj_readable_room2_310	
+outertale.foundry.f_napstablook	obj_readable_room3	620	100	obj_readable_room3_165	
+outertale.foundry.f_napstablook	obj_readable_room3	640	100	obj_readable_room3_165	
+outertale.foundry.f_prepuzzle	obj_readable_room1	160	140	obj_readable_room1_652	
+outertale.foundry.f_prepuzzle	obj_readable_room1	182	140	obj_readable_room1_652	
+outertale.foundry.f_prepuzzle	obj_readable_room1	204	140	obj_readable_room1_652	
+outertale.foundry.f_prepuzzle	obj_readable_room1	212	140	obj_readable_room1_652	
+outertale.foundry.f_prepuzzle	obj_readable_room2	534	140	obj_readable_room2_560	global.flag[7] == 1|obj_readable_room2_563
+outertale.foundry.f_prepuzzle	obj_readable_room3	452	158	obj_readable_room3_325	
+outertale.foundry.f_prepuzzle	obj_readable_room3	464	158	obj_readable_room3_325	
+outertale.foundry.f_puzzle2	obj_readable_room1	140	60	obj_readable_room1_263	
+outertale.foundry.f_puzzle2	obj_readable_room1	160	60	obj_readable_room1_263	
+outertale.foundry.f_puzzle3	obj_readable_room1	100	80	obj_readable_room1_280	
+outertale.foundry.f_puzzle3	obj_readable_room1	120	80	obj_readable_room1_280	
+outertale.foundry.f_sans	obj_readable_room3	140	260	obj_readable_room3_142	
+outertale.foundry.f_sans	obj_readable_room3	160	260	obj_readable_room3_142	
+outertale.foundry.f_story1	obj_readable_room1	1080	60	obj_readable_room1_228	
+outertale.foundry.f_story1	obj_readable_room1	1100	60	obj_readable_room1_228	
+outertale.foundry.f_village	obj_readable_room3	120	51		instance_exists(obj_napstablook_actor)|obj_readable_room3_303|ELSE_OF: room == room_water_blookhouse|obj_readable_room3_308
+outertale.foundry.f_village	obj_readable_room3	132	51		instance_exists(obj_napstablook_actor)|obj_readable_room3_303|ELSE_OF: room == room_water_blookhouse|obj_readable_room3_308
+outertale.special._credits4	obj_readable_room1	80	60	obj_readable_room1_65	
+outertale.special._frontier1	obj_readable_room1	100	60	obj_readable_room1_66	
+outertale.special._frontier3	obj_readable_room1	580	140	obj_readable_room1_67	
+outertale.special._frontier3	obj_readable_room1	600	140	obj_readable_room1_67	
+outertale.special._frontier8	obj_readable_room1	160	60	obj_readable_room1_68	
+outertale.starton.s_backrooms	obj_readable_room1	160	92	obj_readable_room1_590	
+outertale.starton.s_backrooms	obj_readable_room1	164	112	obj_readable_room1_590	
+outertale.starton.s_backrooms	obj_readable_room1	176	112	obj_readable_room1_590	
+outertale.starton.s_backrooms	obj_readable_room2	140	84	obj_readable_room2_539	
+outertale.starton.s_backrooms	obj_readable_room3	108	84	obj_readable_room3_286	
+outertale.starton.s_backrooms	obj_readable_room4	44	176	obj_readable_room4_212	
+outertale.starton.s_backrooms	obj_readable_room4	80	72	obj_readable_room4_212	
+outertale.starton.s_backrooms	obj_readable_room4	80	88	obj_readable_room4_212	
+outertale.starton.s_backrooms	obj_readable_room5	52	88		global.flag[497] < 3|obj_readable_room5_186|ELSE_OF: x < 128|obj_readable_room5_192|ELSE_OF: room == room_tundra_sansroom|obj_readable_room5_197
+outertale.starton.s_backrooms	obj_readable_room5	168	180		ELSE_OF: room == room_tundra_sansroom|obj_readable_room5_197
+outertale.starton.s_battle	obj_readable_room3	60	120	obj_readable_room3_139	
+outertale.starton.s_battle	obj_readable_room3	80	120	obj_readable_room3_139	
+outertale.starton.s_beddinng	obj_readable_room2	264	168		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_sanshouse|obj_readable_room2_266|read > 0|obj_readable_room2_268
+outertale.starton.s_beddinng	obj_readable_room3	140	35		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_sanshouse|obj_readable_room3_180
+outertale.starton.s_beddinng	obj_readable_room3	160	35		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_sanshouse|obj_readable_room3_180
+outertale.starton.s_bridge	obj_readable_room1	268	56	obj_readable_room1_580	
+outertale.starton.s_bridge	obj_readable_room2	42	30	obj_readable_room2_534	
+outertale.starton.s_dogs	obj_readable_room1	240	80	obj_readable_room1_164	
+outertale.starton.s_dogs	obj_readable_room3	220	40	obj_readable_room3_124	
+outertale.starton.s_dogs	obj_readable_room3	240	40	obj_readable_room3_124	
+outertale.starton.s_dogs	obj_readable_room3	260	40	obj_readable_room3_124	
+outertale.starton.s_exit	obj_readable_room3	360	80	obj_readable_room3_141	
+outertale.starton.s_exit	obj_readable_room3	380	80	obj_readable_room3_141	
+outertale.starton.s_grillbys	obj_readable_room2	45	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+outertale.starton.s_grillbys	obj_readable_room2	60	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+outertale.starton.s_grillbys	obj_readable_room2	70	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+outertale.starton.s_grillbys	obj_readable_room2	85	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+outertale.starton.s_grillbys	obj_readable_room3	180	60		
+outertale.starton.s_grillbys	obj_readable_room3	195	60		
+outertale.starton.s_jenga	obj_readable_room3	160	120	obj_readable_room3_128	
+outertale.starton.s_jenga	obj_readable_room3	800	120	obj_readable_room3_128	
+outertale.starton.s_math	obj_readable_room1	190	100	obj_readable_room1_208	global.flag[7] == 1|obj_readable_room1_213|scr_murderlv() >= 7|obj_readable_room1_219
+outertale.starton.s_pacing	obj_readable_room2	2405	110	obj_readable_room2_483	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room)|instance_exists(obj_undyne_friendc)|global.flag[67] < 0|read > 0
+outertale.starton.s_pacing	obj_readable_room3	1620	180	obj_readable_room3_132	
+outertale.starton.s_pacing	obj_readable_room3	1620	200	obj_readable_room3_132	
+outertale.starton.s_pacing	obj_readable_room4	2196	98		global.flag[497] < 3|obj_readable_room4_222|global.flag[497] >= 3|obj_readable_room4_226
+outertale.starton.s_papyrus	obj_readable_room1	402	123		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+outertale.starton.s_papyrus	obj_readable_room1	402	138		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+outertale.starton.s_papyrus	obj_readable_room1	417	123		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+outertale.starton.s_papyrus	obj_readable_room1	417	138		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+outertale.starton.s_papyrus	obj_readable_room3	100	120	obj_readable_room3_116	
+outertale.starton.s_robot	obj_readable_room5	200	60		
+outertale.starton.s_sans	obj_readable_room1	100	120	obj_readable_room1_155	
+outertale.starton.s_sans	obj_readable_room2	200	120	obj_readable_room2_252	
+outertale.starton.s_sansroom	obj_readable_room4	280	280	obj_readable_room4_237	
+outertale.starton.s_sansroom	obj_readable_room4	300	280	obj_readable_room4_237	
+outertale.starton.s_start	obj_readable_room2	440	440		instance_exists(obj_iceflag)|read == 0|obj_iceflag.image_index == 0|global.flag[387] == 0|obj_readable_room2_178|ELSE_OF: obj_iceflag.image_index == 0|obj_readable_room2_186|obj_iceflag.image_index == 1|obj_readable_room2_194|obj_iceflag.image_index == 2|obj_readable_room2_201|obj_iceflag.image_index == 3|obj_readable_room2_208|obj_iceflag.image_index == 4|obj_readable_room2_215|obj_iceflag.image_index == 5|obj_readable_room2_222|obj_iceflag.image_index == 6|obj_readable_room2_229|ELSE_OF: instance_exists(obj_iceflag)|obj_readable_room2_238|ELSE_OF: room == room_tundra8|obj_readable_room2_245|global.flag[203] >= 16|obj_readable_room2_247
+outertale.starton.s_start	obj_readable_room3	440	360	obj_readable_room3_112	
+outertale.starton.s_town1	obj_readable_room1	50	60	obj_readable_room1_198	
+outertale.starton.s_town1	obj_readable_room2	90	60	obj_readable_room2_149	
+outertale.starton.s_town1	obj_readable_room3	170	60	obj_readable_room3_89	
+outertale.starton.s_town1	obj_readable_room4	210	60	obj_readable_room4_114	
+outertale.starton.s_town1	obj_readable_room5	250	60	obj_readable_room5_138	global.ghost == 1 || scr_murderlv() >= 7 || ossafe_file_exists("system_information_963") || ossafe_file_exists("system_information_964")
+outertale.starton.s_town2	obj_readable_room1	100	95	obj_readable_room1_595	global.flag[7] == 1|obj_readable_room1_602|global.flag[279] == 1|obj_readable_room1_610
+outertale.starton.s_town2	obj_readable_room2	130	95	obj_readable_room2_544	
+outertale.starton.s_town2	obj_readable_room3	160	95	obj_readable_room3_291	
+outertale.starton.s_town2	obj_readable_room3	180	95	obj_readable_room3_291	
+outertale.starton.s_town2	obj_readable_room4	220	135	obj_readable_room4_217	
+outertale.starton.s_town2	obj_readable_room4	220	150	obj_readable_room4_217	
+outertale.starton.s_town2	obj_readable_room4	225	120	obj_readable_room4_217	
+outertale.wastelands.w_alley2	obj_readable_room3	400	60	obj_readable_room3_108	
+outertale.wastelands.w_alley2	obj_readable_room3	420	60	obj_readable_room3_108	
+outertale.wastelands.w_blooky	obj_readable_room1	568	125	obj_readable_room1_142	
+outertale.wastelands.w_blooky	obj_readable_room2	206	133	obj_readable_room2_135	global.flag[50] == 1|obj_readable_room2_136
+outertale.wastelands.w_blooky	obj_readable_room2	701	131	obj_readable_room2_135	global.flag[50] == 1|obj_readable_room2_136
+outertale.wastelands.w_blooky	obj_readable_room3	537	131	obj_readable_room3_83	
+outertale.wastelands.w_blooky	obj_readable_room4	640	125	obj_readable_room4_63	global.flag[7] == 1|obj_readable_room4_64|murdererlv1() == 1|obj_readable_room4_66
+outertale.wastelands.w_coffin	obj_readable_room1	80	240	obj_readable_room1_72	
+outertale.wastelands.w_coffin	obj_readable_room1	100	240	obj_readable_room1_72	
+outertale.wastelands.w_danger	obj_readable_room1	300	240	obj_readable_room1_73	
+outertale.wastelands.w_danger	obj_readable_room1	320	240	obj_readable_room1_73	
+outertale.wastelands.w_dummy	obj_readable_room1	80	100	obj_readable_room1_71	
+outertale.wastelands.w_dummy	obj_readable_room1	100	100	obj_readable_room1_71	
+outertale.wastelands.w_junction	obj_readable_room2	122	140	obj_readable_room2_140	global.flag[103] > 0|obj_readable_room2_141|global.flag[7] == 1|obj_readable_room2_144
+outertale.wastelands.w_junction	obj_readable_room3	64	140	obj_readable_room3_84	
+outertale.wastelands.w_junction	obj_readable_room4	92	140	obj_readable_room4_76	murdererlv1() == 1|obj_readable_room4_77
+outertale.wastelands.w_junction	obj_readable_room4	150	140	obj_readable_room4_78	global.flag[45] == 4|obj_readable_room4_79
+outertale.wastelands.w_lobby	obj_readable_room1	280	100		global.osflavor >= 3 || ossafe_file_exists("file6") || global.flag[19] > 665 || global.ghost == 1|obj_readable_room1_69_console_1
+outertale.wastelands.w_mouse	obj_readable_room1	278	56	obj_readable_room1_81	
+outertale.wastelands.w_mouse	obj_readable_room2	226	61	obj_readable_room2_80	
+outertale.wastelands.w_mouse	obj_readable_room2	250	62	obj_readable_room2_80	
+outertale.wastelands.w_pacing	obj_readable_room1	216	148	obj_readable_room1_83	
+outertale.wastelands.w_pacing	obj_readable_room1	228	148	obj_readable_room1_83	
+outertale.wastelands.w_pacing	obj_readable_room2	120	94	obj_readable_room2_63	global.flag[7] == 1|obj_readable_room2_67
+outertale.wastelands.w_pacing	obj_readable_room2	120	94	obj_readable_room2_63	global.flag[7] == 1|obj_readable_room2_67
+outertale.wastelands.w_pacing	obj_readable_room3	92	86	obj_readable_room3_60	
+outertale.wastelands.w_party	obj_readable_room1	70	172		
+outertale.wastelands.w_party	obj_readable_room2	65	202	obj_readable_room2_124	
+outertale.wastelands.w_party	obj_readable_room2	142	79	obj_readable_room2_127	
+outertale.wastelands.w_party	obj_readable_room2	162	78	obj_readable_room2_127	
+outertale.wastelands.w_party	obj_readable_room3	90	92	obj_readable_room3_71	global.flag[7] == 1|obj_readable_room3_74
+outertale.wastelands.w_party	obj_readable_room3	90	112	obj_readable_room3_71	global.flag[7] == 1|obj_readable_room3_74
+outertale.wastelands.w_puzzle4	obj_readable_room1	252	52	obj_readable_room1_75	
+outertale.wastelands.w_puzzle4	obj_readable_room2	40	58	obj_readable_room2_114	
+outertale.wastelands.w_toriel_asriel	obj_readable_room3	2580	60	obj_readable_room3_104	
+outertale.wastelands.w_toriel_asriel	obj_readable_room3	2600	60	obj_readable_room3_104	
+outertale.wastelands.w_toriel_hallway	obj_readable_room2	70	120	obj_readable_room2_166	
+outertale.wastelands.w_toriel_hallway	obj_readable_room2	90	120	obj_readable_room2_166	
+outertale.wastelands.w_tutorial	obj_readable_room1	100	80	obj_readable_room1_70	
+outertale.wastelands.w_zigzag	obj_readable_room1	180	100	obj_readable_room1_74	
+outertale.wastelands.w_zigzag	obj_readable_room1	200	100	obj_readable_room1_74	

@@ -1,0 +1,338 @@
+scene	obj	x	y	certain_key	uncertain_overrides
+ut.rooms.room_asghouse1	obj_readable_room1	252	52	obj_readable_room1_78	scr_murderlv() >= 16|obj_readable_room1_79
+ut.rooms.room_asghouse1	obj_readable_room2	40	58	obj_readable_room2_115	
+ut.rooms.room_asghouse2	obj_readable_room1	278	56	obj_readable_room1_82	
+ut.rooms.room_asghouse2	obj_readable_room2	226	61	obj_readable_room2_100	scr_murderlv() >= 16|obj_readable_room2_105
+ut.rooms.room_asghouse2	obj_readable_room2	250	62	obj_readable_room2_100	scr_murderlv() >= 16|obj_readable_room2_105
+ut.rooms.room_asghouse2	obj_readable_room3	157	57	obj_readable_room3_79	
+ut.rooms.room_asghouse2	obj_readable_room4	101	161	obj_readable_room4_67	
+ut.rooms.room_asghouse3	obj_readable_room1	360	122	obj_readable_room1_143	
+ut.rooms.room_asghouse3	obj_readable_room2	206	133	obj_readable_room2_111	
+ut.rooms.room_asghouse3	obj_readable_room2	225	133	obj_readable_room2_111	
+ut.rooms.room_asghouse3	obj_readable_room2	327	134	obj_readable_room2_111	
+ut.rooms.room_asghouse3	obj_readable_room2	701	131	obj_readable_room2_111	
+ut.rooms.room_asghouse3	obj_readable_room4	640	125	obj_readable_room4_70	scr_murderlv() >= 16|obj_readable_room4_73
+ut.rooms.room_asghouse3	obj_readable_room4	663	125	obj_readable_room4_70	scr_murderlv() >= 16|obj_readable_room4_73
+ut.rooms.room_asgoreroom	obj_readable_room1	60	69	obj_readable_room1_125	scr_murderlv() >= 16|obj_readable_room1_130
+ut.rooms.room_asgoreroom	obj_readable_room1	84	69	obj_readable_room1_125	scr_murderlv() >= 16|obj_readable_room1_130
+ut.rooms.room_asgoreroom	obj_readable_room2	124	68	obj_readable_room2_90	scr_murderlv() >= 16|obj_readable_room2_94
+ut.rooms.room_asgoreroom	obj_readable_room3	162	46	obj_readable_room3_81	
+ut.rooms.room_asgoreroom	obj_readable_room4	186	74	obj_readable_room4_110	
+ut.rooms.room_asgoreroom	obj_readable_room4	186	94	obj_readable_room4_110	
+ut.rooms.room_asgoreroom	obj_readable_room4	186	115	obj_readable_room4_110	
+ut.rooms.room_asgoreroom	obj_readable_room5	190	154	obj_readable_room5_82	global.flag[7] == 1|scr_murderlv() >= 16|obj_readable_room5_80
+ut.rooms.room_asgoreroom	obj_readable_room5	212	171	obj_readable_room5_74	global.flag[7] == 1|scr_murderlv() >= 16|obj_readable_room5_80
+ut.rooms.room_asrielroom	obj_readable_room1	216	148	obj_readable_room1_83	
+ut.rooms.room_asrielroom	obj_readable_room1	228	148	obj_readable_room1_83	
+ut.rooms.room_asrielroom	obj_readable_room2	120	94	obj_readable_room2_63	global.flag[7] == 1|obj_readable_room2_67
+ut.rooms.room_asrielroom	obj_readable_room2	120	94	obj_readable_room2_63	global.flag[7] == 1|obj_readable_room2_67
+ut.rooms.room_asrielroom	obj_readable_room3	92	86	obj_readable_room3_60	
+ut.rooms.room_asrielroom_final	obj_readable_room1	208	150	obj_readable_room1_84	
+ut.rooms.room_asrielroom_final	obj_readable_room1	228	150	obj_readable_room1_84	
+ut.rooms.room_asrielroom_final	obj_readable_room2	120	94	obj_readable_room2_72	scr_murderlv() >= 16|obj_readable_room2_75
+ut.rooms.room_asrielroom_final	obj_readable_room2	120	94	obj_readable_room2_72	scr_murderlv() >= 16|obj_readable_room2_75
+ut.rooms.room_asrielroom_final	obj_readable_room3	92	86	obj_readable_room3_63	scr_murderlv() >= 16|obj_readable_room3_66
+ut.rooms.room_asrielroom_final	obj_readable_room4	64	134	obj_readable_room4_98	scr_murderlv() >= 16|obj_readable_room4_99
+ut.rooms.room_asrielroom_final	obj_readable_room4	68	132	obj_readable_room4_98	scr_murderlv() >= 16|obj_readable_room4_99
+ut.rooms.room_asrielroom_final	obj_readable_room4	70	98	obj_readable_room4_98	scr_murderlv() >= 16|obj_readable_room4_99
+ut.rooms.room_asrielroom_final	obj_readable_room4	70	118	obj_readable_room4_98	scr_murderlv() >= 16|obj_readable_room4_99
+ut.rooms.room_asrielroom_final	obj_readable_room4	194	116	obj_readable_room4_104	scr_murderlv() >= 16|obj_readable_room4_105
+ut.rooms.room_asrielroom_final	obj_readable_room4	194	132	obj_readable_room4_104	scr_murderlv() >= 16|obj_readable_room4_105
+ut.rooms.room_asrielroom_final	obj_readable_room5	162	100	obj_readable_room5_68	scr_murderlv() >= 16|obj_readable_room5_69
+ut.rooms.room_castle_coffins2	obj_readable_room1	140	140	obj_readable_room1_90	global.flag[7] == 1|obj_readable_room1_96|scr_murderlv() >= 16|obj_readable_room1_103
+ut.rooms.room_castle_coffins2	obj_readable_room1	140	160	obj_readable_room1_90	global.flag[7] == 1|obj_readable_room1_96|scr_murderlv() >= 16|obj_readable_room1_103
+ut.rooms.room_castle_coffins2	obj_readable_room1	140	180	obj_readable_room1_90	global.flag[7] == 1|obj_readable_room1_96|scr_murderlv() >= 16|obj_readable_room1_103
+ut.rooms.room_castle_finalshoehorn	obj_readable_room1	260	100	obj_readable_room1_86	
+ut.rooms.room_castle_finalshoehorn	obj_readable_room1	280	100	obj_readable_room1_86	
+ut.rooms.room_castle_throneroom	obj_readable_room1	150	215	obj_readable_room1_139	
+ut.rooms.room_castle_throneroom	obj_readable_room1	150	230	obj_readable_room1_139	
+ut.rooms.room_castle_throneroom	obj_readable_room2	210	110	obj_readable_room2_119	
+ut.rooms.room_castle_throneroom	obj_readable_room2	230	110	obj_readable_room2_119	
+ut.rooms.room_fire_cookingshow	obj_readable_room1	60	320	obj_readable_room1_304	global.plot < 134|obj_readable_room1_306|instance_exists(obj_mettaton_npc)|obj_readable_room1_312|global.plot == 134|obj_readable_room1_320|specialread > 0|obj_readable_room1_328
+ut.rooms.room_fire_cookingshow	obj_readable_room1	80	320	obj_readable_room1_304	global.plot < 134|obj_readable_room1_306|instance_exists(obj_mettaton_npc)|obj_readable_room1_312|global.plot == 134|obj_readable_room1_320|specialread > 0|obj_readable_room1_328
+ut.rooms.room_fire_cookingshow	obj_readable_room2	265	320	obj_readable_room2_343	global.plot < 134|obj_readable_room2_345|instance_exists(obj_mettaton_npc)|obj_readable_room2_353|global.plot == 134|obj_readable_room2_360
+ut.rooms.room_fire_cookingshow	obj_readable_room3	90	382	obj_readable_room3_213	global.plot < 134|obj_readable_room3_215|instance_exists(obj_mettaton_npc)|obj_readable_room3_222|global.plot == 134|obj_readable_room3_228
+ut.rooms.room_fire_cookingshow	obj_readable_room4	210	320	obj_readable_room4_159	global.plot < 134|scr_murderlv() < 12|obj_readable_room4_161|instance_exists(obj_mettaton_npc)|obj_readable_room4_168|global.plot == 134|obj_readable_room4_174
+ut.rooms.room_fire_cookingshow	obj_readable_room4	230	320	obj_readable_room4_159	global.plot < 134|scr_murderlv() < 12|obj_readable_room4_161|instance_exists(obj_mettaton_npc)|obj_readable_room4_168|global.plot == 134|obj_readable_room4_174
+ut.rooms.room_fire_cookingshow	obj_readable_room5	460	340	obj_readable_room5_203	
+ut.rooms.room_fire_cookingshow	obj_readable_room5	460	360	obj_readable_room5_203	
+ut.rooms.room_fire_cookingshow	obj_readable_room5	480	340	obj_readable_room5_203	
+ut.rooms.room_fire_cookingshow	obj_readable_room5	480	360	obj_readable_room5_203	
+ut.rooms.room_fire_core_branch	obj_readable_room1	200	80	obj_readable_room1_380	
+ut.rooms.room_fire_core_branch	obj_readable_room1	220	80	obj_readable_room1_380	
+ut.rooms.room_fire_core_branch	obj_readable_room2	60	80	obj_readable_room2_395	
+ut.rooms.room_fire_core_branch	obj_readable_room2	80	80	obj_readable_room2_395	
+ut.rooms.room_fire_core_center	obj_readable_room1	220	80	obj_readable_room1_401	
+ut.rooms.room_fire_core_center	obj_readable_room1	240	80	obj_readable_room1_401	
+ut.rooms.room_fire_core_left	obj_readable_room1	40	80	obj_readable_room1_385	
+ut.rooms.room_fire_core_left	obj_readable_room1	60	80	obj_readable_room1_385	
+ut.rooms.room_fire_core_right	obj_readable_room1	200	80	obj_readable_room1_395	
+ut.rooms.room_fire_core_right	obj_readable_room1	220	80	obj_readable_room1_395	
+ut.rooms.room_fire_core_right	obj_readable_room2	60	80	obj_readable_room2_400	
+ut.rooms.room_fire_core_right	obj_readable_room2	80	80	obj_readable_room2_400	
+ut.rooms.room_fire_core_top	obj_readable_room1	60	80	obj_readable_room1_390	
+ut.rooms.room_fire_core_top	obj_readable_room1	80	80	obj_readable_room1_390	
+ut.rooms.room_fire_core_treasureleft	obj_readable_room1	140	60	obj_readable_room1_406	
+ut.rooms.room_fire_core_treasureleft	obj_readable_room1	160	60	obj_readable_room1_406	
+ut.rooms.room_fire_hotelbed	obj_readable_room1	70	54	obj_readable_room1_646	
+ut.rooms.room_fire_hotelbed	obj_readable_room2	230	54	obj_readable_room2_554	
+ut.rooms.room_fire_hoteldoors	obj_readable_room1	196	120	obj_readable_room1_628	
+ut.rooms.room_fire_hotelfront_2	obj_readable_room1	50	20	obj_readable_room1_375	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	160	388	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	160	400	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	178	388	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	178	400	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	196	400	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	198	388	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	218	388	obj_readable_room1_633	
+ut.rooms.room_fire_hotellobby	obj_readable_room1	218	398	obj_readable_room1_633	
+ut.rooms.room_fire_lab1	obj_readable_room1	560	120	obj_readable_room1_292	global.plot < 126|scr_murderlv() < 12|obj_readable_room1_293
+ut.rooms.room_fire_lab1	obj_readable_room2	500	100	obj_readable_room2_332	global.plot < 126|scr_murderlv() < 12|obj_readable_room2_333
+ut.rooms.room_fire_lab1	obj_readable_room2	520	100	obj_readable_room2_332	global.plot < 126|scr_murderlv() < 12|obj_readable_room2_333
+ut.rooms.room_fire_lab1	obj_readable_room3	480	120	obj_readable_room3_200	global.plot < 126|scr_murderlv() < 12|obj_readable_room3_202
+ut.rooms.room_fire_lab1	obj_readable_room4	360	80	obj_readable_room4_145	global.plot < 126|obj_readable_room4_146|scr_murderlv() >= 12|obj_readable_room4_147
+ut.rooms.room_fire_lab1	obj_readable_room4	380	80	obj_readable_room4_145	global.plot < 126|obj_readable_room4_146|scr_murderlv() >= 12|obj_readable_room4_147
+ut.rooms.room_fire_lab1	obj_readable_room4	400	80	obj_readable_room4_145	global.plot < 126|obj_readable_room4_146|scr_murderlv() >= 12|obj_readable_room4_147
+ut.rooms.room_fire_lab1	obj_readable_room5	540	100	obj_readable_room5_92	global.plot < 126|scr_murderlv() < 12|obj_readable_room5_93
+ut.rooms.room_fire_lab1	obj_readable_room5	840	80	obj_readable_room5_177	global.plot < 126|scr_murderlv() < 12|obj_readable_room5_93
+ut.rooms.room_fire_lab2	obj_readable_room1	740	120	obj_readable_room1_299	
+ut.rooms.room_fire_lab2	obj_readable_room1	760	120	obj_readable_room1_299	
+ut.rooms.room_fire_lab2	obj_readable_room2	700	120		
+ut.rooms.room_fire_lab2	obj_readable_room2	720	120		
+ut.rooms.room_fire_lab2	obj_readable_room3	660	120	obj_readable_room3_207	
+ut.rooms.room_fire_lab2	obj_readable_room3	680	120	obj_readable_room3_207	
+ut.rooms.room_fire_lab2	obj_readable_room4	620	120		
+ut.rooms.room_fire_lab2	obj_readable_room4	640	120		
+ut.rooms.room_fire_lab2	obj_readable_room5	57	120	obj_readable_room5_104	
+ut.rooms.room_fire_lab2	obj_readable_room5	75	120	obj_readable_room5_104	
+ut.rooms.room_fire_lab2	obj_readable_room5	165	117	obj_readable_room5_110	
+ut.rooms.room_fire_lab2	obj_readable_room5	174	117	obj_readable_room5_110	
+ut.rooms.room_fire_lab2	obj_readable_room5	483	120	obj_readable_room5_116	
+ut.rooms.room_fire_lab2	obj_readable_room5	507	120	obj_readable_room5_116	
+ut.rooms.room_fire_lab2	obj_readable_room5	531	120	obj_readable_room5_116	
+ut.rooms.room_fire_lab2	obj_readable_room5	546	120	obj_readable_room5_116	
+ut.rooms.room_fire_lab2	obj_readable_room5	580	120		
+ut.rooms.room_fire_lab2	obj_readable_room5	600	120		
+ut.rooms.room_fire_pacing	obj_readable_room1	160	140	obj_readable_room1_621	
+ut.rooms.room_fire_pacing	obj_readable_room1	175	140	obj_readable_room1_621	
+ut.rooms.room_fire_restaurant	obj_readable_room1	265	80	obj_readable_room1_639	
+ut.rooms.room_fire_restaurant	obj_readable_room1	285	80	obj_readable_room1_639	
+ut.rooms.room_fire_restaurant	obj_readable_room1	305	80	obj_readable_room1_639	
+ut.rooms.room_fire_restaurant	obj_readable_room2	490	80	obj_readable_room2_549	
+ut.rooms.room_fire_restaurant	obj_readable_room2	510	80	obj_readable_room2_549	
+ut.rooms.room_fire_restaurant	obj_readable_room2	525	80	obj_readable_room2_549	
+ut.rooms.room_fire_restaurant	obj_readable_room3	120	80	obj_readable_room3_320	
+ut.rooms.room_fire_restaurant	obj_readable_room3	140	80	obj_readable_room3_320	
+ut.rooms.room_fire_restaurant	obj_readable_room3	435	80	obj_readable_room3_320	
+ut.rooms.room_fire_restaurant	obj_readable_room3	450	80	obj_readable_room3_320	
+ut.rooms.room_fire_spidershop	obj_readable_room1	148	108	obj_readable_room1_369	
+ut.rooms.room_fire_spidershop	obj_readable_room2	194	104	obj_readable_room2_390	
+ut.rooms.room_ice_dog	obj_readable_room3	195	150	obj_readable_room3_315	
+ut.rooms.room_ice_dog	obj_readable_room4	195	105	obj_readable_room4_234	
+ut.rooms.room_kitchen	obj_readable_room1	30	140	obj_readable_room1_144	
+ut.rooms.room_kitchen	obj_readable_room2	122	140	obj_readable_room2_140	global.flag[103] > 0|obj_readable_room2_141|global.flag[7] == 1|obj_readable_room2_144
+ut.rooms.room_kitchen	obj_readable_room3	64	140	obj_readable_room3_84	
+ut.rooms.room_kitchen	obj_readable_room4	92	140	obj_readable_room4_76	murdererlv1() == 1|obj_readable_room4_77
+ut.rooms.room_kitchen	obj_readable_room4	150	140	obj_readable_room4_78	global.flag[45] == 4|obj_readable_room4_79
+ut.rooms.room_kitchen_final	obj_readable_room1	30	140	obj_readable_room1_147	scr_murderlv() >= 16|obj_readable_room1_151
+ut.rooms.room_kitchen_final	obj_readable_room3	64	140	obj_readable_room3_85	
+ut.rooms.room_kitchen_final	obj_readable_room4	92	140	obj_readable_room4_83	scr_murderlv() >= 16|obj_readable_room4_84
+ut.rooms.room_kitchen_final	obj_readable_room4	150	140	obj_readable_room4_90	scr_murderlv() >= 16|obj_readable_room4_91
+ut.rooms.room_ruins13	obj_readable_room1	280	100		global.osflavor >= 3|obj_readable_room1_69_console_1|ELSE_OF: room == room_ruins13|obj_readable_room1_69
+ut.rooms.room_ruins14	obj_readable_room1	100	80	obj_readable_room1_70	
+ut.rooms.room_ruins15A	obj_readable_room1	80	100	obj_readable_room1_71	
+ut.rooms.room_ruins15A	obj_readable_room1	100	100	obj_readable_room1_71	
+ut.rooms.room_ruins15B	obj_readable_room1	80	240	obj_readable_room1_72	
+ut.rooms.room_ruins15B	obj_readable_room1	100	240	obj_readable_room1_72	
+ut.rooms.room_ruins15C	obj_readable_room1	300	240	obj_readable_room1_73	
+ut.rooms.room_ruins15C	obj_readable_room1	320	240	obj_readable_room1_73	
+ut.rooms.room_ruins15D	obj_readable_room1	180	100	obj_readable_room1_74	
+ut.rooms.room_ruins15D	obj_readable_room1	200	100	obj_readable_room1_74	
+ut.rooms.room_ruins2	obj_readable_room1	80	60	obj_readable_room1_65	
+ut.rooms.room_ruins3	obj_readable_room1	100	60	obj_readable_room1_66	
+ut.rooms.room_ruins5	obj_readable_room1	580	140	obj_readable_room1_67	
+ut.rooms.room_ruins5	obj_readable_room1	600	140	obj_readable_room1_67	
+ut.rooms.room_ruins9	obj_readable_room1	160	60	obj_readable_room1_68	
+ut.rooms.room_torhouse1	obj_readable_room1	252	52	obj_readable_room1_75	
+ut.rooms.room_torhouse1	obj_readable_room2	40	58	obj_readable_room2_114	
+ut.rooms.room_torhouse2	obj_readable_room1	278	56	obj_readable_room1_81	
+ut.rooms.room_torhouse2	obj_readable_room2	226	61	obj_readable_room2_80	
+ut.rooms.room_torhouse2	obj_readable_room2	250	62	obj_readable_room2_80	
+ut.rooms.room_torhouse3	obj_readable_room1	568	125	obj_readable_room1_142	
+ut.rooms.room_torhouse3	obj_readable_room2	206	133	obj_readable_room2_135	global.flag[50] == 1|obj_readable_room2_136
+ut.rooms.room_torhouse3	obj_readable_room2	701	131	obj_readable_room2_135	global.flag[50] == 1|obj_readable_room2_136
+ut.rooms.room_torhouse3	obj_readable_room3	537	131	obj_readable_room3_83	
+ut.rooms.room_torhouse3	obj_readable_room4	640	125	obj_readable_room4_63	global.flag[7] == 1|obj_readable_room4_64|murdererlv1() == 1|obj_readable_room4_66
+ut.rooms.room_torhouse3	obj_readable_room4	663	125	obj_readable_room4_63	global.flag[7] == 1|obj_readable_room4_64|murdererlv1() == 1|obj_readable_room4_66
+ut.rooms.room_torielroom	obj_readable_room1	70	172		
+ut.rooms.room_torielroom	obj_readable_room2	65	202	obj_readable_room2_124	
+ut.rooms.room_torielroom	obj_readable_room2	142	79	obj_readable_room2_127	
+ut.rooms.room_torielroom	obj_readable_room2	162	78	obj_readable_room2_127	
+ut.rooms.room_torielroom	obj_readable_room3	90	92	obj_readable_room3_71	global.flag[7] == 1|obj_readable_room3_74
+ut.rooms.room_torielroom	obj_readable_room3	90	112	obj_readable_room3_71	global.flag[7] == 1|obj_readable_room3_74
+ut.rooms.room_truelab_bedroom	obj_readable_room1	268	80	obj_readable_room1_476	global.flag[485] == 1|obj_readable_room1_481
+ut.rooms.room_truelab_bedroom	obj_readable_room2	180	80	obj_readable_room2_424	
+ut.rooms.room_truelab_castle_elevator	obj_readable_room1	140	100	obj_readable_room1_575	
+ut.rooms.room_truelab_castle_elevator	obj_readable_room1	160	100	obj_readable_room1_575	
+ut.rooms.room_truelab_cooler	obj_readable_room1	618	100	obj_readable_room1_538	global.flag[485] == 1|obj_readable_room1_542|global.flag[490] == 0|obj_readable_room1_543
+ut.rooms.room_truelab_cooler	obj_readable_room2	417	100	obj_readable_room2_462	global.flag[485] == 1|obj_readable_room2_467|global.flag[490] == 0|obj_readable_room2_468
+ut.rooms.room_truelab_cooler	obj_readable_room3	316	100	obj_readable_room3_272	global.flag[485] == 1|obj_readable_room3_275|global.flag[490] == 0|obj_readable_room3_276
+ut.rooms.room_truelab_determination	obj_readable_room1	112	60	obj_readable_room1_517	global.flag[485] == 1|obj_readable_room1_518
+ut.rooms.room_truelab_elevatorinside	obj_readable_room1	140	100	obj_readable_room1_565	
+ut.rooms.room_truelab_elevatorinside	obj_readable_room1	160	100	obj_readable_room1_565	
+ut.rooms.room_truelab_fan	obj_readable_room1	500	120		
+ut.rooms.room_truelab_fan	obj_readable_room2	106	120	obj_readable_room2_452	
+ut.rooms.room_truelab_hall1	obj_readable_room1	147	120	obj_readable_room1_425	global.flag[485] == 1|obj_readable_room1_430
+ut.rooms.room_truelab_hall1	obj_readable_room2	306	120	obj_readable_room2_405	global.flag[485] == 1|obj_readable_room2_412
+ut.rooms.room_truelab_hall1	obj_readable_room3	465	120	obj_readable_room3_254	global.flag[485] == 1|obj_readable_room3_261
+ut.rooms.room_truelab_hall1	obj_readable_room4	627	120	obj_readable_room4_193	global.flag[485] == 1|obj_readable_room4_201
+ut.rooms.room_truelab_hall2	obj_readable_room1	207	60	obj_readable_room1_441	global.flag[485] == 1|obj_readable_room1_449
+ut.rooms.room_truelab_hall3	obj_readable_room1	726	120	obj_readable_room1_497	global.flag[485] == 1|obj_readable_room1_503
+ut.rooms.room_truelab_hall3	obj_readable_room2	526	120	obj_readable_room2_439	global.flag[485] == 1|obj_readable_room2_441
+ut.rooms.room_truelab_hub	obj_readable_room1	316	180	obj_readable_room1_435	global.flag[485] == 1|obj_readable_room1_436
+ut.rooms.room_truelab_hub	obj_readable_room3	180	190		
+ut.rooms.room_truelab_hub	obj_readable_room3	188	190		
+ut.rooms.room_truelab_mirror	obj_readable_room1	208	100	obj_readable_room1_486	global.flag[485] == 1|obj_readable_room1_492
+ut.rooms.room_truelab_mirror	obj_readable_room2	368	100	obj_readable_room2_429	global.flag[485] == 1|obj_readable_room2_434
+ut.rooms.room_truelab_mirror	obj_readable_room4	120	160	obj_readable_room4_206	
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	426	100	obj_readable_room1_454	global.flag[485] == 1|obj_readable_room1_462
+ut.rooms.room_truelab_prebed	obj_readable_room1	266	80	obj_readable_room1_467	global.flag[485] == 1|obj_readable_room1_471
+ut.rooms.room_truelab_prebed	obj_readable_room2	446	80	obj_readable_room2_417	global.flag[485] == 1|obj_readable_room2_419
+ut.rooms.room_truelab_prepower	obj_readable_room1	236	100	obj_readable_room1_548	global.flag[485] == 1|obj_readable_room1_551
+ut.rooms.room_truelab_prepower	obj_readable_room2	412	100	obj_readable_room2_473	global.flag[485] == 1|obj_readable_room2_476
+ut.rooms.room_truelab_tv	obj_readable_room1	60	80	obj_readable_room1_523	global.flag[485] == 1|obj_readable_room1_528
+ut.rooms.room_truelab_tv	obj_readable_room2	105	100	obj_readable_room2_446	
+ut.rooms.room_truelab_tv	obj_readable_room2	115	100	obj_readable_room2_446	
+ut.rooms.room_truelab_tv	obj_readable_room3	185	100	obj_readable_room3_266	
+ut.rooms.room_truelab_tv	obj_readable_room3	195	100	obj_readable_room3_266	
+ut.rooms.room_tundra1	obj_readable_room2	70	120	obj_readable_room2_166	
+ut.rooms.room_tundra1	obj_readable_room2	90	120	obj_readable_room2_166	
+ut.rooms.room_tundra2	obj_readable_room3	2580	60	obj_readable_room3_104	
+ut.rooms.room_tundra2	obj_readable_room3	2600	60	obj_readable_room3_104	
+ut.rooms.room_tundra4	obj_readable_room3	400	60	obj_readable_room3_108	
+ut.rooms.room_tundra4	obj_readable_room3	420	60	obj_readable_room3_108	
+ut.rooms.room_tundra8	obj_readable_room2	440	440		instance_exists(obj_iceflag)|read == 0|obj_iceflag.image_index == 0|global.flag[387] == 0|obj_readable_room2_178|ELSE_OF: obj_iceflag.image_index == 0|obj_readable_room2_186|obj_iceflag.image_index == 1|obj_readable_room2_194|obj_iceflag.image_index == 2|obj_readable_room2_201|obj_iceflag.image_index == 3|obj_readable_room2_208|obj_iceflag.image_index == 4|obj_readable_room2_215|obj_iceflag.image_index == 5|obj_readable_room2_222|obj_iceflag.image_index == 6|obj_readable_room2_229|ELSE_OF: instance_exists(obj_iceflag)|obj_readable_room2_238|ELSE_OF: room == room_tundra8|obj_readable_room2_245|global.flag[203] >= 16|obj_readable_room2_247
+ut.rooms.room_tundra8	obj_readable_room3	440	360	obj_readable_room3_112	
+ut.rooms.room_tundra8A	obj_readable_room1	100	120	obj_readable_room1_155	
+ut.rooms.room_tundra8A	obj_readable_room2	200	120	obj_readable_room2_252	
+ut.rooms.room_tundra_dangerbridge	obj_readable_room3	160	120	obj_readable_room3_128	
+ut.rooms.room_tundra_dangerbridge	obj_readable_room3	800	120	obj_readable_room3_128	
+ut.rooms.room_tundra_grillby	obj_readable_room1	268	56	obj_readable_room1_580	
+ut.rooms.room_tundra_grillby	obj_readable_room2	42	30	obj_readable_room2_534	
+ut.rooms.room_tundra_inn	obj_readable_room1	190	100	obj_readable_room1_208	global.flag[7] == 1|obj_readable_room1_213|scr_murderlv() >= 7|obj_readable_room1_219
+ut.rooms.room_tundra_lesserdog	obj_readable_room1	240	80	obj_readable_room1_164	
+ut.rooms.room_tundra_lesserdog	obj_readable_room3	220	40	obj_readable_room3_124	
+ut.rooms.room_tundra_lesserdog	obj_readable_room3	240	40	obj_readable_room3_124	
+ut.rooms.room_tundra_lesserdog	obj_readable_room3	260	40	obj_readable_room3_124	
+ut.rooms.room_tundra_library	obj_readable_room1	50	60	obj_readable_room1_198	
+ut.rooms.room_tundra_library	obj_readable_room2	90	60	obj_readable_room2_149	
+ut.rooms.room_tundra_library	obj_readable_room3	170	60	obj_readable_room3_89	
+ut.rooms.room_tundra_library	obj_readable_room4	210	60	obj_readable_room4_114	
+ut.rooms.room_tundra_library	obj_readable_room5	250	60	obj_readable_room5_138	
+ut.rooms.room_tundra_paproom	obj_readable_room2	45	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+ut.rooms.room_tundra_paproom	obj_readable_room2	60	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+ut.rooms.room_tundra_paproom	obj_readable_room2	70	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+ut.rooms.room_tundra_paproom	obj_readable_room2	85	60		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_paproom|obj_readable_room2_287|read > 0|obj_readable_room2_288
+ut.rooms.room_tundra_paproom	obj_readable_room3	180	60		
+ut.rooms.room_tundra_paproom	obj_readable_room3	195	60		
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	100	95	obj_readable_room1_595	global.flag[7] == 1|obj_readable_room1_602|global.flag[279] == 1|obj_readable_room1_610
+ut.rooms.room_tundra_sansbasement	obj_readable_room2	130	95	obj_readable_room2_544	
+ut.rooms.room_tundra_sansbasement	obj_readable_room3	160	95	obj_readable_room3_291	
+ut.rooms.room_tundra_sansbasement	obj_readable_room3	180	95	obj_readable_room3_291	
+ut.rooms.room_tundra_sansbasement	obj_readable_room4	220	135	obj_readable_room4_217	
+ut.rooms.room_tundra_sansbasement	obj_readable_room4	220	150	obj_readable_room4_217	
+ut.rooms.room_tundra_sansbasement	obj_readable_room4	225	120	obj_readable_room4_217	
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	264	168		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_sanshouse|obj_readable_room2_266|read > 0|obj_readable_room2_268
+ut.rooms.room_tundra_sanshouse	obj_readable_room3	140	35		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_sanshouse|obj_readable_room3_180
+ut.rooms.room_tundra_sanshouse	obj_readable_room3	160	35		instance_exists(obj_papyrusparent)|ELSE_OF: room == room_tundra_sanshouse|obj_readable_room3_180
+ut.rooms.room_tundra_sansroom	obj_readable_room1	160	92	obj_readable_room1_590	
+ut.rooms.room_tundra_sansroom	obj_readable_room1	164	112	obj_readable_room1_590	
+ut.rooms.room_tundra_sansroom	obj_readable_room1	176	112	obj_readable_room1_590	
+ut.rooms.room_tundra_sansroom	obj_readable_room2	140	84	obj_readable_room2_539	
+ut.rooms.room_tundra_sansroom	obj_readable_room3	108	84	obj_readable_room3_286	
+ut.rooms.room_tundra_sansroom	obj_readable_room4	44	176	obj_readable_room4_212	
+ut.rooms.room_tundra_sansroom	obj_readable_room4	80	72	obj_readable_room4_212	
+ut.rooms.room_tundra_sansroom	obj_readable_room4	80	88	obj_readable_room4_212	
+ut.rooms.room_tundra_sansroom	obj_readable_room5	52	88		global.flag[497] < 3|obj_readable_room5_186|ELSE_OF: x < 128|obj_readable_room5_192|ELSE_OF: room == room_tundra_sansroom|obj_readable_room5_197
+ut.rooms.room_tundra_sansroom	obj_readable_room5	168	180		ELSE_OF: room == room_tundra_sansroom|obj_readable_room5_197
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	402	123		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	402	138		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	417	123		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	417	138		global.plot <= 48|obj_readable_room1_158|global.plot > 48|obj_readable_room1_159|scr_murderlv() >= 3|obj_readable_room1_162
+ut.rooms.room_tundra_snowpuzz	obj_readable_room3	100	120	obj_readable_room3_116	
+ut.rooms.room_tundra_town	obj_readable_room2	2405	110	obj_readable_room2_483	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room)|instance_exists(obj_undyne_friendc)|global.flag[67] < 0|read > 0
+ut.rooms.room_tundra_town	obj_readable_room3	1620	180	obj_readable_room3_132	
+ut.rooms.room_tundra_town	obj_readable_room3	1620	200	obj_readable_room3_132	
+ut.rooms.room_tundra_town	obj_readable_room4	2196	98		global.flag[497] < 3|obj_readable_room4_222|global.flag[497] >= 3|obj_readable_room4_226
+ut.rooms.room_tundra_xoxopuzz	obj_readable_room5	200	60		
+ut.rooms.room_water11	obj_readable_room2	280	180	obj_readable_room2_569	
+ut.rooms.room_water11	obj_readable_room2	300	180	obj_readable_room2_569	
+ut.rooms.room_water12	obj_readable_room1	1080	60	obj_readable_room1_228	
+ut.rooms.room_water12	obj_readable_room1	1100	60	obj_readable_room1_228	
+ut.rooms.room_water14	obj_readable_room1	320	60	obj_readable_room1_241	
+ut.rooms.room_water14	obj_readable_room1	340	60	obj_readable_room1_241	
+ut.rooms.room_water14	obj_readable_room2	500	100	obj_readable_room2_302	
+ut.rooms.room_water14	obj_readable_room2	520	100	obj_readable_room2_302	
+ut.rooms.room_water14	obj_readable_room3	600	100	obj_readable_room3_154	
+ut.rooms.room_water14	obj_readable_room3	620	100	obj_readable_room3_154	
+ut.rooms.room_water15	obj_readable_room1	200	100	obj_readable_room1_247	
+ut.rooms.room_water15	obj_readable_room1	220	100	obj_readable_room1_247	
+ut.rooms.room_water15	obj_readable_room2	360	100	obj_readable_room2_310	
+ut.rooms.room_water15	obj_readable_room2	380	100	obj_readable_room2_310	
+ut.rooms.room_water15	obj_readable_room3	620	100	obj_readable_room3_165	
+ut.rooms.room_water15	obj_readable_room3	640	100	obj_readable_room3_165	
+ut.rooms.room_water17	obj_readable_room1	100	80	obj_readable_room1_280	
+ut.rooms.room_water17	obj_readable_room1	120	80	obj_readable_room1_280	
+ut.rooms.room_water19	obj_readable_room1	140	100	obj_readable_room1_256	
+ut.rooms.room_water19	obj_readable_room1	160	100	obj_readable_room1_256	
+ut.rooms.room_water3	obj_readable_room4	280	280	obj_readable_room4_237	
+ut.rooms.room_water3	obj_readable_room4	300	280	obj_readable_room4_237	
+ut.rooms.room_water5	obj_readable_room3	360	80	obj_readable_room3_141	
+ut.rooms.room_water5	obj_readable_room3	380	80	obj_readable_room3_141	
+ut.rooms.room_water6	obj_readable_room3	140	260	obj_readable_room3_142	
+ut.rooms.room_water6	obj_readable_room3	160	260	obj_readable_room3_142	
+ut.rooms.room_water7	obj_readable_room1	100	100	obj_readable_room1_235	
+ut.rooms.room_water7	obj_readable_room1	120	100	obj_readable_room1_235	
+ut.rooms.room_water7	obj_readable_room2	180	100	obj_readable_room2_295	
+ut.rooms.room_water7	obj_readable_room2	200	100	obj_readable_room2_295	
+ut.rooms.room_water7	obj_readable_room3	260	100	obj_readable_room3_147	
+ut.rooms.room_water7	obj_readable_room3	280	100	obj_readable_room3_147	
+ut.rooms.room_water7	obj_readable_room4	340	100	obj_readable_room4_139	
+ut.rooms.room_water7	obj_readable_room4	360	100	obj_readable_room4_139	
+ut.rooms.room_water7	obj_readable_room5	420	100	obj_readable_room5_131	
+ut.rooms.room_water7	obj_readable_room5	440	100	obj_readable_room5_131	
+ut.rooms.room_water_blookhouse	obj_readable_room3	120	51		instance_exists(obj_napstablook_actor)|obj_readable_room3_303|ELSE_OF: room == room_water_blookhouse|obj_readable_room3_308
+ut.rooms.room_water_blookhouse	obj_readable_room3	132	51		instance_exists(obj_napstablook_actor)|obj_readable_room3_303|ELSE_OF: room == room_water_blookhouse|obj_readable_room3_308
+ut.rooms.room_water_bridgepuzz1	obj_readable_room3	60	120	obj_readable_room3_139	
+ut.rooms.room_water_bridgepuzz1	obj_readable_room3	80	120	obj_readable_room3_139	
+ut.rooms.room_water_nicecream	obj_readable_room1	140	60	obj_readable_room1_263	
+ut.rooms.room_water_nicecream	obj_readable_room1	160	60	obj_readable_room1_263	
+ut.rooms.room_water_piano	obj_readable_room5	200	100	obj_readable_room5_126	
+ut.rooms.room_water_piano	obj_readable_room5	220	100	obj_readable_room5_126	
+ut.rooms.room_water_prebird	obj_readable_room1	420	140	obj_readable_room1_269	
+ut.rooms.room_water_prebird	obj_readable_room2	330	100	obj_readable_room2_326	
+ut.rooms.room_water_prebird	obj_readable_room3	270	100	obj_readable_room3_195	
+ut.rooms.room_water_prebird	obj_readable_room4	210	140	obj_readable_room4_126	global.flag[97] == 1|obj_readable_room4_131
+ut.rooms.room_water_preundyne	obj_readable_room1	140	40	obj_readable_room1_274	
+ut.rooms.room_water_preundyne	obj_readable_room1	160	40	obj_readable_room1_274	
+ut.rooms.room_water_preundyne	obj_readable_room2	280	40	obj_readable_room2_318	
+ut.rooms.room_water_preundyne	obj_readable_room2	300	40	obj_readable_room2_318	
+ut.rooms.room_water_temvillage	obj_readable_room1	160	140	obj_readable_room1_652	
+ut.rooms.room_water_temvillage	obj_readable_room1	182	140	obj_readable_room1_652	
+ut.rooms.room_water_temvillage	obj_readable_room1	204	140	obj_readable_room1_652	
+ut.rooms.room_water_temvillage	obj_readable_room1	212	140	obj_readable_room1_652	
+ut.rooms.room_water_temvillage	obj_readable_room2	534	140	obj_readable_room2_560	global.flag[7] == 1|obj_readable_room2_563
+ut.rooms.room_water_temvillage	obj_readable_room3	452	158	obj_readable_room3_325	
+ut.rooms.room_water_temvillage	obj_readable_room3	464	158	obj_readable_room3_325	
+ut.rooms.room_water_undynehouse	obj_readable_room1	150	60		ELSE_OF: room == room_water_undynehouse|obj_readable_room1_360
+ut.rooms.room_water_undynehouse	obj_readable_room1	250	60	obj_readable_room1_347	read > 0|obj_readable_room1_354|ELSE_OF: room == room_water_undynehouse|obj_readable_room1_360
+ut.rooms.room_water_undynehouse	obj_readable_room2	50	40	obj_readable_room2_373	read > 0|obj_readable_room2_377
+ut.rooms.room_water_undynehouse	obj_readable_room3	64	105	obj_readable_room3_242	talkedto > 0|obj_readable_room3_248
+ut.rooms.room_water_undynehouse	obj_readable_room3	64	120	obj_readable_room3_242	talkedto > 0|obj_readable_room3_248
+ut.rooms.room_water_undynehouse	obj_readable_room3	80	120	obj_readable_room3_242	talkedto > 0|obj_readable_room3_248
+ut.rooms.room_water_undynehouse	obj_readable_room4	100	60	obj_readable_room4_182	
+ut.rooms.room_water_undynehouse	obj_readable_room4	260	120	obj_readable_room4_182	
+ut.rooms.room_water_undynehouse	obj_readable_room5	20	140	obj_readable_room5_154	
+ut.rooms.room_water_undynehouse	obj_readable_room5	20	160	obj_readable_room5_154	
+ut.rooms.room_water_undynehouse	obj_readable_room5	190	60	obj_readable_room5_145	
+ut.rooms.room_water_undynehouse	obj_readable_room5	210	60	obj_readable_room5_145	

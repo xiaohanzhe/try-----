@@ -1,0 +1,596 @@
+scene	obj	key	guard	guard_text	instances
+ut.rooms.room_ruins2	obj_readable_room1	obj_readable_room1_65	base		1
+ut.rooms.room_ruins3	obj_readable_room1	obj_readable_room1_66	base		1
+ut.rooms.room_ruins5	obj_readable_room1	obj_readable_room1_67	base		2
+ut.rooms.room_ruins9	obj_readable_room1	obj_readable_room1_68	base		1
+ut.rooms.room_ruins13	obj_readable_room1	obj_readable_room1_69_console_1	state	global.osflavor >= 3	1
+ut.rooms.room_ruins13	obj_readable_room1	obj_readable_room1_69_console_2	state	global.osflavor >= 3	1
+ut.rooms.room_ruins13	obj_readable_room1	obj_readable_room1_69_console_3	state	global.osflavor >= 3	1
+ut.rooms.room_ruins13	obj_readable_room1	obj_readable_room1_69_console_4	state	global.osflavor >= 3	1
+ut.rooms.room_ruins13	obj_readable_room1	obj_readable_room1_69	state	ELSE_OF: room == room_ruins13	1
+ut.rooms.room_ruins14	obj_readable_room1	obj_readable_room1_70	base		1
+ut.rooms.room_ruins15A	obj_readable_room1	obj_readable_room1_71	base		2
+ut.rooms.room_ruins15B	obj_readable_room1	obj_readable_room1_72	base		2
+ut.rooms.room_ruins15C	obj_readable_room1	obj_readable_room1_73	base		2
+ut.rooms.room_ruins15D	obj_readable_room1	obj_readable_room1_74	base		2
+ut.rooms.room_torhouse1	obj_readable_room1	obj_readable_room1_75	base		1
+ut.rooms.room_asghouse1	obj_readable_room1	obj_readable_room1_78	base		1
+ut.rooms.room_asghouse1	obj_readable_room1	obj_readable_room1_79	state	scr_murderlv() >= 16	1
+ut.rooms.room_torhouse2	obj_readable_room1	obj_readable_room1_81	base		1
+ut.rooms.room_asghouse2	obj_readable_room1	obj_readable_room1_82	base		1
+ut.rooms.room_asrielroom	obj_readable_room1	obj_readable_room1_83	base		2
+ut.rooms.room_asrielroom_final	obj_readable_room1	obj_readable_room1_84	base		2
+ut.rooms.room_castle_finalshoehorn	obj_readable_room1	obj_readable_room1_86	base		2
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_90	base		3
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_91	base		3
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_92	base		3
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_96	state	global.flag[7] == 1	3
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_97	state	global.flag[7] == 1	3
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_98	state	global.flag[7] == 1	3
+ut.rooms.room_castle_coffins2	obj_readable_room1	obj_readable_room1_103	state	scr_murderlv() >= 16	3
+ut.rooms.room_torielroom	obj_readable_room1	obj_readable_room1_112	pos	x > 192	1
+ut.rooms.room_torielroom	obj_readable_room1	obj_readable_room1_113	pos	x > 192	1
+ut.rooms.room_torielroom	obj_readable_room1	obj_readable_room1_114	state	x > 192 && read > 0	1
+ut.rooms.room_torielroom	obj_readable_room1	obj_readable_room1_118	state	x > 192 && global.flag[7] == 1	1
+ut.rooms.room_torielroom	obj_readable_room1	obj_readable_room1_119	state	x > 192 && global.flag[7] == 1	1
+ut.rooms.room_asgoreroom	obj_readable_room1	obj_readable_room1_125	base		2
+ut.rooms.room_asgoreroom	obj_readable_room1	obj_readable_room1_126	base		2
+ut.rooms.room_asgoreroom	obj_readable_room1	obj_readable_room1_130	state	scr_murderlv() >= 16	2
+ut.rooms.room_asgoreroom	obj_readable_room1	obj_readable_room1_134	pos	y > 120	2
+ut.rooms.room_castle_throneroom	obj_readable_room1	obj_readable_room1_139	base		2
+ut.rooms.room_torhouse3	obj_readable_room1	obj_readable_room1_142	base		1
+ut.rooms.room_asghouse3	obj_readable_room1	obj_readable_room1_143	base		1
+ut.rooms.room_kitchen	obj_readable_room1	obj_readable_room1_144	base		1
+ut.rooms.room_kitchen_final	obj_readable_room1	obj_readable_room1_147	base		1
+ut.rooms.room_kitchen_final	obj_readable_room1	obj_readable_room1_151	state	scr_murderlv() >= 16	1
+ut.rooms.room_tundra1	obj_readable_room1	obj_readable_room1_154	base		0
+ut.rooms.room_tundra8A	obj_readable_room1	obj_readable_room1_155	base		1
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	obj_readable_room1_158	state	global.plot <= 48	4
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	obj_readable_room1_159	state	global.plot > 48	4
+ut.rooms.room_tundra_snowpuzz	obj_readable_room1	obj_readable_room1_162	state	scr_murderlv() >= 3	4
+ut.rooms.room_tundra_lesserdog	obj_readable_room1	obj_readable_room1_164	base		1
+ut.rooms.room_tundra_library	obj_readable_room1	obj_readable_room1_198	base		1
+ut.rooms.room_tundra_library	obj_readable_room1	obj_readable_room1_199	base		1
+ut.rooms.room_tundra_library	obj_readable_room1	obj_readable_room1_200	base		1
+ut.rooms.room_tundra_library	obj_readable_room1	obj_readable_room1_201	base		1
+ut.rooms.room_tundra_library	obj_readable_room1	obj_readable_room1_202	base		1
+ut.rooms.room_tundra_library	obj_readable_room1	obj_readable_room1_203	base		1
+ut.rooms.room_tundra_inn	obj_readable_room1	obj_readable_room1_208	base		1
+ut.rooms.room_tundra_inn	obj_readable_room1	obj_readable_room1_209	base		1
+ut.rooms.room_tundra_inn	obj_readable_room1	obj_readable_room1_213	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_inn	obj_readable_room1	obj_readable_room1_214	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_inn	obj_readable_room1	obj_readable_room1_219	state	scr_murderlv() >= 7	1
+ut.rooms.room_water12	obj_readable_room1	obj_readable_room1_228	base		2
+ut.rooms.room_water12	obj_readable_room1	obj_readable_room1_229	base		2
+ut.rooms.room_water7	obj_readable_room1	obj_readable_room1_235	base		2
+ut.rooms.room_water7	obj_readable_room1	obj_readable_room1_236	base		2
+ut.rooms.room_water14	obj_readable_room1	obj_readable_room1_241	base		2
+ut.rooms.room_water15	obj_readable_room1	obj_readable_room1_247	base		2
+ut.rooms.room_water15	obj_readable_room1	obj_readable_room1_248	base		2
+ut.rooms.room_water15	obj_readable_room1	obj_readable_room1_249	base		2
+ut.rooms.room_water19	obj_readable_room1	obj_readable_room1_256	base		2
+ut.rooms.room_water19	obj_readable_room1	obj_readable_room1_257	base		2
+ut.rooms.room_water19	obj_readable_room1	obj_readable_room1_258	base		2
+ut.rooms.room_water_nicecream	obj_readable_room1	obj_readable_room1_263	base		2
+ut.rooms.room_water_prebird	obj_readable_room1	obj_readable_room1_269	base		1
+ut.rooms.room_water_preundyne	obj_readable_room1	obj_readable_room1_274	base		2
+ut.rooms.room_water_preundyne	obj_readable_room1	obj_readable_room1_275	base		2
+ut.rooms.room_water17	obj_readable_room1	obj_readable_room1_280	base		2
+ut.rooms.room_fire_lab1	obj_readable_room1	obj_readable_room1_292	base		1
+ut.rooms.room_fire_lab1	obj_readable_room1	obj_readable_room1_293	state	global.plot < 126 && scr_murderlv() < 12	1
+ut.rooms.room_fire_lab2	obj_readable_room1	obj_readable_room1_299	base		2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_304	base		2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_306	state	global.plot < 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_312	state	instance_exists(obj_mettaton_npc)	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_313	state	instance_exists(obj_mettaton_npc)	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_320	state	global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_321	state	global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_322	state	global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_323	state	global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_324	state	global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_325	state	global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_328	state	global.plot == 134 && specialread > 0	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_329	state	global.plot == 134 && specialread > 0	2
+ut.rooms.room_fire_cookingshow	obj_readable_room1	obj_readable_room1_330	state	global.plot == 134 && specialread > 0	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_347	pos	x > 180	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_349	pos	x > 180	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_350	pos	x > 180	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_354	state	x > 180 && read > 0	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_360	state	ELSE_OF: room == room_water_undynehouse	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_361	state	ELSE_OF: room == room_water_undynehouse	2
+ut.rooms.room_water_undynehouse	obj_readable_room1	obj_readable_room1_362	state	ELSE_OF: room == room_water_undynehouse	2
+ut.rooms.room_fire_spidershop	obj_readable_room1	obj_readable_room1_369	base		1
+ut.rooms.room_fire_spidershop	obj_readable_room1	obj_readable_room1_370	base		1
+ut.rooms.room_fire_hotelfront_2	obj_readable_room1	obj_readable_room1_375	base		1
+ut.rooms.room_fire_core_branch	obj_readable_room1	obj_readable_room1_380	base		2
+ut.rooms.room_fire_core_left	obj_readable_room1	obj_readable_room1_385	base		2
+ut.rooms.room_fire_core_top	obj_readable_room1	obj_readable_room1_390	base		2
+ut.rooms.room_fire_core_right	obj_readable_room1	obj_readable_room1_395	base		2
+ut.rooms.room_fire_core_right	obj_readable_room1	obj_readable_room1_396	base		2
+ut.rooms.room_fire_core_center	obj_readable_room1	obj_readable_room1_401	base		2
+ut.rooms.room_fire_core_treasureleft	obj_readable_room1	obj_readable_room1_406	base		2
+ut.rooms.room_fire_core_metttest	obj_readable_room1	obj_readable_room1_416	base		0
+ut.rooms.room_fire_core_metttest	obj_readable_room1	obj_readable_room1_419	state	global.flag[425] == 0	0
+ut.rooms.room_truelab_hall1	obj_readable_room1	obj_readable_room1_425	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room1	obj_readable_room1_426	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room1	obj_readable_room1_427	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room1	obj_readable_room1_428	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room1	obj_readable_room1_430	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_hub	obj_readable_room1	obj_readable_room1_435	base		1
+ut.rooms.room_truelab_hub	obj_readable_room1	obj_readable_room1_436	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_441	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_442	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_443	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_444	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_445	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_446	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_447	base		1
+ut.rooms.room_truelab_hall2	obj_readable_room1	obj_readable_room1_449	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_454	base		1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_455	base		1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_456	base		1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_457	base		1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_458	base		1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_459	base		1
+ut.rooms.room_truelab_operatingroom	obj_readable_room1	obj_readable_room1_462	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prebed	obj_readable_room1	obj_readable_room1_467	base		1
+ut.rooms.room_truelab_prebed	obj_readable_room1	obj_readable_room1_468	base		1
+ut.rooms.room_truelab_prebed	obj_readable_room1	obj_readable_room1_469	base		1
+ut.rooms.room_truelab_prebed	obj_readable_room1	obj_readable_room1_470	base		1
+ut.rooms.room_truelab_prebed	obj_readable_room1	obj_readable_room1_471	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_bedroom	obj_readable_room1	obj_readable_room1_476	base		1
+ut.rooms.room_truelab_bedroom	obj_readable_room1	obj_readable_room1_477	base		1
+ut.rooms.room_truelab_bedroom	obj_readable_room1	obj_readable_room1_478	base		1
+ut.rooms.room_truelab_bedroom	obj_readable_room1	obj_readable_room1_479	base		1
+ut.rooms.room_truelab_bedroom	obj_readable_room1	obj_readable_room1_480	base		1
+ut.rooms.room_truelab_bedroom	obj_readable_room1	obj_readable_room1_481	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_486	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_487	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_488	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_489	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_490	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_491	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room1	obj_readable_room1_492	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_497	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_498	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_499	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_500	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_501	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_502	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room1	obj_readable_room1_503	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_determination	obj_readable_room1	obj_readable_room1_517	base		1
+ut.rooms.room_truelab_determination	obj_readable_room1	obj_readable_room1_518	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_tv	obj_readable_room1	obj_readable_room1_523	base		1
+ut.rooms.room_truelab_tv	obj_readable_room1	obj_readable_room1_524	base		1
+ut.rooms.room_truelab_tv	obj_readable_room1	obj_readable_room1_525	base		1
+ut.rooms.room_truelab_tv	obj_readable_room1	obj_readable_room1_526	base		1
+ut.rooms.room_truelab_tv	obj_readable_room1	obj_readable_room1_527	base		1
+ut.rooms.room_truelab_tv	obj_readable_room1	obj_readable_room1_528	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_cooler	obj_readable_room1	obj_readable_room1_538	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room1	obj_readable_room1_539	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room1	obj_readable_room1_540	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room1	obj_readable_room1_541	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room1	obj_readable_room1_542	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_cooler	obj_readable_room1	obj_readable_room1_543	state	global.flag[490] == 0	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_548	base		1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_551	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_552	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_553	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_554	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_555	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_556	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_557	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_558	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room1	obj_readable_room1_559	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_elevatorinside	obj_readable_room1	obj_readable_room1_565	base		2
+ut.rooms.room_castle_elevatorout	obj_readable_room1	obj_readable_room1_570	base		0
+ut.rooms.room_truelab_castle_elevator	obj_readable_room1	obj_readable_room1_575	base		2
+ut.rooms.room_tundra_grillby	obj_readable_room1	obj_readable_room1_580	base		1
+ut.rooms.room_water_blookyard	obj_readable_room1	obj_readable_room1_585	base		0
+ut.rooms.room_tundra_sansroom	obj_readable_room1	obj_readable_room1_590	base		3
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_595	base		1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_596	base		1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_597	base		1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_602	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_603	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_604	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_605	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_610	state	global.flag[279] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_611	state	global.flag[279] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_612	state	global.flag[279] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_613	state	global.flag[279] == 1	1
+ut.rooms.room_tundra_sansbasement	obj_readable_room1	obj_readable_room1_614	state	global.flag[279] == 1	1
+ut.rooms.room_fire_pacing	obj_readable_room1	obj_readable_room1_621	base		2
+ut.rooms.room_fire_pacing	obj_readable_room1	obj_readable_room1_622	base		2
+ut.rooms.room_fire_pacing	obj_readable_room1	obj_readable_room1_623	base		2
+ut.rooms.room_fire_hoteldoors	obj_readable_room1	obj_readable_room1_628	base		1
+ut.rooms.room_fire_hotellobby	obj_readable_room1	obj_readable_room1_633	base		8
+ut.rooms.room_fire_hotellobby	obj_readable_room1	obj_readable_room1_634	base		8
+ut.rooms.room_fire_restaurant	obj_readable_room1	obj_readable_room1_639	base		3
+ut.rooms.room_fire_restaurant	obj_readable_room1	obj_readable_room1_640	base		3
+ut.rooms.room_fire_restaurant	obj_readable_room1	obj_readable_room1_641	base		3
+ut.rooms.room_fire_hotelbed	obj_readable_room1	obj_readable_room1_646	base		1
+ut.rooms.room_fire_hotelbed	obj_readable_room1	obj_readable_room1_647	base		1
+ut.rooms.room_water_temvillage	obj_readable_room1	obj_readable_room1_652	base		4
+ut.rooms.room_asrielroom	obj_readable_room2	obj_readable_room2_63	base		2
+ut.rooms.room_asrielroom	obj_readable_room2	obj_readable_room2_67	state	global.flag[7] == 1	2
+ut.rooms.room_asrielroom_final	obj_readable_room2	obj_readable_room2_72	base		2
+ut.rooms.room_asrielroom_final	obj_readable_room2	obj_readable_room2_75	state	scr_murderlv() >= 16	2
+ut.rooms.room_torhouse2	obj_readable_room2	obj_readable_room2_80	base		2
+ut.rooms.room_torhouse2	obj_readable_room2	obj_readable_room2_81	base		2
+ut.rooms.room_torhouse2	obj_readable_room2	obj_readable_room2_82	base		2
+ut.rooms.room_torhouse2	obj_readable_room2	obj_readable_room2_83	base		2
+ut.rooms.room_torhouse2	obj_readable_room2	obj_readable_room2_84	base		2
+ut.rooms.room_torhouse2	obj_readable_room2	obj_readable_room2_85	base		2
+ut.rooms.room_asgoreroom	obj_readable_room2	obj_readable_room2_90	base		1
+ut.rooms.room_asgoreroom	obj_readable_room2	obj_readable_room2_91	base		1
+ut.rooms.room_asgoreroom	obj_readable_room2	obj_readable_room2_94	state	scr_murderlv() >= 16	1
+ut.rooms.room_asghouse2	obj_readable_room2	obj_readable_room2_100	base		2
+ut.rooms.room_asghouse2	obj_readable_room2	obj_readable_room2_101	base		2
+ut.rooms.room_asghouse2	obj_readable_room2	obj_readable_room2_105	state	scr_murderlv() >= 16	2
+ut.rooms.room_asghouse3	obj_readable_room2	obj_readable_room2_111	base		4
+ut.rooms.room_torhouse1	obj_readable_room2	obj_readable_room2_114	base		1
+ut.rooms.room_asghouse1	obj_readable_room2	obj_readable_room2_115	base		1
+ut.rooms.room_castle_throneroom	obj_readable_room2	obj_readable_room2_119	base		2
+ut.rooms.room_torielroom	obj_readable_room2	obj_readable_room2_124	base		3
+ut.rooms.room_torielroom	obj_readable_room2	obj_readable_room2_127	pos	x > 90	3
+ut.rooms.room_torielroom	obj_readable_room2	obj_readable_room2_128	pos	x > 90	3
+ut.rooms.room_torielroom	obj_readable_room2	obj_readable_room2_129	pos	x > 90	3
+ut.rooms.room_torhouse3	obj_readable_room2	obj_readable_room2_135	base		2
+ut.rooms.room_torhouse3	obj_readable_room2	obj_readable_room2_136	state	global.flag[50] == 1	2
+ut.rooms.room_kitchen	obj_readable_room2	obj_readable_room2_140	base		1
+ut.rooms.room_kitchen	obj_readable_room2	obj_readable_room2_141	state	global.flag[103] > 0	1
+ut.rooms.room_kitchen	obj_readable_room2	obj_readable_room2_144	state	global.flag[7] == 1	1
+ut.rooms.room_tundra_library	obj_readable_room2	obj_readable_room2_149	base		1
+ut.rooms.room_tundra_library	obj_readable_room2	obj_readable_room2_150	base		1
+ut.rooms.room_tundra_library	obj_readable_room2	obj_readable_room2_151	base		1
+ut.rooms.room_tundra_library	obj_readable_room2	obj_readable_room2_152	base		1
+ut.rooms.room_icecave1	obj_readable_room2	obj_readable_room2_164	base		0
+ut.rooms.room_tundra1	obj_readable_room2	obj_readable_room2_166	base		2
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_178	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && global.flag[387] == 0	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_179	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && global.flag[387] == 0	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_180	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && global.flag[387] == 0	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_186	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && ELSE_OF: obj_iceflag.image_index == 0	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_187	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 0 && ELSE_OF: obj_iceflag.image_index == 0	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_194	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 1	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_195	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 1	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_201	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 2	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_202	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 2	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_208	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 3	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_209	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 3	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_215	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 4	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_216	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 4	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_222	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 5	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_223	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 5	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_229	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 6	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_230	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 6	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_231	state	instance_exists(obj_iceflag) && read == 0 && obj_iceflag.image_index == 6	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_238	state	instance_exists(obj_iceflag) && ELSE_OF: instance_exists(obj_iceflag)	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_245	state	ELSE_OF: room == room_tundra8	1
+ut.rooms.room_tundra8	obj_readable_room2	obj_readable_room2_247	state	ELSE_OF: room == room_tundra8 && global.flag[203] >= 16	1
+ut.rooms.room_tundra8A	obj_readable_room2	obj_readable_room2_252	base		1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_259	state	instance_exists(obj_papyrusparent)	1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_260	state	instance_exists(obj_papyrusparent)	1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_261	state	instance_exists(obj_papyrusparent)	1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_262	state	instance_exists(obj_papyrusparent)	1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_263	state	instance_exists(obj_papyrusparent)	1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_266	state	ELSE_OF: room == room_tundra_sanshouse	1
+ut.rooms.room_tundra_sanshouse	obj_readable_room2	obj_readable_room2_268	state	read > 0	1
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_276	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_277	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_278	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_279	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_280	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_281	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_282	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_283	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_284	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_285	state	instance_exists(obj_papyrusparent)	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_287	state	ELSE_OF: room == room_tundra_paproom	4
+ut.rooms.room_tundra_paproom	obj_readable_room2	obj_readable_room2_288	state	read > 0	4
+ut.rooms.room_water7	obj_readable_room2	obj_readable_room2_295	base		2
+ut.rooms.room_water7	obj_readable_room2	obj_readable_room2_296	base		2
+ut.rooms.room_water7	obj_readable_room2	obj_readable_room2_297	base		2
+ut.rooms.room_water14	obj_readable_room2	obj_readable_room2_302	base		2
+ut.rooms.room_water14	obj_readable_room2	obj_readable_room2_303	base		2
+ut.rooms.room_water14	obj_readable_room2	obj_readable_room2_304	base		2
+ut.rooms.room_water15	obj_readable_room2	obj_readable_room2_310	base		2
+ut.rooms.room_water15	obj_readable_room2	obj_readable_room2_311	base		2
+ut.rooms.room_water15	obj_readable_room2	obj_readable_room2_312	base		2
+ut.rooms.room_water_preundyne	obj_readable_room2	obj_readable_room2_318	base		2
+ut.rooms.room_water_preundyne	obj_readable_room2	obj_readable_room2_319	base		2
+ut.rooms.room_water_preundyne	obj_readable_room2	obj_readable_room2_320	base		2
+ut.rooms.room_water_prebird	obj_readable_room2	obj_readable_room2_326	base		1
+ut.rooms.room_water_prebird	obj_readable_room2	obj_readable_room2_327	base		1
+ut.rooms.room_fire_lab1	obj_readable_room2	obj_readable_room2_332	base		2
+ut.rooms.room_fire_lab1	obj_readable_room2	obj_readable_room2_333	state	global.plot < 126 && scr_murderlv() < 12	2
+ut.rooms.room_fire_cookingshow	obj_readable_room2	obj_readable_room2_343	base		1
+ut.rooms.room_fire_cookingshow	obj_readable_room2	obj_readable_room2_345	state	global.plot < 134	1
+ut.rooms.room_fire_cookingshow	obj_readable_room2	obj_readable_room2_353	state	instance_exists(obj_mettaton_npc)	1
+ut.rooms.room_fire_cookingshow	obj_readable_room2	obj_readable_room2_354	state	instance_exists(obj_mettaton_npc)	1
+ut.rooms.room_fire_cookingshow	obj_readable_room2	obj_readable_room2_360	state	global.plot == 134	1
+ut.rooms.room_water_undynehouse	obj_readable_room2	obj_readable_room2_373	pos	x < 100	1
+ut.rooms.room_water_undynehouse	obj_readable_room2	obj_readable_room2_374	pos	x < 100	1
+ut.rooms.room_water_undynehouse	obj_readable_room2	obj_readable_room2_375	pos	x < 100	1
+ut.rooms.room_water_undynehouse	obj_readable_room2	obj_readable_room2_377	state	x < 100 && read > 0	1
+ut.rooms.room_fire_spidershop	obj_readable_room2	obj_readable_room2_390	base		1
+ut.rooms.room_fire_core_branch	obj_readable_room2	obj_readable_room2_395	base		2
+ut.rooms.room_fire_core_right	obj_readable_room2	obj_readable_room2_400	base		2
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_405	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_406	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_407	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_408	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_409	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_410	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room2	obj_readable_room2_412	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prebed	obj_readable_room2	obj_readable_room2_417	base		1
+ut.rooms.room_truelab_prebed	obj_readable_room2	obj_readable_room2_418	base		1
+ut.rooms.room_truelab_prebed	obj_readable_room2	obj_readable_room2_419	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_bedroom	obj_readable_room2	obj_readable_room2_424	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room2	obj_readable_room2_429	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room2	obj_readable_room2_430	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room2	obj_readable_room2_431	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room2	obj_readable_room2_432	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room2	obj_readable_room2_433	base		1
+ut.rooms.room_truelab_mirror	obj_readable_room2	obj_readable_room2_434	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_hall3	obj_readable_room2	obj_readable_room2_439	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room2	obj_readable_room2_440	base		1
+ut.rooms.room_truelab_hall3	obj_readable_room2	obj_readable_room2_441	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_tv	obj_readable_room2	obj_readable_room2_446	base		2
+ut.rooms.room_truelab_tv	obj_readable_room2	obj_readable_room2_447	base		2
+ut.rooms.room_truelab_fan	obj_readable_room2	obj_readable_room2_452	base		1
+ut.rooms.room_truelab_fan	obj_readable_room2	obj_readable_room2_453	base		1
+ut.rooms.room_truelab_fan	obj_readable_room2	obj_readable_room2_454	base		1
+ut.rooms.room_truelab_fan	obj_readable_room2	obj_readable_room2_455	base		1
+ut.rooms.room_truelab_fan	obj_readable_room2	obj_readable_room2_456	base		1
+ut.rooms.room_truelab_fan	obj_readable_room2	obj_readable_room2_457	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_462	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_463	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_464	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_465	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_466	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_467	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_cooler	obj_readable_room2	obj_readable_room2_468	state	global.flag[490] == 0	1
+ut.rooms.room_truelab_prepower	obj_readable_room2	obj_readable_room2_473	base		1
+ut.rooms.room_truelab_prepower	obj_readable_room2	obj_readable_room2_476	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_prepower	obj_readable_room2	obj_readable_room2_477	state	global.flag[485] == 1	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_483	base		1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_488	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_492	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_493	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_495	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_497	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_498	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_499	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_501	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_506	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_509	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_511	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_513	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_514	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_516	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_517	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_519	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_520	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_522	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && global.flag[67] < 0 && instance_exists(obj_undyne_friendc)	1
+ut.rooms.room_tundra_town	obj_readable_room2	obj_readable_room2_528	state	instance_exists(obj_papyrus_houseoutside) || instance_exists(obj_papyrus_room) && read > 0	1
+ut.rooms.room_tundra_grillby	obj_readable_room2	obj_readable_room2_534	base		1
+ut.rooms.room_tundra_sansroom	obj_readable_room2	obj_readable_room2_539	base		1
+ut.rooms.room_tundra_sansbasement	obj_readable_room2	obj_readable_room2_544	base		1
+ut.rooms.room_fire_restaurant	obj_readable_room2	obj_readable_room2_549	base		3
+ut.rooms.room_fire_hotelbed	obj_readable_room2	obj_readable_room2_554	base		1
+ut.rooms.room_fire_hotelbed	obj_readable_room2	obj_readable_room2_555	base		1
+ut.rooms.room_water_temvillage	obj_readable_room2	obj_readable_room2_560	base		1
+ut.rooms.room_water_temvillage	obj_readable_room2	obj_readable_room2_563	state	global.flag[7] == 1	1
+ut.rooms.room_water11	obj_readable_room2	obj_readable_room2_569	base		2
+ut.rooms.room_water11	obj_readable_room2	obj_readable_room2_570	base		2
+ut.rooms.room_asrielroom	obj_readable_room3	obj_readable_room3_60	base		1
+ut.rooms.room_asrielroom_final	obj_readable_room3	obj_readable_room3_63	base		1
+ut.rooms.room_asrielroom_final	obj_readable_room3	obj_readable_room3_66	state	scr_murderlv() >= 16	1
+ut.rooms.room_torielroom	obj_readable_room3	obj_readable_room3_71	base		2
+ut.rooms.room_torielroom	obj_readable_room3	obj_readable_room3_74	state	global.flag[7] == 1	2
+ut.rooms.room_torielroom	obj_readable_room3	obj_readable_room3_75	state	global.flag[7] == 1	2
+ut.rooms.room_asghouse2	obj_readable_room3	obj_readable_room3_79	base		1
+ut.rooms.room_asgoreroom	obj_readable_room3	obj_readable_room3_81	base		1
+ut.rooms.room_torhouse3	obj_readable_room3	obj_readable_room3_83	base		1
+ut.rooms.room_kitchen	obj_readable_room3	obj_readable_room3_84	base		1
+ut.rooms.room_kitchen_final	obj_readable_room3	obj_readable_room3_85	base		1
+ut.rooms.room_tundra_library	obj_readable_room3	obj_readable_room3_89	base		1
+ut.rooms.room_tundra_library	obj_readable_room3	obj_readable_room3_90	base		1
+ut.rooms.room_tundra_library	obj_readable_room3	obj_readable_room3_91	base		1
+ut.rooms.room_tundra_library	obj_readable_room3	obj_readable_room3_92	base		1
+ut.rooms.room_tundra_library	obj_readable_room3	obj_readable_room3_93	base		1
+ut.rooms.room_tundra2	obj_readable_room3	obj_readable_room3_104	base		2
+ut.rooms.room_tundra4	obj_readable_room3	obj_readable_room3_108	base		2
+ut.rooms.room_tundra8	obj_readable_room3	obj_readable_room3_112	base		1
+ut.rooms.room_tundra_snowpuzz	obj_readable_room3	obj_readable_room3_116	base		1
+ut.rooms.room_tundra_xoxopuzz	obj_readable_room3	obj_readable_room3_120	base		0
+ut.rooms.room_tundra_lesserdog	obj_readable_room3	obj_readable_room3_124	base		3
+ut.rooms.room_tundra_dangerbridge	obj_readable_room3	obj_readable_room3_128	base		2
+ut.rooms.room_tundra_town	obj_readable_room3	obj_readable_room3_132	base		2
+ut.rooms.room_water_bridgepuzz1	obj_readable_room3	obj_readable_room3_139	base		2
+ut.rooms.room_water5	obj_readable_room3	obj_readable_room3_141	base		2
+ut.rooms.room_water6	obj_readable_room3	obj_readable_room3_142	base		2
+ut.rooms.room_water7	obj_readable_room3	obj_readable_room3_147	base		2
+ut.rooms.room_water7	obj_readable_room3	obj_readable_room3_148	base		2
+ut.rooms.room_water14	obj_readable_room3	obj_readable_room3_154	base		2
+ut.rooms.room_water14	obj_readable_room3	obj_readable_room3_155	base		2
+ut.rooms.room_water14	obj_readable_room3	obj_readable_room3_156	base		2
+ut.rooms.room_water14	obj_readable_room3	obj_readable_room3_157	base		2
+ut.rooms.room_water14	obj_readable_room3	obj_readable_room3_158	base		2
+ut.rooms.room_water14	obj_readable_room3	obj_readable_room3_159	base		2
+ut.rooms.room_water15	obj_readable_room3	obj_readable_room3_165	base		2
+ut.rooms.room_water15	obj_readable_room3	obj_readable_room3_166	base		2
+ut.rooms.room_water15	obj_readable_room3	obj_readable_room3_167	base		2
+ut.rooms.room_tundra_sanshouse	obj_readable_room3	obj_readable_room3_175	state	instance_exists(obj_papyrusparent)	2
+ut.rooms.room_tundra_sanshouse	obj_readable_room3	obj_readable_room3_176	state	instance_exists(obj_papyrusparent)	2
+ut.rooms.room_tundra_sanshouse	obj_readable_room3	obj_readable_room3_180	state	ELSE_OF: room == room_tundra_sanshouse	2
+ut.rooms.room_water_prebird	obj_readable_room3	obj_readable_room3_195	base		1
+ut.rooms.room_fire_lab1	obj_readable_room3	obj_readable_room3_200	base		1
+ut.rooms.room_fire_lab1	obj_readable_room3	obj_readable_room3_201	base		1
+ut.rooms.room_fire_lab1	obj_readable_room3	obj_readable_room3_202	state	global.plot < 126 && scr_murderlv() < 12	1
+ut.rooms.room_fire_lab2	obj_readable_room3	obj_readable_room3_207	base		2
+ut.rooms.room_fire_lab2	obj_readable_room3	obj_readable_room3_208	base		2
+ut.rooms.room_fire_cookingshow	obj_readable_room3	obj_readable_room3_213	base		1
+ut.rooms.room_fire_cookingshow	obj_readable_room3	obj_readable_room3_215	state	global.plot < 134	1
+ut.rooms.room_fire_cookingshow	obj_readable_room3	obj_readable_room3_222	state	instance_exists(obj_mettaton_npc)	1
+ut.rooms.room_fire_cookingshow	obj_readable_room3	obj_readable_room3_223	state	instance_exists(obj_mettaton_npc)	1
+ut.rooms.room_fire_cookingshow	obj_readable_room3	obj_readable_room3_228	state	instance_exists(obj_mettaton_npc) && global.plot == 134	1
+ut.rooms.room_fire_cookingshow	obj_readable_room3	obj_readable_room3_229	state	instance_exists(obj_mettaton_npc) && global.plot == 134	1
+ut.rooms.room_water_undynehouse	obj_readable_room3	obj_readable_room3_242	base		3
+ut.rooms.room_water_undynehouse	obj_readable_room3	obj_readable_room3_243	base		3
+ut.rooms.room_water_undynehouse	obj_readable_room3	obj_readable_room3_244	base		3
+ut.rooms.room_water_undynehouse	obj_readable_room3	obj_readable_room3_245	base		3
+ut.rooms.room_water_undynehouse	obj_readable_room3	obj_readable_room3_246	base		3
+ut.rooms.room_water_undynehouse	obj_readable_room3	obj_readable_room3_248	state	talkedto > 0	3
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_254	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_255	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_256	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_257	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_258	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_259	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room3	obj_readable_room3_261	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_tv	obj_readable_room3	obj_readable_room3_266	base		2
+ut.rooms.room_truelab_cooler	obj_readable_room3	obj_readable_room3_272	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room3	obj_readable_room3_273	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room3	obj_readable_room3_274	base		1
+ut.rooms.room_truelab_cooler	obj_readable_room3	obj_readable_room3_275	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_cooler	obj_readable_room3	obj_readable_room3_276	state	global.flag[490] == 0	1
+ut.rooms.room_tundra_sansroom	obj_readable_room3	obj_readable_room3_286	base		1
+ut.rooms.room_tundra_sansbasement	obj_readable_room3	obj_readable_room3_291	base		2
+ut.rooms.room_tundra_sansbasement	obj_readable_room3	obj_readable_room3_292	base		2
+ut.rooms.room_tundra_sansbasement	obj_readable_room3	obj_readable_room3_293	base		2
+ut.rooms.room_water_blookhouse	obj_readable_room3	obj_readable_room3_303	state	instance_exists(obj_napstablook_actor)	2
+ut.rooms.room_water_blookhouse	obj_readable_room3	obj_readable_room3_304	state	instance_exists(obj_napstablook_actor)	2
+ut.rooms.room_water_blookhouse	obj_readable_room3	obj_readable_room3_308	state	ELSE_OF: room == room_water_blookhouse	2
+ut.rooms.room_water_blookhouse	obj_readable_room3	obj_readable_room3_309	state	ELSE_OF: room == room_water_blookhouse	2
+ut.rooms.room_ice_dog	obj_readable_room3	obj_readable_room3_315	base		1
+ut.rooms.room_fire_restaurant	obj_readable_room3	obj_readable_room3_320	base		4
+ut.rooms.room_water_temvillage	obj_readable_room3	obj_readable_room3_325	base		2
+ut.rooms.room_torhouse3	obj_readable_room4	obj_readable_room4_63	base		2
+ut.rooms.room_torhouse3	obj_readable_room4	obj_readable_room4_64	state	global.flag[7] == 1	2
+ut.rooms.room_torhouse3	obj_readable_room4	obj_readable_room4_66	state	murdererlv1() == 1	2
+ut.rooms.room_asghouse2	obj_readable_room4	obj_readable_room4_67	base		1
+ut.rooms.room_asghouse3	obj_readable_room4	obj_readable_room4_70	base		2
+ut.rooms.room_asghouse3	obj_readable_room4	obj_readable_room4_73	state	scr_murderlv() >= 16	2
+ut.rooms.room_kitchen	obj_readable_room4	obj_readable_room4_76	pos	x < 130	2
+ut.rooms.room_kitchen	obj_readable_room4	obj_readable_room4_77	state	murdererlv1() == 1 && x < 130	2
+ut.rooms.room_kitchen	obj_readable_room4	obj_readable_room4_78	pos	x > 130	2
+ut.rooms.room_kitchen	obj_readable_room4	obj_readable_room4_79	state	x > 130 && global.flag[45] == 4	2
+ut.rooms.room_kitchen_final	obj_readable_room4	obj_readable_room4_83	pos	x < 130	2
+ut.rooms.room_kitchen_final	obj_readable_room4	obj_readable_room4_84	state	x < 130 && scr_murderlv() >= 16	2
+ut.rooms.room_kitchen_final	obj_readable_room4	obj_readable_room4_90	pos	x > 130	2
+ut.rooms.room_kitchen_final	obj_readable_room4	obj_readable_room4_91	state	x > 130 && scr_murderlv() >= 16	2
+ut.rooms.room_asrielroom_final	obj_readable_room4	obj_readable_room4_98	pos	x < 160	6
+ut.rooms.room_asrielroom_final	obj_readable_room4	obj_readable_room4_99	state	x < 160 && scr_murderlv() >= 16	6
+ut.rooms.room_asrielroom_final	obj_readable_room4	obj_readable_room4_104	pos	x > 160	6
+ut.rooms.room_asrielroom_final	obj_readable_room4	obj_readable_room4_105	state	x > 160 && scr_murderlv() >= 16	6
+ut.rooms.room_asgoreroom	obj_readable_room4	obj_readable_room4_110	base		3
+ut.rooms.room_tundra_library	obj_readable_room4	obj_readable_room4_114	base		1
+ut.rooms.room_tundra_library	obj_readable_room4	obj_readable_room4_116	base		1
+ut.rooms.room_tundra_library	obj_readable_room4	obj_readable_room4_117	base		1
+ut.rooms.room_tundra_library	obj_readable_room4	obj_readable_room4_118	base		1
+ut.rooms.room_tundra_library	obj_readable_room4	obj_readable_room4_119	base		1
+ut.rooms.room_tundra_library	obj_readable_room4	obj_readable_room4_120	base		1
+ut.rooms.room_water_prebird	obj_readable_room4	obj_readable_room4_126	base		1
+ut.rooms.room_water_prebird	obj_readable_room4	obj_readable_room4_127	base		1
+ut.rooms.room_water_prebird	obj_readable_room4	obj_readable_room4_128	base		1
+ut.rooms.room_water_prebird	obj_readable_room4	obj_readable_room4_131	state	global.flag[97] == 1	1
+ut.rooms.room_water7	obj_readable_room4	obj_readable_room4_139	base		2
+ut.rooms.room_water7	obj_readable_room4	obj_readable_room4_140	base		2
+ut.rooms.room_fire_lab1	obj_readable_room4	obj_readable_room4_145	base		3
+ut.rooms.room_fire_lab1	obj_readable_room4	obj_readable_room4_146	state	global.plot < 126	3
+ut.rooms.room_fire_lab1	obj_readable_room4	obj_readable_room4_147	state	scr_murderlv() >= 12	3
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_159	base		2
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_161	state	global.plot < 134 && scr_murderlv() < 12	2
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_168	state	instance_exists(obj_mettaton_npc)	2
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_169	state	instance_exists(obj_mettaton_npc)	2
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_170	state	instance_exists(obj_mettaton_npc)	2
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_174	state	instance_exists(obj_mettaton_npc) && global.plot == 134	2
+ut.rooms.room_fire_cookingshow	obj_readable_room4	obj_readable_room4_175	state	instance_exists(obj_mettaton_npc) && global.plot == 134	2
+ut.rooms.room_water_undynehouse	obj_readable_room4	obj_readable_room4_182	base		2
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_193	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_194	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_195	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_196	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_197	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_198	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_199	base		1
+ut.rooms.room_truelab_hall1	obj_readable_room4	obj_readable_room4_201	state	global.flag[485] == 1	1
+ut.rooms.room_truelab_mirror	obj_readable_room4	obj_readable_room4_206	base		1
+ut.rooms.room_tundra_sansroom	obj_readable_room4	obj_readable_room4_212	base		3
+ut.rooms.room_tundra_sansbasement	obj_readable_room4	obj_readable_room4_217	base		3
+ut.rooms.room_tundra_town	obj_readable_room4	obj_readable_room4_222	state	global.flag[497] < 3	1
+ut.rooms.room_tundra_town	obj_readable_room4	obj_readable_room4_226	state	global.flag[497] >= 3	1
+ut.rooms.room_ice_dog	obj_readable_room4	obj_readable_room4_234	base		1
+ut.rooms.room_water3	obj_readable_room4	obj_readable_room4_237	base		2
+ut.rooms.room_asrielroom_final	obj_readable_room5	obj_readable_room5_68	base		1
+ut.rooms.room_asrielroom_final	obj_readable_room5	obj_readable_room5_69	state	scr_murderlv() >= 16	1
+ut.rooms.room_asgoreroom	obj_readable_room5	obj_readable_room5_74	base		2
+ut.rooms.room_asgoreroom	obj_readable_room5	obj_readable_room5_75	base		2
+ut.rooms.room_asgoreroom	obj_readable_room5	obj_readable_room5_78	state	global.flag[7] == 1	2
+ut.rooms.room_asgoreroom	obj_readable_room5	obj_readable_room5_80	state	scr_murderlv() >= 16	2
+ut.rooms.room_asgoreroom	obj_readable_room5	obj_readable_room5_82	pos	x < 208	2
+ut.rooms.room_fire_lab1	obj_readable_room5	obj_readable_room5_92	base		2
+ut.rooms.room_fire_lab1	obj_readable_room5	obj_readable_room5_93	state	global.plot < 126 && scr_murderlv() < 12	2
+ut.rooms.room_fire_lab2	obj_readable_room5	obj_readable_room5_104	pos	x < 130	10
+ut.rooms.room_fire_lab2	obj_readable_room5	obj_readable_room5_105	pos	x < 130	10
+ut.rooms.room_fire_lab2	obj_readable_room5	obj_readable_room5_110	pos	x < 204 && x > 144	10
+ut.rooms.room_fire_lab2	obj_readable_room5	obj_readable_room5_111	pos	x < 204 && x > 144	10
+ut.rooms.room_fire_lab2	obj_readable_room5	obj_readable_room5_116	pos	x < 575 && x > 474	10
+ut.rooms.room_water_piano	obj_readable_room5	obj_readable_room5_126	base		2
+ut.rooms.room_water_piano	obj_readable_room5	obj_readable_room5_127	base		2
+ut.rooms.room_water7	obj_readable_room5	obj_readable_room5_131	base		2
+ut.rooms.room_water7	obj_readable_room5	obj_readable_room5_132	base		2
+ut.rooms.room_tundra_library	obj_readable_room5	obj_readable_room5_138	base		1
+ut.rooms.room_tundra_library	obj_readable_room5	obj_readable_room5_139	base		1
+ut.rooms.room_tundra_library	obj_readable_room5	obj_readable_room5_140	base		1
+ut.rooms.room_water_undynehouse	obj_readable_room5	obj_readable_room5_145	base		4
+ut.rooms.room_water_undynehouse	obj_readable_room5	obj_readable_room5_146	base		4
+ut.rooms.room_water_undynehouse	obj_readable_room5	obj_readable_room5_154	pos	x < 80	4
+ut.rooms.room_water_undynehouse	obj_readable_room5	obj_readable_room5_155	pos	x < 80	4
+ut.rooms.room_fire2	obj_readable_room5	obj_readable_room5_160	base		0
+ut.rooms.room_fire2	obj_readable_room5	obj_readable_room5_163	state	global.flag[353] > 7	0
+ut.rooms.room_fire2	obj_readable_room5	obj_readable_room5_167	state	global.flag[353] > 15	0
+ut.rooms.room_fire2	obj_readable_room5	obj_readable_room5_171	state	global.flag[353] > 15 && global.flag[7] == 1	0
+ut.rooms.room_fire_lab1	obj_readable_room5	obj_readable_room5_177	pos	x > 828 && x < 868 && y < 90	2
+ut.rooms.room_tundra_sansroom	obj_readable_room5	obj_readable_room5_186	state	x < 128 && global.flag[497] < 3	2
+ut.rooms.room_tundra_sansroom	obj_readable_room5	obj_readable_room5_187	state	x < 128 && global.flag[497] < 3	2
+ut.rooms.room_tundra_sansroom	obj_readable_room5	obj_readable_room5_192	state	x < 128 && ELSE_OF: x < 128	2
+ut.rooms.room_tundra_sansroom	obj_readable_room5	obj_readable_room5_197	state	ELSE_OF: room == room_tundra_sansroom	2
+ut.rooms.room_fire_cookingshow	obj_readable_room5	obj_readable_room5_203	base		4
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_209	base		0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_216	state	dognumber == 2	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_217	state	dognumber == 2	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_218	state	dognumber == 2	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_226	state	dognumber == 4	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_227	state	dognumber == 4	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_231	state	dognumber == 5	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_232	state	dognumber == 5	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_236	state	dognumber == 6	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_237	state	dognumber == 6	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_241	state	dognumber == 7	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_242	state	dognumber == 7	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_246	state	dognumber == 8	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_247	state	dognumber == 8	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_248	state	dognumber == 8	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_252	state	dognumber == 9	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_253	state	dognumber == 9	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_257	state	dognumber == 10	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_258	state	dognumber == 10	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_259	state	dognumber == 10	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_260	state	dognumber == 10	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_264	state	dognumber == 11	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_265	state	dognumber == 11	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_269	state	dognumber == 12	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_270	state	dognumber == 12	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_271	state	dognumber == 12	0
+ut.rooms.room_dogshrine	obj_readable_room5	obj_readable_room5_272	state	dognumber == 12	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_0	state	locked == 1	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_1	state	locked == 1	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_2	state	locked == 1	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_3	state	ELSE_OF: room == room_dogshrine_ruined	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_4	state	ELSE_OF: room == room_dogshrine_ruined	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_5	state	ELSE_OF: room == room_dogshrine_ruined && read >= 1	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_6	state	ELSE_OF: room == room_dogshrine_ruined && read >= 1	0
+ut.rooms.room_dogshrine_ruined	obj_readable_room5	obj_readable_room5_ds2_7	state	ELSE_OF: room == room_dogshrine_ruined && read >= 1	0

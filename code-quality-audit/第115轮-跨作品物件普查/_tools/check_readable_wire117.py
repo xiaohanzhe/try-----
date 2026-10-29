@@ -139,14 +139,22 @@ check('B1 资产存在且 by_scene 非空；场景数 ≥ 150（下界，防回�
       len(raw_by_scene) >= 150, '场景=%d' % len(raw_by_scene))
 
 table = II.load_readable_text(ASSET)
-# ★ 期望的"有正文的场景数"不能直接拿 `len(by_scene)`：有 2 个场景的条目**全是 `%%`**
+# ★ 期望的"有正文的场景数"不能直接拿 `len(by_scene)`：有场景的条目**全是 `%%`**
 #   （原文就只有终止符）⇒ 解完为空、不该进表。拿"至少有一条解出正文"来数才等价。
+# ★★ 第119轮：v2 资产里同一 `(场景,对象)` 有多条候选（分支），"解出正文"要按
+#   **选中的那一条**算（`pick_readable_entry`），否则会把"只被覆盖的分支非空"也算进来。
 _expect_scenes = 0
 for _sid, _entries in raw_by_scene.items():
+    _by_obj = {}
     for _e in _entries:
-        _raw = (_e.get('cn_tight') or _e.get('cn')
-                or _e.get('en') or _e.get('ja'))
-        if D(_raw):
+        _o = (_e or {}).get('obj')
+        if _o:
+            _by_obj.setdefault(_o, []).append(_e)
+    for _o, _cand in _by_obj.items():
+        # ★★ 第119轮：选中的条目**解完可能为空**（原文只有 `%%`）⇒
+        #   加载器会回退到其余候选。这里必须用**同一个**
+        #   `readable_text_of()`，否则期望值与实际少 2 个场景（假红）。
+        if II.readable_text_of(_cand):
             _expect_scenes += 1
             break
 check('B2 `load_readable_text` 把每个**真有正文**的场景都读出来'
@@ -166,32 +174,70 @@ check('B4 ★★ 解码后**没有**控制符残留（`% & / ^ \\`）—— 界�
       not bad, '残留=%d 例：%r' % (len(bad), bad[:3]))
 
 _raw_n = sum(len(v) for v in raw_by_scene.values())
-_seen = {}
+_n_pick = 0
+_n_alt = 0
 _n_empty = 0
-_n_dup = 0
 for sid, entries in raw_by_scene.items():
+    _by_obj = {}
     for e in entries:
-        obj = e.get('obj')
-        raw = (e.get('cn_tight') or e.get('cn') or e.get('en') or e.get('ja'))
-        txt = D(raw)
-        k = (sid, obj)
-        if not txt:
+        obj = (e or {}).get('obj')
+        if obj:
+            _by_obj.setdefault(obj, []).append(e)
+    for obj, cand in _by_obj.items():
+        if not II.readable_text_of(cand):
             _n_empty += 1
-        elif _seen.get(k):
-            _n_dup += 1
-        else:
-            _seen[k] = 1
-check('B5 ★★ 账目守恒：保留 + 解完为空 + 判为重复 == 原始条目（不静默丢条目）',
-      (len(_all_txt) + _n_empty + _n_dup) == _raw_n,
-      '%d + %d + %d vs 原始 %d' % (len(_all_txt), _n_empty, _n_dup, _raw_n))
+            _n_alt += len(cand) - 1     # ★ 解完为空的那条也**只是候选之一**，其余照样算未采用
+            continue
+        _n_pick += 1
+        _n_alt += len(cand) - 1
+check('B5 ★★ 账目守恒：采用 + 未采用候选 + 解完为空 == 原始条目（不静默丢条目）',
+      (_n_pick + _n_alt + _n_empty) == _raw_n,
+      '%d + %d + %d vs 原始 %d' % (_n_pick, _n_alt, _n_empty, _raw_n))
 
 check('B6 路径不存在 / 空 ⇒ 空 dict（不抛、不假装有正文）',
       II.load_readable_text(os.path.join(PET, 'assets', '_no_such_file_.json')) == {}
       and II.load_readable_text('') == {},
       '')
 
-check('B7 重复组合确实只留第一条（同 (场景, 对象) 多条时取第一个，不当成两条）',
-      _n_dup > 0 and _n_dup < 30, '重复=%d' % _n_dup)
+# ★★ 第119轮改写 B7：v1 的判据是"重复组合 < 30 条"（当时只有 10 个组合有分支）。
+#   v2 把分支**全部收进来**（189 个组合多条候选）⇒ 那个上界已经不代表任何风险，
+#   继续留着只会逼人"为了过闸而删数据"。改成**恒等式 + 结构断言**：
+#     · 未采用候选数 == 原始条目 - 组合数（一条不丢、也不重复计）
+#     · 每条候选都带合法 guard
+_n_combos = sum(len({(e or {}).get('obj') for e in v if (e or {}).get('obj')})
+                for v in raw_by_scene.values())
+_guards = {e.get('guard') for v in raw_by_scene.values() for e in v}
+check('B7 ★★ 每条候选都带合法 `guard`（base/pos/state），且未采用候选数对得上'
+      '（改判据而非删数据）',
+      _guards <= {'base', 'pos', 'state'} and _n_alt == _raw_n - _n_combos,
+      'guards=%s 未采用=%d vs %d-%d' % (sorted(_guards), _n_alt, _raw_n, _n_combos))
+# ═══ 第119轮新增：守卫等级真的被用于**选正文**（不是"标了不用"）═══
+_multi = []
+_no_base = 0
+for _sid, _entries in raw_by_scene.items():
+    _by_obj = {}
+    for _e in _entries:
+        _o = (_e or {}).get('obj')
+        if _o:
+            _by_obj.setdefault(_o, []).append(_e)
+    for _o, _cand in _by_obj.items():
+        if not any(x.get('guard') == 'base' for x in _cand):
+            _no_base += 1
+        elif len(_cand) > 1:
+            _multi.append((_sid, _o, _cand))
+
+_bad_pick = []
+for _s, _o, _cand in _multi:
+    _idx = [i for i, x in enumerate(_cand) if x.get('guard') == 'base']
+    _pick = II.pick_readable_entry(_cand)
+    if _pick is not _cand[_idx[-1]]:
+        _bad_pick.append((_s, _o, _pick.get('key')))
+check('B8 ★★ 有多条候选时**选中的是最后一条 base**（守卫分级真的生效，不是摆设）',
+      bool(_multi) and not _bad_pick,
+      '多条候选组合=%d 选错=%d %r' % (len(_multi), len(_bad_pick), _bad_pick[:2]))
+
+check('B9 ★★ 没有 base 守卫的组合数 ≤ 40（本轮实测 35）—— 涨上去说明解析退化了',
+      _no_base <= 40, '无 base 组合=%d' % _no_base)
 
 
 # ================================================================ C 接线
