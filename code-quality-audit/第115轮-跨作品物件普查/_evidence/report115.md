@@ -160,6 +160,17 @@ python _tools/check_inst115.py
 python _tools/run_dump115.py
 #    它做四件事：复制 data.win 到 D:（只对副本 load）→ sha256 双向核对
 #    → 用 DETACHED_PROCESS 启动 UTMT 跑 dump_instances.csx → 校验房间数/实例数
+
+# 10) UT / UTY / Outertale 的同类导出（源是 game.droid，不是 data.win）
+python _tools/run_dump_ut.py
+#    与 run_dump115.py 只差三点：源文件名、三款各自一份、EXPECT 允许为 None
+#    产物落 _evidence/raw/{ut,uty,outertale}/inst_full.tsv
+
+# 11) 跨作品摘要（写 cross_works115.txt）
+python _tools/cross_works115.py
+
+# 12) 跨作品坐标的独立对账（13 条判据，含四条负控制）
+python _tools/check_ut115.py
 ```
 
 `check_obj115.py` 当前 **11 PASS / 0 FAIL**：
@@ -186,8 +197,8 @@ trigger 必须从 401 掉到 0（P9，证明规则表真在起作用，不是摆
 2. ~~82 个不表意名字~~ ⇒ **已做**，见 §3.2（其中 61 个其实是触发器，真正要填的只有 21 个）。
 3. ~~先给一部分坐标~~ ⇒ **已做**：978 间房的**交互点坐标**（门/标记/可读物/存档/宝箱/招牌/传送），
    见 §8（它是 §10 的一个**子集视图**，查门/存档点更好用）。
-4. **UT / UTY / Outertale**：同为 GameMaker `data.win`，流程可直接迁移。§7 那个启动坑已经填平，
-   下一轮**照抄 `run_dump115.py` 换个 `GAME`/`EXPECT` 就能跑**。
+4. ~~UT / UTY / Outertale~~ ⇒ **已做**：三款共 **983 间房 / 36,136 个实例**，
+   ut=338 间、uty=287 间均与历史登记逐值相等，见 §11。`check_ut115.py` **13 PASS / 0 FAIL**。
 5. **用户填 `deltarune_objects_todo.csv` 的前 174 行**（覆盖 88.0% 的实体物件出场）。
 6. **Freebird 四款**：用户已明确搁置（性质不同）。
 
@@ -325,3 +336,73 @@ x/y 区间、缩放种类、旋转种类、出现过的 depth），**不复制**
 ★ **明确不判**「层名里的 `_Depth_N` 必须等于 depth 列」：ch4/ch5 的层是自定义名
 （`OBJECTS_MAIN` / `COLLISION_DOOR` …），且确有 59 个 `_Depth_N` 层与 depth 不符——
 层名是人起的、depth 才是引擎用的，拿层名当判据只会误报。R6 用「房内层→depth 唯一」代替。
+
+---
+
+## 11. 跨作品：UT / UTY / Outertale（983 间 / 36,136 实例）
+
+源是**安卓包 `game.droid`**（不是 `data.win`），UTMT 同样能读，`dump_instances.csx` 一行没改。
+三款各导一次，每款 4 秒、4 MB 级 TSV。
+
+| 作品 | 房间 | 实例 | 不同对象 | 非 1 缩放 | 带旋转 | 房间名前缀 | 交叉校验 |
+|---|---|---|---|---|---|---|---|
+| Undertale | **338** | 13,965 | 784 | 170 | 0 | `room_` 335（99.1%） | ✅ 与详版 §87.11 登记 **338** 相等 |
+| Undertale Yellow | **287** | 7,636 | 915 | 4,863 | 28 | `rm_` 250（87.1%） | ✅ 与登记 **287** 相等 |
+| Outertale | **358** | 14,535 | 812 | 218 | 0 | `room_` 354（98.9%） | 无历史登记，首次测定 |
+
+**两个历史登记值被独立命中（338 / 287）**，这是比"脚本不报错"强得多的正确性证据——
+期望值来自第42轮拓扑取证，不是本脚本自己算的，所以能真正证伪。
+
+### 11.1 三款的结构差异（直接影响后续渲染）
+
+| 维度 | Undertale | Undertale Yellow | Outertale |
+|---|---|---|---|
+| 层结构 | **全是 `Compatibility_Instances_Depth_N`** | 混合：`Compatibility_*` + 真实层名（`Walls` / `walls` / `Window`） | 同 UT，全是 compatibility 层 |
+| 最大层 | `Depth_0` 7,935 个 | `Depth_-999999` 2,633 个 | `Depth_0` 7,923 个 |
+| 非 1 缩放占比 | 1.2% | **63.7%** | 1.5% |
+
+★ **UTY 是异类**：63.7% 的实例靠 `scaleX/scaleY` 缩放，且层名是人起的。
+把 UT 的做法直接套到 UTY 上会错——这也是当初「两作不能套同一套做法」的又一例证。
+
+### 11.2 实例最多的对象
+
+- **UT**：`obj_solidsmall` 2,893、`obj_solidexwide` 1,188、`obj_solidwide` 640、
+  `obj_doorA` 315 / `obj_doorB` 321（与 §87.11 登记的「门 = `obj_doorA~D`」相符）
+- **UTY**：`obj_wall` 3,887、`obj_doorway` 462、`obj_interactable` 296
+  （与登记的「门 = `obj_doorway` / `obj_exit` / `obj_door`」相符）
+- **Outertale**：`obj_solidsmall` 2,991、`obj_solidexwide` 1,281、`obj_doorB` 333
+  —— 结构几乎与 UT 同构（它本来就是 UT 的改版）
+
+### 11.3 对账 `check_ut115.py` **13 PASS / 0 FAIL**
+
+| 判据 | 内容 |
+|---|---|
+| U1 | 三份 TSV 非空（分母闸，防「空集恒真」） |
+| U2 | `H` 行自述房间数 == 实际 `R` 行数 |
+| U3 | `R` 行 8 字段 / `I` 行 11 字段（全量逐行，不抽样） |
+| U4a | 每房「层内实例数」== 实际 `I` 行数（0 例外） |
+| U4b | `GameObjects` 与层内实例的差异集合 == 白名单（多一处就报红） |
+| U5 | ut=338 / uty=287（历史登记逐值相等） |
+| U6 | 房间名前缀覆盖：ut `room_` ≥ 90%、uty `rm_` ≥ 80% |
+| U7 | x/y/sx/sy/rot 全量可解析且 `\|v\| ≤ 100000`（实测最大 5,120） |
+| U8 | `raw` 件与 `D:\_wb_tmp\dw_ut` 工作副本 sha256 一致 |
+| U9 | 负控制 A：改一间房的层内实例数 ⇒ U4a 报红 |
+| U10 | 负控制 B：把 uty 期望改成 288 ⇒ U5 报红 |
+| U11 | 负控制 C：喂空房间列表 ⇒ U4a 分母闸报红 |
+| U12 | 负控制 D：塞一个白名单外差异 ⇒ U4b 报红 |
+
+**唯一已知差异（白名单）**：`uty / rm_intro` —— 层内 3 个实例，
+但引擎 `GameObjects` 是 4。3 个实例全在 `Compatibility_Instances_Depth_0` 层里，
+第 4 个**没挂到任何 Instances 层**。这是 UTY 老格式房间的真实特征，不是导出缺陷，
+所以进白名单而不把判据放宽成 `>=`（放宽就等于放弃这条判据）。
+
+★ 这条差异暴露了**判据本身曾经写错**：第一版把「层内实例 == `GameObjects`」当恒等式，
+U4 立刻报红。查原始数据后确认是判据过严，不是数据有问题——**报红先怀疑判据**，又一次生效。
+
+### 11.4 这一节没做的事（别当已完成）
+
+- **只做了全量坐标**。UT / UTY / Outertale 的**物件分级、触发器识别、功能说明**都还没做
+  （Deltarune 那套 §3 的三分法没有套用过来）；
+- 门/存档点/可读物这层**语义标注**也还没有，目前只有原始对象名；
+- 三款的**房间连通图**（谁能走到谁）未重建，`_room_graph.json` 仍只有 Deltarune 的 1,202 条边。
+

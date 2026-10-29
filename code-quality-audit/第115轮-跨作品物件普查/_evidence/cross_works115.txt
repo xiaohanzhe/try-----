@@ -1,0 +1,60 @@
+第115轮 · 跨作品实例坐标（UT / UTY / Outertale）
+
+合计 983 间房 / 36136 个实例（三款）
+
+Undertale（room_*，门为 obj_doorA~D（详版 §87.11））：338 间 / 13965 实例 / 784 个不同对象（带非 1 缩放的 170 个、带旋转的 0 个）
+Undertale Yellow（rm_*，门为 obj_doorway / obj_exit / obj_door（详版 §87.11））：287 间 / 7636 实例 / 915 个不同对象（带非 1 缩放的 4863 个、带旋转的 28 个）
+Outertale（首次测定，无历史登记）：358 间 / 14535 实例 / 812 个不同对象（带非 1 缩放的 218 个、带旋转的 0 个）
+
+--- Undertale 明细 ---
+实例最多的 10 个：
+  obj_solidsmall                     inst=2893  rooms=212   x[-20..2700] y[-4..1620]
+  obj_solidexwide                    inst=1188  rooms=130   x[-60..2660] y[20..1100]
+  obj_solidwide                      inst=640   rooms=79    x[-20..2445] y[20..1080]
+  obj_solidextall_2                  inst=594   rooms=107   x[0..1840] y[-55..1440]
+  obj_solidthin                      inst=447   rooms=16    x[0..1004] y[20..640]
+  obj_doorB                          inst=321   rooms=132   x[-15..1140] y[0..1610]
+  obj_doorA                          inst=315   rooms=135   x[-15..2700] y[-5..1040]
+  obj_overworldcontroller            inst=282   rooms=282   x[0..840] y[-180..920]
+  obj_mainchara                      inst=282   rooms=282   x[20..2400] y[40..1520]
+  obj_solidlong                      inst=265   rooms=156   x[-5..2400] y[0..1160]
+房间名前缀：room_=335  (无下划线)=3
+空对象名实例 0 个 / 空层名实例 0 个
+层名 top5：Compatibility_Instances_Depth_0(7935)  Compatibility_Instances_Depth_-9(2111)  Compatibility_Instances_Depth_60000(1163)  Compatibility_Instances_Depth_900000(344)  Compatibility_Instances_Depth_700000(324)
+
+--- Undertale Yellow 明细 ---
+实例最多的 10 个：
+  obj_wall                           inst=3887  rooms=248   x[-20..2740] y[-10..2700]
+  obj_doorway                        inst=462   rooms=231   x[-20..2380] y[0..1560]
+  obj_interactable                   inst=296   rooms=98    x[17..1309] y[28..1730]
+  obj_shadow_collider                inst=184   rooms=43    x[0..1640] y[-1000..680]
+  obj_ur                             inst=167   rooms=48    x[29..2060] y[0..1540]
+  obj_dl                             inst=152   rooms=55    x[20..2040] y[0..1540]
+  obj_steamworks_steam_blaster       inst=152   rooms=4     x[100..800] y[100..340]
+  obj_ul                             inst=141   rooms=52    x[0..2300] y[20..1460]
+  obj_dr                             inst=138   rooms=56    x[70..2300] y[0..1080]
+  obj_snowdin_water_ripples_north_overworld_yellow inst=62    rooms=3     x[280..580] y[0..420]
+房间名前缀：rm_=250  (无下划线)=36  ruins_=1
+空对象名实例 0 个 / 空层名实例 0 个
+层名 top5：Compatibility_Instances_Depth_-999999(2633)  Compatibility_Instances_Depth_0(952)  Walls(501)  walls(413)  Window(412)
+
+--- Outertale 明细 ---
+实例最多的 10 个：
+  obj_solidsmall                     inst=2991  rooms=224   x[-20..2700] y[-4..1725]
+  obj_solidexwide                    inst=1281  rooms=138   x[-60..2660] y[20..1710]
+  obj_solidwide                      inst=653   rooms=79    x[-20..2445] y[20..1080]
+  obj_solidextall_2                  inst=642   rooms=114   x[0..1840] y[-55..1640]
+  obj_solidthin                      inst=447   rooms=16    x[0..1004] y[20..640]
+  obj_doorB                          inst=333   rooms=137   x[-15..1140] y[0..1610]
+  obj_doorA                          inst=330   rooms=140   x[-15..2700] y[-5..1040]
+  obj_overworldcontroller            inst=297   rooms=297   x[0..840] y[-180..920]
+  obj_mainchara                      inst=297   rooms=297   x[20..2400] y[40..1520]
+  obj_solidlong                      inst=288   rooms=169   x[-120..2400] y[0..1720]
+房间名前缀：room_=354  (无下划线)=3  coming_=1
+空对象名实例 0 个 / 空层名实例 0 个
+层名 top5：Compatibility_Instances_Depth_0(7923)  Compatibility_Instances_Depth_-9(2130)  Compatibility_Instances_Depth_60000(1170)  Compatibility_Instances_Depth_900000(508)  Compatibility_Instances_Depth_700000(324)
+
+已知差异（已在 check_ut115.py U4b 白名单登记）：
+  uty / rm_intro：层内实例 3，引擎 GameObjects 4（老格式房间，有 1 个实例没挂层）
+
+复现：python _tools/run_dump_ut.py（要 UTMT + 三份 game.droid） → python _tools/cross_works115.py → python _tools/check_ut115.py
