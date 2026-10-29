@@ -1,0 +1,60 @@
+
+=== [1] gml_Script_SCR_TEXT  @ins 30126/30392  name=obj_readable_room1_621
+    30121: PushI t1=Int16 t2=Double int=0 short=3
+    30122: Pop t1=Variable t2=String int=52 short=0
+    30123: PushI t1=Int16 t2=Double int=0 short=104
+    30124: Pop t1=Variable t2=Int32 int=-1610538424 short=-5
+    30125: B t1=Double t2=Double int=0 short=376
+ >> 30126: Push t1=String t2=Double str='obj_readable_room1_621' int=0 short=0
+    30127: Conv t1=String t2=Variable int=0 short=0
+    30128: Call t1=Int32 t2=Double int=36 short=1
+    30129: PushI t1=Int16 t2=Double int=0 short=-5
+    30130: PushI t1=Int16 t2=Double int=0 short=0
+    30131: Pop t1=Variable t2=Variable int=36 short=0
+    30132: Push t1=String t2=Double str='obj_readable_room1_622' int=0 short=0
+    30133: Conv t1=String t2=Variable int=0 short=0
+
+=== [2] gml_Script_SCR_TEXT  @ins 30132/30392  name=obj_readable_room1_622
+    30127: Conv t1=String t2=Variable int=0 short=0
+    30128: Call t1=Int32 t2=Double int=36 short=1
+    30129: PushI t1=Int16 t2=Double int=0 short=-5
+    30130: PushI t1=Int16 t2=Double int=0 short=0
+    30131: Pop t1=Variable t2=Variable int=36 short=0
+ >> 30132: Push t1=String t2=Double str='obj_readable_room1_622' int=0 short=0
+    30133: Conv t1=String t2=Variable int=0 short=0
+    30134: Call t1=Int32 t2=Double int=36 short=1
+    30135: PushI t1=Int16 t2=Double int=0 short=-5
+    30136: PushI t1=Int16 t2=Double int=0 short=1
+    30137: Pop t1=Variable t2=Variable int=36 short=0
+    30138: Push t1=String t2=Double str='obj_readable_room1_623' int=0 short=0
+    30139: Conv t1=String t2=Variable int=0 short=0
+
+=== [3] gml_Script_SCR_TEXT  @ins 30138/30392  name=obj_readable_room1_623
+    30133: Conv t1=String t2=Variable int=0 short=0
+    30134: Call t1=Int32 t2=Double int=36 short=1
+    30135: PushI t1=Int16 t2=Double int=0 short=-5
+    30136: PushI t1=Int16 t2=Double int=0 short=1
+    30137: Pop t1=Variable t2=Variable int=36 short=0
+ >> 30138: Push t1=String t2=Double str='obj_readable_room1_623' int=0 short=0
+    30139: Conv t1=String t2=Variable int=0 short=0
+    30140: Call t1=Int32 t2=Double int=320 short=1
+    30141: PushI t1=Int16 t2=Double int=0 short=-5
+    30142: PushI t1=Int16 t2=Double int=0 short=2
+    30143: Pop t1=Variable t2=Variable int=132 short=0
+    30144: PushI t1=Int16 t2=Double int=0 short=-5
+    30145: PushI t1=Int16 t2=Double int=0 short=29
+
+=== [4] gml_Script_textdata_en  @ins 69213/118253  name=obj_readable_modernbook_59
+    69208: PushGlb t1=Variable t2=Double int=-1610612692 short=-5
+    69209: Call t1=Int32 t2=Double int=44 short=3
+    69210: Popz t1=Variable t2=Double int=0 short=0
+    69211: Push t1=String t2=Double str='%%' int=0 short=0
+    69212: Conv t1=String t2=Variable int=0 short=0
+ >> 69213: Push t1=String t2=Double str='obj_readable_modernbook_59' int=0 short=0
+    69214: Conv t1=String t2=Variable int=0 short=0
+    69215: PushGlb t1=Variable t2=Double int=-1610612692 short=-5
+    69216: Call t1=Int32 t2=Double int=44 short=3
+    69217: Popz t1=Variable t2=Double int=0 short=0
+    69218: Push t1=String t2=Double str='* (我 正 在 ..^1.&* 写 这 本 书 。 )/' int=0 short=0
+    69219: Conv t1=String t2=Variable int=0 short=0
+    69220: Push t1=String t2=Double str='obj_readable_modernbook_60' int=0 short=0
