@@ -1,0 +1,295 @@
+{
+ "method": "Alarm_0 内 if (room == N) 绑定文本键",
+ "games": {
+  "ut": {
+   "bind_rows": 614,
+   "guarded": 203,
+   "unique_keys": 614,
+   "rooms_with_readable": 95,
+   "instances": 350,
+   "combos": 202,
+   "combo_hit": 187,
+   "combo_miss": 15,
+   "miss_list": [
+    {
+     "room_idx": 4,
+     "room": "room_area1",
+     "obj": "obj_readable_flowers1",
+     "n": 1
+    },
+    {
+     "room_idx": 8,
+     "room": "room_ruins3",
+     "obj": "obj_readable_sign1",
+     "n": 1
+    },
+    {
+     "room_idx": 8,
+     "room": "room_ruins3",
+     "obj": "obj_readable_switch1",
+     "n": 1
+    },
+    {
+     "room_idx": 16,
+     "room": "room_ruins10",
+     "obj": "obj_readable_plaque_1",
+     "n": 1
+    },
+    {
+     "room_idx": 16,
+     "room": "room_ruins10",
+     "obj": "obj_readable_plaque_2",
+     "n": 1
+    },
+    {
+     "room_idx": 21,
+     "room": "room_ruins13",
+     "obj": "obj_readable_sign2",
+     "n": 1
+    },
+    {
+     "room_idx": 59,
+     "room": "room_tundra_xoxopuzz",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 74,
+     "room": "room_tundra_library",
+     "obj": "obj_readable_modernbook",
+     "n": 1
+    },
+    {
+     "room_idx": 77,
+     "room": "room_tundra_paproom",
+     "obj": "obj_readable_room3",
+     "n": 2
+    },
+    {
+     "room_idx": 142,
+     "room": "room_fire_lab2",
+     "obj": "obj_readable_room2",
+     "n": 2
+    },
+    {
+     "room_idx": 142,
+     "room": "room_fire_lab2",
+     "obj": "obj_readable_room4",
+     "n": 2
+    },
+    {
+     "room_idx": 142,
+     "room": "room_fire_lab2",
+     "obj": "obj_readable_room_editor",
+     "n": 4
+    },
+    {
+     "room_idx": 246,
+     "room": "room_truelab_hub",
+     "obj": "obj_readable_room3",
+     "n": 2
+    },
+    {
+     "room_idx": 260,
+     "room": "room_truelab_fan",
+     "obj": "obj_readable_room1",
+     "n": 1
+    },
+    {
+     "room_idx": 302,
+     "room": "room_water7_older",
+     "obj": "obj_readable_room1",
+     "n": 2
+    }
+   ],
+   "multi_instance_combos": 103
+  },
+  "outertale": {
+   "bind_rows": 604,
+   "guarded": 200,
+   "unique_keys": 599,
+   "rooms_with_readable": 102,
+   "instances": 360,
+   "combos": 210,
+   "combo_hit": 183,
+   "combo_miss": 27,
+   "miss_list": [
+    {
+     "room_idx": 4,
+     "room": "room_area1",
+     "obj": "obj_readable_flowers1",
+     "n": 1
+    },
+    {
+     "room_idx": 8,
+     "room": "room_ruins3",
+     "obj": "obj_readable_sign1",
+     "n": 1
+    },
+    {
+     "room_idx": 8,
+     "room": "room_ruins3",
+     "obj": "obj_readable_switch1",
+     "n": 1
+    },
+    {
+     "room_idx": 16,
+     "room": "room_ruins10",
+     "obj": "obj_readable_plaque_1",
+     "n": 1
+    },
+    {
+     "room_idx": 16,
+     "room": "room_ruins10",
+     "obj": "obj_readable_plaque_2",
+     "n": 1
+    },
+    {
+     "room_idx": 21,
+     "room": "room_ruins13",
+     "obj": "obj_readable_sign2",
+     "n": 1
+    },
+    {
+     "room_idx": 37,
+     "room": "room_kitchen",
+     "obj": "obj_readable_room1",
+     "n": 1
+    },
+    {
+     "room_idx": 59,
+     "room": "room_tundra_xoxopuzz",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 74,
+     "room": "room_tundra_library",
+     "obj": "obj_readable_modernbook",
+     "n": 1
+    },
+    {
+     "room_idx": 77,
+     "room": "room_tundra_paproom",
+     "obj": "obj_readable_room3",
+     "n": 2
+    },
+    {
+     "room_idx": 142,
+     "room": "room_fire_lab2",
+     "obj": "obj_readable_room2",
+     "n": 2
+    },
+    {
+     "room_idx": 142,
+     "room": "room_fire_lab2",
+     "obj": "obj_readable_room4",
+     "n": 2
+    },
+    {
+     "room_idx": 142,
+     "room": "room_fire_lab2",
+     "obj": "obj_readable_room_editor",
+     "n": 4
+    },
+    {
+     "room_idx": 220,
+     "room": "room_asghouse1",
+     "obj": "obj_readable_room1",
+     "n": 1
+    },
+    {
+     "room_idx": 224,
+     "room": "room_asrielroom_final",
+     "obj": "obj_readable_room2",
+     "n": 2
+    },
+    {
+     "room_idx": 246,
+     "room": "room_truelab_hub",
+     "obj": "obj_readable_room3",
+     "n": 2
+    },
+    {
+     "room_idx": 260,
+     "room": "room_truelab_fan",
+     "obj": "obj_readable_room1",
+     "n": 1
+    },
+    {
+     "room_idx": 302,
+     "room": "room_water7_older",
+     "obj": "obj_readable_room1",
+     "n": 2
+    },
+    {
+     "room_idx": 340,
+     "room": "room_steamworks_36",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 342,
+     "room": "room_steamworks_34",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 343,
+     "room": "room_steamworks_33",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 344,
+     "room": "room_steamworks_32",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 345,
+     "room": "room_steamworks_factory_elevator",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 346,
+     "room": "room_newhome_01",
+     "obj": "obj_readable_room5",
+     "n": 1
+    },
+    {
+     "room_idx": 348,
+     "room": "room_newhome_02",
+     "obj": "obj_readable_room5",
+     "n": 5
+    },
+    {
+     "room_idx": 356,
+     "room": "room_fire_alley",
+     "obj": "obj_readable_room5",
+     "n": 6
+    },
+    {
+     "room_idx": 356,
+     "room": "room_fire_alley",
+     "obj": "obj_readable_room_editor",
+     "n": 1
+    }
+   ],
+   "multi_instance_combos": 98
+  },
+  "uty": {
+   "bind_rows": 0,
+   "guarded": 0,
+   "unique_keys": 0,
+   "rooms_with_readable": 0,
+   "instances": 0,
+   "combos": 0,
+   "combo_hit": 0,
+   "combo_miss": 0,
+   "miss_list": [],
+   "multi_instance_combos": 0
+  }
+ }
+}

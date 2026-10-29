@@ -810,11 +810,81 @@ obj_readable_room2_465      * 谢谢你， ASGORE。 /%%
 
 ### 15.5 这一段仍未做的（下一步）
 
-- **键还没绑到房间里的具体实例**：现在知道 `obj_readable_room1_64` 写的是哪句话，
-  但"这间房的第 3 个可读物实例用的是哪一个键"还没解出来（需要读房间创建代码里的
-  `variable_instance_set`）。没有这一步，桌宠走到牌子前还不知道该读哪个键。
+- ~~**键还没绑到房间里的具体实例**~~ → **已解，见 §16**（机理＝`Alarm_0` 里 `if (room == N)`）。
 - 标记（`%` `&` `/` `^1`）的渲染规则没定。
 - uty 的可读物正文没找到。
+
+## 16. 可读物「哪间房用哪个键」：解出来了，粒度是 (房间, 对象)（第117轮补）
+
+### 16.1 结论先行
+
+**文本键不是按实例坐标选的，是按房间选的。** `obj_readable_<kind>_Alarm_0` 里是一串：
+
+```
+PushBltn{room} ; PushI <N> ; Cmp ; Bf <skip> ; Push 'obj_readable_<kind>_<M>' ; Call … ; Pop …
+        ↑ 反射出来 ValueVariable = {room}
+```
+
+⇒ 等价于 GML 的 `if (room == N) { msg = scr_textdata('obj_readable_<kind>_<M>'); }`。
+
+**关键证据（两条，都不是推断）**：
+① `probe_dump_ins` 对 `PushBltn` 指令做**全字段反射**，`ValueVariable = {room}`；
+② `probe_key_users` 反查 16 个样本键，**每个键只被自己对象的 Alarm 引用一次**（其它 8,120 段代码一处都不碰）。
+
+### 16.2 排除过程（四次探针，每次否掉一个假设）
+
+| # | 假设 | 结果 |
+| --- | --- | --- |
+| 1 | 正文写在对象 `Create` 事件里 | ✗ Create 只有变量初始化（room1 的 24 条指令里 0 个字符串） |
+| 2 | 键按**实例**算（实例号/坐标） | ✗ 键数远多于实例数（614 键 vs 350 实例）⇒ 是预置文本槽 |
+| 3 | 键在**房间创建代码** `gml_RoomCC_*` 里写死 | ✗ 反查 16 个键，引用者全是自己的 `Alarm_0`，没有一条 RoomCC |
+| 4 | 键在 `Alarm_0` 里按 `room` 选 | ✓ 反射出 `{room}` + `PushI N` + `Cmp` + `Bf` |
+
+### 16.3 量化结果（分母是"有实例的 (房间,对象) 组合"，不是"全部房间"）
+
+| 作品 | 绑定行 | 有 room 守卫 | 唯一键 | 可读物实例 | 组合 | **能绑定** | 涉及房间 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ut | 614 | 203 | 614 | 350 | 202 | **187（92.6%）** | 95 |
+| outertale | 604 | 200 | 599 | 360 | 210 | **183（87.1%）** | 102 |
+| uty | 0 | 0 | 0 | 0 | 0 | EMPTY（无数据，不当 100%） | 0 |
+
+> 203/614 有 room 守卫、其余 411 个没有 —— 这正好解释 §15 那个"键数多于实例数"的困惑：
+> **键是预先写好的文本槽**（全游戏 614 个），房间用到哪个就在 Alarm 里挂哪条，
+> 没用到的也留在表里。所以"按第几个实例取第几个键"从一开始就是错的。
+
+### 16.4 对不上的 15 / 27 例（全部列出，不猜）
+
+ut 的 15 例：`room_area1/flowers1`、`room_ruins3/sign1`、`room_ruins3/switch1`、
+`room_ruins10/plaque_1`、`room_ruins10/plaque_2`、`room_ruins13/sign2`、
+`room_tundra_xoxopuzz/room5`、`room_tundra_library/modernbook`、`room_tundra_paproom/room3`、
+`room_fire_lab2/room2`、`room_fire_lab2/room4`、`room_fire_lab2/room_editor`、
+`room_truelab_hub/room3`、`room_truelab_fan/room1`、`room_water7_older/room1`。
+
+它们的共同点：**都是单例小对象**（`sign1`/`switch1`/`plaque_*` 各有 1 个实例）。
+实测 `switch1` 的 Alarm 用的是 `PushGlb <全局> == 5` 这种**全局/剧情条件**，不是 `room ==`。
+⇒ 这 7 种对象走另一套守卫，**本轮不猜**，如实列出来。
+
+### 16.5 ★★ 必须说清的限制：粒度只到 (房间, 对象)
+
+ut 有 **103** 个组合是"同一房间摆了多个同类可读物"（outertale 98 个）。
+按本规则这些实例会**共享同一条正文** —— 本规则**不能**当成"每实例一文本"。
+桌宠实现时应当：进入房间 → 取该房间该对象类型的键 → 显示该段正文；
+同房间多个同类牌子显示同一段（除非以后解出第二层守卫）。
+
+### 16.6 复现
+
+```
+# 1) 抽绑定表（三款一起，产物落工作目录）
+python _tools/run_csx_ut.py --csx dump_readable_bind.csx --out readable_bind.tsv --no-distil
+# 2) 交叉验证 + 异常清单（只读仓库内文件，不碰 D:/E:）
+python _tools/readable_bind115.py
+```
+
+产物：`_evidence/raw/{ut,outertale,uty}/readable_bind.tsv`、
+`_evidence/readable_bind115.json` / `.txt`。
+排除过程中用到的五个探针脚本留在 `_tools/`（`probe_readable_key.csx`、`probe_readable_alarm.csx`、
+`probe_key_users.csx`、`probe_dump_ins.csx`、`probe_resolve.csx`）——
+**它们是"证伪记录"不是产物**，留着是为了下一个人能复现"为什么排除了别的解释"。
 
 
 

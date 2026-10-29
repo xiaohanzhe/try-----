@@ -1,0 +1,61 @@
+==================================================================
+[ut] 绑定行 614（有 room 守卫 203）· 唯一键 614
+     可读物实例 350 个 · (房间,对象) 组合 202 个 · 涉及 95 间房
+     ★ 能绑定 187 / 202 = 92.6%
+     对不上 15 个（全部列出，不猜）：
+       - room_area1         obj_readable_flowers1        实例1
+       - room_ruins3        obj_readable_sign1           实例1
+       - room_ruins3        obj_readable_switch1         实例1
+       - room_ruins10       obj_readable_plaque_1        实例1
+       - room_ruins10       obj_readable_plaque_2        实例1
+       - room_ruins13       obj_readable_sign2           实例1
+       - room_tundra_xoxopuzz obj_readable_room5           实例1
+       - room_tundra_library obj_readable_modernbook      实例1
+       - room_tundra_paproom obj_readable_room3           实例2
+       - room_fire_lab2     obj_readable_room2           实例2
+       - room_fire_lab2     obj_readable_room4           实例2
+       - room_fire_lab2     obj_readable_room_editor     实例4
+       - room_truelab_hub   obj_readable_room3           实例2
+       - room_truelab_fan   obj_readable_room1           实例1
+       - room_water7_older  obj_readable_room1           实例2
+     同一房间摆多个同类可读物的组合：103 个
+     ⚠ 这些组合会**共享同一条正文**（本规则只到 (房间,对象) 粒度，不能当成"每实例一文本"）
+==================================================================
+[outertale] 绑定行 604（有 room 守卫 200）· 唯一键 599
+     可读物实例 360 个 · (房间,对象) 组合 210 个 · 涉及 102 间房
+     ★ 能绑定 183 / 210 = 87.1%
+     对不上 27 个（全部列出，不猜）：
+       - room_area1         obj_readable_flowers1        实例1
+       - room_ruins3        obj_readable_sign1           实例1
+       - room_ruins3        obj_readable_switch1         实例1
+       - room_ruins10       obj_readable_plaque_1        实例1
+       - room_ruins10       obj_readable_plaque_2        实例1
+       - room_ruins13       obj_readable_sign2           实例1
+       - room_kitchen       obj_readable_room1           实例1
+       - room_tundra_xoxopuzz obj_readable_room5           实例1
+       - room_tundra_library obj_readable_modernbook      实例1
+       - room_tundra_paproom obj_readable_room3           实例2
+       - room_fire_lab2     obj_readable_room2           实例2
+       - room_fire_lab2     obj_readable_room4           实例2
+       - room_fire_lab2     obj_readable_room_editor     实例4
+       - room_asghouse1     obj_readable_room1           实例1
+       - room_asrielroom_final obj_readable_room2           实例2
+       - room_truelab_hub   obj_readable_room3           实例2
+       - room_truelab_fan   obj_readable_room1           实例1
+       - room_water7_older  obj_readable_room1           实例2
+       - room_steamworks_36 obj_readable_room5           实例1
+       - room_steamworks_34 obj_readable_room5           实例1
+       - room_steamworks_33 obj_readable_room5           实例1
+       - room_steamworks_32 obj_readable_room5           实例1
+       - room_steamworks_factory_elevator obj_readable_room5           实例1
+       - room_newhome_01    obj_readable_room5           实例1
+       - room_newhome_02    obj_readable_room5           实例5
+       - room_fire_alley    obj_readable_room5           实例6
+       - room_fire_alley    obj_readable_room_editor     实例1
+     同一房间摆多个同类可读物的组合：98 个
+     ⚠ 这些组合会**共享同一条正文**（本规则只到 (房间,对象) 粒度，不能当成"每实例一文本"）
+==================================================================
+[uty] 绑定行 0（有 room 守卫 0）· 唯一键 0
+     可读物实例 0 个 · (房间,对象) 组合 0 个 · 涉及 0 间房
+     EMPTY：没有可读物实例，覆盖率无从计算（不当 100%）
+     同一房间摆多个同类可读物的组合：0 个
