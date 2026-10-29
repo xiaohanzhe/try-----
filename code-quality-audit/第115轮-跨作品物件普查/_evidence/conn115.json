@@ -1,0 +1,1958 @@
+{
+ "outertale": {
+  "edges": [
+   {
+    "code": "gml_Object_obj_battlerflowey_Alarm_3",
+    "dst": 307,
+    "dst_name": "room_floweybattle",
+    "src": 5,
+    "src_name": "room_area1_2"
+   },
+   {
+    "code": "gml_Object_obj_wanderparent_Step_0",
+    "dst": 274,
+    "dst_name": "room_overworld",
+    "src": 16,
+    "src_name": "room_ruins10"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 21,
+    "dst_name": "room_ruins13",
+    "src": 19,
+    "src_name": "room_ruins12"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 19,
+    "dst_name": "room_ruins12",
+    "src": 21,
+    "src_name": "room_ruins13"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 23,
+    "dst_name": "room_ruins15A",
+    "src": 27,
+    "src_name": "room_ruins15E"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 31,
+    "dst_name": "room_ruins19",
+    "src": 28,
+    "src_name": "room_ruins16"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 28,
+    "dst_name": "room_ruins16",
+    "src": 31,
+    "src_name": "room_ruins19"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 37,
+    "dst_name": "room_kitchen",
+    "src": 33,
+    "src_name": "room_torhouse2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 33,
+    "dst_name": "room_torhouse2",
+    "src": 37,
+    "src_name": "room_kitchen"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 32,
+    "dst_name": "room_torhouse1",
+    "src": 38,
+    "src_name": "room_basement1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 44,
+    "dst_name": "room_tundra1",
+    "src": 43,
+    "src_name": "room_ruinsexit"
+   },
+   {
+    "code": "gml_Object_obj_demodoorA_Alarm_2",
+    "dst": 325,
+    "dst_name": "room_undertale",
+    "src": 43,
+    "src_name": "room_ruinsexit"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 43,
+    "dst_name": "room_ruinsexit",
+    "src": 44,
+    "src_name": "room_tundra1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 66,
+    "dst_name": "room_tundra_poffzone",
+    "src": 63,
+    "src_name": "room_tundra_iceentrance"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 265,
+    "dst_name": "room_icecave1",
+    "src": 65,
+    "src_name": "room_tundra_iceexit"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 63,
+    "dst_name": "room_tundra_iceentrance",
+    "src": 66,
+    "src_name": "room_tundra_poffzone"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 69,
+    "dst_name": "room_tundra_town2",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 71,
+    "dst_name": "room_tundra_inn",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 73,
+    "dst_name": "room_tundra_grillby",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 74,
+    "dst_name": "room_tundra_library",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 80,
+    "dst_name": "room_tundra_sansbasement",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 71,
+    "src_name": "room_tundra_inn"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 73,
+    "src_name": "room_tundra_grillby"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 74,
+    "src_name": "room_tundra_library"
+   },
+   {
+    "code": "gml_Object_obj_door_v_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 75,
+    "src_name": "room_tundra_garage"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 76,
+    "src_name": "room_tundra_sanshouse"
+   },
+   {
+    "code": "gml_Object_obj_battlerflowey_Alarm_3",
+    "dst": 317,
+    "dst_name": "room_papdate",
+    "src": 77,
+    "src_name": "room_tundra_paproom"
+   },
+   {
+    "code": "gml_Object_obj_battlerflowey_Alarm_3",
+    "dst": 318,
+    "dst_name": "room_adate",
+    "src": 77,
+    "src_name": "room_tundra_paproom"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 78,
+    "src_name": "room_tundra_sansroom"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 79,
+    "src_name": "room_tundra_sansroom_dark"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 80,
+    "src_name": "room_tundra_sansbasement"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 81,
+    "src_name": "room_fogroom"
+   },
+   {
+    "code": "gml_Object_obj_purpledude_Step_1",
+    "dst": 93,
+    "dst_name": "room_water9",
+    "src": 91,
+    "src_name": "room_water7"
+   },
+   {
+    "code": "gml_Object_obj_purpledude_Step_1",
+    "dst": 91,
+    "dst_name": "room_water7",
+    "src": 93,
+    "src_name": "room_water9"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 94,
+    "dst_name": "room_water_savepoint1",
+    "src": 95,
+    "src_name": "room_water11"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 95,
+    "src_name": "room_water11"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 95,
+    "src_name": "room_water11"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 95,
+    "dst_name": "room_water11",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 100,
+    "dst_name": "room_water_onionsan",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 123,
+    "dst_name": "room_water_prebird",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 273,
+    "dst_name": "room_water13",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 95,
+    "dst_name": "room_water11",
+    "src": 99,
+    "src_name": "room_water_bird"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 99,
+    "src_name": "room_water_bird"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 123,
+    "dst_name": "room_water_prebird",
+    "src": 99,
+    "src_name": "room_water_bird"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 100,
+    "src_name": "room_water_onionsan"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 104,
+    "dst_name": "room_water_statue",
+    "src": 101,
+    "src_name": "room_water14"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 101,
+    "dst_name": "room_water14",
+    "src": 104,
+    "src_name": "room_water_statue"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 119,
+    "dst_name": "room_water_blookyard",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_door_v_Alarm_2",
+    "dst": 122,
+    "dst_name": "room_water_farm",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 124,
+    "dst_name": "room_water_shop",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_battler_Alarm_3",
+    "dst": 306,
+    "dst_name": "room_battle",
+    "src": 118,
+    "src_name": "room_water_undynehouse"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 119,
+    "src_name": "room_water_blookyard"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 122,
+    "dst_name": "room_water_farm",
+    "src": 119,
+    "src_name": "room_water_blookyard"
+   },
+   {
+    "code": "gml_Object_obj_door_v_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 122,
+    "src_name": "room_water_farm"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 119,
+    "dst_name": "room_water_blookyard",
+    "src": 122,
+    "src_name": "room_water_farm"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 123,
+    "src_name": "room_water_prebird"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 123,
+    "src_name": "room_water_prebird"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 354,
+    "dst_name": "room_water_yellow",
+    "src": 123,
+    "src_name": "room_water_prebird"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 124,
+    "src_name": "room_water_shop"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 312,
+    "dst_name": "room_shop2",
+    "src": 124,
+    "src_name": "room_water_shop"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 315,
+    "dst_name": "room_shop5",
+    "src": 128,
+    "src_name": "room_water_temvillage"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 214,
+    "dst_name": "room_fire_elevator_l1",
+    "src": 139,
+    "src_name": "room_fire_prelab"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 242,
+    "dst_name": "room_fire_labelevator",
+    "src": 141,
+    "src_name": "room_fire_lab1"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 151,
+    "dst_name": "room_fire9",
+    "src": 148,
+    "src_name": "room_fire7"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 153,
+    "dst_name": "room_fire_turn",
+    "src": 148,
+    "src_name": "room_fire7"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 148,
+    "dst_name": "room_fire7",
+    "src": 151,
+    "src_name": "room_fire9"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 148,
+    "dst_name": "room_fire7",
+    "src": 153,
+    "src_name": "room_fire_turn"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 148,
+    "dst_name": "room_fire7",
+    "src": 155,
+    "src_name": "room_fire_savepoint1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 156,
+    "src_name": "room_fire_elevator_r1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 157,
+    "src_name": "room_fire_elevator_r2"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 162,
+    "dst_name": "room_fire10",
+    "src": 159,
+    "src_name": "room_fire_walkandbranch"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 159,
+    "dst_name": "room_fire_walkandbranch",
+    "src": 162,
+    "src_name": "room_fire10"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 168,
+    "src_name": "room_fire_elevator_l2"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 169,
+    "src_name": "room_fire_elevator_l3"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 174,
+    "dst_name": "room_fire_preshootguy4",
+    "src": 171,
+    "src_name": "room_fire_walkandbranch2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 176,
+    "dst_name": "room_fire_savepoint2",
+    "src": 171,
+    "src_name": "room_fire_walkandbranch2"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 171,
+    "dst_name": "room_fire_walkandbranch2",
+    "src": 174,
+    "src_name": "room_fire_preshootguy4"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 171,
+    "dst_name": "room_fire_walkandbranch2",
+    "src": 176,
+    "src_name": "room_fire_savepoint2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 187,
+    "dst_name": "room_fire_elevator_r3",
+    "src": 181,
+    "src_name": "room_fire_hotelfront_1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 313,
+    "dst_name": "room_shop3",
+    "src": 182,
+    "src_name": "room_fire_hotelfront_2"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 356,
+    "dst_name": "room_fire_alley",
+    "src": 182,
+    "src_name": "room_fire_hotelfront_2"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 188,
+    "dst_name": "room_fire_precore",
+    "src": 183,
+    "src_name": "room_fire_hotellobby"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 181,
+    "dst_name": "room_fire_hotelfront_1",
+    "src": 187,
+    "src_name": "room_fire_elevator_r3"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 187,
+    "src_name": "room_fire_elevator_r3"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 183,
+    "dst_name": "room_fire_hotellobby",
+    "src": 188,
+    "src_name": "room_fire_precore"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 210,
+    "dst_name": "room_fire_core_premett",
+    "src": 189,
+    "src_name": "room_fire_core1"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 203,
+    "dst_name": "room_fire_core_bottomright",
+    "src": 196,
+    "src_name": "room_fire_core_branch"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 204,
+    "dst_name": "room_fire_core_center",
+    "src": 196,
+    "src_name": "room_fire_core_branch"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 205,
+    "dst_name": "room_fire_shootguy_5",
+    "src": 198,
+    "src_name": "room_fire_core_left"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 206,
+    "dst_name": "room_fire_core_treasureleft",
+    "src": 199,
+    "src_name": "room_fire_core_topleft"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 204,
+    "dst_name": "room_fire_core_center",
+    "src": 200,
+    "src_name": "room_fire_core_top"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 208,
+    "dst_name": "room_fire_core_warrior",
+    "src": 200,
+    "src_name": "room_fire_core_top"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 207,
+    "dst_name": "room_fire_core_treasureright",
+    "src": 201,
+    "src_name": "room_fire_core_topright"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 209,
+    "dst_name": "room_fire_core_bridge",
+    "src": 202,
+    "src_name": "room_fire_core_right"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 196,
+    "dst_name": "room_fire_core_branch",
+    "src": 203,
+    "src_name": "room_fire_core_bottomright"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 196,
+    "dst_name": "room_fire_core_branch",
+    "src": 204,
+    "src_name": "room_fire_core_center"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 200,
+    "dst_name": "room_fire_core_top",
+    "src": 204,
+    "src_name": "room_fire_core_center"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 198,
+    "dst_name": "room_fire_core_left",
+    "src": 205,
+    "src_name": "room_fire_shootguy_5"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 199,
+    "dst_name": "room_fire_core_topleft",
+    "src": 206,
+    "src_name": "room_fire_core_treasureleft"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 201,
+    "dst_name": "room_fire_core_topright",
+    "src": 207,
+    "src_name": "room_fire_core_treasureright"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 200,
+    "dst_name": "room_fire_core_top",
+    "src": 208,
+    "src_name": "room_fire_core_warrior"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 202,
+    "dst_name": "room_fire_core_right",
+    "src": 209,
+    "src_name": "room_fire_core_bridge"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 189,
+    "dst_name": "room_fire_core1",
+    "src": 210,
+    "src_name": "room_fire_core_premett"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 215,
+    "dst_name": "room_fire_finalelevator",
+    "src": 212,
+    "src_name": "room_fire_core_final"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 139,
+    "dst_name": "room_fire_prelab",
+    "src": 214,
+    "src_name": "room_fire_elevator_l1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 214,
+    "src_name": "room_fire_elevator_l1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 215,
+    "dst_name": "room_fire_finalelevator",
+    "src": 216,
+    "src_name": "room_castle_elevatorout"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 230,
+    "dst_name": "room_lastruins_corridor",
+    "src": 217,
+    "src_name": "room_castle_precastle"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 226,
+    "dst_name": "room_basement1_final",
+    "src": 220,
+    "src_name": "room_asghouse1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 225,
+    "dst_name": "room_kitchen_final",
+    "src": 221,
+    "src_name": "room_asghouse2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 221,
+    "dst_name": "room_asghouse2",
+    "src": 225,
+    "src_name": "room_kitchen_final"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 220,
+    "dst_name": "room_asghouse1",
+    "src": 226,
+    "src_name": "room_basement1_final"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 235,
+    "dst_name": "room_castle_throneroom",
+    "src": 232,
+    "src_name": "room_castle_finalshoehorn"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 232,
+    "dst_name": "room_castle_finalshoehorn",
+    "src": 235,
+    "src_name": "room_castle_throneroom"
+   },
+   {
+    "code": "gml_Object_obj_demodoorA_Alarm_2",
+    "dst": 239,
+    "dst_name": "room_undertale_end",
+    "src": 238,
+    "src_name": "room_castle_exit"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 236,
+    "dst_name": "room_castle_prebarrier",
+    "src": 240,
+    "src_name": "room_castle_trueexit"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 141,
+    "dst_name": "room_fire_lab1",
+    "src": 242,
+    "src_name": "room_fire_labelevator"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 250,
+    "dst_name": "room_truelab_prebed",
+    "src": 246,
+    "src_name": "room_truelab_hub"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 261,
+    "dst_name": "room_truelab_castle_elevator",
+    "src": 246,
+    "src_name": "room_truelab_hub"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 246,
+    "dst_name": "room_truelab_hub",
+    "src": 250,
+    "src_name": "room_truelab_prebed"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 254,
+    "dst_name": "room_truelab_hall3",
+    "src": 251,
+    "src_name": "room_truelab_bedroom"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 251,
+    "dst_name": "room_truelab_bedroom",
+    "src": 254,
+    "src_name": "room_truelab_hall3"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 260,
+    "dst_name": "room_truelab_fan",
+    "src": 254,
+    "src_name": "room_truelab_hall3"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 254,
+    "dst_name": "room_truelab_hall3",
+    "src": 260,
+    "src_name": "room_truelab_fan"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 246,
+    "dst_name": "room_truelab_hub",
+    "src": 261,
+    "src_name": "room_truelab_castle_elevator"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 65,
+    "dst_name": "room_tundra_iceexit",
+    "src": 265,
+    "src_name": "room_icecave1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 94,
+    "dst_name": "room_water_savepoint1",
+    "src": 268,
+    "src_name": "room_water_fakehallway"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 95,
+    "dst_name": "room_water11",
+    "src": 268,
+    "src_name": "room_water_fakehallway"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 268,
+    "dst_name": "room_water_fakehallway",
+    "src": 269,
+    "src_name": "room_mysteryman"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 273,
+    "src_name": "room_water13"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 335,
+    "src_name": "room_dogshrine"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 336,
+    "src_name": "room_dogshrine_ruined"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 339,
+    "src_name": "room_fire_elevator_s"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 340,
+    "dst_name": "room_steamworks_36",
+    "src": 339,
+    "src_name": "room_fire_elevator_s"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 339,
+    "dst_name": "room_fire_elevator_s",
+    "src": 340,
+    "src_name": "room_steamworks_36"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 345,
+    "dst_name": "room_steamworks_factory_elevator",
+    "src": 344,
+    "src_name": "room_steamworks_32"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 344,
+    "dst_name": "room_steamworks_32",
+    "src": 345,
+    "src_name": "room_steamworks_factory_elevator"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 347,
+    "dst_name": "room_newhome_elevator",
+    "src": 346,
+    "src_name": "room_newhome_01"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 347,
+    "dst_name": "room_newhome_elevator",
+    "src": 350,
+    "src_name": "room_newhome_04"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 264,
+    "dst_name": "room_gaster",
+    "src": 352,
+    "src_name": "room_smile"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 123,
+    "dst_name": "room_water_prebird",
+    "src": 354,
+    "src_name": "room_water_yellow"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 182,
+    "dst_name": "room_fire_hotelfront_2",
+    "src": 356,
+    "src_name": "room_fire_alley"
+   },
+   {
+    "code": "gml_Object_obj_readable_room_editor_Alarm_0",
+    "dst": 313,
+    "dst_name": "room_shop3",
+    "src": 356,
+    "src_name": "room_fire_alley"
+   }
+  ],
+  "n_edges": 144,
+  "n_rooms": 358,
+  "rule": "GML 里 `if (room == N) room_goto(M)` 的常量对；src 取自同一 code 内的守卫",
+  "src_rooms": 110
+ },
+ "ut": {
+  "edges": [
+   {
+    "code": "gml_Object_obj_battlerflowey_Alarm_3",
+    "dst": 307,
+    "dst_name": "room_floweybattle",
+    "src": 5,
+    "src_name": "room_area1_2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 21,
+    "dst_name": "room_ruins13",
+    "src": 19,
+    "src_name": "room_ruins12"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 19,
+    "dst_name": "room_ruins12",
+    "src": 21,
+    "src_name": "room_ruins13"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 23,
+    "dst_name": "room_ruins15A",
+    "src": 27,
+    "src_name": "room_ruins15E"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 31,
+    "dst_name": "room_ruins19",
+    "src": 28,
+    "src_name": "room_ruins16"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 28,
+    "dst_name": "room_ruins16",
+    "src": 31,
+    "src_name": "room_ruins19"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 37,
+    "dst_name": "room_kitchen",
+    "src": 33,
+    "src_name": "room_torhouse2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 33,
+    "dst_name": "room_torhouse2",
+    "src": 37,
+    "src_name": "room_kitchen"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 32,
+    "dst_name": "room_torhouse1",
+    "src": 38,
+    "src_name": "room_basement1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 44,
+    "dst_name": "room_tundra1",
+    "src": 43,
+    "src_name": "room_ruinsexit"
+   },
+   {
+    "code": "gml_Object_obj_demodoorA_Alarm_2",
+    "dst": 325,
+    "dst_name": "room_undertale",
+    "src": 43,
+    "src_name": "room_ruinsexit"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 43,
+    "dst_name": "room_ruinsexit",
+    "src": 44,
+    "src_name": "room_tundra1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 66,
+    "dst_name": "room_tundra_poffzone",
+    "src": 63,
+    "src_name": "room_tundra_iceentrance"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 265,
+    "dst_name": "room_icecave1",
+    "src": 65,
+    "src_name": "room_tundra_iceexit"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 63,
+    "dst_name": "room_tundra_iceentrance",
+    "src": 66,
+    "src_name": "room_tundra_poffzone"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 69,
+    "dst_name": "room_tundra_town2",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 71,
+    "dst_name": "room_tundra_inn",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 73,
+    "dst_name": "room_tundra_grillby",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 74,
+    "dst_name": "room_tundra_library",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 80,
+    "dst_name": "room_tundra_sansbasement",
+    "src": 68,
+    "src_name": "room_tundra_town"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 71,
+    "src_name": "room_tundra_inn"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 73,
+    "src_name": "room_tundra_grillby"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 74,
+    "src_name": "room_tundra_library"
+   },
+   {
+    "code": "gml_Object_obj_door_v_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 75,
+    "src_name": "room_tundra_garage"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 76,
+    "src_name": "room_tundra_sanshouse"
+   },
+   {
+    "code": "gml_Object_obj_battlerflowey_Alarm_3",
+    "dst": 317,
+    "dst_name": "room_papdate",
+    "src": 77,
+    "src_name": "room_tundra_paproom"
+   },
+   {
+    "code": "gml_Object_obj_battlerflowey_Alarm_3",
+    "dst": 318,
+    "dst_name": "room_adate",
+    "src": 77,
+    "src_name": "room_tundra_paproom"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 78,
+    "src_name": "room_tundra_sansroom"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 79,
+    "src_name": "room_tundra_sansroom_dark"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 80,
+    "src_name": "room_tundra_sansbasement"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 68,
+    "dst_name": "room_tundra_town",
+    "src": 81,
+    "src_name": "room_fogroom"
+   },
+   {
+    "code": "gml_Object_obj_purpledude_Step_1",
+    "dst": 93,
+    "dst_name": "room_water9",
+    "src": 91,
+    "src_name": "room_water7"
+   },
+   {
+    "code": "gml_Object_obj_purpledude_Step_1",
+    "dst": 91,
+    "dst_name": "room_water7",
+    "src": 93,
+    "src_name": "room_water9"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 94,
+    "dst_name": "room_water_savepoint1",
+    "src": 95,
+    "src_name": "room_water11"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 95,
+    "src_name": "room_water11"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 95,
+    "src_name": "room_water11"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 95,
+    "dst_name": "room_water11",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 100,
+    "dst_name": "room_water_onionsan",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 273,
+    "dst_name": "room_water13",
+    "src": 97,
+    "src_name": "room_water12"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 95,
+    "dst_name": "room_water11",
+    "src": 99,
+    "src_name": "room_water_bird"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 99,
+    "src_name": "room_water_bird"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 123,
+    "dst_name": "room_water_prebird",
+    "src": 99,
+    "src_name": "room_water_bird"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 100,
+    "src_name": "room_water_onionsan"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 104,
+    "dst_name": "room_water_statue",
+    "src": 101,
+    "src_name": "room_water14"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 101,
+    "dst_name": "room_water14",
+    "src": 104,
+    "src_name": "room_water_statue"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 119,
+    "dst_name": "room_water_blookyard",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_door_v_Alarm_2",
+    "dst": 122,
+    "dst_name": "room_water_farm",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 124,
+    "dst_name": "room_water_shop",
+    "src": 116,
+    "src_name": "room_water_friendlyhub"
+   },
+   {
+    "code": "gml_Object_obj_battler_Alarm_3",
+    "dst": 306,
+    "dst_name": "room_battle",
+    "src": 118,
+    "src_name": "room_water_undynehouse"
+   },
+   {
+    "code": "gml_Object_obj_door_w_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 119,
+    "src_name": "room_water_blookyard"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 122,
+    "dst_name": "room_water_farm",
+    "src": 119,
+    "src_name": "room_water_blookyard"
+   },
+   {
+    "code": "gml_Object_obj_door_v_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 122,
+    "src_name": "room_water_farm"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 119,
+    "dst_name": "room_water_blookyard",
+    "src": 122,
+    "src_name": "room_water_farm"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 99,
+    "dst_name": "room_water_bird",
+    "src": 123,
+    "src_name": "room_water_prebird"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 116,
+    "dst_name": "room_water_friendlyhub",
+    "src": 124,
+    "src_name": "room_water_shop"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 312,
+    "dst_name": "room_shop2",
+    "src": 124,
+    "src_name": "room_water_shop"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 315,
+    "dst_name": "room_shop5",
+    "src": 128,
+    "src_name": "room_water_temvillage"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 214,
+    "dst_name": "room_fire_elevator_l1",
+    "src": 139,
+    "src_name": "room_fire_prelab"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 242,
+    "dst_name": "room_fire_labelevator",
+    "src": 141,
+    "src_name": "room_fire_lab1"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 151,
+    "dst_name": "room_fire9",
+    "src": 148,
+    "src_name": "room_fire7"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 153,
+    "dst_name": "room_fire_turn",
+    "src": 148,
+    "src_name": "room_fire7"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 148,
+    "dst_name": "room_fire7",
+    "src": 151,
+    "src_name": "room_fire9"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 148,
+    "dst_name": "room_fire7",
+    "src": 153,
+    "src_name": "room_fire_turn"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 148,
+    "dst_name": "room_fire7",
+    "src": 155,
+    "src_name": "room_fire_savepoint1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 156,
+    "src_name": "room_fire_elevator_r1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 157,
+    "src_name": "room_fire_elevator_r2"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 162,
+    "dst_name": "room_fire10",
+    "src": 159,
+    "src_name": "room_fire_walkandbranch"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 159,
+    "dst_name": "room_fire_walkandbranch",
+    "src": 162,
+    "src_name": "room_fire10"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 168,
+    "src_name": "room_fire_elevator_l2"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 169,
+    "src_name": "room_fire_elevator_l3"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 174,
+    "dst_name": "room_fire_preshootguy4",
+    "src": 171,
+    "src_name": "room_fire_walkandbranch2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 176,
+    "dst_name": "room_fire_savepoint2",
+    "src": 171,
+    "src_name": "room_fire_walkandbranch2"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 171,
+    "dst_name": "room_fire_walkandbranch2",
+    "src": 174,
+    "src_name": "room_fire_preshootguy4"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 171,
+    "dst_name": "room_fire_walkandbranch2",
+    "src": 176,
+    "src_name": "room_fire_savepoint2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 187,
+    "dst_name": "room_fire_elevator_r3",
+    "src": 181,
+    "src_name": "room_fire_hotelfront_1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 313,
+    "dst_name": "room_shop3",
+    "src": 182,
+    "src_name": "room_fire_hotelfront_2"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 188,
+    "dst_name": "room_fire_precore",
+    "src": 183,
+    "src_name": "room_fire_hotellobby"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 314,
+    "dst_name": "room_shop4",
+    "src": 183,
+    "src_name": "room_fire_hotellobby"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 181,
+    "dst_name": "room_fire_hotelfront_1",
+    "src": 187,
+    "src_name": "room_fire_elevator_r3"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 187,
+    "src_name": "room_fire_elevator_r3"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 183,
+    "dst_name": "room_fire_hotellobby",
+    "src": 188,
+    "src_name": "room_fire_precore"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 210,
+    "dst_name": "room_fire_core_premett",
+    "src": 189,
+    "src_name": "room_fire_core1"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 203,
+    "dst_name": "room_fire_core_bottomright",
+    "src": 196,
+    "src_name": "room_fire_core_branch"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 204,
+    "dst_name": "room_fire_core_center",
+    "src": 196,
+    "src_name": "room_fire_core_branch"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 205,
+    "dst_name": "room_fire_shootguy_5",
+    "src": 198,
+    "src_name": "room_fire_core_left"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 206,
+    "dst_name": "room_fire_core_treasureleft",
+    "src": 199,
+    "src_name": "room_fire_core_topleft"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 204,
+    "dst_name": "room_fire_core_center",
+    "src": 200,
+    "src_name": "room_fire_core_top"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 208,
+    "dst_name": "room_fire_core_warrior",
+    "src": 200,
+    "src_name": "room_fire_core_top"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 207,
+    "dst_name": "room_fire_core_treasureright",
+    "src": 201,
+    "src_name": "room_fire_core_topright"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 209,
+    "dst_name": "room_fire_core_bridge",
+    "src": 202,
+    "src_name": "room_fire_core_right"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 196,
+    "dst_name": "room_fire_core_branch",
+    "src": 203,
+    "src_name": "room_fire_core_bottomright"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 196,
+    "dst_name": "room_fire_core_branch",
+    "src": 204,
+    "src_name": "room_fire_core_center"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 200,
+    "dst_name": "room_fire_core_top",
+    "src": 204,
+    "src_name": "room_fire_core_center"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 198,
+    "dst_name": "room_fire_core_left",
+    "src": 205,
+    "src_name": "room_fire_shootguy_5"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 199,
+    "dst_name": "room_fire_core_topleft",
+    "src": 206,
+    "src_name": "room_fire_core_treasureleft"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 201,
+    "dst_name": "room_fire_core_topright",
+    "src": 207,
+    "src_name": "room_fire_core_treasureright"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 200,
+    "dst_name": "room_fire_core_top",
+    "src": 208,
+    "src_name": "room_fire_core_warrior"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 202,
+    "dst_name": "room_fire_core_right",
+    "src": 209,
+    "src_name": "room_fire_core_bridge"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 189,
+    "dst_name": "room_fire_core1",
+    "src": 210,
+    "src_name": "room_fire_core_premett"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 215,
+    "dst_name": "room_fire_finalelevator",
+    "src": 212,
+    "src_name": "room_fire_core_final"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 139,
+    "dst_name": "room_fire_prelab",
+    "src": 214,
+    "src_name": "room_fire_elevator_l1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 213,
+    "dst_name": "room_fire_elevator",
+    "src": 214,
+    "src_name": "room_fire_elevator_l1"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 215,
+    "dst_name": "room_fire_finalelevator",
+    "src": 216,
+    "src_name": "room_castle_elevatorout"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 230,
+    "dst_name": "room_lastruins_corridor",
+    "src": 217,
+    "src_name": "room_castle_precastle"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 226,
+    "dst_name": "room_basement1_final",
+    "src": 220,
+    "src_name": "room_asghouse1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 225,
+    "dst_name": "room_kitchen_final",
+    "src": 221,
+    "src_name": "room_asghouse2"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 221,
+    "dst_name": "room_asghouse2",
+    "src": 225,
+    "src_name": "room_kitchen_final"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 220,
+    "dst_name": "room_asghouse1",
+    "src": 226,
+    "src_name": "room_basement1_final"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 217,
+    "dst_name": "room_castle_precastle",
+    "src": 230,
+    "src_name": "room_lastruins_corridor"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 235,
+    "dst_name": "room_castle_throneroom",
+    "src": 232,
+    "src_name": "room_castle_finalshoehorn"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 232,
+    "dst_name": "room_castle_finalshoehorn",
+    "src": 235,
+    "src_name": "room_castle_throneroom"
+   },
+   {
+    "code": "gml_Object_obj_demodoorA_Alarm_2",
+    "dst": 239,
+    "dst_name": "room_undertale_end",
+    "src": 238,
+    "src_name": "room_castle_exit"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 236,
+    "dst_name": "room_castle_prebarrier",
+    "src": 240,
+    "src_name": "room_castle_trueexit"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 141,
+    "dst_name": "room_fire_lab1",
+    "src": 242,
+    "src_name": "room_fire_labelevator"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 250,
+    "dst_name": "room_truelab_prebed",
+    "src": 246,
+    "src_name": "room_truelab_hub"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 261,
+    "dst_name": "room_truelab_castle_elevator",
+    "src": 246,
+    "src_name": "room_truelab_hub"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 246,
+    "dst_name": "room_truelab_hub",
+    "src": 250,
+    "src_name": "room_truelab_prebed"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 254,
+    "dst_name": "room_truelab_hall3",
+    "src": 251,
+    "src_name": "room_truelab_bedroom"
+   },
+   {
+    "code": "gml_Object_obj_door_t_Alarm_2",
+    "dst": 251,
+    "dst_name": "room_truelab_bedroom",
+    "src": 254,
+    "src_name": "room_truelab_hall3"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 260,
+    "dst_name": "room_truelab_fan",
+    "src": 254,
+    "src_name": "room_truelab_hall3"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 254,
+    "dst_name": "room_truelab_hall3",
+    "src": 260,
+    "src_name": "room_truelab_fan"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 246,
+    "dst_name": "room_truelab_hub",
+    "src": 261,
+    "src_name": "room_truelab_castle_elevator"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 65,
+    "dst_name": "room_tundra_iceexit",
+    "src": 265,
+    "src_name": "room_icecave1"
+   },
+   {
+    "code": "gml_Object_obj_door_ruins13_Alarm_2",
+    "dst": 94,
+    "dst_name": "room_water_savepoint1",
+    "src": 268,
+    "src_name": "room_water_fakehallway"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 95,
+    "dst_name": "room_water11",
+    "src": 268,
+    "src_name": "room_water_fakehallway"
+   },
+   {
+    "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+    "dst": 268,
+    "dst_name": "room_water_fakehallway",
+    "src": 269,
+    "src_name": "room_mysteryman"
+   },
+   {
+    "code": "gml_Object_obj_door_u_Alarm_2",
+    "dst": 97,
+    "dst_name": "room_water12",
+    "src": 273,
+    "src_name": "room_water13"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 335,
+    "src_name": "room_dogshrine"
+   },
+   {
+    "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+    "dst": 76,
+    "dst_name": "room_tundra_sanshouse",
+    "src": 336,
+    "src_name": "room_dogshrine_ruined"
+   }
+  ],
+  "n_edges": 131,
+  "n_rooms": 338,
+  "rule": "GML 里 `if (room == N) room_goto(M)` 的常量对；src 取自同一 code 内的守卫",
+  "src_rooms": 101
+ },
+ "uty": {
+  "edges": [
+   {
+    "code": "gml_Object_obj_flowey_world_controller_Step_0",
+    "dst": 225,
+    "dst_name": "rm_battle_flowey",
+    "src": 182,
+    "src_name": "rm_death_screen"
+   }
+  ],
+  "n_edges": 1,
+  "n_rooms": 287,
+  "rule": "GML 里 `if (room == N) room_goto(M)` 的常量对；src 取自同一 code 内的守卫",
+  "src_rooms": 1
+ }
+}
