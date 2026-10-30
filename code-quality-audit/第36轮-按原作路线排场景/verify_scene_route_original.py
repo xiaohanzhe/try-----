@@ -338,6 +338,22 @@ _KIND_ONESHOT = 'oneshot_transfer'
 _KIND_UT_SRC = 'ut_door_src'
 _KIND_UT_NEXT = 'ut_door_next'
 _UT_NEXT_VIA = 'obj_doorA'
+# ★★★ 第123轮：第四种机制 —— `ut_door_shift`。ut 的门把目标写成**函数调用**
+#   （`room_goto(room_next(room))` / `room_goto(room_previous(room))` / 双层 ±2），
+#   第122轮的扫描只认常量目标 ⇒ 这 282 条一直没进表；本轮反编译事件代码补齐。
+#   自洽条件（四条，比 `ut_door_next` 更严，因为位移值不是从字母推的）：
+#     ① `how` 与 `off` **成对**（`room_next(room)`↔+1 / `room_previous(room)`↔−1 /
+#        双层 ↔ ±2）—— 位移说法与位移值不许各说各的；
+#     ② `dst_room_id == src_room_id + off`（下标真按位移算）；
+#     ③ `alarm` 是反编译名 `gml_Object_*`（有取证来源，不是编的）；
+#     ④ `via` 是门对象名 `obj_*`（说得清是哪扇门）。
+_KIND_UT_SHIFT = 'ut_door_shift'
+_UT_SHIFT_HOW = {
+    'room_next(room)': 1,
+    'room_previous(room)': -1,
+    'room_next(room_next(room))': 2,
+    'room_previous(room_previous(room))': -2,
+}
 
 
 def _ut_self_ok(r):
@@ -356,6 +372,13 @@ def _ut_self_ok(r):
         return (o.get('off') == 1 and o.get('via') == _UT_NEXT_VIA
                 and isinstance(o.get('src_room_id'), int)
                 and o.get('dst_room_id') == o.get('src_room_id') + 1)
+    if k == _KIND_UT_SHIFT:
+        off = o.get('off')
+        return (isinstance(off, int) and _UT_SHIFT_HOW.get(o.get('how')) == off
+                and isinstance(o.get('src_room_id'), int)
+                and o.get('dst_room_id') == o.get('src_room_id') + off
+                and str(o.get('alarm') or '').startswith('gml_Object_')
+                and str(o.get('via') or '').startswith('obj_'))
     return False
 
 
@@ -369,7 +392,7 @@ for _r in (routes.get('routes') or []):
     if not isinstance(_o, dict):
         _struct_bad.append('%s(无_original)' % _r.get('to'))
         continue
-    if _o.get('kind') in (_KIND_UT_SRC, _KIND_UT_NEXT):
+    if _o.get('kind') in (_KIND_UT_SRC, _KIND_UT_NEXT, _KIND_UT_SHIFT):
         _n_ut += 1
         if not _ut_self_ok(_r):
             _struct_bad.append('%s(ut %s 不自洽)' % (_r.get('to'), _o.get('kind')))
@@ -391,12 +414,14 @@ for _r in (routes.get('routes') or []):
                                               _DOOR_DELTA[_L]))
 check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
       '（门位移 A+1/B-1/C+2 ｜ OneShot 传送为两端不同的原作 map ｜ '
-      'ut 门为 room_goto 取证 / room_goto_next ±1；排除 desktop 世界门）',
+      'ut 门为 room_goto 取证 / room_goto_next ±1 / room_next·previous(room) 位移 ±1·±2；'
+      '排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
 
 # C3a4 —— ★★ 第122轮：ut 分支**确实存在且被管到**（正控制），以及它有鉴别力（负控制）
-check('C3a4 ★ C3 的 ut 门分支确有样本（%d 条）' % _n_ut, _n_ut == 243,
+#   ★ 第123轮：243 → **525**（多了 282 条 `ut_door_shift`）。
+check('C3a4 ★ C3 的 ut 门分支确有样本（%d 条）' % _n_ut, _n_ut == 525,
       '实测 %d' % _n_ut)
 _neg_a = {'to': 'x', 'when_scene': 'ut.rooms.a',
           '_original': {'kind': _KIND_UT_NEXT, 'via': _UT_NEXT_VIA,
@@ -414,6 +439,28 @@ check('C3a5 正/负控制：`_ut_self_ok` 对"合法 next / off=2 的 next / 无
       _ut_self_ok(_pos) is True and _ut_self_ok(_neg_a) is False
       and _ut_self_ok(_neg_b) is False,
       repr((_ut_self_ok(_pos), _ut_self_ok(_neg_a), _ut_self_ok(_neg_b))))
+
+# C3a6 —— ★★★ 第123轮：`ut_door_shift` 分支的正/负控制（三条负控制各拆一处）：
+#   ① `how` 与 `off` 各说各的（`room_previous(room)` 却写 off=+1）⇒ 必红
+#   ② 下标没按位移算（src 9 / off −1 但 dst 5）⇒ 必红
+#   ③ `alarm` 不是反编译名（少了 `gml_Object_` 前缀）⇒ 必红
+def _sh(**kw):
+    o = {'kind': _KIND_UT_SHIFT, 'via': 'obj_doorB', 'how': 'room_previous(room)',
+         'off': -1, 'src_room_name': 'room_b', 'dst_room_name': 'room_a',
+         'src_room_id': 9, 'dst_room_id': 8,
+         'alarm': 'gml_Object_obj_doorB_Alarm_2'}
+    o.update(kw)
+    return {'to': 'ut.rooms.room_a', 'when_scene': 'ut.rooms.room_b', '_original': o}
+
+
+check('C3a6 正/负控制：`ut_door_shift` 的 how↔off 不符 / 下标不算对 / '
+      'alarm 非反编译名 三种都必须判红',
+      _ut_self_ok(_sh()) is True
+      and _ut_self_ok(_sh(off=1)) is False
+      and _ut_self_ok(_sh(dst_room_id=5)) is False
+      and _ut_self_ok(_sh(alarm='obj_doorB')) is False,
+      repr((_ut_self_ok(_sh()), _ut_self_ok(_sh(off=1)),
+            _ut_self_ok(_sh(dst_room_id=5)), _ut_self_ok(_sh(alarm='obj_doorB')))))
 
 # C3a2 —— ★ 第105轮正控制：OneShot 段**确实存在且被 C3 的新分支管到**
 #   （否则"换个更松的判据"可能变成"整段没人管"）。

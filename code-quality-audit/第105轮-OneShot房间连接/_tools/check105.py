@@ -405,12 +405,15 @@ ok(fp(_neg_nd) != _OLD_NO_DESK_FP_105,
 
 # ★★ D2e 第122轮：ut 段**自证**（它被 D1/D2/D2c 排除出去了，必须在这里锁住，
 #   否则"排除"就变成"没人管"）。三条：条数、前缀全为 `ut.`、每条必须有目标。
-_UT_N_122 = 243
+# ★★★ 第123轮：243 → **525**（122 的对象级 110 + 字母级 133 + 123 的位移门 282）。
+#   这里仍只锁"段位与条数"，逐条目标复算归 `check122` / `check123`（分工不变）。
+_UT_N = 525
 _ut_bad_prefix = [r for r in _UT
                   if not str(r.get('when_scene') or '').startswith('ut.')]
 _ut_no_to = [r for r in _UT if not (isinstance(r.get('to'), str) and r.get('to'))]
-ok(len(_UT) == _UT_N_122 and not _ut_bad_prefix and not _ut_no_to,
-   'D2e ★ ut 段 %d 条、前缀全为 `ut.`、每条都有 to（异常 %d / %d）'
+ok(len(_UT) == _UT_N and not _ut_bad_prefix and not _ut_no_to,
+   'D2e ★ ut 段 %d 条（第122轮 243 + 第123轮 282）、前缀全为 `ut.`、每条都有 to'
+   '（异常 %d / %d）'
    % (len(_UT), len(_ut_bad_prefix), len(_ut_no_to)))
 ok(all(r.get('work') == 'ut' for r in _UT),
    'D2e2 ut 段每条都带 `work: "ut"` 标记（可被生成器覆盖式重写，不会误伤别人）')

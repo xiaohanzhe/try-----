@@ -146,8 +146,10 @@ ONESHOT_OBJ_TOTAL = 7804
 #     否则会把黄魂整块静默剔掉（A2d 正/负控制就是钉这个）。
 RE_UT_ZONE = re.compile(r'^_zone\.ut\.')
 UT_SCENES = 358
-UT_SCENES_WITH_OBJ = 227
-UT_OBJ_TOTAL = 970
+#: ★ 第122轮：227 → 243（补了 243 条门）；第123轮：243 → **274**、970 → **1655**
+#:   （第123轮的位移门补齐后门涨到 1,233 条 ⇒ 274 个场景有物件、合计 1,655 条）。
+UT_SCENES_WITH_OBJ = 274
+UT_OBJ_TOTAL = 1655
 
 PASS = 0
 FAIL = 0

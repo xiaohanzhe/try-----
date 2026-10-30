@@ -70,7 +70,44 @@
    "original_room_id": 5,
    "bg": "bg/ut_room_area1_2.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 150],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 150],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [120, 410],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 410],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 410],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 410],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_ruins1": {
    "name": "room_ruins1",
@@ -96,6 +133,18 @@
      "pos": [150, 195],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [140, 450],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 450],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -124,6 +173,18 @@
      "pos": [140, 60],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -165,6 +226,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -180,6 +253,18 @@
      "pos": [150, 62],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -215,6 +300,18 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -225,7 +322,32 @@
    "original_room_id": 11,
    "bg": "bg/ut_room_ruins6.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [4, 97],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [2478, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [4, 118],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [2478, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_ruins7": {
    "name": "room_ruins7",
@@ -248,9 +370,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [210, 140],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [300, 340],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [300, 360],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     }
    ]
@@ -262,7 +408,20 @@
    "original_room_id": 13,
    "bg": "bg/ut_room_ruins7A.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_ruins8": {
    "name": "room_ruins8",
@@ -273,9 +432,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [300, 100],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -301,9 +472,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [460, 100],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -322,6 +505,18 @@
    "bg": "bg/ut_room_ruins10.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [460, 160],
      "sprite": null,
@@ -357,9 +552,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [540, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -379,9 +586,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -419,9 +638,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -444,6 +675,18 @@
      "pos": [150, 120],
      "sprite": null,
      "src": "obj_sign_room",
+     "depth": 0
+    },
+    {
+     "pos": [0, 122],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 138],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -509,6 +752,18 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [620, 160],
      "sprite": null,
      "src": "obj_doorA",
@@ -549,6 +804,18 @@
      "depth": 0
     },
     {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [240, 420],
      "sprite": null,
      "src": "obj_doorA",
@@ -570,6 +837,18 @@
    "bg": "bg/ut_room_ruins15B.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [240, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [260, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [80, 240],
      "sprite": null,
@@ -627,6 +906,18 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [380, 320],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [380, 340],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -648,6 +939,30 @@
      "pos": [200, 100],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [380, 160],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [380, 180],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [120, 420],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 420],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -695,9 +1010,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 280],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [580, 280],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 300],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -721,6 +1048,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -737,6 +1076,18 @@
      "sprite": null,
      "src": "obj_knife_pickup",
      "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -748,6 +1099,18 @@
    "bg": "bg/ut_room_ruins19.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [140, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
     {
      "pos": [80, 200],
      "sprite": null,
@@ -789,9 +1152,21 @@
      "depth": 0
     },
     {
+     "pos": [298, 146],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [0, 150],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [298, 166],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     },
     {
@@ -801,9 +1176,27 @@
      "depth": 0
     },
     {
+     "pos": [298, 186],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [0, 190],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [140, 234],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 234],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -839,6 +1232,18 @@
      "sprite": null,
      "src": "obj_readable_room2",
      "depth": 0
+    },
+    {
+     "pos": [300, 150],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 176],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -850,6 +1255,12 @@
    "bg": "bg/ut_room_torhouse3.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [152, 122],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
     {
      "pos": [360, 124],
      "sprite": null,
@@ -890,6 +1301,24 @@
      "pos": [206, 133],
      "sprite": null,
      "src": "obj_readable_room2",
+     "depth": 0
+    },
+    {
+     "pos": [-3, 142],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [-1, 168],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [0, 183],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -937,6 +1366,12 @@
      "sprite": null,
      "src": "obj_readable_room2",
      "depth": 0
+    },
+    {
+     "pos": [110, 232],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -982,6 +1417,12 @@
      "pos": [228, 148],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [196, 218],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -1081,9 +1522,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [480, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1125,6 +1578,24 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -1135,7 +1606,44 @@
    "original_room_id": 41,
    "bg": "bg/ut_room_basement4.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 60],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 60],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_basement5": {
    "name": "room_basement5",
@@ -1156,6 +1664,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [140, 1610],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 1610],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -1171,6 +1691,18 @@
      "pos": [151, 150],
      "sprite": null,
      "src": "obj_demodoorA",
+     "depth": 0
+    },
+    {
+     "pos": [140, 410],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 410],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -1236,15 +1768,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [2700, 160],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [2700, 180],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 200],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1292,6 +1842,42 @@
      "sprite": null,
      "src": "obj_savepoint",
      "depth": 0
+    },
+    {
+     "pos": [380, 147],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [380, 174],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 200],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [380, 201],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
     }
    ]
   },
@@ -1302,7 +1888,26 @@
    "original_room_id": 47,
    "bg": "bg/ut_room_tundra3A.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [115, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [165, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_tundra4": {
    "name": "room_tundra4",
@@ -1337,9 +1942,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [550, 135],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -1349,15 +1966,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [550, 175],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [550, 195],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 200],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -1377,15 +2012,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [440, 160],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [440, 180],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 200],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1417,9 +2070,45 @@
      "depth": 0
     },
     {
+     "pos": [600, 120],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [310, 135],
      "sprite": null,
      "src": "obj_sign_room",
+     "depth": 0
+    },
+    {
+     "pos": [600, 140],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 160],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 200],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -1431,7 +2120,26 @@
    "original_room_id": 51,
    "bg": "bg/ut_room_tundra6A.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_tundra7": {
    "name": "room_tundra7",
@@ -1442,15 +2150,33 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [300, 140],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -1482,9 +2208,27 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [740, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1494,9 +2238,27 @@
      "depth": 0
     },
     {
+     "pos": [740, 420],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [440, 440],
      "sprite": null,
      "src": "obj_readable_room2",
+     "depth": 0
+    },
+    {
+     "pos": [740, 440],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [740, 460],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     }
    ]
@@ -1509,6 +2271,12 @@
    "bg": "bg/ut_room_tundra8A.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [100, 120],
      "sprite": null,
@@ -1526,6 +2294,18 @@
      "sprite": null,
      "src": "obj_readable_room2",
      "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -1538,15 +2318,33 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [300, 140],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -1566,9 +2364,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1581,6 +2391,12 @@
      "pos": [145, 155],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1603,6 +2419,12 @@
      "pos": [60, 100],
      "sprite": null,
      "src": "obj_sign_room",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1633,6 +2455,18 @@
      "pos": [417, 138],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -1669,6 +2503,30 @@
    "bg": "bg/ut_room_tundra_xoxosmall.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [80, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [100, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [480, 100],
      "sprite": null,
@@ -1716,15 +2574,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [800, 100],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [800, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -1737,6 +2613,18 @@
    "bg": "bg/ut_room_tundra_randoblock.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [300, 120],
      "sprite": null,
@@ -1796,6 +2684,42 @@
      "depth": 0
     },
     {
+     "pos": [540, 100],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [540, 120],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [540, 140],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [360, 180],
      "sprite": null,
      "src": "obj_savepoint",
@@ -1840,15 +2764,51 @@
      "depth": 0
     },
     {
+     "pos": [2400, 80],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 100],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [920, 100],
      "sprite": null,
      "src": "obj_door_ruins13",
      "depth": 0
     },
     {
+     "pos": [2400, 100],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [920, 120],
      "sprite": null,
      "src": "obj_door_ruins13",
+     "depth": 0
+    },
+    {
+     "pos": [2400, 120],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 140],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -1862,6 +2822,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [18, 222],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [36, 222],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -1873,6 +2845,18 @@
    "bg": "bg/ut_room_tundra_iceexit_new.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [500, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [520, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [0, 100],
      "sprite": null,
@@ -1905,6 +2889,18 @@
      "pos": [460, 75],
      "sprite": null,
      "src": "obj_doorXmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [580, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [580, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -1974,6 +2970,30 @@
      "sprite": null,
      "src": "obj_readable_room3",
      "depth": 0
+    },
+    {
+     "pos": [1020, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [1020, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -1985,6 +3005,30 @@
    "bg": "bg/ut_room_tundra_town.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [1580, 0],
+     "sprite": null,
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1600, 0],
+     "sprite": null,
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1620, 0],
+     "sprite": null,
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1640, 0],
+     "sprite": null,
+     "src": "obj_doorA",
+     "depth": 0
+    },
     {
      "pos": [1829, 28],
      "sprite": null,
@@ -2034,9 +3078,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [518, 124],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     },
     {
@@ -2060,7 +3116,50 @@
    "original_room_id": 69,
    "bg": "bg/ut_room_tundra_town2.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [200, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [220, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [240, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [180, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [200, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [220, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [240, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_tundra_dock": {
    "name": "room_tundra_dock",
@@ -2069,7 +3168,26 @@
    "original_room_id": 70,
    "bg": "bg/ut_room_tundra_dock.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 235],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 235],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 235],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_tundra_inn": {
    "name": "room_tundra_inn",
@@ -2237,6 +3355,12 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [33, 9],
+     "sprite": null,
+     "src": "obj_papdoor",
+     "depth": 0
+    },
+    {
      "pos": [140, 35],
      "sprite": null,
      "src": "obj_readable_room3",
@@ -2304,6 +3428,18 @@
      "pos": [195, 60],
      "sprite": null,
      "src": "obj_readable_room3",
+     "depth": 0
+    },
+    {
+     "pos": [200, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [220, 230],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -2491,15 +3627,33 @@
      "depth": 0
     },
     {
+     "pos": [880, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [0, 140],
      "sprite": null,
      "src": "obj_doorXmusicfade",
      "depth": 0
     },
     {
+     "pos": [880, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [0, 160],
      "sprite": null,
      "src": "obj_doorXmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [880, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     },
     {
@@ -2517,7 +3671,44 @@
    "original_room_id": 82,
    "bg": "bg/ut_room_water1.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [620, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [620, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [620, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water2": {
    "name": "room_water2",
@@ -2531,6 +3722,42 @@
      "pos": [174, 70],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     }
    ]
@@ -2556,6 +3783,36 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [560, 120],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [560, 140],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [280, 280],
      "sprite": null,
      "src": "obj_readable_room4",
@@ -2576,7 +3833,20 @@
    "original_room_id": 85,
    "bg": "bg/ut_room_water3A.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water4": {
    "name": "room_water4",
@@ -2593,9 +3863,21 @@
      "depth": 0
     },
     {
+     "pos": [-10, 280],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [550, 280],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 300],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -2633,9 +3915,21 @@
      "depth": 0
     },
     {
+     "pos": [-15, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [500, 140],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 155],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -2655,6 +3949,18 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [100, 70],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [120, 70],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [360, 80],
      "sprite": null,
      "src": "obj_readable_room3",
@@ -2664,6 +3970,24 @@
      "pos": [380, 80],
      "sprite": null,
      "src": "obj_readable_room3",
+     "depth": 0
+    },
+    {
+     "pos": [0, 340],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 360],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 380],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -2699,7 +4023,14 @@
    "original_room_id": 89,
    "bg": "bg/ut_room_water5A.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water6": {
    "name": "room_water6",
@@ -2725,6 +4056,18 @@
      "pos": [160, 260],
      "sprite": null,
      "src": "obj_readable_room3",
+     "depth": 0
+    },
+    {
+     "pos": [100, 370],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [120, 370],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -2814,6 +4157,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 330],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 330],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -2826,9 +4181,27 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [-10, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 200],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [2080, 200],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 220],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -2846,7 +4219,32 @@
    "original_room_id": 93,
    "bg": "bg/ut_room_water9.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [840, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [840, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_savepoint1": {
    "name": "room_water_savepoint1",
@@ -2860,6 +4258,18 @@
      "pos": [210, 100],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -2913,6 +4323,42 @@
      "sprite": null,
      "src": "obj_readable_room2",
      "depth": 0
+    },
+    {
+     "pos": [440, 330],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [460, 330],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [480, 330],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [360, 520],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [380, 520],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [400, 520],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -2934,6 +4380,18 @@
      "pos": [160, 60],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [140, 420],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 420],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -2962,6 +4420,24 @@
      "pos": [100, 0],
      "sprite": null,
      "src": "obj_door_ruins13",
+     "depth": 0
+    },
+    {
+     "pos": [360, 0],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [380, 0],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [400, 0],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
      "depth": 0
     },
     {
@@ -3039,7 +4515,26 @@
    "original_room_id": 98,
    "bg": "bg/ut_room_water_shoe.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [310, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [310, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [310, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_bird": {
    "name": "room_water_bird",
@@ -3136,6 +4631,24 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [240, -10],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [260, -10],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [280, -10],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [320, 60],
      "sprite": null,
      "src": "obj_readable_room1",
@@ -3170,6 +4683,18 @@
      "sprite": null,
      "src": "obj_readable_room3",
      "depth": 0
+    },
+    {
+     "pos": [-15, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -3198,6 +4723,24 @@
      "sprite": null,
      "src": "obj_readable_room5",
      "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -3208,7 +4751,20 @@
    "original_room_id": 103,
    "bg": "bg/ut_room_water_dogroom.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_statue": {
    "name": "room_water_statue",
@@ -3247,9 +4803,21 @@
      "depth": 0
     },
     {
+     "pos": [-10, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [330, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -3274,6 +4842,24 @@
    "bg": "bg/ut_room_water_waterfall.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [1520, 220],
      "sprite": null,
@@ -3302,6 +4888,24 @@
    "bg": "bg/ut_room_water_waterfall2.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [300, 880],
      "sprite": null,
@@ -3337,6 +4941,12 @@
      "depth": 0
     },
     {
+     "pos": [-2, 178],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [1380, 183],
      "sprite": null,
      "src": "obj_doorA",
@@ -3368,6 +4978,24 @@
      "pos": [510, 95],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -3405,6 +5033,12 @@
      "depth": 0
     },
     {
+     "pos": [0, 60],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [220, 60],
      "sprite": null,
      "src": "obj_savepoint",
@@ -3417,9 +5051,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 80],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [700, 80],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -3438,6 +5084,24 @@
    "bg": "bg/ut_room_water_undynebridge.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [0, 80],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [1920, 1000],
      "sprite": null,
@@ -3504,9 +5168,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [300, 100],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -3524,7 +5200,38 @@
    "original_room_id": 115,
    "bg": "bg/ut_room_water_trashzone2.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [180, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [200, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 780],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 800],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_friendlyhub": {
    "name": "room_water_friendlyhub",
@@ -3534,6 +5241,24 @@
    "bg": "bg/ut_room_water_friendlyhub.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
     {
      "pos": [280, 0],
      "sprite": null,
@@ -3593,6 +5318,24 @@
      "sprite": null,
      "src": "obj_door_t",
      "depth": 0
+    },
+    {
+     "pos": [280, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [320, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -3603,7 +5346,26 @@
    "original_room_id": 117,
    "bg": "bg/ut_room_water_undyneyard.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_undynehouse": {
    "name": "room_water_undynehouse",
@@ -3708,6 +5470,12 @@
      "depth": 0
     },
     {
+     "pos": [116, 112],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_door_s_musfade",
@@ -3752,6 +5520,18 @@
      "sprite": null,
      "src": "obj_readable_room3",
      "depth": 0
+    },
+    {
+     "pos": [60, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [80, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -3762,7 +5542,20 @@
    "original_room_id": 121,
    "bg": "bg/ut_room_water_hapstablook.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [130, 230],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [150, 230],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_farm": {
    "name": "room_water_farm",
@@ -3877,9 +5670,33 @@
      "depth": 0
     },
     {
+     "pos": [310, 120],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [-10, 140],
      "sprite": null,
      "src": "obj_door_t",
+     "depth": 0
+    },
+    {
+     "pos": [310, 140],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     }
    ]
@@ -3891,7 +5708,26 @@
    "original_room_id": 125,
    "bg": "bg/ut_room_water_dock.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water15": {
    "name": "room_water15",
@@ -3938,9 +5774,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [1000, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
      "depth": 0
     },
     {
@@ -3958,7 +5806,32 @@
    "original_room_id": 127,
    "bg": "bg/ut_room_water16.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 240],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [520, 635],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_temvillage": {
    "name": "room_water_temvillage",
@@ -3968,6 +5841,18 @@
    "bg": "bg/ut_room_water_temvillage.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [40, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [60, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
     {
      "pos": [322, 138],
      "sprite": null,
@@ -4067,6 +5952,18 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [635, 300],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -4094,6 +5991,12 @@
      "pos": [380, 0],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -4141,6 +6044,24 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 620],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 620],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 620],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -4153,15 +6074,33 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [600, 100],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [600, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -4179,7 +6118,44 @@
    "original_room_id": 133,
    "bg": "bg/ut_room_water21.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-15, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [310, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [310, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [315, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water_undynefinal": {
    "name": "room_water_undynefinal",
@@ -4211,6 +6187,24 @@
      "pos": [180, 520],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 640],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 660],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 680],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -4246,6 +6240,30 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 460],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 460],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 460],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 460],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -4262,6 +6280,30 @@
      "sprite": null,
      "src": "obj_hotlandsign",
      "depth": 900000
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [700, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [700, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -4274,9 +6316,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [500, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -4289,6 +6343,12 @@
    "bg": "bg/ut_room_fire2.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [300, 100],
      "sprite": null,
@@ -4324,9 +6384,39 @@
      "depth": 0
     },
     {
+     "pos": [-15, 105],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [-15, 115],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [200, 120],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [180, 232],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [200, 232],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [220, 232],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     }
    ]
@@ -4338,7 +6428,20 @@
    "original_room_id": 140,
    "bg": "bg/ut_room_fire_dock.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [130, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [150, -10],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_lab1": {
    "name": "room_fire_lab1",
@@ -4406,6 +6509,30 @@
      "pos": [560, 120],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [1088, 120],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 140],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [1088, 140],
+     "sprite": null,
+     "src": "obj_doorCmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 160],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
      "depth": 0
     }
    ]
@@ -4549,6 +6676,12 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [60, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -4559,7 +6692,14 @@
    "original_room_id": 143,
    "bg": "bg/ut_room_fire3.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [410, -10],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire5": {
    "name": "room_fire5",
@@ -4586,6 +6726,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [140, 1630],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 1630],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -4598,9 +6750,45 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [300, 0],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [320, 0],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [340, 0],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [100, 280],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [80, 420],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [100, 420],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [120, 420],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -4630,7 +6818,26 @@
    "original_room_id": 146,
    "bg": "bg/ut_room_fire6A.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [260, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [280, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_lasers1": {
    "name": "room_fire_lasers1",
@@ -4650,6 +6857,24 @@
      "pos": [1150, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [100, 220],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -4703,6 +6928,18 @@
      "sprite": null,
      "src": "obj_door_u",
      "depth": 0
+    },
+    {
+     "pos": [0, 440],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 460],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -4725,6 +6962,24 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [350, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [350, 115],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [350, 135],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -4735,7 +6990,26 @@
    "original_room_id": 150,
    "bg": "bg/ut_room_fire_shootguy_2.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire9": {
    "name": "room_fire9",
@@ -4784,7 +7058,26 @@
    "original_room_id": 152,
    "bg": "bg/ut_room_fire_shootguy_1.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_turn": {
    "name": "room_fire_turn",
@@ -4794,6 +7087,24 @@
    "bg": "bg/ut_room_fire_turn.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [780, 80],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [780, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [780, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
     {
      "pos": [140, 220],
      "sprite": null,
@@ -4853,6 +7164,12 @@
      "depth": 0
     },
     {
+     "pos": [-10, 340],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [460, 340],
      "sprite": null,
      "src": "obj_readable_room5",
@@ -4862,6 +7179,18 @@
      "pos": [480, 340],
      "sprite": null,
      "src": "obj_readable_room5",
+     "depth": 0
+    },
+    {
+     "pos": [620, 340],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 360],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     },
     {
@@ -4877,9 +7206,33 @@
      "depth": 0
     },
     {
+     "pos": [620, 360],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 380],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [620, 380],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [90, 382],
      "sprite": null,
      "src": "obj_readable_room3",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 400],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -4893,9 +7246,45 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [140, 140],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [700, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [700, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [700, 180],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     }
    ]
@@ -4925,6 +7314,24 @@
      "sprite": null,
      "src": "obj_door_s_musfade",
      "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -4953,6 +7360,24 @@
      "sprite": null,
      "src": "obj_door_s_musfade",
      "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -4963,7 +7388,44 @@
    "original_room_id": 158,
    "bg": "bg/ut_room_fire_hotdog.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 100],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_walkandbranch": {
    "name": "room_fire_walkandbranch",
@@ -4974,9 +7436,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [220, -8],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [0, 100],
      "sprite": null,
      "src": "obj_door_t",
+     "depth": 0
+    },
+    {
+     "pos": [800, 100],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     },
     {
@@ -4986,9 +7460,39 @@
      "depth": 0
     },
     {
+     "pos": [800, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [-2, 138],
      "sprite": null,
      "src": "obj_door_t",
+     "depth": 0
+    },
+    {
+     "pos": [800, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [200, 226],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [220, 226],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [240, 226],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     }
    ]
@@ -5006,6 +7510,24 @@
      "sprite": null,
      "src": "obj_artclass_sign",
      "depth": 0
+    },
+    {
+     "pos": [144, 232],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [164, 232],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [178, 232],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -5016,7 +7538,26 @@
    "original_room_id": 161,
    "bg": "bg/ut_room_fire_apron.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire10": {
    "name": "room_fire10",
@@ -5089,6 +7630,24 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [600, 260],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 280],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 300],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -5113,15 +7672,39 @@
      "depth": 0
     },
     {
+     "pos": [516, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [-15, 140],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [516, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [519, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [-15, 160],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [516, 160],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -5133,7 +7716,38 @@
    "original_room_id": 165,
    "bg": "bg/ut_room_fire_boysnightout.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [600, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [600, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [600, 320],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 340],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [600, 360],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_newsreport": {
    "name": "room_fire_newsreport",
@@ -5142,7 +7756,38 @@
    "original_room_id": 166,
    "bg": "bg/ut_room_fire_newsreport.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [880, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [900, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [920, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 300],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 320],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_coreview2": {
    "name": "room_fire_coreview2",
@@ -5151,7 +7796,44 @@
    "original_room_id": 167,
    "bg": "bg/ut_room_fire_coreview2.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [600, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [620, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [640, 220],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_elevator_l2": {
    "name": "room_fire_elevator_l2",
@@ -5177,6 +7859,24 @@
      "pos": [120, 115],
      "sprite": null,
      "src": "obj_door_s_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 160],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 180],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -5206,6 +7906,24 @@
      "sprite": null,
      "src": "obj_door_s_musfade",
      "depth": 0
+    },
+    {
+     "pos": [300, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -5218,9 +7936,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [230, 100],
      "sprite": null,
      "src": "obj_sign_room",
+     "depth": 0
+    },
+    {
+     "pos": [460, 100],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     },
     {
@@ -5233,6 +7963,30 @@
      "pos": [148, 108],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [460, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [460, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     }
    ]
@@ -5270,6 +8024,24 @@
      "depth": 0
     },
     {
+     "pos": [0, 300],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 320],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 340],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [340, 640],
      "sprite": null,
      "src": "obj_doorA",
@@ -5298,6 +8070,24 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [850, 80],
      "sprite": null,
      "src": "obj_doorA",
@@ -5312,7 +8102,26 @@
    "original_room_id": 173,
    "bg": "bg/ut_room_fire_shootguy_3.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_preshootguy4": {
    "name": "room_fire_preshootguy4",
@@ -5361,7 +8170,26 @@
    "original_room_id": 175,
    "bg": "bg/ut_room_fire_shootguy_4.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 235],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_savepoint2": {
    "name": "room_fire_savepoint2",
@@ -5375,6 +8203,12 @@
      "pos": [160, 100],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [480, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
      "depth": 0
     },
     {
@@ -5404,7 +8238,20 @@
    "original_room_id": 177,
    "bg": "bg/ut_room_fire_spider.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [1000, 180],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_pacing": {
    "name": "room_fire_pacing",
@@ -5425,6 +8272,24 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [315, 160],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [-5, 180],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [315, 180],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -5435,7 +8300,68 @@
    "original_room_id": 179,
    "bg": "bg/ut_room_fire_operatest.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-10, 240],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [310, 240],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 260],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [310, 260],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 280],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [310, 280],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 300],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [310, 300],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 320],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [310, 320],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_multitile": {
    "name": "room_fire_multitile",
@@ -5474,9 +8400,39 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [220, -15],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [240, -15],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [260, -15],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [500, 120],
      "sprite": null,
      "src": "obj_door_ruins13",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -5486,9 +8442,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [500, 160],
      "sprite": null,
      "src": "obj_door_ruins13",
+     "depth": 0
+    },
+    {
+     "pos": [220, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [240, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [260, 220],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -5505,6 +8485,36 @@
      "pos": [50, 20],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [210, 175],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [230, 175],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [250, 175],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [220, 380],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [240, 380],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -5560,9 +8570,21 @@
      "depth": 0
     },
     {
+     "pos": [510, 360],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [0, 380],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [510, 380],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     },
     {
@@ -5620,9 +8642,27 @@
      "depth": 0
     },
     {
+     "pos": [510, 400],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [190, 429],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [180, 580],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [200, 580],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -5694,6 +8734,24 @@
      "sprite": null,
      "src": "obj_readable_room2",
      "depth": 0
+    },
+    {
+     "pos": [1000, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [1000, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [1000, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -5709,6 +8767,24 @@
      "pos": [196, 120],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 140],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 160],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 180],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -5737,6 +8813,18 @@
      "pos": [230, 54],
      "sprite": null,
      "src": "obj_readable_room2",
+     "depth": 0
+    },
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -5796,6 +8884,18 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [140, 75],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 75],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [140, 550],
      "sprite": null,
      "src": "obj_doorXmusicfade",
@@ -5818,6 +8918,18 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [20, 60],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [40, 60],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [260, 60],
      "sprite": null,
      "src": "obj_doorA",
@@ -5834,6 +8946,18 @@
      "sprite": null,
      "src": "obj_door_u",
      "depth": 0
+    },
+    {
+     "pos": [140, 285],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 285],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -5844,7 +8968,20 @@
    "original_room_id": 190,
    "bg": "bg/ut_room_fire_core2.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 320],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 320],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_core3": {
    "name": "room_fire_core3",
@@ -5864,6 +9001,18 @@
      "pos": [160, 80],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [140, 400],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [160, 400],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -5893,6 +9042,24 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -5921,6 +9088,42 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 100],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 140],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
     }
    ]
   },
@@ -5931,7 +9134,20 @@
    "original_room_id": 194,
    "bg": "bg/ut_room_fire_core_freebattle.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire_core_laserfun": {
    "name": "room_fire_core_laserfun",
@@ -5957,6 +9173,24 @@
      "pos": [1100, 0],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -6040,6 +9274,24 @@
      "sprite": null,
      "src": "obj_door_u",
      "depth": 0
+    },
+    {
+     "pos": [120, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -6067,6 +9319,18 @@
      "pos": [160, 0],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [300, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6120,6 +9384,24 @@
      "sprite": null,
      "src": "obj_door_ruins13",
      "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -6159,6 +9441,24 @@
      "pos": [300, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6202,9 +9502,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [300, 100],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -6260,6 +9572,18 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [120, 220],
      "sprite": null,
      "src": "obj_doorA",
@@ -6288,6 +9612,24 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [60, 80],
      "sprite": null,
      "src": "obj_readable_room2",
@@ -6312,9 +9654,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [300, 100],
      "sprite": null,
      "src": "obj_door_ruins13",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     },
     {
@@ -6351,6 +9705,24 @@
    "bg": "bg/ut_room_fire_core_bottomright.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [0, 100],
      "sprite": null,
@@ -6401,6 +9773,18 @@
      "pos": [240, 80],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [300, 100],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [300, 120],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -6584,15 +9968,33 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [150, 75],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [230, 75],
      "sprite": null,
      "src": "obj_door_u",
      "depth": 0
     },
     {
+     "pos": [-10, 100],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [275, 105],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [-10, 120],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6610,6 +10012,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [140, 980],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 980],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -6625,6 +10039,24 @@
      "pos": [1090, 95],
      "sprite": null,
      "src": "obj_door_s_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 220],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6770,6 +10202,30 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [100, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -6791,6 +10247,18 @@
      "pos": [160, 0],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 840],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 860],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6819,6 +10287,18 @@
      "pos": [150, 240],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [140, 520],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 520],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -6850,9 +10330,21 @@
      "depth": 0
     },
     {
+     "pos": [298, 146],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [0, 150],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [298, 166],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     },
     {
@@ -6862,9 +10354,27 @@
      "depth": 0
     },
     {
+     "pos": [298, 186],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [0, 190],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [138, 232],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [158, 232],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6908,9 +10418,21 @@
      "depth": 0
     },
     {
+     "pos": [300, 150],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [101, 161],
      "sprite": null,
      "src": "obj_readable_room4",
+     "depth": 0
+    },
+    {
+     "pos": [300, 176],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -6933,6 +10455,12 @@
      "pos": [570, 123],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [151, 124],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     },
     {
@@ -6969,6 +10497,24 @@
      "pos": [327, 134],
      "sprite": null,
      "src": "obj_readable_room2",
+     "depth": 0
+    },
+    {
+     "pos": [-3, 142],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [-1, 168],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [0, 183],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -7033,6 +10579,12 @@
      "pos": [212, 171],
      "sprite": null,
      "src": "obj_readable_room5",
+     "depth": 0
+    },
+    {
+     "pos": [174, 234],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -7115,6 +10667,12 @@
      "pos": [228, 150],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [196, 218],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -7220,9 +10778,21 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [480, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -7264,6 +10834,24 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -7286,6 +10874,30 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -7307,6 +10919,18 @@
      "pos": [1996, 136],
      "sprite": null,
      "src": "obj_door_s_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     },
     {
@@ -7337,6 +10961,18 @@
    "bg": "bg/ut_room_sanscorridor.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [140, 90],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 90],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [1220, 90],
      "sprite": null,
@@ -7382,6 +11018,42 @@
      "sprite": null,
      "src": "obj_savepoint",
      "depth": 0
+    },
+    {
+     "pos": [140, 520],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 520],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 520],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [640, 520],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [660, 520],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [680, 520],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -7393,6 +11065,24 @@
    "bg": "bg/ut_room_castle_coffins1.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [120, 0],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 0],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 0],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
     {
      "pos": [120, 520],
      "sprite": null,
@@ -7421,6 +11111,18 @@
    "bg": "bg/ut_room_castle_coffins2.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [60, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [80, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
     {
      "pos": [140, 140],
      "sprite": null,
@@ -7520,9 +11222,39 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [590, 138],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [610, 138],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [520, 142],
      "sprite": null,
      "src": "obj_savepoint",
+     "depth": 0
+    },
+    {
+     "pos": [120, 250],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 250],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 250],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -7627,6 +11359,18 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -7638,6 +11382,12 @@
    "bg": "bg/ut_room_truelab_elevator.png",
    "bg_source": "room.bake120.ut",
    "objects": [
+    {
+     "pos": [130, 95],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
     {
      "pos": [300, 140],
      "sprite": null,
@@ -7661,6 +11411,18 @@
    "bg_source": "room.bake120.ut",
    "objects": [
     {
+     "pos": [720, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [740, 0],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [147, 120],
      "sprite": null,
      "src": "obj_readable_room1",
@@ -7682,6 +11444,18 @@
      "pos": [627, 120],
      "sprite": null,
      "src": "obj_readable_room4",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -7741,6 +11515,18 @@
      "sprite": null,
      "src": "obj_savepoint",
      "depth": 0
+    },
+    {
+     "pos": [240, 600],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [260, 600],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -7765,9 +11551,21 @@
      "depth": 0
     },
     {
+     "pos": [400, 80],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [0, 100],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [400, 100],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -7791,6 +11589,18 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [560, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [560, 160],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -7801,7 +11611,20 @@
    "original_room_id": 249,
    "bg": "bg/ut_room_truelab_redlever.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_truelab_prebed": {
    "name": "room_truelab_prebed",
@@ -7886,6 +11709,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [0, 380],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 400],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -7916,6 +11751,18 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
      "pos": [120, 160],
      "sprite": null,
      "src": "obj_readable_room4",
@@ -7930,7 +11777,20 @@
    "original_room_id": 253,
    "bg": "bg/ut_room_truelab_bluelever.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_truelab_hall3": {
    "name": "room_truelab_hall3",
@@ -7959,9 +11819,21 @@
      "depth": 0
     },
     {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
      "pos": [1140, 140],
      "sprite": null,
      "src": "obj_door_u",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorC",
      "depth": 0
     },
     {
@@ -7985,7 +11857,26 @@
    "original_room_id": 255,
    "bg": "bg/ut_room_truelab_shower.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [180, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_truelab_determination": {
    "name": "room_truelab_determination",
@@ -8005,6 +11896,30 @@
      "pos": [112, 60],
      "sprite": null,
      "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [440, 140],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [0, 160],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [440, 160],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     }
    ]
@@ -8046,6 +11961,18 @@
      "sprite": null,
      "src": "obj_readable_room3",
      "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -8080,6 +12007,18 @@
      "sprite": null,
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [700, 140],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [700, 160],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
     }
    ]
   },
@@ -8090,7 +12029,20 @@
    "original_room_id": 259,
    "bg": "bg/ut_room_truelab_greenlever.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_truelab_fan": {
    "name": "room_truelab_fan",
@@ -8141,6 +12093,18 @@
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorAmusicfade",
+     "depth": 0
+    },
+    {
      "pos": [140, 230],
      "sprite": null,
      "src": "obj_door_s_musfade",
@@ -8179,6 +12143,18 @@
      "sprite": null,
      "src": "obj_readable_room2",
      "depth": 0
+    },
+    {
+     "pos": [560, 120],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [560, 140],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
     }
    ]
   },
@@ -8189,7 +12165,20 @@
    "original_room_id": 263,
    "bg": "bg/ut_room_truelab_power.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 400],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 400],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_gaster": {
    "name": "room_gaster",
@@ -8240,6 +12229,18 @@
      "pos": [195, 150],
      "sprite": null,
      "src": "obj_readable_room3",
+     "depth": 0
+    },
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorBmusicfade",
      "depth": 0
     }
    ]
@@ -8334,7 +12335,26 @@
    "original_room_id": 272,
    "bg": "bg/ut_room_water_redacted.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [120, 220],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [140, 220],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    },
+    {
+     "pos": [160, 220],
+     "sprite": null,
+     "src": "obj_doorDmusicfade",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_water13": {
    "name": "room_water13",
@@ -8399,7 +12419,14 @@
    "original_room_id": 275,
    "bg": "bg/ut_room_overworld3.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 180],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.bullettest": {
    "name": "bullettest",
@@ -8614,6 +12641,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [120, 520],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [140, 520],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
     }
    ]
   },
@@ -8624,7 +12663,38 @@
    "original_room_id": 297,
    "bg": "bg/ut_room_fire10_old.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 80],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [1200, 80],
+     "sprite": null,
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [1220, 80],
+     "sprite": null,
+     "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    },
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorC",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_fire10A_old": {
    "name": "room_fire10A_old",
@@ -8633,7 +12703,20 @@
    "original_room_id": 298,
    "bg": "bg/ut_room_fire10A_old.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1120, 80],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [1140, 80],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_tundra_placeholder": {
    "name": "room_tundra_placeholder",
@@ -8651,7 +12734,20 @@
    "original_room_id": 300,
    "bg": "bg/ut_room_ruins12B_old.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_tundra_rollsnow": {
    "name": "room_tundra_rollsnow",
@@ -8699,6 +12795,18 @@
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
+    },
+    {
+     "pos": [320, 330],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [340, 330],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -8717,15 +12825,33 @@
      "depth": 0
     },
     {
+     "pos": [0, 100],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [540, 100],
      "sprite": null,
      "src": "obj_doorA",
      "depth": 0
     },
     {
+     "pos": [0, 120],
+     "sprite": null,
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
      "pos": [540, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [0, 140],
+     "sprite": null,
+     "src": "obj_doorD",
      "depth": 0
     },
     {
@@ -8760,6 +12886,24 @@
      "pos": [310, 120],
      "sprite": null,
      "src": "obj_doorA",
+     "depth": 0
+    },
+    {
+     "pos": [120, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
      "depth": 0
     }
    ]
@@ -9092,7 +13236,20 @@
    "original_room_id": 337,
    "bg": "bg/ut_room_dogshrine_mewmew.png",
    "bg_source": "room.bake120.ut",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    },
+    {
+     "pos": [160, 230],
+     "sprite": null,
+     "src": "obj_doorB",
+     "depth": 0
+    }
+   ]
   },
   "ut.rooms.room_of_bog": {
    "name": "room_of_bog",

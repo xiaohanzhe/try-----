@@ -116,7 +116,15 @@ def load_routed_doors():
         if not str(r.get('when_scene') or '').startswith('ut.'):
             continue
         rn = (r.get('_original') or {}).get('src_room_name')
-        o = r.get('when_src') or 'obj_doorA'
+        # ★★★ 第123轮修：**不能**再假设"字母级就是 obj_doorA"。
+        #   第122轮 ut 段只有字母 A，所以 `when_src or 'obj_doorA'` 侥幸成立；
+        #   第123轮补了 B(−1) / C(+2) / D(−2)，若仍按 obj_doorA 取，那些规则会
+        #   被算成"obj_doorA 在房间 X 有目标"，而 `obj_doorB` 的实例依旧一扇门都不写
+        #   （实测：791/1,233，正正好少了 B/C/D 那一批）。
+        #   ⇒ 对象名一律优先取 `_original.via`（两轮生成器都写了它），最后才回落 obj_doorA。
+        o = (r.get('when_src')
+             or (r.get('_original') or {}).get('via')
+             or 'obj_doorA')
         if rn and o:
             out.add((rn, o))
     return out

@@ -95,14 +95,34 @@ for _sid, _sc in ZONE.items():
         NAME2SID[_sc['name']] = _sid
 
 print(u'== A. 规模与形状 ==')
-check(u'A0 ut 段 %d 条（对象级 %d / 字母级 %d）'
-      % (len(UT), sum(1 for r in UT if r.get('when_src')),
+# ★★★ 第123轮改口径（**不是放宽**）：第122轮引入的 ut 段是 243 条，第123轮又补了
+#   282 条位移机制门 ⇒ 整段变成 525 条。如果这里仍钉"整段 == 243"，第123轮一落地
+#   这条判据就会红 —— 但它红的原因是"段长大了"，不是"122 那 243 条坏了"。
+#   ⇒ 改成本轮**真正要守的语义**：`ut_doors122.json` 里那 243 条**按内容逐条仍在**
+#      （场景 / 门字母 / 对象 / 目标 / 原作机制，四项全等），一条都不许丢、不许改。
+#   整段的规模与连续编号由第123轮的 `check123` 接手。
+_FACT122 = _json(os.path.join(ROUND, '_evidence', 'ut_doors122.json')).get('routes') or []
+
+
+def _sig(r):
+    u"""一条路由的**身份**（不掺 reason/priority 之类会随排版变的字段）。"""
+    o = r.get('_original') or {}
+    return (r.get('when_scene'), r.get('when_door'), r.get('when_src'),
+            r.get('to'), o.get('kind'))
+
+
+_HAVE_SIG = set(_sig(r) for r in UT)
+_missing_122 = [s for s in (_sig(r) for r in _FACT122) if s not in _HAVE_SIG]
+check(u'A0 第122轮那 %d 条**逐条仍在**（缺 %d）；ut 段现共 %d 条（对象级 %d / 字母级 %d）'
+      % (EXPECT_N, len(_missing_122), len(UT),
+         sum(1 for r in UT if r.get('when_src')),
          sum(1 for r in UT if not r.get('when_src'))),
-      len(UT) == EXPECT_N
-      and sum(1 for r in UT if r.get('when_src')) == EXPECT_SRC
-      and sum(1 for r in UT if not r.get('when_src')) == EXPECT_NEXT,
-      u'%d / %d / %d' % (len(UT), sum(1 for r in UT if r.get('when_src')),
-                         sum(1 for r in UT if not r.get('when_src'))))
+      len(_FACT122) == EXPECT_N and not _missing_122
+      and sum(1 for r in _FACT122 if r.get('when_src')) == EXPECT_SRC
+      and sum(1 for r in _FACT122 if not r.get('when_src')) == EXPECT_NEXT,
+      u'实测 %d / %d / %d / 缺 %d' % (len(UT), sum(1 for r in UT if r.get('when_src')),
+                                   sum(1 for r in UT if not r.get('when_src')),
+                                   len(_missing_122)))
 
 _bad_prio = [r for r in UT
              if not (isinstance(r.get('priority'), int)
@@ -126,11 +146,13 @@ _bad_door = [r for r in UT
 check(u'A3 `when_src` 都在 ut objmap 里（坏 %d）／字母级 `when_door` 都是合法字母（坏 %d）' % (len(_bad_src), len(_bad_door)),
       not _bad_src and not _bad_door, repr((_bad_src[:2], _bad_door[:2])))
 
-check(u'A4 每条都带 `work: "ut"`，`_original.kind` 只有两种',
+_KINDS = set((r.get('_original') or {}).get('kind') for r in UT)
+check(u'A4 每条都带 `work: "ut"`，`_original.kind` 只在本轮已知的三种里（实测 %s）'
+      % sorted(_KINDS),
       all(r.get('work') == 'ut' for r in UT)
-      and set((r.get('_original') or {}).get('kind') for r in UT)
-      == {'ut_door_src', 'ut_door_next'},
-      repr(sorted(set((r.get('_original') or {}).get('kind') for r in UT))))
+      and _KINDS <= {'ut_door_src', 'ut_door_next', 'ut_door_shift'}
+      and {'ut_door_src', 'ut_door_next'} <= _KINDS,
+      repr(sorted(_KINDS)))
 
 print(u'')
 print(u'== B. 独立重算（本套件最硬的一条）==')
@@ -188,11 +210,18 @@ def recount():
 
 
 EXPECT = recount()
+# ★★ 第123轮：`recount()` 只会重推**本轮的两种机制**（对象级 `room_goto(常量)` 与
+#   `obj_doorA` 的 `room_goto_next`），所以对账范围也必须限定在本轮引入的那批。
+#   拿整段（含 282 条 `ut_door_shift`）来比，`_extra` 必然非空 —— 那不是错，
+#   是"分母换了物种"。整段的独立重算由 `check123` 负责。
+UT122 = [r for r in UT
+         if (r.get('_original') or {}).get('kind') in ('ut_door_src', 'ut_door_next')]
 HAVE = dict(((r['when_scene'], r.get('when_src'), r.get('when_door')), r['to'])
-            for r in UT)
-_missing = sorted(set(EXPECT) - set(HAVE))
-_extra = sorted(set(HAVE) - set(EXPECT))
-_diff = sorted(k for k in (set(EXPECT) & set(HAVE)) if EXPECT[k] != HAVE[k])
+            for r in UT122)
+_KEY = lambda k: (k[0], k[1] or '', k[2] or '')      # None 与 str 不能直接排（已栽过）
+_missing = sorted(set(EXPECT) - set(HAVE), key=_KEY)
+_extra = sorted(set(HAVE) - set(EXPECT), key=_KEY)
+_diff = sorted((k for k in (set(EXPECT) & set(HAVE)) if EXPECT[k] != HAVE[k]), key=_KEY)
 check(u'B1 重推 %d 条（%d 对象级 + %d 字母级）；缺 %d / 多 %d / 目标不同 %d'
       % (len(EXPECT), sum(1 for k in EXPECT if k[1]), sum(1 for k in EXPECT if k[2]),
          len(_missing), len(_extra), len(_diff)),
@@ -225,17 +254,26 @@ for _sid, _sc in ZONE.items():
     for _e in (_sc.get('objects') or []):
         if (II.classify((_e or {}).get('src')) or {}).get('kind') == 'door':
             _have_doors.add((_sc.get('name'), _e['src']))
-_routed = set(((r.get('_original') or {}).get('src_room_name'),
-               r.get('when_src') or 'obj_doorA') for r in UT)
+_routed = set()
+for r in UT:
+    o = (r.get('when_src') or (r.get('_original') or {}).get('via') or 'obj_doorA')
+    _routed.add(((r.get('_original') or {}).get('src_room_name'), o))
+# ★★ 第123轮：双射仍要守，但分母从「本轮那 243 组」换成「ut 段现有的全部门组」——
+#   因为 `objects` 里的门是**按整张路由表**写进去的（`build_objs121.load_routed_doors`），
+#   拿 243 去比 525 只会红得莫名其妙。整段的规模闸由 `check123` 接手。
+#   这里改成**双向相等**（点不动的门 0 / 幽灵规则 0），再加非空闸防"两边都空"。
 check(u'C1 `objects` 里的门 %d 组 == 路由表 %d 组，逐组相等（点不动的 %d / 幽灵 %d）'
       % (len(_have_doors), len(_routed), len(_have_doors - _routed),
          len(_routed - _have_doors)),
-      _have_doors == _routed and len(_have_doors) == EXPECT_N,
+      _have_doors == _routed and len(_have_doors) >= EXPECT_N,
       repr((sorted(_have_doors - _routed)[:3], sorted(_routed - _have_doors)[:3])))
 
 _covered = sum(n for (_rn, _o), n in INSTS.items() if (_rn, _o) in _routed)
-check(u'C2 被这些门覆盖的实例数 %d（第121轮统计 ut 门实例共 1,299）' % _covered,
-      _covered == EXPECT_COVERED_INST, u'%d' % _covered)
+# ★★ 第123轮：分母/分子一起长大（548 → 1,233）。这里不写死新数字，改守**下界** +
+#   "不许把已经写过的门写丢"（防回滚），精确值由 `check123` 用独立算法对账。
+check(u'C2 被这些门覆盖的实例数 %d（第121轮统计 ut 门实例共 1,299；本轮下界 %d）'
+      % (_covered, EXPECT_COVERED_INST),
+      _covered >= EXPECT_COVERED_INST, u'%d' % _covered)
 
 print(u'')
 print(u'== D. 产品接线 ==')

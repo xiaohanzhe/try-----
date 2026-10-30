@@ -3274,6 +3274,35 @@ SUITES = [
                 '★ 零 Qt、零外部盘（只读仓库资产 + 第115轮蒸馏进仓库的 TSV）。',
     },
     {
+        'id': 'check123',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第123轮-补齐ut门证据', '_tools',
+                               'check123.py'),
+        'desc': '第123轮：**ut 剩下的 751 个门实例**补齐（覆盖率 42.2% → 94.9%）。'
+                '第122轮只认 `room_goto(<常量>)` 与函数名**字面**，'
+                '而 ut 的门把目标写成 `room_goto(room_previous(room))` —— 目标是**函数调用**，'
+                '永远变不成边（这就是 `conn_ut.csx` 里 `n_nonconst_target: 30` 的成因）。'
+                '本轮反编译 133 条 door 事件代码 + 34 个 door 对象元数据（**含 ParentId**），'
+                '实测出纪律：`obj_doorA` +1 / `obj_doorB` −1 / `obj_doorC` +2 / `obj_doorD` −2，'
+                '`obj_doorAmusicfade`/`obj_doorBmusicfade` **自己没有 Alarm_2**、'
+                '只有 `event_inherited()` ⇒ 必须沿父链继承（这条不查 `ParentId` 就会把 214 个'
+                '实例误判成"无机制"）；`obj_papdoor` +1 是本轮新发现的对象。'
+                '⇒ 新增 282 条位移路由（字母级 183 / 对象级 99），ut 段 243 → 525 条，'
+                '门覆盖 548/1,299 → **1,233/1,299**。'
+                'A 规模/形状（525 条分账 · priority 4000~4524 连续 · 两端已登记 · 无自环 · '
+                '**同场景同字母唯一** · shift 只含 {−2,−1,1,2} 与 9 个已实证对象）· '
+                '★★B **独立重算**：另一套实现（手工括号配对，不用生成器正则）从事件源码重推'
+                '282 条逐条相等（配改目标负控制 + 正控制 + 非空分母闸 + '
+                '★**继承链生效自证** + ★**条件房间被识别**）· '
+                'C 与 objects 双向相等（1,233 组 / 1,655 条 / 274 场景）· '
+                'D 产品行为（`obj_doorB`→room_area1 / 撤掉 `when_src` ⇒ 0 扇）· E 防回滚 · '
+                'F 自检。'
+                '★★ 明确不做：`obj_elevatordoor` 是电梯 UI（`event_user(0)`）不是门位移；'
+                '`Alarm_2` 里 `if (...)` 条件点名的房间不套通用位移'
+                '（`obj_doorA` 在 `castle_prebarrier` 走 `global.flag[7]` 分叉）。'
+                '★ 零 Qt、零外部盘（只读仓库资产 + 第115轮蒸馏进仓库的 TSV + 本轮事实 JSON）。',
+    },
+    {
         'id': 'check113p',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第113轮-全体角色AI训练', '_tools', 'check113p.py'),

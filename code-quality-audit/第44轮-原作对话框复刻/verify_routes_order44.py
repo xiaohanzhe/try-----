@@ -213,9 +213,12 @@ _lettered_n = sum(1 for r in RL
                   if isinstance(r.get('when_door'), str) and r.get('when_door'))
 _srced_n = sum(1 for r in RL
                if isinstance(r.get('when_src'), str) and r.get('when_src'))
-ok(not _no_split and _srced_n == 110,
+ok(not _no_split and _srced_n == 209,
    'B6 全部 %d 条规则都带分流依据（字母级 %d + 对象级 when_src %d；'
    '两样都没有的 %d）' % (len(RL), _lettered_n, _srced_n, len(_no_split)))
+# ★ 第123轮：对象级 from **110 → 209**（第122轮的 110 条 + 第123轮新补的 99 条
+#   对象级位移门 —— `obj_doorAmusicfade` / `obj_doorDmusicfade` 这类不带字母的门）。
+#   字母级同期 1000 → 1183（122 的 133 + 123 的 183）。
 # —— 负控制：把两种依据都剥掉的规则必须被判出（证明上一条不是恒真）
 ok(_has_split({'when_scene': 'a', 'to': 'b'}) is False
    and _has_split({'when_scene': 'a', 'to': 'b', 'when_door': 'A'}) is True
@@ -409,19 +412,30 @@ if have_rooms:
           ('｜证据读取失败: %s' % _os_err) if _os_err else ''))
 
     # ★★ C1b 第122轮：被 C1 排除的 ut 段**必须自证**（否则"排除"就成了没人管）。
-    #   三条：① 条数钉死 243；② 两端都必须是 ut 已登记场景（不指向别作品）；
-    #   ③ 按 (when_scene, to) 去重后不缩水（没有两条规则指向同一对）。
+    #   三条：① 条数钉死（第122轮 243 → 第123轮 **525**）；② 两端都必须是 ut 已登记
+    #   场景（不指向别作品）；③ **没有两条一模一样的规则**。
+    #   ★ 第123轮改：去重键从 `(场景, 目标)` 升级为 `(场景, 目标, 分流依据)`。
+    #     起因：`room_water12` 有**两扇不同的门**指向同一间 `room_water11`
+    #     （`obj_doorDmusicfade` 的 D−2 位移 + 第122轮那条 `obj_door_ruins13`
+    #     对象级规则）⇒ 旧键会把 525 判成 524 而报红，但那是**合法并存**，不是重复条目。
+    #     真正要防的"两条一模一样的规则"由三元键守（它必须等于条数）。
     _ut_routes = [r for r in RL
                   if str(r.get('when_scene') or '').startswith('ut.')]
     _utz = jload(os.path.join(SC, '_zone.ut.rooms.json')).get('scenes') or {}
     _ut_bad_end = [r for r in _ut_routes
                    if r.get('when_scene') not in _utz or r.get('to') not in _utz]
     _ut_pairs = set((r.get('when_scene'), r.get('to')) for r in _ut_routes)
-    ok(len(_ut_routes) == 243 and not _ut_bad_end
-       and len(_ut_pairs) == len(_ut_routes),
+    _ut_pairs3 = set((r.get('when_scene'), r.get('to'),
+                      r.get('when_door') or '', r.get('when_src') or '')
+                     for r in _ut_routes)
+    ok(len(_ut_routes) == 525 and not _ut_bad_end
+       and len(_ut_pairs3) == len(_ut_routes),
        'C1b ★ 被 C1 排除的 ut 段：%d 条 / 两端都在 ut 场景表里（越界 %d）/ '
-       '按 (场景,目标) 去重后仍 %d 条 —— 排除**有账**，归 `check122` 守'
-       % (len(_ut_routes), len(_ut_bad_end), len(_ut_pairs)))
+       '按 (场景,目标,依据) 去重后仍 %d 条（按 (场景,目标) 是 %d 条 —— 差的那 %d 处'
+       '是**同房间两扇不同的门**指向同一间，不是重复条目）'
+       '—— 排除**有账**，归 `check122` / `check123` 守'
+       % (len(_ut_routes), len(_ut_bad_end), len(_ut_pairs3), len(_ut_pairs),
+          len(_ut_routes) - len(_ut_pairs)))
 
     # C2 断链归因：'to 无出边的场景' 里，凡原作**能编出边**的都算真缺口。
     #   ⚠️ 判据必须是"原作侧按同一机制能编出边"，而不是"该房有没有字母门" ——

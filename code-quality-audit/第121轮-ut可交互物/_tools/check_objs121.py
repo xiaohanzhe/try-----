@@ -14,12 +14,13 @@ D 来源：每条 `src` 都必须在 ut 的 objmap 里，且 `classify()` 命中
 E 防回滚：场景数 / 条目数不得跌破本轮实测
 F 自检：**AST** 数恒真判据（不扫注释，否则会被文案误报）/ 无 BOM / 正负控制成对
 
-## 为什么 `door` 和 `cutscene` 不许出现
+## 为什么 `cutscene` 不许出现（`door` 则**有条件**允许）
 
-  · `door`(1,299 个实例)：`build_props` 建门要 `routes` 表，ut 侧还没有
-    `_routes.json` 条目（第109轮只做了桌面 4 门）⇒ 写了也只会是"推不开的门"。
-    等路由那一轮一起做。**这条判据是"提醒"，不是"禁止"** —— 将来路由到位时
-    会红一次，届时把 `WANT_KINDS` 和这条一起改。
+  · `door`：第121轮时**一扇都不写**（建门要 `routes`，ut 侧还没有 ⇒ 写了就是
+    "推不开的门"）。第122轮补了 243 条门、第123轮补齐位移机制后，口径变成
+    **「`_routes.json` 里真有目标的才写」**（准入闸见
+    `build_objs121.load_routed_doors`，判据 B2b 守两个方向的双射）。
+    现在实测 1,233 条门实例 / 525 组，覆盖 1,233 of 1,299 个门实例（94.9%）。
   · `cutscene`(375)：`build_props` 落 `else` 直接丢弃，写了是纯噪音。
 
 ## 为什么 `sprite` 必须 None
@@ -59,6 +60,11 @@ BANNED_KINDS = ('cutscene',)
 
 #: 本轮（第121轮）那 6 类的实测条数 —— 第122轮加了门之后要能**分账**
 BASE_N, BASE_TOTAL = 136, 422
+
+#: ★ 第123轮：门补齐后的实测规模（274 场景 / 1,655 条 / 其中门 1,233 条 525 组）
+#:   来源：`第123轮-补齐ut门证据/_evidence/ut_doors123.json` +
+#:   `check123.C2/C3`（1,655 条 / 274 场景 / 门 1,233 / 覆盖 1,233 of 1,299）
+SCENES_N, TOTAL_N, DOOR_N, DOOR_GROUPS_N = 274, 1655, 1233, 525
 
 _n = {'p': 0, 'f': 0}
 _failed = []
@@ -118,11 +124,22 @@ total = sum(len(sc['objects']) for _s, sc in withobj)
 
 
 def _routed_doors():
-    u"""`{(房间名, 门对象名)}` —— 从 `_routes.json` **现读**（第122轮）。
+    u"""`{(房间名, 门对象名)}` —— **路由表真能匹配到的门**（第122轮起；第123轮改口径）。
+
+    ★★★ 第123轮修：旧实现写的是 `r.get('when_src') or 'obj_doorA'` —— 那个
+      `'obj_doorA'` 兜底在第123轮**变成错的**：第122轮 ut 段只有字母 A（133 条
+      `ut_door_next`），所以"没写 when_src 就是 obj_doorA"侥幸成立；第123轮补了
+      B(−1)/C(+2)/D(−2) 之后，`obj_doorB` 的规则会被算成"obj_doorA 在房间 X 有目标"
+      ⇒ 判据自己得出「点不动的门 442 / 幽灵规则 66」这种**纯误报**（实测过）。
+
+    ★ 现在改成**语义重推**（不是照抄生成器的 `_original.via`）：一条路由到底能匹配
+      到哪扇门，问的是产品那条路 —— 对象级（`when_src`）直接就是那扇门；字母级
+      （`when_door`）则去实例表里找**该房间里字母相同的那个门对象**。
+      这样写的好处：① 不与生成器共用同一份书签（`via` 写错时判据仍能抓）；
+      ② 顺带把「同场景同字母多解」暴露成红（匹配到 0 个或多于 1 个都记账）。
 
     ★ 为什么判据自己去读路由表、而不是调 `build_objs121.load_routed_doors()`：
       那是生成器的**决策**；判据若直接复用同一个函数，就变成"自己验自己"。
-      这里按同一份**数据**独立重推一遍（规则只有一句：ut 路由里的 (房间, 对象)）。
     """
     try:
         d = _json(os.path.join(SCENES, '_routes.json'))
@@ -135,9 +152,19 @@ def _routed_doors():
         if not str(r.get('when_scene') or '').startswith('ut.'):
             continue
         rn = (r.get('_original') or {}).get('src_room_name')
-        o = r.get('when_src') or 'obj_doorA'
-        if rn and o:
+        if not rn:
+            continue
+        o = r.get('when_src')
+        if o:
             out.add((rn, o))
+            continue
+        letter = r.get('when_door')
+        if not letter:
+            continue
+        cand = [it['obj'] for it in insts.get(rn, [])
+                if II.door_letter_of(it['obj']) == letter]
+        for o2 in set(cand):
+            out.add((rn, o2))
     return out
 
 
@@ -152,9 +179,9 @@ _6n = sum(1 for _s, sc in withobj for e in sc['objects']
 _6s = sum(1 for _s, sc in withobj
           if any((II.classify(e.get('src')) or {}).get('kind') in WANT_KINDS
                  for e in sc['objects']))
-check('A1 227 场景 / 970 条（= 第121轮的 %d/%d + 第122轮的门 %d）'
-      % (BASE_N, BASE_TOTAL, _ndoor),
-      len(withobj) == 227 and total == 970 and _ndoor == 548,
+check('A1 %d 场景 / %d 条（= 第121轮的 %d/%d + 第122轮的门 243 条 + 第123轮的位移门）'
+      % (SCENES_N, TOTAL_N, BASE_N, BASE_TOTAL),
+      len(withobj) == SCENES_N and total == TOTAL_N and _ndoor == DOOR_N,
       '%d / %d / door %d' % (len(withobj), total, _ndoor))
 check('A1b ★分账：非 door 的 6 类仍是 %d 场景 / %d 条（加门没有顶替或挤掉别的类）'
       % (BASE_N, BASE_TOTAL), _6s == BASE_N and _6n == BASE_TOTAL,
@@ -201,10 +228,10 @@ check('B1 每条 `src` 都在 ut 的 objmap 里', not unknown, repr(unknown[:3])
 check('B2 每条都命中 6 类或 `door`；`cutscene` 一个都不许出现（`build_props` 落 else 丢弃）',
       not banned, repr(banned[:3]))
 check('B3 分类分布 == 实测（readable 350 / sign 34 / savepoint 33 / pickup 3 / '
-      'fountain 1 / interactable 1 / door 548）',
+      'fountain 1 / interactable 1 / door %d）' % DOOR_N,
       dict(kinds) == {'readable': 350, 'sign': 34, 'savepoint': 33,
                       'pickup': 3, 'fountain': 1, 'interactable': 1,
-                      'door': 548},
+                      'door': DOOR_N},
       repr(dict(sorted(kinds.items(), key=lambda kv: -kv[1]))))
 # ★★ B2b 第122轮：门与路由表**双射**（两个方向都要，缺一个方向就等于没守）
 #   ① 写进 objects 的每一扇门，都必须在路由表里有 (房间,对象) ⇒ 不会有点不动的门
@@ -227,7 +254,7 @@ _ghost = sorted(ROUTED - _have)
 check('B2b ★门与路由表**双射**：objects 里的门 %d 组全有目标（点不动的 %d）／'
       '路由表 %d 组全在场（幽灵规则 %d）'
       % (len(_have), len(_dead), len(ROUTED), len(_ghost)),
-      not _dead and not _ghost and len(_have) == len(ROUTED) == 243,
+      not _dead and not _ghost and len(_have) == len(ROUTED) == DOOR_GROUPS_N,
       repr((_dead[:3], _ghost[:3])))
 
 print()
@@ -285,8 +312,9 @@ if withobj:
 
 print()
 print('== D. 防回滚 ==')
-check('D1 有物件的场景数 ≥ 227（防批量清空）', len(withobj) >= 227, str(len(withobj)))
-check('D2 条目总数 ≥ 970（防批量删条目）', total >= 970, str(total))
+check('D1 有物件的场景数 ≥ %d（防批量清空）' % SCENES_N, len(withobj) >= SCENES_N,
+      str(len(withobj)))
+check('D2 条目总数 ≥ %d（防批量删条目）' % TOTAL_N, total >= TOTAL_N, str(total))
 check('D3 场景总数仍是 358（objects 改动不许连带改场景表结构）',
       len(scenes) == 358, str(len(scenes)))
 
